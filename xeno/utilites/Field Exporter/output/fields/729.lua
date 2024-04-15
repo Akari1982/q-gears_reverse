@@ -46,21 +46,21 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0023 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0023 0xd2
         opcode9C_MessageSync() -- 0x0027 0x9c
         return 0 -- 0x0028 0x00
     end,
 
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x0029 0x2c
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x002b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x002b 0xd2
         opcode9C_MessageSync() -- 0x002f 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0030 0x2c
         return 0 -- 0x0032 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0033 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0033 0xd2
         opcode9C_MessageSync() -- 0x0037 0x9c
         return 0 -- 0x0038 0x00
     end,
@@ -323,7 +323,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x00b6 0xfe
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00b8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00b8 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=07 ) -- 0x00bc 0xa9
         opcode9C_MessageSync() -- 0x00be 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00cf ) -- 0x00bf 0x02

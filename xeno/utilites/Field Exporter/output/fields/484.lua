@@ -851,7 +851,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode09_ActorCallScriptEW( actor_id=0xff, script=04, priority=03 ) -- 0x08fb 0x09
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x08fe 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x08fe 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x0902 0xa9
         opcode9C_MessageSync() -- 0x0904 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0968 ) -- 0x0905 0x02
@@ -881,7 +881,7 @@ Actor[ "0x0e" ] = {
 
     on_talk = function( self )
         opcode09_ActorCallScriptEW( actor_id=0xff, script=04, priority=03 ) -- 0x098e 0x09
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0991 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0991 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x0995 0xa9
         opcode9C_MessageSync() -- 0x0997 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x09f5 ) -- 0x0998 0x02

@@ -91,27 +91,40 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x016f 0x1f
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x017d 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0180 0x4a
+        -- 0x21( ???=256 ) -- 0x0186 0x21
+        return 0 -- 0x0189 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x018a 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x018d 0x4a
+        -- 0x21( ???=256 ) -- 0x0193 0x21
+        return 0 -- 0x0196 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0197 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x019a 0x4a
+        -- 0x21( ???=256 ) -- 0x01a0 0x21
+        return 0 -- 0x01a3 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x01a4 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01a7 0x4a
+        -- 0x21( ???=256 ) -- 0x01ad 0x21
+        return 0 -- 0x01b0 0x00
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x01b1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x01b1 0xd2
         opcode9C_MessageSync() -- 0x01b5 0x9c
         return 0 -- 0x01b6 0x00
     end,
@@ -176,7 +189,7 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x01e0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x01e0 0xd2
         opcode9C_MessageSync() -- 0x01e4 0x9c
         return 0 -- 0x01e5 0x00
     end,
@@ -241,7 +254,7 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x020f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x020f 0xd2
         opcode9C_MessageSync() -- 0x0213 0x9c
         return 0 -- 0x0214 0x00
     end,
@@ -306,7 +319,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x023e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x023e 0xd2
         opcode9C_MessageSync() -- 0x0242 0x9c
         return 0 -- 0x0243 0x00
     end,
@@ -371,7 +384,7 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x026d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x026d 0xd2
         opcode9C_MessageSync() -- 0x0271 0x9c
         return 0 -- 0x0272 0x00
     end,
@@ -436,7 +449,7 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x029c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x029c 0xd2
         opcode9C_MessageSync() -- 0x02a0 0x9c
         return 0 -- 0x02a1 0x00
     end,
@@ -501,7 +514,7 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x02cb 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x02cb 0xd2
         opcode9C_MessageSync() -- 0x02cf 0x9c
         return 0 -- 0x02d0 0x00
     end,
@@ -566,7 +579,7 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x02fa 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x02fa 0xd2
         opcode9C_MessageSync() -- 0x02fe 0x9c
         return 0 -- 0x02ff 0x00
     end,
@@ -631,7 +644,7 @@ Actor[ "0x09" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x0329 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=0 ) -- 0x0329 0xd2
         opcode9C_MessageSync() -- 0x032d 0x9c
         return 0 -- 0x032e 0x00
     end,
@@ -697,7 +710,7 @@ Actor[ "0x0a" ] = {
 
     script_0x0b = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=307 ) -- 0x0358 0x74
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x035b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=0 ) -- 0x035b 0xd2
         opcode9C_MessageSync() -- 0x035f 0x9c
         return 0 -- 0x0360 0x00
     end,
@@ -762,7 +775,7 @@ Actor[ "0x0b" ] = {
     end,
 
     script_0x0b = function( self )
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x00 ) -- 0x038a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=0 ) -- 0x038a 0xd2
         opcode9C_MessageSync() -- 0x038e 0x9c
         return 0 -- 0x038f 0x00
     end,
@@ -1216,18 +1229,18 @@ Actor[ "0x15" ] = {
         opcode2C_SpritePlayAnim( anim_id=0x03 ) -- 0x06a2 0x2c
         opcodeFE0D_MessageSetFace( char_id=23 ) -- 0x06a4 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e2 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x06b8 ) -- 0x06a8 0x02
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x06b0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=0 ) -- 0x06b0 0xd2
         opcode9C_MessageSync() -- 0x06b4 0x9c
         -- 0x01_JumpTo( 0x06da ) -- 0x06b5 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e2 ), value2=(s16)0x0001, condition="value1 & value2", jump_if_false=0x06d5 ) -- 0x06b8 0x02
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x00 ) -- 0x06c0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=0 ) -- 0x06c0 0xd2
         opcode9C_MessageSync() -- 0x06c4 0x9c
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x06c5 0x2c
-        opcodeD2_MessageShow0( text_id=0x0010, ???=0x00 ) -- 0x06c7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0010, flags=0 ) -- 0x06c7 0xd2
         opcode9C_MessageSync() -- 0x06cb 0x9c
         opcode3A_VariableBitSet( address=0x00e2, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x06cc 0x3a
         -- 0x01_JumpTo( 0x06da ) -- 0x06d2 0x01
-        opcodeD2_MessageShow0( text_id=0x0011, ???=0x00 ) -- 0x06d5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0011, flags=0 ) -- 0x06d5 0xd2
         opcode9C_MessageSync() -- 0x06d9 0x9c
         opcode69_ActorSetRotation( rot=7 ) -- 0x06da 0x69
         return 0 -- 0x06dd 0x00

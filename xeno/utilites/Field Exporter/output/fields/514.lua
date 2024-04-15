@@ -37,8 +37,8 @@ Actor[ "0x00" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xD0() -- 0x007b 0xd0
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x00 ) -- 0x0086 0xf5
+        opcodeD0_MessageSettings( x=20, y=100, letters=0, rows=0, flags=321 ) -- 0x007b 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=0 ) -- 0x0086 0xf5
         opcode9C_MessageSync() -- 0x008a 0x9c
         -- MISSING OPCODE 0x28
     end,
@@ -140,7 +140,8 @@ Actor[ "0x04" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0248 ) -- 0x0232 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=3072 ) -- 0x023a 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -163,7 +164,8 @@ Actor[ "0x05" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0284 ) -- 0x026e 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=3072 ) -- 0x0276 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -186,7 +188,8 @@ Actor[ "0x06" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x02c0 ) -- 0x02aa 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=3072 ) -- 0x02b2 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -209,7 +212,8 @@ Actor[ "0x07" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x02fc ) -- 0x02e6 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=3072 ) -- 0x02ee 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -232,7 +236,8 @@ Actor[ "0x08" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0338 ) -- 0x0322 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=3072 ) -- 0x032a 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -255,7 +260,8 @@ Actor[ "0x09" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0374 ) -- 0x035e 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=3072 ) -- 0x0366 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -282,7 +288,17 @@ Actor[ "0x0a" ] = {
         opcode37_VariableSetFalse( address=0x040c ) -- 0x0391 0x37
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040c ), value2=(s16)0x0100, condition="value1 < value2", jump_if_false=0x03ab ) -- 0x0394 0x02
         -- 0xBE() -- 0x039c 0xbe
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=1 ) -- 0x039f 0xc0
+        opcode3C_VariableInc( address=0x040c ) -- 0x03a2 0x3c
+        opcode26_Wait( time=0 ) -- 0x03a5 0x26
+        -- 0x01_JumpTo( 0x0394 ) -- 0x03a8 0x01
+        opcode37_VariableSetFalse( address=0x040c ) -- 0x03ab 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040c ), value2=(s16)0x0040, condition="value1 < value2", jump_if_false=0x03c2 ) -- 0x03ae 0x02
+        -- 0xC0( ???=1 ) -- 0x03b6 0xc0
+        opcode3C_VariableInc( address=0x040c ) -- 0x03b9 0x3c
+        opcode26_Wait( time=0 ) -- 0x03bc 0x26
+        -- 0x01_JumpTo( 0x03ae ) -- 0x03bf 0x01
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -309,7 +325,17 @@ Actor[ "0x0b" ] = {
         opcode37_VariableSetFalse( address=0x040e ) -- 0x03e5 0x37
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0100, condition="value1 < value2", jump_if_false=0x03ff ) -- 0x03e8 0x02
         -- 0xBE() -- 0x03f0 0xbe
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=1 ) -- 0x03f3 0xc0
+        opcode3C_VariableInc( address=0x040e ) -- 0x03f6 0x3c
+        opcode26_Wait( time=0 ) -- 0x03f9 0x26
+        -- 0x01_JumpTo( 0x03e8 ) -- 0x03fc 0x01
+        opcode37_VariableSetFalse( address=0x040e ) -- 0x03ff 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x00e0, condition="value1 < value2", jump_if_false=0x0416 ) -- 0x0402 0x02
+        -- 0xC0( ???=1 ) -- 0x040a 0xc0
+        opcode3C_VariableInc( address=0x040e ) -- 0x040d 0x3c
+        opcode26_Wait( time=0 ) -- 0x0410 0x26
+        -- 0x01_JumpTo( 0x0402 ) -- 0x0413 0x01
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -336,7 +362,17 @@ Actor[ "0x0c" ] = {
         opcode37_VariableSetFalse( address=0x0410 ) -- 0x0439 0x37
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0100, condition="value1 < value2", jump_if_false=0x0453 ) -- 0x043c 0x02
         -- 0xBE() -- 0x0444 0xbe
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=1 ) -- 0x0447 0xc0
+        opcode3C_VariableInc( address=0x0410 ) -- 0x044a 0x3c
+        opcode26_Wait( time=0 ) -- 0x044d 0x26
+        -- 0x01_JumpTo( 0x043c ) -- 0x0450 0x01
+        opcode37_VariableSetFalse( address=0x0410 ) -- 0x0453 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0180, condition="value1 < value2", jump_if_false=0x046a ) -- 0x0456 0x02
+        -- 0xC0( ???=1 ) -- 0x045e 0xc0
+        opcode3C_VariableInc( address=0x0410 ) -- 0x0461 0x3c
+        opcode26_Wait( time=0 ) -- 0x0464 0x26
+        -- 0x01_JumpTo( 0x0456 ) -- 0x0467 0x01
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -363,7 +399,17 @@ Actor[ "0x0d" ] = {
         opcode37_VariableSetFalse( address=0x0412 ) -- 0x0490 0x37
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0100, condition="value1 < value2", jump_if_false=0x04aa ) -- 0x0493 0x02
         -- 0xBE() -- 0x049b 0xbe
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=1 ) -- 0x049e 0xbf
+        opcode3C_VariableInc( address=0x0412 ) -- 0x04a1 0x3c
+        opcode26_Wait( time=0 ) -- 0x04a4 0x26
+        -- 0x01_JumpTo( 0x0493 ) -- 0x04a7 0x01
+        opcode37_VariableSetFalse( address=0x0412 ) -- 0x04aa 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0040, condition="value1 < value2", jump_if_false=0x04c1 ) -- 0x04ad 0x02
+        -- 0xBF( ???=1 ) -- 0x04b5 0xbf
+        opcode3C_VariableInc( address=0x0412 ) -- 0x04b8 0x3c
+        opcode26_Wait( time=0 ) -- 0x04bb 0x26
+        -- 0x01_JumpTo( 0x04ad ) -- 0x04be 0x01
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -390,7 +436,17 @@ Actor[ "0x0e" ] = {
         opcode37_VariableSetFalse( address=0x0414 ) -- 0x04e4 0x37
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0414 ), value2=(s16)0x0100, condition="value1 < value2", jump_if_false=0x04fe ) -- 0x04e7 0x02
         -- 0xBE() -- 0x04ef 0xbe
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=1 ) -- 0x04f2 0xbf
+        opcode3C_VariableInc( address=0x0414 ) -- 0x04f5 0x3c
+        opcode26_Wait( time=0 ) -- 0x04f8 0x26
+        -- 0x01_JumpTo( 0x04e7 ) -- 0x04fb 0x01
+        opcode37_VariableSetFalse( address=0x0414 ) -- 0x04fe 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0414 ), value2=(s16)0x00e0, condition="value1 < value2", jump_if_false=0x0515 ) -- 0x0501 0x02
+        -- 0xBF( ???=1 ) -- 0x0509 0xbf
+        opcode3C_VariableInc( address=0x0414 ) -- 0x050c 0x3c
+        opcode26_Wait( time=0 ) -- 0x050f 0x26
+        -- 0x01_JumpTo( 0x0501 ) -- 0x0512 0x01
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )
@@ -417,7 +473,17 @@ Actor[ "0x0f" ] = {
         opcode37_VariableSetFalse( address=0x0416 ) -- 0x0538 0x37
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0416 ), value2=(s16)0x0100, condition="value1 < value2", jump_if_false=0x0552 ) -- 0x053b 0x02
         -- 0xBE() -- 0x0543 0xbe
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=1 ) -- 0x0546 0xbf
+        opcode3C_VariableInc( address=0x0416 ) -- 0x0549 0x3c
+        opcode26_Wait( time=0 ) -- 0x054c 0x26
+        -- 0x01_JumpTo( 0x053b ) -- 0x054f 0x01
+        opcode37_VariableSetFalse( address=0x0416 ) -- 0x0552 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0416 ), value2=(s16)0x0180, condition="value1 < value2", jump_if_false=0x0569 ) -- 0x0555 0x02
+        -- 0xBF( ???=1 ) -- 0x055d 0xbf
+        opcode3C_VariableInc( address=0x0416 ) -- 0x0560 0x3c
+        opcode26_Wait( time=0 ) -- 0x0563 0x26
+        -- 0x01_JumpTo( 0x0555 ) -- 0x0566 0x01
+        -- MISSING OPCODE 0xFE65
     end,
 
     on_talk = function( self )

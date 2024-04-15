@@ -479,7 +479,7 @@ Actor[ "0x11" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=144, jump=0x0217 ) -- 0x0205 0x86
         opcode74_SoundPlayFixedVolume( sound_id=308 ) -- 0x020a 0x74
         opcodeFE0D_MessageSetFace( char_id=7 ) -- 0x020d 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0211 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0211 0xd2
         opcode9C_MessageSync() -- 0x0215 0x9c
         return 0 -- 0x0216 0x00
     end,
@@ -915,13 +915,13 @@ Actor[ "0x21" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x045f 0x6f
         -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x046e ) -- 0x0461 0x86
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0466 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0466 0xd2
         opcode9C_MessageSync() -- 0x046a 0x9c
         -- 0x01_JumpTo( 0x047b ) -- 0x046b 0x01
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x046e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x046e 0xd2
         opcode9C_MessageSync() -- 0x0472 0x9c
         -- 0x05_CallFunction( 0x05a2 ) -- 0x0473 0x05
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0476 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0476 0xd2
         opcode9C_MessageSync() -- 0x047a 0x9c
         return 0 -- 0x047b 0x00
     end,

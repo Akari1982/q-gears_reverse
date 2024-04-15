@@ -55,7 +55,9 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x004f 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0052 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
@@ -66,7 +68,9 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=160 ) -- 0x0083 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0086 0x4a
+        return 0 -- 0x008c 0x00
     end,
 
 }
@@ -339,8 +343,8 @@ Actor[ "0x0d" ] = {
         -- 0x07( actor_id=0x04, script=0x24 ) -- 0x0150 0x07
         opcode26_Wait( time=20 ) -- 0x0153 0x26
         -- 0x07( actor_id=0x0e, script=0x24 ) -- 0x0156 0x07
-        -- 0xD0() -- 0x0159 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x43 ) -- 0x0164 0xd2
+        opcodeD0_MessageSettings( x=90, y=60, letters=0, rows=0, flags=67 ) -- 0x0159 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x0164 0xd2
         opcode9C_MessageSync() -- 0x0168 0x9c
         -- 0x5A() -- 0x0169 0x5a
         -- MISSING OPCODE 0x8a

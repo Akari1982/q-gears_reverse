@@ -62,7 +62,7 @@ Actor[ "0x01" ] = {
 
     script_0x04 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x02 ) -- 0x00bc 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x10 ) -- 0x00be 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_TOP ) -- 0x00be 0xd2
         opcode9C_MessageSync() -- 0x00c2 0x9c
         return 0 -- 0x00c3 0x00
     end,
@@ -99,7 +99,7 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x10 ) -- 0x00e6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=FORCE_TOP ) -- 0x00e6 0xd2
         opcode9C_MessageSync() -- 0x00ea 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00eb 0x2c
         opcode26_Wait( time=0 ) -- 0x00ed 0x26
@@ -141,7 +141,7 @@ Actor[ "0x03" ] = {
 
     script_0x04 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x0113 0x6f
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x10 ) -- 0x0115 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=FORCE_TOP ) -- 0x0115 0xd2
         opcode9C_MessageSync() -- 0x0119 0x9c
         return 0 -- 0x011a 0x00
     end,
@@ -173,7 +173,7 @@ Actor[ "0x04" ] = {
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x012f 0x2c
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x0131 0x6f
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x10 ) -- 0x0133 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=FORCE_TOP ) -- 0x0133 0xd2
         opcode9C_MessageSync() -- 0x0137 0x9c
         return 0 -- 0x0138 0x00
     end,
@@ -263,7 +263,16 @@ Actor[ "0x07" ] = {
         -- 0xC6() -- 0x01fc 0xc6
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0219 ) -- 0x01fd 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x002e, condition="value1 < value2", jump_if_false=0x0216 ) -- 0x0205 0x02
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=16 ) -- 0x020d 0xc0
+        opcode3C_VariableInc( address=0x0402 ) -- 0x0210 0x3c
+        -- 0x01_JumpTo( 0x0216 ) -- 0x0213 0x01
+        -- 0x01_JumpTo( 0x0232 ) -- 0x0216 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0232 ) -- 0x0219 0x02
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x002e, condition="value1 < value2", jump_if_false=0x0232 ) -- 0x0221 0x02
+        -- 0xBF( ???=16 ) -- 0x0229 0xbf
+        opcode3C_VariableInc( address=0x0402 ) -- 0x022c 0x3c
+        -- 0x01_JumpTo( 0x0232 ) -- 0x022f 0x01
+        return 0 -- 0x0232 0x00
     end,
 
     on_talk = function( self )

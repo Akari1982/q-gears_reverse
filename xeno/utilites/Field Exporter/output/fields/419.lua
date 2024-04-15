@@ -110,7 +110,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) ) -- 0x43a2 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x003e ) ) -- 0x43a5 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1638 ) -- 0x43a9 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -131,7 +132,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x43bb 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x43bb 0xd2
         opcode9C_MessageSync() -- 0x43bf 0x9c
         opcode36_VariableSetTrue( address=0x0404 ) -- 0x43c0 0x36
         return 0 -- 0x43c3 0x00
@@ -159,7 +160,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x440d 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x4410 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1638 ) -- 0x4414 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -192,7 +194,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x4463 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x4466 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1638 ) -- 0x446a 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -335,7 +338,9 @@ Actor[ "0x0b" ] = {
 Actor[ "0x0c" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x45f2 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x45f3 0x21
+        -- 0xFE07( ???=0x01 ) -- 0x45f6 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -360,7 +365,9 @@ Actor[ "0x0d" ] = {
         -- 0xBC_ActorNoModelInit() -- 0x4669 0xbc
         -- 0x23() -- 0x466a 0x23
         -- 0x27( actor_id=(entity)0x0d ) -- 0x466b 0x27
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x466d 0x21
+        -- 0xFE07( ???=0x01 ) -- 0x4670 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -429,7 +436,9 @@ Actor[ "0x10" ] = {
         -- 0xBC_ActorNoModelInit() -- 0x4745 0xbc
         -- 0x23() -- 0x4746 0x23
         -- 0x27( actor_id=(entity)0x10 ) -- 0x4747 0x27
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x4749 0x21
+        -- 0xFE07( ???=0x01 ) -- 0x474c 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -754,7 +763,7 @@ Actor[ "0x1d" ] = {
         -- 0xFE54() -- 0x484c 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4859 ) -- 0x484e 0x02
         opcode09_ActorCallScriptEW( actor_id=0x04, script=05, priority=01 ) -- 0x4856 0x09
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x4859 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x4859 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x485d 0xa9
         opcode9C_MessageSync() -- 0x485f 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4883 ) -- 0x4860 0x02
@@ -777,7 +786,7 @@ Actor[ "0x1d" ] = {
         -- 0xFE54() -- 0x484c 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4859 ) -- 0x484e 0x02
         opcode09_ActorCallScriptEW( actor_id=0x04, script=05, priority=01 ) -- 0x4856 0x09
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x4859 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x4859 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x485d 0xa9
         opcode9C_MessageSync() -- 0x485f 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4883 ) -- 0x4860 0x02

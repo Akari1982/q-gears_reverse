@@ -121,7 +121,12 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x00fd 0x1f
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x00ff 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0101 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0107 0x4a
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x010d 0x2c
+        -- MISSING OPCODE 0x5f
     end,
 
 }
@@ -183,7 +188,7 @@ Actor[ "0x05" ] = {
 
     script_0x06 = function( self )
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x018e 0xfe
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0192 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0192 0xd2
         opcode9C_MessageSync() -- 0x0196 0x9c
         opcode6F_ActorRotateToActor( actor_id=(entity)0x07 ) -- 0x0197 0x6f
         -- MISSING OPCODE 0xFE17
@@ -241,7 +246,11 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x02d2 0x1f
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x02d4 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02d6 0x4a
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x02dc 0x2c
+        -- MISSING OPCODE 0x5f
     end,
 
 }
@@ -413,7 +422,12 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x033f 0x1f
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x0341 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0343 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0349 0x4a
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x034f 0x2c
+        -- MISSING OPCODE 0x5f
     end,
 
 }

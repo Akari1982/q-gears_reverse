@@ -271,7 +271,9 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x01a3 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01a6 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x06 = function( self )
@@ -334,7 +336,9 @@ Actor[ "0x07" ] = {
 
     script_0x06 = function( self )
         -- 0xFE07( ???=0x01 ) -- 0x0211 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=96 ) -- 0x0214 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0217 0x4a
+        -- MISSING OPCODE 0x29
     end,
 
 }
@@ -343,7 +347,9 @@ Actor[ "0x07" ] = {
 
 Actor[ "0x08" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=1 ) -- 0x0220 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0xff4d, z=(vf40)0xfe87, flag=(flag)0xc0 ) -- 0x0226 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
@@ -359,12 +365,15 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x0230 0x21
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
         -- 0xFE07( ???=0x01 ) -- 0x024c 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=96 ) -- 0x024f 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0252 0x4a
+        -- MISSING OPCODE 0x29
     end,
 
 }
@@ -519,12 +528,12 @@ Actor[ "0x0c" ] = {
     end,
 
     on_update = function( self )
-        opcodeD4_MessageShowE( actor_id=(entity)0x05, text_id=0x0000, ???=0x12 ) -- 0x030c 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x0000, flags=NO_FACE|FORCE_TOP ) -- 0x030c 0xd4
         -- 0x07( actor_id=0x01, script=0xc4 ) -- 0x0312 0x07
         -- 0x07( actor_id=0x03, script=0xc4 ) -- 0x0315 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x04, text_id=0x0001, ???=0x10 ) -- 0x0318 0xfc
-        opcodeD4_MessageShowE( actor_id=(entity)0x05, text_id=0x0002, ???=0x12 ) -- 0x031e 0xd4
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0003, ???=0x20 ) -- 0x0324 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x04, text_id=0x0001, flags=FORCE_TOP ) -- 0x0318 0xfc
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x0002, flags=NO_FACE|FORCE_TOP ) -- 0x031e 0xd4
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0003, flags=FORCE_BOTTOM ) -- 0x0324 0xfc
         -- MISSING OPCODE 0xFE17
     end,
 

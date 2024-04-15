@@ -63,7 +63,19 @@ Actor[ "0x01" ] = {
     script_0x04 = function( self )
         -- 0xFE54() -- 0x0085 0xfe
         opcode20_ActorSetFlags0( flags=13 ) -- 0x0087 0x20
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x008a 0x1f
+        opcode26_Wait( time=30 ) -- 0x008c 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x008f 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0095 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x009b 0x4a
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00a1 0xd2
+        opcode9C_MessageSync() -- 0x00a5 0x9c
+        -- 0xB4_FadeIn() -- 0x00a6 0xb4
+        opcode26_Wait( time=60 ) -- 0x00a9 0x26
+        -- 0x79() -- 0x00ac 0x79
+        -- 0x7A() -- 0x00ad 0x7a
+        -- 0x98_MapLoad( field_id=16464, value=2 ) -- 0x00ae 0x98
+        return 0 -- 0x00b3 0x00
     end,
 
 }
@@ -341,7 +353,8 @@ Actor[ "0x0d" ] = {
         -- 0x0B_InitNPC( 3 ) -- 0x0174 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0x00a1, z=(vf40)0xff24, flag=(flag)0xc0 ) -- 0x0177 0x19
         -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x0185 ) -- 0x017d 0x86
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x0182 0x21
+        return 0 -- 0x0185 0x00
     end,
 
     on_update = function( self )
@@ -393,7 +406,10 @@ Actor[ "0x0f" ] = {
         -- 0x0B_InitNPC( 1 ) -- 0x02aa 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0x0134, z=(vf40)0x00c8, flag=(flag)0xc0 ) -- 0x02ad 0x19
         opcode69_ActorSetRotation( rot=6 ) -- 0x02b3 0x69
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x12 ) -- 0x02b6 0x1f
+        -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x02c0 ) -- 0x02b8 0x86
+        -- 0x21( ???=128 ) -- 0x02bd 0x21
+        return 0 -- 0x02c0 0x00
     end,
 
     on_update = function( self )
@@ -458,7 +474,8 @@ Actor[ "0x10" ] = {
 
 Actor[ "0x11" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=2 ) -- 0x036b 0xfe
+        -- MISSING OPCODE 0x1b
     end,
 
     on_update = function( self )
@@ -489,7 +506,10 @@ Actor[ "0x12" ] = {
         -- 0x0B_InitNPC( 7 ) -- 0x03da 0x0b
         -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x03ee ) -- 0x03dd 0x86
         -- 0x19_ActorSetPosition( x=(vf80)0xff74, z=(vf40)0x0028, flag=(flag)0xc0 ) -- 0x03e2 0x19
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x03e8 0x21
+        -- 0x01_JumpTo( 0x03fd ) -- 0x03eb 0x01
+        -- 0x19_ActorSetPosition( x=(vf80)0x002e, z=(vf40)0xff94, flag=(flag)0xc0 ) -- 0x03ee 0x19
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )
@@ -580,7 +600,9 @@ Actor[ "0x14" ] = {
 
 Actor[ "0x15" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=7, ???=1 ) -- 0x0509 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0xfd94, z=(vf40)0xff7a, flag=(flag)0xc0 ) -- 0x050f 0x19
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )
@@ -609,7 +631,10 @@ Actor[ "0x16" ] = {
         -- 0x0B_InitNPC( 5 ) -- 0x054d 0x0b
         -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x0561 ) -- 0x0550 0x86
         -- 0x19_ActorSetPosition( x=(vf80)0x0081, z=(vf40)0x00db, flag=(flag)0xc0 ) -- 0x0555 0x19
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x055b 0x21
+        -- 0x01_JumpTo( 0x0570 ) -- 0x055e 0x01
+        -- 0x19_ActorSetPosition( x=(vf80)0xffa7, z=(vf40)0x005e, flag=(flag)0xc0 ) -- 0x0561 0x19
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )
@@ -633,7 +658,16 @@ Actor[ "0x16" ] = {
 
 Actor[ "0x17" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=8, ???=1 ) -- 0x0597 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0xff5a, z=(vf40)0x0001, flag=(flag)0xc0 ) -- 0x059d 0x19
+        -- 0x2A() -- 0x05a3 0x2a
+        opcode20_ActorSetFlags0( flags=13 ) -- 0x05a4 0x20
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x05a7 0x2c
+        -- 0xFE07( ???=0x01 ) -- 0x05a9 0xfe
+        -- 0xF6( ???=0x02 ) -- 0x05ac 0xf6
+        -- 0x86_ProgressNotEqualJumpTo( value=56, jump=0x05c1 ) -- 0x05ae 0x86
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c2 ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x05be ) -- 0x05b3 0x02
+        -- MISSING OPCODE 0x29
     end,
 
     on_update = function( self )

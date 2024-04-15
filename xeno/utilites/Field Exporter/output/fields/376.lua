@@ -53,7 +53,7 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x003e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x003e 0xd2
         opcode9C_MessageSync() -- 0x0042 0x9c
         return 0 -- 0x0043 0x00
     end,
@@ -407,7 +407,7 @@ Actor[ "0x0f" ] = {
         -- 0xFE54() -- 0x01ae 0xfe
         opcode36_VariableSetTrue( address=0x0406 ) -- 0x01b0 0x36
         opcode74_SoundPlayFixedVolume( sound_id=70 ) -- 0x01b3 0x74
-        opcodeF5_MessageShow3( text_id=0x0003, flag=0x00 ) -- 0x01b6 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0003, flags=0 ) -- 0x01b6 0xf5
         opcode9C_MessageSync() -- 0x01ba 0x9c
         -- MISSING OPCODE 0xFE65
     end,

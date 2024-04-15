@@ -130,7 +130,7 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x00aa 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=129 ) -- 0x00aa 0xd0
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00c1 ) -- 0x00b5 0x02
         return 0 -- 0x00bd 0x00
     end,
@@ -138,9 +138,9 @@ Actor[ "0x03" ] = {
     script_0x05 = function( self )
         opcode26_Wait( time=30 ) -- 0x0285 0x26
         opcodeFE0D_MessageSetFace( char_id=24 ) -- 0x0288 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x06, text_id=0x000d, ???=0xa1 ) -- 0x028c 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x06, text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|0x80 ) -- 0x028c 0xd4
         opcodeFE0D_MessageSetFace( char_id=28 ) -- 0x0292 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x05, text_id=0x000e, ???=0xa0 ) -- 0x0296 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x000e, flags=FORCE_BOTTOM|0x80 ) -- 0x0296 0xd4
         -- MISSING OPCODE 0xFE65
     end,
 

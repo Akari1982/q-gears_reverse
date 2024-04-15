@@ -104,7 +104,12 @@ Actor[ "0x04" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x433a ) -- 0x4303 0x02
         opcodeFE45_SpriteSetDefaultAnim( anim_id=0x02 ) -- 0x430b 0xfe
         opcode26_Wait( time=1 ) -- 0x430e 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x0000, z=(vf40)0x0022, y=(vf20)0xfff0, ???=(vf10)0x001e, flag=0xf0 ) -- 0x4311 0x57
+        -- 0x57( type=0x8f ) -- 0x431c 0x57
+        opcode26_Wait( time=1 ) -- 0x431e 0x26
+        -- 0x57( type=0x0f ) -- 0x4321 0x57
+        opcodeFE45_SpriteSetDefaultAnim( anim_id=0x00 ) -- 0x4323 0xfe
+        -- MISSING OPCODE 0xFE5d
     end,
 
     on_talk = function( self )
@@ -117,7 +122,11 @@ Actor[ "0x04" ] = {
 
     script_0x04 = function( self )
         opcodeFE45_SpriteSetDefaultAnim( anim_id=0x02 ) -- 0x433d 0xfe
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x000a, z=(vf40)0x015e, y=(vf20)0x01c2, ???=(vf10)0x0024, flag=0xf0 ) -- 0x4340 0x57
+        -- 0x57( type=0x8f ) -- 0x434b 0x57
+        opcode26_Wait( time=1 ) -- 0x434d 0x26
+        -- 0x57( type=0x0f ) -- 0x4350 0x57
+        -- MISSING OPCODE 0x1d
     end,
 
 }
@@ -563,7 +572,8 @@ Actor[ "0x13" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e6 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x4750 ) -- 0x473a 0x02
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1 ) -- 0x4742 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )

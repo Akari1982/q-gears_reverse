@@ -50,10 +50,10 @@ Actor[ "0x01" ] = {
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x001f 0x2c
         opcode26_Wait( time=10 ) -- 0x0021 0x26
         -- 0x84_ProgressLessEqualJumpTo( value=179, jump=0x0031 ) -- 0x0024 0x84
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0029 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0029 0xd2
         opcode9C_MessageSync() -- 0x002d 0x9c
         -- 0x01_JumpTo( 0x0036 ) -- 0x002e 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0031 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0031 0xd2
         opcode9C_MessageSync() -- 0x0035 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0036 0x2c
         return 0 -- 0x0038 0x00

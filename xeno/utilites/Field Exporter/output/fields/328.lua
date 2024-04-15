@@ -335,7 +335,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0180 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0182 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0182 0xd2
         opcode9C_MessageSync() -- 0x0186 0x9c
         return 0 -- 0x0187 0x00
     end,
@@ -359,7 +359,7 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x10 ) -- 0x01a5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=FORCE_TOP ) -- 0x01a5 0xd2
         opcode9C_MessageSync() -- 0x01a9 0x9c
         return 0 -- 0x01aa 0x00
     end,
@@ -387,7 +387,7 @@ Actor[ "0x0d" ] = {
         opcode74_SoundPlayFixedVolume( sound_id=95 ) -- 0x01c6 0x74
         opcode26_Wait( time=30 ) -- 0x01c9 0x26
         opcode74_SoundPlayFixedVolume( sound_id=95 ) -- 0x01cc 0x74
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x02 ) -- 0x01cf 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=NO_FACE ) -- 0x01cf 0xd2
         opcode9C_MessageSync() -- 0x01d3 0x9c
         -- 0x01_JumpTo( 0x0220 ) -- 0x01d4 0x01
         -- 0xFE54() -- 0x01d7 0xfe

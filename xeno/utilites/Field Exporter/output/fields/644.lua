@@ -104,7 +104,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) ) -- 0x4353 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x003e ) ) -- 0x4356 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x435a 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -121,15 +122,21 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x4366 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4368 0x4a
+        return 0 -- 0x436e 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x436f 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4371 0x4a
+        return 0 -- 0x4377 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x4378 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x437a 0x4a
+        return 0 -- 0x4380 0x00
     end,
 
 }
@@ -140,7 +147,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x4381 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x4384 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x4388 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -164,7 +172,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x4394 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x4397 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x439b 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -227,7 +236,8 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=768 ) -- 0x43c5 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

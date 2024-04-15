@@ -30,7 +30,8 @@ Actor[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=0 ) -- 0x0040 0x16
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0043 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1365 ) -- 0x0047 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -47,7 +48,13 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=320 ) -- 0x0053 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0056 0x4a
+        -- 0xF6( ???=0x01 ) -- 0x005c 0xf6
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x005e 0x4a
+        -- 0xF6( ???=0x00 ) -- 0x0064 0xf6
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0066 0x4a
+        return 0 -- 0x006c 0x00
     end,
 
     script_0x05 = function( self )
@@ -179,7 +186,10 @@ Actor[ "0x05" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0194 ) -- 0x0186 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=8 ) -- 0x018e 0xbf
+        -- 0x01_JumpTo( 0x0197 ) -- 0x0191 0x01
+        -- 0xBF( ???=4 ) -- 0x0194 0xbf
+        return 0 -- 0x0197 0x00
     end,
 
     on_talk = function( self )
@@ -255,7 +265,7 @@ Actor[ "0x07" ] = {
 
     script_0x04 = function( self )
         opcode08_ActorCallScriptSW( actor_id=0x01, script=04, priority=01 ) -- 0x01f8 0x08
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x63 ) -- 0x01fb 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x01fb 0xf5
         opcode9C_MessageSync() -- 0x01ff 0x9c
         opcode08_ActorCallScriptSW( actor_id=0x04, script=04, priority=01 ) -- 0x0200 0x08
         opcode26_Wait( time=60 ) -- 0x0203 0x26
@@ -264,11 +274,11 @@ Actor[ "0x07" ] = {
         opcode26_Wait( time=45 ) -- 0x020c 0x26
         opcode09_ActorCallScriptEW( actor_id=0x06, script=05, priority=01 ) -- 0x020f 0x09
         opcode26_Wait( time=30 ) -- 0x0212 0x26
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x63 ) -- 0x0215 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x0215 0xf5
         opcode9C_MessageSync() -- 0x0219 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x06, script=06, priority=01 ) -- 0x021a 0x09
         opcode26_Wait( time=45 ) -- 0x021d 0x26
-        opcodeF5_MessageShow3( text_id=0x0002, flag=0x63 ) -- 0x0220 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x0220 0xf5
         opcode9C_MessageSync() -- 0x0224 0x9c
         return 0 -- 0x0225 0x00
     end,

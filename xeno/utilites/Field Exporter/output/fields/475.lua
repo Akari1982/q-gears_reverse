@@ -391,7 +391,11 @@ Actor[ "0x0f" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040c ), value2=(s16)0x001c, condition="value1 < value2", jump_if_false=0x01f3 ) -- 0x01e1 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=32 ) -- 0x01e9 0xbf
+        opcode3C_VariableInc( address=0x040c ) -- 0x01ec 0x3c
+        -- 0x5A() -- 0x01ef 0x5a
+        -- 0x01_JumpTo( 0x01e1 ) -- 0x01f0 0x01
+        return 0 -- 0x01f3 0x00
     end,
 
 }
@@ -419,7 +423,11 @@ Actor[ "0x10" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x001c, condition="value1 < value2", jump_if_false=0x020c ) -- 0x01fa 0x02
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=32 ) -- 0x0202 0xc0
+        opcode3C_VariableInc( address=0x040e ) -- 0x0205 0x3c
+        -- 0x5A() -- 0x0208 0x5a
+        -- 0x01_JumpTo( 0x01fa ) -- 0x0209 0x01
+        return 0 -- 0x020c 0x00
     end,
 
 }

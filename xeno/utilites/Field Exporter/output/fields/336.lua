@@ -169,7 +169,8 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x01bf 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x11 = function( self )
@@ -264,7 +265,8 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x021a 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x11 = function( self )
@@ -359,7 +361,8 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x0275 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x11 = function( self )
@@ -454,7 +457,8 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x02d0 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x11 = function( self )
@@ -464,7 +468,11 @@ Actor[ "0x04" ] = {
 
     script_0x12 = function( self )
         -- 0xF6( ???=0x01 ) -- 0x02e4 0xf6
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x02e6 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02e9 0x4a
+        -- 0xF6( ???=0x00 ) -- 0x02ef 0xf6
+        -- 0x21( ???=256 ) -- 0x02f1 0x21
+        return 0 -- 0x02f4 0x00
     end,
 
     script_0x13 = function( self )
@@ -559,7 +567,8 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x0368 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x11 = function( self )
@@ -1806,7 +1815,7 @@ Actor[ "0x31" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x101a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=0 ) -- 0x101a 0xd2
         opcode9C_MessageSync() -- 0x101e 0x9c
         return 0 -- 0x101f 0x00
     end,
@@ -1831,7 +1840,7 @@ Actor[ "0x32" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x00 ) -- 0x1036 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=0 ) -- 0x1036 0xd2
         opcode9C_MessageSync() -- 0x103a 0x9c
         return 0 -- 0x103b 0x00
     end,

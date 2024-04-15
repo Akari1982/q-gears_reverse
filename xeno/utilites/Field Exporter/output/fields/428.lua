@@ -84,16 +84,16 @@ Actor[ "0x01" ] = {
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x0085 0x2c
         opcode26_Wait( time=20 ) -- 0x0087 0x26
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x008a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x008a 0xd2
         opcode9C_MessageSync() -- 0x008e 0x9c
         opcode26_Wait( time=20 ) -- 0x008f 0x26
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0092 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0092 0xd2
         opcode9C_MessageSync() -- 0x0096 0x9c
         opcode26_Wait( time=20 ) -- 0x0097 0x26
         opcode5D_SpritePlayAnim2( anim_id=0x05 ) -- 0x009a 0x5d
         -- 0x5E() -- 0x009c 0x5e
         opcode26_Wait( time=10 ) -- 0x009d 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00a0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00a0 0xd2
         opcode9C_MessageSync() -- 0x00a4 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00a5 0x2c
         return 0 -- 0x00a7 0x00
@@ -358,7 +358,7 @@ Actor[ "0x0c" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02cc ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x0137 ) -- 0x012c 0x02
         -- 0x01_JumpTo( 0x017c ) -- 0x0134 0x01
         -- 0xFE54() -- 0x0137 0xfe
-        opcodeF5_MessageShow3( text_id=0x0003, flag=0x00 ) -- 0x0139 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0003, flags=0 ) -- 0x0139 0xf5
         opcode9C_MessageSync() -- 0x013d 0x9c
         opcode74_SoundPlayFixedVolume( sound_id=55 ) -- 0x013e 0x74
         -- MISSING OPCODE 0x8c
@@ -387,7 +387,7 @@ Actor[ "0x0d" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02cc ), value2=(s16)0x0800, condition="value1 & value2", jump_if_false=0x01a0 ) -- 0x0195 0x02
         -- 0x01_JumpTo( 0x01be ) -- 0x019d 0x01
         -- 0xFE54() -- 0x01a0 0xfe
-        opcodeF5_MessageShow3( text_id=0x0005, flag=0x00 ) -- 0x01a2 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0005, flags=0 ) -- 0x01a2 0xf5
         opcode9C_MessageSync() -- 0x01a6 0x9c
         opcode74_SoundPlayFixedVolume( sound_id=55 ) -- 0x01a7 0x74
         -- MISSING OPCODE 0x8c
@@ -413,7 +413,7 @@ Actor[ "0x0e" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x01d7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x01d7 0xd2
         opcode9C_MessageSync() -- 0x01db 0x9c
         return 0 -- 0x01dc 0x00
     end,

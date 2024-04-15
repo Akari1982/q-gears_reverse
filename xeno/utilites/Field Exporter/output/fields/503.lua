@@ -99,7 +99,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=0 ) -- 0x14d5 0x16
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x14d8 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=192 ) -- 0x14dc 0x21
+        return 0 -- 0x14df 0x00
     end,
 
     on_update = function( self )
@@ -117,7 +118,8 @@ Actor[ "0x04" ] = {
 
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x14e3 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=12 ) -- 0x14e5 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

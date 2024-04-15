@@ -214,7 +214,7 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x21 ) -- 0x446f 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x446f 0xf5
         opcode9C_MessageSync() -- 0x4473 0x9c
         return 0 -- 0x4474 0x00
     end,
@@ -402,7 +402,10 @@ Actor[ "0x0d" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=128 ) -- 0x468a 0xbf
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0434 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x46a6 ) -- 0x468d 0x02
+        -- 0xA8_VariableRandom2( address=0x0432, value=3 ) -- 0x4695 0xa8
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -425,7 +428,10 @@ Actor[ "0x0e" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=128 ) -- 0x46bf 0xc0
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0438 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x46db ) -- 0x46c2 0x02
+        -- 0xA8_VariableRandom2( address=0x0436, value=3 ) -- 0x46ca 0xa8
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -685,7 +691,8 @@ Actor[ "0x17" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x4a16 0xbf
+        return 0 -- 0x4a19 0x00
     end,
 
     on_talk = function( self )
@@ -736,7 +743,8 @@ Actor[ "0x19" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x4ab4 0xbf
+        return 0 -- 0x4ab7 0x00
     end,
 
     on_talk = function( self )
@@ -787,7 +795,8 @@ Actor[ "0x1b" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x4aef 0xbf
+        return 0 -- 0x4af2 0x00
     end,
 
     on_talk = function( self )
@@ -838,7 +847,8 @@ Actor[ "0x1d" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x4b2a 0xbf
+        return 0 -- 0x4b2d 0x00
     end,
 
     on_talk = function( self )
@@ -889,7 +899,8 @@ Actor[ "0x1f" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x4b65 0xbf
+        return 0 -- 0x4b68 0x00
     end,
 
     on_talk = function( self )
@@ -940,7 +951,8 @@ Actor[ "0x21" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x4ba0 0xbf
+        return 0 -- 0x4ba3 0x00
     end,
 
     on_talk = function( self )
@@ -1227,11 +1239,16 @@ Actor[ "0x2a" ] = {
 Actor[ "0x2b" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x4f5f 0x0b
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x4f62 0x1f
+        -- 0x19_ActorSetPosition( x=(vf80)0x023d, z=(vf40)0x0000, flag=(flag)0xc0 ) -- 0x4f64 0x19
+        -- MISSING OPCODE 0xf8
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=24 ) -- 0x4f78 0x21
+        -- 0xC6() -- 0x4f7b 0xc6
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x049c ), value2=(s16)0x00f0, condition="value1 == value2", jump_if_false=0x4fc5 ) -- 0x4f7c 0x02
+        -- MISSING OPCODE 0x2d
     end,
 
     on_talk = function( self )
@@ -1262,11 +1279,15 @@ Actor[ "0x2c" ] = {
         -- 0x0B_InitNPC( 0 ) -- 0x5062 0x0b
         -- 0x23() -- 0x5065 0x23
         -- 0x19_ActorSetPosition( x=(vf80)0x0101, z=(vf40)0x0109, flag=(flag)0xc0 ) -- 0x5066 0x19
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x506c 0x1f
+        -- MISSING OPCODE 0xf8
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=16 ) -- 0x507b 0x21
+        -- 0xC6() -- 0x507e 0xc6
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x04ac ), value2=(s16)0x00b4, condition="value1 == value2", jump_if_false=0x50c8 ) -- 0x507f 0x02
+        -- MISSING OPCODE 0x2d
     end,
 
     on_talk = function( self )
@@ -1297,11 +1318,15 @@ Actor[ "0x2d" ] = {
         -- 0x0B_InitNPC( 0 ) -- 0x50fb 0x0b
         -- 0x23() -- 0x50fe 0x23
         -- 0x19_ActorSetPosition( x=(vf80)0xfe04, z=(vf40)0x0000, flag=(flag)0xc0 ) -- 0x50ff 0x19
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x5105 0x1f
+        -- MISSING OPCODE 0xf8
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=24 ) -- 0x5114 0x21
+        -- 0xC6() -- 0x5117 0xc6
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x04ba ), value2=(s16)0x00b4, condition="value1 == value2", jump_if_false=0x5161 ) -- 0x5118 0x02
+        -- MISSING OPCODE 0x2d
     end,
 
     on_talk = function( self )

@@ -307,7 +307,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x00af 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00b1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00b1 0xd2
         opcode9C_MessageSync() -- 0x00b5 0x9c
         -- MISSING OPCODE 0x8b
     end,

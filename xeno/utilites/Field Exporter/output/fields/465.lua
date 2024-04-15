@@ -303,7 +303,7 @@ Actor[ "0x0c" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x009b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x009b 0xd2
         opcode9C_MessageSync() -- 0x009f 0x9c
         -- MISSING OPCODE 0x70
     end,
@@ -329,7 +329,7 @@ Actor[ "0x0d" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00bc 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00bc 0xd2
         opcode9C_MessageSync() -- 0x00c0 0x9c
         -- MISSING OPCODE 0x70
     end,

@@ -334,7 +334,7 @@ Actor[ "0x0d" ] = {
         opcode26_Wait( time=13 ) -- 0x0154 0x26
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0157 0x4a
         opcode69_ActorSetRotation( rot=2 ) -- 0x015d 0x69
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0160 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0160 0xd2
         opcode9C_MessageSync() -- 0x0164 0x9c
         opcode3C_VariableInc( address=0x0402 ) -- 0x0165 0x3c
         -- 0x5B() -- 0x0168 0x5b
@@ -345,7 +345,7 @@ Actor[ "0x0d" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x017c ) -- 0x016a 0x02
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0172 0x6f
         opcode3C_VariableInc( address=0x00e0 ) -- 0x0174 0x3c
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0177 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0177 0xd2
         opcode9C_MessageSync() -- 0x017b 0x9c
         return 0 -- 0x017c 0x00
     end,
@@ -375,7 +375,7 @@ Actor[ "0x0e" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x01c4 0x6f
         opcode3C_VariableInc( address=0x00e0 ) -- 0x01c6 0x3c
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x01c9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x01c9 0xd2
         opcode9C_MessageSync() -- 0x01cd 0x9c
         opcode69_ActorSetRotation( rot=1 ) -- 0x01ce 0x69
         return 0 -- 0x01d1 0x00
@@ -405,7 +405,7 @@ Actor[ "0x0f" ] = {
 
     on_talk = function( self )
         opcode3C_VariableInc( address=0x00e0 ) -- 0x0219 0x3c
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x021c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x021c 0xd2
         opcode9C_MessageSync() -- 0x0220 0x9c
         return 0 -- 0x0221 0x00
     end,
@@ -650,7 +650,8 @@ Actor[ "0x18" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x050e 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -677,7 +678,8 @@ Actor[ "0x19" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0545 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -748,7 +750,8 @@ Actor[ "0x1c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0595 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -775,7 +778,8 @@ Actor[ "0x1d" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x05bb 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

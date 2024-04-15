@@ -114,7 +114,7 @@ Actor[ "0x04" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0070 0x4a
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x20 ) -- 0x0076 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_BOTTOM ) -- 0x0076 0xd2
         opcode9C_MessageSync() -- 0x007a 0x9c
         return 0 -- 0x007b 0x00
     end,
@@ -150,7 +150,7 @@ Actor[ "0x05" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0095 0x4a
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x20 ) -- 0x009b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=FORCE_BOTTOM ) -- 0x009b 0xd2
         opcode9C_MessageSync() -- 0x009f 0x9c
         return 0 -- 0x00a0 0x00
     end,
@@ -186,7 +186,7 @@ Actor[ "0x06" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00ba 0x4a
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x20 ) -- 0x00c0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=FORCE_BOTTOM ) -- 0x00c0 0xd2
         opcode9C_MessageSync() -- 0x00c4 0x9c
         return 0 -- 0x00c5 0x00
     end,
@@ -222,7 +222,7 @@ Actor[ "0x07" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00df 0x4a
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x20 ) -- 0x00e5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=FORCE_BOTTOM ) -- 0x00e5 0xd2
         opcode9C_MessageSync() -- 0x00e9 0x9c
         return 0 -- 0x00ea 0x00
     end,
@@ -258,7 +258,7 @@ Actor[ "0x08" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0104 0x4a
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x20 ) -- 0x010a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=FORCE_BOTTOM ) -- 0x010a 0xd2
         opcode9C_MessageSync() -- 0x010e 0x9c
         return 0 -- 0x010f 0x00
     end,
@@ -328,7 +328,7 @@ Actor[ "0x0a" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x015a 0x4a
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x20 ) -- 0x0160 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=FORCE_BOTTOM ) -- 0x0160 0xd2
         opcode9C_MessageSync() -- 0x0164 0x9c
         return 0 -- 0x0165 0x00
     end,
@@ -364,7 +364,7 @@ Actor[ "0x0b" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x017f 0x4a
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x20 ) -- 0x0185 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=FORCE_BOTTOM ) -- 0x0185 0xd2
         opcode9C_MessageSync() -- 0x0189 0x9c
         return 0 -- 0x018a 0x00
     end,
@@ -400,7 +400,7 @@ Actor[ "0x0c" ] = {
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01a4 0x4a
-        opcodeD2_MessageShow0( text_id=0x0010, ???=0x20 ) -- 0x01aa 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0010, flags=FORCE_BOTTOM ) -- 0x01aa 0xd2
         opcode9C_MessageSync() -- 0x01ae 0x9c
         return 0 -- 0x01af 0x00
     end,

@@ -97,7 +97,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=0 ) -- 0x4312 0x16
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x4315 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=7372 ) -- 0x4319 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -121,7 +122,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=1 ) -- 0x4334 0x16
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x4337 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=7372 ) -- 0x433b 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -145,7 +147,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=2 ) -- 0x4347 0x16
         opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x434a 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=7372 ) -- 0x434e 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -169,7 +172,8 @@ Actor[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=3 ) -- 0x435a 0x16
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x435d 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=7372 ) -- 0x4361 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -193,7 +197,8 @@ Actor[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=4 ) -- 0x436d 0x16
         opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x4370 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=7372 ) -- 0x4374 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -217,7 +222,8 @@ Actor[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=5 ) -- 0x4380 0x16
         opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x4383 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=7372 ) -- 0x4387 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )

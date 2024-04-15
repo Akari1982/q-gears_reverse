@@ -310,7 +310,8 @@ Actor[ "0x0b" ] = {
 
 Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=1 ) -- 0x00b8 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )

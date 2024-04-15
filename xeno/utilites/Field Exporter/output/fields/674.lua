@@ -156,7 +156,11 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x00d8 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00db 0x4a
+        opcode26_Wait( time=10 ) -- 0x00e1 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x03 ) -- 0x00e4 0x2c
+        return 0 -- 0x00e6 0x00
     end,
 
     script_0x05 = function( self )
@@ -209,7 +213,11 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x013e 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0141 0x4a
+        opcode26_Wait( time=5 ) -- 0x0147 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x014a 0x2c
+        return 0 -- 0x014c 0x00
     end,
 
     script_0x05 = function( self )
@@ -486,16 +494,16 @@ Actor[ "0x0b" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0000, ???=0x11 ) -- 0x04e9 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x04e9 0xfc
         opcode08_ActorCallScriptSW( actor_id=0x04, script=04, priority=01 ) -- 0x04ef 0x08
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0001, ???=0x11 ) -- 0x04f2 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x04f2 0xfc
         opcode26_Wait( time=30 ) -- 0x04f8 0x26
         -- MISSING OPCODE 0x67
     end,
 
     script_0x05 = function( self )
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0015, ???=0x11 ) -- 0x05ac 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0016, ???=0x11 ) -- 0x05b2 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0015, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x05ac 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0016, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x05b2 0xfc
         return 0 -- 0x05b8 0x00
     end,
 

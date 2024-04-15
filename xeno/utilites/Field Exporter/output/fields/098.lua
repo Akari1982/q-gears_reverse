@@ -99,7 +99,10 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x042c 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x042f 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x0f ) -- 0x0435 0x6f
+        return 0 -- 0x0437 0x00
     end,
 
     script_0x09 = function( self )
@@ -191,13 +194,16 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x04ac 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x04af 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x04b8 0x4a
         opcode6F_ActorRotateToActor( actor_id=(entity)0x0f ) -- 0x04be 0x6f
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x04c0 0x21
+        return 0 -- 0x04c3 0x00
     end,
 
     script_0x06 = function( self )
@@ -206,7 +212,10 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x04cb 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x04ce 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x0f ) -- 0x04d4 0x6f
+        return 0 -- 0x04d6 0x00
     end,
 
     script_0x08 = function( self )
@@ -255,17 +264,23 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x051f 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0522 0x4a
+        return 0 -- 0x0528 0x00
     end,
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0529 0x4a
         opcode6F_ActorRotateToActor( actor_id=(entity)0x0f ) -- 0x052f 0x6f
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0531 0x21
+        return 0 -- 0x0534 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0535 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0538 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x04 ) -- 0x053e 0x6f
+        return 0 -- 0x0540 0x00
     end,
 
     script_0x07 = function( self )

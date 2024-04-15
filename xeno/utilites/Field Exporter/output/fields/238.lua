@@ -5,7 +5,7 @@ Actor = {}
 Actor[ "0x00" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0024 0xbc
-        -- 0xD0() -- 0x0025 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x0025 0xd0
         opcodeF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 ) -- 0x0030 0xf1
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0048 ) -- 0x003b 0x02
         -- 0x75( ???=71 ) -- 0x0043 0x75

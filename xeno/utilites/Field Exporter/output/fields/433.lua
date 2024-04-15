@@ -309,7 +309,16 @@ Actor[ "0x0c" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x00a8 0xc0
+        opcode26_Wait( time=2 ) -- 0x00ab 0x26
+        -- 0xC0( ???=8 ) -- 0x00ae 0xc0
+        opcode26_Wait( time=1 ) -- 0x00b1 0x26
+        -- 0xC0( ???=8 ) -- 0x00b4 0xc0
+        opcode26_Wait( time=2 ) -- 0x00b7 0x26
+        -- 0xC0( ???=16 ) -- 0x00ba 0xc0
+        opcode26_Wait( time=60 ) -- 0x00bd 0x26
+        -- 0x01_JumpTo( 0x00a8 ) -- 0x00c0 0x01
+        return 0 -- 0x00c3 0x00
     end,
 
     on_talk = function( self )

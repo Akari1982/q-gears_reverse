@@ -129,8 +129,8 @@ Actor[ "0x04" ] = {
         opcodeAC_MoveCamera( control=0x81, steps=0 ) -- 0x00a0 0xac
         -- 0x75( ???=56 ) -- 0x00a4 0x75
         opcode26_Wait( time=160 ) -- 0x00a7 0x26
-        -- 0xD0() -- 0x00aa 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00b5 0xd2
+        opcodeD0_MessageSettings( x=30, y=70, letters=0, rows=0, flags=321 ) -- 0x00aa 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00b5 0xd2
         opcode9C_MessageSync() -- 0x00b9 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00c8 ) -- 0x00ba 0x02
         opcode26_Wait( time=0 ) -- 0x00c2 0x26
@@ -154,7 +154,8 @@ Actor[ "0x04" ] = {
 
 Actor[ "0x05" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=68 ) -- 0x0110 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -174,7 +175,9 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x0176 0x21
+        opcodeFE03( ???=1280 ) -- 0x0179 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }

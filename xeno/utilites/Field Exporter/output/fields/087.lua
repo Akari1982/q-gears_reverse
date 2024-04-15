@@ -298,7 +298,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x010d 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x010f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x010f 0xd2
         opcode9C_MessageSync() -- 0x0113 0x9c
         return 0 -- 0x0114 0x00
     end,
@@ -324,7 +324,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0122 0x6f
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0124 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0124 0xd2
         opcode9C_MessageSync() -- 0x0128 0x9c
         return 0 -- 0x0129 0x00
     end,
@@ -350,7 +350,7 @@ Actor[ "0x0e" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0137 0x6f
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0139 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0139 0xd2
         opcode9C_MessageSync() -- 0x013d 0x9c
         return 0 -- 0x013e 0x00
     end,
@@ -376,7 +376,7 @@ Actor[ "0x0f" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x014c 0x6f
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x014e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x014e 0xd2
         opcode9C_MessageSync() -- 0x0152 0x9c
         return 0 -- 0x0153 0x00
     end,
@@ -406,7 +406,7 @@ Actor[ "0x10" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0013, condition="value1 < value2", jump_if_false=0x01e4 ) -- 0x0164 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01da ) -- 0x016c 0x02
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x0174 0xfe
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x10 ) -- 0x0178 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=FORCE_TOP ) -- 0x0178 0xd2
         opcode9C_MessageSync() -- 0x017c 0x9c
         opcode26_Wait( time=10 ) -- 0x017d 0x26
         opcode74_SoundPlayFixedVolume( sound_id=55 ) -- 0x0180 0x74

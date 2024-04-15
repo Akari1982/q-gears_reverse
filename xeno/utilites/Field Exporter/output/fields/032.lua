@@ -353,7 +353,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0134 0x6f
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0136 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0136 0xd2
         opcode9C_MessageSync() -- 0x013a 0x9c
         return 0 -- 0x013b 0x00
     end,

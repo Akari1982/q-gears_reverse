@@ -116,7 +116,7 @@ Actor[ "0x04" ] = {
     on_update = function( self )
         opcode26_Wait( time=200 ) -- 0x0164 0x26
         opcodeFE0D_MessageSetFace( char_id=51 ) -- 0x0167 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x016b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x016b 0xd2
         opcode9C_MessageSync() -- 0x016f 0x9c
         opcode26_Wait( time=60 ) -- 0x0170 0x26
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x0173 0x35

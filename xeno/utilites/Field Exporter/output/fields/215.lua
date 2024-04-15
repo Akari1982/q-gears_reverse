@@ -178,10 +178,10 @@ Actor[ "0x06" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00fa ) -- 0x00ea 0x02
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x00f2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x00f2 0xd2
         opcode9C_MessageSync() -- 0x00f6 0x9c
         -- 0x01_JumpTo( 0x0105 ) -- 0x00f7 0x01
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x00fa 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x00fa 0xd2
         opcode9C_MessageSync() -- 0x00fe 0x9c
         opcode35_VariableSet( address=0x0404, value=(vf40)0x0001, flag=0x40 ) -- 0x00ff 0x35
         return 0 -- 0x0105 0x00
@@ -208,7 +208,7 @@ Actor[ "0x07" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x0116 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x0116 0xd2
         opcode9C_MessageSync() -- 0x011a 0x9c
         return 0 -- 0x011b 0x00
     end,
@@ -233,7 +233,7 @@ Actor[ "0x08" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x012a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x012a 0xd2
         opcode9C_MessageSync() -- 0x012e 0x9c
         return 0 -- 0x012f 0x00
     end,
@@ -258,7 +258,7 @@ Actor[ "0x09" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x013e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x013e 0xd2
         opcode9C_MessageSync() -- 0x0142 0x9c
         return 0 -- 0x0143 0x00
     end,
@@ -284,7 +284,7 @@ Actor[ "0x0a" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0150 0x6f
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x0152 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=0 ) -- 0x0152 0xd2
         opcode9C_MessageSync() -- 0x0156 0x9c
         return 0 -- 0x0157 0x00
     end,

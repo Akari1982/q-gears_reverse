@@ -170,24 +170,24 @@ Actor[ "0x06" ] = {
 
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x0b ) -- 0x00a7 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00a9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00a9 0xd2
         opcode9C_MessageSync() -- 0x00ad 0x9c
         return 0 -- 0x00ae 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00af 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00af 0xd2
         opcode9C_MessageSync() -- 0x00b3 0x9c
         opcode26_Wait( time=30 ) -- 0x00b4 0x26
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00b7 0x2c
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00b9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00b9 0xd2
         opcode9C_MessageSync() -- 0x00bd 0x9c
         -- 0xFE54() -- 0x00be 0xfe
         return 0 -- 0x00c0 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00c1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00c1 0xd2
         opcode9C_MessageSync() -- 0x00c5 0x9c
         return 0 -- 0x00c6 0x00
     end,
@@ -494,7 +494,7 @@ Actor[ "0x12" ] = {
         opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x000f, flag=0x40 ) -- 0x01ef 0x3a
         -- 0xFE54() -- 0x01f5 0xfe
         opcode09_ActorCallScriptEW( actor_id=0x06, script=04, priority=06 ) -- 0x01f7 0x09
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x01fa 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x01fa 0xd2
         opcode9C_MessageSync() -- 0x01fe 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x06, script=05, priority=06 ) -- 0x01ff 0x09
         return 0 -- 0x0202 0x00

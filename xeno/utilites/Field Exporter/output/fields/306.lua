@@ -64,7 +64,7 @@ Actor[ "0x02" ] = {
         opcode35_VariableSet( address=0x040a, value=(vf40)0x0404, flag=0x00 ) -- 0x013c 0x35
         -- 0x05_CallFunction( 0x037a ) -- 0x0142 0x05
         opcode39_VariableSubtract( address=0x0408, value=(vf40)0x0010, flag=0x40 ) -- 0x0145 0x39
-        -- 0xD0() -- 0x014b 0xd0
+        opcodeD0_MessageSettings( x=GetVar( 0x0406 ), y=GetVar( 0x0408 ), letters=0, rows=0, flags=320 ) -- 0x014b 0xd0
         -- MISSING OPCODE 0xa6
     end,
 

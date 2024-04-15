@@ -307,7 +307,8 @@ Actor[ "0x06" ] = {
 
 Actor[ "0x07" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=37 ) -- 0x05c5 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -328,11 +329,16 @@ Actor[ "0x07" ] = {
 
     script_0x05 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x05dc, flag=(flag)0xc0 ) -- 0x05f8 0x19
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=60 ) -- 0x05fe 0xfe
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x0655 0x21
+        opcode26_Wait( time=30 ) -- 0x0658 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x065b 0x2c
+        opcode26_Wait( time=30 ) -- 0x065d 0x26
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -341,7 +347,9 @@ Actor[ "0x07" ] = {
 
 Actor[ "0x08" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=47 ) -- 0x072f 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0xfe82, z=(vf40)0x080f, flag=(flag)0xc0 ) -- 0x0732 0x19
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )
@@ -371,7 +379,10 @@ Actor[ "0x08" ] = {
 
 Actor[ "0x09" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=47 ) -- 0x0761 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x0578, z=(vf40)0x00fa, flag=(flag)0xc0 ) -- 0x0764 0x19
+        opcodeFE03( ???=6000 ) -- 0x076a 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -428,7 +439,10 @@ Actor[ "0x09" ] = {
 
 Actor[ "0x0a" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=47 ) -- 0x0876 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x071c, z=(vf40)0x032a, flag=(flag)0xc0 ) -- 0x0879 0x19
+        opcodeFE03( ???=6000 ) -- 0x087f 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -517,8 +531,8 @@ Actor[ "0x0c" ] = {
 
     script_0x05 = function( self )
         opcode26_Wait( time=10 ) -- 0x08f6 0x26
-        -- 0xD0() -- 0x08f9 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0904 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 ) -- 0x08f9 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0904 0xd2
         opcode9C_MessageSync() -- 0x0908 0x9c
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0000, flag=0x40 ) -- 0x0909 0x35
         return 0 -- 0x090f 0x00

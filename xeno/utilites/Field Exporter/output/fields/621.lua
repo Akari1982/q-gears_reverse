@@ -36,7 +36,7 @@ Actor[ "0x01" ] = {
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00f1 ) -- 0x0040 0x02
         -- 0xFE54() -- 0x0048 0xfe
-        -- 0xD0() -- 0x004a 0xd0
+        opcodeD0_MessageSettings( x=20, y=20, letters=0, rows=0, flags=321 ) -- 0x004a 0xd0
         -- 0xB4_FadeIn() -- 0x0055 0xb4
         -- 0x75( ???=56 ) -- 0x0058 0x75
         -- 0xFE0E_SoundSetVolume( volume=60, steps=0 ) -- 0x005b 0xfe
@@ -316,7 +316,9 @@ Actor[ "0x0c" ] = {
 
 Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=7, ???=1 ) -- 0x01b3 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0366, z=(vf40)0x0516, flag=(flag)0xc0 ) -- 0x01b9 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
@@ -389,7 +391,8 @@ Actor[ "0x10" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=8 ) -- 0x01e1 0xbf
+        return 0 -- 0x01e4 0x00
     end,
 
     on_talk = function( self )
@@ -412,7 +415,8 @@ Actor[ "0x11" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=8 ) -- 0x01e9 0xbf
+        return 0 -- 0x01ec 0x00
     end,
 
     on_talk = function( self )
@@ -435,7 +439,8 @@ Actor[ "0x12" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x01f1 0xc0
+        return 0 -- 0x01f4 0x00
     end,
 
     on_talk = function( self )
@@ -458,7 +463,8 @@ Actor[ "0x13" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x01f9 0xc0
+        return 0 -- 0x01fc 0x00
     end,
 
     on_talk = function( self )

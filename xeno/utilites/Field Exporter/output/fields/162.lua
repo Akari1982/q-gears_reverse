@@ -78,10 +78,10 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x12 ) -- 0x008f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=NO_FACE|FORCE_TOP ) -- 0x008f 0xd2
         opcode9C_MessageSync() -- 0x0093 0x9c
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x0094 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0001, ???=0x90 ) -- 0x0098 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0001, flags=FORCE_TOP|0x80 ) -- 0x0098 0xd4
         -- MISSING OPCODE 0x67
     end,
 
@@ -124,7 +124,8 @@ Actor[ "0x04" ] = {
         -- 0x16_ActorPCInit( char_id=1 ) -- 0x016e 0x16
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x0171 0xfe
         -- 0x86_ProgressNotEqualJumpTo( value=114, jump=0x018b ) -- 0x0175 0x86
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x70 ) -- 0x017a 0x1f
+        -- MISSING OPCODE 0x1d
     end,
 
     on_update = function( self )

@@ -372,7 +372,9 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x465a 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x465d 0x2c
+        -- MISSING OPCODE 0x22
     end,
 
 }
@@ -400,7 +402,9 @@ Actor[ "0x10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x4721 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x4724 0x2c
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }

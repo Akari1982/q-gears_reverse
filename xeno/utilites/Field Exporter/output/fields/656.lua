@@ -126,7 +126,8 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x025d 0x21
+        -- MISSING OPCODE 0x53
     end,
 
     script_0x06 = function( self )
@@ -171,7 +172,8 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0298 0x21
+        -- MISSING OPCODE 0x53
     end,
 
 }
@@ -206,7 +208,8 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=48 ) -- 0x02b3 0x93
+        -- MISSING OPCODE 0xFE3d
     end,
 
     on_update = function( self )
@@ -229,7 +232,10 @@ Actor[ "0x06" ] = {
 
 Actor[ "0x07" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=42 ) -- 0x0307 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0xfe0c, z=(vf40)0xff06, flag=(flag)0xc0 ) -- 0x030a 0x19
+        opcodeFE03( ???=6144 ) -- 0x0310 0xfe
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )

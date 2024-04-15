@@ -209,7 +209,7 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x02c9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x02c9 0xd2
         opcode9C_MessageSync() -- 0x02cd 0x9c
         return 0 -- 0x02ce 0x00
     end,
@@ -249,7 +249,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x01 ) -- 0x0313 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x0313 0xd2
         opcode9C_MessageSync() -- 0x0317 0x9c
         return 0 -- 0x0318 0x00
     end,
@@ -289,7 +289,7 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x01 ) -- 0x035d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x035d 0xd2
         opcode9C_MessageSync() -- 0x0361 0x9c
         return 0 -- 0x0362 0x00
     end,
@@ -329,7 +329,7 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x01 ) -- 0x03a7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x03a7 0xd2
         opcode9C_MessageSync() -- 0x03ab 0x9c
         return 0 -- 0x03ac 0x00
     end,
@@ -369,7 +369,7 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x01 ) -- 0x03f1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x03f1 0xd2
         opcode9C_MessageSync() -- 0x03f5 0x9c
         return 0 -- 0x03f6 0x00
     end,
@@ -409,7 +409,7 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x01 ) -- 0x043b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=CLOSE_OFF_SCREEN ) -- 0x043b 0xd2
         opcode9C_MessageSync() -- 0x043f 0x9c
         return 0 -- 0x0440 0x00
     end,
@@ -656,7 +656,9 @@ Actor[ "0x11" ] = {
 
 Actor[ "0x12" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=48 ) -- 0x05fa 0x93
+        opcodeFE0D_MessageSetFace( char_id=24 ) -- 0x05fd 0xfe
+        -- MISSING OPCODE 0xFE3d
     end,
 
     on_update = function( self )
@@ -793,7 +795,9 @@ Actor[ "0x16" ] = {
         opcode24_ActorEnable( actor_id=(entity)0x17 ) -- 0x0922 0x24
         opcode24_ActorEnable( actor_id=(entity)0x18 ) -- 0x0924 0x24
         -- 0x05_CallFunction( 0x09e2 ) -- 0x0926 0x05
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0929 0x21
+        opcode39_VariableSubtract( address=0x0436, value=(vf40)0x0bb8, flag=0x40 ) -- 0x092c 0x39
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -855,7 +859,9 @@ Actor[ "0x18" ] = {
 Actor[ "0x19" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0a4c 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x0a4d 0x21
+        -- 0x2A() -- 0x0a50 0x2a
+        return 0 -- 0x0a51 0x00
     end,
 
     on_update = function( self )
@@ -882,7 +888,9 @@ Actor[ "0x19" ] = {
 Actor[ "0x1a" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0a95 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x0a96 0x21
+        -- 0x2A() -- 0x0a99 0x2a
+        return 0 -- 0x0a9a 0x00
     end,
 
     on_update = function( self )
@@ -918,7 +926,9 @@ Actor[ "0x1a" ] = {
 Actor[ "0x1b" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0b0d 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x0b0e 0x21
+        -- 0x2A() -- 0x0b11 0x2a
+        return 0 -- 0x0b12 0x00
     end,
 
     on_update = function( self )
@@ -949,7 +959,9 @@ Actor[ "0x1b" ] = {
 Actor[ "0x1c" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0b70 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x0b71 0x21
+        -- 0x2A() -- 0x0b74 0x2a
+        return 0 -- 0x0b75 0x00
     end,
 
     on_update = function( self )
@@ -1005,7 +1017,9 @@ Actor[ "0x1e" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0bd9 0xbc
         -- 0x2A() -- 0x0bda 0x2a
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=64 ) -- 0x0bdb 0xfe
+        -- 0x23() -- 0x0bdf 0x23
+        return 0 -- 0x0be0 0x00
     end,
 
     on_update = function( self )

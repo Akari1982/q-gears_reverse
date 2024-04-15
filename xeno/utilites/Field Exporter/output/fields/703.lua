@@ -124,7 +124,13 @@ Actor[ "0x04" ] = {
     script_0x04 = function( self )
         opcodeFE45_SpriteSetDefaultAnim( anim_id=0x02 ) -- 0x4384 0xfe
         opcode26_Wait( time=1 ) -- 0x4387 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x0000, z=(vf40)0x0000, y=(vf20)0xfda8, ???=(vf10)0x001e, flag=0xf0 ) -- 0x438a 0x57
+        -- 0x57( type=0x8f ) -- 0x4395 0x57
+        opcode26_Wait( time=1 ) -- 0x4397 0x26
+        -- 0x57( type=0x0f ) -- 0x439a 0x57
+        opcode26_Wait( time=20 ) -- 0x439c 0x26
+        -- 0x23() -- 0x439f 0x23
+        return 0 -- 0x43a0 0x00
     end,
 
     script_0x05 = function( self )
@@ -615,7 +621,7 @@ Actor[ "0x14" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x4946 0xfe
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x4948 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x4948 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x494c 0xa9
         opcode9C_MessageSync() -- 0x494e 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x497f ) -- 0x494f 0x02
@@ -811,13 +817,13 @@ Actor[ "0x1b" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x4c6f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x4c6f 0xd2
         opcode9C_MessageSync() -- 0x4c73 0x9c
         return 0 -- 0x4c74 0x00
     end,
 
     on_push = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x4c6f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x4c6f 0xd2
         opcode9C_MessageSync() -- 0x4c73 0x9c
         return 0 -- 0x4c74 0x00
     end,

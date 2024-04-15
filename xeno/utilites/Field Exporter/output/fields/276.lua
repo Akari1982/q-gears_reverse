@@ -47,13 +47,13 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x11 ) -- 0x0164 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0164 0xd2
         opcode9C_MessageSync() -- 0x0168 0x9c
         return 0 -- 0x0169 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x11 ) -- 0x016a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x016a 0xd2
         opcode9C_MessageSync() -- 0x016e 0x9c
         return 0 -- 0x016f 0x00
     end,

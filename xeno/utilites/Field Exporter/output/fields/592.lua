@@ -309,7 +309,7 @@ Actor[ "0x0c" ] = {
     end,
 
     on_talk = function( self )
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x01 ) -- 0x0156 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x0156 0xf5
         opcode9C_MessageSync() -- 0x015a 0x9c
         return 0 -- 0x015b 0x00
     end,

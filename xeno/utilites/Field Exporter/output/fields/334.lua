@@ -50,7 +50,8 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x005b 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x05 = function( self )
@@ -85,7 +86,8 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x0086 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x05 = function( self )
@@ -120,7 +122,8 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x00b1 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x05 = function( self )
@@ -155,7 +158,8 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x00dc 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x05 = function( self )
@@ -195,7 +199,8 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x66 ) -- 0x011e 0x1f
+        -- MISSING OPCODE 0x1c
     end,
 
     script_0x05 = function( self )
@@ -211,7 +216,11 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x0132 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x005f, flag=(flag)0xc0 ) -- 0x0135 0x19
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x70 ) -- 0x013b 0x1f
+        -- 0x21( ???=128 ) -- 0x013d 0x21
+        -- 0x2A() -- 0x0140 0x2a
+        -- 0x23() -- 0x0141 0x23
+        return 0 -- 0x0142 0x00
     end,
 
     on_update = function( self )
@@ -234,7 +243,7 @@ Actor[ "0x06" ] = {
         -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xff5a, flag=(flag)0xc0 ) -- 0x015a 0x19
         opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x0160 0x2c
         opcode26_Wait( time=20 ) -- 0x0162 0x26
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x01 ) -- 0x0165 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x0165 0xd2
         opcode9C_MessageSync() -- 0x0169 0x9c
         opcode35_VariableSet( address=0x0406, value=(vf40)0x1000, flag=0x40 ) -- 0x016a 0x35
         opcode39_VariableSubtract( address=0x0406, value=(vf40)0x0080, flag=0x40 ) -- 0x0170 0x39

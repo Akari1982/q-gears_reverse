@@ -121,7 +121,7 @@ Actor[ "0x04" ] = {
         opcode26_Wait( time=1 ) -- 0x43f8 0x26
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x43fb 0x4a
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x4401 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x4403 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x4403 0xd2
         opcode9C_MessageSync() -- 0x4407 0x9c
         -- 0xFE54() -- 0x4408 0xfe
         return 0 -- 0x440a 0x00
@@ -143,7 +143,7 @@ Actor[ "0x05" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x442a 0xfe
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x01 ) -- 0x442c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x442c 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=03 ) -- 0x4430 0xa9
         opcode9C_MessageSync() -- 0x4432 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4450 ) -- 0x4433 0x02

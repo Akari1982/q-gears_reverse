@@ -102,13 +102,13 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x11 ) -- 0x0128 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0128 0xf5
         opcode9C_MessageSync() -- 0x012c 0x9c
         -- MISSING OPCODE 0xFE65
     end,
 
     script_0x05 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x21 ) -- 0x0134 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0134 0xf5
         opcode9C_MessageSync() -- 0x0138 0x9c
         return 0 -- 0x0139 0x00
     end,
@@ -119,11 +119,14 @@ Actor[ "0x02" ] = {
 
 Actor[ "0x03" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=10 ) -- 0x013a 0x93
+        opcodeFE03( ???=4896 ) -- 0x013d 0xfe
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=1 ) -- 0x015e 0xfe
+        -- MISSING OPCODE 0xFE46
     end,
 
     on_talk = function( self )

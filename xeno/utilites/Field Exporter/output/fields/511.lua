@@ -260,12 +260,23 @@ Actor[ "0x06" ] = {
 
 Actor[ "0x07" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=21 ) -- 0x024a 0x93
+        -- 0x47( ???=512 ) -- 0x024d 0xfe
+        opcode69_ActorSetRotation( rot=2 ) -- 0x0251 0x69
+        opcode35_VariableSet( address=0x0464, value=(vf40)0x0400, flag=0x40 ) -- 0x0254 0x35
+        opcode35_VariableSet( address=0x044c, value=(vf40)0x0fa0, flag=0x40 ) -- 0x025a 0x35
+        opcodeFE03( ???=GetVar( 0x044c ) ) -- 0x0260 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
         -- 0x5A() -- 0x0293 0x5a
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=12 ) -- 0x0294 0xfe
+        -- 0x5A() -- 0x029a 0x5a
+        -- 0xFE3C( ???=0, ???=8 ) -- 0x029b 0xfe
+        -- 0x05_CallFunction( 0x0487 ) -- 0x02a1 0x05
+        -- 0x5B() -- 0x02a4 0x5b
+        return 0 -- 0x02a5 0x00
     end,
 
     on_talk = function( self )
@@ -278,7 +289,8 @@ Actor[ "0x07" ] = {
 
     script_0x04 = function( self )
         opcode35_VariableSet( address=0x044c, value=(vf40)0x36b0, flag=0x40 ) -- 0x02a6 0x35
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=GetVar( 0x044c ) ) -- 0x02ac 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x05 = function( self )

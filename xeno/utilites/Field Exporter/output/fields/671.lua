@@ -47,7 +47,17 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0066 0x21
+        opcodeFE4A_SpriteAddAnimLoad( file=63 ) -- 0x0069 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x006d 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x01 ) -- 0x006f 0xfe
+        opcode26_Wait( time=45 ) -- 0x0072 0x26
+        opcode35_VariableSet( address=0x0402, value=(vf40)0x000b, flag=0x40 ) -- 0x0075 0x35
+        opcode09_ActorCallScriptEW( actor_id=0x01, script=07, priority=01 ) -- 0x007b 0x09
+        opcode26_Wait( time=30 ) -- 0x007e 0x26
+        opcode35_VariableSet( address=0x0400, value=(vf40)0x000f, flag=0x40 ) -- 0x0081 0x35
+        opcode09_ActorCallScriptEW( actor_id=0x01, script=06, priority=01 ) -- 0x0087 0x09
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
@@ -133,7 +143,10 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0175 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0178 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x017e 0x6f
+        return 0 -- 0x0180 0x00
     end,
 
     script_0x05 = function( self )
@@ -660,14 +673,14 @@ Actor[ "0x11" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x01, text_id=0x0000, ???=0x53 ) -- 0x04a8 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x01, text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP|NO_WINDOW ) -- 0x04a8 0xfc
         return 0 -- 0x04ae 0x00
     end,
 
     script_0x05 = function( self )
         opcode09_ActorCallScriptEW( actor_id=0x04, script=04, priority=01 ) -- 0x04af 0x09
         opcode26_Wait( time=15 ) -- 0x04b2 0x26
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x53 ) -- 0x04b5 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP|NO_WINDOW ) -- 0x04b5 0xf5
         opcode9C_MessageSync() -- 0x04b9 0x9c
         return 0 -- 0x04ba 0x00
     end,

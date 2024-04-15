@@ -180,7 +180,15 @@ Actor[ "0x04" ] = {
         opcode26_Wait( time=1 ) -- 0x0396 0x26
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0399 0x4a
         opcode08_ActorCallScriptSW( actor_id=0x05, script=04, priority=01 ) -- 0x039f 0x08
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x03a2 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x03a5 0x4a
+        -- 0x21( ???=448 ) -- 0x03ab 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x03ae 0x4a
+        opcode26_Wait( time=30 ) -- 0x03b4 0x26
+        -- 0x21( ???=256 ) -- 0x03b7 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x03ba 0x4a
+        opcode26_Wait( time=15 ) -- 0x03c0 0x26
+        return 0 -- 0x03c3 0x00
     end,
 
     on_talk = function( self )
@@ -217,7 +225,19 @@ Actor[ "0x05" ] = {
 
     script_0x04 = function( self )
         -- 0xF6( ???=0x01 ) -- 0x03da 0xf6
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x02a8, z=(vf40)0xff7e, y=(vf20)0x000f, ???=(vf10)0x0005, flag=0xf0 ) -- 0x03dc 0x57
+        -- 0x57( type=0x8f ) -- 0x03e7 0x57
+        opcode26_Wait( time=1 ) -- 0x03e9 0x26
+        -- 0x57( type=0x0f ) -- 0x03ec 0x57
+        -- 0x57( type=0x00, x=(vf80)0x02a8, z=(vf40)0xff7e, y=(vf20)0x0000, ???=(vf10)0x0005, flag=0xf0 ) -- 0x03ee 0x57
+        -- 0x57( type=0x8f ) -- 0x03f9 0x57
+        opcode26_Wait( time=1 ) -- 0x03fb 0x26
+        -- 0x57( type=0x0f ) -- 0x03fe 0x57
+        -- 0xF6( ???=0x00 ) -- 0x0400 0xf6
+        opcode26_Wait( time=1 ) -- 0x0402 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0405 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x040b 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
 }
@@ -378,7 +398,7 @@ Actor[ "0x0a" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x63 ) -- 0x057e 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x057e 0xf5
         opcode9C_MessageSync() -- 0x0582 0x9c
         return 0 -- 0x0583 0x00
     end,
@@ -388,13 +408,13 @@ Actor[ "0x0a" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040e ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x059b ) -- 0x058a 0x02
         opcode39_VariableSubtract( address=0x040e, value=(vf40)0x0004, flag=0x40 ) -- 0x0592 0x39
         -- 0x01_JumpTo( 0x058a ) -- 0x0598 0x01
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x63 ) -- 0x059b 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x059b 0xf5
         opcode9C_MessageSync() -- 0x059f 0x9c
         return 0 -- 0x05a0 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0002, flag=0x63 ) -- 0x05a1 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x05a1 0xf5
         opcode9C_MessageSync() -- 0x05a5 0x9c
         return 0 -- 0x05a6 0x00
     end,

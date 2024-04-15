@@ -107,7 +107,7 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0xa0 ) -- 0x0134 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_BOTTOM|0x80 ) -- 0x0134 0xd2
         opcode9C_MessageSync() -- 0x0138 0x9c
         return 0 -- 0x0139 0x00
     end,
@@ -178,7 +178,8 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0219 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

@@ -69,13 +69,15 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x0070 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0073 0x4a
+        -- MISSING OPCODE 0x4b
     end,
 
     script_0x06 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0087 0x2c
         opcode6F_ActorRotateToActor( actor_id=(entity)0x0c ) -- 0x0089 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x02 ) -- 0x008b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=NO_FACE ) -- 0x008b 0xd2
         opcode9C_MessageSync() -- 0x008f 0x9c
         return 0 -- 0x0090 0x00
     end,
@@ -105,7 +107,10 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x009b 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x009e 0x4a
+        -- 0x21( ???=256 ) -- 0x00a4 0x21
+        return 0 -- 0x00a7 0x00
     end,
 
 }

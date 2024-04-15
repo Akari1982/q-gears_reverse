@@ -32,7 +32,7 @@ Actor[ "0x01" ] = {
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x004d 0xfe
         opcode69_ActorSetRotation( rot=2 ) -- 0x0051 0x69
         -- 0xFE07( ???=0x01 ) -- 0x0054 0xfe
-        -- 0xD0() -- 0x0057 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x0057 0xd0
         opcode20_ActorSetFlags0( flags=13 ) -- 0x0062 0x20
         -- 0x2A() -- 0x0065 0x2a
         return 0 -- 0x0066 0x00
@@ -112,14 +112,24 @@ Actor[ "0x03" ] = {
         -- 0x19_ActorSetPosition( x=(vf80)0x010a, z=(vf40)0xfe10, flag=(flag)0xc0 ) -- 0x0145 0x19
         opcode69_ActorSetRotation( rot=0 ) -- 0x014b 0x69
         -- 0xFE07( ???=0x01 ) -- 0x014e 0xfe
-        -- 0xD0() -- 0x0151 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x0151 0xd0
         opcode20_ActorSetFlags0( flags=13 ) -- 0x015c 0x20
         -- 0x2A() -- 0x015f 0x2a
         return 0 -- 0x0160 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=336 ) -- 0x0161 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0164 0x4a
+        opcode09_ActorCallScriptEW( actor_id=0x02, script=05, priority=06 ) -- 0x016a 0x09
+        -- 0x19_ActorSetPosition( x=(vf80)0xfdb1, z=(vf40)0x00d5, flag=(flag)0xc0 ) -- 0x016d 0x19
+        -- 0x21( ???=512 ) -- 0x0173 0x21
+        opcode35_VariableSet( address=0x0406, value=(vf40)0x0001, flag=0x40 ) -- 0x0176 0x35
+        opcode69_ActorSetRotation( rot=6 ) -- 0x017c 0x69
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x017f 0x4a
+        opcode26_Wait( time=20 ) -- 0x0185 0x26
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0000, flags=0 ) -- 0x0188 0xd4
+        -- MISSING OPCODE 0xFE17
     end,
 
     on_talk = function( self )
@@ -140,7 +150,7 @@ Actor[ "0x04" ] = {
         -- 0x19_ActorSetPosition( x=(vf80)0xfcae, z=(vf40)0x00e1, flag=(flag)0xc0 ) -- 0x01cb 0x19
         opcode69_ActorSetRotation( rot=2 ) -- 0x01d1 0x69
         -- 0xFE07( ???=0x01 ) -- 0x01d4 0xfe
-        -- 0xD0() -- 0x01d7 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x01d7 0xd0
         return 0 -- 0x01e2 0x00
     end,
 

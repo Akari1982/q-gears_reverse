@@ -92,7 +92,7 @@ Actor[ "0x04" ] = {
 
     on_talk = function( self )
         -- 0x5A() -- 0x004a 0x5a
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x2a ) -- 0x004b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=NO_FACE|FORCE_RIGHT|FORCE_BOTTOM ) -- 0x004b 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=05 ) -- 0x004f 0xa9
         opcode9C_MessageSync() -- 0x0051 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0060 ) -- 0x0052 0x02

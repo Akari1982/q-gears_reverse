@@ -362,9 +362,9 @@ Actor[ "0x05" ] = {
         -- 0x07( actor_id=0x15, script=0x65 ) -- 0x048a 0x07
         -- 0x07( actor_id=0x16, script=0x65 ) -- 0x048d 0x07
         -- 0x07( actor_id=0x02, script=0x67 ) -- 0x0490 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0021, ???=0x10 ) -- 0x0493 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0021, flags=FORCE_TOP ) -- 0x0493 0xfc
         opcode26_Wait( time=10 ) -- 0x0499 0x26
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x11, text_id=0x0022, ???=0x20 ) -- 0x049c 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x11, text_id=0x0022, flags=FORCE_BOTTOM ) -- 0x049c 0xfc
         -- MISSING OPCODE 0xFE17
     end,
 
@@ -403,7 +403,7 @@ Actor[ "0x06" ] = {
         opcode26_Wait( time=40 ) -- 0x06fa 0x26
         opcode74_SoundPlayFixedVolume( sound_id=151 ) -- 0x06fd 0x74
         opcode09_ActorCallScriptEW( actor_id=0x12, script=05, priority=03 ) -- 0x0700 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0037, ???=0x10 ) -- 0x0703 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0037, flags=FORCE_TOP ) -- 0x0703 0xfc
         -- MISSING OPCODE 0xFE17
     end,
 
@@ -827,7 +827,8 @@ Actor[ "0x15" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=4 ) -- 0x09f6 0xbf
+        return 0 -- 0x09f9 0x00
     end,
 
     on_talk = function( self )
@@ -861,7 +862,8 @@ Actor[ "0x16" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=4 ) -- 0x0a88 0xbf
+        return 0 -- 0x0a8b 0x00
     end,
 
     on_talk = function( self )
@@ -895,7 +897,8 @@ Actor[ "0x17" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x0b1a 0xc0
+        return 0 -- 0x0b1d 0x00
     end,
 
     on_talk = function( self )
@@ -923,7 +926,8 @@ Actor[ "0x18" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b66 0xc0
+        return 0 -- 0x0b69 0x00
     end,
 
     on_talk = function( self )
@@ -947,7 +951,8 @@ Actor[ "0x19" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b6f 0xc0
+        return 0 -- 0x0b72 0x00
     end,
 
     on_talk = function( self )
@@ -971,7 +976,8 @@ Actor[ "0x1a" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b78 0xc0
+        return 0 -- 0x0b7b 0x00
     end,
 
     on_talk = function( self )
@@ -995,7 +1001,8 @@ Actor[ "0x1b" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b81 0xc0
+        return 0 -- 0x0b84 0x00
     end,
 
     on_talk = function( self )
@@ -1019,7 +1026,8 @@ Actor[ "0x1c" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b8a 0xc0
+        return 0 -- 0x0b8d 0x00
     end,
 
     on_talk = function( self )
@@ -1043,7 +1051,8 @@ Actor[ "0x1d" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b93 0xc0
+        return 0 -- 0x0b96 0x00
     end,
 
     on_talk = function( self )
@@ -1067,7 +1076,8 @@ Actor[ "0x1e" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0b9c 0xc0
+        return 0 -- 0x0b9f 0x00
     end,
 
     on_talk = function( self )
@@ -1091,7 +1101,8 @@ Actor[ "0x1f" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=4 ) -- 0x0ba5 0xc0
+        return 0 -- 0x0ba8 0x00
     end,
 
     on_talk = function( self )

@@ -97,7 +97,8 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=2, ???=2 ) -- 0x0052 0xfe
+        -- MISSING OPCODE 0x85
     end,
 
     on_update = function( self )
@@ -127,7 +128,7 @@ Actor[ "0x05" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x00f7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x00f7 0xd2
         opcode9C_MessageSync() -- 0x00fb 0x9c
         return 0 -- 0x00fc 0x00
     end,

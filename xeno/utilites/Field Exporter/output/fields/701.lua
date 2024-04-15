@@ -31,7 +31,8 @@ Actor[ "0x01" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=0 ) -- 0x0015 0x16
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0018 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1365 ) -- 0x001c 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -306,7 +307,8 @@ Actor[ "0x0c" ] = {
         -- 0x0B_InitNPC( 1 ) -- 0x00b4 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0xff10, z=(vf40)0xfa12, flag=(flag)0xc0 ) -- 0x00b7 0x19
         opcode69_ActorSetRotation( rot=0 ) -- 0x00bd 0x69
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1365 ) -- 0x00c0 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -316,7 +318,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ce ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x00d9 ) -- 0x00cb 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00d3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00d3 0xd2
         opcode9C_MessageSync() -- 0x00d7 0x9c
         return 0 -- 0x00d8 0x00
     end,

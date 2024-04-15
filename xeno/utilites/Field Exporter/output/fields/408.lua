@@ -50,16 +50,16 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x005f 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x006a 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x005f 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x006a 0xd2
         opcode9C_MessageSync() -- 0x006e 0x9c
-        -- 0xD0() -- 0x006f 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=0 ) -- 0x006f 0xd0
         return 0 -- 0x007a 0x00
     end,
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x007b 0x4a
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0081 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0081 0xd2
         opcode9C_MessageSync() -- 0x0085 0x9c
         return 0 -- 0x0086 0x00
     end,

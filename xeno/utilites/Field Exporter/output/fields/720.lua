@@ -312,8 +312,8 @@ Actor[ "0x0c" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xD0() -- 0x00c7 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00d2 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=7, flags=0 ) -- 0x00c7 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00d2 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=06 ) -- 0x00d6 0xa9
         opcode9C_MessageSync() -- 0x00d8 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00ec ) -- 0x00d9 0x02
@@ -367,8 +367,8 @@ Actor[ "0x0d" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xD0() -- 0x016c 0xd0
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0177 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=7, flags=0 ) -- 0x016c 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0177 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=06 ) -- 0x017b 0xa9
         opcode9C_MessageSync() -- 0x017d 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0197 ) -- 0x017e 0x02
@@ -402,8 +402,8 @@ Actor[ "0x0e" ] = {
     end,
 
     on_talk = function( self )
-        -- 0xD0() -- 0x0256 0xd0
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0261 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=12, flags=0 ) -- 0x0256 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0261 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=0b ) -- 0x0265 0xa9
         opcode9C_MessageSync() -- 0x0267 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x02b1 ) -- 0x0268 0x02
@@ -522,7 +522,7 @@ Actor[ "0x0f" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0467 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0467 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=08 ) -- 0x046b 0xa9
         opcode9C_MessageSync() -- 0x046d 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x04b4 ) -- 0x046e 0x02
@@ -568,7 +568,7 @@ Actor[ "0x10" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x05bb 0xfe
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x05bd 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x05bd 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x05c1 0xa9
         opcode9C_MessageSync() -- 0x05c3 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x05cf ) -- 0x05c4 0x02
@@ -599,7 +599,7 @@ Actor[ "0x11" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x09ee 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x09ee 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=04 ) -- 0x09f2 0xa9
         opcode9C_MessageSync() -- 0x09f4 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0a0a ) -- 0x09f5 0x02

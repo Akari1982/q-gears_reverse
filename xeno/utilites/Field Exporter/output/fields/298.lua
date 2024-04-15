@@ -360,7 +360,7 @@ Actor[ "0x0d" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0011, ???=0x12 ) -- 0x0202 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0011, flags=NO_FACE|FORCE_TOP ) -- 0x0202 0xd2
         opcode9C_MessageSync() -- 0x0206 0x9c
         return 0 -- 0x0207 0x00
     end,
@@ -388,14 +388,14 @@ Actor[ "0x0e" ] = {
 
     on_update = function( self )
         -- 0xFE54() -- 0x0229 0xfe
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0012, ???=0x02 ) -- 0x022b 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0012, flags=NO_FACE ) -- 0x022b 0xfc
         opcode26_Wait( time=30 ) -- 0x0231 0x26
         opcodeF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=60 ) -- 0x0234 0xf1
         opcode26_Wait( time=30 ) -- 0x023f 0x26
         -- 0x07( actor_id=0x0d, script=0x64 ) -- 0x0242 0x07
         opcode26_Wait( time=2 ) -- 0x0245 0x26
         -- 0x07( actor_id=0x06, script=0x64 ) -- 0x0248 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x06, text_id=0x0013, ???=0x22 ) -- 0x024b 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x06, text_id=0x0013, flags=NO_FACE|FORCE_BOTTOM ) -- 0x024b 0xfc
         -- 0x07( actor_id=0x0d, script=0x45 ) -- 0x0251 0x07
         -- MISSING OPCODE 0xFE17
     end,

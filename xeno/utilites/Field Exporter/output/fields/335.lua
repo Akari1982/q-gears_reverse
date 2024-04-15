@@ -121,20 +121,20 @@ Actor[ "0x01" ] = {
 
     script_0x08 = function( self )
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x0135 0x6c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x0138 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x0138 0xd2
         opcode9C_MessageSync() -- 0x013c 0x9c
         return 0 -- 0x013d 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x01 ) -- 0x013e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x013e 0xd2
         opcode9C_MessageSync() -- 0x0142 0x9c
         return 0 -- 0x0143 0x00
     end,
 
     script_0x0a = function( self )
         opcode6B_ActorRotateClockwise( rot=3 ) -- 0x0144 0x6b
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x01 ) -- 0x0147 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x0147 0xd2
         opcode9C_MessageSync() -- 0x014b 0x9c
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x014c 0x6c
         -- 0x07( actor_id=0xfe, script=0x6c ) -- 0x014f 0x07
@@ -198,20 +198,20 @@ Actor[ "0x02" ] = {
 
     script_0x08 = function( self )
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x01c3 0x6c
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x01 ) -- 0x01c6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x01c6 0xd2
         opcode9C_MessageSync() -- 0x01ca 0x9c
         return 0 -- 0x01cb 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x01 ) -- 0x01cc 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=CLOSE_OFF_SCREEN ) -- 0x01cc 0xd2
         opcode9C_MessageSync() -- 0x01d0 0x9c
         return 0 -- 0x01d1 0x00
     end,
 
     script_0x0a = function( self )
         opcode6B_ActorRotateClockwise( rot=3 ) -- 0x01d2 0x6b
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x01 ) -- 0x01d5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=CLOSE_OFF_SCREEN ) -- 0x01d5 0xd2
         opcode9C_MessageSync() -- 0x01d9 0x9c
         opcode6B_ActorRotateClockwise( rot=3 ) -- 0x01da 0x6b
         -- 0x07( actor_id=0xfe, script=0x6c ) -- 0x01dd 0x07
@@ -275,20 +275,20 @@ Actor[ "0x03" ] = {
 
     script_0x08 = function( self )
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x0251 0x6c
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x01 ) -- 0x0254 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=CLOSE_OFF_SCREEN ) -- 0x0254 0xd2
         opcode9C_MessageSync() -- 0x0258 0x9c
         return 0 -- 0x0259 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x01 ) -- 0x025a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=CLOSE_OFF_SCREEN ) -- 0x025a 0xd2
         opcode9C_MessageSync() -- 0x025e 0x9c
         return 0 -- 0x025f 0x00
     end,
 
     script_0x0a = function( self )
         opcode6B_ActorRotateClockwise( rot=3 ) -- 0x0260 0x6b
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x01 ) -- 0x0263 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=CLOSE_OFF_SCREEN ) -- 0x0263 0xd2
         opcode9C_MessageSync() -- 0x0267 0x9c
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x0268 0x6c
         -- 0x07( actor_id=0xfe, script=0x6c ) -- 0x026b 0x07
@@ -398,20 +398,20 @@ Actor[ "0x05" ] = {
 
     script_0x08 = function( self )
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x032b 0x6c
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x01 ) -- 0x032e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=CLOSE_OFF_SCREEN ) -- 0x032e 0xd2
         opcode9C_MessageSync() -- 0x0332 0x9c
         return 0 -- 0x0333 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000d, ???=0x01 ) -- 0x0334 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000d, flags=CLOSE_OFF_SCREEN ) -- 0x0334 0xd2
         opcode9C_MessageSync() -- 0x0338 0x9c
         return 0 -- 0x0339 0x00
     end,
 
     script_0x0a = function( self )
         opcode6B_ActorRotateClockwise( rot=3 ) -- 0x033a 0x6b
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x01 ) -- 0x033d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=CLOSE_OFF_SCREEN ) -- 0x033d 0xd2
         opcode9C_MessageSync() -- 0x0341 0x9c
         opcode6C_ActorRotateAnticlockwise( rot=3 ) -- 0x0342 0x6c
         -- 0x07( actor_id=0xfe, script=0x6c ) -- 0x0345 0x07
@@ -450,7 +450,8 @@ Actor[ "0x06" ] = {
 
 Actor[ "0x07" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=18 ) -- 0x045e 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -484,12 +485,16 @@ Actor[ "0x07" ] = {
 
 Actor[ "0x08" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=52 ) -- 0x059e 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0426 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0617 ) -- 0x05f5 0x02
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=2000 ) -- 0x05fd 0xfe
+        opcode36_VariableSetTrue( address=0x0426 ) -- 0x0601 0x36
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0613 ) -- 0x0604 0x02
+        -- MISSING OPCODE 0x5f
     end,
 
     on_talk = function( self )
@@ -505,11 +510,19 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x066a 0x21
+        -- 0x07( actor_id=0x07, script=0x64 ) -- 0x066d 0x07
+        opcode2C_SpritePlayAnim( anim_id=0x17 ) -- 0x0670 0x2c
+        opcode26_Wait( time=60 ) -- 0x0672 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x13 ) -- 0x0675 0x2c
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=10 ) -- 0x06c3 0xfe
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x09 ) -- 0x06c7 0x6f
+        -- 0x47( ???=32 ) -- 0x06c9 0xfe
+        return 0 -- 0x06cd 0x00
     end,
 
     script_0x07 = function( self )
@@ -517,7 +530,9 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0718 0x21
+        -- 0xF6( ???=0x01 ) -- 0x071b 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x09 = function( self )
@@ -552,7 +567,8 @@ Actor[ "0x09" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=32 ) -- 0x077a 0x21
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }

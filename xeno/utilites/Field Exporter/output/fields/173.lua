@@ -156,7 +156,7 @@ Actor[ "0x05" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x449a 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x449c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x449c 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=03 ) -- 0x44a0 0xa9
         opcode9C_MessageSync() -- 0x44a2 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x44c0 ) -- 0x44a3 0x02

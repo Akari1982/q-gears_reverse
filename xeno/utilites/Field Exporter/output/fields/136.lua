@@ -277,10 +277,10 @@ Actor[ "0x0b" ] = {
 
     on_talk = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x009e ) -- 0x0091 0x84
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0096 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0096 0xd2
         opcode9C_MessageSync() -- 0x009a 0x9c
         -- 0x01_JumpTo( 0x00a3 ) -- 0x009b 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x009e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x009e 0xd2
         opcode9C_MessageSync() -- 0x00a2 0x9c
         return 0 -- 0x00a3 0x00
     end,

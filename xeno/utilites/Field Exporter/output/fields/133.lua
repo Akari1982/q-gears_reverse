@@ -117,17 +117,17 @@ Actor[ "0x03" ] = {
 
     script_0x05 = function( self )
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x042f 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x07, text_id=0x0001, ???=0xa0 ) -- 0x0433 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0001, flags=FORCE_BOTTOM|0x80 ) -- 0x0433 0xd4
         opcodeFE0D_MessageSetFace( char_id=27 ) -- 0x0439 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x0e, text_id=0x0002, ???=0xa0 ) -- 0x043d 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x0e, text_id=0x0002, flags=FORCE_BOTTOM|0x80 ) -- 0x043d 0xd4
         opcode26_Wait( time=60 ) -- 0x0443 0x26
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x0446 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x07, text_id=0x0003, ???=0xa0 ) -- 0x044a 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0003, flags=FORCE_BOTTOM|0x80 ) -- 0x044a 0xd4
         opcode26_Wait( time=30 ) -- 0x0450 0x26
         opcodeFE0D_MessageSetFace( char_id=27 ) -- 0x0453 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x0e, text_id=0x0004, ???=0xa0 ) -- 0x0457 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x0e, text_id=0x0004, flags=FORCE_BOTTOM|0x80 ) -- 0x0457 0xd4
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x045d 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x07, text_id=0x0005, ???=0xa0 ) -- 0x0461 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0005, flags=FORCE_BOTTOM|0x80 ) -- 0x0461 0xd4
         opcode26_Wait( time=30 ) -- 0x0467 0x26
         -- MISSING OPCODE 0x67
     end,
@@ -671,7 +671,11 @@ Actor[ "0x17" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x043a ), value2=(s16)0x0040, condition="value1 != value2", jump_if_false=0x0704 ) -- 0x06f2 0x02
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=16 ) -- 0x06fa 0xc0
+        opcode3C_VariableInc( address=0x043a ) -- 0x06fd 0x3c
+        -- 0x5A() -- 0x0700 0x5a
+        -- 0x01_JumpTo( 0x06f2 ) -- 0x0701 0x01
+        return 0 -- 0x0704 0x00
     end,
 
 }

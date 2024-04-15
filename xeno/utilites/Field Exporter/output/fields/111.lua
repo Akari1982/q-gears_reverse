@@ -303,10 +303,10 @@ Actor[ "0x0c" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00d6 0x6f
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x00e5 ) -- 0x00d8 0x84
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00dd 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00dd 0xd2
         opcode9C_MessageSync() -- 0x00e1 0x9c
         -- 0x01_JumpTo( 0x00ea ) -- 0x00e2 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00e5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00e5 0xd2
         opcode9C_MessageSync() -- 0x00e9 0x9c
         return 0 -- 0x00ea 0x00
     end,
@@ -321,7 +321,10 @@ Actor[ "0x0c" ] = {
 
 Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=2 ) -- 0x00eb 0xfe
+        -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x0103 ) -- 0x00f1 0x84
+        -- 0x19_ActorSetPosition( x=(vf80)0x009e, z=(vf40)0x0185, flag=(flag)0xc0 ) -- 0x00f6 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )

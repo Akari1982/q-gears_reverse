@@ -149,36 +149,43 @@ Actor[ "0x04" ] = {
         opcode26_Wait( time=2 ) -- 0x015b 0x26
         opcode5D_SpritePlayAnim2( anim_id=0x04 ) -- 0x015e 0x5d
         -- 0x5E() -- 0x0160 0x5e
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0161 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0161 0xd2
         opcode9C_MessageSync() -- 0x0165 0x9c
         return 0 -- 0x0166 0x00
     end,
 
     script_0x06 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x0d ) -- 0x0167 0x6f
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0169 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0169 0xd2
         opcode9C_MessageSync() -- 0x016d 0x9c
         return 0 -- 0x016e 0x00
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x016f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x016f 0xd2
         opcode9C_MessageSync() -- 0x0173 0x9c
         return 0 -- 0x0174 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x0175 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x0175 0xd2
         opcode9C_MessageSync() -- 0x0179 0x9c
         return 0 -- 0x017a 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x017b 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x017e 0x4a
+        return 0 -- 0x0184 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0185 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0188 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x018e 0x4a
+        opcode35_VariableSet( address=0x012a, value=(vf40)0x0001, flag=0x40 ) -- 0x0194 0x35
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x0d ) -- 0x019a 0x6f
+        return 0 -- 0x019c 0x00
     end,
 
     script_0x0b = function( self )
@@ -456,7 +463,8 @@ Actor[ "0x0e" ] = {
 Actor[ "0x0f" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0462 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0463 0x21
+        return 0 -- 0x0466 0x00
     end,
 
     on_update = function( self )
@@ -503,7 +511,8 @@ Actor[ "0x0f" ] = {
 Actor[ "0x10" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x04da 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=768 ) -- 0x04db 0x21
+        return 0 -- 0x04de 0x00
     end,
 
     on_update = function( self )

@@ -75,7 +75,9 @@ Actor[ "0x02" ] = {
 
 Actor[ "0x03" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=0 ) -- 0x0094 0x93
+        opcodeFE03( ???=6000 ) -- 0x0097 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -91,7 +93,11 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=12 ) -- 0x00b1 0xfe
+        opcode26_Wait( time=1 ) -- 0x00b7 0x26
+        -- 0xF6( ???=0x01 ) -- 0x00ba 0xf6
+        opcode2C_SpritePlayAnim( anim_id=0x1c ) -- 0x00bc 0x2c
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }
@@ -100,7 +106,8 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=8 ) -- 0x018e 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -116,7 +123,12 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=1, ???=7 ) -- 0x01a7 0xfe
+        opcode26_Wait( time=1 ) -- 0x01ad 0x26
+        -- 0xF6( ???=0x01 ) -- 0x01b0 0xf6
+        opcode2C_SpritePlayAnim( anim_id=0x17 ) -- 0x01b2 0x2c
+        -- 0xF6( ???=0x01 ) -- 0x01b4 0xf6
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }
@@ -125,7 +137,8 @@ Actor[ "0x04" ] = {
 
 Actor[ "0x05" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=8 ) -- 0x01cb 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -141,7 +154,11 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=2, ???=7 ) -- 0x01e4 0xfe
+        opcode26_Wait( time=1 ) -- 0x01ea 0x26
+        -- 0xF6( ???=0x01 ) -- 0x01ed 0xf6
+        opcode2C_SpritePlayAnim( anim_id=0x17 ) -- 0x01ef 0x2c
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }
@@ -150,7 +167,8 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=8 ) -- 0x0206 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -166,7 +184,11 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=3, ???=7 ) -- 0x021f 0xfe
+        opcode26_Wait( time=1 ) -- 0x0225 0x26
+        -- 0xF6( ???=0x01 ) -- 0x0228 0xf6
+        opcode2C_SpritePlayAnim( anim_id=0x17 ) -- 0x022a 0x2c
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }

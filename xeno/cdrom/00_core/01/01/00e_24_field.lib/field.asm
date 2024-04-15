@@ -875,10 +875,10 @@
 // func8a6bc
 8008A6BC-8008A714
 ////////////////////////////////
-// func8a718
+// field_script_opFE47
 8008A718-8008A750
 ////////////////////////////////
-// func8a754
+// field_script_opFE3C
 8008A754-8008A7E0
 ////////////////////////////////
 // func8a7e4
@@ -965,7 +965,7 @@
 // func8c64c
 8008C64C-8008C6C4
 ////////////////////////////////
-// func8c6c8
+// field_script_opFE03
 8008C6C8-8008C750
 ////////////////////////////////
 // func8c754
@@ -1485,10 +1485,10 @@
 // func940a0
 800940A0-8009410C
 ////////////////////////////////
-// func94110
+// field_script_opBF
 80094110-8009417C
 ////////////////////////////////
-// func94180
+// field_script_opC0
 80094180-800941EC
 ////////////////////////////////
 // func941f0
@@ -2012,10 +2012,10 @@
 // field_script_help_message_check_face_used
 8009BB0C-8009BB78
 ////////////////////////////////
-// func9bb7c
+// field_script_message_init
 8009BB7C-8009C284
 ////////////////////////////////
-// func9c288
+// field_script_message_activate_mask
 8009C288-8009C2A4
 ////////////////////////////////
 // field_script_help_message_find_for_current_entity
@@ -2027,10 +2027,10 @@
 // field_script_help_read_entity
 8009C344-8009C3D4
 ////////////////////////////////
-// func9c3d8
+// field_script_opCF
 8009C3D8-8009C46C
 ////////////////////////////////
-// 0xD0
+// field_script_opD0
 8009C470-8009C4FC
 ////////////////////////////////
 // func9c500
@@ -2299,7 +2299,7 @@
 // field_script_op93
 800A08F4-800A0A7C
 ////////////////////////////////
-// funca0a80
+// field_script_opFE15
 800A0A80-800A0BB0
 ////////////////////////////////
 // 0x0B_EntityNPCSpriteInit

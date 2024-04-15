@@ -61,7 +61,8 @@ Actor[ "0x01" ] = {
         -- 0xC6() -- 0x010a 0xc6
         opcode69_ActorSetRotation( rot=0 ) -- 0x010b 0x69
         -- 0xC6() -- 0x010e 0xc6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x010f 0x1f
+        -- MISSING OPCODE 0x2d
     end,
 
     script_0x05 = function( self )
@@ -107,7 +108,8 @@ Actor[ "0x02" ] = {
         -- 0xC6() -- 0x01c0 0xc6
         opcode69_ActorSetRotation( rot=0 ) -- 0x01c1 0x69
         -- 0xC6() -- 0x01c4 0xc6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x01c5 0x1f
+        -- MISSING OPCODE 0x2d
     end,
 
     script_0x06 = function( self )
@@ -116,7 +118,8 @@ Actor[ "0x02" ] = {
         -- 0xC6() -- 0x0202 0xc6
         opcode69_ActorSetRotation( rot=0 ) -- 0x0203 0x69
         -- 0xC6() -- 0x0206 0xc6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x0207 0x1f
+        -- MISSING OPCODE 0x2d
     end,
 
 }
@@ -386,7 +389,8 @@ Actor[ "0x09" ] = {
         -- 0xC6() -- 0x02f8 0xc6
         opcode69_ActorSetRotation( rot=4 ) -- 0x02f9 0x69
         -- 0xC6() -- 0x02fc 0xc6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x02fd 0x1f
+        -- MISSING OPCODE 0x2d
     end,
 
     script_0x05 = function( self )
@@ -504,7 +508,11 @@ Actor[ "0x0c" ] = {
 Actor[ "0x0d" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0369 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=50 ) -- 0x036a 0x21
+        -- 0x86_ProgressNotEqualJumpTo( value=183, jump=0x0375 ) -- 0x036d 0x86
+        -- 0x01_JumpTo( 0x037d ) -- 0x0372 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x01c3, condition="value1 == value2", jump_if_false=0x0386 ) -- 0x0375 0x02
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )

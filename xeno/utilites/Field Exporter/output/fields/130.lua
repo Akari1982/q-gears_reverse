@@ -139,11 +139,15 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x028e 0x21
+        -- 0x05_CallFunction( 0x088d ) -- 0x0291 0x05
+        return 0 -- 0x0294 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0295 0x21
+        -- 0x05_CallFunction( 0x0a14 ) -- 0x0298 0x05
+        return 0 -- 0x029b 0x00
     end,
 
     script_0x07 = function( self )
@@ -241,7 +245,9 @@ Actor[ "0x06" ] = {
 Actor[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x03fc 0xbc
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x03fd 0x1f
+        opcode35_VariableSet( address=0x0402, value=(vf40)0x00b0, flag=0x00 ) -- 0x03ff 0x35
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )

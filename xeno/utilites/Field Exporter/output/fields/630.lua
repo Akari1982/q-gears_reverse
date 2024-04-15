@@ -52,7 +52,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0062 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0064 0x4a
+        return 0 -- 0x006a 0x00
     end,
 
     script_0x05 = function( self )
@@ -80,7 +82,7 @@ Actor[ "0x01" ] = {
         opcode26_Wait( time=20 ) -- 0x0090 0x26
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x0093 0x2c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b6 ) -- 0x0095 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x009d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x009d 0xd2
         opcode9C_MessageSync() -- 0x00a1 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00a2 0x2c
         -- MISSING OPCODE 0x5f
@@ -104,7 +106,7 @@ Actor[ "0x01" ] = {
         opcode26_Wait( time=10 ) -- 0x00d8 0x26
         opcode74_SoundPlayFixedVolume( sound_id=405 ) -- 0x00db 0x74
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00de 0x2c
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00e0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00e0 0xd2
         opcode9C_MessageSync() -- 0x00e4 0x9c
         -- MISSING OPCODE 0x5f
     end,
@@ -260,12 +262,12 @@ Actor[ "0x07" ] = {
         opcode09_ActorCallScriptEW( actor_id=0x01, script=05, priority=01 ) -- 0x0161 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x020c ), value2=(s16)0x0040, condition="value1 & value2", jump_if_false=0x019f ) -- 0x0164 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x020c ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x017c ) -- 0x016c 0x02
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0174 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0174 0xd2
         opcode9C_MessageSync() -- 0x0178 0x9c
         -- 0x01_JumpTo( 0x019c ) -- 0x0179 0x01
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x017c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x017c 0xd2
         opcode9C_MessageSync() -- 0x0180 0x9c
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x0181 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x0181 0xd2
         opcode9C_MessageSync() -- 0x0185 0x9c
         -- MISSING OPCODE 0xFE66
     end,

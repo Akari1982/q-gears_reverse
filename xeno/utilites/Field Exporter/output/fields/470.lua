@@ -47,7 +47,7 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x001f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x001f 0xd2
         opcode9C_MessageSync() -- 0x0023 0x9c
         return 0 -- 0x0024 0x00
     end,
@@ -55,7 +55,7 @@ Actor[ "0x01" ] = {
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x0025 0x2c
         opcode26_Wait( time=10 ) -- 0x0027 0x26
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x002a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x002a 0xd2
         opcode9C_MessageSync() -- 0x002e 0x9c
         return 0 -- 0x002f 0x00
     end,
@@ -63,7 +63,7 @@ Actor[ "0x01" ] = {
     script_0x06 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x0030 0x2c
         opcode26_Wait( time=10 ) -- 0x0032 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0035 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0035 0xd2
         opcode9C_MessageSync() -- 0x0039 0x9c
         return 0 -- 0x003a 0x00
     end,
@@ -71,7 +71,7 @@ Actor[ "0x01" ] = {
     script_0x07 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x003b 0x2c
         opcode26_Wait( time=10 ) -- 0x003d 0x26
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0040 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0040 0xd2
         opcode9C_MessageSync() -- 0x0044 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0045 0x2c
         return 0 -- 0x0047 0x00
@@ -80,7 +80,7 @@ Actor[ "0x01" ] = {
     script_0x08 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x04 ) -- 0x0048 0x6f
         opcode26_Wait( time=10 ) -- 0x004a 0x26
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x004d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x004d 0xd2
         opcode9C_MessageSync() -- 0x0051 0x9c
         return 0 -- 0x0052 0x00
     end,
@@ -91,7 +91,7 @@ Actor[ "0x01" ] = {
         opcode5D_SpritePlayAnim2( anim_id=0x04 ) -- 0x0058 0x5d
         -- 0x5E() -- 0x005a 0x5e
         opcode26_Wait( time=10 ) -- 0x005b 0x26
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x005e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x005e 0xd2
         opcode9C_MessageSync() -- 0x0062 0x9c
         return 0 -- 0x0063 0x00
     end,
@@ -123,7 +123,7 @@ Actor[ "0x02" ] = {
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x006f 0x2c
         opcode26_Wait( time=10 ) -- 0x0071 0x26
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x0074 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x0074 0xd2
         opcode9C_MessageSync() -- 0x0078 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0079 0x2c
         return 0 -- 0x007b 0x00
@@ -187,14 +187,14 @@ Actor[ "0x04" ] = {
 
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x00ac 0x2c
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x00ae 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x00ae 0xd2
         opcode9C_MessageSync() -- 0x00b2 0x9c
         return 0 -- 0x00b3 0x00
     end,
 
     script_0x06 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x00b4 0x2c
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x00b6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=0 ) -- 0x00b6 0xd2
         opcode9C_MessageSync() -- 0x00ba 0x9c
         return 0 -- 0x00bb 0x00
     end,
@@ -507,7 +507,10 @@ Actor[ "0x10" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=1365 ) -- 0x02a6 0xc0
+        opcode26_Wait( time=1 ) -- 0x02a9 0x26
+        -- 0x01_JumpTo( 0x02a6 ) -- 0x02ac 0x01
+        return 0 -- 0x02af 0x00
     end,
 
     on_talk = function( self )

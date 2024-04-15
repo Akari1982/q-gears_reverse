@@ -298,14 +298,29 @@ Actor[ "0x0b" ] = {
 
 Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=21 ) -- 0x0432 0x93
+        -- 0x86_ProgressNotEqualJumpTo( value=209, jump=0x045a ) -- 0x0435 0x86
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ca ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x044e ) -- 0x043a 0x02
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
         opcode26_Wait( time=0 ) -- 0x0496 0x26
         -- 0x86_ProgressNotEqualJumpTo( value=209, jump=0x04bb ) -- 0x0499 0x86
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ca ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x04b2 ) -- 0x049e 0x02
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=12 ) -- 0x04a6 0xfe
+        opcode69_ActorSetRotation( rot=5 ) -- 0x04ac 0x69
+        -- 0x01_JumpTo( 0x04b8 ) -- 0x04af 0x01
+        -- 0xFE3C( ???=0, ???=3 ) -- 0x04b2 0xfe
+        -- 0x01_JumpTo( 0x04c1 ) -- 0x04b8 0x01
+        -- 0xFE3C( ???=0, ???=3 ) -- 0x04bb 0xfe
+        opcode26_Wait( time=0 ) -- 0x04c1 0x26
+        -- 0xFE3C( ???=0, ???=8 ) -- 0x04c4 0xfe
+        -- 0x86_ProgressNotEqualJumpTo( value=209, jump=0x053f ) -- 0x04ca 0x86
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ca ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x053f ) -- 0x04cf 0x02
+        opcode2C_SpritePlayAnim( anim_id=0x1c ) -- 0x04d7 0x2c
+        -- 0x5A() -- 0x04d9 0x5a
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )
@@ -317,11 +332,16 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=11 ) -- 0x0542 0xfe
+        opcode36_VariableSetTrue( address=0x040c ) -- 0x0548 0x36
+        return 0 -- 0x054b 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=3 ) -- 0x054c 0xfe
+        -- 0x5A() -- 0x0552 0x5a
+        -- 0xFE3C( ???=0, ???=8 ) -- 0x0553 0xfe
+        return 0 -- 0x0559 0x00
     end,
 
 }
@@ -424,12 +444,16 @@ Actor[ "0x0d" ] = {
 
 Actor[ "0x0e" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=61 ) -- 0x086b 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
         opcode26_Wait( time=0 ) -- 0x0894 0x26
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=1, ???=3 ) -- 0x0897 0xfe
+        opcode69_ActorSetRotation( rot=4 ) -- 0x089d 0x69
+        -- 0x5B() -- 0x08a0 0x5b
+        return 0 -- 0x08a1 0x00
     end,
 
     on_talk = function( self )
@@ -506,7 +530,7 @@ Actor[ "0x0f" ] = {
     script_0x08 = function( self )
         opcode26_Wait( time=20 ) -- 0x097a 0x26
         opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x097d 0xfe
-        opcodeF5_MessageShow3( text_id=0x000d, flag=0x25 ) -- 0x0981 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_BOTTOM ) -- 0x0981 0xf5
         opcode9C_MessageSync() -- 0x0985 0x9c
         opcode36_VariableSetTrue( address=0x040c ) -- 0x0986 0x36
         return 0 -- 0x0989 0x00

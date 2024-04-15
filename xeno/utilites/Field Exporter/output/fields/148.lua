@@ -62,15 +62,15 @@ Actor[ "0x02" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x0024 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0026 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0026 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x002a 0xa9
         opcode9C_MessageSync() -- 0x002c 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x003d ) -- 0x002d 0x02
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0035 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0035 0xd2
         opcode9C_MessageSync() -- 0x0039 0x9c
         -- 0x01_JumpTo( 0x004d ) -- 0x003a 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x004d ) -- 0x003d 0x02
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0045 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0045 0xd2
         opcode9C_MessageSync() -- 0x0049 0x9c
         -- 0x01_JumpTo( 0x004d ) -- 0x004a 0x01
         return 0 -- 0x004d 0x00
@@ -97,9 +97,12 @@ Actor[ "0x03" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x005c 0x6f
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x005e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x005e 0xd2
         opcode9C_MessageSync() -- 0x0062 0x9c
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x77 ) -- 0x0063 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0065 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x006b 0x4a
+        -- MISSING OPCODE 0x29
     end,
 
     on_push = function( self )
@@ -112,7 +115,9 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=1 ) -- 0x0074 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0025, z=(vf40)0xff62, flag=(flag)0xc0 ) -- 0x007a 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
@@ -120,7 +125,7 @@ Actor[ "0x04" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x0084 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x0084 0xd2
         opcode9C_MessageSync() -- 0x0088 0x9c
         return 0 -- 0x0089 0x00
     end,
@@ -149,17 +154,17 @@ Actor[ "0x05" ] = {
         opcodeFE0D_MessageSetFace( char_id=23 ) -- 0x0099 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00a8 ) -- 0x009d 0x02
         -- 0x01_JumpTo( 0x00dc ) -- 0x00a5 0x01
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0xa0 ) -- 0x00a8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=FORCE_BOTTOM|0x80 ) -- 0x00a8 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x00ac 0xa9
         opcode9C_MessageSync() -- 0x00ae 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c1 ) -- 0x00af 0x02
         opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x00b7 0x2c
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0xa0 ) -- 0x00b9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=FORCE_BOTTOM|0x80 ) -- 0x00b9 0xd2
         opcode9C_MessageSync() -- 0x00bd 0x9c
         -- 0x01_JumpTo( 0x00d3 ) -- 0x00be 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00d3 ) -- 0x00c1 0x02
         opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x00c9 0x2c
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0xa0 ) -- 0x00cb 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=FORCE_BOTTOM|0x80 ) -- 0x00cb 0xd2
         opcode9C_MessageSync() -- 0x00cf 0x9c
         -- 0x01_JumpTo( 0x00d3 ) -- 0x00d0 0x01
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00d3 0x2c

@@ -79,7 +79,7 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0070 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0070 0xd2
         opcode9C_MessageSync() -- 0x0074 0x9c
         return 0 -- 0x0075 0x00
     end,
@@ -87,7 +87,7 @@ Actor[ "0x02" ] = {
     script_0x05 = function( self )
         opcode26_Wait( time=32 ) -- 0x0076 0x26
         opcode6F_ActorRotateToActor( actor_id=(entity)0x03 ) -- 0x0079 0x6f
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x007b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x007b 0xd2
         opcode9C_MessageSync() -- 0x007f 0x9c
         return 0 -- 0x0080 0x00
     end,
@@ -119,7 +119,7 @@ Actor[ "0x03" ] = {
 
     script_0x04 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x02 ) -- 0x0090 0x6f
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0092 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0092 0xd2
         opcode9C_MessageSync() -- 0x0096 0x9c
         return 0 -- 0x0097 0x00
     end,
@@ -372,31 +372,31 @@ Actor[ "0x0d" ] = {
         -- 0x86_ProgressNotEqualJumpTo( value=165, jump=0x01ea ) -- 0x0170 0x86
         -- 0xFE54() -- 0x0175 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x014e ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x0187 ) -- 0x0177 0x02
-        opcodeF5_MessageShow3( text_id=0x0003, flag=0x01 ) -- 0x017f 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x017f 0xf5
         opcode9C_MessageSync() -- 0x0183 0x9c
         -- 0x01_JumpTo( 0x01e8 ) -- 0x0184 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x014e ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x01c4 ) -- 0x0187 0x02
-        opcodeF5_MessageShow3( text_id=0x0004, flag=0x01 ) -- 0x018f 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x018f 0xf5
         opcode9C_MessageSync() -- 0x0193 0x9c
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0194 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0194 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=02, end_row=03 ) -- 0x0198 0xa9
         opcode9C_MessageSync() -- 0x019a 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x01b1 ) -- 0x019b 0x02
-        opcodeF5_MessageShow3( text_id=0x0006, flag=0x00 ) -- 0x01a3 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0006, flags=0 ) -- 0x01a3 0xf5
         opcode9C_MessageSync() -- 0x01a7 0x9c
         opcode3A_VariableBitSet( address=0x014e, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x01a8 0x3a
         -- 0x01_JumpTo( 0x01c1 ) -- 0x01ae 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x01c1 ) -- 0x01b1 0x02
-        opcodeF5_MessageShow3( text_id=0x0007, flag=0x00 ) -- 0x01b9 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0007, flags=0 ) -- 0x01b9 0xf5
         opcode9C_MessageSync() -- 0x01bd 0x9c
         -- 0x01_JumpTo( 0x01c1 ) -- 0x01be 0x01
         -- 0x01_JumpTo( 0x01e8 ) -- 0x01c1 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x014e ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x01da ) -- 0x01c4 0x02
-        opcodeF5_MessageShow3( text_id=0x0008, flag=0x01 ) -- 0x01cc 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0008, flags=CLOSE_OFF_SCREEN ) -- 0x01cc 0xf5
         opcode9C_MessageSync() -- 0x01d0 0x9c
         opcode3B_VariableBitUnset( address=0x014e, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x01d1 0x3b
         -- 0x01_JumpTo( 0x01e8 ) -- 0x01d7 0x01
-        opcodeF5_MessageShow3( text_id=0x0009, flag=0x01 ) -- 0x01da 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0009, flags=CLOSE_OFF_SCREEN ) -- 0x01da 0xf5
         opcode9C_MessageSync() -- 0x01de 0x9c
         opcode3A_VariableBitSet( address=0x014e, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x01df 0x3a
         opcode26_Wait( time=24 ) -- 0x01e5 0x26

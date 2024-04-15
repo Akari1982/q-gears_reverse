@@ -46,7 +46,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0018 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x001a 0x4a
+        return 0 -- 0x0020 0x00
     end,
 
     script_0x05 = function( self )
@@ -158,13 +160,13 @@ Actor[ "0x05" ] = {
         opcode09_ActorCallScriptEW( actor_id=0x01, script=05, priority=01 ) -- 0x0090 0x09
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x020c ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x00a7 ) -- 0x0093 0x02
         -- 0xFE54() -- 0x009b 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x009d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x009d 0xd2
         opcode9C_MessageSync() -- 0x00a1 0x9c
         -- 0xFE54() -- 0x00a2 0xfe
         -- 0x01_JumpTo( 0x00c5 ) -- 0x00a4 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00a7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00a7 0xd2
         opcode9C_MessageSync() -- 0x00ab 0x9c
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00ac 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00ac 0xd2
         opcode9C_MessageSync() -- 0x00b0 0x9c
         -- MISSING OPCODE 0xFE5d
     end,
@@ -191,7 +193,7 @@ Actor[ "0x06" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x00dc 0xfe
         opcode09_ActorCallScriptEW( actor_id=0x01, script=05, priority=01 ) -- 0x00de 0x09
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x00e1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x00e1 0xd2
         opcode9C_MessageSync() -- 0x00e5 0x9c
         -- 0xFE54() -- 0x00e6 0xfe
         return 0 -- 0x00e8 0x00
@@ -219,7 +221,7 @@ Actor[ "0x07" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x0100 0xfe
         opcode09_ActorCallScriptEW( actor_id=0x01, script=05, priority=01 ) -- 0x0102 0x09
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0105 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0105 0xd2
         opcode9C_MessageSync() -- 0x0109 0x9c
         -- 0xFE54() -- 0x010a 0xfe
         return 0 -- 0x010c 0x00

@@ -246,7 +246,8 @@ Actor[ "0x03" ] = {
         -- 0x0B_InitNPC( 3 ) -- 0x0835 0x0b
         -- 0x2A() -- 0x0838 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0839 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x083b 0x21
+        return 0 -- 0x083e 0x00
     end,
 
     on_update = function( self )
@@ -270,7 +271,8 @@ Actor[ "0x04" ] = {
         -- 0x0B_InitNPC( 3 ) -- 0x085e 0x0b
         -- 0x2A() -- 0x0861 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0862 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x0864 0x21
+        return 0 -- 0x0867 0x00
     end,
 
     on_update = function( self )
@@ -294,7 +296,8 @@ Actor[ "0x05" ] = {
         -- 0x0B_InitNPC( 3 ) -- 0x0887 0x0b
         -- 0x2A() -- 0x088a 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x088b 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x088d 0x21
+        return 0 -- 0x0890 0x00
     end,
 
     on_update = function( self )
@@ -318,7 +321,8 @@ Actor[ "0x06" ] = {
         -- 0x0B_InitNPC( 3 ) -- 0x08b0 0x0b
         -- 0x2A() -- 0x08b3 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x08b4 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x08b6 0x21
+        return 0 -- 0x08b9 0x00
     end,
 
     on_update = function( self )
@@ -342,7 +346,8 @@ Actor[ "0x07" ] = {
         -- 0x0B_InitNPC( 5 ) -- 0x08d9 0x0b
         -- 0x2A() -- 0x08dc 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x08dd 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x08df 0x21
+        return 0 -- 0x08e2 0x00
     end,
 
     on_update = function( self )
@@ -366,7 +371,8 @@ Actor[ "0x08" ] = {
         -- 0x0B_InitNPC( 4 ) -- 0x0906 0x0b
         -- 0x2A() -- 0x0909 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x090a 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x090c 0x21
+        return 0 -- 0x090f 0x00
     end,
 
     on_update = function( self )
@@ -390,7 +396,8 @@ Actor[ "0x09" ] = {
         -- 0x0B_InitNPC( 4 ) -- 0x0933 0x0b
         -- 0x2A() -- 0x0936 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0937 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x0939 0x21
+        return 0 -- 0x093c 0x00
     end,
 
     on_update = function( self )
@@ -414,7 +421,8 @@ Actor[ "0x0a" ] = {
         -- 0x0B_InitNPC( 4 ) -- 0x0960 0x0b
         -- 0x2A() -- 0x0963 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0964 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x0966 0x21
+        return 0 -- 0x0969 0x00
     end,
 
     on_update = function( self )
@@ -438,7 +446,8 @@ Actor[ "0x0b" ] = {
         -- 0x0B_InitNPC( 4 ) -- 0x098d 0x0b
         -- 0x2A() -- 0x0990 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0991 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x0993 0x21
+        return 0 -- 0x0996 0x00
     end,
 
     on_update = function( self )
@@ -462,7 +471,8 @@ Actor[ "0x0c" ] = {
         -- 0x0B_InitNPC( 5 ) -- 0x09ba 0x0b
         -- 0x2A() -- 0x09bd 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x09be 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x09c0 0x21
+        return 0 -- 0x09c3 0x00
     end,
 
     on_update = function( self )
@@ -486,7 +496,8 @@ Actor[ "0x0d" ] = {
         -- 0x0B_InitNPC( 5 ) -- 0x09e7 0x0b
         -- 0x2A() -- 0x09ea 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x09eb 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x09ed 0x21
+        return 0 -- 0x09f0 0x00
     end,
 
     on_update = function( self )
@@ -510,7 +521,8 @@ Actor[ "0x0e" ] = {
         -- 0x0B_InitNPC( 4 ) -- 0x0a14 0x0b
         -- 0x2A() -- 0x0a17 0x2a
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0a18 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x0a1a 0x21
+        return 0 -- 0x0a1d 0x00
     end,
 
     on_update = function( self )

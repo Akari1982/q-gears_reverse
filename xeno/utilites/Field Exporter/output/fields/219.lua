@@ -113,7 +113,7 @@ Actor[ "0x03" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x009f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x012a ) -- 0x00a1 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x03 ) -- 0x00a9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE ) -- 0x00a9 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x00ad 0xa9
         opcode9C_MessageSync() -- 0x00af 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c0 ) -- 0x00b0 0x02
@@ -127,7 +127,7 @@ Actor[ "0x03" ] = {
     on_push = function( self )
         -- 0xFE54() -- 0x009f 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x012a ) -- 0x00a1 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x03 ) -- 0x00a9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE ) -- 0x00a9 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x00ad 0xa9
         opcode9C_MessageSync() -- 0x00af 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c0 ) -- 0x00b0 0x02
@@ -473,10 +473,10 @@ Actor[ "0x0e" ] = {
         opcode09_ActorCallScriptEW( actor_id=0x05, script=05, priority=01 ) -- 0x0203 0x09
         opcode35_VariableSet( address=0x0412, value=(vf40)0x0004, flag=0x40 ) -- 0x0206 0x35
         opcode09_ActorCallScriptEW( actor_id=0x05, script=06, priority=01 ) -- 0x020c 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x05, text_id=0x0002, ???=0x00 ) -- 0x020f 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x05, text_id=0x0002, flags=0 ) -- 0x020f 0xfc
         opcode35_VariableSet( address=0x0412, value=(vf40)0x000f, flag=0x40 ) -- 0x0215 0x35
         opcode09_ActorCallScriptEW( actor_id=0x05, script=06, priority=01 ) -- 0x021b 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x01, text_id=0x0003, ???=0x20 ) -- 0x021e 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x01, text_id=0x0003, flags=FORCE_BOTTOM ) -- 0x021e 0xfc
         -- 0x23() -- 0x0224 0x23
         opcode9C_MessageSync() -- 0x0225 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0268 ) -- 0x0226 0x02
@@ -485,7 +485,7 @@ Actor[ "0x0e" ] = {
         opcode26_Wait( time=15 ) -- 0x0237 0x26
         opcode35_VariableSet( address=0x0412, value=(vf40)0x0004, flag=0x40 ) -- 0x023a 0x35
         opcode09_ActorCallScriptEW( actor_id=0x05, script=06, priority=01 ) -- 0x0240 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x05, text_id=0x0004, ???=0x00 ) -- 0x0243 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x05, text_id=0x0004, flags=0 ) -- 0x0243 0xfc
         opcode35_VariableSet( address=0x0412, value=(vf40)0x000f, flag=0x40 ) -- 0x0249 0x35
         opcode09_ActorCallScriptEW( actor_id=0x05, script=06, priority=01 ) -- 0x024f 0x09
         opcode35_VariableSet( address=0x0412, value=(vf40)0x000f, flag=0x40 ) -- 0x0252 0x35

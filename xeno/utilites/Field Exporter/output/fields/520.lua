@@ -111,7 +111,7 @@ Actor[ "0x03" ] = {
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0095 0x4a
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x009b 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x009d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x009d 0xd2
         opcode9C_MessageSync() -- 0x00a1 0x9c
         return 0 -- 0x00a2 0x00
     end,

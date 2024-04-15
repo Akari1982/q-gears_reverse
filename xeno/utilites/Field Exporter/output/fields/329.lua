@@ -516,7 +516,10 @@ Actor[ "0x0c" ] = {
         opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x0207 0xfe
         -- 0x19_ActorSetPosition( x=(vf80)0x00dd, z=(vf40)0x0000, flag=(flag)0xc0 ) -- 0x020b 0x19
         opcode69_ActorSetRotation( rot=6 ) -- 0x0211 0x69
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0214 0x1f
+        opcode20_ActorSetFlags0( flags=13 ) -- 0x0216 0x20
+        -- 0x23() -- 0x0219 0x23
+        return 0 -- 0x021a 0x00
     end,
 
     on_update = function( self )
@@ -535,7 +538,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x025e 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0260 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0260 0xd2
         opcode9C_MessageSync() -- 0x0264 0x9c
         return 0 -- 0x0265 0x00
     end,
@@ -735,7 +738,9 @@ Actor[ "0x11" ] = {
 
     script_0x06 = function( self )
         opcode20_ActorSetFlags0( flags=13 ) -- 0x03c5 0x20
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x03c8 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x03cb 0x4a
+        return 0 -- 0x03d1 0x00
     end,
 
     script_0x07 = function( self )
@@ -762,7 +767,7 @@ Actor[ "0x12" ] = {
         opcode36_VariableSetTrue( address=0x0406 ) -- 0x0401 0x36
         -- 0x07( actor_id=0x0c, script=0x64 ) -- 0x0404 0x07
         opcode26_Wait( time=10 ) -- 0x0407 0x26
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x0c, text_id=0x0004, ???=0x00 ) -- 0x040a 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x0c, text_id=0x0004, flags=0 ) -- 0x040a 0xfc
         opcode37_VariableSetFalse( address=0x0406 ) -- 0x0410 0x37
         return 0 -- 0x0413 0x00
     end,

@@ -79,11 +79,11 @@ Actor[ "0x03" ] = {
     end,
 
     on_update = function( self )
-        -- 0xD0() -- 0x00c3 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=17 ) -- 0x00c3 0xd0
         opcode26_Wait( time=30 ) -- 0x00ce 0x26
         -- 0x07( actor_id=0x04, script=0x04 ) -- 0x00d1 0x07
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00d4 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00d6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00d6 0xd2
         opcode9C_MessageSync() -- 0x00da 0x9c
         -- MISSING OPCODE 0xfb
     end,

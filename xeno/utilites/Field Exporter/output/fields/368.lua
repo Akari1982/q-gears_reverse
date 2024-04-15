@@ -234,7 +234,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x01ed 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x01ed 0xd2
         opcode9C_MessageSync() -- 0x01f1 0x9c
         return 0 -- 0x01f2 0x00
     end,
@@ -281,7 +281,7 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x01 ) -- 0x023e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x023e 0xd2
         opcode9C_MessageSync() -- 0x0242 0x9c
         return 0 -- 0x0243 0x00
     end,
@@ -328,7 +328,7 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x01 ) -- 0x028f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x028f 0xd2
         opcode9C_MessageSync() -- 0x0293 0x9c
         return 0 -- 0x0294 0x00
     end,
@@ -375,7 +375,7 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x01 ) -- 0x02e0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x02e0 0xd2
         opcode9C_MessageSync() -- 0x02e4 0x9c
         return 0 -- 0x02e5 0x00
     end,
@@ -423,7 +423,7 @@ Actor[ "0x08" ] = {
 
     script_0x08 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=308 ) -- 0x0331 0x74
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x01 ) -- 0x0334 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x0334 0xd2
         opcode9C_MessageSync() -- 0x0338 0x9c
         return 0 -- 0x0339 0x00
     end,

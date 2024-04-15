@@ -306,7 +306,7 @@ Actor[ "0x0c" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00a1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00a1 0xd2
         opcode9C_MessageSync() -- 0x00a5 0x9c
         return 0 -- 0x00a6 0x00
     end,
@@ -334,7 +334,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00b6 0x6f
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00b8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00b8 0xd2
         opcode9C_MessageSync() -- 0x00bc 0x9c
         opcode69_ActorSetRotation( rot=6 ) -- 0x00bd 0x69
         return 0 -- 0x00c0 0x00

@@ -46,7 +46,10 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x00a4 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x00a7 0x2c
+        -- 0xF6( ???=0x01 ) -- 0x00a9 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -54,7 +57,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x00f5 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00f7 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x07 = function( self )
@@ -70,7 +75,10 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x0158 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x015a 0x4a
+        -- 0x1F( ???=0x00 ) -- 0x0160 0x1f
+        return 0 -- 0x0162 0x00
     end,
 
     script_0x0a = function( self )
@@ -84,23 +92,33 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x0176 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0178 0x4a
+        return 0 -- 0x017e 0x00
     end,
 
     script_0x0d = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x017f 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0181 0x4a
+        return 0 -- 0x0187 0x00
     end,
 
     script_0x0e = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x0188 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x018a 0x4a
+        return 0 -- 0x0190 0x00
     end,
 
     script_0x0f = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x0191 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0193 0x4a
+        return 0 -- 0x0199 0x00
     end,
 
     script_0x10 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x019a 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x019c 0x4a
+        return 0 -- 0x01a2 0x00
     end,
 
 }
@@ -111,7 +129,8 @@ Actor[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x01a3 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x01a6 0xfe
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01aa 0x1f
+        return 0 -- 0x01ac 0x00
     end,
 
     on_update = function( self )
@@ -128,7 +147,10 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x01b0 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x01b3 0x2c
+        -- 0xF6( ???=0x01 ) -- 0x01b5 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -155,7 +177,8 @@ Actor[ "0x03" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x0247 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x024a 0xfe
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x024e 0x1f
+        return 0 -- 0x0250 0x00
     end,
 
     on_update = function( self )
@@ -172,7 +195,10 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0254 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x00 ) -- 0x0257 0x2c
+        -- 0xF6( ???=0x01 ) -- 0x0259 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -400,12 +426,15 @@ Actor[ "0x0a" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0465 0x21
+        opcode74_SoundPlayFixedVolume( sound_id=259 ) -- 0x0468 0x74
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=259 ) -- 0x0488 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x048b 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -433,11 +462,13 @@ Actor[ "0x0b" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x04e1 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x04fe 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -465,11 +496,13 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0551 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x056e 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )
@@ -505,7 +538,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x05d7 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x05d9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x05d9 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x05dd 0xa9
         opcode9C_MessageSync() -- 0x05df 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x063c ) -- 0x05e0 0x02
@@ -514,7 +547,7 @@ Actor[ "0x0d" ] = {
 
     on_push = function( self )
         -- 0xFE54() -- 0x05d7 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x05d9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x05d9 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x05dd 0xa9
         opcode9C_MessageSync() -- 0x05df 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x063c ) -- 0x05e0 0x02
@@ -538,7 +571,7 @@ Actor[ "0x0e" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x066e 0xfe
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0670 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0670 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x0674 0xa9
         opcode9C_MessageSync() -- 0x0676 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x06cb ) -- 0x0677 0x02
@@ -548,7 +581,7 @@ Actor[ "0x0e" ] = {
 
     on_push = function( self )
         -- 0xFE54() -- 0x066e 0xfe
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0670 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0670 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x0674 0xa9
         opcode9C_MessageSync() -- 0x0676 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x06cb ) -- 0x0677 0x02
@@ -862,7 +895,7 @@ Actor[ "0x19" ] = {
         -- 0x5B() -- 0x0769 0x5b
         -- 0x01_JumpTo( 0x0775 ) -- 0x076a 0x01
         opcode74_SoundPlayFixedVolume( sound_id=405 ) -- 0x076d 0x74
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0770 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0770 0xd2
         opcode9C_MessageSync() -- 0x0774 0x9c
         return 0 -- 0x0775 0x00
     end,
@@ -897,7 +930,7 @@ Actor[ "0x1a" ] = {
         -- 0x5B() -- 0x07a7 0x5b
         -- 0x01_JumpTo( 0x07b3 ) -- 0x07a8 0x01
         opcode74_SoundPlayFixedVolume( sound_id=405 ) -- 0x07ab 0x74
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x07ae 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x07ae 0xd2
         opcode9C_MessageSync() -- 0x07b2 0x9c
         return 0 -- 0x07b3 0x00
     end,

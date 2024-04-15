@@ -55,34 +55,34 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0000, ???=0x01 ) -- 0x0086 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x0086 0xfc
         -- 0x07( actor_id=0x03, script=0x67 ) -- 0x008c 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0001, ???=0x01 ) -- 0x008f 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x008f 0xfc
         -- 0x07( actor_id=0x06, script=0x64 ) -- 0x0095 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0002, ???=0x01 ) -- 0x0098 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x0098 0xfc
         -- 0x07( actor_id=0x03, script=0x6b ) -- 0x009e 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0003, ???=0x01 ) -- 0x00a1 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x00a1 0xfc
         -- 0x07( actor_id=0x03, script=0x66 ) -- 0x00a7 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0004, ???=0x01 ) -- 0x00aa 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0005, ???=0x01 ) -- 0x00b0 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0006, ???=0x01 ) -- 0x00b6 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0007, ???=0x11 ) -- 0x00bc 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0008, ???=0x11 ) -- 0x00c2 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x00aa 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0005, flags=CLOSE_OFF_SCREEN ) -- 0x00b0 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0006, flags=CLOSE_OFF_SCREEN ) -- 0x00b6 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0007, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00bc 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0008, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00c2 0xfc
         -- 0x07( actor_id=0x02, script=0x67 ) -- 0x00c8 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0009, ???=0x11 ) -- 0x00cb 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x000a, ???=0x11 ) -- 0x00d1 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0009, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00cb 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x000a, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00d1 0xfc
         -- 0x07( actor_id=0x02, script=0x66 ) -- 0x00d7 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x000b, ???=0x11 ) -- 0x00da 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x000b, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00da 0xfc
         -- 0x07( actor_id=0x03, script=0x68 ) -- 0x00e0 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x000c, ???=0x11 ) -- 0x00e3 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x000c, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00e3 0xfc
         -- 0x07( actor_id=0x02, script=0x6c ) -- 0x00e9 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x000d, ???=0x11 ) -- 0x00ec 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00ec 0xfc
         -- 0x07( actor_id=0x03, script=0x69 ) -- 0x00f2 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x000e, ???=0x11 ) -- 0x00f5 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x000e, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x00f5 0xfc
         opcode26_Wait( time=60 ) -- 0x00fb 0x26
         -- 0x07( actor_id=0x02, script=0x69 ) -- 0x00fe 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x000f, ???=0x11 ) -- 0x0101 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0010, ???=0x11 ) -- 0x0107 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x000f, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0101 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0010, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0107 0xfc
         opcode26_Wait( time=60 ) -- 0x010d 0x26
         -- 0x07( actor_id=0x02, script=0x68 ) -- 0x0110 0x07
         -- 0x60() -- 0x0113 0x60
@@ -91,10 +91,10 @@ Actor[ "0x01" ] = {
         opcodeA3() -- 0x011d 0xa3
         opcodeAC_MoveCamera( control=0x01, steps=200 ) -- 0x0125 0xac
         opcodeAC_MoveCamera( control=0x00, steps=200 ) -- 0x0129 0xac
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0011, ???=0x11 ) -- 0x012d 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0011, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x012d 0xfc
         -- 0x07( actor_id=0x03, script=0x6a ) -- 0x0133 0x07
         opcode09_ActorCallScriptEW( actor_id=0x02, script=0a, priority=03 ) -- 0x0136 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0012, ???=0x11 ) -- 0x0139 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0012, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0139 0xfc
         -- 0x07( actor_id=0x03, script=0x6c ) -- 0x013f 0x07
         -- 0x07( actor_id=0x02, script=0x6b ) -- 0x0142 0x07
         return 0 -- 0x0145 0x00
@@ -120,7 +120,8 @@ Actor[ "0x02" ] = {
         -- 0x16_ActorPCInit( char_id=0 ) -- 0x01f3 0x16
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x01f6 0xfe
         -- 0x19_ActorSetPosition( x=(vf80)0x0060, z=(vf40)0xfcbe, flag=(flag)0xc0 ) -- 0x01fa 0x19
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1024 ) -- 0x0200 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -155,7 +156,8 @@ Actor[ "0x02" ] = {
 
     script_0x07 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0241 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0243 0x21
+        -- MISSING OPCODE 0x53
     end,
 
     script_0x08 = function( self )
@@ -184,7 +186,11 @@ Actor[ "0x02" ] = {
         opcode26_Wait( time=10 ) -- 0x027f 0x26
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0282 0x2c
         opcode26_Wait( time=0 ) -- 0x0284 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x0050, z=(vf40)0xfd1b, y=(vf20)0xfac4, ???=(vf10)0x0014, flag=0xf0 ) -- 0x0287 0x57
+        -- 0x57( type=0x8f ) -- 0x0292 0x57
+        opcode26_Wait( time=1 ) -- 0x0294 0x26
+        -- 0x57( type=0x0f ) -- 0x0297 0x57
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x0c = function( self )
@@ -201,7 +207,8 @@ Actor[ "0x03" ] = {
         -- 0x16_ActorPCInit( char_id=1 ) -- 0x02d3 0x16
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x02d6 0xfe
         -- 0x19_ActorSetPosition( x=(vf80)0x0092, z=(vf40)0xfcbe, flag=(flag)0xc0 ) -- 0x02da 0x19
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1024 ) -- 0x02e0 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -218,8 +225,8 @@ Actor[ "0x03" ] = {
 
     script_0x04 = function( self )
         opcode37_VariableSetFalse( address=0x042e ) -- 0x02f0 0x37
-        -- 0xD0() -- 0x02f3 0xd0
-        opcodeD2_MessageShow0( text_id=0x0013, ???=0x43 ) -- 0x02fe 0xd2
+        opcodeD0_MessageSettings( x=30, y=40, letters=0, rows=0, flags=0 ) -- 0x02f3 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0013, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x02fe 0xd2
         opcode9C_MessageSync() -- 0x0302 0x9c
         opcode36_VariableSetTrue( address=0x042e ) -- 0x0303 0x36
         return 0 -- 0x0306 0x00
@@ -281,7 +288,10 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=7 ) -- 0x0347 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x0042, z=(vf40)0xfd2e, flag=(flag)0xc0 ) -- 0x034a 0x19
+        opcodeFE03( ???=1280 ) -- 0x0350 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -371,7 +381,10 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=1 ) -- 0x049c 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x00d9, z=(vf40)0xfd2f, flag=(flag)0xc0 ) -- 0x049f 0x19
+        opcodeFE03( ???=1280 ) -- 0x04a5 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )

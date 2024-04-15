@@ -119,10 +119,10 @@ Actor[ "0x04" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0067 0x6f
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x0079 ) -- 0x0069 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0071 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0071 0xd2
         opcode9C_MessageSync() -- 0x0075 0x9c
         -- 0x01_JumpTo( 0x007e ) -- 0x0076 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0079 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0079 0xd2
         opcode9C_MessageSync() -- 0x007d 0x9c
         return 0 -- 0x007e 0x00
     end,

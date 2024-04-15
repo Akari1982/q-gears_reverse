@@ -79,19 +79,31 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00a3 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00a6 0x4a
+        -- 0x21( ???=256 ) -- 0x00ac 0x21
+        return 0 -- 0x00af 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00b0 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00b3 0x4a
+        -- 0x21( ???=256 ) -- 0x00b9 0x21
+        return 0 -- 0x00bc 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00bd 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00c0 0x4a
+        -- 0x21( ???=256 ) -- 0x00c6 0x21
+        return 0 -- 0x00c9 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00ca 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00cd 0x4a
+        -- 0x21( ???=256 ) -- 0x00d3 0x21
+        return 0 -- 0x00d6 0x00
     end,
 
 }

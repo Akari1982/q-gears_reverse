@@ -101,11 +101,13 @@ Actor[ "0x04" ] = {
 
     script_0x04 = function( self )
         opcode35_VariableSet( address=0x0400, value=(vf40)0x03e8, flag=0x40 ) -- 0x0085 0x35
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x008b 0x21
+        -- MISSING OPCODE 0x11
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x00b5 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )
@@ -188,7 +190,8 @@ Actor[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x02e3 0xbc
         -- 0x2A() -- 0x02e4 0x2a
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=768 ) -- 0x02e5 0x21
+        -- MISSING OPCODE 0x58
     end,
 
     on_update = function( self )
@@ -211,7 +214,8 @@ Actor[ "0x08" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x030c 0xbc
         -- 0x2A() -- 0x030d 0x2a
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=768 ) -- 0x030e 0x21
+        -- MISSING OPCODE 0x58
     end,
 
     on_update = function( self )
@@ -238,7 +242,8 @@ Actor[ "0x09" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=20 ) -- 0x0338 0xbf
+        return 0 -- 0x033b 0x00
     end,
 
     on_talk = function( self )
@@ -261,7 +266,8 @@ Actor[ "0x0a" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=17 ) -- 0x033f 0xbf
+        return 0 -- 0x0342 0x00
     end,
 
     on_talk = function( self )
@@ -284,7 +290,8 @@ Actor[ "0x0b" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=25 ) -- 0x0346 0xbf
+        return 0 -- 0x0349 0x00
     end,
 
     on_talk = function( self )
@@ -307,7 +314,8 @@ Actor[ "0x0c" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=16 ) -- 0x034d 0xbf
+        return 0 -- 0x0350 0x00
     end,
 
     on_talk = function( self )
@@ -330,7 +338,8 @@ Actor[ "0x0d" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=20 ) -- 0x0354 0xbf
+        return 0 -- 0x0357 0x00
     end,
 
     on_talk = function( self )
@@ -353,7 +362,8 @@ Actor[ "0x0e" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=12 ) -- 0x035b 0xbf
+        return 0 -- 0x035e 0x00
     end,
 
     on_talk = function( self )
@@ -376,7 +386,8 @@ Actor[ "0x0f" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=13 ) -- 0x0362 0xbf
+        return 0 -- 0x0365 0x00
     end,
 
     on_talk = function( self )
@@ -399,7 +410,8 @@ Actor[ "0x10" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=25 ) -- 0x0369 0xbf
+        return 0 -- 0x036c 0x00
     end,
 
     on_talk = function( self )
@@ -422,7 +434,8 @@ Actor[ "0x11" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=16 ) -- 0x0370 0xbf
+        return 0 -- 0x0373 0x00
     end,
 
     on_talk = function( self )
@@ -445,7 +458,8 @@ Actor[ "0x12" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=20 ) -- 0x0377 0xbf
+        return 0 -- 0x037a 0x00
     end,
 
     on_talk = function( self )

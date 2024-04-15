@@ -54,11 +54,15 @@ Actor[ "0x01" ] = {
 
 Actor[ "0x02" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=8 ) -- 0x0097 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xfe75, flag=(flag)0xc0 ) -- 0x009a 0x19
+        opcodeFE03( ???=8000 ) -- 0x00a0 0xfe
+        return 0 -- 0x00a4 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=2047 ) -- 0x00a5 0xfe
+        -- MISSING OPCODE 0x5f
     end,
 
     on_talk = function( self )
@@ -709,11 +713,15 @@ Actor[ "0x18" ] = {
 
 Actor[ "0x19" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=2 ) -- 0x0673 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0048, z=(vf40)0xfab3, flag=(flag)0xc0 ) -- 0x0679 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0682 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0685 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
     on_talk = function( self )

@@ -101,7 +101,9 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=1 ) -- 0x006c 0xfe
+        -- 0xFE07( ???=0x01 ) -- 0x0072 0xfe
+        -- MISSING OPCODE 0x85
     end,
 
     on_update = function( self )
@@ -131,7 +133,8 @@ Actor[ "0x04" ] = {
         opcode24_ActorEnable( actor_id=(entity)0x43 ) -- 0x0683 0x24
         opcode24_ActorEnable( actor_id=(entity)0x44 ) -- 0x0685 0x24
         opcode74_SoundPlayFixedVolume( sound_id=34 ) -- 0x0687 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x068a 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -140,7 +143,9 @@ Actor[ "0x04" ] = {
 
 Actor[ "0x05" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=1 ) -- 0x06a3 0xfe
+        -- 0xFE07( ???=0x01 ) -- 0x06a9 0xfe
+        -- MISSING OPCODE 0x29
     end,
 
     on_update = function( self )
@@ -170,7 +175,8 @@ Actor[ "0x05" ] = {
         opcode24_ActorEnable( actor_id=(entity)0x43 ) -- 0x0cb5 0x24
         opcode24_ActorEnable( actor_id=(entity)0x44 ) -- 0x0cb7 0x24
         opcode74_SoundPlayFixedVolume( sound_id=34 ) -- 0x0cb9 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x0cbc 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -179,7 +185,9 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=1 ) -- 0x0cd5 0xfe
+        -- 0xFE07( ???=0x01 ) -- 0x0cdb 0xfe
+        -- MISSING OPCODE 0x85
     end,
 
     on_update = function( self )
@@ -209,7 +217,8 @@ Actor[ "0x06" ] = {
         opcode24_ActorEnable( actor_id=(entity)0x43 ) -- 0x12eb 0x24
         opcode24_ActorEnable( actor_id=(entity)0x44 ) -- 0x12ed 0x24
         opcode74_SoundPlayFixedVolume( sound_id=34 ) -- 0x12ef 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x12f2 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

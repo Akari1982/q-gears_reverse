@@ -13,7 +13,6 @@ V0 = w[800ADB78 + V0 * 4];
 00 8008C8AC
 01 8009E9B4
 02 80095110
-03 8008C6C8
 04 8008C840
 05 80095298
 06 80095340
@@ -26,7 +25,6 @@ V0 = w[800ADB78 + V0 * 4];
 11 8008C120
 12 8008C248
 14 8008C3A8
-15 800A0A80
 16 8008BDAC
 17 80099FD4
 18 8008B3AC
@@ -59,7 +57,6 @@ V0 = w[800ADB78 + V0 * 4];
 38 8008D788
 39 8008C804
 3b 8008C438
-3c 8008A754
 3d 8008A49C
 3e 8008A5AC
 3f 8008A6BC
@@ -68,7 +65,6 @@ V0 = w[800ADB78 + V0 * 4];
 43 8009A730
 44 8009A758
 46 8008A430
-47 8008A718
 48 8008AAEC
 49 8008D0D0
 4C 80089F48
@@ -3954,58 +3950,54 @@ RA = w[SP + 0010];
 8008A710	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func8a718
-8008A718	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008A720	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-V1 = w[800af54c];
-[800b1688] = h(V0);
-V0 = hu[V1 + 00cc];
-8008A73C	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008A74C	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
-// func8a754
-V0 = w[800acff4];
-8008A75C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-8008A764	beq    v0, zero, L8a7b4 [$8008a7b4]
-[SP + 0010] = w(S0);
-8008A76C	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-A0 = 0003;
-8008A778	jal    field_script_help_read_v80 [$800ac2c4]
-S0 = V0 & ffff;
-A0 = S0;
-A1 = 0;
-8008A788	jal    $801e8330
-A2 = V0;
-8008A790	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-A0 = 0003;
-8008A79C	jal    field_script_help_read_v80 [$800ac2c4]
-S0 = V0;
-S0 = S0 << 01;
-8008A7A8	lui    at, $800b
-AT = AT + S0;
-[AT + 16b8] = h(V0);
 
-L8a7b4:	; 8008A7B4
+
+
+////////////////////////////////
+// field_script_opFE47()
+
+A0 = 1;
+field_script_help_read_v80();
+[800b1688] = h(V0);
+
 V1 = w[800af54c];
-8008A7BC	nop
-V0 = hu[V1 + 00cc];
-8008A7C4	nop
-V0 = V0 + 0005;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008A7DC	jr     ra 
-8008A7E0	nop
+[V1 + cc] = h(hu[V1 + cc] + 3);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_script_opFE3C()
+
+if( w[800acff4] != 0 )
+{
+    A0 = 1;
+    field_script_help_read_v80();
+    S0 = V0 & ffff;
+
+    A0 = 3;
+    field_script_help_read_v80();
+
+    A0 = S0;
+    A1 = 0;
+    A2 = V0;
+    func1e8330();
+
+    A0 = 1;
+    field_script_help_read_v80();
+    S0 = V0;
+
+    A0 = 3;
+    field_script_help_read_v80();
+    [800b16b8 + S0 * 2] = h(V0);
+}
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + 5);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8a7e4
 8008A7E4	addiu  sp, sp, $ffe8 (=-$18)
@@ -5848,38 +5840,31 @@ RA = w[SP + 0010];
 8008C6C0	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func8c6c8
-8008C6C8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008C6D0	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-A0 = w[800af1f0];
+
+
+
+////////////////////////////////
+// field_script_opFE03()
+
+A0 = 1;
+field_script_help_read_v80();
+
+entity_id_cur = w[800af1f0];
 A1 = w[800aefe4];
-V1 = A0 << 01;
-V1 = V1 + A0;
-V1 = V1 << 03;
-V1 = V1 - A0;
-V1 = V1 << 02;
-V1 = V1 + A1;
-A1 = V0 << 01;
-A1 = A1 + V0;
-A2 = w[V1 + 0004];
-V1 = w[800af54c];
-A1 = A1 >> 02;
-[A2 + 002c] = h(A1);
-[V1 + 00f4] = h(V0);
-[V1 + 00f6] = h(V0);
-8008C724	jal    func718e4 [$800718e4]
-[V1 + 00f8] = h(V0);
-V1 = w[800af54c];
-8008C734	nop
-V0 = hu[V1 + 00cc];
-8008C73C	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008C74C	jr     ra 
-SP = SP + 0018;
+A2 = w[A1 + entity_id_cur * 5c + 4];
+struct_138_cur = w[800af54c];
+
+[A2 + 2c] = h(V0 * c);
+[struct_138_cur + f4] = h(V0);
+[struct_138_cur + f6] = h(V0);
+[struct_138_cur + f8] = h(V0);
+func718e4();
+
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 3);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8c754
 8008C754	addiu  sp, sp, $ffe0 (=-$20)
@@ -12321,7 +12306,7 @@ else
 }
 
 A0 = entity_id;
-80093714	jal    func718e4 [$800718e4]
+func718e4();
 ////////////////////////////////
 
 
@@ -12473,14 +12458,7 @@ V0 = V0 + 0007;
 
 L93958:	; 80093958
 A0 = w[800af1f0];
-80093960	jal    func718e4 [$800718e4]
-80093964	nop
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80093978	jr     ra 
-8009397C	nop
+func718e4();
 ////////////////////////////////
 
 
@@ -12621,14 +12599,7 @@ V0 = V0 + 0007;
 
 L93b80:	; 80093B80
 A0 = w[800af1f0];
-80093B88	jal    func718e4 [$800718e4]
-80093B8C	nop
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80093BA0	jr     ra 
-80093BA4	nop
+func718e4();
 ////////////////////////////////
 
 
@@ -12853,21 +12824,16 @@ L93ea8:	; 80093EA8
 L93eac:	; 80093EAC
 80093EAC	jal    field_script_help_read_entity [$8009c344]
 A0 = 0002;
-80093EB4	jal    func718e4 [$800718e4]
+
 A0 = V0;
+func718e4();
+
 
 L93ebc:	; 80093EBC
 V1 = w[800af54c];
-80093EC4	nop
 V0 = hu[V1 + 00cc];
-80093ECC	nop
 V0 = V0 + 0005;
 [V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80093EE4	jr     ra 
-80093EE8	nop
 ////////////////////////////////
 
 
@@ -13011,70 +12977,47 @@ A1 = A1 - V0;
 [V1 + 0050] = h(A1);
 [A2 + 00cc] = h(hu[A2 + 00cc] + 3);
 
-800940F8	jal    func718e4 [$800718e4]
+func718e4();
 
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func94110
-80094110	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80094118	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-A0 = w[800af1f0];
+// field_script_opBF()
+
+A0 = 1;
+field_script_help_read_v80();
+
+entity_id_cur = w[800af1f0];
 A1 = w[800aefe4];
-V1 = A0 << 01;
-V1 = V1 + A0;
-V1 = V1 << 03;
-V1 = V1 - A0;
-V1 = V1 << 02;
-V1 = V1 + A1;
-A1 = hu[V1 + 0052];
+[A1 + entity_id_cur * 5c + 52] = h(hu[A1 + entity_id_cur * 5c + 52] + V0);
+
 A2 = w[800af54c];
-A1 = A1 + V0;
-[V1 + 0052] = h(A1);
-V0 = hu[A2 + 00cc];
-80094160	nop
-V0 = V0 + 0003;
-80094168	jal    func718e4 [$800718e4]
-[A2 + 00cc] = h(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80094178	jr     ra 
-8009417C	nop
+[A2 + cc] = h(hu[A2 + cc] + 3);
+
+A0 = entity_id_cur;
+func718e4();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func94180
-80094180	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80094188	jal    field_script_help_read_v80 [$800ac2c4]
-A0 = 0001;
-A0 = w[800af1f0];
+// field_script_opC0()
+
+A0 = 1;
+field_script_help_read_v80();
+
+entity_id_cur = w[800af1f0];
+
 A1 = w[800aefe4];
-V1 = A0 << 01;
-V1 = V1 + A0;
-V1 = V1 << 03;
-V1 = V1 - A0;
-V1 = V1 << 02;
-V1 = V1 + A1;
-A1 = hu[V1 + 0052];
+[A1 + entity_id_cur * 5c + 52] = h(hu[A1 + entity_id_cur * 5c + 52] - V0);
+
 A2 = w[800af54c];
-A1 = A1 - V0;
-[V1 + 0052] = h(A1);
-V0 = hu[A2 + 00cc];
-800941D0	nop
-V0 = V0 + 0003;
-800941D8	jal    func718e4 [$800718e4]
-[A2 + 00cc] = h(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800941E8	jr     ra 
-800941EC	nop
+[A2 + cc] = h(hu[A2 + cc] + 3);
+
+A0 = entity_id_cur;
+func718e4();
 ////////////////////////////////
 
 
@@ -17925,7 +17868,7 @@ else if( A0 == 2 )
 }
 else if( A0 == 3 )
 {
-    if( V1 == f )
+    if( V1 == 0f )
     {
         for( int i = 0; i < h[800af028] - 1; ++i ) // go through all walkmeshes
         {
@@ -20063,60 +20006,45 @@ struct_138 = w[800af54c];
 
 
 ////////////////////////////////
-// func9af74
-V0 = h[800aeeca];
-8009AF7C	addiu  sp, sp, $ffe8 (=-$18)
-8009AF80	bne    v0, zero, L9afd0 [$8009afd0]
-[SP + 0010] = w(RA);
-8009AF88	jal    func99ae8 [$80099ae8]
-8009AF8C	nop
-V1 = w[800aeecc];
-A0 = hu[800aeed0];
-A1 = w[800af54c];
-[800aef1c] = h(V0);
-[800aef20] = w(V1);
-[800aef24] = h(A0);
-V0 = hu[A1 + 00cc];
-8009AFC4	nop
-V0 = V0 + 0001;
-[A1 + 00cc] = h(V0);
+// func9af74()
 
-L9afd0:	; 8009AFD0
-RA = w[SP + 0010];
-SP = SP + 0018;
-8009AFD8	jr     ra 
-8009AFDC	nop
+if( h[800aeeca] == 0 )
+{
+    func99ae8();
+    cam_rot = V0;
+
+    [800aef1c] = h(cam_rot);
+    [800aef20] = w(w[800aeecc]);
+    [800aef24] = h(hu[800aeed0]);
+
+    A1 = w[800af54c];
+    [A1 + cc] = h(hu[A1 + cc] + 1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func9afe0
-V0 = h[800aeeca];
-8009AFE8	addiu  sp, sp, $ffe8 (=-$18)
-8009AFEC	bne    v0, zero, L9b040 [$8009b040]
-[SP + 0010] = w(RA);
-A0 = h[800aef1c];
-8009AFFC	jal    func9acdc [$8009acdc]
-A1 = 0020;
-A0 = w[800aef20];
-8009B00C	jal    func9a410 [$8009a410]
-A1 = 0020;
-A0 = h[800aef24];
-8009B01C	jal    func999f4 [$800999f4]
-A1 = 0020;
-V1 = w[800af54c];
-8009B02C	nop
-V0 = hu[V1 + 00cc];
-8009B034	nop
-V0 = V0 + 0001;
-[V1 + 00cc] = h(V0);
+// func9afe0()
 
-L9b040:	; 8009B040
-RA = w[SP + 0010];
-SP = SP + 0018;
-8009B048	jr     ra 
-8009B04C	nop
+if( h[800aeeca] == 0 )
+{
+    A0 = h[800aef1c];
+    A1 = 20;
+    func9acdc();
+
+    A0 = w[800aef20];
+    A1 = 20;
+    func9a410();
+
+
+    A0 = h[800aef24];
+    A1 = 20;
+    func999f4();
+
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 1);
+}
 ////////////////////////////////
 
 
@@ -20152,621 +20080,26 @@ V1 = w[800af54c];
 
 
 
-////////////////////////////////
-// field_script_op9C_message_sync()
 
-struct_138 = w[800af54c];
 
-A0 = SP + 10;
-field_script_help_message_find_for_current_entity();
 
-if( V0 == -1 ) // if this entity don't have opened dialogs
-{
-    [800af150] = w(w[800af150] + 8); // increase number of executed opcodes
 
-    A0 = 14;
-    A1 = bu[struct_138 + 81];
-    field_script_help_write_bytes_to_800C2F3C();
 
-    [struct_138 + cc] = h(hu[struct_138 + cc] + 1);
-}
-else
-{
-    message_id = w[SP + 10];
-    entity_id = h[800c1b6c + message * 498 + 418];
-    V0 = w[800aefe4];
-    V0 = w[V0 + entity_id * 5c + 4c];
 
-    // if target entity not on screen close dialog and related entity script
-    if( w[V0 + 4] & 00000200 )
-    {
-        V1 = w[struct_138 + 84];
-        if( ( V1 >> 10 ) == 0 )
-        {
-            V0 = V1 & ffff;
-        }
-        else
-        {
-            V0 = (V1 >> 10) & ffff;
-        }
 
-        if( ( V0 & 0001 ) == 0 )
-        {
-            slot_id = bu[struct_138 + ce]; // current script slot id
-            script_priority = (w[struct_138 + 8c + slot_id * 8 + 4] >> 12) & f;
-            if( script_priority != 7 )
-            {
-                // end this entity script execution
-                funca1100(); // this is return opcode
-            }
-
-            [800c1b6c + message * 498 + 414] = h(0); // close window
-        }
-    }
-
-    [800af594] = w(1); // wait
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opA9_message_set_selection_sync()
-
-struct_138 = w[800af54c];
-
-A0 = SP + 10;
-field_script_help_message_find_for_current_entity();
-
-if( V0 == 0 )
-{
-    message_id = w[SP + 10];
-
-    [800af150] = w(w[800af150] + 8); // increase number of executed opcodes
-
-    A0 = 800c1b6c + message_id * 498 + 18;
-    func33af4(); // get state of text
-
-    if( V0 != 1 )
-    {
-        // if wait timer 0
-        // if end of text opcode is not met
-        if( ( h[800c1b6c + message_id * 498 + 18 + 84] == 0 ) || ( bu[800c1b6c + message_id * 498 + 18 + 6c] == 0 ) )
-        {
-            [800af594] = w(1);
-            return;
-        }
-    }
-
-    [struct_138 + 81] = b(ff); // stored cursor value
-
-    A0 = w[800ad0d8];
-    V0 = hu[struct_138 + cc] + A0;
-    val = bu[V0 + 1];
-    A1 = val >> 4;
-    [800c1b6c + message_id * 498 + 37c] = h(0); // show cursor
-    [800c1b6c + message_id * 498 + 37e] = h(A1); // start cursor pos
-    [800c1b6c + message_id * 498 + 380] = h((val & f) - A1 + 1); // max cursor pos
-    [800c1b6c + message_id * 498 + 382] = h(0); // current cursor pos
-
-    A0 = 800c1b6c + message_id * 498 + 18;
-    A1 = ef;
-    A2 = 1e;
-    A3 = f0;
-    func34624();
-}
-
-[struct_138 + cc] = h(hu[struct_138 + cc] + 2);
-[800af594] = w(1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func9b42c()
-
-func99ae8();
-
-struct_138_cur = w[800af54c];
-
-V1 = w[struct_138_cur + 12c];
-V0 = V0 & ffff;
-V1 = V1 >> 09;
-V1 = V1 & 0007;
-V1 = V1 - V0;
-V1 = V1 & 0007;
-return V1 < 5;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opF4_message_close()
-
-struct_138_cur = w[800af54c];
-V1 = w[800ad0d8] + hu[struct_138_cur + cc];
-
-if( bu[V1 + 1] == 0 )
-{
-    A0 = SP + 10;
-    field_script_help_message_find_for_current_entity();
-
-    if( V0 == 0 )
-    {
-        V1 = w[SP + 10];
-        [800c1b6c + V1 * 498 + 414] = h(0); // close message
-    }
-}
-else
-{
-    [struct_138_cur + 82] = b(0);
-    [struct_138_cur + 83] = b(0);
-    [struct_138_cur + 84] = w(0);
-    [struct_138_cur + 88] = h(0);
-    [struct_138_cur + 8a] = h(0);
-}
-
-[struct_138_cur + cc] = h([struct_138_cur + cc] + 2);
-
-[800af594] = w(1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opFC_message_show_e_copy_face()
-
-struct_138_cur = w[800af54c];
-
-A0 = 1;
-field_script_help_read_entity();
-
-if( V0 != ff )
-{
-    struct_5c_p = w[800aefe4];
-    struct_138 = w[struct_5c_p + V0 * 5c + 4c];
-    [struct_138_cur + 80] = b(bu[struct_138 + 80]);
-
-    field_script_opD4_message_show_e();
-}
-else
-{
-    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 6);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opD4_message_show_e()
-
-struct_138_cur = w[800af54c];
-
-A0 = 1;
-field_script_help_read_entity();
-
-if( V0 != ff )
-{
-    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 1);
-
-    A0 = V0; // entity_id
-    A1 = 0;
-    func9bb7c();
-
-    if( V0 == -1 )
-    {
-        [struct_138_cur + cc] = h(hu[struct_138_cur + cc] - 1);
-    }
-}
-else
-{
-    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 6);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opD2_message_show_0()
-
-A0 = w[800af1f0]; // current entity id
-A1 = 0;
-func9bb7c();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opD3_message_show_1()
-
-A0 = w[800af1f0]; // current entity id
-A1 = 1;
-func9bb7c();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_op03_message_show_2()
-
-A0 = w[800af1f0]; // current entity id
-A1 = 2;
-func9bb7c();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_script_opF5_message_show_3()
-
-A0 = w[8009f1f0];
-A1 = 3;
-func9bb7c();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func9bb7c()
-
-entity_id = A0;
-type = A1;
-
-struct_138_cur = w[800af54c];
-
-[800af150] = w(w[800af150] + 20); // increase number of opcodes in current script
-
-if( ( w[800ad004] != 0 ) || ( w[800af1d8] != 0 ) || ( w[800c373c] != 0 ) || ( w[800ad03c] != ff ) )
-{
-    [800af594] = w(1); // wait
-    return -1;
-}
-
-if( w[800ad048] == 0 )
-{
-    func89b2c(); // cdrom data sync
-    if( V0 != 0 )
-    {
-        [800af594] = w(1); // wait
-        return -1;
-    }
-}
-
-face_id = bu[struct_138_cur + 80];
-if( face_id != ff )
-{
-    A0 = face_id;
-    field_script_help_message_load_face();
-    if( V0 == -1 ) // face not ready
-    {
-        [800af594] = w(1); // wait
-        return -1;
-    }
-}
-
-[800c373c] = w(w[800c373c] + 1); // message is currently opening
-
-A0 = SP + 30;
-field_script_help_message_find_for_current_entity();
-if( V0 != -1 ) // if already opened
-{
-    // close and wait
-    window_id = w[SP + 30];
-    [800c1b6c + window_id * 498 + 414] = h(0);
-    [800af594] = w(1); // wait
-    return -1;
-}
-
-[800af150] = w(w[800af150] + 8); // increase number of opcodes in current script
-
-A0 = 1;
-field_script_help_read_u16();
-text_id = V0;
-
-field_message_find_free_slot();
-if( V0 != 0 ) // if not found
-{
-    // close lowest message and wait
-    field_message_find_lowest_opened_slot();
-    window_id = V0;
-    if( window_id != ffff )
-    {
-        [800c1b6c + V0 * 498 + 414] = h(0);
-        [800af594] = w(1); // wait
-        return -1;
-    }
-}
-
-field_message_open_new_slot_on_top();
-window_id = V0;
-
-enabled_mes_num = 0;
-enabled_mes_flags = 0;
-for( int i = 0; i < 4; ++i )
-{
-    if( h[800c1b6c + i * 498 + 40e] == 0 ) // enabled message
-    {
-        ++enabled_mes_num;
-        enabled_mes_flags |= h[800c1b6c + i * 498 + 40c];
-    }
-}
-
-A0 = w[800ad0c8];
-A1 = text_id;
-system_message_get_width();
-message_w = V0;
-
-A0 = w[800ad0c8];
-A1 = text_id;
-system_message_get_rows();
-message_rows = V0;
-
-entity_cur_flags = w[struct_138_cur + 84];
-[struct_138_cur + 84] = w(entity_cur_flags & 0000ffff);
-flags2 = entity_cur_flags & 0000ffff;
-
-// read last byte in opcode
-V0 = w[800ad0d8] + hu[struct_138_cur + cc];
-if( bu[V0 + 3] != 0 )
-{
-    flags2 = (entity_cur_flags & ff00) | bu[V0 + 3];
-    [struct_138_cur + 84] = w((flags2 << 10) | (entity_cur_flags & 0000ffff));
-}
-
-V1 = (flags2 >> 4) & 3;
-
-message_y = 10;
-
-func99ae8();
-cam_rot = V0;
-int_rot = (((w[struct_138_cur + 12c] >> 9) & 7) - cam_rot) & 7;
-
-// message on top
-if( ( V1 == 1 ) ||
-  ( ( V1 == 0 ) && ( ( ( int_rot < 5 ) && ( enabled_mes_flags & 0080 ) ) ||
-                     ( ( int_rot >= 5 ) && ( cam_rot == 0 ) && ( enabled_mes_num == 0 ) ) ) )
-{
-    [800c1f78 + window_id * 498 + 40c] = h(0001);
-
-    if( ( type == 0 ) || ( type == 3 ) )
-    {
-        A0 = entity_id;
-        A1 = SP + 34; // x
-        A2 = SP + 38; // y
-        A3 = -40; // offset
-        field_message_get_entity_screen_pos();
-
-        if( type == 0 )
-        {
-            middle_x = w[SP + 34];
-            message_y = w[SP + 38] - message_rows * e - 24; // move entity y by dialog height
-        }
-        else
-        {
-            middle_x = a0;
-            message_y = 14;
-        }
-
-        if( bu[struct_138_cur + 80] != ff ) // if there is face
-        {
-            if( ( flags2 & 0002 ) == 0 )
-            {
-                message_y = 10;
-                if( message_w < 18 ) message_w = 18;
-                message_w = message_w + 11;
-                message_rows = 4;
-            }
-        }
-    }
-    else // default top
-    {
-        middle_x = a0;
-        message_y = 10;
-        message_w = 48;
-        message_rows = 4;
-    }
-}
-// message on bottom
-else if( ( V1 == 2 ) ||
-       ( ( V1 == 0 ) && ( ( ( int_rot < 5 ) && ( ( enabled_mes_flags & 0080 ) == 0 ) ) ||
-                          ( ( int_rot >= 5 ) && ( ( cam_rot != 0 ) || ( enabled_mes_num != 0 ) ) ) ) )
-{
-    [800c1f78 + window_id * 498 + 40c] = h(0081);
-
-    if( ( type == 0 ) || ( type == 3 ) )
-    {
-        A0 = entity_id;
-        A1 = SP + 34;
-        A2 = SP + 38;
-        A3 = -40;
-        field_message_get_entity_screen_pos();
-
-        if( type == 0 )
-        {
-            middle_x = w[SP + 34];
-            message_y = w[SP + 38] + 30;
-        }
-        else
-        {
-            middle_x = a0;
-            message_y = 94;
-        }
-
-        if( bu[struct_138_cur + 80] != ff ) // if there is face
-        {
-            if( ( flags2 & 0002 ) == 0 )
-            {
-                message_y = 94;
-                if( message_w < 18 ) message_w = 18;
-                message_w = message_w + 11;
-                message_rows = 4;
-            }
-        }
-    }
-    else // default bottom
-    {
-        middle_x = a0;
-        message_y = 94;
-        message_w = 48;
-        message_rows = 4;
-    }
-}
-
-message_x = middle_x - (message_w * 4) / 2 - 8;
-
-if( message_x < c ) message_x = c;
-
-if( ( message_x + message_w * 4 ) >= 125 ) message_x = 124 - message_w * 4; // calculate in pixels
-
-if( message_y < 10 ) message_y = 10;
-
-if( ( message_y + message_rows * e ) >= cd ) message_y = сс - message_rows * e;
-
-if( ( type == 0 ) || ( type == 3 ) )
-{
-    if( h[struct_138_cur + 88] != 0 ) message_x = h[struct_138_cur + 88];
-    if( h[struct_138_cur + 8a] != 0 ) message_y = h[struct_138_cur + 8a];
-    if( bu[struct_138_cur + 82] != 0 ) message_w = bu[struct_138_cur + 82];
-    if( bu[struct_138_cur + 83] != 0 ) message_rows = bu[struct_138_cur + 83];
-    if( bu[struct_138_cur + 80] != ff ) // if there is face
-    {
-        if( ( flags2 & 0002 ) == 0 )
-        {
-            message_rows = 4;
-        }
-    }
-}
-
-if( flags2 & 0040 )
-{
-    [800c1b6c + window_id * 498 + 40c] = h(hu[800c1b6c + window_id * 498 + 40c] | 0040); // don't render border and background and continue arrow
-}
-
-if( flags2 & 000c )
-{
-    if( flags2 & 0004 )
-    {
-        flags1 = 0400;
-    }
-    else
-    {
-        flags1 = 0000;
-    }
-}
-else
-{
-    func99ae8();
-
-    A0 = w[800aefe4];
-    V1 = w[A0 + entity_id * 5c + 4c];
-    V1 = ((h[V1 + 106] >> 9) - V0) + 1;
-    if( ( V1 & 7 ) < 4 )
-    {
-        flags1 = 0000;
-    }
-    else
-    {
-        flags1 = 0400;
-    }
-
-}
-
-A0 = message_x;
-A1 = message_y;
-A2 = text_id;
-A3 = window_id;
-A4 = message_w;
-A5 = message_rows;
-A6 = w[800af1f0]; // current entity id
-A7 = entity_id;
-A8 = type;
-A9 = flags1;
-A10 = flags2;
-field_message_set_to_show();
-
-A0 = window_id;
-func9c288(); // add window to activated windows mask
-
-[struct_138_cur + 104] = h(hu[struct_138_cur + 104] | 8000);
-[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 4);
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func9c288()
-
-[800b1648] = h(hu[800b1648] | (1 << A0));
-////////////////////////////////
 
 
 
 ////////////////////////////////
 // func9c30c
-8009C30C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8009C314	jal    field_script_help_read_entity [$8009c344]
-8009C318	nop
-V1 = V0;
-V0 = 00ff;
-8009C324	bne    v1, v0, L9c334 [$8009c334]
-V0 = V1;
-V0 = w[80059ad4];
 
-L9c334:	; 8009C334
-RA = w[SP + 0010];
-SP = SP + 0018;
-8009C33C	jr     ra 
-8009C340	nop
-////////////////////////////////
+field_script_help_read_entity();
 
-
-
-////////////////////////////////
-// func9c3d8()
-cf 8009C3D8
-
-struct_138_cur = w[800af54c];
-
-V0 = w[800ad0d8] + hu[struct_138_cur + cc];
-[struct_138_cur + 88] = h(bu[V0 + 1] * 2); // dialog pixel width
-[struct_138_cur + 8a] = h(bu[V0 + 2]);     // dialog pixel height
-[struct_138_cur + 82] = b(bu[V0 + 3] * 3); // dialog width
-[struct_138_cur + 83] = b(bu[V0 + 4]);     // dialog height
-
-[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 5);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xD0()
-
-struct_138_cur = w[800af54c];
-
-A0 = 1;
-field_script_help_read_v80();
-[struct_138_cur + 88] = h(V0);
-
-A0 = 3;
-field_script_help_read_v80();
-[struct_138_cur + 8a] = h(V0);
-
-A0 = 5;
-field_script_help_read_v80();
-[struct_138_cur + 82] = b(V0 * 3);
-
-A0 = 7;
-field_script_help_read_v80();
-[struct_138_cur + 83] = b(V0);
-
-A0 = 9;
-field_script_help_read_v80();
-[struct_138_cur + 84] = w(V0); // flags dialog related
-
-[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + b);
+if( V0 == ff )
+{
+    return w[80059ad4];
+}
+return V0;
 ////////////////////////////////
 
 
@@ -24442,77 +23775,42 @@ A0 = w[800af54c];
 
 
 ////////////////////////////////
-// funca0a80
-V1 = w[800af1f0];
-800A0A88	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S1);
-[SP + 0020] = w(S0);
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
+// field_script_opFE15()
+
+V0 = w[800af1f0];
 V1 = w[800aefe4];
-V0 = V0 << 02;
-V1 = V1 + V0;
-V0 = hu[V1 + 0058];
-A0 = 0001;
-V0 = V0 & f07f;
-V0 = V0 | 0200;
-800A0AC8	jal    field_script_help_read_v80 [$800ac2c4]
-[V1 + 0058] = h(V0);
+[V1 + V0 * 5c + 58] = h((hu[V1 + V0 * 5c + 58] & f07f) | 0200);
+
+A0 = 1;
+field_script_help_read_v80();
 S1 = V0;
+
 V1 = w[800aeff0];
-V0 = S1 << 02;
-V0 = V0 + V1;
-S0 = w[V0 + 0004];
-A0 = 0003;
-800A0AEC	jal    field_script_help_read_v80 [$800ac2c4]
-S0 = S0 + V1;
-[SP + 0010] = w(V0);
-V0 = S1 | 0080;
-[SP + 0014] = w(V0);
-V0 = 0001;
+S0 = V1 + w[V1 + S1 * 4 + 4];
+
+A0 = 3;
+field_script_help_read_v80();
+
 A1 = S1;
 A2 = S0;
 A0 = w[800af1f0];
 A3 = 0;
-800A0B18	jal    func76150 [$80076150]
-[SP + 0018] = w(V0);
-800A0B20	jal    funca0224 [$800a0224]
-800A0B24	nop
+A4 = V0;
+A5 = S1 | 0080;
+A6 = 1;
+func76150();
+
+funca0224();
+
 A0 = w[800af54c];
-800A0B30	nop
-V0 = hu[A0 + 00cc];
-V1 = w[A0 + 0000];
-V0 = V0 + 0005;
-V1 = V1 | 0100;
-[A0 + 00cc] = h(V0);
-800A0B48	addiu  v0, zero, $ff7f (=-$81)
-V1 = V1 & V0;
-V0 = w[A0 + 0004];
-800A0B54	addiu  a1, zero, $f7ff (=-$801)
-[A0 + 0000] = w(V1);
-V1 = w[800af1f0];
-V0 = V0 & A1;
-[A0 + 0004] = w(V0);
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
+[A0 + cc] = h(hu[A0 + cc] + 5);
+
+[A0 + 0] = w((w[A0 + 0] | 00000100) & ffffff7f);
+[A0 + 4] = w(w[A0 + 4] & fffff7ff);
+
+V0 = w[800af1f0];
 V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = hu[V0 + 0058];
-800A0B90	nop
-V1 = V1 & ffdf;
-[V0 + 0058] = h(V1);
-RA = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0030;
-800A0BAC	jr     ra 
-800A0BB0	nop
+[V1 + V0 * 5c + 58] = h(hu[V1 + V0 * 5c + 58] & ffdf);
 ////////////////////////////////
 
 

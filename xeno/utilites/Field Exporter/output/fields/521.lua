@@ -138,7 +138,7 @@ Actor[ "0x05" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0076 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0076 0xd2
         opcode9C_MessageSync() -- 0x007a 0x9c
         return 0 -- 0x007b 0x00
     end,

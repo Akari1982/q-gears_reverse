@@ -235,22 +235,22 @@ Actor[ "0x09" ] = {
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x0082 0x6f
         opcode26_Wait( time=10 ) -- 0x0084 0x26
         -- 0x84_ProgressLessEqualJumpTo( value=8, jump=0x00b4 ) -- 0x0087 0x84
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x008c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x008c 0xd2
         opcode9C_MessageSync() -- 0x0090 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x0091 0x69
         opcode26_Wait( time=10 ) -- 0x0094 0x26
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0097 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0097 0xd2
         opcode9C_MessageSync() -- 0x009b 0x9c
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x009c 0x6f
         opcode26_Wait( time=10 ) -- 0x009e 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00a1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00a1 0xd2
         opcode9C_MessageSync() -- 0x00a5 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x00a6 0x69
         opcode26_Wait( time=10 ) -- 0x00a9 0x26
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00ac 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00ac 0xd2
         opcode9C_MessageSync() -- 0x00b0 0x9c
         -- 0x01_JumpTo( 0x00bc ) -- 0x00b1 0x01
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x00b4 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x00b4 0xd2
         opcode9C_MessageSync() -- 0x00b8 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x00b9 0x69
         return 0 -- 0x00bc 0x00

@@ -169,7 +169,7 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0092 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0092 0xd2
         opcode9C_MessageSync() -- 0x0096 0x9c
         return 0 -- 0x0097 0x00
     end,

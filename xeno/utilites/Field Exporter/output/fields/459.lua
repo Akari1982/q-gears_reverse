@@ -49,7 +49,7 @@ Actor[ "0x01" ] = {
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x001f 0x2c
         opcode26_Wait( time=10 ) -- 0x0021 0x26
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0024 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0024 0xd2
         opcode9C_MessageSync() -- 0x0028 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0029 0x2c
         return 0 -- 0x002b 0x00
@@ -135,7 +135,7 @@ Actor[ "0x04" ] = {
         opcode6F_ActorRotateToActor( actor_id=(entity)0x0e ) -- 0x005a 0x6f
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x005c 0x2c
         opcode26_Wait( time=10 ) -- 0x005e 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0061 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0061 0xd2
         opcode9C_MessageSync() -- 0x0065 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0066 0x2c
         return 0 -- 0x0068 0x00

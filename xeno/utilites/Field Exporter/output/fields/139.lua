@@ -277,12 +277,17 @@ Actor[ "0x0b" ] = {
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x00b4 ) -- 0x007c 0x86
         -- 0x15() -- 0x0081 0x15
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0082 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0082 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x0086 0xa9
         opcode9C_MessageSync() -- 0x0088 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00b4 ) -- 0x0089 0x02
         -- 0xFE0A( ???=0x0844 ) -- 0x0091 0xfe
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=100 ) -- 0x0095 0xbf
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00a4 ) -- 0x0098 0x02
+        -- 0x5A() -- 0x00a0 0x5a
+        -- 0x01_JumpTo( 0x0098 ) -- 0x00a1 0x01
+        -- 0x27( actor_id=(entity)0x0c ) -- 0x00a4 0x27
+        -- MISSING OPCODE 0x12
     end,
 
     on_push = function( self )

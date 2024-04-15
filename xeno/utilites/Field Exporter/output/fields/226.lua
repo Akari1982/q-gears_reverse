@@ -46,15 +46,21 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0175 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0177 0x4a
+        return 0 -- 0x017d 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x017e 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0180 0x4a
+        return 0 -- 0x0186 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0187 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0189 0x4a
+        return 0 -- 0x018f 0x00
     end,
 
 }
@@ -311,7 +317,9 @@ Actor[ "0x0a" ] = {
 
 Actor[ "0x0b" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=1 ) -- 0x0248 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x02eb, z=(vf40)0x002f, flag=(flag)0xc0 ) -- 0x024e 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
@@ -321,7 +329,7 @@ Actor[ "0x0b" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x026e 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0270 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0270 0xd2
         opcode9C_MessageSync() -- 0x0274 0x9c
         -- MISSING OPCODE 0x5f
     end,
@@ -338,7 +346,8 @@ Actor[ "0x0c" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x0278 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0xffa4, z=(vf40)0x002c, flag=(flag)0xc0 ) -- 0x027b 0x19
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=149 ) -- 0x0281 0x21
+        return 0 -- 0x0284 0x00
     end,
 
     on_update = function( self )
@@ -347,7 +356,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x030b 0x6f
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x030d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x030d 0xd2
         opcode9C_MessageSync() -- 0x0311 0x9c
         return 0 -- 0x0312 0x00
     end,

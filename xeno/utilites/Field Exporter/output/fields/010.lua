@@ -233,13 +233,13 @@ Actor[ "0x09" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c2 ), value2=(s16)0x0800, condition="value1 & value2", jump_if_false=0x0094 ) -- 0x0084 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x008c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x008c 0xd2
         opcode9C_MessageSync() -- 0x0090 0x9c
         -- 0x01_JumpTo( 0x00a1 ) -- 0x0091 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0094 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0094 0xd2
         opcode9C_MessageSync() -- 0x0098 0x9c
         opcode26_Wait( time=15 ) -- 0x0099 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x009c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x009c 0xd2
         opcode9C_MessageSync() -- 0x00a0 0x9c
         return 0 -- 0x00a1 0x00
     end,
@@ -254,7 +254,10 @@ Actor[ "0x09" ] = {
 
 Actor[ "0x0a" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=1 ) -- 0x00a2 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0xffee, z=(vf40)0xff97, flag=(flag)0xc0 ) -- 0x00a8 0x19
+        opcode69_ActorSetRotation( rot=1 ) -- 0x00ae 0x69
+        return 0 -- 0x00b1 0x00
     end,
 
     on_update = function( self )

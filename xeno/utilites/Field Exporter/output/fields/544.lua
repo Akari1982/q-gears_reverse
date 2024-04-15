@@ -60,7 +60,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0062 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0064 0x4a
+        return 0 -- 0x006a 0x00
     end,
 
     script_0x05 = function( self )
@@ -68,14 +70,24 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=336 ) -- 0x0086 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x06 ) -- 0x0089 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x008b 0x4a
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0091 0x2c
+        -- 0x21( ???=256 ) -- 0x0093 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0096 0x4a
+        return 0 -- 0x009c 0x00
     end,
 
     script_0x07 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x03 ) -- 0x009d 0x2c
         -- 0x5A() -- 0x009f 0x5a
         opcode74_SoundPlayFixedVolume( sound_id=6 ) -- 0x00a0 0x74
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x00b2, z=(vf40)0x007f, walkmesh_id=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x00a3 0x57
+        -- 0x57( type=0x8f ) -- 0x00ae 0x57
+        opcode26_Wait( time=1 ) -- 0x00b0 0x26
+        -- 0x57( type=0x0f ) -- 0x00b3 0x57
+        -- MISSING OPCODE 0x1b
     end,
 
     script_0x08 = function( self )
@@ -83,7 +95,32 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=80 ) -- 0x00ce 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00d1 0x4a
+        -- 0x07( actor_id=0x06, script=0x24 ) -- 0x00d7 0x07
+        opcodeFE4A_SpriteAddAnimLoad( file=75 ) -- 0x00da 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x00de 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x00e0 0xfe
+        opcode26_Wait( time=1 ) -- 0x00e3 0x26
+        -- 0x21( ???=256 ) -- 0x00e6 0x21
+        -- 0x57( type=0x02, x=(vf80)0x00c8, z=(vf40)0xff38, y=(vf20)0x0038, ???=(vf10)0xffce, flag=0xf0 ) -- 0x00e9 0x57
+        -- 0x57( type=0x8f ) -- 0x00f4 0x57
+        opcode26_Wait( time=1 ) -- 0x00f6 0x26
+        -- 0x57( type=0x0f ) -- 0x00f9 0x57
+        opcode74_SoundPlayFixedVolume( sound_id=270 ) -- 0x00fb 0x74
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00fe 0x2c
+        opcodeFE4E_SpriteAddAnimUnload() -- 0x0100 0xfe
+        opcodeFE4A_SpriteAddAnimLoad( file=1 ) -- 0x0102 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x0106 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x0108 0xfe
+        opcode26_Wait( time=30 ) -- 0x010b 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x010e 0x2c
+        opcodeFE4E_SpriteAddAnimUnload() -- 0x0110 0xfe
+        opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0112 0x2c
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0114 0xd2
+        opcode9C_MessageSync() -- 0x0118 0x9c
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0119 0x2c
+        return 0 -- 0x011b 0x00
     end,
 
 }
@@ -117,11 +154,28 @@ Actor[ "0x02" ] = {
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x03 ) -- 0x0142 0x2c
         -- 0x5A() -- 0x0144 0x5a
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x00b2, z=(vf40)0x007f, y=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x0145 0x57
+        -- 0x57( type=0x8f ) -- 0x0150 0x57
+        opcode26_Wait( time=1 ) -- 0x0152 0x26
+        -- 0x57( type=0x0f ) -- 0x0155 0x57
+        opcode74_SoundPlayFixedVolume( sound_id=7 ) -- 0x0157 0x74
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x015a 0x2c
+        return 0 -- 0x015c 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=80 ) -- 0x015d 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0160 0x4a
+        -- 0x21( ???=768 ) -- 0x0166 0x21
+        opcodeFE4A_SpriteAddAnimLoad( file=68 ) -- 0x0169 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x016d 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x016f 0xfe
+        opcode26_Wait( time=1 ) -- 0x0172 0x26
+        -- 0x57( type=0x02, x=(vf80)0x00b4, z=(vf40)0xffa6, y=(vf20)0x0038, ???=(vf10)0xffce, flag=0xf0 ) -- 0x0175 0x57
+        -- 0x57( type=0x8f ) -- 0x0180 0x57
+        opcode26_Wait( time=1 ) -- 0x0182 0x26
+        -- 0x57( type=0x0f ) -- 0x0185 0x57
+        -- MISSING OPCODE 0xFE65
     end,
 
 }
@@ -155,11 +209,26 @@ Actor[ "0x03" ] = {
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x03 ) -- 0x01c1 0x2c
         -- 0x5A() -- 0x01c3 0x5a
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0x00b2, z=(vf40)0x007f, y=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x01c4 0x57
+        -- 0x57( type=0x8f ) -- 0x01cf 0x57
+        opcode26_Wait( time=1 ) -- 0x01d1 0x26
+        -- 0x57( type=0x0f ) -- 0x01d4 0x57
+        opcode74_SoundPlayFixedVolume( sound_id=7 ) -- 0x01d6 0x74
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x01d9 0x2c
+        return 0 -- 0x01db 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=80 ) -- 0x01dc 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01df 0x4a
+        opcode2C_SpritePlayAnim( anim_id=0x03 ) -- 0x01e5 0x2c
+        opcode26_Wait( time=1 ) -- 0x01e7 0x26
+        -- 0x21( ???=256 ) -- 0x01ea 0x21
+        -- 0x57( type=0x02, x=(vf80)0x005a, z=(vf40)0xff4c, y=(vf20)0x0038, ???=(vf10)0xff9c, flag=0xf0 ) -- 0x01ed 0x57
+        -- 0x57( type=0x8f ) -- 0x01f8 0x57
+        opcode26_Wait( time=1 ) -- 0x01fa 0x26
+        -- 0x57( type=0x0f ) -- 0x01fd 0x57
+        -- MISSING OPCODE 0xFE65
     end,
 
 }

@@ -21,8 +21,8 @@ Actor[ "0x00" ] = {
         opcodeEF_MoveCameraSync() -- 0x0028 0xef
         opcode26_Wait( time=60 ) -- 0x002b 0x26
         opcodeFE0D_MessageSetFace( char_id=19 ) -- 0x002e 0xfe
-        -- 0xD0() -- 0x0032 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x21 ) -- 0x003d 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x0032 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x003d 0xd2
         opcode9C_MessageSync() -- 0x0041 0x9c
         opcode26_Wait( time=60 ) -- 0x0042 0x26
         opcodeFE9B_SlideShow1( steps=30 ) -- 0x0045 0xfe
@@ -32,8 +32,8 @@ Actor[ "0x00" ] = {
         opcode25_ActorDisable( actor_id=(entity)0x02 ) -- 0x0054 0x25
         opcode24_ActorEnable( actor_id=(entity)0x03 ) -- 0x0056 0x24
         opcode26_Wait( time=60 ) -- 0x0058 0x26
-        -- 0xD0() -- 0x005b 0xd0
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x21 ) -- 0x0066 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x005b 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0066 0xd2
         opcode9C_MessageSync() -- 0x006a 0x9c
         opcode26_Wait( time=60 ) -- 0x006b 0x26
         opcodeFE9B_SlideShow1( steps=30 ) -- 0x006e 0xfe
@@ -43,12 +43,12 @@ Actor[ "0x00" ] = {
         opcode25_ActorDisable( actor_id=(entity)0x03 ) -- 0x007d 0x25
         opcode24_ActorEnable( actor_id=(entity)0x04 ) -- 0x007f 0x24
         opcode26_Wait( time=60 ) -- 0x0081 0x26
-        -- 0xD0() -- 0x0084 0xd0
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x21 ) -- 0x008f 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x0084 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x008f 0xd2
         opcode9C_MessageSync() -- 0x0093 0x9c
         opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x0094 0xfe
-        -- 0xD0() -- 0x0098 0xd0
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x21 ) -- 0x00a3 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x0098 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x00a3 0xd2
         opcode9C_MessageSync() -- 0x00a7 0x9c
         opcode26_Wait( time=60 ) -- 0x00a8 0x26
         opcode3A_VariableBitSet( address=0x01c2, bit_num=(vf40)0x0000, flag=0x40 ) -- 0x00ab 0x3a

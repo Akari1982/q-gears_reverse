@@ -396,16 +396,16 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x01c8 0xd0
-        opcodeD4_MessageShowE( actor_id=(entity)0x10, text_id=0x0002, ???=0x00 ) -- 0x01d3 0xd4
+        opcodeD0_MessageSettings( x=0, y=0, letters=19, rows=4, flags=1 ) -- 0x01c8 0xd0
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x10, text_id=0x0002, flags=0 ) -- 0x01d3 0xd4
         opcodeF4_MessageClose( type=0x01 ) -- 0x01d9 0xf4
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0003, ???=0x01 ) -- 0x01db 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x01db 0xd4
         -- 0x07( actor_id=0x10, script=0x24 ) -- 0x01e1 0x07
-        opcodeD4_MessageShowE( actor_id=(entity)0x10, text_id=0x0004, ???=0x01 ) -- 0x01e4 0xd4
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0005, ???=0x01 ) -- 0x01ea 0xd4
-        opcodeD4_MessageShowE( actor_id=(entity)0x15, text_id=0x0006, ???=0x01 ) -- 0x01f0 0xd4
-        opcodeD4_MessageShowE( actor_id=(entity)0x13, text_id=0x0007, ???=0x01 ) -- 0x01f6 0xd4
-        opcodeD4_MessageShowE( actor_id=(entity)0x14, text_id=0x0008, ???=0x01 ) -- 0x01fc 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x10, text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x01e4 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0005, flags=CLOSE_OFF_SCREEN ) -- 0x01ea 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x15, text_id=0x0006, flags=CLOSE_OFF_SCREEN ) -- 0x01f0 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x13, text_id=0x0007, flags=CLOSE_OFF_SCREEN ) -- 0x01f6 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x14, text_id=0x0008, flags=CLOSE_OFF_SCREEN ) -- 0x01fc 0xd4
         return 0 -- 0x0202 0x00
     end,
 
@@ -470,7 +470,8 @@ Actor[ "0x11" ] = {
     script_0x04 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xfee8, z=(vf40)0xff88, flag=(flag)0xc0 ) -- 0x0292 0x19
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0298 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x029a 0x21
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -498,7 +499,8 @@ Actor[ "0x12" ] = {
     script_0x04 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xff3d, z=(vf40)0xff9a, flag=(flag)0xc0 ) -- 0x0303 0x19
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0309 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x030b 0x21
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -526,7 +528,8 @@ Actor[ "0x13" ] = {
     script_0x04 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xffdf, z=(vf40)0xff8b, flag=(flag)0xc0 ) -- 0x0374 0x19
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x037a 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x037c 0x21
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -554,7 +557,8 @@ Actor[ "0x14" ] = {
     script_0x04 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xfece, z=(vf40)0xfa37, flag=(flag)0xc0 ) -- 0x03e5 0x19
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x03eb 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x03ed 0x21
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -582,7 +586,8 @@ Actor[ "0x15" ] = {
     script_0x04 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xff3a, z=(vf40)0xfdfa, flag=(flag)0xc0 ) -- 0x0458 0x19
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x045e 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x0460 0x21
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -610,7 +615,8 @@ Actor[ "0x16" ] = {
     script_0x04 = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xfff3, z=(vf40)0xfe0e, flag=(flag)0xc0 ) -- 0x04c3 0x19
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x04c9 0x2c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x04cb 0x21
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -654,7 +660,7 @@ Actor[ "0x18" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0545 0x6f
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x0547 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=0 ) -- 0x0547 0xd2
         opcode9C_MessageSync() -- 0x054b 0x9c
         return 0 -- 0x054c 0x00
     end,

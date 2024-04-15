@@ -87,41 +87,69 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00db 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00de 0x4a
+        -- 0x21( ???=256 ) -- 0x00e4 0x21
+        return 0 -- 0x00e7 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00e8 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00eb 0x4a
+        -- 0x21( ???=256 ) -- 0x00f1 0x21
+        return 0 -- 0x00f4 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x00f5 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00f8 0x4a
+        -- 0x21( ???=256 ) -- 0x00fe 0x21
+        return 0 -- 0x0101 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0102 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0105 0x4a
+        -- 0x21( ???=256 ) -- 0x010b 0x21
+        return 0 -- 0x010e 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x010f 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0112 0x4a
+        -- 0x21( ???=256 ) -- 0x0118 0x21
+        return 0 -- 0x011b 0x00
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x011c 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x011f 0x4a
+        -- 0x21( ???=256 ) -- 0x0125 0x21
+        return 0 -- 0x0128 0x00
     end,
 
     script_0x0c = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0129 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x012c 0x4a
+        -- 0x21( ???=256 ) -- 0x0132 0x21
+        return 0 -- 0x0135 0x00
     end,
 
     script_0x0d = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0136 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0139 0x4a
+        -- 0x21( ???=256 ) -- 0x013f 0x21
+        return 0 -- 0x0142 0x00
     end,
 
     script_0x0e = function( self )
         opcodeFE45_SpriteSetDefaultAnim( anim_id=0x03 ) -- 0x0143 0xfe
         opcode26_Wait( time=1 ) -- 0x0146 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0xfea0, z=(vf40)0xfc93, y=(vf20)0x00fa, ???=(vf10)0x001e, flag=0xf0 ) -- 0x0149 0x57
+        -- 0x57( type=0x8f ) -- 0x0154 0x57
+        opcode26_Wait( time=1 ) -- 0x0156 0x26
+        -- 0x57( type=0x0f ) -- 0x0159 0x57
+        -- MISSING OPCODE 0x1d
     end,
 
 }
@@ -1050,7 +1078,7 @@ Actor[ "0x0d" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x0453 0xfe
         opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x0455 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)party_2, text_id=0x0000, ???=0x00 ) -- 0x0459 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)party_2, text_id=0x0000, flags=0 ) -- 0x0459 0xd4
         opcode3A_VariableBitSet( address=0x00e2, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x045f 0x3a
         -- 0xFE54() -- 0x0465 0xfe
         -- MISSING OPCODE 0x29
@@ -1059,7 +1087,7 @@ Actor[ "0x0d" ] = {
     on_push = function( self )
         -- 0xFE54() -- 0x0453 0xfe
         opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x0455 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)party_2, text_id=0x0000, ???=0x00 ) -- 0x0459 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)party_2, text_id=0x0000, flags=0 ) -- 0x0459 0xd4
         opcode3A_VariableBitSet( address=0x00e2, bit_num=(vf40)0x0003, flag=0x40 ) -- 0x045f 0x3a
         -- 0xFE54() -- 0x0465 0xfe
         -- MISSING OPCODE 0x29

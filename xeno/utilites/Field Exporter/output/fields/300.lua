@@ -63,7 +63,12 @@ Actor[ "0x01" ] = {
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0056 0x4a
         opcode6F_ActorRotateToActor( actor_id=(entity)0x10 ) -- 0x005c 0x6f
         opcode09_ActorCallScriptEW( actor_id=0x10, script=04, priority=03 ) -- 0x005e 0x09
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0061 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0063 0x4a
+        -- 0x23() -- 0x0069 0x23
+        opcode26_Wait( time=10 ) -- 0x006a 0x26
+        opcode09_ActorCallScriptEW( actor_id=0x10, script=05, priority=03 ) -- 0x006d 0x09
+        return 0 -- 0x0070 0x00
     end,
 
     script_0x07 = function( self )
@@ -499,7 +504,7 @@ Actor[ "0x0c" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x01ea 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x01ea 0xd2
         opcode9C_MessageSync() -- 0x01ee 0x9c
         return 0 -- 0x01ef 0x00
     end,
@@ -547,7 +552,7 @@ Actor[ "0x0e" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x026f 0x6f
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0271 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0271 0xd2
         opcode9C_MessageSync() -- 0x0275 0x9c
         return 0 -- 0x0276 0x00
     end,

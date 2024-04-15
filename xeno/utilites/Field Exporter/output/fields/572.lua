@@ -48,11 +48,15 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x017c 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x017e 0x4a
+        return 0 -- 0x0184 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0185 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0187 0x4a
+        return 0 -- 0x018d 0x00
     end,
 
     script_0x06 = function( self )
@@ -68,14 +72,14 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x01a5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x01a5 0xd2
         opcode9C_MessageSync() -- 0x01a9 0x9c
         return 0 -- 0x01aa 0x00
     end,
 
     script_0x08 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x01ab 0x2c
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x01ad 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x01ad 0xd2
         opcode9C_MessageSync() -- 0x01b1 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x01b2 0x2c
         return 0 -- 0x01b4 0x00
@@ -115,7 +119,7 @@ Actor[ "0x02" ] = {
         opcodeFE4A_SpriteAddAnimLoad( file=8 ) -- 0x01cd 0xfe
         opcodeFE4B_SpriteAddAnimSync() -- 0x01d1 0xfe
         opcodeFE4D_SpritePlayAddAnim( anim_id=0x01 ) -- 0x01d3 0xfe
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x01d6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x01d6 0xd2
         opcode9C_MessageSync() -- 0x01da 0x9c
         return 0 -- 0x01db 0x00
     end,
@@ -124,7 +128,7 @@ Actor[ "0x02" ] = {
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x01dc 0x2c
         opcodeFE4E_SpriteAddAnimUnload() -- 0x01de 0xfe
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x01e0 0x2c
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x01e2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x01e2 0xd2
         opcode9C_MessageSync() -- 0x01e6 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x01e7 0x2c
         return 0 -- 0x01e9 0x00
@@ -132,7 +136,7 @@ Actor[ "0x02" ] = {
 
     script_0x07 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x01ea 0x2c
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x01ec 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x01ec 0xd2
         opcode9C_MessageSync() -- 0x01f0 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x01f1 0x2c
         return 0 -- 0x01f3 0x00
@@ -180,7 +184,9 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=54 ) -- 0x0223 0x93
+        opcodeFE03( ???=24576 ) -- 0x0226 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )

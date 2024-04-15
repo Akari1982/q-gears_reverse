@@ -108,7 +108,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) ) -- 0x436d 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x003e ) ) -- 0x4370 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x4374 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -125,15 +126,21 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x4380 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4382 0x4a
+        return 0 -- 0x4388 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x4389 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x438b 0x4a
+        return 0 -- 0x4391 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x4392 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4394 0x4a
+        return 0 -- 0x439a 0x00
     end,
 
 }
@@ -144,7 +151,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x439b 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x439e 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x43a2 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -168,7 +176,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x43ae 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x43b1 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x43b5 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )

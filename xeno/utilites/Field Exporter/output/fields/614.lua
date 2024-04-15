@@ -87,7 +87,8 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x00cf 0x21
+        -- MISSING OPCODE 0x53
     end,
 
 }
@@ -126,7 +127,9 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0114 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0117 0x4a
+        return 0 -- 0x011d 0x00
     end,
 
     script_0x07 = function( self )
@@ -135,7 +138,12 @@ Actor[ "0x02" ] = {
 
     script_0x08 = function( self )
         -- 0xF6( ???=0x01 ) -- 0x0126 0xf6
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0xfee2, z=(vf40)0xff6c, walkmesh_id=(vf20)0x0001, ???=(vf10)0x000a, flag=0xf0 ) -- 0x0128 0x57
+        -- 0x57( type=0x8f ) -- 0x0133 0x57
+        opcode26_Wait( time=1 ) -- 0x0135 0x26
+        -- 0x57( type=0x0f ) -- 0x0138 0x57
+        -- 0xF6( ???=0x00 ) -- 0x013a 0xf6
+        return 0 -- 0x013c 0x00
     end,
 
     script_0x09 = function( self )
@@ -389,7 +397,13 @@ Actor[ "0x08" ] = {
     script_0x07 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0222 0x2c
         opcode26_Wait( time=0 ) -- 0x0224 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0xfd96, z=(vf40)0xfed8, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x0227 0x57
+        -- 0x57( type=0x8f ) -- 0x0232 0x57
+        opcode26_Wait( time=1 ) -- 0x0234 0x26
+        -- 0x57( type=0x0f ) -- 0x0237 0x57
+        opcode26_Wait( time=0 ) -- 0x0239 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x023c 0x2c
+        -- MISSING OPCODE 0xFE17
     end,
 
 }

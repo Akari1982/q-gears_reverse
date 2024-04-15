@@ -292,7 +292,7 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x11 ) -- 0x0200 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0200 0xd2
         opcode9C_MessageSync() -- 0x0204 0x9c
         return 0 -- 0x0205 0x00
     end,
@@ -456,19 +456,19 @@ Actor[ "0x0e" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x10 ) -- 0x02e2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=FORCE_TOP ) -- 0x02e2 0xd2
         opcode9C_MessageSync() -- 0x02e6 0x9c
         return 0 -- 0x02e7 0x00
     end,
 
     on_push = function( self )
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x10 ) -- 0x02e2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=FORCE_TOP ) -- 0x02e2 0xd2
         opcode9C_MessageSync() -- 0x02e6 0x9c
         return 0 -- 0x02e7 0x00
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x10 ) -- 0x02e2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=FORCE_TOP ) -- 0x02e2 0xd2
         opcode9C_MessageSync() -- 0x02e6 0x9c
         return 0 -- 0x02e7 0x00
     end,
@@ -579,30 +579,30 @@ Actor[ "0x12" ] = {
 
     on_talk = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x032e 0x4a
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x10 ) -- 0x0334 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=FORCE_TOP ) -- 0x0334 0xd2
         opcode9C_MessageSync() -- 0x0338 0x9c
         opcode36_VariableSetTrue( address=0x0402 ) -- 0x0339 0x36
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x10 ) -- 0x033c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=FORCE_TOP ) -- 0x033c 0xd2
         opcode9C_MessageSync() -- 0x0340 0x9c
         -- MISSING OPCODE 0xFE5b
     end,
 
     on_push = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x032e 0x4a
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x10 ) -- 0x0334 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=FORCE_TOP ) -- 0x0334 0xd2
         opcode9C_MessageSync() -- 0x0338 0x9c
         opcode36_VariableSetTrue( address=0x0402 ) -- 0x0339 0x36
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x10 ) -- 0x033c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=FORCE_TOP ) -- 0x033c 0xd2
         opcode9C_MessageSync() -- 0x0340 0x9c
         -- MISSING OPCODE 0xFE5b
     end,
 
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x032e 0x4a
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x10 ) -- 0x0334 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=FORCE_TOP ) -- 0x0334 0xd2
         opcode9C_MessageSync() -- 0x0338 0x9c
         opcode36_VariableSetTrue( address=0x0402 ) -- 0x0339 0x36
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x10 ) -- 0x033c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=FORCE_TOP ) -- 0x033c 0xd2
         opcode9C_MessageSync() -- 0x0340 0x9c
         -- MISSING OPCODE 0xFE5b
     end,
@@ -613,7 +613,10 @@ Actor[ "0x12" ] = {
 
 Actor[ "0x13" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=14 ) -- 0x0365 0x93
+        opcodeFE03( ???=9792 ) -- 0x0368 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0863, z=(vf40)0x0570, flag=(flag)0xc0 ) -- 0x036c 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
@@ -636,7 +639,7 @@ Actor[ "0x13" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0012, ???=0x21 ) -- 0x0392 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0012, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0392 0xd2
         opcode9C_MessageSync() -- 0x0396 0x9c
         opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x0397 0x2c
         opcode36_VariableSetTrue( address=0x0404 ) -- 0x0399 0x36

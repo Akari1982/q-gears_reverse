@@ -360,7 +360,12 @@ Actor[ "0x0e" ] = {
 Actor[ "0x0f" ] = {
     on_start = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=303, jump=0x4409 ) -- 0x43ce 0x84
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=71 ) -- 0x43d3 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0xffa4, z=(vf40)0xff65, flag=(flag)0xc0 ) -- 0x43d6 0x19
+        opcode69_ActorSetRotation( rot=3 ) -- 0x43dc 0x69
+        opcodeFE03( ???=1024 ) -- 0x43df 0xfe
+        opcodeFE0D_MessageSetFace( char_id=26 ) -- 0x43e3 0xfe
+        -- MISSING OPCODE 0xFE3e
     end,
 
     on_update = function( self )
@@ -369,7 +374,11 @@ Actor[ "0x0f" ] = {
         -- 0x23() -- 0x4415 0x23
         -- 0x2A() -- 0x4416 0x2a
         -- 0x27( actor_id=(entity)0x0f ) -- 0x4417 0x27
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=9 ) -- 0x4419 0xfe
+        -- 0x5A() -- 0x441f 0x5a
+        opcode69_ActorSetRotation( rot=3 ) -- 0x4420 0x69
+        -- 0x5B() -- 0x4423 0x5b
+        return 0 -- 0x4424 0x00
     end,
 
     on_talk = function( self )

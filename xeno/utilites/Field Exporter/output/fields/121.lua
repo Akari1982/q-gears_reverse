@@ -303,7 +303,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00bf 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x00c1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x00c1 0xd2
         opcode9C_MessageSync() -- 0x00c5 0x9c
         -- MISSING OPCODE 0xFE5a
     end,

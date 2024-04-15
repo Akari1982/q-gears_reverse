@@ -104,7 +104,9 @@ Actor[ "0x04" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x4339 0x21
+        -- 0x0C() -- 0x433c 0x0c
+        return 0 -- 0x433d 0x00
     end,
 
     on_talk = function( self )

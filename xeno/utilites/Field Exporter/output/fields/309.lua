@@ -84,7 +84,12 @@ Actor[ "0x01" ] = {
     script_0x09 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0077 0x2c
         -- 0x5A() -- 0x0079 0x5a
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x0016, z=(vf40)0xffb7, walkmesh_id=(vf20)0x0000, ???=(vf10)0x000f, flag=0xf0 ) -- 0x007a 0x57
+        -- 0x57( type=0x8f ) -- 0x0085 0x57
+        opcode26_Wait( time=1 ) -- 0x0087 0x26
+        -- 0x57( type=0x0f ) -- 0x008a 0x57
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x008c 0x2c
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x0a = function( self )
@@ -164,7 +169,13 @@ Actor[ "0x02" ] = {
     script_0x0a = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0102 0x2c
         -- 0x5A() -- 0x0104 0x5a
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x007a, z=(vf40)0xffc8, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x0105 0x57
+        -- 0x57( type=0x8f ) -- 0x0110 0x57
+        opcode26_Wait( time=1 ) -- 0x0112 0x26
+        -- 0x57( type=0x0f ) -- 0x0115 0x57
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0117 0x2c
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x0119 0x6f
+        return 0 -- 0x011b 0x00
     end,
 
     script_0x0b = function( self )
@@ -332,7 +343,10 @@ Actor[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x01d1 0xbc
         -- 0x23() -- 0x01d2 0x23
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1536 ) -- 0x01d3 0xfe
+        -- 0xC0( ???=2288 ) -- 0x01d7 0xc0
+        -- 0xBE() -- 0x01da 0xbe
+        -- MISSING OPCODE 0xf9
     end,
 
     on_update = function( self )
@@ -363,48 +377,48 @@ Actor[ "0x0a" ] = {
         opcodeF1_FadeSetUp( steps=2, r=100, g=90, b=20, semi_tr=1 ) -- 0x01f0 0xf1
         opcode26_Wait( time=15 ) -- 0x01fb 0x26
         -- 0x75( ???=255 ) -- 0x01fe 0x75
-        -- 0xD0() -- 0x0201 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x020c 0xd2
+        opcodeD0_MessageSettings( x=130, y=100, letters=0, rows=0, flags=323 ) -- 0x0201 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x020c 0xd2
         opcode9C_MessageSync() -- 0x0210 0x9c
         -- 0x75( ???=8 ) -- 0x0211 0x75
-        -- 0xD0() -- 0x0214 0xd0
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x021f 0xd2
+        opcodeD0_MessageSettings( x=10, y=150, letters=0, rows=0, flags=323 ) -- 0x0214 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x021f 0xd2
         opcode9C_MessageSync() -- 0x0223 0x9c
-        -- 0xD0() -- 0x0224 0xd0
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x022f 0xd2
+        opcodeD0_MessageSettings( x=130, y=100, letters=0, rows=0, flags=323 ) -- 0x0224 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x022f 0xd2
         opcode9C_MessageSync() -- 0x0233 0x9c
-        -- 0xD0() -- 0x0234 0xd0
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x023f 0xd2
+        opcodeD0_MessageSettings( x=10, y=150, letters=0, rows=0, flags=323 ) -- 0x0234 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x023f 0xd2
         opcode9C_MessageSync() -- 0x0243 0x9c
-        -- 0xD0() -- 0x0244 0xd0
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x024f 0xd2
+        opcodeD0_MessageSettings( x=130, y=100, letters=0, rows=0, flags=323 ) -- 0x0244 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x024f 0xd2
         opcode9C_MessageSync() -- 0x0253 0x9c
-        -- 0xD0() -- 0x0254 0xd0
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x025f 0xd2
+        opcodeD0_MessageSettings( x=10, y=150, letters=0, rows=0, flags=323 ) -- 0x0254 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x025f 0xd2
         opcode9C_MessageSync() -- 0x0263 0x9c
-        -- 0xD0() -- 0x0264 0xd0
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x026f 0xd2
+        opcodeD0_MessageSettings( x=130, y=100, letters=0, rows=0, flags=323 ) -- 0x0264 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x026f 0xd2
         opcode9C_MessageSync() -- 0x0273 0x9c
-        -- 0xD0() -- 0x0274 0xd0
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x027f 0xd2
+        opcodeD0_MessageSettings( x=10, y=150, letters=0, rows=0, flags=323 ) -- 0x0274 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x027f 0xd2
         opcode9C_MessageSync() -- 0x0283 0x9c
-        -- 0xD0() -- 0x0284 0xd0
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x028f 0xd2
+        opcodeD0_MessageSettings( x=130, y=100, letters=0, rows=0, flags=323 ) -- 0x0284 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x028f 0xd2
         opcode9C_MessageSync() -- 0x0293 0x9c
         -- 0x07( actor_id=0x0b, script=0x24 ) -- 0x0294 0x07
-        -- 0xD0() -- 0x0297 0xd0
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x02a2 0xd2
+        opcodeD0_MessageSettings( x=10, y=150, letters=0, rows=0, flags=323 ) -- 0x0297 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x02a2 0xd2
         opcode9C_MessageSync() -- 0x02a6 0x9c
-        -- 0xD0() -- 0x02a7 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=0 ) -- 0x02a7 0xd0
         opcodeEF_MoveCameraSync() -- 0x02b2 0xef
         opcodeF1_FadeSetUp( steps=2, r=90, g=81, b=18, semi_tr=120 ) -- 0x02b5 0xf1
         -- 0x07( actor_id=0x0c, script=0x24 ) -- 0x02c0 0x07
         opcode26_Wait( time=10 ) -- 0x02c3 0x26
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x01, text_id=0x000a, ???=0x21 ) -- 0x02c6 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x000b, ???=0x11 ) -- 0x02cc 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x01, text_id=0x000c, ???=0x21 ) -- 0x02d2 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x000d, ???=0x11 ) -- 0x02d8 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x01, text_id=0x000e, ???=0x21 ) -- 0x02de 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x01, text_id=0x000a, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x02c6 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x000b, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x02cc 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x01, text_id=0x000c, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x02d2 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x02d8 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x01, text_id=0x000e, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x02de 0xfc
         opcode26_Wait( time=30 ) -- 0x02e4 0x26
         -- MISSING OPCODE 0x67
     end,

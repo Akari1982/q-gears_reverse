@@ -67,13 +67,21 @@ Actor[ "0x01" ] = {
     script_0x04 = function( self )
         opcode20_ActorSetFlags0( flags=13 ) -- 0x00c3 0x20
         -- 0xF6( ???=0x01 ) -- 0x00c6 0xf6
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=96 ) -- 0x00c8 0x21
+        opcode26_Wait( time=1 ) -- 0x00cb 0x26
+        return 0 -- 0x00ce 0x00
     end,
 
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x00cf 0x2c
         opcode26_Wait( time=1 ) -- 0x00d1 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x00a2, z=(vf40)0xf8cc, walkmesh_id=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x00d4 0x57
+        -- 0x57( type=0x8f ) -- 0x00df 0x57
+        opcode26_Wait( time=1 ) -- 0x00e1 0x26
+        -- 0x57( type=0x0f ) -- 0x00e4 0x57
+        opcode26_Wait( time=1 ) -- 0x00e6 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x00e9 0x2c
+        return 0 -- 0x00eb 0x00
     end,
 
 }
@@ -111,14 +119,22 @@ Actor[ "0x02" ] = {
     script_0x05 = function( self )
         opcode20_ActorSetFlags0( flags=13 ) -- 0x0111 0x20
         -- 0xF6( ???=0x01 ) -- 0x0114 0xf6
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=96 ) -- 0x0116 0x21
+        opcode26_Wait( time=1 ) -- 0x0119 0x26
+        return 0 -- 0x011c 0x00
     end,
 
     script_0x06 = function( self )
         -- 0xB4_FadeIn() -- 0x011d 0xb4
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0120 0x2c
         opcode26_Wait( time=1 ) -- 0x0122 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x00a2, z=(vf40)0xf8cc, walkmesh_id=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x0125 0x57
+        -- 0x57( type=0x8f ) -- 0x0130 0x57
+        opcode26_Wait( time=1 ) -- 0x0132 0x26
+        -- 0x57( type=0x0f ) -- 0x0135 0x57
+        opcode26_Wait( time=1 ) -- 0x0137 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x013a 0x2c
+        return 0 -- 0x013c 0x00
     end,
 
 }
@@ -128,7 +144,8 @@ Actor[ "0x02" ] = {
 Actor[ "0x03" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x013d 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x013e 0x21
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -244,7 +261,8 @@ Actor[ "0x04" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x04dc 0xbf
+        return 0 -- 0x04df 0x00
     end,
 
     on_talk = function( self )
@@ -266,7 +284,8 @@ Actor[ "0x05" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=256 ) -- 0x04ef 0xc0
+        return 0 -- 0x04f2 0x00
     end,
 
     on_talk = function( self )
@@ -345,7 +364,8 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0569 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -438,7 +458,8 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0623 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -574,7 +595,8 @@ Actor[ "0x12" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x06fe 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -600,7 +622,8 @@ Actor[ "0x13" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x074b 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -626,7 +649,8 @@ Actor[ "0x14" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0796 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -652,7 +676,8 @@ Actor[ "0x15" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x07e1 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -847,7 +872,8 @@ Actor[ "0x1b" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0b50 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

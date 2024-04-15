@@ -117,7 +117,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x461a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=0 ) -- 0x461a 0xd2
         opcode9C_MessageSync() -- 0x461e 0x9c
         opcode36_VariableSetTrue( address=0x0408 ) -- 0x461f 0x36
         return 0 -- 0x4622 0x00
@@ -375,7 +375,9 @@ Actor[ "0x0e" ] = {
 Actor[ "0x0f" ] = {
     on_start = function( self )
         -- 0x84_ProgressLessEqualJumpTo( value=300, jump=0x46d7 ) -- 0x4698 0x84
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=71 ) -- 0x469d 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0xfee4, z=(vf40)0x023c, flag=(flag)0xc0 ) -- 0x46a0 0x19
+        -- MISSING OPCODE 0x1a
     end,
 
     on_update = function( self )
@@ -383,7 +385,11 @@ Actor[ "0x0f" ] = {
         -- 0x01_JumpTo( 0x46e6 ) -- 0x46e0 0x01
         -- 0x23() -- 0x46e3 0x23
         -- 0x27( actor_id=(entity)0x0f ) -- 0x46e4 0x27
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=3 ) -- 0x46e6 0xfe
+        -- 0x5A() -- 0x46ec 0x5a
+        opcode69_ActorSetRotation( rot=3 ) -- 0x46ed 0x69
+        -- 0x5B() -- 0x46f0 0x5b
+        return 0 -- 0x46f1 0x00
     end,
 
     on_talk = function( self )
@@ -401,7 +407,14 @@ Actor[ "0x0f" ] = {
     script_0x05 = function( self )
         opcode69_ActorSetRotation( rot=4 ) -- 0x474b 0x69
         -- 0xF6( ???=0x01 ) -- 0x474e 0xf6
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=100 ) -- 0x4750 0x21
+        -- 0xFE3C( ???=0, ???=8 ) -- 0x4753 0xfe
+        opcode2C_SpritePlayAnim( anim_id=0x18 ) -- 0x4759 0x2c
+        -- 0x57( type=0x00, x=(vf80)0x0000, z=(vf40)0x0334, y=(vf20)0xff38, ???=(vf10)0x0014, flag=0xf0 ) -- 0x475b 0x57
+        -- 0x57( type=0x8f ) -- 0x4766 0x57
+        opcode26_Wait( time=1 ) -- 0x4768 0x26
+        -- 0x57( type=0x0f ) -- 0x476b 0x57
+        return 0 -- 0x476d 0x00
     end,
 
     script_0x06 = function( self )
@@ -410,7 +423,9 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=4 ) -- 0x4772 0xfe
+        -- 0x5A() -- 0x4778 0x5a
+        return 0 -- 0x4779 0x00
     end,
 
     script_0x08 = function( self )
@@ -473,7 +488,7 @@ Actor[ "0x10" ] = {
 
     script_0x07 = function( self )
         opcodeFE0D_MessageSetFace( char_id=26 ) -- 0x47e4 0xfe
-        opcodeF5_MessageShow3( text_id=0x000f, flag=0x01 ) -- 0x47e8 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000f, flags=CLOSE_OFF_SCREEN ) -- 0x47e8 0xf5
         opcode9C_MessageSync() -- 0x47ec 0x9c
         return 0 -- 0x47ed 0x00
     end,

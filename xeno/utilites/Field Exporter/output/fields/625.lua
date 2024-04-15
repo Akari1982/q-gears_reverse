@@ -170,7 +170,11 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=4095 ) -- 0x02a7 0xfe
+        opcode37_VariableSetFalse( address=0x0410 ) -- 0x02ab 0x37
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x1000, condition="value1 < value2", jump_if_false=0x02c9 ) -- 0x02ae 0x02
+        -- 0x05_CallFunction( 0x0390 ) -- 0x02b6 0x05
+        -- MISSING OPCODE 0xdb
     end,
 
 }

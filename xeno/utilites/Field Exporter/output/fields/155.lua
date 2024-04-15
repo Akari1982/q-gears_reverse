@@ -118,7 +118,8 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=768 ) -- 0x030b 0x21
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x05 = function( self )
@@ -177,16 +178,16 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0002, ???=0x02 ) -- 0x035a 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0002, flags=NO_FACE ) -- 0x035a 0xd4
         opcodeFE0D_MessageSetFace( char_id=64 ) -- 0x0360 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x03, text_id=0x0003, ???=0x80 ) -- 0x0364 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x03, text_id=0x0003, flags=0x80 ) -- 0x0364 0xd4
         opcode26_Wait( time=30 ) -- 0x036a 0x26
         -- 0x07( actor_id=0x03, script=0x05 ) -- 0x036d 0x07
         opcodeFE0D_MessageSetFace( char_id=64 ) -- 0x0370 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x03, text_id=0x0004, ???=0x80 ) -- 0x0374 0xd4
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0005, ???=0x02 ) -- 0x037a 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x03, text_id=0x0004, flags=0x80 ) -- 0x0374 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0005, flags=NO_FACE ) -- 0x037a 0xd4
         opcodeFE0D_MessageSetFace( char_id=64 ) -- 0x0380 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x03, text_id=0x0006, ???=0x80 ) -- 0x0384 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x03, text_id=0x0006, flags=0x80 ) -- 0x0384 0xd4
         -- 0x98_MapLoad( field_id=102, value=20 ) -- 0x038a 0x98
         -- 0x5B() -- 0x038f 0x5b
         return 0 -- 0x0390 0x00
@@ -462,7 +463,8 @@ Actor[ "0x10" ] = {
 Actor[ "0x11" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x040a 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x040b 0x21
+        -- MISSING OPCODE 0xfb
     end,
 
     on_update = function( self )

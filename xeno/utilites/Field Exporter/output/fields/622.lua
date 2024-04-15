@@ -49,7 +49,8 @@ Actor[ "0x00" ] = {
 
 Actor[ "0x01" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=65 ) -- 0x0067 0x93
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -69,7 +70,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x012f 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x0132 0x2c
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )
@@ -152,7 +155,8 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x0d = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x01f1 0x21
+        -- MISSING OPCODE 0x52
     end,
 
     script_0x0e = function( self )
@@ -236,7 +240,13 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x027f 0x21
+        opcode5D_SpritePlayAnim2( anim_id=0x05 ) -- 0x0282 0x5d
+        -- 0x5E() -- 0x0284 0x5e
+        opcode5D_SpritePlayAnim2( anim_id=0x05 ) -- 0x0285 0x5d
+        -- 0x5E() -- 0x0287 0x5e
+        -- 0x21( ???=256 ) -- 0x0288 0x21
+        return 0 -- 0x028b 0x00
     end,
 
     script_0x0c = function( self )
@@ -261,7 +271,11 @@ Actor[ "0x03" ] = {
 
     script_0x0f = function( self )
         -- 0x19_ActorSetPosition( x=(vf80)0xfd74, z=(vf40)0xff56, flag=(flag)0xc0 ) -- 0x02a5 0x19
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x02ab 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02ae 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x04 ) -- 0x02b4 0x6f
+        opcode36_VariableSetTrue( address=0x0408 ) -- 0x02b6 0x36
+        return 0 -- 0x02b9 0x00
     end,
 
     script_0x10 = function( self )
@@ -733,7 +747,8 @@ Actor[ "0x0e" ] = {
 
     script_0x05 = function( self )
         opcode26_Wait( time=70 ) -- 0x097f 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0982 0x21
+        -- MISSING OPCODE 0x53
     end,
 
     script_0x06 = function( self )
@@ -1106,7 +1121,8 @@ Actor[ "0x17" ] = {
 
     script_0x05 = function( self )
         opcode26_Wait( time=80 ) -- 0x0c70 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0c73 0x21
+        -- MISSING OPCODE 0x53
     end,
 
     script_0x06 = function( self )

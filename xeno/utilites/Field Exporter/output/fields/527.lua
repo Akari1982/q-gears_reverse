@@ -253,7 +253,7 @@ Actor[ "0x05" ] = {
         -- 0x27( actor_id=(entity)0x06 ) -- 0x0136 0x27
         opcode26_Wait( time=30 ) -- 0x0138 0x26
         -- 0x07( actor_id=0x01, script=0x66 ) -- 0x013b 0x07
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x01, text_id=0x0000, ???=0x00 ) -- 0x013e 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x01, text_id=0x0000, flags=0 ) -- 0x013e 0xfc
         -- MISSING OPCODE 0xFE17
     end,
 

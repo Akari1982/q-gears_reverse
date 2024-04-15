@@ -170,7 +170,7 @@ Actor[ "0x06" ] = {
 
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x0b ) -- 0x0084 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x20 ) -- 0x0086 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_BOTTOM ) -- 0x0086 0xd2
         opcode9C_MessageSync() -- 0x008a 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x008b 0x2c
         -- 0xFE54() -- 0x008d 0xfe
@@ -321,13 +321,13 @@ Actor[ "0x0c" ] = {
         -- 0x01_JumpTo( 0x0126 ) -- 0x0113 0x01
         -- 0xFE54() -- 0x0116 0xfe
         opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0009, flag=0x40 ) -- 0x0118 0x3a
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x011e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x011e 0xd2
         opcode9C_MessageSync() -- 0x0122 0x9c
         -- 0x07( actor_id=0x06, script=0xc4 ) -- 0x0123 0x07
         -- 0x01_JumpTo( 0x0136 ) -- 0x0126 0x01
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0129 0x6f
         opcode3C_VariableInc( address=0x00e0 ) -- 0x012b 0x3c
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x012e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x012e 0xd2
         opcode9C_MessageSync() -- 0x0132 0x9c
         opcode69_ActorSetRotation( rot=3 ) -- 0x0133 0x69
         return 0 -- 0x0136 0x00
@@ -366,7 +366,7 @@ Actor[ "0x0d" ] = {
         opcode3C_VariableInc( address=0x00e0 ) -- 0x018a 0x3c
         opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0004, flag=0x40 ) -- 0x018d 0x3a
         opcode3A_VariableBitSet( address=0x01fc, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x0193 0x3a
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0199 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0199 0xd2
         opcode9C_MessageSync() -- 0x019d 0x9c
         opcode69_ActorSetRotation( rot=6 ) -- 0x019e 0x69
         return 0 -- 0x01a1 0x00
@@ -399,7 +399,7 @@ Actor[ "0x0e" ] = {
         opcode3C_VariableInc( address=0x00e0 ) -- 0x01d4 0x3c
         opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0004, flag=0x40 ) -- 0x01d7 0x3a
         opcode3A_VariableBitSet( address=0x01fc, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x01dd 0x3a
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x01e3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x01e3 0xd2
         opcode9C_MessageSync() -- 0x01e7 0x9c
         opcode69_ActorSetRotation( rot=4 ) -- 0x01e8 0x69
         return 0 -- 0x01eb 0x00
@@ -427,7 +427,7 @@ Actor[ "0x0f" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0203 0x6f
         opcode3C_VariableInc( address=0x00e0 ) -- 0x0205 0x3c
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0208 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0208 0xd2
         opcode9C_MessageSync() -- 0x020c 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x020d 0x69
         return 0 -- 0x0210 0x00

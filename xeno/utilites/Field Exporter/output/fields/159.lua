@@ -377,9 +377,11 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x0164 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x0164 0xd2
         opcode9C_MessageSync() -- 0x0168 0x9c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0169 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x016c 0x2c
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -406,9 +408,11 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x01 ) -- 0x01b1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x01b1 0xd2
         opcode9C_MessageSync() -- 0x01b5 0x9c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x01b6 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x01b9 0x2c
+        -- MISSING OPCODE 0x52
     end,
 
 }

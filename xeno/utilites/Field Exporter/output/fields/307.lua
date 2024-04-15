@@ -87,7 +87,7 @@ Actor[ "0x02" ] = {
         opcode35_VariableSet( address=0x040a, value=(vf40)0x0404, flag=0x00 ) -- 0x014b 0x35
         -- 0x05_CallFunction( 0x0389 ) -- 0x0151 0x05
         opcode39_VariableSubtract( address=0x0408, value=(vf40)0x0010, flag=0x40 ) -- 0x0154 0x39
-        -- 0xD0() -- 0x015a 0xd0
+        opcodeD0_MessageSettings( x=GetVar( 0x0406 ), y=GetVar( 0x0408 ), letters=0, rows=0, flags=320 ) -- 0x015a 0xd0
         -- MISSING OPCODE 0xa6
     end,
 
@@ -151,31 +151,31 @@ Actor[ "0x04" ] = {
     end,
 
     on_update = function( self )
-        -- 0xD0() -- 0x040c 0xd0
-        opcodeF5_MessageShow3( text_id=0x001c, flag=0x00 ) -- 0x0417 0xf5
+        opcodeD0_MessageSettings( x=30, y=56, letters=0, rows=0, flags=321 ) -- 0x040c 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x001c, flags=0 ) -- 0x0417 0xf5
         opcode9C_MessageSync() -- 0x041b 0x9c
         opcode36_VariableSetTrue( address=0x0426 ) -- 0x041c 0x36
-        -- 0xD0() -- 0x041f 0xd0
-        opcodeF5_MessageShow3( text_id=0x001d, flag=0x00 ) -- 0x042a 0xf5
+        opcodeD0_MessageSettings( x=20, y=56, letters=0, rows=0, flags=321 ) -- 0x041f 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x001d, flags=0 ) -- 0x042a 0xf5
         opcode9C_MessageSync() -- 0x042e 0x9c
         opcode26_Wait( time=30 ) -- 0x042f 0x26
         opcode36_VariableSetTrue( address=0x0428 ) -- 0x0432 0x36
-        -- 0xD0() -- 0x0435 0xd0
-        opcodeF5_MessageShow3( text_id=0x001e, flag=0x00 ) -- 0x0440 0xf5
+        opcodeD0_MessageSettings( x=20, y=140, letters=0, rows=0, flags=321 ) -- 0x0435 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x001e, flags=0 ) -- 0x0440 0xf5
         opcode9C_MessageSync() -- 0x0444 0x9c
         opcode26_Wait( time=30 ) -- 0x0445 0x26
         opcode36_VariableSetTrue( address=0x042a ) -- 0x0448 0x36
-        -- 0xD0() -- 0x044b 0xd0
-        opcodeF5_MessageShow3( text_id=0x001f, flag=0x00 ) -- 0x0456 0xf5
+        opcodeD0_MessageSettings( x=160, y=150, letters=0, rows=0, flags=321 ) -- 0x044b 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x001f, flags=0 ) -- 0x0456 0xf5
         opcode9C_MessageSync() -- 0x045a 0x9c
         opcode36_VariableSetTrue( address=0x042c ) -- 0x045b 0x36
         opcode26_Wait( time=30 ) -- 0x045e 0x26
-        -- 0xD0() -- 0x0461 0xd0
-        opcodeF5_MessageShow3( text_id=0x0020, flag=0x00 ) -- 0x046c 0xf5
+        opcodeD0_MessageSettings( x=20, y=30, letters=0, rows=0, flags=321 ) -- 0x0461 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0020, flags=0 ) -- 0x046c 0xf5
         opcode9C_MessageSync() -- 0x0470 0x9c
         opcode26_Wait( time=30 ) -- 0x0471 0x26
-        -- 0xD0() -- 0x0474 0xd0
-        opcodeF5_MessageShow3( text_id=0x0021, flag=0x00 ) -- 0x047f 0xf5
+        opcodeD0_MessageSettings( x=80, y=56, letters=0, rows=0, flags=321 ) -- 0x0474 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0021, flags=0 ) -- 0x047f 0xf5
         opcode9C_MessageSync() -- 0x0483 0x9c
         opcode26_Wait( time=60 ) -- 0x0484 0x26
         -- 0x98_MapLoad( field_id=303, value=4 ) -- 0x0487 0x98

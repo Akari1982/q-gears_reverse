@@ -434,7 +434,13 @@ Actor[ "0x0c" ] = {
         -- 0x2A() -- 0x015a 0x2a
         -- 0x01_JumpTo( 0x016e ) -- 0x015b 0x01
         -- 0x0B_InitNPC( 0 ) -- 0x015e 0x0b
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=3000 ) -- 0x0161 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x003d, z=(vf40)0xffa6, flag=(flag)0xc0 ) -- 0x0165 0x19
+        opcode69_ActorSetRotation( rot=0 ) -- 0x016b 0x69
+        -- 0x01_JumpTo( 0x0173 ) -- 0x016e 0x01
+        -- 0xBC_ActorNoModelInit() -- 0x0171 0xbc
+        -- 0x2A() -- 0x0172 0x2a
+        return 0 -- 0x0173 0x00
     end,
 
     on_update = function( self )
@@ -531,7 +537,7 @@ Actor[ "0x0f" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x03d1 ) -- 0x039a 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01c8 ), value2=(s16)0x2000, condition="value1 & value2", jump_if_false=0x03c9 ) -- 0x03a2 0x02
         -- 0xFE54() -- 0x03aa 0xfe
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x03ac 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x03ac 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x03b0 0xa9
         opcode9C_MessageSync() -- 0x03b2 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x03c4 ) -- 0x03b3 0x02
@@ -540,7 +546,7 @@ Actor[ "0x0f" ] = {
         -- 0x01_JumpTo( 0x03c4 ) -- 0x03c1 0x01
         -- 0xFE54() -- 0x03c4 0xfe
         -- 0x01_JumpTo( 0x03ce ) -- 0x03c6 0x01
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x03c9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x03c9 0xd2
         opcode9C_MessageSync() -- 0x03cd 0x9c
         opcode36_VariableSetTrue( address=0x0410 ) -- 0x03ce 0x36
         -- 0xFE54() -- 0x03d1 0xfe
@@ -563,7 +569,7 @@ Actor[ "0x10" ] = {
         -- 0xFE54() -- 0x0447 0xfe
         -- 0x07( actor_id=0xfe, script=0x64 ) -- 0x0449 0x07
         opcode09_ActorCallScriptEW( actor_id=0xfd, script=05, priority=03 ) -- 0x044c 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0009, ???=0x00 ) -- 0x044f 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0009, flags=0 ) -- 0x044f 0xfc
         -- MISSING OPCODE 0xFE24
     end,
 

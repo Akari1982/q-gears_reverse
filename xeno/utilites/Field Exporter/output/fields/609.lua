@@ -194,7 +194,11 @@ Actor[ "0x05" ] = {
 Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0148 ), value2=(s16)0x0064, condition="value1 == value2", jump_if_false=0x02bc ) -- 0x02aa 0x02
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=22 ) -- 0x02b2 0x93
+        opcodeFE03( ???=4896 ) -- 0x02b5 0xfe
+        -- 0x01_JumpTo( 0x02bd ) -- 0x02b9 0x01
+        -- 0xBC_ActorNoModelInit() -- 0x02bc 0xbc
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -231,7 +235,9 @@ Actor[ "0x07" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0148 ), value2=(s16)0x0064, condition="value1 == value2", jump_if_false=0x04b6 ) -- 0x04aa 0x02
         -- 0xBC_ActorNoModelInit() -- 0x04b2 0xbc
         -- 0x01_JumpTo( 0x04bd ) -- 0x04b3 0x01
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=37 ) -- 0x04b6 0x93
+        opcodeFE03( ???=9900 ) -- 0x04b9 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -247,7 +253,8 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=2 ) -- 0x04f7 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -256,7 +263,8 @@ Actor[ "0x07" ] = {
         opcode35_VariableSet( address=0x0434, value=(vf40)0xfe0c, flag=0x40 ) -- 0x0519 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0438 ), value2=(s16)0x0063, condition="value1 > value2", jump_if_false=0x0553 ) -- 0x051f 0x02
         -- 0xC6() -- 0x0527 0xc6
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=GetVar( 0x0438 ) ) -- 0x0528 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x06 = function( self )
@@ -436,13 +444,13 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x21 ) -- 0x067b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x067b 0xd2
         opcode9C_MessageSync() -- 0x067f 0x9c
         return 0 -- 0x0680 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x21 ) -- 0x0681 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0681 0xd2
         opcode9C_MessageSync() -- 0x0685 0x9c
         return 0 -- 0x0686 0x00
     end,

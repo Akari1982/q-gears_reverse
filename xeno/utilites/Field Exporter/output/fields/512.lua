@@ -144,7 +144,9 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=1 ) -- 0x013d 0xfe
+        -- 0xFE07( ???=0x01 ) -- 0x0143 0xfe
+        return 0 -- 0x0146 0x00
     end,
 
     on_update = function( self )

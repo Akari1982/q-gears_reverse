@@ -70,7 +70,8 @@ Actor[ "0x02" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=0 ) -- 0x0079 0x16
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x007c 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=320 ) -- 0x0080 0x21
+        return 0 -- 0x0083 0x00
     end,
 
     on_update = function( self )
@@ -95,20 +96,20 @@ Actor[ "0x02" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0090 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0096 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0098 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0098 0xd2
         opcode9C_MessageSync() -- 0x009c 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x009d 0x2c
         return 0 -- 0x009f 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00a0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00a0 0xd2
         opcode9C_MessageSync() -- 0x00a4 0x9c
         return 0 -- 0x00a5 0x00
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00a6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00a6 0xd2
         opcode9C_MessageSync() -- 0x00aa 0x9c
         return 0 -- 0x00ab 0x00
     end,
@@ -245,7 +246,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=1 ) -- 0x02ec 0x16
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x02ef 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x02f3 0x21
+        return 0 -- 0x02f6 0x00
     end,
 
     on_update = function( self )
@@ -271,14 +273,14 @@ Actor[ "0x04" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x030b 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0311 0x2c
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x11 ) -- 0x0313 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0313 0xd2
         opcode9C_MessageSync() -- 0x0317 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0318 0x2c
         return 0 -- 0x031a 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x11 ) -- 0x031b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x031b 0xd2
         opcode9C_MessageSync() -- 0x031f 0x9c
         return 0 -- 0x0320 0x00
     end,
@@ -341,7 +343,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=2 ) -- 0x039a 0x16
         opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x039d 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x03a1 0x21
+        return 0 -- 0x03a4 0x00
     end,
 
     on_update = function( self )
@@ -367,14 +370,14 @@ Actor[ "0x05" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x03b9 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x03bf 0x2c
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x11 ) -- 0x03c1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x03c1 0xd2
         opcode9C_MessageSync() -- 0x03c5 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x03c6 0x2c
         return 0 -- 0x03c8 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x11 ) -- 0x03c9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x03c9 0xd2
         opcode9C_MessageSync() -- 0x03cd 0x9c
         return 0 -- 0x03ce 0x00
     end,
@@ -437,7 +440,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=3 ) -- 0x0448 0x16
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x044b 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x044f 0x21
+        return 0 -- 0x0452 0x00
     end,
 
     on_update = function( self )
@@ -463,14 +467,14 @@ Actor[ "0x06" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0467 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x046d 0x2c
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x11 ) -- 0x046f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x046f 0xd2
         opcode9C_MessageSync() -- 0x0473 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0474 0x2c
         return 0 -- 0x0476 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x11 ) -- 0x0477 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0477 0xd2
         opcode9C_MessageSync() -- 0x047b 0x9c
         return 0 -- 0x047c 0x00
     end,
@@ -533,7 +537,8 @@ Actor[ "0x07" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=4 ) -- 0x04f6 0x16
         opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x04f9 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x04fd 0x21
+        return 0 -- 0x0500 0x00
     end,
 
     on_update = function( self )
@@ -559,14 +564,14 @@ Actor[ "0x07" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0515 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x051b 0x2c
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x11 ) -- 0x051d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x051d 0xd2
         opcode9C_MessageSync() -- 0x0521 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0522 0x2c
         return 0 -- 0x0524 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000d, ???=0x11 ) -- 0x0525 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0525 0xd2
         opcode9C_MessageSync() -- 0x0529 0x9c
         return 0 -- 0x052a 0x00
     end,
@@ -629,7 +634,8 @@ Actor[ "0x08" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=5 ) -- 0x05a4 0x16
         opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x05a7 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x05ab 0x21
+        return 0 -- 0x05ae 0x00
     end,
 
     on_update = function( self )
@@ -655,14 +661,14 @@ Actor[ "0x08" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x05c3 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x05c9 0x2c
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x11 ) -- 0x05cb 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x05cb 0xd2
         opcode9C_MessageSync() -- 0x05cf 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x05d0 0x2c
         return 0 -- 0x05d2 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0010, ???=0x11 ) -- 0x05d3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0010, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x05d3 0xd2
         opcode9C_MessageSync() -- 0x05d7 0x9c
         return 0 -- 0x05d8 0x00
     end,
@@ -725,7 +731,8 @@ Actor[ "0x09" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=6 ) -- 0x0652 0x16
         opcodeFE0D_MessageSetFace( char_id=6 ) -- 0x0655 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0659 0x21
+        return 0 -- 0x065c 0x00
     end,
 
     on_update = function( self )
@@ -751,14 +758,14 @@ Actor[ "0x09" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0671 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0677 0x2c
-        opcodeD2_MessageShow0( text_id=0x0012, ???=0x11 ) -- 0x0679 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0012, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0679 0xd2
         opcode9C_MessageSync() -- 0x067d 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x067e 0x2c
         return 0 -- 0x0680 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0013, ???=0x11 ) -- 0x0681 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0013, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0681 0xd2
         opcode9C_MessageSync() -- 0x0685 0x9c
         return 0 -- 0x0686 0x00
     end,
@@ -821,7 +828,8 @@ Actor[ "0x0a" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=7 ) -- 0x0700 0x16
         opcodeFE0D_MessageSetFace( char_id=7 ) -- 0x0703 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0707 0x21
+        return 0 -- 0x070a 0x00
     end,
 
     on_update = function( self )
@@ -847,14 +855,14 @@ Actor[ "0x0a" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x071f 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0725 0x2c
-        opcodeD2_MessageShow0( text_id=0x0015, ???=0x11 ) -- 0x0727 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0015, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0727 0xd2
         opcode9C_MessageSync() -- 0x072b 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x072c 0x2c
         return 0 -- 0x072e 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0016, ???=0x11 ) -- 0x072f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0016, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x072f 0xd2
         opcode9C_MessageSync() -- 0x0733 0x9c
         return 0 -- 0x0734 0x00
     end,
@@ -917,7 +925,8 @@ Actor[ "0x0b" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=8 ) -- 0x07ae 0x16
         opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x07b1 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x07b5 0x21
+        return 0 -- 0x07b8 0x00
     end,
 
     on_update = function( self )
@@ -943,14 +952,14 @@ Actor[ "0x0b" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x07cd 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x07d3 0x2c
-        opcodeD2_MessageShow0( text_id=0x0018, ???=0x11 ) -- 0x07d5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0018, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x07d5 0xd2
         opcode9C_MessageSync() -- 0x07d9 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x07da 0x2c
         return 0 -- 0x07dc 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0019, ???=0x11 ) -- 0x07dd 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0019, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x07dd 0xd2
         opcode9C_MessageSync() -- 0x07e1 0x9c
         return 0 -- 0x07e2 0x00
     end,
@@ -1013,7 +1022,8 @@ Actor[ "0x0c" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=9 ) -- 0x085c 0x16
         opcodeFE0D_MessageSetFace( char_id=9 ) -- 0x085f 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0863 0x21
+        return 0 -- 0x0866 0x00
     end,
 
     on_update = function( self )
@@ -1039,14 +1049,14 @@ Actor[ "0x0c" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x087b 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0881 0x2c
-        opcodeD2_MessageShow0( text_id=0x001b, ???=0x11 ) -- 0x0883 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x001b, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0883 0xd2
         opcode9C_MessageSync() -- 0x0887 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0888 0x2c
         return 0 -- 0x088a 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x001c, ???=0x11 ) -- 0x088b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x001c, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x088b 0xd2
         opcode9C_MessageSync() -- 0x088f 0x9c
         return 0 -- 0x0890 0x00
     end,
@@ -1107,7 +1117,8 @@ Actor[ "0x0d" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=10 ) -- 0x0901 0x16
         opcodeFE0D_MessageSetFace( char_id=10 ) -- 0x0904 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0908 0x21
+        return 0 -- 0x090b 0x00
     end,
 
     on_update = function( self )
@@ -1133,14 +1144,14 @@ Actor[ "0x0d" ] = {
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0920 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x0926 0x2c
-        opcodeD2_MessageShow0( text_id=0x001e, ???=0x11 ) -- 0x0928 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x001e, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0928 0xd2
         opcode9C_MessageSync() -- 0x092c 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x092d 0x2c
         return 0 -- 0x092f 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x001f, ???=0x11 ) -- 0x0930 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x001f, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0930 0xd2
         opcode9C_MessageSync() -- 0x0934 0x9c
         return 0 -- 0x0935 0x00
     end,
@@ -1221,7 +1232,7 @@ Actor[ "0x0e" ] = {
     script_0x04 = function( self )
         opcode09_ActorCallScriptEW( actor_id=0xfe, script=08, priority=01 ) -- 0x09b4 0x09
         opcode09_ActorCallScriptEW( actor_id=0xfd, script=09, priority=01 ) -- 0x09b7 0x09
-        opcodeF5_MessageShow3( text_id=0x0021, flag=0x00 ) -- 0x09ba 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0021, flags=0 ) -- 0x09ba 0xf5
         opcode9C_MessageSync() -- 0x09be 0x9c
         return 0 -- 0x09bf 0x00
     end,
@@ -1232,25 +1243,25 @@ Actor[ "0x0e" ] = {
         opcode26_Wait( time=15 ) -- 0x09c6 0x26
         opcode08_ActorCallScriptSW( actor_id=0xfd, script=04, priority=01 ) -- 0x09c9 0x08
         opcode09_ActorCallScriptEW( actor_id=0xfe, script=05, priority=01 ) -- 0x09cc 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0022, ???=0x11 ) -- 0x09cf 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0022, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x09cf 0xfc
         opcode08_ActorCallScriptSW( actor_id=0x02, script=0f, priority=01 ) -- 0x09d5 0x08
         opcode08_ActorCallScriptSW( actor_id=0xfe, script=0a, priority=01 ) -- 0x09d8 0x08
         opcode08_ActorCallScriptSW( actor_id=0xfd, script=0b, priority=01 ) -- 0x09db 0x08
         opcode08_ActorCallScriptSW( actor_id=0x03, script=06, priority=01 ) -- 0x09de 0x08
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0023, ???=0x11 ) -- 0x09e1 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0024, ???=0x11 ) -- 0x09e7 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0025, ???=0x11 ) -- 0x09ed 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0026, ???=0x11 ) -- 0x09f3 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0023, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x09e1 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0024, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x09e7 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0025, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x09ed 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0026, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x09f3 0xfc
         opcode08_ActorCallScriptSW( actor_id=0x02, script=10, priority=01 ) -- 0x09f9 0x08
         opcode08_ActorCallScriptSW( actor_id=0x03, script=07, priority=01 ) -- 0x09fc 0x08
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0027, ???=0x21 ) -- 0x09ff 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0027, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x09ff 0xfc
         opcode08_ActorCallScriptSW( actor_id=0xfe, script=0c, priority=01 ) -- 0x0a05 0x08
         opcode26_Wait( time=5 ) -- 0x0a08 0x26
         opcode08_ActorCallScriptSW( actor_id=0xfd, script=0d, priority=01 ) -- 0x0a0b 0x08
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0028, ???=0x21 ) -- 0x0a0e 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x0029, ???=0x21 ) -- 0x0a14 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x002a, ???=0x21 ) -- 0x0a1a 0xfc
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x02, text_id=0x002b, ???=0x21 ) -- 0x0a20 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0028, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0a0e 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x0029, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0a14 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x002a, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0a1a 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x02, text_id=0x002b, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0a20 0xfc
         opcode09_ActorCallScriptEW( actor_id=0xfd, script=06, priority=01 ) -- 0x0a26 0x09
         -- MISSING OPCODE 0x67
     end,

@@ -331,11 +331,11 @@ Actor[ "0x0d" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00d0 0x6f
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00e4 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x00e2 ) -- 0x00d2 0x02
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00da 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00da 0xd2
         opcode9C_MessageSync() -- 0x00de 0x9c
         -- 0x01_JumpTo( 0x00ed ) -- 0x00df 0x01
         opcode3A_VariableBitSet( address=0x00e4, bit_num=(vf40)0x0001, flag=0x40 ) -- 0x00e2 0x3a
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00e8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00e8 0xd2
         opcode9C_MessageSync() -- 0x00ec 0x9c
         opcode69_ActorSetRotation( rot=7 ) -- 0x00ed 0x69
         return 0 -- 0x00f0 0x00

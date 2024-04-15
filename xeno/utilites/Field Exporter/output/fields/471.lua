@@ -329,7 +329,7 @@ Actor[ "0x0d" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00b9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00b9 0xd2
         opcode9C_MessageSync() -- 0x00bd 0x9c
         return 0 -- 0x00be 0x00
     end,

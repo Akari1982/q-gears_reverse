@@ -324,7 +324,7 @@ Actor[ "0x0d" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x028d 0xfe
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x028f 0x35
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x10 ) -- 0x0295 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_TOP ) -- 0x0295 0xd2
         opcode9C_MessageSync() -- 0x0299 0x9c
         opcode74_SoundPlayFixedVolume( sound_id=119 ) -- 0x029a 0x74
         -- 0x07( actor_id=0x0e, script=0x64 ) -- 0x029d 0x07
@@ -411,7 +411,7 @@ Actor[ "0x10" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x0308 0xfe
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x030a 0x35
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x10 ) -- 0x0310 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=FORCE_TOP ) -- 0x0310 0xd2
         opcode9C_MessageSync() -- 0x0314 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x11, script=04, priority=03 ) -- 0x0315 0x09
         -- 0x98_MapLoad( field_id=485, value=3 ) -- 0x0318 0x98
@@ -470,7 +470,7 @@ Actor[ "0x12" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x035d 0xfe
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x035f 0x35
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x10 ) -- 0x0365 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=FORCE_TOP ) -- 0x0365 0xd2
         opcode9C_MessageSync() -- 0x0369 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x13, script=04, priority=03 ) -- 0x036a 0x09
         -- 0x98_MapLoad( field_id=485, value=9 ) -- 0x036d 0x98
@@ -529,7 +529,7 @@ Actor[ "0x14" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x03b2 0xfe
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x03b4 0x35
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x10 ) -- 0x03ba 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=FORCE_TOP ) -- 0x03ba 0xd2
         opcode9C_MessageSync() -- 0x03be 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x15, script=04, priority=03 ) -- 0x03bf 0x09
         -- 0x98_MapLoad( field_id=485, value=1 ) -- 0x03c2 0x98
@@ -872,7 +872,7 @@ Actor[ "0x20" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x0591 0xfe
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x0593 0x35
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x10 ) -- 0x0599 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=FORCE_TOP ) -- 0x0599 0xd2
         opcode9C_MessageSync() -- 0x059d 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x21, script=04, priority=03 ) -- 0x059e 0x09
         -- 0x98_MapLoad( field_id=485, value=2 ) -- 0x05a1 0x98

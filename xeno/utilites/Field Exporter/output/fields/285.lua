@@ -182,16 +182,16 @@ Actor[ "0x05" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01f2 ) -- 0x01df 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x01e7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x01e7 0xd2
         opcode9C_MessageSync() -- 0x01eb 0x9c
         opcode3C_VariableInc( address=0x0412 ) -- 0x01ec 0x3c
         -- 0x01_JumpTo( 0x020d ) -- 0x01ef 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0412 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0205 ) -- 0x01f2 0x02
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x01fa 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x01fa 0xd2
         opcode9C_MessageSync() -- 0x01fe 0x9c
         opcode3C_VariableInc( address=0x0412 ) -- 0x01ff 0x3c
         -- 0x01_JumpTo( 0x020d ) -- 0x0202 0x01
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0205 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0205 0xd2
         opcode9C_MessageSync() -- 0x0209 0x9c
         opcode3D_VariableDec( address=0x0412 ) -- 0x020a 0x3d
         return 0 -- 0x020d 0x00
@@ -216,7 +216,7 @@ Actor[ "0x05" ] = {
     script_0x07 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x06 ) -- 0x022d 0x6f
         opcode26_Wait( time=12 ) -- 0x022f 0x26
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x10 ) -- 0x0232 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=FORCE_TOP ) -- 0x0232 0xd2
         opcode9C_MessageSync() -- 0x0236 0x9c
         opcode26_Wait( time=32 ) -- 0x0237 0x26
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x023a 0x4a
@@ -258,13 +258,13 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x21 ) -- 0x0287 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0287 0xd2
         opcode9C_MessageSync() -- 0x028b 0x9c
         return 0 -- 0x028c 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x21 ) -- 0x028d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x028d 0xd2
         opcode9C_MessageSync() -- 0x0291 0x9c
         return 0 -- 0x0292 0x00
     end,
@@ -292,7 +292,7 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x11 ) -- 0x02ab 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x02ab 0xd2
         opcode9C_MessageSync() -- 0x02af 0x9c
         return 0 -- 0x02b0 0x00
     end,
@@ -305,13 +305,13 @@ Actor[ "0x07" ] = {
     script_0x06 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02b8 0x4a
         opcode26_Wait( time=24 ) -- 0x02be 0x26
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x21 ) -- 0x02c1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x02c1 0xd2
         opcode9C_MessageSync() -- 0x02c5 0x9c
         -- MISSING OPCODE 0xFE5b
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000d, ???=0x21 ) -- 0x02de 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x02de 0xd2
         opcode9C_MessageSync() -- 0x02e2 0x9c
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02e3 0x4a
         return 0 -- 0x02e9 0x00
@@ -327,7 +327,7 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x0a = function( self )
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x21 ) -- 0x02f0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x02f0 0xd2
         opcode9C_MessageSync() -- 0x02f4 0x9c
         opcode26_Wait( time=24 ) -- 0x02f5 0x26
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02f8 0x4a
@@ -364,7 +364,7 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0010, ???=0x21 ) -- 0x0336 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0010, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0336 0xd2
         opcode9C_MessageSync() -- 0x033a 0x9c
         opcode26_Wait( time=16 ) -- 0x033b 0x26
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x033e 0x4a

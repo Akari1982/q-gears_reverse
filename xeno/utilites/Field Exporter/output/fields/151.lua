@@ -109,10 +109,10 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x0068 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=129 ) -- 0x0068 0xd0
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x0073 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x07, text_id=0x0000, ???=0x00 ) -- 0x0077 0xd4
-        opcodeD4_MessageShowE( actor_id=(entity)0x07, text_id=0x0001, ???=0x00 ) -- 0x007d 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0000, flags=0 ) -- 0x0077 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0001, flags=0 ) -- 0x007d 0xd4
         -- MISSING OPCODE 0xFEaa
     end,
 

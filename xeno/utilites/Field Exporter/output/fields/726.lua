@@ -318,7 +318,7 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00df 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00e1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00e1 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=07 ) -- 0x00e5 0xa9
         opcode9C_MessageSync() -- 0x00e7 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00f6 ) -- 0x00e8 0x02
@@ -365,7 +365,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0702 0x6f
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x0704 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=0 ) -- 0x0704 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=06 ) -- 0x0708 0xa9
         opcode9C_MessageSync() -- 0x070a 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0719 ) -- 0x070b 0x02
@@ -408,8 +408,8 @@ Actor[ "0x0e" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0a9d 0x6f
         opcodeF4_MessageClose( type=0x01 ) -- 0x0a9f 0xf4
-        -- 0xD0() -- 0x0aa1 0xd0
-        opcodeD2_MessageShow0( text_id=0x0016, ???=0x00 ) -- 0x0aac 0xd2
+        opcodeD0_MessageSettings( x=6, y=18, letters=15, rows=9, flags=2 ) -- 0x0aa1 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0016, flags=0 ) -- 0x0aac 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=08 ) -- 0x0ab0 0xa9
         opcode9C_MessageSync() -- 0x0ab2 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0ac1 ) -- 0x0ab3 0x02
@@ -454,7 +454,8 @@ Actor[ "0x0f" ] = {
         -- 0x0B_InitNPC( 1 ) -- 0x136e 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0xff22, z=(vf40)0x0154, flag=(flag)0xc0 ) -- 0x1371 0x19
         opcode69_ActorSetRotation( rot=6 ) -- 0x1377 0x69
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=12288 ) -- 0x137a 0xfe
+        return 0 -- 0x137e 0x00
     end,
 
     on_update = function( self )
@@ -463,7 +464,7 @@ Actor[ "0x0f" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x1380 0x6f
-        opcodeD2_MessageShow0( text_id=0x001f, ???=0x00 ) -- 0x1382 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x001f, flags=0 ) -- 0x1382 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=05 ) -- 0x1386 0xa9
         opcode9C_MessageSync() -- 0x1388 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x13c8 ) -- 0x1389 0x02

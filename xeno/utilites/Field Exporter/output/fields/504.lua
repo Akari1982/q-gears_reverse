@@ -379,11 +379,11 @@ Actor[ "0x0f" ] = {
         opcode74_SoundPlayFixedVolume( sound_id=250 ) -- 0x43a1 0x74
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x43a4 0x2c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0190 ), value2=(s16)0x8000, condition="value1 & value2", jump_if_false=0x43b6 ) -- 0x43a6 0x02
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x00 ) -- 0x43ae 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=0 ) -- 0x43ae 0xf5
         opcode9C_MessageSync() -- 0x43b2 0x9c
         -- 0x01_JumpTo( 0x43fc ) -- 0x43b3 0x01
         -- 0xFE54() -- 0x43b6 0xfe
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x00 ) -- 0x43b8 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=0 ) -- 0x43b8 0xf5
         opcode9C_MessageSync() -- 0x43bc 0x9c
         -- MISSING OPCODE 0xFE65
     end,

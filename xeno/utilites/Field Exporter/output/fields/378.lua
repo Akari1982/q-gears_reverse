@@ -112,7 +112,7 @@ Actor[ "0x03" ] = {
         opcode26_Wait( time=35 ) -- 0x014d 0x26
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x0150 0x2c
         opcode26_Wait( time=90 ) -- 0x0152 0x26
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x01 ) -- 0x0155 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x0155 0xd2
         opcode9C_MessageSync() -- 0x0159 0x9c
         opcode26_Wait( time=24 ) -- 0x015a 0x26
         return 0 -- 0x015d 0x00
@@ -120,7 +120,7 @@ Actor[ "0x03" ] = {
 
     script_0x05 = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)0x04 ) -- 0x015e 0x6f
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x11 ) -- 0x0160 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0160 0xd2
         opcode9C_MessageSync() -- 0x0164 0x9c
         return 0 -- 0x0165 0x00
     end,
@@ -163,7 +163,7 @@ Actor[ "0x04" ] = {
         opcode74_SoundPlayFixedVolume( sound_id=249 ) -- 0x019e 0x74
         opcode26_Wait( time=35 ) -- 0x01a1 0x26
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x01a4 0x2c
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x01 ) -- 0x01a6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x01a6 0xd2
         opcode9C_MessageSync() -- 0x01aa 0x9c
         opcode26_Wait( time=24 ) -- 0x01ab 0x26
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x01ae 0x2c
@@ -181,7 +181,12 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x021c 0x1f
+        opcode26_Wait( time=1 ) -- 0x021e 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0221 0x4a
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0227 0xd2
+        opcode9C_MessageSync() -- 0x022b 0x9c
+        return 0 -- 0x022c 0x00
     end,
 
 }

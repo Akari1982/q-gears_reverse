@@ -56,11 +56,19 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x0044 0x21
+        -- 0xF6( ???=0x01 ) -- 0x0047 0xf6
+        opcodeFE4A_SpriteAddAnimLoad( file=101 ) -- 0x0049 0xfe
+        opcodeFE4B_SpriteAddAnimSync() -- 0x004d 0xfe
+        opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x004f 0xfe
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x0061 0x21
+        -- 0xF6( ???=0x00 ) -- 0x0064 0xf6
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0066 0x2c
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )

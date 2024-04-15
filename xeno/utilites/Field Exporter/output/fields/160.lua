@@ -140,19 +140,25 @@ Actor[ "0x03" ] = {
         opcode09_ActorCallScriptEW( actor_id=0x04, script=04, priority=00 ) -- 0x01bf 0x09
         opcode26_Wait( time=30 ) -- 0x01c2 0x26
         opcodeFE0D_MessageSetFace( char_id=88 ) -- 0x01c5 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0000, ???=0x24 ) -- 0x01c9 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0000, flags=FORCE_LEFT|FORCE_BOTTOM ) -- 0x01c9 0xd4
         opcode26_Wait( time=20 ) -- 0x01cf 0x26
         opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x01d2 0x2c
         opcodeFE0D_MessageSetFace( char_id=87 ) -- 0x01d4 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x03, text_id=0x0001, ???=0x24 ) -- 0x01d8 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x03, text_id=0x0001, flags=FORCE_LEFT|FORCE_BOTTOM ) -- 0x01d8 0xd4
         opcode5D_SpritePlayAnim2( anim_id=0x03 ) -- 0x01de 0x5d
         -- 0x5E() -- 0x01e0 0x5e
         -- 0x19_ActorSetPosition( x=(vf80)0xff38, z=(vf40)0x0087, flag=(flag)0xc0 ) -- 0x01e1 0x19
         opcode2C_SpritePlayAnim( anim_id=0x04 ) -- 0x01e7 0x2c
         opcodeFE0D_MessageSetFace( char_id=88 ) -- 0x01e9 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0002, ???=0x24 ) -- 0x01ed 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0002, flags=FORCE_LEFT|FORCE_BOTTOM ) -- 0x01ed 0xd4
         opcode26_Wait( time=10 ) -- 0x01f3 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x01f6 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x05 ) -- 0x01f9 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01fb 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0201 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0207 0x4a
+        opcode74_SoundPlayFixedVolume( sound_id=8 ) -- 0x020d 0x74
+        return 0 -- 0x0210 0x00
     end,
 
 }
@@ -179,7 +185,9 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x021f 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x0222 0x2c
+        return 0 -- 0x0224 0x00
     end,
 
     script_0x05 = function( self )
@@ -190,18 +198,18 @@ Actor[ "0x04" ] = {
     script_0x06 = function( self )
         opcode26_Wait( time=30 ) -- 0x0228 0x26
         opcodeFE0D_MessageSetFace( char_id=88 ) -- 0x022b 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0003, ???=0x29 ) -- 0x022f 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_RIGHT|FORCE_BOTTOM ) -- 0x022f 0xd4
         -- 0x07( actor_id=0x05, script=0x24 ) -- 0x0235 0x07
         opcode26_Wait( time=60 ) -- 0x0238 0x26
         opcodeFE0D_MessageSetFace( char_id=88 ) -- 0x023b 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0004, ???=0x29 ) -- 0x023f 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0004, flags=CLOSE_OFF_SCREEN|FORCE_RIGHT|FORCE_BOTTOM ) -- 0x023f 0xd4
         opcode26_Wait( time=50 ) -- 0x0245 0x26
         opcodeFE0D_MessageSetFace( char_id=24 ) -- 0x0248 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x05, text_id=0x0005, ???=0x25 ) -- 0x024c 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x0005, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_BOTTOM ) -- 0x024c 0xd4
         -- 0x07( actor_id=0x05, script=0x05 ) -- 0x0252 0x07
         opcode26_Wait( time=20 ) -- 0x0255 0x26
         opcodeFE0D_MessageSetFace( char_id=88 ) -- 0x0258 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x04, text_id=0x0006, ???=0x29 ) -- 0x025c 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0006, flags=CLOSE_OFF_SCREEN|FORCE_RIGHT|FORCE_BOTTOM ) -- 0x025c 0xd4
         -- 0x0B_InitNPC( 2 ) -- 0x0262 0x0b
         -- MISSING OPCODE 0xFE1c
     end,

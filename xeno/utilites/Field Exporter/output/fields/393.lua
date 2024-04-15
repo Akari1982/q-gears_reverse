@@ -393,9 +393,9 @@ Actor[ "0x0c" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x0241 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x11 ) -- 0x0243 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0243 0xd2
         opcode9C_MessageSync() -- 0x0247 0x9c
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0248 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0248 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=02, end_row=03 ) -- 0x024c 0xa9
         opcode9C_MessageSync() -- 0x024e 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0260 ) -- 0x024f 0x02

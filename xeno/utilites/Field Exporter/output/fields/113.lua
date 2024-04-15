@@ -303,13 +303,13 @@ Actor[ "0x0c" ] = {
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00a7 0x6f
         -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x00c6 ) -- 0x00a9 0x84
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00be ), value2=(s16)0x0005, condition="value1 < value2", jump_if_false=0x00be ) -- 0x00ae 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00b6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00b6 0xd2
         opcode9C_MessageSync() -- 0x00ba 0x9c
         -- 0x01_JumpTo( 0x00c3 ) -- 0x00bb 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00be 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00be 0xd2
         opcode9C_MessageSync() -- 0x00c2 0x9c
         -- 0x01_JumpTo( 0x00cb ) -- 0x00c3 0x01
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00c6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00c6 0xd2
         opcode9C_MessageSync() -- 0x00ca 0x9c
         return 0 -- 0x00cb 0x00
     end,
@@ -324,7 +324,9 @@ Actor[ "0x0c" ] = {
 
 Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=3 ) -- 0x00cd 0xfe
+        -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x00da ) -- 0x00d3 0x84
+        -- MISSING OPCODE 0x29
     end,
 
     on_update = function( self )
@@ -333,7 +335,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00e3 0x6f
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00e5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00e5 0xd2
         opcode9C_MessageSync() -- 0x00e9 0x9c
         return 0 -- 0x00ea 0x00
     end,

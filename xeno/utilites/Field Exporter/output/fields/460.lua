@@ -36,56 +36,56 @@ Actor[ "0x00" ] = {
         -- 0x05_CallFunction( 0x07bc ) -- 0x0063 0x05
         -- 0xFE0E_SoundSetVolume( volume=64, steps=60 ) -- 0x0066 0xfe
         opcode26_Wait( time=60 ) -- 0x006c 0x26
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x01 ) -- 0x006f 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x006f 0xf5
         opcode9C_MessageSync() -- 0x0073 0x9c
         opcodeFE0D_MessageSetFace( char_id=72 ) -- 0x0074 0xfe
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x01 ) -- 0x0078 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x0078 0xf5
         opcode9C_MessageSync() -- 0x007c 0x9c
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x007d 0xfe
-        opcodeF5_MessageShow3( text_id=0x0002, flag=0x01 ) -- 0x0081 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x0081 0xf5
         opcode9C_MessageSync() -- 0x0085 0x9c
         opcodeFE0D_MessageSetFace( char_id=72 ) -- 0x0086 0xfe
-        opcodeF5_MessageShow3( text_id=0x0003, flag=0x01 ) -- 0x008a 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x008a 0xf5
         opcode9C_MessageSync() -- 0x008e 0x9c
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x008f 0xfe
-        opcodeF5_MessageShow3( text_id=0x0004, flag=0x01 ) -- 0x0093 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0004, flags=CLOSE_OFF_SCREEN ) -- 0x0093 0xf5
         opcode9C_MessageSync() -- 0x0097 0x9c
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x0098 0xfe
-        opcodeF5_MessageShow3( text_id=0x0005, flag=0x01 ) -- 0x009c 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0005, flags=CLOSE_OFF_SCREEN ) -- 0x009c 0xf5
         opcode9C_MessageSync() -- 0x00a0 0x9c
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x00a1 0xfe
-        opcodeF5_MessageShow3( text_id=0x0006, flag=0x01 ) -- 0x00a5 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0006, flags=CLOSE_OFF_SCREEN ) -- 0x00a5 0xf5
         opcode9C_MessageSync() -- 0x00a9 0x9c
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x00aa 0xfe
-        opcodeF5_MessageShow3( text_id=0x0007, flag=0x01 ) -- 0x00ae 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0007, flags=CLOSE_OFF_SCREEN ) -- 0x00ae 0xf5
         opcode9C_MessageSync() -- 0x00b2 0x9c
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x00b3 0xfe
-        opcodeF5_MessageShow3( text_id=0x0008, flag=0x01 ) -- 0x00b7 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0008, flags=CLOSE_OFF_SCREEN ) -- 0x00b7 0xf5
         opcode9C_MessageSync() -- 0x00bb 0x9c
         opcodeFE0D_MessageSetFace( char_id=29 ) -- 0x00bc 0xfe
-        opcodeF5_MessageShow3( text_id=0x0009, flag=0x01 ) -- 0x00c0 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0009, flags=CLOSE_OFF_SCREEN ) -- 0x00c0 0xf5
         opcode9C_MessageSync() -- 0x00c4 0x9c
         opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x00c5 0xfe
-        opcodeF5_MessageShow3( text_id=0x000a, flag=0x01 ) -- 0x00c9 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000a, flags=CLOSE_OFF_SCREEN ) -- 0x00c9 0xf5
         opcode9C_MessageSync() -- 0x00cd 0x9c
         opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x00ce 0xfe
-        opcodeF5_MessageShow3( text_id=0x000b, flag=0x01 ) -- 0x00d2 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000b, flags=CLOSE_OFF_SCREEN ) -- 0x00d2 0xf5
         opcode9C_MessageSync() -- 0x00d6 0x9c
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x00d7 0xfe
-        opcodeF5_MessageShow3( text_id=0x000c, flag=0x01 ) -- 0x00db 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000c, flags=CLOSE_OFF_SCREEN ) -- 0x00db 0xf5
         opcode9C_MessageSync() -- 0x00df 0x9c
         opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x00e0 0xfe
-        opcodeF5_MessageShow3( text_id=0x000d, flag=0x01 ) -- 0x00e4 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000d, flags=CLOSE_OFF_SCREEN ) -- 0x00e4 0xf5
         opcode9C_MessageSync() -- 0x00e8 0x9c
         opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x00e9 0xfe
-        opcodeF5_MessageShow3( text_id=0x000e, flag=0x01 ) -- 0x00ed 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000e, flags=CLOSE_OFF_SCREEN ) -- 0x00ed 0xf5
         opcode9C_MessageSync() -- 0x00f1 0x9c
         opcodeFE0D_MessageSetFace( char_id=72 ) -- 0x00f2 0xfe
-        opcodeF5_MessageShow3( text_id=0x000f, flag=0x01 ) -- 0x00f6 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000f, flags=CLOSE_OFF_SCREEN ) -- 0x00f6 0xf5
         opcode9C_MessageSync() -- 0x00fa 0x9c
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x00fb 0xfe
-        -- 0xD0() -- 0x00ff 0xd0
-        opcodeF5_MessageShow3( text_id=0x0010, flag=0x01 ) -- 0x010a 0xf5
+        opcodeD0_MessageSettings( x=0, y=90, letters=0, rows=0, flags=0 ) -- 0x00ff 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0010, flags=CLOSE_OFF_SCREEN ) -- 0x010a 0xf5
         opcode9C_MessageSync() -- 0x010e 0x9c
         -- 0xFE0E_SoundSetVolume( volume=0, steps=10 ) -- 0x010f 0xfe
         opcode26_Wait( time=10 ) -- 0x0115 0x26
@@ -878,7 +878,7 @@ Actor[ "0x1c" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040a ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x044a ) -- 0x040c 0x02
         opcode74_SoundPlayFixedVolume( sound_id=307 ) -- 0x0414 0x74
-        opcodeD2_MessageShow0( text_id=0x0013, ???=0x00 ) -- 0x0417 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0013, flags=0 ) -- 0x0417 0xd2
         opcode9C_MessageSync() -- 0x041b 0x9c
         -- MISSING OPCODE 0x70
     end,

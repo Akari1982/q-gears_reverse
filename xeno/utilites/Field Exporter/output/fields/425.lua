@@ -25,27 +25,27 @@ Actor[ "0x00" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0000, ???=0x00 ) -- 0x0021 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0000, flags=0 ) -- 0x0021 0xd4
         opcode26_Wait( time=10 ) -- 0x0027 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0001, ???=0x00 ) -- 0x002a 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0001, flags=0 ) -- 0x002a 0xd4
         opcode26_Wait( time=10 ) -- 0x0030 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0002, ???=0x00 ) -- 0x0033 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0002, flags=0 ) -- 0x0033 0xd4
         opcode26_Wait( time=10 ) -- 0x0039 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0003, ???=0x00 ) -- 0x003c 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0003, flags=0 ) -- 0x003c 0xd4
         opcode26_Wait( time=10 ) -- 0x0042 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0004, ???=0x00 ) -- 0x0045 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0004, flags=0 ) -- 0x0045 0xd4
         opcode26_Wait( time=10 ) -- 0x004b 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0005, ???=0x00 ) -- 0x004e 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0005, flags=0 ) -- 0x004e 0xd4
         opcode26_Wait( time=10 ) -- 0x0054 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0006, ???=0x00 ) -- 0x0057 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0006, flags=0 ) -- 0x0057 0xd4
         opcode26_Wait( time=10 ) -- 0x005d 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0007, ???=0x00 ) -- 0x0060 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0007, flags=0 ) -- 0x0060 0xd4
         opcode26_Wait( time=10 ) -- 0x0066 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0008, ???=0x00 ) -- 0x0069 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0008, flags=0 ) -- 0x0069 0xd4
         opcode26_Wait( time=10 ) -- 0x006f 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x0009, ???=0x00 ) -- 0x0072 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x0009, flags=0 ) -- 0x0072 0xd4
         opcode26_Wait( time=10 ) -- 0x0078 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x12, text_id=0x000a, ???=0x00 ) -- 0x007b 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x12, text_id=0x000a, flags=0 ) -- 0x007b 0xd4
         opcode26_Wait( time=10 ) -- 0x0081 0x26
         return 0 -- 0x0084 0x00
     end,
@@ -330,7 +330,7 @@ Actor[ "0x0c" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x0112 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=0 ) -- 0x0112 0xd2
         opcode9C_MessageSync() -- 0x0116 0x9c
         return 0 -- 0x0117 0x00
     end,
@@ -514,7 +514,7 @@ Actor[ "0x13" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0018, ???=0x00 ) -- 0x0240 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0018, flags=0 ) -- 0x0240 0xd2
         opcode9C_MessageSync() -- 0x0244 0x9c
         return 0 -- 0x0245 0x00
     end,
@@ -611,7 +611,10 @@ Actor[ "0x17" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x029c 0xc0
+        opcode26_Wait( time=1 ) -- 0x029f 0x26
+        -- 0x01_JumpTo( 0x029c ) -- 0x02a2 0x01
+        return 0 -- 0x02a5 0x00
     end,
 
     on_talk = function( self )
@@ -661,7 +664,10 @@ Actor[ "0x19" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x0316 0xc0
+        opcode26_Wait( time=1 ) -- 0x0319 0x26
+        -- 0x01_JumpTo( 0x0316 ) -- 0x031c 0x01
+        return 0 -- 0x031f 0x00
     end,
 
     on_talk = function( self )
@@ -711,7 +717,10 @@ Actor[ "0x1b" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x0390 0xc0
+        opcode26_Wait( time=1 ) -- 0x0393 0x26
+        -- 0x01_JumpTo( 0x0390 ) -- 0x0396 0x01
+        return 0 -- 0x0399 0x00
     end,
 
     on_talk = function( self )
@@ -761,7 +770,10 @@ Actor[ "0x1d" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x040a 0xc0
+        opcode26_Wait( time=1 ) -- 0x040d 0x26
+        -- 0x01_JumpTo( 0x040a ) -- 0x0410 0x01
+        return 0 -- 0x0413 0x00
     end,
 
     on_talk = function( self )

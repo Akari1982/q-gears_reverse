@@ -56,13 +56,13 @@ Actor[ "0x01" ] = {
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x0151 0x2c
         opcode26_Wait( time=20 ) -- 0x0153 0x26
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x10 ) -- 0x0156 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=FORCE_TOP ) -- 0x0156 0xd2
         opcode9C_MessageSync() -- 0x015a 0x9c
         return 0 -- 0x015b 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x015c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x015c 0xd2
         opcode9C_MessageSync() -- 0x0160 0x9c
         return 0 -- 0x0161 0x00
     end,
@@ -71,7 +71,7 @@ Actor[ "0x01" ] = {
         opcode5D_SpritePlayAnim2( anim_id=0x04 ) -- 0x0162 0x5d
         -- 0x5E() -- 0x0164 0x5e
         opcode26_Wait( time=10 ) -- 0x0165 0x26
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x0168 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x0168 0xd2
         opcode9C_MessageSync() -- 0x016c 0x9c
         return 0 -- 0x016d 0x00
     end,
@@ -296,7 +296,7 @@ Actor[ "0x0a" ] = {
         opcode5D_SpritePlayAnim2( anim_id=0x04 ) -- 0x01d1 0x5d
         -- 0x5E() -- 0x01d3 0x5e
         opcode26_Wait( time=20 ) -- 0x01d4 0x26
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x01d7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x01d7 0xd2
         opcode9C_MessageSync() -- 0x01db 0x9c
         return 0 -- 0x01dc 0x00
     end,
@@ -345,7 +345,7 @@ Actor[ "0x0c" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x01fa 0xfe
         opcode08_ActorCallScriptSW( actor_id=0x00, script=04, priority=03 ) -- 0x01fc 0x08
-        opcodeF5_MessageShow3( text_id=0x0008, flag=0x11 ) -- 0x01ff 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0008, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x01ff 0xf5
         opcode9C_MessageSync() -- 0x0203 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ce ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x020f ) -- 0x0204 0x02
         -- 0x01_JumpTo( 0x0232 ) -- 0x020c 0x01
@@ -357,13 +357,13 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x0256 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=0 ) -- 0x0256 0xd2
         opcode9C_MessageSync() -- 0x025a 0x9c
         return 0 -- 0x025b 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x025c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=0 ) -- 0x025c 0xd2
         opcode9C_MessageSync() -- 0x0260 0x9c
         return 0 -- 0x0261 0x00
     end,

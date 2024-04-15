@@ -108,7 +108,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) ) -- 0x43bf 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x003e ) ) -- 0x43c2 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x43c6 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -125,15 +126,21 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x43d2 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x43d4 0x4a
+        return 0 -- 0x43da 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x43db 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x43dd 0x4a
+        return 0 -- 0x43e3 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x43e4 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x43e6 0x4a
+        return 0 -- 0x43ec 0x00
     end,
 
 }
@@ -144,7 +151,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x43ed 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x43f0 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x43f4 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -168,7 +176,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x4400 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x4403 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2730 ) -- 0x4407 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -395,29 +404,29 @@ Actor[ "0x0e" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x45cf ) -- 0x45c4 0x02
         -- 0x01_JumpTo( 0x45e3 ) -- 0x45cc 0x01
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x45cf 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x45d1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x45d1 0xd2
         opcode9C_MessageSync() -- 0x45d5 0x9c
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x45d6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x45d6 0xd2
         opcode9C_MessageSync() -- 0x45da 0x9c
         opcode3A_VariableBitSet( address=0x0210, bit_num=(vf40)0x0009, flag=0x40 ) -- 0x45db 0x3a
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x45e1 0x2c
         -- 0x01_JumpTo( 0x4600 ) -- 0x45e3 0x01
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x45e6 0x2c
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x45e8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x45e8 0xd2
         opcode9C_MessageSync() -- 0x45ec 0x9c
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x45ed 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x45ed 0xd2
         opcode9C_MessageSync() -- 0x45f1 0x9c
         opcode3A_VariableBitSet( address=0x020c, bit_num=(vf40)0x000b, flag=0x40 ) -- 0x45f2 0x3a
         opcode3A_VariableBitSet( address=0x0210, bit_num=(vf40)0x0009, flag=0x40 ) -- 0x45f8 0x3a
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x45fe 0x2c
         opcode2C_SpritePlayAnim( anim_id=0x01 ) -- 0x4600 0x2c
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x4602 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x4602 0xd2
         opcode9C_MessageSync() -- 0x4606 0x9c
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x4607 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x4607 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=02 ) -- 0x460b 0xa9
         opcode9C_MessageSync() -- 0x460d 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4664 ) -- 0x460e 0x02
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x4616 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x4616 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=03 ) -- 0x461a 0xa9
         opcode9C_MessageSync() -- 0x461c 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x4631 ) -- 0x461d 0x02

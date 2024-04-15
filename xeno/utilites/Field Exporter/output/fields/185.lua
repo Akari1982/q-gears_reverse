@@ -143,7 +143,10 @@ Actor[ "0x03" ] = {
 
 Actor[ "0x04" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=15 ) -- 0x01f8 0x93
+        opcodeFE03( ???=1500 ) -- 0x01fb 0xfe
+        opcodeFE0D_MessageSetFace( char_id=63 ) -- 0x01ff 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -161,13 +164,14 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=2800 ) -- 0x023e 0xfe
+        return 0 -- 0x0242 0x00
     end,
 
     script_0x05 = function( self )
         opcode09_ActorCallScriptEW( actor_id=0x01, script=04, priority=01 ) -- 0x0243 0x09
         opcode26_Wait( time=32 ) -- 0x0246 0x26
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x10 ) -- 0x0249 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_TOP ) -- 0x0249 0xd2
         opcode9C_MessageSync() -- 0x024d 0x9c
         return 0 -- 0x024e 0x00
     end,

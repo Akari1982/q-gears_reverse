@@ -134,7 +134,9 @@ Actor[ "0x04" ] = {
 
 Actor[ "0x05" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=51 ) -- 0x021d 0x93
+        opcodeFE03( ???=2448 ) -- 0x0220 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -296,12 +298,19 @@ Actor[ "0x0b" ] = {
 
 Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=17 ) -- 0x026c 0x93
+        opcodeFE03( ???=2448 ) -- 0x026f 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x03ed, z=(vf40)0xf060, flag=(flag)0xc0 ) -- 0x0273 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0420 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0299 ) -- 0x0283 0x02
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=1, ???=4 ) -- 0x028b 0xfe
+        opcode26_Wait( time=1 ) -- 0x0291 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x0294 0x2c
+        opcode36_VariableSetTrue( address=0x0420 ) -- 0x0296 0x36
+        return 0 -- 0x0299 0x00
     end,
 
     on_talk = function( self )

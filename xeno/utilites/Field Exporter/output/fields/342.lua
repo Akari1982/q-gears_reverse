@@ -334,11 +334,15 @@ Actor[ "0x0c" ] = {
 
 Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=28 ) -- 0x0116 0x93
+        opcodeFE03( ???=6144 ) -- 0x0119 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=2 ) -- 0x0135 0xfe
+        -- 0x21( ???=69 ) -- 0x013b 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     on_talk = function( self )

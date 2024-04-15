@@ -217,7 +217,9 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x0296 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0299 0x4a
+        return 0 -- 0x029f 0x00
     end,
 
     script_0x05 = function( self )
@@ -230,13 +232,13 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x11 ) -- 0x030a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x030a 0xd2
         opcode9C_MessageSync() -- 0x030e 0x9c
         return 0 -- 0x030f 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x11 ) -- 0x0310 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0310 0xd2
         opcode9C_MessageSync() -- 0x0314 0x9c
         return 0 -- 0x0315 0x00
     end,
@@ -251,7 +253,10 @@ Actor[ "0x06" ] = {
 
 Actor[ "0x07" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=0 ) -- 0x031e 0x93
+        opcodeFE03( ???=14688 ) -- 0x0321 0xfe
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x0325 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -271,7 +276,11 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=144 ) -- 0x03a2 0x21
+        opcode26_Wait( time=55 ) -- 0x03a5 0x26
+        -- 0x47( ???=64 ) -- 0x03a8 0xfe
+        opcode2C_SpritePlayAnim( anim_id=0x1e ) -- 0x03ac 0x2c
+        -- MISSING OPCODE 0xFE65
     end,
 
     script_0x06 = function( self )
@@ -279,25 +288,25 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x20 ) -- 0x0538 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=FORCE_BOTTOM ) -- 0x0538 0xd2
         opcode9C_MessageSync() -- 0x053c 0x9c
         return 0 -- 0x053d 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x20 ) -- 0x053e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=FORCE_BOTTOM ) -- 0x053e 0xd2
         opcode9C_MessageSync() -- 0x0542 0x9c
         return 0 -- 0x0543 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x20 ) -- 0x0544 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=FORCE_BOTTOM ) -- 0x0544 0xd2
         opcode9C_MessageSync() -- 0x0548 0x9c
         return 0 -- 0x0549 0x00
     end,
 
     script_0x0a = function( self )
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x20 ) -- 0x054a 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=FORCE_BOTTOM ) -- 0x054a 0xd2
         opcode9C_MessageSync() -- 0x054e 0x9c
         return 0 -- 0x054f 0x00
     end,

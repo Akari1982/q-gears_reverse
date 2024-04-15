@@ -289,11 +289,15 @@ Actor[ "0x0b" ] = {
 
 Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=5 ) -- 0x00f6 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xfe75, flag=(flag)0xc0 ) -- 0x00f9 0x19
+        opcodeFE03( ???=8000 ) -- 0x00ff 0xfe
+        return 0 -- 0x0103 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=2047 ) -- 0x0104 0xfe
+        -- MISSING OPCODE 0x5f
     end,
 
     on_talk = function( self )

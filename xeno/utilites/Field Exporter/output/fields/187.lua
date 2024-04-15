@@ -169,7 +169,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x21 ) -- 0x03da 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x03da 0xd2
         opcode9C_MessageSync() -- 0x03de 0x9c
         return 0 -- 0x03df 0x00
     end,
@@ -199,31 +199,31 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x23 ) -- 0x03e9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM ) -- 0x03e9 0xd2
         opcode9C_MessageSync() -- 0x03ed 0x9c
         return 0 -- 0x03ee 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x21 ) -- 0x03ef 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x03ef 0xd2
         opcode9C_MessageSync() -- 0x03f3 0x9c
         return 0 -- 0x03f4 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x21 ) -- 0x03f5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x03f5 0xd2
         opcode9C_MessageSync() -- 0x03f9 0x9c
         return 0 -- 0x03fa 0x00
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x21 ) -- 0x03fb 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x03fb 0xd2
         opcode9C_MessageSync() -- 0x03ff 0x9c
         return 0 -- 0x0400 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x23 ) -- 0x0401 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM ) -- 0x0401 0xd2
         opcode9C_MessageSync() -- 0x0405 0x9c
         return 0 -- 0x0406 0x00
     end,
@@ -256,8 +256,8 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x041d 0xd0
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x11 ) -- 0x0428 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x041d 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0428 0xd2
         opcode9C_MessageSync() -- 0x042c 0x9c
         return 0 -- 0x042d 0x00
     end,
@@ -295,7 +295,10 @@ Actor[ "0x07" ] = {
 
 Actor[ "0x08" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=13 ) -- 0x047e 0x93
+        opcodeFE03( ???=9792 ) -- 0x0481 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0514, flag=(flag)0xc0 ) -- 0x0485 0x19
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )
@@ -315,53 +318,56 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x21 ) -- 0x04ba 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04ba 0xd2
         opcode9C_MessageSync() -- 0x04be 0x9c
         return 0 -- 0x04bf 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x21 ) -- 0x04c0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04c0 0xd2
         opcode9C_MessageSync() -- 0x04c4 0x9c
         return 0 -- 0x04c5 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x21 ) -- 0x04c6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04c6 0xd2
         opcode9C_MessageSync() -- 0x04ca 0x9c
         return 0 -- 0x04cb 0x00
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x21 ) -- 0x04cc 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04cc 0xd2
         opcode9C_MessageSync() -- 0x04d0 0x9c
         return 0 -- 0x04d1 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x21 ) -- 0x04d2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04d2 0xd2
         opcode9C_MessageSync() -- 0x04d6 0x9c
         return 0 -- 0x04d7 0x00
     end,
 
     script_0x09 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x21 ) -- 0x04d8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04d8 0xd2
         opcode9C_MessageSync() -- 0x04dc 0x9c
         return 0 -- 0x04dd 0x00
     end,
 
     script_0x0a = function( self )
-        opcodeD2_MessageShow0( text_id=0x000d, ???=0x21 ) -- 0x04de 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x04de 0xd2
         opcode9C_MessageSync() -- 0x04e2 0x9c
         return 0 -- 0x04e3 0x00
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=32 ) -- 0x04e4 0xfe
+        opcode26_Wait( time=45 ) -- 0x04e8 0x26
+        opcode2C_SpritePlayAnim( anim_id=0x18 ) -- 0x04eb 0x2c
+        -- MISSING OPCODE 0x5f
     end,
 
     script_0x0c = function( self )
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x11 ) -- 0x04f8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x04f8 0xd2
         opcode9C_MessageSync() -- 0x04fc 0x9c
         return 0 -- 0x04fd 0x00
     end,
@@ -372,7 +378,10 @@ Actor[ "0x08" ] = {
 
 Actor[ "0x09" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=37 ) -- 0x04fe 0x93
+        opcodeFE03( ???=9792 ) -- 0x0501 0xfe
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0148 ), value2=(s16)0x0014, condition="value1 == value2", jump_if_false=0x051e ) -- 0x0505 0x02
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -923,7 +932,8 @@ Actor[ "0x1f" ] = {
         -- 0xBC_ActorNoModelInit() -- 0x0a4c 0xbc
         -- 0x2A() -- 0x0a4d 0x2a
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0148 ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x0a59 ) -- 0x0a4e 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=2048 ) -- 0x0a56 0xbf
+        -- MISSING OPCODE 0xf9
     end,
 
     on_update = function( self )

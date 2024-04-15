@@ -75,7 +75,8 @@ Actor[ "0x03" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 1 ) -- 0x0027 0x0b
         -- 0x19_ActorSetPosition( x=(vf80)0x007c, z=(vf40)0x010b, flag=(flag)0xc0 ) -- 0x002a 0x19
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0030 0x21
+        return 0 -- 0x0033 0x00
     end,
 
     on_update = function( self )
@@ -86,7 +87,7 @@ Actor[ "0x03" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x005e 0x6f
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0060 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0060 0xd2
         opcode9C_MessageSync() -- 0x0064 0x9c
         return 0 -- 0x0065 0x00
     end,
@@ -96,7 +97,7 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0067 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0067 0xd2
         opcode9C_MessageSync() -- 0x006b 0x9c
         return 0 -- 0x006c 0x00
     end,
@@ -120,10 +121,10 @@ Actor[ "0x04" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x007a 0x6f
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x008c ) -- 0x007c 0x02
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0084 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0084 0xd2
         opcode9C_MessageSync() -- 0x0088 0x9c
         -- 0x01_JumpTo( 0x0097 ) -- 0x0089 0x01
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x008c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x008c 0xd2
         opcode9C_MessageSync() -- 0x0090 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x03, script=04, priority=01 ) -- 0x0091 0x09
         opcode36_VariableSetTrue( address=0x0400 ) -- 0x0094 0x36
@@ -151,7 +152,7 @@ Actor[ "0x05" ] = {
 
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00a4 0x6f
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x00a6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x00a6 0xd2
         opcode9C_MessageSync() -- 0x00aa 0x9c
         return 0 -- 0x00ab 0x00
     end,
@@ -176,7 +177,7 @@ Actor[ "0x06" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x00b1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x00b1 0xd2
         opcode9C_MessageSync() -- 0x00b5 0x9c
         return 0 -- 0x00b6 0x00
     end,

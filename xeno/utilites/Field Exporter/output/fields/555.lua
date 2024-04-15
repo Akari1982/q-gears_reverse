@@ -58,19 +58,27 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x00b8 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00ba 0x4a
+        return 0 -- 0x00c0 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x30 ) -- 0x00c1 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00c3 0x4a
+        return 0 -- 0x00c9 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x00ca 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00cc 0x4a
+        return 0 -- 0x00d2 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x00d3 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00d5 0x4a
+        return 0 -- 0x00db 0x00
     end,
 
 }
@@ -234,7 +242,7 @@ Actor[ "0x07" ] = {
         -- 0x98_MapLoad( field_id=560, value=0 ) -- 0x0198 0x98
         -- 0x5B() -- 0x019d 0x5b
         -- 0x01_JumpTo( 0x01a6 ) -- 0x019e 0x01
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x01a1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x01a1 0xd2
         opcode9C_MessageSync() -- 0x01a5 0x9c
         return 0 -- 0x01a6 0x00
     end,

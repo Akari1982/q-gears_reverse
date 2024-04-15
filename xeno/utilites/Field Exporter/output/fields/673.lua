@@ -73,7 +73,10 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x0080 0x21
+        opcode08_ActorCallScriptSW( actor_id=0x08, script=05, priority=01 ) -- 0x0083 0x08
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0086 0x4a
+        return 0 -- 0x008c 0x00
     end,
 
     script_0x05 = function( self )
@@ -107,7 +110,10 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x00a9 0x21
+        opcode08_ActorCallScriptSW( actor_id=0x08, script=05, priority=01 ) -- 0x00ac 0x08
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00af 0x4a
+        return 0 -- 0x00b5 0x00
     end,
 
     script_0x05 = function( self )
@@ -175,7 +181,13 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=320 ) -- 0x00e0 0x21
+        -- 0xF6( ???=0x01 ) -- 0x00e3 0xf6
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00e5 0x4a
+        -- 0xF6( ???=0x00 ) -- 0x00eb 0xf6
+        opcode26_Wait( time=5 ) -- 0x00ed 0x26
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x02 ) -- 0x00f0 0x6f
+        return 0 -- 0x00f2 0x00
     end,
 
     script_0x05 = function( self )
@@ -735,7 +747,7 @@ Actor[ "0x15" ] = {
         opcode08_ActorCallScriptSW( actor_id=0x09, script=07, priority=01 ) -- 0x064c 0x08
         opcode26_Wait( time=45 ) -- 0x064f 0x26
         opcode09_ActorCallScriptEW( actor_id=0x03, script=06, priority=01 ) -- 0x0652 0x09
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0019, ???=0x21 ) -- 0x0655 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0019, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0655 0xfc
         opcode09_ActorCallScriptEW( actor_id=0x03, script=05, priority=01 ) -- 0x065b 0x09
         opcode26_Wait( time=10 ) -- 0x065e 0x26
         -- MISSING OPCODE 0x67

@@ -320,7 +320,7 @@ Actor[ "0x0c" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00ec ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x011a ) -- 0x010f 0x02
         -- 0x01_JumpTo( 0x0125 ) -- 0x0117 0x01
         opcode3A_VariableBitSet( address=0x00ec, bit_num=(vf40)0x0200, flag=0x40 ) -- 0x011a 0x3a
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0120 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0120 0xd2
         opcode9C_MessageSync() -- 0x0124 0x9c
         return 0 -- 0x0125 0x00
     end,
@@ -391,7 +391,9 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=96 ) -- 0x0178 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x017b 0x4a
+        return 0 -- 0x0181 0x00
     end,
 
 }

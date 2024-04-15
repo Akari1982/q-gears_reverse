@@ -94,7 +94,8 @@ Actor[ "0x04" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) ) -- 0x4360 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x003e ) ) -- 0x4363 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1638 ) -- 0x4367 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -115,7 +116,11 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0xffaa, z=(vf40)0x013c, y=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x437d 0x57
+        -- 0x57( type=0x8f ) -- 0x4388 0x57
+        opcode26_Wait( time=1 ) -- 0x438a 0x26
+        -- 0x57( type=0x0f ) -- 0x438d 0x57
+        return 0 -- 0x438f 0x00
     end,
 
     script_0x06 = function( self )
@@ -124,43 +129,43 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x07 = function( self )
-        -- 0xD0() -- 0x439e 0xd0
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x43a9 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x439e 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x43a9 0xd2
         opcode9C_MessageSync() -- 0x43ad 0x9c
         return 0 -- 0x43ae 0x00
     end,
 
     script_0x08 = function( self )
         opcode26_Wait( time=60 ) -- 0x43af 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x43b2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x43b2 0xd2
         opcode9C_MessageSync() -- 0x43b6 0x9c
         return 0 -- 0x43b7 0x00
     end,
 
     script_0x09 = function( self )
-        -- 0xD0() -- 0x43b8 0xd0
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x43c3 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x43b8 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x43c3 0xd2
         opcode9C_MessageSync() -- 0x43c7 0x9c
         return 0 -- 0x43c8 0x00
     end,
 
     script_0x0a = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x43c9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x43c9 0xd2
         opcode9C_MessageSync() -- 0x43cd 0x9c
         return 0 -- 0x43ce 0x00
     end,
 
     script_0x0b = function( self )
-        -- 0xD0() -- 0x43cf 0xd0
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x43da 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 ) -- 0x43cf 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x43da 0xd2
         opcode9C_MessageSync() -- 0x43de 0x9c
         return 0 -- 0x43df 0x00
     end,
 
     script_0x0c = function( self )
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x00 ) -- 0x43e0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=0 ) -- 0x43e0 0xd2
         opcode9C_MessageSync() -- 0x43e4 0x9c
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x43e5 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x43e5 0xd2
         opcode9C_MessageSync() -- 0x43e9 0x9c
         return 0 -- 0x43ea 0x00
     end,
@@ -171,7 +176,7 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x0e = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x43f2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x43f2 0xd2
         opcode9C_MessageSync() -- 0x43f6 0x9c
         return 0 -- 0x43f7 0x00
     end,
@@ -189,7 +194,8 @@ Actor[ "0x05" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) ) -- 0x43ff 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) ) -- 0x4402 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1638 ) -- 0x4406 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -210,19 +216,23 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0xffaa, z=(vf40)0x013c, y=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x441c 0x57
+        -- 0x57( type=0x8f ) -- 0x4427 0x57
+        opcode26_Wait( time=1 ) -- 0x4429 0x26
+        -- 0x57( type=0x0f ) -- 0x442c 0x57
+        return 0 -- 0x442e 0x00
     end,
 
     script_0x06 = function( self )
-        -- 0xD0() -- 0x442f 0xd0
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x443a 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 ) -- 0x442f 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x443a 0xd2
         opcode9C_MessageSync() -- 0x443e 0x9c
         return 0 -- 0x443f 0x00
     end,
 
     script_0x07 = function( self )
-        -- 0xD0() -- 0x4440 0xd0
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x444b 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x4440 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=0 ) -- 0x444b 0xd2
         opcode9C_MessageSync() -- 0x444f 0x9c
         return 0 -- 0x4450 0x00
     end,
@@ -235,7 +245,8 @@ Actor[ "0x06" ] = {
     on_start = function( self )
         -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) ) -- 0x4451 0x16
         opcodeFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) ) -- 0x4454 0xfe
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=1638 ) -- 0x4458 0xfe
+        -- MISSING OPCODE 0xFE04
     end,
 
     on_update = function( self )
@@ -256,38 +267,42 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0xffaa, z=(vf40)0x013c, y=(vf20)0x0000, ???=(vf10)0x001e, flag=0xf0 ) -- 0x446e 0x57
+        -- 0x57( type=0x8f ) -- 0x4479 0x57
+        opcode26_Wait( time=1 ) -- 0x447b 0x26
+        -- 0x57( type=0x0f ) -- 0x447e 0x57
+        return 0 -- 0x4480 0x00
     end,
 
     script_0x06 = function( self )
-        -- 0xD0() -- 0x4481 0xd0
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x448c 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 ) -- 0x4481 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=0 ) -- 0x448c 0xd2
         opcode9C_MessageSync() -- 0x4490 0x9c
         return 0 -- 0x4491 0x00
     end,
 
     script_0x07 = function( self )
-        -- 0xD0() -- 0x4492 0xd0
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x00 ) -- 0x449d 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 ) -- 0x4492 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=0 ) -- 0x449d 0xd2
         opcode9C_MessageSync() -- 0x44a1 0x9c
         return 0 -- 0x44a2 0x00
     end,
 
     script_0x08 = function( self )
-        opcodeD2_MessageShow0( text_id=0x000d, ???=0x00 ) -- 0x44a3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000d, flags=0 ) -- 0x44a3 0xd2
         opcode9C_MessageSync() -- 0x44a7 0x9c
         return 0 -- 0x44a8 0x00
     end,
 
     script_0x09 = function( self )
-        -- 0xD0() -- 0x44a9 0xd0
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x44b4 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=33 ) -- 0x44a9 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=0 ) -- 0x44b4 0xd2
         opcode9C_MessageSync() -- 0x44b8 0x9c
         return 0 -- 0x44b9 0x00
     end,
 
     script_0x0a = function( self )
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x00 ) -- 0x44ba 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=0 ) -- 0x44ba 0xd2
         opcode9C_MessageSync() -- 0x44be 0x9c
         return 0 -- 0x44bf 0x00
     end,
@@ -316,7 +331,8 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=128 ) -- 0x44d6 0x21
+        -- MISSING OPCODE 0xFE66
     end,
 
 }
@@ -417,7 +433,8 @@ Actor[ "0x0a" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x4814 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )
@@ -429,7 +446,81 @@ Actor[ "0x0a" ] = {
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x4843 0x21
+        -- 0xFE8F_ParticleSystemInit1( actor_id=(entity)self, render_settings=0, rot_x=0, rot_y=0 ) -- 0x4846 0xfe
+        -- 0xC6() -- 0x484f 0xc6
+        -- 0xFE90_ParticleInitBase( particle_id=0, number_of_sprites=1, wait=0, ttl=1 ) -- 0x4850 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xff38, z=(vf20)0xff9c, speed_x=(vf10)0x044c, speed_y=(vf08)0xff38, speed_z=(vf04)0xff9c, flag=(flag)0xfc ) -- 0x485a 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc ) -- 0x4869 0xfe
+        -- 0xFE93( s_wait=2, var2=11, sprite_id=7, var4=0, var5=2 ) -- 0x4878 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x0506, trans_y=(vf40)0x1424, trans_add_x=(vf20)0x0023, trans_add_y=(vf10)0x0325, flag=(flag)0xf0 ) -- 0x4884 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x0051, g=(vf40)0x0000, b=(vf20)0x0000, r_add=(vf10)0x0025, g_add=(vf10)0x0005, b_add=(vf10)0x0000, flag=(flag)0xfc ) -- 0x488f 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=0, settings=0, rot_z=0 ) -- 0x489e 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x48a6 0xfe
+        -- 0xC6() -- 0x48ae 0xc6
+        -- 0xFE90_ParticleInitBase( particle_id=1, number_of_sprites=6, wait=0, ttl=9 ) -- 0x48af 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xfe4d, z=(vf20)0xff9c, speed_x=(vf10)0x044c, speed_y=(vf08)0x029a, speed_z=(vf04)0xff9c, flag=(flag)0xfc ) -- 0x48b9 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x006e, flag=(flag)0xfc ) -- 0x48c8 0xfe
+        -- 0xFE93( s_wait=2, var2=17, sprite_id=3, var4=1, var5=2 ) -- 0x48d7 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x03bc, trans_y=(vf40)0x0420, trans_add_x=(vf20)0x00e4, trans_add_y=(vf10)0x0104, flag=(flag)0xf0 ) -- 0x48e3 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x00b4, b=(vf20)0x00d7, r_add=(vf10)0x0064, g_add=(vf10)0x0004, b_add=(vf10)0x0004, flag=(flag)0xfc ) -- 0x48ee 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=5, settings=0, rot_z=0 ) -- 0x48fd 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=1 ) -- 0x4905 0xfe
+        -- 0xFE90_ParticleInitBase( particle_id=2, number_of_sprites=4, wait=0, ttl=1 ) -- 0x490d 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xfe70, z=(vf20)0xff7e, speed_x=(vf10)0x044c, speed_y=(vf08)0xfe71, speed_z=(vf04)0xff7e, flag=(flag)0xfc ) -- 0x4917 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x1450, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc ) -- 0x4926 0xfe
+        -- 0xFE93( s_wait=2, var2=9, sprite_id=0, var4=0, var5=2 ) -- 0x4935 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x0344, trans_y=(vf40)0x06dc, trans_add_x=(vf20)0x000f, trans_add_y=(vf10)0x003e, flag=(flag)0xf0 ) -- 0x4941 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x006e, g=(vf40)0x005d, b=(vf20)0x0019, r_add=(vf10)0xfffe, g_add=(vf10)0xfffc, b_add=(vf10)0xfffb, flag=(flag)0xfc ) -- 0x494c 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=10, settings=2, rot_z=0 ) -- 0x495b 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x4963 0xfe
+        -- 0xFE90_ParticleInitBase( particle_id=3, number_of_sprites=6, wait=4, ttl=1 ) -- 0x496b 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xfe8e, z=(vf20)0xff92, speed_x=(vf10)0x044c, speed_y=(vf08)0xfe8e, speed_z=(vf04)0xff92, flag=(flag)0xfc ) -- 0x4975 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0032, rand_speed=(vf04)0x0032, flag=(flag)0xfc ) -- 0x4984 0xfe
+        -- 0xFE93( s_wait=4, var2=7, sprite_id=2, var4=0, var5=2 ) -- 0x4993 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x0ed8, trans_y=(vf40)0x0e10, trans_add_x=(vf20)0x0073, trans_add_y=(vf10)0x0070, flag=(flag)0xf0 ) -- 0x499f 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x0064, g=(vf40)0x0049, b=(vf20)0x001e, r_add=(vf10)0xfffe, g_add=(vf10)0xfffc, b_add=(vf10)0xfffb, flag=(flag)0xfc ) -- 0x49aa 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 ) -- 0x49b9 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x49c1 0xfe
+        -- 0xFE90_ParticleInitBase( particle_id=4, number_of_sprites=3, wait=23, ttl=1000 ) -- 0x49c9 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xfe7a, z=(vf20)0xff7e, speed_x=(vf10)0x044c, speed_y=(vf08)0xfe7a, speed_z=(vf04)0xff7e, flag=(flag)0xfc ) -- 0x49d3 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x7c17, acc_x=(vf40)0x0000, acc_y=(vf20)0x0898, acc_z=(vf10)0x0000, rand_start=(vf08)0x001e, rand_speed=(vf04)0x001e, flag=(flag)0xfc ) -- 0x49e2 0xfe
+        -- 0xFE93( s_wait=3, var2=9, sprite_id=2, var4=0, var5=2 ) -- 0x49f1 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x08bc, trans_y=(vf40)0x0934, trans_add_x=(vf20)0x0041, trans_add_y=(vf10)0x0048, flag=(flag)0xf0 ) -- 0x49fd 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x0082, g=(vf40)0x0049, b=(vf20)0x002d, r_add=(vf10)0xfffe, g_add=(vf10)0xfffc, b_add=(vf10)0xfffa, flag=(flag)0xfc ) -- 0x4a08 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 ) -- 0x4a17 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x4a1f 0xfe
+        -- 0xC6() -- 0x4a27 0xc6
+        -- 0xFE90_ParticleInitBase( particle_id=5, number_of_sprites=3, wait=33, ttl=1001 ) -- 0x4a28 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xff06, z=(vf20)0xff74, speed_x=(vf10)0x044c, speed_y=(vf08)0xff06, speed_z=(vf04)0xff74, flag=(flag)0xfc ) -- 0x4a32 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x000a, flag=(flag)0xfc ) -- 0x4a41 0xfe
+        -- 0xFE93( s_wait=7, var2=7, sprite_id=2, var4=0, var5=2 ) -- 0x4a50 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x086c, trans_y=(vf40)0x086c, trans_add_x=(vf20)0x00b0, trans_add_y=(vf10)0x00a2, flag=(flag)0xf0 ) -- 0x4a5c 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x004b, g=(vf40)0x000a, b=(vf20)0x000a, r_add=(vf10)0x0000, g_add=(vf10)0x0000, b_add=(vf10)0x0000, flag=(flag)0xfc ) -- 0x4a67 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 ) -- 0x4a76 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x4a7e 0xfe
+        -- 0xC6() -- 0x4a86 0xc6
+        -- 0xFE90_ParticleInitBase( particle_id=6, number_of_sprites=12, wait=26, ttl=1000 ) -- 0x4a87 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xfe70, z=(vf20)0xff80, speed_x=(vf10)0x044c, speed_y=(vf08)0xfe70, speed_z=(vf04)0xff7b, flag=(flag)0xfc ) -- 0x4a91 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x58ef, acc_x=(vf40)0x0000, acc_y=(vf20)0xf9c0, acc_z=(vf10)0xfaec, rand_start=(vf08)0x0006, rand_speed=(vf04)0x000b, flag=(flag)0xfc ) -- 0x4aa0 0xfe
+        -- 0xFE93( s_wait=5, var2=48, sprite_id=0, var4=1, var5=2 ) -- 0x4aaf 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x0808, trans_y=(vf40)0x0808, trans_add_x=(vf20)0x0092, trans_add_y=(vf10)0x0084, flag=(flag)0xf0 ) -- 0x4abb 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x002c, g=(vf40)0x002c, b=(vf20)0x0030, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc ) -- 0x4ac6 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=2, settings=1, rot_z=0 ) -- 0x4ad5 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x4add 0xfe
+        -- 0xC6() -- 0x4ae5 0xc6
+        -- 0xFE90_ParticleInitBase( particle_id=7, number_of_sprites=14, wait=13, ttl=1001 ) -- 0x4ae6 0xfe
+        -- 0xFE91_ParticlePos( x=(vf80)0x044c, y=(vf40)0xff06, z=(vf20)0xff74, speed_x=(vf10)0x044c, speed_y=(vf08)0xff0f, speed_z=(vf04)0xff6a, flag=(flag)0xfc ) -- 0x4af0 0xfe
+        -- 0xFE92_ParticleSpeed( speed=(vf80)0x782f, acc_x=(vf40)0x0000, acc_y=(vf20)0xf8f8, acc_z=(vf10)0xfa24, rand_start=(vf08)0x003c, rand_speed=(vf04)0x003c, flag=(flag)0xfc ) -- 0x4aff 0xfe
+        -- 0xFE93( s_wait=5, var2=35, sprite_id=0, var4=1, var5=2 ) -- 0x4b0e 0xfe
+        -- 0xFE94_ParticleTranslation( trans_x=(vf80)0x086c, trans_y=(vf40)0x086c, trans_add_x=(vf20)0x0060, trans_add_y=(vf10)0x003e, flag=(flag)0xf0 ) -- 0x4b1a 0xfe
+        -- 0xFE95_ParticleColour( r=(vf80)0x0027, g=(vf40)0x0027, b=(vf20)0x002c, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc ) -- 0x4b25 0xfe
+        -- 0xFEA5_ParticleRenderSettings( use_speed=2, settings=1, rot_z=0 ) -- 0x4b34 0xfe
+        -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x4b3c 0xfe
+        opcode74_SoundPlayFixedVolume( sound_id=224 ) -- 0x4b44 0x74
+        -- 0xFE96_ParticleCreate() -- 0x4b47 0xfe
+        opcode26_Wait( time=10 ) -- 0x4b49 0x26
+        -- MISSING OPCODE 0xFE65
     end,
 
     script_0x09 = function( self )
@@ -507,7 +598,11 @@ Actor[ "0x0a" ] = {
 
     script_0x0c = function( self )
         -- 0xFE07( ???=0x01 ) -- 0x4dc6 0xfe
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=16 ) -- 0x4dc9 0xfe
+        opcode69_ActorSetRotation( rot=6 ) -- 0x4dcd 0x69
+        opcode26_Wait( time=120 ) -- 0x4dd0 0x26
+        -- 0x21( ???=96 ) -- 0x4dd3 0x21
+        -- MISSING OPCODE 0xFE66
     end,
 
     script_0x0d = function( self )
@@ -515,7 +610,9 @@ Actor[ "0x0a" ] = {
     end,
 
     script_0x0e = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x4df9 0x21
+        -- 0xF6( ???=0x01 ) -- 0x4dfc 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x0f = function( self )
@@ -584,7 +681,8 @@ Actor[ "0x0c" ] = {
         opcode74_SoundPlayFixedVolume( sound_id=222 ) -- 0x4ebd 0x74
         opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x4ec0 0x2c
         opcode26_Wait( time=30 ) -- 0x4ec2 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=32 ) -- 0x4ec5 0x21
+        -- MISSING OPCODE 0xFE65
     end,
 
     script_0x07 = function( self )
@@ -594,7 +692,8 @@ Actor[ "0x0c" ] = {
     script_0x08 = function( self )
         -- 0x07( actor_id=0x26, script=0x24 ) -- 0x4fb8 0x07
         -- 0x07( actor_id=0x25, script=0x24 ) -- 0x4fbb 0x07
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=32 ) -- 0x4fbe 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x09 = function( self )
@@ -612,7 +711,11 @@ Actor[ "0x0c" ] = {
         -- 0x05_CallFunction( 0x4faa ) -- 0x501e 0x05
         opcode37_VariableSetFalse( address=0x040c ) -- 0x5021 0x37
         opcode2C_SpritePlayAnim( anim_id=0x14 ) -- 0x5024 0x2c
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x02, x=(vf80)0xff06, z=(vf40)0x0000, y=(vf20)0x0000, ???=(vf10)0xfed4, flag=0xf0 ) -- 0x5026 0x57
+        -- 0x57( type=0x8f ) -- 0x5031 0x57
+        opcode26_Wait( time=1 ) -- 0x5033 0x26
+        -- 0x57( type=0x0f ) -- 0x5036 0x57
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x0c = function( self )
@@ -632,7 +735,8 @@ Actor[ "0x0c" ] = {
 
     script_0x0f = function( self )
         opcode26_Wait( time=20 ) -- 0x508a 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x508d 0x21
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x10 = function( self )
@@ -683,7 +787,8 @@ Actor[ "0x0d" ] = {
         opcode74_SoundPlayFixedVolume( sound_id=222 ) -- 0x5152 0x74
         opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x5155 0x2c
         opcode26_Wait( time=30 ) -- 0x5157 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=32 ) -- 0x515a 0x21
+        -- MISSING OPCODE 0xFE65
     end,
 
     script_0x06 = function( self )
@@ -691,20 +796,26 @@ Actor[ "0x0d" ] = {
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=32 ) -- 0x524d 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x08 = function( self )
         opcode26_Wait( time=20 ) -- 0x527c 0x26
         -- 0x05_CallFunction( 0x5187 ) -- 0x527f 0x05
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x5282 0x21
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x09 = function( self )
         -- 0x05_CallFunction( 0x523f ) -- 0x529f 0x05
         opcode2C_SpritePlayAnim( anim_id=0x11 ) -- 0x52a2 0x2c
         opcode26_Wait( time=10 ) -- 0x52a4 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x02, x=(vf80)0xff06, z=(vf40)0x0046, y=(vf20)0x0000, ???=(vf10)0xfed4, flag=0xf0 ) -- 0x52a7 0x57
+        -- 0x57( type=0x8f ) -- 0x52b2 0x57
+        opcode26_Wait( time=1 ) -- 0x52b4 0x26
+        -- 0x57( type=0x0f ) -- 0x52b7 0x57
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x0a = function( self )
@@ -715,27 +826,28 @@ Actor[ "0x0d" ] = {
     script_0x0b = function( self )
         opcode69_ActorSetRotation( rot=4 ) -- 0x52eb 0x69
         opcode26_Wait( time=10 ) -- 0x52ee 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=768 ) -- 0x52f1 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x0c = function( self )
-        opcodeD2_MessageShow0( text_id=0x0010, ???=0x00 ) -- 0x5308 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0010, flags=0 ) -- 0x5308 0xd2
         opcode9C_MessageSync() -- 0x530c 0x9c
         opcode26_Wait( time=10 ) -- 0x530d 0x26
         opcode2C_SpritePlayAnim( anim_id=0x13 ) -- 0x5310 0x2c
-        opcodeD2_MessageShow0( text_id=0x0011, ???=0x00 ) -- 0x5312 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0011, flags=0 ) -- 0x5312 0xd2
         opcode9C_MessageSync() -- 0x5316 0x9c
         return 0 -- 0x5317 0x00
     end,
 
     script_0x0d = function( self )
-        opcodeD2_MessageShow0( text_id=0x0012, ???=0x00 ) -- 0x5318 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0012, flags=0 ) -- 0x5318 0xd2
         opcode9C_MessageSync() -- 0x531c 0x9c
         return 0 -- 0x531d 0x00
     end,
 
     script_0x0e = function( self )
-        opcodeD2_MessageShow0( text_id=0x0013, ???=0x00 ) -- 0x531e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0013, flags=0 ) -- 0x531e 0xd2
         opcode9C_MessageSync() -- 0x5322 0x9c
         return 0 -- 0x5323 0x00
     end,
@@ -743,12 +855,14 @@ Actor[ "0x0d" ] = {
     script_0x0f = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x12 ) -- 0x5324 0x2c
         opcode26_Wait( time=30 ) -- 0x5326 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=80 ) -- 0x5329 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x10 = function( self )
         opcode26_Wait( time=20 ) -- 0x5338 0x26
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x533b 0x21
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x11 = function( self )
@@ -794,21 +908,21 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x539d 0xd0
-        opcodeD2_MessageShow0( text_id=0x0014, ???=0x00 ) -- 0x53a8 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=33 ) -- 0x539d 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0014, flags=0 ) -- 0x53a8 0xd2
         opcode9C_MessageSync() -- 0x53ac 0x9c
         return 0 -- 0x53ad 0x00
     end,
 
     script_0x05 = function( self )
-        -- 0xD0() -- 0x53ae 0xd0
-        opcodeD2_MessageShow0( text_id=0x0015, ???=0x00 ) -- 0x53b9 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=273 ) -- 0x53ae 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0015, flags=0 ) -- 0x53b9 0xd2
         opcode9C_MessageSync() -- 0x53bd 0x9c
         return 0 -- 0x53be 0x00
     end,
 
     script_0x06 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0016, ???=0x00 ) -- 0x53bf 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0016, flags=0 ) -- 0x53bf 0xd2
         opcode9C_MessageSync() -- 0x53c3 0x9c
         return 0 -- 0x53c4 0x00
     end,
@@ -838,28 +952,28 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- 0xD0() -- 0x53cf 0xd0
-        opcodeD2_MessageShow0( text_id=0x0017, ???=0x00 ) -- 0x53da 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=273 ) -- 0x53cf 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0017, flags=0 ) -- 0x53da 0xd2
         opcode9C_MessageSync() -- 0x53de 0x9c
         return 0 -- 0x53df 0x00
     end,
 
     script_0x05 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0018, ???=0x00 ) -- 0x53e0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0018, flags=0 ) -- 0x53e0 0xd2
         opcode9C_MessageSync() -- 0x53e4 0x9c
         -- MISSING OPCODE 0x67
     end,
 
     script_0x06 = function( self )
-        -- 0xD0() -- 0x53ef 0xd0
-        opcodeD2_MessageShow0( text_id=0x001a, ???=0x00 ) -- 0x53fa 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=289 ) -- 0x53ef 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x001a, flags=0 ) -- 0x53fa 0xd2
         opcode9C_MessageSync() -- 0x53fe 0x9c
         return 0 -- 0x53ff 0x00
     end,
 
     script_0x07 = function( self )
-        -- 0xD0() -- 0x5400 0xd0
-        opcodeD2_MessageShow0( text_id=0x001b, ???=0x00 ) -- 0x540b 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=289 ) -- 0x5400 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x001b, flags=0 ) -- 0x540b 0xd2
         opcode9C_MessageSync() -- 0x540f 0x9c
         return 0 -- 0x5410 0x00
     end,
@@ -887,7 +1001,8 @@ Actor[ "0x10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=64 ) -- 0x5429 0x21
+        -- MISSING OPCODE 0xFE13
     end,
 
     script_0x05 = function( self )
@@ -1176,7 +1291,7 @@ Actor[ "0x13" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x001c, ???=0x00 ) -- 0x588c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x001c, flags=0 ) -- 0x588c 0xd2
         opcode9C_MessageSync() -- 0x5890 0x9c
         return 0 -- 0x5891 0x00
     end,
@@ -1360,7 +1475,8 @@ Actor[ "0x18" ] = {
 Actor[ "0x19" ] = {
     on_start = function( self )
         -- 0x0B_InitNPC( 0 ) -- 0x5caa 0x0b
-        -- MISSING OPCODE 0xFE03
+        opcodeFE03( ???=24576 ) -- 0x5cad 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -1724,7 +1840,8 @@ Actor[ "0x20" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x6db1 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x06 = function( self )

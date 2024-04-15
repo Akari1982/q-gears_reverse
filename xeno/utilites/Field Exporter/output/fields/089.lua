@@ -182,7 +182,8 @@ Actor[ "0x06" ] = {
 Actor[ "0x07" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x02ce 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x02cf 0x21
+        return 0 -- 0x02d2 0x00
     end,
 
     on_update = function( self )
@@ -200,7 +201,10 @@ Actor[ "0x07" ] = {
     script_0x04 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02d5 0x4a
         opcode26_Wait( time=30 ) -- 0x02db 0x26
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=512 ) -- 0x02de 0xc0
+        opcode26_Wait( time=30 ) -- 0x02e1 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x02e4 0x4a
+        return 0 -- 0x02ea 0x00
     end,
 
 }
@@ -232,7 +236,8 @@ Actor[ "0x08" ] = {
 Actor[ "0x09" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x02f1 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x02f2 0x21
+        return 0 -- 0x02f5 0x00
     end,
 
     on_update = function( self )
@@ -276,7 +281,9 @@ Actor[ "0x0a" ] = {
 Actor[ "0x0b" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x02fe 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=640 ) -- 0x02ff 0x21
+        opcode35_VariableSet( address=0x0402, value=(vf40)0x0000, flag=0x40 ) -- 0x0302 0x35
+        return 0 -- 0x0308 0x00
     end,
 
     on_update = function( self )
@@ -294,7 +301,11 @@ Actor[ "0x0b" ] = {
     script_0x04 = function( self )
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0000, flag=0x40 ) -- 0x030b 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x000d, condition="value1 < value2", jump_if_false=0x0325 ) -- 0x0311 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=128 ) -- 0x0319 0xbf
+        opcode3C_VariableInc( address=0x0402 ) -- 0x031c 0x3c
+        opcode26_Wait( time=1 ) -- 0x031f 0x26
+        -- 0x01_JumpTo( 0x0311 ) -- 0x0322 0x01
+        return 0 -- 0x0325 0x00
     end,
 
 }
@@ -327,7 +338,9 @@ Actor[ "0x0d" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x032c 0xbc
         -- 0x23() -- 0x032d 0x23
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x032e 0x21
+        opcode35_VariableSet( address=0x0404, value=(vf40)0x0000, flag=0x40 ) -- 0x0331 0x35
+        return 0 -- 0x0337 0x00
     end,
 
     on_update = function( self )
@@ -345,7 +358,13 @@ Actor[ "0x0d" ] = {
     script_0x04 = function( self )
         opcode35_VariableSet( address=0x0404, value=(vf40)0x0000, flag=0x40 ) -- 0x033b 0x35
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0011, condition="value1 < value2", jump_if_false=0x0355 ) -- 0x0341 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=32 ) -- 0x0349 0xbf
+        opcode26_Wait( time=1 ) -- 0x034c 0x26
+        opcode3C_VariableInc( address=0x0404 ) -- 0x034f 0x3c
+        -- 0x01_JumpTo( 0x0341 ) -- 0x0352 0x01
+        opcode26_Wait( time=20 ) -- 0x0355 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0358 0x4a
+        return 0 -- 0x035e 0x00
     end,
 
     script_0x05 = function( self )
@@ -385,7 +404,9 @@ Actor[ "0x0e" ] = {
 Actor[ "0x0f" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x036e 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x036f 0x21
+        -- 0x23() -- 0x0372 0x23
+        return 0 -- 0x0373 0x00
     end,
 
     on_update = function( self )
@@ -429,7 +450,9 @@ Actor[ "0x10" ] = {
 Actor[ "0x11" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x037d 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=640 ) -- 0x037e 0x21
+        -- 0x23() -- 0x0381 0x23
+        return 0 -- 0x0382 0x00
     end,
 
     on_update = function( self )
@@ -478,11 +501,15 @@ Actor[ "0x12" ] = {
 Actor[ "0x13" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x0393 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0394 0x21
+        return 0 -- 0x0397 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=64 ) -- 0x0398 0xbf
+        opcode26_Wait( time=1 ) -- 0x039b 0x26
+        -- 0x01_JumpTo( 0x0398 ) -- 0x039e 0x01
+        return 0 -- 0x03a1 0x00
     end,
 
     on_talk = function( self )
@@ -522,11 +549,15 @@ Actor[ "0x14" ] = {
 Actor[ "0x15" ] = {
     on_start = function( self )
         -- 0xBC_ActorNoModelInit() -- 0x03aa 0xbc
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x03ab 0x21
+        return 0 -- 0x03ae 0x00
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=64 ) -- 0x03af 0xbf
+        opcode26_Wait( time=1 ) -- 0x03b2 0x26
+        -- 0x01_JumpTo( 0x03af ) -- 0x03b5 0x01
+        return 0 -- 0x03b8 0x00
     end,
 
     on_talk = function( self )

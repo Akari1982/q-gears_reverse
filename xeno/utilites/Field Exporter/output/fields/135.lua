@@ -367,8 +367,8 @@ Actor[ "0x0e" ] = {
 
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x0465 ) -- 0x044f 0x86
-        -- 0xD0() -- 0x0454 0xd0
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x045f 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=257 ) -- 0x0454 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x045f 0xd2
         opcode9C_MessageSync() -- 0x0463 0x9c
         return 0 -- 0x0464 0x00
     end,
@@ -655,7 +655,11 @@ Actor[ "0x18" ] = {
 
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0436 ), value2=(s16)0x0040, condition="value1 != value2", jump_if_false=0x05db ) -- 0x05c9 0x02
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=16 ) -- 0x05d1 0xc0
+        opcode3C_VariableInc( address=0x0436 ) -- 0x05d4 0x3c
+        -- 0x5A() -- 0x05d7 0x5a
+        -- 0x01_JumpTo( 0x05c9 ) -- 0x05d8 0x01
+        return 0 -- 0x05db 0x00
     end,
 
 }
@@ -720,9 +724,11 @@ Actor[ "0x1a" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x01 ) -- 0x0783 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN ) -- 0x0783 0xd2
         opcode9C_MessageSync() -- 0x0787 0x9c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=192 ) -- 0x0788 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x078b 0x2c
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -763,9 +769,11 @@ Actor[ "0x1b" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x01 ) -- 0x0843 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN ) -- 0x0843 0xd2
         opcode9C_MessageSync() -- 0x0847 0x9c
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=192 ) -- 0x0848 0x21
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x084b 0x2c
+        -- MISSING OPCODE 0x52
     end,
 
 }

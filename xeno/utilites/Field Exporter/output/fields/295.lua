@@ -476,7 +476,7 @@ Actor[ "0x12" ] = {
     on_update = function( self )
         -- 0xCB_TriggerJumpTo( trigger_id=22784, jump=0x8607 ) -- 0x07c3 0xcb
         opcode5D_SpritePlayAnim2( anim_id=0x80 ) -- 0x07c8 0x5d
-        opcodeD4_MessageShowE( actor_id=(entity)0x07, text_id=0x1a98, ???=0x81 ) -- 0x07ca 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x1a98, flags=CLOSE_OFF_SCREEN|0x80 ) -- 0x07ca 0xd4
         -- MISSING OPCODE 0x80
     end,
 

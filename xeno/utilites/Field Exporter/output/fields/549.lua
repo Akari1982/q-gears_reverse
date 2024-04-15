@@ -72,7 +72,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x008a 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x008c 0x4a
+        return 0 -- 0x0092 0x00
     end,
 
     script_0x05 = function( self )
@@ -87,7 +89,7 @@ Actor[ "0x01" ] = {
 
     script_0x06 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x00a4 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00a6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00a6 0xd2
         opcode9C_MessageSync() -- 0x00aa 0x9c
         return 0 -- 0x00ab 0x00
     end,
@@ -186,7 +188,7 @@ Actor[ "0x05" ] = {
 
     on_talk = function( self )
         opcode09_ActorCallScriptEW( actor_id=0x01, script=06, priority=01 ) -- 0x0191 0x09
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x0194 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x0194 0xd2
         opcode9C_MessageSync() -- 0x0198 0x9c
         opcode09_ActorCallScriptEW( actor_id=0x01, script=07, priority=01 ) -- 0x0199 0x09
         return 0 -- 0x019c 0x00

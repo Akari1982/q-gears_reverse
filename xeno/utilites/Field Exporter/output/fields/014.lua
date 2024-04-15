@@ -97,11 +97,11 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x07 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x02 ) -- 0x01d4 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=NO_FACE ) -- 0x01d4 0xd2
         opcode9C_MessageSync() -- 0x01d8 0x9c
         opcode26_Wait( time=20 ) -- 0x01d9 0x26
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x01dc 0xfe
-        opcodeF5_MessageShow3( text_id=0x0003, flag=0x20 ) -- 0x01e0 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0003, flags=FORCE_BOTTOM ) -- 0x01e0 0xf5
         opcode9C_MessageSync() -- 0x01e4 0x9c
         -- MISSING OPCODE 0x8c
     end,
@@ -333,8 +333,8 @@ Actor[ "0x09" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x0280 0xfe
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c2 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x02bf ) -- 0x0282 0x02
-        -- 0xD0() -- 0x028a 0xd0
-        opcodeF5_MessageShow3( text_id=0x0004, flag=0x00 ) -- 0x0295 0xf5
+        opcodeD0_MessageSettings( x=0, y=140, letters=0, rows=0, flags=0 ) -- 0x028a 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0004, flags=0 ) -- 0x0295 0xf5
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x0299 0xa9
         opcode9C_MessageSync() -- 0x029b 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x02af ) -- 0x029c 0x02
@@ -348,8 +348,8 @@ Actor[ "0x09" ] = {
         -- 0x01_JumpTo( 0x02ef ) -- 0x02bc 0x01
         opcode08_ActorCallScriptSW( actor_id=0x01, script=0e, priority=03 ) -- 0x02bf 0x08
         opcode26_Wait( time=5 ) -- 0x02c2 0x26
-        -- 0xD0() -- 0x02c5 0xd0
-        opcodeF5_MessageShow3( text_id=0x0005, flag=0x00 ) -- 0x02d0 0xf5
+        opcodeD0_MessageSettings( x=0, y=140, letters=0, rows=0, flags=0 ) -- 0x02c5 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0005, flags=0 ) -- 0x02d0 0xf5
         opcode9C_MessageSync() -- 0x02d4 0x9c
         -- MISSING OPCODE 0x8f
     end,
@@ -386,7 +386,7 @@ Actor[ "0x0a" ] = {
         opcode26_Wait( time=10 ) -- 0x0328 0x26
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x032b 0x6f
         opcode26_Wait( time=5 ) -- 0x032d 0x26
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x0330 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x0330 0xd2
         opcode9C_MessageSync() -- 0x0334 0x9c
         opcode36_VariableSetTrue( address=0x0404 ) -- 0x0335 0x36
         -- 0xFE54() -- 0x0338 0xfe
@@ -429,11 +429,11 @@ Actor[ "0x0a" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x03f7 ) -- 0x03c3 0x02
         opcode6F_ActorRotateToActor( actor_id=(entity)0x01 ) -- 0x03cb 0x6f
         -- 0xFE54() -- 0x03cd 0xfe
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x03cf 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x03cf 0xd2
         opcode9C_MessageSync() -- 0x03d3 0x9c
         opcode6B_ActorRotateClockwise( rot=2 ) -- 0x03d4 0x6b
         opcode26_Wait( time=5 ) -- 0x03d7 0x26
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x03da 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x03da 0xd2
         opcode9C_MessageSync() -- 0x03de 0x9c
         -- 0xFE0E_SoundSetVolume( volume=0, steps=120 ) -- 0x03df 0xfe
         -- 0xB4_FadeIn() -- 0x03e5 0xb4
@@ -727,7 +727,7 @@ Actor[ "0x13" ] = {
         -- 0x01_JumpTo( 0x07d1 ) -- 0x07b8 0x01
         -- 0x15() -- 0x07bb 0x15
         opcode09_ActorCallScriptEW( actor_id=0x01, script=0c, priority=03 ) -- 0x07bc 0x09
-        opcodeF5_MessageShow3( text_id=0x000b, flag=0x00 ) -- 0x07bf 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000b, flags=0 ) -- 0x07bf 0xf5
         opcode9C_MessageSync() -- 0x07c3 0x9c
         opcode74_SoundPlayFixedVolume( sound_id=55 ) -- 0x07c4 0x74
         -- MISSING OPCODE 0x8c
@@ -756,7 +756,7 @@ Actor[ "0x14" ] = {
         -- 0x01_JumpTo( 0x080c ) -- 0x07f3 0x01
         -- 0x15() -- 0x07f6 0x15
         opcode09_ActorCallScriptEW( actor_id=0x01, script=0d, priority=03 ) -- 0x07f7 0x09
-        opcodeF5_MessageShow3( text_id=0x000c, flag=0x00 ) -- 0x07fa 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x000c, flags=0 ) -- 0x07fa 0xf5
         opcode9C_MessageSync() -- 0x07fe 0x9c
         opcode74_SoundPlayFixedVolume( sound_id=55 ) -- 0x07ff 0x74
         -- MISSING OPCODE 0x8c

@@ -50,7 +50,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x005b 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x005d 0x4a
+        return 0 -- 0x0063 0x00
     end,
 
     script_0x05 = function( self )
@@ -387,12 +389,14 @@ Actor[ "0x0a" ] = {
 
     script_0x04 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=261 ) -- 0x024f 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0252 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=261 ) -- 0x029c 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x029f 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -419,12 +423,14 @@ Actor[ "0x0b" ] = {
 
     script_0x04 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=261 ) -- 0x02cb 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x02ce 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=261 ) -- 0x0318 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x031b 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -451,12 +457,14 @@ Actor[ "0x0c" ] = {
 
     script_0x04 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=261 ) -- 0x0347 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x034a 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=261 ) -- 0x0394 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0397 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }
@@ -505,7 +513,9 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x03d1 0x21
+        opcode26_Wait( time=5 ) -- 0x03d4 0x26
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -538,7 +548,9 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x04c7 0x21
+        opcode26_Wait( time=5 ) -- 0x04ca 0x26
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -571,12 +583,14 @@ Actor[ "0x10" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x059e 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
         opcode09_ActorCallScriptEW( actor_id=0x13, script=05, priority=01 ) -- 0x05be 0x09
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x05c1 0x21
+        -- MISSING OPCODE 0x10
     end,
 
 }

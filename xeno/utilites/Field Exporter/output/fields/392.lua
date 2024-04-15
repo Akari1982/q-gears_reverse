@@ -319,11 +319,11 @@ Actor[ "0x0c" ] = {
         opcode74_SoundPlayFixedVolume( sound_id=20 ) -- 0x00de 0x74
         -- 0xA8_VariableRandom2( address=0x0402, value=1 ) -- 0x00e1 0xa8
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00f6 ) -- 0x00e6 0x02
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x40 ) -- 0x00ee 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=NO_WINDOW ) -- 0x00ee 0xf5
         opcode9C_MessageSync() -- 0x00f2 0x9c
         -- 0x01_JumpTo( 0x0106 ) -- 0x00f3 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0106 ) -- 0x00f6 0x02
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x40 ) -- 0x00fe 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=NO_WINDOW ) -- 0x00fe 0xf5
         opcode9C_MessageSync() -- 0x0102 0x9c
         -- 0x01_JumpTo( 0x0106 ) -- 0x0103 0x01
         -- 0xFE54() -- 0x0106 0xfe

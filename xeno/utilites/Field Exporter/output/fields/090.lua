@@ -326,10 +326,10 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0102 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00e6 ) -- 0x00d6 0x02
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00de 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00de 0xd2
         opcode9C_MessageSync() -- 0x00e2 0x9c
         -- 0x01_JumpTo( 0x00eb ) -- 0x00e3 0x01
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00e6 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00e6 0xd2
         opcode9C_MessageSync() -- 0x00ea 0x9c
         return 0 -- 0x00eb 0x00
     end,

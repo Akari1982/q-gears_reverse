@@ -47,7 +47,8 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=48 ) -- 0x0021 0x21
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }
@@ -152,7 +153,9 @@ Actor[ "0x05" ] = {
 
     script_0x05 = function( self )
         -- 0x05_CallFunction( 0x016b ) -- 0x0157 0x05
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=48 ) -- 0x015a 0x21
+        -- 0xF6( ???=0x02 ) -- 0x015d 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
 }

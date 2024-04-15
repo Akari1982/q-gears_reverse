@@ -402,7 +402,7 @@ Actor[ "0x0e" ] = {
         -- 0x15() -- 0x040c 0x15
         -- 0xFE50() -- 0x040d 0xfe
         -- 0xFE52() -- 0x040f 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0411 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0411 0xd2
         opcode9C_MessageSync() -- 0x0415 0x9c
         opcode35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x0416 0x35
         -- 0xFE54() -- 0x041c 0xfe
@@ -470,7 +470,7 @@ Actor[ "0x10" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x40 ) -- 0x049c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=NO_WINDOW ) -- 0x049c 0xd2
         opcode9C_MessageSync() -- 0x04a0 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x04cc ) -- 0x04a1 0x31
         -- 0xFE54() -- 0x04a6 0xfe
@@ -554,7 +554,7 @@ Actor[ "0x13" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x40 ) -- 0x0503 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=NO_WINDOW ) -- 0x0503 0xd2
         opcode9C_MessageSync() -- 0x0507 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0520 ) -- 0x0508 0x31
         -- 0xFE54() -- 0x050d 0xfe
@@ -638,7 +638,7 @@ Actor[ "0x16" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x40 ) -- 0x0557 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=NO_WINDOW ) -- 0x0557 0xd2
         opcode9C_MessageSync() -- 0x055b 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0574 ) -- 0x055c 0x31
         -- 0xFE54() -- 0x0561 0xfe
@@ -722,7 +722,7 @@ Actor[ "0x19" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x40 ) -- 0x05ab 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=NO_WINDOW ) -- 0x05ab 0xd2
         opcode9C_MessageSync() -- 0x05af 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x05c8 ) -- 0x05b0 0x31
         -- 0xFE54() -- 0x05b5 0xfe
@@ -805,7 +805,7 @@ Actor[ "0x1c" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x40 ) -- 0x05fe 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=NO_WINDOW ) -- 0x05fe 0xd2
         opcode9C_MessageSync() -- 0x0602 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0610 ) -- 0x0603 0x31
         -- 0xFE54() -- 0x0608 0xfe
@@ -866,7 +866,7 @@ Actor[ "0x1e" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x40 ) -- 0x0636 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=NO_WINDOW ) -- 0x0636 0xd2
         opcode9C_MessageSync() -- 0x063a 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x06bb ) -- 0x063b 0x31
         -- 0xFE54() -- 0x0640 0xfe
@@ -950,7 +950,7 @@ Actor[ "0x21" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x40 ) -- 0x06f1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=NO_WINDOW ) -- 0x06f1 0xd2
         opcode9C_MessageSync() -- 0x06f5 0x9c
         -- 0x31_JumpIfButtonNotPressed( button_mask=0x0020, jump_to=0x0702 ) -- 0x06f6 0x31
         -- 0xFE54() -- 0x06fb 0xfe

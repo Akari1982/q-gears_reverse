@@ -752,7 +752,7 @@
     +412 [][]     ???
     +414 [][]     Set to 0 to close window. Usually 0xffff (not used in usual window render)
     +416 [][]     owner entity id. We store result of selection in this entity +81.
-    +418 [][]     target entity id.
+    +418 [][]     talking entity id.
     +41c [][][][] position offset x.
     +420 [][][][] position offset y.
     +424 [][][][] position offset x add.

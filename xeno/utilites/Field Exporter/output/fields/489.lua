@@ -18,7 +18,7 @@ Actor[ "0x01" ] = {
 
     on_update = function( self )
         -- 0xFEA0( ???=(vf80)0xfe00, ???=(vf40)0xfe61, ???=(vf20)0x01a0, ???=(vf10)0x005b, ???=(vf08)0x0000, flag=(flag)0x00) -- 0x000d 0xfe
-        return 0 -- 0x001a 0x00
+        -- MISSING OPCODE 0x8d
     end,
 
     on_talk = function( self )

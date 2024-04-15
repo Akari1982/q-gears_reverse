@@ -307,17 +307,17 @@ Actor[ "0x0c" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b2 ) -- 0x009f 0x02
         opcode3C_VariableInc( address=0x0400 ) -- 0x00a7 0x3c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00aa 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00aa 0xd2
         opcode9C_MessageSync() -- 0x00ae 0x9c
         -- 0x01_JumpTo( 0x00d5 ) -- 0x00af 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c5 ) -- 0x00b2 0x02
         opcode3C_VariableInc( address=0x0400 ) -- 0x00ba 0x3c
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x00bd 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x00bd 0xd2
         opcode9C_MessageSync() -- 0x00c1 0x9c
         -- 0x01_JumpTo( 0x00d5 ) -- 0x00c2 0x01
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00c5 0x6f
         opcode35_VariableSet( address=0x0400, value=(vf40)0x0000, flag=0x40 ) -- 0x00c7 0x35
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00cd 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00cd 0xd2
         opcode9C_MessageSync() -- 0x00d1 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x00d2 0x69
         return 0 -- 0x00d5 0x00
@@ -369,7 +369,7 @@ Actor[ "0x0e" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x0107 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x0107 0xd2
         opcode9C_MessageSync() -- 0x010b 0x9c
         return 0 -- 0x010c 0x00
     end,
@@ -394,7 +394,7 @@ Actor[ "0x0f" ] = {
     end,
 
     on_talk = function( self )
-        opcodeF5_MessageShow3( text_id=0x0006, flag=0x00 ) -- 0x0120 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0006, flags=0 ) -- 0x0120 0xf5
         opcode9C_MessageSync() -- 0x0124 0x9c
         return 0 -- 0x0125 0x00
     end,

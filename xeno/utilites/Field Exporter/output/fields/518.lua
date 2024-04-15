@@ -104,7 +104,8 @@ Actor[ "0x03" ] = {
 
     script_0x04 = function( self )
         opcode74_SoundPlayFixedVolume( sound_id=120 ) -- 0x00b6 0x74
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x00b9 0x21
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x05 = function( self )
@@ -385,7 +386,7 @@ Actor[ "0x0d" ] = {
     end,
 
     on_update = function( self )
-        opcodeD4_MessageShowECopyAvatar( actor_id=(entity)0x03, text_id=0x0005, ???=0x00 ) -- 0x0366 0xfc
+        opcodeFC_MessageShowFromActorCopyFace( actor_id=(entity)0x03, text_id=0x0005, flags=0 ) -- 0x0366 0xfc
         -- 0x07( actor_id=0x03, script=0x65 ) -- 0x036c 0x07
         -- 0x07( actor_id=0x10, script=0x65 ) -- 0x036f 0x07
         -- 0x07( actor_id=0x03, script=0x66 ) -- 0x0372 0x07

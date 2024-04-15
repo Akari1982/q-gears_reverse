@@ -351,8 +351,8 @@ Actor[ "0x0e" ] = {
     on_talk = function( self )
         -- 0xFE54() -- 0x00d0 0xfe
         opcode74_SoundPlayFixedVolume( sound_id=20 ) -- 0x00d2 0x74
-        -- 0xD0() -- 0x00d5 0xd0
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x40 ) -- 0x00e0 0xf5
+        opcodeD0_MessageSettings( x=20, y=20, letters=20, rows=14, flags=0 ) -- 0x00d5 0xd0
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=NO_WINDOW ) -- 0x00e0 0xf5
         opcode9C_MessageSync() -- 0x00e4 0x9c
         -- 0xFE54() -- 0x00e5 0xfe
         return 0 -- 0x00e7 0x00

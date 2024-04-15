@@ -60,7 +60,10 @@ Actor[ "0x01" ] = {
 
 Actor[ "0x02" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=0 ) -- 0x00a2 0x93
+        opcodeFE03( ???=4896 ) -- 0x00a5 0xfe
+        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x00a9 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )

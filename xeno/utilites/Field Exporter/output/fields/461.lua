@@ -320,7 +320,10 @@ Actor[ "0x0c" ] = {
 
 Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=1 ) -- 0x00b8 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x00ec, z=(vf40)0x004c, flag=(flag)0xc0 ) -- 0x00be 0x19
+        opcode69_ActorSetRotation( rot=2 ) -- 0x00c4 0x69
+        return 0 -- 0x00c7 0x00
     end,
 
     on_update = function( self )
@@ -437,7 +440,10 @@ Actor[ "0x11" ] = {
 
 Actor[ "0x12" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=1 ) -- 0x0152 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0xff6d, z=(vf40)0xfe6d, flag=(flag)0xc0 ) -- 0x0158 0x19
+        opcode69_ActorSetRotation( rot=5 ) -- 0x015e 0x69
+        return 0 -- 0x0161 0x00
     end,
 
     on_update = function( self )

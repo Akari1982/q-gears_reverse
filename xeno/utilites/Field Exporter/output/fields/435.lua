@@ -356,7 +356,10 @@ Actor[ "0x0b" ] = {
 
 Actor[ "0x0c" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=3, ???=3 ) -- 0x00e9 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x013e, z=(vf40)0x000f, flag=(flag)0xc0 ) -- 0x00ef 0x19
+        opcode69_ActorSetRotation( rot=1 ) -- 0x00f5 0x69
+        return 0 -- 0x00f8 0x00
     end,
 
     on_update = function( self )
@@ -377,7 +380,10 @@ Actor[ "0x0c" ] = {
 
 Actor[ "0x0d" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=1, ???=1 ) -- 0x010d 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x017d, z=(vf40)0x00c2, flag=(flag)0xc0 ) -- 0x0113 0x19
+        opcode69_ActorSetRotation( rot=1 ) -- 0x0119 0x69
+        return 0 -- 0x011c 0x00
     end,
 
     on_update = function( self )
@@ -585,7 +591,10 @@ Actor[ "0x14" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x02f3 0xc0
+        opcode26_Wait( time=1 ) -- 0x02f6 0x26
+        -- 0x01_JumpTo( 0x02f3 ) -- 0x02f9 0x01
+        return 0 -- 0x02fc 0x00
     end,
 
     on_talk = function( self )
@@ -635,7 +644,10 @@ Actor[ "0x16" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=8 ) -- 0x036d 0xc0
+        opcode26_Wait( time=1 ) -- 0x0370 0x26
+        -- 0x01_JumpTo( 0x036d ) -- 0x0373 0x01
+        return 0 -- 0x0376 0x00
     end,
 
     on_talk = function( self )

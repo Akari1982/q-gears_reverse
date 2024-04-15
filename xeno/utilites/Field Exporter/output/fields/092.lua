@@ -351,7 +351,7 @@ Actor[ "0x0e" ] = {
         -- 0xFE54() -- 0x0104 0xfe
         opcodeFE0D_MessageSetFace( char_id=252 ) -- 0x0106 0xfe
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x010a 0x6f
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x010c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x010c 0xd2
         opcode9C_MessageSync() -- 0x0110 0x9c
         -- 0xFE54() -- 0x0111 0xfe
         return 0 -- 0x0113 0x00

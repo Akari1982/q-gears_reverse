@@ -316,17 +316,17 @@ Actor[ "0x0c" ] = {
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x01d0 0x6f
         opcode3C_VariableInc( address=0x00e0 ) -- 0x01d2 0x3c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01e8 ) -- 0x01d5 0x02
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x01dd 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x01dd 0xd2
         opcode9C_MessageSync() -- 0x01e1 0x9c
         opcode69_ActorSetRotation( rot=7 ) -- 0x01e2 0x69
         -- 0x01_JumpTo( 0x020e ) -- 0x01e5 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x01fb ) -- 0x01e8 0x02
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x01f0 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x01f0 0xd2
         opcode9C_MessageSync() -- 0x01f4 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x01f5 0x69
         -- 0x01_JumpTo( 0x020e ) -- 0x01f8 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x020e ) -- 0x01fb 0x02
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x0203 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0203 0xd2
         opcode9C_MessageSync() -- 0x0207 0x9c
         opcode69_ActorSetRotation( rot=2 ) -- 0x0208 0x69
         -- 0x01_JumpTo( 0x020e ) -- 0x020b 0x01
@@ -362,12 +362,12 @@ Actor[ "0x0d" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0287 ) -- 0x0268 0x02
         opcode3A_VariableBitSet( address=0x00ea, bit_num=(vf40)0x0004, flag=0x40 ) -- 0x0270 0x3a
         opcode3A_VariableBitSet( address=0x01fc, bit_num=(vf40)0x000a, flag=0x40 ) -- 0x0276 0x3a
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x027c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x027c 0xd2
         opcode9C_MessageSync() -- 0x0280 0x9c
         opcode69_ActorSetRotation( rot=3 ) -- 0x0281 0x69
         -- 0x01_JumpTo( 0x029a ) -- 0x0284 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x029a ) -- 0x0287 0x02
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x00 ) -- 0x028f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x028f 0xd2
         opcode9C_MessageSync() -- 0x0293 0x9c
         opcode69_ActorSetRotation( rot=7 ) -- 0x0294 0x69
         -- 0x01_JumpTo( 0x029a ) -- 0x0297 0x01
@@ -403,12 +403,12 @@ Actor[ "0x0e" ] = {
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0314 0x6f
         opcode3C_VariableInc( address=0x00e0 ) -- 0x0316 0x3c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x032c ) -- 0x0319 0x02
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x0321 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x0321 0xd2
         opcode9C_MessageSync() -- 0x0325 0x9c
         opcode69_ActorSetRotation( rot=1 ) -- 0x0326 0x69
         -- 0x01_JumpTo( 0x033c ) -- 0x0329 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x033c ) -- 0x032c 0x02
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x0334 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x0334 0xd2
         opcode9C_MessageSync() -- 0x0338 0x9c
         -- 0x01_JumpTo( 0x033c ) -- 0x0339 0x01
         return 0 -- 0x033c 0x00
@@ -436,10 +436,10 @@ Actor[ "0x0f" ] = {
     on_talk = function( self )
         -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x0365 ) -- 0x0356 0x86
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x035b 0x6f
-        opcodeD2_MessageShow0( text_id=0x000a, ???=0x00 ) -- 0x035d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=0 ) -- 0x035d 0xd2
         opcode9C_MessageSync() -- 0x0361 0x9c
         -- 0x01_JumpTo( 0x036a ) -- 0x0362 0x01
-        opcodeD2_MessageShow0( text_id=0x000b, ???=0x00 ) -- 0x0365 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000b, flags=0 ) -- 0x0365 0xd2
         opcode9C_MessageSync() -- 0x0369 0x9c
         return 0 -- 0x036a 0x00
     end,
@@ -466,10 +466,10 @@ Actor[ "0x10" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x0384 0x6f
         -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x0393 ) -- 0x0386 0x86
-        opcodeD2_MessageShow0( text_id=0x000c, ???=0x00 ) -- 0x038b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000c, flags=0 ) -- 0x038b 0xd2
         opcode9C_MessageSync() -- 0x038f 0x9c
         -- 0x01_JumpTo( 0x0398 ) -- 0x0390 0x01
-        opcodeD2_MessageShow0( text_id=0x000d, ???=0x00 ) -- 0x0393 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000d, flags=0 ) -- 0x0393 0xd2
         opcode9C_MessageSync() -- 0x0397 0x9c
         return 0 -- 0x0398 0x00
     end,
@@ -496,15 +496,15 @@ Actor[ "0x11" ] = {
     on_talk = function( self )
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x03b2 0x6f
         -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x03c1 ) -- 0x03b4 0x86
-        opcodeD2_MessageShow0( text_id=0x000e, ???=0x00 ) -- 0x03b9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000e, flags=0 ) -- 0x03b9 0xd2
         opcode9C_MessageSync() -- 0x03bd 0x9c
         -- 0x01_JumpTo( 0x03d9 ) -- 0x03be 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x03d1 ) -- 0x03c1 0x02
-        opcodeD2_MessageShow0( text_id=0x000f, ???=0x00 ) -- 0x03c9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x000f, flags=0 ) -- 0x03c9 0xd2
         opcode9C_MessageSync() -- 0x03cd 0x9c
         -- 0x01_JumpTo( 0x03d9 ) -- 0x03ce 0x01
         opcode3C_VariableInc( address=0x0402 ) -- 0x03d1 0x3c
-        opcodeD2_MessageShow0( text_id=0x0010, ???=0x00 ) -- 0x03d4 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0010, flags=0 ) -- 0x03d4 0xd2
         opcode9C_MessageSync() -- 0x03d8 0x9c
         opcode69_ActorSetRotation( rot=5 ) -- 0x03d9 0x69
         return 0 -- 0x03dc 0x00

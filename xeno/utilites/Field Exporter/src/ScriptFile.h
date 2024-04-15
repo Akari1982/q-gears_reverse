@@ -27,6 +27,8 @@ public:
     std::string GetVF80Variable( const u32 script_pointer );
     std::string GetVVariable( const u32 script_pointer );
     std::string GetV80Variable( const u32 script_pointer );
+
+    std::string GetMessageFlags( const u32 pointer );
 };
 
 

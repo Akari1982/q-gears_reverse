@@ -80,7 +80,15 @@ Actor[ "0x02" ] = {
         opcode3B_VariableBitUnset( address=0x0080, bit_num=(vf40)0x0080, flag=0x00 ) -- 0x00f1 0x3b
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x00f7 0x2c
         opcode26_Wait( time=0 ) -- 0x00f9 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x01db, z=(vf40)0xfd41, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x00fc 0x57
+        -- 0x57( type=0x8f ) -- 0x0107 0x57
+        opcode26_Wait( time=1 ) -- 0x0109 0x26
+        -- 0x57( type=0x0f ) -- 0x010c 0x57
+        opcode26_Wait( time=0 ) -- 0x010e 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0111 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0113 0x4a
+        opcode09_ActorCallScriptEW( actor_id=0x03, script=04, priority=01 ) -- 0x0119 0x09
+        return 0 -- 0x011c 0x00
     end,
 
     on_talk = function( self )
@@ -94,13 +102,29 @@ Actor[ "0x02" ] = {
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x00f7 0x2c
         opcode26_Wait( time=0 ) -- 0x00f9 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x01db, z=(vf40)0xfd41, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x00fc 0x57
+        -- 0x57( type=0x8f ) -- 0x0107 0x57
+        opcode26_Wait( time=1 ) -- 0x0109 0x26
+        -- 0x57( type=0x0f ) -- 0x010c 0x57
+        opcode26_Wait( time=0 ) -- 0x010e 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0111 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0113 0x4a
+        opcode09_ActorCallScriptEW( actor_id=0x03, script=04, priority=01 ) -- 0x0119 0x09
+        return 0 -- 0x011c 0x00
     end,
 
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x011d 0x2c
         opcode26_Wait( time=0 ) -- 0x011f 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x01d5, z=(vf40)0x023b, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x0122 0x57
+        -- 0x57( type=0x8f ) -- 0x012d 0x57
+        opcode26_Wait( time=1 ) -- 0x012f 0x26
+        -- 0x57( type=0x0f ) -- 0x0132 0x57
+        opcode26_Wait( time=0 ) -- 0x0134 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0137 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0139 0x4a
+        opcode09_ActorCallScriptEW( actor_id=0x03, script=05, priority=01 ) -- 0x013f 0x09
+        return 0 -- 0x0142 0x00
     end,
 
 }
@@ -131,13 +155,33 @@ Actor[ "0x03" ] = {
     script_0x04 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x0156 0x2c
         opcode26_Wait( time=0 ) -- 0x0158 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x01db, z=(vf40)0xfd41, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x015b 0x57
+        -- 0x57( type=0x8f ) -- 0x0166 0x57
+        opcode26_Wait( time=1 ) -- 0x0168 0x26
+        -- 0x57( type=0x0f ) -- 0x016b 0x57
+        opcode26_Wait( time=0 ) -- 0x016d 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0170 0x2c
+        opcode09_ActorCallScriptEW( actor_id=0x01, script=04, priority=01 ) -- 0x0172 0x09
+        opcode36_VariableSetTrue( address=0x0402 ) -- 0x0175 0x36
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN ) -- 0x0178 0xd2
+        opcode9C_MessageSync() -- 0x017c 0x9c
+        return 0 -- 0x017d 0x00
     end,
 
     script_0x05 = function( self )
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x017e 0x2c
         opcode26_Wait( time=0 ) -- 0x0180 0x26
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x80, x=(vf80)0x01da, z=(vf40)0x023b, walkmesh_id=(vf20)0x0000, ???=(vf10)0x0014, flag=0xf0 ) -- 0x0183 0x57
+        -- 0x57( type=0x8f ) -- 0x018e 0x57
+        opcode26_Wait( time=1 ) -- 0x0190 0x26
+        -- 0x57( type=0x0f ) -- 0x0193 0x57
+        opcode26_Wait( time=0 ) -- 0x0195 0x26
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0198 0x2c
+        opcode09_ActorCallScriptEW( actor_id=0x01, script=04, priority=01 ) -- 0x019a 0x09
+        opcode36_VariableSetTrue( address=0x0402 ) -- 0x019d 0x36
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN ) -- 0x01a0 0xd2
+        opcode9C_MessageSync() -- 0x01a4 0x9c
+        return 0 -- 0x01a5 0x00
     end,
 
 }

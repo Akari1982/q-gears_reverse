@@ -1057,7 +1057,8 @@ else
 }
 
 struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
-if( ( w[struct_138 + 4] & 0200 ) && ( ( flags1 & 0001 ) == 0 ) )
+// if entity not on screen
+if( ( w[struct_138 + 4] & 00000200 ) && ( ( flags1 & 0001 ) == 0 ) )
 {
     [800c1b6c + id * 498 + 414] = h(0);
 

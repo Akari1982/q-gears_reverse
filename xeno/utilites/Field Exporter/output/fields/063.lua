@@ -114,13 +114,13 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0000, flag=0x11 ) -- 0x031e 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x031e 0xf5
         opcode9C_MessageSync() -- 0x0322 0x9c
         -- MISSING OPCODE 0xFE65
     end,
 
     script_0x05 = function( self )
-        opcodeF5_MessageShow3( text_id=0x0001, flag=0x21 ) -- 0x032a 0xf5
+        opcodeF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x032a 0xf5
         opcode9C_MessageSync() -- 0x032e 0x9c
         return 0 -- 0x032f 0x00
     end,
@@ -282,7 +282,10 @@ Actor[ "0x08" ] = {
 
 Actor[ "0x09" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=0 ) -- 0x05a4 0x93
+        opcodeFE03( ???=816 ) -- 0x05a7 0xfe
+        opcode37_VariableSetFalse( address=0x042a ) -- 0x05ab 0x37
+        -- MISSING OPCODE 0xFE46
     end,
 
     on_update = function( self )
@@ -361,7 +364,11 @@ Actor[ "0x0c" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=128 ) -- 0x062f 0xc0
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0430 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x0651 ) -- 0x0632 0x02
+        -- 0xA8_VariableRandom2( address=0x042e, value=3 ) -- 0x063a 0xa8
+        opcode38_VariableAdd( address=0x042e, value=(vf40)0x000d, flag=0x40 ) -- 0x063f 0x38
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -384,7 +391,11 @@ Actor[ "0x0d" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=128 ) -- 0x066a 0xc0
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0434 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x068c ) -- 0x066d 0x02
+        -- 0xA8_VariableRandom2( address=0x0432, value=3 ) -- 0x0675 0xa8
+        opcode38_VariableAdd( address=0x0432, value=(vf40)0x000d, flag=0x40 ) -- 0x067a 0x38
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -407,7 +418,11 @@ Actor[ "0x0e" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=128 ) -- 0x06a5 0xc0
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0438 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x06c7 ) -- 0x06a8 0x02
+        -- 0xA8_VariableRandom2( address=0x0436, value=3 ) -- 0x06b0 0xa8
+        opcode38_VariableAdd( address=0x0436, value=(vf40)0x000d, flag=0x40 ) -- 0x06b5 0x38
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -430,7 +445,11 @@ Actor[ "0x0f" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=128 ) -- 0x06e0 0xbf
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x043c ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x0702 ) -- 0x06e3 0x02
+        -- 0xA8_VariableRandom2( address=0x043a, value=3 ) -- 0x06eb 0xa8
+        opcode38_VariableAdd( address=0x043a, value=(vf40)0x000d, flag=0x40 ) -- 0x06f0 0x38
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -453,7 +472,11 @@ Actor[ "0x10" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=128 ) -- 0x071b 0xbf
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0440 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x073d ) -- 0x071e 0x02
+        -- 0xA8_VariableRandom2( address=0x043e, value=3 ) -- 0x0726 0xa8
+        opcode38_VariableAdd( address=0x043e, value=(vf40)0x000d, flag=0x40 ) -- 0x072b 0x38
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )
@@ -476,7 +499,11 @@ Actor[ "0x11" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=128 ) -- 0x0756 0xbf
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0444 ), value2=(s16)0x0003, condition="value1 > value2", jump_if_false=0x0778 ) -- 0x0759 0x02
+        -- 0xA8_VariableRandom2( address=0x0442, value=3 ) -- 0x0761 0xa8
+        opcode38_VariableAdd( address=0x0442, value=(vf40)0x000d, flag=0x40 ) -- 0x0766 0x38
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_talk = function( self )

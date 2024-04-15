@@ -119,7 +119,7 @@ Actor[ "0x04" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4367 0x4a
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x20 ) -- 0x436d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_BOTTOM ) -- 0x436d 0xd2
         opcode9C_MessageSync() -- 0x4371 0x9c
         return 0 -- 0x4372 0x00
     end,
@@ -154,7 +154,7 @@ Actor[ "0x05" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x43ad 0x4a
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x20 ) -- 0x43b3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=FORCE_BOTTOM ) -- 0x43b3 0xd2
         opcode9C_MessageSync() -- 0x43b7 0x9c
         return 0 -- 0x43b8 0x00
     end,
@@ -189,7 +189,7 @@ Actor[ "0x06" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x43f3 0x4a
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x20 ) -- 0x43f9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=FORCE_BOTTOM ) -- 0x43f9 0xd2
         opcode9C_MessageSync() -- 0x43fd 0x9c
         return 0 -- 0x43fe 0x00
     end,
@@ -224,7 +224,7 @@ Actor[ "0x07" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4439 0x4a
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x20 ) -- 0x443f 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=FORCE_BOTTOM ) -- 0x443f 0xd2
         opcode9C_MessageSync() -- 0x4443 0x9c
         return 0 -- 0x4444 0x00
     end,
@@ -259,7 +259,7 @@ Actor[ "0x08" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x447f 0x4a
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x20 ) -- 0x4485 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=FORCE_BOTTOM ) -- 0x4485 0xd2
         opcode9C_MessageSync() -- 0x4489 0x9c
         return 0 -- 0x448a 0x00
     end,
@@ -327,7 +327,7 @@ Actor[ "0x0a" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4511 0x4a
-        opcodeD2_MessageShow0( text_id=0x0006, ???=0x20 ) -- 0x4517 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0006, flags=FORCE_BOTTOM ) -- 0x4517 0xd2
         opcode9C_MessageSync() -- 0x451b 0x9c
         return 0 -- 0x451c 0x00
     end,
@@ -362,7 +362,7 @@ Actor[ "0x0b" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x4557 0x4a
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x20 ) -- 0x455d 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=FORCE_BOTTOM ) -- 0x455d 0xd2
         opcode9C_MessageSync() -- 0x4561 0x9c
         return 0 -- 0x4562 0x00
     end,
@@ -397,7 +397,7 @@ Actor[ "0x0c" ] = {
 
     script_0x05 = function( self )
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x459d 0x4a
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x20 ) -- 0x45a3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=FORCE_BOTTOM ) -- 0x45a3 0xd2
         opcode9C_MessageSync() -- 0x45a7 0x9c
         return 0 -- 0x45a8 0x00
     end,
@@ -764,7 +764,8 @@ Actor[ "0x15" ] = {
         -- 0xFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=2000 ) -- 0x4a85 0xfe
         -- 0xFEBD_ParticleSpawnSettings( settings=0 ) -- 0x4a8d 0xfe
         -- 0xFE96_ParticleCreate() -- 0x4a95 0xfe
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1536 ) -- 0x4a97 0x21
+        -- MISSING OPCODE 0x22
     end,
 
 }

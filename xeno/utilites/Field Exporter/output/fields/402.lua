@@ -162,7 +162,7 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x11 ) -- 0x43b9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x43b9 0xd2
         opcode9C_MessageSync() -- 0x43bd 0x9c
         return 0 -- 0x43be 0x00
     end,
@@ -193,7 +193,7 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x11 ) -- 0x43ce 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x43ce 0xd2
         opcode9C_MessageSync() -- 0x43d2 0x9c
         return 0 -- 0x43d3 0x00
     end,
@@ -224,7 +224,7 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x11 ) -- 0x43e3 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x43e3 0xd2
         opcode9C_MessageSync() -- 0x43e7 0x9c
         return 0 -- 0x43e8 0x00
     end,
@@ -303,7 +303,7 @@ Actor[ "0x0b" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x11 ) -- 0x440e 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x440e 0xd2
         opcode9C_MessageSync() -- 0x4412 0x9c
         return 0 -- 0x4413 0x00
     end,
@@ -334,7 +334,7 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x11 ) -- 0x4423 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x4423 0xd2
         opcode9C_MessageSync() -- 0x4427 0x9c
         return 0 -- 0x4428 0x00
     end,
@@ -365,7 +365,7 @@ Actor[ "0x0d" ] = {
     end,
 
     script_0x04 = function( self )
-        opcodeD2_MessageShow0( text_id=0x0005, ???=0x11 ) -- 0x4438 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0005, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x4438 0xd2
         opcode9C_MessageSync() -- 0x443c 0x9c
         return 0 -- 0x443d 0x00
     end,

@@ -849,7 +849,7 @@ Actor[ "0x0d" ] = {
 
     on_talk = function( self )
         opcode09_ActorCallScriptEW( actor_id=0xff, script=04, priority=03 ) -- 0x08c5 0x09
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x08c8 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x08c8 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=00, end_row=01 ) -- 0x08cc 0xa9
         opcode9C_MessageSync() -- 0x08ce 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x092f ) -- 0x08cf 0x02

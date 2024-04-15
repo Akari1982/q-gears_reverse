@@ -332,15 +332,15 @@ Actor[ "0x0d" ] = {
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00d4 ) -- 0x00c1 0x02
         opcode3C_VariableInc( address=0x0402 ) -- 0x00c9 0x3c
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x00cc 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x00cc 0xd2
         opcode9C_MessageSync() -- 0x00d0 0x9c
         -- 0x01_JumpTo( 0x00e6 ) -- 0x00d1 0x01
         opcode6F_ActorRotateToActor( actor_id=(entity)party_1 ) -- 0x00d4 0x6f
         opcode3D_VariableDec( address=0x0402 ) -- 0x00d6 0x3d
-        opcodeD2_MessageShow0( text_id=0x0003, ???=0x00 ) -- 0x00d9 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x00d9 0xd2
         opcode9C_MessageSync() -- 0x00dd 0x9c
         opcode69_ActorSetRotation( rot=6 ) -- 0x00de 0x69
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x00e1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x00e1 0xd2
         opcode9C_MessageSync() -- 0x00e5 0x9c
         return 0 -- 0x00e6 0x00
     end,
@@ -362,7 +362,15 @@ Actor[ "0x0e" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=224 ) -- 0x00f4 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00f7 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00fd 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0103 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0109 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x010f 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0115 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x011b 0x4a
+        return 0 -- 0x0121 0x00
     end,
 
     on_talk = function( self )

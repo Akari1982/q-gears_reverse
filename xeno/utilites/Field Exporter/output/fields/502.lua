@@ -121,7 +121,8 @@ Actor[ "0x04" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x432b 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -149,7 +150,8 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x433b 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -177,7 +179,8 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x434b 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -205,7 +208,8 @@ Actor[ "0x07" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x435b 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -233,7 +237,8 @@ Actor[ "0x08" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x436b 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -285,7 +290,8 @@ Actor[ "0x0a" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x4386 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -313,7 +319,8 @@ Actor[ "0x0b" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x4396 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -341,7 +348,8 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x43a6 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -369,7 +377,8 @@ Actor[ "0x0d" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x43b6 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }
@@ -397,7 +406,8 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x43c6 0x1f
+        -- MISSING OPCODE 0x52
     end,
 
 }

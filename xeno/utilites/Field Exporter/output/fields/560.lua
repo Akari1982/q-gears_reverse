@@ -50,31 +50,45 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01bf 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01c1 0x4a
+        return 0 -- 0x01c7 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01c8 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01ca 0x4a
+        return 0 -- 0x01d0 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01d1 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01d3 0x4a
+        return 0 -- 0x01d9 0x00
     end,
 
     script_0x07 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01da 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01dc 0x4a
+        return 0 -- 0x01e2 0x00
     end,
 
     script_0x08 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01e3 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01e5 0x4a
+        return 0 -- 0x01eb 0x00
     end,
 
     script_0x09 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01ec 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01ee 0x4a
+        return 0 -- 0x01f4 0x00
     end,
 
     script_0x0a = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01f5 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01f7 0x4a
+        return 0 -- 0x01fd 0x00
     end,
 
 }
@@ -149,7 +163,7 @@ Actor[ "0x04" ] = {
         -- 0x98_MapLoad( field_id=555, value=3 ) -- 0x023d 0x98
         -- 0x5B() -- 0x0242 0x5b
         -- 0x01_JumpTo( 0x024b ) -- 0x0243 0x01
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x0246 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0246 0xd2
         opcode9C_MessageSync() -- 0x024a 0x9c
         return 0 -- 0x024b 0x00
     end,
@@ -174,7 +188,7 @@ Actor[ "0x05" ] = {
     end,
 
     on_talk = function( self )
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x0263 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0263 0xd2
         opcode9C_MessageSync() -- 0x0267 0x9c
         return 0 -- 0x0268 0x00
     end,

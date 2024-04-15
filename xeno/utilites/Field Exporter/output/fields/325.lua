@@ -74,11 +74,20 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=384 ) -- 0x004d 0x21
+        opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0050 0x2c
+        -- MISSING OPCODE 0x53
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x0057 0x21
+        -- 0xF6( ???=0x01 ) -- 0x005a 0xf6
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x005c 0x4a
+        -- 0xF6( ???=0x00 ) -- 0x0062 0xf6
+        -- 0x21( ???=256 ) -- 0x0064 0x21
+        opcode26_Wait( time=30 ) -- 0x0067 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x006a 0x4a
+        return 0 -- 0x0070 0x00
     end,
 
     script_0x06 = function( self )

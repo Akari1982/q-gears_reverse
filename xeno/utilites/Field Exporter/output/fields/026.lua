@@ -194,7 +194,7 @@ Actor[ "0x05" ] = {
         opcode5D_SpritePlayAnim2( anim_id=0x05 ) -- 0x0157 0x5d
         -- 0x5E() -- 0x0159 0x5e
         opcode2C_SpritePlayAnim( anim_id=0x07 ) -- 0x015a 0x2c
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x20 ) -- 0x015c 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=FORCE_BOTTOM ) -- 0x015c 0xd2
         opcode9C_MessageSync() -- 0x0160 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0161 0x2c
         -- MISSING OPCODE 0x1e
@@ -211,7 +211,10 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=0 ) -- 0x0334 0x93
+        -- 0x19_ActorSetPosition( x=(vf80)0x0190, z=(vf40)0x0190, flag=(flag)0xc0 ) -- 0x0337 0x19
+        opcodeFE03( ???=6000 ) -- 0x033d 0xfe
+        -- MISSING OPCODE 0x5f
     end,
 
     on_update = function( self )

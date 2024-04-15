@@ -111,7 +111,8 @@ Actor[ "0x04" ] = {
 
 Actor[ "0x05" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=1 ) -- 0x00ef 0x93
+        -- MISSING OPCODE 0xFE09
     end,
 
     on_update = function( self )
@@ -127,11 +128,13 @@ Actor[ "0x05" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=2047 ) -- 0x0104 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0xFE47
+        -- 0x47( ???=2047 ) -- 0x0117 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
 }
@@ -140,7 +143,9 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=48 ) -- 0x012a 0x93
+        -- 0x2A() -- 0x012d 0x2a
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -164,7 +169,9 @@ Actor[ "0x06" ] = {
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0165 0x21
+        -- 0xF6( ???=0x01 ) -- 0x0168 0xf6
+        -- MISSING OPCODE 0x10
     end,
 
     script_0x07 = function( self )
@@ -199,14 +206,14 @@ Actor[ "0x07" ] = {
         opcode09_ActorCallScriptEW( actor_id=0x06, script=05, priority=01 ) -- 0x01df 0x09
         opcodeF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=200 ) -- 0x01e2 0xf1
         opcode26_Wait( time=200 ) -- 0x01ed 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x02, text_id=0x0000, ???=0x52 ) -- 0x01f0 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x02, text_id=0x0000, flags=NO_FACE|FORCE_TOP|NO_WINDOW ) -- 0x01f0 0xd4
         opcode26_Wait( time=10 ) -- 0x01f6 0x26
         opcodeFE9B_SlideShow1( steps=100 ) -- 0x01f9 0xfe
         -- 0x5A() -- 0x01fd 0x5a
         -- 0x07( actor_id=0x00, script=0x44 ) -- 0x01fe 0x07
         opcode09_ActorCallScriptEW( actor_id=0x08, script=05, priority=01 ) -- 0x0201 0x09
         opcode26_Wait( time=100 ) -- 0x0204 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x05, text_id=0x0001, ???=0x63 ) -- 0x0207 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM|NO_WINDOW ) -- 0x0207 0xd4
         opcode09_ActorCallScriptEW( actor_id=0x06, script=06, priority=01 ) -- 0x020d 0x09
         opcodeFE9B_SlideShow1( steps=80 ) -- 0x0210 0xfe
         -- 0x5A() -- 0x0214 0x5a
@@ -217,7 +224,7 @@ Actor[ "0x07" ] = {
         opcode26_Wait( time=50 ) -- 0x0229 0x26
         -- 0x07( actor_id=0x06, script=0x28 ) -- 0x022c 0x07
         opcode26_Wait( time=29 ) -- 0x022f 0x26
-        opcodeD4_MessageShowE( actor_id=(entity)0x02, text_id=0x0002, ???=0x52 ) -- 0x0232 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x02, text_id=0x0002, flags=NO_FACE|FORCE_TOP|NO_WINDOW ) -- 0x0232 0xd4
         opcodeF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=90 ) -- 0x0238 0xf1
         opcode26_Wait( time=90 ) -- 0x0243 0x26
         -- 0x07( actor_id=0x08, script=0x26 ) -- 0x0246 0x07

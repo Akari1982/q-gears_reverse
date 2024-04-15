@@ -693,7 +693,7 @@ Actor[ "0x0e" ] = {
         -- 0xFE54() -- 0x0367 0xfe
         opcode3A_VariableBitSet( address=0x00e2, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x0369 0x3a
         opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x036f 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x0b, text_id=0x0000, ???=0x00 ) -- 0x0373 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x0b, text_id=0x0000, flags=0 ) -- 0x0373 0xd4
         -- 0xFE54() -- 0x0379 0xfe
         -- MISSING OPCODE 0x29
     end,
@@ -704,7 +704,7 @@ Actor[ "0x0e" ] = {
         -- 0xFE54() -- 0x0367 0xfe
         opcode3A_VariableBitSet( address=0x00e2, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x0369 0x3a
         opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x036f 0xfe
-        opcodeD4_MessageShowE( actor_id=(entity)0x0b, text_id=0x0000, ???=0x00 ) -- 0x0373 0xd4
+        opcodeD4_MessageShowFromActor( actor_id=(entity)0x0b, text_id=0x0000, flags=0 ) -- 0x0373 0xd4
         -- 0xFE54() -- 0x0379 0xfe
         -- MISSING OPCODE 0x29
     end,
@@ -889,7 +889,12 @@ Actor[ "0x15" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x06de ) -- 0x06d0 0x02
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=13 ) -- 0x06d8 0xc0
+        -- 0x01_JumpTo( 0x06e1 ) -- 0x06db 0x01
+        -- 0xBF( ???=13 ) -- 0x06de 0xbf
+        opcode26_Wait( time=2 ) -- 0x06e1 0x26
+        -- 0x01_JumpTo( 0x06d0 ) -- 0x06e4 0x01
+        return 0 -- 0x06e7 0x00
     end,
 
     on_talk = function( self )
@@ -903,7 +908,44 @@ Actor[ "0x15" ] = {
     script_0x04 = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0741 ) -- 0x06e9 0x02
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x001e, condition="value1 < value2", jump_if_false=0x0702 ) -- 0x06f1 0x02
-        -- MISSING OPCODE 0xc0
+        -- 0xC0( ???=5 ) -- 0x06f9 0xc0
+        opcode26_Wait( time=1 ) -- 0x06fc 0x26
+        -- 0x01_JumpTo( 0x06f1 ) -- 0x06ff 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0050, condition="value1 < value2", jump_if_false=0x0713 ) -- 0x0702 0x02
+        -- 0xC0( ???=2 ) -- 0x070a 0xc0
+        opcode26_Wait( time=1 ) -- 0x070d 0x26
+        -- 0x01_JumpTo( 0x0702 ) -- 0x0710 0x01
+        -- 0xC0( ???=0 ) -- 0x0713 0xc0
+        opcode26_Wait( time=60 ) -- 0x0716 0x26
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0028, condition="value1 > value2", jump_if_false=0x072a ) -- 0x0719 0x02
+        -- 0xBF( ???=2 ) -- 0x0721 0xbf
+        opcode26_Wait( time=1 ) -- 0x0724 0x26
+        -- 0x01_JumpTo( 0x0719 ) -- 0x0727 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x073b ) -- 0x072a 0x02
+        -- 0xBF( ???=5 ) -- 0x0732 0xbf
+        opcode26_Wait( time=1 ) -- 0x0735 0x26
+        -- 0x01_JumpTo( 0x072a ) -- 0x0738 0x01
+        opcode36_VariableSetTrue( address=0x0402 ) -- 0x073b 0x36
+        -- 0x01_JumpTo( 0x078b ) -- 0x073e 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x001e, condition="value1 < value2", jump_if_false=0x0752 ) -- 0x0741 0x02
+        -- 0xBF( ???=5 ) -- 0x0749 0xbf
+        opcode26_Wait( time=1 ) -- 0x074c 0x26
+        -- 0x01_JumpTo( 0x0741 ) -- 0x074f 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0050, condition="value1 < value2", jump_if_false=0x0763 ) -- 0x0752 0x02
+        -- 0xBF( ???=2 ) -- 0x075a 0xbf
+        opcode26_Wait( time=1 ) -- 0x075d 0x26
+        -- 0x01_JumpTo( 0x0752 ) -- 0x0760 0x01
+        -- 0xC0( ???=0 ) -- 0x0763 0xc0
+        opcode26_Wait( time=60 ) -- 0x0766 0x26
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0028, condition="value1 > value2", jump_if_false=0x077a ) -- 0x0769 0x02
+        -- 0xC0( ???=2 ) -- 0x0771 0xc0
+        opcode26_Wait( time=1 ) -- 0x0774 0x26
+        -- 0x01_JumpTo( 0x0769 ) -- 0x0777 0x01
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x078b ) -- 0x077a 0x02
+        -- 0xC0( ???=5 ) -- 0x0782 0xc0
+        opcode26_Wait( time=1 ) -- 0x0785 0x26
+        -- 0x01_JumpTo( 0x077a ) -- 0x0788 0x01
+        -- MISSING OPCODE 0x92
     end,
 
 }

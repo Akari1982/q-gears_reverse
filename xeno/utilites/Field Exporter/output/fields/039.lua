@@ -336,19 +336,19 @@ Actor[ "0x0d" ] = {
 
     on_update = function( self )
         opcode26_Wait( time=80 ) -- 0x00ec 0x26
-        -- 0xD0() -- 0x00ef 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=409 ) -- 0x00ef 0xd0
         opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x00fa 0xfe
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00fe 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00fe 0xd2
         opcode9C_MessageSync() -- 0x0102 0x9c
         opcode26_Wait( time=10 ) -- 0x0103 0x26
         -- 0x07( actor_id=0x0e, script=0xc4 ) -- 0x0106 0x07
         -- 0x07( actor_id=0x0f, script=0xc4 ) -- 0x0109 0x07
-        -- 0xD0() -- 0x010c 0xd0
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=421 ) -- 0x010c 0xd0
         opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x0117 0xfe
-        opcodeD2_MessageShow0( text_id=0x0001, ???=0x00 ) -- 0x011b 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x011b 0xd2
         opcode9C_MessageSync() -- 0x011f 0x9c
         opcode26_Wait( time=30 ) -- 0x0120 0x26
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0123 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0123 0xd2
         opcode9C_MessageSync() -- 0x0127 0x9c
         -- 0x07( actor_id=0x0c, script=0xc5 ) -- 0x0128 0x07
         opcode26_Wait( time=10 ) -- 0x012b 0x26
@@ -371,7 +371,11 @@ Actor[ "0x0d" ] = {
 
 Actor[ "0x0e" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=56 ) -- 0x0136 0x93
+        opcodeFE03( ???=4896 ) -- 0x0139 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0463, z=(vf40)0xfb50, flag=(flag)0xc0 ) -- 0x013d 0x19
+        -- 0xFE07( ???=0x01 ) -- 0x0143 0xfe
+        -- MISSING OPCODE 0xFE3f
     end,
 
     on_update = function( self )
@@ -388,7 +392,8 @@ Actor[ "0x0e" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xFE3c
+        -- 0xFE3C( ???=0, ???=2 ) -- 0x0152 0xfe
+        -- MISSING OPCODE 0xFE09
     end,
 
 }
@@ -417,7 +422,8 @@ Actor[ "0x0f" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=592 ) -- 0x02fc 0x21
+        -- MISSING OPCODE 0xFE13
     end,
 
 }

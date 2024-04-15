@@ -65,7 +65,9 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x008e 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0090 0x4a
+        return 0 -- 0x0096 0x00
     end,
 
     script_0x05 = function( self )
@@ -86,8 +88,8 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x07 = function( self )
-        -- 0xD0() -- 0x00c6 0xd0
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x00d1 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 ) -- 0x00c6 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x00d1 0xd2
         opcode9C_MessageSync() -- 0x00d5 0x9c
         return 0 -- 0x00d6 0x00
     end,
@@ -129,8 +131,8 @@ Actor[ "0x02" ] = {
     end,
 
     script_0x05 = function( self )
-        -- 0xD0() -- 0x010d 0xd0
-        opcodeD2_MessageShow0( text_id=0x0002, ???=0x00 ) -- 0x0118 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 ) -- 0x010d 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x0118 0xd2
         opcode9C_MessageSync() -- 0x011c 0x9c
         return 0 -- 0x011d 0x00
     end,
@@ -174,8 +176,8 @@ Actor[ "0x03" ] = {
         opcodeFE4A_SpriteAddAnimLoad( file=80 ) -- 0x0140 0xfe
         opcodeFE4B_SpriteAddAnimSync() -- 0x0144 0xfe
         opcodeFE4D_SpritePlayAddAnim( anim_id=0x00 ) -- 0x0146 0xfe
-        -- 0xD0() -- 0x0149 0xd0
-        opcodeD2_MessageShow0( text_id=0x0004, ???=0x00 ) -- 0x0154 0xd2
+        opcodeD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 ) -- 0x0149 0xd0
+        opcodeD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x0154 0xd2
         opcode9C_MessageSync() -- 0x0158 0x9c
         opcode2C_SpritePlayAnim( anim_id=0xff ) -- 0x0159 0x2c
         opcodeFE4E_SpriteAddAnimUnload() -- 0x015b 0xfe
@@ -255,7 +257,8 @@ Actor[ "0x06" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x01b9 ) -- 0x01ae 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=512 ) -- 0x01b6 0xbf
+        return 0 -- 0x01b9 0x00
     end,
 
     on_talk = function( self )
@@ -287,7 +290,8 @@ Actor[ "0x07" ] = {
 
     on_update = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x01d8 ) -- 0x01cd 0x02
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=256 ) -- 0x01d5 0xbf
+        return 0 -- 0x01d8 0x00
     end,
 
     on_talk = function( self )

@@ -58,7 +58,13 @@ Actor[ "0x01" ] = {
         -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00a1 0x4a
         opcode2C_SpritePlayAnim( anim_id=0x09 ) -- 0x00a7 0x2c
         -- 0x5A() -- 0x00a9 0x5a
-        -- MISSING OPCODE 0x57
+        -- 0x57( type=0x00, x=(vf80)0xffec, z=(vf40)0x00c8, y=(vf20)0xffa7, ???=(vf10)0x000f, flag=0xf0 ) -- 0x00aa 0x57
+        -- 0x57( type=0x8f ) -- 0x00b5 0x57
+        opcode26_Wait( time=1 ) -- 0x00b7 0x26
+        -- 0x57( type=0x0f ) -- 0x00ba 0x57
+        opcode2C_SpritePlayAnim( anim_id=0x02 ) -- 0x00bc 0x2c
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00be 0x4a
+        -- MISSING OPCODE 0x5f
     end,
 
 }
@@ -157,7 +163,12 @@ Actor[ "0x04" ] = {
 
 Actor[ "0x05" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=2 ) -- 0x0247 0xfe
+        opcode20_ActorSetFlags0( flags=255 ) -- 0x024d 0x20
+        -- 0x23() -- 0x0250 0x23
+        -- 0x19_ActorSetPosition( x=(vf80)0x0064, z=(vf40)0xfed4, flag=(flag)0xc0 ) -- 0x0251 0x19
+        -- 0x2A() -- 0x0257 0x2a
+        return 0 -- 0x0258 0x00
     end,
 
     on_update = function( self )
@@ -193,7 +204,12 @@ Actor[ "0x05" ] = {
 
 Actor[ "0x06" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=0, ???=3 ) -- 0x027f 0xfe
+        opcode20_ActorSetFlags0( flags=255 ) -- 0x0285 0x20
+        -- 0x2A() -- 0x0288 0x2a
+        -- 0x23() -- 0x0289 0x23
+        -- 0x19_ActorSetPosition( x=(vf80)0x0050, z=(vf40)0xfed4, flag=(flag)0xc0 ) -- 0x028a 0x19
+        return 0 -- 0x0290 0x00
     end,
 
     on_update = function( self )
@@ -236,16 +252,16 @@ Actor[ "0x07" ] = {
 
     on_talk = function( self )
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x02c9 ) -- 0x02b9 0x02
-        opcodeD2_MessageShow0( text_id=0x0007, ???=0x00 ) -- 0x02c1 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0007, flags=0 ) -- 0x02c1 0xd2
         opcode9C_MessageSync() -- 0x02c5 0x9c
         -- 0x01_JumpTo( 0x02e7 ) -- 0x02c6 0x01
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0184 ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x02e2 ) -- 0x02c9 0x02
         opcode74_SoundPlayFixedVolume( sound_id=249 ) -- 0x02d1 0x74
-        opcodeD2_MessageShow0( text_id=0x0008, ???=0x00 ) -- 0x02d4 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0008, flags=0 ) -- 0x02d4 0xd2
         opcode9C_MessageSync() -- 0x02d8 0x9c
         opcode3A_VariableBitSet( address=0x0184, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x02d9 0x3a
         -- 0x01_JumpTo( 0x02e7 ) -- 0x02df 0x01
-        opcodeD2_MessageShow0( text_id=0x0009, ???=0x00 ) -- 0x02e2 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0009, flags=0 ) -- 0x02e2 0xd2
         opcode9C_MessageSync() -- 0x02e6 0x9c
         return 0 -- 0x02e7 0x00
     end,

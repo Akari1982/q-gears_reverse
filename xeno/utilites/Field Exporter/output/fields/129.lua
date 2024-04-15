@@ -746,7 +746,8 @@ Actor[ "0x17" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0xbf
+        -- 0xBF( ???=2048 ) -- 0x0602 0xbf
+        return 0 -- 0x0605 0x00
     end,
 
 }

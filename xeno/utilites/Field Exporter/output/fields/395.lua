@@ -341,7 +341,8 @@ Actor[ "0x0d" ] = {
 
     on_update = function( self )
         -- 0xCB_TriggerJumpTo( trigger_id=GetVar( 0x0b01 ), jump=0x9801 ) -- 0x0101 0xcb
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=GetVar( 0x0381 ) ) -- 0x0106 0x93
+        -- MISSING OPCODE 0x80
     end,
 
     on_talk = function( self )

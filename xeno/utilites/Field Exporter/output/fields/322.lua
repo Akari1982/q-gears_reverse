@@ -75,7 +75,9 @@ Actor[ "0x02" ] = {
 
 Actor[ "0x03" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=4 ) -- 0x0029 0x93
+        -- 0x2A() -- 0x002c 0x2a
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )
@@ -99,7 +101,10 @@ Actor[ "0x04" ] = {
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x004e ) -- 0x0042 0x02
         -- 0xBC_ActorNoModelInit() -- 0x004a 0xbc
         -- 0x01_JumpTo( 0x0051 ) -- 0x004b 0x01
-        -- MISSING OPCODE 0x93
+        -- 0x93( ???=1 ) -- 0x004e 0x93
+        -- 0x2A() -- 0x0051 0x2a
+        opcodeFE03( ???=512 ) -- 0x0052 0xfe
+        -- MISSING OPCODE 0xFE1c
     end,
 
     on_update = function( self )

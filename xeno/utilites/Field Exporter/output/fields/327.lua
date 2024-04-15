@@ -97,17 +97,47 @@ Actor[ "0x01" ] = {
 
     script_0x0c = function( self )
         -- 0xF6( ???=0x02 ) -- 0x009a 0xf6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x009c 0x1f
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00b2 ) -- 0x009e 0x02
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00a6 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00ac 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00b2 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00b8 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00be 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x0e ) -- 0x00c4 0x6f
+        -- 0x1F( ???=0x00 ) -- 0x00c6 0x1f
+        -- 0xF6( ???=0x00 ) -- 0x00c8 0xf6
+        return 0 -- 0x00ca 0x00
     end,
 
     script_0x0d = function( self )
         -- 0xF6( ???=0x02 ) -- 0x00cb 0xf6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x00cd 0x1f
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00e9 ) -- 0x00cf 0x02
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00d7 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00dd 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00e3 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00e9 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x00ef 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x0e ) -- 0x00f5 0x6f
+        -- 0x1F( ???=0x00 ) -- 0x00f7 0x1f
+        -- 0xF6( ???=0x00 ) -- 0x00f9 0xf6
+        return 0 -- 0x00fb 0x00
     end,
 
     script_0x0e = function( self )
         -- 0xF6( ???=0x02 ) -- 0x00fc 0xf6
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x00fe 0x1f
+        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0120 ) -- 0x0100 0x02
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0108 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x010e 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0114 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x011a 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0120 0x4a
+        opcode6F_ActorRotateToActor( actor_id=(entity)0x0e ) -- 0x0126 0x6f
+        -- 0x1F( ???=0x00 ) -- 0x0128 0x1f
+        -- 0xF6( ???=0x00 ) -- 0x012a 0xf6
+        return 0 -- 0x012c 0x00
     end,
 
 }
@@ -273,7 +303,7 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x0f = function( self )
-        opcodeD2_MessageShow0( text_id=0x0000, ???=0x00 ) -- 0x01bf 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x01bf 0xd2
         opcode9C_MessageSync() -- 0x01c3 0x9c
         return 0 -- 0x01c4 0x00
     end,
@@ -284,7 +314,12 @@ Actor[ "0x03" ] = {
     end,
 
     script_0x11 = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x01c8 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01ca 0x4a
+        opcode69_ActorSetRotation( rot=4 ) -- 0x01d0 0x69
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x01d3 0x4a
+        -- 0x23() -- 0x01d9 0x23
+        return 0 -- 0x01da 0x00
     end,
 
 }
@@ -954,7 +989,9 @@ Actor[ "0x0c" ] = {
         opcode69_ActorSetRotation( rot=4 ) -- 0x0477 0x69
         -- 0x23() -- 0x047a 0x23
         opcode20_ActorSetFlags0( flags=13 ) -- 0x047b 0x20
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x047e 0x1f
+        -- 0x2A() -- 0x0480 0x2a
+        return 0 -- 0x0481 0x00
     end,
 
     on_update = function( self )
@@ -973,11 +1010,19 @@ Actor[ "0x0c" ] = {
     end,
 
     script_0x04 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x0543 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0546 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x054c 0x4a
+        return 0 -- 0x0552 0x00
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=1024 ) -- 0x0553 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0556 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x055c 0x4a
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0562 0x4a
+        opcode69_ActorSetRotation( rot=0 ) -- 0x0568 0x69
+        return 0 -- 0x056b 0x00
     end,
 
     script_0x06 = function( self )
@@ -1031,7 +1076,11 @@ Actor[ "0x0d" ] = {
         -- 0x0B_InitNPC( 2 ) -- 0x061c 0x0b
         opcode69_ActorSetRotation( rot=0 ) -- 0x061f 0x69
         opcode20_ActorSetFlags0( flags=13 ) -- 0x0622 0x20
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0625 0x1f
+        opcodeFE0D_MessageSetFace( char_id=29 ) -- 0x0627 0xfe
+        -- 0x19_ActorSetPosition( x=(vf80)0x0084, z=(vf40)0xff15, flag=(flag)0xc0 ) -- 0x062b 0x19
+        -- 0x23() -- 0x0631 0x23
+        return 0 -- 0x0632 0x00
     end,
 
     on_update = function( self )
@@ -1085,7 +1134,18 @@ Actor[ "0x0d" ] = {
     end,
 
     script_0x0b = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=256 ) -- 0x0732 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0735 0x4a
+        opcode69_ActorSetRotation( rot=4 ) -- 0x073b 0x69
+        opcodeD2_MessageShowDynamic( text_id=0x000a, flags=NO_FACE ) -- 0x073e 0xd2
+        opcode9C_MessageSync() -- 0x0742 0x9c
+        opcode26_Wait( time=10 ) -- 0x0743 0x26
+        opcode09_ActorCallScriptEW( actor_id=0x17, script=04, priority=03 ) -- 0x0746 0x09
+        opcode26_Wait( time=10 ) -- 0x0749 0x26
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x074c 0x4a
+        -- 0x23() -- 0x0752 0x23
+        opcode09_ActorCallScriptEW( actor_id=0x17, script=05, priority=03 ) -- 0x0753 0x09
+        return 0 -- 0x0756 0x00
     end,
 
     script_0x0c = function( self )
@@ -1094,7 +1154,9 @@ Actor[ "0x0d" ] = {
     end,
 
     script_0x0d = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=512 ) -- 0x075b 0x21
+        -- 0x05_CallFunction( 0x1092 ) -- 0x075e 0x05
+        return 0 -- 0x0761 0x00
     end,
 
 }
@@ -1108,7 +1170,10 @@ Actor[ "0x0e" ] = {
         -- 0x2A() -- 0x0769 0x2a
         opcode69_ActorSetRotation( rot=0 ) -- 0x076a 0x69
         opcode20_ActorSetFlags0( flags=13 ) -- 0x076d 0x20
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x0770 0x1f
+        -- 0x19_ActorSetPosition( x=(vf80)0x0084, z=(vf40)0xff15, flag=(flag)0xc0 ) -- 0x0772 0x19
+        -- 0x23() -- 0x0778 0x23
+        return 0 -- 0x0779 0x00
     end,
 
     on_update = function( self )
@@ -1152,7 +1217,10 @@ Actor[ "0x0f" ] = {
         -- 0x2A() -- 0x079e 0x2a
         opcode69_ActorSetRotation( rot=0 ) -- 0x079f 0x69
         opcode20_ActorSetFlags0( flags=13 ) -- 0x07a2 0x20
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x07a5 0x1f
+        -- 0x19_ActorSetPosition( x=(vf80)0x0084, z=(vf40)0xff15, flag=(flag)0xc0 ) -- 0x07a7 0x19
+        -- 0x23() -- 0x07ad 0x23
+        return 0 -- 0x07ae 0x00
     end,
 
     on_update = function( self )
@@ -1193,7 +1261,8 @@ Actor[ "0x0f" ] = {
 
 Actor[ "0x10" ] = {
     on_start = function( self )
-        -- MISSING OPCODE 0xFE15
+        -- 0xFE15( ???=6, ???=1 ) -- 0x07d3 0xfe
+        -- MISSING OPCODE 0x1b
     end,
 
     on_update = function( self )
@@ -1253,7 +1322,7 @@ Actor[ "0x12" ] = {
 
     on_talk = function( self )
         -- 0xFE54() -- 0x08f5 0xfe
-        opcodeD2_MessageShow0( text_id=0x0014, ???=0x00 ) -- 0x08f7 0xd2
+        opcodeD2_MessageShowDynamic( text_id=0x0014, flags=0 ) -- 0x08f7 0xd2
         opcodeA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x08fb 0xa9
         opcode9C_MessageSync() -- 0x08fd 0x9c
         -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0911 ) -- 0x08fe 0x02

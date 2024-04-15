@@ -45,7 +45,11 @@ Actor[ "0x01" ] = {
     end,
 
     on_update = function( self )
-        -- MISSING OPCODE 0x1f
+        -- 0x1F( ???=0x10 ) -- 0x003b 0x1f
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x003d 0x4a
+        -- 0x1F( ???=0x00 ) -- 0x0043 0x1f
+        -- 0x0C() -- 0x0045 0x0c
+        return 0 -- 0x0046 0x00
     end,
 
     on_talk = function( self )
@@ -62,11 +66,17 @@ Actor[ "0x01" ] = {
     end,
 
     script_0x05 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0057 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x005a 0x4a
+        -- 0x21( ???=256 ) -- 0x0060 0x21
+        return 0 -- 0x0063 0x00
     end,
 
     script_0x06 = function( self )
-        -- MISSING OPCODE 0x21
+        -- 0x21( ???=208 ) -- 0x0064 0x21
+        -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call ) -- 0x0067 0x4a
+        -- 0x21( ???=256 ) -- 0x006d 0x21
+        return 0 -- 0x0070 0x00
     end,
 
 }
