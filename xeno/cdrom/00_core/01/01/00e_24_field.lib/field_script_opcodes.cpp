@@ -10034,7 +10034,7 @@ V1 = w[800af54c];
 // func910b0
 
 V0 = [800aec3c] = b85;
-V0 = V0 & field_script_op1F = 5;
+V0 = V0 & 1f = 5;
 T0 = V0 << 3 = 28;
 [800aeabe + T0] = A1;
 A1 = 800aebbc;
