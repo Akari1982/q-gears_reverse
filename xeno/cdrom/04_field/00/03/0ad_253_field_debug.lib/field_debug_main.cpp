@@ -700,7 +700,7 @@ switch( w[802859d8] )
             if( S3 & 1 )
             {
                 A0 = 802804b4; // "%d "
-                A1 = S2;
+                A1 = i;
                 system_print_alias();
             }
 
@@ -902,12 +902,12 @@ switch( w[802859d8] )
             S3 = S3 + 1;
         }
 
-        if( hu[800c2dd4] & 0001 )
+        if( hu[800c2dd4] & 0001 ) // repeated L2
         {
             [802859d0] = w(w[802859d0] + 1);
         }
 
-        if( hu[800c2dd4] & 0002 )
+        if( hu[800c2dd4] & 0002 ) // repeated R2
         {
             [802859d0] = w(w[802859d0] - 1);
         }

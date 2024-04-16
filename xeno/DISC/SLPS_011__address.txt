@@ -972,6 +972,20 @@
 80059918 some gpu mem set (0x100 size).
 
 80059a38 [][][][] pointer to start of player data. Init with 8006ccc4.
+    + 2b8+x*a4 [][] HP.
+    + 2bc+x*a4 [][] MP.
+    + 30c+x*a4 []   gear num for this character.
+    +1924 [][][][] gold.
+    +1d30 [][]     members mask.
+    +1d32 [][]     friends mask.
+    +1ec8 array of accessory id (0xc8 items 0x1 size)
+    +1e00 array of accessory num (0xc8 items 0x1 size)
+    +1f90 array of items num (0x94 items 0x1 size)
+    +2026 array of items id (0x94 items 0x1 size)
+    +22b1 []       gear ride 1.
+    +22b2 []       gear ride 2.
+    +22b3 []       gear ride 3.
+    +2318 [][]     friends lock.
 
 80059a3c some array 0x2 size.
 
