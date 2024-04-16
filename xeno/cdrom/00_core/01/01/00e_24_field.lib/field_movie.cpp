@@ -692,7 +692,8 @@ system_cdrom2_load_file_by_dir_file_id();
 
 [800afb74] = w(0);
 [800af348] = w(0);
-funca686c()
+
+funca686c(); // cdrom sync while update models
 
 A0 = 18;
 A1 = 0;
@@ -705,7 +706,7 @@ A0 = 4;
 A1 = 0;
 system_cdrom2_set_dir();
 
-funca686c();
+funca686c(); // cdrom sync while update models
 
 if( w[800b1738] != 0 )
 {
