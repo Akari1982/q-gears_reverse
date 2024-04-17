@@ -584,22 +584,22 @@
 // func861bc
 800861BC-80086244
 ////////////////////////////////
-// field_script_op73
+// field_event_op73
 80086248-8008635C
 ////////////////////////////////
 // func86360
 80086360-800863B0
 ////////////////////////////////
-// field_script_opFEE0
+// field_event_opFEE0
 800863B4-800863EC
 ////////////////////////////////
-// field_script_opFEDF
+// field_event_opFEDF
 800863F0-8008654C
 ////////////////////////////////
-// field_script_opFEC5
+// field_event_opFEC5
 80086550-800865A0
 ////////////////////////////////
-// field_script_opFED4
+// field_event_opFED4
 800865A4-80086718
 ////////////////////////////////
 // func8671c
@@ -614,19 +614,19 @@
 // func869f4
 800869F4-80086AFC
 ////////////////////////////////
-// field_script_opFED2
+// field_event_opFED2
 80086B00-80086B1C
 ////////////////////////////////
-// field_script_opFED1
+// field_event_opFED1
 80086B20-80086B50
 ////////////////////////////////
 // func86b54
 80086B54-80086C1C
 ////////////////////////////////
-// field_script_opFED0
+// field_event_opFED0
 80086C20-80086DD0
 ////////////////////////////////
-// field_script_opFEC0
+// field_event_opFEC0
 80086DD4-80086E18
 ////////////////////////////////
 // func86e1c
@@ -650,7 +650,7 @@
 // func87130
 80087130-800871DC
 ////////////////////////////////
-// field_script_opFEBE_enable_credits
+// field_event_opFEBE_enable_credits
 800871E0-80087204
 ////////////////////////////////
 // func87208
@@ -674,31 +674,31 @@
 // func87578
 80087578-800875A4
 ////////////////////////////////
-// field_script_opFEB1_scifi_hud_init
+// field_event_opFEB1_scifi_hud_init
 800875A8-800875DC
 ////////////////////////////////
 // func875e0
 800875E0-80087768
 ////////////////////////////////
-// field_script_opFEA4
+// field_event_opFEA4
 8008776C-800877B8
 ////////////////////////////////
 // func877bc
 800877BC-8008782C
 ////////////////////////////////
-// field_script_opFEA2
+// field_event_opFEA2
 80087830-80087888
 ////////////////////////////////
 // func8788c
 8008788C-80087930
 ////////////////////////////////
-// field_script_opFEA1
+// field_event_opFEA1
 80087934-800879A4
 ////////////////////////////////
 // func879a8
 800879A8-80087A5C
 ////////////////////////////////
-// field_script_opFE99
+// field_event_opFE99
 80087A60-80087A9C
 ////////////////////////////////
 // func87aa0
@@ -710,7 +710,7 @@
 // func87bf0
 80087BF0-80087C44
 ////////////////////////////////
-// field_script_opFEC2
+// field_event_opFEC2
 80087C48-80087D60
 ////////////////////////////////
 // func87d64
@@ -845,22 +845,22 @@
 // func89db0
 80089DB0-80089F0C
 ////////////////////////////////
-// field_script_opFE4D_sprite_play_add_animation
+// field_event_opFE4D_sprite_play_add_animation
 80089F10-80089F44
 ////////////////////////////////
 // func89f48
 80089F48-80089F7C
 ////////////////////////////////
-// field_script_opFE4B_sprite_add_anim_sync
+// field_event_opFE4B_sprite_add_anim_sync
 80089F80-8008A030
 ////////////////////////////////
-// field_script_opFE4E_sprite_add_anim_unload
+// field_event_opFE4E_sprite_add_anim_unload
 8008A034-8008A09C
 ////////////////////////////////
 // func8a0a0
 8008A0A0-8008A2B8
 ////////////////////////////////
-// field_script_opFE4A_sprite_add_anim_load
+// field_event_opFE4A_sprite_add_anim_load
 8008A2BC-8008A42C
 ////////////////////////////////
 // func8a430
@@ -875,16 +875,16 @@
 // func8a6bc
 8008A6BC-8008A714
 ////////////////////////////////
-// field_script_opFE47
+// field_event_opFE47
 8008A718-8008A750
 ////////////////////////////////
-// field_script_opFE3C
+// field_event_opFE3C
 8008A754-8008A7E0
 ////////////////////////////////
 // func8a7e4
 8008A7E4-8008A818
 ////////////////////////////////
-// field_script_opF1_fade_setup
+// field_event_opF1_fade_setup
 8008A81C-8008A8C0
 ////////////////////////////////
 // 0xFE26_ScreenDistortion
@@ -920,7 +920,7 @@
 // func8b754
 8008B754-8008B904
 ////////////////////////////////
-// field_script_opFE19
+// field_event_opFE19
 8008B908-8008BDA8
 ////////////////////////////////
 // func8bdac
@@ -950,13 +950,13 @@
 // func8c438
 8008C438-8008C4A0
 ////////////////////////////////
-// field_script_opFE3A
+// field_event_opFE3A
 8008C4A4-8008C50C
 ////////////////////////////////
 // convert_magic_to_pc_id
 8008C510-8008C56C
 ////////////////////////////////
-// field_script_opFE0D_set_face
+// field_event_opFE0D_set_face
 8008C570-8008C5BC
 ////////////////////////////////
 // func8c5c0
@@ -965,7 +965,7 @@
 // func8c64c
 8008C64C-8008C6C4
 ////////////////////////////////
-// field_script_opFE03
+// field_event_opFE03
 8008C6C8-8008C750
 ////////////////////////////////
 // func8c754
@@ -995,10 +995,10 @@
 // func8cb9c
 8008CB9C-8008CBD4
 ////////////////////////////////
-// field_script_opFE07
+// field_event_opFE07
 8008CBD8-8008CC54
 ////////////////////////////////
-// field_script_opFE0A
+// field_event_opFE0A
 8008CC58-8008CCD0
 ////////////////////////////////
 // func8ccd4
@@ -1103,13 +1103,13 @@
 // 0xF7
 8008DE30-8008DE98
 ////////////////////////////////
-// field_script_opF6
+// field_event_opF6
 8008DE9C-8008DFC8
 ////////////////////////////////
 // func8dfcc
 8008DFCC-8008E028
 ////////////////////////////////
-// field_script_opFEA0
+// field_event_opFEA0
 8008E02C-8008E200
 ////////////////////////////////
 // func8e204
@@ -1118,16 +1118,16 @@
 // func8e3e8
 8008E3E8-8008E52C
 ////////////////////////////////
-// field_script_opFE9B
+// field_event_opFE9B
 8008E530-8008E570
 ////////////////////////////////
-// field_script_opFE9C
+// field_event_opFE9C
 8008E574-8008E5B4
 ////////////////////////////////
 // func8e5b8
 8008E5B8-8008E640
 ////////////////////////////////
-// field_script_opFE9D
+// field_event_opFE9D
 8008E644-8008E684
 ////////////////////////////////
 // func8e688
@@ -1163,16 +1163,16 @@
 // func8ebb8
 8008EBB8-8008EC38
 ////////////////////////////////
-// field_script_op74_sound_play_fixed_volume
+// field_event_op74_sound_play_fixed_volume
 8008EC3C-8008EC7C
 ////////////////////////////////
-// field_script_opFE5D_play_sound_with_volume_in_3
+// field_event_opFE5D_play_sound_with_volume_in_3
 8008EC80-8008ECF4
 ////////////////////////////////
 // func8ecf8
 8008ECF8-8008ED3C
 ////////////////////////////////
-// field_script_op75
+// field_event_op75
 8008ED40-8008ED88
 ////////////////////////////////
 // func8ed8c
@@ -1181,7 +1181,7 @@
 // func8eee0
 8008EEE0-8008F008
 ////////////////////////////////
-// field_script_opEF
+// field_event_opEF
 8008F00C-8008F08C
 ////////////////////////////////
 // func8f090
@@ -1190,7 +1190,7 @@
 // func8f0fc
 8008F0FC-8008F168
 ////////////////////////////////
-// field_script_op99
+// field_event_op99
 8008F16C-8008F21C
 ////////////////////////////////
 // func8f220
@@ -1199,7 +1199,7 @@
 // func8f314
 8008F314-8008F3A0
 ////////////////////////////////
-// field_script_op60
+// field_event_op60
 8008F3A4-8008F3FC
 ////////////////////////////////
 // func8f400
@@ -1208,10 +1208,10 @@
 // func8f4d8
 8008F4D8-8008F560
 ////////////////////////////////
-// field_script_op63
+// field_event_op63
 8008F564-8008F638
 ////////////////////////////////
-// field_script_op64
+// field_event_op64
 8008F63C-8008F694
 ////////////////////////////////
 // func8f698
@@ -1220,13 +1220,13 @@
 // func8f770
 8008F770-8008F7F8
 ////////////////////////////////
-// field_script_opA3
+// field_event_opA3
 8008F7FC-8008F8D0
 ////////////////////////////////
 // func8f8d4
 8008F8D4-8008F98C
 ////////////////////////////////
-// field_script_opAC
+// field_event_opAC
 8008F990-8008FFE0
 ////////////////////////////////
 // func8ffe4
@@ -1277,7 +1277,7 @@
 // func90fdc
 80090FDC-80091048
 ////////////////////////////////
-// field_script_opE7
+// field_event_opE7
 8009104C-800910A4
 ////////////////////////////////
 // func910a8
@@ -1322,7 +1322,7 @@
 // func91aa8
 80091AA8-80091B70
 ////////////////////////////////
-// field_script_opD6_message_set_speed
+// field_event_opD6_message_set_speed
 80091B74-80091BF8
 ////////////////////////////////
 // func91bfc
@@ -1358,7 +1358,7 @@
 // func92588
 80092588-800925E4
 ////////////////////////////////
-// field_script_op56
+// field_event_op56
 800925E8-800927C8
 ////////////////////////////////
 // func927cc
@@ -1413,28 +1413,28 @@
 // func9306c
 8009306C-80093098
 ////////////////////////////////
-// field_script_opFE53
+// field_event_opFE53
 8009309C-800930E0
 ////////////////////////////////
-// field_script_opFE54
+// field_event_opFE54
 800930E4-80093180
 ////////////////////////////////
-// field_script_opFE4F
+// field_event_opFE4F
 80093184-800931A4
 ////////////////////////////////
-// field_script_opFE50
+// field_event_opFE50
 800931A8-800931CC
 ////////////////////////////////
-// field_script_opFE51
+// field_event_opFE51
 800931D0-800931F0
 ////////////////////////////////
-// field_script_opFE52
+// field_event_opFE52
 800931F4-80093218
 ////////////////////////////////
-// field_script_op14
+// field_event_op14
 8009321C-8009323C
 ////////////////////////////////
-// field_script_op15
+// field_event_op15
 80093240-800932A0
 ////////////////////////////////
 // func932a4
@@ -1485,10 +1485,10 @@
 // func940a0
 800940A0-8009410C
 ////////////////////////////////
-// field_script_opBF
+// field_event_opBF
 80094110-8009417C
 ////////////////////////////////
-// field_script_opC0
+// field_event_opC0
 80094180-800941EC
 ////////////////////////////////
 // func941f0
@@ -1696,19 +1696,19 @@
 // func967d4
 800967D4-80096834
 ////////////////////////////////
-// field_script_op79
+// field_event_op79
 80096838-8009687C
 ////////////////////////////////
-// field_script_op7A
+// field_event_op7A
 80096880-800968C4
 ////////////////////////////////
 // func968c8
 800968C8-800968EC
 ////////////////////////////////
-// field_script_opB3_fadein
+// field_event_opB3_fadein
 800968F0-80096934
 ////////////////////////////////
-// field_script_opB4_fadeout
+// field_event_opB4_fadeout
 80096938-80096974
 ////////////////////////////////
 // func96978
@@ -1780,7 +1780,7 @@
 // func97f70
 80097F70-80097FC0
 ////////////////////////////////
-// field_script_opFE75
+// field_event_opFE75
 80097FC4-8009804C
 ////////////////////////////////
 // func98050
@@ -1795,10 +1795,10 @@
 // func98280
 80098280-800987E4
 ////////////////////////////////
-// field_script_op57
+// field_event_op57
 800987E8-80098F50
 ////////////////////////////////
-// field_script_op4A_actor_go_to_position
+// field_event_op4A_actor_go_to_position
 80098F54-80098FD4
 ////////////////////////////////
 // func98fd8
@@ -1825,23 +1825,23 @@
 // 0x2D
 800995F8-800996CC
 ////////////////////////////////
-// field_script_opFE45_sprite_set_default_animation
+// field_event_opFE45_sprite_set_default_animation
 800996D0-80099700
 ////////////////////////////////
-// field_script_op2C_sprite_play_animation
+// field_event_op2C_sprite_play_animation
 // func99704
 80099704-80099744
 ////////////////////////////////
-// field_script_op5D
+// field_event_op5D
 80099748-8009977C
 ////////////////////////////////
-// field_script_op5E
+// field_event_op5E
 80099780-800997B4
 ////////////////////////////////
 // func997b8
 800997B8-80099878
 ////////////////////////////////
-// field_script_op6F_actor_rotate_to_actor
+// field_event_op6F_actor_rotate_to_actor
 8009987C-8009991C
 ////////////////////////////////
 // 0x9D
@@ -1895,10 +1895,10 @@
 // func9a0dc
 8009A0DC-8009A12C
 ////////////////////////////////
-// field_script_op6B_actor_rotate_clockwise
+// field_event_op6B_actor_rotate_clockwise
 8009A130-8009A17C
 ////////////////////////////////
-// field_script_op6C_actor_rotate_anticlockwise
+// field_event_op6C_actor_rotate_anticlockwise
 8009A180-8009A1CC
 ////////////////////////////////
 // func9a1d0
@@ -1907,7 +1907,7 @@
 // func9a208
 8009A208-8009A24C
 ////////////////////////////////
-// field_script_op69_actor_set_rotation
+// field_event_op69_actor_set_rotation
 8009A250-8009A284
 ////////////////////////////////
 // func9a288
@@ -1976,142 +1976,142 @@
 // 0xA0
 8009B050-8009B0DC
 ////////////////////////////////
-// field_script_op9C_message_sync
+// field_event_op9C_message_sync
 8009B0E0-8009B268
 ////////////////////////////////
-// field_script_opA9_message_set_selection_sync
+// field_event_opA9_message_set_selection_sync
 8009B26C-8009B428
 ////////////////////////////////
 // func9b42c
 8009B42C-8009B46C
 ////////////////////////////////
-// field_script_opF4_message_close
+// field_event_opF4_message_close
 8009B470-8009B55C
 ////////////////////////////////
-// field_script_opFC_message_show_e_copy_face
+// field_event_opFC_message_show_e_copy_face
 8009B560-8009B5EC
 ////////////////////////////////
-// field_script_opD4_message_show_e
+// field_event_opD4_message_show_e
 8009B5F0-8009B684
 ////////////////////////////////
-// field_script_opD2_message_show_0
+// field_event_opD2_message_show_0
 8009B688-8009B6AC
 ////////////////////////////////
-// field_script_opD3_message_show_1
+// field_event_opD3_message_show_1
 8009B6B0-8009B6D4
 ////////////////////////////////
-// field_script_op03_message_show_2
+// field_event_op03_message_show_2
 8009B6D8-8009B6FC
 ////////////////////////////////
-// field_script_opF5_message_show_3
+// field_event_opF5_message_show_3
 8009B700-8009B724
 ////////////////////////////////
-// field_script_help_message_load_face
+// field_event_help_message_load_face
 8009B728-8009BB08
 ////////////////////////////////
-// field_script_help_message_check_face_used
+// field_event_help_message_check_face_used
 8009BB0C-8009BB78
 ////////////////////////////////
-// field_script_message_init
+// field_event_message_init
 8009BB7C-8009C284
 ////////////////////////////////
-// field_script_message_activate_mask
+// field_event_message_activate_mask
 8009C288-8009C2A4
 ////////////////////////////////
-// field_script_help_message_find_for_current_entity
+// field_event_help_message_find_for_current_entity
 8009C2A8-8009C308
 ////////////////////////////////
 // func9c30c
 8009C30C-8009C340
 ////////////////////////////////
-// field_script_help_read_entity
+// field_event_help_read_entity
 8009C344-8009C3D4
 ////////////////////////////////
-// field_script_opCF
+// field_event_opCF
 8009C3D8-8009C46C
 ////////////////////////////////
-// field_script_opD0
+// field_event_opD0
 8009C470-8009C4FC
 ////////////////////////////////
 // func9c500
 8009C500-8009C504
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_80
+// field_event_help_read_u16_by_flag_80
 8009C508-8009C548
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_40
+// field_event_help_read_u16_by_flag_40
 8009C54C-8009C58C
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_20
+// field_event_help_read_u16_by_flag_20
 8009C590-8009C5D0
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_10
+// field_event_help_read_u16_by_flag_10
 8009C5D4-8009C614
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_08
+// field_event_help_read_u16_by_flag_08
 8009C618-8009C658
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_04
+// field_event_help_read_u16_by_flag_04
 8009C65C-8009C69C
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_02
+// field_event_help_read_u16_by_flag_02
 8009C6A0-8009C6E0
 ////////////////////////////////
-// field_script_help_read_u16_by_flag_01
+// field_event_help_read_u16_by_flag_01
 8009C6E4-8009C724
 ////////////////////////////////
-// field_script_op43_variable_random
+// field_event_op43_variable_random
 8009C728-8009C77C
 ////////////////////////////////
-// field_script_opA8
+// field_event_opA8
 8009C780-8009C7EC
 ////////////////////////////////
-// field_script_op42_variable_shift_right
+// field_event_op42_variable_shift_right
 8009C7F0-8009C85C
 ////////////////////////////////
-// field_script_op41_variable_shift_left
+// field_event_op41_variable_shift_left
 8009C860-8009C8CC
 ////////////////////////////////
-// field_script_op3C_variable_inc
+// field_event_op3C_variable_inc
 8009C8D0-8009C930
 ////////////////////////////////
-// field_script_op3D_variable_dec
+// field_event_op3D_variable_dec
 8009C934-8009C994
 ////////////////////////////////
-// field_script_op3B_variable_bit_unset
+// field_event_op3B_variable_bit_unset
 8009C998-8009CA2C
 ////////////////////////////////
-// field_script_op40_variable_xor
+// field_event_op40_variable_xor
 8009CA30-8009CAB8
 ////////////////////////////////
-// field_script_op3F_variable_or
+// field_event_op3F_variable_or
 8009CABC-8009CB44
 ////////////////////////////////
-// field_script_op3E_variable_and
+// field_event_op3E_variable_and
 8009CB48-8009CBD0
 ////////////////////////////////
-// field_script_op3A_variable_bit_set
+// field_event_op3A_variable_bit_set
 8009CBD4-8009CC64
 ////////////////////////////////
-// field_script_opDE_variable_multiply
+// field_event_opDE_variable_multiply
 8009CC68-8009CCF4
 ////////////////////////////////
-// field_script_opDF_variable_divide
+// field_event_opDF_variable_divide
 8009CCF8-8009CD90
 ////////////////////////////////
-// field_script_op39_variable_subtract
+// field_event_op39_variable_subtract
 8009CD94-8009CE1C
 ////////////////////////////////
-// field_script_op38_variable_add
+// field_event_op38_variable_add
 8009CE20-8009CEA8
 ////////////////////////////////
-// field_script_op37_variable_set_false
+// field_event_op37_variable_set_false
 8009CEAC-8009CEEC
 ////////////////////////////////
-// field_script_op36_variable_set_true
+// field_event_op36_variable_set_true
 8009CEF0-8009CF30
 ////////////////////////////////
-// field_script_op35_variable_set
+// field_event_op35_variable_set
 8009CF34-8009CFA8
 ////////////////////////////////
 // 0x2A
@@ -2132,16 +2132,16 @@
 // func9d158
 8009D158-8009D1D8
 ////////////////////////////////
-// field_script_op27
+// field_event_op27
 8009D1DC-8009D2C0
 ////////////////////////////////
 // 0x26_Wait
 8009D2C4-8009D378
 ////////////////////////////////
-// field_script_op24
+// field_event_op24
 8009D37C-8009D420
 ////////////////////////////////
-// field_script_op25
+// field_event_op25
 8009D424-8009D49C
 ////////////////////////////////
 // 0x22
@@ -2156,13 +2156,13 @@
 // 0x23
 8009D5D0-8009D620
 ////////////////////////////////
-// field_script_op21
+// field_event_op21
 8009D624-8009D698
 ////////////////////////////////
-// field_script_op20_actor_set_flags0
+// field_event_op20_actor_set_flags0
 8009D69C-8009D72C
 ////////////////////////////////
-// field_script_op1F
+// field_event_op1F
 8009D730-8009D794
 ////////////////////////////////
 // func9d798
@@ -2216,7 +2216,7 @@
 // func9ea5c
 8009EA5C-8009EB34
 ////////////////////////////////
-// field_script_op0C
+// field_event_op0C
 8009EB38-8009EB80
 ////////////////////////////////
 // 0xA7
@@ -2238,7 +2238,7 @@
 // func9f1d8
 8009F1D8-8009F238
 ////////////////////////////////
-// field_script_opFE42
+// field_event_opFE42
 8009F23C-8009F29C
 ////////////////////////////////
 // func9f2a0
@@ -2265,7 +2265,7 @@
 // func9fc78
 8009FC78-8009FE44
 ////////////////////////////////
-// field_script_op16_actor_pc_init
+// field_event_op16_actor_pc_init
 8009FE48-800A01D8
 ////////////////////////////////
 // funca01dc
@@ -2296,10 +2296,10 @@
 // funca0568
 800A0568-800A08F0
 ////////////////////////////////
-// field_script_op93
+// field_event_op93
 800A08F4-800A0A7C
 ////////////////////////////////
-// field_script_opFE15
+// field_event_opFE15
 800A0A80-800A0BB0
 ////////////////////////////////
 // 0x0B_EntityNPCSpriteInit
@@ -2308,7 +2308,7 @@
 // 0x06
 800A0CC0-800A0D80
 ////////////////////////////////
-// field_script_op05_call_function
+// field_event_op05_call_function
 800A0D84-800A0E44
 ////////////////////////////////
 // funca0e48
@@ -2357,16 +2357,16 @@
 // funca2550
 800A2550-800A256C
 ////////////////////////////////
-// field_script_help_get_bytes_sign
+// field_event_help_get_bytes_sign
 800A2570-800A25A4
 ////////////////////////////////
-// field_script_help_read_bytes_from_800C2F3C
+// field_event_help_read_bytes_from_800C2F3C
 800A25A8-800A25FC
 ////////////////////////////////
-// field_script_help_write_bytes_to_800C2F3C
+// field_event_help_write_bytes_to_800C2F3C
 800A2604-800A261C
 ////////////////////////////////
-// get_script_offset
+// field_event_help_get_event_offset
 800A2620-800A2640
 ////////////////////////////////
 // funca2644
@@ -2629,13 +2629,13 @@
 // field_credits_update
 800AC1CC-800AC250
 ////////////////////////////////
-// field_script_help_read_s16
+// field_event_help_read_s16
 800AC254-800AC28C
 ////////////////////////////////
-// field_script_help_read_u16
+// field_event_help_read_u16
 800AC290-800AC2C0
 ////////////////////////////////
-// field_script_help_read_v80
+// field_event_help_read_v80
 800AC2C4-800AC2F8
 ////////////////////////////////
 // funcac2fc

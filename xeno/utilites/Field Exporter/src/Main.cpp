@@ -83,7 +83,7 @@ main()
         // EXPORT  SCRIPT
         {
             File* temp;
-            temp = field_pack->Extract( 5 ); // scripts
+            temp = field_pack->Extract( 5 ); // events
             ScriptFile* file = new ScriptFile( temp );
 
             std::string save;

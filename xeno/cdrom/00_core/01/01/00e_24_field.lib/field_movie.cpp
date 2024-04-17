@@ -151,23 +151,15 @@ S1 = A0;
 
 system_reset_check();
 
-V0 = w[800ad044];
+if( w[800ad044] == 0 )
+{
+    for( int i = 0; i < S1; ++i )
+    {
+        func1d3f7c();
 
-800A6828	bne    v0, zero, La6854 [$800a6854]
-800A682C	nop
-800A6830	blez   s1, La6854 [$800a6854]
-S0 = 0;
-
-loopa6838:	; 800A6838
-    func1d3f7c();
-
-    func84c8c();
-
-    S0 = S0 + 1;
-    V0 = S0 < S1;
-800A684C	bne    v0, zero, loopa6838 [$800a6838]
-
-La6854:	; 800A6854
+        func84c8c();
+    }
+}
 ////////////////////////////////
 
 
@@ -371,34 +363,26 @@ else
 // movie related
 
 A0 = w[800b097c];
-800A6C24	nop
-V0 = A0 & 0003;
-800A6C2C	bne    v0, zero, La6c58 [$800a6c58]
-800A6C30	nop
-V0 = w[800c2dd8];
-800A6C3C	nop
-V1 = w[V0 + 0000];
-V0 = V0 + 0004;
-[800c2dd8] = w(V0);
-[800c1b5c] = w(V1);
+if( ( A0 & 3 ) == 0 )
+{
+    V0 = w[800c2dd8];
+    [800c2dd8] = w(V0 + 4);
+    [800c1b5c] = w(w[V0 + 0]);
+}
 
-La6c58:	; 800A6C58
 V0 = w[800c1b5c];
-V1 = A0 + 0001;
-[800b097c] = w(V1);
-V1 = V0 & 00ff;
-V0 = V0 >> 08;
-[800c1b5c] = w(V0);
-800A6C7C	beq    v1, zero, La6c94 [$800a6c94]
-800A6C80	nop
-V1 = V1 >> 03;
-800A6C88	bne    v1, zero, La6c94 [$800a6c94]
-800A6C8C	nop
-V1 = 0001;
+[800b097c] = w(A0 + 1);
 
-La6c94:	; 800A6C94
-800A6C94	jr     ra 
-V0 = V1;
+V1 = V0 & ff;
+[800c1b5c] = w(V0 >> 8);
+
+if( V1 != 0 )
+{
+    V1 = V1 >> 3;
+    if( V1 == 0 ) V1 = 1;
+}
+
+return V1;
 ////////////////////////////////
 
 
@@ -415,75 +399,71 @@ S4 = V0;
 A0 = 7000;
 A1 = 0;
 system_memory_allocate();
-
 S5 = V0;
-S2 = 0;
-S6 = 00e0;
-S3 = 0;
 
-loopa6cec:	; 800A6CEC
-A0 = SP + 0010;
-A1 = S4;
-V0 = 0060;
-[SP + 0010] = h(S3);
-[SP + 0012] = h(0);
-[SP + 0014] = h(V0);
-800A6D04	jal    $system_store_image
-[SP + 0016] = h(S6);
-800A6D0C	jal    $system_draw_sync
-A0 = 0;
-S1 = 0;
-[800c2dd8] = w(S4);
-[800c2de0] = w(S5);
-[800b097c] = w(0);
+for( int i = 0; i < 5; ++i )
+{
+    [SP + 10] = h(i * 60);
+    [SP + 12] = h(0);
+    [SP + 14] = h(60);
+    [SP + 16] = h(e0);
 
-loopa6d30:	; 800A6D30
-800A6D30	jal    funca6c1c [$800a6c1c]
-S1 = S1 + 0001;
-800A6D38	jal    funca6c1c [$800a6c1c]
-S0 = V0;
-V0 = V0 << 05;
-800A6D44	jal    funca6c1c [$800a6c1c]
-S0 = S0 | V0;
-V0 = V0 << 0a;
-800A6D50	jal    funca6c1c [$800a6c1c]
-S0 = S0 | V0;
-V0 = V0 << 10;
-800A6D5C	jal    funca6c1c [$800a6c1c]
-S0 = S0 | V0;
-V0 = V0 << 15;
-800A6D68	jal    funca6c1c [$800a6c1c]
-S0 = S0 | V0;
-V0 = V0 << 1a;
-V1 = w[800c2de0];
-S0 = S0 | V0;
-[V1 + 0000] = w(S0);
-V0 = w[800c2de0];
-800A6D8C	nop
-V0 = V0 + 0004;
-[800c2de0] = w(V0);
-V0 = S1 < 1c00;
-800A6DA0	bne    v0, zero, loopa6d30 [$800a6d30]
-A0 = SP + 0010;
-A1 = S5;
-V0 = S2 << 06;
-[SP + 0010] = h(V0);
-V0 = 0100;
-[SP + 0012] = h(V0);
-V0 = 0040;
-[SP + 0014] = h(V0);
-800A6DC4	jal    $system_load_image
-[SP + 0016] = h(S6);
-800A6DCC	jal    $system_draw_sync
-A0 = 0;
-S2 = S2 + 0001;
-V0 = S2 < 0005;
-800A6DDC	bne    v0, zero, loopa6cec [$800a6cec]
-S3 = S3 + 0060;
-800A6DE4	jal    $system_memory_free
+    A0 = SP + 10;
+    A1 = S4;
+    system_store_image();
+
+    A0 = 0;
+    system_draw_sync();
+
+    [800c2dd8] = w(S4);
+    [800c2de0] = w(S5);
+    [800b097c] = w(0);
+
+    for( int j = 0; j < 1c00; ++j )
+    {
+        funca6c1c();
+        S0 = V0;
+
+        funca6c1c();
+        S0 = S0 | (V0 << 5);
+
+        funca6c1c();
+        S0 = S0 | (V0 << a);
+
+        funca6c1c();
+        S0 = S0 | (V0 << 10);
+
+        funca6c1c();
+        S0 = S0 | (V0 << 15);
+
+        funca6c1c();
+        V0 = V0 << 1a;
+        S0 = S0 | V0;
+
+        V1 = w[800c2de0];
+        [V1] = w(S0);
+
+        [800c2de0] = w(w[800c2de0] + 4);
+    }
+
+    [SP + 10] = h(i * 40);
+    [SP + 12] = h(100);
+    [SP + 14] = h(40);
+    [SP + 16] = h(e0);
+
+    A0 = SP + 10;
+    A1 = S5;
+    system_load_image();
+
+    A0 = 0;
+    system_draw_sync();
+}
+
 A0 = S4;
-800A6DEC	jal    $system_memory_free
+system_memory_free();
+
 A0 = S5;
+system_memory_free();
 ////////////////////////////////
 
 
@@ -799,144 +779,111 @@ loopa7334:	; 800A7334
     V0 = w[800af5b8];
 800A7350	bne    v0, zero, loopa7334 [$800a7334]
 
-S0 = 0002;
 S1 = 800c2f0e;
 
-La7360:	; 800A7360
+do
+{
     V1 = w[800ad04c];
-    V0 = 0001;
-    800A736C	beq    v1, v0, La739c [$800a739c]
-    V0 = V1 < 0002;
-    800A7374	beq    v0, zero, La738c [$800a738c]
-    800A7378	nop
-    800A737C	beq    v1, zero, La73b4 [$800a73b4]
-    800A7380	nop
-    800A7384	j      La7450 [$800a7450]
-    800A7388	nop
-
-    La738c:	; 800A738C
-    800A738C	beq    v1, s0, La7434 [$800a7434]
-    800A7390	nop
-    800A7394	j      La7450 [$800a7450]
-
-
-    La739c:	; 800A739C
-    func735e0();
-
-    func74fa0();
-
-    A0 = 6;
-    800A73AC	j      La7448 [$800a7448]
-
-    La73b4:	; 800A73B4
-    A0 = 0;
-    system_draw_sync();
-
-    A0 = 0;
-    system_psyq_wait_frames();
-
-    A0 = w[800c3740] + b8;
-    system_psyq_put_disp_env();
-
-    A0 = w[800c3740];
-    system_psyq_put_draw_env();
-
-    A0 = 3;
-    funca6804();
-
-    A0 = 0;
-    system_draw_sync();
-
-    A0 = 0;
-    system_psyq_wait_frames();
-
-    A0 = w[800c3740];
-    A0 = A0 + 00b8;
-    system_psyq_put_disp_env();
-
-    A0 = w[800c3740];
-    system_psyq_put_draw_env();
-
-    A0 = 3;
-    funca6804();
-
-    field_movie_credits();
-
-    800A742C	j      La7450 [$800a7450]
-    800A7430	nop
-
-    La7434:	; 800A7434
-    func7743c();
-
-    func74bdc(); // move and update sprite and model here
-
-    A0 = 9;
-
-    La7448:	; 800A7448
-    funca6804();
-
-    La7450:	; 800A7450
-    if( w[800c1b60] == 0 ) // PC HDD MODE
+    if( V1 == 0 )
     {
-        if( w[800ad04c] != S0 )
-        {
-            field_update_buttons();
+        A0 = 0;
+        system_draw_sync();
 
-            V0 = hu[800c2dd4] & 0020; // repeated circle
-            800A74C4	bne    v0, zero, La758c [$800a758c]
-        }
-        else
-        {
-            V0 = hu[800c2dd4] & 0080; // repeated square
-            800A7488	bne    v0, zero, La758c [$800a758c]
-
-            V0 = w[800ad05c];
-            800A749C	bne    v0, zero, La758c [$800a758c]
-        }
-        800A74A4	j      La7538 [$800a7538]
-    }
-
-    V0 = w[800ad058] & 0080;
-    800A74E4	beq    v0, zero, La7538 [$800a7538]
-
-    field_update_buttons();
-
-    V0 = hu[800c2dd4] & 0020; // repeated circle
-    800A7504	beq    v0, zero, La7538 [$800a7538]
-
-    A0 = 0;
-    A1 = a;
-    system_sound_set_cd_volume_increase();
-
-    S0 = 0;
-
-    La7518:	; 800A7518
         A0 = 0;
         system_psyq_wait_frames();
 
-        S0 = S0 + 0001;
-        V0 = S0 < 0005;
-        800A7528	beq    v0, zero, La758c [$800a758c]
+        A0 = w[800c3740] + b8;
+        system_psyq_put_disp_env();
 
-    800A7530	j      La7518 [$800a7518]
+        A0 = w[800c3740];
+        system_psyq_put_draw_env();
 
-    La7538:	; 800A7538
-    V0 = w[800ad04c];
-    800A7544	bne    v0, s0, La7560 [$800a7560]
+        A0 = 3;
+        funca6804();
 
-    V0 = w[800ad05c];
-    800A7558	bne    v0, zero, La758c [$800a758c]
+        A0 = 0;
+        system_draw_sync();
 
-    La7560:	; 800A7560
-    V0 = h[S1 + 0000];
-    800A7568	bne    v0, zero, La7360 [$800a7360]
+        A0 = 0;
+        system_psyq_wait_frames();
 
-    V1 = hu[S1 + fff4];
-    V0 = w[800afb74];
-    V0 = V0 < V1;
-800A7584	bne    v0, zero, La7360 [$800a7360]
+        A0 = w[800c3740];
+        A0 = A0 + 00b8;
+        system_psyq_put_disp_env();
 
-La758c:	; 800A758C
+        A0 = w[800c3740];
+        system_psyq_put_draw_env();
+
+        A0 = 3;
+        funca6804();
+
+        field_movie_credits();
+    }
+    else if( V1 == 1 )
+    {
+        func735e0();
+
+        func74fa0();
+
+        A0 = 6;
+        funca6804();
+    }
+    else if( V1 == 2 )
+    {
+        func7743c();
+
+        func74bdc(); // move and update sprite and model here
+
+        A0 = 9;
+        funca6804();
+    }
+
+    if( w[800c1b60] == 0 ) // PC HDD MODE
+    {
+        if( w[800ad04c] != 2 )
+        {
+            field_update_buttons();
+
+            // repeated circle
+            if( hu[800c2dd4] & 0020 ) break;
+        }
+        else
+        {
+            // repeated square
+            if( hu[800c2dd4] & 0080 ) break;
+
+            V0 = w[800ad05c];
+            if( V0 != 0 ) break;
+        }
+    }
+    else
+    {
+        if( w[800ad058] & 80 )
+        {
+            field_update_buttons();
+
+            if( hu[800c2dd4] & 0020 ) // repeated circle
+            {
+                A0 = 0;
+                A1 = a;
+                system_sound_set_cd_volume_increase();
+
+                for( int i = 0; i < 5; ++i )
+                {
+                    A0 = 0;
+                    system_psyq_wait_frames();
+                }
+                break;
+            }
+        }
+    }
+
+    if( w[800ad04c] == 2 )
+    {
+        if( w[800ad05c] != 0 ) break;
+    }
+} while( ( h[S1] != 0 ) || ( w[800afb74] < hu[S1 - c] ) )
+
 A0 = 0;
 system_psyq_wait_frames();
 

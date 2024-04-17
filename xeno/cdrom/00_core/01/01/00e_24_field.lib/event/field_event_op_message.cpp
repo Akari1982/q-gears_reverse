@@ -1,10 +1,10 @@
 ////////////////////////////////
-// field_script_op9C_message_sync()
+// field_event_op9C_message_sync()
 
 struct_138 = w[800af54c];
 
 A0 = SP + 10;
-field_script_help_message_find_for_current_entity();
+field_event_help_message_find_for_current_entity();
 
 if( V0 == -1 ) // if this entity don't have opened dialogs
 {
@@ -12,7 +12,7 @@ if( V0 == -1 ) // if this entity don't have opened dialogs
 
     A0 = 14;
     A1 = bu[struct_138 + 81];
-    field_script_help_write_bytes_to_800C2F3C();
+    field_event_help_write_bytes_to_800C2F3C();
 
     [struct_138 + cc] = h(hu[struct_138 + cc] + 1);
 }
@@ -57,12 +57,12 @@ else
 
 
 ////////////////////////////////
-// field_script_opA9_message_set_selection_sync()
+// field_event_opA9_message_set_selection_sync()
 
 struct_138 = w[800af54c];
 
 A0 = SP + 10;
-field_script_help_message_find_for_current_entity();
+field_event_help_message_find_for_current_entity();
 
 if( V0 == 0 )
 {
@@ -123,7 +123,7 @@ return int_rot < 5;
 
 
 ////////////////////////////////
-// field_script_opF4_message_close()
+// field_event_opF4_message_close()
 
 struct_138_cur = w[800af54c];
 V1 = w[800ad0d8] + hu[struct_138_cur + cc];
@@ -131,7 +131,7 @@ V1 = w[800ad0d8] + hu[struct_138_cur + cc];
 if( bu[V1 + 1] == 0 )
 {
     A0 = SP + 10;
-    field_script_help_message_find_for_current_entity();
+    field_event_help_message_find_for_current_entity();
 
     if( V0 == 0 )
     {
@@ -156,12 +156,12 @@ else
 
 
 ////////////////////////////////
-// field_script_opFC_message_show_e_copy_face()
+// field_event_opFC_message_show_e_copy_face()
 
 struct_138_cur = w[800af54c];
 
 A0 = 1;
-field_script_help_read_entity();
+field_event_help_read_entity();
 
 if( V0 != ff )
 {
@@ -169,7 +169,7 @@ if( V0 != ff )
     struct_138 = w[struct_5c_p + V0 * 5c + 4c];
     [struct_138_cur + 80] = b(bu[struct_138 + 80]);
 
-    field_script_opD4_message_show_e();
+    field_event_opD4_message_show_e();
 }
 else
 {
@@ -180,12 +180,12 @@ else
 
 
 ////////////////////////////////
-// field_script_opD4_message_show_e()
+// field_event_opD4_message_show_e()
 
 struct_138_cur = w[800af54c];
 
 A0 = 1;
-field_script_help_read_entity();
+field_event_help_read_entity();
 
 if( V0 != ff )
 {
@@ -193,7 +193,7 @@ if( V0 != ff )
 
     A0 = V0; // entity_id
     A1 = 0;
-    field_script_message_init();
+    field_event_message_init();
 
     if( V0 == -1 )
     {
@@ -209,47 +209,47 @@ else
 
 
 ////////////////////////////////
-// field_script_opD2_message_show_0()
+// field_event_opD2_message_show_0()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 0;
-field_script_message_init();
+field_event_message_init();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// field_script_opD3_message_show_1()
+// field_event_opD3_message_show_1()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 1;
-field_script_message_init();
+field_event_message_init();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// field_script_op03_message_show_2()
+// field_event_op03_message_show_2()
 
 A0 = w[800af1f0]; // current entity id
 A1 = 2;
-field_script_message_init();
+field_event_message_init();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// field_script_opF5_message_show_3()
+// field_event_opF5_message_show_3()
 
 A0 = w[8009f1f0];
 A1 = 3;
-field_script_message_init();
+field_event_message_init();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// field_script_message_init()
+// field_event_message_init()
 
 entity_id = A0;
 type = A1;
@@ -283,7 +283,7 @@ face_id = bu[struct_138_cur + 80];
 if( face_id != ff )
 {
     A0 = face_id;
-    field_script_help_message_load_face();
+    field_event_help_message_load_face();
     if( V0 == -1 ) // face not ready
     {
         [800af594] = w(1); // wait
@@ -294,7 +294,7 @@ if( face_id != ff )
 [800c373c] = w(w[800c373c] + 1); // message is currently opening
 
 A0 = SP + 30;
-field_script_help_message_find_for_current_entity();
+field_event_help_message_find_for_current_entity();
 if( V0 != -1 ) // if already opened
 {
     // close and wait
@@ -307,7 +307,7 @@ if( V0 != -1 ) // if already opened
 [800af150] = w(w[800af150] + 8); // increase number of opcodes in current script
 
 A0 = 1;
-field_script_help_read_u16();
+field_event_help_read_u16();
 text_id = V0;
 
 field_message_find_free_slot();
@@ -540,7 +540,7 @@ A10 = flags2;
 field_message_set_to_show();
 
 A0 = window_id;
-field_script_message_activate_mask(); // add window to activated windows mask
+field_event_message_activate_mask(); // add window to activated windows mask
 
 [struct_138_cur + 104] = h(hu[struct_138_cur + 104] | 8000);
 [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 4);
@@ -551,7 +551,7 @@ return 0;
 
 
 ////////////////////////////////
-// field_script_message_activate_mask()
+// field_event_message_activate_mask()
 
 [800b1648] = h(hu[800b1648] | (1 << A0));
 ////////////////////////////////
@@ -559,7 +559,7 @@ return 0;
 
 
 ////////////////////////////////
-// field_script_opCF()
+// field_event_opCF()
 
 struct_138_cur = w[800af54c];
 
@@ -575,28 +575,28 @@ V0 = w[800ad0d8] + hu[struct_138_cur + cc];
 
 
 ////////////////////////////////
-// field_script_opD0()
+// field_event_opD0()
 
 struct_138_cur = w[800af54c];
 
 A0 = 1;
-field_script_help_read_v80();
+field_event_help_read_v80();
 [struct_138_cur + 88] = h(V0);
 
 A0 = 3;
-field_script_help_read_v80();
+field_event_help_read_v80();
 [struct_138_cur + 8a] = h(V0);
 
 A0 = 5;
-field_script_help_read_v80();
+field_event_help_read_v80();
 [struct_138_cur + 82] = b(V0 * 3);
 
 A0 = 7;
-field_script_help_read_v80();
+field_event_help_read_v80();
 [struct_138_cur + 83] = b(V0);
 
 A0 = 9;
-field_script_help_read_v80();
+field_event_help_read_v80();
 [struct_138_cur + 84] = w(V0); // flags dialog related
 
 [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + b);

@@ -204,7 +204,7 @@ if( w[800c1b60] == 1 ) // not debug
 
     A0 = 50;
     A1 = 1;
-    field_script_help_write_bytes_to_800C2F3C();
+    field_event_help_write_bytes_to_800C2F3C();
 }
 
 func76cb0(); // load some textures into vram
@@ -278,7 +278,7 @@ while( true )
     {
         A0 = 50;
         A1 = 1;
-        field_script_help_write_bytes_to_800C2F3C();
+        field_event_help_write_bytes_to_800C2F3C();
     }
 
     system_reset_check();
@@ -520,7 +520,7 @@ while( true )
                             // set spawn spot to 0
                             A0 = 2;
                             A1 = 0;
-                            field_script_help_write_bytes_to_800C2F3C();
+                            field_event_help_write_bytes_to_800C2F3C();
                         }
                     }
                 }
@@ -1557,7 +1557,7 @@ if( w[8004ea14] == 1 )
 }
 else
 {
-    A0 = (w[SP + 48] & 00ffffff) + ffe3aff8;
+    A0 = (w[SP + 48] & 00ffffff) + ffe3aff8; // address801c5000
     A1 = 1;
     system_memory_allocate();
     S7 = V0;
@@ -1707,11 +1707,11 @@ if( bu[80058b6c] == 0 )
 
         A0 = 46;
         A1 = 0;
-        field_script_help_write_bytes_to_800C2F3C();
+        field_event_help_write_bytes_to_800C2F3C();
 
         A0 = 4;
         A1 = 4;
-        field_script_help_write_bytes_to_800C2F3C();
+        field_event_help_write_bytes_to_800C2F3C();
 
         V1 = w[80059a38];
         [8004e9f0] = w(4);
@@ -1727,12 +1727,12 @@ if( bu[80058b6c] == 2 )
 
     A0 = 46;
     A1 = 2;
-    field_script_help_write_bytes_to_800C2F3C();
+    field_event_help_write_bytes_to_800C2F3C();
 
     V0 = w[80059a38];
     A0 = 4;
     A1 = hu[V0 + 231a] & 3fff;
-    field_script_help_write_bytes_to_800C2F3C();
+    field_event_help_write_bytes_to_800C2F3C();
 
     V1 = w[80059a38];
     if( ( hu[V1 + 231a] & 3fff ) < 400 )
@@ -1913,7 +1913,7 @@ if( w[800b1738] != 0 )
 {
     if( w[8004ea14] == 0 )
     {
-        A0 = (w[SP + 48] & 00ffffff) + ffe23ff8;
+        A0 = (w[SP + 48] & 00ffffff) + ffe23ff8; // 1dc000
         A1 = 1;
         system_memory_allocate();
         [800acff8] = w(V0);

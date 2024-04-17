@@ -192,31 +192,31 @@ if( w[800acffc] == 0 ) // if not inited
 if( read_script == 0 )
 {
     A0 = 1;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
     S5 = V0;
 
     A0 = 3;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
     S4 = V0;
 
     A0 = 5;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
     S3 = V0;
 
     A0 = 7;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
     S2 = V0;
 
     A0 = 9;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
     S1 = V0;
 
     A0 = b;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
     S0 = V0;
 
     A0 = d;
-    field_script_help_read_v80();
+    field_event_help_read_v80();
 
     A0 = S5;
     A1 = S4;

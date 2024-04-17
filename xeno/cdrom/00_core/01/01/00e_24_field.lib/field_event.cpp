@@ -152,7 +152,7 @@ for( int i = 0; i < number_of_actors; ++i )
             {
                 A0 = i;
                 A1 = 1;
-                get_script_offset();
+                field_event_help_get_event_offset();
 
                 [struct_138 + 8c + 0] = h(V0);
                 [struct_138 + ce] = b(0);
@@ -184,44 +184,33 @@ for( int i = 0; i < number_of_actors; ++i )
 ////////////////////////////////
 // funca183c
 // call script_for_entity 0
-script_id = A0;
 
-
+event_id = A0;
 
 struct_5c_p = w[800aefe4];
 struct_138 = w[struct_5c_p + 4c];
-
-
 
 A0 = 138;
 A1 = 1;
 system_memory_allocate();
 S0 = V0;
 
-
-
-// copy data from first entity to temp
-A3 = 0;
-loopa1890:	; 800A1890
-    [S0 + A3] = w(w[struct_138 + A3]);
-    A3 = A3 + 4;
-800A18B4	bne    a3, 138, loopa1890 [$800a1890]
-
-
+// copy struct_138 from first actor to temp
+for( int i = 0; i < 138; i += 4 )
+    [S0 + i] = w(w[struct_138 + i]);
+}
 
 // set up scripts to entity 0
-A2 = 0;
-loopa18f4:	; 800A18F4
-    [struct_138 + A2 * 8 + 8c] = h(ffff); // requested script
-    [struct_138 + A2 * 8 + 8e] = b(0); // wait
-    [struct_138 + A2 * 8 + 8f] = b(ff); // script id
-    [struct_138 + A2 * 8 + 90] = w((w[struct_138 + A2 * 8 + 90] & fffcffff) | 003c0000); // lowest priority
-    [struct_138 + A2 * 8 + 90] = w(w[struct_138 + A2 * 8 + 90] & ffbfffff); // script state?
-    [struct_138 + A2 * 8 + 90] = h(ffff); // number of steps
-    [struct_138 + A2 * 8 + 90] = w(w[struct_138 + A2 * 8 + 90] & fe7fffff); // argument read type
-    A2 = A2 + 1;
-    V0 = A2 < 8;
-800A1960	bne    v0, zero, loopa18f4 [$800a18f4]
+for( int i = 0; i < 8; ++i )
+{
+    [struct_138 + i * 8 + 8c] = h(ffff); // requested script
+    [struct_138 + i * 8 + 8e] = b(0); // wait
+    [struct_138 + i * 8 + 8f] = b(ff); // script id
+    [struct_138 + i * 8 + 90] = w((w[struct_138 + i * 8 + 90] & fffcffff) | 003c0000); // lowest priority
+    [struct_138 + i * 8 + 90] = w(w[struct_138 + i * 8 + 90] & ffbfffff); // script state?
+    [struct_138 + i * 8 + 90] = h(ffff); // number of steps
+    [struct_138 + i * 8 + 90] = w(w[struct_138 + i * 8 + 90] & fe7fffff); // argument read type
+}
 
 // start script
 [800af1f0] = w(0); // current entity id for script call
@@ -231,9 +220,9 @@ loopa18f4:	; 800A18F4
 
 [800acff4] = w(0);
 
-A0 = 0;
-A1 = script_id;
-get_script_offset();
+A0 = 0; // actor_id
+A1 = event_id;
+field_event_help_get_event_offset();
 [struct_138 + cc] = h(V0);
 
 A0 = ffff;
@@ -241,14 +230,11 @@ run_script();
 
 [800acff4] = w(1);
 
-// restore data from temp to first entity
-A3 = 0;
-loopa1890:	; 800A1890
-    [struct_138 + A3] = w(w[S0 + A3]);
-    A3 = A3 + 4;
-800A18B4	bne    a3, 138, loopa1890 [$800a1890]
-
-
+// restore struct_138 from temp
+for( int i = 0; i < 138; i += 4 )
+{
+    [struct_138 + i] = w(w[S0 + i]);
+}
 
 A0 = S0;
 system_memory_free();
@@ -468,7 +454,7 @@ if( w[8004e9b0] != 0 )
         }
     }
 
-    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all entity
+    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
         V0 = w[800aefe4];
         A1 = w[V0 + i * 5c + 4c];
@@ -491,11 +477,11 @@ if( w[8004e9b0] != 0 )
 
     A0 = 10;
     A1 = 0;
-    field_script_help_write_bytes_to_800C2F3C();
+    field_event_help_write_bytes_to_800C2F3C();
 
     funca2644(); // store some data
 
-    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all entity
+    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
         A0 = i;
         func718e4(); // caclulate move matrix
@@ -508,24 +494,17 @@ if( w[8004e9b0] != 0 )
 ////////////////////////////////
 // funca1e64()
 
+struct_5c_p = w[800aefe4];
+
 if( w[8004e9b0] != 0 )
 {
-    S1 = 0;
-
     funca2a04();
 
-    V0 = w[800ad0d4];
-    if( V0 > 0 )
+    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
-        S0 = 0;
-
-        La1ea4:	; 800A1EA4
-            V0 = w[800aefe4];
-            800A1EAC	nop
-            V0 = S0 + V0;
+            V0 = struct_5c_p + i * 5c;
             V1 = w[V0 + 004c];
-            800A1EB8	nop
-            A2 = bu[V1 + 0126];
+            A2 = bu[V1 + 126];
             800A1EC0	nop
             V0 = A2 & 0080;
             if( V0 == 0 )
@@ -533,19 +512,16 @@ if( w[8004e9b0] != 0 )
                 A1 = bu[V1 + 0127];
                 A3 = w[V1 + 0130];
                 V0 = w[V1 + 0134];
-                V1 = w[800aefe4];
                 V0 = V0 & 000f;
-                V1 = S0 + V1;
+                V1 = struct_5c_p + i * 5c;
                 [SP + 0010] = w(V0);
                 V0 = w[V1 + 004c];
                 800A1EF4	nop
                 V1 = bu[V0 + 0126];
-                V0 = w[800aefe4];
-                800A1F04	nop
-                V0 = S0 + V0;
+                V0 = struct_5c_p + i * 5c;
                 [SP + 0014] = w(V1);
                 V0 = w[V0 + 004c];
-                A0 = S1;
+                A0 = i;
                 V0 = w[V0 + 0134];
                 A3 = A3 >> 1c;
                 V0 = V0 >> 04;
@@ -568,29 +544,26 @@ if( w[8004e9b0] != 0 )
                 V0 = V0 + A2;
                 T0 = w[V0 + 0004];
                 V0 = w[V1 + 0134];
-                V1 = w[800aefe4];
                 V0 = V0 & 000f;
-                V1 = S0 + V1;
+                V1 = struct_5c_p + i * 5c;
                 [SP + 0010] = w(V0);
                 V0 = w[V1 + 004c];
                 800A1F84	nop
                 V0 = bu[V0 + 0126];
-                A0 = S1;
+                A0 = i;
                 [SP + 0014] = w(V0);
-                V0 = w[800aefe4];
                 A3 = A3 >> 1c;
-                V0 = S0 + V0;
+                V0 = struct_5c_p + i * 5c;
                 V0 = w[V0 + 004c];
                 A3 = A3 & 0003;
                 V0 = w[V0 + 0134];
                 A2 = T0 + A2;
                 V0 = V0 >> 04;
                 V0 = V0 & 0001;
-                800A1FBC	jal    func76150 [$80076150]
                 [SP + 0018] = w(V0);
-                V0 = w[800aefe4];
-                800A1FCC	nop
-                A0 = S0 + V0;
+                800A1FBC	jal    func76150 [$80076150]
+
+                A0 = struct_5c_p + i * 5c;
                 V0 = w[A0 + 004c];
                 800A1FD8	nop
                 V0 = hu[V0 + 012e];
@@ -605,13 +578,12 @@ if( w[8004e9b0] != 0 )
                 800A2000	nop
 
                 La2004:	; 800A2004
-                A1 = 0002;
-                A0 = w[A0 + 0004];
-                800A200C	jal    func22eb8 [$80022eb8]
+                A0 = w[A0 + 4];
+                A1 = 2;
                 A2 = 0;
-                V0 = w[800aefe4];
-                800A201C	nop
-                V0 = S0 + V0;
+                800A200C	jal    func22eb8 [$80022eb8]
+
+                V0 = struct_5c_p + i * 5c;
                 V1 = w[V0 + 004c];
                 A0 = w[V0 + 0004];
                 V0 = w[V1 + 012c];
@@ -620,25 +592,22 @@ if( w[8004e9b0] != 0 )
                 V1 = w[V1 + 0018];
                 V0 = V0 & 03ff;
                 [V1 + 0004] = h(V0);
-                V0 = w[800aefe4];
-                800A204C	nop
-                V0 = S0 + V0;
+                V0 = struct_5c_p + i * 5c;
                 V1 = w[V0 + 0004];
                 V0 = w[V0 + 004c];
                 V1 = w[V1 + 007c];
                 V0 = w[V0 + 0130];
                 V1 = w[V1 + 0018];
                 V0 = V0 & 01ff;
-                800A206C	j      La213c [$800a213c]
                 [V1 + 0006] = h(V0);
+                800A206C	j      La213c [$800a213c]
 
                 La2074:	; 800A2074
                 A0 = w[A0 + 0004];
-                800A2078	jal    func22eb8 [$80022eb8]
                 A2 = 0;
-                V0 = w[800aefe4];
-                800A2088	nop
-                V0 = S0 + V0;
+                func22eb8();
+
+                V0 = struct_5c_p + i * 5c;
                 V1 = w[V0 + 004c];
                 A0 = w[V0 + 0004];
                 V0 = w[V1 + 012c];
@@ -647,9 +616,7 @@ if( w[8004e9b0] != 0 )
                 V1 = w[V1 + 0018];
                 V0 = V0 & 03ff;
                 [V1 + 0004] = h(V0);
-                V0 = w[800aefe4];
-                800A20B8	nop
-                V0 = S0 + V0;
+                V0 = struct_5c_p + i * 5c;
                 V1 = w[V0 + 0004];
                 V0 = w[V0 + 004c];
                 V1 = w[V1 + 007c];
@@ -657,9 +624,7 @@ if( w[8004e9b0] != 0 )
                 V1 = w[V1 + 0018];
                 V0 = V0 & 01ff;
                 [V1 + 0006] = h(V0);
-                V0 = w[800aefe4];
-                800A20E4	nop
-                V0 = S0 + V0;
+                V0 = struct_5c_p + i * 5c;
                 V1 = w[V0 + 004c];
                 A0 = w[V0 + 0004];
                 V0 = w[V1 + 0130];
@@ -668,9 +633,7 @@ if( w[8004e9b0] != 0 )
                 V1 = w[V1 + 0018];
                 V0 = V0 & 03ff;
                 [V1 + 0008] = h(V0);
-                V0 = w[800aefe4];
-                800A2114	nop
-                V0 = S0 + V0;
+                V0 = struct_5c_p + i * 5c;
                 V1 = w[V0 + 004c];
                 A0 = w[V0 + 0004];
                 V0 = w[V1 + 0130];
@@ -682,11 +645,7 @@ if( w[8004e9b0] != 0 )
             }
 
             La213c:	; 800A213C
-            V0 = w[800ad0d4];
-            S1 = S1 + 0001;
-            V0 = S1 < V0;
-        800A214C	bne    v0, zero, La1ea4 [$800a1ea4]
-        S0 = S0 + 005c;
+        }
     }
 
     if( w[800b173c] != 0 )
@@ -711,27 +670,24 @@ if( w[8004e9b0] != 0 )
             V1 = V1 << 03;
             V1 = V1 - A0;
             V1 = V1 << 02;
-            A1 = w[800aefe4];
             A0 = w[A2 + 0000];
-            V1 = V1 + A1;
+            V1 = struct_5c_p + V1;
             V0 = A0 << 01;
             V0 = V0 + A0;
             V0 = V0 << 03;
             V0 = V0 - A0;
             V0 = V0 << 02;
-            V0 = V0 + A1;
+            V0 = V0 + struct_5c_p;
             V0 = w[V0 + 0004];
             A0 = w[V1 + 0004];
             [V1 + 0004] = w(V0);
             V1 = w[A2 + 0000];
-            800A21F0	nop
             V0 = V1 << 01;
             V0 = V0 + V1;
             V0 = V0 << 03;
             V0 = V0 - V1;
-            V1 = w[800aefe4];
             V0 = V0 << 02;
-            V0 = V0 + V1;
+            V0 = struct_5c_p + V0;
             [V0 + 0004] = w(A0);
             V1 = w[A2 + 0000];
             800A221C	nop
@@ -739,9 +695,8 @@ if( w[8004e9b0] != 0 )
             V0 = V0 + V1;
             V0 = V0 << 03;
             V0 = V0 - V1;
-            V1 = w[800aefe4];
             V0 = V0 << 02;
-            V0 = V0 + V1;
+            V0 = struct_5c_p + V0;
             V1 = w[V0 + 004c];
             800A2244	nop
             V0 = w[V1 + 0000];
@@ -754,9 +709,8 @@ if( w[8004e9b0] != 0 )
             V0 = V0 + V1;
             V0 = V0 << 03;
             V0 = V0 - V1;
-            V1 = w[800aefe4];
             V0 = V0 << 02;
-            V0 = V0 + V1;
+            V0 = struct_5c_p + V0;
             A0 = w[V0 + 004c];
             800A2284	nop
             V0 = w[A0 + 0000];
@@ -769,14 +723,12 @@ if( w[8004e9b0] != 0 )
             V1 = V1 + V0;
             V1 = V1 << 03;
             V1 = V1 - V0;
-            V0 = w[800aefe4];
             V1 = V1 << 02;
-            V1 = V1 + V0;
+            V1 = struct_5c_p + V1;
             V0 = hu[V1 + 0058];
-            800A22C4	nop
             V0 = V0 | 0020;
-            800A22CC	j      La2354 [$800a2354]
             [V1 + 0058] = h(V0);
+            800A22CC	j      La2354 [$800a2354]
 
             La22d4:	; 800A22D4
             V1 = w[A2 + 0000];
@@ -785,26 +737,20 @@ if( w[8004e9b0] != 0 )
             V0 = V0 + V1;
             V0 = V0 << 03;
             V0 = V0 - V1;
-            V1 = w[800aefe4];
             V0 = V0 << 02;
-            V0 = V0 + V1;
+            V0 = struct_5c_p + V0;
             V1 = w[V0 + 004c];
-            800A2300	nop
             V0 = w[V1 + 0000];
-            800A2308	nop
             V0 = V0 | 0400;
             [V1 + 0000] = w(V0);
             V1 = w[A2 + 0000];
-            800A2318	nop
             V0 = V1 << 01;
             V0 = V0 + V1;
             V0 = V0 << 03;
             V0 = V0 - V1;
-            V1 = w[800aefe4];
             V0 = V0 << 02;
-            V0 = V0 + V1;
+            V0 = struct_5c_p + V0;
             A0 = w[V0 + 004c];
-            800A2340	nop
             V0 = w[A0 + 0000];
             800A2348	addiu  v1, zero, $fcff (=-$301)
             V0 = V0 & V1;
@@ -822,109 +768,70 @@ else
 {
     A0 = 10;
     A1 = 0;
-    field_script_help_write_bytes_to_800C2F3C();
+    field_event_help_write_bytes_to_800C2F3C();
 
     funca2644();
 
-    S1 = 0;
-
-    if ( w[800ad0d4] > 0)
+    // disable talking if there is no "on_talk" event for entity
+    // set current event pointer to "on_init" event
+    for( int i = 0; i < w[800ad0d4]; ++i )
     {
-        S2 = 800aefe4;
-        S0 = 0;
+        struct_5c = struct_5c_p + i * 5c;
+        struct_138 = w[struct_5c + 4c];
 
-        loopa23a4:	; 800A23A4
-            V0 = w[S2 + 0000];
-            A0 = S1;
-            V0 = V0 + S0;
-            V1 = w[V0 + 004c];
-            [800af1f0] = w(S1);
-            [800afb8c] = w(V0);
-            [800af54c] = w(V1);
-            800A23CC	jal    get_script_offset [$800a2620]
-            A1 = 0002;
-            A0 = w[800af54c];
-            V1 = w[800ad0d8];
-            [A0 + 00cc] = h(V0);
-            V0 = V0 & ffff;
-            V1 = V1 + V0;
-            V0 = bu[V1 + 0000];
-            800A23F4	nop
-            if (V0 == 0)
-            {
-                800A23FC	lui    v1, $0400
-                V0 = w[A0 + 0004];
-                800A2404	nop
-                V0 = V0 | V1;
-                [A0 + 0004] = w(V0);
-            }
+        [800af1f0] = w(i);
+        [800afb8c] = w(struct_5c);
+        [800af54c] = w(struct_138);
 
-            [800af1f0] = w(S1);
-            [800afb8c] = w(V0);
+        A0 = i;
+        A1 = 2; // on_talk
+        field_event_help_get_event_offset();
+        [struct_138 + cc] = h(V0);
 
-            V0 = w[S2 + 0];
-            [800af54c] = w(w[S0 + V0 + 4c]);
+        event_block = w[800ad0d8];
 
-            A0 = S1;
-            A1 = 0;
-            get_script_offset;
+        if( bu[event_block + V0] == 0 )
+        {
+            [struct_138 + 4] = w(w[struct_138 + 4] | 04000000);
+        }
 
-            A0 = w[800af54c];
-            [A0 + cc] = h(V0);
-
-            S0 = S0 + 5c;
-
-            S1 = S1 + 1;
-            V1 = S1 < w[800ad0d4];
-        800A245C	bne    v1, zero, loopa23a4 [$800a23a4]
+        A0 = i;
+        A1 = 0;
+        field_event_help_get_event_offset();
+        [struct_138 + cc] = h(V0);
     }
 
-    if (w[800ad0d4] > 0)
+    // execute all opcodes in "on_init" event
+    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
-        S1 = 0;
-        S2 = 800aefe4;
-        S0 = 0;
+        struct_5c = struct_5c_p + i * 5c;
+        struct_138 = w[struct_5c + 4c];
 
-        loopa2484:	; 800A2484
-            V0 = w[S2 + 0000];
-            800A2488	nop
-            V0 = V0 + S0;
-            V1 = w[V0 + 004c];
-            [800af1f0] = w(S1);
-            [800af148] = w(0);
-            [800af4c0] = w(0);
-            [800afb8c] = w(V0);
-            [800af54c] = w(V1);
+        [800af148] = w(0);
+        [800af4c0] = w(0); // execute till the end
 
-            A0 = ffff;
-            run_script();
+        [800af1f0] = w(i);
+        [800afb8c] = w(struct_5c);
+        [800af54c] = w(struct_138]);
 
-            V0 = w[800af148];
-            if( V0 == 0 )
-            {
-                A0 = S1;
-                A1 = 0;
-                A2 = w[S2 + 000c];
-                A3 = 0;
-                V1 = w[A2 + 0004];
-                V0 = 0080;
-                [SP + 0010] = w(0);
-                [SP + 0014] = w(V0);
-                [SP + 0018] = w(0);
-                800A24F8	jal    func76150 [$80076150]
-                A2 = V1 + A2;
-                V1 = w[800af54c];
-                800A2508	nop
-                V0 = w[V1 + 0004];
-                800A2510	nop
-                V0 = V0 | 0800;
-                [V1 + 0004] = w(V0);
-            }
+        A0 = ffff;
+        run_script();
 
-            S0 = S0 + 5c;
-            S1 = S1 + 1;
-            V0 = S1 < w[800ad0d4];
-        800A252C	bne    v0, zero, loopa2484 [$800a2484]
+        if( w[800af148] == 0 )
+        {
+            sprite_block = w[800aeff0];
+
+            A0 = i;
+            A1 = 0;
+            A2 = sprite_block + w[sprite_block + 4];
+            A3 = 0;
+            A4 = 0;
+            A5 = 80;
+            A6 = 0;
+            func76150(); // init sprite?
+
+            [struct_138 + 4] = w(w[struct_138 + 4] | 00000800);
+        }
     }
 }
 ////////////////////////////////
@@ -945,27 +852,19 @@ V0 = V0 + 0001;
 
 
 ////////////////////////////////
-// get_script_offset()
-V0 = w[800ad0d0];
-return hu[V0 + 84 + A0 * 40 + A1 * 2];
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funca2644()
 
 A0 = 3e;
 A1 = w[80061c20];
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 A0 = 40;
 A1 = w[80061c24];
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 A0 = 42;
 A1 = w[80061c28];
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 ////////////////////////////////
 
 
@@ -981,29 +880,29 @@ V0 = w[80059a38];
 
 A0 = 44;
 A1 = hu[80058ab8];
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 A0 = 46;
 A1 = bu[80058b6c];
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 func96a20();
 A0 = 6; // direction of pc entity during spawn.
 A1 = V0;
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 func99ae8();
 A0 = 8; // direction of camera.
 A1 = V0;
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 A0 = 24;
 A1 = h[800aeed0];
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 A0 = 3c;
 A1 = w[8004e9f0]; // field id to load
-field_script_help_write_bytes_to_800C2F3C();
+field_event_help_write_bytes_to_800C2F3C();
 
 funca2644();
 
@@ -1075,7 +974,7 @@ V0 = w[8004e9cc];
 V0 = V0 & 0080;
 800A2870	bne    v0, zero, La2900 [$800a2900]
 A0 = 000c;
-800A2878	jal    field_script_help_read_bytes_from_800C2F3C [$800a25a8]
+800A2878	jal    field_event_help_read_bytes_from_800C2F3C [$800a25a8]
 A0 = 000a;
 A1 = V0 & 00ff;
 V0 = V0 >> 08;
@@ -1111,7 +1010,7 @@ La28e8:	; 800A28E8
 A0 = 000a;
 V0 = A2 << 08;
 A1 = A1 & 00ff;
-800A28F4	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
+800A28F4	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
 A1 = V0 | A1;
 
 La28fc:	; 800A28FC
@@ -1121,10 +1020,10 @@ La2900:	; 800A2900
 A1 = bu[80058abc];
 V0 = bu[80058ab4];
 A1 = A1 << 08;
-800A2914	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
+800A2914	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
 A1 = V0 | A1;
 A1 = bu[80058b20];
-800A2924	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
+800A2924	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 000e;
 V1 = w[800b1740];
 800A2934	nop
@@ -1138,7 +1037,7 @@ V0 = V0 + V1;
 V0 = w[V0 + 004c];
 800A295C	nop
 A1 = h[V0 + 0022];
-800A2964	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
+800A2964	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 001e;
 V1 = w[800b1740];
 800A2974	nop
@@ -1152,7 +1051,7 @@ V0 = V0 + V1;
 V0 = w[V0 + 004c];
 800A299C	nop
 A1 = h[V0 + 002a];
-800A29A4	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
+800A29A4	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 0020;
 V1 = w[800b1740];
 800A29B4	nop
@@ -1166,7 +1065,7 @@ V0 = V0 + V1;
 V0 = w[V0 + 004c];
 800A29DC	nop
 A1 = h[V0 + 0026];
-800A29E4	jal    field_script_help_write_bytes_to_800C2F3C [$800a2604]
+800A29E4	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
 A0 = 0022;
 
 La29ec:	; 800A29EC
@@ -1724,7 +1623,7 @@ while( A2 != 80059c20 )
 
 [800af124] = w(w[800af124] + 920);
 
-for( int i = 0; i < w[800ad0d4]; ++i )
+for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
 {
     V0 = w[800aefe4];
     A1 = w[800af124];

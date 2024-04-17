@@ -2243,7 +2243,7 @@ if( number_of_entity > 0 )
                         {
                             A0 = entity_id;
                             A1 = script_to_call;
-                            get_script_offset();
+                            field_event_help_get_event_offset();
                             [data_138 + 8c + slot_id * 8 + 0] = h(V0);
                             [data_138 + 8c + slot_id * 8 + 3] = b(script_to_call);
                             [data_138 + 8c + slot_id * 8 + 4] = w((w[data_138 + 8c + slot_id * 8 + 4] & ffc3ffff) | (script_priority << 12));
@@ -3270,8 +3270,9 @@ if( V0 > 0 )
         80084E58	nop
         80084E5C	beq    v0, a2, L84e6c [$80084e6c]
         V1 = V1 + 0004;
-        80084E64	j      L84e54 [$80084e54]
         A0 = A0 + 0001;
+        80084E64	j      L84e54 [$80084e54]
+
 
         L84e6c:	; 80084E6C
         A0 = A0 + 0001;
@@ -3927,7 +3928,7 @@ S3 = A1;
 S2 = A2;
 A0 = 0001;
 [SP + 0058] = w(RA);
-80085838	jal    field_script_help_read_entity [$8009c344]
+80085838	jal    field_event_help_read_entity [$8009c344]
 [SP + 004c] = w(S1);
 V1 = 800aefe4;
 80085848	addiu  a0, v1, $ff54 (=-$ac)

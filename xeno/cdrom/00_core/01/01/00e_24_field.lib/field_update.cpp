@@ -1024,6 +1024,7 @@ A0 = w[V0 + V1 * 5c + 4c];
 
 ////////////////////////////////
 // func76150()
+
 entity_id = A0;
 sprite_id = A1;
 sprite_data = A2; // offset to data in 2dsprite block to load
@@ -1652,7 +1653,7 @@ field_particle_restore_texture();
 
 if( w[8004ea14] == 0 )
 {
-    A0 = (w[800ad008] & 00ffffff) + ffe23ff8;
+    A0 = (w[800ad008] & 00ffffff) + ffe23ff8; // 1dc000
 }
 else
 {

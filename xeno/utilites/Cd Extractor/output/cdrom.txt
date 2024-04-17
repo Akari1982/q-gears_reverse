@@ -49,16 +49,18 @@
 0252-credits_logos.tim
 0253-field_debug.lib
 
+085f-.lib
+
 0a22-menu.pack
 0a23-menu.pack
 0a24-.lib
 0a25-menu_normal.lib
 0a26-menu_member_change.lib
-0a27-menu_load_game_0a25_copy.lib
+0a27-menu_load_game_a25_copy.lib
 0a28-menu_enter_name.lib
 0a29-menu_shop.lib
 0a2a-menu_robo.lib
-0a2b-menu_cd_change_0a25_copy.lib
+0a2b-menu_cd_change_a25_copy.lib
 0a2c-.lib
 0a2e-.lib
 0a33-battle_debug.lib

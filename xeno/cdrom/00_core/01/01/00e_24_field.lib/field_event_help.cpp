@@ -353,9 +353,8 @@ return -1;
 ////////////////////////////////
 // field_event_help_get_event_offset()
 
-actor_id = A0;
 event_id = A1;
 
 V0 = w[800ad0d0];
-return hu[V0 + 84 + actor_id * 40 + event_id * 2];
+return hu[V0 + 84 + A0 * 40 + event_id * 2];
 ////////////////////////////////

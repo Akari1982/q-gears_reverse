@@ -47,9 +47,9 @@
 
 800ad0c8 [][][][] pointer to field dialogs block (file 7).
 800ad0cc [][][][] pointer to field triggers (file 8).
-800ad0d0 [][][][] pointer to field entity file (file 5).
+800ad0d0 [][][][] pointer to field events file (file 5).
 800ad0d4 [][][][] number of entity actors.
-800ad0d8 [][][][] offset to field scripts in file 5.
+800ad0d8 [][][][] offset to field events in file 5.
 800ad0dc [][][][] init with 2.
 
 800ad0e4 [][][][] checked if equal to 1 in func83f40.
@@ -869,7 +869,7 @@
 800c2f24 [][][][] max horizontal movement for mouse controller.
 800c2f28 [][][][] max vertical movement for mouse controller.
 
-800c2f3c memory block. used in field_script_help_read_bytes_from_800C2F3C.
+800c2f3c memory block. used in field_event_help_read_bytes_from_800C2F3C.
 + 0000 [][]     progress.
 + 0002 [][]     spawn slot id (used when spawn pc).
 + 0004 [][]     current field id.
