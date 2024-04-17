@@ -597,7 +597,7 @@ l6fd00:	; 8006FD00
 8006fd04	lw     v0, $1c30(v0)
 8006fd08	nop
 8006fd0c	lw     a0, $032c(v0)
-8006fd10	jal    $system_memory_mark_removed_alloc
+8006fd10	jal    $system_memory_free
 8006fd14	nop
 8006fd18	lw     ra, $0010(sp)
 8006fd1c	addiu  sp, sp, $0018
@@ -626,7 +626,7 @@ l6fd64:	; 8006FD64
 8006fd68	lw     v0, $1c30(v0)
 8006fd6c	nop
 8006fd70	lw     a0, $033c(v0)
-8006fd74	jal    $system_memory_mark_removed_alloc
+8006fd74	jal    $system_memory_free
 8006fd78	nop
 8006fd7c	lw     ra, $0010(sp)
 8006fd80	addiu  sp, sp, $0018
@@ -655,7 +655,7 @@ l6fdc8:	; 8006FDC8
 8006fdcc	lw     v0, $1c30(v0)
 8006fdd0	nop
 8006fdd4	lw     a0, $0350(v0)
-8006fdd8	jal    $system_memory_mark_removed_alloc
+8006fdd8	jal    $system_memory_free
 8006fddc	nop
 8006fde0	lw     ra, $0010(sp)
 8006fde4	addiu  sp, sp, $0018
@@ -684,7 +684,7 @@ l6fe2c:	; 8006FE2C
 8006fe30	lw     v0, $1c30(v0)
 8006fe34	nop
 8006fe38	lw     a0, $0354(v0)
-8006fe3c	jal    $system_memory_mark_removed_alloc
+8006fe3c	jal    $system_memory_free
 8006fe40	nop
 8006fe44	lw     ra, $0010(sp)
 8006fe48	addiu  sp, sp, $0018
@@ -713,7 +713,7 @@ l6fe90:	; 8006FE90
 8006fe94	lw     v0, $1c30(v0)
 8006fe98	nop
 8006fe9c	lw     a0, $0330(v0)
-8006fea0	jal    $system_memory_mark_removed_alloc
+8006fea0	jal    $system_memory_free
 8006fea4	nop
 8006fea8	lw     ra, $0010(sp)
 8006feac	addiu  sp, sp, $0018
@@ -742,7 +742,7 @@ l6fef4:	; 8006FEF4
 8006fef8	lw     v0, $1c30(v0)
 8006fefc	nop
 8006ff00	lw     a0, $0340(v0)
-8006ff04	jal    $system_memory_mark_removed_alloc
+8006ff04	jal    $system_memory_free
 8006ff08	nop
 8006ff0c	lw     ra, $0010(sp)
 8006ff10	addiu  sp, sp, $0018
@@ -771,7 +771,7 @@ l6ff58:	; 8006FF58
 8006ff5c	lw     v0, $1c30(v0)
 8006ff60	nop
 8006ff64	lw     a0, $0344(v0)
-8006ff68	jal    $system_memory_mark_removed_alloc
+8006ff68	jal    $system_memory_free
 8006ff6c	nop
 8006ff70	lw     ra, $0010(sp)
 8006ff74	addiu  sp, sp, $0018
@@ -800,7 +800,7 @@ l6ffbc:	; 8006FFBC
 8006ffc0	lw     v0, $1c30(v0)
 8006ffc4	nop
 8006ffc8	lw     a0, $0348(v0)
-8006ffcc	jal    $system_memory_mark_removed_alloc
+8006ffcc	jal    $system_memory_free
 8006ffd0	nop
 8006ffd4	lw     ra, $0010(sp)
 8006ffd8	addiu  sp, sp, $0018
@@ -841,7 +841,7 @@ V0 = w[80061c30];
 8007004c	sll    v1, s0, $02
 V1 = V1 + V0;
 A0 = w[V1 + 039c];
-80070058	jal    $system_memory_mark_removed_alloc
+80070058	jal    $system_memory_free
 8007005c	addiu  s0, s0, $0001
 V0 = S0 < 0003;
 80070064	bne    v0, zero, loop70044 [$80070044]
@@ -986,24 +986,24 @@ A0 = 0;
 V0 = w[V0 + 1c30];
 80070264	nop
 A0 = w[V0 + 0428];
-8007026c	jal    $system_memory_mark_removed_alloc
+8007026c	jal    $system_memory_free
 80070270	nop
 V0 = w[80061c30];
 8007027c	nop
 A0 = w[V0 + 02dc];
-80070284	jal    $system_memory_mark_removed_alloc
+80070284	jal    $system_memory_free
 80070288	nop
 8007028c	lui    v0, $8006
 V0 = w[V0 + 1c30];
 80070294	nop
 A0 = w[V0 + 02e0];
-8007029c	jal    $system_memory_mark_removed_alloc
+8007029c	jal    $system_memory_free
 800702a0	nop
 800702a4	lui    v0, $8006
 800702a8	lw     v0, $1c30(v0)
 800702ac	nop
 800702b0	lw     a0, $0558(v0)
-800702b4	jal    $system_memory_mark_removed_alloc
+800702b4	jal    $system_memory_free
 800702b8	nop
 800702bc	lui    v0, $8006
 800702c0	lbu    v0, $8818(v0)
@@ -1029,7 +1029,7 @@ A0 = w[V0 + 02e0];
 V0 = w[80061c30];
 80070318	nop
 8007031c	lw     a0, $02e4(v0)
-80070320	jal    $system_memory_mark_removed_alloc
+80070320	jal    $system_memory_free
 80070324	nop
 
 l70328:	; 80070328
@@ -1065,25 +1065,25 @@ A0 = 0;
 8007038c	lw     v0, $1c30(v0)
 80070390	nop
 A0 = w[V0 + 0364];
-80070398	jal    $system_memory_mark_removed_alloc
+80070398	jal    $system_memory_free
 8007039c	nop
 800703a0	lui    v0, $8006
 800703a4	lw     v0, $1c30(v0)
 800703a8	nop
 800703ac	lw     a0, $0380(v0)
-800703b0	jal    $system_memory_mark_removed_alloc
+800703b0	jal    $system_memory_free
 800703b4	nop
 800703b8	lui    v0, $8006
 800703bc	lw     v0, $1c30(v0)
 800703c0	nop
 800703c4	lw     a0, $0368(v0)
-800703c8	jal    $system_memory_mark_removed_alloc
+800703c8	jal    $system_memory_free
 800703cc	nop
 800703d0	lui    v0, $8006
 800703d4	lw     v0, $1c30(v0)
 800703d8	nop
 800703dc	lw     a0, $0384(v0)
-800703e0	jal    $system_memory_mark_removed_alloc
+800703e0	jal    $system_memory_free
 800703e4	nop
 800703e8	j      $801c6278
 800703ec	nop
@@ -1093,7 +1093,7 @@ l703f0:	; 800703F0
 800703f4	addu   a0, zero, zero
 800703f8	lui    a0, $8006
 800703fc	lw     a0, $1c30(a0)
-80070400	jal    $system_memory_mark_removed_alloc
+80070400	jal    $system_memory_free
 80070404	nop
 RA = w[SP + 0010];
 8007040c	addiu  sp, sp, $0018
@@ -1333,7 +1333,7 @@ A1 = 0;
 system_cdrom2_set_dir();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -1431,7 +1431,7 @@ A0 = A0 + 4b98;
 800708d0	lw     a1, $0b90(a0)
 800708d4	jal    $8003f844
 800708d8	addiu  a0, a0, $4c14
-800708dc	jal    $system_memory_mark_removed_alloc
+800708dc	jal    $system_memory_free
 800708e0	addu   a0, s1, zero
 800708e4	lw     a0, $0008(s7)
 800708e8	jal    $80032cac
@@ -1439,7 +1439,7 @@ A0 = A0 + 4b98;
 800708f0	addu   s1, v0, zero
 800708f4	jal    $8002db30
 800708f8	addu   a0, s1, zero
-800708fc	jal    $system_memory_mark_removed_alloc
+800708fc	jal    $system_memory_free
 A0 = S1;
 A0 = w[S7 + 000c];
 80070908	jal    $80032cac
@@ -1575,7 +1575,7 @@ l70af8:	; 80070AF8
 80070b04	addiu  s0, s0, $0018
 80070b08	jal    $system_draw_sync
 80070b0c	addu   a0, zero, zero
-80070b10	jal    $system_memory_mark_removed_alloc
+80070b10	jal    $system_memory_free
 80070b14	addu   a0, s1, zero
 80070b18	lui    v0, $8006
 80070b1c	lbu    v0, $8818(v0)
@@ -1618,7 +1618,7 @@ l70b88:	; 80070B88
 80070b90	lui    v0, $8006
 80070b94	lw     v0, $1c2c(v0)
 80070b98	addu   a0, s7, zero
-80070b9c	jal    $system_memory_mark_removed_alloc
+80070b9c	jal    $system_memory_free
 80070ba0	sw     v0, $02e4(v1)
 80070ba4	lw     ra, $00a0(sp)
 80070ba8	lw     s7, $009c(sp)
@@ -1868,7 +1868,7 @@ loop70e3c:	; 80070E3C
 80070f18	sh     v0, $0016(sp)
 80070f1c	jal    $system_draw_sync
 80070f20	addu   a0, zero, zero
-80070f24	jal    $system_memory_mark_removed_alloc
+80070f24	jal    $system_memory_free
 80070f28	addu   a0, s0, zero
 80070f2c	lw     ra, $0024(sp)
 80070f30	lw     s0, $0020(sp)
@@ -2509,7 +2509,7 @@ V1 = w[V1 + 0434];
 800718cc	lw     v0, $0330(v0)
 800718d0	nop
 800718d4	lw     a0, $001c(v0)
-800718d8	jal    $system_memory_mark_removed_alloc
+800718d8	jal    $system_memory_free
 800718dc	nop
 800718e0	lui    v0, $8006
 800718e4	lw     v0, $1c30(v0)
@@ -2524,21 +2524,21 @@ V0 = w[80061c30];
 8007190c	lw     v0, $0330(v0)
 80071910	nop
 A0 = w[V0 + 0008];
-80071918	jal    $system_memory_mark_removed_alloc
+80071918	jal    $system_memory_free
 8007191c	nop
 V0 = w[80061c30];
 80071928	nop
 8007192c	lw     v0, $0330(v0)
 80071930	nop
 A0 = w[V0 + 0010];
-80071938	jal    $system_memory_mark_removed_alloc
+80071938	jal    $system_memory_free
 8007193c	nop
 V0 = w[80061c30];
 80071948	nop
 8007194c	lw     v0, $0330(v0)
 80071950	nop
 A0 = w[V0 + 000c];
-80071958	jal    $system_memory_mark_removed_alloc
+80071958	jal    $system_memory_free
 8007195c	nop
 V0 = w[80061c30];
 80071968	nop
@@ -2565,7 +2565,7 @@ V0 = w[V1 + 033c];
 800719b4	sll    v0, v0, $02
 800719b8	addu   v0, v0, v1
 800719bc	lw     a0, $0020(v0)
-800719c0	jal    $system_memory_mark_removed_alloc
+800719c0	jal    $system_memory_free
 800719c4	nop
 
 l719c8:	; 800719C8
@@ -2586,7 +2586,7 @@ l719c8:	; 800719C8
 80071a00	lw     v0, $0330(v0)
 80071a04	nop
 80071a08	lw     a0, $0000(v0)
-80071a0c	jal    $system_memory_mark_removed_alloc
+80071a0c	jal    $system_memory_free
 80071a10	nop
 80071a14	lui    v0, $8006
 80071a18	lw     v0, $1c30(v0)
@@ -2594,7 +2594,7 @@ l719c8:	; 800719C8
 80071a20	lw     v0, $0330(v0)
 80071a24	nop
 80071a28	lw     a0, $0004(v0)
-80071a2c	jal    $system_memory_mark_removed_alloc
+80071a2c	jal    $system_memory_free
 80071a30	nop
 80071a34	lui    v0, $8006
 80071a38	lw     v0, $1c30(v0)
@@ -2602,7 +2602,7 @@ l719c8:	; 800719C8
 80071a40	lw     v0, $0330(v0)
 80071a44	nop
 80071a48	lw     a0, $0018(v0)
-80071a4c	jal    $system_memory_mark_removed_alloc
+80071a4c	jal    $system_memory_free
 80071a50	nop
 80071a54	lui    v0, $8006
 80071a58	lw     v0, $1c30(v0)
@@ -2630,7 +2630,7 @@ loop71a7c:	; 80071A7C
 80071aa8	sll    v0, v0, $02
 80071aac	addu   v0, v0, v1
 80071ab0	lw     a0, $0020(v0)
-80071ab4	jal    $system_memory_mark_removed_alloc
+80071ab4	jal    $system_memory_free
 80071ab8	nop
 
 l71abc:	; 80071ABC
@@ -2674,7 +2674,7 @@ loop71af0:	; 80071AF0
 80071b48	nop
 80071b4c	addu   v0, v0, v1
 80071b50	lw     a0, $004c(v0)
-80071b54	jal    $system_memory_mark_removed_alloc
+80071b54	jal    $system_memory_free
 80071b58	nop
 
 l71b5c:	; 80071B5C
@@ -2695,7 +2695,7 @@ l71b5c:	; 80071B5C
 80071b94	lw     v0, $0434(v0)
 80071b98	nop
 80071b9c	lw     a0, $0a00(v0)
-80071ba0	jal    $system_memory_mark_removed_alloc
+80071ba0	jal    $system_memory_free
 80071ba4	nop
 80071ba8	lui    v0, $8006
 80071bac	lw     v0, $1c30(v0)
@@ -2703,7 +2703,7 @@ l71b5c:	; 80071B5C
 80071bb4	lw     v0, $0434(v0)
 80071bb8	nop
 80071bbc	lw     a0, $0a04(v0)
-80071bc0	jal    $system_memory_mark_removed_alloc
+80071bc0	jal    $system_memory_free
 80071bc4	nop
 80071bc8	lui    v0, $8006
 80071bcc	lw     v0, $1c30(v0)
@@ -2711,7 +2711,7 @@ l71b5c:	; 80071B5C
 80071bd4	lw     v0, $0434(v0)
 80071bd8	nop
 80071bdc	lw     a0, $0a08(v0)
-80071be0	jal    $system_memory_mark_removed_alloc
+80071be0	jal    $system_memory_free
 80071be4	nop
 80071be8	lui    v0, $8006
 80071bec	lw     v0, $1c30(v0)
@@ -2719,7 +2719,7 @@ l71b5c:	; 80071B5C
 80071bf4	lw     v0, $0434(v0)
 80071bf8	nop
 80071bfc	lw     a0, $0a0c(v0)
-80071c00	jal    $system_memory_mark_removed_alloc
+80071c00	jal    $system_memory_free
 80071c04	nop
 
 l71c08:	; 80071C08
@@ -2727,7 +2727,7 @@ l71c08:	; 80071C08
 80071c0c	sltiu  v0, v0, $0010
 80071c10	beq    v0, zero, L71c20 [$80071c20]
 80071c14	nop
-80071c18	jal    $system_memory_mark_removed_alloc
+80071c18	jal    $system_memory_free
 80071c1c	addu   a0, s1, zero
 
 l71c20:	; 80071C20
@@ -6501,7 +6501,7 @@ l74fd8:	; 80074FD8
 V0 = w[80061c30];
 8007500c	nop
 A0 = w[V0 + 044c];
-80075014	jal    $system_memory_mark_removed_alloc
+80075014	jal    $system_memory_free
 80075018	nop
 8007501c	j      $801cb168
 80075020	nop
@@ -7092,7 +7092,7 @@ V0 = A0 & 00ff;
 8007589c	beq    v0, v1, loop75734 [$80075734]
 800758a0	addiu  s0, s4, $0100
 800758a4	addu   s2, zero, zero
-800758a8	jal    $system_memory_mark_removed_alloc
+800758a8	jal    $system_memory_free
 800758ac	addu   a0, s4, zero
 
 l758b0:	; 800758B0
@@ -8040,7 +8040,7 @@ A0 = SP + 0050;
 8007660c	nop
 
 l76610:	; 80076610
-80076610	jal    $system_memory_mark_removed_alloc
+80076610	jal    $system_memory_free
 A0 = S4;
 
 l76618:	; 80076618
@@ -15750,7 +15750,7 @@ loop7d39c:	; 8007D39C
 8007d500	lw     v0, $1de0(v0)
 8007d504	nop
 8007d508	lw     a0, $0078(v0)
-8007d50c	jal    $system_memory_mark_removed_alloc
+8007d50c	jal    $system_memory_free
 8007d510	nop
 8007d514	lui    v0, $8006
 8007d518	lw     v0, $1c30(v0)
@@ -15758,7 +15758,7 @@ loop7d39c:	; 8007D39C
 8007d520	lw     v0, $1de8(v0)
 8007d524	nop
 8007d528	lw     a0, $0078(v0)
-8007d52c	jal    $system_memory_mark_removed_alloc
+8007d52c	jal    $system_memory_free
 8007d530	nop
 8007d534	jal    $801c7ba8
 8007d538	nop
@@ -15804,7 +15804,7 @@ loop7d5c0:	; 8007D5C0
 8007d5c8	sll    v1, s0, $02
 8007d5cc	addu   v1, v1, v0
 8007d5d0	lw     a0, $1de0(v1)
-8007d5d4	jal    $system_memory_mark_removed_alloc
+8007d5d4	jal    $system_memory_free
 8007d5d8	addiu  s0, s0, $0001
 8007d5dc	slti   v0, s0, $0004
 8007d5e0	bne    v0, zero, loop7d5c0 [$8007d5c0]
@@ -15899,7 +15899,7 @@ l7d660:	; 8007D660
 8007d724	lw     v0, $1c30(v0)
 8007d728	nop
 8007d72c	lw     a0, $043c(v0)
-8007d730	jal    $system_memory_mark_removed_alloc
+8007d730	jal    $system_memory_free
 8007d734	nop
 8007d738	lw     ra, $0010(sp)
 8007d73c	addiu  sp, sp, $0018
@@ -16063,7 +16063,7 @@ l7d918:	; 8007D918
 8007d97c	lw     v0, $1c30(v0)
 8007d980	nop
 8007d984	lw     a0, $0440(v0)
-8007d988	jal    $system_memory_mark_removed_alloc
+8007d988	jal    $system_memory_free
 8007d98c	nop
 
 l7d990:	; 8007D990
@@ -17666,14 +17666,14 @@ l7f0f0:	; 8007F0F0
 8007f1a8	sll    s0, s0, $02
 8007f1ac	addu   v0, s0, v0
 8007f1b0	lw     a0, $0364(v0)
-8007f1b4	jal    $system_memory_mark_removed_alloc
+8007f1b4	jal    $system_memory_free
 8007f1b8	nop
 8007f1bc	lui    v0, $8006
 8007f1c0	lw     v0, $1c30(v0)
 8007f1c4	nop
 8007f1c8	addu   s0, s0, v0
 8007f1cc	lw     a0, $0380(s0)
-8007f1d0	jal    $system_memory_mark_removed_alloc
+8007f1d0	jal    $system_memory_free
 8007f1d4	nop
 8007f1d8	lw     ra, $0014(sp)
 8007f1dc	lw     s0, $0010(sp)
@@ -22547,7 +22547,7 @@ V0 = w[80061c30];
 A0 = S2;
 8008390c	lw     v1, $033c(v0)
 V0 = 0001;
-80083914	jal    $system_memory_mark_removed_alloc
+80083914	jal    $system_memory_free
 [V1 + 004b] = b(V0);
 8008391c	lw     ra, $0084(sp)
 FP = w[SP + 0080];
@@ -23591,13 +23591,13 @@ A0 = 0010;
 800847ac	lw     v0, $042c(v0)
 800847b0	nop
 800847b4	lw     a0, $1180(v0)
-800847b8	jal    $system_memory_mark_removed_alloc
+800847b8	jal    $system_memory_free
 800847bc	nop
 800847c0	lui    v0, $8006
 800847c4	lw     v0, $1c30(v0)
 800847c8	nop
 800847cc	lw     a0, $042c(v0)
-800847d0	jal    $system_memory_mark_removed_alloc
+800847d0	jal    $system_memory_free
 800847d4	nop
 800847d8	lui    v0, $8006
 800847dc	lw     v0, $1c30(v0)
@@ -23605,7 +23605,7 @@ A0 = 0010;
 800847e4	lw     v0, $0330(v0)
 800847e8	nop
 800847ec	lw     a0, $001c(v0)
-800847f0	jal    $system_memory_mark_removed_alloc
+800847f0	jal    $system_memory_free
 800847f4	nop
 800847f8	lw     ra, $0010(sp)
 800847fc	addiu  sp, sp, $0018
@@ -23855,7 +23855,7 @@ l84b68:	; 80084B68
 80084b94	slti   v0, s2, $0010
 80084b98	bne    v0, zero, L8486c [$8008486c]
 80084b9c	addiu  s3, s3, $0080
-80084ba0	jal    $system_memory_mark_removed_alloc
+80084ba0	jal    $system_memory_free
 80084ba4	addu   a0, s5, zero
 80084ba8	lui    v0, $8006
 80084bac	lw     v0, $1c30(v0)
@@ -23966,7 +23966,7 @@ l84b68:	; 80084B68
 80084d48	addiu  a0, a0, $1150
 80084d4c	jal    $801c8464
 80084d50	sw     s2, $0010(sp)
-80084d54	jal    $system_memory_mark_removed_alloc
+80084d54	jal    $system_memory_free
 80084d58	addu   a0, s0, zero
 80084d5c	lui    v0, $8006
 80084d60	lw     v0, $1c30(v0)
@@ -24441,7 +24441,7 @@ V0 = S0 << 02;
 [SP + 0014] = w(RA);
 V0 = V0 + V1;
 8008545c	lw     a0, $0444(v0)
-80085460	jal    $system_memory_mark_removed_alloc
+80085460	jal    $system_memory_free
 80085464	nop
 80085468	lui    v0, $8006
 8008546c	lw     v0, $1c30(v0)
@@ -25114,7 +25114,7 @@ loop85dd8:	; 80085DD8
 80085de0	sll    v1, s0, $02
 80085de4	addu   v1, v1, v0
 80085de8	lw     a0, $1e08(v1)
-80085dec	jal    $system_memory_mark_removed_alloc
+80085dec	jal    $system_memory_free
 80085df0	addiu  s0, s0, $0001
 80085df4	slti   v0, s0, $0003
 80085df8	bne    v0, zero, loop85dd8 [$80085dd8]
@@ -25592,7 +25592,7 @@ A0 = A0 & 00ff;
 V0 = w[80061c30];
 8008647c	nop
 A0 = w[V0 + 0430];
-80086484	jal    $system_memory_mark_removed_alloc
+80086484	jal    $system_memory_free
 80086488	nop
 8008648c	lui    v0, $8006
 V0 = w[V0 + 1c30];
@@ -26274,7 +26274,7 @@ l86e10:	; 80086E10
 80086e4c	addiu  t3, t3, $0080
 80086e50	bne    v0, zero, L865c0 [$800865c0]
 80086e54	sw     t3, $0090(sp)
-80086e58	jal    $system_memory_mark_removed_alloc
+80086e58	jal    $system_memory_free
 80086e5c	addu   a0, s7, zero
 80086e60	ori    a0, zero, $0008
 80086e64	lui    s2, $801f
@@ -26558,7 +26558,7 @@ A0 = w[V0 + 0430];
 800872a4	addiu  a0, a0, $0fd0
 800872a8	jal    $801c8464
 800872ac	sw     s1, $0010(sp)
-800872b0	jal    $system_memory_mark_removed_alloc
+800872b0	jal    $system_memory_free
 800872b4	addu   a0, s2, zero
 800872b8	lui    v0, $8006
 800872bc	lw     v0, $1c30(v0)
@@ -27459,7 +27459,7 @@ loop87fb4:	; 80087FB4
 80087fbc	sll    v1, s0, $02
 80087fc0	addu   v1, v1, v0
 80087fc4	lw     a0, $1e08(v1)
-80087fc8	jal    $system_memory_mark_removed_alloc
+80087fc8	jal    $system_memory_free
 80087fcc	addiu  s0, s0, $0001
 80087fd0	slti   v0, s0, $0003
 80087fd4	bne    v0, zero, loop87fb4 [$80087fb4]
@@ -27803,7 +27803,7 @@ A0 = 0004;
 800884d0	lw     v0, $1c30(v0)
 800884d4	nop
 800884d8	lw     a0, $0434(v0)
-800884dc	jal    $system_memory_mark_removed_alloc
+800884dc	jal    $system_memory_free
 800884e0	nop
 800884e4	jal    $801d3584
 800884e8	nop
@@ -27829,13 +27829,13 @@ V0 = w[V0 + 033c];
 V0 = w[80061c30];
 80088538	nop
 8008853c	lw     a0, $035c(v0)
-80088540	jal    $system_memory_mark_removed_alloc
+80088540	jal    $system_memory_free
 80088544	nop
 80088548	lui    v0, $8006
 8008854c	lw     v0, $1c30(v0)
 80088550	nop
 A0 = w[V0 + 0360];
-80088558	jal    $system_memory_mark_removed_alloc
+80088558	jal    $system_memory_free
 8008855c	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -28669,7 +28669,7 @@ S1 = S1 + 0001;
 V0 = S1 < 0008;
 8008913c	bne    v0, zero, L88e68 [$80088e68]
 S4 = S4 + 0001;
-80089144	jal    $system_memory_mark_removed_alloc
+80089144	jal    $system_memory_free
 A0 = S3;
 8008914c	addu   a3, zero, zero
 A1 = bu[SP + 0030];
@@ -30041,7 +30041,7 @@ loop8a3a8:	; 8008A3A8
 8008a4d0	addu   a0, s4, zero
 8008a4d4	lw     v1, $0434(v0)
 8008a4d8	ori    v0, zero, $0001
-8008a4dc	jal    $system_memory_mark_removed_alloc
+8008a4dc	jal    $system_memory_free
 8008a4e0	sb     v0, $0a18(v1)
 8008a4e4	j      $801e0384
 8008a4e8	nop
@@ -31157,7 +31157,7 @@ l8b288:	; 8008B288
 8008b4c4	lw     v0, $1c30(v0)
 8008b4c8	nop
 8008b4cc	lw     a0, $0438(v0)
-8008b4d0	jal    $system_memory_mark_removed_alloc
+8008b4d0	jal    $system_memory_free
 8008b4d4	nop
 8008b4d8	lw     ra, $0010(sp)
 8008b4dc	addiu  sp, sp, $0018
@@ -31990,7 +31990,7 @@ l8c0c4:	; 8008C0C4
 8008c118	slti   v0, s2, $000d
 8008c11c	bne    v0, zero, L8bbf0 [$8008bbf0]
 8008c120	nop
-8008c124	jal    $system_memory_mark_removed_alloc
+8008c124	jal    $system_memory_free
 8008c128	addu   a0, s5, zero
 8008c12c	addu   a2, zero, zero
 8008c130	lui    v0, $8006
@@ -32216,19 +32216,19 @@ l8c3d0:	; 8008C3D0
 8008c440	addiu  sp, sp, $ffe8 (=-$18)
 8008c444	sw     ra, $0010(sp)
 8008c448	lw     a0, $0358(v0)
-8008c44c	jal    $system_memory_mark_removed_alloc
+8008c44c	jal    $system_memory_free
 8008c450	nop
 8008c454	lui    v0, $8006
 8008c458	lw     v0, $1c30(v0)
 8008c45c	nop
 8008c460	lw     a0, $035c(v0)
-8008c464	jal    $system_memory_mark_removed_alloc
+8008c464	jal    $system_memory_free
 8008c468	nop
 8008c46c	lui    v0, $8006
 8008c470	lw     v0, $1c30(v0)
 8008c474	nop
 8008c478	lw     a0, $0360(v0)
-8008c47c	jal    $system_memory_mark_removed_alloc
+8008c47c	jal    $system_memory_free
 8008c480	nop
 8008c484	jal    $801c7270
 8008c488	ori    a0, zero, $0013
@@ -32773,19 +32773,19 @@ l8cb3c:	; 8008CB3C
 8008cc68	addiu  sp, sp, $ffe8 (=-$18)
 8008cc6c	sw     ra, $0010(sp)
 8008cc70	lw     a0, $0358(v0)
-8008cc74	jal    $system_memory_mark_removed_alloc
+8008cc74	jal    $system_memory_free
 8008cc78	nop
 8008cc7c	lui    v0, $8006
 8008cc80	lw     v0, $1c30(v0)
 8008cc84	nop
 8008cc88	lw     a0, $035c(v0)
-8008cc8c	jal    $system_memory_mark_removed_alloc
+8008cc8c	jal    $system_memory_free
 8008cc90	nop
 8008cc94	lui    v0, $8006
 8008cc98	lw     v0, $1c30(v0)
 8008cc9c	nop
 8008cca0	lw     a0, $0360(v0)
-8008cca4	jal    $system_memory_mark_removed_alloc
+8008cca4	jal    $system_memory_free
 8008cca8	nop
 8008ccac	jal    $801c7270
 8008ccb0	ori    a0, zero, $0013
@@ -36122,7 +36122,7 @@ loop8fc30:	; 8008FC30
 8008fc38	sll    v1, s0, $02
 8008fc3c	addu   v1, v1, v0
 8008fc40	lw     a0, $03a8(v1)
-8008fc44	jal    $system_memory_mark_removed_alloc
+8008fc44	jal    $system_memory_free
 8008fc48	addiu  s0, s0, $0001
 8008fc4c	slti   v0, s0, $0020
 8008fc50	bne    v0, zero, loop8fc30 [$8008fc30]
@@ -36734,7 +36734,7 @@ V0 = w[80061c30];
 80090588	addiu  sp, sp, $ffe8 (=-$18)
 8009058c	sw     ra, $0010(sp)
 A0 = w[V0 + 034c];
-80090594	jal    $system_memory_mark_removed_alloc
+80090594	jal    $system_memory_free
 80090598	nop
 8009059c	lui    v0, $8006
 800905a0	lw     v0, $1c30(v0)
@@ -37009,9 +37009,9 @@ V0 = 0020;
 8009094c	sh     v0, $0016(sp)
 80090950	jal    $system_draw_sync
 A0 = 0;
-80090958	jal    $system_memory_mark_removed_alloc
+80090958	jal    $system_memory_free
 8009095c	addu   a0, s4, zero
-80090960	jal    $system_memory_mark_removed_alloc
+80090960	jal    $system_memory_free
 A0 = S5;
 RA = w[SP + 0030];
 8009096c	lw     s5, $002c(sp)
@@ -37657,7 +37657,7 @@ V1 = V1 << 02;
 800912d4	sh     v1, $0012(sp)
 800912d8	jal    $system_draw_sync
 800912dc	addu   a0, zero, zero
-800912e0	jal    $system_memory_mark_removed_alloc
+800912e0	jal    $system_memory_free
 800912e4	addu   a0, s0, zero
 800912e8	lw     ra, $0054(sp)
 800912ec	lw     s2, $0050(sp)
@@ -39523,7 +39523,7 @@ l92dfc:	; 80092DFC
 80092e40	sh     v1, $0012(sp)
 80092e44	jal    $system_draw_sync
 80092e48	addu   a0, zero, zero
-80092e4c	jal    $system_memory_mark_removed_alloc
+80092e4c	jal    $system_memory_free
 80092e50	addu   a0, s2, zero
 80092e54	lw     ra, $0028(sp)
 80092e58	lw     s3, $0024(sp)

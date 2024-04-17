@@ -106,7 +106,7 @@ if( w[800ad00c] == 1 )
     }
 
     A0 = w[800af144];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [800af144] = w(mem);
 }
@@ -166,7 +166,7 @@ if( w[800ad00c] != 0 )
     system_draw_sync();
 
     A0 = w[800af144];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 
@@ -198,12 +198,12 @@ if( bu[800b0984 + id] == 1 )
         if( h[S0 + i * 78 + 6] != 0 )
         {
             A0 = w[S0 + i * 78 + 2c]; // sprite data
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
     }
 
     A0 = w[800c2dec + id * 4];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 [800b0984 + id] = b(0);

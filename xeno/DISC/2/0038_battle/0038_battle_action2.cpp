@@ -131,7 +131,7 @@ V0 = V0 << 10;
 800B81D8	nop
 
 Lb81dc:	; 800B81DC
-800B81DC	jal    $system_memory_mark_removed_alloc
+800B81DC	jal    $system_memory_free
 A0 = S0;
 V0 = 0001;
 
@@ -231,7 +231,7 @@ while( true )
 A0 = w[800c2d50];
 if( A0 != 0 )
 {
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [800c2d50] = w(0);
 }
@@ -788,7 +788,7 @@ switch( S2 )
         V0 = V0 | 40000000;
         [struct_164 + 003c] = w(V0);
         A0 = w[A0 + 002c];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         V0 = w[S0 + 0020];
         A0 = w[V0 + 002c];
@@ -1935,7 +1935,7 @@ A0 = w[V0 + 002c];
 800BA1CC	nop
 800BA1D0	beq    a0, zero, Lba1e0 [$800ba1e0]
 S1 = S0 + 0038;
-800BA1D8	jal    $system_memory_mark_removed_alloc
+800BA1D8	jal    $system_memory_free
 800BA1DC	nop
 
 Lba1e0:	; 800BA1E0
@@ -1947,7 +1947,7 @@ A0 = S1;
 A0 = S0 + 001c;
 800BA1F8	jal    $func1cc20
 A0 = S0;
-800BA200	jal    $system_memory_mark_removed_alloc
+800BA200	jal    $system_memory_free
 A0 = S0;
 RA = w[SP + 0018];
 S1 = w[SP + 0014];
@@ -2081,7 +2081,7 @@ A0 = w[AT + c2f4];
 800BA3F4	nop
 800BA3F8	beq    a0, zero, Lba408 [$800ba408]
 800BA3FC	nop
-800BA400	jal    $system_memory_mark_removed_alloc
+800BA400	jal    $system_memory_free
 800BA404	nop
 
 Lba408:	; 800BA408
@@ -2409,7 +2409,7 @@ S0 = A0;
 A0 = S0 + 001c;
 800BA8A4	jal    $func1cc20
 A0 = S0;
-800BA8AC	jal    $system_memory_mark_removed_alloc
+800BA8AC	jal    $system_memory_free
 A0 = S0;
 RA = w[SP + 001c];
 S0 = w[SP + 0018];
@@ -2614,7 +2614,7 @@ SP = T0;
 A0 = S1;
 SP = SP + 0004;
 SP = w[SP + 0000];
-800BABE0	jal    $system_memory_mark_removed_alloc
+800BABE0	jal    $system_memory_free
 A0 = S0;
 
 Lbabe8:	; 800BABE8
@@ -2670,7 +2670,7 @@ SP = T0;
 A0 = S1;
 SP = SP + 0004;
 SP = w[SP + 0000];
-800BACB8	jal    $system_memory_mark_removed_alloc
+800BACB8	jal    $system_memory_free
 A0 = S0;
 
 Lbacc0:	; 800BACC0
@@ -3194,7 +3194,7 @@ Lbb5d0:	; 800BB5D0
 A0 = S0;
 800BB5D8	jal    $func1c9d4
 A0 = S0 + 001c;
-800BB5E0	jal    $system_memory_mark_removed_alloc
+800BB5E0	jal    $system_memory_free
 A0 = S0;
 V0 = bu[800c33f0];
 800BB5F0	nop
@@ -4009,7 +4009,7 @@ A0 = S0;
 V0 = V0 | 0001;
 800BC264	jal    $func1cc20
 [V1 + 002b] = b(V0);
-800BC26C	jal    $system_memory_mark_removed_alloc
+800BC26C	jal    $system_memory_free
 A0 = S0;
 [800c2e80] = w(0);
 
@@ -4343,7 +4343,7 @@ A0 = w[S1 + 005c];
 A0 = S0;
 800BC744	jal    $func1cc20
 A0 = S0;
-800BC74C	jal    $system_memory_mark_removed_alloc
+800BC74C	jal    $system_memory_free
 A0 = S1;
 RA = w[SP + 0018];
 S1 = w[SP + 0014];
@@ -6328,7 +6328,7 @@ return w[800c2d48];
 // funcbe5cc()
 
 A0 = w[800c2d48];
-system_memory_mark_removed_alloc();
+system_memory_free();
 [800c2d48] = w(0);
 
 [80058b00] = w(0);
@@ -6362,7 +6362,7 @@ A2 = S3;
 SP = SP + 0004;
 SP = w[SP + 0000];
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -7065,7 +7065,7 @@ if( bu[800c2d59] != 0 )
     800BF234	jal    funcbdea8 [$800bdea8]
 
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [800c2d59] = b(0);
 }
@@ -7204,7 +7204,7 @@ Lbf42c:	; 800BF42C
 [800c2d5a] = b(0);
 
 Lbf43c:	; 800BF43C
-800BF43C	jal    $system_memory_mark_removed_alloc
+800BF43C	jal    $system_memory_free
 A0 = S0;
 
 Lbf444:	; 800BF444

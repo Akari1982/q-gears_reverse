@@ -346,7 +346,7 @@ while( true )
                 A0 = w[80076530];
                 if( A0 != 0 )
                 {
-                    system_memory_mark_removed_alloc();
+                    system_memory_free();
                 }
 
                 A0 = w[80076528];
@@ -354,7 +354,7 @@ while( true )
 
                 if( A0 != 0 )
                 {
-                    system_memory_mark_removed_alloc();
+                    system_memory_free();
                 }
 
                 [80076528] = w(0);
@@ -1042,7 +1042,7 @@ V0 = w[8006f3b4 + V0]; // 8006f3b4-8006f180
     func2a334();
 
     A0 = w[8007650c];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[80076510];
     800710C4	j      L711f8 [$800711f8]
@@ -1111,12 +1111,12 @@ V0 = w[8006f3b4 + V0]; // 8006f3b4-8006f180
 
     L711e0:	; 800711E0
     A0 = w[80076518];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[8007651c];
 
     L711f8:	; 800711F8
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
 80071200 6 7 8 9
 
@@ -1550,7 +1550,7 @@ switch( A0 )
 
         if( w[80076528] != 0 )
         {
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
 
         A0 = 40;
@@ -2519,14 +2519,13 @@ A1 = 1;
 system_memory_allocate();
 S0 = V0;
 
-V1 = ffe2cff8;
-A0 = (S0 & 00ffffff) + V1;
+A0 = (S0 & 00ffffff) + ffe2cff8;
 A1 = 1;
 system_memory_allocate();
 mdec_lib = V0; // 801d3000
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 1; // local file id
 A1 = mdec_lib;
@@ -2666,7 +2665,7 @@ if( bu[8004f4e8] != ff )
         mdec_deinit();
 
         A0 = mdec_lib;
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         A0 = bu[8004f4ea];
         func199f0();
@@ -3227,7 +3226,7 @@ while( true )
     if( ( w[800767a8] == d ) && ( w[SP + 38] == 2 ) ) // return to kernel
     {
         A0 = mdec_lib;
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         A0 = 0;
         func19b50(); // return to main
@@ -3947,7 +3946,7 @@ loop74a74:	; 80074A74
 80074A80	bne    v0, zero, loop74a74 [$80074a74]
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 8006f9b8; // "c:\work\cdrom\sound\wave\bat_se.wd"
 A1 = 0;
@@ -3966,7 +3965,7 @@ loop74ab0:	; 80074AB0
 80074ABC	bne    v0, zero, loop74ab0 [$80074ab0]
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 8006f9dc; // "c:\work\cdrom\sound\wave\gear_se.wd"
 A1 = 0;
@@ -3985,7 +3984,7 @@ loop74aec:	; 80074AEC
 80074AF8	bne    v0, zero, loop74aec [$80074aec]
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -4010,7 +4009,7 @@ loop74b48:	; 80074B48
 80074B54	bne    v0, zero, loop74b48 [$80074b48]
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 8006fa24; // "c:\work\cdrom\sound\music\battle2.smd"
 A1 = 0;
@@ -4321,7 +4320,7 @@ L74ce8:	; 80074CE8
 800752D8	j      L74ce8 [$80074ce8]
 
 A0 = S4;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 movie_clear_work_area_sync();
 

@@ -209,7 +209,7 @@ S4 = hu[GP + 1ac];
     system_message_init_font();
 
     A0 = S5;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 // load sysdata text
@@ -241,7 +241,7 @@ S4 = hu[GP + 1ac];
     system_message_init_sysdata();
 
     A0 = S5;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 A0 = S4;
@@ -251,16 +251,16 @@ A0 = 10;
 system_sound_spu_sync();
 
 A0 = snd24_mem;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = snd25_mem;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = snd26_mem;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = snd27_mem;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 func1a970(); // init some data
 
@@ -328,7 +328,7 @@ if( A0 == w[8005895c] ) // check with loading file id
 A0 = w[80058958]; // pointer to place for file load
 if( A0 != 0 )
 {
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [80058958] = w(0); // reset file pointer
 }
@@ -1628,7 +1628,7 @@ for( int i = 0; i < 3; ++i )
                     system_memory_mark_removable();
 
                     A0 = w[8006518c + j * 4];
-                    system_memory_mark_removed_alloc();
+                    system_memory_free();
                 }
             }
 
@@ -1728,7 +1728,7 @@ if( w[8004ea18] != 0 )
             system_extract_archive();
 
             A0 = w[8006518c + i * 4];
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
     }
 
@@ -1763,7 +1763,7 @@ if( w[8004e9d8] != -1 )
     system_memory_mark_removable();
 
     A0 = w[80059b70];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 A0 = field_id;
@@ -2065,7 +2065,7 @@ A2 = 2358;
 system_memmove();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 S3 = SP + 0010;
 S2 = SP + 0011;
@@ -2801,24 +2801,24 @@ switch( bu[80058afc] )
 if( bu[80058818] != 0 )
 {
     A0 = S4;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = S5;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     if( bu[80058afc] == 5 )
     {
         A0 = w[80064f5c];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         A0 = w[8006b4b4];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         A0 = w[80059b3c];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         A0 = w[80059b40];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     [80058818] = b(1);

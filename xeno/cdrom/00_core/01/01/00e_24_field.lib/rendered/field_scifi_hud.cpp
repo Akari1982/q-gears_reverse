@@ -39,7 +39,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = mem;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -55,10 +55,10 @@ if( w[800ae74c] != 0 ) // if inited
     system_draw_sync();
 
     A0 = w[800af134];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[800af138];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 

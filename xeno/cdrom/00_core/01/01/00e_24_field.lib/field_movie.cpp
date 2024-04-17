@@ -2,37 +2,33 @@
 // funca6564()
 // movie related
 
-A0 = 0004;
-
-800A6570	jal    $system_memory_set_alloc_user
+A0 = 4;
 A1 = 0;
-V1 = w[800ad04c];
-V0 = 0002;
-800A6584	bne    v1, v0, La659c [$800a659c]
-V0 = 0001;
-[801d68b4] = w(V0);
-800A6594	j      La65a8 [$800a65a8]
-A0 = 0140;
+system_memory_set_alloc_user();
 
-La659c:	; 800A659C
-[801d68b4] = w(0);
-A0 = 0140;
+if( w[800ad04c] == 2 )
+{
+    [801d68b4] = w(1);
+}
+else
+{
+    [801d68b4] = w(0);
+}
 
-La65a8:	; 800A65A8
-A1 = 00e0;
-V0 = 0020;
-[SP + 0010] = w(V0);
-V0 = 0800;
-A2 = 0080;
-V1 = hu[800c2f0a];
-A3 = 0010;
-[SP + 0014] = w(V0);
-800A65CC	jal    $801d3538
-[SP + 0018] = w(V1);
-A0 = 0008;
+A0 = 140;
+A1 = e0;
+A2 = 80;
+A3 = 10;
+A4 = 20;
+A5 = 800;
+A6 = hu[800c2f0a];
+mdec_init();
+
 [800ad044] = w(0);
-800A65E0	jal    $system_memory_set_alloc_user
+
+A0 = 8;
 A1 = 0;
+system_memory_set_alloc_user();
 ////////////////////////////////
 
 
@@ -129,12 +125,11 @@ if( w[800ad044] == 0 )
     [SP + 2c] = w(e0);
     [SP + 30] = w(800a65f8);
 
-
     A0 = h[800c2ef4] + 2;
     A1 = hu[800c2efe];
     A2 = hu[800c2f00];
     A3 = hu[800c2f02];
-    800A67D4	jal    $801d37cc
+    func1d37cc();
 
     A0 = 4;
     A1 = 0;
@@ -164,10 +159,11 @@ V0 = w[800ad044];
 S0 = 0;
 
 loopa6838:	; 800A6838
-    800A6838	jal    $801d3f7c
-    S0 = S0 + 0001;
-    800A6840	jal    func84c8c [$80084c8c]
-    800A6844	nop
+    func1d3f7c();
+
+    func84c8c();
+
+    S0 = S0 + 1;
     V0 = S0 < S1;
 800A684C	bne    v0, zero, loopa6838 [$800a6838]
 
@@ -245,10 +241,10 @@ else
 }
 
 A0 = w[80059aa8];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[80059aac];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -320,7 +316,7 @@ if( w[800ad04c] == 2 )
             system_extract_archive();
 
             A0 = w[8006518c + i * 4];
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
     }
 }
@@ -484,9 +480,9 @@ S2 = S2 + 0001;
 V0 = S2 < 0005;
 800A6DDC	bne    v0, zero, loopa6cec [$800a6cec]
 S3 = S3 + 0060;
-800A6DE4	jal    $system_memory_mark_removed_alloc
+800A6DE4	jal    $system_memory_free
 A0 = S4;
-800A6DEC	jal    $system_memory_mark_removed_alloc
+800A6DEC	jal    $system_memory_free
 A0 = S5;
 ////////////////////////////////
 
@@ -717,7 +713,7 @@ if( w[800b1738] != 0 )
     field_draw_sync();
 
     A0 = w[800acff8];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 field_particle_clear_all();
@@ -737,7 +733,7 @@ if( w[800ad04c] != 2 )
     system_draw_sync();
 
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = 18000;
     A1 = 0;
@@ -773,7 +769,7 @@ else
 }
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 func84d9c();
 
@@ -947,7 +943,7 @@ system_psyq_wait_frames();
 A0 = 0;
 system_draw_sync();
 
-func1d43b0();
+mdec_deinit();
 
 field_flush_sync();
 
@@ -964,7 +960,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = S2;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 system_memory_clean_removed_alloc();
 

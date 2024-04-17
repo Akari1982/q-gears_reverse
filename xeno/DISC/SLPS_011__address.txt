@@ -438,7 +438,7 @@
                                  0x12 LsFONT
                                  0x13 DelayFree
                   -0 start of memory.
-    +1bc [][][][] set to 1 if some memory marked to remove in system_memory_mark_removed_alloc().
+    +1bc [][][][] set to 1 if some memory marked to remove in system_memory_free().
     +1c0 [][][][] store 1 when we start load some data for field, and 0 when finish process. Maybe this is to restrict new memory allocation till we finish process.
     +1c4 [][][][] init with 0. Start of function debug names.
     +1c8 [][][][] init with 0. End of function debug names.

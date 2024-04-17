@@ -492,7 +492,7 @@ V0 = hu[S0 + 0] & 0001;
 if( V0 != 0 )
 {
     A0 = w[S0 + 18];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [S0 + 0] = h(hu[S0 + 0] & fffe);
 }
@@ -4127,19 +4127,19 @@ if( S0 != 0 )
     part_data = w[S0 + 0];
 
     A0 = w[part_data + 8];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     if( hu[part_data + 0] & 0010 )
     {
         A0 = w[part_data + c];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     [part_data + 8] = w(w[S0 + 4]);
     [part_data + c] = w(w[S0 + 8]);
 
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 
@@ -5387,7 +5387,7 @@ V1 = bu[A0 + 0003];
 V0 = 0;
 
 L3180c:	; 8003180C
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [GP + 01c4] = w(0);
 [GP + 01c8] = w(0);

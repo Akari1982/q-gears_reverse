@@ -376,10 +376,10 @@ for( int i = 0; i < 5; ++i )
 }
 
 A0 = w[SP + 28];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[SP + 30];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -481,7 +481,7 @@ A6 = 0;   // clut_h
 field_load_tim_into_vram();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 if( w[800ae950 + map_id * 20 + 1c] == 1 )
 {
@@ -526,10 +526,10 @@ A0 = 0;
 system_draw_sync();
 
 A0 = w[800c2f10];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800b12c4];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = SP + 20;
 A1 = S3;
@@ -539,5 +539,5 @@ A0 = 0;
 system_draw_sync();
 
 A0 = S3;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////

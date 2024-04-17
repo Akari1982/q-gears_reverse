@@ -3,7 +3,7 @@
 // denit something from script
 
 A0 = w[800af13c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 0;
 system_draw_sync();

@@ -45,13 +45,13 @@ A0 = w[80059aac];
 system_memory_mark_removable();
 
 A0 = w[80059aa4];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[80059aa8];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[80059aac];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -73,7 +73,7 @@ if( w[800c1b60] == 0 ) // debug
     field_debug_add_timer();
 }
 
-80077488	jal    funca2778 [$800a2778]
+funca2778();
 ////////////////////////////////
 
 
@@ -307,7 +307,7 @@ while( true )
                         system_memory_mark_removable();
 
                         A0 = w[80059b70];
-                        system_memory_mark_removed_alloc();
+                        system_memory_free();
                     }
 
                     if( S5 == 0 )
@@ -421,7 +421,7 @@ while( true )
                     system_memory_mark_removable();
 
                     A0 = w[80059b70];
-                    system_memory_mark_removed_alloc();
+                    system_memory_free();
                 }
                 break;
             }
@@ -444,7 +444,7 @@ while( true )
                         system_memory_mark_removable();
 
                         A0 = w[80059b70];
-                        system_memory_mark_removed_alloc();
+                        system_memory_free();
                     }
 
                     [8004e9b4] = w(w[8004e9b4] + 1);
@@ -473,7 +473,7 @@ while( true )
                             system_memory_mark_removable();
 
                             A0 = w[80059b70];
-                            system_memory_mark_removed_alloc();
+                            system_memory_free();
                         }
 
                         S0 = 3;
@@ -645,7 +645,7 @@ func84f9c();
 [8004e9c0] = w(0);
 
 A0 = w[800ad008];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = S0;
 func78b60();
@@ -741,7 +741,7 @@ if( h[800b1818] != 0 )
     system_draw_sync();
 
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 
@@ -837,9 +837,9 @@ field_load_main_map_texture_into_vram();
 V0 = w[800b1738];
 [800af1d8] = w(S0);
 800784B4	beq    v0, zero, L784c4 [$800784c4]
-800784B8	nop
-800784BC	jal    $801e7378
-A0 = 0001;
+
+A0 = 1;
+func1e7378();
 
 L784c4:	; 800784C4
 V0 = bu[80058b6c];
@@ -897,7 +897,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = w[800ad0ec];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [800ad038] = w(0); // set that map texture not loading
 
@@ -1083,7 +1083,7 @@ V0 = w[800b1738];
 if( V0 != 0 )
 {
     A0 = 0;
-    80078848	jal    $801e7378
+    func1e7378();
 }
 
 field_particle_load_texture();
@@ -1536,7 +1536,7 @@ if( w[800b1738] != 0 )
     system_memcpy();
 
     A0 = w[800acff8];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 [SP + 48] = w(w[800ad008]);
@@ -1897,13 +1897,13 @@ A0 = 0;
 system_draw_sync()
 
 A0 = S5;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = S6;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = S7;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 4;
 A1 = 0;
@@ -1940,7 +1940,7 @@ if( w[800b1738] != 0 )
     system_memcpy();
 
     A0 = FP;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 A0 = a0;
@@ -1999,7 +1999,7 @@ else
             system_extract_archive();
 
             A0 = S0;
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
     }
 
@@ -2198,8 +2198,8 @@ loop7a12c:	; 8007A12C
 // funca4aa0()
 
 A0 = w[800af354];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800afb70];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////

@@ -1153,7 +1153,7 @@ if( A0 != 0 )
 
     if( w[80058a3c] == 0 )
     {
-        system_memory_mark_removed_alloc();
+        system_memory_free();
         [80058a30] = w(0);
     }
 }
@@ -1378,7 +1378,7 @@ system_graphic_create_texpage_settings_packet();
 system_print_reset_string_buffer();
 
 A0 = file;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 return mem;
 ////////////////////////////////
@@ -1461,7 +1461,7 @@ L377d0:	; 800377D0
 8003781C	addu   s3, s4, zero
 
 L37820:	; 80037820
-80037820	jal    system_memory_mark_removed_alloc [$80031f0c]
+80037820	jal    system_memory_free [$80031f0c]
 80037824	addu   a0, fp, zero
 80037828	lw     ra, $003c(sp)
 8003782C	lw     fp, $0038(sp)

@@ -1081,19 +1081,19 @@ system_cdrom_action_sync();
 func1d4318();
 
 A0 = w[801e891c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[801e8920];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[801e8928];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[801e892c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[801e898c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [801e891c] = w(0);
 [801e8920] = w(0);

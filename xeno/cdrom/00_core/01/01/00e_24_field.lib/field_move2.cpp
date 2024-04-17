@@ -11,32 +11,32 @@ if( entity_id < w[800ad0d4] ) // number of entity
     if( w[struct_138 + 134] & 00000080 )
     {
         A0 = w[struct_138 + 110];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     if( w[struct_138 + 12c] & 00001000 )
     {
         A0 = w[struct_138 + 114];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     if( hu[struct_5c_p + entity_id * 5c + 58] & 2000 )
     {
         A0 = w[struct_138 + 118];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     if( h[struct_138 + 124] != -1 )
     {
         A0 = w[struct_138 + 120];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     A0 = struct_138;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[struct_5c_p + entity_id * 5c + 8];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[struct_5c_p + entity_id * 5c + 4];
     system_field_sprite_memory_free();
@@ -3077,7 +3077,7 @@ V0 = w[800ad094];
 80084B40	bne    v0, zero, L84b64 [$80084b64]
 V0 = 0;
 A0 = w[800ad090];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [800ad004] = w(0);
 80084B60	addiu  v0, zero, $ffff (=-$1)
@@ -3202,7 +3202,7 @@ if( h[800c2f0c] != ff )
     system_sound_remove_sed_from_linked_array();
 
     A0 = w[800b1830];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 
@@ -3328,7 +3328,7 @@ else
     system_memory_mark_removable();
 
     A0 = w[80059b4c];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 
 A0 = w[80061c2c];
@@ -3356,7 +3356,7 @@ A0 = w[80061c2c];
 system_memory_mark_removable();
 
 A0 = w[80061c2c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [8004e9d0] = w(-1);
 ////////////////////////////////
@@ -3574,7 +3574,7 @@ if( S0 == 1 )
     system_sound_spu_sync();
 
     A0 = w[800c2ef0];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [8004e9f8] = w(0);
     [8004ea04] = w(S0);
@@ -3723,7 +3723,7 @@ A1 = 0;
 8008557C	jal    $8003bca4
 A0 = 0010;
 A0 = w[800af5b4];
-8008558C	jal    $system_memory_mark_removed_alloc
+8008558C	jal    $system_memory_free
 80085590	nop
 V1 = 0001;
 [8004ea08] = w(V1);

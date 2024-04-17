@@ -251,7 +251,7 @@ loopa1890:	; 800A1890
 
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 

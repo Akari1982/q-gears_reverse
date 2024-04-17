@@ -155,10 +155,10 @@ if( bu[80058b94] != 0 )
     system_cdrom_action_sync();
 
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = S1;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     if( bu[80058b18] == 0 )
     {
@@ -252,7 +252,7 @@ while( bu[800cc378] == 0 )
 }
 
 A0 = w[80058c6c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 if( bu[80058be8] != 4 )
 {
@@ -264,10 +264,10 @@ A0 = w[80058c6c];
 system_sound_remove_sed_from_linked_array();
 
 A0 = w[80058b1c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[80058b48];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 8007097C	jal    func704cc [$800704cc]
 
@@ -434,10 +434,10 @@ if( bu[800c3470] == 0 )
 80070D30	jal    func1e252c [$801e252c]
 
 A0 = w[800d245c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800d2680];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -7176,7 +7176,7 @@ S2 = 0;
 loop77654:	; 80077654
 A0 = w[S0 + 0000];
 S0 = S0 + 0004;
-8007765C	jal    $system_memory_mark_removed_alloc
+8007765C	jal    $system_memory_free
 S2 = S2 + 0001;
 V0 = S2 < 000b;
 80077668	bne    v0, zero, loop77654 [$80077654]
@@ -7587,7 +7587,7 @@ V0 = w[800c35c4];
 80077CE8	lui    at, $0001
 AT = V0 + AT;
 A0 = w[AT + a550];
-80077CF4	jal    $system_memory_mark_removed_alloc
+80077CF4	jal    $system_memory_free
 80077CF8	nop
 RA = w[SP + 0010];
 SP = SP + 0018;

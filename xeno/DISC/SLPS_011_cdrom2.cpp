@@ -229,7 +229,7 @@ L278c8:	; 800278C8
 
 if( A0 != 0 )
 {
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 
@@ -347,7 +347,7 @@ S0 = A0;
 A0 = w[S0 + 14];
 if( A0 != 0 )
 {
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [S0 + 14] = w(0);
 }
@@ -796,7 +796,7 @@ if( handler != -1 )
         if( memory != 0 )
         {
             A0 = memory;
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
 
         memory = 0;
@@ -815,7 +815,7 @@ if( handler != -1 )
     if( memory != 0 )
     {
         A0 = memory;
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 }
 
@@ -2514,7 +2514,7 @@ while( hu[S0 + 0] != 0 )
     A0 = w[S0 + 4];
     if( A0 != 0 )
     {
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
     S0 = S0 + 8;
 }
@@ -2575,7 +2575,7 @@ for( int i = 0; i < number; ++i )
         if( new_alloc > 0 )
         {
             A0 = data;
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
         return 0;
     }

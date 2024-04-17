@@ -1118,13 +1118,13 @@
 // system_memory_mark_removable_2
 80031EF4-80031F08
 ////////////////////////////////
-// system_memory_mark_removed_alloc
+// system_memory_free
 80031F0C-80031FAC
 ////////////////////////////////
-// system_memory_mark_removed_alloc_by_type
+// system_memory_free_by_type
 80031FB0-8003205C
 ////////////////////////////////
-// system_memory_mark_removed_alloc_all
+// system_memory_free_all
 80032060-800320D4
 ////////////////////////////////
 // system_memory_mark_forced_removed_alloc_all

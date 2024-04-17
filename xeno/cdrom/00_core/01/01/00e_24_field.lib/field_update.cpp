@@ -1586,7 +1586,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = w[80059b30];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -1809,7 +1809,7 @@ A3 = w[S0 + 0000];
 8007726C	jal    $801e742c
 S6 = S6 + 0004;
 A0 = w[S0 + 0000];
-80077278	jal    $system_memory_mark_removed_alloc
+80077278	jal    $system_memory_free
 S3 = S3 + 0001;
 V1 = S7 + 0020;
 V0 = w[801e8670 + S1];

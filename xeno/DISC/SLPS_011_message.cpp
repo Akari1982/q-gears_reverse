@@ -214,7 +214,7 @@ A0 = w[80058a08];
 system_memory_mark_removable();
 
 A0 = w[80058a08];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [80058a08] = w(0);
 ////////////////////////////////
@@ -228,7 +228,7 @@ A0 = w[80058a04];
 system_memory_mark_removable();
 
 A0 = w[80058a04];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 [80058a04] = w(0);
 ////////////////////////////////
@@ -1306,7 +1306,7 @@ if( h[offset_18 + 84] == 0 )
         loop34494:	; 80034494
             A0 = S0;
             S0 = w[S0];
-            system_memory_mark_removed_alloc();
+            system_memory_free();
 
         800344A0	bne    s0, zero, loop34494 [$80034494]
     }
@@ -1341,10 +1341,10 @@ A0 = offset_18;
 func344c8();
 
 A0 = w[offset_18 + 28];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[offset_18 + 2c];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -1479,7 +1479,7 @@ if( ( hu[offset_18 + 10] & 0004 ) == 0 )
     [offset_18 + 8c] = w(w[text_stack + 0]);
 
     A0 = text_stack;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [offset_18 + 82] = h(hu[offset_18 + 82] - 1);
     [offset_18 + 10] = h((hu[offset_18 + 10] & 0002) | 0024);

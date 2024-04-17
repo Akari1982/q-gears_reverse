@@ -494,7 +494,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = w[800aec58];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 // clear place in vram
 A0 = 200;
@@ -520,7 +520,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -548,10 +548,10 @@ if( w[8004e9a4] != 0 )
 if( w[8004e9a4] != 0 )
 {
     A0 = w[800aec40];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[800aec44];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 ////////////////////////////////
 

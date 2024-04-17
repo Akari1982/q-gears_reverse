@@ -43,7 +43,7 @@ A0 = w[80059b70];
 system_memory_mark_removable();
 
 A0 = w[80059b70];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 if( w[800af51c] != 6 )
 {
@@ -66,7 +66,7 @@ A0 = w[80059b70];
 system_memory_mark_not_removable();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 switch( w[800af51c] )
 {
@@ -217,7 +217,7 @@ switch( w[800af51c] )
             }
 
             A0 = w[800ad0ec];
-            system_memory_mark_removed_alloc();
+            system_memory_free();
 
             [800ad038] = w(0); // set that map texture not loading
 
@@ -777,7 +777,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = S1;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -1085,7 +1085,7 @@ for( int y = 0; y < e; ++y )
 // clear memory
 
 A0 = w[800af598];
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 

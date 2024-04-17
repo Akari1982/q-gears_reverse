@@ -240,12 +240,12 @@ for( int i = 0; i < 3; ++i )
         [800afb78 + i * 6 + 2] = h(0); // load to vram finished
 
         A0 = w[800acfe8];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         if( h[800afb78 + i * 6 + 4] == 1 )
         {
             A0 = w[800acfec];
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
         return -1;
     }

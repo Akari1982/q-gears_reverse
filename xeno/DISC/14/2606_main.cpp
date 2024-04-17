@@ -742,7 +742,7 @@ A2 = 200;
 system_memmove();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 801E0C34	jal    $8001b500
 
@@ -773,7 +773,7 @@ A2 = S1;
 system_memmove();
 
 A0 = w[800d30f8];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 801E0CA8	jal    $800992ac
 

@@ -213,10 +213,10 @@ if( number_of_entity > 0 )
             func2c9cc();
 
             A0 = w[model_struct + 8];
-            system_memory_mark_removed_alloc(); // clear packets
+            system_memory_free(); // clear packets
 
             A0 = model_struct;
-            system_memory_mark_removed_alloc();
+            system_memory_free();
         }
 
         S1 = S1 + 1;
@@ -227,25 +227,25 @@ if( number_of_entity > 0 )
 field_distortion_deinit();
 
 A0 = w[800aefe4]; // allocated entity data
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800ad0cc]; // field triggers
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800ad0c8]; // field dialog
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800ad0d0]; // field script
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800aefec]; // field walkmesh
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800aefe8]; // field model
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = w[800aeff0]; // field sprite
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 if( h[800af586] != 0 )
 {
@@ -270,12 +270,12 @@ if( V0 > 0 )
         S1 = S1 + 0001;
 
         A0 = w[S2];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         S2 = S2 + 0004;
 
         A0 = w[S0];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         S0 = S0 + 0004;
         V0 = h[S3 + fffc];
@@ -293,14 +293,14 @@ if( w[800b1738] != 0 )
     func1e7fd4();
 
     A0 = w[800acff8];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     field_flush_sync();
 }
 [800b1738] = w(0);
 
 A0 = 3;
-system_memory_mark_removed_alloc_by_type();
+system_memory_free_by_type();
 
 field_scifi_hud_deinit();
 ////////////////////////////////
@@ -408,7 +408,7 @@ if( w[800ad038] == 1 )
     system_draw_sync();
 
     A0 = w[800ad0ec];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [800ad038] = w(0);
 }
@@ -871,10 +871,10 @@ A0 = 0; // wait for termination
 system_draw_sync();
 
 A0 = S2;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = S4;
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 // 3d model extraction (part 2 of field file)
 V0 = w[80059b70];
@@ -1108,7 +1108,7 @@ A0 = w[80059b70];
 system_memory_mark_removable();
 
 A0 = w[80059b70];
-system_memory_mark_removed_alloc();
+system_memory_free();
 
 A0 = 5; // MIYA
 A1 = 0;

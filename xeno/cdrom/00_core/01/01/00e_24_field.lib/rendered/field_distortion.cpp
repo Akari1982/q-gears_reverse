@@ -6,16 +6,16 @@
 if( w[800acffc] != 0 ) // if inited
 {
     A0 = w[800b1588];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[800b15bc];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[800b1590];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = w[800b1594];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [800acffc] = w(0); // deinit
 }

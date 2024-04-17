@@ -43,7 +43,7 @@ func31840();
 
 start = A0;
 
-system_memory_mark_removed_alloc_all();
+system_memory_free_all();
 
 if( w[GP + 1bc] != 0 )
 {
@@ -118,7 +118,7 @@ if( w[GP + 1bc] != 0 )
 [GP + 1cc] = w(alloc_size);
 aligned_size = (alloc_size + 3) & fffffffc; // align to size of word
 
-not_use_min_lowest = 1;
+memory_not_enough = 1;
 min_free_data = 0;
 lowest_free_data = 0;
 free_data = 0;
@@ -127,15 +127,16 @@ min_free_space = 800000;
 data = w[GP + 1b0];
 while( true )
 {
-    while( ( w[data - 4] & 01e00000 ) != 0 )
+    while( ( w[data - 4] & 01e00000 ) != 0 ) // owner id
     {
-        if( ( w[data - 4] & 01e00000 ) == 00200000 )
+        if( ( w[data - 4] & 01e00000 ) == 00200000 ) // owner id "END"
         {
-            if( ( ( w[GP + 1c0] == 0 ) && ( not_use_min_lowest != 0 ) ) || ( not_use_min_lowest == 0 ) )
+            // memory not locked
+            if( ( ( w[GP + 1c0] == 0 ) && ( memory_not_enough != 0 ) ) || ( memory_not_enough == 0 ) )
             {
-                if( not_use_min_lowest != 0 )
+                if( memory_not_enough != 0 )
                 {
-                    A0 = 82;
+                    A0 = 82; // "LsGetMem:Memory Not Enough"
                     func19b50();
                 }
 
@@ -145,10 +146,12 @@ while( true )
                     [min_free_data + aligned_size + 4] = w(w[free_data - 4]);
 
                     [free_data - 8] = w(min_free_data + aligned_size + 8);
-                    [free_data - 4] = w((w[free_data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000
-                    [free_data - 4] = w((w[free_data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000
-                    [free_data - 4] = w(w[free_data - 4]) & fdffffff);                                  // set 0x02000000
+
+                    [free_data - 4] = w((w[free_data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000 owner id
+                    [free_data - 4] = w((w[free_data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000 content id
+                    [free_data - 4] = w(w[free_data - 4] & fdffffff);                                  // set 0x02000000 can be free
                     [free_data - 4] = w((w[free_data - 4] & ffe00000) | (alloc_call_word & 001fffff));  // set 0x001fffff (place in code from where we call allocate function)
+
                     [GP + 1a8] = h(20);
                     return min_free_data;
                 }
@@ -156,10 +159,11 @@ while( true )
                 {
                     if( free_data < lowest_free_data )
                     {
-                        [lowest_free_data - 4] = w((w[lowest_free_data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000
-                        [lowest_free_data - 4] = w((w[lowest_free_data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000
-                        [lowest_free_data - 4] = w(w[lowest_free_data - 4]) & fdffffff);                                  // set 0x02000000
+                        [lowest_free_data - 4] = w((w[lowest_free_data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000 owner id
+                        [lowest_free_data - 4] = w((w[lowest_free_data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000 content id
+                        [lowest_free_data - 4] = w(w[lowest_free_data - 4] & fdffffff);                                   // set 0x02000000 can be free
                         [lowest_free_data - 4] = w((w[lowest_free_data - 4] & ffe00000) | (alloc_call_word & 001fffff));  // set 0x001fffff (place in code from where we call allocate function)
+
                         [GP + 1a8] = h(20);
                         return lowest_free_data;
                     }
@@ -167,11 +171,14 @@ while( true )
                     {
                         V0 = w[free_data - 8] - aligned_size;
                         [V0 + 0] = w(w[free_data + 0]);
-                        [V0 + 4] = w((w[V0 + 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000
-                        [V0 + 4] = w((w[V0 + 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000
-                        [V0 + 4] = w(w[V0 + 4]) & fdffffff);                                  // set 0x02000000
+
+                        [V0 + 4] = w((w[V0 + 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000 owner id
+                        [V0 + 4] = w((w[V0 + 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000 content id
+                        [V0 + 4] = w(w[V0 + 4] & fdffffff);                                  // set 0x02000000 can be free
                         [V0 + 4] = w((w[V0 + 4] & ffe00000) | (alloc_call_word & 001fffff));  // set 0x001fffff (place in code from where we call allocate function)
+
                         [free_data - 8] = w(V0);
+
                         [GP + 1a8] = h(20);
                         return V0;
                     }
@@ -190,19 +197,20 @@ while( true )
     {
         if( flag != 1 )
         {
-            [data - 4] = w((w[data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000
-            [data - 4] = w((w[data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000
-            [data - 4] = w(w[data - 4]) & fdffffff);                                  // set 0x02000000
+            [data - 4] = w((w[data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000 owner id
+            [data - 4] = w((w[data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000 content id
+            [data - 4] = w(w[data - 4] & fdffffff);                                  // set 0x02000000 can be free
             [data - 4] = w((w[data - 4] & ffe00000) | (alloc_call_word & 001fffff));  // set 0x001fffff (place in code from where we call allocate function)
+
             [GP + 1a8] = h(20);
             return data;
         }
-        not_use_min_lowest = 0;
+        memory_not_enough = 0;
         lowest_free_data = data;
     }
     else if( ( free_space - aligned_size ) >= 5 )
     {
-        not_use_min_lowest = 0;
+        memory_not_enough = 0;
 
         if( flag == 1 )
         {
@@ -214,10 +222,12 @@ while( true )
             [data + aligned_size + 4] = w(w[data - 4]);
 
             [data - 8] = w(data + aligned_size + 8);
-            [data - 4] = w((w[data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000
-            [data - 4] = w((w[data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000
-            [data - 4] = w(w[data - 4]) & fdffffff);                                  // set 0x02000000
+
+            [data - 4] = w((w[data - 4] & fe1fffff) | ((hu[GP + 1ac] & 000f) << 15)); // set 0x01e00000 owner id
+            [data - 4] = w((w[data - 4] & 03ffffff) | (hu[GP + 1a8] << 1a));          // set 0xfc000000 content id
+            [data - 4] = w(w[data - 4] & fdffffff);                                  // set 0x02000000 can be free
             [data - 4] = w((w[data - 4] & ffe00000) | (alloc_call_word & 001fffff));  // set 0x001fffff (place in code from where we call allocate function)
+
             [GP + 1a8] = h(20);
             return data;
         }
@@ -316,7 +326,7 @@ while( ( w[data - 4] & 01e00000 ) != 00200000 )
 
 
 ////////////////////////////////
-// system_memory_mark_removed_alloc()
+// system_memory_free()
 
 data = A0;
 
@@ -331,19 +341,19 @@ if( data == 0 )
     [GP + 1cc] = w(0);
     [GP + 1d0] = w(w[SP + 10] - 8);
 
-    A0 = 83;
+    A0 = 83; // "LsFreeMem:Can't Release NULL Pointer"
     func19b50();
 }
 
-if( w[data - 4] & 02000000 )
+if( w[data - 4] & 02000000 ) // can't clear this memory block
 {
     return -1;
 }
 
-[data - 4] = w(w[data - 4] & 03ffffff); // remove 0xfc000000 identificator
-[data - 4] = w(w[data - 4] | 84000000); // add new identificator 0x21
-[data - 4] = w(w[data - 4] & fe1fffff); // remove 0x01e00000
-[data - 4] = w(w[data - 4] & ffe00000); // remove 0x00100000 function allocates this pointer
+[data - 4] = w(w[data - 4] & 03ffffff); // remove 0xfc000000 content id
+[data - 4] = w(w[data - 4] | 84000000); // add new identificator FREE AREA
+[data - 4] = w(w[data - 4] & fe1fffff); // remove 0x01e00000 owner id
+[data - 4] = w(w[data - 4] & ffe00000); // remove 0x001fffff function allocates this pointer
 
 [GP + 1bc] = w(1); // mark memory dirty
 
@@ -353,7 +363,7 @@ return 0;
 
 
 ////////////////////////////////
-// system_memory_mark_removed_alloc_by_type()
+// system_memory_free_by_type()
 
 type = A0;
 
@@ -364,7 +374,7 @@ while( ( w[data - 4] & 01e00000 ) != 00200000 )
     if( ( ( w[data - 4] >> 15 ) & f ) == type ) // check 0x01e00000
     {
         A0 = data;
-        system_memory_mark_removed_alloc();
+        system_memory_free();
     }
 
     data = w[data - 8]; // next ptr
@@ -374,14 +384,14 @@ while( ( w[data - 4] & 01e00000 ) != 00200000 )
 
 
 ////////////////////////////////
-// system_memory_mark_removed_alloc_all()
+// system_memory_free_all()
 
 data = w[GP + 1b0];
 
 while( ( w[data - 4] & 01e00000 ) != 00200000 )
 {
     A0 = data;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     data = w[data - 8]; // next ptr
 }
@@ -400,7 +410,7 @@ while( ( w[S1 - 4] & 01e00000 ) != 00200000 )
     system_memory_mark_removable();
 
     A0 = data;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     data = w[data - 8]; // next ptr
 }
@@ -888,7 +898,7 @@ S0 = A0;
 system_memory_mark_removable();
 
 A0 = S0;
-system_memory_mark_removed_alloc();
+system_memory_free();
 ////////////////////////////////
 
 
@@ -923,14 +933,14 @@ if( S0 == 0 )
     [GP + 1cc] = w(0);
     [GP + 1d0] = w(w[SP + 10] - 8);
 
-    A0 = 83;
-    80032A74	jal    func19b50 [$80019b50]
+    A0 = 83; // "LsFreeMem:Can't Release NULL Pointer"
+    func19b50();
 }
 
 if( S1 == 0 )
 {
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 }
 else
 {
@@ -962,12 +972,12 @@ while( S0 != 0 )
     if( V0 == -1 )
     {
         A0 = w[S0 + 4];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         V0 = w[S0 + 0];
         A0 = S0;
         [S1 + 0] = w(V0);
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         if( w[S1 + 0] == 0 )
         {
@@ -992,10 +1002,10 @@ S0 = w[80059668];
 while( S0 != 0 )
 {
     A0 = w[S0 + 4];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     A0 = S0;
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     [80059668] = w(w[S0 + 0]);
     S0 = w[80059668];

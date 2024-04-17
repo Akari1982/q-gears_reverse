@@ -651,10 +651,10 @@ L86920:	; 80086920
 
 L86928:	; 80086928
 A0 = w[800c2f1c];
-80086930	jal    $system_memory_mark_removed_alloc
+80086930	jal    $system_memory_free
 80086934	nop
 A0 = w[800aed50];
-80086940	jal    $system_memory_mark_removed_alloc
+80086940	jal    $system_memory_free
 80086944	nop
 V1 = w[800af54c];
 80086950	nop
@@ -3116,7 +3116,7 @@ V0 = V0 + 000b;
 
 L89a60:	; 80089A60
 A0 = w[800b1448];
-80089A68	jal    $system_memory_mark_removed_alloc
+80089A68	jal    $system_memory_free
 80089A6C	nop
 
 L89a70:	; 80089A70
@@ -3558,7 +3558,7 @@ V1 = h[A0 + 124];
 if( V1 != -1 )
 {
     A0 = w[A0 + 0120];
-    system_memory_mark_removed_alloc();
+    system_memory_free();
 
     V1 = w[800af54c];
     [V1 + 124] = h(-1);
@@ -3601,7 +3601,7 @@ AT = AT + V1;
 8008A110	jal    $8003bca4
 A0 = 0010;
 A0 = w[800af1dc];
-8008A120	jal    $system_memory_mark_removed_alloc
+8008A120	jal    $system_memory_free
 8008A124	nop
 V1 = w[800af1ec];
 V0 = 0003;
@@ -3728,7 +3728,7 @@ if( ( w[800ad068] == 0 ) && ( w[800ad004] == 0 ) )
     if( h[struct_138_cur + 124] != -1 )
     {
         A0 = w[struct_138_cur + 120];
-        system_memory_mark_removed_alloc();
+        system_memory_free();
 
         [struct_138_cur + 124] = h(-1);
     }
@@ -4416,7 +4416,7 @@ A1 = w[AT + 9aa4];
 8008AEBC	jal    $80032cd8
 8008AEC0	nop
 A0 = w[800ad098];
-8008AECC	jal    $system_memory_mark_removed_alloc
+8008AECC	jal    $system_memory_free
 8008AED0	nop
 A0 = w[800ad0a0];
 8008AEDC	jal    func8af4c [$8008af4c]
@@ -5272,7 +5272,7 @@ V0 = V0 & 1000;
 8008BDC8	beq    v0, zero, L8bdf8 [$8008bdf8]
 8008BDCC	nop
 A0 = w[V1 + 0114];
-8008BDD4	jal    $system_memory_mark_removed_alloc
+8008BDD4	jal    $system_memory_free
 8008BDD8	nop
 V0 = w[800af54c];
 8008BDE4	nop
@@ -23666,7 +23666,7 @@ V0 = h[V0 + 001c];
 S0 = S0 + S3;
 [S0 + 0000] = w(V0);
 A0 = w[S1 + 0000];
-800A0824	jal    $system_memory_mark_removed_alloc
+800A0824	jal    $system_memory_free
 800A0828	nop
 V1 = w[800af54c];
 800A0834	nop
