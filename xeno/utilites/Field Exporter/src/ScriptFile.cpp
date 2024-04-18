@@ -20,48 +20,56 @@ void
 ScriptFile::GetScripts( const std::string& path )
 {
     Logger* exp = new Logger( path );
-    exp->Log( "Actor = {}\n\n\n\n" );
+
+    exp->Log( "var = [\n" );
+    for( u32 i = 0; i < 0x80; i += 2 )
+    {
+        if( ( i & 0x0f ) == 0 ) exp->Log( "   " );
+        exp->Log( " 0x" + HexToString( GetU16LE( i ), 4, '0' ) + "," );
+        if( ( i & 0x0f ) == 0x0e ) exp->Log( "\n" );
+    }
+    exp->Log( " ]\n" );
 
     u32 number_of_entity = GetU32LE( 0x80 );
     u32 offset_to_script = 0x84 + number_of_entity * 0x40;
 
-    for( u32 i = 0; i < number_of_entity; ++i )
-    {
-        exp->Log( "Actor[ \"0x" + HexToString( i, 2, '0' ) + "\" ] = {\n" );
+//    for( u32 i = 0; i < number_of_entity; ++i )
+//    {
+//        exp->Log( "Actor[ \"0x" + HexToString( i, 2, '0' ) + "\" ] = {\n" );
 
-        for( u8 j = 0; j < 0x20; ++j )
-        {
-            u32 offset_in_script = GetU16LE( 0x84 + i * 0x40 + j * 2 );
-            if( offset_in_script == 0 )
-            {
-                break;
-            }
+//        for( u8 j = 0; j < 0x20; ++j )
+//        {
+//            u32 offset_in_script = GetU16LE( 0x84 + i * 0x40 + j * 2 );
+//            if( offset_in_script == 0 )
+//            {
+//                break;
+//            }
 
-            if( j == 0 )
-            {
-                exp->Log( "    on_start = function( self )\n" );
-            }
-            else if( j == 1 )
-            {
-                exp->Log( "    on_update = function( self )\n" );
-            }
-            else if( j == 2 )
-            {
-                exp->Log( "    on_talk = function( self )\n" );
-            }
-            else if( j == 3 )
-            {
-                exp->Log( "    on_push = function( self )\n" );
-            }
-            else
-            {
-                exp->Log( "    script_0x" + HexToString( j, 2, '0' ) + " = function( self )\n" );
-            }
-
-            u32 pointer = offset_to_script + offset_in_script;
+//            if( j == 0 )
+//            {
+//                exp->Log( "    on_start = function( self )\n" );
+//            }
+//            else if( j == 1 )
+//            {
+//                exp->Log( "    on_update = function( self )\n" );
+//            }
+//            else if( j == 2 )
+//            {
+//                exp->Log( "    on_talk = function( self )\n" );
+//            }
+//            else if( j == 3 )
+//            {
+//                exp->Log( "    on_push = function( self )\n" );
+//            }
+//            else
+//            {
+//                exp->Log( "    script_0x" + HexToString( j, 2, '0' ) + " = function( self )\n" );
+//            }
+//
+            u32 pointer = offset_to_script + GetU16LE( 0x84 );
             bool n_ret = true;
 
-            while( n_ret )
+            while( ( pointer < m_BufferSize ) && ( n_ret == true ) )
             {
                 std::string address = "0x" + HexToString( pointer - offset_to_script, 4, '0' );
                 exp->Log( "        " );
@@ -75,7 +83,7 @@ ScriptFile::GetScripts( const std::string& path )
                         exp->Log( "return 0" );
                         pointer += 1;
                         exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
-                        n_ret = false;
+                        //n_ret = false;
                     }
                     break;
 
@@ -1099,11 +1107,11 @@ ScriptFile::GetScripts( const std::string& path )
                 }
             }
 
-            exp->Log( "    end,\n\n" );
-        }
+//            exp->Log( "    end,\n\n" );
+//        }
 
-        exp->Log( "}\n\n\n\n" );
-    }
+//        exp->Log( "}\n\n\n\n" );
+//    }
 }
 
 
