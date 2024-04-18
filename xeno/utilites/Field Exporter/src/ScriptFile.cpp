@@ -66,7 +66,7 @@ ScriptFile::GetScripts( const std::string& path )
 //                exp->Log( "    script_0x" + HexToString( j, 2, '0' ) + " = function( self )\n" );
 //            }
 //
-            u32 pointer = offset_to_script + GetU16LE( 0x84 );
+            u32 pointer = offset_to_script;
             bool n_ret = true;
 
             while( ( pointer < m_BufferSize ) && ( n_ret == true ) )
@@ -82,7 +82,7 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "return 0" );
                         pointer += 1;
-                        exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
+                        //exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
                         //n_ret = false;
                     }
                     break;
@@ -190,6 +190,13 @@ ScriptFile::GetScripts( const std::string& path )
                     case 0x0c:
                     {
                         exp->Log( "-- 0x0C()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x13:
+                    {
+                        exp->Log( "opcode13_Nop()" );
                         pointer += 1;
                     }
                     break;
@@ -588,9 +595,23 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x9b:
+                    {
+                        exp->Log( "-- 0x9B( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
+                        pointer += 5;
+                    }
+                    break;
+
                     case 0x9c:
                     {
                         exp->Log( "opcode9C_MessageSync()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x9f:
+                    {
+                        exp->Log( "-- 0x9F()" );
                         pointer += 1;
                     }
                     break;
@@ -797,6 +818,20 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "opcodeFC_MessageShowFromActorCopyFace( actor_id=" + GetEVariable( pointer + 1 ) + ", text_id=" + GetU16Variable( pointer + 2 ) + ", flags=" + GetMessageFlags( pointer + 4 ) + " )" );
                         pointer += 6;
+                    }
+                    break;
+
+                    case 0xfd:
+                    {
+                        exp->Log( "opcodeFD_Nop()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xff:
+                    {
+                        exp->Log( "opcodeFF_Nop()" );
+                        pointer += 1;
                     }
                     break;
 
