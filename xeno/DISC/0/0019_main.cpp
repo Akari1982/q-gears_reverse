@@ -273,12 +273,11 @@ else
     [801e8968] = b(0);
 }
 
-V0 = w[801d68b4];
 [801e8964] = b(0);
 
 S2 = S3 & ffff;
 
-if( V0 != 0 )
+if( w[801d68b4] != 0 )
 {
     S4 = S3;
 }
@@ -427,7 +426,7 @@ T0 = w[SP + 0028];
 [801e8960] = b(0);
 [801e897c] = h(S1);
 [801e8974] = h(FP);
-[801e896c] = w(T0);
+[801e896c] = w(T0); // number of sectors to play
 
 if( bu[801e8968] != 0 )
 {
@@ -699,7 +698,6 @@ V0 = bu[801e895c];
 801D3D7C	nop
 S0 = 801e8930;
 V0 = w[S0 + 0000];
-801D3D8C	nop
 V0 = V0 << 03;
 V1 = hu[801e8934 + V0];
 [801e8948 + V0] = h(V1);
@@ -707,15 +705,14 @@ V0 = w[S0 + 0000];
 V0 = V0 << 03;
 V1 = hu[801e8936 + V0];
 [801e894a + V0] = h(V1);
+
+[801e8980] = w(w[801e8994]);
+
 V0 = w[801e8918];
+A0 = w[S0 + V0 * 4 - 14];
 A1 = w[801d68c8];
-V0 = V0 << 02;
-V0 = S0 + V0;
-A0 = w[V0 + ffec];
-V0 = w[801e8994];
-[801e8980] = w(V0);
-801D3DFC	jal    func1d46a0 [$801d46a0]
-801D3E00	nop
+func1d46a0();
+
 V0 = w[S0 + 0000];
 801D3E08	nop
 V0 = V0 << 03;
@@ -750,56 +747,47 @@ V1 = V1 - A0;
 L1d3e88:	; 801D3E88
 A0 = w[801d68cc];
 A1 = 801e8910;
-801D3E98	jal    func1d3b00 [$801d3b00]
-801D3E9C	nop
-[801e8914] = w(V0);
-801D3EA8	bne    v0, zero, L1d3ec0 [$801d3ec0]
-V0 = 0001;
-[801e895c] = b(V0);
-801D3EB8	j      L1d3f68 [$801d3f68]
-801D3EBC	nop
+func1d3b00();
 
-L1d3ec0:	; 801D3EC0
-A0 = w[801d68c4];
+[801e8914] = w(V0);
+if( V0 == 0 )
+{
+    [801e895c] = b(1);
+    return;
+}
+
 [801e895c] = b(0);
-801D3ED0	jal    func1d4c98 [$801d4c98]
-801D3ED4	nop
+
+A0 = w[801d68c4];
+func1d4c98();
+
 V0 = w[801e8918];
 A0 = w[801e8914];
-V0 = V0 << 02;
-801D3EEC	lui    at, $801f
-AT = AT + V0;
-A1 = w[AT + 891c];
+A1 = w[801e891c + V0 * 4];
 801D3EF8	j      L1d3f08 [$801d3f08]
-801D3EFC	nop
 
 L1d3f00:	; 801D3F00
 A0 = 0;
 A1 = 0;
 
 L1d3f08:	; 801D3F08
-801D3F08	jal    func1d4cc8 [$801d4cc8]
-801D3F0C	nop
+func1d4cc8();
+
 [801d68c0] = w(V0);
-V0 = w[801d68c0];
-801D3F20	nop
-801D3F24	bne    v0, zero, L1d3f68 [$801d3f68]
-801D3F28	nop
-V0 = bu[801e8968];
-801D3F34	nop
-801D3F38	beq    v0, zero, L1d3f58 [$801d3f58]
-801D3F3C	nop
-A0 = w[801e8910];
-801D3F48	jal    $800292c4
-801D3F4C	nop
-801D3F50	j      L1d3f68 [$801d3f68]
-801D3F54	nop
 
-L1d3f58:	; 801D3F58
-A0 = w[801e8914];
-801D3F60	jal    func1d5b7c [$801d5b7c]
-801D3F64	nop
-
+if( w[801d68c0] == 0 )
+{
+    if( bu[801e8968] != 0 )
+    {
+        A0 = w[801e8910];
+        func292c4();
+    }
+    else
+    {
+        A0 = w[801e8914];
+        func1d5b7c();
+    }
+}
 L1d3f68:	; 801D3F68
 ////////////////////////////////
 
@@ -1172,87 +1160,90 @@ mdec_reset_inner();
 
 
 ////////////////////////////////
-// func1d456c
+// func1d456c()
+
 A2 = A0;
 A1 = 801d76e4;
 V1 = 000f;
 801D457C	addiu  a3, zero, $ffff (=-$1)
 
 loop1d4580:	; 801D4580
-V0 = w[A1 + 0000];
-A1 = A1 + 0004;
-801D4588	addiu  v1, v1, $ffff (=-$1)
-[A2 + 0000] = w(V0);
+    V0 = w[A1 + 0000];
+    A1 = A1 + 0004;
+    801D4588	addiu  v1, v1, $ffff (=-$1)
+    [A2 + 0000] = w(V0);
+    A2 = A2 + 0004;
 801D4590	bne    v1, a3, loop1d4580 [$801d4580]
-A2 = A2 + 0004;
+
 A2 = A0 + 0040;
 A1 = 801d7724;
 V1 = 000f;
 801D45A8	addiu  a3, zero, $ffff (=-$1)
 
 loop1d45ac:	; 801D45AC
-V0 = w[A1 + 0000];
-A1 = A1 + 0004;
-801D45B4	addiu  v1, v1, $ffff (=-$1)
-[A2 + 0000] = w(V0);
+    V0 = w[A1 + 0000];
+    A1 = A1 + 0004;
+    801D45B4	addiu  v1, v1, $ffff (=-$1)
+    [A2 + 0000] = w(V0);
+    A2 = A2 + 0004;
 801D45BC	bne    v1, a3, loop1d45ac [$801d45ac]
-A2 = A2 + 0004;
+
 A2 = A0 + 0080;
 A1 = 801d7768;
 V1 = 001f;
 801D45D4	addiu  a3, zero, $ffff (=-$1)
 
 loop1d45d8:	; 801D45D8
-V0 = w[A1 + 0000];
-A1 = A1 + 0004;
-801D45E0	addiu  v1, v1, $ffff (=-$1)
-[A2 + 0000] = w(V0);
+    V0 = w[A1 + 0000];
+    A1 = A1 + 0004;
+    801D45E0	addiu  v1, v1, $ffff (=-$1)
+    [A2 + 0000] = w(V0);
+    A2 = A2 + 0004;
 801D45E8	bne    v1, a3, loop1d45d8 [$801d45d8]
-A2 = A2 + 0004;
-801D45F0	jr     ra 
-V0 = A0;
+
+return A0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d45f8
+// func1d45f8()
 
-S0 = A0;
-A1 = 801d76e4;
-V1 = 000f;
-801D4610	addiu  a2, zero, $ffff (=-$1)
-[SP + 0014] = w(RA);
+// copy parameter to be loaded in mdec
+for( int i = 0; i < 10; ++i )
+{
+    [801d76e4 + i * 4] = w(w[A0 + i * 4]);
+}
 
-loop1d4618:	; 801D4618
-V0 = w[A0 + 0000];
-A0 = A0 + 0004;
-801D4620	addiu  v1, v1, $ffff (=-$1)
-[A1 + 0000] = w(V0);
-801D4628	bne    v1, a2, loop1d4618 [$801d4618]
-A1 = A1 + 0004;
-A1 = 801d7724;
-A0 = S0 + 0040;
-V1 = 000f;
-801D4640	addiu  a2, zero, $ffff (=-$1)
+// copy data to be loaded in mdec
+for( int i = 0; i < 10; ++i )
+{
+    [801d76e4 + 40 + i * 4] = w(w[A0 + 40 + i * 4]);
+}
 
-loop1d4644:	; 801D4644
-V0 = w[A0 + 0000];
-A0 = A0 + 0004;
-801D464C	addiu  v1, v1, $ffff (=-$1)
-[A1 + 0000] = w(V0);
-801D4654	bne    v1, a2, loop1d4644 [$801d4644]
-A1 = A1 + 0004;
-
-A0 = 801d76e0;
-A1 = 0020;
+A0 = 801d76e0; // 01000040
+// MDEC(1) - Decode Macroblock(s)
+// 31-29 Command (1=decode_macroblock)
+// 28-27 Data Output Depth  (0=4bit, 1=8bit, 2=24bit, 3=15bit)      ;STAT.26-25
+// 26    Data Output Signed (0=Unsigned, 1=Signed)                  ;STAT.24
+// 25    Data Output Bit15  (0=Clear, 1=Set) (for 15bit depth only) ;STAT.23
+// 24-16 Not used (should be zero)
+// 15-0  Number of Parameter Words (size of compressed data)
+// This command is followed by one or more Macroblock parameters (usually, all
+// macroblocks for the whole image are sent at once).
+A1 = 20; // number of blocks
 mdec_in_setup();
 
-A0 = 801d7764;
-A1 = 0020;
+A0 = 801d7764; // 00000060
+// MDEC(0) - No function
+// This command has no function. Command bits 25-28 are reflected to Status bits
+// 23-26 as usually. Command bits 0-15 are reflected to Status bits 0-15 (similar
+// as the "number of parameter words" for MDEC(1), but without the "minus 1"
+// effect, and without actually expecting any parameters).
+A1 = 20; // number of blocks
 mdec_in_setup();
 
-V0 = S0;
+return S0;
 ////////////////////////////////
 
 
@@ -1266,46 +1257,40 @@ return hu[A0];
 
 
 ////////////////////////////////
-// func1d46a0
-801D46A0	addiu  sp, sp, $ffe8 (=-$18)
-V0 = A1 & 0001;
-801D46A8	beq    v0, zero, L1d46c4 [$801d46c4]
-[SP + 0010] = w(RA);
-801D46B0	lui    v1, $f7ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-801D46BC	j      L1d46d0 [$801d46d0]
-V0 = V0 & V1;
+// func1d46a0()
 
-L1d46c4:	; 801D46C4
-V0 = w[A0 + 0000];
-801D46C8	lui    v1, $0800
-V0 = V0 | V1;
+if( A1 & 1 )
+{
+    [A0] = w(w[A0] & f7ffffff);
+}
+else
+{
+    [A0] = w(w[A0] | 08000000);
+}
 
-L1d46d0:	; 801D46D0
-[A0 + 0000] = w(V0);
-V0 = A1 & 0002;
-801D46D8	beq    v0, zero, L1d46ec [$801d46ec]
-801D46DC	lui    v1, $0200
-V0 = w[A0 + 0000];
-801D46E4	j      L1d46fc [$801d46fc]
-V0 = V0 | V1;
+if( A1 & 2 )
+{
+    [A0] = w(w[A0] | 02000000);
+}
+else
+{
+    [A0] = w(w[A0] & fdffffff);
+}
 
-L1d46ec:	; 801D46EC
-801D46EC	lui    v1, $fdff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
+A0 = A0; // mdec address (0 - command, +4 addres to wread/write)
+    // MDEC(1) - Decode Macroblock(s)
+    // 31-29 Command (1=decode_macroblock)
+    // 28-27 Data Output Depth  (0=4bit, 1=8bit, 2=24bit, 3=15bit)      ;STAT.26-25
+    // 26    Data Output Signed (0=Unsigned, 1=Signed)                  ;STAT.24
+    // 25    Data Output Bit15  (0=Clear, 1=Set) (for 15bit depth only) ;STAT.23
+    // 24-16 Not used (should be zero)
+    // 15-0  Number of Parameter Words (size of compressed data)
+    // This command is followed by one or more Macroblock parameters (usually, all
+    // macroblocks for the whole image are sent at once).
 
-L1d46fc:	; 801D46FC
-[A0 + 0000] = w(V0);
-A1 = hu[A0 + 0000];
-801D4704	jal    mdec_in_setup [$801d48f8]
-801D4708	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D4714	jr     ra 
-801D4718	nop
+
+A1 = hu[A0 + 0]; // number of blocks
+mdec_in_setup();
 ////////////////////////////////
 
 
@@ -1430,7 +1415,7 @@ else
 ////////////////////////////////
 // mdec_in_setup()
 
-S1 = A0;
+address = A0;
 block = A1;
 
 mdec_command = w[801d7820]; // 1f801820 MDEC Command/Parameter Register (W)
@@ -1442,9 +1427,9 @@ dma_mdec_in_control = w[801d77f8]; // 1f801088 DMA Channel Control (MDEC.In) (R/
 mdec_in_sync();
 
 [dma_control] = w(w[dma_control] | 00000088); // enable MDECin and MDECout
-[dma_mdec_in_address] = w(S1 + 4);
-[dma_mdec_in_block] = w(((block >> 5) << 10) | 0020);
-[mdec_command] = w(w[S1]);
+[dma_mdec_in_address] = w(address + 4); // Memory Address where the DMA will start reading from/writing to
+[dma_mdec_in_block] = w(((block >> 5) << 10) | 0020); // Amount of blocks | Blocksize 0x20
+[mdec_command] = w(w[address]);
 
 // SyncMode, Transfer Synchronisation/Mode (0-3): 1 Sync blocks to DMA requests   (used for MDEC, SPU, and GPU-data)
 // Start/Busy 1=Start/Enable/Busy

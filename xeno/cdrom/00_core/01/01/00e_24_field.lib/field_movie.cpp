@@ -108,27 +108,25 @@ if( w[800ad044] == 0 )
 
     if( ( h[800c2f0c] != ff ) || ( w[800ad058] & 0040 ) )
     {
-        [SP + 14] = w(3);
+        A5 = 3; // movie type
     }
     else
     {
-        [SP + 14] = w(1);
+        A5 = 1; // movie type
     }
 
-
-    [SP + 10] = w(1);
-    [SP + 18] = w(hu[800c2f0e]);
-    [SP + 1c] = w(hu[800c2ef6]);
-    [SP + 20] = w(hu[800c2ef8]);
-    [SP + 24] = w(hu[800c2efa]);
-    [SP + 28] = w(hu[800c2efc]);
-    [SP + 2c] = w(e0);
-    [SP + 30] = w(800a65f8);
-
-    A0 = h[800c2ef4] + 2;
-    A1 = hu[800c2efe];
-    A2 = hu[800c2f00];
-    A3 = hu[800c2f02];
+    A0 = h[800c2ef4] + 2; // movie id
+    A1 = hu[800c2efe]; // number of sectors to play
+    A2 = hu[800c2f00]; // start frame
+    A3 = hu[800c2f02]; // end frame
+    A4 = 1; // movie channel
+    A6 = hu[800c2f0e]; // rewind
+    A7 = hu[800c2ef6];
+    A8 = hu[800c2ef8]; // screen draw related
+    A9 = hu[800c2efa];
+    A10 = hu[800c2efc]; // screen draw related
+    A11 = e0; // screen draw
+    A12 = 800a65f8; // callback funca65f8()
     func1d37cc();
 
     A0 = 4;
@@ -751,7 +749,7 @@ else
 A0 = S0;
 system_memory_free();
 
-func84d9c();
+func84d9c(); // stop sounds and music
 
 field_credits_init();
 
@@ -763,7 +761,7 @@ field_flush_sync();
 
 system_memory_clean_removed_alloc();
 
-funca6564();
+funca6564(); // mdec init
 
 funca66f0();
 
