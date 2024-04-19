@@ -1,93 +1,14 @@
-Actor = {}
-
-
-
-Actor[ "0x00" ] = {
-    on_start = function( self )
-        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
-        -- 0xA0() -- 0x0009 0xa0
-        -- 0x2A() -- 0x0010 0x2a
-        -- MISSING OPCODE 0xFE6a
-    end,
-
-    on_update = function( self )
-        -- MISSING OPCODE 0xFE65
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x0146 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0146 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x01" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=2 ) -- 0x0147 0x16
-        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x014a 0xfe
-        opcode20_ActorSetFlags0( flags=13 ) -- 0x014e 0x20
-        -- MISSING OPCODE 0x5f
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x0162 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x0163 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0163 0x00
-    end,
-
-    script_0x04 = function( self )
-        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0164 0xd2
-        opcode9C_MessageSync() -- 0x0168 0x9c
-        return 0 -- 0x0169 0x00
-    end,
-
-    script_0x05 = function( self )
-        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x016a 0xd2
-        opcode9C_MessageSync() -- 0x016e 0x9c
-        return 0 -- 0x016f 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x02" ] = {
-    on_start = function( self )
-        -- 0xBC_ActorNoModelInit() -- 0x0170 0xbc
-        opcode37_VariableSetFalse( address=0x0410 ) -- 0x0171 0x37
-        opcode37_VariableSetFalse( address=0x0412 ) -- 0x0174 0x37
-        return 0 -- 0x0177 0x00
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x0178 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x0179 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0179 0x00
-    end,
-
-    script_0x04 = function( self )
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0410 ), value2=(s16)0x01c2, condition="value1 < value2", jump_if_false=0x0191 ) -- 0x017a 0x02
-        -- MISSING OPCODE 0xFE1c
-    end,
-
-}
-
-
-
+var = [
+    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0xffff, 0x0007, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+ ]
+opFF_Nop() -- 0x0000 0xff
+return 0 -- 0x0001 0x00
+return 0 -- 0x0002 0x00
+-- MISSING OPCODE 0xe8

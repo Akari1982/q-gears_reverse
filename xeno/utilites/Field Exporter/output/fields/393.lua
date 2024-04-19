@@ -1,531 +1,166 @@
-Actor = {}
-
-
-
-Actor[ "0x00" ] = {
-    on_start = function( self )
-        -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
-        -- 0xA0() -- 0x0009 0xa0
-        -- 0x2A() -- 0x0010 0x2a
-        -- 0x75( ???=44 ) -- 0x0011 0x75
-        opcode35_VariableSet( address=0x040a, value=(vf40)0x0001, flag=0x40 ) -- 0x0014 0x35
-        opcode35_VariableSet( address=0x040c, value=(vf40)0x00aa, flag=0x40 ) -- 0x001a 0x35
-        opcode35_VariableSet( address=0x040e, value=(vf40)0x00ee, flag=0x40 ) -- 0x0020 0x35
-        opcode35_VariableSet( address=0x0410, value=(vf40)0x0000, flag=0x40 ) -- 0x0026 0x35
-        opcode35_VariableSet( address=0x0412, value=(vf40)0x0002, flag=0x40 ) -- 0x002c 0x35
-        -- 0xA8_VariableRandom2( address=0x0402, value=3 ) -- 0x0032 0xa8
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0048 ) -- 0x0037 0x02
-        opcode35_VariableSet( address=0x0414, value=(vf40)0x003a, flag=0x40 ) -- 0x003f 0x35
-        -- 0x01_JumpTo( 0x007b ) -- 0x0045 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0059 ) -- 0x0048 0x02
-        opcode35_VariableSet( address=0x0414, value=(vf40)0x0055, flag=0x40 ) -- 0x0050 0x35
-        -- 0x01_JumpTo( 0x007b ) -- 0x0056 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x006a ) -- 0x0059 0x02
-        opcode35_VariableSet( address=0x0414, value=(vf40)0x005b, flag=0x40 ) -- 0x0061 0x35
-        -- 0x01_JumpTo( 0x007b ) -- 0x0067 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x007b ) -- 0x006a 0x02
-        opcode35_VariableSet( address=0x0414, value=(vf40)0x0006, flag=0x40 ) -- 0x0072 0x35
-        -- 0x01_JumpTo( 0x007b ) -- 0x0078 0x01
-        opcode35_VariableSet( address=0x041c, value=(vf40)0x0001, flag=0x40 ) -- 0x007b 0x35
-        opcode35_VariableSet( address=0x041e, value=(vf40)0x00d8, flag=0x40 ) -- 0x0081 0x35
-        opcode35_VariableSet( address=0x0420, value=(vf40)0x0185, flag=0x40 ) -- 0x0087 0x35
-        opcode35_VariableSet( address=0x0422, value=(vf40)0x0000, flag=0x40 ) -- 0x008d 0x35
-        opcode35_VariableSet( address=0x0424, value=(vf40)0x0002, flag=0x40 ) -- 0x0093 0x35
-        -- 0xA8_VariableRandom2( address=0x0404, value=3 ) -- 0x0099 0xa8
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00af ) -- 0x009e 0x02
-        opcode35_VariableSet( address=0x0426, value=(vf40)0x0041, flag=0x40 ) -- 0x00a6 0x35
-        -- 0x01_JumpTo( 0x00e2 ) -- 0x00ac 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c0 ) -- 0x00af 0x02
-        opcode35_VariableSet( address=0x0426, value=(vf40)0x0057, flag=0x40 ) -- 0x00b7 0x35
-        -- 0x01_JumpTo( 0x00e2 ) -- 0x00bd 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00d1 ) -- 0x00c0 0x02
-        opcode35_VariableSet( address=0x0426, value=(vf40)0x0001, flag=0x40 ) -- 0x00c8 0x35
-        -- 0x01_JumpTo( 0x00e2 ) -- 0x00ce 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00e2 ) -- 0x00d1 0x02
-        opcode35_VariableSet( address=0x0426, value=(vf40)0x003d, flag=0x40 ) -- 0x00d9 0x35
-        -- 0x01_JumpTo( 0x00e2 ) -- 0x00df 0x01
-        opcode35_VariableSet( address=0x042e, value=(vf40)0x0001, flag=0x40 ) -- 0x00e2 0x35
-        opcode35_VariableSet( address=0x0430, value=(vf40)0x0132, flag=0x40 ) -- 0x00e8 0x35
-        opcode35_VariableSet( address=0x0432, value=(vf40)0x0120, flag=0x40 ) -- 0x00ee 0x35
-        opcode35_VariableSet( address=0x0434, value=(vf40)0x0000, flag=0x40 ) -- 0x00f4 0x35
-        opcode35_VariableSet( address=0x0436, value=(vf40)0x0002, flag=0x40 ) -- 0x00fa 0x35
-        -- 0xA8_VariableRandom2( address=0x0406, value=3 ) -- 0x0100 0xa8
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0116 ) -- 0x0105 0x02
-        opcode35_VariableSet( address=0x0438, value=(vf40)0x0016, flag=0x40 ) -- 0x010d 0x35
-        -- 0x01_JumpTo( 0x0149 ) -- 0x0113 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0127 ) -- 0x0116 0x02
-        opcode35_VariableSet( address=0x0438, value=(vf40)0x0042, flag=0x40 ) -- 0x011e 0x35
-        -- 0x01_JumpTo( 0x0149 ) -- 0x0124 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0138 ) -- 0x0127 0x02
-        opcode35_VariableSet( address=0x0438, value=(vf40)0x0050, flag=0x40 ) -- 0x012f 0x35
-        -- 0x01_JumpTo( 0x0149 ) -- 0x0135 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0149 ) -- 0x0138 0x02
-        opcode35_VariableSet( address=0x0438, value=(vf40)0x0039, flag=0x40 ) -- 0x0140 0x35
-        -- 0x01_JumpTo( 0x0149 ) -- 0x0146 0x01
-        opcode35_VariableSet( address=0x0440, value=(vf40)0x0001, flag=0x40 ) -- 0x0149 0x35
-        opcode35_VariableSet( address=0x0442, value=(vf40)0x0132, flag=0x40 ) -- 0x014f 0x35
-        opcode35_VariableSet( address=0x0444, value=(vf40)0x00d0, flag=0x40 ) -- 0x0155 0x35
-        opcode35_VariableSet( address=0x0446, value=(vf40)0x0000, flag=0x40 ) -- 0x015b 0x35
-        opcode35_VariableSet( address=0x0448, value=(vf40)0x0002, flag=0x40 ) -- 0x0161 0x35
-        -- 0xA8_VariableRandom2( address=0x0408, value=3 ) -- 0x0167 0xa8
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x017d ) -- 0x016c 0x02
-        opcode35_VariableSet( address=0x044a, value=(vf40)0x0040, flag=0x40 ) -- 0x0174 0x35
-        -- 0x01_JumpTo( 0x01b0 ) -- 0x017a 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x018e ) -- 0x017d 0x02
-        opcode35_VariableSet( address=0x044a, value=(vf40)0x0054, flag=0x40 ) -- 0x0185 0x35
-        -- 0x01_JumpTo( 0x01b0 ) -- 0x018b 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x019f ) -- 0x018e 0x02
-        opcode35_VariableSet( address=0x044a, value=(vf40)0x0122, flag=0x40 ) -- 0x0196 0x35
-        -- 0x01_JumpTo( 0x01b0 ) -- 0x019c 0x01
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x01b0 ) -- 0x019f 0x02
-        opcode35_VariableSet( address=0x044a, value=(vf40)0x0402, flag=0x40 ) -- 0x01a7 0x35
-        -- 0x01_JumpTo( 0x01b0 ) -- 0x01ad 0x01
-        return 0 -- 0x01b0 0x00
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x01b1 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01b2 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01b2 0x00
-    end,
-
-    script_0x04 = function( self )
-        return 0 -- 0x01b3 0x00
-    end,
-
-    script_0x05 = function( self )
-        return 0 -- 0x01b4 0x00
-    end,
-
-    script_0x06 = function( self )
-        return 0 -- 0x01b5 0x00
-    end,
-
-    script_0x07 = function( self )
-        return 0 -- 0x01b6 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x01" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=0 ) -- 0x01b7 0x16
-        opcodeFE0D_MessageSetFace( char_id=0 ) -- 0x01ba 0xfe
-        return 0 -- 0x01be 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x01bf 0xa7
-        return 0 -- 0x01c0 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01c1 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01c1 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x02" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=1 ) -- 0x01c2 0x16
-        opcodeFE0D_MessageSetFace( char_id=1 ) -- 0x01c5 0xfe
-        return 0 -- 0x01c9 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x01ca 0xa7
-        return 0 -- 0x01cb 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01cc 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01cc 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x03" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=2 ) -- 0x01cd 0x16
-        opcodeFE0D_MessageSetFace( char_id=2 ) -- 0x01d0 0xfe
-        return 0 -- 0x01d4 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x01d5 0xa7
-        return 0 -- 0x01d6 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01d7 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01d7 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x04" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=3 ) -- 0x01d8 0x16
-        opcodeFE0D_MessageSetFace( char_id=3 ) -- 0x01db 0xfe
-        return 0 -- 0x01df 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x01e0 0xa7
-        return 0 -- 0x01e1 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01e2 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01e2 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x05" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=4 ) -- 0x01e3 0x16
-        opcodeFE0D_MessageSetFace( char_id=4 ) -- 0x01e6 0xfe
-        return 0 -- 0x01ea 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x01eb 0xa7
-        return 0 -- 0x01ec 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01ed 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01ed 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x06" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=5 ) -- 0x01ee 0x16
-        opcodeFE0D_MessageSetFace( char_id=5 ) -- 0x01f1 0xfe
-        return 0 -- 0x01f5 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x01f6 0xa7
-        return 0 -- 0x01f7 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x01f8 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x01f8 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x07" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=6 ) -- 0x01f9 0x16
-        opcodeFE0D_MessageSetFace( char_id=6 ) -- 0x01fc 0xfe
-        return 0 -- 0x0200 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x0201 0xa7
-        return 0 -- 0x0202 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x0203 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0203 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x08" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=7 ) -- 0x0204 0x16
-        opcodeFE0D_MessageSetFace( char_id=7 ) -- 0x0207 0xfe
-        return 0 -- 0x020b 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x020c 0xa7
-        return 0 -- 0x020d 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x020e 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x020e 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x09" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=8 ) -- 0x020f 0x16
-        opcodeFE0D_MessageSetFace( char_id=8 ) -- 0x0212 0xfe
-        return 0 -- 0x0216 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x0217 0xa7
-        return 0 -- 0x0218 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x0219 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0219 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x0a" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=9 ) -- 0x021a 0x16
-        opcodeFE0D_MessageSetFace( char_id=9 ) -- 0x021d 0xfe
-        return 0 -- 0x0221 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x0222 0xa7
-        return 0 -- 0x0223 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x0224 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0224 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x0b" ] = {
-    on_start = function( self )
-        -- 0x16_ActorPCInit( char_id=10 ) -- 0x0225 0x16
-        opcodeFE0D_MessageSetFace( char_id=10 ) -- 0x0228 0xfe
-        return 0 -- 0x022c 0x00
-    end,
-
-    on_update = function( self )
-        -- 0xA7() -- 0x022d 0xa7
-        return 0 -- 0x022e 0x00
-    end,
-
-    on_talk = function( self )
-        return 0 -- 0x022f 0x00
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x022f 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x0c" ] = {
-    on_start = function( self )
-        -- 0x0B_InitNPC( 0 ) -- 0x0230 0x0b
-        -- 0x19_ActorSetPosition( x=(vf80)0x00e0, z=(vf40)0x0146, flag=(flag)0xc0 ) -- 0x0233 0x19
-        opcodeFE0D_MessageSetFace( char_id=23 ) -- 0x0239 0xfe
-        -- MISSING OPCODE 0x5f
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x0240 0x00
-    end,
-
-    on_talk = function( self )
-        -- 0xFE54() -- 0x0241 0xfe
-        opcodeD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP ) -- 0x0243 0xd2
-        opcode9C_MessageSync() -- 0x0247 0x9c
-        opcodeD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0248 0xd2
-        opcodeA9_MessageSetSelectionSync( start_row=02, end_row=03 ) -- 0x024c 0xa9
-        opcode9C_MessageSync() -- 0x024e 0x9c
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0260 ) -- 0x024f 0x02
-        -- MISSING OPCODE 0xFE59
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0279 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x0d" ] = {
-    on_start = function( self )
-        -- 0xBC_ActorNoModelInit() -- 0x027a 0xbc
-        -- 0x19_ActorSetPosition( x=(vf80)0xfed4, z=(vf40)0xff6a, flag=(flag)0xc0 ) -- 0x027b 0x19
-        return 0 -- 0x0281 0x00
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x0282 0x00
-    end,
-
-    on_talk = function( self )
-        -- MISSING OPCODE 0x12
-    end,
-
-    on_push = function( self )
-        -- MISSING OPCODE 0x12
-    end,
-
-}
-
-
-
-Actor[ "0x0e" ] = {
-    on_start = function( self )
-        -- 0x0B_InitNPC( GetVar( 0x040a ) ) -- 0x028e 0x0b
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0416 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x029c ) -- 0x0291 0x02
-        -- MISSING OPCODE 0x29
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x02d7 0x00
-    end,
-
-    on_talk = function( self )
-        -- 0xFE54() -- 0x02d8 0xfe
-        -- MISSING OPCODE 0x34
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0332 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x0f" ] = {
-    on_start = function( self )
-        -- 0x0B_InitNPC( GetVar( 0x041c ) ) -- 0x0334 0x0b
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0428 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0342 ) -- 0x0337 0x02
-        -- MISSING OPCODE 0x29
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x037d 0x00
-    end,
-
-    on_talk = function( self )
-        -- 0xFE54() -- 0x037e 0xfe
-        -- MISSING OPCODE 0x34
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x03d8 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x10" ] = {
-    on_start = function( self )
-        -- 0x0B_InitNPC( GetVar( 0x042e ) ) -- 0x03da 0x0b
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x043a ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x03e8 ) -- 0x03dd 0x02
-        -- MISSING OPCODE 0x29
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x0423 0x00
-    end,
-
-    on_talk = function( self )
-        -- 0xFE54() -- 0x0424 0xfe
-        -- MISSING OPCODE 0x34
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x047e 0x00
-    end,
-
-}
-
-
-
-Actor[ "0x11" ] = {
-    on_start = function( self )
-        -- 0x0B_InitNPC( GetVar( 0x0440 ) ) -- 0x0480 0x0b
-        -- 0x02_ConditionalJumpTo( value1=GetVar( 0x044c ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x048e ) -- 0x0483 0x02
-        -- MISSING OPCODE 0x29
-    end,
-
-    on_update = function( self )
-        return 0 -- 0x04c9 0x00
-    end,
-
-    on_talk = function( self )
-        -- 0xFE54() -- 0x04ca 0xfe
-        -- MISSING OPCODE 0x34
-    end,
-
-    on_push = function( self )
-        return 0 -- 0x0524 0x00
-    end,
-
-}
-
-
-
+var = [
+    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0xffff, 0x0007, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+ ]
+opFF_Nop() -- 0x0000 0xff
+opD4_MessageShowFromActor( actor_id=(entity)party_2, text_id=0xff9e, flags=0 ) -- 0x0001 0xd4
+opFF_Nop() -- 0x0007 0xff
+-- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
+-- 0xA0() -- 0x0009 0xa0
+-- 0x2A() -- 0x0010 0x2a
+-- 0x75( ???=44 ) -- 0x0011 0x75
+op35_VariableSet( address=0x040a, value=(vf40)0x0001, flag=0x40 ) -- 0x0014 0x35
+op35_VariableSet( address=0x040c, value=(vf40)0x00aa, flag=0x40 ) -- 0x001a 0x35
+op35_VariableSet( address=0x040e, value=(vf40)0x00ee, flag=0x40 ) -- 0x0020 0x35
+op35_VariableSet( address=0x0410, value=(vf40)0x0000, flag=0x40 ) -- 0x0026 0x35
+op35_VariableSet( address=0x0412, value=(vf40)0x0002, flag=0x40 ) -- 0x002c 0x35
+-- 0xA8_VariableRandom2( address=0x0402, value=3 ) -- 0x0032 0xa8
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0048 ) -- 0x0037 0x02
+op35_VariableSet( address=0x0414, value=(vf40)0x003a, flag=0x40 ) -- 0x003f 0x35
+-- 0x01_JumpTo( 0x007b ) -- 0x0045 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0059 ) -- 0x0048 0x02
+op35_VariableSet( address=0x0414, value=(vf40)0x0055, flag=0x40 ) -- 0x0050 0x35
+-- 0x01_JumpTo( 0x007b ) -- 0x0056 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x006a ) -- 0x0059 0x02
+op35_VariableSet( address=0x0414, value=(vf40)0x005b, flag=0x40 ) -- 0x0061 0x35
+-- 0x01_JumpTo( 0x007b ) -- 0x0067 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x007b ) -- 0x006a 0x02
+op35_VariableSet( address=0x0414, value=(vf40)0x0006, flag=0x40 ) -- 0x0072 0x35
+-- 0x01_JumpTo( 0x007b ) -- 0x0078 0x01
+op35_VariableSet( address=0x041c, value=(vf40)0x0001, flag=0x40 ) -- 0x007b 0x35
+op35_VariableSet( address=0x041e, value=(vf40)0x00d8, flag=0x40 ) -- 0x0081 0x35
+op35_VariableSet( address=0x0420, value=(vf40)0x0185, flag=0x40 ) -- 0x0087 0x35
+op35_VariableSet( address=0x0422, value=(vf40)0x0000, flag=0x40 ) -- 0x008d 0x35
+op35_VariableSet( address=0x0424, value=(vf40)0x0002, flag=0x40 ) -- 0x0093 0x35
+-- 0xA8_VariableRandom2( address=0x0404, value=3 ) -- 0x0099 0xa8
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00af ) -- 0x009e 0x02
+op35_VariableSet( address=0x0426, value=(vf40)0x0041, flag=0x40 ) -- 0x00a6 0x35
+-- 0x01_JumpTo( 0x00e2 ) -- 0x00ac 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c0 ) -- 0x00af 0x02
+op35_VariableSet( address=0x0426, value=(vf40)0x0057, flag=0x40 ) -- 0x00b7 0x35
+-- 0x01_JumpTo( 0x00e2 ) -- 0x00bd 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00d1 ) -- 0x00c0 0x02
+op35_VariableSet( address=0x0426, value=(vf40)0x0001, flag=0x40 ) -- 0x00c8 0x35
+-- 0x01_JumpTo( 0x00e2 ) -- 0x00ce 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00e2 ) -- 0x00d1 0x02
+op35_VariableSet( address=0x0426, value=(vf40)0x003d, flag=0x40 ) -- 0x00d9 0x35
+-- 0x01_JumpTo( 0x00e2 ) -- 0x00df 0x01
+op35_VariableSet( address=0x042e, value=(vf40)0x0001, flag=0x40 ) -- 0x00e2 0x35
+op35_VariableSet( address=0x0430, value=(vf40)0x0132, flag=0x40 ) -- 0x00e8 0x35
+op35_VariableSet( address=0x0432, value=(vf40)0x0120, flag=0x40 ) -- 0x00ee 0x35
+op35_VariableSet( address=0x0434, value=(vf40)0x0000, flag=0x40 ) -- 0x00f4 0x35
+op35_VariableSet( address=0x0436, value=(vf40)0x0002, flag=0x40 ) -- 0x00fa 0x35
+-- 0xA8_VariableRandom2( address=0x0406, value=3 ) -- 0x0100 0xa8
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0116 ) -- 0x0105 0x02
+op35_VariableSet( address=0x0438, value=(vf40)0x0016, flag=0x40 ) -- 0x010d 0x35
+-- 0x01_JumpTo( 0x0149 ) -- 0x0113 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0127 ) -- 0x0116 0x02
+op35_VariableSet( address=0x0438, value=(vf40)0x0042, flag=0x40 ) -- 0x011e 0x35
+-- 0x01_JumpTo( 0x0149 ) -- 0x0124 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0138 ) -- 0x0127 0x02
+op35_VariableSet( address=0x0438, value=(vf40)0x0050, flag=0x40 ) -- 0x012f 0x35
+-- 0x01_JumpTo( 0x0149 ) -- 0x0135 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0149 ) -- 0x0138 0x02
+op35_VariableSet( address=0x0438, value=(vf40)0x0039, flag=0x40 ) -- 0x0140 0x35
+-- 0x01_JumpTo( 0x0149 ) -- 0x0146 0x01
+op35_VariableSet( address=0x0440, value=(vf40)0x0001, flag=0x40 ) -- 0x0149 0x35
+op35_VariableSet( address=0x0442, value=(vf40)0x0132, flag=0x40 ) -- 0x014f 0x35
+op35_VariableSet( address=0x0444, value=(vf40)0x00d0, flag=0x40 ) -- 0x0155 0x35
+op35_VariableSet( address=0x0446, value=(vf40)0x0000, flag=0x40 ) -- 0x015b 0x35
+op35_VariableSet( address=0x0448, value=(vf40)0x0002, flag=0x40 ) -- 0x0161 0x35
+-- 0xA8_VariableRandom2( address=0x0408, value=3 ) -- 0x0167 0xa8
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x017d ) -- 0x016c 0x02
+op35_VariableSet( address=0x044a, value=(vf40)0x0040, flag=0x40 ) -- 0x0174 0x35
+-- 0x01_JumpTo( 0x01b0 ) -- 0x017a 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x018e ) -- 0x017d 0x02
+op35_VariableSet( address=0x044a, value=(vf40)0x0054, flag=0x40 ) -- 0x0185 0x35
+-- 0x01_JumpTo( 0x01b0 ) -- 0x018b 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x019f ) -- 0x018e 0x02
+op35_VariableSet( address=0x044a, value=(vf40)0x0122, flag=0x40 ) -- 0x0196 0x35
+-- 0x01_JumpTo( 0x01b0 ) -- 0x019c 0x01
+-- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x01b0 ) -- 0x019f 0x02
+op35_VariableSet( address=0x044a, value=(vf40)0x0402, flag=0x40 ) -- 0x01a7 0x35
+-- 0x01_JumpTo( 0x01b0 ) -- 0x01ad 0x01
+return 0 -- 0x01b0 0x00
+return 0 -- 0x01b1 0x00
+return 0 -- 0x01b2 0x00
+return 0 -- 0x01b3 0x00
+return 0 -- 0x01b4 0x00
+return 0 -- 0x01b5 0x00
+return 0 -- 0x01b6 0x00
+-- 0x16_ActorPCInit( char_id=0 ) -- 0x01b7 0x16
+opFE0D_MessageSetFace( char_id=0 ) -- 0x01ba 0xfe
+return 0 -- 0x01be 0x00
+-- 0xA7() -- 0x01bf 0xa7
+return 0 -- 0x01c0 0x00
+return 0 -- 0x01c1 0x00
+-- 0x16_ActorPCInit( char_id=1 ) -- 0x01c2 0x16
+opFE0D_MessageSetFace( char_id=1 ) -- 0x01c5 0xfe
+return 0 -- 0x01c9 0x00
+-- 0xA7() -- 0x01ca 0xa7
+return 0 -- 0x01cb 0x00
+return 0 -- 0x01cc 0x00
+-- 0x16_ActorPCInit( char_id=2 ) -- 0x01cd 0x16
+opFE0D_MessageSetFace( char_id=2 ) -- 0x01d0 0xfe
+return 0 -- 0x01d4 0x00
+-- 0xA7() -- 0x01d5 0xa7
+return 0 -- 0x01d6 0x00
+return 0 -- 0x01d7 0x00
+-- 0x16_ActorPCInit( char_id=3 ) -- 0x01d8 0x16
+opFE0D_MessageSetFace( char_id=3 ) -- 0x01db 0xfe
+return 0 -- 0x01df 0x00
+-- 0xA7() -- 0x01e0 0xa7
+return 0 -- 0x01e1 0x00
+return 0 -- 0x01e2 0x00
+-- 0x16_ActorPCInit( char_id=4 ) -- 0x01e3 0x16
+opFE0D_MessageSetFace( char_id=4 ) -- 0x01e6 0xfe
+return 0 -- 0x01ea 0x00
+-- 0xA7() -- 0x01eb 0xa7
+return 0 -- 0x01ec 0x00
+return 0 -- 0x01ed 0x00
+-- 0x16_ActorPCInit( char_id=5 ) -- 0x01ee 0x16
+opFE0D_MessageSetFace( char_id=5 ) -- 0x01f1 0xfe
+return 0 -- 0x01f5 0x00
+-- 0xA7() -- 0x01f6 0xa7
+return 0 -- 0x01f7 0x00
+return 0 -- 0x01f8 0x00
+-- 0x16_ActorPCInit( char_id=6 ) -- 0x01f9 0x16
+opFE0D_MessageSetFace( char_id=6 ) -- 0x01fc 0xfe
+return 0 -- 0x0200 0x00
+-- 0xA7() -- 0x0201 0xa7
+return 0 -- 0x0202 0x00
+return 0 -- 0x0203 0x00
+-- 0x16_ActorPCInit( char_id=7 ) -- 0x0204 0x16
+opFE0D_MessageSetFace( char_id=7 ) -- 0x0207 0xfe
+return 0 -- 0x020b 0x00
+-- 0xA7() -- 0x020c 0xa7
+return 0 -- 0x020d 0x00
+return 0 -- 0x020e 0x00
+-- 0x16_ActorPCInit( char_id=8 ) -- 0x020f 0x16
+opFE0D_MessageSetFace( char_id=8 ) -- 0x0212 0xfe
+return 0 -- 0x0216 0x00
+-- 0xA7() -- 0x0217 0xa7
+return 0 -- 0x0218 0x00
+return 0 -- 0x0219 0x00
+-- 0x16_ActorPCInit( char_id=9 ) -- 0x021a 0x16
+opFE0D_MessageSetFace( char_id=9 ) -- 0x021d 0xfe
+return 0 -- 0x0221 0x00
+-- 0xA7() -- 0x0222 0xa7
+return 0 -- 0x0223 0x00
+return 0 -- 0x0224 0x00
+-- 0x16_ActorPCInit( char_id=10 ) -- 0x0225 0x16
+opFE0D_MessageSetFace( char_id=10 ) -- 0x0228 0xfe
+return 0 -- 0x022c 0x00
+-- 0xA7() -- 0x022d 0xa7
+return 0 -- 0x022e 0x00
+return 0 -- 0x022f 0x00
+-- 0x0B_InitNPC( 0 ) -- 0x0230 0x0b
+-- 0x19_ActorSetPosition( x=(vf80)0x00e0, z=(vf40)0x0146, flag=(flag)0xc0 ) -- 0x0233 0x19
+opFE0D_MessageSetFace( char_id=23 ) -- 0x0239 0xfe
+-- MISSING OPCODE 0x5f
