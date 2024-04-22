@@ -1722,7 +1722,7 @@ A0 = w[8004f4a8]; // file sector to load
 A1 = 800595ac;
 system_psyq_cd_int_to_pos();
 
-if( flags & 100 )
+if( flags & 100 ) // streaming
 {
     A0 = allocated_memory;
     func288a4(); // store to 8004f4d4
@@ -1795,7 +1795,7 @@ if( flags & 100 )
         return 0;
     }
 }
-else if( flags & 0200 )
+else if( flags & 200 )
 {
     A0 = allocated_memory;
     func288a4(); // store to 8004f4d4
@@ -2347,6 +2347,7 @@ if( items <= 0 )
 }
 
 A0 = items * 808 + 24;
+A1 = A1;
 system_memory_allocate();
 alloc = V0;
 if( alloc == 0 )
@@ -3215,7 +3216,7 @@ if( result_id == 1 ) // DataReady
 
             [8004f49c] = w(0);
 
-            A0 = w[8004f4dc]; // default dir_file_id
+            A0 = w[8004f4dc]; // dir_file_id
             system_cdrom2_command_cdl_set_loc();
 
             [8004f4a0] = w(0);

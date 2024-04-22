@@ -1,7 +1,7 @@
 ////////////////////////////////
 // func1d30c4()
 
-if( bu[801e8968] == 0 )
+if( bu[801e8968] == 0 ) // CD-ROM MODE1
 {
     if( w[801d68c8] & 1 )
     {
@@ -18,235 +18,173 @@ V0 = w[801e8944];
 V1 = h[801e897c];
 A1 = V0 << 03;
 S3 = hu[801e894e + A1];
-801D314C	bltz   v1, L1d3174 [$801d3174]
-A0 = V1;
-V0 = S3 << 10;
-V0 = V0 >> 10;
-V0 = V1 < V0;
-801D3160	beq    v0, zero, L1d3174 [$801d3174]
-801D3164	nop
-801D3168	lui    at, $801f
-AT = AT + A1;
-[AT + 894e] = h(A0);
+if( V1 >= 0 )
+{
+    A0 = V1;
+    V0 = S3 << 10;
+    V0 = V0 >> 10;
+    V0 = V1 < V0;
+    if( V0 != 0 )
+    {
+        [801e894e + A1] = h(A0);
+    }
+}
 
-L1d3174:	; 801D3174
 V0 = w[801d68b4];
-801D317C	nop
-801D3180	beq    v0, zero, L1d3310 [$801d3310]
-801D3184	nop
-A1 = 801e8944;
-A0 = w[A1 + 0000];
-V0 = hu[801e89c0];
-A0 = A0 << 03;
-801D31A0	lui    at, $801f
-AT = AT + A0;
-V1 = hu[AT + 894a];
-[SP + 0014] = h(V0);
-[SP + 0012] = h(V1);
-801D31B4	lui    at, $801f
-AT = AT + A0;
-V1 = hu[AT + 894e];
-V0 = V0 << 10;
-[SP + 0016] = h(V1);
-801D31C8	lui    at, $801f
-AT = AT + A0;
-V1 = h[AT + 894c];
-V0 = V0 >> 10;
-801D31D8	div    v1, v0
-801D3200	mflo   v1
-801D3204	nop
-801D3208	blez   v1, L1d3390 [$801d3390]
-S0 = 0;
-S2 = A1;
+if( V0 != 0 )
+{
+    A1 = 801e8944;
+    A0 = w[A1 + 0000];
+    V0 = hu[801e89c0];
+    A0 = A0 << 03;
+    V1 = hu[801e894a + A0];
+    [SP + 0014] = h(V0);
+    [SP + 0012] = h(V1);
+    V1 = hu[801e894e + A0];
+    V0 = V0 << 10;
+    [SP + 0016] = h(V1);
+    V1 = h[801e894c + A0];
+    V0 = V0 >> 10;
+    801D31D8	div    v1, v0
+    801D3200	mflo   v1
 
-L1d3214:	; 801D3214
-801D3214	addiu  s5, s2, $ffe4 (=-$1c)
-V0 = S3 << 10;
-S4 = V0 >> 10;
-S1 = 0;
+    if( V1 > 0 )
+    {
+        S0 = 0;
+        S2 = A1;
+        801D3214	addiu  s5, s2, $ffe4 (=-$1c)
+        V0 = S3 << 10;
+        S4 = V0 >> 10;
+        S1 = 0;
 
-loop1d3224:	; 801D3224
-V1 = w[S2 + 0000];
-A1 = hu[801e89c0];
-V1 = V1 << 03;
-801D3234	lui    at, $801f
-AT = AT + V1;
-V0 = hu[AT + 8948];
-801D3240	nop
-[SP + 0010] = h(V0);
-801D3248	lui    at, $801f
-AT = AT + V1;
-V0 = hu[AT + 8948];
+        loop1d3224:	; 801D3224
+            V1 = w[S2 + 0000];
+            A1 = hu[801e89c0];
+            V1 = V1 << 03;
+            V0 = hu[801e8948 + V1];
+            [SP + 0010] = h(V0);
+            V0 = hu[801e8948 + V1];
 
-L1d3254:	; 801D3254
-A0 = w[801e8998];
-V0 = V0 + A1;
-801D3260	lui    at, $801f
-AT = AT + V1;
-[AT + 8948] = h(V0);
-801D326C	beq    a0, zero, L1d32a8 [$801d32a8]
-S0 = S0 + 0001;
-V0 = A1 << 10;
-V0 = V0 >> 10;
-801D327C	mult   s1, v0
-V0 = w[801e8924];
-A0 = SP + 0010;
-V0 = V0 << 02;
-V0 = V0 + S5;
-V0 = w[V0 + 0000];
-801D3298	mflo   a1
-A1 = A1 << 01;
-801D32A0	jal    $8004470c
-A1 = A1 + V0;
+            L1d3254:	; 801D3254
+            A0 = w[801e8998];
+            V0 = V0 + A1;
+            [801e8948 + V1] = h(V0);
+            801D326C	beq    a0, zero, L1d32a8 [$801d32a8]
+            S0 = S0 + 0001;
+            V0 = A1 << 10;
+            V0 = V0 >> 10;
+            801D327C	mult   s1, v0
+            V0 = w[801e8924];
+            A0 = SP + 0010;
+            V0 = V0 << 02;
+            V0 = V0 + S5;
+            V0 = w[V0 + 0000];
+            801D3298	mflo   a1
+            A1 = A1 << 01;
+            A1 = A1 + V0;
+            system_load_image();
 
-L1d32a8:	; 801D32A8
-V0 = w[S2 + 0000];
-801D32AC	nop
-V0 = V0 << 03;
-801D32B4	lui    at, $801f
-AT = AT + V0;
-V1 = h[AT + 894c];
-V0 = h[801e89c0];
-801D32C8	nop
-801D32CC	div    v1, v0
-801D32F4	mflo   v1
-801D32F8	nop
-V0 = S0 < V1;
-801D3300	bne    v0, zero, loop1d3224 [$801d3224]
-S1 = S1 + S4;
-801D3308	j      L1d3390 [$801d3390]
-801D330C	nop
+            L1d32a8:	; 801D32A8
+            V0 = w[S2 + 0000];
+            801D32AC	nop
+            V0 = V0 << 03;
+            V1 = h[801e894c + V0];
+            V0 = h[801e89c0];
+            801D32C8	nop
+            801D32CC	div    v1, v0
+            801D32F4	mflo   v1
+            S1 = S1 + S4;
+            V0 = S0 < V1;
+        801D3300	bne    v0, zero, loop1d3224 [$801d3224]
+    }
+}
+else
+{
+    if( w[801e8998] != 0 )
+    {
+        V1 = 801e8944;
+        V0 = w[801e8924];
+        A0 = w[V1 + 0000];
+        V0 = V0 << 02;
+        V0 = V1 + V0;
+        A0 = A0 << 03;
+        V1 = V1 + 0004;
+        A1 = w[V0 + ffe4];
+        A0 = A0 + V1;
+        system_load_image();
+    }
 
-L1d3310:	; 801D3310
-V0 = w[801e8998];
-801D3318	nop
-801D331C	beq    v0, zero, L1d3354 [$801d3354]
-801D3320	nop
-V1 = 801e8944;
-V0 = w[801e8924];
-A0 = w[V1 + 0000];
-V0 = V0 << 02;
-V0 = V1 + V0;
-A0 = A0 << 03;
-V1 = V1 + 0004;
-A1 = w[V0 + ffe4];
-801D334C	jal    $8004470c
-A0 = A0 + V1;
+    V0 = w[801e8944];
+    [801e8948 + V0 * 8] = h(hu[801e8948 + V0 * 8] + hu[801e894c + V0 * 8]);
+}
 
-L1d3354:	; 801D3354
-V0 = w[801e8944];
-801D335C	nop
-V0 = V0 << 03;
-801D3364	lui    at, $801f
-AT = AT + V0;
-V1 = hu[AT + 8948];
-801D3370	lui    at, $801f
-AT = AT + V0;
-A0 = hu[AT + 894c];
-801D337C	nop
-V1 = V1 + A0;
-801D3384	lui    at, $801f
-AT = AT + V0;
-[AT + 8948] = h(V1);
-
-L1d3390:	; 801D3390
 A3 = 801e8944;
 V0 = w[A3 + 0000];
 V1 = 0001;
 V0 = V0 << 03;
-801D33A4	lui    at, $801f
-AT = AT + V0;
-[AT + 894e] = h(S3);
+[801e894e + V0] = h(S3);
 V0 = w[801e8924];
 A0 = w[A3 + 0000];
 A1 = V1 - V0;
 A2 = A0 << 03;
 [801e8924] = w(A1);
-801D33CC	lui    at, $801f
-AT = AT + A2;
-V0 = h[AT + 8948];
-801D33D8	lui    at, $801f
-AT = AT + A2;
-V1 = h[AT + 8938];
+V0 = h[801e8948 + A2];
+V1 = h[801e8938 + A2];
 801D33E4	nop
 V0 = V0 < V1;
-801D33EC	bne    v0, zero, L1d34d0 [$801d34d0]
-801D33F0	nop
-A3 = w[801e8990];
-801D33FC	nop
-801D3400	beq    a3, zero, L1d3488 [$801d3488]
-801D3404	nop
-V0 = w[801d68c8];
-801D3410	nop
-V0 = V0 & 0001;
-801D3418	beq    v0, zero, L1d3460 [$801d3460]
-801D341C	lui    v1, $5555
-801D3420	lui    at, $801f
-AT = AT + A2;
-V0 = h[AT + 8934];
-V1 = V1 | 5556;
-V0 = V0 << 01;
-801D3434	mult   v0, v1
-A0 = hu[801e8980];
-801D3440	lui    at, $801f
-AT = AT + A2;
-A2 = hu[AT + 8936];
-V0 = V0 >> 1f;
-801D3450	mfhi   a1
-A1 = A1 - V0;
-801D3458	j      L1d3480 [$801d3480]
-A1 = A1 & ffff;
+if( V0 == 0 )
+{
+    A3 = w[801e8990]; // callback
+    if( A3 != 0 )
+    {
+        if( w[801d68c8] & 1 )
+        {
+            V0 = h[801e8934 + A2];
+            V1 = 55555556;
+            V0 = V0 << 01;
+            801D3434	mult   v0, v1
+            A0 = hu[801e8980];
+            A2 = hu[801e8936 + A2];
+            V0 = V0 >> 1f;
+            801D3450	mfhi   a1
+            A1 = A1 - V0;
+            A1 = A1 & ffff;
+        }
+        else
+        {
+            A0 = hu[801e8980];
+            A1 = hu[801e8934 + A2];
+            A2 = hu[801e8936 + A2];
+        }
 
-L1d3460:	; 801D3460
-A0 = hu[801e8980];
-801D3468	lui    at, $801f
-AT = AT + A2;
-A1 = hu[AT + 8934];
+        801D3480	jalr   a3 ra
+    }
 
-L1d3474:	; 801D3474
-801D3474	lui    at, $801f
-AT = AT + A2;
-A2 = hu[AT + 8936];
-
-L1d3480:	; 801D3480
-801D3480	jalr   a3 ra
-801D3484	nop
-
-L1d3488:	; 801D3488
-V1 = w[801e89e0];
-A0 = w[801e8980];
-V0 = 0001;
-
-L1d349c:	; 801D349C
-[801e8958] = b(V0);
-[801e8988] = w(A0);
-A0 = 801e8944;
-[801e8998] = w(V1);
-V1 = w[A0 + 0000];
-V0 = 0001;
-V0 = V0 - V1;
-801D34C8	j      L1d3510 [$801d3510]
-[A0 + 0000] = w(V0);
-
-L1d34d0:	; 801D34D0
-801D34D0	lui    at, $801f
-AT = AT + A2;
-V1 = h[AT + 894c];
-801D34DC	lui    at, $801f
-AT = AT + A2;
-V0 = h[AT + 894e];
-801D34E8	nop
-801D34EC	mult   v1, v0
-V0 = A1 << 02;
-V0 = A3 + V0;
-A0 = w[V0 + ffe4];
-801D34FC	mflo   a1
-V0 = A1 >> 1f;
-A1 = A1 + V0;
-801D3508	jal    mdec_out_setup [$801d471c]
-A1 = A1 >> 01;
-
-L1d3510:	; 801D3510
+    V1 = w[801e89e0];
+    A0 = w[801e8980];
+    [801e8958] = b(1);
+    [801e8988] = w(A0);
+    A0 = 801e8944;
+    [801e8998] = w(V1);
+    V1 = w[A0 + 0000];
+    V0 = 1 - V1;
+    [A0 + 0000] = w(V0);
+}
+else
+{
+    V1 = h[801e894c + A2];
+    V0 = h[801e894e + A2];
+    801D34E8	nop
+    801D34EC	mult   v1, v0
+    V0 = A1 << 02;
+    V0 = A3 + V0;
+    A0 = w[V0 + ffe4];
+    801D34FC	mflo   a1
+    V0 = A1 >> 1f;
+    A1 = A1 + V0;
+    A1 = A1 >> 01;
+    mdec_out_setup();
+}
 ////////////////////////////////
 
 
@@ -258,19 +196,19 @@ S3 = A0;
 S5 = A1;
 S0 = A2;
 S4 = A3;
-FP = A4;
+sectors_num = A4;
 S7 = A5;
-S1 = A6;
+screen_mode = A6; // 0 - 16 bit color, other - 24 bit color
 
 system_cdrom2_get_cdrom_hdd_mode();
 
 if( V0 != 0 )
 {
-    [801e8968] = b(1);
+    [801e8968] = b(1); // CD-ROM MODE2 OR HDD
 }
 else
 {
-    [801e8968] = b(0);
+    [801e8968] = b(0); // CD-ROM MODE1
 }
 
 [801e8964] = b(0);
@@ -291,8 +229,7 @@ V1 = S0 & ffff;
 V1 = V1 << 01;
 S0 = V0 * V1;
 [801d68c4] = w(S7);
-V0 = S1 & 3;
-[801d68c8] = w(V0);
+[801d68c8] = w(screen_mode & 3);
 
 S1 = S0 / 100;
 
@@ -353,22 +290,20 @@ V1 = bu[801e8968];
 
 if( V1 != 0 )
 {
-    A0 = FP;
-    A1 = 0;
+    A0 = sectors_num; // items
+    A1 = 0; // alloc flags
     func2a070();
-
     [801e898c] = w(V0);
 }
 else
 {
-    S0 = FP & ffff;
-    A0 = S0 << b;
+    A0 = sectors_num * 800;
     A1 = 0;
     system_memory_allocate();
-
     [801e898c] = w(V0);
+
     A0 = V0;
-    A1 = S0;
+    A1 = sectors_num;
     func1d583c();
 }
 
@@ -386,20 +321,19 @@ return -1;
 ////////////////////////////////
 // func1d37cc()
 
-FP = A0; // movie id
-[SP + 28] = w(A1); // number of sectors to play
-[SP + 30] = h(A2); // start frame
-[SP + 38] = h(A3); // end frame
-S3 = A4; // movie channel
-S2 = A5; // movie type
+movie_id = A0; // movie id
+sectors_to_play = A1;
+start_frame = A2;
+end_frame = A3;
+channel = A4; // movie channel
+type = A5; // 1 - movie type picture + adpcm, 0 - movie type picture only
 rewind = A6;
 S4 = A7; // 0
 S5 = A8; // screen draw related
 S6 = A9; // 0
 S7 = A10; // screen draw related
-S1 = A11; // screen draw
-T0 = A12; // callback
-[SP + 40] = w(T0);
+screen_draw = A11;
+callback = A12; // callback
 
 if( b[801e8964] == 0 )
 {
@@ -422,121 +356,91 @@ else
     [801e8964] = b(1); // rewind off
 }
 
-T0 = w[SP + 0028];
 [801e8960] = b(0);
-[801e897c] = h(S1);
-[801e8974] = h(FP);
-[801e896c] = w(T0); // number of sectors to play
+[801e897c] = h(screen_draw);
+[801e8974] = h(movie_id);
+[801e896c] = w(sectors_to_play);
 
-if( bu[801e8968] != 0 )
+if( bu[801e8968] != 0 ) // CD-ROM MODE2 OR HDD
 {
-    if( S2 & 0001 )
+    if( type & 1 )
     {
-        V0 = 248;
-        [801e8978] = h(S3);
+        [801e8978] = h(channel);
+        [801e8970] = w(248);
     }
     else
     {
         [801e8978] = h(1);
-        V0 = 200;
+        [801e8970] = w(200);
     }
 
-    [801e8970] = w(V0);
     func288bc();
 
     [80059b48] = h(0);
     [80061ba4] = h(0);
-    801D38F4	j      L1d3978 [$801d3978]
-    V0 = S2 & 0002;
+}
+else // CD-ROM MODE1
+{
+    if( type & 1 )
+    {
+        [801e8978] = h(channel);
+        [801e8970] = w(148); // streaming | XA-ADPCM | Process only XA-ADPCM sectors that match Setfilter
+
+        [SP + 20] = b(1); // file
+        [SP + 21] = b(bu[801e8978]); // channel
+
+        do
+        {
+            A0 = d; // Setfilter (file, channel)
+            A1 = SP + 20;
+            A2 = 0;
+            system_cdrom_cdl_command_exec_with_ret_sync();
+        } while( V0 == 0 );
+    }
+    else
+    {
+        [801e8970] = w(100); // streaming | No XA-ADPCM | No XA-Filter
+    }
+
+    A0 = w[801d68c8] & 1;
+    A1 = start_frame;
+    A2 = -1;
+    A3 = 0;
+    A4 = 0;
+    func1d5af4();
+
 }
 
-V0 = S2 & 0001;
-801D38FC	beq    v0, zero, L1d3948 [$801d3948]
-V0 = 0148;
-[801e8978] = h(S3);
-V1 = bu[801e8978];
-[801e8970] = w(V0);
-[SP + 0020] = b(1);
-[SP + 0021] = b(V1);
-
-do
+if( type & 2 )
 {
-    A0 = d;
-    A1 = SP + 20;
-    A2 = 0;
-    system_cdrom_cdl_command_exec_with_ret_sync();
-} while( V0 == 0 );
+    [801e8970] = w(w[801e8970] & ffffffbf); // remove 0x00000040
+}
 
-801D393C	addiu  a2, zero, $ffff (=-$1)
-801D3940	j      L1d3958 [$801d3958]
-801D3944	nop
+[801e8990] = w(callback);
 
-L1d3948:	; 801D3948
-V0 = 0100;
-[801e8970] = w(V0);
-801D3954	addiu  a2, zero, $ffff (=-$1)
+if( w[801d68c8] & 1 )
+{
+    [801e8934] = h((S4 * 3) / 2);
+    [801e893c] = h((S6 * 3) / 2);
+    [801e8936] = h(S5);
+    [801e89c0] = h(18);
+}
+else
+{
+    [801e8934] = h(S4);
+    [801e8936] = h(S5);
+    [801e893c] = h(S6);
+    [801e89c0] = h(10);
+}
 
-L1d3958:	; 801D3958
-A1 = hu[SP + 0030];
-A0 = w[801d68c8];
-A3 = 0;
-[SP + 0010] = w(0);
-801D396C	jal    func1d5af4 [$801d5af4]
-A0 = A0 & 0001;
-V0 = S2 & 0002;
-
-L1d3978:	; 801D3978
-801D3978	beq    v0, zero, L1d3998 [$801d3998]
-801D397C	addiu  v1, zero, $ffbf (=-$41)
-V0 = w[801e8970];
-801D3988	nop
-V0 = V0 & V1;
-[801e8970] = w(V0);
-
-L1d3998:	; 801D3998
-V0 = w[801d68c8];
-T0 = w[SP + 0040];
-V0 = V0 & 0001;
-[801e8990] = w(T0);
-801D39B0	beq    v0, zero, L1d39ec [$801d39ec]
-V0 = S4 << 01;
-V0 = S4 + V0;
-V0 = V0 >> 01;
-[801e8934] = h(V0);
-V0 = S6 << 01;
-V0 = S6 + V0;
-V0 = V0 >> 01;
-[801e893c] = h(V0);
-[801e8936] = h(S5);
-801D39E4	j      L1d3a08 [$801d3a08]
-V0 = 0018;
-
-L1d39ec:	; 801D39EC
-V0 = 0010;
-[801e8934] = h(S4);
-[801e8936] = h(S5);
-[801e893c] = h(S6);
-
-L1d3a08:	; 801D3A08
 [801e893e] = h(S7);
-[801e89c0] = h(V0);
-V0 = 0001;
-[801e8958] = b(V0);
-[801e895c] = b(V0);
-801D3A2C	addiu  v0, zero, $ffff (=-$1)
-[801e8988] = w(V0);
-V0 = 0001;
-[801e89e0] = w(V0);
-[801e8998] = w(V0);
-V0 = hu[SP + 0030];
-A1 = w[SP + 0028];
-A2 = hu[801e8978];
-A3 = w[801e8970];
-[801e8984] = w(V0);
-V0 = hu[SP + 0038];
+[801e8958] = b(1);
+[801e895c] = b(1);
+[801e8988] = w(-1);
+[801e89e0] = w(1);
+[801e8998] = w(1);
+[801e8984] = w(start_frame);
 [801e8918] = w(0);
-
-L1d3a78:	; 801D3A78
 [801e8924] = w(0);
 [801e8930] = w(0);
 [801e8944] = w(0);
@@ -545,10 +449,13 @@ L1d3a78:	; 801D3A78
 [801e89f4] = w(0);
 [801d68c0] = w(0);
 [801e89d4] = w(0);
-[SP + 0010] = w(0);
-[801d68cc] = w(V0);
+[801d68cc] = w(end_frame);
 
-A0 = FP;
+A0 = movie_id;
+A1 = sectors_to_play;
+A2 = hu[801e8978]; // channel
+A3 = w[801e8970]; // load flags
+A4 = 0;
 func1d41ac();
 ////////////////////////////////
 
@@ -777,12 +684,12 @@ func1d4cc8();
 
 if( w[801d68c0] == 0 )
 {
-    if( bu[801e8968] != 0 )
+    if( bu[801e8968] != 0 ) // CD-ROM MODE2 OR HDD
     {
         A0 = w[801e8910];
         func292c4();
     }
-    else
+    else // CD-ROM MODE1
     {
         A0 = w[801e8914];
         func1d5b7c();
@@ -834,10 +741,10 @@ if( w[801e8988] >= w[801d68cc] )
         [801e8960] = b(0);
         [801e8988] = w(-1);
 
-        A0 = hu[801e8974];
-        A1 = w[801e896c];
-        A2 = hu[801e8978];
-        A3 = w[801e8970];
+        A0 = hu[801e8974]; // movie_id
+        A1 = w[801e896c]; // sectors_to_play
+        A2 = hu[801e8978]; // channel
+        A3 = w[801e8970]; // load flags
         A4 = 0;
         func1d41ac();
     }
@@ -866,26 +773,25 @@ A0 = SP + 18;
 system_psyq_cd_pos_to_int();
 
 A0 = w[801e896c];
-V1 = w[801d68cc];
+end_frame = w[801d68cc];
 [80059b38] = w(V0);
 [80059b44] = w(A0);
 
-if( ( V1 < S0 ) || ( S0 < 0 ) )
+if( ( end_frame < S0 ) || ( S0 < 0 ) )
 {
     A4 = 0;
 }
 else
 {
-    A4 = SP + 18;
+    A4 = SP + 18; // pos
 }
 
 [801e8988] = w(-1);
 
-A0 = hu[801e8974];
-A1 = w[801e896c];
-A2 = hu[801e8978];
-A3 = w[801e8970];
-A4 = V1;
+A0 = hu[801e8974]; // movie_id
+A1 = w[801e896c]; // sectors_to_play
+A2 = hu[801e8978]; // channel
+A3 = w[801e8970]; // load flags
 func1d41ac();
 ////////////////////////////////
 
@@ -894,11 +800,11 @@ func1d41ac();
 ////////////////////////////////
 // func1d41ac()
 
-S2 = A0;
-S0 = A1;
-S3 = A2;
-S1 = A3;
-S4 = A4;
+movie_id = A0;
+sectors_to_play = A1;
+channel = A2;
+flags = A3;
+pos = A4;
 
 A0 = 0;
 A1 = 0;
@@ -922,46 +828,42 @@ system_cdrom2_set_dir();
 [801e89a4] = w(1);
 [801e89a8] = w(1);
 
-if( bu[801e8968] != 0 )
+if( bu[801e8968] != 0 ) // CD-ROM MODE2 OR HDD
 {
-    A0 = S2;
-    A1 = w[801e898c];
-    A2 = S3;
-    A3 = S1;
+    A0 = movie_id;
+    A1 = w[801e898c]; // address to load
+    A2 = channel;
+    A3 = flags;
     system_cdrom2_load_file_by_dir_file_id();
 
-    V0 = S1 & 0008;
-    A1 = S0 << 03;
-    if( V0 != 0 )
+    if( flags & 0008 )
     {
         A0 = w[8004f4f0];
-        A1 = A1 + S0;
-        A1 = A1 << 03;
-        A1 = A1 + S0;
-        A1 = A1 << 05;
+        A1 = sectors_to_play * 920;
     }
     else
     {
         A0 = w[8004f4f0];
-        A1 = S0 << b;
+        A1 = sectors_to_play * 800;
     }
 
     A2 = 0;
     system_devkit_pc_seek();
 }
-else
+else // CD-ROM MODE1
 {
-    S1 = S1 | 0080;
-    A0 = S2;
+    flags = flags | 80; // Speed (0=Normal speed, 1=Double speed)
+
+    A0 = movie_id;
     system_cdrom2_get_sector_by_dir_file_id();
 
-    A0 = V0 + S0;
+    A0 = V0 + sectors_to_play;
     A1 = SP + 10;
     system_psyq_cd_int_to_pos();
 
-    if( S4 != 0 )
+    if( pos != 0 )
     {
-        S0 = S4;
+        S0 = pos;
     }
     else
     {
@@ -970,14 +872,14 @@ else
 
     do
     {
-        A0 = 2;
+        A0 = 2; // Setloc (amm, ass, asect)
         A1 = S0;
         A2 = 0;
         system_cdrom_cdl_command_exec_with_ret_sync();
     } while( V0 == 0 );
 
     loop1d42d4:	; 801D42D4
-        A0 = S1;
+        A0 = flags;
         func1d586c();
     801D42DC	beq    v0, zero, loop1d42d4 [$801d42d4]
 }
@@ -1008,17 +910,17 @@ mdec_reset();
 
 [801e8964] = b(-1);
 
-if( bu[801e8968] != 0 )
+if( bu[801e8968] != 0 ) // CD-ROM MODE2 OR HDD
 {
     func288bc();
 }
-else
+else // CD-ROM MODE1
 {
     func1d5980();
 
     do
     {
-        A0 = 9;
+        A0 = 9; // Pause
         A1 = 0;
         A2 = 0;
         system_cdrom_cdl_command_exec_with_ret_sync();
@@ -2490,10 +2392,10 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func1d583c
+// func1d583c()
 
 [801e8a14] = w(A0);
-[801e8a18] = w(A1);
+[801e8a18] = w(A1); // sectors_num
 
 func1d5920();
 ////////////////////////////////
@@ -2503,18 +2405,28 @@ func1d5920();
 ////////////////////////////////
 // func1d586c()
 
-S0 = A0;
+flags = A0;
 
-[SP + 10] = b(S0);
+[SP + 10] = b(flags);
 
-A0 = e;
+// Setmode - Command 0Eh,mode --> INT3(stat)
+// 7   Speed       (0=Normal speed, 1=Double speed)
+// 6   XA-ADPCM    (0=Off, 1=Send XA-ADPCM sectors to SPU Audio Input)
+// 5   Sector Size (0=800h=DataOnly, 1=924h=WholeSectorExceptSyncBytes)
+// 4   Ignore Bit  (0=Normal, 1=Ignore Sector Size and Setloc position)
+// 3   XA-Filter   (0=Off, 1=Process only XA-ADPCM sectors that match Setfilter)
+// 2   Report      (0=Off, 1=Enable Report-Interrupts for Audio Play)
+// 1   AutoPause   (0=Off, 1=Auto Pause upon End of Track) ;for Audio Play
+// 0   CDDA        (0=Off, 1=Allow to Read CD-DA Sectors; ignore missing EDC)
+
+A0 = e; // Setmode
 A1 = SP + 10;
 A2 = 0;
 system_cdrom_cdl_command_exec_with_ret();
 
-if( S0 & 0100 )
+if( flags & 0100 )
 {
-    if( S0 & 0020 )
+    if( flags & 0020 )
     {
         [80059b00] = w(0);
     }
@@ -2530,7 +2442,7 @@ if( S0 & 0100 )
     system_cdrom_set_ready_callback();
 }
 
-A0 = 1b;
+A0 = 1b; // GetQ (adr, point)
 A1 = 0;
 A2 = 0;
 system_cdrom_cdl_command_exec_with_ret();
@@ -2650,11 +2562,11 @@ return -1;
 
 
 ////////////////////////////////
-// func1d5af4
+// func1d5af4()
 
 S0 = A0;
 S1 = A3;
-S2 = w[SP + 0030];
+S2 = A4;
 
 A0 = 1;
 func1d5d34();
@@ -3062,8 +2974,9 @@ A0 = w[801e89fc];
 A1 = w[801e89f8];
 [801e89b8] = w(0);
 [801e89bc] = h(0);
-801D61A0	jal    func1d5c34 [$801d5c34]
 A1 = A1 - A0;
+func1d5c34();
+
 V0 = w[801e89fc];
 V1 = w[801e89b4];
 [801e89f8] = w(V0);
@@ -3102,8 +3015,9 @@ A0 = w[801e89fc];
 A1 = w[801e89f8];
 [801e89b8] = w(0);
 [801e89bc] = h(0);
-801D6270	jal    func1d5c34 [$801d5c34]
 A1 = A1 - A0;
+func1d5c34();
+
 V0 = w[801e89fc];
 V1 = w[801e89b4];
 [801e89f8] = w(V0);

@@ -112,7 +112,7 @@ if( w[800ad044] == 0 )
     }
     else
     {
-        A5 = 1; // movie type
+        A5 = 1; // movie type picture + adpcm
     }
 
     A0 = h[800c2ef4] + 2; // movie id
