@@ -236,6 +236,20 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x1c:
+                    {
+                        exp->Log( "-- 0x1C( ???=" + GetVF80Variable( pointer + 1 ) + ", flag=" + GetFVariable( pointer + 3 ) + " )");
+                        pointer += 4;
+                    }
+                    break;
+
+                    case 0x1e:
+                    {
+                        exp->Log( "-- 0x1E()" );
+                        pointer += 1;
+                    }
+                    break;
+
                     case 0x1f:
                     {
                         exp->Log( "-- 0x1F( ???=" + GetU8Variable( pointer + 1 ) + " )" );
@@ -422,6 +436,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )" );
                         pointer += 6;
+                    }
+                    break;
+
+                    case 0x4c:
+                    {
+                        exp->Log( "-- 0x4С( variable arguments based args )" );
+                        pointer += 8;
                     }
                     break;
 
@@ -1002,6 +1023,11 @@ ScriptFile::GetScripts( const std::string& path )
                         {
                             exp->Log( "-- 0xFE63()" );
                             pointer += 5;
+                        }
+                        else if( eo_opcode == 0x69 )
+                        {
+                            exp->Log( "-- 0xFE69( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
+                            pointer += 8;
                         }
                         else if( eo_opcode == 0x73 )
                         {
