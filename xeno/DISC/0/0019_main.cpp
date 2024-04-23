@@ -1,5 +1,5 @@
 ////////////////////////////////
-// func1d30c4()
+// mdec_out_dma_callback()
 
 if( bu[801e8968] == 0 ) // CD-ROM MODE1
 {
@@ -7,179 +7,103 @@ if( bu[801e8968] == 0 ) // CD-ROM MODE1
     {
         if( w[801e89d0] != 0 )
         {
-            func1d5d54();
+            mdec_cdrom_ready_callback_inner();
 
             [801e89d0] = w(0);
         }
     }
 }
 
-V0 = w[801e8944];
-V1 = h[801e897c];
-A1 = V0 << 03;
-S3 = hu[801e894e + A1];
-if( V1 >= 0 )
+rb = w[801e8944];
+screen_draw = h[801e897c];
+
+S3 = h[801e894e + rb * 8];
+
+if( screen_draw >= 0 )
 {
-    A0 = V1;
-    V0 = S3 << 10;
-    V0 = V0 >> 10;
-    V0 = V1 < V0;
-    if( V0 != 0 )
+    if( screen_draw < S3 )
     {
-        [801e894e + A1] = h(A0);
+        [801e894e + rb * 8] = h(screen_draw);
     }
 }
 
-V0 = w[801d68b4];
-if( V0 != 0 )
+if( w[801d68b4] != 0 )
 {
-    A1 = 801e8944;
-    A0 = w[A1 + 0000];
-    V0 = hu[801e89c0];
-    A0 = A0 << 03;
-    V1 = hu[801e894a + A0];
-    [SP + 0014] = h(V0);
-    [SP + 0012] = h(V1);
-    V1 = hu[801e894e + A0];
-    V0 = V0 << 10;
-    [SP + 0016] = h(V1);
-    V1 = h[801e894c + A0];
-    V0 = V0 >> 10;
-    801D31D8	div    v1, v0
-    801D3200	mflo   v1
+    width = h[801e89c0];
 
-    if( V1 > 0 )
+    for( int i = 0; i < ( h[801e894c + rb * 8] / width ); ++i )
     {
-        S0 = 0;
-        S2 = A1;
-        801D3214	addiu  s5, s2, $ffe4 (=-$1c)
-        V0 = S3 << 10;
-        S4 = V0 >> 10;
-        S1 = 0;
+        [SP + 10] = h(hu[801e8948 + rb * 8]); // x
+        [SP + 12] = h(hu[801e894a + rb * 8]); // y
+        [SP + 14] = h(width);
+        [SP + 16] = h(hu[801e894e + rb * 8]); // h
 
-        loop1d3224:	; 801D3224
-            V1 = w[S2 + 0000];
-            A1 = hu[801e89c0];
-            V1 = V1 << 03;
-            V0 = hu[801e8948 + V1];
-            [SP + 0010] = h(V0);
-            V0 = hu[801e8948 + V1];
+        [801e8948 + rb * 8] = h(hu[801e8948 + rb * 8] + width);
 
-            L1d3254:	; 801D3254
-            A0 = w[801e8998];
-            V0 = V0 + A1;
-            [801e8948 + V1] = h(V0);
-            801D326C	beq    a0, zero, L1d32a8 [$801d32a8]
-            S0 = S0 + 0001;
-            V0 = A1 << 10;
-            V0 = V0 >> 10;
-            801D327C	mult   s1, v0
+        if( w[801e8998] != 0 )
+        {
+            A0 = SP + 10; // rect
             V0 = w[801e8924];
-            A0 = SP + 0010;
-            V0 = V0 << 02;
-            V0 = V0 + S5;
-            V0 = w[V0 + 0000];
-            801D3298	mflo   a1
-            A1 = A1 << 01;
-            A1 = A1 + V0;
+            A1 = w[801e8928 + V0 * 4] + ((i * S3) * width) * 2; // src
             system_load_image();
-
-            L1d32a8:	; 801D32A8
-            V0 = w[S2 + 0000];
-            801D32AC	nop
-            V0 = V0 << 03;
-            V1 = h[801e894c + V0];
-            V0 = h[801e89c0];
-            801D32C8	nop
-            801D32CC	div    v1, v0
-            801D32F4	mflo   v1
-            S1 = S1 + S4;
-            V0 = S0 < V1;
-        801D3300	bne    v0, zero, loop1d3224 [$801d3224]
+        }
     }
 }
 else
 {
     if( w[801e8998] != 0 )
     {
-        V1 = 801e8944;
+        A0 = 801e8948 + rb * 8;
         V0 = w[801e8924];
-        A0 = w[V1 + 0000];
-        V0 = V0 << 02;
-        V0 = V1 + V0;
-        A0 = A0 << 03;
-        V1 = V1 + 0004;
-        A1 = w[V0 + ffe4];
-        A0 = A0 + V1;
+        A1 = w[801e8928 + V0 * 4];
         system_load_image();
     }
 
-    V0 = w[801e8944];
-    [801e8948 + V0 * 8] = h(hu[801e8948 + V0 * 8] + hu[801e894c + V0 * 8]);
+    [801e8948 + rb * 8 * 8] = h(hu[801e8948 + rb * 8 * 8] + hu[801e894c + rb * 8 * 8]);
 }
 
-A3 = 801e8944;
-V0 = w[A3 + 0000];
-V1 = 0001;
-V0 = V0 << 03;
-[801e894e + V0] = h(S3);
-V0 = w[801e8924];
-A0 = w[A3 + 0000];
-A1 = V1 - V0;
-A2 = A0 << 03;
-[801e8924] = w(A1);
-V0 = h[801e8948 + A2];
-V1 = h[801e8938 + A2];
-801D33E4	nop
-V0 = V0 < V1;
-if( V0 == 0 )
+[801e894e + rb * 8] = h(S3);
+[801e8924] = w(1 - w[801e8924]);
+
+if( h[801e8948 + rb * 8] >= h[801e8938 + rb * 8] )
 {
     A3 = w[801e8990]; // callback
     if( A3 != 0 )
     {
         if( w[801d68c8] & 1 )
         {
-            V0 = h[801e8934 + A2];
+            V0 = h[801e8934 + rb * 8];
             V1 = 55555556;
             V0 = V0 << 01;
             801D3434	mult   v0, v1
             A0 = hu[801e8980];
-            A2 = hu[801e8936 + A2];
+            A2 = hu[801e8936 + rb * 8];
             V0 = V0 >> 1f;
             801D3450	mfhi   a1
-            A1 = A1 - V0;
-            A1 = A1 & ffff;
+            A1 = (A1 - V0) & ffff;
         }
         else
         {
             A0 = hu[801e8980];
-            A1 = hu[801e8934 + A2];
-            A2 = hu[801e8936 + A2];
+            A1 = hu[801e8934 + rb * 8];
+            A2 = hu[801e8936 + rb * 8];
         }
 
         801D3480	jalr   a3 ra
     }
 
-    V1 = w[801e89e0];
-    A0 = w[801e8980];
     [801e8958] = b(1);
-    [801e8988] = w(A0);
-    A0 = 801e8944;
-    [801e8998] = w(V1);
-    V1 = w[A0 + 0000];
-    V0 = 1 - V1;
-    [A0 + 0000] = w(V0);
+    [801e8988] = w(w[801e8980]);
+    [801e8998] = w(w[801e89e0]);
+    [801e8944] = w(1 - rb);
 }
 else
 {
-    V1 = h[801e894c + A2];
-    V0 = h[801e894e + A2];
-    801D34E8	nop
-    801D34EC	mult   v1, v0
-    V0 = A1 << 02;
+    A1 = h[801e894c + rb * 8] * h[801e894e + rb * 8];
+    V0 = w[801e8924] * 4;
     V0 = A3 + V0;
     A0 = w[V0 + ffe4];
-    801D34FC	mflo   a1
+
     V0 = A1 >> 1f;
     A1 = A1 + V0;
     A1 = A1 >> 01;
@@ -270,7 +194,6 @@ A1 = 0;
 system_memory_allocate();
 [801e892c] = w(V0);
 
-V1 = bu[801e8968];
 [801e8934] = h(0);
 [801e8936] = h(0);
 [801e8938] = h(S3);
@@ -288,14 +211,14 @@ V1 = bu[801e8968];
 [801e8954] = h(S4);
 [801e8956] = h(S5);
 
-if( V1 != 0 )
+if( bu[801e8968] != 0 ) // CD-ROM MODE2 OR HDD
 {
     A0 = sectors_num; // items
     A1 = 0; // alloc flags
     func2a070();
     [801e898c] = w(V0);
 }
-else
+else // CD-ROM MODE1
 {
     A0 = sectors_num * 800;
     A1 = 0;
@@ -344,8 +267,8 @@ A0 = 801e899c;
 A1 = 801e89a0;
 system_cdrom2_get_dir();
 
-A0 = 801d30c4; // func1d30c4()
-mdec_out_dma_callback();
+A0 = 801d30c4; // mdec_out_dma_callback()
+mdec_out_dma_set_callback();
 
 if( rewind != 0 )
 {
@@ -405,7 +328,7 @@ else // CD-ROM MODE1
     A0 = w[801d68c8] & 1;
     A1 = start_frame;
     A2 = -1;
-    A3 = 0;
+    A3 = 0; // callback
     A4 = 0;
     func1d5af4();
 
@@ -418,14 +341,14 @@ if( type & 2 )
 
 [801e8990] = w(callback);
 
-if( w[801d68c8] & 1 )
+if( w[801d68c8] & 1 ) // 24 bit color
 {
     [801e8934] = h((S4 * 3) / 2);
     [801e893c] = h((S6 * 3) / 2);
     [801e8936] = h(S5);
     [801e89c0] = h(18);
 }
-else
+else // 16 bit color
 {
     [801e8934] = h(S4);
     [801e8936] = h(S5);
@@ -594,93 +517,70 @@ L1d3d3c:	; 801D3D3C
 
 
 ////////////////////////////////
-// func1d3d54
+// func1d3d54()
 
-V0 = w[801d68c0];
-801D3D64	bne    v0, zero, L1d3f00 [$801d3f00]
-
-V0 = bu[801e895c];
-801D3D74	nop
-801D3D78	bne    v0, zero, L1d3e88 [$801d3e88]
-801D3D7C	nop
-S0 = 801e8930;
-V0 = w[S0 + 0000];
-V0 = V0 << 03;
-V1 = hu[801e8934 + V0];
-[801e8948 + V0] = h(V1);
-V0 = w[S0 + 0000];
-V0 = V0 << 03;
-V1 = hu[801e8936 + V0];
-[801e894a + V0] = h(V1);
-
-[801e8980] = w(w[801e8994]);
-
-V0 = w[801e8918];
-A0 = w[S0 + V0 * 4 - 14];
-A1 = w[801d68c8];
-func1d46a0();
-
-V0 = w[S0 + 0000];
-801D3E08	nop
-V0 = V0 << 03;
-801D3E10	lui    at, $801f
-AT = AT + V0;
-V1 = h[AT + 894c];
-801D3E1C	lui    at, $801f
-AT = AT + V0;
-V0 = h[AT + 894e];
-801D3E28	nop
-801D3E2C	mult   v1, v0
-V0 = w[801e8924];
-801D3E38	nop
-V0 = V0 << 02;
-V0 = S0 + V0;
-A0 = w[V0 + fff8];
-801D3E48	mflo   a1
-V0 = A1 >> 1f;
-A1 = A1 + V0;
-A1 = A1 >> 01;
-mdec_out_setup();
-
-V0 = w[S0 + 0000];
-A0 = w[801e8918];
-V1 = 0001;
-[801e8958] = b(0);
-V0 = V1 - V0;
-V1 = V1 - A0;
-[S0 + 0000] = w(V0);
-[801e8918] = w(V1);
-
-L1d3e88:	; 801D3E88
-A0 = w[801d68cc];
-A1 = 801e8910;
-func1d3b00();
-
-[801e8914] = w(V0);
-if( V0 == 0 )
+if( w[801d68c0] == 0 )
 {
-    [801e895c] = b(1);
-    return;
+    if( bu[801e895c] == 0 )
+    {
+        V0 = w[801e8930];
+        [801e8948 + V0 * 8] = h(hu[801e8934 + V0 * 8]);
+        [801e894a + V0 * 8] = h(hu[801e8936 + V0 * 8]);
+
+        [801e8980] = w(w[801e8994]);
+
+        V0 = w[801e8918];
+        A0 = w[801e891c + V0 * 4];
+        A1 = w[801d68c8];
+        func1d46a0();
+
+        V0 = w[801e8930];
+        V1 = h[801e894c + V0 * 8];
+        V0 = h[801e894e + V0 * 8];
+        801D3E2C	mult   v1, v0
+        V0 = w[801e8924];
+        V0 = 801e8930 + V0 * 4;
+        A0 = w[V0 - 8];
+        801D3E48	mflo   a1
+        V0 = A1 >> 1f;
+        A1 = A1 + V0;
+        A1 = A1 >> 01;
+        mdec_out_setup();
+
+        [801e8958] = b(0);
+        [801e8930] = w(1 - w[801e8930]);
+        [801e8918] = w(1 - w[801e8918]);
+    }
+
+    A0 = w[801d68cc];
+    A1 = 801e8910;
+    func1d3b00();
+    [801e8914] = w(V0);
+
+    if( V0 == 0 )
+    {
+        [801e895c] = b(1);
+        return;
+    }
+
+    [801e895c] = b(0);
+
+    A0 = w[801d68c4];
+    func1d4c98();
+
+    V0 = w[801e8918];
+    A0 = w[801e8914];
+    A1 = w[801e891c + V0 * 4];
+    func1d4cc8();
+    [801d68c0] = w(V0);
 }
-
-[801e895c] = b(0);
-
-A0 = w[801d68c4];
-func1d4c98();
-
-V0 = w[801e8918];
-A0 = w[801e8914];
-A1 = w[801e891c + V0 * 4];
-801D3EF8	j      L1d3f08 [$801d3f08]
-
-L1d3f00:	; 801D3F00
-A0 = 0;
-A1 = 0;
-
-L1d3f08:	; 801D3F08
-func1d4cc8();
-
-[801d68c0] = w(V0);
+else
+{
+    A0 = 0;
+    A1 = 0;
+    func1d4cc8();
+    [801d68c0] = w(V0);
+}
 
 if( w[801d68c0] == 0 )
 {
@@ -695,7 +595,6 @@ if( w[801d68c0] == 0 )
         func1d5b7c();
     }
 }
-L1d3f68:	; 801D3F68
 ////////////////////////////////
 
 
@@ -903,7 +802,7 @@ A0 = 0;
 system_cdrom2_abort_fileload();
 
 A0 = 0;
-mdec_out_dma_callback();
+mdec_out_dma_set_callback();
 
 A0 = 0; // Initializes all internal states
 mdec_reset();
@@ -1240,7 +1139,7 @@ return V0;
 
 
 ////////////////////////////////
-// mdec_in_dma_callback()
+// mdec_in_dma_set_callback()
 
 A1 = A0;
 A0 = 0; // MDECin  (RAM to MDEC)
@@ -1250,7 +1149,7 @@ system_dma_additional_callback();
 
 
 ////////////////////////////////
-// mdec_out_dma_callback()
+// mdec_out_dma_set_callback()
 
 A1 = A0;
 A0 = 1; // MDECout (MDEC to RAM)
@@ -1472,26 +1371,28 @@ return 0;
 
 
 ////////////////////////////////
-// func1d4c98
-T0 = 801d4c94;
-AT = A0 + ffff;
-801D4CA4	blez   at, L1d4cb8 [$801d4cb8]
-V0 = w[T0 + 0000];
-AT = A0 << 01;
-801D4CB0	jr     ra 
-[T0 + 0000] = w(AT);
+// func1d4c98()
 
+AT = A0 - 1;
+ret = w[801d4c94];
 
-L1d4cb8:	; 801D4CB8
-AT = ffffff;
-801D4CC0	jr     ra 
-[T0 + 0000] = w(AT);
+if( AT > 0 )
+{
+    [801d4c94] = w(A0 * 2);
+}
+else
+{
+    [801d4c94] = w(00ffffff);
+}
+
+return ret;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d4cc8
+// func1d4cc8()
+
 T0 = 801d4c94;
 A2 = 801d802c;
 A3 = 801e802c;
@@ -2435,10 +2336,10 @@ if( flags & 0100 )
         [80059b00] = w(1);
     }
 
-    A0 = 801d5a04;
+    A0 = 801d5a04; // mdec_cdrom_dma_callback()
     system_cdrom_dma_callback();
 
-    A0 = 801d5900;
+    A0 = 801d5900; // mdec_cdrom_ready_callback()
     system_cdrom_set_ready_callback();
 }
 
@@ -2451,9 +2352,9 @@ system_cdrom_cdl_command_exec_with_ret();
 
 
 ////////////////////////////////
-// func1d5900()
+// mdec_cdrom_ready_callback()
 
-func1d5d54();
+mdec_cdrom_ready_callback_inner();
 ////////////////////////////////
 
 
@@ -2488,7 +2389,7 @@ if( w[80055b6c] == 1 )
     system_cdrom_dma_callback_2();
 
     A0 = 0;
-    801D59AC	jal    $80040b48
+    func40b48();
 }
 else
 {
@@ -2510,31 +2411,22 @@ system_exit_critical_section();
 
 
 ////////////////////////////////
-// func1d5a04()
+// mdec_cdrom_dma_callback()
 
 V0 = w[801e89fc];
 V1 = w[801e8a14];
-V0 = V0 << 05;
-V1 = V1 + V0;
-V0 = 0002;
-[V1 + 0000] = h(V0);
-A2 = 801e89ac;
-801D5A34	lwl    v0, $001f(v1)
-801D5A38	lwr    v0, $001c(v1)
-801D5A3C	nop
-801D5A40	swl    v0, $0003(a2)
-801D5A44	swr    v0, $0000(a2)
-V0 = w[V1 + 0008];
-V1 = w[801e89f8];
-A0 = w[801e89c8];
-[801e89b0] = w(V0);
-[801e89fc] = w(V1);
-801D5A6C	beq    a0, zero, L1d5a7c [$801d5a7c]
-801D5A70	nop
-801D5A74	jalr   a0 ra
-801D5A78	nop
+V1 = V1 + V0 * 20;
+[V1 + 0] = h(2);
+[801e89ac] = w(w[V1 + 1c]);
+[801e89b0] = w(w[V1 + 8]);
+[801e89fc] = w(w[801e89f8]);
 
-L1d5a7c:	; 801D5A7C
+A0 = w[801e89c8];
+if( A0 != 0 )
+{
+    801D5A74	jalr   a0 ra
+}
+
 [801e89e8] = w(0);
 ////////////////////////////////
 
@@ -2585,12 +2477,12 @@ S0 = S0 & 0001;
 
 
 ////////////////////////////////
-// func1d5b7c
+// func1d5b7c()
 
 A1 = 82082083;
 V0 = w[801e8a18];
 V1 = w[801e8a14];
-V0 = V0 << 05;
+V0 = V0 * 20;
 V0 = V1 + V0;
 A0 = A0 - V0;
 V0 = A0 >> 02;
@@ -2602,17 +2494,13 @@ V0 = V0 >> 08;
 A1 = V0 - A0;
 V0 = A1 << 05;
 V1 = V1 + V0;
-A0 = 0004;
 V0 = h[V1 + 0000];
-V1 = hu[V1 + 0006];
-801D5BD0	beq    v0, a0, L1d5be0 [$801d5be0]
-801D5BD4	addiu  sp, sp, $fff8 (=-$8)
-801D5BD8	j      L1d5c28 [$801d5c28]
-V0 = 0001;
+if( V0 != 4 )
+{
+    return 1;
+}
 
-L1d5be0:	; 801D5BE0
-V0 = V1 << 10;
-V0 = V0 >> 10;
+V0 = h[V1 + 6];
 801D5BE8	blez   v0, L1d5c18 [$801d5c18]
 A0 = 0;
 A2 = V0;
@@ -2630,11 +2518,9 @@ loop1d5bf4:	; 801D5BF4
 801D5C10	bne    v0, zero, loop1d5bf4 [$801d5bf4]
 
 L1d5c18:	; 801D5C18
-V0 = A0 + A1;
-[801e8a00] = w(V0);
-V0 = 0;
+[801e8a00] = w(A0 + A1);
 
-L1d5c28:	; 801D5C28
+return 0;
 ////////////////////////////////
 
 
@@ -2713,7 +2599,7 @@ L1d5d2c:	; 801D5D2C
 
 
 ////////////////////////////////
-// func1d5d54()
+// mdec_cdrom_ready_callback_inner()
 
 if( w[801e89e8] == 1 )
 {
@@ -3257,7 +3143,7 @@ if( w[801e8a04] != 0 )
 {
     if( w[801e89e8] != 0 )
     {
-        func1d5a04();
+        mdec_cdrom_dma_callback();
     }
 }
 ////////////////////////////////
