@@ -3,7 +3,7 @@
 
 if( bu[801e8968] == 0 ) // CD-ROM MODE1
 {
-    if( w[801d68c8] & 1 )
+    if( w[801d68c8] & 1 ) // 24 bit color
     {
         if( w[801e89d0] != 0 )
         {
@@ -17,13 +17,13 @@ if( bu[801e8968] == 0 ) // CD-ROM MODE1
 rb = w[801e8944];
 screen_draw = h[801e897c];
 
-S3 = h[801e894e + rb * 8];
+w = h[801e8948 + rb * 8 + 6];
 
 if( screen_draw >= 0 )
 {
-    if( screen_draw < S3 )
+    if( screen_draw < w )
     {
-        [801e894e + rb * 8] = h(screen_draw);
+        [801e8948 + rb * 8 + 6] = h(screen_draw);
     }
 }
 
@@ -33,18 +33,18 @@ if( w[801d68b4] != 0 )
 
     for( int i = 0; i < ( h[801e894c + rb * 8] / width ); ++i )
     {
-        [SP + 10] = h(hu[801e8948 + rb * 8]); // x
-        [SP + 12] = h(hu[801e894a + rb * 8]); // y
+        [SP + 10] = h(hu[801e8948 + rb * 8 + 0]); // x
+        [SP + 12] = h(hu[801e8948 + rb * 8 + 2]); // y
         [SP + 14] = h(width);
-        [SP + 16] = h(hu[801e894e + rb * 8]); // h
+        [SP + 16] = h(hu[801e8948 + rb * 8 + 6]); // h
 
-        [801e8948 + rb * 8] = h(hu[801e8948 + rb * 8] + width);
+        [801e8948 + rb * 8 + 0] = h(hu[801e8948 + rb * 8 + 0] + width);
 
         if( w[801e8998] != 0 )
         {
             A0 = SP + 10; // rect
             V0 = w[801e8924];
-            A1 = w[801e8928 + V0 * 4] + ((i * S3) * width) * 2; // src
+            A1 = w[801e8928 + V0 * 4] + ((i * w) * width) * 2; // src
             system_load_image();
         }
     }
@@ -55,7 +55,7 @@ else
     {
         A0 = 801e8948 + rb * 8;
         V0 = w[801e8924];
-        A1 = w[801e8928 + V0 * 4];
+        A1 = w[801e8928 + V0 * 4]; // area allocated memory
         system_load_image();
     }
 
@@ -70,25 +70,23 @@ if( h[801e8948 + rb * 8] >= h[801e8938 + rb * 8] )
     A3 = w[801e8990]; // callback
     if( A3 != 0 )
     {
-        if( w[801d68c8] & 1 )
+        if( w[801d68c8] & 1 ) // 24 bit color
         {
             V0 = h[801e8934 + rb * 8];
             V1 = 55555556;
             V0 = V0 << 01;
             801D3434	mult   v0, v1
-            A0 = hu[801e8980];
-            A2 = hu[801e8936 + rb * 8];
             V0 = V0 >> 1f;
             801D3450	mfhi   a1
             A1 = (A1 - V0) & ffff;
         }
-        else
+        else // 15 bit color
         {
-            A0 = hu[801e8980];
             A1 = hu[801e8934 + rb * 8];
-            A2 = hu[801e8936 + rb * 8];
         }
 
+        A0 = hu[801e8980]; // current frame
+        A2 = hu[801e8936 + rb * 8];
         801D3480	jalr   a3 ra
     }
 
@@ -116,10 +114,10 @@ else
 ////////////////////////////////
 // mdec_init()
 
-S3 = A0;
-S5 = A1;
+area_width = A0;
+area_height = A1;
 S0 = A2;
-S4 = A3;
+block_width = A3;
 sectors_num = A4;
 S7 = A5;
 screen_mode = A6; // 0 - 16 bit color, other - 24 bit color
@@ -137,79 +135,69 @@ else
 
 [801e8964] = b(0);
 
-S2 = S3 & ffff;
-
 if( w[801d68b4] != 0 )
 {
-    S4 = S3;
+    block_width = area_width;
 }
 
 A0 = 0; // Initializes all internal states
 mdec_reset();
 
-S6 = S5 & ffff;
-V0 = S2 * S6;
-V1 = S0 & ffff;
-V1 = V1 << 01;
-S0 = V0 * V1;
 [801d68c4] = w(S7);
 [801d68c8] = w(screen_mode & 3);
 
-S1 = S0 / 100;
+command_size = (area_width * area_height * S0 * 2) / 100;
 
-A0 = S1;
+A0 = command_size;
 A1 = 0;
 system_memory_allocate();
-[801e891c] = w(V0);
+[801e891c + 0] = w(V0); // mdec command buffer 1
 
-A0 = S1;
+A0 = command_size;
 A1 = 0;
 system_memory_allocate();
-[801e8920] = w(V0);
+[801e891c + 4] = w(V0); // mdec command buffer 2
 
-if( w[801d68c8] & 1 )
+if( w[801d68c8] & 1 ) // 24 bit color
 {
-    V0 = S4 & ffff;
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    S4 = V1 >> 01;
-    V0 = S2 << 01;
-    V0 = V0 + S2;
-    S3 = V0 >> 01;
+    area_width = (area_width * 3) / 2;
+    block_width = (block_width * 3) / 2;
 }
 
-V0 = S4 & ffff;
-S0 = V0 * S6;
-[801d68bc] = h(S3);
-[801d68be] = h(S5);
-S0 = S0 << 01;
+[801d68bc] = h(area_width);
+[801d68be] = h(area_height);
+
+S0 = block_width * area_height * 2;
 
 A0 = S0;
 A1 = 0;
 system_memory_allocate();
-[801e8928] = w(V0);
+[801e8928 + 0] = w(V0);
 
 A0 = S0;
 A1 = 0;
 system_memory_allocate();
-[801e892c] = w(V0);
+[801e8928 + 4] = w(V0);
 
-[801e8934] = h(0);
-[801e8936] = h(0);
-[801e8938] = h(S3);
-[801e893a] = h(S5);
-[801e893c] = h(0);
-[801e893e] = h(0);
-[801e8940] = h(S3);
-[801e8942] = h(S5);
-[801e8948] = h(0);
-[801e894a] = h(0);
-[801e894c] = h(S4);
-[801e894e] = h(S5);
-[801e8950] = h(0);
-[801e8952] = h(0);
-[801e8954] = h(S4);
-[801e8956] = h(S5);
+// init both buffers rect
+[801e8934 + 0 * 8 + 0] = h(0);
+[801e8934 + 0 * 8 + 2] = h(0);
+[801e8934 + 0 * 8 + 4] = h(area_width);
+[801e8934 + 0 * 8 + 6] = h(area_height);
+[801e8934 + 1 * 8 + 0] = h(0);
+[801e8934 + 1 * 8 + 2] = h(0);
+[801e8934 + 1 * 8 + 4] = h(area_width);
+[801e8934 + 1 * 8 + 6] = h(area_height);
+
+// init both buffers rect
+[801e8948 + 0 * 8 + 0] = h(0);
+[801e8948 + 0 * 8 + 2] = h(0);
+[801e8948 + 0 * 8 + 4] = h(block_width);
+[801e8948 + 0 * 8 + 6] = h(area_height);
+[801e8948 + 1 * 8 + 0] = h(0);
+[801e8948 + 1 * 8 + 2] = h(0);
+[801e8948 + 1 * 8 + 4] = h(block_width);
+[801e8948 + 1 * 8 + 6] = h(area_height);
 
 if( bu[801e8968] != 0 ) // CD-ROM MODE2 OR HDD
 {
@@ -251,8 +239,8 @@ end_frame = A3;
 channel = A4; // movie channel
 type = A5; // 1 - movie type picture + adpcm, 0 - movie type picture only
 rewind = A6;
-S4 = A7; // 0
-S5 = A8; // screen draw related
+x = A7; // 0
+y = A8; // screen draw related
 S6 = A9; // 0
 S7 = A10; // screen draw related
 screen_draw = A11;
@@ -325,7 +313,7 @@ else // CD-ROM MODE1
         [801e8970] = w(100); // streaming | No XA-ADPCM | No XA-Filter
     }
 
-    A0 = w[801d68c8] & 1;
+    A0 = w[801d68c8] & 1; // 24 bit color
     A1 = start_frame;
     A2 = -1;
     A3 = 0; // callback
@@ -343,17 +331,17 @@ if( type & 2 )
 
 if( w[801d68c8] & 1 ) // 24 bit color
 {
-    [801e8934] = h((S4 * 3) / 2);
-    [801e893c] = h((S6 * 3) / 2);
-    [801e8936] = h(S5);
-    [801e89c0] = h(18);
+    [801e8934 + 0] = h((x * 3) / 2);
+    [801e8934 + 2] = h(y);
+    [801e8934 + 8] = h((S6 * 3) / 2);
+    [801e89c0] = h(18); // width
 }
-else // 16 bit color
+else // 15 bit color
 {
-    [801e8934] = h(S4);
-    [801e8936] = h(S5);
-    [801e893c] = h(S6);
-    [801e89c0] = h(10);
+    [801e8934 + 0] = h(x);
+    [801e8934 + 2] = h(y);
+    [801e8934 + 8] = h(S6);
+    [801e89c0] = h(10); // width
 }
 
 [801e893e] = h(S7);
@@ -385,133 +373,103 @@ func1d41ac();
 
 
 ////////////////////////////////
-// func1d3b00
+// func1d3b00()
 
-V0 = bu[801e8968];
-S0 = A0;
+end_frame = A0;
 S1 = A1;
-801D3B1C	beq    v0, zero, L1d3b68 [$801d3b68]
 
-A0 = SP + 0010;
-801D3B28	jal    $80028d40
-A1 = SP + 0014;
-801D3B30	bne    v0, zero, L1d3d3c [$801d3d3c]
-V0 = 0;
-V0 = w[SP + 0014];
-801D3B3C	nop
-V0 = w[V0 + 0008];
-[801e8994] = w(V0);
-V0 = V0 < S0;
-801D3B50	bne    v0, zero, L1d3bec [$801d3bec]
+if( bu[801e8968] != 0 )
+{
+    A0 = SP + 10;
+    A1 = SP + 14;
+    func28d40();
 
-system_cdrom2_abort_fileload();
+    if( V0 != 0 )
+    {
+        return 0;
+    }
 
-L1d3b5c:	; 801D3B5C
-A0 = 0;
-801D3B60	j      L1d3bec [$801d3bec]
-801D3B64	nop
+    V0 = w[SP + 14];
+    V0 = w[V0 + 8];
+    [801e8994] = w(V0); // current frame
 
-L1d3b68:	; 801D3B68
-A0 = SP + 0010;
-801D3B6C	jal    func1d5c70 [$801d5c70]
-A1 = SP + 0014;
-801D3B74	beq    v0, zero, L1d3b9c [$801d3b9c]
-V0 = 0;
-V1 = w[801e89f4];
-801D3B84	nop
-V1 = V1 + 0001;
-[801e89f4] = w(V1);
-801D3B94	j      L1d3d3c [$801d3d3c]
-801D3B98	nop
+    if( V0 >= end_frame )
+    {
+        A0 = 0;
+        system_cdrom2_abort_fileload();
+    }
+}
+else
+{
+    A0 = SP + 10;
+    A1 = SP + 14;
+    func1d5c70();
 
-L1d3b9c:	; 801D3B9C
-V0 = w[SP + 0014];
-V1 = w[801e8994];
-V0 = w[V0 + 0008];
-[801e89f4] = w(0);
-[801e89ec] = w(V1);
-V1 = V1 + 0001;
-V1 = V1 < V0;
-[801e8994] = w(V0);
-801D3BCC	beq    v1, zero, L1d3bec [$801d3bec]
-801D3BD0	nop
-V0 = w[801e89d4];
-801D3BDC	nop
-V0 = V0 + 0001;
-[801e89d4] = w(V0);
+    if( V0 != 0 )
+    {
+        [801e89f4] = w(w[801e89f4] + 1);
+        return 0;
+    }
 
-L1d3bec:	; 801D3BEC
-A0 = w[SP + 0014];
-V1 = hu[801d68b8];
-V0 = hu[A0 + 0010];
-801D3BFC	nop
-801D3C00	bne    v1, v0, L1d3c20 [$801d3c20]
-801D3C04	nop
-V1 = hu[801d68ba];
-V0 = hu[A0 + 0012];
-801D3C14	nop
-801D3C18	beq    v1, v0, L1d3d2c [$801d3d2c]
-801D3C1C	nop
+    V0 = w[SP + 14];
+    V1 = w[801e8994];
+    V0 = w[V0 + 8];
+    [801e89f4] = w(0);
+    [801e89ec] = w(V1);
+    V1 = V1 + 1;
+    [801e8994] = w(V0);
 
-L1d3c20:	; 801D3C20
-A1 = hu[A0 + 0010];
-V0 = w[801d68c8];
-V1 = hu[A0 + 0012];
-V0 = V0 & 0001;
-[801d68b8] = h(A1);
-[801d68ba] = h(V1);
-801D3C44	beq    v0, zero, L1d3c90 [$801d3c90]
-801D3C48	nop
-V0 = hu[801d68b8];
-A0 = hu[801e893c];
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 >> 01;
-V0 = hu[801e8934];
-A0 = A0 + V1;
-[801e8940] = h(A0);
-V0 = V0 + V1;
-[801e8938] = h(V0);
-801D3C88	j      L1d3cb8 [$801d3cb8]
-801D3C8C	nop
+    if( V1 < V0 )
+    {
+        [801e89d4] = w(w[801e89d4] + 1);
+    }
+}
 
-L1d3c90:	; 801D3C90
-V0 = hu[801e8934];
-V1 = hu[801e893c];
-V0 = V0 + A1;
-V1 = V1 + A1;
-[801e8938] = h(V0);
-[801e8940] = h(V1);
+A0 = w[SP + 14];
 
-L1d3cb8:	; 801D3CB8
-V0 = hu[801e8936];
-A0 = hu[801d68ba];
-V1 = hu[801d68ba];
-A1 = hu[801d68be];
-V0 = V0 + A0;
-[801e893a] = h(V0);
-V0 = hu[801e893e];
-V1 = A1 < V1;
-V0 = V0 + A0;
-[801e8942] = h(V0);
-801D3CFC	beq    v1, zero, L1d3d1c [$801d3d1c]
-V0 = A1;
-[801e894e] = h(V0);
-[801e8956] = h(V0);
-801D3D14	j      L1d3d2c [$801d3d2c]
-801D3D18	nop
+if( ( hu[801d68b8] != hu[A0 + 10] ) || ( hu[801d68ba] != hu[A0 + 12] ) )
+{
+    A1 = hu[A0 + 10];
+    V1 = hu[A0 + 12];
+    [801d68b8] = h(A1);
+    [801d68ba] = h(V1);
 
-L1d3d1c:	; 801D3D1C
-[801e894e] = h(A0);
-[801e8956] = h(A0);
+    if( w[801d68c8] & 1 ) // 24 bit color
+    {
+        V0 = hu[801d68b8];
+        A0 = hu[801e893c];
+        V1 = V0 << 01;
+        V1 = V1 + V0;
+        V1 = V1 >> 01;
+        V0 = hu[801e8934];
+        [801e8940] = h(A0 + V1);
+        [801e8938] = h(V0 + V1);
+    }
+    else // 15 bit color
+    {
+        [801e8938] = h(hu[801e8934] + A1);
+        [801e8940] = h(hu[801e893c] + A1);
+    }
 
-L1d3d2c:	; 801D3D2C
-V0 = w[SP + 0014];
-801D3D30	nop
-[S1 + 0000] = w(V0);
-V0 = w[SP + 0010];
+    area_height = hu[801d68be];
+    [801e893a] = h(hu[801e8936] + hu[801d68ba]);
+    [801e8942] = h(hu[801e893e] + hu[801d68ba]);
 
-L1d3d3c:	; 801D3D3C
+    if( area_height < hu[801d68ba] )
+    {
+        [801e894e] = h(area_height);
+        [801e8956] = h(area_height);
+    }
+    else
+    {
+        [801e894e] = h(hu[801d68ba]);
+        [801e8956] = h(hu[801d68ba]);
+    }
+}
+
+[S1 + 0] = w(w[SP + 14]);
+
+return w[SP + 10];
 ////////////////////////////////
 
 
@@ -524,15 +482,15 @@ if( w[801d68c0] == 0 )
     if( bu[801e895c] == 0 )
     {
         V0 = w[801e8930];
-        [801e8948 + V0 * 8] = h(hu[801e8934 + V0 * 8]);
-        [801e894a + V0 * 8] = h(hu[801e8936 + V0 * 8]);
+        [801e8948 + V0 * 8 + 0] = h(hu[801e8934 + V0 * 8 + 0]); // x
+        [801e8948 + V0 * 8 + 2] = h(hu[801e8934 + V0 * 8 + 2]); // y
 
-        [801e8980] = w(w[801e8994]);
+        [801e8980] = w(w[801e8994]); // current frame
 
         V0 = w[801e8918];
-        A0 = w[801e891c + V0 * 4];
-        A1 = w[801d68c8];
-        func1d46a0();
+        A0 = w[801e891c + V0 * 4]; // mdec command
+        A1 = w[801d68c8]; // screen mode
+        func1d46a0(); // mdec in setup
 
         V0 = w[801e8930];
         V1 = h[801e894c + V0 * 8];
@@ -552,7 +510,7 @@ if( w[801d68c0] == 0 )
         [801e8918] = w(1 - w[801e8918]);
     }
 
-    A0 = w[801d68cc];
+    A0 = w[801d68cc]; // end_frame
     A1 = 801e8910;
     func1d3b00();
     [801e8914] = w(V0);
@@ -846,10 +804,10 @@ system_memory_free();
 A0 = w[801e8920];
 system_memory_free();
 
-A0 = w[801e8928];
+A0 = w[801e8928 + 0];
 system_memory_free();
 
-A0 = w[801e892c];
+A0 = w[801e8928 + 4];
 system_memory_free();
 
 A0 = w[801e898c];
@@ -857,8 +815,8 @@ system_memory_free();
 
 [801e891c] = w(0);
 [801e8920] = w(0);
-[801e8928] = w(0);
-[801e892c] = w(0);
+[801e8928 + 0] = w(0);
+[801e8928 + 4] = w(0);
 [801e898c] = w(0);
 ////////////////////////////////
 
@@ -1060,25 +1018,28 @@ return hu[A0];
 ////////////////////////////////
 // func1d46a0()
 
-if( A1 & 1 )
+command = A0;
+screen_mode = A1;
+
+if( screen_mode & 1 ) // 24 bit color
 {
-    [A0] = w(w[A0] & f7ffffff);
+    [command] = w(w[command] & f7ffffff); // Data Output Depth set 24 bit
 }
 else
 {
-    [A0] = w(w[A0] | 08000000);
+    [command] = w(w[command] | 08000000); // Data Output Depth set 15 bit
 }
 
-if( A1 & 2 )
+if( screen_mode & 2 )
 {
-    [A0] = w(w[A0] | 02000000);
+    [command] = w(w[command] | 02000000); // Data Output Bit15 set
 }
 else
 {
-    [A0] = w(w[A0] & fdffffff);
+    [command] = w(w[command] & fdffffff); // Data Output Bit15 clear
 }
 
-A0 = A0; // mdec address (0 - command, +4 addres to wread/write)
+A0 = command; // mdec address (0 - command, +4 addres to wread/write)
     // MDEC(1) - Decode Macroblock(s)
     // 31-29 Command (1=decode_macroblock)
     // 28-27 Data Output Depth  (0=4bit, 1=8bit, 2=24bit, 3=15bit)      ;STAT.26-25
@@ -1088,9 +1049,7 @@ A0 = A0; // mdec address (0 - command, +4 addres to wread/write)
     // 15-0  Number of Parameter Words (size of compressed data)
     // This command is followed by one or more Macroblock parameters (usually, all
     // macroblocks for the whole image are sent at once).
-
-
-A1 = hu[A0 + 0]; // number of blocks
+A1 = hu[command + 0]; // number of blocks
 mdec_in_setup();
 ////////////////////////////////
 
@@ -1393,14 +1352,16 @@ return ret;
 ////////////////////////////////
 // func1d4cc8()
 
+mdec_command = A1;
 T0 = 801d4c94;
 A2 = 801d802c;
 A3 = 801e802c;
-801D4CE0	bne    a0, zero, L1d4d20 [$801d4d20]
 T1 = w[T0 + 0000];
+801D4CE0	bne    a0, zero, L1d4d20 [$801d4d20]
+
 T0 = 801d5008;
 A0 = w[T0 + 0000];
-A1 = w[T0 + 0004];
+mdec_command = w[T0 + 0004];
 V0 = w[T0 + 0008];
 V1 = w[T0 + 000c];
 T4 = w[T0 + 0010];
@@ -1410,47 +1371,53 @@ T8 = w[T0 + 001c];
 T9 = w[T0 + 0020];
 801D4D14	add    t1, t1, t1
 801D4D18	bgez   zero, L1d4e98 [$801d4e98]
-801D4D1C	add    t6, a1, t1
+801D4D1C	add    t6, mdec_command, t1
 
 L1d4d20:	; 801D4D20
-801D4D20	add    t5, zero, zero
-801D4D24	add    t7, zero, zero
-801D4D28	add    t8, zero, zero
-801D4D2C	add    t9, zero, zero
-801D4D30	add    t1, t1, t1
-801D4D34	add    t6, a1, t1
-T0 = hu[A0 + 0000];
-T1 = hu[A0 + 0002];
-T4 = hu[A0 + 0004];
-T2 = hu[A0 + 0006];
-V0 = hu[A0 + 0008];
-V1 = hu[A0 + 000a];
+T5 = 0;
+T7 = 0;
+T8 = 0;
+T9 = 0;
+T1 = T1 + T1;
+T6 = mdec_command + T1;
+T0 = hu[A0 + 0];
+T1 = hu[A0 + 2];
+T4 = hu[A0 + 4];
+T2 = hu[A0 + 6];
+V0 = hu[A0 + 8];
+V1 = hu[A0 + a];
 T2 = T2 + fffd;
-801D4D54	bltz   t2, L1d4d60 [$801d4d60]
 T4 = T4 << 0a;
-T5 = 0 + 0001;
+if( T2 >= 0 )
+{
+    T5 = 1;
+}
 
-L1d4d60:	; 801D4D60
-A0 = A0 + 000c;
+A0 = A0 + c;
 V0 = V0 << 10;
 V0 = V0 | V1;
 V1 = 0 | 0;
-[A1 + 0000] = h(T0);
-[A1 + 0002] = h(T1);
-A1 = A1 + 0002;
+[mdec_command + 0] = h(T0);
+[mdec_command + 2] = h(T1);
+mdec_command += 2;
 
 L1d4d7c:	; 801D4D7C
 801D4D7C	beq    t5, zero, L1d4e54 [$801d4e54]
 T0 = V0 >> 16;
 AT = T0 ^ 03ff;
+mdec_command += 2;
 801D4D88	beq    at, zero, L1d4fa0 [$801d4fa0]
-A1 = A1 + 0002;
-AT = T5 + fffd;
-801D4D94	bltz   at, L1d4da0 [$801d4da0]
-AT = A2 + fc00;
-AT = AT + fc00;
 
-L1d4da0:	; 801D4DA0
+AT = T5 + fffd;
+if( AT >= 0 )
+{
+    AT = AT + fc00;
+}
+else
+{
+    AT = A2 + fc00;
+}
+
 T0 = V0 >> 18;
 T0 = T0 << 02;
 801D4DA8	add    t0, t0, at
@@ -1462,26 +1429,28 @@ V0 = V0 << T1;
 AT = 0 + 0020;
 801D4DC4	sub    at, at, t2
 T0 = V0 >> AT;
-801D4DCC	bltz   v0, L1d4de0 [$801d4de0]
-V0 = V0 << T2;
-T3 = 0 + ffff;
-T3 = T3 >> AT;
-801D4DDC	sub    t0, t0, t3
+if( V0 >= 0 )
+{
+    T3 = 0 + ffff;
+    T3 = T3 >> AT;
+    801D4DDC	sub    t0, t0, t3
+}
 
-L1d4de0:	; 801D4DE0
+V0 = V0 << T2;
 801D4DE0	add    v1, v1, t2
 
 L1d4de4:	; 801D4DE4
 801D4DE4	add    v1, v1, t1
 AT = V1 & 0010;
-801D4DEC	beq    at, zero, L1d4e04 [$801d4e04]
 V1 = V1 & 000f;
-T1 = hu[A0 + 0000];
-A0 = A0 + 0002;
-T1 = T1 << V1;
-V0 = V0 | T1;
+if( AT != 0 )
+{
+    T1 = hu[A0 + 0000];
+    A0 = A0 + 2;
+    T1 = T1 << V1;
+    V0 = V0 | T1;
+}
 
-L1d4e04:	; 801D4E04
 AT = T5 + fffe;
 801D4E08	bgtz   at, L1d4e2c [$801d4e2c]
 801D4E0C	add    t1, t9, t0
@@ -1505,32 +1474,48 @@ T1 = T4 | T1;
 T5 = T5 + 0001;
 AT = T5 + fff9;
 801D4E44	bne    at, zero, L1d4e8c [$801d4e8c]
-[A1 + 0000] = h(T1);
+[mdec_command] = h(T1);
 801D4E4C	bgez   zero, L1d4e8c [$801d4e8c]
 T5 = T5 + fffa;
 
 L1d4e54:	; 801D4E54
 AT = T0 ^ 01ff;
+mdec_command += 2;
 801D4E58	beq    at, zero, L1d4fa0 [$801d4fa0]
-A1 = A1 + 0002;
+
 V0 = V0 << 0a;
 V1 = V1 + 000a;
 AT = V1 & 0010;
-801D4E6C	beq    at, zero, L1d4e84 [$801d4e84]
 V1 = V1 & 000f;
-T1 = hu[A0 + 0000];
-A0 = A0 + 0002;
-T1 = T1 << V1;
-V0 = V0 | T1;
+if( AT != 0 )
+{
+    T1 = hu[A0 + 0000];
+    A0 = A0 + 0002;
+    T1 = T1 << V1;
+    V0 = V0 | T1;
+}
 
-L1d4e84:	; 801D4E84
 T0 = T4 | T0;
-[A1 + 0000] = h(T0);
+[mdec_command] = h(T0);
 
 L1d4e8c:	; 801D4E8C
-AT = A1 - T6;
-801D4E90	bgez   at, L1d4fd4 [$801d4fd4]
-A1 = A1 + 0002;
+AT = mdec_command - T6;
+mdec_command += 2;
+
+if( AT >= 0 )
+{
+    [801d5008 +  0] = w(A0);
+    [801d5008 +  4] = w(mdec_command);
+    [801d5008 +  8] = w(V0);
+    [801d5008 +  c] = w(V1);
+    [801d5008 + 10] = w(T4);
+    [801d5008 + 14] = w(T5);
+    [801d5008 + 18] = w(T7);
+    [801d5008 + 1c] = w(T8);
+    [801d5008 + 20] = w(T9);
+
+    return 1;
+}
 
 L1d4e98:	; 801D4E98
 T0 = V0 >> 13;
@@ -1581,30 +1566,33 @@ AT = T1 ^ fe00;
 801D4F2C	beq    at, zero, L1d4d7c [$801d4d7c]
 
 L1d4f30:	; 801D4F30
-[A1 + 0000] = h(T1);
+[mdec_command] = h(T1);
+mdec_command += 2;
 801D4F34	beq    t3, zero, L1d4e98 [$801d4e98]
-A1 = A1 + 0002;
+
 T2 = T3 & ffff;
 AT = T2 ^ 7c1f;
 801D4F44	beq    at, zero, L1d4f7c [$801d4f7c]
 AT = T2 ^ fe00;
 801D4F4C	beq    at, zero, L1d4d7c [$801d4d7c]
-[A1 + 0000] = h(T2);
+[mdec_command] = h(T2);
 T2 = T3 >> 10;
+mdec_command += 2;
 801D4F58	beq    t2, zero, L1d4e98 [$801d4e98]
-A1 = A1 + 0002;
+
 AT = T2 ^ 7c1f;
 801D4F64	beq    at, zero, L1d4f7c [$801d4f7c]
 AT = T2 ^ fe00;
 801D4F6C	beq    at, zero, L1d4d7c [$801d4d7c]
-[A1 + 0000] = h(T2);
+[mdec_command] = h(T2);
+mdec_command += 2;
 801D4F74	bgez   zero, L1d4e98 [$801d4e98]
-A1 = A1 + 0002;
 
 L1d4f7c:	; 801D4F7C
 T0 = V0 >> 10;
-[A1 + 0000] = h(T0);
-A1 = A1 + 0002;
+[mdec_command + 0000] = h(T0);
+mdec_command += 2;
+
 T0 = hu[A0 + 0000];
 A0 = A0 + 0002;
 V0 = V0 << 10;
@@ -1617,32 +1605,14 @@ T0 = fe00;
 V0 = 0 + 0040;
 
 loop1d4fa8:	; 801D4FA8
-[A1 + 0000] = h(T0);
-A1 = A1 + 0002;
+[mdec_command] = h(T0);
+mdec_command += 2;
 801D4FB0	bne    v0, zero, loop1d4fa8 [$801d4fa8]
 V0 = V0 + ffff;
 T1 = SR;
-801D4FBC	nop
-801D4FC0	lui    at, $0002
-T1 = T1 | AT;
+T1 = T1 | 00020000;
 SR = T1;
-801D4FCC	jr     ra 
-801D4FD0	add    v0, zero, zero
-
-
-L1d4fd4:	; 801D4FD4
-T0 = 801d5008;
-[T0 + 0000] = w(A0);
-[T0 + 0004] = w(A1);
-[T0 + 0008] = w(V0);
-[T0 + 000c] = w(V1);
-[T0 + 0010] = w(T4);
-[T0 + 0014] = w(T5);
-[T0 + 0018] = w(T7);
-[T0 + 001c] = w(T8);
-[T0 + 0020] = w(T9);
-801D5000	jr     ra 
-V0 = 0 + 0001;
+return 0;
 ////////////////////////////////
 
 
@@ -2057,28 +2027,18 @@ A0 = A0 + 0004;
 
 
 ////////////////////////////////
-// func1d5544
-801D5544	addiu  sp, sp, $fef8 (=-$108)
-[SP + 00fc] = w(S7);
+// func1d5544()
+
 S7 = A1;
 T2 = w[SP + 0118];
 T1 = A2;
-[SP + 00f8] = w(S6);
 S6 = A3;
-[SP + 00e4] = w(S1);
 S1 = 0;
-[SP + 0100] = w(FP);
 FP = 0;
-[SP + 00f4] = w(S5);
 S5 = SP + 0018;
-[SP + 00f0] = w(S4);
 S4 = w[SP + 0120];
 V0 = w[SP + 0124];
 T3 = SP + 0050;
-[SP + 0104] = w(RA);
-[SP + 00ec] = w(S3);
-[SP + 00e8] = w(S2);
-[SP + 00e0] = w(S0);
 [SP + 00c8] = w(T3);
 801D559C	beq    v0, zero, L1d55b0 [$801d55b0]
 [SP + 00c0] = h(0);
@@ -2245,28 +2205,14 @@ L1d579c:	; 801D579C
 V0 = S1 << 01;
 
 L1d57a8:	; 801D57A8
-RA = w[SP + 0104];
-FP = w[SP + 0100];
-S7 = w[SP + 00fc];
-S6 = w[SP + 00f8];
-S5 = w[SP + 00f4];
-S4 = w[SP + 00f0];
-S3 = w[SP + 00ec];
-S2 = w[SP + 00e8];
-S1 = w[SP + 00e4];
-S0 = w[SP + 00e0];
-SP = SP + 0108;
-801D57D4	jr     ra 
-801D57D8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d57dc
-801D57DC	addiu  sp, sp, $ffd8 (=-$28)
+// func1d57dc()
+
 V0 = A0;
-[SP + 0020] = w(RA);
 V1 = bu[V0 + 0014];
 A2 = w[V0 + 000c];
 A3 = w[V0 + 0010];
@@ -2282,12 +2228,8 @@ A2 = A2 >> 01;
 [SP + 001c] = w(V1);
 A0 = w[V0 + 0000];
 A1 = w[V0 + 0004];
-801D5824	jal    func1d5544 [$801d5544]
 A3 = A3 >> 01;
-RA = w[SP + 0020];
-SP = SP + 0028;
-801D5834	jr     ra 
-801D5838	nop
+func1d5544();
 ////////////////////////////////
 
 
@@ -2479,7 +2421,6 @@ S0 = S0 & 0001;
 ////////////////////////////////
 // func1d5b7c()
 
-A1 = 82082083;
 V0 = w[801e8a18];
 V1 = w[801e8a14];
 V0 = V0 * 20;
@@ -2487,38 +2428,26 @@ V0 = V1 + V0;
 A0 = A0 - V0;
 V0 = A0 >> 02;
 A0 = A0 >> 1f;
-801D5BA4	mult   v0, a1
-801D5BAC	mfhi   a3
+A3 = hi(V0 * 82082083);
 V0 = A3 + V0;
 V0 = V0 >> 08;
 A1 = V0 - A0;
-V0 = A1 << 05;
-V1 = V1 + V0;
-V0 = h[V1 + 0000];
-if( V0 != 4 )
+V1 = V1 + A1 * 20;
+
+if( h[V1] != 4 )
 {
     return 1;
 }
 
 V0 = h[V1 + 6];
-801D5BE8	blez   v0, L1d5c18 [$801d5c18]
-A0 = 0;
-A2 = V0;
 
-loop1d5bf4:	; 801D5BF4
-    V0 = A0 + A1;
-    A0 = A0 + 0001;
-    V1 = w[801e8a14];
-    V0 = V0 << 05;
-    V1 = V1 + V0;
-    V0 = A0 < A2;
+for( int i = 0; i < V0; ++i )
+{
+        V1 = w[801e8a14];
+        [V1 + (A1 + i) * 20] = h(0);
+}
 
-    L1d5c10:	; 801D5C10
-    [V1 + 0000] = h(0);
-801D5C10	bne    v0, zero, loop1d5bf4 [$801d5bf4]
-
-L1d5c18:	; 801D5C18
-[801e8a00] = w(A0 + A1);
+[801e8a00] = w(A1 + V0);
 
 return 0;
 ////////////////////////////////

@@ -15,11 +15,11 @@ else
     [801d68b4] = w(0);
 }
 
-A0 = 140;
-A1 = e0;
+A0 = 140; // area width
+A1 = e0; // area height
 A2 = 80;
-A3 = 10;
-A4 = 20;
+A3 = 10; // block width
+A4 = 20; // sector num
 A5 = 800;
 A6 = hu[800c2f0a];
 mdec_init();
@@ -34,58 +34,34 @@ system_memory_set_alloc_user();
 
 ////////////////////////////////
 // funca65f8()
+// callback
 
-A0 = A0 & ffff;
+current_frame = A0;
 A2 = A2 & ffff;
 
-[800afb74] = w(A0);
+[800afb74] = w(current_frame); // current frame
 [800af5b8] = w(0);
-800A6618	bne    a2, zero, La6630 [$800a6630]
-V0 = 0001;
-[800ad050] = w(V0);
-800A6628	j      La6638 [$800a6638]
-800A662C	nop
 
-La6630:	; 800A6630
-[800ad050] = w(0);
+if( A2 != 0 ) [800ad050] = w(0);
+else          [800ad050] = w(1);
 
-La6638:	; 800A6638
-V0 = w[800ad04c];
-800A6640	nop
-800A6644	bne    v0, zero, La66e0 [$800a66e0]
-800A6648	nop
-V0 = w[800af348];
-800A6654	nop
-800A6658	bne    v0, zero, La66e0 [$800a66e0]
-800A665C	nop
-800A6660	jal    $system_draw_sync
-A0 = 0;
-A0 = w[800ad050];
-V1 = 800b1970;
-V0 = A0 << 07;
-V0 = V0 + A0;
-V0 = V0 << 04;
-V0 = V0 - A0;
-V0 = V0 << 02;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = h[800c2f0a];
-[800c3740] = w(V0);
-V0 = 0001;
-800A66AC	bne    v1, v0, La66e0 [$800a66e0]
-V0 = A0 & 0001;
-V1 = V0 << 07;
-V1 = V1 + V0;
-V1 = V1 << 04;
-V1 = V1 - V0;
-V1 = V1 << 02;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V0 = 0001;
-[800b1a39 + V1] = b(V0);
+if( w[800ad04c] == 0 )
+{
+    if( w[800af348] == 0 )
+    {
+        A0 = 0;
+        system_draw_sync();
 
-La66e0:	; 800A66E0
+        A0 = w[800ad050];
+        [800c3740] = w(800b1970 + A0 * 80f4); // draw otag
+
+        if( h[800c2f0a] == 1 )
+        {
+            V0 = A0 & 1;
+            [800b1a39 + V0 * 80f4] = b(1);
+        }
+    }
+}
 ////////////////////////////////
 
 
@@ -94,7 +70,7 @@ La66e0:	; 800A66E0
 // funca66f0()
 // movie related
 
-[800afb74] = w(0);
+[800afb74] = w(0); // current frame
 
 A0 = 4;
 A1 = 0;
@@ -474,8 +450,8 @@ if( w[8004e9a4] == 0 ) // dont show credits
     return;
 }
 
-V1 = w[800afb74];
-if( ( V1 < 687 ) || ( V1 >= 18e2 ) )
+current_frame = w[800afb74];
+if( ( current_frame < 687 ) || ( current_frame >= 18e2 ) )
 {
     return;
 }
@@ -557,7 +533,7 @@ system_psyq_wait_frames();
 A0 = 0;
 system_draw_sync();
 
-while( w[800afb74] < 18e2 )
+while( w[800afb74] < 18e2 ) // current frame
 {
     system_reset_check();
 
@@ -664,7 +640,7 @@ A2 = 0;
 A3 = 80;
 system_cdrom2_load_file_by_dir_file_id();
 
-[800afb74] = w(0);
+[800afb74] = w(0); // current frame
 [800af348] = w(0);
 
 funca686c(); // cdrom sync while update models
@@ -777,8 +753,6 @@ loopa7334:	; 800A7334
     V0 = w[800af5b8];
 800A7350	bne    v0, zero, loopa7334 [$800a7334]
 
-S1 = 800c2f0e;
-
 do
 {
     V1 = w[800ad04c];
@@ -806,7 +780,7 @@ do
         system_psyq_wait_frames();
 
         A0 = w[800c3740];
-        A0 = A0 + 00b8;
+        A0 = A0 + b8;
         system_psyq_put_disp_env();
 
         A0 = w[800c3740];
@@ -880,7 +854,7 @@ do
     {
         if( w[800ad05c] != 0 ) break;
     }
-} while( ( h[S1] != 0 ) || ( w[800afb74] < hu[S1 - c] ) )
+} while( ( h[800c2f0e] != 0 ) || ( w[800afb74] < hu[800c2f02] ) )
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -931,7 +905,7 @@ A0 = 0;
 system_psyq_wait_frames();
 
 S0 = 800b9a64;
-S1 = S0 + 00b8;
+S1 = S0 + b8;
 [800c3740] = w(S0);
 
 A0 = S1;

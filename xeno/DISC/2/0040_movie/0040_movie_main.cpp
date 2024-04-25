@@ -4887,9 +4887,6 @@ while( true )
         if( V0 > 0 )
         {
             S6 = V0;
-            S2 = 80076a4c;
-            S1 = 80076a48;
-            S0 = 0001;
 
             for( int i = 0; i < S6; ++i )
             {
@@ -4903,15 +4900,11 @@ while( true )
                 system_psyq_wait_frames();
                 V1 = V0;
 
-                if( S0 < 20 )
+                if( ( 1 + i * 2 ) < 20 )
                 {
-                    [S1 + 0] = w(S3);
-                    [S2 + 0] = w(V1);
+                    [80076a48 + i * 8 + 0] = w(S3);
+                    [80076a48 + i * 8 + 4] = w(V1);
                 }
-
-                S0 = S0 + 2;
-                S2 = S2 + 8;
-                S1 = S1 + 8;
             }
 
             80075E24	mult   s5, s7
