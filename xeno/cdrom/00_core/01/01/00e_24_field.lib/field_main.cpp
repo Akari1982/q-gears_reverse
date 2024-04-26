@@ -783,8 +783,7 @@ if( w[8004e99c] == 0 )
     system_move_image();
 }
 
-S0 = 1;
-[800acfe0] = w(S0);
+[800acfe0] = w(1);
 
 field_copy_screen_to_2c0_100();
 
@@ -801,11 +800,11 @@ field_draw_sync();
 
 V0 = bu[80058b6c];
 
-80078444	beq    v0, s0, L78460 [$80078460]
+80078444	beq    v0, 1, L78460 [$80078460]
 A0 = 0;
 V0 = bu[80058ac8];
 80078454	nop
-80078458	bne    v0, s0, L78468 [$80078468]
+80078458	bne    v0, 1, L78468 [$80078468]
 8007845C	nop
 
 L78460:	; 80078460
@@ -817,11 +816,10 @@ A0 = 0001;
 A1 = 0001;
 
 L78470:	; 80078470
-S0 = 0001;
 
 field_transition_create_add_transp_render();
 
-[8004e99c] = w(S0);
+[8004e99c] = w(1);
 
 A0 = 0;
 system_cdrom_action_sync();
@@ -835,24 +833,25 @@ func70358(); // parse field
 field_load_main_map_texture_into_vram();
 
 V0 = w[800b1738];
-[800af1d8] = w(S0);
-800784B4	beq    v0, zero, L784c4 [$800784c4]
+[800af1d8] = w(1);
+if( V0 != 0 )
+{
+    A0 = 1;
+    func1e7378();
+}
 
-A0 = 1;
-func1e7378();
-
-L784c4:	; 800784C4
 V0 = bu[80058b6c];
-800784CC	nop
-800784D0	beq    v0, s0, L784f0 [$800784f0]
+800784D0	beq    v0, 1, L784f0 [$800784f0]
 S2 = 0;
 V0 = bu[80058ac8];
-800784E0	nop
-800784E4	bne    v0, s0, L784f0 [$800784f0]
+800784E4	bne    v0, 1, L784f0 [$800784f0]
 S2 = 0020;
 S2 = 0;
 
 L784f0:	; 800784F0
+
+S0 = 1;
+
 V1 = w[800ad038];
 V0 = 0001;
 800784FC	bne    v1, v0, L785ac [$800785ac]

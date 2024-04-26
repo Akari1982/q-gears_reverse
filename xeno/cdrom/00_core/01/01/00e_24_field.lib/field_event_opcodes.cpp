@@ -7447,7 +7447,7 @@ field_event_help_read_u16_by_flag_08();
 [800c2f0e] = h(0);
 [800c2f04] = h(hu[800c2f04] & 000f);
 [800ad04c] = w(0);
-[800ad048] = w(1);
+[800ad048] = w(1); // play movie
 [800af594] = w(1);
 
 [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + c);
@@ -7523,7 +7523,7 @@ else if( V0 == 2 )
 
 [800c2f0c] = h(ff);
 [800c2f0e] = h(0);
-[800ad048] = w(1);
+[800ad048] = w(1); // play movie
 [800af594] = w(1);
 
 A0 = w[800af54c];
@@ -7583,7 +7583,8 @@ field_event_help_read_v80();
 [800c2f0a] = h(0);
 [800c2f04] = h(hu[800c2f04] & 000f);
 
-[800ad048] = w(1);
+[800ad048] = w(1); // play movie
+
 A0 = w[800af54c];
 [A0 + cc] = h(hu[A0 + cc] + 13);
 ////////////////////////////////
