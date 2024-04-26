@@ -619,8 +619,7 @@ field_credits_deinit();
 
 
 ////////////////////////////////
-// funca7130()
-// called when movie starts
+// field_movie_play()
 
 [800ad05c] = w(0);
 [800af5b8] = w(0);

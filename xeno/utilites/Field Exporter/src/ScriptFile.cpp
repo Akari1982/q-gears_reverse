@@ -1019,10 +1019,20 @@ ScriptFile::GetScripts( const std::string& path )
                             exp->Log( "-- 0xFE54()" );
                             pointer += 1;
                         }
+                        else if( eo_opcode == 0x60 )
+                        {
+                            exp->Log( "-- 0xFE60( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", end_frame=" + GetV80Variable( pointer + 5 ) + ", flags=" + GetV80Variable( pointer + 7 ) + " )" );
+                            pointer += 9;
+                        }
                         else if( eo_opcode == 0x63 )
                         {
                             exp->Log( "-- 0xFE63()" );
                             pointer += 5;
+                        }
+                        else if( eo_opcode == 0x67 )
+                        {
+                            exp->Log( "-- 0xFE67( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", start_frame=" + GetV80Variable( pointer + 5 ) + ", end_frame=" + GetV80Variable( pointer + 7 ) + ", flags=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 0xb ) + ", ???=" + GetV80Variable( pointer + 0xd ) + ", ???=" + GetV80Variable( pointer + 0xf ) + ", ???=" + GetV80Variable( pointer + 0x11 ) + " )" );
+                            pointer += 0x13;
                         }
                         else if( eo_opcode == 0x69 )
                         {
@@ -1106,7 +1116,7 @@ ScriptFile::GetScripts( const std::string& path )
                         }
                         else if( eo_opcode == 0xa0 )
                         {
-                            exp->Log( "-- 0xFEA0( ???=" + GetVF80Variable( pointer + 1 ) + ", ???=" + GetVF40Variable( pointer + 3 ) + ", ???=" + GetVF20Variable( pointer + 5 ) + ", ???=" + GetVF10Variable( pointer + 7 ) + ", ???=" + GetVF08Variable( pointer + 9 ) + ", flag=" + GetFVariable( pointer + 11 ) + ")" );
+                            exp->Log( "-- 0xFEA0( movie_id=" + GetVF80Variable( pointer + 1 ) + ", sector=" + GetVF40Variable( pointer + 3 ) + ", start_frame=" + GetVF20Variable( pointer + 5 ) + ", end_frame=" + GetVF10Variable( pointer + 7 ) + ", ???=" + GetVF08Variable( pointer + 9 ) + ", flag=" + GetFVariable( pointer + 11 ) + ")" );
                             pointer += 12;
                         }
                         else if( eo_opcode == 0xa1 )

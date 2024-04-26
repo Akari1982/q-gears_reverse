@@ -78,12 +78,10 @@ V0 = w[800ADB78 + V0 * 4];
 5C 800A0568
 5E 8008E8AC
 5F 8008E79C
-60 8008E204
 61 8008DFCC
 62 8008EA18
 64 8008EBB8
 65 8008EAD0
-67 8008E3E8
 68 800921F4
 6a 80089BD8
 6b 80089C14
@@ -178,7 +176,7 @@ de 8008671C
 
 
 ////////////////////////////////
-// field_script_op13_opFD_opFF()
+// field_event_op13_opFD_opFF()
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 1);
@@ -7416,22 +7414,22 @@ flag = bu[V0 + b];
 A0 = 1;
 A1 = flag;
 field_event_help_read_u16_by_flag_80();
-[800c2dec + 108] = h(V0);
+[800c2ef4] = h(V0); // movie id
 
 A0 = 3;
 A1 = flag;
 field_event_help_read_u16_by_flag_40();
-[800c2efe] = h(V0);
+[800c2efe] = h(V0); // sector
 
 A0 = 5;
 A1 = flag;
 field_event_help_read_u16_by_flag_20();
-[800c2f00] = h(V0);
+[800c2f00] = h(V0); // start frame
 
 A0 = 7;
 A1 = flag;
 field_event_help_read_u16_by_flag_10();
-[800c2f02] = h(V0);
+[800c2f02] = h(V0); // end frame
 
 A0 = 9;
 A1 = flag;
@@ -7458,177 +7456,136 @@ field_event_help_read_u16_by_flag_08();
 
 
 ////////////////////////////////
-// func8e204
-V0 = w[800ad0b4];
-8008E20C	addiu  sp, sp, $ffe8 (=-$18)
-8008E210	bne    v0, zero, L8e240 [$8008e240]
-[SP + 0010] = w(RA);
-V0 = w[800af54c];
-8008E220	nop
-V1 = hu[V0 + 00cc];
-A0 = 0001;
-[800af594] = w(A0);
-8008E234	addiu  v1, v1, $ffff (=-$1)
-8008E238	j      L8e3d8 [$8008e3d8]
-[V0 + 00cc] = h(V1);
+// field_event_opFE60()
 
-L8e240:	; 8008E240
-8008E240	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0001;
-[800c2ef4] = h(V0);
-8008E250	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0003;
-[800c2efe] = h(V0);
-8008E260	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0005;
-[800c2f02] = h(V0);
-8008E270	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0007;
-V1 = V0;
-A0 = 0140;
-A1 = 0100;
-V0 = V0 & 000f;
-[800c2f04] = h(V1);
-V1 = V1 & 00c0;
-A3 = 0001;
-[800ad058] = w(V1);
-V1 = V0;
-A2 = 0001;
-[800c2f06] = h(A0);
-[800c2f08] = h(A1);
-[800c2f04] = h(V0);
-[800c2f00] = h(A3);
-8008E2C8	beq    v1, a2, L8e334 [$8008e334]
-V0 = V1 < 0002;
-8008E2D0	beq    v0, zero, L8e2e8 [$8008e2e8]
-8008E2D4	nop
-8008E2D8	beq    v1, zero, L8e2fc [$8008e2fc]
-8008E2DC	nop
-8008E2E0	j      L8e39c [$8008e39c]
-8008E2E4	nop
+if( w[800ad0b4] == 0 )
+{
+    [800af594] = w(1);
+    V0 = w[800af54c];
+    [V0 + cc] = h(hu[V0 + cc] - 1);
+    return;
+}
 
-L8e2e8:	; 8008E2E8
-V0 = 0002;
-8008E2EC	beq    v1, v0, L8e36c [$8008e36c]
-8008E2F0	nop
-8008E2F4	j      L8e39c [$8008e39c]
-8008E2F8	nop
+A0 = 1;
+field_event_help_read_v80();
+[800c2ef4] = h(V0); // movie id
 
-L8e2fc:	; 8008E2FC
-[800c2ef6] = h(A0);
-[800c2ef8] = h(0);
-[800c2efa] = h(A0);
-[800c2efc] = h(A1);
-[800ad04c] = w(A2);
-[800c2f0a] = h(0);
-8008E32C	j      L8e39c [$8008e39c]
-8008E330	nop
+A0 = 3;
+field_event_help_read_v80();
+[800c2efe] = h(V0); // sector
 
-L8e334:	; 8008E334
-[800c2efa] = h(0);
-[800c2ef8] = h(0);
-[800c2ef6] = h(0);
-[800c2efc] = h(A1);
-[800ad04c] = w(0);
-[800c2f0a] = h(0);
-8008E364	j      L8e39c [$8008e39c]
-8008E368	nop
+A0 = 5;
+field_event_help_read_v80();
+[800c2f02] = h(V0); // end frame
 
-L8e36c:	; 8008E36C
-[800c2efa] = h(0);
-[800c2ef8] = h(0);
-[800c2ef6] = h(0);
-[800c2efc] = h(A1);
-[800ad04c] = w(0);
-[800c2f0a] = h(A3);
+A0 = 7;
+field_event_help_read_v80();
+[800c2f04] = h(V0 & 000f);
+[800ad058] = w(V0 & c0);
 
-L8e39c:	; 8008E39C
+[800c2f06] = h(140);
+[800c2f08] = h(100);
+
+[800c2f00] = h(1); // start frame
+
+V0 = h[[800c2f04]];
+
+if( V0 == 0 )
+{
+    [800c2ef6] = h(140);
+    [800c2ef8] = h(0);
+    [800c2efa] = h(140);
+    [800c2efc] = h(100);
+
+    [800ad04c] = w(1);
+    [800c2f0a] = h(0);
+}
+else if( V0 == 1 )
+{
+    [800c2ef6] = h(0);
+    [800c2ef8] = h(0);
+    [800c2efa] = h(0);
+    [800c2efc] = h(100);
+
+    [800ad04c] = w(0);
+    [800c2f0a] = h(0);
+}
+else if( V0 == 2 )
+{
+    [800c2ef6] = h(0);
+    [800c2ef8] = h(0);
+    [800c2efa] = h(0);
+    [800c2efc] = h(100);
+
+    [800ad04c] = w(0);
+    [800c2f0a] = h(1);
+}
+
+[800c2f0c] = h(ff);
+[800c2f0e] = h(0);
+[800ad048] = w(1);
+[800af594] = w(1);
+
 A0 = w[800af54c];
-V0 = 00ff;
-[800c2f0c] = h(V0);
-[800c2f0e] = h(0);
-V0 = hu[A0 + 00cc];
-V1 = 0001;
-[800ad048] = w(V1);
-[800af594] = w(V1);
-V0 = V0 + 0009;
-[A0 + 00cc] = h(V0);
-
-L8e3d8:	; 8008E3D8
-RA = w[SP + 0010];
-SP = SP + 0018;
-8008E3E0	jr     ra 
-8008E3E4	nop
+[A0 + cc] = h(hu[A0 + cc] + 9);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func8e3e8
-8008E3E8	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-8008E3F4	jal    field_event_help_read_v80 [$800ac2c4]
-[SP + 0010] = w(S0);
-[800c2ef4] = h(V0);
-8008E404	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0003;
-[800c2efe] = h(V0);
-8008E414	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0005;
-[800c2f00] = h(V0);
-8008E424	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0007;
-[800c2f02] = h(V0);
-8008E434	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0009;
-S0 = V0 & ffff;
+// field_event_opFE67()
+
+A0 = 1;
+field_event_help_read_v80();
+[800c2ef4] = h(V0); // movie id
+
+A0 = 3;
+field_event_help_read_v80();
+[800c2efe] = h(V0); // sector
+
+A0 = 5;
+field_event_help_read_v80();
+[800c2f00] = h(V0); // start frame
+
+A0 = 7;
+field_event_help_read_v80();
+[800c2f02] = h(V0); // end frame
+
+A0 = 9;
+field_event_help_read_v80();
 [800c2f04] = h(V0);
-V0 = 00fe;
-8008E44C	bne    s0, v0, L8e464 [$8008e464]
-V0 = 0001;
-[800c2f0e] = h(V0);
-8008E45C	j      L8e46c [$8008e46c]
-8008E460	nop
 
-L8e464:	; 8008E464
-[800c2f0e] = h(0);
+S0 = V0;
+if( S0 == fe ) [800c2f0e] = h(1);
+else           [800c2f0e] = h(0);
 
-L8e46c:	; 8008E46C
-8008E46C	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 000b;
+A0 = b;
+field_event_help_read_v80();
 [800c2ef6] = h(V0);
 [800c2efa] = h(V0);
-8008E484	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 000d;
+
+A0 = d;
+field_event_help_read_v80();
 [800c2ef8] = h(V0);
 [800c2efc] = h(V0);
-8008E49C	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 000f;
+
+A0 = f;
+field_event_help_read_v80();
 [800c2f06] = h(V0);
-8008E4AC	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0011;
+
+A0 = 11;
+field_event_help_read_v80();
 [800c2f08] = h(V0);
-V0 = S0 & 0040;
-[800ad058] = w(V0);
-V0 = 00ff;
-[800c2f0c] = h(V0);
+
+[800ad058] = w(S0 & 40);
+[800c2f0c] = h(ff);
 [800ad04c] = w(2);
-V0 = hu[800c2f04];
-A0 = w[800af54c];
 [800c2f0a] = h(0);
-V0 = V0 & 000f;
-[800c2f04] = h(V0);
-V0 = hu[A0 + 00cc];
-V1 = 0001;
-[800ad048] = w(V1);
-V0 = V0 + 0013;
-[A0 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8008E528	jr     ra 
-8008E52C	nop
+[800c2f04] = h(hu[800c2f04] & 000f);
+
+[800ad048] = w(1);
+A0 = w[800af54c];
+[A0 + cc] = h(hu[A0 + cc] + 13);
 ////////////////////////////////
 
 
@@ -8476,7 +8433,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// field_script_op9B()
+// field_event_op9B()
 
 A0 = 1;
 field_event_help_read_v80();
@@ -8646,7 +8603,7 @@ A0 = w[800af54c];
 
 
 ////////////////////////////////
-// field_script_op65()
+// field_event_op65()
 
 V0 = w[800af54c];
 V0 = w[800ad0d8] + hu[V0 + cc];
@@ -9206,7 +9163,7 @@ V0 = w[800af54c];
 
 
 ////////////////////////////////
-// field_script_opF3()
+// field_event_opF3()
 
 A3 = w[800aedd4];
 T1 = w[800aedf4];
@@ -9493,7 +9450,7 @@ SP = SP + 0048;
 
 
 ////////////////////////////////
-// field_script_opEC()
+// field_event_opEC()
 
 V0 = w[800af54c];
 V0 = w[800ad0d8] + hu[V0 + cc];
@@ -9709,7 +9666,7 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// field_script_opEE()
+// field_event_opEE()
 
 V0 = w[800af54c];
 V0 = w[800ad0d8] + hu[V0 + cc];
@@ -19834,7 +19791,7 @@ if( h[800aeeca] == 0 )
 
 
 ////////////////////////////////
-// field_script_op9F()
+// field_event_op9F()
 
 if( h[800aeeca] == 0 )
 {

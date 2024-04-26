@@ -577,7 +577,7 @@ while( true )
 
             if( ( w[800ad048] != 0 ) && ( w[800acfe0] == 1 )
             {
-                funca7130(); // start movie
+                field_movie_play();
 
                 [800ad048] = w(0);
             }
