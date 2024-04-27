@@ -10,4 +10,6 @@ var = [
  ]
 opFF_Nop() -- 0x0000 0xff
 op99() -- 0x0001 0x99
--- MISSING OPCODE 0xFE69
+-- 0xFE69( actor_id=(entity)0x01, render_settings=32512, rot_x=15363, rot_y=8234 ) -- 0x0002 0xfe
+op05_FunctionCall( 0x1980 ) -- 0x000b 0x05
+-- MISSING OPCODE 0x80

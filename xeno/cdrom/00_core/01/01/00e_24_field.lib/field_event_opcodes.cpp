@@ -17,7 +17,6 @@ V0 = w[800ADB78 + V0 * 4];
 05 80095298
 06 80095340
 08 8008C754
-09 8008C64C
 0B 8008CCD4
 0C 8008C5C0
 0F 8008BF0C
@@ -78,7 +77,6 @@ V0 = w[800ADB78 + V0 * 4];
 5C 800A0568
 5E 8008E8AC
 5F 8008E79C
-61 8008DFCC
 62 8008EA18
 64 8008EBB8
 65 8008EAD0
@@ -5811,39 +5809,17 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func8c64c
-8008C64C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008C654	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0001;
-8008C65C	bne    v0, zero, L8c684 [$8008c684]
-8008C660	addiu  a0, zero, $f7ff (=-$801)
-V0 = w[800af54c];
-8008C66C	nop
-V1 = w[V0 + 0004];
-8008C674	nop
-V1 = V1 & A0;
-8008C67C	j      L8c6a0 [$8008c6a0]
-[V0 + 0004] = w(V1);
+// field_event_opFE09()
 
-L8c684:	; 8008C684
-V1 = w[800af54c];
-8008C68C	nop
-V0 = w[V1 + 0004];
-8008C694	nop
-V0 = V0 | 0800;
-[V1 + 0004] = w(V0);
+A0 = 1;
+field_event_help_read_v80();
 
-L8c6a0:	; 8008C6A0
-V1 = w[800af54c];
-8008C6A8	nop
-V0 = hu[V1 + 00cc];
-8008C6B0	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-8008C6C0	jr     ra 
-SP = SP + 0018;
+struct_138_cur = w[800af54c];
+
+if( V0 == 0 ) [struct_138_cur + 4] = w(w[struct_138_cur + 4] & fffff7ff);
+else          [struct_138_cur + 4] = w(w[struct_138_cur + 4] | 00000800);
+
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 3);
 ////////////////////////////////
 
 
@@ -7368,30 +7344,20 @@ else if( V1 == 2 )
 
 
 ////////////////////////////////
-// func8dfcc
-V0 = w[800ad054];
-8008DFD4	nop
-8008DFD8	bne    v0, zero, L8dff8 [$8008dff8]
-8008DFDC	nop
-V1 = w[800af54c];
-8008DFE8	nop
-V0 = hu[V1 + 00cc];
-8008DFF0	j      L8e014 [$8008e014]
-8008DFF4	addiu  v0, v0, $ffff (=-$1)
+// field_event_opFE61()
 
-L8dff8:	; 8008DFF8
-V1 = w[800af54c];
-8008E000	nop
-V0 = hu[V1 + 00cc];
+if( w[800ad054] == 0 )
+{
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] - 1);
+    return;
+}
+
 [800ad054] = w(0);
-V0 = V0 + 0001;
+[800af594] = w(1);
 
-L8e014:	; 8008E014
-[V1 + 00cc] = h(V0);
-V0 = 0001;
-[800af594] = w(V0);
-8008E024	jr     ra 
-8008E028	nop
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + 1);
 ////////////////////////////////
 
 
@@ -18985,33 +18951,22 @@ V0 = V0 + 0002;
 
 
 ////////////////////////////////
-// func9a340
-A0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[A0 + 00cc];
-8009A354	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-8009A360	nop
-V0 = V0 << 01;
-8009A368	lui    at, $800b
-AT = AT + V0;
-V0 = hu[AT + df28];
-V1 = w[800acff4];
-V0 = V0 | 8000;
-[A0 + 0104] = h(V0);
-8009A384	bne    v1, zero, L9a390 [$8009a390]
-[A0 + 0106] = h(V0);
-[A0 + 0108] = h(V0);
+// field_event_op5F()
 
-L9a390:	; 8009A390
+A0 = w[800af54c];
+V0 = w[800ad0d8] + hu[A0 + cc];
+
+V0 = bu[V0 + 1];
+[A0 + 104] = h(hu[800adf28 + V0 * 2] | 8000);
+[A0 + 106] = h(hu[800adf28 + V0 * 2] | 8000);
+
+if( w[800acff4] == 0 )
+{
+    [A0 + 108] = h(hu[800adf28 + V0 * 2] | 8000);
+}
+
 V1 = w[800af54c];
-8009A398	nop
-V0 = hu[V1 + 00cc];
-8009A3A0	nop
-V0 = V0 + 0002;
-8009A3A8	jr     ra 
-[V1 + 00cc] = h(V0);
+[V1 + cc] = h(hu[V1 + cc] + 2);
 ////////////////////////////////
 
 
@@ -19621,29 +19576,21 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func9ac80
-8009AC80	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-8009AC8C	jal    field_event_help_read_v80 [$800ac2c4]
-[SP + 0010] = w(S0);
-A0 = 0003;
-8009AC98	jal    field_event_help_read_v80 [$800ac2c4]
+// field_event_opB6()
+
+A0 = 1;
+field_event_help_read_v80();
 S0 = V0;
+
+A0 = 3;
+field_event_help_read_v80();
+
 A0 = S0;
-8009ACA4	jal    func9a410 [$8009a410]
 A1 = V0;
+func9a410();
+
 V1 = w[800af54c];
-8009ACB4	nop
-V0 = hu[V1 + 00cc];
-8009ACBC	nop
-V0 = V0 + 0005;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8009ACD4	jr     ra 
-8009ACD8	nop
+[V1 + cc] = h(hu[V1 + cc] + 5);
 ////////////////////////////////
 
 
@@ -23746,70 +23693,34 @@ V1 = V1 & V0;
 
 
 ////////////////////////////////
-// 0x04
-800A101C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = 0;
-[SP + 0018] = w(S2);
-S2 = 0007;
-[SP + 001c] = w(RA);
-[SP + 0014] = w(S1);
+// field_event_op04()
 
-loopa1038:	; 800A1038
-V0 = w[800af54c];
-S1 = S0 << 03;
-V0 = V0 + S1;
-V0 = w[V0 + 0090];
-800A104C	nop
-V0 = V0 >> 12;
-V0 = V0 & 000f;
-800A1058	bne    v0, s2, La1084 [$800a1084]
-800A105C	nop
-A0 = w[800af1f0];
-800A1068	jal    funca2620 [$800a2620]
-A1 = 0001;
-V1 = w[800af54c];
-800A1078	nop
-V1 = V1 + S1;
-[V1 + 008c] = h(V0);
+struct_138_cur = w[800af54c];
 
-La1084:	; 800A1084
-S0 = S0 + 0001;
-V0 = S0 < 0008;
-800A108C	bne    v0, zero, loopa1038 [$800a1038]
-800A1090	lui    a0, $003c
+for( int i = 0; i < 8; ++i )
+{
+    if( ( (w[struct_138_cur + i * 8 + 90] >> 12) & f ) == 7 )
+    {
+        A0 = w[800af1f0];
+        A1 = 1;
+        funca2620();
+
+        [struct_138_cur + i * 8 + 8c] = h(V0);
+    }
+}
+
 A1 = w[800af54c];
-800A109C	nop
-V1 = bu[A1 + 00ce];
-800A10A4	nop
-V1 = V1 << 03;
-V1 = A1 + V1;
-V0 = w[V1 + 0090];
-800A10B4	nop
-V0 = V0 | A0;
-[V1 + 0090] = w(V0);
-V0 = bu[A1 + 00ce];
-800A10C4	nop
-V0 = V0 << 03;
-A1 = A1 + V0;
-V0 = 00ff;
-[A1 + 008f] = b(V0);
-V0 = 0001;
-[800af594] = w(V0);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800A10F8	jr     ra 
-800A10FC	nop
+V1 = bu[struct_138_cur + ce];
+[struct_138_cur + V1 * 8 + 90] = w(w[struct_138_cur + V1 * 8 + 90] | 003c0000);
+[struct_138_cur + V1 * 8 + 8f] = b(ff);
+[800af594] = w(1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0x00_Return
-// funca1100
+// funca1100()
 
 struct_138 = w[800af54c];
 slot = bu[struct_138 + ce];
