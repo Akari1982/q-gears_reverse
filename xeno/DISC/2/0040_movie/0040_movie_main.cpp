@@ -4855,7 +4855,7 @@ A9 = 0;
 A10 = (hu[800766b4] + f0) & ffff; // screen draw related
 A11 = h[80076a30]; // screen draw
 A12 = 80075f68; // func75f68()
-func1d37cc();
+mdec_movie_set_to_play();
 
 V0 = w[800766a8];
 A0 = 800767b4 + V0 * 138;
@@ -4945,7 +4945,7 @@ while( true )
     }
 }
 
-func1d4318();
+mdec_movie_stop();
 
 if( w[800766ac] != 0 )
 {

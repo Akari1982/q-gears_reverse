@@ -1,6 +1,5 @@
 ////////////////////////////////
-// funca6564()
-// movie related
+// field_movie_mdec_init()
 
 A0 = 4;
 A1 = 0;
@@ -30,6 +29,7 @@ A0 = 8;
 A1 = 0;
 system_memory_set_alloc_user();
 ////////////////////////////////
+
 
 
 ////////////////////////////////
@@ -67,8 +67,7 @@ if( w[800ad04c] == 0 )
 
 
 ////////////////////////////////
-// funca66f0()
-// movie related
+// field_movie_set_to_play()
 
 [800afb74] = w(0); // current frame
 
@@ -103,7 +102,7 @@ if( w[800ad044] == 0 )
     A10 = hu[800c2efc]; // screen draw related
     A11 = e0; // screen draw
     A12 = 800a65f8; // callback funca65f8()
-    func1d37cc();
+    mdec_movie_set_to_play();
 
     A0 = 4;
     A1 = 0;
@@ -736,9 +735,9 @@ field_flush_sync();
 
 system_memory_clean_removed_alloc();
 
-funca6564(); // mdec init
+field_movie_mdec_init();
 
-funca66f0();
+field_movie_set_to_play();
 
 [800ad054] = w(1);
 

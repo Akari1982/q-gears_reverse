@@ -230,7 +230,7 @@ return -1;
 
 
 ////////////////////////////////
-// func1d37cc()
+// mdec_movie_set_to_play()
 
 movie_id = A0; // movie id
 sectors_to_play = A1;
@@ -367,7 +367,7 @@ A1 = sectors_to_play;
 A2 = hu[801e8978]; // channel
 A3 = w[801e8970]; // load flags
 A4 = 0;
-func1d41ac();
+mdec_movie_play();
 ////////////////////////////////
 
 
@@ -490,7 +490,7 @@ if( w[801d68c0] == 0 )
         V0 = w[801e8918];
         A0 = w[801e891c + V0 * 4]; // mdec command
         A1 = w[801d68c8]; // screen mode
-        func1d46a0(); // mdec in setup
+        mdec_in_setup_with_settings();
 
         V0 = w[801e8930];
         V1 = h[801e894c + V0 * 8];
@@ -529,14 +529,14 @@ if( w[801d68c0] == 0 )
     V0 = w[801e8918];
     A0 = w[801e8914];
     A1 = w[801e891c + V0 * 4];
-    func1d4cc8();
+    mdec_create_in_commands();
     [801d68c0] = w(V0);
 }
 else
 {
     A0 = 0;
     A1 = 0;
-    func1d4cc8();
+    mdec_create_in_commands();
     [801d68c0] = w(V0);
 }
 
@@ -565,18 +565,19 @@ if( b[801e8964] <= 0 )
     return;
 }
 
-if( w[801e8984] < w[801e8988] )
+if( w[801e8988] > w[801e8984] ) // current frame greater than start frame
 {
     if( w[801e89a4] != 0 )
     {
         [801e89a4] = w(0);
+
         A0 = 7fff;
         A1 = 28;
         system_sound_set_cd_volume_increase();
     }
 }
 
-if( w[801e8988] >= ( w[801d68cc] - 3 ) )
+if( w[801e8988] >= ( w[801d68cc] - 3 ) ) // current frame greater than end frame - 3
 {
     if( w[801e89a8] != 0 )
     {
@@ -587,13 +588,13 @@ if( w[801e8988] >= ( w[801d68cc] - 3 ) )
     }
 }
 
-if( w[801e8988] >= w[801d68cc] )
+if( w[801e8988] >= w[801d68cc] ) // current frame greater than end frame
 {
-    if( b[801e8964] == 1 )
+    if( b[801e8964] == 1 ) // rewind off
     {
-        func1d4318();
+        mdec_movie_stop();
     }
-    else
+    else // rewind on
     {
         [801e8960] = b(0);
         [801e8988] = w(-1);
@@ -603,7 +604,7 @@ if( w[801e8988] >= w[801d68cc] )
         A2 = hu[801e8978]; // channel
         A3 = w[801e8970]; // load flags
         A4 = 0;
-        func1d41ac();
+        mdec_movie_play();
     }
 }
 
@@ -649,13 +650,13 @@ A0 = hu[801e8974]; // movie_id
 A1 = w[801e896c]; // sectors_to_play
 A2 = hu[801e8978]; // channel
 A3 = w[801e8970]; // load flags
-func1d41ac();
+mdec_movie_play();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d41ac()
+// mdec_movie_play()
 
 movie_id = A0;
 sectors_to_play = A1;
@@ -750,7 +751,7 @@ system_cdrom2_set_dir();
 
 
 ////////////////////////////////
-// func1d4318()
+// mdec_movie_stop()
 
 A0 = 0;
 A1 = 0;
@@ -796,7 +797,7 @@ system_cdrom_action_sync();
 ////////////////////////////////
 // mdec_deinit()
 
-func1d4318();
+mdec_movie_stop();
 
 A0 = w[801e891c];
 system_memory_free();
@@ -1016,7 +1017,7 @@ return hu[A0];
 
 
 ////////////////////////////////
-// func1d46a0()
+// mdec_in_setup_with_settings()
 
 command = A0;
 screen_mode = A1;
@@ -1350,7 +1351,7 @@ return ret;
 
 
 ////////////////////////////////
-// func1d4cc8()
+// mdec_create_in_commands()
 
 mdec_command = A1;
 T0 = 801d4c94;
@@ -1369,9 +1370,9 @@ T5 = w[T0 + 0014];
 T7 = w[T0 + 0018];
 T8 = w[T0 + 001c];
 T9 = w[T0 + 0020];
-801D4D14	add    t1, t1, t1
+T1 = T1 + T1;
+T6 = mdec_command + T1;
 801D4D18	bgez   zero, L1d4e98 [$801d4e98]
-801D4D1C	add    t6, mdec_command, t1
 
 L1d4d20:	; 801D4D20
 T5 = 0;
@@ -1386,8 +1387,8 @@ T4 = hu[A0 + 4];
 T2 = hu[A0 + 6];
 V0 = hu[A0 + 8];
 V1 = hu[A0 + a];
-T2 = T2 + fffd;
-T4 = T4 << 0a;
+T2 = T2 - 3;
+T4 = T4 << a;
 if( T2 >= 0 )
 {
     T5 = 1;
@@ -1411,36 +1412,36 @@ mdec_command += 2;
 AT = T5 + fffd;
 if( AT >= 0 )
 {
-    AT = AT + fc00;
+    AT = fc00 + AT;
 }
 else
 {
-    AT = A2 + fc00;
+    AT = fc00 + A2;
 }
 
 T0 = V0 >> 18;
 T0 = T0 << 02;
-801D4DA8	add    t0, t0, at
+T0 = T0 + AT;
 T1 = hu[T0 + 0000];
 T2 = hu[T0 + 0002];
 T0 = 0 & 0;
-801D4DB8	beq    t2, zero, L1d4de4 [$801d4de4]
 V0 = V0 << T1;
-AT = 0 + 0020;
-801D4DC4	sub    at, at, t2
-T0 = V0 >> AT;
-if( V0 >= 0 )
+if( T2 != 0 )
 {
-    T3 = 0 + ffff;
-    T3 = T3 >> AT;
-    801D4DDC	sub    t0, t0, t3
+    AT = 20 - T2;
+    T0 = V0 >> AT;
+    if( V0 >= 0 )
+    {
+        T3 = 0 + ffff;
+        T3 = T3 >> AT;
+        T0 = T0 - T3;
+    }
+
+    V0 = V0 << T2;
+    V1 = V1 + T2;
 }
 
-V0 = V0 << T2;
-801D4DE0	add    v1, v1, t2
-
-L1d4de4:	; 801D4DE4
-801D4DE4	add    v1, v1, t1
+V1 = V1 + T1;
 AT = V1 & 0010;
 V1 = V1 & 000f;
 if( AT != 0 )
@@ -1452,31 +1453,37 @@ if( AT != 0 )
 }
 
 AT = T5 + fffe;
-801D4E08	bgtz   at, L1d4e2c [$801d4e2c]
-801D4E0C	add    t1, t9, t0
-801D4E10	beq    at, zero, L1d4e24 [$801d4e24]
-801D4E14	add    t1, t8, t0
-801D4E18	add    t1, t7, t0
-801D4E1C	bgez   zero, L1d4e30 [$801d4e30]
-801D4E20	add    t7, t7, t0
+T1 = T9 + T0;
+if( AT <= 0 )
+{
+    T1 = T8 + T0;
+    if( AT == 0 )
+    {
+        T8 = T8 + T0;
+    }
+    else
+    {
+        T1 = T7 + T0;
+        T7 = T7 + T0;
+    }
+}
+else
+{
+    T9 = T9 + T0;
+}
 
-L1d4e24:	; 801D4E24
-801D4E24	bgez   zero, L1d4e30 [$801d4e30]
-801D4E28	add    t8, t8, t0
-
-L1d4e2c:	; 801D4E2C
-801D4E2C	add    t9, t9, t0
-
-L1d4e30:	; 801D4E30
 T1 = T1 << 02;
 T1 = T1 & 03ff;
 T1 = T4 | T1;
 T5 = T5 + 0001;
 AT = T5 + fff9;
-801D4E44	bne    at, zero, L1d4e8c [$801d4e8c]
 [mdec_command] = h(T1);
+
+if( AT == 0 )
+{
+    T5 = T5 - 6;
+}
 801D4E4C	bgez   zero, L1d4e8c [$801d4e8c]
-T5 = T5 + fffa;
 
 L1d4e54:	; 801D4E54
 AT = T0 ^ 01ff;
@@ -1540,25 +1547,27 @@ T0 = V0 >> 17;
 T0 = T0 << 02;
 801D4EE0	add    t0, t0, a3
 T1 = w[T0 + 0000];
-801D4EE8	add    t3, zero, zero
-801D4EEC	bgez   zero, L1d4ef8 [$801d4ef8]
+T3 = 0;
 AT = T1 & 00ff;
+801D4EEC	bgez   zero, L1d4ef8 [$801d4ef8]
 
 L1d4ef4:	; 801D4EF4
 T3 = w[T0 + 0004];
 
 L1d4ef8:	; 801D4EF8
 V0 = V0 << AT;
-801D4EFC	add    v1, v1, at
+V1 = V1 + AT;
 AT = V1 & 0010;
-801D4F04	beq    at, zero, L1d4f1c [$801d4f1c]
 V1 = V1 & 000f;
-T0 = hu[A0 + 0000];
-A0 = A0 + 0002;
-T0 = T0 << V1;
-V0 = V0 | T0;
+if( AT != 0 )
+{
 
-L1d4f1c:	; 801D4F1C
+    T0 = hu[A0 + 0000];
+    A0 = A0 + 0002;
+    T0 = T0 << V1;
+    V0 = V0 | T0;
+}
+
 T1 = T1 >> 10;
 AT = T1 ^ 7c1f;
 801D4F24	beq    at, zero, L1d4f7c [$801d4f7c]
@@ -1597,21 +1606,22 @@ T0 = hu[A0 + 0000];
 A0 = A0 + 0002;
 V0 = V0 << 10;
 T0 = T0 << V1;
-801D4F98	bgez   zero, L1d4e98 [$801d4e98]
 V0 = V0 | T0;
+801D4F98	bgez   zero, L1d4e98 [$801d4e98]
 
 L1d4fa0:	; 801D4FA0
-T0 = fe00;
-V0 = 0 + 0040;
+for( int i = 41; i != 0; --i )
+{
+    [mdec_command] = h(fe00); // end of block
+    mdec_command += 2;
+}
 
-loop1d4fa8:	; 801D4FA8
-[mdec_command] = h(T0);
-mdec_command += 2;
-801D4FB0	bne    v0, zero, loop1d4fa8 [$801d4fa8]
-V0 = V0 + ffff;
-T1 = SR;
-T1 = T1 | 00020000;
-SR = T1;
+// cop0r12 - SR - System status register (R/W)
+// 17 Swc Swapped cache mode (0=Normal, 1=Swapped)
+// Instruction cache will act as Data cache and vice versa.
+// Use only with Isc to access & invalidate Instr. cache entries.
+SR = SR | 00020000;
+
 return 0;
 ////////////////////////////////
 
