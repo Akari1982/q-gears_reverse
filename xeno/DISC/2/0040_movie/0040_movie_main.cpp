@@ -4894,7 +4894,7 @@ while( true )
                 system_psyq_wait_frames();
                 S3 = V0;
 
-                func1d3f7c();
+                mdec_update();
 
                 A0 = 1;
                 system_psyq_wait_frames();

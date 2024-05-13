@@ -24,7 +24,7 @@ FieldPackFile::Extract( u32 id )
         return NULL;
     }
 
-    u32 length_uncompressed = GetU32LE( 0x010c + id * 0x04 );
+    u32 length_uncompressed = GetU32LE( 0x010c + id * 0x04 ) + 0x10;
     u32 first_file = GetU32LE( 0x0130 + id * 0x04 );
     u32 length = 0;
     if( id < 8 )
@@ -38,6 +38,7 @@ FieldPackFile::Extract( u32 id )
 
     ArchiveFile* comp = new ArchiveFile( this, first_file, length );
     File* file = new File( comp, 0, length_uncompressed );
+    //File* file = new File( comp );
     delete comp;
     return file;
 }

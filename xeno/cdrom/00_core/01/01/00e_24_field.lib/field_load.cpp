@@ -900,22 +900,22 @@ A0 = A1 + w[A1 + 148];
 A1 = 80064f6c; // where
 system_extract_archive();
 
-// script extraction (part 5 of field file)
+// events extraction (part 5 of field file)
 V0 = w[80059b70];
-A0 = w[V0 + 120] + 10;
+A0 = w[V0 + 10c + 5 * 5] + 10;
 A1 = 0;
 system_memory_allocate();
 [800ad0d0] = w(V0);
 
 V1 = w[80059b70];
-A0 = V1 + w[V1 + 144];
+A0 = V1 + w[V1 + 130 + 5 * 4];
 A1 = V0;
 system_extract_archive();
 
 V0 = w[800ad0d0];
 V1 = w[V0 + 80];
 [800ad0d4] = w(V1); // number of entities
-[800ad0d8] = w(V0 + 84 + V1 * 40); // pointer to script data
+[800ad0d8] = w(V0 + 84 + V1 * 40); // pointer to events data
 
 // triggers extraction (part 8 of field file)
 A0 = w[80059b70];

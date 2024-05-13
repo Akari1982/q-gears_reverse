@@ -27,68 +27,42 @@ ArchiveFile::~ArchiveFile()
 void
 ArchiveFile::Extract()
 {
-    u16 circle_size = 4096;
-    u16 F = 18;
+    u32 src = 0;
+    u32 dst = 0;
 
-    u8 circle_buffer[ 4096 ];
-    int r = 0;
-    for( u16 i = 0; i < circle_size - F; i++ )
+    u32 size = GetU32LE( src );
+    src += 4;
+
+    u8* decomp_buffer = ( u8* )malloc( sizeof( u8 ) * size );
+
+    while( dst < size )
     {
-        circle_buffer[ i ] = 0;
-    }
-    r = circle_size - F;
+        u8 control = GetU8( src++ );
 
-    // current position in mpBuffer (compressed)
-    u32 comp_position = 0;
-
-    u32 decomp_length = GetU32LE( comp_position );
-    comp_position += 0x04;
-    u8* decomp_buffer = ( u8* )malloc( sizeof( u8 ) * decomp_length );
-
-    // current position in decomp_buffer
-    u32 decomp_position = 0;
-
-    // decompression
-    while( decomp_position < decomp_length )
-    {
-        // Control byte
-        u8 control_byte = GetU8( comp_position++ );
-
-        for( u8 shift = 0; shift < 8; shift++ )
+        for( int i = 8; i != 0; --i )
         {
-            if( ( control_byte & ( 1 << shift ) ) == 0 )
+            if( control & 0x1 )
             {
-                // not compressed
-                // copy byte in circle burrer and in decomp_buffer
-                u8 temp = GetU8( comp_position++ );
-                decomp_buffer[ decomp_position++ ] = temp;
-                circle_buffer[ r++ ] = temp;
-                r &= circle_size - 1;
+                u16 repeat = dst - (((GetU8( src + 1 ) & 0xf) << 0x8) | GetU8( src ));
+                u16 repeat_end = repeat + (GetU8( src + 1 ) >> 0x4) + 0x3;
+
+                do
+                {
+                    decomp_buffer[ dst++ ] = decomp_buffer[ repeat++ ];
+                } while( repeat != repeat_end );
+
+                src += 2;
             }
             else
             {
-                // compressed
-                // get 2 bytes
-                u8 reference1 = GetU8( comp_position++ );
-                u8 reference2 = GetU8( comp_position++ );
-                // offset for circle_buffer
-                u16 reference_offset = reference1 | ( ( reference2 & 0x0F ) << 8 );
-                // length are always lesser than real by 3
-                u8 reference_length = ( ( reference2 & 0xF0 ) >> 4 ) + 3;
-
-                // copy bytes
-                for( u32 i = 0; i < reference_length; i++ )
-                {
-                    u8 temp = circle_buffer[ ( r - reference_offset ) & ( circle_size - 1 ) ];
-                    decomp_buffer[ decomp_position++ ] = temp;
-                    circle_buffer[ r++ ] = temp;
-                    r &= circle_size - 1;
-                }
+                decomp_buffer[ dst++ ] = GetU8( src++ );
             }
+
+            control >>= 1;
         }
     }
 
     free( m_Buffer );
     m_Buffer = decomp_buffer;
-    m_BufferSize = decomp_length;
+    m_BufferSize = size;
 }

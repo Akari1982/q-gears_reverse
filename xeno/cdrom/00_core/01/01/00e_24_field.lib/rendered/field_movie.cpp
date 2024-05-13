@@ -33,8 +33,7 @@ system_memory_set_alloc_user();
 
 
 ////////////////////////////////
-// funca65f8()
-// callback
+// field_movie_mdec_callback()
 
 current_frame = A0;
 A2 = A2 & ffff;
@@ -101,7 +100,7 @@ if( w[800ad044] == 0 )
     A9 = hu[800c2efa];
     A10 = hu[800c2efc]; // screen draw related
     A11 = e0; // screen draw
-    A12 = 800a65f8; // callback funca65f8()
+    A12 = 800a65f8; // field_movie_mdec_callback()
     mdec_movie_set_to_play();
 
     A0 = 4;
@@ -117,18 +116,17 @@ system_memory_set_alloc_user();
 
 
 ////////////////////////////////
-// funca6804()
-// movie related
+// field_movie_mdec_update()
 
-S1 = A0;
+iter = A0;
 
 system_reset_check();
 
 if( w[800ad044] == 0 )
 {
-    for( int i = 0; i < S1; ++i )
+    for( int i = 0; i < iter; ++i )
     {
-        func1d3f7c();
+        mdec_update();
 
         func84c8c();
     }
@@ -138,21 +136,16 @@ if( w[800ad044] == 0 )
 
 
 ////////////////////////////////
-// funca686c()
-// movie related
+// field_movie_mdec_lib_load_sync()
 
-loopa6874:	; 800A6874
-    func7743c();
+do
+{
+    func7743c(); // update buttons clear otag
 
     func74bdc(); // move and update sprite and model here
 
     system_cdrom2_data_sync();
-
-800A688C	bne    v0, zero, loopa6874 [$800a6874]
-
-V0 = w[800acfe0];
-
-800A68A0	bne    v0, zero, loopa6874 [$800a6874]
+} while( ( V0 != 0 ) || ( w[800acfe0] != 0 ) )
 
 A0 = 0;
 system_psyq_cd_data_sync();
@@ -161,10 +154,9 @@ system_psyq_cd_data_sync();
 
 
 ////////////////////////////////
-// funca68c0()
-// movie related
+// field_movie_free_party_sprites()
 
-if( w[800ad04c] == 2 )
+if( w[800ad04c] == 2 ) // remove memory for 2nd and 3rd party sprites
 {
     A0 = w[80059aa8];
     system_memory_mark_removable();
@@ -172,7 +164,7 @@ if( w[800ad04c] == 2 )
     A0 = w[80059aac];
     system_memory_mark_removable();
 }
-else
+else // store 2nd and 3rd party sprites in vram
 {
     [SP + 10] = h(200);
     [SP + 12] = h(0);
@@ -215,10 +207,9 @@ system_memory_free();
 
 
 ////////////////////////////////
-// funca69d0()
-// movie related
+// field_movie_recover_party_sprites()
 
-if( w[800ad04c] == 2 )
+if( w[800ad04c] == 2 ) // load 2nd and 3rd party sprites
 {
     A0 = 14000;
     A1 = 0;
@@ -245,7 +236,7 @@ if( w[800ad04c] == 2 )
     {
         if( w[8006f14c + i * 4] != ff )
         {
-            [SP + 18 + load * 8] = h(w[8006f14c + i * 4] + 5);
+            [SP + 18 + load * 8 + 0] = h(w[8006f14c + i * 4] + 5);
 
             A0 = w[8006f14c + i * 4] + 5;
             system_get_aligned_filesize_by_dir_file_id();
@@ -285,7 +276,7 @@ if( w[800ad04c] == 2 )
         }
     }
 }
-else
+else // recover 2nd and 3rd party sprites from vram
 {
     A0 = 14000;
     A1 = 0;
@@ -332,20 +323,18 @@ else
 
 
 ////////////////////////////////
-// funca6c1c()
-// movie related
+// field_movie_convert_component()
 
 A0 = w[800b097c];
 if( ( A0 & 3 ) == 0 )
 {
-    V0 = w[800c2dd8];
-    [800c2dd8] = w(V0 + 4);
-    [800c1b5c] = w(w[V0 + 0]);
+    V0 = w[800c2dd8]; // image buffer
+    [800c2dd8] = w(V0 + 4); // move pointer
 }
 
-V0 = w[800c1b5c];
 [800b097c] = w(A0 + 1);
 
+V0 = w[800c1b5c];
 V1 = V0 & ff;
 [800c1b5c] = w(V0 >> 8);
 
@@ -361,8 +350,7 @@ return V1;
 
 
 ////////////////////////////////
-// funca6c9c()
-// movie related
+// field_movie_convert_24bit_to_15bit()
 
 A0 = a800;
 A1 = 0;
@@ -394,22 +382,22 @@ for( int i = 0; i < 5; ++i )
 
     for( int j = 0; j < 1c00; ++j )
     {
-        funca6c1c();
+        field_movie_convert_component();
         S0 = V0;
 
-        funca6c1c();
+        field_movie_convert_component();
         S0 = S0 | (V0 << 5);
 
-        funca6c1c();
+        field_movie_convert_component();
         S0 = S0 | (V0 << a);
 
-        funca6c1c();
+        field_movie_convert_component();
         S0 = S0 | (V0 << 10);
 
-        funca6c1c();
+        field_movie_convert_component();
         S0 = S0 | (V0 << 15);
 
-        funca6c1c();
+        field_movie_convert_component();
         V0 = V0 << 1a;
         S0 = S0 | V0;
 
@@ -567,7 +555,7 @@ while( w[800afb74] < 18e2 ) // current frame
     field_credits_update();
 
     A0 = 5;
-    funca6804();
+    field_movie_mdec_update();
 }
 
 [800af348] = w(0);
@@ -641,7 +629,7 @@ system_cdrom2_load_file_by_dir_file_id();
 [800afb74] = w(0); // current frame
 [800af348] = w(0);
 
-funca686c(); // cdrom sync while update models
+field_movie_mdec_lib_load_sync();
 
 A0 = 18;
 A1 = 0;
@@ -654,7 +642,7 @@ A0 = 4;
 A1 = 0;
 system_cdrom2_set_dir();
 
-funca686c(); // cdrom sync while update models
+field_movie_mdec_lib_load_sync();
 
 if( w[800b1738] != 0 )
 {
@@ -727,9 +715,7 @@ func84d9c(); // stop sounds and music
 
 field_credits_init();
 
-[800af5b8] = w(1);
-
-funca68c0();
+field_movie_free_party_sprites();
 
 field_flush_sync();
 
@@ -740,16 +726,16 @@ field_movie_mdec_init();
 field_movie_set_to_play();
 
 [800ad054] = w(1);
+[800af5b8] = w(1);
 
-loopa7334:	; 800A7334
+while( w[800af5b8] != 0 )
+{
     A0 = 0;
     system_psyq_wait_frames();
 
     A0 = 3;
-    funca6804();
-
-    V0 = w[800af5b8];
-800A7350	bne    v0, zero, loopa7334 [$800a7334]
+    field_movie_mdec_update();
+}
 
 do
 {
@@ -769,7 +755,7 @@ do
         system_psyq_put_draw_env();
 
         A0 = 3;
-        funca6804();
+        field_movie_mdec_update();
 
         A0 = 0;
         system_draw_sync();
@@ -785,7 +771,7 @@ do
         system_psyq_put_draw_env();
 
         A0 = 3;
-        funca6804();
+        field_movie_mdec_update();
 
         field_movie_credits();
     }
@@ -796,16 +782,16 @@ do
         func74fa0();
 
         A0 = 6;
-        funca6804();
+        field_movie_mdec_update();
     }
     else if( V1 == 2 )
     {
-        func7743c();
+        func7743c(); // update buttons clear otag
 
         func74bdc(); // move and update sprite and model here
 
         A0 = 9;
-        funca6804();
+        field_movie_mdec_update();
     }
 
     if( w[800c1b60] == 0 ) // PC HDD MODE
@@ -881,7 +867,7 @@ system_memory_free();
 
 system_memory_clean_removed_alloc();
 
-funca69d0();
+field_movie_recover_party_sprites();
 
 func76f14();
 
@@ -915,7 +901,7 @@ system_psyq_put_draw_env();
 if( w[800ad04c] != 2 )
 {
     A0 = 0;
-    funca6c9c();
+    field_movie_convert_24bit_to_15bit();
 }
 
 A0 = 0;

@@ -705,14 +705,14 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
-    psxMemWrite32(0x80010000, 0);
+    psxMemWrite32( 0x80010000, 0 );
 
     //psxMemWrite32(0x800af51c, 0); // transition type
 
     // FFVII DEBUG
     //psxMemWrite8(0x8009d820, 0xff);
 
-    if (0) {}
+    if( 0 ) {}
 
 
     //else if (_JumpTarget_ == 0x8007d058)

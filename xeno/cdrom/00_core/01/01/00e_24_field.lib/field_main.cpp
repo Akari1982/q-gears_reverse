@@ -765,7 +765,7 @@ field_draw_sync();
 if( w[8004e99c] == 0 )
 {
     A0 = 0;
-    funca6c9c();
+    field_movie_convert_24bit_to_15bit();
 }
 
 func71640();

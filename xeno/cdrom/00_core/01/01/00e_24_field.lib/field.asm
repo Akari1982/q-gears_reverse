@@ -902,13 +902,13 @@
 // func8aba8
 8008ABA8-8008AE64
 ////////////////////////////////
-// func8ae68
+// field_event_opFE1A
 8008AE68-8008AF48
 ////////////////////////////////
 // func8af4c
 8008AF4C-8008B250
 ////////////////////////////////
-// func8b254
+// field_event_opFEC6
 8008B254-8008B3A8
 ////////////////////////////////
 // func8b3ac
@@ -968,7 +968,7 @@
 // field_event_opFE03
 8008C6C8-8008C750
 ////////////////////////////////
-// func8c754
+// field_event_opFE08
 8008C754-8008C800
 ////////////////////////////////
 // func8c804
@@ -1106,16 +1106,16 @@
 // field_event_opF6
 8008DE9C-8008DFC8
 ////////////////////////////////
-// field_event_opFE61
+// field_event_opFE61_movie_start_sync
 8008DFCC-8008E028
 ////////////////////////////////
-// field_event_opFEA0
+// field_event_opFEA0_movie_play3
 8008E02C-8008E200
 ////////////////////////////////
-// field_event_opFE60
+// field_event_opFE60_movie_play1
 8008E204-8008E3E4
 ////////////////////////////////
-// field_event_opFE67
+// field_event_opFE67_movie_play2
 8008E3E8-8008E52C
 ////////////////////////////////
 // field_event_opFE9B
@@ -1292,7 +1292,7 @@
 // func913d4
 800913D4-80091468
 ////////////////////////////////
-// 0xE0
+// field_event_opE0
 8009146C-80091554
 ////////////////////////////////
 // func91558
@@ -1633,7 +1633,7 @@
 // func95b7c
 80095B7C-80095BC4
 ////////////////////////////////
-// func95bc8
+// field_event_opBB
 80095BC8-80095C14
 ////////////////////////////////
 // 0x84_ProgressLessEqualJumpTo
@@ -2455,28 +2455,28 @@
 // field_movie_mdec_init
 800A6564-800A65F4
 ////////////////////////////////
-// funca65f8
+// field_movie_mdec_callback
 800A65F8-800A66EC
 ////////////////////////////////
 // field_movie_set_to_play
 800A66F0-800A6800
 ////////////////////////////////
-// funca6804
+// field_movie_mdec_update
 800A6804-800A6868
 ////////////////////////////////
-// funca686c
+// field_movie_mdec_lib_load_sync
 800A686C-800A68BC
 ////////////////////////////////
-// funca68c0
+// field_movie_free_party_sprites
 800A68C0-800A69CC
 ////////////////////////////////
-// funca69d0
+// field_movie_recover_party_sprites
 800A69D0-800A6C18
 ////////////////////////////////
-// funca6c1c
+// field_movie_convert_component
 800A6C1C-800A6C98
 ////////////////////////////////
-// funca6c9c
+// field_movie_convert_24bit_to_15bit
 800A6C9C-800A6E1C
 ////////////////////////////////
 // field_movie_credits
