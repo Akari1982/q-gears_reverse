@@ -9,7 +9,172 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    return 0 -- 0x0001 0x00
-    return 0 -- 0x0002 0x00
-    -- MISSING OPCODE 0x2e
+unknown = [
+    0x00ff, 0x2e00, 0x00fa, 0xffff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    op05_FunctionCall( 0x0a5f )
+0x000d    -- 0xA0()
+0x0014    -- 0x86_ProgressNotEqualJumpTo( value=147, jump=0x001c )
+0x0019    op36_VariableSetTrue( address=0x0406 )
+0x001c    op00_Return()
+
+Actor_0x00:on_update:
+0x001d    op00_Return()
+
+Actor_0x01:on_start:
+0x001e    -- 0x16_ActorPCInit( char_id=0 )
+0x0021    opFE0D_MessageSetFace( char_id=0 )
+0x0025    op00_Return()
+
+Actor_0x01:on_update:
+0x0026    -- 0xA7()
+0x0027    op00_Return()
+
+Actor_0x01:on_talk:
+0x0028    op00_Return()
+
+Actor_0x02:on_start:
+0x0029    -- 0x16_ActorPCInit( char_id=2 )
+0x002c    opFE0D_MessageSetFace( char_id=2 )
+0x0030    op00_Return()
+
+Actor_0x02:on_update:
+0x0031    -- 0x0C()
+0x0032    op00_Return()
+
+Actor_0x02:on_talk:
+0x0033    op00_Return()
+
+Actor_0x03:on_start:
+0x0034    -- 0x16_ActorPCInit( char_id=1 )
+0x0037    opFE0D_MessageSetFace( char_id=1 )
+0x003b    op00_Return()
+
+Actor_0x03:on_update:
+0x003c    -- 0x0C()
+0x003d    op00_Return()
+
+Actor_0x03:on_talk:
+0x003e    op00_Return()
+
+Actor_0x04:on_start:
+0x003f    -- 0x16_ActorPCInit( char_id=3 )
+0x0042    opFE0D_MessageSetFace( char_id=3 )
+0x0046    op00_Return()
+
+Actor_0x04:on_update:
+0x0047    -- 0x0C()
+0x0048    op00_Return()
+
+Actor_0x04:on_talk:
+0x0049    op00_Return()
+
+Actor_0x05:on_start:
+0x004a    -- 0x16_ActorPCInit( char_id=4 )
+0x004d    opFE0D_MessageSetFace( char_id=4 )
+0x0051    op00_Return()
+
+Actor_0x05:on_update:
+0x0052    -- 0x0C()
+0x0053    op00_Return()
+
+Actor_0x05:on_talk:
+0x0054    op00_Return()
+
+Actor_0x06:on_start:
+0x0055    -- 0x16_ActorPCInit( char_id=5 )
+0x0058    opFE0D_MessageSetFace( char_id=5 )
+0x005c    op00_Return()
+
+Actor_0x06:on_update:
+0x005d    -- 0x0C()
+0x005e    op00_Return()
+
+Actor_0x06:on_talk:
+0x005f    op00_Return()
+
+Actor_0x07:on_start:
+0x0060    -- 0x16_ActorPCInit( char_id=6 )
+0x0063    opFE0D_MessageSetFace( char_id=6 )
+0x0067    op00_Return()
+
+Actor_0x07:on_update:
+0x0068    -- 0x0C()
+0x0069    op00_Return()
+
+Actor_0x07:on_talk:
+0x006a    op00_Return()
+
+Actor_0x08:on_start:
+0x006b    -- 0x16_ActorPCInit( char_id=7 )
+0x006e    opFE0D_MessageSetFace( char_id=7 )
+0x0072    op00_Return()
+
+Actor_0x08:on_update:
+0x0073    -- 0x0C()
+0x0074    op00_Return()
+
+Actor_0x08:on_talk:
+0x0075    op00_Return()
+
+Actor_0x09:on_start:
+0x0076    -- 0x16_ActorPCInit( char_id=8 )
+0x0079    opFE0D_MessageSetFace( char_id=8 )
+0x007d    op00_Return()
+
+Actor_0x09:on_update:
+0x007e    -- 0xA7()
+0x007f    op00_Return()
+
+Actor_0x09:on_talk:
+0x0080    op00_Return()
+
+Actor_0x0a:on_start:
+0x0081    -- 0x16_ActorPCInit( char_id=9 )
+0x0084    opFE0D_MessageSetFace( char_id=9 )
+0x0088    op00_Return()
+
+Actor_0x0a:on_update:
+0x0089    -- 0xA7()
+0x008a    op00_Return()
+
+Actor_0x0a:on_talk:
+0x008b    op00_Return()
+
+Actor_0x0b:on_start:
+0x008c    -- 0x16_ActorPCInit( char_id=10 )
+0x008f    opFE0D_MessageSetFace( char_id=10 )
+0x0093    op00_Return()
+
+Actor_0x0b:on_update:
+0x0094    -- 0xA7()
+0x0095    op00_Return()
+
+Actor_0x0b:on_talk:
+0x0096    op00_Return()
+
+Actor_0x0c:on_start:
+0x0097    -- 0x0B_InitNPC( 0 )
+0x009a    -- 0x19_ActorSetPosition( x=(vf80)0x012e, z=(vf40)0x00f6, flag=(flag)0xc0 )
+0x00a0    op69_ActorSetRotation( rot=5 )
+0x00a3    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00b5 )
+0x00ab    -- 0x19_ActorSetPosition( x=(vf80)0xfffe, z=(vf40)0xfd78, flag=(flag)0xc0 )
+0x00b1    op69_ActorSetRotation( rot=0 )
+0x00b4    op00_Return()
+0x00b5    op00_Return()
+
+Actor_0x0c:on_update:
+0x00b6    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x017d )
+0x00be    -- 0xC6()
+0x00bf    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00cb    op69_ActorSetRotation( rot=7 )
+0x00ce    op2C_SpritePlayAnim( anim_id=0x03 )
+0x00d0    op37_VariableSetFalse( address=0x040a )
+0x00d3    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040a ), value2=(s16)0x003c, condition="value1 < value2", jump_if_false=0x00f8 )
+0x00db    -- MISSING OPCODE 0x89

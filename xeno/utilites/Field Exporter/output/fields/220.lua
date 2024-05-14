@@ -9,5 +9,49 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xb0
+unknown = [
+    0xb0ff, 0x5700, 0x0000, 0xffff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    op00_Return()
+
+Actor_0x00:on_update:
+0x000b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x0029 )
+0x0013    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x001e )
+0x001b    -- 0x01_JumpTo( 0x0029 )
+0x001e    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x0029    op00_Return()
+
+Actor_0x00:on_talk:
+0x002a    op00_Return()
+
+Actor_0x01:on_start:
+0x002b    -- 0x16_ActorPCInit( char_id=0 )
+0x002e    opFE0D_MessageSetFace( char_id=0 )
+0x0032    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0041 )
+0x003a    opFE0D_MessageSetFace( char_id=0 )
+0x003e    -- 0x01_JumpTo( 0x0045 )
+0x0041    opFE0D_MessageSetFace( char_id=36 )
+0x0045    op00_Return()
+
+Actor_0x01:on_update:
+0x0046    -- 0xA7()
+0x0047    op00_Return()
+
+Actor_0x01:on_talk:
+0x0048    op00_Return()
+
+Actor_0x02:on_start:
+0x0049    -- 0x46()
+0x004a    op00_Return()
+
+Actor_0x02:on_update:
+0x004b    op00_Return()
+
+Actor_0x02:on_talk:
+0x004c    -- 0x15()
+0x004d    -- MISSING OPCODE 0xc4

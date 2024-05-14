@@ -9,5 +9,41 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x47
+unknown = [
+    0x47ff, 0x8a00, 0x0000, 0x02ff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    -- 0xA0()
+0x0011    -- 0x84_ProgressLessEqualJumpTo( value=8, jump=0x001a )
+0x0016    -- 0xFE54()
+0x0018    -- 0x27( actor_id=(entity)0x0c )
+0x001a    op00_Return()
+
+Actor_0x00:on_update:
+0x001b    op09_ActorCallScriptEW( actor_id=0x0b, script=05, priority=02 )
+0x001e    -- 0x84_ProgressLessEqualJumpTo( value=8, jump=0x004c )
+0x0023    op26_Wait( time=10 )
+0x0026    op08_ActorCallScriptSW( actor_id=0x0a, script=04, priority=05 )
+0x0029    op08_ActorCallScriptSW( actor_id=0x01, script=04, priority=05 )
+0x002c    op26_Wait( time=84 )
+0x002f    op09_ActorCallScriptEW( actor_id=0x01, script=05, priority=05 )
+0x0032    op08_ActorCallScriptSW( actor_id=0x0a, script=05, priority=05 )
+0x0035    op09_ActorCallScriptEW( actor_id=0x09, script=04, priority=05 )
+0x0038    -- 0x87_SetProgress( progress=8 )
+0x003b    op08_ActorCallScriptSW( actor_id=0x0a, script=08, priority=05 )
+0x003e    op26_Wait( time=20 )
+0x0041    -- 0xB4_FadeIn()
+0x0044    op26_Wait( time=50 )
+0x0047    -- 0x98_MapLoad( field_id=11, value=1 )
+0x004c    -- 0x5B()
+0x004d    op00_Return()
+
+Actor_0x00:on_talk:
+0x004e    op00_Return()
+
+Actor_0x00:on_push:
+0x004f    -- MISSING OPCODE 0xe1

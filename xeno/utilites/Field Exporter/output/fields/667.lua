@@ -9,20 +9,24 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    -- 0xBC_ActorNoModelInit() -- 0x0000 0xbc
-    -- 0x2A() -- 0x0001 0x2a
-    return 0 -- 0x0002 0x00
-    return 0 -- 0x0003 0x00
-    opD0_MessageSettings( x=80, y=50, letters=0, rows=0, flags=0 ) -- 0x0004 0xd0
-    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_WINDOW ) -- 0x000f 0xd2
-    op9C_MessageSync() -- 0x0013 0x9c
-    return 0 -- 0x0014 0x00
-    opD0_MessageSettings( x=100, y=50, letters=0, rows=0, flags=0 ) -- 0x0015 0xd0
-    opD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_WINDOW ) -- 0x0020 0xd2
-    op9C_MessageSync() -- 0x0024 0x9c
-    return 0 -- 0x0025 0x00
+unknown = [
+
+]
+
+0x0000    -- 0xBC_ActorNoModelInit()
+0x0001    -- 0x2A()
+0x0002    op00_Return()
+0x0003    op00_Return()
+0x0004    opD0_MessageSettings( x=80, y=50, letters=0, rows=0, flags=0 )
+0x000f    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
+0x0013    op9C_MessageSync()
+0x0014    op00_Return()
+0x0015    opD0_MessageSettings( x=100, y=50, letters=0, rows=0, flags=0 )
+0x0020    opD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
+0x0024    op9C_MessageSync()
+0x0025    op00_Return()
 
 Actor_0x01:on_start:
-    -- 0x0B_InitNPC( 2 ) -- 0x0026 0x0b
-    -- 0x2A() -- 0x0029 0x2a
-    -- MISSING OPCODE 0x1d
+0x0026    -- 0x0B_InitNPC( 2 )
+0x0029    -- 0x2A()
+0x002a    -- MISSING OPCODE 0x1d

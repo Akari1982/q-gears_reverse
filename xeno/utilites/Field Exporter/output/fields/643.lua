@@ -9,7 +9,80 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    return 0 -- 0x0001 0x00
-    return 0 -- 0x0002 0x00
-    -- MISSING OPCODE 0xea
+unknown = [
+    0x00ff, 0xea00, 0x00fe, 0xffff, 0x0000, 0x0025, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0x2A()
+0x0011    op00_Return()
+
+Actor_0x00:on_update:
+0x0012    op00_Return()
+
+Actor_0x00:on_talk:
+0x0013    op00_Return()
+
+Actor_0x01:on_start:
+0x0014    -- 0x16_ActorPCInit( char_id=GetVar( 0x003e ) )
+0x0017    opFE0D_MessageSetFace( char_id=GetVar( 0x003e ) )
+0x001b    op00_Return()
+
+Actor_0x01:on_update:
+0x001c    -- 0xA7()
+0x001d    op00_Return()
+
+Actor_0x01:on_talk:
+0x001e    op00_Return()
+
+Actor_0x01:script_0x04:
+0x001f    -- 0x1F( ???=0x10 )
+0x0021    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0027    op00_Return()
+
+Actor_0x01:script_0x05:
+0x0028    op2C_SpritePlayAnim( anim_id=0x07 )
+0x002a    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x002e    op9C_MessageSync()
+0x002f    op2C_SpritePlayAnim( anim_id=0xff )
+0x0031    op2C_SpritePlayAnim( anim_id=0x0d )
+0x0033    op26_Wait( time=10 )
+0x0036    op2C_SpritePlayAnim( anim_id=0x0e )
+0x0038    op26_Wait( time=10 )
+0x003b    op2C_SpritePlayAnim( anim_id=0x0d )
+0x003d    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x0041    op9C_MessageSync()
+0x0042    op2C_SpritePlayAnim( anim_id=0xff )
+0x0044    op00_Return()
+
+Actor_0x02:on_start:
+0x0045    -- 0x16_ActorPCInit( char_id=GetVar( 0x0040 ) )
+0x0048    opFE0D_MessageSetFace( char_id=GetVar( 0x0040 ) )
+0x004c    op00_Return()
+
+Actor_0x02:on_update:
+0x004d    -- 0xA7()
+0x004e    op00_Return()
+
+Actor_0x02:on_talk:
+0x004f    op00_Return()
+
+Actor_0x03:on_start:
+0x0050    -- 0x16_ActorPCInit( char_id=GetVar( 0x0042 ) )
+0x0053    opFE0D_MessageSetFace( char_id=GetVar( 0x0042 ) )
+0x0057    op00_Return()
+
+Actor_0x03:on_update:
+0x0058    -- 0xA7()
+0x0059    op00_Return()
+
+Actor_0x03:on_talk:
+0x005a    op00_Return()
+
+Actor_0x04:on_start:
+0x005b    -- 0xBC_ActorNoModelInit()
+0x005c    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0210 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0079 )
+0x0064    op20_ActorSetFlags0( flags=12 )
+0x0067    -- MISSING OPCODE 0x18

@@ -9,5 +9,199 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xf8
+unknown = [
+    0xf8ff, 0x0001, 0x0000, 0x06ff, 0xfe08, 0x0000, 0xff00, 0xbc02,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0x2A()
+
+Actor_0x00:on_update:
+0x0011    op00_Return()
+
+Actor_0x01:on_start:
+0x0012    -- 0xBC_ActorNoModelInit()
+0x0013    -- 0x2A()
+0x0014    op00_Return()
+
+Actor_0x01:on_update:
+0x0015    -- 0x86_ProgressNotEqualJumpTo( value=60, jump=0x0029 )
+0x001a    -- 0x07( actor_id=0x02, script=0x04 )
+0x001d    -- 0x07( actor_id=0x04, script=0x04 )
+0x0020    -- 0x07( actor_id=0x05, script=0x04 )
+0x0023    -- 0x07( actor_id=0x07, script=0x04 )
+0x0026    -- 0x07( actor_id=0x03, script=0x04 )
+0x0029    -- 0x86_ProgressNotEqualJumpTo( value=138, jump=0x0037 )
+0x002e    -- 0x15()
+0x002f    -- 0xFE52()
+0x0031    -- 0x07( actor_id=0x02, script=0x05 )
+0x0034    -- 0x07( actor_id=0x05, script=0x06 )
+0x0037    -- 0x5B()
+
+Actor_0x01:on_talk:
+0x0038    op00_Return()
+
+Actor_0x02:on_start:
+0x0039    -- 0xBC_ActorNoModelInit()
+0x003a    -- 0x2A()
+
+Actor_0x02:on_update:
+0x003b    op00_Return()
+
+Actor_0x02:script_0x04:
+0x003c    op35_VariableSet( address=0x0404, value=(vf40)0x0001, flag=0x40 )
+0x0042    op99()
+0x0043    -- 0x62( actor_id=(entity)0x04 )
+0x0045    opA3()
+0x004d    opAC_MoveCamera( control=0x00, steps=0 )
+0x0051    opAC_MoveCamera( control=0x01, steps=0 )
+0x0055    opEF_MoveCameraSync()
+0x0058    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x006b )
+0x0060    -- 0x60()
+0x0061    -- 0x62( actor_id=(entity)0x04 )
+0x0063    opAC_MoveCamera( control=0x00, steps=2 )
+0x0067    -- 0x5A()
+0x0068    -- 0x01_JumpTo( 0x0058 )
+0x006b    op00_Return()
+
+Actor_0x02:script_0x05:
+0x006c    op99()
+0x006d    -- 0x63( ???=(vf80)0x0029, ???=(vf40)0x0000, ???=(vf20)0xfff5, flag=0xe0 )
+0x0075    opA3()
+0x007d    opAC_MoveCamera( control=0x00, steps=0 )
+0x0081    opAC_MoveCamera( control=0x01, steps=0 )
+0x0085    opEF_MoveCameraSync()
+0x0088    op00_Return()
+
+Actor_0x02:script_0x06:
+0x0089    -- 0x60()
+0x008a    -- 0x64()
+0x008b    -- 0x63( ???=(vf80)0x006a, ???=(vf40)0x005b, ???=(vf20)0xffef, flag=0xe0 )
+0x0093    opA3()
+0x009b    opAC_MoveCamera( control=0x00, steps=60 )
+0x009f    opAC_MoveCamera( control=0x01, steps=60 )
+0x00a3    opEF_MoveCameraSync()
+0x00a6    op00_Return()
+
+Actor_0x03:on_start:
+0x00a7    -- 0xBC_ActorNoModelInit()
+0x00a8    -- 0x2A()
+
+Actor_0x03:on_update:
+0x00a9    op00_Return()
+
+Actor_0x03:script_0x04:
+0x00aa    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=129 )
+0x00b5    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00c1 )
+0x00bd    op00_Return()
+0x00be    -- 0x01_JumpTo( 0x0177 )
+0x00c1    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00cf )
+0x00c9    -- 0x01_JumpTo( 0x0178 )
+0x00cc    -- 0x01_JumpTo( 0x0177 )
+0x00cf    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00dd )
+0x00d7    -- 0x01_JumpTo( 0x018a )
+0x00da    -- 0x01_JumpTo( 0x0177 )
+0x00dd    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00eb )
+0x00e5    -- 0x01_JumpTo( 0x019d )
+0x00e8    -- 0x01_JumpTo( 0x0177 )
+0x00eb    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x00f9 )
+0x00f3    -- 0x01_JumpTo( 0x01b0 )
+0x00f6    -- 0x01_JumpTo( 0x0177 )
+0x00f9    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0107 )
+0x0101    -- 0x01_JumpTo( 0x01c3 )
+0x0104    -- 0x01_JumpTo( 0x0177 )
+0x0107    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x0115 )
+0x010f    -- 0x01_JumpTo( 0x01d6 )
+0x0112    -- 0x01_JumpTo( 0x0177 )
+0x0115    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x0123 )
+0x011d    -- 0x01_JumpTo( 0x01e9 )
+0x0120    -- 0x01_JumpTo( 0x0177 )
+0x0123    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x0131 )
+0x012b    -- 0x01_JumpTo( 0x01fc )
+0x012e    -- 0x01_JumpTo( 0x0177 )
+0x0131    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x013f )
+0x0139    -- 0x01_JumpTo( 0x020f )
+0x013c    -- 0x01_JumpTo( 0x0177 )
+0x013f    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x000a, condition="value1 == value2", jump_if_false=0x014d )
+0x0147    -- 0x01_JumpTo( 0x0222 )
+0x014a    -- 0x01_JumpTo( 0x0177 )
+0x014d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x000b, condition="value1 == value2", jump_if_false=0x015b )
+0x0155    -- 0x01_JumpTo( 0x0235 )
+0x0158    -- 0x01_JumpTo( 0x0177 )
+0x015b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x000c, condition="value1 == value2", jump_if_false=0x0169 )
+0x0163    -- 0x01_JumpTo( 0x0248 )
+0x0166    -- 0x01_JumpTo( 0x0177 )
+0x0169    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x000d, condition="value1 == value2", jump_if_false=0x0177 )
+0x0171    -- 0x01_JumpTo( 0x0265 )
+0x0174    -- 0x01_JumpTo( 0x0177 )
+0x0177    op00_Return()
+0x0178    op05_FunctionCall( 0x0273 )
+0x017b    op26_Wait( time=30 )
+0x017e    opD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0000, flags=0x80 )
+0x0184    op35_VariableSet( address=0x00bc, value=(vf40)0x0002, flag=0x40 )
+0x018a    opFE0D_MessageSetFace( char_id=26 )
+0x018e    op05_FunctionCall( 0x0273 )
+0x0191    opD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0001, flags=0x80 )
+0x0197    op35_VariableSet( address=0x00bc, value=(vf40)0x0003, flag=0x40 )
+0x019d    op05_FunctionCall( 0x0273 )
+0x01a0    opFE0D_MessageSetFace( char_id=64 )
+0x01a4    opD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0002, flags=0x80 )
+0x01aa    op35_VariableSet( address=0x00bc, value=(vf40)0x0004, flag=0x40 )
+0x01b0    op05_FunctionCall( 0x0273 )
+0x01b3    opFE0D_MessageSetFace( char_id=26 )
+0x01b7    opD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0003, flags=0x80 )
+0x01bd    op35_VariableSet( address=0x00bc, value=(vf40)0x0005, flag=0x40 )
+0x01c3    op05_FunctionCall( 0x0273 )
+0x01c6    opFE0D_MessageSetFace( char_id=64 )
+0x01ca    opD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0004, flags=0x80 )
+0x01d0    op35_VariableSet( address=0x00bc, value=(vf40)0x0006, flag=0x40 )
+0x01d6    op05_FunctionCall( 0x0273 )
+0x01d9    opFE0D_MessageSetFace( char_id=26 )
+0x01dd    opD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0005, flags=0x80 )
+0x01e3    op35_VariableSet( address=0x00bc, value=(vf40)0x0007, flag=0x40 )
+0x01e9    op05_FunctionCall( 0x0273 )
+0x01ec    opFE0D_MessageSetFace( char_id=64 )
+0x01f0    opD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0006, flags=0x80 )
+0x01f6    op35_VariableSet( address=0x00bc, value=(vf40)0x0008, flag=0x40 )
+0x01fc    op05_FunctionCall( 0x0273 )
+0x01ff    opFE0D_MessageSetFace( char_id=26 )
+0x0203    opD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0007, flags=0x80 )
+0x0209    op35_VariableSet( address=0x00bc, value=(vf40)0x0009, flag=0x40 )
+0x020f    op05_FunctionCall( 0x0273 )
+0x0212    opFE0D_MessageSetFace( char_id=64 )
+0x0216    opD4_MessageShowFromActor( actor_id=(entity)0x07, text_id=0x0008, flags=0x80 )
+0x021c    op35_VariableSet( address=0x00bc, value=(vf40)0x000a, flag=0x40 )
+0x0222    op05_FunctionCall( 0x0273 )
+0x0225    opFE0D_MessageSetFace( char_id=26 )
+0x0229    opD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x0009, flags=0x80 )
+0x022f    op35_VariableSet( address=0x00bc, value=(vf40)0x000b, flag=0x40 )
+0x0235    op05_FunctionCall( 0x0273 )
+0x0238    opFE0D_MessageSetFace( char_id=28 )
+0x023c    opD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x000a, flags=0x80 )
+0x0242    op35_VariableSet( address=0x00bc, value=(vf40)0x000c, flag=0x40 )
+0x0248    op05_FunctionCall( 0x0273 )
+0x024b    opFE0D_MessageSetFace( char_id=26 )
+0x024f    opD4_MessageShowFromActor( actor_id=(entity)0x04, text_id=0x000b, flags=0x80 )
+0x0255    opFE0D_MessageSetFace( char_id=28 )
+0x0259    opD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x000c, flags=0x80 )
+0x025f    op35_VariableSet( address=0x00bc, value=(vf40)0x000d, flag=0x40 )
+0x0265    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x00bc ), value2=(s16)0x000d, condition="value1 == value2", jump_if_false=0x0273 )
+0x026d    op05_FunctionCall( 0x0273 )
+0x0270    -- 0x01_JumpTo( 0x0265 )
+
+function:
+0x0273    op26_Wait( time=20 )
+0x0276    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0284 )
+0x027e    -- 0x98_MapLoad( field_id=167, value=0 )
+0x0283    -- 0x5B()
+0x0284    op0D_FunctionRet()
+
+Actor_0x03:script_0x05:
+0x0285    op26_Wait( time=30 )
+0x0288    opFE0D_MessageSetFace( char_id=24 )
+0x028c    opD4_MessageShowFromActor( actor_id=(entity)0x06, text_id=0x000d, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|0x80 )
+0x0292    opFE0D_MessageSetFace( char_id=28 )
+0x0296    opD4_MessageShowFromActor( actor_id=(entity)0x05, text_id=0x000e, flags=FORCE_BOTTOM|0x80 )
+0x029c    -- MISSING OPCODE 0xFE65

@@ -9,5 +9,66 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x7d
+unknown = [
+    0x7dff, 0x0aff, 0x0000, 0xffff, 0x0013, 0x006f, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    op35_VariableSet( address=0x0404, value=(vf40)0x0013, flag=0x40 )
+0x0016    op35_VariableSet( address=0x0406, value=(vf40)0x006f, flag=0x40 )
+0x001c    op35_VariableSet( address=0x0408, value=(vf40)0x0000, flag=0x40 )
+0x0022    op35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 )
+0x0028    op35_VariableSet( address=0x0054, value=(vf40)0x0001, flag=0x40 )
+0x002e    -- 0x2A()
+0x002f    op00_Return()
+
+Actor_0x00:on_update:
+0x0030    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x004e )
+0x0038    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x0043 )
+0x0040    -- 0x01_JumpTo( 0x004e )
+0x0043    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x004e    op00_Return()
+
+Actor_0x00:on_talk:
+0x004f    op00_Return()
+
+Actor_0x01:on_start:
+0x0050    -- 0x16_ActorPCInit( char_id=0 )
+0x0053    opFE0D_MessageSetFace( char_id=0 )
+0x0057    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0066 )
+0x005f    opFE0D_MessageSetFace( char_id=0 )
+0x0063    -- 0x01_JumpTo( 0x006a )
+0x0066    opFE0D_MessageSetFace( char_id=36 )
+0x006a    op00_Return()
+
+Actor_0x01:on_update:
+0x006b    -- 0xA7()
+0x006c    op00_Return()
+
+Actor_0x01:on_talk:
+0x006d    op00_Return()
+
+Actor_0x01:script_0x04:
+0x006e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0074    op00_Return()
+
+Actor_0x01:script_0x05:
+0x0075    op05_FunctionCall( 0x0334 )
+0x0078    op00_Return()
+
+Actor_0x01:script_0x06:
+0x0079    op05_FunctionCall( 0x0407 )
+0x007c    op00_Return()
+
+Actor_0x02:on_start:
+0x007d    -- 0x46()
+0x007e    op00_Return()
+
+Actor_0x02:on_update:
+0x007f    op00_Return()
+
+Actor_0x02:on_talk:
+0x0080    -- 0x15()
+0x0081    -- MISSING OPCODE 0xc4

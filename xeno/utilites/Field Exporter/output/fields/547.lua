@@ -9,5 +9,109 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x81
+unknown = [
+    0x81ff, 0x81ff, 0x01ff, 0xffff, 0xff06, 0x00fa, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x021c ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x001e )
+0x0018    op35_VariableSet( address=0x0410, value=(vf40)0x0001, flag=0x40 )
+0x001e    op35_VariableSet( address=0x0404, value=(vf40)0x0001, flag=0x40 )
+0x0024    op35_VariableSet( address=0x0406, value=(vf40)0xff81, flag=0x40 )
+0x002a    op35_VariableSet( address=0x0408, value=(vf40)0x01a9, flag=0x40 )
+0x0030    op35_VariableSet( address=0x040a, value=(vf40)0x0001, flag=0x40 )
+0x0036    op35_VariableSet( address=0x040c, value=(vf40)0x0003, flag=0x40 )
+0x003c    op35_VariableSet( address=0x040e, value=(vf40)0x0003, flag=0x40 )
+0x0042    -- 0x2A()
+0x0043    op00_Return()
+
+Actor_0x00:on_update:
+0x0044    op00_Return()
+
+Actor_0x00:on_talk:
+0x0045    op00_Return()
+
+Actor_0x00:script_0x04:
+0x0046    op3A_VariableBitSet( address=0x021c, bit_num=(vf40)0x0002, flag=0x40 )
+0x004c    op00_Return()
+
+Actor_0x01:on_start:
+0x004d    -- 0x16_ActorPCInit( char_id=0 )
+0x0050    opFE0D_MessageSetFace( char_id=0 )
+0x0054    op00_Return()
+
+Actor_0x01:on_update:
+0x0055    -- 0xA7()
+0x0056    op00_Return()
+
+Actor_0x01:on_talk:
+0x0057    op00_Return()
+
+Actor_0x01:script_0x04:
+0x0058    -- 0x1F( ???=0x30 )
+0x005a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0060    op00_Return()
+
+Actor_0x01:script_0x05:
+0x0061    -- 0x1F( ???=0x30 )
+0x0063    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0069    op00_Return()
+
+Actor_0x01:script_0x06:
+0x006a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0070    op00_Return()
+
+Actor_0x01:script_0x07:
+0x0071    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x021a ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x0085 )
+0x0079    op2C_SpritePlayAnim( anim_id=0x05 )
+0x007b    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x007f    op9C_MessageSync()
+0x0080    op2C_SpritePlayAnim( anim_id=0xff )
+0x0082    -- 0x01_JumpTo( 0x0094 )
+0x0085    op74_SoundPlayFixedVolume( sound_id=135 )
+0x0088    op26_Wait( time=20 )
+0x008b    op2C_SpritePlayAnim( anim_id=0x07 )
+0x008d    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x0091    op9C_MessageSync()
+0x0092    op2C_SpritePlayAnim( anim_id=0xff )
+0x0094    op00_Return()
+
+Actor_0x01:script_0x08:
+0x0095    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x009b    -- 0x5F( ???=0x06 )
+0x009d    op00_Return()
+
+Actor_0x01:script_0x09:
+0x009e    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=32 )
+0x00a9    op2C_SpritePlayAnim( anim_id=0x07 )
+0x00ab    opD2_MessageShowDynamic( text_id=0x0002, flags=0 )
+0x00af    op9C_MessageSync()
+0x00b0    op2C_SpritePlayAnim( anim_id=0xff )
+0x00b2    -- 0x5F( ???=0x01 )
+0x00b4    op00_Return()
+
+Actor_0x01:script_0x0a:
+0x00b5    -- 0x5F( ???=0x03 )
+0x00b7    op26_Wait( time=10 )
+0x00ba    op2C_SpritePlayAnim( anim_id=0x04 )
+0x00bc    opD2_MessageShowDynamic( text_id=0x0003, flags=0 )
+0x00c0    op9C_MessageSync()
+0x00c1    op2C_SpritePlayAnim( anim_id=0xff )
+0x00c3    op00_Return()
+
+Actor_0x01:script_0x0b:
+0x00c4    opD2_MessageShowDynamic( text_id=0x0004, flags=0 )
+0x00c8    op9C_MessageSync()
+0x00c9    -- 0x5F( ???=0x06 )
+0x00cb    op26_Wait( time=10 )
+0x00ce    -- 0x07( actor_id=0x02, script=0x26 )
+0x00d1    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=16 )
+0x00dc    op2C_SpritePlayAnim( anim_id=0x04 )
+0x00de    opD2_MessageShowDynamic( text_id=0x0005, flags=0 )
+0x00e2    op9C_MessageSync()
+0x00e3    op2C_SpritePlayAnim( anim_id=0x0b )
+0x00e5    op37_VariableSetFalse( address=0x0400 )
+0x00e8    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0014, condition="value1 < value2", jump_if_false=0x0101 )
+0x00f0    -- MISSING OPCODE 0xFE5d

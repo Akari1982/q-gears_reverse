@@ -9,5 +9,61 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xe3
+unknown = [
+    0xe3ff, 0x20fe, 0x0001, 0x03ff, 0x012c, 0xfed4, 0xff00, 0x2e07, 0xd2ff, 0x0000, 0x03ff,
+]
+
+
+Actor_0x00:on_start:
+0x0016    -- 0xBC_ActorNoModelInit()
+0x0017    -- 0xA0()
+0x001e    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0029 )
+0x0026    -- 0x75( ???=18 )
+0x0029    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02ca ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x0034 )
+0x0031    -- 0x01_JumpTo( 0x0037 )
+0x0034    -- 0x75( ???=18 )
+0x0037    -- 0x2A()
+0x0038    op00_Return()
+
+Actor_0x00:on_update:
+0x0039    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x01f2 )
+0x0041    -- 0xFE54()
+0x0043    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x004e    -- 0x75( ???=18 )
+0x0051    op25_ActorDisable( actor_id=(entity)0x02 )
+0x0053    op25_ActorDisable( actor_id=(entity)0x03 )
+0x0055    op25_ActorDisable( actor_id=(entity)0x0a )
+0x0057    op25_ActorDisable( actor_id=(entity)0x04 )
+0x0059    op25_ActorDisable( actor_id=(entity)0x06 )
+0x005b    op25_ActorDisable( actor_id=(entity)0x05 )
+0x005d    op25_ActorDisable( actor_id=(entity)0x09 )
+0x005f    op25_ActorDisable( actor_id=(entity)0x08 )
+0x0061    op25_ActorDisable( actor_id=(entity)0x07 )
+0x0063    op25_ActorDisable( actor_id=(entity)0x0b )
+0x0065    op99()
+0x0066    op35_VariableSet( address=0x0410, value=(vf40)0x0000, flag=0x40 )
+0x006c    -- 0x63( ???=(vf80)0x027b, ???=(vf40)0x00fa, ???=(vf20)0xfd5a, flag=0xe0 )
+0x0074    opA3()
+0x007c    op05_FunctionCall( 0x07c5 )
+0x007f    op26_Wait( time=30 )
+0x0082    opF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_TOP )
+0x0086    op9C_MessageSync()
+0x0087    opF1_FadeSetUp( steps=2, r=62, g=102, b=44, semi_tr=60 )
+0x0092    op26_Wait( time=30 )
+0x0095    op08_ActorCallScriptSW( actor_id=0x0c, script=05, priority=03 )
+0x0098    op08_ActorCallScriptSW( actor_id=0x0d, script=04, priority=03 )
+0x009b    opFE0D_MessageSetFace( char_id=16 )
+0x009f    opF5_MessageShowStatic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_TOP )
+0x00a3    op9C_MessageSync()
+0x00a4    opFE0D_MessageSetFace( char_id=252 )
+0x00a8    op09_ActorCallScriptEW( actor_id=0x0c, script=06, priority=05 )
+0x00ab    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b6 )
+0x00b3    -- 0x01_JumpTo( 0x00ab )
+0x00b6    op37_VariableSetFalse( address=0x0408 )
+0x00b9    op26_Wait( time=20 )
+0x00bc    -- 0xFE0E_SoundSetVolume( volume=0, steps=240 )
+0x00c2    op35_VariableSet( address=0x0410, value=(vf40)0x0050, flag=0x40 )
+0x00c8    -- 0x63( ???=(vf80)0xff55, ???=(vf40)0xfcda, ???=(vf20)0xffb0, flag=0xe0 )
+0x00d0    opA3()
+0x00d8    op05_FunctionCall( 0x07c5 )
+0x00db    -- MISSING OPCODE 0x72

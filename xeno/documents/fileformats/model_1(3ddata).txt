@@ -5,15 +5,15 @@ model header (0x10 size)
 
 parts header
 +00 [][]     init flags
-             0x0001 - memory +18 (for polygon normals for lighting) allocated.
-             0x0002 - polygon normals for lighting are calculated and stored.
+             0x0001 - memory +18 (lighting) allocated.
+             0x0002 - normals for lighting are calculated and stored.
              0x0010 - if flag is set we create copy of vertexes +0c in some cases.
 +02 [][]     number of vertexes.
 +04 [][]     number of polygons.
 +06 [][]     number of polygons blocks.
 +08 [][][][] offset to vertex block.
 +0c [][][][] offset to some other vectors block used in gourad shaded poly, maybe normals.
-+10 [][][][] offset to mesh block.
++10 [][][][] offset to polygons block.
 +14 [][][][] offset to texture coords block.
 +18 [][][][] we store here pointer to allocated memory for normals for polygons lighting with +30 size if +00 & 1 not set.
 +1c [][][][] some offset (if exist).
@@ -23,8 +23,8 @@ parts header
 +28 [][]     x2.
 +2a [][]     y2.
 +2с [][]     z2.
-+30 [][][][] memory size for polygon normals for lighting.
-+34 [][][][] allocate twice as much place. Maybe size of all packets (twice because threre are 2 frames one to display and one to render).
++30 [][][][] memory size for lighting.
++34 [][][][] size of packets for this part.
 
 
 

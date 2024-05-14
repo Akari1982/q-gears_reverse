@@ -9,5 +9,81 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xea
+unknown = [
+    0xeaff, 0x3900, 0x00ff, 0xffff, 0xff3c, 0x0014, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0xA0()
+0x0017    -- 0x75( ???=72 )
+0x001a    -- 0x2A()
+0x001b    op35_VariableSet( address=0x0430, value=(vf40)0xff3c, flag=0x40 )
+0x0021    op35_VariableSet( address=0x0432, value=(vf40)0x0014, flag=0x40 )
+0x0027    op35_VariableSet( address=0x0434, value=(vf40)0x0000, flag=0x40 )
+0x002d    op35_VariableSet( address=0x042e, value=(vf40)0x0003, flag=0x40 )
+0x0033    op35_VariableSet( address=0x0054, value=(vf40)0x0001, flag=0x40 )
+0x0039    op00_Return()
+
+Actor_0x00:on_update:
+0x003a    op00_Return()
+
+Actor_0x01:on_start:
+0x003b    -- 0x16_ActorPCInit( char_id=0 )
+0x003e    opFE0D_MessageSetFace( char_id=0 )
+0x0042    op00_Return()
+
+Actor_0x01:on_update:
+0x0043    -- 0x0C()
+
+Actor_0x01:on_talk:
+0x0044    op00_Return()
+
+Actor_0x02:on_start:
+0x0045    -- 0x16_ActorPCInit( char_id=2 )
+0x0048    opFE0D_MessageSetFace( char_id=2 )
+0x004c    op00_Return()
+
+Actor_0x02:on_update:
+0x004d    -- 0x0C()
+
+Actor_0x02:on_talk:
+0x004e    op00_Return()
+
+Actor_0x03:on_start:
+0x004f    -- 0x16_ActorPCInit( char_id=1 )
+0x0052    opFE0D_MessageSetFace( char_id=1 )
+0x0056    op00_Return()
+
+Actor_0x03:on_update:
+0x0057    -- 0x0C()
+
+Actor_0x03:on_talk:
+0x0058    op00_Return()
+
+Actor_0x04:on_start:
+0x0059    -- 0x0B_InitNPC( 0 )
+0x005c    -- 0x19_ActorSetPosition( x=(vf80)0xffb5, z=(vf40)0xffc4, flag=(flag)0xc0 )
+0x0062    op69_ActorSetRotation( rot=1 )
+0x0065    op00_Return()
+
+Actor_0x04:on_update:
+0x0066    op00_Return()
+
+Actor_0x04:on_talk:
+0x0067    op6F_ActorRotateToActor( actor_id=(entity)party_1 )
+0x0069    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x0079 )
+0x0071    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x0075    op9C_MessageSync()
+0x0076    -- 0x01_JumpTo( 0x007e )
+0x0079    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x007d    op9C_MessageSync()
+0x007e    op00_Return()
+
+Actor_0x04:on_push:
+0x007f    op00_Return()
+
+Actor_0x05:on_start:
+0x0080    -- 0xBC_ActorNoModelInit()
+0x0081    -- MISSING OPCODE 0xFE1c

@@ -9,63 +9,67 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    -- 0xBC_ActorNoModelInit() -- 0x0000 0xbc
-    -- 0x2A() -- 0x0001 0x2a
-    return 0 -- 0x0002 0x00
-    return 0 -- 0x0003 0x00
-    opD0_MessageSettings( x=80, y=90, letters=0, rows=0, flags=323 ) -- 0x0004 0xd0
-    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x000f 0xd2
-    op9C_MessageSync() -- 0x0013 0x9c
-    return 0 -- 0x0014 0x00
-    opD0_MessageSettings( x=90, y=90, letters=0, rows=0, flags=323 ) -- 0x0015 0xd0
-    opD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x0020 0xd2
-    op9C_MessageSync() -- 0x0024 0x9c
-    return 0 -- 0x0025 0x00
-    opD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x0026 0xd2
-    op9C_MessageSync() -- 0x002a 0x9c
-    return 0 -- 0x002b 0x00
-    opD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x002c 0xd2
-    op9C_MessageSync() -- 0x0030 0x9c
-    return 0 -- 0x0031 0x00
-    op09_ActorCallScriptEW( actor_id=0x08, script=04, priority=01 ) -- 0x0032 0x09
-    op09_ActorCallScriptEW( actor_id=0x09, script=04, priority=01 ) -- 0x0035 0x09
-    op09_ActorCallScriptEW( actor_id=0x0a, script=04, priority=01 ) -- 0x0038 0x09
-    return 0 -- 0x003b 0x00
-    op26_Wait( time=41 ) -- 0x003c 0x26
-    op09_ActorCallScriptEW( actor_id=0x0b, script=04, priority=01 ) -- 0x003f 0x09
-    op09_ActorCallScriptEW( actor_id=0x0c, script=04, priority=01 ) -- 0x0042 0x09
-    op09_ActorCallScriptEW( actor_id=0x0d, script=04, priority=01 ) -- 0x0045 0x09
-    op09_ActorCallScriptEW( actor_id=0x0e, script=04, priority=01 ) -- 0x0048 0x09
-    return 0 -- 0x004b 0x00
-    opD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW ) -- 0x004c 0xd2
-    op9C_MessageSync() -- 0x0050 0x9c
-    return 0 -- 0x0051 0x00
+unknown = [
+
+]
+
+0x0000    -- 0xBC_ActorNoModelInit()
+0x0001    -- 0x2A()
+0x0002    op00_Return()
+0x0003    op00_Return()
+0x0004    opD0_MessageSettings( x=80, y=90, letters=0, rows=0, flags=323 )
+0x000f    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0013    op9C_MessageSync()
+0x0014    op00_Return()
+0x0015    opD0_MessageSettings( x=90, y=90, letters=0, rows=0, flags=323 )
+0x0020    opD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0024    op9C_MessageSync()
+0x0025    op00_Return()
+0x0026    opD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x002a    op9C_MessageSync()
+0x002b    op00_Return()
+0x002c    opD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0030    op9C_MessageSync()
+0x0031    op00_Return()
+0x0032    op09_ActorCallScriptEW( actor_id=0x08, script=04, priority=01 )
+0x0035    op09_ActorCallScriptEW( actor_id=0x09, script=04, priority=01 )
+0x0038    op09_ActorCallScriptEW( actor_id=0x0a, script=04, priority=01 )
+0x003b    op00_Return()
+0x003c    op26_Wait( time=41 )
+0x003f    op09_ActorCallScriptEW( actor_id=0x0b, script=04, priority=01 )
+0x0042    op09_ActorCallScriptEW( actor_id=0x0c, script=04, priority=01 )
+0x0045    op09_ActorCallScriptEW( actor_id=0x0d, script=04, priority=01 )
+0x0048    op09_ActorCallScriptEW( actor_id=0x0e, script=04, priority=01 )
+0x004b    op00_Return()
+0x004c    opD2_MessageShowDynamic( text_id=0x0004, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0050    op9C_MessageSync()
+0x0051    op00_Return()
 
 Actor_0x01:on_start:
-    -- 0x16_ActorPCInit( char_id=0 ) -- 0x0052 0x16
-    opFE0D_MessageSetFace( char_id=0 ) -- 0x0055 0xfe
-    -- 0x23() -- 0x0059 0x23
-    return 0 -- 0x005a 0x00
+0x0052    -- 0x16_ActorPCInit( char_id=0 )
+0x0055    opFE0D_MessageSetFace( char_id=0 )
+0x0059    -- 0x23()
+0x005a    op00_Return()
 
 Actor_0x01:on_update:
-    -- 0xA7() -- 0x005b 0xa7
-    return 0 -- 0x005c 0x00
+0x005b    -- 0xA7()
+0x005c    op00_Return()
 
 Actor_0x01:on_talk:
-    return 0 -- 0x005d 0x00
+0x005d    op00_Return()
 
 Actor_0x02:on_start:
-    -- 0x0B_InitNPC( 0 ) -- 0x005e 0x0b
-    -- 0xFE07( ???=0x01 ) -- 0x0061 0xfe
-    -- 0x5F( ???=0x04 ) -- 0x0064 0x5f
-    -- 0x23() -- 0x0066 0x23
-    -- 0x19_ActorSetPosition( x=(vf80)0x000f, z=(vf40)0xfef5, flag=(flag)0xc0 ) -- 0x0067 0x19
-    -- 0x2A() -- 0x006d 0x2a
-    return 0 -- 0x006e 0x00
+0x005e    -- 0x0B_InitNPC( 0 )
+0x0061    -- 0xFE07( ???=0x01 )
+0x0064    -- 0x5F( ???=0x04 )
+0x0066    -- 0x23()
+0x0067    -- 0x19_ActorSetPosition( x=(vf80)0x000f, z=(vf40)0xfef5, flag=(flag)0xc0 )
+0x006d    -- 0x2A()
+0x006e    op00_Return()
 
 Actor_0x02:on_update:
-    return 0 -- 0x006f 0x00
+0x006f    op00_Return()
 
 Actor_0x02:script_0x04:
-    op26_Wait( time=15 ) -- 0x0070 0x26
-    -- MISSING OPCODE 0x22
+0x0070    op26_Wait( time=15 )
+0x0073    -- MISSING OPCODE 0x22

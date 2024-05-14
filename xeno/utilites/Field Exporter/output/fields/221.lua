@@ -9,68 +9,65 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- 0xF0( ???=0x5afe, ???=0x0000, ???=0xff02 ) -- 0x0001 0xf0
-    op05_FunctionCall( 0x2c01 ) -- 0x0008 0x05
-    opFF_Nop() -- 0x000b 0xff
-    return 0 -- 0x000c 0x00
-    opFF_Nop() -- 0x000d 0xff
-    opFF_Nop() -- 0x000e 0xff
+unknown = [
+    0xf0ff, 0x5afe, 0x0000, 0xff02, 0x0105, 0xff2c, 0xff00, 0xbcff,
+]
+
 
 Actor_0x00:on_start:
-    -- 0xBC_ActorNoModelInit() -- 0x000f 0xbc
-    op35_VariableSet( address=0x041a, value=(vf40)0x0105, flag=0x40 ) -- 0x0010 0x35
-    op35_VariableSet( address=0x041c, value=(vf40)0xff2c, flag=0x40 ) -- 0x0016 0x35
-    op35_VariableSet( address=0x041e, value=(vf40)0x0000, flag=0x40 ) -- 0x001c 0x35
-    op35_VariableSet( address=0x0418, value=(vf40)0x0006, flag=0x40 ) -- 0x0022 0x35
-    op35_VariableSet( address=0x0054, value=(vf40)0x0001, flag=0x40 ) -- 0x0028 0x35
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x0047 ) -- 0x002e 0x02
-    -- 0x75( ???=35 ) -- 0x0036 0x75
-    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 ) -- 0x0039 0xf1
-    -- 0x01_JumpTo( 0x0063 ) -- 0x0044 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0060 ) -- 0x0047 0x02
-    -- 0x75( ???=35 ) -- 0x004f 0x75
-    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 ) -- 0x0052 0xf1
-    -- 0x01_JumpTo( 0x0063 ) -- 0x005d 0x01
-    -- 0x75( ???=29 ) -- 0x0060 0x75
-    -- 0x2A() -- 0x0063 0x2a
-    return 0 -- 0x0064 0x00
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    op35_VariableSet( address=0x041a, value=(vf40)0x0105, flag=0x40 )
+0x0016    op35_VariableSet( address=0x041c, value=(vf40)0xff2c, flag=0x40 )
+0x001c    op35_VariableSet( address=0x041e, value=(vf40)0x0000, flag=0x40 )
+0x0022    op35_VariableSet( address=0x0418, value=(vf40)0x0006, flag=0x40 )
+0x0028    op35_VariableSet( address=0x0054, value=(vf40)0x0001, flag=0x40 )
+0x002e    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x0047 )
+0x0036    -- 0x75( ???=35 )
+0x0039    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x0044    -- 0x01_JumpTo( 0x0063 )
+0x0047    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0060 )
+0x004f    -- 0x75( ???=35 )
+0x0052    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x005d    -- 0x01_JumpTo( 0x0063 )
+0x0060    -- 0x75( ???=29 )
+0x0063    -- 0x2A()
+0x0064    op00_Return()
 
 Actor_0x00:on_update:
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x0070 ) -- 0x0065 0x02
-    -- 0x01_JumpTo( 0x0100 ) -- 0x006d 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x007b ) -- 0x0070 0x02
-    -- 0x01_JumpTo( 0x0100 ) -- 0x0078 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0246 ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x00a3 ) -- 0x007b 0x02
-    -- 0xB4_FadeIn() -- 0x0083 0xb4
-    -- 0xFE54() -- 0x0086 0xfe
-    op09_ActorCallScriptEW( actor_id=0x09, script=06, priority=01 ) -- 0x0088 0x09
-    op09_ActorCallScriptEW( actor_id=0x0a, script=07, priority=01 ) -- 0x008b 0x09
-    op09_ActorCallScriptEW( actor_id=0x0b, script=08, priority=01 ) -- 0x008e 0x09
-    -- 0x5A() -- 0x0091 0x5a
-    -- 0xB3() -- 0x0092 0xb3
-    op26_Wait( time=15 ) -- 0x0095 0x26
-    op35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 ) -- 0x0098 0x35
-    -- 0xFE54() -- 0x009e 0xfe
-    -- 0x01_JumpTo( 0x0100 ) -- 0x00a0 0x01
-    -- 0xB4_FadeIn() -- 0x00a3 0xb4
-    -- 0xFE54() -- 0x00a6 0xfe
-    -- 0x27( actor_id=(entity)0x19 ) -- 0x00a8 0x27
-    op09_ActorCallScriptEW( actor_id=0x01, script=06, priority=01 ) -- 0x00aa 0x09
-    op09_ActorCallScriptEW( actor_id=0x0f, script=04, priority=01 ) -- 0x00ad 0x09
-    op26_Wait( time=15 ) -- 0x00b0 0x26
-    -- 0xB3() -- 0x00b3 0xb3
-    op09_ActorCallScriptEW( actor_id=0x01, script=07, priority=01 ) -- 0x00b6 0x09
-    op26_Wait( time=5 ) -- 0x00b9 0x26
-    op09_ActorCallScriptEW( actor_id=0x0a, script=04, priority=01 ) -- 0x00bc 0x09
-    op35_VariableSet( address=0x0428, value=(vf40)0x000f, flag=0x40 ) -- 0x00bf 0x35
-    op09_ActorCallScriptEW( actor_id=0x01, script=12, priority=01 ) -- 0x00c5 0x09
-    op35_VariableSet( address=0x0428, value=(vf40)0x000f, flag=0x40 ) -- 0x00c8 0x35
-    op09_ActorCallScriptEW( actor_id=0x0f, script=0b, priority=01 ) -- 0x00ce 0x09
-    op09_ActorCallScriptEW( actor_id=0x09, script=04, priority=01 ) -- 0x00d1 0x09
-    opFE9B_SlideShow1( steps=30 ) -- 0x00d4 0xfe
-    op09_ActorCallScriptEW( actor_id=0x0d, script=06, priority=01 ) -- 0x00d8 0x09
-    op26_Wait( time=30 ) -- 0x00db 0x26
-    op09_ActorCallScriptEW( actor_id=0x1a, script=15, priority=01 ) -- 0x00de 0x09
-    op37_VariableSetFalse( address=0x0400 ) -- 0x00e1 0x37
-    -- MISSING OPCODE 0xFE24
+0x0065    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x0070 )
+0x006d    -- 0x01_JumpTo( 0x0100 )
+0x0070    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x007b )
+0x0078    -- 0x01_JumpTo( 0x0100 )
+0x007b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0246 ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x00a3 )
+0x0083    -- 0xB4_FadeIn()
+0x0086    -- 0xFE54()
+0x0088    op09_ActorCallScriptEW( actor_id=0x09, script=06, priority=01 )
+0x008b    op09_ActorCallScriptEW( actor_id=0x0a, script=07, priority=01 )
+0x008e    op09_ActorCallScriptEW( actor_id=0x0b, script=08, priority=01 )
+0x0091    -- 0x5A()
+0x0092    -- 0xB3()
+0x0095    op26_Wait( time=15 )
+0x0098    op35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 )
+0x009e    -- 0xFE54()
+0x00a0    -- 0x01_JumpTo( 0x0100 )
+0x00a3    -- 0xB4_FadeIn()
+0x00a6    -- 0xFE54()
+0x00a8    -- 0x27( actor_id=(entity)0x19 )
+0x00aa    op09_ActorCallScriptEW( actor_id=0x01, script=06, priority=01 )
+0x00ad    op09_ActorCallScriptEW( actor_id=0x0f, script=04, priority=01 )
+0x00b0    op26_Wait( time=15 )
+0x00b3    -- 0xB3()
+0x00b6    op09_ActorCallScriptEW( actor_id=0x01, script=07, priority=01 )
+0x00b9    op26_Wait( time=5 )
+0x00bc    op09_ActorCallScriptEW( actor_id=0x0a, script=04, priority=01 )
+0x00bf    op35_VariableSet( address=0x0428, value=(vf40)0x000f, flag=0x40 )
+0x00c5    op09_ActorCallScriptEW( actor_id=0x01, script=12, priority=01 )
+0x00c8    op35_VariableSet( address=0x0428, value=(vf40)0x000f, flag=0x40 )
+0x00ce    op09_ActorCallScriptEW( actor_id=0x0f, script=0b, priority=01 )
+0x00d1    op09_ActorCallScriptEW( actor_id=0x09, script=04, priority=01 )
+0x00d4    opFE9B_SlideShow1( steps=30 )
+0x00d8    op09_ActorCallScriptEW( actor_id=0x0d, script=06, priority=01 )
+0x00db    op26_Wait( time=30 )
+0x00de    op09_ActorCallScriptEW( actor_id=0x1a, script=15, priority=01 )
+0x00e1    op37_VariableSetFalse( address=0x0400 )
+0x00e4    -- MISSING OPCODE 0xFE24

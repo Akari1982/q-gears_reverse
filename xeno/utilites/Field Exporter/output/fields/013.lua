@@ -9,5 +9,40 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x66
+unknown = [
+    0x66ff, 0x0000, 0x0000, 0xffff, 0xffdb, 0x0000, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0x2A()
+0x0011    -- 0xA0()
+0x0018    op00_Return()
+
+Actor_0x00:on_update:
+0x0019    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x02c8 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0038 )
+0x0021    -- 0xFE54()
+0x0023    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x002e    -- 0x5A()
+0x002f    op08_ActorCallScriptSW( actor_id=0x01, script=0e, priority=03 )
+0x0032    opF5_MessageShowStatic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP|NO_WINDOW )
+0x0036    op9C_MessageSync()
+0x0037    -- 0x5B()
+0x0038    op00_Return()
+
+Actor_0x00:on_talk:
+0x0039    op00_Return()
+
+Actor_0x00:script_0x04:
+0x003a    op26_Wait( time=20 )
+0x003d    opC7_CameraRotRight( steps=50 )
+0x0040    opC7_CameraRotRight( steps=50 )
+0x0043    opC7_CameraRotRight( steps=50 )
+0x0046    opC7_CameraRotRight( steps=50 )
+0x0049    opC7_CameraRotRight( steps=50 )
+0x004c    op00_Return()
+
+Actor_0x00:script_0x05:
+0x004d    op26_Wait( time=10 )
+0x0050    -- MISSING OPCODE 0xb5

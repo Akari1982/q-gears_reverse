@@ -3906,12 +3906,12 @@ D4100280 // f7
     A2 = w[S3 + 0020];
     A0 = S0;
     A1 = A2 + 002c;
-    80020FF8	jal    system_allocate_memory_for_packets [$8002c964]
+    80020FF8	jal    system_model_allocate_memory_for_packets [$8002c964]
     A2 = A2 + 0030;
     V0 = w[S3 + 0020];
     A0 = S0;
     A1 = w[V0 + 002c];
-    8002100C	jal    system_fill_packets_drafts_for_model_part [$8002c6dc]
+    8002100C	jal    system_model_create_packets_for_part [$8002c6dc]
     A2 = 0;
     V0 = w[S3 + 0020];
     A2 = w[S0 + 0034];
@@ -3950,12 +3950,12 @@ D4100280 // f7
     A2 = w[S3 + 0020];
     A0 = S1;
     A1 = A2 + 002c;
-    80021098	jal    system_allocate_memory_for_packets [$8002c964]
+    80021098	jal    system_model_allocate_memory_for_packets [$8002c964]
     A2 = A2 + 0030;
     V0 = w[S3 + 0020];
     A0 = S1;
     A1 = w[V0 + 002c];
-    800210AC	jal    system_fill_packets_drafts_for_model_part [$8002c6dc]
+    800210AC	jal    system_model_create_packets_for_part [$8002c6dc]
     A2 = 0;
     V0 = w[S3 + 0020];
     A2 = w[S0 + 0044];
@@ -3988,12 +3988,12 @@ D4100280 // f7
     A2 = w[S3 + 0020];
     A0 = S1;
     A1 = A2 + 002c;
-    80021128	jal    system_allocate_memory_for_packets [$8002c964]
+    80021128	jal    system_model_allocate_memory_for_packets [$8002c964]
     A2 = A2 + 0030;
     V0 = w[S3 + 0020];
     A0 = S1;
     A1 = w[V0 + 002c];
-    8002113C	jal    system_fill_packets_drafts_for_model_part [$8002c6dc]
+    8002113C	jal    system_model_create_packets_for_part [$8002c6dc]
     A2 = 0;
     V0 = w[S3 + 0020];
     A2 = w[S0 + 0044];

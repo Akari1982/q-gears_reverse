@@ -9,5 +9,190 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x8a
+unknown = [
+    0x8aff, 0x4a00, 0x00fd, 0xffff, 0xff7e, 0xfe39, 0xff00, 0xee07, 0xd7ff, 0x00fd, 0x07ff,
+]
+
+
+Actor_0x00:on_start:
+0x0016    -- 0xBC_ActorNoModelInit()
+0x0017    -- 0xA0()
+0x001e    -- 0x2A()
+0x001f    op35_VariableSet( address=0x0406, value=(vf40)0xff39, flag=0x40 )
+0x0025    op35_VariableSet( address=0x0408, value=(vf40)0xfe8e, flag=0x40 )
+0x002b    op35_VariableSet( address=0x040a, value=(vf40)0x0000, flag=0x40 )
+0x0031    op35_VariableSet( address=0x0404, value=(vf40)0x0001, flag=0x40 )
+0x0037    op35_VariableSet( address=0x0054, value=(vf40)0x0001, flag=0x40 )
+0x003d    op35_VariableSet( address=0x0416, value=(vf40)0xffb7, flag=0x40 )
+0x0043    op35_VariableSet( address=0x0418, value=(vf40)0xfe02, flag=0x40 )
+0x0049    op35_VariableSet( address=0x041a, value=(vf40)0x0000, flag=0x40 )
+0x004f    op35_VariableSet( address=0x0414, value=(vf40)0x0002, flag=0x40 )
+0x0055    op35_VariableSet( address=0x041c, value=(vf40)0x0002, flag=0x40 )
+0x005b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x0257, condition="value1 == value2", jump_if_false=0x0095 )
+0x0063    op35_VariableSet( address=0x0426, value=(vf40)0x0003, flag=0x40 )
+0x0069    op35_VariableSet( address=0x0428, value=(vf40)0x0173, flag=0x40 )
+0x006f    op35_VariableSet( address=0x042a, value=(vf40)0x00c4, flag=0x40 )
+0x0075    op35_VariableSet( address=0x042c, value=(vf40)0x0000, flag=0x40 )
+0x007b    op35_VariableSet( address=0x042e, value=(vf40)0x0003, flag=0x40 )
+0x0081    op35_VariableSet( address=0x0430, value=(vf40)0x0005, flag=0x40 )
+0x0087    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0162 ), value2=(s16)0x0400, condition="value1 & value2", jump_if_false=0x0092 )
+0x008f    op36_VariableSetTrue( address=0x0432 )
+0x0092    -- 0x01_JumpTo( 0x00c4 )
+0x0095    op35_VariableSet( address=0x0426, value=(vf40)0x0003, flag=0x40 )
+0x009b    op35_VariableSet( address=0x0428, value=(vf40)0x0173, flag=0x40 )
+0x00a1    op35_VariableSet( address=0x042a, value=(vf40)0x00c4, flag=0x40 )
+0x00a7    op35_VariableSet( address=0x042c, value=(vf40)0x0000, flag=0x40 )
+0x00ad    op35_VariableSet( address=0x042e, value=(vf40)0x0003, flag=0x40 )
+0x00b3    op35_VariableSet( address=0x0430, value=(vf40)0x0032, flag=0x40 )
+0x00b9    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0162 ), value2=(s16)0x0800, condition="value1 & value2", jump_if_false=0x00c4 )
+0x00c1    op36_VariableSetTrue( address=0x0432 )
+0x00c4    -- 0x75( ???=58 )
+0x00c7    op00_Return()
+
+Actor_0x00:on_update:
+0x00c8    op00_Return()
+
+Actor_0x00:on_talk:
+0x00c9    op00_Return()
+
+Actor_0x00:script_0x04:
+0x00ca    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x0257, condition="value1 == value2", jump_if_false=0x00db )
+0x00d2    op3A_VariableBitSet( address=0x0162, bit_num=(vf40)0x000a, flag=0x40 )
+0x00d8    -- 0x01_JumpTo( 0x00e1 )
+0x00db    op3A_VariableBitSet( address=0x0162, bit_num=(vf40)0x000b, flag=0x40 )
+0x00e1    op00_Return()
+
+Actor_0x01:on_start:
+0x00e2    -- 0x16_ActorPCInit( char_id=0 )
+0x00e5    opFE0D_MessageSetFace( char_id=0 )
+0x00e9    opFE0D_MessageSetFace( char_id=0 )
+0x00ed    op00_Return()
+
+Actor_0x01:on_update:
+0x00ee    -- 0xA7()
+0x00ef    op00_Return()
+
+Actor_0x01:on_talk:
+0x00f0    op00_Return()
+
+Actor_0x02:on_start:
+0x00f1    -- 0x16_ActorPCInit( char_id=1 )
+0x00f4    opFE0D_MessageSetFace( char_id=1 )
+0x00f8    opFE0D_MessageSetFace( char_id=1 )
+0x00fc    op00_Return()
+
+Actor_0x02:on_update:
+0x00fd    -- 0xA7()
+0x00fe    op00_Return()
+
+Actor_0x02:on_talk:
+0x00ff    op00_Return()
+
+Actor_0x03:on_start:
+0x0100    -- 0x16_ActorPCInit( char_id=9 )
+0x0103    opFE0D_MessageSetFace( char_id=9 )
+0x0107    opFE0D_MessageSetFace( char_id=9 )
+0x010b    op00_Return()
+
+Actor_0x03:on_update:
+0x010c    -- 0xA7()
+0x010d    op00_Return()
+
+Actor_0x03:on_talk:
+0x010e    op00_Return()
+
+Actor_0x04:on_start:
+0x010f    -- 0x16_ActorPCInit( char_id=3 )
+0x0112    opFE0D_MessageSetFace( char_id=3 )
+0x0116    opFE0D_MessageSetFace( char_id=3 )
+0x011a    op00_Return()
+
+Actor_0x04:on_update:
+0x011b    -- 0xA7()
+0x011c    op00_Return()
+
+Actor_0x04:on_talk:
+0x011d    op00_Return()
+
+Actor_0x05:on_start:
+0x011e    -- 0x16_ActorPCInit( char_id=4 )
+0x0121    opFE0D_MessageSetFace( char_id=4 )
+0x0125    opFE0D_MessageSetFace( char_id=4 )
+0x0129    op00_Return()
+
+Actor_0x05:on_update:
+0x012a    -- 0xA7()
+0x012b    op00_Return()
+
+Actor_0x05:on_talk:
+0x012c    op00_Return()
+
+Actor_0x06:on_start:
+0x012d    -- 0x16_ActorPCInit( char_id=5 )
+0x0130    opFE0D_MessageSetFace( char_id=5 )
+0x0134    opFE0D_MessageSetFace( char_id=5 )
+0x0138    op00_Return()
+
+Actor_0x06:on_update:
+0x0139    -- 0xA7()
+0x013a    op00_Return()
+
+Actor_0x06:on_talk:
+0x013b    op00_Return()
+
+Actor_0x07:on_start:
+0x013c    -- 0x16_ActorPCInit( char_id=6 )
+0x013f    opFE0D_MessageSetFace( char_id=6 )
+0x0143    opFE0D_MessageSetFace( char_id=6 )
+0x0147    op00_Return()
+
+Actor_0x07:on_update:
+0x0148    -- 0xA7()
+0x0149    op00_Return()
+
+Actor_0x07:on_talk:
+0x014a    op00_Return()
+
+Actor_0x08:on_start:
+0x014b    -- 0x16_ActorPCInit( char_id=7 )
+0x014e    opFE0D_MessageSetFace( char_id=7 )
+0x0152    opFE0D_MessageSetFace( char_id=7 )
+0x0156    op00_Return()
+
+Actor_0x08:on_update:
+0x0157    -- 0xA7()
+0x0158    op00_Return()
+
+Actor_0x08:on_talk:
+0x0159    op00_Return()
+
+Actor_0x09:on_start:
+0x015a    -- 0x16_ActorPCInit( char_id=8 )
+0x015d    opFE0D_MessageSetFace( char_id=8 )
+0x0161    opFE0D_MessageSetFace( char_id=8 )
+0x0165    op00_Return()
+
+Actor_0x09:on_update:
+0x0166    -- 0xA7()
+0x0167    op00_Return()
+
+Actor_0x09:on_talk:
+0x0168    op00_Return()
+
+Actor_0x0a:on_start:
+0x0169    -- 0xBC_ActorNoModelInit()
+0x016a    op00_Return()
+
+Actor_0x0a:on_update:
+0x016b    op00_Return()
+
+Actor_0x0a:on_talk:
+0x016c    op00_Return()
+
+Actor_0x0a:on_push:
+0x016d    op00_Return()
+
+Actor_0x0b:on_start:
+0x016e    -- 0xBC_ActorNoModelInit()
+0x016f    -- 0x19_ActorSetPosition( x=(vf80)0xff66, z=(vf40)0x007d, flag=(flag)0xc0 )
+0x0175    -- MISSING OPCODE 0xf8

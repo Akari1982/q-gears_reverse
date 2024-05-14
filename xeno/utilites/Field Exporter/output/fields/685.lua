@@ -9,5 +9,29 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xb0
+unknown = [
+    0xb0ff, 0x5601, 0x0100, 0xffff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    -- 0xA0()
+0x0011    opF1_FadeSetUp( steps=2, r=80, g=65, b=32, semi_tr=1 )
+0x001c    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x02b7, condition="value1 == value2", jump_if_false=0x0026 )
+0x0024    -- 0xFE54()
+0x0026    op00_Return()
+
+Actor_0x00:on_update:
+0x0027    -- 0x5B()
+0x0028    op00_Return()
+
+Actor_0x00:on_talk:
+0x0029    op00_Return()
+
+Actor_0x01:on_start:
+0x002a    -- 0x16_ActorPCInit( char_id=0 )
+0x002d    opFE0D_MessageSetFace( char_id=0 )
+0x0031    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x02b7, condition="value1 == value2", jump_if_false=0x0040 )
+0x0039    -- MISSING OPCODE 0x1d

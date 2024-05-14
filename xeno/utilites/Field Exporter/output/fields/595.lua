@@ -9,5 +9,51 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xb2
+unknown = [
+    0xb2ff, 0xe201, 0x00ff, 0xffff, 0x0078, 0x0028, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0xA0()
+0x0017    -- 0x2A()
+0x0018    op99()
+0x0019    -- 0x9B( ???=12, ???=12 )
+0x001e    -- 0x60()
+0x001f    -- 0x63( ???=(vf80)0x014d, ???=(vf40)0x004d, ???=(vf20)0xffc0, flag=0xe0 )
+0x0027    -- 0x64()
+0x0028    opA3()
+0x0030    opAC_MoveCamera( control=0x01, steps=0 )
+0x0034    opAC_MoveCamera( control=0x00, steps=0 )
+0x0038    -- 0x75( ???=60 )
+0x003b    op00_Return()
+
+Actor_0x00:on_update:
+0x003c    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00a3 )
+0x0044    -- 0xFE54()
+0x0046    -- 0xB4_FadeIn()
+0x0049    op09_ActorCallScriptEW( actor_id=0x05, script=05, priority=01 )
+0x004c    op26_Wait( time=32 )
+0x004f    -- 0xB3()
+0x0052    op26_Wait( time=200 )
+0x0055    op09_ActorCallScriptEW( actor_id=0x01, script=04, priority=01 )
+0x0058    op09_ActorCallScriptEW( actor_id=0x02, script=04, priority=01 )
+0x005b    op26_Wait( time=45 )
+0x005e    op99()
+0x005f    -- 0x9B( ???=12, ???=12 )
+0x0064    -- 0x60()
+0x0065    -- 0x63( ???=(vf80)0x0108, ???=(vf40)0xfe7c, ???=(vf20)0xffd9, flag=0xe0 )
+0x006d    -- 0x64()
+0x006e    opA3()
+0x0076    opAC_MoveCamera( control=0x01, steps=40 )
+0x007a    opAC_MoveCamera( control=0x00, steps=40 )
+0x007e    op09_ActorCallScriptEW( actor_id=0x03, script=04, priority=01 )
+0x0081    -- 0x07( actor_id=0x02, script=0x25 )
+0x0084    op09_ActorCallScriptEW( actor_id=0x01, script=05, priority=01 )
+0x0087    op09_ActorCallScriptEW( actor_id=0x04, script=04, priority=01 )
+0x008a    op09_ActorCallScriptEW( actor_id=0x05, script=04, priority=01 )
+0x008d    op26_Wait( time=45 )
+0x0090    op09_ActorCallScriptEW( actor_id=0x0b, script=04, priority=01 )
+0x0093    -- 0x87_SetProgress( progress=234 )
+0x0096    -- MISSING OPCODE 0x12

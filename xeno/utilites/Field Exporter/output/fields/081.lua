@@ -9,102 +9,98 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    return 0 -- 0x0001 0x00
-    return 0 -- 0x0002 0x00
-    return 0 -- 0x0003 0x00
-    return 0 -- 0x0004 0x00
-    return 0 -- 0x0005 0x00
-    opFF_Nop() -- 0x0006 0xff
-    opFF_Nop() -- 0x0007 0xff
+unknown = [
+    0x00ff, 0x0000, 0x0000, 0xffff,
+]
+
 
 Actor_0x00:on_start:
-    -- 0xBC_ActorNoModelInit() -- 0x0008 0xbc
-    -- 0x2A() -- 0x0009 0x2a
-    return 0 -- 0x000a 0x00
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    op00_Return()
 
 Actor_0x00:on_update:
-    -- 0xFE54() -- 0x000b 0xfe
-    op99() -- 0x000d 0x99
-    -- 0x60() -- 0x000e 0x60
-    -- 0x64() -- 0x000f 0x64
-    -- 0x63( ???=(vf80)0x0000, ???=(vf40)0xffcf, ???=(vf20)0xff02, flag=0xe0 ) -- 0x0010 0x63
-    opA3() -- 0x0018 0xa3
-    opAC_MoveCamera( control=0x00, steps=0 ) -- 0x0020 0xac
-    opAC_MoveCamera( control=0x01, steps=0 ) -- 0x0024 0xac
-    opEF_MoveCameraSync() -- 0x0028 0xef
-    op26_Wait( time=60 ) -- 0x002b 0x26
-    opFE0D_MessageSetFace( char_id=19 ) -- 0x002e 0xfe
-    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x0032 0xd0
-    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x003d 0xd2
-    op9C_MessageSync() -- 0x0041 0x9c
-    op26_Wait( time=60 ) -- 0x0042 0x26
-    opFE9B_SlideShow1( steps=30 ) -- 0x0045 0xfe
-    opAC_MoveCamera( control=0x00, steps=0 ) -- 0x0049 0xac
-    opAC_MoveCamera( control=0x01, steps=0 ) -- 0x004d 0xac
-    opEF_MoveCameraSync() -- 0x0051 0xef
-    op25_ActorDisable( actor_id=(entity)0x02 ) -- 0x0054 0x25
-    op24_ActorEnable( actor_id=(entity)0x03 ) -- 0x0056 0x24
-    op26_Wait( time=60 ) -- 0x0058 0x26
-    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x005b 0xd0
-    opD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x0066 0xd2
-    op9C_MessageSync() -- 0x006a 0x9c
-    op26_Wait( time=60 ) -- 0x006b 0x26
-    opFE9B_SlideShow1( steps=30 ) -- 0x006e 0xfe
-    opAC_MoveCamera( control=0x00, steps=0 ) -- 0x0072 0xac
-    opAC_MoveCamera( control=0x01, steps=0 ) -- 0x0076 0xac
-    opEF_MoveCameraSync() -- 0x007a 0xef
-    op25_ActorDisable( actor_id=(entity)0x03 ) -- 0x007d 0x25
-    op24_ActorEnable( actor_id=(entity)0x04 ) -- 0x007f 0x24
-    op26_Wait( time=60 ) -- 0x0081 0x26
-    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x0084 0xd0
-    opD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x008f 0xd2
-    op9C_MessageSync() -- 0x0093 0x9c
-    opFE0D_MessageSetFace( char_id=2 ) -- 0x0094 0xfe
-    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 ) -- 0x0098 0xd0
-    opD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM ) -- 0x00a3 0xd2
-    op9C_MessageSync() -- 0x00a7 0x9c
-    op26_Wait( time=60 ) -- 0x00a8 0x26
-    op3A_VariableBitSet( address=0x01c2, bit_num=(vf40)0x0000, flag=0x40 ) -- 0x00ab 0x3a
-    -- 0x98_MapLoad( field_id=75, value=1 ) -- 0x00b1 0x98
-    -- 0x5B() -- 0x00b6 0x5b
+0x000b    -- 0xFE54()
+0x000d    op99()
+0x000e    -- 0x60()
+0x000f    -- 0x64()
+0x0010    -- 0x63( ???=(vf80)0x0000, ???=(vf40)0xffcf, ???=(vf20)0xff02, flag=0xe0 )
+0x0018    opA3()
+0x0020    opAC_MoveCamera( control=0x00, steps=0 )
+0x0024    opAC_MoveCamera( control=0x01, steps=0 )
+0x0028    opEF_MoveCameraSync()
+0x002b    op26_Wait( time=60 )
+0x002e    opFE0D_MessageSetFace( char_id=19 )
+0x0032    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 )
+0x003d    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x0041    op9C_MessageSync()
+0x0042    op26_Wait( time=60 )
+0x0045    opFE9B_SlideShow1( steps=30 )
+0x0049    opAC_MoveCamera( control=0x00, steps=0 )
+0x004d    opAC_MoveCamera( control=0x01, steps=0 )
+0x0051    opEF_MoveCameraSync()
+0x0054    op25_ActorDisable( actor_id=(entity)0x02 )
+0x0056    op24_ActorEnable( actor_id=(entity)0x03 )
+0x0058    op26_Wait( time=60 )
+0x005b    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 )
+0x0066    opD2_MessageShowDynamic( text_id=0x0001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x006a    op9C_MessageSync()
+0x006b    op26_Wait( time=60 )
+0x006e    opFE9B_SlideShow1( steps=30 )
+0x0072    opAC_MoveCamera( control=0x00, steps=0 )
+0x0076    opAC_MoveCamera( control=0x01, steps=0 )
+0x007a    opEF_MoveCameraSync()
+0x007d    op25_ActorDisable( actor_id=(entity)0x03 )
+0x007f    op24_ActorEnable( actor_id=(entity)0x04 )
+0x0081    op26_Wait( time=60 )
+0x0084    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 )
+0x008f    opD2_MessageShowDynamic( text_id=0x0002, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x0093    op9C_MessageSync()
+0x0094    opFE0D_MessageSetFace( char_id=2 )
+0x0098    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 )
+0x00a3    opD2_MessageShowDynamic( text_id=0x0003, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x00a7    op9C_MessageSync()
+0x00a8    op26_Wait( time=60 )
+0x00ab    op3A_VariableBitSet( address=0x01c2, bit_num=(vf40)0x0000, flag=0x40 )
+0x00b1    -- 0x98_MapLoad( field_id=75, value=1 )
+0x00b6    -- 0x5B()
 
 Actor_0x00:on_talk:
-    return 0 -- 0x00b7 0x00
+0x00b7    op00_Return()
 
 Actor_0x01:on_start:
-    -- 0x16_ActorPCInit( char_id=0 ) -- 0x00b8 0x16
-    opFE0D_MessageSetFace( char_id=0 ) -- 0x00bb 0xfe
-    -- 0x23() -- 0x00bf 0x23
-    return 0 -- 0x00c0 0x00
+0x00b8    -- 0x16_ActorPCInit( char_id=0 )
+0x00bb    opFE0D_MessageSetFace( char_id=0 )
+0x00bf    -- 0x23()
+0x00c0    op00_Return()
 
 Actor_0x01:on_update:
-    return 0 -- 0x00c1 0x00
+0x00c1    op00_Return()
 
 Actor_0x02:on_start:
-    -- 0xBC_ActorNoModelInit() -- 0x00c2 0xbc
-    -- 0x2A() -- 0x00c3 0x2a
-    return 0 -- 0x00c4 0x00
+0x00c2    -- 0xBC_ActorNoModelInit()
+0x00c3    -- 0x2A()
+0x00c4    op00_Return()
 
 Actor_0x02:on_update:
-    return 0 -- 0x00c5 0x00
+0x00c5    op00_Return()
 
 Actor_0x03:on_start:
-    -- 0xBC_ActorNoModelInit() -- 0x00c6 0xbc
-    -- 0x2A() -- 0x00c7 0x2a
-    -- 0x23() -- 0x00c8 0x23
-    return 0 -- 0x00c9 0x00
+0x00c6    -- 0xBC_ActorNoModelInit()
+0x00c7    -- 0x2A()
+0x00c8    -- 0x23()
+0x00c9    op00_Return()
 
 Actor_0x03:on_update:
-    return 0 -- 0x00ca 0x00
+0x00ca    op00_Return()
 
 Actor_0x04:on_start:
-    -- 0xBC_ActorNoModelInit() -- 0x00cb 0xbc
-    -- 0x2A() -- 0x00cc 0x2a
-    -- 0x23() -- 0x00cd 0x23
-    return 0 -- 0x00ce 0x00
+0x00cb    -- 0xBC_ActorNoModelInit()
+0x00cc    -- 0x2A()
+0x00cd    -- 0x23()
+0x00ce    op00_Return()
 
 Actor_0x04:on_update:
-    return 0 -- 0x00cf 0x00
-    op37_VariableSetFalse( address=0x0406 ) -- 0x00d0 0x37
-    -- MISSING OPCODE 0x2e
+0x00cf    op00_Return()
+0x00d0    op37_VariableSetFalse( address=0x0406 )
+0x00d3    -- MISSING OPCODE 0x2e

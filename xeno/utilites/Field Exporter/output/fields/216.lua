@@ -9,5 +9,52 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xe2
+unknown = [
+    0xe2ff, 0xfbfe, 0x00ff, 0xffff, 0xff20, 0xff0d, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x0031 )
+0x0018    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x0023 )
+0x0020    -- 0x01_JumpTo( 0x0031 )
+0x0023    -- 0x75( ???=35 )
+0x0026    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x0031    -- 0x2A()
+0x0032    op00_Return()
+
+Actor_0x00:on_update:
+0x0033    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0100, condition="value1 & value2", jump_if_false=0x0051 )
+0x003b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0010, condition="value1 & value2", jump_if_false=0x0046 )
+0x0043    -- 0x01_JumpTo( 0x0051 )
+0x0046    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x0051    op00_Return()
+
+Actor_0x00:on_talk:
+0x0052    op00_Return()
+
+Actor_0x01:on_start:
+0x0053    -- 0x16_ActorPCInit( char_id=0 )
+0x0056    opFE0D_MessageSetFace( char_id=0 )
+0x005a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0069 )
+0x0062    opFE0D_MessageSetFace( char_id=0 )
+0x0066    -- 0x01_JumpTo( 0x006d )
+0x0069    opFE0D_MessageSetFace( char_id=36 )
+0x006d    op00_Return()
+
+Actor_0x01:on_update:
+0x006e    -- 0xA7()
+0x006f    op00_Return()
+
+Actor_0x01:on_talk:
+0x0070    op00_Return()
+
+Actor_0x02:on_start:
+0x0071    -- 0xBC_ActorNoModelInit()
+0x0072    -- 0x2A()
+0x0073    op00_Return()
+
+Actor_0x02:on_update:
+0x0074    -- 0xCB_TriggerJumpTo( trigger_id=GetVar( 0x7e00 ), jump=0x9800 )
+0x0079    -- MISSING OPCODE 0xd7

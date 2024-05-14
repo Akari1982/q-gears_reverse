@@ -9,5 +9,163 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xea
+unknown = [
+    0xeaff, 0x3900, 0x00ff, 0xffff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0xA0()
+0x0010    -- 0x2A()
+0x0011    -- 0x75( ???=72 )
+0x0014    op00_Return()
+
+Actor_0x00:on_update:
+0x0015    op00_Return()
+
+Actor_0x01:on_start:
+0x0016    -- 0x16_ActorPCInit( char_id=0 )
+0x0019    opFE0D_MessageSetFace( char_id=0 )
+0x001d    op00_Return()
+
+Actor_0x01:on_update:
+0x001e    -- 0x0C()
+
+Actor_0x01:on_talk:
+0x001f    op00_Return()
+
+Actor_0x01:script_0x04:
+0x0020    op2C_SpritePlayAnim( anim_id=0x01 )
+0x0022    op37_VariableSetFalse( address=0x0400 )
+0x0025    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x000a, condition="value1 < value2", jump_if_false=0x0039 )
+0x002d    op6C_ActorRotateAnticlockwise( rot=1 )
+0x0030    op3C_VariableInc( address=0x0400 )
+0x0033    op26_Wait( time=2 )
+0x0036    -- 0x01_JumpTo( 0x0025 )
+0x0039    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x004d )
+0x0041    op6B_ActorRotateClockwise( rot=1 )
+0x0044    op3D_VariableDec( address=0x0400 )
+0x0047    op26_Wait( time=2 )
+0x004a    -- 0x01_JumpTo( 0x0039 )
+0x004d    op2C_SpritePlayAnim( anim_id=0xff )
+0x004f    op00_Return()
+
+Actor_0x02:on_start:
+0x0050    -- 0x16_ActorPCInit( char_id=1 )
+0x0053    opFE0D_MessageSetFace( char_id=1 )
+0x0057    op00_Return()
+
+Actor_0x02:on_update:
+0x0058    -- 0x0C()
+
+Actor_0x02:on_talk:
+0x0059    op00_Return()
+
+Actor_0x02:script_0x04:
+0x005a    op2C_SpritePlayAnim( anim_id=0x01 )
+0x005c    op37_VariableSetFalse( address=0x0402 )
+0x005f    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x000a, condition="value1 < value2", jump_if_false=0x0073 )
+0x0067    op6C_ActorRotateAnticlockwise( rot=1 )
+0x006a    op3C_VariableInc( address=0x0402 )
+0x006d    op26_Wait( time=2 )
+0x0070    -- 0x01_JumpTo( 0x005f )
+0x0073    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x0087 )
+0x007b    op6B_ActorRotateClockwise( rot=1 )
+0x007e    op3D_VariableDec( address=0x0402 )
+0x0081    op26_Wait( time=2 )
+0x0084    -- 0x01_JumpTo( 0x0073 )
+0x0087    op2C_SpritePlayAnim( anim_id=0xff )
+0x0089    op00_Return()
+
+Actor_0x03:on_start:
+0x008a    -- 0x16_ActorPCInit( char_id=2 )
+0x008d    opFE0D_MessageSetFace( char_id=2 )
+0x0091    op00_Return()
+
+Actor_0x03:on_update:
+0x0092    -- 0x0C()
+
+Actor_0x03:on_talk:
+0x0093    op00_Return()
+
+Actor_0x03:script_0x04:
+0x0094    op2C_SpritePlayAnim( anim_id=0x01 )
+0x0096    op37_VariableSetFalse( address=0x0404 )
+0x0099    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x000a, condition="value1 < value2", jump_if_false=0x00ad )
+0x00a1    op6C_ActorRotateAnticlockwise( rot=1 )
+0x00a4    op3C_VariableInc( address=0x0404 )
+0x00a7    op26_Wait( time=2 )
+0x00aa    -- 0x01_JumpTo( 0x0099 )
+0x00ad    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x00c1 )
+0x00b5    op6B_ActorRotateClockwise( rot=1 )
+0x00b8    op3D_VariableDec( address=0x0404 )
+0x00bb    op26_Wait( time=2 )
+0x00be    -- 0x01_JumpTo( 0x00ad )
+0x00c1    op2C_SpritePlayAnim( anim_id=0xff )
+0x00c3    op00_Return()
+
+Actor_0x04:on_start:
+0x00c4    -- 0x0B_InitNPC( 0 )
+0x00c7    -- 0x19_ActorSetPosition( x=(vf80)0x0013, z=(vf40)0x008d, flag=(flag)0xc0 )
+0x00cd    op69_ActorSetRotation( rot=0 )
+0x00d0    -- 0x2A()
+0x00d1    op00_Return()
+
+Actor_0x04:on_update:
+0x00d2    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00df )
+0x00da    op2C_SpritePlayAnim( anim_id=0x01 )
+0x00dc    op36_VariableSetTrue( address=0x0406 )
+0x00df    op37_VariableSetFalse( address=0x0408 )
+0x00e2    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x000a, condition="value1 < value2", jump_if_false=0x00f6 )
+0x00ea    op6C_ActorRotateAnticlockwise( rot=1 )
+0x00ed    op3C_VariableInc( address=0x0408 )
+0x00f0    op26_Wait( time=3 )
+0x00f3    -- 0x01_JumpTo( 0x00e2 )
+0x00f6    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x010a )
+0x00fe    op6B_ActorRotateClockwise( rot=1 )
+0x0101    op3D_VariableDec( address=0x0408 )
+0x0104    op26_Wait( time=3 )
+0x0107    -- 0x01_JumpTo( 0x00f6 )
+0x010a    op37_VariableSetFalse( address=0x0408 )
+0x010d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0032, condition="value1 < value2", jump_if_false=0x0121 )
+0x0115    op6C_ActorRotateAnticlockwise( rot=1 )
+0x0118    op3C_VariableInc( address=0x0408 )
+0x011b    op26_Wait( time=3 )
+0x011e    -- 0x01_JumpTo( 0x010d )
+0x0121    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 > value2", jump_if_false=0x0135 )
+0x0129    op6B_ActorRotateClockwise( rot=1 )
+0x012c    op3D_VariableDec( address=0x0408 )
+0x012f    op26_Wait( time=3 )
+0x0132    -- 0x01_JumpTo( 0x0121 )
+0x0135    op00_Return()
+
+Actor_0x04:on_talk:
+0x0136    op00_Return()
+
+Actor_0x04:on_push:
+0x0137    op00_Return()
+
+Actor_0x05:on_start:
+0x0138    -- 0xBC_ActorNoModelInit()
+0x0139    -- 0x19_ActorSetPosition( x=(vf80)0x0013, z=(vf40)0x008d, flag=(flag)0xc0 )
+0x013f    op00_Return()
+
+Actor_0x05:on_update:
+0x0140    op00_Return()
+
+Actor_0x05:on_talk:
+0x0141    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0040 ), value2=(s16)0x00ff, condition="value1 == value2", jump_if_false=0x0151 )
+0x0149    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x014d    op9C_MessageSync()
+0x014e    -- 0x01_JumpTo( 0x0156 )
+0x0151    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x0155    op9C_MessageSync()
+0x0156    op00_Return()
+
+Actor_0x05:on_push:
+0x0157    op00_Return()
+
+Actor_0x06:on_start:
+0x0158    -- 0x0B_InitNPC( 1 )
+0x015b    -- MISSING OPCODE 0xFE1c

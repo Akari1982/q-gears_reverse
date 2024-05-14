@@ -237,8 +237,8 @@
 
 800aefe0 [][][][] number of entity objects.
 800aefe4 [][][][] pointer to model/sprite entity data (size 0x5c each).
-    +   0 [][][][] pointer to allocated 0x24 size struct (only for models).
-        +  4 [][][][] pointer to start of model parts header.
+    +   0 [][][][] pointer to allocated 0x24 size struct (for field models).
+        +  4 [][][][] pointer to start of model part header.
         +  8 [][][][] pointer to allocated memory for 1st packets buffer.
         +  c [][][][] pointer to allocated memory for 2nd packets buffer.
         + 12 [][]     ???
@@ -465,7 +465,7 @@
                            3 - calculate lighing and store it
                    0x0010: ???
                    0x0020: set if 0x0040 flag == 1 during init. Set in 0x29 and 0x23(only) opcode. Remove if we init this entity as player.
-                   0x0040: model or sprite not loaded yet.
+                   0x0040: if not set - model object (attach model to this entity).
                    0x0080: if this is 0 - we set height for model depending on triangle.
                    0x0200: 
                    0x0f00: if at least one of this bits exist - we perform move.

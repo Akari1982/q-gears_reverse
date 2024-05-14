@@ -9,5 +9,44 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x70
+unknown = [
+    0x70ff, 0x7000, 0x0000, 0x05ff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0xA0()
+0x0010    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x001b    op35_VariableSet( address=0x0400, value=(vf40)0x0000, flag=0x40 )
+0x0021    op00_Return()
+
+Actor_0x00:on_update:
+0x0022    op00_Return()
+
+Actor_0x00:on_talk:
+0x0023    op00_Return()
+
+Actor_0x00:on_push:
+0x0024    op00_Return()
+
+Actor_0x01:on_start:
+0x0025    -- 0xBC_ActorNoModelInit()
+0x0026    op00_Return()
+
+Actor_0x01:on_update:
+0x0027    op00_Return()
+
+Actor_0x01:on_talk:
+0x0028    op00_Return()
+
+Actor_0x01:on_push:
+0x0029    op00_Return()
+
+Actor_0x02:on_start:
+0x002a    -- 0x16_ActorPCInit( char_id=0 )
+0x002d    opFE0D_MessageSetFace( char_id=0 )
+0x0031    op00_Return()
+
+Actor_0x02:on_update:
+0x0032    -- MISSING OPCODE 0xfb

@@ -176,7 +176,7 @@
 //0d 8002E078 8002E078 8002E498 8002E904 8002FB0C 8002FD1C 8002CEF4 08000000 0C000000 28000000 quad monochrome textured
 //0e 8002E050 8002E050 8002E470 8002E8DC 8002E050 8002E050 8002CF90 08000000 04000000 24000000 quad gourad (c8)
 //0f 8002E03C 8002E03C 8002E45C 8002E8C8 8002E03C 8002E03C 8002D054 08000000 0C000000 34000000 quad gourad textured (c8)
-+18 - function to fill the packet.
++18 - function to create packet.
 +1c - size of polygon data.
 +20 - size of tex data.
 +24 - size of packets data.
@@ -1181,7 +1181,7 @@ First struct is just header struct (0x10 size), later we add more structs differ
 8006efe4 [][]     copied to 8006e5f6.
 8006efe6 [][]     copied to 8004e9c8.
 
-8006f020 array of 3 items with size 0x4. Init with 0.
+8006f020 array of 3 party with size 0x4. Init with 0.
 
 8006f08c array of spu memory allocation structs with size 0x10. 0xc items.
          Insert first item right after init. (+0 0x81, +1 0x05, +2 0x0000, +4 0x00000000, +8 0x00001010)

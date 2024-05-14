@@ -9,5 +9,30 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x7d
+unknown = [
+    0x7dff, 0x5800, 0x0000, 0xffff, 0x0000, 0x00da, 0xff00, 0xbc04,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0xA0()
+0x0017    op35_VariableSet( address=0x0144, value=(vf40)0xffff, flag=0x40 )
+0x001d    -- 0x2A()
+0x001e    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x0029 )
+0x0023    -- 0x75( ???=58 )
+0x0026    -- 0x01_JumpTo( 0x002c )
+0x0029    -- 0x75( ???=26 )
+0x002c    op00_Return()
+
+Actor_0x00:on_update:
+0x002d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x014c ), value2=(s16)0x0050, condition="value1 == value2", jump_if_false=0x00ba )
+0x0035    op26_Wait( time=32 )
+0x0038    -- 0xFE54()
+0x003a    opF1_FadeSetUp( steps=2, r=200, g=200, b=200, semi_tr=1 )
+0x0045    op26_Wait( time=1 )
+0x0048    op74_SoundPlayFixedVolume( sound_id=276 )
+0x004b    op26_Wait( time=5 )
+0x004e    op74_SoundPlayFixedVolume( sound_id=277 )
+0x0051    opF1_FadeSetUp( steps=1, r=200, g=200, b=100, semi_tr=3 )
+0x005c    -- MISSING OPCODE 0xf2

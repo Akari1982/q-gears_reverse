@@ -9,5 +9,62 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0xc4
+unknown = [
+    0xc4ff, 0x18ff, 0x00ff, 0x0500, 0x0000, 0x0000, 0x0000, 0xbc05,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0xA0()
+0x0017    -- 0xA8_VariableRandom2( address=0x0400, value=255 )
+0x001c    -- 0xA8_VariableRandom2( address=0x0402, value=255 )
+0x0021    -- 0xA8_VariableRandom2( address=0x0404, value=255 )
+0x0026    -- 0xE7( ???=GetVar( 0x0400 ), ???=GetVar( 0x0402 ), ???=GetVar( 0x0404 ) )
+0x002d    op00_Return()
+
+Actor_0x00:on_update:
+0x002e    op00_Return()
+
+Actor_0x00:on_talk:
+0x002f    op00_Return()
+
+Actor_0x01:on_start:
+0x0030    -- 0x46()
+0x0031    op00_Return()
+
+Actor_0x01:on_update:
+0x0032    op00_Return()
+
+Actor_0x01:on_talk:
+0x0033    opF5_MessageShowStatic( text_id=0x0000, flags=0 )
+0x0037    opA9_MessageSetSelectionSync( start_row=01, end_row=04 )
+0x0039    op9C_MessageSync()
+0x003a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0048 )
+0x0042    -- 0x01_JumpTo( 0x0074 )
+0x0045    -- 0x01_JumpTo( 0x0072 )
+0x0048    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0056 )
+0x0050    -- 0x01_JumpTo( 0x023d )
+0x0053    -- 0x01_JumpTo( 0x0072 )
+0x0056    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0064 )
+0x005e    -- 0x01_JumpTo( 0x044c )
+0x0061    -- 0x01_JumpTo( 0x0072 )
+0x0064    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0072 )
+0x006c    -- 0x01_JumpTo( 0x0453 )
+0x006f    -- 0x01_JumpTo( 0x0072 )
+0x0072    op00_Return()
+
+Actor_0x01:on_push:
+0x0073    op00_Return()
+0x0074    opF4_MessageClose( type=0x00 )
+0x0076    opF5_MessageShowStatic( text_id=0x0001, flags=0 )
+0x007a    opA9_MessageSetSelectionSync( start_row=00, end_row=0c )
+0x007c    op9C_MessageSync()
+0x007d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x009b )
+0x0085    opF4_MessageClose( type=0x00 )
+0x0087    op35_VariableSet( address=0x0126, value=(vf40)0x0000, flag=0x40 )
+0x008d    op35_VariableSet( address=0x0128, value=(vf40)0x0000, flag=0x40 )
+0x0093    -- 0x98_MapLoad( field_id=93, value=0 )
+0x0098    -- 0x01_JumpTo( 0x023d )
+0x009b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00af )
+0x00a3    -- MISSING OPCODE 0xFE0b

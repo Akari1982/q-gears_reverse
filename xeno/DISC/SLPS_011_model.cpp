@@ -326,7 +326,8 @@ return 1;
 
 
 ////////////////////////////////
-// system_fill_packets_drafts_for_model_part
+// system_model_create_packets_for_part()
+
 // A0 - model part data pointer
 // A1 - packet data pointer
 // A2 == 0 - not calculate lighting
@@ -335,33 +336,33 @@ return 1;
 // A2 == 3 - calculate lighing and store it
 
 part_data = A0;
-packet_data_offset = A1; // pointer to allocated memory for packets
+packet_data = A1; // pointer to allocated memory for packets
 light_flags = A2;
 
-// allocate place for lightings normals
-if( ( hu[part_data + 0] & 1 ) == 0 ) // if buffer not allocated
+// allocate place for lighting
+if( ( hu[part_data + 0] & 0001 ) == 0 ) // if buffer not allocated
 {
     if( w[part_data + 30] != 0 ) // if there is size for buffer
     {
         if( light_flags != 0 ) // if we calculate lighting
         {
-            [GP + 1a8] = h(26);
+            [GP + 1a8] = h(26); // "MDL Light" alloc
             A0 = w[part_data + 30];
             A1 = 0;
             system_memory_allocate();
             [part_data + 18] = w(V0);
 
-            [part_data + 0] = h(hu[part_data + 0] | 1);
+            [part_data + 0] = h(hu[part_data + 0] | 0001);
         }
     }
 }
 
-mesh_data_offset = w[part_data + 10];
-texture_data_offset = w[part_data + 14];
+polygon_data = w[part_data + 10];
+texture_data = w[part_data + 14];
 
-[80058bd8] = w(w[part_data + 8]);
-[80058bc8] = w(w[part_data + c]);
-[80058b34] = w(w[part_data + 18]);
+[80058bd8] = w(w[part_data + 8]); // offset to vertex block
+[80058bc8] = w(w[part_data + c]); // offset to some other vectors block used in gourad shaded poly, maybe normals
+[80058b34] = w(w[part_data + 18]); // offset to lighting
 
 if( light_flags == 0 )
 {
@@ -406,50 +407,38 @@ else if( light_flags == 3 )
     }
 }
 
-[80058c5c] = w(w[80058c5c] + hu[part_data + 4]); // + number of polygons
+[80058c5c] = w(w[80058c5c] + hu[part_data + 4]); // total number of polygons
 
-S2 = hu[part_data + 6]; // number of polygons block
-S2 = S2 - 1;
-if( S2 != -1 )
+for( int i = hu[part_data + 6] - 1; i != -1; --i ) // number of polygons block
 {
-    loop2c84c:	; 8002C84C
-        type_of_polygons = bu[mesh_data_offset + 0];
-        number_of_polygons = h[mesh_data_offset + 2] - 1;
-        mesh_data_offset = mesh_data_offset + 4;
+    type_of_polygons = bu[polygon_data + 0];
+    polygon_data += 4;
 
-        if( number_of_polygons != -1 )
+    for( int j = h[polygon_data + 2] - 1; j != -1; --j ) // number of polygons
+    {
+        A0 = texture_data;
+        A1 = polygon_data;
+        A2 = S5;
+        8002C8A4	jalr   w[8004f4f4 + type_of_polygons * 28 + 18] ra // "load_poly_" + type + "_18" (create packet)
+
+        if( V0 != 0 )
         {
-            // calculate lighting for packets
-            loop2c894:	; 8002C894
-                A0 = texture_data_offset;
-                A1 = mesh_data_offset;
-                A2 = S5;
-                8002C8A4	jalr   w[8004f4f4 + type_of_polygons * 28 + 18] ra
-
-                if( V0 != 0 )
-                {
-                    mesh_data_offset = mesh_data_offset + w[8004f4f4 + type_of_polygons * 28 + 1c]; // polygon data
-                    texture_data_offset = texture_data_offset + w[8004f4f4 + type_of_polygons * 28 + 20]; // tex data
-                    packet_data_offset = packet_data_offset + w[8004f4f4 + type_of_polygons * 28 + 24]; // packets
-                }
-                else
-                {
-                    number_of_polygons = number_of_polygons + 1;
-                    texture_data_offset = texture_data_offset + 4;
-                }
-
-                number_of_polygons = number_of_polygons - 1;
-            8002C920	bne    number_of_polygons, -1, loop2c894 [$8002c894]
+            polygon_data += w[8004f4f4 + type_of_polygons * 28 + 1c]; // polygon data
+            texture_data += w[8004f4f4 + type_of_polygons * 28 + 20]; // tex data
+            packet_data += w[8004f4f4 + type_of_polygons * 28 + 24]; // packets
         }
-
-        S2 = S2 - 1;
-    8002C92C	bne    s2, -1, loop2c84c [$8002c84c]
+        else
+        {
+            ++j;
+            texture_data += 4;
+        }
+    }
 }
 
 // this not needed, I just add this in case this data used somewhere else
-[80058bc4] = w(mesh_data_offset);
-[80058bd4] = w(texture_data_offset);
-[80058ac0] = w(packet_data_offset);
+[80058bc4] = w(polygon_data);
+[80058bd4] = w(texture_data);
+[80058ac0] = w(packet_data);
 
 system_reset_tex_page_and_clut_default_usage();
 ////////////////////////////////
@@ -457,22 +446,22 @@ system_reset_tex_page_and_clut_default_usage();
 
 
 ////////////////////////////////
-// system_allocate_memory_for_packets()
+// system_model_allocate_memory_for_packets()
 
-S0 = A0;
-S1 = A1;
-S2 = A2;
+part_header = A0;
+buf1 = A1;
+buf2 = A2;
 
-[GP + 1a8] = h(25);
+[GP + 1a8] = h(25); // "MDL Packet" alloc
 
-A0 = w[S0 + 34] * 2;
+A0 = w[part_header + 34] * 2;
 A1 = 0;
 system_memory_allocate();
 
-[S1] = w(V0);
-[S2] = w(V0 + w[S0 + 34]);
+[buf1] = w(V0);
+[buf2] = w(V0 + w[part_header + 34]);
 
-return w[S2];
+return w[buf2];
 ////////////////////////////////
 
 
@@ -586,7 +575,7 @@ return 1;
 
 
 ////////////////////////////////
-// load_poly_00_18
+// load_poly_00_18()
 // A2 = 0 - not calculate light
 //      1 - calculate light but not store it
 //      3 - calculate light and store it
@@ -1196,8 +1185,8 @@ return 1;
 
 
 ////////////////////////////////
-// load_poly_03_18
-// load_poly_07_18
+// load_poly_03_18()
+// load_poly_07_18()
 
 texture_data_offset = A0;
 mesh_data_offset = A1;
@@ -3964,7 +3953,7 @@ if( offset_1c == 0 )
     return 0;
 }
 
-[GP + 1a8] = h(2b);
+[GP + 1a8] = h(2b); // "MIMe Work" alloc
 A0 = w[offset_1c] * 20 + 14;
 A1 = S4;
 system_memory_allocate();
@@ -3977,7 +3966,7 @@ S1 = V0;
 [S1 + 10] = w(S1 + 14);
 
 // allocate new vertex block
-[GP + 1a8] = h(2c);
+[GP + 1a8] = h(2c); // "MIMe Vertex" alloc
 A0 = hu[part_header + 2] * 8;
 A1 = S4;
 system_memory_allocate();
@@ -3999,7 +3988,7 @@ if( vertex_id != -1 )
 
 if( hu[part_header + 0] & 0010 )
 {
-    [GP + 1a8] = h(2d);
+    [GP + 1a8] = h(2d); // "MIMe Normal" alloc
     A0 = hu[part_header + 2] * 8;
     A1 = S4;
     system_memory_allocate();

@@ -9,325 +9,329 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    -- 0xBC_ActorNoModelInit() -- 0x0000 0xbc
-    -- 0x2A() -- 0x0001 0x2a
-    return 0 -- 0x0002 0x00
-    return 0 -- 0x0003 0x00
+unknown = [
+
+]
+
+0x0000    -- 0xBC_ActorNoModelInit()
+0x0001    -- 0x2A()
+0x0002    op00_Return()
+0x0003    op00_Return()
 
 Actor_0x01:on_start:
-    -- 0x16_ActorPCInit( char_id=0 ) -- 0x0004 0x16
-    opFE0D_MessageSetFace( char_id=0 ) -- 0x0007 0xfe
-    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xff9c, flag=(flag)0xc0 ) -- 0x000b 0x19
-    return 0 -- 0x0011 0x00
+0x0004    -- 0x16_ActorPCInit( char_id=0 )
+0x0007    opFE0D_MessageSetFace( char_id=0 )
+0x000b    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xff9c, flag=(flag)0xc0 )
+0x0011    op00_Return()
 
 Actor_0x01:on_update:
-    -- 0xA7() -- 0x0012 0xa7
-    return 0 -- 0x0013 0x00
+0x0012    -- 0xA7()
+0x0013    op00_Return()
 
 Actor_0x01:on_talk:
-    return 0 -- 0x0014 0x00
+0x0014    op00_Return()
 
 Actor_0x02:on_start:
-    -- 0x16_ActorPCInit( char_id=1 ) -- 0x0015 0x16
-    opFE0D_MessageSetFace( char_id=1 ) -- 0x0018 0xfe
-    return 0 -- 0x001c 0x00
+0x0015    -- 0x16_ActorPCInit( char_id=1 )
+0x0018    opFE0D_MessageSetFace( char_id=1 )
+0x001c    op00_Return()
 
 Actor_0x02:on_update:
-    -- 0xA7() -- 0x001d 0xa7
-    return 0 -- 0x001e 0x00
+0x001d    -- 0xA7()
+0x001e    op00_Return()
 
 Actor_0x02:on_talk:
-    return 0 -- 0x001f 0x00
+0x001f    op00_Return()
 
 Actor_0x03:on_start:
-    -- 0x16_ActorPCInit( char_id=2 ) -- 0x0020 0x16
-    opFE0D_MessageSetFace( char_id=2 ) -- 0x0023 0xfe
-    return 0 -- 0x0027 0x00
+0x0020    -- 0x16_ActorPCInit( char_id=2 )
+0x0023    opFE0D_MessageSetFace( char_id=2 )
+0x0027    op00_Return()
 
 Actor_0x03:on_update:
-    -- 0xA7() -- 0x0028 0xa7
-    return 0 -- 0x0029 0x00
+0x0028    -- 0xA7()
+0x0029    op00_Return()
 
 Actor_0x03:on_talk:
-    return 0 -- 0x002a 0x00
+0x002a    op00_Return()
 
 Actor_0x04:on_start:
-    -- 0x16_ActorPCInit( char_id=3 ) -- 0x002b 0x16
-    opFE0D_MessageSetFace( char_id=3 ) -- 0x002e 0xfe
-    return 0 -- 0x0032 0x00
+0x002b    -- 0x16_ActorPCInit( char_id=3 )
+0x002e    opFE0D_MessageSetFace( char_id=3 )
+0x0032    op00_Return()
 
 Actor_0x04:on_update:
-    -- 0xA7() -- 0x0033 0xa7
-    return 0 -- 0x0034 0x00
+0x0033    -- 0xA7()
+0x0034    op00_Return()
 
 Actor_0x04:on_talk:
-    return 0 -- 0x0035 0x00
+0x0035    op00_Return()
 
 Actor_0x05:on_start:
-    -- 0x16_ActorPCInit( char_id=4 ) -- 0x0036 0x16
-    opFE0D_MessageSetFace( char_id=4 ) -- 0x0039 0xfe
-    return 0 -- 0x003d 0x00
+0x0036    -- 0x16_ActorPCInit( char_id=4 )
+0x0039    opFE0D_MessageSetFace( char_id=4 )
+0x003d    op00_Return()
 
 Actor_0x05:on_update:
-    -- 0xA7() -- 0x003e 0xa7
-    return 0 -- 0x003f 0x00
+0x003e    -- 0xA7()
+0x003f    op00_Return()
 
 Actor_0x05:on_talk:
-    return 0 -- 0x0040 0x00
+0x0040    op00_Return()
 
 Actor_0x06:on_start:
-    -- 0x16_ActorPCInit( char_id=5 ) -- 0x0041 0x16
-    opFE0D_MessageSetFace( char_id=5 ) -- 0x0044 0xfe
-    return 0 -- 0x0048 0x00
+0x0041    -- 0x16_ActorPCInit( char_id=5 )
+0x0044    opFE0D_MessageSetFace( char_id=5 )
+0x0048    op00_Return()
 
 Actor_0x06:on_update:
-    -- 0xA7() -- 0x0049 0xa7
-    return 0 -- 0x004a 0x00
+0x0049    -- 0xA7()
+0x004a    op00_Return()
 
 Actor_0x06:on_talk:
-    return 0 -- 0x004b 0x00
+0x004b    op00_Return()
 
 Actor_0x07:on_start:
-    -- 0x16_ActorPCInit( char_id=6 ) -- 0x004c 0x16
-    opFE0D_MessageSetFace( char_id=6 ) -- 0x004f 0xfe
-    return 0 -- 0x0053 0x00
+0x004c    -- 0x16_ActorPCInit( char_id=6 )
+0x004f    opFE0D_MessageSetFace( char_id=6 )
+0x0053    op00_Return()
 
 Actor_0x07:on_update:
-    -- 0xA7() -- 0x0054 0xa7
-    return 0 -- 0x0055 0x00
+0x0054    -- 0xA7()
+0x0055    op00_Return()
 
 Actor_0x07:on_talk:
-    return 0 -- 0x0056 0x00
+0x0056    op00_Return()
 
 Actor_0x08:on_start:
-    -- 0x16_ActorPCInit( char_id=7 ) -- 0x0057 0x16
-    opFE0D_MessageSetFace( char_id=7 ) -- 0x005a 0xfe
-    return 0 -- 0x005e 0x00
+0x0057    -- 0x16_ActorPCInit( char_id=7 )
+0x005a    opFE0D_MessageSetFace( char_id=7 )
+0x005e    op00_Return()
 
 Actor_0x08:on_update:
-    -- 0xA7() -- 0x005f 0xa7
-    return 0 -- 0x0060 0x00
+0x005f    -- 0xA7()
+0x0060    op00_Return()
 
 Actor_0x08:on_talk:
-    return 0 -- 0x0061 0x00
+0x0061    op00_Return()
 
 Actor_0x09:on_start:
-    -- 0x16_ActorPCInit( char_id=8 ) -- 0x0062 0x16
-    opFE0D_MessageSetFace( char_id=8 ) -- 0x0065 0xfe
-    return 0 -- 0x0069 0x00
+0x0062    -- 0x16_ActorPCInit( char_id=8 )
+0x0065    opFE0D_MessageSetFace( char_id=8 )
+0x0069    op00_Return()
 
 Actor_0x09:on_update:
-    -- 0xA7() -- 0x006a 0xa7
-    return 0 -- 0x006b 0x00
+0x006a    -- 0xA7()
+0x006b    op00_Return()
 
 Actor_0x09:on_talk:
-    return 0 -- 0x006c 0x00
+0x006c    op00_Return()
 
 Actor_0x0a:on_start:
-    -- 0x16_ActorPCInit( char_id=9 ) -- 0x006d 0x16
-    opFE0D_MessageSetFace( char_id=9 ) -- 0x0070 0xfe
-    return 0 -- 0x0074 0x00
+0x006d    -- 0x16_ActorPCInit( char_id=9 )
+0x0070    opFE0D_MessageSetFace( char_id=9 )
+0x0074    op00_Return()
 
 Actor_0x0a:on_update:
-    -- 0xA7() -- 0x0075 0xa7
-    return 0 -- 0x0076 0x00
+0x0075    -- 0xA7()
+0x0076    op00_Return()
 
 Actor_0x0a:on_talk:
-    return 0 -- 0x0077 0x00
+0x0077    op00_Return()
 
 Actor_0x0b:on_start:
-    -- 0x16_ActorPCInit( char_id=10 ) -- 0x0078 0x16
-    opFE0D_MessageSetFace( char_id=10 ) -- 0x007b 0xfe
-    return 0 -- 0x007f 0x00
+0x0078    -- 0x16_ActorPCInit( char_id=10 )
+0x007b    opFE0D_MessageSetFace( char_id=10 )
+0x007f    op00_Return()
 
 Actor_0x0b:on_update:
-    -- 0xA7() -- 0x0080 0xa7
-    return 0 -- 0x0081 0x00
+0x0080    -- 0xA7()
+0x0081    op00_Return()
 
 Actor_0x0b:on_talk:
-    return 0 -- 0x0082 0x00
+0x0082    op00_Return()
 
 Actor_0x0c:on_start:
-    -- 0xFE15( ???=4, ???=0 ) -- 0x0083 0xfe
-    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0064, flag=(flag)0xc0 ) -- 0x0089 0x19
-    return 0 -- 0x008f 0x00
+0x0083    -- 0xFE15( ???=4, ???=0 )
+0x0089    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0064, flag=(flag)0xc0 )
+0x008f    op00_Return()
 
 Actor_0x0c:on_update:
-    return 0 -- 0x0090 0x00
+0x0090    op00_Return()
 
 Actor_0x0c:on_talk:
-    opD2_MessageShowDynamic( text_id=0x0000, flags=0 ) -- 0x0091 0xd2
-    opA9_MessageSetSelectionSync( start_row=01, end_row=08 ) -- 0x0095 0xa9
-    op9C_MessageSync() -- 0x0097 0x9c
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00b5 ) -- 0x0098 0x02
-    op35_VariableSet( address=0x018e, value=(vf40)0x0000, flag=0x40 ) -- 0x00a0 0x35
-    op35_VariableSet( address=0x0180, value=(vf40)0x0000, flag=0x40 ) -- 0x00a6 0x35
-    -- 0x98_MapLoad( field_id=47, value=1 ) -- 0x00ac 0x98
-    -- 0x5B() -- 0x00b1 0x5b
-    -- 0x01_JumpTo( 0x0136 ) -- 0x00b2 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00d1 ) -- 0x00b5 0x02
-    op35_VariableSet( address=0x0184, value=(vf40)0x0000, flag=0x40 ) -- 0x00bd 0x35
-    -- 0xFEA1( ???=2, ???=255 ) -- 0x00c3 0xfe
-    -- 0x98_MapLoad( field_id=251, value=0 ) -- 0x00c9 0x98
-    -- 0x01_JumpTo( 0x0136 ) -- 0x00ce 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00e4 ) -- 0x00d1 0x02
-    -- 0x87_SetProgress( progress=135 ) -- 0x00d9 0x87
-    -- 0x98_MapLoad( field_id=262, value=0 ) -- 0x00dc 0x98
-    -- 0x01_JumpTo( 0x0136 ) -- 0x00e1 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x00fd ) -- 0x00e4 0x02
-    -- 0x87_SetProgress( progress=205 ) -- 0x00ec 0x87
-    op35_VariableSet( address=0x0190, value=(vf40)0x0000, flag=0x40 ) -- 0x00ef 0x35
-    -- 0x98_MapLoad( field_id=496, value=0 ) -- 0x00f5 0x98
-    -- 0x01_JumpTo( 0x0136 ) -- 0x00fa 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x010d ) -- 0x00fd 0x02
-    -- 0x98_MapLoad( field_id=319, value=0 ) -- 0x0105 0x98
-    -- 0x01_JumpTo( 0x0136 ) -- 0x010a 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x0126 ) -- 0x010d 0x02
-    op35_VariableSet( address=0x0182, value=(vf40)0x0000, flag=0x40 ) -- 0x0115 0x35
-    -- 0x87_SetProgress( progress=39 ) -- 0x011b 0x87
-    -- 0x98_MapLoad( field_id=53, value=0 ) -- 0x011e 0x98
-    -- 0x01_JumpTo( 0x0136 ) -- 0x0123 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x0136 ) -- 0x0126 0x02
-    -- 0x98_MapLoad( field_id=249, value=0 ) -- 0x012e 0x98
-    -- 0x01_JumpTo( 0x0136 ) -- 0x0133 0x01
-    return 0 -- 0x0136 0x00
+0x0091    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x0095    opA9_MessageSetSelectionSync( start_row=01, end_row=08 )
+0x0097    op9C_MessageSync()
+0x0098    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00b5 )
+0x00a0    op35_VariableSet( address=0x018e, value=(vf40)0x0000, flag=0x40 )
+0x00a6    op35_VariableSet( address=0x0180, value=(vf40)0x0000, flag=0x40 )
+0x00ac    -- 0x98_MapLoad( field_id=47, value=1 )
+0x00b1    -- 0x5B()
+0x00b2    -- 0x01_JumpTo( 0x0136 )
+0x00b5    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00d1 )
+0x00bd    op35_VariableSet( address=0x0184, value=(vf40)0x0000, flag=0x40 )
+0x00c3    -- 0xFEA1( ???=2, ???=255 )
+0x00c9    -- 0x98_MapLoad( field_id=251, value=0 )
+0x00ce    -- 0x01_JumpTo( 0x0136 )
+0x00d1    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00e4 )
+0x00d9    -- 0x87_SetProgress( progress=135 )
+0x00dc    -- 0x98_MapLoad( field_id=262, value=0 )
+0x00e1    -- 0x01_JumpTo( 0x0136 )
+0x00e4    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x00fd )
+0x00ec    -- 0x87_SetProgress( progress=205 )
+0x00ef    op35_VariableSet( address=0x0190, value=(vf40)0x0000, flag=0x40 )
+0x00f5    -- 0x98_MapLoad( field_id=496, value=0 )
+0x00fa    -- 0x01_JumpTo( 0x0136 )
+0x00fd    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x010d )
+0x0105    -- 0x98_MapLoad( field_id=319, value=0 )
+0x010a    -- 0x01_JumpTo( 0x0136 )
+0x010d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x0126 )
+0x0115    op35_VariableSet( address=0x0182, value=(vf40)0x0000, flag=0x40 )
+0x011b    -- 0x87_SetProgress( progress=39 )
+0x011e    -- 0x98_MapLoad( field_id=53, value=0 )
+0x0123    -- 0x01_JumpTo( 0x0136 )
+0x0126    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x0136 )
+0x012e    -- 0x98_MapLoad( field_id=249, value=0 )
+0x0133    -- 0x01_JumpTo( 0x0136 )
+0x0136    op00_Return()
 
 Actor_0x0c:on_push:
-    return 0 -- 0x0137 0x00
+0x0137    op00_Return()
 
 Actor_0x0d:on_start:
-    -- 0x0B_InitNPC( 0 ) -- 0x0138 0x0b
-    -- 0x19_ActorSetPosition( x=(vf80)0x0064, z=(vf40)0xfe70, flag=(flag)0xc0 ) -- 0x013b 0x19
-    return 0 -- 0x0141 0x00
+0x0138    -- 0x0B_InitNPC( 0 )
+0x013b    -- 0x19_ActorSetPosition( x=(vf80)0x0064, z=(vf40)0xfe70, flag=(flag)0xc0 )
+0x0141    op00_Return()
 
 Actor_0x0d:on_update:
-    return 0 -- 0x0142 0x00
+0x0142    op00_Return()
 
 Actor_0x0d:on_talk:
-    opD2_MessageShowDynamic( text_id=0x0001, flags=0 ) -- 0x0143 0xd2
-    opA9_MessageSetSelectionSync( start_row=01, end_row=09 ) -- 0x0147 0xa9
-    op9C_MessageSync() -- 0x0149 0x9c
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x015a ) -- 0x014a 0x02
-    -- 0x98_MapLoad( field_id=49, value=0 ) -- 0x0152 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x0157 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x016a ) -- 0x015a 0x02
-    -- 0x98_MapLoad( field_id=50, value=0 ) -- 0x0162 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x0167 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0183 ) -- 0x016a 0x02
-    -- 0x87_SetProgress( progress=39 ) -- 0x0172 0x87
-    op35_VariableSet( address=0x0182, value=(vf40)0x0002, flag=0x40 ) -- 0x0175 0x35
-    -- 0x98_MapLoad( field_id=53, value=0 ) -- 0x017b 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x0180 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0199 ) -- 0x0183 0x02
-    op3B_VariableBitUnset( address=0x0182, bit_num=(vf40)0x0002, flag=0x40 ) -- 0x018b 0x3b
-    -- 0x98_MapLoad( field_id=54, value=0 ) -- 0x0191 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x0196 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x01a9 ) -- 0x0199 0x02
-    -- 0x98_MapLoad( field_id=55, value=0 ) -- 0x01a1 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x01a6 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x01b9 ) -- 0x01a9 0x02
-    -- 0x98_MapLoad( field_id=269, value=0 ) -- 0x01b1 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x01b6 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x01c9 ) -- 0x01b9 0x02
-    -- 0x98_MapLoad( field_id=270, value=0 ) -- 0x01c1 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x01c6 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x01d9 ) -- 0x01c9 0x02
-    -- 0x98_MapLoad( field_id=270, value=1 ) -- 0x01d1 0x98
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x01d6 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x01e4 ) -- 0x01d9 0x02
-    -- 0x01_JumpTo( 0x01e4 ) -- 0x01e1 0x01
-    return 0 -- 0x01e4 0x00
+0x0143    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x0147    opA9_MessageSetSelectionSync( start_row=01, end_row=09 )
+0x0149    op9C_MessageSync()
+0x014a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x015a )
+0x0152    -- 0x98_MapLoad( field_id=49, value=0 )
+0x0157    -- 0x01_JumpTo( 0x01e4 )
+0x015a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x016a )
+0x0162    -- 0x98_MapLoad( field_id=50, value=0 )
+0x0167    -- 0x01_JumpTo( 0x01e4 )
+0x016a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0183 )
+0x0172    -- 0x87_SetProgress( progress=39 )
+0x0175    op35_VariableSet( address=0x0182, value=(vf40)0x0002, flag=0x40 )
+0x017b    -- 0x98_MapLoad( field_id=53, value=0 )
+0x0180    -- 0x01_JumpTo( 0x01e4 )
+0x0183    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0199 )
+0x018b    op3B_VariableBitUnset( address=0x0182, bit_num=(vf40)0x0002, flag=0x40 )
+0x0191    -- 0x98_MapLoad( field_id=54, value=0 )
+0x0196    -- 0x01_JumpTo( 0x01e4 )
+0x0199    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x01a9 )
+0x01a1    -- 0x98_MapLoad( field_id=55, value=0 )
+0x01a6    -- 0x01_JumpTo( 0x01e4 )
+0x01a9    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x01b9 )
+0x01b1    -- 0x98_MapLoad( field_id=269, value=0 )
+0x01b6    -- 0x01_JumpTo( 0x01e4 )
+0x01b9    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0007, condition="value1 == value2", jump_if_false=0x01c9 )
+0x01c1    -- 0x98_MapLoad( field_id=270, value=0 )
+0x01c6    -- 0x01_JumpTo( 0x01e4 )
+0x01c9    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0008, condition="value1 == value2", jump_if_false=0x01d9 )
+0x01d1    -- 0x98_MapLoad( field_id=270, value=1 )
+0x01d6    -- 0x01_JumpTo( 0x01e4 )
+0x01d9    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0009, condition="value1 == value2", jump_if_false=0x01e4 )
+0x01e1    -- 0x01_JumpTo( 0x01e4 )
+0x01e4    op00_Return()
 
 Actor_0x0d:on_push:
-    return 0 -- 0x01e5 0x00
+0x01e5    op00_Return()
 
 Actor_0x0e:on_start:
-    -- 0x0B_InitNPC( 1 ) -- 0x01e6 0x0b
-    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xff38, flag=(flag)0xc0 ) -- 0x01e9 0x19
-    return 0 -- 0x01ef 0x00
+0x01e6    -- 0x0B_InitNPC( 1 )
+0x01e9    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xff38, flag=(flag)0xc0 )
+0x01ef    op00_Return()
 
 Actor_0x0e:on_update:
-    return 0 -- 0x01f0 0x00
+0x01f0    op00_Return()
 
 Actor_0x0e:on_talk:
-    opD2_MessageShowDynamic( text_id=0x0002, flags=0 ) -- 0x01f1 0xd2
-    opA9_MessageSetSelectionSync( start_row=01, end_row=07 ) -- 0x01f5 0xa9
-    op9C_MessageSync() -- 0x01f7 0x9c
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0208 ) -- 0x01f8 0x02
-    -- 0x98_MapLoad( field_id=308, value=0 ) -- 0x0200 0x98
-    -- 0x01_JumpTo( 0x0258 ) -- 0x0205 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0218 ) -- 0x0208 0x02
-    -- 0x98_MapLoad( field_id=309, value=0 ) -- 0x0210 0x98
-    -- 0x01_JumpTo( 0x0258 ) -- 0x0215 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0228 ) -- 0x0218 0x02
-    -- 0x98_MapLoad( field_id=319, value=3 ) -- 0x0220 0x98
-    -- 0x01_JumpTo( 0x0258 ) -- 0x0225 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0238 ) -- 0x0228 0x02
-    -- 0x98_MapLoad( field_id=319, value=4 ) -- 0x0230 0x98
-    -- 0x01_JumpTo( 0x0258 ) -- 0x0235 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0248 ) -- 0x0238 0x02
-    -- 0x98_MapLoad( field_id=320, value=0 ) -- 0x0240 0x98
-    -- 0x01_JumpTo( 0x0258 ) -- 0x0245 0x01
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x0258 ) -- 0x0248 0x02
-    -- 0x98_MapLoad( field_id=311, value=3 ) -- 0x0250 0x98
-    -- 0x01_JumpTo( 0x0258 ) -- 0x0255 0x01
-    return 0 -- 0x0258 0x00
+0x01f1    opD2_MessageShowDynamic( text_id=0x0002, flags=0 )
+0x01f5    opA9_MessageSetSelectionSync( start_row=01, end_row=07 )
+0x01f7    op9C_MessageSync()
+0x01f8    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0208 )
+0x0200    -- 0x98_MapLoad( field_id=308, value=0 )
+0x0205    -- 0x01_JumpTo( 0x0258 )
+0x0208    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0218 )
+0x0210    -- 0x98_MapLoad( field_id=309, value=0 )
+0x0215    -- 0x01_JumpTo( 0x0258 )
+0x0218    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0228 )
+0x0220    -- 0x98_MapLoad( field_id=319, value=3 )
+0x0225    -- 0x01_JumpTo( 0x0258 )
+0x0228    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0004, condition="value1 == value2", jump_if_false=0x0238 )
+0x0230    -- 0x98_MapLoad( field_id=319, value=4 )
+0x0235    -- 0x01_JumpTo( 0x0258 )
+0x0238    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0005, condition="value1 == value2", jump_if_false=0x0248 )
+0x0240    -- 0x98_MapLoad( field_id=320, value=0 )
+0x0245    -- 0x01_JumpTo( 0x0258 )
+0x0248    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x0258 )
+0x0250    -- 0x98_MapLoad( field_id=311, value=3 )
+0x0255    -- 0x01_JumpTo( 0x0258 )
+0x0258    op00_Return()
 
 Actor_0x0e:on_push:
-    return 0 -- 0x0259 0x00
+0x0259    op00_Return()
 
 Actor_0x0f:on_start:
-    -- 0x0B_InitNPC( 5 ) -- 0x025a 0x0b
-    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x00c8, flag=(flag)0xc0 ) -- 0x025d 0x19
-    return 0 -- 0x0263 0x00
+0x025a    -- 0x0B_InitNPC( 5 )
+0x025d    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x00c8, flag=(flag)0xc0 )
+0x0263    op00_Return()
 
 Actor_0x0f:on_update:
-    return 0 -- 0x0264 0x00
+0x0264    op00_Return()
 
 Actor_0x0f:on_talk:
-    opD2_MessageShowDynamic( text_id=0x0003, flags=0 ) -- 0x0265 0xd2
-    opA9_MessageSetSelectionSync( start_row=03, end_row=04 ) -- 0x0269 0xa9
-    op9C_MessageSync() -- 0x026b 0x9c
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x027c ) -- 0x026c 0x02
-    -- 0x98_MapLoad( field_id=627, value=0 ) -- 0x0274 0x98
-    -- 0x01_JumpTo( 0x027c ) -- 0x0279 0x01
-    return 0 -- 0x027c 0x00
+0x0265    opD2_MessageShowDynamic( text_id=0x0003, flags=0 )
+0x0269    opA9_MessageSetSelectionSync( start_row=03, end_row=04 )
+0x026b    op9C_MessageSync()
+0x026c    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x027c )
+0x0274    -- 0x98_MapLoad( field_id=627, value=0 )
+0x0279    -- 0x01_JumpTo( 0x027c )
+0x027c    op00_Return()
 
 Actor_0x0f:on_push:
-    return 0 -- 0x027d 0x00
+0x027d    op00_Return()
 
 Actor_0x10:on_start:
-    -- 0x0B_InitNPC( 3 ) -- 0x027e 0x0b
-    -- 0x19_ActorSetPosition( x=(vf80)0xff9c, z=(vf40)0x0000, flag=(flag)0xc0 ) -- 0x0281 0x19
-    return 0 -- 0x0287 0x00
+0x027e    -- 0x0B_InitNPC( 3 )
+0x0281    -- 0x19_ActorSetPosition( x=(vf80)0xff9c, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0287    op00_Return()
 
 Actor_0x10:on_update:
-    return 0 -- 0x0288 0x00
+0x0288    op00_Return()
 
 Actor_0x10:on_talk:
-    opD2_MessageShowDynamic( text_id=0x0004, flags=0 ) -- 0x0289 0xd2
-    opA9_MessageSetSelectionSync( start_row=01, end_row=02 ) -- 0x028d 0xa9
-    op9C_MessageSync() -- 0x028f 0x9c
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x02a0 ) -- 0x0290 0x02
-    -- 0x98_MapLoad( field_id=658, value=0 ) -- 0x0298 0x98
-    -- 0x01_JumpTo( 0x02a0 ) -- 0x029d 0x01
-    return 0 -- 0x02a0 0x00
+0x0289    opD2_MessageShowDynamic( text_id=0x0004, flags=0 )
+0x028d    opA9_MessageSetSelectionSync( start_row=01, end_row=02 )
+0x028f    op9C_MessageSync()
+0x0290    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x02a0 )
+0x0298    -- 0x98_MapLoad( field_id=658, value=0 )
+0x029d    -- 0x01_JumpTo( 0x02a0 )
+0x02a0    op00_Return()
 
 Actor_0x10:on_push:
-    return 0 -- 0x02a1 0x00
+0x02a1    op00_Return()
 
 Actor_0x11:on_start:
-    -- 0xFE15( ???=4, ???=2 ) -- 0x02a2 0xfe
-    -- 0x19_ActorSetPosition( x=(vf80)0x012c, z=(vf40)0x0000, flag=(flag)0xc0 ) -- 0x02a8 0x19
-    return 0 -- 0x02ae 0x00
+0x02a2    -- 0xFE15( ???=4, ???=2 )
+0x02a8    -- 0x19_ActorSetPosition( x=(vf80)0x012c, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x02ae    op00_Return()
 
 Actor_0x11:on_update:
-    return 0 -- 0x02af 0x00
+0x02af    op00_Return()
 
 Actor_0x11:on_talk:
-    opD2_MessageShowDynamic( text_id=0x0005, flags=0 ) -- 0x02b0 0xd2
-    opA9_MessageSetSelectionSync( start_row=02, end_row=0a ) -- 0x02b4 0xa9
-    op9C_MessageSync() -- 0x02b6 0x9c
-    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x02eb ) -- 0x02b7 0x02
-    op05_FunctionCall( 0x03e7 ) -- 0x02bf 0x05
-    -- MISSING OPCODE 0xFE18
+0x02b0    opD2_MessageShowDynamic( text_id=0x0005, flags=0 )
+0x02b4    opA9_MessageSetSelectionSync( start_row=02, end_row=0a )
+0x02b6    op9C_MessageSync()
+0x02b7    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x02eb )
+0x02bf    op05_FunctionCall( 0x03e7 )
+0x02c2    -- MISSING OPCODE 0xFE18

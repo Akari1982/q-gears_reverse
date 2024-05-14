@@ -810,10 +810,10 @@
 // func2c510
 8002C510-8002C6D8
 ////////////////////////////////
-// system_fill_packets_drafts_for_model_part
+// system_model_create_packets_for_part
 8002C6DC-8002C960
 ////////////////////////////////
-// system_allocate_memory_for_packets
+// system_model_allocate_memory_for_packets
 8002C964-8002C9C8
 ////////////////////////////////
 // func2c9cc

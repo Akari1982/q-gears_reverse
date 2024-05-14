@@ -9,5 +9,38 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x94
+unknown = [
+    0x94ff, 0x22fc, 0x0105, 0xffff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0xA0()
+0x0010    op99()
+0x0011    -- 0x9B( ???=12, ???=12 )
+0x0016    -- 0x60()
+0x0017    -- 0x63( ???=(vf80)0x04d8, ???=(vf40)0x00e7, ???=(vf20)0xfd7e, flag=0xe0 )
+0x001f    -- 0x64()
+0x0020    opA3()
+0x0028    opAC_MoveCamera( control=0x01, steps=0 )
+0x002c    opAC_MoveCamera( control=0x00, steps=0 )
+0x0030    -- 0x2A()
+0x0031    op00_Return()
+
+Actor_0x00:on_update:
+0x0032    -- 0xFE54()
+0x0034    op26_Wait( time=32 )
+0x0037    op09_ActorCallScriptEW( actor_id=0x01, script=04, priority=01 )
+0x003a    op26_Wait( time=32 )
+0x003d    op09_ActorCallScriptEW( actor_id=0x01, script=05, priority=01 )
+0x0040    op09_ActorCallScriptEW( actor_id=0x02, script=05, priority=01 )
+0x0043    op09_ActorCallScriptEW( actor_id=0x03, script=05, priority=01 )
+0x0046    op09_ActorCallScriptEW( actor_id=0x02, script=06, priority=01 )
+0x0049    op09_ActorCallScriptEW( actor_id=0x03, script=06, priority=01 )
+0x004c    op09_ActorCallScriptEW( actor_id=0x02, script=07, priority=01 )
+0x004f    op09_ActorCallScriptEW( actor_id=0x03, script=07, priority=01 )
+0x0052    op09_ActorCallScriptEW( actor_id=0x02, script=08, priority=01 )
+0x0055    op26_Wait( time=24 )
+0x0058    op09_ActorCallScriptEW( actor_id=0x01, script=06, priority=01 )
+0x005b    -- MISSING OPCODE 0x12

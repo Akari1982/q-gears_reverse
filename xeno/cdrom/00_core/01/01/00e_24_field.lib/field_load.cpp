@@ -543,10 +543,6 @@ func35c84(); // reset system buttons
 [800ad010] = w(0);
 [800ad014] = w(0);
 
-A0 = SP + 20;
-A1 = 800af5bc;
-S0 = 800b182a;
-
 [800af1e8] = w(20);
 [800af51c] = w(2);
 [800b1680] = h(3ff);
@@ -571,10 +567,15 @@ S0 = 800b182a;
 [800ad054] = w(0);
 [800ad064] = w(0);
 [800ad03c] = w(ff);
-[SP + 0020] = h(0);
-[SP + 0022] = h(0);
-[SP + 0024] = h(0);
+
+[SP + 20] = h(0);
+[SP + 22] = h(0);
+[SP + 24] = h(0);
+A0 = SP + 20;
+A1 = 800af5bc;
 system_calculate_rotation_matrix();
+
+S0 = 800b182a;
 
 8006FFD4	addiu  v0, zero, $ffff (=-$1)
 A1 = 0002;
@@ -617,27 +618,19 @@ loop700a0:	; 800700A0
 800700A4	addiu  a1, a1, $ffff (=-$1)
 800700A8	bgez   a1, loop700a0 [$800700a0]
 800700AC	addiu  a2, a2, $fffe (=-$2)
-V1 = w[8004e9b0];
-V0 = 001d;
-[800b1764] = h(V0);
-800700C4	addiu  v0, zero, $ffff (=-$1)
-[800ad0c4] = w(V0);
-V0 = 0002;
-[800b16ac] = w(V0);
-V0 = ffff;
-[800b164e] = h(V0);
-V0 = 0080;
-[800b1666] = b(V0);
-[800b1665] = b(V0);
-[800b1664] = b(V0);
-V0 = 00ff;
-[800b166a] = b(V0);
-[800b1669] = b(V0);
-[800b1668] = b(V0);
-V0 = 15e0;
-[800b166c] = h(V0);
-V0 = 300c;
-[800b166e] = h(V0);
+
+[800b1764] = h(1d);
+[800ad0c4] = w(-1);
+[800b16ac] = w(2);
+[800b164e] = h(ffff);
+[800b1666] = b(80);
+[800b1665] = b(80);
+[800b1664] = b(80);
+[800b166a] = b(ff);
+[800b1669] = b(ff);
+[800b1668] = b(ff);
+[800b166c] = h(15e0);
+[800b166e] = h(300c);
 [800acfe0] = w(0);
 [800ad0e4] = w(0);
 [800af37c] = h(0);
@@ -650,22 +643,15 @@ V0 = 300c;
 [800b1662] = h(0);
 [800b16aa] = h(8);
 
-80070194	bne    v1, zero, L701cc [$800701cc]
-A1 = 0;
-A0 = 8006f020;
-V1 = 80059ad4;
+if( w[8004e9b0] == 0 )
+{
+    for( int i = 0; i < 3; ++i )
+    {
+        [80059ad4 + i * 4] = w(ff); // party clear
+        [8006f020 + i * 4] = w(ff);
+    }
+}
 
-loop701b0:	; 800701B0
-    [V1 + 0000] = w(ff);
-    [A0 + 0000] = w(ff);
-    A0 = A0 + 0004;
-    V1 = V1 + 0004;
-    A1 = A1 + 0001;
-    V0 = A1 < 0003;
-800701C4	bne    v0, zero, loop701b0 [$800701b0]
-
-
-L701cc:	; 800701CC
 V1 = ffff;
 A1 = 001f;
 V0 = 800b17b2;
@@ -993,99 +979,99 @@ A0 = field_file + 154;
 func6f47c();
 
 // set up entities
-number_of_entities = hu[field_file + 18c];
-[800aefe0] = w(number_of_entities);
-
-A0 = number_of_entities * 5c;
-A1 = 0;
-system_memory_allocate();
-[800aefe4] = w(V0);
-
-if( number_of_entities > 0 )
 {
-    struct_5c = w[800aefe4];
+    entities_n = hu[field_file + 18c];
+    [800aefe0] = w(entities_n);
 
-    // init entity struct with zeroes
-    S4 = 0;
-    loop709f0:	; 800709F0
-        [struct_5c + S4] = w(0);
-        S4 = S4 + 4;
-        V0 = S4 < number_of_entities * 5c;
-    800709FC	bne    v0, zero, loop709f0 [$800709f0]
+    A0 = entities_n * 5c;
+    A1 = 0;
+    system_memory_allocate();
+    [800aefe4] = w(V0);
 
-    init_data = field_file + 190;
-
-    for( entity_id = 0; entity_id < number_of_entities; ++entity_id )
+    if( entities_n > 0 )
     {
-        [struct_5c + entity_id * 5c + 58] = h(hu[init_data + entity_id * 10 + 0]); // flags
-        [struct_5c + entity_id * 5c + 50] = h(hu[init_data + entity_id * 10 + 2]); // x rot
-        [struct_5c + entity_id * 5c + 52] = h(hu[init_data + entity_id * 10 + 4]); // y rot
-        [struct_5c + entity_id * 5c + 54] = h(hu[init_data + entity_id * 10 + 6]); // z rot
-        [struct_5c + entity_id * 5c + 20] = w(hu[init_data + entity_id * 10 + 8]); // x
-        [struct_5c + entity_id * 5c + 40] = w(hu[init_data + entity_id * 10 + 8]); // x
-        [struct_5c + entity_id * 5c + 24] = w(hu[init_data + entity_id * 10 + a]); // y
-        [struct_5c + entity_id * 5c + 44] = w(hu[init_data + entity_id * 10 + a]); // y
-        [struct_5c + entity_id * 5c + 28] = w(hu[init_data + entity_id * 10 + c]); // z
-        [struct_5c + entity_id * 5c + 48] = w(hu[init_data + entity_id * 10 + c]); // z
+        struct_5c = w[800aefe4];
 
-        if( ( hu[struct_5c + entity_id * 5c + 58] & 0040 ) == 0 )
+        for( int i = 0; i < entities_n * 5c; i += 4 )
         {
-            A0 = 24;
-            A1 = 0;
-            system_memory_allocate();
-            S0 = V0;
+            [struct_5c + i] = w(0); // init entity struct with zeroes
+        }
 
-            [struct_5c + entity_id * 5c + 0] = w(S0);
+        init_data = field_file + 190;
 
-            models = w[800aefe8];
-            model_id = hu[init_data + entity_id * 10 + e];
-            [S0 + 4] = w(models + w[models + 4 + model_id * 4] + 10);
+        for( int i = 0; i < entities_n; ++i )
+        {
+            [struct_5c + i * 5c + 58] = h(hu[init_data + i * 10 + 0]); // flags
+            [struct_5c + i * 5c + 50] = h(hu[init_data + i * 10 + 2]); // x rot
+            [struct_5c + i * 5c + 52] = h(hu[init_data + i * 10 + 4]); // y rot
+            [struct_5c + i * 5c + 54] = h(hu[init_data + i * 10 + 6]); // z rot
+            [struct_5c + i * 5c + 20] = w(hu[init_data + i * 10 + 8]); // x
+            [struct_5c + i * 5c + 40] = w(hu[init_data + i * 10 + 8]); // x
+            [struct_5c + i * 5c + 24] = w(hu[init_data + i * 10 + a]); // y
+            [struct_5c + i * 5c + 44] = w(hu[init_data + i * 10 + a]); // y
+            [struct_5c + i * 5c + 28] = w(hu[init_data + i * 10 + c]); // z
+            [struct_5c + i * 5c + 48] = w(hu[init_data + i * 10 + c]); // z
 
-            A0 = w[S0 + 4];
-            A1 = S0 + 8; // buffer 1
-            A2 = S0 + c; // buffer 2
-            system_allocate_memory_for_packets(); // allocate place for both packets buffers
-
-            A0 = w[S0 + 4]; // data
-            A1 = w[S0 + 8]; // memory for packets
-            A2 = ( hu[struct_5c + entity_id * 5c + 58] & 000c ) >> 2; // lighting flags
-            system_fill_packets_drafts_for_model_part(); // fill 1st buffer
-
-            A0 = w[S0 + c]; // to
-            A1 = w[S0 + 8]; // from
-            V0 = w[S0 + 4];
-            A2 = w[V0 + 34]; // size
-            system_memcpy(); // copy from 1st buffer to second
-
-            if( hu[struct_5c + entity_id * 5c + 58] & 2000 )
+            // load model
+            if( ( hu[struct_5c + i * 5c + 58] & 0040 ) == 0 )
             {
-                A0 = 3; // KAZM
+                A0 = 24;
                 A1 = 0;
-                system_memory_set_alloc_user();
+                system_memory_allocate();
+                S0 = V0;
+
+                [struct_5c + i * 5c + 0] = w(S0);
+
+                models = w[800aefe8];
+                model_id = hu[init_data + i * 10 + e];
+                [S0 + 4] = w(models + w[models + 4 + model_id * 4] + 10);
 
                 A0 = w[S0 + 4];
-                A1 = 0;
-                func301d8(); // init +1c in model data
-                [S0 + 14] = w(V0);
+                A1 = S0 + 8; // buffer 1
+                A2 = S0 + c; // buffer 2
+                system_model_allocate_memory_for_packets();
 
-                A0 = 8; // YOSI
-                A1 = 0;
-                system_memory_set_alloc_user();
+                A0 = w[S0 + 4]; // data
+                A1 = w[S0 + 8]; // memory for packets
+                A2 = ( hu[struct_5c + i * 5c + 58] & 000c ) >> 2; // lighting flags
+                system_model_create_packets_for_part();
+
+                A0 = w[S0 + c]; // to
+                A1 = w[S0 + 8]; // from
+                V0 = w[S0 + 4];
+                A2 = w[V0 + 34]; // size
+                system_memcpy(); // copy from 1st buffer to second
+
+                if( hu[struct_5c + i * 5c + 58] & 2000 )
+                {
+                    A0 = 3; // KAZM
+                    A1 = 0;
+                    system_memory_set_alloc_user();
+
+                    A0 = w[S0 + 4];
+                    A1 = 0;
+                    func301d8(); // init +1c in model data
+                    [S0 + 14] = w(V0);
+
+                    A0 = 8; // YOSI
+                    A1 = 0;
+                    system_memory_set_alloc_user();
+                }
+
+                A0 = w[S0 + 4];
+                func2c454();
+            }
+            else
+            {
+                [struct_5c + i * 5c + 50] = h(0);
+                [struct_5c + i * 5c + 52] = h(0);
+                [struct_5c + i * 5c + 54] = h(0);
+                [struct_5c + i * 5c + 58] = h(hu[struct_5c + i * 5c + 58] | 0020);
             }
 
-            A0 = w[S0 + 4];
-            func2c454();
+            A0 = i;
+            func80558();
         }
-        else
-        {
-            [struct_5c + entity_id * 5c + 50] = h(0);
-            [struct_5c + entity_id * 5c + 52] = h(0);
-            [struct_5c + entity_id * 5c + 54] = h(0);
-            [struct_5c + entity_id * 5c + 58] = h(hu[struct_5c + entity_id * 5c + 58] | 0020);
-        }
-
-        A0 = entity_id;
-        func80558();
     }
 }
 

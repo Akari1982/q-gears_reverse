@@ -41,7 +41,7 @@ ScriptFile::GetScripts( const std::string& path )
 
     u32 number_of_entity = GetU32LE( 0x80 );
     u32 offset_to_script = 0x84 + number_of_entity * 0x40;
-
+    u16 pointer = offset_to_script;
     std::vector< Mark > marks;
 
     for( u32 i = 0; i < number_of_entity; ++i )
@@ -51,6 +51,20 @@ ScriptFile::GetScripts( const std::string& path )
         for( u8 j = 0; j < 0x20; ++j )
         {
             u16 script = GetU16LE( 0x84 + i * 0x40 + j * 2 );
+
+            if( ( i == 0 ) && ( j == 0 ) )
+            {
+                // start from first actor event script
+                pointer = offset_to_script + script;
+
+                exp->Log( "unknown = [\n" );
+                for( u32 k = 0; k < script; k += 2 )
+                {
+                    if( k == 0 ) exp->Log("   ");
+                    exp->Log( " 0x" + HexToString( GetU16LE( offset_to_script + k ), 4, '0' ) + "," );
+                }
+                exp->Log( "\n]\n\n" );
+            }
 
             if( script == 0 ) break;
 
@@ -69,13 +83,10 @@ ScriptFile::GetScripts( const std::string& path )
         }
     }
 
-    u16 pointer = offset_to_script;
     bool n_ret = true;
 
     while( ( pointer < m_BufferSize ) && ( n_ret == true ) )
     {
-        std::string address = "0x" + HexToString( pointer - offset_to_script, 4, '0' );
-
         for( int i = 0; i < marks.size(); ++i )
         {
             if( marks[ i ].pointer == pointer )
@@ -85,6 +96,7 @@ ScriptFile::GetScripts( const std::string& path )
             }
         }
 
+        exp->Log("0x" + HexToString(pointer - offset_to_script, 4, '0'));
         exp->Log( "    " );
 
         u8 opcode = GetU8( pointer );
@@ -93,7 +105,7 @@ ScriptFile::GetScripts( const std::string& path )
         {
             case 0x00:
             {
-                exp->Log( "return 0" );
+                exp->Log( "op00_Return()" );
                 pointer += 1;
                 //exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
                 //n_ret = false;
@@ -174,6 +186,11 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0x05:
             {
+                Mark mark;
+                mark.pointer = offset_to_script + GetU16LE( pointer + 1 );
+                mark.str = "function:";
+                marks.push_back(mark);
+
                 exp->Log( "op05_FunctionCall( " + GetU16Variable( pointer + 1 ) + " )" );
                 pointer += 3;
             }
@@ -829,6 +846,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xc2:
+            {
+                exp->Log( "-- 0xC2( ???=" + GetV80Variable( pointer + 1 ) + " )" );
+                pointer += 3;
+            }
+            break;
+
             case 0xc6:
             {
                 exp->Log( "-- 0xC6()" );
@@ -1332,7 +1356,7 @@ ScriptFile::GetScripts( const std::string& path )
 
         if( n_ret == true )
         {
-            exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
+            exp->Log( "\n" );
         }
     }
 }

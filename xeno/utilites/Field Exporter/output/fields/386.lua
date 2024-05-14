@@ -9,7 +9,53 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    return 0 -- 0x0001 0x00
-    return 0 -- 0x0002 0x00
-    -- MISSING OPCODE 0x0f
+unknown = [
+    0x00ff, 0x0f00, 0x0000, 0xffff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0xA0()
+0x0010    -- 0x2A()
+0x0011    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0144 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0022 )
+0x0019    op35_VariableSet( address=0x0400, value=(vf40)0x0003, flag=0x40 )
+0x001f    -- 0x01_JumpTo( 0x0030 )
+0x0022    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0144 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0030 )
+0x002a    op35_VariableSet( address=0x0400, value=(vf40)0x0004, flag=0x40 )
+0x0030    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x003b )
+0x0035    -- 0x75( ???=58 )
+0x0038    -- 0x01_JumpTo( 0x003e )
+0x003b    -- 0x75( ???=26 )
+0x003e    op00_Return()
+
+Actor_0x00:on_update:
+0x003f    -- 0x15()
+0x0040    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0004 ), value2=(s16)0x0180, condition="value1 != value2", jump_if_false=0x0059 )
+0x0048    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0003, condition="value1 != value2", jump_if_false=0x0056 )
+0x0050    op35_VariableSet( address=0x0400, value=(vf40)0x0001, flag=0x40 )
+0x0056    -- 0x01_JumpTo( 0x0067 )
+0x0059    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0004, condition="value1 != value2", jump_if_false=0x0067 )
+0x0061    op35_VariableSet( address=0x0400, value=(vf40)0x0002, flag=0x40 )
+0x0067    -- 0x5B()
+0x0068    op00_Return()
+
+Actor_0x00:on_talk:
+0x0069    op00_Return()
+
+Actor_0x01:on_start:
+0x006a    -- 0xBC_ActorNoModelInit()
+0x006b    -- 0x2A()
+0x006c    op37_VariableSetFalse( address=0x0402 )
+0x006f    op37_VariableSetFalse( address=0x0404 )
+0x0072    op00_Return()
+
+Actor_0x01:on_update:
+0x0073    -- 0xC6()
+0x0074    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00dd )
+0x007c    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x008a )
+0x0084    op74_SoundPlayFixedVolume( sound_id=120 )
+0x0087    op36_VariableSetTrue( address=0x0406 )
+0x008a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0008, condition="value1 < value2", jump_if_false=0x00be )
+0x0092    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x001b, condition="value1 < value2", jump_if_false=0x00a9 )
+0x009a    -- MISSING OPCODE 0xFE1d

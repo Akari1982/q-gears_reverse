@@ -9,9 +9,128 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    op5D_SpritePlayAnim2( anim_id=0x21 ) -- 0x0001 0x5d
-    return 0 -- 0x0003 0x00
-    return 0 -- 0x0004 0x00
-    return 0 -- 0x0005 0x00
-    -- MISSING OPCODE 0x06
+unknown = [
+    0x5dff, 0x0021, 0x0000, 0x0206, 0xdc92, 0xffa1, 0xff00, 0xbcff,
+]
+
+
+Actor_0x00:on_start:
+0x000f    -- 0xBC_ActorNoModelInit()
+0x0010    -- 0xA0()
+0x0017    -- 0x75( ???=58 )
+0x001a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0025 )
+0x0022    op36_VariableSetTrue( address=0x0400 )
+0x0025    op35_VariableSet( address=0x043e, value=(vf40)0xfa1c, flag=0x40 )
+0x002b    op35_VariableSet( address=0x0440, value=(vf40)0x0060, flag=0x40 )
+0x0031    op35_VariableSet( address=0x0442, value=(vf40)0x0000, flag=0x40 )
+0x0037    op35_VariableSet( address=0x0444, value=(vf40)0x0006, flag=0x40 )
+0x003d    op35_VariableSet( address=0x043c, value=(vf40)0x0001, flag=0x40 )
+0x0043    op35_VariableSet( address=0x0446, value=(vf40)0x0208, flag=0x40 )
+0x0049    op35_VariableSet( address=0x0450, value=(vf40)0xf2a3, flag=0x40 )
+0x004f    op35_VariableSet( address=0x0452, value=(vf40)0x0069, flag=0x40 )
+0x0055    op35_VariableSet( address=0x0454, value=(vf40)0x0000, flag=0x40 )
+0x005b    op35_VariableSet( address=0x0456, value=(vf40)0x0006, flag=0x40 )
+0x0061    op35_VariableSet( address=0x044e, value=(vf40)0x0001, flag=0x40 )
+0x0067    op35_VariableSet( address=0x0458, value=(vf40)0x0003, flag=0x40 )
+0x006d    op35_VariableSet( address=0x0462, value=(vf40)0xe9bc, flag=0x40 )
+0x0073    op35_VariableSet( address=0x0464, value=(vf40)0x0063, flag=0x40 )
+0x0079    op35_VariableSet( address=0x0466, value=(vf40)0x0000, flag=0x40 )
+0x007f    op35_VariableSet( address=0x0468, value=(vf40)0x0006, flag=0x40 )
+0x0085    op35_VariableSet( address=0x0460, value=(vf40)0x0001, flag=0x40 )
+0x008b    op35_VariableSet( address=0x046a, value=(vf40)0x0215, flag=0x40 )
+0x0091    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01cc ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x009f )
+0x0099    op35_VariableSet( address=0x0448, value=(vf40)0x0001, flag=0x40 )
+0x009f    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01cc ), value2=(s16)0x0004, condition="value1 & value2", jump_if_false=0x00ad )
+0x00a7    op35_VariableSet( address=0x045a, value=(vf40)0x0001, flag=0x40 )
+0x00ad    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x01cc ), value2=(s16)0x0008, condition="value1 & value2", jump_if_false=0x00bb )
+0x00b5    op35_VariableSet( address=0x046c, value=(vf40)0x0001, flag=0x40 )
+0x00bb    op00_Return()
+
+Actor_0x00:on_update:
+0x00bc    op35_VariableSet( address=0x001c, value=(vf40)0x0000, flag=0x40 )
+0x00c2    -- 0x5B()
+
+Actor_0x00:on_talk:
+0x00c3    -- 0xFE0E_SoundSetVolume( volume=127, steps=0 )
+0x00c9    op00_Return()
+
+Actor_0x00:on_push:
+0x00ca    op00_Return()
+
+Actor_0x00:script_0x04:
+0x00cb    op3A_VariableBitSet( address=0x01cc, bit_num=(vf40)0x0001, flag=0x40 )
+0x00d1    op00_Return()
+
+Actor_0x00:script_0x05:
+0x00d2    op3A_VariableBitSet( address=0x01cc, bit_num=(vf40)0x0002, flag=0x40 )
+0x00d8    op00_Return()
+
+Actor_0x00:script_0x06:
+0x00d9    op3A_VariableBitSet( address=0x01cc, bit_num=(vf40)0x0003, flag=0x40 )
+0x00df    op00_Return()
+
+Actor_0x01:on_start:
+0x00e0    -- 0x16_ActorPCInit( char_id=0 )
+0x00e3    opFE0D_MessageSetFace( char_id=0 )
+0x00e7    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00f5 )
+0x00ef    -- 0x19_ActorSetPosition( x=(vf80)0x22ac, z=(vf40)0xffad, flag=(flag)0xc0 )
+0x00f5    op00_Return()
+
+Actor_0x01:on_update:
+0x00f6    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0103 )
+0x00fe    -- 0xA7()
+0x00ff    op00_Return()
+0x0100    -- 0x01_JumpTo( 0x0104 )
+0x0103    -- 0x5A()
+0x0104    op00_Return()
+
+Actor_0x01:on_talk:
+0x0105    op00_Return()
+
+Actor_0x01:script_0x04:
+0x0106    op2C_SpritePlayAnim( anim_id=0x04 )
+0x0108    op00_Return()
+
+Actor_0x01:script_0x05:
+0x0109    op2C_SpritePlayAnim( anim_id=0xff )
+0x010b    op00_Return()
+
+Actor_0x02:on_start:
+0x010c    -- 0x16_ActorPCInit( char_id=1 )
+0x010f    opFE0D_MessageSetFace( char_id=1 )
+0x0113    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0121 )
+0x011b    -- 0x19_ActorSetPosition( x=(vf80)0x222a, z=(vf40)0xffad, flag=(flag)0xc0 )
+0x0121    op00_Return()
+
+Actor_0x02:on_update:
+0x0122    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x012f )
+0x012a    -- 0xA7()
+0x012b    op00_Return()
+0x012c    -- 0x01_JumpTo( 0x0130 )
+0x012f    -- 0x5A()
+0x0130    op00_Return()
+
+Actor_0x02:on_talk:
+0x0131    op00_Return()
+
+Actor_0x02:script_0x04:
+0x0132    op2C_SpritePlayAnim( anim_id=0x07 )
+0x0134    op00_Return()
+
+Actor_0x02:script_0x05:
+0x0135    op2C_SpritePlayAnim( anim_id=0x04 )
+0x0137    op00_Return()
+
+Actor_0x02:script_0x06:
+0x0138    op2C_SpritePlayAnim( anim_id=0xff )
+0x013a    op00_Return()
+
+Actor_0x03:on_start:
+0x013b    -- 0xBC_ActorNoModelInit()
+0x013c    -- 0x2A()
+0x013d    op00_Return()
+
+Actor_0x03:on_update:
+0x013e    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0002 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x01ae )
+0x0146    -- 0xFE54()
+0x0148    -- MISSING OPCODE 0xFEb0

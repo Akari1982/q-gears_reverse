@@ -9,5 +9,62 @@ var = [
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
 ]
 
-    opFF_Nop() -- 0x0000 0xff
-    -- MISSING OPCODE 0x8a
+unknown = [
+    0x8aff, 0xd500, 0x00ff, 0x06ff,
+]
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    op00_Return()
+
+Actor_0x00:on_update:
+0x000b    op00_Return()
+
+Actor_0x01:on_start:
+0x000c    -- 0x16_ActorPCInit( char_id=0 )
+0x000f    opFE0D_MessageSetFace( char_id=0 )
+0x0013    op00_Return()
+
+Actor_0x01:on_update:
+0x0014    -- 0xA7()
+0x0015    op00_Return()
+
+Actor_0x01:on_talk:
+0x0016    op00_Return()
+
+Actor_0x02:on_start:
+0x0017    -- 0x0B_InitNPC( 1 )
+0x001a    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0041, flag=(flag)0xc0 )
+0x0020    -- 0x5F( ???=0x03 )
+0x0022    op00_Return()
+
+Actor_0x02:on_update:
+0x0023    op00_Return()
+
+Actor_0x02:on_talk:
+0x0024    op6F_ActorRotateToActor( actor_id=(entity)0x01 )
+0x0026    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x002a    opA9_MessageSetSelectionSync( start_row=01, end_row=02 )
+0x002c    op9C_MessageSync()
+0x002d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x003d )
+0x0035    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x0039    op9C_MessageSync()
+0x003a    -- 0x01_JumpTo( 0x004d )
+0x003d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x004d )
+0x0045    opD2_MessageShowDynamic( text_id=0x0002, flags=0 )
+0x0049    op9C_MessageSync()
+0x004a    -- 0x01_JumpTo( 0x004d )
+
+Actor_0x02:on_push:
+0x004d    op00_Return()
+
+Actor_0x03:on_start:
+0x004e    -- 0x0B_InitNPC( 2 )
+0x0051    -- 0x19_ActorSetPosition( x=(vf80)0x0034, z=(vf40)0x000a, flag=(flag)0xc0 )
+0x0057    -- 0x5F( ???=0x00 )
+0x0059    op00_Return()
+
+Actor_0x03:on_update:
+0x005a    -- MISSING OPCODE 0x59
