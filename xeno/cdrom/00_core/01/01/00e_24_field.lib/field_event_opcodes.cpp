@@ -146,8 +146,6 @@ c1 80087ADC
 c3 8009D5A4
 c4 8009D508
 c7 8008788C
-c8 800882CC
-c9 800882EC
 ca 800A0478
 cb 800A0440
 cc 800A03E4
@@ -280,57 +278,6 @@ for( int i = 0; i < 3; ++i )
         A1 = w[V0 + V1 * 5c + 4c] + 20;
         func86030();
     }
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op73()
-
-A1 = w[800af54c];
-V0 = w[800ad0d8] + hu[A1 + cc];
-V1 = bu[V0 + 1];
-
-if( V1 == 0 )
-{
-    [A1 + cc] = h(hu[A1 + cc] + 2);
-}
-else if( V1 == 1 )
-{
-    A0 = 2;
-    field_event_help_read_v80();
-
-    A0 = 4;
-    field_event_help_read_v80();
-    S0 = V0;
-
-    A0 = 6;
-    field_event_help_read_v80();
-
-    A0 = w[800af1f0]; // current entity id in script call
-    field_particle_init_default_particle();
-
-    [800af7a0 + 0] = h(1);
-    [800af7a0 + 4] = h(1000);
-    [800af7a0 + 6] = h(10); // number of sprites
-    [800af7a0 + 2a] = h(14);
-    [800af7a0 + 72] = h(0);
-
-    if( S0 == 27 )
-    {
-        [800af7a0 + 74] = h(20);
-    }
-    else
-    {
-        [800af7a0 + 74] = h(22);
-    }
-
-    A0 = w[800af1f0]; // current entity id in script call
-    field_particle_create_instance();
-
-    V1 = w[800af54c];
-    [V1 + cc] = h(hu[V1 + cc] + 8);
 }
 ////////////////////////////////
 
@@ -1906,62 +1853,6 @@ else if( V1 == 3 )
 
 
 ////////////////////////////////
-// func87d64()
-// 0xFE8F_ParticleSystemInit1()
-
-A0 = 1;
-field_event_help_read_entity();
-entity_id = V0;
-
-if( entity_id == -1 )
-{
-    entity_id = 0;
-}
-[800b1848] = w(entity_id);
-
-A0 = 2;
-field_event_help_read_v80();
-[800b184c] = w(V0);
-
-A0 = 4;
-field_event_help_read_v80();
-[800b1850] = w(V0);
-
-A0 = 6;
-field_event_help_read_v80();
-[800b1854] = w(V0);
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 8);
-
-A0 = entity_id;
-field_particle_init_default_particle();
-
-V1 = w[800b184c];
-
-if( V1 == 0 )
-{
-    [800b184c] = w(0);
-}
-else if( V1 == 1 )
-{
-    [800b184c] = w(10);
-}
-else if( V1 == 2 )
-{
-    [800b184c] = w(20);
-}
-else if( V1 == 3 )
-{
-    [800b184c] = w(30);
-}
-
-[800af150] = w(w[800af150] + 4);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func87e78
 
 V1 = w[800af1f0];
@@ -2123,60 +2014,7 @@ A0 = A0 | A1;
 
 
 ////////////////////////////////
-// 0xFEBD_ParticleSpawnSettings()
-
-struct_138 = w[800af54c];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-
-S0 = 0;
-
-A0 = 1;
-field_event_help_read_v80();
-
-if( V0 == 1 )
-{
-    S0 = 80; // use fixed start pos
-}
-else if( V0 == 2 )
-{
-    S0 = 40; // use fixed z variation pos
-}
-[800af7a0 + id * 78 + 2a] = h(hu[800af7a0 + id * 78 + 2a] | S0);
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + 7);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFEA5_ParticleRenderSettings()
-
-struct_138 = w[800af54c];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-
-A0 = 1;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 24] = h(V0); // use speed for sprites
-
-A0 = 3;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 2a] = h((V0 << 8) | hu[800af7a0 + id * 78 + 2a]); // render settings
-
-A0 = 5;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 76] = h(V0); // rotation z
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + 7);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func882cc()
+// field_event_opFEC8()
 
 A0 = 0;
 func8830c();
@@ -2185,7 +2023,7 @@ func8830c();
 
 
 ////////////////////////////////
-// func882ec()
+// field_event_opFEC9()
 
 A0 = 4;
 func8830c();
@@ -2247,290 +2085,6 @@ field_event_help_read_u16_by_flag_01();
 
 [800af150] = w(w[800af150] + 4);
 [struct_138 + cc] = h(current_pos + 12);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE90_ParticleInitBase()
-
-A0 = 1;
-field_event_help_read_v80();
-val = V0;
-
-[800b1858] = w(val); // particle id
-[800ad018] = w(w[800b1848]); // entity id
-
-[800af7a0 + val * 78 + 0] = h(0);
-[800af7a0 + val * 78 + 24] = h(1); // use speed for sprites
-[800af7a0 + val * 78 + 52] = h(w[800b1848]); // entity id
-[800af7a0 + val * 78 + 76] = h(0); // rotation z
-
-A0 = 3;
-field_event_help_read_v80();
-[800af7a0 + val * 78 + 6] = h(V0); // number of sprites
-
-A0 = 5;
-field_event_help_read_v80();
-[800af7a0 + val * 78 + 2] = h(V0); // wait
-
-A0 = 7;
-field_event_help_read_v80();
-[800af7a0 + val * 78 + 4] = h(V0); // ttl
-
-func87bf0();
-
-[800af150] = w(w[800af150] + 4);
-
-A0 = w[800af54c];
-[A0 + cc] = h(hu[A0 + cc] + 9);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE91_ParticlePos()
-
-struct_138 = w[800af54c];
-script = w[800ad0d8];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-flag = bu[script + current_pos + d];
-
-A0 = 1;
-A1 = flag;
-field_event_help_read_u16_by_flag_80();
-[800af7a0 + id * 78 + c] = h(V0); // x pos
-
-A0 = 3;
-A1 = flag;
-field_event_help_read_u16_by_flag_40();
-[800af7a0 + id * 78 + e] = h(V0); // y pos
-
-A0 = 5;
-A1 = flag;
-field_event_help_read_u16_by_flag_20();
-[800af7a0 + id * 78 + 10] = h(V0); // z pos
-
-A0 = 7;
-A1 = flag;
-field_event_help_read_u16_by_flag_10();
-[800af7a0 + id * 78 + 14] = h(V0); // x speed
-
-A0 = 9;
-A1 = flag;
-field_event_help_read_u16_by_flag_08();
-[800af7a0 + id * 78 + 16] = h(V0); // y speed
-
-A0 = b;
-A1 = flag;
-field_event_help_read_u16_by_flag_04();
-[800af7a0 + id * 78 + 18] = h(V0); // z speed
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + e);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE92_ParticleSpeed()
-
-struct_138 = w[800af54c];
-script = w[800ad0d8];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-flag = bu[script + current_pos + d];
-
-A0 = 1;
-A1 = flag;
-field_event_help_read_u16_by_flag_80();
-[800af7a0 + id * 78 + 8] = w(V0); // speed of sprites.
-
-A0 = 3;
-A1 = flag;
-field_event_help_read_u16_by_flag_40();
-[800af7a0 + id * 78 + 1c] = h(V0); // x accel for sprites
-
-A0 = 5;
-A1 = flag;
-field_event_help_read_u16_by_flag_20();
-[800af7a0 + id * 78 + 1e] = h(V0); // y accel for sprites
-
-A0 = 7;
-A1 = flag;
-field_event_help_read_u16_by_flag_10();
-[800af7a0 + id * 78 + 20] = h(V0); // z accel for sprites
-
-A0 = 9;
-A1 = flag;
-field_event_help_read_u16_by_flag_08();
-[800af7a0 + id * 78 + 26] = h(V0); // random range for start pos
-
-A0 = b;
-A1 = flag;
-field_event_help_read_u16_by_flag_04();
-[800af7a0 + id * 78 + 28] = h(V0); // random range for speed
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + e);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func88b48()
-// 0xFE93()
-// particle
-
-struct_138 = w[800af54c];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-
-A0 = 1;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 56] = h(V0); // sprite wait
-
-A0 = 3;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 58] = h(V0); // sprite ttl
-
-A0 = 5;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 54] = h(V0); // sprite id
-
-A0 = 7;
-field_event_help_read_v80();
-S0 = V0;
-
-A0 = 9;
-field_event_help_read_v80();
-[800af7a0 + id * 78 + 2a] = h((V0 << 1) | S0 | w[800b184c]);
-
-[800af7a0 + id * 78 + 72] = h(w[800b1850]); // rotation x
-[800af7a0 + id * 78 + 74] = h(w[800b1854]); // rotation y
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + b);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE94_ParticleTranslation()
-
-struct_138 = w[800af54c];
-script = w[800ad0d8];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-flag = bu[script + current_pos + 9];
-
-A0 = 1;
-A1 = flag;
-field_event_help_read_u16_by_flag_80();
-[800af7a0 + id * 78 + 5a] = h(V0); // x trans
-
-A0 = 3;
-A1 = flag;
-field_event_help_read_u16_by_flag_40();
-[800af7a0 + id * 78 + 5c] = h(V0); // y trans
-
-[800af7a0 + id * 78 + 5e] = h(0); // z trans
-
-A0 = 5;
-A1 = flag;
-field_event_help_read_u16_by_flag_20();
-[800af7a0 + id * 78 + 62] = h(V0); // x trans add
-
-A0 = 7;
-A1 = flag;
-field_event_help_read_u16_by_flag_10();
-[800af7a0 + id * 78 + 64] = h(V0); // y trans add
-
-[800af7a0 + id * 78 + 66] = h(0); // z trans add
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + a);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE95_ParticleColour()
-
-struct_138 = w[800af54c];
-script = w[800ad0d8];
-current_pos = hu[struct_138 + cc];
-id = w[800b1858];
-flag = bu[script + current_pos + d];
-
-A0 = 1;
-A1 = flag;
-field_event_help_read_u16_by_flag_80();
-[800af7a0 + id * 78 + 6a] = b(V0); // R
-
-A0 = 3;
-A1 = flag;
-field_event_help_read_u16_by_flag_40();
-[800af7a0 + id * 78 + 6b] = b(V0); // G
-
-A0 = 5;
-A1 = flag;
-field_event_help_read_u16_by_flag_20();
-[800af7a0 + id * 78 + 6c] = b(V0); // B
-
-A0 = 7;
-A1 = flag;
-field_event_help_read_u16_by_flag_10();
-[800af7a0 + id * 78 + 6e] = b(V0); // R add
-
-A0 = 9;
-A1 = flag;
-field_event_help_read_u16_by_flag_08();
-[800af7a0 + id * 78 + 6f] = b(V0); // G add
-
-A0 = b;
-A1 = flag;
-field_event_help_read_u16_by_flag_04();
-[800af7a0 + id * 78 + 70] = b(V0); // B add
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + e);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE96_ParticleCreate()
-
-struct_138 = w[800af54c];
-current_pos = hu[struct_138 + cc];
-
-if( w[800ad064] == 0 )
-{
-    A0 = w[800af1f0]; // current entity id in script call
-    field_particle_create_instance();
-}
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE97_ParticleReset()
-
-struct_138 = w[800af54c];
-script = w[800ad0d8];
-current_pos = hu[struct_138 + cc];
-
-A0 = w[800af1f0]; // current entity id in script call
-A1 = bu[script + current_pos + 1];
-field_particle_reset_particle_for_entity();
-
-[800af150] = w(w[800af150] + 4);
-[struct_138 + cc] = h(current_pos + 2);
 ////////////////////////////////
 
 
@@ -8222,11 +7776,11 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func8f4d8
-8008F4D8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8008F4E0	jal    func9c30c [$8009c30c]
-A0 = 0001;
+// field_event_op62()
+
+A0 = 1;
+func9c30c();
+
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 03;
@@ -8234,23 +7788,14 @@ V1 = V1 - V0;
 V0 = w[800aefe4];
 V1 = V1 << 02;
 V1 = V1 + V0;
-V1 = w[V1 + 004c];
+V1 = w[V1 + 4c];
+[800aedd4] = w(w[V1 + 20]);
+[800aedd8] = w(w[V1 + 24]);
+[800aeddc] = w(w[V1 + 28]);
+[800af150] = w(w[800af150] + 1);
+
 A0 = w[800af54c];
-V0 = w[V1 + 0020];
-[800aedd4] = w(V0);
-V0 = w[V1 + 0024];
-[800aedd8] = w(V0);
-V0 = w[V1 + 0028];
-[800aeddc] = w(V0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0001;
-V1 = V1 + 0002;
-[800af150] = w(V0);
-RA = w[SP + 0010];
-[A0 + 00cc] = h(V1);
-8008F55C	jr     ra 
-SP = SP + 0018;
+[A0 + cc] = h(hu[A0 + cc] + 2);
 ////////////////////////////////
 
 
@@ -9970,136 +9515,117 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func917bc
+// field_event_opDA()
+
 V0 = w[800ad064];
-800917C4	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 0048] = w(RA);
-[SP + 0044] = w(S5);
-[SP + 0040] = w(S4);
-[SP + 003c] = w(S3);
-[SP + 0038] = w(S2);
-[SP + 0034] = w(S1);
-800917E0	bne    v0, zero, L91974 [$80091974]
-[SP + 0030] = w(S0);
-S0 = 800af37c;
-V0 = h[S0 + 0000];
-800917F4	nop
-V0 = V0 < 0020;
-800917FC	beq    v0, zero, L91974 [$80091974]
-80091800	nop
-80091804	jal    field_event_help_read_u16 [$800ac290]
-A0 = 0009;
-S5 = V0 & ffff;
-A0 = S5 + 0001;
-A1 = 0;
-V0 = h[S0 + 0000];
-V1 = S0 + 0104;
-V0 = V0 << 01;
-V0 = V0 + V1;
-80091828	jal    $system_memory_allocate
-[V0 + 0000] = h(S5);
-A0 = 0018;
-A1 = 0;
-V1 = h[S0 + 0000];
-S1 = S0 + 0084;
-V1 = V1 << 02;
-V1 = V1 + S1;
-80091848	jal    $system_memory_allocate
-[V1 + 0000] = w(V0);
-A0 = 000f;
-V1 = h[S0 + 0000];
-A1 = S0 + 0004;
-V1 = V1 << 02;
-V1 = V1 + A1;
-80091864	jal    field_event_help_read_u16 [$800ac290]
-[V1 + 0000] = w(V0);
-A0 = 0;
-80091870	beq    s5, zero, L918b0 [$800918b0]
-A2 = V0 & ffff;
-V1 = S0;
-A3 = S1;
+if( V0 == 0 )
+{
+    S0 = 800af37c;
+    V0 = h[S0 + 0];
+    if( V0 < 20 )
+    {
+        A0 = 9;
+        field_event_help_read_u16();
 
-loop91880:	; 80091880
-V0 = h[V1 + 0000];
-80091884	nop
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-80091894	nop
-V0 = V0 + A0;
-A0 = A0 + 0001;
-[V0 + 0000] = b(A2);
-V0 = A0 < S5;
-800918A8	bne    v0, zero, loop91880 [$80091880]
-800918AC	nop
+        S5 = V0 & ffff;
+        A0 = S5 + 0001;
+        A1 = 0;
+        V0 = h[S0 + 0000];
+        V1 = S0 + 0104;
+        V0 = V0 << 01;
+        V0 = V0 + V1;
+        [V0 + 0000] = h(S5);
+        system_memory_allocate();
 
-L918b0:	; 800918B0
-800918B0	jal    field_event_help_read_u16 [$800ac290]
-A0 = 0001;
-A0 = 0003;
-S3 = V0 << 10;
-800918C0	jal    field_event_help_read_u16 [$800ac290]
-S3 = S3 >> 10;
-A0 = 0005;
-S4 = V0 << 10;
-800918D0	jal    field_event_help_read_u16 [$800ac290]
-S4 = S4 >> 10;
-A0 = 0007;
-S2 = V0 << 10;
-800918E0	jal    field_event_help_read_u16 [$800ac290]
-S2 = S2 >> 10;
-A0 = 000b;
-S0 = V0 << 10;
-800918F0	jal    field_event_help_read_u16 [$800ac290]
-S0 = S0 >> 10;
-A0 = 000d;
-S1 = V0 << 10;
-80091900	jal    field_event_help_read_u16 [$800ac290]
-S1 = S1 >> 10;
-V1 = S5 << 10;
-V1 = V1 >> 10;
-V0 = V0 << 10;
-[SP + 0010] = w(S0);
-S0 = 800af37c;
-V0 = V0 >> 10;
-A1 = S3;
-[SP + 0014] = w(V1);
-[SP + 0018] = w(S1);
-V1 = h[S0 + 0000];
-A2 = S4;
-[SP + 001c] = w(V0);
-V0 = h[S0 + 0000];
-V1 = V1 << 02;
-V1 = S0 + V1;
-V0 = V0 << 02;
-V1 = w[V1 + 0084];
-V0 = S0 + V0;
-[SP + 0020] = w(V1);
-A0 = w[V0 + 0004];
-8009195C	jal    $80027b74
-A3 = S2;
-V0 = hu[S0 + 0000];
-80091968	nop
-V0 = V0 + 0001;
-[S0 + 0000] = h(V0);
+        A0 = 0018;
+        A1 = 0;
+        V1 = h[S0 + 0000];
+        S1 = S0 + 0084;
+        V1 = V1 << 02;
+        V1 = V1 + S1;
+        [V1 + 0000] = w(V0);
+        system_memory_allocate();
 
-L91974:	; 80091974
+        A0 = 000f;
+        V1 = h[S0 + 0000];
+        A1 = S0 + 0004;
+        V1 = V1 << 02;
+        V1 = V1 + A1;
+        [V1 + 0000] = w(V0);
+        field_event_help_read_u16();
+
+        A0 = 0;
+        80091870	beq    s5, zero, L918b0 [$800918b0]
+        A2 = V0 & ffff;
+        V1 = S0;
+        A3 = S1;
+
+        loop91880:	; 80091880
+            V0 = h[V1 + 0000];
+            80091884	nop
+            V0 = V0 << 02;
+            V0 = V0 + A3;
+            V0 = w[V0 + 0000];
+            80091894	nop
+            V0 = V0 + A0;
+            A0 = A0 + 0001;
+            [V0 + 0000] = b(A2);
+            V0 = A0 < S5;
+        800918A8	bne    v0, zero, loop91880 [$80091880]
+
+        L918b0:	; 800918B0
+        A0 = 1;
+        field_event_help_read_u16();
+        S3 = (V0 << 10) >> 10;
+
+        A0 = 3;
+        field_event_help_read_u16();
+        S4 = (V0 << 10) >> 10;
+
+        A0 = 5;
+        field_event_help_read_u16();
+        S2 = (V0 << 10) >> 10;
+
+        A0 = 7;
+        field_event_help_read_u16();
+        S0 = (V0 << 10) >> 10;
+
+        A0 = b;
+        field_event_help_read_u16();
+        S1 = (V0 << 10) >> 10;
+
+        A0 = d;
+        field_event_help_read_u16();
+
+        V1 = S5 << 10;
+        V1 = V1 >> 10;
+        V0 = V0 << 10;
+        [SP + 0010] = w(S0);
+        S0 = 800af37c;
+        V0 = V0 >> 10;
+        A1 = S3;
+        [SP + 0014] = w(V1);
+        [SP + 0018] = w(S1);
+        V1 = h[S0 + 0000];
+        A2 = S4;
+        [SP + 001c] = w(V0);
+        V0 = h[S0 + 0000];
+        V1 = V1 << 02;
+        V1 = S0 + V1;
+        V0 = V0 << 02;
+        V1 = w[V1 + 0084];
+        V0 = S0 + V0;
+        [SP + 0020] = w(V1);
+        A0 = w[V0 + 4];
+        A3 = S2;
+        func27b54();
+
+        [S0 + 0] = h(hu[S0 + 0] + 1);
+    }
+}
+
 V1 = w[800af54c];
-8009197C	nop
-V0 = hu[V1 + 00cc];
-80091984	nop
-V0 = V0 + 0011;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0048];
-S5 = w[SP + 0044];
-S4 = w[SP + 0040];
-S3 = w[SP + 003c];
-S2 = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0050;
-800919B0	jr     ra 
-800919B4	nop
+[V1 + cc] = h(hu[V1 + cc] + 11);
 ////////////////////////////////
 
 
@@ -10399,52 +9925,35 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0x46
-V0 = w[800afb8c];
-80091DE4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A0 = h[V0 + 0052];
-80091DF0	jal    system_cos [$system_cos]
-80091DF4	nop
-V1 = V0 << 03;
-V1 = V1 + V0;
-V0 = w[800af54c];
-A0 = w[800afb8c];
-V1 = V1 >> 0a;
-[V0 + 0060] = h(V1);
-A0 = h[A0 + 0052];
-80091E1C	jal    system_sin [$system_sin]
-80091E20	nop
-V1 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 << 02;
-V1 = 0 - V1;
-A0 = w[800af54c];
-V1 = V1 >> 0c;
-[A0 + 0064] = h(V1);
-V1 = hu[A0 + 00cc];
-V0 = w[A0 + 0004];
-V1 = V1 + 0001;
-V0 = V0 | 0800;
-[A0 + 0004] = w(V0);
-RA = w[SP + 0010];
-[A0 + 00cc] = h(V1);
-80091E60	jr     ra 
-SP = SP + 0018;
+// field_event_op46()
+
+struct_138_cur = w[800af54c];
+struct_5c_cur = w[800afb8c];
+
+A0 = h[struct_5c_cur + 52]; // X rotation
+system_cos();
+[struct_138_cur + 60] = h((V0 * 24) >> c);
+
+A0 = h[struct_5c_cur + 52]; // Y rotation
+system_sin();
+[struct_138_cur + 64] = h((0 - V0 * 24) >> c);
+
+[struct_138_cur + 4] = w(w[struct_138_cur + 4] | 0800);
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func91e68
+// func91e68()
+
 S4 = A0;
 S3 = A1;
 S0 = A2;
 S1 = A3;
-80091E8C	addiu  v0, zero, $ffff (=-$1)
 V1 = w[800b1740];
-A0 = 0008;
-[800b164a] = h(V0);
+A0 = 8;
+[800b164a] = h(-1);
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
@@ -10454,12 +9963,10 @@ V0 = V0 << 02;
 V0 = V0 + V1;
 S2 = w[V0 + 004c];
 S7 = w[V0 + 0004];
-V1 = w[S2 + 0004];
-80091EE8	lui    v0, $0008
-V1 = V1 | 0038;
-[S2 + 0004] = w(V1);
-80091EF4	jal    length_of_vector_by_x [$80099060]
-[S7 + 0018] = w(V0);
+[S2 + 4] = w(w[S2 + 4] | 00000038);
+[S7 + 18] = w(00080000);
+length_of_vector_by_x();
+
 S5 = h[S2 + 0022];
 S6 = h[S2 + 002a];
 80091F04	bne    s3, zero, L92018 [$80092018]
@@ -10467,44 +9974,46 @@ FP = V0 << 01;
 V0 = w[800ad0b4];
 80091F14	nop
 80091F18	beq    v0, zero, L91f34 [$80091f34]
-V0 = 0001;
+
 V0 = w[800ad0bc];
 80091F28	nop
 80091F2C	bne    v0, zero, L91f3c [$80091f3c]
-V0 = 0001;
 
 L91f34:	; 80091F34
-[800af594] = w(V0);
+[800af594] = w(1);
 
 L91f3c:	; 80091F3C
-V0 = w[800ad0c4];
-80091F44	nop
-80091F48	beq    v0, zero, L91f88 [$80091f88]
-80091F4C	nop
-80091F50	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0004;
-A0 = 0002;
-80091F5C	jal    field_event_help_read_v80 [$800ac2c4]
-S0 = V0;
-80091F64	jal    func92518 [$80092518]
-S1 = V0;
-A0 = 0002;
-[800ad0c4] = w(0);
-80091F78	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A1 = S0;
-[8004e9f0] = w(S1);
+if( w[800ad0c4] != 0 )
+{
+    A0 = 4;
+    field_event_help_read_v80();
+    S0 = V0;
 
-L91f88:	; 80091F88
+    A0 = 2;
+    field_event_help_read_v80();
+    S1 = V0;
+
+    func92518();
+
+    [800ad0c4] = w(0);
+
+    A0 = 2;
+    A1 = S0;
+    field_event_help_write_bytes_to_800C2F3C();
+
+    [8004e9f0] = w(S1);
+}
+
 V0 = w[800afb8c];
 80091F90	nop
 S0 = h[V0 + 0052];
 80091F98	nop
-S0 = S0 + S4;
-80091FA0	addiu  s0, s0, $fc00 (=-$400)
-80091FA4	jal    system_cos [$system_cos]
+S0 = S0 + S4 - 400;
+
 A0 = S0;
+system_cos();
+
 V1 = w[800af54c];
-80091FB4	nop
 A1 = h[V1 + 0060];
 V1 = h[V1 + 0022];
 A0 = S0;
@@ -10513,8 +10022,10 @@ V1 = V0 << 02;
 V1 = V1 + V0;
 V1 = V1 << 03;
 V1 = V1 >> 0c;
-80091FD8	jal    system_sin [$system_sin]
 S0 = A1 + V1;
+
+system_sin();
+
 V1 = w[800af54c];
 80091FE8	nop
 A0 = h[V1 + 0064];
@@ -10537,113 +10048,85 @@ A0 = S0 - S5;
 A1 = A3 - S6;
 [SP + 0010] = w(A0);
 [SP + 0014] = w(0);
-8009202C	jal    length_of_vector_by_x_y [$80099020]
 [SP + 0018] = w(A1);
+
+length_of_vector_by_x_y();
+
 V0 = FP < V0;
 80092038	bne    v0, zero, L92114 [$80092114]
-8009203C	nop
 
 loop92040:	; 80092040
-V0 = hu[S2 + 0106];
-A0 = S7;
-V0 = V0 | 8000;
-[S2 + 0104] = h(V0);
-[S2 + 0106] = h(V0);
-[A0 + 0018] = w(0);
-[S2 + 00e8] = h(0);
-V0 = w[800b1740];
-A1 = 0;
-A2 = V0 << 01;
-A2 = A2 + V0;
-A2 = A2 << 03;
-A2 = A2 - V0;
-V0 = w[800aefe4];
-A2 = A2 << 02;
-80092084	jal    func81808 [$80081808]
-A2 = V0 + A2;
-A2 = 0001;
-80092090	lui    a1, $fe7f
-[800af594] = w(A2);
-V0 = bu[S2 + 00ce];
-V1 = ffff;
-V0 = V0 << 03;
-V0 = S2 + V0;
-[V0 + 0090] = h(V1);
-V1 = bu[S2 + 00ce];
-A1 = A1 | ffff;
-V1 = V1 << 03;
-V1 = S2 + V1;
-V0 = w[V1 + 0090];
-800920C4	lui    a0, $ffdf
-V0 = V0 & A1;
-[V1 + 0090] = w(V0);
-V0 = w[S2 + 0000];
-A0 = A0 | ffff;
-V0 = V0 & A0;
-[S2 + 0000] = w(V0);
-if (S3 == A2)
-{
-    V0 = w[S2 + 0004];
-    800920E8	addiu  v1, zero, $ffc7 (=-$39)
-    V0 = V0 & V1;
-    [S2 + 0004] = w(V0);
-}
+    A0 = S7;
+    [S2 + 104] = h(hu[S2 + 106] | 8000);
+    [S2 + 106] = h(hu[S2 + 106] | 8000);
+    [A0 + 18] = w(0);
+    [S2 + e8] = h(0);
 
-A0 = w[800af54c];
-[S2 + 006e] = h(0);
-V1 = hu[A0 + 00cc];
-V1 = V1 + 0006;
-[A0 + 00cc] = h(V1);
-return 0;
+    V0 = w[800b1740];
+    A1 = 0;
 
-L92114:	; 80092114
-if (h(S2 + 68) != h(S2 + 22) || h(S2 + 6A) != h(S2 + 26) || h(S2 + 6C) != h(S2 + 2A))
-{
-    [S2 + 6E] = h(0);
-}
-else
-{
-    V0 = hu[S2 + 6E];
-    V0 = V0 + 1;
-    [S2 + 6E] = h(V0);
-}
+    A2 = V0 << 01;
+    A2 = A2 + V0;
+    A2 = A2 << 03;
+    A2 = A2 - V0;
+    V0 = w[800aefe4];
+    A2 = A2 << 02;
+    A2 = V0 + A2;
+    func81808();
 
-V0 = h[S2 + 006e];
-8009216C	nop
-V0 = V0 < 0041;
+    [800af594] = w(1);
+    V0 = bu[S2 + ce];
+    [S2 + 90 + V0 * 8] = h(ffff);
+    [S2 + 90 + V0 * 8] = w(w[S2 + 90 + V0 * 8] & fe7fffff);
+    [S2 + 0] = w(w[S2 + 0] & ffdfffff);
+
+    if( S3 == 1 )
+    {
+        [S2 + 4] = w(w[S2 + 4] & ffffffc7);
+    }
+
+    A0 = w[800af54c];
+    [S2 + 6e] = h(0);
+    [A0 + cc] = h(hu[A0 + cc] + 6);
+    return 0;
+
+    L92114:	; 80092114
+    if( ( h[S2 + 68] == h[S2 + 22] ) && ( h[S2 + 6a] == h[S2 + 26] ) && ( h[S2 + 6c] == h[S2 + 2a] ) )
+    {
+        [S2 + 6e] = h(hu[S2 + 6e] + 1);
+    }
+    else
+    {
+        [S2 + 6e] = h(0);
+    }
+
+    V0 = h[S2 + 6e];
+    V0 = V0 < 41;
 80092174	beq    v0, zero, loop92040 [$80092040]
-80092178	nop
-8009217C	jal    func7aca8 [$8007aca8]
-A0 = SP + 0010;
-[S2 + 0104] = h(V0);
-[S2 + 0106] = h(V0);
-V0 = 0001;
-[800af594] = w(V0);
-if (S3 == 0)
+
+A0 = SP + 10;
+func7aca8();
+[S2 + 104] = h(V0);
+[S2 + 106] = h(V0);
+
+[800af594] = w(1);
+
+if( S3 != 0 )
 {
-    return -1;
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] - 1);
 }
-
-V1 = w[800af54c];
-800921A8	nop
-V0 = hu[V1 + 00cc];
-800921B0	nop
-800921B4	addiu  v0, v0, $ffff (=-$1)
-[V1 + 00cc] = h(V0);
-return - 1;
+return -1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func921f4
+// func921f4()
+
 V0 = w[800ad0b4];
-800921FC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
 8009220C	beq    v0, zero, L92264 [$80092264]
-[SP + 0010] = w(S0);
+
 V0 = w[800ad0bc];
 8009221C	nop
 80092220	beq    v0, zero, L92264 [$80092264]
@@ -10709,8 +10192,8 @@ V0 = w[V0 + 0000];
 [S0 + 0000] = w(V0);
 
 L92334:	; 80092334
-80092334	jal    funca01dc [$800a01dc]
-80092338	nop
+funca01dc();
+
 A0 = 0;
 A1 = 0001;
 A2 = S2;
@@ -10743,23 +10226,17 @@ L923b0:	; 800923B0
 [S0 + 0000] = w(0);
 
 L923b4:	; 800923B4
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800923C8	jr     ra 
-800923CC	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func923d0
+// func923d0()
+
 V0 = w[800ad0b4];
-800923D8	addiu  sp, sp, $ffe8 (=-$18)
+
 800923DC	beq    v0, zero, L92434 [$80092434]
-[SP + 0010] = w(RA);
+
 V0 = w[800ad0bc];
 800923EC	nop
 800923F0	beq    v0, zero, L92438 [$80092438]
@@ -10786,50 +10263,55 @@ L92438:	; 80092438
 80092444	nop
 
 L92448:	; 80092448
-80092448	jal    funca01dc [$800a01dc]
-8009244C	nop
+funca01dc();
+
 A0 = 0;
 A1 = 0;
 A2 = 0;
-8009245C	jal    func91e68 [$80091e68]
 A3 = 0;
+func91e68();
 
 L92464:	; 80092464
-RA = w[SP + 0010];
-SP = SP + 0018;
-8009246C	jr     ra 
-80092470	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// 0x47
+// field_event_op47()
 
-V0 = w[800ad0b4];
-if (V0 != 0)
+if( w[800ad0b4] != 0 )
 {
-    if (w[800AD0BC] != 0  && w[800AD004] != 0 && w[8004E9AC] != -1 && w[800AD068] == 0)
+    if( w[800ad0bc] != 0 )
     {
-        funca01dc
+        if( w[800ad004] == 0 )
+        {
+            if( w[8004e9ac] != -1 )
+            {
+                if( w[800ad068] == 0 )
+                {
+                    funca01dc();
 
-        A0 = 03E0;
-        A1 = 0;
-        A2 = 0;
-        A3 = 0;
-        func91e68;
+                    A0 = 03e0;
+                    A1 = 0;
+                    A2 = 0;
+                    A3 = 0;
+                    func91e68();
 
-        return;
+                    return;
+                }
+            }
+        }
     }
 }
 
-[800AF594] = w(1);
+[800af594] = w(1);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func92518()
+
 A0 = 4;
 A1 = w[8004e9f0] & 3fff;
 field_event_help_write_bytes_to_800C2F3C();
@@ -11048,14 +10530,11 @@ if( ( w[800ad0b4] != 0 ) &&
 
 
 ////////////////////////////////
-// func929cc
+// func929cc()
+
 V0 = w[800ad0b4];
-800929D4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
 800929E4	beq    v0, zero, L92a50 [$80092a50]
-[SP + 0010] = w(S0);
+
 V0 = w[800ad0bc];
 800929F4	nop
 800929F8	beq    v0, zero, L92a50 [$80092a50]
@@ -11103,14 +10582,17 @@ A0 = 0005;
 S1 = V0;
 V0 = 7fff;
 80092ACC	beq    s1, v0, L92b00 [$80092b00]
-80092AD0	nop
-80092AD4	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0007;
-80092ADC	jal    func92518 [$80092518]
+
+A0 = 7;
+field_event_help_read_v80();
 S0 = V0;
-A0 = 0002;
-80092AE8	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
+
+func92518();
+
+A0 = 2;
 A1 = S0;
+field_event_help_write_bytes_to_800C2F3C();
+
 [8004e9f0] = w(S1);
 [800acff0] = w(S2);
 
@@ -11123,13 +10605,6 @@ V0 = V0 + 0009;
 [V1 + 00cc] = h(V0);
 
 L92b20:	; 80092B20
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80092B34	jr     ra 
-80092B38	nop
 ////////////////////////////////
 
 
@@ -11343,42 +10818,33 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func92e5c
-80092E5C	addiu  sp, sp, $ffe0 (=-$20)
-80092E60	addiu  v0, zero, $ffff (=-$1)
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-[800b164a] = h(V0);
-80092E78	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0003;
-A0 = 0001;
-80092E84	jal    field_event_help_read_v80 [$800ac2c4]
+// func92e5c()
+
+[800b164a] = h(-1);
+
+A0 = 3;
+field_event_help_read_v80();
 S0 = V0;
-80092E8C	jal    func92518 [$80092518]
+
+A0 = 1;
+field_event_help_read_v80();
+
+func92518 [$80092518]
 S1 = V0;
-A0 = 0002;
-80092E98	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
+
+A0 = 2;
 A1 = S0;
+field_event_help_write_bytes_to_800C2F3C();
+
 [8004e9f0] = w(S1);
-80092EA8	jal    func927cc [$800927cc]
-80092EAC	nop
+func927cc();
+
+[800ad03c] = w(1);
+[800af594] = w(1);
+[8004e9f4] = w(w[8004e9f4] + 1);
+
 A0 = w[800af54c];
-V0 = 0001;
-[800ad03c] = w(V0);
-[800af594] = w(V0);
-V0 = w[8004e9f4];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0001;
-[8004e9f4] = w(V0);
-V1 = V1 + 0005;
-[A0 + 00cc] = h(V1);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80092EFC	jr     ra 
-80092F00	nop
+[A0 + cc] = h(hu[A0 + cc] + 5);
 ////////////////////////////////
 
 
@@ -14100,32 +13566,36 @@ SP = SP + 0020;
 8009588C	jr     ra 
 80095890	nop
 ////////////////////////////////
-// func95894
-80095894	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8009589C	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0001;
-800958A4	jal    func946f8 [$800946f8]
+
+
+
+////////////////////////////////
+// field_event_op8B()
+
+A0 = 1;
+field_event_help_read_v80();
+
+
 A0 = V0;
-800958AC	addiu  v1, zero, $ffff (=-$1)
-800958B0	beq    v0, v1, L958d0 [$800958d0]
-800958B4	nop
-V1 = w[800af54c];
-800958C0	nop
-V0 = hu[V1 + 00cc];
-800958C8	j      L958e0 [$800958e0]
-V0 = V0 + 0005;
+func946f8();
 
-L958d0:	; 800958D0
-800958D0	jal    field_event_help_read_u16 [$800ac290]
-A0 = 0003;
-V1 = w[800af54c];
+if( V0 != -1 )
+{
+    V1 = w[800af54c];
+    [V1 + cc] = h(hu[V1 + cc] + 5);
+}
+else
+{
+    A0 = 3;
+    field_event_help_read_u16();
 
-L958e0:	; 800958E0
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-800958E8	jr     ra 
-SP = SP + 0018;
+    V1 = w[800af54c];
+    [V1 + cc] = h(V0);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func958f0
 800958F0	addiu  sp, sp, $ffe8 (=-$18)
@@ -19319,6 +18789,7 @@ if( S0 == 0 )
 
 ////////////////////////////////
 // func9ad7c()
+
 if( A1 == 0 )
 {
     A1 = 1;
@@ -19342,17 +18813,17 @@ else
 
 
 ////////////////////////////////
-// 0xC7_CameraRotateRight
+// field_event_opC7_camera_rotate_right()
+
 if( h[800aeeca] == 0 )
 {
     A0 = 1;
-    field_event_help_read_v80;
+    field_event_help_read_v80();
 
     A0 = 0;
     A1 = V0;
     func9ad7c();
 
-    // move script pointer
     struct_138 = w[800af54c];
     [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
 }
@@ -19363,7 +18834,8 @@ if( h[800aeeca] == 0 )
 
 
 ////////////////////////////////
-// 0xC8_CameraRotateLeft
+// field_event_opC8_camera_rotate_left()
+
 if( h[800aeeca] == 0 )
 {
     A0 = 1;
@@ -19373,7 +18845,6 @@ if( h[800aeeca] == 0 )
     A1 = V0;
     func9ad7c();
 
-    // move script pointer
     struct_138 = w[800af54c];
     [struct_138 + cc] = h(hu[struct_138 + cc] + 3);
 }
@@ -19497,17 +18968,8 @@ V1 = w[800af54c];
 
 
 
-
-
-
-
-
-
-
-
-
 ////////////////////////////////
-// func9c30c
+// func9c30c()
 
 field_event_help_read_entity();
 
@@ -22668,9 +22130,9 @@ else
 
 
 ////////////////////////////////
-// funca01dc
+// funca01dc()
+
 V1 = w[800b1740];
-800A01E4	nop
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 03;
@@ -22678,13 +22140,8 @@ V0 = V0 - V1;
 V1 = w[800aefe4];
 V0 = V0 << 02;
 V0 = V0 + V1;
-V1 = w[V0 + 004c];
-800A020C	nop
-V0 = w[V1 + 0000];
-800A0214	nop
-V0 = V0 | 0080;
-800A021C	jr     ra 
-[V1 + 0000] = w(V0);
+V1 = w[V0 + 4c];
+[V1 + 0] = w(w[V1 + 0] | 0080);
 ////////////////////////////////
 
 

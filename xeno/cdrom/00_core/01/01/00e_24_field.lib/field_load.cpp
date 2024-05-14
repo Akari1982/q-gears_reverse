@@ -191,37 +191,31 @@ loop6f768:	; 8006F768
 
 struct_5c_p = w[800aefe4];
 number_of_entity = w[800aefe0];
-if( number_of_entity > 0 )
+for( int i = 0; i < number_of_entity; ++i )
 {
-    S1 = 0;
-    loop6f7d0:	; 8006F7D0
-        A0 = S1;
-        func7fe50(); // clear sprite and script entity allocated data
+    A0 = i;
+    func7fe50(); // clear sprite and script entity allocated data
 
-        // clear model data
-        if( ( hu[struct_5c_p + S1 * 5c + 58] & 0040 ) == 0 )
+    // clear model data
+    if( ( hu[struct_5c_p + i * 5c + 58] & 0040 ) == 0 )
+    {
+        model_struct = w[struct_5c_p + i * 5c + 0];
+
+        if( hu[struct_5c_p + i * 5c + 58] & 2000 )
         {
-            model_struct = w[struct_5c_p + S1 * 5c + 0];
-
-            if( hu[struct_5c_p + S1 * 5c + 58] & 2000 )
-            {
-                A0 = w[model_struct + 14];
-                func304e0(); // clear additional +8 and +c in parts data and restore original pointers.
-            }
-
-            A0 = w[model_struct + 4];
-            func2c9cc();
-
-            A0 = w[model_struct + 8];
-            system_memory_free(); // clear packets
-
-            A0 = model_struct;
-            system_memory_free();
+            A0 = w[model_struct + 14];
+            func304e0(); // clear additional +8 and +c in parts data and restore original pointers.
         }
 
-        S1 = S1 + 1;
-        V0 = S1 < number_of_entity;
-    8006F858	bne    v0, zero, loop6f7d0 [$8006f7d0]
+        A0 = w[model_struct + 4];
+        func2c9cc();
+
+        A0 = w[model_struct + 8];
+        system_memory_free(); // clear packets
+
+        A0 = model_struct;
+        system_memory_free();
+    }
 }
 
 field_distortion_deinit();

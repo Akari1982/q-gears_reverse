@@ -452,6 +452,20 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x46:
+            {
+                exp->Log( "-- 0x46()" );
+                pointer += 1;
+            }
+            break;
+
+            case 0x47:
+            {
+                exp->Log( "-- 0x47( ???=" + GetV80Variable( pointer + 2 ) + ", ???=" + GetV80Variable( pointer + 4 ) + " )" );
+                pointer += 6;
+            }
+            break;
+
             case 0x4a:
             {
                 exp->Log( "-- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )" );
@@ -538,6 +552,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x62:
+            {
+                exp->Log( "-- 0x62( actor_id=" + GetEVariable( pointer + 1 ) + " )" );
+                pointer += 2;
+            }
+            break;
+
             case 0x63:
             {
                 exp->Log( "-- 0x63( ???=" + GetVF80Variable( pointer + 1 ) + ", ???=" + GetVF40Variable( pointer + 3 ) + ", ???=" + GetVF20Variable( pointer + 5 ) + ", flag=" + GetU8Variable( pointer + 7 ) + " )" );
@@ -587,6 +608,22 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x73:
+            {
+                u8 type = GetU8( pointer + 1 );
+                if( type == 0 )
+                {
+                    exp->Log( "op73_ParticleCreateDefault( ???=" + GetU8Variable( pointer + 1 ) + " )" );
+                    pointer += 2;
+                }
+                else
+                {
+                    exp->Log( "op73_ParticleCreateDefault( ???=" + GetU8Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 2 ) + ", ???=" + GetV80Variable( pointer + 4 ) + ", ???=" + GetV80Variable( pointer + 6 ) + " )" );
+                    pointer += 8;
+                }
+            }
+            break;
+
             case 0x74:
             {
                 exp->Log( "op74_SoundPlayFixedVolume( sound_id=" + GetV80Variable( pointer + 1 ) + " )" );
@@ -633,6 +670,13 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0x87_SetProgress( progress=" + GetV80Variable( pointer + 1 ) + " )" );
                 pointer += 3;
+            }
+            break;
+
+            case 0x8b:
+            {
+                exp->Log( "-- 0x8B( check?=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
+                pointer += 5;
             }
             break;
 
@@ -789,6 +833,20 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0xC6()" );
                 pointer += 1;
+            }
+            break;
+
+            case 0xc7:
+            {
+                exp->Log( "opC7_CameraRotRight( steps=" + GetV80Variable( pointer + 1 ) + " )" );
+                pointer += 3;
+            }
+            break;
+
+            case 0xc8:
+            {
+                exp->Log( "opC8_CameraRotLeft( steps=" + GetV80Variable( pointer + 1 ) + " )" );
+                pointer += 3;
             }
             break;
 
@@ -1092,11 +1150,6 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "opFE61_MovieStartSync()" );
                     pointer += 1;
                 }
-                else if( eo_opcode == 0x63 )
-                {
-                    exp->Log( "-- 0xFE63()" );
-                    pointer += 5;
-                }
                 else if( eo_opcode == 0x67 )
                 {
                     exp->Log( "opFE67_MoviePlay2( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", start_frame=" + GetV80Variable( pointer + 5 ) + ", end_frame=" + GetV80Variable( pointer + 7 ) + ", flags=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 0xb ) + ", ???=" + GetV80Variable( pointer + 0xd ) + ", ???=" + GetV80Variable( pointer + 0xf ) + ", ???=" + GetV80Variable( pointer + 0x11 ) + " )" );
@@ -1107,59 +1160,49 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE69( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
                     pointer += 8;
                 }
-                else if( eo_opcode == 0x73 )
-                {
-                    exp->Log( "-- 0xFE73()" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x75 )
-                {
-                    exp->Log( "-- 0xFE75()" );
-                    pointer += 4;
-                }
                 else if( eo_opcode == 0x8f )
                 {
-                    exp->Log( "-- 0xFE8F_ParticleSystemInit1( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
+                    exp->Log( "opFE8F_ParticleSystemInit1( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
                     pointer += 8;
                 }
                 else if( eo_opcode == 0x90 )
                 {
-                    exp->Log( "-- 0xFE90_ParticleInitBase( particle_id=" + GetV80Variable( pointer + 1 ) + ", number_of_sprites=" + GetV80Variable( pointer + 3 ) + ", wait=" + GetV80Variable( pointer + 5 ) + ", ttl=" + GetV80Variable( pointer + 7 ) + " )" );
+                    exp->Log( "opFE90_ParticleInitBase( particle_id=" + GetV80Variable( pointer + 1 ) + ", number_of_sprites=" + GetV80Variable( pointer + 3 ) + ", wait=" + GetV80Variable( pointer + 5 ) + ", ttl=" + GetV80Variable( pointer + 7 ) + " )" );
                     pointer += 9;
                 }
                 else if( eo_opcode == 0x91 )
                 {
-                    exp->Log( "-- 0xFE91_ParticlePos( x=" + GetVF80Variable( pointer + 1 ) + ", y=" + GetVF40Variable( pointer + 3 ) + ", z=" + GetVF20Variable( pointer + 5 ) + ", speed_x=" + GetVF10Variable( pointer + 7 ) + ", speed_y=" + GetVF08Variable( pointer + 9 ) + ", speed_z=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
+                    exp->Log( "opFE91_ParticlePos( x=" + GetVF80Variable( pointer + 1 ) + ", y=" + GetVF40Variable( pointer + 3 ) + ", z=" + GetVF20Variable( pointer + 5 ) + ", speed_x=" + GetVF10Variable( pointer + 7 ) + ", speed_y=" + GetVF08Variable( pointer + 9 ) + ", speed_z=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
                     pointer += 14;
                 }
                 else if( eo_opcode == 0x92 )
                 {
-                    exp->Log( "-- 0xFE92_ParticleSpeed( speed=" + GetVF80Variable( pointer + 1 ) + ", acc_x=" + GetVF40Variable( pointer + 3 ) + ", acc_y=" + GetVF20Variable( pointer + 5 ) + ", acc_z=" + GetVF10Variable( pointer + 7 ) + ", rand_start=" + GetVF08Variable( pointer + 9 ) + ", rand_speed=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
+                    exp->Log( "opFE92_ParticleSpeed( speed=" + GetVF80Variable( pointer + 1 ) + ", acc_x=" + GetVF40Variable( pointer + 3 ) + ", acc_y=" + GetVF20Variable( pointer + 5 ) + ", acc_z=" + GetVF10Variable( pointer + 7 ) + ", rand_start=" + GetVF08Variable( pointer + 9 ) + ", rand_speed=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
                     pointer += 14;
                 }
                 else if( eo_opcode == 0x93 )
                 {
-                    exp->Log( "-- 0xFE93( s_wait=" + GetV80Variable( pointer + 1 ) + ", var2=" + GetV80Variable( pointer + 3 ) + ", sprite_id=" + GetV80Variable( pointer + 5 ) + ", var4=" + GetV80Variable( pointer + 7 ) + ", var5=" + GetV80Variable( pointer + 9 ) + " )" );
+                    exp->Log( "opFE93_ParticleWaitTtl( s_wait=" + GetV80Variable( pointer + 1 ) + ", var2=" + GetV80Variable( pointer + 3 ) + ", sprite_id=" + GetV80Variable( pointer + 5 ) + ", var4=" + GetV80Variable( pointer + 7 ) + ", var5=" + GetV80Variable( pointer + 9 ) + " )" );
                     pointer += 11;
                 }
                 else if( eo_opcode == 0x94 )
                 {
-                    exp->Log( "-- 0xFE94_ParticleTranslation( trans_x=" + GetVF80Variable( pointer + 1 ) + ", trans_y=" + GetVF40Variable( pointer + 3 ) + ", trans_add_x=" + GetVF20Variable( pointer + 5 ) + ", trans_add_y=" + GetVF10Variable( pointer + 7 ) + ", flag=" + GetFVariable( pointer + 9 ) + " )" );
+                    exp->Log( "opFE94_ParticleTranslation( trans_x=" + GetVF80Variable( pointer + 1 ) + ", trans_y=" + GetVF40Variable( pointer + 3 ) + ", trans_add_x=" + GetVF20Variable( pointer + 5 ) + ", trans_add_y=" + GetVF10Variable( pointer + 7 ) + ", flag=" + GetFVariable( pointer + 9 ) + " )" );
                     pointer += 10;
                 }
                 else if( eo_opcode == 0x95 )
                 {
-                    exp->Log( "-- 0xFE95_ParticleColour( r=" + GetVF80Variable( pointer + 1 ) + ", g=" + GetVF40Variable( pointer + 3 ) + ", b=" + GetVF20Variable( pointer + 5 ) + ", r_add=" + GetVF10Variable( pointer + 7 ) + ", g_add=" + GetVF10Variable( pointer + 9 ) + ", b_add=" + GetVF10Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
+                    exp->Log( "opFE95_ParticleColour( r=" + GetVF80Variable( pointer + 1 ) + ", g=" + GetVF40Variable( pointer + 3 ) + ", b=" + GetVF20Variable( pointer + 5 ) + ", r_add=" + GetVF10Variable( pointer + 7 ) + ", g_add=" + GetVF10Variable( pointer + 9 ) + ", b_add=" + GetVF10Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
                     pointer += 14;
                 }
                 else if( eo_opcode == 0x96 )
                 {
-                    exp->Log( "-- 0xFE96_ParticleCreate()" );
+                    exp->Log( "opFE96_ParticleCreate()" );
                     pointer += 1;
                 }
                 else if( eo_opcode == 0x97 )
                 {
-                    exp->Log( "-- 0xFE97_ParticleReset( all=" + GetU8Variable( pointer + 1 ) + " )" );
+                    exp->Log( "opFE97_ParticleReset( all=" + GetU8Variable( pointer + 1 ) + " )" );
                     pointer += 2;
                 }
                 else if( eo_opcode == 0x99 )
@@ -1204,7 +1247,7 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( eo_opcode == 0xa5 )
                 {
-                    exp->Log( "-- 0xFEA5_ParticleRenderSettings( use_speed=" + GetV80Variable( pointer + 1 ) + ", settings=" + GetV80Variable( pointer + 3 ) + ", rot_z=" + GetV80Variable( pointer + 5 ) + " )" );
+                    exp->Log( "opFEA5_ParticleRenderSettings( use_speed=" + GetV80Variable( pointer + 1 ) + ", settings=" + GetV80Variable( pointer + 3 ) + ", rot_z=" + GetV80Variable( pointer + 5 ) + " )" );
                     pointer += 7;
                 }
                 else if( eo_opcode == 0xa7 )
@@ -1219,7 +1262,7 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( eo_opcode == 0xbd )
                 {
-                    exp->Log( "-- 0xFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )" );
+                    exp->Log( "opFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 7;
                 }
                 else if( eo_opcode == 0xbe )

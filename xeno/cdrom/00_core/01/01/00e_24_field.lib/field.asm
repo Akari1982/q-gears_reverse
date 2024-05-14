@@ -584,7 +584,7 @@
 // func861bc
 800861BC-80086244
 ////////////////////////////////
-// field_event_op73
+// field_event_op73_particle_create_default
 80086248-8008635C
 ////////////////////////////////
 // func86360
@@ -713,7 +713,7 @@
 // field_event_opFEC2
 80087C48-80087D60
 ////////////////////////////////
-// func87d64
+// field_event_opFE8F_particle_system_init_1
 80087D64-80087E74
 ////////////////////////////////
 // func87e78
@@ -722,43 +722,43 @@
 // func87f90
 80087F90-80088138
 ////////////////////////////////
-// 0xFEBD_ParticleSpawnSettings
+// field_event_opFEBD_particle_spawn_settings
 8008813C-800881EC
 ////////////////////////////////
-// 0xFEA5_ParticleRenderSettings
+// field_event_opFEA5_particle_render_settings
 800881F0-800882C8
 ////////////////////////////////
-// func882cc
+// field_event_opFEC8
 800882CC-800882E8
 ////////////////////////////////
-// func882ec
+// field_event_opFEC9
 800882EC-80088308
 ////////////////////////////////
 // func8830c
 8008830C-800885D4
 ////////////////////////////////
-// 0xFE90_ParticleInitBase
+// field_event_opFE90_particle_init_base
 800885D8-80088744
 ////////////////////////////////
-// 0xFE91_ParticlePos
+// field_event_opFE91_particle_pos
 80088748-80088944
 ////////////////////////////////
-// 0xFE92_ParticleSpeed
+// field_event_opFE92_particle_speed
 80088948-80088B44
 ////////////////////////////////
-// func88b48
+// field_event_opFE93_particle_wait_ttl
 80088B48-80088CA4
 ////////////////////////////////
-// 0xFE94_ParticleTranslation
+// field_event_opFE94_particle_translation
 80088CA8-80088E50
 ////////////////////////////////
-// 0xFE95_ParticleColour
+// field_event_opFE95_particle_colour
 80088E54-80089050
 ////////////////////////////////
-// 0xFE96_ParticleCreate
+// field_event_opFE96_particle_create
 80089054-800890B4
 ////////////////////////////////
-// 0xFE97_ParticleReset
+// field_event_opFE97_particle_reset
 800890B8-80089124
 ////////////////////////////////
 // func89128
@@ -1205,7 +1205,7 @@
 // func8f400
 8008F400-8008F4D4
 ////////////////////////////////
-// func8f4d8
+// field_event_op62
 8008F4D8-8008F560
 ////////////////////////////////
 // field_event_op63
@@ -1307,7 +1307,7 @@
 // func9171c
 8009171C-800917B8
 ////////////////////////////////
-// func917bc
+// field_event_opDA
 800917BC-800919B4
 ////////////////////////////////
 // func919b8
@@ -1337,7 +1337,7 @@
 // func91d3c
 80091D3C-80091DD8
 ////////////////////////////////
-// 0x46
+// field_event_op46
 80091DDC-80091E64
 ////////////////////////////////
 // func91e68
@@ -1349,7 +1349,7 @@
 // func923d0
 800923D0-80092470
 ////////////////////////////////
-// 0x47
+// field_event_op47
 80092474-80092514
 ////////////////////////////////
 // func92518
@@ -1612,7 +1612,7 @@
 // func957e8
 800957E8-80095890
 ////////////////////////////////
-// func95894
+// field_event_op8B
 80095894-800958EC
 ////////////////////////////////
 // func958f0
@@ -1958,10 +1958,10 @@
 // func9ad7c
 8009AD7C-8009ADF4
 ////////////////////////////////
-// 0xC7_CameraRotateRight
+// field_event_opC7_camera_rotate_right
 8009ADF8-8009AE54
 ////////////////////////////////
-// 0xC8_CameraRotateLeft
+// field_event_opC8_camera_rotate_left
 8009AE58-8009AEB4
 ////////////////////////////////
 // 0xB5_CameraSetDirection
