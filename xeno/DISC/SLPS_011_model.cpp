@@ -4,52 +4,44 @@
 // sets global offsets for model file and return number of parts
 // A0 - pointer to model 3d data file
 
-offset_to_file = A0;
-T0 = w[offset_to_file + 4];
-T2 = w[offset_to_file + 0];
+file = A0;
+T0 = w[file + 4];
+parts_n = w[file + 0];
 
 if( ( T0 & 1 ) == 0 )
 {
-    [offset_to_file + 4] = w(T0 | 1);
-    if( T2 > 0 )
+    [file + 4] = w(T0 | 1);
+
+    for( int i = 0; i < parts_n; ++i ) // go through all parts
     {
-        A0 = offset_to_file + 10;
+        [file + 10 + i * 38 +  8] = w(w[file + 10 + i * 38 +  8] + file); // vertex
+        [file + 10 + i * 38 +  c] = w(w[file + 10 + i * 38 +  c] + file); // normals
+        [file + 10 + i * 38 + 10] = w(w[file + 10 + i * 38 + 10] + file); // mesh
+        [file + 10 + i * 38 + 14] = w(w[file + 10 + i * 38 + 14] + file); // tex coords
 
-        T0 = 0;
-        loop2c224:	; 8002C224
-            [A0 + 8] = w(w[A0 + 8] + offset_to_file);
-            [A0 + c] = w(w[A0 + c] + offset_to_file);
-            [A0 + 10] = w(w[A0 + 10] + offset_to_file)
-            [A0 + 14] = w(w[A0 + 14] + offset_to_file);
-
-            V1 = w[A0 + 1c];
-            if( V1 != 0 )
+        V1 = w[file + 10 + i * 38 + 1c];
+        if( V1 != 0 )
+        {
+            V0 = V1 + file;
+            [file + 10 + i * 38 + 1c] = w(V0);
+            A2 = w[V0];
+            V1 = V0 + 4;
+            if( A2 != -1 )
             {
-                V0 = V1 + offset_to_file;
-                [A0 + 1c] = w(V0);
-                A2 = w[V0];
-                V1 = V0 + 4;
-                if( A2 != -1 )
-                {
-                    A1 = V1 + A2 * c;
+                A1 = V1 + A2 * c;
 
-                    loop2c288:	; 8002C288
-                        [A1 + 4] = w(w[A1 + 4] + offset_to_file);
-                        [A1 + 8] = w(w[A1 + 8] + offset_to_file);
-                        A1 = A1 - c;
-                        A2 = A2 - 1;
-                    8002C2A4	bne    a2, -1, loop2c288 [$8002c288]
-                }
+                loop2c288:	; 8002C288
+                    [A1 + 4] = w(w[A1 + 4] + file);
+                    [A1 + 8] = w(w[A1 + 8] + file);
+                    A1 = A1 - c;
+                    A2 = A2 - 1;
+                8002C2A4	bne    a2, -1, loop2c288 [$8002c288]
             }
-
-            A0 = A0 + 38;
-            T0 = T0 + 1;
-            V0 = T0 < T2;
-        8002C2B4	bne    v0, zero, loop2c224 [$8002c224]
+        }
     }
 }
 
-return T2;
+return parts_n;
 ////////////////////////////////
 
 

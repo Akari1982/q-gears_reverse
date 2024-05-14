@@ -760,226 +760,227 @@ A1 = 8006f184;
 
 func6fc6c(); // init values
 
+field_file = w[80059b70];
+
 // copy first 0x100 byte of field file
-A2 = w[80059b70]; // src field file
-A3 = 800b144c; // dst
-T0 = A2 + 100;
-while( A2 != T0 )
+src = field_file;
+dst = 800b144c; // dst
+while( src != ( field_file + 100 ) )
 {
-    [A3 + 0] = w(w[A2 + 0]);
-    [A3 + 4] = w(w[A2 + 4]);
-    [A3 + 8] = w(w[A2 + 8]);
-    [A3 + c] = w(w[A2 + c]);
-    A2 = A2 + 10;
-    A3 = A3 + 10;
+    [dst] = w(w[src]);
+    src = src + 4;
+    dst = dst + 4;
 }
 
-for( int i = 0; i < 4; ++i )
+// compas packets creation
 {
-    for( int j = 0; j < 4; ++j )
+    for( int i = 0; i < 4; ++i )
     {
-        A0 = 800afb90 + (i * 4 + j) * 70; // compass disc
-        A1 = j; // x id
-        A2 = i; // y id
-        A3 = 0; // tex id
-        field_compass_body_create_packets();
+        for( int j = 0; j < 4; ++j )
+        {
+            A0 = 800afb90 + (i * 4 + j) * 70; // compass disc
+            A1 = j; // x id
+            A2 = i; // y id
+            A3 = 0; // tex id
+            field_compass_body_create_packets();
+        }
     }
+
+    A0 = 800afb90 + 10 * 70; // compass letter
+    A1 = 4; // x id
+    A2 = 4; // y id
+    A3 = 1; // tex id
+    field_compass_body_create_packets();
+
+    A0 = 800afb90 + 11 * 70; // compass letter
+    A1 = 5; // x id
+    A2 = 5; // y id
+    A3 = 1; // tex id
+    field_compass_body_create_packets();
+
+    A0 = 800afb90 + 12 * 70; // compass letter
+    A1 = 6; // x id
+    A2 = 6; // y id
+    A3 = 1; // tex id
+    field_compass_body_create_packets();
+
+    A0 = 800afb90 + 13 * 70; // compass letter
+    A1 = 7; // x id
+    A2 = 7; // y id
+    A3 = 1; // tex id
+    field_compass_body_create_packets();
+
+    A0 = 800afb90 + 14 * 70; // compass arrow
+    A1 = 8; // x id
+    A2 = 8; // y id
+    A3 = 1; // tex id
+    field_compass_body_create_packets();
+
+    field_compass_shadow_create_packets();
 }
-
-A0 = 800afb90 + 10 * 70; // compass letter
-A1 = 4; // x id
-A2 = 4; // y id
-A3 = 1; // tex id
-field_compass_body_create_packets();
-
-A0 = 800afb90 + 11 * 70; // compass letter
-A1 = 5; // x id
-A2 = 5; // y id
-A3 = 1; // tex id
-field_compass_body_create_packets();
-
-A0 = 800afb90 + 12 * 70; // compass letter
-A1 = 6; // x id
-A2 = 6; // y id
-A3 = 1; // tex id
-field_compass_body_create_packets();
-
-A0 = 800afb90 + 13 * 70; // compass letter
-A1 = 7; // x id
-A2 = 7; // y id
-A3 = 1; // tex id
-field_compass_body_create_packets();
-
-A0 = 800afb90 + 14 * 70; // compass arrow
-A1 = 8; // x id
-A2 = 8; // y id
-A3 = 1; // tex id
-field_compass_body_create_packets();
-
-field_compass_shadow_create_packets();
 
 // additional textures extraction (part 0 of field file)
-V0 = w[80059b70];
-A0 = w[V0 + 10c] + 10;
-A1 = 1;
-system_memory_allocate();
-S2 = V0;
-
-V0 = w[80059b70];
-A0 = V0 + w[V0 + 130];
-A1 = S2;
-system_extract_archive();
-
-S3 = w[S2];
-for( int i = 0; i < S3; ++i )
 {
-    A0 = S2 + w[S2 + 4 + i * 4];
-    func76888(); // load tim by tim file pointer
+    A0 = w[field_file + 10c] + 10;
+    A1 = 1;
+    system_memory_allocate();
+    S2 = V0;
+
+    A0 = field_file + w[field_file + 130];
+    A1 = S2;
+    system_extract_archive();
+
+    S3 = w[S2];
+    for( int i = 0; i < S3; ++i )
+    {
+        A0 = S2 + w[S2 + 4 + i * 4];
+        func76888(); // load tim by tim file pointer
+    }
 }
 
 // sprite texture extraction (part 4 of field file)
-V0 = w[80059b70];
-A0 = w[V0 + 11c] + 10;
-A1 = 0;
-system_memory_allocate();
-S4 = V0;
-
-V0 = w[80059b70];
-A0 = V0 + w[V0 + 140];
-A1 = S4;
-system_extract_archive();
-
-number_of_textures = w[S4];
-for( int i = 0; i < number_of_textures; ++i )
 {
-    if( h[800b144c + i * 8 + 6] == 0 )
+    A0 = w[field_file + 11c] + 10;
+    A1 = 0;
+    system_memory_allocate();
+    S4 = V0;
+
+    A0 = field_file + w[field_file + 140];
+    A1 = S4;
+    system_extract_archive();
+
+    number_of_textures = w[S4];
+    for( int i = 0; i < number_of_textures; ++i )
     {
-        A0 = S4 + w[S4 + 4 + i * 4]; // texture pack pointer
-        A1 = hu[800b144c + i * 8 + 0]; // x offset in vram to load to
-        A2 = hu[800b144c + i * 8 + 2]; // y pos in vram to load to
-        func228fc();
+        if( h[800b144c + i * 8 + 6] == 0 )
+        {
+            A0 = S4 + w[S4 + 4 + i * 4]; // texture pack pointer
+            A1 = hu[800b144c + i * 8 + 0]; // x offset in vram to load to
+            A2 = hu[800b144c + i * 8 + 2]; // y pos in vram to load to
+            func228fc();
+        }
+    }
+
+    A0 = 0; // wait for termination
+    system_draw_sync();
+
+    A0 = S2;
+    system_memory_free();
+
+    A0 = S4;
+    system_memory_free();
+}
+
+// 3d field model extraction (part 2 of field file)
+{
+    A0 = w[field_file + 114] + 10;
+    A1 = 0;
+    system_memory_allocate();
+    [800aefe8] = w(V0);
+
+    A0 = field_file + w[field_file + 130 + 2 * 4];
+    A1 = V0;
+    system_extract_archive();
+
+    S2 = w[800aefe8];
+    for( int i = 0; i < w[S2]; ++i ) // number of models
+    {
+        A0 = S2 + w[S2 + 4 + i * 4]; //offset to model
+        func2c1f8(); // sets global offsets for model file and return number of parts
     }
 }
 
-A0 = 0; // wait for termination
-system_draw_sync();
-
-A0 = S2;
-system_memory_free();
-
-A0 = S4;
-system_memory_free();
-
-// 3d model extraction (part 2 of field file)
-V0 = w[80059b70];
-A0 = w[V0 + 114] + 10;
-A1 = 0;
-system_memory_allocate();
-[800aefe8] = w(V0);
-
-V1 = w[80059b70];
-A0 = V1 + w[V1 + 138];
-A1 = V0;
-system_extract_archive();
-
-S2 = w[800aefe8];
-for( int i = 0; i < w[S2]; ++i ) // number of models
+// array of encounters (part 6 of field file)
 {
-    A0 = S2 + w[S2 + 4 + i * 4]; //offset to model
-    func2c1f8(); // sets global offsets for model file and return number of parts
+    A0 = field_file + w[field_file + 130 + 6 * 6];
+    A1 = 80064f6c; // where
+    system_extract_archive();
 }
-
-A1 = w[80059b70];
-A0 = A1 + w[A1 + 148];
-A1 = 80064f6c; // where
-system_extract_archive();
 
 // events extraction (part 5 of field file)
-V0 = w[80059b70];
-A0 = w[V0 + 10c + 5 * 5] + 10;
-A1 = 0;
-system_memory_allocate();
-[800ad0d0] = w(V0);
+{
+    A0 = w[field_file + 10c + 5 * 4] + 10;
+    A1 = 0;
+    system_memory_allocate();
+    [800ad0d0] = w(V0);
 
-V1 = w[80059b70];
-A0 = V1 + w[V1 + 130 + 5 * 4];
-A1 = V0;
-system_extract_archive();
+    A0 = field_file + w[field_file + 130 + 5 * 4];
+    A1 = V0;
+    system_extract_archive();
 
-V0 = w[800ad0d0];
-V1 = w[V0 + 80];
-[800ad0d4] = w(V1); // number of entities
-[800ad0d8] = w(V0 + 84 + V1 * 40); // pointer to events data
+    V0 = w[800ad0d0];
+    V1 = w[V0 + 80];
+    [800ad0d4] = w(V1); // number of entities
+    [800ad0d8] = w(V0 + 84 + V1 * 40); // pointer to events data
+}
 
 // triggers extraction (part 8 of field file)
-A0 = w[80059b70];
-A0 = w[A0 + 12c] + 10;
-A1 = 0;
-system_memory_allocate();
-[800ad0cc] = w(V0);
+{
+    A0 = w[field_file + 12c] + 10;
+    A1 = 0;
+    system_memory_allocate();
+    [800ad0cc] = w(V0);
 
-V1 = w[80059b70];
-A0 = V1 + w[V1 + 150];
-A1 = V0;
-system_extract_archive();
+    A0 = field_file + w[field_file + 150];
+    A1 = V0;
+    system_extract_archive();
+}
 
 // dialogs extraction (part 7 of field file)
-V0 = w[80059b70];
-A0 = w[V0 + 128] + 10;
-A1 = 0;
-system_memory_allocate();
-[800ad0c8] = w(V0);
+{
+    A0 = w[field_file + 128] + 10;
+    A1 = 0;
+    system_memory_allocate();
+    [800ad0c8] = w(V0);
 
-V1 = w[80059b70];
-A0 = V1 + w[V1 + 14c];
-A1 = V0;
-system_extract_archive();
+    A0 = field_file + w[field_file + 14c];
+    A1 = V0;
+    system_extract_archive();
+}
 
 // walkmesh extraction (part 1 of field file)
-V0 = w[80059b70];
-A0 = w[V0 + 110] + 10;
-A1 = 0;
-system_memory_allocate();
-[800aefec] = w(V0);
-
-V1 = w[80059b70];
-A0 = V1 + w[V1 + 134];
-A1 = V0;
-system_extract_archive();
-
-V0 = w[800aefec];
-[800af028] = h(w[V0]); // block count
-
-S2 = w[800aefec] + 4;
-
-for( int i = 0; i < 4; ++i )
 {
-    [800af018 + i * 4] = w(w[S2] / e); // number of triangles
+    A0 = w[field_file + 110] + 10;
+    A1 = 0;
+    system_memory_allocate();
+    [800aefec] = w(V0);
+
+    A0 = field_file + w[field_file + 134];
+    A1 = V0;
+    system_extract_archive();
+
+    V0 = w[800aefec];
+    [800af028] = h(w[V0]); // block count
+
+    S2 = w[800aefec] + 4;
+
+    for( int i = 0; i < 4; ++i )
+    {
+        [800af018 + i * 4] = w(w[S2] / e); // number of triangles
+        S2 = S2 + 4;
+    }
+
+    [800aeff4] = w(w[800aefec] + w[S2]); // material data
     S2 = S2 + 4;
+
+    blocks = h[800af028];
+    for( int i = 0; i < blocks; ++i )
+    {
+        [800aeff8 + i * 4] = w(w[800aefec] + w[S2 + 0]); // block_start
+        [800af008 + i * 4] = w(w[800aefec] + w[S2 + 4]; // block_vertex
+        S2 = S2 + 8;
+    }
+
+    [800af1e4] = w((w[800aeff8] - w[800aeff4]) / 4); // number of materials
 }
-
-[800aeff4] = w(w[800aefec] + w[S2]); // material data
-S2 = S2 + 4;
-
-blocks = h[800af028];
-for( int i = 0; i < blocks; ++i )
-{
-    [800aeff8 + i * 4] = w(w[800aefec] + w[S2 + 0]); // block_start
-    [800af008 + i * 4] = w(w[800aefec] + w[S2 + 4]; // block_vertex
-    S2 = S2 + 8;
-}
-
-[800af1e4] = w((w[800aeff8] - w[800aeff4]) / 4); // number of materials
 
 // sprite data extraction (part 3 of field file)
-V1 = w[80059b70];
-A0 = w[V1 + 118] + 10;
+A0 = w[field_file + 118] + 10;
 A1 = 0;
 system_memory_allocate();
 [800aeff0] = w(V0);
 
-V1 = w[80059b70];
-A0 = V1 + w[V1 + 13c];
+A0 = field_file + w[field_file + 13c];
 A1 = V0;
 system_extract_archive();
 
@@ -988,12 +989,11 @@ system_extract_archive();
 [800aeeb4] = h(1);
 [800aeeb6] = h(1);
 
-A0 = w[80059b70] + 154;
+A0 = field_file + 154;
 func6f47c();
 
 // set up entities
-V0 = w[80059b70];
-number_of_entities = hu[V0 + 18c];
+number_of_entities = hu[field_file + 18c];
 [800aefe0] = w(number_of_entities);
 
 A0 = number_of_entities * 5c;
@@ -1013,7 +1013,7 @@ if( number_of_entities > 0 )
         V0 = S4 < number_of_entities * 5c;
     800709FC	bne    v0, zero, loop709f0 [$800709f0]
 
-    init_data = w[80059b70] + 190;
+    init_data = field_file + 190;
 
     for( entity_id = 0; entity_id < number_of_entities; ++entity_id )
     {
@@ -1098,10 +1098,10 @@ field_message_init();
 
 field_fade_both_init();
 
-A0 = w[80059b70];
+A0 = field_file;
 system_memory_mark_removable();
 
-A0 = w[80059b70];
+A0 = field_file;
 system_memory_free();
 
 A0 = 5; // MIYA
