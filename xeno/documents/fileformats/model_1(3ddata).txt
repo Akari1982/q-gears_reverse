@@ -16,7 +16,7 @@ parts header
 +10 [][][][] offset to polygons block.
 +14 [][][][] offset to texture coords block.
 +18 [][][][] we store here pointer to allocated memory for normals for polygons lighting with +30 size if +00 & 1 not set.
-+1c [][][][] some offset (if exist).
++1c [][][][] MIMe offset (if exist).
 +20 [][]     x1.
 +22 [][]     y1.
 +24 [][]     z1.
@@ -76,9 +76,16 @@ all textured poly
 
 
 
-+1c sub file format
+MIMe (+1c sub file format)
 +00 [][][][] number of records in subfile
 
 +00 [][][][] ???
 +04 [][][][] some offset
 +08 [][][][] some offset
+
+
+MIMe Work
+size number of MIM * 0x20 + 0x14
++0 [][][][] pointer to part header
++4 [][][][] offset to vertex block
++8 [][][][] offset to additional vertex block

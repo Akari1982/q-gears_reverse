@@ -1360,7 +1360,7 @@ IR0 = A1;
 
 
 ////////////////////////////////
-// system_gte_calculate_normal_color_by_vector_only()
+// system_psyq_normal_color()
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
@@ -1371,7 +1371,7 @@ gte_NCS(); // Normal color v0.
 
 
 ////////////////////////////////
-// system_gte_calculate_normals_color_by_3vectors_only()
+// system_psyq_normal_color_3()
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
@@ -1427,7 +1427,9 @@ T2 = w[SP + 001c];
 
 
 ////////////////////////////////
-// system_gte_calculate_normal_color_by_vector_and_color()
+// system_psyq_normal_color_col()
+
+// Find a local color from a normal vector.
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
@@ -1439,7 +1441,7 @@ gte_NCCS(); // Normal color col. v0.
 
 
 ////////////////////////////////
-// system_gte_calculate_normals_color_by_3vectors_and_color()
+// system_psyq_normal_color_col_3()
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];

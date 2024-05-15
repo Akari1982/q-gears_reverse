@@ -1063,9 +1063,9 @@ func6f47c();
             }
             else
             {
-                [struct_5c + i * 5c + 50] = h(0);
-                [struct_5c + i * 5c + 52] = h(0);
-                [struct_5c + i * 5c + 54] = h(0);
+                [struct_5c + i * 5c + 50] = h(0); // rot x
+                [struct_5c + i * 5c + 52] = h(0); // rot y
+                [struct_5c + i * 5c + 54] = h(0); // rot z
                 [struct_5c + i * 5c + 58] = h(hu[struct_5c + i * 5c + 58] | 0020);
             }
 

@@ -336,8 +336,10 @@ return 1;
 // A2 == 3 - calculate lighing and store it
 
 part_data = A0;
-packet_data = A1; // pointer to allocated memory for packets
+packet_data = A1;
 light_flags = A2;
+
+[80058ac0] = w(packet_data);
 
 // allocate place for lighting
 if( ( hu[part_data + 0] & 0001 ) == 0 ) // if buffer not allocated
@@ -357,8 +359,8 @@ if( ( hu[part_data + 0] & 0001 ) == 0 ) // if buffer not allocated
     }
 }
 
-polygon_data = w[part_data + 10];
-texture_data = w[part_data + 14];
+[80058bc4] = w(w[part_data + 10]); // polygon_data
+[80058bd4] = w(w[part_data + 14]); // texture_data
 
 [80058bd8] = w(w[part_data + 8]); // offset to vertex block
 [80058bc8] = w(w[part_data + c]); // offset to some other vectors block used in gourad shaded poly, maybe normals
@@ -411,34 +413,31 @@ else if( light_flags == 3 )
 
 for( int i = hu[part_data + 6] - 1; i != -1; --i ) // number of polygons block
 {
+    polygon_data = w[80058bc4];
     type_of_polygons = bu[polygon_data + 0];
-    polygon_data += 4;
+    ponygon_n = h[polygon_data + 2]
+    [80058bc4] = w(polygon_data + 4);
 
-    for( int j = h[polygon_data + 2] - 1; j != -1; --j ) // number of polygons
+    for( int j = ponygon_n - 1; j != -1; --j )
     {
-        A0 = texture_data;
-        A1 = polygon_data;
-        A2 = S5;
-        8002C8A4	jalr   w[8004f4f4 + type_of_polygons * 28 + 18] ra // "load_poly_" + type + "_18" (create packet)
+        A0 = w[80058bd4]; // texture_data
+        A1 = w[80058bc4] // polygon_data
+        A2 = S5; // lighting type
+        8002C8A4	jalr   w[8004f4f4 + type_of_polygons * 28 + 18] ra // system_model_poly_create_packet_X
 
         if( V0 != 0 )
         {
-            polygon_data += w[8004f4f4 + type_of_polygons * 28 + 1c]; // polygon data
-            texture_data += w[8004f4f4 + type_of_polygons * 28 + 20]; // tex data
-            packet_data += w[8004f4f4 + type_of_polygons * 28 + 24]; // packets
+            [80058bc4] = w(w[80058bc4] + w[8004f4f4 + type_of_polygons * 28 + 1c]); // polygon_data
+            [80058ac0] = w(w[80058ac0] + w[8004f4f4 + type_of_polygons * 28 + 24]); // packets
+            [80058bd4] = w(w[80058bd4] + w[8004f4f4 + type_of_polygons * 28 + 20]); // texture_data
         }
         else
         {
             ++j;
-            texture_data += 4;
+            [80058bd4] = w(w[80058bd4] + 4); // texture_data
         }
     }
 }
-
-// this not needed, I just add this in case this data used somewhere else
-[80058bc4] = w(polygon_data);
-[80058bd4] = w(texture_data);
-[80058ac0] = w(packet_data);
 
 system_reset_tex_page_and_clut_default_usage();
 ////////////////////////////////
@@ -528,316 +527,6 @@ system_graphic_get_clut_by_param();
 
 
 ////////////////////////////////
-// system_set_texture_page_settings
-[800589a8] = h(hu[A0 + 0]);
-
-if (w[8004f7ac] == 1)
-{
-    [800589a8] = h(w[800589b0] | (hu[[800589a8]] & ffe0));
-}
-else if (V1 == 2)
-{
-    [800589a8] = h(w[800589b0]);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_set_clut_settings
-[800589ac] = h(hu[A0 + 0]);
-
-if (w[8004f7b0] == 0)
-{
-    [800589ac] = h(w[800589b4] | (hu[[800589ac]] & 000f));
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2cb74
-A1 = bu[A0 + 3];
-if( A1 == c4 )
-{
-    system_set_texture_page_settings;
-    return 0;
-}
-if( A1 == c8 )
-{
-    system_set_clut_settings;
-    return 0;
-}
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_00_18()
-// A2 = 0 - not calculate light
-//      1 - calculate light but not store it
-//      3 - calculate light and store it
-//      4 - use calculated stored light
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-packet = w[80058ac0];
-
-[packet + 3] = b(04);
-
-if( A2 & 1 )
-{
-    if( A2 & 2 ) // calculate notmal and store it
-    {
-        V1 = w[80058b34]; // precalculated normal pointer
-        [V1] = w(w[texture_data_offset + 0]);
-        [80058b34] = w(w[80058b34] + 4);
-
-        // pointers to vertexes
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = w[80058b34]; // store result here
-        system_calculate_normal_for_lighting;
-
-        A0 = w[80058b34];
-        A1 = texture_data_offset;
-        A2 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_and_color;
-
-        [80058b34] = w(w[80058b34] + 8);
-        [packet + 7] = b(bu[texture_data_offset + 3]);
-    }
-    else // calculate and use normal but not store it
-    {
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = SP + 10;
-        system_calculate_normal_for_lighting;
-
-        A0 = SP + 10;
-        A1 = texture_data_offset;
-        A2 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_and_color;
-
-        [packet + 7] = b(bu[texture_data_offset + 3]);
-    }
-}
-else if( A2 & 4 ) // use stored normal
-{
-    A0 = w[80058b34] + 4;
-    A1 = texture_data_offset;
-    A2 = packet + 4;
-    [80058b34] = w(A0);
-    system_gte_calculate_normal_color_by_vector_and_color;
-
-    [80058b34] = w(w[80058b34] + 8);
-    [packet + 7] = b(bu[texture_data_offset + 3]);
-}
-else // not calculate light
-{
-    [packet + 4] = w(w[texture_data_offset + 0]);
-}
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_04_18
-
-texture_data_offset = A0;
-packet = w[80058ac0]; // place for packets
-[packet + 3] = b(04);
-[packet + 4] = w(w[texture_data_offset + 0]);
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_08_18
-// A2 = 0 - not calculate light
-//      1 - calculate light but not store it
-//      3 - calculate light and store it
-//      4 - use calculated stored light
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-packet = w[80058ac0];
-
-[packet + 3] = b(04);
-
-if( A2 & 1 )
-{
-    if( A2 & 2 ) // calculate normal and store it
-    {
-        V1 = w[80058b34]; // precalculated normal pointer
-        [V1] = w(w[texture_data_offset + 0]);
-        [80058b34] = w(w[80058b34] + 4);
-
-        // pointers to vertexes
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = w[80058b34]; // store result here
-        system_calculate_normal_for_lighting;
-
-        A0 = w[80058b34];
-        A1 = texture_data_offset;
-        A2 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_and_color;
-
-        [80058b34] = w(w[80058b34] + 8);
-        [packet + 7] = b(bu[texture_data_offset + 3]);
-    }
-    else // calculate and use normal but not store it
-    {
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = SP + 10;
-        system_calculate_normal_for_lighting;
-
-        A0 = SP + 10;
-        A1 = texture_data_offset;
-        A2 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_and_color;
-
-        [packet + 7] = b(bu[texture_data_offset + 3]);
-    }
-}
-else if( A2 & 4 ) // use stored normal
-{
-    A0 = w[80058b34] + 4;
-    A1 = texture_data_offset;
-    A2 = packet + 4;
-    [80058b34] = w(A0);
-    system_gte_calculate_normal_color_by_vector_and_color;
-
-    [80058b34] = w(w[80058b34] + 8);
-    [packet + 7] = b(bu[texture_data_offset + 3]);
-}
-else // not calculate light
-{
-    [packet + 4] = w(w[texture_data_offset + 0]);
-}
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_0c_18
-
-texture_data_offset = A0;
-packet = w[80058ac0]; // place for packets
-[packet + 3] = b(05);
-[packet + 4] = w(w[texture_data_offset + 0]);
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_0d_18
-texture_data_offset = A0;
-
-A0 = texture_data_offset;
-func2cb74;
-if( V0 == 0 )
-{
-    return 0;
-}
-
-packet = w[80058ac0]; // place for packets
-[packet +  3] = b(09);
-[packet +  4] = w(w[texture_data_offset + 0]);
-[packet +  c] = w((hu[800589ac] << 10) | hu[texture_data_offset + 4]); // clut and UV for vertex 1
-[packet + 14] = w((hu[800589a8] << 10) | hu[texture_data_offset + 6]);
-[packet + 1c] = h(hu[texture_data_offset + 8]);
-[packet + 24] = h(hu[texture_data_offset + a]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_0a_18
-// load_poly_0e_18
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-
-packet = w[80058ac0];
-[packet +  3] = b(08);
-
-A0 = w[80058bc8] + h[mesh_data_offset + 0] * 8;
-A1 = w[80058bc8] + h[mesh_data_offset + 2] * 8;
-A2 = w[80058bc8] + h[mesh_data_offset + 4] * 8;
-A3 = texture_data_offset;
-A4 = packet + 4;  // out0
-A5 = packet + c;  // out1
-A6 = packet + 14; // out2
-system_gte_calculate_normals_color_by_3vectors_and_color;
-
-A0 = w[80058bc8] + h[mesh_data_offset + 6] * 8;
-A1 = texture_data_offset;
-A2 = packet + 1c;
-system_gte_calculate_normal_color_by_vector_and_color;
-
-[packet + 7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_0b_18
-// load_poly_0f_18
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-
-A0 = texture_data_offset
-func2cb74; // check 0xc4 0xc8 in textures data
-if( V0 == 0 )
-{
-    return 0;
-}
-
-packet = w[80058ac0];
-[packet + 3] = b(0c);
-
-A0 = w[80058bc8] + h[mesh_data_offset + 0] * 8; // vertex data 1
-A1 = w[80058bc8] + h[mesh_data_offset + 2] * 8; // vertex data 2
-A2 = w[80058bc8] + h[mesh_data_offset + 4] * 8; // vertex data 3
-A3 = packet + 4;
-A4 = packet + 10;
-A5 = packet + 1c;
-system_gte_calculate_normals_color_by_3vectors_only;
-
-A0 = w[80058bc8] + h[mesh_data_offset + 6] * 8;
-A1 = packet + 28;
-system_gte_calculate_normal_color_by_vector_only;
-
-[packet +  c] = w((hu[800589ac] << 10) | hu[texture_data_offset + 4]); // clut and UV for vertex 1
-[packet + 18] = w((hu[800589a8] << 10) | hu[texture_data_offset + 6]);
-[packet + 24] = h(hu[texture_data_offset + 8]);
-[packet + 30] = h(hu[texture_data_offset + a]);
-[packet +  7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func2d164
 8002D164	addiu  sp, sp, $ffd0 (=-$30)
 [SP + 0028] = w(S2);
@@ -867,7 +556,7 @@ A0 = V0 + A0;
 A1 = A1 << 03;
 A1 = V0 + A1;
 A2 = A2 << 03;
-8002D1DC	jal    system_gte_calculate_normals_color_by_3vectors_and_color [$8004a128]
+8002D1DC	jal    system_psyq_normal_color_col_3 [$8004a128]
 A2 = V0 + A2;
 
 L2d1e4:	; 8002D1E4
@@ -876,7 +565,7 @@ A2 = S0 + 001c;
 A0 = h[S1 + 0006];
 V0 = w[80058bc8];
 A0 = A0 << 03;
-8002D1FC	jal    system_gte_calculate_normal_color_by_vector_and_color [$8004a108]
+8002D1FC	jal    system_psyq_normal_color_col [$8004a108]
 A0 = V0 + A0;
 V0 = bu[S2 + 0003];
 8002D208	nop
@@ -901,7 +590,7 @@ S2 = A0;
 [SP + 001c] = w(S1);
 S1 = A1;
 [SP + 0024] = w(RA);
-8002D248	jal    func2cb74 [$8002cb74]
+8002D248	jal    system_model_poly_parse_tex_and_clut_settings [$8002cb74]
 [SP + 0018] = w(S0);
 8002D250	beq    v0, zero, L2d320 [$8002d320]
 V0 = 000c;
@@ -922,13 +611,13 @@ A0 = V0 + A0;
 A1 = A1 << 03;
 A1 = V0 + A1;
 A2 = A2 << 03;
-8002D2A4	jal    system_gte_calculate_normals_color_by_3vectors_only [$8004a060]
+8002D2A4	jal    system_psyq_normal_color_3 [$8004a060]
 A2 = V0 + A2;
 A1 = S0 + 0028;
 A0 = h[S1 + 0006];
 V0 = w[80058bc8];
 A0 = A0 << 03;
-8002D2C0	jal    system_gte_calculate_normal_color_by_vector_only [$8004a044]
+8002D2C0	jal    system_psyq_normal_color [$8004a044]
 A0 = V0 + A0;
 V0 = hu[800589ac];
 V1 = hu[S2 + 0004];
@@ -966,256 +655,7 @@ SP = SP + 0028;
 
 
 
-////////////////////////////////
-// load_poly_09_18
-// A2 = 0 - not calculate light
-//      1 - calculate light but not store it
-//      3 - calculate light and store it
-//      4 - use calculated stored light
 
-texture_data_offset = A0;
-mesh_data_offset = A1;
-S2 = A2;
-
-A0 = texture_data_offset
-func2cb74; // check 0xc4 0xc8 in textures data
-if( V0 == 0 )
-{
-    return 0;
-}
-
-packet = w[80058ac0];
-[packet +  3] = b(09);
-[packet +  c] = w((hu[800589ac] << 10) | hu[texture_data_offset + 4]); // clut and UV for vertex 1
-[packet + 14] = w((hu[800589a8] << 10) | hu[texture_data_offset + 6]);
-[packet + 1c] = h(hu[texture_data_offset + 8]);
-[packet + 24] = h(hu[texture_data_offset + a]);
-
-if( S2 & 1 )
-{
-    if( S2 & 2 )
-    {
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = w[80058b34];
-        system_calculate_normal_for_lighting;
-
-        A0 = w[80058b34];
-        A1 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_only;
-    }
-    else
-    {
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = SP + 10;
-        system_calculate_normal_for_lighting;
-
-        A0 = SP + 10;
-        A1 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_only;
-    }
-}
-else if (S2 & 4)
-{
-    A0 = w[80058b34];
-    A1 = packet + 4;
-    system_gte_calculate_normal_color_by_vector_only;
-}
-
-[80058b34] = w(w[80058b34] + 8);
-[packet + 7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_02_18
-// A2 = 0 - not calculate light
-//      1 - calculate light but not store it
-//      3 - calculate light and store it
-//      4 - use calculated stored light
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-
-packet = w[80058ac0];
-[packet +  3] = b(06);
-
-if( A2 & 2 )
-{
-    V1 = w[80058b34]; // precalculated normal pointer
-    [V1] = w(w[texture_data_offset + 0]);
-    [80058b34] = w(w[80058b34] + 4);
-}
-
-A0 = w[80058bc8] + h[mesh_data_offset + 0] * 8;
-A1 = w[80058bc8] + h[mesh_data_offset + 2] * 8;
-A2 = w[80058bc8] + h[mesh_data_offset + 4] * 8;
-A3 = texture_data_offset;
-A4 = packet + 4;  // out0
-A5 = packet + c;  // out1
-A6 = packet + 14; // out2
-system_gte_calculate_normals_color_by_3vectors_and_color;
-
-[packet + 7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_06_18
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-
-packet = w[80058ac0];
-[packet + 3] = b(06);
-
-A0 = w[80058bc8] + h[mesh_data_offset + 0] * 8;
-A1 = w[80058bc8] + h[mesh_data_offset + 2] * 8;
-A2 = w[80058bc8] + h[mesh_data_offset + 4] * 8;
-A3 = texture_data_offset;
-A4 = packet + 4;  // out0
-A5 = packet + c;  // out1
-A6 = packet + 14; // out2
-system_gte_calculate_normals_color_by_3vectors_and_color;
-
-[packet + 7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_01_18
-// A2 = 0 - not calculate light
-//      1 - calculate light but not store it
-//      3 - calculate light and store it
-//      4 - use calculated stored light
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-S2 = A2;
-
-A0 = texture_data_offset
-func2cb74; // check 0xc4 0xc8 in textures data
-if( V0 == 0 )
-{
-    return 0;
-}
-
-packet = w[80058ac0];
-[packet +  3] = b(07);
-[packet +  c] = w((hu[800589ac] << 10) | hu[texture_data_offset + 4]); // clut and UV for vertex 1
-[packet + 14] = w((hu[800589a8] << 10) | hu[texture_data_offset + 6]);
-[packet + 1c] = h(hu[texture_data_offset + 0]);
-
-if( S2 & 1 )
-{
-    if( S2 & 2 )
-    {
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = w[80058b34];
-        system_calculate_normal_for_lighting;
-
-        A0 = w[80058b34];
-        A1 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_only;
-    }
-    else
-    {
-        A0 = w[80058bd8] + h[mesh_data_offset + 0] * 8;
-        A1 = w[80058bd8] + h[mesh_data_offset + 2] * 8;
-        A2 = w[80058bd8] + h[mesh_data_offset + 4] * 8;
-        A3 = SP + 10;
-        system_calculate_normal_for_lighting;
-
-        A0 = SP + 10;
-        A1 = packet + 4;
-        system_gte_calculate_normal_color_by_vector_only;
-    }
-}
-else if (S2 & 4)
-{
-    A0 = w[80058b34];
-    A1 = packet + 4;
-    system_gte_calculate_normal_color_by_vector_only;
-}
-
-[80058b34] = w(w[80058b34] + 8);
-[packet + 7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_05_18
-
-texture_data_offset = A0;
-
-A0 = texture_data_offset;
-func2cb74;
-if( V0 == 0 )
-{
-    return 0;
-}
-
-packet = w[80058ac0]; // place for packets
-[packet +  3] = b(07);
-[packet +  c] = w((hu[800589ac] << 10) | hu[texture_data_offset + 4]); // clut and UV for vertex 1
-[packet + 14] = w((hu[800589a8] << 10) | hu[texture_data_offset + 6]);
-[packet + 1c] = h(hu[texture_data_offset + 0]);
-[packet +  7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_03_18()
-// load_poly_07_18()
-
-texture_data_offset = A0;
-mesh_data_offset = A1;
-
-A0 = texture_data_offset
-func2cb74; // check 0xc4 0xc8 in textures data
-if( V0 == 0 )
-{
-    return 0;
-}
-
-packet = w[80058ac0];
-[packet + 3] = b(09);
-
-A0 = w[80058bc8] + h[mesh_data_offset + 0] * 8; // vertex data 1
-A1 = w[80058bc8] + h[mesh_data_offset + 2] * 8; // vertex data 2
-A2 = w[80058bc8] + h[mesh_data_offset + 4] * 8; // vertex data 3
-A3 = packet + 4;
-A4 = packet + 10;
-A5 = packet + 1c;
-system_gte_calculate_normals_color_by_3vectors_only;
-
-[packet +  c] = w((hu[800589ac] << 10) | hu[texture_data_offset + 4]); // clut and UV for vertex 1
-[packet + 18] = w((hu[800589a8] << 10) | hu[texture_data_offset + 6]);
-[packet + 24] = h(hu[texture_data_offset + 0]);
-[packet +  7] = b(bu[texture_data_offset + 3]);
-
-return 1;
-////////////////////////////////
 
 
 
@@ -1253,82 +693,6 @@ S0 = w[SP + 0010];
 SP = SP + 0018;
 8002D98C	jr     ra 
 8002D990	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_calculate_normal_for_lighting
-T0 = A0;
-S1 = A3;
-
-[SP + 10] = w(h[A1 + 0] - h[T0 + 0]);
-[SP + 14] = w(h[A1 + 2] - h[T0 + 2]);
-[SP + 18] = w(h[A1 + 4] - h[T0 + 4]);
-
-[SP + 20] = w(h[A2 + 0] - h[T0 + 0])
-[SP + 24] = w(h[A2 + 2] - h[T0 + 2])
-[SP + 28] = w(h[A2 + 4] - h[T0 + 4])
-
-A0 = SP + 20;
-A1 = SP + 10;
-A2 = SP + 30;
-system_gte_outer_product_A0_A1_to_A2;
-
-A0 = w[SP + 30];
-A1 = w[SP + 34];
-A2 = w[SP + 38];
-func2daac;
-
-if (V0 < 0)
-{
-    V0 = -V0;
-}
-A0 = V0;
-system_square_root;
-
-[SP + 30] = w(w[SP + 30] / V0);
-[SP + 34] = w(w[SP + 34] / V0);
-[SP + 38] = w(w[SP + 38] / V0);
-A0 = SP + 30;
-A1 = S1;
-system_gte_normalize_word_vector_T0_T1_T2_to_half;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2daac
-norm_x = A0;
-norm_y = A1;
-norm_z = A2;
-if (norm_x < 0)
-{
-    norm_x = -norm_x;
-}
-if (norm_y < 0)
-{
-    norm_y = -norm_y;
-}
-if (norm_z < 0)
-{
-    norm_z = -norm_z;
-}
-
-if (norm_x >= norm_y && norm_x >= norm_z)
-{
-    return A0;
-}
-
-if (norm_y >= norm_x && norm_y >= norm_z)
-{
-    return A1;
-}
-
-if (norm_z >= norm_x && norm_z >= norm_y)
-{
-    return A2;
-}
 ////////////////////////////////
 
 
@@ -3955,7 +3319,7 @@ if( offset_1c == 0 )
 }
 
 [GP + 1a8] = h(2b); // "MIMe Work" alloc
-A0 = w[offset_1c] * 20 + 14;
+A0 = w[offset_1c + 0] * 20 + 14;
 A1 = S4;
 system_memory_allocate();
 S1 = V0;
@@ -4028,17 +3392,11 @@ return S1;
 
 
 ////////////////////////////////
-// func303e8
-800303E8	addiu  sp, sp, $ffc8 (=-$38)
+// func303e8()
+
 V1 = A0;
-[SP + 0030] = w(RA);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
 80030408	beq    v1, zero, L304b8 [$800304b8]
-[SP + 0018] = w(S0);
+
 S3 = w[V1 + 0000];
 A1 = w[V1 + 0004];
 S5 = w[V1 + 000c];
@@ -4087,16 +3445,6 @@ V0 = S4 < S5;
 S0 = S0 + 000c;
 
 L304b8:	; 800304B8
-RA = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-800304D8	jr     ra 
-800304DC	nop
 ////////////////////////////////
 
 

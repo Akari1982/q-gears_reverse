@@ -831,36 +831,36 @@
 // system_reset_tex_page_and_clut_default_usage
 8002CABC-8002CAD4
 ////////////////////////////////
-// system_set_texture_page_settings
+// system_model_poly_set_texture_page_settings
 8002CAD8-8002CB30
 ////////////////////////////////
-// system_set_clut_settings
+// system_model_poly_set_clut_settings
 8002CB34-8002CB70
 ////////////////////////////////
-// func2cb74
+// system_model_poly_parse_tex_and_clut_settings
 8002CB74-8002CBD8
 ////////////////////////////////
-// load_poly_00_18
+// system_model_poly_create_packet_0
 8002CBDC-8002CD40
 ////////////////////////////////
-// load_poly_04_18
+// system_model_poly_create_packet_4
 8002CD44-8002CD64
 ////////////////////////////////
-// load_poly_08_18
+// system_model_poly_create_packet_8
 8002CD68-8002CECC
 ////////////////////////////////
-// load_poly_0c_18
+// system_model_poly_create_packet_c
 8002CED0-8002CEF0
 ////////////////////////////////
-// load_poly_0d_18
+// system_model_poly_create_packet_d
 8002CEF4-8002CF8C
 ////////////////////////////////
-// load_poly_0a_18
-// load_poly_0e_18
+// system_model_poly_create_packet_a
+// system_model_poly_create_packet_e
 8002CF90-8002D050
 ////////////////////////////////
-// load_poly_0b_18
-// load_poly_0f_18
+// system_model_poly_create_packet_b
+// system_model_poly_create_packet_f
 8002D054-8002D160
 ////////////////////////////////
 // func2d164
@@ -869,32 +869,32 @@
 // func2d230
 8002D230-8002D33C
 ////////////////////////////////
-// load_poly_09_18
+// system_model_poly_create_packet_9
 8002D340-8002D4B8
 ////////////////////////////////
-// load_poly_02_18
+// system_model_poly_create_packet_2
 8002D4BC-8002D588
 ////////////////////////////////
-// load_poly_06_18
+// system_model_poly_create_packet_6
 8002D58C-8002D620
 ////////////////////////////////
-// load_poly_01_18
+// system_model_poly_create_packet_1
 8002D624-8002D790
 ////////////////////////////////
-// load_poly_05_18
+// system_model_poly_create_packet_5
 8002D794-8002D820
 ////////////////////////////////
-// load_poly_03_18
-// load_poly_07_18
+// system_model_poly_create_packet_3
+// system_model_poly_create_packet_7
 8002D824-8002D908
 ////////////////////////////////
 // func2d90c
 8002D90C-8002D990
 ////////////////////////////////
-// system_calculate_normal_for_lighting
+// system_model_poly_calculate_normal
 8002D994-8002DAA8
 ////////////////////////////////
-// func2daac
+// system_model_poly_normal_check
 8002DAAC-8002DB2C
 ////////////////////////////////
 // func2db30
@@ -3275,10 +3275,10 @@
 // func4a028
 8004A028-8004A040
 ////////////////////////////////
-// system_gte_calculate_normal_color_by_vector_only
+// system_psyq_normal_color
 8004A044-8004A05C
 ////////////////////////////////
-// system_gte_calculate_normals_color_by_3vectors_only
+// system_psyq_normal_color_3
 8004A060-8004A098
 ////////////////////////////////
 // func4a09c
@@ -3287,10 +3287,10 @@
 // func4a0c0
 8004A0C0-8004A104
 ////////////////////////////////
-// system_gte_calculate_normal_color_by_vector_and_color
+// system_psyq_normal_color_col
 8004A108-8004A124
 ////////////////////////////////
-// system_gte_calculate_normals_color_by_3vectors_and_color
+// system_psyq_normal_color_col_3
 8004A128-8004A168
 ////////////////////////////////
 // func4a16c
