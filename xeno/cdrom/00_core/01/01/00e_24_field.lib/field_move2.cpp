@@ -269,10 +269,11 @@ if( ( hu[struct_5c + 58] & 0080 ) == 0 )
 
 ////////////////////////////////
 // func80558()
+
 entity_id = A0;
 struct_5c = w[800aefe4] + entity_id * 5c;
 
-// given id greater than number of entitys
+// given id greater than number of actors
 if( entity_id >= w[800ad0d4] )
 {
     return;

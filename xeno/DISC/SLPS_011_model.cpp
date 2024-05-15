@@ -3944,6 +3944,7 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // func301d8()
+
 part_header = A0;
 offset_1c = w[part_header + 1c];
 S4 = A1; // 0
