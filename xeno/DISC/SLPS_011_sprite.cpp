@@ -7299,8 +7299,8 @@ S0 = A0;
 
 A0 = S0 * 2;
 system_memory_allocate();
-
 S0 = S0 + V0;
+
 [GP + 340] = w(V0);
 [80058b54] = w(S0);
 [GP + 194] = w(0);

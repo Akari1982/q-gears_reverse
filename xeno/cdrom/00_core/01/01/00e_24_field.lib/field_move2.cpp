@@ -92,212 +92,194 @@ return A0 >> 10;
 
 V0 = w[800ad030];
 V1 = w[800aefe4];
-A0 = w[V1 + V0 * 5c + 4c];
+struct_138 = w[V1 + V0 * 5c + 4c];
 
 V1 = w[800ad034];
 [800ad034] = w(V1 + 1);
 
-V0 = w[A0 + 118];
+V0 = w[struct_138 + 118];
 return w[V0 + V1 * 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func80088()
+// field_actor_init_struct_138()
 
 entity_id = A0;
-
 struct_5c = w[800aefe4] + entity_id * 5c;
+struct_138 = w[struct_5c + 4c];
 
-S0 = w[struct_5c + 4c];
+[struct_138 + 0] = w(000000b0);
+[struct_138 + 4] = w(00000800);
+[struct_138 + 8] = h(0);
+[struct_138 + a] = h(0);
+[struct_138 + c] = h(0);
+[struct_138 + e] = h(0);
+[struct_138 + 10] = h(0);
 
-[S0 + 0] = w(000000b0);
-[S0 + 4] = w(00000800);
-[S0 + 8] = h(0);
-[S0 + a] = h(0);
-[S0 + c] = h(0);
-[S0 + e] = h(0);
-[S0 + 10] = h(0);
+[struct_138 + 18] = h(10);
+[struct_138 + 1a] = h(60);
+[struct_138 + 1c] = h(10);
+[struct_138 + 1e] = h(hu[struct_138 + 18]);
 
-[S0 + 18] = h(10);
-[S0 + 1a] = h(60);
-[S0 + 1c] = h(10);
-[S0 + 1e] = h(hu[S0 + 18]);
+[struct_138 + 30] = w(0);
+[struct_138 + 34] = w(0);
+[struct_138 + 38] = w(0);
 
-[S0 + 30] = w(0);
-[S0 + 34] = w(0);
-[S0 + 38] = w(0);
+[struct_138 + 40] = w(0);
+[struct_138 + 44] = w(0);
+[struct_138 + 48] = w(0);
 
-[S0 + 40] = w(0);
-[S0 + 44] = w(0);
-[S0 + 48] = w(0);
+[struct_138 + 60] = h(0);
+[struct_138 + 62] = h(0);
+[struct_138 + 64] = h(0);
 
-[S0 + 60] = h(0);
-[S0 + 62] = h(0);
-[S0 + 64] = h(0);
+[struct_138 + 6e] = h(0);
 
-[S0 + 6e] = h(0);
+[struct_138 + 74] = b(ff);
+[struct_138 + 75] = b(ff);
+[struct_138 + 76] = h(0100);
 
-[S0 + 74] = b(ff);
-[S0 + 75] = b(ff);
-[S0 + 76] = h(0100);
+[struct_138 + 80] = b(ff);
 
-[S0 + 80] = b(ff);
-
-[S0 + 82] = b(0);
-[S0 + 83] = b(0);
-[S0 + 84] = w(0);
-[S0 + 88] = h(0);
-[S0 + 8a] = h(0);
+[struct_138 + 82] = b(0);
+[struct_138 + 83] = b(0);
+[struct_138 + 84] = w(0);
+[struct_138 + 88] = h(0);
+[struct_138 + 8a] = h(0);
 
 // init requested script
-S3 = 0;
-loop8021c:	; 8008021C
-    [S0 + 8c + S3 * 8 + 0] = h(ffff); // pointer to requested script
-    [S0 + 8c + S3 * 8 + 2] = b(0); // wait byte
-    [S0 + 8c + S3 * 8 + 3] = b(ff); // script id
-    [S0 + 8c + S3 * 8 + 4] = w(( w[S0 + 8c + S3 * 8 + 4] & fffcffff & ffbfffff & fe7fffff ) | 003с0000);
-    [S0 + 8c + S3 * 8 + 4] = h(ffff);
-    S3 = S3 + 1;
-    V0 = S3 < 8;
-8008024C	bne    v0, zero, loop8021c [$8008021c]
-
-[S0 + cc] = h(0);
-[S0 + ce] = b(0);
-[S0 + cf] = b(0);
-
-[S0 + d0] = w(0);
-[S0 + d4] = w(0);
-[S0 + d8] = w(0);
-
-[S0 + e2] = b(0);
-[S0 + e3] = b(0);
-[S0 + e4] = h(00ff);
-[S0 + e6] = h(0);
-[S0 + e8] = h(0);
-[S0 + ec] = h(0);
-[S0 + ea] = h(ff);
-
-[S0 + f4] = h(1000);
-[S0 + f6] = h(1000);
-[S0 + f8] = h(1000);
-
-[S0 + fc] = b(80);
-[S0 + fd] = b(80);
-[S0 + fe] = b(80);
-[S0 + ff] = b(80);
-[S0 + 100] = b(80);
-[S0 + 101] = b(80);
-
-system_get_random_2_bytes;
-[S0 + 102] = h(V0);
-
-[S0 + 104] = h(8000);
-[S0 + 106] = h(8000);
-[S0 + 108] = h(8000);
-
-[S0 + 10d] = b(ff);
-
-[S0 + 11e] = h(0200);
-[S0 + 120] = w(0);
-[S0 + 124] = h(ffff);
-[S0 + 128] = h(ffff);
-[S0 + 12c] = w(w[S0 + 12c] & fffffe3f & fffff1ff & ffffefff & f003ffff & fffcffff & ffffffdf & ffffffe3 & fffffffc);
-[S0 + 130] = w(w[S0 + 130] & f007ffff & fffffe00 & fff801ff);
-[S0 + 134] = w(w[S0 + 134] & ffffff9f & ffffff7f);
-
-
-
-// find triangles to place entity on on all walkmeshes in field
-number_of_walkmeshes = h[800af028] - 1;
-if( number_of_walkmeshes > 0 )
+for( int i = 0; i < 8; ++i )
 {
-    walkmesh_id = 0;
-    loop80368:	; 80080368
-        A0 = h[struct_5c + 20]; // x
-        A1 = h[struct_5c + 28]; // z
-        A2 = walkmesh_id;
-        A3 = SP + 58 + walkmesh_id * 8;  // ret position
-        A4 = SP + 18 + walkmesh_id * 10; // ret normal
-        func7a7d8(); // search for triangle model are in
-        [S0 + 8 + walkmesh_id * 2] = h(V0); // store id of triangle
-
-        if( V0 != -1 )
-        {
-            // if found triangle greater than total number of triangles - remove it
-            if( V0 >= w[800af018 + walkmesh_id * 4] )
-            {
-                [800af018 + walkmesh_id * 4] = w(0);
-
-                [SP + 18 + walkmesh_id * 10] = w(0);
-                [SP + 1c + walkmesh_id * 10] = w(0);
-                [SP + 20 + walkmesh_id * 10] = w(0);
-
-                [SP + 58 + walkmesh_id * 8] = h(0);
-                [SP + 5a + walkmesh_id * 8] = h(0);
-                [SP + 5c + walkmesh_id * 8] = h(0);
-            }
-        }
-
-        walkmesh_id = walkmesh_id + 1;
-        V0 = walkmesh_id < number_of_walkmeshes;
-    80080404	bne    v0, zero, loop80368 [$80080368]
+    [struct_138 + 8c + i * 8 + 0] = h(ffff); // pointer to requested script
+    [struct_138 + 8c + i * 8 + 2] = b(0); // wait byte
+    [struct_138 + 8c + i * 8 + 3] = b(ff); // script id
+    [struct_138 + 8c + i * 8 + 4] = w(( w[struct_138 + 8c + i * 8 + 4] & fffcffff & ffbfffff & fe7fffff ) | 003с0000);
+    [struct_138 + 8c + i * 8 + 4] = h(ffff);
 }
 
-A0 = S0;
-field_move_get_current_triangle_material();
-[S0 + 14] = w(V0);
+[struct_138 + cc] = h(0);
+[struct_138 + ce] = b(0);
+[struct_138 + cf] = b(0);
 
-current_walkmesh = h[S0 + 10];
-[S0 + 50] = w(w[SP + 18 + current_walkmesh * 10]);
-[S0 + 54] = w(w[SP + 1c + current_walkmesh * 10]);
-[S0 + 58] = w(w[SP + 20 + current_walkmesh * 10]);
+[struct_138 + d0] = w(0);
+[struct_138 + d4] = w(0);
+[struct_138 + d8] = w(0);
+
+[struct_138 + e2] = b(0);
+[struct_138 + e3] = b(0);
+[struct_138 + e4] = h(00ff);
+[struct_138 + e6] = h(0);
+[struct_138 + e8] = h(0);
+[struct_138 + ec] = h(0);
+[struct_138 + ea] = h(ff);
+
+[struct_138 + f4] = h(1000);
+[struct_138 + f6] = h(1000);
+[struct_138 + f8] = h(1000);
+
+[struct_138 + fc] = b(80);
+[struct_138 + fd] = b(80);
+[struct_138 + fe] = b(80);
+[struct_138 + ff] = b(80);
+[struct_138 + 100] = b(80);
+[struct_138 + 101] = b(80);
+
+system_get_random_2_bytes();
+[struct_138 + 102] = h(V0);
+
+[struct_138 + 104] = h(8000);
+[struct_138 + 106] = h(8000);
+[struct_138 + 108] = h(8000);
+
+[struct_138 + 10d] = b(ff);
+
+[struct_138 + 11e] = h(0200);
+[struct_138 + 120] = w(0);
+[struct_138 + 124] = h(ffff);
+[struct_138 + 128] = h(ffff);
+[struct_138 + 12c] = w(w[struct_138 + 12c] & fffffe3f & fffff1ff & ffffefff & f003ffff & fffcffff & ffffffdf & ffffffe3 & fffffffc);
+[struct_138 + 130] = w(w[struct_138 + 130] & f007ffff & fffffe00 & fff801ff);
+[struct_138 + 134] = w(w[struct_138 + 134] & ffffff9f & ffffff7f);
+
+// find triangles to place entity on on all walkmeshes in field
+for( int i = 0; i < h[800af028] - 1; ++i ) // number_of_walkmeshes
+{
+    A0 = h[struct_5c + 20]; // x
+    A1 = h[struct_5c + 28]; // z
+    A2 = i;
+    A3 = SP + 58 + i * 8;  // ret position
+    A4 = SP + 18 + i * 10; // ret normal
+    func7a7d8(); // search for triangle model are in
+    [struct_138 + 8 + i * 2] = h(V0); // store id of triangle
+
+    if( V0 != -1 )
+    {
+        // if found triangle greater than total number of triangles - remove it
+        if( V0 >= w[800af018 + i * 4] )
+        {
+            [800af018 + i * 4] = w(0);
+
+            [SP + 18 + i * 10] = w(0);
+            [SP + 1c + i * 10] = w(0);
+            [SP + 20 + i * 10] = w(0);
+
+            [SP + 58 + i * 8] = h(0);
+            [SP + 5a + i * 8] = h(0);
+            [SP + 5c + i * 8] = h(0);
+        }
+    }
+}
+
+A0 = struct_138;
+field_move_get_current_triangle_material();
+[struct_138 + 14] = w(V0);
+
+current_walkmesh = h[struct_138 + 10];
+[struct_138 + 50] = w(w[SP + 18 + current_walkmesh * 10]);
+[struct_138 + 54] = w(w[SP + 1c + current_walkmesh * 10]);
+[struct_138 + 58] = w(w[SP + 20 + current_walkmesh * 10]);
 
 if( ( hu[struct_5c + 58] & 0080 ) == 0 )
 {
     [struct_5c + 24] = w(h[SP + 5a + current_walkmesh * 8]);
 }
 
-[S0 + 20] = w(w[struct_5c + 20] << 10);
-[S0 + 24] = w(w[struct_5c + 24] << 10);
-[S0 + 28] = w(w[struct_5c + 28] << 10);
-[S0 + 72] = h(w[struct_5c + 24]);
+[struct_138 + 20] = w(w[struct_5c + 20] << 10);
+[struct_138 + 24] = w(w[struct_5c + 24] << 10);
+[struct_138 + 28] = w(w[struct_5c + 28] << 10);
+[struct_138 + 72] = h(w[struct_5c + 24]);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func80558()
+// field_actor_init()
 
 entity_id = A0;
 struct_5c = w[800aefe4] + entity_id * 5c;
 
 // given id greater than number of actors
-if( entity_id >= w[800ad0d4] )
-{
-    return;
-}
+if( entity_id >= w[800ad0d4] ) return;
 
 [800b1654] = w(w[800b1654] + 1);
 
 A0 = 138;
 A1 = 0;
 system_memory_allocate();
-[struct_5c + 4c] = w(V0);
+struct_138 = V0;
 
-A0 = 0;
-loop805dc:	; 800805DC
-    [V0 + A0] = w(0);
-    A0 = A0 + 4;
-    V0 = A0 < 138;
-800805EC	bne    v0, zero, loop805dc [$800805dc]
+[struct_5c + 4c] = w(struct_138);
+
+for( int i = 0; i < 138; i += 4)
+{
+    [struct_138 + i] = w(0);
+}
 
 [struct_5c + 5a] = h(0);
 
-struct_138 = w[struct_5c + 4c];
-
-if( hu[struct_5c + 58] & 2000 )
+if( hu[struct_5c + 58] & 2000 ) // this entity with MIMe
 {
     S1 = w[struct_5c + 0];
 
@@ -309,25 +291,19 @@ if( hu[struct_5c + 58] & 2000 )
     V1 = w[S1 + 14];
     if( V1 != 0 )
     {
-        if( w[V1 + c] > 0 )
+        for( int i = 0; i < w[V1 + c]; ++i )
         {
-            A0 = 0;
-            loop80674:	; 80080674
-                V0 = w[V1 + 10];
-                [V0 + A0 * 20 + 0] = w(8008002c);
+            V0 = w[V1 + 10];
+            [V0 + i * 20 + 0] = w(8008002c); // set callback func8002c()
 
-                V0 = w[struct_138 + 118];
-                [V0 + A0 * 4] = w(0);
-
-                A0 = A0 + 1;
-                V0 = A0 < w[V1 + c];
-            800806A8	bne    v0, zero, loop80674 [$80080674]
+            V0 = w[struct_138 + 118];
+            [V0 + i * 4] = w(0);
         }
     }
 }
 
 A0 = entity_id;
-func80088();
+field_actor_init_struct_138();
 
 A0 = 70;
 A1 = 0;
@@ -335,7 +311,7 @@ system_memory_allocate();
 [struct_5c + 8] = w(V0);
 
 A0 = V0;
-func7a058(); // init shadow under entitys
+field_actor_init_shadow();
 ////////////////////////////////
 
 

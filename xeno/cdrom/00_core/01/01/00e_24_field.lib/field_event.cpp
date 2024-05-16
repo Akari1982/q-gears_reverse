@@ -497,264 +497,103 @@ if( w[8004e9b0] != 0 )
 
     for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
-            V0 = struct_5c_p + i * 5c;
-            V1 = w[V0 + 004c];
-            A2 = bu[V1 + 126];
-            800A1EC0	nop
-            V0 = A2 & 0080;
-            if( V0 == 0 )
+            struct_138 = w[struct_5c_p + i * 5c + 4c];
+
+            A2 = bu[struct_138 + 126];
+
+            if( ( A2 & 80 ) == 0 )
             {
-                A1 = bu[V1 + 0127];
-                A3 = w[V1 + 0130];
-                V0 = w[V1 + 0134];
-                V0 = V0 & 000f;
-                V1 = struct_5c_p + i * 5c;
-                [SP + 0010] = w(V0);
-                V0 = w[V1 + 004c];
-                800A1EF4	nop
-                V1 = bu[V0 + 0126];
-                V0 = struct_5c_p + i * 5c;
-                [SP + 0014] = w(V1);
-                V0 = w[V0 + 004c];
                 A0 = i;
-                V0 = w[V0 + 0134];
-                A3 = A3 >> 1c;
-                V0 = V0 >> 04;
-                V0 = V0 & 0001;
-                [SP + 0018] = w(V0);
-                V0 = A2 << 02;
-                A2 = w[80059aa4 + V0];
-                A3 = A3 & 0003;
+                A1 = bu[struct_138 + 127];
+                A2 = w[80059aa4 + A2 * 4];
+                A3 = (w[struct_138 + 130] >> 1c) & 3;
+                A4 = w[struct_138 + 134] & f;
+                A5 = bu[struct_138 + 126];
+                A6 = (w[struct_138 + 134] >> 4) & 1;
                 func76150();
             }
             else
             {
-                V0 = A2 & 007f;
-                V0 = V0 << 02;
+                V0 = (A2 & 7f) << 2;
                 A2 = w[800aeff0];
-                A1 = bu[V1 + 0127];
-                A3 = w[V1 + 0130];
+                A1 = bu[V1 + 127];
+                A3 = w[V1 + 130];
                 V0 = V0 + A2;
-                T0 = w[V0 + 0004];
-                V0 = w[V1 + 0134];
-                V0 = V0 & 000f;
-                V1 = struct_5c_p + i * 5c;
-                [SP + 0010] = w(V0);
-                V0 = w[V1 + 004c];
-                800A1F84	nop
-                V0 = bu[V0 + 0126];
+
                 A0 = i;
-                [SP + 0014] = w(V0);
-                A3 = A3 >> 1c;
-                V0 = struct_5c_p + i * 5c;
-                V0 = w[V0 + 004c];
-                A3 = A3 & 0003;
-                V0 = w[V0 + 0134];
-                A2 = T0 + A2;
-                V0 = V0 >> 04;
-                V0 = V0 & 0001;
-                [SP + 0018] = w(V0);
+                A2 = w[V0 + 4] + A2;
+                A3 = (A3 >> 1c) & 3;
+                A4 = w[V1 + 134] & f;
+                A5 = bu[struct_138 + 126];
+                A6 = (w[struct_138 + 134] >> 4) & 1;
                 func76150();
 
-                A0 = struct_5c_p + i * 5c;
-                V0 = w[A0 + 004c];
-                800A1FD8	nop
-                V0 = hu[V0 + 012e];
-                800A1FE0	nop
-                V1 = V0 & 0003;
-                V0 = 0001;
-                800A1FEC	beq    v1, v0, La2004 [$800a2004]
-                V0 = 0002;
-                800A1FF4	beq    v1, v0, La2074 [$800a2074]
-                A1 = 0003;
-                800A1FFC	j      La213c [$800a213c]
-                800A2000	nop
+                V1 = hu[struct_138 + 12e] & 3;
 
-                La2004:	; 800A2004
-                A0 = w[A0 + 4];
-                A1 = 2;
-                A2 = 0;
-                800A200C	jal    func22eb8 [$80022eb8]
+                if( V1 == 1 )
+                {
+                    A0 = w[struct_5c_p + i * 5c + 4];
+                    A1 = 2;
+                    A2 = 0;
+                    func22eb8();
 
-                V0 = struct_5c_p + i * 5c;
-                V1 = w[V0 + 004c];
-                A0 = w[V0 + 0004];
-                V0 = w[V1 + 012c];
-                V1 = w[A0 + 007c];
-                V0 = V0 >> 12;
-                V1 = w[V1 + 0018];
-                V0 = V0 & 03ff;
-                [V1 + 0004] = h(V0);
-                V0 = struct_5c_p + i * 5c;
-                V1 = w[V0 + 0004];
-                V0 = w[V0 + 004c];
-                V1 = w[V1 + 007c];
-                V0 = w[V0 + 0130];
-                V1 = w[V1 + 0018];
-                V0 = V0 & 01ff;
-                [V1 + 0006] = h(V0);
-                800A206C	j      La213c [$800a213c]
+                    A0 = w[struct_5c_p + i * 5c + 4];
+                    V1 = w[A0 + 7c];
+                    V1 = w[V1 + 18];
+                    [V1 + 4] = h((w[struct_138 + 12c] >> 12) & 3ff);
+                    [V1 + 6] = h(w[struct_138 + 130] & 1ff);
+                }
+                if( V1 == 2 )
+                {
+                    A0 = w[struct_5c_p + i * 5c + 4];
+                    A2 = 0;
+                    func22eb8();
 
-                La2074:	; 800A2074
-                A0 = w[A0 + 0004];
-                A2 = 0;
-                func22eb8();
-
-                V0 = struct_5c_p + i * 5c;
-                V1 = w[V0 + 004c];
-                A0 = w[V0 + 0004];
-                V0 = w[V1 + 012c];
-                V1 = w[A0 + 007c];
-                V0 = V0 >> 12;
-                V1 = w[V1 + 0018];
-                V0 = V0 & 03ff;
-                [V1 + 0004] = h(V0);
-                V0 = struct_5c_p + i * 5c;
-                V1 = w[V0 + 0004];
-                V0 = w[V0 + 004c];
-                V1 = w[V1 + 007c];
-                V0 = w[V0 + 0130];
-                V1 = w[V1 + 0018];
-                V0 = V0 & 01ff;
-                [V1 + 0006] = h(V0);
-                V0 = struct_5c_p + i * 5c;
-                V1 = w[V0 + 004c];
-                A0 = w[V0 + 0004];
-                V0 = w[V1 + 0130];
-                V1 = w[A0 + 007c];
-                V0 = V0 >> 09;
-                V1 = w[V1 + 0018];
-                V0 = V0 & 03ff;
-                [V1 + 0008] = h(V0);
-                V0 = struct_5c_p + i * 5c;
-                V1 = w[V0 + 004c];
-                A0 = w[V0 + 0004];
-                V0 = w[V1 + 0130];
-                V1 = w[A0 + 007c];
-                V0 = V0 >> 13;
-                V1 = w[V1 + 0018];
-                V0 = V0 & 01ff;
-                [V1 + 000a] = h(V0);
+                    A0 = w[struct_5c_p + i * 5c + 4];
+                    V1 = w[A0 + 7c];
+                    V1 = w[V1 + 18];
+                    [V1 + 4] = h((w[struct_138 + 12c] >> 12) & 3ff);
+                    [V1 + 6] = h(w[struct_138 + 130] & 1ff);
+                    [V1 + 8] = h((w[struct_138 + 130] >> 9) & 3ff);
+                    [V1 + a] = h((w[struct_138 + 130] >> 13) & 1ff);
+                }
             }
-
-            La213c:	; 800A213C
         }
     }
 
     if( w[800b173c] != 0 )
     {
-        S1 = 0;
-        A2 = 8006f020;
-        A3 = 80059ad4;
+        for( int i = 0; i < 3; ++i )
+        {
+            A0 = w[80059ad4 + i * 4];
+            if( A0 != ff )
+            {
+                V0 = w[80059a38];
 
-        La2178:	; 800A2178
-            A0 = w[A3 + 0000];
-            V0 = 00ff;
-            800A2180	beq    a0, v0, La2354 [$800a2354]
-            800A2184	nop
-            V0 = w[80059a38];
-            800A2190	nop
-            V0 = V0 + S1;
-            V0 = bu[V0 + 22b1];
-            800A219C	nop
-            800A21A0	beq    v0, zero, La22d4 [$800a22d4]
-            V1 = A0 << 01;
-            V1 = V1 + A0;
-            V1 = V1 << 03;
-            V1 = V1 - A0;
-            V1 = V1 << 02;
-            A0 = w[A2 + 0000];
-            V1 = struct_5c_p + V1;
-            V0 = A0 << 01;
-            V0 = V0 + A0;
-            V0 = V0 << 03;
-            V0 = V0 - A0;
-            V0 = V0 << 02;
-            V0 = V0 + struct_5c_p;
-            V0 = w[V0 + 0004];
-            A0 = w[V1 + 0004];
-            [V1 + 0004] = w(V0);
-            V1 = w[A2 + 0000];
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V0 = V0 << 02;
-            V0 = struct_5c_p + V0;
-            [V0 + 0004] = w(A0);
-            V1 = w[A2 + 0000];
-            800A221C	nop
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V0 = V0 << 02;
-            V0 = struct_5c_p + V0;
-            V1 = w[V0 + 004c];
-            800A2244	nop
-            V0 = w[V1 + 0000];
-            800A224C	nop
-            V0 = V0 | 0200;
-            [V1 + 0000] = w(V0);
-            V1 = w[A2 + 0000];
-            800A225C	nop
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V0 = V0 << 02;
-            V0 = struct_5c_p + V0;
-            A0 = w[V0 + 004c];
-            800A2284	nop
-            V0 = w[A0 + 0000];
-            800A228C	addiu  v1, zero, $faff (=-$501)
-            V0 = V0 & V1;
-            [A0 + 0000] = w(V0);
-            V0 = w[A2 + 0000];
-            800A229C	nop
-            V1 = V0 << 01;
-            V1 = V1 + V0;
-            V1 = V1 << 03;
-            V1 = V1 - V0;
-            V1 = V1 << 02;
-            V1 = struct_5c_p + V1;
-            V0 = hu[V1 + 0058];
-            V0 = V0 | 0020;
-            [V1 + 0058] = h(V0);
-            800A22CC	j      La2354 [$800a2354]
+                if( bu[V0 + 22b1 + i] != 0 )
+                {
+                    entity_id = w[8006f020 + i * 4];
+                    V1 = struct_5c_p + A0 * 5c;
+                    V0 = w[struct_5c_p + entity_id * 5c + 4];
+                    A0 = w[V1 + 0004];
+                    [V1 + 0004] = w(V0);
+                    [struct_5c_p + entity_id * 5c + 4] = w(A0);
 
-            La22d4:	; 800A22D4
-            V1 = w[A2 + 0000];
-            800A22D8	nop
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V0 = V0 << 02;
-            V0 = struct_5c_p + V0;
-            V1 = w[V0 + 004c];
-            V0 = w[V1 + 0000];
-            V0 = V0 | 0400;
-            [V1 + 0000] = w(V0);
-            V1 = w[A2 + 0000];
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 03;
-            V0 = V0 - V1;
-            V0 = V0 << 02;
-            V0 = struct_5c_p + V0;
-            A0 = w[V0 + 004c];
-            V0 = w[A0 + 0000];
-            800A2348	addiu  v1, zero, $fcff (=-$301)
-            V0 = V0 & V1;
-            [A0 + 0000] = w(V0);
+                    struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
+                    [struct_138 + 0] = w(w[struct_138 + 0] | 00000200);
+                    [struct_138 + 0] = w(w[struct_138 + 0] & fffffaff);
 
-            La2354:	; 800A2354
-            A2 = A2 + 0004;
-            A3 = A3 + 0004;
-            S1 = S1 + 0001;
-            V0 = S1 < 0003;
-        800A2360	bne    v0, zero, La2178 [$800a2178]
+                    [struct_5c_p + entity_id * 5c + 58] = h(hu[struct_5c_p + entity_id * 5c + 58] | 0020);
+                }
+                else
+                {
+                    V1 = w[8006f020 + i * 4];
+                    struct_138 = w[struct_5c_p + V1 * 5c + 4c];
+                    [struct_138 + 0] = w(w[struct_138 + 0] | 00000400);
+                    [struct_138 + 0] = w(w[struct_138 + 0] & fffffcff);
+                }
+            }
+        }
     }
 }
 else
@@ -767,7 +606,7 @@ else
 
     // disable talking if there is no "on_talk" event for entity
     // set current event pointer to "on_init" event
-    for( int i = 0; i < w[800ad0d4]; ++i )
+    for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
         struct_5c = struct_5c_p + i * 5c;
         struct_138 = w[struct_5c + 4c];

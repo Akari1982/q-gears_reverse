@@ -17,6 +17,8 @@
 800ad018 [][][][] store here entity id for particle.
 800ad01c [][][][] store here entity id that inits particle.
 
+800ad030 [][][][] some entity id for MIMe in callback.
+800ad034 [][][][] current MIMe data from +118 used.
 800ad038 [][][][] init with 0. Field texture loaded.
 800ad03c [][][][] ???
 
@@ -242,15 +244,15 @@
         +  8 [][][][] pointer to allocated memory for 1st packets buffer.
         +  c [][][][] pointer to allocated memory for 2nd packets buffer.
         + 12 [][]     ???
-        + 14 [][][][] pointer to data for +1c things. (allocated as number of item in +1c * 20 + 14 size)
+        + 14 [][][][] pointer to data for MIMe (+1c in model). (allocated as number of item in +1c * 20 + 14 size)
             header (0x14 size)
             +  0 [][][][] pointer to part data.
             +  4 [][][][] offset to original vertex block +8.
-            +  8 [][][][] offset to original additional vertex block +c.
+            +  8 [][][][] offset to original normal block +c.
             +  c [][][][] number of items in +1c.
-            + 10 [][][][] pointer to next data (+4 from this address);
+            + 10 [][][][] pointer to data (+4 from this address);
             data (size 0x20 each)
-            +  0 [][][][] init with 8002ff5c. Set to 8008002c during entity initialization.
+            +  0 [][][][] init with callback 8002ff5c. Set to 8008002c during actor initialization.
             +  4 [][][][] init with 0.
             +  8 [][][][] init with 0.
             +  c [][][][] init with 0.
@@ -259,7 +261,7 @@
         +1c [][]     z.
         +20 [][]     ???
     +   4 [][][][] offset to sprite data (0x164 size).
-    +   8 [][][][] pointer to allocated memory for model shadow (0x70 size).
+    +   8 [][][][] pointer to allocated memory for actor shadow (0x70 size).
         +  0 [][]     vertex0 x.
         +  2 [][]     vertex0 y.
         +  4 [][]     vertex0 z.
@@ -296,7 +298,7 @@
     +  40 [][][][] some X data.
     +  44 [][][][] some Y data.
     +  48 [][][][] some Z data.
-    +  4c [][][][] pointer to allocated total entity data (0x138 size).
+    +  4c [][][][] pointer to allocated actor data (0x138 size).
         +   0 [][][][] entity flags (0x000000b0 init).
                        0x00000001: if flag is set - scripts will be not runned. In addition it make entity not solid (maybe this is turn entity off (ie it will not calculated at all))
                        0x00000002: flag added if 0x2A opcode called in this entity.
@@ -428,7 +430,7 @@
             + 4 [][]     z rot
             + 8 [][]     store here distance between entity and follower.
         + 114 [][][][] pointer to some quad data. This quad restrict whole move area.
-        + 118 [][][][] pointer to allocated 0x80 byte for +1c data. Size 0x4 for each +1c item.
+        + 118 [][][][] pointer to allocated 0x80 byte for MIMe (+1c data). Size 0x4 for each.
             +  0 [][][][] init with 0.
         + 11c [][]     rotation stored to +106 sometimes.
         + 11e [][]     init with 0x0200.
@@ -469,9 +471,9 @@
                    0x0080: if this is 0 - we set height for model depending on triangle.
                    0x0200: 
                    0x0f00: if at least one of this bits exist - we perform move.
-                   0x2000: init +1c in model data if this is set.
+                   0x2000: init MIMe (+1c in model data) if this is set.
                    0x4000: ???
-    +  5a [][]     init with 0.
+    +  5a [][]     init with 0 when init actor.
                    0x0001 - sprite inited.
 
 800aefe8 [][][][] pointer to field model pack (field file 2).
@@ -594,7 +596,7 @@
 800b164a [][]     -1 disable battle, 0 - enable battle.
 800b164c [][]     additional rotation for movement (can be set from script).
 
-800b1654 [][][][] increment during each entity initialization.
+800b1654 [][][][] increment during each actor initialization.
 
 800b1660 [][][][] base walking speed. Move length (1 << 0xc) (can be set from script).
 

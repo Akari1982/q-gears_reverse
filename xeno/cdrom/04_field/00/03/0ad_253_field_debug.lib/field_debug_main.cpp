@@ -850,7 +850,7 @@ switch( w[802859d8] )
         system_print_alias();
 
         S3 = 0;
-        for( int i = w[802859d0]; i < w[800ad0d4]; ++i )
+        for( int i = w[802859d0]; i < w[800ad0d4]; ++i ) // go through all actors
         {
             data = w[struct_5c_p + i * 5c + 4c];
 

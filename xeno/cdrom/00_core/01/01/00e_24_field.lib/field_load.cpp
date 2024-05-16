@@ -1050,7 +1050,7 @@ func6f47c();
 
                     A0 = w[S0 + 4];
                     A1 = 0;
-                    func301d8(); // init +1c in model data
+                    func301d8(); // init MIMe (+1c in model data)
                     [S0 + 14] = w(V0);
 
                     A0 = 8; // YOSI
@@ -1070,7 +1070,7 @@ func6f47c();
             }
 
             A0 = i;
-            func80558();
+            field_actor_init();
         }
     }
 }
@@ -1096,17 +1096,15 @@ system_memory_set_alloc_user();
 
 A0 = 3c00;
 A1 = 0;
-func24d5c(); // init for sprites
+func24d5c(); // allocate sprites memory
 
-func1c7d0(); // sprites init all
+func1c7d0(); // init sprites list
 
 A0 = 8; // YOSI
 A1 = 0;
 system_memory_set_alloc_user();
 
-S0 = 800b1710;
-
-A0 = S0;
+A0 = 800b1710;
 A1 = 800;
 A2 = 0;
 A3 = 0;
@@ -1118,7 +1116,7 @@ A8 = 0;
 A9 = 0;
 func76ed4(); // set data in A0
 
-A0 = S0 - 20;
+A0 = 800b1710 - 20;
 A1 = 1f8;
 A2 = fffff03f;
 A3 = fffffe08;
@@ -1130,13 +1128,11 @@ A8 = 0;
 A9 = 0;
 func76ed4(); // set data in A0
 
-S2 = 800af558;
-
 [800a1732] = b(1e);
 [800a1731] = b(1e);
 [800a1730] = b(1e);
 
-[S2] = h(140);
+[800af558] = h(140);
 
 [800af562] = h(0);
 [800af57d] = b(0);
@@ -1147,8 +1143,8 @@ S2 = 800af558;
 [800af576] = b(0);
 [800af575] = b(0);
 
-[S2 + 1c] = b(0);
-[S2 + c] = w(0);
+[800af558 + 1c] = b(0);
+[800af558 + c] = w(0);
 
 [800af56c] = w(1000);
 
@@ -1168,13 +1164,13 @@ S2 = 800af558;
 [800af57e] = b(20);
 
 [800afcff4] = w(0);
-S1 = S2 + c;
+S1 = 800af558 + c;
 
 funca1e64(); // we run script from here
 
 [800acff4] = w(1);
 
-A0 = S0 - b8;
+A0 = 800b1710 - b8;
 A1 = 800af104;
 system_calculate_rotation_matrix();
 
@@ -1182,13 +1178,13 @@ system_calculate_rotation_matrix();
 [800af11c] = w(0);
 [800af118] = w(0);
 
-S0 = S2 + 1c;
+S0 = 800af558 + 1c;
 
 if( h[800af586] != 0 )
 {
     A0 = h[800af554];
     A1 = h[800af556];
-    A2 = h[S2];
+    A2 = h[800af558];
     A3 = h[800af55a];
     A4 = h[800af55c];
     A5 = h[800af55e];

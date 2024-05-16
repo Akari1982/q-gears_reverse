@@ -7,12 +7,12 @@ parts header
 +00 [][]     init flags
              0x0001 - memory +18 (lighting) allocated.
              0x0002 - normals for lighting are calculated and stored.
-             0x0010 - if flag is set we create copy of vertexes +0c in some cases.
+             0x0010 - if flag is set we create MIMe normals.
 +02 [][]     number of vertexes.
 +04 [][]     number of polygons.
 +06 [][]     number of polygons blocks.
-+08 [][][][] offset to vertex block.
-+0c [][][][] offset to some other vectors block used in gourad shaded poly, maybe normals.
++08 [][][][] offset to vertexes block.
++0c [][][][] offset to normals block.
 +10 [][][][] offset to polygons block.
 +14 [][][][] offset to texture coords block.
 +18 [][][][] we store here pointer to allocated memory for normals for polygons lighting with +30 size if +00 & 1 not set.
@@ -80,12 +80,19 @@ MIMe (+1c sub file format)
 +00 [][][][] number of records in subfile
 
 +00 [][][][] ???
-+04 [][][][] some offset
-+08 [][][][] some offset
++04 [][][][] some offset.
++08 [][][][] some offset.
 
 
 MIMe Work
 size number of MIM * 0x20 + 0x14
-+0 [][][][] pointer to part header
-+4 [][][][] offset to vertex block
-+8 [][][][] offset to additional vertex block
++ 0 [][][][] pointer to part header.
++ 4 [][][][] offset to origin vertex block.
++ 8 [][][][] offset to normals block.
++ c [][][][] pointer to +1c data.
++10 [][][][] pointer to +14 in this alloc.
++14 start of MIMe records
+    + 0 [][][][] callback.
+    + 4 [][][][] init with 0.
+    + 8 [][][][] init with 0.
+    + c [][][][] init with 0.

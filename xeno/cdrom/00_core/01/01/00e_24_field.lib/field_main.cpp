@@ -2111,7 +2111,7 @@ if( v4 >= 100 )
 
 
 ////////////////////////////////
-// func7a058()
+// field_actor_init_shadow()
 
 packet = A0;
 S1 = packet + 20; // start of packet

@@ -176,6 +176,7 @@ L2c44c:	; 8002C44C
 // func2c454()
 
 part_header = A0;
+
 if( ( w[part_header + 4] & 00000002 ) == 0 )
 {
     [part_header + 4] = w(w[part_header + 4] | 00000002);
@@ -186,6 +187,7 @@ if( ( w[part_header + 4] & 00000002 ) == 0 )
 
     return 0;
 }
+
 return 1;
 ////////////////////////////////
 
@@ -2176,7 +2178,8 @@ S3 = S3 + A3;
 
 
 ////////////////////////////////
-// func2f0f0
+// func2f0f0()
+
 [SP + fffc] = w(S0);
 [SP + fff8] = w(S1);
 [SP + fff0] = w(S2);
@@ -3121,44 +3124,45 @@ T1 = w[T0 + 0000];
 T1 = T1 | T8;
 8002FF54	j      loop2fdd4 [$8002fdd4]
 [S3 + 0000] = w(T1);
-A1 = w[A0 + 0008];
-V0 = w[A0 + 0004];
-8002FF64	nop
-V0 = V0 < A1;
-8002FF6C	beq    v0, zero, L2ff98 [$8002ff98]
-8002FF70	nop
-V0 = w[A0 + 000c];
-V1 = w[A0 + 0004];
-V0 = A1 - V0;
-[A0 + 0008] = w(V0);
-V0 = V0 < V1;
-8002FF88	beq    v0, zero, L2ffcc [$8002ffcc]
-8002FF8C	nop
-[A0 + 0008] = w(V1);
-A1 = w[A0 + 0008];
-
-L2ff98:	; 8002FF98
-V0 = w[A0 + 0004];
-8002FF9C	nop
-V0 = A1 < V0;
-8002FFA4	beq    v0, zero, L2ffcc [$8002ffcc]
-8002FFA8	nop
-V0 = w[A0 + 000c];
-V1 = w[A0 + 0004];
-V0 = A1 + V0;
-[A0 + 0008] = w(V0);
-V0 = V1 < V0;
-8002FFC0	beq    v0, zero, L2ffcc [$8002ffcc]
-8002FFC4	nop
-[A0 + 0008] = w(V1);
-
-L2ffcc:	; 8002FFCC
-V0 = w[A0 + 0008];
-8002FFD0	jr     ra 
-8002FFD4	nop
 ////////////////////////////////
-// func2ffd8
-8002FFD8	addiu  sp, sp, $fff8 (=-$8)
+
+
+
+////////////////////////////////
+// func2ff5c()
+
+if( w[A0 + 4] < w[A0 + 8] )
+{
+    [A0 + 8] = w(w[A0 + 8] - w[A0 + c]);
+
+    if( w[A0 + c] < w[A0 + 4] )
+    {
+        [A0 + 8] = w(w[A0 + 4]);
+    }
+    else
+    {
+        return w[A0 + 8];
+    }
+}
+
+if( w[A0 + 8] < w[A0 + 4] )
+{
+    [A0 + 8] = w(w[A0 + 8] + w[A0 + c]);
+
+    if( w[A0 + 4] < w[A0 + c] )
+    {
+        [A0 + 8] = w(w[A0 + 4]);
+    }
+}
+
+return w[A0 + 8];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2ffd8()
+
 T1 = A0;
 8002FFE0	beq    a2, zero, L3002c [$8003002c]
 8002FFE4	addiu  t0, a2, $ffff (=-$1)
@@ -3183,11 +3187,13 @@ V1 = hu[A0 + 0004];
 [V0 + 0004] = h(V1);
 
 L3002c:	; 8003002C
-SP = SP + 0008;
-80030030	jr     ra 
-80030034	nop
 ////////////////////////////////
-// func30038
+
+
+
+////////////////////////////////
+// func30038()
+
 T1 = A0;
 8003003C	beq    a3, zero, L300dc [$800300dc]
 T0 = A1;
@@ -3236,19 +3242,18 @@ L300dc:	; 800300DC
 800300DC	jr     ra 
 800300E0	nop
 ////////////////////////////////
-// func300e4
-800300E4	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S4);
+
+
+
+////////////////////////////////
+// func300e4()
+
 S4 = A0;
-[SP + 001c] = w(S3);
 S3 = A1;
-[SP + 0014] = w(S1);
 S1 = A2;
-[SP + 0018] = w(S2);
 S2 = A3;
-[SP + 0024] = w(RA);
 8003010C	beq    s2, zero, L301b4 [$800301b4]
-[SP + 0010] = w(S0);
+
 80030114	addiu  s1, s1, $ffff (=-$1)
 80030118	addiu  v0, zero, $ffff (=-$1)
 8003011C	beq    s1, v0, L301b4 [$800301b4]
@@ -3293,15 +3298,6 @@ V0 = V0 + V1;
 800301B0	nop
 
 L301b4:	; 800301B4
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800301D0	jr     ra 
-800301D4	nop
 ////////////////////////////////
 
 
@@ -3322,13 +3318,13 @@ if( offset_1c == 0 )
 A0 = w[offset_1c + 0] * 20 + 14;
 A1 = S4;
 system_memory_allocate();
-S1 = V0;
+mim_work = V0;
 
-[S1 + 0] = w(part_header);
-[S1 + 4] = w(w[part_header + 8]); // offset to vertex block
-[S1 + 8] = w(w[part_header + c]); // offset to additional vertex block
-[S1 + c] = w(w[offset_1c]);
-[S1 + 10] = w(S1 + 14);
+[mim_work + 0] = w(part_header);
+[mim_work + 4] = w(w[part_header + 8]); // vertex block
+[mim_work + 8] = w(w[part_header + c]); // normals block
+[mim_work + c] = w(w[offset_1c]);
+[mim_work + 10] = w(mim_work + 14);
 
 // allocate new vertex block
 [GP + 1a8] = h(2c); // "MIMe Vertex" alloc
@@ -3337,18 +3333,14 @@ A1 = S4;
 system_memory_allocate();
 [part_header + 8] = w(V0);
 
-// copy vertexes to new position
-vertex_id = hu[part_header + 2] - 1;
-if( vertex_id != -1 )
+// copy vertexes from old to new
+for( int i = hu[part_header + 2] - 1; i != -1; --i )
 {
-    loop3028c:	; 8003028C
-        V1 = w[S1 + 4];
-        V0 = w[part_header + 8];
-        [V0 + vertex_id * 3 + 0] = h(hu[V1 + vertex_id * 3 + 0]);
-        [V0 + vertex_id * 3 + 2] = h(hu[V1 + vertex_id * 3 + 2]);
-        [V0 + vertex_id * 3 + 4] = h(hu[V1 + vertex_id * 3 + 4]);
-        vertex_id = vertex_id - 1;
-    800302D8	bne    vertex_id, -1, loop3028c [$8003028c]
+    old_vertex = w[mim_work + 4];
+    mim_vertex = w[part_header + 8];
+    [mim_vertex + i * 8 + 0] = h(hu[old_vertex + i * 8 + 0]);
+    [mim_vertex + i * 8 + 2] = h(hu[old_vertex + i * 8 + 2]);
+    [mim_vertex + i * 8 + 4] = h(hu[old_vertex + i * 8 + 4]);
 }
 
 if( hu[part_header + 0] & 0010 )
@@ -3359,34 +3351,27 @@ if( hu[part_header + 0] & 0010 )
     system_memory_allocate();
     [part_header + c] = w(V0);
 
-    // copy vertexes to new position
-    vertex_id = hu[part_header + 2] - 1;
-    if( vertex_id != -1 )
+    // copy normals to new position
+    vertex_id = ;
+    for( int i = hu[part_header + 2] - 1; i != -1; --i )
     {
-        loop3028c:	; 8003028C
-            V1 = w[S1 + 8];
-            V0 = w[part_header + c];
-            [V0 + vertex_id * 3 + 0] = h(hu[V1 + vertex_id * 3 + 0]);
-            [V0 + vertex_id * 3 + 2] = h(hu[V1 + vertex_id * 3 + 2]);
-            [V0 + vertex_id * 3 + 4] = h(hu[V1 + vertex_id * 3 + 4]);
-            vertex_id = vertex_id - 1;
-        800302D8	bne    vertex_id, -1, loop3028c [$8003028c]
+        old_normal = w[mim_work + 8];
+        mim_normal = w[part_header + c];
+        [mim_normal + i * 8 + 0] = h(hu[old_normal + i * 8 + 0]);
+        [mim_normal + i * 8 + 2] = h(hu[old_normal + i * 8 + 2]);
+        [mim_normal + i * 8 + 4] = h(hu[old_normal + i * 8 + 4]);
     }
 }
 
-if( w[S1 + c] > 0 )
+for( int i = 0; i < w[mim_work + c]; ++i )
 {
-    A1 = 0;
-    loop30398:	; 80030398
-        [S1 + 14 + S3 * 20 + 0] = w(8002ff5c);
-        [S1 + 14 + S3 * 20 + 4] = w(0);
-        [S1 + 14 + S3 * 20 + 8] = w(0);
-        [S1 + 14 + S3 * 20 + c] = w(0);
-        A1 = A1 + 1;
-        V0 = A1 < w[S1 + c];
-    800303B8	bne    v0, zero, loop30398 [$80030398]
+    [mim_work + 14 + i * 20 + 0] = w(8002ff5c); // func2ff5c()
+    [mim_work + 14 + i * 20 + 4] = w(0);
+    [mim_work + 14 + i * 20 + 8] = w(0);
+    [mim_work + 14 + i * 20 + c] = w(0);
 }
-return S1;
+
+return mim_work;
 ////////////////////////////////
 
 

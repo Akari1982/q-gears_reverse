@@ -4012,7 +4012,7 @@ if (V1 == 16 && V0 == S3)
     V1 = w[V0 + 004c];
     [800afb8c] = w(V0);
     [800af54c] = w(V1);
-    8008B068	jal    func80088 [$80080088]
+    8008B068	jal    field_actor_init_struct_138 [$80080088]
     A0 = S0;
     V0 = w[800aefe4];
     A0 = S0;
@@ -4066,7 +4066,7 @@ if (V1 == 16 && V0 == S3)
     V0 = w[V1 + 004c];
     [800afb8c] = w(V1);
     [800af54c] = w(V0);
-    8008B15C	jal    func80088 [$80080088]
+    8008B15C	jal    field_actor_init_struct_138 [$80080088]
     8008B160	nop
     V0 = w[800aefe4];
     8008B16C	nop
@@ -4443,7 +4443,7 @@ V0 = w[V1 + 004c];
 S3 = hu[S1 + 00cc];
 [800afb8c] = w(V1);
 [800af54c] = w(V0);
-8008B7F0	jal    func80088 [$80080088]
+8008B7F0	jal    field_actor_init_struct_138 [$80080088]
 8008B7F4	nop
 A1 = 0;
 A0 = w[S6 + 0000];
