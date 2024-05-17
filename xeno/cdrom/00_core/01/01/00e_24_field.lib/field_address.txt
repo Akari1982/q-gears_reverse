@@ -437,7 +437,8 @@
         + 120 [][][][] pointer to files 0x77a in dir 4 0. Init with 0.
         + 124 [][]     init with -1. If this not -1 then we allocate +120 struct.
         + 124 [][][][] init with 0x0000ffff.
-        + 126 [][]     init with 0.
+        + 126 []       init with 0.
+        + 127 []       init with 0.
         + 128 [][][][] init with 0x0000ffff.
         + 12c [][][][] flags.
                         0x00000003 - remove during entity init.
