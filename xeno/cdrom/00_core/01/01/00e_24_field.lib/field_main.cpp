@@ -204,7 +204,7 @@ if( w[800c1b60] == 1 ) // not debug
 
     A0 = 50;
     A1 = 1;
-    field_event_help_write_bytes_to_800C2F3C();
+    field_event_help_write_to_script_mem();
 }
 
 func76cb0(); // load some textures into vram
@@ -278,7 +278,7 @@ while( true )
     {
         A0 = 50;
         A1 = 1;
-        field_event_help_write_bytes_to_800C2F3C();
+        field_event_help_write_to_script_mem();
     }
 
     system_reset_check();
@@ -351,7 +351,7 @@ while( true )
                         {
                             [8004e9b0] = w(w[8004e9b0] + 1);
 
-                            80077A64	jal    funca345c [$800a345c]
+                            field_main_store_state();
                         }
 
                         S0 = 0;
@@ -450,7 +450,7 @@ while( true )
                     [8004e9b4] = w(w[8004e9b4] + 1);
                     S0 = 2;
 
-                    80077C70	jal    funca345c [$800a345c]
+                    field_main_store_state();
 
                     break;
                 }
@@ -520,7 +520,7 @@ while( true )
                             // set spawn spot to 0
                             A0 = 2;
                             A1 = 0;
-                            field_event_help_write_bytes_to_800C2F3C();
+                            field_event_help_write_to_script_mem();
                         }
                     }
                 }
@@ -798,25 +798,16 @@ func73670(); // clear otagr
 
 field_draw_sync();
 
-V0 = bu[80058b6c];
-
-80078444	beq    v0, 1, L78460 [$80078460]
-A0 = 0;
-V0 = bu[80058ac8];
-80078454	nop
-80078458	bne    v0, 1, L78468 [$80078468]
-8007845C	nop
-
-L78460:	; 80078460
-80078460	j      L78470 [$80078470]
-A1 = 0;
-
-L78468:	; 80078468
-A0 = 0001;
-A1 = 0001;
-
-L78470:	; 80078470
-
+if( ( bu[80058b6c] == 1 ) || ( bu[80058ac8] == 1 ) )
+{
+    A0 = 0;
+    A1 = 0;
+}
+else
+{
+    A0 = 1;
+    A1 = 1;
+}
 field_transition_create_add_transp_render();
 
 [8004e99c] = w(1);
@@ -1000,8 +991,8 @@ L78724:	; 80078724
 80078728	nop
 
 L7872c:	; 8007872C
-8007872C	jal    funca2778 [$800a2778]
-80078730	nop
+funca2778();
+
 V0 = bu[80058b6c];
 V1 = 0001;
 80078740	beq    v0, v1, L78808 [$80078808]
@@ -1698,17 +1689,17 @@ field_flush_sync();
 
 if( bu[80058b6c] == 0 )
 {
-    if( ( w[800ad03c] & 7f ) == 2 )
+    if( ( w[800ad03c] & 7f ) == 2 ) // load game menu
     {
         [800af79c] = b(1);
 
         A0 = 46;
         A1 = 0;
-        field_event_help_write_bytes_to_800C2F3C();
+        field_event_help_write_to_script_mem();
 
-        A0 = 4;
+        A0 = 4; // current field id
         A1 = 4;
-        field_event_help_write_bytes_to_800C2F3C();
+        field_event_help_write_to_script_mem();
 
         V1 = w[80059a38];
         [8004e9f0] = w(4);
@@ -1724,12 +1715,12 @@ if( bu[80058b6c] == 2 )
 
     A0 = 46;
     A1 = 2;
-    field_event_help_write_bytes_to_800C2F3C();
+    field_event_help_write_to_script_mem();
 
     V0 = w[80059a38];
     A0 = 4;
     A1 = hu[V0 + 231a] & 3fff;
-    field_event_help_write_bytes_to_800C2F3C();
+    field_event_help_write_to_script_mem();
 
     V1 = w[80059a38];
     if( ( hu[V1 + 231a] & 3fff ) < 400 )

@@ -1190,7 +1190,7 @@ switch( w[802859d8] )
         {
             [802859e4] = w(3c);
         }
-        funca345c();
+        field_main_store_state();
     }
     break;
 

@@ -32,6 +32,6 @@ Actor_0x00:on_update:
 Actor_0x00:on_talk:
 0x0039    op00_Return()
 
-Actor_0x00:script_0x04:
+Actor_0x00:event_0x04:
 0x003a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0008 ), value2=(s16)0x0006, condition="value1 == value2", jump_if_false=0x004a )
 0x0042    -- MISSING OPCODE 0xb5

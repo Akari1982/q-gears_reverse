@@ -20,12 +20,12 @@
 800ad030 [][][][] some entity id for MIMe in callback.
 800ad034 [][][][] current MIMe data from +118 used.
 800ad038 [][][][] init with 0. Field texture loaded.
-800ad03c [][][][] ???
+800ad03c [][][][] menu to open.
 
 800ad040 [][][][] init with 0. checked in move function (func821cc) as well as some other condition to make entity play run animation if equal to 1.
 
 800ad048 [][][][] movie play.
-800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_run_script_8().
+800ad04c [][][][] if this is 1 then we set number of entities to 1 in script call call_field_event_execute_8().
 
 800ad054 [][][][] init with 0.
 
@@ -42,8 +42,8 @@
 
 800ad0b0 [][][][] init with -1.
 800ad0b4 [][][][] battle not started (0 - started).
-800ad0b8 [][][][] if this is 0 - we dont perform something in call_run_script_8 (move related).
-800ad0bc [][][][] if this is 0 - we dont perform something in call_run_script_8 (move related).
+800ad0b8 [][][][] if this is 0 - we dont perform something in call_field_event_execute_8 (move related).
+800ad0bc [][][][] if this is 0 - we dont perform something in call_field_event_execute_8 (move related).
 800ad0c0 [][][][] init with -1.
 800ad0c4 [][][][] field load not started ( 0 - started ).
 
@@ -336,6 +336,7 @@
                        0x00002000: 0 - sprite else model.
                        0x00010000: ???
                        0x00080000: managed in opcode 0xF6.
+                       0x00100000: 
                        0x00200000: removed in 0x19_SetPosition.
                        0x00400000: maybe means that we checked this entity during movement collision check.
                        0x04000000: talk off.
@@ -373,7 +374,7 @@
         +  74 []       follow entity id. Init with 0xff. We dont calculate interaction with this entity.
         +  75 []       init with 0xff.
         +  76 [][]     move speed. Init with 0x0100.
-        +  78          stored script pointers stack (2 size 4 item) (when we go to subroutine we store here return pointer).
+        +  78          stored script pointers stack (0x2 size 0x4 item) (when we go to subroutine we store here return pointer).
         +  80 []       face id.
         +  81 []       store something from here to memory block + 14. Dialog related. Maybe cursor position.
         +  82 []       dialog width. Init with 0.
@@ -382,20 +383,20 @@
                         0x00000001 dont close offscreen entity message and dont stop low priority script.
         +  88 [][]     dialog pixel width. Init with 0.
         +  8a [][]     dialog pixel height. Init with 0.
-        +  8c start of script slots (0x8 size 0x8 items)
-            +0 [][]     pointer to requested script this slot. Init with 0xffff.
+        +  8c start of event slots (0x8 size 0x8 items)
+            +0 [][]     pointer to requested event this slot. Init with 0xffff.
             +2 []       wait byte in this slot. Init with 0.
-            +3 []       script id in this slot. Store 0xff  in 0x00_Return. Init with 0xff.
-            +4 [][][][] flags for script this slot (script priority among them).
-                           0x0000ffff: seems like number of steps to move. (SpriteGoToPosition == 0x0000ffff). Init with 0xffff.
-                           0x00030000: remove during init.
-                           0x003c0000: priority. Lower value - higher priority. Init with 0x3c.
-                           0x00600000: remove during init. Maybe state os script. If 0 then we add new script in this slot.
+            +3 []       event id in this slot.
+            +4 [][][][] flags for event this slot (script priority among them).
+                           0x0000ffff: event offset. Init with 0xffff.
+                           0x00030000: state of event call for this actor (0 - not wait, 1 - wait, 2 ).
+                           0x003c0000: priority. Lower value - higher priority. Init with 0xf.
+                           0x00400000: 0 - new event can be added. 1 - wait for sync with this slot.
                            0x01800000: how read argument in move reading function. (SpriteGoToPosition(vf80 x, vf40 y, f flag) - 0x00). Unknown setting. When add auto script during collision add script only if this not 1. Remove during init.
             here 7 more requersed script data 8 bytes each.
-        +  cc [][]     current script pointer. Init with 0.
-        +  ce []       current script slot id. Used in 0x00_Return. Init with 0.
-        +  cf []       byte to get data for Requests. Init with 0.
+        +  cc [][]     current script pointer.
+        +  ce []       current event slot id.
+        +  cf []       slot id of actor where we call event for sync.
         +  d0 [][][][] maybe current X. Init with 0 when set position by x z
         +  d4 [][][][] maybe current Y. Init with 0 when set position by x z
         +  d8 [][][][] maybe current Z. Init with 0 when set position by x z
@@ -496,11 +497,11 @@
 800af144 [][][][] store here particle texture from vram (3c0 100 40 100).
 800af148 [][][][] every time we init entity model with func76150 we increment this by 1.
 
-800af150 [][][][] store here how much opcodes to execute in run_script().
+800af150 [][][][] store here how much opcodes to execute in field_event_execute().
 
 800af1e4 [][][][] number of materials.
 
-800af1f0 [][][][] current entity id in script call.
+800af1f0 [][][][] current actor id in script call.
 800af1f4 [][]     store 0xff40 here if we init player entity.
 
 800af2f8 some render buffer.
@@ -548,7 +549,7 @@
 
 800af54c [][][][] offset to struct 0x138 for current entity in script call.
 
-800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of run_script function.
+800af594 [][][][] seems like return result from function (wait opcode returns 1). Set to 0 at start of field_event_execute function.
 
 800af5dc array of particle entities id. 0x40 items 0x2 size.
 
@@ -603,7 +604,7 @@
 
 800b168c [][][][] store here id of sound to play.
 
-800b16a0 []       if this is not 0 we nulify triangle material mask. If this not 0 we do not run scripts for party character entity (in call_run_script_8 (move related)).
+800b16a0 []       if this is not 0 we nulify triangle material mask. If this not 0 we do not run scripts for party character entity (in call_field_event_execute_8 (move related)).
 800b16a1 []       if 0 then we use entity y pos for camera y.
 
 800b16a4 []       1 - disable menu, 0 - enable menu.
@@ -872,21 +873,9 @@
 800c2f24 [][][][] max horizontal movement for mouse controller.
 800c2f28 [][][][] max vertical movement for mouse controller.
 
-800c2f3c memory block. used in field_event_help_read_bytes_from_800C2F3C.
-+ 0000 [][]     progress.
-+ 0002 [][]     spawn slot id (used when spawn pc).
-+ 0004 [][]     current field id.
-+ 0006 [][]     direction of pc entity during spawn.
-+ 0008 [][]     direction of camera.
-+ 0012 [][]     increment by 1 when we change field.
-+ 0014 [][]     related to displayed window. Store something here during 0x9c opcode. Maybe cursor position.
-+ 0016 [][]     slot1 for dialog temp variable.
-+ 0018 [][]     slot2 for dialog temp variable.
-+ 001a [][]     slot3 for dialog temp variable.
-+ 001c [][]     slot4 for dialog temp variable.
-+ 003c [][]     store loaded field id to load here.
+800c2f3c event script memory first 0x400 bytes are saved into savemap 80059a38 +1930 (described there), second 0x400 are temp variable.
+800c373c end of memory block.
 800c373c [][][][] message currently opening.
-800c3740          end of memory block.
 
 800c3740 [][][][] pointer to 800b1970 (otag).
 

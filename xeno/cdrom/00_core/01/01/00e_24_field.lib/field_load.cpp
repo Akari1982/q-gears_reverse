@@ -661,40 +661,37 @@ loop701dc:	; 800701DC
 800701E0	addiu  a1, a1, $ffff (=-$1)
 800701E4	bgez   a1, loop701dc [$800701dc]
 800701E8	addiu  v0, v0, $fffe (=-$2)
-A1 = 0;
-800701F0	lui    v0, $800c
-V0 = V0 + 2f3c;
-A2 = V0 + 0400;
-V1 = V0;
-A0 = w[80059a38];
-V0 = 0002;
+
 [800b1770] = w(0);
 [800b176c] = w(0);
-[8004f7a4] = w(V0);
+[8004f7a4] = w(2);
 
-loop70224:	; 80070224
-V0 = hu[A0 + 1930];
-A0 = A0 + 0002;
-A1 = A1 + 0001;
-[V1 + 0000] = h(V0);
-[A2 + 0000] = h(0);
-A2 = A2 + 0002;
-V0 = A1 < 0200;
-80070240	bne    v0, zero, loop70224 [$80070224]
-V1 = V1 + 0002;
+for( int i = 0; i < 200; ++i )
+{
+    A0 = w[80059a38];
+    [800c2f3c + i * 2] = h(hu[A0 + 1930 + i * 2]);
+    [800c2f3c + 400 + i * 2] = h(0);
+}
+
 A0 = 200;
 system_gte_set_projection_plane_distance();
 
 S0 = 800aee64;
-80070258	jal    field_get_identity_matrix [$8006fc24]
+
 A0 = S0;
+field_get_identity_matrix();
+
+S1 = S0 + d4;
+
 A0 = 800aed30;
-80070268	jal    field_get_identity_matrix [$8006fc24]
-S1 = S0 + 00d4;
-80070270	jal    field_get_identity_matrix [$8006fc24]
+field_get_identity_matrix();
+
 A0 = S1;
-80070278	jal    field_get_identity_matrix [$8006fc24]
-A0 = S0 + 0114;
+field_get_identity_matrix();
+
+A0 = S0 + 114;
+field_get_identity_matrix();
+
 A0 = S0 + 00c4;
 V0 = 3000;
 [S0 + 00c4] = h(0);

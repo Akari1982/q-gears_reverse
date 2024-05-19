@@ -1,5 +1,5 @@
 ////////////////////////////////
-// field_event_help_read_bytes_from_800C2F3C()
+// field_event_help_read_from_script_mem()
 // [xxxxxxxx][xxxxxxx0] => x (offset to read)
 // [xxxxxxxx][xx000000] => x * 4 (offset to sign)
 
@@ -22,7 +22,7 @@ else
 
 
 ////////////////////////////////
-// field_event_help_write_bytes_to_800C2F3C()
+// field_event_help_write_to_script_mem()
 
 [800c2f3c + ((A0 >> 1) << 1)] = h(A1);
 ////////////////////////////////
@@ -66,7 +66,7 @@ if( V0 & 8000 )
 else
 {
     A0 = V0 & ffff;
-    field_event_help_read_bytes_from_800C2F3C();
+    field_event_help_read_from_script_mem();
 }
 return V0;
 ////////////////////////////////
@@ -97,7 +97,7 @@ else
     field_event_help_read_u16();
 
     A0 = V0 & ffff
-    field_event_help_read_bytes_from_800C2F3C();
+    field_event_help_read_from_script_mem();
 }
 ////////////////////////////////
 
@@ -161,6 +161,24 @@ for( int i = 0; i < 4; ++i )
 }
 
 return -1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_event_help_set_party_members_to_script_mem()
+
+A0 = 3e;
+A1 = w[80061c20];
+field_event_help_write_to_script_mem();
+
+A0 = 40;
+A1 = w[80061c24];
+field_event_help_write_to_script_mem();
+
+A0 = 42;
+A1 = w[80061c28];
+field_event_help_write_to_script_mem();
 ////////////////////////////////
 
 
@@ -358,4 +376,20 @@ event_id = A1;
 
 V0 = w[800ad0d0];
 return hu[V0 + 84 + actor_id * 40 + event_id * 2];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_event_help_check_event_in_slots()
+
+struct_138 = A0;
+event_id = A1;
+
+for( int i = 0; i < 8; ++i )
+{
+    if( bu[struct_138 + 8c + i * 8 + 3] == event_id ) return -1;
+}
+
+return 0;
 ////////////////////////////////

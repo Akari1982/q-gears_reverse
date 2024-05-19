@@ -29,6 +29,7 @@ public:
     std::string GetV80Variable( const u32 script_pointer );
 
     std::string GetMessageFlags( const u32 pointer );
+    std::string GetButtonsFlags( const u32 pointer );
 };
 
 

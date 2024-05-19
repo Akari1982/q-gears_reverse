@@ -48,7 +48,7 @@ Actor_0x01:script_0x04:
 0x0039    op00_Return()
 
 Actor_0x01:script_0x05:
-0x003a    op6F_ActorRotateToActor( actor_id=(entity)0x03 )
+0x003a    op6F_ActorRotateToActor( actor_id=0x03 )
 0x003c    op00_Return()
 
 Actor_0x01:script_0x06:

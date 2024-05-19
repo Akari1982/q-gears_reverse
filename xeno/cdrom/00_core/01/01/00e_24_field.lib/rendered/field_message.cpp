@@ -918,19 +918,19 @@ for( int i = 0; i < 4; ++i )
 }
 
 A0 = 16;
-field_event_help_read_bytes_from_800C2F3C();
+field_event_help_read_from_script_mem();
 [800c1b6c + id * 498 + 18 + 70] = w(V0);
 
 A0 = 18;
-field_event_help_read_bytes_from_800C2F3C();
+field_event_help_read_from_script_mem();
 [800c1b6c + id * 498 + 18 + 74] = w(V0);
 
 A0 = 1a;
-field_event_help_read_bytes_from_800C2F3C();
+field_event_help_read_from_script_mem();
 [800c1b6c + id * 498 + 18 + 78] = w(V0);
 
 A0 = 1c;
-field_event_help_read_bytes_from_800C2F3C();
+field_event_help_read_from_script_mem();
 [800c1b6c + id * 498 + 18 + 7c] = w(V0);
 [800c1b6c + id * 498 + 18 + 80] = h(V0);
 

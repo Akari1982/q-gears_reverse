@@ -2198,16 +2198,16 @@
 // func9deac
 8009DEAC-8009E0D4
 ////////////////////////////////
-// check_script_execution
+// field_event_help_check_event_in_slots
 8009E0D8-8009E104
 ////////////////////////////////
-// func9e108
+// field_event_op07_call_actor_event
 8009E108-8009E2F4
 ////////////////////////////////
-// 0x08_EntityCallScriptSW
+// field_event_op08_call_actor_event_start_sync
 8009E2F8-8009E62C
 ////////////////////////////////
-// 0x09_EntityCallScriptEW
+// field_event_op09_call_actor_event_end_sync
 8009E630-8009E9B0
 ////////////////////////////////
 // func9e9b4
@@ -2305,7 +2305,7 @@
 // 0x0B_EntityNPCSpriteInit
 800A0BB4-800A0CBC
 ////////////////////////////////
-// 0x06
+// field_event_op06
 800A0CC0-800A0D80
 ////////////////////////////////
 // field_event_op05_function_call
@@ -2320,23 +2320,22 @@
 // field_event_op04
 800A101C-800A10FC
 ////////////////////////////////
-// 0x00_Return
-// funca1100
+// field_event_op00_return
 800A1100-800A115C
 ////////////////////////////////
-// 0x02_ConditionalJumpTo
+// field_event_op02_jump_to_conditional
 800A1160-800A1400
 ////////////////////////////////
-// 0x01_JumpTo
+// field_event_op01_jump_to
 800A1404-800A1428
 ////////////////////////////////
-// funca142c
+// field_event_opC6_expand_run
 800A142C-800A1454
 ////////////////////////////////
-// run_script
+// field_event_execute
 800A1458-800A15BC
 ////////////////////////////////
-// call_run_script_8
+// call_field_event_execute_8
 800A15C0-800A1838
 ////////////////////////////////
 // funca183c
@@ -2360,16 +2359,16 @@
 // field_event_help_get_bytes_sign
 800A2570-800A25A4
 ////////////////////////////////
-// field_event_help_read_bytes_from_800C2F3C
+// field_event_help_read_from_script_mem
 800A25A8-800A25FC
 ////////////////////////////////
-// field_event_help_write_bytes_to_800C2F3C
+// field_event_help_write_to_script_mem
 800A2604-800A261C
 ////////////////////////////////
 // field_event_help_get_event_offset
 800A2620-800A2640
 ////////////////////////////////
-// funca2644
+// field_event_help_set_party_members_to_script_mem
 800A2644-800A2688
 ////////////////////////////////
 // funca268c
@@ -2378,13 +2377,13 @@
 // funca2778
 800A2778-800A2A00
 ////////////////////////////////
-// funca2a04
+// field_main_restore_state
 800A2A04-800A3218
 ////////////////////////////////
 // funca321c
 800A321C-800A3458
 ////////////////////////////////
-// funca345c
+// field_main_store_state
 800A345C-800A3C1C
 ////////////////////////////////
 // field_copy_screen_to_2c0_100

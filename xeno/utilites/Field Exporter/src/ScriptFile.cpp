@@ -74,7 +74,7 @@ ScriptFile::GetScripts( const std::string& path )
             else if( j == 1 ) str = actor + "on_update:";
             else if( j == 2 ) str = actor + "on_talk:";
             else if( j == 3 ) str = actor + "on_push:";
-            else              str = actor + "script_0x" + HexToString( j, 2, '0' ) + ":";
+            else              str = actor + "event_0x" + HexToString( j, 2, '0' ) + ":";
 
             Mark mark;
             mark.pointer = offset_to_script + script;
@@ -107,65 +107,43 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "op00_Return()" );
                 pointer += 1;
-                //exp->Log( " -- " + address + " 0x" + HexToString( opcode, 2, '0' ) + "\n" );
-                //n_ret = false;
             }
             break;
 
             case 0x01:
             {
-                exp->Log( "-- 0x01_JumpTo( " + GetU16Variable( pointer + 1 ) + " )" );
+                exp->Log( "op01_JumpTo( address=" + GetU16Variable( pointer + 1 ) + " )" );
                 pointer += 3;
             }
             break;
 
             case 0x02:
             {
-                exp->Log( "-- 0x02_ConditionalJumpTo( " );
+                exp->Log( "op02_JumpToConditional( " );
                 u8 flag = GetU8( pointer + 5 );
                 switch( flag & 0xf0 )
                 {
-                    case 0x00:
-                    {
-                        exp->Log( "value1=" + GetVVariable( pointer + 1 ) + ", " );
-                        exp->Log( "value2=" + GetVVariable( pointer + 3 ) + ", " );
-                    }
-                    break;
-                    case 0x40:
-                    {
-                        exp->Log( "value1=" + GetVVariable( pointer + 1 ) + ", " );
-                        exp->Log( "value2=" + GetS16Variable( pointer + 3 ) + ", " );
-                    }
-                    break;
-                    case 0x80:
-                    {
-                        exp->Log( "value1=" + GetS16Variable( pointer + 1 ) + ", " );
-                        exp->Log( "value2=" + GetVVariable( pointer + 3 ) + ", " );
-                    }
-                    break;
-                    case 0xc0:
-                    {
-                        exp->Log( "value1=" + GetS16Variable( pointer + 1 ) + ", " );
-                        exp->Log( "value2=" + GetS16Variable( pointer + 3 ) + ", " );
-                    }
-                    break;
+                    case 0x00: exp->Log( "val1=" + GetVVariable( pointer + 1 ) + ", val2=" + GetVVariable( pointer + 3 ) + ", " ); break;
+                    case 0x40: exp->Log( "val1=" + GetVVariable( pointer + 1 ) + ", val2=" + GetS16Variable( pointer + 3 ) + ", " ); break;
+                    case 0x80: exp->Log( "val1=" + GetS16Variable( pointer + 1 ) + ", val2=" + GetVVariable( pointer + 3 ) + ", " ); break;
+                    case 0xc0: exp->Log( "val1=" + GetS16Variable( pointer + 1 ) + ", val2=" + GetS16Variable( pointer + 3 ) + ", " ); break;
                 }
                 exp->Log( "condition=\"" );
                 switch( flag & 0x0f )
                 {
-                    case 0x00: exp->Log( "value1 == value2" ); break;
-                    case 0x01: exp->Log( "value1 != value2" ); break;
-                    case 0x02: exp->Log( "value1 > value2" ); break;
-                    case 0x03: exp->Log( "value1 < value2" ); break;
-                    case 0x04: exp->Log( "value1 >= value2" ); break;
-                    case 0x05: exp->Log( "value1 <= value2" ); break;
-                    case 0x06: exp->Log( "value1 & value2" ); break;
-                    case 0x07: exp->Log( "value1 != value2" ); break;
-                    case 0x08: exp->Log( "value1 | value2" ); break;
-                    case 0x09: exp->Log( "value1 & value2" ); break;
-                    case 0x0A: exp->Log( "(0 NOR value1) & value2" ); break;
+                    case 0x00: exp->Log( "val1 == val2" ); break;
+                    case 0x01: exp->Log( "val1 != val2" ); break;
+                    case 0x02: exp->Log( "val1 > val2" ); break;
+                    case 0x03: exp->Log( "val1 < val2" ); break;
+                    case 0x04: exp->Log( "val1 >= val2" ); break;
+                    case 0x05: exp->Log( "val1 <= val2" ); break;
+                    case 0x06: exp->Log( "val1 & val2" ); break;
+                    case 0x07: exp->Log( "val1 != val2" ); break;
+                    case 0x08: exp->Log( "val1 | val2" ); break;
+                    case 0x09: exp->Log( "val1 & val2" ); break;
+                    case 0x0A: exp->Log( "~val1 & val2" ); break;
                 }
-                exp->Log("\", jump_if_false=" + GetU16Variable( pointer + 6 ) + " )" );
+                exp->Log("\", address_if_false=" + GetU16Variable( pointer + 6 ) + " )" );
                 pointer += 8;
             }
             break;
@@ -177,13 +155,6 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
-            case 0x04:
-            {
-                exp->Log( "-- 0x04()" );
-                pointer += 1;
-            }
-            break;
-
             case 0x05:
             {
                 Mark mark;
@@ -191,28 +162,28 @@ ScriptFile::GetScripts( const std::string& path )
                 mark.str = "function:";
                 marks.push_back(mark);
 
-                exp->Log( "op05_FunctionCall( " + GetU16Variable( pointer + 1 ) + " )" );
+                exp->Log( "op05_CallFunction( address=" + GetU16Variable( pointer + 1 ) + " )" );
                 pointer += 3;
             }
             break;
 
             case 0x07:
             {
-                exp->Log( "-- 0x07( actor_id=" + GetU8Variable( pointer + 1 ) + ", script=" + GetU8Variable( pointer + 2 ) + " )" );
+                exp->Log( "op07_CallActorEvent( actor_id=" + GetEVariable( pointer + 1 ) + ", event=event_0x" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=0x" + HexToString( ( GetU8( pointer + 2 ) & 0xe0 ) >> 5, 2, '0' )  + " )" );
                 pointer += 3;
             }
             break;
 
             case 0x08:
             {
-                exp->Log( "op08_ActorCallScriptSW( actor_id=" + GetU8Variable( pointer + 1 ) + ", script=" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=" + HexToString( ( GetU8( pointer + 2 ) & 0xe0) >> 5, 2, '0' )  + " )" );
+                exp->Log( "op08_CallActorEventStartSync( actor_id=" + GetEVariable( pointer + 1 ) + ", event=event_0x" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=0x" + HexToString( ( GetU8( pointer + 2 ) & 0xe0 ) >> 5, 2, '0' )  + " )" );
                 pointer += 3;
             }
             break;
 
             case 0x09:
             {
-                exp->Log( "op09_ActorCallScriptEW( actor_id=" + GetU8Variable( pointer + 1 ) + ", script=" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=" + HexToString( ( GetU8( pointer + 2 ) & 0xe0) >> 5, 2, '0' )  + " )" );
+                exp->Log( "op09_CallActorEventEndSync( actor_id=" + GetEVariable( pointer + 1 ) + ", event=event_0x" + HexToString( GetU8( pointer + 2 ) & 0x1f, 2, '0' )  + ", priority=0x" + HexToString( ( GetU8( pointer + 2 ) & 0xe0 ) >> 5, 2, '0' )  + " )" );
                 pointer += 3;
             }
             break;
@@ -233,7 +204,7 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0x0d:
             {
-                exp->Log( "op0D_FunctionRet()" );
+                exp->Log( "op0D_Return()" );
                 pointer += 1;
             }
             break;
@@ -359,7 +330,7 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0x31:
             {
-                exp->Log( "-- 0x31_JumpIfButtonNotPressed( button_mask=" + GetU16Variable( pointer + 1 ) + ", jump_to=" + GetU16Variable( pointer + 3 ) + " )" );
+                exp->Log( "op31_JumpIfButtonNotPressed( buttons=" + GetButtonsFlags( pointer + 1 ) + ", jump_to=" + GetU16Variable( pointer + 3 ) + " )" );
                 pointer += 5;
             }
             break;
@@ -792,14 +763,14 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0xb3:
             {
-                exp->Log( "-- 0xB3()" );
+                exp->Log( "opB3_FadeIn()" );
                 pointer += 3;
             }
             break;
 
             case 0xb4:
             {
-                exp->Log("-- 0xB4_FadeIn()" );
+                exp->Log("opB4_FadeOut()" );
                 pointer += 3;
             }
             break;
@@ -855,7 +826,7 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0xc6:
             {
-                exp->Log( "-- 0xC6()" );
+                exp->Log( "opC6_ExpandRun()" );
                 pointer += 1;
             }
             break;
@@ -1368,11 +1339,11 @@ ScriptFile::GetEVariable( const u32 pointer )
 {
     u8 char_id = GetU8( pointer );
 
-         if( char_id == 0xff ) return "(entity)party_1";
-    else if( char_id == 0xfe ) return "(entity)party_2";
-    else if( char_id == 0xfd ) return "(entity)party_3";
-    else if( char_id == 0xfb ) return "(entity)self";
-    else                       return "(entity)0x" + HexToString( GetU8( pointer ), 2, '0' );
+         if( char_id == 0xff ) return "party1";
+    else if( char_id == 0xfe ) return "party2";
+    else if( char_id == 0xfd ) return "party3";
+    else if( char_id == 0xfb ) return "self";
+    else                       return "Actor_0x" + HexToString( GetU8( pointer ), 2, '0' );
 }
 
 
@@ -1460,7 +1431,7 @@ ScriptFile::GetVF80Variable( const u32 pointer )
 std::string
 ScriptFile::GetVVariable( const u32 pointer )
 {
-    return "GetVar( 0x" + HexToString( GetU16LE( pointer ), 4, '0' ) + " )";
+    return "mem[0x" + HexToString( GetU16LE( pointer ), 4, '0' ) + "]";
 }
 
 
@@ -1491,7 +1462,7 @@ ScriptFile::GetMessageFlags( const u32 pointer )
     }
     if( flags & 0x02 )
     {
-        if( flags & 0x01 ) str += "|";
+        if( flags & 0x01 ) str += "|"; 
         str += "NO_FACE";
     }
     if( flags & 0x04 )
@@ -1525,6 +1496,99 @@ ScriptFile::GetMessageFlags( const u32 pointer )
         str += "0x80";
     }
     if( ( flags & 0xff ) == 0 )
+    {
+        str += "0";
+    }
+    return str;
+}
+
+std::string
+ScriptFile::GetButtonsFlags( const u32 pointer )
+{
+    u16 flags = GetU16LE( pointer );
+
+    std::string str = "";
+    if( flags & 0x0001 )
+    {
+        str += "L2";
+    }
+    if( flags & 0x0002 )
+    {
+        if( flags & 0x0001 ) str += "|";
+        str += "R2";
+    }
+    if( flags & 0x0004 )
+    {
+        if( flags & 0x0003 ) str += "|";
+        str += "L1";
+    }
+    if( flags & 0x0008 )
+    {
+        if( flags & 0x0007 ) str += "|";
+        str += "R1";
+    }
+    if( flags & 0x0010 )
+    {
+        if( flags & 0x000f ) str += "|";
+        str += "Triangle";
+    }
+    if( flags & 0x0020 )
+    {
+        if( flags & 0x001f ) str += "|";
+        str += "Circle";
+    }
+    if( flags & 0x0040 )
+    {
+        if( flags & 0x003f ) str += "|";
+        str += "Cross";
+    }
+    if( flags & 0x0080 )
+    {
+        if( flags & 0x007f ) str += "|";
+        str += "Square";
+    }
+    if( flags & 0x0100 )
+    {
+        if( flags & 0x00ff ) str += "|";
+        str += "Select";
+    }
+    if( flags & 0x0200 )
+    {
+        if( flags & 0x01ff ) str += "|";
+        str += "L3";
+    }
+    if( flags & 0x0400 )
+    {
+        if( flags & 0x03ff ) str += "|";
+        str += "R3";
+    }
+    if( flags & 0x0800 )
+    {
+        if( flags & 0x07ff ) str += "|";
+        str += "Start";
+    }
+    if( flags & 0x1000 )
+    {
+        if( flags & 0x0fff ) str += "|";
+        str += "Up";
+    }
+    if( flags & 0x2000 )
+    {
+        if( flags & 0x1fff ) str += "|";
+        str += "Right";
+    }
+    if( flags & 0x4000 )
+    {
+        if( flags & 0x3fff ) str += "|";
+        str += "Down";
+    }
+    if( flags & 0x8000 )
+    {
+        if( flags & 0x7fff ) str += "|";
+        str += "Left";
+    }
+
+    if( ( flags & 0xffff ) == 0 )
     {
         str += "0";
     }

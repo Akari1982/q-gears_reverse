@@ -12,7 +12,7 @@ if( V0 == -1 ) // if this entity don't have opened dialogs
 
     A0 = 14;
     A1 = bu[struct_138 + 81];
-    field_event_help_write_bytes_to_800C2F3C();
+    field_event_help_write_to_script_mem();
 
     [struct_138 + cc] = h(hu[struct_138 + cc] + 1);
 }
@@ -43,7 +43,7 @@ else
             if( script_priority != 7 )
             {
                 // end this entity script execution
-                funca1100(); // this is return opcode
+                field_event_op00_return(); // this is return opcode
             }
 
             [800c1b6c + message * 498 + 414] = h(0); // close window

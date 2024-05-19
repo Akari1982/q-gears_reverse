@@ -1,5 +1,5 @@
 ////////////////////////////////
-// run_script()
+// field_event_execute()
 
 exec_num = A0;
 
@@ -13,7 +13,7 @@ for( int i = 0; i < w[800af150]; ++i )
         if( w[800c1b60] == 0 )
         {
             A0 = 8006f414; // "EVENTLOOP ERROR ACT=%d"
-            A1 = w[800af1f0]; // current entity id
+            A1 = w[800af1f0]; // current actor id
             system_print_alias();
         }
         return;
@@ -85,7 +85,7 @@ for( int i = 0; i < w[800af150]; ++i )
 
 
 ////////////////////////////////
-// call_run_script_8()
+// call_field_event_execute_8()
 // called in move routine
 // run 8 opcodes for non-party entities
 
@@ -158,7 +158,7 @@ for( int i = 0; i < number_of_actors; ++i )
                 [struct_138 + 8c + 4] = w((w[struct_138 + 8c + 4] & ffc3ffff) | 001c0000); // run script with priority 7
             }
 
-            [800af4c0] = w(1); // execute once and finish at stop
+            [800af4c0] = w(1); // finish at wait
 
             V0 = bu[struct_138 + ce]; // current script slot
             [struct_138 + cc] = h(hu[struct_138 + 8c + V0 * 8 + 0]);
@@ -167,7 +167,7 @@ for( int i = 0; i < number_of_actors; ++i )
             {
                 // execute 8 opcodes
                 A0 = 8;
-                run_script();
+                field_event_execute();
             }
 
             // update script pointer in slot
@@ -213,7 +213,7 @@ for( int i = 0; i < 8; ++i )
 
 // start script
 [800af1f0] = w(0); // current entity id for script call
-[800af4c0] = w(0); // wait state for return
+[800af4c0] = w(0); // execute all opcodes
 [800af54c] = struct_138;
 [800afb8c] = w(struct_5c_p);
 
@@ -225,7 +225,7 @@ field_event_help_get_event_offset();
 [struct_138 + cc] = h(V0);
 
 A0 = ffff;
-run_script();
+field_event_execute();
 
 [800acff4] = w(1);
 
@@ -257,14 +257,11 @@ funcac2fc();
 
 
 ////////////////////////////////
-// funca1a54
+// funca1a54()
+
 V0 = w[8004e9b0];
-800A1A5C	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 003c] = w(RA);
-[SP + 0038] = w(S2);
-[SP + 0034] = w(S1);
 800A1A6C	beq    v0, zero, La1c88 [$800a1c88]
-[SP + 0030] = w(S0);
+
 800A1A74	jal    funca183c [$800a183c]
 A0 = 0002;
 800A1A7C	jal    funcacd70 [$800acd70]
@@ -400,13 +397,6 @@ V0 = S1 < V0;
 A1 = A1 + 005c;
 
 La1c88:	; 800A1C88
-RA = w[SP + 003c];
-S2 = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0040;
-800A1C9C	jr     ra 
-800A1CA0	nop
 ////////////////////////////////
 
 
@@ -472,9 +462,9 @@ if( w[8004e9b0] != 0 )
 
     A0 = 10;
     A1 = 0;
-    field_event_help_write_bytes_to_800C2F3C();
+    field_event_help_write_to_script_mem();
 
-    funca2644(); // store some data
+    field_event_help_set_party_members_to_script_mem();
 
     for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
@@ -491,9 +481,9 @@ if( w[8004e9b0] != 0 )
 
 struct_5c_p = w[800aefe4];
 
-if( w[8004e9b0] != 0 )
+if( w[8004e9b0] != 0 ) // we need to restore state
 {
-    funca2a04();
+    field_main_restore_state();
 
     for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     {
@@ -600,9 +590,9 @@ else
 {
     A0 = 10;
     A1 = 0;
-    field_event_help_write_bytes_to_800C2F3C();
+    field_event_help_write_to_script_mem();
 
-    funca2644();
+    field_event_help_set_party_members_to_script_mem();
 
     // disable talking if there is no "on_talk" event for entity
     // set current event pointer to "on_init" event
@@ -624,11 +614,11 @@ else
 
         if( bu[event_block + V0] == 0 ) // ret opcode
         {
-            [struct_138 + 4] = w(w[struct_138 + 4] | 04000000);
+            [struct_138 + 4] = w(w[struct_138 + 4] | 04000000); // disable talking
         }
 
         A0 = i;
-        A1 = 0;
+        A1 = 0; // on_init
         field_event_help_get_event_offset();
         [struct_138 + cc] = h(V0);
     }
@@ -640,14 +630,14 @@ else
         struct_138 = w[struct_5c + 4c];
 
         [800af148] = w(0);
-        [800af4c0] = w(0); // execute till the end
+        [800af4c0] = w(0); // execute all opcodes
 
         [800af1f0] = w(i);
         [800afb8c] = w(struct_5c);
         [800af54c] = w(struct_138]);
 
         A0 = ffff;
-        run_script();
+        field_event_execute();
 
         if( w[800af148] == 0 )
         {
@@ -671,24 +661,6 @@ else
 
 
 ////////////////////////////////
-// funca2644()
-
-A0 = 3e;
-A1 = w[80061c20];
-field_event_help_write_bytes_to_800C2F3C();
-
-A0 = 40;
-A1 = w[80061c24];
-field_event_help_write_bytes_to_800C2F3C();
-
-A0 = 42;
-A1 = w[80061c28];
-field_event_help_write_bytes_to_800C2F3C();
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funca268c()
 
 V0 = w[80059a38];
@@ -699,39 +671,37 @@ V0 = w[80059a38];
 
 A0 = 44;
 A1 = hu[80058ab8];
-field_event_help_write_bytes_to_800C2F3C();
+field_event_help_write_to_script_mem();
 
 A0 = 46;
 A1 = bu[80058b6c];
-field_event_help_write_bytes_to_800C2F3C();
+field_event_help_write_to_script_mem();
 
 func96a20();
 A0 = 6; // direction of pc entity during spawn.
 A1 = V0;
-field_event_help_write_bytes_to_800C2F3C();
+field_event_help_write_to_script_mem();
 
 func99ae8();
 A0 = 8; // direction of camera.
 A1 = V0;
-field_event_help_write_bytes_to_800C2F3C();
+field_event_help_write_to_script_mem();
 
 A0 = 24;
-A1 = h[800aeed0];
-field_event_help_write_bytes_to_800C2F3C();
+A1 = h[800aeed0]; // DIP
+field_event_help_write_to_script_mem();
 
 A0 = 3c;
 A1 = w[8004e9f0]; // field id to load
-field_event_help_write_bytes_to_800C2F3C();
+field_event_help_write_to_script_mem();
 
-funca2644();
+field_event_help_set_party_members_to_script_mem();
 
-A1 = 0;
-V1 = w[80059a38];
-loopa274c:	; 800A274C
-    [V1 + 1930 + A1 * 2] = h(hu[800c2f3c + A1 * 2]);
-    A1 = A1 + 1;
-    V0 = A1 < 200;
-800A2760	bne    v0, zero, loopa274c [$800a274c]
+for( int i = 0; i < 200; ++i )
+{
+    V1 = w[80059a38];
+    [V1 + 1930 + i * 2] = h(hu[800c2f3c + i * 2]);
+}
 ////////////////////////////////
 
 
@@ -739,162 +709,105 @@ loopa274c:	; 800A274C
 ////////////////////////////////
 // funca2778()
 
-V1 = bu[800af79c];
-V0 = 0001;
-800A2790	beq    v1, v0, La29ec [$800a29ec]
+if( bu[800af79c] == 1 ) return;
 
-S0 = 0;
-V0 = hu[800af140];
-V1 = hu[800af370];
-A0 = 80061c20;
-V0 = V0 | V1;
-[800af140] = h(V0);
+[800af140] = h(hu[800af140] | hu[800af370]);
 
-loopa27c0:	; 800A27C0
-V0 = w[80059a38];
-V1 = w[A0 + 0000];
-V0 = V0 + S0;
-S0 = S0 + 0001;
-[V0 + 1d34] = b(V1);
-V0 = S0 < 0003;
-800A27DC	bne    v0, zero, loopa27c0 [$800a27c0]
-A0 = A0 + 0004;
-800A27E4	jal    funca268c [$800a268c]
-S0 = 0;
-V0 = w[8004e9bc];
-S1 = 0001;
+for( int i = 0; i < 3; ++i )
+{
+    V0 = w[80059a38];
+    [V0 + 1d34 + i] = b(w[80061c20 + i * 4]);
+}
+
+funca268c();
+
 [8004e998] = w(0);
-V0 = V0 + 0001;
-[8004e9bc] = w(V0);
+[8004e9bc] = w(w[8004e9bc] + 1);
 
-loopa280c:	; 800A280C
-V0 = w[80059a38];
-800A2814	nop
-V0 = V0 + S0;
-V0 = bu[V0 + 22b1];
-800A2820	nop
-800A2824	bne    v0, s1, La2834 [$800a2834]
-800A2828	nop
-800A282C	jal    func9f474 [$8009f474]
-A0 = S0;
+for( int i = 0; i < 3; ++i )
+{
+    V0 = w[80059a38];
+    if( bu[V0 + 22b1 + i] == 1 )
+    {
+        A0 = i;
+        func9f474();
+    }
+}
 
-La2834:	; 800A2834
-S0 = S0 + 0001;
-V0 = S0 < 0003;
-800A283C	bne    v0, zero, loopa280c [$800a280c]
-800A2840	nop
-V0 = w[8004e9bc];
-800A284C	nop
-V0 = V0 < 001f;
-800A2854	bne    v0, zero, La28fc [$800a28fc]
-800A2858	nop
-V0 = w[8004e9cc];
-[8004e9bc] = w(0);
-V0 = V0 & 0080;
-800A2870	bne    v0, zero, La2900 [$800a2900]
-A0 = 000c;
-800A2878	jal    field_event_help_read_bytes_from_800C2F3C [$800a25a8]
-A0 = 000a;
-A1 = V0 & 00ff;
-V0 = V0 >> 08;
-V1 = w[8004e9cc];
-800A2890	nop
-V1 = V1 & 0004;
-800A2898	bne    v1, zero, La28c8 [$800a28c8]
-A2 = V0 & 00ff;
-V0 = ff3b;
-800A28A4	beq    a1, v0, La28e8 [$800a28e8]
-800A28A8	nop
-A1 = A1 + 0001;
-V0 = A1 < 003d;
-800A28B4	bne    v0, zero, La28e8 [$800a28e8]
-800A28B8	nop
-A1 = 0;
-800A28C0	j      La28e8 [$800a28e8]
-A2 = A2 + 0001;
+if( w[8004e9bc] >= 1f )
+{
+    [8004e9bc] = w(0);
 
-La28c8:	; 800A28C8
-800A28C8	bne    a1, zero, La28e4 [$800a28e4]
-800A28CC	nop
-800A28D0	beq    a2, zero, La28e8 [$800a28e8]
-800A28D4	nop
-A1 = 003b;
-800A28DC	j      La28e8 [$800a28e8]
-800A28E0	addiu  a2, a2, $ffff (=-$1)
+    if( ( w[8004e9cc] & 80 ) == 0 )
+    {
+        A0 = a;
+        field_event_help_read_from_script_mem();
+        A1 = V0 & ff;
+        A2 = (V0 >> 8) & ff;
 
-La28e4:	; 800A28E4
-800A28E4	addiu  a1, a1, $ffff (=-$1)
+        if( ( w[8004e9cc] & 4 ) == 0 )
+        {
+            if( A1 != 3b )
+            {
+                A1 = A1 + 1;
+                if( A1 >= 3d ) // count to 60
+                {
+                    A1 = 0;
+                    A2 = A2 + 1;
+                }
+            }
+        }
+        else
+        {
+            if( A1 == 0 )
+            {
+                if( A2 != 0 )
+                {
+                    A1 = 3b; // 59
+                    A2 = A2 - 1;
+                }
+            }
+            else
+            {
+                A1 = A1 - 1;
+            }
+        }
 
-La28e8:	; 800A28E8
-A0 = 000a;
-V0 = A2 << 08;
-A1 = A1 & 00ff;
-800A28F4	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A1 = V0 | A1;
+        A0 = a;
+        A1 = (A2 << 8) | (A1 & ff);
+        field_event_help_write_to_script_mem();
+    }
+}
 
-La28fc:	; 800A28FC
-A0 = 000c;
+A0 = c;
+A1 = (bu[80058abc] << 8) | bu[80058ab4]; // number of minutes game working | number of seconds game working
+field_event_help_write_to_script_mem();
 
-La2900:	; 800A2900
-A1 = bu[80058abc];
-V0 = bu[80058ab4];
-A1 = A1 << 08;
-800A2914	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A1 = V0 | A1;
-A1 = bu[80058b20];
-800A2924	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A0 = 000e;
-V1 = w[800b1740];
-800A2934	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-800A295C	nop
-A1 = h[V0 + 0022];
-800A2964	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A0 = 001e;
-V1 = w[800b1740];
-800A2974	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-800A299C	nop
-A1 = h[V0 + 002a];
-800A29A4	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A0 = 0020;
-V1 = w[800b1740];
-800A29B4	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = w[V0 + 004c];
-800A29DC	nop
-A1 = h[V0 + 0026];
-800A29E4	jal    field_event_help_write_bytes_to_800C2F3C [$800a2604]
-A0 = 0022;
+A0 = e;
+A1 = bu[80058b20]; // number of hours game working
+field_event_help_write_to_script_mem();
 
-La29ec:	; 800A29EC
+player_id = w[800b1740];
+struct_5c_p = w[800aefe4];
+player_138 = w[struct_5c_p + player_id * 5c + 4c];
+
+A0 = 1e;
+A1 = h[player_138 + 22]; // x
+field_event_help_write_to_script_mem();
+
+A0 = 20;
+A1 = h[player_138 + 2a]; // z
+field_event_help_write_to_script_mem();
+
+A0 = 22;
+A1 = h[player_138 + 26]; // y
+field_event_help_write_to_script_mem();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca2a04()
-// load from save
+// field_main_restore_state()
 
 [800aefe0] = w(bu[80059b74 + 0]);
 [800af124] = w(80059b74 + 4);
@@ -1041,16 +954,18 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
     }
 }
 
-A2 = w[800af124];
-A3 = 800c2f3c;
-T0 = A2 + 800;
-La31c0:	; 800A31C0
-    [A3] = w(w[A2]);
-    A2 = A2 + 4;
-    A3 = A3 + 4;
-800A31E4	bne    a2, t0, La31c0 [$800a31c0]
-
-[800af124] = w(w[800af124] + 800);
+// copy script memory
+{
+    src = w[800af124];
+    dst = 800c2f3c;
+    while( src != ( w[800af124] + 800 ) )
+    {
+        [dst] = w(w[src]);
+        src += 4;
+        dst += 4;
+    }
+    [800af124] = w(w[800af124] + 800);
+}
 ////////////////////////////////
 
 
@@ -1079,9 +994,10 @@ while( A2 != 80059c20 )
 
 for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
 {
-    V0 = w[800aefe4];
+    struct_5c_p = w[800aefe4];
+
     A1 = w[800af124];
-    A0 = w[V0 + i * 5c + 4c];
+    A0 = w[struct_5c_p + i * 5c + 4c];
     [800af124] = w(A1 + c);
 
     if( h[A0 + 124] != -1 )
@@ -1094,17 +1010,15 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
         }
     }
 
-    V0 = w[800aefe4];
-    V1 = w[V0 + i * 5c + 4c];
+    V1 = w[struct_5c_p + i * 5c + 4c];
     if( ( w[V1 + 4] & 01000000 ) == 0 )
     {
-        A0 = w[V0 + i * 5c + 4];
+        A0 = w[struct_5c_p + i * 5c + 4];
         A1 = w[800af124];
         func21bb0();
     }
 
-    V0 = w[800aefe4];
-    V1 = w[V0 + i * 5c + 4c];
+    V1 = w[struct_5c_p + i * 5c + 4c];
     if( w[V1 + 134] & 0080 )
     {
         [800af124] = w(w[800af124] + 174);
@@ -1124,8 +1038,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // go through all actors
 
 
 ////////////////////////////////
-// funca345c()
-// save?
+// field_main_store_state()
 
 V1 = 80059b74;
 V0 = V1 + 0004;
@@ -1392,32 +1305,22 @@ if( V1 > 0 )
     800A3B24	bne    v0, zero, La3884 [$800a3884]
 }
 
-A3 = w[800af124];
-A2 = 800c2f3c;
-T0 = A2 + 0800;
-
-La3ba0:	; 800A3BA0
-    V0 = w[A2 + 0000];
-    V1 = w[A2 + 0004];
-    A0 = w[A2 + 0008];
-    A1 = w[A2 + 000c];
-    [A3 + 0000] = w(V0);
-    [A3 + 0004] = w(V1);
-    [A3 + 0008] = w(A0);
-    [A3 + 000c] = w(A1);
-    A2 = A2 + 0010;
-    A3 = A3 + 0010;
-800A3BC4	bne    a2, t0, La3ba0 [$800a3ba0]
-
-S1 = 80059b74;
-V0 = w[800af124];
-V0 = V0 + 800;
-[800af124] = w(V0);
+{
+    src = 800c2f3c;
+    dst = w[800af124];
+    while( src != ( w[800af124] + 800 ) )
+    {
+        [dst] = w(w[src]);
+        src += 4;
+        dst += 4;
+    }
+    [800af124] = w(w[800af124] + 800);
+}
 
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f42c; // "SAVESIZE=%d %x\n"
-    A1 = V0 - S1;
+    A1 = w[800af124] - 80059b74;
     A2 = A1;
     system_print_alias();
 }

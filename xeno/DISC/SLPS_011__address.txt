@@ -16,7 +16,7 @@
 8004e9c0 [][][][] init with 0.
 8004e9c4 [][][][] init with 0.
 8004e9c8 [][][][] init with 000000ff. Store here value from 800b1774 + encounter * 2.
-8004e9cc [][][][] init with 000000ff.
+8004e9cc [][][][] init with 000000ff. 0x80 - enable field timer for script. 0x04 - count down.
 8004e9d0 [][][][] init with -1. If this is 0 then 10\0590.sed already loaded into temp buffer and we can copy it.
 8004e9d4 [][][][] init with -1. Looks like current field.
 8004e9d8 [][][][] init with -1. After field load and set to 0 when start field load.
@@ -965,8 +965,38 @@
     + 2bc+x*a4 [][] MP.
     + 30c+x*a4 []   gear num for this character.
     +1924 [][][][] gold.
+    +1930 script data 0x400 size (0x200 items 0x2 size).
+        +   0 progress.
+        +   2 spawn slot id (used when spawn pc).
+        +   4 current field id.
+        +   6 direction of pc entity during spawn.
+        +   8 direction of camera.
+        +   a ingame counter to 0 or to 1 hour.
+        +   c number of minutes game working | number of seconds game working.
+        +   e number of hours game working.
+        +  10 init with 0 when load field.
+        +  12 increment by 1 when we change field.
+        +  14 related to displayed window. Store something here during 0x9c opcode. Maybe cursor position.
+        +  16 slot1 for dialog temp variable.
+        +  18 slot2 for dialog temp variable.
+        +  1a slot3 for dialog temp variable.
+        +  1c slot4 for dialog temp variable.
+        +  1e player X.
+        +  20 player Z.
+        +  22 player Y.
+        +  24 DIP.
+        +  3c store loaded field id to load here.
+        +  3e store here party member 1 from 80061c20 when load field.
+        +  40 store here party member 2 from 80061c24 when load field.
+        +  42 store here party member 3 from 80061c28 when load field.
+        +  44 store hu[80058ab8] here.
+        +  46 store hu[80058b6c] here.
+        +  50 set to 1 every frame.
     +1d30 [][]     members mask.
     +1d32 [][]     friends mask.
+    +1d34 []       party member 1.
+    +1d35 []       party member 2.
+    +1d36 []       party member 3.
     +1ec8 array of accessory id (0xc8 items 0x1 size)
     +1e00 array of accessory num (0xc8 items 0x1 size)
     +1f90 array of items num (0x94 items 0x1 size)
