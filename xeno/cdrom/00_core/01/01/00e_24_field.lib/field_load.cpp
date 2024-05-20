@@ -2791,8 +2791,9 @@ V0 = 0800;
 [SP + 0030] = w(V0);
 [SP + 0018] = w(V1);
 [SP + 001c] = w(V1);
-80074054	jal    $system_gte_multiply_matrix_by_vector
 [SP + 0020] = w(V1);
+system_gte_multiply_matrix_by_vector();
+
 8007405C	addiu  s1, s0, $ffa0 (=-$60)
 A0 = S1;
 A1 = 800af104;
@@ -2810,22 +2811,19 @@ V1 = h[800b1684];
 V0 = V0 + A0;
 [800b1690] = w(V0);
 V0 = w[800b1698];
-A0 = w[800aefe0];
 V0 = V0 + V1;
 [800b1698] = w(V0);
-800740D8	blez   a0, L74844 [$80074844]
-S6 = 0;
-FP = 0001;
+
 S3 = SP + 0078;
 S7 = S0 + 004c;
 S5 = S2 + 0044;
 S4 = SP + 0058;
-S2 = 0;
 
-L740f8:	; 800740F8
-    V0 = w[800aefe4];
-    80074100	nop
-    V0 = S2 + V0;
+for( int i = 0; i < w[800aefe0]; ++i )
+{
+    struct_5c_p = w[800aefe4];
+
+    V0 = struct_5c_p + i * 5c;
     V1 = w[V0 + 000c];
     A0 = w[V0 + 0010];
     A1 = w[V0 + 0014];
@@ -2842,9 +2840,8 @@ L740f8:	; 800740F8
     [V0 + 0040] = w(A0);
     [V0 + 0044] = w(A1);
     [V0 + 0048] = w(A2);
-    V0 = w[800aefe4];
-    80074150	nop
-    V1 = S2 + V0;
+
+    V1 = struct_5c_p + i * 5c;
     V0 = hu[V1 + 0058];
     8007415C	nop
     V0 = V0 & 0040;
@@ -2852,7 +2849,7 @@ L740f8:	; 800740F8
     [SP + 0098] = w(0);
     V0 = w[800ad0d4];
     80074174	nop
-    V0 = S6 < V0;
+    V0 = i < V0;
     8007417C	beq    v0, zero, L743c0 [$800743c0]
     S1 = V1;
     A0 = w[S1 + 004c];
@@ -2865,7 +2862,7 @@ L740f8:	; 800740F8
     V0 = V1 < 0003;
     800741A4	beq    v0, zero, L741bc [$800741bc]
     800741A8	nop
-    800741AC	beq    v1, fp, L741d0 [$800741d0]
+    800741AC	beq    v1, 1, L741d0 [$800741d0]
     800741B0	nop
     800741B4	j      L7427c [$8007427c]
     800741B8	nop
@@ -2890,8 +2887,8 @@ L740f8:	; 800740F8
     800741EC	nop
     V0 = hu[V0 + 0070];
     [SP + 0014] = h(0);
-    800741F8	j      L7421c [$8007421c]
     [SP + 0012] = h(V0);
+    800741F8	j      L7421c [$8007421c]
 
     L74200:	; 80074200
     [SP + 0010] = h(0);
@@ -2909,12 +2906,11 @@ L740f8:	; 800740F8
 
     A0 = w[S7 + 0000];
     A1 = S3;
-    A0 = A0 + S2;
-    80074234	jal    $system_gte_matrix_multiplication_to_A1
-    A0 = A0 + 000c;
-    V0 = w[800aefe4];
-    80074244	nop
-    V0 = S2 + V0;
+    A0 = A0 + i * 5c;
+    A0 = A0 + c;
+    system_gte_matrix_multiplication_to_A1();
+
+    V0 = struct_5c_p + i * 5c;
     V1 = w[V0 + 0020];
     80074250	addiu  a0, s7, $ff54 (=-$ac)
     [SP + 008c] = w(V1);
@@ -2923,8 +2919,9 @@ L740f8:	; 800740F8
     [SP + 0090] = w(V1);
     V0 = w[V0 + 0028];
     A2 = SP + 0058;
-    8007426C	jal    $system_gte_matrix_mult_and_trans
     [SP + 0094] = w(V0);
+    system_gte_matrix_mult_and_trans();
+
     80074274	j      L74628 [$80074628]
     80074278	nop
 
@@ -2938,29 +2935,32 @@ L740f8:	; 800740F8
     A2 = A2 >> 0c;
     A0 = w[S7 + 0000];
     A3 = A3 & 0fff;
-    A0 = A0 + S2;
+    A0 = A0 + i * 5c;
     A0 = A0 + 002c;
     800742A8	jal    $801e72cc
     A1 = A0;
     800742B0	addiu  a0, s7, $ff54 (=-$ac)
     A1 = w[S7 + 0000];
     A2 = S3;
-    A1 = A1 + S2;
-    800742C0	jal    $system_gte_matrix_mult_and_trans
-    A1 = A1 + 002c;
+    A1 = A1 + i * 5c;
+    A1 = A1 + 2c;
+    system_gte_matrix_mult_and_trans();
+
     A0 = S3;
     A1 = w[S7 + 0000];
     A2 = SP + 0058;
-    A1 = A1 + S2;
-    800742D8	jal    $system_gte_matrix_mult_and_trans
-    A1 = A1 + 000c;
+    A1 = A1 + i * 5c;
+    A1 = A1 + c;
+    system_gte_matrix_mult_and_trans();
+
     A1 = w[S7 + 0000];
     800742E4	nop
-    A1 = A1 + S2;
+    A1 = A1 + i * 5c;
     A0 = A1 + 002c;
     A1 = A1 + 000c;
-    800742F4	jal    $system_gte_matrix_mult_and_trans
     A2 = A0;
+    system_gte_matrix_mult_and_trans();
+
     800742FC	j      L74628 [$80074628]
     80074300	nop
 
@@ -2969,30 +2969,26 @@ L740f8:	; 800740F8
     V0 = 00ff;
     8007430C	beq    v1, v0, L74410 [$80074410]
     A2 = S3;
-    V0 = w[800aefe4];
     A0 = 800aef38;
-    V0 = S2 + V0;
+    V0 = struct_5c_p + i * 5c;
     V0 = w[V0 + 004c];
     8007432C	nop
     V1 = bu[V0 + 0075];
-    A1 = w[800aefe4];
     V0 = V1 << 01;
     V0 = V0 + V1;
     V0 = V0 << 03;
     V0 = V0 - V1;
     V0 = V0 << 02;
-    A1 = A1 + V0;
-    80074354	jal    $system_gte_matrix_mult_and_trans
-    A1 = A1 + 002c;
+    A1 = struct_5c_p + V0;
+    A1 = A1 + 2c;
+    system_gte_matrix_mult_and_trans();
+
     A0 = S3;
-    A1 = w[800aefe4];
-    A2 = SP + 0058;
-    A1 = A1 + S2;
-    80074370	jal    $system_gte_matrix_mult_and_trans
-    A1 = A1 + 000c;
-    A0 = w[800aefe4];
-    80074380	nop
-    A2 = S2 + A0;
+    A1 = struct_5c_p + i * 5c + c;
+    A2 = SP + 58;
+    system_gte_matrix_mult_and_trans();
+
+    A2 = struct_5c_p + i * 5c;
     V0 = w[A2 + 004c];
     A1 = A2 + 000c;
     V1 = bu[V0 + 0075];
@@ -3002,9 +2998,10 @@ L740f8:	; 800740F8
     V0 = V0 << 03;
     V0 = V0 - V1;
     V0 = V0 << 02;
-    A0 = A0 + V0;
-    800743B0	jal    $system_gte_matrix_mult_and_trans
-    A0 = A0 + 002c;
+    A0 = struct_5c_p + V0;
+    A0 = A0 + 2c;
+    system_gte_matrix_mult_and_trans();
+
     800743B8	j      L74628 [$80074628]
     800743BC	nop
 
@@ -3034,8 +3031,8 @@ L740f8:	; 800740F8
     V0 = bu[S5 + 0000];
     80074414	nop
     V0 = V0 & 007f;
-    8007441C	bne    v0, fp, L74460 [$80074460]
-    80074420	nop
+    8007441C	bne    v0, 1, L74460 [$80074460]
+
     V1 = h[S5 + ffdc];
     V0 = w[S1 + 0020];
     8007442C	nop
@@ -3048,7 +3045,6 @@ L740f8:	; 800740F8
     [S1 + 0024] = w(V0);
     V1 = h[S5 + ffde];
     V0 = w[S1 + 0028];
-    80074454	nop
     V0 = V0 + V1;
     [S1 + 0028] = w(V0);
 
@@ -3079,8 +3075,6 @@ L740f8:	; 800740F8
     IR1 = T4;
     IR2 = T5;
     IR3 = T6;
-    800744C0	nop
-    800744C4	nop
     800744C8	gte_func18t1,dqb
     T4 = IR1;
     T5 = IR2;
@@ -3095,8 +3089,6 @@ L740f8:	; 800740F8
     IR1 = T4;
     IR2 = T5;
     IR3 = T6;
-    80074500	nop
-    80074504	nop
     80074508	gte_func18t1,dqb
     V0 = SP + 005a;
     T4 = IR1;
@@ -3112,8 +3104,6 @@ L740f8:	; 800740F8
     IR1 = T4;
     IR2 = T5;
     IR3 = T6;
-    80074544	nop
-    80074548	nop
     8007454C	gte_func18t1,dqb
     V0 = SP + 005c;
     T4 = IR1;
@@ -3135,27 +3125,24 @@ L740f8:	; 800740F8
     T4 = T4 | T5;
     VXY0 = T4;
     VZ0 = w[V0 + 0008];
-    800745A0	nop
-    800745A4	nop
     800745A8	gte_func18t0,r11r12
     V0 = SP + 006c;
     [V0 + 0000] = w(MAC1);
     [V0 + 0004] = w(MAC2);
     [V0 + 0008] = w(MAC3);
-    V0 = w[800aefe4];
-    800745C4	nop
-    A1 = S2 + V0;
+    A1 = struct_5c_p + i * 5c;
     V0 = hu[A1 + 0058];
     800745D0	nop
     V0 = V0 & 0003;
     800745D8	beq    v0, zero, L74628 [$80074628]
     800745DC	nop
-    800745E0	bne    v0, fp, L74604 [$80074604]
+    800745E0	bne    v0, 1, L74604 [$80074604]
     A0 = S4;
     A0 = 800aef58;
-    A1 = A1 + 000c;
-    800745F4	jal    $system_gte_matrix_multiplication_to_A2
+    A1 = A1 + c;
     A2 = S4;
+    system_gte_matrix_multiplication_to_A2();
+
     800745FC	j      L74618 [$80074618]
     80074600	nop
 
@@ -3164,20 +3151,22 @@ L740f8:	; 800740F8
     field_copy_rotation_matrix(); // copy A1 to A0
 
     A0 = S4;
-    80074610	jal    $system_gte_multiply_matrix_by_vector
-    A1 = SP + 0018;
+    A1 = SP + 18;
+    system_gte_multiply_matrix_by_vector();
+
 
     L74618:	; 80074618
     A0 = 800aee84;
-    80074620	jal    $system_gte_matrix_multiplication_to_A1
-    A1 = SP + 0058;
+    A1 = SP + 58;
+    system_gte_matrix_multiplication_to_A1();
+
 
     L74628:	; 80074628
     S0 = w[S1 + 0000];
     8007462C	nop
     V0 = h[S0 + 0012];
     80074634	nop
-    80074638	bne    v0, fp, L746b4 [$800746b4]
+    80074638	bne    v0, 1, L746b4 [$800746b4]
     8007463C	nop
     V0 = w[SP + 0058];
     V1 = w[SP + 005c];
@@ -3196,20 +3185,19 @@ L740f8:	; 800740F8
     [SP + 0090] = w(A0);
     [SP + 0094] = w(A1);
     A0 = S3;
-    80074684	jal    $system_gte_multiply_matrix_by_vector
-    A1 = SP + 0028;
-    8007468C	jal    $system_gte_calculate_and_set_lighting_matrix
+    A1 = SP + 28;
+    system_gte_multiply_matrix_by_vector();
+
     A0 = S3;
+    system_gte_calculate_and_set_lighting_matrix();
+
     A0 = h[800aefd8];
     A1 = h[800aefda];
     A2 = h[800aefdc];
-    800746AC	jal    $func30a50
-    800746B0	nop
+    func30a50();
 
     L746b4:	; 800746B4
-    V0 = w[800aefe4];
-    800746BC	nop
-    V0 = S2 + V0;
+    V0 = struct_5c_p + i * 5c;
     V0 = hu[V0 + 0058];
     [8004f7a8] = w(0);
     V0 = V0 & 0020;
@@ -3225,10 +3213,9 @@ L740f8:	; 800740F8
     800746F8	beq    v0, zero, L7471c [$8007471c]
     800746FC	nop
     A0 = w[S0 + 0014];
-    [800ad030] = w(S6);
+    [800ad030] = w(i);
     [800ad034] = w(0);
-    80074714	jal    $func303e8
-    80074718	nop
+    func303e8();
 
     L7471c:	; 8007471C
     T4 = w[S4 + 0000];
@@ -3253,7 +3240,7 @@ L740f8:	; 800740F8
     80074768	nop
     T0 = w[SP + 0098];
     80074770	nop
-    80074774	bne    t0, fp, L7482c [$8007482c]
+    80074774	bne    t0, 1, L7482c [$8007482c]
     80074778	nop
 
     L7477c:	; 8007477C
@@ -3274,7 +3261,6 @@ L740f8:	; 800740F8
     800747B4	ctc2   t5,rgb
     800747B8	ctc2   t6,otz
     V0 = hu[S1 + 0058];
-    800747C0	nop
     V0 = V0 & 8000;
     800747C8	bne    v0, zero, L747fc [$800747fc]
     800747CC	nop
@@ -3302,12 +3288,8 @@ L740f8:	; 800740F8
     func2c510();
 
     L7482c:	; 8007482C
-    S2 = S2 + 005c;
-    S6 = S6 + 0001;
-    V0 = S6 < w[800aefe0];
-8007483C	bne    v0, zero, L740f8 [$800740f8]
+}
 
-L74844:	; 80074844
 if( w[800c1b60] == 0 )
 {
     A0 = 8006f1a0; // "MODEL     "

@@ -161,7 +161,7 @@ T0 = T1;
 T0 = T0 - 4;
 SP = T0;
 
-func73f78();
+func73f78(); // update model
 
 func74958(); // update sprite
 
@@ -1025,7 +1025,7 @@ A0 = w[V0 + V1 * 5c + 4c];
 ////////////////////////////////
 // func76150()
 
-entity_id = A0;
+actor_id = A0;
 sprite_id = A1;
 sprite_data = A2; // offset to data in 2dsprite block to load
 S7 = A3; // maybe field or global sprite.
@@ -1034,15 +1034,11 @@ S0 = A5; // sprite id with 0x80 (sometimes)
 FP = A6; // 0 or 1
 
 struct_5c_p = w[800aefe4];
-struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
-
-
+struct_138 = w[struct_5c_p + actor_id * 5c + 4c];
 
 [GP + 1ac] = h(8);
 [80059640 + 8 * 4] = w(0);
 [GP + 1c0] = w(0);
-
-
 
 [struct_138 + 126] = b(S0);
 [struct_138 + 127] = b(sprite_id);
@@ -1059,9 +1055,9 @@ if( S7 == 0 )
     ty = hu[800b144c + sprite_id * 8 + 2]; // ty
     if( S6 == 0 )
     {
-        if( hu[struct_5c_p + entity_id * 5c + 5a] & 0001 )
+        if( hu[struct_5c_p + actor_id * 5c + 5a] & 0001 )
         {
-            A0 = w[struct_5c_p + entity_id * 5c + 4];
+            A0 = w[struct_5c_p + actor_id * 5c + 4];
             system_field_sprite_memory_free();
         }
 
@@ -1073,13 +1069,13 @@ if( S7 == 0 )
         A5 = 40;
         func24330(); // sprite set up
         struct_164 = V0;
-        [struct_5c_p + entity_id * 5c + 4] = w(struct_164);
+        [struct_5c_p + actor_id * 5c + 4] = w(struct_164);
     }
     else
     {
-        if( hu[struct_5c_p + entity_id * 5c + 5a] & 0001 )
+        if( hu[struct_5c_p + actor_id * 5c + 5a] & 0001 )
         {
-            A0 = w[struct_5c_p + entity_id * 5c + 4];
+            A0 = w[struct_5c_p + actor_id * 5c + 4];
             system_field_sprite_memory_free();
         }
 
@@ -1093,14 +1089,14 @@ if( S7 == 0 )
         func240a0();
 
         struct_164 = V0;
-        [struct_5c_p + entity_id * 5c + 4] = w(struct_164);
+        [struct_5c_p + actor_id * 5c + 4] = w(struct_164);
     }
 }
 else
 {
-    if( hu[struct_5c_p + entity_id * 5c + 5a] & 0001 )
+    if( hu[struct_5c_p + actor_id * 5c + 5a] & 0001 )
     {
-        A0 = w[struct_5c_p + entity_id * 5c + 4];
+        A0 = w[struct_5c_p + actor_id * 5c + 4];
         system_field_sprite_memory_free();
     }
 
@@ -1126,7 +1122,7 @@ else
     func24330(); // sprite set up
     struct_164 = V0;
 
-    [struct_5c_p + entity_id * 5c + 4] = w(struct_164);
+    [struct_5c_p + actor_id * 5c + 4] = w(struct_164);
 
     A0 = struct_164;
     A1 = 20;
@@ -1135,7 +1131,7 @@ else
 
 
 
-[struct_5c_p + entity_id * 5c + 5a] = h(hu[struct_5c_p + entity_id * 5c + 5a] | 0001);
+[struct_5c_p + actor_id * 5c + 5a] = h(hu[struct_5c_p + actor_id * 5c + 5a] | 0001);
 
 
 
@@ -1163,7 +1159,7 @@ if( w[8004e9b0] == 0 )
     [struct_164 + 10] = w(0);
     [struct_164 + 14] = w(0);
     [struct_164 + 1c] = w(00010000);
-    [struct_164 + 84] = h(w[struct_5c_p + entity_id * 5c + 24]);
+    [struct_164 + 84] = h(w[struct_5c_p + actor_id * 5c + 24]);
 
     if( S7 == 0 )
     {
@@ -1201,7 +1197,7 @@ func21e40(); // sprite rotation
 
 
 V0 = w[struct_164 + 7c];
-[V0 + 14] = h(entity_id);
+[V0 + 14] = h(actor_id);
 [struct_164 + 68] = w(80076104); // set callback func76104()
 
 
@@ -1224,14 +1220,14 @@ if( FP == 0 )
     }
 }
 
-[struct_5c_p + entity_id * 5c + 20] = w(h[struct_138 + 22]); // x
-[struct_5c_p + entity_id * 5c + 40] = w(h[struct_138 + 22]); // x
+[struct_5c_p + actor_id * 5c + 20] = w(h[struct_138 + 22]); // x
+[struct_5c_p + actor_id * 5c + 40] = w(h[struct_138 + 22]); // x
 
-[struct_5c_p + entity_id * 5c + 24] = w(h[struct_138 + 26]); // y
-[struct_5c_p + entity_id * 5c + 44] = w(h[struct_138 + 26]); // y
+[struct_5c_p + actor_id * 5c + 24] = w(h[struct_138 + 26]); // y
+[struct_5c_p + actor_id * 5c + 44] = w(h[struct_138 + 26]); // y
 
-[struct_5c_p + entity_id * 5c + 28] = w(h[struct_138 + 2a]); // z
-[struct_5c_p + entity_id * 5c + 48] = w(h[struct_138 + 2a]); // z
+[struct_5c_p + actor_id * 5c + 28] = w(h[struct_138 + 2a]); // z
+[struct_5c_p + actor_id * 5c + 48] = w(h[struct_138 + 2a]); // z
 
 [struct_164 + 84] = h(w[struct_138 + 24]);
 
