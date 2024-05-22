@@ -2758,12 +2758,10 @@ if( w[800ad0b4] == 0 )
 ////////////////////////////////
 // func73f78()
 
-S2 = 800b1662;
-
 [80058c14] = w(0);
 [80058c5c] = w(0);
 
-if( h[S2] != 0 )
+if( h[800b1662] != 0 )
 {
     A0 = bu[800b1664];
     A1 = bu[800b1665];
@@ -2781,513 +2779,367 @@ if( h[S2] != 0 )
     func48958();
 }
 
-S0 = 800aef98;
-80074030	addiu  a0, s0, $ffc0 (=-$40)
-A1 = SP + 0018;
-V1 = w[S0 + 0000];
-V0 = 0800;
-[SP + 0028] = w(V0);
-[SP + 002c] = w(V0);
-[SP + 0030] = w(V0);
-[SP + 0018] = w(V1);
-[SP + 001c] = w(V1);
-[SP + 0020] = w(V1);
+[SP + 18] = w(w[800aef98]);
+[SP + 1c] = w(w[800aef98]);
+[SP + 20] = w(w[800aef98]);
+[SP + 28] = w(800);
+[SP + 2c] = w(800);
+[SP + 30] = w(800);
+
+A0 = 800aef58;
+A1 = SP + 18;
 system_gte_multiply_matrix_by_vector();
 
-8007405C	addiu  s1, s0, $ffa0 (=-$60)
-A0 = S1;
+A0 = 800aef38;
 A1 = 800af104;
-A2 = SP + 0038;
+A2 = SP + 38;
 system_gte_matrix_mult_and_trans();
 
-A0 = h[800b1682];
-V0 = w[800b1690];
-A1 = h[800b1686];
-V1 = w[800b1694];
 [8004f7a8] = w(0);
-V1 = V1 + A1;
-[800b1694] = w(V1);
-V1 = h[800b1684];
-V0 = V0 + A0;
-[800b1690] = w(V0);
-V0 = w[800b1698];
-V0 = V0 + V1;
-[800b1698] = w(V0);
 
-S3 = SP + 0078;
-S7 = S0 + 004c;
-S5 = S2 + 0044;
-S4 = SP + 0058;
+[800b1690] = w(w[800b1690] + h[800b1682]);
+[800b1694] = w(w[800b1694] + h[800b1686]);
+[800b1698] = w(w[800b1698] + h[800b1684]);
 
 for( int i = 0; i < w[800aefe0]; ++i )
 {
     struct_5c_p = w[800aefe4];
 
-    V0 = struct_5c_p + i * 5c;
-    V1 = w[V0 + 000c];
-    A0 = w[V0 + 0010];
-    A1 = w[V0 + 0014];
-    A2 = w[V0 + 0018];
-    [V0 + 002c] = w(V1);
-    [V0 + 0030] = w(A0);
-    [V0 + 0034] = w(A1);
-    [V0 + 0038] = w(A2);
-    V1 = w[V0 + 001c];
-    A0 = w[V0 + 0020];
-    A1 = w[V0 + 0024];
-    A2 = w[V0 + 0028];
-    [V0 + 003c] = w(V1);
-    [V0 + 0040] = w(A0);
-    [V0 + 0044] = w(A1);
-    [V0 + 0048] = w(A2);
+    [struct_5c_p + i * 5c + 2c] = w(w[V0 +  c]);
+    [struct_5c_p + i * 5c + 30] = w(w[V0 + 10]);
+    [struct_5c_p + i * 5c + 34] = w(w[V0 + 14]);
+    [struct_5c_p + i * 5c + 38] = w(w[V0 + 18]);
+    [struct_5c_p + i * 5c + 3c] = w(w[V0 + 1c]);
+    [struct_5c_p + i * 5c + 40] = w(w[V0 + 20]);
+    [struct_5c_p + i * 5c + 44] = w(w[V0 + 24]);
+    [struct_5c_p + i * 5c + 48] = w(w[V0 + 28]);
 
-    V1 = struct_5c_p + i * 5c;
-    V0 = hu[V1 + 0058];
-    8007415C	nop
-    V0 = V0 & 0040;
-    80074164	bne    v0, zero, L7482c [$8007482c]
-    [SP + 0098] = w(0);
-    V0 = w[800ad0d4];
-    80074174	nop
-    V0 = i < V0;
-    8007417C	beq    v0, zero, L743c0 [$800743c0]
-    S1 = V1;
-    A0 = w[S1 + 004c];
-    80074188	nop
-    V0 = w[A0 + 012c];
-    80074190	nop
-    V1 = V0 & 0003;
-    V0 = 0002;
-    8007419C	beq    v1, v0, L741e4 [$800741e4]
-    V0 = V1 < 0003;
-    800741A4	beq    v0, zero, L741bc [$800741bc]
-    800741A8	nop
-    800741AC	beq    v1, 1, L741d0 [$800741d0]
-    800741B0	nop
-    800741B4	j      L7427c [$8007427c]
-    800741B8	nop
+    [SP + 98] = w(0);
 
-    L741bc:	; 800741BC
-    V0 = 0003;
-    800741C0	beq    v1, v0, L74200 [$80074200]
-    800741C4	nop
-    800741C8	j      L7427c [$8007427c]
-    800741CC	nop
+    flags58 = hu[struct_5c_p + i * 5c + 58];
 
-    L741d0:	; 800741D0
-    V0 = hu[A0 + 0070];
-    [SP + 0012] = h(0);
-    [SP + 0014] = h(0);
-    800741DC	j      L7421c [$8007421c]
-    [SP + 0010] = h(V0);
+    if( ( flags58 & 0040 ) == 0 )
+    {
+        struct_138 = w[struct_5c_p + i * 5c + 4c];
 
-    L741e4:	; 800741E4
-    [SP + 0010] = h(0);
-    V0 = w[S1 + 004c];
-    800741EC	nop
-    V0 = hu[V0 + 0070];
-    [SP + 0014] = h(0);
-    [SP + 0012] = h(V0);
-    800741F8	j      L7421c [$8007421c]
+        if( i >= w[800ad0d4] )
+        {
+            if( ( bu[800b1662 + 44] & 7f ) == 0 )
+            {
+                [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+                [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+                [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+            }
+            800743B8	j      L74410 [$80074410]
+        }
 
-    L74200:	; 80074200
-    [SP + 0010] = h(0);
-    [SP + 0012] = h(0);
-    V0 = w[S1 + 004c];
-    8007420C	nop
-    V0 = hu[V0 + 0070];
-    80074214	nop
-    [SP + 0014] = h(V0);
+        V1 = w[struct_138 + 12c] & 3;
 
-    L7421c:	; 8007421C
-    A0 = SP + 0010;
-    A1 = S3;
-    system_calculate_rotation_matrix();
+        if( V1 == 1 )
+        {
+            [SP + 0010] = h(hu[struct_138 + 70]);
+            [SP + 0012] = h(0);
+            [SP + 0014] = h(0);
 
-    A0 = w[S7 + 0000];
-    A1 = S3;
-    A0 = A0 + i * 5c;
-    A0 = A0 + c;
-    system_gte_matrix_multiplication_to_A1();
+            A0 = SP + 10;
+            A1 = SP + 78;
+            system_calculate_rotation_matrix();
 
-    V0 = struct_5c_p + i * 5c;
-    V1 = w[V0 + 0020];
-    80074250	addiu  a0, s7, $ff54 (=-$ac)
-    [SP + 008c] = w(V1);
-    V1 = w[V0 + 0024];
-    A1 = S3;
-    [SP + 0090] = w(V1);
-    V0 = w[V0 + 0028];
-    A2 = SP + 0058;
-    [SP + 0094] = w(V0);
-    system_gte_matrix_mult_and_trans();
+            A1 = SP + 78;
+            A0 = struct_5c_p + i * 5c + c;
+            system_gte_matrix_multiplication_to_A1();
 
-    80074274	j      L74628 [$80074628]
-    80074278	nop
+            [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+            [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+            [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
 
-    L7427c:	; 8007427C
-    V1 = w[S1 + 004c];
-    80074280	nop
-    A3 = hu[V1 + 0128];
-    V0 = ffff;
-    A2 = A3 & ffff;
-    80074290	beq    a2, v0, L74304 [$80074304]
-    A2 = A2 >> 0c;
-    A0 = w[S7 + 0000];
-    A3 = A3 & 0fff;
-    A0 = A0 + i * 5c;
-    A0 = A0 + 002c;
-    800742A8	jal    $801e72cc
-    A1 = A0;
-    800742B0	addiu  a0, s7, $ff54 (=-$ac)
-    A1 = w[S7 + 0000];
-    A2 = S3;
-    A1 = A1 + i * 5c;
-    A1 = A1 + 2c;
-    system_gte_matrix_mult_and_trans();
+            A0 = 800aef38;
+            A1 = SP + 78;
+            A2 = SP + 58;
+            system_gte_matrix_mult_and_trans();
 
-    A0 = S3;
-    A1 = w[S7 + 0000];
-    A2 = SP + 0058;
-    A1 = A1 + i * 5c;
-    A1 = A1 + c;
-    system_gte_matrix_mult_and_trans();
+            80074274	j      L74628 [$80074628]
+        }
+        else if( V1 == 2 )
+        {
+            [SP + 0010] = h(0);
+            [SP + 0012] = h(hu[struct_138 + 70]);
+            [SP + 0014] = h(0);
 
-    A1 = w[S7 + 0000];
-    800742E4	nop
-    A1 = A1 + i * 5c;
-    A0 = A1 + 002c;
-    A1 = A1 + 000c;
-    A2 = A0;
-    system_gte_matrix_mult_and_trans();
+            A0 = SP + 10;
+            A1 = SP + 78;
+            system_calculate_rotation_matrix();
 
-    800742FC	j      L74628 [$80074628]
-    80074300	nop
+            A1 = SP + 78;
+            A0 = struct_5c_p + i * 5c + c;
+            system_gte_matrix_multiplication_to_A1();
 
-    L74304:	; 80074304
-    V1 = bu[V1 + 0075];
-    V0 = 00ff;
-    8007430C	beq    v1, v0, L74410 [$80074410]
-    A2 = S3;
-    A0 = 800aef38;
-    V0 = struct_5c_p + i * 5c;
-    V0 = w[V0 + 004c];
-    8007432C	nop
-    V1 = bu[V0 + 0075];
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 - V1;
-    V0 = V0 << 02;
-    A1 = struct_5c_p + V0;
-    A1 = A1 + 2c;
-    system_gte_matrix_mult_and_trans();
+            [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+            [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+            [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
 
-    A0 = S3;
-    A1 = struct_5c_p + i * 5c + c;
-    A2 = SP + 58;
-    system_gte_matrix_mult_and_trans();
+            A0 = 800aef38;
+            A1 = SP + 78;
+            A2 = SP + 58;
+            system_gte_matrix_mult_and_trans();
 
-    A2 = struct_5c_p + i * 5c;
-    V0 = w[A2 + 004c];
-    A1 = A2 + 000c;
-    V1 = bu[V0 + 0075];
-    A2 = A2 + 002c;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 - V1;
-    V0 = V0 << 02;
-    A0 = struct_5c_p + V0;
-    A0 = A0 + 2c;
-    system_gte_matrix_mult_and_trans();
+            80074274	j      L74628 [$80074628]
+        }
+        else if( V1 == 3 )
+        {
+            [SP + 10] = h(0);
+            [SP + 12] = h(0);
+            [SP + 14] = h(hu[struct_138 + 70]);
 
-    800743B8	j      L74628 [$80074628]
-    800743BC	nop
+            A0 = SP + 10;
+            A1 = SP + 78;
+            system_calculate_rotation_matrix();
 
-    L743c0:	; 800743C0
-    V0 = bu[S5 + 0000];
-    800743C4	nop
-    V0 = V0 & 007f;
-    800743CC	bne    v0, zero, L74410 [$80074410]
-    800743D0	nop
-    V1 = h[S5 + ffdc];
-    V0 = w[S1 + 0020];
-    800743DC	nop
-    V0 = V0 + V1;
-    [S1 + 0020] = w(V0);
-    V1 = h[S5 + ffe0];
-    V0 = w[S1 + 0024];
-    800743F0	nop
-    V0 = V0 + V1;
-    [S1 + 0024] = w(V0);
-    V1 = h[S5 + ffde];
-    V0 = w[S1 + 0028];
-    80074404	nop
-    V0 = V0 + V1;
-    [S1 + 0028] = w(V0);
+            A1 = SP + 78;
+            A0 = struct_5c_p + i * 5c + c;
+            system_gte_matrix_multiplication_to_A1();
 
-    L74410:	; 80074410
-    V0 = bu[S5 + 0000];
-    80074414	nop
-    V0 = V0 & 007f;
-    8007441C	bne    v0, 1, L74460 [$80074460]
+            [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+            [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+            [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
 
-    V1 = h[S5 + ffdc];
-    V0 = w[S1 + 0020];
-    8007442C	nop
-    V0 = V0 + V1;
-    [S1 + 0020] = w(V0);
-    V1 = h[S5 + ffe0];
-    V0 = w[S1 + 0024];
-    80074440	nop
-    V0 = V0 + V1;
-    [S1 + 0024] = w(V0);
-    V1 = h[S5 + ffde];
-    V0 = w[S1 + 0028];
-    V0 = V0 + V1;
-    [S1 + 0028] = w(V0);
+            A0 = 800aef38;
+            A1 = SP + 78;
+            A2 = SP + 58;
+            system_gte_matrix_mult_and_trans();
 
-    L74460:	; 80074460
-    V0 = bu[S5 + 0000];
-    80074464	nop
-    V0 = V0 & 0080;
-    8007446C	beq    v0, zero, L7447c [$8007447c]
-    V1 = SP + 0038;
-    T0 = 0001;
-    [SP + 0098] = w(T0);
+            80074274	j      L74628 [$80074628]
+        }
 
-    L7447c:	; 8007447C
-    T4 = w[V1 + 0000];
-    T5 = w[V1 + 0004];
-    R11R12 = T4;
-    R13R21 = T5;
-    T4 = w[V1 + 0008];
-    T5 = w[V1 + 000c];
-    T6 = w[V1 + 0010];
-    R22R23 = T4;
-    R31R32 = T5;
-    R33 = T6;
-    V0 = S1 + 000c;
-    T4 = hu[V0 + 0000];
-    T5 = hu[V0 + 0006];
-    T6 = hu[V0 + 000c];
-    IR1 = T4;
-    IR2 = T5;
-    IR3 = T6;
-    800744C8	gte_func18t1,dqb
-    T4 = IR1;
-    T5 = IR2;
-    T6 = IR3;
-    [S4 + 0000] = h(T4);
-    [S4 + 0006] = h(T5);
-    [S4 + 000c] = h(T6);
-    V0 = S1 + 000e;
-    T4 = hu[V0 + 0000];
-    T5 = hu[V0 + 0006];
-    T6 = hu[V0 + 000c];
-    IR1 = T4;
-    IR2 = T5;
-    IR3 = T6;
-    80074508	gte_func18t1,dqb
-    V0 = SP + 005a;
-    T4 = IR1;
-    T5 = IR2;
-    T6 = IR3;
-    [V0 + 0000] = h(T4);
-    [V0 + 0006] = h(T5);
-    [V0 + 000c] = h(T6);
-    V0 = S1 + 0010;
-    T4 = hu[V0 + 0000];
-    T5 = hu[V0 + 0006];
-    T6 = hu[V0 + 000c];
-    IR1 = T4;
-    IR2 = T5;
-    IR3 = T6;
-    8007454C	gte_func18t1,dqb
-    V0 = SP + 005c;
-    T4 = IR1;
-    T5 = IR2;
-    T6 = IR3;
-    [V0 + 0000] = h(T4);
-    [V0 + 0006] = h(T5);
-    [V0 + 000c] = h(T6);
-    T4 = w[V1 + 0014];
-    T5 = w[V1 + 0018];
-    80074574	ctc2   t4,vz2
-    T6 = w[V1 + 001c];
-    8007457C	ctc2   t5,rgb
-    80074580	ctc2   t6,otz
-    V0 = S1 + 0020;
-    T5 = hu[V0 + 0004];
-    T4 = hu[V0 + 0000];
-    T5 = T5 << 10;
-    T4 = T4 | T5;
-    VXY0 = T4;
-    VZ0 = w[V0 + 0008];
-    800745A8	gte_func18t0,r11r12
-    V0 = SP + 006c;
-    [V0 + 0000] = w(MAC1);
-    [V0 + 0004] = w(MAC2);
-    [V0 + 0008] = w(MAC3);
-    A1 = struct_5c_p + i * 5c;
-    V0 = hu[A1 + 0058];
-    800745D0	nop
-    V0 = V0 & 0003;
-    800745D8	beq    v0, zero, L74628 [$80074628]
-    800745DC	nop
-    800745E0	bne    v0, 1, L74604 [$80074604]
-    A0 = S4;
-    A0 = 800aef58;
-    A1 = A1 + c;
-    A2 = S4;
-    system_gte_matrix_multiplication_to_A2();
+        A3 = hu[struct_138 + 128];
+        A2 = A3 & ffff;
+        if( A2 != ffff )
+        {
+            A0 = struct_5c_p + i * 5c + 2c;
+            A1 = A0;
+            A2 = A2 >> c;
+            A3 = A3 & 0fff;
+            func1e72cc();
 
-    800745FC	j      L74618 [$80074618]
-    80074600	nop
+            A0 = 800aef38;
+            A1 = struct_5c_p + i * 5c + 2c;
+            A2 = SP + 78;
+            system_gte_matrix_mult_and_trans();
 
-    L74604:	; 80074604
-    A1 = A1 + c;
-    field_copy_rotation_matrix(); // copy A1 to A0
+            A0 = SP + 78;
+            A1 = struct_5c_p + i * 5c + c;
+            A2 = SP + 58;
+            system_gte_matrix_mult_and_trans();
 
-    A0 = S4;
-    A1 = SP + 18;
-    system_gte_multiply_matrix_by_vector();
+            A0 = struct_5c_p + i * 5c + 2c;
+            A1 = struct_5c_p + i * 5c + c;
+            A2 = struct_5c_p + i * 5c + 2c;
+            system_gte_matrix_mult_and_trans();
+
+            800742FC	j      L74628 [$80074628]
+        }
+
+        V1 = bu[struct_138 + 75];
+
+        8007430C	beq    v1, ff, L74410 [$80074410]
+
+        A0 = 800aef38;
+        V1 = bu[struct_138 + 75];
+        A1 = struct_5c_p + V1 * 5c + 2c;
+        A2 = SP + 78;
+        system_gte_matrix_mult_and_trans();
+
+        A0 = SP + 78;
+        A1 = struct_5c_p + i * 5c + c;
+        A2 = SP + 58;
+        system_gte_matrix_mult_and_trans();
+
+        V1 = bu[struct_138 + 75];
+        A0 = struct_5c_p + V1 * 5c + 2c;
+        A1 = struct_5c_p + i * 5c + c;
+        A2 = struct_5c_p + i * 5c + 2c;
+        system_gte_matrix_mult_and_trans();
+
+        800743B8	j      L74628 [$80074628]
+
+        L74410:	; 80074410
+        if( ( bu[800b1662 + 44] & 7f ) == 1 )
+        {
+            [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+            [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+            [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+        }
+
+        if( bu[800b1662 + 44] & 80 )
+        {
+            [SP + 98] = w(1);
+        }
+
+        R11R12 = w[SP + 38 +  0];
+        R13R21 = w[SP + 38 +  4];
+        R22R23 = w[SP + 38 +  8];
+        R31R32 = w[SP + 38 +  c];
+        R33    = w[SP + 38 + 10];
+
+        IR1 = hu[struct_5c_p + i * 5c + c + 0];
+        IR2 = hu[struct_5c_p + i * 5c + c + 6];
+        IR3 = hu[struct_5c_p + i * 5c + c + c];
+        gte_rtir12(); // ir * rotmatrix.
+        [SP + 58 + 0] = h(IR1);
+        [SP + 58 + 6] = h(IR2);
+        [SP + 58 + c] = h(IR3);
+
+        IR1 = hu[struct_5c_p + i * 5c + e + 0];
+        IR2 = hu[struct_5c_p + i * 5c + e + 6];
+        IR3 = hu[struct_5c_p + i * 5c + e + c];
+        gte_rtir12(); // ir * rotmatrix.
+        [SP + 5a + 0] = h(IR1);
+        [SP + 5a + 6] = h(IR2);
+        [SP + 5a + c] = h(IR3);
+
+        IR1 = hu[struct_5c_p + i * 5c + 10 + 0];
+        IR2 = hu[struct_5c_p + i * 5c + 10 + 6];
+        IR3 = hu[struct_5c_p + i * 5c + 10 + c];
+        gte_rtir12(); // ir * rotmatrix.
+        [SP + 5c + 0] = h(IR1);
+        [SP + 5c + 6] = h(IR2);
+        [SP + 5c + c] = h(IR3);
+
+        TRX = w[SP + 38 + 14];
+        TRY = w[SP + 38 + 18];
+        TRZ = w[SP + 38 + 1c];
+
+        VXY0 = (hu[struct_5c_p + i * 5c + 24] << 10) | hu[struct_5c_p + i * 5c + 20];
+        VZ0 = w[struct_5c_p + i * 5c + 28];
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+        [SP + 6c + 0] = w(MAC1);
+        [SP + 6c + 4] = w(MAC2);
+        [SP + 6c + 8] = w(MAC3);
+
+        if( flags58 & 0003 )
+        {
+            if( V0 == 1 )
+            {
+                A0 = 800aef58;
+                A1 = A1 + c;
+                A2 = SP + 58;
+                system_gte_matrix_multiplication_to_A2();
+            }
+            else
+            {
+                A0 = SP + 58;
+                A1 = A1 + c;
+                field_copy_rotation_matrix(); // copy A1 to A0
+
+                A0 = SP + 58;
+                A1 = SP + 18;
+                system_gte_multiply_matrix_by_vector();
+            }
+
+            A0 = 800aee84;
+            A1 = SP + 58;
+            system_gte_matrix_multiplication_to_A1();
+        }
+        800743B8	j      L74628 [$80074628]
+
+        L74628:	; 80074628
+        S0 = w[struct_5c_p + i * 5c + 0];
+        if( h[S0 + 12] == 1 )
+        {
+            [SP + 78] = w(w[SP + 58]);
+            [SP + 7c] = w(w[SP + 5c]);
+            [SP + 80] = w(w[SP + 60]);
+            [SP + 84] = w(w[SP + 64]);
+            [SP + 88] = w(w[SP + 68]);
+            [SP + 8c] = w(w[SP + 6c]);
+            [SP + 90] = w(w[SP + 70]);
+            [SP + 94] = w(w[SP + 74]);
+
+            A0 = SP + 78;
+            A1 = SP + 28;
+            system_gte_multiply_matrix_by_vector();
+
+            A0 = SP + 78;
+            system_gte_calculate_and_set_lighting_matrix();
+
+            A0 = h[800aefd8];
+            A1 = h[800aefda];
+            A2 = h[800aefdc];
+            func30a50();
+        }
+
+        [8004f7a8] = w(0);
+
+        if( ( flags58 & 0020 ) == 0 )
+        {
+            if( flags58 & 2000 )
+            {
+                if( w[S0 + 14] != 0 )
+                {
+                    [800ad030] = w(i);
+                    [800ad034] = w(0);
+
+                    A0 = w[S0 + 14];
+                    func303e8();
+                }
+            }
+
+            R11R12 = w[SP + 58 +  0];
+            R13R21 = w[SP + 58 +  4];
+            R22R23 = w[SP + 58 +  8];
+            R31R32 = w[SP + 58 +  c];
+            R33    = w[SP + 58 + 10];
+            TRX    = w[SP + 58 + 14];
+            TRY    = w[SP + 58 + 18];
+            TRZ    = w[SP + 58 + 1c];
+
+            A0 = S0;
+            funca9f4c();
 
 
-    L74618:	; 80074618
-    A0 = 800aee84;
-    A1 = SP + 58;
-    system_gte_matrix_multiplication_to_A1();
+            if( ( V0 == 0 ) || ( w[SP + 0098] == 1 ) )
+            {
+                R11R12 = w[SP + 58 +  0];
+                R13R21 = w[SP + 58 +  4];
+                R22R23 = w[SP + 58 +  8];
+                R31R32 = w[SP + 58 +  c];
+                R33    = w[SP + 58 + 10];
 
+                T4 = w[SP + 58 + 14];
+                T5 = w[SP + 58 + 18];
+                T6 = w[SP + 58 + 1c];
+                800747AC	ctc2   t4,vz2
+                800747B4	ctc2   t5,rgb
+                800747B8	ctc2   t6,otz
 
-    L74628:	; 80074628
-    S0 = w[S1 + 0000];
-    8007462C	nop
-    V0 = h[S0 + 0012];
-    80074634	nop
-    80074638	bne    v0, 1, L746b4 [$800746b4]
-    8007463C	nop
-    V0 = w[SP + 0058];
-    V1 = w[SP + 005c];
-    A0 = w[SP + 0060];
-    A1 = w[SP + 0064];
-    [SP + 0078] = w(V0);
-    [SP + 007c] = w(V1);
-    [SP + 0080] = w(A0);
-    [SP + 0084] = w(A1);
-    V0 = w[SP + 0068];
-    V1 = w[SP + 006c];
-    A0 = w[SP + 0070];
-    A1 = w[SP + 0074];
-    [SP + 0088] = w(V0);
-    [SP + 008c] = w(V1);
-    [SP + 0090] = w(A0);
-    [SP + 0094] = w(A1);
-    A0 = S3;
-    A1 = SP + 28;
-    system_gte_multiply_matrix_by_vector();
+                V0 = hu[struct_5c_p + i * 5c + 58];
+                if( ( V0 & 8000 ) == 0 )
+                {
+                    A0 = w[S0 + 0004];
+                    V0 = w[800acfe0];
+                    A3 = h[S0 + 0012];
+                    A2 = w[800c3740];
+                    V0 = V0 << 02;
+                    V0 = V0 + S0;
+                    A1 = w[V0 + 0008];
+                    A2 = A2 + 00cc;
+                }
+                else
+                {
+                    A0 = w[S0 + 4];
+                    V0 = w[800acfe0];
+                    A3 = h[S0 + 12];
+                    A2 = w[800c3740];
+                    V0 = V0 << 02;
+                    V0 = V0 + S0;
+                    A1 = w[V0 + 0008];
+                    A2 = A2 + 40d0;
+                }
 
-    A0 = S3;
-    system_gte_calculate_and_set_lighting_matrix();
-
-    A0 = h[800aefd8];
-    A1 = h[800aefda];
-    A2 = h[800aefdc];
-    func30a50();
-
-    L746b4:	; 800746B4
-    V0 = struct_5c_p + i * 5c;
-    V0 = hu[V0 + 0058];
-    [8004f7a8] = w(0);
-    V0 = V0 & 0020;
-    800746D4	bne    v0, zero, L7482c [$8007482c]
-    800746D8	nop
-    V0 = hu[S1 + 0058];
-    800746E0	nop
-    V0 = V0 & 2000;
-    800746E8	beq    v0, zero, L7471c [$8007471c]
-    800746EC	nop
-    V0 = w[S0 + 0014];
-    800746F4	nop
-    800746F8	beq    v0, zero, L7471c [$8007471c]
-    800746FC	nop
-    A0 = w[S0 + 0014];
-    [800ad030] = w(i);
-    [800ad034] = w(0);
-    func303e8();
-
-    L7471c:	; 8007471C
-    T4 = w[S4 + 0000];
-    T5 = w[S4 + 0004];
-    R11R12 = T4;
-    R13R21 = T5;
-    T4 = w[S4 + 0008];
-    T5 = w[S4 + 000c];
-    T6 = w[S4 + 0010];
-    R22R23 = T4;
-    R31R32 = T5;
-    R33 = T6;
-    T4 = w[S4 + 0014];
-    T5 = w[S4 + 0018];
-    8007474C	ctc2   t4,vz2
-    T6 = w[S4 + 001c];
-    80074754	ctc2   t5,rgb
-    80074758	ctc2   t6,otz
-    8007475C	jal    funca9f4c [$800a9f4c]
-    A0 = S0;
-    80074764	beq    v0, zero, L7477c [$8007477c]
-    80074768	nop
-    T0 = w[SP + 0098];
-    80074770	nop
-    80074774	bne    t0, 1, L7482c [$8007482c]
-    80074778	nop
-
-    L7477c:	; 8007477C
-    T4 = w[S4 + 0000];
-    T5 = w[S4 + 0004];
-    R11R12 = T4;
-    R13R21 = T5;
-    T4 = w[S4 + 0008];
-    T5 = w[S4 + 000c];
-    T6 = w[S4 + 0010];
-    R22R23 = T4;
-    R31R32 = T5;
-    R33 = T6;
-    T4 = w[S4 + 0014];
-    T5 = w[S4 + 0018];
-    800747AC	ctc2   t4,vz2
-    T6 = w[S4 + 001c];
-    800747B4	ctc2   t5,rgb
-    800747B8	ctc2   t6,otz
-    V0 = hu[S1 + 0058];
-    V0 = V0 & 8000;
-    800747C8	bne    v0, zero, L747fc [$800747fc]
-    800747CC	nop
-    A0 = w[S0 + 0004];
-    V0 = w[800acfe0];
-    A3 = h[S0 + 0012];
-    A2 = w[800c3740];
-    V0 = V0 << 02;
-    V0 = V0 + S0;
-    A1 = w[V0 + 0008];
-    800747F4	j      L74824 [$80074824]
-    A2 = A2 + 00cc;
-
-    L747fc:	; 800747FC
-    A0 = w[S0 + 0004];
-    V0 = w[800acfe0];
-    A3 = h[S0 + 0012];
-    A2 = w[800c3740];
-    V0 = V0 << 02;
-    V0 = V0 + S0;
-    A1 = w[V0 + 0008];
-    A2 = A2 + 40d0;
-
-    L74824:	; 80074824
-    func2c510();
-
-    L7482c:	; 8007482C
+                func2c510();
+            }
+        }
+    }
 }
 
 if( w[800c1b60] == 0 )
