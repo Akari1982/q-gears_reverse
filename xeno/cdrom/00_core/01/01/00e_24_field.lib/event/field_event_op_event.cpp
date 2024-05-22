@@ -348,49 +348,34 @@ if( V0 != ff )
                 return;
             }
 
-            S1 = 0;
-            A1 = 000f;
             S0 = S2;
 
-            loop9e434:	; 8009E434
+            for( int i = 0; i < 8; ++i )
+            {
                 A0 = S0;
-                V1 = w[A0 + 0090];
-                8009E43C	nop
-                V0 = V1 >> 12;
-                V0 = V0 & 000f;
-                if( V0 == f )
-                {
-                    V0 = V1 >> 16;
-                    V0 = V0 & 0001;
-                    if( V0 == 0 )
-                    {
-                        V1 = w[800ad0d8];
-                        V0 = hu[struct_138_cur + 00cc];
-                        8009E518	nop
-                        V0 = V0 + V1;
-                        A1 = bu[V0 + 0002];
-                        A0 = S3;
-                        A1 = A1 & 001f;
-                        field_event_help_get_event_offset();
+                V1 = w[A0 + 90];
 
-                        A2 = w[800ad0d8];
-                        [S0 + 008c] = h(V0);
-                        V0 = hu[struct_138_cur + 00cc];
-                        V1 = w[S0 + 0090];
-                        V0 = V0 + A2;
-                        [S0 + 90] = w((V1 & ffc3ffff) | ((bu[V0 + 2] >> 5) << 12));
-                        V1 = bu[struct_138_cur + 00cf];
-                        V1 = V1 << 03;
-                        V1 = S2 + V1;
-                        V0 = w[V1 + 0090];
-                        V0 = V0 | 00400000;
-                        [V1 + 0090] = w(V0);
-                        V0 = hu[struct_138_cur + 00cc];
-                        V0 = V0 + A2;
-                        V0 = bu[V0 + 0002];
-                        V0 = V0 & 001f;
-                        [S0 + 008f] = b(V0);
-                        [struct_138_cur + 00cf] = b(S1);
+                if( ( ( V1 >> 12 ) & f ) == f )
+                {
+                    if( ( ( V1 >> 16 ) & 1 ) == 0 )
+                    {
+                        V0 = w[800ad0d8] + hu[struct_138_cur + cc];
+
+                        A0 = S3;
+                        A1 = bu[V0 + 2] & 1f;
+                        field_event_help_get_event_offset();
+                        [S0 + 8c] = h(V0);
+
+                        V0 = w[800ad0d8] + hu[struct_138_cur + cc];
+
+                        [S0 + 90] = w((w[S0 + 90] & ffc3ffff) | ((bu[V0 + 2] >> 5) << 12));
+                        V1 = bu[struct_138_cur + cf];
+                        [S2 + V1 * 8 + 90] = w(w[S2 + V1 * 8 + 90] | 00400000);
+
+                        V0 = w[800ad0d8] + hu[struct_138_cur + cc];
+
+                        [S0 + 8f] = b(bu[V0 + 2] & 1f);
+                        [struct_138_cur + cf] = b(i);
                         V0 = bu[struct_138_cur + ce];
                         [struct_138_cur + V0 * 8 + 90] = w((w[struct_138_cur + V0 * 8 + 90] & fffcffff) | 00010000);
                         return;
@@ -398,16 +383,13 @@ if( V0 != ff )
                 }
 
                 S0 = A0 + 0008;
-                S1 = S1 + 0001;
-                V0 = S1 < 0008;
-            8009E464	bne    v0, zero, loop9e434 [$8009e434]
+            }
         }
         else if( A0 == 1 )
         {
-            V0 = bu[S2 + ce];
             V1 = bu[struct_138_cur + cf];
 
-            if( V0 != V1 )
+            if( bu[S2 + ce] != V1 )
             {
                 V0 = V1 << 03;
                 V0 = S2 + V0;
