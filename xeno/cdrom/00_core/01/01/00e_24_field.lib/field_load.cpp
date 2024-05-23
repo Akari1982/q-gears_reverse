@@ -2830,221 +2830,292 @@ for( int i = 0; i < w[800aefe0]; ++i )
                 [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
                 [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
             }
-            800743B8	j      L74410 [$80074410]
-        }
 
-        V1 = w[struct_138 + 12c] & 3;
-
-        if( V1 == 1 )
-        {
-            [SP + 0010] = h(hu[struct_138 + 70]);
-            [SP + 0012] = h(0);
-            [SP + 0014] = h(0);
-
-            A0 = SP + 10;
-            A1 = SP + 78;
-            system_calculate_rotation_matrix();
-
-            A1 = SP + 78;
-            A0 = struct_5c_p + i * 5c + c;
-            system_gte_matrix_multiplication_to_A1();
-
-            [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
-            [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
-            [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
-
-            A0 = 800aef38;
-            A1 = SP + 78;
-            A2 = SP + 58;
-            system_gte_matrix_mult_and_trans();
-
-            80074274	j      L74628 [$80074628]
-        }
-        else if( V1 == 2 )
-        {
-            [SP + 0010] = h(0);
-            [SP + 0012] = h(hu[struct_138 + 70]);
-            [SP + 0014] = h(0);
-
-            A0 = SP + 10;
-            A1 = SP + 78;
-            system_calculate_rotation_matrix();
-
-            A1 = SP + 78;
-            A0 = struct_5c_p + i * 5c + c;
-            system_gte_matrix_multiplication_to_A1();
-
-            [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
-            [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
-            [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
-
-            A0 = 800aef38;
-            A1 = SP + 78;
-            A2 = SP + 58;
-            system_gte_matrix_mult_and_trans();
-
-            80074274	j      L74628 [$80074628]
-        }
-        else if( V1 == 3 )
-        {
-            [SP + 10] = h(0);
-            [SP + 12] = h(0);
-            [SP + 14] = h(hu[struct_138 + 70]);
-
-            A0 = SP + 10;
-            A1 = SP + 78;
-            system_calculate_rotation_matrix();
-
-            A1 = SP + 78;
-            A0 = struct_5c_p + i * 5c + c;
-            system_gte_matrix_multiplication_to_A1();
-
-            [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
-            [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
-            [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
-
-            A0 = 800aef38;
-            A1 = SP + 78;
-            A2 = SP + 58;
-            system_gte_matrix_mult_and_trans();
-
-            80074274	j      L74628 [$80074628]
-        }
-
-        A3 = hu[struct_138 + 128];
-        A2 = A3 & ffff;
-        if( A2 != ffff )
-        {
-            A0 = struct_5c_p + i * 5c + 2c;
-            A1 = A0;
-            A2 = A2 >> c;
-            A3 = A3 & 0fff;
-            func1e72cc();
-
-            A0 = 800aef38;
-            A1 = struct_5c_p + i * 5c + 2c;
-            A2 = SP + 78;
-            system_gte_matrix_mult_and_trans();
-
-            A0 = SP + 78;
-            A1 = struct_5c_p + i * 5c + c;
-            A2 = SP + 58;
-            system_gte_matrix_mult_and_trans();
-
-            A0 = struct_5c_p + i * 5c + 2c;
-            A1 = struct_5c_p + i * 5c + c;
-            A2 = struct_5c_p + i * 5c + 2c;
-            system_gte_matrix_mult_and_trans();
-
-            800742FC	j      L74628 [$80074628]
-        }
-
-        V1 = bu[struct_138 + 75];
-
-        8007430C	beq    v1, ff, L74410 [$80074410]
-
-        A0 = 800aef38;
-        V1 = bu[struct_138 + 75];
-        A1 = struct_5c_p + V1 * 5c + 2c;
-        A2 = SP + 78;
-        system_gte_matrix_mult_and_trans();
-
-        A0 = SP + 78;
-        A1 = struct_5c_p + i * 5c + c;
-        A2 = SP + 58;
-        system_gte_matrix_mult_and_trans();
-
-        V1 = bu[struct_138 + 75];
-        A0 = struct_5c_p + V1 * 5c + 2c;
-        A1 = struct_5c_p + i * 5c + c;
-        A2 = struct_5c_p + i * 5c + 2c;
-        system_gte_matrix_mult_and_trans();
-
-        800743B8	j      L74628 [$80074628]
-
-        L74410:	; 80074410
-        if( ( bu[800b1662 + 44] & 7f ) == 1 )
-        {
-            [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
-            [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
-            [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
-        }
-
-        if( bu[800b1662 + 44] & 80 )
-        {
-            [SP + 98] = w(1);
-        }
-
-        R11R12 = w[SP + 38 +  0];
-        R13R21 = w[SP + 38 +  4];
-        R22R23 = w[SP + 38 +  8];
-        R31R32 = w[SP + 38 +  c];
-        R33    = w[SP + 38 + 10];
-
-        IR1 = hu[struct_5c_p + i * 5c + c + 0];
-        IR2 = hu[struct_5c_p + i * 5c + c + 6];
-        IR3 = hu[struct_5c_p + i * 5c + c + c];
-        gte_rtir12(); // ir * rotmatrix.
-        [SP + 58 + 0] = h(IR1);
-        [SP + 58 + 6] = h(IR2);
-        [SP + 58 + c] = h(IR3);
-
-        IR1 = hu[struct_5c_p + i * 5c + e + 0];
-        IR2 = hu[struct_5c_p + i * 5c + e + 6];
-        IR3 = hu[struct_5c_p + i * 5c + e + c];
-        gte_rtir12(); // ir * rotmatrix.
-        [SP + 5a + 0] = h(IR1);
-        [SP + 5a + 6] = h(IR2);
-        [SP + 5a + c] = h(IR3);
-
-        IR1 = hu[struct_5c_p + i * 5c + 10 + 0];
-        IR2 = hu[struct_5c_p + i * 5c + 10 + 6];
-        IR3 = hu[struct_5c_p + i * 5c + 10 + c];
-        gte_rtir12(); // ir * rotmatrix.
-        [SP + 5c + 0] = h(IR1);
-        [SP + 5c + 6] = h(IR2);
-        [SP + 5c + c] = h(IR3);
-
-        TRX = w[SP + 38 + 14];
-        TRY = w[SP + 38 + 18];
-        TRZ = w[SP + 38 + 1c];
-
-        VXY0 = (hu[struct_5c_p + i * 5c + 24] << 10) | hu[struct_5c_p + i * 5c + 20];
-        VZ0 = w[struct_5c_p + i * 5c + 28];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector.
-        [SP + 6c + 0] = w(MAC1);
-        [SP + 6c + 4] = w(MAC2);
-        [SP + 6c + 8] = w(MAC3);
-
-        if( flags58 & 0003 )
-        {
-            if( V0 == 1 )
+            if( ( bu[800b1662 + 44] & 7f ) == 1 )
             {
-                A0 = 800aef58;
-                A1 = A1 + c;
+                [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+                [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+                [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+            }
+
+            if( bu[800b1662 + 44] & 80 )
+            {
+                [SP + 98] = w(1);
+            }
+
+            R11R12 = w[SP + 38 +  0];
+            R13R21 = w[SP + 38 +  4];
+            R22R23 = w[SP + 38 +  8];
+            R31R32 = w[SP + 38 +  c];
+            R33    = w[SP + 38 + 10];
+
+            IR1 = hu[struct_5c_p + i * 5c + c + 0];
+            IR2 = hu[struct_5c_p + i * 5c + c + 6];
+            IR3 = hu[struct_5c_p + i * 5c + c + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [SP + 58 + 0] = h(IR1);
+            [SP + 58 + 6] = h(IR2);
+            [SP + 58 + c] = h(IR3);
+
+            IR1 = hu[struct_5c_p + i * 5c + e + 0];
+            IR2 = hu[struct_5c_p + i * 5c + e + 6];
+            IR3 = hu[struct_5c_p + i * 5c + e + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [SP + 5a + 0] = h(IR1);
+            [SP + 5a + 6] = h(IR2);
+            [SP + 5a + c] = h(IR3);
+
+            IR1 = hu[struct_5c_p + i * 5c + 10 + 0];
+            IR2 = hu[struct_5c_p + i * 5c + 10 + 6];
+            IR3 = hu[struct_5c_p + i * 5c + 10 + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [SP + 5c + 0] = h(IR1);
+            [SP + 5c + 6] = h(IR2);
+            [SP + 5c + c] = h(IR3);
+
+            TRX = w[SP + 38 + 14];
+            TRY = w[SP + 38 + 18];
+            TRZ = w[SP + 38 + 1c];
+
+            VXY0 = (hu[struct_5c_p + i * 5c + 24] << 10) | hu[struct_5c_p + i * 5c + 20];
+            VZ0 = w[struct_5c_p + i * 5c + 28];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+            [SP + 6c + 0] = w(MAC1);
+            [SP + 6c + 4] = w(MAC2);
+            [SP + 6c + 8] = w(MAC3);
+
+            if( flags58 & 0003 )
+            {
+                if( V0 == 1 )
+                {
+                    A0 = 800aef58;
+                    A1 = A1 + c;
+                    A2 = SP + 58;
+                    system_gte_matrix_multiplication_to_A2();
+                }
+                else
+                {
+                    A0 = SP + 58;
+                    A1 = A1 + c;
+                    field_copy_rotation_matrix(); // copy A1 to A0
+
+                    A0 = SP + 58;
+                    A1 = SP + 18;
+                    system_gte_multiply_matrix_by_vector();
+                }
+
+                A0 = 800aee84;
+                A1 = SP + 58;
+                system_gte_matrix_multiplication_to_A1();
+            }
+        }
+        else
+        {
+            V1 = w[struct_138 + 12c] & 3;
+
+            if( V1 == 0 )
+            {
+                A3 = hu[struct_138 + 128];
+                A2 = A3 & ffff;
+                if( A2 != ffff )
+                {
+                    A0 = struct_5c_p + i * 5c + 2c;
+                    A1 = A0;
+                    A2 = A2 >> c;
+                    A3 = A3 & 0fff;
+                    func1e72cc();
+
+                    A0 = 800aef38;
+                    A1 = struct_5c_p + i * 5c + 2c;
+                    A2 = SP + 78;
+                    system_gte_matrix_mult_and_trans();
+
+                    A0 = SP + 78;
+                    A1 = struct_5c_p + i * 5c + c;
+                    A2 = SP + 58;
+                    system_gte_matrix_mult_and_trans();
+
+                    A0 = struct_5c_p + i * 5c + 2c;
+                    A1 = struct_5c_p + i * 5c + c;
+                    A2 = struct_5c_p + i * 5c + 2c;
+                    system_gte_matrix_mult_and_trans();
+                }
+                else
+                {
+                    if( bu[struct_138 + 75] == ff )
+                    {
+                        if( ( bu[800b1662 + 44] & 7f ) == 1 )
+                        {
+                            [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+                            [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+                            [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+                        }
+
+                        if( bu[800b1662 + 44] & 80 )
+                        {
+                            [SP + 98] = w(1);
+                        }
+
+                        R11R12 = w[SP + 38 +  0];
+                        R13R21 = w[SP + 38 +  4];
+                        R22R23 = w[SP + 38 +  8];
+                        R31R32 = w[SP + 38 +  c];
+                        R33    = w[SP + 38 + 10];
+
+                        IR1 = hu[struct_5c_p + i * 5c + c + 0];
+                        IR2 = hu[struct_5c_p + i * 5c + c + 6];
+                        IR3 = hu[struct_5c_p + i * 5c + c + c];
+                        gte_rtir12(); // ir * rotmatrix.
+                        [SP + 58 + 0] = h(IR1);
+                        [SP + 58 + 6] = h(IR2);
+                        [SP + 58 + c] = h(IR3);
+
+                        IR1 = hu[struct_5c_p + i * 5c + e + 0];
+                        IR2 = hu[struct_5c_p + i * 5c + e + 6];
+                        IR3 = hu[struct_5c_p + i * 5c + e + c];
+                        gte_rtir12(); // ir * rotmatrix.
+                        [SP + 5a + 0] = h(IR1);
+                        [SP + 5a + 6] = h(IR2);
+                        [SP + 5a + c] = h(IR3);
+
+                        IR1 = hu[struct_5c_p + i * 5c + 10 + 0];
+                        IR2 = hu[struct_5c_p + i * 5c + 10 + 6];
+                        IR3 = hu[struct_5c_p + i * 5c + 10 + c];
+                        gte_rtir12(); // ir * rotmatrix.
+                        [SP + 5c + 0] = h(IR1);
+                        [SP + 5c + 6] = h(IR2);
+                        [SP + 5c + c] = h(IR3);
+
+                        TRX = w[SP + 38 + 14];
+                        TRY = w[SP + 38 + 18];
+                        TRZ = w[SP + 38 + 1c];
+
+                        VXY0 = (hu[struct_5c_p + i * 5c + 24] << 10) | hu[struct_5c_p + i * 5c + 20];
+                        VZ0 = w[struct_5c_p + i * 5c + 28];
+                        gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+                        [SP + 6c + 0] = w(MAC1);
+                        [SP + 6c + 4] = w(MAC2);
+                        [SP + 6c + 8] = w(MAC3);
+
+                        if( flags58 & 0003 )
+                        {
+                            if( V0 == 1 )
+                            {
+                                A0 = 800aef58;
+                                A1 = A1 + c;
+                                A2 = SP + 58;
+                                system_gte_matrix_multiplication_to_A2();
+                            }
+                            else
+                            {
+                                A0 = SP + 58;
+                                A1 = A1 + c;
+                                field_copy_rotation_matrix(); // copy A1 to A0
+
+                                A0 = SP + 58;
+                                A1 = SP + 18;
+                                system_gte_multiply_matrix_by_vector();
+                            }
+
+                            A0 = 800aee84;
+                            A1 = SP + 58;
+                            system_gte_matrix_multiplication_to_A1();
+                        }
+                    }
+                    else
+                    {
+                        A0 = 800aef38;
+                        V1 = bu[struct_138 + 75];
+                        A1 = struct_5c_p + V1 * 5c + 2c;
+                        A2 = SP + 78;
+                        system_gte_matrix_mult_and_trans();
+
+                        A0 = SP + 78;
+                        A1 = struct_5c_p + i * 5c + c;
+                        A2 = SP + 58;
+                        system_gte_matrix_mult_and_trans();
+
+                        V1 = bu[struct_138 + 75];
+                        A0 = struct_5c_p + V1 * 5c + 2c;
+                        A1 = struct_5c_p + i * 5c + c;
+                        A2 = struct_5c_p + i * 5c + 2c;
+                        system_gte_matrix_mult_and_trans();
+                    }
+                }
+            }
+            else if( V1 == 1 )
+            {
+                [SP + 10] = h(hu[struct_138 + 70]);
+                [SP + 12] = h(0);
+                [SP + 14] = h(0);
+
+                A0 = SP + 10;
+                A1 = SP + 78;
+                system_calculate_rotation_matrix();
+
+                A1 = SP + 78;
+                A0 = struct_5c_p + i * 5c + c;
+                system_gte_matrix_multiplication_to_A1();
+
+                [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+                [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+                [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
+
+                A0 = 800aef38;
+                A1 = SP + 78;
                 A2 = SP + 58;
-                system_gte_matrix_multiplication_to_A2();
+                system_gte_matrix_mult_and_trans();
             }
-            else
+            else if( V1 == 2 )
             {
-                A0 = SP + 58;
-                A1 = A1 + c;
-                field_copy_rotation_matrix(); // copy A1 to A0
+                [SP + 10] = h(0);
+                [SP + 12] = h(hu[struct_138 + 70]);
+                [SP + 14] = h(0);
 
-                A0 = SP + 58;
-                A1 = SP + 18;
-                system_gte_multiply_matrix_by_vector();
+                A0 = SP + 10;
+                A1 = SP + 78;
+                system_calculate_rotation_matrix();
+
+                A1 = SP + 78;
+                A0 = struct_5c_p + i * 5c + c;
+                system_gte_matrix_multiplication_to_A1();
+
+                [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+                [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+                [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
+
+                A0 = 800aef38;
+                A1 = SP + 78;
+                A2 = SP + 58;
+                system_gte_matrix_mult_and_trans();
             }
+            else if( V1 == 3 )
+            {
+                [SP + 10] = h(0);
+                [SP + 12] = h(0);
+                [SP + 14] = h(hu[struct_138 + 70]);
 
-            A0 = 800aee84;
-            A1 = SP + 58;
-            system_gte_matrix_multiplication_to_A1();
+                A0 = SP + 10;
+                A1 = SP + 78;
+                system_calculate_rotation_matrix();
+
+                A1 = SP + 78;
+                A0 = struct_5c_p + i * 5c + c;
+                system_gte_matrix_multiplication_to_A1();
+
+                [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+                [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+                [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
+
+                A0 = 800aef38;
+                A1 = SP + 78;
+                A2 = SP + 58;
+                system_gte_matrix_mult_and_trans();
+            }
         }
-        800743B8	j      L74628 [$80074628]
 
-        L74628:	; 80074628
-        S0 = w[struct_5c_p + i * 5c + 0];
-        if( h[S0 + 12] == 1 )
+        struct_model = w[struct_5c_p + i * 5c + 0];
+        if( h[struct_model + 12] == 1 )
         {
             [SP + 78] = w(w[SP + 58]);
             [SP + 7c] = w(w[SP + 5c]);
@@ -3074,12 +3145,12 @@ for( int i = 0; i < w[800aefe0]; ++i )
         {
             if( flags58 & 2000 )
             {
-                if( w[S0 + 14] != 0 )
+                if( w[struct_model + 14] != 0 )
                 {
                     [800ad030] = w(i);
                     [800ad034] = w(0);
 
-                    A0 = w[S0 + 14];
+                    A0 = w[struct_model + 14];
                     func303e8();
                 }
             }
@@ -3093,11 +3164,10 @@ for( int i = 0; i < w[800aefe0]; ++i )
             TRY    = w[SP + 58 + 18];
             TRZ    = w[SP + 58 + 1c];
 
-            A0 = S0;
+            A0 = struct_model;
             funca9f4c();
 
-
-            if( ( V0 == 0 ) || ( w[SP + 0098] == 1 ) )
+            if( ( V0 == 0 ) || ( w[SP + 98] == 1 ) )
             {
                 R11R12 = w[SP + 58 +  0];
                 R13R21 = w[SP + 58 +  4];
@@ -3112,30 +3182,19 @@ for( int i = 0; i < w[800aefe0]; ++i )
                 800747B4	ctc2   t5,rgb
                 800747B8	ctc2   t6,otz
 
-                V0 = hu[struct_5c_p + i * 5c + 58];
-                if( ( V0 & 8000 ) == 0 )
+                if( flags58 & 8000 )
                 {
-                    A0 = w[S0 + 0004];
-                    V0 = w[800acfe0];
-                    A3 = h[S0 + 0012];
-                    A2 = w[800c3740];
-                    V0 = V0 << 02;
-                    V0 = V0 + S0;
-                    A1 = w[V0 + 0008];
-                    A2 = A2 + 00cc;
+                    A2 = w[800c3740] + 40d0;
                 }
                 else
                 {
-                    A0 = w[S0 + 4];
-                    V0 = w[800acfe0];
-                    A3 = h[S0 + 12];
-                    A2 = w[800c3740];
-                    V0 = V0 << 02;
-                    V0 = V0 + S0;
-                    A1 = w[V0 + 0008];
-                    A2 = A2 + 40d0;
+                    A2 = w[800c3740] + cc;
                 }
 
+                A0 = w[struct_model + 4]; // part_header
+                rb = w[800acfe0];
+                A1 = w[struct_model + 8 + rb * 4]; // render buffer
+                A3 = h[struct_model + 12];
                 func2c510();
             }
         }
