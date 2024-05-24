@@ -2012,15 +2012,14 @@ T1 = T1 | T8;
 ////////////////////////////////
 // load_poly_01_14()
 
-polygons = A0 = // pointer to polygons data block in 3d model file
+polygons = A0 // pointer to polygons data block in 3d model file
 poly_n = A1;
 
 vertex_block = w[80058bd8]; // pointer to vertex block in model data
 poly_count = w[80058c14]; // PolyCount
 packet = w[80058ac0]; // offset to place for packets
 rdata = w[80058c04];
-V0 = w[8004f7a0];
-V1 = w[8004f79c];
+
 T7 = w[8004f7a4] + 2;
 
 vertex1 = hu[polygons + 0];
@@ -2070,65 +2069,55 @@ while (true)
         T3 = SXY2P;
         gte_NCLIP(); // Normal clipping
 
-        if( ( T1 < V0 ) || ( T2 < V0 ) || ( T3 < V0 ) )
+        if( ( T1 < w[8004f7a0] ) || ( T2 < w[8004f7a0] ) || ( T3 < w[8004f7a0] ) )
         {
             gte_DPCS(); // Depth Cueing.
 
-            T0 = T1 & ffff;
-            T0 = T0 < V1;
-            8002F044	bne    t0, zero, L2f060 [$8002f060]
-            T0 = T2 & ffff;
-            T0 = T0 < V1;
-            8002F050	bne    t0, zero, L2f060 [$8002f060]
-            T0 = T3 & ffff;
-            T0 = T0 < V1;
-            8002F05C	beq    t0, zero, loop2efb4 [$8002efb4]
-
-            L2f060:	; 8002F060
-            T4 = MAC0;
-            T5 = SZ2;
-            packet = packet & 00ffffff;
-
-            if( T4 > 0 )
+            if( ( ( T1 & ffff ) < w[8004f79c] ) || ( ( T2 & ffff ) < w[8004f79c] ) || ( ( T3 & ffff ) < w[8004f79c] ) )
             {
-                [packet + 0008] = w(T1);
-                T0 = packet + 8;
-                [T0 + 0008] = w(T2);
-                T2 = SZ3;
-                T0 = T0 + 8;
-                [T0 + 0008] = w(T3);
-                T0 = SZ1;
-                T3 = T5 < T0;
-                T1 = bu[packet + 0007];
+                T4 = MAC0;
+                T5 = SZ2;
+                packet = packet & 00ffffff;
 
-                if( T3 == 0 )
+                if( T4 > 0 )
                 {
-                    T0 = T5;
-                }
+                    [packet + 0008] = w(T1);
+                    T0 = packet + 8;
+                    [T0 + 0008] = w(T2);
+                    T2 = SZ3;
+                    T0 = T0 + 8;
+                    [T0 + 0008] = w(T3);
+                    T0 = SZ1;
+                    T3 = T5 < T0;
+                    T1 = bu[packet + 0007];
 
-                ++poly_count;
-                T3 = T2 < T0;
-                if( T3 == 0 )
-                {
-                    T0 = T2;
-                }
+                    if( T3 == 0 )
+                    {
+                        T0 = T5;
+                    }
 
-                if( T0 != 0 )
-                {
-                    T0 = T0 >> T7;
-                    T0 = T0 << 02;
-                    T0 = T0 + rdata;
-                    T1 = T1 << 18;
-                    [packet + 4] = w((T1 & fe000000) | (RGB2 & 00ffffff));
-                    T1 = w[T0 + 0000];
-                    [T0 + 0] = w(packet);
-                    [packet + 0] = w(T1 | 07000000);
+                    ++poly_count;
+                    T3 = T2 < T0;
+                    if( T3 == 0 )
+                    {
+                        T0 = T2;
+                    }
+
+                    if( T0 != 0 )
+                    {
+                        T0 = T0 >> T7;
+                        T0 = rdata + T0 * 4;
+                        T1 = T1 << 18;
+                        [packet + 4] = w((T1 & fe000000) | (RGB2 & 00ffffff));
+                        T1 = w[T0 + 0000];
+                        [T0 + 0] = w(packet);
+                        [packet + 0] = w(T1 | 07000000);
+                    }
                 }
             }
         }
     }
 }
-8002F0E8	j      loop2efb4 [$8002efb4]
 
 [80058c14] = w(poly_count);
 [80058ac0] = w(packet + 20);
