@@ -2062,18 +2062,16 @@ while (true)
     VXY2 = w[T0 + 0000];
     VZ2 = w[T0 + 0004];
     T0 = LZCR;
-    T1 = SXY0;
+
     if( T0 >= 0 )
     {
-        T2 = SXY1;
-        T3 = SXY2P;
         gte_NCLIP(); // Normal clipping
 
-        if( ( T1 < w[8004f7a0] ) || ( T2 < w[8004f7a0] ) || ( T3 < w[8004f7a0] ) )
+        if( ( SXY0 < w[8004f7a0] ) || ( SXY1 < w[8004f7a0] ) || ( SXY2P < w[8004f7a0] ) )
         {
             gte_DPCS(); // Depth Cueing.
 
-            if( ( ( T1 & ffff ) < w[8004f79c] ) || ( ( T2 & ffff ) < w[8004f79c] ) || ( ( T3 & ffff ) < w[8004f79c] ) )
+            if( ( ( SXY0 & ffff ) < w[8004f79c] ) || ( ( SXY1 & ffff ) < w[8004f79c] ) || ( ( SXY2P & ffff ) < w[8004f79c] ) )
             {
                 T4 = MAC0;
                 T5 = SZ2;
@@ -2081,15 +2079,15 @@ while (true)
 
                 if( T4 > 0 )
                 {
-                    [packet + 0008] = w(T1);
+                    [packet + 8] = w(SXY0);
                     T0 = packet + 8;
-                    [T0 + 0008] = w(T2);
+                    [T0 + 8] = w(SXY1);
                     T2 = SZ3;
                     T0 = T0 + 8;
-                    [T0 + 0008] = w(T3);
+                    [T0 + 8] = w(SXY2P);
                     T0 = SZ1;
                     T3 = T5 < T0;
-                    T1 = bu[packet + 0007];
+                    T1 = bu[packet + 7];
 
                     if( T3 == 0 )
                     {
@@ -2097,8 +2095,8 @@ while (true)
                     }
 
                     ++poly_count;
-                    T3 = T2 < T0;
-                    if( T3 == 0 )
+
+                    if( T2 >= T0 )
                     {
                         T0 = T2;
                     }
@@ -2106,11 +2104,10 @@ while (true)
                     if( T0 != 0 )
                     {
                         T0 = T0 >> T7;
-                        T0 = rdata + T0 * 4;
                         T1 = T1 << 18;
                         [packet + 4] = w((T1 & fe000000) | (RGB2 & 00ffffff));
-                        T1 = w[T0 + 0000];
-                        [T0 + 0] = w(packet);
+                        T1 = w[rdata + T0 * 4];
+                        [rdata + T0 * 4] = w(packet);
                         [packet + 0] = w(T1 | 07000000);
                     }
                 }
