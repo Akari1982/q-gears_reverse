@@ -17508,28 +17508,20 @@ return (7 - ((h[800aee60] - 100) >> 9)) & 7;
 
 
 ////////////////////////////////
-// func99b08
-80099B08	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-80099B14	jal    field_event_help_read_u16 [$800ac290]
-[SP + 0010] = w(S0);
-80099B1C	jal    func99ae8 [$80099ae8]
+// func99b08()
+
+A0 = 1;
+field_event_help_read_u16();
 S0 = V0 & ffff;
+
+80099B1C	jal    func99ae8 [$80099ae8]
+
 A0 = S0;
-80099B28	jal    field_event_help_write_to_script_mem [$800a2604]
 A1 = V0 & ffff;
+field_event_help_write_to_script_mem();
+
 V1 = w[800af54c];
-80099B38	nop
-V0 = hu[V1 + 00cc];
-80099B40	nop
-V0 = V0 + 0003;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80099B58	jr     ra 
-80099B5C	nop
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
@@ -21757,47 +21749,33 @@ funca0224();
 
 
 ////////////////////////////////
-// funca0350
-800A0350	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A0358	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0001;
-V1 = w[800af54c];
+// funca0350()
+
+A0 = 1;
+field_event_help_read_v80();
 [800b181e] = h(V0);
-V0 = hu[V1 + 00cc];
-800A0374	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-800A0384	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
 
-
-
-////////////////////////////////
-// funca038c
-800A038C	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0001;
-[SP + 0014] = w(RA);
-800A0398	jal    field_event_help_read_u16 [$800ac290]
-[SP + 0010] = w(S0);
-800A03A0	jal    $system_cdrom2_get_disc_number
-S0 = V0 & ffff;
-A0 = S0;
-800A03AC	jal    field_event_help_write_to_script_mem [$800a2604]
-A1 = V0;
 V1 = w[800af54c];
-800A03BC	nop
-V0 = hu[V1 + 00cc];
-800A03C4	nop
-V0 = V0 + 0003;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800A03DC	jr     ra 
-800A03E0	nop
+[V1 + cc] = h(hu[V1 + cc] + 3);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca038c()
+
+A0 = 1;
+field_event_help_read_u16();
+S0 = V0 & ffff;
+
+system_cdrom2_get_disc_number();
+
+A0 = S0;
+A1 = V0;
+field_event_help_write_to_script_mem();
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
