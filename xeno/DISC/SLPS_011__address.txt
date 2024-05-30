@@ -164,6 +164,7 @@
 +20 - size of tex data.
 +24 - size of packets data.
 
+8004f7a0 [][][][] min SXY0
 8004f7a4 [][][][] shifter for depth sort OTZ.
 
 8004f7ac [][][][] some tex page global setting. If 1 or 2 we use some default values.

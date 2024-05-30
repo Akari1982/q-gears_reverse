@@ -282,7 +282,7 @@ for( int i = hu[part_header + 6] - 1; i != -1; --i ) // number of polygons block
     A0 = A0 + 4;
     [80058bc4] = w(A0);
 
-    8002C674	jalr   s2 ra // load_poly_01_14
+    8002C674	jalr   s2 ra // system_model_poly_render_packet_1_14
 
     [80058bc4] = w(w[80058bc4] + h[S1 + 2] * w[S0 + 1c]);
 }
@@ -2005,119 +2005,6 @@ T1 = w[T0 + 0000];
 T1 = T1 | T8;
 8002EEEC	j      loop2edd8 [$8002edd8]
 [S3 + 0000] = w(T1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// load_poly_01_14()
-
-polygons = A0 // pointer to polygons data block in 3d model file
-poly_n = A1;
-
-vertex_block = w[80058bd8]; // pointer to vertex block in model data
-poly_count = w[80058c14]; // PolyCount
-packet = w[80058ac0]; // offset to place for packets
-rdata = w[80058c04];
-
-T7 = w[8004f7a4] + 2;
-
-vertex1 = hu[polygons + 0];
-vertex2 = hu[polygons + 2];
-vertex3 = hu[polygons + 4];
-
-VXY0 = w[vertex_block + vertex1 * 8 + 0];
-VZ0 = w[vertex_block + vertex1 * 8 + 4];
-VXY1 = w[vertex_block + vertex2 * 8 + 0];
-VZ1 = w[vertex_block + vertex2 * 8 + 4];
-VXY2 = w[vertex_block + vertex3 * 8 + 0];
-VZ2 = w[vertex_block + vertex3 * 8 + 4];
-
-packet = packet - 20;
-RGB = w[80058c34];
-
-while (true)
-{
-    gte_RTPT(); // Perspective transform on 3 points
-
-    if( poly_n == 0 ) break;
-
-    --poly_n;
-    polygons += 8;
-    T4 = w[polygons + 0000];
-    T5 = hu[polygons + 0004];
-    packet = packet + 20;
-    T0 = T4 & ffff;
-    T0 = T0 << 03;
-    T0 = T0 + vertex_block;
-    VXY0 = w[T0 + 0000];
-    VZ0 = w[T0 + 0004];
-    T0 = T4 >> 0d;
-    T0 = T0 & fff8;
-    T0 = T0 + vertex_block;
-    VXY1 = w[T0 + 0000];
-    VZ1 = w[T0 + 0004];
-    T0 = T5 << 03;
-    T0 = T0 + vertex_block;
-    VXY2 = w[T0 + 0000];
-    VZ2 = w[T0 + 0004];
-    T0 = LZCR;
-
-    if( T0 >= 0 )
-    {
-        gte_NCLIP(); // Normal clipping
-
-        if( ( SXY0 < w[8004f7a0] ) || ( SXY1 < w[8004f7a0] ) || ( SXY2P < w[8004f7a0] ) )
-        {
-            gte_DPCS(); // Depth Cueing.
-
-            if( ( ( SXY0 & ffff ) < w[8004f79c] ) || ( ( SXY1 & ffff ) < w[8004f79c] ) || ( ( SXY2P & ffff ) < w[8004f79c] ) )
-            {
-                T4 = MAC0;
-                T5 = SZ2;
-                packet = packet & 00ffffff;
-
-                if( T4 > 0 )
-                {
-                    [packet + 8] = w(SXY0);
-                    T0 = packet + 8;
-                    [T0 + 8] = w(SXY1);
-                    T2 = SZ3;
-                    T0 = T0 + 8;
-                    [T0 + 8] = w(SXY2P);
-                    T0 = SZ1;
-                    T3 = T5 < T0;
-                    T1 = bu[packet + 7];
-
-                    if( T3 == 0 )
-                    {
-                        T0 = T5;
-                    }
-
-                    ++poly_count;
-
-                    if( T2 >= T0 )
-                    {
-                        T0 = T2;
-                    }
-
-                    if( T0 != 0 )
-                    {
-                        T0 = T0 >> T7;
-                        T1 = T1 << 18;
-                        [packet + 4] = w((T1 & fe000000) | (RGB2 & 00ffffff));
-                        T1 = w[rdata + T0 * 4];
-                        [rdata + T0 * 4] = w(packet);
-                        [packet + 0] = w(T1 | 07000000);
-                    }
-                }
-            }
-        }
-    }
-}
-
-[80058c14] = w(poly_count);
-[80058ac0] = w(packet + 20);
 ////////////////////////////////
 
 
