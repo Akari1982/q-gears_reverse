@@ -943,9 +943,14 @@
 8002EB30-8002ED04
 ////////////////////////////////
 // func2ed08
-8002ED08-8002EEF0
+8002ED08-8002EEEC
 ////////////////////////////////
-// load_poly_01_14
+// system_model_poly_render_packet_1_10
+// system_model_poly_render_packet_5_10
+8002ED1C-8002EEEC
+////////////////////////////////
+// system_model_poly_render_packet_1_14
+// system_model_poly_render_packet_5_14
 8002EEF4-8002F0EC
 ////////////////////////////////
 // func2f0f0
