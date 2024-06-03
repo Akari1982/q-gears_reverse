@@ -794,7 +794,7 @@
 // func89874
 80089874-800898B8
 ////////////////////////////////
-// func898bc
+// field_event_opFE77
 800898BC-80089AB0
 ////////////////////////////////
 // func89ab4
@@ -887,7 +887,7 @@
 // field_event_opF1_fade_setup
 8008A81C-8008A8C0
 ////////////////////////////////
-// 0xFE26_ScreenDistortion
+// field_event_opFE26_distortion_setup
 8008A8C4-8008A8F8
 ////////////////////////////////
 // func8a8fc
@@ -1202,7 +1202,7 @@
 // field_event_op60
 8008F3A4-8008F3FC
 ////////////////////////////////
-// func8f400
+// field_event_op61
 8008F400-8008F4D4
 ////////////////////////////////
 // field_event_op62
@@ -2063,7 +2063,7 @@
 // field_event_op43_variable_random
 8009C728-8009C77C
 ////////////////////////////////
-// field_event_opA8
+// field_event_opA8_variable_random
 8009C780-8009C7EC
 ////////////////////////////////
 // field_event_op42_variable_shift_right

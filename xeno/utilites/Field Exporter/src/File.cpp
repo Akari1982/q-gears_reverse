@@ -146,6 +146,14 @@ File::GetU16LE( u32 offset ) const
 
 
 
+s16
+File::GetS16LE( u32 offset ) const
+{
+    return (s16)(((u8*)m_Buffer + offset)[0] | (((u8*)m_Buffer + offset)[1] << 8));
+}
+
+
+
 u32
 File::GetU32LE( u32 offset ) const
 {

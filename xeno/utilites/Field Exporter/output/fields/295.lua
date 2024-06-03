@@ -1,12 +1,8 @@
 var = [
-    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x007f, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x093800e0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x0000007f,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -14,16 +10,21 @@ unknown = [
 ]
 
 
+
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0x2A()
-0x000a    op05_FunctionCall( 0x0a5f )
+0x000a    op05_CallFunction( address=0xa5f )
 0x000d    -- 0xA0()
-0x0014    -- 0x86_ProgressNotEqualJumpTo( value=147, jump=0x001c )
-0x0019    op36_VariableSetTrue( address=0x0406 )
+0x0014    -- 0x86_ProgressNotEqualJumpTo( value=147, jump=0x1c )
+0x0019    mem[0x406] = true -- op36
 0x001c    op00_Return()
 
 Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
 0x001d    op00_Return()
 
 Actor_0x01:on_start:
@@ -36,6 +37,8 @@ Actor_0x01:on_update:
 0x0027    op00_Return()
 
 Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
 0x0028    op00_Return()
 
 Actor_0x02:on_start:
@@ -48,6 +51,8 @@ Actor_0x02:on_update:
 0x0032    op00_Return()
 
 Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
 0x0033    op00_Return()
 
 Actor_0x03:on_start:
@@ -60,6 +65,8 @@ Actor_0x03:on_update:
 0x003d    op00_Return()
 
 Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
 0x003e    op00_Return()
 
 Actor_0x04:on_start:
@@ -72,6 +79,8 @@ Actor_0x04:on_update:
 0x0048    op00_Return()
 
 Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
 0x0049    op00_Return()
 
 Actor_0x05:on_start:
@@ -84,6 +93,8 @@ Actor_0x05:on_update:
 0x0053    op00_Return()
 
 Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
 0x0054    op00_Return()
 
 Actor_0x06:on_start:
@@ -96,6 +107,8 @@ Actor_0x06:on_update:
 0x005e    op00_Return()
 
 Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
 0x005f    op00_Return()
 
 Actor_0x07:on_start:
@@ -108,6 +121,8 @@ Actor_0x07:on_update:
 0x0069    op00_Return()
 
 Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
 0x006a    op00_Return()
 
 Actor_0x08:on_start:
@@ -120,6 +135,8 @@ Actor_0x08:on_update:
 0x0074    op00_Return()
 
 Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
 0x0075    op00_Return()
 
 Actor_0x09:on_start:
@@ -132,6 +149,8 @@ Actor_0x09:on_update:
 0x007f    op00_Return()
 
 Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
 0x0080    op00_Return()
 
 Actor_0x0a:on_start:
@@ -144,6 +163,8 @@ Actor_0x0a:on_update:
 0x008a    op00_Return()
 
 Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
 0x008b    op00_Return()
 
 Actor_0x0b:on_start:
@@ -156,25 +177,27 @@ Actor_0x0b:on_update:
 0x0095    op00_Return()
 
 Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
 0x0096    op00_Return()
 
 Actor_0x0c:on_start:
 0x0097    -- 0x0B_InitNPC( 0 )
 0x009a    -- 0x19_ActorSetPosition( x=(vf80)0x012e, z=(vf40)0x00f6, flag=(flag)0xc0 )
 0x00a0    op69_ActorSetRotation( rot=5 )
-0x00a3    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00b5 )
+0x00a3    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0xb5 )
 0x00ab    -- 0x19_ActorSetPosition( x=(vf80)0xfffe, z=(vf40)0xfd78, flag=(flag)0xc0 )
 0x00b1    op69_ActorSetRotation( rot=0 )
 0x00b4    op00_Return()
 0x00b5    op00_Return()
 
 Actor_0x0c:on_update:
-0x00b6    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x017d )
-0x00be    -- 0xC6()
+0x00b6    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x17d )
+0x00be    opC6_ExpandRun() -- exp0x20
 0x00bf    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00c5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00cb    op69_ActorSetRotation( rot=7 )
-0x00ce    op2C_SpritePlayAnim( anim_id=0x03 )
-0x00d0    op37_VariableSetFalse( address=0x040a )
-0x00d3    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x040a ), value2=(s16)0x003c, condition="value1 < value2", jump_if_false=0x00f8 )
+0x00ce    op2C_SpritePlayAnim( anim_id=0x3 )
+0x00d0    mem[0x40a] = false -- op37
+0x00d3    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0xf8 )
 0x00db    -- MISSING OPCODE 0x89

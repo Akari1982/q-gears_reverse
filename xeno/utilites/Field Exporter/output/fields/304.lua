@@ -1,12 +1,8 @@
 var = [
-    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x007f, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x093800e0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x0000007f,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -14,64 +10,67 @@ unknown = [
 ]
 
 
+
 Actor_0x00:on_start:
 0x0032    -- 0xBC_ActorNoModelInit()
 0x0033    -- 0x2A()
-0x0034    op05_FunctionCall( 0x07fe )
+0x0034    op05_CallFunction( address=0x7fe )
 0x0037    op00_Return()
 
 Actor_0x00:on_update:
-0x0038    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x001e ), value2=(s16)0xfea5, condition="value1 < value2", jump_if_false=0x006b )
-0x0040    -- 0xC6()
-0x0041    op24_ActorEnable( actor_id=(entity)0x1a )
-0x0043    op24_ActorEnable( actor_id=(entity)0x20 )
-0x0045    op25_ActorDisable( actor_id=(entity)0x19 )
-0x0047    op25_ActorDisable( actor_id=(entity)0x13 )
-0x0049    op25_ActorDisable( actor_id=(entity)0x14 )
-0x004b    op25_ActorDisable( actor_id=(entity)0x15 )
-0x004d    -- 0xC6()
-0x004e    op25_ActorDisable( actor_id=(entity)0x16 )
-0x0050    op25_ActorDisable( actor_id=(entity)0x17 )
-0x0052    op25_ActorDisable( actor_id=(entity)0x18 )
-0x0054    op25_ActorDisable( actor_id=(entity)0x1b )
-0x0056    op25_ActorDisable( actor_id=(entity)0x1c )
-0x0058    -- 0xC6()
-0x0059    op25_ActorDisable( actor_id=(entity)0x1d )
-0x005b    op25_ActorDisable( actor_id=(entity)0x1e )
-0x005d    op25_ActorDisable( actor_id=(entity)0x1f )
-0x005f    -- 0xC6()
-0x0060    op25_ActorDisable( actor_id=(entity)0x22 )
-0x0062    op25_ActorDisable( actor_id=(entity)0x23 )
-0x0064    op25_ActorDisable( actor_id=(entity)0x24 )
-0x0066    op25_ActorDisable( actor_id=(entity)0x21 )
-0x0068    -- 0x01_JumpTo( 0x008a )
-0x006b    -- 0xC6()
-0x006c    op25_ActorDisable( actor_id=(entity)0x1a )
-0x006e    op25_ActorDisable( actor_id=(entity)0x20 )
-0x0070    op24_ActorEnable( actor_id=(entity)0x19 )
-0x0072    op24_ActorEnable( actor_id=(entity)0x13 )
-0x0074    -- 0xC6()
-0x0075    op24_ActorEnable( actor_id=(entity)0x14 )
-0x0077    op24_ActorEnable( actor_id=(entity)0x15 )
-0x0079    op24_ActorEnable( actor_id=(entity)0x16 )
-0x007b    op24_ActorEnable( actor_id=(entity)0x17 )
-0x007d    op24_ActorEnable( actor_id=(entity)0x18 )
-0x007f    -- 0xC6()
-0x0080    op24_ActorEnable( actor_id=(entity)0x1b )
-0x0082    op24_ActorEnable( actor_id=(entity)0x1c )
-0x0084    op24_ActorEnable( actor_id=(entity)0x1d )
-0x0086    op24_ActorEnable( actor_id=(entity)0x1e )
-0x0088    op24_ActorEnable( actor_id=(entity)0x1f )
+0x0038    op02_JumpToConditional( val1=(s)mem[0x1e], val2=-347, condition="val1 < val2", address_if_false=0x6b )
+0x0040    opC6_ExpandRun() -- exp0x20
+0x0041    op24_ActorEnable( actor_id=Actor_0x1a )
+0x0043    op24_ActorEnable( actor_id=Actor_0x20 )
+0x0045    op25_ActorDisable( actor_id=Actor_0x19 )
+0x0047    op25_ActorDisable( actor_id=Actor_0x13 )
+0x0049    op25_ActorDisable( actor_id=Actor_0x14 )
+0x004b    op25_ActorDisable( actor_id=Actor_0x15 )
+0x004d    opC6_ExpandRun() -- exp0x20
+0x004e    op25_ActorDisable( actor_id=Actor_0x16 )
+0x0050    op25_ActorDisable( actor_id=Actor_0x17 )
+0x0052    op25_ActorDisable( actor_id=Actor_0x18 )
+0x0054    op25_ActorDisable( actor_id=Actor_0x1b )
+0x0056    op25_ActorDisable( actor_id=Actor_0x1c )
+0x0058    opC6_ExpandRun() -- exp0x20
+0x0059    op25_ActorDisable( actor_id=Actor_0x1d )
+0x005b    op25_ActorDisable( actor_id=Actor_0x1e )
+0x005d    op25_ActorDisable( actor_id=Actor_0x1f )
+0x005f    opC6_ExpandRun() -- exp0x20
+0x0060    op25_ActorDisable( actor_id=Actor_0x22 )
+0x0062    op25_ActorDisable( actor_id=Actor_0x23 )
+0x0064    op25_ActorDisable( actor_id=Actor_0x24 )
+0x0066    op25_ActorDisable( actor_id=Actor_0x21 )
+0x0068    op01_JumpTo( address=0x8a )
+0x006b    opC6_ExpandRun() -- exp0x20
+0x006c    op25_ActorDisable( actor_id=Actor_0x1a )
+0x006e    op25_ActorDisable( actor_id=Actor_0x20 )
+0x0070    op24_ActorEnable( actor_id=Actor_0x19 )
+0x0072    op24_ActorEnable( actor_id=Actor_0x13 )
+0x0074    opC6_ExpandRun() -- exp0x20
+0x0075    op24_ActorEnable( actor_id=Actor_0x14 )
+0x0077    op24_ActorEnable( actor_id=Actor_0x15 )
+0x0079    op24_ActorEnable( actor_id=Actor_0x16 )
+0x007b    op24_ActorEnable( actor_id=Actor_0x17 )
+0x007d    op24_ActorEnable( actor_id=Actor_0x18 )
+0x007f    opC6_ExpandRun() -- exp0x20
+0x0080    op24_ActorEnable( actor_id=Actor_0x1b )
+0x0082    op24_ActorEnable( actor_id=Actor_0x1c )
+0x0084    op24_ActorEnable( actor_id=Actor_0x1d )
+0x0086    op24_ActorEnable( actor_id=Actor_0x1e )
+0x0088    op24_ActorEnable( actor_id=Actor_0x1f )
 0x008a    op00_Return()
 
 Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
 0x008b    op00_Return()
 
-Actor_0x00:script_0x04:
+Actor_0x00:event_0x04:
 0x008c    op99()
-0x008d    op35_VariableSet( address=0x0432, value=(vf40)0x0e00, flag=0x40 )
-0x0093    op35_VariableSet( address=0x0434, value=(vf40)0x001e, flag=0x40 )
-0x0099    op05_FunctionCall( 0x06f2 )
+0x008d    mem[0x432] = 3584 -- op35
+0x0093    mem[0x434] = 30 -- op35
+0x0099    op05_CallFunction( address=0x6f2 )
 0x009c    op00_Return()
 
 Actor_0x01:on_start:
@@ -84,6 +83,8 @@ Actor_0x01:on_update:
 0x00a6    op00_Return()
 
 Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
 0x00a7    op00_Return()
 
 Actor_0x02:on_start:
@@ -96,6 +97,8 @@ Actor_0x02:on_update:
 0x00b1    op00_Return()
 
 Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
 0x00b2    op00_Return()
 
 Actor_0x03:on_start:
@@ -108,6 +111,8 @@ Actor_0x03:on_update:
 0x00bc    op00_Return()
 
 Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
 0x00bd    op00_Return()
 
 Actor_0x04:on_start:
@@ -120,6 +125,8 @@ Actor_0x04:on_update:
 0x00c7    op00_Return()
 
 Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
 0x00c8    op00_Return()
 
 Actor_0x05:on_start:
@@ -132,6 +139,8 @@ Actor_0x05:on_update:
 0x00d2    op00_Return()
 
 Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
 0x00d3    op00_Return()
 
 Actor_0x06:on_start:
@@ -144,6 +153,8 @@ Actor_0x06:on_update:
 0x00dd    op00_Return()
 
 Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
 0x00de    op00_Return()
 
 Actor_0x07:on_start:
@@ -156,6 +167,8 @@ Actor_0x07:on_update:
 0x00e8    op00_Return()
 
 Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
 0x00e9    op00_Return()
 
 Actor_0x08:on_start:
@@ -168,6 +181,8 @@ Actor_0x08:on_update:
 0x00f3    op00_Return()
 
 Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
 0x00f4    op00_Return()
 
 Actor_0x09:on_start:
@@ -180,6 +195,8 @@ Actor_0x09:on_update:
 0x00fe    op00_Return()
 
 Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
 0x00ff    op00_Return()
 
 Actor_0x0a:on_start:
@@ -192,6 +209,8 @@ Actor_0x0a:on_update:
 0x0109    op00_Return()
 
 Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
 0x010a    op00_Return()
 
 Actor_0x0b:on_start:
@@ -204,6 +223,8 @@ Actor_0x0b:on_update:
 0x0114    op00_Return()
 
 Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
 0x0115    op00_Return()
 
 Actor_0x0c:on_start:

@@ -1,12 +1,8 @@
 var = [
-    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0xffff, 0x0007, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x093800e0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x0007ffff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -14,101 +10,104 @@ unknown = [
 ]
 
 
+
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0xA0()
 0x0010    -- 0x2A()
 0x0011    -- 0x75( ???=44 )
-0x0014    op35_VariableSet( address=0x040a, value=(vf40)0x0001, flag=0x40 )
-0x001a    op35_VariableSet( address=0x040c, value=(vf40)0x00aa, flag=0x40 )
-0x0020    op35_VariableSet( address=0x040e, value=(vf40)0x00ee, flag=0x40 )
-0x0026    op35_VariableSet( address=0x0410, value=(vf40)0x0000, flag=0x40 )
-0x002c    op35_VariableSet( address=0x0412, value=(vf40)0x0002, flag=0x40 )
-0x0032    -- 0xA8_VariableRandom2( address=0x0402, value=3 )
-0x0037    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0048 )
-0x003f    op35_VariableSet( address=0x0414, value=(vf40)0x003a, flag=0x40 )
-0x0045    -- 0x01_JumpTo( 0x007b )
-0x0048    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0059 )
-0x0050    op35_VariableSet( address=0x0414, value=(vf40)0x0055, flag=0x40 )
-0x0056    -- 0x01_JumpTo( 0x007b )
-0x0059    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x006a )
-0x0061    op35_VariableSet( address=0x0414, value=(vf40)0x005b, flag=0x40 )
-0x0067    -- 0x01_JumpTo( 0x007b )
-0x006a    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x007b )
-0x0072    op35_VariableSet( address=0x0414, value=(vf40)0x0006, flag=0x40 )
-0x0078    -- 0x01_JumpTo( 0x007b )
-0x007b    op35_VariableSet( address=0x041c, value=(vf40)0x0001, flag=0x40 )
-0x0081    op35_VariableSet( address=0x041e, value=(vf40)0x00d8, flag=0x40 )
-0x0087    op35_VariableSet( address=0x0420, value=(vf40)0x0185, flag=0x40 )
-0x008d    op35_VariableSet( address=0x0422, value=(vf40)0x0000, flag=0x40 )
-0x0093    op35_VariableSet( address=0x0424, value=(vf40)0x0002, flag=0x40 )
-0x0099    -- 0xA8_VariableRandom2( address=0x0404, value=3 )
-0x009e    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00af )
-0x00a6    op35_VariableSet( address=0x0426, value=(vf40)0x0041, flag=0x40 )
-0x00ac    -- 0x01_JumpTo( 0x00e2 )
-0x00af    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c0 )
-0x00b7    op35_VariableSet( address=0x0426, value=(vf40)0x0057, flag=0x40 )
-0x00bd    -- 0x01_JumpTo( 0x00e2 )
-0x00c0    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x00d1 )
-0x00c8    op35_VariableSet( address=0x0426, value=(vf40)0x0001, flag=0x40 )
-0x00ce    -- 0x01_JumpTo( 0x00e2 )
-0x00d1    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0404 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x00e2 )
-0x00d9    op35_VariableSet( address=0x0426, value=(vf40)0x003d, flag=0x40 )
-0x00df    -- 0x01_JumpTo( 0x00e2 )
-0x00e2    op35_VariableSet( address=0x042e, value=(vf40)0x0001, flag=0x40 )
-0x00e8    op35_VariableSet( address=0x0430, value=(vf40)0x0132, flag=0x40 )
-0x00ee    op35_VariableSet( address=0x0432, value=(vf40)0x0120, flag=0x40 )
-0x00f4    op35_VariableSet( address=0x0434, value=(vf40)0x0000, flag=0x40 )
-0x00fa    op35_VariableSet( address=0x0436, value=(vf40)0x0002, flag=0x40 )
-0x0100    -- 0xA8_VariableRandom2( address=0x0406, value=3 )
-0x0105    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x0116 )
-0x010d    op35_VariableSet( address=0x0438, value=(vf40)0x0016, flag=0x40 )
-0x0113    -- 0x01_JumpTo( 0x0149 )
-0x0116    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x0127 )
-0x011e    op35_VariableSet( address=0x0438, value=(vf40)0x0042, flag=0x40 )
-0x0124    -- 0x01_JumpTo( 0x0149 )
-0x0127    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0138 )
-0x012f    op35_VariableSet( address=0x0438, value=(vf40)0x0050, flag=0x40 )
-0x0135    -- 0x01_JumpTo( 0x0149 )
-0x0138    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0406 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x0149 )
-0x0140    op35_VariableSet( address=0x0438, value=(vf40)0x0039, flag=0x40 )
-0x0146    -- 0x01_JumpTo( 0x0149 )
-0x0149    op35_VariableSet( address=0x0440, value=(vf40)0x0001, flag=0x40 )
-0x014f    op35_VariableSet( address=0x0442, value=(vf40)0x0132, flag=0x40 )
-0x0155    op35_VariableSet( address=0x0444, value=(vf40)0x00d0, flag=0x40 )
-0x015b    op35_VariableSet( address=0x0446, value=(vf40)0x0000, flag=0x40 )
-0x0161    op35_VariableSet( address=0x0448, value=(vf40)0x0002, flag=0x40 )
-0x0167    -- 0xA8_VariableRandom2( address=0x0408, value=3 )
-0x016c    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x017d )
-0x0174    op35_VariableSet( address=0x044a, value=(vf40)0x0040, flag=0x40 )
-0x017a    -- 0x01_JumpTo( 0x01b0 )
-0x017d    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x018e )
-0x0185    op35_VariableSet( address=0x044a, value=(vf40)0x0054, flag=0x40 )
-0x018b    -- 0x01_JumpTo( 0x01b0 )
-0x018e    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x019f )
-0x0196    op35_VariableSet( address=0x044a, value=(vf40)0x0122, flag=0x40 )
-0x019c    -- 0x01_JumpTo( 0x01b0 )
-0x019f    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0408 ), value2=(s16)0x0003, condition="value1 == value2", jump_if_false=0x01b0 )
-0x01a7    op35_VariableSet( address=0x044a, value=(vf40)0x0402, flag=0x40 )
-0x01ad    -- 0x01_JumpTo( 0x01b0 )
+0x0014    mem[0x40a] = 1 -- op35
+0x001a    mem[0x40c] = 170 -- op35
+0x0020    mem[0x40e] = 238 -- op35
+0x0026    mem[0x410] = 0 -- op35
+0x002c    mem[0x412] = 2 -- op35
+0x0032    mem[0x402] = opA8_Random( max=3 )
+0x0037    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x48 )
+0x003f    mem[0x414] = 58 -- op35
+0x0045    op01_JumpTo( address=0x7b )
+0x0048    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x59 )
+0x0050    mem[0x414] = 85 -- op35
+0x0056    op01_JumpTo( address=0x7b )
+0x0059    op02_JumpToConditional( val1=mem[0x402], val2=2, condition="val1 == val2", address_if_false=0x6a )
+0x0061    mem[0x414] = 91 -- op35
+0x0067    op01_JumpTo( address=0x7b )
+0x006a    op02_JumpToConditional( val1=mem[0x402], val2=3, condition="val1 == val2", address_if_false=0x7b )
+0x0072    mem[0x414] = 6 -- op35
+0x0078    op01_JumpTo( address=0x7b )
+0x007b    mem[0x41c] = 1 -- op35
+0x0081    mem[0x41e] = 216 -- op35
+0x0087    mem[0x420] = 389 -- op35
+0x008d    mem[0x422] = 0 -- op35
+0x0093    mem[0x424] = 2 -- op35
+0x0099    mem[0x404] = opA8_Random( max=3 )
+0x009e    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xaf )
+0x00a6    mem[0x426] = 65 -- op35
+0x00ac    op01_JumpTo( address=0xe2 )
+0x00af    op02_JumpToConditional( val1=mem[0x404], val2=1, condition="val1 == val2", address_if_false=0xc0 )
+0x00b7    mem[0x426] = 87 -- op35
+0x00bd    op01_JumpTo( address=0xe2 )
+0x00c0    op02_JumpToConditional( val1=mem[0x404], val2=2, condition="val1 == val2", address_if_false=0xd1 )
+0x00c8    mem[0x426] = 1 -- op35
+0x00ce    op01_JumpTo( address=0xe2 )
+0x00d1    op02_JumpToConditional( val1=mem[0x404], val2=3, condition="val1 == val2", address_if_false=0xe2 )
+0x00d9    mem[0x426] = 61 -- op35
+0x00df    op01_JumpTo( address=0xe2 )
+0x00e2    mem[0x42e] = 1 -- op35
+0x00e8    mem[0x430] = 306 -- op35
+0x00ee    mem[0x432] = 288 -- op35
+0x00f4    mem[0x434] = 0 -- op35
+0x00fa    mem[0x436] = 2 -- op35
+0x0100    mem[0x406] = opA8_Random( max=3 )
+0x0105    op02_JumpToConditional( val1=mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x116 )
+0x010d    mem[0x438] = 22 -- op35
+0x0113    op01_JumpTo( address=0x149 )
+0x0116    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x127 )
+0x011e    mem[0x438] = 66 -- op35
+0x0124    op01_JumpTo( address=0x149 )
+0x0127    op02_JumpToConditional( val1=mem[0x406], val2=2, condition="val1 == val2", address_if_false=0x138 )
+0x012f    mem[0x438] = 80 -- op35
+0x0135    op01_JumpTo( address=0x149 )
+0x0138    op02_JumpToConditional( val1=mem[0x406], val2=3, condition="val1 == val2", address_if_false=0x149 )
+0x0140    mem[0x438] = 57 -- op35
+0x0146    op01_JumpTo( address=0x149 )
+0x0149    mem[0x440] = 1 -- op35
+0x014f    mem[0x442] = 306 -- op35
+0x0155    mem[0x444] = 208 -- op35
+0x015b    mem[0x446] = 0 -- op35
+0x0161    mem[0x448] = 2 -- op35
+0x0167    mem[0x408] = opA8_Random( max=3 )
+0x016c    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x17d )
+0x0174    mem[0x44a] = 64 -- op35
+0x017a    op01_JumpTo( address=0x1b0 )
+0x017d    op02_JumpToConditional( val1=mem[0x408], val2=1, condition="val1 == val2", address_if_false=0x18e )
+0x0185    mem[0x44a] = 84 -- op35
+0x018b    op01_JumpTo( address=0x1b0 )
+0x018e    op02_JumpToConditional( val1=mem[0x408], val2=2, condition="val1 == val2", address_if_false=0x19f )
+0x0196    mem[0x44a] = 290 -- op35
+0x019c    op01_JumpTo( address=0x1b0 )
+0x019f    op02_JumpToConditional( val1=mem[0x408], val2=3, condition="val1 == val2", address_if_false=0x1b0 )
+0x01a7    mem[0x44a] = 1026 -- op35
+0x01ad    op01_JumpTo( address=0x1b0 )
 0x01b0    op00_Return()
 
 Actor_0x00:on_update:
 0x01b1    op00_Return()
 
 Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
 0x01b2    op00_Return()
 
-Actor_0x00:script_0x04:
+Actor_0x00:event_0x04:
 0x01b3    op00_Return()
 
-Actor_0x00:script_0x05:
+Actor_0x00:event_0x05:
 0x01b4    op00_Return()
 
-Actor_0x00:script_0x06:
+Actor_0x00:event_0x06:
 0x01b5    op00_Return()
 
-Actor_0x00:script_0x07:
+Actor_0x00:event_0x07:
 0x01b6    op00_Return()
 
 Actor_0x01:on_start:
@@ -121,6 +120,8 @@ Actor_0x01:on_update:
 0x01c0    op00_Return()
 
 Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
 0x01c1    op00_Return()
 
 Actor_0x02:on_start:
@@ -133,6 +134,8 @@ Actor_0x02:on_update:
 0x01cb    op00_Return()
 
 Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
 0x01cc    op00_Return()
 
 Actor_0x03:on_start:
@@ -145,6 +148,8 @@ Actor_0x03:on_update:
 0x01d6    op00_Return()
 
 Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
 0x01d7    op00_Return()
 
 Actor_0x04:on_start:
@@ -157,6 +162,8 @@ Actor_0x04:on_update:
 0x01e1    op00_Return()
 
 Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
 0x01e2    op00_Return()
 
 Actor_0x05:on_start:
@@ -169,6 +176,8 @@ Actor_0x05:on_update:
 0x01ec    op00_Return()
 
 Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
 0x01ed    op00_Return()
 
 Actor_0x06:on_start:
@@ -181,6 +190,8 @@ Actor_0x06:on_update:
 0x01f7    op00_Return()
 
 Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
 0x01f8    op00_Return()
 
 Actor_0x07:on_start:
@@ -193,6 +204,8 @@ Actor_0x07:on_update:
 0x0202    op00_Return()
 
 Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
 0x0203    op00_Return()
 
 Actor_0x08:on_start:
@@ -205,6 +218,8 @@ Actor_0x08:on_update:
 0x020d    op00_Return()
 
 Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
 0x020e    op00_Return()
 
 Actor_0x09:on_start:
@@ -217,6 +232,8 @@ Actor_0x09:on_update:
 0x0218    op00_Return()
 
 Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
 0x0219    op00_Return()
 
 Actor_0x0a:on_start:
@@ -229,6 +246,8 @@ Actor_0x0a:on_update:
 0x0223    op00_Return()
 
 Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
 0x0224    op00_Return()
 
 Actor_0x0b:on_start:
@@ -241,13 +260,15 @@ Actor_0x0b:on_update:
 0x022e    op00_Return()
 
 Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
 0x022f    op00_Return()
 
 Actor_0x0c:on_start:
 0x0230    -- 0x0B_InitNPC( 0 )
 0x0233    -- 0x19_ActorSetPosition( x=(vf80)0x00e0, z=(vf40)0x0146, flag=(flag)0xc0 )
 0x0239    opFE0D_MessageSetFace( char_id=23 )
-0x023d    -- 0x5F( ???=0x01 )
+0x023d    -- 0x5F( ???=0x1 )
 0x023f    op00_Return()
 
 Actor_0x0c:on_update:
@@ -255,10 +276,10 @@ Actor_0x0c:on_update:
 
 Actor_0x0c:on_talk:
 0x0241    -- 0xFE54()
-0x0243    opD2_MessageShowDynamic( text_id=0x0000, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0243    opD2_MessageShowDynamic( text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
 0x0247    op9C_MessageSync()
-0x0248    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x0248    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x024c    opA9_MessageSetSelectionSync( start_row=02, end_row=03 )
 0x024e    op9C_MessageSync()
-0x024f    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0014 ), value2=(s16)0x0002, condition="value1 == value2", jump_if_false=0x0260 )
+0x024f    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x260 )
 0x0257    -- MISSING OPCODE 0xFE59

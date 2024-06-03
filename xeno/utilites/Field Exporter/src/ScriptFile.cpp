@@ -31,11 +31,12 @@ ScriptFile::GetScripts( const std::string& path )
     Logger* exp = new Logger( path );
 
     exp->Log( "var = [\n" );
-    for( u32 i = 0; i < 0x80; i += 2 )
+    for( u32 i = 0; i < 0x40; i += 4 )
     {
-        if( ( i & 0x0f ) == 0 ) exp->Log( "   " );
-        exp->Log( " 0x" + HexToString( GetU16LE( i ), 4, '0' ) + "," );
-        if( ( i & 0x0f ) == 0x0e ) exp->Log( "\n" );
+        if( ( i & 0xf ) == 0 ) exp->Log( "   " );
+        m_Signs.push_back( GetU32LE( i ) );
+        exp->Log( " 0x" + HexToString( GetU32LE( i ), 8, '0' ) + "," );
+        if( ( i & 0xf ) == 0x0c ) exp->Log( "\n" );
     }
     exp->Log( "]\n\n" );
 
@@ -63,10 +64,10 @@ ScriptFile::GetScripts( const std::string& path )
                     if( k == 0 ) exp->Log("   ");
                     exp->Log( " 0x" + HexToString( GetU16LE( offset_to_script + k ), 4, '0' ) + "," );
                 }
-                exp->Log( "\n]\n\n" );
+                exp->Log( "\n]\n\n\n" );
             }
 
-            if( script == 0 ) break;
+            if( ( j != 0 ) && ( script == 0 ) ) break;
 
             std::string str;
 
@@ -92,7 +93,6 @@ ScriptFile::GetScripts( const std::string& path )
             if( marks[ i ].pointer == pointer )
             {
                 exp->Log( "\n" + marks[ i ].str + "\n" );
-                break;
             }
         }
 
@@ -337,105 +337,107 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0x35:
             {
-                exp->Log( "op35_VariableSet( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op35");
                 pointer += 6;
             }
             break;
 
             case 0x36:
             {
-                exp->Log( "op36_VariableSetTrue( address=" + GetU16Variable( pointer + 1 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = true -- op36");
                 pointer += 3;
             }
             break;
 
             case 0x37:
             {
-                exp->Log( "op37_VariableSetFalse( address=" + GetU16Variable( pointer + 1 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = false -- op37");
                 pointer += 3;
             }
             break;
 
             case 0x38:
             {
-                exp->Log( "op38_VariableAdd( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] += " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op38");
                 pointer += 6;
             }
             break;
 
             case 0x39:
             {
-                exp->Log( "op39_VariableSubtract( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] -= " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op39");
                 pointer += 6;
             }
             break;
 
             case 0x3a:
             {
-                exp->Log( "op3A_VariableBitSet( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] |= 1 << " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op3a");
+                //exp->Log( "op3A_VariableBitSet( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
                 pointer += 6;
             }
             break;
 
             case 0x3b:
             {
-                exp->Log( "op3B_VariableBitUnset( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] &= ~(1 << " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + ") -- op3a");
+                //exp->Log( "op3B_VariableBitUnset( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
                 pointer += 6;
             }
             break;
 
             case 0x3c:
             {
-                exp->Log( "op3C_VariableInc( address=" + GetU16Variable( pointer + 1 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] += 1 -- op3c");
                 pointer += 3;
             }
             break;
 
             case 0x3d:
             {
-                exp->Log( "op3D_VariableDec( address=" + GetU16Variable( pointer + 1 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] -= 1 -- op3d");
                 pointer += 3;
             }
             break;
 
             case 0x3e:
             {
-                exp->Log( "op3E_VariableAnd( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] &= " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op3e");
                 pointer += 6;
             }
             break;
 
             case 0x3f:
             {
-                exp->Log( "op3F_VariableOr( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] |= " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op3f");
                 pointer += 6;
             }
             break;
 
             case 0x40:
             {
-                exp->Log( "op40_VariableXor( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetVF40Variable( pointer + 3 ) + ", flag=" + GetU8Variable( pointer + 5 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] ^= " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op40");
                 pointer += 6;
             }
             break;
 
             case 0x41:
             {
-                exp->Log( "op41_VariableShiftLeft( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetV80Variable( pointer + 3 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] <<= " + GetV80Variable( pointer + 3 ) + " -- op41" );
                 pointer += 5;
             }
             break;
 
             case 0x42:
             {
-                exp->Log( "op42_VariableShiftRight( address=" + GetU16Variable( pointer + 1 ) + ", bit_num=" + GetV80Variable( pointer + 3 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] >>= " + GetV80Variable( pointer + 3 ) + " -- op42" );
                 pointer += 5;
             }
             break;
 
             case 0x43:
             {
-                exp->Log( "op43_VariableSetRandom( address=" + GetU16Variable( pointer + 1 ) + " )");
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = op43_Random()");
                 pointer += 3;
             }
             break;
@@ -540,30 +542,37 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x61:
+            {
+                exp->Log( "-- 0x61( ???=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", ???=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", ???=" + GetVFVariable( pointer + 5, GetU8( pointer + 7 ) & 0x20 ) + " ) -- exp0x1");
+                pointer += 8;
+            }
+            break;
+
             case 0x62:
             {
-                exp->Log( "-- 0x62( actor_id=" + GetEVariable( pointer + 1 ) + " )" );
+                exp->Log( "-- 0x62( actor_id=" + GetEVariable( pointer + 1 ) + " ) -- exp0x1" );
                 pointer += 2;
             }
             break;
 
             case 0x63:
             {
-                exp->Log( "-- 0x63( ???=" + GetVF80Variable( pointer + 1 ) + ", ???=" + GetVF40Variable( pointer + 3 ) + ", ???=" + GetVF20Variable( pointer + 5 ) + ", flag=" + GetU8Variable( pointer + 7 ) + " )" );
+                exp->Log( "-- 0x63( ???=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", ???=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", ???=" + GetVFVariable( pointer + 5, GetU8( pointer + 7 ) & 0x20 ) + " ) -- exp0x1");
                 pointer += 8;
             }
             break;
 
             case 0x64:
             {
-                exp->Log( "-- 0x64()" );
+                exp->Log( "-- 0x64() -- exp0x1" );
                 pointer += 1;
             }
             break;
 
             case 0x65:
             {
-                exp->Log( "-- 0x65( ???=" + GetVF80Variable( pointer + 1 ) + ", ???=" + GetVF40Variable( pointer + 3 ) + ", ???=" + GetVF20Variable( pointer + 5 ) + ", flag=" + GetU8Variable( pointer + 7 ) + " )" );
+                exp->Log( "-- 0x65( ???=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", ???=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", ???=" + GetVFVariable( pointer + 5, GetU8( pointer + 7 ) & 0x20 ) + " ) -- exp0x1");
                 pointer += 8;
             }
             break;
@@ -733,7 +742,7 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0xa8:
             {
-                exp->Log( "-- 0xA8_VariableRandom2( address=" + GetU16Variable( pointer + 1 ) + ", value=" + GetV80Variable( pointer + 3 ) + " )" );
+                exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = opA8_Random( max=" + GetV80Variable( pointer + 3 ) + " )" );
                 pointer += 5;
             }
             break;
@@ -826,7 +835,7 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0xc6:
             {
-                exp->Log( "opC6_ExpandRun()" );
+                exp->Log( "opC6_ExpandRun() -- exp0x20" );
                 pointer += 1;
             }
             break;
@@ -1054,6 +1063,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE1A() sync load for 0xFEC6()" );
                     pointer += 1;
                 }
+                else if( eo_opcode == 0x26 )
+                {
+                    exp->Log( "opFE26_DistortionSetup( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + ", ???=" + GetV80Variable( pointer + 5 ) + ", ???=" + GetV80Variable( pointer + 7 ) + ", ???=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 11 ) + ", steps=" + GetV80Variable( pointer + 13 ) + " )" );
+                    pointer += 15;
+                }
                 else if( eo_opcode == 0x35 )
                 {
                     exp->Log( "-- 0xFE35()" );
@@ -1069,7 +1083,6 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE3C( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
                     pointer += 5;
                 }
-
                 else if( eo_opcode == 0x42 )
                 {
                     exp->Log( "opFE42( ???=" + GetV80Variable( pointer + 1 ) + " )" );
@@ -1154,6 +1167,12 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "-- 0xFE69( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
                     pointer += 8;
+                }
+                else if( eo_opcode == 0x77 )
+                {
+                    u8 flag = GetU8( pointer + 13 );
+                    exp->Log( "opFE77_LoadTim_04_00_07( file_id=" + GetVFVariable( pointer + 5, flag & 0x80, true ) + ", clut_y=" + GetVFVariable( pointer + 11, flag & 0x10 ) + ", x=" + GetVFVariable( pointer + 7, flag & 0x40 ) + ", y=" + GetVFVariable( pointer + 9, flag & 0x20 ) + " )" );
+                    pointer += 17;
                 }
                 else if( eo_opcode == 0x8f )
                 {
@@ -1359,15 +1378,16 @@ ScriptFile::GetFVariable( const u32 pointer )
 std::string
 ScriptFile::GetU8Variable( const u32 pointer )
 {
-    return "0x" + HexToString( GetU8( pointer ), 2, '0' );
+    return "0x" + HexToString( GetU8( pointer ), 1, '0' );
 }
 
 
 
 std::string
-ScriptFile::GetS16Variable( const u32 pointer )
+ScriptFile::GetS16Variable( const u32 pointer, bool hex )
 {
-    return "(s16)0x" + HexToString( GetU16LE( pointer ), 4, '0' );
+    if( hex == true ) return "0x" + HexToString( GetU16LE( pointer ), 1, '0' );
+    else return IntToString( GetS16LE( pointer ) );
 }
 
 
@@ -1375,7 +1395,7 @@ ScriptFile::GetS16Variable( const u32 pointer )
 std::string
 ScriptFile::GetU16Variable( const u32 pointer )
 {
-    return "0x" + HexToString( GetU16LE( pointer ), 4, '0' );
+    return "0x" + HexToString( GetU16LE( pointer ), 1, '0' );
 }
 
 
@@ -1431,24 +1451,49 @@ ScriptFile::GetVF80Variable( const u32 pointer )
 std::string
 ScriptFile::GetVVariable( const u32 pointer )
 {
-    return "mem[0x" + HexToString( GetU16LE( pointer ), 4, '0' ) + "]";
+    u16 slot = GetU16LE( pointer ) / 2;
+
+    if( m_Signs[ slot / 20 ] & ( 1 << ( slot & 0x1f ) ) ) // if bit in sign block is set
+    {
+        return "mem[0x" + HexToString( slot * 2, 1, '0' ) + "]";
+    }
+    else
+    {
+        return "(s)mem[0x" + HexToString( slot * 2, 1, '0' ) + "]";
+    }
 }
 
 
 
 std::string
-ScriptFile::GetV80Variable( const u32 pointer )
+ScriptFile::GetV80Variable( const u32 pointer, bool hex )
 {
     u16 data = GetU16LE( pointer );
     if( data & 0x8000 )
     {
-        return IntToString( GetU16LE( pointer ) & 0x7fff );
+        if( hex == true ) return "0x" + HexToString( data & 0x7fff, 1, '0' );
+        else return IntToString( data & 0x7fff );
     }
     else
     {
         return GetVVariable( pointer );
     }
 }
+
+std::string
+ScriptFile::GetVFVariable( const u32 pointer, bool flag, bool hex )
+{
+    if( flag )
+    {
+        return GetS16Variable( pointer, hex );
+    }
+    else
+    {
+        return GetVVariable( pointer );
+    }
+}
+
+
 
 std::string
 ScriptFile::GetMessageFlags( const u32 pointer )

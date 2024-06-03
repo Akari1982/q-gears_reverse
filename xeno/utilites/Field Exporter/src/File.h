@@ -21,6 +21,7 @@ public:
     void GetFileBuffer( u8* buffer, u32 start, u32 length ) const;
     u8 GetU8( u32 offset ) const;
     u16 GetU16LE( u32 offset ) const;
+    s16 GetS16LE( u32 offset ) const;
     u32 GetU32LE( u32 offset ) const;
 
 protected:

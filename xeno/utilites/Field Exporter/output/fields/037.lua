@@ -1,17 +1,14 @@
 var = [
-    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x007f,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x093800e0, 0x00000000, 0x00000000, 0x007f0000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
     0x91ff, 0xbbff, 0x0000, 0x01ff,
 ]
+
 
 
 Actor_0x00:on_start:
@@ -25,6 +22,8 @@ Actor_0x00:on_update:
 0x0015    op00_Return()
 
 Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
 0x0016    op00_Return()
 
 Actor_0x01:on_start:
@@ -37,6 +36,8 @@ Actor_0x01:on_update:
 0x0020    op00_Return()
 
 Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
 0x0021    op00_Return()
 
 Actor_0x02:on_start:
@@ -49,6 +50,8 @@ Actor_0x02:on_update:
 0x002b    op00_Return()
 
 Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
 0x002c    op00_Return()
 
 Actor_0x03:on_start:
@@ -61,6 +64,8 @@ Actor_0x03:on_update:
 0x0036    op00_Return()
 
 Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
 0x0037    op00_Return()
 
 Actor_0x04:on_start:
@@ -73,6 +78,8 @@ Actor_0x04:on_update:
 0x0041    op00_Return()
 
 Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
 0x0042    op00_Return()
 
 Actor_0x05:on_start:
@@ -85,6 +92,8 @@ Actor_0x05:on_update:
 0x004c    op00_Return()
 
 Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
 0x004d    op00_Return()
 
 Actor_0x06:on_start:
@@ -97,6 +106,8 @@ Actor_0x06:on_update:
 0x0057    op00_Return()
 
 Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
 0x0058    op00_Return()
 
 Actor_0x07:on_start:
@@ -109,6 +120,8 @@ Actor_0x07:on_update:
 0x0062    op00_Return()
 
 Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
 0x0063    op00_Return()
 
 Actor_0x08:on_start:
@@ -121,6 +134,8 @@ Actor_0x08:on_update:
 0x006d    op00_Return()
 
 Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
 0x006e    op00_Return()
 
 Actor_0x09:on_start:
@@ -133,6 +148,8 @@ Actor_0x09:on_update:
 0x0078    op00_Return()
 
 Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
 0x0079    op00_Return()
 
 Actor_0x0a:on_start:
@@ -145,6 +162,8 @@ Actor_0x0a:on_update:
 0x0083    op00_Return()
 
 Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
 0x0084    op00_Return()
 
 Actor_0x0b:on_start:
@@ -157,6 +176,8 @@ Actor_0x0b:on_update:
 0x008e    op00_Return()
 
 Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
 0x008f    op00_Return()
 
 Actor_0x0c:on_start:
@@ -170,19 +191,19 @@ Actor_0x0c:on_update:
 0x009e    op00_Return()
 
 Actor_0x0c:on_talk:
-0x009f    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0000, condition="value1 == value2", jump_if_false=0x00b2 )
-0x00a7    op3C_VariableInc( address=0x0400 )
-0x00aa    opD2_MessageShowDynamic( text_id=0x0000, flags=0 )
+0x009f    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xb2 )
+0x00a7    mem[0x400] += 1 -- op3c
+0x00aa    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00ae    op9C_MessageSync()
-0x00af    -- 0x01_JumpTo( 0x00d5 )
-0x00b2    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0400 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x00c5 )
-0x00ba    op3C_VariableInc( address=0x0400 )
-0x00bd    opD2_MessageShowDynamic( text_id=0x0001, flags=0 )
+0x00af    op01_JumpTo( address=0xd5 )
+0x00b2    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xc5 )
+0x00ba    mem[0x400] += 1 -- op3c
+0x00bd    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x00c1    op9C_MessageSync()
-0x00c2    -- 0x01_JumpTo( 0x00d5 )
-0x00c5    op6F_ActorRotateToActor( actor_id=(entity)party_1 )
-0x00c7    op35_VariableSet( address=0x0400, value=(vf40)0x0000, flag=0x40 )
-0x00cd    opD2_MessageShowDynamic( text_id=0x0002, flags=0 )
+0x00c2    op01_JumpTo( address=0xd5 )
+0x00c5    op6F_ActorRotateToActor( actor_id=party1 )
+0x00c7    mem[0x400] = 0 -- op35
+0x00cd    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x00d1    op9C_MessageSync()
 0x00d2    op69_ActorSetRotation( rot=2 )
 

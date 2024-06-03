@@ -1,12 +1,8 @@
 var = [
-    0x00e0, 0x0938, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x007f, 0xc000,
-    0xffff, 0x0007, 0x01ff, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x093800e0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0xc000007f,
+    0x0007ffff, 0x000001ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -14,60 +10,61 @@ unknown = [
 ]
 
 
+
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    op35_VariableSet( address=0x041a, value=(vf40)0x0105, flag=0x40 )
-0x0016    op35_VariableSet( address=0x041c, value=(vf40)0xff2c, flag=0x40 )
-0x001c    op35_VariableSet( address=0x041e, value=(vf40)0x0000, flag=0x40 )
-0x0022    op35_VariableSet( address=0x0418, value=(vf40)0x0006, flag=0x40 )
-0x0028    op35_VariableSet( address=0x0054, value=(vf40)0x0001, flag=0x40 )
-0x002e    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0020, condition="value1 & value2", jump_if_false=0x0047 )
+0x0010    mem[0x41a] = 261 -- op35
+0x0016    mem[0x41c] = -212 -- op35
+0x001c    mem[0x41e] = 0 -- op35
+0x0022    mem[0x418] = 6 -- op35
+0x0028    mem[0x54] = 1 -- op35
+0x002e    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x47 )
 0x0036    -- 0x75( ???=35 )
 0x0039    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
-0x0044    -- 0x01_JumpTo( 0x0063 )
-0x0047    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0244 ), value2=(s16)0x0002, condition="value1 & value2", jump_if_false=0x0060 )
+0x0044    op01_JumpTo( address=0x63 )
+0x0047    op02_JumpToConditional( val1=(s)mem[0x244], val2=2, condition="val1 & val2", address_if_false=0x60 )
 0x004f    -- 0x75( ???=35 )
 0x0052    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
-0x005d    -- 0x01_JumpTo( 0x0063 )
+0x005d    op01_JumpTo( address=0x63 )
 0x0060    -- 0x75( ???=29 )
 0x0063    -- 0x2A()
 0x0064    op00_Return()
 
 Actor_0x00:on_update:
-0x0065    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0240 ), value2=(s16)0x0080, condition="value1 & value2", jump_if_false=0x0070 )
-0x006d    -- 0x01_JumpTo( 0x0100 )
-0x0070    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0402 ), value2=(s16)0x0001, condition="value1 == value2", jump_if_false=0x007b )
-0x0078    -- 0x01_JumpTo( 0x0100 )
-0x007b    -- 0x02_ConditionalJumpTo( value1=GetVar( 0x0246 ), value2=(s16)0x0200, condition="value1 & value2", jump_if_false=0x00a3 )
-0x0083    -- 0xB4_FadeIn()
+0x0065    op02_JumpToConditional( val1=(s)mem[0x240], val2=128, condition="val1 & val2", address_if_false=0x70 )
+0x006d    op01_JumpTo( address=0x100 )
+0x0070    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x7b )
+0x0078    op01_JumpTo( address=0x100 )
+0x007b    op02_JumpToConditional( val1=(s)mem[0x246], val2=512, condition="val1 & val2", address_if_false=0xa3 )
+0x0083    opB4_FadeOut()
 0x0086    -- 0xFE54()
-0x0088    op09_ActorCallScriptEW( actor_id=0x09, script=06, priority=01 )
-0x008b    op09_ActorCallScriptEW( actor_id=0x0a, script=07, priority=01 )
-0x008e    op09_ActorCallScriptEW( actor_id=0x0b, script=08, priority=01 )
+0x0088    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x06, priority=0x01 )
+0x008b    op09_CallActorEventEndSync( actor_id=Actor_0x0a, event=event_0x07, priority=0x01 )
+0x008e    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x08, priority=0x01 )
 0x0091    -- 0x5A()
-0x0092    -- 0xB3()
+0x0092    opB3_FadeIn()
 0x0095    op26_Wait( time=15 )
-0x0098    op35_VariableSet( address=0x0402, value=(vf40)0x0001, flag=0x40 )
+0x0098    mem[0x402] = 1 -- op35
 0x009e    -- 0xFE54()
-0x00a0    -- 0x01_JumpTo( 0x0100 )
-0x00a3    -- 0xB4_FadeIn()
+0x00a0    op01_JumpTo( address=0x100 )
+0x00a3    opB4_FadeOut()
 0x00a6    -- 0xFE54()
-0x00a8    -- 0x27( actor_id=(entity)0x19 )
-0x00aa    op09_ActorCallScriptEW( actor_id=0x01, script=06, priority=01 )
-0x00ad    op09_ActorCallScriptEW( actor_id=0x0f, script=04, priority=01 )
+0x00a8    -- 0x27( actor_id=Actor_0x19 )
+0x00aa    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
+0x00ad    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x01 )
 0x00b0    op26_Wait( time=15 )
-0x00b3    -- 0xB3()
-0x00b6    op09_ActorCallScriptEW( actor_id=0x01, script=07, priority=01 )
+0x00b3    opB3_FadeIn()
+0x00b6    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x07, priority=0x01 )
 0x00b9    op26_Wait( time=5 )
-0x00bc    op09_ActorCallScriptEW( actor_id=0x0a, script=04, priority=01 )
-0x00bf    op35_VariableSet( address=0x0428, value=(vf40)0x000f, flag=0x40 )
-0x00c5    op09_ActorCallScriptEW( actor_id=0x01, script=12, priority=01 )
-0x00c8    op35_VariableSet( address=0x0428, value=(vf40)0x000f, flag=0x40 )
-0x00ce    op09_ActorCallScriptEW( actor_id=0x0f, script=0b, priority=01 )
-0x00d1    op09_ActorCallScriptEW( actor_id=0x09, script=04, priority=01 )
+0x00bc    op09_CallActorEventEndSync( actor_id=Actor_0x0a, event=event_0x04, priority=0x01 )
+0x00bf    mem[0x428] = 15 -- op35
+0x00c5    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x12, priority=0x01 )
+0x00c8    mem[0x428] = 15 -- op35
+0x00ce    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x0b, priority=0x01 )
+0x00d1    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x04, priority=0x01 )
 0x00d4    opFE9B_SlideShow1( steps=30 )
-0x00d8    op09_ActorCallScriptEW( actor_id=0x0d, script=06, priority=01 )
+0x00d8    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x06, priority=0x01 )
 0x00db    op26_Wait( time=30 )
-0x00de    op09_ActorCallScriptEW( actor_id=0x1a, script=15, priority=01 )
-0x00e1    op37_VariableSetFalse( address=0x0400 )
+0x00de    op09_CallActorEventEndSync( actor_id=Actor_0x1a, event=event_0x15, priority=0x01 )
+0x00e1    mem[0x400] = false -- op37
 0x00e4    -- MISSING OPCODE 0xFE24

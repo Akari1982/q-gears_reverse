@@ -91,7 +91,6 @@ V0 = w[800ADB78 + V0 * 4];
 73 80097BF0
 74 80097B90
 76 80097D0C
-77 800898BC
 78 80089AC4
 79 80089ABC
 7a 80089AB4
@@ -161,7 +160,6 @@ d9 80087050
 da 80092D64
 db 800967D4
 dc 80086998
-dd 80086784
 de 8008671C
 
 80086018	jalr   v0 ra
@@ -502,122 +500,87 @@ V0 = V0 + 0005;
 
 
 ////////////////////////////////
-// func86784
-A1 = w[800af54c];
-V0 = w[800ad0d8];
-80086794	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-A0 = hu[A1 + 00cc];
-800867B0	nop
-V0 = A0 + V0;
-V1 = bu[V0 + 0001];
-S3 = 0001;
-800867C0	beq    v1, s3, L868b0 [$800868b0]
-V0 = V1 < 0002;
-800867C8	beq    v0, zero, L867e0 [$800867e0]
-800867CC	nop
-800867D0	beq    v1, zero, L867fc [$800867fc]
-800867D4	nop
-800867D8	j      L86978 [$80086978]
-800867DC	nop
+// field_event_opFEDD()
 
-L867e0:	; 800867E0
-V0 = 0002;
-800867E4	beq    v1, v0, L86928 [$80086928]
-V0 = 0003;
-800867EC	beq    v1, v0, L8696c [$8008696c]
-V0 = A0 + 0002;
-800867F4	j      L86978 [$80086978]
-800867F8	nop
+struct_138_cur = w[800af54c];
 
-L867fc:	; 800867FC
-V0 = w[800af150];
-80086804	nop
-V0 = V0 + 0020;
-[800af150] = w(V0);
-80086814	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0002;
-A0 = 0004;
-80086820	jal    field_event_help_read_v80 [$800ac2c4]
-S1 = V0;
-S2 = V0;
-S0 = S2 << 09;
-A0 = S0;
-80086834	jal    $system_memory_allocate
-A1 = 0;
-A0 = S0;
-[800c2f1c] = w(V0);
-80086848	jal    $system_memory_allocate
-A1 = 0;
-A1 = w[800c2f1c];
-A0 = 800af12c;
-[800aed50] = w(V0);
-V0 = 0100;
-[A0 + 0000] = h(0);
-[800af12e] = h(S1);
-[800af130] = h(V0);
-[800af132] = h(S2);
-80086888	jal    $system_store_image
-8008688C	nop
-V1 = w[800af54c];
-80086898	nop
-V0 = hu[V1 + 00cc];
-[800af594] = w(S3);
-800868A8	j      L86920 [$80086920]
-V0 = V0 + 0006;
+V0 = w[800ad0d8] + hu[struct_138_cur + cc];
+V1 = bu[V0 + 1];
 
-L868b0:	; 800868B0
-V0 = w[800af150];
-800868B8	nop
-V0 = V0 + 0020;
-[800af150] = w(V0);
-800868C8	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0002;
-A0 = 0004;
-800868D4	jal    field_event_help_read_v80 [$800ac2c4]
-S0 = V0;
-A0 = 0100;
-A1 = V0;
-S0 = S0 << 09;
-A2 = w[800aed50];
-A3 = w[800c2f1c];
-A2 = A2 + S0;
-800868FC	jal    $func26d54
-A3 = A3 + S0;
-V1 = w[800af54c];
-8008690C	nop
-V0 = hu[V1 + 00cc];
-[800ad08c] = w(S3);
-V0 = V0 + 0006;
+if( V1 == 0 )
+{
+    [800af150] = w(w[800af150] + 20);
 
-L86920:	; 80086920
-80086920	j      L86978 [$80086978]
-[V1 + 00cc] = h(V0);
+    A0 = 2;
+    field_event_help_read_v80();
+    S1 = V0;
 
-L86928:	; 80086928
-A0 = w[800c2f1c];
-80086930	jal    $system_memory_free
-80086934	nop
-A0 = w[800aed50];
-80086940	jal    $system_memory_free
-80086944	nop
-V1 = w[800af54c];
-80086950	nop
-V0 = hu[V1 + 00cc];
-[800af594] = w(S3);
-V0 = V0 + 0002;
-80086964	j      L86978 [$80086978]
-[V1 + 00cc] = h(V0);
+    A0 = 4;
+    field_event_help_read_v80();
+    S2 = V0;
 
-L8696c:	; 8008696C
-[A1 + 00cc] = h(V0);
-[800af594] = w(S3);
+    S0 = S2 << 09;
 
-L86978:	; 80086978
+    A0 = S0;
+    A1 = 0;
+    system_memory_allocate();
+    [800c2f1c] = w(V0);
+
+    A0 = S0;
+    A1 = 0;
+    system_memory_allocate();
+    [800aed50] = w(V0);
+
+    [800af12c + 0] = h(0);
+    [800af12c + 2] = h(S1);
+    [800af12c + 4] = h(100);
+    [800af12c + 6] = h(S2);
+
+    A0 = 800af12c;
+    A1 = w[800c2f1c];
+    system_store_image();
+
+    [800af594] = w(1);
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 6);
+}
+else if( V1 == 1 )
+{
+    [800af150] = w(w[800af150] + 20);
+
+    A0 = 2;
+    field_event_help_read_v80();
+    S0 = V0;
+
+    A0 = 4;
+    field_event_help_read_v80();
+
+    S0 = S0 << 09;
+
+    A0 = 100;
+    A1 = V0;
+    A2 = w[800aed50] + S0;
+    A3 = w[800c2f1c] + S0;
+    func26d54();
+
+    [800ad08c] = w(1);
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 6);
+}
+else if( V1 == 2 )
+{
+    A0 = w[800c2f1c];
+    system_memory_free();
+
+    A0 = w[800aed50];
+    system_memory_free();
+
+    [800af594] = w(1);
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 2);
+}
+else if( V1 == 3 )
+{
+    [800af594] = w(1);
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 2);
+}
 ////////////////////////////////
 
 
@@ -2562,139 +2525,108 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func898bc
-800898BC	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
-800898CC	jal    func89b2c [$80089b2c]
-[SP + 0020] = w(S0);
-800898D4	addiu  v1, zero, $ffff (=-$1)
-800898D8	bne    v0, v1, L89904 [$80089904]
-A0 = 0001;
-V0 = w[800af54c];
-800898E8	nop
-V1 = hu[V0 + 00cc];
-[800af594] = w(A0);
-800898F8	addiu  v1, v1, $ffff (=-$1)
-800898FC	j      L89a98 [$80089a98]
-[V0 + 00cc] = h(V1);
+// field_event_opFE77()
 
-L89904:	; 80089904
-V0 = w[800af54c];
-8008990C	nop
-V1 = hu[V0 + 00cc];
-V0 = w[800ad0d8];
-8008991C	nop
-V1 = V1 + V0;
-A0 = bu[V1 + 0001];
-80089928	nop
-8008992C	bne    a0, zero, L8998c [$8008998c]
-V0 = 0001;
-A1 = bu[V1 + 000d];
-80089938	jal    field_event_help_read_u16_by_flag_80 [$8009c508]
-A0 = 0005;
-A0 = 0004;
-A1 = 0;
-80089948	jal    $system_cdrom2_set_dir
-S0 = V0;
-S0 = S0 + 07fb;
-80089954	jal    $system_get_aligned_filesize_by_dir_file_id
-A0 = S0;
-A0 = V0;
-A1 = 0;
-system_memory_allocate();
+struct_138_cur = w[800af54c];
 
-A0 = S0;
-A1 = V0;
-A2 = 0;
-[800b1448] = w(A1);
-A3 = 80;
-system_cdrom2_load_file_by_dir_file_id();
+func89b2c(); // cdrom data sync
 
-80089984	j      L89a70 [$80089a70]
-80089988	nop
+if( V0 == -1 )
+{
+    [800af594] = w(1);
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] - 1);
+}
+else // load finished
+{
+    V1 = hu[struct_138_cur + cc];
+    V0 = w[800ad0d8];
+    V1 = V1 + V0;
+    A0 = bu[V1 + 1];
 
-L8998c:	; 8008998C
-8008998C	bne    a0, v0, L89a60 [$80089a60]
-80089990	nop
-A1 = bu[V1 + 000a];
-80089998	jal    field_event_help_read_u16_by_flag_10 [$8009c5d4]
-A0 = 0008;
-V1 = 00ff;
-800899A4	bne    v0, v1, L899b0 [$800899b0]
-S2 = V0 + 00e8;
-800899AC	addiu  s2, zero, $ffff (=-$1)
+    if( A0 == 0 )
+    {
+        A0 = 5;
+        A1 = bu[V1 + d];
+        field_event_help_read_u16_by_flag_80();
+        S0 = V0;
 
-L899b0:	; 800899B0
-V0 = w[800af54c];
-V1 = w[800ad0d8];
-V0 = hu[V0 + 00cc];
-800899C4	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 000a];
-800899D0	jal    field_event_help_read_u16_by_flag_40 [$8009c54c]
-A0 = 0004;
-V1 = w[800af54c];
-A1 = w[800ad0d8];
-V1 = hu[V1 + 00cc];
-A0 = 0006;
-V1 = V1 + A1;
-A1 = bu[V1 + 000a];
-800899F8	jal    field_event_help_read_u16_by_flag_20 [$8009c590]
-S1 = V0;
-S0 = V0;
-V0 = S0 < 0100;
-80089A08	bne    v0, zero, L89a28 [$80089a28]
-A1 = S1;
-V0 = S1 < 02c0;
-80089A14	bne    v0, zero, L89a2c [$80089a2c]
-A2 = S0;
-80089A1C	jal    field_particle_store_texture [$800a8634]
-80089A20	nop
-A1 = S1;
+        A0 = 4;
+        A1 = 0;
+        system_cdrom2_set_dir();
 
-L89a28:	; 80089A28
-A2 = S0;
+        A0 = 7fb + S0;
+        system_get_aligned_filesize_by_dir_file_id();
 
-L89a2c:	; 80089A2C
-A0 = w[800b1448];
-A3 = 0;
-[SP + 0010] = w(S2);
-[SP + 0014] = w(0);
-80089A40	jal    field_load_tim_into_vram [$8006f9d0]
-[SP + 0018] = w(0);
-V1 = w[800af54c];
-80089A50	nop
-V0 = hu[V1 + 00cc];
-80089A58	j      L89a88 [$80089a88]
-V0 = V0 + 000b;
+        A0 = V0;
+        A1 = 0;
+        system_memory_allocate();
+        [800b1448] = w(V0);
 
-L89a60:	; 80089A60
-A0 = w[800b1448];
-80089A68	jal    $system_memory_free
-80089A6C	nop
+        A0 = 7fb + S0;
+        A1 = V0;
+        A2 = 0;
+        A3 = 80;
+        system_cdrom2_load_file_by_dir_file_id();
 
-L89a70:	; 80089A70
-V1 = w[800af54c];
-80089A78	nop
-V0 = hu[V1 + 00cc];
-80089A80	nop
-V0 = V0 + 0002;
+        [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 2);
+        [800af594] = w(1);
+    }
+    else if( A0 == 1 )
+    {
+        A0 = 8;
+        A1 = bu[V1 + a];
+        field_event_help_read_u16_by_flag_10();
+        clut_y = e8 + V0;
 
-L89a88:	; 80089A88
-[V1 + 00cc] = h(V0);
-V0 = 0001;
-[800af594] = w(V0);
+        if( V0 == ff )
+        {
+            clut_y = -1;
+        }
 
-L89a98:	; 80089A98
-RA = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0030;
-80089AAC	jr     ra 
-80089AB0	nop
+        V1 = w[800ad0d8];
+        V0 = hu[struct_138_cur + cc];
+        V0 = V0 + V1;
+
+        A0 = 4;
+        A1 = bu[V0 + a];
+        field_event_help_read_u16_by_flag_40();
+        x = V0;
+
+        A1 = w[800ad0d8];
+        V1 = hu[struct_138_cur + cc];
+        V1 = V1 + A1;
+
+        A0 = 6;
+        A1 = bu[V1 + a];
+        field_event_help_read_u16_by_flag_20();
+        y = V0;
+
+        if( ( y >= 100 ) && ( x >= 2c0 ) )
+        {
+            field_particle_store_texture();
+        }
+
+        A0 = w[800b1448];
+        A1 = x;
+        A2 = y;
+        A3 = 0;
+        A4 = clut_y;
+        A5 = 0;
+        A6 = 0;
+        field_load_tim_into_vram();
+
+        [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + b);
+        [800af594] = w(1);
+    }
+    else
+    {
+        A0 = w[800b1448];
+        system_memory_free();
+
+        [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 2);
+        [800af594] = w(1);
+    }
+}
 ////////////////////////////////
 
 
@@ -2702,64 +2634,48 @@ SP = SP + 0030;
 
 ////////////////////////////////
 // func89ab4
-80089AB4	jr     ra 
-80089AB8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89abc
-80089ABC	jr     ra 
-80089AC0	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89ac4
-80089AC4	jr     ra 
-80089AC8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89acc
-80089ACC	jr     ra 
-80089AD0	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89ad4
-80089AD4	jr     ra 
-80089AD8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89adc
-80089ADC	jr     ra 
-80089AE0	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89ae4
-80089AE4	jr     ra 
-80089AE8	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func89aec
-80089AEC	jr     ra 
-80089AF0	nop
 ////////////////////////////////
 
 
@@ -3589,18 +3505,6 @@ field_fade_setup();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + b);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE26_ScreenDistortionSetup()
-
-A0 = 0; // read settings from script
-field_distortion_init();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + f);
 ////////////////////////////////
 
 
@@ -7738,49 +7642,30 @@ A0 = w[800af54c];
 
 
 ////////////////////////////////
-// func8f400
+// field_event_op61()
+
 V0 = w[800af54c];
-V1 = w[800ad0d8];
-8008F410	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = hu[V0 + 00cc];
-8008F41C	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0007];
-8008F428	jal    field_event_help_read_u16_by_flag_80 [$8009c508]
-A0 = 0001;
-V1 = w[800af54c];
-V0 = V0 << 10;
-[800aedc4] = w(V0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-8008F450	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0007];
-8008F45C	jal    field_event_help_read_u16_by_flag_40 [$8009c54c]
-A0 = 0003;
-V1 = w[800af54c];
-V0 = V0 << 10;
-[800aedcc] = w(V0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-8008F484	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0007];
-8008F490	jal    field_event_help_read_u16_by_flag_20 [$8009c590]
-A0 = 0005;
+V0 = w[800ad0d8] + hu[V0 + cc];
+flag = bu[V0 + 7];
+
+A0 = 1;
+A1 = flag;
+field_event_help_read_u16_by_flag_80();
+[800aedc4] = w(V0 << 10);
+
+A0 = 3;
+A1 = flag;
+field_event_help_read_u16_by_flag_40();
+[800aedcc] = w(V0 << 10);
+
+A0 = 5;
+A1 = flag;
+field_event_help_read_u16_by_flag_20();
+[800aedc8] = w(V0 << 10);
+
 A0 = w[800af54c];
-V0 = V0 << 10;
-[800aedc8] = w(V0);
-V0 = w[800af150];
-V1 = hu[A0 + 00cc];
-V0 = V0 + 0001;
-[800af150] = w(V0);
-V1 = V1 + 0008;
-RA = w[SP + 0010];
-[A0 + 00cc] = h(V1);
-8008F4D0	jr     ra 
-SP = SP + 0018;
+[800af150] = w(w[800af150] + 1);
+[A0 + cc] = h(hu[A0 + cc] + 8);
 ////////////////////////////////
 
 
@@ -18936,487 +18821,6 @@ return V0;
 
 ////////////////////////////////
 // func9c500()
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op43_variable_random()
-
-A0 = 1;
-field_event_help_read_u16();
-S0 = V0 & ffff;
-
-system_get_random_2_bytes()
-
-A0 = S0;
-A1 = V0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_opA8()
-
-system_get_random_2_bytes();
-S0 = V0;
-fffe0001
-
-A0 = 3;
-field_event_help_read_v80();
-S0 = (S0 * (V0 + 1)) >> f;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 5);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op42_variable_shift_right()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-A0 = 3;
-field_event_help_read_v80();
-S0 = S0 >> V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + 00cc] = h(hu[V1 + cc] + 5);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op41_variable_shift_left()
-
-A0 = 1;
-field_event_help_read_u16()
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-A0 = 3;
-field_event_help_read_v80()
-S0 = S0 << V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 5);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op3C_variable_inc()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0 + 1;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op3D_variable_dec()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0 - 1;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op3B_variable_bit_unset()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-
-V1 = w[800af54c];
-A0 = w[800ad0d8];
-V1 = hu[V1 + 00cc];
-S0 = V0;
-V1 = V1 + A0;
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 & (~(1 << V0));
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op40_variable_xor()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 ^ V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op3F_variable_or()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 | V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op3E_variable_and()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40()
-S0 = S0 & V0;
-
-A0 = 0001;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op3A_variable_bit_set()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-struct_138_cur = w[800af54c];
-V1 = w[800ad0d8] + hu[struct_138_cur + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 | (1 << V0);
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_opDE_variable_multiply()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 * V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_opDF_variable_divide()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-
-if( V0 == 0 ) V0 = 1;
-S0 = S0 / V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op39_variable_subtract()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 - V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op38_variable_add()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-field_event_help_read_from_script_mem();
-S0 = V0;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-S0 = S0 + V0;
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0 & ffff;
-A1 = S0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op37_variable_set_false()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0;
-A1 = 0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op36_variable_set_true()
-
-A0 = 1;
-field_event_help_read_u16();
-
-A0 = V0;
-A1 = 1;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_event_op35_variable_set()
-
-A0 = 1;
-field_event_help_read_u16();
-S0 = V0 & ffff;
-
-V1 = w[800af54c];
-V1 = w[800ad0d8] + hu[V1 + cc];
-
-A0 = 3;
-A1 = bu[V1 + 5];
-field_event_help_read_u16_by_flag_40();
-
-A0 = S0;
-A1 = V0;
-field_event_help_write_to_script_mem();
-
-V1 = w[800af54c];
-[V1 + cc] = h(hu[V1 + cc] + 6);
 ////////////////////////////////
 
 

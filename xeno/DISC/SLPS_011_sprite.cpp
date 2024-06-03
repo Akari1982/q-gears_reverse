@@ -9467,56 +9467,54 @@ return FP;
 
 
 ////////////////////////////////
-// func26d54
-T2 = A1 < 0020;
-80026D58	bne    zero, t2, L26d64 [$80026d64]
-80026D5C	nop
-A1 = 0 + 0020;
+// func26d54()
 
-L26d64:	; 80026D64
+if( A1 > 20 ) A1 = 20;
+
 A1 = A1 << 07;
 IR0 = A1;
-80026D6C	addiu  t2, zero, $ffff (=-$1)
 
 L26d70:	; 80026D70
-80026D70	addiu  a0, a0, $ffff (=-$1)
-80026D74	beq    a0, t2, L26df0 [$80026df0]
-T6 = hu[A3 + 0000];
-A3 = A3 + 0002;
-T5 = T6 & 001f;
-T4 = T6 & 03e0;
-T3 = T6 & 7c00;
-IR1 = T5;
-IR2 = T4;
-IR3 = T3;
-80026D98	nop
-80026D9C	nop
-gte_gpf12(); // General purpose interpolation
-T5 = IR1;
-T4 = IR2;
-T3 = IR3;
-T5 = T5 & 001f;
-T4 = T4 & 03e0;
-T3 = T3 & 7c00;
-T5 = T5 | T4;
-T5 = T3 | T5;
-80026DC4	beq    zero, t6, L26dd8 [$80026dd8]
-80026DC8	nop
-80026DCC	bne    zero, t5, L26dd8 [$80026dd8]
-80026DD0	nop
-T5 = T5 | 0001;
+    A0 = A0 - 1;
 
-L26dd8:	; 80026DD8
-T6 = T6 & 8000;
-T6 = T6 | T5;
-[A2 + 0000] = h(T6);
-A2 = A2 + 0002;
+    if( A0 == -1 ) return;
+
+    T6 = hu[A3 + 0000];
+    A3 = A3 + 0002;
+    T5 = T6 & 001f;
+    T4 = T6 & 03e0;
+    T3 = T6 & 7c00;
+    IR1 = T5;
+    IR2 = T4;
+    IR3 = T3;
+    gte_gpf12(); // General purpose interpolation
+    T5 = IR1;
+    T4 = IR2;
+    T3 = IR3;
+    T5 = T5 & 001f;
+    T4 = T4 & 03e0;
+    T3 = T3 & 7c00;
+    T5 = T5 | T4;
+    T5 = T3 | T5;
+    if( T6 != 0 )
+    {
+        if( T5 == 0 )
+        {
+            T5 |= 1;
+        }
+    }
+
+    T6 = T6 & 8000;
+    T6 = T6 | T5;
+    [A2 + 0000] = h(T6);
+    A2 = A2 + 2;
 80026DE8	j      L26d70 [$80026d70]
-80026DEC	nop
 
 L26df0:	; 80026DF0
-80026DF0	jr     ra 
-80026DF4	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func26df8
 T0 = w[SP + 0010];
