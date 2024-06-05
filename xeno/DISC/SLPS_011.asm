@@ -909,31 +909,31 @@
 // func2de00
 8002DE00-8002DE1C
 ////////////////////////////////
-// func2de20
+// system_model_poly_render_packet_3_00
 8002DE20-8002DE30
 ////////////////////////////////
-// func2de34
+// system_model_poly_render_packet_2_00
 8002DE34-8002DE44
 ////////////////////////////////
-// load_poly_00_00
+// system_model_poly_render_packet_0_00
 8002DE48-8002DE58
 ////////////////////////////////
-// func2de5c
+// system_model_poly_render_packet_1_00
 8002DE5C-8002DE64
 ////////////////////////////////
 // func2de68
 8002DE68-8002E038
 ////////////////////////////////
-// func2e03с
+// system_model_poly_render_packet_b_00
 8002E03C-8002E04C
 ////////////////////////////////
-// func2e050
+// system_model_poly_render_packet_a_00
 8002E050-8002E060
 ////////////////////////////////
-// func2e064
+// system_model_poly_render_packet_8_00
 8002E064-8002E074
 ////////////////////////////////
-// func2e078
+// system_model_poly_render_packet_9_00
 8002E078-8002E080
 ////////////////////////////////
 // func2e084
