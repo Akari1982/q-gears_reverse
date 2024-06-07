@@ -3194,7 +3194,7 @@ for( int i = 0; i < w[800aefe0]; ++i )
                 A0 = w[struct_model + 4]; // part_header
                 rb = w[800acfe0];
                 A1 = w[struct_model + 8 + rb * 4]; // render buffer
-                A3 = h[struct_model + 12];
+                A3 = h[struct_model + 12]; // render type
                 func2c510();
             }
         }

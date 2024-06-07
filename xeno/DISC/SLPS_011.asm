@@ -984,7 +984,7 @@
 // func2e910
 8002E910
 ////////////////////////////////
-// load_poly_00_01
+// system_model_poly_render_packet_0_04
 8002EB30-8002ED04
 ////////////////////////////////
 // func2ed08
@@ -1003,6 +1003,18 @@
 ////////////////////////////////
 // system_model_poly_render_packet_3_04
 8002F2C4
+////////////////////////////////
+// system_model_poly_render_packet_2_04
+8002F4C4
+////////////////////////////////
+// system_model_poly_render_packet_9_04
+8002F8F8
+////////////////////////////////
+// system_model_poly_render_packet_9_10
+8002FB0C
+////////////////////////////////
+// system_model_poly_render_packet_9_14
+8002FD1C
 ////////////////////////////////
 // func2ffd8
 8002FFD8-80030034

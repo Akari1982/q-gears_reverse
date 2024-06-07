@@ -243,7 +243,7 @@
         +  4 [][][][] pointer to start of model part header.
         +  8 [][][][] pointer to allocated memory for 1st packets buffer.
         +  c [][][][] pointer to allocated memory for 2nd packets buffer.
-        + 12 [][]     ??? id of function to render.
+        + 12 [][]     add to render type (id of function to add to render).
         + 14 [][][][] pointer to data for MIMe (+1c in model). (allocated as number of item in +1c * 20 + 14 size)
             header (0x14 size)
             +  0 [][][][] pointer to part data.
