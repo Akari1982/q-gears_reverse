@@ -65696,7 +65696,7 @@ SP = SP + 00d0;
 
 S3 = 56;
 
-func1c7d0();
+system_sprite_init_list();
 
 S1 = 0001;
 S4 = 0;

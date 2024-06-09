@@ -1091,11 +1091,11 @@ A0 = 5; // MIYA
 A1 = 0;
 system_memory_set_alloc_user();
 
-A0 = 3c00;
+A0 = 3c00; // size
 A1 = 0;
-func24d5c(); // allocate sprites memory
+system_sprite_init_mem();
 
-func1c7d0(); // init sprites list
+system_sprite_init_list();
 
 A0 = 8; // YOSI
 A1 = 0;

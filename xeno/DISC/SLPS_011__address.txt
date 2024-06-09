@@ -379,14 +379,15 @@
     + 24 [][]     some y of texture (used as * 0x40 + 140). Increment by 1 when +26 >= 0x41 each func call limited by 3.
     + 26 [][]     some x of texture (used as + 300). Increment by A1 each func call limited by 41.
     + 28 [][][][] ???
+    80058858 ( +48) ???
     + 38 [][][][] rotation dta for some sprite animation if flag 0x2000 in sprite animation data not set.
     + 3c []       init with 0 during battle attack struct init.
     + 3d []       if this != 0 then we use +38 to calculate rotation matrix for sprite animation (if flag 0x2000 not set).
     + 3e []       
     +17c [][][][] increment during sprite update.
-    +18c [][][][] size of one allocated sprite memory.
-    +190 [][][][] init with 0 when init sprite memory.
-    +194 [][][][] init with 0 when init sprite memory.
+    8005899c (+18c) [][][][] size of one allocated sprite memory.
+    800589a0 (+190) [][][][] init with 0 when init sprite memory.
+    800589a4 (+194) [][][][] init with 0 when init sprite memory.
     +1a8 [][]     init with 0x20. 0xfc000000 type of memory alloc.
     +1ac [][]     init with 0xa. 0x01e00000 owner for memory alloc.
     +1b0 [][][][] pointer to start of allocated memory.
@@ -440,10 +441,13 @@
     +1d4 [][][][] memory error filehandle (for devkit).
     80058b50 (+340) [][][][] allocated sprite memory 1.
     80058b54 (+344) [][][][] allocated sprite memory 2.
-    +350 [][][][] init with 0 when init sprite memory.
-    +418 [][][][] last inserted struct (size 0x1c)
-    +41c [][][][] current struct.
-    +420 [][][][] last inserted struct (size 0x1c)
+    80058b60 (+350) [][][][] init with 0 when init sprite memory.
+    80058bc0 (+3b0) [][][][] init with pointer to allocated sprite memory.
+    80058bd0 (+3c0) [][][][] max size
+    80058c1c (+40c) [][][][] pointer to current sprite packet.
+    80058c28 (+418) [][][][] last inserted sprite struct (size 0x1c)
+    80058c2c (+41c) [][][][] current sprite struct.
+    80058c30 (+420) [][][][] last inserted struct (size 0x1c)
                     +00 [][][][] struct_164.
                     +08 [][][][] init with 0.
                     +0c [][][][] ptr to func1c9d4() for +420 and func1cc20() for +418. Looks like destructor.

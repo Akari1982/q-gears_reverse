@@ -176,7 +176,7 @@
 // func76104
 80076104-8007614C
 ////////////////////////////////
-// func76150
+// field_sprite_init
 80076150-8007683C
 ////////////////////////////////
 // func76840
@@ -2229,7 +2229,7 @@
 // func9efe4
 8009EFE4-8009F124
 ////////////////////////////////
-// func9f128
+// field_event_opFE1E
 8009F128-8009F19C
 ////////////////////////////////
 // func9f1a0
@@ -2256,13 +2256,13 @@
 // func9f6e8
 8009F6E8-8009F7B4
 ////////////////////////////////
-// func9f7b8
+// field_event_op5C
 8009F7B8-8009FAB0
 ////////////////////////////////
 // func9fab4
 8009FAB4-8009FC74
 ////////////////////////////////
-// func9fc78
+// field_event_opFE21
 8009FC78-8009FE44
 ////////////////////////////////
 // field_event_op16_actor_pc_init
@@ -2274,8 +2274,8 @@
 // funca0224
 800A0224-800A02C8
 ////////////////////////////////
-// 0xBC_EntityNoModelInit
-// funca02cc
+// field_event_opBC_no_sprite_init
+// field_event_opBC_no_sprite_init
 800A02CC-800A034C
 ////////////////////////////////
 // funca0350
@@ -2302,7 +2302,7 @@
 // field_event_opFE15
 800A0A80-800A0BB0
 ////////////////////////////////
-// 0x0B_EntityNPCSpriteInit
+// field_event_op0B_npc_sprite_init
 800A0BB4-800A0CBC
 ////////////////////////////////
 // field_event_op06

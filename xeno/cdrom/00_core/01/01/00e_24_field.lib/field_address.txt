@@ -438,8 +438,8 @@
         + 120 [][][][] pointer to files 0x77a in dir 4 0. Init with 0.
         + 124 [][]     init with -1. If this not -1 then we allocate +120 struct.
         + 124 [][][][] init with 0x0000ffff.
-        + 126 []       init with 0.
-        + 127 []       init with 0.
+        + 126 []       sprite id with 0x80 in case of party sprites.
+        + 127 []       sprite id.
         + 128 [][][][] init with 0x0000ffff.
         + 12c [][][][] flags.
                         0x00000003 - remove during entity init. Type of render used.
@@ -457,6 +457,8 @@
                         0x0007fe00 - remove during entity init.
                         0x0ff80000 - remove during entity init.
         + 134 [][][][] flags.
+                        0x0000000f - some data during sprite init ()
+                        0x00000010 - some flag set during sprite init.
                         0x00000060 - remove during entity init.
                         0x00000080 - set if struct_138 + 110 is allocated.
     +  50 [][]     X rotation.
@@ -495,7 +497,7 @@
 800af104 some matrix and translation.
 
 800af144 [][][][] store here particle texture from vram (3c0 100 40 100).
-800af148 [][][][] every time we init entity model with func76150 we increment this by 1.
+800af148 [][][][] every time we init entity model with field_sprite_init() we increment this by 1.
 
 800af150 [][][][] store here how much opcodes to execute in field_event_execute().
 

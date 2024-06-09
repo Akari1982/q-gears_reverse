@@ -79,44 +79,29 @@ system_psyq_add_prims();
 
 
 ////////////////////////////////
-// func74b14
+// func74b14()
 
-V0 = h[800af586];
+if( h[800af586] != 0 )
+{
+    if( w[800ad028] == 0 )
+    {
+        [SP + 18] = h(h[800aed56]);
+        [SP + 1a] = h(h[800aed5a]);
+        [SP + 1c] = h(h[800aed5e]);
 
-80074B20	beq    v0, zero, L74bcc [$80074bcc]
+        [SP + 20] = h(h[800aed66]);
+        [SP + 22] = h(h[800aed6a]);
+        [SP + 24] = h(h[800aed6e]);
 
-V0 = w[800ad028];
-80074B30	nop
-80074B34	bne    v0, zero, L74bcc [$80074bcc]
-80074B38	nop
-A3 = 800aed54;
-V0 = h[A3 + 0002];
-V1 = h[800aed5a];
-A0 = h[800aed5e];
-A1 = h[800aed66];
-A2 = h[800aed6a];
-T0 = h[800aed6e];
-[SP + 0018] = h(V0);
-V0 = h[800b16a8];
-[SP + 001a] = h(V1);
-V1 = w[800c3740];
-[SP + 001c] = h(A0);
-A0 = w[800af550];
-A3 = A3 + 01e4;
-[SP + 0020] = h(A1);
-A1 = SP + 0018;
-[SP + 0022] = h(A2);
-A2 = SP + 0020;
-[SP + 0024] = h(T0);
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = w[800acfe0];
-V0 = V0 + 40cc;
-[SP + 0010] = w(V0);
-[SP + 0014] = w(V1);
-func271d4();
-
-L74bcc:	; 80074BCC
+        A0 = w[800af550];
+        A1 = SP + 18;
+        A2 = SP + 20;
+        A3 = 800aed54 + 1e4;
+        A4 = w[800c3740] + h[800b16a8] * 4 + 40cc;
+        A5 = w[800acfe0];
+        func271d4(); // render sprite?
+    }
+}
 ////////////////////////////////
 
 
@@ -179,7 +164,7 @@ SP = w[SP];
 
 field_scifi_hud_update_add_to_render();
 
-80074CE0	jal    func74b14 [$80074b14]
+func74b14(); // render sprite?
 
 80074CE8	jal    func7489c [$8007489c]
 
@@ -1023,36 +1008,35 @@ A0 = w[V0 + V1 * 5c + 4c];
 
 
 ////////////////////////////////
-// func76150()
+// field_sprite_init()
 
 actor_id = A0;
 sprite_id = A1;
 sprite_data = A2; // offset to data in 2dsprite block to load
-S7 = A3; // maybe field or global sprite.
-S6 = A4; // always 0
+party = A3; // maybe field or party sprite. 1 - party, 0 - local, 2 - party as well???
+S6 = A4;
 S0 = A5; // sprite id with 0x80 (sometimes)
 FP = A6; // 0 or 1
 
 struct_5c_p = w[800aefe4];
 struct_138 = w[struct_5c_p + actor_id * 5c + 4c];
 
-[GP + 1ac] = h(8);
+[GP + 1ac] = h(8); // owner for memory alloc (YOSI Kiyoshi Yoshii (Main Programmer))
 [80059640 + 8 * 4] = w(0);
 [GP + 1c0] = w(0);
 
 [struct_138 + 126] = b(S0);
 [struct_138 + 127] = b(sprite_id);
-[struct_138 + 130] = w((w[struct_138 + 130] & cfffffff) | ((S7 & 3) << 1c));
+[struct_138 + 130] = w((w[struct_138 + 130] & cfffffff) | ((party & 3) << 1c));
 [struct_138 + 134] = w((w[struct_138 + 134] & fffffff0) | (S6 & f));
 [struct_138 + 134] = w((w[struct_138 + 134] & ffffffef) | ((FP & 1) << 4));
 
-
-
-if( S7 == 0 )
+if( party == 0 ) // local sprite
 {
     // from first 0x100 bytes of field file
     tx = hu[800b144c + sprite_id * 8 + 0];
-    ty = hu[800b144c + sprite_id * 8 + 2]; // ty
+    ty = hu[800b144c + sprite_id * 8 + 2];
+
     if( S6 == 0 )
     {
         if( hu[struct_5c_p + actor_id * 5c + 5a] & 0001 )
@@ -1063,7 +1047,7 @@ if( S7 == 0 )
 
         A0 = sprite_data;
         A1 = 100; // clut x
-        A2 = sprite_id + 1e0; // clut y
+        A2 = 1e0 + sprite_id; // clut y
         A3 = tx;
         A4 = ty;
         A5 = 40;
@@ -1081,18 +1065,17 @@ if( S7 == 0 )
 
         A0 = sprite_data;
         A1 = 100 + S6 * 10;
-        A2 = sprite_id + 1e0;
+        A2 = 1e0 + sprite_id;
         A3 = tx;
         A4 = ty;
         A5 = 40;
         A6 = S6;
         func240a0();
-
         struct_164 = V0;
         [struct_5c_p + actor_id * 5c + 4] = w(struct_164);
     }
 }
-else
+else // party sprite
 {
     if( hu[struct_5c_p + actor_id * 5c + 5a] & 0001 )
     {
@@ -1100,28 +1083,23 @@ else
         system_field_sprite_memory_free();
     }
 
-    if( S7 == 1 )
+    if( party == 1 )
     {
-        S0 = sprite_id << 6 + 100;
-        A0 = sprite_data;
-        A1 = 100;
-        A2 = sprite_id + e0;
-        A3 = 280;
+        A2 = e0 + sprite_id; // clut y
+        A3 = 280; // tx
     }
     else
     {
-        S0 = sprite_id << 6 + 100;
-        A0 = sprite_data;
-        A1 = 100;
-        A2 = sprite_id + e3;
-        A3 = 2a0;
+        A2 = e3 + sprite_id; // clut y
+        A3 = 2a0; // tx
     }
 
-    A4 = S0;
+    A0 = sprite_data;
+    A1 = 100; // clut x
+    A4 = 100 + sprite_id * 40; // ty
     A5 = 8;
     func24330(); // sprite set up
     struct_164 = V0;
-
     [struct_5c_p + actor_id * 5c + 4] = w(struct_164);
 
     A0 = struct_164;
@@ -1129,11 +1107,7 @@ else
     func231cc(); // allocate place for 0x20 tiles.
 }
 
-
-
 [struct_5c_p + actor_id * 5c + 5a] = h(hu[struct_5c_p + actor_id * 5c + 5a] | 0001);
-
-
 
 A0 = struct_164;
 A1 = 0;
@@ -1142,13 +1116,9 @@ A3 = SP + 24;
 A4 = SP + 28;
 func1f434(); // get data +1+2+3 from frame data in sprite file 1
 
-
-
 [struct_164 + 2c] = h(0c00); // sprite scale
 [struct_164 + 40] = w((w[struct_164 + 40] & ffffe0ff) | 00000300); // sprite scale
 [struct_164 + 82] = h(2000);
-
-
 
 if( w[8004e9b0] == 0 )
 {
@@ -1161,7 +1131,7 @@ if( w[8004e9b0] == 0 )
     [struct_164 + 1c] = w(00010000);
     [struct_164 + 84] = h(w[struct_5c_p + actor_id * 5c + 24]);
 
-    if( S7 == 0 )
+    if( party == 0 )
     {
         [struct_138 + 1a] = h(w[SP + 24] << 1);
     }
@@ -1171,14 +1141,10 @@ if( w[8004e9b0] == 0 )
     }
 }
 
-
-
 if( h[800b1662] != 0 )
 {
     [struct_164 + 40] = w(w[struct_164 + 40] | 00040000);
 }
-
-
 
 A0 = struct_164;
 A1 = 0; // anim id
@@ -1188,19 +1154,13 @@ A0 = struct_164;
 A1 = 0; // rot
 func21e40(); // sprite rotation
 
-
-
 [GP + 1ac] = h(0);
 [80059640 + 0 * 4] = w(0);
 [GP + 1c0] = w(0);
 
-
-
 V0 = w[struct_164 + 7c];
 [V0 + 14] = h(actor_id);
 [struct_164 + 68] = w(80076104); // set callback func76104()
-
-
 
 if( FP == 0 )
 {
