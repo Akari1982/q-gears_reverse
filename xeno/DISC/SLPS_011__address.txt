@@ -159,12 +159,12 @@
 //0d 8002E078 8002E078 8002E498 8002E904 8002FB0C 8002FD1C 8002CEF4 08000000 0C000000 28000000 quad monochrome textured (main vertexes)
 //0e 8002E050 8002E050 8002E470 8002E8DC 8002E050 8002E050 8002CF90 08000000 04000000 24000000 quad gourad with lighting (other vertexes)
 //0f 8002E03C 8002E03C 8002E45C 8002E8C8 8002E03C 8002E03C 8002D054 08000000 0C000000 34000000 quad gourad textured with lighting (other vertexes)
-+00 - function to add packet. "system_model_poly_render_packet_X_00"
-+04 - function to add packet. "system_model_poly_render_packet_X_04"
-+08 - function to add packet. "system_model_poly_render_packet_X_08"
-+0c - function to add packet. "system_model_poly_render_packet_X_0c"
-+10 - function to add packet. "system_model_poly_render_packet_X_10"
-+14 - function to add packet. "system_model_poly_render_packet_X_14"
++00 - function to add packet. "system_model_poly_render_packet_X_00" Depth by OTZ >> w[8004f7a4].
++04 - function to add packet. "system_model_poly_render_packet_X_04" Depth by OTZ >> w[8004f7a4]. With normals.
++08 - function to add packet. "system_model_poly_render_packet_X_08" Depth by greatest SZ. Order as >> w[8004f7a4] + 2
++0c - function to add packet. "system_model_poly_render_packet_X_0c" Depth by minimum SZ. Order as >> w[8004f7a4] + 2
++10 - function to add packet. "system_model_poly_render_packet_X_10" Depth by OTZ >> w[8004f7a4]. Color by gte_DPCS (Depth Cueing).
++14 - function to add packet. "system_model_poly_render_packet_X_14" Depth by OTZ >> w[8004f7a4].
 +18 - function to create packet. "system_model_poly_create_packet_X"
 +1c - size of polygon data.
 +20 - size of tex data.
