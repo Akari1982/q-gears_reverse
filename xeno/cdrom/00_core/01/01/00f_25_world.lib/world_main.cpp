@@ -362,7 +362,7 @@ L7099c:	; 8007099C
     system_clear_otagr();
 
     A0 = w[8009cbd8];
-    80070B08	jal    $func24ed4
+    system_sprite_reset_buffers();
 
     80070B10	jal    $func1d2e4
 

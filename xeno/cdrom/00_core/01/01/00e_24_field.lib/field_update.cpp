@@ -1,4 +1,491 @@
 ////////////////////////////////
+// func73f78()
+
+[80058c14] = w(0);
+[80058c5c] = w(0);
+
+if( h[800b1662] != 0 )
+{
+    A0 = bu[800b1664];
+    A1 = bu[800b1665];
+    A2 = bu[800b1666];
+    func2c4f0();
+
+    A0 = bu[800b1668];
+    A1 = bu[800b1669];
+    A2 = bu[800b166a];
+    func49fb4();
+
+    A0 = h[800b166c];
+    A1 = h[800b166e];
+    A2 = w[800aeecc];
+    func48958();
+}
+
+[SP + 18] = w(w[800aef98]);
+[SP + 1c] = w(w[800aef98]);
+[SP + 20] = w(w[800aef98]);
+[SP + 28] = w(800);
+[SP + 2c] = w(800);
+[SP + 30] = w(800);
+
+A0 = 800aef58;
+A1 = SP + 18;
+system_gte_multiply_matrix_by_vector();
+
+A0 = 800aef38;
+A1 = 800af104;
+A2 = SP + 38;
+system_gte_matrix_mult_and_trans();
+
+[8004f7a8] = w(0);
+
+[800b1690] = w(w[800b1690] + h[800b1682]);
+[800b1694] = w(w[800b1694] + h[800b1686]);
+[800b1698] = w(w[800b1698] + h[800b1684]);
+
+for( int i = 0; i < w[800aefe0]; ++i )
+{
+    struct_5c_p = w[800aefe4];
+
+    [struct_5c_p + i * 5c + 2c] = w(w[V0 +  c]);
+    [struct_5c_p + i * 5c + 30] = w(w[V0 + 10]);
+    [struct_5c_p + i * 5c + 34] = w(w[V0 + 14]);
+    [struct_5c_p + i * 5c + 38] = w(w[V0 + 18]);
+    [struct_5c_p + i * 5c + 3c] = w(w[V0 + 1c]);
+    [struct_5c_p + i * 5c + 40] = w(w[V0 + 20]);
+    [struct_5c_p + i * 5c + 44] = w(w[V0 + 24]);
+    [struct_5c_p + i * 5c + 48] = w(w[V0 + 28]);
+
+    [SP + 98] = w(0);
+
+    flags58 = hu[struct_5c_p + i * 5c + 58];
+
+    if( ( flags58 & 0040 ) == 0 )
+    {
+        struct_138 = w[struct_5c_p + i * 5c + 4c];
+
+        if( i >= w[800ad0d4] )
+        {
+            if( ( bu[800b1662 + 44] & 7f ) == 0 )
+            {
+                [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+                [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+                [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+            }
+
+            if( ( bu[800b1662 + 44] & 7f ) == 1 )
+            {
+                [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+                [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+                [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+            }
+
+            if( bu[800b1662 + 44] & 80 )
+            {
+                [SP + 98] = w(1);
+            }
+
+            R11R12 = w[SP + 38 +  0];
+            R13R21 = w[SP + 38 +  4];
+            R22R23 = w[SP + 38 +  8];
+            R31R32 = w[SP + 38 +  c];
+            R33    = w[SP + 38 + 10];
+
+            IR1 = hu[struct_5c_p + i * 5c + c + 0];
+            IR2 = hu[struct_5c_p + i * 5c + c + 6];
+            IR3 = hu[struct_5c_p + i * 5c + c + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [SP + 58 + 0] = h(IR1);
+            [SP + 58 + 6] = h(IR2);
+            [SP + 58 + c] = h(IR3);
+
+            IR1 = hu[struct_5c_p + i * 5c + e + 0];
+            IR2 = hu[struct_5c_p + i * 5c + e + 6];
+            IR3 = hu[struct_5c_p + i * 5c + e + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [SP + 5a + 0] = h(IR1);
+            [SP + 5a + 6] = h(IR2);
+            [SP + 5a + c] = h(IR3);
+
+            IR1 = hu[struct_5c_p + i * 5c + 10 + 0];
+            IR2 = hu[struct_5c_p + i * 5c + 10 + 6];
+            IR3 = hu[struct_5c_p + i * 5c + 10 + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [SP + 5c + 0] = h(IR1);
+            [SP + 5c + 6] = h(IR2);
+            [SP + 5c + c] = h(IR3);
+
+            TRX = w[SP + 38 + 14];
+            TRY = w[SP + 38 + 18];
+            TRZ = w[SP + 38 + 1c];
+
+            VXY0 = (hu[struct_5c_p + i * 5c + 24] << 10) | hu[struct_5c_p + i * 5c + 20];
+            VZ0 = w[struct_5c_p + i * 5c + 28];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+            [SP + 6c + 0] = w(MAC1);
+            [SP + 6c + 4] = w(MAC2);
+            [SP + 6c + 8] = w(MAC3);
+
+            if( flags58 & 0003 )
+            {
+                if( V0 == 1 )
+                {
+                    A0 = 800aef58;
+                    A1 = A1 + c;
+                    A2 = SP + 58;
+                    system_gte_matrix_multiplication_to_A2();
+                }
+                else
+                {
+                    A0 = SP + 58;
+                    A1 = A1 + c;
+                    field_copy_rotation_matrix(); // copy A1 to A0
+
+                    A0 = SP + 58;
+                    A1 = SP + 18;
+                    system_gte_multiply_matrix_by_vector();
+                }
+
+                A0 = 800aee84;
+                A1 = SP + 58;
+                system_gte_matrix_multiplication_to_A1();
+            }
+        }
+        else
+        {
+            V1 = w[struct_138 + 12c] & 3;
+
+            if( V1 == 0 )
+            {
+                A3 = hu[struct_138 + 128];
+                A2 = A3 & ffff;
+                if( A2 != ffff )
+                {
+                    A0 = struct_5c_p + i * 5c + 2c;
+                    A1 = A0;
+                    A2 = A2 >> c;
+                    A3 = A3 & 0fff;
+                    func1e72cc();
+
+                    A0 = 800aef38;
+                    A1 = struct_5c_p + i * 5c + 2c;
+                    A2 = SP + 78;
+                    system_gte_matrix_mult_and_trans();
+
+                    A0 = SP + 78;
+                    A1 = struct_5c_p + i * 5c + c;
+                    A2 = SP + 58;
+                    system_gte_matrix_mult_and_trans();
+
+                    A0 = struct_5c_p + i * 5c + 2c;
+                    A1 = struct_5c_p + i * 5c + c;
+                    A2 = struct_5c_p + i * 5c + 2c;
+                    system_gte_matrix_mult_and_trans();
+                }
+                else
+                {
+                    if( bu[struct_138 + 75] == ff )
+                    {
+                        if( ( bu[800b1662 + 44] & 7f ) == 1 )
+                        {
+                            [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + h[800b1662 + 20]);
+                            [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + h[800b1662 + 24]);
+                            [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + h[800b1662 + 22]);
+                        }
+
+                        if( bu[800b1662 + 44] & 80 )
+                        {
+                            [SP + 98] = w(1);
+                        }
+
+                        R11R12 = w[SP + 38 +  0];
+                        R13R21 = w[SP + 38 +  4];
+                        R22R23 = w[SP + 38 +  8];
+                        R31R32 = w[SP + 38 +  c];
+                        R33    = w[SP + 38 + 10];
+
+                        IR1 = hu[struct_5c_p + i * 5c + c + 0];
+                        IR2 = hu[struct_5c_p + i * 5c + c + 6];
+                        IR3 = hu[struct_5c_p + i * 5c + c + c];
+                        gte_rtir12(); // ir * rotmatrix.
+                        [SP + 58 + 0] = h(IR1);
+                        [SP + 58 + 6] = h(IR2);
+                        [SP + 58 + c] = h(IR3);
+
+                        IR1 = hu[struct_5c_p + i * 5c + e + 0];
+                        IR2 = hu[struct_5c_p + i * 5c + e + 6];
+                        IR3 = hu[struct_5c_p + i * 5c + e + c];
+                        gte_rtir12(); // ir * rotmatrix.
+                        [SP + 5a + 0] = h(IR1);
+                        [SP + 5a + 6] = h(IR2);
+                        [SP + 5a + c] = h(IR3);
+
+                        IR1 = hu[struct_5c_p + i * 5c + 10 + 0];
+                        IR2 = hu[struct_5c_p + i * 5c + 10 + 6];
+                        IR3 = hu[struct_5c_p + i * 5c + 10 + c];
+                        gte_rtir12(); // ir * rotmatrix.
+                        [SP + 5c + 0] = h(IR1);
+                        [SP + 5c + 6] = h(IR2);
+                        [SP + 5c + c] = h(IR3);
+
+                        TRX = w[SP + 38 + 14];
+                        TRY = w[SP + 38 + 18];
+                        TRZ = w[SP + 38 + 1c];
+
+                        VXY0 = (hu[struct_5c_p + i * 5c + 24] << 10) | hu[struct_5c_p + i * 5c + 20];
+                        VZ0 = w[struct_5c_p + i * 5c + 28];
+                        gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+                        [SP + 6c + 0] = w(MAC1);
+                        [SP + 6c + 4] = w(MAC2);
+                        [SP + 6c + 8] = w(MAC3);
+
+                        if( flags58 & 0003 )
+                        {
+                            if( V0 == 1 )
+                            {
+                                A0 = 800aef58;
+                                A1 = A1 + c;
+                                A2 = SP + 58;
+                                system_gte_matrix_multiplication_to_A2();
+                            }
+                            else
+                            {
+                                A0 = SP + 58;
+                                A1 = A1 + c;
+                                field_copy_rotation_matrix(); // copy A1 to A0
+
+                                A0 = SP + 58;
+                                A1 = SP + 18;
+                                system_gte_multiply_matrix_by_vector();
+                            }
+
+                            A0 = 800aee84;
+                            A1 = SP + 58;
+                            system_gte_matrix_multiplication_to_A1();
+                        }
+                    }
+                    else
+                    {
+                        A0 = 800aef38;
+                        V1 = bu[struct_138 + 75];
+                        A1 = struct_5c_p + V1 * 5c + 2c;
+                        A2 = SP + 78;
+                        system_gte_matrix_mult_and_trans();
+
+                        A0 = SP + 78;
+                        A1 = struct_5c_p + i * 5c + c;
+                        A2 = SP + 58;
+                        system_gte_matrix_mult_and_trans();
+
+                        V1 = bu[struct_138 + 75];
+                        A0 = struct_5c_p + V1 * 5c + 2c;
+                        A1 = struct_5c_p + i * 5c + c;
+                        A2 = struct_5c_p + i * 5c + 2c;
+                        system_gte_matrix_mult_and_trans();
+                    }
+                }
+            }
+            else if( V1 == 1 )
+            {
+                [SP + 10] = h(hu[struct_138 + 70]);
+                [SP + 12] = h(0);
+                [SP + 14] = h(0);
+
+                A0 = SP + 10;
+                A1 = SP + 78;
+                system_calculate_rotation_matrix();
+
+                A1 = SP + 78;
+                A0 = struct_5c_p + i * 5c + c;
+                system_gte_matrix_multiplication_to_A1();
+
+                [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+                [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+                [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
+
+                A0 = 800aef38;
+                A1 = SP + 78;
+                A2 = SP + 58;
+                system_gte_matrix_mult_and_trans();
+            }
+            else if( V1 == 2 )
+            {
+                [SP + 10] = h(0);
+                [SP + 12] = h(hu[struct_138 + 70]);
+                [SP + 14] = h(0);
+
+                A0 = SP + 10;
+                A1 = SP + 78;
+                system_calculate_rotation_matrix();
+
+                A1 = SP + 78;
+                A0 = struct_5c_p + i * 5c + c;
+                system_gte_matrix_multiplication_to_A1();
+
+                [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+                [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+                [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
+
+                A0 = 800aef38;
+                A1 = SP + 78;
+                A2 = SP + 58;
+                system_gte_matrix_mult_and_trans();
+            }
+            else if( V1 == 3 )
+            {
+                [SP + 10] = h(0);
+                [SP + 12] = h(0);
+                [SP + 14] = h(hu[struct_138 + 70]);
+
+                A0 = SP + 10;
+                A1 = SP + 78;
+                system_calculate_rotation_matrix();
+
+                A1 = SP + 78;
+                A0 = struct_5c_p + i * 5c + c;
+                system_gte_matrix_multiplication_to_A1();
+
+                [SP + 8c] = w(w[struct_5c_p + i * 5c + 20]);
+                [SP + 90] = w(w[struct_5c_p + i * 5c + 24]);
+                [SP + 94] = w(w[struct_5c_p + i * 5c + 28]);
+
+                A0 = 800aef38;
+                A1 = SP + 78;
+                A2 = SP + 58;
+                system_gte_matrix_mult_and_trans();
+            }
+        }
+
+        struct_model = w[struct_5c_p + i * 5c + 0];
+        if( h[struct_model + 12] == 1 )
+        {
+            [SP + 78] = w(w[SP + 58]);
+            [SP + 7c] = w(w[SP + 5c]);
+            [SP + 80] = w(w[SP + 60]);
+            [SP + 84] = w(w[SP + 64]);
+            [SP + 88] = w(w[SP + 68]);
+            [SP + 8c] = w(w[SP + 6c]);
+            [SP + 90] = w(w[SP + 70]);
+            [SP + 94] = w(w[SP + 74]);
+
+            A0 = SP + 78;
+            A1 = SP + 28;
+            system_gte_multiply_matrix_by_vector();
+
+            A0 = SP + 78;
+            system_gte_calculate_and_set_lighting_matrix();
+
+            A0 = h[800aefd8];
+            A1 = h[800aefda];
+            A2 = h[800aefdc];
+            func30a50();
+        }
+
+        [8004f7a8] = w(0);
+
+        if( ( flags58 & 0020 ) == 0 )
+        {
+            if( flags58 & 2000 )
+            {
+                if( w[struct_model + 14] != 0 )
+                {
+                    [800ad030] = w(i);
+                    [800ad034] = w(0);
+
+                    A0 = w[struct_model + 14];
+                    func303e8();
+                }
+            }
+
+            R11R12 = w[SP + 58 +  0];
+            R13R21 = w[SP + 58 +  4];
+            R22R23 = w[SP + 58 +  8];
+            R31R32 = w[SP + 58 +  c];
+            R33    = w[SP + 58 + 10];
+            TRX    = w[SP + 58 + 14];
+            TRY    = w[SP + 58 + 18];
+            TRZ    = w[SP + 58 + 1c];
+
+            A0 = struct_model;
+            funca9f4c();
+
+            if( ( V0 == 0 ) || ( w[SP + 98] == 1 ) )
+            {
+                R11R12 = w[SP + 58 +  0];
+                R13R21 = w[SP + 58 +  4];
+                R22R23 = w[SP + 58 +  8];
+                R31R32 = w[SP + 58 +  c];
+                R33    = w[SP + 58 + 10];
+
+                T4 = w[SP + 58 + 14];
+                T5 = w[SP + 58 + 18];
+                T6 = w[SP + 58 + 1c];
+                800747AC	ctc2   t4,vz2
+                800747B4	ctc2   t5,rgb
+                800747B8	ctc2   t6,otz
+
+                if( flags58 & 8000 )
+                {
+                    A2 = w[800c3740] + 40d0;
+                }
+                else
+                {
+                    A2 = w[800c3740] + cc;
+                }
+
+                A0 = w[struct_model + 4]; // part_header
+                rb = w[800acfe0];
+                A1 = w[struct_model + 8 + rb * 4]; // render buffer
+                A3 = h[struct_model + 12]; // render type
+                func2c510();
+            }
+        }
+    }
+}
+
+if( w[800c1b60] == 0 )
+{
+    A0 = 8006f1a0; // "MODEL     "
+    field_debug_add_timer();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func7489c()
+
+// gears disabled
+if( w[8004ea24] != 0 ) return;
+
+if( w[800b1738] != 0 )
+{
+    func861bc();
+
+    A0 = bu[800b1730];
+    A1 = bu[800b1731];
+    A2 = bu[800b1732];
+    func49f94();
+
+    A0 = 800aef38;
+    A1 = 800b1738 - 48;
+    A2 = w[800c3740] + cc;
+    A3 = w[800acfe0];
+    A4 = 1;
+    func1e7d14();
+}
+
+if( w[800c1b60] == 0 )
+{
+    A0 = 8006f1ac; // "GEAR      "
+    field_debug_add_timer();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func74958()
 
 if( bu[800acfdd] == 1 )
@@ -7,7 +494,7 @@ if( bu[800acfdd] == 1 )
 }
 
 A0 = w[800acfe0];
-func24ed4(); // clear some set of images
+system_sprite_reset_buffers();
 
 [80058c08] = w(w[800c3740] + cc);
 
@@ -22,7 +509,7 @@ func1c7f0(); // run GP + 418 + 8 funcs
 
 A0 = w[800c3740] + cc;
 A1 = w[800acfe0]; // rb (not used)
-func751d4();
+func751d4(); // update and add sprites and models to render
 
 for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 {
@@ -52,7 +539,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 
 A0 = w[800c3740] + cc;
 A1 = w[800acfe0]; // rb
-func75b44(); // add to entity to render
+field_shadow_update_add_to_render();
 
 if( w[800c1b60] == 0 )
 {
@@ -166,7 +653,7 @@ field_scifi_hud_update_add_to_render();
 
 func74b14(); // render sprite?
 
-80074CE8	jal    func7489c [$8007489c]
+func7489c(); // add gear to render
 
 funcab3a0(); // add to render some 5 packets
 
@@ -249,7 +736,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
     field_debug_add_timer();
 }
 
-80074E80	jal    func916ac [$800916ac]
+func916ac();
 
 if( w[800ad08c] != 0 )
 {
@@ -446,7 +933,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 
     T0 = hu[struct_5c + 58];
 
-    if( hu[struct_5c + 58] & 0040 ) // model or sprite loaded
+    if( hu[struct_5c + 58] & 0040 ) // if this is not model
     {
         struct_138 = w[struct_5c + 4c];
         struct_164 = w[struct_5c + 4];
@@ -460,7 +947,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
         [struct_5c + 44] = w(w[struct_5c + 24]);
         [struct_5c + 48] = w(w[struct_5c + 28]);
 
-        if( ( w[struct_138 + 4] & 00002000 ) == 0 )
+        if( ( w[struct_138 + 4] & 00002000 ) == 0 ) // sprite
         {
             R11R12 = w[800aef38 +  0];
             R13R21 = w[800aef38 +  4];
@@ -742,7 +1229,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
         }
         else
         {
-            if( w[8004ea24] == 0 )
+            if( w[8004ea24] == 0 ) // gears not disabled
             {
                 model = w[models];
 
@@ -802,7 +1289,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 
 
 ////////////////////////////////
-// func75b44()
+// field_shadow_update_add_to_render()
 
 otag = A0;
 rb = A1;
@@ -818,10 +1305,7 @@ matrix = 800aef38;
 [SP + b0] = w(w[matrix + 18]);
 [SP + b4] = w(w[matrix + 1c]);
 
-if( w[8004ea20] == 0 )
-{
-    return;
-}
+if( w[8004ea20] == 0 ) return;
 
 for( int i = 0; i < w[800ad0d4]; ++i ) // num of entitys
 {
@@ -829,30 +1313,11 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // num of entitys
     struct_138 = w[struct_5c + 4c];
     struct_164 = w[struct_5c + 4];
 
-    if( ( w[struct_5c + 58] & 0060 ) != 0040 )
-    {
-        continue;
-    }
-
-    if( w[struct_138 + 4] & 00102200 )
-    {
-        continue;
-    }
-
-    if( w[struct_138 + 4] & 00000800 )
-    {
-        continue;
-    }
-
-    if( w[struct_138 + 0] & 00010000 )
-    {
-        continue;
-    }
-
-    if( w[struct_138 + 14] & 00200002 )
-    {
-        continue;
-    }
+    if( ( w[struct_5c + 58] & 0060 ) != 0040 ) continue;
+    if( w[struct_138 + 4] & 00102200 ) continue;
+    if( w[struct_138 + 4] & 00000800 ) continue;
+    if( w[struct_138 + 0] & 00010000 ) continue;
+    if( w[struct_138 + 14] & 00200002 ) continue;
 
     [SP + 28] = w(0);
     [SP + 2c] = w(0);
@@ -972,24 +1437,24 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // num of entitys
     TRY    = w[SP + 78 + 18];
     TRZ    = w[SP + 78 + 1c]
 
-    packets = w[struct_5c + 8];
+    shadow = w[struct_5c + 8];
 
-    A0 = packets +  0;                // xyz0
-    A1 = packets +  8;                // xyz1
-    A2 = packets + 10;                // xyz2
-    A3 = packets + 18;                // xyz3
-    A4 = packets + rb * 28 + 20 +  8; // xy0
-    A5 = packets + rb * 28 + 20 + 10; // xy1
-    A6 = packets + rb * 28 + 20 + 18; // xy3
-    A7 = packets + rb * 28 + 20 + 20; // xy2
+    A0 = shadow +  0;                // xyz0
+    A1 = shadow +  8;                // xyz1
+    A2 = shadow + 10;                // xyz2
+    A3 = shadow + 18;                // xyz3
+    A4 = shadow + rb * 28 + 20 +  8; // xy0
+    A5 = shadow + rb * 28 + 20 + 10; // xy1
+    A6 = shadow + rb * 28 + 20 + 18; // xy3
+    A7 = shadow + rb * 28 + 20 + 20; // xy2
     A8 = SP + c8;                     // Interpolation value for depth queing. (not used)
     A9 = SP + cc;                     // return flags (not used)
     system_psyq_rot_average_4();
     otz = V0;
 
     A1 = otag + (otz >> w[8004f7a4]) * 4;
-    [packets + rb * 28 + 20] = w((w[packets + rb * 28 + 20] & ff000000) | (w[A1] & 00ffffff));
-    [A1] = w((w[A1] & ff000000) | ((packets + rb * 28 + 20) & 00ffffff));
+    [shadow + rb * 28 + 20] = w((w[shadow + rb * 28 + 20] & ff000000) | (w[A1] & 00ffffff));
+    [A1] = w((w[A1] & ff000000) | ((shadow + rb * 28 + 20) & 00ffffff));
 }
 ////////////////////////////////
 
@@ -1593,10 +2058,7 @@ system_psyq_wait_frames();
 // func76f14()
 // load 3d models
 
-if( w[800b1738] == 0 )
-{
-    return;
-}
+if( w[800b1738] == 0 ) return;
 
 func89af4(); // wait cdrom finish
 
@@ -1625,42 +2087,26 @@ system_memory_allocate();
 A0 = 1;
 field_particle_restore_texture();
 
-if( w[800b1738] > 0 )
+for( int i = 0; i < w[800b1738]; ++i )
 {
-    S1 = 0;
-    S3 = 80059ae0;
-    80076FCC	addiu  s4, v1, $ff78 (=-$88)
-    S2 = S4;
-    S0 = 0008;
+    file = 6bb + hu[800b1738 - 88 + i * 2];
 
-    loop76fd8:	; 80076FD8
-        V0 = hu[S2 + 0000];
-        S1 = S1 + 1;
-        V0 = V0 + 6bb;
-        [800b1868 + S0] = h(V0);
-        A0 = h[S2 + 0000];
-        S2 = S2 + 2;
-        A0 = A0 + 6bb;
-        system_get_aligned_filesize_by_dir_file_id();
+    [800b1868 + i * 10 + 8] = h(file);
+    A0 = file;
+    system_get_aligned_filesize_by_dir_file_id();
 
-        A0 = V0;
-        A1 = 1;
-        system_memory_allocate();
-
-        [S3 + 0000] = w(V0);
-        S3 = S3 + 4;
-        [800b186c + S0] = w(V0);
-        V0 = w[S4 + 88];
-        S0 = S0 + 10;
-        V0 = S1 < V0;
-    8007702C	bne    v0, zero, loop76fd8 [$80076fd8]
+    A0 = V0;
+    A1 = 1;
+    system_memory_allocate();
+    [80059ae0 + i * 4] = w(V0);
+    [800b1868 + i * 10 + c] = w(V0);
 }
 
 S1 = 0;
 if( w[800b1738] > 0 )
 {
     S3 = 80059ab0;
-    80077054	addiu  s4, v1, $ff78 (=-$88)
+    S4 = 800b1738 - 88;
     S2 = S4;
     S0 = 0;
 
@@ -1703,7 +2149,7 @@ system_load_files_by_array();
 
 
 ////////////////////////////////
-// func77144
+// func77144()
 
 S0 = 800b1738;
 V0 = w[S0 + 0000];

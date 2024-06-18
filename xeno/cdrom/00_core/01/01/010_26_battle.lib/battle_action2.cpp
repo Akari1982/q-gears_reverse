@@ -6003,7 +6003,7 @@ if( w[80010000] != -1 )
 S0 = S0 - 28;
 
 A0 = w[800cc254];
-func24ed4();
+system_sprite_reset_buffers();
 
 funcbb040();
 

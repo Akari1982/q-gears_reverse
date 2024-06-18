@@ -448,7 +448,7 @@
                         0x000001c0 - current script stack pointer.
                         0x00000e00 - interaction direction (from leader entity to current). Remove during entity init.
                         0x00001000 - remove during entity init. Checked in func81aa8(). If set then struct_138 + 114 allocated.
-                        0x0000e000 - index in model pointers 801e8670.
+                        0x0000e000 - index in gear pointers 801e8670 for this entity gear.
                         0x00030000 - remove during entity init.
                         0x0ffc0000 - remove during entity init.
 

@@ -16,14 +16,8 @@ dx = x2 - x1;
 dy = y2 - y1;
 dz = z2 - z1;
 
-if( dx < dy )
-{
-    A1 = dy;
-}
-if( A1 < dz )
-{
-    A1 = dz;
-}
+if( dx < dy ) A1 = dy;
+if( A1 < dz ) A1 = dz;
 
 [model_data + 18] = h(x1 + dx / 2);
 [model_data + 1a] = h(y1 + dy / 2);

@@ -823,9 +823,9 @@ func70358(); // parse field
 
 field_load_main_map_texture_into_vram();
 
-V0 = w[800b1738];
 [800af1d8] = w(1);
-if( V0 != 0 )
+
+if( w[800b1738] != 0 )
 {
     A0 = 1;
     func1e7378();
@@ -1069,8 +1069,7 @@ V0 = S1 < 0008;
 80078830	nop
 
 L78834:	; 80078834
-V0 = w[800b1738];
-if( V0 != 0 )
+if( w[800b1738] != 0 )
 {
     A0 = 0;
     func1e7378();

@@ -5072,6 +5072,7 @@ V0 = ((V1 >> 5) & 1) XOR ((V1 >> 4) & 1);
 
 ////////////////////////////////
 // func224f0()
+
 struct_164 = A0;
 S4 = A1; // pointer to start of sprite sequence data.
 S5 = A2; // +a8 0x0fc00000 flags
@@ -7385,17 +7386,16 @@ V0 = w[GP + 188];
 
 
 ////////////////////////////////
-// func24ed4()
-// clear some set of images
+// system_sprite_reset_buffers()
 
-S1 = A0;
-S0 = w[800589a0 + S1 * 4];
+rb = A0;
 
-[GP + 188] = w(S1);
-[GP + 3b0] = w(w[80058b50 + S1 * 4]);
-[GP + 3c0] = w(w[80058b50 + S1 * 4] + w[GP + 18c]); // set max
-[GP + 40c] = w(w[80058b50 + S1 * 4]);               // set start of memory
+[GP + 188] = w(rb);
+[GP + 3b0] = w(w[80058b50 + rb * 4]);
+[GP + 3c0] = w(w[80058b50 + rb * 4] + w[GP + 18c]); // set max
+[GP + 40c] = w(w[80058b50 + rb * 4]);               // set start of memory
 
+S0 = w[800589a0 + rb * 4];
 while( S0 != 0 )
 {
     A0 = w[S0];
@@ -7403,8 +7403,7 @@ while( S0 != 0 )
 
     S0 = w[S0 + 4];
 }
-
-[800589a0 + S1 * 4] = w(0);
+[800589a0 + rb * 4] = w(0);
 ////////////////////////////////
 
 

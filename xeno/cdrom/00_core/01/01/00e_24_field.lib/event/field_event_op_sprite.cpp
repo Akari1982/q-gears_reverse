@@ -4,7 +4,7 @@
 entity_id = w[800af1f0];
 sprite_data = w[800aeff0];
 struct_5c_p = w[800aefe4];
-struct_138 = w[800af54c];
+struct_138_cur = w[800af54c];
 
 [struct_5c_p + entity_id * 5c + 58] = h((hu[struct_5c_p + entity_id * 5c + 58] & f07f) | 0200);
 
@@ -22,9 +22,9 @@ field_sprite_init();
 
 funca0224();
 
-[struct_138 + 0] = w((w[struct_138 + 0] | 00000100) & ffffff7f); // make solid
-[struct_138 + 4] = w(w[struct_138 + 4] & fffff7ff);
-[struct_138 + cc] = h(hu[struct_138 + cc] + 3);
+[struct_138_cur + 0] = w((w[struct_138_cur + 0] | 00000100) & ffffff7f); // make solid
+[struct_138_cur + 4] = w(w[struct_138_cur + 4] & fffff7ff);
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 3);
 
 [struct_5c_p + entity_id * 5c + 58] = h(hu[struct_5c_p + entity_id * 5c + 58] & ffdf);
 ////////////////////////////////
@@ -38,7 +38,7 @@ funca0224();
 entity_id = w[800af1f0];
 sprite_data = w[800aeff0];
 struct_5c_p = w[800aefe4];
-struct_138 = w[800af54c];
+struct_138_cur = w[800af54c];
 
 A0 = 1;
 field_event_help_read_v80();
@@ -51,7 +51,7 @@ A0 = character_id;
 get_party_slot_id();
 party_slot_id = V0;
 
-[struct_138 + e4] = h(character_id);
+[struct_138_cur + e4] = h(character_id);
 
 [struct_5c_p + V1 * 5c + 58] = h((hu[struct_5c_p + entity_id * 5c + 58] & f07f) | 0200);
 
@@ -63,7 +63,7 @@ if( party_slot_id != -1 )
     {
         [800b1740] = w(entity_id);
         [800b1812] = h(entity_id);
-        [struct_138 + 0] = w((w[struct_138 + 0] | 00004400) & ffffff7f); // set solid
+        [struct_138_cur + 0] = w((w[struct_138_cur + 0] | 00004400) & ffffff7f); // set solid
     }
 
     [80059ad4 + party_slot_id * 4] = w(entity_id);
@@ -81,7 +81,7 @@ if( party_slot_id != -1 )
         A6 = 1;
         field_sprite_init();
 
-        [struct_138 + 0] = w((w[struct_138 + 0] | 00000400) & fffffcff);
+        [struct_138_cur + 0] = w((w[struct_138_cur + 0] | 00000400) & fffffcff);
 
         V1 = w[80059a38];
         if( bu[V1 + party_slot_id + 22b1] != 0 )
@@ -91,7 +91,7 @@ if( party_slot_id != -1 )
             y = w[struct_5c_p + entity_id * 5c + 4]
             [struct_5c_p + entity_id * 5c + 0] = w(x);
             [struct_5c_p + A0 * 5c + 4] = w(y);
-            [struct_5c_p + A0 * 5c + 0] = w((w[struct_138 + 0] | 00000200) & fffffaff;
+            [struct_5c_p + A0 * 5c + 0] = w((w[struct_138_cur + 0] | 00000200) & fffffaff;
         }
     }
     else
@@ -105,7 +105,7 @@ if( party_slot_id != -1 )
         A6 = 1;
         field_sprite_init();
 
-        [struct_138 + 0] = w((w[struct_138 + 0] | 00000400) & fffffcff);
+        [struct_138_cur + 0] = w((w[struct_138_cur + 0] | 00000400) & fffffcff);
     }
 
     [800af1f4] = h(ff40);
@@ -120,7 +120,7 @@ if( party_slot_id != -1 )
 
     funca0224;
 
-    [struct_138 + 4] = w([struct_138 + 4] & fffff7ff);
+    [struct_138_cur + 4] = w([struct_138_cur + 4] & fffff7ff);
 }
 else
 {
@@ -133,16 +133,16 @@ else
     A6 = 1;
     field_sprite_init();
 
-    [struct_138 + 0] = w(w[struct_138 + 0] | 00000001);
-    [struct_138 + 4] = w(w[struct_138 + 4] | 00100000);
+    [struct_138_cur + 0] = w(w[struct_138_cur + 0] | 00000001);
+    [struct_138_cur + 4] = w(w[struct_138_cur + 4] | 00100000);
 
     [800af4c0] = w(1); // finish at wait
     [800af594] = w(1); // wait
 }
 
-[struct_138 + 0] = w(w[struct_138 + 0] | 00020000);
-[struct_138 + 4] = w(w[struct_138 + 4] | 00000400);
-[struct_138 + cc] = h(hu[struct_138 + cc] + 3);
+[struct_138_cur + 0] = w(w[struct_138_cur + 0] | 00020000);
+[struct_138_cur + 4] = w(w[struct_138_cur + 4] | 00000400);
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 3);
 ////////////////////////////////
 
 
@@ -324,18 +324,20 @@ L9fa90:	; 8009FA90
 
 ////////////////////////////////
 // field_event_op93();
+// set gear to load
 
+entity_id = w[800af1f0];
+struct_138_cur = w[800af54c];
 sprite_data = w[800aeff0];
+struct_5c_p = w[800aefe4];
 
-V1 = w[800af1f0];
-V1 = w[800aefe4] + V1 * 5c;
-[V1 + 58] = h((hu[V1 + 58] & f07f) | 0200);
+[struct_5c_p + entity_id * 5c + 58] = h((hu[struct_5c_p + entity_id * 5c + 58] & f07f) | 0200);
 
 A0 = 1;
 field_event_help_read_v80();
 S0 = V0 * 2;
 
-A0 = w[800af1f0];
+A0 = entity_id;
 A1 = 0; // sprite id
 A2 = sprite_data + w[sprite_data + 4];
 A3 = 0;
@@ -346,28 +348,17 @@ field_sprite_init();
 
 funca0224();
 
-A0 = w[800af54c];
-[A0 + cc] = h(hu[A0 + cc] + 3);
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 3);
 
-[A0 + 0] = w(w[A0 + 0] | 00000100);
+[struct_5c_p + entity_id * 5c + 58] = h(hu[struct_5c_p + entity_id * 5c + 58] & ffdf);
 
-V1 = w[800af1f0];
-V0 = V1 * 5c;
-V1 = w[800aefe4];
-
-V0 = V0 + V1;
-[V0 + 58] = h(hu[V0 + 58] & ffdf);
-
-[A0 + 4] = w((w[A0 + 4] | 00002000) & fffff7ff);
+[struct_138_cur + 0] = w(w[struct_138_cur + 0] | 00000100);
+[struct_138_cur + 4] = w((w[struct_138_cur + 4] | 00002000) & fffff7ff);
 
 V0 = w[800b1738];
 [800b16b0 + V0 * 2] = h(S0);
-
-V0 = w[800b1738];
 [800b1733 + V0] = b(0);
-
-A0 = w[800af54c];
-[A0 + 12c] = w((w[A0 + 12c] & ffff1fff) | ((w[800b1738] & 7) << d));
+[struct_138_cur + 12c] = w((w[struct_138_cur + 12c] & ffff1fff) | ((V0 & 7) << d));
 
 [800b1738] = w(w[800b1738] + 1);
 ////////////////////////////////
@@ -380,7 +371,7 @@ A0 = w[800af54c];
 
 entity_id = w[800af1f0];
 sprite_data = w[800aeff0];
-struct_138 = w[800af54c];
+struct_138_cur = w[800af54c];
 
 A0 = entity_id;
 A1 = 0; // sprite id
@@ -393,9 +384,9 @@ field_sprite_init();
 
 funca0224();
 
-[struct_138 + 0] = w(w[struct_138 + 0] | 00000100);
-[struct_138 + 4] = w(w[struct_138 + 4] | 00000800);
-[struct_138 + cc] = h(hu[struct_138 + cc] + 1);
+[struct_138_cur + 0] = w(w[struct_138_cur + 0] | 00000100);
+[struct_138_cur + 4] = w(w[struct_138_cur + 4] | 00000800);
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 1);
 ////////////////////////////////
 
 
@@ -409,20 +400,20 @@ V1 = w[800aefe4];
 
 A0 = 1;
 field_event_help_read_v80();
-S1 = V0;
+sprite_id = V0;
 
 V1 = w[800aeff0];
-S0 = V1 + w[V1 + S1 * 4 + 4];
+S0 = V1 + w[V1 + sprite_id * 4 + 4];
 
 A0 = 3;
 field_event_help_read_v80();
 
 A0 = w[800af1f0];
-A1 = S1; // sprite id
+A1 = sprite_id;
 A2 = S0;
 A3 = 0;
 A4 = V0;
-A5 = S1 | 80;
+A5 = sprite_id | 80;
 A6 = 1;
 field_sprite_init();
 
@@ -953,20 +944,11 @@ L8b740:	; 8008B740
 
 
 ////////////////////////////////
-// func8b754
-8008B754	addiu  sp, sp, $ffb8 (=-$48)
+// func8b754()
+
 V0 = 80059ad4;
-[SP + 0034] = w(S5);
 S5 = A0 << 02;
-[SP + 0038] = w(S6);
 S6 = S5 + V0;
-[SP + 0040] = w(RA);
-[SP + 003c] = w(S7);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0028] = w(S2);
-[SP + 0024] = w(S1);
-[SP + 0020] = w(S0);
 V1 = w[S6 + 0000];
 S7 = 00ff;
 8008B794	beq    v1, s7, L8b8c0 [$8008b8c0]
@@ -1034,23 +1016,7 @@ V1 = V1 | 0400;
 [S6 + 0000] = w(S7);
 
 L8b8c0:	; 8008B8C0
-8008B8C0	lui    at, $8006
-AT = AT + S5;
-[AT + 1c20] = w(S7);
-8008B8CC	lui    at, $8007
-AT = AT + S5;
-[AT + f14c] = w(S7);
-RA = w[SP + 0040];
-S7 = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0048;
-8008B900	jr     ra 
-8008B904	nop
+[80061c20 + S5] = w(S7);
+[8006f14c + S5] = w(S7);
 ////////////////////////////////
 
