@@ -454,142 +454,98 @@ while( poly_n != 0 )
 ////////////////////////////////
 // system_model_poly_render_packet_2_04()
 
-S0 = w[80058bd8];
-A3 = w[80058bc8];
-S2 = w[80058c14];
-S3 = w[80058ac0];
-S4 = w[80058c04];
-V0 = w[8004f7a0];
-V1 = w[8004f79c];
-T9 = w[8004f7a4];
-S7 = w[80058b34];
-S6 = ffffff;
-8002F534	lui    a2, $1f80
-T4 = w[A0 + 0000];
-T5 = hu[A0 + 0004];
-T6 = T4 & ffff;
-T6 = T6 << 03;
-T6 = T6 + S0;
-T7 = T4 >> 0d;
-T7 = T7 & fff8;
-T7 = T7 + S0;
-T8 = T5 << 03;
-T8 = T8 + S0;
-8002F560	addiu  s3, s3, $ffe4 (=-$1c)
-8002F564	sub    a3, a3, s0
+polygons = A0;
+poly_n = A1;
 
-loop2f568:	; 8002F568
-    VXY0 = w[T6 + 0000];
-    VZ0 = w[T6 + 0004];
-    VXY1 = w[T7 + 0000];
-    VZ1 = w[T7 + 0004];
-    VXY2 = w[T8 + 0000];
-    VZ2 = w[T8 + 0004];
-    8002F580	beq    a1, zero, L2f6cc [$8002f6cc]
+vertex_block = w[80058bd8]; // pointer to vertex block in model data
+poly_count = w[80058c14]; // PolyCount
+packet = w[80058ac0]; // offset to place for packets
+rdata = w[80058c04];
+normal = w[80058b34];
+
+A3 = w[80058bc8] - vertex_block;
+
+while( poly_n != 0 )
+{
+    vertex1 = hu[polygons + 0];
+    vertex2 = hu[polygons + 2];
+    vertex3 = hu[polygons + 4];
+    T6 = vertex_block + vertex1 * 8;
+    T7 = vertex_block + vertex2 * 8;
+    T8 = vertex_block + vertex3 * 8;
+    VXY0 = w[T6 + 0];
+    VZ0 = w[T6 + 4];
+    VXY1 = w[T7 + 0];
+    VZ1 = w[T7 + 4];
+    VXY2 = w[T8 + 0];
+    VZ2 = w[T8 + 4];
+
     gte_RTPT(); // Perspective transform on 3 points
-    8002F588	add    t6, t6, a3
-    8002F58C	add    t7, t7, a3
-    8002F590	add    t8, t8, a3
-    [A2 + 0000] = w(T6);
-    [A2 + 0004] = w(T7);
-    [A2 + 0008] = w(T8);
-    8002F5A0	addiu  a1, a1, $ffff (=-$1)
-    A0 = A0 + 0008;
-    S7 = S7 + 0004;
-    T4 = w[A0 + 0000];
-    T5 = hu[A0 + 0004];
-    S3 = S3 + 001c;
-    T6 = T4 & ffff;
-    T6 = T6 << 03;
-    T6 = T6 + S0;
-    T7 = T4 >> 0d;
-    T7 = T7 & fff8;
-    T7 = T7 + S0;
-    T8 = T5 << 03;
-    T8 = T8 + S0;
-    T0 = LZCR;
-    T1 = SXY0;
-    8002F5E0	bltz   t0, loop2f568 [$8002f568]
-    T0 = T1 < V0;
-    T2 = SXY1;
-    T3 = SXY2P;
-    gte_NCLIP(); // Normal clipping
-    8002F5F4	bne    t0, zero, L2f608 [$8002f608]
-    T0 = T2 < V0;
-    8002F5FC	bne    t0, zero, L2f608 [$8002f608]
-    T0 = T3 < V0;
-    8002F604	beq    t0, zero, loop2f568 [$8002f568]
 
-    L2f608:	; 8002F608
-    T0 = T1 & ffff;
-    T0 = T0 < V1;
-    8002F610	bne    t0, zero, L2f62c [$8002f62c]
-    T0 = T2 & ffff;
-    T0 = T0 < V1;
-    8002F61C	bne    t0, zero, L2f62c [$8002f62c]
-    T0 = T3 & ffff;
-    T0 = T0 < V1;
-    8002F628	beq    t0, zero, loop2f568 [$8002f568]
+    [1f800000] = w(T6 + A3);
+    [1f800004] = w(T7 + A3);
+    [1f800008] = w(T8 + A3);
 
-    L2f62c:	; 8002F62C
-    T0 = MAC0;
-    [S3 + 0008] = w(T1);
-    8002F634	blez   t0, loop2f568 [$8002f568]
-    [S3 + 0010] = w(T2);
-    gte_AVSZ3(); // Average of three Z values
-    [S3 + 0018] = w(T3);
-    S3 = S3 & S6;
-    T0 = OTZ;
-    8002F64C	nop
-    8002F650	beq    t0, zero, loop2f568 [$8002f568]
-    T2 = w[A2 + 0000];
-    S2 = S2 + 0001;
-    VXY0 = w[T2 + 0000];
-    T1 = w[A2 + 0004];
-    VZ0 = w[T2 + 0004];
-    T2 = w[A2 + 0008];
-    VXY1 = w[T1 + 0000];
-    VZ1 = w[T1 + 0004];
-    T1 = w[S7 + fffc];
-    VXY2 = w[T2 + 0000];
-    VZ2 = w[T2 + 0004];
-    RGB = T1;
-    8002F684	gte_func24t8,r11r12
-    3F04184B
-0011 1111 0000 0100 0001 1000 0100 1011
+    if( LZCR >= 0 )
+    {
+        gte_NCLIP(); // Normal clipping
 
-    11111
-    01011
+        if( ( SXY0 < w[8004f7a0] ) || ( SXY1 < w[8004f7a0] ) || ( SXY2P < w[8004f7a0] ) )
+        {
+            if( ( ( SXY0 & ffff ) < w[8004f79c] ) || ( ( SXY1 & ffff ) < w[8004f79c] ) || ( ( SXY2P & ffff ) < w[8004f79c] ) )
+            {
+                depth = MAC0;
+                [packet + 8] = w(SXY0);
+                [packet + 10] = w(SXY1);
+                [packet + 18] = w(SXY2P);
 
+                if( depth > 0 )
+                {
+                    gte_AVSZ3(); // Average of three Z values
 
-gte_RTPT(); // Perspective transform on 3 points
+                    packet &= 00ffffff;
 
-0100101
+                    if( OTZ != 0 )
+                    {
+                        T2 = w[1f800000];
+                        poly_count++;
+                        VXY0 = w[T2 + 0];
+                        VZ0 = w[T2 + 4];
+                        T1 = w[1f800004];
+                        VXY1 = w[T1 + 0];
+                        VZ1 = w[T1 + 4];
+                        T2 = w[1f800008];
+                        VXY2 = w[T2 + 0];
+                        VZ2 = w[T2 + 4];
 
-3000284A
-0000 0010 1000 0000 0000 0011 0000        0280030
-0100 0001 0000 0000 0000 0001 1
+                        T1 = w[normal];
+                        RGB = T1;
 
+                        gte_NCCT(); // Normal color col.v0, v1, v2
 
+                        depth >>= w[8004f7a4];
+                        [packet +  4] = w((T1 & ff000000) | (RGB0 & 00ffffff));
+                        [packet +  c] = w(RGB1);
+                        [packet + 14] = w(RGB2);
 
-    T0 = T0 >> T9;
-    T0 = T0 << 02;
-    T0 = T0 + S4;
-    T1 = T1 & ff000000;
-    T2 = RGB0 & S6;
-    T1 = T1 | T2;
-    [S3 +  4] = w(T1);
-    [S3 +  c] = w(RGB1);
-    [S3 + 14] = w(RGB2);
-    T1 = w[T0];
-    [T0] = w(S3);
-    [S3] = w(T1 | 06000000);
-8002F6C4	j      loop2f568 [$8002f568]
+                        T1 = w[rdata + depth * 4];
+                        [rdata + depth * 4] = w(packet);
+                        [packet] = w(T1 | 06000000);
+                    }
+                }
+            }
+        }
+    }
 
-L2f6cc:	; 8002F6CC
-[80058b34] = w(S7);
-[80058c14] = w(S2);
-[80058ac0] = w(S3 + 1c);
+    poly_n--;
+    polygons += 8;
+    normal += 4;
+    packet += 1c;
+}
+
+[80058b34] = w(normal);
+[80058c14] = w(poly_count);
+[80058ac0] = w(packet);
 ////////////////////////////////
 
 
@@ -629,12 +585,6 @@ VXY2 = w[T8 + 0000];
 VZ2 = w[T8 + 0004];
 8002F378	beq    a1, zero, L2f4b8 [$8002f4b8]
 gte_RTPT(); // Perspective transform on 3 points
-
-0100101
-
-3000284A
-0280030
-0011 0000 0000 0000 0010 1000 0100 1010
 
 8002F380	add    t6, t6, a3
 8002F384	add    t7, t7, a3
