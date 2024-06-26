@@ -143,6 +143,8 @@
 
 800aed2c [][][][] store 0 here at start of movement calc.
 
+800aed30 some matrix.
+
 800aed54 [][][][] Camera eye x pos. Init with 0.
 800aed58 [][][][] Camera eye y pos. Init with 0.
 800aed5c [][][][] Camera eye z pos. Init with 0.
@@ -189,6 +191,7 @@
 800aee5c [][][][] store 1 here if 800b16ac not 0. Init with 8.
 800aee60 [][]     some rotation (maybe camera rotation). Init with 0.
 800aee62 [][]     init with 0.
+800aee64 some matrix.
 800aee84 some rotation and translation matrix inited with 0.
 800aeea4 [][]     init with 0.
 800aeea6 [][]     init with 0.
@@ -234,7 +237,7 @@
 800aef14 [][][][] increment for 800aef08. Init with 0.
 800aef18 [][][][] increment for 800aef0c. Init with 0.
 
-800aef38 some matrix and translation.
+800aef38 looks like final camera matrix used to render all objects.
 800aef78 some matrix and translation.
 
 800aefe0 [][][][] number of entity objects.
@@ -601,6 +604,10 @@
 800b164c [][]     additional rotation for movement (can be set from script).
 
 800b1654 [][][][] increment during each actor initialization.
+
+800b1658 [][]     camera base x rot.
+800b165a [][]     camera base y rot.
+800b165c [][]     camera base z rot.
 
 800b1660 [][][][] base walking speed. Move length (1 << 0xc) (can be set from script).
 

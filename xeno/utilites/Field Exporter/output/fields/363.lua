@@ -32,4 +32,15 @@ Actor_0x00:on_update:
 0x004b    op26_Wait( time=5 )
 0x004e    op74_SoundPlayFixedVolume( sound_id=277 )
 0x0051    opF1_FadeSetUp( steps=1, r=200, g=200, b=100, semi_tr=3 )
-0x005c    -- MISSING OPCODE 0xf2
+0x005c    -- 0xF2()
+0x0065    op74_SoundPlayFixedVolume( sound_id=81 )
+0x0068    op26_Wait( time=3 )
+0x006b    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=3 )
+0x0076    op26_Wait( time=3 )
+0x0079    op74_SoundPlayFixedVolume( sound_id=276 )
+0x007c    op26_Wait( time=5 )
+0x007f    op74_SoundPlayFixedVolume( sound_id=277 )
+0x0082    -- 0xF2()
+0x008b    op26_Wait( time=32 )
+0x008e    -- 0xF2()
+0x0097    -- MISSING OPCODE 0x91

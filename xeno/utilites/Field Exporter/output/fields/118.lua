@@ -17,4 +17,57 @@ Actor_0x00:on_start:
 0x0018    op00_Return()
 
 Actor_0x00:on_update:
-0x0019    -- MISSING OPCODE 0xc9
+0x0019    -- 0xC9()
+0x001d    -- 0x15()
+0x001e    -- 0x98_MapLoad( field_id=102, value=14 )
+0x0023    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0024    op00_Return()
+
+Actor_0x01:on_start:
+0x0025    -- 0xBC_ActorNoModelInit()
+0x0026    -- 0x2A()
+0x0027    op00_Return()
+
+Actor_0x01:on_update:
+0x0028    -- 0xE1_BackgroundSetTex()
+0x0036    op26_Wait( time=5 )
+0x0039    -- 0xE1_BackgroundSetTex()
+0x0047    op26_Wait( time=5 )
+0x004a    -- 0xE1_BackgroundSetTex()
+0x0058    op26_Wait( time=5 )
+0x005b    -- 0xE1_BackgroundSetTex()
+0x0069    op26_Wait( time=5 )
+0x006c    op01_JumpTo( address=0x28 )
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x006f    op00_Return()
+
+Actor_0x02:on_start:
+0x0070    -- 0x16_ActorPCInit( char_id=0 )
+0x0073    opFE0D_MessageSetFace( char_id=0 )
+0x0077    op00_Return()
+
+Actor_0x02:on_update:
+0x0078    -- 0xA7()
+0x0079    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x007a    op00_Return()
+
+Actor_0x02:event_0x04:
+0x007b    opFE4A_SpriteAddAnimLoad( file=0 )
+0x007f    opFE4B_SpriteAddAnimSync()
+0x0081    op00_Return()
+
+Actor_0x02:event_0x05:
+
+Actor_0x02:event_0x06:
+0x0082    -- MISSING OPCODE 0xFE8b

@@ -19,4 +19,71 @@ Actor_0x00:on_start:
 0x0028    -- 0xA0()
 0x002f    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x40 )
 0x0037    -- 0x75( ???=46 )
-0x003a    -- MISSING OPCODE 0xFE18
+0x003a    -- 0xFE18()
+0x003f    op00_Return()
+0x0040    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x5e )
+0x0048    -- 0x75( ???=46 )
+0x004b    -- 0xFE19( char_id=0x0 )
+0x004e    -- 0xFE18()
+0x0053    -- 0xFE18()
+0x0058    -- 0xFE18()
+0x005d    op00_Return()
+0x005e    -- 0x75( ???=7 )
+0x0061    op00_Return()
+
+Actor_0x00:on_update:
+0x0062    opC6_ExpandRun() -- exp0x20
+0x0063    -- 0xE1_BackgroundSetTex()
+0x0071    op26_Wait( time=6 )
+0x0074    -- 0xE1_BackgroundSetTex()
+0x0082    op26_Wait( time=6 )
+0x0085    -- 0xE1_BackgroundSetTex()
+0x0093    op26_Wait( time=6 )
+0x0096    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0097    op00_Return()
+
+Actor_0x01:on_start:
+0x0098    -- 0x16_ActorPCInit( char_id=0 )
+0x009b    opFE0D_MessageSetFace( char_id=0 )
+0x009f    op00_Return()
+
+Actor_0x01:on_update:
+0x00a0    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xad )
+0x00a8    -- 0xA7()
+0x00a9    op00_Return()
+0x00aa    op01_JumpTo( address=0xaf )
+0x00ad    -- 0x5A()
+0x00ae    op00_Return()
+0x00af    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00b0    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00b1    op2C_SpritePlayAnim( anim_id=0xc )
+0x00b3    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00b4    op2C_SpritePlayAnim( anim_id=0x4 )
+0x00b6    op00_Return()
+
+Actor_0x01:event_0x06:
+0x00b7    op2C_SpritePlayAnim( anim_id=0x5 )
+0x00b9    op00_Return()
+
+Actor_0x01:event_0x07:
+0x00ba    op2C_SpritePlayAnim( anim_id=0x7 )
+0x00bc    op00_Return()
+
+Actor_0x01:event_0x08:
+0x00bd    op2C_SpritePlayAnim( anim_id=0xff )
+0x00bf    op00_Return()
+
+Actor_0x01:event_0x09:
+0x00c0    -- MISSING OPCODE 0x1b

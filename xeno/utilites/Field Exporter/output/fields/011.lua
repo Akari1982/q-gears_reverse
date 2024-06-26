@@ -179,4 +179,19 @@ Actor_0x0a:on_start:
 0x00bf    op00_Return()
 
 Actor_0x0a:on_update:
-0x00c0    -- MISSING OPCODE 0xe1
+0x00c0    -- 0xE1_BackgroundSetTex()
+0x00ce    op26_Wait( time=4 )
+0x00d1    -- 0xE1_BackgroundSetTex()
+0x00df    op26_Wait( time=4 )
+0x00e2    -- 0xE1_BackgroundSetTex()
+0x00f0    op26_Wait( time=4 )
+0x00f3    op00_Return()
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x00f4    op00_Return()
+
+Actor_0x0b:on_start:
+0x00f5    -- 0xBC_ActorNoModelInit()
+0x00f6    -- MISSING OPCODE 0x1d

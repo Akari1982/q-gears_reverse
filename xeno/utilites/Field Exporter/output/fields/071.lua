@@ -50,7 +50,7 @@ Actor_0x00:on_update:
 0x0097    op26_Wait( time=10 )
 0x009a    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x03 )
 0x009d    opEF_MoveCameraSync()
-0x00a0    op02_JumpToConditional( val1=mem[0x42a], val2=1, condition="val1 != val2", address_if_false=0xab )
+0x00a0    op02_JumpToConditional( val1=(s)mem[0x42a], val2=1, condition="val1 != val2", address_if_false=0xab )
 0x00a8    op01_JumpTo( address=0xa0 )
 0x00ab    -- 0x60()
 0x00ac    -- 0x64() -- exp0x1
@@ -115,4 +115,28 @@ Actor_0x00:on_update:
 0x01a2    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x04, priority=0x03 )
 0x01a5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x11, flags=CLOSE_OFF_SCREEN )
 0x01ab    -- 0x87_SetProgress( progress=51 )
-0x01ae    -- MISSING OPCODE 0x9a
+0x01ae    -- 0x9A()
+0x01b1    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x03 )
+0x01b4    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
+0x01b7    mem[0x400] = false -- op37
+0x01ba    mem[0xc0] |= 1 << 7 -- op3a
+0x01c0    -- 0xFE24()
+0x01c2    op26_Wait( time=4 )
+0x01c5    -- 0xFE54()
+0x01c7    op01_JumpTo( address=0x202 )
+0x01ca    op02_JumpToConditional( val1=(s)mem[0xc0], val2=8, condition="val1 & val2", address_if_false=0x1e9 )
+0x01d2    op02_JumpToConditional( val1=(s)mem[0xc0], val2=16, condition="val1 & val2", address_if_false=0x1e3 )
+0x01da    mem[0x404] = 3 -- op35
+0x01e0    op01_JumpTo( address=0x1e9 )
+0x01e3    mem[0x404] = 1 -- op35
+0x01e9    op02_JumpToConditional( val1=(s)mem[0xc0], val2=16, condition="val1 & val2", address_if_false=0x202 )
+0x01f1    op02_JumpToConditional( val1=(s)mem[0xc0], val2=8, condition="val1 & val2", address_if_false=0x1fc )
+0x01f9    op01_JumpTo( address=0x202 )
+0x01fc    mem[0x404] = 2 -- op35
+0x0202    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x21b )
+0x020a    -- 0xFE54()
+0x020c    mem[0x400] = true -- op36
+0x020f    op05_CallFunction( address=0x2ef )
+0x0212    mem[0xc0] |= 1 << 5 -- op3a
+0x0218    mem[0x400] = false -- op37
+0x021b    -- MISSING OPCODE 0x28

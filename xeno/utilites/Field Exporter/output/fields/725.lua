@@ -361,4 +361,6 @@ Actor_0x11:on_talk:
 0x02b6    op9C_MessageSync()
 0x02b7    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x2eb )
 0x02bf    op05_CallFunction( address=0x3e7 )
-0x02c2    -- MISSING OPCODE 0xFE18
+0x02c2    -- 0xFE18()
+0x02c7    -- 0xFE18()
+0x02cc    -- MISSING OPCODE 0xb5

@@ -20,4 +20,10 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0074    -- 0xFE54()
 0x0076    -- 0x75( ???=255 )
-0x0079    -- MISSING OPCODE 0xFE65
+0x0079    -- 0xFE65()
+0x007f    -- 0xFE65()
+0x0085    mem[0x404] = 0 -- op35
+0x008b    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0096    op26_Wait( time=1 )
+0x0099    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=120 )
+0x00a4    -- MISSING OPCODE 0x29

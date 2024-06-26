@@ -334,7 +334,7 @@ for( int i = 0; i < 8; ++i )
 
 if( w[800ad00c] == 0 )
 {
-    // some matrix
+    // camera matrix
     [SP + 10] = w(w[800aef38 + 0])
     [SP + 14] = w(w[800aef38 + 4])
     [SP + 18] = w(w[800aef38 + 8])

@@ -18,4 +18,22 @@ Actor_0x00:on_start:
 0x001b    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x41 )
 0x0023    -- 0xA0()
 0x002a    op74_SoundPlayFixedVolume( sound_id=292 )
-0x002d    -- MISSING OPCODE 0xFE65
+0x002d    -- 0xFE65()
+0x0033    -- 0xFE19( char_id=0x0 )
+0x0036    -- 0xFE19( char_id=0x1 )
+0x0039    -- 0xFE18()
+0x003e    -- 0x87_SetProgress( progress=139 )
+0x0041    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0042    op00_Return()
+
+Actor_0x01:on_start:
+0x0043    -- 0x16_ActorPCInit( char_id=0 )
+0x0046    opFE0D_MessageSetFace( char_id=0 )
+0x004a    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x92 )
+0x0052    -- MISSING OPCODE 0xFE8b

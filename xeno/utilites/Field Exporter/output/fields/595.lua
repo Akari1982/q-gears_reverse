@@ -27,7 +27,7 @@ Actor_0x00:on_start:
 0x003b    op00_Return()
 
 Actor_0x00:on_update:
-0x003c    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xa3 )
+0x003c    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xa3 )
 0x0044    -- 0xFE54()
 0x0046    opB4_FadeOut()
 0x0049    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x05, priority=0x01 )

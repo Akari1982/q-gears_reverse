@@ -54,7 +54,7 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x00d8    -- 0x86_ProgressNotEqualJumpTo( value=90, jump=0x103 )
-0x00dd    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x100 )
+0x00dd    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x100 )
 0x00e5    -- 0xFE54()
 0x00e7    -- 0x75( ???=255 )
 0x00ea    op26_Wait( time=32 )

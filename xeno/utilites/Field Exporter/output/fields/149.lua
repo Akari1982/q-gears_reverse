@@ -29,4 +29,17 @@ Actor_0x01:on_start:
 0x000e    op00_Return()
 
 Actor_0x01:on_update:
-0x000f    -- MISSING OPCODE 0xc9
+0x000f    -- 0xC9()
+0x0013    -- 0x15()
+0x0014    op74_SoundPlayFixedVolume( sound_id=97 )
+0x0017    -- 0x98_MapLoad( field_id=131, value=4 )
+0x001c    -- 0x5B()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x001d    op00_Return()
+
+Actor_0x01:event_0x04:
+0x001e    op26_Wait( time=30 )
+0x0021    -- MISSING OPCODE 0xFE17

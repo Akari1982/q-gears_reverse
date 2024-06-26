@@ -24,4 +24,23 @@ Actor_0x00:on_start:
 0x0041    -- 0xFE19( char_id=0x1 )
 0x0044    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x54 )
 0x004c    -- 0x75( ???=39 )
-0x004f    -- MISSING OPCODE 0xFE18
+0x004f    -- 0xFE18()
+0x0054    op00_Return()
+
+Actor_0x00:on_update:
+0x0055    opC6_ExpandRun() -- exp0x20
+0x0056    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=-32768, condition="val1 & val2", address_if_false=0x65 )
+0x005e    -- 0xFE54()
+0x0060    -- 0x98_MapLoad( field_id=617, value=0 )
+0x0065    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0066    op00_Return()
+
+Actor_0x01:on_start:
+0x0067    -- 0x16_ActorPCInit( char_id=0 )
+0x006a    opFE0D_MessageSetFace( char_id=0 )
+0x006e    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=-32768, condition="val1 & val2", address_if_false=0x79 )
+0x0076    -- MISSING OPCODE 0x29

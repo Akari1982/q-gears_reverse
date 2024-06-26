@@ -608,9 +608,11 @@ V0 = 00ff;
 [800ad09c] = w(V0);
 80070074	addiu  v0, zero, $ffff (=-$1)
 [800b1660] = h(1000);
-[800b1658] = h(0);
-[800b165a] = h(0);
-[800b165c] = h(0);
+
+[800b1658] = h(0); // rot x
+[800b165a] = h(0); // rot y
+[800b165c] = h(0); // rot z
+
 [800ad044] = w(V0);
 
 loop700a0:	; 800700A0
@@ -676,32 +678,31 @@ for( int i = 0; i < 200; ++i )
 A0 = 200;
 system_gte_set_projection_plane_distance();
 
-S0 = 800aee64;
 
-A0 = S0;
+A0 = 800aee64;
 field_get_identity_matrix();
-
-S1 = S0 + d4;
 
 A0 = 800aed30;
 field_get_identity_matrix();
 
-A0 = S1;
+A0 = 800aef38;
 field_get_identity_matrix();
 
-A0 = S0 + 114;
+A0 = 800aef78;
 field_get_identity_matrix();
 
-A0 = S0 + 00c4;
-V0 = 3000;
-[S0 + 00c4] = h(0);
-[800aef2a] = h(0);
-[800aef2c] = h(0);
+[800aef28] = h(0); // rot x
+[800aef2a] = h(0); // rot y
+[800aef2c] = h(0); // rot z
+
 [800aef30] = h(0);
 [800aef32] = h(0);
 [800aef34] = h(0);
-[800aef98] = w(V0);
-A1 = S1;
+
+[800aef98] = w(3000);
+
+A0 = 800aef28;
+A1 = 800aef38;
 system_calculate_rotation_matrix();
 
 [800c3740] = w(800b1970);
@@ -1167,13 +1168,13 @@ funca1e64(); // we run script from here
 
 [800acff4] = w(1);
 
-A0 = 800b1710 - b8;
-A1 = 800af104;
+A0 = 800b1658; // base camera rotations
+A1 = 800af104; // res matrix
 system_calculate_rotation_matrix();
 
-[800af120] = w(0);
-[800af11c] = w(0);
-[800af118] = w(0);
+[800af118] = w(0); // trans x
+[800af11c] = w(0); // trans y
+[800af120] = w(0); // trans z
 
 S0 = 800af558 + 1c;
 
@@ -1526,7 +1527,7 @@ system_gte_multiply_matrix_by_vector();
 
 8007198C	jal    func717e0 [$800717e0]
 
-A0 = 800aef38;
+A0 = 800aef38; // camera matrix
 system_gte_set_rotation_matrix();
 
 A0 = 800aef38;
@@ -1791,6 +1792,7 @@ if( w[800c1b60] == 0 )
 
 ////////////////////////////////
 // func720c8()
+
 S0 = A0; // vector with +20 current position
 S2 = A1; // current y pos [][]
 
@@ -1841,8 +1843,6 @@ else
 
     [800ad080] = w(0);
 }
-
-
 
 [800aed84] = w(w[800aed94]);
 
@@ -2038,6 +2038,7 @@ if( h[800aeefc] != 0 )
 
 ////////////////////////////////
 // func728c0()
+
 if( h[800aee08] == 0 )
 {
     [800ad088] = w(0);
@@ -2123,8 +2124,6 @@ else if( h[800aee08] == 2 )
     }
 }
 
-
-
 if( ( h[800aee08] == 0 ) || ( h[800aee08] == 2 ) )
 {
     func71d78(); // set camera rotation based on buttons and step rotation
@@ -2174,8 +2173,6 @@ if( ( h[800aee08] == 0 ) || ( h[800aee08] == 2 ) )
     }
 }
 
-
-
 func72404(); // update cam move and shake
 
 [800aeeba] = h(hu[800aeeba] & fff);
@@ -2185,6 +2182,7 @@ func72404(); // update cam move and shake
 
 ////////////////////////////////
 // func72d14()
+
 S1 = A0;
 cam_pos = A1;
 
@@ -2340,15 +2338,15 @@ else
 ////////////////////////////////
 // func73050()
 
-func80720(); // move routine
+func80720(); // call script and move actors
 
-A0 = 800b1658;
-A1 = 800af104;
+A0 = 800b1658; // base camera rotations
+A1 = 800af104; // res matrix
 system_calculate_rotation_matrix();
 
-[800af120] = w(0);
-[800af11c] = w(0);
-[800af118] = w(0);
+[800af118] = w(0); // trans x
+[800af11c] = w(0); // trans y
+[800af120] = w(0); // trans z
 
 A0 = w[800aed6c] - w[800aed5c];
 A1 = w[800aed64] - w[800aed54];
@@ -2380,65 +2378,46 @@ func728c0(); // camera update
 SP = SP + 4;
 
 SP = w[SP];
-V0 = w[800aed54];
-V1 = w[800aed58];
-A1 = w[800aed5c];
-A3 = w[800aedb4];
-T0 = w[800aedb8];
-A2 = w[800aedbc];
-V0 = w[SP + 10];
-V0 = V0 + A3;
 
-[SP + 0010] = w(V0);
-V0 = w[800aed64];
-[SP + 0014] = w(V1);
-V1 = V1 + T0;
-[SP + 0014] = w(V1);
-V1 = w[800aed68];
-[SP + 0018] = w(A1);
-S0 = 800aed6c;
-
-A0 = w[S0 + 0000];
-[SP + 0020] = w(V0);
-[SP + 0020] = w(V0 + A3);
-[SP + 0018] = w(A1 + A2);
-[SP + 0024] = w(V1);
-[SP + 0028] = w(A0);
-[SP + 0024] = w(V1 + T0);
-[SP + 0028] = w(A0 + A2);
+[SP + 10] = w(w[800aed54] + w[800aedb4]);
+[SP + 14] = w(w[800aed58] + w[800aedb8]);
+[SP + 18] = w(w[800aed5c] + w[800aedbc]);
+[SP + 20] = w(w[800aed64] + w[800aedb4]);
+[SP + 24] = w(w[800aed68] + w[800aedb8]);
+[SP + 28] = w(w[800aed6c] + w[800aedbc]);
 
 if( w[800ad0f0] != 0 )
 {
-    A0 = S0 + f8;
+    A0 = 800aee64;
     A1 = SP + 10;
     A2 = SP + 20;
-    A3 = S0 + 8;
+    A3 = 800aed74;
     func72de0();
 
-    A1 = 800aed30;
-    [A1 + 0] = w(w[S0 + f8]);
-    [A1 + 4] = w(w[S0 + fc]);
-    [A1 + 8] = w(w[S0 + 100]);
-    [A1 + c] = w(w[S0 + 104]);
-    [A1 + 10] = w(w[S0 + 108]);
-    [A1 + 14] = w(w[S0 + 10c]);
-    [A1 + 18] = w(w[S0 + 110]);
-    [A1 + 1c] = w(w[S0 + 114]);
+    [800aed30 +  0] = w(w[800aee64 +  0]);
+    [800aed30 +  4] = w(w[800aee64 +  4]);
+    [800aed30 +  8] = w(w[800aee64 +  8]);
+    [800aed30 +  c] = w(w[800aee64 +  c]);
+    [800aed30 + 10] = w(w[800aee64 + 10]);
+    [800aed30 + 14] = w(w[800aee64 + 14]);
+    [800aed30 + 18] = w(w[800aee64 + 18]);
+    [800aed30 + 1c] = w(w[800aee64 + 1c]);
 }
 else
 {
+    [800aee64 +  0] = w(w[800aed30 +  0]);
+    [800aee64 +  4] = w(w[800aed30 +  4]);
+    [800aee64 +  8] = w(w[800aed30 +  8]);
+    [800aee64 +  c] = w(w[800aed30 +  c]);
+    [800aee64 + 10] = w(w[800aed30 + 10]);
+    [800aee64 + 14] = w(w[800aed30 + 14]);
+    [800aee64 + 18] = w(w[800aed30 + 18]);
+    [800aee64 + 1c] = w(w[800aed30 + 1c]);
+
     A0 = 800aed30;
-    [S0 + f8] = w(w[A0 + 0]);
-    [S0 + fc] = w(w[A0 + 4]);
-    [S0 + 100] = w(w[A0 + 8]);
-    [S0 + 104] = w(w[A0 + c]);
-    [S0 + 108] = w(w[A0 + 10]);
-    [S0 + 10c] = w(w[A0 + 14]);
-    [S0 + 110] = w(w[A0 + 18]);
-    [S0 + 114] = w(w[A0 + 1c]);
-    A1 = SP + 0010;
-    A2 = SP + 0020;
-    A3 = S0 + 0008;
+    A1 = SP + 10;
+    A2 = SP + 20;
+    A3 = 800aed74;
     func72de0();
 }
 

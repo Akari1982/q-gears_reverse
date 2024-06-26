@@ -11,6 +11,7 @@
 int
 main()
 {
+    /*
     {
         printf( "Extract sys_data texts.\n" );
 
@@ -69,6 +70,7 @@ main()
 
         delete sys_data;
     }
+    */
 
     for( int i = 0; i <= 729; ++i )
     {

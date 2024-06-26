@@ -19,4 +19,11 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x0074    -- 0x75( ???=255 )
-0x0077    -- MISSING OPCODE 0xFE65
+0x0077    -- 0xFE65()
+0x007d    -- 0xFE65()
+0x0083    -- 0xFE54()
+0x0085    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xd6 )
+0x008d    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0098    op26_Wait( time=1 )
+0x009b    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=120 )
+0x00a6    -- MISSING OPCODE 0x29

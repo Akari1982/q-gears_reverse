@@ -16,4 +16,8 @@ Actor_0x00:on_start:
 0x0010    op00_Return()
 
 Actor_0x00:on_update:
-0x0011    -- MISSING OPCODE 0xc9
+0x0011    -- 0xC9()
+0x0015    -- 0x15()
+0x0016    op74_SoundPlayFixedVolume( sound_id=97 )
+0x0019    op26_Wait( time=10 )
+0x001c    -- MISSING OPCODE 0x85

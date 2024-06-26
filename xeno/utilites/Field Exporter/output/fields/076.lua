@@ -23,4 +23,5 @@ Actor_0x00:on_start:
 0x003a    mem[0x54] = 2 -- op35
 0x0040    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x57 )
 0x0045    op02_JumpToConditional( val1=(s)mem[0x1c2], val2=8192, condition="val1 & val2", address_if_false=0x53 )
-0x004d    -- MISSING OPCODE 0xFE65
+0x004d    -- 0xFE65()
+0x0053    -- MISSING OPCODE 0xFE8d

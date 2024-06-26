@@ -54,4 +54,31 @@ Actor_0x00:on_start:
 0x00a5    opA3()
 0x00ad    opAC_MoveCamera( control=0x1, steps=0 )
 0x00b1    opAC_MoveCamera( control=0x0, steps=0 )
-0x00b5    -- MISSING OPCODE 0xFE65
+0x00b5    -- 0xFE65()
+0x00bb    -- 0xFE62()
+0x00c1    op00_Return()
+
+Actor_0x00:on_update:
+0x00c2    -- 0xFE54()
+0x00c4    op26_Wait( time=32 )
+0x00c7    op02_JumpToConditional( val1=(s)mem[0x140], val2=100, condition="val1 == val2", address_if_false=0x117 )
+0x00cf    op74_SoundPlayFixedVolume( sound_id=34 )
+0x00d2    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x04, priority=0x01 )
+0x00d5    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
+0x00d8    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
+0x00db    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
+0x00de    op26_Wait( time=24 )
+0x00e1    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x04, priority=0x01 )
+0x00e4    op26_Wait( time=16 )
+0x00e7    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x05, priority=0x01 )
+0x00ea    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x05, priority=0x01 )
+0x00ed    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
+0x00f0    op26_Wait( time=14 )
+0x00f3    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x06, priority=0x01 )
+0x00f6    op26_Wait( time=16 )
+0x00f9    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
+0x00fc    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
+0x00ff    op26_Wait( time=32 )
+0x0102    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x07, priority=0x01 )
+0x0105    mem[0x140] = 110 -- op35
+0x010b    -- MISSING OPCODE 0x12

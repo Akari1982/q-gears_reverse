@@ -31,4 +31,26 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0043    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
 0x0046    mem[0x40a] = true -- op36
-0x0049    -- MISSING OPCODE 0xFE65
+0x0049    -- 0xFE65()
+0x004f    -- 0x87_SetProgress( progress=240 )
+0x0052    -- 0xFE54()
+0x0054    op26_Wait( time=32 )
+0x0057    op26_Wait( time=24 )
+0x005a    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x04, priority=0x01 )
+0x005d    -- 0xFE65()
+0x0063    -- 0xFE65()
+0x0069    opFE60_MoviePlay1( movie_id=11, sector=0, end_frame=92, flags=2 )
+0x0073    opFE61_MovieStartSync()
+0x0075    -- 0xFE65()
+0x007b    -- 0xFE65()
+0x0081    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
+0x0084    -- 0xF2()
+0x008d    op26_Wait( time=32 )
+0x0090    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x05, priority=0x01 )
+0x0093    -- 0xFE65()
+0x0099    -- 0xFE65()
+0x009f    opFE60_MoviePlay1( movie_id=12, sector=0, end_frame=92, flags=2 )
+0x00a9    opFE61_MovieStartSync()
+0x00ab    -- 0xFE65()
+0x00b1    -- 0xFE65()
+0x00b7    -- MISSING OPCODE 0xFE8c

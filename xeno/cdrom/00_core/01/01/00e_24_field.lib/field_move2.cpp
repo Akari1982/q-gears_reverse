@@ -320,14 +320,14 @@ field_actor_init_shadow();
 // func80720()
 
 struct_5c_p = w[800aefe4];
-number_of_entity = w[800ad0d4];
+n_actors = w[800ad0d4];
 
 [800c2de4] = w(-1);
 
 call_run_script_8(); // run 8 opcodes for non-party entities
 
 // store previous position
-for( int i = 0; i < number_of_entity; ++i )
+for( int i = 0; i < n_actors; ++i )
 {
     struct_138 = w[struct_5c_p + i * 5c + 4c];
     [struct_138 + 68] = h(h(struct_138 + 22));
@@ -343,7 +343,7 @@ if( w[800c1b60] == 0 )
 
 [800aed2c] = w(0);
 
-for( i = 0; i < number_of_entity; ++i )
+for( i = 0; i < n_actors; ++i )
 {
     struct_138 = w[struct_5c_p; + i * 5c + 4c];
 
@@ -402,7 +402,7 @@ if( w[800c1b60] == 0 )
 }
 
 A0 = w[800b1740];
-A1 = struct_5c_p + leader_id * 5c;
+A1 = struct_5c_p + A0 * 5c;
 A2 = w[A1 + 4c];
 func8376c(); // move player
 
@@ -412,28 +412,28 @@ if( w[800c1b60] == 0 )
     field_debug_add_timer();
 }
 
-for( entity_id = 0; entity_id < number_of_entity; ++entity_id )
+for( i = 0; i < n_actors; ++i )
 {
-    if( hu[struct_5c_p + entity_id * 5c + 58] & 0f00 )
+    if( hu[struct_5c_p + i * 5c + 58] & 0f00 )
     {
-        struct_138 = w[struct_5c_p + entity_id * 5c + 4c];
+        struct_138 = w[struct_5c_p + i * 5c + 4c];
         if( ( w[struct_138 + 4] & 00000600 ) != 200 )
         {
-            if( ( hu[struct_5c_p + entity_id * 5c + 58] & 00000f80 ) == 200 )
+            if( ( hu[struct_5c_p + i * 5c + 58] & 00000f80 ) == 200 )
             {
                 if( ( w[struct_138 + 0] & 00010001 ) == 0 )
                 {
                     // if not party leader
-                    if( entity_id != w[800b1740] )
+                    if( i != w[800b1740] )
                     {
-                        A0 = entity_id;
+                        A0 = i;
                         A1 = 7fffffff;
-                        A2 = struct_5c_p + entity_id * 5c;
+                        A2 = struct_5c_p + i * 5c;
                         A3 = struct_138;
                         A4 = 0;
                         func84054(); // perform move for all nonplayer
 
-                        V0 = w[struct_5c_p + entity_id * 5c + 4];
+                        V0 = w[struct_5c_p + i * 5c + 4];
                         V0 = w[V0 + 7c]; // +f4
                         if( hu[V0 + c] == 1 )
                         {
@@ -1817,143 +1817,136 @@ for( int i = hu[S6 + 6]; i > 0; --i )
     }
     else
     {
-        if( FP != 0 )
+        S6 = temp + 2c;
+
+        for( int i = 0; i < FP; ++i )
         {
-            S0 = 0;
-            S6 = temp + 002c;
+            A1 = S7;
+            A2 = S1;
+            A0 = hu[S4 + 0000];
+            V0 = w[temp + 00a4];
+            A0 = A0 << 03;
+            A0 = V0 + A0;
+            80082D54	jal    func4a3f4 [$8004a3f4]
 
-            L82d44:	; 80082D44
-                A1 = S7;
-                A2 = S1;
-                A0 = hu[S4 + 0000];
-                V0 = w[temp + 00a4];
-                A0 = A0 << 03;
-                A0 = V0 + A0;
-                80082D54	jal    func4a3f4 [$8004a3f4]
+            A1 = S5;
+            A2 = S1;
+            A0 = hu[S4 + 0002];
+            S4 = S4 + 0004;
+            V0 = w[temp + 00a4];
+            A0 = A0 << 03;
+            A0 = V0 + A0;
+            80082D74	jal    func4a3f4 [$8004a3f4]
 
-                A1 = S5;
-                A2 = S1;
-                A0 = hu[S4 + 0002];
-                S4 = S4 + 0004;
-                V0 = w[temp + 00a4];
-                A0 = A0 << 03;
-                A0 = V0 + A0;
-                80082D74	jal    func4a3f4 [$8004a3f4]
+            A1 = S2;
+            A2 = S1;
+            A0 = hu[S4 + 0000];
+            V0 = w[temp + 00a4];
+            A0 = A0 << 03;
+            A0 = V0 + A0;
+            80082D90	jal    func4a3f4 [$8004a3f4]
 
-                A1 = S2;
-                A2 = S1;
-                A0 = hu[S4 + 0000];
-                V0 = w[temp + 00a4];
-                A0 = A0 << 03;
-                A0 = V0 + A0;
-                80082D90	jal    func4a3f4 [$8004a3f4]
+            A1 = S6;
+            A2 = S1;
+            A0 = hu[S4 + 0002];
+            S4 = S4 + 0004;
+            V0 = w[temp + 00a4];
+            A0 = A0 << 03;
+            A0 = V0 + A0;
+            80082DB0	jal    func4a3f4 [$8004a3f4]
 
-                A1 = S6;
-                A2 = S1;
-                A0 = hu[S4 + 0002];
-                S4 = S4 + 0004;
-                V0 = w[temp + 00a4];
-                A0 = A0 << 03;
-                A0 = V0 + A0;
-                80082DB0	jal    func4a3f4 [$8004a3f4]
+            A2 = w[temp + 0010];
+            V0 = h[temp + 0014];
+            V1 = h[temp + 0018];
+            V0 = V0 << 10;
+            V0 = V0 + V1;
+            [temp + 0000] = w(V0);
+            A0 = w[temp + 0000];
+            V0 = h[temp + 001c];
+            V1 = h[temp + 0020];
+            V0 = V0 << 10;
+            V0 = V0 + V1;
+            [temp + 0004] = w(V0);
+            A1 = w[temp + 0004];
+            V0 = h[temp + 0024];
+            V1 = h[temp + 0028];
+            V0 = V0 << 10;
+            V0 = V0 + V1;
+            [temp + 0008] = w(V0);
+            V0 = h[temp + 002c];
+            V1 = h[temp + 0030];
+            V0 = V0 << 10;
+            V0 = V0 + V1;
+            [temp + 000c] = w(V0);
 
-                A2 = w[temp + 0010];
-                V0 = h[temp + 0014];
-                V1 = h[temp + 0018];
-                V0 = V0 << 10;
-                V0 = V0 + V1;
-                [temp + 0000] = w(V0);
-                A0 = w[temp + 0000];
-                V0 = h[temp + 001c];
-                V1 = h[temp + 0020];
-                V0 = V0 << 10;
-                V0 = V0 + V1;
-                [temp + 0004] = w(V0);
-                A1 = w[temp + 0004];
-                V0 = h[temp + 0024];
-                V1 = h[temp + 0028];
-                V0 = V0 << 10;
-                V0 = V0 + V1;
-                [temp + 0008] = w(V0);
-                V0 = h[temp + 002c];
-                V1 = h[temp + 0030];
-                V0 = V0 << 10;
-                V0 = V0 + V1;
-                [temp + 000c] = w(V0);
+            system_side_of_vector();
 
+            if( V0 >= 0 )
+            {
+                A0 = w[temp + 4];
+                A1 = w[temp + c];
+                A2 = w[temp + 10];
                 system_side_of_vector();
 
                 if( V0 >= 0 )
                 {
-                    A0 = w[temp + 4];
-                    A1 = w[temp + c];
+                    A0 = w[temp + c];
+                    A1 = w[temp + 8];
                     A2 = w[temp + 10];
                     system_side_of_vector();
 
                     if( V0 >= 0 )
                     {
-                        A0 = w[temp + c];
-                        A1 = w[temp + 8];
+                        A0 = w[temp + 8];
+                        A1 = w[temp + 0];
                         A2 = w[temp + 10];
                         system_side_of_vector();
 
                         if( V0 >= 0 )
                         {
-                            A0 = w[temp + 8];
-                            A1 = w[temp + 0];
-                            A2 = w[temp + 10];
+                            A0 = w[temp + 0];
+                            A1 = w[temp + 4];
+                            A2 = w[temp + 8];
                             system_side_of_vector();
 
                             if( V0 >= 0 )
                             {
-                                A0 = w[temp + 0];
-                                A1 = w[temp + 4];
-                                A2 = w[temp + 8];
+                                A0 = w[temp + 0004];
+                                A1 = w[temp + 0008];
+                                A2 = w[temp + 0010];
+                                T0 = hu[SP + 0018];
+                                [temp + 0034] = h(T0);
+                                T0 = hu[SP + 0020];
+                                [temp + 0038] = h(T0);
                                 system_side_of_vector();
 
                                 if( V0 >= 0 )
                                 {
-                                    A0 = w[temp + 0004];
-                                    A1 = w[temp + 0008];
-                                    A2 = w[temp + 0010];
-                                    T0 = hu[SP + 0018];
-                                    [temp + 0034] = h(T0);
-                                    T0 = hu[SP + 0020];
-                                    [temp + 0038] = h(T0);
-                                    system_side_of_vector();
-
-                                    if( V0 >= 0 )
-                                    {
-                                        A0 = S7;
-                                        A1 = S5;
-                                    }
-                                    else
-                                    {
-                                        A0 = S5;
-                                        A1 = S6;
-                                    }
-
-                                    A2 = S2;
-                                    A3 = temp + 34;
-                                    A4 = A5;
-                                    field_calculate_walkmesh_height();
-
-                                    if( h[temp + 36] < w[temp + a0] )
-                                    {
-                                        [temp + a0] = w(h[temp + 36]);
-                                    {
+                                    A0 = S7;
+                                    A1 = S5;
                                 }
+                                else
+                                {
+                                    A0 = S5;
+                                    A1 = S6;
+                                }
+
+                                A2 = S2;
+                                A3 = temp + 34;
+                                A4 = A5;
+                                field_calculate_walkmesh_height();
+
+                                if( h[temp + 36] < w[temp + a0] )
+                                {
+                                    [temp + a0] = w(h[temp + 36]);
+                                {
                             }
                         }
                     }
                 }
-
-                S0 = S0 + 1;
-                V0 = S0 < FP;
-            80082F1C	bne    v0, zero, L82d44 [$80082d44]
+            }
         }
     }
-    L82f24:	; 80082F24
 }
 
 A0 = b8;

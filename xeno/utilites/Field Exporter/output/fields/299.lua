@@ -21,4 +21,238 @@ Actor_0x00:on_start:
 0x0039    -- 0xFE19( char_id=0xff )
 0x003c    -- 0xFE19( char_id=0xfe )
 0x003f    -- 0xFE19( char_id=0xfd )
-0x0042    -- MISSING OPCODE 0xFE18
+0x0042    -- 0xFE18()
+0x0047    -- 0x75( ???=46 )
+0x004a    op00_Return()
+0x004b    op05_CallFunction( address=0xf7a )
+0x004e    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x004f    op00_Return()
+
+Actor_0x01:on_start:
+0x0050    -- 0x16_ActorPCInit( char_id=0 )
+0x0053    opFE0D_MessageSetFace( char_id=0 )
+0x0057    op00_Return()
+
+Actor_0x01:on_update:
+0x0058    -- 0xA7()
+0x0059    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x005a    op00_Return()
+
+Actor_0x01:event_0x04:
+0x005b    op20_ActorSetFlags0( flags=13 )
+0x005e    -- 0x1F( ???=0x10 )
+0x0060    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0066    op6F_ActorRotateToActor( actor_id=Actor_0x0f )
+0x0068    op20_ActorSetFlags0( flags=12 )
+0x006b    -- 0x1F( ???=0x0 )
+0x006d    op00_Return()
+
+Actor_0x01:event_0x05:
+0x006e    op2C_SpritePlayAnim( anim_id=0x4 )
+0x0070    op26_Wait( time=30 )
+0x0073    op2C_SpritePlayAnim( anim_id=0xff )
+0x0075    op00_Return()
+
+Actor_0x02:on_start:
+0x0076    -- 0x16_ActorPCInit( char_id=2 )
+0x0079    opFE0D_MessageSetFace( char_id=2 )
+0x007d    op00_Return()
+
+Actor_0x02:on_update:
+0x007e    -- 0x0C()
+0x007f    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0080    op00_Return()
+
+Actor_0x03:on_start:
+0x0081    -- 0x16_ActorPCInit( char_id=1 )
+0x0084    opFE0D_MessageSetFace( char_id=1 )
+0x0088    op00_Return()
+
+Actor_0x03:on_update:
+0x0089    -- 0x0C()
+0x008a    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x008b    op00_Return()
+
+Actor_0x03:event_0x04:
+0x008c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0092    op69_ActorSetRotation( rot=1 )
+0x0095    op00_Return()
+
+Actor_0x04:on_start:
+0x0096    -- 0x16_ActorPCInit( char_id=3 )
+0x0099    opFE0D_MessageSetFace( char_id=3 )
+0x009d    op00_Return()
+
+Actor_0x04:on_update:
+0x009e    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xaa )
+0x00a6    -- 0xA7()
+0x00a7    op01_JumpTo( address=0xab )
+0x00aa    -- 0x5A()
+0x00ab    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x00ac    op00_Return()
+
+Actor_0x04:event_0x04:
+0x00ad    op20_ActorSetFlags0( flags=13 )
+0x00b0    -- 0x1F( ???=0x10 )
+0x00b2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00b8    op6F_ActorRotateToActor( actor_id=Actor_0x0f )
+0x00ba    -- 0x1F( ???=0x0 )
+0x00bc    op00_Return()
+
+Actor_0x04:event_0x05:
+0x00bd    op2C_SpritePlayAnim( anim_id=0x4 )
+0x00bf    op26_Wait( time=20 )
+0x00c2    op2C_SpritePlayAnim( anim_id=0xff )
+0x00c4    op26_Wait( time=10 )
+0x00c7    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x00c9    op26_Wait( time=10 )
+0x00cc    op6F_ActorRotateToActor( actor_id=Actor_0x0f )
+0x00ce    op26_Wait( time=10 )
+0x00d1    op00_Return()
+
+Actor_0x04:event_0x06:
+0x00d2    op2C_SpritePlayAnim( anim_id=0x5 )
+0x00d4    op00_Return()
+
+Actor_0x04:event_0x07:
+0x00d5    op2C_SpritePlayAnim( anim_id=0xff )
+0x00d7    op00_Return()
+
+Actor_0x05:on_start:
+0x00d8    -- 0x16_ActorPCInit( char_id=4 )
+0x00db    opFE0D_MessageSetFace( char_id=4 )
+0x00df    op00_Return()
+
+Actor_0x05:on_update:
+0x00e0    -- 0x0C()
+0x00e1    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x00e2    op00_Return()
+
+Actor_0x06:on_start:
+0x00e3    -- 0x16_ActorPCInit( char_id=5 )
+0x00e6    opFE0D_MessageSetFace( char_id=5 )
+0x00ea    op00_Return()
+
+Actor_0x06:on_update:
+0x00eb    -- 0x0C()
+0x00ec    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x00ed    op00_Return()
+
+Actor_0x07:on_start:
+0x00ee    -- 0x16_ActorPCInit( char_id=6 )
+0x00f1    opFE0D_MessageSetFace( char_id=6 )
+0x00f5    op00_Return()
+
+Actor_0x07:on_update:
+0x00f6    -- 0x0C()
+0x00f7    op00_Return()
+
+Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
+0x00f8    op00_Return()
+
+Actor_0x08:on_start:
+0x00f9    -- 0x16_ActorPCInit( char_id=7 )
+0x00fc    opFE0D_MessageSetFace( char_id=7 )
+0x0100    op00_Return()
+
+Actor_0x08:on_update:
+0x0101    -- 0x0C()
+0x0102    op00_Return()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x0103    op00_Return()
+
+Actor_0x09:on_start:
+0x0104    -- 0x16_ActorPCInit( char_id=8 )
+0x0107    opFE0D_MessageSetFace( char_id=8 )
+0x010b    op00_Return()
+
+Actor_0x09:on_update:
+0x010c    -- 0xA7()
+0x010d    op00_Return()
+
+Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
+0x010e    op00_Return()
+
+Actor_0x0a:on_start:
+0x010f    -- 0x16_ActorPCInit( char_id=9 )
+0x0112    opFE0D_MessageSetFace( char_id=9 )
+0x0116    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x127 )
+0x011e    -- 0x19_ActorSetPosition( x=(vf80)0x0041, z=(vf40)0xffb5, flag=(flag)0xc0 )
+0x0124    op69_ActorSetRotation( rot=6 )
+0x0127    op00_Return()
+
+Actor_0x0a:on_update:
+0x0128    -- 0xA7()
+0x0129    op00_Return()
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x012a    op00_Return()
+
+Actor_0x0a:event_0x04:
+0x012b    op2C_SpritePlayAnim( anim_id=0xff )
+0x012d    opFE4E_SpriteAddAnimUnload()
+0x012f    opFE4A_SpriteAddAnimLoad( file=85 )
+0x0133    opFE4B_SpriteAddAnimSync()
+0x0135    opFE4A_SpriteAddAnimLoad( file=85 )
+0x0139    opFE4B_SpriteAddAnimSync()
+0x013b    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x013e    op00_Return()
+
+Actor_0x0a:event_0x05:
+0x013f    op2C_SpritePlayAnim( anim_id=0xff )
+0x0141    opFE4E_SpriteAddAnimUnload()
+0x0143    opFE4A_SpriteAddAnimLoad( file=83 )
+0x0147    opFE4B_SpriteAddAnimSync()
+0x0149    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x014c    op00_Return()
+
+Actor_0x0a:event_0x06:
+0x014d    op2C_SpritePlayAnim( anim_id=0x7 )
+0x014f    op00_Return()
+
+Actor_0x0a:event_0x07:
+0x0150    op2C_SpritePlayAnim( anim_id=0xa )
+0x0152    op00_Return()
+
+Actor_0x0a:event_0x08:
+0x0153    -- 0x21( ???=64 )
+0x0156    -- MISSING OPCODE 0x53

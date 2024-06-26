@@ -27,7 +27,7 @@ Actor_0x00:on_start:
 0x0034    op00_Return()
 
 Actor_0x00:on_update:
-0x0035    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xc6 )
+0x0035    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xc6 )
 0x003d    -- 0xFE54()
 0x003f    op26_Wait( time=32 )
 0x0042    -- 0xFE0E_SoundSetVolume( volume=0, steps=1000 )
