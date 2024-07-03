@@ -109,10 +109,10 @@ gte_func20t8,r11r12     gte_INTPL       Interpolation of vector and far color.
 gte_func21zero,r11r12   gte_SQR         Square of vector.
 
 gte_func22t0,r11r12     NSC             Normal color v0.
-
 gte_func23t8,r11r12     DPCT            Depth cue color RGB0,RGB1,RGB2.
 
 gte_func24t0,r11r12     gte_NCCS        Normal color col. v0.
+gte_func24t8,r11r12     gte_NCCT        Normal color col.v0, v1, v2
 
 gte_func26zero,r11r12   gte_NCLIP       Normal clipping.
 gte_func26t8,r11r12     gte_AVSZ3       Average of three Z values.

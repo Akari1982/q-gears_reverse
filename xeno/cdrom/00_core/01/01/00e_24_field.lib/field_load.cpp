@@ -1171,7 +1171,6 @@ funca1e64(); // we run script from here
 A0 = 800b1658; // base camera rotations
 A1 = 800af104; // res matrix
 system_calculate_rotation_matrix();
-
 [800af118] = w(0); // trans x
 [800af11c] = w(0); // trans y
 [800af120] = w(0); // trans z
@@ -1750,9 +1749,9 @@ if( ( ( bu[800aeec8] & ff ) != ff ) && ( bu[800aeec9] != ff ) )
         V0 = ((h[800aeeba] - 200) & fff) >> 9;
         if( ( bu[800ad0f4 + V0] & bu[800aeec9] ) == 0 )
         {
-            [800aeec0] = w(ffc00000);
-            [800aeeca] = h(8);
-            [800aeee0] = w(w[800aeee0] - 200);
+            [800aeec0] = w(ffc00000); // step value
+            [800aeeca] = h(8); // steps
+            [800aeee0] = w(w[800aeee0] - 200); // final value
         }
     }
 
@@ -1763,7 +1762,7 @@ if( ( ( bu[800aeec8] & ff ) != ff ) && ( bu[800aeec9] != ff ) )
         if( ( bu[800ad0f4 + V0] & bu[800aeec9] ) == 0 )
         {
             [800aeec0] = w(00400000);
-            [800aeeca] = h(8);
+            [800aeeca] = h(8); // steps
             [800aeee0] = w(w[800aeee0] + 200);
         }
     }
@@ -2039,7 +2038,7 @@ if( h[800aeefc] != 0 )
 ////////////////////////////////
 // func728c0()
 
-if( h[800aee08] == 0 )
+if( h[800aee08] == 0 ) // cam mode 0
 {
     [800ad088] = w(0);
 
@@ -2066,7 +2065,7 @@ if( h[800aee08] == 0 )
 
     [800ad084] = w(w[800ad084] + 1);
 }
-else if( h[800aee08] == 1 )
+else if( h[800aee08] == 1 ) // cam mode 1
 {
     [800ad084] = w(0);
     [800ad088] = w(0);
@@ -2113,18 +2112,18 @@ else if( h[800aee08] == 1 )
         [800aed8c] = w(w[800aee40]);
     }
 }
-else if( h[800aee08] == 2 )
+else if( h[800aee08] == 2 ) // cam mode 2
 {
     [800ad088] = w(w[800ad088] + 1);
     [800ad084] = w(0);
 
     if( w[800ad088] >= 41 )
     {
-        [800aee08] = h(0);
+        [800aee08] = h(0); // cam mode 0
     }
 }
 
-if( ( h[800aee08] == 0 ) || ( h[800aee08] == 2 ) )
+if( ( h[800aee08] == 0 ) || ( h[800aee08] == 2 ) ) // cam mode 0 or 2
 {
     func71d78(); // set camera rotation based on buttons and step rotation
 
@@ -2155,7 +2154,7 @@ if( ( h[800aee08] == 0 ) || ( h[800aee08] == 2 ) )
         }
     }
 
-    if( h[800aee08] == 2 )
+    if( h[800aee08] == 2 ) // cam mode 2
     {
         A0 = h[800aed96] - h[800aed66];
         A1 = h[800aed9e] - h[800aed6e];
@@ -2168,7 +2167,7 @@ if( ( h[800aee08] == 0 ) || ( h[800aee08] == 2 ) )
 
         if( ( S0 & 0080 ) && ( V0 & 0080 ) )
         {
-            [800aee08] = h(0);
+            [800aee08] = h(0); // cam mode 0
         }
     }
 }
@@ -2340,13 +2339,14 @@ else
 
 func80720(); // call script and move actors
 
-A0 = 800b1658; // base camera rotations
-A1 = 800af104; // res matrix
-system_calculate_rotation_matrix();
-
-[800af118] = w(0); // trans x
-[800af11c] = w(0); // trans y
-[800af120] = w(0); // trans z
+{
+    A0 = 800b1658; // base camera rotations
+    A1 = 800af104; // matrix used to model render
+    system_calculate_rotation_matrix();
+    [800af118] = w(0); // trans x
+    [800af11c] = w(0); // trans y
+    [800af120] = w(0); // trans z
+}
 
 A0 = w[800aed6c] - w[800aed5c];
 A1 = w[800aed64] - w[800aed54];

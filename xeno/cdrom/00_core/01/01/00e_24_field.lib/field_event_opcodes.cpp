@@ -19195,7 +19195,7 @@ else
 
         if( w[800ad03c] == ff )
         {
-            // PC entity and PC folower and some flafs in material
+            // PC entity and PC folower and some flags in material
             if( ( ( ( w[data_138 + 0] >> 9 ) & 3 ) & ( w[data_138 + 14] >> 3 ) ) == 0 )
             {
                 [data_138 + 0] = w(w[data_138 + 0] | 00000800)
@@ -19233,31 +19233,18 @@ if( ( A1 & 8000 ) == 0 )
 
 
 ////////////////////////////////
-// get_party_slot_id
-if (A0 == FF)
+// get_party_slot_id()
+
+if( A0 != ff )
 {
-    return -1;
-
-}
-
-A1 = 0;
-
-for (V1 = 0; V1 < 3; ++V1)
-{
-    V0 = w[80061C20 + A1];
-    if (V0 == FF)
+    for( int i = 0; i < 3; ++i )
     {
-        return -1;
-    }
+        V0 = w[80061c20 + i * 4];
 
-    if (V0 == A0)
-    {
-        return V1;
+        if( V0 == ff ) return -1;
+        if( V0 == A0 ) return i;
     }
-
-    A1 = A1 + 4;
 }
-
 return -1;
 ////////////////////////////////
 
@@ -19265,6 +19252,7 @@ return -1;
 
 ////////////////////////////////
 // func9efe4()
+
 spawn_id = A0;
 
 field_script = w[800ad0d8];

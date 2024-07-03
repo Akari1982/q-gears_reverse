@@ -339,7 +339,7 @@ while( true )
                             [8004e9ac] = w(-1);
                             [8004e9c8] = w(A0);
                             A1 = 1;
-                            func85134();
+                            func85134(); // load battle music?
                         }
 
                         [800ad0a8] = w(0);
@@ -1108,17 +1108,12 @@ if( w[800b1768] == 0 )
     func8dcec(); // reinit 800b1774
 }
 
-if( w[800b1770] > 0 )
+for( int i = 0; i < w[800b1770]; ++i )
 {
-    S0 = 0;
-    loop78994:	; 80078994
-        if( hu[800b1774 + S0 * 2] != ffff )
-        {
-            [800b1774 + S0 * 2] = h(hu[800b1774 + S0 * 2] - 1);
-        }
-        S0 = S0 + 1;
-        V0 = S0 < w[800b1770];
-    800789B4	bne    v0, zero, loop78994 [$80078994]
+    if( hu[800b1774 + i * 2] != ffff )
+    {
+        [800b1774 + i * 2] = h(hu[800b1774 + i * 2] - 1);
+    }
 }
 
 for( int i = 0; i < w[800b1770]; ++i )
@@ -1131,13 +1126,11 @@ for( int i = 0; i < w[800b1770]; ++i )
 
         // get total encounter chance and
         // store chance for current encounter
-        A0 = 0;
-        loop78a50:	; 80078A50
-            [SP + 10 + A0 * 4] = w(max_chance);
-            max_chance = max_chance + bu[8006516c + A0]; // last row in encounter file
-            A0 = A0 + 1;
-            V0 = A0 < 10;
-        80078A68	bne    v0, zero, loop78a50 [$80078a50]
+        for( int j = 0; j < 10; ++j )
+        {
+            [SP + 10 + j * 4] = w(max_chance);
+            max_chance += bu[8006516c + j]; // last row in encounter file
+        }
 
         // calculate current chance value
         system_get_random_2_bytes();

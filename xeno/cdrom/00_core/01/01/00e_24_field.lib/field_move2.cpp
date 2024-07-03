@@ -3058,18 +3058,18 @@ L84b64:	; 80084B64
 
 
 ////////////////////////////////
-// func84b74
+// func84b74()
 
-S0 = A0;
-[800ad004] = w(1);
+dir_file_id = A0;
 S1 = A2;
 
-A0 = 8;
-func2a070();
+[800ad004] = w(1);
 
+A0 = 8; // items in stream
+func2a070(); // init stream
 [800ad090] = w(V0);
 
-A0 = S0;
+A0 = dir_file_id;
 A1 = V0;
 A2 = 0;
 A3 = 100;
@@ -3428,67 +3428,55 @@ return;
 
 ////////////////////////////////
 // func85134()
+
 S0 = A0;
 
 A0 = 0;
 system_cdrom_action_sync(); // execute until command finished
 
-S2 = 00ff;
-
 func1b500(); // something sound related
 
-80085160	bne    s0, s2, L85178 [$80085178]
+if( S0 == ff )
+{
+    [8004e9ac] = w(0);
+    return;
+}
 
-[8004e9ac] = w(0);
-return;
-
-L85178:	; 80085178
 A0 = 1c;
 A1 = 0;
 system_cdrom2_set_dir();
 
-S1 = S0 << 01;
-S0 = 800ad4a5;
-8008518C	lui    at, $800b
-AT = AT + S1;
-V0 = bu[AT + d4a5];
-S3 = 0001;
-8008519C	bne    v0, s3, L851b0 [$800851b0]
-V0 = S0 + S1;
-800851A4	jal    func85638 [$80085638]
-800851A8	nop
-V0 = S0 + S1;
+if( bu[800ad4a5 + S0 * 2] == 1 )
+{
+    func85638();
+}
 
-L851b0:	; 800851B0
-A0 = bu[V0 + ffff];
-800851B4	nop
-800851B8	beq    a0, s2, L8520c [$8008520c]
-V0 = A0 << 01;
-V1 = w[8004e9e0];
-800851C8	nop
-800851CC	beq    v1, a0, L8520c [$8008520c]
-V0 = V0 + 0013;
-A0 = V0;
-A2 = 80084ff0;
-800851E0	jal    func84b74 [$80084b74]
-A1 = 0001;
-A0 = 2000;
-[8004e9f8] = w(S3);
-[800b1844] = w(0);
-A1 = 1;
-system_memory_allocate();
+A0 = bu[800ad4a5 + S0 * 2 - 1];
+if( A0 != ff )
+{
+    if( w[8004e9e0] != A0 )
+    {
+        A0 = 13 + A0 * 2; // dir_file_id
+        A1 = 1;
+        A2 = 80084ff0;
+        func84b74();
 
-[800c2ef0] = w(V0);
+        [8004e9f8] = w(1);
+        [800b1844] = w(0);
 
-L8520c:	; 8008520C
+        A0 = 2000;
+        A1 = 1;
+        system_memory_allocate();
+        [800c2ef0] = w(V0);
+    }
+}
+
 A0 = 4;
 A1 = 0;
 system_cdrom2_set_dir();
 
-80085218	addiu  v0, zero, $ffff (=-$1)
-[8004e9ac] = w(V0);
-V0 = 0001;
-[800af128] = w(V0);
+[8004e9ac] = w(-1);
+[800af128] = w(1);
 ////////////////////////////////
 
 

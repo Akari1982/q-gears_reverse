@@ -16,10 +16,10 @@
                   c PolyCount
                   d RGB CALC
 
-802859e0 [][][][]
+802859e0 [][][][] 
 802859e4 [][][][]
 802859e8 [][][][]
-802859ec [][][][]
+802859ec [][][][] encounter num in field.
 
 802859f8 [][]     current timer count (increment when new timer check added).
 

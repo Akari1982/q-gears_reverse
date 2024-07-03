@@ -1298,7 +1298,7 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( eo_opcode == 0x6f )
                 {
-                    exp->Log("opFE6F_CameraBaseRot( rot_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", rot_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", rot_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )");
+                    exp->Log( "opFE6F_CameraBaseRot( rot_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", rot_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", rot_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
                     pointer += 8;
                 }
                 else if( eo_opcode == 0x74 )
