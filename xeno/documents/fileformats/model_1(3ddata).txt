@@ -78,10 +78,14 @@ all textured poly
 
 MIMe (+1c sub file format)
 +00 [][][][] number of records in subfile
-
-+00 [][][][] ???
-+04 [][][][] some offset.
-+08 [][][][] some offset.
+MIM item +4
++00 [][][][] number of modifiers to apply.
++04 [][][][] some offset to vertex MIMe data.
++08 [][][][] some offset to normals MIMe data.
+    +0 [][] x modifier.
+    +2 [][] y modifier.
+    +4 [][] z modifier.
+    +6 [][] vertex id.
 
 
 MIMe Work

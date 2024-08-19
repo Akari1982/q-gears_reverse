@@ -142,7 +142,7 @@ do
 {
     func7743c(); // update buttons clear otag
 
-    func74bdc(); // move and update sprite and model here
+    field_update_and_render();
 
     system_cdrom2_data_sync();
 } while( ( V0 != 0 ) || ( w[800acfe0] != 0 ) )
@@ -788,7 +788,7 @@ do
     {
         func7743c(); // update buttons clear otag
 
-        func74bdc(); // move and update sprite and model here
+        field_update_and_render();
 
         A0 = 9;
         field_movie_mdec_update();

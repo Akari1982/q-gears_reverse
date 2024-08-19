@@ -356,7 +356,7 @@ funca0224();
 [struct_138_cur + 4] = w((w[struct_138_cur + 4] | 00002000) & fffff7ff);
 
 V0 = w[800b1738];
-[800b16b0 + V0 * 2] = h(S0);
+[800b16b0 + V0 * 2] = h(S0); // gear id to load
 [800b1733 + V0] = b(0);
 [struct_138_cur + 12c] = w((w[struct_138_cur + 12c] & ffff1fff) | ((V0 & 7) << d));
 

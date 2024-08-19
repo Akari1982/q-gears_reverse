@@ -807,7 +807,7 @@
 // func2c4f0
 8002C4F0-8002C50C
 ////////////////////////////////
-// func2c510
+// system_model_render_packets_for_part
 8002C510-8002C6D8
 ////////////////////////////////
 // system_model_create_packets_for_part
@@ -1043,7 +1043,7 @@
 // system_gte_calculate_and_set_lighting_matrix
 80030924-80030A4C
 ////////////////////////////////
-// func30a50
+// system_gte_set_back_color
 80030A50-80030A84
 ////////////////////////////////
 // func30a88

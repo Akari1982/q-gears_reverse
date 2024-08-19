@@ -140,13 +140,13 @@
 // field_update_buttons
 80073D90-80073F74
 ////////////////////////////////
-// func73f78
+// field_model_update_add_to_render
 80073F78-80074898
 ////////////////////////////////
-// func7489c
+// field_gear_update_add_to_render
 8007489C-80074954
 ////////////////////////////////
-// func74958
+// field_char_update_add_to_render
 80074958-80074AE4
 ////////////////////////////////
 // func74ae8
@@ -155,7 +155,7 @@
 // func74b14
 80074B14-80074BD8
 ////////////////////////////////
-// func74bdc
+// field_update_and_render
 80074BDC-80074F9C
 ////////////////////////////////
 // func74fa0
@@ -2559,7 +2559,7 @@
 // funca9eb4
 800A9EB4-800A9F48
 ////////////////////////////////
-// funca9f4c
+// field_model_is_on_screen
 800A9F4C-800AA0AC
 ////////////////////////////////
 // funcaa0b0

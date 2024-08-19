@@ -90,7 +90,7 @@ return A0 >> 10;
 ////////////////////////////////
 // func8002c()
 
-V0 = w[800ad030];
+V0 = w[800ad030]; // currently rendered entity
 V1 = w[800aefe4];
 struct_138 = w[V1 + V0 * 5c + 4c];
 
@@ -98,7 +98,7 @@ V1 = w[800ad034];
 [800ad034] = w(V1 + 1);
 
 V0 = w[struct_138 + 118];
-return w[V0 + V1 * 4];
+return w[V0 + V1 * 4]; // return scaler
 ////////////////////////////////
 
 

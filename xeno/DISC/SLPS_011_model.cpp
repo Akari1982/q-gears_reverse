@@ -220,7 +220,7 @@ return 0;
 
 
 ////////////////////////////////
-// func2c510()
+// system_model_render_packets_for_part()
 
 packets = A1;
 part_header = A0;
@@ -927,53 +927,21 @@ L3002c:	; 8003002C
 ////////////////////////////////
 // func30038()
 
-T1 = A0;
-8003003C	beq    a3, zero, L300dc [$800300dc]
-T0 = A1;
-80030044	addiu  a2, a2, $ffff (=-$1)
-80030048	addiu  v0, zero, $ffff (=-$1)
-8003004C	beq    a2, v0, L300dc [$800300dc]
-80030050	nop
-80030054	addiu  t2, zero, $ffff (=-$1)
-A1 = A1 + 0004;
+if( A3 == 0 ) return;
 
-loop3005c:	; 8003005C
-V0 = h[T0 + 0000];
-80030060	nop
-80030064	mult   v0, a3
-A0 = h[A1 + 0002];
-8003006C	nop
-A0 = A0 << 03;
-A0 = A0 + T1;
-V0 = hu[A0 + 0000];
-8003007C	mflo   t3
-V1 = T3 >> 0c;
-V0 = V0 + V1;
-[A0 + 0000] = h(V0);
-V0 = h[A1 + fffe];
-80030090	nop
-80030094	mult   v0, a3
-V0 = hu[A0 + 0002];
-8003009C	mflo   t3
-V1 = T3 >> 0c;
-V0 = V0 + V1;
-[A0 + 0002] = h(V0);
-V0 = h[A1 + 0000];
-800300B0	nop
-800300B4	mult   v0, a3
-T0 = T0 + 0008;
-800300BC	addiu  a2, a2, $ffff (=-$1)
-A1 = A1 + 0008;
-V0 = hu[A0 + 0004];
-800300C8	mflo   t3
-V1 = T3 >> 0c;
-V0 = V0 + V1;
-800300D4	bne    a2, t2, loop3005c [$8003005c]
-[A0 + 0004] = h(V0);
+vertex_block = A0;
+A2 = A2 - 1;
 
-L300dc:	; 800300DC
-800300DC	jr     ra 
-800300E0	nop
+for(; A2 != -1; --A2 )
+{
+    vertex = vertex_block + h[A1 + 6] * 8;
+
+    [vertex + 0] = h(hu[vertex + 0] + ((h[A1 + 0] * A3) >> c));
+    [vertex + 2] = h(hu[vertex + 2] + ((h[A1 + 2] * A3) >> c));
+    [vertex + 4] = h(hu[vertex + 4] + ((h[A1 + 4] * A3) >> c));
+
+    A1 += 8;
+}
 ////////////////////////////////
 
 
@@ -981,56 +949,28 @@ L300dc:	; 800300DC
 ////////////////////////////////
 // func300e4()
 
-S4 = A0;
+normals_block = A0;
 S3 = A1;
 S1 = A2;
 S2 = A3;
-8003010C	beq    s2, zero, L301b4 [$800301b4]
 
-80030114	addiu  s1, s1, $ffff (=-$1)
-80030118	addiu  v0, zero, $ffff (=-$1)
-8003011C	beq    s1, v0, L301b4 [$800301b4]
-S0 = A1 + 0004;
+if( S2 == 0 ) return;
 
-loop30124:	; 80030124
-V0 = h[S3 + 0000];
-80030128	nop
-8003012C	mult   v0, s2
-A0 = h[S0 + 0002];
-80030134	nop
-A0 = A0 << 03;
-A0 = A0 + S4;
-V0 = hu[A0 + 0000];
-80030144	mflo   t0
-V1 = T0 >> 0c;
-V0 = V0 + V1;
-[A0 + 0000] = h(V0);
-V0 = h[S0 + fffe];
-80030158	nop
-8003015C	mult   v0, s2
-V0 = hu[A0 + 0002];
-80030164	mflo   t0
-V1 = T0 >> 0c;
-V0 = V0 + V1;
-[A0 + 0002] = h(V0);
-V0 = h[S0 + 0000];
-80030178	nop
-8003017C	mult   v0, s2
-S3 = S3 + 0008;
-80030184	addiu  s1, s1, $ffff (=-$1)
-A1 = A0;
-S0 = S0 + 0008;
-V0 = hu[A0 + 0004];
-80030194	mflo   t0
-V1 = T0 >> 0c;
-V0 = V0 + V1;
-800301A0	jal    system_gte_normalize_half_vector_T0_T1_T2_to_half [$80048c50]
-[A0 + 0004] = h(V0);
-800301A8	addiu  v0, zero, $ffff (=-$1)
-800301AC	bne    s1, v0, loop30124 [$80030124]
-800301B0	nop
+S1 = S1 - 1;
 
-L301b4:	; 800301B4
+for(; S1 != -1; --S1 )
+{
+    normal = normals_block + h[S3 + 6] * 8;
+
+    [normal + 0] = h(hu[normal + 0] + ((h[S3 + 0] * S2) >> c));
+    [normal + 2] = h(hu[normal + 2] + ((h[S3 + 2] * S2) >> c));
+    [normal + 4] = h(hu[normal + 4] + ((h[S3 + 4] * S2) >> c));
+
+    A1 = A0;
+    system_gte_normalize_half_vector_T0_T1_T2_to_half();
+
+    S3 += 8;
+}
 ////////////////////////////////
 
 
@@ -1112,57 +1052,46 @@ return mim_work;
 ////////////////////////////////
 // func303e8()
 
-V1 = A0;
-80030408	beq    v1, zero, L304b8 [$800304b8]
+mime_data = A0;
 
-S3 = w[V1 + 0000];
-A1 = w[V1 + 0004];
-S5 = w[V1 + 000c];
-V0 = w[S3 + 001c];
-A0 = w[S3 + 0008];
-S0 = V0 + 0004;
-V0 = S5 << 01;
-V0 = V0 + S5;
-V0 = V0 << 02;
-V0 = V0 + S0;
-A2 = w[V0 + 0000];
-A3 = w[V0 + 0004];
-S2 = w[V1 + 0010];
-80030444	jal    func2ffd8 [$8002ffd8]
-S4 = 0;
-8003044C	blez   s5, L304b8 [$800304b8]
-80030450	nop
+if( mime_data == 0 ) return;
 
-loop30454:	; 80030454
-V0 = w[S2 + 0000];
-80030458	nop
-8003045C	jalr   v0 ra
-A0 = S2;
-S1 = V0;
-A0 = w[S3 + 0008];
-A1 = w[S0 + 0004];
-A2 = w[S0 + 0000];
-80030474	jal    func30038 [$80030038]
-A3 = S1;
-V0 = hu[S3 + 0000];
-80030480	nop
-V0 = V0 & 0010;
-80030488	beq    v0, zero, L304a4 [$800304a4]
-8003048C	nop
-A0 = w[S3 + 000c];
-A1 = w[S0 + 0008];
-A2 = w[S0 + 0000];
-8003049C	jal    func300e4 [$800300e4]
-A3 = S1;
+part_data = w[mime_data + 0];
+mime_n = w[mime_data + c];
+mime_offset = w[part_data + 1c];
 
-L304a4:	; 800304A4
-S2 = S2 + 0020;
-S4 = S4 + 0001;
-V0 = S4 < S5;
-800304B0	bne    v0, zero, loop30454 [$80030454]
-S0 = S0 + 000c;
+A0 = w[part_data + 8];
+A1 = w[mime_data + 4]; // vertex block
+A2 = w[mime_offset + 4 + mime_n * c + 0];
+A3 = w[mime_offset + 4 + mime_n * c + 4];
+func2ffd8();
 
-L304b8:	; 800304B8
+data = w[mime_data + 10];
+
+for( int i = 0; i < mime_n; ++i )
+{
+    V0 = w[data + i * 20 + 0];
+
+    A0 = data + i * 20;
+    8003045C	jalr   v0 ra
+
+    multiplier = V0;
+
+    A0 = w[part_data + 8];
+    A1 = w[mime_offset + 4 + i * c + 4]; // vertexes MIMe data
+    A2 = w[mime_offset + 4 + i * c + 0]; // number of items
+    A3 = multiplier;
+    func30038(); // modify vertexes
+
+    if( hu[part_data + 0] & 0010 )
+    {
+        A0 = w[part_data + c];
+        A1 = w[mime_offset + 4 + i * c + 8]; // normals MIMe data
+        A2 = w[mime_offset + 4 + i * c + 0]; // number of items
+        A3 = multiplier;
+        func300e4(); // modify normals
+    }
+}
 ////////////////////////////////
 
 
@@ -1489,7 +1418,7 @@ L33 = w[SP + 10];
 
 
 ////////////////////////////////
-// func30a50()
+// system_gte_set_back_color()
 
 RBK = ((A0 & ffff) >> 4) << 4;
 BBK = ((A1 & ffff) >> 4) << 4;

@@ -7801,20 +7801,23 @@ A1 = w[S0 + 0020];
 A1 = A1 + 000c;
 
 L25584:	; 80025584
-80025584	jal    system_gte_set_rotation_matrix [$80049da4]
-A0 = SP + 0010;
-8002558C	jal    system_gte_set_translation_vector [$80049e34]
-A0 = SP + 0010;
+A0 = SP + 10;
+system_gte_set_rotation_matrix();
+
+
+A0 = SP + 10;
+system_gte_set_translation_vector();
+
 A2 = w[80058c08];
-V0 = w[S0 + 0020];
-V1 = w[GP + 0188];
-A3 = hu[S0 + 0042];
-V1 = V1 << 02;
+V0 = w[S0 + 20];
+V1 = w[GP + 188];
+A3 = hu[S0 + 42];
+V1 = V1 << 2;
 V1 = V1 + V0;
-A0 = w[V0 + 0034];
-A1 = w[V1 + 002c];
-800255B8	jal    func2c510 [$8002c510]
-A3 = A3 & 0004;
+A0 = w[V0 + 34];
+A1 = w[V1 + 2c];
+A3 = A3 & 4;
+system_model_render_packets_for_part();
 
 L255c0:	; 800255C0
 RA = w[SP + 0044];

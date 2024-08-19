@@ -246,7 +246,7 @@ switch( w[800af51c] )
 
             field_transition_calculate_add_to_render();
 
-            func74bdc(); // move and update sprite and model here
+            field_update_and_render();
 
             func78170();
 
@@ -311,7 +311,7 @@ switch( w[800af51c] )
 
             field_transition_calculate_add_to_render();
 
-            func74bdc(); // move and update sprite and model here
+            field_update_and_render();
 
             func78170();
         }
@@ -371,7 +371,7 @@ switch( w[800af51c] )
 
             field_transition_calculate_add_to_render();
 
-            func74bdc(); // move and update sprite and model here
+            field_update_and_render();
 
             func78170();
         }
@@ -498,7 +498,7 @@ if( w[800ad010] == 3 )
 
         field_transition_calculate_add_to_render();
 
-        func74bdc(); // move and update sprite and model here
+        field_update_and_render();
 
         func78170();
 
@@ -519,7 +519,7 @@ if( w[800ad010] == 3 )
 
         field_transition_calculate_add_to_render();
 
-        func74bdc(); // move and update sprite and model here
+        field_update_and_render();
 
         func78170();
     }
@@ -548,7 +548,7 @@ if( w[800ad010] >= 4 )
 
             field_transition_central_update_add_to_render(); // render unk1
 
-            func74bdc(); // move and update sprite and model here
+            field_update_and_render();
 
             func78170();
 
@@ -588,7 +588,7 @@ if( w[800ad010] > 0 ) // 1 2
 
         field_transition_calculate_add_to_render();
 
-        func74bdc(); // move and update sprite and model here
+        field_update_and_render();
 
         func78170();
 

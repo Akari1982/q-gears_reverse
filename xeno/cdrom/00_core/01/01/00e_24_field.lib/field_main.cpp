@@ -285,7 +285,7 @@ while( true )
 
     func7743c();
 
-    func74bdc(); // move and update sprite and model here
+    field_update_and_render();
 
     field_transition_same_map();
 
@@ -1015,7 +1015,7 @@ func7743c();
 
 field_transition_calculate_add_to_render();
 
-func74bdc(); // move and update sprite and model here
+field_update_and_render();
 
 func78170();
 
@@ -1060,7 +1060,7 @@ func7743c();
 
 field_transition_calculate_add_to_render();
 
-func74bdc(); // move and update sprite and model here
+field_update_and_render();
 
 func78170();
 
