@@ -851,7 +851,7 @@ x_ptr = A1;
 y_ptr = A2;
 offset = A3;
 
-A0 = 800aef38; // rot matrix
+A0 = 800aef38; // camera matrix
 A1 = w[800aefe4] + entity_id * 5c + c; // rotation matrix
 A2 = SP + 18; // result
 system_gte_matrix_mult_and_trans();

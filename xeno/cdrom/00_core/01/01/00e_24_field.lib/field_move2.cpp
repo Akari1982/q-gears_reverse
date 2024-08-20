@@ -4286,21 +4286,15 @@ loop85e0c:	; 80085E0C
 V0 = w[S2 + 0030];
 80085E10	nop
 80085E14	bne    v0, zero, L85e54 [$80085e54]
-80085E18	nop
-80085E1C	lui    at, $800b
-AT = AT + S0;
-V0 = hu[AT + f35e];
-80085E28	nop
+
+V0 = hu[800af35e + S0];
+
 80085E2C	beq    v0, s3, L85e54 [$80085e54]
 A0 = S1 << 01;
 80085E34	jal    $8003a0b4
-80085E38	nop
-80085E3C	lui    at, $800b
-AT = AT + S0;
-[AT + f35e] = h(S3);
-80085E48	lui    at, $800b
-AT = AT + S0;
-[AT + f35c] = h(S3);
+
+[800af35e + S0] = h(S3);
+[800af35c + S0] = h(S3);
 
 L85e54:	; 80085E54
 S0 = S0 + 0006;

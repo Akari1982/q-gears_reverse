@@ -392,7 +392,7 @@ system_gte_set_translation_vector();
 A0 = SP + 50;
 field_get_identity_matrix();
 
-A0 = 800aef54;
+A0 = 800aee64;
 A1 = SP + 50;
 system_gte_matrix_multiplication_to_A1();
 

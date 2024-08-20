@@ -22,25 +22,27 @@ if( h[800b1662] != 0 )
     func48958();
 }
 
-[SP + 18] = w(w[800aef98]);
-[SP + 1c] = w(w[800aef98]);
-[SP + 20] = w(w[800aef98]);
+cam_scale = SP + 18;
+[cam_scale + 0] = w(w[800aef98]);
+[cam_scale + 4] = w(w[800aef98]);
+[cam_scale + 8] = w(w[800aef98]);
 
-[SP + 28] = w(800);
-[SP + 2c] = w(800);
-[SP + 30] = w(800);
+light_scale = SP + 28;
+[light_scale + 0] = w(800);
+[light_scale + 4] = w(800);
+[light_scale + 8] = w(800);
 
-A0 = 800aef58;
-A1 = SP + 18;
+A0 = 800aef58; // res
+A1 = cam_scale;
 system_gte_multiply_matrix_by_vector();
 
 cam_matrix = SP + 38;
 mod_matrix = SP + 58; // model matrix multiplied by camera matrix
 light_matrix = SP + 78;
 
-A0 = 800aef38;
-A1 = 800af104;
-A2 = cam_matrix;
+A0 = 800aef38; // camera matrix
+A1 = 800af104; // base camera matrix
+A2 = cam_matrix; // res
 system_gte_matrix_mult_and_trans();
 
 [8004f7a8] = w(0);
@@ -151,7 +153,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                     field_copy_rotation_matrix(); // copy A1 to A0
 
                     A0 = mod_matrix;
-                    A1 = SP + 18;
+                    A1 = cam_scale;
                     system_gte_multiply_matrix_by_vector();
                 }
 
@@ -176,7 +178,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                     A3 = A3 & 0fff;
                     func1e72cc();
 
-                    A0 = 800aef38;
+                    A0 = 800aef38; // camera matrix
                     A1 = struct_5c_p + i * 5c + 2c;
                     A2 = light_matrix;
                     system_gte_matrix_mult_and_trans();
@@ -264,7 +266,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                                 field_copy_rotation_matrix(); // copy A1 to A0
 
                                 A0 = mod_matrix;
-                                A1 = SP + 18;
+                                A1 = cam_scale;
                                 system_gte_multiply_matrix_by_vector();
                             }
 
@@ -275,9 +277,8 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                     }
                     else
                     {
-                        A0 = 800aef38;
-                        V1 = bu[struct_138 + 75];
-                        A1 = struct_5c_p + V1 * 5c + 2c;
+                        A0 = 800aef38; // camera matrix
+                        A1 = struct_5c_p + bu[struct_138 + 75] * 5c + 2c;
                         A2 = light_matrix;
                         system_gte_matrix_mult_and_trans();
 
@@ -286,8 +287,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                         A2 = mod_matrix;
                         system_gte_matrix_mult_and_trans();
 
-                        V1 = bu[struct_138 + 75];
-                        A0 = struct_5c_p + V1 * 5c + 2c;
+                        A0 = struct_5c_p + bu[struct_138 + 75] * 5c + 2c;
                         A1 = struct_5c_p + i * 5c + c;
                         A2 = struct_5c_p + i * 5c + 2c;
                         system_gte_matrix_mult_and_trans();
@@ -304,15 +304,15 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                 A1 = light_matrix;
                 system_calculate_rotation_matrix();
 
-                A1 = light_matrix;
                 A0 = struct_5c_p + i * 5c + c;
+                A1 = light_matrix;
                 system_gte_matrix_multiplication_to_A1();
 
                 [light_matrix + 14] = w(w[struct_5c_p + i * 5c + 20]);
                 [light_matrix + 18] = w(w[struct_5c_p + i * 5c + 24]);
                 [light_matrix + 1c] = w(w[struct_5c_p + i * 5c + 28]);
 
-                A0 = 800aef38;
+                A0 = 800aef38; // camera matrix
                 A1 = light_matrix;
                 A2 = mod_matrix;
                 system_gte_matrix_mult_and_trans();
@@ -327,15 +327,15 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                 A1 = light_matrix;
                 system_calculate_rotation_matrix();
 
-                A1 = light_matrix;
                 A0 = struct_5c_p + i * 5c + c;
+                A1 = light_matrix;
                 system_gte_matrix_multiplication_to_A1();
 
                 [light_matrix + 14] = w(w[struct_5c_p + i * 5c + 20]);
                 [light_matrix + 18] = w(w[struct_5c_p + i * 5c + 24]);
                 [light_matrix + 1c] = w(w[struct_5c_p + i * 5c + 28]);
 
-                A0 = 800aef38;
+                A0 = 800aef38; // camera matrix
                 A1 = light_matrix;
                 A2 = mod_matrix;
                 system_gte_matrix_mult_and_trans();
@@ -358,7 +358,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                 [light_matrix + 18] = w(w[struct_5c_p + i * 5c + 24]);
                 [light_matrix + 1c] = w(w[struct_5c_p + i * 5c + 28]);
 
-                A0 = 800aef38;
+                A0 = 800aef38; // camera matrix
                 A1 = light_matrix;
                 A2 = mod_matrix;
                 system_gte_matrix_mult_and_trans();
@@ -378,7 +378,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
             [light_matrix + 1c] = w(w[mod_matrix + 1c]);
 
             A0 = light_matrix;
-            A1 = SP + 28;
+            A1 = light_scale;
             system_gte_multiply_matrix_by_vector();
 
             A0 = light_matrix;
@@ -473,7 +473,7 @@ if( w[800b1738] != 0 )
     A2 = bu[800b1732];
     func49f94();
 
-    A0 = 800aef38;
+    A0 = 800aef38; // camera matrix
     A1 = 800b1738 - 48;
     A2 = w[800c3740] + cc;
     A3 = w[800acfe0];
@@ -503,7 +503,7 @@ system_sprite_reset_buffers();
 
 [80058c08] = w(w[800c3740] + cc);
 
-A0 = 800aef38;
+A0 = 800aef38; // camera matrix
 func24dec(); // set sprite matrix.
 
 func1d2e4(); // sprites texture and tile update by frame id.
@@ -588,7 +588,7 @@ if( h[800af586] != 0 )
         A0 = w[800af550];
         A1 = SP + 18;
         A2 = SP + 20;
-        A3 = 800aed54 + 1e4;
+        A3 = 800aef38; // camera matrix
         A4 = w[800c3740] + h[800b16a8] * 4 + 40cc;
         A5 = w[800acfe0];
         func271d4(); // render sprite?
@@ -954,6 +954,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 
         if( ( w[struct_138 + 4] & 00002000 ) == 0 ) // sprite
         {
+            // camera matrix
             R11R12 = w[800aef38 +  0];
             R13R21 = w[800aef38 +  4];
             R22R23 = w[800aef38 +  8];
@@ -984,6 +985,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
             [SP + 3a] = h(IR2);
             [SP + 40] = h(IR3);
 
+            // camera matrix
             TRX = w[800aef38 + 14];
             TRY = w[800aef38 + 18];
             TRX = w[800aef38 + 1c];
@@ -1299,7 +1301,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
 otag = A0;
 rb = A1;
 
-matrix = 800aef38;
+matrix = 800aef38; // camera matrix
 
 [SP + 98] = w(w[matrix + 0]);
 [SP + 9c] = w(w[matrix + 4]);

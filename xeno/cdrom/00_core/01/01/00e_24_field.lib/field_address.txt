@@ -238,7 +238,12 @@
 800aef18 [][][][] increment for 800aef0c. Init with 0.
 
 800aef38 looks like final camera matrix used to render all objects.
+800aef58 some camera matrix for model render.
 800aef78 some matrix and translation.
+
+800aef98 [][][][] camera scale for model render. Init with 0x3000.
+800aef9c
+
 
 800aefd8 [][]     R back color.
 800aefda [][]     G back color.
@@ -513,7 +518,7 @@
 800af100 [][]     particle texture width.
 800af102 [][]     particle texture height.
 
-800af104 some matrix and translation.
+800af104 base camera matrix. Calculates from base rotations set from events script.
 
 800af144 [][][][] store here particle texture from vram (3c0 100 40 100).
 800af148 [][][][] every time we init entity model with field_sprite_init() we increment this by 1.

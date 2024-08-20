@@ -1,26 +1,25 @@
 ////////////////////////////////
 // func6f47c()
+
 S0 = A0; // pointer to field +154
 
 S1 = 800aee64;
 
-A0 = S1;
-A1 = S1 - 110;
-A2 = S1 - 100;
-A3 = S1 - f0;
+A0 = 800aee64; // res matrix
+A1 = 800aed54; // eye pos
+A2 = 800aed64; // at pos
+A3 = 800aed74; // up vec
 func72de0();
 
-S2 = S1 + d4;
-
-A0 = S1 + c4; // rot data
-A1 = S1 + d4;
+A0 = 800aef28; // rot data
+A1 = 800aef38; // camera matrix
 system_calculate_rotation_matrix();
 
-A0 = S1;
-A1 = S1 + d4;
+A0 = 800aee64;
+A1 = 800aef38; // camera matrix
 system_gte_matrix_multiplication_to_A1();
 
-[S1 + 138] = w(h[S0]);
+[800aef9c] = w(h[S0]);
 S0 = S0 + 2;
 [800aefa0] = w(h[S0]);
 S0 = S0 + 2;
@@ -34,8 +33,8 @@ S0 = S0 + 2;
 S0 = S0 + 4;
 
 A0 = 0;
-A1 = S1 + 138;
-8006F53C	jal    func30840 [$80030840]
+A1 = 800aef9c;
+func30840();
 
 V0 = h[S0 + 0000];
 S0 = S0 + 0002;
@@ -85,7 +84,7 @@ V0 = hu[S0 + 0000];
 8006F61C	nop
 V0 = V0 << 03;
 [800aefd4] = h(V0);
-V0 = w[S1 + 0138];
+V0 = w[800aef9c];
 V1 = w[S1 + 013c];
 
 L6f634:	; 8006F634
@@ -98,7 +97,7 @@ A3 = w[S1 + 0144];
 V0 = w[S1 + 0148];
 8006F650	nop
 [S1 + 015c] = w(V0);
-V0 = w[S1 + 0138];
+V0 = w[800aef9c];
 V1 = w[S1 + 013c];
 A2 = w[S1 + 0140];
 
@@ -136,15 +135,15 @@ system_gte_set_translation_vector();
 A0 = S1 + cc;
 A1 = S1 + e8;
 A2 = SP + 10;
-8006F6E0	jal    system_gte_rotate_translate_vector [$system_gte_rotate_translate_vector]
+system_gte_rotate_translate_vector();
 
-A0 = S2; // original light matrix without rotation.
+A0 = 800aef38; // camera matrix
 system_gte_calculate_and_set_lighting_matrix();
 
-A0 = S2;
+A0 = 800aef38; // camera matrix
 system_gte_set_rotation_matrix();
 
-A0 = S2;
+A0 = 800aef38; // camera matrix
 system_gte_set_translation_vector();
 ////////////////////////////////
 
@@ -685,7 +684,7 @@ field_get_identity_matrix();
 A0 = 800aed30;
 field_get_identity_matrix();
 
-A0 = 800aef38;
+A0 = 800aef38; // camera matrix
 field_get_identity_matrix();
 
 A0 = 800aef78;
@@ -702,7 +701,7 @@ field_get_identity_matrix();
 [800aef98] = w(3000);
 
 A0 = 800aef28;
-A1 = 800aef38;
+A1 = 800aef38; // res
 system_calculate_rotation_matrix();
 
 [800c3740] = w(800b1970);
@@ -1479,13 +1478,12 @@ A1 = S1 + 00a8;
 A2 = SP + 0060;
 system_gte_rotate_translate_vector();
 
-A0 = S0;
-V0 = w[800aef98];
-A1 = SP + 0010;
-[SP + 0010] = w(V0);
-[SP + 0014] = w(V0);
-[SP + 0018] = w(V0);
+[SP + 10] = w(w[800aef98]);
+[SP + 14] = w(w[800aef98]);
+[SP + 18] = w(w[800aef98]);
 
+A0 = S0;
+A1 = SP + 10;
 system_gte_multiply_matrix_by_vector();
 
 A0 = S0;
@@ -1529,7 +1527,7 @@ system_gte_multiply_matrix_by_vector();
 A0 = 800aef38; // camera matrix
 system_gte_set_rotation_matrix();
 
-A0 = 800aef38;
+A0 = 800aef38; // camera matrix
 system_gte_set_translation_vector();
 
 if( w[800c1b60] == 0 )
@@ -2221,71 +2219,74 @@ system_gte_pop_matrix();
 ////////////////////////////////
 // func72de0()
 
-S4 = A1;
-V0 = w[A2 + 0000];
-V1 = w[S4 + 0000];
-S1 = A0;
-V0 = V0 - V1;
-V0 = V0 >> 10;
-[SP + 0010] = w(V0);
-V0 = w[A2 + 0004];
-V1 = w[S4 + 0004];
-V0 = V0 - V1;
-[SP + 0014] = w(V0 >> 10);
-V0 = w[A2 + 0008] - w[S4 + 0008];
-[SP + 0018] = w(V0 >> 10);
-[SP + 0040] = w(w[A3 + 0000]);
-[SP + 0044] = w(w[A3 + 0004]);
-[SP + 0040] = w(w[A3 + 0004] >> 10);
-[SP + 0044] = w(V0 >> 10);
-[SP + 0048] = w(w[A3 + 0008]);
-[SP + 0048] = w(w[A3 + 0008] >> 10);
+res_matrix = A0;
+eye_pos = A1;
+at_pos = A2;
+up_vec = A3;
 
-A0 = SP + 10;
+// eye vector
+[SP + 10] = w((w[at_pos + 0] - w[eye_pos + 0]) >> 10);
+[SP + 14] = w((w[at_pos + 4] - w[eye_pos + 4]) >> 10);
+[SP + 18] = w((w[at_pos + 8] - w[eye_pos + 8]) >> 10);
+
+// up vector
+[SP + 40] = w(w[up_vec + 0] >> 10);
+[SP + 44] = w(w[up_vec + 4] >> 10);
+[SP + 48] = w(w[up_vec + 8] >> 10);
+
+// normalize eye vector
+A0 = SP + 10; // eye vector
 A1 = SP + 20;
-A2 = w[A3 + 0000] >> 10;
 system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
-A0 = SP + 40;
-A1 = SP + 20;
+// get normal
+A0 = SP + 40; // up vector
+A1 = SP + 20; // normalized eye vector
 A2 = SP + 10;
 system_gte_outer_product2_A0_A1_to_A2();
 
-A0 = SP + 10;
+// normalize normal
+A0 = SP + 10; // normal
 A1 = SP + 30;
 system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
-A0 = SP + 20;
-A1 = SP + 30;
+// get new up vector
+A0 = SP + 20; // normalized eye vector
+A1 = SP + 30; // normalized normal
 A2 = SP + 10;
 system_gte_outer_product2_A0_A1_to_A2();
 
-A0 = SP + 10;
+// normalized new up vector
+A0 = SP + 10; // new up vector
 A1 = SP + 40;
 system_gte_normalize_word_vector_T0_T1_T2_to_word();
 
-[S1 + 0] = h(w[SP + 30]);
-[S1 + 2] = h(w[SP + 34]);
-[S1 + 4] = h(w[SP + 38]);
-[S1 + 6] = h(w[SP + 40]);
-[S1 + 8] = h(w[SP + 44]);
-[S1 + a] = h(w[SP + 48]);
-[S1 + c] = h(w[SP + 20]);
-[S1 + e] = h(w[SP + 24]);
-[S1 + 10] = h(w[SP + 28]);
+// normalized normal
+[res_matrix +  0] = h(w[SP + 30]);
+[res_matrix +  2] = h(w[SP + 34]);
+[res_matrix +  4] = h(w[SP + 38]);
+// normalized new up vector
+[res_matrix +  6] = h(w[SP + 40]);
+[res_matrix +  8] = h(w[SP + 44]);
+[res_matrix +  a] = h(w[SP + 48]);
+// normalized eye vector
+[res_matrix +  c] = h(w[SP + 20]);
+[res_matrix +  e] = h(w[SP + 24]);
+[res_matrix + 10] = h(w[SP + 28]);
 
-[SP + 50] = h(h[S4 + 2] * 3);
-[SP + 52] = h(h[S4 + 6] * 3);
-[SP + 54] = h(h[S4 + a] * 3);
+[SP + 50] = h(h[eye_pos + 2] * 3);
+[SP + 52] = h(h[eye_pos + 6] * 3);
+[SP + 54] = h(h[eye_pos + a] * 3);
 
-A0 = S1;
-A1 = SP + 50;
-A2 = SP + 10;
+// multiply input vector by matrix
+A0 = res_matrix; // rotation matrix
+A1 = SP + 50; // input vector
+A2 = SP + 10; // output vector
 system_gte_apply_matrix();
 
-[S1 + 14] = w(0 - w[SP + 10]);
-[S1 + 18] = w(0 - w[SP + 14]);
-[S1 + 1c] = w(0 - w[SP + 18]);
+[res_matrix + 14] = w(0 - w[SP + 10]);
+[res_matrix + 18] = w(0 - w[SP + 14]);
+[res_matrix + 1c] = w(0 - w[SP + 18]);
 ////////////////////////////////
 
 
@@ -2389,9 +2390,9 @@ SP = w[SP];
 if( w[800ad0f0] != 0 )
 {
     A0 = 800aee64;
-    A1 = SP + 10;
-    A2 = SP + 20;
-    A3 = 800aed74;
+    A1 = SP + 10;  // eye pos
+    A2 = SP + 20;  // at pos
+    A3 = 800aed74; // up vec
     func72de0();
 
     [800aed30 +  0] = w(w[800aee64 +  0]);
@@ -2415,9 +2416,9 @@ else
     [800aee64 + 1c] = w(w[800aed30 + 1c]);
 
     A0 = 800aed30;
-    A1 = SP + 10;
-    A2 = SP + 20;
-    A3 = 800aed74;
+    A1 = SP + 10;  // eye pos
+    A2 = SP + 20;  // at pos
+    A3 = 800aed74; // up vec
     func72de0();
 }
 
