@@ -3,8 +3,6 @@
 
 S0 = A0; // pointer to field +154
 
-S1 = 800aee64;
-
 A0 = 800aee64; // res matrix
 A1 = 800aed54; // eye pos
 A2 = 800aed64; // at pos
@@ -19,121 +17,62 @@ A0 = 800aee64;
 A1 = 800aef38; // camera matrix
 system_gte_matrix_multiplication_to_A1();
 
-[800aef9c] = w(h[S0]);
-S0 = S0 + 2;
-[800aefa0] = w(h[S0]);
-S0 = S0 + 2;
-[800aefa4] = w(h[S0]);
-S0 = S0 + 4;
-[800aefa8] = h(hu[S0] << 3);
-S0 = S0 + 2;
-[800aefaa] = h(hu[S0] << 3);
-S0 = S0 + 2;
-[800aefac] = h(hu[S0] << 3);
-S0 = S0 + 4;
+[800aef9c] = w(h[S0 + 0]);
+[800aefa0] = w(h[S0 + 2]);
+[800aefa4] = w(h[S0 + 4]);
+[800aefa8] = h(hu[S0 + 8] << 3);
+[800aefaa] = h(hu[S0 + a] << 3);
+[800aefac] = h(hu[S0 + c] << 3);
 
 A0 = 0;
 A1 = 800aef9c;
 func30840();
 
-V0 = h[S0 + 0000];
-S0 = S0 + 0002;
-A0 = 0001;
-A1 = S1 + 014c;
-[S1 + 014c] = w(V0);
-V0 = h[S0 + 0000];
-S0 = S0 + 0002;
-[800aefb4] = w(V0);
-V0 = h[S0 + 0000];
-S0 = S0 + 0004;
-[800aefb8] = w(V0);
-V0 = hu[S0 + 0000];
-S0 = S0 + 0002;
-V0 = V0 << 03;
-[800aefbc] = h(V0);
-V0 = hu[S0 + 0000];
-S0 = S0 + 0002;
-V0 = V0 << 03;
-[800aefbe] = h(V0);
-V0 = hu[S0 + 0000];
-8006F5A4	nop
-V0 = V0 << 03;
-[800aefc0] = h(V0);
-8006F5B4	jal    func30840 [$80030840]
-S0 = S0 + 0004;
-V0 = h[S0 + 0000];
-S0 = S0 + 0002;
-A0 = 0002;
-A1 = S1 + 0160;
-[S1 + 0160] = w(V0);
-V0 = h[S0 + 0000];
-S0 = S0 + 0002;
-[800aefc8] = w(V0);
-V0 = h[S0 + 0000];
-S0 = S0 + 0004;
-[800aefcc] = w(V0);
-V0 = hu[S0 + 0000];
-S0 = S0 + 0002;
-V0 = V0 << 03;
-[800aefd0] = h(V0);
-V0 = hu[S0 + 0000];
-S0 = S0 + 0002;
-V0 = V0 << 03;
-[800aefd2] = h(V0);
-V0 = hu[S0 + 0000];
-8006F61C	nop
-V0 = V0 << 03;
-[800aefd4] = h(V0);
-V0 = w[800aef9c];
-V1 = w[S1 + 013c];
+[800aefb0] = w(h[S0 + 10]);
+[800aefb4] = w(h[S0 + 12]);
+[800aefb8] = w(h[S0 + 14]);
+[800aefbc] = h(hu[S0 + 18] << 3);
+[800aefbe] = h(hu[S0 + 1a] << 3);
+[800aefc0] = h(hu[S0 + 1c] << 3);
 
-L6f634:	; 8006F634
-A2 = w[S1 + 0140];
-A3 = w[S1 + 0144];
-[S1 + 014c] = w(V0);
-[S1 + 0150] = w(V1);
-[S1 + 0154] = w(A2);
-[S1 + 0158] = w(A3);
-V0 = w[S1 + 0148];
-8006F650	nop
-[S1 + 015c] = w(V0);
-V0 = w[800aef9c];
-V1 = w[S1 + 013c];
-A2 = w[S1 + 0140];
+A0 = 1;
+A1 = 800aefb0;
+func30840();
 
-L6f664:	; 8006F664
-A3 = w[S1 + 0144];
-[S1 + 0160] = w(V0);
-[S1 + 0164] = w(V1);
-[S1 + 0168] = w(A2);
-[S1 + 016c] = w(A3);
-V0 = w[S1 + 0148];
-8006F67C	nop
-[S1 + 0170] = w(V0);
-S0 = S0 + 0004;
-8006F684	jal    func30840 [$80030840]
+[800aefc4] = w(h[S0 + 20]);
+[800aefc8] = w(h[S0 + 22]);
+[800aefcc] = w(h[S0 + 24]);
+[800aefd0] = h(hu[S0 + 28] << 3);
+[800aefd2] = h(hu[S0 + 2a] << 3);
+[800aefd4] = h(hu[S0 + 2c] << 3);
 
-V0 = hu[S0 + 0000];
-8006F690	nop
-V0 = V0 << 04;
-[800aefd8] = h(V0);
-V0 = hu[S0 + 0002];
-8006F6A4	nop
-V0 = V0 << 04;
-[800aefda] = h(V0);
-V0 = hu[S0 + 0004];
-8006F6B8	nop
-V0 = V0 << 04;
-[800aefdc] = h(V0);
+[800aefb0] = w(w[800aef9c]);
+[800aefb4] = w(w[800aefa0]);
+[800aefb8] = w(w[800aefa4]);
+[800aefbc] = w(w[800aefa8]);
+[800aefc0] = w(w[800aefac]);
+[800aefc4] = w(w[800aef9c]);
+[800aefc8] = w(w[800aefa0]);
+[800aefcc] = w(w[800aefa4]);
+[800aefd0] = w(w[800aefa8]);
+[800aefd4] = w(w[800aefac]);
 
-A0 = S1;
+A0 = 2;
+A1 = 800aefc4;
+func30840();
+
+[800aefd8] = h(hu[S0 + 30] << 4);
+[800aefda] = h(hu[S0 + 32] << 4);
+[800aefdc] = h(hu[S0 + 34] << 4);
+
+A0 = 800aee64;
 system_gte_set_rotation_matrix();
 
-A0 = S1;
+A0 = 800aee64;
 system_gte_set_translation_vector();
 
-A0 = S1 + cc;
-A1 = S1 + e8;
+A0 = 800aef30;
+A1 = 800aef4c;
 A2 = SP + 10;
 system_gte_rotate_translate_vector();
 
@@ -2577,7 +2516,7 @@ V1 = V1 - V0;
 [800c3740] = w(800b1970 + V1 * 80f4);
 [800acfe0] = w(V1);
 
-A0 = w[800c3740] + 80d4;
+A0 = w[800c3740] + 80d4; // interface otag
 A1 = 8;
 system_clear_otagr();
 ////////////////////////////////
@@ -2589,13 +2528,13 @@ system_clear_otagr();
 
 func735e0();
 
-A0 = w[800c3740] + cc;
+A0 = w[800c3740] + cc; // scene otag
 A1 = 1000;
 system_clear_otagr();
 
 if( w[800ad024] != 0 )
 {
-    A0 = w[800c3740] + 40d0;
+    A0 = w[800c3740] + 40d0; // top scene otag
     A1 = 1000;
     system_clear_otagr();
 }

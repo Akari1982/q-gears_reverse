@@ -354,7 +354,7 @@ if( bu[800b16a5] == 0 ) // compas render on (script)
         {
             for( int i = 14; i < 15; ++i ) // render arrow
             {
-                A0 = rdata + 80d4; // otag
+                A0 = rdata + 80d4; // interface otag
                 A1 = 800afb90 + i * 70;
                 A2 = SP + 70; // matrix
                 A3 = rb;
@@ -443,7 +443,7 @@ if( bu[800b16a5] == 0 ) // compas render on (script)
                 A1 = SP + 90; // src
                 field_copy_rotation_matrix(); // copy matrix without translation part
 
-                A0 = rdata + 80d4; // otag
+                A0 = rdata + 80d4; // interface otag
                 A1 = 800afb90 + i * 70; // packet
                 A2 = SP + 70; // matrix + translation
                 A3 = rb;
@@ -452,7 +452,7 @@ if( bu[800b16a5] == 0 ) // compas render on (script)
 
             for( int i = 0; i < 10; ++i )
             {
-                A0 = rdata + 80d4; // otag
+                A0 = rdata + 80d4; // interface otag
                 A1 = 800afb90 + i * 70;
                 A2 = SP + 10; // matrix
                 A3 = rb;
@@ -461,7 +461,7 @@ if( bu[800b16a5] == 0 ) // compas render on (script)
 
             for( int i = 15; i < 19; ++i )
             {
-                A0 = rdata + 80d4; // otag
+                A0 = rdata + 80d4; // interface otag
                 A1 = 800afb90 + i * 70;
                 A2 = SP + 10; // matrix
                 A3 = rb;
@@ -471,6 +471,7 @@ if( bu[800b16a5] == 0 ) // compas render on (script)
     }
 }
 
+// render to interface otag
 V1 = 800b12d4 + rb * c0;
 [V1] = w((w[V1] & ff000000) | (w[rdata + 80d4] & 00ffffff));
 [rdata + 80d4] = w((w[rdata + 80d4] & ff000000) | (V1 & 00ffffff));

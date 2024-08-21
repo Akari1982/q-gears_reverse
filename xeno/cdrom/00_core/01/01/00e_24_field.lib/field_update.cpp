@@ -432,11 +432,11 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
 
                 if( flags58 & 8000 )
                 {
-                    A2 = w[800c3740] + 40d0; // rdata
+                    A2 = w[800c3740] + 40d0; // top scene otag
                 }
-                else
+                else // as scene
                 {
-                    A2 = w[800c3740] + cc; // rdata
+                    A2 = w[800c3740] + cc; // otag
                 }
 
                 A0 = w[struct_model + 4]; // part_header
@@ -620,7 +620,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
     field_debug_add_timer();
 }
 
-A0 = w[800c3740] + 80d4;
+A0 = w[800c3740] + 80d4; // interface otag
 A1 = w[800acfe0];
 field_fade_update_and_add_to_render();
 
@@ -679,7 +679,7 @@ system_draw_sync();
 
 field_message_update_state();
 
-A0 = w[800c3740] + 80d4; // otag
+A0 = w[800c3740] + 80d4; // interface otag
 A1 = w[800acfe0]; // rb
 field_message_update_add_to_render();
 
@@ -763,7 +763,7 @@ if( w[800ad0f0] == 0 )
     if( w[800ad024] != 0 )
     {
         A0 = w[800c3740] + cc + h[800b16a8] * 4; // ot
-        A1 = w[800c3740] + 40d0; // primitives
+        A1 = w[800c3740] + 40d0; // top scene otag
         A2 = h[800b16a8]; // size
         func74ae8();
     }
@@ -796,7 +796,7 @@ call_run_script_8();
 
 field_message_update_state();
 
-A0 = w[800c3740] + 80d4;
+A0 = w[800c3740] + 80d4; // interface otag
 A1 = w[800acfe0];
 field_message_update_add_to_render(); // dialog add to render
 
