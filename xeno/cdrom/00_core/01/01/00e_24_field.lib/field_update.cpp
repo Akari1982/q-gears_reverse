@@ -14,12 +14,12 @@ if( h[800b1662] != 0 )
     A0 = bu[800b1668];
     A1 = bu[800b1669];
     A2 = bu[800b166a];
-    func49fb4();
+    func49fb4(); // set Far color
 
     A0 = h[800b166c];
     A1 = h[800b166e];
     A2 = w[800aeecc];
-    func48958();
+    func48958(); // set dqa and dqb
 }
 
 cam_scale = SP + 18;
@@ -41,7 +41,7 @@ mod_matrix = SP + 58; // model matrix multiplied by camera matrix
 light_matrix = SP + 78;
 
 A0 = 800aef38; // camera matrix
-A1 = 800af104; // base camera matrix
+A1 = 800af104; // additional model rotation matrix
 A2 = cam_matrix; // res
 system_gte_matrix_mult_and_trans();
 
@@ -55,7 +55,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
 {
     struct_5c_p = w[800aefe4];
 
-    // copy matrix to temp
+    // update child transform matrix
     [struct_5c_p + i * 5c + 2c] = w(w[struct_5c_p + i * 5c +  c]);
     [struct_5c_p + i * 5c + 30] = w(w[struct_5c_p + i * 5c + 10]);
     [struct_5c_p + i * 5c + 34] = w(w[struct_5c_p + i * 5c + 14]);
@@ -139,14 +139,14 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
 
             if( flags58 & 0003 )
             {
-                if( flags58 == 1 )
+                if( flags58 == 1 ) // render model by 800aef58 and model transform
                 {
                     A0 = 800aef58;
                     A1 = struct_5c_p + i * 5c + c;
                     A2 = mod_matrix;
                     system_gte_matrix_multiplication_to_A2();
                 }
-                else
+                else // render model without camera matrix just from model transform
                 {
                     A0 = mod_matrix;
                     A1 = struct_5c_p + i * 5c + c;
@@ -168,33 +168,38 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
 
             if( V1 == 0 )
             {
-                A3 = hu[struct_138 + 128];
-                A2 = A3 & ffff;
-                if( A2 != ffff )
+                // if animation exist. Set in opcode 0xFEC5
+                data128 = hu[struct_138 + 128];
+                if( ( data128 & ffff ) != ffff )
                 {
-                    A0 = struct_5c_p + i * 5c + 2c;
+                    // calculate self child transform (maybe for animation)
+                    A0 = struct_5c_p + i * 5c + 2c; // res
                     A1 = A0;
-                    A2 = A2 >> c;
-                    A3 = A3 & 0fff;
+                    A2 = (data128 & ffff) >> c; // some id1 (animation?)
+                    A3 = data128 & 0fff; // some id2 (frame?)
                     func1e72cc();
 
+                    // use self child transform
                     A0 = 800aef38; // camera matrix
                     A1 = struct_5c_p + i * 5c + 2c;
-                    A2 = light_matrix;
+                    A2 = light_matrix; // res
                     system_gte_matrix_mult_and_trans();
 
+                    // add self transform
                     A0 = light_matrix;
                     A1 = struct_5c_p + i * 5c + c;
-                    A2 = mod_matrix;
+                    A2 = mod_matrix; // res
                     system_gte_matrix_mult_and_trans();
 
+                    // update self child transform
                     A0 = struct_5c_p + i * 5c + 2c;
                     A1 = struct_5c_p + i * 5c + c;
-                    A2 = struct_5c_p + i * 5c + 2c;
+                    A2 = struct_5c_p + i * 5c + 2c; // res
                     system_gte_matrix_mult_and_trans();
                 }
-                else
+                else // no animation
                 {
+                    // no parent entity
                     if( bu[struct_138 + 75] == ff )
                     {
                         if( ( bu[800b16a6] & 7f ) == 1 )
@@ -275,21 +280,25 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
                             system_gte_matrix_multiplication_to_A1();
                         }
                     }
+                    // parent entity exist
                     else
                     {
+                        // use parent transform
                         A0 = 800aef38; // camera matrix
                         A1 = struct_5c_p + bu[struct_138 + 75] * 5c + 2c;
-                        A2 = light_matrix;
+                        A2 = light_matrix; // res
                         system_gte_matrix_mult_and_trans();
 
+                        // add self transform
                         A0 = light_matrix;
                         A1 = struct_5c_p + i * 5c + c;
-                        A2 = mod_matrix;
+                        A2 = mod_matrix; // res
                         system_gte_matrix_mult_and_trans();
 
+                        // calculate child transform for this entity
                         A0 = struct_5c_p + bu[struct_138 + 75] * 5c + 2c;
                         A1 = struct_5c_p + i * 5c + c;
-                        A2 = struct_5c_p + i * 5c + 2c;
+                        A2 = struct_5c_p + i * 5c + 2c; // res
                         system_gte_matrix_mult_and_trans();
                     }
                 }
@@ -360,7 +369,7 @@ for( int i = 0; i < w[800aefe0]; ++i ) // go through all entities
 
                 A0 = 800aef38; // camera matrix
                 A1 = light_matrix;
-                A2 = mod_matrix;
+                A2 = mod_matrix; // res
                 system_gte_matrix_mult_and_trans();
             }
         }
@@ -610,7 +619,7 @@ A0 = -1;
 system_psyq_wait_frames();
 S1 = V0;
 
-func73050(); // move here
+func73050(); // move and update matrixes here here
 
 func85f1c();
 

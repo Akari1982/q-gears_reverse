@@ -20,10 +20,28 @@ first 0x100 bytes of data copied to 0x800b144c.
 + 148 [][][][] offset to subfile 6 (sprites).
 + 14c [][][][] offset to subfile 7 (dialogs).
 + 150 [][][][] offset to subfile 8 (triggers).
-
-+ 154
-
-
++ 154 lighting data for this field.
+    +  0 [][] L11.
+    +  2 [][] L12.
+    +  4 [][] L13.
+    +  8 [][] LR1.
+    +  a [][] LR2.
+    +  c [][] LR3.
+    + 10 [][] L21.
+    + 12 [][] L22.
+    + 14 [][] L23.
+    + 18 [][] LG1.
+    + 1a [][] LG2.
+    + 1c [][] LG3.
+    + 20 [][] L31.
+    + 22 [][] L32.
+    + 24 [][] L33.
+    + 28 [][] LB1.
+    + 2a [][] LB2.
+    + 2c [][] LB3.
+    + 30 [][] RBK.
+    + 32 [][] GBK.
+    + 34 [][] BBK.
 + 18c [][][][] number of model/sprite entities.
 + 190 start of entities data (0x10 size).
     + 00 [][]     flags.

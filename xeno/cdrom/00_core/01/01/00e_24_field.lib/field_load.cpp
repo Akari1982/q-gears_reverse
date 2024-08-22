@@ -17,9 +17,11 @@ A0 = 800aee64;
 A1 = 800aef38; // camera matrix
 system_gte_matrix_multiplication_to_A1();
 
+// Light source matrix part 0
 [800aef9c] = w(h[S0 + 0]);
 [800aefa0] = w(h[S0 + 2]);
 [800aefa4] = w(h[S0 + 4]);
+// Light color matrix source part 0
 [800aefa8] = h(hu[S0 + 8] << 3);
 [800aefaa] = h(hu[S0 + a] << 3);
 [800aefac] = h(hu[S0 + c] << 3);
@@ -28,20 +30,24 @@ A0 = 0;
 A1 = 800aef9c;
 func30840();
 
+// Light source matrix part 1
 [800aefb0] = w(h[S0 + 10]);
 [800aefb4] = w(h[S0 + 12]);
 [800aefb8] = w(h[S0 + 14]);
+// Light color matrix source part 1
 [800aefbc] = h(hu[S0 + 18] << 3);
 [800aefbe] = h(hu[S0 + 1a] << 3);
 [800aefc0] = h(hu[S0 + 1c] << 3);
 
 A0 = 1;
 A1 = 800aefb0;
-func30840();
+func30840(); // set Light color matrix source
 
+// Light source matrix part 2
 [800aefc4] = w(h[S0 + 20]);
 [800aefc8] = w(h[S0 + 22]);
 [800aefcc] = w(h[S0 + 24]);
+// Light color matrix source part 2
 [800aefd0] = h(hu[S0 + 28] << 3);
 [800aefd2] = h(hu[S0 + 2a] << 3);
 [800aefd4] = h(hu[S0 + 2c] << 3);
@@ -51,6 +57,7 @@ func30840();
 [800aefb8] = w(w[800aefa4]);
 [800aefbc] = w(w[800aefa8]);
 [800aefc0] = w(w[800aefac]);
+
 [800aefc4] = w(w[800aef9c]);
 [800aefc8] = w(w[800aefa0]);
 [800aefcc] = w(w[800aefa4]);
@@ -59,8 +66,9 @@ func30840();
 
 A0 = 2;
 A1 = 800aefc4;
-func30840();
+func30840(); // set Light color matrix source
 
+// back colors
 [800aefd8] = h(hu[S0 + 30] << 4);
 [800aefda] = h(hu[S0 + 32] << 4);
 [800aefdc] = h(hu[S0 + 34] << 4);
@@ -71,8 +79,8 @@ system_gte_set_rotation_matrix();
 A0 = 800aee64;
 system_gte_set_translation_vector();
 
-A0 = 800aef30;
-A1 = 800aef4c;
+A0 = 800aef30; // vector
+A1 = 800aef4c; // res
 A2 = SP + 10;
 system_gte_rotate_translate_vector();
 
@@ -912,7 +920,7 @@ system_extract_archive();
 [800aeeb6] = h(1);
 
 A0 = field_file + 154;
-func6f47c();
+func6f47c(); // set light matrixes data and camera
 
 // set up entities
 {
@@ -1106,8 +1114,8 @@ funca1e64(); // we run script from here
 
 [800acff4] = w(1);
 
-A0 = 800b1658; // base camera rotations
-A1 = 800af104; // res matrix
+A0 = 800b1658; // add model rotations
+A1 = 800af104; // res add rotation matrix
 system_calculate_rotation_matrix();
 [800af118] = w(0); // trans x
 [800af11c] = w(0); // trans y
@@ -1148,7 +1156,7 @@ for( int i = 0; i < w[800aefe0]; ++i )
 {
     struct_5c = w[800aefe4] + i * 5c;
 
-    A0 = struct_5c + 50;
+    A0 = struct_5c + 50; // entity rot
     A1 = struct_5c + c;
     system_calculate_rotation_matrix();
 
@@ -1447,7 +1455,7 @@ V0 = w[V1 + entity_id * 5c + 4c];
 [SP + 18] = w(h[V0 + f8]); // speed z
 
 A1 = w[800aefe4];
-A0 = A1 + entity_id * 5c + 50; // x rotation
+A0 = A1 + entity_id * 5c + 50; // entity rotations
 A1 = A1 + entity_id * 5c + c; // place for matrix
 system_calculate_rotation_matrix();
 
@@ -2280,8 +2288,8 @@ else
 func80720(); // call script and move actors
 
 {
-    A0 = 800b1658; // base camera rotations
-    A1 = 800af104; // matrix used to model render
+    A0 = 800b1658; // additional camera rotations
+    A1 = 800af104; // res additional rotation matrix
     system_calculate_rotation_matrix();
     [800af118] = w(0); // trans x
     [800af11c] = w(0); // trans y
@@ -2328,7 +2336,7 @@ SP = w[SP];
 
 if( w[800ad0f0] != 0 )
 {
-    A0 = 800aee64;
+    A0 = 800aee64; // res
     A1 = SP + 10;  // eye pos
     A2 = SP + 20;  // at pos
     A3 = 800aed74; // up vec

@@ -1166,6 +1166,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE1A() sync load for 0xFEC6()" );
                     pointer += 1;
                 }
+                else if( eo_opcode == 0x1d )
+                {
+                    exp->Log( "opFE1D_ModelAddTrans( trans_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", trans_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", trans_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
+                    pointer += 8;
+                }
                 else if( eo_opcode == 0x24 )
                 {
                     exp->Log( "-- 0xFE24()" );
@@ -1298,8 +1303,13 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( eo_opcode == 0x6f )
                 {
-                    exp->Log( "opFE6F_CameraBaseRot( rot_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", rot_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", rot_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
+                    exp->Log( "opFE6F_ModelAddRot( rot_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", rot_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", rot_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
                     pointer += 8;
+                }
+                else if( eo_opcode == 0x70 )
+                {
+                    exp->Log( "-- 0xFE70()" );
+                    pointer += 3;
                 }
                 else if( eo_opcode == 0x74 )
                 {

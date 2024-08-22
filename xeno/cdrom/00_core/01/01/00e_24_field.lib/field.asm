@@ -773,7 +773,7 @@
 // func894ec
 800894EC-80089524
 ////////////////////////////////
-// func89528
+// field_event_opFE70
 80089528-80089564
 ////////////////////////////////
 // func89568
@@ -893,7 +893,7 @@
 // func8a8fc
 8008A8FC-8008AA2C
 ////////////////////////////////
-// field_event_opFE6F_camera_base_rot
+// field_event_opFE6F_model_add_rot
 8008AA30-8008AAE8
 ////////////////////////////////
 // field_event_opFE48
@@ -1762,7 +1762,7 @@
 // func97a04
 80097A04-80097ABC
 ////////////////////////////////
-// func97ac0
+// field_event_opFE1D_model_add_trans
 80097AC0-80097B8C
 ////////////////////////////////
 // field_event_opFE74

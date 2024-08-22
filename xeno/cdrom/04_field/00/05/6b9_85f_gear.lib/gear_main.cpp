@@ -392,7 +392,7 @@ A0 = w[S2 + 0000];
 801DC780	beq    a0, zero, L1dc79c [$801dc79c]
 A0 = A0 + 002c;
 A1 = S3;
-801DC78C	jal    $800491c4
+801DC78C	jal    $system_gte_matrix_mult_and_trans
 A2 = S0;
 801DC794	j      L1dc7e0 [$801dc7e0]
 S1 = S1 + 0001;
@@ -682,7 +682,7 @@ A0 = w[S3 + 0000];
 801DCB60	beq    a0, zero, L1dcb7c [$801dcb7c]
 A0 = A0 + 002c;
 A1 = S2;
-801DCB6C	jal    $800491c4
+801DCB6C	jal    $system_gte_matrix_mult_and_trans
 A2 = S0;
 801DCB74	j      L1dcbc0 [$801dcbc0]
 S4 = S4 + 0001;
@@ -773,7 +773,7 @@ A2 = 1f800020;
 A0 = S0;
 A1 = S1 + 000c;
 801DCCA0	lui    a2, $1f80
-801DCCA4	jal    $800491c4
+801DCCA4	jal    $system_gte_matrix_mult_and_trans
 A2 = A2 | 0040;
 S5 = hu[S1 + 000a];
 S1 = S1 + 007c;
@@ -797,7 +797,7 @@ A2 = S4;
 A0 = S4;
 A0 = S6;
 A1 = S0;
-801DCCFC	jal    $800491c4
+801DCCFC	jal    $system_gte_matrix_mult_and_trans
 A2 = S4;
 801DCD04	jal    $80049da4
 A0 = S4;
@@ -971,7 +971,7 @@ T2 = hu[S5 + 001c];
 801DCF48	nop
 [SP + 0080] = h(T2);
 S3 = hu[S2 + 000a];
-801DCF54	jal    $800491c4
+801DCF54	jal    $system_gte_matrix_mult_and_trans
 A1 = S0;
 V0 = hu[S5 + 004a];
 801DCF60	nop
@@ -980,7 +980,7 @@ V0 = V0 & 0001;
 A0 = S0;
 A1 = w[S5 + 0004];
 801DCF74	lui    a2, $1f80
-801DCF78	jal    $800491c4
+801DCF78	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 00a8;
 801DCF80	jal    $80049da4
 801DCF84	lui    a0, $1f80
@@ -1035,7 +1035,7 @@ V1 = h[S5 + 0060];
 V0 = w[SP + 0040];
 [1f80003c] = w(V0);
 [1f800038] = w(V1);
-801DD068	jal    $800491c4
+801DD068	jal    $system_gte_matrix_mult_and_trans
 A2 = A2 | 0020;
 V0 = w[S5 + 0004];
 V1 = h[S5 + 0060];
@@ -1240,7 +1240,7 @@ A2 = S7;
 A0 = S7;
 A1 = S0;
 A0 = w[SP + 0088];
-801DD378	jal    $800491c4
+801DD378	jal    $system_gte_matrix_mult_and_trans
 A2 = S7;
 V0 = h[S1 + 004a];
 801DD384	nop
@@ -1355,7 +1355,7 @@ A1 = V0 << 05;
 A1 = A1 - V0;
 A1 = A1 << 02;
 A1 = T2 + A1;
-801DD514	jal    $800491c4
+801DD514	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801DD51C	jal    $80049da4
 A0 = S7;
@@ -1421,7 +1421,7 @@ A1 = V0 << 05;
 A1 = A1 - V0;
 A1 = A1 << 02;
 A1 = T2 + A1;
-801DD604	jal    $800491c4
+801DD604	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801DD60C	jal    $80049da4
 A0 = S7;
@@ -1514,7 +1514,7 @@ A1 = V0 << 05;
 A1 = A1 - V0;
 A1 = A1 << 02;
 A1 = T2 + A1;
-801DD748	jal    $800491c4
+801DD748	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801DD750	jal    $80049da4
 A0 = S7;
@@ -1662,7 +1662,7 @@ A1 = V0 << 05;
 A1 = A1 - V0;
 A1 = A1 << 02;
 A1 = T2 + A1;
-801DD980	jal    $800491c4
+801DD980	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801DD988	jal    $80049da4
 A0 = S7;
@@ -6461,7 +6461,7 @@ A1 = V0 << 05;
 A1 = A1 - V0;
 A1 = A1 << 02;
 A1 = A1 + V1;
-801E1924	jal    $800491c4
+801E1924	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 00a8;
 801E192C	jal    $80049da4
 A0 = S4;
@@ -8749,7 +8749,7 @@ V0 = w[V0 + 0004];
 A1 = A1 << 02;
 A0 = V0 + 000c;
 A1 = A1 + V0;
-801E3914	jal    $800491c4
+801E3914	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801E391C	j      L1e394c [$801e394c]
 801E3920	nop
@@ -11801,7 +11801,7 @@ A1 = A1 << 02;
 801E6490	lui    a2, $1f80
 A0 = V0 + 000c;
 A1 = A1 + V0;
-801E649C	jal    $800491c4
+801E649C	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801E64A4	j      L1e64b8 [$801e64b8]
 801E64A8	nop
@@ -12637,7 +12637,7 @@ V0 = w[V0 + 0004];
 801E6FAC	lui    a2, $1f80
 A0 = V0 + 000c;
 A1 = A1 + V0;
-801E6FB8	jal    $800491c4
+801E6FB8	jal    $system_gte_matrix_mult_and_trans
 A1 = A1 + 002c;
 801E6FC0	j      L1e6fdc [$801e6fdc]
 801E6FC4	nop
@@ -12871,47 +12871,33 @@ SP = SP + 0018;
 ////////////////////////////////
 // func1e72cc()
 
-A2 = A2 << 02;
-801E72D8	lui    at, $801f
-AT = AT + A2;
-V0 = w[AT + 8670];
-801E72E4	nop
-801E72E8	beq    v0, zero, L1e7368 [$801e7368]
-T0 = A0;
-801E72F0	beq    a3, zero, L1e7320 [$801e7320]
-A1 = A3 << 05;
-A0 = w[V0 + 0004];
-A1 = A1 - A3;
-A1 = A1 << 02;
-A2 = T0;
-A1 = A1 + A0;
-A0 = A0 + 000c;
-801E7310	jal    $800491c4
-A1 = A1 + 002c;
-801E7318	j      L1e7368 [$801e7368]
-801E731C	nop
+matrix = A0;
 
-L1e7320:	; 801E7320
-V0 = w[V0 + 0004];
-801E7324	nop
-V1 = w[V0 + 000c];
-A0 = w[V0 + 0010];
-A1 = w[V0 + 0014];
-A2 = w[V0 + 0018];
-[T0 + 0000] = w(V1);
-[T0 + 0004] = w(A0);
-[T0 + 0008] = w(A1);
-[T0 + 000c] = w(A2);
-V1 = w[V0 + 001c];
-A0 = w[V0 + 0020];
-A1 = w[V0 + 0024];
-A2 = w[V0 + 0028];
-[T0 + 0010] = w(V1);
-[T0 + 0014] = w(A0);
-[T0 + 0018] = w(A1);
-[T0 + 001c] = w(A2);
+V0 = w[801e8670 + A2 * 4];
 
-L1e7368:	; 801E7368
+if( V0 == 0 ) return;
+
+T0 = matrix;
+
+if( A3 != 0 )
+{
+    A0 = w[V0 + 4] + c;
+    A1 = w[V0 + 4] + A3 * 7c + 2c;
+    A2 = matrix; // res
+    system_gte_matrix_mult_and_trans();
+}
+else
+{
+    V0 = w[V0 + 4];
+    [matrix +  0] = w([V0 +  c]);
+    [matrix +  4] = w([V0 + 10]);
+    [matrix +  8] = w([V0 + 14]);
+    [matrix +  c] = w([V0 + 18]);
+    [matrix + 10] = w(w[V0 + 1c]);
+    [matrix + 14] = w(w[V0 + 20]);
+    [matrix + 18] = w(w[V0 + 24]);
+    [matrix + 1c] = w(w[V0 + 28]);
+}
 ////////////////////////////////
 
 

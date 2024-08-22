@@ -380,7 +380,7 @@ system_gte_matrix_mult_and_trans();
 
 A0 = SP + 10;
 A1 = SP + 50;
-A2 = 800aef58;
+A2 = 800aef58; // res
 system_gte_matrix_multiplication_to_A2();
 
 A0 = SP + 10;

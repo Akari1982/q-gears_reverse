@@ -191,7 +191,7 @@
 800aee5c [][][][] store 1 here if 800b16ac not 0. Init with 8.
 800aee60 [][]     some rotation (maybe camera rotation). Init with 0.
 800aee62 [][]     init with 0.
-800aee64 some matrix.
+800aee64 camera matrix from eye at and up vectors.
 800aee84 some rotation and translation matrix inited with 0.
 800aeea4 [][]     init with 0.
 800aeea6 [][]     init with 0.
@@ -237,14 +237,24 @@
 800aef14 [][][][] increment for 800aef08. Init with 0.
 800aef18 [][][][] increment for 800aef0c. Init with 0.
 
-800aef38 looks like final camera matrix used to render all objects.
+800aef28 [][]     camera rot x. Some base rotations. Not modified. Setup when field loaded.
+800aef2a [][]     camera rot y.
+800aef2c [][]     camera rot z.
+
+800aef38 cummulative matrix from base field rotations and camera matrix. Used to render all objects.
 800aef58 some camera matrix for model render.
 800aef78 some matrix and translation.
 
 800aef98 [][][][] camera scale for model render. Init with 0x3000.
-800aef9c
-
-
+800aef9c R light matrixes data.
+800aefb0 G light matrixes data.
+800aefc4 B light matrixes data.
+    +  0 [][][][] L11.
+    +  4 [][][][] L12.
+    +  8 [][][][] L13.
+    +  c [][]     Lx1.
+    +  e [][]     Lx2.
+    + 10 [][]     Lx3.
 800aefd8 [][]     R back color.
 800aefda [][]     G back color.
 800aefdc [][]     B back color.
@@ -300,27 +310,16 @@
             + 1c [][]     uv 2.
             + 24 [][]     uv 3.
     +   c current render data
-    +   c some matrix (looks like move matrix. Created from rotation and speed vectors).
-    +   c [][][][] R11R12.
-    +  10 [][][][] R13R21.
-    +  14 [][][][] R22R23.
-    +  18 [][][][] R31R32.
-    +  1c [][]     R33.
-    +  1e          solid range.
-    +  20 [][][][] TRX.
-    +  24 [][][][] TRY.
-    +  28 [][][][] TRZ.
-    +  2c new render data.
-    +  2c [][][][] R11R12.
-    +  30 [][][][] R13R21.
-    +  34 [][][][] R22R23.
-    +  38 [][][][] R31R32.
-    +  3c [][]     R33.
-    +  3c [][][][] some flags.
-                    0x10000000 - update render matrix.
-    +  40 [][][][] TRX.
-    +  44 [][][][] TRY.
-    +  48 [][][][] TRZ.
+    +   c self matrix (matrix for entity rotation and translation. Created from rotation and speed vectors).
+    +  2c child matrix (matrix used to render child of this entity if they linked via +75)
+        +   c [][][][] R11R12.
+        +  10 [][][][] R13R21.
+        +  14 [][][][] R22R23.
+        +  18 [][][][] R31R32.
+        +  1c [][]     R33.
+        +  20 [][][][] TRX.
+        +  24 [][][][] TRY.
+        +  28 [][][][] TRZ.
     +  4c [][][][] pointer to allocated actor data (0x138 size).
         +   0 [][][][] entity flags (0x000000b0 init).
                        0x00000001: if flag is set - scripts will be not runned. In addition it make entity not solid (maybe this is turn entity off (ie it will not calculated at all))
@@ -392,10 +391,10 @@
         +  6a [][]     presious pos Y.
         +  6c [][]     presious pos Z.
         +  6e [][]     init with 0.
-        +  70 [][]     some coord applied to X or Y or Z.
+        +  70 [][]     some coord applied to X or Y or Z. Used in 3rd render type 0x12c & 3
         +  72 [][]     store current Y pos here.
         +  74 []       follow entity id. Init with 0xff. We dont calculate interaction with this entity.
-        +  75 []       init with 0xff.
+        +  75 []       id of parent entity we use transform matrix from. init with 0xff.
         +  76 [][]     move speed. Init with 0x0100.
         +  78          stored script pointers stack (0x2 size 0x4 item) (when we go to subroutine we store here return pointer).
         +  80 []       face id.
@@ -463,9 +462,15 @@
         + 124 [][][][] init with 0x0000ffff.
         + 126 []       sprite id with 0x80 in case of party sprites.
         + 127 []       sprite id.
-        + 128 [][][][] init with 0x0000ffff.
+        + 128 [][][][] model animation. Used from fardcoded from gear.lib. Init with 0x0000ffff. Set in opcode 0xFEC5.
+                        0x00000fff - frame id.
+                        0x0000f000 - animation id.
         + 12c [][][][] flags.
-                        0x00000003 - remove during entity init. Type of render used.
+                        0x00000003 - type of render camera used. Init with 0.
+                                     0 - 
+                                     1 - use +70 as X rotation instead of additional model rotation.
+                                     2 - use +70 as Y rotation instead of additional model rotation.
+                                     3 - use +70 as Z rotation instead of additional model rotation.
                         0x0000001c - face slot used by this entity.
                         0x00000020 - if set - door opening or closing. Remove during init.
                         0x000001c0 - current script stack pointer.
@@ -518,7 +523,7 @@
 800af100 [][]     particle texture width.
 800af102 [][]     particle texture height.
 
-800af104 base camera matrix. Calculates from base rotations set from events script.
+800af104 additional model rotation matrix. Calculates from 800b1658 (additional model rotations from events script).
 
 800af144 [][][][] store here particle texture from vram (3c0 100 40 100).
 800af148 [][][][] every time we init entity model with field_sprite_init() we increment this by 1.
@@ -632,6 +637,8 @@
 
 800b1660 [][][][] base walking speed. Move length (1 << 0xc) (can be set from script).
 
+800b1682 all models translation vector.
+
 800b168c [][][][] store here id of sound to play.
 
 800b16a0 []       if this is not 0 we nulify triangle material mask. If this not 0 we do not run scripts for party character entity (in call_field_event_execute_8 (move related)).
@@ -639,6 +646,8 @@
 
 800b16a4 []       1 - disable menu, 0 - enable menu.
 800b16a5 []       1 - disable compass, 0 - enable compass.
+800b16a6 []       0x80 - render scene anyway even if model offscreen.
+                  0x7f - 0 or 1 add 800b1682 vector to model translation.
 
 800b16aa [][]     speed of dialog. Less is faster.
 800b16ac [][][][] increase by 2 if we set camera direction by opcode 0xC7 CameraRotate to 0. Store 1 to 800aee58 and 800aee5c if this not 0 and decrement.

@@ -1332,7 +1332,7 @@ system_gte_normalize_word_vector_T0_T1_T2_to_half();
 [80059626 + S0 * 2] = h(hu[S1 + e]);
 [8005962c + S0 * 2] = h(hu[S1 + 10]);
 
-// set light color matrix
+// set Light color matrix source
 LR1LR2 = w[80059620 + 0];
 LR3LG1 = w[80059620 + 4];
 LG2LG3 = w[80059620 + 8];
@@ -1377,6 +1377,7 @@ gte_rtir12(); // ir * rotmatrix
 [SP + a] = h(IR2);
 [SP + 10] = h(IR3);
 
+// set Light source matrix
 L11L12 = w[SP + 0];
 L13L21 = w[SP + 4];
 L22L23 = w[SP + 8];
