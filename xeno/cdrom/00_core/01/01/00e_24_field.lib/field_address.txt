@@ -241,7 +241,7 @@
 800aef2a [][]     camera rot y.
 800aef2c [][]     camera rot z.
 
-800aef38 cummulative matrix from base field rotations and camera matrix. Used to render all objects.
+800aef38 cummulative matrix from base field rotations and camera matrix (from eye pos). Used to render all models, sprites and gears.
 800aef58 some camera matrix for model render.
 800aef78 some matrix and translation.
 

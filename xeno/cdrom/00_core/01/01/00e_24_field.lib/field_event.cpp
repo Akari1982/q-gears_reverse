@@ -259,137 +259,60 @@ funcac2fc();
 ////////////////////////////////
 // funca1a54()
 
-V0 = w[8004e9b0];
-800A1A6C	beq    v0, zero, La1c88 [$800a1c88]
+if( w[8004e9b0] == 0 ) return;
 
-800A1A74	jal    funca183c [$800a183c]
-A0 = 0002;
-800A1A7C	jal    funcacd70 [$800acd70]
-S1 = 0;
-V1 = 800b1738;
-V0 = w[V1 + 0000];
-if( V0 > 0 )
+A0 = 2;
+funca183c();
+
+funcacd70();
+
+for( int i = 0; i < w[800b1738]; ++i )
 {
-    800A1A9C	addiu  s2, v1, $ff80 (=-$80)
-    S0 = S2;
-
-    loopa1aa4:	; 800A1AA4
-        A0 = S1 & ffff;
-        A2 = h[S0 + 0000];
-        S0 = S0 + 0002;
-        800A1AAC	jal    $801e8330
-        A1 = 0;
-        V0 = w[S2 + 0080];
-        S1 = S1 + 0001;
-        V0 = S1 < V0;
-    800A1AC0	bne    v0, zero, loopa1aa4 [$800a1aa4]
+    A0 = i;
+    A1 = 0;
+    A2 = h[800b16b8 + i * 2];
+    func1e8330();
 }
 
-V1 = w[800b1740];
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = w[V0 + 004c];
-S1 = bu[V1 + 0074];
-
-if( S1 != ff )
+pc_id = w[800b1740];
+struct_5c_p = w[800aefe4];
+struct_138 = w[struct_5c_p + pc_id * 5c + 4c];
+if( bu[struct_138 + 74] != ff )
 {
-    [V1 + 24] = w(w[V1 + 24] - 8);
+    [struct_138 + 24] = w(w[struct_138 + 24] - 8); // current Y
 }
 
-V0 = w[800aefe0];
-800A1B28	blez   v0, La1c88 [$800a1c88]
-S1 = 0;
-A2 = 800b16a6;
-A1 = 0;
-
-loopa1b3c:	; 800A1B3C
-    V0 = w[800ad0d4];
-    800A1B44	nop
-    V0 = S1 < V0;
-    800A1B4C	beq    v0, zero, La1b88 [$800a1b88]
-    800A1B50	nop
-    V0 = w[800aefe4];
-    800A1B5C	nop
-    V0 = A1 + V0;
-    V0 = w[V0 + 004c];
-    800A1B68	nop
-    V0 = w[V0 + 012c];
-    800A1B70	nop
-    V0 = V0 & 0003;
-    800A1B78	beq    v0, zero, La1bfc [$800a1bfc]
-    800A1B7C	nop
-    800A1B80	j      La1c70 [$800a1c70]
-    800A1B84	nop
-
-    La1b88:	; 800A1B88
-    V0 = bu[A2 + 0000];
-    800A1B8C	nop
-    V0 = V0 & 007f;
-    800A1B94	bne    v0, zero, La1bfc [$800a1bfc]
-    800A1B98	nop
-    A0 = w[800aefe4];
-    V1 = w[A2 + ffea];
-    A0 = A1 + A0;
-    V0 = w[A0 + 0020];
-    800A1BB0	nop
-    V0 = V0 + V1;
-    [A0 + 0020] = w(V0);
-    A0 = w[800aefe4];
-    V1 = w[A2 + ffee];
-    A0 = A1 + A0;
-    V0 = w[A0 + 0024];
-    800A1BD0	nop
-    V0 = V0 + V1;
-    [A0 + 0024] = w(V0);
-    A0 = w[800aefe4];
-    V1 = w[A2 + fff2];
-    A0 = A1 + A0;
-    V0 = w[A0 + 0028];
-    800A1BF0	nop
-    V0 = V0 + V1;
-    [A0 + 0028] = w(V0);
-
-    La1bfc:	; 800A1BFC
-    V0 = bu[A2 + 0000];
-    V1 = 0001;
-    V0 = V0 & 007f;
-    800A1C08	bne    v0, v1, La1c70 [$800a1c70]
-    800A1C0C	nop
-    A0 = w[800aefe4];
-    V1 = w[A2 + ffea];
-    A0 = A1 + A0;
-    V0 = w[A0 + 0020];
-    800A1C24	nop
-    V0 = V0 + V1;
-    [A0 + 0020] = w(V0);
-    A0 = w[800aefe4];
-    V1 = w[A2 + ffee];
-    A0 = A1 + A0;
-    V0 = w[A0 + 0024];
-    800A1C44	nop
-    V0 = V0 + V1;
-    [A0 + 0024] = w(V0);
-    A0 = w[800aefe4];
-    V1 = w[A2 + fff2];
-    A0 = A1 + A0;
-    V0 = w[A0 + 0028];
-    800A1C64	nop
-    V0 = V0 + V1;
-    [A0 + 0028] = w(V0);
-
-    La1c70:	; 800A1C70
-    V0 = w[800aefe0];
-    S1 = S1 + 0001;
-    A1 = A1 + 005c;
-    V0 = S1 < V0;
-800A1C80	bne    v0, zero, loopa1b3c [$800a1b3c]
-
-La1c88:	; 800A1C88
+for( int i = 0; i < w[800aefe0]; ++i )
+{
+    if( i < w[800ad0d4] )
+    {
+        V0 = w[struct_5c_p + i * 5c + 4c];
+        if( ( w[V0 + 12c] & 3 ) == 0 )
+        {
+            if( ( bu[800b16a6] & 7f ) == 1 )
+            {
+                [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + w[800b1690 + 0]);
+                [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + w[800b1690 + 4]);
+                [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + w[800b1690 + 8]);
+            }
+        }
+    }
+    else
+    {
+        if( ( bu[800b16a6] & 7f ) == 0 )
+        {
+            [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + w[800b1690 + 0]);
+            [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + w[800b1690 + 4]);
+            [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + w[800b1690 + 8]);
+        }
+        if( ( bu[800b16a6] & 7f ) == 1 )
+        {
+            [struct_5c_p + i * 5c + 20] = w(w[struct_5c_p + i * 5c + 20] + w[800b1690 + 0]);
+            [struct_5c_p + i * 5c + 24] = w(w[struct_5c_p + i * 5c + 24] + w[800b1690 + 4]);
+            [struct_5c_p + i * 5c + 28] = w(w[struct_5c_p + i * 5c + 28] + w[800b1690 + 8]);
+        }
+    }
+}
 ////////////////////////////////
 
 
