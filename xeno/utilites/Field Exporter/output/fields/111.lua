@@ -220,4 +220,23 @@ Actor_0x0d:on_start:
 0x00fc    -- 0x5F( ???=0x2 )
 0x00fe    op2C_SpritePlayAnim( anim_id=0x2 )
 0x0100    op01_JumpTo( address=0x105 )
-0x0103    -- MISSING OPCODE 0x29
+0x0103    op29_ActorTurnOff( actor_id=self )
+
+Actor_0x0d:on_update:
+0x0105    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0106    op74_SoundPlayFixedVolume( sound_id=84 )
+
+Actor_0x0d:on_push:
+0x0109    op00_Return()
+
+Actor_0x0e:on_start:
+0x010a    -- 0x46()
+0x010b    op00_Return()
+
+Actor_0x0e:on_update:
+0x010c    op00_Return()
+
+Actor_0x0e:on_talk:
+0x010d    -- MISSING OPCODE 0x85

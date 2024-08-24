@@ -14,4 +14,43 @@ unknown = [
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0xA0()
-0x0010    -- MISSING OPCODE 0x9d
+0x0010    -- 0x9D()
+0x0014    -- 0xB6( ???=440, ???=0 )
+0x0019    -- 0x80()
+0x001e    -- 0x80()
+0x0023    -- 0x80()
+0x0028    op00_Return()
+
+Actor_0x00:on_update:
+0x0029    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x002a    op00_Return()
+
+Actor_0x01:on_start:
+0x002b    -- 0xBC_ActorNoModelInit()
+0x002c    op00_Return()
+
+Actor_0x01:on_update:
+0x002d    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x38 )
+0x0035    op01_JumpTo( address=0x3a )
+0x0038    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0039    op00_Return()
+0x003a    -- 0xFE54()
+0x003c    op25_ActorDisable( actor_id=Actor_0x02 )
+0x003e    op25_ActorDisable( actor_id=Actor_0x04 )
+0x0040    op25_ActorDisable( actor_id=Actor_0x05 )
+0x0042    op25_ActorDisable( actor_id=Actor_0x0d )
+0x0044    -- 0x80()
+0x0049    -- 0x80()
+0x004e    -- 0x80()
+0x0053    -- 0xFE52()
+0x0055    op09_CallActorEventEndSync( actor_id=Actor_0x24, event=event_0x04, priority=0x03 )
+0x0058    op26_Wait( time=30 )
+0x005b    -- MISSING OPCODE 0x28

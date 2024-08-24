@@ -18,4 +18,12 @@ Actor_0x00:on_start:
 0x0011    op00_Return()
 
 Actor_0x00:on_update:
-0x0012    -- MISSING OPCODE 0x9d
+0x0012    -- 0x9D()
+0x0016    opB3_FadeIn()
+0x0019    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0024    -- 0xFE54()
+0x0026    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x06 )
+0x0029    op26_Wait( time=2 )
+0x002c    opF1_FadeSetUp( steps=2, r=125, g=95, b=25, semi_tr=120 )
+0x0037    mem[0x406] = 0 -- op35
+0x003d    -- MISSING OPCODE 0xFE66

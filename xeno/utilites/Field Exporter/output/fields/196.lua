@@ -16,4 +16,19 @@ Actor_0x00:on_start:
 0x0062    mem[0x404] = opA8_Random( max=1 )
 0x0067    mem[0x408] = opA8_Random( max=5 )
 0x006c    -- 0xA0()
-0x0073    -- MISSING OPCODE 0x9d
+0x0073    -- 0x9D()
+0x0077    -- 0x2A()
+0x0078    mem[0x1fc] |= 1 << 6 -- op3a
+0x007e    op02_JumpToConditional( val1=(s)mem[0x244], val2=256, condition="val1 & val2", address_if_false=0xab )
+0x0086    op02_JumpToConditional( val1=(s)mem[0x240], val2=16, condition="val1 & val2", address_if_false=0x94 )
+0x008e    -- 0x75( ???=71 )
+0x0091    op01_JumpTo( address=0xa8 )
+0x0094    -- 0x75( ???=61 )
+0x0097    mem[0x402] = 1 -- op35
+0x009d    opF1_FadeSetUp( steps=2, r=50, g=30, b=20, semi_tr=1 )
+0x00a8    op01_JumpTo( address=0xae )
+0x00ab    -- 0x75( ???=71 )
+0x00ae    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0xc1 )
+0x00b6    opF1_FadeSetUp( steps=2, r=70, g=20, b=10, semi_tr=1 )
+0x00c1    -- 0xFE0E_SoundSetVolume( volume=127, steps=120 )
+0x00c7    -- MISSING OPCODE 0xFE0c

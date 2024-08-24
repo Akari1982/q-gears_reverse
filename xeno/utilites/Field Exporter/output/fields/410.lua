@@ -13,4 +13,148 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0xa1
+0x0010    -- 0xA1()
+0x0013    op02_JumpToConditional( val1=(s)mem[0x218], val2=128, condition="val1 & val2", address_if_false=0x21 )
+0x001b    mem[0x40e] = 1 -- op35
+0x0021    op02_JumpToConditional( val1=(s)mem[0x218], val2=256, condition="val1 & val2", address_if_false=0x2f )
+0x0029    mem[0x420] = 1 -- op35
+0x002f    mem[0x402] = 1 -- op35
+0x0035    mem[0x404] = 45 -- op35
+0x003b    mem[0x406] = 315 -- op35
+0x0041    mem[0x408] = 0 -- op35
+0x0047    mem[0x40a] = 2 -- op35
+0x004d    mem[0x40c] = 90 -- op35
+0x0053    mem[0x414] = 1 -- op35
+0x0059    mem[0x416] = 45 -- op35
+0x005f    mem[0x418] = -315 -- op35
+0x0065    mem[0x41a] = 0 -- op35
+0x006b    mem[0x41c] = 6 -- op35
+0x0071    mem[0x41e] = 1065 -- op35
+0x0077    -- 0x2A()
+0x0078    op00_Return()
+
+Actor_0x00:on_update:
+0x0079    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x007a    op00_Return()
+
+Actor_0x00:event_0x04:
+0x007b    mem[0x218] |= 1 << 7 -- op3a
+0x0081    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0082    mem[0x218] |= 1 << 8 -- op3a
+0x0088    op00_Return()
+
+Actor_0x01:on_start:
+0x0089    -- 0x16_ActorPCInit( char_id=(s)mem[0x3e] )
+0x008c    opFE0D_MessageSetFace( char_id=(s)mem[0x3e] )
+0x0090    op00_Return()
+
+Actor_0x01:on_update:
+0x0091    -- 0xA7()
+0x0092    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0093    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0094    -- 0x1F( ???=0x30 )
+0x0096    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x009c    op00_Return()
+
+Actor_0x01:event_0x05:
+0x009d    -- 0x5F( ???=0x3 )
+0x009f    op2C_SpritePlayAnim( anim_id=0x7 )
+0x00a1    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00a5    op9C_MessageSync()
+0x00a6    op2C_SpritePlayAnim( anim_id=0xff )
+0x00a8    op2C_SpritePlayAnim( anim_id=0xa )
+0x00aa    op74_SoundPlayFixedVolume( sound_id=249 )
+0x00ad    op26_Wait( time=10 )
+0x00b0    op74_SoundPlayFixedVolume( sound_id=249 )
+0x00b3    op26_Wait( time=5 )
+0x00b6    op2C_SpritePlayAnim( anim_id=0xa )
+0x00b8    op74_SoundPlayFixedVolume( sound_id=249 )
+0x00bb    op26_Wait( time=10 )
+0x00be    op74_SoundPlayFixedVolume( sound_id=151 )
+0x00c1    op26_Wait( time=10 )
+0x00c4    -- 0x5F( ???=0x0 )
+0x00c6    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00ca    op9C_MessageSync()
+0x00cb    -- 0x5F( ???=0x3 )
+0x00cd    op07_CallActorEvent( actor_id=Actor_0x08, event=event_0x04, priority=0x01 )
+0x00d0    opFE4A_SpriteAddAnimLoad( file=3 )
+0x00d4    opFE4B_SpriteAddAnimSync()
+0x00d6    opFE4D_SpritePlayAddAnim( anim_id=0x2 )
+0x00d9    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00dd    op9C_MessageSync()
+0x00de    op2C_SpritePlayAnim( anim_id=0xa )
+0x00e0    op74_SoundPlayFixedVolume( sound_id=265 )
+0x00e3    op26_Wait( time=10 )
+0x00e6    -- 0xFE65()
+0x00ec    op26_Wait( time=60 )
+0x00ef    op00_Return()
+
+Actor_0x01:event_0x06:
+0x00f0    -- 0x5F( ???=0x1 )
+0x00f2    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00f6    op9C_MessageSync()
+0x00f7    op00_Return()
+
+Actor_0x01:event_0x07:
+0x00f8    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x00fc    op9C_MessageSync()
+0x00fd    op00_Return()
+
+Actor_0x01:event_0x08:
+0x00fe    -- 0x5F( ???=0x2 )
+0x0100    op74_SoundPlayFixedVolume( sound_id=98 )
+0x0103    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x0107    op9C_MessageSync()
+0x0108    -- 0xF2()
+0x0111    op26_Wait( time=40 )
+0x0114    -- 0xF2()
+0x011d    -- 0x5F( ???=0x1 )
+0x011f    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x0123    op9C_MessageSync()
+0x0124    op00_Return()
+
+Actor_0x01:event_0x09:
+0x0125    op2C_SpritePlayAnim( anim_id=0x3 )
+0x0127    op26_Wait( time=3 )
+0x012a    -- 0x57( type=0x2, x=(vf80)0x0032, z=(vf40)0x0000, y=(vf20)0x0000, ???=(vf10)0xff6a, flag=0xf0 )
+0x0135    -- 0x57( type=0x8f )
+0x0137    op26_Wait( time=1 )
+0x013a    -- 0x57( type=0xf )
+0x013c    op74_SoundPlayFixedVolume( sound_id=7 )
+0x013f    op2C_SpritePlayAnim( anim_id=0xff )
+0x0141    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x0142    -- 0x5F( ???=0x3 )
+0x0144    op74_SoundPlayFixedVolume( sound_id=249 )
+0x0147    op2C_SpritePlayAnim( anim_id=0x7 )
+0x0149    op26_Wait( time=30 )
+0x014c    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
+0x0150    op9C_MessageSync()
+0x0151    op2C_SpritePlayAnim( anim_id=0xff )
+0x0153    -- 0x5F( ???=0x1 )
+0x0155    opD2_MessageShowDynamic( text_id=0x8, flags=0 )
+0x0159    op9C_MessageSync()
+0x015a    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x015b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0161    op00_Return()
+
+Actor_0x01:event_0x0c:
+0x0162    -- 0x21( ???=80 )
+0x0165    op2C_SpritePlayAnim( anim_id=0x0 )
+0x0167    -- 0xF6( ???=0x1 )
+0x0169    -- MISSING OPCODE 0x10

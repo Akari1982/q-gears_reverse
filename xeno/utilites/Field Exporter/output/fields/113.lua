@@ -178,4 +178,12 @@ Actor_0x0b:on_push:
 Actor_0x0c:on_start:
 0x008a    -- 0x0B_InitNPC( 1 )
 0x008d    -- 0x84_ProgressLessEqualJumpTo( value=60, jump=0x94 )
-0x0092    -- MISSING OPCODE 0x29
+0x0092    op29_ActorTurnOff( actor_id=self )
+0x0094    -- 0x19_ActorSetPosition( x=(vf80)0xff8b, z=(vf40)0x0052, flag=(flag)0xc0 )
+0x009a    op20_ActorSetFlags0( flags=4 )
+0x009d    -- 0x5F( ???=0x0 )
+0x009f    op00_Return()
+
+Actor_0x0c:on_update:
+0x00a0    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xa6 )
+0x00a5    -- MISSING OPCODE 0x59

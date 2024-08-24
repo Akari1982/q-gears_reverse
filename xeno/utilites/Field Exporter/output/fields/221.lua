@@ -67,4 +67,7 @@ Actor_0x00:on_update:
 0x00db    op26_Wait( time=30 )
 0x00de    op09_CallActorEventEndSync( actor_id=Actor_0x1a, event=event_0x15, priority=0x01 )
 0x00e1    mem[0x400] = false -- op37
-0x00e4    -- MISSING OPCODE 0xFE24
+0x00e4    -- 0xFE24()
+0x00e6    mem[0x402] = 1 -- op35
+0x00ec    mem[0x246] |= 1 << 9 -- op3a
+0x00f2    -- MISSING OPCODE 0x28

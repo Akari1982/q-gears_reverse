@@ -90,4 +90,5 @@ Actor_0x04:on_start:
 0x005b    -- 0xBC_ActorNoModelInit()
 0x005c    op02_JumpToConditional( val1=(s)mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x79 )
 0x0064    op20_ActorSetFlags0( flags=12 )
-0x0067    -- MISSING OPCODE 0x18
+0x0067    -- 0x18()
+0x006c    -- MISSING OPCODE 0xFE1c

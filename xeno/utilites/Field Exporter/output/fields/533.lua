@@ -41,12 +41,12 @@ Actor_0x01:on_push:
 Actor_0x01:event_0x04:
 0x0020    op2C_SpritePlayAnim( anim_id=0x1 )
 0x0022    mem[0x400] = false -- op37
-0x0025    op02_JumpToConditional( val1=(s)mem[0x400], val2=10, condition="val1 < val2", address_if_false=0x39 )
+0x0025    op02_JumpToConditional( val1=mem[0x400], val2=10, condition="val1 < val2", address_if_false=0x39 )
 0x002d    op6C_ActorRotateAnticlockwise( rot=1 )
 0x0030    mem[0x400] += 1 -- op3c
 0x0033    op26_Wait( time=2 )
 0x0036    op01_JumpTo( address=0x25 )
-0x0039    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 > val2", address_if_false=0x4d )
+0x0039    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 > val2", address_if_false=0x4d )
 0x0041    op6B_ActorRotateClockwise( rot=1 )
 0x0044    mem[0x400] -= 1 -- op3d
 0x0047    op26_Wait( time=2 )
@@ -99,12 +99,12 @@ Actor_0x03:on_push:
 Actor_0x03:event_0x04:
 0x0094    op2C_SpritePlayAnim( anim_id=0x1 )
 0x0096    mem[0x404] = false -- op37
-0x0099    op02_JumpToConditional( val1=(s)mem[0x404], val2=10, condition="val1 < val2", address_if_false=0xad )
+0x0099    op02_JumpToConditional( val1=mem[0x404], val2=10, condition="val1 < val2", address_if_false=0xad )
 0x00a1    op6C_ActorRotateAnticlockwise( rot=1 )
 0x00a4    mem[0x404] += 1 -- op3c
 0x00a7    op26_Wait( time=2 )
 0x00aa    op01_JumpTo( address=0x99 )
-0x00ad    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 > val2", address_if_false=0xc1 )
+0x00ad    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 > val2", address_if_false=0xc1 )
 0x00b5    op6B_ActorRotateClockwise( rot=1 )
 0x00b8    mem[0x404] -= 1 -- op3d
 0x00bb    op26_Wait( time=2 )
@@ -120,7 +120,7 @@ Actor_0x04:on_start:
 0x00d1    op00_Return()
 
 Actor_0x04:on_update:
-0x00d2    op02_JumpToConditional( val1=mem[0x406], val2=0, condition="val1 == val2", address_if_false=0xdf )
+0x00d2    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0xdf )
 0x00da    op2C_SpritePlayAnim( anim_id=0x1 )
 0x00dc    mem[0x406] = true -- op36
 0x00df    mem[0x408] = false -- op37

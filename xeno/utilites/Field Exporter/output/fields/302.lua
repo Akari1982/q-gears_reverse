@@ -304,4 +304,9 @@ Actor_0x0c:on_update:
 0x0184    op02_JumpToConditional( val1=(s)mem[0x1e], val2=-156, condition="val1 < val2", address_if_false=0x190 )
 0x018c    -- 0x23()
 0x018d    op01_JumpTo( address=0x191 )
-0x0190    -- MISSING OPCODE 0x22
+0x0190    -- 0x22()
+0x0191    op00_Return()
+
+Actor_0x0c:on_talk:
+0x0192    op02_JumpToConditional( val1=mem[0x1c8], val2=4, condition="val1 & val2", address_if_false=0x1ab )
+0x019a    -- MISSING OPCODE 0xFE13

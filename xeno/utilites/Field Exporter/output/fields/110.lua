@@ -16,7 +16,7 @@ Actor_0x00:on_start:
 0x0009    op00_Return()
 
 Actor_0x00:on_update:
-0x000a    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x1500], jump=0x1500 )
+0x000a    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x1500], jump=0x1500 )
 0x000f    -- 0x98_MapLoad( field_id=109, value=1 )
 0x0014    -- 0x5B()
 0x0015    op00_Return()

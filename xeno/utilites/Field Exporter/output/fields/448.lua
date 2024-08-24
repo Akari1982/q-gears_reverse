@@ -22,4 +22,26 @@ Actor_0x00:on_start:
 0x003c    op00_Return()
 
 Actor_0x00:on_update:
-0x003d    -- MISSING OPCODE 0x9d
+0x003d    -- 0x9D()
+0x0041    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x58 )
+0x0049    op05_CallFunction( address=0x410 )
+0x004c    op05_CallFunction( address=0x3a4 )
+0x004f    op05_CallFunction( address=0x3c0 )
+0x0052    op05_CallFunction( address=0x3f6 )
+0x0055    op01_JumpTo( address=0x67 )
+0x0058    op05_CallFunction( address=0x3dc )
+0x005b    op05_CallFunction( address=0x3a4 )
+0x005e    op05_CallFunction( address=0x3c0 )
+0x0061    op05_CallFunction( address=0x3f6 )
+0x0064    op05_CallFunction( address=0x420 )
+0x0067    -- 0x75( ???=67 )
+0x006a    -- 0x5B()
+0x006b    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x006c    op00_Return()
+
+Actor_0x00:event_0x04:
+0x006d    -- MISSING OPCODE 0xb5

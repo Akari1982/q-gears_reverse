@@ -24,4 +24,17 @@ Actor_0x00:on_start:
 0x0052    op00_Return()
 
 Actor_0x00:on_update:
-0x0053    -- MISSING OPCODE 0x9d
+0x0053    -- 0x9D()
+0x0057    -- 0x84_ProgressLessEqualJumpTo( value=158, jump=0x62 )
+0x005c    -- 0x75( ???=57 )
+0x005f    op01_JumpTo( address=0x70 )
+0x0062    -- 0x84_ProgressLessEqualJumpTo( value=161, jump=0x6d )
+0x0067    -- 0x75( ???=58 )
+0x006a    op01_JumpTo( address=0x70 )
+0x006d    -- 0x75( ???=255 )
+0x0070    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x9e )
+0x0075    op02_JumpToConditional( val1=(s)mem[0xea], val2=128, condition="val1 & val2", address_if_false=0x80 )
+0x007d    op01_JumpTo( address=0x9e )
+0x0080    -- 0xFE54()
+0x0082    -- 0x5A()
+0x0083    -- MISSING OPCODE 0xFE23

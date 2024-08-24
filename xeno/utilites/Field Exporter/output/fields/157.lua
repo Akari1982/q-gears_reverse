@@ -16,4 +16,5 @@ Actor_0x00:on_start:
 0x0033    -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x3e )
 0x0038    -- 0x75( ???=60 )
 0x003b    op01_JumpTo( address=0x40 )
-0x003e    -- MISSING OPCODE 0x29
+0x003e    op29_ActorTurnOff( actor_id=Actor_0x12 )
+0x0040    -- MISSING OPCODE 0xa4

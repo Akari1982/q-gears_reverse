@@ -14,4 +14,86 @@ unknown = [
 Actor_0x00:on_start:
 0x0016    -- 0xBC_ActorNoModelInit()
 0x0017    -- 0xA0()
-0x001e    -- MISSING OPCODE 0xa1
+0x001e    -- 0xA1()
+0x0021    -- 0x2A()
+0x0022    op00_Return()
+
+Actor_0x00:on_update:
+0x0023    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0024    op00_Return()
+
+Actor_0x01:on_start:
+0x0025    -- 0x16_ActorPCInit( char_id=0 )
+0x0028    opFE0D_MessageSetFace( char_id=0 )
+0x002c    -- 0x23()
+0x002d    op00_Return()
+
+Actor_0x01:on_update:
+0x002e    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x3a )
+0x0036    -- 0xA7()
+0x0037    op01_JumpTo( address=0x3c )
+0x003a    -- 0x5A()
+0x003b    op00_Return()
+0x003c    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x003d    op00_Return()
+
+Actor_0x02:on_start:
+0x003e    -- 0x16_ActorPCInit( char_id=9 )
+0x0041    opFE0D_MessageSetFace( char_id=9 )
+0x0045    -- 0x23()
+0x0046    op00_Return()
+
+Actor_0x02:on_update:
+0x0047    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x53 )
+0x004f    -- 0xA7()
+0x0050    op01_JumpTo( address=0x55 )
+0x0053    -- 0x5A()
+0x0054    op00_Return()
+0x0055    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0056    op00_Return()
+
+Actor_0x03:on_start:
+0x0057    -- 0x16_ActorPCInit( char_id=3 )
+0x005a    opFE0D_MessageSetFace( char_id=3 )
+0x005e    -- 0x23()
+0x005f    op00_Return()
+
+Actor_0x03:on_update:
+0x0060    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x6c )
+0x0068    -- 0xA7()
+0x0069    op01_JumpTo( address=0x6e )
+0x006c    -- 0x5A()
+0x006d    op00_Return()
+0x006e    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x006f    op00_Return()
+
+Actor_0x04:on_start:
+0x0070    -- 0xBC_ActorNoModelInit()
+0x0071    -- 0x2A()
+0x0072    mem[0x408] = 1 -- op35
+0x0078    mem[0x54] = 2 -- op35
+0x007e    op00_Return()
+
+Actor_0x04:on_update:
+0x007f    -- 0xFE54()
+0x0081    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 != val2", address_if_false=0xa5 )
+0x0089    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0094    op05_CallFunction( address=0x1e0 )
+0x0097    -- 0x5A()
+0x0098    -- MISSING OPCODE 0x12

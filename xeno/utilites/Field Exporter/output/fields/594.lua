@@ -100,4 +100,21 @@ Actor_0x04:on_push:
 Actor_0x05:on_start:
 0x0062    -- 0xBC_ActorNoModelInit()
 0x0063    -- 0x19_ActorSetPosition( x=(vf80)0xfd2d, z=(vf40)0xfd4c, flag=(flag)0xc0 )
-0x0069    -- MISSING OPCODE 0xf8
+0x0069    -- 0xF8()
+0x006d    -- 0x18()
+0x0072    op20_ActorSetFlags0( flags=1 )
+0x0075    op00_Return()
+
+Actor_0x05:on_update:
+0x0076    op00_Return()
+
+Actor_0x05:on_talk:
+0x0077    op00_Return()
+
+Actor_0x05:on_push:
+0x0078    -- 0xFE54()
+0x007a    -- 0xFE24()
+0x007c    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x007f    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
+0x0082    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
+0x0085    -- MISSING OPCODE 0x12

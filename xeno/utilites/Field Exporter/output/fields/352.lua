@@ -18,4 +18,19 @@ Actor_0x00:on_start:
 0x0018    op00_Return()
 
 Actor_0x00:on_update:
-0x0019    -- MISSING OPCODE 0x9d
+0x0019    -- 0x9D()
+0x001d    -- 0x84_ProgressLessEqualJumpTo( value=158, jump=0x28 )
+0x0022    -- 0x75( ???=57 )
+0x0025    op01_JumpTo( address=0x36 )
+0x0028    -- 0x84_ProgressLessEqualJumpTo( value=161, jump=0x33 )
+0x002d    -- 0x75( ???=58 )
+0x0030    op01_JumpTo( address=0x36 )
+0x0033    -- 0x75( ???=255 )
+0x0036    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x3e )
+0x003b    op01_JumpTo( address=0x154 )
+0x003e    -- 0x84_ProgressLessEqualJumpTo( value=152, jump=0x154 )
+0x0043    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x75 )
+0x004b    op02_JumpToConditional( val1=(s)mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x72 )
+0x0053    -- 0xFE54()
+0x0055    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x06 )
+0x0058    -- MISSING OPCODE 0xFEb5

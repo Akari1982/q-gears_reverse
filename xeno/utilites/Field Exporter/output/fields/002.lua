@@ -16,4 +16,6 @@ Actor_0x00:on_start:
 0x0001    -- 0x2A()
 0x0002    -- 0xE7( ???=40, ???=48, ???=40 )
 0x0009    -- 0xA0()
-0x0010    -- MISSING OPCODE 0x9d
+0x0010    -- 0x9D()
+0x0014    opF1_FadeSetUp( steps=2, r=0, g=250, b=22, semi_tr=1 )
+0x001f    -- MISSING OPCODE 0xe5

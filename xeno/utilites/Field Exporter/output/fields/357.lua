@@ -18,4 +18,18 @@ Actor_0x00:on_start:
 0x0018    op00_Return()
 
 Actor_0x00:on_update:
-0x0019    -- MISSING OPCODE 0x9d
+0x0019    -- 0x9D()
+0x001d    op29_ActorTurnOff( actor_id=Actor_0x0f )
+0x001f    -- 0x84_ProgressLessEqualJumpTo( value=158, jump=0x2a )
+0x0024    -- 0x75( ???=57 )
+0x0027    op01_JumpTo( address=0x38 )
+0x002a    -- 0x84_ProgressLessEqualJumpTo( value=161, jump=0x35 )
+0x002f    -- 0x75( ???=58 )
+0x0032    op01_JumpTo( address=0x38 )
+0x0035    -- 0x75( ???=255 )
+0x0038    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x88 )
+0x0040    op74_SoundPlayFixedVolume( sound_id=136 )
+0x0043    -- 0x15()
+0x0044    opB4_FadeOut()
+0x0047    op26_Wait( time=32 )
+0x004a    -- MISSING OPCODE 0xb5

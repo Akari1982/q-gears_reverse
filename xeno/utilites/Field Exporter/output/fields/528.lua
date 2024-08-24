@@ -76,4 +76,8 @@ Actor_0x04:on_start:
 0x0053    -- 0x19_ActorSetPosition( x=(vf80)0x003b, z=(vf40)0xff3b, flag=(flag)0xc0 )
 0x0059    op69_ActorSetRotation( rot=7 )
 0x005c    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=2, condition="val1 & val2", address_if_false=0x66 )
-0x0064    -- MISSING OPCODE 0x29
+0x0064    op29_ActorTurnOff( actor_id=self )
+0x0066    op00_Return()
+
+Actor_0x04:on_update:
+0x0067    -- MISSING OPCODE 0x89

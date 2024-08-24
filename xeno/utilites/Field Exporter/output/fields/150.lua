@@ -182,4 +182,10 @@ Actor_0x0b:on_push:
 Actor_0x0c:on_start:
 0x00a2    -- 0x0B_InitNPC( 0 )
 0x00a5    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xac )
-0x00aa    -- MISSING OPCODE 0x29
+0x00aa    op29_ActorTurnOff( actor_id=self )
+0x00ac    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x01d0, flag=(flag)0xc0 )
+0x00b2    -- 0x5F( ???=0x1 )
+0x00b4    op2C_SpritePlayAnim( anim_id=0x2 )
+
+Actor_0x0c:on_update:
+0x00b6    -- MISSING OPCODE 0x89

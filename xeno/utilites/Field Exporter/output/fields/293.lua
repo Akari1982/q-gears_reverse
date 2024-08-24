@@ -18,4 +18,32 @@ Actor_0x00:on_start:
 0x006d    -- 0xA0()
 0x0074    op01_JumpTo( address=0x81 )
 0x0077    -- 0xA0()
-0x007e    -- MISSING OPCODE 0xa1
+0x007e    -- 0xA1()
+0x0081    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0x95 )
+0x0089    -- 0x75( ???=59 )
+0x008c    mem[0x402] = true -- op36
+0x008f    -- 0xFE18()
+0x0094    op00_Return()
+0x0095    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0xa6 )
+0x009a    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xa6 )
+0x00a2    mem[0x402] = true -- op36
+0x00a5    op00_Return()
+0x00a6    op02_JumpToConditional( val1=(s)mem[0x4], val2=275, condition="val1 == val2", address_if_false=0xaf )
+0x00ae    op00_Return()
+0x00af    op05_CallFunction( address=0x169a )
+0x00b2    op00_Return()
+
+Actor_0x00:on_update:
+0x00b3    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00b4    op00_Return()
+
+Actor_0x01:on_start:
+0x00b5    -- 0x16_ActorPCInit( char_id=0 )
+0x00b8    opFE0D_MessageSetFace( char_id=0 )
+0x00bc    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x109 )
+0x00c1    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x109 )
+0x00c9    -- MISSING OPCODE 0xFE8b

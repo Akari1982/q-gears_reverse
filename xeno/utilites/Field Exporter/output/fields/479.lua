@@ -14,4 +14,37 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0xA0()
-0x0017    -- MISSING OPCODE 0x80
+0x0017    -- 0x80()
+0x001c    -- 0x80()
+0x0021    -- 0x80()
+0x0026    op00_Return()
+
+Actor_0x00:on_update:
+0x0027    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0028    op00_Return()
+
+Actor_0x01:on_start:
+0x0029    -- 0xBC_ActorNoModelInit()
+0x002a    op00_Return()
+
+Actor_0x01:on_update:
+0x002b    op00_Return()
+
+Actor_0x01:on_talk:
+0x002c    op00_Return()
+
+Actor_0x01:on_push:
+0x002d    op00_Return()
+
+Actor_0x02:on_start:
+0x002e    -- 0x16_ActorPCInit( char_id=0 )
+0x0031    opFE0D_MessageSetFace( char_id=0 )
+0x0035    opFE0D_MessageSetFace( char_id=0 )
+0x0039    op00_Return()
+
+Actor_0x02:on_update:
+0x003a    -- MISSING OPCODE 0xfb

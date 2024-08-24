@@ -113,7 +113,7 @@ Actor_0x01:event_0x0b:
 
 Actor_0x01:event_0x0c:
 0x00c7    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
-0x00c9    op02_JumpToConditional( val1=(s)mem[0x2c0], val2=1, condition="val1 & val2", address_if_false=0xdc )
+0x00c9    op02_JumpToConditional( val1=mem[0x2c0], val2=1, condition="val1 & val2", address_if_false=0xdc )
 0x00d1    op5D_SpritePlayAnim2( anim_id=0x4 )
 0x00d3    -- 0x5E()
 0x00d4    opD2_MessageShowDynamic( text_id=0x5, flags=0 )

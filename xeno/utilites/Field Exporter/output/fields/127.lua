@@ -13,4 +13,59 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
-0x0009    -- MISSING OPCODE 0x9d
+0x0009    -- 0x9D()
+0x000d    -- 0xB6( ???=400, ???=0 )
+0x0012    -- 0xFE50()
+0x0014    -- 0x2A()
+0x0015    op00_Return()
+
+Actor_0x00:on_update:
+0x0016    mem[0x408] += 1 -- op3c
+0x0019    mem[0x408] &= 3 -- op3e
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x001f    op00_Return()
+
+Actor_0x01:on_start:
+0x0020    -- 0xBC_ActorNoModelInit()
+0x0021    -- 0x2A()
+0x0022    op00_Return()
+
+Actor_0x01:on_update:
+0x0023    -- 0xE1_BackgroundSetTex()
+0x0031    op26_Wait( time=8 )
+0x0034    -- 0xE1_BackgroundSetTex()
+0x0042    op26_Wait( time=8 )
+0x0045    -- 0xE1_BackgroundSetTex()
+0x0053    op26_Wait( time=8 )
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0056    op00_Return()
+
+Actor_0x02:on_start:
+0x0057    -- 0xBC_ActorNoModelInit()
+0x0058    -- 0x2A()
+0x0059    op00_Return()
+
+Actor_0x02:on_update:
+0x005a    -- 0xE1_BackgroundSetTex()
+0x0068    -- 0xE1_BackgroundSetTex()
+0x0076    -- 0xE1_BackgroundSetTex()
+0x0084    op26_Wait( time=12 )
+0x0087    -- 0xE1_BackgroundSetTex()
+0x0095    -- 0xE1_BackgroundSetTex()
+0x00a3    -- 0xE1_BackgroundSetTex()
+0x00b1    op26_Wait( time=12 )
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x00b4    op00_Return()
+
+Actor_0x03:on_start:
+0x00b5    -- 0x0B_InitNPC( 1 )
+0x00b8    -- MISSING OPCODE 0xFE1c

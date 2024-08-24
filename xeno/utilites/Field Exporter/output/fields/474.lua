@@ -15,4 +15,50 @@ Actor_0x00:on_start:
 0x0055    -- 0xBC_ActorNoModelInit()
 0x0056    -- 0x2A()
 0x0057    -- 0xA0()
-0x005e    -- MISSING OPCODE 0x9d
+0x005e    -- 0x9D()
+0x0062    -- 0xE7( ???=119, ???=119, ???=253 )
+0x0069    -- 0x80()
+0x006e    -- 0x80()
+0x0073    -- 0x80()
+0x0078    -- 0x80()
+0x007d    -- 0x80()
+0x0082    -- 0x80()
+0x0087    op02_JumpToConditional( val1=(s)mem[0x102], val2=43, condition="val1 == val2", address_if_false=0x95 )
+0x008f    mem[0x8] = 7 -- op35
+0x0095    mem[0x400] = 0 -- op35
+0x009b    opFE42( ???=253 )
+0x009f    opFE42( ???=254 )
+0x00a3    opFE42( ???=255 )
+0x00a7    op00_Return()
+
+Actor_0x00:on_update:
+0x00a8    op00_Return()
+
+Actor_0x00:on_talk:
+0x00a9    op00_Return()
+
+Actor_0x00:on_push:
+0x00aa    op00_Return()
+
+Actor_0x01:on_start:
+0x00ab    -- 0xBC_ActorNoModelInit()
+0x00ac    -- 0x2A()
+0x00ad    op00_Return()
+
+Actor_0x01:on_update:
+0x00ae    op00_Return()
+
+Actor_0x01:on_talk:
+0x00af    op00_Return()
+
+Actor_0x01:on_push:
+0x00b0    op00_Return()
+
+Actor_0x02:on_start:
+0x00b1    -- 0x16_ActorPCInit( char_id=0 )
+0x00b4    opFE0D_MessageSetFace( char_id=0 )
+0x00b8    opFE0D_MessageSetFace( char_id=0 )
+0x00bc    op00_Return()
+
+Actor_0x02:on_update:
+0x00bd    -- MISSING OPCODE 0xfb

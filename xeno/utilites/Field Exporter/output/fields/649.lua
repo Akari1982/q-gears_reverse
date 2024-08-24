@@ -211,4 +211,77 @@ Actor_0x03:event_0x07:
 Actor_0x04:on_start:
 0x01e7    -- 0xBC_ActorNoModelInit()
 0x01e8    op02_JumpToConditional( val1=(s)mem[0x210], val2=32, condition="val1 & val2", address_if_false=0x20e )
-0x01f0    -- MISSING OPCODE 0x80
+0x01f0    -- 0x80()
+0x01f5    -- 0x80()
+0x01fa    op29_ActorTurnOff( actor_id=Actor_0x05 )
+0x01fc    op20_ActorSetFlags0( flags=12 )
+0x01ff    -- 0x18()
+0x0204    -- 0x19_ActorSetPosition( x=(vf80)0x0377, z=(vf40)0xfe7f, flag=(flag)0xc0 )
+0x020a    -- 0x2A()
+0x020b    op01_JumpTo( address=0x226 )
+0x020e    -- 0x80()
+0x0213    -- 0x80()
+0x0218    op20_ActorSetFlags0( flags=4 )
+0x021b    -- 0x18()
+0x0220    -- 0x19_ActorSetPosition( x=(vf80)0x03f2, z=(vf40)0xfe7f, flag=(flag)0xc0 )
+0x0226    op00_Return()
+
+Actor_0x04:on_update:
+0x0227    op00_Return()
+
+Actor_0x04:on_talk:
+0x0228    op02_JumpToConditional( val1=(s)mem[0x210], val2=32, condition="val1 & val2", address_if_false=0x238 )
+0x0230    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0234    op9C_MessageSync()
+0x0235    op01_JumpTo( address=0x23d )
+0x0238    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x023c    op9C_MessageSync()
+
+Actor_0x04:on_push:
+0x023d    op00_Return()
+
+Actor_0x04:event_0x04:
+0x023e    op74_SoundPlayFixedVolume( sound_id=150 )
+0x0241    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0247    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
+0x024a    op05_CallFunction( address=0x264 )
+0x024d    op74_SoundPlayFixedVolume( sound_id=230 )
+0x0250    op20_ActorSetFlags0( flags=12 )
+0x0253    -- 0x80()
+0x0258    -- 0x80()
+0x025d    mem[0x210] |= 1 << 5 -- op3a
+0x0263    op00_Return()
+
+function:
+0x0264    opFE8F_ParticleSystemInit1( actor_id=Actor_0x04, render_settings=0, rot_x=0, rot_y=0 )
+0x026d    op05_CallFunction( address=0x270 )
+
+function:
+0x0270    opC6_ExpandRun() -- exp0x20
+0x0271    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=16, wait=0, ttl=20 )
+0x027b    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x001e, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x0000, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x028a    opFE92_ParticleSpeed( speed=(vf80)0x2710, acc_x=(vf40)0x0000, acc_y=(vf20)0xff88, acc_z=(vf10)0x0000, rand_start=(vf08)0x0028, rand_speed=(vf04)0x0064, flag=(flag)0xfc )
+0x0299    opFE93_ParticleWaitTtl( s_wait=1, var2=80, sprite_id=4, var4=1, var5=2 )
+0x02a5    opFE94_ParticleTranslation( trans_x=(vf80)0x01f4, trans_y=(vf40)0x01f4, trans_add_x=(vf20)0x001e, trans_add_y=(vf10)0x001e, flag=(flag)0xf0 )
+0x02b0    opFE95_ParticleColour( r=(vf80)0x0046, g=(vf40)0x0046, b=(vf20)0x0046, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc )
+0x02bf    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x02c7    opFEBD_ParticleSpawnSettings( settings=0 )
+0x02cf    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=16, wait=0, ttl=20 )
+0x02d9    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x001e, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x0000, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x02e8    opFE92_ParticleSpeed( speed=(vf80)0x2710, acc_x=(vf40)0x0000, acc_y=(vf20)0xff88, acc_z=(vf10)0x0000, rand_start=(vf08)0x0028, rand_speed=(vf04)0x0064, flag=(flag)0xfc )
+0x02f7    opFE93_ParticleWaitTtl( s_wait=1, var2=80, sprite_id=4, var4=1, var5=2 )
+0x0303    opFE94_ParticleTranslation( trans_x=(vf80)0x01f4, trans_y=(vf40)0x01f4, trans_add_x=(vf20)0x001e, trans_add_y=(vf10)0x001e, flag=(flag)0xf0 )
+0x030e    opFE95_ParticleColour( r=(vf80)0x0046, g=(vf40)0x0046, b=(vf20)0x0046, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc )
+0x031d    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x0325    opFEBD_ParticleSpawnSettings( settings=0 )
+0x032d    opFE96_ParticleCreate()
+0x032f    op0D_Return()
+
+Actor_0x05:on_start:
+0x0330    -- 0xBC_ActorNoModelInit()
+0x0331    -- 0x19_ActorSetPosition( x=(vf80)0x0377, z=(vf40)0xfe7f, flag=(flag)0xc0 )
+0x0337    -- 0x2A()
+0x0338    op00_Return()
+
+Actor_0x05:on_update:
+0x0339    -- MISSING OPCODE 0xFE38

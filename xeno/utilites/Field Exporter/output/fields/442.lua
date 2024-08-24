@@ -15,4 +15,10 @@ Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0x2A()
 0x0011    -- 0xA0()
-0x0018    -- MISSING OPCODE 0x9d
+0x0018    -- 0x9D()
+0x001c    -- 0xE7( ???=104, ???=144, ???=248 )
+0x0023    op00_Return()
+
+Actor_0x00:on_update:
+0x0024    op74_SoundPlayFixedVolume( sound_id=0 )
+0x0027    -- MISSING OPCODE 0xFE0c

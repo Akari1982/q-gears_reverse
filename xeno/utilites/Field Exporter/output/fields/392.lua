@@ -194,4 +194,40 @@ Actor_0x0b:on_push:
 Actor_0x0c:on_start:
 0x00c3    -- 0xBC_ActorNoModelInit()
 0x00c4    -- 0x19_ActorSetPosition( x=(vf80)0x00b2, z=(vf40)0xff4e, flag=(flag)0xc0 )
-0x00ca    -- MISSING OPCODE 0xf8
+0x00ca    -- 0xF8()
+0x00ce    -- 0xF8()
+0x00d2    -- 0x18()
+0x00d7    op20_ActorSetFlags0( flags=1 )
+0x00da    op00_Return()
+
+Actor_0x0c:on_update:
+0x00db    op00_Return()
+
+Actor_0x0c:on_talk:
+0x00dc    -- 0xFE54()
+0x00de    op74_SoundPlayFixedVolume( sound_id=20 )
+0x00e1    mem[0x402] = opA8_Random( max=1 )
+0x00e6    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0xf6 )
+0x00ee    opF5_MessageShowStatic( text_id=0x0, flags=NO_WINDOW )
+0x00f2    op9C_MessageSync()
+0x00f3    op01_JumpTo( address=0x106 )
+0x00f6    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x106 )
+0x00fe    opF5_MessageShowStatic( text_id=0x1, flags=NO_WINDOW )
+0x0102    op9C_MessageSync()
+0x0103    op01_JumpTo( address=0x106 )
+0x0106    -- 0xFE54()
+0x0108    op00_Return()
+
+Actor_0x0c:on_push:
+0x0109    op00_Return()
+
+Actor_0x0d:on_start:
+0x010a    -- 0xBC_ActorNoModelInit()
+0x010b    -- 0x2A()
+0x010c    op00_Return()
+
+Actor_0x0d:on_update:
+0x010d    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x1600], jump=0x9801 )
+0x0112    -- 0x87_SetProgress( progress=(s)mem[0x180] )
+0x0115    -- 0x80()
+0x011a    -- MISSING OPCODE 0x04

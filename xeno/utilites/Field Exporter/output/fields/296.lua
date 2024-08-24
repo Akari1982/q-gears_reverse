@@ -15,4 +15,22 @@ Actor_0x00:on_start:
 0x0039    -- 0xBC_ActorNoModelInit()
 0x003a    -- 0x2A()
 0x003b    -- 0xA0()
-0x0042    -- MISSING OPCODE 0xa1
+0x0042    -- 0xA1()
+0x0045    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x54 )
+0x004d    mem[0x400] = true -- op36
+0x0050    -- 0x75( ???=24 )
+0x0053    op00_Return()
+0x0054    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x5d )
+0x005c    op00_Return()
+0x005d    op02_JumpToConditional( val1=(s)mem[0x2], val2=7, condition="val1 == val2", address_if_false=0x69 )
+0x0065    -- 0x75( ???=15 )
+0x0068    op00_Return()
+0x0069    op05_CallFunction( address=0xf63 )
+0x006c    op00_Return()
+
+Actor_0x00:on_update:
+0x006d    -- 0x86_ProgressNotEqualJumpTo( value=139, jump=0x87 )
+0x0072    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x87 )
+0x007a    op02_JumpToConditional( val1=(s)mem[0x1c8], val2=512, condition="val1 & val2", address_if_false=0x85 )
+0x0082    op01_JumpTo( address=0x87 )
+0x0085    -- MISSING OPCODE 0x28

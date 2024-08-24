@@ -14,4 +14,21 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0x2A()
-0x0011    -- MISSING OPCODE 0x9d
+0x0011    -- 0x9D()
+0x0015    op00_Return()
+
+Actor_0x00:on_update:
+0x0016    -- 0x75( ???=255 )
+0x0019    -- 0x5B()
+0x001a    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x001b    op00_Return()
+
+Actor_0x01:on_start:
+0x001c    -- 0x16_ActorPCInit( char_id=0 )
+0x001f    opFE0D_MessageSetFace( char_id=0 )
+0x0023    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x33 )
+0x002b    -- MISSING OPCODE 0x1d

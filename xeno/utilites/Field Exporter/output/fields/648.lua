@@ -14,4 +14,16 @@ unknown = [
 Actor_0x00:on_start:
 0x0016    -- 0xBC_ActorNoModelInit()
 0x0017    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x2e )
-0x001f    -- MISSING OPCODE 0x80
+0x001f    -- 0x80()
+0x0024    -- 0x80()
+0x0029    op25_ActorDisable( actor_id=Actor_0x0a )
+0x002b    op01_JumpTo( address=0x33 )
+0x002e    -- 0x80()
+0x0033    -- 0x2A()
+0x0034    op00_Return()
+
+Actor_0x00:on_update:
+0x0035    op02_JumpToConditional( val1=(s)mem[0x210], val2=256, condition="val1 & val2", address_if_false=0x9e )
+0x003d    -- 0x27( actor_id=Actor_0x0f )
+0x003f    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x10, priority=0x01 )
+0x0042    -- MISSING OPCODE 0xa4

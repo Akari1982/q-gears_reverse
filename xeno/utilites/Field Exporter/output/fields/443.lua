@@ -19,4 +19,14 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x0012    -- 0xFE54()
-0x0014    -- MISSING OPCODE 0x9d
+0x0014    -- 0x9D()
+0x0018    opF1_FadeSetUp( steps=2, r=80, g=48, b=85, semi_tr=1 )
+0x0023    -- 0xF2()
+0x002c    op25_ActorDisable( actor_id=Actor_0x01 )
+0x002e    op25_ActorDisable( actor_id=Actor_0x08 )
+0x0030    op99()
+0x0031    mem[0x418] = 0 -- op35
+0x0037    -- 0x63( ???=257, ???=-6, ???=1561 ) -- exp0x1
+0x003f    opA3()
+0x0047    op05_CallFunction( address=0x352 )
+0x004a    -- MISSING OPCODE 0xFE66

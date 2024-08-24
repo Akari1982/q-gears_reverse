@@ -84,7 +84,7 @@ Actor_0x01:on_push:
 0x00d4    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0xe2 )
 0x00dc    op01_JumpTo( address=0x30e )
 0x00df    op01_JumpTo( address=0xe2 )
-0x00e2    op02_JumpToConditional( val1=(s)mem[0x404], val2=1, condition="val1 == val2", address_if_false=0xf5 )
+0x00e2    op02_JumpToConditional( val1=mem[0x404], val2=1, condition="val1 == val2", address_if_false=0xf5 )
 0x00ea    mem[0x404] = false -- op37
 0x00ed    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
 0x00f1    op9C_MessageSync()

@@ -45,4 +45,15 @@ Actor_0x00:event_0x04:
 0x005f    opAC_MoveCamera( control=0x0, steps=90 )
 0x0063    opAC_MoveCamera( control=0x1, steps=90 )
 0x0067    opEF_MoveCameraSync()
-0x006a    -- MISSING OPCODE 0x29
+0x006a    op29_ActorTurnOff( actor_id=Actor_0x01 )
+0x006c    op26_Wait( time=2 )
+0x006f    op74_SoundPlayFixedVolume( sound_id=0 )
+0x0072    op26_Wait( time=2 )
+0x0075    -- 0x98_MapLoad( field_id=518, value=3 )
+0x007a    op00_Return()
+
+Actor_0x00:event_0x05:
+0x007b    opD0_MessageSettings( x=20, y=100, letters=0, rows=0, flags=321 )
+0x0086    opF5_MessageShowStatic( text_id=0x0, flags=0 )
+0x008a    op9C_MessageSync()
+0x008b    -- MISSING OPCODE 0x28

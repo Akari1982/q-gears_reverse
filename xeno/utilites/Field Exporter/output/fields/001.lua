@@ -19,4 +19,8 @@ Actor_0x00:on_start:
 0x005a    op02_JumpToConditional( val1=(s)mem[0x2], val2=10, condition="val1 == val2", address_if_false=0x64 )
 0x0062    -- 0xFE54()
 0x0064    -- 0xA0()
-0x006b    -- MISSING OPCODE 0x9d
+0x006b    -- 0x9D()
+0x006f    op00_Return()
+
+Actor_0x00:on_update:
+0x0070    -- MISSING OPCODE 0xFE8e

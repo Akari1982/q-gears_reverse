@@ -46,4 +46,18 @@ Actor_0x00:on_update:
 0x005c    op25_ActorDisable( actor_id=Actor_0x22 )
 0x005e    op25_ActorDisable( actor_id=Actor_0x23 )
 0x0060    op01_JumpTo( address=0x67 )
-0x0063    -- MISSING OPCODE 0x29
+0x0063    op29_ActorTurnOff( actor_id=Actor_0x0f )
+0x0065    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x0067    -- 0x5B()
+0x0068    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0069    op00_Return()
+
+Actor_0x01:on_start:
+0x006a    -- 0x16_ActorPCInit( char_id=0 )
+0x006d    opFE0D_MessageSetFace( char_id=0 )
+0x0071    op02_JumpToConditional( val1=(s)mem[0x4], val2=437, condition="val1 == val2", address_if_false=0x82 )
+0x0079    -- MISSING OPCODE 0xFE1c

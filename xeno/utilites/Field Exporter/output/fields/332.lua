@@ -89,4 +89,100 @@ Actor_0x04:event_0x04:
 0x006f    op69_ActorSetRotation( rot=0 )
 0x0072    op09_CallActorEventEndSync( actor_id=Actor_0x1e, event=event_0x04, priority=0x03 )
 0x0075    op26_Wait( time=10 )
-0x0078    -- MISSING OPCODE 0x22
+0x0078    -- 0x22()
+0x0079    op26_Wait( time=1 )
+0x007c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0082    op26_Wait( time=10 )
+0x0085    op07_CallActorEvent( actor_id=Actor_0x1e, event=event_0x05, priority=0x03 )
+0x0088    op6F_ActorRotateToActor( actor_id=Actor_0x05 )
+0x008a    op00_Return()
+
+Actor_0x04:event_0x05:
+0x008b    -- 0x19_ActorSetPosition( x=(vf80)0xff4e, z=(vf40)0xffcd, flag=(flag)0xc0 )
+0x0091    op69_ActorSetRotation( rot=6 )
+0x0094    op00_Return()
+
+Actor_0x04:event_0x06:
+0x0095    -- 0x19_ActorSetPosition( x=(vf80)0x0040, z=(vf40)0xff3d, flag=(flag)0xc0 )
+0x009b    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x009d    op26_Wait( time=60 )
+0x00a0    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00a6    op26_Wait( time=10 )
+0x00a9    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x00ab    op26_Wait( time=10 )
+0x00ae    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00b4    op26_Wait( time=10 )
+0x00b7    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x00b9    op26_Wait( time=10 )
+0x00bc    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c8    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00ce    op00_Return()
+
+Actor_0x04:event_0x07:
+0x00cf    -- 0x19_ActorSetPosition( x=(vf80)0xff43, z=(vf40)0x0022, flag=(flag)0xc0 )
+0x00d5    op69_ActorSetRotation( rot=6 )
+0x00d8    op00_Return()
+
+Actor_0x05:on_start:
+0x00d9    -- 0x0B_InitNPC( 7 )
+0x00dc    -- 0x2A()
+0x00dd    op20_ActorSetFlags0( flags=13 )
+0x00e0    -- 0x1F( ???=0x10 )
+0x00e2    -- 0xFE09( ???=1 )
+0x00e6    op00_Return()
+
+Actor_0x05:on_update:
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x00e7    op00_Return()
+
+Actor_0x05:event_0x04:
+0x00e8    -- 0x19_ActorSetPosition( x=(vf80)0x00d5, z=(vf40)0xff9b, flag=(flag)0xc0 )
+0x00ee    op69_ActorSetRotation( rot=2 )
+0x00f1    -- 0x22()
+0x00f2    op00_Return()
+
+Actor_0x05:event_0x05:
+0x00f3    -- 0x57( type=0x2, x=(vf80)0x00d5, z=(vf40)0xff9b, y=(vf20)0x0000, ???=(vf10)0xffb5, flag=0xf0 )
+0x00fe    -- 0x57( type=0x8f )
+0x0100    op26_Wait( time=1 )
+0x0103    -- 0x57( type=0xf )
+0x0105    op26_Wait( time=10 )
+0x0108    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x010e    op00_Return()
+
+Actor_0x05:event_0x06:
+0x010f    -- 0x19_ActorSetPosition( x=(vf80)0x0015, z=(vf40)0x0067, flag=(flag)0xc0 )
+0x0115    op69_ActorSetRotation( rot=4 )
+0x0118    op26_Wait( time=30 )
+0x011b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0121    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0127    op00_Return()
+
+Actor_0x05:event_0x07:
+0x0128    -- 0x19_ActorSetPosition( x=(vf80)0xff35, z=(vf40)0xffc8, flag=(flag)0xc0 )
+0x012e    op69_ActorSetRotation( rot=6 )
+0x0131    op00_Return()
+
+Actor_0x05:event_0x08:
+0x0132    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x0134    -- 0x57( type=0x2, x=(vf80)0xff35, z=(vf40)0xffc8, y=(vf20)0x0000, ???=(vf10)0xffb5, flag=0xf0 )
+0x013f    -- 0x57( type=0x8f )
+0x0141    op26_Wait( time=1 )
+0x0144    -- 0x57( type=0xf )
+0x0146    op26_Wait( time=10 )
+0x0149    -- 0x21( ???=128 )
+0x014c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0152    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0158    op00_Return()
+
+Actor_0x05:event_0x09:
+0x0159    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x015f    op26_Wait( time=10 )
+0x0162    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0168    -- 0x21( ???=256 )
+0x016b    op26_Wait( time=10 )
+0x016e    -- MISSING OPCODE 0xFEc3

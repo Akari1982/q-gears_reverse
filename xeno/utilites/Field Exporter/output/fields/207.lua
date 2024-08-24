@@ -21,4 +21,50 @@ Actor_0x00:on_update:
 0x0013    -- 0xFE54()
 0x0015    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
 0x0018    -- 0x5A()
-0x0019    -- MISSING OPCODE 0xFE24
+0x0019    -- 0xFE24()
+0x001b    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x04, priority=0x01 )
+0x001e    -- 0xFE54()
+0x0020    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0021    op00_Return()
+
+Actor_0x01:on_start:
+0x0022    -- 0x16_ActorPCInit( char_id=0 )
+0x0025    opFE0D_MessageSetFace( char_id=0 )
+0x0029    op00_Return()
+
+Actor_0x01:on_update:
+0x002a    -- 0xA7()
+0x002b    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x002c    op00_Return()
+
+Actor_0x01:event_0x04:
+0x002d    -- 0x21( ???=128 )
+0x0030    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0036    -- 0x21( ???=256 )
+0x0039    op00_Return()
+
+Actor_0x02:on_start:
+0x003a    -- 0x46()
+0x003b    op00_Return()
+
+Actor_0x02:on_update:
+0x003c    op00_Return()
+
+Actor_0x02:on_talk:
+0x003d    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x5c )
+0x0045    -- 0xFE65()
+0x004b    op26_Wait( time=10 )
+0x004e    -- 0xFE65()
+0x0054    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0058    op9C_MessageSync()
+0x0059    op01_JumpTo( address=0x68 )
+0x005c    -- 0x15()
+0x005d    -- MISSING OPCODE 0xc4

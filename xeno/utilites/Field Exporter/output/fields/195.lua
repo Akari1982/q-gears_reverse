@@ -15,4 +15,9 @@ Actor_0x00:on_start:
 0x004e    -- 0xBC_ActorNoModelInit()
 0x004f    mem[0x1fc] |= 1 << 6 -- op3a
 0x0055    -- 0xA0()
-0x005c    -- MISSING OPCODE 0x9d
+0x005c    -- 0x9D()
+0x0060    -- 0x75( ???=71 )
+0x0063    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x76 )
+0x006b    opF1_FadeSetUp( steps=2, r=70, g=20, b=10, semi_tr=1 )
+0x0076    -- 0xFE0E_SoundSetVolume( volume=127, steps=120 )
+0x007c    -- MISSING OPCODE 0xFE0c

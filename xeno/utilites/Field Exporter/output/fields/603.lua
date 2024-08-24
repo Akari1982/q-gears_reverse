@@ -212,4 +212,34 @@ Actor_0x0a:on_push:
 Actor_0x0b:on_start:
 0x016e    -- 0xBC_ActorNoModelInit()
 0x016f    -- 0x19_ActorSetPosition( x=(vf80)0xff66, z=(vf40)0x007d, flag=(flag)0xc0 )
-0x0175    -- MISSING OPCODE 0xf8
+0x0175    -- 0xF8()
+0x0179    -- 0x18()
+0x017e    op20_ActorSetFlags0( flags=1 )
+0x0181    op00_Return()
+
+Actor_0x0b:on_update:
+0x0182    op00_Return()
+
+Actor_0x0b:on_talk:
+0x0183    op00_Return()
+
+Actor_0x0b:on_push:
+0x0184    op00_Return()
+
+Actor_0x0c:on_start:
+0x0185    -- 0xBC_ActorNoModelInit()
+0x0186    -- 0x19_ActorSetPosition( x=(vf80)0x00ad, z=(vf40)0xfd23, flag=(flag)0xc0 )
+0x018c    -- 0xF8()
+0x0190    -- 0xF8()
+0x0194    -- 0x18()
+0x0199    op20_ActorSetFlags0( flags=1 )
+0x019c    op00_Return()
+
+Actor_0x0c:on_update:
+0x019d    op00_Return()
+
+Actor_0x0c:on_talk:
+0x019e    -- 0xFE54()
+0x01a0    op74_SoundPlayFixedVolume( sound_id=119 )
+0x01a3    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x01 )
+0x01a6    -- MISSING OPCODE 0xFE68

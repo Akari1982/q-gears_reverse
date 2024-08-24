@@ -188,4 +188,15 @@ Actor_0x0c:on_start:
 Actor_0x0c:on_update:
 0x0094    op02_JumpToConditional( val1=(s)mem[0x190], val2=8, condition="val1 & val2", address_if_false=0x9f )
 0x009c    op01_JumpTo( address=0xa4 )
-0x009f    -- MISSING OPCODE 0xdb
+0x009f    -- 0xDB()
+0x00a4    -- 0x5B()
+0x00a5    op00_Return()
+
+Actor_0x0c:on_talk:
+
+Actor_0x0c:on_push:
+0x00a6    op00_Return()
+
+Actor_0x0c:event_0x04:
+0x00a7    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x04, priority=0x01 )
+0x00aa    -- MISSING OPCODE 0xFE66

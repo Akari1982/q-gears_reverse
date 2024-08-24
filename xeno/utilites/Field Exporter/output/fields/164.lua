@@ -158,4 +158,14 @@ Actor_0x03:event_0x05:
 Actor_0x03:event_0x06:
 0x0158    opFE0D_MessageSetFace( char_id=1 )
 0x015c    opD4_MessageShowFromActor( actor_id=Actor_0x05, text_id=0x2, flags=FORCE_BOTTOM|0x80 )
-0x0162    -- MISSING OPCODE 0x67
+0x0162    -- 0x67()
+0x0166    opFE0D_MessageSetFace( char_id=65 )
+0x016a    opD4_MessageShowFromActor( actor_id=Actor_0x10, text_id=0x3, flags=FORCE_BOTTOM|0x80 )
+0x0170    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x00 )
+0x0173    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x04, priority=0x00 )
+0x0176    opFE0D_MessageSetFace( char_id=1 )
+0x017a    opD4_MessageShowFromActor( actor_id=Actor_0x05, text_id=0x4, flags=FORCE_BOTTOM|0x80 )
+0x0180    opFE0D_MessageSetFace( char_id=69 )
+0x0184    opD4_MessageShowFromActor( actor_id=Actor_0x14, text_id=0x5, flags=FORCE_BOTTOM|0x80 )
+0x018a    -- 0x67()
+0x018e    -- MISSING OPCODE 0xFE17

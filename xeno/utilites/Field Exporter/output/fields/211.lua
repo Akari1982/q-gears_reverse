@@ -45,4 +45,38 @@ Actor_0x00:on_update:
 0x008c    op26_Wait( time=15 )
 0x008f    op09_CallActorEventEndSync( actor_id=Actor_0x29, event=event_0x06, priority=0x01 )
 0x0092    mem[0x404] = false -- op37
-0x0095    -- MISSING OPCODE 0xFE24
+0x0095    -- 0xFE24()
+0x0097    mem[0x242] |= 1 << 14 -- op3a
+0x009d    -- 0xFE54()
+0x009f    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00a0    op00_Return()
+
+Actor_0x01:on_start:
+0x00a1    -- 0x16_ActorPCInit( char_id=0 )
+0x00a4    opFE0D_MessageSetFace( char_id=0 )
+0x00a8    op02_JumpToConditional( val1=(s)mem[0x244], val2=2, condition="val1 & val2", address_if_false=0xb7 )
+0x00b0    opFE0D_MessageSetFace( char_id=0 )
+0x00b4    op01_JumpTo( address=0xbb )
+0x00b7    opFE0D_MessageSetFace( char_id=36 )
+0x00bb    op00_Return()
+
+Actor_0x01:on_update:
+0x00bc    op02_JumpToConditional( val1=(s)mem[0x24a], val2=4, condition="val1 & val2", address_if_false=0xc7 )
+0x00c4    -- 0x21( ???=192 )
+0x00c7    op02_JumpToConditional( val1=(s)mem[0x24a], val2=16, condition="val1 & val2", address_if_false=0xd2 )
+0x00cf    -- 0x21( ???=384 )
+0x00d2    -- 0xA7()
+0x00d3    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00d4    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00d5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00db    -- MISSING OPCODE 0xb5

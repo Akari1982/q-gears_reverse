@@ -166,4 +166,9 @@ Actor_0x0b:on_start:
 0x0079    -- 0x0B_InitNPC( 0 )
 0x007c    -- 0x86_ProgressNotEqualJumpTo( value=202, jump=0x84 )
 0x0081    op01_JumpTo( address=0x86 )
-0x0084    -- MISSING OPCODE 0x29
+0x0084    op29_ActorTurnOff( actor_id=self )
+0x0086    -- 0x19_ActorSetPosition( x=(vf80)0x0032, z=(vf40)0xff5a, flag=(flag)0xc0 )
+0x008c    op00_Return()
+
+Actor_0x0b:on_update:
+0x008d    -- MISSING OPCODE 0x59

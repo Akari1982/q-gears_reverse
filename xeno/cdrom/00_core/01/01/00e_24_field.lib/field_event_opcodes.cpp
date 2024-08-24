@@ -16316,6 +16316,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x2D
+
 800995F8	addiu  sp, sp, $ffe0 (=-$20)
 A0 = 0001;
 [SP + 0018] = w(RA);
@@ -16678,20 +16679,14 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func99c44
-80099C44	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80099C4C	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0001;
-V1 = w[800af54c];
+// field_event_opA1()
+
+A0 = 1;
+field_event_help_read_v80();
 [800aeec9] = b(V0);
-V0 = hu[V1 + 00cc];
-80099C68	nop
-V0 = V0 + 0003;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80099C78	jr     ra 
-SP = SP + 0018;
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + 3);
 ////////////////////////////////
 
 
@@ -16873,50 +16868,32 @@ if( w[800acff4] == 0 )
 
 
 ////////////////////////////////
-// func99f2c
-80099F2C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+// func99f2c()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80099F3C	jal    field_event_help_read_entity [$8009c344]
-A0 = 0001;
-V1 = 00ff;
-80099F48	beq    v0, v1, L99fa4 [$80099fa4]
-80099F4C	nop
-80099F50	jal    field_event_help_read_entity [$8009c344]
-A0 = 0001;
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 03;
-V1 = V1 - V0;
-V0 = w[800aefe4];
-V1 = V1 << 02;
-V1 = V1 + V0;
-V0 = w[800acff4];
-V1 = w[V1 + 004c];
-80099F84	bne    v0, zero, L99f9c [$80099f9c]
-V0 = S0 | 8000;
-[V1 + 0104] = h(V0);
-[V1 + 0106] = h(V0);
-[V1 + 0108] = h(V0);
-V0 = S0 | 8000;
 
-L99f9c:	; 80099F9C
-[V1 + 0104] = h(V0);
-[V1 + 0106] = h(V0);
+A0 = 1;
+field_event_help_read_entity();
 
-L99fa4:	; 80099FA4
+if( V0 != ff )
+{
+    A0 = 1;
+    field_event_help_read_entity();
+
+    V1 = w[800aefe4] + V0 * 5c;
+    V1 = w[V1 + 4c];
+
+    [V1 + 104] = h(S0 | 8000);
+    [V1 + 106] = h(S0 | 8000);
+
+    if( w[800acff4] == 0 )
+    {
+        [V1 + 108] = h(S0 | 8000);
+    }
+}
+
 V1 = w[800af54c];
-80099FAC	nop
-V0 = hu[V1 + 00cc];
-80099FB4	nop
-V0 = V0 + 0004;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80099FCC	jr     ra 
-80099FD0	nop
+[V1 + cc] = h(hu[V1 + cc] + 4);
 ////////////////////////////////
 
 
@@ -17051,7 +17028,7 @@ func99ed8();
 
 
 ////////////////////////////////
-// func9a1d0()
+// field_event_op67()
 
 A0 = 2;
 field_event_help_read_v80();

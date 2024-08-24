@@ -598,6 +598,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x67:
+            {
+                exp->Log( "-- 0x67()" );
+                pointer += 4;
+            }
+            break;
+
             case 0x69:
             {
                 exp->Log( "op69_ActorSetRotation( rot=" + GetV80Variable( pointer + 1 ) + " )" );
@@ -747,6 +754,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x9d:
+            {
+                exp->Log( "-- 0x9D()" );
+                pointer += 4;
+            }
+            break;
+
             case 0x9f:
             {
                 exp->Log( "-- 0x9F()" );
@@ -758,6 +772,13 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0xA0()" );
                 pointer += 7;
+            }
+            break;
+
+            case 0xa1:
+            {
+                exp->Log( "-- 0xA1()" );
+                pointer += 3;
             }
             break;
 

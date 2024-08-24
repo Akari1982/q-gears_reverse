@@ -32,4 +32,127 @@ Actor_0x00:on_push:
 0x01a7    op00_Return()
 
 Actor_0x00:event_0x04:
-0x01a8    -- MISSING OPCODE 0xFE24
+0x01a8    -- 0xFE24()
+0x01aa    op00_Return()
+
+Actor_0x00:event_0x05:
+0x01ab    op25_ActorDisable( actor_id=Actor_0x0e )
+0x01ad    op25_ActorDisable( actor_id=Actor_0x10 )
+0x01af    op25_ActorDisable( actor_id=Actor_0x1f )
+0x01b1    op25_ActorDisable( actor_id=Actor_0x20 )
+0x01b3    op25_ActorDisable( actor_id=Actor_0x21 )
+0x01b5    op25_ActorDisable( actor_id=Actor_0x16 )
+0x01b7    op25_ActorDisable( actor_id=Actor_0x17 )
+0x01b9    op25_ActorDisable( actor_id=Actor_0x0f )
+0x01bb    op25_ActorDisable( actor_id=Actor_0x11 )
+0x01bd    op25_ActorDisable( actor_id=Actor_0x2d )
+0x01bf    op25_ActorDisable( actor_id=Actor_0x2e )
+0x01c1    op25_ActorDisable( actor_id=Actor_0x2f )
+0x01c3    op00_Return()
+
+Actor_0x00:event_0x06:
+0x01c4    op25_ActorDisable( actor_id=Actor_0x1e )
+0x01c6    op00_Return()
+
+Actor_0x00:event_0x07:
+0x01c7    op25_ActorDisable( actor_id=Actor_0x0c )
+0x01c9    op25_ActorDisable( actor_id=Actor_0x0d )
+0x01cb    op00_Return()
+
+Actor_0x00:event_0x08:
+0x01cc    op25_ActorDisable( actor_id=Actor_0x18 )
+0x01ce    op25_ActorDisable( actor_id=Actor_0x19 )
+0x01d0    op25_ActorDisable( actor_id=Actor_0x1a )
+0x01d2    op25_ActorDisable( actor_id=Actor_0x12 )
+0x01d4    op25_ActorDisable( actor_id=Actor_0x14 )
+0x01d6    op25_ActorDisable( actor_id=Actor_0x22 )
+0x01d8    op25_ActorDisable( actor_id=Actor_0x23 )
+0x01da    op25_ActorDisable( actor_id=Actor_0x24 )
+0x01dc    op25_ActorDisable( actor_id=Actor_0x1b )
+0x01de    op25_ActorDisable( actor_id=Actor_0x1c )
+0x01e0    op25_ActorDisable( actor_id=Actor_0x1d )
+0x01e2    op25_ActorDisable( actor_id=Actor_0x13 )
+0x01e4    op25_ActorDisable( actor_id=Actor_0x15 )
+0x01e6    op25_ActorDisable( actor_id=Actor_0x28 )
+0x01e8    op25_ActorDisable( actor_id=Actor_0x29 )
+0x01ea    op00_Return()
+
+Actor_0x00:event_0x09:
+0x01eb    op24_ActorEnable( actor_id=Actor_0x0e )
+0x01ed    op24_ActorEnable( actor_id=Actor_0x10 )
+0x01ef    op24_ActorEnable( actor_id=Actor_0x1f )
+0x01f1    op24_ActorEnable( actor_id=Actor_0x20 )
+0x01f3    op24_ActorEnable( actor_id=Actor_0x21 )
+0x01f5    op24_ActorEnable( actor_id=Actor_0x16 )
+0x01f7    op24_ActorEnable( actor_id=Actor_0x17 )
+0x01f9    op24_ActorEnable( actor_id=Actor_0x0f )
+0x01fb    op24_ActorEnable( actor_id=Actor_0x11 )
+0x01fd    op24_ActorEnable( actor_id=Actor_0x2d )
+0x01ff    op24_ActorEnable( actor_id=Actor_0x2e )
+0x0201    op24_ActorEnable( actor_id=Actor_0x2f )
+0x0203    op00_Return()
+
+Actor_0x00:event_0x0a:
+0x0204    op24_ActorEnable( actor_id=Actor_0x1e )
+0x0206    op00_Return()
+
+Actor_0x00:event_0x0b:
+0x0207    op24_ActorEnable( actor_id=Actor_0x0c )
+0x0209    op24_ActorEnable( actor_id=Actor_0x0d )
+0x020b    op00_Return()
+
+Actor_0x00:event_0x0c:
+0x020c    op24_ActorEnable( actor_id=Actor_0x18 )
+0x020e    op24_ActorEnable( actor_id=Actor_0x19 )
+0x0210    op24_ActorEnable( actor_id=Actor_0x1a )
+0x0212    op24_ActorEnable( actor_id=Actor_0x12 )
+0x0214    op24_ActorEnable( actor_id=Actor_0x14 )
+0x0216    op24_ActorEnable( actor_id=Actor_0x22 )
+0x0218    op24_ActorEnable( actor_id=Actor_0x23 )
+0x021a    op24_ActorEnable( actor_id=Actor_0x24 )
+0x021c    op24_ActorEnable( actor_id=Actor_0x1b )
+0x021e    op24_ActorEnable( actor_id=Actor_0x1c )
+0x0220    op24_ActorEnable( actor_id=Actor_0x1d )
+0x0222    op24_ActorEnable( actor_id=Actor_0x13 )
+0x0224    op24_ActorEnable( actor_id=Actor_0x15 )
+0x0226    op24_ActorEnable( actor_id=Actor_0x28 )
+0x0228    op24_ActorEnable( actor_id=Actor_0x29 )
+0x022a    op00_Return()
+
+Actor_0x01:on_start:
+0x022b    -- 0x16_ActorPCInit( char_id=(s)mem[0x3e] )
+0x022e    opFE0D_MessageSetFace( char_id=(s)mem[0x3e] )
+0x0232    op00_Return()
+
+Actor_0x01:on_update:
+0x0233    -- 0xA7()
+0x0234    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0235    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0236    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x023c    op00_Return()
+
+Actor_0x01:event_0x05:
+0x023d    -- 0x1F( ???=0x30 )
+0x023f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0245    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x04, priority=0x01 )
+0x0248    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x024b    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
+0x024e    -- 0x5F( ???=0x1 )
+0x0250    op26_Wait( time=10 )
+0x0253    op2C_SpritePlayAnim( anim_id=0x0 )
+0x0255    -- 0xF6( ???=0x1 )
+0x0257    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0258    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )
+0x025b    op07_CallActorEvent( actor_id=Actor_0x0d, event=event_0x04, priority=0x01 )
+0x025e    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x05, priority=0x01 )
+0x0261    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x05, priority=0x01 )
+0x0264    -- 0x21( ???=144 )
+0x0267    -- MISSING OPCODE 0x10

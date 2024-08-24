@@ -150,4 +150,60 @@ Actor_0x09:on_start:
 0x0096    opFE0D_MessageSetFace( char_id=1 )
 0x009a    op20_ActorSetFlags0( flags=1 )
 0x009d    op02_JumpToConditional( val1=(s)mem[0x14c], val2=104, condition="val1 > val2", address_if_false=0xaa )
-0x00a5    -- MISSING OPCODE 0x29
+0x00a5    op29_ActorTurnOff( actor_id=Actor_0x09 )
+0x00a7    op01_JumpTo( address=0xb0 )
+0x00aa    -- 0x19_ActorSetPosition( x=(vf80)0x045c, z=(vf40)0x047c, flag=(flag)0xc0 )
+0x00b0    -- 0xFE07( ???=0x1 )
+0x00b3    -- 0x21( ???=96 )
+0x00b6    op00_Return()
+
+Actor_0x09:on_update:
+0x00b7    -- 0xC9()
+0x00bb    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c1    op01_JumpTo( address=0x102 )
+0x00c4    -- 0xC9()
+0x00c8    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00ce    op01_JumpTo( address=0x102 )
+0x00d1    -- 0xC9()
+0x00d5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00db    op01_JumpTo( address=0x102 )
+0x00de    -- 0xC9()
+0x00e2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00e8    op01_JumpTo( address=0x102 )
+0x00eb    -- 0xC9()
+0x00ef    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00f5    op01_JumpTo( address=0x102 )
+0x00f8    -- 0xC9()
+0x00fc    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0102    op00_Return()
+
+Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
+0x0103    op00_Return()
+
+Actor_0x0a:on_start:
+0x0104    -- 0xBC_ActorNoModelInit()
+0x0105    op00_Return()
+
+Actor_0x0a:on_update:
+0x0106    op00_Return()
+
+Actor_0x0a:on_talk:
+0x0107    op00_Return()
+
+Actor_0x0a:on_push:
+0x0108    op00_Return()
+
+Actor_0x0b:on_start:
+0x0109    -- 0x46()
+0x010a    op00_Return()
+
+Actor_0x0b:on_update:
+0x010b    op00_Return()
+
+Actor_0x0b:on_talk:
+0x010c    op02_JumpToConditional( val1=(s)mem[0x14c], val2=110, condition="val1 == val2", address_if_false=0x126 )
+0x0114    op74_SoundPlayFixedVolume( sound_id=8 )
+0x0117    -- 0x15()
+0x0118    -- MISSING OPCODE 0xc4

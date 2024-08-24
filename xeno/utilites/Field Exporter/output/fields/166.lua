@@ -65,7 +65,7 @@ Actor_0x02:event_0x04:
 0x004d    opAC_MoveCamera( control=0x0, steps=0 )
 0x0051    opAC_MoveCamera( control=0x1, steps=0 )
 0x0055    opEF_MoveCameraSync()
-0x0058    op02_JumpToConditional( val1=(s)mem[0x404], val2=1, condition="val1 == val2", address_if_false=0x6b )
+0x0058    op02_JumpToConditional( val1=mem[0x404], val2=1, condition="val1 == val2", address_if_false=0x6b )
 0x0060    -- 0x60()
 0x0061    -- 0x62( actor_id=Actor_0x04 ) -- exp0x1
 0x0063    opAC_MoveCamera( control=0x0, steps=2 )
