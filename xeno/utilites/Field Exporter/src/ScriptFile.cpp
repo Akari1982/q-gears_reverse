@@ -355,7 +355,14 @@ ScriptFile::GetScripts( const std::string& path )
                 pointer += 5;
             }
             break;
-
+/*
+            case 0x34:
+            {
+                exp->Log( "-- 0x34()" );
+                pointer += 5;
+            }
+            break;
+*/
             case 0x35:
             {
                 exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op35");
@@ -488,6 +495,13 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0x4С( variable arguments based args )" );
                 pointer += 8;
+            }
+            break;
+
+            case 0x52:
+            {
+                exp->Log( "-- 0x52()" );
+                pointer += 2;
             }
             break;
 
@@ -633,6 +647,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x70:
+            {
+                exp->Log( "-- 0x70()" );
+                pointer += 2;
+            }
+            break;
+
             case 0x73:
             {
                 u8 type = GetU8( pointer + 1 );
@@ -687,6 +708,13 @@ ScriptFile::GetScripts( const std::string& path )
             case 0x84:
             {
                 exp->Log( "-- 0x84_ProgressLessEqualJumpTo( value=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x85:
+            {
+                exp->Log( "-- 0x85()" );
                 pointer += 5;
             }
             break;
@@ -784,7 +812,7 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0xa3:
             {
-                exp->Log( "opA3()" );
+                exp->Log( "-- 0xA3()" );
                 pointer += 8;
             }
             break;
@@ -1106,6 +1134,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xfb:
+            {
+                exp->Log( "-- 0xFB()" );
+                pointer += 5;
+            }
+            break;
+
             case 0xfc:
             {
                 exp->Log( "opFC_MessageShowFromActorCopyFace( actor_id=" + GetEVariable( pointer + 1 ) + ", text_id=" + GetU16Variable( pointer + 2 ) + ", flags=" + GetMessageFlags( pointer + 4 ) + " )" );
@@ -1311,6 +1346,11 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "-- 0xFE65()" );
                     pointer += 5;
+                }
+                else if( eo_opcode == 0x66 )
+                {
+                    exp->Log( "-- 0xFE66() -- sound play with volume in slot" );
+                    pointer += 9;
                 }
                 else if( eo_opcode == 0x67 )
                 {

@@ -72,7 +72,7 @@ main()
     }
     */
 
-    for( int i = 0; i <= 729; ++i )
+    for( int i = 0; i <= 1/*729*/; ++i )
     {
         printf( "Extract script for field %d.\n", i );
 
@@ -102,7 +102,7 @@ main()
             file->GetScripts( save );
             delete file;
         }
-
+/*
         // EXPORT MESSAGES
         {
             File* temp;
@@ -123,7 +123,7 @@ main()
             file->GetMessages( save );
             delete file;
         }
-
+*/
         delete field_pack;
     }
 
