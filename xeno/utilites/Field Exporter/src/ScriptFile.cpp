@@ -258,6 +258,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x1d:
+            {
+                exp->Log( "-- 0x1D()" );
+                pointer += 7;
+            }
+            break;
+
             case 0x1e:
             {
                 exp->Log( "-- 0x1E()" );
@@ -328,6 +335,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x28:
+            {
+                exp->Log( "-- 0x28()");
+                pointer += 2;
+            }
+            break;
+
             case 0x29:
             {
                 exp->Log( "op29_ActorTurnOff( actor_id=" + GetEVariable( pointer + 1 ) + " )" );
@@ -342,10 +356,45 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x2b:
+            {
+                exp->Log( "-- 0x2B()");
+                pointer += 1;
+            }
+            break;
+
             case 0x2c:
             {
                 exp->Log( "op2C_SpritePlayAnim( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
                 pointer += 2;
+            }
+            break;
+
+            case 0x2d:
+            {
+                exp->Log( "-- 0x2D()" );
+                pointer += 8;
+            }
+            break;
+
+            case 0x2e:
+            {
+                exp->Log( "-- 0x2E()" );
+                pointer += 3;
+            }
+            break;
+
+            case 0x2f:
+            {
+                exp->Log( "-- 0x2F()" );
+                pointer += 3;
+            }
+            break;
+
+            case 0x30:
+            {
+                exp->Log( "-- 0x30()" );
+                pointer += 3;
             }
             break;
 
@@ -355,6 +404,21 @@ ScriptFile::GetScripts( const std::string& path )
                 pointer += 5;
             }
             break;
+
+            case 0x32:
+            {
+                exp->Log( "0x32() -- jump if some buttons not pressed" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x33:
+            {
+                exp->Log( "-- 0x33()" );
+                pointer += 1;
+            }
+            break;
+
 /*
             case 0x34:
             {
@@ -470,6 +534,20 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x44:
+            {
+                exp->Log( "-- 0x44()" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x45:
+            {
+                exp->Log( "-- 0x45()" );
+                pointer += 8;
+            }
+            break;
+
             case 0x46:
             {
                 exp->Log( "-- 0x46()" );
@@ -484,10 +562,31 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x48:
+            {
+                exp->Log( "-- 0x48()" );
+                pointer += 7;
+            }
+            break;
+
+            case 0x49:
+            {
+                exp->Log( "-- 0x49()" );
+                pointer += 8;
+            }
+            break;
+
             case 0x4a:
             {
                 exp->Log( "-- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )" );
                 pointer += 6;
+            }
+            break;
+
+            case 0x4b:
+            {
+                exp->Log( "-- 0x4B()" );
+                pointer += 8;
             }
             break;
 
@@ -498,10 +597,66 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x4d:
+            {
+                exp->Log( "-- 0x4D()" );
+                pointer += 0xa;
+            }
+            break;
+
+            case 0x4e:
+            {
+                exp->Log( "-- 0x4E()" );
+                pointer += 6;
+            }
+            break;
+
+            case 0x4f:
+            {
+                exp->Log( "-- 0x4F()" );
+                pointer += 8;
+            }
+            break;
+
+            case 0x50:
+            {
+                exp->Log( "-- 0x50()" );
+                pointer += 8;
+            }
+            break;
+
+            case 0x51:
+            {
+                exp->Log( "-- 0x51()" );
+                pointer += 0xa;
+            }
+            break;
+
             case 0x52:
             {
                 exp->Log( "-- 0x52()" );
                 pointer += 2;
+            }
+            break;
+
+            case 0x53:
+            {
+                exp->Log( "-- 0x53()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0x54:
+            {
+                exp->Log( "-- 0x54()" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x55:
+            {
+                exp->Log( "-- 0x55()" );
+                pointer += 7;
             }
             break;
 
