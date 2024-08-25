@@ -63,4 +63,289 @@ Actor_0x01:event_0x06:
 0x0070    op00_Return()
 
 Actor_0x01:event_0x07:
-0x0071    -- MISSING OPCODE 0x53
+0x0071    -- 0x53()
+0x0075    op00_Return()
+
+Actor_0x01:event_0x08:
+0x0076    op05_CallFunction( address=0x57e )
+0x0079    op00_Return()
+
+Actor_0x01:event_0x09:
+0x007a    op2C_SpritePlayAnim( anim_id=0x4 )
+0x007c    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x007d    op2C_SpritePlayAnim( anim_id=0x5 )
+0x007f    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x0080    op2C_SpritePlayAnim( anim_id=0x7 )
+0x0082    op00_Return()
+
+Actor_0x01:event_0x0c:
+0x0083    op2C_SpritePlayAnim( anim_id=0xc )
+0x0085    op00_Return()
+
+Actor_0x01:event_0x0d:
+0x0086    opFE4E_SpriteAddAnimUnload()
+0x0088    opFE4A_SpriteAddAnimLoad( file=65 )
+0x008c    opFE4B_SpriteAddAnimSync()
+0x008e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0091    op00_Return()
+
+Actor_0x01:event_0x0e:
+0x0092    opFE4E_SpriteAddAnimUnload()
+0x0094    opFE4A_SpriteAddAnimLoad( file=64 )
+0x0098    opFE4B_SpriteAddAnimSync()
+0x009a    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x009d    op00_Return()
+
+Actor_0x01:event_0x0f:
+0x009e    opFE4E_SpriteAddAnimUnload()
+0x00a0    opFE4A_SpriteAddAnimLoad( file=73 )
+0x00a4    opFE4B_SpriteAddAnimSync()
+0x00a6    opFE4D_SpritePlayAddAnim( anim_id=0x1 )
+0x00a9    op00_Return()
+
+Actor_0x01:event_0x10:
+0x00aa    op2C_SpritePlayAnim( anim_id=0xff )
+0x00ac    op00_Return()
+
+Actor_0x01:event_0x11:
+0x00ad    opFE4E_SpriteAddAnimUnload()
+0x00af    opFE4A_SpriteAddAnimLoad( file=63 )
+0x00b3    opFE4B_SpriteAddAnimSync()
+0x00b5    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x00b8    op00_Return()
+
+Actor_0x01:event_0x12:
+0x00b9    opFE4A_SpriteAddAnimLoad( file=63 )
+0x00bd    opFE4B_SpriteAddAnimSync()
+0x00bf    opFE4D_SpritePlayAddAnim( anim_id=0x1 )
+0x00c2    op00_Return()
+
+Actor_0x01:event_0x13:
+0x00c3    opFE4E_SpriteAddAnimUnload()
+0x00c5    opFE4A_SpriteAddAnimLoad( file=114 )
+0x00c9    opFE4B_SpriteAddAnimSync()
+0x00cb    op00_Return()
+
+Actor_0x01:event_0x14:
+0x00cc    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x00cf    op00_Return()
+
+Actor_0x01:event_0x15:
+0x00d0    opFE4E_SpriteAddAnimUnload()
+0x00d2    op2C_SpritePlayAnim( anim_id=0xff )
+0x00d4    -- 0x19_ActorSetPosition( x=(vf80)0xfffb, z=(vf40)0xff5f, flag=(flag)0xc0 )
+0x00da    op69_ActorSetRotation( rot=6 )
+0x00dd    op00_Return()
+
+Actor_0x02:on_start:
+0x00de    -- 0x16_ActorPCInit( char_id=1 )
+0x00e1    opFE0D_MessageSetFace( char_id=1 )
+0x00e5    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0xf6 )
+0x00ed    -- 0x19_ActorSetPosition( x=(vf80)0xff70, z=(vf40)0xffed, flag=(flag)0xc0 )
+0x00f3    op69_ActorSetRotation( rot=6 )
+0x00f6    op00_Return()
+
+Actor_0x02:on_update:
+0x00f7    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x100 )
+0x00ff    -- 0xA7()
+0x0100    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0101    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0102    op05_CallFunction( address=0x57e )
+0x0105    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0106    op2C_SpritePlayAnim( anim_id=0x4 )
+0x0108    op00_Return()
+
+Actor_0x02:event_0x06:
+0x0109    op2C_SpritePlayAnim( anim_id=0x5 )
+0x010b    op00_Return()
+
+Actor_0x02:event_0x07:
+0x010c    op2C_SpritePlayAnim( anim_id=0x7 )
+0x010e    op00_Return()
+
+Actor_0x02:event_0x08:
+0x010f    op2C_SpritePlayAnim( anim_id=0xc )
+0x0111    op00_Return()
+
+Actor_0x02:event_0x09:
+0x0112    opFE4A_SpriteAddAnimLoad( file=9 )
+0x0116    opFE4B_SpriteAddAnimSync()
+0x0118    opFE4D_SpritePlayAddAnim( anim_id=0x2 )
+0x011b    op00_Return()
+
+Actor_0x02:event_0x0a:
+0x011c    opFE4E_SpriteAddAnimUnload()
+0x011e    opFE4A_SpriteAddAnimLoad( file=8 )
+0x0122    opFE4B_SpriteAddAnimSync()
+0x0124    opFE4D_SpritePlayAddAnim( anim_id=0x1 )
+0x0127    op00_Return()
+
+Actor_0x02:event_0x0b:
+0x0128    op2C_SpritePlayAnim( anim_id=0xff )
+0x012a    op00_Return()
+
+Actor_0x02:event_0x0c:
+0x012b    opFE4E_SpriteAddAnimUnload()
+0x012d    opFE4A_SpriteAddAnimLoad( file=118 )
+0x0131    opFE4B_SpriteAddAnimSync()
+0x0133    op00_Return()
+
+Actor_0x02:event_0x0d:
+0x0134    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0137    op00_Return()
+
+Actor_0x02:event_0x0e:
+0x0138    opFE4A_SpriteAddAnimLoad( file=115 )
+0x013c    opFE4B_SpriteAddAnimSync()
+0x013e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0141    op00_Return()
+
+Actor_0x02:event_0x0f:
+0x0142    opFE4D_SpritePlayAddAnim( anim_id=0x1 )
+0x0145    op00_Return()
+
+Actor_0x02:event_0x10:
+0x0146    opFE4E_SpriteAddAnimUnload()
+0x0148    op2C_SpritePlayAnim( anim_id=0xff )
+0x014a    -- 0x19_ActorSetPosition( x=(vf80)0xff7a, z=(vf40)0xff54, flag=(flag)0xc0 )
+0x0150    op69_ActorSetRotation( rot=4 )
+0x0153    opFE4E_SpriteAddAnimUnload()
+0x0155    opFE4A_SpriteAddAnimLoad( file=115 )
+0x0159    opFE4B_SpriteAddAnimSync()
+0x015b    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x015e    op00_Return()
+
+Actor_0x03:on_start:
+0x015f    -- 0x16_ActorPCInit( char_id=2 )
+0x0162    opFE0D_MessageSetFace( char_id=2 )
+0x0166    op00_Return()
+
+Actor_0x03:on_update:
+0x0167    -- 0x0C()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x0168    op00_Return()
+
+Actor_0x04:on_start:
+0x0169    -- 0x16_ActorPCInit( char_id=3 )
+0x016c    opFE0D_MessageSetFace( char_id=3 )
+0x0170    op00_Return()
+
+Actor_0x04:on_update:
+0x0171    -- 0x0C()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0172    op00_Return()
+
+Actor_0x05:on_start:
+0x0173    -- 0x16_ActorPCInit( char_id=4 )
+0x0176    opFE0D_MessageSetFace( char_id=4 )
+0x017a    op00_Return()
+
+Actor_0x05:on_update:
+0x017b    -- 0x0C()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x017c    op00_Return()
+
+Actor_0x06:on_start:
+0x017d    -- 0x16_ActorPCInit( char_id=5 )
+0x0180    opFE0D_MessageSetFace( char_id=5 )
+0x0184    op00_Return()
+
+Actor_0x06:on_update:
+0x0185    -- 0x0C()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x0186    op00_Return()
+
+Actor_0x07:on_start:
+0x0187    -- 0x16_ActorPCInit( char_id=6 )
+0x018a    opFE0D_MessageSetFace( char_id=6 )
+0x018e    op00_Return()
+
+Actor_0x07:on_update:
+0x018f    -- 0x0C()
+
+Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
+0x0190    op00_Return()
+
+Actor_0x08:on_start:
+0x0191    -- 0x16_ActorPCInit( char_id=7 )
+0x0194    opFE0D_MessageSetFace( char_id=7 )
+0x0198    op00_Return()
+
+Actor_0x08:on_update:
+0x0199    -- 0x0C()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x019a    op00_Return()
+
+Actor_0x09:on_start:
+0x019b    -- 0x16_ActorPCInit( char_id=8 )
+0x019e    opFE0D_MessageSetFace( char_id=8 )
+0x01a2    op00_Return()
+
+Actor_0x09:on_update:
+0x01a3    -- 0x0C()
+
+Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
+0x01a4    op00_Return()
+
+Actor_0x0a:on_start:
+0x01a5    -- 0x16_ActorPCInit( char_id=9 )
+0x01a8    opFE0D_MessageSetFace( char_id=9 )
+0x01ac    op00_Return()
+
+Actor_0x0a:on_update:
+0x01ad    -- 0x0C()
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x01ae    op00_Return()
+
+Actor_0x0b:on_start:
+0x01af    -- 0x16_ActorPCInit( char_id=10 )
+0x01b2    opFE0D_MessageSetFace( char_id=10 )
+0x01b6    op00_Return()
+
+Actor_0x0b:on_update:
+0x01b7    -- 0x0C()
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x01b8    op00_Return()
+
+Actor_0x0c:on_start:
+0x01b9    -- 0x0B_InitNPC( 0 )
+0x01bc    -- 0x85()
+0x01c1    op29_ActorTurnOff( actor_id=self )
+0x01c3    -- MISSING OPCODE 0x91

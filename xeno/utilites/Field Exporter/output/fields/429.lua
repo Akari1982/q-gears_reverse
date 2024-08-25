@@ -223,4 +223,17 @@ Actor_0x0b:on_push:
 
 Actor_0x0c:on_start:
 0x00c6    -- 0xFE15( ???=1, ???=1 )
-0x00cc    -- MISSING OPCODE 0x1d
+0x00cc    -- 0x1D()
+0x00d3    -- 0xFE09( ???=1 )
+0x00d7    op69_ActorSetRotation( rot=7 )
+0x00da    op20_ActorSetFlags0( flags=13 )
+0x00dd    -- 0x2A()
+0x00de    op00_Return()
+
+Actor_0x0c:on_update:
+0x00df    mem[0x410] = opA8_Random( max=3 )
+0x00e4    op02_JumpToConditional( val1=(s)mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x107 )
+0x00ec    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00ee    op02_JumpToConditional( val1=mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0xf9 )
+0x00f6    op01_JumpTo( address=0xff )
+0x00f9    -- MISSING OPCODE 0xFE13

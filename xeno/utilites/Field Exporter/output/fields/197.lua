@@ -22,7 +22,7 @@ Actor_0x00:on_start:
 0x002a    op00_Return()
 
 Actor_0x00:on_update:
-0x002b    op02_JumpToConditional( val1=mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x75 )
+0x002b    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x75 )
 0x0033    op74_SoundPlayFixedVolume( sound_id=69 )
 0x0036    mem[0x408] = 127 -- op35
 0x003c    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 > val2", address_if_false=0x57 )

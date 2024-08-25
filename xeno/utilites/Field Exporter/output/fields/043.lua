@@ -192,4 +192,61 @@ Actor_0x0c:on_update:
 0x00a0    op00_Return()
 
 Actor_0x0c:on_talk:
-0x00a1    -- MISSING OPCODE 0x85
+0x00a1    -- 0x85()
+0x00a6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00aa    op9C_MessageSync()
+0x00ab    op01_JumpTo( address=0xb3 )
+0x00ae    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00b2    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x00b3    op00_Return()
+
+Actor_0x0d:on_start:
+0x00b4    -- 0x0B_InitNPC( 0 )
+0x00b7    -- 0x19_ActorSetPosition( x=(vf80)0xffef, z=(vf40)0xffed, flag=(flag)0xc0 )
+0x00bd    op69_ActorSetRotation( rot=4 )
+0x00c0    op00_Return()
+
+Actor_0x0d:on_update:
+0x00c1    -- 0x5B()
+0x00c2    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00c3    op6F_ActorRotateToActor( actor_id=party1 )
+0x00c5    -- 0x85()
+0x00ca    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00ce    op9C_MessageSync()
+0x00cf    op01_JumpTo( address=0xd7 )
+0x00d2    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00d6    op9C_MessageSync()
+0x00d7    op69_ActorSetRotation( rot=4 )
+
+Actor_0x0d:on_push:
+0x00da    op00_Return()
+
+Actor_0x0e:on_start:
+0x00db    -- 0xBC_ActorNoModelInit()
+0x00dc    -- 0xF8()
+0x00e0    -- 0x1D()
+0x00e7    -- 0x18()
+0x00ec    op00_Return()
+
+Actor_0x0e:on_update:
+0x00ed    -- 0x5B()
+0x00ee    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x00ef    -- 0xFE54()
+0x00f1    -- 0x98_MapLoad( field_id=40, value=1 )
+0x00f6    op00_Return()
+0x00f7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0040, ???=(vf40)0x0000, flag=0x0 )
+0x00fe    op00_Return()
+0x00ff    op00_Return()
+0x0100    op00_Return()
+0x0101    op00_Return()
+0x0102    op00_Return()
+0x0103    op00_Return()
+0x0104    -- 0xCF()

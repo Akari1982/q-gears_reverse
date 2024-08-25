@@ -72,7 +72,7 @@ main()
     }
     */
 
-    for( int i = 0; i <= 1/*729*/; ++i )
+    for( int i = 0; i <= 729; ++i )
     {
         printf( "Extract script for field %d.\n", i );
 

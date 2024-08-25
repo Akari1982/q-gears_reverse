@@ -37,4 +37,6 @@ Actor_0x00:on_start:
 0x009e    mem[0x4e6] = 1 -- op35
 0x00a4    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=8, condition="val1 & val2", address_if_false=0xb2 )
 0x00ac    mem[0x4f8] = 1 -- op35
-0x00b2    -- MISSING OPCODE 0x85
+0x00b2    -- 0x85()
+0x00b7    -- 0x75( ???=16 )
+0x00ba    -- MISSING OPCODE 0xf7

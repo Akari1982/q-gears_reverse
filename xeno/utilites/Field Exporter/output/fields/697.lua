@@ -235,9 +235,13 @@ Actor_0x0d:on_update:
 0x00de    op00_Return()
 
 Actor_0x0d:on_talk:
-0x00df    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=-32768, condition="val1 & val2", address_if_false=0xed )
+0x00df    op02_JumpToConditional( val1=mem[0x2ca], val2=-32768, condition="val1 & val2", address_if_false=0xed )
 0x00e7    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
 0x00eb    op9C_MessageSync()
 0x00ec    op00_Return()
 0x00ed    -- 0xFE54()
-0x00ef    -- MISSING OPCODE 0x70
+0x00ef    -- 0x70()
+0x00f1    op26_Wait( time=10 )
+0x00f4    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x00f8    op9C_MessageSync()
+0x00f9    -- MISSING OPCODE 0xaa

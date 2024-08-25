@@ -37,7 +37,7 @@ Actor_0x01:on_update:
 0x002b    -- 0x61( ???=205, ???=-80, ???=-217 ) -- exp0x1
 0x0033    -- 0x65( ???=1343, ???=-840, ???=-916 ) -- exp0x1
 0x003b    -- 0x63( ???=205, ???=-80, ???=-217 ) -- exp0x1
-0x0043    opA3()
+0x0043    -- 0xA3()
 0x004b    opAC_MoveCamera( control=0x80, steps=0 )
 0x004f    opAC_MoveCamera( control=0x81, steps=0 )
 0x0053    opEF_MoveCameraSync()
@@ -46,7 +46,7 @@ Actor_0x01:on_update:
 0x005e    -- 0x60()
 0x005f    -- 0x64() -- exp0x1
 0x0060    -- 0x63( ???=1817, ???=1349, ???=-2103 ) -- exp0x1
-0x0068    opA3()
+0x0068    -- 0xA3()
 0x0070    opAC_MoveCamera( control=0x0, steps=220 )
 0x0074    opAC_MoveCamera( control=0x1, steps=170 )
 0x0078    opD0_MessageSettings( x=30, y=70, letters=0, rows=0, flags=321 )

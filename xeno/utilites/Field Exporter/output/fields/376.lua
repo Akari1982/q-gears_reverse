@@ -208,7 +208,7 @@ Actor_0x0c:on_start:
 0x00e2    op00_Return()
 
 Actor_0x0c:on_update:
-0x00e3    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x10a )
+0x00e3    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x10a )
 0x00eb    opF1_FadeSetUp( steps=1, r=128, g=128, b=0, semi_tr=3 )
 0x00f6    op26_Wait( time=5 )
 0x00f9    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=3 )

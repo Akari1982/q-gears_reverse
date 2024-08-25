@@ -28,7 +28,7 @@ Actor_0x00:on_start:
 0x0072    -- 0x60()
 0x0073    -- 0x63( ???=518, ???=474, ???=9 ) -- exp0x1
 0x007b    -- 0x64() -- exp0x1
-0x007c    opA3()
+0x007c    -- 0xA3()
 0x0084    opAC_MoveCamera( control=0x1, steps=1 )
 0x0088    opAC_MoveCamera( control=0x0, steps=1 )
 0x008c    op01_JumpTo( address=0xd7 )
@@ -38,7 +38,7 @@ Actor_0x00:on_start:
 0x009a    -- 0x60()
 0x009b    -- 0x63( ???=-824, ???=185, ???=-136 ) -- exp0x1
 0x00a3    -- 0x64() -- exp0x1
-0x00a4    opA3()
+0x00a4    -- 0xA3()
 0x00ac    opAC_MoveCamera( control=0x1, steps=0 )
 0x00b0    opAC_MoveCamera( control=0x0, steps=0 )
 0x00b4    op01_JumpTo( address=0xd7 )
@@ -47,14 +47,14 @@ Actor_0x00:on_start:
 0x00bd    -- 0x60()
 0x00be    -- 0x63( ???=219, ???=731, ???=7 ) -- exp0x1
 0x00c6    -- 0x64() -- exp0x1
-0x00c7    opA3()
+0x00c7    -- 0xA3()
 0x00cf    opAC_MoveCamera( control=0x1, steps=0 )
 0x00d3    opAC_MoveCamera( control=0x0, steps=0 )
 0x00d7    op00_Return()
 
 Actor_0x00:on_update:
 0x00d8    -- 0x86_ProgressNotEqualJumpTo( value=90, jump=0x103 )
-0x00dd    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x100 )
+0x00dd    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x100 )
 0x00e5    -- 0xFE54()
 0x00e7    -- 0x75( ???=255 )
 0x00ea    op26_Wait( time=32 )

@@ -25,4 +25,9 @@ Actor_0x00:on_start:
 0x0057    op00_Return()
 
 Actor_0x00:on_update:
-0x0058    -- MISSING OPCODE 0x85
+0x0058    -- 0x85()
+0x005d    op02_JumpToConditional( val1=(s)mem[0x240], val2=8, condition="val1 & val2", address_if_false=0x68 )
+0x0065    op01_JumpTo( address=0x109 )
+0x0068    opB4_FadeOut()
+0x006b    -- 0xFE54()
+0x006d    -- MISSING OPCODE 0x72

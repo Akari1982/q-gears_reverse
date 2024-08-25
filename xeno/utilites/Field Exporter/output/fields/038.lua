@@ -192,4 +192,79 @@ Actor_0x0c:on_update:
 
 Actor_0x0c:on_talk:
 0x009f    op6F_ActorRotateToActor( actor_id=party1 )
-0x00a1    -- MISSING OPCODE 0x85
+0x00a1    -- 0x85()
+0x00a6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00aa    op9C_MessageSync()
+0x00ab    op01_JumpTo( address=0xb3 )
+0x00ae    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00b2    op9C_MessageSync()
+0x00b3    op69_ActorSetRotation( rot=1 )
+
+Actor_0x0c:on_push:
+0x00b6    op00_Return()
+
+Actor_0x0d:on_start:
+0x00b7    -- 0x0B_InitNPC( 1 )
+0x00ba    -- 0x85()
+0x00bf    op29_ActorTurnOff( actor_id=Actor_0x0d )
+0x00c1    op01_JumpTo( address=0xcd )
+0x00c4    -- 0x19_ActorSetPosition( x=(vf80)0x0064, z=(vf40)0xffab, flag=(flag)0xc0 )
+0x00ca    op69_ActorSetRotation( rot=7 )
+0x00cd    op00_Return()
+
+Actor_0x0d:on_update:
+0x00ce    -- 0x5B()
+0x00cf    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00d0    op6F_ActorRotateToActor( actor_id=party1 )
+0x00d2    op02_JumpToConditional( val1=(s)mem[0xe4], val2=2, condition="val1 & val2", address_if_false=0xe2 )
+0x00da    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00de    op9C_MessageSync()
+0x00df    op01_JumpTo( address=0xed )
+0x00e2    mem[0xe4] |= 1 << 1 -- op3a
+0x00e8    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00ec    op9C_MessageSync()
+0x00ed    op69_ActorSetRotation( rot=7 )
+
+Actor_0x0d:on_push:
+0x00f0    op00_Return()
+
+Actor_0x0e:on_start:
+0x00f1    -- 0x0B_InitNPC( 1 )
+0x00f4    -- 0x19_ActorSetPosition( x=(vf80)0x0064, z=(vf40)0x0050, flag=(flag)0xc0 )
+0x00fa    op69_ActorSetRotation( rot=5 )
+0x00fd    op00_Return()
+
+Actor_0x0e:on_update:
+0x00fe    -- 0x5B()
+0x00ff    op00_Return()
+
+Actor_0x0e:on_talk:
+0x0100    op6F_ActorRotateToActor( actor_id=party1 )
+0x0102    -- 0x85()
+0x0107    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x010b    op9C_MessageSync()
+0x010c    op01_JumpTo( address=0x12a )
+0x010f    op02_JumpToConditional( val1=(s)mem[0xe4], val2=2, condition="val1 & val2", address_if_false=0x11f )
+0x0117    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x011b    op9C_MessageSync()
+0x011c    op01_JumpTo( address=0x12a )
+0x011f    mem[0xe4] |= 1 << 1 -- op3a
+0x0125    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x0129    op9C_MessageSync()
+0x012a    op69_ActorSetRotation( rot=5 )
+
+Actor_0x0e:on_push:
+0x012d    op00_Return()
+
+Actor_0x0f:on_start:
+0x012e    -- 0x46()
+0x012f    op00_Return()
+
+Actor_0x0f:on_update:
+0x0130    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0131    -- 0x15()
+0x0132    -- MISSING OPCODE 0xc4

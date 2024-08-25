@@ -40,4 +40,12 @@ Actor_0x01:on_update:
 0x0033    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x00 )
 0x0036    op07_CallActorEvent( actor_id=Actor_0x0f, event=event_0x04, priority=0x00 )
 0x0039    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x04, priority=0x00 )
-0x003c    -- MISSING OPCODE 0xfb
+0x003c    -- 0xFB()
+0x0041    op01_JumpTo( address=0x7b )
+0x0044    -- 0x86_ProgressNotEqualJumpTo( value=72, jump=0x7b )
+0x0049    -- 0xFE54()
+0x004b    -- 0xFE52()
+0x004d    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x06, priority=0x00 )
+0x0050    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x04, priority=0x00 )
+0x0053    op07_CallActorEvent( actor_id=Actor_0x0e, event=event_0x04, priority=0x00 )
+0x0056    -- MISSING OPCODE 0xFE23

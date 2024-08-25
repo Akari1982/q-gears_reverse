@@ -27,6 +27,10 @@ Actor_0x00:on_update:
 0x0030    op99()
 0x0031    mem[0x418] = 0 -- op35
 0x0037    -- 0x63( ???=257, ???=-6, ???=1561 ) -- exp0x1
-0x003f    opA3()
+0x003f    -- 0xA3()
 0x0047    op05_CallFunction( address=0x352 )
-0x004a    -- MISSING OPCODE 0xFE66
+0x004a    -- 0xFE66() -- sound play with volume in slot
+0x0054    -- 0xFE66() -- sound play with volume in slot
+0x005e    -- 0xFE66() -- sound play with volume in slot
+0x0068    op08_CallActorEventStartSync( actor_id=Actor_0x0c, event=event_0x04, priority=0x03 )
+0x006b    -- MISSING OPCODE 0xFE8c

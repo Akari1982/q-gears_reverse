@@ -191,4 +191,28 @@ Actor_0x0c:on_update:
 Actor_0x0c:on_talk:
 0x009b    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0xbe )
 0x00a3    mem[0x40a] = true -- op36
-0x00a6    -- MISSING OPCODE 0x70
+0x00a6    -- 0x70()
+0x00a8    op26_Wait( time=20 )
+0x00ab    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00af    op9C_MessageSync()
+0x00b0    op69_ActorSetRotation( rot=2 )
+0x00b3    op26_Wait( time=5 )
+0x00b6    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00ba    op9C_MessageSync()
+0x00bb    op01_JumpTo( address=0xc3 )
+0x00be    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00c2    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x00c3    op00_Return()
+
+Actor_0x0d:on_start:
+0x00c4    -- 0x46()
+0x00c5    op00_Return()
+
+Actor_0x0d:on_update:
+0x00c6    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00c7    -- 0x15()
+0x00c8    -- MISSING OPCODE 0xc4

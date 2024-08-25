@@ -87,4 +87,27 @@ Actor_0x02:on_update:
 0x0075    op00_Return()
 
 Actor_0x02:on_talk:
-0x0076    -- MISSING OPCODE 0x70
+0x0076    -- 0x70()
+0x0078    op02_JumpToConditional( val1=mem[0x2c2], val2=128, condition="val1 & val2", address_if_false=0x88 )
+0x0080    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x0084    op9C_MessageSync()
+0x0085    op01_JumpTo( address=0xfa )
+0x0088    -- 0xFE54()
+0x008a    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x04 )
+0x008d    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
+0x0091    op9C_MessageSync()
+0x0092    op26_Wait( time=10 )
+0x0095    opD2_MessageShowDynamic( text_id=0x8, flags=0 )
+0x0099    opA9_MessageSetSelectionSync( start_row=02, end_row=03 )
+0x009b    op9C_MessageSync()
+0x009c    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0xc7 )
+0x00a4    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x03 )
+0x00a7    op6B_ActorRotateClockwise( rot=2 )
+0x00aa    opD2_MessageShowDynamic( text_id=0x9, flags=0 )
+0x00ae    op9C_MessageSync()
+0x00af    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x00b1    opD2_MessageShowDynamic( text_id=0xa, flags=0 )
+0x00b5    op9C_MessageSync()
+0x00b6    opF5_MessageShowStatic( text_id=0xb, flags=0 )
+0x00ba    op9C_MessageSync()
+0x00bb    -- MISSING OPCODE 0x8f

@@ -211,4 +211,19 @@ Actor_0x0c:on_update:
 
 Actor_0x0c:on_talk:
 0x00fe    -- 0xFE54()
-0x0100    -- MISSING OPCODE 0x70
+0x0100    -- 0x70()
+0x0102    op26_Wait( time=10 )
+0x0105    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x118 )
+0x010d    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0111    op9C_MessageSync()
+0x0112    mem[0x40a] = true -- op36
+0x0115    op01_JumpTo( address=0x11d )
+0x0118    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x011c    op9C_MessageSync()
+0x011d    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x0121    opA9_MessageSetSelectionSync( start_row=02, end_row=03 )
+0x0123    op9C_MessageSync()
+0x0124    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x13c )
+0x012c    opB4_FadeOut()
+0x012f    op26_Wait( time=30 )
+0x0132    -- MISSING OPCODE 0xFE56

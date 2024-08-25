@@ -196,4 +196,6 @@ Actor_0x0c:on_talk:
 0x00b1    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00b5    op9C_MessageSync()
 0x00b6    -- 0x8B( check?=79, jump=0x102 )
-0x00bb    -- MISSING OPCODE 0x70
+0x00bb    -- 0x70()
+0x00bd    op26_Wait( time=20 )
+0x00c0    -- MISSING OPCODE 0x91

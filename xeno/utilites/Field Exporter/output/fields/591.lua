@@ -27,14 +27,14 @@ Actor_0x00:on_start:
 0x0032    -- 0x60()
 0x0033    -- 0x63( ???=-59, ???=253, ???=134 ) -- exp0x1
 0x003b    -- 0x64() -- exp0x1
-0x003c    opA3()
+0x003c    -- 0xA3()
 0x0044    opAC_MoveCamera( control=0x1, steps=0 )
 0x0048    opAC_MoveCamera( control=0x0, steps=0 )
 0x004c    -- 0x75( ???=60 )
 0x004f    op00_Return()
 
 Actor_0x00:on_update:
-0x0050    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x166 )
+0x0050    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x166 )
 0x0058    -- 0xE1_BackgroundSetTex()
 0x0066    opB4_FadeOut()
 0x0069    -- 0xFE54()

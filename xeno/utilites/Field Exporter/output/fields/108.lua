@@ -216,4 +216,30 @@ Actor_0x0c:on_start:
 0x0162    -- 0x0B_InitNPC( 0 )
 0x0165    -- 0x84_ProgressLessEqualJumpTo( value=60, jump=0x16c )
 0x016a    op29_ActorTurnOff( actor_id=self )
-0x016c    -- MISSING OPCODE 0x85
+0x016c    -- 0x85()
+0x0171    op29_ActorTurnOff( actor_id=self )
+0x0173    -- 0x19_ActorSetPosition( x=(vf80)0xff9b, z=(vf40)0x007a, flag=(flag)0xc0 )
+0x0179    -- 0x5F( ???=0x0 )
+0x017b    op00_Return()
+
+Actor_0x0c:on_update:
+0x017c    op00_Return()
+
+Actor_0x0c:on_talk:
+0x017d    op6F_ActorRotateToActor( actor_id=party1 )
+0x017f    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0183    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x0184    op00_Return()
+
+Actor_0x0d:on_start:
+0x0185    -- 0x46()
+0x0186    op00_Return()
+
+Actor_0x0d:on_update:
+0x0187    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0188    -- 0x15()
+0x0189    -- MISSING OPCODE 0xc4

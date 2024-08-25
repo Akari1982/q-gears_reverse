@@ -53,4 +53,11 @@ Actor_0x01:on_push:
 0x0053    -- 0xFE52()
 0x0055    op09_CallActorEventEndSync( actor_id=Actor_0x24, event=event_0x04, priority=0x03 )
 0x0058    op26_Wait( time=30 )
-0x005b    -- MISSING OPCODE 0x28
+0x005b    -- 0x28()
+0x005d    op24_ActorEnable( actor_id=Actor_0x0d )
+0x005f    op24_ActorEnable( actor_id=Actor_0x02 )
+0x0061    op24_ActorEnable( actor_id=Actor_0x04 )
+0x0063    op24_ActorEnable( actor_id=Actor_0x05 )
+0x0065    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
+0x0068    -- 0xFE0A( ???=0x1282 )
+0x006c    -- MISSING OPCODE 0xFE23

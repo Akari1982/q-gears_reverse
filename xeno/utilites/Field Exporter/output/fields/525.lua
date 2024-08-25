@@ -38,4 +38,36 @@ Actor_0x01:on_start:
 0x004c    opFE0D_MessageSetFace( char_id=0 )
 0x0050    -- 0x1F( ???=0x2 )
 0x0052    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x61 )
-0x005a    -- MISSING OPCODE 0x1d
+0x005a    -- 0x1D()
+0x0061    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x70 )
+0x0069    -- 0x1D()
+0x0070    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x7e )
+0x0078    -- 0x19_ActorSetPosition( x=(vf80)0x00a9, z=(vf40)0x011e, flag=(flag)0xc0 )
+0x007e    op00_Return()
+
+Actor_0x01:on_update:
+0x007f    op02_JumpToConditional( val1=(s)mem[0x412], val2=0, condition="val1 == val2", address_if_false=0x8b )
+0x0087    -- 0x1E()
+0x0088    mem[0x412] = true -- op36
+0x008b    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x97 )
+0x0093    -- 0xA7()
+0x0094    op01_JumpTo( address=0x98 )
+0x0097    -- 0x5A()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0098    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0099    -- 0x1F( ???=0x0 )
+0x009b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00a1    op2C_SpritePlayAnim( anim_id=0x9 )
+0x00a3    op26_Wait( time=0 )
+0x00a6    -- 0x57( type=0x0, x=(vf80)0x012e, z=(vf40)0xfecc, y=(vf20)0xff1e, ???=(vf10)0x000f, flag=0xf0 )
+0x00b1    -- 0x57( type=0x8f )
+0x00b3    op26_Wait( time=1 )
+0x00b6    -- 0x57( type=0xf )
+0x00b8    op26_Wait( time=0 )
+0x00bb    op2C_SpritePlayAnim( anim_id=0x6 )
+0x00bd    -- MISSING OPCODE 0x10

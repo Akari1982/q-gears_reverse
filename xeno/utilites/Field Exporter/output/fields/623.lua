@@ -37,7 +37,7 @@ Actor_0x01:on_update:
 0x002b    -- 0x61( ???=0, ???=418, ???=-35 ) -- exp0x1
 0x0033    -- 0x65( ???=0, ???=-1095, ???=-111 ) -- exp0x1
 0x003b    -- 0x63( ???=0, ???=418, ???=-35 ) -- exp0x1
-0x0043    opA3()
+0x0043    -- 0xA3()
 0x004b    opAC_MoveCamera( control=0x80, steps=0 )
 0x004f    opAC_MoveCamera( control=0x81, steps=0 )
 0x0053    opEF_MoveCameraSync()
@@ -46,7 +46,7 @@ Actor_0x01:on_update:
 0x005e    -- 0x60()
 0x005f    -- 0x64() -- exp0x1
 0x0060    -- 0x63( ???=0, ???=-415, ???=-215 ) -- exp0x1
-0x0068    opA3()
+0x0068    -- 0xA3()
 0x0070    opAC_MoveCamera( control=0x0, steps=100 )
 0x0074    opAC_MoveCamera( control=0x1, steps=100 )
 0x0078    opEF_MoveCameraSync()
@@ -54,7 +54,7 @@ Actor_0x01:on_update:
 0x007e    -- 0x60()
 0x007f    -- 0x64() -- exp0x1
 0x0080    -- 0x63( ???=341, ???=173, ???=-307 ) -- exp0x1
-0x0088    opA3()
+0x0088    -- 0xA3()
 0x0090    opAC_MoveCamera( control=0x0, steps=200 )
 0x0094    opAC_MoveCamera( control=0x1, steps=200 )
 0x0098    opD0_MessageSettings( x=30, y=70, letters=0, rows=0, flags=321 )
@@ -117,4 +117,5 @@ Actor_0x05:on_start:
 0x00d7    -- 0xBC_ActorNoModelInit()
 0x00d8    -- 0x2A()
 0x00d9    -- 0x21( ???=512 )
-0x00dc    -- MISSING OPCODE 0x2d
+0x00dc    -- 0x2D()
+0x00e4    -- MISSING OPCODE 0xFE1c

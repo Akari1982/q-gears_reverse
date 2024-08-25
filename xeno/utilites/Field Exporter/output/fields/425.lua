@@ -209,4 +209,52 @@ Actor_0x0b:on_push:
 Actor_0x0c:on_start:
 0x00fe    -- 0xBC_ActorNoModelInit()
 0x00ff    -- 0xF8()
-0x0103    -- MISSING OPCODE 0x1d
+0x0103    -- 0x1D()
+0x010a    -- 0x18()
+0x010f    op00_Return()
+
+Actor_0x0c:on_update:
+0x0110    -- 0x5B()
+0x0111    op00_Return()
+
+Actor_0x0c:on_talk:
+0x0112    opD2_MessageShowDynamic( text_id=0xb, flags=0 )
+0x0116    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x0117    op00_Return()
+
+Actor_0x0d:on_start:
+0x0118    -- 0x0B_InitNPC( 5 )
+0x011b    -- 0x19_ActorSetPosition( x=(vf80)0x01d3, z=(vf40)0xfecb, flag=(flag)0xc0 )
+0x0121    op69_ActorSetRotation( rot=3 )
+0x0124    op00_Return()
+
+Actor_0x0d:on_update:
+0x0125    -- 0x5B()
+0x0126    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0127    -- 0x70()
+0x0129    opD2_MessageShowDynamic( text_id=0xc, flags=0 )
+0x012d    op9C_MessageSync()
+0x012e    op69_ActorSetRotation( rot=3 )
+
+Actor_0x0d:on_push:
+0x0131    op00_Return()
+
+Actor_0x0e:on_start:
+0x0132    -- 0x0B_InitNPC( 0 )
+0x0135    -- 0x19_ActorSetPosition( x=(vf80)0x00ab, z=(vf40)0xfe1e, flag=(flag)0xc0 )
+0x013b    op69_ActorSetRotation( rot=6 )
+0x013e    op00_Return()
+
+Actor_0x0e:on_update:
+0x013f    -- 0x5B()
+0x0140    op00_Return()
+
+Actor_0x0e:on_talk:
+0x0141    -- 0x70()
+0x0143    opD2_MessageShowDynamic( text_id=0xd, flags=0 )
+0x0147    op9C_MessageSync()
+0x0148    -- MISSING OPCODE 0xaa

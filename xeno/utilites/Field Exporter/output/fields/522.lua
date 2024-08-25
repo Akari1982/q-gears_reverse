@@ -52,4 +52,70 @@ Actor_0x01:event_0x05:
 0x0038    op00_Return()
 
 Actor_0x01:event_0x06:
-0x0039    -- MISSING OPCODE 0x4b
+0x0039    -- 0x4B()
+0x0041    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
+0x0043    op00_Return()
+
+Actor_0x02:on_start:
+0x0044    -- 0x16_ActorPCInit( char_id=1 )
+0x0047    opFE0D_MessageSetFace( char_id=1 )
+0x004b    op00_Return()
+
+Actor_0x02:on_update:
+0x004c    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x58 )
+0x0054    -- 0xA7()
+0x0055    op01_JumpTo( address=0x59 )
+0x0058    -- 0x5A()
+0x0059    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x005a    op00_Return()
+
+Actor_0x02:event_0x04:
+0x005b    -- 0x1F( ???=0x10 )
+0x005d    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0063    -- 0x1F( ???=0x0 )
+0x0065    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
+0x0067    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0068    -- 0x1F( ???=0x10 )
+0x006a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0070    -- 0x1F( ???=0x0 )
+0x0072    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
+0x0074    op00_Return()
+
+Actor_0x03:on_start:
+0x0075    -- 0x16_ActorPCInit( char_id=2 )
+0x0078    opFE0D_MessageSetFace( char_id=2 )
+0x007c    op00_Return()
+
+Actor_0x03:on_update:
+0x007d    -- 0x0C()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x007e    op00_Return()
+
+Actor_0x04:on_start:
+0x007f    -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0xa0 )
+0x0084    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=16384, condition="val1 & val2", address_if_false=0x91 )
+0x008c    -- 0xBC_ActorNoModelInit()
+0x008d    -- 0x2A()
+0x008e    op01_JumpTo( address=0x9d )
+0x0091    -- 0xFE15( ???=0, ???=1 )
+0x0097    -- 0x19_ActorSetPosition( x=(vf80)0xfff0, z=(vf40)0x000e, flag=(flag)0xc0 )
+0x009d    op01_JumpTo( address=0xa2 )
+0x00a0    -- 0xBC_ActorNoModelInit()
+0x00a1    -- 0x2A()
+0x00a2    op00_Return()
+
+Actor_0x04:on_update:
+0x00a3    op00_Return()
+
+Actor_0x04:on_talk:
+0x00a4    -- 0xFE54()
+0x00a6    -- MISSING OPCODE 0x76

@@ -19,4 +19,19 @@ Actor_0x00:on_start:
 0x0015    mem[0x400] = true -- op36
 0x0018    op02_JumpToConditional( val1=(s)mem[0x18c], val2=-32768, condition="val1 & val2", address_if_false=0x23 )
 0x0020    mem[0x400] = true -- op36
-0x0023    -- MISSING OPCODE 0xfb
+0x0023    -- 0xFB()
+0x0028    mem[0x400] = true -- op36
+0x002b    op02_JumpToConditional( val1=mem[0x1c8], val2=1, condition="val1 & val2", address_if_false=0x36 )
+0x0033    mem[0x400] = true -- op36
+0x0036    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0037    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0038    -- 0xFE54()
+0x003a    -- MISSING OPCODE 0x76

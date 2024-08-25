@@ -189,4 +189,22 @@ Actor_0x0c:on_update:
 0x009a    op00_Return()
 
 Actor_0x0c:on_talk:
-0x009b    -- MISSING OPCODE 0x70
+0x009b    -- 0x70()
+0x009d    op26_Wait( time=20 )
+0x00a0    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00a4    op9C_MessageSync()
+0x00a5    op69_ActorSetRotation( rot=7 )
+
+Actor_0x0c:on_push:
+0x00a8    op00_Return()
+
+Actor_0x0d:on_start:
+0x00a9    -- 0x46()
+0x00aa    op00_Return()
+
+Actor_0x0d:on_update:
+0x00ab    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00ac    -- 0x15()
+0x00ad    -- MISSING OPCODE 0xc4

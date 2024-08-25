@@ -99,7 +99,7 @@ Actor_0x04:on_update:
 0x008a    -- 0x60()
 0x008b    -- 0x64() -- exp0x1
 0x008c    -- 0x63( ???=-4844, ???=-2152, ???=327 ) -- exp0x1
-0x0094    opA3()
+0x0094    -- 0xA3()
 0x009c    opAC_MoveCamera( control=0x80, steps=0 )
 0x00a0    opAC_MoveCamera( control=0x81, steps=0 )
 0x00a4    -- 0x75( ???=56 )
@@ -107,7 +107,7 @@ Actor_0x04:on_update:
 0x00aa    opD0_MessageSettings( x=30, y=70, letters=0, rows=0, flags=321 )
 0x00b5    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00b9    op9C_MessageSync()
-0x00ba    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xc8 )
+0x00ba    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xc8 )
 0x00c2    op26_Wait( time=0 )
 0x00c5    op01_JumpTo( address=0xba )
 0x00c8    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x03 )
@@ -116,7 +116,7 @@ Actor_0x04:on_update:
 0x00d3    -- 0x60()
 0x00d4    -- 0x64() -- exp0x1
 0x00d5    -- 0x63( ???=-1645, ???=-999, ???=-684 ) -- exp0x1
-0x00dd    opA3()
+0x00dd    -- 0xA3()
 0x00e5    opAC_MoveCamera( control=0x0, steps=400 )
 0x00e9    opAC_MoveCamera( control=0x1, steps=400 )
 0x00ed    opD0_MessageSettings( x=30, y=100, letters=0, rows=0, flags=321 )

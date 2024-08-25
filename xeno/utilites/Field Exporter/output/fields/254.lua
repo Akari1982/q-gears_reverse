@@ -20,7 +20,7 @@ Actor_0x00:on_start:
 0x0023    -- 0x61( ???=0, ???=0, ???=0 ) -- exp0x1
 0x002b    -- 0x65( ???=-397, ???=-1163, ???=-746 ) -- exp0x1
 0x0033    -- 0x63( ???=0, ???=0, ???=0 ) -- exp0x1
-0x003b    opA3()
+0x003b    -- 0xA3()
 0x0043    opAC_MoveCamera( control=0x0, steps=0 )
 0x0047    opAC_MoveCamera( control=0x1, steps=0 )
 0x004b    op00_Return()
@@ -30,7 +30,7 @@ Actor_0x00:on_update:
 0x0054    -- 0x61( ???=0, ???=0, ???=0 ) -- exp0x1
 0x005c    -- 0x65( ???=-397, ???=-1163, ???=-746 ) -- exp0x1
 0x0064    -- 0x63( ???=0, ???=0, ???=0 ) -- exp0x1
-0x006c    opA3()
+0x006c    -- 0xA3()
 0x0074    opAC_MoveCamera( control=0x0, steps=100 )
 0x0078    opAC_MoveCamera( control=0x1, steps=100 )
 0x007c    opEF_MoveCameraSync()

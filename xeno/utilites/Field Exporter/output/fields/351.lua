@@ -190,4 +190,67 @@ Actor_0x0b:on_push:
 
 Actor_0x0c:on_start:
 0x00ab    -- 0x0B_InitNPC( 0 )
-0x00ae    -- MISSING OPCODE 0x85
+0x00ae    -- 0x85()
+0x00b3    op29_ActorTurnOff( actor_id=Actor_0x0c )
+0x00b5    op01_JumpTo( address=0xc6 )
+0x00b8    -- 0x19_ActorSetPosition( x=(vf80)0xff97, z=(vf40)0xff3e, flag=(flag)0xc0 )
+0x00be    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0xc6 )
+0x00c3    op69_ActorSetRotation( rot=5 )
+0x00c6    op00_Return()
+
+Actor_0x0c:on_update:
+0x00c7    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0xcf )
+0x00cc    op01_JumpTo( address=0x10e )
+0x00cf    -- 0x21( ???=192 )
+0x00d2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00d8    op69_ActorSetRotation( rot=6 )
+0x00db    op26_Wait( time=100 )
+0x00de    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00e4    op69_ActorSetRotation( rot=2 )
+0x00e7    op26_Wait( time=50 )
+0x00ea    op5D_SpritePlayAnim2( anim_id=0x1 )
+0x00ec    -- 0x5E()
+0x00ed    op26_Wait( time=50 )
+0x00f0    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00f6    op69_ActorSetRotation( rot=6 )
+0x00f9    op26_Wait( time=20 )
+0x00fc    op5D_SpritePlayAnim2( anim_id=0x1 )
+0x00fe    -- 0x5E()
+0x00ff    op5D_SpritePlayAnim2( anim_id=0x1 )
+0x0101    -- 0x5E()
+0x0102    op26_Wait( time=20 )
+0x0105    op5D_SpritePlayAnim2( anim_id=0x1 )
+0x0107    -- 0x5E()
+0x0108    op26_Wait( time=30 )
+0x010b    op01_JumpTo( address=0xcf )
+0x010e    -- 0x5B()
+0x010f    op00_Return()
+
+Actor_0x0c:on_talk:
+0x0110    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x135 )
+0x0115    op6F_ActorRotateToActor( actor_id=party1 )
+0x0117    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x12a )
+0x011f    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0123    op9C_MessageSync()
+0x0124    mem[0x400] += 1 -- op3c
+0x0127    op01_JumpTo( address=0x12f )
+0x012a    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x012e    op9C_MessageSync()
+0x012f    op69_ActorSetRotation( rot=5 )
+0x0132    op01_JumpTo( address=0x13a )
+0x0135    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x0139    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x013a    op00_Return()
+
+Actor_0x0d:on_start:
+0x013b    -- 0x46()
+0x013c    op00_Return()
+
+Actor_0x0d:on_update:
+0x013d    op00_Return()
+
+Actor_0x0d:on_talk:
+0x013e    -- 0x15()
+0x013f    -- MISSING OPCODE 0xc4

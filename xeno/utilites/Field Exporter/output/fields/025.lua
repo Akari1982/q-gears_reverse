@@ -52,7 +52,7 @@ Actor_0x01:on_update:
 0x0051    opB4_FadeOut()
 0x0054    op99()
 0x0055    -- 0x63( ???=423, ???=-423, ???=2131 ) -- exp0x1
-0x005d    opA3()
+0x005d    -- 0xA3()
 0x0065    opAC_MoveCamera( control=0x0, steps=0 )
 0x0069    opAC_MoveCamera( control=0x1, steps=0 )
 0x006d    opEF_MoveCameraSync()
@@ -62,7 +62,7 @@ Actor_0x01:on_update:
 0x0082    op9C_MessageSync()
 0x0083    opB4_FadeOut()
 0x0086    -- 0x63( ???=186, ???=-244, ???=-51 ) -- exp0x1
-0x008e    opA3()
+0x008e    -- 0xA3()
 0x0096    opAC_MoveCamera( control=0x0, steps=0 )
 0x009a    opAC_MoveCamera( control=0x1, steps=0 )
 0x009e    opEF_MoveCameraSync()
@@ -107,14 +107,14 @@ Actor_0x01:on_update:
 0x0163    -- 0x60()
 0x0164    -- 0x64() -- exp0x1
 0x0165    -- 0x63( ???=-143, ???=131, ???=-1573 ) -- exp0x1
-0x016d    opA3()
+0x016d    -- 0xA3()
 0x0175    opAC_MoveCamera( control=0x0, steps=200 )
 0x0179    opAC_MoveCamera( control=0x1, steps=200 )
 0x017d    opEF_MoveCameraSync()
 0x0180    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x04, priority=0x00 )
 0x0183    op01_JumpTo( address=0x183 )
 0x0186    -- 0x63( ???=77, ???=-80, ???=-129 ) -- exp0x1
-0x018e    opA3()
+0x018e    -- 0xA3()
 0x0196    opAC_MoveCamera( control=0x0, steps=0 )
 0x019a    opAC_MoveCamera( control=0x1, steps=0 )
 0x019e    opEF_MoveCameraSync()
@@ -191,4 +191,21 @@ Actor_0x03:event_0x06:
 
 Actor_0x04:on_start:
 0x01ff    -- 0x0B_InitNPC( 0 )
-0x0202    -- MISSING OPCODE 0x1d
+0x0202    -- 0x1D()
+0x0209    -- 0xFE03( ???=3000 )
+0x020d    -- 0x2A()
+0x020e    -- 0x23()
+0x020f    op00_Return()
+
+Actor_0x04:on_update:
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0210    op00_Return()
+
+Actor_0x04:event_0x04:
+0x0211    -- 0x22()
+0x0212    op26_Wait( time=60 )
+0x0215    -- 0x21( ???=128 )
+0x0218    -- MISSING OPCODE 0x10

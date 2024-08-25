@@ -189,19 +189,65 @@ Actor_0x0c:on_update:
 0x009a    mem[0x400] = opA8_Random( max=1 )
 0x009f    mem[0x402] = opA8_Random( max=60 )
 0x00a4    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
-0x00aa    op26_Wait( time=mem[0x402] )
+0x00aa    op26_Wait( time=(s)mem[0x402] )
 0x00ad    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xc9 )
 0x00b5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00bb    mem[0x402] = opA8_Random( max=60 )
-0x00c0    op26_Wait( time=mem[0x402] )
+0x00c0    op26_Wait( time=(s)mem[0x402] )
 0x00c3    op01_JumpTo( address=0x9a )
 0x00c6    op01_JumpTo( address=0xda )
 0x00c9    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00cf    mem[0x402] = opA8_Random( max=60 )
-0x00d4    op26_Wait( time=mem[0x402] )
+0x00d4    op26_Wait( time=(s)mem[0x402] )
 0x00d7    op01_JumpTo( address=0x9a )
 0x00da    op00_Return()
 
 Actor_0x0c:on_talk:
 0x00db    op6F_ActorRotateToActor( actor_id=party1 )
-0x00dd    -- MISSING OPCODE 0x85
+0x00dd    -- 0x85()
+0x00e2    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00e6    op9C_MessageSync()
+0x00e7    op01_JumpTo( address=0xef )
+0x00ea    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00ee    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x00ef    op00_Return()
+
+Actor_0x0d:on_start:
+0x00f0    -- 0x0B_InitNPC( 1 )
+0x00f3    -- 0x19_ActorSetPosition( x=(vf80)0x00b1, z=(vf40)0x005c, flag=(flag)0xc0 )
+0x00f9    op00_Return()
+
+Actor_0x0d:on_update:
+0x00fa    mem[0x404] = opA8_Random( max=2 )
+0x00ff    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x110 )
+0x0107    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x010d    op01_JumpTo( address=0x127 )
+0x0110    op02_JumpToConditional( val1=(s)mem[0x404], val2=1, condition="val1 == val2", address_if_false=0x121 )
+0x0118    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x011e    op01_JumpTo( address=0x127 )
+0x0121    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0127    op26_Wait( time=8 )
+0x012a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0130    op26_Wait( time=8 )
+0x0133    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0134    op6F_ActorRotateToActor( actor_id=party1 )
+0x0136    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x013a    op9C_MessageSync()
+
+Actor_0x0d:on_push:
+0x013b    op00_Return()
+
+Actor_0x0e:on_start:
+0x013c    -- 0x46()
+0x013d    op00_Return()
+
+Actor_0x0e:on_update:
+0x013e    op00_Return()
+
+Actor_0x0e:on_talk:
+0x013f    -- 0x15()
+0x0140    -- MISSING OPCODE 0xc4

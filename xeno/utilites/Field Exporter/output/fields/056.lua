@@ -35,7 +35,7 @@ Actor_0x00:on_start:
 0x0058    -- 0x60()
 0x0059    -- 0x63( ???=220, ???=-283, ???=-58 ) -- exp0x1
 0x0061    -- 0x64() -- exp0x1
-0x0062    opA3()
+0x0062    -- 0xA3()
 0x006a    opAC_MoveCamera( control=0x1, steps=0 )
 0x006e    opAC_MoveCamera( control=0x0, steps=0 )
 0x0072    op01_JumpTo( address=0x95 )
@@ -44,7 +44,7 @@ Actor_0x00:on_start:
 0x007b    -- 0x60()
 0x007c    -- 0x63( ???=214, ???=-784, ???=-17 ) -- exp0x1
 0x0084    -- 0x64() -- exp0x1
-0x0085    opA3()
+0x0085    -- 0xA3()
 0x008d    opAC_MoveCamera( control=0x1, steps=0 )
 0x0091    opAC_MoveCamera( control=0x0, steps=0 )
 0x0095    mem[0x424] = 80 -- op35
@@ -52,4 +52,30 @@ Actor_0x00:on_start:
 0x00a1    mem[0x428] = 0 -- op35
 0x00a7    mem[0x422] = 1 -- op35
 0x00ad    mem[0x54] = 1 -- op35
-0x00b3    -- MISSING OPCODE 0xFE66
+0x00b3    -- 0xFE66() -- sound play with volume in slot
+0x00bd    op00_Return()
+
+Actor_0x00:on_update:
+0x00be    op02_JumpToConditional( val1=(s)mem[0x140], val2=1, condition="val1 == val2", address_if_false=0xd4 )
+0x00c6    -- 0xFE54()
+0x00c8    op26_Wait( time=32 )
+0x00cb    op26_Wait( time=15 )
+0x00ce    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x05, priority=0x01 )
+0x00d1    op01_JumpTo( address=0x1a4 )
+0x00d4    op02_JumpToConditional( val1=(s)mem[0x140], val2=2, condition="val1 == val2", address_if_false=0xe9 )
+0x00dc    -- 0xFE54()
+0x00de    -- 0xFE52()
+0x00e0    op26_Wait( time=32 )
+0x00e3    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x06, priority=0x01 )
+0x00e6    op01_JumpTo( address=0x1a4 )
+0x00e9    op02_JumpToConditional( val1=(s)mem[0x15e], val2=1, condition="val1 == val2", address_if_false=0x102 )
+0x00f1    -- 0xFE52()
+0x00f3    -- 0x75( ???=62 )
+0x00f6    mem[0x418] = true -- op36
+0x00f9    mem[0x416] = true -- op36
+0x00fc    mem[0x15e] = true -- op36
+0x00ff    op01_JumpTo( address=0x1a4 )
+0x0102    op02_JumpToConditional( val1=(s)mem[0x418], val2=0, condition="val1 == val2", address_if_false=0x1a4 )
+0x010a    -- 0xFE54()
+0x010c    -- 0xFE52()
+0x010e    -- MISSING OPCODE 0xFE8c

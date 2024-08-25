@@ -58,16 +58,16 @@ Actor_0x00:on_start:
 0x00f4    mem[0x434] = 0 -- op35
 0x00fa    mem[0x436] = 2 -- op35
 0x0100    mem[0x406] = opA8_Random( max=3 )
-0x0105    op02_JumpToConditional( val1=mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x116 )
+0x0105    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x116 )
 0x010d    mem[0x438] = 22 -- op35
 0x0113    op01_JumpTo( address=0x149 )
-0x0116    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x127 )
+0x0116    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x127 )
 0x011e    mem[0x438] = 66 -- op35
 0x0124    op01_JumpTo( address=0x149 )
-0x0127    op02_JumpToConditional( val1=mem[0x406], val2=2, condition="val1 == val2", address_if_false=0x138 )
+0x0127    op02_JumpToConditional( val1=(s)mem[0x406], val2=2, condition="val1 == val2", address_if_false=0x138 )
 0x012f    mem[0x438] = 80 -- op35
 0x0135    op01_JumpTo( address=0x149 )
-0x0138    op02_JumpToConditional( val1=mem[0x406], val2=3, condition="val1 == val2", address_if_false=0x149 )
+0x0138    op02_JumpToConditional( val1=(s)mem[0x406], val2=3, condition="val1 == val2", address_if_false=0x149 )
 0x0140    mem[0x438] = 57 -- op35
 0x0146    op01_JumpTo( address=0x149 )
 0x0149    mem[0x440] = 1 -- op35

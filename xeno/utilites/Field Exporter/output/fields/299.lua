@@ -255,4 +255,66 @@ Actor_0x0a:event_0x07:
 
 Actor_0x0a:event_0x08:
 0x0153    -- 0x21( ???=64 )
-0x0156    -- MISSING OPCODE 0x53
+0x0156    -- 0x53()
+0x015a    -- 0x21( ???=256 )
+0x015d    op2C_SpritePlayAnim( anim_id=0xff )
+0x015f    opFE4E_SpriteAddAnimUnload()
+0x0161    opFE4A_SpriteAddAnimLoad( file=15 )
+0x0165    opFE4B_SpriteAddAnimSync()
+0x0167    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x016a    op00_Return()
+
+Actor_0x0a:event_0x09:
+0x016b    op2C_SpritePlayAnim( anim_id=0xff )
+0x016d    op00_Return()
+
+Actor_0x0a:event_0x0a:
+0x016e    op2C_SpritePlayAnim( anim_id=0xff )
+0x0170    opFE4E_SpriteAddAnimUnload()
+0x0172    opFE4A_SpriteAddAnimLoad( file=80 )
+0x0176    opFE4B_SpriteAddAnimSync()
+0x0178    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x017b    op00_Return()
+
+Actor_0x0a:event_0x0b:
+0x017c    -- 0x21( ???=512 )
+0x017f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0185    -- 0x21( ???=256 )
+0x0188    op69_ActorSetRotation( rot=2 )
+0x018b    op00_Return()
+
+Actor_0x0b:on_start:
+0x018c    -- 0x16_ActorPCInit( char_id=10 )
+0x018f    opFE0D_MessageSetFace( char_id=10 )
+0x0193    op00_Return()
+
+Actor_0x0b:on_update:
+0x0194    -- 0xA7()
+0x0195    op00_Return()
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x0196    op00_Return()
+
+Actor_0x0c:on_start:
+0x0197    -- 0x85()
+0x019c    -- 0x84_ProgressLessEqualJumpTo( value=61, jump=0x1a4 )
+0x01a1    -- 0xBC_ActorNoModelInit()
+0x01a2    -- 0x2A()
+0x01a3    op00_Return()
+0x01a4    -- 0x85()
+0x01a9    op02_JumpToConditional( val1=(s)mem[0x1ca], val2=128, condition="val1 & val2", address_if_false=0x1b7 )
+0x01b1    -- 0x0B_InitNPC( 1 )
+0x01b4    op01_JumpTo( address=0x1ba )
+0x01b7    -- 0x0B_InitNPC( 2 )
+0x01ba    op01_JumpTo( address=0x1c0 )
+0x01bd    -- 0x0B_InitNPC( 1 )
+0x01c0    -- 0x19_ActorSetPosition( x=(vf80)0xffcd, z=(vf40)0xff57, flag=(flag)0xc0 )
+0x01c6    op69_ActorSetRotation( rot=7 )
+0x01c9    op00_Return()
+
+Actor_0x0c:on_update:
+0x01ca    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x1f2 )
+0x01d2    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x1f2 )
+0x01da    -- MISSING OPCODE 0xFE17

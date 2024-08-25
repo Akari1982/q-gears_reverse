@@ -27,5 +27,5 @@ Actor_0x00:on_push:
 0x001e    op00_Return()
 
 Actor_0x00:event_0x04:
-0x001f    op02_JumpToConditional( val1=mem[0x40c], val2=1, condition="val1 == val2", address_if_false=0x3f )
+0x001f    op02_JumpToConditional( val1=(s)mem[0x40c], val2=1, condition="val1 == val2", address_if_false=0x3f )
 0x0027    -- MISSING OPCODE 0xFE23

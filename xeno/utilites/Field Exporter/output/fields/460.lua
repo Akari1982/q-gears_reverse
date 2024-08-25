@@ -39,7 +39,7 @@ Actor_0x00:on_update:
 0x004c    op99()
 0x004d    mem[0x41c] = 0 -- op35
 0x0053    -- 0x63( ???=14, ???=-19, ???=-4 ) -- exp0x1
-0x005b    opA3()
+0x005b    -- 0xA3()
 0x0063    op05_CallFunction( address=0x7bc )
 0x0066    -- 0xFE0E_SoundSetVolume( volume=64, steps=60 )
 0x006c    op26_Wait( time=60 )

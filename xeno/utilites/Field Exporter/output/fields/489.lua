@@ -33,10 +33,9 @@ Actor_0x01:on_start:
 0x000c    op00_Return()
 
 Actor_0x01:on_update:
-0x000d    opFEA0_MoviePlay3( movie_id=(vf80)0xfe00, sector=(vf40)0xfe61, start_frame=(vf20)0x01a0, end_frame=(vf10)0x005b, ???=(vf08)0x0000, flag=(flag)0x00 )
+0x000d    opFEA0_MoviePlay3( movie_id=(vf80)0xfe00, sector=(vf40)0xfe61, start_frame=(vf20)0x01a0, end_frame=(vf10)0x005b, ???=(vf08)0x0000, flag=(flag)0x63 )
 0x001a    op00_Return()
-0x001b    -- 0x80()
-0x0020    op00_Return()
-0x0021    op00_Return()
-0x0022    op03_MessageShowFixed2( text_id=0xe400, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
-0x0026    -- MISSING OPCODE 0x34
+0x001b    op00_Return()
+0x001c    mem[0x5c3a] = op43_Random()
+0x001f    -- 0x55()
+0x0026    -- 0xBD()

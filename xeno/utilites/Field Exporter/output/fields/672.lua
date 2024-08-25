@@ -15,4 +15,7 @@ Actor_0x00:on_start:
 0x001d    -- 0xBC_ActorNoModelInit()
 0x001e    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x3e )
 0x0026    -- 0x75( ???=46 )
-0x0029    -- MISSING OPCODE 0xFE66
+0x0029    -- 0xFE66() -- sound play with volume in slot
+0x0033    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
+0x003e    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x54 )
+0x0046    -- MISSING OPCODE 0x72

@@ -250,4 +250,45 @@ Actor_0x0c:on_start:
 0x0284    op00_Return()
 
 Actor_0x0c:on_update:
-0x0285    -- MISSING OPCODE 0x53
+0x0285    -- 0x53()
+0x0289    op02_JumpToConditional( val1=mem[0x408], val2=60, condition="val1 < val2", address_if_false=0x307 )
+0x0291    op02_JumpToConditional( val1=mem[0x408], val2=1, condition="val1 < val2", address_if_false=0x2d1 )
+0x0299    mem[0x40a] = opA8_Random( max=2 )
+0x029e    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x2ad )
+0x02a6    -- 0x53()
+0x02aa    op01_JumpTo( address=0x2cb )
+0x02ad    op02_JumpToConditional( val1=mem[0x40a], val2=1, condition="val1 == val2", address_if_false=0x2bc )
+0x02b5    -- 0x53()
+0x02b9    op01_JumpTo( address=0x2cb )
+0x02bc    op02_JumpToConditional( val1=mem[0x40a], val2=2, condition="val1 == val2", address_if_false=0x2cb )
+0x02c4    -- 0x53()
+0x02c8    op01_JumpTo( address=0x2cb )
+0x02cb    mem[0x408] += 1 -- op3c
+0x02ce    op01_JumpTo( address=0x301 )
+0x02d1    mem[0x408] += 1 -- op3c
+0x02d4    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x2e3 )
+0x02dc    -- 0x53()
+0x02e0    op01_JumpTo( address=0x301 )
+0x02e3    op02_JumpToConditional( val1=mem[0x40a], val2=1, condition="val1 == val2", address_if_false=0x2f2 )
+0x02eb    -- 0x53()
+0x02ef    op01_JumpTo( address=0x301 )
+0x02f2    op02_JumpToConditional( val1=mem[0x40a], val2=2, condition="val1 == val2", address_if_false=0x301 )
+0x02fa    -- 0x53()
+0x02fe    op01_JumpTo( address=0x301 )
+0x0301    op01_JumpTo( address=0x289 )
+0x0304    op01_JumpTo( address=0x30a )
+0x0307    mem[0x408] = false -- op37
+0x030a    op00_Return()
+
+Actor_0x0c:on_talk:
+0x030b    op6F_ActorRotateToActor( actor_id=party1 )
+0x030d    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0311    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x0312    op00_Return()
+
+Actor_0x0d:on_start:
+0x0313    -- 0x0B_InitNPC( 2 )
+0x0316    -- 0x19_ActorSetPosition( x=(vf80)0x0072, z=(vf40)0xffa9, flag=(flag)0xc0 )
+0x031c    -- MISSING OPCODE 0x17

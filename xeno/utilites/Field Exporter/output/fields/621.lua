@@ -42,7 +42,7 @@ Actor_0x01:on_update:
 0x006a    -- 0x61( ???=1007, ???=1945, ???=-613 ) -- exp0x1
 0x0072    -- 0x65( ???=1673, ???=3155, ???=-1286 ) -- exp0x1
 0x007a    -- 0x63( ???=987, ???=1875, ???=-190 ) -- exp0x1
-0x0082    opA3()
+0x0082    -- 0xA3()
 0x008a    opB3_FadeIn()
 0x008d    opAC_MoveCamera( control=0x80, steps=200 )
 0x0091    opAC_MoveCamera( control=0x81, steps=200 )
@@ -54,7 +54,7 @@ Actor_0x01:on_update:
 0x00a5    -- 0x61( ???=643, ???=1619, ???=-174 ) -- exp0x1
 0x00ad    -- 0x65( ???=-679, ???=2306, ???=-547 ) -- exp0x1
 0x00b5    -- 0x63( ???=1038, ???=837, ???=189 ) -- exp0x1
-0x00bd    opA3()
+0x00bd    -- 0xA3()
 0x00c5    opFE9B_SlideShow1( steps=64 )
 0x00c9    opAC_MoveCamera( control=0x80, steps=200 )
 0x00cd    opAC_MoveCamera( control=0x81, steps=200 )
@@ -83,4 +83,6 @@ Actor_0x02:on_push:
 0x00f6    op00_Return()
 
 Actor_0x02:event_0x04:
-0x00f7    -- MISSING OPCODE 0x2d
+0x00f7    -- 0x2D()
+0x00ff    mem[0x404] += 10 -- op38
+0x0105    -- MISSING OPCODE 0x10

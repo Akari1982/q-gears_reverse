@@ -25,4 +25,8 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x0047    -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0xbf )
-0x004c    -- MISSING OPCODE 0xfb
+0x004c    -- 0xFB()
+0x0051    -- 0xFE54()
+0x0053    opB4_FadeOut()
+0x0056    op26_Wait( time=1 )
+0x0059    -- MISSING OPCODE 0xFE55

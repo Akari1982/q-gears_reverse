@@ -40,7 +40,7 @@ Actor_0x00:on_update:
 0x0065    op99()
 0x0066    mem[0x410] = 0 -- op35
 0x006c    -- 0x63( ???=635, ???=250, ???=-678 ) -- exp0x1
-0x0074    opA3()
+0x0074    -- 0xA3()
 0x007c    op05_CallFunction( address=0x7c5 )
 0x007f    op26_Wait( time=30 )
 0x0082    opF5_MessageShowStatic( text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_TOP )
@@ -61,6 +61,6 @@ Actor_0x00:on_update:
 0x00bc    -- 0xFE0E_SoundSetVolume( volume=0, steps=240 )
 0x00c2    mem[0x410] = 80 -- op35
 0x00c8    -- 0x63( ???=-171, ???=-806, ???=-80 ) -- exp0x1
-0x00d0    opA3()
+0x00d0    -- 0xA3()
 0x00d8    op05_CallFunction( address=0x7c5 )
 0x00db    -- MISSING OPCODE 0x72

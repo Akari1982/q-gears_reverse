@@ -36,4 +36,54 @@ Actor_0x00:event_0x04:
 0x0182    op25_ActorDisable( actor_id=Actor_0x18 )
 0x0184    op25_ActorDisable( actor_id=Actor_0x1e )
 0x0186    op25_ActorDisable( actor_id=Actor_0x1f )
-0x0188    -- MISSING OPCODE 0x85
+0x0188    -- 0x85()
+0x018d    op02_JumpToConditional( val1=(s)mem[0x204], val2=16, condition="val1 & val2", address_if_false=0x198 )
+0x0195    op01_JumpTo( address=0x19a )
+0x0198    op25_ActorDisable( actor_id=Actor_0x20 )
+0x019a    op00_Return()
+
+Actor_0x00:event_0x05:
+0x019b    op25_ActorDisable( actor_id=Actor_0x1a )
+0x019d    op25_ActorDisable( actor_id=Actor_0x1b )
+0x019f    op25_ActorDisable( actor_id=Actor_0x19 )
+0x01a1    op00_Return()
+
+Actor_0x00:event_0x06:
+0x01a2    op24_ActorEnable( actor_id=Actor_0x11 )
+0x01a4    op24_ActorEnable( actor_id=Actor_0x12 )
+0x01a6    op24_ActorEnable( actor_id=Actor_0x13 )
+0x01a8    op24_ActorEnable( actor_id=Actor_0x14 )
+0x01aa    op24_ActorEnable( actor_id=Actor_0x15 )
+0x01ac    op24_ActorEnable( actor_id=Actor_0x16 )
+0x01ae    op24_ActorEnable( actor_id=Actor_0x17 )
+0x01b0    op24_ActorEnable( actor_id=Actor_0x18 )
+0x01b2    op24_ActorEnable( actor_id=Actor_0x1e )
+0x01b4    op24_ActorEnable( actor_id=Actor_0x1f )
+0x01b6    -- 0x85()
+0x01bb    op02_JumpToConditional( val1=(s)mem[0x204], val2=16, condition="val1 & val2", address_if_false=0x1c6 )
+0x01c3    op01_JumpTo( address=0x1c8 )
+0x01c6    op24_ActorEnable( actor_id=Actor_0x20 )
+0x01c8    op00_Return()
+
+Actor_0x00:event_0x07:
+0x01c9    op24_ActorEnable( actor_id=Actor_0x1a )
+0x01cb    op24_ActorEnable( actor_id=Actor_0x1b )
+0x01cd    op24_ActorEnable( actor_id=Actor_0x19 )
+0x01cf    op00_Return()
+
+Actor_0x01:on_start:
+0x01d0    -- 0x16_ActorPCInit( char_id=0 )
+0x01d3    opFE0D_MessageSetFace( char_id=0 )
+0x01d7    op00_Return()
+
+Actor_0x01:on_update:
+0x01d8    -- 0xA7()
+0x01d9    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x01da    op00_Return()
+
+Actor_0x01:event_0x04:
+0x01db    -- MISSING OPCODE 0xFE5f

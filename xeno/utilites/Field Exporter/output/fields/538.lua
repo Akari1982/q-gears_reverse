@@ -128,4 +128,66 @@ Actor_0x02:event_0x09:
 0x0126    op00_Return()
 
 Actor_0x02:event_0x0a:
-0x0127    -- MISSING OPCODE 0x53
+0x0127    -- 0x53()
+0x012b    op00_Return()
+
+Actor_0x02:event_0x0b:
+0x012c    -- 0xF6( ???=0x2 )
+0x012e    -- 0x21( ???=320 )
+0x0131    -- 0x1F( ???=0x10 )
+0x0133    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0139    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x013f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0145    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x014b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0151    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0157    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x015d    op74_SoundPlayFixedVolume( sound_id=119 )
+0x0160    op26_Wait( time=10 )
+0x0163    -- 0x23()
+0x0164    op00_Return()
+
+Actor_0x02:event_0x0c:
+0x0165    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x016b    op00_Return()
+
+Actor_0x02:event_0x0d:
+0x016c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0172    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0178    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x017e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0184    op69_ActorSetRotation( rot=3 )
+0x0187    op00_Return()
+
+Actor_0x02:event_0x0e:
+0x0188    op2C_SpritePlayAnim( anim_id=0x2 )
+0x018a    -- 0x1F( ???=0x10 )
+0x018c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0192    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0198    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x019e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01a4    -- 0x23()
+0x01a5    op2C_SpritePlayAnim( anim_id=0xff )
+0x01a7    op00_Return()
+
+Actor_0x02:event_0x0f:
+0x01a8    -- 0xF6( ???=0x1 )
+0x01aa    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01b0    -- 0xF6( ???=0x0 )
+0x01b2    op00_Return()
+
+Actor_0x03:on_start:
+0x01b3    -- 0x0B_InitNPC( 0 )
+0x01b6    opFE0D_MessageSetFace( char_id=71 )
+0x01ba    -- 0x86_ProgressNotEqualJumpTo( value=213, jump=0x1cf )
+0x01bf    -- 0x19_ActorSetPosition( x=(vf80)0xffb0, z=(vf40)0x0118, flag=(flag)0xc0 )
+0x01c5    op69_ActorSetRotation( rot=7 )
+0x01c8    op20_ActorSetFlags0( flags=13 )
+0x01cb    op00_Return()
+0x01cc    op01_JumpTo( address=0x1e5 )
+0x01cf    -- 0x19_ActorSetPosition( x=(vf80)0xff4e, z=(vf40)0xfe0e, flag=(flag)0xc0 )
+0x01d5    op69_ActorSetRotation( rot=7 )
+0x01d8    op20_ActorSetFlags0( flags=13 )
+0x01db    -- 0x1F( ???=0x10 )
+0x01dd    -- 0xFE07( ???=0x1 )
+0x01e0    -- MISSING OPCODE 0xFEc3

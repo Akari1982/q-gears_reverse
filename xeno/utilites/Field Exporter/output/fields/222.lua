@@ -19,4 +19,139 @@ Actor_0x00:on_start:
 0x0022    mem[0x410] = 6 -- op35
 0x0028    mem[0x54] = 1 -- op35
 0x002e    mem[0x408] = opA8_Random( max=4 )
-0x0033    -- MISSING OPCODE 0x85
+0x0033    -- 0x85()
+0x0038    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x0043    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x51 )
+0x004b    -- 0x75( ???=35 )
+0x004e    op01_JumpTo( address=0x89 )
+0x0051    op02_JumpToConditional( val1=mem[0x408], val2=1, condition="val1 == val2", address_if_false=0x5f )
+0x0059    -- 0x75( ???=25 )
+0x005c    op01_JumpTo( address=0x89 )
+0x005f    op02_JumpToConditional( val1=mem[0x408], val2=2, condition="val1 == val2", address_if_false=0x6d )
+0x0067    -- 0x75( ???=56 )
+0x006a    op01_JumpTo( address=0x89 )
+0x006d    op02_JumpToConditional( val1=mem[0x408], val2=3, condition="val1 == val2", address_if_false=0x7b )
+0x0075    -- 0x75( ???=57 )
+0x0078    op01_JumpTo( address=0x89 )
+0x007b    op02_JumpToConditional( val1=mem[0x408], val2=4, condition="val1 == val2", address_if_false=0x89 )
+0x0083    -- 0x75( ???=41 )
+0x0086    op01_JumpTo( address=0x89 )
+0x0089    op01_JumpTo( address=0x8f )
+0x008c    -- 0x75( ???=29 )
+0x008f    -- 0x2A()
+0x0090    op00_Return()
+
+Actor_0x00:on_update:
+0x0091    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0092    op00_Return()
+
+Actor_0x01:on_start:
+0x0093    -- 0x16_ActorPCInit( char_id=0 )
+0x0096    opFE0D_MessageSetFace( char_id=0 )
+0x009a    op00_Return()
+
+Actor_0x01:on_update:
+0x009b    -- 0xA7()
+0x009c    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x009d    op00_Return()
+
+Actor_0x01:event_0x04:
+0x009e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00a4    -- 0x5F( ???=0x3 )
+0x00a6    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00a7    op26_Wait( time=15 )
+0x00aa    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00ac    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00b2    op26_Wait( time=5 )
+0x00b5    -- 0x23()
+0x00b6    op00_Return()
+
+Actor_0x01:event_0x06:
+0x00b7    op2C_SpritePlayAnim( anim_id=0xff )
+0x00b9    -- 0x22()
+0x00ba    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x005a, flag=(flag)0xc0 )
+0x00c0    -- 0x5F( ???=0x2 )
+0x00c2    op00_Return()
+
+Actor_0x01:event_0x07:
+0x00c3    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c9    -- 0x5F( ???=0x0 )
+0x00cb    op00_Return()
+
+Actor_0x01:event_0x08:
+0x00cc    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00d2    -- 0x5F( ???=0x0 )
+0x00d4    op00_Return()
+
+Actor_0x01:event_0x09:
+0x00d5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00db    -- 0x5F( ???=0x0 )
+0x00dd    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x00de    op05_CallFunction( address=0x32ee )
+0x00e1    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x00e2    op05_CallFunction( address=0x33c1 )
+0x00e5    op00_Return()
+
+Actor_0x02:on_start:
+0x00e6    -- 0x0B_InitNPC( 5 )
+0x00e9    -- 0x19_ActorSetPosition( x=(vf80)0x0113, z=(vf40)0x005a, flag=(flag)0xc0 )
+0x00ef    -- 0xF8()
+0x00f3    -- 0x18()
+0x00f8    op20_ActorSetFlags0( flags=12 )
+0x00fb    -- 0x5F( ???=0x2 )
+0x00fd    op00_Return()
+
+Actor_0x02:on_update:
+0x00fe    op00_Return()
+
+Actor_0x02:on_talk:
+0x00ff    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0103    op9C_MessageSync()
+0x0104    op00_Return()
+
+Actor_0x02:on_push:
+0x0105    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0106    op20_ActorSetFlags0( flags=13 )
+0x0109    -- 0xF6( ???=0x1 )
+0x010b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0111    -- 0xF6( ???=0x0 )
+0x0113    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0114    op20_ActorSetFlags0( flags=12 )
+0x0117    -- 0xF6( ???=0x1 )
+0x0119    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x011f    -- 0xF6( ???=0x0 )
+0x0121    op00_Return()
+
+Actor_0x03:on_start:
+0x0122    -- 0x0B_InitNPC( 5 )
+0x0125    -- 0x19_ActorSetPosition( x=(vf80)0xffa6, z=(vf40)0x00ff, flag=(flag)0xc0 )
+0x012b    -- 0xF8()
+0x012f    -- 0x18()
+0x0134    op20_ActorSetFlags0( flags=13 )
+0x0137    -- 0x5F( ???=0x1 )
+0x0139    op00_Return()
+
+Actor_0x03:on_update:
+0x013a    op00_Return()
+
+Actor_0x03:on_talk:
+0x013b    -- 0xFE54()
+0x013d    -- MISSING OPCODE 0xb5

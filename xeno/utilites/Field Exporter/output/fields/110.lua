@@ -16,7 +16,7 @@ Actor_0x00:on_start:
 0x0009    op00_Return()
 
 Actor_0x00:on_update:
-0x000a    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x1500], jump=0x1500 )
+0x000a    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x1500], jump=0x1500 )
 0x000f    -- 0x98_MapLoad( field_id=109, value=1 )
 0x0014    -- 0x5B()
 0x0015    op00_Return()
@@ -194,7 +194,7 @@ Actor_0x0c:on_talk:
 0x00a6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00aa    op9C_MessageSync()
 0x00ab    op01_JumpTo( address=0xc3 )
-0x00ae    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xbe )
+0x00ae    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xbe )
 0x00b6    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x00ba    op9C_MessageSync()
 0x00bb    op01_JumpTo( address=0xc3 )

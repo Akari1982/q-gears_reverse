@@ -22,7 +22,7 @@ Actor_0x00:on_update:
 0x000e    -- 0x60()
 0x000f    -- 0x64() -- exp0x1
 0x0010    -- 0x63( ???=0, ???=-49, ???=-254 ) -- exp0x1
-0x0018    opA3()
+0x0018    -- 0xA3()
 0x0020    opAC_MoveCamera( control=0x0, steps=0 )
 0x0024    opAC_MoveCamera( control=0x1, steps=0 )
 0x0028    opEF_MoveCameraSync()
@@ -118,4 +118,41 @@ Actor_0x04:on_talk:
 Actor_0x04:on_push:
 0x00cf    op00_Return()
 0x00d0    mem[0x406] = false -- op37
-0x00d3    -- MISSING OPCODE 0x2e
+0x00d3    -- 0x2E()
+0x00d6    op02_JumpToConditional( val1=mem[0x406], val2=4, condition="val1 < val2", address_if_false=0xf3 )
+0x00de    mem[0x400] += 1 -- op3c
+0x00e1    mem[0x400] &= 7 -- op3e
+0x00e7    op69_ActorSetRotation( rot=mem[0x400] )
+0x00ea    mem[0x406] += 1 -- op3c
+0x00ed    op26_Wait( time=0 )
+0x00f0    op01_JumpTo( address=0xd6 )
+0x00f3    op0D_Return()
+0x00f4    mem[0x406] = false -- op37
+0x00f7    -- 0x2E()
+0x00fa    op02_JumpToConditional( val1=mem[0x406], val2=4, condition="val1 < val2", address_if_false=0x117 )
+0x0102    mem[0x400] -= 1 -- op3d
+0x0105    mem[0x400] &= 7 -- op3e
+0x010b    op69_ActorSetRotation( rot=mem[0x400] )
+0x010e    mem[0x406] += 1 -- op3c
+0x0111    op26_Wait( time=0 )
+0x0114    op01_JumpTo( address=0xfa )
+0x0117    op0D_Return()
+0x0118    op6B_ActorRotateClockwise( rot=1 )
+0x011b    op26_Wait( time=6 )
+0x011e    op6C_ActorRotateAnticlockwise( rot=1 )
+0x0121    op26_Wait( time=2 )
+0x0124    op6C_ActorRotateAnticlockwise( rot=1 )
+0x0127    op26_Wait( time=6 )
+0x012a    op6B_ActorRotateClockwise( rot=1 )
+0x012d    op0D_Return()
+0x012e    -- 0x2E()
+0x0131    mem[0x402] -= 2 -- op39
+0x0137    mem[0x402] &= 7 -- op3e
+0x013d    opDE_VariableMultiply( address=0x402, value=(vf40)0x0200, flag=0x40 )
+0x0143    -- 0x44()
+0x0148    op0D_Return()
+0x0149    op74_SoundPlayFixedVolume( sound_id=119 )
+0x014c    mem[0x408] = false -- op37
+0x014f    op02_JumpToConditional( val1=mem[0x408], val2=16, condition="val1 < val2", address_if_false=0x167 )
+0x0157    opC6_ExpandRun() -- exp0x20
+0x0158    -- MISSING OPCODE 0xFE1b

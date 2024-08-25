@@ -49,7 +49,7 @@ Actor_0x01:on_update:
 0x007b    -- 0x61( ???=718, ???=0, ???=-5 ) -- exp0x1
 0x0083    -- 0x65( ???=-812, ???=0, ???=-117 ) -- exp0x1
 0x008b    -- 0x63( ???=718, ???=0, ???=17 ) -- exp0x1
-0x0093    opA3()
+0x0093    -- 0xA3()
 0x009b    opAC_MoveCamera( control=0x80, steps=0 )
 0x009f    opAC_MoveCamera( control=0x81, steps=0 )
 0x00a3    op26_Wait( time=60 )
@@ -57,7 +57,7 @@ Actor_0x01:on_update:
 0x00ab    -- 0x60()
 0x00ac    -- 0x64() -- exp0x1
 0x00ad    -- 0x63( ???=-124, ???=9, ???=-125 ) -- exp0x1
-0x00b5    opA3()
+0x00b5    -- 0xA3()
 0x00bd    opAC_MoveCamera( control=0x0, steps=200 )
 0x00c1    opAC_MoveCamera( control=0x1, steps=200 )
 0x00c5    opD0_MessageSettings( x=20, y=20, letters=0, rows=0, flags=321 )
@@ -68,7 +68,7 @@ Actor_0x01:on_update:
 0x00db    -- 0x60()
 0x00dc    -- 0x64() -- exp0x1
 0x00dd    -- 0x63( ???=-175, ???=-229, ???=-126 ) -- exp0x1
-0x00e5    opA3()
+0x00e5    -- 0xA3()
 0x00ed    opAC_MoveCamera( control=0x0, steps=200 )
 0x00f1    opAC_MoveCamera( control=0x1, steps=200 )
 0x00f5    opD0_MessageSettings( x=30, y=40, letters=0, rows=0, flags=321 )
@@ -79,7 +79,7 @@ Actor_0x01:on_update:
 0x010b    -- 0x60()
 0x010c    -- 0x64() -- exp0x1
 0x010d    -- 0x63( ???=118, ???=-350, ???=-280 ) -- exp0x1
-0x0115    opA3()
+0x0115    -- 0xA3()
 0x011d    opFE9B_SlideShow1( steps=64 )
 0x0121    op26_Wait( time=0 )
 0x0124    opF1_FadeSetUp( steps=2, r=32, g=64, b=64, semi_tr=1 )
@@ -97,7 +97,7 @@ Actor_0x01:on_update:
 0x0156    -- 0x60()
 0x0157    -- 0x64() -- exp0x1
 0x0158    -- 0x63( ???=326, ???=-220, ???=-154 ) -- exp0x1
-0x0160    opA3()
+0x0160    -- 0xA3()
 0x0168    opFE9B_SlideShow1( steps=64 )
 0x016c    op26_Wait( time=0 )
 0x016f    opF1_FadeSetUp( steps=2, r=32, g=128, b=128, semi_tr=1 )

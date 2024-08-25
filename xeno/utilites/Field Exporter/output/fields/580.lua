@@ -175,7 +175,7 @@ Actor_0x06:on_update:
 
 Actor_0x06:on_talk:
 0x0113    -- 0xFE54()
-0x0115    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x129 )
+0x0115    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x129 )
 0x011d    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
 0x0120    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
 0x0123    mem[0x400] = false -- op37

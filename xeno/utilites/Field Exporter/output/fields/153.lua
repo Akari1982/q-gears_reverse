@@ -26,7 +26,7 @@ Actor_0x00:on_push:
 
 Actor_0x00:event_0x04:
 0x0013    op31_JumpIfButtonNotPressed( buttons=Circle, jump_to=0x30 )
-0x0018    op02_JumpToConditional( val1=(s)mem[0x42e], val2=1, condition="val1 == val2", address_if_false=0x24 )
+0x0018    op02_JumpToConditional( val1=mem[0x42e], val2=1, condition="val1 == val2", address_if_false=0x24 )
 0x0020    -- 0x5A()
 0x0021    op01_JumpTo( address=0x18 )
 0x0024    -- 0x27( actor_id=Actor_0x0f )

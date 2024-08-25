@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x0016    op01_JumpTo( address=0x1c )
 0x0019    -- 0x75( ???=24 )
 0x001c    -- 0x86_ProgressNotEqualJumpTo( value=209, jump=0x2b )
-0x0021    op02_JumpToConditional( val1=mem[0x2ca], val2=256, condition="val1 & val2", address_if_false=0x2b )
+0x0021    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=256, condition="val1 & val2", address_if_false=0x2b )
 0x0029    -- 0xFE54()
 0x002b    op00_Return()
 
@@ -36,11 +36,11 @@ Actor_0x00:on_update:
 0x0043    op99()
 0x0044    mem[0x42e] = 40 -- op35
 0x004a    -- 0x63( ???=323, ???=-20, ???=-171 ) -- exp0x1
-0x0052    opA3()
+0x0052    -- 0xA3()
 0x005a    op05_CallFunction( address=0x147e )
 0x005d    mem[0x42e] = 30 -- op35
 0x0063    -- 0x63( ???=-522, ???=-10, ???=-426 ) -- exp0x1
-0x006b    opA3()
+0x006b    -- 0xA3()
 0x0073    op05_CallFunction( address=0x147e )
 0x0076    op26_Wait( time=80 )
 0x0079    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x0c, priority=0x03 )
@@ -63,7 +63,7 @@ Actor_0x00:on_update:
 0x00c7    op26_Wait( time=60 )
 0x00ca    mem[0x42e] = 0 -- op35
 0x00d0    -- 0x63( ???=1271, ???=5, ???=-235 ) -- exp0x1
-0x00d8    opA3()
+0x00d8    -- 0xA3()
 0x00e0    op05_CallFunction( address=0x147e )
 0x00e3    op26_Wait( time=10 )
 0x00e6    -- 0xFE65()
@@ -71,11 +71,11 @@ Actor_0x00:on_update:
 0x00ef    op26_Wait( time=15 )
 0x00f2    mem[0x42e] = 0 -- op35
 0x00f8    -- 0x63( ???=-378, ???=-1, ???=-337 ) -- exp0x1
-0x0100    opA3()
+0x0100    -- 0xA3()
 0x0108    op05_CallFunction( address=0x147e )
 0x010b    mem[0x42e] = 2 -- op35
 0x0111    -- 0x63( ???=-586, ???=-11, ???=-260 ) -- exp0x1
-0x0119    opA3()
+0x0119    -- 0xA3()
 0x0121    op05_CallFunction( address=0x147e )
 0x0124    op26_Wait( time=4 )
 0x0127    opFE0D_MessageSetFace( char_id=8 )
@@ -87,7 +87,7 @@ Actor_0x00:on_update:
 0x0145    op26_Wait( time=15 )
 0x0148    mem[0x42e] = 0 -- op35
 0x014e    -- 0x63( ???=281, ???=-1, ???=-723 ) -- exp0x1
-0x0156    opA3()
+0x0156    -- 0xA3()
 0x015e    op05_CallFunction( address=0x147e )
 0x0161    -- 0xF2()
 0x016a    op08_CallActorEventStartSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x03 )
