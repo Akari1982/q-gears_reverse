@@ -839,6 +839,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x78:
+            {
+                exp->Log( "-- 0x78()" );
+                pointer += 4;
+            }
+            break;
+
             case 0x79:
             {
                 exp->Log( "-- 0x79()" );
@@ -853,9 +860,65 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x7b:
+            {
+                exp->Log( "-- 0x7B()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0x7c:
+            {
+                exp->Log( "-- 0x7C()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0x7d:
+            {
+                exp->Log( "-- 0x7D()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0x7e:
+            {
+                exp->Log( "-- 0x7E()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0x7f:
+            {
+                exp->Log( "-- 0x7F()" );
+                pointer += 3;
+            }
+            break;
+
             case 0x80:
             {
                 exp->Log( "-- 0x80()" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x81:
+            {
+                exp->Log( "-- 0x81()" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x82:
+            {
+                exp->Log( "-- 0x82()" );
+                pointer += 5;
+            }
+            break;
+
+            case 0x83:
+            {
+                exp->Log( "-- 0x83()" );
                 pointer += 5;
             }
             break;
@@ -885,6 +948,27 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0x87_SetProgress( progress=" + GetV80Variable( pointer + 1 ) + " )" );
                 pointer += 3;
+            }
+            break;
+
+            case 0x88:
+            {
+                exp->Log( "-- 0x88()" );
+                pointer += 3;
+            }
+            break;
+
+            case 0x89:
+            {
+                exp->Log( "-- 0x89()" );
+                pointer += 6;
+            }
+            break;
+
+            case 0x8a:
+            {
+                exp->Log( "-- 0x8A()" );
+                pointer += 4;
             }
             break;
 
