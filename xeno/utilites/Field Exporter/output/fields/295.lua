@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x0000007f,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -185,21 +189,21 @@ Actor_0x0c:on_start:
 0x0097    -- 0x0B_InitNPC( 0 )
 0x009a    -- 0x19_ActorSetPosition( x=(vf80)0x012e, z=(vf40)0x00f6, flag=(flag)0xc0 )
 0x00a0    op69_ActorSetRotation( rot=5 )
-0x00a3    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0xb5 )
+0x00a3    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0xb5 )
 0x00ab    -- 0x19_ActorSetPosition( x=(vf80)0xfffe, z=(vf40)0xfd78, flag=(flag)0xc0 )
 0x00b1    op69_ActorSetRotation( rot=0 )
 0x00b4    op00_Return()
 0x00b5    op00_Return()
 
 Actor_0x0c:on_update:
-0x00b6    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x17d )
+0x00b6    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x17d )
 0x00be    opC6_ExpandRun() -- exp0x20
 0x00bf    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00c5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00cb    op69_ActorSetRotation( rot=7 )
 0x00ce    op2C_SpritePlayAnim( anim_id=0x3 )
 0x00d0    mem[0x40a] = false -- op37
-0x00d3    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0xf8 )
+0x00d3    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0xf8 )
 0x00db    -- 0x89()
 0x00e1    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00e5    op9C_MessageSync()
@@ -214,7 +218,7 @@ Actor_0x0c:on_update:
 0x0106    op69_ActorSetRotation( rot=0 )
 0x0109    op2C_SpritePlayAnim( anim_id=0x3 )
 0x010b    mem[0x40a] = false -- op37
-0x010e    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x133 )
+0x010e    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x133 )
 0x0116    -- 0x89()
 0x011c    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x0120    op9C_MessageSync()
@@ -229,7 +233,7 @@ Actor_0x0c:on_update:
 0x0141    op69_ActorSetRotation( rot=0 )
 0x0144    op2C_SpritePlayAnim( anim_id=0x3 )
 0x0146    mem[0x40a] = false -- op37
-0x0149    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x16e )
+0x0149    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x16e )
 0x0151    -- 0x89()
 0x0157    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x015b    op9C_MessageSync()
@@ -247,7 +251,7 @@ Actor_0x0c:on_update:
 0x0189    op69_ActorSetRotation( rot=4 )
 0x018c    op2C_SpritePlayAnim( anim_id=0x3 )
 0x018e    mem[0x40a] = false -- op37
-0x0191    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x1b6 )
+0x0191    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x1b6 )
 0x0199    -- 0x89()
 0x019f    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
 0x01a3    op9C_MessageSync()
@@ -263,7 +267,7 @@ Actor_0x0c:on_update:
 0x01ca    op69_ActorSetRotation( rot=3 )
 0x01cd    op2C_SpritePlayAnim( anim_id=0x3 )
 0x01cf    mem[0x40a] = false -- op37
-0x01d2    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x1f7 )
+0x01d2    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x1f7 )
 0x01da    -- 0x89()
 0x01e0    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
 0x01e4    op9C_MessageSync()
@@ -280,7 +284,7 @@ Actor_0x0c:on_update:
 0x020e    op69_ActorSetRotation( rot=4 )
 0x0211    op2C_SpritePlayAnim( anim_id=0x3 )
 0x0213    mem[0x40a] = false -- op37
-0x0216    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x23b )
+0x0216    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x23b )
 0x021e    -- 0x89()
 0x0224    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
 0x0228    op9C_MessageSync()
@@ -296,7 +300,7 @@ Actor_0x0c:on_update:
 0x024f    op69_ActorSetRotation( rot=5 )
 0x0252    op2C_SpritePlayAnim( anim_id=0x3 )
 0x0254    mem[0x40a] = false -- op37
-0x0257    op02_JumpToConditional( val1=mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x27c )
+0x0257    op02_JumpToConditional( val1=(s)mem[0x40a], val2=60, condition="val1 < val2", address_if_false=0x27c )
 0x025f    -- 0x89()
 0x0265    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
 0x0269    op9C_MessageSync()
@@ -375,7 +379,7 @@ Actor_0x0c:on_talk:
 0x033b    op00_Return()
 0x033c    -- 0x85()
 0x0341    op6F_ActorRotateToActor( actor_id=party1 )
-0x0343    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x356 )
+0x0343    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x356 )
 0x034b    opD2_MessageShowDynamic( text_id=0x12, flags=0 )
 0x034f    op9C_MessageSync()
 0x0350    mem[0x408] = true -- op36
@@ -450,5 +454,5 @@ Actor_0x0d:on_start:
 0x03e3    -- 0x0B_InitNPC( 2 )
 0x03e6    -- 0x19_ActorSetPosition( x=(vf80)0xffce, z=(vf40)0xfd7d, flag=(flag)0xc0 )
 0x03ec    op69_ActorSetRotation( rot=0 )
-0x03ef    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x404 )
+0x03ef    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x404 )
 0x03f7    -- MISSING OPCODE 0xFE1c

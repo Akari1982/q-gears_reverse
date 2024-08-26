@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -107,7 +111,7 @@ Actor_0x04:on_update:
 0x00aa    opD0_MessageSettings( x=30, y=70, letters=0, rows=0, flags=321 )
 0x00b5    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00b9    op9C_MessageSync()
-0x00ba    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xc8 )
+0x00ba    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xc8 )
 0x00c2    op26_Wait( time=0 )
 0x00c5    op01_JumpTo( address=0xba )
 0x00c8    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x03 )

@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x0000007f,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -100,7 +104,7 @@ Actor_0x06:on_start:
 0x0062    op00_Return()
 
 Actor_0x06:on_update:
-0x0063    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x6f )
+0x0063    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x6f )
 0x006b    -- 0xA7()
 0x006c    op01_JumpTo( address=0x70 )
 0x006f    -- 0x5A()
@@ -424,7 +428,7 @@ Actor_0x0e:on_talk:
 0x0328    -- 0xFE54()
 0x032a    op00_Return()
 0x032b    -- 0x85()
-0x0330    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x357 )
+0x0330    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x357 )
 0x0338    op26_Wait( time=10 )
 0x033b    op6F_ActorRotateToActor( actor_id=Actor_0x06 )
 0x033d    opD2_MessageShowDynamic( text_id=0x2d, flags=0 )

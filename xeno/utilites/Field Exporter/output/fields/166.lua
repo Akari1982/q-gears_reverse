@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000007, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -228,7 +232,7 @@ function:
 
 function:
 0x0273    op26_Wait( time=20 )
-0x0276    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x284 )
+0x0276    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x284 )
 0x027e    -- 0x98_MapLoad( field_id=167, value=0 )
 0x0283    -- 0x5B()
 0x0284    op0D_Return()

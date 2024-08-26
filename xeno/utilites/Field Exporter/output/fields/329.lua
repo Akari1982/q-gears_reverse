@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x0000007f,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -439,7 +443,7 @@ Actor_0x0c:on_push:
 0x0266    op00_Return()
 
 Actor_0x0c:event_0x04:
-0x0267    op02_JumpToConditional( val1=mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x274 )
+0x0267    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x274 )
 0x026f    op6F_ActorRotateToActor( actor_id=party1 )
 0x0271    op01_JumpTo( address=0x267 )
 0x0274    op00_Return()

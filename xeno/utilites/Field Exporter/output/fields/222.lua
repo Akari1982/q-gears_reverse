@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0xc000007f,
     0x0007ffff, 0x000001ff, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -21,19 +25,19 @@ Actor_0x00:on_start:
 0x002e    mem[0x408] = opA8_Random( max=4 )
 0x0033    -- 0x85()
 0x0038    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
-0x0043    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x51 )
+0x0043    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x51 )
 0x004b    -- 0x75( ???=35 )
 0x004e    op01_JumpTo( address=0x89 )
-0x0051    op02_JumpToConditional( val1=mem[0x408], val2=1, condition="val1 == val2", address_if_false=0x5f )
+0x0051    op02_JumpToConditional( val1=(s)mem[0x408], val2=1, condition="val1 == val2", address_if_false=0x5f )
 0x0059    -- 0x75( ???=25 )
 0x005c    op01_JumpTo( address=0x89 )
-0x005f    op02_JumpToConditional( val1=mem[0x408], val2=2, condition="val1 == val2", address_if_false=0x6d )
+0x005f    op02_JumpToConditional( val1=(s)mem[0x408], val2=2, condition="val1 == val2", address_if_false=0x6d )
 0x0067    -- 0x75( ???=56 )
 0x006a    op01_JumpTo( address=0x89 )
-0x006d    op02_JumpToConditional( val1=mem[0x408], val2=3, condition="val1 == val2", address_if_false=0x7b )
+0x006d    op02_JumpToConditional( val1=(s)mem[0x408], val2=3, condition="val1 == val2", address_if_false=0x7b )
 0x0075    -- 0x75( ???=57 )
 0x0078    op01_JumpTo( address=0x89 )
-0x007b    op02_JumpToConditional( val1=mem[0x408], val2=4, condition="val1 == val2", address_if_false=0x89 )
+0x007b    op02_JumpToConditional( val1=(s)mem[0x408], val2=4, condition="val1 == val2", address_if_false=0x89 )
 0x0083    -- 0x75( ???=41 )
 0x0086    op01_JumpTo( address=0x89 )
 0x0089    op01_JumpTo( address=0x8f )

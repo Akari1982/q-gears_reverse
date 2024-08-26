@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x0001ffff,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -54,7 +58,7 @@ Actor_0x00:on_update:
 0x00a3    op9C_MessageSync()
 0x00a4    opFE0D_MessageSetFace( char_id=252 )
 0x00a8    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x06, priority=0x05 )
-0x00ab    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0xb6 )
+0x00ab    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0xb6 )
 0x00b3    op01_JumpTo( address=0xab )
 0x00b6    mem[0x408] = false -- op37
 0x00b9    op26_Wait( time=20 )

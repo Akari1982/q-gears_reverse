@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x0000007f,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -119,20 +123,20 @@ Actor_0x04:on_push:
 0x00cf    op00_Return()
 0x00d0    mem[0x406] = false -- op37
 0x00d3    -- 0x2E()
-0x00d6    op02_JumpToConditional( val1=mem[0x406], val2=4, condition="val1 < val2", address_if_false=0xf3 )
+0x00d6    op02_JumpToConditional( val1=(s)mem[0x406], val2=4, condition="val1 < val2", address_if_false=0xf3 )
 0x00de    mem[0x400] += 1 -- op3c
 0x00e1    mem[0x400] &= 7 -- op3e
-0x00e7    op69_ActorSetRotation( rot=mem[0x400] )
+0x00e7    op69_ActorSetRotation( rot=(s)mem[0x400] )
 0x00ea    mem[0x406] += 1 -- op3c
 0x00ed    op26_Wait( time=0 )
 0x00f0    op01_JumpTo( address=0xd6 )
 0x00f3    op0D_Return()
 0x00f4    mem[0x406] = false -- op37
 0x00f7    -- 0x2E()
-0x00fa    op02_JumpToConditional( val1=mem[0x406], val2=4, condition="val1 < val2", address_if_false=0x117 )
+0x00fa    op02_JumpToConditional( val1=(s)mem[0x406], val2=4, condition="val1 < val2", address_if_false=0x117 )
 0x0102    mem[0x400] -= 1 -- op3d
 0x0105    mem[0x400] &= 7 -- op3e
-0x010b    op69_ActorSetRotation( rot=mem[0x400] )
+0x010b    op69_ActorSetRotation( rot=(s)mem[0x400] )
 0x010e    mem[0x406] += 1 -- op3c
 0x0111    op26_Wait( time=0 )
 0x0114    op01_JumpTo( address=0xfa )
@@ -153,6 +157,6 @@ Actor_0x04:on_push:
 0x0148    op0D_Return()
 0x0149    op74_SoundPlayFixedVolume( sound_id=119 )
 0x014c    mem[0x408] = false -- op37
-0x014f    op02_JumpToConditional( val1=mem[0x408], val2=16, condition="val1 < val2", address_if_false=0x167 )
+0x014f    op02_JumpToConditional( val1=(s)mem[0x408], val2=16, condition="val1 < val2", address_if_false=0x167 )
 0x0157    opC6_ExpandRun() -- exp0x20
 0x0158    -- MISSING OPCODE 0xFE1b

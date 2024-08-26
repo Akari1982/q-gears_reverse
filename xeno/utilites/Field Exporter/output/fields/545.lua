@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x0007ffff, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -116,8 +120,8 @@ Actor_0x04:on_update:
 0x00af    op01_JumpTo( address=0xe2 )
 0x00b2    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xdf )
 0x00ba    mem[0x402] = 256 -- op35
-0x00c0    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 > val2", address_if_false=0xd5 )
-0x00c8    -- 0xBF( ???=mem[0x402] )
+0x00c0    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 > val2", address_if_false=0xd5 )
+0x00c8    -- 0xBF( ???=(s)mem[0x402] )
 0x00cb    mem[0x402] -= 4 -- op39
 0x00d1    -- 0x5A()
 0x00d2    op01_JumpTo( address=0xc0 )
@@ -141,8 +145,8 @@ Actor_0x05:on_start:
 Actor_0x05:on_update:
 0x00ec    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x115 )
 0x00f4    mem[0x404] = 256 -- op35
-0x00fa    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x10f )
-0x0102    -- 0xBF( ???=mem[0x404] )
+0x00fa    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x10f )
+0x0102    -- 0xBF( ???=(s)mem[0x404] )
 0x0105    mem[0x404] -= 4 -- op39
 0x010b    -- 0x5A()
 0x010c    op01_JumpTo( address=0xfa )

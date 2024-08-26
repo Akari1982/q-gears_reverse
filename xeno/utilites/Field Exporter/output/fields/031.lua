@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -212,7 +216,7 @@ Actor_0x0d:on_update:
 0x00c0    op00_Return()
 
 Actor_0x0d:on_talk:
-0x00c1    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0xd4 )
+0x00c1    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0xd4 )
 0x00c9    mem[0x402] += 1 -- op3c
 0x00cc    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x00d0    op9C_MessageSync()
@@ -250,7 +254,7 @@ Actor_0x0e:on_talk:
 0x0127    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
 0x012b    op9C_MessageSync()
 0x012c    op01_JumpTo( address=0x14a )
-0x012f    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x142 )
+0x012f    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x142 )
 0x0137    mem[0x404] += 1 -- op3c
 0x013a    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
 0x013e    op9C_MessageSync()

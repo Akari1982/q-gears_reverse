@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x000fffff,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -19,7 +23,7 @@ Actor_0x00:on_start:
 0x0016    op01_JumpTo( address=0x1c )
 0x0019    -- 0x75( ???=24 )
 0x001c    -- 0x86_ProgressNotEqualJumpTo( value=209, jump=0x2b )
-0x0021    op02_JumpToConditional( val1=mem[0x2ca], val2=256, condition="val1 & val2", address_if_false=0x2b )
+0x0021    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=256, condition="val1 & val2", address_if_false=0x2b )
 0x0029    -- 0xFE54()
 0x002b    op00_Return()
 
@@ -93,7 +97,7 @@ Actor_0x00:on_update:
 0x016a    op08_CallActorEventStartSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x03 )
 0x016d    -- 0xFE65()
 0x0173    -- 0xFE65()
-0x0179    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x184 )
+0x0179    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x184 )
 0x0181    op01_JumpTo( address=0x179 )
 0x0184    mem[0x408] = false -- op37
 0x0187    -- 0x98_MapLoad( field_id=443, value=0 )

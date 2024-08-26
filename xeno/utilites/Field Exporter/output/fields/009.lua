@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x0001ffff,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -233,17 +237,17 @@ Actor_0x0a:on_update:
 0x0152    -- 0x5E()
 0x0153    op26_Wait( time=40 )
 0x0156    op01_JumpTo( address=0x1b5 )
-0x0159    op02_JumpToConditional( val1=mem[0x410], val2=1, condition="val1 == val2", address_if_false=0x170 )
+0x0159    op02_JumpToConditional( val1=(s)mem[0x410], val2=1, condition="val1 == val2", address_if_false=0x170 )
 0x0161    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x0167    op69_ActorSetRotation( rot=5 )
 0x016a    op26_Wait( time=50 )
 0x016d    op01_JumpTo( address=0x1b5 )
-0x0170    op02_JumpToConditional( val1=mem[0x410], val2=2, condition="val1 == val2", address_if_false=0x187 )
+0x0170    op02_JumpToConditional( val1=(s)mem[0x410], val2=2, condition="val1 == val2", address_if_false=0x187 )
 0x0178    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x017e    op69_ActorSetRotation( rot=5 )
 0x0181    op26_Wait( time=40 )
 0x0184    op01_JumpTo( address=0x1b5 )
-0x0187    op02_JumpToConditional( val1=mem[0x410], val2=3, condition="val1 == val2", address_if_false=0x1aa )
+0x0187    op02_JumpToConditional( val1=(s)mem[0x410], val2=3, condition="val1 == val2", address_if_false=0x1aa )
 0x018f    op6B_ActorRotateClockwise( rot=1 )
 0x0192    op26_Wait( time=10 )
 0x0195    op6C_ActorRotateAnticlockwise( rot=2 )
@@ -254,6 +258,6 @@ Actor_0x0a:on_update:
 0x01a3    -- 0x5E()
 0x01a4    op26_Wait( time=10 )
 0x01a7    op01_JumpTo( address=0x1b5 )
-0x01aa    op02_JumpToConditional( val1=mem[0x410], val2=4, condition="val1 == val2", address_if_false=0x1b5 )
+0x01aa    op02_JumpToConditional( val1=(s)mem[0x410], val2=4, condition="val1 == val2", address_if_false=0x1b5 )
 0x01b2    op01_JumpTo( address=0x1b5 )
 0x01b5    -- MISSING OPCODE 0x04

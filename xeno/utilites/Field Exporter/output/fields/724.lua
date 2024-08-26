@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x0007ffff, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -18,11 +22,11 @@ Actor_0x00:on_start:
 0x0011    op00_Return()
 
 Actor_0x00:on_update:
-0x0012    op02_JumpToConditional( val1=mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0x29 )
+0x0012    op02_JumpToConditional( val1=(s)mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0x29 )
 0x001a    -- 0xFE65()
 0x0020    -- 0xFE65()
 0x0026    mem[0x40c] = true -- op36
-0x0029    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x44 )
+0x0029    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x44 )
 0x0031    opD0_MessageSettings( x=10, y=10, letters=20, rows=8, flags=0 )
 0x003c    opF5_MessageShowStatic( text_id=0x0, flags=0 )
 0x0040    op9C_MessageSync()
@@ -938,7 +942,7 @@ Actor_0x12:on_push:
 0x0d0b    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0xd19 )
 0x0d13    op01_JumpTo( address=0xf34 )
 0x0d16    op01_JumpTo( address=0xd19 )
-0x0d19    op02_JumpToConditional( val1=mem[0x412], val2=1, condition="val1 == val2", address_if_false=0xd2c )
+0x0d19    op02_JumpToConditional( val1=(s)mem[0x412], val2=1, condition="val1 == val2", address_if_false=0xd2c )
 0x0d21    mem[0x412] = false -- op37
 0x0d24    opD2_MessageShowDynamic( text_id=0xc, flags=0 )
 0x0d28    op9C_MessageSync()

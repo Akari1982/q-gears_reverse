@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0xc0000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -213,7 +217,7 @@ Actor_0x03:event_0x04:
 0x02c4    opFE0D_MessageSetFace( char_id=12 )
 0x02c8    opD4_MessageShowFromActor( actor_id=Actor_0x07, text_id=0x12, flags=FORCE_BOTTOM )
 0x02ce    mem[0x402] = 1 -- op35
-0x02d4    op02_JumpToConditional( val1=mem[0x404], val2=128, condition="val1 < val2", address_if_false=0x2e2 )
+0x02d4    op02_JumpToConditional( val1=(s)mem[0x404], val2=128, condition="val1 < val2", address_if_false=0x2e2 )
 0x02dc    mem[0x404] += 1 -- op3c
 0x02df    op01_JumpTo( address=0x2d4 )
 0x02e2    op26_Wait( time=5 )

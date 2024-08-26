@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0x0000007f,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -46,7 +50,7 @@ Actor_0x01:on_start:
 0x007e    op00_Return()
 
 Actor_0x01:on_update:
-0x007f    op02_JumpToConditional( val1=mem[0x412], val2=0, condition="val1 == val2", address_if_false=0x8b )
+0x007f    op02_JumpToConditional( val1=(s)mem[0x412], val2=0, condition="val1 == val2", address_if_false=0x8b )
 0x0087    -- 0x1E()
 0x0088    mem[0x412] = true -- op36
 0x008b    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x97 )

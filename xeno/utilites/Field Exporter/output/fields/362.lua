@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x0007ffff, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -244,7 +248,7 @@ Actor_0x0d:on_talk:
 0x0148    op09_CallActorEventEndSync( actor_id=Actor_0x12, event=event_0x04, priority=0x01 )
 0x014b    op26_Wait( time=12 )
 0x014e    op74_SoundPlayFixedVolume( sound_id=136 )
-0x0151    op02_JumpToConditional( val1=mem[0x408], val2=30, condition="val1 < val2", address_if_false=0x16b )
+0x0151    op02_JumpToConditional( val1=(s)mem[0x408], val2=30, condition="val1 < val2", address_if_false=0x16b )
 0x0159    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=(s)mem[0xfff4] )
 0x0162    mem[0x408] += 1 -- op3c
 0x0165    op26_Wait( time=1 )

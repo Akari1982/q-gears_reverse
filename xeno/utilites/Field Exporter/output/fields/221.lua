@@ -3,6 +3,10 @@ var = [
     0x00000000, 0x00000000, 0x00000000, 0xc000007f,
     0x0007ffff, 0x000001ff, 0x00000000, 0x00000000,
     0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
 ]
 
 unknown = [
@@ -33,7 +37,7 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0065    op02_JumpToConditional( val1=(s)mem[0x240], val2=128, condition="val1 & val2", address_if_false=0x70 )
 0x006d    op01_JumpTo( address=0x100 )
-0x0070    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x7b )
+0x0070    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x7b )
 0x0078    op01_JumpTo( address=0x100 )
 0x007b    op02_JumpToConditional( val1=(s)mem[0x246], val2=512, condition="val1 & val2", address_if_false=0xa3 )
 0x0083    opB4_FadeOut()
