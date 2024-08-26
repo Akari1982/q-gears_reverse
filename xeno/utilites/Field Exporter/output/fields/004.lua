@@ -929,7 +929,7 @@ function:
 0x16b2    op0D_Return()
 0x16b3    opF1_FadeSetUp( steps=3, r=246, g=99, b=31, semi_tr=60 )
 0x16be    op0D_Return()
-0x16bf    -- 0xFE69( actor_id=Actor_0x38, render_settings=(s)mem[0x3e04], rot_x=mem[0x3500], rot_y=(s)mem[0x43a] )
+0x16bf    -- 0xFE69( actor_id=Actor_0x38, render_settings=(s)mem[0x3e04], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x43a] )
 0x16c8    op01_JumpTo( address=0x4000 )
 0x16cb    op02_JumpToConditional( val1=(s)mem[0x3e], val2=0, condition="val1 == val2", address_if_false=0x1700 )
 0x16d3    op02_JumpToConditional( val1=(s)mem[0x438], val2=51, condition="val1 < val2", address_if_false=0x16e1 )
@@ -1033,7 +1033,3 @@ function:
 0x193c    -- 0xBB( ???=0x7 )
 0x193e    -- 0x5A()
 0x193f    op0D_Return()
-0x1940    op00_Return()
-0x1941    op26_Wait( time=50 )
-0x1944    -- 0x44()
-0x1949    -- MISSING OPCODE 0x58

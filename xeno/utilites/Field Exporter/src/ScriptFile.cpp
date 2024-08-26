@@ -31,7 +31,7 @@ ScriptFile::GetScripts( const std::string& path )
     Logger* exp = new Logger( path );
 
     exp->Log( "var = [\n" );
-    for( u32 i = 0; i < 0x40; i += 4 )
+    for( u32 i = 0; i < 0x80; i += 4 )
     {
         if( ( i & 0xf ) == 0 ) exp->Log( "   " );
         m_Signs.push_back( GetU32LE( i ) );

@@ -32,30 +32,47 @@ ArchiveFile::Extract()
 
     u32 size = GetU32LE( src );
     src += 4;
-
     u8* decomp_buffer = ( u8* )malloc( sizeof( u8 ) * size );
 
-    while( dst < size )
+    u32 end = dst + size;
+
+//printf("archive size %04x\n", m_BufferSize );
+//printf("extracted size %04x\n", size );
+
+    while( true )
     {
-        u8 control = GetU8( src++ );
+        if( dst >= end ) break;
+
+        u8 control = GetU8( src );
+        src += 1;
 
         for( int i = 8; i != 0; --i )
         {
-            if( control & 0x1 )
+//printf("data src %04x\n", src );
+            u8 data = GetU8( src );
+            src += 1;
+
+            if( control & 1 )
             {
-                u16 repeat = dst - (((GetU8( src + 1 ) & 0xf) << 0x8) | GetU8( src ));
-                u16 repeat_end = repeat + (GetU8( src + 1 ) >> 0x4) + 0x3;
+                u16 repeat = dst - (((GetU8( src ) & 0xf) << 0x8) | data);
+                u16 repeat_end = repeat + (GetU8( src ) >> 0x4) + 0x3;
 
                 do
                 {
-                    decomp_buffer[ dst++ ] = decomp_buffer[ repeat++ ];
+//printf("extract %04x repeat %04x", dst, repeat );
+                    decomp_buffer[ dst ] = decomp_buffer[ repeat ];
+                    repeat += 1;
+                    dst += 1;
+//printf(" done\n");
                 } while( repeat != repeat_end );
 
-                src += 2;
+                src += 1;
             }
             else
             {
-                decomp_buffer[ dst++ ] = GetU8( src++ );
+//printf("extract %04x from %04x\n", dst, src - 1);
+                decomp_buffer[ dst ] = data;
+                dst += 1;
             }
 
             control >>= 1;

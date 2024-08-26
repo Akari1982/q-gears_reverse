@@ -24,7 +24,7 @@ FieldPackFile::Extract( u32 id )
         return NULL;
     }
 
-    u32 length_uncompressed = GetU32LE( 0x010c + id * 0x04 ) + 0x10;
+    u32 length_uncompressed = GetU32LE( 0x010c + id * 0x04 ); // real code add 0x10 but we don't need additional space
     u32 first_file = GetU32LE( 0x0130 + id * 0x04 );
     u32 length = 0;
     if( id < 8 )

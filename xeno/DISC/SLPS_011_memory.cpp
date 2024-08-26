@@ -1098,24 +1098,21 @@ src = A0;
 dst = A1;
 
 size = w[src];
-src = src + 4;
+src += 4;
 end = dst + size;
 start = dst;
 
 while( true )
 {
-    if( dst == end )
-    {
-        return start;
-    }
+    if( dst == end ) return start;
 
     control = bu[src];
-    src = src + 1;
+    src += 1;
 
     for( int i = 8; i != 0; --i )
     {
         data = bu[src];
-        src = src + 1;
+        src += 1;
 
         if( control & 1 )
         {
@@ -1125,19 +1122,19 @@ while( true )
             do
             {
                 [dst] = b(b[repeat]);
-                repeat = repeat + 1;
-                dst = dst + 1;
+                repeat += 1;
+                dst += 1;
             } while( repeat != repeat_end )
 
-            src = src + 1;
+            src += 1;
         }
         else
         {
             [dst] = b(data);
-            dst = dst + 1;
+            dst += 1;
         }
 
-        control = control >> 1;
+        control >>= 1;
     }
 }
 ////////////////////////////////

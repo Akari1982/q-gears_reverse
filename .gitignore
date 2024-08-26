@@ -18,5 +18,5 @@ build
 /xeno/utilites/field exporter/.vs
 /xeno/utilites/field exporter/output/*.pdb
 /xeno/utilites/field exporter/*.user
+/xeno/utilites/field exporter/output/fields_raw
 /xeno/utilites/Field Exporter/output/fields_raw
-/xeno/utilites/Field Exporter/output/fields_raw/*.mes

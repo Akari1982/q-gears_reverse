@@ -219,6 +219,3 @@ Actor_0x0d:on_push:
 0x00c1    -- 0x98_MapLoad( field_id=399, value=0 )
 0x00c6    -- 0x5B()
 0x00c7    op00_Return()
-0x00c8    op00_Return()
-0x00c9    op00_Return()
-0x00ca    -- MISSING OPCODE 0x91
