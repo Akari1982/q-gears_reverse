@@ -219,7 +219,7 @@ Actor_0x0c:on_update:
 
 Actor_0x0c:on_talk:
 0x0123    op2C_SpritePlayAnim( anim_id=0x0 )
-0x0125    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=128, condition="val1 & val2", address_if_false=0x144 )
+0x0125    op02_JumpToConditional( val1=mem[0x2c6], val2=128, condition="val1 & val2", address_if_false=0x144 )
 0x012d    -- 0x70()
 0x012f    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x0133    op9C_MessageSync()

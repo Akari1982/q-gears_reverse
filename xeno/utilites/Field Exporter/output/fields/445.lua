@@ -36,7 +36,7 @@ Actor_0x00:on_update:
 0x0066    op01_JumpTo( address=0xb1 )
 0x0069    -- 0x8B( check?=99, jump=0xb1 )
 0x006e    -- 0x27( actor_id=Actor_0x0d )
-0x0070    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x7b )
+0x0070    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x7b )
 0x0078    op01_JumpTo( address=0x70 )
 0x007b    mem[0x400] = false -- op37
 0x007e    op26_Wait( time=30 )

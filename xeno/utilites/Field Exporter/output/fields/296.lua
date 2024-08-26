@@ -50,7 +50,7 @@ Actor_0x01:on_start:
 0x00a1    op00_Return()
 
 Actor_0x01:on_update:
-0x00a2    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xab )
+0x00a2    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xab )
 0x00aa    -- 0xA7()
 0x00ab    op00_Return()
 
@@ -89,7 +89,7 @@ Actor_0x02:on_start:
 0x00d8    op00_Return()
 
 Actor_0x02:on_update:
-0x00d9    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xe2 )
+0x00d9    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xe2 )
 0x00e1    -- 0xA7()
 0x00e2    op00_Return()
 

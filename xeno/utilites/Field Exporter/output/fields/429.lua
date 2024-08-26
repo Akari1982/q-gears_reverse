@@ -232,7 +232,7 @@ Actor_0x0c:on_start:
 
 Actor_0x0c:on_update:
 0x00df    mem[0x410] = opA8_Random( max=3 )
-0x00e4    op02_JumpToConditional( val1=(s)mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x107 )
+0x00e4    op02_JumpToConditional( val1=mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x107 )
 0x00ec    op2C_SpritePlayAnim( anim_id=0x2 )
 0x00ee    op02_JumpToConditional( val1=mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0xf9 )
 0x00f6    op01_JumpTo( address=0xff )

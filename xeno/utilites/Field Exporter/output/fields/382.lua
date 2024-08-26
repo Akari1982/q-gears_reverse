@@ -199,6 +199,6 @@ Actor_0x0c:on_push:
 
 Actor_0x0c:event_0x04:
 0x00ad    mem[0x402] = false -- op37
-0x00b0    op02_JumpToConditional( val1=mem[0x402], val2=14, condition="val1 < val2", address_if_false=0xc8 )
+0x00b0    op02_JumpToConditional( val1=(s)mem[0x402], val2=14, condition="val1 < val2", address_if_false=0xc8 )
 0x00b8    opC6_ExpandRun() -- exp0x20
 0x00b9    -- MISSING OPCODE 0xFE1b

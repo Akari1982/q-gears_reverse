@@ -80,7 +80,7 @@ Actor_0x01:event_0x07:
 0x008d    op74_SoundPlayFixedVolume( sound_id=405 )
 0x0090    op26_Wait( time=20 )
 0x0093    op2C_SpritePlayAnim( anim_id=0x7 )
-0x0095    op02_JumpToConditional( val1=mem[0x410], val2=0, condition="val1 == val2", address_if_false=0xb6 )
+0x0095    op02_JumpToConditional( val1=(s)mem[0x410], val2=0, condition="val1 == val2", address_if_false=0xb6 )
 0x009d    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00a1    op9C_MessageSync()
 0x00a2    op2C_SpritePlayAnim( anim_id=0xff )

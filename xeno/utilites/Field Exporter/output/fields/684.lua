@@ -50,7 +50,7 @@ Actor_0x01:on_update:
 0x006b    opFE4B_SpriteAddAnimSync()
 0x006d    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x0070    -- 0x2D()
-0x0078    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x95 )
+0x0078    op02_JumpToConditional( val1=mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x95 )
 0x0080    mem[0x400] -= 20 -- op39
 0x0086    mem[0x404] += 50 -- op38
 0x008c    mem[0x402] -= 25 -- op39

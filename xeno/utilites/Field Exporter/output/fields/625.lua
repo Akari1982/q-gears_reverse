@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x001f    op00_Return()
 
 Actor_0x00:on_update:
-0x0020    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x230 )
+0x0020    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x230 )
 0x0028    opC6_ExpandRun() -- exp0x20
 0x0029    opF1_FadeSetUp( steps=3, r=95, g=22, b=30, semi_tr=1 )
 0x0034    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )

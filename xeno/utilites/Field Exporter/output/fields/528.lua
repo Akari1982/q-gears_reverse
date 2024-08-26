@@ -80,4 +80,10 @@ Actor_0x04:on_start:
 0x0066    op00_Return()
 
 Actor_0x04:on_update:
-0x0067    -- MISSING OPCODE 0x89
+0x0067    -- 0x89()
+0x006d    -- 0x85()
+0x0072    op6F_ActorRotateToActor( actor_id=party1 )
+0x0074    -- 0xFE54()
+0x0076    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x007a    op9C_MessageSync()
+0x007b    -- MISSING OPCODE 0xFE17

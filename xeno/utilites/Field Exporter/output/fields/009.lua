@@ -226,7 +226,7 @@ Actor_0x0a:on_start:
 
 Actor_0x0a:on_update:
 0x013a    mem[0x410] = opA8_Random( max=4 )
-0x013f    op02_JumpToConditional( val1=mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x159 )
+0x013f    op02_JumpToConditional( val1=(s)mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x159 )
 0x0147    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x014d    op69_ActorSetRotation( rot=3 )
 0x0150    op5D_SpritePlayAnim2( anim_id=0x2 )

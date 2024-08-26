@@ -36,7 +36,7 @@ Actor_0x00:on_talk:
 0x0063    op00_Return()
 
 Actor_0x00:on_push:
-0x0064    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x7b )
+0x0064    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x7b )
 0x006c    -- 0xE1_BackgroundSetTex()
 0x007a    -- 0x5A()
 0x007b    op00_Return()

@@ -192,7 +192,7 @@ Actor_0x0c:on_update:
 0x00a6    op00_Return()
 
 Actor_0x0c:on_talk:
-0x00a7    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xb3 )
+0x00a7    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xb3 )
 0x00af    -- 0x5A()
 0x00b0    op01_JumpTo( address=0xa7 )
 0x00b3    -- 0x27( actor_id=Actor_0x0d )

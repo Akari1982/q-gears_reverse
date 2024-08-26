@@ -213,7 +213,7 @@ Actor_0x0c:on_talk:
 0x00fe    -- 0xFE54()
 0x0100    -- 0x70()
 0x0102    op26_Wait( time=10 )
-0x0105    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x118 )
+0x0105    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x118 )
 0x010d    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x0111    op9C_MessageSync()
 0x0112    mem[0x40a] = true -- op36

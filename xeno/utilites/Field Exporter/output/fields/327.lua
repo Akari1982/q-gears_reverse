@@ -36,7 +36,7 @@ Actor_0x01:on_start:
 0x0045    op00_Return()
 
 Actor_0x01:on_update:
-0x0046    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x53 )
+0x0046    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x53 )
 0x004e    -- 0xA7()
 0x004f    op00_Return()
 0x0050    op01_JumpTo( address=0x55 )
@@ -88,7 +88,7 @@ Actor_0x01:event_0x0b:
 Actor_0x01:event_0x0c:
 0x009a    -- 0xF6( ???=0x2 )
 0x009c    -- 0x1F( ???=0x10 )
-0x009e    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0xb2 )
+0x009e    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0xb2 )
 0x00a6    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00ac    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x00b2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
@@ -350,7 +350,7 @@ Actor_0x04:event_0x0f:
 Actor_0x04:event_0x10:
 0x0246    -- 0xF6( ???=0x1 )
 0x0248    -- 0x2D()
-0x0250    op02_JumpToConditional( val1=(s)mem[0x410], val2=2, condition="val1 < val2", address_if_false=0x270 )
+0x0250    op02_JumpToConditional( val1=mem[0x410], val2=2, condition="val1 < val2", address_if_false=0x270 )
 0x0258    -- 0x57( type=0x2, x=(vf80)0x040a, z=(vf40)0x040c, y=(vf20)0x0000, ???=(vf10)0xffb5, flag=0x30 )
 0x0263    -- 0x57( type=0x8f )
 0x0265    op26_Wait( time=1 )

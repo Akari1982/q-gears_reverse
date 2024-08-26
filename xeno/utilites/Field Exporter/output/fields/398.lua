@@ -217,4 +217,9 @@ Actor_0x0d:on_push:
 0x00c7    op00_Return()
 0x00c8    op00_Return()
 0x00c9    op00_Return()
-0x00ca    -- MISSING OPCODE 0x58
+0x00ca    op00_Return()
+0x00cb    -- 0x16_ActorPCInit( char_id=5 )
+0x00ce    opFE0D_MessageSetFace( char_id=5 )
+0x00d2    op00_Return()
+0x00d3    -- 0xA7()
+0x00d4    -- MISSING OPCODE 0xeb

@@ -316,5 +316,5 @@ Actor_0x0c:on_start:
 
 Actor_0x0c:on_update:
 0x01ca    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x1f2 )
-0x01d2    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x1f2 )
+0x01d2    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x1f2 )
 0x01da    -- MISSING OPCODE 0xFE17

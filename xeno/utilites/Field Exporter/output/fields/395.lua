@@ -203,4 +203,24 @@ Actor_0x0c:on_start:
 
 Actor_0x0c:on_update:
 0x00f2    -- 0xCB_TriggerJumpTo( trigger_id=31744, jump=0x9800 )
-0x00f7    -- MISSING OPCODE 0x8a
+0x00f7    -- 0x8A()
+0x00fb    -- 0x5B()
+0x00fc    op00_Return()
+
+Actor_0x0c:on_talk:
+
+Actor_0x0c:on_push:
+0x00fd    op00_Return()
+
+Actor_0x0d:on_start:
+0x00fe    -- 0xBC_ActorNoModelInit()
+0x00ff    -- 0x2A()
+0x0100    op00_Return()
+
+Actor_0x0d:on_update:
+0x0101    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0xb00], jump=0x9801 )
+0x0106    -- 0x93( ???=(s)mem[0x380] )
+0x0109    -- 0x80()
+0x010e    op02_JumpToConditional( val1=(s)mem[0x1904], val2=(s)mem[0x404], condition="val1 & val2", address_if_false=0x4 )
+0x0116    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x123 )
+0x011e    -- MISSING OPCODE 0x1a

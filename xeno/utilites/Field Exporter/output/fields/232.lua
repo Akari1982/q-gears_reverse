@@ -247,21 +247,21 @@ Actor_0x0b:on_update:
 0x02c2    -- 0x5F( ???=0x1 )
 0x02c4    mem[0x408] = opA8_Random( max=60 )
 0x02c9    mem[0x408] += 10 -- op38
-0x02cf    op26_Wait( time=mem[0x408] )
+0x02cf    op26_Wait( time=(s)mem[0x408] )
 0x02d2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x02d8    -- 0x5F( ???=0x6 )
 0x02da    mem[0x408] = opA8_Random( max=60 )
-0x02df    op26_Wait( time=mem[0x408] )
+0x02df    op26_Wait( time=(s)mem[0x408] )
 0x02e2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x02e8    -- 0x5F( ???=0x2 )
 0x02ea    mem[0x408] = opA8_Random( max=60 )
 0x02ef    mem[0x408] += 10 -- op38
-0x02f5    op26_Wait( time=mem[0x408] )
+0x02f5    op26_Wait( time=(s)mem[0x408] )
 0x02f8    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x02fe    -- 0x5F( ???=0x6 )
 0x0300    mem[0x408] = opA8_Random( max=60 )
 0x0305    mem[0x408] += 30 -- op38
-0x030b    op26_Wait( time=mem[0x408] )
+0x030b    op26_Wait( time=(s)mem[0x408] )
 0x030e    op00_Return()
 
 Actor_0x0b:on_talk:

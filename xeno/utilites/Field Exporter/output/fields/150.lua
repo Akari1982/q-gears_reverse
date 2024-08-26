@@ -188,4 +188,20 @@ Actor_0x0c:on_start:
 0x00b4    op2C_SpritePlayAnim( anim_id=0x2 )
 
 Actor_0x0c:on_update:
-0x00b6    -- MISSING OPCODE 0x89
+0x00b6    -- 0x89()
+0x00bc    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x019c, flag=(flag)0xc0 )
+0x00c2    op2C_SpritePlayAnim( anim_id=0xff )
+0x00c4    op00_Return()
+
+Actor_0x0c:on_talk:
+0x00c5    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00c9    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x00ca    op00_Return()
+
+Actor_0x0d:on_start:
+0x00cb    -- 0xBC_ActorNoModelInit()
+0x00cc    -- 0xF8()
+0x00d0    -- 0x18()
+0x00d5    -- MISSING OPCODE 0x1b

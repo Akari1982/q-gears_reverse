@@ -189,7 +189,7 @@ Actor_0x0c:on_update:
 0x009a    op00_Return()
 
 Actor_0x0c:on_talk:
-0x009b    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0xbe )
+0x009b    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0xbe )
 0x00a3    mem[0x40a] = true -- op36
 0x00a6    -- 0x70()
 0x00a8    op26_Wait( time=20 )

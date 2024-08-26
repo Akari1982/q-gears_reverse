@@ -92,10 +92,10 @@ Actor_0x00:on_update:
 0x00fc    -- 0xFE54()
 0x00fe    mem[0x406] = true -- op36
 0x0101    op01_JumpTo( address=0x128 )
-0x0104    op02_JumpToConditional( val1=mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x115 )
+0x0104    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x115 )
 0x010c    -- 0xFE65()
 0x0112    mem[0x40a] = true -- op36
-0x0115    op02_JumpToConditional( val1=mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x128 )
+0x0115    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x128 )
 0x011d    -- 0x28()
 0x011f    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x06, priority=0x01 )
 0x0122    mem[0x408] = true -- op36
@@ -114,7 +114,7 @@ Actor_0x01:on_start:
 0x0132    op00_Return()
 
 Actor_0x01:on_update:
-0x0133    op02_JumpToConditional( val1=mem[0x40c], val2=1, condition="val1 == val2", address_if_false=0x16b )
+0x0133    op02_JumpToConditional( val1=(s)mem[0x40c], val2=1, condition="val1 == val2", address_if_false=0x16b )
 0x013b    op26_Wait( time=3 )
 0x013e    opF1_FadeSetUp( steps=0, r=180, g=80, b=80, semi_tr=5 )
 0x0149    mem[0x40e] = opA8_Random( max=20 )

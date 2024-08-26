@@ -304,7 +304,7 @@ Actor_0x04:on_start:
 0x02f6    op00_Return()
 
 Actor_0x04:on_update:
-0x02f7    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x300 )
+0x02f7    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x300 )
 0x02ff    -- 0xA7()
 0x0300    op00_Return()
 
@@ -1024,7 +1024,7 @@ Actor_0x0c:on_start:
 0x0866    op00_Return()
 
 Actor_0x0c:on_update:
-0x0867    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x870 )
+0x0867    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x870 )
 0x086f    -- 0xA7()
 0x0870    op00_Return()
 
@@ -2524,4 +2524,7 @@ function:
 0x1df1    op00_Return()
 0x1df2    op00_Return()
 0x1df3    op00_Return()
-0x1df4    -- MISSING OPCODE 0x7b
+0x1df4    -- 0x22()
+0x1df5    -- 0xE7( ???=27800, ???=29336, ???=(s)mem[0x0] )
+0x1dfc    -- 0x70()
+0x1dfe    -- 0x1D()

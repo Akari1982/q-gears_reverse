@@ -306,8 +306,9 @@ Actor_0x0d:on_talk:
 Actor_0x0d:on_push:
 0x0278    op00_Return()
 0x0279    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x4 )
-0x0280    op03_MessageShowFixed2( text_id=0x3980, flags=NO_FACE|FORCE_TOP )
-0x0284    opC7_CameraRotRight( steps=13372 )
-0x0287    opD6_MessageSetSpeed( speed=0x5e63 )
-0x028a    op00_Return()
-0x028b    -- MISSING OPCODE 0x10
+0x0280    op00_Return()
+0x0281    op00_Return()
+0x0282    op00_Return()
+0x0283    op00_Return()
+0x0284    -- 0xC0( ???=6374 )
+0x0287    -- MISSING OPCODE 0x0f

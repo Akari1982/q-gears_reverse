@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x0016    op01_JumpTo( address=0x1c )
 0x0019    -- 0x75( ???=24 )
 0x001c    -- 0x86_ProgressNotEqualJumpTo( value=209, jump=0x2b )
-0x0021    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=256, condition="val1 & val2", address_if_false=0x2b )
+0x0021    op02_JumpToConditional( val1=mem[0x2ca], val2=256, condition="val1 & val2", address_if_false=0x2b )
 0x0029    -- 0xFE54()
 0x002b    op00_Return()
 

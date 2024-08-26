@@ -70,12 +70,12 @@ Actor_0x02:on_push:
 Actor_0x02:event_0x04:
 0x005a    op2C_SpritePlayAnim( anim_id=0x1 )
 0x005c    mem[0x402] = false -- op37
-0x005f    op02_JumpToConditional( val1=(s)mem[0x402], val2=10, condition="val1 < val2", address_if_false=0x73 )
+0x005f    op02_JumpToConditional( val1=mem[0x402], val2=10, condition="val1 < val2", address_if_false=0x73 )
 0x0067    op6C_ActorRotateAnticlockwise( rot=1 )
 0x006a    mem[0x402] += 1 -- op3c
 0x006d    op26_Wait( time=2 )
 0x0070    op01_JumpTo( address=0x5f )
-0x0073    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 > val2", address_if_false=0x87 )
+0x0073    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 > val2", address_if_false=0x87 )
 0x007b    op6B_ActorRotateClockwise( rot=1 )
 0x007e    mem[0x402] -= 1 -- op3d
 0x0081    op26_Wait( time=2 )
@@ -99,12 +99,12 @@ Actor_0x03:on_push:
 Actor_0x03:event_0x04:
 0x0094    op2C_SpritePlayAnim( anim_id=0x1 )
 0x0096    mem[0x404] = false -- op37
-0x0099    op02_JumpToConditional( val1=(s)mem[0x404], val2=10, condition="val1 < val2", address_if_false=0xad )
+0x0099    op02_JumpToConditional( val1=mem[0x404], val2=10, condition="val1 < val2", address_if_false=0xad )
 0x00a1    op6C_ActorRotateAnticlockwise( rot=1 )
 0x00a4    mem[0x404] += 1 -- op3c
 0x00a7    op26_Wait( time=2 )
 0x00aa    op01_JumpTo( address=0x99 )
-0x00ad    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 > val2", address_if_false=0xc1 )
+0x00ad    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 > val2", address_if_false=0xc1 )
 0x00b5    op6B_ActorRotateClockwise( rot=1 )
 0x00b8    mem[0x404] -= 1 -- op3d
 0x00bb    op26_Wait( time=2 )

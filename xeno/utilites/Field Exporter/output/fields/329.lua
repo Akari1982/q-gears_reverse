@@ -32,7 +32,7 @@ Actor_0x01:on_start:
 0x0028    op00_Return()
 
 Actor_0x01:on_update:
-0x0029    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x36 )
+0x0029    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x36 )
 0x0031    -- 0xA7()
 0x0032    op00_Return()
 0x0033    op01_JumpTo( address=0x38 )
@@ -76,7 +76,7 @@ Actor_0x02:on_start:
 0x0070    op00_Return()
 
 Actor_0x02:on_update:
-0x0071    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x7e )
+0x0071    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x7e )
 0x0079    -- 0xA7()
 0x007a    op00_Return()
 0x007b    op01_JumpTo( address=0x80 )
@@ -116,7 +116,7 @@ Actor_0x03:on_start:
 0x00a1    op00_Return()
 
 Actor_0x03:on_update:
-0x00a2    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xaf )
+0x00a2    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xaf )
 0x00aa    -- 0xA7()
 0x00ab    op00_Return()
 0x00ac    op01_JumpTo( address=0xb1 )
@@ -156,7 +156,7 @@ Actor_0x04:on_start:
 0x00d2    op00_Return()
 
 Actor_0x04:on_update:
-0x00d3    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xe0 )
+0x00d3    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xe0 )
 0x00db    -- 0xA7()
 0x00dc    op00_Return()
 0x00dd    op01_JumpTo( address=0xe2 )
@@ -209,7 +209,7 @@ Actor_0x04:event_0x0b:
 Actor_0x04:event_0x0c:
 0x0111    -- 0xF6( ???=0x1 )
 0x0113    -- 0x2D()
-0x011b    op02_JumpToConditional( val1=mem[0x40e], val2=5, condition="val1 < val2", address_if_false=0x13d )
+0x011b    op02_JumpToConditional( val1=(s)mem[0x40e], val2=5, condition="val1 < val2", address_if_false=0x13d )
 0x0123    op6F_ActorRotateToActor( actor_id=Actor_0x0c )
 0x0125    -- 0x57( type=0x2, x=(vf80)0x0408, z=(vf40)0x040a, y=(vf20)0x0000, ???=(vf10)0xffb5, flag=0x30 )
 0x0130    -- 0x57( type=0x8f )

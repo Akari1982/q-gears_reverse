@@ -194,7 +194,7 @@ Actor_0x0c:on_talk:
 0x00a6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00aa    op9C_MessageSync()
 0x00ab    op01_JumpTo( address=0xc3 )
-0x00ae    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xbe )
+0x00ae    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xbe )
 0x00b6    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x00ba    op9C_MessageSync()
 0x00bb    op01_JumpTo( address=0xc3 )

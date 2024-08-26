@@ -17,7 +17,7 @@ Actor_0x00:on_start:
 0x0017    mem[0x400] = opA8_Random( max=255 )
 0x001c    mem[0x402] = opA8_Random( max=255 )
 0x0021    mem[0x404] = opA8_Random( max=255 )
-0x0026    -- 0xE7( ???=(s)mem[0x400], ???=mem[0x402], ???=(s)mem[0x404] )
+0x0026    -- 0xE7( ???=(s)mem[0x400], ???=(s)mem[0x402], ???=(s)mem[0x404] )
 0x002d    op00_Return()
 
 Actor_0x00:on_update:

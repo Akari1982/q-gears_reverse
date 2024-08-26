@@ -74,4 +74,90 @@ Actor_0x01:event_0x06:
 0x0080    -- 0x23()
 0x0081    op26_Wait( time=1 )
 0x0084    -- 0x22()
-0x0085    -- MISSING OPCODE 0x7b
+0x0085    -- 0x7B()
+0x0089    op00_Return()
+
+Actor_0x02:on_start:
+0x008a    -- 0x16_ActorPCInit( char_id=1 )
+0x008d    opFE0D_MessageSetFace( char_id=1 )
+0x0091    op00_Return()
+
+Actor_0x02:on_update:
+0x0092    -- 0xA7()
+0x0093    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0094    op00_Return()
+
+Actor_0x03:on_start:
+0x0095    -- 0x16_ActorPCInit( char_id=2 )
+0x0098    opFE0D_MessageSetFace( char_id=2 )
+0x009c    op00_Return()
+
+Actor_0x03:on_update:
+0x009d    -- 0xA7()
+0x009e    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x009f    op00_Return()
+
+Actor_0x04:on_start:
+0x00a0    -- 0xBC_ActorNoModelInit()
+0x00a1    -- 0xF8()
+0x00a5    -- 0x2A()
+0x00a6    op00_Return()
+
+Actor_0x04:on_update:
+0x00a7    op02_JumpToConditional( val1=(s)mem[0x21a], val2=4, condition="val1 & val2", address_if_false=0xb2 )
+0x00af    op01_JumpTo( address=0xe2 )
+0x00b2    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0xdf )
+0x00ba    mem[0x402] = 256 -- op35
+0x00c0    op02_JumpToConditional( val1=mem[0x402], val2=0, condition="val1 > val2", address_if_false=0xd5 )
+0x00c8    -- 0xBF( ???=mem[0x402] )
+0x00cb    mem[0x402] -= 4 -- op39
+0x00d1    -- 0x5A()
+0x00d2    op01_JumpTo( address=0xc0 )
+0x00d5    mem[0x21a] |= 1 << 2 -- op3a
+0x00db    -- 0x5B()
+0x00dc    op01_JumpTo( address=0xe2 )
+0x00df    -- 0xBF( ???=256 )
+0x00e2    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x00e3    op00_Return()
+
+Actor_0x05:on_start:
+0x00e4    -- 0xBC_ActorNoModelInit()
+0x00e5    -- 0x2A()
+0x00e6    -- 0x18()
+0x00eb    op00_Return()
+
+Actor_0x05:on_update:
+0x00ec    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x115 )
+0x00f4    mem[0x404] = 256 -- op35
+0x00fa    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x10f )
+0x0102    -- 0xBF( ???=mem[0x404] )
+0x0105    mem[0x404] -= 4 -- op39
+0x010b    -- 0x5A()
+0x010c    op01_JumpTo( address=0xfa )
+0x010f    op29_ActorTurnOff( actor_id=Actor_0x05 )
+0x0111    -- 0x5B()
+0x0112    op01_JumpTo( address=0x118 )
+0x0115    -- 0xBF( ???=256 )
+0x0118    op00_Return()
+
+Actor_0x05:on_talk:
+0x0119    op00_Return()
+
+Actor_0x05:on_push:
+0x011a    op00_Return()
+
+Actor_0x06:on_start:
+0x011b    -- 0xBC_ActorNoModelInit()
+0x011c    -- MISSING OPCODE 0x1b
