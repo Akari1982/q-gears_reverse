@@ -155,6 +155,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x04:
+            {
+                exp->Log( "-- 0x04()" );
+                pointer += 1;
+            }
+            break;
+
             case 0x05:
             {
                 Mark mark;
@@ -690,6 +697,20 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x58:
+            {
+                exp->Log( "-- 0x58()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0x59:
+            {
+                exp->Log( "-- 0x59()" );
+                pointer += 1;
+            }
+            break;
+
             case 0x5a:
             {
                 exp->Log( "-- 0x5A()" );
@@ -806,6 +827,20 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0x70()" );
                 pointer += 2;
+            }
+            break;
+
+            case 0x71:
+            {
+                exp->Log( "-- 0x71()" );
+                pointer += 3;
+            }
+            break;
+
+            case 0x72:
+            {
+                exp->Log( "-- 0x72()" );
+                pointer += 3;
             }
             break;
 
@@ -979,6 +1014,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x8f:
+            {
+                exp->Log( "-- 0x8F()" );
+                pointer += 3;
+            }
+            break;
+
             case 0x93:
             {
                 exp->Log( "-- 0x93( ???=" + GetV80Variable( pointer + 1 ) + " )" );
@@ -1121,6 +1163,34 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xb7:
+            {
+                exp->Log( "-- 0xB7()" );
+                pointer += 1;
+            }
+            break;
+
+            case 0xb8:
+            {
+                exp->Log( "-- 0xB8()" );
+                pointer += 1;
+            }
+            break;
+
+            case 0xb9:
+            {
+                exp->Log( "-- 0xB9()" );
+                pointer += 4;
+            }
+            break;
+
+            case 0xba:
+            {
+                exp->Log( "-- 0xBA()" );
+                pointer += 2;
+            }
+            break;
+
             case 0xbb:
             {
                 exp->Log( "-- 0xBB( ???=" + GetU8Variable( pointer + 1 ) + " )" );
@@ -1163,10 +1233,38 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xc1:
+            {
+                exp->Log( "-- 0xC1()" );
+                pointer += 3;
+            }
+            break;
+
             case 0xc2:
             {
                 exp->Log( "-- 0xC2( ???=" + GetV80Variable( pointer + 1 ) + " )" );
                 pointer += 3;
+            }
+            break;
+
+            case 0xc3:
+            {
+                exp->Log( "-- 0xC3()" );
+                pointer += 1;
+            }
+            break;
+
+            case 0xc4:
+            {
+                exp->Log( "-- 0xC4()" );
+                pointer += 2;
+            }
+            break;
+
+            case 0xc5:
+            {
+                exp->Log( "-- 0xC5()" );
+                pointer += 2;
             }
             break;
 
@@ -1289,13 +1387,19 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xe5:
+            {
+                exp->Log( "-- 0xE5()" );
+                pointer += 0x11;
+            }
+            break;
+
             case 0xe6:
             {
                 exp->Log( "-- 0xE6()" );
                 pointer += 9;
             }
             break;
-
 
             case 0xe7:
             {
@@ -1374,6 +1478,14 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xf7:
+            {
+                exp->Log( "-- 0xF7()" );
+                pointer += 5;
+            }
+            break;
+
+
             case 0xf8:
             {
                 exp->Log( "-- 0xF8()" );
@@ -1447,6 +1559,11 @@ ScriptFile::GetScripts( const std::string& path )
                 else if( eo_opcode == 0x0e )
                 {
                     exp->Log( "-- 0xFE0E_SoundSetVolume( volume=" + GetV80Variable( pointer + 1 ) + ", steps=" + GetV80Variable( pointer + 3 ) + " )" );
+                    pointer += 5;
+                }
+                else if( eo_opcode == 0x13 )
+                {
+                    exp->Log( "-- 0xFE13()" );
                     pointer += 5;
                 }
                 else if( eo_opcode == 0x15 )
@@ -1629,6 +1746,37 @@ ScriptFile::GetScripts( const std::string& path )
                     u8 flag = GetU8( pointer + 13 );
                     exp->Log( "opFE77_LoadTim_04_00_07( file_id=" + GetVFVariable( pointer + 5, flag & 0x80, true ) + ", clut_y=" + GetVFVariable( pointer + 11, flag & 0x10 ) + ", x=" + GetVFVariable( pointer + 7, flag & 0x40 ) + ", y=" + GetVFVariable( pointer + 9, flag & 0x20 ) + " )" );
                     pointer += 17;
+                }
+                else if( eo_opcode == 0x80 )
+                {
+                    exp->Log( "-- 0xFE80()" );
+                    pointer += 0xf;
+                }
+
+                else if( eo_opcode == 0x8a )
+                {
+                    exp->Log( "-- 0xFE8A()" );
+                    pointer += 3;
+                }
+                else if( eo_opcode == 0x8b )
+                {
+                    exp->Log( "-- 0xFE8B()" );
+                    pointer += 3;
+                }
+                else if( eo_opcode == 0x8c )
+                {
+                    exp->Log( "-- 0xFE8C()" );
+                    pointer += 7;
+                }
+                else if( eo_opcode == 0x8d )
+                {
+                    exp->Log( "-- 0xFE8D()" );
+                    pointer += 3;
+                }
+                else if( eo_opcode == 0x8e )
+                {
+                    exp->Log( "-- 0xFE8E()" );
+                    pointer += 5;
                 }
                 else if( eo_opcode == 0x8f )
                 {
