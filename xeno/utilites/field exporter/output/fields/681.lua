@@ -18,4 +18,24 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x26 )
-0x0018    -- MISSING OPCODE 0x72
+0x0018    -- 0x72()
+0x001b    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
+0x0026    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x3c )
+0x002e    -- 0x72()
+0x0031    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
+0x003c    -- 0x2A()
+0x003d    op00_Return()
+
+Actor_0x00:on_update:
+0x003e    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x003f    op00_Return()
+
+Actor_0x01:on_start:
+0x0040    -- 0x16_ActorPCInit( char_id=0 )
+0x0043    opFE0D_MessageSetFace( char_id=0 )
+0x0047    -- 0xFE03( ???=1365 )
+0x004b    -- MISSING OPCODE 0xFE04

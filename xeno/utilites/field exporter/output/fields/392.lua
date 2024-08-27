@@ -234,4 +234,10 @@ Actor_0x0d:on_update:
 0x010d    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x1600], jump=0x9801 )
 0x0112    -- 0x87_SetProgress( progress=(s)mem[0x180] )
 0x0115    -- 0x80()
-0x011a    -- MISSING OPCODE 0x04
+0x011a    -- 0x04()
+0x011b    op02_JumpToConditional( val1=(s)mem[0x410], val2=1, condition="val1 == val2", address_if_false=0x126 )
+0x0123    op29_ActorTurnOff( actor_id=self )
+0x0125    op00_Return()
+0x0126    -- 0x19_ActorSetPosition( x=(vf80)0x0406, z=(vf40)0x0408, flag=(flag)0x00 )
+0x012c    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x139 )
+0x0134    -- MISSING OPCODE 0x1a

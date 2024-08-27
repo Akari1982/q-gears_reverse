@@ -18,4 +18,7 @@ unknown = [
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0x2A()
-0x000a    -- MISSING OPCODE 0xFE8e
+0x000a    -- 0xFE8E()
+0x0010    op02_JumpToConditional( val1=(s)mem[0x146], val2=5, condition="val1 == val2", address_if_false=0x65 )
+0x0018    -- 0xA0()
+0x001f    -- MISSING OPCODE 0xFE81

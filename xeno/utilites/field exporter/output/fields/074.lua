@@ -19,4 +19,59 @@ Actor_0x00:on_start:
 0x0039    -- 0xBC_ActorNoModelInit()
 0x003a    -- 0x2A()
 0x003b    op05_CallFunction( address=0xded )
-0x003e    -- MISSING OPCODE 0xe6
+0x003e    -- 0xE6()
+0x0047    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x4f )
+0x004c    op01_JumpTo( address=0x52 )
+0x004f    -- 0x75( ???=22 )
+0x0052    op02_JumpToConditional( val1=(s)mem[0x2], val2=6, condition="val1 == val2", address_if_false=0x69 )
+0x005a    -- 0xFE54()
+0x005c    -- 0xFE19( char_id=0x2 )
+0x005f    -- 0xA0()
+0x0066    op01_JumpTo( address=0x70 )
+0x0069    -- 0xA0()
+0x0070    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x79 )
+0x0075    -- 0xFE8D()
+0x0079    op00_Return()
+
+Actor_0x00:on_update:
+0x007a    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x83 )
+0x007f    op05_CallFunction( address=0xc01 )
+0x0082    op00_Return()
+0x0083    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0084    op00_Return()
+
+Actor_0x01:on_start:
+0x0085    -- 0x16_ActorPCInit( char_id=0 )
+0x0088    opFE0D_MessageSetFace( char_id=0 )
+0x008c    op02_JumpToConditional( val1=(s)mem[0x1c8], val2=1, condition="val1 & val2", address_if_false=0x97 )
+0x0094    op01_JumpTo( address=0x99 )
+0x0097    -- 0x1F( ???=0x2 )
+0x0099    op02_JumpToConditional( val1=(s)mem[0x2], val2=6, condition="val1 == val2", address_if_false=0xac )
+0x00a1    -- 0x1D()
+0x00a8    op69_ActorSetRotation( rot=4 )
+0x00ab    op00_Return()
+0x00ac    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 == val2", address_if_false=0xbc )
+0x00b4    -- 0x1D()
+0x00bb    op00_Return()
+0x00bc    op00_Return()
+
+Actor_0x01:on_update:
+0x00bd    op02_JumpToConditional( val1=(s)mem[0x412], val2=0, condition="val1 == val2", address_if_false=0xc7 )
+0x00c5    -- 0xA7()
+0x00c6    op00_Return()
+0x00c7    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00c8    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00c9    opC6_ExpandRun() -- exp0x20
+0x00ca    op2C_SpritePlayAnim( anim_id=0x0 )
+0x00cc    -- 0x2D()
+0x00d4    -- MISSING OPCODE 0x10

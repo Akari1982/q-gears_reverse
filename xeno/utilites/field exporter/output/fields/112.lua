@@ -203,4 +203,11 @@ Actor_0x0c:on_start:
 
 Actor_0x0c:on_update:
 0x00cd    -- 0x85()
-0x00d2    -- MISSING OPCODE 0x59
+0x00d2    -- 0x59()
+0x00d3    op00_Return()
+
+Actor_0x0c:on_talk:
+0x00d4    op6F_ActorRotateToActor( actor_id=party1 )
+0x00d6    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xf1 )
+0x00db    -- 0xFB()
+0x00e0    -- MISSING OPCODE 0xFE0b

@@ -18,4 +18,90 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0xA0()
-0x0017    -- MISSING OPCODE 0xe5
+0x0017    -- 0xE5()
+0x0028    -- 0xFE18()
+0x002d    opFE3A( char_id=1 )
+0x0031    -- 0x2A()
+0x0032    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0033    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0034    op26_Wait( time=5 )
+0x0037    opF1_FadeSetUp( steps=1, r=256, g=256, b=256, semi_tr=32 )
+0x0042    op26_Wait( time=17 )
+0x0045    mem[0x402] = true -- op36
+0x0048    op00_Return()
+
+Actor_0x01:on_start:
+0x0049    -- 0xBC_ActorNoModelInit()
+0x004a    -- 0xFE8E()
+0x0050    mem[0x420] = -145 -- op35
+0x0056    op00_Return()
+
+Actor_0x01:on_update:
+0x0057    -- 0xFE54()
+0x0059    mem[0x424] = false -- op37
+0x005c    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x397 )
+0x0064    opD6_MessageSetSpeed( speed=0x8001 )
+0x0067    -- 0xFE48()
+0x0070    -- 0xB6( ???=304, ???=0 )
+0x0075    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0e, priority=0x02 )
+0x0078    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x0a, priority=0x02 )
+0x007b    op02_JumpToConditional( val1=(s)mem[0x424], val2=0, condition="val1 == val2", address_if_false=0x8c )
+0x0083    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
+0x0086    mem[0x424] += 1 -- op3c
+0x0089    op01_JumpTo( address=0xe4 )
+0x008c    op02_JumpToConditional( val1=(s)mem[0x424], val2=1, condition="val1 == val2", address_if_false=0x9d )
+0x0094    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x05, priority=0x03 )
+0x0097    mem[0x424] += 1 -- op3c
+0x009a    op01_JumpTo( address=0xe4 )
+0x009d    op02_JumpToConditional( val1=(s)mem[0x424], val2=2, condition="val1 == val2", address_if_false=0xb4 )
+0x00a5    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x06, priority=0x03 )
+0x00a8    mem[0x424] += 1 -- op3c
+0x00ab    mem[0x424] = 255 -- op35
+0x00b1    op01_JumpTo( address=0xe4 )
+0x00b4    op02_JumpToConditional( val1=(s)mem[0x424], val2=3, condition="val1 == val2", address_if_false=0xc5 )
+0x00bc    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x07, priority=0x03 )
+0x00bf    mem[0x424] += 1 -- op3c
+0x00c2    op01_JumpTo( address=0xe4 )
+0x00c5    op02_JumpToConditional( val1=(s)mem[0x424], val2=4, condition="val1 == val2", address_if_false=0xd6 )
+0x00cd    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x08, priority=0x03 )
+0x00d0    mem[0x424] += 1 -- op3c
+0x00d3    op01_JumpTo( address=0xe4 )
+0x00d6    op02_JumpToConditional( val1=(s)mem[0x424], val2=5, condition="val1 == val2", address_if_false=0xe4 )
+0x00de    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x09, priority=0x03 )
+0x00e1    op01_JumpTo( address=0xe4 )
+0x00e4    mem[0x420] = opA8_Random( max=70 )
+0x00e9    mem[0x420] += 100 -- op38
+0x00ef    opDE_VariableMultiply( address=0x420, value=(vf40)0xffff, flag=0x40 )
+0x00f5    -- 0xFE48()
+0x00fe    opF1_FadeSetUp( steps=2, r=0, g=52, b=137, semi_tr=1 )
+0x0109    op26_Wait( time=1 )
+0x010c    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x04, priority=0x03 )
+0x010f    mem[0x41e] = false -- op37
+0x0112    mem[0x418] = 1024 -- op35
+0x0118    mem[0x41c] = -105 -- op35
+0x011e    op99()
+0x011f    -- 0x9B( ???=12, ???=6 )
+0x0124    -- 0x61( ???=1185, ???=-393, ???=-80 ) -- exp0x1
+0x012c    -- 0x65( ???=1305, ???=-393, ???=-105 ) -- exp0x1
+0x0134    -- 0xEE( ???=0x0, ???=0x1 )
+0x0137    -- 0xEE( ???=0x2, ???=0x3 )
+0x013a    opAC_MoveCamera( control=0x80, steps=0 )
+0x013e    opAC_MoveCamera( control=0x81, steps=0 )
+0x0142    opEF_MoveCameraSync()
+0x0145    -- 0x9B( ???=12, ???=6 )
+0x014a    -- 0xF3( ???=0x406, ???=0x408, ???=0x40a )
+0x0151    -- 0x60()
+0x0152    -- 0x64() -- exp0x1
+0x0153    -- 0x63( ???=-1922, ???=-393, ???=-80 ) -- exp0x1
+0x015b    opAC_MoveCamera( control=0x80, steps=345 )
+0x015f    mem[0x418] += 512 -- op38
+0x0165    mem[0x41e] += 1 -- op3c
+0x0168    -- MISSING OPCODE 0xFEa8

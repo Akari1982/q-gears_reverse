@@ -31,4 +31,99 @@ Actor_0x00:on_update:
 0x0045    op01_JumpTo( address=0x4b )
 0x0048    -- 0x75( ???=255 )
 0x004b    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x55 )
-0x0050    -- MISSING OPCODE 0xf7
+0x0050    -- 0xF7()
+0x0055    -- 0x5B()
+0x0056    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0057    -- 0xFE0E_SoundSetVolume( volume=127, steps=30 )
+0x005d    op00_Return()
+
+Actor_0x01:on_start:
+0x005e    -- 0x16_ActorPCInit( char_id=0 )
+0x0061    opFE0D_MessageSetFace( char_id=0 )
+0x0065    op00_Return()
+
+Actor_0x01:on_update:
+0x0066    -- 0x0C()
+0x0067    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0068    op00_Return()
+
+Actor_0x02:on_start:
+0x0069    -- 0x16_ActorPCInit( char_id=1 )
+0x006c    opFE0D_MessageSetFace( char_id=1 )
+0x0070    op00_Return()
+
+Actor_0x02:on_update:
+0x0071    -- 0x0C()
+0x0072    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0073    op00_Return()
+
+Actor_0x03:on_start:
+0x0074    -- 0x16_ActorPCInit( char_id=2 )
+0x0077    opFE0D_MessageSetFace( char_id=2 )
+0x007b    op00_Return()
+
+Actor_0x03:on_update:
+0x007c    -- 0x0C()
+0x007d    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x007e    op00_Return()
+
+Actor_0x04:on_start:
+0x007f    -- 0x16_ActorPCInit( char_id=9 )
+0x0082    opFE0D_MessageSetFace( char_id=9 )
+0x0086    op00_Return()
+
+Actor_0x04:on_update:
+0x0087    -- 0x0C()
+0x0088    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0089    op00_Return()
+
+Actor_0x05:on_start:
+0x008a    -- 0x16_ActorPCInit( char_id=3 )
+0x008d    opFE0D_MessageSetFace( char_id=3 )
+0x0091    op00_Return()
+
+Actor_0x05:on_update:
+0x0092    -- 0x0C()
+0x0093    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x0094    op00_Return()
+
+Actor_0x06:on_start:
+0x0095    -- 0x16_ActorPCInit( char_id=4 )
+0x0098    opFE0D_MessageSetFace( char_id=4 )
+0x009c    op00_Return()
+
+Actor_0x06:on_update:
+0x009d    -- 0x0C()
+0x009e    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x009f    op00_Return()
+
+Actor_0x06:event_0x04:
+0x00a0    -- MISSING OPCODE 0xFEaa

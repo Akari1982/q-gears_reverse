@@ -17,4 +17,5 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0040    -- 0xBC_ActorNoModelInit()
-0x0041    -- MISSING OPCODE 0xf7
+0x0041    -- 0xF7()
+0x0046    -- MISSING OPCODE 0xFEb8

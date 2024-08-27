@@ -114,4 +114,38 @@ Actor_0x02:on_talk:
 0x00b5    op9C_MessageSync()
 0x00b6    opF5_MessageShowStatic( text_id=0xb, flags=0 )
 0x00ba    op9C_MessageSync()
-0x00bb    -- MISSING OPCODE 0x8f
+0x00bb    -- 0x8F()
+0x00be    op05_CallFunction( address=0x35c )
+0x00c1    op74_SoundPlayFixedVolume( sound_id=209 )
+0x00c4    op01_JumpTo( address=0xf2 )
+0x00c7    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0xf2 )
+0x00cf    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x03 )
+0x00d2    op6B_ActorRotateClockwise( rot=2 )
+0x00d5    op26_Wait( time=20 )
+0x00d8    opD2_MessageShowDynamic( text_id=0xc, flags=0 )
+0x00dc    op9C_MessageSync()
+0x00dd    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x00df    opD2_MessageShowDynamic( text_id=0xd, flags=0 )
+0x00e3    op9C_MessageSync()
+0x00e4    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x07, priority=0x03 )
+0x00e7    op26_Wait( time=10 )
+0x00ea    opD2_MessageShowDynamic( text_id=0xe, flags=0 )
+0x00ee    op9C_MessageSync()
+0x00ef    op01_JumpTo( address=0xf2 )
+0x00f2    mem[0x2c2] |= 1 << 7 -- op3a
+0x00f8    -- 0xFE54()
+0x00fa    op69_ActorSetRotation( rot=5 )
+
+Actor_0x02:on_push:
+0x00fd    op00_Return()
+
+Actor_0x03:on_start:
+0x00fe    -- 0xBC_ActorNoModelInit()
+0x00ff    -- 0x2A()
+0x0100    op00_Return()
+
+Actor_0x03:on_update:
+0x0101    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0xa00], jump=0x9801 )
+0x0106    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x01, priority=0x00 )
+0x0109    -- 0x80()
+0x010e    -- MISSING OPCODE 0x8c

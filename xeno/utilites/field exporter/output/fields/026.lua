@@ -52,4 +52,11 @@ Actor_0x01:on_push:
 Actor_0x01:event_0x04:
 0x0036    -- 0xFE0E_SoundSetVolume( volume=0, steps=1000 )
 0x003c    op26_Wait( time=250 )
-0x003f    -- MISSING OPCODE 0x72
+0x003f    -- 0x72()
+0x0042    -- 0xFEA2()
+0x0044    -- 0xFE0E_SoundSetVolume( volume=127, steps=1000 )
+0x004a    op00_Return()
+
+Actor_0x02:on_start:
+0x004b    -- 0xBC_ActorNoModelInit()
+0x004c    -- MISSING OPCODE 0xa4

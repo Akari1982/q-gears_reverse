@@ -18,4 +18,179 @@ unknown = [
 Actor_0x00:on_start:
 0x0032    -- 0xBC_ActorNoModelInit()
 0x0033    -- 0x75( ???=61 )
-0x0036    -- MISSING OPCODE 0xf7
+0x0036    -- 0xF7()
+0x003b    opF1_FadeSetUp( steps=2, r=80, g=50, b=80, semi_tr=1 )
+0x0046    op02_JumpToConditional( val1=(s)mem[0x21a], val2=2, condition="val1 & val2", address_if_false=0x6a )
+0x004e    -- 0x80()
+0x0053    -- 0x80()
+0x0058    -- 0x80()
+0x005d    -- 0x80()
+0x0062    -- 0x80()
+0x0067    op01_JumpTo( address=0x74 )
+0x006a    -- 0x80()
+0x006f    -- 0x80()
+0x0074    mem[0x430] = 1285 -- op35
+0x007a    mem[0x432] = -181 -- op35
+0x0080    mem[0x434] = 0 -- op35
+0x0086    mem[0x42e] = 1 -- op35
+0x008c    mem[0x54] = 6 -- op35
+0x0092    op02_JumpToConditional( val1=(s)mem[0x21c], val2=256, condition="val1 & val2", address_if_false=0xa0 )
+0x009a    mem[0x416] = 1 -- op35
+0x00a0    op02_JumpToConditional( val1=(s)mem[0x21c], val2=512, condition="val1 & val2", address_if_false=0xae )
+0x00a8    mem[0x428] = 1 -- op35
+0x00ae    mem[0x40a] = 2 -- op35
+0x00b4    mem[0x40c] = 740 -- op35
+0x00ba    mem[0x40e] = -560 -- op35
+0x00c0    mem[0x410] = 1 -- op35
+0x00c6    mem[0x412] = 1 -- op35
+0x00cc    mem[0x414] = 58 -- op35
+0x00d2    mem[0x41c] = 2 -- op35
+0x00d8    mem[0x41e] = -825 -- op35
+0x00de    mem[0x420] = 720 -- op35
+0x00e4    mem[0x422] = 2 -- op35
+0x00ea    mem[0x424] = 3 -- op35
+0x00f0    mem[0x426] = 59 -- op35
+0x00f6    -- 0x2A()
+0x00f7    op00_Return()
+
+Actor_0x00:on_update:
+0x00f8    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00f9    op00_Return()
+
+Actor_0x00:event_0x04:
+0x00fa    mem[0x21c] |= 1 << 8 -- op3a
+0x0100    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0101    mem[0x21c] |= 1 << 9 -- op3a
+0x0107    op00_Return()
+
+Actor_0x01:on_start:
+0x0108    -- 0x16_ActorPCInit( char_id=0 )
+0x010b    opFE0D_MessageSetFace( char_id=0 )
+0x010f    op00_Return()
+
+Actor_0x01:on_update:
+0x0110    -- 0xA7()
+0x0111    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0112    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0113    -- 0x1F( ???=0x30 )
+0x0115    op00_Return()
+
+Actor_0x01:event_0x05:
+0x0116    -- 0x21( ???=112 )
+0x0119    op2C_SpritePlayAnim( anim_id=0x0 )
+0x011b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0121    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0127    op2C_SpritePlayAnim( anim_id=0xff )
+0x0129    -- 0x1F( ???=0x0 )
+0x012b    -- 0x21( ???=256 )
+0x012e    op00_Return()
+
+Actor_0x01:event_0x06:
+0x012f    -- 0x21( ???=112 )
+0x0132    op2C_SpritePlayAnim( anim_id=0x0 )
+0x0134    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x013a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0140    op2C_SpritePlayAnim( anim_id=0xff )
+0x0142    -- 0x1F( ???=0x0 )
+0x0144    -- 0x21( ???=256 )
+0x0147    op00_Return()
+
+Actor_0x01:event_0x07:
+0x0148    -- 0x21( ???=112 )
+0x014b    op2C_SpritePlayAnim( anim_id=0x0 )
+0x014d    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0153    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0159    op2C_SpritePlayAnim( anim_id=0xff )
+0x015b    -- 0x1F( ???=0x0 )
+0x015d    -- 0x21( ???=256 )
+0x0160    op00_Return()
+
+Actor_0x01:event_0x08:
+0x0161    -- 0x1F( ???=0x30 )
+0x0163    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0169    op00_Return()
+
+Actor_0x01:event_0x09:
+0x016a    -- 0x1F( ???=0x70 )
+0x016c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0172    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x0173    -- 0x1F( ???=0x30 )
+0x0175    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x017b    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x017c    -- 0x1F( ???=0x30 )
+0x017e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0184    op00_Return()
+
+Actor_0x01:event_0x0c:
+0x0185    -- 0x1F( ???=0x30 )
+0x0187    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x018d    op00_Return()
+
+Actor_0x01:event_0x0d:
+0x018e    -- 0x1F( ???=0x30 )
+0x0190    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0196    op00_Return()
+
+Actor_0x01:event_0x0e:
+0x0197    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x019d    op00_Return()
+
+Actor_0x01:event_0x0f:
+0x019e    op2C_SpritePlayAnim( anim_id=0x0 )
+0x01a0    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01a6    op2C_SpritePlayAnim( anim_id=0xff )
+0x01a8    op00_Return()
+
+Actor_0x01:event_0x10:
+0x01a9    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01af    -- 0x5F( ???=0x5 )
+0x01b1    op26_Wait( time=10 )
+0x01b4    op2C_SpritePlayAnim( anim_id=0xc )
+0x01b6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x01ba    op9C_MessageSync()
+0x01bb    op2C_SpritePlayAnim( anim_id=0xff )
+0x01bd    op00_Return()
+
+Actor_0x01:event_0x11:
+0x01be    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01c4    -- 0x5F( ???=0x7 )
+0x01c6    op00_Return()
+
+Actor_0x01:event_0x12:
+0x01c7    -- 0x5F( ???=0x5 )
+0x01c9    op2C_SpritePlayAnim( anim_id=0x5 )
+0x01cb    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=16 )
+0x01d6    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x01da    op9C_MessageSync()
+0x01db    op2C_SpritePlayAnim( anim_id=0xff )
+0x01dd    op00_Return()
+
+Actor_0x01:event_0x13:
+0x01de    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01e4    op00_Return()
+
+Actor_0x01:event_0x14:
+0x01e5    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=16 )
+0x01f0    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x01f4    op9C_MessageSync()
+0x01f5    op00_Return()
+
+Actor_0x01:event_0x15:
+0x01f6    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01fc    -- MISSING OPCODE 0xFE17

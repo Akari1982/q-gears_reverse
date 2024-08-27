@@ -255,4 +255,84 @@ Actor_0x03:event_0x05:
 0x02c5    opD4_MessageShowFromActor( actor_id=Actor_0x06, text_id=0x10, flags=FORCE_BOTTOM|0x80 )
 0x02cb    opFE0D_MessageSetFace( char_id=28 )
 0x02cf    opD4_MessageShowFromActor( actor_id=Actor_0x05, text_id=0x11, flags=FORCE_BOTTOM|0x80 )
-0x02d5    -- MISSING OPCODE 0xFE8d
+0x02d5    -- 0xFE8D()
+0x02d9    -- 0x98_MapLoad( field_id=101, value=0 )
+0x02de    -- 0x5B()
+0x02df    op00_Return()
+
+Actor_0x04:on_start:
+0x02e0    -- 0x0B_InitNPC( 0 )
+0x02e3    -- 0x19_ActorSetPosition( x=(vf80)0x01ea, z=(vf40)0x0019, flag=(flag)0xc0 )
+0x02e9    -- 0x5F( ???=0x2 )
+0x02eb    -- 0xFE07( ???=0x1 )
+0x02ee    -- 0x2A()
+0x02ef    op00_Return()
+
+Actor_0x04:on_update:
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x02f0    op00_Return()
+
+Actor_0x04:event_0x04:
+0x02f1    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x02f7    op07_CallActorEvent( actor_id=Actor_0x16, event=event_0x05, priority=0x00 )
+0x02fa    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x00 )
+0x02fd    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x05, priority=0x00 )
+0x0300    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x00 )
+0x0303    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0309    op00_Return()
+
+Actor_0x05:on_start:
+0x030a    -- 0x0B_InitNPC( 1 )
+0x030d    -- 0x19_ActorSetPosition( x=(vf80)0x0217, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0313    -- 0xFE07( ???=0x1 )
+0x0316    -- 0x5F( ???=0x2 )
+0x0318    -- 0x2A()
+0x0319    op00_Return()
+
+Actor_0x05:on_update:
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x031a    op00_Return()
+
+Actor_0x05:event_0x04:
+0x031b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0321    op00_Return()
+
+Actor_0x05:event_0x05:
+0x0322    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0328    mem[0x400] = 1 -- op35
+0x032e    op00_Return()
+
+Actor_0x05:event_0x06:
+0x032f    op26_Wait( time=20 )
+0x0332    -- 0xFE0E_SoundSetVolume( volume=80, steps=500 )
+0x0338    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x033e    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x00 )
+0x0341    op00_Return()
+
+Actor_0x06:on_start:
+0x0342    -- 0x0B_InitNPC( 3 )
+0x0345    -- 0x19_ActorSetPosition( x=(vf80)0x0040, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x034b    -- 0x5F( ???=0x3 )
+0x034d    op20_ActorSetFlags0( flags=13 )
+0x0350    -- 0x23()
+
+Actor_0x06:on_update:
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x0351    op00_Return()
+
+Actor_0x06:event_0x04:
+0x0352    -- 0xFE0E_SoundSetVolume( volume=10, steps=30 )
+0x0358    -- 0xFE65()
+0x035e    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0369    -- 0x22()
+0x036a    op26_Wait( time=5 )
+0x036d    -- MISSING OPCODE 0xFE5e

@@ -257,4 +257,160 @@ Actor_0x10:on_start:
 0x00fe    op00_Return()
 
 Actor_0x10:on_update:
-0x00ff    -- MISSING OPCODE 0x59
+0x00ff    -- 0x59()
+0x0100    op00_Return()
+
+Actor_0x10:on_talk:
+0x0101    op6F_ActorRotateToActor( actor_id=party1 )
+0x0103    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x0107    op9C_MessageSync()
+
+Actor_0x10:on_push:
+0x0108    op00_Return()
+
+Actor_0x11:on_start:
+0x0109    -- 0xFE15( ???=5, ???=1 )
+0x010f    -- 0x19_ActorSetPosition( x=(vf80)0x00d2, z=(vf40)0xff76, flag=(flag)0xc0 )
+0x0115    -- 0x5F( ???=0x3 )
+0x0117    op00_Return()
+
+Actor_0x11:on_update:
+0x0118    -- 0x59()
+0x0119    op00_Return()
+
+Actor_0x11:on_talk:
+0x011a    op6F_ActorRotateToActor( actor_id=party1 )
+0x011c    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x0120    op9C_MessageSync()
+
+Actor_0x11:on_push:
+0x0121    op00_Return()
+
+Actor_0x12:on_start:
+0x0122    -- 0x0B_InitNPC( 6 )
+0x0125    -- 0x19_ActorSetPosition( x=(vf80)0x002d, z=(vf40)0x00ec, flag=(flag)0xc0 )
+0x012b    -- 0x5F( ???=0x1 )
+0x012d    op2C_SpritePlayAnim( anim_id=0x2 )
+0x012f    op20_ActorSetFlags0( flags=13 )
+0x0132    -- 0x18()
+
+Actor_0x12:on_update:
+0x0137    op00_Return()
+
+Actor_0x12:on_talk:
+0x0138    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x013c    op9C_MessageSync()
+
+Actor_0x12:on_push:
+0x013d    op00_Return()
+
+Actor_0x13:on_start:
+0x013e    -- 0x0B_InitNPC( 8 )
+0x0141    -- 0x19_ActorSetPosition( x=(vf80)0x0030, z=(vf40)0x0091, flag=(flag)0xc0 )
+0x0147    -- 0x5F( ???=0x3 )
+0x0149    op2C_SpritePlayAnim( anim_id=0x2 )
+0x014b    op20_ActorSetFlags0( flags=13 )
+0x014e    -- 0x18()
+0x0153    op00_Return()
+
+Actor_0x13:on_update:
+0x0154    op00_Return()
+
+Actor_0x13:on_talk:
+0x0155    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
+0x0159    op9C_MessageSync()
+
+Actor_0x13:on_push:
+0x015a    op00_Return()
+
+Actor_0x14:on_start:
+0x015b    -- 0xFE15( ???=7, ???=2 )
+0x0161    -- 0x19_ActorSetPosition( x=(vf80)0xff61, z=(vf40)0x006f, flag=(flag)0xc0 )
+0x0167    -- 0x5F( ???=0x3 )
+0x0169    op00_Return()
+
+Actor_0x14:on_update:
+0x016a    -- 0x59()
+0x016b    op00_Return()
+
+Actor_0x14:on_talk:
+0x016c    op6F_ActorRotateToActor( actor_id=party1 )
+0x016e    opD2_MessageShowDynamic( text_id=0x8, flags=0 )
+0x0172    op9C_MessageSync()
+
+Actor_0x14:on_push:
+0x0173    op00_Return()
+
+Actor_0x15:on_start:
+0x0174    -- 0xFE15( ???=9, ???=4 )
+0x017a    -- 0x19_ActorSetPosition( x=(vf80)0x0006, z=(vf40)0x0091, flag=(flag)0xc0 )
+0x0180    -- 0x5F( ???=0x1 )
+0x0182    op2C_SpritePlayAnim( anim_id=0x6 )
+0x0184    op00_Return()
+
+Actor_0x15:on_update:
+0x0185    op00_Return()
+
+Actor_0x15:on_talk:
+0x0186    op74_SoundPlayFixedVolume( sound_id=9 )
+
+Actor_0x15:on_push:
+0x0189    op00_Return()
+
+Actor_0x16:on_start:
+0x018a    -- 0xFE15( ???=9, ???=1 )
+0x0190    -- 0x19_ActorSetPosition( x=(vf80)0xffc9, z=(vf40)0xffaa, flag=(flag)0xc0 )
+0x0196    -- 0xFE03( ???=3000 )
+0x019a    -- 0x5F( ???=0x1 )
+0x019c    op20_ActorSetFlags0( flags=4 )
+0x019f    op00_Return()
+
+Actor_0x16:on_update:
+0x01a0    -- 0x59()
+0x01a1    op00_Return()
+
+Actor_0x16:on_talk:
+0x01a2    op74_SoundPlayFixedVolume( sound_id=9 )
+
+Actor_0x16:on_push:
+0x01a5    op00_Return()
+
+Actor_0x17:on_start:
+0x01a6    -- 0xFE15( ???=9, ???=3 )
+0x01ac    -- 0x19_ActorSetPosition( x=(vf80)0xffe0, z=(vf40)0xff32, flag=(flag)0xc0 )
+0x01b2    op2C_SpritePlayAnim( anim_id=0x6 )
+0x01b4    op20_ActorSetFlags0( flags=4 )
+0x01b7    -- 0x5F( ???=0x3 )
+0x01b9    op00_Return()
+
+Actor_0x17:on_update:
+0x01ba    -- 0x59()
+0x01bb    op00_Return()
+
+Actor_0x17:on_talk:
+0x01bc    op74_SoundPlayFixedVolume( sound_id=9 )
+
+Actor_0x17:on_push:
+0x01bf    op00_Return()
+
+Actor_0x18:on_start:
+0x01c0    -- 0xFE15( ???=9, ???=0 )
+0x01c6    -- 0x19_ActorSetPosition( x=(vf80)0xffdf, z=(vf40)0xff50, flag=(flag)0xc0 )
+0x01cc    -- 0x5F( ???=0x0 )
+0x01ce    op2C_SpritePlayAnim( anim_id=0x0 )
+0x01d0    op00_Return()
+
+Actor_0x18:on_update:
+0x01d1    op00_Return()
+
+Actor_0x18:on_talk:
+0x01d2    op74_SoundPlayFixedVolume( sound_id=9 )
+
+Actor_0x18:on_push:
+0x01d5    op00_Return()
+
+Actor_0x19:on_start:
+0x01d6    -- 0xFE15( ???=9, ???=2 )
+0x01dc    -- 0x19_ActorSetPosition( x=(vf80)0xff79, z=(vf40)0x00cf, flag=(flag)0xc0 )
+0x01e2    op20_ActorSetFlags0( flags=4 )
+0x01e5    -- MISSING OPCODE 0xcd

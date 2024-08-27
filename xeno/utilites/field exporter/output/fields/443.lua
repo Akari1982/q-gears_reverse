@@ -37,4 +37,69 @@ Actor_0x00:on_update:
 0x0054    -- 0xFE66() -- sound play with volume in slot
 0x005e    -- 0xFE66() -- sound play with volume in slot
 0x0068    op08_CallActorEventStartSync( actor_id=Actor_0x0c, event=event_0x04, priority=0x03 )
-0x006b    -- MISSING OPCODE 0xFE8c
+0x006b    -- 0xFE8C()
+0x0073    -- 0xFE8C()
+0x007b    -- 0xFE8C()
+0x0083    op26_Wait( time=70 )
+0x0086    mem[0x418] = 17 -- op35
+0x008c    -- 0x63( ???=-488, ???=-6, ???=3905 ) -- exp0x1
+0x0094    -- 0xA3()
+0x009c    op05_CallFunction( address=0x352 )
+0x009f    -- 0xFE8C()
+0x00a7    -- 0xFE8C()
+0x00af    -- 0xFE8C()
+0x00b7    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0xc2 )
+0x00bf    op01_JumpTo( address=0xb7 )
+0x00c2    mem[0x408] = false -- op37
+0x00c5    op26_Wait( time=40 )
+0x00c8    opFE9B_SlideShow1( steps=30 )
+0x00cc    op24_ActorEnable( actor_id=Actor_0x09 )
+0x00ce    mem[0x418] = 0 -- op35
+0x00d4    -- 0x63( ???=130, ???=110, ???=-85 ) -- exp0x1
+0x00dc    -- 0xA3()
+0x00e4    op05_CallFunction( address=0x352 )
+0x00e7    op26_Wait( time=10 )
+0x00ea    -- 0xFE8C()
+0x00f2    -- 0xFE8C()
+0x00fa    -- 0xFE8C()
+0x0102    op26_Wait( time=30 )
+0x0105    op08_CallActorEventStartSync( actor_id=Actor_0x0c, event=event_0x05, priority=0x03 )
+0x0108    op26_Wait( time=10 )
+0x010b    -- 0xE7( ???=104, ???=144, ???=248 )
+0x0112    op08_CallActorEventStartSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x03 )
+0x0115    mem[0x418] = 6 -- op35
+0x011b    -- 0x63( ???=270, ???=296, ???=512 ) -- exp0x1
+0x0123    -- 0xA3()
+0x012b    op05_CallFunction( address=0x352 )
+0x012e    -- 0xFE8C()
+0x0136    -- 0xFE8C()
+0x013e    -- 0xFE8C()
+0x0146    -- 0xF2()
+0x014f    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x15a )
+0x0157    op01_JumpTo( address=0x14f )
+0x015a    mem[0x408] = false -- op37
+0x015d    op26_Wait( time=10 )
+0x0160    -- 0x98_MapLoad( field_id=442, value=0 )
+0x0165    -- 0x5B()
+0x0166    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0167    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0168    op26_Wait( time=30 )
+0x016b    mem[0x418] = 250 -- op35
+0x0171    -- 0x63( ???=-401, ???=8, ???=-348 ) -- exp0x1
+0x0179    -- 0xA3()
+0x0181    op05_CallFunction( address=0x352 )
+0x0184    mem[0x408] = true -- op36
+0x0187    op00_Return()
+
+Actor_0x01:on_start:
+0x0188    -- 0x16_ActorPCInit( char_id=0 )
+0x018b    opFE0D_MessageSetFace( char_id=0 )
+0x018f    -- 0x21( ???=160 )
+0x0192    -- 0xFE03( ???=2048 )
+0x0196    -- MISSING OPCODE 0xFE04

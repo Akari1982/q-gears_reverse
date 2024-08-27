@@ -18,4 +18,48 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0xA0()
-0x0017    -- MISSING OPCODE 0xe5
+0x0017    -- 0xE5()
+0x0028    -- 0x2A()
+0x0029    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x002a    op00_Return()
+
+Actor_0x01:on_start:
+0x002b    -- 0x16_ActorPCInit( char_id=0 )
+0x002e    opFE0D_MessageSetFace( char_id=0 )
+0x0032    op00_Return()
+
+Actor_0x01:on_update:
+0x0033    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x3f )
+0x003b    -- 0xA7()
+0x003c    op01_JumpTo( address=0x40 )
+0x003f    -- 0x5A()
+0x0040    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0041    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0042    -- 0x19_ActorSetPosition( x=(vf80)0x0004, z=(vf40)0xfe3a, flag=(flag)0xc0 )
+0x0048    -- 0x5F( ???=0x2 )
+0x004a    op2C_SpritePlayAnim( anim_id=0xb )
+0x004c    op00_Return()
+
+Actor_0x01:event_0x05:
+0x004d    op2C_SpritePlayAnim( anim_id=0xff )
+0x004f    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0050    op2C_SpritePlayAnim( anim_id=0xc )
+0x0052    op00_Return()
+
+Actor_0x02:on_start:
+0x0053    -- 0xBC_ActorNoModelInit()
+0x0054    -- MISSING OPCODE 0xFE1c

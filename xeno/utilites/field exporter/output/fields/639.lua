@@ -455,4 +455,149 @@ Actor_0x15:on_talk:
 0x02f4    mem[0x190] |= 1 << 4 -- op3a
 0x02fa    -- 0x80()
 0x02ff    op29_ActorTurnOff( actor_id=Actor_0x15 )
-0x0301    -- MISSING OPCODE 0x04
+0x0301    -- 0x04()
+
+Actor_0x15:on_push:
+0x0302    op00_Return()
+
+Actor_0x16:on_start:
+0x0303    -- 0xBC_ActorNoModelInit()
+0x0304    -- 0x2A()
+0x0305    op00_Return()
+
+Actor_0x16:on_update:
+0x0306    op02_JumpToConditional( val1=(s)mem[0x190], val2=32, condition="val1 & val2", address_if_false=0x311 )
+0x030e    op01_JumpTo( address=0x316 )
+0x0311    -- 0xDB()
+0x0316    -- 0x5B()
+0x0317    op00_Return()
+
+Actor_0x16:on_talk:
+
+Actor_0x16:on_push:
+0x0318    op00_Return()
+
+Actor_0x16:event_0x04:
+0x0319    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0c, priority=0x01 )
+0x031c    -- 0xFE66() -- sound play with volume in slot
+0x0326    -- 0xFE66() -- sound play with volume in slot
+0x0330    -- 0xDB()
+0x0335    -- 0x5A()
+0x0336    -- 0xDB()
+0x033b    op00_Return()
+
+Actor_0x17:on_start:
+0x033c    -- 0xBC_ActorNoModelInit()
+0x033d    -- 0x2A()
+0x033e    op00_Return()
+
+Actor_0x17:on_update:
+0x033f    op02_JumpToConditional( val1=(s)mem[0x190], val2=32, condition="val1 & val2", address_if_false=0x34a )
+0x0347    op01_JumpTo( address=0x34f )
+0x034a    -- 0xDB()
+0x034f    -- 0x5B()
+0x0350    op00_Return()
+
+Actor_0x17:on_talk:
+
+Actor_0x17:on_push:
+0x0351    op00_Return()
+
+Actor_0x17:event_0x04:
+0x0352    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0d, priority=0x01 )
+0x0355    -- 0xFE66() -- sound play with volume in slot
+0x035f    -- 0xFE66() -- sound play with volume in slot
+0x0369    -- 0xDB()
+0x036e    -- 0x5A()
+0x036f    -- 0xDB()
+0x0374    op00_Return()
+
+Actor_0x18:on_start:
+0x0375    -- 0xBC_ActorNoModelInit()
+0x0376    -- 0x2A()
+0x0377    op00_Return()
+
+Actor_0x18:on_update:
+0x0378    op02_JumpToConditional( val1=(s)mem[0x190], val2=32, condition="val1 & val2", address_if_false=0x383 )
+0x0380    op01_JumpTo( address=0x388 )
+0x0383    -- 0xDB()
+0x0388    -- 0x5B()
+0x0389    op00_Return()
+
+Actor_0x18:on_talk:
+
+Actor_0x18:on_push:
+0x038a    op00_Return()
+
+Actor_0x18:event_0x04:
+0x038b    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0e, priority=0x01 )
+0x038e    -- 0xFE66() -- sound play with volume in slot
+0x0398    -- 0xFE66() -- sound play with volume in slot
+0x03a2    -- 0xDB()
+0x03a7    -- 0x5A()
+0x03a8    -- 0xDB()
+0x03ad    op00_Return()
+
+Actor_0x19:on_start:
+0x03ae    -- 0xBC_ActorNoModelInit()
+0x03af    -- 0x2A()
+0x03b0    op00_Return()
+
+Actor_0x19:on_update:
+0x03b1    op02_JumpToConditional( val1=(s)mem[0x190], val2=32, condition="val1 & val2", address_if_false=0x3bc )
+0x03b9    op01_JumpTo( address=0x3c1 )
+0x03bc    -- 0xDB()
+0x03c1    -- 0x5B()
+0x03c2    op00_Return()
+
+Actor_0x19:on_talk:
+
+Actor_0x19:on_push:
+0x03c3    op00_Return()
+
+Actor_0x19:event_0x04:
+0x03c4    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0f, priority=0x01 )
+0x03c7    -- 0xFE66() -- sound play with volume in slot
+0x03d1    -- 0xFE66() -- sound play with volume in slot
+0x03db    -- 0xDB()
+0x03e0    -- 0x5A()
+0x03e1    -- 0xDB()
+0x03e6    op00_Return()
+
+Actor_0x1a:on_start:
+0x03e7    -- 0xBC_ActorNoModelInit()
+0x03e8    -- 0xF8()
+0x03ec    -- 0xF8()
+0x03f0    -- 0x19_ActorSetPosition( x=(vf80)0x079e, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x03f6    -- 0x18()
+0x03fb    op02_JumpToConditional( val1=(s)mem[0x190], val2=32, condition="val1 & val2", address_if_false=0x408 )
+0x0403    op29_ActorTurnOff( actor_id=self )
+0x0405    op01_JumpTo( address=0x40d )
+0x0408    -- 0x80()
+0x040d    op00_Return()
+
+Actor_0x1a:on_update:
+0x040e    op00_Return()
+
+Actor_0x1a:on_talk:
+0x040f    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x04, priority=0x01 )
+0x0412    op26_Wait( time=15 )
+0x0415    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
+0x0418    op26_Wait( time=15 )
+0x041b    op09_CallActorEventEndSync( actor_id=Actor_0x18, event=event_0x04, priority=0x01 )
+0x041e    op26_Wait( time=15 )
+0x0421    op09_CallActorEventEndSync( actor_id=Actor_0x16, event=event_0x04, priority=0x01 )
+0x0424    op26_Wait( time=30 )
+0x0427    op09_CallActorEventEndSync( actor_id=Actor_0x20, event=event_0x04, priority=0x01 )
+0x042a    mem[0x190] |= 1 << 5 -- op3a
+0x0430    -- 0x80()
+0x0435    op29_ActorTurnOff( actor_id=Actor_0x1a )
+0x0437    -- 0x04()
+
+Actor_0x1a:on_push:
+0x0438    op00_Return()
+
+Actor_0x1b:on_start:
+0x0439    -- 0xBC_ActorNoModelInit()
+0x043a    -- 0x2A()
+0x043b    -- MISSING OPCODE 0xFE1b

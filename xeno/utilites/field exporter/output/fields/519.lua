@@ -18,4 +18,26 @@ unknown = [
 Actor_0x00:on_start:
 0x0040    -- 0xBC_ActorNoModelInit()
 0x0041    -- 0xA0()
-0x0048    -- MISSING OPCODE 0xFE8e
+0x0048    -- 0xFE8E()
+0x004e    -- 0x2A()
+0x004f    -- 0x75( ???=60 )
+0x0052    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0053    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0054    op74_SoundPlayFixedVolume( sound_id=269 )
+0x0057    -- 0xFE65()
+0x005d    opD4_MessageShowFromActor( actor_id=Actor_0x3a, text_id=0x0, flags=0 )
+0x0063    op00_Return()
+
+Actor_0x01:on_start:
+0x0064    -- 0x16_ActorPCInit( char_id=0 )
+0x0067    opFE0D_MessageSetFace( char_id=0 )
+0x006b    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x7c )
+0x0073    -- MISSING OPCODE 0xFE1c

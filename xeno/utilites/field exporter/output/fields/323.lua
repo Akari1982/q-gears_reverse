@@ -19,4 +19,5 @@ Actor_0x00:on_start:
 0x0000    -- 0xBC_ActorNoModelInit()
 0x0001    -- 0xFE54()
 0x0003    opF1_FadeSetUp( steps=2, r=40, g=40, b=0, semi_tr=1 )
-0x000e    -- MISSING OPCODE 0xFE80
+0x000e    -- 0xFE80()
+0x001e    -- MISSING OPCODE 0xFE81

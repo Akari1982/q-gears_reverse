@@ -20,4 +20,12 @@ Actor_0x00:on_start:
 0x002c    opFE42( ???=0 )
 0x0030    opFE42( ???=1 )
 0x0034    opFE42( ???=2 )
-0x0038    -- MISSING OPCODE 0xf7
+0x0038    -- 0xF7()
+0x003d    op02_JumpToConditional( val1=(s)mem[0x4], val2=1000, condition="val1 > val2", address_if_false=0x4b )
+0x0045    mem[0x18e] = 0 -- op35
+0x004b    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 != val2", address_if_false=0x59 )
+0x0053    mem[0x180] |= 1 << 7 -- op3a
+0x0059    op02_JumpToConditional( val1=(s)mem[0x18e], val2=2, condition="val1 > val2", address_if_false=0x67 )
+0x0061    mem[0x18e] = 2 -- op35
+0x0067    -- 0xFE80()
+0x0077    -- MISSING OPCODE 0xFE81

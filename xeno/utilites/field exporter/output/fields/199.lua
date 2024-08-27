@@ -22,4 +22,46 @@ Actor_0x00:on_start:
 0x0023    mem[0x43e] = 0 -- op35
 0x0029    mem[0x438] = 1 -- op35
 0x002f    mem[0x54] = 2 -- op35
-0x0035    -- MISSING OPCODE 0xFE3b
+0x0035    -- 0xFE3B()
+0x0039    -- 0xA0()
+0x0040    -- 0x9D()
+0x0044    -- 0x75( ???=47 )
+0x0047    op00_Return()
+
+Actor_0x00:on_update:
+0x0048    op02_JumpToConditional( val1=(s)mem[0x242], val2=4, condition="val1 & val2", address_if_false=0x53 )
+0x0050    op01_JumpTo( address=0x1a4 )
+0x0053    -- 0x79()
+0x0054    -- 0x7A()
+0x0055    op02_JumpToConditional( val1=(s)mem[0x246], val2=512, condition="val1 & val2", address_if_false=0x99 )
+0x005d    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0068    -- 0xFE54()
+0x006a    mem[0x402] += 1 -- op3c
+0x006d    mem[0x400] += 1 -- op3c
+0x0070    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x04, priority=0x01 )
+0x0073    op09_CallActorEventEndSync( actor_id=Actor_0x0a, event=event_0x04, priority=0x01 )
+0x0076    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x04, priority=0x01 )
+0x0079    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )
+0x007c    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x01 )
+0x007f    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x07, priority=0x01 )
+0x0082    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x0085    opF1_FadeSetUp( steps=2, r=50, g=30, b=20, semi_tr=60 )
+0x0090    op26_Wait( time=15 )
+0x0093    -- 0xFE54()
+0x0095    -- 0x5B()
+0x0096    op01_JumpTo( address=0xc3 )
+0x0099    opF1_FadeSetUp( steps=2, r=50, g=30, b=20, semi_tr=1 )
+0x00a4    -- 0xFE54()
+0x00a6    mem[0x402] += 1 -- op3c
+0x00a9    mem[0x400] += 1 -- op3c
+0x00ac    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
+0x00af    op09_CallActorEventEndSync( actor_id=Actor_0x1a, event=event_0x04, priority=0x01 )
+0x00b2    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x01 )
+0x00b5    op24_ActorEnable( actor_id=Actor_0x0a )
+0x00b7    -- 0x28()
+0x00b9    op08_CallActorEventStartSync( actor_id=Actor_0x0a, event=event_0x05, priority=0x01 )
+0x00bc    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x08, priority=0x01 )
+0x00bf    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
+0x00c2    -- 0x5B()
+0x00c3    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x09, priority=0x01 )
+0x00c6    -- MISSING OPCODE 0xFE84

@@ -25,4 +25,55 @@ Actor_0x00:on_start:
 0x0074    -- 0x75( ???=67 )
 0x0077    op01_JumpTo( address=0x91 )
 0x007a    op02_JumpToConditional( val1=(s)mem[0x4], val2=472, condition="val1 == val2", address_if_false=0x8e )
-0x0082    -- MISSING OPCODE 0x72
+0x0082    -- 0x72()
+0x0085    -- 0xFE0E_SoundSetVolume( volume=0, steps=0 )
+0x008b    op01_JumpTo( address=0x91 )
+0x008e    -- 0x75( ???=69 )
+0x0091    -- 0x2A()
+0x0092    op00_Return()
+
+Actor_0x00:on_update:
+0x0093    opF1_FadeSetUp( steps=2, r=36, g=38, b=20, semi_tr=1 )
+0x009e    -- 0x9D()
+0x00a2    op02_JumpToConditional( val1=(s)mem[0x4], val2=472, condition="val1 == val2", address_if_false=0xdd )
+0x00aa    -- 0xFE54()
+0x00ac    -- 0xFE66() -- sound play with volume in slot
+0x00b6    -- 0xFE8C()
+0x00be    op08_CallActorEventStartSync( actor_id=Actor_0x27, event=event_0x06, priority=0x02 )
+0x00c1    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0xcc )
+0x00c9    op01_JumpTo( address=0xc1 )
+0x00cc    mem[0x402] = false -- op37
+0x00cf    op26_Wait( time=30 )
+0x00d2    -- 0xFE8C()
+0x00da    op01_JumpTo( address=0xdf )
+0x00dd    op25_ActorDisable( actor_id=Actor_0x1f )
+0x00df    -- 0x5B()
+0x00e0    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00e1    op00_Return()
+
+Actor_0x00:event_0x04:
+0x00e2    -- 0xFE8C()
+0x00ea    op00_Return()
+
+Actor_0x00:event_0x05:
+0x00eb    -- 0xFE62()
+0x00f1    op00_Return()
+
+Actor_0x00:event_0x06:
+0x00f2    op26_Wait( time=10 )
+0x00f5    op99()
+0x00f6    mem[0x48a] = 60 -- op35
+0x00fc    -- 0x63( ???=-29, ???=514, ???=-716 ) -- exp0x1
+0x0104    -- 0xA3()
+0x010c    op05_CallFunction( address=0xcbd )
+0x010f    op00_Return()
+
+Actor_0x01:on_start:
+0x0110    -- 0x16_ActorPCInit( char_id=0 )
+0x0113    opFE0D_MessageSetFace( char_id=0 )
+0x0117    op02_JumpToConditional( val1=(s)mem[0x4], val2=472, condition="val1 == val2", address_if_false=0x128 )
+0x011f    -- MISSING OPCODE 0xFE1c

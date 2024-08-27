@@ -32,4 +32,22 @@ Actor_0x00:on_start:
 0x0074    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 == val2", address_if_false=0x7f )
 0x007c    mem[0x41a] = true -- op36
 0x007f    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x88 )
-0x0084    -- MISSING OPCODE 0xFE8d
+0x0084    -- 0xFE8D()
+0x0088    op00_Return()
+
+Actor_0x00:on_update:
+0x0089    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x92 )
+0x008e    op05_CallFunction( address=0x1df1 )
+0x0091    op00_Return()
+0x0092    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0093    op00_Return()
+
+Actor_0x01:on_start:
+0x0094    -- 0x16_ActorPCInit( char_id=0 )
+0x0097    opFE0D_MessageSetFace( char_id=0 )
+0x009b    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xad )
+0x00a3    -- MISSING OPCODE 0xFE1c

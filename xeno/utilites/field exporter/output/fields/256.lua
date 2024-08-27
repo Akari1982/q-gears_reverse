@@ -17,4 +17,96 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0xf7
+0x0010    -- 0xF7()
+0x0015    -- 0x2A()
+0x0016    mem[0x400] = 1 -- op35
+0x001c    mem[0x402] = -737 -- op35
+0x0022    mem[0x404] = 110 -- op35
+0x0028    mem[0x406] = 528 -- op35
+0x002e    mem[0x408] = 6 -- op35
+0x0034    mem[0x40a] = 50 -- op35
+0x003a    op02_JumpToConditional( val1=(s)mem[0x184], val2=4096, condition="val1 & val2", address_if_false=0x45 )
+0x0042    mem[0x40c] = true -- op36
+0x0045    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0046    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0047    mem[0x184] |= 1 << 12 -- op3a
+0x004d    op00_Return()
+
+Actor_0x01:on_start:
+0x004e    -- 0x16_ActorPCInit( char_id=0 )
+0x0051    opFE0D_MessageSetFace( char_id=0 )
+0x0055    op00_Return()
+
+Actor_0x01:on_update:
+0x0056    -- 0xA7()
+0x0057    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0058    op00_Return()
+
+Actor_0x02:on_start:
+0x0059    -- 0x16_ActorPCInit( char_id=2 )
+0x005c    opFE0D_MessageSetFace( char_id=2 )
+0x0060    op00_Return()
+
+Actor_0x02:on_update:
+0x0061    -- 0xA7()
+0x0062    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0063    op00_Return()
+
+Actor_0x03:on_start:
+0x0064    -- 0x46()
+0x0065    op00_Return()
+
+Actor_0x03:on_update:
+0x0066    op00_Return()
+
+Actor_0x03:on_talk:
+0x0067    -- 0x15()
+0x0068    -- 0xC4()
+0x006a    -- 0x1F( ???=0x11 )
+0x006c    -- 0x47( ???=251, ???=3 )
+0x0072    op00_Return()
+
+Actor_0x03:on_push:
+0x0073    op00_Return()
+
+Actor_0x04:on_start:
+0x0074    -- 0x46()
+0x0075    op00_Return()
+
+Actor_0x04:on_update:
+0x0076    op00_Return()
+
+Actor_0x04:on_talk:
+0x0077    -- 0x15()
+0x0078    -- 0xC4()
+0x007a    -- 0x1F( ???=0x11 )
+0x007c    -- 0x47( ???=16634, ???=0 )
+0x0082    op00_Return()
+
+Actor_0x04:on_push:
+0x0083    op00_Return()
+
+Actor_0x05:on_start:
+0x0084    -- 0x0B_InitNPC( (s)mem[0x400] )
+0x0087    op02_JumpToConditional( val1=(s)mem[0x40c], val2=1, condition="val1 == val2", address_if_false=0x92 )
+0x008f    op29_ActorTurnOff( actor_id=self )
+0x0091    op00_Return()
+0x0092    -- 0x19_ActorSetPosition( x=(vf80)0x0402, z=(vf40)0x0404, flag=(flag)0x00 )
+0x0098    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0xa5 )
+0x00a0    -- MISSING OPCODE 0x1a

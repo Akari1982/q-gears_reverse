@@ -18,4 +18,91 @@ unknown = [
 Actor_0x00:on_start:
 0x001d    -- 0xBC_ActorNoModelInit()
 0x001e    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x3e )
-0x0026    -- MISSING OPCODE 0x72
+0x0026    -- 0x72()
+0x0029    -- 0xFE66() -- sound play with volume in slot
+0x0033    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x003e    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x5e )
+0x0046    -- 0x72()
+0x0049    -- 0xFE66() -- sound play with volume in slot
+0x0053    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x005e    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x7e )
+0x0066    -- 0x72()
+0x0069    -- 0xFE66() -- sound play with volume in slot
+0x0073    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x007e    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0xa9 )
+0x0086    -- 0x72()
+0x0089    -- 0xFE66() -- sound play with volume in slot
+0x0093    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
+0x009e    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=60 )
+0x00a9    -- 0x2A()
+0x00aa    op00_Return()
+
+Actor_0x00:on_update:
+0x00ab    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00ac    op00_Return()
+
+Actor_0x01:on_start:
+0x00ad    -- 0x16_ActorPCInit( char_id=0 )
+0x00b0    opFE0D_MessageSetFace( char_id=0 )
+0x00b4    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0xc0 )
+0x00bc    -- 0x1C( ???=(vf80)0xfddf, flag=(flag)0x80 )
+0x00c0    op00_Return()
+
+Actor_0x01:on_update:
+0x00c1    -- 0xA7()
+0x00c2    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00c3    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00c4    op05_CallFunction( address=0x84f )
+0x00c7    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00c8    op05_CallFunction( address=0x922 )
+0x00cb    op00_Return()
+
+Actor_0x02:on_start:
+0x00cc    -- 0x93( ???=48 )
+0x00cf    -- 0x19_ActorSetPosition( x=(vf80)0xff04, z=(vf40)0x01ff, flag=(flag)0xc0 )
+0x00d5    -- 0x5F( ???=0x7 )
+0x00d7    -- 0xFE03( ???=7500 )
+0x00db    -- 0x47( ???=2000 )
+0x00df    -- 0xFE09( ???=1 )
+0x00e3    -- 0x2A()
+0x00e4    op00_Return()
+
+Actor_0x02:on_update:
+0x00e5    -- 0xFE3C( ???=0, ???=12 )
+0x00eb    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x00ec    op00_Return()
+
+Actor_0x03:on_start:
+0x00ed    -- 0x0B_InitNPC( 0 )
+0x00f0    -- 0x19_ActorSetPosition( x=(vf80)0x000b, z=(vf40)0x0211, flag=(flag)0xc0 )
+0x00f6    opFE0D_MessageSetFace( char_id=51 )
+0x00fa    -- 0xFE07( ???=0x1 )
+0x00fd    -- 0x5F( ???=0x0 )
+0x00ff    op00_Return()
+
+Actor_0x03:on_update:
+0x0100    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x0101    op00_Return()
+
+Actor_0x03:event_0x04:
+0x0102    -- MISSING OPCODE 0xFE5e

@@ -17,4 +17,73 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0x72
+0x0010    -- 0x72()
+0x0013    -- 0xFE66() -- sound play with volume in slot
+0x001d    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x0028    -- 0x2A()
+0x0029    op00_Return()
+
+Actor_0x00:on_update:
+0x002a    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x002b    op00_Return()
+
+Actor_0x01:on_start:
+0x002c    -- 0x16_ActorPCInit( char_id=0 )
+0x002f    opFE0D_MessageSetFace( char_id=0 )
+0x0033    op00_Return()
+
+Actor_0x01:on_update:
+0x0034    -- 0xA7()
+0x0035    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0036    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0037    -- 0x21( ???=384 )
+0x003a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0040    op26_Wait( time=15 )
+0x0043    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0049    op26_Wait( time=45 )
+0x004c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0052    -- 0x21( ???=256 )
+0x0055    op00_Return()
+
+Actor_0x01:event_0x05:
+0x0056    op05_CallFunction( address=0x475 )
+0x0059    op00_Return()
+
+Actor_0x01:event_0x06:
+0x005a    op05_CallFunction( address=0x548 )
+0x005d    op00_Return()
+
+Actor_0x02:on_start:
+0x005e    -- 0x0B_InitNPC( 0 )
+0x0061    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xffa6, flag=(flag)0xc0 )
+0x0067    opFE0D_MessageSetFace( char_id=28 )
+0x006b    -- 0xFE07( ???=0x1 )
+0x006e    op20_ActorSetFlags0( flags=13 )
+0x0071    -- 0x5F( ???=0x0 )
+0x0073    op00_Return()
+
+Actor_0x02:on_update:
+0x0074    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0075    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0076    -- 0x21( ???=320 )
+0x0079    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x007f    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0080    -- MISSING OPCODE 0xFE5e

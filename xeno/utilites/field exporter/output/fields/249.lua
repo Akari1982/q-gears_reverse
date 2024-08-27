@@ -76,4 +76,5 @@ Actor_0x04:on_start:
 0x0034    -- 0x0B_InitNPC( 0 )
 0x0037    -- 0x23()
 0x0038    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x50 )
-0x0040    -- MISSING OPCODE 0x58
+0x0040    -- 0x58()
+0x0044    -- MISSING OPCODE 0xFE1c

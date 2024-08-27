@@ -43,4 +43,59 @@ Actor_0x00:on_start:
 0x00ac    mem[0x4f8] = 1 -- op35
 0x00b2    -- 0x85()
 0x00b7    -- 0x75( ???=16 )
-0x00ba    -- MISSING OPCODE 0xf7
+0x00ba    -- 0xF7()
+0x00bf    op00_Return()
+0x00c0    -- 0x85()
+0x00c5    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=128, condition="val1 & val2", address_if_false=0xd0 )
+0x00cd    op01_JumpTo( address=0xd9 )
+0x00d0    -- 0xFE18()
+0x00d5    -- 0xFE3B()
+0x00d9    opF1_FadeSetUp( steps=2, r=200, g=80, b=0, semi_tr=1 )
+0x00e4    op00_Return()
+0x00e5    -- 0x85()
+0x00ea    opF1_FadeSetUp( steps=2, r=200, g=80, b=0, semi_tr=1 )
+0x00f5    op01_JumpTo( address=0x100 )
+0x00f8    -- 0x75( ???=16 )
+0x00fb    -- 0xF7()
+0x0100    op00_Return()
+
+Actor_0x00:on_update:
+0x0101    mem[0x1c] = 0 -- op35
+0x0107    -- 0x5B()
+
+Actor_0x00:on_talk:
+0x0108    mem[0x40c] = 4095 -- op35
+0x010e    mem[0x40a] = 0 -- op35
+0x0114    -- 0xFE0E_SoundSetVolume( volume=127, steps=0 )
+0x011a    op00_Return()
+
+Actor_0x00:on_push:
+0x011b    op00_Return()
+
+Actor_0x00:event_0x04:
+0x011c    mem[0x1c0] |= 1 << 2 -- op3a
+0x0122    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0123    mem[0x1c0] |= 1 << 3 -- op3a
+0x0129    op00_Return()
+
+Actor_0x01:on_start:
+0x012a    -- 0x16_ActorPCInit( char_id=0 )
+0x012d    opFE0D_MessageSetFace( char_id=0 )
+0x0131    op00_Return()
+
+Actor_0x01:on_update:
+0x0132    -- 0x0C()
+0x0133    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0134    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0135    -- 0x4B()
+0x013d    op26_Wait( time=1 )
+0x0140    op6F_ActorRotateToActor( actor_id=Actor_0x10 )
+0x0142    -- MISSING OPCODE 0xb5

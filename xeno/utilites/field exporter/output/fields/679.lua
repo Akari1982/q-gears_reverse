@@ -17,4 +17,130 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0x72
+0x0010    -- 0x72()
+0x0013    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x001e    -- 0x2A()
+0x001f    op00_Return()
+
+Actor_0x00:on_update:
+0x0020    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0021    op00_Return()
+
+Actor_0x01:on_start:
+0x0022    -- 0x16_ActorPCInit( char_id=0 )
+0x0025    opFE0D_MessageSetFace( char_id=0 )
+0x0029    op00_Return()
+
+Actor_0x01:on_update:
+0x002a    -- 0xA7()
+0x002b    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x002c    op00_Return()
+
+Actor_0x01:event_0x04:
+0x002d    op2C_SpritePlayAnim( anim_id=0xff )
+0x002f    -- 0x21( ???=384 )
+0x0032    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0038    op26_Wait( time=5 )
+0x003b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0041    -- 0x5F( ???=0x7 )
+0x0043    op00_Return()
+
+Actor_0x01:event_0x05:
+0x0044    op05_CallFunction( address=0x4a7 )
+0x0047    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0048    op05_CallFunction( address=0x57a )
+0x004b    op00_Return()
+
+Actor_0x02:on_start:
+0x004c    -- 0x0B_InitNPC( 0 )
+0x004f    -- 0x19_ActorSetPosition( x=(vf80)0x0061, z=(vf40)0xffb0, flag=(flag)0xc0 )
+0x0055    op20_ActorSetFlags0( flags=13 )
+0x0058    opFE0D_MessageSetFace( char_id=51 )
+0x005c    -- 0xFE07( ???=0x1 )
+0x005f    -- 0x5F( ???=0x7 )
+0x0061    op00_Return()
+
+Actor_0x02:on_update:
+0x0062    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0063    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0064    -- 0x21( ???=512 )
+0x0067    -- 0xF6( ???=0x1 )
+0x0069    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x006f    op26_Wait( time=15 )
+0x0072    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0078    op26_Wait( time=5 )
+0x007b    -- 0xF6( ???=0x0 )
+0x007d    op26_Wait( time=10 )
+0x0080    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0086    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0087    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x008d    op26_Wait( time=10 )
+0x0090    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0096    -- 0x5F( ???=0x4 )
+0x0098    op00_Return()
+
+Actor_0x02:event_0x06:
+0x0099    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x009f    op26_Wait( time=5 )
+0x00a2    -- 0x67()
+0x00a6    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00ac    op26_Wait( time=10 )
+0x00af    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00b5    -- 0x5F( ???=0x2 )
+0x00b7    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x04, priority=0x01 )
+0x00ba    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c0    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x05, priority=0x01 )
+0x00c3    op00_Return()
+
+Actor_0x02:event_0x07:
+0x00c4    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00ca    -- 0x5F( ???=0x2 )
+0x00cc    op2C_SpritePlayAnim( anim_id=0x4 )
+0x00ce    op00_Return()
+
+Actor_0x02:event_0x08:
+0x00cf    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00d1    op26_Wait( time=20 )
+0x00d4    op2C_SpritePlayAnim( anim_id=0xff )
+0x00d6    op00_Return()
+
+Actor_0x02:event_0x09:
+0x00d7    op2C_SpritePlayAnim( anim_id=0x3 )
+0x00d9    op00_Return()
+
+Actor_0x02:event_0x0a:
+0x00da    op2C_SpritePlayAnim( anim_id=0x4 )
+0x00dc    op00_Return()
+
+Actor_0x02:event_0x0b:
+0x00dd    op2C_SpritePlayAnim( anim_id=0x5 )
+0x00df    op00_Return()
+
+Actor_0x02:event_0x0c:
+0x00e0    op2C_SpritePlayAnim( anim_id=0x6 )
+0x00e2    op00_Return()
+
+Actor_0x02:event_0x0d:
+0x00e3    op2C_SpritePlayAnim( anim_id=0xff )
+0x00e5    op00_Return()
+
+Actor_0x02:event_0x0e:
+0x00e6    -- MISSING OPCODE 0xFE5e

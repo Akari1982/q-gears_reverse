@@ -163,4 +163,30 @@ Actor_0x0a:on_update:
 
 Actor_0x0a:on_talk:
 0x0079    -- 0x15()
-0x007a    -- MISSING OPCODE 0xc4
+0x007a    -- 0xC4()
+0x007c    -- 0x1F( ???=0x11 )
+0x007e    -- 0x47( ???=1, ???=1 )
+
+Actor_0x0a:on_push:
+0x0084    op00_Return()
+
+Actor_0x0b:on_start:
+0x0085    -- 0x0B_InitNPC( 0 )
+0x0088    -- 0x19_ActorSetPosition( x=(vf80)0xff0b, z=(vf40)0xffcc, flag=(flag)0xc0 )
+0x008e    -- 0x18()
+0x0093    op69_ActorSetRotation( rot=3 )
+0x0096    op00_Return()
+
+Actor_0x0b:on_update:
+0x0097    op00_Return()
+
+Actor_0x0b:on_talk:
+0x0098    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x009a    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0xad )
+0x00a2    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00a6    op9C_MessageSync()
+0x00a7    mem[0x406] = true -- op36
+0x00aa    op01_JumpTo( address=0xb2 )
+0x00ad    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00b1    op9C_MessageSync()
+0x00b2    -- MISSING OPCODE 0xFE59

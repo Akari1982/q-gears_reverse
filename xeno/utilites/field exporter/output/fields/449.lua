@@ -27,4 +27,25 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0034    -- 0x9D()
 0x0038    -- 0x75( ???=21 )
-0x003b    -- MISSING OPCODE 0xf7
+0x003b    -- 0xF7()
+0x0040    -- 0x5B()
+0x0041    op00_Return()
+
+Actor_0x00:on_talk:
+0x0042    -- 0xFE65()
+0x0048    op00_Return()
+
+Actor_0x00:on_push:
+0x0049    op00_Return()
+
+Actor_0x01:on_start:
+0x004a    -- 0x16_ActorPCInit( char_id=0 )
+0x004d    opFE0D_MessageSetFace( char_id=0 )
+0x0051    op00_Return()
+
+Actor_0x01:on_update:
+0x0052    op02_JumpToConditional( val1=(s)mem[0x4], val2=445, condition="val1 == val2", address_if_false=0x7c )
+0x005a    op2C_SpritePlayAnim( anim_id=0x0 )
+0x005c    -- 0x1D()
+0x0063    op26_Wait( time=1 )
+0x0066    -- MISSING OPCODE 0x10

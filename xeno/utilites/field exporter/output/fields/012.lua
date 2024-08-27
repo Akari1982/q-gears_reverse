@@ -440,4 +440,23 @@ Actor_0x09:event_0x04:
 0x033f    opD2_MessageShowDynamic( text_id=0x23, flags=0 )
 0x0343    op9C_MessageSync()
 0x0344    op26_Wait( time=30 )
-0x0347    -- MISSING OPCODE 0x04
+0x0347    -- 0x04()
+
+Actor_0x0a:on_start:
+0x0348    -- 0xBC_ActorNoModelInit()
+0x0349    -- 0x2A()
+0x034a    op00_Return()
+
+Actor_0x0a:on_update:
+0x034b    op00_Return()
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x034c    op00_Return()
+
+Actor_0x0a:event_0x04:
+0x034d    op02_JumpToConditional( val1=(s)mem[0x8], val2=3, condition="val1 > val2", address_if_false=0x371 )
+0x0355    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 < val2", address_if_false=0x36b )
+0x035d    op26_Wait( time=20 )
+0x0360    -- MISSING OPCODE 0xb5

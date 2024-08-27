@@ -190,4 +190,81 @@ Actor_0x0c:on_start:
 
 Actor_0x0c:on_update:
 0x00a0    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xa6 )
-0x00a5    -- MISSING OPCODE 0x59
+0x00a5    -- 0x59()
+0x00a6    op00_Return()
+
+Actor_0x0c:on_talk:
+0x00a7    op6F_ActorRotateToActor( actor_id=party1 )
+0x00a9    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xc6 )
+0x00ae    op02_JumpToConditional( val1=(s)mem[0xbe], val2=5, condition="val1 < val2", address_if_false=0xbe )
+0x00b6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00ba    op9C_MessageSync()
+0x00bb    op01_JumpTo( address=0xc3 )
+0x00be    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00c2    op9C_MessageSync()
+0x00c3    op01_JumpTo( address=0xcb )
+0x00c6    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00ca    op9C_MessageSync()
+0x00cb    op00_Return()
+
+Actor_0x0c:on_push:
+0x00cc    op00_Return()
+
+Actor_0x0d:on_start:
+0x00cd    -- 0xFE15( ???=1, ???=3 )
+0x00d3    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xda )
+0x00d8    op29_ActorTurnOff( actor_id=self )
+0x00da    -- 0x19_ActorSetPosition( x=(vf80)0xff8b, z=(vf40)0x00b4, flag=(flag)0xc0 )
+0x00e0    -- 0x5F( ???=0x1 )
+
+Actor_0x0d:on_update:
+0x00e2    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00e3    op6F_ActorRotateToActor( actor_id=party1 )
+0x00e5    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00e9    op9C_MessageSync()
+
+Actor_0x0d:on_push:
+0x00ea    op00_Return()
+
+Actor_0x0e:on_start:
+0x00eb    -- 0x46()
+0x00ec    op00_Return()
+
+Actor_0x0e:on_update:
+0x00ed    op00_Return()
+
+Actor_0x0e:on_talk:
+0x00ee    -- 0x85()
+0x00f3    -- 0x15()
+0x00f4    -- 0xC4()
+0x00f6    -- 0x1F( ???=0x11 )
+0x00f8    -- 0x47( ???=103, ???=8 )
+0x00fe    op01_JumpTo( address=0x10c )
+0x0101    -- 0x15()
+0x0102    -- 0xC4()
+0x0104    -- 0x1F( ???=0x11 )
+0x0106    -- 0x47( ???=102, ???=8 )
+0x010c    -- 0x5B()
+
+Actor_0x0e:on_push:
+0x010d    op00_Return()
+
+Actor_0x0f:on_start:
+0x010e    -- 0x46()
+0x010f    op00_Return()
+
+Actor_0x0f:on_update:
+0x0110    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0111    -- 0x15()
+0x0112    -- 0xC4()
+0x0114    -- 0x1F( ???=0x11 )
+0x0116    -- 0x47( ???=114, ???=1 )
+0x011c    -- 0x5B()
+
+Actor_0x0f:on_push:
+0x011d    op00_Return()
+0x011e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xeb00, flag=0x1 )

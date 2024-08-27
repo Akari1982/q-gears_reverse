@@ -214,4 +214,15 @@ Actor_0x0d:on_start:
 0x00d0    -- 0x5F( ???=0x0 )
 
 Actor_0x0d:on_update:
-0x00d2    -- MISSING OPCODE 0x59
+0x00d2    -- 0x59()
+0x00d3    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00d4    op6F_ActorRotateToActor( actor_id=party1 )
+0x00d6    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xe3 )
+0x00db    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00df    op9C_MessageSync()
+0x00e0    op01_JumpTo( address=0xe8 )
+0x00e3    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x00e7    op9C_MessageSync()
+0x00e8    -- MISSING OPCODE 0xFE17

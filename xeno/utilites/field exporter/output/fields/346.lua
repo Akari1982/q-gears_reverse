@@ -34,4 +34,34 @@ Actor_0x00:on_update:
 0x00b2    op02_JumpToConditional( val1=(s)mem[0xea], val2=32, condition="val1 & val2", address_if_false=0xbc )
 0x00ba    -- 0xFE54()
 0x00bc    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0xc6 )
-0x00c1    -- MISSING OPCODE 0xf7
+0x00c1    -- 0xF7()
+0x00c6    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0xd8 )
+0x00ce    -- 0x27( actor_id=Actor_0x12 )
+0x00d0    op26_Wait( time=40 )
+0x00d3    -- 0x28()
+0x00d5    op01_JumpTo( address=0xdf )
+0x00d8    -- 0x27( actor_id=Actor_0x12 )
+0x00da    op26_Wait( time=10 )
+0x00dd    -- 0x28()
+0x00df    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 == val2", address_if_false=0xf1 )
+0x00e7    -- 0x27( actor_id=Actor_0x13 )
+0x00e9    op26_Wait( time=40 )
+0x00ec    -- 0x28()
+0x00ee    op01_JumpTo( address=0xf8 )
+0x00f1    -- 0x27( actor_id=Actor_0x13 )
+0x00f3    op26_Wait( time=10 )
+0x00f6    -- 0x28()
+0x00f8    -- 0x5B()
+0x00f9    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00fa    -- 0xFE0E_SoundSetVolume( volume=127, steps=30 )
+0x0100    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0101    op26_Wait( time=2 )
+0x0104    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x07, priority=0x06 )
+0x0107    -- 0xFE24()
+0x0109    -- MISSING OPCODE 0xFEaa

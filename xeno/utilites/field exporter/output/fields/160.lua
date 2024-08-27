@@ -19,4 +19,74 @@ Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0x75( ???=255 )
 0x0013    -- 0x2A()
-0x0014    -- MISSING OPCODE 0xe5
+0x0014    -- 0xE5()
+0x0025    op00_Return()
+
+Actor_0x00:on_update:
+0x0026    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x34 )
+0x002e    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x00 )
+0x0031    op01_JumpTo( address=0x51 )
+0x0034    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x05, priority=0x00 )
+0x0037    op26_Wait( time=20 )
+0x003a    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x00 )
+0x003d    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x00 )
+0x0040    op29_ActorTurnOff( actor_id=Actor_0x03 )
+0x0042    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x06, priority=0x00 )
+0x0045    opB4_FadeOut()
+0x0048    op26_Wait( time=60 )
+0x004b    -- 0x98_MapLoad( field_id=287, value=0 )
+0x0050    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0051    op00_Return()
+
+Actor_0x01:on_start:
+0x0052    -- 0xBC_ActorNoModelInit()
+0x0053    -- 0x2A()
+0x0054    -- 0xFE52()
+0x0056    -- 0xFE50()
+0x0058    op00_Return()
+
+Actor_0x01:on_update:
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0059    op00_Return()
+
+Actor_0x01:event_0x04:
+0x005a    -- 0xB6( ???=1057, ???=0 )
+0x005f    op99()
+0x0060    -- 0x9B( ???=32, ???=32 )
+0x0065    -- 0x63( ???=-16, ???=2444, ???=-125 ) -- exp0x1
+0x006d    -- 0xA3()
+0x0075    opAC_MoveCamera( control=0x0, steps=0 )
+0x0079    opAC_MoveCamera( control=0x1, steps=0 )
+0x007d    opEF_MoveCameraSync()
+0x0080    op26_Wait( time=60 )
+0x0083    -- 0xB6( ???=512, ???=200 )
+0x0088    -- 0x60()
+0x0089    -- 0x64() -- exp0x1
+0x008a    -- 0x63( ???=-27, ???=603, ???=-154 ) -- exp0x1
+0x0092    -- 0xA3()
+0x009a    opAC_MoveCamera( control=0x0, steps=200 )
+0x009e    opAC_MoveCamera( control=0x1, steps=200 )
+0x00a2    opEF_MoveCameraSync()
+0x00a5    -- 0x60()
+0x00a6    -- 0x64() -- exp0x1
+0x00a7    -- 0x63( ???=212, ???=466, ???=19 ) -- exp0x1
+0x00af    -- 0xA3()
+0x00b7    opAC_MoveCamera( control=0x0, steps=50 )
+0x00bb    opAC_MoveCamera( control=0x1, steps=50 )
+0x00bf    opEF_MoveCameraSync()
+0x00c2    -- 0x60()
+0x00c3    -- 0x64() -- exp0x1
+0x00c4    -- 0x63( ???=65, ???=364, ???=108 ) -- exp0x1
+0x00cc    -- 0xA3()
+0x00d4    opAC_MoveCamera( control=0x0, steps=100 )
+0x00d8    opAC_MoveCamera( control=0x1, steps=100 )
+0x00dc    opEF_MoveCameraSync()
+0x00df    op26_Wait( time=60 )
+0x00e2    -- MISSING OPCODE 0xFEb8

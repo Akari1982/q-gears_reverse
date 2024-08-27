@@ -35,4 +35,23 @@ Actor_0x00:on_start:
 0x0041    -- 0xA3()
 0x0049    opAC_MoveCamera( control=0x1, steps=0 )
 0x004d    opAC_MoveCamera( control=0x0, steps=0 )
-0x0051    -- MISSING OPCODE 0x72
+0x0051    -- 0x72()
+0x0054    op74_SoundPlayFixedVolume( sound_id=133 )
+0x0057    -- 0x2A()
+0x0058    op00_Return()
+
+Actor_0x00:on_update:
+0x0059    -- 0x86_ProgressNotEqualJumpTo( value=234, jump=0x92 )
+0x005e    -- 0xFE54()
+0x0060    op74_SoundPlayFixedVolume( sound_id=37 )
+0x0063    op26_Wait( time=32 )
+0x0066    -- 0xCF()
+0x006b    opF5_MessageShowStatic( text_id=0x0, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
+0x006f    op9C_MessageSync()
+0x0070    op26_Wait( time=45 )
+0x0073    opF5_MessageShowStatic( text_id=0x1, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
+0x0077    op9C_MessageSync()
+0x0078    op26_Wait( time=32 )
+0x007b    mem[0x14c] = 130 -- op35
+0x0081    -- 0xFE8D()
+0x0085    -- MISSING OPCODE 0x12

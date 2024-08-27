@@ -72,4 +72,102 @@ Actor_0x03:on_update:
 
 Actor_0x03:on_talk:
 0x004e    -- 0x15()
-0x004f    -- MISSING OPCODE 0xc4
+0x004f    -- 0xC4()
+0x0051    -- 0x1F( ???=0x11 )
+0x0053    -- 0x47( ???=238, ???=3 )
+0x0059    -- 0x5B()
+
+Actor_0x03:on_push:
+0x005a    op00_Return()
+
+Actor_0x04:on_start:
+0x005b    -- 0xBC_ActorNoModelInit()
+0x005c    -- 0x2A()
+0x005d    op00_Return()
+
+Actor_0x04:on_update:
+0x005e    -- 0xBF( ???=80 )
+0x0061    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0062    op00_Return()
+
+Actor_0x05:on_start:
+0x0063    -- 0x0B_InitNPC( 1 )
+0x0066    -- 0x19_ActorSetPosition( x=(vf80)0x00cb, z=(vf40)0xff06, flag=(flag)0xc0 )
+0x006c    -- 0xFE07( ???=0x1 )
+0x006f    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=3 )
+0x007a    op00_Return()
+
+Actor_0x05:on_update:
+0x007b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0081    -- 0x5F( ???=0x3 )
+0x0083    op26_Wait( time=30 )
+0x0086    -- 0x5F( ???=0x7 )
+0x0088    op26_Wait( time=15 )
+0x008b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0091    op26_Wait( time=30 )
+0x0094    -- 0x5F( ???=0x2 )
+0x0096    op26_Wait( time=15 )
+0x0099    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x009f    -- 0x5F( ???=0x4 )
+0x00a1    op26_Wait( time=45 )
+0x00a4    -- 0x5F( ???=0x6 )
+0x00a6    op26_Wait( time=10 )
+0x00a9    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00af    op26_Wait( time=15 )
+0x00b2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00b8    -- 0x5F( ???=0x2 )
+0x00ba    op26_Wait( time=30 )
+0x00bd    -- 0x5F( ???=0x6 )
+0x00bf    op26_Wait( time=60 )
+0x00c2    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00c8    op26_Wait( time=15 )
+0x00cb    -- 0x5F( ???=0x7 )
+0x00cd    op26_Wait( time=5 )
+0x00d0    -- 0x5F( ???=0x1 )
+0x00d2    -- 0xF6( ???=0x1 )
+0x00d4    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00da    op26_Wait( time=15 )
+0x00dd    -- 0xF6( ???=0x0 )
+0x00df    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00e5    op26_Wait( time=120 )
+0x00e8    -- 0x5F( ???=0x5 )
+0x00ea    op26_Wait( time=5 )
+0x00ed    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00f3    op26_Wait( time=10 )
+0x00f6    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00fc    op26_Wait( time=90 )
+0x00ff    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x0100    op00_Return()
+
+Actor_0x05:event_0x04:
+0x0101    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0107    op26_Wait( time=5 )
+0x010a    op6F_ActorRotateToActor( actor_id=party1 )
+0x010c    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0110    op9C_MessageSync()
+0x0111    op00_Return()
+
+Actor_0x05:event_0x05:
+0x0112    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0116    op9C_MessageSync()
+0x0117    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x011b    op9C_MessageSync()
+0x011c    op00_Return()
+
+Actor_0x05:event_0x06:
+0x011d    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x0121    op9C_MessageSync()
+0x0122    -- 0xFE0E_SoundSetVolume( volume=0, steps=32 )
+0x0128    op74_SoundPlayFixedVolume( sound_id=249 )
+0x012b    op26_Wait( time=5 )
+0x012e    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=45 )
+0x0139    op26_Wait( time=60 )
+0x013c    -- MISSING OPCODE 0xFE56

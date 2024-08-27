@@ -226,4 +226,44 @@ Actor_0x0d:on_start:
 
 Actor_0x0d:on_update:
 0x00f9    -- 0x84_ProgressLessEqualJumpTo( value=204, jump=0x102 )
-0x00fe    -- MISSING OPCODE 0x59
+0x00fe    -- 0x59()
+0x00ff    op01_JumpTo( address=0x103 )
+0x0102    -- 0x5A()
+0x0103    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0104    op2C_SpritePlayAnim( anim_id=0x5 )
+0x0106    op74_SoundPlayFixedVolume( sound_id=9 )
+0x0109    op26_Wait( time=50 )
+0x010c    op2C_SpritePlayAnim( anim_id=0x6 )
+
+Actor_0x0d:on_push:
+0x010e    op00_Return()
+
+Actor_0x0e:on_start:
+0x010f    -- 0xFE15( ???=0, ???=5 )
+0x0115    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0x11c )
+0x011a    op29_ActorTurnOff( actor_id=self )
+0x011c    -- 0x19_ActorSetPosition( x=(vf80)0xffcd, z=(vf40)0x0034, flag=(flag)0xc0 )
+0x0122    -- 0x5F( ???=0x3 )
+0x0124    op00_Return()
+
+Actor_0x0e:on_update:
+0x0125    -- 0x84_ProgressLessEqualJumpTo( value=204, jump=0x12f )
+0x012a    -- 0x52()
+0x012c    op01_JumpTo( address=0x130 )
+0x012f    -- 0x59()
+0x0130    op00_Return()
+
+Actor_0x0e:on_talk:
+0x0131    op74_SoundPlayFixedVolume( sound_id=9 )
+
+Actor_0x0e:on_push:
+0x0134    op00_Return()
+
+Actor_0x0f:on_start:
+0x0135    -- 0xFE15( ???=0, ???=5 )
+0x013b    -- 0x84_ProgressLessEqualJumpTo( value=204, jump=0x142 )
+0x0140    op29_ActorTurnOff( actor_id=self )
+0x0142    -- 0xFE03( ???=2048 )
+0x0146    -- MISSING OPCODE 0xFE04

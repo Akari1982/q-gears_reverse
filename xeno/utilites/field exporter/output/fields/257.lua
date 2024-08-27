@@ -17,4 +17,102 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0016    -- 0xBC_ActorNoModelInit()
-0x0017    -- MISSING OPCODE 0xf7
+0x0017    -- 0xF7()
+0x001c    -- 0x2A()
+0x001d    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x001e    op00_Return()
+
+Actor_0x01:on_start:
+0x001f    -- 0x16_ActorPCInit( char_id=0 )
+0x0022    opFE0D_MessageSetFace( char_id=0 )
+0x0026    op00_Return()
+
+Actor_0x01:on_update:
+0x0027    -- 0xA7()
+0x0028    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0029    op00_Return()
+
+Actor_0x02:on_start:
+0x002a    -- 0x16_ActorPCInit( char_id=2 )
+0x002d    opFE0D_MessageSetFace( char_id=2 )
+0x0031    op00_Return()
+
+Actor_0x02:on_update:
+0x0032    -- 0xA7()
+0x0033    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0034    op00_Return()
+
+Actor_0x03:on_start:
+0x0035    -- 0x46()
+0x0036    op00_Return()
+
+Actor_0x03:on_update:
+0x0037    op00_Return()
+
+Actor_0x03:on_talk:
+0x0038    -- 0x15()
+0x0039    -- 0xC4()
+0x003b    -- 0x1F( ???=0x11 )
+0x003d    -- 0x47( ???=254, ???=1 )
+0x0043    op00_Return()
+
+Actor_0x03:on_push:
+0x0044    op00_Return()
+
+Actor_0x04:on_start:
+0x0045    -- 0x46()
+0x0046    op00_Return()
+
+Actor_0x04:on_update:
+0x0047    op00_Return()
+
+Actor_0x04:on_talk:
+0x0048    -- 0x15()
+0x0049    -- 0xC4()
+0x004b    -- 0x1F( ???=0x11 )
+0x004d    -- 0x47( ???=252, ???=0 )
+0x0053    op00_Return()
+
+Actor_0x04:on_push:
+0x0054    op00_Return()
+
+Actor_0x05:on_start:
+0x0055    -- 0x46()
+0x0056    op00_Return()
+
+Actor_0x05:on_update:
+0x0057    op00_Return()
+
+Actor_0x05:on_talk:
+0x0058    op02_JumpToConditional( val1=(s)mem[0x184], val2=8, condition="val1 & val2", address_if_false=0x84 )
+0x0060    op02_JumpToConditional( val1=(s)mem[0x184], val2=32, condition="val1 & val2", address_if_false=0x6b )
+0x0068    op01_JumpTo( address=0x76 )
+0x006b    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x006f    op9C_MessageSync()
+0x0070    mem[0x184] |= 1 << 5 -- op3a
+0x0076    -- 0x15()
+0x0077    -- 0xC4()
+0x0079    -- 0x1F( ???=0x11 )
+0x007b    -- 0x47( ???=253, ???=2 )
+0x0081    op01_JumpTo( address=0x89 )
+0x0084    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0088    op9C_MessageSync()
+0x0089    op00_Return()
+
+Actor_0x05:on_push:
+0x008a    op00_Return()
+0x008b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

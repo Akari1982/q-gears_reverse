@@ -313,4 +313,10 @@ Actor_0x0c:on_update:
 
 Actor_0x0c:on_talk:
 0x0192    op02_JumpToConditional( val1=mem[0x1c8], val2=4, condition="val1 & val2", address_if_false=0x1ab )
-0x019a    -- MISSING OPCODE 0xFE13
+0x019a    -- 0xFE13()
+0x01a0    op26_Wait( time=30 )
+0x01a3    opF5_MessageShowStatic( text_id=0x0, flags=NO_FACE )
+0x01a7    op9C_MessageSync()
+0x01a8    op01_JumpTo( address=0x1ef )
+0x01ab    -- 0xFE54()
+0x01ad    -- MISSING OPCODE 0xFE17
