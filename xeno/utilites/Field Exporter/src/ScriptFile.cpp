@@ -1289,6 +1289,14 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xe6:
+            {
+                exp->Log( "-- 0xE6()" );
+                pointer += 9;
+            }
+            break;
+
+
             case 0xe7:
             {
                 exp->Log( "-- 0xE7( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + ", ???=" + GetV80Variable( pointer + 5 ) + " )" );

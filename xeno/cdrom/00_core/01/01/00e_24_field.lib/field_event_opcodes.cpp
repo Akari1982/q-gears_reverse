@@ -8274,30 +8274,26 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func90fdc
-80090FDC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80090FE4	jal    field_event_help_read_s16 [$800ac254]
-A0 = 0001;
+// field_event_opE6()
+
+A0 = 1;
+field_event_help_read_s16();
 [800aeeb0] = h(V0);
-80090FF4	jal    field_event_help_read_s16 [$800ac254]
-A0 = 0003;
+
+A0 = 3;
+field_event_help_read_s16();
 [800aeeb2] = h(V0);
-80091004	jal    field_event_help_read_s16 [$800ac254]
-A0 = 0005;
+
+A0 = 5;
+field_event_help_read_s16();
 [800aeeb4] = h(V0);
-80091014	jal    field_event_help_read_s16 [$800ac254]
-A0 = 0007;
+
+A0 = 7;
+field_event_help_read_s16();
+[800aeeb6] = h(0 - V0);
+
 V1 = w[800af54c];
-V0 = 0 - V0;
-[800aeeb6] = h(V0);
-V0 = hu[V1 + 00cc];
-80091034	nop
-V0 = V0 + 0009;
-RA = w[SP + 0010];
-[V1 + 00cc] = h(V0);
-80091044	jr     ra 
-SP = SP + 0018;
+[V1 + cc] = h(hu[V1 + cc] + 9);
 ////////////////////////////////
 
 
