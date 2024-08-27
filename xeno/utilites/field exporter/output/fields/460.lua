@@ -1,0 +1,113 @@
+var = [
+    0x093800e0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x000fffff,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+]
+
+unknown = [
+    0xe3ff, 0x0000, 0x0000, 0x06ff,
+]
+
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    -- 0x86_ProgressNotEqualJumpTo( value=241, jump=0x1c )
+0x000f    -- 0xA0()
+0x0016    -- 0x75( ???=57 )
+0x0019    op01_JumpTo( address=0x23 )
+0x001c    -- 0xA0()
+0x0023    op00_Return()
+
+Actor_0x00:on_update:
+0x0024    -- 0x86_ProgressNotEqualJumpTo( value=241, jump=0x174 )
+0x0029    -- 0xFE54()
+0x002b    opF1_FadeSetUp( steps=2, r=6, g=51, b=100, semi_tr=1 )
+0x0036    op25_ActorDisable( actor_id=Actor_0x01 )
+0x0038    op25_ActorDisable( actor_id=Actor_0x03 )
+0x003a    op25_ActorDisable( actor_id=Actor_0x02 )
+0x003c    op25_ActorDisable( actor_id=Actor_0x0a )
+0x003e    op25_ActorDisable( actor_id=Actor_0x04 )
+0x0040    op25_ActorDisable( actor_id=Actor_0x05 )
+0x0042    op25_ActorDisable( actor_id=Actor_0x06 )
+0x0044    op25_ActorDisable( actor_id=Actor_0x08 )
+0x0046    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0048    op25_ActorDisable( actor_id=Actor_0x07 )
+0x004a    op25_ActorDisable( actor_id=Actor_0x1c )
+0x004c    op99()
+0x004d    mem[0x41c] = 0 -- op35
+0x0053    -- 0x63( ???=14, ???=-19, ???=-4 ) -- exp0x1
+0x005b    -- 0xA3()
+0x0063    op05_CallFunction( address=0x7bc )
+0x0066    -- 0xFE0E_SoundSetVolume( volume=64, steps=60 )
+0x006c    op26_Wait( time=60 )
+0x006f    opF5_MessageShowStatic( text_id=0x0, flags=CLOSE_OFF_SCREEN )
+0x0073    op9C_MessageSync()
+0x0074    opFE0D_MessageSetFace( char_id=72 )
+0x0078    opF5_MessageShowStatic( text_id=0x1, flags=CLOSE_OFF_SCREEN )
+0x007c    op9C_MessageSync()
+0x007d    opFE0D_MessageSetFace( char_id=252 )
+0x0081    opF5_MessageShowStatic( text_id=0x2, flags=CLOSE_OFF_SCREEN )
+0x0085    op9C_MessageSync()
+0x0086    opFE0D_MessageSetFace( char_id=72 )
+0x008a    opF5_MessageShowStatic( text_id=0x3, flags=CLOSE_OFF_SCREEN )
+0x008e    op9C_MessageSync()
+0x008f    opFE0D_MessageSetFace( char_id=252 )
+0x0093    opF5_MessageShowStatic( text_id=0x4, flags=CLOSE_OFF_SCREEN )
+0x0097    op9C_MessageSync()
+0x0098    opFE0D_MessageSetFace( char_id=3 )
+0x009c    opF5_MessageShowStatic( text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x00a0    op9C_MessageSync()
+0x00a1    opFE0D_MessageSetFace( char_id=252 )
+0x00a5    opF5_MessageShowStatic( text_id=0x6, flags=CLOSE_OFF_SCREEN )
+0x00a9    op9C_MessageSync()
+0x00aa    opFE0D_MessageSetFace( char_id=1 )
+0x00ae    opF5_MessageShowStatic( text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x00b2    op9C_MessageSync()
+0x00b3    opFE0D_MessageSetFace( char_id=252 )
+0x00b7    opF5_MessageShowStatic( text_id=0x8, flags=CLOSE_OFF_SCREEN )
+0x00bb    op9C_MessageSync()
+0x00bc    opFE0D_MessageSetFace( char_id=29 )
+0x00c0    opF5_MessageShowStatic( text_id=0x9, flags=CLOSE_OFF_SCREEN )
+0x00c4    op9C_MessageSync()
+0x00c5    opFE0D_MessageSetFace( char_id=3 )
+0x00c9    opF5_MessageShowStatic( text_id=0xa, flags=CLOSE_OFF_SCREEN )
+0x00cd    op9C_MessageSync()
+0x00ce    opFE0D_MessageSetFace( char_id=5 )
+0x00d2    opF5_MessageShowStatic( text_id=0xb, flags=CLOSE_OFF_SCREEN )
+0x00d6    op9C_MessageSync()
+0x00d7    opFE0D_MessageSetFace( char_id=1 )
+0x00db    opF5_MessageShowStatic( text_id=0xc, flags=CLOSE_OFF_SCREEN )
+0x00df    op9C_MessageSync()
+0x00e0    opFE0D_MessageSetFace( char_id=2 )
+0x00e4    opF5_MessageShowStatic( text_id=0xd, flags=CLOSE_OFF_SCREEN )
+0x00e8    op9C_MessageSync()
+0x00e9    opFE0D_MessageSetFace( char_id=1 )
+0x00ed    opF5_MessageShowStatic( text_id=0xe, flags=CLOSE_OFF_SCREEN )
+0x00f1    op9C_MessageSync()
+0x00f2    opFE0D_MessageSetFace( char_id=72 )
+0x00f6    opF5_MessageShowStatic( text_id=0xf, flags=CLOSE_OFF_SCREEN )
+0x00fa    op9C_MessageSync()
+0x00fb    opFE0D_MessageSetFace( char_id=252 )
+0x00ff    opD0_MessageSettings( x=0, y=90, letters=0, rows=0, flags=0 )
+0x010a    opF5_MessageShowStatic( text_id=0x10, flags=CLOSE_OFF_SCREEN )
+0x010e    op9C_MessageSync()
+0x010f    -- 0xFE0E_SoundSetVolume( volume=0, steps=10 )
+0x0115    op26_Wait( time=10 )
+0x0118    opB4_FadeOut()
+0x011b    -- 0x75( ???=255 )
+0x011e    op74_SoundPlayFixedVolume( sound_id=204 )
+0x0121    op74_SoundPlayFixedVolume( sound_id=205 )
+0x0124    op74_SoundPlayFixedVolume( sound_id=206 )
+0x0127    op26_Wait( time=320 )
+0x012a    -- 0x87_SetProgress( progress=242 )
+0x012d    -- 0xFE19( char_id=0xff )
+0x0130    -- 0xFE19( char_id=0xfe )
+0x0133    -- 0xFE18()
+0x0138    -- MISSING OPCODE 0xFE8c

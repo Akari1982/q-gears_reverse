@@ -1,0 +1,100 @@
+var = [
+    0x093800e0, 0x00000000, 0x00000000, 0x007f0000,
+    0x00000000, 0x00000000, 0x00000000, 0xc000007f,
+    0x0007ffff, 0x000001ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+]
+
+unknown = [
+    0x5bff, 0x3200, 0x0000, 0x06ff,
+]
+
+
+
+Actor_0x00:on_start:
+0x0008    -- 0xBC_ActorNoModelInit()
+0x0009    -- 0x2A()
+0x000a    -- 0xA0()
+0x0011    op00_Return()
+
+Actor_0x00:on_update:
+0x0012    -- 0x9D()
+0x0016    -- 0xFE54()
+0x0018    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x06 )
+0x001b    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
+0x0026    op26_Wait( time=15 )
+0x0029    opF1_FadeSetUp( steps=1, r=60, g=30, b=0, semi_tr=120 )
+0x0034    op26_Wait( time=150 )
+0x0037    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x06 )
+0x003a    -- 0x5B()
+0x003b    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x003c    op00_Return()
+
+Actor_0x01:on_start:
+0x003d    -- 0x16_ActorPCInit( char_id=0 )
+0x0040    opFE0D_MessageSetFace( char_id=0 )
+0x0044    op00_Return()
+
+Actor_0x01:on_update:
+0x0045    -- 0x0C()
+0x0046    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0047    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0048    -- 0xFE5B()
+0x004c    op6F_ActorRotateToActor( actor_id=Actor_0x06 )
+0x004e    op26_Wait( time=28 )
+0x0051    op6F_ActorRotateToActor( actor_id=Actor_0x03 )
+0x0053    op26_Wait( time=8 )
+0x0056    opFE4A_SpriteAddAnimLoad( file=4 )
+0x005a    opFE4B_SpriteAddAnimSync()
+0x005c    opFE4D_SpritePlayAddAnim( anim_id=0x1 )
+0x005f    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0063    op9C_MessageSync()
+0x0064    op26_Wait( time=20 )
+0x0067    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=120 )
+0x0072    op26_Wait( time=130 )
+0x0075    -- 0x98_MapLoad( field_id=729, value=0 )
+0x007a    op00_Return()
+
+Actor_0x02:on_start:
+0x007b    -- 0x2A()
+0x007c    -- 0xBC_ActorNoModelInit()
+0x007d    op00_Return()
+
+Actor_0x02:on_update:
+0x007e    -- 0x5B()
+0x007f    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0080    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0081    op99()
+0x0082    -- 0x9B( ???=12, ???=12 )
+0x0087    -- 0x60()
+0x0088    -- 0x64() -- exp0x1
+0x0089    -- 0x63( ???=-152, ???=167, ???=75 ) -- exp0x1
+0x0091    -- 0xA3()
+0x0099    opAC_MoveCamera( control=0x0, steps=0 )
+0x009d    opAC_MoveCamera( control=0x1, steps=0 )
+0x00a1    opEF_MoveCameraSync()
+0x00a4    op00_Return()
+
+Actor_0x03:on_start:
+0x00a5    -- 0x0B_InitNPC( 0 )
+0x00a8    -- MISSING OPCODE 0xFE1c

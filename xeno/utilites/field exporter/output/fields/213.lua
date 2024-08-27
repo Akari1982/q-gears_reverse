@@ -1,0 +1,61 @@
+var = [
+    0x093800e0, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0xc000007f,
+    0x0007ffff, 0x000001ff, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+]
+
+unknown = [
+    0xf6ff, 0x86fe, 0x0000, 0x02ff, 0x0090, 0xff91, 0xff00, 0x37ff, 0x2901, 0x0000, 0xffff, 0xfedd, 0xfefd, 0xff00, 0x4706, 0x85ff, 0x0000, 0x0206, 0xff38, 0xff51, 0x0200, 0x5e02, 0xfbff, 0x00fe, 0x0202, 0xffd1, 0x013b, 0xff00, 0xbcff,
+]
+
+
+
+Actor_0x00:on_start:
+0x0039    -- 0xBC_ActorNoModelInit()
+0x003a    mem[0x416] = -47 -- op35
+0x0040    mem[0x418] = 315 -- op35
+0x0046    mem[0x41a] = 0 -- op35
+0x004c    mem[0x414] = 6 -- op35
+0x0052    mem[0x54] = 7 -- op35
+0x0058    -- 0x2A()
+0x0059    op00_Return()
+
+Actor_0x00:on_update:
+0x005a    op02_JumpToConditional( val1=(s)mem[0x242], val2=1, condition="val1 & val2", address_if_false=0x28e )
+0x0062    op02_JumpToConditional( val1=(s)mem[0x242], val2=8, condition="val1 & val2", address_if_false=0x245 )
+0x006a    op02_JumpToConditional( val1=(s)mem[0x242], val2=2048, condition="val1 & val2", address_if_false=0x242 )
+0x0072    op02_JumpToConditional( val1=(s)mem[0x242], val2=8192, condition="val1 & val2", address_if_false=0x194 )
+0x007a    op02_JumpToConditional( val1=(s)mem[0x242], val2=-32768, condition="val1 & val2", address_if_false=0x191 )
+0x0082    op02_JumpToConditional( val1=(s)mem[0x244], val2=4096, condition="val1 & val2", address_if_false=0x10b )
+0x008a    op02_JumpToConditional( val1=(s)mem[0x244], val2=1, condition="val1 & val2", address_if_false=0x95 )
+0x0092    op01_JumpTo( address=0x108 )
+0x0095    op02_JumpToConditional( val1=(s)mem[0x244], val2=16384, condition="val1 & val2", address_if_false=0x108 )
+0x009d    opB4_FadeOut()
+0x00a0    -- 0x27( actor_id=Actor_0x04 )
+0x00a2    -- 0x27( actor_id=Actor_0x05 )
+0x00a4    -- 0xFE18()
+0x00a9    -- 0xFE18()
+0x00ae    opFE3A( char_id=2 )
+0x00b2    opFE3A( char_id=5 )
+0x00b6    -- 0xFE54()
+0x00b8    mem[0x402] += 1 -- op3c
+0x00bb    op09_CallActorEventEndSync( actor_id=Actor_0x10, event=event_0x13, priority=0x01 )
+0x00be    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x04, priority=0x01 )
+0x00c1    op08_CallActorEventStartSync( actor_id=Actor_0x1c, event=event_0x05, priority=0x01 )
+0x00c4    op08_CallActorEventStartSync( actor_id=Actor_0x0e, event=event_0x0e, priority=0x01 )
+0x00c7    opB3_FadeIn()
+0x00ca    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
+0x00d5    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x04, priority=0x01 )
+0x00d8    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x05, priority=0x01 )
+0x00db    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x06, priority=0x01 )
+0x00de    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x16, priority=0x01 )
+0x00e1    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x0e, priority=0x01 )
+0x00e4    mem[0x244] |= 1 << 0 -- op3a
+0x00ea    opB4_FadeOut()
+0x00ed    op26_Wait( time=15 )
+0x00f0    -- MISSING OPCODE 0xFE9f
