@@ -1611,6 +1611,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "opFE3A( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
+                else if( eo_opcode == 0x3b )
+                {
+                    exp->Log( "-- 0xFE3B()" );
+                    pointer += 3;
+                }
                 else if( eo_opcode == 0x3c )
                 {
                     exp->Log( "-- 0xFE3C( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
