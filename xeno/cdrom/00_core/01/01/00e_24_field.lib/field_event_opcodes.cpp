@@ -14832,18 +14832,13 @@ if (V0 == 0)
 }
 else
 {
-    V0 = h[T0 + 0102];
-    800984C8	nop
+    V0 = h[T0 + 102];
     800984CC	blez   v0, L984f4 [$800984f4]
-    800984D0	nop
-    V0 = bu[T0 + 00ce];
-    800984D8	nop
-    V0 = V0 << 03;
-    V0 = T0 + V0;
-    V0 = hu[V0 + 0090];
-    800984E8	nop
+
+    V0 = bu[T0 + ce];
+    V0 = hu[T0 + V0 * 8 + 90];
+
     800984EC	bne    v0, zero, L98654 [$80098654]
-    800984F0	nop
 
     L984f4:	; 800984F4
     V0 = bu[T0 + 00ce];
@@ -14869,8 +14864,10 @@ else
     80098540	nop
     V0 = V0 + A1;
     A1 = bu[V0 + 0008];
-    8009854C	jal    field_event_help_read_u16_by_flag_80 [$8009c508]
-    A0 = 0002;
+
+    A0 = 2;
+    field_event_help_read_u16_by_flag_80();
+
     A0 = w[800af54c];
     A1 = w[800ad0d8];
     V1 = hu[A0 + 00cc];
@@ -14878,8 +14875,10 @@ else
     [A0 + 0020] = w(V0);
     V1 = V1 + A1;
     A1 = bu[V1 + 0008];
-    80098578	jal    field_event_help_read_u16_by_flag_40 [$8009c54c]
-    A0 = 0004;
+
+    A0 = 4;
+    field_event_help_read_u16_by_flag_40();
+
     A0 = w[800af54c];
     A1 = w[800ad0d8];
     V1 = hu[A0 + 00cc];
@@ -14887,48 +14886,42 @@ else
     [A0 + 0028] = w(V0);
     V1 = V1 + A1;
     A1 = bu[V1 + 0008];
-    800985A4	jal    field_event_help_read_u16_by_flag_20 [$8009c590]
-    A0 = 0006;
+
+    A0 = 6;
+    field_event_help_read_u16_by_flag_20();
+
     A0 = w[800af54c];
     V0 = V0 << 10;
     [A0 + 0024] = w(V0);
     V0 = w[A0 + 0020];
     V1 = w[SP + 0010];
-    800985C4	nop
     V0 = V0 - V1;
     [A0 + 0030] = w(V0);
     V0 = w[A0 + 0024];
     V1 = w[SP + 0014];
-    800985D8	nop
     V0 = V0 - V1;
     [A0 + 0034] = w(V0);
     V0 = w[A0 + 0028];
     V1 = w[SP + 0018];
-    800985EC	nop
     V0 = V0 - V1;
     [A0 + 0038] = w(V0);
 
     L985f8:	; 800985F8
     V1 = w[800af54c];
-    80098600	nop
-    S4 = h[V1 + 00e6];
+    S4 = h[V1 + e6];
 
-    V0 = hu[V1 + cc];
     if( S1 == 0 )
     {
-        V0 = V0 + b;
+        [V1 + cc] = h(hu[V1 + cc] + b);
     }
     else
     {
-        V0 = V0 + d;
+        [V1 + cc] = h(hu[V1 + cc] + d);
     }
-    [V1 + cc] = h(V0);
 
     V0 = w[800af54c];
-    80098634	nop
-    V1 = bu[V0 + 00ce];
-    8009863C	nop
-    V1 = V1 << 03;
+    V1 = bu[V0 + ce];
+    V1 = V1 * 8;
     V0 = V0 + V1;
     V1 = ffff;
     8009864C	j      L986bc [$800986bc]
@@ -14995,36 +14988,31 @@ else
     [S5 + 0008] = w(V0);
 }
 
-L9874c:	; 8009874C
 A3 = w[800af54c];
-80098754	nop
 V1 = h[A3 + 00ea];
-V0 = 00ff;
-80098760	beq    v1, v0, L9876c [$8009876c]
-80098764	nop
-S4 = V1;
 
-L9876c:	; 8009876C
-V0 = h[A3 + 00e8];
-80098770	nop
-80098774	beq    v0, s4, L987a4 [$800987a4]
-80098778	lui    v1, $0200
-V0 = w[A3 + 0000];
-80098780	nop
-V0 = V0 & V1;
-80098788	bne    v0, zero, L987a4 [$800987a4]
-A0 = S5;
-A2 = w[800afb8c];
-A1 = S4;
-8009879C	jal    func81808 [$80081808]
-[A3 + 00e8] = h(A1);
+if( V1 != ff )
+{
+    S4 = V1;
+}
 
-L987a4:	; 800987A4
+if( h[A3 + e8] != S4 )
+{
+    if( ( w[A3 + 0] & 02000000 ) == 0 )
+    {
+        A0 = S5;
+        A1 = S4;
+        A2 = w[800afb8c];
+        [A3 + e8] = h(A1);
+        func81808();
+    }
+}
+
 V0 = w[800af54c];
-A2 = w[800afb8c];
-A1 = h[V0 + 0104];
-800987B8	jal    func81594 [$80081594]
 A0 = S5;
+A1 = h[V0 + 104];
+A2 = w[800afb8c];
+func81594();
 ////////////////////////////////
 
 
