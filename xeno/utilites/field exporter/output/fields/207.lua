@@ -98,4 +98,5 @@ Actor_0x03:on_talk:
 0x008d    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x0091    op9C_MessageSync()
 0x0092    op2C_SpritePlayAnim( anim_id=0xff )
-0x0094    -- MISSING OPCODE 0xFE59
+0x0094    -- 0xFE59()
+0x0098    -- MISSING OPCODE 0xFE87

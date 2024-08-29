@@ -40,4 +40,10 @@ Actor_0x00:on_start:
 0x009a    mem[0x36] = 0 -- op35
 0x00a0    mem[0x38] = 0 -- op35
 0x00a6    mem[0x3a] = 0 -- op35
-0x00ac    -- MISSING OPCODE 0xa4
+0x00ac    -- 0xA4() -- camera angle
+0x00b0    -- 0xB6( ???=300, ???=0 )
+0x00b5    -- 0x9D()
+0x00b9    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0xc4 )
+0x00c1    -- 0x87_SetProgress( progress=140 )
+0x00c4    -- 0x2A()
+0x00c5    -- MISSING OPCODE 0xFE1e

@@ -1671,4 +1671,6 @@ Actor_0x03:event_0x0c:
 0x1a8e    opD0_MessageSettings( x=0, y=30, letters=0, rows=0, flags=0 )
 0x1a99    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0xc2, flags=FORCE_RIGHT|FORCE_TOP )
 0x1a9f    op26_Wait( time=8 )
-0x1aa2    -- MISSING OPCODE 0xFE41
+0x1aa2    -- 0xFE41()
+0x1aa6    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=60 )
+0x1ab1    -- MISSING OPCODE 0xFEb8

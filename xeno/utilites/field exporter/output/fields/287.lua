@@ -32,4 +32,5 @@ Actor_0x00:on_start:
 0x0042    opAC_MoveCamera( control=0x1, steps=1 )
 0x0046    opAC_MoveCamera( control=0x0, steps=1 )
 0x004a    op26_Wait( time=10 )
-0x004d    -- MISSING OPCODE 0xFE81
+0x004d    -- 0xFE81()
+0x0056    -- MISSING OPCODE 0xFE82

@@ -67,4 +67,37 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x00e4    -- 0x86_ProgressNotEqualJumpTo( value=241, jump=0x14e )
-0x00e9    -- MISSING OPCODE 0xb5
+0x00e9    -- 0xB5() -- camera set direction
+0x00ea    op00_Return()
+0x00eb    -- 0x80()
+0x00f0    -- 0xB5() -- camera set direction
+0x00f1    op00_Return()
+0x00f2    -- 0x80()
+0x00f7    -- 0xFE23()
+0x010c    op25_ActorDisable( actor_id=Actor_0x01 )
+0x010e    -- 0x5A()
+0x010f    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x0b, priority=0x03 )
+0x0112    op26_Wait( time=10 )
+0x0115    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x09, priority=0x03 )
+0x0118    op26_Wait( time=10 )
+0x011b    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x08, priority=0x03 )
+0x011e    op26_Wait( time=10 )
+0x0121    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x0c, priority=0x03 )
+0x0124    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x09, priority=0x03 )
+0x0127    op26_Wait( time=10 )
+0x012a    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x0d, priority=0x03 )
+0x012d    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x0a, priority=0x03 )
+0x0130    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x0e, priority=0x03 )
+0x0133    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x0b, priority=0x03 )
+0x0136    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x0f, priority=0x03 )
+0x0139    op26_Wait( time=40 )
+0x013c    -- 0xFE0E_SoundSetVolume( volume=0, steps=360 )
+0x0142    opB4_FadeOut()
+0x0145    op26_Wait( time=120 )
+0x0148    -- 0x98_MapLoad( field_id=460, value=0 )
+0x014d    -- 0x5B()
+0x014e    -- 0x86_ProgressNotEqualJumpTo( value=240, jump=0x18e )
+0x0153    -- 0xB5() -- camera set direction
+0x0154    op00_Return()
+0x0155    -- 0x80()
+0x015a    -- MISSING OPCODE 0xFEb5

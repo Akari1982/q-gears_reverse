@@ -321,4 +321,5 @@ Actor_0x0d:event_0x04:
 0x021a    op9C_MessageSync()
 0x021b    op02_JumpToConditional( val1=(s)mem[0x14], val2=1, condition="val1 == val2", address_if_false=0x233 )
 0x0223    opF4_MessageClose( type=0x0 )
-0x0225    -- MISSING OPCODE 0xFE59
+0x0225    -- 0xFE59()
+0x0229    -- MISSING OPCODE 0xFE87

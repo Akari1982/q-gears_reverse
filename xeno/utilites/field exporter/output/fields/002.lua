@@ -41,4 +41,6 @@ Actor_0x00:on_update:
 0x0060    -- 0xFE54()
 0x0062    -- 0xFE66() -- sound play with volume in slot
 0x006c    -- 0x84_ProgressLessEqualJumpTo( value=6, jump=0x1f6 )
-0x0071    -- MISSING OPCODE 0xFE41
+0x0071    -- 0xFE41()
+0x0075    opD6_MessageSetSpeed( speed=0x8001 )
+0x0078    -- MISSING OPCODE 0xFE0c

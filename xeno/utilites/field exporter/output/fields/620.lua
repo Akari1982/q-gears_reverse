@@ -116,4 +116,199 @@ Actor_0x01:on_update:
 0x0198    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
 0x019c    op9C_MessageSync()
 0x019d    opEF_MoveCameraSync()
-0x01a0    -- MISSING OPCODE 0x12
+0x01a0    -- 0x12()
+0x01a4    -- 0x80()
+0x01a9    -- 0x5B()
+0x01aa    op26_Wait( time=20 )
+0x01ad    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x01ae    op00_Return()
+
+Actor_0x02:on_start:
+0x01af    -- 0x16_ActorPCInit( char_id=0 )
+0x01b2    opFE0D_MessageSetFace( char_id=0 )
+0x01b6    op00_Return()
+
+Actor_0x02:on_update:
+0x01b7    -- 0x23()
+0x01b8    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x01b9    op00_Return()
+
+Actor_0x03:on_start:
+0x01ba    -- 0x16_ActorPCInit( char_id=1 )
+0x01bd    opFE0D_MessageSetFace( char_id=1 )
+0x01c1    op00_Return()
+
+Actor_0x03:on_update:
+0x01c2    -- 0x23()
+0x01c3    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x01c4    op00_Return()
+
+Actor_0x04:on_start:
+0x01c5    -- 0x16_ActorPCInit( char_id=2 )
+0x01c8    opFE0D_MessageSetFace( char_id=2 )
+0x01cc    op00_Return()
+
+Actor_0x04:on_update:
+0x01cd    -- 0x23()
+0x01ce    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x01cf    op00_Return()
+
+Actor_0x05:on_start:
+0x01d0    -- 0x0B_InitNPC( 0 )
+0x01d3    -- 0x19_ActorSetPosition( x=(vf80)0x005a, z=(vf40)0x005a, flag=(flag)0xc0 )
+0x01d9    op00_Return()
+
+Actor_0x05:on_update:
+0x01da    -- 0x59()
+0x01db    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x01dc    op00_Return()
+
+Actor_0x06:on_start:
+0x01dd    -- 0x0B_InitNPC( 0 )
+0x01e0    -- 0x19_ActorSetPosition( x=(vf80)0x0141, z=(vf40)0xff9a, flag=(flag)0xc0 )
+0x01e6    op00_Return()
+
+Actor_0x06:on_update:
+0x01e7    -- 0x59()
+0x01e8    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x01e9    op00_Return()
+
+Actor_0x07:on_start:
+0x01ea    -- 0x0B_InitNPC( 1 )
+0x01ed    -- 0x19_ActorSetPosition( x=(vf80)0xffc9, z=(vf40)0xffa6, flag=(flag)0xc0 )
+0x01f3    op00_Return()
+
+Actor_0x07:on_update:
+0x01f4    -- 0x59()
+0x01f5    op00_Return()
+
+Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
+0x01f6    op00_Return()
+
+Actor_0x08:on_start:
+0x01f7    -- 0x0B_InitNPC( 1 )
+0x01fa    -- 0x19_ActorSetPosition( x=(vf80)0xffdc, z=(vf40)0xff76, flag=(flag)0xc0 )
+0x0200    op00_Return()
+
+Actor_0x08:on_update:
+0x0201    -- 0x59()
+0x0202    op00_Return()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x0203    op00_Return()
+
+Actor_0x09:on_start:
+0x0204    -- 0x0B_InitNPC( 2 )
+0x0207    -- 0x19_ActorSetPosition( x=(vf80)0xff93, z=(vf40)0xfff3, flag=(flag)0xc0 )
+0x020d    op2C_SpritePlayAnim( anim_id=0x1 )
+0x020f    op00_Return()
+
+Actor_0x09:on_update:
+0x0210    mem[0x406] = opA8_Random( max=7 )
+0x0215    op69_ActorSetRotation( rot=(s)mem[0x406] )
+0x0218    mem[0x406] = opA8_Random( max=600 )
+0x021d    op26_Wait( time=(s)mem[0x406] )
+0x0220    op00_Return()
+
+Actor_0x09:on_talk:
+0x0221    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x0225    op9C_MessageSync()
+
+Actor_0x09:on_push:
+0x0226    op00_Return()
+
+Actor_0x0a:on_start:
+0x0227    -- 0x0B_InitNPC( 3 )
+0x022a    -- 0x19_ActorSetPosition( x=(vf80)0x00e5, z=(vf40)0x0018, flag=(flag)0xc0 )
+0x0230    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0232    op00_Return()
+
+Actor_0x0a:on_update:
+0x0233    mem[0x408] = opA8_Random( max=7 )
+0x0238    op69_ActorSetRotation( rot=(s)mem[0x408] )
+0x023b    mem[0x408] = opA8_Random( max=600 )
+0x0240    op26_Wait( time=(s)mem[0x408] )
+0x0243    op00_Return()
+
+Actor_0x0a:on_talk:
+0x0244    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x0248    op9C_MessageSync()
+
+Actor_0x0a:on_push:
+0x0249    op00_Return()
+
+Actor_0x0b:on_start:
+0x024a    -- 0x0B_InitNPC( 4 )
+0x024d    -- 0x19_ActorSetPosition( x=(vf80)0xfee7, z=(vf40)0x0083, flag=(flag)0xc0 )
+0x0253    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0255    op00_Return()
+
+Actor_0x0b:on_update:
+0x0256    mem[0x40a] = opA8_Random( max=7 )
+0x025b    op69_ActorSetRotation( rot=(s)mem[0x40a] )
+0x025e    mem[0x40a] = opA8_Random( max=600 )
+0x0263    op26_Wait( time=(s)mem[0x40a] )
+0x0266    op00_Return()
+
+Actor_0x0b:on_talk:
+0x0267    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x026b    op9C_MessageSync()
+
+Actor_0x0b:on_push:
+0x026c    op00_Return()
+
+Actor_0x0c:on_start:
+0x026d    -- 0x0B_InitNPC( 5 )
+0x0270    -- 0x19_ActorSetPosition( x=(vf80)0xffc9, z=(vf40)0xffa6, flag=(flag)0xc0 )
+0x0276    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0278    op00_Return()
+
+Actor_0x0c:on_update:
+0x0279    mem[0x40c] = opA8_Random( max=7 )
+0x027e    op69_ActorSetRotation( rot=(s)mem[0x40c] )
+0x0281    mem[0x40c] = opA8_Random( max=600 )
+0x0286    op26_Wait( time=(s)mem[0x40c] )
+0x0289    op00_Return()
+
+Actor_0x0c:on_talk:
+0x028a    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
+0x028e    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x028f    op00_Return()
+
+Actor_0x0d:on_start:
+0x0290    -- 0x0B_InitNPC( 6 )
+0x0293    -- 0x19_ActorSetPosition( x=(vf80)0xfecc, z=(vf40)0x0085, flag=(flag)0xc0 )
+0x0299    op00_Return()
+
+Actor_0x0d:on_update:
+0x029a    -- MISSING OPCODE 0xFE01

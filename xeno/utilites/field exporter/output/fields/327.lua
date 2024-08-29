@@ -836,4 +836,7 @@ Actor_0x0c:on_talk:
 0x049e    -- 0xFE54()
 0x04a0    op6F_ActorRotateToActor( actor_id=party1 )
 0x04a2    op02_JumpToConditional( val1=(s)mem[0x20], val2=0, condition="val1 > val2", address_if_false=0x4c2 )
-0x04aa    -- MISSING OPCODE 0xFE23
+0x04aa    -- 0xFE23()
+0x04bf    op01_JumpTo( address=0x4d7 )
+0x04c2    -- 0xFE23()
+0x04d7    -- MISSING OPCODE 0xFE17

@@ -201,4 +201,32 @@ Actor_0x0d:on_update:
 Actor_0x0d:on_talk:
 
 Actor_0x0d:on_push:
-0x00ac    -- MISSING OPCODE 0x12
+0x00ac    -- 0x12()
+0x00b0    -- 0x80()
+0x00b5    -- 0x5B()
+0x00b6    op00_Return()
+
+Actor_0x0e:on_start:
+0x00b7    -- 0xBC_ActorNoModelInit()
+0x00b8    -- 0x19_ActorSetPosition( x=(vf80)0xff90, z=(vf40)0xfede, flag=(flag)0xc0 )
+0x00be    -- 0xF8()
+0x00c2    -- 0xF8()
+0x00c6    -- 0x18()
+0x00cb    op20_ActorSetFlags0( flags=1 )
+0x00ce    op00_Return()
+
+Actor_0x0e:on_update:
+0x00cf    op00_Return()
+
+Actor_0x0e:on_talk:
+0x00d0    -- 0xFE54()
+0x00d2    op74_SoundPlayFixedVolume( sound_id=20 )
+0x00d5    opD0_MessageSettings( x=20, y=20, letters=20, rows=14, flags=0 )
+0x00e0    opF5_MessageShowStatic( text_id=0x0, flags=NO_WINDOW )
+0x00e4    op9C_MessageSync()
+0x00e5    -- 0xFE54()
+0x00e7    op00_Return()
+
+Actor_0x0e:on_push:
+0x00e8    op00_Return()
+0x00e9    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x02ae, flag=0x0 )

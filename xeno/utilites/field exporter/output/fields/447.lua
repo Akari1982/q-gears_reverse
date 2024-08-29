@@ -35,4 +35,22 @@ Actor_0x00:on_push:
 0x0031    op00_Return()
 
 Actor_0x00:event_0x04:
-0x0032    -- MISSING OPCODE 0xb5
+0x0032    -- 0xB5() -- camera set direction
+0x0033    op03_MessageShowFixed2( text_id=0x1980, flags=0x80 )
+0x0037    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0038    -- 0xB5() -- camera set direction
+0x0039    op02_JumpToConditional( condition="val1 <= val2", address_if_false=0x8004 )
+0x0041    -- 0x19_ActorSetPosition( x=(vf80)0x0080, z=(vf40)0x01b5, flag=(flag)0x80 )
+0x0047    -- 0x1E()
+0x0048    -- 0x80()
+0x004d    opFE0D_MessageSetFace( char_id=0 )
+0x0051    op00_Return()
+
+Actor_0x01:on_update:
+0x0052    op02_JumpToConditional( val1=(s)mem[0x4], val2=450, condition="val1 == val2", address_if_false=0x79 )
+0x005a    op2C_SpritePlayAnim( anim_id=0x0 )
+0x005c    -- 0x1D()
+0x0063    op26_Wait( time=1 )
+0x0066    -- MISSING OPCODE 0x10

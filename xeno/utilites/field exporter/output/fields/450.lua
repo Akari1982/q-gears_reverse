@@ -42,4 +42,18 @@ Actor_0x00:on_push:
 0x005b    op00_Return()
 
 Actor_0x00:event_0x04:
-0x005c    -- MISSING OPCODE 0xb5
+0x005c    -- 0xB5() -- camera set direction
+0x005d    -- 0x04()
+0x005e    -- 0x80()
+0x0063    op00_Return()
+0x0064    -- 0x80()
+0x0069    op00_Return()
+
+Actor_0x01:on_update:
+0x006a    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x75 )
+0x0072    op01_JumpTo( address=0xbe )
+0x0075    op02_JumpToConditional( val1=(s)mem[0x4], val2=447, condition="val1 == val2", address_if_false=0x9f )
+0x007d    op2C_SpritePlayAnim( anim_id=0x0 )
+0x007f    -- 0x1D()
+0x0086    op26_Wait( time=1 )
+0x0089    -- MISSING OPCODE 0x10

@@ -43,4 +43,35 @@ Actor_0x00:on_update:
 0x0056    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x9f )
 0x005e    -- 0xFE54()
 0x0060    opB4_FadeOut()
-0x0063    -- MISSING OPCODE 0xa4
+0x0063    -- 0xA4() -- camera angle
+0x0067    -- 0x9D()
+0x006b    op07_CallActorEvent( actor_id=Actor_0x08, event=event_0x05, priority=0x01 )
+0x006e    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
+0x0071    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x07, priority=0x01 )
+0x0074    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x07, priority=0x01 )
+0x0077    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x07, priority=0x01 )
+0x007a    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x08, priority=0x01 )
+0x007d    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x07, priority=0x01 )
+0x0080    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x07, priority=0x01 )
+0x0083    opB3_FadeIn()
+0x0086    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x08, priority=0x01 )
+0x0089    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x09, priority=0x01 )
+0x008c    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x08, priority=0x01 )
+0x008f    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x08, priority=0x01 )
+0x0092    -- 0xA4() -- camera angle
+0x0096    -- 0x9D()
+0x009a    op26_Wait( time=16 )
+0x009d    -- 0xFE54()
+0x009f    -- 0x5B()
+0x00a0    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00a1    op00_Return()
+
+Actor_0x01:on_start:
+0x00a2    -- 0x16_ActorPCInit( char_id=(s)mem[0x3e] )
+0x00a5    opFE0D_MessageSetFace( char_id=(s)mem[0x3e] )
+0x00a9    -- 0x21( ???=512 )
+0x00ac    -- MISSING OPCODE 0xFE1c

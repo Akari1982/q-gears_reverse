@@ -98,4 +98,33 @@ Actor_0x01:event_0x04:
 0x0135    -- 0x4B()
 0x013d    op26_Wait( time=1 )
 0x0140    op6F_ActorRotateToActor( actor_id=Actor_0x10 )
-0x0142    -- MISSING OPCODE 0xb5
+0x0142    -- 0xB5() -- camera set direction
+0x0143    op00_Return()
+0x0144    -- 0x80()
+0x0149    op00_Return()
+
+Actor_0x01:event_0x05:
+0x014a    op69_ActorSetRotation( rot=4 )
+0x014d    op05_CallFunction( address=0xde6 )
+0x0150    opD2_MessageShowDynamic( text_id=0x0, flags=CLOSE_OFF_SCREEN )
+0x0154    op9C_MessageSync()
+0x0155    op05_CallFunction( address=0xde6 )
+0x0158    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0159    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x015f    op69_ActorSetRotation( rot=3 )
+0x0162    op00_Return()
+
+Actor_0x01:event_0x07:
+0x0163    op2C_SpritePlayAnim( anim_id=0x2 )
+0x0165    op26_Wait( time=0 )
+0x0168    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x016e    op2C_SpritePlayAnim( anim_id=0xff )
+0x0170    -- 0x21( ???=512 )
+0x0173    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0179    -- 0x21( ???=256 )
+0x017c    op00_Return()
+
+Actor_0x01:event_0x08:
+0x017d    -- MISSING OPCODE 0x10

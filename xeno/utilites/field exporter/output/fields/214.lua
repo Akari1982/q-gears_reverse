@@ -280,7 +280,7 @@ function:
 0x0198    op01_JumpTo( address=0x1ac )
 0x019b    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
 0x019f    op9C_MessageSync()
-0x01a0    -- 0xFE69( actor_id=Actor_0x02, render_settings=(s)mem[0x4204], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x400] )
+0x01a0    -- 0xFE69( actor_id=Actor_0x02, render_settings=mem[0x4204], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x400] )
 0x01a9    mem[0x0] >>= 16385 -- op42
 0x01ae    op01_JumpTo( address=0x1402 )
 0x01b1    op00_Return()
@@ -388,4 +388,4 @@ function:
 0x0414    op9C_MessageSync()
 0x0415    op01_JumpTo( address=0x418 )
 0x0418    op0D_Return()
-0x0419    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0xfe80, flag=0xd )
+0x0419    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )

@@ -25,4 +25,34 @@ Actor_0x00:on_update:
 0x009a    -- 0x2D()
 0x00a2    op02_JumpToConditional( val1=(s)mem[0x404], val2=-30, condition="val1 > val2", address_if_false=0xb9 )
 0x00aa    op02_JumpToConditional( val1=(s)mem[0x402], val2=-1380, condition="val1 > val2", address_if_false=0xb9 )
-0x00b2    -- MISSING OPCODE 0xa4
+0x00b2    -- 0xA4() -- camera angle
+0x00b6    op01_JumpTo( address=0xd4 )
+0x00b9    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 < val2", address_if_false=0xd0 )
+0x00c1    op02_JumpToConditional( val1=(s)mem[0x404], val2=-390, condition="val1 < val2", address_if_false=0xd0 )
+0x00c9    -- 0xA4() -- camera angle
+0x00cd    op01_JumpTo( address=0xd4 )
+0x00d0    -- 0xA4() -- camera angle
+0x00d4    -- 0xA2()
+0x00d6    op02_JumpToConditional( val1=(s)mem[0x400], val2=-400, condition="val1 > val2", address_if_false=0xfe )
+0x00de    op02_JumpToConditional( val1=(s)mem[0x400], val2=400, condition="val1 < val2", address_if_false=0xfe )
+0x00e6    op02_JumpToConditional( val1=(s)mem[0x8], val2=4, condition="val1 == val2", address_if_false=0xfe )
+0x00ee    op02_JumpToConditional( val1=(s)mem[0x402], val2=1500, condition="val1 < val2", address_if_false=0xfe )
+0x00f6    -- 0xE7( ???=132, ???=157, ???=212 )
+0x00fd    op00_Return()
+0x00fe    -- 0xE7( ???=145, ???=120, ???=80 )
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0105    op00_Return()
+
+Actor_0x01:on_start:
+0x0106    -- 0xBC_ActorNoModelInit()
+0x0107    -- 0x2A()
+0x0108    -- 0xFE54()
+0x010a    op00_Return()
+
+Actor_0x01:on_update:
+0x010b    op02_JumpToConditional( val1=(s)mem[0x40a], val2=1, condition="val1 == val2", address_if_false=0x114 )
+0x0113    op00_Return()
+0x0114    -- MISSING OPCODE 0xFEb0

@@ -45,4 +45,32 @@ Actor_0x00:event_0x04:
 0x0093    op00_Return()
 
 Actor_0x00:event_0x05:
-0x0094    -- MISSING OPCODE 0xb5
+0x0094    -- 0xB5() -- camera set direction
+0x0095    op00_Return()
+0x0096    -- 0x80()
+0x009b    op00_Return()
+0x009c    -- 0x80()
+0x00a1    op00_Return()
+
+Actor_0x01:on_update:
+0x00a2    -- 0x0C()
+0x00a3    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00a4    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00a5    op6F_ActorRotateToActor( actor_id=Actor_0x1c )
+0x00a7    op02_JumpToConditional( val1=(s)mem[0x2c0], val2=1, condition="val1 & val2", address_if_false=0xb7 )
+0x00af    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00b3    op9C_MessageSync()
+0x00b4    op01_JumpTo( address=0xbc )
+0x00b7    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x00bb    op9C_MessageSync()
+0x00bc    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00bd    op74_SoundPlayFixedVolume( sound_id=134 )
+0x00c0    -- MISSING OPCODE 0xFE64

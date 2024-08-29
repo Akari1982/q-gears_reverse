@@ -121,4 +121,33 @@ Actor_0x05:on_push:
 0x007c    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
 0x007f    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
 0x0082    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
-0x0085    -- MISSING OPCODE 0x12
+0x0085    -- 0x12()
+0x0089    -- 0x80()
+0x008e    -- 0x5B()
+0x008f    op00_Return()
+
+Actor_0x06:on_start:
+0x0090    -- 0xBC_ActorNoModelInit()
+0x0091    -- 0x2A()
+0x0092    op00_Return()
+
+Actor_0x06:on_update:
+0x0093    op00_Return()
+
+Actor_0x06:on_talk:
+0x0094    op00_Return()
+
+Actor_0x06:on_push:
+0x0095    op00_Return()
+
+Actor_0x06:event_0x04:
+0x0096    -- 0xFE65()
+0x009c    -- 0xFE65()
+0x00a2    op02_JumpToConditional( val1=(s)mem[0x400], val2=-1000, condition="val1 > val2", address_if_false=0xb7 )
+0x00aa    -- 0x58()
+0x00ae    mem[0x400] -= 4 -- op39
+0x00b4    op01_JumpTo( address=0xa2 )
+0x00b7    op74_SoundPlayFixedVolume( sound_id=250 )
+0x00ba    op26_Wait( time=32 )
+0x00bd    op00_Return()
+0x00be    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x02ae, ???=(vf40)0x0000, flag=0x59 )

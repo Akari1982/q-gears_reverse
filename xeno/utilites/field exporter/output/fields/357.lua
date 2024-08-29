@@ -36,4 +36,40 @@ Actor_0x00:on_update:
 0x0043    -- 0x15()
 0x0044    opB4_FadeOut()
 0x0047    op26_Wait( time=32 )
-0x004a    -- MISSING OPCODE 0xb5
+0x004a    -- 0xB5() -- camera set direction
+0x004b    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x01, priority=0x00 )
+0x004e    -- 0x80()
+0x0053    -- 0x1D()
+0x005a    -- 0xE0( actor_id=Actor_0x26, ???=(vf80)0x8000, ???=(vf40)0x0cb3, flag=0x80 )
+0x0061    op02_JumpToConditional( val1=(s)mem[0x400], val2=30, condition="val1 < val2", address_if_false=0x7b )
+0x0069    opFE1D_ModelAddTrans( trans_x=0, trans_y=6, trans_z=(s)mem[0x0] )
+0x0072    mem[0x400] += 1 -- op3c
+0x0075    op26_Wait( time=1 )
+0x0078    op01_JumpTo( address=0x61 )
+0x007b    opFE1D_ModelAddTrans( trans_x=0, trans_y=0, trans_z=(s)mem[0x0] )
+0x0084    op74_SoundPlayFixedVolume( sound_id=137 )
+0x0087    -- 0x14()
+0x0088    -- 0x5B()
+0x0089    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x008a    op00_Return()
+
+Actor_0x01:on_start:
+0x008b    -- 0x16_ActorPCInit( char_id=0 )
+0x008e    opFE0D_MessageSetFace( char_id=0 )
+0x0092    op00_Return()
+
+Actor_0x01:on_update:
+0x0093    -- 0x0C()
+0x0094    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0095    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0096    -- MISSING OPCODE 0x10

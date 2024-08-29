@@ -449,7 +449,7 @@ function:
 0x040a    op0D_Return()
 0x040b    opF1_FadeSetUp( steps=3, r=246, g=99, b=31, semi_tr=60 )
 0x0416    op0D_Return()
-0x0417    -- 0xFE69( actor_id=Actor_0x3a, render_settings=(s)mem[0x3e04], rot_x=mem[0x3500], rot_y=(s)mem[0x43c] )
+0x0417    -- 0xFE69( actor_id=Actor_0x3a, render_settings=(s)mem[0x3e04], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x43c] )
 0x0420    op01_JumpTo( address=0x4000 )
 0x0423    op02_JumpToConditional( val1=(s)mem[0x3e], val2=0, condition="val1 == val2", address_if_false=0x458 )
 0x042b    op02_JumpToConditional( val1=(s)mem[0x43a], val2=51, condition="val1 < val2", address_if_false=0x439 )

@@ -122,4 +122,24 @@ Actor_0x04:on_update:
 
 Actor_0x04:on_talk:
 0x00a4    -- 0xFE54()
-0x00a6    -- MISSING OPCODE 0x76
+0x00a6    -- 0x76()
+0x00a7    op6F_ActorRotateToActor( actor_id=party1 )
+0x00a9    op26_Wait( time=10 )
+0x00ac    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=8192, condition="val1 & val2", address_if_false=0x1b0 )
+0x00b4    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=16384, condition="val1 & val2", address_if_false=0x118 )
+0x00bc    -- 0x91()
+0x00c0    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
+0x00c3    opD2_MessageShowDynamic( text_id=0x0, flags=NO_FACE )
+0x00c7    op9C_MessageSync()
+0x00c8    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x1, flags=NO_FACE|FORCE_TOP )
+0x00ce    opD2_MessageShowDynamic( text_id=0x2, flags=NO_FACE )
+0x00d2    op9C_MessageSync()
+0x00d3    -- 0x8C()
+0x00d6    op74_SoundPlayFixedVolume( sound_id=55 )
+0x00d9    opF5_MessageShowStatic( text_id=0x3, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x00dd    op9C_MessageSync()
+0x00de    mem[0x1c6] |= 1 << 14 -- op3a
+0x00e4    op20_ActorSetFlags0( flags=13 )
+0x00e7    -- 0x1F( ???=0x10 )
+0x00e9    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00ef    -- MISSING OPCODE 0xFE17

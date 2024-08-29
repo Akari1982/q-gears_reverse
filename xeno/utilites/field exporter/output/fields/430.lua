@@ -34,4 +34,49 @@ Actor_0x00:on_update:
 0x0042    -- 0xA3()
 0x004a    op05_CallFunction( address=0xa33 )
 0x004d    op26_Wait( time=20 )
-0x0050    -- MISSING OPCODE 0xFE23
+0x0050    -- 0xFE23()
+0x0065    op08_CallActorEventStartSync( actor_id=Actor_0x01, event=event_0x07, priority=0x03 )
+0x0068    op08_CallActorEventStartSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x03 )
+0x006b    op02_JumpToConditional( val1=(s)mem[0x40c], val2=2, condition="val1 == val2", address_if_false=0x76 )
+0x0073    op01_JumpTo( address=0x79 )
+0x0076    op01_JumpTo( address=0x6b )
+0x0079    mem[0x40c] = false -- op37
+0x007c    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x07, priority=0x03 )
+0x007f    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x07, priority=0x03 )
+0x0082    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x07, priority=0x03 )
+0x0085    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x07, priority=0x03 )
+0x0088    -- 0xA0()
+0x008f    -- 0x9A()
+0x0092    -- 0xFE24()
+0x0094    op26_Wait( time=40 )
+0x0097    mem[0x2c6] |= 1 << 12 -- op3a
+0x009d    -- 0xFE54()
+0x009f    -- 0x5B()
+0x00a0    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00a1    op00_Return()
+
+Actor_0x01:on_start:
+0x00a2    -- 0x16_ActorPCInit( char_id=0 )
+0x00a5    opFE0D_MessageSetFace( char_id=0 )
+0x00a9    op02_JumpToConditional( val1=(s)mem[0x4], val2=431, condition="val1 == val2", address_if_false=0xb8 )
+0x00b1    -- 0x1D()
+0x00b8    op00_Return()
+
+Actor_0x01:on_update:
+0x00b9    -- 0x0C()
+0x00ba    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00bb    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00bc    -- 0x1F( ???=0x77 )
+0x00be    -- 0x2D()
+0x00c6    mem[0x406] -= 12 -- op39
+0x00cc    -- MISSING OPCODE 0xFE1c

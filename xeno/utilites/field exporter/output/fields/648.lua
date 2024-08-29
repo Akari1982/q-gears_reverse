@@ -30,4 +30,46 @@ Actor_0x00:on_update:
 0x0035    op02_JumpToConditional( val1=(s)mem[0x210], val2=256, condition="val1 & val2", address_if_false=0x9e )
 0x003d    -- 0x27( actor_id=Actor_0x0f )
 0x003f    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x10, priority=0x01 )
-0x0042    -- MISSING OPCODE 0xa4
+0x0042    -- 0xA4() -- camera angle
+0x0046    -- 0xFE54()
+0x0048    -- 0xF2()
+0x0051    op74_SoundPlayFixedVolume( sound_id=39 )
+0x0054    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x04, priority=0x01 )
+0x0057    op74_SoundPlayFixedVolume( sound_id=40 )
+0x005a    -- 0xFE62()
+0x0060    -- 0xF2()
+0x0069    op26_Wait( time=20 )
+0x006c    -- 0xF2()
+0x0075    op26_Wait( time=5 )
+0x0078    -- 0xA0()
+0x007f    op09_CallActorEventEndSync( actor_id=Actor_0x0a, event=event_0x04, priority=0x01 )
+0x0082    -- 0x80()
+0x0087    -- 0x80()
+0x008c    mem[0x210] &= ~(1 << 8) -- op3a
+0x0092    mem[0x210] |= 1 << 4 -- op3a
+0x0098    op26_Wait( time=10 )
+0x009b    -- 0xFE54()
+0x009d    -- 0x5B()
+0x009e    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x009f    op00_Return()
+
+Actor_0x00:event_0x04:
+0x00a0    -- 0xFE54()
+0x00a2    op26_Wait( time=30 )
+0x00a5    -- 0x27( actor_id=Actor_0x0f )
+0x00a7    -- 0xA4() -- camera angle
+0x00ab    -- 0xB5() -- camera set direction
+0x00ac    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
+0x00b0    op26_Wait( time=10 )
+0x00b3    op74_SoundPlayFixedVolume( sound_id=111 )
+0x00b6    op26_Wait( time=40 )
+0x00b9    -- 0xF2()
+0x00c2    op26_Wait( time=20 )
+0x00c5    -- 0xFE65()
+0x00cb    -- 0xF2()
+0x00d4    op26_Wait( time=30 )
+0x00d7    -- MISSING OPCODE 0xFE5d

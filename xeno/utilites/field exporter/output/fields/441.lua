@@ -103,4 +103,5 @@ Actor_0x00:on_update:
 0x0187    -- 0x98_MapLoad( field_id=443, value=0 )
 0x018c    -- 0x5B()
 0x018d    -- 0x86_ProgressNotEqualJumpTo( value=179, jump=0x197 )
-0x0192    -- MISSING OPCODE 0xb5
+0x0192    -- 0xB5() -- camera set direction
+0x0193    -- MISSING OPCODE 0x06

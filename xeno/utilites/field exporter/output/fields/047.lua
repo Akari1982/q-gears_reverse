@@ -28,4 +28,5 @@ Actor_0x00:on_start:
 0x0059    op02_JumpToConditional( val1=(s)mem[0x18e], val2=2, condition="val1 > val2", address_if_false=0x67 )
 0x0061    mem[0x18e] = 2 -- op35
 0x0067    -- 0xFE80()
-0x0077    -- MISSING OPCODE 0xFE81
+0x0077    -- 0xFE81()
+0x0080    -- MISSING OPCODE 0xFE82

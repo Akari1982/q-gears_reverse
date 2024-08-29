@@ -45,4 +45,77 @@ Actor_0x00:on_update:
 0x0055    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x05, priority=0x01 )
 0x0058    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x06, priority=0x01 )
 0x005b    op26_Wait( time=180 )
-0x005e    -- MISSING OPCODE 0x12
+0x005e    -- 0x12()
+0x0062    -- 0x80()
+0x0067    -- 0x5B()
+0x0068    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0069    op00_Return()
+
+Actor_0x01:on_start:
+0x006a    -- 0x0B_InitNPC( 0 )
+0x006d    -- 0x19_ActorSetPosition( x=(vf80)0x115d, z=(vf40)0x12e6, flag=(flag)0xc0 )
+0x0073    -- 0x5F( ???=0x1 )
+0x0075    opFE0D_MessageSetFace( char_id=34 )
+0x0079    -- 0x2A()
+0x007a    op00_Return()
+
+Actor_0x01:on_update:
+0x007b    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x007c    op00_Return()
+
+Actor_0x01:event_0x04:
+0x007d    opD2_MessageShowDynamic( text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0081    op9C_MessageSync()
+0x0082    op00_Return()
+
+Actor_0x01:event_0x05:
+0x0083    opD2_MessageShowDynamic( text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0087    op9C_MessageSync()
+0x0088    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0089    opD2_MessageShowDynamic( text_id=0x2, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x008d    op9C_MessageSync()
+0x008e    op00_Return()
+
+Actor_0x01:event_0x07:
+0x008f    opD2_MessageShowDynamic( text_id=0x3, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0093    op9C_MessageSync()
+0x0094    op00_Return()
+
+Actor_0x02:on_start:
+0x0095    -- 0x0B_InitNPC( 1 )
+0x0098    -- 0x19_ActorSetPosition( x=(vf80)0x11cf, z=(vf40)0x12c0, flag=(flag)0xc0 )
+0x009e    -- 0x5F( ???=0x6 )
+0x00a0    opFE0D_MessageSetFace( char_id=42 )
+0x00a4    op00_Return()
+
+Actor_0x02:on_update:
+0x00a5    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x00a6    op00_Return()
+
+Actor_0x02:event_0x04:
+0x00a7    opD2_MessageShowDynamic( text_id=0x4, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x00ab    op9C_MessageSync()
+0x00ac    op00_Return()
+
+Actor_0x02:event_0x05:
+0x00ad    opD2_MessageShowDynamic( text_id=0x5, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x00b1    op9C_MessageSync()
+0x00b2    op00_Return()
+
+Actor_0x03:on_start:
+0x00b3    -- 0x0B_InitNPC( 2 )
+0x00b6    -- MISSING OPCODE 0xFE1c

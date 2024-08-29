@@ -35,4 +35,17 @@ Actor_0x00:on_update:
 0x0036    op26_Wait( time=60 )
 0x0039    opB4_FadeOut()
 0x003c    op26_Wait( time=60 )
-0x003f    -- MISSING OPCODE 0xb5
+0x003f    -- 0xB5() -- camera set direction
+0x0040    op02_JumpToConditional( val1=(s)mem[0x180], val2=(s)mem[0x780], condition="val1 != val2", address_if_false=0x724 )
+0x0048    -- 0x04()
+0x0049    op25_ActorDisable( actor_id=Actor_0x09 )
+0x004b    op05_CallFunction( address=0xb326 )
+0x004e    -- 0x50()
+0x0056    op26_Wait( time=60 )
+0x0059    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x0a, priority=0x01 )
+0x005c    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x0b, priority=0x01 )
+0x005f    op26_Wait( time=20 )
+0x0062    opB4_FadeOut()
+0x0065    op26_Wait( time=60 )
+0x0068    -- 0xB5() -- camera set direction
+0x0069    -- MISSING OPCODE 0x06

@@ -204,4 +204,5 @@ Actor_0x0c:on_talk:
 0x00be    op6F_ActorRotateToActor( actor_id=party1 )
 0x00c0    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00c4    op9C_MessageSync()
-0x00c5    -- MISSING OPCODE 0xFE59
+0x00c5    -- 0xFE59()
+0x00c9    -- MISSING OPCODE 0xFE87

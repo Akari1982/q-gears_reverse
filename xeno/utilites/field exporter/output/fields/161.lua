@@ -18,4 +18,84 @@ unknown = [
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0x2A()
-0x000a    -- MISSING OPCODE 0xa4
+0x000a    -- 0xA4() -- camera angle
+0x000e    -- 0xFE52()
+0x0010    -- 0xFE50()
+0x0012    -- 0x75( ???=255 )
+0x0015    opF1_FadeSetUp( steps=1, r=48, g=48, b=16, semi_tr=1 )
+0x0020    op00_Return()
+
+Actor_0x00:on_update:
+0x0021    opB4_FadeOut()
+0x0024    opB3_FadeIn()
+0x0027    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x04, priority=0x01 )
+0x002a    op01_JumpTo( address=0x2a )
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x002d    op00_Return()
+
+Actor_0x00:event_0x04:
+0x002e    op02_JumpToConditional( val1=(s)mem[0x404], val2=18, condition="val1 > val2", address_if_false=0x3f )
+0x0036    mem[0x404] -= 1 -- op3d
+0x0039    op26_Wait( time=60 )
+0x003c    op01_JumpTo( address=0x2e )
+0x003f    op00_Return()
+
+Actor_0x01:on_start:
+0x0040    -- 0xBC_ActorNoModelInit()
+0x0041    -- 0x2A()
+0x0042    op00_Return()
+
+Actor_0x01:on_update:
+0x0043    -- 0xE1_BackgroundSetTex()
+0x0051    op26_Wait( time=5 )
+0x0054    -- 0xE1_BackgroundSetTex()
+0x0062    op26_Wait( time=5 )
+0x0065    -- 0xE1_BackgroundSetTex()
+0x0073    op26_Wait( time=5 )
+0x0076    -- 0xE1_BackgroundSetTex()
+0x0084    op26_Wait( time=5 )
+0x0087    op01_JumpTo( address=0x43 )
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x008a    op00_Return()
+
+Actor_0x02:on_start:
+0x008b    -- 0xBC_ActorNoModelInit()
+0x008c    -- 0x2A()
+0x008d    op00_Return()
+
+Actor_0x02:on_update:
+0x008e    -- 0xE1_BackgroundSetTex()
+0x009c    op26_Wait( time=5 )
+0x009f    -- 0xE1_BackgroundSetTex()
+0x00ad    op26_Wait( time=5 )
+0x00b0    -- 0xE1_BackgroundSetTex()
+0x00be    op26_Wait( time=5 )
+0x00c1    -- 0xE1_BackgroundSetTex()
+0x00cf    op26_Wait( time=5 )
+0x00d2    -- 0xE1_BackgroundSetTex()
+0x00e0    op26_Wait( time=5 )
+0x00e3    -- 0xE1_BackgroundSetTex()
+0x00f1    op26_Wait( time=5 )
+0x00f4    -- 0xE1_BackgroundSetTex()
+0x0102    op26_Wait( time=5 )
+0x0105    -- 0xE1_BackgroundSetTex()
+0x0113    op26_Wait( time=5 )
+0x0116    op01_JumpTo( address=0x8e )
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0119    op00_Return()
+
+Actor_0x03:on_start:
+0x011a    -- 0xBC_ActorNoModelInit()
+0x011b    -- 0x2A()
+0x011c    -- 0xFE80()
+0x012c    -- 0xFE81()
+0x0135    -- MISSING OPCODE 0xFE82

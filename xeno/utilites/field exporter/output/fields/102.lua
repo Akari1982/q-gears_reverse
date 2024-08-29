@@ -37,4 +37,61 @@ Actor_0x00:on_update:
 0x00d0    -- 0x2D()
 0x00d8    op02_JumpToConditional( val1=(s)mem[0x406], val2=-30, condition="val1 > val2", address_if_false=0xef )
 0x00e0    op02_JumpToConditional( val1=(s)mem[0x404], val2=-1380, condition="val1 > val2", address_if_false=0xef )
-0x00e8    -- MISSING OPCODE 0xa4
+0x00e8    -- 0xA4() -- camera angle
+0x00ec    op01_JumpTo( address=0x10a )
+0x00ef    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 < val2", address_if_false=0x106 )
+0x00f7    op02_JumpToConditional( val1=(s)mem[0x406], val2=-390, condition="val1 < val2", address_if_false=0x106 )
+0x00ff    -- 0xA4() -- camera angle
+0x0103    op01_JumpTo( address=0x10a )
+0x0106    -- 0xA4() -- camera angle
+0x010a    -- 0xA2()
+0x010c    op02_JumpToConditional( val1=(s)mem[0x402], val2=-400, condition="val1 > val2", address_if_false=0x134 )
+0x0114    op02_JumpToConditional( val1=(s)mem[0x402], val2=400, condition="val1 < val2", address_if_false=0x134 )
+0x011c    op02_JumpToConditional( val1=(s)mem[0x8], val2=4, condition="val1 == val2", address_if_false=0x134 )
+0x0124    op02_JumpToConditional( val1=(s)mem[0x404], val2=1500, condition="val1 < val2", address_if_false=0x134 )
+0x012c    -- 0xE7( ???=132, ???=157, ???=212 )
+0x0133    op00_Return()
+0x0134    -- 0xE7( ???=145, ???=120, ???=80 )
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x013b    op00_Return()
+
+Actor_0x00:event_0x04:
+0x013c    -- 0xA4() -- camera angle
+0x0140    -- 0xB6( ???=320, ???=20 )
+0x0145    op26_Wait( time=20 )
+0x0148    -- 0xFE54()
+0x014a    op99()
+0x014b    -- 0x60()
+0x014c    -- 0x64() -- exp0x1
+0x014d    -- 0x63( ???=0, ???=557, ???=96 ) -- exp0x1
+0x0155    -- 0xA3()
+0x015d    opAC_MoveCamera( control=0x0, steps=300 )
+0x0161    opAC_MoveCamera( control=0x1, steps=300 )
+0x0165    opEF_MoveCameraSync()
+0x0168    -- 0x60()
+0x0169    -- 0x64() -- exp0x1
+0x016a    -- 0x63( ???=0, ???=1236, ???=-1862 ) -- exp0x1
+0x0172    -- 0xA3()
+0x017a    -- 0xB6( ???=256, ???=80 )
+0x017f    opAC_MoveCamera( control=0x0, steps=80 )
+0x0183    opAC_MoveCamera( control=0x1, steps=80 )
+0x0187    opEF_MoveCameraSync()
+0x018a    -- 0xB6( ???=512, ???=30 )
+0x018f    op26_Wait( time=30 )
+0x0192    -- 0x9A()
+0x0195    -- 0xFE54()
+0x0197    op00_Return()
+
+Actor_0x01:on_start:
+0x0198    -- 0xBC_ActorNoModelInit()
+0x0199    -- 0x2A()
+0x019a    -- 0xFE54()
+0x019c    op00_Return()
+
+Actor_0x01:on_update:
+0x019d    op02_JumpToConditional( val1=(s)mem[0x40e], val2=1, condition="val1 == val2", address_if_false=0x1a6 )
+0x01a5    op00_Return()
+0x01a6    -- MISSING OPCODE 0xFEb0

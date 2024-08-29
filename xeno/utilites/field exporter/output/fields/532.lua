@@ -120,4 +120,24 @@ Actor_0x05:on_talk:
 0x00a0    opA9_MessageSetSelectionSync( start_row=02, end_row=03 )
 0x00a2    op9C_MessageSync()
 0x00a3    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0xc4 )
-0x00ab    -- MISSING OPCODE 0x8c
+0x00ab    -- 0x8C()
+0x00ae    op74_SoundPlayFixedVolume( sound_id=55 )
+0x00b1    opF5_MessageShowStatic( text_id=0x7, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x00b5    op9C_MessageSync()
+0x00b6    opD2_MessageShowDynamic( text_id=0x8, flags=0 )
+0x00ba    op9C_MessageSync()
+0x00bb    mem[0x1c6] |= 1 << 12 -- op3a
+0x00c1    op01_JumpTo( address=0xd4 )
+0x00c4    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0xd4 )
+0x00cc    opD2_MessageShowDynamic( text_id=0x9, flags=0 )
+0x00d0    op9C_MessageSync()
+0x00d1    op01_JumpTo( address=0xd4 )
+0x00d4    -- 0xFE54()
+0x00d6    op00_Return()
+
+Actor_0x05:on_push:
+0x00d7    op00_Return()
+
+Actor_0x06:on_start:
+0x00d8    -- 0xBC_ActorNoModelInit()
+0x00d9    -- MISSING OPCODE 0xFE1c

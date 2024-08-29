@@ -210,4 +210,153 @@ Actor_0x0c:on_update:
 
 Actor_0x0c:on_talk:
 0x0105    op6F_ActorRotateToActor( actor_id=party1 )
-0x0107    -- MISSING OPCODE 0x91
+0x0107    -- 0x91()
+0x010b    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x010f    op9C_MessageSync()
+0x0110    op01_JumpTo( address=0x118 )
+0x0113    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0117    op9C_MessageSync()
+
+Actor_0x0c:on_push:
+0x0118    op00_Return()
+
+Actor_0x0d:on_start:
+0x0119    -- 0x0B_InitNPC( 0 )
+0x011c    -- 0x85()
+0x0121    op29_ActorTurnOff( actor_id=Actor_0x0d )
+0x0123    op01_JumpTo( address=0x146 )
+0x0126    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x13d )
+0x012b    -- 0x19_ActorSetPosition( x=(vf80)0xf840, z=(vf40)0xffb5, flag=(flag)0xc0 )
+0x0131    -- 0x2A()
+0x0132    op69_ActorSetRotation( rot=0 )
+0x0135    -- 0x18()
+0x013a    op01_JumpTo( address=0x146 )
+0x013d    -- 0x19_ActorSetPosition( x=(vf80)0xf84a, z=(vf40)0xffa1, flag=(flag)0xc0 )
+0x0143    op69_ActorSetRotation( rot=0 )
+0x0146    op00_Return()
+
+Actor_0x0d:on_update:
+0x0147    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x154 )
+0x014c    op2C_SpritePlayAnim( anim_id=0x3 )
+0x014e    op20_ActorSetFlags0( flags=15 )
+0x0151    op01_JumpTo( address=0x168 )
+0x0154    op26_Wait( time=13 )
+0x0157    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x015d    op69_ActorSetRotation( rot=2 )
+0x0160    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x0164    op9C_MessageSync()
+0x0165    mem[0x402] += 1 -- op3c
+0x0168    -- 0x5B()
+0x0169    op00_Return()
+
+Actor_0x0d:on_talk:
+0x016a    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 > val2", address_if_false=0x17c )
+0x0172    op6F_ActorRotateToActor( actor_id=party1 )
+0x0174    mem[0xe0] += 1 -- op3c
+0x0177    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x017b    op9C_MessageSync()
+
+Actor_0x0d:on_push:
+0x017c    op00_Return()
+
+Actor_0x0e:on_start:
+0x017d    -- 0x0B_InitNPC( 0 )
+0x0180    -- 0x85()
+0x0185    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x0187    op01_JumpTo( address=0x1b7 )
+0x018a    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x1ae )
+0x018f    op02_JumpToConditional( val1=(s)mem[0xec], val2=8, condition="val1 & val2", address_if_false=0x19c )
+0x0197    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x0199    op01_JumpTo( address=0x1ab )
+0x019c    -- 0x19_ActorSetPosition( x=(vf80)0x0021, z=(vf40)0x0656, flag=(flag)0xc0 )
+0x01a2    op69_ActorSetRotation( rot=3 )
+0x01a5    -- 0x18()
+0x01aa    -- 0x2A()
+0x01ab    op01_JumpTo( address=0x1b7 )
+0x01ae    -- 0x19_ActorSetPosition( x=(vf80)0xffb3, z=(vf40)0x069e, flag=(flag)0xc0 )
+0x01b4    op69_ActorSetRotation( rot=1 )
+0x01b7    op00_Return()
+
+Actor_0x0e:on_update:
+0x01b8    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x1c2 )
+0x01bd    op2C_SpritePlayAnim( anim_id=0x3 )
+0x01bf    op20_ActorSetFlags0( flags=15 )
+0x01c2    -- 0x5B()
+0x01c3    op00_Return()
+
+Actor_0x0e:on_talk:
+0x01c4    op6F_ActorRotateToActor( actor_id=party1 )
+0x01c6    mem[0xe0] += 1 -- op3c
+0x01c9    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x01cd    op9C_MessageSync()
+0x01ce    op69_ActorSetRotation( rot=1 )
+
+Actor_0x0e:on_push:
+0x01d1    op00_Return()
+
+Actor_0x0f:on_start:
+0x01d2    -- 0x0B_InitNPC( 1 )
+0x01d5    -- 0x85()
+0x01da    op29_ActorTurnOff( actor_id=Actor_0x0f )
+0x01dc    op01_JumpTo( address=0x20c )
+0x01df    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x203 )
+0x01e4    op02_JumpToConditional( val1=(s)mem[0xec], val2=8, condition="val1 & val2", address_if_false=0x1f1 )
+0x01ec    op29_ActorTurnOff( actor_id=Actor_0x0f )
+0x01ee    op01_JumpTo( address=0x200 )
+0x01f1    -- 0x19_ActorSetPosition( x=(vf80)0xffc1, z=(vf40)0x0747, flag=(flag)0xc0 )
+0x01f7    op69_ActorSetRotation( rot=7 )
+0x01fa    -- 0x18()
+0x01ff    -- 0x2A()
+0x0200    op01_JumpTo( address=0x20c )
+0x0203    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0785, flag=(flag)0xc0 )
+0x0209    op69_ActorSetRotation( rot=0 )
+0x020c    op00_Return()
+
+Actor_0x0f:on_update:
+0x020d    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x217 )
+0x0212    op2C_SpritePlayAnim( anim_id=0x3 )
+0x0214    op20_ActorSetFlags0( flags=15 )
+0x0217    -- 0x5B()
+0x0218    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0219    mem[0xe0] += 1 -- op3c
+0x021c    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x0220    op9C_MessageSync()
+
+Actor_0x0f:on_push:
+0x0221    op00_Return()
+
+Actor_0x10:on_start:
+0x0222    -- 0x0B_InitNPC( 2 )
+0x0225    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x250 )
+0x022a    op02_JumpToConditional( val1=(s)mem[0xec], val2=1, condition="val1 & val2", address_if_false=0x237 )
+0x0232    op29_ActorTurnOff( actor_id=Actor_0x10 )
+0x0234    op01_JumpTo( address=0x24d )
+0x0237    op02_JumpToConditional( val1=(s)mem[0xec], val2=8, condition="val1 & val2", address_if_false=0x244 )
+0x023f    op29_ActorTurnOff( actor_id=Actor_0x10 )
+0x0241    op01_JumpTo( address=0x24d )
+0x0244    -- 0x19_ActorSetPosition( x=(vf80)0x0002, z=(vf40)0x072c, flag=(flag)0xc0 )
+0x024a    op69_ActorSetRotation( rot=7 )
+0x024d    op01_JumpTo( address=0x252 )
+0x0250    op29_ActorTurnOff( actor_id=Actor_0x10 )
+0x0252    op00_Return()
+
+Actor_0x10:on_update:
+0x0253    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x29d )
+0x025b    op02_JumpToConditional( val1=(s)mem[0xec], val2=1, condition="val1 & val2", address_if_false=0x266 )
+0x0263    op01_JumpTo( address=0x29d )
+0x0266    -- 0xFE54()
+0x0268    op2C_SpritePlayAnim( anim_id=0x1 )
+0x026a    op26_Wait( time=5 )
+0x026d    -- 0xB5() -- camera set direction
+0x026e    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
+0x0272    op26_Wait( time=40 )
+0x0275    op6F_ActorRotateToActor( actor_id=party1 )
+0x0277    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x027b    op9C_MessageSync()
+0x027c    op26_Wait( time=5 )
+0x027f    -- 0x21( ???=128 )
+0x0282    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0288    -- 0x71()
+0x028b    -- MISSING OPCODE 0xFE7f

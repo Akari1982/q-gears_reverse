@@ -352,4 +352,124 @@ Actor_0x0c:on_start:
 0x01b9    -- 0x0B_InitNPC( 0 )
 0x01bc    -- 0x85()
 0x01c1    op29_ActorTurnOff( actor_id=self )
-0x01c3    -- MISSING OPCODE 0x91
+0x01c3    -- 0x91()
+0x01c7    op29_ActorTurnOff( actor_id=self )
+0x01c9    op00_Return()
+0x01ca    op01_JumpTo( address=0x1e8 )
+0x01cd    -- 0x85()
+0x01d2    opFE0D_MessageSetFace( char_id=1 )
+0x01d6    op2C_SpritePlayAnim( anim_id=0x2 )
+0x01d8    -- 0x19_ActorSetPosition( x=(vf80)0xff8f, z=(vf40)0x0064, flag=(flag)0xc0 )
+0x01de    op69_ActorSetRotation( rot=4 )
+0x01e1    op00_Return()
+0x01e2    op01_JumpTo( address=0x1e8 )
+0x01e5    op29_ActorTurnOff( actor_id=self )
+0x01e7    op00_Return()
+0x01e8    op00_Return()
+
+Actor_0x0c:on_update:
+0x01e9    op00_Return()
+
+Actor_0x0c:on_talk:
+0x01ea    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x01ee    op9C_MessageSync()
+0x01ef    op00_Return()
+
+Actor_0x0c:on_push:
+0x01f0    op00_Return()
+
+Actor_0x0d:on_start:
+0x01f1    -- 0x0B_InitNPC( 1 )
+0x01f4    opFE0D_MessageSetFace( char_id=8 )
+0x01f8    -- 0x85()
+0x01fd    -- 0x91()
+0x0201    op29_ActorTurnOff( actor_id=self )
+0x0203    op01_JumpTo( address=0x210 )
+0x0206    -- 0x19_ActorSetPosition( x=(vf80)0x0009, z=(vf40)0xff67, flag=(flag)0xc0 )
+0x020c    op69_ActorSetRotation( rot=0 )
+0x020f    op00_Return()
+0x0210    op01_JumpTo( address=0x215 )
+0x0213    op29_ActorTurnOff( actor_id=self )
+
+Actor_0x0d:on_update:
+0x0215    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0216    op6F_ActorRotateToActor( actor_id=party1 )
+0x0218    -- 0x85()
+0x021d    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0221    op9C_MessageSync()
+0x0222    op00_Return()
+0x0223    op01_JumpTo( address=0x22b )
+0x0226    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x022a    op9C_MessageSync()
+0x022b    op00_Return()
+
+Actor_0x0d:on_push:
+0x022c    op00_Return()
+
+Actor_0x0e:on_start:
+0x022d    -- 0x85()
+0x0232    -- 0xB9()
+0x0236    -- 0x91()
+0x023a    -- 0xBC_ActorNoModelInit()
+0x023b    -- 0x2A()
+0x023c    op01_JumpTo( address=0x24c )
+0x023f    -- 0x0B_InitNPC( 3 )
+0x0242    opFE0D_MessageSetFace( char_id=10 )
+0x0246    -- 0x19_ActorSetPosition( x=(vf80)0x0098, z=(vf40)0xff65, flag=(flag)0xc0 )
+0x024c    op00_Return()
+0x024d    op01_JumpTo( address=0x267 )
+0x0250    -- 0x91()
+0x0254    -- 0xBC_ActorNoModelInit()
+0x0255    -- 0x2A()
+0x0256    op01_JumpTo( address=0x266 )
+0x0259    -- 0x0B_InitNPC( 2 )
+0x025c    opFE0D_MessageSetFace( char_id=6 )
+0x0260    -- 0x19_ActorSetPosition( x=(vf80)0x0098, z=(vf40)0xff65, flag=(flag)0xc0 )
+0x0266    op00_Return()
+0x0267    op01_JumpTo( address=0x26d )
+0x026a    -- 0xBC_ActorNoModelInit()
+0x026b    op29_ActorTurnOff( actor_id=self )
+0x026d    op00_Return()
+
+Actor_0x0e:on_update:
+0x026e    op00_Return()
+
+Actor_0x0e:on_talk:
+0x026f    op6F_ActorRotateToActor( actor_id=party1 )
+0x0271    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x0275    op9C_MessageSync()
+0x0276    op00_Return()
+
+Actor_0x0e:on_push:
+0x0277    op00_Return()
+
+Actor_0x0f:on_start:
+0x0278    -- 0xBC_ActorNoModelInit()
+0x0279    -- 0x2A()
+0x027a    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x28c )
+0x0282    op29_ActorTurnOff( actor_id=Actor_0x0d )
+0x0284    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x0286    mem[0x400] = true -- op36
+0x0289    op01_JumpTo( address=0x28e )
+0x028c    -- 0x27( actor_id=self )
+0x028e    op00_Return()
+
+Actor_0x0f:on_update:
+0x028f    -- 0xFE54()
+0x0291    op29_ActorTurnOff( actor_id=Actor_0x11 )
+0x0293    op99()
+0x0294    -- 0x60()
+0x0295    -- 0x64() -- exp0x1
+0x0296    -- 0x63( ???=-169, ???=-115, ???=21 ) -- exp0x1
+0x029e    -- 0xA3()
+0x02a6    opAC_MoveCamera( control=0x0, steps=0 )
+0x02aa    opAC_MoveCamera( control=0x1, steps=0 )
+0x02ae    opEF_MoveCameraSync()
+0x02b1    opF1_FadeSetUp( steps=2, r=88, g=43, b=0, semi_tr=1 )
+0x02bc    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x08, priority=0x02 )
+0x02bf    op26_Wait( time=30 )
+0x02c2    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x02 )
+0x02c5    op26_Wait( time=10 )
+0x02c8    -- MISSING OPCODE 0xFE17

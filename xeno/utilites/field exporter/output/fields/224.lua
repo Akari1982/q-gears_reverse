@@ -24,4 +24,5 @@ Actor_0x00:on_start:
 0x001c    -- 0x75( ???=27 )
 0x001f    opF1_FadeSetUp( steps=2, r=120, g=100, b=40, semi_tr=1 )
 0x002a    -- 0xFE80()
-0x003a    -- MISSING OPCODE 0xFE81
+0x003a    -- 0xFE81()
+0x0043    -- MISSING OPCODE 0xFE82

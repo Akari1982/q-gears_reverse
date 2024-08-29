@@ -189,4 +189,5 @@ Actor_0x0b:on_talk:
 0x00aa    op01_JumpTo( address=0xb2 )
 0x00ad    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x00b1    op9C_MessageSync()
-0x00b2    -- MISSING OPCODE 0xFE59
+0x00b2    -- 0xFE59()
+0x00b6    -- MISSING OPCODE 0xFE87

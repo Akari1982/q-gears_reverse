@@ -54,4 +54,31 @@ Actor_0x00:on_update:
 0x0078    op26_Wait( time=32 )
 0x007b    mem[0x14c] = 130 -- op35
 0x0081    -- 0xFE8D()
-0x0085    -- MISSING OPCODE 0x12
+0x0085    -- 0x12()
+0x0089    -- 0x80()
+0x008e    -- 0x5B()
+0x008f    op01_JumpTo( address=0xbf )
+0x0092    op26_Wait( time=32 )
+0x0095    -- 0xFE54()
+0x0097    op26_Wait( time=150 )
+0x009a    -- 0xCF()
+0x009f    opF5_MessageShowStatic( text_id=0x2, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
+0x00a3    op9C_MessageSync()
+0x00a4    op26_Wait( time=45 )
+0x00a7    opF5_MessageShowStatic( text_id=0x3, flags=CLOSE_OFF_SCREEN|NO_WINDOW )
+0x00ab    op9C_MessageSync()
+0x00ac    op26_Wait( time=32 )
+0x00af    mem[0x14c] = 75 -- op35
+0x00b5    -- 0x12()
+0x00b9    -- 0x80()
+0x00be    -- 0x5B()
+0x00bf    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00c0    op00_Return()
+
+Actor_0x01:on_start:
+0x00c1    -- 0x0B_InitNPC( 0 )
+0x00c4    -- MISSING OPCODE 0xFE1c

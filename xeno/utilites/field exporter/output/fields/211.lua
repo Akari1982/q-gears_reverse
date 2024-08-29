@@ -83,4 +83,26 @@ Actor_0x01:on_push:
 
 Actor_0x01:event_0x04:
 0x00d5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
-0x00db    -- MISSING OPCODE 0xb5
+0x00db    -- 0xB5() -- camera set direction
+0x00dc    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x1c, priority=0x01 )
+0x00df    -- 0x80()
+0x00e4    op08_CallActorEventStartSync( actor_id=Actor_0x0a, event=event_0x05, priority=0x01 )
+0x00e7    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00ed    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00f3    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00f9    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00fa    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0100    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0101    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x0105    op9C_MessageSync()
+0x0106    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x010c    op00_Return()
+
+Actor_0x01:event_0x07:
+0x010d    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0113    -- 0xB5() -- camera set direction
+0x0114    -- MISSING OPCODE 0x06

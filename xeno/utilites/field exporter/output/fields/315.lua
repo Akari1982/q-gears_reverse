@@ -71,4 +71,64 @@ Actor_0x00:on_start:
 0x0108    -- 0x2A()
 0x0109    -- 0x19_ActorSetPosition( x=(vf80)0xffba, z=(vf40)0x0046, flag=(flag)0xc0 )
 0x010f    -- 0xB6( ???=512, ???=0 )
-0x0114    -- MISSING OPCODE 0xa4
+0x0114    -- 0xA4() -- camera angle
+0x0118    op00_Return()
+
+Actor_0x00:on_update:
+0x0119    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x12a )
+0x0121    -- 0x75( ???=45 )
+0x0124    mem[0x406] = 1 -- op35
+0x012a    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x012b    op00_Return()
+
+Actor_0x01:on_start:
+0x012c    -- 0x16_ActorPCInit( char_id=0 )
+0x012f    opFE0D_MessageSetFace( char_id=0 )
+0x0133    op00_Return()
+
+Actor_0x01:on_update:
+0x0134    -- 0xA7()
+0x0135    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0136    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0137    -- 0x1F( ???=0x10 )
+0x0139    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x013f    op00_Return()
+
+Actor_0x01:event_0x05:
+0x0140    op6F_ActorRotateToActor( actor_id=Actor_0x11 )
+0x0142    opD2_MessageShowDynamic( text_id=0x0, flags=FORCE_BOTTOM )
+0x0146    op9C_MessageSync()
+0x0147    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0148    op6F_ActorRotateToActor( actor_id=Actor_0x11 )
+0x014a    opD2_MessageShowDynamic( text_id=0x1, flags=FORCE_BOTTOM )
+0x014e    op9C_MessageSync()
+0x014f    op00_Return()
+
+Actor_0x01:event_0x07:
+0x0150    -- 0x19_ActorSetPosition( x=(vf80)0xffb6, z=(vf40)0xfeb6, flag=(flag)0xc0 )
+0x0156    -- 0x5F( ???=0x0 )
+0x0158    op00_Return()
+
+Actor_0x01:event_0x08:
+0x0159    opD2_MessageShowDynamic( text_id=0x2, flags=NO_FACE )
+0x015d    op9C_MessageSync()
+0x015e    op00_Return()
+
+Actor_0x01:event_0x09:
+0x015f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0165    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x0166    -- MISSING OPCODE 0x10

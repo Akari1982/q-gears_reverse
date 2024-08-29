@@ -25,4 +25,66 @@ Actor_0x00:on_start:
 0x0028    -- 0xFE19( char_id=0x2 )
 0x002b    -- 0xFE19( char_id=0x3 )
 0x002e    -- 0xFE18()
-0x0033    -- MISSING OPCODE 0xFE41
+0x0033    -- 0xFE41()
+0x0037    -- 0xFE52()
+0x0039    op00_Return()
+
+Actor_0x00:on_update:
+0x003a    -- 0x86_ProgressNotEqualJumpTo( value=59, jump=0x43 )
+0x003f    op05_CallFunction( address=0x617 )
+0x0042    op00_Return()
+0x0043    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0044    op00_Return()
+
+Actor_0x01:on_start:
+0x0045    -- 0x16_ActorPCInit( char_id=(s)mem[0x3e] )
+0x0048    opFE0D_MessageSetFace( char_id=(s)mem[0x3e] )
+0x004c    op20_ActorSetFlags0( flags=13 )
+0x004f    -- 0x2A()
+0x0050    op00_Return()
+
+Actor_0x01:on_update:
+0x0051    -- 0x0C()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0052    op00_Return()
+
+Actor_0x02:on_start:
+0x0053    -- 0x16_ActorPCInit( char_id=(s)mem[0x40] )
+0x0056    opFE0D_MessageSetFace( char_id=(s)mem[0x40] )
+0x005a    op20_ActorSetFlags0( flags=13 )
+0x005d    -- 0x2A()
+0x005e    op00_Return()
+
+Actor_0x02:on_update:
+0x005f    -- 0x0C()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0060    op00_Return()
+
+Actor_0x03:on_start:
+0x0061    -- 0x16_ActorPCInit( char_id=(s)mem[0x42] )
+0x0064    opFE0D_MessageSetFace( char_id=(s)mem[0x42] )
+0x0068    op20_ActorSetFlags0( flags=13 )
+0x006b    -- 0x2A()
+0x006c    op00_Return()
+
+Actor_0x03:on_update:
+0x006d    -- 0x0C()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x006e    op00_Return()
+
+Actor_0x04:on_start:
+0x006f    -- 0xFE15( ???=0, ???=1 )
+0x0075    -- MISSING OPCODE 0x1b

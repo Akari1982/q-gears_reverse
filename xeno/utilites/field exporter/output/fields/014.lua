@@ -50,4 +50,31 @@ Actor_0x00:on_push:
 0x0074    op00_Return()
 
 Actor_0x00:event_0x04:
-0x0075    -- MISSING OPCODE 0xa4
+0x0075    -- 0xA4() -- camera angle
+0x0079    op00_Return()
+
+Actor_0x00:event_0x05:
+0x007a    op26_Wait( time=50 )
+0x007d    -- 0xB5() -- camera set direction
+0x007e    op01_JumpTo( address=0x3c80 )
+0x0081    -- 0x80()
+0x0086    -- 0x19_ActorSetPosition( x=(vf80)0x0080, z=(vf40)0x9a82, flag=(flag)0x14 )
+0x008c    -- 0x80()
+0x0091    opFE0D_MessageSetFace( char_id=0 )
+0x0095    -- 0x84_ProgressLessEqualJumpTo( value=6, jump=0xa3 )
+0x009a    -- 0x19_ActorSetPosition( x=(vf80)0x0073, z=(vf40)0xfe39, flag=(flag)0xc0 )
+0x00a0    op69_ActorSetRotation( rot=5 )
+0x00a3    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0xb4 )
+0x00ab    -- 0x19_ActorSetPosition( x=(vf80)0x00b6, z=(vf40)0x00f5, flag=(flag)0xc0 )
+0x00b1    op69_ActorSetRotation( rot=0 )
+0x00b4    op00_Return()
+
+Actor_0x01:on_update:
+0x00b5    -- 0x84_ProgressLessEqualJumpTo( value=6, jump=0x196 )
+0x00ba    -- 0xFE66() -- sound play with volume in slot
+0x00c4    opFE4A_SpriteAddAnimLoad( file=60 )
+0x00c8    opFE4B_SpriteAddAnimSync()
+0x00ca    op26_Wait( time=60 )
+0x00cd    op08_CallActorEventStartSync( actor_id=Actor_0x12, event=event_0x04, priority=0x01 )
+0x00d0    op08_CallActorEventStartSync( actor_id=Actor_0x09, event=event_0x04, priority=0x02 )
+0x00d3    -- MISSING OPCODE 0xFE27

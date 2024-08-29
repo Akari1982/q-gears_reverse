@@ -459,4 +459,7 @@ Actor_0x0a:event_0x04:
 0x034d    op02_JumpToConditional( val1=(s)mem[0x8], val2=3, condition="val1 > val2", address_if_false=0x371 )
 0x0355    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 < val2", address_if_false=0x36b )
 0x035d    op26_Wait( time=20 )
-0x0360    -- MISSING OPCODE 0xb5
+0x0360    -- 0xB5() -- camera set direction
+0x0361    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x08, priority=0x01 )
+0x0364    -- 0x80()
+0x0369    -- MISSING OPCODE 0x6e
