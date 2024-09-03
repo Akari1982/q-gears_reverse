@@ -35,4 +35,58 @@ Actor_0x00:on_start:
 0x0038    -- 0xA0()
 0x003f    -- 0xFE80()
 0x004f    -- 0xFE81()
-0x0058    -- MISSING OPCODE 0xFE82
+0x0058    -- 0xFE82()
+0x0072    -- 0xFE54()
+0x0074    -- 0x2A()
+0x0075    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0076    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0077    opF4_MessageClose( type=0x0 )
+0x0079    op26_Wait( time=20 )
+0x007c    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x0, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x0082    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0083    opF4_MessageClose( type=0x0 )
+0x0085    op26_Wait( time=20 )
+0x0088    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x1, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x008e    op00_Return()
+
+Actor_0x00:event_0x06:
+0x008f    opF4_MessageClose( type=0x0 )
+0x0091    op26_Wait( time=20 )
+0x0094    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x2, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x009a    op00_Return()
+
+Actor_0x00:event_0x07:
+0x009b    opF4_MessageClose( type=0x0 )
+0x009d    op26_Wait( time=20 )
+0x00a0    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x3, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x00a6    op00_Return()
+
+Actor_0x00:event_0x08:
+0x00a7    opF4_MessageClose( type=0x0 )
+0x00a9    op26_Wait( time=20 )
+0x00ac    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x4, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x00b2    op00_Return()
+
+Actor_0x00:event_0x09:
+0x00b3    opF4_MessageClose( type=0x0 )
+0x00b5    op26_Wait( time=20 )
+0x00b8    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x5, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x00be    op00_Return()
+
+Actor_0x00:event_0x0a:
+0x00bf    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x6, flags=NO_FACE|FORCE_BOTTOM|NO_WINDOW )
+0x00c5    op00_Return()
+
+Actor_0x00:event_0x0b:
+0x00c6    -- 0xB5() -- camera set direction
+0x00c7    -- MISSING OPCODE 0x06

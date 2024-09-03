@@ -37,7 +37,7 @@ Actor_0x01:on_start:
 0x002c    op00_Return()
 
 Actor_0x01:on_update:
-0x002d    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x4900], jump=0x1500 )
+0x002d    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x4900], jump=0x1500 )
 0x0032    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x3e )
 0x003a    -- 0x5A()
 0x003b    op01_JumpTo( address=0x32 )
@@ -45,7 +45,7 @@ Actor_0x01:on_update:
 0x0041    -- 0x27( actor_id=Actor_0x14 )
 0x0043    -- 0x98_MapLoad( field_id=158, value=5 )
 0x0048    -- 0x5B()
-0x0049    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x6500], jump=0x1500 )
+0x0049    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x6500], jump=0x1500 )
 0x004e    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x5a )
 0x0056    -- 0x5A()
 0x0057    op01_JumpTo( address=0x4e )

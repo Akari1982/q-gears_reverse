@@ -20,4 +20,47 @@ Actor_0x00:on_start:
 0x004e    -- 0xB6( ???=1024, ???=0 )
 0x0053    -- 0xFE80()
 0x0063    -- 0xFE81()
-0x006c    -- MISSING OPCODE 0xFE82
+0x006c    -- 0xFE82()
+0x0086    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0x91 )
+0x008e    opB4_FadeOut()
+0x0091    op02_JumpToConditional( val1=(s)mem[0x2], val2=9, condition="val1 == val2", address_if_false=0x9f )
+0x0099    -- 0x75( ???=58 )
+0x009c    op01_JumpTo( address=0xa2 )
+0x009f    -- 0x75( ???=72 )
+0x00a2    -- 0x2A()
+0x00a3    op00_Return()
+
+Actor_0x00:on_update:
+0x00a4    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0xf4 )
+0x00ac    -- 0xFE54()
+0x00ae    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x00b9    -- 0xA0()
+0x00c0    op99()
+0x00c1    -- 0x60()
+0x00c2    -- 0x64() -- exp0x1
+0x00c3    -- 0x63( ???=-936, ???=-181, ???=515 ) -- exp0x1
+0x00cb    -- 0xA3()
+0x00d3    opAC_MoveCamera( control=0x0, steps=0 )
+0x00d7    opAC_MoveCamera( control=0x1, steps=0 )
+0x00db    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=120 )
+0x00e6    op26_Wait( time=120 )
+0x00e9    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x09, priority=0x03 )
+0x00ec    -- 0x9A()
+0x00ef    op26_Wait( time=40 )
+0x00f2    -- 0xFE54()
+0x00f4    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00f5    op00_Return()
+0x00f6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x00fa    op9C_MessageSync()
+0x00fb    op0D_Return()
+
+Actor_0x01:on_start:
+0x00fc    -- 0x16_ActorPCInit( char_id=0 )
+0x00ff    opFE0D_MessageSetFace( char_id=0 )
+0x0103    -- 0x21( ???=190 )
+0x0106    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0x118 )
+0x010e    -- MISSING OPCODE 0x1b

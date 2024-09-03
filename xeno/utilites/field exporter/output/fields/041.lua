@@ -47,4 +47,26 @@ Actor_0x00:on_update:
 0x0069    op26_Wait( time=1 )
 0x006c    opFE77_LoadTim_04_00_07( file_id=0x56, clut_y=0, x=640, y=0 )
 0x007e    op26_Wait( time=2 )
-0x0081    -- MISSING OPCODE 0xFEdd
+0x0081    -- opFEDD00()
+0x0088    -- opFEDD03()
+0x008b    mem[0x400] = false -- op37
+0x008e    -- opFEDD01()
+0x0095    op26_Wait( time=0 )
+0x0098    -- 0xFEDF()
+0x009c    op02_JumpToConditional( val1=(s)mem[0x400], val2=33, condition="val1 < val2", address_if_false=0xb5 )
+0x00a4    opC6_ExpandRun() -- exp0x20
+0x00a5    -- opFEDD01()
+0x00ac    op26_Wait( time=0 )
+0x00af    mem[0x400] += 1 -- op3c
+0x00b2    op01_JumpTo( address=0x9c )
+0x00b5    op26_Wait( time=0 )
+0x00b8    -- opFEDD03()
+0x00bb    -- opFEDD02()
+0x00be    -- opFEDD03()
+0x00c1    op26_Wait( time=0 )
+0x00c4    op01_JumpTo( address=0xc1 )
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00c7    op00_Return()

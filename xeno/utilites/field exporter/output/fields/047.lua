@@ -29,4 +29,18 @@ Actor_0x00:on_start:
 0x0061    mem[0x18e] = 2 -- op35
 0x0067    -- 0xFE80()
 0x0077    -- 0xFE81()
-0x0080    -- MISSING OPCODE 0xFE82
+0x0080    -- 0xFE82()
+0x009a    op02_JumpToConditional( val1=(s)mem[0x18e], val2=1, condition="val1 != val2", address_if_false=0xa7 )
+0x00a2    -- 0x80()
+0x00a7    op02_JumpToConditional( val1=(s)mem[0x180], val2=16, condition="val1 & val2", address_if_false=0xb4 )
+0x00af    -- 0x80()
+0x00b4    op02_JumpToConditional( val1=(s)mem[0x180], val2=64, condition="val1 & val2", address_if_false=0xbf )
+0x00bc    op01_JumpTo( address=0xc4 )
+0x00bf    -- 0x80()
+0x00c4    -- 0xA1()
+0x00c7    -- 0xA0()
+0x00ce    op02_JumpToConditional( val1=(s)mem[0x180], val2=1, condition="val1 & val2", address_if_false=0xd9 )
+0x00d6    op01_JumpTo( address=0xe0 )
+0x00d9    -- 0xA0()
+0x00e0    -- 0xE6()
+0x00e9    -- MISSING OPCODE 0xFE25

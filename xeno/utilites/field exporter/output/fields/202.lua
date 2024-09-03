@@ -81,5 +81,5 @@ Actor_0x04:on_start:
 0x0047    op00_Return()
 
 Actor_0x04:on_update:
-0x0048    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x5200], jump=0x9800 )
+0x0048    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x5200], jump=0x9800 )
 0x004d    -- MISSING OPCODE 0xcc

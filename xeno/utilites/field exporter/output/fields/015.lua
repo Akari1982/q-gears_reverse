@@ -127,4 +127,19 @@ Actor_0x01:event_0x07:
 0x017c    op00_Return()
 
 Actor_0x01:event_0x08:
-0x017d    -- MISSING OPCODE 0x10
+0x017d    -- 0x10()
+0x0188    op00_Return()
+
+Actor_0x01:event_0x09:
+0x0189    opF4_MessageClose( type=0x0 )
+0x018b    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x018c    op05_CallFunction( address=0xde6 )
+0x018f    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x0190    opFE4A_SpriteAddAnimLoad( file=4 )
+0x0194    opFE4B_SpriteAddAnimSync()
+0x0196    op26_Wait( time=1 )
+0x0199    -- MISSING OPCODE 0xFE4c

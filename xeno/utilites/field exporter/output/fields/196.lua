@@ -35,4 +35,18 @@ Actor_0x00:on_start:
 0x00ae    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0xc1 )
 0x00b6    opF1_FadeSetUp( steps=2, r=70, g=20, b=10, semi_tr=1 )
 0x00c1    -- 0xFE0E_SoundSetVolume( volume=127, steps=120 )
-0x00c7    -- MISSING OPCODE 0xFE0c
+0x00c7    -- 0xFE0C()
+0x00d5    op00_Return()
+
+Actor_0x00:on_update:
+0x00d6    op02_JumpToConditional( val1=(s)mem[0x242], val2=4096, condition="val1 & val2", address_if_false=0x134 )
+0x00de    op02_JumpToConditional( val1=(s)mem[0x242], val2=16384, condition="val1 & val2", address_if_false=0xe9 )
+0x00e6    op01_JumpTo( address=0x134 )
+0x00e9    opB4_FadeOut()
+0x00ec    -- 0xFE54()
+0x00ee    -- 0x75( ???=14 )
+0x00f1    op25_ActorDisable( actor_id=Actor_0x01 )
+0x00f3    op25_ActorDisable( actor_id=Actor_0x3c )
+0x00f5    opB3_FadeIn()
+0x00f8    op09_CallActorEventEndSync( actor_id=Actor_0x3a, event=event_0x04, priority=0x01 )
+0x00fb    -- MISSING OPCODE 0xFE10

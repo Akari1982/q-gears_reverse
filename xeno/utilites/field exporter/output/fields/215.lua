@@ -237,5 +237,5 @@ Actor_0x0b:on_start:
 0x015b    op00_Return()
 
 Actor_0x0b:on_update:
-0x015c    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x6600], jump=0x9801 )
+0x015c    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x6600], jump=0x9801 )
 0x0161    -- MISSING OPCODE 0xd8

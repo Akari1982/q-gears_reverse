@@ -103,4 +103,91 @@ Actor_0x01:event_0x08:
 
 Actor_0x01:event_0x09:
 0x00fa    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
-0x0100    -- MISSING OPCODE 0x10
+0x0100    -- 0x10()
+0x010b    -- 0x5F( ???=0x0 )
+0x010d    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x010e    -- 0x19_ActorSetPosition( x=(vf80)0x00da, z=(vf40)0xffef, flag=(flag)0xc0 )
+0x0114    -- 0x5F( ???=0x0 )
+0x0116    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x0117    op2C_SpritePlayAnim( anim_id=0x2 )
+0x0119    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x011f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0125    op2C_SpritePlayAnim( anim_id=0xff )
+0x0127    op00_Return()
+
+Actor_0x01:event_0x0c:
+0x0128    -- 0x1F( ???=0x10 )
+0x012a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0130    -- 0x23()
+0x0131    op00_Return()
+
+Actor_0x01:event_0x0d:
+0x0132    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0138    -- 0x5F( ???=0x0 )
+0x013a    op00_Return()
+
+Actor_0x01:event_0x0e:
+0x013b    -- 0x22()
+0x013c    -- 0x1F( ???=0x10 )
+0x013e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0144    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x014a    -- 0x1F( ???=0x0 )
+0x014c    op6F_ActorRotateToActor( actor_id=Actor_0x17 )
+0x014e    op00_Return()
+
+Actor_0x01:event_0x0f:
+0x014f    op2C_SpritePlayAnim( anim_id=0xc )
+0x0151    op00_Return()
+
+Actor_0x01:event_0x10:
+0x0152    op2C_SpritePlayAnim( anim_id=0xff )
+0x0154    op00_Return()
+
+Actor_0x02:on_start:
+0x0155    -- 0x16_ActorPCInit( char_id=1 )
+0x0158    opFE0D_MessageSetFace( char_id=1 )
+0x015c    op00_Return()
+
+Actor_0x02:on_update:
+0x015d    -- 0xA7()
+0x015e    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x015f    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0160    -- 0x1F( ???=0x10 )
+0x0162    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0168    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0169    op6F_ActorRotateToActor( actor_id=Actor_0x16 )
+0x016b    -- 0x5B()
+0x016c    op00_Return()
+
+Actor_0x02:event_0x06:
+0x016d    -- 0x53()
+0x0171    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x0175    op9C_MessageSync()
+0x0176    op00_Return()
+
+Actor_0x02:event_0x07:
+0x0177    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x017b    op9C_MessageSync()
+0x017c    op00_Return()
+
+Actor_0x02:event_0x08:
+0x017d    opD2_MessageShowDynamic( text_id=0x6, flags=NO_FACE )
+0x0181    op9C_MessageSync()
+0x0182    op00_Return()
+
+Actor_0x02:event_0x09:
+0x0183    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
+0x0187    op9C_MessageSync()
+0x0188    -- MISSING OPCODE 0x92

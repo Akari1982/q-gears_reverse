@@ -20,4 +20,167 @@ Actor_0x00:on_start:
 0x0009    -- 0xA0()
 0x0010    -- 0x2A()
 0x0011    -- 0xFE81()
-0x001a    -- MISSING OPCODE 0xFE82
+0x001a    -- 0xFE82()
+0x0034    op99()
+0x0035    -- 0x9B( ???=12, ???=12 )
+0x003a    -- 0x60()
+0x003b    -- 0x63( ???=-4407, ???=-3613, ???=-405 ) -- exp0x1
+0x0043    -- 0x64() -- exp0x1
+0x0044    -- 0xA3()
+0x004c    opAC_MoveCamera( control=0x1, steps=0 )
+0x0050    opAC_MoveCamera( control=0x0, steps=0 )
+0x0054    -- 0x75( ???=255 )
+0x0057    op00_Return()
+
+Actor_0x00:on_update:
+0x0058    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0xf0 )
+0x0060    op74_SoundPlayFixedVolume( sound_id=164 )
+0x0063    -- 0xFE62()
+0x0069    -- 0xFE8C()
+0x0071    -- 0xFE54()
+0x0073    op26_Wait( time=12 )
+0x0076    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
+0x0079    op26_Wait( time=220 )
+0x007c    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=32 )
+0x0087    op26_Wait( time=32 )
+0x008a    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
+0x008d    -- 0xFE65()
+0x0093    -- 0xFE62()
+0x0099    -- 0xFE65()
+0x009f    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=32 )
+0x00aa    op26_Wait( time=24 )
+0x00ad    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x04, priority=0x01 )
+0x00b0    op26_Wait( time=24 )
+0x00b3    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
+0x00b6    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x04, priority=0x01 )
+0x00b9    op26_Wait( time=70 )
+0x00bc    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
+0x00bf    op26_Wait( time=50 )
+0x00c2    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x07, priority=0x01 )
+0x00c5    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x04, priority=0x01 )
+0x00c8    op26_Wait( time=12 )
+0x00cb    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
+0x00ce    op26_Wait( time=12 )
+0x00d1    op09_CallActorEventEndSync( actor_id=Actor_0x0a, event=event_0x04, priority=0x01 )
+0x00d4    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x08, priority=0x01 )
+0x00d7    op26_Wait( time=24 )
+0x00da    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x05, priority=0x01 )
+0x00dd    op26_Wait( time=42 )
+0x00e0    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x05, priority=0x01 )
+0x00e3    op26_Wait( time=32 )
+0x00e6    -- 0x12()
+0x00ea    -- 0x80()
+0x00ef    -- 0x5B()
+0x00f0    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00f1    op00_Return()
+
+Actor_0x01:on_start:
+0x00f2    -- 0xBC_ActorNoModelInit()
+0x00f3    -- 0x2A()
+0x00f4    op00_Return()
+
+Actor_0x01:on_update:
+0x00f5    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00f6    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00f7    op99()
+0x00f8    -- 0x9B( ???=12, ???=12 )
+0x00fd    -- 0x60()
+0x00fe    -- 0x63( ???=-3004, ???=103, ???=-419 ) -- exp0x1
+0x0106    -- 0x64() -- exp0x1
+0x0107    -- 0xA3()
+0x010f    opAC_MoveCamera( control=0x1, steps=280 )
+0x0113    opAC_MoveCamera( control=0x0, steps=280 )
+0x0117    opEF_MoveCameraSync()
+0x011a    op00_Return()
+
+Actor_0x01:event_0x05:
+0x011b    op99()
+0x011c    -- 0x9B( ???=12, ???=12 )
+0x0121    -- 0x60()
+0x0122    -- 0x63( ???=-62, ???=175, ???=-5 ) -- exp0x1
+0x012a    -- 0x64() -- exp0x1
+0x012b    -- 0xA3()
+0x0133    opAC_MoveCamera( control=0x1, steps=0 )
+0x0137    opAC_MoveCamera( control=0x0, steps=0 )
+0x013b    opEF_MoveCameraSync()
+0x013e    op00_Return()
+
+Actor_0x01:event_0x06:
+0x013f    -- 0x60()
+0x0140    -- 0x63( ???=77, ???=-210, ???=-39 ) -- exp0x1
+0x0148    -- 0x64() -- exp0x1
+0x0149    -- 0xA3()
+0x0151    opAC_MoveCamera( control=0x1, steps=300 )
+0x0155    opAC_MoveCamera( control=0x0, steps=300 )
+0x0159    opEF_MoveCameraSync()
+0x015c    op00_Return()
+
+Actor_0x01:event_0x07:
+0x015d    -- 0x60()
+0x015e    -- 0x63( ???=82, ???=227, ???=135 ) -- exp0x1
+0x0166    -- 0x64() -- exp0x1
+0x0167    -- 0xA3()
+0x016f    opAC_MoveCamera( control=0x1, steps=0 )
+0x0173    opAC_MoveCamera( control=0x0, steps=0 )
+0x0177    opEF_MoveCameraSync()
+0x017a    op00_Return()
+
+Actor_0x01:event_0x08:
+0x017b    -- 0x60()
+0x017c    -- 0x63( ???=-463, ???=260, ???=76 ) -- exp0x1
+0x0184    -- 0x64() -- exp0x1
+0x0185    -- 0xA3()
+0x018d    opAC_MoveCamera( control=0x1, steps=0 )
+0x0191    opAC_MoveCamera( control=0x0, steps=0 )
+0x0195    opEF_MoveCameraSync()
+0x0198    op00_Return()
+
+Actor_0x02:on_start:
+0x0199    -- 0xBC_ActorNoModelInit()
+0x019a    -- 0x2A()
+0x019b    op00_Return()
+
+Actor_0x02:on_update:
+0x019c    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x019d    op00_Return()
+
+Actor_0x02:event_0x04:
+0x019e    opF1_FadeSetUp( steps=1, r=255, g=255, b=150, semi_tr=3 )
+0x01a9    op26_Wait( time=3 )
+0x01ac    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=3 )
+0x01b7    op26_Wait( time=3 )
+0x01ba    opF1_FadeSetUp( steps=1, r=255, g=255, b=150, semi_tr=3 )
+0x01c5    op26_Wait( time=180 )
+0x01c8    op00_Return()
+
+Actor_0x03:on_start:
+0x01c9    -- 0xBC_ActorNoModelInit()
+0x01ca    -- 0x2A()
+0x01cb    op00_Return()
+
+Actor_0x03:on_update:
+0x01cc    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x01cd    op00_Return()
+
+Actor_0x04:on_start:
+0x01ce    -- 0x16_ActorPCInit( char_id=0 )
+0x01d1    opFE0D_MessageSetFace( char_id=0 )
+0x01d5    -- MISSING OPCODE 0xFE1c

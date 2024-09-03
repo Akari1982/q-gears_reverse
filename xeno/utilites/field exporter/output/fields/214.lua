@@ -260,8 +260,9 @@ function:
 0x0139    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x155 )
 0x0141    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x0145    op9C_MessageSync()
-0x0146    -- 0xFE69( actor_id=Actor_0x02, render_settings=(s)mem[0x3e04], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x400] )
-0x014f    mem[0x0] &= (s)mem[0xc000] -- op3e
+0x0146    -- 0xFE69()
+0x014c    mem[0x400] = (s)mem[0x3e] -- op35
+0x0152    op01_JumpTo( address=0x1c0 )
 0x0155    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0x182 )
 0x015d    op02_JumpToConditional( val1=(s)mem[0x40], val2=255, condition="val1 == val2", address_if_false=0x16e )
 0x0165    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
@@ -270,8 +271,9 @@ function:
 0x016b    op01_JumpTo( address=0x17f )
 0x016e    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
 0x0172    op9C_MessageSync()
-0x0173    -- 0xFE69( actor_id=Actor_0x02, render_settings=(s)mem[0x4004], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x400] )
-0x017c    mem[0x0] ^= (s)mem[0xc000] -- op40
+0x0173    -- 0xFE69()
+0x0179    mem[0x400] = (s)mem[0x40] -- op35
+0x017f    op01_JumpTo( address=0x1c0 )
 0x0182    op02_JumpToConditional( val1=(s)mem[0x14], val2=4, condition="val1 == val2", address_if_false=0x1af )
 0x018a    op02_JumpToConditional( val1=(s)mem[0x42], val2=255, condition="val1 == val2", address_if_false=0x19b )
 0x0192    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
@@ -280,13 +282,11 @@ function:
 0x0198    op01_JumpTo( address=0x1ac )
 0x019b    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
 0x019f    op9C_MessageSync()
-0x01a0    -- 0xFE69( actor_id=Actor_0x02, render_settings=mem[0x4204], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x400] )
-0x01a9    mem[0x0] >>= 16385 -- op42
-0x01ae    op01_JumpTo( address=0x1402 )
-0x01b1    op00_Return()
-0x01b2    op05_CallFunction( address=0x4000 )
-0x01b5    -- 0xC0( ???=20993 )
-0x01b8    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x00, priority=0x00 )
+0x01a0    -- 0xFE69()
+0x01a6    mem[0x400] = (s)mem[0x42] -- op35
+0x01ac    op01_JumpTo( address=0x1c0 )
+0x01af    op02_JumpToConditional( val1=(s)mem[0x14], val2=5, condition="val1 == val2", address_if_false=0x1c0 )
+0x01b7    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
 0x01bb    op9C_MessageSync()
 0x01bc    op00_Return()
 0x01bd    op01_JumpTo( address=0x1c0 )

@@ -24,4 +24,55 @@ Actor_0x00:on_start:
 0x0020    -- 0x2A()
 0x0021    -- 0xFE80()
 0x0031    -- 0xFE81()
-0x003a    -- MISSING OPCODE 0xFE82
+0x003a    -- 0xFE82()
+0x0054    op00_Return()
+
+Actor_0x00:on_update:
+0x0055    op99()
+0x0056    -- 0x9B( ???=0, ???=0 )
+0x005b    -- 0x61( ???=0, ???=0, ???=0 ) -- exp0x1
+0x0063    -- 0x63( ???=0, ???=0, ???=0 ) -- exp0x1
+0x006b    -- 0x65( ???=0, ???=-1024, ???=0 ) -- exp0x1
+0x0073    -- 0xA3()
+0x007b    opAC_MoveCamera( control=0x80, steps=0 )
+0x007f    opAC_MoveCamera( control=0x81, steps=0 )
+0x0083    -- 0x5B()
+0x0084    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0085    op00_Return()
+
+Actor_0x01:on_start:
+0x0086    -- 0xBC_ActorNoModelInit()
+0x0087    -- 0x2A()
+0x0088    op00_Return()
+
+Actor_0x01:on_update:
+0x0089    opC6_ExpandRun() -- exp0x20
+0x008a    op31_JumpIfButtonNotPressed( buttons=Up, jump_to=0xac )
+0x008f    mem[0x410] = true -- op36
+0x0092    op31_JumpIfButtonNotPressed( buttons=Up, jump_to=0x9d )
+0x0097    op26_Wait( time=0 )
+0x009a    op01_JumpTo( address=0x92 )
+0x009d    mem[0x404] -= 1 -- op3d
+0x00a0    mem[0x404] &= 31 -- op3e
+0x00a6    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x00a9    op01_JumpTo( address=0xe8 )
+0x00ac    opC6_ExpandRun() -- exp0x20
+0x00ad    op31_JumpIfButtonNotPressed( buttons=Down, jump_to=0xcf )
+0x00b2    mem[0x410] = false -- op37
+0x00b5    op31_JumpIfButtonNotPressed( buttons=Down, jump_to=0xc0 )
+0x00ba    op26_Wait( time=0 )
+0x00bd    op01_JumpTo( address=0xb5 )
+0x00c0    mem[0x404] += 1 -- op3c
+0x00c3    mem[0x404] &= 31 -- op3e
+0x00c9    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x00cc    op01_JumpTo( address=0xe8 )
+0x00cf    opC6_ExpandRun() -- exp0x20
+0x00d0    op31_JumpIfButtonNotPressed( buttons=Cross, jump_to=0xe8 )
+0x00d5    op29_ActorTurnOff( actor_id=Actor_0x03 )
+0x00d7    op29_ActorTurnOff( actor_id=Actor_0x02 )
+0x00d9    op26_Wait( time=2 )
+0x00dc    -- MISSING OPCODE 0xFEd4

@@ -25,4 +25,32 @@ Actor_0x00:on_start:
 0x001f    opF1_FadeSetUp( steps=2, r=120, g=100, b=40, semi_tr=1 )
 0x002a    -- 0xFE80()
 0x003a    -- 0xFE81()
-0x0043    -- MISSING OPCODE 0xFE82
+0x0043    -- 0xFE82()
+0x005d    -- 0x2A()
+0x005e    op00_Return()
+
+Actor_0x00:on_update:
+0x005f    opB4_FadeOut()
+0x0062    -- 0xFE18()
+0x0067    mem[0x400] = 1 -- op35
+0x006d    -- 0xFE54()
+0x006f    op25_ActorDisable( actor_id=Actor_0x01 )
+0x0071    op25_ActorDisable( actor_id=Actor_0x05 )
+0x0073    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x05, priority=0x01 )
+0x0076    -- 0x67()
+0x007a    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
+0x007d    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x04, priority=0x01 )
+0x0080    -- 0x67()
+0x0084    op08_CallActorEventStartSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x01 )
+0x0087    opB3_FadeIn()
+0x008a    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x06, priority=0x01 )
+0x008d    op26_Wait( time=10 )
+0x0090    op08_CallActorEventStartSync( actor_id=Actor_0x0e, event=event_0x07, priority=0x01 )
+0x0093    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x05, priority=0x01 )
+0x0096    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x09, priority=0x01 )
+0x0099    op26_Wait( time=5 )
+0x009c    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x06, priority=0x01 )
+0x009f    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x08, priority=0x01 )
+0x00a2    mem[0x240] |= 1 << 4 -- op3a
+0x00a8    op26_Wait( time=75 )
+0x00ab    -- MISSING OPCODE 0xFE84

@@ -19,4 +19,58 @@ Actor_0x00:on_start:
 0x001d    -- 0xBC_ActorNoModelInit()
 0x001e    -- 0xA0()
 0x0025    -- 0xFE81()
-0x002e    -- MISSING OPCODE 0xFE82
+0x002e    -- 0xFE82()
+0x0048    -- 0x75( ???=38 )
+0x004b    -- 0x2A()
+0x004c    op00_Return()
+
+Actor_0x00:on_update:
+0x004d    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x56 )
+0x0055    op00_Return()
+0x0056    mem[0x412] = opA8_Random( max=60 )
+0x005b    mem[0x412] -= 30 -- op39
+0x0061    mem[0x410] = opA8_Random( max=60 )
+0x0066    mem[0x410] -= 30 -- op39
+0x006c    op02_JumpToConditional( val1=(s)mem[0x40e], val2=(s)mem[0x412], condition="val1 > val2", address_if_false=0x77 )
+0x0074    mem[0x40e] -= 1 -- op3d
+0x0077    op02_JumpToConditional( val1=(s)mem[0x40e], val2=(s)mem[0x412], condition="val1 < val2", address_if_false=0x82 )
+0x007f    mem[0x40e] += 1 -- op3c
+0x0082    op02_JumpToConditional( val1=(s)mem[0x40c], val2=(s)mem[0x410], condition="val1 > val2", address_if_false=0x8d )
+0x008a    mem[0x40c] -= 1 -- op3d
+0x008d    op02_JumpToConditional( val1=(s)mem[0x40c], val2=(s)mem[0x410], condition="val1 < val2", address_if_false=0x98 )
+0x0095    mem[0x40c] += 1 -- op3c
+0x0098    -- 0xFE48()
+0x00a1    op02_JumpToConditional( val1=(s)mem[0x40c], val2=(s)mem[0x410], condition="val1 == val2", address_if_false=0xb2 )
+0x00a9    op02_JumpToConditional( val1=(s)mem[0x40e], val2=(s)mem[0x412], condition="val1 == val2", address_if_false=0xb2 )
+0x00b1    op00_Return()
+0x00b2    op01_JumpTo( address=0x6c )
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00b5    op00_Return()
+
+Actor_0x01:on_start:
+0x00b6    -- 0xBC_ActorNoModelInit()
+0x00b7    -- 0x2A()
+0x00b8    op00_Return()
+
+Actor_0x01:on_update:
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00b9    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00ba    opD4_MessageShowFromActor( actor_id=Actor_0x24, text_id=0x0, flags=0 )
+0x00c0    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00c1    op01_JumpTo( address=0x1482 )
+0x00c4    op00_Return()
+
+Actor_0x02:on_start:
+0x00c5    -- 0xBC_ActorNoModelInit()
+0x00c6    -- 0x2A()
+0x00c7    -- MISSING OPCODE 0xFE1c

@@ -77,4 +77,72 @@ Actor_0x01:event_0x04:
 Actor_0x01:event_0x05:
 0x00b3    -- 0x1F( ???=0x10 )
 0x00b5    -- 0x21( ???=2048 )
-0x00b8    -- MISSING OPCODE 0x10
+0x00b8    -- 0x10()
+0x00c3    op00_Return()
+
+Actor_0x01:event_0x06:
+0x00c4    -- 0x53()
+0x00c8    op00_Return()
+
+Actor_0x01:event_0x07:
+0x00c9    op2C_SpritePlayAnim( anim_id=0x4 )
+0x00cb    op00_Return()
+
+Actor_0x01:event_0x08:
+0x00cc    opFE4A_SpriteAddAnimLoad( file=111 )
+0x00d0    opFE4B_SpriteAddAnimSync()
+0x00d2    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x00d5    op00_Return()
+
+Actor_0x01:event_0x09:
+0x00d6    op2C_SpritePlayAnim( anim_id=0xff )
+0x00d8    op00_Return()
+
+Actor_0x02:on_start:
+0x00d9    -- 0x16_ActorPCInit( char_id=1 )
+0x00dc    opFE0D_MessageSetFace( char_id=1 )
+0x00e0    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=-32768, condition="val1 & val2", address_if_false=0xeb )
+0x00e8    op29_ActorTurnOff( actor_id=self )
+0x00ea    op00_Return()
+0x00eb    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x100 )
+0x00f3    -- 0x19_ActorSetPosition( x=(vf80)0xff9b, z=(vf40)0xfe1d, flag=(flag)0xc0 )
+0x00f9    op69_ActorSetRotation( rot=3 )
+0x00fc    op00_Return()
+0x00fd    op01_JumpTo( address=0x103 )
+0x0100    op29_ActorTurnOff( actor_id=self )
+0x0102    op00_Return()
+0x0103    op00_Return()
+
+Actor_0x02:on_update:
+0x0104    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x10d )
+0x010c    -- 0xA7()
+0x010d    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x010e    op00_Return()
+
+Actor_0x02:event_0x04:
+0x010f    -- 0x1F( ???=0x10 )
+0x0111    -- 0x21( ???=2048 )
+0x0114    -- 0x10()
+0x011f    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0120    opFE4A_SpriteAddAnimLoad( file=117 )
+0x0124    opFE4B_SpriteAddAnimSync()
+0x0126    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0129    op00_Return()
+
+Actor_0x02:event_0x06:
+0x012a    op2C_SpritePlayAnim( anim_id=0xff )
+0x012c    op00_Return()
+
+Actor_0x03:on_start:
+0x012d    -- 0x0B_InitNPC( 0 )
+0x0130    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=-32768, condition="val1 & val2", address_if_false=0x13b )
+0x0138    op29_ActorTurnOff( actor_id=self )
+0x013a    op00_Return()
+0x013b    -- 0x2A()
+0x013c    -- MISSING OPCODE 0xFE1c

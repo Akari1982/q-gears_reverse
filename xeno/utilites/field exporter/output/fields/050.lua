@@ -20,4 +20,213 @@ Actor_0x00:on_start:
 0x0001    -- 0x2A()
 0x0002    -- 0xFE80()
 0x0012    -- 0xFE81()
-0x001b    -- MISSING OPCODE 0xFE82
+0x001b    -- 0xFE82()
+0x0035    -- 0xFE52()
+0x0037    -- 0x19_ActorSetPosition( x=(vf80)0x03e8, z=(vf40)0x03e8, flag=(flag)0xc0 )
+0x003d    -- 0xE7( ???=150, ???=150, ???=200 )
+0x0044    opF1_FadeSetUp( steps=2, r=65, g=80, b=75, semi_tr=1 )
+0x004f    -- 0xA0()
+0x0056    mem[0x400] = 512 -- op35
+0x005c    mem[0x402] = 512 -- op35
+0x0062    mem[0x404] = 1 -- op35
+0x0068    op00_Return()
+
+Actor_0x00:on_update:
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0069    op00_Return()
+
+Actor_0x00:event_0x04:
+0x006a    opD4_MessageShowFromActor( actor_id=Actor_0x09, text_id=0x0, flags=FORCE_TOP )
+0x0070    op00_Return()
+
+Actor_0x01:on_start:
+0x0071    -- 0x16_ActorPCInit( char_id=0 )
+0x0074    opFE0D_MessageSetFace( char_id=0 )
+0x0078    -- 0x1F( ???=0x66 )
+0x007a    -- 0x19_ActorSetPosition( x=(vf80)0xfe67, z=(vf40)0x01d0, flag=(flag)0xc0 )
+0x0080    -- 0xFE07( ???=0x1 )
+0x0083    op00_Return()
+
+Actor_0x01:on_update:
+0x0084    -- 0xA7()
+0x0085    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0086    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0087    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x008d    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0091    op9C_MessageSync()
+0x0092    -- 0xFE66() -- sound play with volume in slot
+0x009c    -- 0xFE66() -- sound play with volume in slot
+0x00a6    -- 0x5F( ???=0x0 )
+0x00a8    op07_CallActorEvent( actor_id=Actor_0x14, event=event_0x04, priority=0x01 )
+0x00ab    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00ac    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00b0    op9C_MessageSync()
+0x00b1    -- 0xFE66() -- sound play with volume in slot
+0x00bb    -- 0xFE66() -- sound play with volume in slot
+0x00c5    -- 0x5F( ???=0x4 )
+0x00c7    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00cb    op9C_MessageSync()
+0x00cc    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00ce    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00d4    op00_Return()
+
+Actor_0x01:event_0x06:
+0x00d5    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00d7    -- 0x19_ActorSetPosition( x=(vf80)0x0563, z=(vf40)0x05dc, flag=(flag)0xc0 )
+0x00dd    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00e3    op2C_SpritePlayAnim( anim_id=0xff )
+0x00e5    -- 0x5F( ???=0x2 )
+0x00e7    op26_Wait( time=50 )
+0x00ea    -- 0x5F( ???=0x1 )
+0x00ec    op26_Wait( time=10 )
+0x00ef    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00f1    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00f7    op00_Return()
+
+Actor_0x01:event_0x07:
+0x00f8    -- 0x19_ActorSetPosition( x=(vf80)0x0606, z=(vf40)0x0566, flag=(flag)0xc0 )
+0x00fe    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0104    op2C_SpritePlayAnim( anim_id=0xff )
+0x0106    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x010a    op9C_MessageSync()
+0x010b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0111    op00_Return()
+
+Actor_0x01:event_0x08:
+0x0112    opFE4A_SpriteAddAnimLoad( file=76 )
+0x0116    opFE4B_SpriteAddAnimSync()
+0x0118    opC6_ExpandRun() -- exp0x20
+0x0119    -- 0x27( actor_id=Actor_0x09 )
+0x011b    -- 0x1F( ???=0x0 )
+0x011d    -- 0x53()
+0x0121    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0124    -- 0x5A()
+0x0125    -- 0x1D()
+0x012c    -- 0xC0( ???=256 )
+0x012f    -- 0x5F( ???=0x7 )
+0x0131    -- 0x1E()
+0x0132    op07_CallActorEvent( actor_id=Actor_0x0b, event=event_0x06, priority=0x01 )
+0x0135    mem[0x400] = 0 -- op35
+0x013b    mem[0x404] = 0 -- op35
+0x0141    op00_Return()
+
+Actor_0x01:event_0x09:
+0x0142    op26_Wait( time=30 )
+0x0145    op05_CallFunction( address=0xfa3 )
+0x0148    mem[0x404] = 1 -- op35
+0x014e    -- 0xFE65()
+0x0154    -- 0xFE65()
+0x015a    -- 0xFE65()
+0x0160    mem[0x400] = 256 -- op35
+0x0166    op26_Wait( time=2 )
+0x0169    mem[0x400] = 512 -- op35
+0x016f    op26_Wait( time=40 )
+0x0172    mem[0x400] = 256 -- op35
+0x0178    op26_Wait( time=5 )
+0x017b    opFE97_ParticleReset( all=0x0 )
+0x017e    mem[0x400] = 128 -- op35
+0x0184    op26_Wait( time=5 )
+0x0187    mem[0x404] = 0 -- op35
+0x018d    mem[0x400] = 0 -- op35
+0x0193    op26_Wait( time=5 )
+0x0196    mem[0x404] = 1 -- op35
+0x019c    op05_CallFunction( address=0xfa3 )
+0x019f    -- 0xFE65()
+0x01a5    -- 0xFE65()
+0x01ab    mem[0x400] = 256 -- op35
+0x01b1    op26_Wait( time=2 )
+0x01b4    mem[0x400] = 512 -- op35
+0x01ba    mem[0x406] = 512 -- op35
+0x01c0    mem[0x408] = -512 -- op35
+0x01c6    op26_Wait( time=50 )
+0x01c9    op07_CallActorEvent( actor_id=Actor_0x0b, event=event_0x07, priority=0x01 )
+0x01cc    mem[0x40a] = 176 -- op35
+0x01d2    mem[0x402] = 512 -- op35
+0x01d8    opFE97_ParticleReset( all=0x0 )
+0x01db    op05_CallFunction( address=0xffd )
+0x01de    -- 0xFE65()
+0x01e4    -- 0xFE65()
+0x01ea    opC6_ExpandRun() -- exp0x20
+0x01eb    -- 0x21( ???=(s)mem[0x40a] )
+0x01ee    op02_JumpToConditional( val1=(s)mem[0x40a], val2=80, condition="val1 > val2", address_if_false=0x1fc )
+0x01f6    mem[0x40a] -= 8 -- op39
+0x01fc    -- 0x58()
+0x0200    -- 0x44()
+0x0205    mem[0x406] -= 64 -- op39
+0x020b    mem[0x408] -= 64 -- op39
+0x0211    op02_JumpToConditional( val1=(s)mem[0x408], val2=-2048, condition="val1 > val2", address_if_false=0x21c )
+0x0219    op01_JumpTo( address=0x1ea )
+0x021c    mem[0x402] = 0 -- op35
+0x0222    mem[0x400] = 0 -- op35
+0x0228    opFE97_ParticleReset( all=0x0 )
+0x022b    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x022c    op07_CallActorEvent( actor_id=Actor_0x14, event=event_0x08, priority=0x01 )
+0x022f    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )
+0x0232    mem[0x400] = 512 -- op35
+0x0238    -- 0x21( ???=256 )
+0x023b    op05_CallFunction( address=0xffd )
+0x023e    -- 0xF6( ???=0x1 )
+0x0240    -- 0xFE65()
+0x0246    -- 0xFE65()
+0x024c    -- 0x4E()
+0x0252    -- 0xF6( ???=0x0 )
+0x0254    opC6_ExpandRun() -- exp0x20
+0x0255    -- 0x21( ???=32 )
+0x0258    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x025e    -- 0x21( ???=80 )
+0x0261    -- 0x58()
+0x0265    mem[0x412] = 127 -- op35
+0x026b    -- 0xFE62()
+0x0271    mem[0x412] -= 2 -- op39
+0x0277    -- 0x5A()
+0x0278    op02_JumpToConditional( val1=(s)mem[0x412], val2=0, condition="val1 > val2", address_if_false=0x283 )
+0x0280    op01_JumpTo( address=0x26b )
+0x0283    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x0284    -- 0xFE62()
+0x028a    -- 0xFE62()
+0x0290    -- 0xFE62()
+0x0296    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0299    -- 0x1F( ???=0x66 )
+0x029b    -- 0x21( ???=24 )
+0x029e    -- 0x1D()
+0x02a5    -- 0xFE62()
+0x02ab    op07_CallActorEvent( actor_id=Actor_0x14, event=event_0x0a, priority=0x01 )
+0x02ae    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x05, priority=0x01 )
+0x02b1    -- 0x4С( variable arguments based args )
+0x02b9    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x05, priority=0x01 )
+0x02bc    -- 0x4С( variable arguments based args )
+0x02c4    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x07, priority=0x01 )
+0x02c7    -- 0x4С( variable arguments based args )
+0x02cf    -- 0x4С( variable arguments based args )
+0x02d7    opFE97_ParticleReset( all=0x0 )
+0x02da    -- 0x4С( variable arguments based args )
+0x02e2    -- 0x4С( variable arguments based args )
+0x02ea    op05_CallFunction( address=0xffd )
+0x02ed    -- 0xFE66() -- sound play with volume in slot
+0x02f7    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x05, priority=0x01 )
+0x02fa    -- 0x4С( variable arguments based args )
+0x0302    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x07, priority=0x01 )
+0x0305    -- 0x4С( variable arguments based args )
+0x030d    -- 0x4С( variable arguments based args )
+0x0315    opFE97_ParticleReset( all=0x0 )
+0x0318    -- 0x4С( variable arguments based args )
+0x0320    -- 0x4С( variable arguments based args )
+0x0328    op05_CallFunction( address=0xffd )
+0x032b    -- 0xFE66() -- sound play with volume in slot
+0x0335    -- 0x4С( variable arguments based args )
+0x033d    -- MISSING OPCODE 0x92

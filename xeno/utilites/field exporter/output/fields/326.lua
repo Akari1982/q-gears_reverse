@@ -21,4 +21,39 @@ Actor_0x00:on_start:
 0x0032    -- 0xA0()
 0x0039    -- 0xFE80()
 0x0049    -- 0xFE81()
-0x0052    -- MISSING OPCODE 0xFE82
+0x0052    -- 0xFE82()
+0x006c    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 != val2", address_if_false=0x77 )
+0x0074    -- 0x75( ???=15 )
+0x0077    op05_CallFunction( address=0x290a )
+0x007a    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0x85 )
+0x0082    mem[0x406] = true -- op36
+0x0085    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 == val2", address_if_false=0x90 )
+0x008d    mem[0x402] = true -- op36
+0x0090    -- 0x2A()
+0x0091    op00_Return()
+
+Actor_0x00:on_update:
+0x0092    op02_JumpToConditional( val1=(s)mem[0x20], val2=-1440, condition="val1 < val2", address_if_false=0xb5 )
+0x009a    -- 0x84_ProgressLessEqualJumpTo( value=155, jump=0xaa )
+0x009f    -- 0x85()
+0x00a4    -- 0x98_MapLoad( field_id=302, value=3 )
+0x00a9    -- 0x5B()
+0x00aa    -- 0x56( ???=(vf80)0x0400, ???=(vf40)0x000f, ???=(vf20)0xffff, ???=(vf10)0x0001, flag=0xf0 )
+0x00b4    -- 0x5B()
+0x00b5    op00_Return()
+0x00b6    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00b7    op00_Return()
+
+Actor_0x00:event_0x04:
+0x00b8    opD4_MessageShowFromActor( actor_id=Actor_0x18, text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x00be    op00_Return()
+
+Actor_0x00:event_0x05:
+0x00bf    op26_Wait( time=40 )
+0x00c2    opFE26_DistortionSetup( ???=10, ???=4, ???=512, ???=409, ???=1365, ???=1365, steps=15 )
+0x00d2    op26_Wait( time=30 )
+0x00d5    -- MISSING OPCODE 0xFE27

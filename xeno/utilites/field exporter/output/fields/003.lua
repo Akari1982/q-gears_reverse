@@ -1786,8 +1786,8 @@ function:
 0x124b    op0D_Return()
 0x124c    opF1_FadeSetUp( steps=3, r=246, g=99, b=31, semi_tr=60 )
 0x1257    op0D_Return()
-0x1258    -- 0xFE69( actor_id=Actor_0x3c, render_settings=mem[0x3e04], rot_x=mem[0x3500], rot_y=(s)mem[0x43e] )
-0x1261    op01_JumpTo( address=0x4000 )
+0x1258    -- 0xFE69()
+0x125e    mem[0x43e] = 1 -- op35
 0x1264    op02_JumpToConditional( val1=(s)mem[0x3e], val2=0, condition="val1 == val2", address_if_false=0x1299 )
 0x126c    op02_JumpToConditional( val1=(s)mem[0x43c], val2=51, condition="val1 < val2", address_if_false=0x127a )
 0x1274    mem[0x43e] = 0 -- op35
@@ -1890,4 +1890,4 @@ function:
 0x14d5    -- 0xBB( ???=0x7 )
 0x14d7    -- 0x5A()
 0x14d8    op0D_Return()
-0x14d9    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x00fd, flag=0x0 )
+0x14d9    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x000e, flag=0x0 )

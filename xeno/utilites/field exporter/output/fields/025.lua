@@ -212,4 +212,26 @@ Actor_0x04:event_0x04:
 0x0211    -- 0x22()
 0x0212    op26_Wait( time=60 )
 0x0215    -- 0x21( ???=128 )
-0x0218    -- MISSING OPCODE 0x10
+0x0218    -- 0x10()
+0x0223    op00_Return()
+
+Actor_0x05:on_start:
+0x0224    -- 0xBC_ActorNoModelInit()
+0x0225    -- 0x2A()
+0x0226    mem[0x404] = 128 -- op35
+0x022c    op00_Return()
+
+Actor_0x05:on_update:
+0x022d    mem[0x402] = opA8_Random( max=20 )
+0x0232    mem[0x402] -= 10 -- op39
+0x0238    mem[0x404] += (s)mem[0x402] -- op38
+0x023e    op02_JumpToConditional( val1=(s)mem[0x404], val2=160, condition="val1 > val2", address_if_false=0x24c )
+0x0246    mem[0x404] -= 10 -- op39
+0x024c    op02_JumpToConditional( val1=(s)mem[0x404], val2=80, condition="val1 < val2", address_if_false=0x25a )
+0x0254    mem[0x404] += 10 -- op38
+0x025a    mem[0x408] = (s)mem[0x404] -- op35
+0x0260    mem[0x408] -= 80 -- op39
+0x0266    opDF_VariableDivide( address=0x408, value=(vf40)0x0004, flag=0x40 )
+0x026c    mem[0x406] = 20 -- op35
+0x0272    mem[0x406] -= (s)mem[0x408] -- op39
+0x0278    -- MISSING OPCODE 0xFE9a

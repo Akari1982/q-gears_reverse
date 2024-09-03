@@ -632,7 +632,7 @@ Actor_0x12:on_start:
 0x0563    op00_Return()
 
 Actor_0x12:on_update:
-0x0564    -- 0xCB_TriggerJumpTo( trigger_id=mem[0x6d00], jump=0x9805 )
+0x0564    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x6d00], jump=0x9805 )
 0x0569    -- 0x0A()
 0x056d    op00_Return()
 
@@ -847,8 +847,8 @@ function:
 0x0800    op0D_Return()
 0x0801    opF1_FadeSetUp( steps=3, r=246, g=99, b=31, semi_tr=60 )
 0x080c    op0D_Return()
-0x080d    -- 0xFE69( actor_id=Actor_0x4e, render_settings=(s)mem[0x3e04], rot_x=(s)mem[0x3500], rot_y=(s)mem[0x450] )
-0x0816    op01_JumpTo( address=0x4000 )
+0x080d    -- 0xFE69()
+0x0813    mem[0x450] = 1 -- op35
 0x0819    op02_JumpToConditional( val1=(s)mem[0x3e], val2=0, condition="val1 == val2", address_if_false=0x84e )
 0x0821    op02_JumpToConditional( val1=(s)mem[0x44e], val2=51, condition="val1 < val2", address_if_false=0x82f )
 0x0829    mem[0x450] = 0 -- op35
@@ -951,4 +951,4 @@ function:
 0x0a8a    -- 0xBB( ???=0x7 )
 0x0a8c    -- 0x5A()
 0x0a8d    op0D_Return()
-0x0a8e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x91 )
+0x0a8e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x4000, ???=(vf40)0x3002, flag=0x89 )
