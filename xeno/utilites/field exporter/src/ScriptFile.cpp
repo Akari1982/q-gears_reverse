@@ -2044,6 +2044,30 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFED2()" );
                     pointer += 3;
                 }
+                else if( eo_opcode == 0xdd )
+                {
+                    u8 type = GetU8( pointer + 1 );
+                    if( type == 0 )
+                    {
+                        exp->Log( "-- opFEDD00()" );
+                        pointer += 6;
+                    }
+                    else if( type == 1 )
+                    {
+                        exp->Log( "-- opFEDD01()" );
+                        pointer += 6;
+                    }
+                    else if( type == 2 )
+                    {
+                        exp->Log( "-- opFEDD02()" );
+                        pointer += 2;
+                    }
+                    else if( type == 3 )
+                    {
+                        exp->Log( "-- opFEDD03()" );
+                        pointer += 2;
+                    }
+                }
                 else if( eo_opcode == 0xdf )
                 {
                     exp->Log( "-- 0xFEDF()" );
