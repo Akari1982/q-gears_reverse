@@ -1603,15 +1603,20 @@ ScriptFile::GetScripts( const std::string& path )
                 u8 eo_opcode = GetU8( pointer + 1 );
                 pointer += 1;
 
-                if( eo_opcode == 0x07 )
+                if( eo_opcode == 0x01 )
                 {
-                    exp->Log( "-- 0xFE07( ???=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
+                    exp->Log( "-- 0xFE01()" );
+                    pointer += 1;
                 }
                 else if( eo_opcode == 0x03 )
                 {
                     exp->Log( "-- 0xFE03( ???=" + GetV80Variable( pointer + 1 ) + " )" );
                     pointer += 3;
+                }
+                else if( eo_opcode == 0x07 )
+                {
+                    exp->Log( "-- 0xFE07( ???=" + GetU8Variable( pointer + 1 ) + " )" );
+                    pointer += 2;
                 }
                 else if( eo_opcode == 0x08 )
                 {

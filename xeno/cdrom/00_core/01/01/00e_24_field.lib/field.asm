@@ -2210,7 +2210,7 @@
 // field_event_op09_call_actor_event_end_sync
 8009E630-8009E9B0
 ////////////////////////////////
-// func9e9b4
+// field_event_opFE01
 8009E9B4-8009EA58
 ////////////////////////////////
 // field_event_op59
