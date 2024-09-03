@@ -223,6 +223,20 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x10:
+            {
+                exp->Log( "-- 0x10()" );
+                pointer += 0xb;
+            }
+            break;
+
+            case 0x11:
+            {
+                exp->Log( "-- 0x11()" );
+                pointer += 0xd;
+            }
+            break;
+
             case 0x12:
             {
                 exp->Log( "-- 0x12()" );
@@ -1614,6 +1628,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE0A( ???=" + GetU16Variable( pointer + 1 ) + " )" );
                     pointer += 3;
                 }
+                else if( eo_opcode == 0x0c )
+                {
+                    exp->Log( "-- 0xFE0C()" );
+                    pointer += 0xd;
+                }
                 else if( eo_opcode == 0x0d )
                 {
                     exp->Log( "opFE0D_MessageSetFace( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
@@ -1688,6 +1707,11 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "-- 0xFE3C( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
                     pointer += 5;
+                }
+                else if( eo_opcode == 0x3d )
+                {
+                    exp->Log( "-- 0xFE3D()" );
+                    pointer += 0xa;
                 }
                 else if( eo_opcode == 0x41 )
                 {
@@ -1839,6 +1863,11 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "-- 0xFE81()" );
                     pointer += 8;
+                }
+                else if( eo_opcode == 0x82 )
+                {
+                    exp->Log( "-- 0xFE82()" );
+                    pointer += 0x19;
                 }
                 else if( eo_opcode == 0x8a )
                 {

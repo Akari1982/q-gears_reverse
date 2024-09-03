@@ -343,6 +343,7 @@
                        0x00100000: if set then this entity (door) opened else closed.
                        0x00400000: flag added in SpriteGoToPosition opcode. Looks like make step to direction. Set during set position by x z. Maybe update position?
                        0x01000000: if this bit is set we will not perform move (we just skip movement).
+                       0x02000000: play new animation?
                        0x04000000: add this bit if we can move where we want to move (in movement function after all checks).
                        0x08000000: can be set in 0x20_SetFlags. Removed if
         +   4 [][][][] entity flags 2 (0x00000800 init).

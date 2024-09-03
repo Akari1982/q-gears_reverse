@@ -10,15 +10,15 @@ V1 = w[800AD0D8];
 V0 = bu[V1 + V0];
 V0 = w[800ADB78 + V0 * 4];
 
-// 00 8008C8AC 01 8009E9B4 02 80095110 04 8008C840 05 80095298 06 80095340 0B 8008CCD4 0C 8008C5C0 0F 8008BF0C
+// 00 8008C8AC 01 8009E9B4 02 80095110 04 8008C840 05 80095298 06 80095340 0B 8008CCD4 0F 8008BF0C
 // 10 8008C034 11 8008C120 12 8008C248 14 8008C3A8 16 8008BDAC 17 80099FD4 1B 8008ABA8 1C 80098050 1F 8009F364
 // 20 8009F3DC 22 8009AC38 25 8008CB9C 28 8008DAC0 29 8008DAEC 2a 8008DB18 2b 8008DB44 2c 8008D490 2d 8008D518 2e 8008D5A0 2f 8008D628
-// 30 8008D9BC 31 8008D9E8 32 8008DA14 33 8008DA40 34 8008D86C 36 8008D914 37 8008D968 38 8008D788 39 8008C804 3d 8008A49C 3e 8008A5AC 3f 8008A6BC
+// 30 8008D9BC 31 8008D9E8 32 8008DA14 33 8008DA40 34 8008D86C 36 8008D914 37 8008D968 38 8008D788 39 8008C804 3e 8008A5AC 3f 8008A6BC
 // 40 8009171C 43 8009A730 44 8009A758 46 8008A430 49 8008D0D0 4C 80089F48
 // 55 80092D14 56 80092F04 57 80092DB4 58 80092DF8 5A 80092FD8 5C 800A0568 5E 8008E8AC 5F 8008E79C
 // 64 8008EBB8 68 800921F4 6a 80089BD8 6b 80089C14 6c 80089B74 6d 8008F0FC 6e 8008F090
 // 71 80097F70 72 80097E8C 73 80097BF0 76 80097D0C 78 80089AC4 79 80089ABC 7a 80089AB4 7b 80089AEC 7c 80089AD4 7d 80089ADC 7e 80089AE4 7f 80089818
-// 82 8008971C 83 80092588 84 800929CC 85 80089874 86 80089568 87 80092CB8 88 800891C4 89 800893A0 98 80087AA0 9a 8008E688 9e 8008E5B8 9f 800879A8
+// 83 80092588 84 800929CC 85 80089874 86 80089568 87 80092CB8 88 800891C4 89 800893A0 98 80087AA0 9a 8008E688 9e 8008E5B8 9f 800879A8
 // a3 800877BC a6 80087E78 a8 8008FFE4 a9 80090068 aa 8008D100 ab 8008D248 ac 8008D340 ad 8009612C ae 800960C8 af 800875E0
 // b0 8008A0A0 b2 800962FC b3 800963F4 b4 80096214 b5 80087578 b6 8008746C b7 80087430 b8 800873B4 b9 80087130 ba 80087208 bb 80087304 bc 80087354 bf 80086E1C
 // c1 80087ADC c3 8009D5A4 c4 8009D508 c7 8008788C cb 800A0440 cc 800A03E4 cd 800A038C ce 800A0350 cf 80092E5C
@@ -2241,56 +2241,59 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func8971c
-8008971C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80089724	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0001;
+// field_event_opFE82()
+
+A0 = 1;
+field_event_help_read_v80();
 [800af574] = b(V0);
-80089734	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0003;
+
+A0 = 3;
+field_event_help_read_v80();
 [800af575] = b(V0);
-80089744	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0005;
+
+A0 = 5;
+field_event_help_read_v80();
 [800af576] = b(V0);
-80089754	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0007;
+
+A0 = 7;
+field_event_help_read_v80();
 [800af578] = b(V0);
-80089764	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0009;
+
+A0 = 9;
+field_event_help_read_v80();
 [800af579] = b(V0);
-80089774	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 000b;
+
+A0 = b;
+field_event_help_read_v80();
 [800af57a] = b(V0);
-80089784	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 000d;
+
+A0 = d;
+field_event_help_read_v80();
 [800af57c] = b(V0);
-80089794	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 000f;
+
+A0 = f;
+field_event_help_read_v80();
 [800af57d] = b(V0);
-800897A4	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0011;
+
+A0 = 11;
+field_event_help_read_v80();
 [800af57e] = b(V0);
-800897B4	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0013;
+
+A0 = 13;
+field_event_help_read_v80();
 [800af580] = h(V0);
-800897C4	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0015;
+
+A0 = 15;
+field_event_help_read_v80();
 [800af582] = h(V0);
-800897D4	jal    field_event_help_read_v80 [$800ac2c4]
-A0 = 0017;
-V1 = w[800af54c];
+
+A0 = 17;
+field_event_help_read_v80();
 [800af584] = h(V0);
-V0 = hu[V1 + 00cc];
-800897F0	nop
-V0 = V0 + 0019;
-[V1 + 00cc] = h(V0);
-V0 = 0001;
-[800af586] = h(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80089810	jr     ra 
-80089814	nop
+
+V1 = w[800af54c];
+[V1 + cc] = h(hu[V1 + cc] + 19);
+[800af586] = h(1);
 ////////////////////////////////
 
 
@@ -3080,66 +3083,44 @@ V0 = V0 + 0002;
 8008A494	jr     ra 
 [V1 + 00cc] = h(V0);
 ////////////////////////////////
-// func8a49c
+
+
+
+////////////////////////////////
+// field_event_opFE3D()
+
 V0 = w[800af54c];
 V1 = w[800ad0d8];
-8008A4AC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-V0 = hu[V0 + 00cc];
-8008A4C0	nop
+V0 = hu[V0 + cc];
 V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-8008A4CC	jal    field_event_help_read_u16_by_flag_80 [$8009c508]
-A0 = 0001;
-V1 = w[800af54c];
-A1 = w[800ad0d8];
-V1 = hu[V1 + 00cc];
-A0 = 0003;
-V1 = V1 + A1;
-A1 = bu[V1 + 0009];
-8008A4F4	jal    field_event_help_read_u16_by_flag_40 [$8009c54c]
+flags = bu[V0 + 9];
+
+A0 = 1;
+A1 = flags;
+field_event_help_read_u16_by_flag_80();
 S1 = V0;
-S0 = S1 << 01;
-S0 = S0 + S1;
+
+A0 = 3;
+A1 = flags;
+field_event_help_read_u16_by_flag_40();
+[800b16f0 + S1 * 6] = h(V0);
+
+A0 = 5;
+A1 = flags;
+field_event_help_read_u16_by_flag_20();
+[800b16f2 + S1 * 6] = h(V0);
+
+A0 = 7;
+A1 = flags;
+field_event_help_read_u16_by_flag_10();
+[800b16f4 + S1 * 6] = h(V0);
+
 V1 = w[800af54c];
-S0 = S0 << 01;
-8008A510	lui    at, $800b
-AT = AT + S0;
-[AT + 16f0] = h(V0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-8008A528	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-8008A534	jal    field_event_help_read_u16_by_flag_20 [$8009c590]
-A0 = 0005;
-V1 = w[800af54c];
-8008A544	lui    at, $800b
-AT = AT + S0;
-[AT + 16f2] = h(V0);
-V0 = hu[V1 + 00cc];
-V1 = w[800ad0d8];
-8008A55C	nop
-V0 = V0 + V1;
-A1 = bu[V0 + 0009];
-8008A568	jal    field_event_help_read_u16_by_flag_10 [$8009c5d4]
-A0 = 0007;
-V1 = w[800af54c];
-8008A578	lui    at, $800b
-AT = AT + S0;
-[AT + 16f4] = h(V0);
-V0 = hu[V1 + 00cc];
-8008A588	nop
-V0 = V0 + 000a;
-[V1 + 00cc] = h(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8008A5A4	jr     ra 
-8008A5A8	nop
+[V1 + cc] = h(hu[V1 + cc] + a);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func8a5ac
 V0 = w[800af54c];
@@ -4437,7 +4418,7 @@ V1 = w[800af54c];
 
 
 ////////////////////////////////
-// func8c5c0()
+// field_event_opFE0C()
 
 A0 = 1;
 field_event_help_read_u16();
@@ -14661,9 +14642,9 @@ SP = SP + 0018;
 ////////////////////////////////
 // field_event_op10()
 
-V0 = w[800af54c];
-V1 = bu[V0 + ce];
-[V0 + V1 * 8 + 90] = h(ffff);
+struct_138_cur = w[800af54c];
+V1 = bu[struct_138_cur + ce];
+[struct_138_cur + 8c + V1 * 8 + 4] = h(ffff); // event offset
 
 A0 = 0;
 func98280();
@@ -14674,19 +14655,17 @@ func98280();
 ////////////////////////////////
 // field_event_op11()
 
-V1 = w[800af54c];
-V0 = bu[V1 + ce];
-V1 = V1 + V0 * 8;
-V1 = hu[V1 + 90];
+struct_138_cur = w[800af54c];
+V0 = bu[struct_138_cur + ce];
+V1 = hu[struct_138_cur + 8с + V0 * 8 + 4];
 
-if( V1 == ffff )
+if( V1 == ffff ) // event offset
 {
     A0 = b;
     field_event_help_read_v80();
 
-    A0 = w[800af54c];
-    V1 = bu[A0 + ce];
-    [A0 + V1 * 8 + 90] = h(V0);
+    V1 = bu[struct_138_cur + ce];
+    [struct_138_cur + 8c + V1 * 8 + 4] = h(V0);
 }
 
 A0 = 1;
@@ -14704,13 +14683,11 @@ entity_id_cur = w[800af1f0];
 struct_138_cur = w[800af54c];
 struct_5c_p = w[800aefe4];
 script = w[800ad0d8];
+struct_164 = w[struct_5c_p + entity_id_cur * 5c + 4];
+struct_138 = w[struct_5c_p + entity_id_cur * 5c + 4c];
 
-V1 = w[struct_5c_p + entity_id_cur * 5c + 4c];
-V1 = w[V1 + 4];
-S5 = w[struct_5c_p + entity_id_cur * 5c + 4];
-
-if( V1 & 2000 ) V0 = 08000000;
-else            V0 = 04000000;
+if( w[struct_138 + 4] & 2000 ) V0 = 08000000;
+else                           V0 = 04000000;
 
 V1 = hu[struct_138_cur + 76];
 V0 = V0 / V1;
@@ -14722,15 +14699,17 @@ if( S0 == 0 )
 
 [struct_138_cur + 0] = w(w[struct_138_cur + 0] | 00010000);
 
+animation_id = 1;
+
 V1 = script + hu[struct_138_cur + cc];
 V0 = bu[V1 + 1];
-S4 = 1;
+
 if( V0 == 0 )
 {
     A0 = 2;
     A1 = bu[V1 + 8];
     field_event_help_read_u16_by_flag_80()
-    S2 = V0 << 10;
+    x = V0 << 10;
 
     V1 = hu[struct_138_cur + cc];
     V1 = script + V1;
@@ -14738,7 +14717,7 @@ if( V0 == 0 )
     A0 = 4;
     A1 = bu[V1 + 8];
     field_event_help_read_u16_by_flag_40();
-    S1 = V0 << 10;
+    y = V0 << 10;
 
     V1 = hu[struct_138_cur + cc];
     V1 = script + V1;
@@ -14746,11 +14725,11 @@ if( V0 == 0 )
     A0 = 6;
     A1 = bu[V1 + 8];
     field_event_help_read_u16_by_flag_20();
-    S3 = V0 << 10;
+    z = V0 << 10;
 
-    A0 = (S2 - w[struct_138_cur + 20]) >> 10;
-    A1 = (S3 - w[struct_138_cur + 24]) >> 10;
-    A2 = (S1 - w[struct_138_cur + 28]) >> 10;
+    A0 = (x - w[struct_138_cur + 20]) >> 10;
+    A1 = (z - w[struct_138_cur + 24]) >> 10;
+    A2 = (y - w[struct_138_cur + 28]) >> 10;
     func98fd8();
 
     V1 = V0 / S0;
@@ -14762,11 +14741,11 @@ if( V0 == 0 )
         [struct_138_cur + 102] = h(V1 + 1);
     }
 
-    [struct_138_cur + d0] = w((S2 - w[struct_138_cur + 20]) / h[struct_138_cur + 102]);
-    [struct_138_cur + d4] = w((S3 - w[struct_138_cur + 24]) / h[struct_138_cur + 102]);
-    [struct_138_cur + d8] = w((S1 - w[struct_138_cur + 28]) / h[struct_138_cur + 102]);
+    [struct_138_cur + d0] = w((x - w[struct_138_cur + 20]) / h[struct_138_cur + 102]);
+    [struct_138_cur + d4] = w((z - w[struct_138_cur + 24]) / h[struct_138_cur + 102]);
+    [struct_138_cur + d8] = w((y - w[struct_138_cur + 28]) / h[struct_138_cur + 102]);
 
-    if( ( ( S2 >> 10 ) != h[struct_138_cur + 22] ) || ( ( S1 >> 10 ) != h[struct_138_cur + 2a] ) )
+    if( ( ( x >> 10 ) != h[struct_138_cur + 22] ) || ( ( y >> 10 ) != h[struct_138_cur + 2a] ) )
     {
         A0 = h[struct_138_cur + da];
         A1 = h[struct_138_cur + d2];
@@ -14781,12 +14760,12 @@ else
 {
     V0 = bu[struct_138_cur + ce];
 
-    if( ( h[struct_138_cur + 102] <= 0 ) || ( hu[struct_138_cur + V0 * 8 + 90] == 0 ) )
+    if( ( h[struct_138_cur + 102] <= 0 ) || ( hu[struct_138_cur + 8c + V0 * 8 + 4] == 0 ) )
     {
         [struct_138_cur + cc] = h(hu[struct_138_cur + cc] - 9);
 
         V0 = bu[struct_138_cur + ce];
-        if( hu[struct_138_cur + V0 * 8 + 90] != 0 )
+        if( hu[struct_138_cur + 8c + V0 * 8 + 4] != 0 )
         {
             [SP + 10] = w(w[struct_138_cur + 20]);
             [SP + 14] = w(w[struct_138_cur + 24]);
@@ -14818,7 +14797,7 @@ else
             [struct_138_cur + 38] = w(w[struct_138_cur + 28] - w[SP + 18]);
         }
 
-        S4 = h[struct_138_cur + e6];
+        animation_id = h[struct_138_cur + e6];
 
         if( S1 == 0 ) // opcode 10
         {
@@ -14830,7 +14809,7 @@ else
         }
 
         V1 = bu[struct_138_cur + ce];
-        [struct_138_cur + V1 * 8 + 90] = h(ffff);
+        [struct_138_cur + 8c + V1 * 8 + 4] = h(ffff); // event offset
     }
     else
     {
@@ -14842,10 +14821,10 @@ else
         [struct_138_cur + 34] = w(w[struct_138_cur + d4]);
         [struct_138_cur + 38] = w(w[struct_138_cur + d8]);
 
-        [800af594] = w(S4);
+        [800af594] = w(1); // wait
 
         V1 = bu[struct_138_cur + ce];
-        [struct_138_cur + V1 * 8 + 90] = h(hu[struct_138_cur + V1 * 8 + 90] - 1);
+        [struct_138_cur + 8c + V1 * 8 + 4] = h(hu[struct_138_cur + 8c + V1 * 8 + 4] - 1);
     }
 
     [struct_138_cur + 102] = h(hu[struct_138_cur + 102] - 1);
@@ -14854,31 +14833,31 @@ else
     [struct_5c_p + entity_id_cur * 5c + 24] = w(h[struct_138_cur + 26]);
     [struct_5c_p + entity_id_cur * 5c + 28] = w(h[struct_138_cur + 2a]);
 
-    [S5 + 0] = w(w[struct_138_cur + 20]);
-    [S5 + 4] = w(w[struct_138_cur + 24]);
-    [S5 + 8] = w(w[struct_138_cur + 28]);
+    [struct_164 + 0] = w(w[struct_138_cur + 20]);
+    [struct_164 + 4] = w(w[struct_138_cur + 24]);
+    [struct_164 + 8] = w(w[struct_138_cur + 28]);
 }
 
 if( h[struct_138_cur + ea] != ff )
 {
-    S4 = h[struct_138_cur + ea];
+    animation_id = h[struct_138_cur + ea];
 }
 
-if( h[struct_138_cur + e8] != S4 )
+if( h[struct_138_cur + e8] != animation_id )
 {
     if( ( w[struct_138_cur + 0] & 02000000 ) == 0 )
     {
-        [struct_138_cur + e8] = h(S4);
+        [struct_138_cur + e8] = h(animation_id);
 
-        A0 = S5;
-        A1 = S4;
-        A2 = w[800afb8c];
+        A0 = struct_164;
+        A1 = animation_id;
+        A2 = w[800afb8c]; // struct_5c
         func81808(); // play new animation
     }
 }
 
-A0 = S5;
-A1 = h[struct_138_cur + 104];
+A0 = struct_164;
+A1 = h[struct_138_cur + 104]; // rotation
 A2 = w[800afb8c];
 func81594();
 ////////////////////////////////
