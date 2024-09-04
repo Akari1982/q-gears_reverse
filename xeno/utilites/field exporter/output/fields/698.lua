@@ -192,4 +192,19 @@ Actor_0x01:on_start:
 0x02e8    -- 0x16_ActorPCInit( char_id=0 )
 0x02eb    opFE0D_MessageSetFace( char_id=0 )
 0x02ef    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x303 )
-0x02f7    -- MISSING OPCODE 0xFE1c
+0x02f7    -- 0xFE1C()
+0x0300    op69_ActorSetRotation( rot=1 )
+0x0303    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=1024, condition="val1 & val2", address_if_false=0x30e )
+0x030b    op01_JumpTo( address=0x31a )
+0x030e    -- 0xFE1C()
+0x0317    op69_ActorSetRotation( rot=1 )
+0x031a    op00_Return()
+
+Actor_0x01:on_update:
+0x031b    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x344 )
+0x0323    op2C_SpritePlayAnim( anim_id=0xc )
+0x0325    -- 0x5A()
+0x0326    mem[0x40a] = 64 -- op35
+0x032c    mem[0x40e] = 64 -- op35
+0x0332    mem[0x40c] = 64 -- op35
+0x0338    -- MISSING OPCODE 0xFE5f

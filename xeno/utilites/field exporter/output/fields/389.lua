@@ -118,4 +118,322 @@ Actor_0x02:event_0x05:
 
 Actor_0x03:on_start:
 0x00b3    -- 0x0B_InitNPC( 2 )
-0x00b6    -- MISSING OPCODE 0xFE1c
+0x00b6    -- 0xFE1C()
+0x00bf    -- 0x5F( ???=0x0 )
+0x00c1    op00_Return()
+
+Actor_0x03:on_update:
+0x00c2    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x00c3    op00_Return()
+
+Actor_0x04:on_start:
+0x00c4    -- 0xBC_ActorNoModelInit()
+0x00c5    -- 0x2A()
+0x00c6    op00_Return()
+
+Actor_0x04:on_update:
+0x00c7    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x00c8    op00_Return()
+
+Actor_0x04:event_0x04:
+0x00c9    op99()
+0x00ca    -- 0x9B( ???=12, ???=12 )
+0x00cf    -- 0x60()
+0x00d0    -- 0x63( ???=4779, ???=4865, ???=-40 ) -- exp0x1
+0x00d8    -- 0x64() -- exp0x1
+0x00d9    -- 0xA3()
+0x00e1    opAC_MoveCamera( control=0x1, steps=200 )
+0x00e5    opAC_MoveCamera( control=0x0, steps=200 )
+0x00e9    opEF_MoveCameraSync()
+0x00ec    op00_Return()
+
+Actor_0x04:event_0x05:
+0x00ed    -- 0xFE48()
+0x00f6    -- 0x60()
+0x00f7    -- 0x63( ???=4449, ???=4416, ???=97 ) -- exp0x1
+0x00ff    -- 0x64() -- exp0x1
+0x0100    -- 0xA3()
+0x0108    opAC_MoveCamera( control=0x1, steps=0 )
+0x010c    opAC_MoveCamera( control=0x0, steps=0 )
+0x0110    opEF_MoveCameraSync()
+0x0113    op00_Return()
+
+Actor_0x04:event_0x06:
+0x0114    op99()
+0x0115    -- 0x9B( ???=12, ???=12 )
+0x011a    -- 0x60()
+0x011b    -- 0x63( ???=4491, ???=6677, ???=-1225 ) -- exp0x1
+0x0123    -- 0x64() -- exp0x1
+0x0124    -- 0xA3()
+0x012c    opAC_MoveCamera( control=0x1, steps=300 )
+0x0130    opAC_MoveCamera( control=0x0, steps=300 )
+0x0134    opEF_MoveCameraSync()
+0x0137    op00_Return()
+
+Actor_0x05:on_start:
+0x0138    -- 0xBC_ActorNoModelInit()
+0x0139    -- 0x2A()
+0x013a    op00_Return()
+
+Actor_0x05:on_update:
+0x013b    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x013c    op00_Return()
+
+Actor_0x06:on_start:
+0x013d    -- 0xBC_ActorNoModelInit()
+0x013e    -- 0x2A()
+0x013f    op00_Return()
+
+Actor_0x06:on_update:
+0x0140    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x0141    op00_Return()
+
+Actor_0x07:on_start:
+0x0142    -- 0xBC_ActorNoModelInit()
+0x0143    -- 0x2A()
+0x0144    op00_Return()
+
+Actor_0x07:on_update:
+0x0145    op00_Return()
+
+Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
+0x0146    op00_Return()
+
+Actor_0x08:on_start:
+0x0147    -- 0xBC_ActorNoModelInit()
+0x0148    -- 0x2A()
+0x0149    op00_Return()
+
+Actor_0x08:on_update:
+0x014a    op00_Return()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x014b    op00_Return()
+
+Actor_0x09:on_start:
+0x014c    -- 0xBC_ActorNoModelInit()
+0x014d    -- 0x2A()
+0x014e    op00_Return()
+
+Actor_0x09:on_update:
+0x014f    op00_Return()
+
+Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
+0x0150    op00_Return()
+
+Actor_0x0a:on_start:
+0x0151    -- 0xBC_ActorNoModelInit()
+0x0152    -- 0x2A()
+0x0153    op00_Return()
+
+Actor_0x0a:on_update:
+0x0154    op00_Return()
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x0155    op00_Return()
+
+Actor_0x0b:on_start:
+0x0156    -- 0xBC_ActorNoModelInit()
+0x0157    -- 0x2A()
+0x0158    op00_Return()
+
+Actor_0x0b:on_update:
+0x0159    op00_Return()
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x015a    op00_Return()
+
+Actor_0x0c:on_start:
+0x015b    -- 0xBC_ActorNoModelInit()
+0x015c    -- 0x2A()
+0x015d    op00_Return()
+
+Actor_0x0c:on_update:
+0x015e    op00_Return()
+
+Actor_0x0c:on_talk:
+
+Actor_0x0c:on_push:
+0x015f    op00_Return()
+
+Actor_0x0d:on_start:
+0x0160    -- 0xBC_ActorNoModelInit()
+0x0161    -- 0x2A()
+0x0162    op00_Return()
+
+Actor_0x0d:on_update:
+0x0163    op00_Return()
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x0164    op00_Return()
+
+Actor_0x0e:on_start:
+0x0165    -- 0xBC_ActorNoModelInit()
+0x0166    -- 0x2A()
+0x0167    op00_Return()
+
+Actor_0x0e:on_update:
+0x0168    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x0169    op00_Return()
+
+Actor_0x0f:on_start:
+0x016a    -- 0xBC_ActorNoModelInit()
+0x016b    -- 0x2A()
+0x016c    op00_Return()
+
+Actor_0x0f:on_update:
+0x016d    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x016e    op00_Return()
+
+Actor_0x10:on_start:
+0x016f    -- 0xBC_ActorNoModelInit()
+0x0170    -- 0x2A()
+0x0171    op00_Return()
+
+Actor_0x10:on_update:
+0x0172    op00_Return()
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x0173    op00_Return()
+
+Actor_0x11:on_start:
+0x0174    -- 0xBC_ActorNoModelInit()
+0x0175    -- 0x2A()
+0x0176    op00_Return()
+
+Actor_0x11:on_update:
+0x0177    op00_Return()
+
+Actor_0x11:on_talk:
+
+Actor_0x11:on_push:
+0x0178    op00_Return()
+
+Actor_0x12:on_start:
+0x0179    -- 0xBC_ActorNoModelInit()
+0x017a    -- 0x2A()
+0x017b    op00_Return()
+
+Actor_0x12:on_update:
+0x017c    op00_Return()
+
+Actor_0x12:on_talk:
+
+Actor_0x12:on_push:
+0x017d    op00_Return()
+
+Actor_0x13:on_start:
+0x017e    -- 0xBC_ActorNoModelInit()
+0x017f    -- 0x2A()
+0x0180    op00_Return()
+
+Actor_0x13:on_update:
+0x0181    op00_Return()
+
+Actor_0x13:on_talk:
+
+Actor_0x13:on_push:
+0x0182    op00_Return()
+
+Actor_0x14:on_start:
+0x0183    -- 0xBC_ActorNoModelInit()
+0x0184    -- 0x2A()
+0x0185    op00_Return()
+
+Actor_0x14:on_update:
+0x0186    op00_Return()
+
+Actor_0x14:on_talk:
+
+Actor_0x14:on_push:
+0x0187    op00_Return()
+
+Actor_0x15:on_start:
+0x0188    -- 0xBC_ActorNoModelInit()
+0x0189    -- 0x2A()
+0x018a    op00_Return()
+
+Actor_0x15:on_update:
+0x018b    op00_Return()
+
+Actor_0x15:on_talk:
+
+Actor_0x15:on_push:
+0x018c    op00_Return()
+
+Actor_0x16:on_start:
+0x018d    -- 0xBC_ActorNoModelInit()
+0x018e    -- 0x2A()
+0x018f    op00_Return()
+
+Actor_0x16:on_update:
+0x0190    op00_Return()
+
+Actor_0x16:on_talk:
+
+Actor_0x16:on_push:
+0x0191    op00_Return()
+
+Actor_0x17:on_start:
+0x0192    -- 0xBC_ActorNoModelInit()
+0x0193    -- 0x2A()
+0x0194    op00_Return()
+
+Actor_0x17:on_update:
+0x0195    op00_Return()
+
+Actor_0x17:on_talk:
+
+Actor_0x17:on_push:
+0x0196    op00_Return()
+
+Actor_0x18:on_start:
+0x0197    -- 0xBC_ActorNoModelInit()
+0x0198    -- 0x2A()
+0x0199    op00_Return()
+
+Actor_0x18:on_update:
+0x019a    op00_Return()
+
+Actor_0x18:on_talk:
+
+Actor_0x18:on_push:
+0x019b    op00_Return()

@@ -261,4 +261,101 @@ Actor_0x0e:on_talk:
 0x0141    -- 0x70()
 0x0143    opD2_MessageShowDynamic( text_id=0xd, flags=0 )
 0x0147    op9C_MessageSync()
-0x0148    -- MISSING OPCODE 0xaa
+0x0148    -- 0xAA()
+0x014a    op26_Wait( time=20 )
+0x014d    opD2_MessageShowDynamic( text_id=0xe, flags=0 )
+0x0151    op9C_MessageSync()
+0x0152    op69_ActorSetRotation( rot=6 )
+
+Actor_0x0e:on_push:
+0x0155    op00_Return()
+
+Actor_0x0f:on_start:
+0x0156    -- 0x0B_InitNPC( 6 )
+0x0159    -- 0x19_ActorSetPosition( x=(vf80)0xfda9, z=(vf40)0xffb7, flag=(flag)0xc0 )
+0x015f    op69_ActorSetRotation( rot=5 )
+0x0162    op00_Return()
+
+Actor_0x0f:on_update:
+0x0163    -- 0x5B()
+0x0164    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0165    -- 0xFE54()
+0x0167    -- 0x70()
+0x0169    op26_Wait( time=10 )
+0x016c    opD2_MessageShowDynamic( text_id=0xf, flags=0 )
+0x0170    op9C_MessageSync()
+0x0171    op69_ActorSetRotation( rot=4 )
+0x0174    op09_CallActorEventEndSync( actor_id=Actor_0x10, event=event_0x04, priority=0x03 )
+0x0177    -- 0x70()
+0x0179    op26_Wait( time=10 )
+0x017c    opD2_MessageShowDynamic( text_id=0x10, flags=0 )
+0x0180    op9C_MessageSync()
+0x0181    op69_ActorSetRotation( rot=5 )
+0x0184    -- 0xFE54()
+
+Actor_0x0f:on_push:
+0x0186    op00_Return()
+
+Actor_0x10:on_start:
+0x0187    -- 0x0B_InitNPC( 1 )
+0x018a    -- 0x19_ActorSetPosition( x=(vf80)0xfd8a, z=(vf40)0xff6d, flag=(flag)0xc0 )
+0x0190    op69_ActorSetRotation( rot=7 )
+0x0193    op00_Return()
+
+Actor_0x10:on_update:
+0x0194    -- 0x5B()
+0x0195    op00_Return()
+
+Actor_0x10:on_talk:
+0x0196    -- 0x70()
+0x0198    opD2_MessageShowDynamic( text_id=0x11, flags=0 )
+0x019c    op9C_MessageSync()
+0x019d    -- 0xAA()
+0x019f    op26_Wait( time=10 )
+0x01a2    opD2_MessageShowDynamic( text_id=0x12, flags=0 )
+0x01a6    op9C_MessageSync()
+0x01a7    op69_ActorSetRotation( rot=7 )
+
+Actor_0x10:on_push:
+0x01aa    op00_Return()
+
+Actor_0x10:event_0x04:
+0x01ab    -- 0x70()
+0x01ad    op26_Wait( time=10 )
+0x01b0    opD2_MessageShowDynamic( text_id=0x13, flags=0 )
+0x01b4    op9C_MessageSync()
+0x01b5    -- 0xAA()
+0x01b7    op26_Wait( time=20 )
+0x01ba    opD2_MessageShowDynamic( text_id=0x14, flags=0 )
+0x01be    op9C_MessageSync()
+0x01bf    op69_ActorSetRotation( rot=7 )
+0x01c2    op00_Return()
+
+Actor_0x11:on_start:
+0x01c3    -- 0x0B_InitNPC( 4 )
+0x01c6    -- 0x19_ActorSetPosition( x=(vf80)0xfdbf, z=(vf40)0x009b, flag=(flag)0xc0 )
+0x01cc    op69_ActorSetRotation( rot=6 )
+0x01cf    op00_Return()
+
+Actor_0x11:on_update:
+0x01d0    op00_Return()
+
+Actor_0x11:on_talk:
+0x01d1    -- 0x70()
+0x01d3    op26_Wait( time=20 )
+0x01d6    opD2_MessageShowDynamic( text_id=0x15, flags=0 )
+0x01da    op9C_MessageSync()
+0x01db    opD2_MessageShowDynamic( text_id=0x16, flags=0 )
+0x01df    op9C_MessageSync()
+0x01e0    op69_ActorSetRotation( rot=6 )
+
+Actor_0x11:on_push:
+0x01e3    op00_Return()
+
+Actor_0x12:on_start:
+0x01e4    -- 0x0B_InitNPC( 3 )
+0x01e7    -- 0x19_ActorSetPosition( x=(vf80)0x01f4, z=(vf40)0x018b, flag=(flag)0xc0 )
+0x01ed    op69_ActorSetRotation( rot=1 )
+0x01f0    -- MISSING OPCODE 0xcd

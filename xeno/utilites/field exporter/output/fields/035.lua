@@ -180,4 +180,90 @@ Actor_0x01:event_0x05:
 
 Actor_0x01:event_0x06:
 0x0254    op26_Wait( time=1 )
-0x0257    -- MISSING OPCODE 0x1a
+0x0257    -- 0x1A()
+0x0259    -- 0x19_ActorSetPosition( x=(vf80)0xff1f, z=(vf40)0xfe66, flag=(flag)0xc0 )
+0x025f    op69_ActorSetRotation( rot=6 )
+0x0262    op00_Return()
+
+Actor_0x01:event_0x07:
+0x0263    opD2_MessageShowDynamic( text_id=0x4, flags=FORCE_LEFT|FORCE_TOP )
+0x0267    op9C_MessageSync()
+0x0268    op00_Return()
+
+Actor_0x01:event_0x08:
+0x0269    opD2_MessageShowDynamic( text_id=0x5, flags=FORCE_LEFT|FORCE_TOP )
+0x026d    op9C_MessageSync()
+0x026e    op00_Return()
+
+Actor_0x01:event_0x09:
+0x026f    op6F_ActorRotateToActor( actor_id=Actor_0x03 )
+0x0271    opD2_MessageShowDynamic( text_id=0x6, flags=FORCE_LEFT|FORCE_TOP )
+0x0275    op9C_MessageSync()
+0x0276    op00_Return()
+
+Actor_0x01:event_0x0a:
+0x0277    opD2_MessageShowDynamic( text_id=0x7, flags=FORCE_LEFT|FORCE_TOP )
+0x027b    op9C_MessageSync()
+0x027c    op00_Return()
+
+Actor_0x01:event_0x0b:
+0x027d    op5D_SpritePlayAnim2( anim_id=0x5 )
+0x027f    -- 0x5E()
+0x0280    opD2_MessageShowDynamic( text_id=0x8, flags=FORCE_LEFT|FORCE_TOP )
+0x0284    op9C_MessageSync()
+0x0285    opFE4A_SpriteAddAnimLoad( file=2 )
+0x0289    opFE4B_SpriteAddAnimSync()
+0x028b    op00_Return()
+
+Actor_0x01:event_0x0c:
+0x028c    opFE4C_SpritePlayAddAnim2( anim_id=0x1 )
+0x028f    -- 0x5E()
+0x0290    opD2_MessageShowDynamic( text_id=0x9, flags=FORCE_LEFT|FORCE_TOP )
+0x0294    op9C_MessageSync()
+0x0295    op2C_SpritePlayAnim( anim_id=0xff )
+0x0297    opFE4E_SpriteAddAnimUnload()
+0x0299    op00_Return()
+
+Actor_0x01:event_0x0d:
+0x029a    op5D_SpritePlayAnim2( anim_id=0x4 )
+0x029c    -- 0x5E()
+0x029d    opD2_MessageShowDynamic( text_id=0xa, flags=FORCE_LEFT|FORCE_TOP )
+0x02a1    op9C_MessageSync()
+0x02a2    op00_Return()
+
+Actor_0x01:event_0x0e:
+0x02a3    opD2_MessageShowDynamic( text_id=0xb, flags=FORCE_LEFT|FORCE_TOP )
+0x02a7    op9C_MessageSync()
+0x02a8    op00_Return()
+
+Actor_0x01:event_0x0f:
+0x02a9    op6F_ActorRotateToActor( actor_id=Actor_0x03 )
+0x02ab    opD2_MessageShowDynamic( text_id=0xc, flags=0 )
+0x02af    op9C_MessageSync()
+0x02b0    op00_Return()
+
+Actor_0x01:event_0x10:
+0x02b1    opD2_MessageShowDynamic( text_id=0xd, flags=0 )
+0x02b5    op9C_MessageSync()
+0x02b6    op00_Return()
+
+Actor_0x01:event_0x11:
+0x02b7    op6F_ActorRotateToActor( actor_id=Actor_0x03 )
+0x02b9    opD2_MessageShowDynamic( text_id=0xe, flags=0 )
+0x02bd    op9C_MessageSync()
+0x02be    op00_Return()
+
+Actor_0x01:event_0x12:
+0x02bf    op6F_ActorRotateToActor( actor_id=Actor_0x03 )
+0x02c1    opD2_MessageShowDynamic( text_id=0xf, flags=0 )
+0x02c5    op9C_MessageSync()
+0x02c6    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x07, priority=0x06 )
+0x02c9    op00_Return()
+
+Actor_0x01:event_0x13:
+0x02ca    opD2_MessageShowDynamic( text_id=0x10, flags=0 )
+0x02ce    op9C_MessageSync()
+0x02cf    op00_Return()
+
+Actor_0x01:event_0x14:
+0x02d0    -- MISSING OPCODE 0xFEaa

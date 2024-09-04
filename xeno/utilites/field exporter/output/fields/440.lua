@@ -64,4 +64,28 @@ Actor_0x01:on_start:
 0x006a    -- 0x16_ActorPCInit( char_id=0 )
 0x006d    opFE0D_MessageSetFace( char_id=0 )
 0x0071    op02_JumpToConditional( val1=(s)mem[0x4], val2=437, condition="val1 == val2", address_if_false=0x82 )
-0x0079    -- MISSING OPCODE 0xFE1c
+0x0079    -- 0xFE1C()
+0x0082    op00_Return()
+
+Actor_0x01:on_update:
+0x0083    -- 0xA7()
+0x0084    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0085    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0086    mem[0x40a] = 0 -- op35
+0x008c    mem[0x40c] = 1565 -- op35
+0x0092    opC6_ExpandRun() -- exp0x20
+0x0093    -- 0x2D()
+0x009b    mem[0x40e] -= 70 -- op39
+0x00a1    -- 0xFE1C()
+0x00aa    op26_Wait( time=0 )
+0x00ad    op01_JumpTo( address=0x86 )
+0x00b0    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00b1    -- MISSING OPCODE 0x1b

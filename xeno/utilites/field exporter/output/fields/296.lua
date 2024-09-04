@@ -312,4 +312,46 @@ Actor_0x0d:on_start:
 0x01d7    -- 0x47( ???=2000 )
 0x01db    op69_ActorSetRotation( rot=6 )
 0x01de    -- 0xFE03( ???=8000 )
-0x01e2    -- MISSING OPCODE 0xFE1c
+0x01e2    -- 0xFE1C()
+0x01eb    -- 0xFE09( ???=1 )
+0x01ef    op00_Return()
+0x01f0    -- 0xBC_ActorNoModelInit()
+0x01f1    op29_ActorTurnOff( actor_id=self )
+0x01f3    op00_Return()
+
+Actor_0x0d:on_update:
+0x01f4    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x204 )
+0x01fc    -- 0x5A()
+0x01fd    -- 0xFE3C( ???=0, ???=13 )
+0x0203    -- 0x5B()
+0x0204    -- 0x5B()
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x0205    op00_Return()
+
+Actor_0x0e:on_start:
+0x0206    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x212 )
+0x020e    op01_JumpTo( address=0x23c )
+0x0211    op00_Return()
+0x0212    -- 0xBC_ActorNoModelInit()
+0x0213    op29_ActorTurnOff( actor_id=self )
+0x0215    op00_Return()
+
+Actor_0x0e:on_update:
+0x0216    op02_JumpToConditional( val1=(s)mem[0x402], val2=6, condition="val1 == val2", address_if_false=0x228 )
+0x021e    -- 0x5A()
+0x021f    -- 0xFE3C( ???=0, ???=10 )
+0x0225    op01_JumpTo( address=0x23a )
+0x0228    op02_JumpToConditional( val1=(s)mem[0x402], val2=14, condition="val1 == val2", address_if_false=0x23a )
+0x0230    -- 0x5A()
+0x0231    -- 0xFE3C( ???=0, ???=4 )
+0x0237    op01_JumpTo( address=0x23a )
+0x023a    -- 0x5B()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x023b    op00_Return()
+0x023c    -- MISSING OPCODE 0xFEc7

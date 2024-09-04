@@ -287,4 +287,7 @@ Actor_0x0c:on_talk:
 0x024e    op9C_MessageSync()
 0x024f    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x260 )
 0x0257    -- 0xFE59()
-0x025b    -- MISSING OPCODE 0xFE87
+0x025b    -- 0xFE87()
+0x025d    op01_JumpTo( address=0x271 )
+0x0260    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0x271 )
+0x0268    -- MISSING OPCODE 0xFE5a

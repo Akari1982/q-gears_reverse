@@ -299,4 +299,10 @@ Actor_0x0b:on_push:
 
 Actor_0x0c:on_start:
 0x01b2    -- 0x0B_InitNPC( 1 )
-0x01b5    -- MISSING OPCODE 0xFE1c
+0x01b5    -- 0xFE1C()
+0x01be    op69_ActorSetRotation( rot=4 )
+0x01c1    op00_Return()
+
+Actor_0x0c:on_update:
+0x01c2    opC6_ExpandRun() -- exp0x20
+0x01c3    -- MISSING OPCODE 0x6d

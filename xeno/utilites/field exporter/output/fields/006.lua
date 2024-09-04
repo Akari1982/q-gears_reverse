@@ -190,4 +190,22 @@ Actor_0x0b:on_talk:
 0x00ad    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x00b1    op9C_MessageSync()
 0x00b2    -- 0xFE59()
-0x00b6    -- MISSING OPCODE 0xFE87
+0x00b6    -- 0xFE87()
+0x00b8    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00bc    op9C_MessageSync()
+0x00bd    op69_ActorSetRotation( rot=3 )
+
+Actor_0x0b:on_push:
+0x00c0    op00_Return()
+
+Actor_0x0c:on_start:
+0x00c1    -- 0x0B_InitNPC( 1 )
+0x00c4    -- 0x19_ActorSetPosition( x=(vf80)0x001b, z=(vf40)0x0062, flag=(flag)0xc0 )
+0x00ca    -- 0x21( ???=320 )
+0x00cd    op00_Return()
+
+Actor_0x0c:on_update:
+0x00ce    mem[0x404] = opA8_Random( max=3 )
+0x00d3    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0xf0 )
+0x00db    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x00e1    -- MISSING OPCODE 0x6a

@@ -152,4 +152,30 @@ Actor_0x02:event_0x08:
 Actor_0x02:event_0x09:
 0x013c    opFE4A_SpriteAddAnimLoad( file=6 )
 0x0140    opFE4B_SpriteAddAnimSync()
-0x0142    -- MISSING OPCODE 0xFE1c
+0x0142    -- 0xFE1C()
+0x014b    op69_ActorSetRotation( rot=7 )
+0x014e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0151    op00_Return()
+
+Actor_0x02:event_0x0a:
+0x0152    -- 0x91()
+0x0156    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x0c, priority=0x06 )
+0x0159    op01_JumpTo( address=0x15f )
+0x015c    op07_CallActorEvent( actor_id=Actor_0x0f, event=event_0x0a, priority=0x06 )
+0x015f    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x09, priority=0x06 )
+0x0162    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x0166    op9C_MessageSync()
+0x0167    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x0a, priority=0x06 )
+0x016a    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x016e    op9C_MessageSync()
+0x016f    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0171    -- 0xFE1C()
+0x017a    -- 0x10()
+0x0185    op69_ActorSetRotation( rot=1 )
+0x0188    op2C_SpritePlayAnim( anim_id=0xff )
+0x018a    op26_Wait( time=10 )
+0x018d    opFE0D_MessageSetFace( char_id=1 )
+0x0191    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
+0x0195    op9C_MessageSync()
+0x0196    -- 0x91()
+0x019a    -- MISSING OPCODE 0xFE17

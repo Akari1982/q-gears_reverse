@@ -236,4 +236,25 @@ Actor_0x0e:on_start:
 0x010d    -- 0x0B_InitNPC( (s)mem[0x402] )
 0x0110    -- 0x19_ActorSetPosition( x=(vf80)0x0404, z=(vf40)0x0406, flag=(flag)0x00 )
 0x0116    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x123 )
-0x011e    -- MISSING OPCODE 0x1a
+0x011e    -- 0x1A()
+0x0120    op01_JumpTo( address=0x13d )
+0x0123    op02_JumpToConditional( val1=(s)mem[0x408], val2=1, condition="val1 == val2", address_if_false=0x130 )
+0x012b    -- 0x1A()
+0x012d    op01_JumpTo( address=0x13d )
+0x0130    op02_JumpToConditional( val1=(s)mem[0x408], val2=2, condition="val1 == val2", address_if_false=0x13d )
+0x0138    -- 0x1A()
+0x013a    op01_JumpTo( address=0x13d )
+0x013d    op20_ActorSetFlags0( flags=13 )
+0x0140    -- 0xF8()
+0x0144    -- 0x18()
+0x0149    -- 0x1F( ???=0x70 )
+0x014b    op00_Return()
+
+Actor_0x0e:on_update:
+0x014c    mem[0x40a] = false -- op37
+0x014f    -- 0xFE99()
+0x0152    op00_Return()
+
+Actor_0x0e:on_talk:
+0x0153    -- 0xFE99()
+0x0156    -- MISSING OPCODE 0xFE55

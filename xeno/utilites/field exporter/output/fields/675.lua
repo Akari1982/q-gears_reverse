@@ -97,4 +97,60 @@ Actor_0x02:event_0x04:
 
 Actor_0x03:on_start:
 0x00a5    -- 0x0B_InitNPC( 0 )
-0x00a8    -- MISSING OPCODE 0xFE1c
+0x00a8    -- 0xFE1C()
+0x00b1    op69_ActorSetRotation( rot=2 )
+0x00b4    op00_Return()
+
+Actor_0x03:on_update:
+0x00b5    -- 0x5B()
+0x00b6    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x00b7    op00_Return()
+
+Actor_0x04:on_start:
+0x00b8    -- 0x0B_InitNPC( 1 )
+0x00bb    -- 0x19_ActorSetPosition( x=(vf80)0xff5e, z=(vf40)0x003e, flag=(flag)0xc0 )
+0x00c1    op69_ActorSetRotation( rot=2 )
+0x00c4    op00_Return()
+
+Actor_0x04:on_update:
+0x00c5    -- 0x5B()
+0x00c6    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x00c7    op00_Return()
+
+Actor_0x05:on_start:
+0x00c8    -- 0x0B_InitNPC( 1 )
+0x00cb    -- 0x19_ActorSetPosition( x=(vf80)0xff5e, z=(vf40)0xffc2, flag=(flag)0xc0 )
+0x00d1    op69_ActorSetRotation( rot=2 )
+0x00d4    op00_Return()
+
+Actor_0x05:on_update:
+0x00d5    -- 0x5B()
+0x00d6    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x00d7    op00_Return()
+
+Actor_0x06:on_start:
+0x00d8    -- 0x0B_InitNPC( 2 )
+0x00db    -- 0x19_ActorSetPosition( x=(vf80)0x0004, z=(vf40)0xff6b, flag=(flag)0xc0 )
+0x00e1    op69_ActorSetRotation( rot=1 )
+0x00e4    op00_Return()
+
+Actor_0x06:on_update:
+0x00e5    -- 0x5B()
+0x00e6    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x00e7    op00_Return()

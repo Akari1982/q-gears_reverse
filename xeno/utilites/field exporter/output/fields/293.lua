@@ -481,4 +481,52 @@ Actor_0x0c:event_0x06:
 0x052b    -- 0x2D()
 0x0533    mem[0x41a] -= 10 -- op39
 0x0539    mem[0x41e] -= 10 -- op39
-0x053f    -- MISSING OPCODE 0xFE1c
+0x053f    -- 0xFE1C()
+0x0548    op01_JumpTo( address=0x52b )
+0x054b    op00_Return()
+
+Actor_0x0d:on_start:
+0x054c    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0x56d )
+0x0554    -- 0x0B_InitNPC( 3 )
+0x0557    -- 0x2A()
+0x0558    -- 0xFE07( ???=0x1 )
+0x055b    -- 0x19_ActorSetPosition( x=(vf80)0x0190, z=(vf40)0x0218, flag=(flag)0xc0 )
+0x0561    op69_ActorSetRotation( rot=4 )
+0x0564    opFE0D_MessageSetFace( char_id=27 )
+0x0568    -- 0x1F( ???=0x10 )
+0x056a    op01_JumpTo( address=0x56f )
+0x056d    -- 0xBC_ActorNoModelInit()
+0x056e    -- 0x2A()
+0x056f    op00_Return()
+
+Actor_0x0d:on_update:
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x0570    op00_Return()
+
+Actor_0x0d:event_0x04:
+0x0571    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0577    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x0579    op00_Return()
+
+Actor_0x0d:event_0x05:
+0x057a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0580    op00_Return()
+
+Actor_0x0d:event_0x06:
+0x0581    -- 0xF6( ???=0x2 )
+0x0583    op20_ActorSetFlags0( flags=13 )
+0x0586    -- 0x21( ???=384 )
+0x0589    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x058f    op29_ActorTurnOff( actor_id=Actor_0x0c )
+0x0591    op29_ActorTurnOff( actor_id=Actor_0x0d )
+0x0593    op00_Return()
+
+Actor_0x0d:event_0x07:
+0x0594    op6F_ActorRotateToActor( actor_id=Actor_0x02 )
+0x0596    op26_Wait( time=10 )
+0x0599    opD2_MessageShowDynamic( text_id=0x0, flags=NO_FACE|FORCE_TOP|NO_WINDOW )
+0x059d    op9C_MessageSync()
+0x059e    -- MISSING OPCODE 0xFE17

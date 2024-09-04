@@ -45,4 +45,28 @@ Actor_0x01:on_start:
 0x0072    -- 0x16_ActorPCInit( char_id=0 )
 0x0075    opFE0D_MessageSetFace( char_id=0 )
 0x0079    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x8a )
-0x0081    -- MISSING OPCODE 0xFE1c
+0x0081    -- 0xFE1C()
+0x008a    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x9b )
+0x0092    -- 0xFE1C()
+0x009b    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0xac )
+0x00a3    -- 0xFE1C()
+0x00ac    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0xbd )
+0x00b4    -- 0xFE1C()
+0x00bd    op00_Return()
+
+Actor_0x01:on_update:
+0x00be    -- 0x0C()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00bf    op00_Return()
+
+Actor_0x01:event_0x04:
+0x00c0    op2C_SpritePlayAnim( anim_id=0x0 )
+0x00c2    -- 0x10()
+0x00cd    op00_Return()
+
+Actor_0x01:event_0x05:
+0x00ce    -- 0x10()
+0x00d9    -- MISSING OPCODE 0x1b

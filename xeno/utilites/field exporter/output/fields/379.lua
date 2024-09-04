@@ -706,4 +706,11 @@ Actor_0x0c:on_start:
 0x0549    op29_ActorTurnOff( actor_id=Actor_0x0c )
 0x054b    op01_JumpTo( address=0x581 )
 0x054e    op02_JumpToConditional( val1=(s)mem[0x14c], val2=71, condition="val1 == val2", address_if_false=0x565 )
-0x0556    -- MISSING OPCODE 0xFE1c
+0x0556    -- 0xFE1C()
+0x055f    -- 0x5F( ???=0x0 )
+0x0561    -- 0x23()
+0x0562    op01_JumpTo( address=0x581 )
+0x0565    op02_JumpToConditional( val1=(s)mem[0x14c], val2=72, condition="val1 == val2", address_if_false=0x57f )
+0x056d    -- 0xFE1C()
+0x0576    -- 0x5F( ???=0x0 )
+0x0578    -- MISSING OPCODE 0xFE5e

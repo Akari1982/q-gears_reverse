@@ -36,4 +36,113 @@ Actor_0x00:event_0x04:
 0x0018    op00_Return()
 
 Actor_0x00:event_0x05:
-0x0019    -- MISSING OPCODE 0x92
+0x0019    -- 0x92()
+
+Actor_0x01:on_start:
+0x001a    -- 0x16_ActorPCInit( char_id=0 )
+0x001d    opFE0D_MessageSetFace( char_id=0 )
+0x0021    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x32 )
+0x0029    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xfda8, flag=(flag)0xc0 )
+0x002f    op01_JumpTo( address=0x43 )
+0x0032    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xfea2, flag=(flag)0xc0 )
+0x0038    opFE4A_SpriteAddAnimLoad( file=4 )
+0x003c    opFE4B_SpriteAddAnimSync()
+0x003e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0041    -- 0x5F( ???=0x0 )
+0x0043    op00_Return()
+
+Actor_0x01:on_update:
+0x0044    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0045    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0046    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x004c    -- 0x5F( ???=0x3 )
+0x004e    op26_Wait( time=30 )
+0x0051    -- 0x5F( ???=0x2 )
+0x0053    op26_Wait( time=30 )
+0x0056    -- 0x5F( ???=0x0 )
+0x0058    op26_Wait( time=20 )
+0x005b    opFE4A_SpriteAddAnimLoad( file=4 )
+0x005f    opFE4B_SpriteAddAnimSync()
+0x0061    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0064    op00_Return()
+
+Actor_0x01:event_0x05:
+0x0065    op2C_SpritePlayAnim( anim_id=0xff )
+0x0067    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x006d    opFE4A_SpriteAddAnimLoad( file=4 )
+0x0071    opFE4B_SpriteAddAnimSync()
+0x0073    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x0076    op00_Return()
+
+Actor_0x01:event_0x06:
+0x0077    op2C_SpritePlayAnim( anim_id=0xff )
+0x0079    -- 0x5A()
+0x007a    op2C_SpritePlayAnim( anim_id=0x4 )
+0x007c    op26_Wait( time=60 )
+0x007f    op2C_SpritePlayAnim( anim_id=0xff )
+0x0081    op26_Wait( time=15 )
+0x0084    opFE4A_SpriteAddAnimLoad( file=4 )
+0x0088    opFE4B_SpriteAddAnimSync()
+0x008a    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x008d    op00_Return()
+
+Actor_0x01:event_0x07:
+0x008e    op2C_SpritePlayAnim( anim_id=0xff )
+0x0090    -- 0x5A()
+0x0091    op2C_SpritePlayAnim( anim_id=0x5 )
+0x0093    op26_Wait( time=60 )
+0x0096    op2C_SpritePlayAnim( anim_id=0xff )
+0x0098    op26_Wait( time=15 )
+0x009b    opFE4A_SpriteAddAnimLoad( file=4 )
+0x009f    opFE4B_SpriteAddAnimSync()
+0x00a1    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x00a4    op00_Return()
+
+Actor_0x02:on_start:
+0x00a5    -- 0xBC_ActorNoModelInit()
+0x00a6    -- 0x2A()
+0x00a7    op00_Return()
+
+Actor_0x02:on_update:
+0x00a8    mem[0x400] = 0 -- op35
+0x00ae    opC6_ExpandRun() -- exp0x20
+0x00af    mem[0x400] += 16 -- op38
+0x00b5    -- 0x6E()
+0x00bd    mem[0x402] = 2048 -- op35
+0x00c3    mem[0x402] -= (s)mem[0x404] -- op39
+0x00c9    -- 0xDB()
+0x00ce    -- 0x5A()
+0x00cf    op02_JumpToConditional( val1=(s)mem[0x400], val2=16384, condition="val1 < val2", address_if_false=0xda )
+0x00d7    op01_JumpTo( address=0xae )
+0x00da    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x00db    op00_Return()
+
+Actor_0x03:on_start:
+0x00dc    -- 0x0B_InitNPC( 0 )
+0x00df    -- 0x5F( ???=0x1 )
+0x00e1    -- 0xFE1C()
+0x00ea    -- 0x23()
+0x00eb    -- 0x2A()
+0x00ec    op00_Return()
+
+Actor_0x03:on_update:
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x00ed    op00_Return()
+
+Actor_0x04:on_start:
+0x00ee    -- 0xBC_ActorNoModelInit()
+0x00ef    -- 0x2A()
+0x00f0    -- MISSING OPCODE 0xda

@@ -125,4 +125,5 @@ Actor_0x00:on_update:
 0x01e1    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
 0x01e4    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x05, priority=0x01 )
 0x01e7    op26_Wait( time=15 )
-0x01ea    -- MISSING OPCODE 0xFE84
+0x01ea    -- 0xFE84()
+0x01f4    -- MISSING OPCODE 0xFE7f

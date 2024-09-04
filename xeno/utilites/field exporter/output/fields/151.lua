@@ -39,4 +39,37 @@ Actor_0x00:on_push:
 
 Actor_0x01:on_start:
 0x0030    -- 0xBC_ActorNoModelInit()
-0x0031    -- MISSING OPCODE 0xFE1c
+0x0031    -- 0xFE1C()
+0x003a    -- 0x2A()
+0x003b    op00_Return()
+
+Actor_0x01:on_update:
+0x003c    -- 0x86_ProgressNotEqualJumpTo( value=201, jump=0x53 )
+0x0041    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x00 )
+0x0044    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x04, priority=0x00 )
+0x0047    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x00 )
+0x004a    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x04, priority=0x00 )
+0x004d    op26_Wait( time=30 )
+0x0050    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x04, priority=0x00 )
+0x0053    -- 0x5A()
+0x0054    op01_JumpTo( address=0x53 )
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0057    op00_Return()
+
+Actor_0x02:on_start:
+0x0058    -- 0xBC_ActorNoModelInit()
+0x0059    -- 0x2A()
+0x005a    op00_Return()
+
+Actor_0x02:on_update:
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x005b    op00_Return()
+
+Actor_0x02:event_0x04:
+0x005c    -- MISSING OPCODE 0xFEaa

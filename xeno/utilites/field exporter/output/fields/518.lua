@@ -33,4 +33,78 @@ Actor_0x00:on_push:
 Actor_0x01:on_start:
 0x002d    -- 0x0B_InitNPC( 1 )
 0x0030    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x44 )
-0x0038    -- MISSING OPCODE 0xFE1c
+0x0038    -- 0xFE1C()
+0x0041    op01_JumpTo( address=0x4d )
+0x0044    -- 0xFE1C()
+0x004d    op69_ActorSetRotation( rot=4 )
+0x0050    op00_Return()
+
+Actor_0x01:on_update:
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0051    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0052    -- 0x10()
+0x005d    op00_Return()
+
+Actor_0x02:on_start:
+0x005e    -- 0xBC_ActorNoModelInit()
+0x005f    -- 0x2A()
+0x0060    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x74 )
+0x0068    -- 0xFE1C()
+0x0071    op01_JumpTo( address=0x7d )
+0x0074    -- 0xFE1C()
+0x007d    op00_Return()
+
+Actor_0x02:on_update:
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x007e    op00_Return()
+
+Actor_0x02:event_0x04:
+0x007f    -- 0x10()
+0x008a    op00_Return()
+
+Actor_0x03:on_start:
+0x008b    -- 0x0B_InitNPC( 2 )
+0x008e    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0xa2 )
+0x0096    -- 0xFE1C()
+0x009f    op01_JumpTo( address=0xab )
+0x00a2    -- 0xFE1C()
+0x00ab    op69_ActorSetRotation( rot=4 )
+0x00ae    opFE0D_MessageSetFace( char_id=31 )
+0x00b2    op2C_SpritePlayAnim( anim_id=0x2 )
+0x00b4    op00_Return()
+
+Actor_0x03:on_update:
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x00b5    op00_Return()
+
+Actor_0x03:event_0x04:
+0x00b6    op74_SoundPlayFixedVolume( sound_id=120 )
+0x00b9    -- 0x21( ???=512 )
+0x00bc    -- 0x10()
+0x00c7    op74_SoundPlayFixedVolume( sound_id=0 )
+0x00ca    op00_Return()
+
+Actor_0x03:event_0x05:
+0x00cb    op69_ActorSetRotation( rot=5 )
+0x00ce    op2C_SpritePlayAnim( anim_id=0x7 )
+0x00d0    op00_Return()
+
+Actor_0x03:event_0x06:
+0x00d1    op2C_SpritePlayAnim( anim_id=0xff )
+0x00d3    op00_Return()
+
+Actor_0x04:on_start:
+0x00d4    -- 0xBC_ActorNoModelInit()
+0x00d5    -- 0x2A()
+0x00d6    -- MISSING OPCODE 0xf9

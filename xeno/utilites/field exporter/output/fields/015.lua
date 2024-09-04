@@ -142,4 +142,67 @@ Actor_0x01:event_0x0b:
 0x0190    opFE4A_SpriteAddAnimLoad( file=4 )
 0x0194    opFE4B_SpriteAddAnimSync()
 0x0196    op26_Wait( time=1 )
-0x0199    -- MISSING OPCODE 0xFE4c
+0x0199    opFE4C_SpritePlayAddAnim2( anim_id=0x1 )
+0x019c    -- 0x5E()
+0x019d    op00_Return()
+
+Actor_0x01:event_0x0c:
+0x019e    op2C_SpritePlayAnim( anim_id=0xff )
+0x01a0    op00_Return()
+
+Actor_0x01:event_0x0d:
+0x01a1    op2C_SpritePlayAnim( anim_id=0xff )
+0x01a3    op26_Wait( time=30 )
+0x01a6    op5D_SpritePlayAnim2( anim_id=0x5 )
+0x01a8    -- 0x5E()
+0x01a9    op26_Wait( time=10 )
+0x01ac    op2C_SpritePlayAnim( anim_id=0xff )
+0x01ae    op00_Return()
+
+Actor_0x01:event_0x0e:
+0x01af    op2C_SpritePlayAnim( anim_id=0xc )
+0x01b1    op00_Return()
+
+Actor_0x01:event_0x0f:
+0x01b2    op2C_SpritePlayAnim( anim_id=0xff )
+0x01b4    op00_Return()
+
+Actor_0x01:event_0x10:
+0x01b5    opC6_ExpandRun() -- exp0x20
+0x01b6    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )
+0x01bf    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=1, wait=0, ttl=15 )
+0x01c9    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xff9c, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfc18, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x01d8    opFE92_ParticleSpeed( speed=(vf80)0x511f, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x01e7    opFE93_ParticleWaitTtl( s_wait=1, var2=30, sprite_id=13, var4=0, var5=0 )
+0x01f3    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x01c8, trans_add_x=(vf20)0x0016, trans_add_y=(vf10)0x0016, flag=(flag)0xf0 )
+0x01fe    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x00ff, b=(vf20)0x00ff, r_add=(vf10)0xfff7, g_add=(vf10)0xfff7, b_add=(vf10)0xfff7, flag=(flag)0xfc )
+0x020d    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x0215    opFEBD_ParticleSpawnSettings( settings=0 )
+0x021d    opFE96_ParticleCreate()
+0x021f    op00_Return()
+
+Actor_0x02:on_start:
+0x0220    -- 0x16_ActorPCInit( char_id=2 )
+0x0223    opFE0D_MessageSetFace( char_id=2 )
+0x0227    -- 0x86_ProgressNotEqualJumpTo( value=16, jump=0x236 )
+0x022c    -- 0x19_ActorSetPosition( x=(vf80)0xfbcf, z=(vf40)0x041d, flag=(flag)0xc0 )
+0x0232    -- 0x1C( ???=(vf80)0xfdd0, flag=(flag)0x80 )
+0x0236    op00_Return()
+
+Actor_0x02:on_update:
+0x0237    -- 0x86_ProgressNotEqualJumpTo( value=16, jump=0x240 )
+0x023c    op00_Return()
+0x023d    op01_JumpTo( address=0x242 )
+0x0240    -- 0xA7()
+0x0241    op00_Return()
+0x0242    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0243    op00_Return()
+
+Actor_0x02:event_0x04:
+0x0244    op2C_SpritePlayAnim( anim_id=0x2 )
+0x0246    -- 0x1F( ???=0x10 )
+0x0248    -- MISSING OPCODE 0xFE17

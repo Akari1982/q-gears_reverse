@@ -134,4 +134,25 @@ Actor_0x03:event_0x04:
 
 Actor_0x04:on_start:
 0x0154    -- 0x0B_InitNPC( 0 )
-0x0157    -- MISSING OPCODE 0xFE1c
+0x0157    -- 0xFE1C()
+0x0160    op69_ActorSetRotation( rot=4 )
+0x0163    op00_Return()
+
+Actor_0x04:on_update:
+0x0164    op26_Wait( time=200 )
+0x0167    opFE0D_MessageSetFace( char_id=51 )
+0x016b    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x016f    op9C_MessageSync()
+0x0170    op26_Wait( time=60 )
+0x0173    mem[0x402] = 1 -- op35
+0x0179    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=120 )
+0x0184    op26_Wait( time=130 )
+0x0187    -- 0x98_MapLoad( field_id=683, value=0 )
+0x018c    -- 0x5B()
+0x018d    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x018e    op00_Return()
+0x018f    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x8c00, flag=0xff )

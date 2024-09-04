@@ -1220,4 +1220,23 @@ Actor_0x27:on_start:
 0x09d6    op00_Return()
 0x09d7    -- 0x19_ActorSetPosition( x=(vf80)0x043e, z=(vf40)0x0440, flag=(flag)0x00 )
 0x09dd    op02_JumpToConditional( val1=(s)mem[0x442], val2=0, condition="val1 == val2", address_if_false=0x9ea )
-0x09e5    -- MISSING OPCODE 0x1a
+0x09e5    -- 0x1A()
+0x09e7    op01_JumpTo( address=0xa04 )
+0x09ea    op02_JumpToConditional( val1=(s)mem[0x442], val2=1, condition="val1 == val2", address_if_false=0x9f7 )
+0x09f2    -- 0x1A()
+0x09f4    op01_JumpTo( address=0xa04 )
+0x09f7    op02_JumpToConditional( val1=(s)mem[0x442], val2=2, condition="val1 == val2", address_if_false=0xa04 )
+0x09ff    -- 0x1A()
+0x0a01    op01_JumpTo( address=0xa04 )
+0x0a04    op69_ActorSetRotation( rot=(s)mem[0x444] )
+0x0a07    op20_ActorSetFlags0( flags=12 )
+0x0a0a    -- 0x18()
+0x0a0f    -- 0x1F( ???=0x70 )
+0x0a11    op00_Return()
+
+Actor_0x27:on_update:
+0x0a12    op00_Return()
+
+Actor_0x27:on_talk:
+0x0a13    -- 0xFE54()
+0x0a15    -- MISSING OPCODE 0x34

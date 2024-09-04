@@ -76,4 +76,30 @@ Actor_0x01:on_start:
 0x014b    -- 0x16_ActorPCInit( char_id=0 )
 0x014e    opFE0D_MessageSetFace( char_id=0 )
 0x0152    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x163 )
-0x015a    -- MISSING OPCODE 0xFE1c
+0x015a    -- 0xFE1C()
+0x0163    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x16e )
+0x016b    op01_JumpTo( address=0x191 )
+0x016e    op02_JumpToConditional( val1=(s)mem[0x2], val2=6, condition="val1 == val2", address_if_false=0x179 )
+0x0176    op01_JumpTo( address=0x191 )
+0x0179    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0x184 )
+0x0181    op01_JumpTo( address=0x191 )
+0x0184    op02_JumpToConditional( val1=(s)mem[0x2], val2=9, condition="val1 == val2", address_if_false=0x18f )
+0x018c    op01_JumpTo( address=0x191 )
+0x018f    -- 0x1F( ???=0x2 )
+0x0191    op00_Return()
+
+Actor_0x01:on_update:
+0x0192    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x19e )
+0x019a    -- 0xA7()
+0x019b    op01_JumpTo( address=0x19f )
+0x019e    -- 0x5A()
+0x019f    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x01a0    op00_Return()
+
+Actor_0x01:event_0x04:
+0x01a1    -- 0x10()
+0x01ac    -- MISSING OPCODE 0x1b

@@ -75,4 +75,132 @@ Actor_0x02:on_push:
 Actor_0x03:on_start:
 0x0094    -- 0x93( ???=0 )
 0x0097    -- 0xFE03( ???=6000 )
-0x009b    -- MISSING OPCODE 0xFE1c
+0x009b    -- 0xFE1C()
+0x00a4    -- 0x47( ???=2000 )
+0x00a8    op69_ActorSetRotation( rot=2 )
+0x00ab    -- 0x21( ???=32 )
+0x00ae    -- 0x2A()
+0x00af    op00_Return()
+
+Actor_0x03:on_update:
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x00b0    op00_Return()
+
+Actor_0x03:event_0x04:
+0x00b1    -- 0xFE3C( ???=0, ???=12 )
+0x00b7    op26_Wait( time=1 )
+0x00ba    -- 0xF6( ???=0x1 )
+0x00bc    op2C_SpritePlayAnim( anim_id=0x1c )
+0x00be    -- 0xFE1C()
+0x00c7    op05_CallFunction( address=0xd6 )
+0x00ca    -- 0x10()
+0x00d5    op00_Return()
+
+function:
+0x00d6    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=1, rot_x=0, rot_y=50 )
+0x00df    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=23, wait=0, ttl=32767 )
+0x00e9    opFE91_ParticlePos( x=(vf80)0x00a0, y=(vf40)0xffd8, z=(vf20)0x01f4, speed_x=(vf10)0x00a0, speed_y=(vf08)0xffd8, speed_z=(vf04)0x01f4, flag=(flag)0xfc )
+0x00f8    opFE92_ParticleSpeed( speed=(vf80)0x7530, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x0107    opFE93_ParticleWaitTtl( s_wait=1, var2=12, sprite_id=0, var4=0, var5=1 )
+0x0113    opFE94_ParticleTranslation( trans_x=(vf80)0x01c2, trans_y=(vf40)0x0190, trans_add_x=(vf20)0x003c, trans_add_y=(vf10)0x0046, flag=(flag)0xf0 )
+0x011e    opFE95_ParticleColour( r=(vf80)0x006e, g=(vf40)0x0069, b=(vf20)0x004b, r_add=(vf10)0xfff6, g_add=(vf10)0xfff6, b_add=(vf10)0xfff7, flag=(flag)0xfc )
+0x012d    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x0135    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=23, wait=0, ttl=32767 )
+0x013f    opFE91_ParticlePos( x=(vf80)0xfd8a, y=(vf40)0xffe2, z=(vf20)0x01f4, speed_x=(vf10)0xfd8a, speed_y=(vf08)0xffe2, speed_z=(vf04)0x01f4, flag=(flag)0xfc )
+0x014e    opFE92_ParticleSpeed( speed=(vf80)0x7530, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x015d    opFE93_ParticleWaitTtl( s_wait=1, var2=13, sprite_id=0, var4=0, var5=1 )
+0x0169    opFE94_ParticleTranslation( trans_x=(vf80)0x01c2, trans_y=(vf40)0x0190, trans_add_x=(vf20)0x003c, trans_add_y=(vf10)0x0046, flag=(flag)0xf0 )
+0x0174    opFE95_ParticleColour( r=(vf80)0x006e, g=(vf40)0x0069, b=(vf20)0x004b, r_add=(vf10)0xfff6, g_add=(vf10)0xfff6, b_add=(vf10)0xfff7, flag=(flag)0xfc )
+0x0183    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x018b    opFE96_ParticleCreate()
+0x018d    op0D_Return()
+
+Actor_0x04:on_start:
+0x018e    -- 0x93( ???=8 )
+0x0191    -- 0xFE1C()
+0x019a    -- 0xFE03( ???=6000 )
+0x019e    op69_ActorSetRotation( rot=2 )
+0x01a1    -- 0x2A()
+0x01a2    -- 0x21( ???=32 )
+0x01a5    op00_Return()
+
+Actor_0x04:on_update:
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x01a6    op00_Return()
+
+Actor_0x04:event_0x04:
+0x01a7    -- 0xFE3C( ???=1, ???=7 )
+0x01ad    op26_Wait( time=1 )
+0x01b0    -- 0xF6( ???=0x1 )
+0x01b2    op2C_SpritePlayAnim( anim_id=0x17 )
+0x01b4    -- 0xF6( ???=0x1 )
+0x01b6    -- 0xFE1C()
+0x01bf    -- 0x10()
+0x01ca    op00_Return()
+
+Actor_0x05:on_start:
+0x01cb    -- 0x93( ???=8 )
+0x01ce    -- 0xFE1C()
+0x01d7    -- 0xFE03( ???=6000 )
+0x01db    op69_ActorSetRotation( rot=2 )
+0x01de    -- 0x2A()
+0x01df    -- 0x21( ???=32 )
+0x01e2    op00_Return()
+
+Actor_0x05:on_update:
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x01e3    op00_Return()
+
+Actor_0x05:event_0x04:
+0x01e4    -- 0xFE3C( ???=2, ???=7 )
+0x01ea    op26_Wait( time=1 )
+0x01ed    -- 0xF6( ???=0x1 )
+0x01ef    op2C_SpritePlayAnim( anim_id=0x17 )
+0x01f1    -- 0xFE1C()
+0x01fa    -- 0x10()
+0x0205    op00_Return()
+
+Actor_0x06:on_start:
+0x0206    -- 0x93( ???=8 )
+0x0209    -- 0xFE1C()
+0x0212    -- 0xFE03( ???=6000 )
+0x0216    op69_ActorSetRotation( rot=2 )
+0x0219    -- 0x2A()
+0x021a    -- 0x21( ???=32 )
+0x021d    op00_Return()
+
+Actor_0x06:on_update:
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x021e    op00_Return()
+
+Actor_0x06:event_0x04:
+0x021f    -- 0xFE3C( ???=3, ???=7 )
+0x0225    op26_Wait( time=1 )
+0x0228    -- 0xF6( ???=0x1 )
+0x022a    op2C_SpritePlayAnim( anim_id=0x17 )
+0x022c    -- 0xFE1C()
+0x0235    -- 0x10()
+0x0240    op00_Return()
+
+Actor_0x07:on_start:
+0x0241    -- 0xBC_ActorNoModelInit()
+0x0242    -- 0x2A()
+0x0243    op00_Return()
+
+Actor_0x07:on_update:
+0x0244    op29_ActorTurnOff( actor_id=Actor_0x07 )
+0x0246    op02_JumpToConditional( val1=(s)mem[0x40a], val2=4096, condition="val1 < val2", address_if_false=0x28b )
+0x024e    opC6_ExpandRun() -- exp0x20
+0x024f    -- MISSING OPCODE 0x6d
