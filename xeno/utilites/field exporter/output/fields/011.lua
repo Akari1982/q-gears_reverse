@@ -218,9 +218,14 @@ Actor_0x0c:on_start:
 0x010a    op00_Return()
 
 Actor_0x0c:on_update:
-0x010b    -- 0xCB_TriggerJumpTo( trigger_id=(s)mem[0x1400], jump=0x9801 )
-0x0110    -- 0x0C()
-0x0111    -- 0x80()
+0x010b    opCB_TriggerJumpTo( trigger_id=0x0, jump=0x114 )
+0x010f    -- 0x98_MapLoad( field_id=12, value=0 )
+0x0114    op00_Return()
+
+Actor_0x0c:on_talk:
+
+Actor_0x0c:on_push:
+0x0115    op00_Return()
 
 Actor_0x0d:on_start:
 0x0116    -- 0xBC_ActorNoModelInit()

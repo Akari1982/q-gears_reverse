@@ -1127,10 +1127,16 @@ Actor_0x22:on_start:
 0x0993    op00_Return()
 
 Actor_0x22:on_update:
-0x0994    -- 0xCB_TriggerJumpTo( trigger_id=7425, jump=0x9809 )
-0x0999    mem[0x80] |= 1 << (s)mem[0xcb80] -- op3a
-0x099f    -- 0xA6()
-0x09a2    mem[0x280] -= (s)mem[0x80] -- op39
+0x0994    opCB_TriggerJumpTo( trigger_id=0x1, jump=0x99d )
+0x0998    -- 0x98_MapLoad( field_id=58, value=0 )
+0x099d    opCB_TriggerJumpTo( trigger_id=0x0, jump=0x9a6 )
+0x09a1    -- 0x98_MapLoad( field_id=57, value=2 )
+0x09a6    op00_Return()
+
+Actor_0x22:on_talk:
+
+Actor_0x22:on_push:
+0x09a7    op00_Return()
 
 Actor_0x22:event_0x04:
 0x09a8    -- 0x22()

@@ -67,8 +67,8 @@ Actor_0x00:event_0x04:
 0x009f    mem[0xaa] ^= (s)mem[0x5b4] -- op40
 0x00a5    -- 0x1E()
 0x00a6    -- 0x80()
-0x00ab    op02_JumpToConditional( val1=4, val2=(s)mem[0x2826], condition="val1 == val2", address_if_false=0x3599 )
-0x00b3    -- 0x16_ActorPCInit( char_id=mem[0x3c04] )
+0x00ab    op02_JumpToConditional( val1=4, val2=mem[0x2826], condition="val1 == val2", address_if_false=0x3599 )
+0x00b3    -- 0x16_ActorPCInit( char_id=(s)mem[0x3c04] )
 0x00b6    op00_Return()
 0x00b7    mem[0xa763] ^= -20738 -- op40
 0x00bd    -- 0xBB( ???=0xff )

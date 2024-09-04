@@ -1558,7 +1558,7 @@
 // field_event_opC9
 80094D08-80094E90
 ////////////////////////////////
-// 0xCB_TriggerJumpTo
+// field_event_opCB_trigger_jump_to
 80094E94-8009504C
 ////////////////////////////////
 // func95050

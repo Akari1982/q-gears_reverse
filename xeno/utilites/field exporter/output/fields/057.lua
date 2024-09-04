@@ -90,8 +90,14 @@ Actor_0x02:on_start:
 
 Actor_0x02:on_update:
 0x00eb    -- 0xA7()
-0x00ec    -- 0xCB_TriggerJumpTo( trigger_id=29952, jump=0x9800 )
-0x00f1    mem[0x80] &= ~(1 << (s)mem[0x80]) -- op3a
+0x00ec    opCB_TriggerJumpTo( trigger_id=0x0, jump=0xf5 )
+0x00f0    -- 0x98_MapLoad( field_id=59, value=0 )
+0x00f5    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x00f6    op00_Return()
 
 Actor_0x02:event_0x04:
 0x00f7    op2C_SpritePlayAnim( anim_id=0x9 )
@@ -171,11 +177,8 @@ Actor_0x04:on_start:
 0x01a9    op00_Return()
 
 Actor_0x04:on_update:
-0x01aa    -- 0xCB_TriggerJumpTo( trigger_id=17409, jump=0x201 )
-0x01af    -- 0x0C()
-0x01b0    -- 0x04()
-0x01b1    op00_Return()
-0x01b2    op00_Return()
-0x01b3    mem[0x1c4] ^= (s)mem[0x1d74] -- op40
+0x01aa    opCB_TriggerJumpTo( trigger_id=0x1, jump=0x1c4 )
+0x01ae    op02_JumpToConditional( val1=(s)mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0x1c4 )
+0x01b6    -- 0x75( ???=29 )
 0x01b9    -- 0x71()
 0x01bc    -- MISSING OPCODE 0xFE7f

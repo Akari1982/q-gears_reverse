@@ -1375,8 +1375,8 @@ ScriptFile::GetScripts( const std::string& path )
 
             case 0xcb:
             {
-                exp->Log( "-- 0xCB_TriggerJumpTo( trigger_id=" + GetV80Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 3 ) + " )" );
-                pointer += 5;
+                exp->Log( "opCB_TriggerJumpTo( trigger_id=" + GetU8Variable( pointer + 1 ) + ", jump=" + GetU16Variable( pointer + 2 ) + " )" );
+                pointer += 4;
             }
             break;
 
@@ -1835,8 +1835,8 @@ ScriptFile::GetScripts( const std::string& path )
                 }
                 else if( eo_opcode == 0x69 )
                 {
-                    exp->Log( "-- 0xFE69( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
-                    pointer += 8;
+                    exp->Log( "-- 0xFE69()" );
+                    pointer += 5;
                 }
                 else if( eo_opcode == 0x6f )
                 {

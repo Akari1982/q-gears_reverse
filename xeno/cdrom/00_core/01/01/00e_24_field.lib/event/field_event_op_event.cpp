@@ -528,3 +528,69 @@ V0 = w[800af54c];
 [800af150] = w(w[800af150] + 20); // add 0x20 more opcodes to ececute
 [V0 + cc] = h(hu[V0 + cc] + 1);
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// field_event_opCB_trigger_jump_to()
+
+struct_138 = w[800af54c];
+A0 = hu[struct_138 + cc];
+script_offset = w[800ad0d8];
+param = bu[script_offset + A0 + 1];
+
+party_leader_entity_id = w[800b1740];
+V1 = w[800aefe4];
+A2 = w[V1 + party_leader_entity_id * 5c + 4c];
+
+address_to_8 = w[800ad0cc];
+
+// check height
+entity_y = h[A2 + 26];
+trigger_height = h[address_to_8 + param * 18 + 2];
+if( ( trigger_height < entity_y ) && ( entity_y - hu[A2 + 1a] < trigger_height ) )
+{
+    S0 = (h[A2 + 2a] << 10) + h[A2 + 22];
+    S4 = (h[address_to_8 + param * 18 + 4] << 10) + h[address_to_8 + param * 18 + 0];
+    S3 = (h[address_to_8 + param * 18 + a] << 10) + h[address_to_8 + param * 18 + 6];
+    S1 = (h[address_to_8 + param * 18 + 10] << 10) + h[address_to_8 + param * 18 + c];
+    S2 = (h[address_to_8 + param * 18 + 16] << 10) + h[address_to_8 + param * 18 + 12];
+
+    A0 = S4;
+    A1 = S3;
+    A2 = S0;
+    system_side_of_vector();
+    if( V0 >= 0 )
+    {
+        A0 = S3;
+        A1 = S1;
+        A2 = S0;
+        system_side_of_vector();
+        if( V0 >= 0 )
+        {
+            A0 = S1;
+            A1 = S2;
+            A2 = S0;
+            system_side_of_vector();
+            if( V0 >= 0 )
+            {
+                A0 = S2;
+                A1 = S4;
+                A2 = S0;
+                system_side_of_vector();
+                if( V0 >= 0 )
+                {
+                    [struct_138 + cc] = h(hu[struct_138 + cc] + 4);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+A0 = 2;
+field_event_help_read_u16();
+[struct_138 + cc] = h(V0);
+
+[800af150] = w(w[800af150] + 1);
+////////////////////////////////

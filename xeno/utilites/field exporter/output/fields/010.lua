@@ -191,9 +191,18 @@ Actor_0x0b:on_start:
 0x00c8    op00_Return()
 
 Actor_0x0b:on_update:
-0x00c9    -- 0xCB_TriggerJumpTo( trigger_id=20992, jump=0x9800 )
-0x00ce    op09_CallActorEventEndSync( actor_id=Actor_0x80, event=event_0x02, priority=0x00 )
-0x00d1    -- 0x80()
+0x00c9    opCB_TriggerJumpTo( trigger_id=0x0, jump=0xd2 )
+0x00cd    -- 0x98_MapLoad( field_id=9, value=2 )
+0x00d2    op00_Return()
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x00d3    op00_Return()
+
+Actor_0x0c:on_start:
+0x00d4    -- 0xBC_ActorNoModelInit()
+0x00d5    -- 0x46()
 0x00d6    op00_Return()
 
 Actor_0x0c:on_update:
