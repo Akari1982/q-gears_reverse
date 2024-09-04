@@ -848,7 +848,7 @@
 // field_event_opFE4D_sprite_play_add_animation
 80089F10-80089F44
 ////////////////////////////////
-// func89f48
+// field_event_opFE4C
 80089F48-80089F7C
 ////////////////////////////////
 // field_event_opFE4B_sprite_add_anim_sync
@@ -890,7 +890,7 @@
 // field_event_opFE26_distortion_setup
 8008A8C4-8008A8F8
 ////////////////////////////////
-// func8a8fc
+// field_event_opFE27_screen_distortion_control
 8008A8FC-8008AA2C
 ////////////////////////////////
 // field_event_opFE6F_model_add_rot
@@ -1160,7 +1160,7 @@
 // field_event_opFE66_sound_play_with_volume_in_slot
 8008EB2C-8008EBB4
 ////////////////////////////////
-// func8ebb8
+// field_event_opFE64
 8008EBB8-8008EC38
 ////////////////////////////////
 // field_event_op74_sound_play_fixed_volume
@@ -1371,7 +1371,7 @@
 // func928a4
 800928A4-800929C8
 ////////////////////////////////
-// func929cc
+// field_event_opFE84
 800929CC-80092B38
 ////////////////////////////////
 // field_event_op71
@@ -1380,7 +1380,7 @@
 // field_event_op82
 80092C38-80092CB4
 ////////////////////////////////
-// func92cb8
+// field_event_opFE87
 80092CB8-80092D10
 ////////////////////////////////
 // func92d14
@@ -1579,7 +1579,7 @@
 // field_event_op89
 8009541C-800954F4
 ////////////////////////////////
-// func954f8
+// field_event_op8E
 800954F8-80095588
 ////////////////////////////////
 // field_event_op8F
@@ -1874,7 +1874,7 @@
 // func99c80
 80099C80-80099D38
 ////////////////////////////////
-// func99d3c
+// field_event_op6E
 80099D3C-80099DF4
 ////////////////////////////////
 // func99df8
@@ -1913,7 +1913,7 @@
 // func9a288
 8009A288-8009A2BC
 ////////////////////////////////
-// func9a2c0
+// field_event_opAA
 8009A2C0-8009A33C
 ////////////////////////////////
 // field_event_op5F
@@ -2180,7 +2180,7 @@
 // func9d8ec
 8009D8EC-8009D9B4
 ////////////////////////////////
-// func9d9b8
+// field_event_op1A
 8009D9B8-8009DA48
 ////////////////////////////////
 // 0x19_SpriteSetPosition
@@ -2314,7 +2314,7 @@
 // field_event_op0D_function_ret
 800A0E48-800A0F3C
 ////////////////////////////////
-// 0x92
+// field_event_op92
 800A0F40-800A1018
 ////////////////////////////////
 // field_event_op04

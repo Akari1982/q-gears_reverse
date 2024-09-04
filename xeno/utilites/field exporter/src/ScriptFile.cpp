@@ -286,6 +286,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x1a:
+            {
+                exp->Log( "-- 0x1A()" );
+                pointer += 2;
+            }
+            break;
+
             case 0x1c:
             {
                 exp->Log( "-- 0x1C( ???=" + GetVF80Variable( pointer + 1 ) + ", flag=" + GetFVariable( pointer + 3 ) + " )");
@@ -844,6 +851,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x6e:
+            {
+                exp->Log( "-- 0x6E()" );
+                pointer += 8;
+            }
+            break;
+
             case 0x6f:
             {
                 exp->Log( "op6F_ActorRotateToActor( actor_id=" + GetEVariable( pointer + 1 ) + " )" );
@@ -1063,6 +1077,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x8e:
+            {
+                exp->Log( "-- 0x8E()" );
+                pointer += 7;
+            }
+            break;
+
             case 0x8f:
             {
                 exp->Log( "-- 0x8F()" );
@@ -1074,6 +1095,13 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 exp->Log( "-- 0x91()" );
                 pointer += 4;
+            }
+            break;
+
+            case 0x92:
+            {
+                exp->Log( "-- 0x92()" );
+                pointer += 1;
             }
             break;
 
@@ -1193,6 +1221,13 @@ ScriptFile::GetScripts( const std::string& path )
             {
                 u8 val = GetU8( pointer + 1 );
                 exp->Log( "opA9_MessageSetSelectionSync( start_row=" + HexToString( ( val >> 4 ) , 2, '0' )  + ", end_row=" + HexToString( ( val & 0xf ), 2, '0' ) + " )" );
+                pointer += 2;
+            }
+            break;
+
+            case 0xaa:
+            {
+                exp->Log( "-- 0xAA()" );
                 pointer += 2;
             }
             break;
@@ -1673,6 +1708,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE1A() sync load for 0xFEC6()" );
                     pointer += 1;
                 }
+                else if( eo_opcode == 0x1c )
+                {
+                    exp->Log( "-- 0xFE1C()" );
+                    pointer += 8;
+                }
                 else if( eo_opcode == 0x1d )
                 {
                     exp->Log( "opFE1D_ModelAddTrans( trans_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", trans_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", trans_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
@@ -1692,6 +1732,30 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "opFE26_DistortionSetup( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + ", ???=" + GetV80Variable( pointer + 5 ) + ", ???=" + GetV80Variable( pointer + 7 ) + ", ???=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 11 ) + ", steps=" + GetV80Variable( pointer + 13 ) + " )" );
                     pointer += 15;
+                }
+                else if( eo_opcode == 0x27 )
+                {
+                    u8 type = GetU8( pointer + 1 );
+                    if( type == 0 )
+                    {
+                        exp->Log( "-- opFE2700()" );
+                        pointer += 4;
+                    }
+                    else if( type == 1 )
+                    {
+                        exp->Log( "-- opFE2701()" );
+                        pointer += 1;
+                    }
+                    else if( type == 2 )
+                    {
+                        exp->Log( "-- opFE2702()" );
+                        pointer += 2;
+                    }
+                    else if( type == 3 )
+                    {
+                        exp->Log( "-- opFE2703()" );
+                        pointer += 2;
+                    }
                 }
                 else if( eo_opcode == 0x35 )
                 {
@@ -1752,6 +1816,11 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "opFE4B_SpriteAddAnimSync()" );
                     pointer += 1;
+                }
+                else if( eo_opcode == 0x4c )
+                {
+                    exp->Log( "opFE4C_SpritePlayAddAnim2( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
+                    pointer += 2;
                 }
                 else if( eo_opcode == 0x4d )
                 {
@@ -1818,6 +1887,11 @@ ScriptFile::GetScripts( const std::string& path )
                     exp->Log( "-- 0xFE62()" );
                     pointer += 5;
                 }
+                else if( eo_opcode == 0x64 )
+                {
+                    exp->Log( "-- 0xFE64() -- wait for sound channel?" );
+                    pointer += 3;
+                }
                 else if( eo_opcode == 0x65 )
                 {
                     exp->Log( "-- 0xFE65()" );
@@ -1873,6 +1947,16 @@ ScriptFile::GetScripts( const std::string& path )
                 {
                     exp->Log( "-- 0xFE82()" );
                     pointer += 0x19;
+                }
+                else if( eo_opcode == 0x84 )
+                {
+                    exp->Log( "-- 0xFE84()" );
+                    pointer += 9;
+                }
+                else if( eo_opcode == 0x87 )
+                {
+                    exp->Log( "-- 0xFE87()" );
+                    pointer += 1;
                 }
                 else if( eo_opcode == 0x8a )
                 {
