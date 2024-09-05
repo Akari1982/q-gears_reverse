@@ -240,4 +240,38 @@ Actor_0x0d:on_start:
 0x0121    -- 0x0B_InitNPC( 1 )
 0x0124    opFE0D_MessageSetFace( char_id=18 )
 0x0128    -- 0x18()
-0x012d    -- MISSING OPCODE 0xcd
+0x012d    -- 0xCD()
+0x012e    op02_JumpToConditional( val1=(s)mem[0x102], val2=10, condition="val1 == val2", address_if_false=0x141 )
+0x0136    -- 0x19_ActorSetPosition( x=(vf80)0xffce, z=(vf40)0x029a, flag=(flag)0xc0 )
+0x013c    -- 0x5F( ???=0x3 )
+0x013e    op01_JumpTo( address=0x163 )
+0x0141    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x152 )
+0x0149    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xfd76, flag=(flag)0xc0 )
+0x014f    op01_JumpTo( address=0x163 )
+0x0152    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x163 )
+0x015a    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xfd12, flag=(flag)0xc0 )
+0x0160    op01_JumpTo( address=0x163 )
+0x0163    op00_Return()
+
+Actor_0x0d:on_update:
+0x0164    opC6_ExpandRun() -- exp0x20
+0x0165    op02_JumpToConditional( val1=(s)mem[0x102], val2=9, condition="val1 == val2", address_if_false=0x193 )
+0x016d    mem[0x102] = 10 -- op35
+0x0173    -- 0xFE17()
+0x0177    -- 0xFE17()
+0x017b    -- 0xFE17()
+0x017f    op6F_ActorRotateToActor( actor_id=party1 )
+0x0181    op26_Wait( time=30 )
+0x0184    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x018a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0190    -- 0x5F( ???=0x3 )
+0x0192    op00_Return()
+0x0193    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0194    op02_JumpToConditional( val1=(s)mem[0x102], val2=10, condition="val1 == val2", address_if_false=0x1b7 )
+0x019c    op26_Wait( time=10 )
+0x019f    -- 0x5F( ???=0x2 )
+0x01a1    mem[0x102] = 11 -- op35
+0x01a7    -- 0xFE0A( ???=0x1280 )
+0x01ab    -- MISSING OPCODE 0xa5

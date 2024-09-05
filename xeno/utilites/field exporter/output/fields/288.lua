@@ -55,4 +55,22 @@ Actor_0x00:on_push:
 0x00db    op00_Return()
 
 Actor_0x00:event_0x04:
-0x00dc    -- MISSING OPCODE 0xFE17
+0x00dc    -- 0xFE17()
+0x00e0    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x0, flags=0 )
+0x00e6    op26_Wait( time=10 )
+0x00e9    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1, flags=0 )
+0x00ef    op26_Wait( time=10 )
+0x00f2    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x2, flags=0 )
+0x00f8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x3, flags=0 )
+0x00fe    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x4, flags=0 )
+0x0104    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x5, flags=0 )
+0x010a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x6, flags=0 )
+0x0110    op00_Return()
+
+Actor_0x01:on_start:
+0x0111    -- 0x16_ActorPCInit( char_id=0 )
+0x0114    opFE0D_MessageSetFace( char_id=0 )
+0x0118    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0x163 )
+0x0120    -- 0xFE8B()
+0x0124    op02_JumpToConditional( val1=(s)mem[0x40e], val2=0, condition="val1 == val2", address_if_false=0x139 )
+0x012c    -- MISSING OPCODE 0x1b

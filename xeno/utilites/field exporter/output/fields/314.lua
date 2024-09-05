@@ -804,4 +804,42 @@ Actor_0x16:on_start:
 0x0573    -- 0x5F( ???=0x0 )
 0x0575    -- 0x85()
 0x057a    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 < val2", address_if_false=0x594 )
-0x0582    -- MISSING OPCODE 0x17
+0x0582    -- 0x17()
+0x0594    opFE0D_MessageSetFace( char_id=80 )
+0x0598    op00_Return()
+
+Actor_0x16:on_update:
+0x0599    -- 0x84_ProgressLessEqualJumpTo( value=141, jump=0x5b8 )
+0x059e    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 < val2", address_if_false=0x5b8 )
+0x05a6    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x05ac    op26_Wait( time=30 )
+0x05af    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x05b5    op26_Wait( time=30 )
+0x05b8    -- 0x85()
+0x05bd    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 < val2", address_if_false=0x5c6 )
+0x05c5    -- 0x59()
+0x05c6    op00_Return()
+
+Actor_0x16:on_talk:
+0x05c7    -- 0x84_ProgressLessEqualJumpTo( value=140, jump=0x636 )
+0x05cc    -- 0xFE54()
+0x05ce    op6F_ActorRotateToActor( actor_id=party1 )
+0x05d0    opD2_MessageShowDynamic( text_id=0xf, flags=0 )
+0x05d4    op9C_MessageSync()
+0x05d5    -- 0x75( ???=255 )
+0x05d8    op07_CallActorEvent( actor_id=Actor_0x18, event=event_0x04, priority=0x01 )
+0x05db    op26_Wait( time=10 )
+0x05de    -- 0xB5() -- camera set direction
+0x05df    op02_JumpToConditional( val1=(s)mem[0x80], val2=mem[0x2680], condition="~val1 & val2", address_if_false=0x5f80 )
+0x05e7    op02_JumpToConditional( condition="val1 == val2", address_if_false=0x2200 )
+0x05ef    op9C_MessageSync()
+0x05f0    -- 0xB5() -- camera set direction
+0x05f1    op05_CallFunction( address=0x80 )
+0x05f4    -- 0x80()
+0x05f9    op05_CallFunction( address=0x2c74 )
+0x05fc    -- 0x80()
+0x0601    op9C_MessageSync()
+0x0602    -- 0xB5() -- camera set direction
+0x0603    op01_JumpTo( address=0x80 )
+0x0606    -- 0x80()
+0x060b    -- MISSING OPCODE 0x06

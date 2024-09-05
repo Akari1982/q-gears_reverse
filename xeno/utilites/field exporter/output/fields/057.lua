@@ -181,4 +181,91 @@ Actor_0x04:on_update:
 0x01ae    op02_JumpToConditional( val1=(s)mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0x1c4 )
 0x01b6    -- 0x75( ???=29 )
 0x01b9    -- 0x71()
-0x01bc    -- MISSING OPCODE 0xFE7f
+0x01bc    -- 0xFE7F()
+0x01be    mem[0x40c] = true -- op36
+0x01c1    -- 0x75( ???=58 )
+0x01c4    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x01c5    op00_Return()
+
+Actor_0x05:on_start:
+0x01c6    -- 0xBC_ActorNoModelInit()
+0x01c7    -- 0xFE1C()
+0x01d0    -- 0x2A()
+0x01d1    op00_Return()
+
+Actor_0x05:on_update:
+0x01d2    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x23e )
+0x01da    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )
+0x01e3    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=20, wait=0, ttl=32767 )
+0x01ed    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x004e, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x004e, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x01fc    opFE92_ParticleSpeed( speed=(vf80)0x7530, acc_x=(vf40)0x0000, acc_y=(vf20)0x07d0, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x020b    opFE93_ParticleWaitTtl( s_wait=4, var2=40, sprite_id=0, var4=1, var5=1 )
+0x0217    opFE94_ParticleTranslation( trans_x=(vf80)0x02bc, trans_y=(vf40)0x01f4, trans_add_x=(vf20)0x0046, trans_add_y=(vf10)0x001e, flag=(flag)0xf0 )
+0x0222    opFE95_ParticleColour( r=(vf80)0x00a2, g=(vf40)0x009f, b=(vf20)0x0090, r_add=(vf10)0xfff8, g_add=(vf10)0xfff8, b_add=(vf10)0xfff7, flag=(flag)0xfc )
+0x0231    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x23e )
+0x0239    opFE96_ParticleCreate()
+0x023b    mem[0x404] = true -- op36
+0x023e    op00_Return()
+
+Actor_0x05:on_talk:
+0x023f    op00_Return()
+
+Actor_0x05:on_push:
+0x0240    op00_Return()
+
+Actor_0x06:on_start:
+0x0241    -- 0xBC_ActorNoModelInit()
+0x0242    -- 0xFE1C()
+0x024b    -- 0x2A()
+0x024c    op00_Return()
+
+Actor_0x06:on_update:
+0x024d    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x2b9 )
+0x0255    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )
+0x025e    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=20, wait=0, ttl=32767 )
+0x0268    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x004e, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x004e, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x0277    opFE92_ParticleSpeed( speed=(vf80)0x7530, acc_x=(vf40)0x0000, acc_y=(vf20)0x07d0, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x0286    opFE93_ParticleWaitTtl( s_wait=4, var2=40, sprite_id=0, var4=1, var5=1 )
+0x0292    opFE94_ParticleTranslation( trans_x=(vf80)0x02bc, trans_y=(vf40)0x01f4, trans_add_x=(vf20)0x0046, trans_add_y=(vf10)0x001e, flag=(flag)0xf0 )
+0x029d    opFE95_ParticleColour( r=(vf80)0x00a2, g=(vf40)0x009f, b=(vf20)0x0090, r_add=(vf10)0xfff8, g_add=(vf10)0xfff8, b_add=(vf10)0xfff7, flag=(flag)0xfc )
+0x02ac    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x2b9 )
+0x02b4    opFE96_ParticleCreate()
+0x02b6    mem[0x406] = true -- op36
+0x02b9    op00_Return()
+
+Actor_0x06:on_talk:
+0x02ba    op00_Return()
+
+Actor_0x06:on_push:
+0x02bb    op00_Return()
+
+Actor_0x07:on_start:
+0x02bc    -- 0x0B_InitNPC( (s)mem[0x40e] )
+0x02bf    -- 0x19_ActorSetPosition( x=(vf80)0x0410, z=(vf40)0x0412, flag=(flag)0x00 )
+0x02c5    op02_JumpToConditional( val1=(s)mem[0x414], val2=0, condition="val1 == val2", address_if_false=0x2d2 )
+0x02cd    -- 0x1A()
+0x02cf    op01_JumpTo( address=0x2ec )
+0x02d2    op02_JumpToConditional( val1=(s)mem[0x414], val2=1, condition="val1 == val2", address_if_false=0x2df )
+0x02da    -- 0x1A()
+0x02dc    op01_JumpTo( address=0x2ec )
+0x02df    op02_JumpToConditional( val1=(s)mem[0x414], val2=2, condition="val1 == val2", address_if_false=0x2ec )
+0x02e7    -- 0x1A()
+0x02e9    op01_JumpTo( address=0x2ec )
+0x02ec    op20_ActorSetFlags0( flags=13 )
+0x02ef    -- 0xF8()
+0x02f3    -- 0x18()
+0x02f8    -- 0x1F( ???=0x70 )
+0x02fa    op00_Return()
+
+Actor_0x07:on_update:
+0x02fb    mem[0x416] = false -- op37
+0x02fe    -- 0xFE99()
+0x0301    op00_Return()
+
+Actor_0x07:on_talk:
+0x0302    -- 0xFE99()
+0x0305    -- MISSING OPCODE 0xFE55

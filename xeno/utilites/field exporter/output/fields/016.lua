@@ -203,4 +203,5 @@ Actor_0x07:on_update:
 0x0244    op29_ActorTurnOff( actor_id=Actor_0x07 )
 0x0246    op02_JumpToConditional( val1=(s)mem[0x40a], val2=4096, condition="val1 < val2", address_if_false=0x28b )
 0x024e    opC6_ExpandRun() -- exp0x20
-0x024f    -- MISSING OPCODE 0x6d
+0x024f    -- 0x6D()
+0x0257    -- MISSING OPCODE 0xd9

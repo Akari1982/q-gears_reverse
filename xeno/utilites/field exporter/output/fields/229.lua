@@ -36,7 +36,7 @@ Actor_0x00:on_update:
 0x0039    opB4_FadeOut()
 0x003c    op26_Wait( time=60 )
 0x003f    -- 0xB5() -- camera set direction
-0x0040    op02_JumpToConditional( val1=(s)mem[0x180], val2=mem[0x780], condition="val1 != val2", address_if_false=0x724 )
+0x0040    op02_JumpToConditional( val1=(s)mem[0x180], val2=(s)mem[0x780], condition="val1 != val2", address_if_false=0x724 )
 0x0048    -- 0x04()
 0x0049    op25_ActorDisable( actor_id=Actor_0x09 )
 0x004b    op05_CallFunction( address=0xb326 )

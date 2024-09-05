@@ -226,4 +226,16 @@ Actor_0x0d:on_talk:
 0x00e0    op01_JumpTo( address=0xe8 )
 0x00e3    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
 0x00e7    op9C_MessageSync()
-0x00e8    -- MISSING OPCODE 0xFE17
+0x00e8    -- 0xFE17()
+0x00ec    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xfa )
+0x00f1    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x00f7    op01_JumpTo( address=0x112 )
+0x00fa    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x6, flags=CLOSE_OFF_SCREEN )
+0x0100    -- 0x91()
+0x0104    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
+0x0106    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x010c    mem[0x400] = 1 -- op35
+
+Actor_0x0d:on_push:
+0x0112    op00_Return()
+0x0113    -- 0xE0( actor_id=Actor_0x6e, ???=(vf80)0x5a73, ???=(vf40)0xa63f, flag=0xd2 )

@@ -1207,4 +1207,10 @@ Actor_0x18:on_update:
 0x104c    op02_JumpToConditional( val1=(s)mem[0x414], val2=2, condition="val1 == val2", address_if_false=0x106a )
 0x1054    op02_JumpToConditional( val1=(s)mem[0x410], val2=127, condition="val1 < val2", address_if_false=0x1066 )
 0x105c    mem[0x410] += 1 -- op3c
-0x105f    -- MISSING OPCODE 0xFE0f
+0x105f    -- 0xFE0F()
+0x1066    op00_Return()
+0x1067    op01_JumpTo( address=0x1087 )
+0x106a    op02_JumpToConditional( val1=(s)mem[0x414], val2=3, condition="val1 == val2", address_if_false=0x1087 )
+0x1072    op02_JumpToConditional( val1=(s)mem[0x412], val2=-1, condition="val1 < val2", address_if_false=0x1083 )
+0x107a    mem[0x412] += 1 -- op3c
+0x107d    -- MISSING OPCODE 0xFE10

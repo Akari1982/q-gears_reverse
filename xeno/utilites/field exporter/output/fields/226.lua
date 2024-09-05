@@ -295,4 +295,54 @@ Actor_0x0c:on_push:
 Actor_0x0d:on_start:
 0x0313    -- 0x0B_InitNPC( 2 )
 0x0316    -- 0x19_ActorSetPosition( x=(vf80)0x0072, z=(vf40)0xffa9, flag=(flag)0xc0 )
-0x031c    -- MISSING OPCODE 0x17
+0x031c    -- 0x17()
+0x032e    -- 0x21( ???=128 )
+0x0331    op00_Return()
+
+Actor_0x0d:on_update:
+0x0332    -- 0xFE01()
+0x0334    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0335    op74_SoundPlayFixedVolume( sound_id=22 )
+0x0338    op26_Wait( time=10 )
+
+Actor_0x0d:on_push:
+0x033b    op00_Return()
+
+Actor_0x0e:on_start:
+0x033c    -- 0x0B_InitNPC( 2 )
+0x033f    -- 0x19_ActorSetPosition( x=(vf80)0x0261, z=(vf40)0xffd9, flag=(flag)0xc0 )
+0x0345    -- 0x17()
+0x0357    -- 0x21( ???=128 )
+0x035a    op00_Return()
+
+Actor_0x0e:on_update:
+0x035b    -- 0xFE01()
+0x035d    op00_Return()
+
+Actor_0x0e:on_talk:
+0x035e    op74_SoundPlayFixedVolume( sound_id=22 )
+0x0361    op26_Wait( time=10 )
+
+Actor_0x0e:on_push:
+0x0364    op00_Return()
+
+Actor_0x0f:on_start:
+0x0365    -- 0x0B_InitNPC( 2 )
+0x0368    -- 0x19_ActorSetPosition( x=(vf80)0x01f6, z=(vf40)0x0025, flag=(flag)0xc0 )
+0x036e    -- 0x17()
+0x0380    -- 0x21( ???=128 )
+0x0383    op00_Return()
+
+Actor_0x0f:on_update:
+0x0384    -- 0xFE01()
+0x0386    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0387    op74_SoundPlayFixedVolume( sound_id=23 )
+0x038a    op26_Wait( time=10 )
+
+Actor_0x0f:on_push:
+0x038d    op00_Return()
+0x038e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x10 )

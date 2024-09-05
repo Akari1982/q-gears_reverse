@@ -319,4 +319,38 @@ Actor_0x0c:on_talk:
 0x01a7    op9C_MessageSync()
 0x01a8    op01_JumpTo( address=0x1ef )
 0x01ab    -- 0xFE54()
-0x01ad    -- MISSING OPCODE 0xFE17
+0x01ad    -- 0xFE17()
+0x01b1    op26_Wait( time=10 )
+0x01b4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1, flags=0 )
+0x01ba    -- 0xFE13()
+0x01c0    opD2_MessageShowDynamic( text_id=0x2, flags=NO_FACE )
+0x01c4    op9C_MessageSync()
+0x01c5    -- 0xFE17()
+0x01c9    op26_Wait( time=10 )
+0x01cc    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x3, flags=0 )
+0x01d2    -- 0xFE17()
+0x01d6    op26_Wait( time=10 )
+0x01d9    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x4, flags=0 )
+0x01df    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x5, flags=0 )
+0x01e5    mem[0x1c8] |= 1 << 2 -- op3a
+0x01eb    -- 0xFE24()
+0x01ed    -- 0xFE54()
+0x01ef    op00_Return()
+
+Actor_0x0c:on_push:
+0x01f0    op00_Return()
+
+Actor_0x0d:on_start:
+0x01f1    -- 0xBC_ActorNoModelInit()
+0x01f2    -- 0xFE1C()
+0x01fb    -- 0xF8()
+0x01ff    -- 0xF8()
+0x0203    -- 0x18()
+0x0208    op00_Return()
+
+Actor_0x0d:on_update:
+0x0209    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x2c1 )
+0x0211    opC6_ExpandRun() -- exp0x20
+0x0212    -- 0xFE54()
+0x0214    opB4_FadeOut()
+0x0217    -- MISSING OPCODE 0xaf

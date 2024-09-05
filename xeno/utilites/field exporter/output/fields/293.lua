@@ -529,4 +529,96 @@ Actor_0x0d:event_0x07:
 0x0596    op26_Wait( time=10 )
 0x0599    opD2_MessageShowDynamic( text_id=0x0, flags=NO_FACE|FORCE_TOP|NO_WINDOW )
 0x059d    op9C_MessageSync()
-0x059e    -- MISSING OPCODE 0xFE17
+0x059e    -- 0xFE17()
+0x05a2    op26_Wait( time=10 )
+0x05a5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x1, flags=NO_FACE|NO_WINDOW )
+0x05ab    op00_Return()
+
+Actor_0x0e:on_start:
+0x05ac    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0x5d0 )
+0x05b4    -- 0x0B_InitNPC( 4 )
+0x05b7    -- 0x2A()
+0x05b8    -- 0xFE07( ???=0x1 )
+0x05bb    -- 0x19_ActorSetPosition( x=(vf80)0x0190, z=(vf40)0xfe70, flag=(flag)0xc0 )
+0x05c1    op69_ActorSetRotation( rot=7 )
+0x05c4    opFE0D_MessageSetFace( char_id=19 )
+0x05c8    op20_ActorSetFlags0( flags=13 )
+0x05cb    -- 0x1F( ???=0x10 )
+0x05cd    op01_JumpTo( address=0x5d2 )
+0x05d0    -- 0xBC_ActorNoModelInit()
+0x05d1    -- 0x2A()
+0x05d2    op00_Return()
+
+Actor_0x0e:on_update:
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x05d3    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x05d4    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x05da    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x05dc    op00_Return()
+
+Actor_0x0e:event_0x05:
+0x05dd    -- 0x21( ???=384 )
+0x05e0    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x05e6    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x05e8    op00_Return()
+
+Actor_0x0f:on_start:
+0x05e9    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x610 )
+0x05ee    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x610 )
+0x05f6    -- 0x0B_InitNPC( 6 )
+0x05f9    -- 0x2A()
+0x05fa    -- 0x19_ActorSetPosition( x=(vf80)0x0032, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0600    -- 0xFE07( ???=0x1 )
+0x0603    op69_ActorSetRotation( rot=6 )
+0x0606    -- 0x1F( ???=0x10 )
+0x0608    op20_ActorSetFlags0( flags=13 )
+0x060b    opFE0D_MessageSetFace( char_id=0 )
+0x060f    op00_Return()
+0x0610    -- 0xBC_ActorNoModelInit()
+0x0611    -- 0x2A()
+0x0612    op00_Return()
+
+Actor_0x0f:on_update:
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x0613    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x0614    op2C_SpritePlayAnim( anim_id=0x2 )
+0x0616    op00_Return()
+
+Actor_0x0f:event_0x05:
+0x0617    op2C_SpritePlayAnim( anim_id=0x3 )
+0x0619    op00_Return()
+
+Actor_0x0f:event_0x06:
+0x061a    op2C_SpritePlayAnim( anim_id=0x4 )
+0x061c    op00_Return()
+
+Actor_0x0f:event_0x07:
+0x061d    op2C_SpritePlayAnim( anim_id=0xff )
+0x061f    op00_Return()
+
+Actor_0x0f:event_0x08:
+0x0620    op05_CallFunction( address=0x143e )
+0x0623    op00_Return()
+
+Actor_0x10:on_start:
+0x0624    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x64d )
+0x0629    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x64d )
+0x0631    -- 0x0B_InitNPC( 1 )
+0x0634    -- 0x2A()
+0x0635    -- 0x19_ActorSetPosition( x=(vf80)0x0258, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x063b    -- 0xFE07( ???=0x1 )
+0x063e    op69_ActorSetRotation( rot=6 )
+0x0641    -- 0x1F( ???=0x10 )
+0x0643    op20_ActorSetFlags0( flags=13 )
+0x0646    opFE0D_MessageSetFace( char_id=4 )
+0x064a    -- MISSING OPCODE 0xFEc3

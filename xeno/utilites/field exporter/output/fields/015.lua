@@ -205,4 +205,17 @@ Actor_0x02:on_push:
 Actor_0x02:event_0x04:
 0x0244    op2C_SpritePlayAnim( anim_id=0x2 )
 0x0246    -- 0x1F( ???=0x10 )
-0x0248    -- MISSING OPCODE 0xFE17
+0x0248    -- 0xFE17()
+0x024c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0252    op2C_SpritePlayAnim( anim_id=0xff )
+0x0254    op2C_SpritePlayAnim( anim_id=0x0 )
+0x0256    op00_Return()
+
+Actor_0x02:event_0x05:
+0x0257    op2C_SpritePlayAnim( anim_id=0x2 )
+0x0259    op26_Wait( time=0 )
+0x025c    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0262    -- 0x1E()
+0x0263    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0269    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x026f    -- MISSING OPCODE 0x1b

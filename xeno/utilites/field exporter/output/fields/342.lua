@@ -250,4 +250,101 @@ Actor_0x0d:on_start:
 0x011d    -- 0xFE1C()
 0x0126    op69_ActorSetRotation( rot=4 )
 0x0129    -- 0xFE07( ???=0x1 )
-0x012c    -- MISSING OPCODE 0xFE3f
+0x012c    -- 0xFE3F()
+0x0134    op00_Return()
+
+Actor_0x0d:on_update:
+0x0135    -- 0xFE3C( ???=0, ???=2 )
+0x013b    -- 0x21( ???=69 )
+0x013e    -- 0x10()
+0x0149    -- 0x5B()
+0x014a    op00_Return()
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x014b    op00_Return()
+
+Actor_0x0e:on_start:
+0x014c    -- 0xBC_ActorNoModelInit()
+0x014d    -- 0x2A()
+0x014e    op00_Return()
+
+Actor_0x0e:on_update:
+0x014f    -- 0xFE66() -- sound play with volume in slot
+0x0159    -- 0xFE66() -- sound play with volume in slot
+0x0163    op26_Wait( time=80 )
+0x0166    -- 0xFE66() -- sound play with volume in slot
+0x0170    -- 0xFE66() -- sound play with volume in slot
+0x017a    op26_Wait( time=10 )
+0x017d    -- 0xFE66() -- sound play with volume in slot
+0x0187    -- 0xFE66() -- sound play with volume in slot
+0x0191    op26_Wait( time=10 )
+0x0194    -- 0xFE66() -- sound play with volume in slot
+0x019e    -- 0xFE66() -- sound play with volume in slot
+0x01a8    op26_Wait( time=10 )
+0x01ab    -- 0xFE66() -- sound play with volume in slot
+0x01b5    -- 0xFE66() -- sound play with volume in slot
+0x01bf    op26_Wait( time=10 )
+0x01c2    -- 0xFE66() -- sound play with volume in slot
+0x01cc    -- 0xFE66() -- sound play with volume in slot
+0x01d6    op26_Wait( time=10 )
+0x01d9    -- 0xFE66() -- sound play with volume in slot
+0x01e3    -- 0xFE66() -- sound play with volume in slot
+0x01ed    op26_Wait( time=5 )
+0x01f0    -- 0x98_MapLoad( field_id=360, value=1 )
+0x01f5    -- 0x5B()
+0x01f6    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x01f7    op00_Return()
+
+Actor_0x0f:on_start:
+0x01f8    -- 0xBC_ActorNoModelInit()
+0x01f9    op00_Return()
+
+Actor_0x0f:on_update:
+0x01fa    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x01fb    op00_Return()
+
+Actor_0x10:on_start:
+0x01fc    -- 0xBC_ActorNoModelInit()
+0x01fd    op00_Return()
+
+Actor_0x10:on_update:
+0x01fe    op00_Return()
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x01ff    op00_Return()
+
+Actor_0x11:on_start:
+0x0200    -- 0xBC_ActorNoModelInit()
+0x0201    op00_Return()
+
+Actor_0x11:on_update:
+0x0202    op00_Return()
+
+Actor_0x11:on_talk:
+
+Actor_0x11:on_push:
+0x0203    op00_Return()
+
+Actor_0x12:on_start:
+0x0204    -- 0xBC_ActorNoModelInit()
+0x0205    op00_Return()
+
+Actor_0x12:on_update:
+0x0206    op00_Return()
+
+Actor_0x12:on_talk:
+
+Actor_0x12:on_push:
+0x0207    op00_Return()

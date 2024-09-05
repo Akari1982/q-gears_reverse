@@ -380,4 +380,51 @@ Actor_0x04:event_0x09:
 0x0472    -- 0x53()
 0x0476    -- 0x75( ???=29 )
 0x0479    -- 0xFE84()
-0x0483    -- MISSING OPCODE 0xFE7f
+0x0483    -- 0xFE7F()
+0x0485    -- 0x75( ???=255 )
+0x0488    mem[0x404] = 7 -- op35
+0x048e    op29_ActorTurnOff( actor_id=Actor_0x10 )
+
+Actor_0x04:event_0x0a:
+0x0490    -- 0x21( ???=384 )
+0x0493    -- 0x19_ActorSetPosition( x=(vf80)0xfa74, z=(vf40)0x0401, flag=(flag)0xc0 )
+0x0499    op2C_SpritePlayAnim( anim_id=0x7 )
+0x049b    op26_Wait( time=10 )
+0x049e    opFE0D_MessageSetFace( char_id=0 )
+0x04a2    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x04a6    op9C_MessageSync()
+0x04a7    op26_Wait( time=20 )
+0x04aa    opB4_FadeOut()
+0x04ad    op26_Wait( time=31 )
+0x04b0    -- 0x98_MapLoad( field_id=25, value=0 )
+0x04b5    -- 0x5B()
+0x04b6    op00_Return()
+
+Actor_0x04:event_0x0b:
+0x04b7    op2C_SpritePlayAnim( anim_id=0xc )
+0x04b9    op00_Return()
+
+Actor_0x04:event_0x0c:
+0x04ba    op2C_SpritePlayAnim( anim_id=0xff )
+0x04bc    op00_Return()
+
+Actor_0x05:on_start:
+0x04bd    -- 0x16_ActorPCInit( char_id=1 )
+0x04c0    opFE0D_MessageSetFace( char_id=1 )
+0x04c4    -- 0x84_ProgressLessEqualJumpTo( value=27, jump=0x4e4 )
+0x04c9    -- 0xFE07( ???=0x1 )
+0x04cc    -- 0x19_ActorSetPosition( x=(vf80)0xfa92, z=(vf40)0x04e7, flag=(flag)0xc0 )
+0x04d2    -- 0x5F( ???=0x6 )
+0x04d4    -- 0xFE3B()
+0x04d8    -- 0x23()
+0x04d9    -- 0x1F( ???=0x70 )
+0x04db    mem[0x41e] = true -- op36
+0x04de    opFE4A_SpriteAddAnimLoad( file=67 )
+0x04e2    opFE4B_SpriteAddAnimSync()
+0x04e4    op00_Return()
+
+Actor_0x05:on_update:
+0x04e5    -- 0x84_ProgressLessEqualJumpTo( value=27, jump=0x52d )
+0x04ea    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 != val2", address_if_false=0x4f3 )
+0x04f2    op00_Return()
+0x04f3    -- MISSING OPCODE 0xFE06

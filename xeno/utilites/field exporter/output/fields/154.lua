@@ -79,7 +79,7 @@ Actor_0x02:on_start:
 0x0095    -- 0x2A()
 0x0096    -- 0xB5() -- camera set direction
 0x0097    op02_JumpToConditional( condition="", address_if_false=0x868 )
-0x009f    -- 0x98_MapLoad( field_id=mem[0x2700], value=13339 )
+0x009f    -- 0x98_MapLoad( field_id=(s)mem[0x2700], value=13339 )
 0x00a4    op00_Return()
 0x00a5    -- 0x80()
 0x00aa    -- 0x9F()

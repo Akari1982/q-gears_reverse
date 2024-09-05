@@ -187,4 +187,90 @@ Actor_0x04:on_update:
 0x014e    -- 0xFE65()
 0x0154    opD4_MessageShowFromActor( actor_id=Actor_0x03, text_id=0x3, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_BOTTOM )
 0x015a    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0a, priority=0x01 )
-0x015d    -- MISSING OPCODE 0xFE17
+0x015d    -- 0xFE17()
+0x0161    op26_Wait( time=5 )
+0x0164    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x06, priority=0x01 )
+0x0167    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
+0x016a    -- 0xFE17()
+0x016e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x4, flags=FORCE_TOP )
+0x0174    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x06, priority=0x01 )
+0x0177    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
+0x017a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x5, flags=FORCE_BOTTOM )
+0x0180    -- 0xFE17()
+0x0184    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x6, flags=FORCE_TOP )
+0x018a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x7, flags=FORCE_BOTTOM )
+0x0190    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x8, flags=FORCE_TOP )
+0x0196    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x08, priority=0x01 )
+0x0199    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x9, flags=FORCE_BOTTOM )
+0x019f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0xa, flags=FORCE_TOP )
+0x01a5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xb, flags=FORCE_BOTTOM )
+0x01ab    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x08, priority=0x01 )
+0x01ae    op26_Wait( time=30 )
+0x01b1    -- 0xFE65()
+0x01b7    opF1_FadeSetUp( steps=1, r=60, g=60, b=180, semi_tr=60 )
+0x01c2    op26_Wait( time=20 )
+0x01c5    -- 0xFE65()
+0x01cb    opF1_FadeSetUp( steps=1, r=60, g=60, b=180, semi_tr=1 )
+0x01d6    op26_Wait( time=2 )
+0x01d9    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=1 )
+0x01e4    op26_Wait( time=10 )
+0x01e7    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x06, priority=0x01 )
+0x01ea    op26_Wait( time=20 )
+0x01ed    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x07, priority=0x01 )
+0x01f0    op26_Wait( time=60 )
+0x01f3    -- 0xFE17()
+0x01f7    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0xc, flags=FORCE_TOP )
+0x01fd    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x05, priority=0x01 )
+0x0200    op26_Wait( time=20 )
+0x0203    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
+0x0206    -- 0xFE65()
+0x020c    -- 0xFE17()
+0x0210    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x09, priority=0x01 )
+0x0213    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xd, flags=FORCE_BOTTOM )
+0x0219    -- 0xFE8D()
+0x021d    -- 0x12()
+0x0221    -- 0x80()
+0x0226    -- 0x5B()
+0x0227    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0228    op00_Return()
+
+Actor_0x05:on_start:
+0x0229    -- 0xBC_ActorNoModelInit()
+0x022a    -- 0x2A()
+0x022b    op99()
+0x022c    -- 0x61( ???=-81, ???=-84, ???=12 ) -- exp0x1
+0x0234    -- 0x65( ???=919, ???=52, ???=-201 ) -- exp0x1
+0x023c    -- 0x63( ???=-81, ???=-84, ???=12 ) -- exp0x1
+0x0244    -- 0xA3()
+0x024c    opAC_MoveCamera( control=0x0, steps=0 )
+0x0250    opAC_MoveCamera( control=0x1, steps=0 )
+0x0254    op00_Return()
+
+Actor_0x05:on_update:
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x0255    op00_Return()
+
+Actor_0x05:event_0x04:
+0x0256    -- 0x61( ???=36, ???=177, ???=-12 ) -- exp0x1
+0x025e    -- 0x65( ???=265, ???=-785, ???=-277 ) -- exp0x1
+0x0266    -- 0x63( ???=36, ???=177, ???=-12 ) -- exp0x1
+0x026e    -- 0xA3()
+0x0276    opAC_MoveCamera( control=0x0, steps=0 )
+0x027a    opAC_MoveCamera( control=0x1, steps=0 )
+0x027e    op00_Return()
+
+Actor_0x05:event_0x05:
+0x027f    -- 0x61( ???=285, ???=256, ???=116 ) -- exp0x1
+0x0287    -- 0x65( ???=-199, ???=-415, ???=-464 ) -- exp0x1
+0x028f    -- 0x63( ???=285, ???=256, ???=116 ) -- exp0x1
+0x0297    -- 0xA3()
+0x029f    opAC_MoveCamera( control=0x0, steps=0 )
+0x02a3    opAC_MoveCamera( control=0x1, steps=0 )
+0x02a7    op00_Return()

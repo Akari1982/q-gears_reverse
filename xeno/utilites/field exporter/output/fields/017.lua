@@ -645,4 +645,24 @@ Actor_0x0e:on_start:
 0x0631    -- 0x19_ActorSetPosition( x=(vf80)0xff00, z=(vf40)0xfe18, flag=(flag)0xc0 )
 0x0637    op69_ActorSetRotation( rot=1 )
 0x063a    -- 0x1A()
-0x063c    -- MISSING OPCODE 0x17
+0x063c    -- 0x17()
+0x064e    op20_ActorSetFlags0( flags=13 )
+0x0651    -- 0x21( ???=128 )
+0x0654    mem[0x410] = 2560 -- op35
+0x065a    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=4, condition="val1 & val2", address_if_false=0x665 )
+0x0662    -- 0x23()
+0x0663    -- 0x27( actor_id=Actor_0x0e )
+0x0665    op00_Return()
+
+Actor_0x0e:on_update:
+0x0666    op02_JumpToConditional( val1=(s)mem[0x4], val2=18, condition="val1 == val2", address_if_false=0x6e7 )
+0x066e    op26_Wait( time=30 )
+0x0671    op2C_SpritePlayAnim( anim_id=0x6 )
+0x0673    -- 0x5A()
+0x0674    op26_Wait( time=10 )
+0x0677    -- 0xFE13()
+0x067d    -- 0x21( ???=64 )
+0x0680    op20_ActorSetFlags0( flags=13 )
+0x0683    -- 0x1F( ???=0x77 )
+0x0685    -- 0x2D()
+0x068d    -- MISSING OPCODE 0xFE16

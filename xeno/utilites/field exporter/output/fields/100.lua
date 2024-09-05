@@ -267,4 +267,37 @@ Actor_0x0d:on_update:
 0x0183    op01_JumpTo( address=0x188 )
 0x0186    -- 0x52()
 0x0188    op02_JumpToConditional( val1=(s)mem[0x102], val2=16, condition="val1 == val2", address_if_false=0x1b7 )
-0x0190    -- MISSING OPCODE 0xcd
+0x0190    -- 0xCD()
+0x0191    -- 0xFE17()
+0x0195    -- 0xFE17()
+0x0199    -- 0xFE17()
+0x019d    op6F_ActorRotateToActor( actor_id=party1 )
+0x019f    op26_Wait( time=30 )
+0x01a2    -- 0xFE07( ???=0x1 )
+0x01a5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x01ab    op6F_ActorRotateToActor( actor_id=party1 )
+0x01ad    op26_Wait( time=10 )
+0x01b0    mem[0x102] = 17 -- op35
+0x01b6    -- 0xCE()
+0x01b7    op00_Return()
+
+Actor_0x0d:on_talk:
+0x01b8    op02_JumpToConditional( val1=(s)mem[0x102], val2=17, condition="val1 == val2", address_if_false=0x1c5 )
+0x01c0    opD2_MessageShowDynamic( text_id=0x0, flags=FORCE_BOTTOM )
+0x01c4    op9C_MessageSync()
+0x01c5    op00_Return()
+
+Actor_0x0d:on_push:
+0x01c6    op00_Return()
+
+Actor_0x0e:on_start:
+0x01c7    -- 0xBC_ActorNoModelInit()
+0x01c8    -- 0x2A()
+0x01c9    op00_Return()
+
+Actor_0x0e:on_update:
+0x01ca    -- 0xC9()
+0x01ce    -- 0xFE54()
+0x01d0    -- 0x5A()
+0x01d1    -- 0xFE0A( ???=0x1280 )
+0x01d5    -- MISSING OPCODE 0xa5
