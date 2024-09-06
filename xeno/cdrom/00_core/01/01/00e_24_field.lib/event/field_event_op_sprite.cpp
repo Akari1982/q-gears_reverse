@@ -33,7 +33,7 @@ funca0224();
 
 ////////////////////////////////
 // field_event_op16_actor_pc_init()
-// used to init patry characters
+// used to init party characters
 
 entity_id = w[800af1f0];
 sprite_data = w[800aeff0];
