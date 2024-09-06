@@ -1525,4 +1525,52 @@ Actor_0x11:on_update:
 
 Actor_0x11:on_talk:
 0x174e    -- 0xFE99()
-0x1751    -- MISSING OPCODE 0xFE55
+0x1751    -- 0xFE55()
+0x1753    -- 0xFE87()
+0x1755    op00_Return()
+
+Actor_0x11:on_push:
+0x1756    -- 0xFE99()
+0x1759    op02_JumpToConditional( val1=(s)mem[0x41a], val2=0, condition="val1 == val2", address_if_false=0x1767 )
+0x1761    op74_SoundPlayFixedVolume( sound_id=80 )
+0x1764    mem[0x41a] = true -- op36
+0x1767    op00_Return()
+0x1768    mem[0x428] = false -- op37
+0x176b    -- 0x2E()
+0x176e    op02_JumpToConditional( val1=(s)mem[0x428], val2=4, condition="val1 < val2", address_if_false=0x178b )
+0x1776    mem[0x422] += 1 -- op3c
+0x1779    mem[0x422] &= 7 -- op3e
+0x177f    op69_ActorSetRotation( rot=(s)mem[0x422] )
+0x1782    mem[0x428] += 1 -- op3c
+0x1785    op26_Wait( time=0 )
+0x1788    op01_JumpTo( address=0x176e )
+0x178b    op0D_Return()
+0x178c    mem[0x428] = false -- op37
+0x178f    -- 0x2E()
+0x1792    op02_JumpToConditional( val1=(s)mem[0x428], val2=4, condition="val1 < val2", address_if_false=0x17af )
+0x179a    mem[0x422] -= 1 -- op3d
+0x179d    mem[0x422] &= 7 -- op3e
+0x17a3    op69_ActorSetRotation( rot=(s)mem[0x422] )
+0x17a6    mem[0x428] += 1 -- op3c
+0x17a9    op26_Wait( time=0 )
+0x17ac    op01_JumpTo( address=0x1792 )
+0x17af    op0D_Return()
+0x17b0    op6B_ActorRotateClockwise( rot=1 )
+0x17b3    op26_Wait( time=6 )
+0x17b6    op6C_ActorRotateAnticlockwise( rot=1 )
+0x17b9    op26_Wait( time=2 )
+0x17bc    op6C_ActorRotateAnticlockwise( rot=1 )
+0x17bf    op26_Wait( time=6 )
+0x17c2    op6B_ActorRotateClockwise( rot=1 )
+0x17c5    op0D_Return()
+0x17c6    -- 0x2E()
+0x17c9    mem[0x424] -= 2 -- op39
+0x17cf    mem[0x424] &= 7 -- op3e
+0x17d5    opDE_VariableMultiply( address=0x424, value=(vf40)0x0200, flag=0x40 )
+0x17db    -- 0x44()
+0x17e0    op0D_Return()
+0x17e1    op74_SoundPlayFixedVolume( sound_id=119 )
+0x17e4    mem[0x42a] = false -- op37
+0x17e7    op02_JumpToConditional( val1=(s)mem[0x42a], val2=16, condition="val1 < val2", address_if_false=0x17ff )
+0x17ef    opC6_ExpandRun() -- exp0x20
+0x17f0    -- MISSING OPCODE 0xFE1b

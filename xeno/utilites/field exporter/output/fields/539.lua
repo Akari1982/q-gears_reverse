@@ -67,4 +67,41 @@ Actor_0x03:on_update:
 Actor_0x03:on_talk:
 0x0038    op6F_ActorRotateToActor( actor_id=party1 )
 0x003a    op26_Wait( time=10 )
-0x003d    -- MISSING OPCODE 0xFE17
+0x003d    -- 0xFE17()
+0x0041    op6F_ActorRotateToActor( actor_id=Actor_0x02 )
+0x0043    op02_JumpToConditional( val1=(s)mem[0x1cc], val2=32, condition="val1 & val2", address_if_false=0x53 )
+0x004b    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x004f    op9C_MessageSync()
+0x0050    op01_JumpTo( address=0x75 )
+0x0053    -- 0xFE54()
+0x0055    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0059    op9C_MessageSync()
+0x005a    -- 0x8C()
+0x005d    mem[0x1cc] |= 1 << 5 -- op3a
+0x0063    op74_SoundPlayFixedVolume( sound_id=55 )
+0x0066    opF5_MessageShowStatic( text_id=0x2, flags=CLOSE_OFF_SCREEN )
+0x006a    op9C_MessageSync()
+0x006b    op26_Wait( time=10 )
+0x006e    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x0072    op9C_MessageSync()
+0x0073    -- 0xFE54()
+0x0075    op00_Return()
+
+Actor_0x03:on_push:
+0x0076    op00_Return()
+
+Actor_0x04:on_start:
+0x0077    -- 0xBC_ActorNoModelInit()
+0x0078    -- 0xF8()
+0x007c    -- 0xF8()
+0x0080    -- 0x18()
+0x0085    -- 0x19_ActorSetPosition( x=(vf80)0xff65, z=(vf40)0xfdaf, flag=(flag)0xc0 )
+0x008b    op00_Return()
+
+Actor_0x04:on_update:
+0x008c    op00_Return()
+
+Actor_0x04:on_talk:
+0x008d    -- 0xFE54()
+0x008f    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x04, priority=0x03 )
+0x0092    -- MISSING OPCODE 0xFE68

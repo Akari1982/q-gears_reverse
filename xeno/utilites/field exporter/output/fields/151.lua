@@ -692,4 +692,19 @@ Actor_0x15:on_start:
 0x05d9    -- 0xBC_ActorNoModelInit()
 0x05da    -- 0xF8()
 0x05de    -- 0x18()
-0x05e3    -- MISSING OPCODE 0x1b
+0x05e3    -- 0x1B()
+0x05ea    op20_ActorSetFlags0( flags=13 )
+0x05ed    op00_Return()
+
+Actor_0x15:on_update:
+0x05ee    op00_Return()
+
+Actor_0x15:on_talk:
+0x05ef    -- 0xFE54()
+0x05f1    op07_CallActorEvent( actor_id=Actor_0x16, event=event_0x04, priority=0x01 )
+0x05f4    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x04, priority=0x01 )
+0x05f7    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x603 )
+0x05ff    -- 0x5A()
+0x0600    op01_JumpTo( address=0x5f7 )
+0x0603    -- 0x27( actor_id=Actor_0x19 )
+0x0605    -- MISSING OPCODE 0xFE68

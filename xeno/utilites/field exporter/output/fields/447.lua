@@ -572,4 +572,124 @@ Actor_0x0d:on_push:
 0x02d7    -- 0x75( ???=29 )
 0x02da    op26_Wait( time=4 )
 0x02dd    -- 0x71()
-0x02e0    -- MISSING OPCODE 0xFE7f
+0x02e0    -- 0xFE7F()
+0x02e2    -- 0xFE66() -- sound play with volume in slot
+0x02ec    -- 0xFE66() -- sound play with volume in slot
+0x02f6    -- 0x75( ???=67 )
+0x02f9    mem[0xe2] |= 1 << 1 -- op3a
+0x02ff    op29_ActorTurnOff( actor_id=Actor_0x0c )
+0x0301    op29_ActorTurnOff( actor_id=Actor_0x0d )
+0x0303    -- 0xFE54()
+0x0305    op00_Return()
+
+Actor_0x0e:on_start:
+0x0306    -- 0x2A()
+0x0307    -- 0xBC_ActorNoModelInit()
+0x0308    op00_Return()
+
+Actor_0x0e:on_update:
+0x0309    -- 0x5B()
+0x030a    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x030b    op00_Return()
+
+Actor_0x0e:event_0x04:
+
+function:
+0x030c    op25_ActorDisable( actor_id=Actor_0x23 )
+0x030e    op25_ActorDisable( actor_id=Actor_0x24 )
+0x0310    op25_ActorDisable( actor_id=Actor_0x1c )
+0x0312    op25_ActorDisable( actor_id=Actor_0x1d )
+0x0314    -- 0xF7()
+0x0319    op0D_Return()
+
+Actor_0x0e:event_0x05:
+0x031a    op24_ActorEnable( actor_id=Actor_0x23 )
+0x031c    op24_ActorEnable( actor_id=Actor_0x24 )
+0x031e    op24_ActorEnable( actor_id=Actor_0x1c )
+0x0320    op24_ActorEnable( actor_id=Actor_0x1d )
+0x0322    -- 0xF7()
+0x0327    op0D_Return()
+
+Actor_0x0e:event_0x06:
+0x0328    op25_ActorDisable( actor_id=Actor_0x26 )
+0x032a    op25_ActorDisable( actor_id=Actor_0x25 )
+0x032c    op25_ActorDisable( actor_id=Actor_0x18 )
+0x032e    op25_ActorDisable( actor_id=Actor_0x19 )
+0x0330    op25_ActorDisable( actor_id=Actor_0x1a )
+0x0332    op25_ActorDisable( actor_id=Actor_0x1b )
+0x0334    op25_ActorDisable( actor_id=Actor_0x1c )
+0x0336    op25_ActorDisable( actor_id=Actor_0x1f )
+0x0338    op25_ActorDisable( actor_id=Actor_0x20 )
+0x033a    op25_ActorDisable( actor_id=Actor_0x21 )
+0x033c    op07_CallActorEvent( actor_id=Actor_0x16, event=event_0x05, priority=0x06 )
+0x033f    op0D_Return()
+
+Actor_0x0e:event_0x07:
+
+function:
+0x0340    op24_ActorEnable( actor_id=Actor_0x26 )
+0x0342    op24_ActorEnable( actor_id=Actor_0x25 )
+0x0344    op24_ActorEnable( actor_id=Actor_0x18 )
+0x0346    op24_ActorEnable( actor_id=Actor_0x19 )
+0x0348    op24_ActorEnable( actor_id=Actor_0x1a )
+0x034a    op24_ActorEnable( actor_id=Actor_0x1b )
+0x034c    op24_ActorEnable( actor_id=Actor_0x1c )
+0x034e    op24_ActorEnable( actor_id=Actor_0x1f )
+0x0350    op24_ActorEnable( actor_id=Actor_0x20 )
+0x0352    op24_ActorEnable( actor_id=Actor_0x21 )
+0x0354    op02_JumpToConditional( val1=(s)mem[0xe2], val2=1024, condition="val1 & val2", address_if_false=0x35f )
+0x035c    op01_JumpTo( address=0x362 )
+0x035f    op07_CallActorEvent( actor_id=Actor_0x16, event=event_0x04, priority=0x06 )
+0x0362    op0D_Return()
+
+Actor_0x0e:event_0x08:
+
+function:
+0x0363    op25_ActorDisable( actor_id=Actor_0x27 )
+0x0365    op25_ActorDisable( actor_id=Actor_0x1d )
+0x0367    op25_ActorDisable( actor_id=Actor_0x1e )
+0x0369    op25_ActorDisable( actor_id=Actor_0x22 )
+0x036b    op07_CallActorEvent( actor_id=Actor_0x17, event=event_0x05, priority=0x06 )
+0x036e    op0D_Return()
+
+Actor_0x0e:event_0x09:
+0x036f    op24_ActorEnable( actor_id=Actor_0x27 )
+0x0371    op24_ActorEnable( actor_id=Actor_0x1d )
+0x0373    op24_ActorEnable( actor_id=Actor_0x1e )
+0x0375    op24_ActorEnable( actor_id=Actor_0x22 )
+0x0377    op02_JumpToConditional( val1=(s)mem[0xe2], val2=2048, condition="val1 & val2", address_if_false=0x382 )
+0x037f    op01_JumpTo( address=0x385 )
+0x0382    op07_CallActorEvent( actor_id=Actor_0x17, event=event_0x04, priority=0x06 )
+0x0385    op0D_Return()
+
+Actor_0x0f:on_start:
+0x0386    -- 0x0B_InitNPC( 0 )
+0x0389    -- 0x1D()
+0x0390    -- 0x18()
+0x0395    op20_ActorSetFlags0( flags=13 )
+0x0398    -- 0x23()
+0x0399    op00_Return()
+
+Actor_0x0f:on_update:
+0x039a    -- 0x5B()
+0x039b    op00_Return()
+
+Actor_0x0f:on_talk:
+0x039c    op00_Return()
+
+Actor_0x0f:on_push:
+0x039d    op31_JumpIfButtonNotPressed( buttons=Circle, jump_to=0x3a5 )
+0x03a2    op01_JumpTo( address=0x3a6 )
+0x03a5    op00_Return()
+0x03a6    -- 0xFE54()
+0x03a8    opF5_MessageShowStatic( text_id=0x1, flags=0 )
+0x03ac    opA9_MessageSetSelectionSync( start_row=01, end_row=02 )
+0x03ae    op9C_MessageSync()
+0x03af    op02_JumpToConditional( val1=(s)mem[0x14], val2=1, condition="val1 == val2", address_if_false=0x3db )
+0x03b7    op09_CallActorEventEndSync( actor_id=party1, event=event_0x05, priority=0x06 )
+0x03ba    -- 0xFE24()
+0x03bc    -- MISSING OPCODE 0xFE43

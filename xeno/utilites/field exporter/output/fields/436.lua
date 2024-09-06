@@ -258,4 +258,110 @@ Actor_0x0c:on_talk:
 0x011f    op26_Wait( time=20 )
 0x0122    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x0126    op9C_MessageSync()
-0x0127    -- MISSING OPCODE 0xFE5a
+0x0127    -- 0xFE5A()
+0x012b    -- 0xFE87()
+0x012d    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x0131    op9C_MessageSync()
+0x0132    op69_ActorSetRotation( rot=5 )
+
+Actor_0x0c:on_push:
+0x0135    op00_Return()
+
+Actor_0x0d:on_start:
+0x0136    -- 0x0B_InitNPC( 0 )
+0x0139    -- 0x19_ActorSetPosition( x=(vf80)0xffd9, z=(vf40)0xff56, flag=(flag)0xc0 )
+0x013f    op69_ActorSetRotation( rot=3 )
+0x0142    op00_Return()
+
+Actor_0x0d:on_update:
+0x0143    -- 0x5B()
+0x0144    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0145    -- 0x70()
+0x0147    op26_Wait( time=10 )
+0x014a    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x014e    op9C_MessageSync()
+0x014f    -- 0xAA()
+0x0151    op26_Wait( time=10 )
+0x0154    op5D_SpritePlayAnim2( anim_id=0x2 )
+0x0156    -- 0x5E()
+0x0157    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x015b    op9C_MessageSync()
+0x015c    op69_ActorSetRotation( rot=3 )
+
+Actor_0x0d:on_push:
+0x015f    op00_Return()
+
+Actor_0x0e:on_start:
+0x0160    -- 0x0B_InitNPC( 1 )
+0x0163    -- 0x1D()
+0x016a    op69_ActorSetRotation( rot=7 )
+0x016d    op00_Return()
+
+Actor_0x0e:on_update:
+0x016e    -- 0x5B()
+0x016f    op00_Return()
+
+Actor_0x0e:on_talk:
+0x0170    -- 0x70()
+0x0172    op26_Wait( time=20 )
+0x0175    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x0179    op9C_MessageSync()
+0x017a    op69_ActorSetRotation( rot=7 )
+
+Actor_0x0e:on_push:
+0x017d    op00_Return()
+
+Actor_0x0f:on_start:
+0x017e    -- 0xBC_ActorNoModelInit()
+0x017f    -- 0xF8()
+0x0183    -- 0x1F( ???=0x77 )
+0x0185    op00_Return()
+
+Actor_0x0f:on_update:
+0x0186    -- 0x1D()
+0x018d    -- 0x10()
+0x0198    -- 0x5B()
+0x0199    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x019a    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x019b    -- 0x10()
+0x01a6    op00_Return()
+
+Actor_0x0f:event_0x05:
+0x01a7    -- 0x10()
+0x01b2    op00_Return()
+
+Actor_0x10:on_start:
+0x01b3    -- 0x0B_InitNPC( 1 )
+0x01b6    -- 0x1D()
+0x01bd    -- 0x18()
+0x01c2    op20_ActorSetFlags0( flags=12 )
+0x01c5    -- 0x23()
+0x01c6    op00_Return()
+
+Actor_0x10:on_update:
+0x01c7    op00_Return()
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x01c8    op00_Return()
+
+Actor_0x11:on_start:
+0x01c9    -- 0x0B_InitNPC( 1 )
+0x01cc    -- 0x1D()
+0x01d3    -- 0x18()
+0x01d8    op20_ActorSetFlags0( flags=13 )
+0x01db    -- 0x23()
+0x01dc    op00_Return()
+
+Actor_0x11:on_update:
+0x01dd    -- 0xFE24()
+0x01df    -- MISSING OPCODE 0xFE43

@@ -427,4 +427,30 @@ Actor_0x05:on_update:
 0x04e5    -- 0x84_ProgressLessEqualJumpTo( value=27, jump=0x52d )
 0x04ea    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 != val2", address_if_false=0x4f3 )
 0x04f2    op00_Return()
-0x04f3    -- MISSING OPCODE 0xFE06
+0x04f3    -- 0xFE06()
+0x04fa    -- 0xA1()
+0x04fd    op02_JumpToConditional( val1=(s)mem[0x41e], val2=1, condition="val1 == val2", address_if_false=0x50d )
+0x0505    -- 0xF7()
+0x050a    mem[0x41e] = false -- op37
+0x050d    op01_JumpTo( address=0x523 )
+0x0510    -- 0xA1()
+0x0513    op02_JumpToConditional( val1=(s)mem[0x41e], val2=0, condition="val1 == val2", address_if_false=0x523 )
+0x051b    -- 0xF7()
+0x0520    mem[0x41e] = true -- op36
+0x0523    -- 0xC9()
+0x0527    op01_JumpTo( address=0x52f )
+0x052a    op01_JumpTo( address=0x52e )
+0x052d    -- 0xA7()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x052e    op00_Return()
+
+Actor_0x05:event_0x04:
+0x052f    mem[0x412] = 1 -- op35
+0x0535    -- 0xFE0E_SoundSetVolume( volume=0, steps=0 )
+0x053b    -- 0xFE54()
+0x053d    -- 0xFE0E_SoundSetVolume( volume=0, steps=0 )
+0x0543    -- 0xFE13()
+0x0549    -- MISSING OPCODE 0xFE14

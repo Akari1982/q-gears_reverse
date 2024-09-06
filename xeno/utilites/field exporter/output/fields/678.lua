@@ -252,4 +252,118 @@ Actor_0x05:on_start:
 Actor_0x05:on_update:
 0x0353    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x360 )
 0x035b    op2C_SpritePlayAnim( anim_id=0x1 )
-0x035d    -- MISSING OPCODE 0xFEaa
+0x035d    -- 0xFEAA()
+0x0360    -- 0x5B()
+0x0361    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x0362    op00_Return()
+
+Actor_0x06:on_start:
+0x0363    -- 0x0B_InitNPC( 1 )
+0x0366    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x37a )
+0x036e    -- 0x19_ActorSetPosition( x=(vf80)0x00fc, z=(vf40)0xffdb, flag=(flag)0xc0 )
+0x0374    op69_ActorSetRotation( rot=4 )
+0x0377    op01_JumpTo( address=0x380 )
+0x037a    -- 0x19_ActorSetPosition( x=(vf80)0xfed0, z=(vf40)0x033c, flag=(flag)0xc0 )
+0x0380    -- 0x2A()
+0x0381    op20_ActorSetFlags0( flags=13 )
+0x0384    -- 0xFE07( ???=0x1 )
+0x0387    op00_Return()
+
+Actor_0x06:on_update:
+0x0388    -- 0x5B()
+0x0389    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x038a    op00_Return()
+
+Actor_0x06:event_0x04:
+0x038b    opFE0D_MessageSetFace( char_id=51 )
+0x038f    opD0_MessageSettings( x=8, y=0, letters=0, rows=0, flags=0 )
+0x039a    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x039e    op9C_MessageSync()
+0x039f    op00_Return()
+
+Actor_0x06:event_0x05:
+0x03a0    opFE0D_MessageSetFace( char_id=51 )
+0x03a4    opD2_MessageShowDynamic( text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x03a8    op9C_MessageSync()
+0x03a9    -- 0x21( ???=176 )
+0x03ac    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03b2    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x06 )
+0x03b5    op26_Wait( time=2 )
+0x03b8    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03be    op26_Wait( time=5 )
+0x03c1    op2C_SpritePlayAnim( anim_id=0x4 )
+0x03c3    opFE0D_MessageSetFace( char_id=51 )
+0x03c7    opD2_MessageShowDynamic( text_id=0x2, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x03cb    op9C_MessageSync()
+0x03cc    op26_Wait( time=20 )
+0x03cf    op2C_SpritePlayAnim( anim_id=0x0 )
+0x03d1    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x07, priority=0x06 )
+0x03d4    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x03d6    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x05, priority=0x06 )
+0x03d9    op2C_SpritePlayAnim( anim_id=0x1 )
+0x03db    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03e1    op2C_SpritePlayAnim( anim_id=0x6 )
+0x03e3    opD2_MessageShowDynamic( text_id=0x3, flags=FORCE_BOTTOM )
+0x03e7    op9C_MessageSync()
+0x03e8    op2C_SpritePlayAnim( anim_id=0x3 )
+0x03ea    opD2_MessageShowDynamic( text_id=0x4, flags=FORCE_BOTTOM )
+0x03ee    op9C_MessageSync()
+0x03ef    op26_Wait( time=15 )
+0x03f2    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=120 )
+0x03fd    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x08, priority=0x06 )
+0x0400    op26_Wait( time=130 )
+0x0403    -- 0x98_MapLoad( field_id=679, value=0 )
+0x0408    op00_Return()
+
+Actor_0x07:on_start:
+0x0409    -- 0x93( ???=58 )
+0x040c    -- 0xFE03( ???=6144 )
+0x0410    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x424 )
+0x0418    -- 0x19_ActorSetPosition( x=(vf80)0xfed4, z=(vf40)0xff38, flag=(flag)0xc0 )
+0x041e    op69_ActorSetRotation( rot=2 )
+0x0421    op01_JumpTo( address=0x42d )
+0x0424    -- 0x19_ActorSetPosition( x=(vf80)0x00c8, z=(vf40)0x012c, flag=(flag)0xc0 )
+0x042a    op69_ActorSetRotation( rot=6 )
+0x042d    -- 0xFE07( ???=0x1 )
+0x0430    -- 0xFE3F()
+0x0438    op00_Return()
+
+Actor_0x07:on_update:
+0x0439    -- 0xFE3C( ???=0, ???=5 )
+0x043f    -- 0x5B()
+0x0440    op00_Return()
+
+Actor_0x07:on_talk:
+
+Actor_0x07:on_push:
+0x0441    op00_Return()
+
+Actor_0x08:on_start:
+0x0442    -- 0x93( ???=66 )
+0x0445    -- 0xFE03( ???=6144 )
+0x0449    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x45d )
+0x0451    -- 0x19_ActorSetPosition( x=(vf80)0x00c8, z=(vf40)0x012c, flag=(flag)0xc0 )
+0x0457    op69_ActorSetRotation( rot=5 )
+0x045a    op01_JumpTo( address=0x45f )
+0x045d    op29_ActorTurnOff( actor_id=Actor_0x08 )
+0x045f    -- 0xFE07( ???=0x1 )
+0x0462    -- 0xFE3F()
+0x046a    op00_Return()
+
+Actor_0x08:on_update:
+0x046b    -- 0xFE3C( ???=1, ???=5 )
+0x0471    -- 0x5B()
+0x0472    op00_Return()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x0473    op00_Return()

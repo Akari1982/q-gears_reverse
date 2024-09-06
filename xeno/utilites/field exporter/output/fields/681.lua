@@ -38,4 +38,26 @@ Actor_0x01:on_start:
 0x0040    -- 0x16_ActorPCInit( char_id=0 )
 0x0043    opFE0D_MessageSetFace( char_id=0 )
 0x0047    -- 0xFE03( ???=1365 )
-0x004b    -- MISSING OPCODE 0xFE04
+0x004b    -- 0xFE04()
+0x004f    op00_Return()
+
+Actor_0x01:on_update:
+0x0050    -- 0xA7()
+0x0051    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0052    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0053    -- 0x21( ???=320 )
+0x0056    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x005c    -- 0xF6( ???=0x1 )
+0x005e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0064    -- 0xF6( ???=0x0 )
+0x0066    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x006c    op00_Return()
+
+Actor_0x01:event_0x05:
+0x006d    -- MISSING OPCODE 0xFE5e

@@ -157,7 +157,7 @@ Actor_0x02:event_0x04:
 0x0219    -- opFE2700()
 0x021e    -- opFE2701()
 0x0220    op01_JumpTo( address=0x27fe )
-0x0223    op02_JumpToConditional( val1=mem[0x27fe], val2=(s)mem[0xef02], condition="val1 < val2", address_if_false=0x6080 )
+0x0223    op02_JumpToConditional( val1=mem[0x27fe], val2=mem[0xef02], condition="val1 < val2", address_if_false=0x6080 )
 0x022b    -- 0x63( ???=408, ???=1870, ???=163 ) -- exp0x1
 0x0233    -- 0x64() -- exp0x1
 0x0234    -- 0xA3()

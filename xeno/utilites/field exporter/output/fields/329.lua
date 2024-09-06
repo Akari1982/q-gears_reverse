@@ -672,4 +672,72 @@ Actor_0x12:on_talk:
 0x0432    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=4, condition="val1 & val2", address_if_false=0x465 )
 0x043a    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=8, condition="val1 & val2", address_if_false=0x45f )
 0x0442    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=16, condition="val1 & val2", address_if_false=0x459 )
-0x044a    -- MISSING OPCODE 0x8d
+0x044a    -- 0x8D()
+0x044d    -- 0x8D()
+0x0450    -- 0x8D()
+0x0453    op05_CallFunction( address=0x470 )
+0x0456    op01_JumpTo( address=0x45c )
+0x0459    op05_CallFunction( address=0x46a )
+0x045c    op01_JumpTo( address=0x462 )
+0x045f    op05_CallFunction( address=0x46a )
+0x0462    op01_JumpTo( address=0x468 )
+0x0465    op05_CallFunction( address=0x46a )
+0x0468    op00_Return()
+
+Actor_0x12:on_push:
+0x0469    op00_Return()
+
+function:
+
+function:
+
+function:
+0x046a    opD2_MessageShowDynamic( text_id=0x6, flags=0 )
+0x046e    op9C_MessageSync()
+0x046f    op0D_Return()
+
+function:
+0x0470    -- 0xFE54()
+0x0472    op02_JumpToConditional( val1=(s)mem[0x3e], val2=0, condition="val1 == val2", address_if_false=0x483 )
+0x047a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x7, flags=0 )
+0x0480    op01_JumpTo( address=0x4c7 )
+0x0483    op02_JumpToConditional( val1=(s)mem[0x3e], val2=1, condition="val1 == val2", address_if_false=0x494 )
+0x048b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x8, flags=0 )
+0x0491    op01_JumpTo( address=0x4c7 )
+0x0494    op02_JumpToConditional( val1=(s)mem[0x3e], val2=2, condition="val1 == val2", address_if_false=0x4a5 )
+0x049c    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x9, flags=0 )
+0x04a2    op01_JumpTo( address=0x4c7 )
+0x04a5    op02_JumpToConditional( val1=(s)mem[0x3e], val2=3, condition="val1 == val2", address_if_false=0x4b6 )
+0x04ad    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0xa, flags=0 )
+0x04b3    op01_JumpTo( address=0x4c7 )
+0x04b6    op02_JumpToConditional( val1=(s)mem[0x3e], val2=5, condition="val1 == val2", address_if_false=0x4c7 )
+0x04be    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0xb, flags=0 )
+0x04c4    op01_JumpTo( address=0x4c7 )
+0x04c7    -- 0xFE13()
+0x04cd    op09_CallActorEventEndSync( actor_id=party1, event=event_0x08, priority=0x03 )
+0x04d0    -- 0xFE24()
+0x04d2    op26_Wait( time=10 )
+0x04d5    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x03 )
+0x04d8    mem[0x1c4] |= 1 << 0 -- op3a
+0x04de    -- 0x91()
+0x04e2    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x07, text_id=0xc, flags=0 )
+0x04e8    -- 0xFE54()
+0x04ea    op0D_Return()
+
+Actor_0x13:on_start:
+0x04eb    -- 0x0B_InitNPC( 1 )
+0x04ee    -- 0xFE1C()
+0x04f7    op69_ActorSetRotation( rot=2 )
+0x04fa    op20_ActorSetFlags0( flags=12 )
+0x04fd    -- 0x18()
+0x0502    -- 0x1F( ???=0x70 )
+0x0504    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=2, condition="val1 & val2", address_if_false=0x50e )
+0x050c    op29_ActorTurnOff( actor_id=self )
+0x050e    op00_Return()
+
+Actor_0x13:on_update:
+0x050f    op00_Return()
+
+Actor_0x13:on_talk:
+0x0510    -- 0xFE54()
+0x0512    -- MISSING OPCODE 0x34

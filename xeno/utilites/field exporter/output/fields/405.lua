@@ -18,4 +18,8 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0x75( ???=255 )
-0x0013    -- MISSING OPCODE 0xFE5d
+0x0013    -- 0xFE5D() -- play_sound_with_volume_in_3
+0x001b    -- 0xA4() -- camera angle
+0x001f    -- 0xA1()
+0x0022    -- 0xE7( ???=230, ???=230, ???=255 )
+0x0029    -- MISSING OPCODE 0xFE1e

@@ -18,4 +18,14 @@ unknown = [
 Actor_0x00:on_start:
 0x001d    -- 0xBC_ActorNoModelInit()
 0x001e    -- 0xE6()
-0x0027    -- MISSING OPCODE 0xFE25
+0x0027    -- 0xFE25()
+0x002a    -- 0x2A()
+0x002b    op02_JumpToConditional( val1=(s)mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x3d )
+0x0033    -- 0x80()
+0x0038    -- 0x80()
+0x003d    op02_JumpToConditional( val1=(s)mem[0x186], val2=16384, condition="val1 & val2", address_if_false=0x55 )
+0x0045    -- 0xA4() -- camera angle
+0x0049    -- 0x9D()
+0x004d    -- 0xB6( ???=480, ???=0 )
+0x0052    op01_JumpTo( address=0x78 )
+0x0055    -- MISSING OPCODE 0xFE6a

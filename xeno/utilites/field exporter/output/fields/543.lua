@@ -119,4 +119,53 @@ Actor_0x02:event_0x05:
 
 Actor_0x02:event_0x06:
 0x00f7    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
-0x00fd    -- MISSING OPCODE 0xFE17
+0x00fd    -- 0xFE17()
+0x0101    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x03 )
+0x0104    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x05, priority=0x03 )
+0x0107    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x010d    -- 0xFE17()
+0x0111    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x0113    op00_Return()
+
+Actor_0x02:event_0x07:
+0x0114    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x011a    op00_Return()
+
+Actor_0x03:on_start:
+0x011b    -- 0xBC_ActorNoModelInit()
+0x011c    -- 0x2A()
+0x011d    -- 0xFE1C()
+0x0126    op00_Return()
+
+Actor_0x03:on_update:
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x0127    op00_Return()
+
+Actor_0x03:event_0x04:
+0x0128    -- 0x10()
+0x0133    op00_Return()
+
+Actor_0x03:event_0x05:
+0x0134    -- 0x10()
+0x013f    op00_Return()
+
+Actor_0x04:on_start:
+0x0140    -- 0xBC_ActorNoModelInit()
+0x0141    -- 0x2A()
+0x0142    -- 0x23()
+0x0143    op00_Return()
+
+Actor_0x04:on_update:
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0144    op00_Return()
+
+Actor_0x04:event_0x04:
+0x0145    mem[0x402] = 4096 -- op35
+0x014b    op02_JumpToConditional( val1=(s)mem[0x402], val2=3072, condition="val1 > val2", address_if_false=0x162 )
+0x0153    -- MISSING OPCODE 0xd7

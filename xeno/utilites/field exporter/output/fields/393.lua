@@ -290,4 +290,57 @@ Actor_0x0c:on_talk:
 0x025b    -- 0xFE87()
 0x025d    op01_JumpTo( address=0x271 )
 0x0260    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0x271 )
-0x0268    -- MISSING OPCODE 0xFE5a
+0x0268    -- 0xFE5A()
+0x026c    -- 0xFE87()
+0x026e    op01_JumpTo( address=0x271 )
+0x0271    opD2_MessageShowDynamic( text_id=0x2, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0275    op9C_MessageSync()
+0x0276    -- 0xFE54()
+0x0278    op00_Return()
+
+Actor_0x0c:on_push:
+0x0279    op00_Return()
+
+Actor_0x0d:on_start:
+0x027a    -- 0xBC_ActorNoModelInit()
+0x027b    -- 0x19_ActorSetPosition( x=(vf80)0xfed4, z=(vf40)0xff6a, flag=(flag)0xc0 )
+0x0281    op00_Return()
+
+Actor_0x0d:on_update:
+0x0282    op00_Return()
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x0283    -- 0x12()
+0x0287    -- 0x80()
+0x028c    -- 0x5B()
+0x028d    op00_Return()
+
+Actor_0x0e:on_start:
+0x028e    -- 0x0B_InitNPC( (s)mem[0x40a] )
+0x0291    op02_JumpToConditional( val1=(s)mem[0x416], val2=1, condition="val1 == val2", address_if_false=0x29c )
+0x0299    op29_ActorTurnOff( actor_id=self )
+0x029b    op00_Return()
+0x029c    -- 0x19_ActorSetPosition( x=(vf80)0x040c, z=(vf40)0x040e, flag=(flag)0x00 )
+0x02a2    op02_JumpToConditional( val1=(s)mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x2af )
+0x02aa    -- 0x1A()
+0x02ac    op01_JumpTo( address=0x2c9 )
+0x02af    op02_JumpToConditional( val1=(s)mem[0x410], val2=1, condition="val1 == val2", address_if_false=0x2bc )
+0x02b7    -- 0x1A()
+0x02b9    op01_JumpTo( address=0x2c9 )
+0x02bc    op02_JumpToConditional( val1=(s)mem[0x410], val2=2, condition="val1 == val2", address_if_false=0x2c9 )
+0x02c4    -- 0x1A()
+0x02c6    op01_JumpTo( address=0x2c9 )
+0x02c9    op69_ActorSetRotation( rot=(s)mem[0x412] )
+0x02cc    op20_ActorSetFlags0( flags=12 )
+0x02cf    -- 0x18()
+0x02d4    -- 0x1F( ???=0x70 )
+0x02d6    op00_Return()
+
+Actor_0x0e:on_update:
+0x02d7    op00_Return()
+
+Actor_0x0e:on_talk:
+0x02d8    -- 0xFE54()
+0x02da    -- MISSING OPCODE 0x34

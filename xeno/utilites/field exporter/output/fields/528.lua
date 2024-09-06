@@ -90,4 +90,8 @@ Actor_0x04:on_update:
 0x0074    -- 0xFE54()
 0x0076    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x007a    op9C_MessageSync()
-0x007b    -- MISSING OPCODE 0xFE17
+0x007b    -- 0xFE17()
+0x007f    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x1, flags=NO_FACE )
+0x0085    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x0089    op9C_MessageSync()
+0x008a    -- MISSING OPCODE 0xFE68

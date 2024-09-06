@@ -784,4 +784,14 @@ Actor_0x1a:on_update:
 
 Actor_0x1a:on_talk:
 0x06e8    -- 0xFE99()
-0x06eb    -- MISSING OPCODE 0xFE55
+0x06eb    -- 0xFE55()
+0x06ed    -- 0xFE87()
+0x06ef    op00_Return()
+
+Actor_0x1a:on_push:
+0x06f0    -- 0xFE99()
+0x06f3    op02_JumpToConditional( val1=(s)mem[0x416], val2=0, condition="val1 == val2", address_if_false=0x701 )
+0x06fb    op74_SoundPlayFixedVolume( sound_id=80 )
+0x06fe    mem[0x416] = true -- op36
+0x0701    op00_Return()
+0x0702    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x8d52, ???=(vf40)0x5f74, flag=0xc8 )

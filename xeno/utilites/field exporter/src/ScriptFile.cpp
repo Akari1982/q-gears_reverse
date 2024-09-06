@@ -1743,639 +1743,877 @@ ScriptFile::GetScripts( const std::string& path )
                 u8 eo_opcode = GetU8( pointer + 1 );
                 pointer += 1;
 
-                if( eo_opcode == 0x01 )
+                switch( eo_opcode )
                 {
-                    exp->Log( "-- 0xFE01()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x02 )
-                {
-                    exp->Log( "-- 0xFE02()" );
-                    pointer += 4;
-                }
-                else if( eo_opcode == 0x03 )
-                {
-                    exp->Log( "-- 0xFE03( ???=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x04 )
-                {
-                    exp->Log( "-- 0xFE04()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x06 )
-                {
-                    exp->Log( "-- 0xFE06()" );
-                    pointer += 6;
-                }
-                else if( eo_opcode == 0x07 )
-                {
-                    exp->Log( "-- 0xFE07( ???=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x08 )
-                {
-                    exp->Log( "-- opFE08( scale_x=" + GetV80Variable( pointer + 1 ) + ", scale_y=" + GetV80Variable( pointer + 3 ) + ", scale_z=" + GetV80Variable( pointer + 5 ) + " )" );
-                    pointer += 7;
-                }
-                else if( eo_opcode == 0x09 )
-                {
-                    exp->Log( "-- 0xFE09( ???=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x0a )
-                {
-                    exp->Log( "-- 0xFE0A( ???=" + GetU16Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x0c )
-                {
-                    exp->Log( "-- 0xFE0C()" );
-                    pointer += 0xd;
-                }
-                else if( eo_opcode == 0x0d )
-                {
-                    exp->Log( "opFE0D_MessageSetFace( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x0e )
-                {
-                    exp->Log( "-- 0xFE0E_SoundSetVolume( volume=" + GetV80Variable( pointer + 1 ) + ", steps=" + GetV80Variable( pointer + 3 ) + " )" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x0f )
-                {
-                    exp->Log( "-- 0xFE0F()" );
-                    pointer += 6;
-                }
-                else if( eo_opcode == 0x10 )
-                {
-                    exp->Log( "-- 0xFE10()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x13 )
-                {
-                    exp->Log( "-- 0xFE13()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x15 )
-                {
-                    exp->Log( "-- 0xFE15( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x16 )
-                {
-                    exp->Log( "-- 0xFE16()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x17 )
-                {
-                    exp->Log( "-- 0xFE17()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x18 )
-                {
-                    exp->Log( "-- 0xFE18()" );
-                    pointer += 4;
-                }
-                else if( eo_opcode == 0x19 )
-                {
-                    exp->Log( "-- 0xFE19( char_id=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x1a )
-                {
-                    exp->Log( "-- 0xFE1A() sync load for 0xFEC6()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x1c )
-                {
-                    exp->Log( "-- 0xFE1C()" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x1d )
-                {
-                    exp->Log( "opFE1D_ModelAddTrans( trans_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", trans_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", trans_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x21 )
-                {
-                    exp->Log( "-- 0xFE21()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x23 )
-                {
-                    exp->Log( "-- 0xFE23()" );
-                    pointer += 0x14;
-                }
-                else if( eo_opcode == 0x24 )
-                {
-                    exp->Log( "-- 0xFE24()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x25 )
-                {
-                    exp->Log( "-- 0xFE25()" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x26 )
-                {
-                    exp->Log( "opFE26_DistortionSetup( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + ", ???=" + GetV80Variable( pointer + 5 ) + ", ???=" + GetV80Variable( pointer + 7 ) + ", ???=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 11 ) + ", steps=" + GetV80Variable( pointer + 13 ) + " )" );
-                    pointer += 15;
-                }
-                else if( eo_opcode == 0x27 )
-                {
-                    u8 type = GetU8( pointer + 1 );
-                    if( type == 0 )
+                    case 0x01:
                     {
-                        exp->Log( "-- opFE2700()" );
-                        pointer += 4;
-                    }
-                    else if( type == 1 )
-                    {
-                        exp->Log( "-- opFE2701()" );
+                        exp->Log( "-- 0xFE01()" );
                         pointer += 1;
                     }
-                    else if( type == 2 )
+                    break;
+
+                    case 0x02:
                     {
-                        exp->Log( "-- opFE2702()" );
-                        pointer += 2;
+                        exp->Log( "-- 0xFE02()" );
+                        pointer += 4;
                     }
-                    else if( type == 3 )
+                    break;
+
+                    case 0x03:
                     {
-                        exp->Log( "-- opFE2703()" );
-                        pointer += 2;
+                        exp->Log( "-- 0xFE03( ???=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
                     }
-                }
-                else if( eo_opcode == 0x35 )
-                {
-                    exp->Log( "-- 0xFE35()" );
-                    pointer += 6;
-                }
-                else if( eo_opcode == 0x3a )
-                {
-                    exp->Log( "opFE3A( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x3b )
-                {
-                    exp->Log( "-- 0xFE3B()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x3c )
-                {
-                    exp->Log( "-- 0xFE3C( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x3d )
-                {
-                    exp->Log( "-- 0xFE3D()" );
-                    pointer += 0xa;
-                }
-                else if( eo_opcode == 0x3e )
-                {
-                    exp->Log( "-- 0xFE3E()" );
-                    pointer += 0xa;
-                }
-                else if( eo_opcode == 0x3f )
-                {
-                    exp->Log( "-- 0xFE3F()" );
-                    pointer += 7;
-                }
-                else if( eo_opcode == 0x41 )
-                {
-                    exp->Log( "-- 0xFE41()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x42 )
-                {
-                    exp->Log( "opFE42( ???=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x45 )
-                {
-                    exp->Log( "opFE45_SpriteSetDefaultAnim( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x47 )
-                {
-                    exp->Log( "-- 0x47( ???=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x48 )
-                {
-                    exp->Log( "-- 0xFE48()" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x4a )
-                {
-                    exp->Log( "opFE4A_SpriteAddAnimLoad( file=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x4b )
-                {
-                    exp->Log( "opFE4B_SpriteAddAnimSync()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x4c )
-                {
-                    exp->Log( "opFE4C_SpritePlayAddAnim2( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x4d )
-                {
-                    exp->Log( "opFE4D_SpritePlayAddAnim( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x4e )
-                {
-                    exp->Log( "opFE4E_SpriteAddAnimUnload()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x4f )
-                {
-                    exp->Log( "-- 0xFE4F()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x50 )
-                {
-                    exp->Log( "-- 0xFE50()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x51 )
-                {
-                    exp->Log( "-- 0xFE51()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x52 )
-                {
-                    exp->Log( "-- 0xFE52()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x53 )
-                {
-                    exp->Log( "-- 0xFE54()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x54 )
-                {
-                    exp->Log( "-- 0xFE54()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x55 )
-                {
-                    exp->Log( "-- 0xFE55()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x58 )
-                {
-                    exp->Log( "-- 0xFE58()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x59 )
-                {
-                    exp->Log( "-- 0xFE59()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x5a )
-                {
-                    exp->Log( "-- 0xFE5A()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x5b )
-                {
-                    exp->Log( "-- 0xFE5B()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x5d )
-                {
-                    exp->Log( "-- 0xFE5D() -- play_sound_with_volume_in_3" );
-                    pointer += 7;
-                }
-                else if( eo_opcode == 0x60 )
-                {
-                    exp->Log( "opFE60_MoviePlay1( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", end_frame=" + GetV80Variable( pointer + 5 ) + ", flags=" + GetV80Variable( pointer + 7 ) + " )" );
-                    pointer += 9;
-                }
-                else if( eo_opcode == 0x61 )
-                {
-                    exp->Log( "opFE61_MovieStartSync()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x62 )
-                {
-                    exp->Log( "-- 0xFE62()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x64 )
-                {
-                    exp->Log( "-- 0xFE64() -- wait for sound channel?" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x65 )
-                {
-                    exp->Log( "-- 0xFE65()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x66 )
-                {
-                    exp->Log( "-- 0xFE66() -- sound play with volume in slot" );
-                    pointer += 9;
-                }
-                else if( eo_opcode == 0x67 )
-                {
-                    exp->Log( "opFE67_MoviePlay2( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", start_frame=" + GetV80Variable( pointer + 5 ) + ", end_frame=" + GetV80Variable( pointer + 7 ) + ", flags=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 0xb ) + ", ???=" + GetV80Variable( pointer + 0xd ) + ", ???=" + GetV80Variable( pointer + 0xf ) + ", ???=" + GetV80Variable( pointer + 0x11 ) + " )" );
-                    pointer += 0x13;
-                }
-                else if( eo_opcode == 0x69 )
-                {
-                    exp->Log( "-- 0xFE69()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x6b )
-                {
-                    exp->Log( "-- 0xFE6B()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x6f )
-                {
-                    exp->Log( "opFE6F_ModelAddRot( rot_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", rot_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", rot_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x70 )
-                {
-                    exp->Log( "-- 0xFE70()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x73 )
-                {
-                    exp->Log( "-- 0xFE73()" );
-                    pointer += 0xс;
-                }
-                else if( eo_opcode == 0x74 )
-                {
-                    exp->Log( "-- 0xFE74()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x77 )
-                {
-                    u8 flag = GetU8( pointer + 13 );
-                    exp->Log( "opFE77_LoadTim_04_00_07( file_id=" + GetVFVariable( pointer + 5, flag & 0x80, true ) + ", clut_y=" + GetVFVariable( pointer + 11, flag & 0x10 ) + ", x=" + GetVFVariable( pointer + 7, flag & 0x40 ) + ", y=" + GetVFVariable( pointer + 9, flag & 0x20 ) + " )" );
-                    pointer += 17;
-                }
-                else if( eo_opcode == 0x7f )
-                {
-                    exp->Log( "-- 0xFE7F()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x80 )
-                {
-                    exp->Log( "-- 0xFE80()" );
-                    pointer += 0xf;
-                }
-                else if( eo_opcode == 0x81 )
-                {
-                    exp->Log( "-- 0xFE81()" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x82 )
-                {
-                    exp->Log( "-- 0xFE82()" );
-                    pointer += 0x19;
-                }
-                else if( eo_opcode == 0x84 )
-                {
-                    exp->Log( "-- 0xFE84()" );
-                    pointer += 9;
-                }
-                else if( eo_opcode == 0x87 )
-                {
-                    exp->Log( "-- 0xFE87()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x88 )
-                {
-                    exp->Log( "-- 0xFE88()" );
-                    pointer += 0x12;
-                }
-                else if( eo_opcode == 0x8a )
-                {
-                    exp->Log( "-- 0xFE8A()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x8b )
-                {
-                    exp->Log( "-- 0xFE8B()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x8c )
-                {
-                    exp->Log( "-- 0xFE8C()" );
-                    pointer += 7;
-                }
-                else if( eo_opcode == 0x8d )
-                {
-                    exp->Log( "-- 0xFE8D()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x8e )
-                {
-                    exp->Log( "-- 0xFE8E()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0x8f )
-                {
-                    exp->Log( "opFE8F_ParticleSystemInit1( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
-                    pointer += 8;
-                }
-                else if( eo_opcode == 0x90 )
-                {
-                    exp->Log( "opFE90_ParticleInitBase( particle_id=" + GetV80Variable( pointer + 1 ) + ", number_of_sprites=" + GetV80Variable( pointer + 3 ) + ", wait=" + GetV80Variable( pointer + 5 ) + ", ttl=" + GetV80Variable( pointer + 7 ) + " )" );
-                    pointer += 9;
-                }
-                else if( eo_opcode == 0x91 )
-                {
-                    exp->Log( "opFE91_ParticlePos( x=" + GetVF80Variable( pointer + 1 ) + ", y=" + GetVF40Variable( pointer + 3 ) + ", z=" + GetVF20Variable( pointer + 5 ) + ", speed_x=" + GetVF10Variable( pointer + 7 ) + ", speed_y=" + GetVF08Variable( pointer + 9 ) + ", speed_z=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
-                    pointer += 14;
-                }
-                else if( eo_opcode == 0x92 )
-                {
-                    exp->Log( "opFE92_ParticleSpeed( speed=" + GetVF80Variable( pointer + 1 ) + ", acc_x=" + GetVF40Variable( pointer + 3 ) + ", acc_y=" + GetVF20Variable( pointer + 5 ) + ", acc_z=" + GetVF10Variable( pointer + 7 ) + ", rand_start=" + GetVF08Variable( pointer + 9 ) + ", rand_speed=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
-                    pointer += 14;
-                }
-                else if( eo_opcode == 0x93 )
-                {
-                    exp->Log( "opFE93_ParticleWaitTtl( s_wait=" + GetV80Variable( pointer + 1 ) + ", var2=" + GetV80Variable( pointer + 3 ) + ", sprite_id=" + GetV80Variable( pointer + 5 ) + ", var4=" + GetV80Variable( pointer + 7 ) + ", var5=" + GetV80Variable( pointer + 9 ) + " )" );
-                    pointer += 11;
-                }
-                else if( eo_opcode == 0x94 )
-                {
-                    exp->Log( "opFE94_ParticleTranslation( trans_x=" + GetVF80Variable( pointer + 1 ) + ", trans_y=" + GetVF40Variable( pointer + 3 ) + ", trans_add_x=" + GetVF20Variable( pointer + 5 ) + ", trans_add_y=" + GetVF10Variable( pointer + 7 ) + ", flag=" + GetFVariable( pointer + 9 ) + " )" );
-                    pointer += 10;
-                }
-                else if( eo_opcode == 0x95 )
-                {
-                    exp->Log( "opFE95_ParticleColour( r=" + GetVF80Variable( pointer + 1 ) + ", g=" + GetVF40Variable( pointer + 3 ) + ", b=" + GetVF20Variable( pointer + 5 ) + ", r_add=" + GetVF10Variable( pointer + 7 ) + ", g_add=" + GetVF10Variable( pointer + 9 ) + ", b_add=" + GetVF10Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
-                    pointer += 14;
-                }
-                else if( eo_opcode == 0x96 )
-                {
-                    exp->Log( "opFE96_ParticleCreate()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0x97 )
-                {
-                    exp->Log( "opFE97_ParticleReset( all=" + GetU8Variable( pointer + 1 ) + " )" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x99 )
-                {
-                    exp->Log( "-- 0xFE99()" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0x9a )
-                {
-                    exp->Log( "-- 0xFE9A()" );
-                    pointer += 9;
-                }
-                else if( eo_opcode == 0x9b )
-                {
-                    exp->Log( "opFE9B_SlideShow1( steps=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x9c )
-                {
-                    exp->Log( "opFE9C_SlideShow2( steps=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0x9d )
-                {
-                    exp->Log( "opFE9D_SlideShow3( steps=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0xa0 )
-                {
-                    exp->Log( "opFEA0_MoviePlay3( movie_id=" + GetVF80Variable( pointer + 1 ) + ", sector=" + GetVF40Variable( pointer + 3 ) + ", start_frame=" + GetVF20Variable( pointer + 5 ) + ", end_frame=" + GetVF10Variable( pointer + 7 ) + ", ???=" + GetVF08Variable( pointer + 9 ) + ", flag=" + GetFVariable( pointer + 11 ) + " )" );
-                    pointer += 12;
-                }
-                else if( eo_opcode == 0xa1 )
-                {
-                    exp->Log( "-- 0xFEA1( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0xa2 )
-                {
-                    exp->Log( "-- 0xFEA2()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0xa4 )
-                {
-                    exp->Log( "-- 0xFEA4()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0xa5 )
-                {
-                    exp->Log( "opFEA5_ParticleRenderSettings( use_speed=" + GetV80Variable( pointer + 1 ) + ", settings=" + GetV80Variable( pointer + 3 ) + ", rot_z=" + GetV80Variable( pointer + 5 ) + " )" );
-                    pointer += 7;
-                }
-                else if( eo_opcode == 0xa7 )
-                {
-                    exp->Log( "-- 0xFEA7()" );
-                    pointer += 9;
-                }
-                else if( eo_opcode == 0xaa )
-                {
-                    exp->Log( "-- 0xFEAA()" );
-                    pointer += 2;
-                }
-                else if( eo_opcode == 0xb1 )
-                {
-                    exp->Log( "opFEB1_ScifiHudInit()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0xbd )
-                {
-                    exp->Log( "opFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 7;
-                }
-                else if( eo_opcode == 0xbe )
-                {
-                    exp->Log( "opFEBE_EnableCredits()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0xc0 )
-                {
-                    exp->Log( "-- 0xFEC0()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0xc2 )
-                {
-                    exp->Log( "-- 0xFEC2()" );
-                    pointer += 4;
-                }
-                else if( eo_opcode == 0xc5 )
-                {
-                    exp->Log( "-- 0xFEC5()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0xc6 )
-                {
-                    exp->Log( "-- 0xFEC6( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0xd0 )
-                {
-                    exp->Log( "-- 0xFED0()" );
-                    pointer += 5;
-                }
-                else if( eo_opcode == 0xd1 )
-                {
-                    exp->Log( "-- 0xFED1()" );
-                    pointer += 1;
-                }
-                else if( eo_opcode == 0xd2 )
-                {
-                    exp->Log( "-- 0xFED2()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0xdd )
-                {
-                    u8 type = GetU8( pointer + 1 );
-                    if( type == 0 )
+                    break;
+
+                    case 0x04:
                     {
-                        exp->Log( "-- opFEDD00()" );
+                        exp->Log( "-- 0xFE04()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x06:
+                    {
+                        exp->Log( "-- 0xFE06()" );
                         pointer += 6;
                     }
-                    else if( type == 1 )
+                    break;
+
+                    case 0x07:
                     {
-                        exp->Log( "-- opFEDD01()" );
+                        exp->Log( "-- 0xFE07( ???=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x08:
+                    {
+                        exp->Log( "-- opFE08( scale_x=" + GetV80Variable( pointer + 1 ) + ", scale_y=" + GetV80Variable( pointer + 3 ) + ", scale_z=" + GetV80Variable( pointer + 5 ) + " )" );
+                        pointer += 7;
+                    }
+                    break;
+
+                    case 0x09:
+                    {
+                        exp->Log( "-- 0xFE09( ???=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x0a:
+                    {
+                        exp->Log( "-- 0xFE0A( ???=" + GetU16Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x0c:
+                    {
+                        exp->Log( "-- 0xFE0C()" );
+                        pointer += 0xd;
+                    }
+                    break;
+
+                    case 0x0d:
+                    {
+                        exp->Log( "opFE0D_MessageSetFace( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x0e:
+                    {
+                        exp->Log( "-- 0xFE0E_SoundSetVolume( volume=" + GetV80Variable( pointer + 1 ) + ", steps=" + GetV80Variable( pointer + 3 ) + " )" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x0f:
+                    {
+                        exp->Log( "-- 0xFE0F()" );
                         pointer += 6;
                     }
-                    else if( type == 2 )
+                    break;
+
+                    case 0x10:
                     {
-                        exp->Log( "-- opFEDD02()" );
+                        exp->Log( "-- 0xFE10()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x13:
+                    {
+                        exp->Log( "-- 0xFE13()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x15:
+                    {
+                        exp->Log( "-- 0xFE15( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x16:
+                    {
+                        exp->Log( "-- 0xFE16()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x17:
+                    {
+                        exp->Log( "-- 0xFE17()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x18:
+                    {
+                        exp->Log( "-- 0xFE18()" );
+                        pointer += 4;
+                    }
+                    break;
+
+                    case 0x19:
+                    {
+                        exp->Log( "-- 0xFE19( char_id=" + GetU8Variable( pointer + 1 ) + " )" );
                         pointer += 2;
                     }
-                    else if( type == 3 )
+                    break;
+
+                    case 0x1a:
                     {
-                        exp->Log( "-- opFEDD03()" );
+                        exp->Log( "-- 0xFE1A() sync load for 0xFEC6()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x1c:
+                    {
+                        exp->Log( "-- 0xFE1C()" );
+                        pointer += 8;
+                    }
+                    break;
+
+                    case 0x1d:
+                    {
+                        exp->Log( "opFE1D_ModelAddTrans( trans_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", trans_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", trans_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
+                        pointer += 8;
+                    }
+                    break;
+
+                    case 0x21:
+                    {
+                        exp->Log( "-- 0xFE21()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x23:
+                    {
+                        exp->Log( "-- 0xFE23()" );
+                        pointer += 0x14;
+                    }
+                    break;
+
+                    case 0x24:
+                    {
+                        exp->Log( "-- 0xFE24()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x25:
+                    {
+                        exp->Log( "-- 0xFE25()" );
                         pointer += 2;
                     }
-                }
-                else if( eo_opcode == 0xdf )
-                {
-                    exp->Log( "-- 0xFEDF()" );
-                    pointer += 3;
-                }
-                else if( eo_opcode == 0xe0 )
-                {
-                    exp->Log( "-- 0xFEE0()" );
-                    pointer += 2;
-                }
-                else
-                {
-                    exp->Log( "-- MISSING OPCODE 0xFE" + HexToString( eo_opcode, 2, '0' ) + "\n" );
-                    n_ret = false;
+                    break;
+
+                    case 0x26:
+                    {
+                        exp->Log( "opFE26_DistortionSetup( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + ", ???=" + GetV80Variable( pointer + 5 ) + ", ???=" + GetV80Variable( pointer + 7 ) + ", ???=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 11 ) + ", steps=" + GetV80Variable( pointer + 13 ) + " )" );
+                        pointer += 15;
+                    }
+                    break;
+
+                    case 0x27:
+                    {
+                        u8 type = GetU8( pointer + 1 );
+                        if( type == 0 )
+                        {
+                            exp->Log( "-- opFE2700()" );
+                            pointer += 4;
+                        }
+                        else if( type == 1 )
+                        {
+                            exp->Log( "-- opFE2701()" );
+                            pointer += 1;
+                        }
+                        else if( type == 2 )
+                        {
+                            exp->Log( "-- opFE2702()" );
+                            pointer += 2;
+                        }
+                        else if( type == 3 )
+                        {
+                            exp->Log( "-- opFE2703()" );
+                            pointer += 2;
+                        }
+                    }
+                    break;
+
+                    case 0x35:
+                    {
+                        exp->Log( "-- 0xFE35()" );
+                        pointer += 6;
+                    }
+                    break;
+
+                    case 0x3a:
+                    {
+                        exp->Log( "opFE3A( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x3b:
+                    {
+                        exp->Log( "-- 0xFE3B()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x3c:
+                    {
+                        exp->Log( "-- 0xFE3C( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x3d:
+                    {
+                        exp->Log( "-- 0xFE3D()" );
+                        pointer += 0xa;
+                    }
+                    break;
+
+                    case 0x3e:
+                    {
+                        exp->Log( "-- 0xFE3E()" );
+                        pointer += 0xa;
+                    }
+                    break;
+
+                    case 0x3f:
+                    {
+                        exp->Log( "-- 0xFE3F()" );
+                        pointer += 7;
+                    }
+                    break;
+
+                    case 0x41:
+                    {
+                        exp->Log( "-- 0xFE41()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x42:
+                    {
+                        exp->Log( "opFE42( ???=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x45:
+                    {
+                        exp->Log( "opFE45_SpriteSetDefaultAnim( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x47:
+                    {
+                        exp->Log( "-- 0x47( ???=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x48:
+                    {
+                        exp->Log( "-- 0xFE48()" );
+                        pointer += 8;
+                    }
+                    break;
+
+                    case 0x4a:
+                    {
+                        exp->Log( "opFE4A_SpriteAddAnimLoad( file=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x4b:
+                    {
+                        exp->Log( "opFE4B_SpriteAddAnimSync()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x4c:
+                    {
+                        exp->Log( "opFE4C_SpritePlayAddAnim2( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x4d:
+                    {
+                        exp->Log( "opFE4D_SpritePlayAddAnim( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x4e:
+                    {
+                        exp->Log( "opFE4E_SpriteAddAnimUnload()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x4f:
+                    {
+                        exp->Log( "-- 0xFE4F()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x50:
+                    {
+                        exp->Log( "-- 0xFE50()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x51:
+                    {
+                        exp->Log( "-- 0xFE51()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x52:
+                    {
+                        exp->Log( "-- 0xFE52()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x53:
+                    {
+                        exp->Log( "-- 0xFE54()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x54:
+                    {
+                        exp->Log( "-- 0xFE54()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x55:
+                    {
+                        exp->Log( "-- 0xFE55()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x58:
+                    {
+                        exp->Log( "-- 0xFE58()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x59:
+                    {
+                        exp->Log( "-- 0xFE59()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x5a:
+                    {
+                        exp->Log( "-- 0xFE5A()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x5b:
+                    {
+                        exp->Log( "-- 0xFE5B()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x5d:
+                    {
+                        exp->Log( "-- 0xFE5D() -- play_sound_with_volume_in_3" );
+                        pointer += 7;
+                    }
+                    break;
+
+                    case 0x60:
+                    {
+                        exp->Log( "opFE60_MoviePlay1( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", end_frame=" + GetV80Variable( pointer + 5 ) + ", flags=" + GetV80Variable( pointer + 7 ) + " )" );
+                        pointer += 9;
+                    }
+                    break;
+
+                    case 0x61:
+                    {
+                        exp->Log( "opFE61_MovieStartSync()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x62:
+                    {
+                        exp->Log( "-- 0xFE62()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x64:
+                    {
+                        exp->Log( "-- 0xFE64() -- wait for sound channel?" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x65:
+                    {
+                        exp->Log( "-- 0xFE65()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x66:
+                    {
+                        exp->Log( "-- 0xFE66() -- sound play with volume in slot" );
+                        pointer += 9;
+                    }
+                    break;
+
+                    case 0x67:
+                    {
+                        exp->Log( "opFE67_MoviePlay2( movie_id=" + GetV80Variable( pointer + 1 ) + ", sector=" + GetV80Variable( pointer + 3 ) + ", start_frame=" + GetV80Variable( pointer + 5 ) + ", end_frame=" + GetV80Variable( pointer + 7 ) + ", flags=" + GetV80Variable( pointer + 9 ) + ", ???=" + GetV80Variable( pointer + 0xb ) + ", ???=" + GetV80Variable( pointer + 0xd ) + ", ???=" + GetV80Variable( pointer + 0xf ) + ", ???=" + GetV80Variable( pointer + 0x11 ) + " )" );
+                        pointer += 0x13;
+                    }
+                    break;
+
+                    case 0x69:
+                    {
+                        exp->Log( "-- 0xFE69()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x6b:
+                    {
+                        exp->Log( "-- 0xFE6B()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x6f:
+                    {
+                        exp->Log( "opFE6F_ModelAddRot( rot_x=" + GetVFVariable( pointer + 1, GetU8( pointer + 7 ) & 0x80 ) + ", rot_y=" + GetVFVariable( pointer + 3, GetU8( pointer + 7 ) & 0x40 ) + ", rot_z=" + GetVFVariable( pointer + 1, GetU8( pointer + 5 ) & 0x20 ) + " )" );
+                        pointer += 8;
+                    }
+                    break;
+
+                    case 0x70:
+                    {
+                        exp->Log( "-- 0xFE70()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x73:
+                    {
+                        exp->Log( "-- 0xFE73()" );
+                        pointer += 0xc;
+                    }
+                    break;
+
+                    case 0x74:
+                    {
+                        exp->Log( "-- 0xFE74()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x77:
+                    {
+                        u8 flag = GetU8( pointer + 13 );
+                        exp->Log( "opFE77_LoadTim_04_00_07( file_id=" + GetVFVariable( pointer + 5, flag & 0x80, true ) + ", clut_y=" + GetVFVariable( pointer + 11, flag & 0x10 ) + ", x=" + GetVFVariable( pointer + 7, flag & 0x40 ) + ", y=" + GetVFVariable( pointer + 9, flag & 0x20 ) + " )" );
+                        pointer += 17;
+                    }
+                    break;
+
+                    case 0x7f:
+                    {
+                        exp->Log( "-- 0xFE7F()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x80:
+                    {
+                        exp->Log( "-- 0xFE80()" );
+                        pointer += 0xf;
+                    }
+                    break;
+
+                    case 0x81:
+                    {
+                        exp->Log( "-- 0xFE81()" );
+                        pointer += 8;
+                    }
+                    break;
+
+                    case 0x82:
+                    {
+                        exp->Log( "-- 0xFE82()" );
+                        pointer += 0x19;
+                    }
+                    break;
+
+                    case 0x84:
+                    {
+                        exp->Log( "-- 0xFE84()" );
+                        pointer += 9;
+                    }
+                    break;
+
+                    case 0x87:
+                    {
+                        exp->Log( "-- 0xFE87()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x88:
+                    {
+                        exp->Log( "-- 0xFE88()" );
+                        pointer += 0x12;
+                    }
+                    break;
+
+                    case 0x8a:
+                    {
+                        exp->Log( "-- 0xFE8A()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x8b:
+                    {
+                        exp->Log( "-- 0xFE8B()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x8c:
+                    {
+                        exp->Log( "-- 0xFE8C()" );
+                        pointer += 7;
+                    }
+                    break;
+
+                    case 0x8d:
+                    {
+                        exp->Log( "-- 0xFE8D()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x8e:
+                    {
+                        exp->Log( "-- 0xFE8E()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x8f:
+                    {
+                        exp->Log( "opFE8F_ParticleSystemInit1( actor_id=" + GetEVariable( pointer + 1 ) + ", render_settings=" + GetV80Variable( pointer + 2 ) + ", rot_x=" + GetV80Variable( pointer + 4 ) + ", rot_y=" + GetV80Variable( pointer + 6 ) + " )" );
+                        pointer += 8;
+                    }
+                    break;
+
+                    case 0x90:
+                    {
+                        exp->Log( "opFE90_ParticleInitBase( particle_id=" + GetV80Variable( pointer + 1 ) + ", number_of_sprites=" + GetV80Variable( pointer + 3 ) + ", wait=" + GetV80Variable( pointer + 5 ) + ", ttl=" + GetV80Variable( pointer + 7 ) + " )" );
+                        pointer += 9;
+                    }
+                    break;
+
+                    case 0x91:
+                    {
+                        exp->Log( "opFE91_ParticlePos( x=" + GetVF80Variable( pointer + 1 ) + ", y=" + GetVF40Variable( pointer + 3 ) + ", z=" + GetVF20Variable( pointer + 5 ) + ", speed_x=" + GetVF10Variable( pointer + 7 ) + ", speed_y=" + GetVF08Variable( pointer + 9 ) + ", speed_z=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
+                        pointer += 14;
+                    }
+                    break;
+
+                    case 0x92:
+                    {
+                        exp->Log( "opFE92_ParticleSpeed( speed=" + GetVF80Variable( pointer + 1 ) + ", acc_x=" + GetVF40Variable( pointer + 3 ) + ", acc_y=" + GetVF20Variable( pointer + 5 ) + ", acc_z=" + GetVF10Variable( pointer + 7 ) + ", rand_start=" + GetVF08Variable( pointer + 9 ) + ", rand_speed=" + GetVF04Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
+                        pointer += 14;
+                    }
+                    break;
+
+                    case 0x93:
+                    {
+                        exp->Log( "opFE93_ParticleWaitTtl( s_wait=" + GetV80Variable( pointer + 1 ) + ", var2=" + GetV80Variable( pointer + 3 ) + ", sprite_id=" + GetV80Variable( pointer + 5 ) + ", var4=" + GetV80Variable( pointer + 7 ) + ", var5=" + GetV80Variable( pointer + 9 ) + " )" );
+                        pointer += 11;
+                    }
+                    break;
+
+                    case 0x94:
+                    {
+                        exp->Log( "opFE94_ParticleTranslation( trans_x=" + GetVF80Variable( pointer + 1 ) + ", trans_y=" + GetVF40Variable( pointer + 3 ) + ", trans_add_x=" + GetVF20Variable( pointer + 5 ) + ", trans_add_y=" + GetVF10Variable( pointer + 7 ) + ", flag=" + GetFVariable( pointer + 9 ) + " )" );
+                        pointer += 10;
+                    }
+                    break;
+
+                    case 0x95:
+                    {
+                        exp->Log( "opFE95_ParticleColour( r=" + GetVF80Variable( pointer + 1 ) + ", g=" + GetVF40Variable( pointer + 3 ) + ", b=" + GetVF20Variable( pointer + 5 ) + ", r_add=" + GetVF10Variable( pointer + 7 ) + ", g_add=" + GetVF10Variable( pointer + 9 ) + ", b_add=" + GetVF10Variable( pointer + 11 ) + ", flag=" + GetFVariable( pointer + 13 ) + " )" );
+                        pointer += 14;
+                    }
+                    break;
+
+                    case 0x96:
+                    {
+                        exp->Log( "opFE96_ParticleCreate()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x97:
+                    {
+                        exp->Log( "opFE97_ParticleReset( all=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x99:
+                    {
+                        exp->Log( "-- 0xFE99()" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x9a:
+                    {
+                        exp->Log( "-- 0xFE9A()" );
+                        pointer += 9;
+                    }
+                    break;
+
+                    case 0x9b:
+                    {
+                        exp->Log( "opFE9B_SlideShow1( steps=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x9c:
+                    {
+                        exp->Log( "opFE9C_SlideShow2( steps=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x9d:
+                    {
+                        exp->Log( "opFE9D_SlideShow3( steps=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0xa0:
+                    {
+                        exp->Log( "opFEA0_MoviePlay3( movie_id=" + GetVF80Variable( pointer + 1 ) + ", sector=" + GetVF40Variable( pointer + 3 ) + ", start_frame=" + GetVF20Variable( pointer + 5 ) + ", end_frame=" + GetVF10Variable( pointer + 7 ) + ", ???=" + GetVF08Variable( pointer + 9 ) + ", flag=" + GetFVariable( pointer + 11 ) + " )" );
+                        pointer += 12;
+                    }
+                    break;
+
+                    case 0xa1:
+                    {
+                        exp->Log( "-- 0xFEA1( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0xa2:
+                    {
+                        exp->Log( "-- 0xFEA2()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xa4:
+                    {
+                        exp->Log( "-- 0xFEA4()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xa5:
+                    {
+                        exp->Log( "opFEA5_ParticleRenderSettings( use_speed=" + GetV80Variable( pointer + 1 ) + ", settings=" + GetV80Variable( pointer + 3 ) + ", rot_z=" + GetV80Variable( pointer + 5 ) + " )" );
+                        pointer += 7;
+                    }
+                    break;
+
+                    case 0xa7:
+                    {
+                        exp->Log( "-- 0xFEA7()" );
+                        pointer += 9;
+                    }
+                    break;
+
+                    case 0xaa:
+                    {
+                        exp->Log( "-- 0xFEAA()" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0xb1:
+                    {
+                        exp->Log( "opFEB1_ScifiHudInit()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xbd:
+                    {
+                        exp->Log( "opFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 7;
+                    }
+                    break;
+
+                    case 0xbe:
+                    {
+                        exp->Log( "opFEBE_EnableCredits()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xc0:
+                    {
+                        exp->Log( "-- 0xFEC0()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0xc2:
+                    {
+                        exp->Log( "-- 0xFEC2()" );
+                        pointer += 4;
+                    }
+                    break;
+
+                    case 0xc5:
+                    {
+                        exp->Log( "-- 0xFEC5()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0xc6:
+                    {
+                        exp->Log( "-- 0xFEC6( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0xd0:
+                    {
+                        exp->Log( "-- 0xFED0()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0xd1:
+                    {
+                        exp->Log( "-- 0xFED1()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xd2:
+                    {
+                        exp->Log( "-- 0xFED2()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0xdd:
+                    {
+                        u8 type = GetU8( pointer + 1 );
+                        if( type == 0 )
+                        {
+                            exp->Log( "-- opFEDD00()" );
+                            pointer += 6;
+                        }
+                        else if( type == 1 )
+                        {
+                            exp->Log( "-- opFEDD01()" );
+                            pointer += 6;
+                        }
+                        else if( type == 2 )
+                        {
+                            exp->Log( "-- opFEDD02()" );
+                            pointer += 2;
+                        }
+                        else if( type == 3 )
+                        {
+                            exp->Log( "-- opFEDD03()" );
+                            pointer += 2;
+                        }
+                    }
+                    break;
+
+                    case 0xdf:
+                    {
+                        exp->Log( "-- 0xFEDF()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0xe0:
+                    {
+                        exp->Log( "-- 0xFEE0()" );
+                        pointer += 2;
+                    }
+
+                    default:
+                    {
+                        exp->Log( "-- MISSING OPCODE 0xFE" + HexToString( eo_opcode, 2, '0' ) + "\n" );
+                        n_ret = false;
+                    }
                 }
             }
             break;

@@ -589,4 +589,7 @@ Actor_0x0f:event_0x04:
 0x0402    mem[0x40c] = false -- op37
 0x0405    mem[0x40a] = false -- op37
 0x0408    mem[0x40e] = false -- op37
-0x040b    -- MISSING OPCODE 0xFE5d
+0x040b    -- 0xFE5D() -- play_sound_with_volume_in_3
+0x0413    op02_JumpToConditional( val1=(s)mem[0x40a], val2=150, condition="val1 < val2", address_if_false=0x42a )
+0x041b    mem[0x40a] += 20 -- op38
+0x0421    -- MISSING OPCODE 0xd7

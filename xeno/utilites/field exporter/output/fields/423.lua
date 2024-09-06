@@ -29,4 +29,9 @@ Actor_0x00:on_start:
 0x0044    -- 0x84_ProgressLessEqualJumpTo( value=187, jump=0x53 )
 0x0049    -- 0xFE66() -- sound play with volume in slot
 0x0053    -- 0xE7( ???=104, ???=144, ???=248 )
-0x005a    -- MISSING OPCODE 0xda
+0x005a    -- 0xDA()
+0x006b    op00_Return()
+
+Actor_0x00:on_update:
+0x006c    -- 0xFE54()
+0x006e    -- MISSING OPCODE 0xFE40

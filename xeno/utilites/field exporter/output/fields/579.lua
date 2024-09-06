@@ -514,4 +514,12 @@ Actor_0x06:on_update:
 0x0520    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
 0x0523    op26_Wait( time=30 )
 0x0526    -- 0xB5() -- camera set direction
-0x0527    -- MISSING OPCODE 0x06
+0x0527    -- 0x06()
+0x052c    op01_JumpTo( address=0xfc25 )
+0x052f    op01_JumpTo( address=0x28 )
+0x0532    op01_JumpTo( address=0x79c )
+0x0535    op01_JumpTo( address=0x2626 )
+0x0538    -- 0x0A()
+0x053c    op29_ActorTurnOff( actor_id=Actor_0x00 )
+0x053e    op01_JumpTo( address=0x749c )
+0x0541    -- MISSING OPCODE 0xdc

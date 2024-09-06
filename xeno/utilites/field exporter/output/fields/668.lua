@@ -145,4 +145,18 @@ Actor_0x03:on_push:
 Actor_0x04:on_start:
 0x00ee    -- 0xBC_ActorNoModelInit()
 0x00ef    -- 0x2A()
-0x00f0    -- MISSING OPCODE 0xda
+0x00f0    -- 0xDA()
+0x0101    op00_Return()
+
+Actor_0x04:on_update:
+0x0102    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x114 )
+0x010a    -- opFEDD00()
+0x0111    -- opFEDD03()
+0x0114    -- 0x5B()
+0x0115    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0116    op00_Return()
+0x0117    -- MISSING OPCODE 0xFE40

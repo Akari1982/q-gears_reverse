@@ -190,4 +190,18 @@ Actor_0x0b:on_push:
 
 Actor_0x0c:on_start:
 0x00a7    -- 0xBC_ActorNoModelInit()
-0x00a8    -- MISSING OPCODE 0x1b
+0x00a8    -- 0x1B()
+0x00af    -- 0xF8()
+0x00b3    -- 0xF8()
+0x00b7    -- 0x18()
+0x00bc    op20_ActorSetFlags0( flags=1 )
+0x00bf    op00_Return()
+
+Actor_0x0c:on_update:
+0x00c0    op00_Return()
+
+Actor_0x0c:on_talk:
+0x00c1    -- 0xFE54()
+0x00c3    op74_SoundPlayFixedVolume( sound_id=119 )
+0x00c6    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x01 )
+0x00c9    -- MISSING OPCODE 0xFE68

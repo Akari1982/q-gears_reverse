@@ -179,4 +179,73 @@ Actor_0x04:on_update:
 0x00d3    mem[0x400] = true -- op36
 0x00d6    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
 0x00d9    op26_Wait( time=5 )
-0x00dc    -- MISSING OPCODE 0xFE17
+0x00dc    -- 0xFE17()
+0x00e0    op26_Wait( time=10 )
+0x00e3    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x0, flags=0 )
+0x00e9    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x03 )
+0x00ec    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x1, flags=0 )
+0x00f2    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x06, priority=0x03 )
+0x00f5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x2, flags=0 )
+0x00fb    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x03 )
+0x00fe    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x3, flags=0 )
+0x0104    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x0d, priority=0x02 )
+0x0107    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x05, priority=0x03 )
+0x010a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x4, flags=0 )
+0x0110    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x05, priority=0x03 )
+0x0113    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x5, flags=NO_FACE )
+0x0119    -- 0xFE17()
+0x011d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x6, flags=0 )
+0x0123    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x07, priority=0x03 )
+0x0126    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x7, flags=0 )
+0x012c    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x08, priority=0x03 )
+0x012f    op26_Wait( time=10 )
+0x0132    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x8, flags=0 )
+0x0138    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x03 )
+0x013b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x9, flags=0 )
+0x0141    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0d, priority=0x03 )
+0x0144    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xa, flags=0 )
+0x014a    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x03 )
+0x014d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0xb, flags=0 )
+0x0153    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x09, priority=0x03 )
+0x0156    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xc, flags=0 )
+0x015c    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x0a, priority=0x03 )
+0x015f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0xd, flags=0 )
+0x0165    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0d, priority=0x03 )
+0x0168    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xe, flags=0 )
+0x016e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0xf, flags=0 )
+0x0174    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x10, flags=0 )
+0x017a    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x08, priority=0x02 )
+0x017d    op26_Wait( time=30 )
+0x0180    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x03 )
+0x0183    mem[0x400] = false -- op37
+0x0186    mem[0x1c6] |= 1 << 0 -- op3a
+0x018c    -- 0xFE24()
+0x018e    -- 0xFE54()
+0x0190    -- 0x5B()
+0x0191    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0192    op00_Return()
+
+Actor_0x05:on_start:
+0x0193    -- 0xBC_ActorNoModelInit()
+0x0194    -- 0xF8()
+0x0198    -- 0xF8()
+0x019c    -- 0x19_ActorSetPosition( x=(vf80)0x0091, z=(vf40)0xff6f, flag=(flag)0xc0 )
+0x01a2    -- 0x18()
+0x01a7    op00_Return()
+
+Actor_0x05:on_update:
+0x01a8    op00_Return()
+
+Actor_0x05:on_talk:
+0x01a9    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x03 )
+0x01ac    op99()
+0x01ad    mem[0x428] = 1536 -- op35
+0x01b3    mem[0x42a] = 80 -- op35
+0x01b9    op05_CallFunction( address=0x35f )
+0x01bc    op26_Wait( time=10 )
+0x01bf    -- 0x98_MapLoad( field_id=519, value=5 )
+0x01c4    -- MISSING OPCODE 0xFE68
