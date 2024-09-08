@@ -78,30 +78,10 @@ Actor_0x02:on_start:
 0x0094    -- 0xBC_ActorNoModelInit()
 0x0095    -- 0x2A()
 0x0096    -- 0xB5() -- camera set direction
-0x0097    op02_JumpToConditional( condition="", address_if_false=0x868 )
-0x009f    -- 0x98_MapLoad( field_id=(s)mem[0x2700], value=13339 )
-0x00a4    op00_Return()
-0x00a5    -- 0x80()
-0x00aa    -- 0x9F()
-0x00ab    -- 0x80()
-0x00b0    -- 0xFE52()
-0x00b2    -- 0xB6( ???=400, ???=0 )
-0x00b7    mem[0x406] = 400 -- op35
-0x00bd    op99()
-0x00be    -- 0x63( ???=342, ???=396, ???=56 ) -- exp0x1
-0x00c6    -- 0xA3()
-0x00ce    opAC_MoveCamera( control=0x0, steps=0 )
-0x00d2    opAC_MoveCamera( control=0x1, steps=0 )
-0x00d6    opEF_MoveCameraSync()
-0x00d9    opB3_FadeIn()
-0x00dc    op26_Wait( time=30 )
-0x00df    mem[0x41c] = 4 -- op35
-0x00e5    mem[0x41a] = 8 -- op35
-0x00eb    -- 0xFE65()
-0x00f1    op02_JumpToConditional( val1=(s)mem[0x41c], val2=224, condition="val1 < val2", address_if_false=0x160 )
-0x00f9    op02_JumpToConditional( val1=(s)mem[0x41a], val2=320, condition="val1 < val2", address_if_false=0x12c )
-0x0101    mem[0x422] = (s)mem[0x41a] -- op35
-0x0107    opDF_VariableDivide( address=0x422, value=(vf40)0x0002, flag=0x40 )
-0x010d    mem[0x41e] = 160 -- op35
-0x0113    mem[0x41e] -= (s)mem[0x422] -- op39
-0x0119    -- MISSING OPCODE 0xFE9e
+0x009b    op00_Return()
+
+Actor_0x02:on_update:
+0x009c    -- 0xFB()
+0x00a1    -- 0x27( actor_id=Actor_0x1b )
+0x00a3    opB4_FadeOut()
+0x00a6    -- MISSING OPCODE 0xFE9e

@@ -626,12 +626,12 @@ Actor_0x0d:event_0x04:
 0x030d    opD2_MessageShowDynamic( text_id=0x35, flags=0 )
 0x0311    op9C_MessageSync()
 0x0312    -- 0xB5() -- camera set direction
-0x0313    op00_Return()
-0x0314    -- 0x80()
-0x0319    -- 0x80()
-0x031e    -- 0x80()
-0x0323    op0E_Nop()
-0x0324    -- 0xC4()
+0x0317    op26_Wait( time=11 )
+0x031a    op2C_SpritePlayAnim( anim_id=0xff )
+0x031c    op26_Wait( time=38 )
+0x031f    op07_CallActorEvent( actor_id=Actor_0x0f, event=event_0x04, priority=0x06 )
+0x0322    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x06 )
+0x0325    op00_Return()
 
 Actor_0x0d:event_0x05:
 0x0326    -- MISSING OPCODE 0xFEb5

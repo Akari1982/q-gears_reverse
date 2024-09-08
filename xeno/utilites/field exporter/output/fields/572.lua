@@ -265,10 +265,8 @@ Actor_0x09:on_talk:
 0x02bc    -- 0x67()
 0x02c0    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
 0x02c3    -- 0xB5() -- camera set direction
-0x02c4    op05_CallFunction( address=0x1e80 )
-0x02c7    -- 0x80()
-0x02cc    op02_JumpToConditional( val1=128, val2=(s)mem[0x80], condition="val1 == val2", address_if_false=0x8000 )
-0x02d4    -- 0x28()
+0x02c8    op74_SoundPlayFixedVolume( sound_id=151 )
+0x02cb    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=40 )
 0x02d6    op26_Wait( time=40 )
 0x02d9    -- 0xB6( ???=200, ???=40 )
 0x02de    -- 0x9D()
@@ -366,4 +364,4 @@ function:
 function:
 0x04d7    opFE97_ParticleReset( all=0x1 )
 0x04da    op0D_Return()
-0x04db    -- 0xE0( actor_id=Actor_0x03, ???=(vf80)0x0223, ???=(vf40)0x002a, flag=0x1 )
+0x04db    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

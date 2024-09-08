@@ -205,4 +205,73 @@ Actor_0x0c:event_0x04:
 0x00ad    mem[0x402] = false -- op37
 0x00b0    op02_JumpToConditional( val1=(s)mem[0x402], val2=14, condition="val1 < val2", address_if_false=0xc8 )
 0x00b8    opC6_ExpandRun() -- exp0x20
-0x00b9    -- MISSING OPCODE 0xFE1b
+0x00b9    -- 0xFE1B()
+0x00bf    op26_Wait( time=0 )
+0x00c2    mem[0x402] += 1 -- op3c
+0x00c5    op01_JumpTo( address=0xb0 )
+0x00c8    op00_Return()
+
+Actor_0x0d:on_start:
+0x00c9    -- 0xBC_ActorNoModelInit()
+0x00ca    -- 0x2A()
+0x00cb    op00_Return()
+
+Actor_0x0d:on_update:
+0x00cc    op00_Return()
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x00cd    op00_Return()
+
+Actor_0x0d:event_0x04:
+0x00ce    mem[0x404] = false -- op37
+0x00d1    op02_JumpToConditional( val1=(s)mem[0x404], val2=14, condition="val1 < val2", address_if_false=0xe9 )
+0x00d9    opC6_ExpandRun() -- exp0x20
+0x00da    -- 0xFE1B()
+0x00e0    op26_Wait( time=0 )
+0x00e3    mem[0x404] += 1 -- op3c
+0x00e6    op01_JumpTo( address=0xd1 )
+0x00e9    op00_Return()
+
+Actor_0x0e:on_start:
+0x00ea    -- 0xBC_ActorNoModelInit()
+0x00eb    -- 0x2A()
+0x00ec    op00_Return()
+
+Actor_0x0e:on_update:
+0x00ed    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x00ee    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x00ef    mem[0x406] = false -- op37
+0x00f2    op02_JumpToConditional( val1=(s)mem[0x406], val2=14, condition="val1 < val2", address_if_false=0x10a )
+0x00fa    opC6_ExpandRun() -- exp0x20
+0x00fb    -- 0xFE1B()
+0x0101    op26_Wait( time=0 )
+0x0104    mem[0x406] += 1 -- op3c
+0x0107    op01_JumpTo( address=0xf2 )
+0x010a    op00_Return()
+
+Actor_0x0f:on_start:
+0x010b    -- 0xBC_ActorNoModelInit()
+0x010c    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xff6f, flag=(flag)0xc0 )
+0x0112    -- 0xF8()
+0x0116    -- 0xF8()
+0x011a    -- 0x18()
+0x011f    op20_ActorSetFlags0( flags=1 )
+0x0122    op00_Return()
+
+Actor_0x0f:on_update:
+0x0123    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0124    -- 0xFE54()
+0x0126    op74_SoundPlayFixedVolume( sound_id=119 )
+0x0129    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )
+0x012c    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x01 )
+0x012f    -- MISSING OPCODE 0xFE68

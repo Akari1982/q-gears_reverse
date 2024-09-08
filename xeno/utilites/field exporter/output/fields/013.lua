@@ -49,8 +49,10 @@ Actor_0x00:event_0x04:
 Actor_0x00:event_0x05:
 0x004d    op26_Wait( time=10 )
 0x0050    -- 0xB5() -- camera set direction
-0x0051    op01_JumpTo( address=0x3c80 )
-0x0054    -- 0x80()
+0x0055    op00_Return()
+
+Actor_0x01:on_start:
+0x0056    -- 0x16_ActorPCInit( char_id=0 )
 0x0059    opFE0D_MessageSetFace( char_id=0 )
 0x005d    op00_Return()
 
@@ -537,16 +539,19 @@ Actor_0x0c:event_0x05:
 Actor_0x0c:event_0x06:
 0x041f    op02_JumpToConditional( val1=(s)mem[0x8], val2=6, condition="val1 == val2", address_if_false=0x42f )
 0x0427    -- 0xB5() -- camera set direction
-0x0428    op02_JumpToConditional( condition="val1 >= val2", address_if_false=0x204 )
-0x0430    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x07, priority=0x00 )
-0x0433    op00_Return()
-0x0434    mem[0x43f] ^= (s)mem[0x2b4] -- op40
-0x043a    -- 0x28()
+0x042c    op01_JumpTo( address=0x454 )
+0x042f    op02_JumpToConditional( val1=(s)mem[0x8], val2=7, condition="val1 == val2", address_if_false=0x43f )
+0x0437    -- 0xB5() -- camera set direction
 0x043c    op01_JumpTo( address=0x454 )
 0x043f    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 == val2", address_if_false=0x44f )
 0x0447    -- 0xB5() -- camera set direction
-0x0448    op02_JumpToConditional( condition="val1 >= val2", address_if_false=0xb504 )
-0x0450    op02_JumpToConditional( condition="val1 >= val2", address_if_false=0x5a00 )
+0x044c    op01_JumpTo( address=0x454 )
+0x044f    -- 0xB5() -- camera set direction
+0x0454    op00_Return()
+
+Actor_0x0c:event_0x07:
+0x0455    opF4_MessageClose( type=0x0 )
+0x0457    -- 0x5A()
 0x0458    op69_ActorSetRotation( rot=0 )
 0x045b    -- 0x92()
 
@@ -739,4 +744,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x05c5    op00_Return()
-0x05c6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x3a35, flag=0x0 )
+0x05c6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0100, ???=(vf40)0x02ee, flag=0x3 )

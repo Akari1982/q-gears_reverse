@@ -1060,8 +1060,7 @@ Actor_0x18:on_start:
 Actor_0x18:on_update:
 0x09df    -- 0xFE54()
 0x09e1    -- 0xB5() -- camera set direction
-0x09e2    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x1c, priority=0x01 )
-0x09e5    -- 0x80()
+0x09e6    -- 0xA4() -- camera angle
 0x09ea    mem[0x400] = true -- op36
 0x09ed    op09_CallActorEventEndSync( actor_id=Actor_0x1b, event=event_0x04, priority=0x03 )
 0x09f0    op24_ActorEnable( actor_id=Actor_0x15 )

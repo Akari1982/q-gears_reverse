@@ -70,4 +70,29 @@ Actor_0x01:on_start:
 0x0092    op00_Return()
 
 Actor_0x01:on_update:
-0x0093    -- MISSING OPCODE 0xFEb0
+0x0093    -- opFEB000()
+0x009a    -- opFEB001()
+0x009d    op74_SoundPlayFixedVolume( sound_id=408 )
+0x00a0    -- 0xFE64() -- wait for sound channel?
+0x00a4    op01_JumpTo( address=0x9d )
+0x00a7    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00a8    op00_Return()
+
+Actor_0x02:on_start:
+0x00a9    -- 0xBC_ActorNoModelInit()
+0x00aa    -- 0x2A()
+0x00ab    mem[0x400] = 64 -- op35
+0x00b1    mem[0x402] = 64 -- op35
+0x00b7    mem[0x404] = 64 -- op35
+0x00bd    mem[0x406] = 64 -- op35
+0x00c3    op00_Return()
+
+Actor_0x02:on_update:
+0x00c4    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xf8 )
+0x00cc    -- 0xFE65()
+0x00d2    -- 0xFE65()
+0x00d8    -- MISSING OPCODE 0xFE63

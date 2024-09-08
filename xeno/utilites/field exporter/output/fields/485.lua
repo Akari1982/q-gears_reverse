@@ -360,4 +360,1133 @@ Actor_0x0e:event_0x04:
 0x02b5    op02_JumpToConditional( val1=(s)mem[0x410], val2=11, condition="val1 == val2", address_if_false=0x2c1 )
 0x02bd    op00_Return()
 0x02be    op01_JumpTo( address=0x2ce )
-0x02c1    -- MISSING OPCODE 0xFE1b
+0x02c1    -- 0xFE1B()
+0x02c7    -- 0x5A()
+0x02c8    mem[0x410] += 1 -- op3c
+0x02cb    op01_JumpTo( address=0x2b5 )
+0x02ce    op00_Return()
+0x02cf    op00_Return()
+
+Actor_0x0f:on_start:
+0x02d0    -- 0xBC_ActorNoModelInit()
+0x02d1    op00_Return()
+
+Actor_0x0f:on_update:
+0x02d2    op00_Return()
+
+Actor_0x0f:on_talk:
+0x02d3    op00_Return()
+
+Actor_0x0f:on_push:
+0x02d4    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x02d5    mem[0x412] = 0 -- op35
+0x02db    op02_JumpToConditional( val1=(s)mem[0x412], val2=11, condition="val1 == val2", address_if_false=0x2e7 )
+0x02e3    op00_Return()
+0x02e4    op01_JumpTo( address=0x2f4 )
+0x02e7    -- 0xFE1B()
+0x02ed    -- 0x5A()
+0x02ee    mem[0x412] += 1 -- op3c
+0x02f1    op01_JumpTo( address=0x2db )
+0x02f4    op00_Return()
+0x02f5    op00_Return()
+
+Actor_0x10:on_start:
+0x02f6    -- 0xBC_ActorNoModelInit()
+0x02f7    -- 0x19_ActorSetPosition( x=(vf80)0xeb4f, z=(vf40)0x077b, flag=(flag)0xc0 )
+0x02fd    -- 0xF8()
+0x0301    -- 0x18()
+0x0306    op00_Return()
+
+Actor_0x10:on_update:
+0x0307    op00_Return()
+
+Actor_0x10:on_talk:
+0x0308    -- 0xFE54()
+0x030a    mem[0x402] = 1 -- op35
+0x0310    opD2_MessageShowDynamic( text_id=0x1, flags=FORCE_TOP )
+0x0314    op9C_MessageSync()
+0x0315    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x04, priority=0x03 )
+0x0318    -- 0x98_MapLoad( field_id=485, value=3 )
+0x031d    op00_Return()
+
+Actor_0x10:on_push:
+0x031e    op00_Return()
+
+Actor_0x11:on_start:
+0x031f    -- 0xBC_ActorNoModelInit()
+0x0320    -- 0xFE07( ???=0x1 )
+0x0323    op00_Return()
+
+Actor_0x11:on_update:
+0x0324    op00_Return()
+
+Actor_0x11:on_talk:
+0x0325    op00_Return()
+
+Actor_0x11:on_push:
+0x0326    op00_Return()
+
+Actor_0x11:event_0x04:
+0x0327    op74_SoundPlayFixedVolume( sound_id=119 )
+0x032a    mem[0x414] = 0 -- op35
+0x0330    op02_JumpToConditional( val1=(s)mem[0x414], val2=11, condition="val1 == val2", address_if_false=0x33c )
+0x0338    op00_Return()
+0x0339    op01_JumpTo( address=0x349 )
+0x033c    -- 0xFE1B()
+0x0342    -- 0x5A()
+0x0343    mem[0x414] += 1 -- op3c
+0x0346    op01_JumpTo( address=0x330 )
+0x0349    op00_Return()
+0x034a    op00_Return()
+
+Actor_0x12:on_start:
+0x034b    -- 0xBC_ActorNoModelInit()
+0x034c    -- 0x19_ActorSetPosition( x=(vf80)0xeb59, z=(vf40)0xf886, flag=(flag)0xc0 )
+0x0352    -- 0xF8()
+0x0356    -- 0x18()
+0x035b    op00_Return()
+
+Actor_0x12:on_update:
+0x035c    op00_Return()
+
+Actor_0x12:on_talk:
+0x035d    -- 0xFE54()
+0x035f    mem[0x402] = 1 -- op35
+0x0365    opD2_MessageShowDynamic( text_id=0x2, flags=FORCE_TOP )
+0x0369    op9C_MessageSync()
+0x036a    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x04, priority=0x03 )
+0x036d    -- 0x98_MapLoad( field_id=485, value=9 )
+0x0372    op00_Return()
+
+Actor_0x12:on_push:
+0x0373    op00_Return()
+
+Actor_0x13:on_start:
+0x0374    -- 0xBC_ActorNoModelInit()
+0x0375    -- 0xFE07( ???=0x1 )
+0x0378    op00_Return()
+
+Actor_0x13:on_update:
+0x0379    op00_Return()
+
+Actor_0x13:on_talk:
+0x037a    op00_Return()
+
+Actor_0x13:on_push:
+0x037b    op00_Return()
+
+Actor_0x13:event_0x04:
+0x037c    op74_SoundPlayFixedVolume( sound_id=119 )
+0x037f    mem[0x416] = 0 -- op35
+0x0385    op02_JumpToConditional( val1=(s)mem[0x416], val2=11, condition="val1 == val2", address_if_false=0x391 )
+0x038d    op00_Return()
+0x038e    op01_JumpTo( address=0x39e )
+0x0391    -- 0xFE1B()
+0x0397    -- 0x5A()
+0x0398    mem[0x416] += 1 -- op3c
+0x039b    op01_JumpTo( address=0x385 )
+0x039e    op00_Return()
+0x039f    op00_Return()
+
+Actor_0x14:on_start:
+0x03a0    -- 0xBC_ActorNoModelInit()
+0x03a1    -- 0x19_ActorSetPosition( x=(vf80)0xfb1d, z=(vf40)0x0c9f, flag=(flag)0xc0 )
+0x03a7    -- 0xF8()
+0x03ab    -- 0x18()
+0x03b0    op00_Return()
+
+Actor_0x14:on_update:
+0x03b1    op00_Return()
+
+Actor_0x14:on_talk:
+0x03b2    -- 0xFE54()
+0x03b4    mem[0x402] = 1 -- op35
+0x03ba    opD2_MessageShowDynamic( text_id=0x3, flags=FORCE_TOP )
+0x03be    op9C_MessageSync()
+0x03bf    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x04, priority=0x03 )
+0x03c2    -- 0x98_MapLoad( field_id=485, value=1 )
+0x03c7    op00_Return()
+
+Actor_0x14:on_push:
+0x03c8    op00_Return()
+
+Actor_0x15:on_start:
+0x03c9    -- 0xBC_ActorNoModelInit()
+0x03ca    -- 0xFE07( ???=0x1 )
+0x03cd    op00_Return()
+
+Actor_0x15:on_update:
+0x03ce    op00_Return()
+
+Actor_0x15:on_talk:
+0x03cf    op00_Return()
+
+Actor_0x15:on_push:
+0x03d0    op00_Return()
+
+Actor_0x15:event_0x04:
+0x03d1    op74_SoundPlayFixedVolume( sound_id=119 )
+0x03d4    mem[0x418] = 0 -- op35
+0x03da    op02_JumpToConditional( val1=(s)mem[0x418], val2=11, condition="val1 == val2", address_if_false=0x3e6 )
+0x03e2    op00_Return()
+0x03e3    op01_JumpTo( address=0x3f3 )
+0x03e6    -- 0xFE1B()
+0x03ec    -- 0x5A()
+0x03ed    mem[0x418] += 1 -- op3c
+0x03f0    op01_JumpTo( address=0x3da )
+0x03f3    op00_Return()
+0x03f4    op00_Return()
+
+Actor_0x16:on_start:
+0x03f5    -- 0xBC_ActorNoModelInit()
+0x03f6    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0e00, flag=(flag)0xc0 )
+0x03fc    -- 0xF8()
+0x0400    -- 0x18()
+0x0405    op00_Return()
+
+Actor_0x16:on_update:
+0x0406    op00_Return()
+
+Actor_0x16:on_talk:
+0x0407    -- 0xFE54()
+0x0409    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x04, priority=0x03 )
+0x040c    -- 0x98_MapLoad( field_id=486, value=0 )
+0x0411    op00_Return()
+
+Actor_0x16:on_push:
+0x0412    op00_Return()
+
+Actor_0x17:on_start:
+0x0413    -- 0xBC_ActorNoModelInit()
+0x0414    -- 0xFE07( ???=0x1 )
+0x0417    op00_Return()
+
+Actor_0x17:on_update:
+0x0418    op00_Return()
+
+Actor_0x17:on_talk:
+0x0419    op00_Return()
+
+Actor_0x17:on_push:
+0x041a    op00_Return()
+
+Actor_0x17:event_0x04:
+0x041b    op74_SoundPlayFixedVolume( sound_id=119 )
+0x041e    mem[0x41a] = 0 -- op35
+0x0424    op02_JumpToConditional( val1=(s)mem[0x41a], val2=11, condition="val1 == val2", address_if_false=0x430 )
+0x042c    op00_Return()
+0x042d    op01_JumpTo( address=0x43d )
+0x0430    -- 0xFE1B()
+0x0436    -- 0x5A()
+0x0437    mem[0x41a] += 1 -- op3c
+0x043a    op01_JumpTo( address=0x424 )
+0x043d    op00_Return()
+0x043e    op00_Return()
+
+Actor_0x18:on_start:
+0x043f    -- 0xBC_ActorNoModelInit()
+0x0440    -- 0x19_ActorSetPosition( x=(vf80)0x09dc, z=(vf40)0x09de, flag=(flag)0xc0 )
+0x0446    -- 0xF8()
+0x044a    -- 0x18()
+0x044f    op00_Return()
+
+Actor_0x18:on_update:
+0x0450    op00_Return()
+
+Actor_0x18:on_talk:
+0x0451    -- 0xFE54()
+0x0453    mem[0x402] = 1 -- op35
+0x0459    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x03 )
+0x045c    -- 0x98_MapLoad( field_id=486, value=2 )
+0x0461    op00_Return()
+
+Actor_0x18:on_push:
+0x0462    op00_Return()
+
+Actor_0x19:on_start:
+0x0463    -- 0xBC_ActorNoModelInit()
+0x0464    -- 0xFE07( ???=0x1 )
+0x0467    op00_Return()
+
+Actor_0x19:on_update:
+0x0468    op00_Return()
+
+Actor_0x19:on_talk:
+0x0469    op00_Return()
+
+Actor_0x19:on_push:
+0x046a    op00_Return()
+
+Actor_0x19:event_0x04:
+0x046b    op74_SoundPlayFixedVolume( sound_id=119 )
+0x046e    mem[0x41c] = 0 -- op35
+0x0474    op02_JumpToConditional( val1=(s)mem[0x41c], val2=11, condition="val1 == val2", address_if_false=0x480 )
+0x047c    op00_Return()
+0x047d    op01_JumpTo( address=0x48d )
+0x0480    -- 0xFE1B()
+0x0486    -- 0x5A()
+0x0487    mem[0x41c] += 1 -- op3c
+0x048a    op01_JumpTo( address=0x474 )
+0x048d    op00_Return()
+0x048e    op00_Return()
+
+Actor_0x1a:on_start:
+0x048f    -- 0xBC_ActorNoModelInit()
+0x0490    -- 0x19_ActorSetPosition( x=(vf80)0x0e0d, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0496    -- 0xF8()
+0x049a    -- 0x18()
+0x049f    op00_Return()
+
+Actor_0x1a:on_update:
+0x04a0    op00_Return()
+
+Actor_0x1a:on_talk:
+0x04a1    -- 0xFE54()
+0x04a3    mem[0x402] = 1 -- op35
+0x04a9    op09_CallActorEventEndSync( actor_id=Actor_0x1b, event=event_0x04, priority=0x03 )
+0x04ac    -- 0x98_MapLoad( field_id=486, value=4 )
+0x04b1    op00_Return()
+
+Actor_0x1a:on_push:
+0x04b2    op00_Return()
+
+Actor_0x1b:on_start:
+0x04b3    -- 0xBC_ActorNoModelInit()
+0x04b4    -- 0xFE07( ???=0x1 )
+0x04b7    op00_Return()
+
+Actor_0x1b:on_update:
+0x04b8    op00_Return()
+
+Actor_0x1b:on_talk:
+0x04b9    op00_Return()
+
+Actor_0x1b:on_push:
+0x04ba    op00_Return()
+
+Actor_0x1b:event_0x04:
+0x04bb    op74_SoundPlayFixedVolume( sound_id=119 )
+0x04be    mem[0x41e] = 0 -- op35
+0x04c4    op02_JumpToConditional( val1=(s)mem[0x41e], val2=11, condition="val1 == val2", address_if_false=0x4d0 )
+0x04cc    op00_Return()
+0x04cd    op01_JumpTo( address=0x4dd )
+0x04d0    -- 0xFE1B()
+0x04d6    -- 0x5A()
+0x04d7    mem[0x41e] += 1 -- op3c
+0x04da    op01_JumpTo( address=0x4c4 )
+0x04dd    op00_Return()
+0x04de    op00_Return()
+
+Actor_0x1c:on_start:
+0x04df    -- 0xBC_ActorNoModelInit()
+0x04e0    -- 0x19_ActorSetPosition( x=(vf80)0x09e4, z=(vf40)0xf60a, flag=(flag)0xc0 )
+0x04e6    -- 0xF8()
+0x04ea    -- 0x18()
+0x04ef    op00_Return()
+
+Actor_0x1c:on_update:
+0x04f0    op00_Return()
+
+Actor_0x1c:on_talk:
+0x04f1    -- 0xFE54()
+0x04f3    mem[0x402] = 1 -- op35
+0x04f9    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x04, priority=0x03 )
+0x04fc    -- 0x98_MapLoad( field_id=486, value=6 )
+0x0501    op00_Return()
+
+Actor_0x1c:on_push:
+0x0502    op00_Return()
+
+Actor_0x1d:on_start:
+0x0503    -- 0xBC_ActorNoModelInit()
+0x0504    -- 0xFE07( ???=0x1 )
+0x0507    op00_Return()
+
+Actor_0x1d:on_update:
+0x0508    op00_Return()
+
+Actor_0x1d:on_talk:
+0x0509    op00_Return()
+
+Actor_0x1d:on_push:
+0x050a    op00_Return()
+
+Actor_0x1d:event_0x04:
+0x050b    op74_SoundPlayFixedVolume( sound_id=119 )
+0x050e    mem[0x420] = 0 -- op35
+0x0514    op02_JumpToConditional( val1=(s)mem[0x420], val2=11, condition="val1 == val2", address_if_false=0x520 )
+0x051c    op00_Return()
+0x051d    op01_JumpTo( address=0x52d )
+0x0520    -- 0xFE1B()
+0x0526    -- 0x5A()
+0x0527    mem[0x420] += 1 -- op3c
+0x052a    op01_JumpTo( address=0x514 )
+0x052d    op00_Return()
+0x052e    op00_Return()
+
+Actor_0x1e:on_start:
+0x052f    -- 0xBC_ActorNoModelInit()
+0x0530    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0xf1e8, flag=(flag)0xc0 )
+0x0536    -- 0xF8()
+0x053a    -- 0x18()
+0x053f    op00_Return()
+
+Actor_0x1e:on_update:
+0x0540    op00_Return()
+
+Actor_0x1e:on_talk:
+0x0541    -- 0xFE54()
+0x0543    mem[0x402] = 1 -- op35
+0x0549    op09_CallActorEventEndSync( actor_id=Actor_0x1f, event=event_0x04, priority=0x03 )
+0x054c    -- 0x98_MapLoad( field_id=486, value=8 )
+0x0551    op00_Return()
+
+Actor_0x1e:on_push:
+0x0552    op00_Return()
+
+Actor_0x1f:on_start:
+0x0553    -- 0xBC_ActorNoModelInit()
+0x0554    -- 0xFE07( ???=0x1 )
+0x0557    op00_Return()
+
+Actor_0x1f:on_update:
+0x0558    op00_Return()
+
+Actor_0x1f:on_talk:
+0x0559    op00_Return()
+
+Actor_0x1f:on_push:
+0x055a    op00_Return()
+
+Actor_0x1f:event_0x04:
+0x055b    op74_SoundPlayFixedVolume( sound_id=119 )
+0x055e    mem[0x422] = 0 -- op35
+0x0564    op02_JumpToConditional( val1=(s)mem[0x422], val2=11, condition="val1 == val2", address_if_false=0x570 )
+0x056c    op00_Return()
+0x056d    op01_JumpTo( address=0x57d )
+0x0570    -- 0xFE1B()
+0x0576    -- 0x5A()
+0x0577    mem[0x422] += 1 -- op3c
+0x057a    op01_JumpTo( address=0x564 )
+0x057d    op00_Return()
+0x057e    op00_Return()
+
+Actor_0x20:on_start:
+0x057f    -- 0xBC_ActorNoModelInit()
+0x0580    -- 0x19_ActorSetPosition( x=(vf80)0xfb0b, z=(vf40)0xf359, flag=(flag)0xc0 )
+0x0586    -- 0xF8()
+0x058a    -- 0x18()
+0x058f    op00_Return()
+
+Actor_0x20:on_update:
+0x0590    op00_Return()
+
+Actor_0x20:on_talk:
+0x0591    -- 0xFE54()
+0x0593    mem[0x402] = 1 -- op35
+0x0599    opD2_MessageShowDynamic( text_id=0x4, flags=FORCE_TOP )
+0x059d    op9C_MessageSync()
+0x059e    op09_CallActorEventEndSync( actor_id=Actor_0x21, event=event_0x04, priority=0x03 )
+0x05a1    -- 0x98_MapLoad( field_id=485, value=2 )
+0x05a6    op00_Return()
+
+Actor_0x20:on_push:
+0x05a7    op00_Return()
+
+Actor_0x21:on_start:
+0x05a8    -- 0xBC_ActorNoModelInit()
+0x05a9    -- 0xFE07( ???=0x1 )
+0x05ac    op00_Return()
+
+Actor_0x21:on_update:
+0x05ad    op00_Return()
+
+Actor_0x21:on_talk:
+0x05ae    op00_Return()
+
+Actor_0x21:on_push:
+0x05af    op00_Return()
+
+Actor_0x21:event_0x04:
+0x05b0    op74_SoundPlayFixedVolume( sound_id=119 )
+0x05b3    mem[0x424] = 0 -- op35
+0x05b9    op02_JumpToConditional( val1=(s)mem[0x424], val2=11, condition="val1 == val2", address_if_false=0x5c5 )
+0x05c1    op00_Return()
+0x05c2    op01_JumpTo( address=0x5d2 )
+0x05c5    -- 0xFE1B()
+0x05cb    -- 0x5A()
+0x05cc    mem[0x424] += 1 -- op3c
+0x05cf    op01_JumpTo( address=0x5b9 )
+0x05d2    op00_Return()
+0x05d3    op00_Return()
+
+Actor_0x22:on_start:
+0x05d4    -- 0xBC_ActorNoModelInit()
+0x05d5    -- 0x2A()
+0x05d6    op00_Return()
+
+Actor_0x22:on_update:
+0x05d7    mem[0x426] = opA8_Random( max=3 )
+0x05dc    op02_JumpToConditional( val1=(s)mem[0x426], val2=0, condition="val1 == val2", address_if_false=0x5ea )
+0x05e4    op01_JumpTo( address=0x5d7 )
+0x05e7    op01_JumpTo( address=0x5f0 )
+0x05ea    mem[0x400] = (s)mem[0x426] -- op35
+0x05f0    op00_Return()
+
+Actor_0x22:on_talk:
+0x05f1    op00_Return()
+
+Actor_0x22:on_push:
+0x05f2    op00_Return()
+
+Actor_0x23:on_start:
+0x05f3    -- 0xBC_ActorNoModelInit()
+0x05f4    -- 0x2A()
+0x05f5    op00_Return()
+
+Actor_0x23:on_update:
+0x05f6    op00_Return()
+
+Actor_0x23:on_talk:
+0x05f7    op00_Return()
+
+Actor_0x23:on_push:
+0x05f8    op00_Return()
+
+Actor_0x23:event_0x04:
+0x05f9    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x61f )
+0x0601    -- 0xFE84()
+0x060b    -- 0xFE7F()
+0x060d    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x0613    op25_ActorDisable( actor_id=Actor_0x24 )
+0x0615    -- 0x27( actor_id=Actor_0x24 )
+0x0617    op25_ActorDisable( actor_id=Actor_0x25 )
+0x0619    -- 0x27( actor_id=Actor_0x25 )
+0x061b    op25_ActorDisable( actor_id=Actor_0x26 )
+0x061d    -- 0x27( actor_id=Actor_0x26 )
+0x061f    -- 0x92()
+
+Actor_0x23:event_0x05:
+0x0620    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x646 )
+0x0628    -- 0xFE84()
+0x0632    -- 0xFE7F()
+0x0634    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x063a    op25_ActorDisable( actor_id=Actor_0x27 )
+0x063c    -- 0x27( actor_id=Actor_0x27 )
+0x063e    op25_ActorDisable( actor_id=Actor_0x28 )
+0x0640    -- 0x27( actor_id=Actor_0x28 )
+0x0642    op25_ActorDisable( actor_id=Actor_0x29 )
+0x0644    -- 0x27( actor_id=Actor_0x29 )
+0x0646    -- 0x92()
+
+Actor_0x23:event_0x06:
+0x0647    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x66d )
+0x064f    -- 0xFE84()
+0x0659    -- 0xFE7F()
+0x065b    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x0661    op25_ActorDisable( actor_id=Actor_0x2a )
+0x0663    -- 0x27( actor_id=Actor_0x2a )
+0x0665    op25_ActorDisable( actor_id=Actor_0x2b )
+0x0667    -- 0x27( actor_id=Actor_0x2b )
+0x0669    op25_ActorDisable( actor_id=Actor_0x2c )
+0x066b    -- 0x27( actor_id=Actor_0x2c )
+0x066d    -- 0x92()
+
+Actor_0x23:event_0x07:
+0x066e    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x694 )
+0x0676    -- 0xFE84()
+0x0680    -- 0xFE7F()
+0x0682    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x0688    op25_ActorDisable( actor_id=Actor_0x2d )
+0x068a    -- 0x27( actor_id=Actor_0x2d )
+0x068c    op25_ActorDisable( actor_id=Actor_0x2e )
+0x068e    -- 0x27( actor_id=Actor_0x2e )
+0x0690    op25_ActorDisable( actor_id=Actor_0x2f )
+0x0692    -- 0x27( actor_id=Actor_0x2f )
+0x0694    -- 0x92()
+
+Actor_0x23:event_0x08:
+0x0695    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x6bb )
+0x069d    -- 0xFE84()
+0x06a7    -- 0xFE7F()
+0x06a9    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x06af    op25_ActorDisable( actor_id=Actor_0x30 )
+0x06b1    -- 0x27( actor_id=Actor_0x30 )
+0x06b3    op25_ActorDisable( actor_id=Actor_0x31 )
+0x06b5    -- 0x27( actor_id=Actor_0x31 )
+0x06b7    op25_ActorDisable( actor_id=Actor_0x32 )
+0x06b9    -- 0x27( actor_id=Actor_0x32 )
+0x06bb    -- 0x92()
+
+Actor_0x23:event_0x09:
+0x06bc    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x6e2 )
+0x06c4    -- 0xFE84()
+0x06ce    -- 0xFE7F()
+0x06d0    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x06d6    op25_ActorDisable( actor_id=Actor_0x33 )
+0x06d8    -- 0x27( actor_id=Actor_0x33 )
+0x06da    op25_ActorDisable( actor_id=Actor_0x34 )
+0x06dc    -- 0x27( actor_id=Actor_0x34 )
+0x06de    op25_ActorDisable( actor_id=Actor_0x35 )
+0x06e0    -- 0x27( actor_id=Actor_0x35 )
+0x06e2    -- 0x92()
+
+Actor_0x23:event_0x0a:
+0x06e3    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x709 )
+0x06eb    -- 0xFE84()
+0x06f5    -- 0xFE7F()
+0x06f7    -- 0xFE0E_SoundSetVolume( volume=127, steps=1 )
+0x06fd    op25_ActorDisable( actor_id=Actor_0x36 )
+0x06ff    -- 0x27( actor_id=Actor_0x36 )
+0x0701    op25_ActorDisable( actor_id=Actor_0x37 )
+0x0703    -- 0x27( actor_id=Actor_0x37 )
+0x0705    op25_ActorDisable( actor_id=Actor_0x38 )
+0x0707    -- 0x27( actor_id=Actor_0x38 )
+0x0709    -- 0x92()
+
+Actor_0x24:on_start:
+0x070a    -- 0x0B_InitNPC( 1 )
+0x070d    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x71e )
+0x0715    -- 0x19_ActorSetPosition( x=(vf80)0xf1aa, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x071b    op01_JumpTo( address=0x721 )
+0x071e    -- 0x23()
+0x071f    -- 0x27( actor_id=Actor_0x24 )
+0x0721    op00_Return()
+
+Actor_0x24:on_update:
+0x0722    -- 0x89()
+0x0728    op2C_SpritePlayAnim( anim_id=0x1 )
+0x072a    -- 0x52()
+0x072c    -- 0x89()
+0x0732    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x04, priority=0x03 )
+0x0735    op00_Return()
+
+Actor_0x24:on_talk:
+0x0736    op00_Return()
+
+Actor_0x24:on_push:
+0x0737    op00_Return()
+
+Actor_0x25:on_start:
+0x0738    -- 0x0B_InitNPC( 1 )
+0x073b    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x74c )
+0x0743    -- 0x19_ActorSetPosition( x=(vf80)0xf1aa, z=(vf40)0xffbc, flag=(flag)0xc0 )
+0x0749    op01_JumpTo( address=0x74f )
+0x074c    -- 0x23()
+0x074d    -- 0x27( actor_id=Actor_0x25 )
+0x074f    op00_Return()
+
+Actor_0x25:on_update:
+0x0750    -- 0x89()
+0x0756    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0758    -- 0x52()
+0x075a    -- 0x89()
+0x0760    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x04, priority=0x03 )
+0x0763    op00_Return()
+
+Actor_0x25:on_talk:
+0x0764    op00_Return()
+
+Actor_0x25:on_push:
+0x0765    op00_Return()
+
+Actor_0x26:on_start:
+0x0766    -- 0x0B_InitNPC( 1 )
+0x0769    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x77a )
+0x0771    -- 0x19_ActorSetPosition( x=(vf80)0xf1aa, z=(vf40)0x0044, flag=(flag)0xc0 )
+0x0777    op01_JumpTo( address=0x77d )
+0x077a    -- 0x23()
+0x077b    -- 0x27( actor_id=Actor_0x26 )
+0x077d    op00_Return()
+
+Actor_0x26:on_update:
+0x077e    -- 0x89()
+0x0784    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0786    -- 0x52()
+0x0788    -- 0x89()
+0x078e    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x04, priority=0x03 )
+0x0791    op00_Return()
+
+Actor_0x26:on_talk:
+0x0792    op00_Return()
+
+Actor_0x26:on_push:
+0x0793    op00_Return()
+
+Actor_0x27:on_start:
+0x0794    -- 0x0B_InitNPC( 1 )
+0x0797    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x7a8 )
+0x079f    -- 0x19_ActorSetPosition( x=(vf80)0xfd29, z=(vf40)0x0d2f, flag=(flag)0xc0 )
+0x07a5    op01_JumpTo( address=0x7ab )
+0x07a8    -- 0x23()
+0x07a9    -- 0x27( actor_id=Actor_0x27 )
+0x07ab    op00_Return()
+
+Actor_0x27:on_update:
+0x07ac    -- 0x89()
+0x07b2    op2C_SpritePlayAnim( anim_id=0x1 )
+0x07b4    -- 0x52()
+0x07b6    -- 0x89()
+0x07bc    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x05, priority=0x03 )
+0x07bf    op00_Return()
+
+Actor_0x27:on_talk:
+0x07c0    op00_Return()
+
+Actor_0x27:on_push:
+0x07c1    op00_Return()
+
+Actor_0x28:on_start:
+0x07c2    -- 0x0B_InitNPC( 1 )
+0x07c5    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x7d6 )
+0x07cd    -- 0x19_ActorSetPosition( x=(vf80)0xfcbb, z=(vf40)0x0ceb, flag=(flag)0xc0 )
+0x07d3    op01_JumpTo( address=0x7d9 )
+0x07d6    -- 0x23()
+0x07d7    -- 0x27( actor_id=Actor_0x28 )
+0x07d9    op00_Return()
+
+Actor_0x28:on_update:
+0x07da    -- 0x89()
+0x07e0    op2C_SpritePlayAnim( anim_id=0x1 )
+0x07e2    -- 0x52()
+0x07e4    -- 0x89()
+0x07ea    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x05, priority=0x03 )
+0x07ed    op00_Return()
+
+Actor_0x28:on_talk:
+0x07ee    op00_Return()
+
+Actor_0x28:on_push:
+0x07ef    op00_Return()
+
+Actor_0x29:on_start:
+0x07f0    -- 0x0B_InitNPC( 1 )
+0x07f3    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x804 )
+0x07fb    -- 0x19_ActorSetPosition( x=(vf80)0xfbf0, z=(vf40)0x0d04, flag=(flag)0xc0 )
+0x0801    op01_JumpTo( address=0x807 )
+0x0804    -- 0x23()
+0x0805    -- 0x27( actor_id=Actor_0x29 )
+0x0807    op00_Return()
+
+Actor_0x29:on_update:
+0x0808    -- 0x89()
+0x080e    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0810    -- 0x52()
+0x0812    -- 0x89()
+0x0818    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x05, priority=0x03 )
+0x081b    op00_Return()
+
+Actor_0x29:on_talk:
+0x081c    op00_Return()
+
+Actor_0x29:on_push:
+0x081d    op00_Return()
+
+Actor_0x2a:on_start:
+0x081e    -- 0x0B_InitNPC( 1 )
+0x0821    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x832 )
+0x0829    -- 0x19_ActorSetPosition( x=(vf80)0x052b, z=(vf40)0x0c7b, flag=(flag)0xc0 )
+0x082f    op01_JumpTo( address=0x835 )
+0x0832    -- 0x23()
+0x0833    -- 0x27( actor_id=Actor_0x2a )
+0x0835    op00_Return()
+
+Actor_0x2a:on_update:
+0x0836    -- 0x89()
+0x083c    op2C_SpritePlayAnim( anim_id=0x1 )
+0x083e    -- 0x52()
+0x0840    -- 0x89()
+0x0846    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x06, priority=0x03 )
+0x0849    op00_Return()
+
+Actor_0x2a:on_talk:
+0x084a    op00_Return()
+
+Actor_0x2a:on_push:
+0x084b    op00_Return()
+
+Actor_0x2b:on_start:
+0x084c    -- 0x0B_InitNPC( 1 )
+0x084f    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x860 )
+0x0857    -- 0x19_ActorSetPosition( x=(vf80)0x049f, z=(vf40)0x0cb6, flag=(flag)0xc0 )
+0x085d    op01_JumpTo( address=0x863 )
+0x0860    -- 0x23()
+0x0861    -- 0x27( actor_id=Actor_0x2b )
+0x0863    op00_Return()
+
+Actor_0x2b:on_update:
+0x0864    -- 0x89()
+0x086a    op2C_SpritePlayAnim( anim_id=0x1 )
+0x086c    -- 0x52()
+0x086e    -- 0x89()
+0x0874    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x06, priority=0x03 )
+0x0877    op00_Return()
+
+Actor_0x2b:on_talk:
+0x0878    op00_Return()
+
+Actor_0x2b:on_push:
+0x0879    op00_Return()
+
+Actor_0x2c:on_start:
+0x087a    -- 0x0B_InitNPC( 1 )
+0x087d    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x88e )
+0x0885    -- 0x19_ActorSetPosition( x=(vf80)0x05e0, z=(vf40)0x0bf5, flag=(flag)0xc0 )
+0x088b    op01_JumpTo( address=0x891 )
+0x088e    -- 0x23()
+0x088f    -- 0x27( actor_id=Actor_0x2c )
+0x0891    op00_Return()
+
+Actor_0x2c:on_update:
+0x0892    -- 0x89()
+0x0898    op2C_SpritePlayAnim( anim_id=0x1 )
+0x089a    -- 0x52()
+0x089c    -- 0x89()
+0x08a2    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x06, priority=0x03 )
+0x08a5    op00_Return()
+
+Actor_0x2c:on_talk:
+0x08a6    op00_Return()
+
+Actor_0x2c:on_push:
+0x08a7    op00_Return()
+
+Actor_0x2d:on_start:
+0x08a8    -- 0x0B_InitNPC( 1 )
+0x08ab    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x8bc )
+0x08b3    -- 0x19_ActorSetPosition( x=(vf80)0x0c5e, z=(vf40)0x059a, flag=(flag)0xc0 )
+0x08b9    op01_JumpTo( address=0x8bf )
+0x08bc    -- 0x23()
+0x08bd    -- 0x27( actor_id=Actor_0x2d )
+0x08bf    op00_Return()
+
+Actor_0x2d:on_update:
+0x08c0    -- 0x89()
+0x08c6    op2C_SpritePlayAnim( anim_id=0x1 )
+0x08c8    -- 0x52()
+0x08ca    -- 0x89()
+0x08d0    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x07, priority=0x03 )
+0x08d3    op00_Return()
+
+Actor_0x2d:on_talk:
+0x08d4    op00_Return()
+
+Actor_0x2d:on_push:
+0x08d5    op00_Return()
+
+Actor_0x2e:on_start:
+0x08d6    -- 0x0B_InitNPC( 1 )
+0x08d9    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x8ea )
+0x08e1    -- 0x19_ActorSetPosition( x=(vf80)0x0c5a, z=(vf40)0x0501, flag=(flag)0xc0 )
+0x08e7    op01_JumpTo( address=0x8ed )
+0x08ea    -- 0x23()
+0x08eb    -- 0x27( actor_id=Actor_0x2e )
+0x08ed    op00_Return()
+
+Actor_0x2e:on_update:
+0x08ee    -- 0x89()
+0x08f4    op2C_SpritePlayAnim( anim_id=0x1 )
+0x08f6    -- 0x52()
+0x08f8    -- 0x89()
+0x08fe    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x07, priority=0x03 )
+0x0901    op00_Return()
+
+Actor_0x2e:on_talk:
+0x0902    op00_Return()
+
+Actor_0x2e:on_push:
+0x0903    op00_Return()
+
+Actor_0x2f:on_start:
+0x0904    -- 0x0B_InitNPC( 1 )
+0x0907    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x918 )
+0x090f    -- 0x19_ActorSetPosition( x=(vf80)0x0cca, z=(vf40)0x04b2, flag=(flag)0xc0 )
+0x0915    op01_JumpTo( address=0x91b )
+0x0918    -- 0x23()
+0x0919    -- 0x27( actor_id=Actor_0x2f )
+0x091b    op00_Return()
+
+Actor_0x2f:on_update:
+0x091c    -- 0x89()
+0x0922    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0924    -- 0x52()
+0x0926    -- 0x89()
+0x092c    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x07, priority=0x03 )
+0x092f    op00_Return()
+
+Actor_0x2f:on_talk:
+0x0930    op00_Return()
+
+Actor_0x2f:on_push:
+0x0931    op00_Return()
+
+Actor_0x30:on_start:
+0x0932    -- 0x0B_InitNPC( 1 )
+0x0935    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x946 )
+0x093d    -- 0x19_ActorSetPosition( x=(vf80)0x0cb2, z=(vf40)0xfb1b, flag=(flag)0xc0 )
+0x0943    op01_JumpTo( address=0x949 )
+0x0946    -- 0x23()
+0x0947    -- 0x27( actor_id=Actor_0x30 )
+0x0949    op00_Return()
+
+Actor_0x30:on_update:
+0x094a    -- 0x89()
+0x0950    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0952    -- 0x52()
+0x0954    -- 0x89()
+0x095a    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x08, priority=0x03 )
+0x095d    op00_Return()
+
+Actor_0x30:on_talk:
+0x095e    op00_Return()
+
+Actor_0x30:on_push:
+0x095f    op00_Return()
+
+Actor_0x31:on_start:
+0x0960    -- 0x0B_InitNPC( 1 )
+0x0963    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x974 )
+0x096b    -- 0x19_ActorSetPosition( x=(vf80)0x0c3d, z=(vf40)0xfacd, flag=(flag)0xc0 )
+0x0971    op01_JumpTo( address=0x977 )
+0x0974    -- 0x23()
+0x0975    -- 0x27( actor_id=Actor_0x31 )
+0x0977    op00_Return()
+
+Actor_0x31:on_update:
+0x0978    -- 0x89()
+0x097e    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0980    -- 0x52()
+0x0982    -- 0x89()
+0x0988    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x08, priority=0x03 )
+0x098b    op00_Return()
+
+Actor_0x31:on_talk:
+0x098c    op00_Return()
+
+Actor_0x31:on_push:
+0x098d    op00_Return()
+
+Actor_0x32:on_start:
+0x098e    -- 0x0B_InitNPC( 1 )
+0x0991    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x9a2 )
+0x0999    -- 0x19_ActorSetPosition( x=(vf80)0x0c63, z=(vf40)0xfa56, flag=(flag)0xc0 )
+0x099f    op01_JumpTo( address=0x9a5 )
+0x09a2    -- 0x23()
+0x09a3    -- 0x27( actor_id=Actor_0x32 )
+0x09a5    op00_Return()
+
+Actor_0x32:on_update:
+0x09a6    -- 0x89()
+0x09ac    op2C_SpritePlayAnim( anim_id=0x1 )
+0x09ae    -- 0x52()
+0x09b0    -- 0x89()
+0x09b6    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x08, priority=0x03 )
+0x09b9    op00_Return()
+
+Actor_0x32:on_talk:
+0x09ba    op00_Return()
+
+Actor_0x32:on_push:
+0x09bb    op00_Return()
+
+Actor_0x33:on_start:
+0x09bc    -- 0x0B_InitNPC( 1 )
+0x09bf    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x9d0 )
+0x09c7    -- 0x19_ActorSetPosition( x=(vf80)0x059b, z=(vf40)0xf397, flag=(flag)0xc0 )
+0x09cd    op01_JumpTo( address=0x9d3 )
+0x09d0    -- 0x23()
+0x09d1    -- 0x27( actor_id=Actor_0x33 )
+0x09d3    op00_Return()
+
+Actor_0x33:on_update:
+0x09d4    -- 0x89()
+0x09da    op2C_SpritePlayAnim( anim_id=0x1 )
+0x09dc    -- 0x52()
+0x09de    -- 0x89()
+0x09e4    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x09, priority=0x03 )
+0x09e7    op00_Return()
+
+Actor_0x33:on_talk:
+0x09e8    op00_Return()
+
+Actor_0x33:on_push:
+0x09e9    op00_Return()
+
+Actor_0x34:on_start:
+0x09ea    -- 0x0B_InitNPC( 1 )
+0x09ed    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x9fe )
+0x09f5    -- 0x19_ActorSetPosition( x=(vf80)0x052c, z=(vf40)0xf3ab, flag=(flag)0xc0 )
+0x09fb    op01_JumpTo( address=0xa01 )
+0x09fe    -- 0x23()
+0x09ff    -- 0x27( actor_id=Actor_0x34 )
+0x0a01    op00_Return()
+
+Actor_0x34:on_update:
+0x0a02    -- 0x89()
+0x0a08    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0a0a    -- 0x52()
+0x0a0c    -- 0x89()
+0x0a12    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x09, priority=0x03 )
+0x0a15    op00_Return()
+
+Actor_0x34:on_talk:
+0x0a16    op00_Return()
+
+Actor_0x34:on_push:
+0x0a17    op00_Return()
+
+Actor_0x35:on_start:
+0x0a18    -- 0x0B_InitNPC( 1 )
+0x0a1b    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0xa2c )
+0x0a23    -- 0x19_ActorSetPosition( x=(vf80)0x04ba, z=(vf40)0xf334, flag=(flag)0xc0 )
+0x0a29    op01_JumpTo( address=0xa2f )
+0x0a2c    -- 0x23()
+0x0a2d    -- 0x27( actor_id=Actor_0x35 )
+0x0a2f    op00_Return()
+
+Actor_0x35:on_update:
+0x0a30    -- 0x89()
+0x0a36    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0a38    -- 0x52()
+0x0a3a    -- 0x89()
+0x0a40    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x09, priority=0x03 )
+0x0a43    op00_Return()
+
+Actor_0x35:on_talk:
+0x0a44    op00_Return()
+
+Actor_0x35:on_push:
+0x0a45    op00_Return()
+
+Actor_0x36:on_start:
+0x0a46    -- 0x0B_InitNPC( 1 )
+0x0a49    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0xa5a )
+0x0a51    -- 0x19_ActorSetPosition( x=(vf80)0xfd45, z=(vf40)0xf2ca, flag=(flag)0xc0 )
+0x0a57    op01_JumpTo( address=0xa5d )
+0x0a5a    -- 0x23()
+0x0a5b    -- 0x27( actor_id=Actor_0x36 )
+0x0a5d    op00_Return()
+
+Actor_0x36:on_update:
+0x0a5e    -- 0x89()
+0x0a64    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0a66    -- 0x52()
+0x0a68    -- 0x89()
+0x0a6e    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0a, priority=0x03 )
+0x0a71    op00_Return()
+
+Actor_0x36:on_talk:
+0x0a72    op00_Return()
+
+Actor_0x36:on_push:
+0x0a73    op00_Return()
+
+Actor_0x37:on_start:
+0x0a74    -- 0x0B_InitNPC( 1 )
+0x0a77    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0xa88 )
+0x0a7f    -- 0x19_ActorSetPosition( x=(vf80)0xfd76, z=(vf40)0xf271, flag=(flag)0xc0 )
+0x0a85    op01_JumpTo( address=0xa8b )
+0x0a88    -- 0x23()
+0x0a89    -- 0x27( actor_id=Actor_0x37 )
+0x0a8b    op00_Return()
+
+Actor_0x37:on_update:
+0x0a8c    -- 0x89()
+0x0a92    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0a94    -- 0x52()
+0x0a96    -- 0x89()
+0x0a9c    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0a, priority=0x03 )
+0x0a9f    op00_Return()
+
+Actor_0x37:on_talk:
+0x0aa0    op00_Return()
+
+Actor_0x37:on_push:
+0x0aa1    op00_Return()
+
+Actor_0x38:on_start:
+0x0aa2    -- 0x0B_InitNPC( 1 )
+0x0aa5    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0xab6 )
+0x0aad    -- 0x19_ActorSetPosition( x=(vf80)0xfe44, z=(vf40)0xf2dc, flag=(flag)0xc0 )
+0x0ab3    op01_JumpTo( address=0xab9 )
+0x0ab6    -- 0x23()
+0x0ab7    -- 0x27( actor_id=Actor_0x35 )
+0x0ab9    op00_Return()
+
+Actor_0x38:on_update:
+0x0aba    -- 0x89()
+0x0ac0    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0ac2    -- 0x52()
+0x0ac4    -- 0x89()
+0x0aca    op07_CallActorEvent( actor_id=Actor_0x23, event=event_0x0a, priority=0x03 )
+0x0acd    op00_Return()
+
+Actor_0x38:on_talk:
+0x0ace    op00_Return()
+
+Actor_0x38:on_push:
+0x0acf    op00_Return()
+
+Actor_0x39:on_start:
+0x0ad0    -- 0xBC_ActorNoModelInit()
+0x0ad1    op00_Return()
+
+Actor_0x39:on_update:
+0x0ad2    op00_Return()
+
+Actor_0x39:on_talk:
+
+Actor_0x39:on_push:
+0x0ad3    op00_Return()
+
+Actor_0x3a:on_start:
+0x0ad4    -- 0xBC_ActorNoModelInit()
+0x0ad5    op00_Return()
+
+Actor_0x3a:on_update:
+0x0ad6    op00_Return()
+
+Actor_0x3a:on_talk:
+
+Actor_0x3a:on_push:
+0x0ad7    op00_Return()
+
+Actor_0x3b:on_start:
+0x0ad8    -- 0xBC_ActorNoModelInit()
+0x0ad9    -- 0x84_ProgressLessEqualJumpTo( value=202, jump=0xae8 )
+0x0ade    op02_JumpToConditional( val1=(s)mem[0x102], val2=58, condition="val1 == val2", address_if_false=0xae8 )
+0x0ae6    -- 0x28()
+0x0ae8    op00_Return()
+
+Actor_0x3b:on_update:
+0x0ae9    op00_Return()
+
+Actor_0x3b:on_talk:
+
+Actor_0x3b:on_push:
+0x0aea    op00_Return()
+
+Actor_0x3c:on_start:
+0x0aeb    -- 0xBC_ActorNoModelInit()
+0x0aec    op00_Return()
+
+Actor_0x3c:on_update:
+0x0aed    op02_JumpToConditional( val1=(s)mem[0x102], val2=53, condition="val1 <= val2", address_if_false=0xb42 )
+0x0af5    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xb0b )
+0x0afd    opF1_FadeSetUp( steps=2, r=160, g=10, b=10, semi_tr=1 )
+0x0b08    op01_JumpTo( address=0xb42 )
+0x0b0b    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0xb21 )
+0x0b13    opF1_FadeSetUp( steps=2, r=160, g=10, b=10, semi_tr=1 )
+0x0b1e    op01_JumpTo( address=0xb42 )
+0x0b21    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0xb37 )
+0x0b29    opF1_FadeSetUp( steps=2, r=160, g=10, b=10, semi_tr=1 )
+0x0b34    op01_JumpTo( address=0xb42 )
+0x0b37    opF1_FadeSetUp( steps=2, r=180, g=10, b=10, semi_tr=1 )
+0x0b42    op00_Return()
+
+Actor_0x3c:on_talk:
+
+Actor_0x3c:on_push:
+0x0b43    op00_Return()

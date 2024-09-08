@@ -1013,36 +1013,27 @@ Actor_0x0d:on_talk:
 0x068c    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
 0x068f    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 == val2", address_if_false=0x69f )
 0x0697    -- 0xB5() -- camera set direction
-0x0698    -- 0x04()
-0x0699    -- 0x80()
-0x069e    -- 0x80()
-0x06a3    op00_Return()
-0x06a4    mem[0x6af] ^= (s)mem[0x4b4] -- op40
-0x06aa    -- 0x1E()
-0x06ab    -- 0x80()
-0x06b0    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x07, priority=0x00 )
-0x06b3    op00_Return()
-0x06b4    mem[0x6bf] ^= (s)mem[0x4b4] -- op40
-0x06ba    -- 0x28()
+0x069c    op26_Wait( time=20 )
+0x069f    op02_JumpToConditional( val1=(s)mem[0x8], val2=6, condition="val1 == val2", address_if_false=0x6af )
+0x06a7    -- 0xB5() -- camera set direction
+0x06ac    op26_Wait( time=40 )
+0x06af    op02_JumpToConditional( val1=(s)mem[0x8], val2=7, condition="val1 == val2", address_if_false=0x6bf )
+0x06b7    -- 0xB5() -- camera set direction
 0x06bc    op26_Wait( time=80 )
 0x06bf    op02_JumpToConditional( val1=(s)mem[0x8], val2=0, condition="val1 == val2", address_if_false=0x6cf )
 0x06c7    -- 0xB5() -- camera set direction
-0x06c8    -- 0x04()
-0x06c9    -- 0x80()
-0x06ce    -- 0x80()
-0x06d3    op00_Return()
-0x06d4    mem[0x6df] ^= (s)mem[0x4b4] -- op40
-0x06da    -- 0x28()
+0x06cc    op26_Wait( time=100 )
+0x06cf    op02_JumpToConditional( val1=(s)mem[0x8], val2=1, condition="val1 == val2", address_if_false=0x6df )
+0x06d7    -- 0xB5() -- camera set direction
 0x06dc    op26_Wait( time=80 )
 0x06df    op02_JumpToConditional( val1=(s)mem[0x8], val2=2, condition="val1 == val2", address_if_false=0x6ef )
 0x06e7    -- 0xB5() -- camera set direction
-0x06e8    -- 0x04()
-0x06e9    -- 0x80()
-0x06ee    -- 0x80()
-0x06f3    op00_Return()
-0x06f4    mem[0x6ff] ^= (s)mem[0x4b4] -- op40
-0x06fa    -- 0x0A()
-0x06fe    -- 0x80()
+0x06ec    op26_Wait( time=40 )
+0x06ef    op02_JumpToConditional( val1=(s)mem[0x8], val2=3, condition="val1 == val2", address_if_false=0x6ff )
+0x06f7    -- 0xB5() -- camera set direction
+0x06fc    op26_Wait( time=20 )
+0x06ff    op24_ActorEnable( actor_id=Actor_0x19 )
+0x0701    op24_ActorEnable( actor_id=Actor_0x1a )
 0x0703    op24_ActorEnable( actor_id=Actor_0x1c )
 0x0705    op24_ActorEnable( actor_id=Actor_0x1b )
 0x0707    op02_JumpToConditional( val1=(s)mem[0x40c], val2=1, condition="val1 == val2", address_if_false=0x7b7 )

@@ -703,4 +703,52 @@ Actor_0x13:on_push:
 0x067d    op00_Return()
 
 Actor_0x13:event_0x04:
-0x067e    -- MISSING OPCODE 0xFE1b
+0x067e    -- 0xFE1B()
+0x0684    op26_Wait( time=4 )
+0x0687    mem[0x42a] += 1 -- op3c
+0x068a    op02_JumpToConditional( val1=(s)mem[0x42a], val2=110, condition="val1 != val2", address_if_false=0x695 )
+0x0692    op01_JumpTo( address=0x67e )
+0x0695    mem[0x430] = true -- op36
+0x0698    -- 0x23()
+0x0699    op00_Return()
+
+Actor_0x14:on_start:
+0x069a    -- 0xBC_ActorNoModelInit()
+0x069b    -- opFE08( scale_x=4160, scale_y=4096, scale_z=4096 )
+0x06a3    -- 0x2A()
+0x06a4    op00_Return()
+
+Actor_0x14:on_update:
+0x06a5    op00_Return()
+
+Actor_0x14:on_talk:
+
+Actor_0x14:on_push:
+0x06a6    op00_Return()
+
+Actor_0x14:event_0x04:
+0x06a7    -- 0xFE1B()
+0x06ad    op26_Wait( time=4 )
+0x06b0    mem[0x42c] += 1 -- op3c
+0x06b3    op02_JumpToConditional( val1=(s)mem[0x42c], val2=110, condition="val1 != val2", address_if_false=0x6be )
+0x06bb    op01_JumpTo( address=0x6a7 )
+0x06be    -- 0x23()
+0x06bf    op00_Return()
+
+Actor_0x14:event_0x05:
+0x06c0    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=127 )
+0x06cb    op00_Return()
+
+Actor_0x15:on_start:
+0x06cc    -- 0xBC_ActorNoModelInit()
+0x06cd    -- 0x2A()
+0x06ce    op00_Return()
+
+Actor_0x15:on_update:
+0x06cf    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x8fe )
+0x06d7    -- 0x79()
+0x06d8    -- 0x7A()
+0x06d9    -- 0xFEA4()
+0x06db    -- 0xFE19( char_id=0x9 )
+0x06de    -- 0xFE54()
+0x06e0    -- MISSING OPCODE 0xFE6a

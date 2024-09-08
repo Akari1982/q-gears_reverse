@@ -1211,8 +1211,10 @@ Actor_0x17:event_0x06:
 0x0dd8    op02_JumpToConditional( val1=(s)mem[0x8], val2=1, condition="val1 > val2", address_if_false=0xde8 )
 0x0de0    mem[0x408] = true -- op36
 0x0de3    -- 0xB5() -- camera set direction
-0x0de4    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x1a, priority=0x02 )
-0x0de7    -- 0x80()
+0x0de8    op00_Return()
+
+Actor_0x18:on_start:
+0x0de9    -- 0x0B_InitNPC( 1 )
 0x0dec    -- 0x19_ActorSetPosition( x=(vf80)0xfd0e, z=(vf40)0x0076, flag=(flag)0xc0 )
 0x0df2    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=4, condition="val1 & val2", address_if_false=0xe05 )
 0x0dfa    -- 0x19_ActorSetPosition( x=(vf80)0x00de, z=(vf40)0x012f, flag=(flag)0xc0 )
@@ -2713,38 +2715,27 @@ Actor_0x37:on_push:
 Actor_0x37:event_0x04:
 0x1f8b    op02_JumpToConditional( val1=(s)mem[0x8], val2=1, condition="val1 == val2", address_if_false=0x1f9b )
 0x1f93    -- 0xB5() -- camera set direction
-0x1f94    op00_Return()
-0x1f95    -- 0x80()
-0x1f9a    -- 0x80()
-0x1f9f    op00_Return()
-0x1fa0    mem[0x1fab] ^= (s)mem[0xb4] -- op40
-0x1fa6    -- 0x14()
-0x1fa7    -- 0x80()
-0x1fac    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x03, priority=0x00 )
-0x1faf    op00_Return()
-0x1fb0    mem[0x1fbb] ^= (s)mem[0xb4] -- op40
-0x1fb6    -- 0x14()
-0x1fb7    -- 0x80()
-0x1fbc    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x04, priority=0x00 )
-0x1fbf    op00_Return()
-0x1fc0    mem[0x1fcb] ^= (s)mem[0xb4] -- op40
-0x1fc6    -- 0x1E()
-0x1fc7    -- 0x80()
-0x1fcc    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x05, priority=0x00 )
-0x1fcf    op00_Return()
-0x1fd0    mem[0x1fdb] ^= (s)mem[0xb4] -- op40
-0x1fd6    -- 0x14()
-0x1fd7    -- 0x80()
-0x1fdc    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x06, priority=0x00 )
-0x1fdf    op00_Return()
-0x1fe0    mem[0x1feb] ^= (s)mem[0xb4] -- op40
-0x1fe6    -- 0x14()
-0x1fe7    -- 0x80()
-0x1fec    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x07, priority=0x00 )
-0x1fef    op00_Return()
-0x1ff0    mem[0x1ffb] ^= (s)mem[0xb4] -- op40
-0x1ff6    -- 0x0A()
-0x1ffa    -- 0x80()
+0x1f98    op26_Wait( time=20 )
+0x1f9b    op02_JumpToConditional( val1=(s)mem[0x8], val2=2, condition="val1 == val2", address_if_false=0x1fab )
+0x1fa3    -- 0xB5() -- camera set direction
+0x1fa8    op26_Wait( time=30 )
+0x1fab    op02_JumpToConditional( val1=(s)mem[0x8], val2=3, condition="val1 == val2", address_if_false=0x1fbb )
+0x1fb3    -- 0xB5() -- camera set direction
+0x1fb8    op26_Wait( time=40 )
+0x1fbb    op02_JumpToConditional( val1=(s)mem[0x8], val2=4, condition="val1 == val2", address_if_false=0x1fcb )
+0x1fc3    -- 0xB5() -- camera set direction
+0x1fc8    op26_Wait( time=50 )
+0x1fcb    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 == val2", address_if_false=0x1fdb )
+0x1fd3    -- 0xB5() -- camera set direction
+0x1fd8    op26_Wait( time=40 )
+0x1fdb    op02_JumpToConditional( val1=(s)mem[0x8], val2=6, condition="val1 == val2", address_if_false=0x1feb )
+0x1fe3    -- 0xB5() -- camera set direction
+0x1fe8    op26_Wait( time=30 )
+0x1feb    op02_JumpToConditional( val1=(s)mem[0x8], val2=7, condition="val1 == val2", address_if_false=0x1ffb )
+0x1ff3    -- 0xB5() -- camera set direction
+0x1ff8    op26_Wait( time=20 )
+0x1ffb    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
+0x1ffe    op99()
 0x1fff    mem[0x4e2] = 20 -- op35
 0x2005    -- 0x63( ???=-141, ???=-901, ???=-743 ) -- exp0x1
 0x200d    -- 0xA3()
@@ -2901,7 +2892,7 @@ function:
 0x215f    opAC_MoveCamera( control=0x0, steps=(s)mem[0x4e2] )
 0x2163    opAC_MoveCamera( control=0x1, steps=(s)mem[0x4e2] )
 0x2167    opEF_MoveCameraSync()
-0x216a    -- 0x65( ???=(s)mem[0x4fc], ???=(s)mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
+0x216a    -- 0x65( ???=(s)mem[0x4fc], ???=mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
 0x2172    mem[0x4f6] += 1 -- op3c
 0x2175    mem[0x4e8] += (s)mem[0x4ea] -- op38
 0x217b    op01_JumpTo( address=0x2140 )
@@ -2919,7 +2910,7 @@ function:
 0x21b8    opAC_MoveCamera( control=0x0, steps=(s)mem[0x4e2] )
 0x21bc    opAC_MoveCamera( control=0x1, steps=(s)mem[0x4e2] )
 0x21c0    opEF_MoveCameraSync()
-0x21c3    -- 0x65( ???=(s)mem[0x4fc], ???=(s)mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
+0x21c3    -- 0x65( ???=(s)mem[0x4fc], ???=mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
 0x21cb    mem[0x4f6] += 1 -- op3c
 0x21ce    mem[0x4e6] += (s)mem[0x4ee] -- op38
 0x21d4    mem[0x4e8] += (s)mem[0x4ea] -- op38
@@ -2972,7 +2963,7 @@ function:
 0x22c6    opAC_MoveCamera( control=0x0, steps=(s)mem[0x4e2] )
 0x22ca    opAC_MoveCamera( control=0x1, steps=(s)mem[0x4e2] )
 0x22ce    opEF_MoveCameraSync()
-0x22d1    -- 0x65( ???=(s)mem[0x4fc], ???=(s)mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
+0x22d1    -- 0x65( ???=(s)mem[0x4fc], ???=mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
 0x22d9    mem[0x4f6] += 1 -- op3c
 0x22dc    mem[0x4e4] += 256 -- op38
 0x22e2    op01_JumpTo( address=0x22a7 )
@@ -3118,16 +3109,16 @@ function:
 0x2594    op02_JumpToConditional( val1=(s)mem[0x510], val2=148, condition="val1 > val2", address_if_false=0x25a2 )
 0x259c    mem[0x512] = 3 -- op35
 0x25a2    op01_JumpTo( address=0x25a5 )
-0x25a5    op02_JumpToConditional( val1=(s)mem[0x512], val2=0, condition="val1 == val2", address_if_false=0x25b8 )
+0x25a5    op02_JumpToConditional( val1=mem[0x512], val2=0, condition="val1 == val2", address_if_false=0x25b8 )
 0x25ad    -- opFE08( scale_x=3000, scale_y=4096, scale_z=3500 )
 0x25b5    op01_JumpTo( address=0x25f1 )
-0x25b8    op02_JumpToConditional( val1=(s)mem[0x512], val2=1, condition="val1 == val2", address_if_false=0x25cb )
+0x25b8    op02_JumpToConditional( val1=mem[0x512], val2=1, condition="val1 == val2", address_if_false=0x25cb )
 0x25c0    -- opFE08( scale_x=4096, scale_y=4096, scale_z=3500 )
 0x25c8    op01_JumpTo( address=0x25f1 )
-0x25cb    op02_JumpToConditional( val1=(s)mem[0x512], val2=2, condition="val1 == val2", address_if_false=0x25de )
+0x25cb    op02_JumpToConditional( val1=mem[0x512], val2=2, condition="val1 == val2", address_if_false=0x25de )
 0x25d3    -- opFE08( scale_x=6096, scale_y=4096, scale_z=3500 )
 0x25db    op01_JumpTo( address=0x25f1 )
-0x25de    op02_JumpToConditional( val1=(s)mem[0x512], val2=3, condition="val1 == val2", address_if_false=0x25f1 )
+0x25de    op02_JumpToConditional( val1=mem[0x512], val2=3, condition="val1 == val2", address_if_false=0x25f1 )
 0x25e6    -- opFE08( scale_x=12288, scale_y=4096, scale_z=3500 )
 0x25ee    op01_JumpTo( address=0x25f1 )
 0x25f1    op0D_Return()

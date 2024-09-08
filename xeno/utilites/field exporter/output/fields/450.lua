@@ -43,10 +43,11 @@ Actor_0x00:on_push:
 
 Actor_0x00:event_0x04:
 0x005c    -- 0xB5() -- camera set direction
-0x005d    -- 0x04()
-0x005e    -- 0x80()
-0x0063    op00_Return()
-0x0064    -- 0x80()
+0x0061    op00_Return()
+
+Actor_0x01:on_start:
+0x0062    -- 0x16_ActorPCInit( char_id=0 )
+0x0065    opFE0D_MessageSetFace( char_id=0 )
 0x0069    op00_Return()
 
 Actor_0x01:on_update:

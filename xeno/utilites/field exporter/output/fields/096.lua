@@ -119,10 +119,10 @@ Actor_0x01:on_update:
 0x016d    -- 0x9A()
 0x0170    op26_Wait( time=10 )
 0x0173    -- 0xB5() -- camera set direction
-0x0174    op00_Return()
-0x0175    -- 0x80()
-0x017a    -- 0x80()
-0x017f    op02_JumpToConditional( val1=513, val2=mem[0x4000], condition="val1 != val2", address_if_false=0x8051 )
+0x0178    op26_Wait( time=10 )
+0x017b    op05_CallFunction( address=0x34d )
+0x017e    mem[0x102] = 2 -- op35
+0x0184    -- 0x87_SetProgress( progress=81 )
 0x0187    -- 0x98_MapLoad( field_id=94, value=6 )
 0x018c    -- 0x5B()
 0x018d    -- 0x86_ProgressNotEqualJumpTo( value=87, jump=0x2eb )

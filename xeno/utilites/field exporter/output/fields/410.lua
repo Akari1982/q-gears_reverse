@@ -313,9 +313,8 @@ Actor_0x07:on_talk:
 0x026b    -- 0x75( ???=255 )
 0x026e    -- 0xFE54()
 0x0270    -- 0xB5() -- camera set direction
-0x0271    op02_JumpToConditional( val1=(s)mem[0x1480], val2=(s)mem[0x980], condition="val1 != val2", address_if_false=0xfe25 )
-0x0279    op5D_SpritePlayAnim2( anim_id=0xc6 )
-0x027b    -- 0x80()
+0x0275    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
+0x0278    -- 0xFE5D() -- play_sound_with_volume_in_3
 0x0280    -- 0xF2()
 0x0289    op26_Wait( time=30 )
 0x028c    -- 0xF2()

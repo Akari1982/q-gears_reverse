@@ -124,7 +124,10 @@ Actor_0x02:on_push:
 
 Actor_0x02:event_0x04:
 0x00cd    -- 0xB5() -- camera set direction
-0x00ce    op02_JumpToConditional( val1=mem[0xa80], val2=(s)mem[0x80], condition="", address_if_false=0x8001 )
+0x00d2    op00_Return()
+
+Actor_0x03:on_start:
+0x00d3    -- 0x0B_InitNPC( 1 )
 0x00d6    -- 0x19_ActorSetPosition( x=(vf80)0x00d9, z=(vf40)0x000b, flag=(flag)0xc0 )
 0x00dc    -- 0x21( ???=384 )
 0x00df    op20_ActorSetFlags0( flags=8 )

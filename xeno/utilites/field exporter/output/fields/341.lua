@@ -350,7 +350,6 @@ Actor_0x10:on_update:
 0x0268    op2C_SpritePlayAnim( anim_id=0x1 )
 0x026a    op26_Wait( time=5 )
 0x026d    -- 0xB5() -- camera set direction
-0x026e    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
 0x0272    op26_Wait( time=40 )
 0x0275    op6F_ActorRotateToActor( actor_id=party1 )
 0x0277    opD2_MessageShowDynamic( text_id=0x6, flags=0 )

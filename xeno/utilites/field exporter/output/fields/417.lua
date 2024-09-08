@@ -674,7 +674,6 @@ Actor_0x10:on_update:
 0x0565    op26_Wait( time=30 )
 0x0568    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
 0x056b    -- 0xB5() -- camera set direction
-0x056c    op03_MessageShowFixed2( text_id=0x1480, flags=0x80 )
 0x0570    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x05, priority=0x01 )
 0x0573    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x07, priority=0x01 )
 0x0576    op26_Wait( time=30 )

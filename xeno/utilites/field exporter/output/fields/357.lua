@@ -37,10 +37,10 @@ Actor_0x00:on_update:
 0x0044    opB4_FadeOut()
 0x0047    op26_Wait( time=32 )
 0x004a    -- 0xB5() -- camera set direction
-0x004b    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x01, priority=0x00 )
-0x004e    -- 0x80()
-0x0053    -- 0x1D()
-0x005a    -- 0xE0( actor_id=Actor_0x26, ???=(vf80)0x8000, ???=(vf40)0x0cb3, flag=0x80 )
+0x004f    op26_Wait( time=10 )
+0x0052    opFE1D_ModelAddTrans( trans_x=0, trans_y=-360, trans_z=(s)mem[0x0] )
+0x005b    op26_Wait( time=0 )
+0x005e    opB3_FadeIn()
 0x0061    op02_JumpToConditional( val1=(s)mem[0x400], val2=30, condition="val1 < val2", address_if_false=0x7b )
 0x0069    opFE1D_ModelAddTrans( trans_x=0, trans_y=6, trans_z=(s)mem[0x0] )
 0x0072    mem[0x400] += 1 -- op3c

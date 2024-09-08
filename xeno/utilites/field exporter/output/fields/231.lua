@@ -535,45 +535,42 @@ Actor_0x05:on_talk:
 0x05fd    opB4_FadeOut()
 0x0600    op26_Wait( time=15 )
 0x0603    -- 0xB5() -- camera set direction
-0x0604    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x01, priority=0x00 )
-0x0607    -- 0x80()
-0x060c    op00_Return()
-0x060d    op25_ActorDisable( actor_id=Actor_0x26 )
-0x060f    op03_MessageShowFixed2( text_id=0xb380, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_LEFT|FORCE_RIGHT )
-0x0613    -- 0x80()
-0x0618    op01_JumpTo( address=0xb426 )
-0x061b    op0F_Nop()
-0x061c    -- 0x80()
-0x0621    op00_Return()
-0x0622    -- 0x80()
-0x0627    op26_Wait( time=(s)mem[0x8] )
-0x062a    op2C_SpritePlayAnim( anim_id=0x26 )
-0x062c    op03_MessageShowFixed2( text_id=0xb380, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_LEFT|FORCE_RIGHT )
-0x0630    -- 0x80()
-0x0635    -- 0x12()
-0x0639    op24_ActorEnable( actor_id=Actor_0x26 )
-0x063b    op08_CallActorEventStartSync( actor_id=Actor_0x80, event=event_0x07, priority=0x00 )
-0x063e    op13_Nop()
-0x063f    op24_ActorEnable( actor_id=Actor_0x09 )
-0x0641    -- 0x15()
-0x0642    op24_ActorEnable( actor_id=Actor_0x09 )
-0x0644    op01_JumpTo( address=0x727 )
-0x0647    op13_Nop()
-0x0648    op25_ActorDisable( actor_id=Actor_0x07 )
-0x064a    -- 0x15()
-0x064b    op25_ActorDisable( actor_id=Actor_0x26 )
-0x064d    op08_CallActorEventStartSync( actor_id=Actor_0x80, event=event_0x07, priority=0x00 )
-0x0650    -- 0x12()
-0x0654    op25_ActorDisable( actor_id=Actor_0x09 )
-0x0656    op00_Return()
-0x0657    -- 0x27( actor_id=party2 )
-0x0659    -- 0x53()
-0x065d    -- 0xF8()
-0x0661    -- 0xC0( ???=(s)mem[0xf8] )
-0x0664    op00_Return()
-0x0665    op20_ActorSetFlags0( flags=(s)mem[0x3f8] )
-0x0668    -- 0x04()
-0x0669    op00_Return()
+0x0608    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x0a, priority=0x01 )
+0x060b    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x05, priority=0x01 )
+0x060e    op26_Wait( time=3 )
+0x0611    opB3_FadeIn()
+0x0614    op26_Wait( time=15 )
+0x0617    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
+0x061a    opB4_FadeOut()
+0x061d    op26_Wait( time=15 )
+0x0620    -- 0xB5() -- camera set direction
+0x0625    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x06, priority=0x01 )
+0x0628    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x0c, priority=0x01 )
+0x062b    op26_Wait( time=3 )
+0x062e    opB3_FadeIn()
+0x0631    op26_Wait( time=5 )
+0x0634    op07_CallActorEvent( actor_id=Actor_0x12, event=event_0x04, priority=0x01 )
+0x0637    op07_CallActorEvent( actor_id=Actor_0x14, event=event_0x04, priority=0x01 )
+0x063a    op26_Wait( time=8 )
+0x063d    op07_CallActorEvent( actor_id=Actor_0x13, event=event_0x04, priority=0x01 )
+0x0640    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x04, priority=0x01 )
+0x0643    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x07, priority=0x01 )
+0x0646    op07_CallActorEvent( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
+0x0649    op07_CallActorEvent( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
+0x064c    op26_Wait( time=8 )
+0x064f    op07_CallActorEvent( actor_id=Actor_0x12, event=event_0x05, priority=0x01 )
+0x0652    op09_CallActorEventEndSync( actor_id=Actor_0x14, event=event_0x05, priority=0x01 )
+0x0655    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x07, priority=0x01 )
+0x0658    -- 0xFE54()
+
+Actor_0x05:on_push:
+0x065a    op00_Return()
+
+Actor_0x06:on_start:
+0x065b    -- 0xBC_ActorNoModelInit()
+0x065c    -- 0x19_ActorSetPosition( x=(vf80)0xfdf8, z=(vf40)0xffd6, flag=(flag)0xc0 )
+0x0662    -- 0xF8()
+0x0666    -- 0xF8()
 0x066a    -- 0x18()
 0x066f    op00_Return()
 
@@ -645,10 +642,8 @@ Actor_0x08:on_talk:
 0x06f6    opB4_FadeOut()
 0x06f9    op26_Wait( time=15 )
 0x06fc    -- 0xB5() -- camera set direction
-0x06fd    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x01, priority=0x00 )
-0x0700    -- 0x80()
-0x0705    op00_Return()
-0x0706    -- 0x2A()
+0x0701    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x08, priority=0x01 )
+0x0704    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x0a, priority=0x01 )
 0x0707    op26_Wait( time=3 )
 0x070a    opB3_FadeIn()
 0x070d    op26_Wait( time=15 )
@@ -656,15 +651,16 @@ Actor_0x08:on_talk:
 0x0713    opB4_FadeOut()
 0x0716    op26_Wait( time=15 )
 0x0719    -- 0xB5() -- camera set direction
-0x071a    op00_Return()
-0x071b    -- 0x80()
-0x0720    op26_Wait( time=(s)mem[0x8] )
-0x0723    op29_ActorTurnOff( actor_id=Actor_0x26 )
-0x0725    op03_MessageShowFixed2( text_id=0xb380, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_LEFT|FORCE_RIGHT )
-0x0729    -- 0x80()
-0x072e    op0E_Nop()
-0x072f    op24_ActorEnable( actor_id=Actor_0x07 )
-0x0731    -- 0x10()
+0x071e    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x06, priority=0x01 )
+0x0721    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x09, priority=0x01 )
+0x0724    op26_Wait( time=3 )
+0x0727    opB3_FadeIn()
+0x072a    op26_Wait( time=15 )
+0x072d    op07_CallActorEvent( actor_id=Actor_0x0e, event=event_0x04, priority=0x01 )
+0x0730    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x04, priority=0x01 )
+0x0733    op26_Wait( time=8 )
+0x0736    op07_CallActorEvent( actor_id=Actor_0x0f, event=event_0x04, priority=0x01 )
+0x0739    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x04, priority=0x01 )
 0x073c    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x01 )
 0x073f    op07_CallActorEvent( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
 0x0742    op07_CallActorEvent( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
@@ -1304,16 +1300,26 @@ Actor_0x27:on_push:
 
 Actor_0x27:event_0x04:
 0x0a8d    -- 0xB5() -- camera set direction
-0x0a8e    op01_JumpTo( address=0xe680 )
-0x0a91    -- 0x80()
-0x0a96    -- 0x6E()
+0x0a92    op00_Return()
+
+Actor_0x27:event_0x05:
+0x0a93    -- 0xB5() -- camera set direction
+0x0a98    op00_Return()
+
+Actor_0x27:event_0x06:
+0x0a99    -- 0xB5() -- camera set direction
 0x0a9e    op00_Return()
 
 Actor_0x27:event_0x07:
 0x0a9f    -- 0xB5() -- camera set direction
-0x0aa0    op01_JumpTo( address=0xe680 )
-0x0aa3    -- 0x80()
-0x0aa8    -- 0x6E()
+0x0aa4    op00_Return()
+
+Actor_0x27:event_0x08:
+0x0aa5    -- 0xB5() -- camera set direction
+0x0aaa    op00_Return()
+
+Actor_0x27:event_0x09:
+0x0aab    -- 0xB5() -- camera set direction
 0x0ab0    op00_Return()
 
 Actor_0x28:on_start:

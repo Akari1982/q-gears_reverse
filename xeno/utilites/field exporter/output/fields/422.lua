@@ -476,4 +476,4 @@ function:
 0x075e    opFEBD_ParticleSpawnSettings( settings=0 )
 0x0766    opFE96_ParticleCreate()
 0x0768    op0D_Return()
-0x0769    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x0769    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x8f00, flag=0x2 )

@@ -980,31 +980,24 @@ Actor_0x0d:on_talk:
 0x0624    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
 0x0627    op02_JumpToConditional( val1=(s)mem[0x8], val2=4, condition="val1 == val2", address_if_false=0x637 )
 0x062f    -- 0xB5() -- camera set direction
-0x0630    op03_MessageShowFixed2( text_id=0xa80, flags=0x80 )
 0x0634    op26_Wait( time=20 )
 0x0637    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 == val2", address_if_false=0x647 )
 0x063f    -- 0xB5() -- camera set direction
-0x0640    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
 0x0644    op26_Wait( time=40 )
 0x0647    op02_JumpToConditional( val1=(s)mem[0x8], val2=6, condition="val1 == val2", address_if_false=0x657 )
 0x064f    -- 0xB5() -- camera set direction
-0x0650    op03_MessageShowFixed2( text_id=0x2880, flags=0x80 )
 0x0654    op26_Wait( time=80 )
 0x0657    op02_JumpToConditional( val1=(s)mem[0x8], val2=7, condition="val1 == val2", address_if_false=0x667 )
 0x065f    -- 0xB5() -- camera set direction
-0x0660    op03_MessageShowFixed2( text_id=0x3280, flags=0x80 )
 0x0664    op26_Wait( time=100 )
 0x0667    op02_JumpToConditional( val1=(s)mem[0x8], val2=0, condition="val1 == val2", address_if_false=0x677 )
 0x066f    -- 0xB5() -- camera set direction
-0x0670    op03_MessageShowFixed2( text_id=0x2880, flags=0x80 )
 0x0674    op26_Wait( time=80 )
 0x0677    op02_JumpToConditional( val1=(s)mem[0x8], val2=1, condition="val1 == val2", address_if_false=0x687 )
 0x067f    -- 0xB5() -- camera set direction
-0x0680    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
 0x0684    op26_Wait( time=40 )
 0x0687    op02_JumpToConditional( val1=(s)mem[0x8], val2=2, condition="val1 == val2", address_if_false=0x697 )
 0x068f    -- 0xB5() -- camera set direction
-0x0690    op03_MessageShowFixed2( text_id=0xa80, flags=0x80 )
 0x0694    op26_Wait( time=20 )
 0x0697    op24_ActorEnable( actor_id=Actor_0x1b )
 0x0699    op24_ActorEnable( actor_id=Actor_0x1c )
@@ -1085,31 +1078,24 @@ Actor_0x0d:on_talk:
 0x07a2    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
 0x07a5    op02_JumpToConditional( val1=(s)mem[0x8], val2=4, condition="val1 == val2", address_if_false=0x7b5 )
 0x07ad    -- 0xB5() -- camera set direction
-0x07ae    op03_MessageShowFixed2( text_id=0xa80, flags=0x80 )
 0x07b2    op26_Wait( time=20 )
 0x07b5    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 == val2", address_if_false=0x7c5 )
 0x07bd    -- 0xB5() -- camera set direction
-0x07be    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
 0x07c2    op26_Wait( time=40 )
 0x07c5    op02_JumpToConditional( val1=(s)mem[0x8], val2=6, condition="val1 == val2", address_if_false=0x7d5 )
 0x07cd    -- 0xB5() -- camera set direction
-0x07ce    op03_MessageShowFixed2( text_id=0x2880, flags=0x80 )
 0x07d2    op26_Wait( time=80 )
 0x07d5    op02_JumpToConditional( val1=(s)mem[0x8], val2=7, condition="val1 == val2", address_if_false=0x7e5 )
 0x07dd    -- 0xB5() -- camera set direction
-0x07de    op03_MessageShowFixed2( text_id=0x3280, flags=0x80 )
 0x07e2    op26_Wait( time=100 )
 0x07e5    op02_JumpToConditional( val1=(s)mem[0x8], val2=0, condition="val1 == val2", address_if_false=0x7f5 )
 0x07ed    -- 0xB5() -- camera set direction
-0x07ee    op03_MessageShowFixed2( text_id=0x2880, flags=0x80 )
 0x07f2    op26_Wait( time=80 )
 0x07f5    op02_JumpToConditional( val1=(s)mem[0x8], val2=1, condition="val1 == val2", address_if_false=0x805 )
 0x07fd    -- 0xB5() -- camera set direction
-0x07fe    op03_MessageShowFixed2( text_id=0x1e80, flags=0x80 )
 0x0802    op26_Wait( time=40 )
 0x0805    op02_JumpToConditional( val1=(s)mem[0x8], val2=2, condition="val1 == val2", address_if_false=0x815 )
 0x080d    -- 0xB5() -- camera set direction
-0x080e    op03_MessageShowFixed2( text_id=0xa80, flags=0x80 )
 0x0812    op26_Wait( time=20 )
 0x0815    op24_ActorEnable( actor_id=Actor_0x1b )
 0x0817    op24_ActorEnable( actor_id=Actor_0x1c )

@@ -464,9 +464,9 @@ Actor_0x0f:on_push:
 Actor_0x0f:event_0x04:
 0x0281    -- 0x19_ActorSetPosition( x=(vf80)0x004e, z=(vf40)0xfef1, flag=(flag)0xc0 )
 0x0287    -- 0xB5() -- camera set direction
-0x0288    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x08, priority=0x01 )
-0x028b    -- 0x80()
-0x0290    -- 0x06()
+0x028c    op26_Wait( time=5 )
+0x028f    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x06 )
+0x0292    op07_CallActorEvent( actor_id=party2, event=event_0x04, priority=0x06 )
 0x0295    op07_CallActorEvent( actor_id=party3, event=event_0x04, priority=0x06 )
 0x0298    -- 0xFEAA()
 0x029b    op00_Return()
@@ -559,7 +559,6 @@ Actor_0x10:event_0x04:
 0x0379    opD2_MessageShowDynamic( text_id=0x14, flags=0 )
 0x037d    op9C_MessageSync()
 0x037e    -- 0xB5() -- camera set direction
-0x037f    op03_MessageShowFixed2( text_id=0xf80, flags=0x80 )
 0x0383    op26_Wait( time=10 )
 0x0386    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x09, priority=0x06 )
 0x0389    op5D_SpritePlayAnim2( anim_id=0x2 )
@@ -568,7 +567,8 @@ Actor_0x10:event_0x04:
 0x0390    op9C_MessageSync()
 0x0391    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x0a, priority=0x06 )
 0x0394    -- 0xB5() -- camera set direction
-0x0395    op02_JumpToConditional( condition="val1 > val2", address_if_false=0xc7 )
+0x0399    op07_CallActorEvent( actor_id=Actor_0x12, event=event_0x07, priority=0x06 )
+0x039c    op00_Return()
 
 Actor_0x10:event_0x05:
 0x039d    -- 0x19_ActorSetPosition( x=(vf80)0x0025, z=(vf40)0xfee5, flag=(flag)0xc0 )

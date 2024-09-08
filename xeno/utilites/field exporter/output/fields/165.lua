@@ -498,4 +498,41 @@ Actor_0x12:on_push:
 0x03cb    op00_Return()
 
 Actor_0x12:event_0x04:
-0x03cc    -- MISSING OPCODE 0xFE1b
+0x03cc    -- 0xFE1B()
+0x03d2    mem[0x402] = 32 -- op35
+0x03d8    op00_Return()
+
+Actor_0x12:event_0x05:
+0x03d9    -- 0xFE65()
+0x03df    op02_JumpToConditional( val1=(s)mem[0x402], val2=32, condition="val1 < val2", address_if_false=0x3f3 )
+0x03e7    -- 0xFE1B()
+0x03ed    mem[0x402] += 1 -- op3c
+0x03f0    op01_JumpTo( address=0x3df )
+0x03f3    op00_Return()
+
+Actor_0x12:event_0x06:
+0x03f4    -- 0xFE65()
+0x03fa    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 > val2", address_if_false=0x40e )
+0x0402    -- 0xFE1B()
+0x0408    mem[0x402] -= 1 -- op3d
+0x040b    op01_JumpTo( address=0x3fa )
+0x040e    op00_Return()
+
+Actor_0x13:on_start:
+0x040f    -- 0xBC_ActorNoModelInit()
+0x0410    -- 0x2A()
+0x0411    -- 0x86_ProgressNotEqualJumpTo( value=72, jump=0x41c )
+0x0416    op29_ActorTurnOff( actor_id=Actor_0x03 )
+0x0418    op29_ActorTurnOff( actor_id=Actor_0x07 )
+0x041a    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x041c    -- 0x85()
+0x0421    op29_ActorTurnOff( actor_id=Actor_0x0f )
+0x0423    op29_ActorTurnOff( actor_id=Actor_0x05 )
+
+Actor_0x13:on_update:
+
+Actor_0x13:on_talk:
+
+Actor_0x13:on_push:
+0x0425    op00_Return()
+0x0426    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x08fe, ???=(vf40)0x8e66, flag=0x66 )

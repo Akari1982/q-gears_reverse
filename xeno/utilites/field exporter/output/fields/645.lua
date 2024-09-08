@@ -187,4 +187,62 @@ Actor_0x07:event_0x04:
 0x0121    mem[0x400] = false -- op37
 0x0124    op02_JumpToConditional( val1=(s)mem[0x400], val2=60, condition="val1 < val2", address_if_false=0x13c )
 0x012c    opC6_ExpandRun() -- exp0x20
-0x012d    -- MISSING OPCODE 0xFE1b
+0x012d    -- 0xFE1B()
+0x0133    op26_Wait( time=0 )
+0x0136    mem[0x400] += 1 -- op3c
+0x0139    op01_JumpTo( address=0x124 )
+0x013c    -- 0xFE62()
+0x0142    op00_Return()
+
+Actor_0x08:on_start:
+0x0143    -- 0xBC_ActorNoModelInit()
+0x0144    -- 0x2A()
+0x0145    op00_Return()
+
+Actor_0x08:on_update:
+0x0146    op00_Return()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x0147    op00_Return()
+
+Actor_0x08:event_0x04:
+0x0148    op74_SoundPlayFixedVolume( sound_id=39 )
+0x014b    mem[0x402] = false -- op37
+0x014e    op02_JumpToConditional( val1=(s)mem[0x402], val2=60, condition="val1 < val2", address_if_false=0x166 )
+0x0156    opC6_ExpandRun() -- exp0x20
+0x0157    -- 0xFE1B()
+0x015d    op26_Wait( time=0 )
+0x0160    mem[0x402] += 1 -- op3c
+0x0163    op01_JumpTo( address=0x14e )
+0x0166    -- 0xFE62()
+0x016c    op00_Return()
+
+Actor_0x09:on_start:
+0x016d    -- 0x0B_InitNPC( (s)mem[0x404] )
+0x0170    op02_JumpToConditional( val1=(s)mem[0x410], val2=1, condition="val1 == val2", address_if_false=0x17b )
+0x0178    op29_ActorTurnOff( actor_id=self )
+0x017a    op00_Return()
+0x017b    -- 0x19_ActorSetPosition( x=(vf80)0x0406, z=(vf40)0x0408, flag=(flag)0x00 )
+0x0181    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x18e )
+0x0189    -- 0x1A()
+0x018b    op01_JumpTo( address=0x1a8 )
+0x018e    op02_JumpToConditional( val1=(s)mem[0x40a], val2=1, condition="val1 == val2", address_if_false=0x19b )
+0x0196    -- 0x1A()
+0x0198    op01_JumpTo( address=0x1a8 )
+0x019b    op02_JumpToConditional( val1=(s)mem[0x40a], val2=2, condition="val1 == val2", address_if_false=0x1a8 )
+0x01a3    -- 0x1A()
+0x01a5    op01_JumpTo( address=0x1a8 )
+0x01a8    op69_ActorSetRotation( rot=(s)mem[0x40c] )
+0x01ab    op20_ActorSetFlags0( flags=12 )
+0x01ae    -- 0x18()
+0x01b3    -- 0x1F( ???=0x70 )
+0x01b5    op00_Return()
+
+Actor_0x09:on_update:
+0x01b6    op00_Return()
+
+Actor_0x09:on_talk:
+0x01b7    -- 0xFE54()
+0x01b9    -- MISSING OPCODE 0x34

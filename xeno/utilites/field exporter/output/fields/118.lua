@@ -1057,4 +1057,20 @@ Actor_0x15:on_start:
 0x0a80    -- 0xBC_ActorNoModelInit()
 0x0a81    -- 0x2A()
 0x0a82    -- 0xFB()
-0x0a87    -- MISSING OPCODE 0xd7
+0x0a87    -- 0xD7()
+0x0a8a    op00_Return()
+
+Actor_0x15:on_update:
+0x0a8b    -- 0xC9()
+0x0a8f    op31_JumpIfButtonNotPressed( buttons=Circle, jump_to=0xb2f )
+0x0a94    -- 0x15()
+0x0a95    op02_JumpToConditional( val1=(s)mem[0x6], val2=2, condition="val1 == val2", address_if_false=0xb07 )
+0x0a9d    -- 0xFB()
+0x0aa2    op01_JumpTo( address=0xb07 )
+0x0aa5    mem[0x426] = 4096 -- op35
+0x0aab    op02_JumpToConditional( val1=(s)mem[0x426], val2=3071, condition="val1 > val2", address_if_false=0xac2 )
+0x0ab3    mem[0x426] -= 32 -- op39
+0x0ab9    -- 0xD7()
+0x0abc    op26_Wait( time=3 )
+0x0abf    op01_JumpTo( address=0xaab )
+0x0ac2    -- MISSING OPCODE 0x34

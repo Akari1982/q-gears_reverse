@@ -99,8 +99,7 @@ Actor_0x01:event_0x04:
 0x013d    op26_Wait( time=1 )
 0x0140    op6F_ActorRotateToActor( actor_id=Actor_0x10 )
 0x0142    -- 0xB5() -- camera set direction
-0x0143    op00_Return()
-0x0144    -- 0x80()
+0x0147    -- 0xA2()
 0x0149    op00_Return()
 
 Actor_0x01:event_0x05:
@@ -811,4 +810,45 @@ Actor_0x17:on_update:
 0x07ef    -- 0xFE54()
 0x07f1    -- 0xB8()
 0x07f2    -- 0xFE8C()
-0x07fa    -- MISSING OPCODE 0xab
+0x07fa    -- 0xAB()
+0x07fb    -- 0xF3( ???=0x444, ???=0x446, ???=0x448 )
+0x0802    op99()
+0x0803    -- 0x60()
+0x0804    -- 0x64() -- exp0x1
+0x0805    -- 0x63( ???=-424, ???=-235, ???=-567 ) -- exp0x1
+0x080d    -- 0xA3()
+0x0815    opAC_MoveCamera( control=0x0, steps=0 )
+0x0819    opAC_MoveCamera( control=0x1, steps=0 )
+0x081d    opEF_MoveCameraSync()
+0x0820    op26_Wait( time=1 )
+0x0823    -- 0x9B( ???=12, ???=12 )
+0x0828    -- 0x60()
+0x0829    -- 0x64() -- exp0x1
+0x082a    -- 0x63( ???=-467, ???=-235, ???=-376 ) -- exp0x1
+0x0832    -- 0xA3()
+0x083a    opAC_MoveCamera( control=0x0, steps=30 )
+0x083e    opAC_MoveCamera( control=0x1, steps=30 )
+0x0842    opEF_MoveCameraSync()
+0x0845    -- 0x60()
+0x0846    -- 0x64() -- exp0x1
+0x0847    -- 0x63( ???=-1088, ???=-158, ???=-545 ) -- exp0x1
+0x084f    -- 0xA3()
+0x0857    opAC_MoveCamera( control=0x0, steps=30 )
+0x085b    opAC_MoveCamera( control=0x1, steps=30 )
+0x085f    opEF_MoveCameraSync()
+0x0862    -- 0xA0()
+0x0869    -- 0x9A()
+0x086c    -- 0x72()
+0x086f    -- 0xFE0E_SoundSetVolume( volume=127, steps=0 )
+0x0875    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x21, flags=CLOSE_OFF_SCREEN )
+0x087b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x22, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP )
+0x0881    -- 0xB5() -- camera set direction
+0x0886    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
+0x0889    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x23, flags=CLOSE_OFF_SCREEN )
+0x088f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x24, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x0895    op26_Wait( time=10 )
+0x0898    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x25, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x089e    opF1_FadeSetUp( steps=2, r=114, g=82, b=15, semi_tr=5 )
+0x08a9    op26_Wait( time=7 )
+0x08ac    opF1_FadeSetUp( steps=0, r=200, g=0, b=0, semi_tr=40 )
+0x08b7    -- MISSING OPCODE 0xFE63

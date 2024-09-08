@@ -307,9 +307,8 @@ Actor_0x0f:on_push:
 Actor_0x0f:event_0x04:
 0x01ab    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x04, priority=0x06 )
 0x01ae    -- 0xB5() -- camera set direction
-0x01af    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x19, priority=0x00 )
-0x01b2    -- 0x80()
-0x01b7    op01_JumpTo( address=0x0 )
+0x01b3    op26_Wait( time=5 )
+0x01b6    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x01ba    op9C_MessageSync()
 0x01bb    op26_Wait( time=5 )
 0x01be    -- 0xFE17()

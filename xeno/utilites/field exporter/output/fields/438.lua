@@ -707,35 +707,20 @@ Actor_0x0c:on_talk:
 0x05a5    -- 0xFE23()
 0x05ba    op02_JumpToConditional( val1=(s)mem[0x8], val2=1, condition="val1 == val2", address_if_false=0x5c7 )
 0x05c2    -- 0xB5() -- camera set direction
-0x05c3    op00_Return()
-0x05c4    -- 0x80()
-0x05c9    op00_Return()
-0x05ca    op02_JumpToConditional( condition="val1 <= val2", address_if_false=0x8000 )
-0x05d2    -- 0x1E()
-0x05d3    -- 0x80()
-0x05d8    op00_Return()
-0x05d9    mem[0x5e1] ^= (s)mem[0xb4] -- op40
-0x05df    -- 0x1E()
-0x05e0    -- 0x80()
-0x05e5    op00_Return()
-0x05e6    mem[0x5ee] ^= (s)mem[0xb4] -- op40
-0x05ec    -- 0x28()
+0x05c7    op02_JumpToConditional( val1=(s)mem[0x8], val2=2, condition="val1 == val2", address_if_false=0x5d4 )
+0x05cf    -- 0xB5() -- camera set direction
+0x05d4    op02_JumpToConditional( val1=(s)mem[0x8], val2=3, condition="val1 == val2", address_if_false=0x5e1 )
+0x05dc    -- 0xB5() -- camera set direction
+0x05e1    op02_JumpToConditional( val1=(s)mem[0x8], val2=4, condition="val1 == val2", address_if_false=0x5ee )
+0x05e9    -- 0xB5() -- camera set direction
 0x05ee    op02_JumpToConditional( val1=(s)mem[0x8], val2=5, condition="val1 == val2", address_if_false=0x5fb )
 0x05f6    -- 0xB5() -- camera set direction
-0x05f7    op00_Return()
-0x05f8    -- 0x80()
-0x05fd    op00_Return()
-0x05fe    -- 0x06()
+0x05fb    op02_JumpToConditional( val1=(s)mem[0x8], val2=6, condition="val1 == val2", address_if_false=0x608 )
 0x0603    -- 0xB5() -- camera set direction
-0x0604    op00_Return()
-0x0605    -- 0x80()
-0x060a    op00_Return()
-0x060b    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x00, priority=0x02 )
-0x060e    -- 0x15()
-0x060f    -- 0x06()
-0x0614    -- 0x80()
-0x0619    op5D_SpritePlayAnim2( anim_id=0x97 )
-0x061b    -- 0x80()
+0x0608    op02_JumpToConditional( val1=(s)mem[0x8], val2=7, condition="val1 == val2", address_if_false=0x615 )
+0x0610    -- 0xB5() -- camera set direction
+0x0615    op26_Wait( time=30 )
+0x0618    -- 0xFE5D() -- play_sound_with_volume_in_3
 0x0620    op24_ActorEnable( actor_id=Actor_0x12 )
 0x0622    op26_Wait( time=30 )
 0x0625    -- 0xFE66() -- sound play with volume in slot

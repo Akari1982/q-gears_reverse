@@ -1582,4 +1582,134 @@ Actor_0x1d:event_0x04:
 0x0a36    op02_JumpToConditional( val1=(s)mem[0x410], val2=11, condition="val1 == val2", address_if_false=0xa42 )
 0x0a3e    op00_Return()
 0x0a3f    op01_JumpTo( address=0xa4f )
-0x0a42    -- MISSING OPCODE 0xFE1b
+0x0a42    -- 0xFE1B()
+0x0a48    -- 0x5A()
+0x0a49    mem[0x410] += 1 -- op3c
+0x0a4c    op01_JumpTo( address=0xa36 )
+0x0a4f    op00_Return()
+0x0a50    op00_Return()
+
+Actor_0x1e:on_start:
+0x0a51    -- 0xBC_ActorNoModelInit()
+0x0a52    -- 0x19_ActorSetPosition( x=(vf80)0x00bb, z=(vf40)0x163c, flag=(flag)0xc0 )
+0x0a58    -- 0x18()
+0x0a5d    -- 0xF8()
+0x0a61    op00_Return()
+
+Actor_0x1e:on_update:
+0x0a62    op00_Return()
+
+Actor_0x1e:on_talk:
+0x0a63    -- 0xFE54()
+0x0a65    mem[0x402] = 1 -- op35
+0x0a6b    op09_CallActorEventEndSync( actor_id=Actor_0x1f, event=event_0x04, priority=0x03 )
+0x0a6e    -- 0x98_MapLoad( field_id=492, value=0 )
+0x0a73    -- 0x5B()
+0x0a74    op00_Return()
+
+Actor_0x1e:on_push:
+0x0a75    op00_Return()
+
+Actor_0x1f:on_start:
+0x0a76    -- 0xBC_ActorNoModelInit()
+0x0a77    -- 0xFE07( ???=0x1 )
+0x0a7a    op00_Return()
+
+Actor_0x1f:on_update:
+0x0a7b    op00_Return()
+
+Actor_0x1f:on_talk:
+0x0a7c    op00_Return()
+
+Actor_0x1f:on_push:
+0x0a7d    op00_Return()
+
+Actor_0x1f:event_0x04:
+0x0a7e    op74_SoundPlayFixedVolume( sound_id=119 )
+0x0a81    mem[0x412] = 0 -- op35
+0x0a87    op02_JumpToConditional( val1=(s)mem[0x412], val2=11, condition="val1 == val2", address_if_false=0xa93 )
+0x0a8f    op00_Return()
+0x0a90    op01_JumpTo( address=0xaa0 )
+0x0a93    -- 0xFE1B()
+0x0a99    -- 0x5A()
+0x0a9a    mem[0x412] += 1 -- op3c
+0x0a9d    op01_JumpTo( address=0xa87 )
+0x0aa0    op00_Return()
+0x0aa1    op00_Return()
+
+Actor_0x20:on_start:
+0x0aa2    -- 0xBC_ActorNoModelInit()
+0x0aa3    -- 0x19_ActorSetPosition( x=(vf80)0x0772, z=(vf40)0x0764, flag=(flag)0xc0 )
+0x0aa9    -- 0x18()
+0x0aae    -- 0xF8()
+0x0ab2    op00_Return()
+
+Actor_0x20:on_update:
+0x0ab3    op00_Return()
+
+Actor_0x20:on_talk:
+0x0ab4    op02_JumpToConditional( val1=(s)mem[0x102], val2=61, condition="val1 == val2", address_if_false=0xac0 )
+0x0abc    op00_Return()
+0x0abd    op01_JumpTo( address=0xad1 )
+0x0ac0    -- 0xFE54()
+0x0ac2    mem[0x402] = 1 -- op35
+0x0ac8    op09_CallActorEventEndSync( actor_id=Actor_0x21, event=event_0x04, priority=0x03 )
+0x0acb    -- 0x98_MapLoad( field_id=485, value=5 )
+0x0ad0    -- 0x5B()
+0x0ad1    op00_Return()
+
+Actor_0x20:on_push:
+0x0ad2    op00_Return()
+
+Actor_0x21:on_start:
+0x0ad3    -- 0xBC_ActorNoModelInit()
+0x0ad4    -- 0xFE07( ???=0x1 )
+0x0ad7    op00_Return()
+
+Actor_0x21:on_update:
+0x0ad8    op00_Return()
+
+Actor_0x21:on_talk:
+0x0ad9    op00_Return()
+
+Actor_0x21:on_push:
+0x0ada    op00_Return()
+
+Actor_0x21:event_0x04:
+0x0adb    op74_SoundPlayFixedVolume( sound_id=119 )
+0x0ade    mem[0x414] = 0 -- op35
+0x0ae4    op02_JumpToConditional( val1=(s)mem[0x414], val2=11, condition="val1 == val2", address_if_false=0xaf0 )
+0x0aec    op00_Return()
+0x0aed    op01_JumpTo( address=0xafd )
+0x0af0    -- 0xFE1B()
+0x0af6    -- 0x5A()
+0x0af7    mem[0x414] += 1 -- op3c
+0x0afa    op01_JumpTo( address=0xae4 )
+0x0afd    op00_Return()
+0x0afe    op00_Return()
+
+Actor_0x22:on_start:
+0x0aff    -- 0xBC_ActorNoModelInit()
+0x0b00    -- 0x19_ActorSetPosition( x=(vf80)0x1036, z=(vf40)0x0f3c, flag=(flag)0xc0 )
+0x0b06    -- 0x18()
+0x0b0b    -- 0xF8()
+0x0b0f    op00_Return()
+
+Actor_0x22:on_update:
+0x0b10    op00_Return()
+
+Actor_0x22:on_talk:
+0x0b11    -- 0xFB()
+0x0b16    -- 0xFE54()
+0x0b18    mem[0x402] = 1 -- op35
+0x0b1e    op09_CallActorEventEndSync( actor_id=Actor_0x23, event=event_0x04, priority=0x03 )
+0x0b21    -- 0x98_MapLoad( field_id=488, value=0 )
+0x0b26    -- 0x5B()
+0x0b27    op01_JumpTo( address=0xb5a )
+0x0b2a    -- 0xFE54()
+0x0b2c    -- 0xFE0A( ???=0x1283 )
+0x0b30    -- 0xFE23()
+0x0b45    op26_Wait( time=30 )
+0x0b48    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0xc, flags=0 )
+0x0b4e    opFE0D_MessageSetFace( char_id=252 )
+0x0b52    -- MISSING OPCODE 0xFE0b

@@ -252,15 +252,11 @@ Actor_0x07:on_update:
 Actor_0x07:on_talk:
 0x021a    -- 0xFE54()
 0x021c    -- 0xB5() -- camera set direction
-0x021d    -- 0x04()
-0x021e    -- 0x80()
-0x0223    op25_ActorDisable( actor_id=party2 )
-0x0225    op24_ActorEnable( actor_id=Actor_0x37 )
-0x0227    op08_CallActorEventStartSync( actor_id=Actor_0x04, event=event_0x05, priority=0x04 )
-0x022a    -- 0x77()
-0x022b    -- 0x80()
-0x0230    op00_Return()
-0x0231    op00_Return()
+0x0221    op09_CallActorEventEndSync( actor_id=party1, event=event_0x05, priority=0x01 )
+0x0224    -- 0xFE24()
+0x0226    mem[0x408] = false -- op37
+0x0229    -- 0x85()
+0x022e    opD2_MessageShowDynamic( text_id=0xf, flags=0 )
 0x0232    op9C_MessageSync()
 0x0233    op01_JumpTo( address=0xa33 )
 0x0236    op01_JumpTo( address=0x279 )

@@ -131,8 +131,7 @@ Actor_0x04:on_talk:
 0x0237    -- 0xFE54()
 0x0239    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
 0x023c    -- 0xB5() -- camera set direction
-0x023d    op01_JumpTo( address=0x1080 )
-0x0240    -- 0x80()
+0x0241    -- 0xA4() -- camera angle
 0x0245    -- 0x9D()
 0x0249    op26_Wait( time=16 )
 0x024c    op09_CallActorEventEndSync( actor_id=Actor_0x14, event=event_0x04, priority=0x01 )

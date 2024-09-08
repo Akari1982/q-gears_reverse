@@ -313,9 +313,10 @@ Actor_0x06:event_0x09:
 0x0201    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x04, priority=0x06 )
 0x0204    op6F_ActorRotateToActor( actor_id=Actor_0x13 )
 0x0206    -- 0xB5() -- camera set direction
-0x0207    op01_JumpTo( address=0x1980 )
-0x020a    -- 0x80()
-0x020f    -- 0x56( ???=(vf80)0x6b00, ???=(vf40)0xc0fc, ???=(vf20)0x0326, ???=(vf10)0x2c80, flag=0xb )
+0x020b    op26_Wait( time=10 )
+0x020e    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0214    op26_Wait( time=3 )
+0x0217    op2C_SpritePlayAnim( anim_id=0xb )
 0x0219    opD2_MessageShowDynamic( text_id=0xb, flags=FORCE_BOTTOM )
 0x021d    op9C_MessageSync()
 0x021e    op26_Wait( time=6 )

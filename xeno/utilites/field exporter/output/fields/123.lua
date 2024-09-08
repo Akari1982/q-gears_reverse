@@ -1682,4 +1682,4 @@ function:
 0x1357    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x135f    opFE96_ParticleCreate()
 0x1361    op0D_Return()
-0x1362    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x8d52, ???=(vf40)0x5f74, flag=0xd6 )
+0x1362    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7cb1, ???=(vf40)0xe251, flag=0xb4 )

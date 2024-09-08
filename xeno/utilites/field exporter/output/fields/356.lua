@@ -520,10 +520,8 @@ Actor_0x0f:event_0x04:
 0x02ce    op6F_ActorRotateToActor( actor_id=party1 )
 0x02d0    opFE0D_MessageSetFace( char_id=23 )
 0x02d4    -- 0xB5() -- camera set direction
-0x02d5    op07_CallActorEvent( actor_id=Actor_0x80, event=event_0x1e, priority=0x00 )
-0x02d8    -- 0x80()
-0x02dd    op00_Return()
-0x02de    op00_Return()
+0x02d9    op2C_SpritePlayAnim( anim_id=0x3 )
+0x02db    opD2_MessageShowDynamic( text_id=0x18, flags=0 )
 0x02df    op9C_MessageSync()
 0x02e0    op2C_SpritePlayAnim( anim_id=0xff )
 0x02e2    -- 0x10()
@@ -588,4 +586,35 @@ Actor_0x11:on_push:
 Actor_0x11:event_0x04:
 0x0378    mem[0x404] = 0 -- op35
 0x037e    op02_JumpToConditional( val1=(s)mem[0x404], val2=13, condition="val1 < val2", address_if_false=0x395 )
-0x0386    -- MISSING OPCODE 0xFE1b
+0x0386    -- 0xFE1B()
+0x038c    op26_Wait( time=0 )
+0x038f    mem[0x404] += 1 -- op3c
+0x0392    op01_JumpTo( address=0x37e )
+0x0395    op00_Return()
+
+Actor_0x11:event_0x05:
+0x0396    mem[0x404] = 13 -- op35
+0x039c    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 != val2", address_if_false=0x3b3 )
+0x03a4    -- 0xFE1B()
+0x03aa    op26_Wait( time=0 )
+0x03ad    mem[0x404] -= 1 -- op3d
+0x03b0    op01_JumpTo( address=0x39c )
+0x03b3    op00_Return()
+
+Actor_0x12:on_start:
+0x03b4    -- 0xBC_ActorNoModelInit()
+0x03b5    op00_Return()
+
+Actor_0x12:on_update:
+0x03b6    -- 0x5B()
+0x03b7    op00_Return()
+
+Actor_0x12:on_talk:
+
+Actor_0x12:on_push:
+0x03b8    op00_Return()
+
+Actor_0x12:event_0x04:
+0x03b9    -- 0x10()
+0x03c4    op00_Return()
+0x03c5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x25 )

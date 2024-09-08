@@ -389,4 +389,47 @@ Actor_0x0f:event_0x04:
 0x0243    op02_JumpToConditional( val1=(s)mem[0x40c], val2=11, condition="val1 == val2", address_if_false=0x24f )
 0x024b    op00_Return()
 0x024c    op01_JumpTo( address=0x25c )
-0x024f    -- MISSING OPCODE 0xFE1b
+0x024f    -- 0xFE1B()
+0x0255    -- 0x5A()
+0x0256    mem[0x40c] += 1 -- op3c
+0x0259    op01_JumpTo( address=0x243 )
+0x025c    op00_Return()
+
+Actor_0x10:on_start:
+0x025d    -- 0xBC_ActorNoModelInit()
+0x025e    -- 0x19_ActorSetPosition( x=(vf80)0x00c8, z=(vf40)0xff38, flag=(flag)0xc0 )
+0x0264    -- 0xF8()
+0x0268    -- 0x18()
+0x026d    op00_Return()
+
+Actor_0x10:on_update:
+0x026e    op00_Return()
+
+Actor_0x10:on_talk:
+0x026f    -- 0xFB()
+0x0274    op00_Return()
+0x0275    op01_JumpTo( address=0x2ea )
+0x0278    -- 0xFE54()
+0x027a    -- 0xFE0A( ???=0x1283 )
+0x027e    -- 0xB5() -- camera set direction
+0x0283    -- 0xFE23()
+0x0298    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x04, priority=0x03 )
+0x029b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x0, flags=0 )
+0x02a1    op26_Wait( time=10 )
+0x02a4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x1, flags=0 )
+0x02aa    op26_Wait( time=10 )
+0x02ad    -- 0xFE17()
+0x02b1    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x06, priority=0x03 )
+0x02b4    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x05, priority=0x03 )
+0x02b7    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x05, priority=0x03 )
+0x02ba    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x04, priority=0x03 )
+0x02bd    op26_Wait( time=180 )
+0x02c0    op09_CallActorEventEndSync( actor_id=Actor_0x14, event=event_0x04, priority=0x03 )
+0x02c3    op26_Wait( time=60 )
+0x02c6    -- 0xF2()
+0x02cf    op26_Wait( time=1 )
+0x02d2    -- 0xF2()
+0x02db    -- 0xFE0A( ???=0x1086 )
+0x02df    op26_Wait( time=60 )
+0x02e2    -- 0xFE24()
+0x02e4    -- MISSING OPCODE 0xFE0b

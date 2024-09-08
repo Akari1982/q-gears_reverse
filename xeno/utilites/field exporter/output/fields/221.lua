@@ -366,9 +366,8 @@ Actor_0x06:on_update:
 Actor_0x06:on_talk:
 0x0330    -- 0xFE54()
 0x0332    -- 0xB5() -- camera set direction
-0x0333    -- 0x04()
-0x0334    -- 0x80()
-0x0339    -- 0x30()
+0x0337    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x10, priority=0x01 )
+0x033a    -- 0xFE24()
 0x033c    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x349 )
 0x0344    opD2_MessageShowDynamic( text_id=0x5, flags=CLOSE_OFF_SCREEN|NO_FACE )
 0x0348    op9C_MessageSync()
@@ -422,12 +421,10 @@ Actor_0x07:on_update:
 Actor_0x07:on_talk:
 0x03e6    -- 0xFE54()
 0x03e8    -- 0xB5() -- camera set direction
-0x03e9    -- 0x04()
-0x03ea    -- 0x80()
-0x03ef    op31_JumpIfButtonNotPressed( buttons=R2|L1|R1|Triangle|Circle|Cross|Square|R3|Right, jump_to=0x4602 )
-0x03f4    op02_JumpToConditional( val1=(s)mem[0x10], val2=(s)mem[0x446], condition="val1 >= val2", address_if_false=0xad2 )
-0x03fc    op00_Return()
-0x03fd    op00_Return()
+0x03ed    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x11, priority=0x01 )
+0x03f0    -- 0xFE24()
+0x03f2    op02_JumpToConditional( val1=(s)mem[0x246], val2=16, condition="val1 & val2", address_if_false=0x404 )
+0x03fa    opD2_MessageShowDynamic( text_id=0xa, flags=0 )
 0x03fe    op9C_MessageSync()
 0x03ff    -- 0xFE54()
 0x0401    op01_JumpTo( address=0x44a )
@@ -482,7 +479,8 @@ Actor_0x08:on_update:
 0x0484    op09_CallActorEventEndSync( actor_id=Actor_0x12, event=event_0x04, priority=0x01 )
 0x0487    mem[0x400] = 1 -- op35
 0x048d    -- 0xB5() -- camera set direction
-0x048e    -- 0x06()
-0x0493    -- 0x0C()
-0x0494    op05_CallFunction( address=0x180 )
-0x0497    -- MISSING OPCODE 0xb1
+0x0492    -- 0x67()
+0x0496    op01_JumpTo( address=0x4b1 )
+0x0499    -- 0xB5() -- camera set direction
+0x049e    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0e, priority=0x01 )
+0x04a1    -- MISSING OPCODE 0xFEb5
