@@ -49280,10 +49280,10 @@ S3 = V0;
 V0 = S0 & 0001;
 800A80C0	bne    v0, zero, La80e0 [$800a80e0]
 V0 = S0 & 0004;
-800A80C8	jal    $80033250
+800A80C8	jal    $system_set_pack_global_pointers
 A0 = S2;
 A0 = w[S2 + 0010];
-800A80D4	jal    $80033250
+800A80D4	jal    $system_set_pack_global_pointers
 800A80D8	nop
 V0 = S0 & 0004;
 
@@ -49292,20 +49292,20 @@ La80e0:	; 800A80E0
 800A80E4	bne    v0, zero, La8174 [$800a8174]
 [S3 + 0063] = b(0);
 A0 = w[SP + 0058];
-800A80F0	jal    $80033250
+800A80F0	jal    $system_set_pack_global_pointers
 800A80F4	nop
 T0 = w[SP + 0058];
 800A80FC	nop
 A0 = w[T0 + 0008];
-800A8104	jal    $80033250
+800A8104	jal    $system_set_pack_global_pointers
 800A8108	nop
 T0 = w[SP + 0058];
 800A8110	nop
 S1 = w[T0 + 0004];
-800A8118	jal    $80033250
+800A8118	jal    $system_set_pack_global_pointers
 A0 = S1;
 A0 = w[S1 + 0004];
-800A8124	jal    $80033250
+800A8124	jal    $system_set_pack_global_pointers
 800A8128	nop
 T0 = w[SP + 0058];
 800A8130	nop
@@ -49392,7 +49392,7 @@ V0 = V0 >> 10;
 [SP + 0014] = w(V0);
 V0 = T0 << 10;
 V0 = V0 >> 10;
-800A8268	jal    $8002dbf4
+800A8268	jal    $func2dbf4
 [SP + 0018] = w(V0);
 A0 = S2;
 800A8274	jal    $system_memory_allocate
@@ -50075,7 +50075,7 @@ S4 = w[V0 + 0014];
 800A8C8C	nop
 800A8C90	beq    s4, zero, La8e10 [$800a8e10]
 800A8C94	nop
-800A8C98	jal    $80033250
+800A8C98	jal    $system_set_pack_global_pointers
 A0 = S4;
 S1 = w[S4 + 0004];
 800A8CA4	nop
@@ -50172,7 +50172,7 @@ V0 = 0001;
 [SP + 0014] = w(S2);
 [SP + 0018] = w(S0);
 A0 = w[S4 + 0008];
-800A8E00	jal    $8002dbf4
+800A8E00	jal    $func2dbf4
 A3 = S6;
 
 La8e08:	; 800A8E08
@@ -51911,12 +51911,12 @@ V0 = w[S4 + 0018];
 800AA6E0	bne    v0, zero, Laa848 [$800aa848]
 800AA6E4	nop
 A0 = w[S4 + 000c];
-800AA6EC	jal    $80033250
+800AA6EC	jal    $system_set_pack_global_pointers
 800AA6F0	nop
 V0 = w[S4 + 000c];
 800AA6F8	nop
 S0 = w[V0 + 0008];
-800AA700	jal    $80033250
+800AA700	jal    $system_set_pack_global_pointers
 A0 = S0;
 [S4 + 00b4] = w(S0);
 V1 = w[S0 + 0018];
@@ -51931,7 +51931,7 @@ V0 = 01d0;
 [SP + 0014] = w(0);
 [SP + 0018] = w(V0);
 A0 = w[S0 + 0014];
-800AA73C	jal    $8002dbf4
+800AA73C	jal    $func2dbf4
 A3 = 0100;
 
 Laa744:	; 800AA744
@@ -51962,10 +51962,10 @@ Laa794:	; 800AA794
 V0 = w[S4 + 000c];
 800AA798	nop
 S0 = w[V0 + 0004];
-800AA7A0	jal    $80033250
+800AA7A0	jal    $system_set_pack_global_pointers
 A0 = S0;
 S0 = w[S0 + 0004];
-800AA7AC	jal    $80033250
+800AA7AC	jal    $system_set_pack_global_pointers
 A0 = S0;
 A0 = 0;
 800AA7B8	jal    $system_draw_sync
@@ -64232,7 +64232,7 @@ A3 = 0;
 A0 = A0 << 08;
 A0 = A0 | V0;
 A0 = A1 + A0;
-800B594C	jal    $8002dbf4
+800B594C	jal    $func2dbf4
 A1 = 0;
 RA = w[SP + 0020];
 SP = SP + 0028;
