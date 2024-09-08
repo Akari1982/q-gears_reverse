@@ -1295,6 +1295,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xab:
+            {
+                exp->Log( "-- 0xAB()" );
+                pointer += 1;
+            }
+            break;
+
             case 0xac:
             {
                 u8 control = GetU8( pointer + 1 ) & 0xf;
@@ -1327,7 +1334,7 @@ ScriptFile::GetScripts( const std::string& path )
             case 0xb5:
             {
                 exp->Log( "-- 0xB5() -- camera set direction" );
-                pointer += 1;
+                pointer += 5;
             }
             break;
 
@@ -1544,6 +1551,13 @@ ScriptFile::GetScripts( const std::string& path )
             case 0xd6:
             {
                 exp->Log( "opD6_MessageSetSpeed( speed=" + GetU16Variable( pointer + 1 ) + " )" );
+                pointer += 3;
+            }
+            break;
+
+            case 0xd7:
+            {
+                exp->Log( "-- 0xD7()" );
                 pointer += 3;
             }
             break;
@@ -1850,6 +1864,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x14:
+                    {
+                        exp->Log( "-- 0xFE14()" );
+                        pointer += 5;
+                    }
+                    break;
+
                     case 0x15:
                     {
                         exp->Log( "-- 0xFE15( ???=" + GetV80Variable( pointer + 1 ) + ", ???=" + GetV80Variable( pointer + 3 ) + " )" );
@@ -1889,6 +1910,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE1A() sync load for 0xFEC6()" );
                         pointer += 1;
+                    }
+                    break;
+
+                    case 0x1b:
+                    {
+                        exp->Log( "-- 0xFE1B()" );
+                        pointer += 5;
                     }
                     break;
 
@@ -2160,6 +2188,27 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE5B()" );
                         pointer += 3;
+                    }
+                    break;
+
+                    case 0x5c:
+                    {
+                        u8 type = GetU8( pointer + 1 );
+                        if( type == 0 )
+                        {
+                            exp->Log( "-- opFE5C00()" );
+                            pointer += 2;
+                        }
+                        else if( type == 1 )
+                        {
+                            exp->Log( "-- opFE5C01()" );
+                            pointer += 2;
+                        }
+                        else if( type == 2 )
+                        {
+                            exp->Log( "-- opFE5C02()" );
+                            pointer += 4;
+                        }
                     }
                     break;
 
@@ -2500,6 +2549,22 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xb0:
+                    {
+                        u8 type = GetU8( pointer + 1 );
+                        if( type == 1 )
+                        {
+                            exp->Log( "-- opFEB001()" );
+                            pointer += 2;
+                        }
+                        else
+                        {
+                            exp->Log( "-- opFEB000()" );
+                            pointer += 6;
+                        }
+                    }
+                    break;
+
                     case 0xb1:
                     {
                         exp->Log( "opFEB1_ScifiHudInit()" );
@@ -2608,6 +2673,7 @@ ScriptFile::GetScripts( const std::string& path )
                         exp->Log( "-- 0xFEE0()" );
                         pointer += 2;
                     }
+                    break;
 
                     default:
                     {

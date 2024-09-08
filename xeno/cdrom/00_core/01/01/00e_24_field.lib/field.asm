@@ -857,7 +857,7 @@
 // field_event_opFE4E_sprite_add_anim_unload
 8008A034-8008A09C
 ////////////////////////////////
-// func8a0a0
+// field_event_opFEB0
 8008A0A0-8008A2B8
 ////////////////////////////////
 // field_event_opFE4A_sprite_add_anim_load
@@ -899,7 +899,7 @@
 // field_event_opFE48
 8008AAEC-8008ABA4
 ////////////////////////////////
-// func8aba8
+// field_event_opFE1B
 8008ABA8-8008AE64
 ////////////////////////////////
 // field_event_opFE1A
@@ -944,7 +944,7 @@
 // field_event_opFE13
 8008C31C-8008C3A4
 ////////////////////////////////
-// func8c3a8
+// field_event_opFE14
 8008C3A8-8008C434
 ////////////////////////////////
 // field_event_opFE3B
@@ -1223,7 +1223,7 @@
 // field_event_opA3
 8008F7FC-8008F8D0
 ////////////////////////////////
-// func8f8d4
+// field_event_opAB
 8008F8D4-8008F98C
 ////////////////////////////////
 // field_event_opAC
@@ -1464,7 +1464,7 @@
 // func93c60
 80093C60-80093C8C
 ////////////////////////////////
-// func93c90
+// field_event_opD7
 80093C90-80093CE0
 ////////////////////////////////
 // func93ce4
