@@ -496,14 +496,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
-/*
             case 0x34:
             {
                 exp->Log( "-- 0x34()" );
                 pointer += 5;
             }
             break;
-*/
+
             case 0x35:
             {
                 exp->Log( "mem[" + GetU16Variable( pointer + 1 ) + "] = " + GetVFVariable( pointer + 3, GetU8( pointer + 5 ) & 0x40 ) + " -- op35");
@@ -1548,6 +1547,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xd5:
+            {
+                exp->Log( "-- 0xD5()" );
+                pointer += 3;
+            }
+            break;
+
             case 0xd6:
             {
                 exp->Log( "opD6_MessageSetSpeed( speed=" + GetU16Variable( pointer + 1 ) + " )" );
@@ -1716,11 +1722,24 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
-
             case 0xf8:
             {
                 exp->Log( "-- 0xF8()" );
                 pointer += 4;
+            }
+            break;
+
+            case 0xf9:
+            {
+                exp->Log( "-- 0xF9()" );
+                pointer += 2;
+            }
+            break;
+
+            case 0xfa:
+            {
+                exp->Log( "-- 0xFA()" );
+                pointer += 5;
             }
             break;
 
@@ -1934,6 +1953,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x1e:
+                    {
+                        exp->Log( "-- 0xFE1E()" );
+                        pointer += 2;
+                    }
+                    break;
+
                     case 0x21:
                     {
                         exp->Log( "-- 0xFE21()" );
@@ -1995,9 +2021,30 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x34:
+                    {
+                        exp->Log( "-- 0xFE34()" );
+                        pointer += 6;
+                    }
+                    break;
+
                     case 0x35:
                     {
                         exp->Log( "-- 0xFE35()" );
+                        pointer += 6;
+                    }
+                    break;
+
+                    case 0x36:
+                    {
+                        exp->Log( "-- 0xFE36()" );
+                        pointer += 6;
+                    }
+                    break;
+
+                    case 0x37:
+                    {
+                        exp->Log( "-- 0xFE37()" );
                         pointer += 6;
                     }
                     break;
@@ -2058,9 +2105,23 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x43:
+                    {
+                        exp->Log( "-- 0xFE43()" );
+                        pointer += 1;
+                    }
+                    break;
+
                     case 0x45:
                     {
                         exp->Log( "opFE45_SpriteSetDefaultAnim( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0x46:
+                    {
+                        exp->Log( "-- 0xFE46()" );
                         pointer += 2;
                     }
                     break;
@@ -2240,6 +2301,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x63:
+                    {
+                        exp->Log( "-- 0xFE63()" );
+                        pointer += 5;
+                    }
+                    break;
+
                     case 0x64:
                     {
                         exp->Log( "-- 0xFE64() -- wait for sound channel?" );
@@ -2272,6 +2340,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE69()" );
                         pointer += 5;
+                    }
+                    break;
+
+                    case 0x6a:
+                    {
+                        exp->Log( "-- 0xFE6A()" );
+                        pointer += 3;
                     }
                     break;
 
@@ -2364,6 +2439,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE88()" );
                         pointer += 0x12;
+                    }
+                    break;
+
+                    case 0x89:
+                    {
+                        exp->Log( "-- 0xFE89()" );
+                        pointer += 0xb;
                     }
                     break;
 
@@ -2500,6 +2582,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x9f:
+                    {
+                        exp->Log( "-- 0xFE9F()" );
+                        pointer += 4;
+                    }
+                    break;
+
                     case 0xa0:
                     {
                         exp->Log( "opFEA0_MoviePlay3( movie_id=" + GetVF80Variable( pointer + 1 ) + ", sector=" + GetVF40Variable( pointer + 3 ) + ", start_frame=" + GetVF20Variable( pointer + 5 ) + ", end_frame=" + GetVF10Variable( pointer + 7 ) + ", ???=" + GetVF08Variable( pointer + 9 ) + ", flag=" + GetFVariable( pointer + 11 ) + " )" );
@@ -2572,6 +2661,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xb8:
+                    {
+                        exp->Log( "-- 0xFEB8()" );
+                        pointer += 4;
+                    }
+                    break;
+
                     case 0xbd:
                     {
                         exp->Log( "opFEBD_ParticleSpawnSettings( settings=" + GetV80Variable( pointer + 1 ) + " )" );
@@ -2610,6 +2706,13 @@ ScriptFile::GetScripts( const std::string& path )
                     case 0xc6:
                     {
                         exp->Log( "-- 0xFEC6( char_id=" + GetV80Variable( pointer + 1 ) + " )" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0xcd:
+                    {
+                        exp->Log( "-- 0xFECD()" );
                         pointer += 3;
                     }
                     break;
