@@ -2213,4 +2213,4 @@ Actor_0x29:event_0x0a:
 0x1684    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0xc8, flags=0 )
 0x168a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x1e, text_id=0xc9, flags=0 )
 0x1690    op00_Return()
-0x1691    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x4a38, ???=(vf40)0x587e, flag=0x12 )
+0x1691    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7a38, ???=(vf40)0x9972, flag=0x60 )

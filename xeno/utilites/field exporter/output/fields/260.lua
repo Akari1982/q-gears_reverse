@@ -28,4 +28,51 @@ Actor_0x00:on_start:
 0x0049    -- 0x9D()
 0x004d    -- 0xB6( ???=480, ???=0 )
 0x0052    op01_JumpTo( address=0x78 )
-0x0055    -- MISSING OPCODE 0xFE6a
+0x0055    -- 0xFE6A()
+0x0059    -- 0xE5()
+0x006a    -- 0xA0()
+0x0071    -- 0xA1()
+0x0074    -- 0x9D()
+0x0078    -- 0xFE1E()
+0x007b    mem[0x40c] = 1 -- op35
+0x0081    mem[0x40e] = 637 -- op35
+0x0087    mem[0x410] = 1266 -- op35
+0x008d    mem[0x412] = 0 -- op35
+0x0093    mem[0x414] = 6 -- op35
+0x0099    mem[0x416] = 90 -- op35
+0x009f    op02_JumpToConditional( val1=(s)mem[0x188], val2=1, condition="val1 & val2", address_if_false=0xad )
+0x00a7    mem[0x418] = 1 -- op35
+0x00ad    op00_Return()
+
+Actor_0x00:on_update:
+0x00ae    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0xdb )
+0x00b6    -- 0x75( ???=24 )
+0x00b9    mem[0x400] = true -- op36
+0x00bc    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 < val2", address_if_false=0xd1 )
+0x00c4    -- 0xFE66() -- sound play with volume in slot
+0x00ce    op01_JumpTo( address=0xdb )
+0x00d1    -- 0xFE66() -- sound play with volume in slot
+0x00db    -- 0xFE06()
+0x00e2    -- 0xD5()
+0x00e5    op01_JumpTo( address=0xf8 )
+0x00e8    -- 0xFE06()
+0x00ef    -- 0xD5()
+0x00f2    op01_JumpTo( address=0xf8 )
+0x00f5    -- 0xD5()
+0x00f8    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00f9    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 < val2", address_if_false=0x10e )
+0x0101    -- 0xFE66() -- sound play with volume in slot
+0x010b    op01_JumpTo( address=0x118 )
+0x010e    -- 0xFE66() -- sound play with volume in slot
+0x0118    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0119    mem[0x188] |= 1 << 0 -- op3a
+0x011f    op00_Return()
+
+Actor_0x01:on_start:
+0x0120    -- MISSING OPCODE 0x5c

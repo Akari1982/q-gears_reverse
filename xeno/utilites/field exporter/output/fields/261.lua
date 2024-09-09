@@ -18,4 +18,86 @@ unknown = [
 Actor_0x00:on_start:
 0x0024    -- 0xBC_ActorNoModelInit()
 0x0025    -- 0xE5()
-0x0036    -- MISSING OPCODE 0xFE6a
+0x0036    -- 0xFE6A()
+0x003a    -- 0xFE25()
+0x003d    -- 0xE6()
+0x0046    op02_JumpToConditional( val1=(s)mem[0x186], val2=32, condition="val1 & val2", address_if_false=0x5e )
+0x004e    -- 0xA4() -- camera angle
+0x0052    -- 0x9D()
+0x0056    -- 0xB6( ???=480, ???=0 )
+0x005b    op01_JumpTo( address=0x6c )
+0x005e    -- 0xA0()
+0x0065    -- 0xA1()
+0x0068    -- 0x9D()
+0x006c    op02_JumpToConditional( val1=(s)mem[0x186], val2=64, condition="val1 & val2", address_if_false=0x7e )
+0x0074    -- 0x80()
+0x0079    -- 0x80()
+0x007e    op02_JumpToConditional( val1=(s)mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x9a )
+0x0086    -- 0x80()
+0x008b    -- 0x80()
+0x0090    -- 0x80()
+0x0095    -- 0x80()
+0x009a    -- 0xFE1E()
+0x009d    -- 0x2A()
+0x009e    op00_Return()
+
+Actor_0x00:on_update:
+0x009f    op02_JumpToConditional( val1=(s)mem[0x186], val2=256, condition="val1 & val2", address_if_false=0xee )
+0x00a7    -- 0xE1_BackgroundSetTex()
+0x00b5    op26_Wait( time=2 )
+0x00b8    -- 0xE1_BackgroundSetTex()
+0x00c6    op26_Wait( time=2 )
+0x00c9    -- 0xE1_BackgroundSetTex()
+0x00d7    op26_Wait( time=2 )
+0x00da    -- 0xE1_BackgroundSetTex()
+0x00e8    op26_Wait( time=2 )
+0x00eb    op01_JumpTo( address=0x132 )
+0x00ee    -- 0xE1_BackgroundSetTex()
+0x00fc    op26_Wait( time=2 )
+0x00ff    -- 0xE1_BackgroundSetTex()
+0x010d    op26_Wait( time=2 )
+0x0110    -- 0xE1_BackgroundSetTex()
+0x011e    op26_Wait( time=2 )
+0x0121    -- 0xE1_BackgroundSetTex()
+0x012f    op26_Wait( time=2 )
+0x0132    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0133    -- 0xFE66() -- sound play with volume in slot
+0x013d    op00_Return()
+
+Actor_0x01:on_start:
+0x013e    -- 0xBC_ActorNoModelInit()
+0x013f    -- 0x2A()
+0x0140    op00_Return()
+
+Actor_0x01:on_update:
+0x0141    op02_JumpToConditional( val1=(s)mem[0x186], val2=64, condition="val1 & val2", address_if_false=0x190 )
+0x0149    -- 0xE1_BackgroundSetTex()
+0x0157    op26_Wait( time=2 )
+0x015a    -- 0xE1_BackgroundSetTex()
+0x0168    op26_Wait( time=2 )
+0x016b    -- 0xE1_BackgroundSetTex()
+0x0179    op26_Wait( time=2 )
+0x017c    -- 0xE1_BackgroundSetTex()
+0x018a    op26_Wait( time=2 )
+0x018d    op01_JumpTo( address=0x1d4 )
+0x0190    -- 0xE1_BackgroundSetTex()
+0x019e    op26_Wait( time=2 )
+0x01a1    -- 0xE1_BackgroundSetTex()
+0x01af    op26_Wait( time=2 )
+0x01b2    -- 0xE1_BackgroundSetTex()
+0x01c0    op26_Wait( time=2 )
+0x01c3    -- 0xE1_BackgroundSetTex()
+0x01d1    op26_Wait( time=2 )
+0x01d4    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x01d5    op00_Return()
+
+Actor_0x02:on_start:
+0x01d6    -- MISSING OPCODE 0x5c

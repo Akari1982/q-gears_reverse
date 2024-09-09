@@ -16,4 +16,59 @@ unknown = [
 
 
 Actor_0x00:on_start:
-0x0016    -- MISSING OPCODE 0xFE1e
+0x0016    -- 0xFE1E()
+0x0019    -- 0xBC_ActorNoModelInit()
+0x001a    -- 0x2A()
+0x001b    -- 0xE5()
+0x002c    -- 0xA0()
+0x0033    mem[0x402] = 0 -- op35
+0x0039    mem[0x404] = -480 -- op35
+0x003f    mem[0x406] = -450 -- op35
+0x0045    mem[0x408] = 560 -- op35
+0x004b    mem[0x40a] = 440 -- op35
+0x0051    mem[0x40c] = (s)mem[0x404] -- op35
+0x0057    mem[0x40c] += (s)mem[0x406] -- op38
+0x005d    opDF_VariableDivide( address=0x40c, value=(vf40)0x0002, flag=0x40 )
+0x0063    mem[0x40e] = (s)mem[0x408] -- op35
+0x0069    mem[0x40e] += (s)mem[0x40a] -- op38
+0x006f    opDF_VariableDivide( address=0x40e, value=(vf40)0x0002, flag=0x40 )
+0x0075    -- 0x2D()
+0x007d    -- 0x2D()
+0x0085    mem[0x416] -= 559 -- op39
+0x008b    mem[0x414] += 837 -- op38
+0x0091    -- 0xF7()
+0x0096    mem[0x49a] = 134 -- op35
+0x009c    mem[0x49c] = -861 -- op35
+0x00a2    mem[0x49e] = 1 -- op35
+0x00a8    mem[0x498] = 1 -- op35
+0x00ae    mem[0x54] = 2 -- op35
+0x00b4    op00_Return()
+
+Actor_0x00:on_update:
+0x00b5    op02_JumpToConditional( val1=(s)mem[0x420], val2=0, condition="val1 == val2", address_if_false=0xcb )
+0x00bd    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0xc8 )
+0x00c5    op07_CallActorEvent( actor_id=Actor_0x0b, event=event_0x05, priority=0x03 )
+0x00c8    mem[0x420] = true -- op36
+0x00cb    op02_JumpToConditional( val1=(s)mem[0x410], val2=1, condition="val1 >= val2", address_if_false=0x106 )
+0x00d3    op02_JumpToConditional( val1=(s)mem[0x410], val2=100, condition="val1 == val2", address_if_false=0xe1 )
+0x00db    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x02 )
+0x00de    op26_Wait( time=10 )
+0x00e1    op02_JumpToConditional( val1=(s)mem[0x410], val2=200, condition="val1 == val2", address_if_false=0xef )
+0x00e9    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x06, priority=0x02 )
+0x00ec    op26_Wait( time=10 )
+0x00ef    op02_JumpToConditional( val1=(s)mem[0x410], val2=2, condition="val1 == val2", address_if_false=0x105 )
+0x00f7    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x02 )
+0x00fa    op02_JumpToConditional( val1=(s)mem[0x410], val2=2, condition="val1 == val2", address_if_false=0x105 )
+0x0102    op01_JumpTo( address=0xfa )
+0x0105    -- 0x5A()
+0x0106    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0107    -- 0x75( ???=18 )
+0x010a    mem[0x496] = false -- op37
+0x010d    op00_Return()
+
+Actor_0x01:on_start:
+0x010e    -- MISSING OPCODE 0x5c

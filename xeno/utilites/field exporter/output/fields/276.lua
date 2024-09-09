@@ -19,4 +19,129 @@ Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0xA0()
 0x0010    -- 0x2A()
-0x0011    -- MISSING OPCODE 0xFE6a
+0x0011    -- 0xFE6A()
+0x0015    op99()
+0x0016    -- 0x9B( ???=12, ???=12 )
+0x001b    -- 0x60()
+0x001c    -- 0x63( ???=33, ???=539, ???=104 ) -- exp0x1
+0x0024    -- 0x64() -- exp0x1
+0x0025    -- 0xA3()
+0x002d    opAC_MoveCamera( control=0x1, steps=0 )
+0x0031    opAC_MoveCamera( control=0x0, steps=0 )
+0x0035    op00_Return()
+
+Actor_0x00:on_update:
+0x0036    -- 0xFE65()
+0x003c    -- 0xFE65()
+0x0042    -- 0xF2()
+0x004b    -- 0xFE54()
+0x004d    op26_Wait( time=32 )
+0x0050    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
+0x0053    opB4_FadeOut()
+0x0056    op26_Wait( time=200 )
+0x0059    -- 0xFE62()
+0x005f    -- 0xFE62()
+0x0065    -- 0xFE0E_SoundSetVolume( volume=0, steps=2000 )
+0x006b    op26_Wait( time=250 )
+0x006e    -- 0xF2()
+0x0077    -- 0x60()
+0x0078    -- 0x63( ???=-8, ???=-847, ???=113 ) -- exp0x1
+0x0080    -- 0x64() -- exp0x1
+0x0081    -- 0xA3()
+0x0089    opAC_MoveCamera( control=0x1, steps=0 )
+0x008d    opAC_MoveCamera( control=0x0, steps=0 )
+0x0091    opEF_MoveCameraSync()
+0x0094    op26_Wait( time=100 )
+0x0097    -- 0xFE65()
+0x009d    -- 0xFE65()
+0x00a3    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=16 )
+0x00ae    -- 0xFE64() -- wait for sound channel?
+0x00b2    -- 0xFE64() -- wait for sound channel?
+0x00b6    opB3_FadeIn()
+0x00b9    op26_Wait( time=12 )
+0x00bc    -- 0xF2()
+0x00c5    op26_Wait( time=5 )
+0x00c8    op26_Wait( time=32 )
+0x00cb    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=45 )
+0x00d6    -- 0xF2()
+0x00df    op26_Wait( time=60 )
+0x00e2    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x00e5    -- 0xFE65()
+0x00eb    -- 0xFE65()
+0x00f1    op26_Wait( time=48 )
+0x00f4    -- 0xFE8C()
+0x00fc    -- 0xFE8C()
+0x0104    op74_SoundPlayFixedVolume( sound_id=149 )
+0x0107    op26_Wait( time=12 )
+0x010a    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
+0x010d    op26_Wait( time=24 )
+0x0110    op02_JumpToConditional( val1=(s)mem[0x412], val2=1, condition="val1 == val2", address_if_false=0x13b )
+0x0118    op99()
+0x0119    -- 0x9B( ???=12, ???=12 )
+0x011e    -- 0x60()
+0x011f    -- 0x63( ???=-15, ???=-1034, ???=150 ) -- exp0x1
+0x0127    -- 0x64() -- exp0x1
+0x0128    -- 0xA3()
+0x0130    opAC_MoveCamera( control=0x1, steps=30 )
+0x0134    opAC_MoveCamera( control=0x0, steps=30 )
+0x0138    opEF_MoveCameraSync()
+0x013b    -- 0x12()
+0x013f    -- 0x80()
+0x0144    -- 0x5B()
+0x0145    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0146    op00_Return()
+
+Actor_0x01:on_start:
+0x0147    -- 0x16_ActorPCInit( char_id=2 )
+0x014a    opFE0D_MessageSetFace( char_id=2 )
+0x014e    op20_ActorSetFlags0( flags=13 )
+0x0151    -- 0x5F( ???=0x1 )
+0x0153    -- 0xFE1C()
+0x015c    -- 0x2A()
+0x015d    opFE0D_MessageSetFace( char_id=2 )
+0x0161    op00_Return()
+
+Actor_0x01:on_update:
+0x0162    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x0163    op00_Return()
+
+Actor_0x01:event_0x04:
+0x0164    opD2_MessageShowDynamic( text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0168    op9C_MessageSync()
+0x0169    op00_Return()
+
+Actor_0x01:event_0x05:
+0x016a    opD2_MessageShowDynamic( text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x016e    op9C_MessageSync()
+0x016f    op00_Return()
+
+Actor_0x02:on_start:
+0x0170    -- 0xBC_ActorNoModelInit()
+0x0171    mem[0x410] = false -- op37
+0x0174    mem[0x412] = false -- op37
+0x0177    op00_Return()
+
+Actor_0x02:on_update:
+0x0178    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x0179    op00_Return()
+
+Actor_0x02:event_0x04:
+0x017a    op02_JumpToConditional( val1=(s)mem[0x410], val2=450, condition="val1 < val2", address_if_false=0x191 )
+0x0182    -- 0xFE1C()
+0x018b    mem[0x410] += 1 -- op3c
+0x018e    op01_JumpTo( address=0x17a )
+0x0191    mem[0x412] = true -- op36
+0x0194    op00_Return()
+0x0195    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x5000, flag=0x4 )

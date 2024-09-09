@@ -305,4 +305,105 @@ Actor_0x07:event_0x04:
 
 Actor_0x08:on_start:
 0x02eb    -- 0xBC_ActorNoModelInit()
-0x02ec    -- MISSING OPCODE 0xf9
+0x02ec    -- 0xF9()
+0x02ee    op00_Return()
+
+Actor_0x08:on_update:
+0x02ef    op00_Return()
+
+Actor_0x08:on_talk:
+
+Actor_0x08:on_push:
+0x02f0    op00_Return()
+
+Actor_0x09:on_start:
+0x02f1    -- 0xBC_ActorNoModelInit()
+0x02f2    -- 0x21( ???=256 )
+0x02f5    op00_Return()
+
+Actor_0x09:on_update:
+0x02f6    op00_Return()
+
+Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
+0x02f7    op00_Return()
+
+Actor_0x0a:on_start:
+0x02f8    -- 0xBC_ActorNoModelInit()
+0x02f9    -- 0xF9()
+0x02fb    op00_Return()
+
+Actor_0x0a:on_update:
+0x02fc    op00_Return()
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x02fd    op00_Return()
+
+Actor_0x0b:on_start:
+0x02fe    -- 0xBC_ActorNoModelInit()
+0x02ff    -- 0x21( ???=640 )
+0x0302    mem[0x402] = 0 -- op35
+0x0308    op00_Return()
+
+Actor_0x0b:on_update:
+0x0309    op00_Return()
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x030a    op00_Return()
+
+Actor_0x0b:event_0x04:
+0x030b    mem[0x402] = 0 -- op35
+0x0311    op02_JumpToConditional( val1=(s)mem[0x402], val2=13, condition="val1 < val2", address_if_false=0x325 )
+0x0319    -- 0xBF( ???=128 )
+0x031c    mem[0x402] += 1 -- op3c
+0x031f    op26_Wait( time=1 )
+0x0322    op01_JumpTo( address=0x311 )
+0x0325    op00_Return()
+
+Actor_0x0c:on_start:
+0x0326    -- 0xBC_ActorNoModelInit()
+0x0327    -- 0xF9()
+0x0329    op00_Return()
+
+Actor_0x0c:on_update:
+0x032a    op00_Return()
+
+Actor_0x0c:on_talk:
+
+Actor_0x0c:on_push:
+0x032b    op00_Return()
+
+Actor_0x0d:on_start:
+0x032c    -- 0xBC_ActorNoModelInit()
+0x032d    -- 0x23()
+0x032e    -- 0x21( ???=512 )
+0x0331    mem[0x404] = 0 -- op35
+0x0337    op00_Return()
+
+Actor_0x0d:on_update:
+0x0338    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0339    op00_Return()
+
+Actor_0x0d:on_push:
+0x033a    op00_Return()
+
+Actor_0x0d:event_0x04:
+0x033b    mem[0x404] = 0 -- op35
+0x0341    op02_JumpToConditional( val1=(s)mem[0x404], val2=17, condition="val1 < val2", address_if_false=0x355 )
+0x0349    -- 0xBF( ???=32 )
+0x034c    op26_Wait( time=1 )
+0x034f    mem[0x404] += 1 -- op3c
+0x0352    op01_JumpTo( address=0x341 )
+0x0355    op26_Wait( time=20 )
+0x0358    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x035e    op00_Return()
+
+Actor_0x0d:event_0x05:
+0x035f    -- MISSING OPCODE 0xd8

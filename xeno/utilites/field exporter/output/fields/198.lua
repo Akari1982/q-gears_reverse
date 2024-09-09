@@ -18,4 +18,77 @@ unknown = [
 Actor_0x00:on_start:
 0x0047    -- 0xBC_ActorNoModelInit()
 0x0048    mem[0x1fc] |= 1 << 6 -- op3a
-0x004e    -- MISSING OPCODE 0xFEb8
+0x004e    -- 0xFEB8()
+0x0053    -- 0xA0()
+0x005a    -- 0x9D()
+0x005e    opFE42( ???=0 )
+0x0062    opFE42( ???=1 )
+0x0066    opFE42( ???=2 )
+0x006a    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0x83 )
+0x0072    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
+0x007d    -- 0x75( ???=58 )
+0x0080    op01_JumpTo( address=0xa6 )
+0x0083    -- 0x85()
+0x0088    opF1_FadeSetUp( steps=2, r=45, g=60, b=20, semi_tr=1 )
+0x0093    -- 0xFE66() -- sound play with volume in slot
+0x009d    -- 0x75( ???=62 )
+0x00a0    op01_JumpTo( address=0xa6 )
+0x00a3    -- 0x75( ???=71 )
+0x00a6    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 )
+0x00b1    -- 0x2A()
+0x00b2    op00_Return()
+
+Actor_0x00:on_update:
+0x00b3    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x00b4    -- 0x85()
+0x00b9    -- 0xFE66() -- sound play with volume in slot
+0x00c3    op00_Return()
+
+Actor_0x01:on_start:
+0x00c4    -- 0x16_ActorPCInit( char_id=0 )
+0x00c7    opFE0D_MessageSetFace( char_id=0 )
+0x00cb    op00_Return()
+
+Actor_0x01:on_update:
+0x00cc    -- 0xA7()
+0x00cd    op00_Return()
+
+Actor_0x01:on_talk:
+
+Actor_0x01:on_push:
+0x00ce    op00_Return()
+
+Actor_0x02:on_start:
+0x00cf    -- 0xBC_ActorNoModelInit()
+0x00d0    -- 0x2A()
+0x00d1    op00_Return()
+
+Actor_0x02:on_update:
+0x00d2    op02_JumpToConditional( val1=(s)mem[0x2], val2=8, condition="val1 == val2", address_if_false=0x14e )
+0x00da    -- 0xFE54()
+0x00dc    mem[0x400] = -32768 -- op35
+0x00e2    op09_CallActorEventEndSync( actor_id=Actor_0x2a, event=event_0x04, priority=0x01 )
+0x00e5    -- 0xFE18()
+0x00ea    op25_ActorDisable( actor_id=party1 )
+0x00ec    op09_CallActorEventEndSync( actor_id=Actor_0x1c, event=event_0x07, priority=0x01 )
+0x00ef    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=90 )
+0x00fa    op08_CallActorEventStartSync( actor_id=Actor_0x1c, event=event_0x04, priority=0x01 )
+0x00fd    op09_CallActorEventEndSync( actor_id=Actor_0x1e, event=event_0x04, priority=0x01 )
+0x0100    opFE9B_SlideShow1( steps=30 )
+0x0104    op08_CallActorEventStartSync( actor_id=Actor_0x1c, event=event_0x05, priority=0x01 )
+0x0107    op26_Wait( time=45 )
+0x010a    op09_CallActorEventEndSync( actor_id=Actor_0x1e, event=event_0x05, priority=0x01 )
+0x010d    opFE9B_SlideShow1( steps=30 )
+0x0111    op08_CallActorEventStartSync( actor_id=Actor_0x1c, event=event_0x06, priority=0x01 )
+0x0114    op26_Wait( time=30 )
+0x0117    op09_CallActorEventEndSync( actor_id=Actor_0x1e, event=event_0x06, priority=0x01 )
+0x011a    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x04, priority=0x01 )
+0x011d    op26_Wait( time=15 )
+0x0120    op09_CallActorEventEndSync( actor_id=Actor_0x1d, event=event_0x05, priority=0x01 )
+0x0123    -- 0xFEA1( ???=3, ???=18 )
+0x0129    -- 0xFE41()
+0x012d    -- MISSING OPCODE 0xFEde

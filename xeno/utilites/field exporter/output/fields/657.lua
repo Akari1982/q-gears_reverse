@@ -17,4 +17,103 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0xFE1e
+0x0010    -- 0xFE1E()
+0x0013    -- 0xFE41()
+0x0017    -- 0xFE41()
+0x001b    -- 0xFE41()
+0x001f    -- 0x75( ???=10 )
+0x0022    -- 0x2A()
+0x0023    -- 0xA0()
+0x002a    op00_Return()
+
+Actor_0x00:on_update:
+0x002b    -- 0xFE54()
+0x002d    op25_ActorDisable( actor_id=Actor_0x04 )
+0x002f    op25_ActorDisable( actor_id=Actor_0x06 )
+0x0031    op25_ActorDisable( actor_id=Actor_0x05 )
+0x0033    op25_ActorDisable( actor_id=Actor_0x07 )
+0x0035    op25_ActorDisable( actor_id=Actor_0x08 )
+0x0037    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0039    op25_ActorDisable( actor_id=Actor_0x0c )
+0x003b    op25_ActorDisable( actor_id=Actor_0x0b )
+0x003d    op25_ActorDisable( actor_id=Actor_0x0a )
+0x003f    op25_ActorDisable( actor_id=Actor_0x0d )
+0x0041    op25_ActorDisable( actor_id=Actor_0x0e )
+0x0043    op99()
+0x0044    mem[0x40a] = 0 -- op35
+0x004a    -- 0x63( ???=-72, ???=-1442, ???=29 ) -- exp0x1
+0x0052    -- 0xA3()
+0x005a    op05_CallFunction( address=0x2db )
+0x005d    op26_Wait( time=30 )
+0x0060    mem[0x40a] = 180 -- op35
+0x0066    -- 0x63( ???=-72, ???=-104, ???=11 ) -- exp0x1
+0x006e    -- 0xA3()
+0x0076    op05_CallFunction( address=0x2db )
+0x0079    op26_Wait( time=120 )
+0x007c    opFE9B_SlideShow1( steps=60 )
+0x0080    op99()
+0x0081    mem[0x40a] = 0 -- op35
+0x0087    -- 0x63( ???=288, ???=-338, ???=-145 ) -- exp0x1
+0x008f    -- 0xA3()
+0x0097    op05_CallFunction( address=0x2db )
+0x009a    mem[0x40a] = 280 -- op35
+0x00a0    -- 0x63( ???=-432, ???=-338, ???=-145 ) -- exp0x1
+0x00a8    -- 0xA3()
+0x00b0    op05_CallFunction( address=0x2db )
+0x00b3    op26_Wait( time=140 )
+0x00b6    opFE9B_SlideShow1( steps=60 )
+0x00ba    op99()
+0x00bb    mem[0x40a] = 0 -- op35
+0x00c1    -- 0x63( ???=-1071, ???=1199, ???=-283 ) -- exp0x1
+0x00c9    -- 0xA3()
+0x00d1    op05_CallFunction( address=0x2db )
+0x00d4    mem[0x40a] = 220 -- op35
+0x00da    -- 0x63( ???=-264, ???=1690, ???=-283 ) -- exp0x1
+0x00e2    -- 0xA3()
+0x00ea    op05_CallFunction( address=0x2db )
+0x00ed    mem[0x40a] = 200 -- op35
+0x00f3    -- 0x63( ???=655, ???=1369, ???=-283 ) -- exp0x1
+0x00fb    -- 0xA3()
+0x0103    op05_CallFunction( address=0x2db )
+0x0106    mem[0x40a] = 220 -- op35
+0x010c    -- 0x63( ???=1214, ???=793, ???=-283 ) -- exp0x1
+0x0114    -- 0xA3()
+0x011c    op05_CallFunction( address=0x2db )
+0x011f    op26_Wait( time=140 )
+0x0122    opFE9B_SlideShow1( steps=60 )
+0x0126    op99()
+0x0127    mem[0x40a] = 0 -- op35
+0x012d    -- 0x63( ???=-57, ???=-17, ???=-563 ) -- exp0x1
+0x0135    -- 0xA3()
+0x013d    op05_CallFunction( address=0x2db )
+0x0140    mem[0x40a] = 240 -- op35
+0x0146    -- 0x63( ???=897, ???=-475, ???=-1043 ) -- exp0x1
+0x014e    -- 0xA3()
+0x0156    op05_CallFunction( address=0x2db )
+0x0159    op26_Wait( time=140 )
+0x015c    opFE9B_SlideShow1( steps=60 )
+0x0160    op99()
+0x0161    mem[0x40a] = 0 -- op35
+0x0167    -- 0x63( ???=-195, ???=320, ???=-428 ) -- exp0x1
+0x016f    -- 0xA3()
+0x0177    op05_CallFunction( address=0x2db )
+0x017a    op25_ActorDisable( actor_id=Actor_0x0f )
+0x017c    op25_ActorDisable( actor_id=Actor_0x10 )
+0x017e    mem[0x40a] = 180 -- op35
+0x0184    -- 0x63( ???=-220, ???=655, ???=-391 ) -- exp0x1
+0x018c    -- 0xA3()
+0x0194    op05_CallFunction( address=0x2db )
+0x0197    op26_Wait( time=90 )
+0x019a    -- 0xFE0E_SoundSetVolume( volume=0, steps=100 )
+0x01a0    op26_Wait( time=40 )
+0x01a3    -- 0x98_MapLoad( field_id=619, value=3 )
+0x01a8    -- 0x5B()
+0x01a9    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x01aa    op00_Return()
+
+Actor_0x01:on_start:
+0x01ab    -- MISSING OPCODE 0x5c

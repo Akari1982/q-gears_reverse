@@ -539,4 +539,95 @@ Actor_0x19:event_0x04:
 
 Actor_0x1a:on_start:
 0x02bd    -- 0xBC_ActorNoModelInit()
-0x02be    -- MISSING OPCODE 0xf9
+0x02be    -- 0xF9()
+0x02c0    -- 0x23()
+0x02c1    op00_Return()
+
+Actor_0x1a:on_update:
+0x02c2    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x2d3 )
+0x02ca    -- 0xC1()
+0x02cd    -- 0xC0( ???=50 )
+0x02d0    op01_JumpTo( address=0x2df )
+0x02d3    -- 0xC2( ???=30 )
+0x02d6    op26_Wait( time=1 )
+0x02d9    -- 0xBF( ???=50 )
+0x02dc    op26_Wait( time=1 )
+0x02df    op01_JumpTo( address=0x2c2 )
+0x02e2    op00_Return()
+
+Actor_0x1a:on_talk:
+0x02e3    op00_Return()
+
+Actor_0x1a:on_push:
+0x02e4    op00_Return()
+
+Actor_0x1b:on_start:
+0x02e5    -- 0xBC_ActorNoModelInit()
+0x02e6    -- 0xF9()
+0x02e8    op00_Return()
+
+Actor_0x1b:on_update:
+0x02e9    -- 0xBF( ???=25 )
+0x02ec    op01_JumpTo( address=0x2e9 )
+0x02ef    op00_Return()
+
+Actor_0x1b:on_talk:
+0x02f0    op00_Return()
+
+Actor_0x1b:on_push:
+0x02f1    op00_Return()
+
+Actor_0x1c:on_start:
+0x02f2    -- 0xBC_ActorNoModelInit()
+0x02f3    -- 0xF9()
+0x02f5    op00_Return()
+
+Actor_0x1c:on_update:
+0x02f6    op00_Return()
+
+Actor_0x1c:on_talk:
+0x02f7    op00_Return()
+
+Actor_0x1c:on_push:
+0x02f8    op00_Return()
+
+Actor_0x1d:on_start:
+0x02f9    -- 0xBC_ActorNoModelInit()
+0x02fa    -- 0xF9()
+0x02fc    op00_Return()
+
+Actor_0x1d:on_update:
+0x02fd    op00_Return()
+
+Actor_0x1d:on_talk:
+0x02fe    op00_Return()
+
+Actor_0x1d:on_push:
+0x02ff    op00_Return()
+
+Actor_0x1e:on_start:
+0x0300    -- 0xBC_ActorNoModelInit()
+0x0301    -- 0xF9()
+0x0303    mem[0x402] = 0 -- op35
+0x0309    op00_Return()
+
+Actor_0x1e:on_update:
+0x030a    op00_Return()
+
+Actor_0x1e:on_talk:
+0x030b    op00_Return()
+
+Actor_0x1e:on_push:
+0x030c    op00_Return()
+
+Actor_0x1e:event_0x04:
+0x030d    opFE8F_ParticleSystemInit1( actor_id=Actor_0x1a, render_settings=2, rot_x=0, rot_y=0 )
+0x0316    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=10, wait=0, ttl=1 )
+0x0320    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x0000, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfc18, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x032f    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x033e    opFE93_ParticleWaitTtl( s_wait=8, var2=2, sprite_id=8, var4=1, var5=2 )
+0x034a    opFE94_ParticleTranslation( trans_x=(vf80)0x07d0, trans_y=(vf40)0x0258, trans_add_x=(vf20)0x0000, trans_add_y=(vf10)0x0000, flag=(flag)0xf0 )
+0x0355    opFE95_ParticleColour( r=(vf80)0x009b, g=(vf40)0x009b, b=(vf20)0x009b, r_add=(vf10)0x0000, g_add=(vf10)0x0000, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x0364    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x036c    opFEBD_ParticleSpawnSettings( settings=0 )
+0x0374    -- MISSING OPCODE 0xFEc8

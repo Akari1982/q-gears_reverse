@@ -18,4 +18,50 @@ unknown = [
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0x2A()
-0x000a    -- MISSING OPCODE 0xFE1e
+0x000a    -- 0xFE1E()
+0x000d    -- 0xFE41()
+0x0011    -- 0xFE41()
+0x0015    -- 0xFE41()
+0x0019    op00_Return()
+
+Actor_0x00:on_update:
+0x001a    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x001b    op00_Return()
+
+Actor_0x00:event_0x04:
+0x001c    op26_Wait( time=15 )
+0x001f    -- 0xFE3C( ???=1, ???=6 )
+0x0025    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0026    -- 0xFE65()
+0x002c    -- 0xFE65()
+0x0032    op26_Wait( time=15 )
+0x0035    -- 0xFE66() -- sound play with volume in slot
+0x003f    -- 0xFE66() -- sound play with volume in slot
+0x0049    op26_Wait( time=15 )
+0x004c    -- 0xFE66() -- sound play with volume in slot
+0x0056    -- 0xFE66() -- sound play with volume in slot
+0x0060    op26_Wait( time=15 )
+0x0063    -- 0xFE66() -- sound play with volume in slot
+0x006d    -- 0xFE66() -- sound play with volume in slot
+0x0077    op26_Wait( time=15 )
+0x007a    -- 0xFE66() -- sound play with volume in slot
+0x0084    -- 0xFE66() -- sound play with volume in slot
+0x008e    op26_Wait( time=15 )
+0x0091    -- 0xFE66() -- sound play with volume in slot
+0x009b    -- 0xFE66() -- sound play with volume in slot
+0x00a5    op26_Wait( time=15 )
+0x00a8    -- 0xFE66() -- sound play with volume in slot
+0x00b2    -- 0xFE66() -- sound play with volume in slot
+0x00bc    op00_Return()
+
+Actor_0x00:event_0x06:
+0x00bd    -- 0x92()
+
+Actor_0x01:on_start:
+0x00be    -- MISSING OPCODE 0x5c

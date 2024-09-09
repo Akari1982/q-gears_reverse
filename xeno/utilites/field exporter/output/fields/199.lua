@@ -1194,4 +1194,73 @@ Actor_0x1e:on_push:
 
 Actor_0x1f:on_start:
 0x0ba1    -- 0xBC_ActorNoModelInit()
-0x0ba2    -- MISSING OPCODE 0xf9
+0x0ba2    -- 0xF9()
+0x0ba4    -- 0xFE1C()
+0x0bad    -- 0x2A()
+0x0bae    -- 0xFE07( ???=0x1 )
+0x0bb1    op00_Return()
+
+Actor_0x1f:on_update:
+0x0bb2    mem[0x422] = opA8_Random( max=5 )
+0x0bb7    mem[0x420] = opA8_Random( max=1 )
+0x0bbc    mem[0x424] = opA8_Random( max=1 )
+0x0bc1    mem[0x428] = opA8_Random( max=1 )
+0x0bc6    op02_JumpToConditional( val1=(s)mem[0x428], val2=0, condition="val1 == val2", address_if_false=0xbd4 )
+0x0bce    opDE_VariableMultiply( address=0x422, value=(vf40)0xffff, flag=0x40 )
+0x0bd4    mem[0x428] = opA8_Random( max=1 )
+0x0bd9    op02_JumpToConditional( val1=(s)mem[0x428], val2=0, condition="val1 == val2", address_if_false=0xbe7 )
+0x0be1    opDE_VariableMultiply( address=0x420, value=(vf40)0xffff, flag=0x40 )
+0x0be7    mem[0x428] = opA8_Random( max=1 )
+0x0bec    op02_JumpToConditional( val1=(s)mem[0x428], val2=0, condition="val1 == val2", address_if_false=0xbfa )
+0x0bf4    opDE_VariableMultiply( address=0x424, value=(vf40)0xffff, flag=0x40 )
+0x0bfa    mem[0x420] += -85 -- op38
+0x0c00    mem[0x422] += 0 -- op38
+0x0c06    mem[0x424] += 250 -- op38
+0x0c0c    -- 0x10()
+0x0c17    mem[0x426] = opA8_Random( max=10 )
+0x0c1c    mem[0x426] += 1 -- op38
+0x0c22    op26_Wait( time=(s)mem[0x426] )
+0x0c25    op00_Return()
+
+Actor_0x1f:on_talk:
+
+Actor_0x1f:on_push:
+0x0c26    op00_Return()
+
+Actor_0x20:on_start:
+0x0c27    -- 0xBC_ActorNoModelInit()
+0x0c28    -- 0xF9()
+0x0c2a    -- 0xFE1C()
+0x0c33    -- 0x2A()
+0x0c34    op00_Return()
+
+Actor_0x20:on_update:
+0x0c35    -- 0xBF( ???=256 )
+0x0c38    op00_Return()
+
+Actor_0x20:on_talk:
+
+Actor_0x20:on_push:
+0x0c39    op00_Return()
+
+Actor_0x21:on_start:
+0x0c3a    -- 0xBC_ActorNoModelInit()
+0x0c3b    -- 0xF9()
+0x0c3d    -- 0xFE1C()
+0x0c46    -- 0x2A()
+0x0c47    op00_Return()
+
+Actor_0x21:on_update:
+0x0c48    -- 0xC0( ???=256 )
+0x0c4b    op00_Return()
+
+Actor_0x21:on_talk:
+
+Actor_0x21:on_push:
+0x0c4c    op00_Return()
+
+Actor_0x22:on_start:
+0x0c4d    -- 0xBC_ActorNoModelInit()
+0x0c4e    -- 0xF9()
+0x0c50    -- 0xFE1C()
+0x0c59    -- MISSING OPCODE 0xFE5e

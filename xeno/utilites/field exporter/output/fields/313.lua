@@ -666,4 +666,13 @@ Actor_0x1b:on_start:
 0x0466    op24_ActorEnable( actor_id=Actor_0x0d )
 0x0468    op25_ActorDisable( actor_id=Actor_0x13 )
 0x046a    op29_ActorTurnOff( actor_id=Actor_0x12 )
-0x046c    -- MISSING OPCODE 0xFE9f
+0x046c    -- 0xFE9F()
+0x0471    op01_JumpTo( address=0x476 )
+0x0474    op29_ActorTurnOff( actor_id=Actor_0x14 )
+0x0476    -- 0x2A()
+0x0477    op00_Return()
+
+Actor_0x1b:on_update:
+0x0478    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x57d )
+0x0480    opC6_ExpandRun() -- exp0x20
+0x0481    -- MISSING OPCODE 0xFEde

@@ -55,4 +55,36 @@ Actor_0x01:on_start:
 0x00ea    -- 0xBC_ActorNoModelInit()
 0x00eb    -- 0x2A()
 0x00ec    -- 0xFE19( char_id=0x3 )
-0x00ef    -- MISSING OPCODE 0xFE9f
+0x00ef    -- 0xFE9F()
+0x00f4    -- 0xFE18()
+0x00f9    -- 0xFEA1( ???=2, ???=3 )
+0x00ff    op00_Return()
+
+Actor_0x01:on_update:
+0x0100    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x1b3 )
+0x0108    -- 0xFE54()
+0x010a    -- 0xFE3F()
+0x0112    -- 0xFE3D()
+0x011d    mem[0x402] = true -- op36
+0x0120    -- 0xB6( ???=256, ???=0 )
+0x0125    -- 0x75( ???=27 )
+0x0128    op99()
+0x0129    -- 0x60()
+0x012a    -- 0x64() -- exp0x1
+0x012b    -- 0x63( ???=0, ???=0, ???=-255 ) -- exp0x1
+0x0133    -- 0xA3()
+0x013b    opAC_MoveCamera( control=0x80, steps=0 )
+0x013f    opAC_MoveCamera( control=0x81, steps=0 )
+0x0143    opEF_MoveCameraSync()
+0x0146    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x0, flags=CLOSE_OFF_SCREEN )
+0x014c    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1, flags=CLOSE_OFF_SCREEN )
+0x0152    -- 0x64() -- exp0x1
+0x0153    -- 0xA3()
+0x015b    opAC_MoveCamera( control=0x81, steps=200 )
+0x015f    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x04, priority=0x03 )
+0x0162    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x2, flags=CLOSE_OFF_SCREEN )
+0x0168    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x3, flags=CLOSE_OFF_SCREEN )
+0x016e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x4, flags=CLOSE_OFF_SCREEN )
+0x0174    -- 0x87_SetProgress( progress=54 )
+0x0177    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x017d    -- MISSING OPCODE 0xFEbc

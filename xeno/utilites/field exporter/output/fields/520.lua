@@ -250,4 +250,30 @@ Actor_0x0a:on_push:
 Actor_0x0a:event_0x04:
 0x01ee    mem[0x416] = 127 -- op35
 0x01f4    op02_JumpToConditional( val1=(s)mem[0x416], val2=64, condition="val1 > val2", address_if_false=0x211 )
-0x01fc    -- MISSING OPCODE 0xFE63
+0x01fc    -- 0xFE63()
+0x0202    mem[0x416] -= 1 -- op3d
+0x0205    mem[0x48] = (s)mem[0x416] -- op35
+0x020b    op26_Wait( time=3 )
+0x020e    op01_JumpTo( address=0x1f4 )
+0x0211    op00_Return()
+
+Actor_0x0b:on_start:
+0x0212    -- 0xBC_ActorNoModelInit()
+0x0213    -- 0xF8()
+0x0217    -- 0xF8()
+0x021b    -- 0x18()
+0x0220    -- 0x19_ActorSetPosition( x=(vf80)0xff78, z=(vf40)0xff78, flag=(flag)0xc0 )
+0x0226    op00_Return()
+
+Actor_0x0b:on_update:
+0x0227    op00_Return()
+
+Actor_0x0b:on_talk:
+0x0228    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x03 )
+0x022b    op99()
+0x022c    mem[0x43c] = 2560 -- op35
+0x0232    mem[0x43e] = 80 -- op35
+0x0238    op05_CallFunction( address=0x3f7 )
+0x023b    op26_Wait( time=10 )
+0x023e    -- 0x98_MapLoad( field_id=519, value=1 )
+0x0243    -- MISSING OPCODE 0xFE68

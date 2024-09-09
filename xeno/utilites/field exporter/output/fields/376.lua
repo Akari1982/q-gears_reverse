@@ -254,4 +254,21 @@ Actor_0x0e:on_update:
 Actor_0x0e:on_talk:
 0x0135    -- 0xFE54()
 0x0137    op74_SoundPlayFixedVolume( sound_id=70 )
-0x013a    -- MISSING OPCODE 0xd5
+0x013a    -- 0xD5()
+0x013d    mem[0x406] = true -- op36
+0x0140    opF5_MessageShowStatic( text_id=0x1, flags=0 )
+0x0144    op9C_MessageSync()
+0x0145    -- 0xFE65()
+0x014b    op26_Wait( time=50 )
+0x014e    mem[0x406] = false -- op37
+0x0151    opF5_MessageShowStatic( text_id=0x2, flags=0 )
+0x0155    op9C_MessageSync()
+0x0156    op74_SoundPlayFixedVolume( sound_id=119 )
+0x0159    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x04, priority=0x01 )
+0x015c    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x186 )
+0x0161    op02_JumpToConditional( val1=(s)mem[0x14c], val2=74, condition="val1 == val2", address_if_false=0x176 )
+0x0169    -- 0x12()
+0x016d    -- 0x80()
+0x0172    -- 0x5B()
+0x0173    op01_JumpTo( address=0x183 )
+0x0176    -- MISSING OPCODE 0xFE68

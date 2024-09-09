@@ -17,4 +17,44 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0xFE1e
+0x0010    -- 0xFE1E()
+0x0013    -- 0xF7()
+0x0018    -- 0xA4() -- camera angle
+0x001c    -- 0x9D()
+0x0020    op02_JumpToConditional( val1=(s)mem[0x218], val2=4096, condition="val1 & val2", address_if_false=0x2e )
+0x0028    mem[0x410] = 1 -- op35
+0x002e    op02_JumpToConditional( val1=(s)mem[0x218], val2=8192, condition="val1 & val2", address_if_false=0x3c )
+0x0036    mem[0x422] = 1 -- op35
+0x003c    mem[0x404] = 1 -- op35
+0x0042    mem[0x406] = -340 -- op35
+0x0048    mem[0x408] = 310 -- op35
+0x004e    mem[0x40a] = 0 -- op35
+0x0054    mem[0x40c] = 0 -- op35
+0x005a    mem[0x40e] = 777 -- op35
+0x0060    mem[0x416] = 1 -- op35
+0x0066    mem[0x418] = -340 -- op35
+0x006c    mem[0x41a] = -310 -- op35
+0x0072    mem[0x41c] = 0 -- op35
+0x0078    mem[0x41e] = 0 -- op35
+0x007e    mem[0x420] = 1062 -- op35
+0x0084    -- 0x2A()
+0x0085    op00_Return()
+
+Actor_0x00:on_update:
+0x0086    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0087    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0088    mem[0x218] |= 1 << 12 -- op3a
+0x008e    op00_Return()
+
+Actor_0x00:event_0x05:
+0x008f    mem[0x218] |= 1 << 13 -- op3a
+0x0095    op00_Return()
+
+Actor_0x01:on_start:
+0x0096    -- MISSING OPCODE 0x5c

@@ -82,4 +82,9 @@ Actor_0x04:on_update:
 0x0063    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x94 )
 0x006b    -- 0xFE54()
 0x006d    -- 0xFE24()
-0x006f    -- MISSING OPCODE 0xFE43
+0x006f    -- 0xFE43()
+0x0071    -- 0xFE65()
+0x0077    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x03 )
+0x007a    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x04, priority=0x03 )
+0x007d    op26_Wait( time=2 )
+0x0080    -- MISSING OPCODE 0xFE68

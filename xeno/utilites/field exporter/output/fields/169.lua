@@ -168,4 +168,4 @@ function:
 0x02b8    opFEBD_ParticleSpawnSettings( settings=0 )
 0x02c0    opFE96_ParticleCreate()
 0x02c2    op0D_Return()
-0x02c3    -- 0xE0( actor_id=Actor_0x26, ???=(vf80)0x587c, ???=(vf40)0x0a7c, flag=0xaf )
+0x02c3    -- 0xE0( actor_id=Actor_0x2b, ???=(vf80)0x9971, ???=(vf40)0x1332, flag=0xa9 )

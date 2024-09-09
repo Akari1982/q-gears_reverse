@@ -17,4 +17,28 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
-0x0009    -- MISSING OPCODE 0xFE1e
+0x0009    -- 0xFE1E()
+0x000c    -- 0xFE41()
+0x0010    -- 0xFE41()
+0x0014    -- 0xFE41()
+0x0018    -- 0xA0()
+0x001f    mem[0x400] = 0 -- op35
+0x0025    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 )
+0x0030    mem[0x402] = opA8_Random( max=255 )
+0x0035    -- 0xE7( ???=(s)mem[0x402], ???=(s)mem[0x402], ???=(s)mem[0x402] )
+0x003c    op00_Return()
+
+Actor_0x00:on_update:
+0x003d    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x4b )
+0x0045    mem[0x400] = 1 -- op35
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x004b    op00_Return()
+
+Actor_0x00:event_0x04:
+0x004c    op00_Return()
+
+Actor_0x01:on_start:
+0x004d    -- MISSING OPCODE 0x5c

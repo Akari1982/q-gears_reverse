@@ -21,4 +21,29 @@ Actor_0x00:on_start:
 0x0014    -- 0xB6( ???=450, ???=0 )
 0x0019    -- 0xA4() -- camera angle
 0x001d    -- 0x2A()
-0x001e    -- MISSING OPCODE 0xFE1e
+0x001e    -- 0xFE1E()
+0x0021    op00_Return()
+
+Actor_0x00:on_update:
+0x0022    -- 0xFE54()
+0x0024    -- 0x75( ???=255 )
+0x0027    op26_Wait( time=60 )
+0x002a    -- 0xB5() -- camera set direction
+0x002f    -- 0xA4() -- camera angle
+0x0033    -- 0xA2()
+0x0035    op26_Wait( time=60 )
+0x0038    op26_Wait( time=60 )
+0x003b    op26_Wait( time=60 )
+0x003e    op26_Wait( time=60 )
+0x0041    op26_Wait( time=60 )
+0x0044    op26_Wait( time=60 )
+0x0047    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0048    -- 0xFE65()
+0x004e    op00_Return()
+
+Actor_0x01:on_start:
+0x004f    -- MISSING OPCODE 0x5c

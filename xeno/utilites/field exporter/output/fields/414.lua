@@ -17,4 +17,42 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    -- MISSING OPCODE 0xFE1e
+0x0010    -- 0xFE1E()
+0x0013    -- 0xF7()
+0x0018    op02_JumpToConditional( val1=(s)mem[0x218], val2=1024, condition="val1 & val2", address_if_false=0x26 )
+0x0020    mem[0x410] = 1 -- op35
+0x0026    op02_JumpToConditional( val1=(s)mem[0x218], val2=2048, condition="val1 & val2", address_if_false=0x34 )
+0x002e    mem[0x422] = 1 -- op35
+0x0034    mem[0x404] = 1 -- op35
+0x003a    mem[0x406] = -50 -- op35
+0x0040    mem[0x408] = 1448 -- op35
+0x0046    mem[0x40a] = 0 -- op35
+0x004c    mem[0x40c] = 2 -- op35
+0x0052    mem[0x40e] = 1105 -- op35
+0x0058    mem[0x416] = 1 -- op35
+0x005e    mem[0x418] = 80 -- op35
+0x0064    mem[0x41a] = 1448 -- op35
+0x006a    mem[0x41c] = 0 -- op35
+0x0070    mem[0x41e] = 2 -- op35
+0x0076    mem[0x420] = 1060 -- op35
+0x007c    -- 0x2A()
+0x007d    op00_Return()
+
+Actor_0x00:on_update:
+0x007e    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x007f    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0080    mem[0x218] |= 1 << 10 -- op3a
+0x0086    op00_Return()
+
+Actor_0x00:event_0x05:
+0x0087    mem[0x218] |= 1 << 11 -- op3a
+0x008d    op00_Return()
+
+Actor_0x01:on_start:
+0x008e    -- MISSING OPCODE 0x5c

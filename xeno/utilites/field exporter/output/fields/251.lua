@@ -122,4 +122,20 @@ Actor_0x03:on_talk:
 0x0118    op01_JumpTo( address=0x21d )
 0x011b    -- 0xFE54()
 0x011d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x1, flags=FORCE_TOP )
-0x0123    -- MISSING OPCODE 0xFE43
+0x0123    -- 0xFE43()
+0x0125    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x00 )
+0x0128    mem[0x184] |= 1 << 1 -- op3a
+0x012e    -- 0xA2()
+0x0130    op99()
+0x0131    -- 0xF0( ???=0x404, ???=0x402, ???=0x406 )
+0x0138    op02_JumpToConditional( val1=(s)mem[0x404], val2=1700, condition="val1 > val2", address_if_false=0x15a )
+0x0140    op02_JumpToConditional( val1=(s)mem[0x404], val2=3800, condition="val1 < val2", address_if_false=0x151 )
+0x0148    mem[0x404] += 32 -- op38
+0x014e    op01_JumpTo( address=0x157 )
+0x0151    mem[0x404] -= 32 -- op39
+0x0157    op01_JumpTo( address=0x160 )
+0x015a    mem[0x404] -= 32 -- op39
+0x0160    mem[0x404] &= 4095 -- op3e
+0x0166    op02_JumpToConditional( val1=(s)mem[0x402], val2=30, condition="val1 < val2", address_if_false=0x174 )
+0x016e    mem[0x402] += 3 -- op38
+0x0174    -- MISSING OPCODE 0xeb
