@@ -2021,6 +2021,69 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x28:
+                    {
+                        exp->Log( "-- 0xFE28()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x29:
+                    {
+                        exp->Log( "-- 0xFE29()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x2a:
+                    {
+                        exp->Log( "-- 0xFE2A()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x2b:
+                    {
+                        exp->Log( "-- 0xFE2B()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x2c:
+                    {
+                        exp->Log( "-- 0xFE2C()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x30:
+                    {
+                        exp->Log( "-- 0xFE30()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x31:
+                    {
+                        exp->Log( "-- 0xFE31()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x32:
+                    {
+                        exp->Log( "-- 0xFE32()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x33:
+                    {
+                        exp->Log( "-- 0xFE33()" );
+                        pointer += 5;
+                    }
+                    break;
+
                     case 0x34:
                     {
                         exp->Log( "-- 0xFE34()" );
@@ -2046,6 +2109,20 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE37()" );
                         pointer += 6;
+                    }
+                    break;
+
+                    case 0x38:
+                    {
+                        exp->Log( "-- 0xFE38()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0x39:
+                    {
+                        exp->Log( "-- 0xFE39()" );
+                        pointer += 3;
                     }
                     break;
 
@@ -2091,6 +2168,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x40:
+                    {
+                        exp->Log( "-- 0xFE40()" );
+                        pointer += 7;
+                    }
+                    break;
+
                     case 0x41:
                     {
                         exp->Log( "-- 0xFE41()" );
@@ -2108,6 +2192,13 @@ ScriptFile::GetScripts( const std::string& path )
                     case 0x43:
                     {
                         exp->Log( "-- 0xFE43()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0x44:
+                    {
+                        exp->Log( "-- 0xFE44()" );
                         pointer += 1;
                     }
                     break;
