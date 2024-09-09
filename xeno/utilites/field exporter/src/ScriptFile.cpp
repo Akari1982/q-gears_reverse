@@ -2315,6 +2315,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x57:
+                    {
+                        exp->Log( "-- 0xFE57()" );
+                        pointer += 1;
+                    }
+                    break;
+
                     case 0x58:
                     {
                         exp->Log( "-- 0xFE58()" );
@@ -2512,10 +2519,31 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x83:
+                    {
+                        exp->Log( "-- 0xFE83()" );
+                        pointer += 3;
+                    }
+                    break;
+
                     case 0x84:
                     {
                         exp->Log( "-- 0xFE84()" );
                         pointer += 9;
+                    }
+                    break;
+
+                    case 0x85:
+                    {
+                        exp->Log( "-- 0xFE85()" );
+                        pointer += 3;
+                    }
+                    break;
+
+                    case 0x86:
+                    {
+                        exp->Log( "-- 0xFE86()" );
+                        pointer += 2;
                     }
                     break;
 
@@ -2701,6 +2729,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xa3:
+                    {
+                        exp->Log( "-- 0xFEA3()" );
+                        pointer += 2;
+                    }
+                    break;
+
                     case 0xa4:
                     {
                         exp->Log( "-- 0xFEA4()" );
@@ -2726,6 +2761,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFEAA()" );
                         pointer += 2;
+                    }
+                    break;
+
+                    case 0xaf:
+                    {
+                        exp->Log( "-- 0xFEAF()" );
+                        pointer += 0x12;
                     }
                     break;
 
@@ -2808,6 +2850,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xcf:
+                    {
+                        exp->Log( "-- 0xFECF()" );
+                        pointer += 5;
+                    }
+                    break;
+
                     case 0xd0:
                     {
                         exp->Log( "-- 0xFED0()" );
@@ -2826,6 +2875,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFED2()" );
                         pointer += 3;
+                    }
+                    break;
+
+                    case 0xda:
+                    {
+                        exp->Log( "-- 0xFEDA()" );
+                        pointer += 1;
                     }
                     break;
 
