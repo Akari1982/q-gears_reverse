@@ -794,6 +794,13 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x5c:
+            {
+                exp->Log( "-- 0x5C()" );
+                pointer += 3;
+            }
+            break;
+
             case 0x5d:
             {
                 exp->Log( "op5D_SpritePlayAnim2( anim_id=" + GetU8Variable( pointer + 1 ) + " )" );
@@ -1645,6 +1652,14 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0xeb:
+            {
+                exp->Log( "-- 0xEB()" );
+                pointer += 0x14;
+            }
+            break;
+
+
             case 0xec:
             {
                 exp->Log( "-- 0xEC( ???=" + GetU8Variable( pointer + 1 ) + ", ???=" + GetVF80Variable( pointer + 2 ) + ", ???=" + GetVF40Variable( pointer + 4 ) + ", ???=" + GetVF20Variable( pointer + 6 ) + ", flag=" + GetU8Variable( pointer + 8 ) + ", ???=" + GetU16Variable( pointer + 9 ) + ", ???=" + GetU16Variable( pointer + 11 ) + ", ???=" + GetU16Variable( pointer + 13 ) + " )" );
@@ -2434,6 +2449,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x68:
+                    {
+                        exp->Log( "-- 0xFE68()" );
+                        pointer += 6;
+                    }
+                    break;
+
                     case 0x69:
                     {
                         exp->Log( "-- 0xFE69()" );
@@ -2757,6 +2779,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xa9:
+                    {
+                        exp->Log( "-- 0xFEA9()" );
+                        pointer += 7;
+                    }
+                    break;
+
                     case 0xaa:
                     {
                         exp->Log( "-- 0xFEAA()" );
@@ -2797,6 +2826,13 @@ ScriptFile::GetScripts( const std::string& path )
                     case 0xb8:
                     {
                         exp->Log( "-- 0xFEB8()" );
+                        pointer += 4;
+                    }
+                    break;
+
+                    case 0xbc:
+                    {
+                        exp->Log( "-- 0xFEBC()" );
                         pointer += 4;
                     }
                     break;

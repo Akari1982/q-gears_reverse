@@ -150,67 +150,67 @@ else
 ////////////////////////////////
 // field_event_op5C()
 
-V1 = w[800af1f0];
-A0 = 0001;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-8009F7FC	jal    field_event_help_read_v80 [$800ac2c4]
-S4 = V1 + V0;
+entity_id = w[800af1f0];
+struct_138_cur = w[800af54c];
+struct_5c_p = w[800aefe4];
+
+V0 = entity_id * 5с;
+S4 = struct_5c_p + V0;
+
+A0 = 1;
+field_event_help_read_v80();
 S0 = V0;
-V0 = S0 < 0003;
-8009F80C	bne    v0, zero, L9f818 [$8009f818]
-8009F810	nop
-S0 = 0002;
 
-L9f818:	; 8009F818
-V0 = w[800af1f0];
-V1 = S0 << 02;
-8009F824	lui    at, $8007
-AT = AT + V1;
-[AT + f020] = w(V0);
-V0 = 80061c20;
-S3 = V1 + V0;
-A0 = w[S3 + 0000];
-S1 = 00ff;
-8009F844	beq    a0, s1, L9fa04 [$8009fa04]
-S2 = 0001;
-8009F84C	jal    $func1ab84
-8009F850	nop
-8009F854	beq    v0, s1, L9fa04 [$8009fa04]
+if( S0 >= 3 ) S0 = 2;
+
+[8006f020 + S0 * 4] = w(entity_id);
+
+A0 = w[80061c20 + S0 * 4];
+
+S2 = 1;
+
+if( A0 == ff )
+{
+    field_event_opBC_no_sprite_init();
+
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 2);
+    [struct_138_cur + 4] = w(w[struct_138_cur + 4] | 0800);
+    return;
+}
+
+func1ab84();
+
+if( V0 == ff )
+{
+    field_event_opBC_no_sprite_init();
+
+    [struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 2);
+    [struct_138_cur + 4] = w(w[struct_138_cur + 4] | 0800);
+    return;
+}
+
 A0 = S0;
-A1 = SP + 0020;
-A2 = SP + 0024;
-8009F864	jal    func9f6e8 [$8009f6e8]
-A3 = SP + 0028;
-V0 = w[SP + 0020];
-A1 = w[800af54c];
-A0 = w[8004e9f0];
-V1 = V0 >> 0e;
-V1 = V1 & 0003;
-A0 = A0 & 0fff;
-V0 = V0 & 3fff;
-8009F890	beq    a0, v0, L9f8a8 [$8009f8a8]
-[A1 + 0010] = h(V1);
-S2 = 0;
-[SP + 0024] = w(0);
-[SP + 0028] = w(0);
-[A1 + 0010] = h(0);
+A1 = SP + 20;
+A2 = SP + 24;
+A3 = SP + 28;
+func9f6e8();
 
-L9f8a8:	; 8009F8A8
+[struct_138_cur + 10] = h((w[SP + 20] >> e) & 0003);
+
+if( ( w[8004e9f0] & 0fff ) != ( w[SP + 20] & 3fff ) )
+{
+    S2 = 0;
+    [SP + 24] = w(0);
+    [SP + 28] = w(0);
+    [struct_138_cur + 10] = h(0);
+}
+
 V0 = w[80059a38];
-8009F8B0	nop
-V0 = V0 + S0;
-V0 = bu[V0 + 22b1];
-8009F8BC	nop
+V0 = bu[V0 + 22b1 + S0];
 8009F8C0	bne    v0, zero, L9f8d8 [$8009f8d8]
-V0 = 0007;
-V1 = w[S3 + 0000];
-8009F8CC	nop
-8009F8D0	bne    v1, v0, L9f8e0 [$8009f8e0]
+
+V1 = w[80061c20 + S0 * 4];
+8009F8D0	bne    v1, 7, L9f8e0 [$8009f8e0]
 
 L9f8d8:	; 8009F8D8
 S2 = 0;
@@ -218,7 +218,7 @@ S2 = 0;
 L9f8e0:	; 8009F8E0
 [S4 + 58] = h((hu[S4 + 58] & f07f) | 0200);
 
-A0 = w[800af1f0];
+A0 = entity_id;
 A1 = S0;
 A2 = w[80059aa4 + A1 * 4];
 A3 = 1;
@@ -227,97 +227,34 @@ A5 = A1;
 A6 = 1;
 field_sprite_init();
 
-V1 = w[800af1f0];
-8009F928	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = hu[V0 + 0058];
-8009F950	nop
-V1 = V1 & ffdf;
-[V0 + 0058] = h(V1);
-V1 = w[8004e9f0];
-V0 = w[SP + 0020];
-V1 = V1 & 0fff;
-V0 = V0 & 3fff;
-8009F970	beq    v1, v0, L9f988 [$8009f988]
-8009F974	nop
-V0 = w[800af54c];
-8009F980	nop
-[V0 + 0010] = h(0);
+[struct_5c_p + entity_id * 5с + 58] = h(hu[struct_5c_p + entity_id * 5с + 58] & ffdf);
 
-L9f988:	; 8009F988
-A0 = w[SP + 0024];
-A1 = w[SP + 0028];
-8009F990	jal    set_position_by_x_z [$8009db04]
-8009F994	nop
-8009F998	jal    funca0224 [$800a0224]
-8009F99C	nop
-V0 = w[800af54c];
-8009F9A8	nop
-V1 = w[V0 + 0000];
-8009F9B0	addiu  a0, zero, $fcff (=-$301)
-V1 = V1 | 0400;
-V1 = V1 & A0;
-8009F9BC	bne    s2, zero, L9fa34 [$8009fa34]
-[V0 + 0000] = w(V1);
-V1 = w[800af1f0];
-8009F9CC	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V1 = w[800aefe4];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V1 = hu[V0 + 0058];
-8009F9F4	nop
-V1 = V1 | 0020;
-8009F9FC	j      L9fa34 [$8009fa34]
-[V0 + 0058] = h(V1);
+if( ( w[8004e9f0] & 0fff ) != ( w[SP + 20] & 3fff ) )
+{
+    [struct_138_cur + 10] = h(0);
+}
 
-L9fa04:	; 8009FA04
-8009FA04	jal    field_event_opBC_no_sprite_init [$800a02cc]
-8009FA08	nop
-V0 = w[800af54c];
-8009FA14	nop
-V1 = hu[V0 + 00cc];
-A0 = w[V0 + 0004];
-V1 = V1 + 0002;
-A0 = A0 | 0800;
-[V0 + 00cc] = h(V1);
-8009FA2C	j      L9fa90 [$8009fa90]
-[V0 + 0004] = w(A0);
+A0 = w[SP + 24];
+A1 = w[SP + 28];
+set_position_by_x_z();
 
-L9fa34:	; 8009FA34
-A0 = w[800af54c];
-V0 = h[800af028];
-V1 = h[A0 + 0010];
-8009FA48	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < V1;
-8009FA50	beq    v0, zero, L9fa64 [$8009fa64]
-8009FA54	nop
-[A0 + 0010] = h(0);
-A0 = w[800af54c];
+funca0224();
 
-L9fa64:	; 8009FA64
-8009FA64	nop
-V0 = w[A0 + 0000];
-8009FA6C	lui    v1, $0002
-V0 = V0 | V1;
-[A0 + 0000] = w(V0);
-V0 = w[A0 + 0004];
-V1 = hu[A0 + 00cc];
-V0 = V0 | 0c00;
-V1 = V1 + 0003;
-[A0 + 0004] = w(V0);
-[A0 + 00cc] = h(V1);
+[struct_138_cur + 0] = w((w[struct_138_cur + 0] | 00000400) & fffffcff);
 
-L9fa90:	; 8009FA90
+if( S2 == 0 )
+{
+    [struct_5c_p + entity_id * 5с + 58] = h(hu[struct_5c_p + entity_id * 5с + 58] | 0020);
+}
+
+if( ( h[800af028] - 1 ) < h[struct_138_cur + 10] )
+{
+    [struct_138_cur + 10] = h(0);
+}
+
+[struct_138_cur + 0] = w(w[struct_138_cur + 0] | 00020000);
+[struct_138_cur + 4] = w(w[struct_138_cur + 4] | 00000c00);
+[struct_138_cur + cc] = h(hu[struct_138_cur + cc] + 3);
 ////////////////////////////////
 
 
