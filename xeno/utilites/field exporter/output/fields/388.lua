@@ -246,4 +246,12 @@ Actor_0x00:on_push:
 0x03b9    op00_Return()
 
 Actor_0x01:on_start:
-0x03ba    -- MISSING OPCODE 0x5c
+0x03ba    -- 0x5C()
+0x03bd    op00_Return()
+
+Actor_0x01:on_update:
+0x03be    -- 0xA7()
+0x03bf    op00_Return()
+
+Actor_0x01:on_talk:
+0x03c0    -- MISSING OPCODE 0xFE1f

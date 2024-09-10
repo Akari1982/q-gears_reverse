@@ -318,4 +318,86 @@ Actor_0x04:on_update:
 0x0315    -- 0x5A()
 0x0316    -- 0xFE24()
 0x0318    -- 0xFE43()
-0x031a    -- MISSING OPCODE 0xFE68
+0x031a    -- 0xFE68()
+0x0321    op26_Wait( time=10 )
+0x0324    -- 0xFE44()
+0x0326    -- 0x67()
+0x032a    -- 0x67()
+0x032e    mem[0x1c6] |= 1 << 5 -- op3a
+0x0334    mem[0x400] = false -- op37
+0x0337    -- 0x28()
+0x0339    -- 0xFE54()
+0x033b    -- 0x5B()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x033c    op00_Return()
+
+Actor_0x05:on_start:
+0x033d    -- 0xBC_ActorNoModelInit()
+0x033e    -- 0x2A()
+0x033f    op00_Return()
+
+Actor_0x05:on_update:
+0x0340    -- 0xC9()
+0x0344    -- 0x85()
+0x0349    op02_JumpToConditional( val1=(s)mem[0x404], val2=1, condition="val1 == val2", address_if_false=0x365 )
+0x0351    -- 0xFE54()
+0x0353    -- 0xFE24()
+0x0355    -- 0xFE43()
+0x0357    -- 0xFE68()
+0x035e    -- 0xFE44()
+0x0360    -- 0xFE54()
+0x0362    op01_JumpTo( address=0x376 )
+0x0365    -- 0xFE54()
+0x0367    -- 0xFE24()
+0x0369    -- 0xFE43()
+0x036b    -- 0xFE68()
+0x0372    -- 0xFE44()
+0x0374    -- 0xFE54()
+0x0376    op01_JumpTo( address=0x38e )
+0x0379    -- 0xFE54()
+0x037b    -- 0xFE17()
+0x037f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x1a, flags=0 )
+0x0385    -- 0xFE68()
+0x038c    -- 0xFE54()
+0x038e    op00_Return()
+
+Actor_0x05:on_talk:
+
+Actor_0x05:on_push:
+0x038f    op00_Return()
+
+Actor_0x06:on_start:
+0x0390    -- 0xFE15( ???=0, ???=1 )
+0x0396    op00_Return()
+
+Actor_0x06:on_update:
+0x0397    op02_JumpToConditional( val1=(s)mem[0x40c], val2=0, condition="val1 == val2", address_if_false=0x41d )
+0x039f    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x3ac )
+0x03a7    op29_ActorTurnOff( actor_id=Actor_0x06 )
+0x03a9    op01_JumpTo( address=0x41a )
+0x03ac    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x3d7 )
+0x03b4    -- 0x19_ActorSetPosition( x=(vf80)0xfecb, z=(vf40)0xff84, flag=(flag)0xc0 )
+0x03ba    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03c0    op05_CallFunction( address=0x964 )
+0x03c3    op26_Wait( time=90 )
+0x03c6    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03cc    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03d2    op29_ActorTurnOff( actor_id=Actor_0x06 )
+0x03d4    op01_JumpTo( address=0x41a )
+0x03d7    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x40e )
+0x03df    -- 0x19_ActorSetPosition( x=(vf80)0x007c, z=(vf40)0x0135, flag=(flag)0xc0 )
+0x03e5    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03eb    op05_CallFunction( address=0x964 )
+0x03ee    op26_Wait( time=90 )
+0x03f1    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03f7    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x03fd    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0403    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0409    op29_ActorTurnOff( actor_id=Actor_0x06 )
+0x040b    op01_JumpTo( address=0x41a )
+0x040e    -- 0x19_ActorSetPosition( x=(vf80)0x04e3, z=(vf40)0x04e9, flag=(flag)0xc0 )
+0x0414    op69_ActorSetRotation( rot=1 )
+0x0417    -- MISSING OPCODE 0xFEc3

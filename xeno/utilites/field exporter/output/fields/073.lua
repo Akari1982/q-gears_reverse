@@ -87,4 +87,5 @@ Actor_0x01:on_update:
 0x016e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x4, flags=CLOSE_OFF_SCREEN )
 0x0174    -- 0x87_SetProgress( progress=54 )
 0x0177    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x5, flags=CLOSE_OFF_SCREEN )
-0x017d    -- MISSING OPCODE 0xFEbc
+0x017d    -- 0xFEBC()
+0x0182    -- MISSING OPCODE 0xFEba

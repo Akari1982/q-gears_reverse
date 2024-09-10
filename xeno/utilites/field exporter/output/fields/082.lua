@@ -725,4 +725,4 @@ function:
 0x080e    opFE42( ???=1 )
 0x0812    opFE42( ???=2 )
 0x0816    op0D_Return()
-0x0817    -- 0xE0( actor_id=self, ???=(vf80)0x015e, ???=(vf40)0x0000, flag=0xe0 )
+0x0817    -- 0xE0( actor_id=Actor_0x80, ???=(vf80)0x80c8, ???=(vf40)0x8000, flag=0x0 )

@@ -205,4 +205,75 @@ Actor_0x0c:on_talk:
 
 Actor_0x0c:on_push:
 0x00c2    -- 0xFE54()
-0x00c4    -- MISSING OPCODE 0xFE68
+0x00c4    -- 0xFE68()
+0x00cb    -- 0x98_MapLoad( field_id=386, value=0 )
+0x00d0    op00_Return()
+
+Actor_0x0d:on_start:
+0x00d1    -- 0xBC_ActorNoModelInit()
+0x00d2    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x00b4, flag=(flag)0xc0 )
+0x00d8    -- 0xF8()
+0x00dc    -- 0xF8()
+0x00e0    -- 0x18()
+0x00e5    op20_ActorSetFlags0( flags=1 )
+0x00e8    op00_Return()
+
+Actor_0x0d:on_update:
+0x00e9    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00ea    op00_Return()
+
+Actor_0x0d:on_push:
+0x00eb    -- 0xFE54()
+0x00ed    -- 0xFE68()
+0x00f4    -- 0x98_MapLoad( field_id=368, value=0 )
+0x00f9    op00_Return()
+
+Actor_0x0e:on_start:
+0x00fa    -- 0xBC_ActorNoModelInit()
+0x00fb    -- 0x2A()
+0x00fc    -- 0xFE1B()
+0x0102    op00_Return()
+
+Actor_0x0e:on_update:
+0x0103    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x0104    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x0105    mem[0x402] = false -- op37
+0x0108    op02_JumpToConditional( val1=(s)mem[0x402], val2=28, condition="val1 < val2", address_if_false=0x120 )
+0x0110    opC6_ExpandRun() -- exp0x20
+0x0111    -- 0xFE1B()
+0x0117    op26_Wait( time=0 )
+0x011a    mem[0x402] += 1 -- op3c
+0x011d    op01_JumpTo( address=0x108 )
+0x0120    op00_Return()
+
+Actor_0x0f:on_start:
+0x0121    -- 0xBC_ActorNoModelInit()
+0x0122    -- 0x2A()
+0x0123    -- 0xFE1B()
+0x0129    op00_Return()
+
+Actor_0x0f:on_update:
+0x012a    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x012b    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x012c    mem[0x404] = false -- op37
+0x012f    op02_JumpToConditional( val1=(s)mem[0x404], val2=28, condition="val1 < val2", address_if_false=0x147 )
+0x0137    opC6_ExpandRun() -- exp0x20
+0x0138    -- 0xFE1B()
+0x013e    op26_Wait( time=0 )
+0x0141    mem[0x404] += 1 -- op3c
+0x0144    op01_JumpTo( address=0x12f )
+0x0147    op00_Return()

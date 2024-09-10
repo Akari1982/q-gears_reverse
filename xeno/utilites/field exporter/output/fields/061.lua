@@ -375,14 +375,14 @@ Actor_0x07:event_0x05:
 0x0429    -- opFE2700()
 0x042e    -- opFE2701()
 0x0430    op01_JumpTo( address=0x27fe )
-0x0433    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=mem[0x2602], condition="val1 <= val2", address_if_false=0xf280 )
+0x0433    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=(s)mem[0x2602], condition="val1 <= val2", address_if_false=0xf280 )
 0x043b    op00_Return()
 0x043c    -- 0x80()
 0x0441    op00_Return()
 0x0442    -- 0x80()
 0x0447    -- 0xFE40()
 0x044f    op00_Return()
-0x0450    -- 0x98_MapLoad( field_id=(s)mem[0x1c2c], value=(s)mem[0x1926] )
+0x0450    -- 0x98_MapLoad( field_id=(s)mem[0x1c2c], value=mem[0x1926] )
 0x0455    -- 0x80()
 0x045a    op03_MessageShowFixed2( text_id=0xfe80, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_BOTTOM|NO_WINDOW )
 0x045e    mem[0x281] -= 1 -- op3d
@@ -553,4 +553,4 @@ Actor_0x08:on_talk:
 
 Actor_0x08:on_push:
 0x0911    op00_Return()
-0x0912    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7179, ???=(vf40)0x6099, flag=0xe8 )
+0x0912    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x9d7c, ???=(vf40)0x5a91, flag=0x5f )

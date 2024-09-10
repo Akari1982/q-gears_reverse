@@ -418,4 +418,119 @@ Actor_0x14:on_talk:
 0x024c    -- 0xFE54()
 0x024e    op74_SoundPlayFixedVolume( sound_id=119 )
 0x0251    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x04, priority=0x01 )
-0x0254    -- MISSING OPCODE 0xFE68
+0x0254    -- 0xFE68()
+0x025b    -- 0x98_MapLoad( field_id=606, value=1 )
+0x0260    op00_Return()
+
+Actor_0x14:on_push:
+0x0261    op00_Return()
+
+Actor_0x15:on_start:
+0x0262    -- 0xBC_ActorNoModelInit()
+0x0263    -- 0x2A()
+0x0264    op00_Return()
+
+Actor_0x15:on_update:
+0x0265    op00_Return()
+
+Actor_0x15:on_talk:
+
+Actor_0x15:on_push:
+0x0266    op00_Return()
+
+Actor_0x15:event_0x04:
+0x0267    mem[0x400] = false -- op37
+0x026a    op02_JumpToConditional( val1=(s)mem[0x400], val2=14, condition="val1 < val2", address_if_false=0x282 )
+0x0272    opC6_ExpandRun() -- exp0x20
+0x0273    -- 0xFE1B()
+0x0279    op26_Wait( time=0 )
+0x027c    mem[0x400] += 1 -- op3c
+0x027f    op01_JumpTo( address=0x26a )
+0x0282    op00_Return()
+
+Actor_0x16:on_start:
+0x0283    -- 0x0B_InitNPC( (s)mem[0x402] )
+0x0286    -- 0x19_ActorSetPosition( x=(vf80)0x0404, z=(vf40)0x0406, flag=(flag)0x00 )
+0x028c    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x299 )
+0x0294    -- 0x1A()
+0x0296    op01_JumpTo( address=0x2b3 )
+0x0299    op02_JumpToConditional( val1=(s)mem[0x408], val2=1, condition="val1 == val2", address_if_false=0x2a6 )
+0x02a1    -- 0x1A()
+0x02a3    op01_JumpTo( address=0x2b3 )
+0x02a6    op02_JumpToConditional( val1=(s)mem[0x408], val2=2, condition="val1 == val2", address_if_false=0x2b3 )
+0x02ae    -- 0x1A()
+0x02b0    op01_JumpTo( address=0x2b3 )
+0x02b3    op20_ActorSetFlags0( flags=13 )
+0x02b6    -- 0xF8()
+0x02ba    -- 0x18()
+0x02bf    -- 0x1F( ???=0x70 )
+0x02c1    op00_Return()
+
+Actor_0x16:on_update:
+0x02c2    mem[0x40a] = false -- op37
+0x02c5    -- 0xFE99()
+0x02c8    op00_Return()
+
+Actor_0x16:on_talk:
+0x02c9    -- 0xFE99()
+0x02cc    -- 0xFE55()
+0x02ce    -- 0xFE87()
+0x02d0    op00_Return()
+
+Actor_0x16:on_push:
+0x02d1    -- 0xFE99()
+0x02d4    op02_JumpToConditional( val1=(s)mem[0x40a], val2=0, condition="val1 == val2", address_if_false=0x2e2 )
+0x02dc    op74_SoundPlayFixedVolume( sound_id=80 )
+0x02df    mem[0x40a] = true -- op36
+0x02e2    op00_Return()
+
+Actor_0x17:on_start:
+0x02e3    -- 0x0B_InitNPC( (s)mem[0x412] )
+0x02e6    -- 0x19_ActorSetPosition( x=(vf80)0x0414, z=(vf40)0x0416, flag=(flag)0x00 )
+0x02ec    op02_JumpToConditional( val1=(s)mem[0x418], val2=0, condition="val1 == val2", address_if_false=0x2f9 )
+0x02f4    -- 0x1A()
+0x02f6    op01_JumpTo( address=0x313 )
+0x02f9    op02_JumpToConditional( val1=(s)mem[0x418], val2=1, condition="val1 == val2", address_if_false=0x306 )
+0x0301    -- 0x1A()
+0x0303    op01_JumpTo( address=0x313 )
+0x0306    op02_JumpToConditional( val1=(s)mem[0x418], val2=2, condition="val1 == val2", address_if_false=0x313 )
+0x030e    -- 0x1A()
+0x0310    op01_JumpTo( address=0x313 )
+0x0313    op20_ActorSetFlags0( flags=13 )
+0x0316    -- 0xF8()
+0x031a    -- 0x18()
+0x031f    -- 0x1F( ???=0x70 )
+0x0321    op00_Return()
+
+Actor_0x17:on_update:
+0x0322    mem[0x41c] = false -- op37
+0x0325    -- 0xFE4F()
+0x0327    op00_Return()
+
+Actor_0x17:on_talk:
+0x0328    -- 0xFE50()
+0x032a    op02_JumpToConditional( val1=(s)mem[0x41c], val2=0, condition="val1 == val2", address_if_false=0x338 )
+0x0332    op74_SoundPlayFixedVolume( sound_id=95 )
+0x0335    mem[0x41c] = true -- op36
+0x0338    -- 0xFE54()
+0x033a    opB4_FadeOut()
+0x033d    op26_Wait( time=32 )
+0x0340    -- 0xFE56()
+0x0344    -- 0xFE87()
+0x0346    -- 0x5B()
+0x0347    op00_Return()
+
+Actor_0x17:on_push:
+0x0348    -- 0xFE50()
+0x034a    op02_JumpToConditional( val1=(s)mem[0x41c], val2=0, condition="val1 == val2", address_if_false=0x358 )
+0x0352    op74_SoundPlayFixedVolume( sound_id=95 )
+0x0355    mem[0x41c] = true -- op36
+0x0358    op31_JumpIfButtonNotPressed( buttons=Triangle, jump_to=0x36c )
+0x035d    -- 0xFE54()
+0x035f    opB4_FadeOut()
+0x0362    op26_Wait( time=32 )
+0x0365    -- 0xFE56()
+0x0369    -- 0xFE87()
+0x036b    -- 0x5B()
+0x036c    op00_Return()
+0x036d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x4100, flag=0x0 )

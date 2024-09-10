@@ -3030,7 +3030,7 @@ Actor_0x48:event_0x04:
 0x1c6d    -- 0x58()
 0x1c71    mem[0x4a8] += 128 -- op38
 0x1c77    op02_JumpToConditional( val1=(s)mem[0x4a8], val2=0, condition="val1 > val2", address_if_false=0x1ca3 )
-0x1c7f    op02_JumpToConditional( val1=mem[0x502], val2=20, condition="val1 > val2", address_if_false=0x1c8d )
+0x1c7f    op02_JumpToConditional( val1=(s)mem[0x502], val2=20, condition="val1 > val2", address_if_false=0x1c8d )
 0x1c87    mem[0x502] -= 10 -- op39
 0x1c8d    -- 0xFE66() -- sound play with volume in slot
 0x1c97    mem[0x4a8] -= 4096 -- op39

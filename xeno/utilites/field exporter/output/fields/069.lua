@@ -71,4 +71,9 @@ Actor_0x00:on_push:
 0x010d    op00_Return()
 
 Actor_0x01:on_start:
-0x010e    -- MISSING OPCODE 0x5c
+0x010e    -- 0x5C()
+0x0111    op00_Return()
+
+Actor_0x01:on_update:
+0x0112    opC6_ExpandRun() -- exp0x20
+0x0113    -- MISSING OPCODE 0xFEc1

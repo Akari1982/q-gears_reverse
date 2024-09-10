@@ -707,4 +707,85 @@ Actor_0x15:on_talk:
 0x05ff    -- 0x5A()
 0x0600    op01_JumpTo( address=0x5f7 )
 0x0603    -- 0x27( actor_id=Actor_0x19 )
-0x0605    -- MISSING OPCODE 0xFE68
+0x0605    -- 0xFE68()
+0x060c    -- 0x98_MapLoad( field_id=157, value=0 )
+0x0611    -- 0x5B()
+
+Actor_0x15:on_push:
+0x0612    op00_Return()
+
+Actor_0x16:on_start:
+0x0613    -- 0xBC_ActorNoModelInit()
+0x0614    -- 0x2A()
+0x0615    op00_Return()
+
+Actor_0x16:on_update:
+
+Actor_0x16:on_talk:
+
+Actor_0x16:on_push:
+0x0616    op00_Return()
+
+Actor_0x16:event_0x04:
+0x0617    -- 0xC4()
+0x0619    op00_Return()
+
+Actor_0x17:on_start:
+0x061a    -- 0xBC_ActorNoModelInit()
+0x061b    -- 0x2A()
+0x061c    op00_Return()
+
+Actor_0x17:on_update:
+
+Actor_0x17:on_talk:
+
+Actor_0x17:on_push:
+0x061d    op00_Return()
+
+Actor_0x17:event_0x04:
+0x061e    -- 0xC4()
+0x0620    op00_Return()
+
+Actor_0x18:on_start:
+0x0621    -- 0xBC_ActorNoModelInit()
+0x0622    -- 0x2A()
+0x0623    -- 0x86_ProgressNotEqualJumpTo( value=201, jump=0x62b )
+0x0628    op01_JumpTo( address=0x639 )
+0x062b    op29_ActorTurnOff( actor_id=Actor_0x10 )
+0x062d    op29_ActorTurnOff( actor_id=Actor_0x11 )
+0x062f    op29_ActorTurnOff( actor_id=Actor_0x12 )
+0x0631    op29_ActorTurnOff( actor_id=Actor_0x13 )
+0x0633    op29_ActorTurnOff( actor_id=Actor_0x14 )
+0x0635    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x0637    op29_ActorTurnOff( actor_id=Actor_0x0f )
+
+Actor_0x18:on_update:
+
+Actor_0x18:on_talk:
+
+Actor_0x18:on_push:
+0x0639    op00_Return()
+
+Actor_0x19:on_start:
+0x063a    -- 0xBC_ActorNoModelInit()
+0x063b    -- 0x2A()
+0x063c    -- 0x23()
+0x063d    -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x645 )
+0x0642    op01_JumpTo( address=0x647 )
+0x0645    op29_ActorTurnOff( actor_id=Actor_0x19 )
+0x0647    -- 0x2A()
+0x0648    op02_JumpToConditional( val1=(s)mem[0xae], val2=0, condition="val1 == val2", address_if_false=0x652 )
+0x0650    op29_ActorTurnOff( actor_id=Actor_0x19 )
+0x0652    op02_JumpToConditional( val1=(s)mem[0xae], val2=6, condition="val1 == val2", address_if_false=0x65c )
+0x065a    op29_ActorTurnOff( actor_id=Actor_0x19 )
+0x065c    op00_Return()
+
+Actor_0x19:on_update:
+0x065d    -- 0x86_ProgressNotEqualJumpTo( value=70, jump=0x665 )
+0x0662    op01_JumpTo( address=0x666 )
+0x0665    op00_Return()
+0x0666    -- 0xFB()
+0x066b    op02_JumpToConditional( val1=mem[0xa], val2=0, condition="val1 == val2", address_if_false=0x7a6 )
+0x0673    mem[0x400] = true -- op36
+0x0676    -- 0xFE54()
+0x0678    -- MISSING OPCODE 0xFE0b

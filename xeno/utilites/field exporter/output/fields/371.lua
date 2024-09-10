@@ -204,4 +204,78 @@ Actor_0x0c:on_talk:
 0x00c1    -- 0xFE54()
 0x00c3    op74_SoundPlayFixedVolume( sound_id=119 )
 0x00c6    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x01 )
-0x00c9    -- MISSING OPCODE 0xFE68
+0x00c9    -- 0xFE68()
+0x00d0    -- 0x98_MapLoad( field_id=370, value=1 )
+0x00d5    op00_Return()
+
+Actor_0x0c:on_push:
+0x00d6    op00_Return()
+
+Actor_0x0d:on_start:
+0x00d7    -- 0xBC_ActorNoModelInit()
+0x00d8    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0097, flag=(flag)0xc0 )
+0x00de    -- 0xF8()
+0x00e2    -- 0xF8()
+0x00e6    -- 0x18()
+0x00eb    op20_ActorSetFlags0( flags=1 )
+0x00ee    op00_Return()
+
+Actor_0x0d:on_update:
+0x00ef    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00f0    -- 0xFE54()
+0x00f2    op74_SoundPlayFixedVolume( sound_id=119 )
+0x00f5    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x01 )
+0x00f8    -- 0xFE68()
+0x00ff    -- 0x98_MapLoad( field_id=372, value=0 )
+0x0104    op00_Return()
+
+Actor_0x0d:on_push:
+0x0105    op00_Return()
+
+Actor_0x0e:on_start:
+0x0106    -- 0xBC_ActorNoModelInit()
+0x0107    -- 0x2A()
+0x0108    op00_Return()
+
+Actor_0x0e:on_update:
+0x0109    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x010a    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x010b    mem[0x402] = false -- op37
+0x010e    op02_JumpToConditional( val1=(s)mem[0x402], val2=28, condition="val1 < val2", address_if_false=0x126 )
+0x0116    opC6_ExpandRun() -- exp0x20
+0x0117    -- 0xFE1B()
+0x011d    op26_Wait( time=0 )
+0x0120    mem[0x402] += 1 -- op3c
+0x0123    op01_JumpTo( address=0x10e )
+0x0126    op00_Return()
+
+Actor_0x0f:on_start:
+0x0127    -- 0xBC_ActorNoModelInit()
+0x0128    -- 0x2A()
+0x0129    op00_Return()
+
+Actor_0x0f:on_update:
+0x012a    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x012b    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x012c    mem[0x404] = false -- op37
+0x012f    op02_JumpToConditional( val1=(s)mem[0x404], val2=28, condition="val1 < val2", address_if_false=0x147 )
+0x0137    opC6_ExpandRun() -- exp0x20
+0x0138    -- 0xFE1B()
+0x013e    op26_Wait( time=0 )
+0x0141    mem[0x404] += 1 -- op3c
+0x0144    op01_JumpTo( address=0x12f )
+0x0147    op00_Return()

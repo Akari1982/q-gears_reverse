@@ -558,4 +558,67 @@ Actor_0x13:event_0x04:
 0x04ae    -- 0x15()
 0x04af    op07_CallActorEvent( actor_id=Actor_0x14, event=event_0x04, priority=0x00 )
 0x04b2    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x04, priority=0x00 )
-0x04b5    -- MISSING OPCODE 0xFE68
+0x04b5    -- 0xFE68()
+0x04bc    op02_JumpToConditional( val1=(s)mem[0x400], val2=166, condition="val1 == val2", address_if_false=0x4cc )
+0x04c4    -- 0x98_MapLoad( field_id=166, value=1 )
+0x04c9    op01_JumpTo( address=0x4d1 )
+0x04cc    -- 0x98_MapLoad( field_id=152, value=1 )
+0x04d1    -- 0x5B()
+
+Actor_0x14:on_start:
+0x04d2    -- 0xBC_ActorNoModelInit()
+0x04d3    -- 0x2A()
+0x04d4    op00_Return()
+
+Actor_0x14:on_update:
+
+Actor_0x14:on_talk:
+
+Actor_0x14:on_push:
+0x04d5    op00_Return()
+
+Actor_0x14:event_0x04:
+0x04d6    -- 0xFE65()
+0x04dc    op02_JumpToConditional( val1=(s)mem[0x402], val2=20, condition="val1 < val2", address_if_false=0x4f0 )
+0x04e4    -- 0xFE1B()
+0x04ea    mem[0x402] += 1 -- op3c
+0x04ed    op01_JumpTo( address=0x4dc )
+0x04f0    op00_Return()
+
+Actor_0x15:on_start:
+0x04f1    -- 0xBC_ActorNoModelInit()
+0x04f2    -- 0x2A()
+0x04f3    op00_Return()
+
+Actor_0x15:on_update:
+
+Actor_0x15:on_talk:
+
+Actor_0x15:on_push:
+0x04f4    op00_Return()
+
+Actor_0x15:event_0x04:
+0x04f5    op02_JumpToConditional( val1=(s)mem[0x404], val2=20, condition="val1 < val2", address_if_false=0x509 )
+0x04fd    -- 0xFE1B()
+0x0503    mem[0x404] += 1 -- op3c
+0x0506    op01_JumpTo( address=0x4f5 )
+0x0509    op00_Return()
+
+Actor_0x16:on_start:
+0x050a    -- 0xBC_ActorNoModelInit()
+0x050b    -- 0x2A()
+0x050c    -- 0x86_ProgressNotEqualJumpTo( value=60, jump=0x514 )
+0x0511    op01_JumpTo( address=0x51c )
+0x0514    op29_ActorTurnOff( actor_id=Actor_0x04 )
+0x0516    op29_ActorTurnOff( actor_id=Actor_0x05 )
+0x0518    op29_ActorTurnOff( actor_id=Actor_0x06 )
+0x051a    op29_ActorTurnOff( actor_id=Actor_0x07 )
+0x051c    op00_Return()
+
+Actor_0x16:on_update:
+
+Actor_0x16:on_talk:
+
+Actor_0x16:on_push:
+0x051d    op00_Return()
+0x051e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x4a00, flag=0x54 )

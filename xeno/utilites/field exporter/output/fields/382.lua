@@ -274,4 +274,69 @@ Actor_0x0f:on_talk:
 0x0126    op74_SoundPlayFixedVolume( sound_id=119 )
 0x0129    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )
 0x012c    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x01 )
-0x012f    -- MISSING OPCODE 0xFE68
+0x012f    -- 0xFE68()
+0x0136    -- 0x98_MapLoad( field_id=365, value=0 )
+0x013b    op00_Return()
+
+Actor_0x0f:on_push:
+0x013c    op00_Return()
+
+Actor_0x10:on_start:
+0x013d    -- 0xBC_ActorNoModelInit()
+0x013e    -- 0x19_ActorSetPosition( x=(vf80)0x00dc, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0144    -- 0xF8()
+0x0148    -- 0xF8()
+0x014c    -- 0x18()
+0x0151    op20_ActorSetFlags0( flags=1 )
+0x0154    op00_Return()
+
+Actor_0x10:on_update:
+0x0155    op00_Return()
+
+Actor_0x10:on_talk:
+0x0156    -- 0xFE54()
+0x0158    op74_SoundPlayFixedVolume( sound_id=119 )
+0x015b    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x01 )
+0x015e    -- 0xFE68()
+0x0165    -- 0x98_MapLoad( field_id=383, value=0 )
+0x016a    op00_Return()
+
+Actor_0x10:on_push:
+0x016b    op00_Return()
+
+Actor_0x11:on_start:
+0x016c    -- 0xBC_ActorNoModelInit()
+0x016d    -- 0x19_ActorSetPosition( x=(vf80)0xff2e, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0173    -- 0xF8()
+0x0177    -- 0xF8()
+0x017b    -- 0x18()
+0x0180    op20_ActorSetFlags0( flags=1 )
+0x0183    op00_Return()
+
+Actor_0x11:on_update:
+0x0184    op00_Return()
+
+Actor_0x11:on_talk:
+0x0185    op00_Return()
+
+Actor_0x11:on_push:
+0x0186    op00_Return()
+
+Actor_0x12:on_start:
+0x0187    -- 0xBC_ActorNoModelInit()
+0x0188    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x00d2, flag=(flag)0xc0 )
+0x018e    -- 0xF8()
+0x0192    -- 0xF8()
+0x0196    -- 0x18()
+0x019b    op20_ActorSetFlags0( flags=1 )
+0x019e    op00_Return()
+
+Actor_0x12:on_update:
+0x019f    op00_Return()
+
+Actor_0x12:on_talk:
+0x01a0    op00_Return()
+
+Actor_0x12:on_push:
+0x01a1    op00_Return()
+0x01a2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x9d44, ???=(vf40)0x6291, flag=0x8e )

@@ -91,7 +91,7 @@ Actor_0x01:on_update:
 0x00f5    mem[0xe35] ^= (s)mem[0x9604] -- op40
 0x00fb    mem[0x2e05] ^= (s)mem[0x3508] -- op40
 0x0101    -- 0x04()
-0x0102    op02_JumpToConditional( val1=mem[0x4000], val2=mem[0xe34], condition="val1 >= val2", address_if_false=0x10 )
+0x0102    op02_JumpToConditional( val1=mem[0x4000], val2=(s)mem[0xe34], condition="val1 >= val2", address_if_false=0x10 )
 0x010a    mem[0x2e05] ^= (s)mem[0x3508] -- op40
 0x0110    -- 0x04()
 0x0111    op20_ActorSetFlags0( flags=mem[0x4000] )

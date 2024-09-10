@@ -545,4 +545,32 @@ Actor_0x16:on_talk:
 0x03f1    -- 0xFE54()
 0x03f3    op74_SoundPlayFixedVolume( sound_id=119 )
 0x03f6    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x04, priority=0x01 )
-0x03f9    -- MISSING OPCODE 0xFE68
+0x03f9    -- 0xFE68()
+0x0400    -- 0x98_MapLoad( field_id=377, value=1 )
+0x0405    op00_Return()
+
+Actor_0x16:on_push:
+0x0406    op00_Return()
+
+Actor_0x17:on_start:
+0x0407    -- 0xBC_ActorNoModelInit()
+0x0408    -- 0x2A()
+0x0409    op00_Return()
+
+Actor_0x17:on_update:
+0x040a    op00_Return()
+
+Actor_0x17:on_talk:
+
+Actor_0x17:on_push:
+0x040b    op00_Return()
+
+Actor_0x17:event_0x04:
+0x040c    mem[0x404] = false -- op37
+0x040f    op02_JumpToConditional( val1=(s)mem[0x404], val2=14, condition="val1 < val2", address_if_false=0x427 )
+0x0417    opC6_ExpandRun() -- exp0x20
+0x0418    -- 0xFE1B()
+0x041e    op26_Wait( time=0 )
+0x0421    mem[0x404] += 1 -- op3c
+0x0424    op01_JumpTo( address=0x40f )
+0x0427    op00_Return()

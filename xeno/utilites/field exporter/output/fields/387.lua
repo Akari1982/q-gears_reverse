@@ -205,4 +205,77 @@ Actor_0x0c:on_talk:
 0x00c7    -- 0xFE54()
 0x00c9    op74_SoundPlayFixedVolume( sound_id=119 )
 0x00cc    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x01 )
-0x00cf    -- MISSING OPCODE 0xFE68
+0x00cf    -- 0xFE68()
+0x00d6    -- 0x98_MapLoad( field_id=383, value=1 )
+
+Actor_0x0c:on_push:
+0x00db    op00_Return()
+
+Actor_0x0d:on_start:
+0x00dc    -- 0xBC_ActorNoModelInit()
+0x00dd    -- 0x1B()
+0x00e4    -- 0xF8()
+0x00e8    -- 0xF8()
+0x00ec    -- 0x18()
+0x00f1    op20_ActorSetFlags0( flags=1 )
+0x00f4    op00_Return()
+
+Actor_0x0d:on_update:
+0x00f5    op00_Return()
+
+Actor_0x0d:on_talk:
+0x00f6    -- 0xFE54()
+0x00f8    op74_SoundPlayFixedVolume( sound_id=119 )
+0x00fb    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x01 )
+0x00fe    -- 0xFE68()
+0x0105    -- 0x98_MapLoad( field_id=385, value=0 )
+
+Actor_0x0d:on_push:
+0x010a    op00_Return()
+
+Actor_0x0e:on_start:
+0x010b    -- 0xBC_ActorNoModelInit()
+0x010c    -- 0x2A()
+0x010d    op00_Return()
+
+Actor_0x0e:on_update:
+0x010e    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x010f    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x0110    mem[0x400] = false -- op37
+0x0113    op02_JumpToConditional( val1=(s)mem[0x400], val2=14, condition="val1 < val2", address_if_false=0x12b )
+0x011b    opC6_ExpandRun() -- exp0x20
+0x011c    -- 0xFE1B()
+0x0122    op26_Wait( time=0 )
+0x0125    mem[0x400] += 1 -- op3c
+0x0128    op01_JumpTo( address=0x113 )
+0x012b    op00_Return()
+
+Actor_0x0f:on_start:
+0x012c    -- 0xBC_ActorNoModelInit()
+0x012d    -- 0x2A()
+0x012e    op00_Return()
+
+Actor_0x0f:on_update:
+0x012f    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x0130    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x0131    mem[0x402] = false -- op37
+0x0134    op02_JumpToConditional( val1=(s)mem[0x402], val2=14, condition="val1 < val2", address_if_false=0x14c )
+0x013c    opC6_ExpandRun() -- exp0x20
+0x013d    -- 0xFE1B()
+0x0143    op26_Wait( time=0 )
+0x0146    mem[0x402] += 1 -- op3c
+0x0149    op01_JumpTo( address=0x134 )
+0x014c    op00_Return()
+0x014d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x5238, ???=(vf40)0x0002, flag=0x0 )
