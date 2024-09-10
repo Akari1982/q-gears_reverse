@@ -2330,6 +2330,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0x56:
+                    {
+                        exp->Log( "-- 0xFE56()" );
+                        pointer += 3;
+                    }
+                    break;
+
                     case 0x57:
                     {
                         exp->Log( "-- 0xFE57()" );
