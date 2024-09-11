@@ -128,4 +128,5 @@ Actor_0x02:on_start:
 0x010e    -- 0x16_ActorPCInit( char_id=5 )
 0x0111    opFE0D_MessageSetFace( char_id=5 )
 0x0115    op20_ActorSetFlags0( flags=13 )
-0x0118    -- MISSING OPCODE 0xFE5e
+0x0118    -- 0xFE5E()
+0x011c    -- MISSING OPCODE 0xFE5f

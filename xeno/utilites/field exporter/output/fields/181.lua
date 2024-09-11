@@ -27,4 +27,115 @@ Actor_0x00:on_start:
 0x0025    -- 0x2A()
 0x0026    -- 0x9D()
 0x002a    -- 0xE7( ???=192, ???=168, ???=144 )
-0x0031    -- MISSING OPCODE 0xFEb7
+0x0031    -- 0xFEB7()
+0x0035    -- 0xD5()
+0x0038    -- 0x75( ???=11 )
+0x003b    mem[0x402] = false -- op37
+0x003e    mem[0x404] = false -- op37
+0x0041    op00_Return()
+
+Actor_0x00:on_update:
+0x0042    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x63 )
+0x004a    -- 0xFE54()
+0x004c    op09_CallActorEventEndSync( actor_id=Actor_0x27, event=event_0x04, priority=0x01 )
+0x004f    op09_CallActorEventEndSync( actor_id=Actor_0x28, event=event_0x04, priority=0x01 )
+0x0052    op09_CallActorEventEndSync( actor_id=Actor_0x2a, event=event_0x04, priority=0x01 )
+0x0055    op09_CallActorEventEndSync( actor_id=Actor_0x2b, event=event_0x04, priority=0x01 )
+0x0058    op26_Wait( time=26 )
+0x005b    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
+0x005e    mem[0x400] = true -- op36
+0x0061    -- 0xFE54()
+0x0063    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 == val2", address_if_false=0x7a )
+0x006b    op09_CallActorEventEndSync( actor_id=Actor_0x27, event=event_0x04, priority=0x01 )
+0x006e    op09_CallActorEventEndSync( actor_id=Actor_0x28, event=event_0x04, priority=0x01 )
+0x0071    op09_CallActorEventEndSync( actor_id=Actor_0x2a, event=event_0x04, priority=0x01 )
+0x0074    op09_CallActorEventEndSync( actor_id=Actor_0x2b, event=event_0x04, priority=0x01 )
+0x0077    mem[0x402] = true -- op36
+0x007a    op00_Return()
+
+Actor_0x00:on_talk:
+0x007b    mem[0x472] = false -- op37
+0x007e    mem[0x430] = false -- op37
+0x0081    mem[0x402] = false -- op37
+0x0084    mem[0x404] = false -- op37
+0x0087    op00_Return()
+
+Actor_0x00:on_push:
+0x0088    op00_Return()
+
+Actor_0x01:on_start:
+0x0089    -- 0x5C()
+0x008c    op00_Return()
+
+Actor_0x01:on_update:
+0x008d    opC6_ExpandRun() -- exp0x20
+0x008e    -- 0xFEC1()
+0x0096    op01_JumpTo( address=0x99 )
+0x0099    -- 0xA6()
+0x009c    op01_JumpTo( address=0x13b )
+0x009f    op01_JumpTo( address=0x13b )
+0x00a2    op01_JumpTo( address=0x13b )
+0x00a5    op01_JumpTo( address=0x138 )
+0x00a8    op01_JumpTo( address=0x13c )
+0x00ab    op01_JumpTo( address=0x35d )
+0x00ae    op01_JumpTo( address=0x57e )
+0x00b1    op01_JumpTo( address=0x5ed )
+0x00b4    op01_JumpTo( address=0x80e )
+0x00b7    op01_JumpTo( address=0xa2f )
+0x00ba    op01_JumpTo( address=0xa9e )
+0x00bd    op01_JumpTo( address=0xcbf )
+0x00c0    op01_JumpTo( address=0xee0 )
+0x00c3    op01_JumpTo( address=0xf4f )
+0x00c6    op01_JumpTo( address=0x1170 )
+0x00c9    op01_JumpTo( address=0x1391 )
+0x00cc    op01_JumpTo( address=0x1400 )
+0x00cf    op01_JumpTo( address=0x1621 )
+0x00d2    op01_JumpTo( address=0x17de )
+0x00d5    op01_JumpTo( address=0x184d )
+0x00d8    op01_JumpTo( address=0x1a6e )
+0x00db    op01_JumpTo( address=0x1c0b )
+0x00de    op01_JumpTo( address=0x1c7a )
+0x00e1    op01_JumpTo( address=0x1e9b )
+0x00e4    op01_JumpTo( address=0x1fb4 )
+0x00e7    op01_JumpTo( address=0x2020 )
+0x00ea    op01_JumpTo( address=0x208f )
+0x00ed    op01_JumpTo( address=0x20fe )
+0x00f0    op01_JumpTo( address=0x216d )
+0x00f3    op01_JumpTo( address=0x238e )
+0x00f6    op01_JumpTo( address=0x25af )
+0x00f9    op01_JumpTo( address=0x261e )
+0x00fc    op01_JumpTo( address=0x283f )
+0x00ff    op01_JumpTo( address=0x29c8 )
+0x0102    op01_JumpTo( address=0x2a37 )
+0x0105    op01_JumpTo( address=0x2c58 )
+0x0108    op01_JumpTo( address=0x2e79 )
+0x010b    op01_JumpTo( address=0x2ee8 )
+0x010e    op01_JumpTo( address=0x3109 )
+0x0111    op01_JumpTo( address=0x332a )
+0x0114    op01_JumpTo( address=0x3399 )
+0x0117    op01_JumpTo( address=0x35ba )
+0x011a    op01_JumpTo( address=0x37db )
+0x011d    op01_JumpTo( address=0x384a )
+0x0120    op01_JumpTo( address=0x39e7 )
+0x0123    op01_JumpTo( address=0x3b84 )
+0x0126    op01_JumpTo( address=0x3bf3 )
+0x0129    op01_JumpTo( address=0x3e14 )
+0x012c    op01_JumpTo( address=0x4035 )
+0x012f    op01_JumpTo( address=0x40a4 )
+0x0132    op01_JumpTo( address=0x4171 )
+0x0135    op01_JumpTo( address=0x423e )
+0x0138    opFE97_ParticleReset( all=0x0 )
+0x013b    op00_Return()
+0x013c    opC6_ExpandRun() -- exp0x20
+0x013d    opFE97_ParticleReset( all=0x0 )
+0x0140    -- 0xFEC2()
+0x0145    -- 0x80()
+0x014a    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=3, wait=0, ttl=5 )
+0x0154    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffa6, z=(vf20)0x000a, speed_x=(vf10)0x0000, speed_y=(vf08)0xffa6, speed_z=(vf04)0x0014, flag=(flag)0xfc )
+0x0163    opFE92_ParticleSpeed( speed=(vf80)0x3a98, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x0172    opFE93_ParticleWaitTtl( s_wait=1, var2=3, sprite_id=0, var4=1, var5=2 )
+0x017e    opFE94_ParticleTranslation( trans_x=(vf80)0x02bc, trans_y=(vf40)0x02bc, trans_add_x=(vf20)0xfff6, trans_add_y=(vf10)0xfff6, flag=(flag)0xf0 )
+0x0189    opFE95_ParticleColour( r=(vf80)0x0050, g=(vf40)0x0064, b=(vf20)0x005a, r_add=(vf10)0xfff2, g_add=(vf10)0xfff7, b_add=(vf10)0xfff2, flag=(flag)0xfc )
+0x0198    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x01a0    opFEBD_ParticleSpawnSettings( settings=0 )
+0x01a8    -- MISSING OPCODE 0xFEc8

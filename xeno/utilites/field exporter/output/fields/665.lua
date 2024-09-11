@@ -116,4 +116,128 @@ Actor_0x02:on_start:
 0x00e3    op2C_SpritePlayAnim( anim_id=0x2 )
 0x00e5    -- 0x5F( ???=0x0 )
 0x00e7    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x012c, flag=(flag)0xc0 )
-0x00ed    -- MISSING OPCODE 0xFE5e
+0x00ed    -- 0xFE5E()
+0x00f1    -- 0x2A()
+0x00f2    op20_ActorSetFlags0( flags=13 )
+0x00f5    op00_Return()
+
+Actor_0x02:on_update:
+0x00f6    op00_Return()
+
+Actor_0x02:on_talk:
+
+Actor_0x02:on_push:
+0x00f7    op00_Return()
+
+Actor_0x02:event_0x04:
+0x00f8    op2C_SpritePlayAnim( anim_id=0xff )
+0x00fa    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
+0x00fc    op00_Return()
+
+Actor_0x02:event_0x05:
+0x00fd    op26_Wait( time=30 )
+0x0100    -- 0x21( ???=160 )
+0x0103    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0109    op26_Wait( time=2 )
+0x010c    op2C_SpritePlayAnim( anim_id=0x0 )
+0x010e    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x00d7, flag=(flag)0xc0 )
+0x0114    op26_Wait( time=10 )
+0x0117    op2C_SpritePlayAnim( anim_id=0x1 )
+0x0119    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x00c8, flag=(flag)0xc0 )
+0x011f    op01_JumpTo( address=0x109 )
+0x0122    op00_Return()
+
+Actor_0x02:event_0x06:
+0x0123    op2C_SpritePlayAnim( anim_id=0xff )
+0x0125    -- 0xF6( ???=0x0 )
+0x0127    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x012d    -- 0x92()
+
+Actor_0x03:on_start:
+0x012e    -- 0x0B_InitNPC( 1 )
+0x0131    -- 0x2A()
+0x0132    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x145 )
+0x013a    -- 0x19_ActorSetPosition( x=(vf80)0xff38, z=(vf40)0xffce, flag=(flag)0xc0 )
+0x0140    -- 0x5F( ???=0x5 )
+0x0142    op01_JumpTo( address=0x16b )
+0x0145    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x158 )
+0x014d    -- 0x19_ActorSetPosition( x=(vf80)0xff38, z=(vf40)0x0000, flag=(flag)0xc0 )
+0x0153    -- 0x5F( ???=0x5 )
+0x0155    op01_JumpTo( address=0x16b )
+0x0158    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x16b )
+0x0160    -- 0x19_ActorSetPosition( x=(vf80)0xff38, z=(vf40)0x0096, flag=(flag)0xc0 )
+0x0166    -- 0x5F( ???=0x3 )
+0x0168    op01_JumpTo( address=0x16b )
+0x016b    op00_Return()
+
+Actor_0x03:on_update:
+0x016c    op00_Return()
+
+Actor_0x03:on_talk:
+
+Actor_0x03:on_push:
+0x016d    op00_Return()
+
+Actor_0x03:event_0x04:
+0x016e    -- 0x53()
+0x0172    op00_Return()
+
+Actor_0x03:event_0x05:
+0x0173    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0179    op00_Return()
+
+Actor_0x03:event_0x06:
+0x017a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0180    op00_Return()
+
+Actor_0x03:event_0x07:
+0x0181    -- 0x5F( ???=0x5 )
+0x0183    -- 0xF6( ???=0x1 )
+0x0185    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x018b    op26_Wait( time=30 )
+0x018e    -- 0xF6( ???=0x1 )
+0x0190    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0196    -- 0xF6( ???=0x0 )
+0x0198    op00_Return()
+
+Actor_0x03:event_0x08:
+0x0199    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x019f    op00_Return()
+
+Actor_0x03:event_0x09:
+0x01a0    -- 0x53()
+0x01a4    op00_Return()
+
+Actor_0x04:on_start:
+0x01a5    -- 0xBC_ActorNoModelInit()
+0x01a6    -- 0x2A()
+0x01a7    op00_Return()
+
+Actor_0x04:on_update:
+0x01a8    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x1dc )
+0x01b0    -- 0xFE65()
+0x01b6    -- 0xFE65()
+0x01bc    mem[0x400] = -13036 -- op35
+0x01c2    opFE67_MoviePlay2( movie_id=6, sector=(s)mem[0x400], start_frame=5251, end_frame=5385, flags=254, ???=320, ???=0, ???=320, ???=224 )
+0x01d6    opFE61_MovieStartSync()
+0x01d8    -- 0x5B()
+0x01d9    op01_JumpTo( address=0x210 )
+0x01dc    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x210 )
+0x01e4    -- 0xFE65()
+0x01ea    -- 0xFE65()
+0x01f0    mem[0x400] = -13036 -- op35
+0x01f6    opFE67_MoviePlay2( movie_id=6, sector=(s)mem[0x400], start_frame=5251, end_frame=5385, flags=254, ???=320, ???=0, ???=320, ???=224 )
+0x020a    opFE61_MovieStartSync()
+0x020c    -- 0x5B()
+0x020d    op01_JumpTo( address=0x210 )
+0x0210    op00_Return()
+
+Actor_0x04:on_talk:
+
+Actor_0x04:on_push:
+0x0211    op00_Return()
+
+Actor_0x04:event_0x04:
+0x0212    -- 0xFE65()
+0x0218    mem[0x400] = -11536 -- op35
+0x021e    -- MISSING OPCODE 0xFEcb

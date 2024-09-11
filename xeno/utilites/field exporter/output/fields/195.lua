@@ -1091,4 +1091,10 @@ Actor_0x19:event_0x06:
 0x0ad1    -- 0xF6( ???=0x1 )
 0x0ad3    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x0ad9    -- 0xF6( ???=0x0 )
-0x0adb    -- MISSING OPCODE 0xFE5e
+0x0adb    -- 0xFE5E()
+0x0adf    mem[0x43e] = 128 -- op35
+0x0ae5    -- 0xFE65()
+0x0aeb    opD2_MessageShowDynamic( text_id=0x35, flags=0 )
+0x0aef    op9C_MessageSync()
+0x0af0    op02_JumpToConditional( val1=(s)mem[0x43e], val2=0, condition="val1 > val2", address_if_false=0xb0a )
+0x0af8    -- MISSING OPCODE 0xFE5f

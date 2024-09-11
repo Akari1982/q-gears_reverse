@@ -248,4 +248,428 @@ Actor_0x08:event_0x04:
 0x0143    op00_Return()
 
 Actor_0x08:event_0x05:
-0x0144    -- MISSING OPCODE 0xFE5e
+0x0144    -- 0xFE5E()
+0x0148    -- 0x22()
+0x0149    op00_Return()
+
+function:
+0x014a    -- 0xFE5E()
+0x014e    op26_Wait( time=5 )
+0x0151    -- 0x23()
+0x0152    -- 0x5A()
+0x0153    -- 0x22()
+0x0154    op26_Wait( time=1 )
+0x0157    -- 0x23()
+0x0158    -- 0x5A()
+0x0159    -- 0x22()
+0x015a    -- 0x5A()
+0x015b    -- 0x23()
+0x015c    -- 0x5A()
+0x015d    -- 0x22()
+0x015e    -- 0x5A()
+0x015f    -- 0x23()
+0x0160    op26_Wait( time=1 )
+0x0163    -- 0x22()
+0x0164    -- 0x5A()
+0x0165    -- 0x23()
+0x0166    op0D_Return()
+
+Actor_0x09:on_start:
+0x0167    -- 0x0B_InitNPC( 2 )
+0x016a    -- 0x2A()
+0x016b    -- 0x19_ActorSetPosition( x=(vf80)0xff9d, z=(vf40)0x0082, flag=(flag)0xc0 )
+0x0171    -- 0x5F( ???=0x6 )
+0x0173    -- 0x23()
+0x0174    op00_Return()
+
+Actor_0x09:on_update:
+
+Actor_0x09:on_talk:
+
+Actor_0x09:on_push:
+0x0175    op00_Return()
+
+Actor_0x09:event_0x04:
+0x0176    op05_CallFunction( address=0x14a )
+0x0179    op00_Return()
+
+Actor_0x09:event_0x05:
+0x017a    -- 0xFE5E()
+0x017e    -- 0x22()
+0x017f    op00_Return()
+
+Actor_0x0a:on_start:
+0x0180    -- 0x0B_InitNPC( 2 )
+0x0183    -- 0x2A()
+0x0184    -- 0x23()
+0x0185    -- 0x19_ActorSetPosition( x=(vf80)0xfff8, z=(vf40)0x0039, flag=(flag)0xc0 )
+0x018b    -- 0x5F( ???=0x6 )
+0x018d    op00_Return()
+
+Actor_0x0a:on_update:
+
+Actor_0x0a:on_talk:
+
+Actor_0x0a:on_push:
+0x018e    op00_Return()
+
+Actor_0x0a:event_0x04:
+0x018f    op05_CallFunction( address=0x14a )
+0x0192    op00_Return()
+
+Actor_0x0a:event_0x05:
+0x0193    -- 0xFE5E()
+0x0197    -- 0x22()
+0x0198    op00_Return()
+
+Actor_0x0b:on_start:
+0x0199    -- 0x0B_InitNPC( 4 )
+0x019c    -- 0x19_ActorSetPosition( x=(vf80)0xff31, z=(vf40)0x0087, flag=(flag)0xc0 )
+0x01a2    -- 0x2A()
+0x01a3    -- 0x23()
+0x01a4    -- 0x5F( ???=0x6 )
+0x01a6    op00_Return()
+
+Actor_0x0b:on_update:
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x01a7    op00_Return()
+
+Actor_0x0b:event_0x04:
+0x01a8    op05_CallFunction( address=0x14a )
+0x01ab    op00_Return()
+
+Actor_0x0b:event_0x05:
+0x01ac    -- 0xFE5E()
+0x01b0    -- 0x22()
+0x01b1    op00_Return()
+
+Actor_0x0c:on_start:
+0x01b2    -- 0x0B_InitNPC( 5 )
+0x01b5    -- 0x2A()
+0x01b6    -- 0x23()
+0x01b7    -- 0x19_ActorSetPosition( x=(vf80)0xff6d, z=(vf40)0x0069, flag=(flag)0xc0 )
+0x01bd    -- 0x5F( ???=0x6 )
+0x01bf    op00_Return()
+
+Actor_0x0c:on_update:
+
+Actor_0x0c:on_talk:
+
+Actor_0x0c:on_push:
+0x01c0    op00_Return()
+
+Actor_0x0c:event_0x04:
+0x01c1    op05_CallFunction( address=0x14a )
+0x01c4    op00_Return()
+
+Actor_0x0c:event_0x05:
+0x01c5    -- 0xFE5E()
+0x01c9    -- 0x22()
+0x01ca    op00_Return()
+
+Actor_0x0d:on_start:
+0x01cb    -- 0xFE15( ???=6, ???=1 )
+0x01d1    -- 0x2A()
+0x01d2    -- 0x23()
+0x01d3    -- 0x19_ActorSetPosition( x=(vf80)0xffa9, z=(vf40)0x004b, flag=(flag)0xc0 )
+0x01d9    -- 0x5F( ???=0x6 )
+0x01db    op00_Return()
+
+Actor_0x0d:on_update:
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x01dc    op00_Return()
+
+Actor_0x0d:event_0x04:
+0x01dd    op05_CallFunction( address=0x14a )
+0x01e0    op00_Return()
+
+Actor_0x0d:event_0x05:
+0x01e1    -- 0xFE5E()
+0x01e5    -- 0x22()
+0x01e6    op00_Return()
+
+Actor_0x0e:on_start:
+0x01e7    -- 0x0B_InitNPC( 7 )
+0x01ea    -- 0x2A()
+0x01eb    -- 0x23()
+0x01ec    -- 0x19_ActorSetPosition( x=(vf80)0xffe5, z=(vf40)0x002d, flag=(flag)0xc0 )
+0x01f2    -- 0x5F( ???=0x6 )
+0x01f4    op00_Return()
+
+Actor_0x0e:on_update:
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x01f5    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x01f6    op05_CallFunction( address=0x14a )
+0x01f9    op00_Return()
+
+Actor_0x0e:event_0x05:
+0x01fa    -- 0xFE5E()
+0x01fe    -- 0x22()
+0x01ff    op00_Return()
+
+Actor_0x0f:on_start:
+0x0200    -- 0xBC_ActorNoModelInit()
+0x0201    -- 0x2A()
+0x0202    -- 0xFE54()
+0x0204    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
+0x020f    op00_Return()
+
+Actor_0x0f:on_update:
+0x0210    op26_Wait( time=2 )
+0x0213    opD0_MessageSettings( x=80, y=80, letters=0, rows=0, flags=0 )
+0x021e    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=90 )
+0x0229    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
+0x022c    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
+0x022f    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x04, priority=0x01 )
+0x0232    opD2_MessageShowDynamic( text_id=0x5, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0236    op9C_MessageSync()
+0x0237    opEF_MoveCameraSync()
+0x023a    opFE9B_SlideShow1( steps=40 )
+0x023e    -- 0x5A()
+0x023f    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x05, priority=0x01 )
+0x0242    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x05, priority=0x01 )
+0x0245    op26_Wait( time=30 )
+0x0248    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x06, priority=0x01 )
+0x024b    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x04, priority=0x01 )
+0x024e    op26_Wait( time=7 )
+0x0251    opD2_MessageShowDynamic( text_id=0x6, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0255    op9C_MessageSync()
+0x0256    opEF_MoveCameraSync()
+0x0259    opFE9B_SlideShow1( steps=40 )
+0x025d    -- 0x5A()
+0x025e    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x05, priority=0x01 )
+0x0261    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x06, priority=0x01 )
+0x0264    op26_Wait( time=38 )
+0x0267    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
+0x026a    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x04, priority=0x01 )
+0x026d    opD0_MessageSettings( x=80, y=90, letters=0, rows=0, flags=0 )
+0x0278    opD2_MessageShowDynamic( text_id=0x7, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x027c    op9C_MessageSync()
+0x027d    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x04, priority=0x01 )
+0x0280    op26_Wait( time=3 )
+0x0283    -- 0xFE66() -- sound play with volume in slot
+0x028d    -- 0xFE66() -- sound play with volume in slot
+0x0297    opFE9B_SlideShow1( steps=10 )
+0x029b    -- 0x5A()
+0x029c    opF1_FadeSetUp( steps=1, r=240, g=240, b=210, semi_tr=1 )
+0x02a7    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x07, priority=0x01 )
+0x02aa    op26_Wait( time=10 )
+0x02ad    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=20 )
+0x02b8    op26_Wait( time=30 )
+0x02bb    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x05, priority=0x01 )
+0x02be    op26_Wait( time=3 )
+0x02c1    -- 0xFE66() -- sound play with volume in slot
+0x02cb    -- 0xFE66() -- sound play with volume in slot
+0x02d5    opFE9B_SlideShow1( steps=10 )
+0x02d9    -- 0x5A()
+0x02da    opF1_FadeSetUp( steps=1, r=240, g=240, b=210, semi_tr=1 )
+0x02e5    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x08, priority=0x01 )
+0x02e8    op26_Wait( time=10 )
+0x02eb    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=20 )
+0x02f6    op26_Wait( time=30 )
+0x02f9    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x06, priority=0x01 )
+0x02fc    op26_Wait( time=3 )
+0x02ff    -- 0xFE66() -- sound play with volume in slot
+0x0309    -- 0xFE66() -- sound play with volume in slot
+0x0313    opFE9B_SlideShow1( steps=10 )
+0x0317    -- 0x5A()
+0x0318    opF1_FadeSetUp( steps=1, r=240, g=240, b=210, semi_tr=1 )
+0x0323    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x09, priority=0x01 )
+0x0326    op26_Wait( time=10 )
+0x0329    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=20 )
+0x0334    op26_Wait( time=30 )
+0x0337    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x07, priority=0x01 )
+0x033a    op26_Wait( time=3 )
+0x033d    -- 0xFE66() -- sound play with volume in slot
+0x0347    -- 0xFE66() -- sound play with volume in slot
+0x0351    opFE9B_SlideShow1( steps=10 )
+0x0355    -- 0x5A()
+0x0356    opF1_FadeSetUp( steps=1, r=240, g=240, b=210, semi_tr=1 )
+0x0361    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x0a, priority=0x01 )
+0x0364    op26_Wait( time=10 )
+0x0367    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=20 )
+0x0372    op26_Wait( time=30 )
+0x0375    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x0b, priority=0x01 )
+0x0378    opD2_MessageShowDynamic( text_id=0x8, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x037c    op9C_MessageSync()
+0x037d    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=60 )
+0x0388    op26_Wait( time=20 )
+0x038b    opD2_MessageShowDynamic( text_id=0x9, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x038f    op9C_MessageSync()
+0x0390    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x0c, priority=0x01 )
+0x0393    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=90 )
+0x039e    op24_ActorEnable( actor_id=Actor_0x08 )
+0x03a0    op24_ActorEnable( actor_id=Actor_0x09 )
+0x03a2    op24_ActorEnable( actor_id=Actor_0x0a )
+0x03a4    op26_Wait( time=30 )
+0x03a7    opD2_MessageShowDynamic( text_id=0xa, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x03ab    op9C_MessageSync()
+0x03ac    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x08, priority=0x01 )
+0x03af    opD2_MessageShowDynamic( text_id=0xb, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x03b3    op9C_MessageSync()
+0x03b4    opF1_FadeSetUp( steps=2, r=100, g=110, b=200, semi_tr=10 )
+0x03bf    opD0_MessageSettings( x=80, y=10, letters=0, rows=0, flags=0 )
+0x03ca    opD2_MessageShowDynamic( text_id=0xc, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x03ce    op9C_MessageSync()
+0x03cf    opF1_FadeSetUp( steps=2, r=100, g=160, b=250, semi_tr=10 )
+0x03da    opD0_MessageSettings( x=80, y=120, letters=0, rows=0, flags=0 )
+0x03e5    opD2_MessageShowDynamic( text_id=0xd, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x03e9    op9C_MessageSync()
+0x03ea    opF1_FadeSetUp( steps=2, r=50, g=60, b=150, semi_tr=10 )
+0x03f5    opD0_MessageSettings( x=80, y=90, letters=0, rows=0, flags=0 )
+0x0400    opFE9B_SlideShow1( steps=30 )
+0x0404    -- 0x5A()
+0x0405    op24_ActorEnable( actor_id=Actor_0x0b )
+0x0407    op24_ActorEnable( actor_id=Actor_0x0c )
+0x0409    op24_ActorEnable( actor_id=Actor_0x0d )
+0x040b    op24_ActorEnable( actor_id=Actor_0x0e )
+0x040d    op26_Wait( time=28 )
+0x0410    opD2_MessageShowDynamic( text_id=0xe, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x0414    op9C_MessageSync()
+0x0415    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x09, priority=0x01 )
+0x0418    opD2_MessageShowDynamic( text_id=0xf, flags=CLOSE_OFF_SCREEN|NO_FACE|NO_WINDOW )
+0x041c    op9C_MessageSync()
+0x041d    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=60 )
+0x0428    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x0a, priority=0x01 )
+0x042b    op26_Wait( time=100 )
+0x042e    -- 0x98_MapLoad( field_id=662, value=1 )
+0x0433    -- 0x5B()
+0x0434    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x0435    op00_Return()
+
+Actor_0x10:on_start:
+0x0436    -- 0xBC_ActorNoModelInit()
+0x0437    op99()
+0x0438    -- 0x61( ???=-337, ???=74, ???=407 ) -- exp0x1
+0x0440    -- 0x65( ???=252, ???=-514, ???=-318 ) -- exp0x1
+0x0448    -- 0x63( ???=-337, ???=74, ???=407 ) -- exp0x1
+0x0450    -- 0xA3()
+0x0458    opAC_MoveCamera( control=0x0, steps=0 )
+0x045c    opAC_MoveCamera( control=0x1, steps=0 )
+0x0460    -- 0x2A()
+0x0461    op00_Return()
+
+Actor_0x10:on_update:
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x0462    op00_Return()
+
+Actor_0x10:event_0x04:
+0x0463    op26_Wait( time=30 )
+0x0466    -- 0x61( ???=-337, ???=74, ???=407 ) -- exp0x1
+0x046e    -- 0x65( ???=252, ???=-514, ???=-318 ) -- exp0x1
+0x0476    -- 0x63( ???=-357, ???=93, ???=-37 ) -- exp0x1
+0x047e    -- 0xA3()
+0x0486    opAC_MoveCamera( control=0x0, steps=120 )
+0x048a    opAC_MoveCamera( control=0x1, steps=120 )
+0x048e    op00_Return()
+
+Actor_0x10:event_0x05:
+0x048f    -- 0x61( ???=-134, ???=363, ???=100 ) -- exp0x1
+0x0497    -- 0x65( ???=598, ???=-207, ???=-333 ) -- exp0x1
+0x049f    -- 0x63( ???=-134, ???=363, ???=100 ) -- exp0x1
+0x04a7    -- 0xA3()
+0x04af    opAC_MoveCamera( control=0x0, steps=0 )
+0x04b3    opAC_MoveCamera( control=0x1, steps=0 )
+0x04b7    op26_Wait( time=20 )
+0x04ba    -- 0x60()
+0x04bb    -- 0x64() -- exp0x1
+0x04bc    -- 0x63( ???=-161, ???=386, ???=-23 ) -- exp0x1
+0x04c4    -- 0xA3()
+0x04cc    opAC_MoveCamera( control=0x0, steps=180 )
+0x04d0    opAC_MoveCamera( control=0x1, steps=180 )
+0x04d4    op00_Return()
+
+Actor_0x10:event_0x06:
+0x04d5    -- 0x61( ???=450, ???=564, ???=75 ) -- exp0x1
+0x04dd    -- 0x65( ???=-274, ???=-116, ???=-173 ) -- exp0x1
+0x04e5    -- 0x63( ???=450, ???=564, ???=75 ) -- exp0x1
+0x04ed    -- 0xA3()
+0x04f5    opAC_MoveCamera( control=0x0, steps=0 )
+0x04f9    opAC_MoveCamera( control=0x1, steps=0 )
+0x04fd    op26_Wait( time=30 )
+0x0500    -- 0x60()
+0x0501    -- 0x64() -- exp0x1
+0x0502    -- 0x63( ???=166, ???=170, ???=12 ) -- exp0x1
+0x050a    -- 0xA3()
+0x0512    opAC_MoveCamera( control=0x0, steps=120 )
+0x0516    opAC_MoveCamera( control=0x1, steps=120 )
+0x051a    op00_Return()
+
+Actor_0x10:event_0x07:
+0x051b    -- 0x61( ???=243, ???=-93, ???=320 ) -- exp0x1
+0x0523    -- 0x65( ???=-504, ???=-60, ???=-365 ) -- exp0x1
+0x052b    -- 0x63( ???=243, ???=-93, ???=320 ) -- exp0x1
+0x0533    -- 0xA3()
+0x053b    opAC_MoveCamera( control=0x0, steps=0 )
+0x053f    opAC_MoveCamera( control=0x1, steps=0 )
+0x0543    opEF_MoveCameraSync()
+0x0546    op00_Return()
+
+Actor_0x10:event_0x08:
+0x0547    -- 0x61( ???=258, ???=472, ???=34 ) -- exp0x1
+0x054f    -- 0x65( ???=-379, ???=-248, ???=-267 ) -- exp0x1
+0x0557    -- 0x63( ???=258, ???=472, ???=34 ) -- exp0x1
+0x055f    -- 0xA3()
+0x0567    opAC_MoveCamera( control=0x0, steps=0 )
+0x056b    opAC_MoveCamera( control=0x1, steps=0 )
+0x056f    opEF_MoveCameraSync()
+0x0572    op00_Return()
+
+Actor_0x10:event_0x09:
+0x0573    -- 0x61( ???=-14, ???=-174, ???=506 ) -- exp0x1
+0x057b    -- 0x65( ???=-236, ???=51, ???=-467 ) -- exp0x1
+0x0583    -- 0x63( ???=-14, ???=-174, ???=506 ) -- exp0x1
+0x058b    -- 0xA3()
+0x0593    opAC_MoveCamera( control=0x0, steps=0 )
+0x0597    opAC_MoveCamera( control=0x1, steps=0 )
+0x059b    opEF_MoveCameraSync()
+0x059e    op00_Return()
+
+Actor_0x10:event_0x0a:
+0x059f    -- 0x61( ???=401, ???=-207, ???=49 ) -- exp0x1
+0x05a7    -- 0x65( ???=-213, ???=580, ???=-181 ) -- exp0x1
+0x05af    -- 0x63( ???=401, ???=-207, ???=49 ) -- exp0x1
+0x05b7    -- 0xA3()
+0x05bf    opAC_MoveCamera( control=0x0, steps=0 )
+0x05c3    opAC_MoveCamera( control=0x1, steps=0 )
+0x05c7    opEF_MoveCameraSync()
+0x05ca    op00_Return()
+
+Actor_0x10:event_0x0b:
+0x05cb    op26_Wait( time=30 )
+0x05ce    -- 0x60()
+0x05cf    -- 0x64() -- exp0x1
+0x05d0    -- 0x63( ???=172, ???=-413, ???=67 ) -- exp0x1
+0x05d8    -- 0xA3()
+0x05e0    opAC_MoveCamera( control=0x0, steps=150 )
+0x05e4    opAC_MoveCamera( control=0x1, steps=150 )
+0x05e8    opEF_MoveCameraSync()
+0x05eb    op00_Return()
+
+Actor_0x10:event_0x0c:
+0x05ec    -- 0x61( ???=-284, ???=494, ???=83 ) -- exp0x1
+0x05f4    -- 0x65( ???=198, ???=-391, ???=-120 ) -- exp0x1
+0x05fc    -- 0x63( ???=-284, ???=494, ???=83 ) -- exp0x1
+0x0604    -- 0xA3()
+0x060c    opAC_MoveCamera( control=0x0, steps=0 )
+0x0610    opAC_MoveCamera( control=0x1, steps=0 )
+0x0614    op00_Return()
+0x0615    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x8046, flag=0xac )

@@ -779,4 +779,68 @@ Actor_0x1a:on_update:
 0x0624    op02_JumpToConditional( val1=mem[0xa], val2=0, condition="val1 == val2", address_if_false=0x75f )
 0x062c    mem[0x418] = true -- op36
 0x062f    -- 0xFE54()
-0x0631    -- MISSING OPCODE 0xFE0b
+0x0631    -- 0xFE0B()
+0x0635    op02_JumpToConditional( val1=(s)mem[0xae], val2=1, condition="val1 == val2", address_if_false=0x658 )
+0x063d    mem[0xae] = 2 -- op35
+0x0643    op05_CallFunction( address=0x761 )
+0x0646    -- 0x75( ???=29 )
+0x0649    -- 0xFE84()
+0x0653    -- 0xFE7F()
+0x0655    op01_JumpTo( address=0x6da )
+0x0658    op02_JumpToConditional( val1=(s)mem[0xae], val2=2, condition="val1 == val2", address_if_false=0x67b )
+0x0660    mem[0xae] = 3 -- op35
+0x0666    op05_CallFunction( address=0x761 )
+0x0669    -- 0x75( ???=29 )
+0x066c    -- 0xFE84()
+0x0676    -- 0xFE7F()
+0x0678    op01_JumpTo( address=0x6da )
+0x067b    op02_JumpToConditional( val1=(s)mem[0xae], val2=3, condition="val1 == val2", address_if_false=0x69e )
+0x0683    mem[0xae] = 4 -- op35
+0x0689    op05_CallFunction( address=0x761 )
+0x068c    -- 0x75( ???=29 )
+0x068f    -- 0xFE84()
+0x0699    -- 0xFE7F()
+0x069b    op01_JumpTo( address=0x6da )
+0x069e    op02_JumpToConditional( val1=(s)mem[0xae], val2=4, condition="val1 == val2", address_if_false=0x6c1 )
+0x06a6    mem[0xae] = 5 -- op35
+0x06ac    op05_CallFunction( address=0x761 )
+0x06af    -- 0x75( ???=20 )
+0x06b2    -- 0xFE84()
+0x06bc    -- 0xFE7F()
+0x06be    op01_JumpTo( address=0x6da )
+0x06c1    op02_JumpToConditional( val1=(s)mem[0xae], val2=5, condition="val1 == val2", address_if_false=0x6da )
+0x06c9    mem[0xae] = 6 -- op35
+0x06cf    mem[0x418] = false -- op37
+0x06d2    -- 0xFE54()
+0x06d4    op29_ActorTurnOff( actor_id=Actor_0x1a )
+0x06d6    -- 0x5B()
+0x06d7    op01_JumpTo( address=0x6da )
+0x06da    op02_JumpToConditional( val1=(s)mem[0x3c], val2=130, condition="val1 == val2", address_if_false=0x6e8 )
+0x06e2    -- 0x75( ???=17 )
+0x06e5    op01_JumpTo( address=0x6eb )
+0x06e8    -- 0x75( ???=60 )
+0x06eb    opB4_FadeOut()
+0x06ee    mem[0x41c] = (s)mem[0x46] -- op35
+0x06f4    -- 0xFE55()
+0x06f6    -- 0xFE87()
+0x06f8    opB3_FadeIn()
+0x06fb    -- 0xFE19( char_id=0x0 )
+0x06fe    opFE3A( char_id=3 )
+0x0702    op02_JumpToConditional( val1=(s)mem[0x41c], val2=3, condition="val1 == val2", address_if_false=0x71b )
+0x070a    mem[0xae] = 6 -- op35
+0x0710    mem[0x418] = false -- op37
+0x0713    -- 0xFE54()
+0x0715    op29_ActorTurnOff( actor_id=Actor_0x1a )
+0x0717    -- 0x5B()
+0x0718    op01_JumpTo( address=0x721 )
+0x071b    mem[0xb6] = (s)mem[0xae] -- op35
+0x0721    mem[0x41a] = (s)mem[0x44] -- op35
+0x0727    op02_JumpToConditional( val1=(s)mem[0x41a], val2=2, condition="val1 < val2", address_if_false=0x738 )
+0x072f    mem[0x41a] = 1 -- op35
+0x0735    op01_JumpTo( address=0x74f )
+0x0738    op02_JumpToConditional( val1=(s)mem[0x44], val2=30, condition="val1 > val2", address_if_false=0x749 )
+0x0740    mem[0x41a] = 15 -- op35
+0x0746    op01_JumpTo( address=0x74f )
+0x0749    opDF_VariableDivide( address=0x41a, value=(vf40)0x0002, flag=0x40 )
+0x074f    -- 0x94()
+0x0754    -- MISSING OPCODE 0x95

@@ -1035,4 +1035,13 @@ Actor_0x25:on_update:
 0x0712    op26_Wait( time=10 )
 0x0715    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x16, flags=0 )
 0x071b    mem[0x102] = 50 -- op35
-0x0721    -- MISSING OPCODE 0xFE0b
+0x0721    -- 0xFE0B()
+0x0725    -- 0xFE24()
+0x0727    -- 0xFE51()
+0x0729    -- 0x14()
+0x072a    op00_Return()
+
+Actor_0x25:on_talk:
+
+Actor_0x25:on_push:
+0x072b    op00_Return()

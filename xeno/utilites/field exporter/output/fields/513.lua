@@ -400,4 +400,37 @@ Actor_0x06:on_update:
 0x040b    op01_JumpTo( address=0x41a )
 0x040e    -- 0x19_ActorSetPosition( x=(vf80)0x04e3, z=(vf40)0x04e9, flag=(flag)0xc0 )
 0x0414    op69_ActorSetRotation( rot=1 )
-0x0417    -- MISSING OPCODE 0xFEc3
+0x0417    -- 0xFEC3()
+0x0419    -- 0x5B()
+0x041a    mem[0x40c] = true -- op36
+0x041d    -- 0xFE01()
+0x041f    op00_Return()
+
+Actor_0x06:on_talk:
+
+Actor_0x06:on_push:
+0x0420    op00_Return()
+
+Actor_0x06:event_0x04:
+0x0421    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0427    op00_Return()
+
+Actor_0x06:event_0x05:
+0x0428    op2C_SpritePlayAnim( anim_id=0x2 )
+0x042a    op00_Return()
+
+Actor_0x06:event_0x06:
+0x042b    op2C_SpritePlayAnim( anim_id=0x3 )
+0x042d    op00_Return()
+
+Actor_0x06:event_0x07:
+0x042e    op2C_SpritePlayAnim( anim_id=0xff )
+0x0430    op00_Return()
+
+Actor_0x06:event_0x08:
+0x0431    -- 0xFE5E()
+0x0435    op26_Wait( time=15 )
+0x0438    mem[0x40e] = 128 -- op35
+0x043e    op02_JumpToConditional( val1=(s)mem[0x40e], val2=-1, condition="val1 > val2", address_if_false=0x45b )
+0x0446    mem[0x48] = (s)mem[0x40e] -- op35
+0x044c    -- MISSING OPCODE 0xFE5f

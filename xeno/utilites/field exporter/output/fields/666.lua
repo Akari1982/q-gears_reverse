@@ -491,4 +491,20 @@ Actor_0x0d:on_start:
 0x04ed    -- 0x2A()
 0x04ee    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x507 )
 0x04f6    -- 0x19_ActorSetPosition( x=(vf80)0x0132, z=(vf40)0xeec7, flag=(flag)0xc0 )
-0x04fc    -- MISSING OPCODE 0xFE5e
+0x04fc    -- 0xFE5E()
+0x0500    -- 0x5F( ???=0x3 )
+0x0502    op2C_SpritePlayAnim( anim_id=0x2 )
+0x0504    op01_JumpTo( address=0x509 )
+0x0507    op29_ActorTurnOff( actor_id=self )
+0x0509    op00_Return()
+
+Actor_0x0d:on_update:
+
+Actor_0x0d:on_talk:
+
+Actor_0x0d:on_push:
+0x050a    op00_Return()
+
+Actor_0x0e:on_start:
+0x050b    -- 0x0B_InitNPC( 0 )
+0x050e    -- MISSING OPCODE 0xFEa6

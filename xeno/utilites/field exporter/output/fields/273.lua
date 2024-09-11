@@ -2259,4 +2259,8 @@ Actor_0x04:on_start:
 
 Actor_0x04:on_update:
 0x2517    op02_JumpToConditional( val1=(s)mem[0x2], val2=6, condition="val1 == val2", address_if_false=0x253f )
-0x251f    -- MISSING OPCODE 0xFE5e
+0x251f    -- 0xFE5E()
+0x2523    mem[0x404] = 0 -- op35
+0x2529    -- 0xFE09( ???=1 )
+0x252d    op26_Wait( time=0 )
+0x2530    -- MISSING OPCODE 0xFE5f

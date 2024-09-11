@@ -38,4 +38,9 @@ Actor_0x00:on_update:
 0x0053    mem[0x40a] &= ~(1 << 13) -- op3a
 0x0059    mem[0x40a] &= ~(1 << 14) -- op3a
 0x005f    -- 0xFEBC()
-0x0064    -- MISSING OPCODE 0xFEba
+0x0064    -- 0xFEBA()
+0x006f    -- 0x87_SetProgress( progress=340 )
+0x0072    op26_Wait( time=90 )
+0x0075    opB3_FadeIn()
+0x0078    op26_Wait( time=60 )
+0x007b    -- MISSING OPCODE 0xFEde

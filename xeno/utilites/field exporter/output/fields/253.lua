@@ -105,4 +105,35 @@ Actor_0x05:on_start:
 0x008f    -- 0x46()
 0x0090    op02_JumpToConditional( val1=(s)mem[0x184], val2=16, condition="val1 & val2", address_if_false=0x9b )
 0x0098    op01_JumpTo( address=0x9e )
-0x009b    -- MISSING OPCODE 0xd8
+0x009b    -- 0xD8()
+0x009e    op00_Return()
+
+Actor_0x05:on_update:
+0x009f    op00_Return()
+
+Actor_0x05:on_talk:
+0x00a0    op02_JumpToConditional( val1=(s)mem[0x184], val2=16, condition="val1 & val2", address_if_false=0xac )
+0x00a8    op00_Return()
+0x00a9    op01_JumpTo( address=0xf5 )
+0x00ac    op02_JumpToConditional( val1=(s)mem[0x184], val2=8, condition="val1 & val2", address_if_false=0xf0 )
+0x00b4    op74_SoundPlayFixedVolume( sound_id=250 )
+0x00b7    -- 0xC0( ???=500 )
+0x00ba    op26_Wait( time=1 )
+0x00bd    -- 0xC0( ???=500 )
+0x00c0    op26_Wait( time=1 )
+0x00c3    -- 0xC0( ???=500 )
+0x00c6    mem[0x184] |= 1 << 4 -- op3a
+0x00cc    op74_SoundPlayFixedVolume( sound_id=55 )
+0x00cf    -- 0x8C()
+0x00d2    opD0_MessageSettings( x=0, y=0, letters=16, rows=3, flags=0 )
+0x00dd    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x00e1    op9C_MessageSync()
+0x00e2    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=0 )
+0x00ed    op01_JumpTo( address=0xf5 )
+0x00f0    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x00f4    op9C_MessageSync()
+0x00f5    op00_Return()
+
+Actor_0x05:on_push:
+0x00f6    op00_Return()
+0x00f7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

@@ -43,4 +43,66 @@ Actor_0x00:on_start:
 0x009d    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0xab )
 0x00a5    mem[0x2ca] &= ~(1 << 0) -- op3a
 0x00ab    -- 0x75( ???=56 )
-0x00ae    -- MISSING OPCODE 0xFEb7
+0x00ae    -- 0xFEB7()
+0x00b2    op00_Return()
+
+Actor_0x00:on_update:
+0x00b3    -- 0x84_ProgressLessEqualJumpTo( value=298, jump=0xbb )
+0x00b8    -- 0x87_SetProgress( progress=298 )
+0x00bb    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x1db )
+0x00c3    -- 0xFE54()
+0x00c5    mem[0x2ca] &= ~(1 << 0) -- op3a
+0x00cb    op25_ActorDisable( actor_id=party2 )
+0x00cd    op25_ActorDisable( actor_id=party3 )
+0x00cf    op08_CallActorEventStartSync( actor_id=Actor_0x04, event=event_0x05, priority=0x02 )
+0x00d2    op99()
+0x00d3    mem[0x43a] = 0 -- op35
+0x00d9    -- 0x63( ???=-82, ???=-726, ???=-2455 ) -- exp0x1
+0x00e1    -- 0xA3()
+0x00e9    op05_CallFunction( address=0x4a10 )
+0x00ec    op26_Wait( time=30 )
+0x00ef    mem[0x43a] = 160 -- op35
+0x00f5    -- 0x63( ???=-23, ???=-615, ???=-1163 ) -- exp0x1
+0x00fd    -- 0xA3()
+0x0105    op05_CallFunction( address=0x4a10 )
+0x0108    opFE9B_SlideShow1( steps=60 )
+0x010c    mem[0x40c] = true -- op36
+0x010f    -- 0xA0()
+0x0116    -- 0x9A()
+0x0119    op08_CallActorEventStartSync( actor_id=Actor_0x04, event=event_0x06, priority=0x02 )
+0x011c    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x127 )
+0x0124    op01_JumpTo( address=0x11c )
+0x0127    op26_Wait( time=0 )
+0x012a    mem[0x408] = false -- op37
+0x012d    op26_Wait( time=20 )
+0x0130    opC7_CameraRotRight( steps=60 )
+0x0133    op26_Wait( time=60 )
+0x0136    opC7_CameraRotRight( steps=45 )
+0x0139    op26_Wait( time=45 )
+0x013c    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x14d )
+0x0144    opC7_CameraRotRight( steps=40 )
+0x0147    op26_Wait( time=40 )
+0x014a    op01_JumpTo( address=0x13c )
+0x014d    op26_Wait( time=0 )
+0x0150    mem[0x408] = false -- op37
+0x0153    opFE9B_SlideShow1( steps=60 )
+0x0157    op99()
+0x0158    mem[0x43a] = 0 -- op35
+0x015e    -- 0x63( ???=-13, ???=-570, ???=-1432 ) -- exp0x1
+0x0166    -- 0xA3()
+0x016e    op05_CallFunction( address=0x4a10 )
+0x0171    op08_CallActorEventStartSync( actor_id=Actor_0x04, event=event_0x07, priority=0x02 )
+0x0174    mem[0x43a] = 120 -- op35
+0x017a    -- 0x63( ???=-13, ???=-190, ???=-210 ) -- exp0x1
+0x0182    -- 0xA3()
+0x018a    op05_CallFunction( address=0x4a10 )
+0x018d    mem[0x43a] = 40 -- op35
+0x0193    -- 0x63( ???=0, ???=-198, ???=-99 ) -- exp0x1
+0x019b    -- 0xA3()
+0x01a3    op05_CallFunction( address=0x4a10 )
+0x01a6    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x1b1 )
+0x01ae    op01_JumpTo( address=0x1a6 )
+0x01b1    opB4_FadeOut()
+0x01b4    op26_Wait( time=50 )
+0x01b7    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x04, priority=0x03 )
+0x01ba    -- MISSING OPCODE 0xFEb5

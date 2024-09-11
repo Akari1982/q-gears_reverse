@@ -18,4 +18,110 @@ unknown = [
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0xFE52()
-0x000b    -- MISSING OPCODE 0xFEb7
+0x000b    -- 0xFEB7()
+0x000f    -- 0x2A()
+0x0010    -- 0xFE1E()
+0x0013    -- 0xFE41()
+0x0017    -- 0xFE41()
+0x001b    -- 0xFE41()
+0x001f    mem[0x406] = 1 -- op35
+0x0025    mem[0x408] = -155 -- op35
+0x002b    mem[0x40a] = -243 -- op35
+0x0031    mem[0x40c] = 0 -- op35
+0x0037    mem[0x40e] = 6 -- op35
+0x003d    mem[0x410] = 268 -- op35
+0x0043    op02_JumpToConditional( val1=(s)mem[0x190], val2=8192, condition="val1 & val2", address_if_false=0x51 )
+0x004b    mem[0x412] = 1 -- op35
+0x0051    op00_Return()
+
+Actor_0x00:on_update:
+0x0052    -- 0xFE52()
+0x0054    op02_JumpToConditional( val1=(s)mem[0x22], val2=200, condition="val1 > val2", address_if_false=0x61 )
+0x005c    -- 0x98_MapLoad( field_id=16883, value=5 )
+0x0061    op00_Return()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0062    op00_Return()
+
+Actor_0x00:event_0x04:
+0x0063    mem[0x190] |= 1 << 13 -- op3a
+0x0069    op00_Return()
+
+Actor_0x01:on_start:
+0x006a    -- 0x5C()
+0x006d    op00_Return()
+
+Actor_0x01:on_update:
+0x006e    opC6_ExpandRun() -- exp0x20
+0x006f    -- 0xFEC1()
+0x0077    op01_JumpTo( address=0x7a )
+0x007a    -- 0xA6()
+0x007d    op01_JumpTo( address=0x11c )
+0x0080    op01_JumpTo( address=0x11c )
+0x0083    op01_JumpTo( address=0x11c )
+0x0086    op01_JumpTo( address=0x119 )
+0x0089    op01_JumpTo( address=0x11d )
+0x008c    op01_JumpTo( address=0x33e )
+0x008f    op01_JumpTo( address=0x55f )
+0x0092    op01_JumpTo( address=0x5ce )
+0x0095    op01_JumpTo( address=0x7ef )
+0x0098    op01_JumpTo( address=0xa10 )
+0x009b    op01_JumpTo( address=0xa7f )
+0x009e    op01_JumpTo( address=0xca0 )
+0x00a1    op01_JumpTo( address=0xec1 )
+0x00a4    op01_JumpTo( address=0xf30 )
+0x00a7    op01_JumpTo( address=0x1151 )
+0x00aa    op01_JumpTo( address=0x1372 )
+0x00ad    op01_JumpTo( address=0x13e1 )
+0x00b0    op01_JumpTo( address=0x1602 )
+0x00b3    op01_JumpTo( address=0x17bf )
+0x00b6    op01_JumpTo( address=0x182e )
+0x00b9    op01_JumpTo( address=0x1a4f )
+0x00bc    op01_JumpTo( address=0x1bec )
+0x00bf    op01_JumpTo( address=0x1c5b )
+0x00c2    op01_JumpTo( address=0x1e7c )
+0x00c5    op01_JumpTo( address=0x1f95 )
+0x00c8    op01_JumpTo( address=0x2001 )
+0x00cb    op01_JumpTo( address=0x2070 )
+0x00ce    op01_JumpTo( address=0x20df )
+0x00d1    op01_JumpTo( address=0x214e )
+0x00d4    op01_JumpTo( address=0x236f )
+0x00d7    op01_JumpTo( address=0x2590 )
+0x00da    op01_JumpTo( address=0x25ff )
+0x00dd    op01_JumpTo( address=0x2820 )
+0x00e0    op01_JumpTo( address=0x29a9 )
+0x00e3    op01_JumpTo( address=0x2a18 )
+0x00e6    op01_JumpTo( address=0x2c39 )
+0x00e9    op01_JumpTo( address=0x2e5a )
+0x00ec    op01_JumpTo( address=0x2ec9 )
+0x00ef    op01_JumpTo( address=0x30ea )
+0x00f2    op01_JumpTo( address=0x330b )
+0x00f5    op01_JumpTo( address=0x337a )
+0x00f8    op01_JumpTo( address=0x359b )
+0x00fb    op01_JumpTo( address=0x37bc )
+0x00fe    op01_JumpTo( address=0x382b )
+0x0101    op01_JumpTo( address=0x39c8 )
+0x0104    op01_JumpTo( address=0x3b65 )
+0x0107    op01_JumpTo( address=0x3bd4 )
+0x010a    op01_JumpTo( address=0x3df5 )
+0x010d    op01_JumpTo( address=0x4016 )
+0x0110    op01_JumpTo( address=0x4085 )
+0x0113    op01_JumpTo( address=0x4152 )
+0x0116    op01_JumpTo( address=0x421f )
+0x0119    opFE97_ParticleReset( all=0x0 )
+0x011c    op00_Return()
+0x011d    opC6_ExpandRun() -- exp0x20
+0x011e    opFE97_ParticleReset( all=0x0 )
+0x0121    -- 0xFEC2()
+0x0126    -- 0x80()
+0x012b    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=3, wait=0, ttl=5 )
+0x0135    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffa6, z=(vf20)0x000a, speed_x=(vf10)0x0000, speed_y=(vf08)0xffa6, speed_z=(vf04)0x0014, flag=(flag)0xfc )
+0x0144    opFE92_ParticleSpeed( speed=(vf80)0x3a98, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x0153    opFE93_ParticleWaitTtl( s_wait=1, var2=3, sprite_id=0, var4=1, var5=2 )
+0x015f    opFE94_ParticleTranslation( trans_x=(vf80)0x02bc, trans_y=(vf40)0x02bc, trans_add_x=(vf20)0xfff6, trans_add_y=(vf10)0xfff6, flag=(flag)0xf0 )
+0x016a    opFE95_ParticleColour( r=(vf80)0x0050, g=(vf40)0x0064, b=(vf20)0x005a, r_add=(vf10)0xfff2, g_add=(vf10)0xfff7, b_add=(vf10)0xfff2, flag=(flag)0xfc )
+0x0179    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x0181    opFEBD_ParticleSpawnSettings( settings=0 )
+0x0189    -- MISSING OPCODE 0xFEc8

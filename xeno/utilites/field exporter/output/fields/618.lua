@@ -137,4 +137,7 @@ Actor_0x01:event_0x0a:
 0x0262    op00_Return()
 
 Actor_0x01:event_0x0b:
-0x0263    -- MISSING OPCODE 0xFE5e
+0x0263    -- 0xFE5E()
+0x0267    mem[0x402] = 128 -- op35
+0x026d    op02_JumpToConditional( val1=(s)mem[0x402], val2=0, condition="val1 > val2", address_if_false=0x287 )
+0x0275    -- MISSING OPCODE 0xFE5f

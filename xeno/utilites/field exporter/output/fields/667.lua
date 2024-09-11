@@ -668,4 +668,41 @@ Actor_0x13:on_update:
 0x0c75    opFEBD_ParticleSpawnSettings( settings=0 )
 0x0c7d    opFE96_ParticleCreate()
 0x0c7f    mem[0x454] = 1 -- op35
-0x0c85    -- MISSING OPCODE 0xFEa8
+0x0c85    -- 0xFEA8()
+0x0c8d    -- 0xFE1C()
+0x0c96    op00_Return()
+
+Actor_0x13:on_talk:
+0x0c97    op00_Return()
+
+Actor_0x13:on_push:
+0x0c98    op00_Return()
+
+Actor_0x14:on_start:
+0x0c99    -- 0xBC_ActorNoModelInit()
+0x0c9a    -- 0x2A()
+0x0c9b    op00_Return()
+
+Actor_0x14:on_update:
+
+Actor_0x14:on_talk:
+
+Actor_0x14:on_push:
+0x0c9c    op00_Return()
+
+Actor_0x14:event_0x04:
+0x0c9d    op26_Wait( time=60 )
+0x0ca0    op29_ActorTurnOff( actor_id=Actor_0x0d )
+0x0ca2    op26_Wait( time=60 )
+0x0ca5    op29_ActorTurnOff( actor_id=Actor_0x0e )
+0x0ca7    op29_ActorTurnOff( actor_id=Actor_0x0b )
+0x0ca9    op26_Wait( time=60 )
+0x0cac    op29_ActorTurnOff( actor_id=Actor_0x0c )
+0x0cae    op29_ActorTurnOff( actor_id=Actor_0x09 )
+0x0cb0    op26_Wait( time=60 )
+0x0cb3    op29_ActorTurnOff( actor_id=Actor_0x0a )
+0x0cb5    op29_ActorTurnOff( actor_id=Actor_0x07 )
+0x0cb7    op26_Wait( time=60 )
+0x0cba    op29_ActorTurnOff( actor_id=Actor_0x08 )
+0x0cbc    op00_Return()
+0x0cbd    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x1207, flag=0x29 )

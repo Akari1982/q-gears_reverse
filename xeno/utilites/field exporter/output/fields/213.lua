@@ -4376,4 +4376,105 @@ function:
 0x3a83    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x3a86    op01_JumpTo( address=0x3a89 )
 0x3a89    op0D_Return()
-0x3a8a    -- MISSING OPCODE 0x68
+0x3a8a    -- 0x68()
+0x3a8e    op26_Wait( time=1 )
+0x3a91    -- 0x68()
+0x3a95    op26_Wait( time=1 )
+0x3a98    -- 0x68()
+0x3a9c    op26_Wait( time=1 )
+0x3a9f    -- 0x68()
+0x3aa3    op26_Wait( time=1 )
+0x3aa6    -- 0x68()
+0x3aaa    op26_Wait( time=1 )
+0x3aad    -- 0x68()
+0x3ab1    op26_Wait( time=1 )
+0x3ab4    -- 0x68()
+0x3ab8    op26_Wait( time=1 )
+0x3abb    -- 0x68()
+0x3abf    op74_SoundPlayFixedVolume( sound_id=55 )
+0x3ac2    op0D_Return()
+0x3ac3    -- 0x68()
+0x3ac7    op26_Wait( time=1 )
+0x3aca    -- 0x68()
+0x3ace    op26_Wait( time=1 )
+0x3ad1    -- 0x68()
+0x3ad5    op26_Wait( time=1 )
+0x3ad8    -- 0x68()
+0x3adc    op26_Wait( time=1 )
+0x3adf    -- 0x68()
+0x3ae3    op26_Wait( time=1 )
+0x3ae6    -- 0x68()
+0x3aea    op26_Wait( time=1 )
+0x3aed    -- 0x68()
+0x3af1    op26_Wait( time=1 )
+0x3af4    -- 0x68()
+0x3af8    op74_SoundPlayFixedVolume( sound_id=209 )
+0x3afb    op0D_Return()
+0x3afc    op31_JumpIfButtonNotPressed( buttons=Circle, jump_to=0x3b04 )
+0x3b01    op01_JumpTo( address=0x3b07 )
+0x3b04    op01_JumpTo( address=0x3afc )
+0x3b07    op0D_Return()
+
+function:
+
+function:
+
+function:
+
+function:
+0x3b08    opB4_FadeOut()
+0x3b0b    -- 0x75( ???=13 )
+0x3b0e    -- 0xFEA2()
+0x3b10    op26_Wait( time=240 )
+0x3b13    op26_Wait( time=90 )
+0x3b16    -- 0x79()
+0x3b17    -- 0x7A()
+0x3b18    opB3_FadeIn()
+0x3b1b    op26_Wait( time=30 )
+0x3b1e    op0D_Return()
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+
+function:
+0x3b1f    opB4_FadeOut()
+0x3b22    -- 0x75( ???=12 )
+0x3b25    -- 0xFEA2()
+0x3b27    op26_Wait( time=170 )
+0x3b2a    op02_JumpToConditional( val1=(s)mem[0x242], val2=64, condition="val1 & val2", address_if_false=0x3b3d )
+0x3b32    -- 0x7C()
+0x3b36    -- 0x7E()
+0x3b3a    op01_JumpTo( address=0x3b6b )
+0x3b3d    op02_JumpToConditional( val1=(s)mem[0x242], val2=32, condition="val1 & val2", address_if_false=0x3b50 )
+0x3b45    -- 0x7C()
+0x3b49    -- 0x7E()
+0x3b4d    op01_JumpTo( address=0x3b6b )
+0x3b50    op02_JumpToConditional( val1=(s)mem[0x242], val2=16, condition="val1 & val2", address_if_false=0x3b63 )
+0x3b58    -- 0x7C()
+0x3b5c    -- 0x7E()
+0x3b60    op01_JumpTo( address=0x3b6b )
+0x3b63    -- 0x7C()
+0x3b67    -- 0x7E()
+0x3b6b    opB3_FadeIn()
+0x3b6e    op26_Wait( time=30 )
+0x3b71    op0D_Return()
+0x3b72    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6dba, ???=(vf40)0xebde, flag=0xe8 )

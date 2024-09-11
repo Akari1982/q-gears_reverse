@@ -621,4 +621,59 @@ Actor_0x10:on_start:
 0x0641    -- 0x1F( ???=0x10 )
 0x0643    op20_ActorSetFlags0( flags=13 )
 0x0646    opFE0D_MessageSetFace( char_id=4 )
-0x064a    -- MISSING OPCODE 0xFEc3
+0x064a    -- 0xFEC3()
+0x064c    op00_Return()
+0x064d    -- 0xBC_ActorNoModelInit()
+0x064e    -- 0x2A()
+0x064f    op00_Return()
+
+Actor_0x10:on_update:
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x0650    op00_Return()
+
+Actor_0x10:event_0x04:
+0x0651    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0657    op00_Return()
+
+Actor_0x10:event_0x05:
+0x0658    op2C_SpritePlayAnim( anim_id=0xa )
+0x065a    op00_Return()
+
+Actor_0x11:on_start:
+0x065b    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x667 )
+0x0663    op01_JumpTo( address=0x6b9 )
+0x0666    op00_Return()
+0x0667    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0x673 )
+0x066f    op01_JumpTo( address=0x6b9 )
+0x0672    op00_Return()
+0x0673    -- 0xBC_ActorNoModelInit()
+0x0674    op29_ActorTurnOff( actor_id=self )
+0x0676    op00_Return()
+
+Actor_0x11:on_update:
+0x0677    op02_JumpToConditional( val1=(s)mem[0x422], val2=0, condition="val1 == val2", address_if_false=0x689 )
+0x067f    -- 0x5A()
+0x0680    -- 0xFE3C( ???=0, ???=13 )
+0x0686    op01_JumpTo( address=0x6b7 )
+0x0689    op02_JumpToConditional( val1=(s)mem[0x422], val2=1, condition="val1 == val2", address_if_false=0x69b )
+0x0691    -- 0x5A()
+0x0692    -- 0xFE3C( ???=0, ???=4 )
+0x0698    op01_JumpTo( address=0x6b7 )
+0x069b    op02_JumpToConditional( val1=(s)mem[0x422], val2=15, condition="val1 == val2", address_if_false=0x6b4 )
+0x06a3    -- 0x5A()
+0x06a4    -- 0xFE3C( ???=0, ???=8 )
+0x06aa    -- 0x5A()
+0x06ab    -- 0xFE3C( ???=0, ???=4 )
+0x06b1    op01_JumpTo( address=0x6b7 )
+0x06b4    -- 0xBC_ActorNoModelInit()
+0x06b5    op29_ActorTurnOff( actor_id=self )
+0x06b7    -- 0x5B()
+
+Actor_0x11:on_talk:
+
+Actor_0x11:on_push:
+0x06b8    op00_Return()
+0x06b9    -- MISSING OPCODE 0xFEc7

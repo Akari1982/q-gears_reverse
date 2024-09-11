@@ -274,4 +274,82 @@ Actor_0x0d:on_talk:
 0x019f    -- 0x5F( ???=0x2 )
 0x01a1    mem[0x102] = 11 -- op35
 0x01a7    -- 0xFE0A( ???=0x1280 )
-0x01ab    -- MISSING OPCODE 0xa5
+0x01ab    -- 0xA5()
+0x01ae    op26_Wait( time=10 )
+0x01b1    -- 0x98_MapLoad( field_id=95, value=3 )
+0x01b6    op00_Return()
+0x01b7    op00_Return()
+
+Actor_0x0d:on_push:
+0x01b8    op00_Return()
+
+Actor_0x0e:on_start:
+0x01b9    -- 0xBC_ActorNoModelInit()
+0x01ba    -- 0x2A()
+0x01bb    op00_Return()
+
+Actor_0x0e:on_update:
+0x01bc    -- 0xC9()
+0x01c0    -- 0xFE54()
+0x01c2    -- 0x5A()
+0x01c3    -- 0xFE0B()
+0x01c7    -- 0x98_MapLoad( field_id=95, value=2 )
+0x01cc    op00_Return()
+
+Actor_0x0e:on_talk:
+0x01cd    op00_Return()
+
+Actor_0x0e:on_push:
+0x01ce    op00_Return()
+
+Actor_0x0f:on_start:
+0x01cf    -- 0xBC_ActorNoModelInit()
+0x01d0    -- 0x2A()
+0x01d1    op00_Return()
+
+Actor_0x0f:on_update:
+0x01d2    -- 0xC9()
+0x01d6    -- 0xFE54()
+0x01d8    -- 0x5A()
+0x01d9    -- 0xFE0A( ???=0x1280 )
+0x01dd    -- 0xA5()
+0x01e0    -- 0x98_MapLoad( field_id=95, value=3 )
+0x01e5    op00_Return()
+
+Actor_0x0f:on_talk:
+0x01e6    op00_Return()
+
+Actor_0x0f:on_push:
+0x01e7    op00_Return()
+
+Actor_0x10:on_start:
+0x01e8    -- 0xBC_ActorNoModelInit()
+0x01e9    op00_Return()
+
+Actor_0x10:on_update:
+0x01ea    op02_JumpToConditional( val1=(s)mem[0x102], val2=7, condition="val1 >= val2", address_if_false=0x200 )
+0x01f2    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 <= val2", address_if_false=0x200 )
+0x01fa    -- 0xFE0E_SoundSetVolume( volume=48, steps=10 )
+0x0200    op00_Return()
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x0201    op00_Return()
+
+Actor_0x11:on_start:
+0x0202    -- 0xBC_ActorNoModelInit()
+0x0203    op02_JumpToConditional( val1=(s)mem[0x102], val2=11, condition="val1 >= val2", address_if_false=0x20f )
+0x020b    op25_ActorDisable( actor_id=Actor_0x0d )
+0x020d    -- 0x27( actor_id=Actor_0x0d )
+0x020f    op00_Return()
+
+Actor_0x11:on_update:
+0x0210    op00_Return()
+
+Actor_0x11:on_talk:
+0x0211    op00_Return()
+
+Actor_0x11:on_push:
+0x0212    op00_Return()
+0x0213    -- 0xE0( actor_id=Actor_0xec, ???=(vf80)0xde6f, ???=(vf40)0xdabf, flag=0xb9 )

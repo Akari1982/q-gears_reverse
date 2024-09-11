@@ -261,4 +261,13 @@ Actor_0x06:on_update:
 0x03dd    opFEBD_ParticleSpawnSettings( settings=0 )
 0x03e5    opFE96_ParticleCreate()
 0x03e7    mem[0x40e] = true -- op36
-0x03ea    -- MISSING OPCODE 0xFEa8
+0x03ea    -- 0xFEA8()
+0x03f2    -- 0xFE1C()
+0x03fb    op00_Return()
+
+Actor_0x06:on_talk:
+0x03fc    op00_Return()
+
+Actor_0x06:on_push:
+0x03fd    op00_Return()
+0x03fe    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0xbf )
