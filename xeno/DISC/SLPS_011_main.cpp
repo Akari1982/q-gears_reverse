@@ -96,7 +96,7 @@ system_psyq_spu_init();
 A0 = 80010004; // file1 allocated memory
 A1 = 80018004; // file2 allocated memory
 A2 = w[80010000]; // ffffffff
-system_cdrom2_init(); // cd init
+system_cdrom2_init();
 
 A0 = 0;
 system_sound_initialize();

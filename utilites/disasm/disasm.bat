@@ -1,1 +1,1 @@
-adisasm 6b9_85f_model.lib 6b9_85f_model.asm -v -b 801dc000 801dc000 -u -a
+adisasm PSX_CD.EXE PSX_CD.asm -v -b 8000F800 8000F800 -u -a
