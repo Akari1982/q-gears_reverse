@@ -90,7 +90,7 @@ Actor_0x00:on_update:
 0x0140    op02_JumpToConditional( val1=(s)mem[0x46], val2=2, condition="val1 == val2", address_if_false=0x16b )
 0x0148    mem[0x406] = (s)mem[0x4] -- op35
 0x014e    mem[0x406] &= 16383 -- op3e
-0x0154    op02_JumpToConditional( val1=(s)mem[0x406], val2=1024, condition="val1 < val2", address_if_false=0x163 )
+0x0154    op02_JumpToConditional( val1=mem[0x406], val2=1024, condition="val1 < val2", address_if_false=0x163 )
 0x015c    -- 0xFE83()
 0x0160    op01_JumpTo( address=0x167 )
 0x0163    -- 0xFE83()

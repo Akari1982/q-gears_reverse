@@ -25,7 +25,7 @@ Actor_0x00:on_start:
 0x003c    mem[0x40e] = 1 -- op35
 0x0042    mem[0x408] = 1 -- op35
 0x0048    mem[0x54] = 2 -- op35
-0x004e    op02_JumpToConditional( val1=(s)mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x5e )
+0x004e    op02_JumpToConditional( val1=mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x5e )
 0x0056    -- 0x80()
 0x005b    op01_JumpTo( address=0x63 )
 0x005e    -- 0x80()
@@ -1821,7 +1821,7 @@ Actor_0x07:event_0x04:
 
 Actor_0x08:on_start:
 0x441a    -- 0xBC_ActorNoModelInit()
-0x441b    op02_JumpToConditional( val1=(s)mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x4426 )
+0x441b    op02_JumpToConditional( val1=mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x4426 )
 0x4423    op01_JumpTo( address=0x4427 )
 0x4426    -- 0x23()
 0x4427    -- 0x2A()
@@ -1849,7 +1849,7 @@ Actor_0x08:event_0x04:
 
 Actor_0x09:on_start:
 0x4463    -- 0xBC_ActorNoModelInit()
-0x4464    op02_JumpToConditional( val1=(s)mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x446f )
+0x4464    op02_JumpToConditional( val1=mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x446f )
 0x446c    op01_JumpTo( address=0x4470 )
 0x446f    -- 0x23()
 0x4470    -- 0x2A()
@@ -1886,7 +1886,7 @@ Actor_0x0a:on_start:
 0x44c5    op00_Return()
 
 Actor_0x0a:on_update:
-0x44c6    op02_JumpToConditional( val1=(s)mem[0x214], val2=2, condition="val1 & val2", address_if_false=0x44f5 )
+0x44c6    op02_JumpToConditional( val1=mem[0x214], val2=2, condition="val1 & val2", address_if_false=0x44f5 )
 0x44ce    -- 0xFE54()
 0x44d0    op07_CallActorEvent( actor_id=Actor_0x0b, event=event_0x04, priority=0x01 )
 0x44d3    op07_CallActorEvent( actor_id=Actor_0x09, event=event_0x04, priority=0x01 )
@@ -1941,7 +1941,7 @@ Actor_0x0b:event_0x04:
 
 Actor_0x0c:on_start:
 0x4540    -- 0xBC_ActorNoModelInit()
-0x4541    op02_JumpToConditional( val1=(s)mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x454b )
+0x4541    op02_JumpToConditional( val1=mem[0x214], val2=4, condition="val1 & val2", address_if_false=0x454b )
 0x4549    op29_ActorTurnOff( actor_id=Actor_0x0c )
 0x454b    mem[0x400] = false -- op37
 0x454e    -- 0x1B()

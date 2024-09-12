@@ -216,7 +216,7 @@ Actor_0x0c:on_talk:
 0x00e2    -- 0xBE()
 0x00e5    mem[0x400] += 1 -- op3c
 0x00e8    op01_JumpTo( address=0xda )
-0x00eb    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=2048, condition="val1 & val2", address_if_false=0xf6 )
+0x00eb    op02_JumpToConditional( val1=mem[0x1c4], val2=2048, condition="val1 & val2", address_if_false=0xf6 )
 0x00f3    op01_JumpTo( address=0xf9 )
 0x00f6    op05_CallFunction( address=0xfd )
 0x00f9    -- 0xFE54()
@@ -256,7 +256,7 @@ Actor_0x0d:on_talk:
 0x0161    -- 0x80()
 0x0166    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x04, priority=0x03 )
 0x0169    mem[0x402] = true -- op36
-0x016c    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=2048, condition="val1 & val2", address_if_false=0x177 )
+0x016c    op02_JumpToConditional( val1=mem[0x1c4], val2=2048, condition="val1 & val2", address_if_false=0x177 )
 0x0174    op01_JumpTo( address=0x17a )
 0x0177    op05_CallFunction( address=0x18a )
 0x017a    op01_JumpTo( address=0x188 )

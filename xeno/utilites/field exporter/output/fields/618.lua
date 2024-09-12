@@ -24,7 +24,7 @@ Actor_0x00:on_start:
 0x0078    -- 0xFE81()
 0x0081    -- 0xFE82()
 0x009b    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xca )
-0x00a3    op02_JumpToConditional( val1=(s)mem[0x248], val2=4, condition="val1 & val2", address_if_false=0xbc )
+0x00a3    op02_JumpToConditional( val1=mem[0x248], val2=4, condition="val1 & val2", address_if_false=0xbc )
 0x00ab    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
 0x00b6    -- 0x75( ???=10 )
 0x00b9    op01_JumpTo( address=0xca )
@@ -37,7 +37,7 @@ Actor_0x00:on_start:
 0x00e8    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=1 )
 0x00f3    -- 0x75( ???=44 )
 0x00f6    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x125 )
-0x00fe    op02_JumpToConditional( val1=(s)mem[0x248], val2=4, condition="val1 & val2", address_if_false=0x117 )
+0x00fe    op02_JumpToConditional( val1=mem[0x248], val2=4, condition="val1 & val2", address_if_false=0x117 )
 0x0106    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
 0x0111    -- 0x75( ???=35 )
 0x0114    op01_JumpTo( address=0x125 )
@@ -141,7 +141,7 @@ Actor_0x01:event_0x0b:
 0x026f    -- 0x04()
 0x0270    op00_Return()
 0x0271    op00_Return()
-0x0272    mem[0x287] >>= (s)mem[0x5ffe] -- op42
+0x0272    mem[0x287] >>= mem[0x5ffe] -- op42
 0x0277    op03_MessageShowFixed2( text_id=0x402, flags=NO_FACE )
 0x027b    -- 0x04()
 0x027c    op02_JumpToConditional( val1=(s)mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
@@ -220,7 +220,7 @@ Actor_0x02:event_0x07:
 0x033d    -- 0x04()
 0x033e    op00_Return()
 0x033f    op00_Return()
-0x0340    mem[0x355] >>= (s)mem[0x5ffe] -- op42
+0x0340    mem[0x355] >>= mem[0x5ffe] -- op42
 0x0345    op03_MessageShowFixed2( text_id=0x404, flags=FORCE_LEFT )
 0x0349    -- 0x04()
 0x034a    -- 0x04()
@@ -298,7 +298,7 @@ Actor_0x03:event_0x08:
 0x03ff    -- 0x04()
 0x0400    op00_Return()
 0x0401    op00_Return()
-0x0402    mem[0x417] >>= (s)mem[0x5ffe] -- op42
+0x0402    mem[0x417] >>= mem[0x5ffe] -- op42
 0x0407    op03_MessageShowFixed2( text_id=0x406, flags=NO_FACE|FORCE_LEFT )
 0x040b    -- 0x04()
 0x040c    -- 0x06()
@@ -351,13 +351,13 @@ Actor_0x04:event_0x05:
 0x0489    -- 0x04()
 0x048a    op00_Return()
 0x048b    op00_Return()
-0x048c    mem[0x4a1] >>= (s)mem[0x5ffe] -- op42
+0x048c    mem[0x4a1] >>= mem[0x5ffe] -- op42
 0x0491    op03_MessageShowFixed2( text_id=0x408, flags=FORCE_RIGHT )
 0x0495    -- 0x04()
 0x0496    op08_CallActorEventStartSync( actor_id=Actor_0x04, event=event_0x19, priority=0x01 )
 0x0499    op08_CallActorEventStartSync( actor_id=Actor_0x04, event=event_0x01, priority=0x00 )
 0x049c    op00_Return()
-0x049d    mem[0x8701] ^= mem[0x2304] -- op40
+0x049d    mem[0x8701] ^= (s)mem[0x2304] -- op40
 
 Actor_0x04:event_0x06:
 0x04a3    -- 0x22()
@@ -396,7 +396,7 @@ Actor_0x05:event_0x05:
 0x0504    -- 0x04()
 0x0505    op00_Return()
 0x0506    op00_Return()
-0x0507    mem[0x51c] >>= (s)mem[0x5ffe] -- op42
+0x0507    mem[0x51c] >>= mem[0x5ffe] -- op42
 0x050c    op03_MessageShowFixed2( text_id=0x40a, flags=NO_FACE|FORCE_RIGHT )
 0x0510    -- 0x04()
 0x0511    -- 0x0A()
@@ -444,7 +444,7 @@ Actor_0x06:event_0x05:
 0x0582    -- 0x04()
 0x0583    op00_Return()
 0x0584    op00_Return()
-0x0585    mem[0x59a] >>= (s)mem[0x5ffe] -- op42
+0x0585    mem[0x59a] >>= mem[0x5ffe] -- op42
 0x058a    op03_MessageShowFixed2( text_id=0x40c, flags=FORCE_LEFT|FORCE_RIGHT )
 0x058e    -- 0x04()
 0x058f    -- 0x0C()
@@ -492,7 +492,7 @@ Actor_0x07:event_0x05:
 0x0600    -- 0x04()
 0x0601    op00_Return()
 0x0602    op00_Return()
-0x0603    mem[0x618] >>= (s)mem[0x5ffe] -- op42
+0x0603    mem[0x618] >>= mem[0x5ffe] -- op42
 0x0608    op03_MessageShowFixed2( text_id=0x40e, flags=NO_FACE|FORCE_LEFT|FORCE_RIGHT )
 0x060c    -- 0x04()
 0x060d    op0E_Nop()
@@ -514,7 +514,7 @@ Actor_0x07:event_0x06:
 0x0642    op26_Wait( time=15 )
 0x0645    -- 0xFE5E()-- 0xFE5F()
 0x0651    op00_Return()
-0x0652    mem[0x746] ^= (s)mem[0x4802] -- op40
+0x0652    mem[0x746] ^= mem[0x4802] -- op40
 0x0658    -- 0x04()
 0x0659    op00_Return()
 0x065a    -- 0x46()

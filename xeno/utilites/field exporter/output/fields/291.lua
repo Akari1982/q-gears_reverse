@@ -347,7 +347,7 @@ Actor_0x13:on_push:
 
 Actor_0x14:on_start:
 0x01dd    -- 0x0B_InitNPC( 17 )
-0x01e0    op02_JumpToConditional( val1=(s)mem[0x1ca], val2=32, condition="val1 & val2", address_if_false=0x204 )
+0x01e0    op02_JumpToConditional( val1=mem[0x1ca], val2=32, condition="val1 & val2", address_if_false=0x204 )
 0x01e8    -- 0x91()
 0x01ec    op01_JumpTo( address=0x204 )
 0x01ef    -- 0xFE1C()
@@ -518,7 +518,7 @@ Actor_0x1c:on_talk:
 Actor_0x1c:on_push:
 0x0323    -- 0xB9()
 0x0327    -- 0x98_MapLoad( field_id=296, value=4 )
-0x032c    op02_JumpToConditional( val1=(s)mem[0x1ca], val2=32, condition="val1 & val2", address_if_false=0x339 )
+0x032c    op02_JumpToConditional( val1=mem[0x1ca], val2=32, condition="val1 & val2", address_if_false=0x339 )
 0x0334    -- 0x98_MapLoad( field_id=296, value=7 )
 0x0339    op00_Return()
 

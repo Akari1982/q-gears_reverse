@@ -38,14 +38,14 @@ Actor_0x00:on_update:
 0x0074    opAC_MoveCamera( control=0x0, steps=100 )
 0x0078    opAC_MoveCamera( control=0x1, steps=100 )
 0x007c    opEF_MoveCameraSync()
-0x007f    op02_JumpToConditional( val1=(s)mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x99 )
+0x007f    op02_JumpToConditional( val1=mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x99 )
 0x0087    -- 0xFE54()
 0x0089    op26_Wait( time=10 )
 0x008c    opF5_MessageShowStatic( text_id=0x0, flags=0 )
 0x0090    op9C_MessageSync()
 0x0091    -- 0x98_MapLoad( field_id=259, value=5 )
 0x0096    op01_JumpTo( address=0xc9 )
-0x0099    op02_JumpToConditional( val1=(s)mem[0x184], val2=256, condition="val1 & val2", address_if_false=0xac )
+0x0099    op02_JumpToConditional( val1=mem[0x184], val2=256, condition="val1 & val2", address_if_false=0xac )
 0x00a1    op26_Wait( time=100 )
 0x00a4    -- 0x98_MapLoad( field_id=259, value=5 )
 0x00a9    op01_JumpTo( address=0xc9 )
@@ -321,14 +321,14 @@ Actor_0x0a:on_push:
 Actor_0x0b:on_start:
 0x0265    -- 0xBC_ActorNoModelInit()
 0x0266    -- 0x2A()
-0x0267    op02_JumpToConditional( val1=(s)mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x27b )
+0x0267    op02_JumpToConditional( val1=mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x27b )
 0x026f    op29_ActorTurnOff( actor_id=Actor_0x05 )
 0x0271    op29_ActorTurnOff( actor_id=Actor_0x06 )
 0x0273    op29_ActorTurnOff( actor_id=Actor_0x07 )
 0x0275    op29_ActorTurnOff( actor_id=Actor_0x08 )
 0x0277    op29_ActorTurnOff( actor_id=Actor_0x09 )
 0x0279    op29_ActorTurnOff( actor_id=Actor_0x0a )
-0x027b    op02_JumpToConditional( val1=(s)mem[0x184], val2=256, condition="val1 & val2", address_if_false=0x289 )
+0x027b    op02_JumpToConditional( val1=mem[0x184], val2=256, condition="val1 & val2", address_if_false=0x289 )
 0x0283    op29_ActorTurnOff( actor_id=Actor_0x06 )
 0x0285    op29_ActorTurnOff( actor_id=Actor_0x07 )
 0x0287    op29_ActorTurnOff( actor_id=Actor_0x08 )
@@ -361,7 +361,7 @@ Actor_0x0c:on_update:
 0x02af    op00_Return()
 
 Actor_0x0c:on_talk:
-0x02b0    op02_JumpToConditional( val1=(s)mem[0x184], val2=512, condition="val1 & val2", address_if_false=0x2bb )
+0x02b0    op02_JumpToConditional( val1=mem[0x184], val2=512, condition="val1 & val2", address_if_false=0x2bb )
 0x02b8    op01_JumpTo( address=0x2cc )
 0x02bb    op74_SoundPlayFixedVolume( sound_id=55 )
 0x02be    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
@@ -372,4 +372,4 @@ Actor_0x0c:on_talk:
 
 Actor_0x0c:on_push:
 0x02cd    op00_Return()
-0x02ce    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x81bb, ???=(vf40)0xc890, flag=0xbe )
+0x02ce    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x10ba, ???=(vf40)0xcd93, flag=0xad )

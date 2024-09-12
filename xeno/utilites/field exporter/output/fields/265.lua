@@ -27,10 +27,10 @@ Actor_0x00:on_start:
 0x0041    -- 0x9D()
 0x0045    -- 0xB6( ???=480, ???=0 )
 0x004a    -- 0xA4() -- camera angle
-0x004e    op02_JumpToConditional( val1=(s)mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x60 )
+0x004e    op02_JumpToConditional( val1=mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x60 )
 0x0056    -- 0x80()
 0x005b    -- 0x80()
-0x0060    op02_JumpToConditional( val1=(s)mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x72 )
+0x0060    op02_JumpToConditional( val1=mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x72 )
 0x0068    -- 0x80()
 0x006d    -- 0x80()
 0x0072    -- 0xF7()
@@ -1856,7 +1856,7 @@ Actor_0x0c:on_talk:
 0x4467    -- 0xFE65()
 0x446d    -- 0xFE65()
 0x4473    mem[0x186] ^= 256 -- op40
-0x4479    op02_JumpToConditional( val1=(s)mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x448e )
+0x4479    op02_JumpToConditional( val1=mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x448e )
 0x4481    -- 0x80()
 0x4486    -- 0x80()
 0x448b    op01_JumpTo( address=0x4498 )
@@ -1883,7 +1883,7 @@ Actor_0x0d:on_talk:
 0x44b9    -- 0xFE65()
 0x44bf    -- 0xFE65()
 0x44c5    mem[0x186] ^= 1024 -- op40
-0x44cb    op02_JumpToConditional( val1=(s)mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x44e0 )
+0x44cb    op02_JumpToConditional( val1=mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x44e0 )
 0x44d3    -- 0x80()
 0x44d8    -- 0x80()
 0x44dd    op01_JumpTo( address=0x44ea )
@@ -1909,7 +1909,7 @@ Actor_0x0e:on_talk:
 0x4505    -- 0xFE65()
 0x450b    -- 0xFE65()
 0x4511    -- 0xFE65()
-0x4517    op02_JumpToConditional( val1=(s)mem[0x186], val2=512, condition="val1 & val2", address_if_false=0x4522 )
+0x4517    op02_JumpToConditional( val1=mem[0x186], val2=512, condition="val1 & val2", address_if_false=0x4522 )
 0x451f    op01_JumpTo( address=0x45c7 )
 0x4522    -- 0xFE54()
 0x4524    op99()
@@ -1950,13 +1950,13 @@ Actor_0x0e:on_push:
 
 Actor_0x0f:on_start:
 0x45c9    -- 0x0B_InitNPC( 1 )
-0x45cc    op02_JumpToConditional( val1=(s)mem[0x186], val2=512, condition="val1 & val2", address_if_false=0x45de )
+0x45cc    op02_JumpToConditional( val1=mem[0x186], val2=512, condition="val1 & val2", address_if_false=0x45de )
 0x45d4    -- 0x22()
 0x45d5    -- 0x19_ActorSetPosition( x=(vf80)0xfe70, z=(vf40)0x0032, flag=(flag)0xc0 )
 0x45db    op01_JumpTo( address=0x45e8 )
 0x45de    -- 0x23()
 0x45df    -- 0xFE1C()
-0x45e8    op02_JumpToConditional( val1=(s)mem[0x186], val2=4096, condition="val1 & val2", address_if_false=0x45fb )
+0x45e8    op02_JumpToConditional( val1=mem[0x186], val2=4096, condition="val1 & val2", address_if_false=0x45fb )
 0x45f0    -- 0xFE1C()
 0x45f9    op29_ActorTurnOff( actor_id=self )
 0x45fb    -- 0x21( ???=256 )
@@ -2007,13 +2007,13 @@ Actor_0x0f:event_0x04:
 
 Actor_0x10:on_start:
 0x4690    -- 0x0B_InitNPC( 1 )
-0x4693    op02_JumpToConditional( val1=(s)mem[0x186], val2=512, condition="val1 & val2", address_if_false=0x46a5 )
+0x4693    op02_JumpToConditional( val1=mem[0x186], val2=512, condition="val1 & val2", address_if_false=0x46a5 )
 0x469b    -- 0x22()
 0x469c    -- 0x19_ActorSetPosition( x=(vf80)0xfe70, z=(vf40)0x00c8, flag=(flag)0xc0 )
 0x46a2    op01_JumpTo( address=0x46af )
 0x46a5    -- 0x23()
 0x46a6    -- 0xFE1C()
-0x46af    op02_JumpToConditional( val1=(s)mem[0x186], val2=8192, condition="val1 & val2", address_if_false=0x46c2 )
+0x46af    op02_JumpToConditional( val1=mem[0x186], val2=8192, condition="val1 & val2", address_if_false=0x46c2 )
 0x46b7    -- 0xFE1C()
 0x46c0    op29_ActorTurnOff( actor_id=self )
 0x46c2    -- 0x21( ???=256 )
@@ -2067,7 +2067,7 @@ Actor_0x11:on_start:
 0x4753    op00_Return()
 
 Actor_0x11:on_update:
-0x4754    op02_JumpToConditional( val1=(s)mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x47a3 )
+0x4754    op02_JumpToConditional( val1=mem[0x186], val2=256, condition="val1 & val2", address_if_false=0x47a3 )
 0x475c    -- 0xE1_BackgroundSetTex()
 0x476a    op26_Wait( time=2 )
 0x476d    -- 0xE1_BackgroundSetTex()
@@ -2098,7 +2098,7 @@ Actor_0x12:on_start:
 0x47eb    op00_Return()
 
 Actor_0x12:on_update:
-0x47ec    op02_JumpToConditional( val1=(s)mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x483b )
+0x47ec    op02_JumpToConditional( val1=mem[0x186], val2=1024, condition="val1 & val2", address_if_false=0x483b )
 0x47f4    -- 0xE1_BackgroundSetTex()
 0x4802    op26_Wait( time=2 )
 0x4805    -- 0xE1_BackgroundSetTex()

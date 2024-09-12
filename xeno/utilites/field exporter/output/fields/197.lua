@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x0008    -- 0xA0()
 0x000f    -- 0xFE18()
 0x0014    -- 0xFE18()
-0x0019    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=512, condition="val1 & val2", address_if_false=0x27 )
+0x0019    op02_JumpToConditional( val1=mem[0x1c0], val2=512, condition="val1 & val2", address_if_false=0x27 )
 0x0021    -- 0x75( ???=58 )
 0x0024    op01_JumpTo( address=0x2a )
 0x0027    -- 0x75( ???=255 )
@@ -595,7 +595,7 @@ Actor_0x16:on_start:
 Actor_0x16:on_update:
 0x081f    -- 0x67()
 0x0823    -- 0x67()
-0x0827    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=512, condition="val1 & val2", address_if_false=0x87b )
+0x0827    op02_JumpToConditional( val1=mem[0x1c0], val2=512, condition="val1 & val2", address_if_false=0x87b )
 0x082f    mem[0x1c0] &= ~(1 << 9) -- op3a
 0x0835    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x0, flags=CLOSE_OFF_SCREEN )
 0x083b    -- 0xF2()

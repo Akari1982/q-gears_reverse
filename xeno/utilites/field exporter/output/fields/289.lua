@@ -523,7 +523,7 @@ Actor_0x0f:on_talk:
 0x0413    opD2_MessageShowDynamic( text_id=0x34, flags=0 )
 0x0417    op9C_MessageSync()
 0x0418    op00_Return()
-0x0419    op02_JumpToConditional( val1=(s)mem[0x1ca], val2=1, condition="val1 & val2", address_if_false=0x441 )
+0x0419    op02_JumpToConditional( val1=mem[0x1ca], val2=1, condition="val1 & val2", address_if_false=0x441 )
 0x0421    -- 0x85()
 0x0426    opD2_MessageShowDynamic( text_id=0x35, flags=0 )
 0x042a    op9C_MessageSync()

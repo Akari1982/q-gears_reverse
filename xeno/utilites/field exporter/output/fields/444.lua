@@ -955,7 +955,7 @@ Actor_0x13:event_0x05:
 
 Actor_0x14:on_start:
 0x0594    -- 0x0B_InitNPC( 1 )
-0x0597    op02_JumpToConditional( val1=(s)mem[0xe2], val2=16, condition="val1 & val2", address_if_false=0x5a4 )
+0x0597    op02_JumpToConditional( val1=mem[0xe2], val2=16, condition="val1 & val2", address_if_false=0x5a4 )
 0x059f    op29_ActorTurnOff( actor_id=Actor_0x14 )
 0x05a1    op01_JumpTo( address=0x5b7 )
 0x05a4    -- 0x19_ActorSetPosition( x=(vf80)0xfa56, z=(vf40)0xf6a0, flag=(flag)0xc0 )
@@ -1313,4 +1313,4 @@ Actor_0x24:on_talk:
 
 Actor_0x24:on_push:
 0x0804    op00_Return()
-0x0805    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x3242, flag=0x18 )
+0x0805    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xec38, ???=(vf40)0x0a01, flag=0x4 )

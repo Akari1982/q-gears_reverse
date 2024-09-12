@@ -60,7 +60,7 @@ Actor_0x03:on_start:
 0x0034    -- 0x19_ActorSetPosition( x=(vf80)0x0001, z=(vf40)0x014d, flag=(flag)0xc0 )
 0x003a    opFE0D_MessageSetFace( char_id=71 )
 0x003e    -- 0xCD()
-0x003f    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=8192, condition="val1 & val2", address_if_false=0x49 )
+0x003f    op02_JumpToConditional( val1=mem[0x1c0], val2=8192, condition="val1 & val2", address_if_false=0x49 )
 0x0047    op29_ActorTurnOff( actor_id=self )
 0x0049    op00_Return()
 
@@ -374,4 +374,4 @@ function:
 0x0469    opFE42( ???=1 )
 0x046d    opFE42( ???=2 )
 0x0471    op0D_Return()
-0x0472    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x81b8, ???=(vf40)0xcb90, flag=0xaa )
+0x0472    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x14b9, ???=(vf40)0xc39a, flag=0x12 )

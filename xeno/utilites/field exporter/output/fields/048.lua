@@ -607,41 +607,41 @@ Actor_0x15:on_push:
 0x05af    op00_Return()
 
 Actor_0x15:event_0x04:
-0x05b0    op02_JumpToConditional( val1=(s)mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x5c6 )
+0x05b0    op02_JumpToConditional( val1=mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x5c6 )
 0x05b8    mem[0x18e] = 0 -- op35
 0x05be    -- 0x98_MapLoad( field_id=47, value=0 )
 0x05c3    op01_JumpTo( address=0x686 )
-0x05c6    op02_JumpToConditional( val1=(s)mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x5dc )
+0x05c6    op02_JumpToConditional( val1=mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x5dc )
 0x05ce    mem[0x18e] = 1 -- op35
 0x05d4    -- 0x98_MapLoad( field_id=47, value=0 )
 0x05d9    op01_JumpTo( address=0x686 )
-0x05dc    op02_JumpToConditional( val1=(s)mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x5f2 )
+0x05dc    op02_JumpToConditional( val1=mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x5f2 )
 0x05e4    mem[0x18e] = 2 -- op35
 0x05ea    -- 0x98_MapLoad( field_id=47, value=0 )
 0x05ef    op01_JumpTo( address=0x686 )
-0x05f2    op02_JumpToConditional( val1=(s)mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x608 )
+0x05f2    op02_JumpToConditional( val1=mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x608 )
 0x05fa    mem[0x18e] = 13 -- op35
 0x0600    -- 0x98_MapLoad( field_id=48, value=4 )
 0x0605    op01_JumpTo( address=0x686 )
-0x0608    op02_JumpToConditional( val1=(s)mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x61e )
+0x0608    op02_JumpToConditional( val1=mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x61e )
 0x0610    mem[0x18e] = 10 -- op35
 0x0616    -- 0x98_MapLoad( field_id=48, value=0 )
 0x061b    op01_JumpTo( address=0x686 )
-0x061e    op02_JumpToConditional( val1=(s)mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x634 )
+0x061e    op02_JumpToConditional( val1=mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x634 )
 0x0626    mem[0x18e] = 10 -- op35
 0x062c    -- 0x98_MapLoad( field_id=48, value=0 )
 0x0631    op01_JumpTo( address=0x686 )
-0x0634    op02_JumpToConditional( val1=(s)mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x64a )
+0x0634    op02_JumpToConditional( val1=mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x64a )
 0x063c    mem[0x18e] = 11 -- op35
 0x0642    -- 0x98_MapLoad( field_id=48, value=0 )
 0x0647    op01_JumpTo( address=0x686 )
-0x064a    op02_JumpToConditional( val1=(s)mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x660 )
+0x064a    op02_JumpToConditional( val1=mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x660 )
 0x0652    mem[0x18e] = 12 -- op35
 0x0658    -- 0x98_MapLoad( field_id=48, value=0 )
 0x065d    op01_JumpTo( address=0x686 )
-0x0660    op02_JumpToConditional( val1=(s)mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x686 )
+0x0660    op02_JumpToConditional( val1=mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x686 )
 0x0668    mem[0x18e] = 4 -- op35
-0x066e    op02_JumpToConditional( val1=(s)mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x67e )
+0x066e    op02_JumpToConditional( val1=mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x67e )
 0x0676    -- 0x98_MapLoad( field_id=51, value=0 )
 0x067b    op01_JumpTo( address=0x683 )
 0x067e    -- 0x98_MapLoad( field_id=52, value=0 )
@@ -650,42 +650,42 @@ Actor_0x15:event_0x04:
 0x0687    op00_Return()
 
 Actor_0x15:event_0x05:
-0x0688    op02_JumpToConditional( val1=(s)mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x69e )
+0x0688    op02_JumpToConditional( val1=mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x69e )
 0x0690    mem[0x18e] = 6 -- op35
 0x0696    -- 0x98_MapLoad( field_id=48, value=1 )
 0x069b    op01_JumpTo( address=0x75e )
-0x069e    op02_JumpToConditional( val1=(s)mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x6b4 )
+0x069e    op02_JumpToConditional( val1=mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x6b4 )
 0x06a6    mem[0x18e] = 7 -- op35
 0x06ac    -- 0x98_MapLoad( field_id=48, value=1 )
 0x06b1    op01_JumpTo( address=0x75e )
-0x06b4    op02_JumpToConditional( val1=(s)mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x6ca )
+0x06b4    op02_JumpToConditional( val1=mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x6ca )
 0x06bc    mem[0x18e] = 7 -- op35
 0x06c2    -- 0x98_MapLoad( field_id=48, value=1 )
 0x06c7    op01_JumpTo( address=0x75e )
-0x06ca    op02_JumpToConditional( val1=(s)mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x6e0 )
+0x06ca    op02_JumpToConditional( val1=mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x6e0 )
 0x06d2    mem[0x18e] = 8 -- op35
 0x06d8    -- 0x98_MapLoad( field_id=48, value=1 )
 0x06dd    op01_JumpTo( address=0x75e )
-0x06e0    op02_JumpToConditional( val1=(s)mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x6f6 )
+0x06e0    op02_JumpToConditional( val1=mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x6f6 )
 0x06e8    mem[0x18e] = 9 -- op35
 0x06ee    -- 0x98_MapLoad( field_id=48, value=1 )
 0x06f3    op01_JumpTo( address=0x75e )
-0x06f6    op02_JumpToConditional( val1=(s)mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x70c )
+0x06f6    op02_JumpToConditional( val1=mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x70c )
 0x06fe    mem[0x18e] = 10 -- op35
 0x0704    -- 0x98_MapLoad( field_id=48, value=1 )
 0x0709    op01_JumpTo( address=0x75e )
-0x070c    op02_JumpToConditional( val1=(s)mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x722 )
+0x070c    op02_JumpToConditional( val1=mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x722 )
 0x0714    mem[0x18e] = 11 -- op35
 0x071a    -- 0x98_MapLoad( field_id=48, value=1 )
 0x071f    op01_JumpTo( address=0x75e )
-0x0722    op02_JumpToConditional( val1=(s)mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x748 )
+0x0722    op02_JumpToConditional( val1=mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x748 )
 0x072a    mem[0x18e] = 4 -- op35
-0x0730    op02_JumpToConditional( val1=(s)mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x740 )
+0x0730    op02_JumpToConditional( val1=mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x740 )
 0x0738    -- 0x98_MapLoad( field_id=51, value=1 )
 0x073d    op01_JumpTo( address=0x745 )
 0x0740    -- 0x98_MapLoad( field_id=52, value=1 )
 0x0745    op01_JumpTo( address=0x75e )
-0x0748    op02_JumpToConditional( val1=(s)mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x75e )
+0x0748    op02_JumpToConditional( val1=mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x75e )
 0x0750    mem[0x18e] = 13 -- op35
 0x0756    -- 0x98_MapLoad( field_id=48, value=1 )
 0x075b    op01_JumpTo( address=0x75e )
@@ -693,42 +693,42 @@ Actor_0x15:event_0x05:
 0x075f    op00_Return()
 
 Actor_0x15:event_0x06:
-0x0760    op02_JumpToConditional( val1=(s)mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x776 )
+0x0760    op02_JumpToConditional( val1=mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x776 )
 0x0768    mem[0x18e] = 5 -- op35
 0x076e    -- 0x98_MapLoad( field_id=48, value=2 )
 0x0773    op01_JumpTo( address=0x836 )
-0x0776    op02_JumpToConditional( val1=(s)mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x78c )
+0x0776    op02_JumpToConditional( val1=mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x78c )
 0x077e    mem[0x18e] = 6 -- op35
 0x0784    -- 0x98_MapLoad( field_id=48, value=2 )
 0x0789    op01_JumpTo( address=0x836 )
-0x078c    op02_JumpToConditional( val1=(s)mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x7a2 )
+0x078c    op02_JumpToConditional( val1=mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x7a2 )
 0x0794    mem[0x18e] = 7 -- op35
 0x079a    -- 0x98_MapLoad( field_id=48, value=2 )
 0x079f    op01_JumpTo( address=0x836 )
-0x07a2    op02_JumpToConditional( val1=(s)mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x7b8 )
+0x07a2    op02_JumpToConditional( val1=mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x7b8 )
 0x07aa    mem[0x18e] = 8 -- op35
 0x07b0    -- 0x98_MapLoad( field_id=48, value=2 )
 0x07b5    op01_JumpTo( address=0x836 )
-0x07b8    op02_JumpToConditional( val1=(s)mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x7ce )
+0x07b8    op02_JumpToConditional( val1=mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x7ce )
 0x07c0    mem[0x18e] = 9 -- op35
 0x07c6    -- 0x98_MapLoad( field_id=48, value=2 )
 0x07cb    op01_JumpTo( address=0x836 )
-0x07ce    op02_JumpToConditional( val1=(s)mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x7e4 )
+0x07ce    op02_JumpToConditional( val1=mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x7e4 )
 0x07d6    mem[0x18e] = 10 -- op35
 0x07dc    -- 0x98_MapLoad( field_id=48, value=2 )
 0x07e1    op01_JumpTo( address=0x836 )
-0x07e4    op02_JumpToConditional( val1=(s)mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x80a )
+0x07e4    op02_JumpToConditional( val1=mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x80a )
 0x07ec    mem[0x18e] = 4 -- op35
-0x07f2    op02_JumpToConditional( val1=(s)mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x802 )
+0x07f2    op02_JumpToConditional( val1=mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x802 )
 0x07fa    -- 0x98_MapLoad( field_id=51, value=2 )
 0x07ff    op01_JumpTo( address=0x807 )
 0x0802    -- 0x98_MapLoad( field_id=52, value=2 )
 0x0807    op01_JumpTo( address=0x836 )
-0x080a    op02_JumpToConditional( val1=(s)mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x820 )
+0x080a    op02_JumpToConditional( val1=mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x820 )
 0x0812    mem[0x18e] = 3 -- op35
 0x0818    -- 0x98_MapLoad( field_id=46, value=0 )
 0x081d    op01_JumpTo( address=0x836 )
-0x0820    op02_JumpToConditional( val1=(s)mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x836 )
+0x0820    op02_JumpToConditional( val1=mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x836 )
 0x0828    mem[0x18e] = 8 -- op35
 0x082e    -- 0x98_MapLoad( field_id=48, value=2 )
 0x0833    op01_JumpTo( address=0x836 )
@@ -736,42 +736,42 @@ Actor_0x15:event_0x06:
 0x0837    op00_Return()
 
 Actor_0x15:event_0x07:
-0x0838    op02_JumpToConditional( val1=(s)mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x84e )
+0x0838    op02_JumpToConditional( val1=mem[0x18e], val2=5, condition="val1 == val2", address_if_false=0x84e )
 0x0840    mem[0x18e] = 5 -- op35
 0x0846    -- 0x98_MapLoad( field_id=48, value=3 )
 0x084b    op01_JumpTo( address=0x90e )
-0x084e    op02_JumpToConditional( val1=(s)mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x864 )
+0x084e    op02_JumpToConditional( val1=mem[0x18e], val2=6, condition="val1 == val2", address_if_false=0x864 )
 0x0856    mem[0x18e] = 5 -- op35
 0x085c    -- 0x98_MapLoad( field_id=48, value=3 )
 0x0861    op01_JumpTo( address=0x90e )
-0x0864    op02_JumpToConditional( val1=(s)mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x87a )
+0x0864    op02_JumpToConditional( val1=mem[0x18e], val2=7, condition="val1 == val2", address_if_false=0x87a )
 0x086c    mem[0x18e] = 6 -- op35
 0x0872    -- 0x98_MapLoad( field_id=48, value=3 )
 0x0877    op01_JumpTo( address=0x90e )
-0x087a    op02_JumpToConditional( val1=(s)mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x890 )
+0x087a    op02_JumpToConditional( val1=mem[0x18e], val2=8, condition="val1 == val2", address_if_false=0x890 )
 0x0882    mem[0x18e] = 2 -- op35
 0x0888    -- 0x98_MapLoad( field_id=47, value=3 )
 0x088d    op01_JumpTo( address=0x90e )
-0x0890    op02_JumpToConditional( val1=(s)mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x8a6 )
+0x0890    op02_JumpToConditional( val1=mem[0x18e], val2=9, condition="val1 == val2", address_if_false=0x8a6 )
 0x0898    mem[0x18e] = 13 -- op35
 0x089e    -- 0x98_MapLoad( field_id=48, value=2 )
 0x08a3    op01_JumpTo( address=0x90e )
-0x08a6    op02_JumpToConditional( val1=(s)mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x8cc )
+0x08a6    op02_JumpToConditional( val1=mem[0x18e], val2=10, condition="val1 == val2", address_if_false=0x8cc )
 0x08ae    mem[0x18e] = 4 -- op35
-0x08b4    op02_JumpToConditional( val1=(s)mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x8c4 )
+0x08b4    op02_JumpToConditional( val1=mem[0x180], val2=4, condition="val1 & val2", address_if_false=0x8c4 )
 0x08bc    -- 0x98_MapLoad( field_id=51, value=3 )
 0x08c1    op01_JumpTo( address=0x8c9 )
 0x08c4    -- 0x98_MapLoad( field_id=52, value=3 )
 0x08c9    op01_JumpTo( address=0x90e )
-0x08cc    op02_JumpToConditional( val1=(s)mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x8e2 )
+0x08cc    op02_JumpToConditional( val1=mem[0x18e], val2=11, condition="val1 == val2", address_if_false=0x8e2 )
 0x08d4    mem[0x18e] = 11 -- op35
 0x08da    -- 0x98_MapLoad( field_id=48, value=3 )
 0x08df    op01_JumpTo( address=0x90e )
-0x08e2    op02_JumpToConditional( val1=(s)mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x8f8 )
+0x08e2    op02_JumpToConditional( val1=mem[0x18e], val2=12, condition="val1 == val2", address_if_false=0x8f8 )
 0x08ea    mem[0x18e] = 12 -- op35
 0x08f0    -- 0x98_MapLoad( field_id=48, value=3 )
 0x08f5    op01_JumpTo( address=0x90e )
-0x08f8    op02_JumpToConditional( val1=(s)mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x90e )
+0x08f8    op02_JumpToConditional( val1=mem[0x18e], val2=13, condition="val1 == val2", address_if_false=0x90e )
 0x0900    mem[0x18e] = 3 -- op35
 0x0906    -- 0x98_MapLoad( field_id=46, value=0 )
 0x090b    op01_JumpTo( address=0x90e )

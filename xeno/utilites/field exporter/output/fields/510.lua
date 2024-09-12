@@ -39,11 +39,11 @@ Actor_0x00:on_start:
 0x007f    mem[0x468] = 6 -- op35
 0x0085    mem[0x460] = 1 -- op35
 0x008b    mem[0x46a] = 533 -- op35
-0x0091    op02_JumpToConditional( val1=(s)mem[0x1cc], val2=2, condition="val1 & val2", address_if_false=0x9f )
+0x0091    op02_JumpToConditional( val1=mem[0x1cc], val2=2, condition="val1 & val2", address_if_false=0x9f )
 0x0099    mem[0x448] = 1 -- op35
-0x009f    op02_JumpToConditional( val1=(s)mem[0x1cc], val2=4, condition="val1 & val2", address_if_false=0xad )
+0x009f    op02_JumpToConditional( val1=mem[0x1cc], val2=4, condition="val1 & val2", address_if_false=0xad )
 0x00a7    mem[0x45a] = 1 -- op35
-0x00ad    op02_JumpToConditional( val1=(s)mem[0x1cc], val2=8, condition="val1 & val2", address_if_false=0xbb )
+0x00ad    op02_JumpToConditional( val1=mem[0x1cc], val2=8, condition="val1 & val2", address_if_false=0xbb )
 0x00b5    mem[0x46c] = 1 -- op35
 0x00bb    op00_Return()
 

@@ -36,12 +36,12 @@ Actor_0x00:on_update:
 0x0055    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0xa0 )
 0x005d    op26_Wait( time=32 )
 0x0060    mem[0x408] = true -- op36
-0x0063    op02_JumpToConditional( val1=(s)mem[0x140], val2=21, condition="val1 == val2", address_if_false=0x7c )
+0x0063    op02_JumpToConditional( val1=mem[0x140], val2=21, condition="val1 == val2", address_if_false=0x7c )
 0x006b    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
 0x006e    -- 0x80()
 0x0073    mem[0x140] = 22 -- op35
 0x0079    op01_JumpTo( address=0xa0 )
-0x007c    op02_JumpToConditional( val1=(s)mem[0x140], val2=11, condition="val1 == val2", address_if_false=0x95 )
+0x007c    op02_JumpToConditional( val1=mem[0x140], val2=11, condition="val1 == val2", address_if_false=0x95 )
 0x0084    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x05, priority=0x01 )
 0x0087    -- 0x80()
 0x008c    mem[0x140] = 22 -- op35

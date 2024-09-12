@@ -111,13 +111,13 @@ Actor_0x03:on_update:
 0x00f3    op00_Return()
 
 Actor_0x03:on_talk:
-0x00f4    op02_JumpToConditional( val1=(s)mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x10a )
+0x00f4    op02_JumpToConditional( val1=mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x10a )
 0x00fc    -- 0x15()
 0x00fd    -- 0xC4()
 0x00ff    -- 0x1F( ???=0x11 )
 0x0101    -- 0x47( ???=252, ???=1 )
 0x0107    op01_JumpTo( address=0x21d )
-0x010a    op02_JumpToConditional( val1=(s)mem[0x184], val2=2, condition="val1 & val2", address_if_false=0x11b )
+0x010a    op02_JumpToConditional( val1=mem[0x184], val2=2, condition="val1 & val2", address_if_false=0x11b )
 0x0112    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x0, flags=FORCE_TOP )
 0x0118    op01_JumpTo( address=0x21d )
 0x011b    -- 0xFE54()
@@ -191,7 +191,7 @@ Actor_0x04:on_update:
 0x0223    op00_Return()
 
 Actor_0x04:on_talk:
-0x0224    op02_JumpToConditional( val1=(s)mem[0x184], val2=4, condition="val1 & val2", address_if_false=0x23a )
+0x0224    op02_JumpToConditional( val1=mem[0x184], val2=4, condition="val1 & val2", address_if_false=0x23a )
 0x022c    -- 0x15()
 0x022d    -- 0xC4()
 0x022f    -- 0x1F( ???=0x11 )
@@ -280,11 +280,11 @@ Actor_0x07:on_update:
 0x02b8    op00_Return()
 
 Actor_0x07:on_talk:
-0x02b9    op02_JumpToConditional( val1=(s)mem[0x184], val2=4, condition="val1 & val2", address_if_false=0x2c9 )
+0x02b9    op02_JumpToConditional( val1=mem[0x184], val2=4, condition="val1 & val2", address_if_false=0x2c9 )
 0x02c1    opD2_MessageShowDynamic( text_id=0x7, flags=0 )
 0x02c5    op9C_MessageSync()
 0x02c6    op01_JumpTo( address=0x2e7 )
-0x02c9    op02_JumpToConditional( val1=(s)mem[0x184], val2=8, condition="val1 & val2", address_if_false=0x2e2 )
+0x02c9    op02_JumpToConditional( val1=mem[0x184], val2=8, condition="val1 & val2", address_if_false=0x2e2 )
 0x02d1    op74_SoundPlayFixedVolume( sound_id=249 )
 0x02d4    opD2_MessageShowDynamic( text_id=0x8, flags=0 )
 0x02d8    op9C_MessageSync()
@@ -332,4 +332,4 @@ Actor_0x08:on_push:
 0x0342    op74_SoundPlayFixedVolume( sound_id=80 )
 0x0345    mem[0x416] = true -- op36
 0x0348    op00_Return()
-0x0349    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x026c, flag=0x0 )
+0x0349    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0651, flag=0x8c )

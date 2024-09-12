@@ -45,7 +45,7 @@ Actor_0x00:on_start:
 0x016c    mem[0x414] = 0 -- op35
 0x0172    mem[0x416] = 6 -- op35
 0x0178    mem[0x418] = 289 -- op35
-0x017e    op02_JumpToConditional( val1=(s)mem[0x180], val2=256, condition="val1 & val2", address_if_false=0x18c )
+0x017e    op02_JumpToConditional( val1=mem[0x180], val2=256, condition="val1 & val2", address_if_false=0x18c )
 0x0186    mem[0x41a] = 1 -- op35
 0x018c    mem[0x420] = 1 -- op35
 0x0192    mem[0x422] = -336 -- op35
@@ -53,7 +53,7 @@ Actor_0x00:on_start:
 0x019e    mem[0x426] = 0 -- op35
 0x01a4    mem[0x428] = 6 -- op35
 0x01aa    mem[0x42a] = 564 -- op35
-0x01b0    op02_JumpToConditional( val1=(s)mem[0x180], val2=512, condition="val1 & val2", address_if_false=0x1be )
+0x01b0    op02_JumpToConditional( val1=mem[0x180], val2=512, condition="val1 & val2", address_if_false=0x1be )
 0x01b8    mem[0x42c] = 1 -- op35
 0x01be    op00_Return()
 
@@ -89,7 +89,7 @@ Actor_0x00:on_update:
 0x0237    op26_Wait( time=45 )
 0x023a    opD6_MessageSetSpeed( speed=0x8000 )
 0x023d    mem[0x18e] = 2 -- op35
-0x0243    op02_JumpToConditional( val1=(s)mem[0x180], val2=2048, condition="val1 & val2", address_if_false=0x257 )
+0x0243    op02_JumpToConditional( val1=mem[0x180], val2=2048, condition="val1 & val2", address_if_false=0x257 )
 0x024b    -- 0x12()
 0x024f    -- 0x80()
 0x0254    op01_JumpTo( address=0x260 )
@@ -410,7 +410,7 @@ Actor_0x0d:on_update:
 0x048c    -- 0x67()
 0x0490    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x05, priority=0x01 )
 0x0493    op26_Wait( time=90 )
-0x0496    op02_JumpToConditional( val1=(s)mem[0x180], val2=4096, condition="val1 & val2", address_if_false=0x4a1 )
+0x0496    op02_JumpToConditional( val1=mem[0x180], val2=4096, condition="val1 & val2", address_if_false=0x4a1 )
 0x049e    op01_JumpTo( address=0x4b4 )
 0x04a1    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x05, priority=0x01 )
 0x04a4    op26_Wait( time=100 )
@@ -590,4 +590,4 @@ Actor_0x10:on_push:
 Actor_0x10:event_0x04:
 0x0694    opF4_MessageClose( type=0x0 )
 0x0696    op00_Return()
-0x0697    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x812c, ???=(vf40)0x5f90, flag=0x63 )
+0x0697    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x149e, ???=(vf40)0xe49a, flag=0x0 )

@@ -337,7 +337,7 @@ Actor_0x0d:on_start:
 0x02bd    -- 0x1F( ???=0x10 )
 0x02bf    -- 0xFE07( ???=0x1 )
 0x02c2    -- 0xCD()
-0x02c3    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=256, condition="val1 & val2", address_if_false=0x2cf )
+0x02c3    op02_JumpToConditional( val1=mem[0x1c6], val2=256, condition="val1 & val2", address_if_false=0x2cf )
 0x02cb    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x02cd    op29_ActorTurnOff( actor_id=Actor_0x0c )
 0x02cf    op00_Return()

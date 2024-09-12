@@ -27,7 +27,7 @@ Actor_0x00:on_start:
 0x002c    op00_Return()
 
 Actor_0x00:on_update:
-0x002d    op02_JumpToConditional( val1=(s)mem[0x14c], val2=80, condition="val1 == val2", address_if_false=0xba )
+0x002d    op02_JumpToConditional( val1=mem[0x14c], val2=80, condition="val1 == val2", address_if_false=0xba )
 0x0035    op26_Wait( time=32 )
 0x0038    -- 0xFE54()
 0x003a    opF1_FadeSetUp( steps=2, r=200, g=200, b=200, semi_tr=1 )
@@ -244,8 +244,8 @@ Actor_0x0c:on_start:
 0x0160    op00_Return()
 
 Actor_0x0c:on_update:
-0x0161    op02_JumpToConditional( val1=(s)mem[0x14c], val2=10, condition="val1 < val2", address_if_false=0x1a2 )
-0x0169    op02_JumpToConditional( val1=(s)mem[0x150], val2=1, condition="val1 & val2", address_if_false=0x176 )
+0x0161    op02_JumpToConditional( val1=mem[0x14c], val2=10, condition="val1 < val2", address_if_false=0x1a2 )
+0x0169    op02_JumpToConditional( val1=mem[0x150], val2=1, condition="val1 & val2", address_if_false=0x176 )
 0x0171    op29_ActorTurnOff( actor_id=Actor_0x0c )
 0x0173    op01_JumpTo( address=0x19f )
 0x0176    -- 0xC9()
@@ -284,11 +284,11 @@ Actor_0x0d:on_update:
 0x01bf    op00_Return()
 
 Actor_0x0d:on_talk:
-0x01c0    op02_JumpToConditional( val1=(s)mem[0x14c], val2=81, condition="val1 > val2", address_if_false=0x1d0 )
+0x01c0    op02_JumpToConditional( val1=mem[0x14c], val2=81, condition="val1 > val2", address_if_false=0x1d0 )
 0x01c8    opD2_MessageShowDynamic( text_id=0x3, flags=CLOSE_OFF_SCREEN )
 0x01cc    op9C_MessageSync()
 0x01cd    op01_JumpTo( address=0x1fd )
-0x01d0    op02_JumpToConditional( val1=(s)mem[0x14c], val2=1, condition="val1 == val2", address_if_false=0x1e6 )
+0x01d0    op02_JumpToConditional( val1=mem[0x14c], val2=1, condition="val1 == val2", address_if_false=0x1e6 )
 0x01d8    -- 0xFE54()
 0x01da    -- 0x12()
 0x01de    -- 0x80()
@@ -368,4 +368,4 @@ Actor_0x10:event_0x04:
 0x025a    mem[0x406] += 1 -- op3c
 0x025d    op01_JumpTo( address=0x248 )
 0x0260    op00_Return()
-0x0261    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xa038, ???=(vf40)0x8791, flag=0x7c )
+0x0261    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb238, ???=(vf40)0x9a14, flag=0xc8 )

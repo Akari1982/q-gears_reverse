@@ -34,9 +34,9 @@ Actor_0x00:on_start:
 0x0074    mem[0x420] = 412 -- op35
 0x007a    mem[0x422] = 1 -- op35
 0x0080    mem[0x424] = 4 -- op35
-0x0086    op02_JumpToConditional( val1=(s)mem[0x212], val2=1, condition="val1 & val2", address_if_false=0x94 )
+0x0086    op02_JumpToConditional( val1=mem[0x212], val2=1, condition="val1 & val2", address_if_false=0x94 )
 0x008e    mem[0x43a] = 1 -- op35
-0x0094    op02_JumpToConditional( val1=(s)mem[0x212], val2=2, condition="val1 & val2", address_if_false=0xa2 )
+0x0094    op02_JumpToConditional( val1=mem[0x212], val2=2, condition="val1 & val2", address_if_false=0xa2 )
 0x009c    mem[0x44c] = 1 -- op35
 0x00a2    mem[0x42e] = 3 -- op35
 0x00a8    mem[0x430] = 509 -- op35
@@ -1860,7 +1860,7 @@ Actor_0x0a:on_update:
 
 Actor_0x0a:on_talk:
 0x44d5    -- 0xFE54()
-0x44d7    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x44f1 )
+0x44d7    op02_JumpToConditional( val1=mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x44f1 )
 0x44df    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x04, priority=0x01 )
 0x44e2    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x06, priority=0x01 )
 0x44e5    op26_Wait( time=10 )

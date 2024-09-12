@@ -27,7 +27,7 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x0068    -- 0x75( ???=45 )
-0x006b    op02_JumpToConditional( val1=(s)mem[0x180], val2=2, condition="val1 & val2", address_if_false=0x77 )
+0x006b    op02_JumpToConditional( val1=mem[0x180], val2=2, condition="val1 & val2", address_if_false=0x77 )
 0x0073    -- 0x5B()
 0x0074    op01_JumpTo( address=0xbb )
 0x0077    -- 0xFE54()
@@ -756,4 +756,4 @@ Actor_0x1d:event_0x04:
 Actor_0x1d:event_0x05:
 0x06e1    opFE97_ParticleReset( all=0x1 )
 0x06e4    op00_Return()
-0x06e5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x06e5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x002e, flag=0x6c )

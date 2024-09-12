@@ -404,7 +404,7 @@ Actor_0x0d:on_talk:
 0x01fb    op09_CallActorEventEndSync( actor_id=Actor_0x18, event=event_0x04, priority=0x06 )
 0x01fe    -- 0x98_MapLoad( field_id=360, value=2 )
 0x0203    op01_JumpTo( address=0x229 )
-0x0206    op02_JumpToConditional( val1=(s)mem[0xea], val2=8192, condition="val1 & val2", address_if_false=0x21c )
+0x0206    op02_JumpToConditional( val1=mem[0xea], val2=8192, condition="val1 & val2", address_if_false=0x21c )
 0x020e    op74_SoundPlayFixedVolume( sound_id=119 )
 0x0211    op09_CallActorEventEndSync( actor_id=Actor_0x18, event=event_0x04, priority=0x06 )
 0x0214    -- 0x98_MapLoad( field_id=360, value=0 )
@@ -430,7 +430,7 @@ Actor_0x0e:on_update:
 0x023c    op00_Return()
 
 Actor_0x0e:on_talk:
-0x023d    op02_JumpToConditional( val1=(s)mem[0xea], val2=8192, condition="val1 & val2", address_if_false=0x253 )
+0x023d    op02_JumpToConditional( val1=mem[0xea], val2=8192, condition="val1 & val2", address_if_false=0x253 )
 0x0245    op74_SoundPlayFixedVolume( sound_id=119 )
 0x0248    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x06 )
 0x024b    -- 0x98_MapLoad( field_id=359, value=1 )
@@ -734,7 +734,7 @@ Actor_0x12:on_start:
 0x058f    -- 0x85()
 0x0594    op29_ActorTurnOff( actor_id=Actor_0x12 )
 0x0596    op01_JumpTo( address=0x5ca )
-0x0599    op02_JumpToConditional( val1=(s)mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x5b2 )
+0x0599    op02_JumpToConditional( val1=mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x5b2 )
 0x05a1    -- 0x19_ActorSetPosition( x=(vf80)0x004c, z=(vf40)0xff0a, flag=(flag)0xc0 )
 0x05a7    op69_ActorSetRotation( rot=2 )
 0x05aa    -- 0x18()
@@ -748,7 +748,7 @@ Actor_0x12:on_start:
 0x05cd    op00_Return()
 
 Actor_0x12:on_update:
-0x05ce    op02_JumpToConditional( val1=(s)mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x5db )
+0x05ce    op02_JumpToConditional( val1=mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x5db )
 0x05d6    op2C_SpritePlayAnim( anim_id=0x3 )
 0x05d8    op20_ActorSetFlags0( flags=15 )
 0x05db    -- 0x5B()
@@ -819,7 +819,7 @@ Actor_0x13:on_start:
 0x065b    -- 0x85()
 0x0660    op29_ActorTurnOff( actor_id=Actor_0x13 )
 0x0662    op01_JumpTo( address=0x696 )
-0x0665    op02_JumpToConditional( val1=(s)mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x67e )
+0x0665    op02_JumpToConditional( val1=mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x67e )
 0x066d    -- 0x19_ActorSetPosition( x=(vf80)0xff5c, z=(vf40)0xff21, flag=(flag)0xc0 )
 0x0673    op69_ActorSetRotation( rot=2 )
 0x0676    -- 0x18()
@@ -833,7 +833,7 @@ Actor_0x13:on_start:
 0x0699    op00_Return()
 
 Actor_0x13:on_update:
-0x069a    op02_JumpToConditional( val1=(s)mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x6a7 )
+0x069a    op02_JumpToConditional( val1=mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x6a7 )
 0x06a2    op2C_SpritePlayAnim( anim_id=0x3 )
 0x06a4    op20_ActorSetFlags0( flags=15 )
 0x06a7    -- 0x5B()
@@ -861,7 +861,7 @@ Actor_0x14:on_start:
 0x06c2    -- 0x85()
 0x06c7    op29_ActorTurnOff( actor_id=Actor_0x14 )
 0x06c9    op01_JumpTo( address=0x6fd )
-0x06cc    op02_JumpToConditional( val1=(s)mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x6e5 )
+0x06cc    op02_JumpToConditional( val1=mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x6e5 )
 0x06d4    -- 0x19_ActorSetPosition( x=(vf80)0xff5c, z=(vf40)0xfec7, flag=(flag)0xc0 )
 0x06da    op69_ActorSetRotation( rot=4 )
 0x06dd    -- 0x18()
@@ -875,7 +875,7 @@ Actor_0x14:on_start:
 0x0700    op00_Return()
 
 Actor_0x14:on_update:
-0x0701    op02_JumpToConditional( val1=(s)mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x70e )
+0x0701    op02_JumpToConditional( val1=mem[0xea], val2=16384, condition="val1 & val2", address_if_false=0x70e )
 0x0709    op2C_SpritePlayAnim( anim_id=0x3 )
 0x070b    op20_ActorSetFlags0( flags=15 )
 0x070e    -- 0x5B()
@@ -1018,4 +1018,4 @@ Actor_0x19:event_0x04:
 0x07df    mem[0x406] += 1 -- op3c
 0x07e2    op01_JumpTo( address=0x7ce )
 0x07e5    op00_Return()
-0x07e6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x8000, flag=0xf )
+0x07e6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

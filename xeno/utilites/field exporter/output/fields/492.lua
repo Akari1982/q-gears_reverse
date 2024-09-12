@@ -32,7 +32,7 @@ Actor_0x00:on_start:
 0x0094    mem[0x8] = 0 -- op35
 0x009a    op02_JumpToConditional( val1=(s)mem[0x2], val2=6, condition="val1 == val2", address_if_false=0xa8 )
 0x00a2    mem[0x8] = 0 -- op35
-0x00a8    op02_JumpToConditional( val1=(s)mem[0x102], val2=53, condition="val1 <= val2", address_if_false=0xbb )
+0x00a8    op02_JumpToConditional( val1=mem[0x102], val2=53, condition="val1 <= val2", address_if_false=0xbb )
 0x00b0    opF1_FadeSetUp( steps=2, r=200, g=64, b=64, semi_tr=1 )
 0x00bb    -- 0xFE52()
 0x00bd    mem[0x400] = 0 -- op35
@@ -238,7 +238,7 @@ Actor_0x09:on_push:
 
 Actor_0x0a:on_start:
 0x01f1    -- 0x0B_InitNPC( 0 )
-0x01f4    op02_JumpToConditional( val1=(s)mem[0x102], val2=60, condition="val1 >= val2", address_if_false=0x1ff )
+0x01f4    op02_JumpToConditional( val1=mem[0x102], val2=60, condition="val1 >= val2", address_if_false=0x1ff )
 0x01fc    -- 0x23()
 0x01fd    -- 0x27( actor_id=Actor_0x0a )
 0x01ff    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 <= val2", address_if_false=0x210 )
@@ -474,11 +474,11 @@ Actor_0x13:on_start:
 
 Actor_0x13:on_update:
 0x0435    -- 0x86_ProgressNotEqualJumpTo( value=203, jump=0x45b )
-0x043a    op02_JumpToConditional( val1=(s)mem[0x106], val2=0, condition="val1 == val2", address_if_false=0x445 )
+0x043a    op02_JumpToConditional( val1=mem[0x106], val2=0, condition="val1 == val2", address_if_false=0x445 )
 0x0442    op01_JumpTo( address=0x45c )
-0x0445    op02_JumpToConditional( val1=(s)mem[0x106], val2=7, condition="val1 == val2", address_if_false=0x450 )
+0x0445    op02_JumpToConditional( val1=mem[0x106], val2=7, condition="val1 == val2", address_if_false=0x450 )
 0x044d    op01_JumpTo( address=0x471 )
-0x0450    op02_JumpToConditional( val1=(s)mem[0x106], val2=10, condition="val1 == val2", address_if_false=0x45b )
+0x0450    op02_JumpToConditional( val1=mem[0x106], val2=10, condition="val1 == val2", address_if_false=0x45b )
 0x0458    op01_JumpTo( address=0x48b )
 0x045b    op00_Return()
 0x045c    -- 0xFE54()
@@ -524,4 +524,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x04b4    op00_Return()
-0x04b5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x04b5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x7 )

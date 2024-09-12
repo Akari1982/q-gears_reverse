@@ -133,7 +133,7 @@ Actor_0x03:event_0x04:
 0x0232    op2C_SpritePlayAnim( anim_id=0x7 )
 0x0234    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x0238    op9C_MessageSync()
-0x0239    op02_JumpToConditional( val1=(s)mem[0x21e], val2=256, condition="val1 & val2", address_if_false=0x249 )
+0x0239    op02_JumpToConditional( val1=mem[0x21e], val2=256, condition="val1 & val2", address_if_false=0x249 )
 0x0241    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
 0x0245    op9C_MessageSync()
 0x0246    op01_JumpTo( address=0x24e )
@@ -338,7 +338,7 @@ Actor_0x0c:on_update:
 0x03ab    op00_Return()
 
 Actor_0x0c:on_talk:
-0x03ac    op02_JumpToConditional( val1=(s)mem[0x21e], val2=512, condition="val1 & val2", address_if_false=0x3c0 )
+0x03ac    op02_JumpToConditional( val1=mem[0x21e], val2=512, condition="val1 & val2", address_if_false=0x3c0 )
 0x03b4    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x04, priority=0x01 )
 0x03b7    -- 0x80()
 0x03bc    -- 0x2A()
@@ -427,7 +427,7 @@ Actor_0x0c:on_talk:
 0x0510    op01_JumpTo( address=0x50b )
 0x0513    op26_Wait( time=10 )
 0x0516    op01_JumpTo( address=0x40b )
-0x0519    op02_JumpToConditional( val1=(s)mem[0x21e], val2=1024, condition="val1 & val2", address_if_false=0x524 )
+0x0519    op02_JumpToConditional( val1=mem[0x21e], val2=1024, condition="val1 & val2", address_if_false=0x524 )
 0x0521    op01_JumpTo( address=0x530 )
 0x0524    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0b, priority=0x01 )
 0x0527    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )

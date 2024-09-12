@@ -30,7 +30,7 @@ Actor_0x00:on_start:
 0x0031    mem[0x40c] = 0 -- op35
 0x0037    mem[0x40e] = 6 -- op35
 0x003d    mem[0x410] = 268 -- op35
-0x0043    op02_JumpToConditional( val1=(s)mem[0x190], val2=8192, condition="val1 & val2", address_if_false=0x51 )
+0x0043    op02_JumpToConditional( val1=mem[0x190], val2=8192, condition="val1 & val2", address_if_false=0x51 )
 0x004b    mem[0x412] = 1 -- op35
 0x0051    op00_Return()
 
@@ -1851,7 +1851,7 @@ Actor_0x0f:on_update:
 Actor_0x0f:on_talk:
 0x43a1    op74_SoundPlayFixedVolume( sound_id=250 )
 0x43a4    op2C_SpritePlayAnim( anim_id=0x1 )
-0x43a6    op02_JumpToConditional( val1=(s)mem[0x190], val2=-32768, condition="val1 & val2", address_if_false=0x43b6 )
+0x43a6    op02_JumpToConditional( val1=mem[0x190], val2=-32768, condition="val1 & val2", address_if_false=0x43b6 )
 0x43ae    opF5_MessageShowStatic( text_id=0x0, flags=0 )
 0x43b2    op9C_MessageSync()
 0x43b3    op01_JumpTo( address=0x43fc )

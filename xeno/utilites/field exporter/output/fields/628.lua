@@ -19,13 +19,13 @@ Actor_0x00:on_start:
 0x0032    -- 0xBC_ActorNoModelInit()
 0x0033    -- 0xFE1E()
 0x0036    -- 0x75( ???=21 )
-0x0039    op02_JumpToConditional( val1=(s)mem[0x20e], val2=1, condition="val1 & val2", address_if_false=0x47 )
+0x0039    op02_JumpToConditional( val1=mem[0x20e], val2=1, condition="val1 & val2", address_if_false=0x47 )
 0x0041    mem[0x434] = 1 -- op35
-0x0047    op02_JumpToConditional( val1=(s)mem[0x20e], val2=2, condition="val1 & val2", address_if_false=0x55 )
+0x0047    op02_JumpToConditional( val1=mem[0x20e], val2=2, condition="val1 & val2", address_if_false=0x55 )
 0x004f    mem[0x446] = 1 -- op35
-0x0055    op02_JumpToConditional( val1=(s)mem[0x20e], val2=4, condition="val1 & val2", address_if_false=0x63 )
+0x0055    op02_JumpToConditional( val1=mem[0x20e], val2=4, condition="val1 & val2", address_if_false=0x63 )
 0x005d    mem[0x458] = 1 -- op35
-0x0063    op02_JumpToConditional( val1=(s)mem[0x20e], val2=8, condition="val1 & val2", address_if_false=0x71 )
+0x0063    op02_JumpToConditional( val1=mem[0x20e], val2=8, condition="val1 & val2", address_if_false=0x71 )
 0x006b    mem[0x46a] = 1 -- op35
 0x0071    mem[0x408] = 440 -- op35
 0x0077    mem[0x40a] = -720 -- op35

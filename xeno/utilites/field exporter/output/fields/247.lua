@@ -73,7 +73,7 @@ Actor_0x00:on_update:
 0x0160    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x16e )
 0x0168    -- 0xFE65()
 0x016e    mem[0x400] = opA8_Random( max=30 )
-0x0173    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 < val2", address_if_false=0x1c2 )
+0x0173    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 < val2", address_if_false=0x1c2 )
 0x017b    op02_JumpToConditional( val1=(s)mem[0x406], val2=1, condition="val1 == val2", address_if_false=0x186 )
 0x0183    op01_JumpTo( address=0x1c2 )
 0x0186    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x194 )
@@ -84,7 +84,7 @@ Actor_0x00:on_update:
 0x01ab    opF1_FadeSetUp( steps=2, r=20, g=100, b=120, semi_tr=5 )
 0x01b6    -- 0xF2()
 0x01bf    op01_JumpTo( address=0x1cd )
-0x01c2    opF1_FadeSetUp( steps=2, r=(s)mem[0x400], g=100, b=120, semi_tr=5 )
+0x01c2    opF1_FadeSetUp( steps=2, r=mem[0x400], g=100, b=120, semi_tr=5 )
 0x01cd    op26_Wait( time=10 )
 0x01d0    op00_Return()
 
@@ -998,4 +998,4 @@ function:
 0x0d2d    op01_JumpTo( address=0xd30 )
 0x0d30    opF4_MessageClose( type=0x1 )
 0x0d32    op0D_Return()
-0x0d33    -- 0xE0( actor_id=party3, ???=(vf80)0x9081, ???=(vf40)0xea8e, flag=0xb8 )
+0x0d33    -- 0xE0( actor_id=Actor_0xb4, ???=(vf80)0x9a14, ???=(vf40)0x52ce, flag=0x83 )

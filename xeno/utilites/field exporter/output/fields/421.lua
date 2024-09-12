@@ -79,7 +79,7 @@ Actor_0x04:on_start:
 0x007a    op00_Return()
 
 Actor_0x04:on_update:
-0x007b    op02_JumpToConditional( val1=(s)mem[0x214], val2=256, condition="val1 & val2", address_if_false=0x136 )
+0x007b    op02_JumpToConditional( val1=mem[0x214], val2=256, condition="val1 & val2", address_if_false=0x136 )
 0x0083    opB4_FadeOut()
 0x0086    -- 0xFE54()
 0x0088    op25_ActorDisable( actor_id=party1 )
@@ -1065,4 +1065,4 @@ function:
 0x0bdb    opFEBD_ParticleSpawnSettings( settings=0 )
 0x0be3    opFE96_ParticleCreate()
 0x0be5    op0D_Return()
-0x0be6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xc000, ???=(vf40)0x5590, flag=0x0 )
+0x0be6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2d00, ???=(vf40)0x2009, flag=0x4 )

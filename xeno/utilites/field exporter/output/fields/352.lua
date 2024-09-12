@@ -33,8 +33,8 @@ Actor_0x00:on_update:
 0x0036    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x3e )
 0x003b    op01_JumpTo( address=0x154 )
 0x003e    -- 0x84_ProgressLessEqualJumpTo( value=152, jump=0x154 )
-0x0043    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x75 )
-0x004b    op02_JumpToConditional( val1=(s)mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x72 )
+0x0043    op02_JumpToConditional( val1=mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x75 )
+0x004b    op02_JumpToConditional( val1=mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x72 )
 0x0053    -- 0xFE54()
 0x0055    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x06 )
 0x0058    -- 0xFEB5()
@@ -700,10 +700,10 @@ Actor_0x0d:on_push:
 Actor_0x0e:on_start:
 0x03e3    -- 0x0B_InitNPC( 2 )
 0x03e6    -- 0x84_ProgressLessEqualJumpTo( value=152, jump=0x418 )
-0x03eb    op02_JumpToConditional( val1=(s)mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x3f8 )
+0x03eb    op02_JumpToConditional( val1=mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x3f8 )
 0x03f3    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x03f5    op01_JumpTo( address=0x415 )
-0x03f8    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x40c )
+0x03f8    op02_JumpToConditional( val1=mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x40c )
 0x0400    -- 0x19_ActorSetPosition( x=(vf80)0x0078, z=(vf40)0xffce, flag=(flag)0xc0 )
 0x0406    op69_ActorSetRotation( rot=6 )
 0x0409    op01_JumpTo( address=0x415 )
@@ -714,7 +714,7 @@ Actor_0x0e:on_start:
 0x041a    op00_Return()
 
 Actor_0x0e:on_update:
-0x041b    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x425 )
+0x041b    op02_JumpToConditional( val1=mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x425 )
 0x0423    op2C_SpritePlayAnim( anim_id=0x2 )
 0x0425    -- 0x5B()
 0x0426    op00_Return()
@@ -772,8 +772,8 @@ Actor_0x0e:event_0x05:
 Actor_0x0f:on_start:
 0x04a5    -- 0x0B_InitNPC( 0 )
 0x04a8    -- 0x84_ProgressLessEqualJumpTo( value=152, jump=0x4da )
-0x04ad    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x4ce )
-0x04b5    op02_JumpToConditional( val1=(s)mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x4c2 )
+0x04ad    op02_JumpToConditional( val1=mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x4ce )
+0x04b5    op02_JumpToConditional( val1=mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x4c2 )
 0x04bd    op29_ActorTurnOff( actor_id=Actor_0x0f )
 0x04bf    op01_JumpTo( address=0x4cb )
 0x04c2    -- 0x19_ActorSetPosition( x=(vf80)0x00c0, z=(vf40)0x0046, flag=(flag)0xc0 )
@@ -786,7 +786,7 @@ Actor_0x0f:on_start:
 0x04dc    op00_Return()
 
 Actor_0x0f:on_update:
-0x04dd    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x4e8 )
+0x04dd    op02_JumpToConditional( val1=mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x4e8 )
 0x04e5    op01_JumpTo( address=0x537 )
 0x04e8    -- 0x21( ???=304 )
 0x04eb    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
@@ -832,8 +832,8 @@ Actor_0x10:on_start:
 0x054e    -- 0x85()
 0x0553    op29_ActorTurnOff( actor_id=Actor_0x10 )
 0x0555    op01_JumpTo( address=0x589 )
-0x0558    op02_JumpToConditional( val1=(s)mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x580 )
-0x0560    op02_JumpToConditional( val1=(s)mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x574 )
+0x0558    op02_JumpToConditional( val1=mem[0xea], val2=4, condition="val1 & val2", address_if_false=0x580 )
+0x0560    op02_JumpToConditional( val1=mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x574 )
 0x0568    -- 0x19_ActorSetPosition( x=(vf80)0x004c, z=(vf40)0xffd0, flag=(flag)0xc0 )
 0x056e    op69_ActorSetRotation( rot=5 )
 0x0571    op01_JumpTo( address=0x57d )

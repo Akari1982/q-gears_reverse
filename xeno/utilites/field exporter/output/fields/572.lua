@@ -272,7 +272,7 @@ Actor_0x09:on_talk:
 0x02de    -- 0x9D()
 0x02e2    -- 0xA4() -- camera angle
 0x02e6    op07_CallActorEvent( actor_id=Actor_0x0a, event=event_0x04, priority=0x01 )
-0x02e9    op02_JumpToConditional( val1=(s)mem[0x21e], val2=2048, condition="val1 & val2", address_if_false=0x2f4 )
+0x02e9    op02_JumpToConditional( val1=mem[0x21e], val2=2048, condition="val1 & val2", address_if_false=0x2f4 )
 0x02f1    op01_JumpTo( address=0x316 )
 0x02f4    -- 0xFE24()
 0x02f6    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
@@ -364,4 +364,4 @@ function:
 function:
 0x04d7    opFE97_ParticleReset( all=0x1 )
 0x04da    op0D_Return()
-0x04db    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x04db    -- 0xE0( actor_id=Actor_0x12, ???=(vf80)0xa440, ???=(vf40)0x0c13, flag=0x4 )

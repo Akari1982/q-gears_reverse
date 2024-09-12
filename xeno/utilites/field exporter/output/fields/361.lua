@@ -36,7 +36,7 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x0053    -- 0xA1()
-0x0056    op02_JumpToConditional( val1=(s)mem[0x144], val2=-1, condition="val1 == val2", address_if_false=0xb6 )
+0x0056    op02_JumpToConditional( val1=mem[0x144], val2=-1, condition="val1 == val2", address_if_false=0xb6 )
 0x005e    -- 0x15()
 0x005f    opB4_FadeOut()
 0x0062    op26_Wait( time=32 )
@@ -44,7 +44,7 @@ Actor_0x00:on_update:
 0x006e    op26_Wait( time=0 )
 0x0071    opB3_FadeIn()
 0x0074    op02_JumpToConditional( val1=(s)mem[0x402], val2=15, condition="val1 < val2", address_if_false=0x8e )
-0x007c    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=(s)mem[0xfff4] )
+0x007c    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=mem[0xfff4] )
 0x0085    mem[0x402] += 1 -- op3c
 0x0088    op26_Wait( time=1 )
 0x008b    op01_JumpTo( address=0x74 )
@@ -311,7 +311,7 @@ Actor_0x0e:on_start:
 
 Actor_0x0e:on_update:
 0x01bd    -- 0x85()
-0x01c2    op02_JumpToConditional( val1=(s)mem[0x14c], val2=0, condition="val1 == val2", address_if_false=0x1da )
+0x01c2    op02_JumpToConditional( val1=mem[0x14c], val2=0, condition="val1 == val2", address_if_false=0x1da )
 0x01ca    -- 0xFE54()
 0x01cc    op09_CallActorEventEndSync( actor_id=party2, event=event_0x04, priority=0x01 )
 0x01cf    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
@@ -345,7 +345,7 @@ Actor_0x0f:on_talk:
 0x0209    opC6_ExpandRun() -- exp0x20
 0x020a    op74_SoundPlayFixedVolume( sound_id=250 )
 0x020d    -- 0x85()
-0x0212    op02_JumpToConditional( val1=(s)mem[0x144], val2=-2, condition="val1 == val2", address_if_false=0x24b )
+0x0212    op02_JumpToConditional( val1=mem[0x144], val2=-2, condition="val1 == val2", address_if_false=0x24b )
 0x021a    -- 0xFE54()
 0x021c    -- 0xFE24()
 0x021e    op26_Wait( time=24 )
@@ -453,4 +453,4 @@ Actor_0x15:on_talk:
 
 Actor_0x15:on_push:
 0x02a4    op00_Return()
-0x02a5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x02a5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x19d2, flag=0x14 )

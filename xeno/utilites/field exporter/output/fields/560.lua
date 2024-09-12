@@ -127,7 +127,7 @@ Actor_0x04:on_update:
 0x0229    op00_Return()
 
 Actor_0x04:on_talk:
-0x022a    op02_JumpToConditional( val1=(s)mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x246 )
+0x022a    op02_JumpToConditional( val1=mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x246 )
 0x0232    -- 0xFE54()
 0x0234    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x04, priority=0x01 )
 0x0237    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
@@ -532,4 +532,4 @@ Actor_0x16:event_0x05:
 0x0469    -- 0xFE1B()
 0x046f    -- 0x5A()
 0x0470    op00_Return()
-0x0471    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb738, ???=(vf40)0x9081, flag=0xc4 )
+0x0471    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xae38, ???=(vf40)0x9a14, flag=0xd4 )

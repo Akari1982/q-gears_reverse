@@ -33,7 +33,7 @@ Actor_0x00:on_update:
 0x0039    -- 0xE6()
 0x0042    -- 0xFE25()
 0x0045    -- 0xA1()
-0x0048    op02_JumpToConditional( val1=(s)mem[0x156], val2=-32768, condition="val1 & val2", address_if_false=0x53 )
+0x0048    op02_JumpToConditional( val1=mem[0x156], val2=-32768, condition="val1 & val2", address_if_false=0x53 )
 0x0050    op01_JumpTo( address=0xb0 )
 0x0053    -- 0x91()
 0x0057    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )

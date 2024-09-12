@@ -153,7 +153,7 @@ Actor_0x09:on_start:
 0x0093    -- 0x0B_InitNPC( 0 )
 0x0096    opFE0D_MessageSetFace( char_id=1 )
 0x009a    op20_ActorSetFlags0( flags=1 )
-0x009d    op02_JumpToConditional( val1=(s)mem[0x14c], val2=104, condition="val1 > val2", address_if_false=0xaa )
+0x009d    op02_JumpToConditional( val1=mem[0x14c], val2=104, condition="val1 > val2", address_if_false=0xaa )
 0x00a5    op29_ActorTurnOff( actor_id=Actor_0x09 )
 0x00a7    op01_JumpTo( address=0xb0 )
 0x00aa    -- 0x19_ActorSetPosition( x=(vf80)0x045c, z=(vf40)0x047c, flag=(flag)0xc0 )
@@ -207,7 +207,7 @@ Actor_0x0b:on_update:
 0x010b    op00_Return()
 
 Actor_0x0b:on_talk:
-0x010c    op02_JumpToConditional( val1=(s)mem[0x14c], val2=110, condition="val1 == val2", address_if_false=0x126 )
+0x010c    op02_JumpToConditional( val1=mem[0x14c], val2=110, condition="val1 == val2", address_if_false=0x126 )
 0x0114    op74_SoundPlayFixedVolume( sound_id=8 )
 0x0117    -- 0x15()
 0x0118    -- 0xC4()
@@ -246,4 +246,4 @@ Actor_0x0c:on_talk:
 
 Actor_0x0c:on_push:
 0x015c    op00_Return()
-0x015d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x6c00, flag=0x2 )
+0x015d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )

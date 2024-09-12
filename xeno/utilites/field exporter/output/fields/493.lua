@@ -865,7 +865,7 @@ Actor_0x23:on_update:
 0x07ad    op07_CallActorEvent( actor_id=Actor_0x15, event=event_0x04, priority=0x03 )
 0x07b0    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x07b4    op9C_MessageSync()
-0x07b5    op02_JumpToConditional( val1=(s)mem[0x12a], val2=0, condition="val1 == val2", address_if_false=0x7c0 )
+0x07b5    op02_JumpToConditional( val1=mem[0x12a], val2=0, condition="val1 == val2", address_if_false=0x7c0 )
 0x07bd    op01_JumpTo( address=0x7b5 )
 0x07c0    op26_Wait( time=30 )
 0x07c3    op09_CallActorEventEndSync( actor_id=Actor_0x21, event=event_0x06, priority=0x03 )
@@ -939,4 +939,4 @@ Actor_0x23:on_talk:
 
 Actor_0x23:on_push:
 0x08b9    op00_Return()
-0x08ba    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x3d00, ???=(vf40)0x9981, flag=0x0 )
+0x08ba    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7e00, ???=(vf40)0x52b5, flag=0x0 )

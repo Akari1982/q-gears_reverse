@@ -1702,7 +1702,7 @@ Actor_0x04:event_0x04:
 Actor_0x04:event_0x05:
 0x431b    op26_Wait( time=60 )
 0x431e    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=33 )
-0x4329    op02_JumpToConditional( val1=(s)mem[0xea], val2=16, condition="val1 & val2", address_if_false=0x433f )
+0x4329    op02_JumpToConditional( val1=mem[0xea], val2=16, condition="val1 & val2", address_if_false=0x433f )
 0x4331    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x4335    op9C_MessageSync()
 0x4336    mem[0x214] |= 1 << 0 -- op3a
@@ -1720,7 +1720,7 @@ Actor_0x04:event_0x06:
 0x435e    -- 0x57( type=0x8f )
 0x4360    op26_Wait( time=1 )
 0x4363    -- 0x57( type=0xf )
-0x4365    op02_JumpToConditional( val1=(s)mem[0xea], val2=16, condition="val1 & val2", address_if_false=0x4388 )
+0x4365    op02_JumpToConditional( val1=mem[0xea], val2=16, condition="val1 & val2", address_if_false=0x4388 )
 0x436d    op02_JumpToConditional( val1=(s)mem[0x406], val2=0, condition="val1 == val2", address_if_false=0x4380 )
 0x4375    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
 0x4379    op9C_MessageSync()
@@ -2134,7 +2134,7 @@ Actor_0x18:on_update:
 0x463c    op29_ActorTurnOff( actor_id=Actor_0x12 )
 0x463e    op29_ActorTurnOff( actor_id=Actor_0x0f )
 0x4640    op01_JumpTo( address=0x4643 )
-0x4643    op02_JumpToConditional( val1=(s)mem[0x214], val2=1, condition="val1 & val2", address_if_false=0x464d )
+0x4643    op02_JumpToConditional( val1=mem[0x214], val2=1, condition="val1 & val2", address_if_false=0x464d )
 0x464b    op29_ActorTurnOff( actor_id=Actor_0x0f )
 0x464d    -- 0x5B()
 0x464e    op00_Return()

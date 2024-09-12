@@ -31,13 +31,13 @@ Actor_0x01:on_start:
 0x0013    -- 0x16_ActorPCInit( char_id=0 )
 0x0016    opFE0D_MessageSetFace( char_id=0 )
 0x001a    -- 0xA4() -- camera angle
-0x001e    op02_JumpToConditional( val1=(s)mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x29 )
+0x001e    op02_JumpToConditional( val1=mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x29 )
 0x0026    op01_JumpTo( address=0x2f )
 0x0029    -- 0x19_ActorSetPosition( x=(vf80)0xfea8, z=(vf40)0xff1d, flag=(flag)0xc0 )
 0x002f    op00_Return()
 
 Actor_0x01:on_update:
-0x0030    op02_JumpToConditional( val1=(s)mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x45 )
+0x0030    op02_JumpToConditional( val1=mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x45 )
 0x0038    -- 0xA7()
 0x0039    -- 0xC9()
 0x003d    -- 0x98_MapLoad( field_id=259, value=3 )
@@ -324,7 +324,7 @@ Actor_0x07:on_update:
 0x02b2    op00_Return()
 
 Actor_0x07:on_talk:
-0x02b3    op02_JumpToConditional( val1=(s)mem[0x184], val2=8, condition="val1 & val2", address_if_false=0x2bf )
+0x02b3    op02_JumpToConditional( val1=mem[0x184], val2=8, condition="val1 & val2", address_if_false=0x2bf )
 0x02bb    op00_Return()
 0x02bc    op01_JumpTo( address=0x32a )
 0x02bf    -- 0xFE54()
@@ -353,7 +353,7 @@ Actor_0x07:on_push:
 
 Actor_0x08:on_start:
 0x032c    -- 0xBC_ActorNoModelInit()
-0x032d    op02_JumpToConditional( val1=(s)mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x338 )
+0x032d    op02_JumpToConditional( val1=mem[0x184], val2=1, condition="val1 & val2", address_if_false=0x338 )
 0x0335    -- 0xC0( ???=1100 )
 0x0338    op00_Return()
 

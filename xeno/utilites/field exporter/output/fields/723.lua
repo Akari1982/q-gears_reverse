@@ -29,7 +29,7 @@ Actor_0x00:on_start:
 0x003c    op00_Return()
 
 Actor_0x00:on_update:
-0x003d    op02_JumpToConditional( val1=(s)mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x4b )
+0x003d    op02_JumpToConditional( val1=mem[0x400], val2=0, condition="val1 == val2", address_if_false=0x4b )
 0x0045    mem[0x400] = 1 -- op35
 
 Actor_0x00:on_talk:

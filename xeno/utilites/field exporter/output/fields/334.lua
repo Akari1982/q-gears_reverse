@@ -261,7 +261,7 @@ Actor_0x07:on_update:
 0x01bf    op07_CallActorEvent( actor_id=party2, event=event_0x04, priority=0x03 )
 0x01c2    op07_CallActorEvent( actor_id=party3, event=event_0x04, priority=0x03 )
 0x01c5    op26_Wait( time=5 )
-0x01c8    op02_JumpToConditional( val1=(s)mem[0xc4], val2=512, condition="val1 & val2", address_if_false=0x1ee )
+0x01c8    op02_JumpToConditional( val1=mem[0xc4], val2=512, condition="val1 & val2", address_if_false=0x1ee )
 0x01d0    -- 0x75( ???=36 )
 0x01d3    -- 0xFE0E_SoundSetVolume( volume=60, steps=0 )
 0x01d9    op07_CallActorEvent( actor_id=party1, event=event_0x05, priority=0x03 )
@@ -358,4 +358,4 @@ Actor_0x07:on_talk:
 
 Actor_0x07:on_push:
 0x0325    op00_Return()
-0x0326    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xa000, flag=0x91 )
+0x0326    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0c00, flag=0x80 )

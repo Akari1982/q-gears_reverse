@@ -717,7 +717,7 @@ Actor_0x12:on_push:
 
 Actor_0x12:event_0x04:
 0x0710    -- 0xFE65()
-0x0716    op02_JumpToConditional( val1=(s)mem[0x404], val2=27, condition="val1 < val2", address_if_false=0x72a )
+0x0716    op02_JumpToConditional( val1=mem[0x404], val2=27, condition="val1 < val2", address_if_false=0x72a )
 0x071e    -- 0xFE1B()
 0x0724    mem[0x404] += 1 -- op3c
 0x0727    op01_JumpTo( address=0x716 )
@@ -725,7 +725,7 @@ Actor_0x12:event_0x04:
 
 Actor_0x12:event_0x05:
 0x072b    -- 0xFE65()
-0x0731    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x745 )
+0x0731    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x745 )
 0x0739    -- 0xFE1B()
 0x073f    mem[0x404] -= 1 -- op3d
 0x0742    op01_JumpTo( address=0x731 )

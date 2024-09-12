@@ -17,8 +17,8 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    op02_JumpToConditional( val1=(s)mem[0x244], val2=256, condition="val1 & val2", address_if_false=0x31 )
-0x0018    op02_JumpToConditional( val1=(s)mem[0x240], val2=16, condition="val1 & val2", address_if_false=0x23 )
+0x0010    op02_JumpToConditional( val1=mem[0x244], val2=256, condition="val1 & val2", address_if_false=0x31 )
+0x0018    op02_JumpToConditional( val1=mem[0x240], val2=16, condition="val1 & val2", address_if_false=0x23 )
 0x0020    op01_JumpTo( address=0x31 )
 0x0023    -- 0x75( ???=35 )
 0x0026    opF1_FadeSetUp( steps=2, r=70, g=30, b=50, semi_tr=1 )
@@ -35,7 +35,7 @@ Actor_0x00:on_push:
 Actor_0x01:on_start:
 0x0034    -- 0x16_ActorPCInit( char_id=0 )
 0x0037    opFE0D_MessageSetFace( char_id=0 )
-0x003b    op02_JumpToConditional( val1=(s)mem[0x244], val2=2, condition="val1 & val2", address_if_false=0x4a )
+0x003b    op02_JumpToConditional( val1=mem[0x244], val2=2, condition="val1 & val2", address_if_false=0x4a )
 0x0043    opFE0D_MessageSetFace( char_id=0 )
 0x0047    op01_JumpTo( address=0x4e )
 0x004a    opFE0D_MessageSetFace( char_id=36 )

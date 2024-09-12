@@ -79,7 +79,7 @@ Actor_0x04:on_start:
 0x0050    -- 0x0B_InitNPC( 3 )
 0x0053    -- 0x19_ActorSetPosition( x=(vf80)0x003b, z=(vf40)0xff3b, flag=(flag)0xc0 )
 0x0059    op69_ActorSetRotation( rot=7 )
-0x005c    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=2, condition="val1 & val2", address_if_false=0x66 )
+0x005c    op02_JumpToConditional( val1=mem[0x1c6], val2=2, condition="val1 & val2", address_if_false=0x66 )
 0x0064    op29_ActorTurnOff( actor_id=self )
 0x0066    op00_Return()
 
@@ -101,7 +101,7 @@ Actor_0x04:on_update:
 0x009e    -- 0x98_MapLoad( field_id=527, value=2 )
 0x00a3    -- 0x5B()
 0x00a4    op01_JumpTo( address=0xf0 )
-0x00a7    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=64, condition="val1 & val2", address_if_false=0xb2 )
+0x00a7    op02_JumpToConditional( val1=mem[0x1c6], val2=64, condition="val1 & val2", address_if_false=0xb2 )
 0x00af    op01_JumpTo( address=0xf0 )
 0x00b2    -- 0xFE54()
 0x00b4    op6F_ActorRotateToActor( actor_id=party1 )

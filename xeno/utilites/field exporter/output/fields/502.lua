@@ -32,7 +32,7 @@ Actor_0x00:on_start:
 0x003b    mem[0x40e] = 0 -- op35
 0x0041    mem[0x410] = 6 -- op35
 0x0047    mem[0x412] = 1121 -- op35
-0x004d    op02_JumpToConditional( val1=(s)mem[0x190], val2=4096, condition="val1 & val2", address_if_false=0x5b )
+0x004d    op02_JumpToConditional( val1=mem[0x190], val2=4096, condition="val1 & val2", address_if_false=0x5b )
 0x0055    mem[0x414] = 1 -- op35
 0x005b    op00_Return()
 

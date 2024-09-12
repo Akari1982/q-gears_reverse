@@ -510,7 +510,7 @@ Actor_0x08:on_update:
 0x04fd    -- 0x98_MapLoad( field_id=674, value=1 )
 0x0502    -- 0x5B()
 0x0503    op02_JumpToConditional( val1=(s)mem[0x2], val2=5, condition="val1 == val2", address_if_false=0x586 )
-0x050b    op02_JumpToConditional( val1=(s)mem[0x248], val2=4, condition="val1 & val2", address_if_false=0x551 )
+0x050b    op02_JumpToConditional( val1=mem[0x248], val2=4, condition="val1 & val2", address_if_false=0x551 )
 0x0513    -- 0xFE54()
 0x0515    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x07, priority=0x01 )
 0x0518    -- 0xFE18()
@@ -549,7 +549,7 @@ Actor_0x08:on_update:
 0x0580    -- 0x98_MapLoad( field_id=678, value=0 )
 0x0585    -- 0x5B()
 0x0586    op02_JumpToConditional( val1=(s)mem[0x2], val2=6, condition="val1 == val2", address_if_false=0x655 )
-0x058e    op02_JumpToConditional( val1=(s)mem[0x248], val2=4, condition="val1 & val2", address_if_false=0x61f )
+0x058e    op02_JumpToConditional( val1=mem[0x248], val2=4, condition="val1 & val2", address_if_false=0x61f )
 0x0596    -- 0xFE54()
 0x0598    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x07, priority=0x01 )
 0x059b    -- 0xFE18()
@@ -1130,7 +1130,7 @@ Actor_0x0d:event_0x07:
 0x0c3e    mem[0x402] = 12 -- op35
 0x0c44    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x01 )
 0x0c47    op26_Wait( time=30 )
-0x0c4a    op02_JumpToConditional( val1=(s)mem[0x248], val2=8, condition="val1 & val2", address_if_false=0xc5e )
+0x0c4a    op02_JumpToConditional( val1=mem[0x248], val2=8, condition="val1 & val2", address_if_false=0xc5e )
 0x0c52    mem[0x402] = 13 -- op35
 0x0c58    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x01 )
 0x0c5b    op01_JumpTo( address=0xc67 )
@@ -1146,7 +1146,7 @@ Actor_0x0d:event_0x07:
 0x0c86    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x01 )
 0x0c89    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x22, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
 0x0c8f    -- 0x5A()
-0x0c90    op02_JumpToConditional( val1=(s)mem[0x248], val2=8, condition="val1 & val2", address_if_false=0xca4 )
+0x0c90    op02_JumpToConditional( val1=mem[0x248], val2=8, condition="val1 & val2", address_if_false=0xca4 )
 0x0c98    mem[0x402] = 13 -- op35
 0x0c9e    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0a, priority=0x01 )
 0x0ca1    op01_JumpTo( address=0xcad )
@@ -2557,4 +2557,4 @@ function:
 0x226f    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x2272    op01_JumpTo( address=0x2275 )
 0x2275    op0D_Return()
-0x2276    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0xf9 )
+0x2276    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x00d0, flag=0x0 )

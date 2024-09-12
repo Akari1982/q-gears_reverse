@@ -1771,10 +1771,10 @@ Actor_0x06:on_start:
 Actor_0x06:on_update:
 0x4446    opC6_ExpandRun() -- exp0x20
 0x4447    op02_JumpToConditional( val1=(s)mem[0x40c], val2=200, condition="val1 < val2", address_if_false=0x445e )
-0x444f    opFE1D_ModelAddTrans( trans_x=42, trans_y=0, trans_z=(s)mem[0x2a] )
+0x444f    opFE1D_ModelAddTrans( trans_x=42, trans_y=0, trans_z=mem[0x2a] )
 0x4458    mem[0x40c] += 1 -- op3c
 0x445b    op01_JumpTo( address=0x446d )
-0x445e    opFE1D_ModelAddTrans( trans_x=-8400, trans_y=0, trans_z=(s)mem[0xdf30] )
+0x445e    opFE1D_ModelAddTrans( trans_x=-8400, trans_y=0, trans_z=mem[0xdf30] )
 0x4467    mem[0x40c] = 0 -- op35
 0x446d    op00_Return()
 

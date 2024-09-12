@@ -213,7 +213,7 @@ Actor_0x0c:on_push:
 0x00e2    mem[0x402] = true -- op36
 0x00e5    op74_SoundPlayFixedVolume( sound_id=57 )
 0x00e8    mem[0x2e4] += 1 -- op38
-0x00ee    op02_JumpToConditional( val1=(s)mem[0x2e4], val2=500, condition="val1 > val2", address_if_false=0xfc )
+0x00ee    op02_JumpToConditional( val1=mem[0x2e4], val2=500, condition="val1 > val2", address_if_false=0xfc )
 0x00f6    mem[0x2e4] = 500 -- op35
 0x00fc    op26_Wait( time=20 )
 0x00ff    op00_Return()

@@ -21,7 +21,7 @@ Actor_0x00:on_start:
 0x000a    op00_Return()
 
 Actor_0x00:on_update:
-0x000b    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x20 )
+0x000b    op02_JumpToConditional( val1=mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x20 )
 0x0013    -- 0xFE54()
 0x0015    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
 0x0018    -- 0x5A()
@@ -93,7 +93,7 @@ Actor_0x03:on_update:
 0x0082    op00_Return()
 
 Actor_0x03:on_talk:
-0x0083    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0xc0 )
+0x0083    op02_JumpToConditional( val1=mem[0x240], val2=32, condition="val1 & val2", address_if_false=0xc0 )
 0x008b    op2C_SpritePlayAnim( anim_id=0x2 )
 0x008d    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
 0x0091    op9C_MessageSync()
@@ -145,14 +145,14 @@ Actor_0x03:event_0x06:
 
 Actor_0x04:on_start:
 0x00f1    -- 0x0B_InitNPC( 1 )
-0x00f4    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x105 )
+0x00f4    op02_JumpToConditional( val1=mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x105 )
 0x00fc    -- 0x19_ActorSetPosition( x=(vf80)0x007e, z=(vf40)0x0087, flag=(flag)0xc0 )
 0x0102    op01_JumpTo( address=0x10b )
 0x0105    -- 0x19_ActorSetPosition( x=(vf80)0xff12, z=(vf40)0x0097, flag=(flag)0xc0 )
 0x010b    op00_Return()
 
 Actor_0x04:on_update:
-0x010c    op02_JumpToConditional( val1=(s)mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x119 )
+0x010c    op02_JumpToConditional( val1=mem[0x240], val2=32, condition="val1 & val2", address_if_false=0x119 )
 0x0114    op6F_ActorRotateToActor( actor_id=party1 )
 0x0116    op01_JumpTo( address=0x153 )
 0x0119    op26_Wait( time=15 )

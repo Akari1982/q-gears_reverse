@@ -35,14 +35,14 @@ Actor_0x00:on_push:
 0x003b    op00_Return()
 
 Actor_0x00:event_0x04:
-0x003c    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=2, condition="val1 & val2", address_if_false=0x4a )
+0x003c    op02_JumpToConditional( val1=mem[0x2c6], val2=2, condition="val1 & val2", address_if_false=0x4a )
 0x0044    op26_Wait( time=40 )
 0x0047    op01_JumpTo( address=0x50 )
 0x004a    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x0, flags=0 )
 0x0050    op00_Return()
 
 Actor_0x00:event_0x05:
-0x0051    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=2, condition="val1 & val2", address_if_false=0x5c )
+0x0051    op02_JumpToConditional( val1=mem[0x2c6], val2=2, condition="val1 & val2", address_if_false=0x5c )
 0x0059    op01_JumpTo( address=0x6d )
 0x005c    op26_Wait( time=30 )
 0x005f    opFE0D_MessageSetFace( char_id=0 )
@@ -81,7 +81,7 @@ Actor_0x01:on_push:
 Actor_0x01:event_0x04:
 0x00b0    op2C_SpritePlayAnim( anim_id=0xff )
 0x00b2    -- 0xF6( ???=0x1 )
-0x00b4    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=2, condition="val1 & val2", address_if_false=0xc2 )
+0x00b4    op02_JumpToConditional( val1=mem[0x2c6], val2=2, condition="val1 & val2", address_if_false=0xc2 )
 0x00bc    op09_CallActorEventEndSync( actor_id=Actor_0x00, event=event_0x07, priority=0x02 )
 0x00bf    op01_JumpTo( address=0xd4 )
 0x00c2    -- 0x57( type=0x80, x=(vf80)0x0074, z=(vf40)0xff8c, walkmesh_id=(vf20)0x0000, ???=(vf10)0x000a, flag=0xf0 )
@@ -1382,9 +1382,9 @@ function:
 0x0fa5    op0D_Return()
 0x0fa6    -- 0xFE19( char_id=0xff )
 0x0fa9    -- 0xFE19( char_id=0xfe )
-0x0fac    -- 0xFEC6( char_id=(s)mem[0x2d0] )
+0x0fac    -- 0xFEC6( char_id=mem[0x2d0] )
 0x0fb0    -- 0xFE1A() sync load for 0xFEC6()
-0x0fb2    -- 0xFEC6( char_id=(s)mem[0x2d2] )
+0x0fb2    -- 0xFEC6( char_id=mem[0x2d2] )
 0x0fb6    -- 0xFE1A() sync load for 0xFEC6()
 0x0fb8    -- 0xBB( ???=0x7 )
 0x0fba    -- 0x5A()

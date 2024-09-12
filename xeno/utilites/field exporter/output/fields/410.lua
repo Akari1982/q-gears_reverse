@@ -18,9 +18,9 @@ unknown = [
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
 0x0010    -- 0xA1()
-0x0013    op02_JumpToConditional( val1=(s)mem[0x218], val2=128, condition="val1 & val2", address_if_false=0x21 )
+0x0013    op02_JumpToConditional( val1=mem[0x218], val2=128, condition="val1 & val2", address_if_false=0x21 )
 0x001b    mem[0x40e] = 1 -- op35
-0x0021    op02_JumpToConditional( val1=(s)mem[0x218], val2=256, condition="val1 & val2", address_if_false=0x2f )
+0x0021    op02_JumpToConditional( val1=mem[0x218], val2=256, condition="val1 & val2", address_if_false=0x2f )
 0x0029    mem[0x420] = 1 -- op35
 0x002f    mem[0x402] = 1 -- op35
 0x0035    mem[0x404] = 45 -- op35
@@ -454,7 +454,7 @@ Actor_0x0c:on_start:
 0x038d    op00_Return()
 
 Actor_0x0c:on_update:
-0x038e    op02_JumpToConditional( val1=(s)mem[0x214], val2=8, condition="val1 & val2", address_if_false=0x3c0 )
+0x038e    op02_JumpToConditional( val1=mem[0x214], val2=8, condition="val1 & val2", address_if_false=0x3c0 )
 0x0396    -- 0xFE54()
 0x0398    -- 0x75( ???=11 )
 0x039b    -- 0xF2()
@@ -480,7 +480,7 @@ Actor_0x0d:on_start:
 0x03c5    op00_Return()
 
 Actor_0x0d:on_update:
-0x03c6    op02_JumpToConditional( val1=(s)mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x421 )
+0x03c6    op02_JumpToConditional( val1=mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x421 )
 0x03ce    -- 0xF2()
 0x03d7    op74_SoundPlayFixedVolume( sound_id=316 )
 0x03da    -- 0xFE54()
@@ -530,7 +530,7 @@ Actor_0x0e:on_push:
 
 Actor_0x0f:on_start:
 0x046c    -- 0xBC_ActorNoModelInit()
-0x046d    op02_JumpToConditional( val1=(s)mem[0x214], val2=8, condition="val1 & val2", address_if_false=0x479 )
+0x046d    op02_JumpToConditional( val1=mem[0x214], val2=8, condition="val1 & val2", address_if_false=0x479 )
 0x0475    op29_ActorTurnOff( actor_id=Actor_0x07 )
 0x0477    op29_ActorTurnOff( actor_id=Actor_0x04 )
 0x0479    -- 0x2A()

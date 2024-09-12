@@ -17,7 +17,7 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0016    -- 0xBC_ActorNoModelInit()
-0x0017    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x2e )
+0x0017    op02_JumpToConditional( val1=mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x2e )
 0x001f    -- 0x80()
 0x0024    -- 0x80()
 0x0029    op25_ActorDisable( actor_id=Actor_0x0a )
@@ -27,7 +27,7 @@ Actor_0x00:on_start:
 0x0034    op00_Return()
 
 Actor_0x00:on_update:
-0x0035    op02_JumpToConditional( val1=(s)mem[0x210], val2=256, condition="val1 & val2", address_if_false=0x9e )
+0x0035    op02_JumpToConditional( val1=mem[0x210], val2=256, condition="val1 & val2", address_if_false=0x9e )
 0x003d    -- 0x27( actor_id=Actor_0x0f )
 0x003f    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x10, priority=0x01 )
 0x0042    -- 0xA4() -- camera angle
@@ -232,7 +232,7 @@ Actor_0x07:event_0x05:
 Actor_0x08:on_start:
 0x01c3    -- 0xBC_ActorNoModelInit()
 0x01c4    -- 0x21( ???=768 )
-0x01c7    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x1d8 )
+0x01c7    op02_JumpToConditional( val1=mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x1d8 )
 0x01cf    -- 0xFE1C()
 0x01d8    -- 0x2A()
 0x01d9    op00_Return()
@@ -334,7 +334,7 @@ Actor_0x08:event_0x12:
 Actor_0x09:on_start:
 0x03a1    -- 0xBC_ActorNoModelInit()
 0x03a2    -- 0x21( ???=768 )
-0x03a5    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x3b6 )
+0x03a5    op02_JumpToConditional( val1=mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x3b6 )
 0x03ad    -- 0xFE1C()
 0x03b6    -- 0x2A()
 0x03b7    op00_Return()
@@ -736,7 +736,7 @@ Actor_0x13:event_0x04:
 
 Actor_0x14:on_start:
 0x0821    -- 0xBC_ActorNoModelInit()
-0x0822    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x832 )
+0x0822    op02_JumpToConditional( val1=mem[0x210], val2=16, condition="val1 & val2", address_if_false=0x832 )
 0x082a    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x082c    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x082e    op29_ActorTurnOff( actor_id=Actor_0x0b )
@@ -745,7 +745,7 @@ Actor_0x14:on_start:
 0x0833    op00_Return()
 
 Actor_0x14:on_update:
-0x0834    op02_JumpToConditional( val1=(s)mem[0x210], val2=256, condition="val1 & val2", address_if_false=0x844 )
+0x0834    op02_JumpToConditional( val1=mem[0x210], val2=256, condition="val1 & val2", address_if_false=0x844 )
 0x083c    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x083e    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x0840    op29_ActorTurnOff( actor_id=Actor_0x0b )
@@ -806,4 +806,4 @@ function:
 function:
 0x0929    opFE97_ParticleReset( all=0x0 )
 0x092c    op0D_Return()
-0x092d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb238, ???=(vf40)0x0000, flag=0x0 )
+0x092d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xbf38, ???=(vf40)0x0480, flag=0x80 )

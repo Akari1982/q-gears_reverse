@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0x2A()
 0x000a    -- 0xFE8E()
-0x0010    op02_JumpToConditional( val1=(s)mem[0x146], val2=5, condition="val1 == val2", address_if_false=0x65 )
+0x0010    op02_JumpToConditional( val1=mem[0x146], val2=5, condition="val1 == val2", address_if_false=0x65 )
 0x0018    -- 0xA0()
 0x001f    -- 0xFE81()
 0x0028    -- 0xFE82()
@@ -48,7 +48,7 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x00b3    -- 0xFE3F()
-0x00bb    op02_JumpToConditional( val1=(s)mem[0x160], val2=1, condition="val1 == val2", address_if_false=0xdb )
+0x00bb    op02_JumpToConditional( val1=mem[0x160], val2=1, condition="val1 == val2", address_if_false=0xdb )
 0x00c3    -- 0x75( ???=66 )
 0x00c6    opB4_FadeOut()
 0x00c9    -- 0xFE54()
@@ -58,7 +58,7 @@ Actor_0x00:on_update:
 0x00d7    -- 0x5B()
 0x00d8    op01_JumpTo( address=0x237 )
 0x00db    -- 0xFE65()
-0x00e1    op02_JumpToConditional( val1=(s)mem[0x146], val2=5, condition="val1 != val2", address_if_false=0x15e )
+0x00e1    op02_JumpToConditional( val1=mem[0x146], val2=5, condition="val1 != val2", address_if_false=0x15e )
 0x00e9    -- 0xFE54()
 0x00eb    op26_Wait( time=32 )
 0x00ee    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
@@ -737,4 +737,4 @@ Actor_0x07:event_0x04:
 0x0c2a    opFEBD_ParticleSpawnSettings( settings=2 )
 0x0c32    opFE96_ParticleCreate()
 0x0c34    op00_Return()
-0x0c35    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0138, ???=(vf40)0x22f0, flag=0x40 )
+0x0c35    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )

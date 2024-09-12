@@ -239,7 +239,7 @@ Actor_0x0d:on_update:
 0x00de    op00_Return()
 
 Actor_0x0d:on_talk:
-0x00df    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=-32768, condition="val1 & val2", address_if_false=0xed )
+0x00df    op02_JumpToConditional( val1=mem[0x2ca], val2=-32768, condition="val1 & val2", address_if_false=0xed )
 0x00e7    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
 0x00eb    op9C_MessageSync()
 0x00ec    op00_Return()
@@ -279,7 +279,7 @@ Actor_0x0e:on_update:
 0x0137    op00_Return()
 
 Actor_0x0e:on_talk:
-0x0138    op02_JumpToConditional( val1=(s)mem[0x2c8], val2=8, condition="val1 & val2", address_if_false=0x146 )
+0x0138    op02_JumpToConditional( val1=mem[0x2c8], val2=8, condition="val1 & val2", address_if_false=0x146 )
 0x0140    opD2_MessageShowDynamic( text_id=0x9, flags=0 )
 0x0144    op9C_MessageSync()
 0x0145    op00_Return()
@@ -288,7 +288,7 @@ Actor_0x0e:on_talk:
 0x014a    op26_Wait( time=20 )
 0x014d    opD2_MessageShowDynamic( text_id=0xa, flags=0 )
 0x0151    op9C_MessageSync()
-0x0152    op02_JumpToConditional( val1=(s)mem[0x2c4], val2=8, condition="val1 & val2", address_if_false=0x18f )
+0x0152    op02_JumpToConditional( val1=mem[0x2c4], val2=8, condition="val1 & val2", address_if_false=0x18f )
 0x015a    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x03 )
 0x015d    opD2_MessageShowDynamic( text_id=0xb, flags=0 )
 0x0161    op9C_MessageSync()
@@ -590,11 +590,11 @@ function:
 0x0690    op0D_Return()
 0x0691    -- 0xFE19( char_id=0xff )
 0x0694    -- 0xFE19( char_id=0xfe )
-0x0697    -- 0xFEC6( char_id=(s)mem[0x2d0] )
+0x0697    -- 0xFEC6( char_id=mem[0x2d0] )
 0x069b    -- 0xFE1A() sync load for 0xFEC6()
-0x069d    -- 0xFEC6( char_id=(s)mem[0x2d2] )
+0x069d    -- 0xFEC6( char_id=mem[0x2d2] )
 0x06a1    -- 0xFE1A() sync load for 0xFEC6()
 0x06a3    -- 0xBB( ???=0x7 )
 0x06a5    -- 0x5A()
 0x06a6    op0D_Return()
-0x06a7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x06a7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0f00, flag=0x0 )

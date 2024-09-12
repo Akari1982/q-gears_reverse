@@ -106,7 +106,7 @@ Actor_0x03:on_push:
 
 Actor_0x04:on_start:
 0x007f    -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0xa0 )
-0x0084    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=16384, condition="val1 & val2", address_if_false=0x91 )
+0x0084    op02_JumpToConditional( val1=mem[0x1c6], val2=16384, condition="val1 & val2", address_if_false=0x91 )
 0x008c    -- 0xBC_ActorNoModelInit()
 0x008d    -- 0x2A()
 0x008e    op01_JumpTo( address=0x9d )
@@ -125,8 +125,8 @@ Actor_0x04:on_talk:
 0x00a6    -- 0x76()
 0x00a7    op6F_ActorRotateToActor( actor_id=party1 )
 0x00a9    op26_Wait( time=10 )
-0x00ac    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=8192, condition="val1 & val2", address_if_false=0x1b0 )
-0x00b4    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=16384, condition="val1 & val2", address_if_false=0x118 )
+0x00ac    op02_JumpToConditional( val1=mem[0x1c6], val2=8192, condition="val1 & val2", address_if_false=0x1b0 )
+0x00b4    op02_JumpToConditional( val1=mem[0x1c0], val2=16384, condition="val1 & val2", address_if_false=0x118 )
 0x00bc    -- 0x91()
 0x00c0    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x04, priority=0x03 )
 0x00c3    opD2_MessageShowDynamic( text_id=0x0, flags=NO_FACE )

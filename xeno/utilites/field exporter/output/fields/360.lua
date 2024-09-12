@@ -40,7 +40,7 @@ Actor_0x00:on_update:
 0x005c    op01_JumpTo( address=0x62 )
 0x005f    -- 0x75( ???=255 )
 0x0062    -- 0x85()
-0x0067    op02_JumpToConditional( val1=(s)mem[0xec], val2=2048, condition="val1 & val2", address_if_false=0x72 )
+0x0067    op02_JumpToConditional( val1=mem[0xec], val2=2048, condition="val1 & val2", address_if_false=0x72 )
 0x006f    op01_JumpTo( address=0x95 )
 0x0072    -- 0xFE54()
 0x0074    -- 0xFE23()

@@ -128,7 +128,7 @@ Actor_0x06:on_start:
 0x01e9    -- 0x85()
 0x01ee    -- 0x19_ActorSetPosition( x=(vf80)0x0003, z=(vf40)0x007c, flag=(flag)0xc0 )
 0x01f4    -- 0x5F( ???=0x1 )
-0x01f6    op02_JumpToConditional( val1=(s)mem[0x204], val2=16, condition="val1 & val2", address_if_false=0x201 )
+0x01f6    op02_JumpToConditional( val1=mem[0x204], val2=16, condition="val1 & val2", address_if_false=0x201 )
 0x01fe    op01_JumpTo( address=0x203 )
 0x0201    op29_ActorTurnOff( actor_id=Actor_0x06 )
 0x0203    op01_JumpTo( address=0x20e )
@@ -202,7 +202,7 @@ Actor_0x08:on_update:
 
 Actor_0x08:on_talk:
 0x02b6    op6F_ActorRotateToActor( actor_id=party1 )
-0x02b8    op02_JumpToConditional( val1=(s)mem[0x204], val2=16, condition="val1 & val2", address_if_false=0x2d0 )
+0x02b8    op02_JumpToConditional( val1=mem[0x204], val2=16, condition="val1 & val2", address_if_false=0x2d0 )
 0x02c0    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
 0x02c4    op9C_MessageSync()
 0x02c5    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
@@ -272,4 +272,4 @@ Actor_0x0b:on_talk:
 
 Actor_0x0b:on_push:
 0x0309    op00_Return()
-0x030a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x080d, ???=(vf40)0x0080, flag=0xa7 )
+0x030a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xda00, ???=(vf40)0x7ebd, flag=0x67 )

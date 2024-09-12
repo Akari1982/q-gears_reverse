@@ -23,7 +23,7 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0018    -- 0x75( ???=42 )
 0x001b    -- 0x84_ProgressLessEqualJumpTo( value=42, jump=0x60 )
-0x0020    op02_JumpToConditional( val1=(s)mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x2c )
+0x0020    op02_JumpToConditional( val1=mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x2c )
 0x0028    -- 0x5B()
 0x0029    op01_JumpTo( address=0x60 )
 0x002c    -- 0xFE54()
@@ -294,7 +294,7 @@ Actor_0x0c:event_0x04:
 
 Actor_0x0d:on_start:
 0x01c7    -- 0x0B_InitNPC( 1 )
-0x01ca    op02_JumpToConditional( val1=(s)mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x1d7 )
+0x01ca    op02_JumpToConditional( val1=mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x1d7 )
 0x01d2    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x01d4    op01_JumpTo( address=0x1e0 )
 0x01d7    -- 0x19_ActorSetPosition( x=(vf80)0x0072, z=(vf40)0x0046, flag=(flag)0xc0 )
@@ -392,7 +392,7 @@ Actor_0x0d:event_0x0a:
 
 Actor_0x0e:on_start:
 0x0292    -- 0x0B_InitNPC( 1 )
-0x0295    op02_JumpToConditional( val1=(s)mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x2a2 )
+0x0295    op02_JumpToConditional( val1=mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x2a2 )
 0x029d    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x029f    op01_JumpTo( address=0x2ab )
 0x02a2    -- 0x19_ActorSetPosition( x=(vf80)0x004b, z=(vf40)0x001f, flag=(flag)0xc0 )
@@ -551,7 +551,7 @@ Actor_0x10:event_0x05:
 
 Actor_0x11:on_start:
 0x03fd    -- 0x0B_InitNPC( 4 )
-0x0400    op02_JumpToConditional( val1=(s)mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x414 )
+0x0400    op02_JumpToConditional( val1=mem[0xe4], val2=128, condition="val1 & val2", address_if_false=0x414 )
 0x0408    -- 0x19_ActorSetPosition( x=(vf80)0xfff5, z=(vf40)0x001e, flag=(flag)0xc0 )
 0x040e    op69_ActorSetRotation( rot=1 )
 0x0411    op01_JumpTo( address=0x416 )

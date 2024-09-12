@@ -3377,7 +3377,7 @@ ScriptFile::GetVVariable( const u32 pointer )
 {
     u16 slot = GetU16LE( pointer ) / 2;
 
-    if( m_Signs[ slot / 20 ] & ( 1 << ( slot & 0x1f ) ) ) // if bit in sign block is set
+    if( m_Signs[ slot / 0x20 ] & ( 1 << ( slot & 0x1f ) ) ) // if bit in sign block is set
     {
         return "mem[0x" + HexToString( slot * 2, 1, '0' ) + "]";
     }

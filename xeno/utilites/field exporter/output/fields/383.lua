@@ -993,7 +993,7 @@ Actor_0x14:on_start:
 Actor_0x14:on_update:
 0x0962    -- 0x86_ProgressNotEqualJumpTo( value=165, jump=0x9f3 )
 0x0967    -- 0xC9()
-0x096b    op02_JumpToConditional( val1=(s)mem[0x14c], val2=10, condition="val1 < val2", address_if_false=0x9f0 )
+0x096b    op02_JumpToConditional( val1=mem[0x14c], val2=10, condition="val1 < val2", address_if_false=0x9f0 )
 0x0973    -- 0xFE54()
 0x0975    op07_CallActorEvent( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
 0x0978    op26_Wait( time=55 )

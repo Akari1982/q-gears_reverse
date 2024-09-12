@@ -30,7 +30,7 @@ Actor_0x00:on_start:
 0x0036    mem[0x442] = 0 -- op35
 0x003c    mem[0x444] = 6 -- op35
 0x0042    mem[0x446] = 50 -- op35
-0x0048    op02_JumpToConditional( val1=(s)mem[0x162], val2=16, condition="val1 & val2", address_if_false=0x53 )
+0x0048    op02_JumpToConditional( val1=mem[0x162], val2=16, condition="val1 & val2", address_if_false=0x53 )
 0x0050    mem[0x448] = true -- op36
 0x0053    mem[0x44e] = 0 -- op35
 0x0059    mem[0x450] = -478 -- op35
@@ -38,7 +38,7 @@ Actor_0x00:on_start:
 0x0065    mem[0x454] = 0 -- op35
 0x006b    mem[0x456] = 6 -- op35
 0x0071    mem[0x458] = 6 -- op35
-0x0077    op02_JumpToConditional( val1=(s)mem[0x162], val2=32, condition="val1 & val2", address_if_false=0x82 )
+0x0077    op02_JumpToConditional( val1=mem[0x162], val2=32, condition="val1 & val2", address_if_false=0x82 )
 0x007f    mem[0x45a] = true -- op36
 0x0082    -- 0xFE48()
 0x008b    op99()
@@ -1052,7 +1052,7 @@ Actor_0x1e:event_0x04:
 Actor_0x1f:on_start:
 0x0945    -- 0xBC_ActorNoModelInit()
 0x0946    -- 0x2A()
-0x0947    op02_JumpToConditional( val1=(s)mem[0x140], val2=1, condition="val1 == val2", address_if_false=0x950 )
+0x0947    op02_JumpToConditional( val1=mem[0x140], val2=1, condition="val1 == val2", address_if_false=0x950 )
 0x094f    -- 0x23()
 0x0950    op00_Return()
 
@@ -1322,4 +1322,4 @@ Actor_0x28:on_talk:
 Actor_0x28:on_push:
 0x0b13    op00_Return()
 0x0b14    op00_Return()
-0x0b15    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2738, ???=(vf40)0x27f1, flag=0xf1 )
+0x0b15    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0xe000, flag=0x99 )

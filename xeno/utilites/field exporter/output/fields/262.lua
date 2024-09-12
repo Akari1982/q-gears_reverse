@@ -22,7 +22,7 @@ Actor_0x00:on_start:
 0x0024    -- 0xA4() -- camera angle
 0x0028    -- 0x2A()
 0x0029    -- 0xFE1E()
-0x002c    op02_JumpToConditional( val1=(s)mem[0x186], val2=1, condition="val1 & val2", address_if_false=0x39 )
+0x002c    op02_JumpToConditional( val1=mem[0x186], val2=1, condition="val1 & val2", address_if_false=0x39 )
 0x0034    -- 0xF7()
 0x0039    op00_Return()
 
@@ -2306,7 +2306,7 @@ Actor_0x10:on_update:
 
 Actor_0x10:on_talk:
 0x4776    -- 0xFE54()
-0x4778    op02_JumpToConditional( val1=(s)mem[0x186], val2=32, condition="val1 & val2", address_if_false=0x4783 )
+0x4778    op02_JumpToConditional( val1=mem[0x186], val2=32, condition="val1 & val2", address_if_false=0x4783 )
 0x4780    op01_JumpTo( address=0x483a )
 0x4783    -- 0xFE54()
 0x4785    op99()

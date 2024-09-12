@@ -37,4 +37,4 @@ Actor_0x01:on_start:
 0x000c    op00_Return()
 
 Actor_0x01:on_update:
-0x000d    opFEA0_MoviePlay3( movie_id=(vf80)0xfe00, sector=(vf40)0xfe61, start_frame=(vf20)0x01a0, end_frame=(vf10)0x005b, ???=(vf08)0x0000, flag=(flag)0x00 )
+0x000d    opFEA0_MoviePlay3( movie_id=(vf80)0xfe00, sector=(vf40)0xfe61, start_frame=(vf20)0x01a0, end_frame=(vf10)0x005b, ???=(vf08)0x0000, flag=(flag)0x67 )

@@ -450,7 +450,7 @@ Actor_0x07:on_start:
 Actor_0x07:on_update:
 0x0463    -- 0xC9()
 0x0467    -- 0x86_ProgressNotEqualJumpTo( value=210, jump=0x47a )
-0x046c    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=32, condition="val1 & val2", address_if_false=0x477 )
+0x046c    op02_JumpToConditional( val1=mem[0x1c6], val2=32, condition="val1 & val2", address_if_false=0x477 )
 0x0474    op01_JumpTo( address=0x47a )
 0x0477    -- 0x28()
 0x0479    -- 0x5B()

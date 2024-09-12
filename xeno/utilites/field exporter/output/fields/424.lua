@@ -29,7 +29,7 @@ Actor_0x00:on_start:
 0x0080    op02_JumpToConditional( val1=(s)mem[0x4], val2=427, condition="val1 == val2", address_if_false=0x8b )
 0x0088    -- 0xA1()
 0x008b    op02_JumpToConditional( val1=(s)mem[0x4], val2=431, condition="val1 == val2", address_if_false=0xaa )
-0x0093    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=256, condition="val1 & val2", address_if_false=0xa7 )
+0x0093    op02_JumpToConditional( val1=mem[0x2c6], val2=256, condition="val1 & val2", address_if_false=0xa7 )
 0x009b    mem[0x2c6] &= ~(1 << 8) -- op3a
 0x00a1    -- 0xA1()
 0x00a4    op01_JumpTo( address=0xaa )
@@ -932,12 +932,12 @@ Actor_0x0e:on_push:
 0x08b8    op01_JumpTo( address=0x8bc )
 0x08bb    op00_Return()
 0x08bc    -- 0xFE54()
-0x08be    op02_JumpToConditional( val1=(s)mem[0x2c6], val2=32, condition="val1 & val2", address_if_false=0x8c9 )
+0x08be    op02_JumpToConditional( val1=mem[0x2c6], val2=32, condition="val1 & val2", address_if_false=0x8c9 )
 0x08c6    op01_JumpTo( address=0x907 )
 0x08c9    -- 0xFE54()
-0x08cb    op02_JumpToConditional( val1=(s)mem[0x2cc], val2=1, condition="val1 & val2", address_if_false=0x8f8 )
-0x08d3    op02_JumpToConditional( val1=(s)mem[0x2cc], val2=2, condition="val1 & val2", address_if_false=0x8f8 )
-0x08db    op02_JumpToConditional( val1=(s)mem[0x2cc], val2=4, condition="val1 & val2", address_if_false=0x8f8 )
+0x08cb    op02_JumpToConditional( val1=mem[0x2cc], val2=1, condition="val1 & val2", address_if_false=0x8f8 )
+0x08d3    op02_JumpToConditional( val1=mem[0x2cc], val2=2, condition="val1 & val2", address_if_false=0x8f8 )
+0x08db    op02_JumpToConditional( val1=mem[0x2cc], val2=4, condition="val1 & val2", address_if_false=0x8f8 )
 0x08e3    mem[0x2c6] |= 1 << 5 -- op3a
 0x08e9    -- 0x8D()
 0x08ec    -- 0x8D()
@@ -1246,7 +1246,7 @@ Actor_0x16:on_update:
 
 Actor_0x16:on_talk:
 0x0c1f    -- 0xFE54()
-0x0c21    op02_JumpToConditional( val1=(s)mem[0x2cc], val2=8192, condition="val1 & val2", address_if_false=0xc51 )
+0x0c21    op02_JumpToConditional( val1=mem[0x2cc], val2=8192, condition="val1 & val2", address_if_false=0xc51 )
 0x0c29    op6F_ActorRotateToActor( actor_id=party1 )
 0x0c2b    op26_Wait( time=10 )
 0x0c2e    opD2_MessageShowDynamic( text_id=0xe, flags=0 )

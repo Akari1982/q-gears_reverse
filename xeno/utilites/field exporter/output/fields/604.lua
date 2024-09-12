@@ -26,7 +26,7 @@ Actor_0x00:on_start:
 0x002b    mem[0x408] = 0 -- op35
 0x0031    mem[0x40a] = 5 -- op35
 0x0037    mem[0x40c] = 310 -- op35
-0x003d    op02_JumpToConditional( val1=(s)mem[0x162], val2=256, condition="val1 & val2", address_if_false=0x48 )
+0x003d    op02_JumpToConditional( val1=mem[0x162], val2=256, condition="val1 & val2", address_if_false=0x48 )
 0x0045    mem[0x40e] = true -- op36
 0x0048    op01_JumpTo( address=0x7a )
 0x004b    mem[0x402] = 1 -- op35
@@ -35,7 +35,7 @@ Actor_0x00:on_start:
 0x005d    mem[0x408] = 0 -- op35
 0x0063    mem[0x40a] = 5 -- op35
 0x0069    mem[0x40c] = 3 -- op35
-0x006f    op02_JumpToConditional( val1=(s)mem[0x162], val2=512, condition="val1 & val2", address_if_false=0x7a )
+0x006f    op02_JumpToConditional( val1=mem[0x162], val2=512, condition="val1 & val2", address_if_false=0x7a )
 0x0077    mem[0x40e] = true -- op36
 0x007a    -- 0x75( ???=58 )
 0x007d    op00_Return()
@@ -237,7 +237,7 @@ Actor_0x0c:on_talk:
 0x0156    op74_SoundPlayFixedVolume( sound_id=119 )
 0x0159    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x04, priority=0x01 )
 0x015c    -- 0xFE68()
-0x0163    op02_JumpToConditional( val1=(s)mem[0x154], val2=0, condition="val1 == val2", address_if_false=0x173 )
+0x0163    op02_JumpToConditional( val1=mem[0x154], val2=0, condition="val1 == val2", address_if_false=0x173 )
 0x016b    -- 0x98_MapLoad( field_id=597, value=1 )
 0x0170    op01_JumpTo( address=0x178 )
 0x0173    -- 0x98_MapLoad( field_id=601, value=4 )

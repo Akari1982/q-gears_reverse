@@ -38,7 +38,7 @@ Actor_0x01:on_start:
 0x002c    op00_Return()
 
 Actor_0x01:on_update:
-0x002d    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x38 )
+0x002d    op02_JumpToConditional( val1=mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x38 )
 0x0035    op01_JumpTo( address=0x3a )
 0x0038    op00_Return()
 
@@ -316,7 +316,7 @@ Actor_0x02:on_start:
 0x03e1    -- 0x16_ActorPCInit( char_id=0 )
 0x03e4    opFE0D_MessageSetFace( char_id=0 )
 0x03e8    opFE0D_MessageSetFace( char_id=0 )
-0x03ec    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x3fc )
+0x03ec    op02_JumpToConditional( val1=mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x3fc )
 0x03f4    -- 0x19_ActorSetPosition( x=(vf80)0xfed9, z=(vf40)0xffa9, flag=(flag)0xc0 )
 0x03fa    -- 0x5F( ???=0x3 )
 0x03fc    op00_Return()
@@ -416,7 +416,7 @@ Actor_0x04:on_start:
 0x0484    -- 0x16_ActorPCInit( char_id=2 )
 0x0487    opFE0D_MessageSetFace( char_id=2 )
 0x048b    opFE0D_MessageSetFace( char_id=2 )
-0x048f    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x49f )
+0x048f    op02_JumpToConditional( val1=mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x49f )
 0x0497    -- 0x19_ActorSetPosition( x=(vf80)0xfed9, z=(vf40)0xffa9, flag=(flag)0xc0 )
 0x049d    -- 0x5F( ???=0x3 )
 0x049f    op00_Return()
@@ -475,7 +475,7 @@ Actor_0x05:on_start:
 0x04f7    -- 0x16_ActorPCInit( char_id=3 )
 0x04fa    opFE0D_MessageSetFace( char_id=3 )
 0x04fe    opFE0D_MessageSetFace( char_id=3 )
-0x0502    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x512 )
+0x0502    op02_JumpToConditional( val1=mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x512 )
 0x050a    -- 0x19_ActorSetPosition( x=(vf80)0xfed9, z=(vf40)0xffa9, flag=(flag)0xc0 )
 0x0510    -- 0x5F( ???=0x3 )
 0x0512    op00_Return()
@@ -641,7 +641,7 @@ Actor_0x0c:on_push:
 Actor_0x0d:on_start:
 0x05eb    -- 0x0B_InitNPC( 0 )
 0x05ee    opFE0D_MessageSetFace( char_id=18 )
-0x05f2    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x608 )
+0x05f2    op02_JumpToConditional( val1=mem[0x102], val2=18, condition="val1 == val2", address_if_false=0x608 )
 0x05fa    -- 0x19_ActorSetPosition( x=(vf80)0xfed9, z=(vf40)0xffa9, flag=(flag)0xc0 )
 0x0600    op20_ActorSetFlags0( flags=15 )
 0x0603    -- 0x5F( ???=0x3 )
@@ -655,7 +655,7 @@ Actor_0x0d:on_update:
 0x0614    op00_Return()
 
 Actor_0x0d:on_talk:
-0x0615    op02_JumpToConditional( val1=(s)mem[0x102], val2=19, condition="val1 == val2", address_if_false=0x620 )
+0x0615    op02_JumpToConditional( val1=mem[0x102], val2=19, condition="val1 == val2", address_if_false=0x620 )
 0x061d    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x03 )
 0x0620    op00_Return()
 
@@ -968,7 +968,7 @@ Actor_0x22:on_talk:
 0x06e4    op00_Return()
 
 Actor_0x22:on_push:
-0x06e5    op02_JumpToConditional( val1=(s)mem[0x102], val2=19, condition="val1 >= val2", address_if_false=0x70d )
+0x06e5    op02_JumpToConditional( val1=mem[0x102], val2=19, condition="val1 >= val2", address_if_false=0x70d )
 0x06ed    op31_JumpIfButtonNotPressed( buttons=Circle, jump_to=0x70d )
 0x06f2    -- 0xFE54()
 0x06f4    -- 0xB5() -- camera set direction
@@ -1168,8 +1168,8 @@ Actor_0x25:on_start:
 0x09c6    op00_Return()
 
 Actor_0x25:on_update:
-0x09c7    op02_JumpToConditional( val1=(s)mem[0x102], val2=7, condition="val1 >= val2", address_if_false=0x9df )
-0x09cf    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 <= val2", address_if_false=0x9df )
+0x09c7    op02_JumpToConditional( val1=mem[0x102], val2=7, condition="val1 >= val2", address_if_false=0x9df )
+0x09cf    op02_JumpToConditional( val1=mem[0x102], val2=18, condition="val1 <= val2", address_if_false=0x9df )
 0x09d7    -- 0xFE0E_SoundSetVolume( volume=24, steps=10 )
 0x09dd    -- 0xFEA2()
 0x09df    op00_Return()
@@ -1243,4 +1243,4 @@ Actor_0x26:event_0x06:
 0x0a81    -- 0x5F( ???=0x0 )
 0x0a83    op0D_Return()
 0x0a84    op0D_Return()
-0x0a85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x0a85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xfe38, ???=(vf40)0x820a, flag=0x12 )

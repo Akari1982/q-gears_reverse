@@ -206,7 +206,7 @@ Actor_0x0c:on_start:
 0x00e6    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x100 )
 0x00eb    -- 0x19_ActorSetPosition( x=(vf80)0x00df, z=(vf40)0xffdf, flag=(flag)0xc0 )
 0x00f1    op69_ActorSetRotation( rot=3 )
-0x00f4    op02_JumpToConditional( val1=(s)mem[0xec], val2=512, condition="val1 & val2", address_if_false=0xfd )
+0x00f4    op02_JumpToConditional( val1=mem[0xec], val2=512, condition="val1 & val2", address_if_false=0xfd )
 0x00fc    -- 0x2A()
 0x00fd    op01_JumpTo( address=0x102 )
 0x0100    op29_ActorTurnOff( actor_id=Actor_0x0c )
@@ -220,7 +220,7 @@ Actor_0x0c:on_update:
 0x010e    op00_Return()
 
 Actor_0x0c:on_talk:
-0x010f    op02_JumpToConditional( val1=(s)mem[0xec], val2=512, condition="val1 & val2", address_if_false=0x11a )
+0x010f    op02_JumpToConditional( val1=mem[0xec], val2=512, condition="val1 & val2", address_if_false=0x11a )
 0x0117    op01_JumpTo( address=0x125 )
 0x011a    mem[0xec] |= 1 << 512 -- op3a
 0x0120    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
@@ -258,7 +258,7 @@ Actor_0x0d:on_push:
 Actor_0x0e:on_start:
 0x014f    -- 0x0B_InitNPC( 2 )
 0x0152    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x170 )
-0x0157    op02_JumpToConditional( val1=(s)mem[0xec], val2=256, condition="val1 & val2", address_if_false=0x164 )
+0x0157    op02_JumpToConditional( val1=mem[0xec], val2=256, condition="val1 & val2", address_if_false=0x164 )
 0x015f    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x0161    op01_JumpTo( address=0x16d )
 0x0164    -- 0x19_ActorSetPosition( x=(vf80)0x007b, z=(vf40)0x0017, flag=(flag)0xc0 )
@@ -285,7 +285,7 @@ Actor_0x0e:event_0x04:
 Actor_0x0f:on_start:
 0x0182    -- 0x0B_InitNPC( 2 )
 0x0185    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x1a3 )
-0x018a    op02_JumpToConditional( val1=(s)mem[0xec], val2=256, condition="val1 & val2", address_if_false=0x197 )
+0x018a    op02_JumpToConditional( val1=mem[0xec], val2=256, condition="val1 & val2", address_if_false=0x197 )
 0x0192    op29_ActorTurnOff( actor_id=Actor_0x0f )
 0x0194    op01_JumpTo( address=0x1a0 )
 0x0197    -- 0x19_ActorSetPosition( x=(vf80)0x0107, z=(vf40)0x001b, flag=(flag)0xc0 )
@@ -343,7 +343,7 @@ Actor_0x10:on_start:
 0x0215    -- 0xBC_ActorNoModelInit()
 0x0216    -- 0xF8()
 0x021a    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x23d )
-0x021f    op02_JumpToConditional( val1=(s)mem[0xec], val2=256, condition="val1 & val2", address_if_false=0x22c )
+0x021f    op02_JumpToConditional( val1=mem[0xec], val2=256, condition="val1 & val2", address_if_false=0x22c )
 0x0227    op29_ActorTurnOff( actor_id=Actor_0x10 )
 0x0229    op01_JumpTo( address=0x23a )
 0x022c    -- 0x19_ActorSetPosition( x=(vf80)0xff56, z=(vf40)0x0000, flag=(flag)0xc0 )
@@ -446,4 +446,4 @@ Actor_0x15:on_talk:
 
 Actor_0x15:on_push:
 0x029e    op00_Return()
-0x029f    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x5e00, flag=0x81 )
+0x029f    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xa867, flag=0x14 )

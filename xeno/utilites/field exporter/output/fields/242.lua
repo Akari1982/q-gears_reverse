@@ -17,9 +17,9 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
-0x0009    op02_JumpToConditional( val1=(s)mem[0x200], val2=8192, condition="val1 & val2", address_if_false=0x17 )
+0x0009    op02_JumpToConditional( val1=mem[0x200], val2=8192, condition="val1 & val2", address_if_false=0x17 )
 0x0011    mem[0x40c] = 1 -- op35
-0x0017    op02_JumpToConditional( val1=(s)mem[0x202], val2=1, condition="val1 & val2", address_if_false=0x25 )
+0x0017    op02_JumpToConditional( val1=mem[0x202], val2=1, condition="val1 & val2", address_if_false=0x25 )
 0x001f    mem[0x41e] = 1 -- op35
 0x0025    mem[0x400] = 1 -- op35
 0x002b    mem[0x402] = 0 -- op35
@@ -417,7 +417,7 @@ Actor_0x07:on_start:
 0x03c7    op00_Return()
 
 Actor_0x07:on_update:
-0x03c8    op02_JumpToConditional( val1=(s)mem[0x200], val2=16384, condition="val1 & val2", address_if_false=0x3f4 )
+0x03c8    op02_JumpToConditional( val1=mem[0x200], val2=16384, condition="val1 & val2", address_if_false=0x3f4 )
 0x03d0    -- 0xFE54()
 0x03d2    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x01 )
 0x03d5    -- 0xB6( ???=200, ???=1 )
@@ -428,7 +428,7 @@ Actor_0x07:on_update:
 0x03eb    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x05, priority=0x01 )
 0x03ee    -- 0x98_MapLoad( field_id=240, value=0 )
 0x03f3    -- 0x5B()
-0x03f4    op02_JumpToConditional( val1=(s)mem[0x200], val2=4096, condition="val1 & val2", address_if_false=0x3ff )
+0x03f4    op02_JumpToConditional( val1=mem[0x200], val2=4096, condition="val1 & val2", address_if_false=0x3ff )
 0x03fc    op01_JumpTo( address=0x418 )
 0x03ff    -- 0xA0()
 0x0406    -- 0xFE54()
@@ -447,7 +447,7 @@ Actor_0x07:on_push:
 Actor_0x08:on_start:
 0x041a    -- 0xBC_ActorNoModelInit()
 0x041b    -- 0xFE0E_SoundSetVolume( volume=0, steps=0 )
-0x0421    op02_JumpToConditional( val1=(s)mem[0x244], val2=1, condition="val1 & val2", address_if_false=0x42c )
+0x0421    op02_JumpToConditional( val1=mem[0x244], val2=1, condition="val1 & val2", address_if_false=0x42c )
 0x0429    op01_JumpTo( address=0x42e )
 0x042c    op29_ActorTurnOff( actor_id=Actor_0x07 )
 0x042e    -- 0x85()

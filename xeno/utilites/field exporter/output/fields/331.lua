@@ -625,7 +625,7 @@ Actor_0x16:on_update:
 0x04a0    op00_Return()
 
 Actor_0x16:on_talk:
-0x04a1    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=8, condition="val1 & val2", address_if_false=0x4b5 )
+0x04a1    op02_JumpToConditional( val1=mem[0x1c4], val2=8, condition="val1 & val2", address_if_false=0x4b5 )
 0x04a9    -- 0x15()
 0x04aa    -- 0xC4()
 0x04ac    -- 0x1F( ???=0x11 )
@@ -724,7 +724,7 @@ Actor_0x18:on_push:
 Actor_0x19:on_start:
 0x057d    -- 0xBC_ActorNoModelInit()
 0x057e    -- 0x2A()
-0x057f    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=8, condition="val1 & val2", address_if_false=0x589 )
+0x057f    op02_JumpToConditional( val1=mem[0x1c4], val2=8, condition="val1 & val2", address_if_false=0x589 )
 0x0587    op29_ActorTurnOff( actor_id=Actor_0x17 )
 0x0589    op00_Return()
 
@@ -934,4 +934,4 @@ function:
 0x088e    opFE42( ???=1 )
 0x0892    opFE42( ???=2 )
 0x0896    op0D_Return()
-0x0897    -- 0xE0( actor_id=Actor_0xd5, ???=(vf80)0x6a0f, ???=(vf40)0x943a, flag=0xf )
+0x0897    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x14a0, flag=0x9a )

@@ -35,7 +35,7 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x006d    -- 0x86_ProgressNotEqualJumpTo( value=139, jump=0x87 )
 0x0072    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x87 )
-0x007a    op02_JumpToConditional( val1=(s)mem[0x1c8], val2=512, condition="val1 & val2", address_if_false=0x85 )
+0x007a    op02_JumpToConditional( val1=mem[0x1c8], val2=512, condition="val1 & val2", address_if_false=0x85 )
 0x0082    op01_JumpTo( address=0x87 )
 0x0085    -- 0x28()
 0x0087    -- 0x5B()
@@ -155,7 +155,7 @@ Actor_0x04:on_start:
 0x0112    -- 0x16_ActorPCInit( char_id=3 )
 0x0115    opFE0D_MessageSetFace( char_id=3 )
 0x0119    -- 0x86_ProgressNotEqualJumpTo( value=139, jump=0x13a )
-0x011e    op02_JumpToConditional( val1=(s)mem[0x1c8], val2=512, condition="val1 & val2", address_if_false=0x129 )
+0x011e    op02_JumpToConditional( val1=mem[0x1c8], val2=512, condition="val1 & val2", address_if_false=0x129 )
 0x0126    op01_JumpTo( address=0x13a )
 0x0129    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x13a )
 0x0131    -- 0x19_ActorSetPosition( x=(vf80)0xfe5b, z=(vf40)0x0000, flag=(flag)0xc0 )
@@ -998,7 +998,7 @@ Actor_0x1d:on_update:
 0x09a2    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x05, priority=0x03 )
 0x09a5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1b, flags=0 )
 0x09ab    mem[0x1c8] |= 1 << 9 -- op3a
-0x09b1    op02_JumpToConditional( val1=(s)mem[0x1c8], val2=256, condition="val1 & val2", address_if_false=0x9cd )
+0x09b1    op02_JumpToConditional( val1=mem[0x1c8], val2=256, condition="val1 & val2", address_if_false=0x9cd )
 0x09b9    -- 0xFE0E_SoundSetVolume( volume=0, steps=480 )
 0x09bf    opB4_FadeOut()
 0x09c2    op26_Wait( time=180 )

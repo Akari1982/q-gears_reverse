@@ -26,7 +26,7 @@ Actor_0x00:on_start:
 0x0028    mem[0x40c] = 0 -- op35
 0x002e    mem[0x40e] = 2 -- op35
 0x0034    mem[0x410] = 633 -- op35
-0x003a    op02_JumpToConditional( val1=(s)mem[0x162], val2=1, condition="val1 & val2", address_if_false=0x45 )
+0x003a    op02_JumpToConditional( val1=mem[0x162], val2=1, condition="val1 & val2", address_if_false=0x45 )
 0x0042    mem[0x412] = true -- op36
 0x0045    op00_Return()
 
@@ -243,7 +243,7 @@ Actor_0x0c:on_talk:
 
 Actor_0x0c:on_push:
 0x012a    -- 0x86_ProgressNotEqualJumpTo( value=165, jump=0x151 )
-0x012f    op02_JumpToConditional( val1=(s)mem[0x14c], val2=25, condition="val1 < val2", address_if_false=0x151 )
+0x012f    op02_JumpToConditional( val1=mem[0x14c], val2=25, condition="val1 < val2", address_if_false=0x151 )
 0x0137    -- 0xFE54()
 0x0139    -- 0x91()
 0x013d    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
@@ -271,11 +271,11 @@ Actor_0x0d:on_talk:
 0x016d    op74_SoundPlayFixedVolume( sound_id=70 )
 0x0170    -- 0x86_ProgressNotEqualJumpTo( value=165, jump=0x1ea )
 0x0175    -- 0xFE54()
-0x0177    op02_JumpToConditional( val1=(s)mem[0x14e], val2=4, condition="val1 & val2", address_if_false=0x187 )
+0x0177    op02_JumpToConditional( val1=mem[0x14e], val2=4, condition="val1 & val2", address_if_false=0x187 )
 0x017f    opF5_MessageShowStatic( text_id=0x3, flags=CLOSE_OFF_SCREEN )
 0x0183    op9C_MessageSync()
 0x0184    op01_JumpTo( address=0x1e8 )
-0x0187    op02_JumpToConditional( val1=(s)mem[0x14e], val2=16, condition="val1 & val2", address_if_false=0x1c4 )
+0x0187    op02_JumpToConditional( val1=mem[0x14e], val2=16, condition="val1 & val2", address_if_false=0x1c4 )
 0x018f    opF5_MessageShowStatic( text_id=0x4, flags=CLOSE_OFF_SCREEN )
 0x0193    op9C_MessageSync()
 0x0194    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
@@ -291,7 +291,7 @@ Actor_0x0d:on_talk:
 0x01bd    op9C_MessageSync()
 0x01be    op01_JumpTo( address=0x1c1 )
 0x01c1    op01_JumpTo( address=0x1e8 )
-0x01c4    op02_JumpToConditional( val1=(s)mem[0x14e], val2=8, condition="val1 & val2", address_if_false=0x1da )
+0x01c4    op02_JumpToConditional( val1=mem[0x14e], val2=8, condition="val1 & val2", address_if_false=0x1da )
 0x01cc    opF5_MessageShowStatic( text_id=0x8, flags=CLOSE_OFF_SCREEN )
 0x01d0    op9C_MessageSync()
 0x01d1    mem[0x14e] &= ~(1 << 3) -- op3a
@@ -409,4 +409,4 @@ Actor_0x10:on_talk:
 Actor_0x10:on_push:
 0x02f4    op00_Return()
 0x02f5    op00_Return()
-0x02f6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x5f6e, ???=(vf40)0x7075, flag=0x64 )
+0x02f6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x1000, flag=0xa9 )

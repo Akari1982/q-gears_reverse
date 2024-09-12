@@ -18,7 +18,7 @@ unknown = [
 Actor_0x00:on_start:
 0x0016    -- 0xBC_ActorNoModelInit()
 0x0017    -- 0xF7()
-0x001c    op02_JumpToConditional( val1=(s)mem[0x20e], val2=128, condition="val1 & val2", address_if_false=0x2a )
+0x001c    op02_JumpToConditional( val1=mem[0x20e], val2=128, condition="val1 & val2", address_if_false=0x2a )
 0x0024    mem[0x40c] = 1 -- op35
 0x002a    mem[0x400] = 1 -- op35
 0x0030    mem[0x402] = -1670 -- op35
@@ -451,4 +451,4 @@ function:
 0x034e    mem[0x418] += 1 -- op3c
 0x0351    op01_JumpTo( address=0x33c )
 0x0354    op0D_Return()
-0x0355    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6c38, ???=(vf40)0x0002, flag=0x0 )
+0x0355    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0538, ???=(vf40)0x00ec, flag=0x0 )

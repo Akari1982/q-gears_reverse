@@ -266,7 +266,7 @@ Actor_0x0e:on_talk:
 0x0156    op74_SoundPlayFixedVolume( sound_id=119 )
 0x0159    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x04, priority=0x01 )
 0x015c    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x186 )
-0x0161    op02_JumpToConditional( val1=(s)mem[0x14c], val2=74, condition="val1 == val2", address_if_false=0x176 )
+0x0161    op02_JumpToConditional( val1=mem[0x14c], val2=74, condition="val1 == val2", address_if_false=0x176 )
 0x0169    -- 0x12()
 0x016d    -- 0x80()
 0x0172    -- 0x5B()
@@ -303,7 +303,7 @@ Actor_0x0f:on_talk:
 0x01ba    op9C_MessageSync()
 0x01bb    -- 0xFE65()
 0x01c1    -- 0x86_ProgressNotEqualJumpTo( value=165, jump=0x1da )
-0x01c6    op02_JumpToConditional( val1=(s)mem[0x14c], val2=50, condition="val1 < val2", address_if_false=0x1da )
+0x01c6    op02_JumpToConditional( val1=mem[0x14c], val2=50, condition="val1 < val2", address_if_false=0x1da )
 0x01ce    op26_Wait( time=32 )
 0x01d1    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
 0x01d4    mem[0x14c] = 50 -- op35

@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0xF7()
 0x000e    -- 0xFEB8()
-0x0013    op02_JumpToConditional( val1=(s)mem[0x222], val2=-32768, condition="val1 & val2", address_if_false=0x21 )
+0x0013    op02_JumpToConditional( val1=mem[0x222], val2=-32768, condition="val1 & val2", address_if_false=0x21 )
 0x001b    mem[0x42a] = 1 -- op35
 0x0021    mem[0x41e] = 1 -- op35
 0x0027    mem[0x420] = -450 -- op35
@@ -316,7 +316,7 @@ Actor_0x09:on_talk:
 0x020f    op26_Wait( time=20 )
 0x0212    op74_SoundPlayFixedVolume( sound_id=403 )
 0x0215    op26_Wait( time=20 )
-0x0218    op02_JumpToConditional( val1=(s)mem[0x21e], val2=256, condition="val1 & val2", address_if_false=0x223 )
+0x0218    op02_JumpToConditional( val1=mem[0x21e], val2=256, condition="val1 & val2", address_if_false=0x223 )
 0x0220    op01_JumpTo( address=0x22f )
 0x0223    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
 0x0226    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )

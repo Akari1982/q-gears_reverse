@@ -1324,7 +1324,7 @@ function:
 0x0e3a    op07_CallActorEvent( actor_id=party1, event=event_0x05, priority=0x01 )
 0x0e3d    op26_Wait( time=2 )
 0x0e40    -- 0x86_ProgressNotEqualJumpTo( value=143, jump=0xe5e )
-0x0e45    op02_JumpToConditional( val1=(s)mem[0x18a], val2=1024, condition="val1 & val2", address_if_false=0xe50 )
+0x0e45    op02_JumpToConditional( val1=mem[0x18a], val2=1024, condition="val1 & val2", address_if_false=0xe50 )
 0x0e4d    op01_JumpTo( address=0xe5e )
 0x0e50    op02_JumpToConditional( val1=(s)mem[0x420], val2=319, condition="val1 == val2", address_if_false=0xe5e )
 0x0e58    mem[0x420] = 310 -- op35
@@ -2031,4 +2031,4 @@ Actor_0x2f:event_0x05:
 0x12d2    opAC_MoveCamera( control=0x0, steps=0 )
 0x12d6    opAC_MoveCamera( control=0x1, steps=0 )
 0x12da    -- 0x92()
-0x12db    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7400, ???=(vf40)0x726f, flag=0x5f )
+0x12db    -- 0xE0( actor_id=Actor_0x42, ???=(vf80)0x350d, ???=(vf40)0x0400, flag=0x0 )

@@ -208,8 +208,8 @@ Actor_0x0c:on_push:
 
 Actor_0x0d:on_start:
 0x00b1    -- 0x0B_InitNPC( 0 )
-0x00b4    op02_JumpToConditional( val1=(s)mem[0x102], val2=36, condition="val1 >= val2", address_if_false=0xc8 )
-0x00bc    op02_JumpToConditional( val1=(s)mem[0x102], val2=64, condition="val1 <= val2", address_if_false=0xc8 )
+0x00b4    op02_JumpToConditional( val1=mem[0x102], val2=36, condition="val1 >= val2", address_if_false=0xc8 )
+0x00bc    op02_JumpToConditional( val1=mem[0x102], val2=64, condition="val1 <= val2", address_if_false=0xc8 )
 0x00c4    -- 0x23()
 0x00c5    -- 0x27( actor_id=Actor_0x0d )
 0x00c7    op00_Return()
@@ -223,7 +223,7 @@ Actor_0x0d:on_update:
 0x00d5    op00_Return()
 
 Actor_0x0d:on_talk:
-0x00d6    op02_JumpToConditional( val1=(s)mem[0x102], val2=0, condition="val1 == val2", address_if_false=0xe6 )
+0x00d6    op02_JumpToConditional( val1=mem[0x102], val2=0, condition="val1 == val2", address_if_false=0xe6 )
 0x00de    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00e2    op9C_MessageSync()
 0x00e3    op01_JumpTo( address=0xeb )
@@ -254,7 +254,7 @@ Actor_0x0f:on_update:
 0x00f3    op00_Return()
 
 Actor_0x0f:on_talk:
-0x00f4    op02_JumpToConditional( val1=(s)mem[0x102], val2=36, condition="val1 >= val2", address_if_false=0x10b )
+0x00f4    op02_JumpToConditional( val1=mem[0x102], val2=36, condition="val1 >= val2", address_if_false=0x10b )
 0x00fc    -- 0x15()
 0x00fd    -- 0xC4()
 0x00ff    -- 0x1F( ???=0x11 )
@@ -270,4 +270,4 @@ Actor_0x0f:on_talk:
 
 Actor_0x0f:on_push:
 0x0118    op00_Return()
-0x0119    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6438, ???=(vf40)0xb8fd, flag=0xfb )
+0x0119    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7438, ???=(vf40)0xb80b, flag=0xfb )

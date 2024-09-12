@@ -201,7 +201,7 @@ Actor_0x04:event_0x06:
 
 Actor_0x04:event_0x07:
 0x01c9    op6F_ActorRotateToActor( actor_id=Actor_0x10 )
-0x01cb    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x1d7 )
+0x01cb    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x1d7 )
 0x01d3    -- 0x5A()
 0x01d4    op01_JumpTo( address=0x1cb )
 0x01d7    op00_Return()
@@ -360,7 +360,7 @@ Actor_0x0e:event_0x04:
 
 Actor_0x0e:event_0x05:
 0x027b    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
-0x027d    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x289 )
+0x027d    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x289 )
 0x0285    -- 0x5A()
 0x0286    op01_JumpTo( address=0x27d )
 0x0289    op00_Return()
@@ -394,7 +394,7 @@ Actor_0x0f:event_0x04:
 
 Actor_0x0f:event_0x05:
 0x02d2    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
-0x02d4    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x2e0 )
+0x02d4    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x2e0 )
 0x02dc    -- 0x5A()
 0x02dd    op01_JumpTo( address=0x2d4 )
 0x02e0    op00_Return()
@@ -428,7 +428,7 @@ Actor_0x10:event_0x04:
 0x0320    op07_CallActorEvent( actor_id=Actor_0x0f, event=event_0x05, priority=0x00 )
 0x0323    op07_CallActorEvent( actor_id=Actor_0x11, event=event_0x05, priority=0x00 )
 0x0326    op07_CallActorEvent( actor_id=Actor_0x12, event=event_0x05, priority=0x00 )
-0x0329    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x335 )
+0x0329    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x335 )
 0x0331    -- 0x5A()
 0x0332    op01_JumpTo( address=0x329 )
 0x0335    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
@@ -440,7 +440,7 @@ Actor_0x10:event_0x04:
 
 Actor_0x10:event_0x05:
 0x034f    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
-0x0351    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x35d )
+0x0351    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x35d )
 0x0359    -- 0x5A()
 0x035a    op01_JumpTo( address=0x351 )
 0x035d    op00_Return()
@@ -474,7 +474,7 @@ Actor_0x11:event_0x04:
 
 Actor_0x11:event_0x05:
 0x03a6    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
-0x03a8    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x3b4 )
+0x03a8    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x3b4 )
 0x03b0    -- 0x5A()
 0x03b1    op01_JumpTo( address=0x3a8 )
 0x03b4    op00_Return()
@@ -509,7 +509,7 @@ Actor_0x12:event_0x04:
 
 Actor_0x12:event_0x05:
 0x0400    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
-0x0402    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x40e )
+0x0402    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x40e )
 0x040a    -- 0x5A()
 0x040b    op01_JumpTo( address=0x402 )
 0x040e    op00_Return()
@@ -598,7 +598,7 @@ Actor_0x16:event_0x04:
 
 Actor_0x16:event_0x05:
 0x048c    -- 0xFE65()
-0x0492    op02_JumpToConditional( val1=(s)mem[0x404], val2=32, condition="val1 < val2", address_if_false=0x4a6 )
+0x0492    op02_JumpToConditional( val1=mem[0x404], val2=32, condition="val1 < val2", address_if_false=0x4a6 )
 0x049a    -- 0xFE1B()
 0x04a0    mem[0x404] += 1 -- op3c
 0x04a3    op01_JumpTo( address=0x492 )
@@ -607,7 +607,7 @@ Actor_0x16:event_0x05:
 
 Actor_0x16:event_0x06:
 0x04ac    -- 0xFE65()
-0x04b2    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x4c6 )
+0x04b2    op02_JumpToConditional( val1=mem[0x404], val2=0, condition="val1 > val2", address_if_false=0x4c6 )
 0x04ba    -- 0xFE1B()
 0x04c0    mem[0x404] -= 1 -- op3d
 0x04c3    op01_JumpTo( address=0x4b2 )

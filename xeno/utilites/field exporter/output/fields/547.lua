@@ -17,7 +17,7 @@ unknown = [
 
 Actor_0x00:on_start:
 0x000f    -- 0xBC_ActorNoModelInit()
-0x0010    op02_JumpToConditional( val1=(s)mem[0x21c], val2=4, condition="val1 & val2", address_if_false=0x1e )
+0x0010    op02_JumpToConditional( val1=mem[0x21c], val2=4, condition="val1 & val2", address_if_false=0x1e )
 0x0018    mem[0x410] = 1 -- op35
 0x001e    mem[0x404] = 1 -- op35
 0x0024    mem[0x406] = -127 -- op35
@@ -69,7 +69,7 @@ Actor_0x01:event_0x06:
 0x0070    op00_Return()
 
 Actor_0x01:event_0x07:
-0x0071    op02_JumpToConditional( val1=(s)mem[0x21a], val2=8, condition="val1 & val2", address_if_false=0x85 )
+0x0071    op02_JumpToConditional( val1=mem[0x21a], val2=8, condition="val1 & val2", address_if_false=0x85 )
 0x0079    op2C_SpritePlayAnim( anim_id=0x5 )
 0x007b    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x007f    op9C_MessageSync()
@@ -241,7 +241,7 @@ Actor_0x05:on_update:
 
 Actor_0x05:on_talk:
 0x01e3    -- 0xFE54()
-0x01e5    op02_JumpToConditional( val1=(s)mem[0x21a], val2=8, condition="val1 & val2", address_if_false=0x202 )
+0x01e5    op02_JumpToConditional( val1=mem[0x21a], val2=8, condition="val1 & val2", address_if_false=0x202 )
 0x01ed    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x04, priority=0x01 )
 0x01f0    op09_CallActorEventEndSync( actor_id=Actor_0x08, event=event_0x04, priority=0x01 )
 0x01f3    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
@@ -326,7 +326,7 @@ Actor_0x08:event_0x04:
 
 Actor_0x09:on_start:
 0x025e    -- 0xBC_ActorNoModelInit()
-0x025f    op02_JumpToConditional( val1=(s)mem[0x21a], val2=8, condition="val1 & val2", address_if_false=0x269 )
+0x025f    op02_JumpToConditional( val1=mem[0x21a], val2=8, condition="val1 & val2", address_if_false=0x269 )
 0x0267    op29_ActorTurnOff( actor_id=Actor_0x09 )
 0x0269    -- 0x19_ActorSetPosition( x=(vf80)0x00f5, z=(vf40)0xfed4, flag=(flag)0xc0 )
 0x026f    -- 0xF8()

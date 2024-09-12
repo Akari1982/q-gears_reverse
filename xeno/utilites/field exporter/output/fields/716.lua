@@ -1860,7 +1860,7 @@ Actor_0x0f:on_update:
 Actor_0x0f:on_talk:
 0x43cc    -- 0xFE54()
 0x43ce    -- 0x84_ProgressLessEqualJumpTo( value=330, jump=0x4426 )
-0x43d3    op02_JumpToConditional( val1=(s)mem[0x2ce], val2=512, condition="val1 & val2", address_if_false=0x43de )
+0x43d3    op02_JumpToConditional( val1=mem[0x2ce], val2=512, condition="val1 & val2", address_if_false=0x43de )
 0x43db    op01_JumpTo( address=0x43e7 )
 0x43de    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x05, priority=0x03 )
 0x43e1    mem[0x2ce] |= 1 << 9 -- op3a
@@ -1882,7 +1882,7 @@ Actor_0x0f:on_talk:
 0x4420    -- 0xFE54()
 0x4422    op69_ActorSetRotation( rot=2 )
 0x4425    op00_Return()
-0x4426    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=2, condition="val1 & val2", address_if_false=0x4431 )
+0x4426    op02_JumpToConditional( val1=mem[0x2ca], val2=2, condition="val1 & val2", address_if_false=0x4431 )
 0x442e    op01_JumpTo( address=0x443a )
 0x4431    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x04, priority=0x03 )
 0x4434    mem[0x2ca] |= 1 << 1 -- op3a
@@ -2194,9 +2194,9 @@ function:
 0x499d    op0D_Return()
 0x499e    -- 0xFE19( char_id=0xff )
 0x49a1    -- 0xFE19( char_id=0xfe )
-0x49a4    -- 0xFEC6( char_id=(s)mem[0x2d0] )
+0x49a4    -- 0xFEC6( char_id=mem[0x2d0] )
 0x49a8    -- 0xFE1A() sync load for 0xFEC6()
-0x49aa    -- 0xFEC6( char_id=(s)mem[0x2d2] )
+0x49aa    -- 0xFEC6( char_id=mem[0x2d2] )
 0x49ae    -- 0xFE1A() sync load for 0xFEC6()
 0x49b0    -- 0xBB( ???=0x7 )
 0x49b2    -- 0x5A()

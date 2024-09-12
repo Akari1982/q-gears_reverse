@@ -499,4 +499,4 @@ function:
 0x0bb9    opFEA5_ParticleRenderSettings( use_speed=2, settings=2, rot_z=0 )
 0x0bc1    opFEBD_ParticleSpawnSettings( settings=0 )
 0x0bc9    op0D_Return()
-0x0bca    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x3b80, ???=(vf40)0x1080, flag=0xa7 )
+0x0bca    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x3539, flag=0x5f )

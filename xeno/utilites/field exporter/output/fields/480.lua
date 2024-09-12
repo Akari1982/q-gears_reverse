@@ -428,7 +428,7 @@ Actor_0x0d:on_update:
 0x02a0    op00_Return()
 
 Actor_0x0d:on_talk:
-0x02a1    op02_JumpToConditional( val1=(s)mem[0x102], val2=57, condition="val1 >= val2", address_if_false=0x2b6 )
+0x02a1    op02_JumpToConditional( val1=mem[0x102], val2=57, condition="val1 >= val2", address_if_false=0x2b6 )
 0x02a9    opFE0D_MessageSetFace( char_id=252 )
 0x02ad    opD2_MessageShowDynamic( text_id=0x10, flags=FORCE_TOP )
 0x02b1    op9C_MessageSync()
@@ -842,7 +842,7 @@ Actor_0x1c:event_0x05:
 
 Actor_0x1d:on_start:
 0x057b    -- 0x0B_InitNPC( 1 )
-0x057e    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x58f )
+0x057e    op02_JumpToConditional( val1=mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x58f )
 0x0586    -- 0x19_ActorSetPosition( x=(vf80)0x0000, z=(vf40)0x0670, flag=(flag)0xc0 )
 0x058c    op01_JumpTo( address=0x592 )
 0x058f    -- 0x23()
@@ -865,7 +865,7 @@ Actor_0x1d:on_push:
 
 Actor_0x1e:on_start:
 0x05a9    -- 0x0B_InitNPC( 1 )
-0x05ac    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x5bd )
+0x05ac    op02_JumpToConditional( val1=mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x5bd )
 0x05b4    -- 0x19_ActorSetPosition( x=(vf80)0x004c, z=(vf40)0x0670, flag=(flag)0xc0 )
 0x05ba    op01_JumpTo( address=0x5c0 )
 0x05bd    -- 0x23()
@@ -888,7 +888,7 @@ Actor_0x1e:on_push:
 
 Actor_0x1f:on_start:
 0x05d7    -- 0x0B_InitNPC( 1 )
-0x05da    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x5eb )
+0x05da    op02_JumpToConditional( val1=mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x5eb )
 0x05e2    -- 0x19_ActorSetPosition( x=(vf80)0xffb4, z=(vf40)0x0670, flag=(flag)0xc0 )
 0x05e8    op01_JumpTo( address=0x5ee )
 0x05eb    -- 0x23()
@@ -914,7 +914,7 @@ Actor_0x1f:on_push:
 
 Actor_0x20:on_start:
 0x0617    -- 0x0B_InitNPC( 1 )
-0x061a    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x62b )
+0x061a    op02_JumpToConditional( val1=mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x62b )
 0x0622    -- 0x19_ActorSetPosition( x=(vf80)0x03c0, z=(vf40)0x0d43, flag=(flag)0xc0 )
 0x0628    op01_JumpTo( address=0x62e )
 0x062b    -- 0x23()
@@ -937,7 +937,7 @@ Actor_0x20:on_push:
 
 Actor_0x21:on_start:
 0x0645    -- 0x0B_InitNPC( 1 )
-0x0648    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x659 )
+0x0648    op02_JumpToConditional( val1=mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x659 )
 0x0650    -- 0x19_ActorSetPosition( x=(vf80)0x03a4, z=(vf40)0x0cdc, flag=(flag)0xc0 )
 0x0656    op01_JumpTo( address=0x65c )
 0x0659    -- 0x23()
@@ -960,7 +960,7 @@ Actor_0x21:on_push:
 
 Actor_0x22:on_start:
 0x0673    -- 0x0B_InitNPC( 1 )
-0x0676    op02_JumpToConditional( val1=(s)mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x687 )
+0x0676    op02_JumpToConditional( val1=mem[0x102], val2=59, condition="val1 == val2", address_if_false=0x687 )
 0x067e    -- 0x19_ActorSetPosition( x=(vf80)0x03a4, z=(vf40)0x0da9, flag=(flag)0xc0 )
 0x0684    op01_JumpTo( address=0x68a )
 0x0687    -- 0x23()
@@ -984,7 +984,7 @@ Actor_0x22:on_push:
 Actor_0x23:on_start:
 0x06a1    -- 0xBC_ActorNoModelInit()
 0x06a2    -- 0x86_ProgressNotEqualJumpTo( value=189, jump=0x6b1 )
-0x06a7    op02_JumpToConditional( val1=(s)mem[0x102], val2=58, condition="val1 == val2", address_if_false=0x6b1 )
+0x06a7    op02_JumpToConditional( val1=mem[0x102], val2=58, condition="val1 == val2", address_if_false=0x6b1 )
 0x06af    -- 0x28()
 0x06b1    op00_Return()
 
@@ -1013,7 +1013,7 @@ Actor_0x25:on_start:
 0x06b9    op00_Return()
 
 Actor_0x25:on_update:
-0x06ba    op02_JumpToConditional( val1=(s)mem[0x102], val2=49, condition="val1 == val2", address_if_false=0x72a )
+0x06ba    op02_JumpToConditional( val1=mem[0x102], val2=49, condition="val1 == val2", address_if_false=0x72a )
 0x06c2    -- 0x15()
 0x06c3    -- 0xFE52()
 0x06c5    -- 0xFE0A( ???=0x1283 )

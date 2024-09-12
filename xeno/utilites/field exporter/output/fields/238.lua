@@ -54,21 +54,21 @@ Actor_0x02:on_start:
 
 Actor_0x02:on_update:
 0x005a    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0xb6 )
-0x0062    op02_JumpToConditional( val1=(s)mem[0x246], val2=2048, condition="val1 & val2", address_if_false=0x78 )
+0x0062    op02_JumpToConditional( val1=mem[0x246], val2=2048, condition="val1 & val2", address_if_false=0x78 )
 0x006a    -- 0xFE54()
 0x006c    mem[0x246] &= ~(1 << 11) -- op3a
 0x0072    -- 0x98_MapLoad( field_id=205, value=0 )
 0x0077    -- 0x5B()
-0x0078    op02_JumpToConditional( val1=(s)mem[0x246], val2=256, condition="val1 & val2", address_if_false=0x8e )
+0x0078    op02_JumpToConditional( val1=mem[0x246], val2=256, condition="val1 & val2", address_if_false=0x8e )
 0x0080    -- 0xFE54()
 0x0082    mem[0x246] &= ~(1 << 8) -- op3a
 0x0088    -- 0x98_MapLoad( field_id=196, value=12 )
 0x008d    -- 0x5B()
-0x008e    op02_JumpToConditional( val1=(s)mem[0x240], val2=1024, condition="val1 & val2", address_if_false=0x9e )
+0x008e    op02_JumpToConditional( val1=mem[0x240], val2=1024, condition="val1 & val2", address_if_false=0x9e )
 0x0096    -- 0xFE54()
 0x0098    -- 0x98_MapLoad( field_id=196, value=11 )
 0x009d    -- 0x5B()
-0x009e    op02_JumpToConditional( val1=(s)mem[0x240], val2=8192, condition="val1 & val2", address_if_false=0xb6 )
+0x009e    op02_JumpToConditional( val1=mem[0x240], val2=8192, condition="val1 & val2", address_if_false=0xb6 )
 0x00a6    -- 0x85()
 0x00ab    op01_JumpTo( address=0xb6 )
 0x00ae    -- 0xFE54()
@@ -291,4 +291,4 @@ Actor_0x0d:event_0x04:
 0x01eb    -- 0xFE9F()
 0x01f0    -- 0xFE9F()
 0x01f5    op00_Return()
-0x01f6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x4000, ???=(vf40)0x0000, flag=0x0 )
+0x01f6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6700, ???=(vf40)0x0001, flag=0x0 )

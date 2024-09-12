@@ -108,7 +108,7 @@ Actor_0x05:on_talk:
 0x007e    op9C_MessageSync()
 0x007f    op00_Return()
 0x0080    op01_JumpTo( address=0xd6 )
-0x0083    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=4096, condition="val1 & val2", address_if_false=0x93 )
+0x0083    op02_JumpToConditional( val1=mem[0x1c6], val2=4096, condition="val1 & val2", address_if_false=0x93 )
 0x008b    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
 0x008f    op9C_MessageSync()
 0x0090    op01_JumpTo( address=0xd6 )

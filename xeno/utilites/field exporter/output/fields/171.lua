@@ -114,7 +114,7 @@ Actor_0x02:on_push:
 Actor_0x02:event_0x04:
 0x00e8    mem[0x400] = 1 -- op35
 0x00ee    op99()
-0x00ef    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x122 )
+0x00ef    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x122 )
 0x00f7    -- 0x62( actor_id=Actor_0x0f ) -- exp0x1
 0x00f9    -- 0xEE( ???=0x1, ???=0x0 )
 0x00fc    -- 0xEC( ???=0x1, ???=(vf80)0x0c00, ???=(vf40)0x001e, ???=(vf20)0x0180, flag=0xe0, ???=0x406, ???=0x408, ???=0x40a )
@@ -131,12 +131,12 @@ Actor_0x02:event_0x05:
 0x0132    opAC_MoveCamera( control=0x0, steps=0 )
 0x0136    opAC_MoveCamera( control=0x1, steps=0 )
 0x013a    opEF_MoveCameraSync()
-0x013d    op02_JumpToConditional( val1=(s)mem[0x400], val2=2, condition="val1 == val2", address_if_false=0x149 )
+0x013d    op02_JumpToConditional( val1=mem[0x400], val2=2, condition="val1 == val2", address_if_false=0x149 )
 0x0145    -- 0x5A()
 0x0146    op01_JumpTo( address=0x13d )
 
 Actor_0x02:event_0x06:
-0x0149    op02_JumpToConditional( val1=(s)mem[0x400], val2=3, condition="val1 == val2", address_if_false=0x17c )
+0x0149    op02_JumpToConditional( val1=mem[0x400], val2=3, condition="val1 == val2", address_if_false=0x17c )
 0x0151    -- 0x62( actor_id=Actor_0x0f ) -- exp0x1
 0x0153    -- 0xEE( ???=0x1, ???=0x0 )
 0x0156    -- 0xEC( ???=0x1, ???=(vf80)0x0400, ???=(vf40)0x000a, ???=(vf20)0x0180, flag=0xe0, ???=0x406, ???=0x408, ???=0x40a )
@@ -274,7 +274,7 @@ function:
 
 function:
 0x030f    op26_Wait( time=20 )
-0x0312    op02_JumpToConditional( val1=(s)mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x320 )
+0x0312    op02_JumpToConditional( val1=mem[0x402], val2=1, condition="val1 == val2", address_if_false=0x320 )
 0x031a    -- 0x98_MapLoad( field_id=166, value=0 )
 0x031f    -- 0x5B()
 0x0320    op0D_Return()

@@ -25,7 +25,7 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0023    -- 0x85()
 0x0028    -- 0x5B()
-0x0029    op02_JumpToConditional( val1=(s)mem[0x1c6], val2=-32768, condition="val1 & val2", address_if_false=0x38 )
+0x0029    op02_JumpToConditional( val1=mem[0x1c6], val2=-32768, condition="val1 & val2", address_if_false=0x38 )
 0x0031    -- 0xFE24()
 0x0033    -- 0xFE43()
 0x0035    op01_JumpTo( address=0x4c )
@@ -2266,4 +2266,4 @@ Actor_0x45:on_push:
 0x1aa6    opFE42( ???=1 )
 0x1aaa    opFE42( ???=2 )
 0x1aae    op0D_Return()
-0x1aaf    -- 0xE0( actor_id=Actor_0xa1, ???=(vf80)0xa001, ???=(vf40)0xba21, flag=0x81 )
+0x1aaf    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xa200, flag=0x17 )

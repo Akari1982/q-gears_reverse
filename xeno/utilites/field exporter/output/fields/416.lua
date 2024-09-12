@@ -21,9 +21,9 @@ Actor_0x00:on_start:
 0x0013    -- 0xF7()
 0x0018    -- 0xA4() -- camera angle
 0x001c    -- 0x9D()
-0x0020    op02_JumpToConditional( val1=(s)mem[0x218], val2=4096, condition="val1 & val2", address_if_false=0x2e )
+0x0020    op02_JumpToConditional( val1=mem[0x218], val2=4096, condition="val1 & val2", address_if_false=0x2e )
 0x0028    mem[0x410] = 1 -- op35
-0x002e    op02_JumpToConditional( val1=(s)mem[0x218], val2=8192, condition="val1 & val2", address_if_false=0x3c )
+0x002e    op02_JumpToConditional( val1=mem[0x218], val2=8192, condition="val1 & val2", address_if_false=0x3c )
 0x0036    mem[0x422] = 1 -- op35
 0x003c    mem[0x404] = 1 -- op35
 0x0042    mem[0x406] = -340 -- op35

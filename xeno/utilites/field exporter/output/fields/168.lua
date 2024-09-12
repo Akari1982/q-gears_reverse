@@ -128,7 +128,7 @@ Actor_0x03:event_0x05:
 0x00d8    opEF_MoveCameraSync()
 0x00db    mem[0x400] = 1 -- op35
 0x00e1    op07_CallActorEvent( actor_id=Actor_0x27, event=event_0x04, priority=0x00 )
-0x00e4    op02_JumpToConditional( val1=(s)mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x10e )
+0x00e4    op02_JumpToConditional( val1=mem[0x400], val2=1, condition="val1 == val2", address_if_false=0x10e )
 0x00ec    -- 0x60()
 0x00ed    -- 0x64() -- exp0x1
 0x00ee    -- 0x62( actor_id=Actor_0x27 ) -- exp0x1
@@ -138,7 +138,7 @@ Actor_0x03:event_0x05:
 0x0104    opAC_MoveCamera( control=0x1, steps=2 )
 0x0108    op26_Wait( time=1 )
 0x010b    op01_JumpTo( address=0xe4 )
-0x010e    op02_JumpToConditional( val1=(s)mem[0x400], val2=2, condition="val1 == val2", address_if_false=0x131 )
+0x010e    op02_JumpToConditional( val1=mem[0x400], val2=2, condition="val1 == val2", address_if_false=0x131 )
 0x0116    -- 0x2D()
 0x011e    -- 0x60()
 0x011f    -- 0x63( ???=(s)mem[0x402], ???=(s)mem[0x404], ???=(s)mem[0x406] ) -- exp0x1
@@ -1297,4 +1297,4 @@ Actor_0x2e:on_talk:
 
 Actor_0x2e:on_push:
 0x0a11    op00_Return()
-0x0a12    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x81a0, ???=(vf40)0xd390, flag=0xa4 )
+0x0a12    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x15ba, ???=(vf40)0xc893, flag=0x1c )

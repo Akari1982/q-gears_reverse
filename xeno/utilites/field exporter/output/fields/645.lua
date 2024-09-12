@@ -17,7 +17,7 @@ unknown = [
 
 Actor_0x00:on_start:
 0x0016    -- 0xBC_ActorNoModelInit()
-0x0017    op02_JumpToConditional( val1=(s)mem[0x212], val2=16, condition="val1 & val2", address_if_false=0x25 )
+0x0017    op02_JumpToConditional( val1=mem[0x212], val2=16, condition="val1 & val2", address_if_false=0x25 )
 0x001f    mem[0x410] = 1 -- op35
 0x0025    mem[0x404] = 1 -- op35
 0x002b    mem[0x406] = -165 -- op35
@@ -113,7 +113,7 @@ Actor_0x04:on_talk:
 0x00a8    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x04, priority=0x01 )
 0x00ab    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
 0x00ae    op26_Wait( time=10 )
-0x00b1    op02_JumpToConditional( val1=(s)mem[0x210], val2=16, condition="val1 & val2", address_if_false=0xc2 )
+0x00b1    op02_JumpToConditional( val1=mem[0x210], val2=16, condition="val1 & val2", address_if_false=0xc2 )
 0x00b9    -- 0x98_MapLoad( field_id=17035, value=1 )
 0x00be    -- 0x5B()
 0x00bf    op01_JumpTo( address=0xc8 )
@@ -273,4 +273,4 @@ Actor_0x09:on_talk:
 Actor_0x09:on_push:
 0x0211    op00_Return()
 0x0212    op00_Return()
-0x0213    -- 0xE0( actor_id=Actor_0xa4, ???=(vf80)0x9081, ???=(vf40)0x90d7, flag=0xb9 )
+0x0213    -- 0xE0( actor_id=Actor_0xa3, ???=(vf80)0x9a14, ???=(vf40)0x28d9, flag=0x82 )

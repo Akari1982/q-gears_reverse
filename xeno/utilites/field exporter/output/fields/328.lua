@@ -294,7 +294,7 @@ Actor_0x0d:on_update:
 0x01bb    op00_Return()
 
 Actor_0x0d:on_talk:
-0x01bc    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=16, condition="val1 & val2", address_if_false=0x1d7 )
+0x01bc    op02_JumpToConditional( val1=mem[0x1c4], val2=16, condition="val1 & val2", address_if_false=0x1d7 )
 0x01c4    op6F_ActorRotateToActor( actor_id=party1 )
 0x01c6    op74_SoundPlayFixedVolume( sound_id=95 )
 0x01c9    op26_Wait( time=30 )
@@ -303,7 +303,7 @@ Actor_0x0d:on_talk:
 0x01d3    op9C_MessageSync()
 0x01d4    op01_JumpTo( address=0x220 )
 0x01d7    -- 0xFE54()
-0x01d9    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=8192, condition="val1 & val2", address_if_false=0x1fe )
+0x01d9    op02_JumpToConditional( val1=mem[0x1c4], val2=8192, condition="val1 & val2", address_if_false=0x1fe )
 0x01e1    -- 0x91()
 0x01e5    op01_JumpTo( address=0x222 )
 0x01e8    op01_JumpTo( address=0x1fb )
@@ -653,4 +653,4 @@ function:
 0x05fa    opFE42( ???=1 )
 0x05fe    opFE42( ???=2 )
 0x0602    op0D_Return()
-0x0603    -- 0xE0( actor_id=Actor_0x94, ???=(vf80)0x9081, ???=(vf40)0x73e7, flag=0xb9 )
+0x0603    -- 0xE0( actor_id=Actor_0xa1, ???=(vf80)0x9a14, ???=(vf40)0xcbdb, flag=0x82 )

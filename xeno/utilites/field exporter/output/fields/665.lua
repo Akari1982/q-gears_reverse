@@ -205,7 +205,7 @@ Actor_0x04:on_update:
 0x01b0    -- 0xFE65()
 0x01b6    -- 0xFE65()
 0x01bc    mem[0x400] = -13036 -- op35
-0x01c2    opFE67_MoviePlay2( movie_id=6, sector=(s)mem[0x400], start_frame=5251, end_frame=5385, flags=254, ???=320, ???=0, ???=320, ???=224 )
+0x01c2    opFE67_MoviePlay2( movie_id=6, sector=mem[0x400], start_frame=5251, end_frame=5385, flags=254, ???=320, ???=0, ???=320, ???=224 )
 0x01d6    opFE61_MovieStartSync()
 0x01d8    -- 0x5B()
 0x01d9    op01_JumpTo( address=0x210 )
@@ -213,7 +213,7 @@ Actor_0x04:on_update:
 0x01e4    -- 0xFE65()
 0x01ea    -- 0xFE65()
 0x01f0    mem[0x400] = -13036 -- op35
-0x01f6    opFE67_MoviePlay2( movie_id=6, sector=(s)mem[0x400], start_frame=5251, end_frame=5385, flags=254, ???=320, ???=0, ???=320, ???=224 )
+0x01f6    opFE67_MoviePlay2( movie_id=6, sector=mem[0x400], start_frame=5251, end_frame=5385, flags=254, ???=320, ???=0, ???=320, ???=224 )
 0x020a    opFE61_MovieStartSync()
 0x020c    -- 0x5B()
 0x020d    op01_JumpTo( address=0x210 )

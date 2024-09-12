@@ -92,7 +92,7 @@ Actor_0x03:on_push:
 
 Actor_0x04:on_start:
 0x005b    -- 0xBC_ActorNoModelInit()
-0x005c    op02_JumpToConditional( val1=(s)mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x79 )
+0x005c    op02_JumpToConditional( val1=mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x79 )
 0x0064    op20_ActorSetFlags0( flags=12 )
 0x0067    -- 0x18()
 0x006c    -- 0xFE1C()
@@ -141,7 +141,7 @@ Actor_0x04:event_0x06:
 
 Actor_0x05:on_start:
 0x00d6    -- 0xBC_ActorNoModelInit()
-0x00d7    op02_JumpToConditional( val1=(s)mem[0x210], val2=2, condition="val1 & val2", address_if_false=0xf4 )
+0x00d7    op02_JumpToConditional( val1=mem[0x210], val2=2, condition="val1 & val2", address_if_false=0xf4 )
 0x00df    op20_ActorSetFlags0( flags=12 )
 0x00e2    -- 0x18()
 0x00e7    -- 0xFE1C()
@@ -190,7 +190,7 @@ Actor_0x05:event_0x06:
 
 Actor_0x06:on_start:
 0x0151    -- 0xBC_ActorNoModelInit()
-0x0152    op02_JumpToConditional( val1=(s)mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x16f )
+0x0152    op02_JumpToConditional( val1=mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x16f )
 0x015a    op20_ActorSetFlags0( flags=12 )
 0x015d    -- 0x18()
 0x0162    -- 0xFE1C()
@@ -601,7 +601,7 @@ Actor_0x16:on_update:
 
 Actor_0x16:on_talk:
 0x0529    -- 0xFE54()
-0x052b    op02_JumpToConditional( val1=(s)mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x545 )
+0x052b    op02_JumpToConditional( val1=mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x545 )
 0x0533    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x04, priority=0x01 )
 0x0536    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x01 )
 0x0539    op26_Wait( time=10 )
@@ -645,7 +645,7 @@ Actor_0x17:event_0x04:
 
 Actor_0x18:on_start:
 0x0580    -- 0xBC_ActorNoModelInit()
-0x0581    op02_JumpToConditional( val1=(s)mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x597 )
+0x0581    op02_JumpToConditional( val1=mem[0x210], val2=2, condition="val1 & val2", address_if_false=0x597 )
 0x0589    op29_ActorTurnOff( actor_id=Actor_0x14 )
 0x058b    op29_ActorTurnOff( actor_id=Actor_0x11 )
 0x058d    op29_ActorTurnOff( actor_id=Actor_0x12 )
@@ -663,4 +663,4 @@ Actor_0x18:on_talk:
 
 Actor_0x18:on_push:
 0x059a    op00_Return()
-0x059b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x8800, ???=(vf40)0x6c7c, flag=0x2 )
+0x059b    -- 0xE0( actor_id=Actor_0x70, ???=(vf80)0xbeb4, ???=(vf40)0x677e, flag=0x1 )

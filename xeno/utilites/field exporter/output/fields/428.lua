@@ -250,7 +250,7 @@ Actor_0x0c:on_update:
 0x012b    op00_Return()
 
 Actor_0x0c:on_talk:
-0x012c    op02_JumpToConditional( val1=(s)mem[0x2cc], val2=1024, condition="val1 & val2", address_if_false=0x137 )
+0x012c    op02_JumpToConditional( val1=mem[0x2cc], val2=1024, condition="val1 & val2", address_if_false=0x137 )
 0x0134    op01_JumpTo( address=0x17c )
 0x0137    -- 0xFE54()
 0x0139    opF5_MessageShowStatic( text_id=0x3, flags=0 )
@@ -292,7 +292,7 @@ Actor_0x0d:on_update:
 0x0194    op00_Return()
 
 Actor_0x0d:on_talk:
-0x0195    op02_JumpToConditional( val1=(s)mem[0x2cc], val2=2048, condition="val1 & val2", address_if_false=0x1a0 )
+0x0195    op02_JumpToConditional( val1=mem[0x2cc], val2=2048, condition="val1 & val2", address_if_false=0x1a0 )
 0x019d    op01_JumpTo( address=0x1be )
 0x01a0    -- 0xFE54()
 0x01a2    opF5_MessageShowStatic( text_id=0x5, flags=0 )
@@ -662,11 +662,11 @@ function:
 0x077c    op0D_Return()
 0x077d    -- 0xFE19( char_id=0xff )
 0x0780    -- 0xFE19( char_id=0xfe )
-0x0783    -- 0xFEC6( char_id=(s)mem[0x2d0] )
+0x0783    -- 0xFEC6( char_id=mem[0x2d0] )
 0x0787    -- 0xFE1A() sync load for 0xFEC6()
-0x0789    -- 0xFEC6( char_id=(s)mem[0x2d2] )
+0x0789    -- 0xFEC6( char_id=mem[0x2d2] )
 0x078d    -- 0xFE1A() sync load for 0xFEC6()
 0x078f    -- 0xBB( ???=0x7 )
 0x0791    -- 0x5A()
 0x0792    op0D_Return()
-0x0793    -- 0xE0( actor_id=Actor_0x92, ???=(vf80)0x9081, ???=(vf40)0x08e1, flag=0xb9 )
+0x0793    -- 0xE0( actor_id=Actor_0xbf, ???=(vf80)0x9a14, ???=(vf40)0xb0c5, flag=0x82 )

@@ -22,7 +22,7 @@ Actor_0x00:on_start:
 0x0018    op00_Return()
 
 Actor_0x00:on_update:
-0x0019    op02_JumpToConditional( val1=(s)mem[0x2c8], val2=2, condition="val1 & val2", address_if_false=0x38 )
+0x0019    op02_JumpToConditional( val1=mem[0x2c8], val2=2, condition="val1 & val2", address_if_false=0x38 )
 0x0021    -- 0xFE54()
 0x0023    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
 0x002e    -- 0x5A()
@@ -274,7 +274,7 @@ Actor_0x09:on_talk:
 0x01a0    op9C_MessageSync()
 0x01a1    op6F_ActorRotateToActor( actor_id=Actor_0x0c )
 0x01a3    op00_Return()
-0x01a4    op02_JumpToConditional( val1=(s)mem[0x2c0], val2=1024, condition="val1 & val2", address_if_false=0x1bc )
+0x01a4    op02_JumpToConditional( val1=mem[0x2c0], val2=1024, condition="val1 & val2", address_if_false=0x1bc )
 0x01ac    op5D_SpritePlayAnim2( anim_id=0x2 )
 0x01ae    -- 0x5E()
 0x01af    op26_Wait( time=10 )
@@ -744,4 +744,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x05c5    op00_Return()
-0x05c6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x3500, flag=0x10 )
+0x05c6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xc0ff, flag=0x69 )

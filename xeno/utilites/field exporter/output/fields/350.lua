@@ -247,9 +247,9 @@ Actor_0x0e:on_update:
 0x015c    op00_Return()
 
 Actor_0x0e:on_talk:
-0x015d    op02_JumpToConditional( val1=(s)mem[0xea], val2=64, condition="val1 & val2", address_if_false=0x168 )
+0x015d    op02_JumpToConditional( val1=mem[0xea], val2=64, condition="val1 & val2", address_if_false=0x168 )
 0x0165    op01_JumpTo( address=0x182 )
-0x0168    op02_JumpToConditional( val1=(s)mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x182 )
+0x0168    op02_JumpToConditional( val1=mem[0xe0], val2=10, condition="val1 > val2", address_if_false=0x182 )
 0x0170    mem[0xea] |= 1 << 5 -- op3a
 0x0176    -- 0x15()
 0x0177    -- 0xC4()
@@ -279,4 +279,4 @@ Actor_0x0f:on_talk:
 
 Actor_0x0f:on_push:
 0x019c    op00_Return()
-0x019d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xae38, ???=(vf40)0x6f81, flag=0x0 )
+0x019d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xbc38, ???=(vf40)0x8614, flag=0x9e )

@@ -123,7 +123,7 @@ Actor_0x05:on_update:
 
 Actor_0x05:on_talk:
 0x0090    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
-0x0093    op02_JumpToConditional( val1=(s)mem[0x20c], val2=8, condition="val1 & val2", address_if_false=0xa7 )
+0x0093    op02_JumpToConditional( val1=mem[0x20c], val2=8, condition="val1 & val2", address_if_false=0xa7 )
 0x009b    -- 0xFE54()
 0x009d    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00a1    op9C_MessageSync()
@@ -358,4 +358,4 @@ function:
 0x02d8    mem[0x406] += 1 -- op3c
 0x02db    op01_JumpTo( address=0x2c6 )
 0x02de    op0D_Return()
-0x02df    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xbf00, flag=0x81 )
+0x02df    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xb800, flag=0x14 )

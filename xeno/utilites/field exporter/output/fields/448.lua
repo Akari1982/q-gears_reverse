@@ -864,7 +864,7 @@ function:
 Actor_0x0d:on_start:
 0x0430    -- 0xBC_ActorNoModelInit()
 0x0431    -- 0xF8()
-0x0435    op02_JumpToConditional( val1=(s)mem[0xe2], val2=8, condition="val1 & val2", address_if_false=0x442 )
+0x0435    op02_JumpToConditional( val1=mem[0xe2], val2=8, condition="val1 & val2", address_if_false=0x442 )
 0x043d    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x043f    op01_JumpTo( address=0x450 )
 0x0442    -- 0x19_ActorSetPosition( x=(vf80)0xfe9d, z=(vf40)0xfd74, flag=(flag)0xc0 )
@@ -1839,4 +1839,4 @@ Actor_0x2e:on_talk:
 
 Actor_0x2e:on_push:
 0x0b52    op00_Return()
-0x0b53    -- 0xE0( actor_id=Actor_0xcf, ???=(vf80)0x9081, ???=(vf40)0xb8bc, flag=0xb8 )
+0x0b53    -- 0xE0( actor_id=Actor_0xa5, ???=(vf80)0x9a14, ???=(vf40)0x00df, flag=0x83 )

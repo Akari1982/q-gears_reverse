@@ -69,7 +69,7 @@ Actor_0x03:on_talk:
 0x003a    op26_Wait( time=10 )
 0x003d    -- 0xFE17()
 0x0041    op6F_ActorRotateToActor( actor_id=Actor_0x02 )
-0x0043    op02_JumpToConditional( val1=(s)mem[0x1cc], val2=32, condition="val1 & val2", address_if_false=0x53 )
+0x0043    op02_JumpToConditional( val1=mem[0x1cc], val2=32, condition="val1 & val2", address_if_false=0x53 )
 0x004b    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x004f    op9C_MessageSync()
 0x0050    op01_JumpTo( address=0x75 )

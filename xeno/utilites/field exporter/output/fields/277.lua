@@ -36,7 +36,7 @@ Actor_0x00:on_start:
 0x006b    op00_Return()
 
 Actor_0x00:on_update:
-0x006c    op02_JumpToConditional( val1=(s)mem[0x148], val2=30, condition="val1 == val2", address_if_false=0xca )
+0x006c    op02_JumpToConditional( val1=mem[0x148], val2=30, condition="val1 == val2", address_if_false=0xca )
 0x0074    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=1 )
 0x007f    opF4_MessageClose( type=0x1 )
 0x0081    -- 0xFE99()
@@ -541,4 +541,4 @@ Actor_0x17:on_talk:
 
 Actor_0x17:on_push:
 0x05cd    op00_Return()
-0x05ce    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x4000, flag=0x86 )
+0x05ce    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x4000, flag=0xa6 )

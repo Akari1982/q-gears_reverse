@@ -288,7 +288,7 @@ Actor_0x0c:on_talk:
 0x01fc    op08_CallActorEventStartSync( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
 0x01ff    opF5_MessageShowStatic( text_id=0x8, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
 0x0203    op9C_MessageSync()
-0x0204    op02_JumpToConditional( val1=(s)mem[0x2ce], val2=2, condition="val1 & val2", address_if_false=0x20f )
+0x0204    op02_JumpToConditional( val1=mem[0x2ce], val2=2, condition="val1 & val2", address_if_false=0x20f )
 0x020c    op01_JumpTo( address=0x232 )
 0x020f    -- 0x70()
 0x0211    op26_Wait( time=30 )
@@ -608,9 +608,9 @@ function:
 0x0765    op0D_Return()
 0x0766    -- 0xFE19( char_id=0xff )
 0x0769    -- 0xFE19( char_id=0xfe )
-0x076c    -- 0xFEC6( char_id=(s)mem[0x2d0] )
+0x076c    -- 0xFEC6( char_id=mem[0x2d0] )
 0x0770    -- 0xFE1A() sync load for 0xFEC6()
-0x0772    -- 0xFEC6( char_id=(s)mem[0x2d2] )
+0x0772    -- 0xFEC6( char_id=mem[0x2d2] )
 0x0776    -- 0xFE1A() sync load for 0xFEC6()
 0x0778    -- 0xBB( ???=0x7 )
 0x077a    -- 0x5A()
@@ -671,4 +671,4 @@ Actor_0x0f:on_talk:
 
 Actor_0x0f:on_push:
 0x0931    op00_Return()
-0x0932    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x81a0, ???=(vf40)0xd390, flag=0x1e )
+0x0932    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x149b, ???=(vf40)0xe19a, flag=0xa6 )

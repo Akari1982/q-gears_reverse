@@ -26,7 +26,7 @@ Actor_0x00:on_start:
 0x002d    mem[0x408] = 0 -- op35
 0x0033    mem[0x40a] = 0 -- op35
 0x0039    mem[0x40c] = 1128 -- op35
-0x003f    op02_JumpToConditional( val1=(s)mem[0x164], val2=16, condition="val1 & val2", address_if_false=0x4a )
+0x003f    op02_JumpToConditional( val1=mem[0x164], val2=16, condition="val1 & val2", address_if_false=0x4a )
 0x0047    mem[0x40e] = true -- op36
 0x004a    op00_Return()
 
@@ -291,4 +291,4 @@ Actor_0x0e:on_talk:
 Actor_0x0e:on_push:
 0x01b7    op00_Return()
 0x01b8    op00_Return()
-0x01b9    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x54 )
+0x01b9    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x53 )

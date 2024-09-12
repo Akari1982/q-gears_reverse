@@ -252,7 +252,7 @@ Actor_0x03:event_0x0b:
 0x01e9    mem[0x1fe] >>= (s)mem[0x5ffe] -- op42
 0x01ee    op03_MessageShowFixed2( text_id=0x402, flags=NO_FACE )
 0x01f2    -- 0x04()
-0x01f3    op02_JumpToConditional( val1=(s)mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
+0x01f3    op02_JumpToConditional( val1=mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
 0x01fb    op01_JumpTo( address=0x1e4 )
 0x01fe    -- 0x23()
 0x01ff    op00_Return()

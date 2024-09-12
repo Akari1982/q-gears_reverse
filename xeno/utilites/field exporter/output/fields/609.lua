@@ -23,7 +23,7 @@ Actor_0x00:on_start:
 0x0017    -- 0xFE3F()
 0x001f    mem[0x400] = false -- op37
 0x0022    mem[0x402] = 0 -- op35
-0x0028    op02_JumpToConditional( val1=(s)mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x53 )
+0x0028    op02_JumpToConditional( val1=mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x53 )
 0x0030    op99()
 0x0031    -- 0x9B( ???=12, ???=12 )
 0x0036    -- 0x60()
@@ -47,7 +47,7 @@ Actor_0x00:on_start:
 
 Actor_0x00:on_update:
 0x0097    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x141 )
-0x009f    op02_JumpToConditional( val1=(s)mem[0x148], val2=100, condition="val1 != val2", address_if_false=0xe0 )
+0x009f    op02_JumpToConditional( val1=mem[0x148], val2=100, condition="val1 != val2", address_if_false=0xe0 )
 0x00a7    -- 0xFE54()
 0x00a9    op26_Wait( time=32 )
 0x00ac    mem[0x40c] = true -- op36
@@ -233,7 +233,7 @@ Actor_0x05:on_push:
 0x02a9    op00_Return()
 
 Actor_0x06:on_start:
-0x02aa    op02_JumpToConditional( val1=(s)mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x2bc )
+0x02aa    op02_JumpToConditional( val1=mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x2bc )
 0x02b2    -- 0x93( ???=22 )
 0x02b5    -- 0xFE03( ???=4896 )
 0x02b9    op01_JumpTo( address=0x2bd )
@@ -249,7 +249,7 @@ Actor_0x06:on_update:
 0x02d6    -- 0xFE09( ???=1 )
 0x02da    op02_JumpToConditional( val1=(s)mem[0x41c], val2=0, condition="val1 == val2", address_if_false=0x2f2 )
 0x02e2    op2C_SpritePlayAnim( anim_id=0x12 )
-0x02e4    op02_JumpToConditional( val1=(s)mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x2ef )
+0x02e4    op02_JumpToConditional( val1=mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x2ef )
 0x02ec    op05_CallFunction( address=0x326 )
 0x02ef    mem[0x41c] = true -- op36
 0x02f2    -- 0x6E()
@@ -313,7 +313,7 @@ function:
 0x04a9    op0D_Return()
 
 Actor_0x07:on_start:
-0x04aa    op02_JumpToConditional( val1=(s)mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x4b6 )
+0x04aa    op02_JumpToConditional( val1=mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x4b6 )
 0x04b2    -- 0xBC_ActorNoModelInit()
 0x04b3    op01_JumpTo( address=0x4bd )
 0x04b6    -- 0x93( ???=37 )
@@ -330,7 +330,7 @@ Actor_0x07:on_update:
 0x04da    op02_JumpToConditional( val1=(s)mem[0x42e], val2=0, condition="val1 == val2", address_if_false=0x4f5 )
 0x04e2    op2C_SpritePlayAnim( anim_id=0x12 )
 0x04e4    mem[0x42e] = true -- op36
-0x04e7    op02_JumpToConditional( val1=(s)mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x4f2 )
+0x04e7    op02_JumpToConditional( val1=mem[0x148], val2=100, condition="val1 == val2", address_if_false=0x4f2 )
 0x04ef    op01_JumpTo( address=0x4f5 )
 0x04f2    op05_CallFunction( address=0x55f )
 0x04f5    op00_Return()

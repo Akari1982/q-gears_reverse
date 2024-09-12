@@ -19,7 +19,7 @@ Actor_0x00:on_start:
 0x0008    -- 0xBC_ActorNoModelInit()
 0x0009    -- 0xF7()
 0x000e    -- 0xFEB8()
-0x0013    op02_JumpToConditional( val1=(s)mem[0x222], val2=1, condition="val1 & val2", address_if_false=0x21 )
+0x0013    op02_JumpToConditional( val1=mem[0x222], val2=1, condition="val1 & val2", address_if_false=0x21 )
 0x001b    mem[0x40c] = 1 -- op35
 0x0021    mem[0x400] = 1 -- op35
 0x0027    mem[0x402] = -250 -- op35
@@ -34,14 +34,14 @@ Actor_0x00:on_update:
 0x0047    op00_Return()
 
 Actor_0x00:on_talk:
-0x0048    op02_JumpToConditional( val1=(s)mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x53 )
+0x0048    op02_JumpToConditional( val1=mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x53 )
 0x0050    op01_JumpTo( address=0x62 )
 0x0053    -- 0xE1_BackgroundSetTex()
 0x0061    -- 0x5A()
 0x0062    op00_Return()
 
 Actor_0x00:on_push:
-0x0063    op02_JumpToConditional( val1=(s)mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x6e )
+0x0063    op02_JumpToConditional( val1=mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x6e )
 0x006b    op01_JumpTo( address=0x7d )
 0x006e    -- 0xE1_BackgroundSetTex()
 0x007c    -- 0x5A()
@@ -146,7 +146,7 @@ Actor_0x05:on_talk:
 0x0101    -- 0xFE54()
 0x0103    -- 0x67()
 0x0107    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
-0x010a    op02_JumpToConditional( val1=(s)mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x11a )
+0x010a    op02_JumpToConditional( val1=mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x11a )
 0x0112    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x0116    op9C_MessageSync()
 0x0117    op01_JumpTo( address=0x12f )
@@ -167,7 +167,7 @@ Actor_0x06:on_start:
 0x0135    op00_Return()
 
 Actor_0x06:on_update:
-0x0136    op02_JumpToConditional( val1=(s)mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x143 )
+0x0136    op02_JumpToConditional( val1=mem[0x21e], val2=1, condition="val1 & val2", address_if_false=0x143 )
 0x013e    -- 0x28()
 0x0140    op01_JumpTo( address=0x152 )
 0x0143    -- 0xE1_BackgroundSetTex()

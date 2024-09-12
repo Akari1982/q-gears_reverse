@@ -221,7 +221,7 @@ Actor_0x0d:on_start:
 0x00e8    -- 0xBC_ActorNoModelInit()
 0x00e9    -- 0xF8()
 0x00ed    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x10d )
-0x00f2    op02_JumpToConditional( val1=(s)mem[0xec], val2=64, condition="val1 & val2", address_if_false=0xff )
+0x00f2    op02_JumpToConditional( val1=mem[0xec], val2=64, condition="val1 & val2", address_if_false=0xff )
 0x00fa    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x00fc    op01_JumpTo( address=0x10a )
 0x00ff    -- 0x19_ActorSetPosition( x=(vf80)0x0327, z=(vf40)0x0000, flag=(flag)0xc0 )
@@ -247,7 +247,7 @@ Actor_0x0d:on_push:
 Actor_0x0e:on_start:
 0x0124    -- 0x0B_InitNPC( 0 )
 0x0127    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x149 )
-0x012c    op02_JumpToConditional( val1=(s)mem[0xec], val2=64, condition="val1 & val2", address_if_false=0x139 )
+0x012c    op02_JumpToConditional( val1=mem[0xec], val2=64, condition="val1 & val2", address_if_false=0x139 )
 0x0134    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x0136    op01_JumpTo( address=0x146 )
 0x0139    -- 0x1D()
@@ -293,7 +293,7 @@ Actor_0x0e:event_0x04:
 
 Actor_0x0f:on_start:
 0x0193    -- 0x0B_InitNPC( 1 )
-0x0196    op02_JumpToConditional( val1=(s)mem[0xe2], val2=16384, condition="val1 & val2", address_if_false=0x1a3 )
+0x0196    op02_JumpToConditional( val1=mem[0xe2], val2=16384, condition="val1 & val2", address_if_false=0x1a3 )
 0x019e    op29_ActorTurnOff( actor_id=Actor_0x0f )
 0x01a0    op01_JumpTo( address=0x1b6 )
 0x01a3    -- 0x19_ActorSetPosition( x=(vf80)0xff7a, z=(vf40)0x0029, flag=(flag)0xc0 )
@@ -339,7 +339,7 @@ Actor_0x0f:on_push:
 
 Actor_0x10:on_start:
 0x0217    -- 0x0B_InitNPC( 1 )
-0x021a    op02_JumpToConditional( val1=(s)mem[0xe2], val2=-32768, condition="val1 & val2", address_if_false=0x227 )
+0x021a    op02_JumpToConditional( val1=mem[0xe2], val2=-32768, condition="val1 & val2", address_if_false=0x227 )
 0x0222    op29_ActorTurnOff( actor_id=Actor_0x10 )
 0x0224    op01_JumpTo( address=0x23a )
 0x0227    -- 0x19_ActorSetPosition( x=(vf80)0xff7a, z=(vf40)0xffde, flag=(flag)0xc0 )
@@ -415,4 +415,4 @@ Actor_0x12:on_talk:
 
 Actor_0x12:on_push:
 0x02be    op00_Return()
-0x02bf    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0150, ???=(vf40)0x7c87, flag=0x6c )
+0x02bf    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x6a00, flag=0xbf )

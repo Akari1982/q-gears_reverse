@@ -40,7 +40,7 @@ Actor_0x00:on_update:
 0x0055    op02_JumpToConditional( val1=(s)mem[0x2], val2=0, condition="val1 == val2", address_if_false=0x7f )
 0x005d    mem[0x400] = 0 -- op35
 0x0063    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0x7c )
-0x0068    op02_JumpToConditional( val1=(s)mem[0xec], val2=128, condition="val1 & val2", address_if_false=0x73 )
+0x0068    op02_JumpToConditional( val1=mem[0xec], val2=128, condition="val1 & val2", address_if_false=0x73 )
 0x0070    op01_JumpTo( address=0x7c )
 0x0073    mem[0xec] |= 1 << 7 -- op3a
 0x0079    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x06 )
@@ -48,7 +48,7 @@ Actor_0x00:on_update:
 0x007f    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0xa9 )
 0x0087    mem[0x400] = 1 -- op35
 0x008d    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0xa6 )
-0x0092    op02_JumpToConditional( val1=(s)mem[0xec], val2=128, condition="val1 & val2", address_if_false=0x9d )
+0x0092    op02_JumpToConditional( val1=mem[0xec], val2=128, condition="val1 & val2", address_if_false=0x9d )
 0x009a    op01_JumpTo( address=0xa6 )
 0x009d    mem[0xec] |= 1 << 7 -- op3a
 0x00a3    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x06 )
@@ -56,7 +56,7 @@ Actor_0x00:on_update:
 0x00a9    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0xd0 )
 0x00b1    mem[0x400] = 2 -- op35
 0x00b7    -- 0x86_ProgressNotEqualJumpTo( value=158, jump=0xd0 )
-0x00bc    op02_JumpToConditional( val1=(s)mem[0xec], val2=128, condition="val1 & val2", address_if_false=0xc7 )
+0x00bc    op02_JumpToConditional( val1=mem[0xec], val2=128, condition="val1 & val2", address_if_false=0xc7 )
 0x00c4    op01_JumpTo( address=0xd0 )
 0x00c7    mem[0xec] |= 1 << 7 -- op3a
 0x00cd    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x04, priority=0x06 )
@@ -511,4 +511,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x0426    op00_Return()
-0x0427    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0080, flag=0x80 )
+0x0427    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

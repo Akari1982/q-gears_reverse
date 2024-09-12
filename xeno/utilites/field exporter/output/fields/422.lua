@@ -84,7 +84,7 @@ Actor_0x04:on_start:
 0x0051    -- 0xBC_ActorNoModelInit()
 0x0052    mem[0x406] = 4096 -- op35
 0x0058    mem[0x408] = false -- op37
-0x005b    op02_JumpToConditional( val1=(s)mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x6c )
+0x005b    op02_JumpToConditional( val1=mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x6c )
 0x0063    -- 0xFE13()
 0x0069    op01_JumpTo( address=0x72 )
 0x006c    -- 0xFE13()
@@ -252,7 +252,7 @@ Actor_0x08:on_start:
 0x0342    op00_Return()
 
 Actor_0x08:on_update:
-0x0343    op02_JumpToConditional( val1=(s)mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x36d )
+0x0343    op02_JumpToConditional( val1=mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x36d )
 0x034b    -- 0xFE54()
 0x034d    op25_ActorDisable( actor_id=party1 )
 0x034f    op25_ActorDisable( actor_id=party2 )
@@ -278,7 +278,7 @@ Actor_0x09:on_start:
 0x0372    op00_Return()
 
 Actor_0x09:on_update:
-0x0373    op02_JumpToConditional( val1=(s)mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x37e )
+0x0373    op02_JumpToConditional( val1=mem[0x214], val2=4096, condition="val1 & val2", address_if_false=0x37e )
 0x037b    op01_JumpTo( address=0x3d9 )
 0x037e    -- 0xFE54()
 0x0380    -- 0x9D()
@@ -476,4 +476,4 @@ function:
 0x075e    opFEBD_ParticleSpawnSettings( settings=0 )
 0x0766    opFE96_ParticleCreate()
 0x0768    op0D_Return()
-0x0769    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x6c00, flag=0x2 )
+0x0769    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x6700, flag=0x1 )

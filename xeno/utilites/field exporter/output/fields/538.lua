@@ -724,7 +724,7 @@ Actor_0x10:on_update:
 0x06e6    op00_Return()
 
 Actor_0x10:on_talk:
-0x06e7    op02_JumpToConditional( val1=(s)mem[0x1c0], val2=8192, condition="val1 & val2", address_if_false=0x704 )
+0x06e7    op02_JumpToConditional( val1=mem[0x1c0], val2=8192, condition="val1 & val2", address_if_false=0x704 )
 0x06ef    -- 0xFE54()
 0x06f1    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x04, priority=0x03 )
 0x06f4    -- 0xFE68()
@@ -2408,4 +2408,4 @@ function:
 0x1e63    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x1e66    op01_JumpTo( address=0x1e69 )
 0x1e69    op0D_Return()
-0x1e6a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x1e6a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x1e00, flag=0x80 )

@@ -196,7 +196,7 @@ Actor_0x0c:on_update:
 Actor_0x0c:on_talk:
 0x00a7    op6F_ActorRotateToActor( actor_id=party1 )
 0x00a9    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xc6 )
-0x00ae    op02_JumpToConditional( val1=(s)mem[0xbe], val2=5, condition="val1 < val2", address_if_false=0xbe )
+0x00ae    op02_JumpToConditional( val1=mem[0xbe], val2=5, condition="val1 < val2", address_if_false=0xbe )
 0x00b6    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
 0x00ba    op9C_MessageSync()
 0x00bb    op01_JumpTo( address=0xc3 )
@@ -267,4 +267,4 @@ Actor_0x0f:on_talk:
 
 Actor_0x0f:on_push:
 0x011d    op00_Return()
-0x011e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x6c00, flag=0xad )
+0x011e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x6700, flag=0xb4 )

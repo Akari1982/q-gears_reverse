@@ -2208,7 +2208,7 @@ Actor_0x12:on_start:
 0x49c9    op00_Return()
 
 Actor_0x12:on_update:
-0x49ca    op02_JumpToConditional( val1=(s)mem[0x214], val2=256, condition="val1 & val2", address_if_false=0x4a01 )
+0x49ca    op02_JumpToConditional( val1=mem[0x214], val2=256, condition="val1 & val2", address_if_false=0x4a01 )
 0x49d2    opB4_FadeOut()
 0x49d5    -- 0xFE0E_SoundSetVolume( volume=0, steps=0 )
 0x49db    -- 0xFE54()
@@ -2635,7 +2635,7 @@ Actor_0x1f:on_start:
 0x4d03    op00_Return()
 
 Actor_0x1f:on_update:
-0x4d04    op02_JumpToConditional( val1=(s)mem[0x214], val2=256, condition="val1 & val2", address_if_false=0x4d16 )
+0x4d04    op02_JumpToConditional( val1=mem[0x214], val2=256, condition="val1 & val2", address_if_false=0x4d16 )
 0x4d0c    opC6_ExpandRun() -- exp0x20
 0x4d0d    -- 0xC0( ???=5 )
 0x4d10    op26_Wait( time=1 )

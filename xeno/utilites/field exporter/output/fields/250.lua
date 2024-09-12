@@ -25,7 +25,7 @@ Actor_0x00:on_start:
 0x0036    -- 0x9D()
 0x003a    -- 0xFE1E()
 0x003d    -- 0xFEA1( ???=0, ???=0 )
-0x0043    op02_JumpToConditional( val1=(s)mem[0x184], val2=1024, condition="val1 & val2", address_if_false=0x52 )
+0x0043    op02_JumpToConditional( val1=mem[0x184], val2=1024, condition="val1 & val2", address_if_false=0x52 )
 0x004b    -- 0xFEB7()
 0x004f    op01_JumpTo( address=0x68 )
 0x0052    -- 0xFEB7()
@@ -50,7 +50,7 @@ Actor_0x01:on_start:
 0x0088    -- 0x5C()
 0x008b    -- 0xFE03( ???=6144 )
 0x008f    -- 0xFE04()
-0x0093    op02_JumpToConditional( val1=(s)mem[0x184], val2=1024, condition="val1 & val2", address_if_false=0x9e )
+0x0093    op02_JumpToConditional( val1=mem[0x184], val2=1024, condition="val1 & val2", address_if_false=0x9e )
 0x009b    op01_JumpTo( address=0xaa )
 0x009e    -- 0x5F( ???=0x0 )
 0x00a0    -- 0x23()
@@ -1654,7 +1654,7 @@ function:
 0x432f    op00_Return()
 
 Actor_0x01:on_talk:
-0x4330    op02_JumpToConditional( val1=(s)mem[0x184], val2=1024, condition="val1 & val2", address_if_false=0x433b )
+0x4330    op02_JumpToConditional( val1=mem[0x184], val2=1024, condition="val1 & val2", address_if_false=0x433b )
 0x4338    op01_JumpTo( address=0x4356 )
 0x433b    -- 0xFE06()
 0x4342    op01_JumpTo( address=0x4356 )

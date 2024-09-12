@@ -1187,9 +1187,9 @@ Actor_0x15:on_update:
 0x1307    opF1_FadeSetUp( steps=1, r=10, g=35, b=30, semi_tr=10 )
 0x1312    op26_Wait( time=10 )
 0x1315    opD0_MessageSettings( x=120, y=10, letters=0, rows=0, flags=0 )
-0x1320    op02_JumpToConditional( val1=(s)mem[0x192], val2=0, condition="val1 == val2", address_if_false=0x132e )
+0x1320    op02_JumpToConditional( val1=mem[0x192], val2=0, condition="val1 == val2", address_if_false=0x132e )
 0x1328    mem[0x192] = 1876 -- op35
-0x132e    mem[0x436] = (s)mem[0x192] -- op35
+0x132e    mem[0x436] = mem[0x192] -- op35
 0x1334    mem[0x436] &= 15 -- op3e
 0x133a    -- 0xFE65()
 0x1340    op02_JumpToConditional( val1=(s)mem[0x436], val2=2, condition="val1 == val2", address_if_false=0x1350 )
@@ -1282,4 +1282,4 @@ function:
 0x1434    op25_ActorDisable( actor_id=Actor_0x0f )
 0x1436    op25_ActorDisable( actor_id=Actor_0x10 )
 0x1438    op0D_Return()
-0x1439    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x1439    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0xbd00, flag=0x7e )

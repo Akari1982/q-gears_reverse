@@ -26,7 +26,7 @@ Actor_0x00:on_start:
 0x0035    mem[0x45c] = 0 -- op35
 0x003b    mem[0x45e] = 6 -- op35
 0x0041    mem[0x460] = 518 -- op35
-0x0047    op02_JumpToConditional( val1=(s)mem[0xca], val2=512, condition="val1 & val2", address_if_false=0x52 )
+0x0047    op02_JumpToConditional( val1=mem[0xca], val2=512, condition="val1 & val2", address_if_false=0x52 )
 0x004f    mem[0x462] = true -- op36
 0x0052    -- 0xF2()
 0x005b    -- 0xF7()
@@ -1310,7 +1310,7 @@ Actor_0x1d:on_update:
 0x0ab7    op00_Return()
 
 Actor_0x1d:on_talk:
-0x0ab8    op02_JumpToConditional( val1=(s)mem[0xc4], val2=1, condition="val1 & val2", address_if_false=0xad3 )
+0x0ab8    op02_JumpToConditional( val1=mem[0xc4], val2=1, condition="val1 & val2", address_if_false=0xad3 )
 0x0ac0    op09_CallActorEventEndSync( actor_id=Actor_0x1e, event=event_0x04, priority=0x03 )
 0x0ac3    -- 0xFE68()
 0x0aca    -- 0x98_MapLoad( field_id=337, value=0 )
@@ -1346,13 +1346,13 @@ Actor_0x1e:event_0x04:
 Actor_0x1f:on_start:
 0x0af4    -- 0xBC_ActorNoModelInit()
 0x0af5    -- 0x2A()
-0x0af6    op02_JumpToConditional( val1=(s)mem[0xc4], val2=1, condition="val1 & val2", address_if_false=0xb01 )
+0x0af6    op02_JumpToConditional( val1=mem[0xc4], val2=1, condition="val1 & val2", address_if_false=0xb01 )
 0x0afe    op01_JumpTo( address=0xb0c )
 0x0b01    opF1_FadeSetUp( steps=2, r=128, g=128, b=128, semi_tr=1 )
 0x0b0c    op00_Return()
 
 Actor_0x1f:on_update:
-0x0b0d    op02_JumpToConditional( val1=(s)mem[0xc4], val2=1, condition="val1 & val2", address_if_false=0xb72 )
+0x0b0d    op02_JumpToConditional( val1=mem[0xc4], val2=1, condition="val1 & val2", address_if_false=0xb72 )
 0x0b15    -- 0xFE66() -- sound play with volume in slot
 0x0b1f    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=1 )
 0x0b2a    op26_Wait( time=1 )
@@ -1382,21 +1382,21 @@ Actor_0x1f:on_push:
 
 Actor_0x20:on_start:
 0x0b9b    -- 0xBC_ActorNoModelInit()
-0x0b9c    op02_JumpToConditional( val1=(s)mem[0xc4], val2=16, condition="val1 & val2", address_if_false=0xbb0 )
+0x0b9c    op02_JumpToConditional( val1=mem[0xc4], val2=16, condition="val1 & val2", address_if_false=0xbb0 )
 0x0ba4    op29_ActorTurnOff( actor_id=Actor_0x0a )
 0x0ba6    op29_ActorTurnOff( actor_id=Actor_0x0b )
 0x0ba8    op29_ActorTurnOff( actor_id=Actor_0x0c )
 0x0baa    op29_ActorTurnOff( actor_id=Actor_0x0d )
 0x0bac    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x0bae    op29_ActorTurnOff( actor_id=Actor_0x0f )
-0x0bb0    op02_JumpToConditional( val1=(s)mem[0xc4], val2=32, condition="val1 & val2", address_if_false=0xbc4 )
+0x0bb0    op02_JumpToConditional( val1=mem[0xc4], val2=32, condition="val1 & val2", address_if_false=0xbc4 )
 0x0bb8    op29_ActorTurnOff( actor_id=Actor_0x16 )
 0x0bba    op29_ActorTurnOff( actor_id=Actor_0x17 )
 0x0bbc    op29_ActorTurnOff( actor_id=Actor_0x18 )
 0x0bbe    op29_ActorTurnOff( actor_id=Actor_0x19 )
 0x0bc0    op29_ActorTurnOff( actor_id=Actor_0x1a )
 0x0bc2    op29_ActorTurnOff( actor_id=Actor_0x1b )
-0x0bc4    op02_JumpToConditional( val1=(s)mem[0xc4], val2=64, condition="val1 & val2", address_if_false=0xbd8 )
+0x0bc4    op02_JumpToConditional( val1=mem[0xc4], val2=64, condition="val1 & val2", address_if_false=0xbd8 )
 0x0bcc    op29_ActorTurnOff( actor_id=Actor_0x10 )
 0x0bce    op29_ActorTurnOff( actor_id=Actor_0x11 )
 0x0bd0    op29_ActorTurnOff( actor_id=Actor_0x12 )
@@ -1425,7 +1425,7 @@ Actor_0x20:on_update:
 0x0c10    mem[0x400] = false -- op37
 0x0c13    -- 0xFE24()
 0x0c15    -- 0xFE54()
-0x0c17    op02_JumpToConditional( val1=(s)mem[0xc4], val2=8, condition="val1 & val2", address_if_false=0xc23 )
+0x0c17    op02_JumpToConditional( val1=mem[0xc4], val2=8, condition="val1 & val2", address_if_false=0xc23 )
 0x0c1f    op00_Return()
 0x0c20    op01_JumpTo( address=0xc6e )
 0x0c23    mem[0x400] = true -- op36
@@ -1523,4 +1523,4 @@ Actor_0x22:on_talk:
 Actor_0x22:on_push:
 0x0d30    op00_Return()
 0x0d31    op00_Return()
-0x0d32    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x82cb, ???=(vf40)0xbb90, flag=0xaa )
+0x0d32    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x1422, ???=(vf40)0x589a, flag=0x12 )

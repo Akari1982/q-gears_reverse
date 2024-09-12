@@ -18,14 +18,14 @@ unknown = [
 Actor_0x00:on_start:
 0x0000    -- 0xBC_ActorNoModelInit()
 0x0001    -- 0xFE54()
-0x0003    op02_JumpToConditional( val1=(s)mem[0x192], val2=0, condition="val1 == val2", address_if_false=0x11 )
+0x0003    op02_JumpToConditional( val1=mem[0x192], val2=0, condition="val1 == val2", address_if_false=0x11 )
 0x000b    mem[0x192] = 1876 -- op35
-0x0011    mem[0x400] = (s)mem[0x192] -- op35
+0x0011    mem[0x400] = mem[0x192] -- op35
 0x0017    mem[0x400] &= 15 -- op3e
-0x001d    mem[0x402] = (s)mem[0x192] -- op35
+0x001d    mem[0x402] = mem[0x192] -- op35
 0x0023    opDF_VariableDivide( address=0x402, value=(vf40)0x0010, flag=0x40 )
 0x0029    mem[0x402] &= 15 -- op3e
-0x002f    mem[0x404] = (s)mem[0x192] -- op35
+0x002f    mem[0x404] = mem[0x192] -- op35
 0x0035    opDF_VariableDivide( address=0x404, value=(vf40)0x0100, flag=0x40 )
 0x003b    -- 0xFE19( char_id=0xff )
 0x003e    -- 0xFE19( char_id=0xfe )
@@ -1301,7 +1301,7 @@ Actor_0x15:event_0x11:
 0x137e    op00_Return()
 
 Actor_0x15:event_0x12:
-0x137f    mem[0x406] = (s)mem[0x192] -- op35
+0x137f    mem[0x406] = mem[0x192] -- op35
 0x1385    mem[0x406] &= 15 -- op3e
 0x138b    op02_JumpToConditional( val1=(s)mem[0x406], val2=2, condition="val1 == val2", address_if_false=0x139b )
 0x1393    opD2_MessageShowDynamic( text_id=0x12, flags=FORCE_BOTTOM )

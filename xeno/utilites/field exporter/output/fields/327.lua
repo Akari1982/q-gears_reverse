@@ -1157,7 +1157,7 @@ Actor_0x10:on_update:
 0x07f9    op00_Return()
 
 Actor_0x10:on_talk:
-0x07fa    op02_JumpToConditional( val1=(s)mem[0x1c4], val2=4, condition="val1 & val2", address_if_false=0x844 )
+0x07fa    op02_JumpToConditional( val1=mem[0x1c4], val2=4, condition="val1 & val2", address_if_false=0x844 )
 0x0802    -- 0x85()
 0x0807    op6F_ActorRotateToActor( actor_id=party1 )
 0x0809    opD2_MessageShowDynamic( text_id=0xb, flags=0 )

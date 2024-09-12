@@ -729,7 +729,7 @@ Actor_0x1d:on_start:
 0x04df    op00_Return()
 
 Actor_0x1d:on_update:
-0x04e0    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x4eb )
+0x04e0    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x4eb )
 0x04e8    -- 0x23()
 0x04e9    -- 0x27( actor_id=Actor_0x1d )
 0x04eb    mem[0x40e] = opA8_Random( max=3 )
@@ -801,7 +801,7 @@ Actor_0x1e:on_start:
 0x05d6    op00_Return()
 
 Actor_0x1e:on_update:
-0x05d7    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x5e2 )
+0x05d7    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x5e2 )
 0x05df    -- 0x23()
 0x05e0    -- 0x27( actor_id=Actor_0x1e )
 0x05e2    op2C_SpritePlayAnim( anim_id=0x1 )
@@ -853,7 +853,7 @@ Actor_0x1f:on_start:
 0x0681    op00_Return()
 
 Actor_0x1f:on_update:
-0x0682    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x68d )
+0x0682    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x68d )
 0x068a    -- 0x23()
 0x068b    -- 0x27( actor_id=Actor_0x1f )
 0x068d    mem[0x434] = opA8_Random( max=3 )
@@ -927,7 +927,7 @@ Actor_0x20:on_start:
 0x077f    op00_Return()
 
 Actor_0x20:on_update:
-0x0780    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x78b )
+0x0780    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x78b )
 0x0788    -- 0x23()
 0x0789    -- 0x27( actor_id=Actor_0x20 )
 0x078b    mem[0x448] = opA8_Random( max=3 )
@@ -1001,7 +1001,7 @@ Actor_0x21:on_update:
 0x0872    op00_Return()
 
 Actor_0x21:on_talk:
-0x0873    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x881 )
+0x0873    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x881 )
 0x087b    opD2_MessageShowDynamic( text_id=0xf, flags=FORCE_TOP )
 0x087f    op9C_MessageSync()
 0x0880    op00_Return()
@@ -1088,7 +1088,7 @@ Actor_0x23:on_start:
 0x0943    -- 0xBC_ActorNoModelInit()
 0x0944    -- 0xF8()
 0x0948    -- 0x1F( ???=0x77 )
-0x094a    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x972 )
+0x094a    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x972 )
 0x0952    op02_JumpToConditional( val1=(s)mem[0x4], val2=685, condition="val1 == val2", address_if_false=0x964 )
 0x095a    -- 0x1D()
 0x0961    op01_JumpTo( address=0x96f )
@@ -1098,7 +1098,7 @@ Actor_0x23:on_start:
 0x0978    op00_Return()
 
 Actor_0x23:on_update:
-0x0979    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x9a2 )
+0x0979    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x9a2 )
 0x0981    op02_JumpToConditional( val1=(s)mem[0x4], val2=685, condition="val1 == val2", address_if_false=0x997 )
 0x0989    -- 0x10()
 0x0994    op01_JumpTo( address=0x9a2 )
@@ -1121,7 +1121,7 @@ Actor_0x23:event_0x05:
 
 Actor_0x24:on_start:
 0x09bd    -- 0x0B_InitNPC( 0 )
-0x09c0    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x9d1 )
+0x09c0    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0x9d1 )
 0x09c8    -- 0x19_ActorSetPosition( x=(vf80)0x0095, z=(vf40)0x0192, flag=(flag)0xc0 )
 0x09ce    op01_JumpTo( address=0x9d7 )
 0x09d1    -- 0x19_ActorSetPosition( x=(vf80)0xff36, z=(vf40)0x0143, flag=(flag)0xc0 )
@@ -1155,7 +1155,7 @@ Actor_0x24:on_talk:
 0x0a1a    op00_Return()
 
 Actor_0x24:on_push:
-0x0a1b    op02_JumpToConditional( val1=(s)mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0xa26 )
+0x0a1b    op02_JumpToConditional( val1=mem[0x2ca], val2=4, condition="val1 & val2", address_if_false=0xa26 )
 0x0a23    op01_JumpTo( address=0xa27 )
 0x0a26    op00_Return()
 0x0a27    op31_JumpIfButtonNotPressed( buttons=Circle, jump_to=0xa2f )
@@ -1585,11 +1585,11 @@ function:
 0x104a    op0D_Return()
 0x104b    -- 0xFE19( char_id=0xff )
 0x104e    -- 0xFE19( char_id=0xfe )
-0x1051    -- 0xFEC6( char_id=(s)mem[0x2d0] )
+0x1051    -- 0xFEC6( char_id=mem[0x2d0] )
 0x1055    -- 0xFE1A() sync load for 0xFEC6()
-0x1057    -- 0xFEC6( char_id=(s)mem[0x2d2] )
+0x1057    -- 0xFEC6( char_id=mem[0x2d2] )
 0x105b    -- 0xFE1A() sync load for 0xFEC6()
 0x105d    -- 0xBB( ???=0x7 )
 0x105f    -- 0x5A()
 0x1060    op0D_Return()
-0x1061    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x9d38, ???=(vf40)0x9080, flag=0xef )
+0x1061    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xaa38, ???=(vf40)0x9a14, flag=0xd0 )

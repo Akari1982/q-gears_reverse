@@ -437,7 +437,7 @@ Actor_0x0e:on_start:
 0x01fe    -- 0x85()
 0x0203    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x0205    op01_JumpTo( address=0x22b )
-0x0208    op02_JumpToConditional( val1=(s)mem[0xea], val2=8192, condition="val1 & val2", address_if_false=0x215 )
+0x0208    op02_JumpToConditional( val1=mem[0xea], val2=8192, condition="val1 & val2", address_if_false=0x215 )
 0x0210    op29_ActorTurnOff( actor_id=Actor_0x0e )
 0x0212    op01_JumpTo( address=0x22b )
 0x0215    op02_JumpToConditional( val1=(s)mem[0x2], val2=1, condition="val1 == val2", address_if_false=0x229 )
@@ -452,7 +452,7 @@ Actor_0x0e:on_update:
 0x022d    op00_Return()
 
 Actor_0x0e:on_talk:
-0x022e    op02_JumpToConditional( val1=(s)mem[0xec], val2=16, condition="val1 & val2", address_if_false=0x245 )
+0x022e    op02_JumpToConditional( val1=mem[0xec], val2=16, condition="val1 & val2", address_if_false=0x245 )
 0x0236    -- 0xFE54()
 0x0238    opD2_MessageShowDynamic( text_id=0x12, flags=0 )
 0x023c    op9C_MessageSync()
@@ -495,7 +495,7 @@ Actor_0x0e:on_push:
 
 Actor_0x0f:on_start:
 0x02a0    -- 0x0B_InitNPC( 1 )
-0x02a3    op02_JumpToConditional( val1=(s)mem[0xea], val2=32, condition="val1 & val2", address_if_false=0x2b0 )
+0x02a3    op02_JumpToConditional( val1=mem[0xea], val2=32, condition="val1 & val2", address_if_false=0x2b0 )
 0x02ab    op29_ActorTurnOff( actor_id=Actor_0x0f )
 0x02ad    op01_JumpTo( address=0x2ca )
 0x02b0    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x2c8 )
@@ -547,7 +547,7 @@ Actor_0x0f:event_0x04:
 Actor_0x10:on_start:
 0x0338    -- 0xBC_ActorNoModelInit()
 0x0339    -- 0xF8()
-0x033d    op02_JumpToConditional( val1=(s)mem[0xea], val2=32, condition="val1 & val2", address_if_false=0x34a )
+0x033d    op02_JumpToConditional( val1=mem[0xea], val2=32, condition="val1 & val2", address_if_false=0x34a )
 0x0345    op29_ActorTurnOff( actor_id=Actor_0x10 )
 0x0347    op01_JumpTo( address=0x362 )
 0x034a    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x360 )
@@ -617,4 +617,4 @@ Actor_0x12:on_push:
 Actor_0x12:event_0x04:
 0x03b9    -- 0x10()
 0x03c4    op00_Return()
-0x03c5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6c38, ???=(vf40)0x0002, flag=0x0 )
+0x03c5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
