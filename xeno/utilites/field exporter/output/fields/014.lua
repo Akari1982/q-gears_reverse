@@ -82,19 +82,21 @@ Actor_0x01:on_update:
 0x00ca    op26_Wait( time=60 )
 0x00cd    op08_CallActorEventStartSync( actor_id=Actor_0x12, event=event_0x04, priority=0x01 )
 0x00d0    op08_CallActorEventStartSync( actor_id=Actor_0x09, event=event_0x04, priority=0x02 )
-0x00d3    -- opFE2700()
-0x00d8    -- opFE2701()
-0x00da    op01_JumpTo( address=0x27fe )
-0x00dd    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=9730, condition="val1 & val2", address_if_false=0xfe80 )
-0x00e5    -- 0x4D()
-0x00ef    mem[0x1035] ^= (s)mem[0x204] -- op40
-0x00f5    mem[0xe35] ^= (s)mem[0x9604] -- op40
-0x00fb    mem[0x2e05] ^= mem[0x3508] -- op40
-0x0101    -- 0x04()
-0x0102    op02_JumpToConditional( val1=mem[0x4000], val2=mem[0xe34], condition="val1 >= val2", address_if_false=0x10 )
-0x010a    mem[0x2e05] ^= mem[0x3508] -- op40
-0x0110    -- 0x04()
-0x0111    op20_ActorSetFlags0( flags=mem[0x4000] )
+0x00d3    -- opFE2700() -- screen_distortion_control
+0x00d8    -- opFE2701() -- screen_distortion_control
+0x00db    -- opFE2702() -- screen_distortion_control
+0x00de    -- opFE2702() -- screen_distortion_control
+0x00e1    op26_Wait( time=70 )
+0x00e4    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
+0x00e7    opEF_MoveCameraSync()
+0x00ea    mem[0x406] = 8 -- op35
+0x00f0    mem[0x410] = 2 -- op35
+0x00f6    mem[0x40e] = 150 -- op35
+0x00fc    op05_CallFunction( address=0x82e )
+0x00ff    mem[0x410] = 2 -- op35
+0x0105    mem[0x40e] = 16 -- op35
+0x010b    op05_CallFunction( address=0x82e )
+0x010e    mem[0x406] = 32 -- op35
 0x0114    mem[0x414] = 111 -- op35
 0x011a    mem[0x416] = -459 -- op35
 0x0120    mem[0x418] = -50 -- op35
@@ -842,6 +844,10 @@ function:
 0x0829    -- 0x60()
 0x082a    -- 0x64() -- exp0x1
 0x082b    op01_JumpTo( address=0xa18 )
+
+function:
+
+function:
 0x082e    -- 0x9B( ???=12, ???=12 )
 0x0833    -- 0x60()
 0x0834    -- 0x64() -- exp0x1

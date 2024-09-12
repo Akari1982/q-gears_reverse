@@ -3091,7 +3091,7 @@ else if( control == 1 ) // wait until distortion finish updates
     }
     else
     {
-        [A1 + cc] = h(A0 + 1);
+        [A1 + cc] = h(A0 + 2);
     }
 }
 else if( control == 2 ) // force finish updates

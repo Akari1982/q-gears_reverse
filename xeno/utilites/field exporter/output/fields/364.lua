@@ -43,14 +43,14 @@ Actor_0x00:on_update:
 0x0082    op26_Wait( time=60 )
 0x0085    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=32 )
 0x0090    op26_Wait( time=32 )
-0x0093    -- opFE2700()
-0x0098    -- opFE2701()
-0x009a    op01_JumpTo( address=0x27fe )
-0x009d    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=(s)mem[0x902], condition="val1 != val2", address_if_false=0x7525 )
-0x00a5    opFF_Nop()
-0x00a6    -- 0x80()
-0x00ab    -- 0x80()
-0x00b0    0x32() -- jump if some buttons not pressed
+0x0093    -- opFE2700() -- screen_distortion_control
+0x0098    -- opFE2701() -- screen_distortion_control
+0x009b    -- opFE2702() -- screen_distortion_control
+0x009e    -- opFE2702() -- screen_distortion_control
+0x00a1    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
+0x00a4    -- 0x75( ???=255 )
+0x00a7    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=50 )
+0x00b2    op26_Wait( time=50 )
 0x00b5    op26_Wait( time=64 )
 0x00b8    op74_SoundPlayFixedVolume( sound_id=151 )
 0x00bb    mem[0x40e] = true -- op36
@@ -574,4 +574,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x0750    op00_Return()
-0x0751    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb638, ???=(vf40)0x34f0, flag=0x66 )
+0x0751    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x8f38, ???=(vf40)0x9081, flag=0xfc )

@@ -1662,7 +1662,7 @@ Actor_0x20:on_push:
 0x1063    op00_Return()
 0x1064    op00_Return()
 0x1065    op00_Return()
-0x1066    mem[0x106f] ^= mem[0xa00] -- op40
+0x1066    mem[0x106f] ^= (s)mem[0xa00] -- op40
 0x106c    op01_JumpTo( address=0x107d )
 0x106f    op02_JumpToConditional( val1=(s)mem[0x14], val2=1, condition="val1 == val2", address_if_false=0x107d )
 0x1077    op01_JumpTo( address=0x12ea )
@@ -2234,4 +2234,4 @@ Actor_0x21:event_0x04:
 Actor_0x21:event_0x05:
 0x1862    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=10 )
 0x186d    op00_Return()
-0x186e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xd140, ???=(vf40)0x0206, flag=0x44 )
+0x186e    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

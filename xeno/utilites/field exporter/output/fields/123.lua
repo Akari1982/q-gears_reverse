@@ -23,11 +23,21 @@ Actor_0x00:on_start:
 Actor_0x00:on_update:
 0x0019    -- 0xC9()
 0x001d    -- 0x15()
-0x001e    -- opFE2700()
-0x0023    -- opFE2701()
-0x0025    op01_JumpTo( address=0x27fe )
-0x0028    op02_JumpToConditional( condition="val1 != val2", address_if_false=0xe80 )
-0x0030    -- 0x80()
+0x001e    -- opFE2700() -- screen_distortion_control
+0x0023    -- opFE2701() -- screen_distortion_control
+0x0026    -- opFE2702() -- screen_distortion_control
+0x0029    -- opFE2702() -- screen_distortion_control
+0x002c    -- 0x98_MapLoad( field_id=103, value=14 )
+0x0031    -- 0x5B()
+
+Actor_0x00:on_talk:
+
+Actor_0x00:on_push:
+0x0032    op00_Return()
+
+Actor_0x01:on_start:
+0x0033    -- 0xBC_ActorNoModelInit()
+0x0034    -- 0x2A()
 0x0035    -- 0x27( actor_id=self )
 0x0037    op00_Return()
 
@@ -1500,10 +1510,12 @@ Actor_0x24:on_update:
 0x125e    op00_Return()
 
 Actor_0x24:on_talk:
-0x125f    -- opFE2700()
-0x1264    -- opFE2701()
-0x1266    op01_JumpTo( address=0x27fe )
-0x1269    op02_JumpToConditional( condition="val1 <= val2", address_if_false=0x1524 )
+0x125f    -- opFE2700() -- screen_distortion_control
+0x1264    -- opFE2701() -- screen_distortion_control
+0x1267    -- opFE2702() -- screen_distortion_control
+0x126a    -- opFE2702() -- screen_distortion_control
+0x126d    op07_CallActorEvent( actor_id=Actor_0x25, event=event_0x04, priority=0x01 )
+0x1270    -- 0x15()
 0x1271    -- 0xC4()
 0x1273    -- 0x1F( ???=0x11 )
 0x1275    -- 0x47( ???=103, ???=13 )
@@ -1682,4 +1694,4 @@ function:
 0x1357    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x135f    opFE96_ParticleCreate()
 0x1361    op0D_Return()
-0x1362    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xf027, ???=(vf40)0xf734, flag=0xb9 )
+0x1362    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x813d, ???=(vf40)0x4799, flag=0x39 )

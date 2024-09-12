@@ -1847,7 +1847,7 @@ Actor_0x2d:on_push:
 0x1762    op00_Return()
 
 Actor_0x2e:on_start:
-0x1763    -- 0x0B_InitNPC( (s)mem[0x500] )
+0x1763    -- 0x0B_InitNPC( mem[0x500] )
 0x1766    op02_JumpToConditional( val1=mem[0x50c], val2=1, condition="val1 == val2", address_if_false=0x1771 )
 0x176e    op29_ActorTurnOff( actor_id=self )
 0x1770    op00_Return()
@@ -1902,7 +1902,7 @@ Actor_0x2e:on_push:
 0x1808    op00_Return()
 
 Actor_0x2f:on_start:
-0x1809    -- 0x0B_InitNPC( (s)mem[0x512] )
+0x1809    -- 0x0B_InitNPC( mem[0x512] )
 0x180c    op02_JumpToConditional( val1=(s)mem[0x51e], val2=1, condition="val1 == val2", address_if_false=0x1817 )
 0x1814    op29_ActorTurnOff( actor_id=self )
 0x1816    op00_Return()
@@ -1929,7 +1929,7 @@ Actor_0x2f:on_talk:
 0x1853    -- 0xFE54()
 0x1855    -- 0x34()
 0x185a    mem[0x522] = (s)mem[0x1c] -- op35
-0x1860    mem[0x1c] = (s)mem[0x51c] -- op35
+0x1860    mem[0x1c] = mem[0x51c] -- op35
 0x1866    op02_JumpToConditional( val1=(s)mem[0x520], val2=99, condition="val1 == val2", address_if_false=0x187c )
 0x186e    opD2_MessageShowDynamic( text_id=0x6, flags=CLOSE_OFF_SCREEN )
 0x1872    op9C_MessageSync()
@@ -1955,4 +1955,4 @@ Actor_0x2f:on_talk:
 Actor_0x2f:on_push:
 0x18ad    op00_Return()
 0x18ae    op00_Return()
-0x18af    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x4e00, flag=0xf0 )
+0x18af    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x4c00, flag=0x84 )

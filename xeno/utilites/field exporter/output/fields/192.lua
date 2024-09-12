@@ -58,11 +58,13 @@ Actor_0x00:on_update:
 0x00a9    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x07, priority=0x01 )
 0x00ac    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x08, priority=0x01 )
 0x00af    op26_Wait( time=45 )
-0x00b2    -- opFE2700()
-0x00b7    -- opFE2701()
-0x00b9    op01_JumpTo( address=0x27fe )
-0x00bc    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=9730, condition="val1 != val2", address_if_false=0x2680 )
-0x00c4    -- 0x18()
+0x00b2    -- opFE2700() -- screen_distortion_control
+0x00b7    -- opFE2701() -- screen_distortion_control
+0x00ba    -- opFE2702() -- screen_distortion_control
+0x00bd    -- opFE2702() -- screen_distortion_control
+0x00c0    op26_Wait( time=65 )
+0x00c3    op26_Wait( time=24 )
+0x00c6    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x08, priority=0x01 )
 0x00c9    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x09, priority=0x01 )
 0x00cc    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x04, priority=0x01 )
 0x00cf    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x0a, priority=0x01 )

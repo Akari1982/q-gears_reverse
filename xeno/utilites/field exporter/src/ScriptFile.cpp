@@ -2092,22 +2092,22 @@ ScriptFile::GetScripts( const std::string& path )
                         u8 type = GetU8( pointer + 1 );
                         if( type == 0 )
                         {
-                            exp->Log( "-- opFE2700()" );
+                            exp->Log( "-- opFE2700() -- screen_distortion_control" );
                             pointer += 4;
                         }
                         else if( type == 1 )
                         {
-                            exp->Log( "-- opFE2701()" );
-                            pointer += 1;
+                            exp->Log( "-- opFE2701() -- screen_distortion_control" );
+                            pointer += 2;
                         }
                         else if( type == 2 )
                         {
-                            exp->Log( "-- opFE2702()" );
+                            exp->Log( "-- opFE2702() -- screen_distortion_control" );
                             pointer += 2;
                         }
                         else if( type == 3 )
                         {
-                            exp->Log( "-- opFE2703()" );
+                            exp->Log( "-- opFE2703() -- screen_distortion_control" );
                             pointer += 2;
                         }
                     }

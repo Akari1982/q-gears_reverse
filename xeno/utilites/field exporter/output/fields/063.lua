@@ -154,10 +154,12 @@ Actor_0x02:event_0x04:
 0x0203    op26_Wait( time=230 )
 0x0206    opFE26_DistortionSetup( ???=10, ???=4, ???=512, ???=409, ???=1365, ???=1365, steps=15 )
 0x0216    op26_Wait( time=30 )
-0x0219    -- opFE2700()
-0x021e    -- opFE2701()
-0x0220    op01_JumpTo( address=0x27fe )
-0x0223    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=mem[0xef02], condition="val1 < val2", address_if_false=0x6080 )
+0x0219    -- opFE2700() -- screen_distortion_control
+0x021e    -- opFE2701() -- screen_distortion_control
+0x0221    -- opFE2702() -- screen_distortion_control
+0x0224    -- opFE2702() -- screen_distortion_control
+0x0227    opEF_MoveCameraSync()
+0x022a    -- 0x60()
 0x022b    -- 0x63( ???=408, ???=1870, ???=163 ) -- exp0x1
 0x0233    -- 0x64() -- exp0x1
 0x0234    -- 0xA3()
@@ -586,4 +588,4 @@ Actor_0x11:on_talk:
 
 Actor_0x11:on_push:
 0x077c    op00_Return()
-0x077d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x1000, flag=0x80 )
+0x077d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )

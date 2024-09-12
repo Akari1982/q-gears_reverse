@@ -888,7 +888,7 @@ Actor_0x1a:on_start:
 0x0a9c    op00_Return()
 0x0a9d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x26, text_id=0x8001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|NO_WINDOW|0x80 )
 0x0aa3    op02_JumpToConditional( condition="val1 == val2", address_if_false=0xcc00 )
-0x0aab    op02_JumpToConditional( val1=(s)mem[0xd0], val2=mem[0x26fc], condition="val1 != val2", address_if_false=0xe180 )
+0x0aab    op02_JumpToConditional( val1=(s)mem[0xd0], val2=(s)mem[0x26fc], condition="val1 != val2", address_if_false=0xe180 )
 0x0ab3    opD4_MessageShowFromActor( actor_id=Actor_0x02, text_id=0xd0, flags=NO_FACE )
 0x0ab9    -- 0x10()
 
@@ -4990,4 +4990,4 @@ function:
 0x3c9e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x3ca1    op01_JumpTo( address=0x3ca4 )
 0x3ca4    op0D_Return()
-0x3ca5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0xf1f0, flag=0x34 )
+0x3ca5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x806c, flag=0x90 )

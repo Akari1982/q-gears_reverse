@@ -372,25 +372,24 @@ Actor_0x07:event_0x05:
 0x0422    -- 0x57( type=0x8f )
 0x0424    op26_Wait( time=1 )
 0x0427    -- 0x57( type=0xf )
-0x0429    -- opFE2700()
-0x042e    -- opFE2701()
-0x0430    op01_JumpTo( address=0x27fe )
-0x0433    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=(s)mem[0x2602], condition="val1 <= val2", address_if_false=0xf280 )
-0x043b    op00_Return()
-0x043c    -- 0x80()
-0x0441    op00_Return()
-0x0442    -- 0x80()
-0x0447    -- 0xFE40()
-0x044f    op00_Return()
-0x0450    -- 0x98_MapLoad( field_id=(s)mem[0x1c2c], value=(s)mem[0x1926] )
-0x0455    -- 0x80()
-0x045a    op03_MessageShowFixed2( text_id=0xfe80, flags=CLOSE_OFF_SCREEN|FORCE_LEFT|FORCE_BOTTOM|NO_WINDOW )
-0x045e    mem[0x281] -= 1 -- op3d
-0x0461    -- 0x80()
-0x0466    op01_JumpTo( address=0xfe80 )
-0x0469    -- 0x62( actor_id=Actor_0x0a ) -- exp0x1
-0x046b    -- 0x80()
-0x0470    -- 0x0A()
+0x0429    -- opFE2700() -- screen_distortion_control
+0x042e    -- opFE2701() -- screen_distortion_control
+0x0431    -- opFE2702() -- screen_distortion_control
+0x0434    -- opFE2702() -- screen_distortion_control
+0x0437    op26_Wait( time=5 )
+0x043a    -- 0xF2()
+0x0443    op00_Return()
+
+Actor_0x07:event_0x06:
+0x0444    -- 0xFE1C()
+0x044d    -- 0xFE03( ???=6144 )
+0x0451    op2C_SpritePlayAnim( anim_id=0x1c )
+0x0453    op26_Wait( time=25 )
+0x0456    -- 0xFE65()
+0x045c    -- 0xFE65()
+0x0462    -- 0xFE65()
+0x0468    -- 0xFE62()
+0x046e    -- 0xFE62()
 0x0474    -- 0xFE62()
 0x047a    -- 0xFE8C()
 0x0482    -- 0xFE8C()
@@ -402,14 +401,15 @@ Actor_0x07:event_0x05:
 0x04b2    op26_Wait( time=1 )
 0x04b5    -- 0x57( type=0xf )
 0x04b7    op2C_SpritePlayAnim( anim_id=0x1b )
-0x04b9    -- opFE2700()
-0x04be    -- opFE2701()
-0x04c0    op01_JumpTo( address=0x27fe )
-0x04c3    op02_JumpToConditional( condition="val1 >= val2", address_if_false=0x426 )
-0x04cb    -- 0x80()
-0x04d0    -- 0x04()
-0x04d1    -- 0x80()
-0x04d6    -- 0x80()
+0x04b9    -- opFE2700() -- screen_distortion_control
+0x04be    -- opFE2701() -- screen_distortion_control
+0x04c1    -- opFE2702() -- screen_distortion_control
+0x04c4    -- opFE2702() -- screen_distortion_control
+0x04c7    op2C_SpritePlayAnim( anim_id=0x14 )
+0x04c9    op26_Wait( time=4 )
+0x04cc    op05_CallFunction( address=0x6d4 )
+0x04cf    op26_Wait( time=4 )
+0x04d2    -- 0xF2()
 0x04db    -- 0xFE1C()
 0x04e4    op26_Wait( time=4 )
 0x04e7    -- 0xF2()
@@ -487,6 +487,8 @@ function:
 0x06d3    op0D_Return()
 
 function:
+
+function:
 0x06d4    opC6_ExpandRun() -- exp0x20
 0x06d5    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )
 0x06de    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=16, wait=0, ttl=60 )
@@ -553,4 +555,4 @@ Actor_0x08:on_talk:
 
 Actor_0x08:on_push:
 0x0911    op00_Return()
-0x0912    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xf00e, ???=(vf40)0xde34, flag=0xfc )
+0x0912    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x8192, ???=(vf40)0xe190, flag=0x7c )

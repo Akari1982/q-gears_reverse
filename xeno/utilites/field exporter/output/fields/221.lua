@@ -2019,7 +2019,7 @@ Actor_0x1a:event_0x08:
 0x1631    mem[0xfe16] += 339 -- op38
 0x1637    -- 0x16_ActorPCInit( char_id=mem[0x1402] )
 0x163a    op00_Return()
-0x163b    op02_JumpToConditional( val1=(s)mem[0x4000], val2=(s)mem[0x1646], condition="val1 != val2", address_if_false=0x1647 )
+0x163b    op02_JumpToConditional( val1=(s)mem[0x4000], val2=mem[0x1646], condition="val1 != val2", address_if_false=0x1647 )
 0x1643    op01_JumpTo( address=0x1646 )
 0x1646    op00_Return()
 0x1647    -- 0xFE0E_SoundSetVolume( volume=0, steps=120 )
@@ -2213,7 +2213,7 @@ Actor_0x1a:event_0x0b:
 0x195a    op26_Wait( time=(s)mem[0x29c] )
 0x195d    -- 0x14()
 0x195e    op00_Return()
-0x195f    op02_JumpToConditional( val1=(s)mem[0x4000], val2=mem[0x196a], condition="val1 != val2", address_if_false=0x1a01 )
+0x195f    op02_JumpToConditional( val1=(s)mem[0x4000], val2=(s)mem[0x196a], condition="val1 != val2", address_if_false=0x1a01 )
 0x1967    op01_JumpTo( address=0x19bc )
 0x196a    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0x1978 )
 0x1972    op01_JumpTo( address=0x1a0b )

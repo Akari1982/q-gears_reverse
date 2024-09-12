@@ -477,11 +477,14 @@ Actor_0x0c:on_update:
 0x0910    -- 0xFE65()
 0x0916    opFE26_DistortionSetup( ???=3, ???=2, ???=256, ???=163, ???=128, ???=178, steps=1 )
 0x0926    op26_Wait( time=60 )
-0x0929    -- opFE2700()
-0x092e    -- opFE2701()
-0x0930    op01_JumpTo( address=0x27fe )
-0x0933    op02_JumpToConditional( condition="", address_if_false=0x1e9b )
-0x093b    -- 0x80()
+0x0929    -- opFE2700() -- screen_distortion_control
+0x092e    -- opFE2701() -- screen_distortion_control
+0x0931    -- opFE2702() -- screen_distortion_control
+0x0934    -- opFE2702() -- screen_distortion_control
+0x0937    -- 0x5A()
+0x0938    opFE9B_SlideShow1( steps=30 )
+0x093c    op25_ActorDisable( actor_id=Actor_0x04 )
+0x093e    op24_ActorEnable( actor_id=Actor_0x03 )
 0x0940    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x07, priority=0x01 )
 0x0943    op26_Wait( time=30 )
 0x0946    -- 0xFE65()
@@ -493,11 +496,14 @@ Actor_0x0c:on_update:
 0x095d    -- 0xFE65()
 0x0963    opFE26_DistortionSetup( ???=3, ???=2, ???=256, ???=163, ???=128, ???=178, steps=1 )
 0x0973    op26_Wait( time=60 )
-0x0976    -- opFE2700()
-0x097b    -- opFE2701()
-0x097d    op01_JumpTo( address=0x27fe )
-0x0980    op02_JumpToConditional( condition="", address_if_false=0x1e9b )
-0x0988    -- 0x80()
+0x0976    -- opFE2700() -- screen_distortion_control
+0x097b    -- opFE2701() -- screen_distortion_control
+0x097e    -- opFE2702() -- screen_distortion_control
+0x0981    -- opFE2702() -- screen_distortion_control
+0x0984    -- 0x5A()
+0x0985    opFE9B_SlideShow1( steps=30 )
+0x0989    op25_ActorDisable( actor_id=Actor_0x03 )
+0x098b    op24_ActorEnable( actor_id=Actor_0x04 )
 0x098d    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
 0x0990    op26_Wait( time=30 )
 0x0993    -- 0xFE65()

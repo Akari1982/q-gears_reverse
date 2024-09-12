@@ -568,25 +568,9 @@ Actor_0x13:event_0x04:
 0x0535    -- 0x18()
 0x053a    -- 0xFE07( ???=0x1 )
 0x053d    -- 0x21( ???=384 )
-0x0540    -- 0xFE5E()
-0x0544    -- 0x19_ActorSetPosition( x=(vf80)0xfeed, z=(vf40)0xfeed, flag=(flag)0xc0 )
-0x054a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
-0x0550    op00_Return()
-
-Actor_0x13:event_0x05:
-0x0551    -- 0xFE5E()
-0x0555    op00_Return()
-
-Actor_0x13:event_0x06:
-0x0556    op2C_SpritePlayAnim( anim_id=0x2 )
-0x0558    op00_Return()
-
-Actor_0x13:event_0x07:
-0x0559    op2C_SpritePlayAnim( anim_id=0x3 )
-0x055b    op00_Return()
-
-Actor_0x13:event_0x08:
-0x055c    op2C_SpritePlayAnim( anim_id=0xff )
+0x0540    -- 0xFE5E()-- 0xFE5F()
+0x054c    opFD_Nop()
+0x054d    -- 0xDA()
 0x055e    op00_Return()
 
 Actor_0x13:event_0x09:
@@ -720,4 +704,67 @@ Actor_0x19:on_update:
 0x0685    -- 0x12()
 0x0689    op00_Return()
 0x068a    op01_JumpTo( address=0x4000 )
-0x068d    -- MISSING OPCODE 0x95
+0x068d    -- 0x95()
+0x068f    op01_JumpTo( address=0x3fb )
+0x0692    op01_JumpTo( address=0x6dc )
+0x0695    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x6dc )
+0x069d    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x40, flags=0 )
+0x06a3    -- 0x12()
+0x06a7    op00_Return()
+0x06a8    op01_JumpTo( address=0x4000 )
+0x06ab    opB3_FadeIn()
+0x06ae    -- 0xFB()
+0x06b3    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x6d9 )
+0x06bb    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x41, flags=0 )
+0x06c1    mem[0x194] &= ~(1 << 0) -- op3a
+0x06c7    mem[0x194] &= ~(1 << 1) -- op3a
+0x06cd    mem[0x194] &= ~(1 << 2) -- op3a
+0x06d3    -- 0xFE54()
+0x06d5    -- 0x5B()
+0x06d6    op01_JumpTo( address=0x6d9 )
+0x06d9    op01_JumpTo( address=0x6dc )
+0x06dc    op01_JumpTo( address=0x748 )
+0x06df    op02_JumpToConditional( val1=(s)mem[0x194], val2=8, condition="val1 & val2", address_if_false=0x6f0 )
+0x06e7    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x42, flags=NO_FACE )
+0x06ed    op01_JumpTo( address=0x724 )
+0x06f0    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x43, flags=NO_FACE )
+0x06f6    op74_SoundPlayFixedVolume( sound_id=55 )
+0x06f9    opD0_MessageSettings( x=0, y=0, letters=16, rows=3, flags=0 )
+0x0704    mem[0x1c] = 651 -- op35
+0x070a    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x44, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x0710    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=0 )
+0x071b    -- 0x8C()
+0x071e    mem[0x194] |= 1 << 3 -- op3a
+0x0724    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x45, flags=0 )
+0x072a    -- 0x23()
+0x072b    op9C_MessageSync()
+0x072c    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x73a )
+0x0734    op01_JumpTo( address=0x3fb )
+0x0737    op01_JumpTo( address=0x748 )
+0x073a    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0x748 )
+0x0742    op01_JumpTo( address=0x69d )
+0x0745    op01_JumpTo( address=0x748 )
+0x0748    -- 0xFE54()
+0x074a    op01_JumpTo( address=0x7e0 )
+0x074d    op02_JumpToConditional( val1=(s)mem[0x2], val2=3, condition="val1 == val2", address_if_false=0x774 )
+0x0755    -- 0xFE54()
+0x0757    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x46, flags=0 )
+0x075d    mem[0x194] &= ~(1 << 0) -- op3a
+0x0763    mem[0x194] &= ~(1 << 1) -- op3a
+0x0769    mem[0x194] &= ~(1 << 2) -- op3a
+0x076f    -- 0xFE54()
+0x0771    op01_JumpTo( address=0x7e0 )
+0x0774    op02_JumpToConditional( val1=(s)mem[0x2], val2=4, condition="val1 == val2", address_if_false=0x7e0 )
+0x077c    -- 0xFE54()
+0x077e    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x47, flags=0 )
+0x0784    -- 0x12()
+0x0788    op00_Return()
+0x0789    op01_JumpTo( address=0x4000 )
+0x078c    -- 0x94()
+0x0791    op01_JumpTo( address=0x7db )
+0x0794    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x7db )
+0x079c    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x48, flags=0 )
+0x07a2    -- 0x12()
+0x07a6    op00_Return()
+0x07a7    op01_JumpTo( address=0x4000 )
+0x07aa    -- MISSING OPCODE 0xb2

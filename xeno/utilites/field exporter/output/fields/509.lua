@@ -873,7 +873,7 @@ Actor_0x17:on_start:
 0x096e    -- 0x46()
 0x096f    op74_SoundPlayFixedVolume( sound_id=(s)mem[0x108] )
 0x0972    -- 0x87_SetProgress( progress=(s)mem[0x208] )
-0x0975    mem[0x4] += (s)mem[0x4000] -- op38
+0x0975    mem[0x4] += mem[0x4000] -- op38
 0x097b    op09_CallActorEventEndSync( actor_id=Actor_0x2c, event=event_0x01, priority=0x00 )
 0x097e    mem[0x438] = true -- op36
 0x0981    op6C_ActorRotateAnticlockwise( rot=1 )

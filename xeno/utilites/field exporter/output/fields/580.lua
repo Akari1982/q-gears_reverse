@@ -206,31 +206,20 @@ Actor_0x07:on_start:
 0x0152    -- 0x0B_InitNPC( 2 )
 0x0155    -- 0xFE1C()
 0x015e    -- 0xFE03( ???=3000 )
-0x0162    -- 0xFE5E()
-0x0166    -- 0x5F( ???=0x2 )
-0x0168    -- 0x2A()
-0x0169    op00_Return()
-
-Actor_0x07:on_update:
-0x016a    op00_Return()
-
-Actor_0x07:on_talk:
-
-Actor_0x07:on_push:
-0x016b    op00_Return()
-
-Actor_0x07:event_0x04:
-0x016c    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x016f    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x0172    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x0175    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x0178    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x017b    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x017e    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x0181    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x0184    -- 0xFE1C()
-0x018d    -- 0xFE03( ???=8192 )
-0x0191    op24_ActorEnable( actor_id=Actor_0x18 )
+0x0162    -- 0xFE5E()-- 0xFE5F()
+0x016e    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0170    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x0173    op0D_Return()
+0x0174    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0176    op0F_Nop()
+0x0177    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0179    -- 0x11()
+0x0186    op00_Return()
+0x0187    op00_Return()
+0x0188    op00_Return()
+0x0189    op00_Return()
+0x018a    op6F_ActorRotateToActor( actor_id=party1 )
+0x018c    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x0193    op24_ActorEnable( actor_id=Actor_0x19 )
 0x0195    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x0198    op00_Return()
@@ -285,31 +274,20 @@ Actor_0x09:on_start:
 0x020e    -- 0x0B_InitNPC( 3 )
 0x0211    -- 0xFE1C()
 0x021a    -- 0xFE03( ???=3000 )
-0x021e    -- 0xFE5E()
-0x0222    -- 0x5F( ???=0x2 )
-0x0224    -- 0x2A()
-0x0225    op00_Return()
-
-Actor_0x09:on_update:
-0x0226    op00_Return()
-
-Actor_0x09:on_talk:
-
-Actor_0x09:on_push:
-0x0227    op00_Return()
-
-Actor_0x09:event_0x04:
-0x0228    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x022b    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x022e    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x0231    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x0234    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x0237    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x023a    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x023d    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x0240    -- 0xFE1C()
-0x0249    -- 0xFE03( ???=8192 )
-0x024d    op24_ActorEnable( actor_id=Actor_0x18 )
+0x021e    -- 0xFE5E()-- 0xFE5F()
+0x022a    op25_ActorDisable( actor_id=Actor_0x09 )
+0x022c    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x022f    op0D_Return()
+0x0230    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0232    op0F_Nop()
+0x0233    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0235    -- 0x11()
+0x0242    op00_Return()
+0x0243    op00_Return()
+0x0244    op00_Return()
+0x0245    op00_Return()
+0x0246    op6F_ActorRotateToActor( actor_id=party1 )
+0x0248    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x024f    op24_ActorEnable( actor_id=Actor_0x19 )
 0x0251    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x0254    op00_Return()
@@ -364,31 +342,20 @@ Actor_0x0b:on_start:
 0x02ca    -- 0x0B_InitNPC( 4 )
 0x02cd    -- 0xFE1C()
 0x02d6    -- 0xFE03( ???=3000 )
-0x02da    -- 0xFE5E()
-0x02de    -- 0x5F( ???=0x6 )
-0x02e0    -- 0x2A()
-0x02e1    op00_Return()
-
-Actor_0x0b:on_update:
-0x02e2    op00_Return()
-
-Actor_0x0b:on_talk:
-
-Actor_0x0b:on_push:
-0x02e3    op00_Return()
-
-Actor_0x0b:event_0x04:
-0x02e4    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x02e7    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x02ea    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x02ed    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x02f0    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x02f3    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x02f6    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x02f9    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x02fc    -- 0xFE1C()
-0x0305    -- 0xFE03( ???=8192 )
-0x0309    op24_ActorEnable( actor_id=Actor_0x18 )
+0x02da    -- 0xFE5E()-- 0xFE5F()
+0x02e6    op25_ActorDisable( actor_id=Actor_0x09 )
+0x02e8    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x02eb    op0D_Return()
+0x02ec    op25_ActorDisable( actor_id=Actor_0x09 )
+0x02ee    op0F_Nop()
+0x02ef    op25_ActorDisable( actor_id=Actor_0x09 )
+0x02f1    -- 0x11()
+0x02fe    op00_Return()
+0x02ff    op00_Return()
+0x0300    op00_Return()
+0x0301    op00_Return()
+0x0302    op6F_ActorRotateToActor( actor_id=party1 )
+0x0304    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x030b    op24_ActorEnable( actor_id=Actor_0x19 )
 0x030d    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x0310    op00_Return()
@@ -443,31 +410,19 @@ Actor_0x0d:on_start:
 0x0386    -- 0x0B_InitNPC( 5 )
 0x0389    -- 0xFE1C()
 0x0392    -- 0xFE03( ???=3000 )
-0x0396    -- 0xFE5E()
-0x039a    -- 0x5F( ???=0x1 )
-0x039c    -- 0x2A()
-0x039d    op00_Return()
-
-Actor_0x0d:on_update:
-0x039e    op00_Return()
-
-Actor_0x0d:on_talk:
-
-Actor_0x0d:on_push:
-0x039f    op00_Return()
-
-Actor_0x0d:event_0x04:
-0x03a0    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x03a3    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x03a6    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x03a9    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x03ac    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x03af    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x03b2    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x03b5    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x03b8    -- 0xFE1C()
-0x03c1    -- 0xFE03( ???=8192 )
-0x03c5    op24_ActorEnable( actor_id=Actor_0x18 )
+0x0396    -- 0xFE5E()-- 0xFE5F()
+0x03a2    op25_ActorDisable( actor_id=Actor_0x09 )
+0x03a4    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x03a7    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x03aa    op0F_Nop()
+0x03ab    op25_ActorDisable( actor_id=Actor_0x09 )
+0x03ad    -- 0x11()
+0x03ba    op00_Return()
+0x03bb    op00_Return()
+0x03bc    op00_Return()
+0x03bd    op00_Return()
+0x03be    op6F_ActorRotateToActor( actor_id=party1 )
+0x03c0    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x03c7    op24_ActorEnable( actor_id=Actor_0x19 )
 0x03c9    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x03cc    op00_Return()
@@ -522,31 +477,19 @@ Actor_0x0f:on_start:
 0x0442    -- 0x0B_InitNPC( 7 )
 0x0445    -- 0xFE1C()
 0x044e    -- 0xFE03( ???=3000 )
-0x0452    -- 0xFE5E()
-0x0456    -- 0x5F( ???=0x7 )
-0x0458    -- 0x2A()
-0x0459    op00_Return()
-
-Actor_0x0f:on_update:
-0x045a    op00_Return()
-
-Actor_0x0f:on_talk:
-
-Actor_0x0f:on_push:
-0x045b    op00_Return()
-
-Actor_0x0f:event_0x04:
-0x045c    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x045f    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x0462    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x0465    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x0468    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x046b    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x046e    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x0471    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x0474    -- 0xFE1C()
-0x047d    -- 0xFE03( ???=8192 )
-0x0481    op24_ActorEnable( actor_id=Actor_0x18 )
+0x0452    -- 0xFE5E()-- 0xFE5F()
+0x045e    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0460    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x0463    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x0466    op0D_Return()
+0x0467    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0469    -- 0x11()
+0x0476    op00_Return()
+0x0477    op00_Return()
+0x0478    op00_Return()
+0x0479    op00_Return()
+0x047a    op6F_ActorRotateToActor( actor_id=party1 )
+0x047c    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x0483    op24_ActorEnable( actor_id=Actor_0x19 )
 0x0485    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x0488    op00_Return()
@@ -601,38 +544,22 @@ Actor_0x11:on_start:
 0x04fe    -- 0x0B_InitNPC( 6 )
 0x0501    -- 0xFE1C()
 0x050a    -- 0xFE03( ???=3000 )
-0x050e    -- 0xFE5E()
-0x0512    -- 0x5F( ???=0x3 )
-0x0514    -- 0x2A()
-0x0515    op00_Return()
-
-Actor_0x11:on_update:
-0x0516    op00_Return()
-
-Actor_0x11:on_talk:
-
-Actor_0x11:on_push:
-0x0517    op00_Return()
-
-Actor_0x11:event_0x04:
-0x0518    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x051b    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x051e    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x0521    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x0524    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x0527    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x052a    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x052d    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x0530    -- 0xFE1C()
-0x0539    -- 0xFE03( ???=8192 )
-0x053d    op24_ActorEnable( actor_id=Actor_0x18 )
-0x053f    op24_ActorEnable( actor_id=Actor_0x19 )
-0x0541    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
-0x0544    op00_Return()
-
-Actor_0x11:event_0x05:
-0x0545    op02_JumpToConditional( val1=(s)mem[0x40a], val2=1, condition="val1 == val2", address_if_false=0x564 )
-0x054d    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x05, priority=0x01 )
+0x050e    -- 0xFE5E()-- 0xFE5F()
+0x051a    op25_ActorDisable( actor_id=Actor_0x09 )
+0x051c    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x051f    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x0522    op0D_Return()
+0x0523    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0525    op0F_Nop()
+0x0526    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0528    op13_Nop()
+0x0529    op25_ActorDisable( actor_id=Actor_0x09 )
+0x052b    -- 0x15()
+0x052c    op25_ActorDisable( actor_id=Actor_0x09 )
+0x052e    -- 0x17()
+0x0540    -- 0x19_ActorSetPosition( x=(vf80)0x1909, z=(vf40)0x0024, flag=(flag)0x02 )
+0x0546    -- 0x0A()
+0x054a    mem[0x564] ^= (s)mem[0x1908] -- op40
 0x0550    op25_ActorDisable( actor_id=Actor_0x18 )
 0x0552    op25_ActorDisable( actor_id=Actor_0x19 )
 0x0554    -- 0xFE1C()
@@ -680,31 +607,18 @@ Actor_0x13:on_start:
 0x05ba    -- 0x0B_InitNPC( 10 )
 0x05bd    -- 0xFE1C()
 0x05c6    -- 0xFE03( ???=3000 )
-0x05ca    -- 0xFE5E()
-0x05ce    -- 0x5F( ???=0x5 )
-0x05d0    -- 0x2A()
-0x05d1    op00_Return()
-
-Actor_0x13:on_update:
-0x05d2    op00_Return()
-
-Actor_0x13:on_talk:
-
-Actor_0x13:on_push:
-0x05d3    op00_Return()
-
-Actor_0x13:event_0x04:
-0x05d4    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x05d7    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x05da    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x05dd    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x05e0    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x05e3    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x05e6    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x05e9    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x05ec    -- 0xFE1C()
-0x05f5    -- 0xFE03( ???=8192 )
-0x05f9    op24_ActorEnable( actor_id=Actor_0x18 )
+0x05ca    -- 0xFE5E()-- 0xFE5F()
+0x05d6    op25_ActorDisable( actor_id=Actor_0x09 )
+0x05d8    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x05db    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x05de    op0D_Return()
+0x05df    op25_ActorDisable( actor_id=Actor_0x09 )
+0x05e1    op0F_Nop()
+0x05e2    op25_ActorDisable( actor_id=Actor_0x09 )
+0x05e4    -- 0x11()
+0x05f1    op00_Return()
+0x05f2    op6F_ActorRotateToActor( actor_id=party1 )
+0x05f4    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x05fb    op24_ActorEnable( actor_id=Actor_0x19 )
 0x05fd    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x0600    op00_Return()
@@ -759,31 +673,18 @@ Actor_0x15:on_start:
 0x0676    -- 0x0B_InitNPC( 9 )
 0x0679    -- 0xFE1C()
 0x0682    -- 0xFE03( ???=3000 )
-0x0686    -- 0xFE5E()
-0x068a    -- 0x5F( ???=0x0 )
-0x068c    -- 0x2A()
-0x068d    op00_Return()
-
-Actor_0x15:on_update:
-0x068e    op00_Return()
-
-Actor_0x15:on_talk:
-
-Actor_0x15:on_push:
-0x068f    op00_Return()
-
-Actor_0x15:event_0x04:
-0x0690    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x0693    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x0696    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x0699    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x069c    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x069f    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x06a2    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x06a5    op09_CallActorEventEndSync( actor_id=Actor_0x17, event=event_0x05, priority=0x01 )
-0x06a8    -- 0xFE1C()
-0x06b1    -- 0xFE03( ???=8192 )
-0x06b5    op24_ActorEnable( actor_id=Actor_0x18 )
+0x0686    -- 0xFE5E()-- 0xFE5F()
+0x0692    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0694    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x0697    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x069a    op0D_Return()
+0x069b    op25_ActorDisable( actor_id=Actor_0x09 )
+0x069d    op0F_Nop()
+0x069e    op25_ActorDisable( actor_id=Actor_0x09 )
+0x06a0    -- 0x11()
+0x06ad    op00_Return()
+0x06ae    op6F_ActorRotateToActor( actor_id=party1 )
+0x06b0    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x06b7    op24_ActorEnable( actor_id=Actor_0x19 )
 0x06b9    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x06bc    op00_Return()
@@ -838,31 +739,18 @@ Actor_0x17:on_start:
 0x0732    -- 0x0B_InitNPC( 8 )
 0x0735    -- 0xFE1C()
 0x073e    -- 0xFE03( ???=3000 )
-0x0742    -- 0xFE5E()
-0x0746    -- 0x5F( ???=0x0 )
-0x0748    -- 0x2A()
-0x0749    op00_Return()
-
-Actor_0x17:on_update:
-0x074a    op00_Return()
-
-Actor_0x17:on_talk:
-
-Actor_0x17:on_push:
-0x074b    op00_Return()
-
-Actor_0x17:event_0x04:
-0x074c    op09_CallActorEventEndSync( actor_id=Actor_0x07, event=event_0x05, priority=0x01 )
-0x074f    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x05, priority=0x01 )
-0x0752    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x05, priority=0x01 )
-0x0755    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
-0x0758    op09_CallActorEventEndSync( actor_id=Actor_0x0f, event=event_0x05, priority=0x01 )
-0x075b    op09_CallActorEventEndSync( actor_id=Actor_0x11, event=event_0x05, priority=0x01 )
-0x075e    op09_CallActorEventEndSync( actor_id=Actor_0x13, event=event_0x05, priority=0x01 )
-0x0761    op09_CallActorEventEndSync( actor_id=Actor_0x15, event=event_0x05, priority=0x01 )
-0x0764    -- 0xFE1C()
-0x076d    -- 0xFE03( ???=8192 )
-0x0771    op24_ActorEnable( actor_id=Actor_0x18 )
+0x0742    -- 0xFE5E()-- 0xFE5F()
+0x074e    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0750    op09_CallActorEventEndSync( actor_id=Actor_0x25, event=event_0x09, priority=0x00 )
+0x0753    -- 0x0B_InitNPC( (s)mem[0x924] )
+0x0756    op0D_Return()
+0x0757    op25_ActorDisable( actor_id=Actor_0x09 )
+0x0759    op0F_Nop()
+0x075a    op25_ActorDisable( actor_id=Actor_0x09 )
+0x075c    -- 0x11()
+0x0769    op00_Return()
+0x076a    op6F_ActorRotateToActor( actor_id=party1 )
+0x076c    -- 0xE0( actor_id=party2, ???=(vf80)0x0003, ???=(vf40)0x24a0, flag=0x18 )
 0x0773    op24_ActorEnable( actor_id=Actor_0x19 )
 0x0775    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x0778    op00_Return()

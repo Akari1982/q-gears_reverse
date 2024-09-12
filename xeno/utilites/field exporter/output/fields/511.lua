@@ -298,14 +298,15 @@ Actor_0x07:event_0x05:
 0x0368    opFE26_DistortionSetup( ???=5, ???=4, ???=128, ???=85, ???=146, ???=195, steps=16 )
 0x0378    op26_Wait( time=30 )
 0x037b    opFE26_DistortionSetup( ???=5, ???=4, ???=128, ???=85, ???=146, ???=195, steps=16 )
-0x038b    -- opFE2700()
-0x0390    -- opFE2701()
-0x0392    op01_JumpTo( address=0x27fe )
-0x0395    op02_JumpToConditional( val1=(s)mem[0x27fe], val2=mem[0xf102], condition="val1 > val2", address_if_false=0x80 )
-0x039d    -- 0x80()
-0x03a2    -- 0x04()
-0x03a3    -- 0x80()
-0x03a8    -- 0xFE25()
+0x038b    -- opFE2700() -- screen_distortion_control
+0x0390    -- opFE2701() -- screen_distortion_control
+0x0393    -- opFE2702() -- screen_distortion_control
+0x0396    -- opFE2702() -- screen_distortion_control
+0x0399    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=4 )
+0x03a4    opC6_ExpandRun() -- exp0x20
+0x03a5    op25_ActorDisable( actor_id=party1 )
+0x03a7    op25_ActorDisable( actor_id=party2 )
+0x03a9    op25_ActorDisable( actor_id=party3 )
 0x03ab    op25_ActorDisable( actor_id=Actor_0x04 )
 0x03ad    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x05, priority=0x03 )
 0x03b0    mem[0x44c] = 7000 -- op35

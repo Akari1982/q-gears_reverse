@@ -249,7 +249,7 @@ Actor_0x0d:on_talk:
 0x014b    op26_Wait( time=12 )
 0x014e    op74_SoundPlayFixedVolume( sound_id=136 )
 0x0151    op02_JumpToConditional( val1=(s)mem[0x408], val2=30, condition="val1 < val2", address_if_false=0x16b )
-0x0159    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=(s)mem[0xfff4] )
+0x0159    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=mem[0xfff4] )
 0x0162    mem[0x408] += 1 -- op3c
 0x0165    op26_Wait( time=1 )
 0x0168    op01_JumpTo( address=0x151 )
@@ -370,4 +370,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x0211    op00_Return()
-0x0212    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xf037, ???=(vf40)0xe734, flag=0x38 )
+0x0212    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x81bf, ???=(vf40)0xcc90, flag=0xf1 )

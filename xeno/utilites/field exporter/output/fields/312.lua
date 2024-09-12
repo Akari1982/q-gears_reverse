@@ -1064,4 +1064,4 @@ Actor_0x2a:event_0x06:
 0x07cb    op02_JumpToConditional( val1=(s)mem[0x1e], val2=2000, condition="val1 < val2", address_if_false=0x7d6 )
 0x07d3    op01_JumpTo( address=0x7a2 )
 0x07d6    op00_Return()
-0x07d7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xf022, flag=0x80 )
+0x07d7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x81ce, flag=0x0 )
