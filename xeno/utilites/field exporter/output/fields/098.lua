@@ -1121,4 +1121,126 @@ Actor_0x24:event_0x09:
 
 Actor_0x24:event_0x0a:
 0x0901    -- 0xAD()
-0x0908    -- MISSING OPCODE 0xae
+0x0908    -- 0xAE()
+0x090f    op99()
+0x0910    -- 0x9B( ???=12, ???=12 )
+0x0915    -- 0x61( ???=(s)mem[0x402], ???=(s)mem[0x404], ???=(s)mem[0x406] ) -- exp0x1
+0x091d    -- 0x65( ???=(s)mem[0x408], ???=(s)mem[0x40a], ???=(s)mem[0x40c] ) -- exp0x1
+0x0925    -- 0x63( ???=1, ???=805, ???=-165 ) -- exp0x1
+0x092d    -- 0xA3()
+0x0935    opAC_MoveCamera( control=0x0, steps=100 )
+0x0939    opAC_MoveCamera( control=0x1, steps=100 )
+0x093d    opEF_MoveCameraSync()
+0x0940    op00_Return()
+
+Actor_0x24:event_0x0b:
+0x0941    -- 0x61( ???=321, ???=699, ???=-284 ) -- exp0x1
+0x0949    -- 0x65( ???=-83, ???=122, ???=-28 ) -- exp0x1
+0x0951    -- 0x63( ???=321, ???=699, ???=-284 ) -- exp0x1
+0x0959    -- 0xA3()
+0x0961    opAC_MoveCamera( control=0x0, steps=0 )
+0x0965    opAC_MoveCamera( control=0x1, steps=0 )
+0x0969    opEF_MoveCameraSync()
+0x096c    op00_Return()
+
+Actor_0x24:event_0x0c:
+0x096d    -- 0x61( ???=-41, ???=75, ???=-90 ) -- exp0x1
+0x0975    -- 0x65( ???=234, ???=-535, ???=-453 ) -- exp0x1
+0x097d    -- 0x63( ???=-41, ???=75, ???=-90 ) -- exp0x1
+0x0985    -- 0xA3()
+0x098d    opAC_MoveCamera( control=0x0, steps=0 )
+0x0991    opAC_MoveCamera( control=0x1, steps=0 )
+0x0995    opEF_MoveCameraSync()
+0x0998    op00_Return()
+
+Actor_0x24:event_0x0d:
+0x0999    -- 0x61( ???=-1, ???=26, ???=-97 ) -- exp0x1
+0x09a1    -- 0x65( ???=587, ???=484, ???=-171 ) -- exp0x1
+0x09a9    -- 0x63( ???=-1, ???=26, ???=-97 ) -- exp0x1
+0x09b1    -- 0xA3()
+0x09b9    opAC_MoveCamera( control=0x0, steps=0 )
+0x09bd    opAC_MoveCamera( control=0x1, steps=0 )
+0x09c1    opEF_MoveCameraSync()
+0x09c4    op00_Return()
+
+Actor_0x25:on_start:
+0x09c5    -- 0xBC_ActorNoModelInit()
+0x09c6    op00_Return()
+
+Actor_0x25:on_update:
+0x09c7    op02_JumpToConditional( val1=(s)mem[0x102], val2=7, condition="val1 >= val2", address_if_false=0x9df )
+0x09cf    op02_JumpToConditional( val1=(s)mem[0x102], val2=18, condition="val1 <= val2", address_if_false=0x9df )
+0x09d7    -- 0xFE0E_SoundSetVolume( volume=24, steps=10 )
+0x09dd    -- 0xFEA2()
+0x09df    op00_Return()
+
+Actor_0x25:on_talk:
+
+Actor_0x25:on_push:
+0x09e0    op00_Return()
+
+Actor_0x25:event_0x04:
+0x09e1    -- 0xFE65()
+0x09e7    -- 0xFE65()
+0x09ed    op00_Return()
+
+Actor_0x26:on_start:
+0x09ee    -- 0xBC_ActorNoModelInit()
+0x09ef    op25_ActorDisable( actor_id=Actor_0x0d )
+0x09f1    -- 0x27( actor_id=Actor_0x0d )
+0x09f3    op25_ActorDisable( actor_id=Actor_0x0e )
+0x09f5    -- 0x27( actor_id=Actor_0x0e )
+0x09f7    op25_ActorDisable( actor_id=Actor_0x12 )
+0x09f9    op25_ActorDisable( actor_id=Actor_0x13 )
+0x09fb    op25_ActorDisable( actor_id=Actor_0x14 )
+0x09fd    op25_ActorDisable( actor_id=Actor_0x15 )
+0x09ff    op25_ActorDisable( actor_id=Actor_0x16 )
+0x0a01    op25_ActorDisable( actor_id=Actor_0x17 )
+0x0a03    op25_ActorDisable( actor_id=Actor_0x18 )
+0x0a05    op25_ActorDisable( actor_id=Actor_0x19 )
+0x0a07    op25_ActorDisable( actor_id=Actor_0x1a )
+0x0a09    op25_ActorDisable( actor_id=Actor_0x1b )
+0x0a0b    op25_ActorDisable( actor_id=Actor_0x1c )
+0x0a0d    op25_ActorDisable( actor_id=Actor_0x1d )
+0x0a0f    op25_ActorDisable( actor_id=Actor_0x1e )
+0x0a11    op25_ActorDisable( actor_id=Actor_0x1f )
+0x0a13    op25_ActorDisable( actor_id=Actor_0x20 )
+0x0a15    op25_ActorDisable( actor_id=Actor_0x21 )
+0x0a17    op00_Return()
+
+Actor_0x26:on_update:
+0x0a18    op00_Return()
+
+Actor_0x26:on_talk:
+
+Actor_0x26:on_push:
+0x0a19    op00_Return()
+
+Actor_0x26:event_0x04:
+0x0a1a    opF1_FadeSetUp( steps=2, r=0, g=108, b=192, semi_tr=1 )
+0x0a25    op26_Wait( time=2 )
+0x0a28    opF1_FadeSetUp( steps=2, r=251, g=0, b=0, semi_tr=1 )
+0x0a33    op26_Wait( time=2 )
+0x0a36    opF1_FadeSetUp( steps=2, r=251, g=212, b=0, semi_tr=5 )
+0x0a41    op26_Wait( time=10 )
+0x0a44    opF1_FadeSetUp( steps=1, r=255, g=255, b=255, semi_tr=15 )
+0x0a4f    op26_Wait( time=16 )
+0x0a52    op00_Return()
+
+Actor_0x26:event_0x05:
+0x0a53    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=15 )
+0x0a5e    op26_Wait( time=16 )
+0x0a61    op00_Return()
+
+Actor_0x26:event_0x06:
+0x0a62    opF1_FadeSetUp( steps=1, r=64, g=64, b=64, semi_tr=30 )
+0x0a6d    op26_Wait( time=31 )
+0x0a70    op00_Return()
+0x0a71    -- 0x19_ActorSetPosition( x=(vf80)0xff33, z=(vf40)0xffa3, flag=(flag)0xc0 )
+0x0a77    op0D_Return()
+0x0a78    -- 0x21( ???=512 )
+0x0a7b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x0a81    -- 0x5F( ???=0x0 )
+0x0a83    op0D_Return()
+0x0a84    op0D_Return()
+0x0a85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0xfc00, flag=0x80 )

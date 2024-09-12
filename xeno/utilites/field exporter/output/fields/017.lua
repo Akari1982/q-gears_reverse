@@ -2892,7 +2892,7 @@ function:
 0x215f    opAC_MoveCamera( control=0x0, steps=(s)mem[0x4e2] )
 0x2163    opAC_MoveCamera( control=0x1, steps=(s)mem[0x4e2] )
 0x2167    opEF_MoveCameraSync()
-0x216a    -- 0x65( ???=(s)mem[0x4fc], ???=mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
+0x216a    -- 0x65( ???=(s)mem[0x4fc], ???=(s)mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
 0x2172    mem[0x4f6] += 1 -- op3c
 0x2175    mem[0x4e8] += (s)mem[0x4ea] -- op38
 0x217b    op01_JumpTo( address=0x2140 )
@@ -2910,7 +2910,7 @@ function:
 0x21b8    opAC_MoveCamera( control=0x0, steps=(s)mem[0x4e2] )
 0x21bc    opAC_MoveCamera( control=0x1, steps=(s)mem[0x4e2] )
 0x21c0    opEF_MoveCameraSync()
-0x21c3    -- 0x65( ???=(s)mem[0x4fc], ???=mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
+0x21c3    -- 0x65( ???=(s)mem[0x4fc], ???=(s)mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
 0x21cb    mem[0x4f6] += 1 -- op3c
 0x21ce    mem[0x4e6] += (s)mem[0x4ee] -- op38
 0x21d4    mem[0x4e8] += (s)mem[0x4ea] -- op38
@@ -2963,7 +2963,7 @@ function:
 0x22c6    opAC_MoveCamera( control=0x0, steps=(s)mem[0x4e2] )
 0x22ca    opAC_MoveCamera( control=0x1, steps=(s)mem[0x4e2] )
 0x22ce    opEF_MoveCameraSync()
-0x22d1    -- 0x65( ???=(s)mem[0x4fc], ???=mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
+0x22d1    -- 0x65( ???=(s)mem[0x4fc], ???=(s)mem[0x500], ???=(s)mem[0x4fe] ) -- exp0x1
 0x22d9    mem[0x4f6] += 1 -- op3c
 0x22dc    mem[0x4e4] += 256 -- op38
 0x22e2    op01_JumpTo( address=0x22a7 )
@@ -3109,16 +3109,16 @@ function:
 0x2594    op02_JumpToConditional( val1=(s)mem[0x510], val2=148, condition="val1 > val2", address_if_false=0x25a2 )
 0x259c    mem[0x512] = 3 -- op35
 0x25a2    op01_JumpTo( address=0x25a5 )
-0x25a5    op02_JumpToConditional( val1=mem[0x512], val2=0, condition="val1 == val2", address_if_false=0x25b8 )
+0x25a5    op02_JumpToConditional( val1=(s)mem[0x512], val2=0, condition="val1 == val2", address_if_false=0x25b8 )
 0x25ad    -- opFE08( scale_x=3000, scale_y=4096, scale_z=3500 )
 0x25b5    op01_JumpTo( address=0x25f1 )
-0x25b8    op02_JumpToConditional( val1=mem[0x512], val2=1, condition="val1 == val2", address_if_false=0x25cb )
+0x25b8    op02_JumpToConditional( val1=(s)mem[0x512], val2=1, condition="val1 == val2", address_if_false=0x25cb )
 0x25c0    -- opFE08( scale_x=4096, scale_y=4096, scale_z=3500 )
 0x25c8    op01_JumpTo( address=0x25f1 )
-0x25cb    op02_JumpToConditional( val1=mem[0x512], val2=2, condition="val1 == val2", address_if_false=0x25de )
+0x25cb    op02_JumpToConditional( val1=(s)mem[0x512], val2=2, condition="val1 == val2", address_if_false=0x25de )
 0x25d3    -- opFE08( scale_x=6096, scale_y=4096, scale_z=3500 )
 0x25db    op01_JumpTo( address=0x25f1 )
-0x25de    op02_JumpToConditional( val1=mem[0x512], val2=3, condition="val1 == val2", address_if_false=0x25f1 )
+0x25de    op02_JumpToConditional( val1=(s)mem[0x512], val2=3, condition="val1 == val2", address_if_false=0x25f1 )
 0x25e6    -- opFE08( scale_x=12288, scale_y=4096, scale_z=3500 )
 0x25ee    op01_JumpTo( address=0x25f1 )
 0x25f1    op0D_Return()

@@ -2342,7 +2342,7 @@ Actor_0x32:on_start:
 0x1976    op00_Return()
 
 Actor_0x32:on_update:
-0x1977    op02_JumpToConditional( val1=(s)mem[0x404], val2=mem[0x504], condition="val1 != val2", address_if_false=0x1bca )
+0x1977    op02_JumpToConditional( val1=(s)mem[0x404], val2=(s)mem[0x504], condition="val1 != val2", address_if_false=0x1bca )
 0x197f    mem[0x504] = (s)mem[0x404] -- op35
 0x1985    mem[0x506] = opA8_Random( max=15 )
 0x198a    op02_JumpToConditional( val1=(s)mem[0x506], val2=0, condition="val1 == val2", address_if_false=0x1998 )
@@ -2393,50 +2393,50 @@ Actor_0x32:on_update:
 0x1a5c    op02_JumpToConditional( val1=(s)mem[0x506], val2=15, condition="val1 == val2", address_if_false=0x1a6a )
 0x1a64    op05_CallFunction( address=0x1f31 )
 0x1a67    op01_JumpTo( address=0x1a6a )
-0x1a6a    mem[0x508] = mem[0x502] -- op35
-0x1a70    mem[0x508] &= mem[0x50a] -- op3e
-0x1a76    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x50a], condition="val1 == val2", address_if_false=0x1a81 )
+0x1a6a    mem[0x508] = (s)mem[0x502] -- op35
+0x1a70    mem[0x508] &= (s)mem[0x50a] -- op3e
+0x1a76    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x50a], condition="val1 == val2", address_if_false=0x1a81 )
 0x1a7e    mem[0x51e] += 1 -- op3c
-0x1a81    mem[0x508] = mem[0x502] -- op35
-0x1a87    mem[0x508] &= mem[0x50c] -- op3e
-0x1a8d    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x50c], condition="val1 == val2", address_if_false=0x1a98 )
+0x1a81    mem[0x508] = (s)mem[0x502] -- op35
+0x1a87    mem[0x508] &= (s)mem[0x50c] -- op3e
+0x1a8d    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x50c], condition="val1 == val2", address_if_false=0x1a98 )
 0x1a95    mem[0x51e] += 1 -- op3c
-0x1a98    mem[0x508] = mem[0x502] -- op35
+0x1a98    mem[0x508] = (s)mem[0x502] -- op35
 0x1a9e    mem[0x508] &= (s)mem[0x50e] -- op3e
 0x1aa4    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x50e], condition="val1 == val2", address_if_false=0x1aaf )
 0x1aac    mem[0x51e] += 1 -- op3c
-0x1aaf    mem[0x508] = mem[0x502] -- op35
-0x1ab5    mem[0x508] &= (s)mem[0x510] -- op3e
-0x1abb    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x510], condition="val1 == val2", address_if_false=0x1ac6 )
+0x1aaf    mem[0x508] = (s)mem[0x502] -- op35
+0x1ab5    mem[0x508] &= mem[0x510] -- op3e
+0x1abb    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x510], condition="val1 == val2", address_if_false=0x1ac6 )
 0x1ac3    mem[0x51e] += 1 -- op3c
-0x1ac6    mem[0x508] = mem[0x502] -- op35
-0x1acc    mem[0x508] &= (s)mem[0x512] -- op3e
-0x1ad2    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x512], condition="val1 == val2", address_if_false=0x1add )
+0x1ac6    mem[0x508] = (s)mem[0x502] -- op35
+0x1acc    mem[0x508] &= mem[0x512] -- op3e
+0x1ad2    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x512], condition="val1 == val2", address_if_false=0x1add )
 0x1ada    mem[0x51e] += 1 -- op3c
-0x1add    mem[0x508] = mem[0x502] -- op35
-0x1ae3    mem[0x508] &= (s)mem[0x514] -- op3e
-0x1ae9    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x514], condition="val1 == val2", address_if_false=0x1af4 )
+0x1add    mem[0x508] = (s)mem[0x502] -- op35
+0x1ae3    mem[0x508] &= mem[0x514] -- op3e
+0x1ae9    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x514], condition="val1 == val2", address_if_false=0x1af4 )
 0x1af1    mem[0x51e] += 1 -- op3c
-0x1af4    mem[0x508] = mem[0x502] -- op35
+0x1af4    mem[0x508] = (s)mem[0x502] -- op35
 0x1afa    mem[0x508] &= (s)mem[0x516] -- op3e
 0x1b00    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x516], condition="val1 == val2", address_if_false=0x1b0b )
 0x1b08    mem[0x51e] += 1 -- op3c
-0x1b0b    mem[0x508] = mem[0x502] -- op35
-0x1b11    mem[0x508] &= (s)mem[0x518] -- op3e
-0x1b17    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x518], condition="val1 == val2", address_if_false=0x1b22 )
+0x1b0b    mem[0x508] = (s)mem[0x502] -- op35
+0x1b11    mem[0x508] &= mem[0x518] -- op3e
+0x1b17    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x518], condition="val1 == val2", address_if_false=0x1b22 )
 0x1b1f    mem[0x51e] += 1 -- op3c
-0x1b22    mem[0x508] = mem[0x502] -- op35
-0x1b28    mem[0x508] &= (s)mem[0x51a] -- op3e
-0x1b2e    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x51a], condition="val1 == val2", address_if_false=0x1b39 )
+0x1b22    mem[0x508] = (s)mem[0x502] -- op35
+0x1b28    mem[0x508] &= mem[0x51a] -- op3e
+0x1b2e    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x51a], condition="val1 == val2", address_if_false=0x1b39 )
 0x1b36    mem[0x51e] += 1 -- op3c
-0x1b39    mem[0x508] = mem[0x502] -- op35
-0x1b3f    mem[0x508] &= (s)mem[0x51c] -- op3e
-0x1b45    op02_JumpToConditional( val1=(s)mem[0x508], val2=(s)mem[0x51c], condition="val1 == val2", address_if_false=0x1b50 )
+0x1b39    mem[0x508] = (s)mem[0x502] -- op35
+0x1b3f    mem[0x508] &= mem[0x51c] -- op3e
+0x1b45    op02_JumpToConditional( val1=(s)mem[0x508], val2=mem[0x51c], condition="val1 == val2", address_if_false=0x1b50 )
 0x1b4d    mem[0x51e] += 1 -- op3c
-0x1b50    op02_JumpToConditional( val1=(s)mem[0x51e], val2=0, condition="val1 != val2", address_if_false=0x1bca )
+0x1b50    op02_JumpToConditional( val1=mem[0x51e], val2=0, condition="val1 != val2", address_if_false=0x1bca )
 0x1b58    op07_CallActorEvent( actor_id=Actor_0x31, event=event_0x07, priority=0x00 )
 0x1b5b    op07_CallActorEvent( actor_id=Actor_0x33, event=event_0x04, priority=0x00 )
-0x1b5e    mem[0x406] += (s)mem[0x51e] -- op38
+0x1b5e    mem[0x406] += mem[0x51e] -- op38
 0x1b64    mem[0x51e] = 0 -- op35
 0x1b6a    mem[0x4e2] = true -- op36
 0x1b6d    op05_CallFunction( address=0x1bcb )
@@ -2702,4 +2702,4 @@ Actor_0x33:event_0x04:
 0x1f7b    opD2_MessageShowDynamic( text_id=0x2a, flags=0 )
 0x1f7f    op9C_MessageSync()
 0x1f80    op00_Return()
-0x1f81    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2838, ???=(vf40)0xd76f, flag=0x72 )
+0x1f81    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xa138, ???=(vf40)0x3df0, flag=0x78 )

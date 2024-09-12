@@ -561,4 +561,268 @@ function:
 0x04e6    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x005a, b=(vf20)0x0032, r_add=(vf10)0xffff, g_add=(vf10)0xfffd, b_add=(vf10)0xfffc, flag=(flag)0xfc )
 0x04f5    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x04fd    opFEBD_ParticleSpawnSettings( settings=0 )
-0x0505    -- MISSING OPCODE 0xFEc8
+0x0505    -- 0xFEC8()
+0x0518    -- 0xFEC8()
+0x052b    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=5, wait=0, ttl=32767 )
+0x0535    opFE91_ParticlePos( x=(vf80)0x0019, y=(vf40)0xffd8, z=(vf20)0x0003, speed_x=(vf10)0x0019, speed_y=(vf08)0xffd3, speed_z=(vf04)0xfff8, flag=(flag)0xfc )
+0x0544    opFE92_ParticleSpeed( speed=(vf80)0x003c, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0001, rand_speed=(vf04)0x0006, flag=(flag)0xfc )
+0x0553    opFE93_ParticleWaitTtl( s_wait=1, var2=8, sprite_id=0, var4=1, var5=2 )
+0x055f    opFE94_ParticleTranslation( trans_x=(vf80)0x0009, trans_y=(vf40)0x001e, trans_add_x=(vf20)0x0003, trans_add_y=(vf10)0x003c, flag=(flag)0xf0 )
+0x056a    opFE95_ParticleColour( r=(vf80)0x00b4, g=(vf40)0x00a0, b=(vf20)0x00fa, r_add=(vf10)0xfffe, g_add=(vf10)0xfffd, b_add=(vf10)0xffff, flag=(flag)0xfc )
+0x0579    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x0581    opFEBD_ParticleSpawnSettings( settings=0 )
+0x0589    -- 0xFEC8()
+0x059c    -- 0xFEC8()
+0x05af    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=3, wait=1, ttl=32767 )
+0x05b9    opFE91_ParticlePos( x=(vf80)0x0019, y=(vf40)0xffc4, z=(vf20)0x0003, speed_x=(vf10)0x000f, speed_y=(vf08)0xffbf, speed_z=(vf04)0xfff8, flag=(flag)0xfc )
+0x05c8    opFE92_ParticleSpeed( speed=(vf80)0x02bc, acc_x=(vf40)0x0000, acc_y=(vf20)0x0226, acc_z=(vf10)0x0000, rand_start=(vf08)0x0006, rand_speed=(vf04)0x000f, flag=(flag)0xfc )
+0x05d7    opFE93_ParticleWaitTtl( s_wait=2, var2=23, sprite_id=7, var4=1, var5=2 )
+0x05e3    opFE94_ParticleTranslation( trans_x=(vf80)0x0004, trans_y=(vf40)0x0005, trans_add_x=(vf20)0x0004, trans_add_y=(vf10)0x0006, flag=(flag)0xf0 )
+0x05ee    opFE95_ParticleColour( r=(vf80)0x009e, g=(vf40)0x003e, b=(vf20)0x0000, r_add=(vf10)0xfffd, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x05fd    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x0605    opFEBD_ParticleSpawnSettings( settings=0 )
+0x060d    -- 0xFEC8()
+0x0620    -- 0xFEC8()
+0x0633    opFE96_ParticleCreate()
+0x0635    op0D_Return()
+
+Actor_0x18:on_start:
+0x0636    -- 0xBC_ActorNoModelInit()
+0x0637    -- 0x2A()
+0x0638    op00_Return()
+
+Actor_0x18:on_update:
+0x0639    op02_JumpToConditional( val1=(s)mem[0x418], val2=1, condition="val1 == val2", address_if_false=0x66b )
+0x0641    op99()
+0x0642    -- 0x60()
+0x0643    -- 0x64() -- exp0x1
+0x0644    -- 0x63( ???=0, ???=-528, ???=-735 ) -- exp0x1
+0x064c    -- 0xA3()
+0x0654    opAC_MoveCamera( control=0x0, steps=60 )
+0x0658    opAC_MoveCamera( control=0x1, steps=60 )
+0x065c    opEF_MoveCameraSync()
+0x065f    op02_JumpToConditional( val1=(s)mem[0x418], val2=1, condition="val1 == val2", address_if_false=0x66b )
+0x0667    -- 0x5A()
+0x0668    op01_JumpTo( address=0x65f )
+0x066b    -- 0x9A()
+0x066e    -- 0xA1()
+0x0671    op00_Return()
+
+Actor_0x18:on_talk:
+
+Actor_0x18:on_push:
+0x0672    op00_Return()
+
+Actor_0x19:on_start:
+0x0673    -- 0xFE15( ???=1, ???=2 )
+0x0679    -- 0x19_ActorSetPosition( x=(vf80)0x0048, z=(vf40)0xfab3, flag=(flag)0xc0 )
+0x067f    -- 0x5F( ???=0x3 )
+0x0681    op00_Return()
+
+Actor_0x19:on_update:
+0x0682    -- 0x21( ???=384 )
+0x0685    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x068b    -- 0x5F( ???=0x7 )
+0x068d    op26_Wait( time=15 )
+0x0690    -- 0x5F( ???=0x5 )
+0x0692    op26_Wait( time=10 )
+0x0695    -- 0x5F( ???=0x2 )
+0x0697    op26_Wait( time=15 )
+0x069a    -- 0x5F( ???=0x3 )
+0x069c    op26_Wait( time=45 )
+0x069f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
+0x06a5    -- 0x5F( ???=0x3 )
+0x06a7    op26_Wait( time=15 )
+0x06aa    -- 0x5F( ???=0x2 )
+0x06ac    op26_Wait( time=10 )
+0x06af    -- 0x5F( ???=0x5 )
+0x06b1    op26_Wait( time=15 )
+0x06b4    -- 0x5F( ???=0x7 )
+0x06b6    op26_Wait( time=45 )
+0x06b9    op00_Return()
+
+Actor_0x19:on_talk:
+0x06ba    op6F_ActorRotateToActor( actor_id=party1 )
+0x06bc    -- 0x85()
+0x06c1    op01_JumpTo( address=0x6d2 )
+0x06c4    op01_JumpTo( address=0x6ca )
+0x06c7    op01_JumpTo( address=0x6cc )
+0x06ca    op00_Return()
+
+Actor_0x19:on_push:
+0x06cb    op00_Return()
+0x06cc    opD2_MessageShowDynamic( text_id=0x0, flags=0 )
+0x06d0    op9C_MessageSync()
+0x06d1    op00_Return()
+0x06d2    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
+0x06d6    op9C_MessageSync()
+0x06d7    op00_Return()
+
+Actor_0x1a:on_start:
+0x06d8    -- 0x0B_InitNPC( 2 )
+0x06db    -- 0x19_ActorSetPosition( x=(vf80)0xffcc, z=(vf40)0xfa5e, flag=(flag)0xc0 )
+0x06e1    op00_Return()
+
+Actor_0x1a:on_update:
+0x06e2    op6F_ActorRotateToActor( actor_id=Actor_0x19 )
+0x06e4    op00_Return()
+
+Actor_0x1a:on_talk:
+0x06e5    op6F_ActorRotateToActor( actor_id=party1 )
+0x06e7    -- 0x85()
+0x06ec    op01_JumpTo( address=0x6fd )
+0x06ef    op01_JumpTo( address=0x6f5 )
+0x06f2    op01_JumpTo( address=0x6f7 )
+0x06f5    op00_Return()
+
+Actor_0x1a:on_push:
+0x06f6    op00_Return()
+0x06f7    opD2_MessageShowDynamic( text_id=0x2, flags=0 )
+0x06fb    op9C_MessageSync()
+0x06fc    op00_Return()
+0x06fd    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
+0x0701    op9C_MessageSync()
+0x0702    opD2_MessageShowDynamic( text_id=0x4, flags=0 )
+0x0706    op9C_MessageSync()
+0x0707    op00_Return()
+
+Actor_0x1b:on_start:
+0x0708    -- 0x16_ActorPCInit( char_id=1 )
+0x070b    opFE0D_MessageSetFace( char_id=1 )
+0x070f    op00_Return()
+
+Actor_0x1b:on_update:
+0x0710    -- 0xA7()
+0x0711    op00_Return()
+
+Actor_0x1b:on_talk:
+
+Actor_0x1b:on_push:
+0x0712    op00_Return()
+
+Actor_0x1c:on_start:
+0x0713    -- 0x16_ActorPCInit( char_id=2 )
+0x0716    opFE0D_MessageSetFace( char_id=2 )
+0x071a    op00_Return()
+
+Actor_0x1c:on_update:
+0x071b    -- 0xA7()
+0x071c    op00_Return()
+
+Actor_0x1c:on_talk:
+
+Actor_0x1c:on_push:
+0x071d    op00_Return()
+
+Actor_0x1d:on_start:
+0x071e    -- 0x16_ActorPCInit( char_id=3 )
+0x0721    opFE0D_MessageSetFace( char_id=3 )
+0x0725    op00_Return()
+
+Actor_0x1d:on_update:
+0x0726    -- 0xA7()
+0x0727    op00_Return()
+
+Actor_0x1d:on_talk:
+
+Actor_0x1d:on_push:
+0x0728    op00_Return()
+
+Actor_0x1e:on_start:
+0x0729    -- 0x16_ActorPCInit( char_id=4 )
+0x072c    opFE0D_MessageSetFace( char_id=4 )
+0x0730    op00_Return()
+
+Actor_0x1e:on_update:
+0x0731    -- 0xA7()
+0x0732    op00_Return()
+
+Actor_0x1e:on_talk:
+
+Actor_0x1e:on_push:
+0x0733    op00_Return()
+
+Actor_0x1f:on_start:
+0x0734    -- 0x16_ActorPCInit( char_id=5 )
+0x0737    opFE0D_MessageSetFace( char_id=5 )
+0x073b    op00_Return()
+
+Actor_0x1f:on_update:
+0x073c    -- 0xA7()
+0x073d    op00_Return()
+
+Actor_0x1f:on_talk:
+
+Actor_0x1f:on_push:
+0x073e    op00_Return()
+
+Actor_0x20:on_start:
+0x073f    -- 0x16_ActorPCInit( char_id=6 )
+0x0742    opFE0D_MessageSetFace( char_id=6 )
+0x0746    op00_Return()
+
+Actor_0x20:on_update:
+0x0747    -- 0xA7()
+0x0748    op00_Return()
+
+Actor_0x20:on_talk:
+
+Actor_0x20:on_push:
+0x0749    op00_Return()
+
+Actor_0x21:on_start:
+0x074a    -- 0x16_ActorPCInit( char_id=7 )
+0x074d    opFE0D_MessageSetFace( char_id=7 )
+0x0751    op00_Return()
+
+Actor_0x21:on_update:
+0x0752    -- 0xA7()
+0x0753    op00_Return()
+
+Actor_0x21:on_talk:
+
+Actor_0x21:on_push:
+0x0754    op00_Return()
+
+Actor_0x22:on_start:
+0x0755    -- 0x16_ActorPCInit( char_id=8 )
+0x0758    opFE0D_MessageSetFace( char_id=8 )
+0x075c    op00_Return()
+
+Actor_0x22:on_update:
+0x075d    -- 0xA7()
+0x075e    op00_Return()
+
+Actor_0x22:on_talk:
+
+Actor_0x22:on_push:
+0x075f    op00_Return()
+
+Actor_0x23:on_start:
+0x0760    -- 0x16_ActorPCInit( char_id=9 )
+0x0763    opFE0D_MessageSetFace( char_id=9 )
+0x0767    op00_Return()
+
+Actor_0x23:on_update:
+0x0768    -- 0xA7()
+0x0769    op00_Return()
+
+Actor_0x23:on_talk:
+
+Actor_0x23:on_push:
+0x076a    op00_Return()
+
+Actor_0x24:on_start:
+0x076b    -- 0x16_ActorPCInit( char_id=10 )
+0x076e    opFE0D_MessageSetFace( char_id=10 )
+0x0772    op00_Return()
+
+Actor_0x24:on_update:
+0x0773    -- 0xA7()
+0x0774    op00_Return()
+
+Actor_0x24:on_talk:
+
+Actor_0x24:on_push:
+0x0775    op00_Return()
+0x0776    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

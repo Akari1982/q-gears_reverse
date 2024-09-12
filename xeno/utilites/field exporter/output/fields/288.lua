@@ -1682,7 +1682,7 @@ Actor_0x18:on_update:
 0x1123    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x15, text_id=0x60, flags=0 )
 0x1129    -- 0x12()
 0x112d    op00_Return()
-0x112e    op02_JumpToConditional( val1=(s)mem[0x4000], val2=mem[0x1138], condition="val1 != val2", address_if_false=0x1123 )
+0x112e    op02_JumpToConditional( val1=(s)mem[0x4000], val2=(s)mem[0x1138], condition="val1 != val2", address_if_false=0x1123 )
 0x1136    op01_JumpTo( address=0x1139 )
 0x1139    -- 0x91()
 0x113d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x61, flags=0 )

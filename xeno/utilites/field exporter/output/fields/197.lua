@@ -285,39 +285,21 @@ Actor_0x06:on_start:
 0x04f4    -- 0xBC_ActorNoModelInit()
 0x04f5    -- 0xF9()
 0x04f7    -- 0xFE1C()
-0x0500    -- 0xFE5E()
-0x0504    -- 0x2A()
-0x0505    op00_Return()
-
-Actor_0x06:on_update:
-0x0506    op00_Return()
-
-Actor_0x06:on_talk:
-
-Actor_0x06:on_push:
-0x0507    op00_Return()
-
-Actor_0x07:on_start:
-0x0508    -- 0xBC_ActorNoModelInit()
-0x0509    -- 0xF9()
-0x050b    -- 0xFE1C()
-0x0514    -- 0x2A()
-0x0515    op00_Return()
-
-Actor_0x07:on_update:
-0x0516    op00_Return()
-
-Actor_0x07:on_talk:
-
-Actor_0x07:on_push:
-0x0517    op00_Return()
-
-Actor_0x08:on_start:
-0x0518    -- 0xBC_ActorNoModelInit()
-0x0519    -- 0xF9()
-0x051b    -- 0xFE1C()
-0x0524    -- 0x21( ???=64 )
-0x0527    -- 0xF8()
+0x0500    -- 0xFE5E()-- 0xFE5F()
+0x050c    -- 0x1C( ???=(vf80)0x0000, flag=(flag)0x00 )
+0x0510    op00_Return()
+0x0511    op00_Return()
+0x0512    op00_Return()
+0x0513    -- 0xE0( actor_id=Actor_0x2a, ???=(vf80)0x0000, ???=(vf40)0xbc00, flag=0xf9 )
+0x051a    op07_CallActorEvent( actor_id=party2, event=event_0x1c, priority=0x00 )
+0x051d    op00_Return()
+0x051e    op00_Return()
+0x051f    op00_Return()
+0x0520    op00_Return()
+0x0521    op00_Return()
+0x0522    op00_Return()
+0x0523    -- 0xE0( actor_id=Actor_0x21, ???=(vf80)0x8040, ???=(vf40)0x02f8, flag=0x80 )
+0x052a    op00_Return()
 0x052b    -- 0xFE07( ???=0x1 )
 0x052e    -- 0x2A()
 0x052f    op00_Return()
@@ -483,32 +465,16 @@ Actor_0x10:on_start:
 0x0690    -- 0xBC_ActorNoModelInit()
 0x0691    -- 0xF9()
 0x0693    -- 0xFE1C()
-0x069c    -- 0xFE5E()
-0x06a0    -- 0x2A()
-0x06a1    op00_Return()
-
-Actor_0x10:on_update:
-0x06a2    op00_Return()
-
-Actor_0x10:on_talk:
-
-Actor_0x10:on_push:
-0x06a3    op00_Return()
-
-Actor_0x11:on_start:
-0x06a4    -- 0x2A()
-0x06a5    op00_Return()
-
-Actor_0x11:on_update:
-0x06a6    -- 0xE1_BackgroundSetTex()
-0x06b4    op26_Wait( time=1 )
-0x06b7    -- 0xE1_BackgroundSetTex()
-0x06c5    op26_Wait( time=1 )
-0x06c8    -- 0xE1_BackgroundSetTex()
-0x06d6    op26_Wait( time=1 )
-0x06d9    -- 0xE1_BackgroundSetTex()
-0x06e7    op26_Wait( time=1 )
-0x06ea    op00_Return()
+0x069c    -- 0xFE5E()-- 0xFE5F()
+0x06a8    op02_JumpToConditional( condition="val1 == val2", address_if_false=0xcc00 )
+0x06b0    op02_JumpToConditional( val1=(s)mem[0xd0], val2=(s)mem[0x26fc], condition="val1 != val2", address_if_false=0xe180 )
+0x06b8    opD0_MessageSettings( x=20482, y=(s)mem[0x200], letters=(s)mem[0x1000], rows=19456, flags=20482 )
+0x06c3    op00_Return()
+0x06c4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x26, text_id=0x8001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|NO_WINDOW|0x80 )
+0x06ca    op02_JumpToConditional( condition="val1 == val2", address_if_false=0xcc00 )
+0x06d2    op02_JumpToConditional( val1=(s)mem[0xd0], val2=(s)mem[0x26fc], condition="val1 != val2", address_if_false=0xe180 )
+0x06da    opD4_MessageShowFromActor( actor_id=Actor_0x02, text_id=0xd0, flags=NO_FACE )
+0x06e0    -- 0x10()
 
 Actor_0x11:on_talk:
 

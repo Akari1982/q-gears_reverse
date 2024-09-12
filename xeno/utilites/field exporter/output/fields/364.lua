@@ -206,19 +206,8 @@ Actor_0x03:on_start:
 Actor_0x03:on_update:
 0x0267    op02_JumpToConditional( val1=(s)mem[0x410], val2=0, condition="val1 == val2", address_if_false=0x27c )
 0x026f    -- 0xDD()
-0x0275    -- 0xFE5E()
-0x0279    mem[0x410] = true -- op36
-0x027c    op00_Return()
-
-Actor_0x03:on_talk:
-
-Actor_0x03:on_push:
-0x027d    op00_Return()
-
-Actor_0x03:event_0x04:
-0x027e    opD2_MessageShowDynamic( text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
-0x0282    op9C_MessageSync()
-0x0283    op00_Return()
+0x0275    -- 0xFE5E()-- 0xFE5F()
+0x0281    -- 0x21( ???=(s)mem[0x9c] )
 
 Actor_0x03:event_0x05:
 0x0284    opD2_MessageShowDynamic( text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
@@ -585,4 +574,4 @@ Actor_0x13:on_talk:
 
 Actor_0x13:on_push:
 0x0750    op00_Return()
-0x0751    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x9a38, ???=(vf40)0xde6f, flag=0xc9 )
+0x0751    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb638, ???=(vf40)0x34f0, flag=0x66 )

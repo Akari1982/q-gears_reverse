@@ -81,16 +81,8 @@ Actor_0x01:on_push:
 0x0094    op00_Return()
 
 Actor_0x01:event_0x04:
-0x0095    -- 0xFE5E()
-0x0099    op00_Return()
-
-Actor_0x01:event_0x05:
-0x009a    opD2_MessageShowDynamic( text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
-0x009e    op9C_MessageSync()
-0x009f    op00_Return()
-
-Actor_0x01:event_0x06:
-0x00a0    opD2_MessageShowDynamic( text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0095    -- 0xFE5E()-- 0xFE5F()
+0x00a1    op01_JumpTo( address=0x1100 )
 0x00a4    op9C_MessageSync()
 0x00a5    op00_Return()
 
@@ -144,17 +136,8 @@ Actor_0x02:on_push:
 0x00eb    op00_Return()
 
 Actor_0x02:event_0x04:
-0x00ec    -- 0xFE5E()
-0x00f0    op00_Return()
-
-Actor_0x02:event_0x05:
-0x00f1    opD2_MessageShowDynamic( text_id=0x9, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
-0x00f5    op9C_MessageSync()
-0x00f6    op00_Return()
-
-Actor_0x02:event_0x06:
-0x00f7    opD2_MessageShowDynamic( text_id=0xa, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
-0x00fb    op9C_MessageSync()
+0x00ec    -- 0xFE5E()-- 0xFE5F()
+0x00f8    -- 0x0A()
 0x00fc    op00_Return()
 
 Actor_0x02:event_0x07:
@@ -269,4 +252,4 @@ Actor_0x04:on_talk:
 
 Actor_0x04:on_push:
 0x01f1    op00_Return()
-0x01f2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6fbe, ???=(vf40)0xedde, flag=0x94 )
+0x01f2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xf02e, ???=(vf40)0xfe34, flag=0x7e )
