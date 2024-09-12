@@ -1195,6 +1195,27 @@ ScriptFile::GetScripts( const std::string& path )
             }
             break;
 
+            case 0x95:
+            {
+                exp->Log( "-- 0x95()" );
+                pointer += 2;
+            }
+            break;
+
+            case 0x96:
+            {
+                exp->Log( "-- 0x96()" );
+                pointer += 1;
+            }
+            break;
+
+            case 0x97:
+            {
+                exp->Log( "-- 0x97()" );
+                pointer += 3;
+            }
+            break;
+
             case 0x98:
             {
                 exp->Log( "-- 0x98_MapLoad( field_id=" + GetV80Variable( pointer + 1 ) + ", value=" + GetV80Variable( pointer + 3 ) + " )" );
@@ -1347,6 +1368,13 @@ ScriptFile::GetScripts( const std::string& path )
             case 0xad:
             {
                 exp->Log( "-- 0xAD()" );
+                pointer += 7;
+            }
+            break;
+
+            case 0xae:
+            {
+                exp->Log( "-- 0xAE()" );
                 pointer += 7;
             }
             break;
@@ -1853,6 +1881,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFE04()" );
                         pointer += 3;
+                    }
+                    break;
+
+                    case 0x05:
+                    {
+                        exp->Log( "-- 0xFE05()" );
+                        pointer += 6;
                     }
                     break;
 
@@ -2447,6 +2482,12 @@ ScriptFile::GetScripts( const std::string& path )
                         exp->Log( "-- 0xFE5E()" );
                         pointer += 3;
                     }
+
+                    case 0x5f:
+                    {
+                        exp->Log( "-- 0xFE5F()" );
+                        pointer += 8;
+                    }
                     break;
 
                     case 0x60:
@@ -2863,6 +2904,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xad:
+                    {
+                        exp->Log( "-- 0xFEAD()" );
+                        pointer += 4;
+                    }
+                    break;
+
                     case 0xaf:
                     {
                         exp->Log( "-- 0xFEAF()" );
@@ -2889,6 +2937,13 @@ ScriptFile::GetScripts( const std::string& path )
                     case 0xb1:
                     {
                         exp->Log( "opFEB1_ScifiHudInit()" );
+                        pointer += 1;
+                    }
+                    break;
+
+                    case 0xb5:
+                    {
+                        exp->Log( "-- 0xFEB5()" );
                         pointer += 1;
                     }
                     break;
@@ -2998,6 +3053,27 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xc7:
+                    {
+                        exp->Log( "-- 0xFEC7()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0xc8:
+                    {
+                        exp->Log( "-- 0xFEC8()" );
+                        pointer += 0x12;
+                    }
+                    break;
+
+                    case 0xc9:
+                    {
+                        exp->Log( "-- 0xFEC9()" );
+                        pointer += 0x12;
+                    }
+                    break;
+
                     case 0xcd:
                     {
                         exp->Log( "-- 0xFECD()" );
@@ -3033,6 +3109,74 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xd3:
+                    {
+                        exp->Log( "-- 0xFED3()" );
+                        pointer += 0x11;
+                    }
+                    break;
+
+                    case 0xd4:
+                    {
+                        u8 type = GetU8( pointer + 1 );
+                        if( type == 0 )
+                        {
+                            exp->Log( "-- opFED400()" );
+                            pointer += 2;
+                        }
+                        else if( type == 1 )
+                        {
+                            exp->Log( "-- opFED401()" );
+                            pointer += 0xa;
+                        }
+                        else if( type == 2 )
+                        {
+                            exp->Log( "-- opFED402()" );
+                            pointer += 2;
+                        }
+                        else if( type == 3 )
+                        {
+                            exp->Log( "-- opFED403()" );
+                            pointer += 0xa;
+                        }
+                    }
+                    break;
+
+                    case 0xd5:
+                    {
+                        exp->Log( "-- 0xFED5()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0xd6:
+                    {
+                        exp->Log( "-- 0xFED6()" );
+                        pointer += 5;
+                    }
+                    break;
+
+                    case 0xd7:
+                    {
+                        exp->Log( "-- 0xFED7()" );
+                        pointer += 6;
+                    }
+                    break;
+
+                    case 0xd8:
+                    {
+                        exp->Log( "-- 0xFED8()" );
+                        pointer += 2;
+                    }
+                    break;
+
+                    case 0xd9:
+                    {
+                        exp->Log( "-- 0xFED9()" );
+                        pointer += 2;
+                    }
+                    break;
+
                     case 0xda:
                     {
                         exp->Log( "-- 0xFEDA()" );
@@ -3044,6 +3188,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFEDB()" );
                         pointer += 3;
+                    }
+                    break;
+
+                    case 0xdc:
+                    {
+                        exp->Log( "-- 0xFEDC()" );
+                        pointer += 5;
                     }
                     break;
 
@@ -3073,6 +3224,13 @@ ScriptFile::GetScripts( const std::string& path )
                     }
                     break;
 
+                    case 0xde:
+                    {
+                        exp->Log( "-- 0xFEDE()" );
+                        pointer += 5;
+                    }
+                    break;
+
                     case 0xdf:
                     {
                         exp->Log( "-- 0xFEDF()" );
@@ -3084,6 +3242,13 @@ ScriptFile::GetScripts( const std::string& path )
                     {
                         exp->Log( "-- 0xFEE0()" );
                         pointer += 2;
+                    }
+                    break;
+
+                    case 0xe1:
+                    {
+                        exp->Log( "-- 0xFEE1()" );
+                        pointer += 5;
                     }
                     break;
 

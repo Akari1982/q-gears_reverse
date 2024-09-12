@@ -873,15 +873,15 @@ if( w[8004f4ec] != 0 ) // PC HDD MODE
     A1 = 0; // accessmode
     A2 = 0;
     system_devkit_pc_open();
-    S0 = V0;
+    filehandle = V0;
 
-    A0 = S0; // filehandle
+    A0 = filehandle;
     A1 = 0; // file_offset
     A2 = 2; // seekmode  2 = end of file.
     system_devkit_pc_seek();
     S1 = V0; // file size
 
-    A0 = S0; // filehandle
+    A0 = filehandle;
     system_devkit_pc_close();
 
     if( S1 > 0 )
@@ -959,10 +959,7 @@ if( num_of_files < 0 )
 {
     return ((0 - num_of_files) << 10) >> 10;
 }
-else
-{
-    return 0;
-}
+return 0;
 ////////////////////////////////
 
 

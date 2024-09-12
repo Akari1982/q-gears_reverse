@@ -335,7 +335,7 @@ Extract()
 
     // create file with cd dir index
     printf("Extract fig file.\n");
-    g_dir_set = (g_cd == 1) ? fopen("cdrom.fig", "wb") : fopen("cdrom2.fig", "wb");
+    g_dir_set = (g_cd == 1) ? fopen("cdrom.fid", "wb") : fopen("cdrom2.fid", "wb");
     pos = fseek(g_cd_image, 0x18, 1); // skip sector header
     pos = fread(buffer, 1, 0x80, g_cd_image); // read and write sector data
     pos = fwrite(buffer, 1, 0x80, g_dir_set);
@@ -346,7 +346,7 @@ Extract()
     if (g_cd == 1)
     {
         g_file_set = fopen("cdrom.mdg", "rb");
-        g_dir_set = fopen("cdrom.fig", "rb");
+        g_dir_set = fopen("cdrom.fid", "rb");
         //g_file_names = fopen("cdrom.fnd", "rb");
         file_name_txt.open("cdrom.txt");
     }

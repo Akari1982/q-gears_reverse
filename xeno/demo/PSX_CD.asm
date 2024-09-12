@@ -10739,7 +10739,7 @@ func19c7c:	; 80019C7C
 80019CFC	lui    a1, $8000
 80019D00	jal    func4bf7c [$8004bf7c]
 80019D04	lui    a2, $0020
-80019D08	jal    func4be44 [$8004be44]
+80019D08	jal    system_devkit_pc_close [$8004be44]
 80019D0C	addu   a0, s0, zero
 80019D10	lw     ra, $0014(sp)
 80019D14	lw     s0, $0010(sp)
@@ -25381,14 +25381,13 @@ L265a0:	; 800265A0
 800265B0	nop
 
 
-system_cdrom2_init:	; 800265B4
-800265B4	addiu  sp, sp, $ffd8 (=-$28)
-800265B8	sw     s1, $001c(sp)
+
+////////////////////////////////
+// system_cdrom2_init()
+// 800265B4-80026754
+
 800265BC	addu   s1, a0, zero
-800265C0	sw     s2, $0020(sp)
 800265C4	sw     s0, $0018(sp)
-800265C8	addu   s0, a2, zero
-800265CC	sw     ra, $0024(sp)
 800265D0	lui    at, $8006
 800265D4	sw     zero, $964c(at)
 800265D8	lui    at, $8006
@@ -25472,6 +25471,7 @@ L266bc:	; 800266BC
 800266E8	sw     zero, $f02c(at)
 800266EC	lui    at, $8005
 800266F0	sw     v0, $f038(at)
+
 if( S0 == 0 )
 {
     // load cdrom files settings
@@ -25480,29 +25480,24 @@ if( S0 == 0 )
     A2 = 8000;
     A3 = 0;
     A4 = 0;
-    80026708	jal    system_cdrom2_load_file_by_file_sector [$800277e4]
+    system_cdrom2_load_file_by_file_sector();
 
     A0 = 0;
-    80026710	jal    system_cdrom_action_sync [$80026cec]
+    system_cdrom_action_sync();
 
     A0 = 28;
     A1 = w[8004f018];
     A2 = 7a;
     A3 = 0;
     A4 = 0;
-    8002672C	jal    system_cdrom2_load_file_by_file_sector [$800277e4]
+    system_cdrom2_load_file_by_file_sector();
 
     A0 = 0;
-    80026734	jal    system_cdrom_action_sync [$80026cec]
+    system_cdrom_action_sync();
 }
+////////////////////////////////
 
-8002673C	lw     ra, $0024(sp)
-80026740	lw     s2, $0020(sp)
-80026744	lw     s1, $001c(sp)
-80026748	lw     s0, $0018(sp)
-8002674C	addiu  sp, sp, $0028
-80026750	jr     ra 
-80026754	nop
+
 
 80026758	addiu  sp, sp, $ffe8 (=-$18)
 8002675C	sw     ra, $0010(sp)
@@ -25548,26 +25543,40 @@ L267b0:	; 800267B0
 800267EC	nop
 
 
-system_cdrom2_set_dir:	; 800267F0
-800267F0	addu   a0, a0, a1
-800267F4	lui    v0, $8005
-800267F8	lw     v0, $f018(v0)
-800267FC	sll    a0, a0, $01
-80026800	addu   a0, a0, v0
-80026804	lhu    v0, $0000(a0)
-80026808	nop
-8002680C	addiu  v0, v0, $ffff (=-$1)
-80026810	lui    at, $8005
-80026814	sw     v0, $eff0(at)
-80026818	bgez   v0, L2682c [$8002682c]
-8002681C	nop
-80026820	lui    at, $8005
-80026824	sw     zero, $eff0(at)
-80026828	addiu  v0, zero, $ffff (=-$1)
 
-L2682c:	; 8002682C
-8002682C	jr     ra 
-80026830	nop
+////////////////////////////////
+// system_cdrom2_set_dir()
+// 800267F0-80026830
+
+// 00 0000 0000 0100 0200
+// 04 FFFF FFFF 4B02 FFFF
+// 08 FFFF FFFF FFFF FFFF
+// 0c FFFF FFFF 550A 5A0A
+// 10 770C B30A 450A 500A
+// 14 510A FFFF FFFF FFFF
+// 18 FFFF FFFF 9D0E 9F0E
+// 1c A00E FFFF 1800 FFFF
+// 20 FFFF FFFF 980B 9A0B
+// 24 9B0B 9F0B 4E0E FFFF
+// 28 FFFF FFFF 4C0E 280B
+// 2c B20B A10E 920B 550B
+// 30 FFFF FFFF FFFF FFFF
+// 34 FFFF FFFF FFFF FFFF
+// 38 FFFF FFFF FFFF FFFF
+// FFFF - disc number
+
+dir_set = w[8004f018];
+start_id = hu[dir_set + (A0 + A1) * 2] - 1;
+[8004eff0] = w(start_id); // start id of files in dir
+
+if( start_id < 0 )
+{
+    [8004eff0] = w(0);
+    return -1;
+}
+return start_id;
+////////////////////////////////
+
 
 
 func26834:	; 80026834
@@ -25646,7 +25655,7 @@ L268a0:	; 800268A0
 80026920	addu   a1, zero, zero
 
 loop26924:	; 80026924
-80026924	jal    func4be24 [$8004be24]
+80026924	jal    system_devkit_pc_open [$8004be24]
 80026928	addu   a2, zero, zero
 8002692C	addu   s2, v0, zero
 80026930	bne    s2, s3, L26954 [$80026954]
@@ -25661,7 +25670,7 @@ loop26924:	; 80026924
 
 L26954:	; 80026954
 80026954	addu   a0, s2, zero
-80026958	jal    func4be54 [$8004be54]
+80026958	jal    system_devkit_pc_seek [$8004be54]
 8002695C	ori    a2, zero, $0002
 80026960	beq    s4, zero, L2696c [$8002696c]
 80026964	addu   s3, v0, zero
@@ -25670,7 +25679,7 @@ L26954:	; 80026954
 L2696c:	; 8002696C
 8002696C	addu   a0, s2, zero
 80026970	addu   a1, zero, zero
-80026974	jal    func4be54 [$8004be54]
+80026974	jal    system_devkit_pc_seek [$8004be54]
 80026978	addu   a2, zero, zero
 8002697C	addu   a0, s3, zero
 80026980	jal    system_memory_allocate [$80031aa8]
@@ -25707,7 +25716,7 @@ L269dc:	; 800269DC
 800269DC	addu   s0, zero, zero
 
 loop269e0:	; 800269E0
-800269E0	jal    func4be44 [$8004be44]
+800269E0	jal    system_devkit_pc_close [$8004be44]
 800269E4	addu   a0, s2, zero
 800269E8	beq    v0, zero, L26a18 [$80026a18]
 800269EC	addu   v0, s1, zero
@@ -25777,50 +25786,39 @@ L26aa4:	; 80026AA4
 80026AB4	nop
 
 
-system_cdrom2_get_filesize_by_dir_file_id:	; 80026AB8
-80026AB8	lui    v0, $8005
-80026ABC	lw     v0, $f034(v0)
-80026AC0	addiu  sp, sp, $ffe0 (=-$20)
-80026AC4	sw     ra, $0018(sp)
-80026AC8	sw     s1, $0014(sp)
-80026ACC	beq    v0, zero, L26b14 [$80026b14]
-80026AD0	sw     s0, $0010(sp)
-80026AD4	jal    func26c88 [$80026c88]
-80026AD8	nop
-80026ADC	addu   a0, v0, zero
-80026AE0	addu   a1, zero, zero
-80026AE4	jal    func4be24 [$8004be24]
-80026AE8	addu   a2, zero, zero
-80026AEC	addu   s0, v0, zero
-80026AF0	addu   a0, s0, zero
-80026AF4	addu   a1, zero, zero
-80026AF8	jal    func4be54 [$8004be54]
-80026AFC	ori    a2, zero, $0002
-80026B00	addu   s1, v0, zero
-80026B04	jal    func4be44 [$8004be44]
-80026B08	addu   a0, s0, zero
-80026B0C	j      L26b3c [$80026b3c]
-80026B10	addu   v0, s1, zero
 
-L26b14:	; 80026B14
-80026B14	lui    v0, $8005
-80026B18	lw     v0, $eff0(v0)
-80026B1C	lui    v1, $8005
-80026B20	lw     v1, $efe0(v1)
-80026B24	addu   v0, a0, v0
-80026B28	sll    v0, v0, $03
-80026B2C	addu   v0, v0, v1
-80026B30	lw     s1, $fffc(v0)
-80026B34	nop
-80026B38	addu   v0, s1, zero
+////////////////////////////////
+// system_cdrom2_get_filesize_by_dir_file_id()
+// 80026AB8-80026B50
 
-L26b3c:	; 80026B3C
-80026B3C	lw     ra, $0018(sp)
-80026B40	lw     s1, $0014(sp)
-80026B44	lw     s0, $0010(sp)
-80026B48	addiu  sp, sp, $0020
-80026B4C	jr     ra 
-80026B50	nop
+if( w[8004f034] != 0 ) // PC HDD MODE
+{
+    system_cdrom2_get_debug_filename();
+
+    A0 = V0; // filename
+    A1 = 0; // accessmode
+    A2 = 0;
+    system_devkit_pc_open();
+    filehandle = V0;
+
+    A0 = filehandle;
+    A1 = 0; // file_offset
+    A2 = 2; // seekmode  2 = end of file.
+    system_devkit_pc_seek();
+    filesize = V0;
+
+    A0 = filehandle;
+    system_devkit_pc_close();
+}
+else
+{
+    file_set = w[8004eff0];
+    V1 = w[8004efe0];
+    filesize = w[V1 + (file_set + A0) * 8 - 4];
+}
+return filesize;
+////////////////////////////////
+
 
 
 func26b54:	; 80026B54
@@ -25831,19 +25829,19 @@ func26b54:	; 80026B54
 80026B64	sw     s1, $0014(sp)
 80026B68	beq    v0, zero, L26bb0 [$80026bb0]
 80026B6C	sw     s0, $0010(sp)
-80026B70	jal    func26c88 [$80026c88]
+80026B70	jal    system_cdrom2_get_debug_filename [$80026c88]
 80026B74	nop
 80026B78	addu   a0, v0, zero
 80026B7C	addu   a1, zero, zero
-80026B80	jal    func4be24 [$8004be24]
+80026B80	jal    system_devkit_pc_open [$8004be24]
 80026B84	addu   a2, zero, zero
 80026B88	addu   s0, v0, zero
 80026B8C	addu   a0, s0, zero
 80026B90	addu   a1, zero, zero
-80026B94	jal    func4be54 [$8004be54]
+80026B94	jal    system_devkit_pc_seek [$8004be54]
 80026B98	ori    a2, zero, $0002
 80026B9C	addu   s1, v0, zero
-80026BA0	jal    func4be44 [$8004be44]
+80026BA0	jal    system_devkit_pc_close [$8004be44]
 80026BA4	addu   a0, s0, zero
 80026BA8	j      L26bd8 [$80026bd8]
 80026BAC	addiu  v0, s1, $0003
@@ -25896,60 +25894,48 @@ L26c2c:	; 80026C2C
 80026C3C	nop
 
 
-func26c40:	; 80026C40
-80026C40	lui    v0, $8005
-80026C44	lw     v0, $eff0(v0)
-80026C48	nop
-80026C4C	addu   a0, a0, v0
-80026C50	lui    v0, $8005
-80026C54	lw     v0, $efe0(v0)
-80026C58	sll    a0, a0, $03
-80026C5C	addu   a0, a0, v0
-80026C60	lw     v0, $fffc(a0)
-80026C64	nop
-80026C68	subu   v0, zero, v0
-80026C6C	bgtz   v0, L26c7c [$80026c7c]
-80026C70	sll    v0, v0, $10
-80026C74	j      L26c80 [$80026c80]
-80026C78	addu   v0, zero, zero
 
-L26c7c:	; 80026C7C
-80026C7C	sra    v0, v0, $10
+////////////////////////////////
+// system_cdrom2_get_number_of_files_in_dir()
+// 80026C40-80026C84
 
-L26c80:	; 80026C80
-80026C80	jr     ra 
-80026C84	nop
+V0 = w[8004eff0];
+A0 = A0 + V0;
+V0 = w[8004efe0];
+num_of_files = 0 - w[V0 + A0 * 8 - 4];
+if( num_of_files > 0 )
+{
+    return (num_of_files << 10) >> 10;
+}
+return 0;
+////////////////////////////////
 
 
-func26c88:	; 80026C88
-80026C88	lui    v1, $8005
-80026C8C	lw     v1, $f034(v1)
-80026C90	nop
-80026C94	beq    v1, zero, L26cb8 [$80026cb8]
-80026C98	addu   v0, zero, zero
-80026C9C	lui    v0, $8005
-80026CA0	lw     v0, $eff0(v0)
-80026CA4	nop
-80026CA8	addu   v0, a0, v0
-80026CAC	addiu  v0, v0, $ffff (=-$1)
-80026CB0	sll    v0, v0, $06
-80026CB4	addu   v0, v0, v1
 
-L26cb8:	; 80026CB8
-80026CB8	jr     ra 
-80026CBC	nop
+////////////////////////////////
+// system_cdrom2_get_debug_filename()
+// 80026C88-80026CBC
 
-80026CC0	lui    v0, $8005
-80026CC4	lw     v0, $eff0(v0)
-80026CC8	nop
-80026CCC	addu   a0, a0, v0
-80026CD0	lui    v0, $8005
-80026CD4	lw     v0, $efe0(v0)
-80026CD8	sll    a0, a0, $03
-80026CDC	addu   a0, a0, v0
-80026CE0	lw     v0, $fff8(a0)
-80026CE4	jr     ra 
-80026CE8	nop
+if( w[8004f034] != 0 ) // PC HDD MODE
+{
+    return w[8004f034] + (w[8004eff0] + A0 - 1) * 40;
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// 80026CC0-80026CE8
+
+V0 = w[8004eff0];
+A0 = A0 + V0;
+V0 = w[8004efe0];
+A0 = A0 * 8;
+A0 = A0 + V0;
+return w[A0 - 8];
+////////////////////////////////
+
 
 
 system_cdrom_action_sync:	; 80026CEC
@@ -26132,7 +26118,7 @@ L26f00:	; 80026F00
 loop26f2c:	; 80026F2C
 80026F2C	lui    a0, $8005
 80026F30	lw     a0, $f038(a0)
-80026F34	jal    func4be44 [$8004be44]
+80026F34	jal    system_devkit_pc_close [$8004be44]
 80026F38	nop
 80026F3C	beq    v0, zero, L26f64 [$80026f64]
 80026F40	addu   a0, s0, zero
@@ -26168,7 +26154,7 @@ L26f64:	; 80026F64
 80026FB0	nop
 80026FB4	beq    v0, zero, L2703c [$8002703c]
 80026FB8	nop
-80026FBC	jal    func26c88 [$80026c88]
+80026FBC	jal    system_cdrom2_get_debug_filename [$80026c88]
 80026FC0	addu   a0, s1, zero
 80026FC4	addu   s3, v0, zero
 80026FC8	addu   s0, zero, zero
@@ -26177,7 +26163,7 @@ L26f64:	; 80026F64
 
 loop26fd4:	; 80026FD4
 80026FD4	addu   a1, zero, zero
-80026FD8	jal    func4be24 [$8004be24]
+80026FD8	jal    system_devkit_pc_open [$8004be24]
 80026FDC	addu   a2, zero, zero
 80026FE0	lui    at, $8005
 80026FE4	sw     v0, $f038(at)
@@ -26513,7 +26499,7 @@ L273f4:	; 800273F4
 80027450	ori    a1, zero, $0118
 80027454	lui    a0, $8005
 80027458	lw     a0, $f038(a0)
-8002745C	jal    func4be54 [$8004be54]
+8002745C	jal    system_devkit_pc_seek [$8004be54]
 80027460	ori    a2, zero, $0001
 
 L27464:	; 80027464
@@ -26555,7 +26541,7 @@ L274d8:	; 800274D8
 800274E0	ori    a1, zero, $0918
 
 L274e4:	; 800274E4
-800274E4	jal    func4be54 [$8004be54]
+800274E4	jal    system_devkit_pc_seek [$8004be54]
 800274E8	ori    a2, zero, $0001
 800274EC	j      L27610 [$80027610]
 800274F0	sw     zero, $0000(s7)
@@ -26610,7 +26596,7 @@ L274f4:	; 800274F4
 800275AC	ori    a1, zero, $0118
 800275B0	lui    a0, $8005
 800275B4	lw     a0, $f038(a0)
-800275B8	jal    func4be54 [$8004be54]
+800275B8	jal    system_devkit_pc_seek [$8004be54]
 800275BC	ori    a2, zero, $0001
 
 L275c0:	; 800275C0
@@ -26806,7 +26792,7 @@ system_cdrom2_load_file_by_file_sector:	; 800277E4
 80027830	sw     s0, $efd8(at)
 80027834	lui    at, $8005
 80027838	sw     s1, $efcc(at)
-8002783C	jal    func2795c [$8002795c]
+8002783C	jal    system_cdrom2_load_file_inner [$8002795c]
 80027840	addu   a2, s3, zero
 80027844	j      L27850 [$80027850]
 80027848	nop
@@ -26879,7 +26865,7 @@ L278d8:	; 800278D8
 80027928	addu   a2, s2, zero
 8002792C	lui    at, $8005
 80027930	sw     v0, $efcc(at)
-80027934	jal    func2795c [$8002795c]
+80027934	jal    system_cdrom2_load_file_inner [$8002795c]
 80027938	addu   a3, s3, zero
 
 L2793c:	; 8002793C
@@ -26893,7 +26879,7 @@ L2793c:	; 8002793C
 80027958	nop
 
 
-func2795c:	; 8002795C
+system_cdrom2_load_file_inner:	; 8002795C
 8002795C	addiu  sp, sp, $ffd8 (=-$28)
 80027960	sw     s3, $001c(sp)
 80027964	addu   s3, a0, zero
@@ -26973,7 +26959,7 @@ loop27990:	; 80027990
 80027A84	nop
 80027A88	beq    v0, zero, L27aec [$80027aec]
 80027A8C	nop
-80027A90	jal    func26c88 [$80026c88]
+80027A90	jal    system_cdrom2_get_debug_filename [$80026c88]
 80027A94	addu   a0, s3, zero
 80027A98	addu   s1, v0, zero
 80027A9C	addu   s0, zero, zero
@@ -26982,7 +26968,7 @@ loop27990:	; 80027990
 
 loop27aa8:	; 80027AA8
 80027AA8	addu   a1, zero, zero
-80027AAC	jal    func4be24 [$8004be24]
+80027AAC	jal    system_devkit_pc_open [$8004be24]
 80027AB0	addu   a2, zero, zero
 80027AB4	lui    at, $8005
 80027AB8	sw     v0, $f038(at)
@@ -27061,7 +27047,7 @@ loop27ba4:	; 80027BA4
 80027BC4	ori    v0, s1, $00a0
 80027BC8	beq    v1, zero, L27c44 [$80027c44]
 80027BCC	sb     v0, $0000(s0)
-80027BD0	jal    func26c88 [$80026c88]
+80027BD0	jal    system_cdrom2_get_debug_filename [$80026c88]
 80027BD4	addu   a0, s3, zero
 80027BD8	addu   s1, v0, zero
 80027BDC	addu   s0, zero, zero
@@ -27070,7 +27056,7 @@ loop27ba4:	; 80027BA4
 
 loop27be8:	; 80027BE8
 80027BE8	addu   a1, zero, zero
-80027BEC	jal    func4be24 [$8004be24]
+80027BEC	jal    system_devkit_pc_open [$8004be24]
 80027BF0	addu   a2, zero, zero
 80027BF4	lui    at, $8005
 80027BF8	sw     v0, $f038(at)
@@ -27134,7 +27120,7 @@ L27cc0:	; 80027CC0
 80027CC8	nop
 80027CCC	beq    v0, zero, L27dd0 [$80027dd0]
 80027CD0	nop
-80027CD4	jal    func26c88 [$80026c88]
+80027CD4	jal    system_cdrom2_get_debug_filename [$80026c88]
 80027CD8	addu   a0, s3, zero
 80027CDC	addu   s3, v0, zero
 80027CE0	addu   s0, zero, zero
@@ -27143,7 +27129,7 @@ L27cc0:	; 80027CC0
 
 loop27cec:	; 80027CEC
 80027CEC	addu   a1, zero, zero
-80027CF0	jal    func4be24 [$8004be24]
+80027CF0	jal    system_devkit_pc_open [$8004be24]
 80027CF4	addu   a2, zero, zero
 80027CF8	addu   s1, v0, zero
 80027CFC	bne    s1, s4, L27d38 [$80027d38]
@@ -27189,7 +27175,7 @@ L27d7c:	; 80027D7C
 80027D7C	addu   s0, zero, zero
 
 loop27d80:	; 80027D80
-80027D80	jal    func4be44 [$8004be44]
+80027D80	jal    system_devkit_pc_close [$8004be44]
 80027D84	addu   a0, s1, zero
 80027D88	beq    v0, zero, L27db8 [$80027db8]
 80027D8C	addu   a0, s0, zero
@@ -27236,7 +27222,7 @@ L27df8:	; 80027DF8
 80027E18	sw     v0, $964c(at)
 
 L27e1c:	; 80027E1C
-80027E1C	jal    func40d60 [$80040d60]
+80027E1C	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80027E20	nop
 80027E24	addu   v0, zero, zero
 
@@ -27447,7 +27433,7 @@ L28094:	; 80028094
 800280E0	nop
 800280E4	beq    v0, zero, L28160 [$80028160]
 800280E8	ori    v0, zero, $0001
-800280EC	jal    func26c88 [$80026c88]
+800280EC	jal    system_cdrom2_get_debug_filename [$80026c88]
 800280F0	addu   a0, s0, zero
 800280F4	addu   s0, v0, zero
 800280F8	addu   s1, zero, zero
@@ -27456,7 +27442,7 @@ L28094:	; 80028094
 
 loop28104:	; 80028104
 80028104	addu   a1, zero, zero
-80028108	jal    func4be24 [$8004be24]
+80028108	jal    system_devkit_pc_open [$8004be24]
 8002810C	addu   a2, zero, zero
 80028110	lui    at, $8005
 80028114	sw     v0, $f038(at)
@@ -27510,14 +27496,14 @@ L28198:	; 80028198
 loop281b8:	; 800281B8
 800281B8	lhu    s2, $0000(s3)
 800281BC	addu   s0, zero, zero
-800281C0	jal    func26c88 [$80026c88]
+800281C0	jal    system_cdrom2_get_debug_filename [$80026c88]
 800281C4	addu   a0, s2, zero
 800281C8	addu   s4, v0, zero
 800281CC	addu   a0, s4, zero
 
 loop281d0:	; 800281D0
 800281D0	addu   a1, zero, zero
-800281D4	jal    func4be24 [$8004be24]
+800281D4	jal    system_devkit_pc_open [$8004be24]
 800281D8	addu   a2, zero, zero
 800281DC	addu   s1, v0, zero
 800281E0	bne    s1, s7, L28210 [$80028210]
@@ -27562,7 +27548,7 @@ L28264:	; 80028264
 80028264	addu   s0, zero, zero
 
 L28268:	; 80028268
-80028268	jal    func4be44 [$8004be44]
+80028268	jal    system_devkit_pc_close [$8004be44]
 8002826C	addu   a0, s1, zero
 80028270	beq    v0, zero, L28298 [$80028298]
 80028274	addu   a0, s0, zero
@@ -27616,7 +27602,7 @@ L282fc:	; 800282FC
 80028314	addiu  v0, v0, $0001
 80028318	lui    at, $8006
 8002831C	sw     v0, $964c(at)
-80028320	jal    func40d60 [$80040d60]
+80028320	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80028324	addu   a1, s1, zero
 80028328	addu   v0, zero, zero
 
@@ -27791,7 +27777,7 @@ loop28434:	; 80028434
 800285AC	sw     zero, $efc0(at)
 800285B0	beq    v0, zero, L286b0 [$800286b0]
 800285B4	nop
-800285B8	jal    func26c88 [$80026c88]
+800285B8	jal    system_cdrom2_get_debug_filename [$80026c88]
 800285BC	addu   a0, s3, zero
 800285C0	addu   s1, v0, zero
 800285C4	addu   s0, zero, zero
@@ -27800,7 +27786,7 @@ loop28434:	; 80028434
 
 loop285d0:	; 800285D0
 800285D0	addu   a1, zero, zero
-800285D4	jal    func4be24 [$8004be24]
+800285D4	jal    system_devkit_pc_open [$8004be24]
 800285D8	addu   a2, zero, zero
 800285DC	lui    at, $8006
 800285E0	sw     v0, $911c(at)
@@ -27837,7 +27823,7 @@ loop28620:	; 80028620
 loop28648:	; 80028648
 80028648	lui    a0, $8006
 8002864C	lw     a0, $911c(a0)
-80028650	jal    func4be44 [$8004be44]
+80028650	jal    system_devkit_pc_close [$8004be44]
 80028654	nop
 80028658	addu   s0, v0, zero
 8002865C	sll    v0, s0, $10
@@ -27886,7 +27872,7 @@ L286b0:	; 800286B0
 800286F8	addiu  v0, v0, $0001
 800286FC	lui    at, $8006
 80028700	sw     v0, $964c(at)
-80028704	jal    func40d60 [$80040d60]
+80028704	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80028708	addu   a1, s0, zero
 8002870C	addu   v0, zero, zero
 
@@ -28033,7 +28019,7 @@ L288ec:	; 800288EC
 80028918	sw     zero, $efc0(at)
 8002891C	beq    v0, zero, L28a2c [$80028a2c]
 80028920	nop
-80028924	jal    func26c88 [$80026c88]
+80028924	jal    system_cdrom2_get_debug_filename [$80026c88]
 80028928	addu   a0, s3, zero
 8002892C	lui    v1, $8005
 80028930	lw     v1, $efd8(v1)
@@ -28060,7 +28046,7 @@ L2896c:	; 8002896C
 
 loop28974:	; 80028974
 80028974	addu   a1, zero, zero
-80028978	jal    func4be24 [$8004be24]
+80028978	jal    system_devkit_pc_open [$8004be24]
 8002897C	addu   a2, zero, zero
 80028980	lui    at, $8006
 80028984	sw     v0, $911c(at)
@@ -28090,7 +28076,7 @@ loop289b4:	; 800289B4
 loop289d0:	; 800289D0
 800289D0	lui    a0, $8006
 800289D4	lw     a0, $911c(a0)
-800289D8	jal    func4be44 [$8004be44]
+800289D8	jal    system_devkit_pc_close [$8004be44]
 800289DC	nop
 800289E0	addu   s0, v0, zero
 800289E4	beq    s0, zero, L28a14 [$80028a14]
@@ -28134,7 +28120,7 @@ L28a2c:	; 80028A2C
 80028A6C	addiu  v0, v0, $0001
 80028A70	lui    at, $8006
 80028A74	sw     v0, $964c(at)
-80028A78	jal    func40d60 [$80040d60]
+80028A78	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80028A7C	addu   a1, s1, zero
 80028A80	addu   v0, zero, zero
 
@@ -28464,7 +28450,7 @@ L28eb4:	; 80028EB4
 80028ED4	addu   a1, zero, zero
 
 L28ed8:	; 80028ED8
-80028ED8	jal    func40d60 [$80040d60]
+80028ED8	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80028EDC	nop
 
 L28ee0:	; 80028EE0
@@ -28515,7 +28501,7 @@ L28f5c:	; 80028F5C
 80028F7C	addu   a1, zero, zero
 
 L28f80:	; 80028F80
-80028F80	jal    func40d60 [$80040d60]
+80028F80	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80028F84	nop
 80028F88	lw     ra, $0014(sp)
 80028F8C	lw     s0, $0010(sp)
@@ -28548,7 +28534,7 @@ loop28fd4:	; 80028FD4
 80028FE4	lui    a1, $8006
 80028FE8	addiu  a1, a1, $9124 (=-$6edc)
 80028FEC	sb     s0, $0000(a1)
-80028FF0	jal    func40d60 [$80040d60]
+80028FF0	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80028FF4	ori    a0, zero, $000e
 80028FF8	lw     ra, $0014(sp)
 80028FFC	lw     s0, $0010(sp)
@@ -28581,7 +28567,7 @@ func2900c:	; 8002900C
 loop29058:	; 80029058
 80029058	lui    a0, $8005
 8002905C	lw     a0, $f038(a0)
-80029060	jal    func4be44 [$8004be44]
+80029060	jal    system_devkit_pc_close [$8004be44]
 80029064	nop
 80029068	beq    v0, zero, L2907c [$8002907c]
 8002906C	addiu  v0, v0, $0001
@@ -28641,7 +28627,7 @@ L290dc:	; 800290DC
 8002910C	sw     ra, $0030(sp)
 80029110	sw     s3, $0024(sp)
 80029114	sw     s1, $001c(sp)
-80029118	jal    func26c40 [$80026c40]
+80029118	jal    system_cdrom2_get_number_of_files_in_dir [$80026c40]
 8002911C	sw     s0, $0018(sp)
 80029120	sll    v0, v0, $10
 80029124	sra    s3, v0, $10
@@ -29105,7 +29091,7 @@ L297a0:	; 800297A0
 800297A0	addu   a1, zero, zero
 
 L297a4:	; 800297A4
-800297A4	jal    func40d60 [$80040d60]
+800297A4	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 800297A8	nop
 
 L297ac:	; 800297AC
@@ -29428,7 +29414,7 @@ L29c08:	; 80029C08
 80029C20	ori    a0, zero, $0001
 
 L29c24:	; 80029C24
-80029C24	jal    func40d60 [$80040d60]
+80029C24	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80029C28	addu   a1, zero, zero
 
 L29c2c:	; 80029C2C
@@ -29663,7 +29649,7 @@ L29f24:	; 80029F24
 80029F70	jal    func40bf8 [$80040bf8]
 80029F74	nop
 80029F78	ori    a0, zero, $0009
-80029F7C	jal    func40d60 [$80040d60]
+80029F7C	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80029F80	addu   a1, zero, zero
 80029F84	lui    v0, $8005
 80029F88	lw     v0, $efd4(v0)
@@ -29748,7 +29734,7 @@ L2a074:	; 8002A074
 8002A084	jal    func40bf8 [$80040bf8]
 8002A088	nop
 8002A08C	ori    a0, zero, $0001
-8002A090	jal    func40d60 [$80040d60]
+8002A090	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 8002A094	addu   a1, zero, zero
 
 L2a098:	; 8002A098
@@ -29943,7 +29929,7 @@ L2a314:	; 8002A314
 8002A324	jal    func40bf8 [$80040bf8]
 8002A328	nop
 8002A32C	ori    a0, zero, $0001
-8002A330	jal    func40d60 [$80040d60]
+8002A330	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 8002A334	addu   a1, zero, zero
 
 L2a338:	; 8002A338
@@ -30165,7 +30151,7 @@ L2a618:	; 8002A618
 8002A628	jal    func40bf8 [$80040bf8]
 8002A62C	nop
 8002A630	ori    a0, zero, $0001
-8002A634	jal    func40d60 [$80040d60]
+8002A634	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 8002A638	addu   a1, zero, zero
 
 L2a63c:	; 8002A63C
@@ -30579,7 +30565,7 @@ L2abe4:	; 8002ABE4
 8002ABF4	jal    func40bf8 [$80040bf8]
 8002ABF8	nop
 8002ABFC	ori    a0, zero, $0001
-8002AC00	jal    func40d60 [$80040d60]
+8002AC00	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 8002AC04	addu   a1, zero, zero
 
 L2ac08:	; 8002AC08
@@ -30805,7 +30791,7 @@ L2aef8:	; 8002AEF8
 8002AF08	jal    func40bf8 [$80040bf8]
 8002AF0C	nop
 8002AF10	ori    a0, zero, $0001
-8002AF14	jal    func40d60 [$80040d60]
+8002AF14	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 8002AF18	addu   a1, zero, zero
 
 L2af1c:	; 8002AF1C
@@ -31194,7 +31180,7 @@ L2b434:	; 8002B434
 8002B44C	ori    a0, zero, $0001
 
 L2b450:	; 8002B450
-8002B450	jal    func40d60 [$80040d60]
+8002B450	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 8002B454	addu   a1, zero, zero
 
 L2b458:	; 8002B458
@@ -38263,19 +38249,19 @@ func316d0:	; 800316D0
 800317E4	sw     s1, $0014(sp)
 800317E8	addu   a0, s0, zero
 800317EC	addu   a1, zero, zero
-800317F0	jal    func4be24 [$8004be24]
+800317F0	jal    system_devkit_pc_open [$8004be24]
 800317F4	addu   a2, zero, zero
 800317F8	addu   s3, v0, zero
 800317FC	addiu  v0, zero, $ffff (=-$1)
 80031800	beq    s3, v0, L318dc [$800318dc]
 80031804	addu   a0, s3, zero
 80031808	addu   a1, zero, zero
-8003180C	jal    func4be54 [$8004be54]
+8003180C	jal    system_devkit_pc_seek [$8004be54]
 80031810	ori    a2, zero, $0002
 80031814	addu   s1, v0, zero
 80031818	addu   a0, s3, zero
 8003181C	addu   a1, zero, zero
-80031820	jal    func4be54 [$8004be54]
+80031820	jal    system_devkit_pc_seek [$8004be54]
 80031824	addu   a2, zero, zero
 80031828	jal    func32388 [$80032388]
 8003182C	ori    a0, zero, $002e
@@ -38303,7 +38289,7 @@ L31860:	; 80031860
 80031874	addu   s0, s0, s2
 
 L31878:	; 80031878
-80031878	jal    func4be44 [$8004be44]
+80031878	jal    system_devkit_pc_close [$8004be44]
 8003187C	addu   a0, s3, zero
 80031880	lw     a0, $01ac(gp)
 80031884	nop
@@ -39903,7 +39889,7 @@ func32cdc:	; 80032CDC
 80032D2C	addiu  v0, v0, $78b0
 80032D30	lui    at, $8006
 80032D34	sw     v0, $84ac(at)
-80032D38	jal    func4be44 [$8004be44]
+80032D38	jal    system_devkit_pc_close [$8004be44]
 80032D3C	nop
 80032D40	lw     ra, $0014(sp)
 80032D44	lw     s0, $0010(sp)
@@ -43576,7 +43562,7 @@ func35d5c:	; 80035D5C
 80035E0C	mflo   a3
 80035E10	jal    func4bf7c [$8004bf7c]
 80035E14	sll    a2, a3, $01
-80035E18	jal    func4be44 [$8004be44]
+80035E18	jal    system_devkit_pc_close [$8004be44]
 80035E1C	addu   a0, s1, zero
 80035E20	lw     ra, $0030(sp)
 80035E24	lw     s1, $002c(sp)
@@ -43652,7 +43638,7 @@ L35eec:	; 80035EEC
 80035F28	sll    a2, s1, $01
 80035F2C	jal    func4bf7c [$8004bf7c]
 80035F30	addu   a2, a2, s1
-80035F34	jal    func4be44 [$8004be44]
+80035F34	jal    system_devkit_pc_close [$8004be44]
 80035F38	addu   a0, s0, zero
 80035F3C	addu   v0, zero, zero
 
@@ -45631,7 +45617,7 @@ func378c0:	; 800378C0
 8003791C	ori    a0, zero, $0004
 80037920	jal    func32368 [$80032368]
 80037924	addu   a1, zero, zero
-80037928	jal    func26c40 [$80026c40]
+80037928	jal    system_cdrom2_get_number_of_files_in_dir [$80026c40]
 8003792C	ori    a0, zero, $0005
 80037930	sll    v0, v0, $10
 80037934	sra    v1, v0, $10
@@ -57083,7 +57069,7 @@ L40d30:	; 80040D30
 80040D5C	nop
 
 
-func40d60:	; 80040D60
+system_cdrom_cdl_command_exec_without_ret:	; 80040D60
 80040D60	addiu  sp, sp, $ffd0 (=-$30)
 80040D64	sw     s1, $0014(sp)
 80040D68	addu   s1, a1, zero
@@ -59499,7 +59485,7 @@ L42d68:	; 80042D68
 80042DB0	addiu  a0, zero, $0009
 
 L42db4:	; 80042DB4
-80042DB4	jal    func40d60 [$80040d60]
+80042DB4	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80042DB8	addu   a1, zero, zero
 80042DBC	lui    v1, $8005
 80042DC0	lw     v1, $5a10(v1)
@@ -59574,7 +59560,7 @@ L42df0:	; 80042DF0
 80042EC0	addiu  a0, zero, $0009
 
 L42ec4:	; 80042EC4
-80042EC4	jal    func40d60 [$80040d60]
+80042EC4	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80042EC8	addu   a1, zero, zero
 80042ECC	lui    v0, $8005
 80042ED0	lw     v0, $5a10(v0)
@@ -59631,7 +59617,7 @@ L42f48:	; 80042F48
 80042F80	addiu  a0, zero, $0001
 
 L42f84:	; 80042F84
-80042F84	jal    func40d60 [$80040d60]
+80042F84	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80042F88	addu   a1, zero, zero
 80042F8C	jal    func4af78 [$8004af78]
 80042F90	addiu  a0, zero, $ffff (=-$1)
@@ -59722,7 +59708,7 @@ L430b4:	; 800430B4
 800430BC	addu   a1, zero, zero
 800430C0	lui    at, $8005
 800430C4	sw     v0, $5a1c(at)
-800430C8	jal    func40d60 [$80040d60]
+800430C8	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 800430CC	nop
 800430D0	lui    v0, $8005
 800430D4	lw     v0, $5a14(v0)
@@ -59780,7 +59766,7 @@ L43144:	; 80043144
 80043190	addiu  a0, zero, $0009
 
 L43194:	; 80043194
-80043194	jal    func40d60 [$80040d60]
+80043194	jal    system_cdrom_cdl_command_exec_without_ret [$80040d60]
 80043198	addu   a1, zero, zero
 8004319C	lw     ra, $0014(sp)
 800431A0	lw     s0, $0010(sp)
@@ -70122,7 +70108,7 @@ L4be14:	; 8004BE14
 8004BE20	nop
 
 
-func4be24:	; 8004BE24
+system_devkit_pc_open:	; 8004BE24
 8004BE24	addu   a2, a1, zero
 8004BE28	addu   a1, a0, zero
 8004BE2C	break   $00103
@@ -70135,14 +70121,14 @@ L4be3c:	; 8004BE3C
 8004BE40	nop
 
 
-func4be44:	; 8004BE44
+system_devkit_pc_close:	; 8004BE44
 8004BE44	addu   a1, a0, zero
 8004BE48	break   $00104
 8004BE4C	jr     ra 
 8004BE50	nop
 
 
-func4be54:	; 8004BE54
+system_devkit_pc_seek:	; 8004BE54
 8004BE54	addu   a3, a2, zero
 8004BE58	addu   a2, a1, zero
 8004BE5C	addu   a1, a0, zero
