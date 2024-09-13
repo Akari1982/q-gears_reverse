@@ -283,6 +283,7 @@ Actor_0x07:event_0x05:
 0x031d    -- 0xF2()
 0x0326    op26_Wait( time=30 )
 0x0329    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x0, flags=0 )
+0x032e    op9C_MessageSync()
 0x032f    -- 0x9B( ???=12, ???=12 )
 0x0334    -- 0x60()
 0x0335    -- 0x64() -- exp0x1
@@ -293,6 +294,7 @@ Actor_0x07:event_0x05:
 0x034e    opEF_MoveCameraSync()
 0x0351    op26_Wait( time=10 )
 0x0354    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1, flags=0 )
+0x0359    op9C_MessageSync()
 0x035a    op74_SoundPlayFixedVolume( sound_id=222 )
 0x035d    opF1_FadeSetUp( steps=2, r=23, g=158, b=200, semi_tr=12 )
 0x0368    opFE26_DistortionSetup( ???=5, ???=4, ???=128, ???=85, ???=146, ???=195, steps=16 )

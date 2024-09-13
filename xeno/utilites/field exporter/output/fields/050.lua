@@ -40,6 +40,7 @@ Actor_0x00:on_push:
 
 Actor_0x00:event_0x04:
 0x006a    opD4_MessageShowFromActor( actor_id=Actor_0x09, text_id=0x0, flags=FORCE_TOP )
+0x006f    op9C_MessageSync()
 0x0070    op00_Return()
 
 Actor_0x01:on_start:

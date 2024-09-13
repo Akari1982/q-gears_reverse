@@ -764,6 +764,7 @@ Actor_0x21:on_update:
 0x0551    op02_JumpToConditional( val1=(s)mem[0x3e], val2=7, condition="val1 == val2", address_if_false=0x55f )
 0x0559    -- 0xFE65()
 0x055f    opFC_MessageShowFromActorCopyFace( actor_id=party1, text_id=0x9, flags=FORCE_BOTTOM )
+0x0564    op9C_MessageSync()
 0x0565    -- 0xFE65()
 0x056b    op05_CallFunction( address=0x6cb )
 0x056e    op26_Wait( time=5 )
@@ -1610,4 +1611,4 @@ Actor_0x25:event_0x04:
 0x1b30    op05_CallFunction( address=0xe15 )
 0x1b33    opFE96_ParticleCreate()
 0x1b35    op00_Return()
-0x1b36    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb243, ???=(vf40)0x84d3, flag=0xab )
+0x1b36    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb63b, ???=(vf40)0x6f1a, flag=0xa0 )

@@ -130,6 +130,7 @@ Actor_0x02:event_0x04:
 0x0171    op26_Wait( time=100 )
 0x0174    opFE0D_MessageSetFace( char_id=64 )
 0x0178    opD4_MessageShowFromActor( actor_id=Actor_0x03, text_id=0x0, flags=CLOSE_OFF_SCREEN|0x80 )
+0x017d    op9C_MessageSync()
 0x017e    -- 0x60()
 0x017f    -- 0x64() -- exp0x1
 0x0180    -- 0x63( ???=785, ???=0, ???=0 ) -- exp0x1
@@ -311,15 +312,20 @@ Actor_0x05:on_push:
 
 Actor_0x05:event_0x04:
 0x035a    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x2, flags=NO_FACE )
+0x035f    op9C_MessageSync()
 0x0360    opFE0D_MessageSetFace( char_id=64 )
 0x0364    opD4_MessageShowFromActor( actor_id=Actor_0x03, text_id=0x3, flags=0x80 )
+0x0369    op9C_MessageSync()
 0x036a    op26_Wait( time=30 )
 0x036d    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x05, priority=0x00 )
 0x0370    opFE0D_MessageSetFace( char_id=64 )
 0x0374    opD4_MessageShowFromActor( actor_id=Actor_0x03, text_id=0x4, flags=0x80 )
+0x0379    op9C_MessageSync()
 0x037a    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x5, flags=NO_FACE )
+0x037f    op9C_MessageSync()
 0x0380    opFE0D_MessageSetFace( char_id=64 )
 0x0384    opD4_MessageShowFromActor( actor_id=Actor_0x03, text_id=0x6, flags=0x80 )
+0x0389    op9C_MessageSync()
 0x038a    -- 0x98_MapLoad( field_id=102, value=20 )
 0x038f    -- 0x5B()
 0x0390    op00_Return()
@@ -750,4 +756,4 @@ function:
 0x06ae    op25_ActorDisable( actor_id=Actor_0x06 )
 0x06b0    -- 0xFE3B()
 0x06b4    op0D_Return()
-0x06b5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x001b, flag=0x6a )
+0x06b5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x1a38, ???=(vf40)0x0304, flag=0x0 )

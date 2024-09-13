@@ -420,6 +420,7 @@ Actor_0x10:on_update:
 0x0353    -- 0xFE1C()
 0x035c    -- 0x89()
 0x0362    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0x14, flags=0 )
+0x0367    op9C_MessageSync()
 0x0368    -- 0x5B()
 0x0369    op00_Return()
 
@@ -513,6 +514,7 @@ Actor_0x12:on_talk:
 0x044e    op9C_MessageSync()
 0x044f    op07_CallActorEvent( actor_id=Actor_0x13, event=event_0x04, priority=0x03 )
 0x0452    opD4_MessageShowFromActor( actor_id=Actor_0x13, text_id=0x1c, flags=0 )
+0x0457    op9C_MessageSync()
 0x0458    op6F_ActorRotateToActor( actor_id=Actor_0x13 )
 0x045a    opD2_MessageShowDynamic( text_id=0x1d, flags=0 )
 0x045e    op9C_MessageSync()
@@ -593,6 +595,7 @@ Actor_0x14:on_talk:
 0x04fd    op9C_MessageSync()
 0x04fe    op26_Wait( time=10 )
 0x0501    opD4_MessageShowFromActor( actor_id=Actor_0x15, text_id=0x22, flags=0 )
+0x0506    op9C_MessageSync()
 0x0507    op00_Return()
 
 Actor_0x14:on_push:
@@ -742,6 +745,7 @@ Actor_0x19:on_update:
 0x067b    -- 0xF2()
 0x0684    mem[0x1c2] |= 1 << 13 -- op3a
 0x068a    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x27, flags=NO_FACE )
+0x068f    op9C_MessageSync()
 0x0690    -- 0x75( ???=11 )
 0x0693    op26_Wait( time=30 )
 0x0696    -- 0x28()

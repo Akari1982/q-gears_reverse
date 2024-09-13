@@ -89,7 +89,6 @@ Actor_0x00:on_update:
 0x0106    op9C_MessageSync()
 0x0107    op26_Wait( time=62 )
 0x010a    -- 0x12()
-0x010e    -- 0x80()
 0x0113    -- 0x5B()
 0x0114    op01_JumpTo( address=0x2ea )
 0x0117    op02_JumpToConditional( val1=mem[0x14c], val2=75, condition="val1 != val2", address_if_false=0x2cf )
@@ -191,7 +190,6 @@ Actor_0x00:on_update:
 0x02bd    op26_Wait( time=3 )
 0x02c0    op26_Wait( time=40 )
 0x02c3    -- 0x12()
-0x02c7    -- 0x80()
 0x02cc    op01_JumpTo( address=0x2ea )
 0x02cf    -- 0xFE54()
 0x02d1    op74_SoundPlayFixedVolume( sound_id=291 )
@@ -200,7 +198,6 @@ Actor_0x00:on_update:
 0x02da    op09_CallActorEventEndSync( actor_id=Actor_0x0b, event=event_0x04, priority=0x01 )
 0x02dd    op26_Wait( time=24 )
 0x02e0    -- 0x12()
-0x02e4    -- 0x80()
 0x02e9    -- 0x5B()
 0x02ea    op00_Return()
 

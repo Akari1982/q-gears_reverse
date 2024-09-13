@@ -64,6 +64,7 @@ Actor_0x00:on_update:
 0x010c    opAC_MoveCamera( control=0x1, steps=100 )
 0x0110    opEF_MoveCameraSync()
 0x0113    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x0, flags=CLOSE_OFF_SCREEN )
+0x0118    op9C_MessageSync()
 0x0119    -- 0x60()
 0x011a    -- 0x64() -- exp0x1
 0x011b    -- 0x63( ???=1686, ???=298, ???=-212 ) -- exp0x1
@@ -2195,4 +2196,4 @@ Actor_0x12:on_push:
 0x4b13    op74_SoundPlayFixedVolume( sound_id=80 )
 0x4b16    mem[0x450] = true -- op36
 0x4b19    op00_Return()
-0x4b1a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x4b1a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb7d2, ???=(vf40)0x871a, flag=0x0 )

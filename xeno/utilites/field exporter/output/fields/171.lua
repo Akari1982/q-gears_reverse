@@ -166,8 +166,10 @@ Actor_0x02:event_0x07:
 0x01b7    opEF_MoveCameraSync()
 0x01ba    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x04, priority=0x00 )
 0x01bd    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x0, flags=0 )
+0x01c2    op9C_MessageSync()
 0x01c3    opFE0D_MessageSetFace( char_id=18 )
 0x01c7    opD4_MessageShowFromActor( actor_id=Actor_0x0e, text_id=0x1, flags=0 )
+0x01cc    op9C_MessageSync()
 0x01cd    -- 0x60()
 0x01ce    -- 0x64() -- exp0x1
 0x01cf    -- 0x63( ???=5163, ???=1410, ???=-2654 ) -- exp0x1
@@ -198,56 +200,70 @@ Actor_0x03:event_0x04:
 0x0207    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=256 )
 0x0212    opFE0D_MessageSetFace( char_id=64 )
 0x0216    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x2, flags=0 )
+0x021b    op9C_MessageSync()
 0x021c    mem[0xbc] = 1 -- op35
 0x0222    op05_CallFunction( address=0x30f )
 0x0225    op26_Wait( time=30 )
 0x0228    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x3, flags=0 )
+0x022d    op9C_MessageSync()
 0x022e    mem[0xbc] = 2 -- op35
 0x0234    opFE0D_MessageSetFace( char_id=26 )
 0x0238    op05_CallFunction( address=0x30f )
 0x023b    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0x4, flags=0 )
+0x0240    op9C_MessageSync()
 0x0241    mem[0xbc] = 3 -- op35
 0x0247    op05_CallFunction( address=0x30f )
 0x024a    opFE0D_MessageSetFace( char_id=64 )
 0x024e    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x5, flags=0 )
+0x0253    op9C_MessageSync()
 0x0254    mem[0xbc] = 4 -- op35
 0x025a    op05_CallFunction( address=0x30f )
 0x025d    opFE0D_MessageSetFace( char_id=26 )
 0x0261    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0x6, flags=0 )
+0x0266    op9C_MessageSync()
 0x0267    mem[0xbc] = 5 -- op35
 0x026d    op05_CallFunction( address=0x30f )
 0x0270    opFE0D_MessageSetFace( char_id=64 )
 0x0274    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x7, flags=0 )
+0x0279    op9C_MessageSync()
 0x027a    mem[0xbc] = 6 -- op35
 0x0280    op05_CallFunction( address=0x30f )
 0x0283    opFE0D_MessageSetFace( char_id=26 )
 0x0287    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0x8, flags=0 )
+0x028c    op9C_MessageSync()
 0x028d    mem[0xbc] = 7 -- op35
 0x0293    op05_CallFunction( address=0x30f )
 0x0296    opFE0D_MessageSetFace( char_id=64 )
 0x029a    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x9, flags=0 )
+0x029f    op9C_MessageSync()
 0x02a0    mem[0xbc] = 8 -- op35
 0x02a6    op05_CallFunction( address=0x30f )
 0x02a9    opFE0D_MessageSetFace( char_id=26 )
 0x02ad    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0xa, flags=0 )
+0x02b2    op9C_MessageSync()
 0x02b3    mem[0xbc] = 9 -- op35
 0x02b9    op05_CallFunction( address=0x30f )
 0x02bc    opFE0D_MessageSetFace( char_id=64 )
 0x02c0    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0xb, flags=0 )
+0x02c5    op9C_MessageSync()
 0x02c6    mem[0xbc] = 10 -- op35
 0x02cc    op05_CallFunction( address=0x30f )
 0x02cf    opFE0D_MessageSetFace( char_id=26 )
 0x02d3    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0xc, flags=0 )
+0x02d8    op9C_MessageSync()
 0x02d9    mem[0xbc] = 11 -- op35
 0x02df    op05_CallFunction( address=0x30f )
 0x02e2    opFE0D_MessageSetFace( char_id=28 )
 0x02e6    opD4_MessageShowFromActor( actor_id=Actor_0x10, text_id=0xd, flags=0 )
+0x02eb    op9C_MessageSync()
 0x02ec    mem[0xbc] = 12 -- op35
 0x02f2    op05_CallFunction( address=0x30f )
 0x02f5    opFE0D_MessageSetFace( char_id=26 )
 0x02f9    opD4_MessageShowFromActor( actor_id=Actor_0x0f, text_id=0xe, flags=0 )
+0x02fe    op9C_MessageSync()
 0x02ff    opFE0D_MessageSetFace( char_id=28 )
 0x0303    opD4_MessageShowFromActor( actor_id=Actor_0x10, text_id=0xf, flags=0 )
+0x0308    op9C_MessageSync()
 0x0309    mem[0xbc] = 13 -- op35
 
 function:
@@ -298,16 +314,20 @@ Actor_0x04:on_push:
 Actor_0x04:event_0x04:
 0x0334    op2C_SpritePlayAnim( anim_id=0x0 )
 0x0336    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x10, flags=0 )
+0x033b    op9C_MessageSync()
 0x033c    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x07, priority=0x00 )
 0x033f    op00_Return()
 
 Actor_0x04:event_0x05:
 0x0340    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x07, text_id=0x11, flags=0 )
+0x0345    op9C_MessageSync()
 0x0346    -- 0xFE17()
 0x034a    opFE0D_MessageSetFace( char_id=18 )
 0x034e    opD4_MessageShowFromActor( actor_id=Actor_0x0e, text_id=0x12, flags=0 )
+0x0353    op9C_MessageSync()
 0x0354    opFE0D_MessageSetFace( char_id=0 )
 0x0358    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x13, flags=0 )
+0x035d    op9C_MessageSync()
 0x035e    op2C_SpritePlayAnim( anim_id=0x2 )
 0x0360    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x04, priority=0x00 )
 0x0363    op07_CallActorEvent( actor_id=Actor_0x0e, event=event_0x04, priority=0x00 )
@@ -542,11 +562,13 @@ Actor_0x0f:event_0x05:
 0x04a0    op9C_MessageSync()
 0x04a1    opFE0D_MessageSetFace( char_id=63 )
 0x04a5    opD4_MessageShowFromActor( actor_id=Actor_0x12, text_id=0x15, flags=0x80 )
+0x04aa    op9C_MessageSync()
 0x04ab    opFE0D_MessageSetFace( char_id=26 )
 0x04af    opD2_MessageShowDynamic( text_id=0x16, flags=0x80 )
 0x04b3    op9C_MessageSync()
 0x04b4    opFE0D_MessageSetFace( char_id=63 )
 0x04b8    opD4_MessageShowFromActor( actor_id=Actor_0x12, text_id=0x17, flags=0x80 )
+0x04bd    op9C_MessageSync()
 0x04be    mem[0x400] = 3 -- op35
 0x04c4    opFE0D_MessageSetFace( char_id=26 )
 0x04c8    opD2_MessageShowDynamic( text_id=0x18, flags=0x80 )

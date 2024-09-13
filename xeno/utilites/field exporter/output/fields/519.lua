@@ -34,6 +34,7 @@ Actor_0x00:event_0x04:
 0x0054    op74_SoundPlayFixedVolume( sound_id=269 )
 0x0057    -- 0xFE65()
 0x005d    opD4_MessageShowFromActor( actor_id=Actor_0x3a, text_id=0x0, flags=0 )
+0x0062    op9C_MessageSync()
 0x0063    op00_Return()
 
 Actor_0x01:on_start:
@@ -408,6 +409,7 @@ Actor_0x05:on_update:
 0x03db    -- 0xFE54()
 0x03dd    op07_CallActorEvent( actor_id=Actor_0x41, event=event_0x06, priority=0x02 )
 0x03e0    opD4_MessageShowFromActor( actor_id=Actor_0x3a, text_id=0x1, flags=CLOSE_OFF_SCREEN )
+0x03e5    op9C_MessageSync()
 0x03e6    op99()
 0x03e7    -- 0x60()
 0x03e8    -- 0x64() -- exp0x1
@@ -419,7 +421,9 @@ Actor_0x05:on_update:
 0x03fe    op26_Wait( time=15 )
 0x0401    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x07, priority=0x03 )
 0x0404    opD4_MessageShowFromActor( actor_id=Actor_0x3a, text_id=0x2, flags=FORCE_BOTTOM )
+0x0409    op9C_MessageSync()
 0x040a    opD4_MessageShowFromActor( actor_id=Actor_0x3a, text_id=0x3, flags=0 )
+0x040f    op9C_MessageSync()
 0x0410    op07_CallActorEvent( actor_id=Actor_0x3a, event=event_0x04, priority=0x03 )
 0x0413    op09_CallActorEventEndSync( actor_id=Actor_0x41, event=event_0x07, priority=0x02 )
 0x0416    op09_CallActorEventEndSync( actor_id=Actor_0x3a, event=event_0x05, priority=0x02 )
@@ -1685,6 +1689,7 @@ Actor_0x37:on_talk:
 0x0eba    op9C_MessageSync()
 0x0ebb    op26_Wait( time=10 )
 0x0ebe    opD4_MessageShowFromActor( actor_id=Actor_0x38, text_id=0xf, flags=0 )
+0x0ec3    op9C_MessageSync()
 0x0ec4    op00_Return()
 
 Actor_0x37:on_push:
@@ -2215,4 +2220,4 @@ Actor_0x43:on_push:
 0x14ed    opFE42( ???=1 )
 0x14f1    opFE42( ???=2 )
 0x14f5    op0D_Return()
-0x14f6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x14f6    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x5900, ???=(vf40)0x3379, flag=0x0 )

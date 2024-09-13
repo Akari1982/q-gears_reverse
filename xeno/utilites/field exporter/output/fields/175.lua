@@ -68,6 +68,7 @@ Actor_0x00:on_update:
 0x00db    op07_CallActorEvent( actor_id=Actor_0x08, event=event_0x04, priority=0x03 )
 0x00de    op09_CallActorEventEndSync( actor_id=Actor_0x09, event=event_0x04, priority=0x03 )
 0x00e1    opD4_MessageShowFromActor( actor_id=Actor_0x05, text_id=0x0, flags=CLOSE_OFF_SCREEN )
+0x00e6    op9C_MessageSync()
 0x00e7    -- 0xFE54()
 0x00e9    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x03 )
 0x00ec    op07_CallActorEvent( actor_id=Actor_0x06, event=event_0x05, priority=0x03 )
@@ -2856,4 +2857,4 @@ Actor_0x0c:on_talk:
 
 Actor_0x0c:on_push:
 0x51b6    op00_Return()
-0x51b7    -- 0xE0( actor_id=Actor_0x60, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x51b7    -- 0xE0( actor_id=Actor_0x2b, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

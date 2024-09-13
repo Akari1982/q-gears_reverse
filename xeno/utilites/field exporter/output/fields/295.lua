@@ -340,6 +340,7 @@ Actor_0x0c:on_talk:
 0x02cd    -- 0x85()
 0x02d2    op6F_ActorRotateToActor( actor_id=party1 )
 0x02d4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0xb, flags=0 )
+0x02d9    op9C_MessageSync()
 0x02da    opFE0D_MessageSetFace( char_id=252 )
 0x02de    opD2_MessageShowDynamic( text_id=0xc, flags=NO_FACE )
 0x02e2    op9C_MessageSync()
@@ -528,6 +529,7 @@ Actor_0x0d:on_talk:
 0x04c7    -- 0xFE17()
 0x04cb    op26_Wait( time=10 )
 0x04ce    opD4_MessageShowFromActor( actor_id=Actor_0x0e, text_id=0x25, flags=0 )
+0x04d3    op9C_MessageSync()
 0x04d4    mem[0x402] = false -- op37
 0x04d7    op2C_SpritePlayAnim( anim_id=0xff )
 0x04d9    op00_Return()
@@ -542,6 +544,7 @@ Actor_0x0d:on_talk:
 0x04f1    -- 0xFE17()
 0x04f5    op26_Wait( time=10 )
 0x04f8    opD4_MessageShowFromActor( actor_id=Actor_0x0e, text_id=0x28, flags=0 )
+0x04fd    op9C_MessageSync()
 0x04fe    op2C_SpritePlayAnim( anim_id=0xff )
 0x0500    op00_Return()
 0x0501    -- 0x85()
@@ -595,6 +598,7 @@ function:
 0x057b    -- 0xFE17()
 0x057f    op26_Wait( time=10 )
 0x0582    opD4_MessageShowFromActor( actor_id=Actor_0x0e, text_id=0x30, flags=CLOSE_OFF_SCREEN )
+0x0587    op9C_MessageSync()
 0x0588    mem[0x402] = false -- op37
 0x058b    mem[0x1c8] |= 1 << 7 -- op3a
 0x0591    -- 0xFE54()
@@ -635,6 +639,7 @@ Actor_0x0e:on_update:
 0x0615    -- 0xFE17()
 0x0619    op26_Wait( time=10 )
 0x061c    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x32, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x0621    op9C_MessageSync()
 0x0622    op26_Wait( time=10 )
 0x0625    op05_CallFunction( address=0x803 )
 0x0628    opD2_MessageShowDynamic( text_id=0x33, flags=0 )
@@ -688,6 +693,7 @@ Actor_0x0e:on_talk:
 0x06bc    op9C_MessageSync()
 0x06bd    -- 0xFE17()
 0x06c1    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x3b, flags=CLOSE_OFF_SCREEN )
+0x06c6    op9C_MessageSync()
 0x06c7    op26_Wait( time=10 )
 0x06ca    opD2_MessageShowDynamic( text_id=0x3c, flags=0 )
 0x06ce    op9C_MessageSync()
@@ -1043,4 +1049,4 @@ function:
 0x0ae2    opFE42( ???=1 )
 0x0ae6    opFE42( ???=2 )
 0x0aea    op0D_Return()
-0x0aeb    -- 0xE0( actor_id=Actor_0xfa, ???=(vf80)0xa3e0, ???=(vf40)0x0000, flag=0x74 )
+0x0aeb    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

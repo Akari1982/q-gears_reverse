@@ -154,6 +154,7 @@ Actor_0x08:on_update:
 0x00e3    opD2_MessageShowDynamic( text_id=0x3, flags=0 )
 0x00e7    op9C_MessageSync()
 0x00e8    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x4, flags=0 )
+0x00ed    op9C_MessageSync()
 0x00ee    opD2_MessageShowDynamic( text_id=0x5, flags=0 )
 0x00f2    op9C_MessageSync()
 0x00f3    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
@@ -228,6 +229,7 @@ Actor_0x0a:on_talk:
 0x019e    op9C_MessageSync()
 0x019f    -- 0x91()
 0x01a3    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xa, flags=0 )
+0x01a8    op9C_MessageSync()
 0x01a9    opD2_MessageShowDynamic( text_id=0xb, flags=NO_FACE )
 0x01ad    op9C_MessageSync()
 0x01ae    op00_Return()
@@ -476,6 +478,7 @@ Actor_0x0f:on_talk:
 0x0463    op05_CallFunction( address=0x2b )
 0x0466    op01_JumpTo( address=0x475 )
 0x0469    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x14, flags=0 )
+0x046e    op9C_MessageSync()
 0x046f    -- 0xFE59()
 0x0473    -- 0xFE87()
 0x0475    -- 0xFE54()
@@ -501,6 +504,7 @@ Actor_0x10:on_talk:
 0x049c    op05_CallFunction( address=0x2b )
 0x049f    op01_JumpTo( address=0x4ae )
 0x04a2    opD4_MessageShowFromActor( actor_id=Actor_0x05, text_id=0x15, flags=0 )
+0x04a7    op9C_MessageSync()
 0x04a8    -- 0xFE59()
 0x04ac    -- 0xFE87()
 0x04ae    -- 0xFE54()
@@ -525,7 +529,7 @@ Actor_0x11:on_talk:
 0x04d3    op05_CallFunction( address=0x2b )
 0x04d6    op01_JumpTo( address=0x51b )
 0x04d9    opD4_MessageShowFromActor( actor_id=Actor_0x06, text_id=0x16, flags=0 )
-0x04df    op13_Nop()
+0x04de    opA9_MessageSetSelectionSync( start_row=01, end_row=03 )
 0x04e0    op9C_MessageSync()
 0x04e1    op02_JumpToConditional( val1=(s)mem[0x14], val2=1, condition="val1 == val2", address_if_false=0x4fe )
 0x04e9    -- 0x85()
@@ -663,6 +667,7 @@ Actor_0x18:on_update:
 
 Actor_0x18:on_talk:
 0x05e0    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x1b, flags=NO_FACE )
+0x05e5    op9C_MessageSync()
 0x05e6    op00_Return()
 
 Actor_0x18:on_push:

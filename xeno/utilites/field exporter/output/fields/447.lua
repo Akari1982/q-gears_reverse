@@ -576,6 +576,7 @@ Actor_0x0d:on_push:
 0x02c4    -- 0xFE66() -- sound play with volume in slot
 0x02ce    op26_Wait( time=10 )
 0x02d1    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x0, flags=0 )
+0x02d6    op9C_MessageSync()
 0x02d7    -- 0x75( ???=29 )
 0x02da    op26_Wait( time=4 )
 0x02dd    -- 0x71()
@@ -1438,4 +1439,4 @@ Actor_0x27:on_talk:
 
 Actor_0x27:on_push:
 0x09a0    op00_Return()
-0x09a1    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2238, ???=(vf40)0xd3b2, flag=0xe5 )
+0x09a1    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x1c38, ???=(vf40)0x1ab6, flag=0x48 )

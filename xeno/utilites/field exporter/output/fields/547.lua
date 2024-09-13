@@ -305,6 +305,7 @@ Actor_0x07:event_0x04:
 Actor_0x07:event_0x05:
 0x0243    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=33 )
 0x024e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0xb, flags=CLOSE_OFF_SCREEN )
+0x0253    op9C_MessageSync()
 0x0254    op00_Return()
 
 Actor_0x08:on_start:

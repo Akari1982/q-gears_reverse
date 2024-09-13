@@ -249,6 +249,7 @@ Actor_0x0d:on_talk:
 0x014f    op9C_MessageSync()
 0x0150    op26_Wait( time=10 )
 0x0153    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x4, flags=0 )
+0x0158    op9C_MessageSync()
 0x0159    op6F_ActorRotateToActor( actor_id=Actor_0x05 )
 0x015b    op26_Wait( time=5 )
 0x015e    op05_CallFunction( address=0x498 )

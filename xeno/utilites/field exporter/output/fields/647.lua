@@ -187,8 +187,10 @@ Actor_0x04:event_0x05:
 0x017a    opD0_MessageSettings( x=70, y=150, letters=0, rows=0, flags=0 )
 0x0185    op02_JumpToConditional( val1=mem[0x210], val2=4, condition="val1 & val2", address_if_false=0x196 )
 0x018d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x0192    op9C_MessageSync()
 0x0193    op01_JumpTo( address=0x1a2 )
 0x0196    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x6, flags=CLOSE_OFF_SCREEN )
+0x019b    op9C_MessageSync()
 0x019c    mem[0x210] |= 1 << 2 -- op3a
 0x01a2    op00_Return()
 

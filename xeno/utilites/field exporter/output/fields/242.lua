@@ -265,8 +265,10 @@ Actor_0x04:on_push:
 
 Actor_0x04:event_0x04:
 0x01f1    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0xf, flags=CLOSE_OFF_SCREEN )
+0x01f6    op9C_MessageSync()
 0x01f7    op74_SoundPlayFixedVolume( sound_id=359 )
 0x01fa    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x10, flags=CLOSE_OFF_SCREEN )
+0x01ff    op9C_MessageSync()
 0x0200    op74_SoundPlayFixedVolume( sound_id=359 )
 0x0203    op00_Return()
 
@@ -574,4 +576,4 @@ Actor_0x0a:on_talk:
 Actor_0x0a:on_push:
 0x0589    op00_Return()
 0x058a    op00_Return()
-0x058b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x00fe, flag=0x0 )
+0x058b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0070, flag=0x0 )

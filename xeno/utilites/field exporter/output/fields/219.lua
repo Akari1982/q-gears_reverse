@@ -118,6 +118,7 @@ Actor_0x03:on_push:
 0x00eb    -- 0xFE0E_SoundSetVolume( volume=127, steps=480 )
 0x00f1    op01_JumpTo( address=0xff )
 0x00f4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x1, flags=0 )
+0x00f9    op9C_MessageSync()
 0x00fa    op09_CallActorEventEndSync( actor_id=party1, event=event_0x04, priority=0x01 )
 0x00fd    -- 0xFE54()
 0x00ff    op01_JumpTo( address=0x127 )
@@ -346,10 +347,11 @@ Actor_0x0e:event_0x04:
 0x0206    mem[0x412] = 4 -- op35
 0x020c    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
 0x020f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x2, flags=0 )
+0x0214    op9C_MessageSync()
 0x0215    mem[0x412] = 15 -- op35
 0x021b    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
 0x021e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x3, flags=FORCE_BOTTOM )
-0x0224    -- 0x23()
+0x0223    opA9_MessageSetSelectionSync( start_row=02, end_row=03 )
 0x0225    op9C_MessageSync()
 0x0226    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x268 )
 0x022e    mem[0x412] = 5 -- op35
@@ -358,6 +360,7 @@ Actor_0x0e:event_0x04:
 0x023a    mem[0x412] = 4 -- op35
 0x0240    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
 0x0243    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x4, flags=0 )
+0x0248    op9C_MessageSync()
 0x0249    mem[0x412] = 15 -- op35
 0x024f    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
 0x0252    mem[0x412] = 15 -- op35
@@ -374,6 +377,7 @@ Actor_0x0e:event_0x04:
 0x027c    mem[0x412] = 7 -- op35
 0x0282    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
 0x0285    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x5, flags=0 )
+0x028a    op9C_MessageSync()
 0x028b    -- 0xFE0E_SoundSetVolume( volume=0, steps=45 )
 0x0291    mem[0x412] = 15 -- op35
 0x0297    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x06, priority=0x01 )
@@ -1751,4 +1755,4 @@ function:
 0x174b    opB3_FadeIn()
 0x174e    op26_Wait( time=30 )
 0x1751    op0D_Return()
-0x1752    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb2a0, ???=(vf40)0x66d2, flag=0xc8 )
+0x1752    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb618, ???=(vf40)0x4c1a, flag=0xc3 )

@@ -1053,6 +1053,7 @@ Actor_0x19:on_push:
 Actor_0x19:event_0x04:
 0x0a61    op26_Wait( time=15 )
 0x0a64    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x13, text_id=0x1f, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0a69    op9C_MessageSync()
 0x0a6a    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
 0x0a6d    mem[0x246] |= 1 << 9 -- op3a
 0x0a73    -- 0xFE54()
@@ -1061,16 +1062,19 @@ Actor_0x19:event_0x04:
 Actor_0x19:event_0x05:
 0x0a76    -- 0xFE54()
 0x0a78    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0a, text_id=0x20, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP )
-0x0a7e    -- 0x23()
+0x0a7d    opA9_MessageSetSelectionSync( start_row=02, end_row=03 )
 0x0a7f    op9C_MessageSync()
 0x0a80    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0xa93 )
 0x0a88    opD4_MessageShowFromActor( actor_id=Actor_0x0a, text_id=0x21, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP )
+0x0a8d    op9C_MessageSync()
 0x0a8e    -- 0xFE54()
 0x0a90    op01_JumpTo( address=0xab0 )
 0x0a93    op02_JumpToConditional( val1=(s)mem[0x14], val2=3, condition="val1 == val2", address_if_false=0xab0 )
 0x0a9b    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
 0x0a9e    opD4_MessageShowFromActor( actor_id=Actor_0x0a, text_id=0x22, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_TOP )
+0x0aa3    op9C_MessageSync()
 0x0aa4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x13, text_id=0x23, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0aa9    op9C_MessageSync()
 0x0aaa    op01_JumpTo( address=0xc3 )
 0x0aad    op01_JumpTo( address=0xab0 )
 0x0ab0    op00_Return()
@@ -1422,9 +1426,11 @@ Actor_0x2c:on_start:
 0x0d9b    opD0_MessageSettings( x=20482, y=mem[0x200], letters=mem[0x1000], rows=19456, flags=20482 )
 0x0da6    op00_Return()
 0x0da7    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x26, text_id=0x8001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|NO_WINDOW|0x80 )
-0x0dad    op02_JumpToConditional( condition="val1 == val2", address_if_false=0xcc00 )
-0x0db5    op02_JumpToConditional( val1=(s)mem[0xd0], val2=(s)mem[0x26fc], condition="val1 != val2", address_if_false=0xe180 )
+0x0dac    opD2_MessageShowDynamic( text_id=0xd002, flags=0 )
+0x0db0    op02_JumpToConditional( val1=mem[0x1000], val2=(s)mem[0xcc00], condition="val1 > val2", address_if_false=0xd0 )
+0x0db8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x26, text_id=0x8001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|NO_WINDOW|0x80 )
 0x0dbd    opD4_MessageShowFromActor( actor_id=Actor_0x02, text_id=0xd0, flags=NO_FACE )
+0x0dc2    op00_Return()
 0x0dc3    -- 0x10()
 
 Actor_0x2c:on_talk:

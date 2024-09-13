@@ -229,13 +229,16 @@ Actor_0x0d:on_talk:
 0x00e8    -- 0xFE17()
 0x00ec    -- 0x84_ProgressLessEqualJumpTo( value=201, jump=0xfa )
 0x00f1    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x00f6    op9C_MessageSync()
 0x00f7    op01_JumpTo( address=0x112 )
 0x00fa    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x6, flags=CLOSE_OFF_SCREEN )
+0x00ff    op9C_MessageSync()
 0x0100    -- 0x91()
 0x0104    op6F_ActorRotateToActor( actor_id=Actor_0x04 )
 0x0106    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x010b    op9C_MessageSync()
 0x010c    mem[0x400] = 1 -- op35
 
 Actor_0x0d:on_push:
 0x0112    op00_Return()
-0x0113    -- 0xE0( actor_id=Actor_0x4a, ???=(vf80)0xd3b2, ???=(vf40)0x248d, flag=0x53 )
+0x0113    -- 0xE0( actor_id=Actor_0x30, ???=(vf80)0x1ab6, ???=(vf40)0x2f64, flag=0x64 )

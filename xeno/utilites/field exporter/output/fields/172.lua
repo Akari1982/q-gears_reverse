@@ -1870,6 +1870,7 @@ Actor_0x0a:on_start:
 Actor_0x0a:on_update:
 0x44de    -- 0xC9()
 0x44e2    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x44e7    op9C_MessageSync()
 0x44e8    -- 0xFEB7()
 0x44ec    -- 0x98_MapLoad( field_id=282, value=0 )
 0x44f1    -- 0x5A()

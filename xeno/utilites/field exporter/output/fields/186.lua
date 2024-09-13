@@ -297,7 +297,6 @@ Actor_0x00:on_update:
 0x0571    op26_Wait( time=4 )
 0x0574    -- 0x87_SetProgress( progress=96 )
 0x0577    -- 0x12()
-0x057b    -- 0x80()
 0x0580    -- 0x5B()
 0x0581    mem[0x400] = true -- op36
 0x0584    op00_Return()
@@ -1974,4 +1973,4 @@ Actor_0x27:event_0x04:
 0x2888    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x2890    opFE96_ParticleCreate()
 0x2892    op00_Return()
-0x2893    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x2893    -- 0xE0( actor_id=Actor_0x2d, ???=(vf80)0x1ab4, ???=(vf40)0x4f7b, flag=0x67 )

@@ -1714,6 +1714,7 @@ Actor_0x17:on_push:
 
 Actor_0x17:event_0x04:
 0x1100    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x4b, flags=CLOSE_OFF_SCREEN )
+0x1105    op9C_MessageSync()
 0x1106    op00_Return()
 
 Actor_0x18:on_start:
@@ -2344,6 +2345,7 @@ Actor_0x2b:on_push:
 
 Actor_0x2b:event_0x04:
 0x19ec    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x4c, flags=CLOSE_OFF_SCREEN )
+0x19f1    op9C_MessageSync()
 0x19f2    -- 0x85()
 0x19f7    -- 0x91()
 0x19fb    opFE0D_MessageSetFace( char_id=0 )
@@ -2352,6 +2354,7 @@ Actor_0x2b:event_0x04:
 0x1a0e    op9C_MessageSync()
 0x1a0f    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=2 )
 0x1a1a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x4e, flags=CLOSE_OFF_SCREEN )
+0x1a1f    op9C_MessageSync()
 0x1a20    opFE0D_MessageSetFace( char_id=0 )
 0x1a24    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 )
 0x1a2f    opD2_MessageShowDynamic( text_id=0x4f, flags=0 )
@@ -2359,17 +2362,27 @@ Actor_0x2b:event_0x04:
 0x1a34    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=2 )
 0x1a3f    op01_JumpTo( address=0x1a48 )
 0x1a42    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x50, flags=CLOSE_OFF_SCREEN )
+0x1a47    op9C_MessageSync()
 0x1a48    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x51, flags=CLOSE_OFF_SCREEN )
+0x1a4d    op9C_MessageSync()
 0x1a4e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x52, flags=CLOSE_OFF_SCREEN )
+0x1a53    op9C_MessageSync()
 0x1a54    op01_JumpTo( address=0x1a85 )
 0x1a57    -- 0xFE17()
 0x1a5b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x53, flags=CLOSE_OFF_SCREEN )
+0x1a60    op9C_MessageSync()
 0x1a61    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x54, flags=CLOSE_OFF_SCREEN )
+0x1a66    op9C_MessageSync()
 0x1a67    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x55, flags=CLOSE_OFF_SCREEN )
+0x1a6c    op9C_MessageSync()
 0x1a6d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x56, flags=CLOSE_OFF_SCREEN )
+0x1a72    op9C_MessageSync()
 0x1a73    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x57, flags=CLOSE_OFF_SCREEN )
+0x1a78    op9C_MessageSync()
 0x1a79    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x58, flags=CLOSE_OFF_SCREEN )
+0x1a7e    op9C_MessageSync()
 0x1a7f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x59, flags=CLOSE_OFF_SCREEN )
+0x1a84    op9C_MessageSync()
 0x1a85    mem[0x202] |= 1 << 13 -- op3a
 0x1a8b    op02_JumpToConditional( val1=mem[0x200], val2=4096, condition="val1 & val2", address_if_false=0x1a99 )
 0x1a93    mem[0x202] |= 1 << 12 -- op3a
@@ -2377,26 +2390,35 @@ Actor_0x2b:event_0x04:
 
 Actor_0x2b:event_0x05:
 0x1a9a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x5a, flags=CLOSE_OFF_SCREEN )
+0x1a9f    op9C_MessageSync()
 0x1aa0    op00_Return()
 
 Actor_0x2b:event_0x06:
 0x1aa1    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x5b, flags=CLOSE_OFF_SCREEN )
+0x1aa6    op9C_MessageSync()
 0x1aa7    -- 0x5F( ???=0x3 )
 0x1aa9    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x5c, flags=CLOSE_OFF_SCREEN )
+0x1aae    op9C_MessageSync()
 0x1aaf    op6F_ActorRotateToActor( actor_id=party1 )
 0x1ab1    op00_Return()
 
 Actor_0x2b:event_0x07:
 0x1ab2    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x5d, flags=CLOSE_OFF_SCREEN )
+0x1ab7    op9C_MessageSync()
 0x1ab8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x5e, flags=CLOSE_OFF_SCREEN )
+0x1abd    op9C_MessageSync()
 0x1abe    op00_Return()
 
 Actor_0x2b:event_0x08:
 0x1abf    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x5f, flags=CLOSE_OFF_SCREEN )
+0x1ac4    op9C_MessageSync()
 0x1ac5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x60, flags=CLOSE_OFF_SCREEN )
+0x1aca    op9C_MessageSync()
 0x1acb    -- 0x67()
 0x1acf    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x61, flags=CLOSE_OFF_SCREEN )
+0x1ad4    op9C_MessageSync()
 0x1ad5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x62, flags=CLOSE_OFF_SCREEN )
+0x1ada    op9C_MessageSync()
 0x1adb    mem[0x202] |= 1 << 12 -- op3a
 0x1ae1    op00_Return()
 
@@ -2404,11 +2426,15 @@ Actor_0x2b:event_0x09:
 0x1ae2    op02_JumpToConditional( val1=mem[0x200], val2=32, condition="val1 & val2", address_if_false=0x1b0a )
 0x1aea    op02_JumpToConditional( val1=mem[0x200], val2=512, condition="val1 & val2", address_if_false=0x1b01 )
 0x1af2    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x63, flags=CLOSE_OFF_SCREEN )
+0x1af7    op9C_MessageSync()
 0x1af8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x64, flags=CLOSE_OFF_SCREEN )
+0x1afd    op9C_MessageSync()
 0x1afe    op01_JumpTo( address=0x1b07 )
 0x1b01    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x65, flags=CLOSE_OFF_SCREEN )
+0x1b06    op9C_MessageSync()
 0x1b07    op01_JumpTo( address=0x1b10 )
 0x1b0a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x66, flags=CLOSE_OFF_SCREEN )
+0x1b0f    op9C_MessageSync()
 0x1b10    op00_Return()
 
 Actor_0x2b:event_0x0a:
@@ -2416,18 +2442,27 @@ Actor_0x2b:event_0x0a:
 0x1b19    op74_SoundPlayFixedVolume( sound_id=95 )
 0x1b1c    op26_Wait( time=30 )
 0x1b1f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x67, flags=CLOSE_OFF_SCREEN )
+0x1b24    op9C_MessageSync()
 0x1b25    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x68, flags=CLOSE_OFF_SCREEN )
+0x1b2a    op9C_MessageSync()
 0x1b2b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x69, flags=CLOSE_OFF_SCREEN )
+0x1b30    op9C_MessageSync()
 0x1b31    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x6a, flags=CLOSE_OFF_SCREEN )
+0x1b36    op9C_MessageSync()
 0x1b37    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x6b, flags=CLOSE_OFF_SCREEN )
+0x1b3c    op9C_MessageSync()
 0x1b3d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x6c, flags=CLOSE_OFF_SCREEN )
+0x1b42    op9C_MessageSync()
 0x1b43    op01_JumpTo( address=0x1b52 )
 0x1b46    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x6d, flags=CLOSE_OFF_SCREEN )
+0x1b4b    op9C_MessageSync()
 0x1b4c    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x6e, flags=CLOSE_OFF_SCREEN )
+0x1b51    op9C_MessageSync()
 0x1b52    op00_Return()
 
 Actor_0x2b:event_0x0b:
 0x1b53    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x2a, text_id=0x6f, flags=CLOSE_OFF_SCREEN )
+0x1b58    op9C_MessageSync()
 0x1b59    op00_Return()
 
 Actor_0x2c:on_start:
@@ -2447,11 +2482,13 @@ Actor_0x2c:on_push:
 Actor_0x2c:event_0x04:
 0x1b60    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 )
 0x1b6b    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x70, flags=0 )
+0x1b70    op9C_MessageSync()
 0x1b71    op00_Return()
 
 Actor_0x2c:event_0x05:
 0x1b72    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 )
 0x1b7d    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x71, flags=0 )
+0x1b82    op9C_MessageSync()
 0x1b83    op00_Return()
 
 Actor_0x2d:on_start:
@@ -2746,4 +2783,4 @@ Actor_0x32:on_talk:
 Actor_0x32:on_push:
 0x1ec0    op00_Return()
 0x1ec1    op00_Return()
-0x1ec2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb34d, ???=(vf40)0x82da, flag=0xb7 )
+0x1ec2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb601, ???=(vf40)0x551a, flag=0xbc )

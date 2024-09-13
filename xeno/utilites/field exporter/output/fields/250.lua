@@ -1797,7 +1797,6 @@ Actor_0x06:on_update:
 0x4457    op07_CallActorEvent( actor_id=Actor_0x13, event=event_0x05, priority=0x00 )
 0x445a    -- 0x4С( variable arguments based args )
 0x4462    -- 0x12()
-0x4466    -- 0x80()
 0x446b    op00_Return()
 
 Actor_0x06:on_talk:
@@ -1828,7 +1827,6 @@ Actor_0x07:on_update:
 0x44a3    op07_CallActorEvent( actor_id=Actor_0x13, event=event_0x05, priority=0x00 )
 0x44a6    -- 0x4С( variable arguments based args )
 0x44ae    -- 0x12()
-0x44b2    -- 0x80()
 0x44b7    op00_Return()
 
 Actor_0x07:on_talk:
@@ -1855,7 +1853,6 @@ Actor_0x08:on_update:
 0x44e6    op07_CallActorEvent( actor_id=Actor_0x13, event=event_0x05, priority=0x00 )
 0x44e9    -- 0x4С( variable arguments based args )
 0x44f1    -- 0x12()
-0x44f5    -- 0x80()
 0x44fa    op00_Return()
 
 Actor_0x08:on_talk:
@@ -2389,6 +2386,7 @@ Actor_0x1a:on_update:
 0x4ab9    op09_CallActorEventEndSync( actor_id=Actor_0x0d, event=event_0x05, priority=0x01 )
 0x4abc    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x05, priority=0x01 )
 0x4abf    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x0, flags=FORCE_BOTTOM )
+0x4ac4    op9C_MessageSync()
 0x4ac5    mem[0x184] |= 1 << 11 -- op3a
 0x4acb    -- 0x98_MapLoad( field_id=259, value=6 )
 0x4ad0    op02_JumpToConditional( val1=(s)mem[0x2], val2=2, condition="val1 == val2", address_if_false=0x4b08 )

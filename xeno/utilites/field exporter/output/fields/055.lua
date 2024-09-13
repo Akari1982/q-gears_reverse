@@ -828,6 +828,7 @@ Actor_0x19:on_update:
 0x0674    op09_CallActorEventEndSync( actor_id=Actor_0x18, event=event_0x05, priority=0x01 )
 0x0677    -- 0x75( ???=20 )
 0x067a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x23, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x067f    op9C_MessageSync()
 0x0680    op26_Wait( time=20 )
 0x0683    op09_CallActorEventEndSync( actor_id=Actor_0x1a, event=event_0x09, priority=0x01 )
 0x0686    op09_CallActorEventEndSync( actor_id=Actor_0x04, event=event_0x12, priority=0x01 )
@@ -1289,4 +1290,4 @@ Actor_0x1c:event_0x04:
 Actor_0x1c:event_0x05:
 0x0e26    opFE97_ParticleReset( all=0x0 )
 0x0e29    op00_Return()
-0x0e2a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x7c00, ???=(vf40)0xd3b2, flag=0xbb )
+0x0e2a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2c00, ???=(vf40)0x1ab6, flag=0x78 )

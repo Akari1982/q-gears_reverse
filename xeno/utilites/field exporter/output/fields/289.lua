@@ -436,6 +436,7 @@ Actor_0x0e:on_talk:
 0x0342    -- 0xFE17()
 0x0346    op26_Wait( time=10 )
 0x0349    opD4_MessageShowFromActor( actor_id=Actor_0x06, text_id=0x2e, flags=NO_FACE )
+0x034e    op9C_MessageSync()
 0x034f    mem[0x402] = true -- op36
 0x0352    -- 0xFE54()
 0x0354    op01_JumpTo( address=0x35a )

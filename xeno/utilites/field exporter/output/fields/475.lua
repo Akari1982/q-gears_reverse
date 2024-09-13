@@ -394,12 +394,16 @@ Actor_0x12:on_update:
 0x0233    -- 0xFE54()
 0x0235    -- 0xFE23()
 0x024a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x0, flags=0 )
+0x024f    op9C_MessageSync()
 0x0250    op26_Wait( time=10 )
 0x0253    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x1, flags=0 )
+0x0258    op9C_MessageSync()
 0x0259    op26_Wait( time=10 )
 0x025c    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x2, flags=0 )
+0x0261    op9C_MessageSync()
 0x0262    op26_Wait( time=10 )
 0x0265    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x3, flags=0 )
+0x026a    op9C_MessageSync()
 0x026b    -- 0xFE0A( ???=0x10e7 )
 0x026f    -- 0xFE24()
 0x0271    -- 0xFE54()
@@ -433,4 +437,4 @@ Actor_0x14:on_talk:
 
 Actor_0x14:on_push:
 0x027c    op00_Return()
-0x027d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x40 )
+0x027d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )

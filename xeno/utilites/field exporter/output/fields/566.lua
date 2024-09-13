@@ -864,6 +864,7 @@ Actor_0x18:event_0x04:
 0x058b    op26_Wait( time=60 )
 0x058e    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=33 )
 0x0599    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x27, flags=CLOSE_OFF_SCREEN )
+0x059e    op9C_MessageSync()
 0x059f    op09_CallActorEventEndSync( actor_id=Actor_0x19, event=event_0x04, priority=0x01 )
 0x05a2    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x0f, priority=0x01 )
 0x05a5    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x08, priority=0x01 )
@@ -885,6 +886,7 @@ Actor_0x18:event_0x04:
 0x05d5    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x06, priority=0x01 )
 0x05d8    op07_CallActorEvent( actor_id=Actor_0x01, event=event_0x0d, priority=0x01 )
 0x05db    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x28, flags=CLOSE_OFF_SCREEN )
+0x05e0    op9C_MessageSync()
 0x05e1    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x09, priority=0x01 )
 0x05e4    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x15, priority=0x01 )
 0x05e7    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x0a, priority=0x01 )
@@ -1193,4 +1195,4 @@ function:
 0x0926    mem[0x41a] += 1 -- op3c
 0x0929    op01_JumpTo( address=0x914 )
 0x092c    op0D_Return()
-0x092d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x2d )
+0x092d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x7f )

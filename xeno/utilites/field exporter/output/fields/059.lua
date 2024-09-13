@@ -91,7 +91,6 @@ Actor_0x00:on_update:
 0x010e    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x09, priority=0x01 )
 0x0111    op26_Wait( time=45 )
 0x0114    -- 0x12()
-0x0118    -- 0x80()
 0x011d    op00_Return()
 
 Actor_0x00:on_talk:

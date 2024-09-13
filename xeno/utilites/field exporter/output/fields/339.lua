@@ -698,6 +698,7 @@ Actor_0x11:event_0x04:
 0x0497    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x09, priority=0x06 )
 0x049a    opFE0D_MessageSetFace( char_id=1 )
 0x049e    opD4_MessageShowFromActor( actor_id=Actor_0x02, text_id=0x14, flags=0 )
+0x04a3    op9C_MessageSync()
 0x04a4    op26_Wait( time=8 )
 0x04a7    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=80 )
 0x04b2    op26_Wait( time=90 )
@@ -1196,6 +1197,7 @@ Actor_0x1e:on_talk:
 0x093d    -- 0xFE54()
 0x093f    opFE0D_MessageSetFace( char_id=252 )
 0x0943    opD4_MessageShowFromActor( actor_id=party1, text_id=0x29, flags=0 )
+0x0948    op9C_MessageSync()
 0x0949    -- 0xFE54()
 0x094b    op01_JumpTo( address=0x95f )
 0x094e    op07_CallActorEvent( actor_id=Actor_0x1c, event=event_0x04, priority=0x03 )
@@ -1294,4 +1296,4 @@ Actor_0x22:on_talk:
 
 Actor_0x22:on_push:
 0x09e9    op00_Return()
-0x09ea    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x09ea    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xfe18, flag=0x1c )

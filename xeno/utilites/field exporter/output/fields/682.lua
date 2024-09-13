@@ -789,18 +789,24 @@ Actor_0x11:on_push:
 
 Actor_0x11:event_0x04:
 0x0743    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0748    op9C_MessageSync()
 0x0749    op26_Wait( time=15 )
 0x074c    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x2, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0751    op9C_MessageSync()
 0x0752    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x3, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0757    op9C_MessageSync()
 0x0758    op00_Return()
 
 Actor_0x11:event_0x05:
 0x0759    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x4, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x075e    op9C_MessageSync()
 0x075f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x5, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0764    op9C_MessageSync()
 0x0765    opFE9B_SlideShow1( steps=45 )
 0x0769    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x0b, priority=0x01 )
 0x076c    op26_Wait( time=60 )
 0x076f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x6, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0774    op9C_MessageSync()
 0x0775    op09_CallActorEventEndSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
 0x0778    op26_Wait( time=45 )
 0x077b    opFE9B_SlideShow1( steps=30 )
@@ -820,13 +826,16 @@ Actor_0x11:event_0x05:
 0x07a4    op08_CallActorEventStartSync( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )
 0x07a7    op26_Wait( time=30 )
 0x07aa    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x7, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x07af    op9C_MessageSync()
 0x07b0    op26_Wait( time=45 )
 0x07b3    -- 0x67()
 0x07b7    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x8, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x07bc    op9C_MessageSync()
 0x07bd    -- 0x67()
 0x07c1    op26_Wait( time=5 )
 0x07c4    -- 0x67()
 0x07c8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x9, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x07cd    op9C_MessageSync()
 0x07ce    op00_Return()
 
 Actor_0x11:event_0x06:
@@ -2122,4 +2131,4 @@ function:
 0x1b7e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x1b81    op01_JumpTo( address=0x1b84 )
 0x1b84    op0D_Return()
-0x1b85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )
+0x1b85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0238, ???=(vf40)0x0408, flag=0x21 )

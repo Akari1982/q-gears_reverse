@@ -159,13 +159,17 @@ Actor_0x02:event_0x04:
 0x0194    opD2_MessageShowDynamic( text_id=0x1, flags=FORCE_BOTTOM )
 0x0198    op9C_MessageSync()
 0x0199    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x2, flags=FORCE_BOTTOM )
+0x019e    op9C_MessageSync()
 0x019f    op6F_ActorRotateToActor( actor_id=Actor_0x01 )
 0x01a1    opFE0D_MessageSetFace( char_id=2 )
 0x01a5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x3, flags=FORCE_BOTTOM )
+0x01aa    op9C_MessageSync()
 0x01ab    opFE0D_MessageSetFace( char_id=0 )
 0x01af    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x4, flags=FORCE_BOTTOM )
+0x01b4    op9C_MessageSync()
 0x01b5    opFE0D_MessageSetFace( char_id=2 )
 0x01b9    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x5, flags=FORCE_BOTTOM )
+0x01be    op9C_MessageSync()
 0x01bf    op00_Return()
 
 Actor_0x03:on_start:

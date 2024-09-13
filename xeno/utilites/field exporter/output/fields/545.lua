@@ -356,6 +356,7 @@ Actor_0x0f:on_push:
 Actor_0x0f:event_0x04:
 0x0221    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 )
 0x022c    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x0, flags=0 )
+0x0231    op9C_MessageSync()
 0x0232    op00_Return()
 
 Actor_0x10:on_start:
@@ -538,4 +539,4 @@ function:
 0x0453    mem[0x422] += 1 -- op3c
 0x0456    op01_JumpTo( address=0x441 )
 0x0459    op0D_Return()
-0x045a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0510, flag=0x14 )
+0x045a    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x9343, flag=0x4 )

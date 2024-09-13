@@ -882,6 +882,7 @@ Actor_0x0d:on_push:
 0x0453    -- 0xFE54()
 0x0455    opFE0D_MessageSetFace( char_id=8 )
 0x0459    opD4_MessageShowFromActor( actor_id=party2, text_id=0x0, flags=0 )
+0x045e    op9C_MessageSync()
 0x045f    mem[0xe2] |= 1 << 3 -- op3a
 0x0465    -- 0xFE54()
 0x0467    op29_ActorTurnOff( actor_id=Actor_0x0d )
@@ -1839,4 +1840,4 @@ Actor_0x2e:on_talk:
 
 Actor_0x2e:on_push:
 0x0b52    op00_Return()
-0x0b53    -- 0xE0( actor_id=Actor_0x7b, ???=(vf80)0xd3b2, ???=(vf40)0x0cbc, flag=0x52 )
+0x0b53    -- 0xE0( actor_id=Actor_0x3c, ???=(vf80)0x1ab6, ???=(vf40)0xd768, flag=0x64 )

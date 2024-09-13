@@ -38,33 +38,40 @@ Actor_0x00:on_push:
 
 Actor_0x00:event_0x04:
 0x0053    opD4_MessageShowFromActor( actor_id=Actor_0x33, text_id=0x0, flags=0 )
+0x0058    op9C_MessageSync()
 0x0059    op00_Return()
 
 Actor_0x00:event_0x05:
 0x005a    opD4_MessageShowFromActor( actor_id=Actor_0x34, text_id=0x1, flags=0 )
+0x005f    op9C_MessageSync()
 0x0060    op00_Return()
 
 Actor_0x00:event_0x06:
 0x0061    opD4_MessageShowFromActor( actor_id=Actor_0x33, text_id=0x2, flags=0 )
+0x0066    op9C_MessageSync()
 0x0067    op00_Return()
 
 Actor_0x00:event_0x07:
 0x0068    opF4_MessageClose( type=0x0 )
 0x006a    op26_Wait( time=10 )
 0x006d    opD4_MessageShowFromActor( actor_id=Actor_0x33, text_id=0x3, flags=0 )
+0x0072    op9C_MessageSync()
 0x0073    op00_Return()
 
 Actor_0x00:event_0x08:
 0x0074    opD4_MessageShowFromActor( actor_id=Actor_0x34, text_id=0x4, flags=0 )
+0x0079    op9C_MessageSync()
 0x007a    op00_Return()
 
 Actor_0x00:event_0x09:
 0x007b    opF4_MessageClose( type=0x0 )
 0x007d    opD4_MessageShowFromActor( actor_id=Actor_0x34, text_id=0x5, flags=0 )
+0x0082    op9C_MessageSync()
 0x0083    op00_Return()
 
 Actor_0x00:event_0x0a:
 0x0084    opD4_MessageShowFromActor( actor_id=Actor_0x3b, text_id=0x6, flags=CLOSE_OFF_SCREEN )
+0x0089    op9C_MessageSync()
 0x008a    op00_Return()
 
 Actor_0x01:on_start:
@@ -81,6 +88,7 @@ Actor_0x01:on_push:
 
 Actor_0x01:event_0x04:
 0x008f    opD4_MessageShowFromActor( actor_id=Actor_0x3c, text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x0094    op9C_MessageSync()
 0x0095    op00_Return()
 
 Actor_0x02:on_start:
@@ -1182,6 +1190,7 @@ Actor_0x2a:on_talk:
 0x0a54    op07_CallActorEvent( actor_id=Actor_0x2c, event=event_0x04, priority=0x01 )
 0x0a57    -- 0xFE17()
 0x0a5b    opD4_MessageShowFromActor( actor_id=Actor_0x44, text_id=0x10, flags=CLOSE_OFF_SCREEN )
+0x0a60    op9C_MessageSync()
 0x0a61    op07_CallActorEvent( actor_id=Actor_0x2b, event=event_0x05, priority=0x01 )
 0x0a64    op09_CallActorEventEndSync( actor_id=Actor_0x2c, event=event_0x05, priority=0x01 )
 0x0a67    -- 0x5A()

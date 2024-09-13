@@ -272,11 +272,14 @@ Actor_0x08:on_update:
 0x0281    -- 0xFE17()
 0x0285    -- 0xFE17()
 0x0289    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x0, flags=0 )
+0x028e    op9C_MessageSync()
 0x028f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x1, flags=0 )
+0x0294    op9C_MessageSync()
 0x0295    op07_CallActorEvent( actor_id=Actor_0x04, event=event_0x04, priority=0x03 )
 0x0298    op26_Wait( time=90 )
 0x029b    op29_ActorTurnOff( actor_id=Actor_0x04 )
 0x029d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x2, flags=0 )
+0x02a2    op9C_MessageSync()
 0x02a3    mem[0x1c6] |= 1 << 4 -- op3a
 0x02a9    -- 0xFE54()
 0x02ab    -- 0x5B()
@@ -1026,4 +1029,4 @@ Actor_0x22:on_talk:
 Actor_0x22:on_push:
 0x0951    op00_Return()
 0x0952    op00_Return()
-0x0953    -- 0xE0( actor_id=Actor_0x23, ???=(vf80)0xd3b2, ???=(vf40)0x5ce4, flag=0x52 )
+0x0953    -- 0xE0( actor_id=Actor_0x27, ???=(vf80)0x1ab6, ???=(vf40)0x5773, flag=0x65 )

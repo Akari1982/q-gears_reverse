@@ -2074,6 +2074,7 @@ Actor_0x25:on_push:
 Actor_0x25:event_0x04:
 0x119d    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 )
 0x11a8    opD4_MessageShowFromActor( actor_id=party1, text_id=0x45, flags=0 )
+0x11ad    op9C_MessageSync()
 0x11ae    op00_Return()
 
 Actor_0x26:on_start:

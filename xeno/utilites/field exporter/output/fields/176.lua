@@ -217,7 +217,6 @@ Actor_0x01:on_update:
 0x0378    op74_SoundPlayFixedVolume( sound_id=465 )
 0x037b    opFE77_LoadTim_04_00_07( file_id=0x0, clut_y=0, x=704, y=256 )
 0x038d    -- 0x12()
-0x0391    -- 0x80()
 0x0396    -- 0x5B()
 0x0397    op00_Return()
 
@@ -596,4 +595,4 @@ Actor_0x0a:event_0x04:
 0x0655    op02_JumpToConditional( val1=(s)mem[0x426], val2=0, condition="val1 == val2", address_if_false=0x660 )
 0x065d    op01_JumpTo( address=0x64f )
 0x0660    op00_Return()
-0x0661    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x1d38, ???=(vf40)0xd3b2, flag=0xda )
+0x0661    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x1 )

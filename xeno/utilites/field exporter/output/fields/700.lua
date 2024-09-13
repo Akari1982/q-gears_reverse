@@ -32,9 +32,13 @@ Actor_0x00:on_update:
 0x0043    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x03 )
 0x0046    op09_CallActorEventEndSync( actor_id=Actor_0x0c, event=event_0x05, priority=0x03 )
 0x0049    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x0, flags=0 )
+0x004e    op9C_MessageSync()
 0x004f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x1, flags=0 )
+0x0054    op9C_MessageSync()
 0x0055    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x2, flags=0 )
+0x005a    op9C_MessageSync()
 0x005b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0x3, flags=0 )
+0x0060    op9C_MessageSync()
 0x0061    -- 0xFE24()
 0x0063    -- 0xB5() -- camera set direction
 0x0068    op26_Wait( time=70 )
@@ -671,4 +675,4 @@ Actor_0x0f:on_talk:
 
 Actor_0x0f:on_push:
 0x0931    op00_Return()
-0x0932    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb25c, ???=(vf40)0x9bd3, flag=0xaa )
+0x0932    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb638, ???=(vf40)0x6c1a, flag=0xa1 )

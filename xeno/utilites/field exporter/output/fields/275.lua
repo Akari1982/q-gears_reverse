@@ -99,7 +99,6 @@ function:
 0x0153    op09_CallActorEventEndSync( actor_id=Actor_0x0a, event=event_0x04, priority=0x01 )
 0x0156    op26_Wait( time=100 )
 0x0159    -- 0x12()
-0x015d    -- 0x80()
 0x0162    op00_Return()
 
 function:
@@ -138,7 +137,6 @@ function:
 0x01e6    opFE61_MovieStartSync()
 0x01e8    opB4_FadeOut()
 0x01eb    -- 0x12()
-0x01ef    -- 0x80()
 0x01f4    -- 0x5B()
 0x01f5    op00_Return()
 
@@ -159,7 +157,6 @@ function:
 0x022e    opFE61_MovieStartSync()
 0x0230    opB4_FadeOut()
 0x0233    -- 0x12()
-0x0237    -- 0x80()
 0x023c    -- 0x5B()
 0x023d    op00_Return()
 
@@ -796,4 +793,4 @@ Actor_0x19:on_talk:
 
 Actor_0x19:on_push:
 0x0711    op00_Return()
-0x0712    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb246, ???=(vf40)0x81d3, flag=0x94 )
+0x0712    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb63c, ???=(vf40)0x681a, flag=0x9f )

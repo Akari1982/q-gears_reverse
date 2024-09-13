@@ -566,7 +566,6 @@ Actor_0x07:on_update:
 0x07c3    op26_Wait( time=30 )
 0x07c6    -- 0x87_SetProgress( progress=42 )
 0x07c9    -- 0x12()
-0x07cd    -- 0x80()
 0x07d2    op29_ActorTurnOff( actor_id=Actor_0x07 )
 0x07d4    op00_Return()
 0x07d5    op01_JumpTo( address=0x9c7 )

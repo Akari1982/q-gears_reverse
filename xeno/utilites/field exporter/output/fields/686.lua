@@ -232,10 +232,13 @@ Actor_0x0d:on_push:
 Actor_0x0d:event_0x04:
 0x00d2    -- 0xFEAA()
 0x00d5    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x1, flags=CLOSE_OFF_SCREEN )
+0x00da    op9C_MessageSync()
 0x00db    -- 0xFEAA()
 0x00de    opD4_MessageShowFromActor( actor_id=Actor_0x10, text_id=0x2, flags=CLOSE_OFF_SCREEN )
+0x00e3    op9C_MessageSync()
 0x00e4    -- 0xFEAA()
 0x00e7    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x3, flags=CLOSE_OFF_SCREEN )
+0x00ec    op9C_MessageSync()
 0x00ed    op00_Return()
 
 Actor_0x0d:event_0x05:
@@ -253,12 +256,14 @@ Actor_0x0d:event_0x05:
 0x010c    -- 0xFEAA()
 0x010f    -- 0xFE17()
 0x0113    opD4_MessageShowFromActor( actor_id=Actor_0x18, text_id=0x5, flags=CLOSE_OFF_SCREEN )
+0x0118    op9C_MessageSync()
 0x0119    -- 0xFEAA()
 0x011c    opD2_MessageShowDynamic( text_id=0x6, flags=CLOSE_OFF_SCREEN )
 0x0120    op9C_MessageSync()
 0x0121    -- 0xFEAA()
 0x0124    -- 0xFE17()
 0x0128    opD4_MessageShowFromActor( actor_id=Actor_0x17, text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x012d    op9C_MessageSync()
 0x012e    op6F_ActorRotateToActor( actor_id=party1 )
 0x0130    -- 0xFE17()
 0x0134    -- 0xFEAA()
@@ -636,6 +641,7 @@ Actor_0x22:on_push:
 
 Actor_0x22:event_0x04:
 0x039e    opD4_MessageShowFromActor( actor_id=Actor_0x20, text_id=0x1a, flags=CLOSE_OFF_SCREEN )
+0x03a3    op9C_MessageSync()
 0x03a4    op07_CallActorEvent( actor_id=Actor_0x20, event=event_0x04, priority=0x00 )
 0x03a7    op00_Return()
 
@@ -652,6 +658,7 @@ Actor_0x23:on_push:
 
 Actor_0x23:event_0x04:
 0x03ab    opD4_MessageShowFromActor( actor_id=Actor_0x21, text_id=0x1b, flags=CLOSE_OFF_SCREEN )
+0x03b0    op9C_MessageSync()
 0x03b1    op07_CallActorEvent( actor_id=Actor_0x21, event=event_0x04, priority=0x00 )
 0x03b4    op00_Return()
 
@@ -730,4 +737,4 @@ Actor_0x26:on_talk:
 
 Actor_0x26:on_push:
 0x0454    op00_Return()
-0x0455    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x48 )
+0x0455    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x62 )

@@ -666,16 +666,20 @@ Actor_0x10:on_talk:
 0x0648    opD2_MessageShowDynamic( text_id=0x9, flags=0 )
 0x064c    op9C_MessageSync()
 0x064d    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0xa, flags=0 )
+0x0652    op9C_MessageSync()
 0x0653    opD2_MessageShowDynamic( text_id=0xb, flags=0 )
 0x0657    op9C_MessageSync()
 0x0658    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0xc, flags=0 )
+0x065d    op9C_MessageSync()
 0x065e    opD2_MessageShowDynamic( text_id=0xd, flags=0 )
 0x0662    op9C_MessageSync()
 0x0663    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0xe, flags=0 )
+0x0668    op9C_MessageSync()
 0x0669    op01_JumpTo( address=0x677 )
 0x066c    opD2_MessageShowDynamic( text_id=0xf, flags=0 )
 0x0670    op9C_MessageSync()
 0x0671    opD4_MessageShowFromActor( actor_id=Actor_0x11, text_id=0x10, flags=0 )
+0x0676    op9C_MessageSync()
 
 Actor_0x10:on_push:
 0x0677    op00_Return()
@@ -977,6 +981,7 @@ Actor_0x13:on_update:
 0x0aca    op05_CallFunction( address=0xaf7 )
 0x0acd    op01_JumpTo( address=0xad0 )
 0x0ad0    opD4_MessageShowFromActor( actor_id=party1, text_id=0x24, flags=CLOSE_OFF_SCREEN )
+0x0ad5    op9C_MessageSync()
 0x0ad6    op07_CallActorEvent( actor_id=party2, event=event_0x06, priority=0x00 )
 0x0ad9    op07_CallActorEvent( actor_id=party3, event=event_0x06, priority=0x00 )
 0x0adc    op09_CallActorEventEndSync( actor_id=party1, event=event_0x06, priority=0x00 )
@@ -990,11 +995,13 @@ Actor_0x13:on_push:
 
 Actor_0x13:event_0x04:
 0x0ae6    opD4_MessageShowFromActor( actor_id=Actor_0x12, text_id=0x25, flags=CLOSE_OFF_SCREEN )
+0x0aeb    op9C_MessageSync()
 0x0aec    mem[0x400] = true -- op36
 0x0aef    op00_Return()
 
 Actor_0x13:event_0x05:
 0x0af0    opD4_MessageShowFromActor( actor_id=Actor_0x12, text_id=0x26, flags=CLOSE_OFF_SCREEN )
+0x0af5    op9C_MessageSync()
 0x0af6    op00_Return()
 
 function:
@@ -1694,4 +1701,4 @@ function:
 0x1357    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x135f    opFE96_ParticleCreate()
 0x1361    op0D_Return()
-0x1362    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb293, ???=(vf40)0x54d3, flag=0x8d )
+0x1362    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb6b7, ???=(vf40)0xea13, flag=0x86 )

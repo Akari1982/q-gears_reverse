@@ -463,10 +463,12 @@ Actor_0x0c:on_push:
 0x0407    opD2_MessageShowDynamic( text_id=0x1b, flags=0 )
 0x040b    op9C_MessageSync()
 0x040c    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x1c, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x0411    op9C_MessageSync()
 0x0412    op00_Return()
 0x0413    opD2_MessageShowDynamic( text_id=0x1d, flags=0 )
 0x0417    op9C_MessageSync()
 0x0418    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x1e, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x041d    op9C_MessageSync()
 0x041e    op00_Return()
 
 Actor_0x0d:on_start:
@@ -662,6 +664,7 @@ Actor_0x14:on_update:
 
 Actor_0x14:on_talk:
 0x05ac    opD4_MessageShowFromActor( actor_id=Actor_0x05, text_id=0x22, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x05b1    op9C_MessageSync()
 0x05b2    op00_Return()
 
 Actor_0x14:on_push:
@@ -1334,28 +1337,38 @@ Actor_0x20:on_push:
 
 Actor_0x20:event_0x04:
 0x0e4c    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x63, flags=0 )
+0x0e51    op9C_MessageSync()
 0x0e52    -- 0xFE0E_SoundSetVolume( volume=0, steps=64 )
 0x0e58    op26_Wait( time=5 )
 0x0e5b    op74_SoundPlayFixedVolume( sound_id=36 )
 0x0e5e    op26_Wait( time=15 )
 0x0e61    -- 0xFE0E_SoundSetVolume( volume=127, steps=120 )
 0x0e67    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x64, flags=0 )
+0x0e6c    op9C_MessageSync()
 0x0e6d    op00_Return()
 
 Actor_0x20:event_0x05:
 0x0e6e    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x65, flags=0 )
+0x0e73    op9C_MessageSync()
 0x0e74    -- 0xFE0E_SoundSetVolume( volume=0, steps=64 )
 0x0e7a    op26_Wait( time=5 )
 0x0e7d    op74_SoundPlayFixedVolume( sound_id=37 )
 0x0e80    op26_Wait( time=60 )
 0x0e83    -- 0xFE0E_SoundSetVolume( volume=127, steps=120 )
 0x0e89    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x66, flags=0 )
+0x0e8e    op9C_MessageSync()
 0x0e8f    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x67, flags=0 )
+0x0e94    op9C_MessageSync()
 0x0e95    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x68, flags=0 )
+0x0e9a    op9C_MessageSync()
 0x0e9b    op26_Wait( time=30 )
 0x0e9e    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x69, flags=0 )
+0x0ea3    op9C_MessageSync()
 0x0ea4    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x6a, flags=0 )
+0x0ea9    op9C_MessageSync()
 0x0eaa    opD4_MessageShowFromActor( actor_id=Actor_0x0c, text_id=0x6b, flags=0 )
+0x0eaf    op9C_MessageSync()
 0x0eb0    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x6c, flags=0 )
+0x0eb5    op9C_MessageSync()
 0x0eb6    op00_Return()
-0x0eb7    -- 0xE0( actor_id=Actor_0x46, ???=(vf80)0x6f72, ???=(vf40)0x0000, flag=0x0 )
+0x0eb7    -- 0xE0( actor_id=Actor_0x02, ???=(vf80)0x044a, ???=(vf40)0x0004, flag=0x40 )

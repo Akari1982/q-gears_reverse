@@ -180,7 +180,7 @@ Actor_0x03:event_0x0a:
 0x0262    -- 0xFE5E()-- 0xFE5F()
 0x026e    -- 0x80()
 0x0273    op00_Return()
-0x0274    -- 0xC0( ???=(s)mem[0x1600] )
+0x0274    -- 0xC0( ???=mem[0x1600] )
 0x0277    op01_JumpTo( address=0xfe80 )
 0x027a    op0D_Return()
 0x027b    op01_JumpTo( address=0x80 )
@@ -565,14 +565,17 @@ Actor_0x15:on_push:
 
 Actor_0x15:event_0x04:
 0x04e9    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x04ee    op9C_MessageSync()
 0x04ef    op00_Return()
 
 Actor_0x15:event_0x05:
 0x04f0    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x8, flags=CLOSE_OFF_SCREEN )
+0x04f5    op9C_MessageSync()
 0x04f6    op00_Return()
 
 Actor_0x15:event_0x06:
 0x04f7    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x9, flags=CLOSE_OFF_SCREEN )
+0x04fc    op9C_MessageSync()
 0x04fd    op00_Return()
 
 Actor_0x16:on_start:
@@ -802,4 +805,4 @@ Actor_0x1c:on_talk:
 
 Actor_0x1c:on_push:
 0x079e    op00_Return()
-0x079f    -- 0xE0( actor_id=Actor_0xc9, ???=(vf80)0x0001, ???=(vf40)0x6800, flag=0xb2 )
+0x079f    -- 0xE0( actor_id=Actor_0x15, ???=(vf80)0x8003, ???=(vf40)0xd801, flag=0xb6 )

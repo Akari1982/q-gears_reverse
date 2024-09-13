@@ -322,10 +322,7 @@ Actor_0x05:event_0x04:
 0x027c    op00_Return()
 0x027d    -- 0x80()
 0x0282    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0c, text_id=0xc0fe, flags=CLOSE_OFF_SCREEN|NO_FACE|FORCE_LEFT|FORCE_RIGHT|FORCE_TOP|NO_WINDOW )
-0x0288    op00_Return()
-
-Actor_0x06:on_start:
-0x0289    -- 0xBC_ActorNoModelInit()
+0x0287    op01_JumpTo( address=0xbc00 )
 0x028a    -- 0x46()
 0x028b    -- 0x2A()
 0x028c    op00_Return()
@@ -728,4 +725,4 @@ Actor_0x0a:event_0x09:
 0x07e1    opAC_MoveCamera( control=0x0, steps=90 )
 0x07e5    opAC_MoveCamera( control=0x1, steps=90 )
 0x07e9    op00_Return()
-0x07ea    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x07ea    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0142, ???=(vf40)0x0d93, flag=0x80 )

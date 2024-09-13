@@ -228,15 +228,19 @@ Actor_0x0c:on_push:
 function:
 0x00fd    op02_JumpToConditional( val1=(s)mem[0x3e], val2=1, condition="val1 == val2", address_if_false=0x10e )
 0x0105    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x0, flags=0 )
+0x010a    op9C_MessageSync()
 0x010b    op01_JumpTo( address=0x13e )
 0x010e    op02_JumpToConditional( val1=(s)mem[0x3e], val2=3, condition="val1 == val2", address_if_false=0x11f )
 0x0116    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1, flags=0 )
+0x011b    op9C_MessageSync()
 0x011c    op01_JumpTo( address=0x13e )
 0x011f    op02_JumpToConditional( val1=(s)mem[0x3e], val2=0, condition="val1 == val2", address_if_false=0x130 )
 0x0127    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x2, flags=0 )
+0x012c    op9C_MessageSync()
 0x012d    op01_JumpTo( address=0x13e )
 0x0130    op02_JumpToConditional( val1=(s)mem[0x3e], val2=2, condition="val1 == val2", address_if_false=0x13e )
 0x0138    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x3, flags=0 )
+0x013d    op9C_MessageSync()
 0x013e    op0D_Return()
 
 Actor_0x0d:on_start:
@@ -272,6 +276,7 @@ function:
 0x018a    -- 0xFE54()
 0x018c    op02_JumpToConditional( val1=(s)mem[0x3e], val2=1, condition="val1 == val2", address_if_false=0x19d )
 0x0194    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x4, flags=0 )
+0x0199    op9C_MessageSync()
 0x019a    op01_JumpTo( address=0x1b3 )
 0x019d    op74_SoundPlayFixedVolume( sound_id=55 )
 0x01a0    opF5_MessageShowStatic( text_id=0x5, flags=CLOSE_OFF_SCREEN )
@@ -536,4 +541,4 @@ Actor_0x10:on_push:
 0x0502    opFE42( ???=1 )
 0x0506    opFE42( ???=2 )
 0x050a    op0D_Return()
-0x050b    -- 0xE0( actor_id=Actor_0x03, ???=(vf80)0x0094, ???=(vf40)0x0000, flag=0x0 )
+0x050b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

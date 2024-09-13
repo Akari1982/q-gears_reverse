@@ -583,7 +583,6 @@ Actor_0x11:on_update:
 0x0b0f    op26_Wait( time=120 )
 0x0b12    op26_Wait( time=45 )
 0x0b15    -- 0x12()
-0x0b19    -- 0x80()
 0x0b1e    op00_Return()
 
 Actor_0x11:on_talk:

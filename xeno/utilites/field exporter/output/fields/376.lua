@@ -268,7 +268,6 @@ Actor_0x0e:on_talk:
 0x015c    -- 0x86_ProgressNotEqualJumpTo( value=166, jump=0x186 )
 0x0161    op02_JumpToConditional( val1=mem[0x14c], val2=74, condition="val1 == val2", address_if_false=0x176 )
 0x0169    -- 0x12()
-0x016d    -- 0x80()
 0x0172    -- 0x5B()
 0x0173    op01_JumpTo( address=0x183 )
 0x0176    -- 0xFE68()

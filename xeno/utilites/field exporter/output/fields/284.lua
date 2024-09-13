@@ -68,7 +68,6 @@ Actor_0x00:on_update:
 0x00b0    opFE60_MoviePlay1( movie_id=14, sector=0, end_frame=575, flags=2 )
 0x00ba    opFE61_MovieStartSync()
 0x00bc    -- 0x12()
-0x00c0    -- 0x80()
 0x00c5    -- 0x5B()
 
 Actor_0x00:on_talk:

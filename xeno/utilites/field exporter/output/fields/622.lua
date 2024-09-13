@@ -527,6 +527,7 @@ Actor_0x05:on_update:
 0x05a3    -- 0x87_SetProgress( progress=263 )
 0x05a6    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=0 )
 0x05b1    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x7, flags=CLOSE_OFF_SCREEN )
+0x05b6    op9C_MessageSync()
 0x05b7    mem[0x40a] = false -- op37
 0x05ba    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0f, priority=0x02 )
 0x05bd    -- 0x9B( ???=12, ???=12 )
@@ -587,9 +588,11 @@ Actor_0x05:on_update:
 0x06ae    op26_Wait( time=50 )
 0x06b1    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=1 )
 0x06bc    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x8, flags=CLOSE_OFF_SCREEN|FORCE_LEFT )
+0x06c1    op9C_MessageSync()
 0x06c2    opEF_MoveCameraSync()
 0x06c5    mem[0x40c] = true -- op36
 0x06c8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x9, flags=CLOSE_OFF_SCREEN|FORCE_LEFT )
+0x06cd    op9C_MessageSync()
 0x06ce    -- 0x60()
 0x06cf    -- 0x64() -- exp0x1
 0x06d0    -- 0x63( ???=-77, ???=503, ???=-102 ) -- exp0x1
@@ -598,11 +601,14 @@ Actor_0x05:on_update:
 0x06e4    opAC_MoveCamera( control=0x1, steps=600 )
 0x06e8    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
 0x06eb    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x06, text_id=0xa, flags=CLOSE_OFF_SCREEN|FORCE_RIGHT )
+0x06f0    op9C_MessageSync()
 0x06f1    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x05, priority=0x03 )
 0x06f4    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0xb, flags=CLOSE_OFF_SCREEN|FORCE_LEFT )
+0x06f9    op9C_MessageSync()
 0x06fa    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x04, priority=0x03 )
 0x06fd    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x0d, priority=0x03 )
 0x0700    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x06, text_id=0xc, flags=CLOSE_OFF_SCREEN|FORCE_RIGHT )
+0x0705    op9C_MessageSync()
 0x0706    op07_CallActorEvent( actor_id=Actor_0x00, event=event_0x05, priority=0x03 )
 0x0709    op26_Wait( time=2 )
 0x070c    op25_ActorDisable( actor_id=Actor_0x06 )
@@ -619,14 +625,19 @@ Actor_0x05:on_update:
 0x0738    opAC_MoveCamera( control=0x1, steps=100 )
 0x073c    op26_Wait( time=20 )
 0x073f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xd, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0744    op9C_MessageSync()
 0x0745    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0xe, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x074a    op9C_MessageSync()
 0x074b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0xf, flags=CLOSE_OFF_SCREEN )
+0x0750    op9C_MessageSync()
 0x0751    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0c, priority=0x03 )
 0x0754    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x10, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0759    op9C_MessageSync()
 0x075a    opF1_FadeSetUp( steps=2, r=255, g=255, b=255, semi_tr=64 )
 0x0765    op07_CallActorEvent( actor_id=Actor_0x02, event=event_0x0d, priority=0x03 )
 0x0768    op26_Wait( time=10 )
 0x076b    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x11, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0770    op9C_MessageSync()
 0x0771    opFE0D_MessageSetFace( char_id=252 )
 0x0775    opEF_MoveCameraSync()
 0x0778    -- 0x98_MapLoad( field_id=618, value=1 )
@@ -660,24 +671,16 @@ Actor_0x06:event_0x04:
 0x0798    -- 0xFE5E()-- 0xFE5F()
 0x07a4    -- 0xFB()
 0x07a9    -- 0x12()
-
-Actor_0x07:on_update:
-0x07ad    op00_Return()
-
-Actor_0x07:on_talk:
-
-Actor_0x07:on_push:
-0x07ae    op00_Return()
-
-Actor_0x07:event_0x04:
-0x07af    mem[0x40e] -= 15 -- op39
-0x07b5    -- 0x10()
-0x07c0    mem[0x410] += 200 -- op38
-0x07c6    -- 0x10()
-0x07d1    op00_Return()
-
-Actor_0x07:event_0x05:
-0x07d2    mem[0x410] -= 200 -- op39
+0x07b2    op0F_Nop()
+0x07b3    op00_Return()
+0x07b4    mem[0x10] ^= (s)mem[0x40e] -- op40
+0x07ba    -- 0x04()
+0x07bb    -- 0x12()
+0x07c4    op00_Return()
+0x07c5    mem[0x10] ^= (s)mem[0x40e] -- op40
+0x07cb    -- 0x04()
+0x07cc    -- 0x12()
+0x07d5    opC8_CameraRotLeft( steps=mem[0x4000] )
 0x07d8    -- 0x10()
 0x07e3    mem[0x40e] += 15 -- op38
 0x07e9    -- 0x10()
@@ -1369,4 +1372,4 @@ function:
 0x0deb    op01_JumpTo( address=0xdee )
 0x0dee    opF4_MessageClose( type=0x1 )
 0x0df0    op0D_Return()
-0x0df1    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2d38, ???=(vf40)0xd3b2, flag=0xea )
+0x0df1    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xa838, ???=(vf40)0x1ab6, flag=0xfc )

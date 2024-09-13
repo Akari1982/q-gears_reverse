@@ -241,6 +241,7 @@ Actor_0x00:event_0x06:
 
 Actor_0x00:event_0x07:
 0x0389    opD4_MessageShowFromActor( actor_id=Actor_0x0d, text_id=0x0, flags=CLOSE_OFF_SCREEN )
+0x038e    op9C_MessageSync()
 0x038f    mem[0x408] = true -- op36
 0x0392    op00_Return()
 
@@ -845,6 +846,7 @@ Actor_0x0c:event_0x07:
 0x07e0    opD2_MessageShowDynamic( text_id=0x32, flags=FORCE_LEFT|FORCE_BOTTOM )
 0x07e4    op9C_MessageSync()
 0x07e5    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0d, text_id=0x33, flags=FORCE_BOTTOM )
+0x07ea    op9C_MessageSync()
 0x07eb    -- 0x75( ???=20 )
 0x07ee    -- 0x5A()
 0x07ef    op08_CallActorEventStartSync( actor_id=Actor_0x1a, event=event_0x05, priority=0x03 )
@@ -854,6 +856,7 @@ Actor_0x0c:event_0x07:
 0x07fc    opD2_MessageShowDynamic( text_id=0x34, flags=FORCE_LEFT|FORCE_BOTTOM )
 0x0800    op9C_MessageSync()
 0x0801    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0d, text_id=0x35, flags=FORCE_BOTTOM )
+0x0806    op9C_MessageSync()
 0x0807    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x812 )
 0x080f    op01_JumpTo( address=0x807 )
 0x0812    mem[0x408] = false -- op37
@@ -863,6 +866,7 @@ Actor_0x0c:event_0x07:
 0x0820    op9C_MessageSync()
 0x0821    opD0_MessageSettings( x=0, y=90, letters=0, rows=0, flags=0 )
 0x082c    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0d, text_id=0x37, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x0831    op9C_MessageSync()
 0x0832    op08_CallActorEventStartSync( actor_id=Actor_0x0e, event=event_0x05, priority=0x03 )
 0x0835    op02_JumpToConditional( val1=(s)mem[0x408], val2=0, condition="val1 == val2", address_if_false=0x840 )
 0x083d    op01_JumpTo( address=0x835 )
@@ -884,6 +888,7 @@ Actor_0x0c:event_0x07:
 0x086d    op26_Wait( time=10 )
 0x0870    opF4_MessageClose( type=0x1 )
 0x0872    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0d, text_id=0x3a, flags=FORCE_TOP )
+0x0877    op9C_MessageSync()
 0x0878    op08_CallActorEventStartSync( actor_id=Actor_0x18, event=event_0x06, priority=0x03 )
 0x087b    op09_CallActorEventEndSync( actor_id=Actor_0x0e, event=event_0x07, priority=0x03 )
 0x087e    opFE0D_MessageSetFace( char_id=72 )

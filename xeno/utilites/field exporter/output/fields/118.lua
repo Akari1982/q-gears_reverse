@@ -945,6 +945,7 @@ Actor_0x11:on_update:
 0x097d    op05_CallFunction( address=0x9aa )
 0x0980    op01_JumpTo( address=0x983 )
 0x0983    opD4_MessageShowFromActor( actor_id=party1, text_id=0x1b, flags=CLOSE_OFF_SCREEN )
+0x0988    op9C_MessageSync()
 0x0989    op07_CallActorEvent( actor_id=party2, event=event_0x06, priority=0x00 )
 0x098c    op07_CallActorEvent( actor_id=party3, event=event_0x06, priority=0x00 )
 0x098f    op09_CallActorEventEndSync( actor_id=party1, event=event_0x06, priority=0x00 )
@@ -958,11 +959,13 @@ Actor_0x11:on_push:
 
 Actor_0x11:event_0x04:
 0x0999    opD4_MessageShowFromActor( actor_id=Actor_0x10, text_id=0x1c, flags=CLOSE_OFF_SCREEN )
+0x099e    op9C_MessageSync()
 0x099f    mem[0x400] = true -- op36
 0x09a2    op00_Return()
 
 Actor_0x11:event_0x05:
 0x09a3    opD4_MessageShowFromActor( actor_id=Actor_0x10, text_id=0x1d, flags=CLOSE_OFF_SCREEN )
+0x09a8    op9C_MessageSync()
 0x09a9    op00_Return()
 
 function:
@@ -1738,4 +1741,4 @@ function:
 0x12e0    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x12e8    opFE96_ParticleCreate()
 0x12ea    op0D_Return()
-0x12eb    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0072, ???=(vf40)0x0074, flag=0x0 )
+0x12eb    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

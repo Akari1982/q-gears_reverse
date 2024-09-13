@@ -1824,6 +1824,7 @@ Actor_0x08:on_talk:
 0x4501    op01_JumpTo( address=0x4514 )
 0x4504    mem[0xc0] |= 1 << 12 -- op3a
 0x450a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x05, text_id=0x8, flags=CLOSE_OFF_SCREEN )
+0x450f    op9C_MessageSync()
 0x4510    opFE0D_MessageSetFace( char_id=252 )
 0x4514    op00_Return()
 
@@ -2053,4 +2054,4 @@ Actor_0x12:on_talk:
 
 Actor_0x12:on_push:
 0x4750    op00_Return()
-0x4751    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xcd38, ???=(vf40)0xdab2, flag=0x3 )
+0x4751    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x3e00, flag=0xb4 )

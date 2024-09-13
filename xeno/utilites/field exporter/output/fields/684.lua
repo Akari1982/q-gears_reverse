@@ -154,6 +154,7 @@ Actor_0x03:on_update:
 0x017f    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x0185    op26_Wait( time=20 )
 0x0188    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x0, flags=0 )
+0x018d    op9C_MessageSync()
 0x018e    -- 0xFE17()
 0x0192    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x04, priority=0x06 )
 0x0195    op26_Wait( time=10 )
@@ -270,4 +271,4 @@ Actor_0x06:on_talk:
 
 Actor_0x06:on_push:
 0x03fd    op00_Return()
-0x03fe    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2d01, ???=(vf40)0x04a0, flag=0x57 )
+0x03fe    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2d01, ???=(vf40)0x04a0, flag=0x31 )

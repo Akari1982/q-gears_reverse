@@ -491,6 +491,7 @@ Actor_0x13:on_update:
 0x041c    op26_Wait( time=30 )
 0x041f    -- 0x67()
 0x0423    opD4_MessageShowFromActor( actor_id=party1, text_id=0x0, flags=CLOSE_OFF_SCREEN|NO_FACE )
+0x0428    op9C_MessageSync()
 0x0429    op07_CallActorEvent( actor_id=Actor_0x14, event=event_0x04, priority=0x01 )
 0x042c    opC6_ExpandRun() -- exp0x20
 0x042d    op07_CallActorEvent( actor_id=Actor_0x0c, event=event_0x04, priority=0x01 )

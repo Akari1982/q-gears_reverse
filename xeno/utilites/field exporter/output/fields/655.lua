@@ -855,6 +855,7 @@ Actor_0x15:on_update:
 0x086e    op9C_MessageSync()
 0x086f    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=0 )
 0x087a    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x09, text_id=0x12, flags=CLOSE_OFF_SCREEN )
+0x087f    op9C_MessageSync()
 0x0880    -- 0x60()
 0x0881    -- 0x64() -- exp0x1
 0x0882    -- 0x63( ???=-864, ???=2267, ???=-162 ) -- exp0x1
@@ -863,6 +864,7 @@ Actor_0x15:on_update:
 0x0896    opAC_MoveCamera( control=0x81, steps=0 )
 0x089a    op09_CallActorEventEndSync( actor_id=party3, event=event_0x04, priority=0x03 )
 0x089d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x13, flags=CLOSE_OFF_SCREEN )
+0x08a2    op9C_MessageSync()
 0x08a3    -- 0x60()
 0x08a4    -- 0x64() -- exp0x1
 0x08a5    -- 0x63( ???=-76, ???=1518, ???=-901 ) -- exp0x1
@@ -870,6 +872,7 @@ Actor_0x15:on_update:
 0x08b5    opAC_MoveCamera( control=0x80, steps=0 )
 0x08b9    opAC_MoveCamera( control=0x81, steps=0 )
 0x08bd    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x14, flags=CLOSE_OFF_SCREEN )
+0x08c2    op9C_MessageSync()
 0x08c3    -- 0x9B( ???=12, ???=12 )
 0x08c8    -- 0x60()
 0x08c9    -- 0x64() -- exp0x1
@@ -1166,4 +1169,4 @@ Actor_0x1e:event_0x04:
 0x0c1d    op02_JumpToConditional( val1=(s)mem[0x47c], val2=4096, condition="val1 != val2", address_if_false=0xc28 )
 0x0c25    op01_JumpTo( address=0xc0c )
 0x0c28    op00_Return()
-0x0c29    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0138, ???=(vf40)0x0100, flag=0x9c )
+0x0c29    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x8838, ???=(vf40)0xc03c, flag=0xe4 )

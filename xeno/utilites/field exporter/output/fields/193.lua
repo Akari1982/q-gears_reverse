@@ -86,7 +86,6 @@ Actor_0x00:on_update:
 0x0102    op09_CallActorEventEndSync( actor_id=Actor_0x06, event=event_0x07, priority=0x01 )
 0x0105    mem[0x140] = 110 -- op35
 0x010b    -- 0x12()
-0x010f    -- 0x80()
 0x0114    op01_JumpTo( address=0x1be )
 0x0117    op02_JumpToConditional( val1=mem[0x140], val2=110, condition="val1 == val2", address_if_false=0x148 )
 0x011f    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x07, priority=0x01 )
@@ -99,7 +98,6 @@ Actor_0x00:on_update:
 0x0135    op9C_MessageSync()
 0x0136    mem[0x140] = 120 -- op35
 0x013c    -- 0x12()
-0x0140    -- 0x80()
 0x0145    op01_JumpTo( address=0x1be )
 0x0148    op02_JumpToConditional( val1=mem[0x140], val2=120, condition="val1 == val2", address_if_false=0x184 )
 0x0150    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x0c, priority=0x01 )
@@ -129,7 +127,6 @@ Actor_0x00:on_update:
 0x01af    op26_Wait( time=150 )
 0x01b2    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x0d, priority=0x01 )
 0x01b5    -- 0x12()
-0x01b9    -- 0x80()
 0x01be    op00_Return()
 
 Actor_0x00:on_talk:

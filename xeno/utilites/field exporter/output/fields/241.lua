@@ -655,6 +655,7 @@ Actor_0x0a:on_push:
 
 Actor_0x0a:event_0x04:
 0x0566    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x27, flags=CLOSE_OFF_SCREEN )
+0x056b    op9C_MessageSync()
 0x056c    -- 0x9A()
 0x056f    op26_Wait( time=16 )
 0x0572    op00_Return()
@@ -1248,11 +1249,13 @@ Actor_0x21:on_push:
 Actor_0x21:event_0x04:
 0x0a7e    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 )
 0x0a89    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x2a, flags=0 )
+0x0a8e    op9C_MessageSync()
 0x0a8f    op00_Return()
 
 Actor_0x21:event_0x05:
 0x0a90    opD0_MessageSettings( x=0, y=0, letters=0, rows=0, flags=338 )
 0x0a9b    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x2b, flags=0 )
+0x0aa0    op9C_MessageSync()
 0x0aa1    op00_Return()
 
 Actor_0x22:on_start:

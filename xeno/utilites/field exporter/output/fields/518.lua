@@ -178,7 +178,7 @@ Actor_0x08:on_start:
 0x015e    -- 0x0B_InitNPC( 4 )
 0x0161    -- 0xFE1C()
 0x016a    -- 0xFE5E()-- 0xFE5F()
-0x0176    mem[0x2dd] ^= mem[0x800] -- op40
+0x0176    mem[0x2dd] ^= (s)mem[0x800] -- op40
 0x017c    -- 0x80()
 
 Actor_0x08:on_update:
@@ -307,6 +307,7 @@ Actor_0x0c:on_update:
 0x02ea    op09_CallActorEventEndSync( actor_id=Actor_0x10, event=event_0x04, priority=0x03 )
 0x02ed    op26_Wait( time=20 )
 0x02f0    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x0, flags=0 )
+0x02f5    op9C_MessageSync()
 0x02f6    opD0_MessageSettings( x=60, y=140, letters=0, rows=0, flags=257 )
 0x0301    opFE0D_MessageSetFace( char_id=1 )
 0x0305    opD2_MessageShowDynamic( text_id=0x1, flags=0 )
@@ -349,6 +350,7 @@ Actor_0x0d:on_start:
 
 Actor_0x0d:on_update:
 0x0366    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x5, flags=0 )
+0x036b    op9C_MessageSync()
 0x036c    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x05, priority=0x03 )
 0x036f    op07_CallActorEvent( actor_id=Actor_0x10, event=event_0x05, priority=0x03 )
 0x0372    op07_CallActorEvent( actor_id=Actor_0x03, event=event_0x06, priority=0x03 )

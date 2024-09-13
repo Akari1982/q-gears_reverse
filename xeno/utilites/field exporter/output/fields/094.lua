@@ -351,6 +351,7 @@ Actor_0x0e:on_talk:
 0x045b    -- 0xFE50()
 0x045d    -- 0xFE52()
 0x045f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x06, text_id=0x1, flags=0 )
+0x0464    op9C_MessageSync()
 0x0465    op26_Wait( time=10 )
 0x0468    opFE0D_MessageSetFace( char_id=18 )
 0x046c    opD2_MessageShowDynamic( text_id=0x2, flags=0 )

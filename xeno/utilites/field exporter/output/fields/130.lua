@@ -88,6 +88,7 @@ Actor_0x00:on_update:
 0x015c    op02_JumpToConditional( val1=(s)mem[0x404], val2=0, condition="val1 == val2", address_if_false=0x170 )
 0x0164    mem[0x404] = 1 -- op35
 0x016a    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x0, flags=FORCE_BOTTOM|0x80 )
+0x016f    op9C_MessageSync()
 0x0170    op01_JumpTo( address=0x179 )
 0x0173    mem[0x404] = 0 -- op35
 0x0179    op01_JumpTo( address=0x154 )

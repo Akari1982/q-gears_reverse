@@ -224,9 +224,11 @@ Actor_0x09:on_update:
 0x01ce    -- 0x9A()
 0x01d1    op26_Wait( time=60 )
 0x01d4    opD4_MessageShowFromActor( actor_id=Actor_0x01, text_id=0x1, flags=NO_FACE )
+0x01d9    op9C_MessageSync()
 0x01da    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x04, priority=0x03 )
 0x01dd    op26_Wait( time=10 )
 0x01e0    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x2, flags=0 )
+0x01e5    op9C_MessageSync()
 0x01e6    -- 0xFE54()
 0x01e8    -- 0x5B()
 
@@ -554,4 +556,4 @@ Actor_0x0e:on_push:
 0x05e8    op74_SoundPlayFixedVolume( sound_id=80 )
 0x05eb    mem[0x44e] = true -- op36
 0x05ee    op00_Return()
-0x05ef    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x4800, ???=(vf40)0x40b2, flag=0xb2 )
+0x05ef    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb000, ???=(vf40)0x0648, flag=0xb6 )

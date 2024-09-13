@@ -426,6 +426,7 @@ Actor_0x08:event_0x04:
 0x03f2    op09_CallActorEventEndSync( actor_id=Actor_0x01, event=event_0x06, priority=0x01 )
 0x03f5    op26_Wait( time=5 )
 0x03f8    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x01, text_id=0x0, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x03fd    op9C_MessageSync()
 0x03fe    op26_Wait( time=15 )
 0x0401    opFE9B_SlideShow1( steps=30 )
 0x0405    mem[0x406] = 11 -- op35
@@ -441,6 +442,7 @@ Actor_0x08:event_0x04:
 0x0427    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x04, priority=0x01 )
 0x042a    op26_Wait( time=5 )
 0x042d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x1, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0432    op9C_MessageSync()
 0x0433    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x07, priority=0x01 )
 0x0436    op26_Wait( time=15 )
 0x0439    opFE9B_SlideShow1( steps=30 )
@@ -451,6 +453,7 @@ Actor_0x08:event_0x04:
 0x0449    op08_CallActorEventStartSync( actor_id=Actor_0x03, event=event_0x04, priority=0x01 )
 0x044c    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x0b, priority=0x01 )
 0x044f    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x2, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0454    op9C_MessageSync()
 0x0455    op26_Wait( time=15 )
 0x0458    opFE9B_SlideShow1( steps=30 )
 0x045c    op09_CallActorEventEndSync( actor_id=Actor_0x05, event=event_0x08, priority=0x01 )
@@ -460,6 +463,7 @@ Actor_0x08:event_0x04:
 0x0468    op26_Wait( time=15 )
 0x046b    op09_CallActorEventEndSync( actor_id=Actor_0x02, event=event_0x0c, priority=0x01 )
 0x046e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x02, text_id=0x3, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0473    op9C_MessageSync()
 0x0474    op00_Return()
 
 function:

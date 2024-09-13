@@ -2745,6 +2745,7 @@ Actor_0x0d:on_update:
 0x4fa1    opF1_FadeSetUp( steps=1, r=0, g=0, b=0, semi_tr=1 )
 0x4fac    -- 0x87_SetProgress( progress=290 )
 0x4faf    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x1, flags=CLOSE_OFF_SCREEN )
+0x4fb4    op9C_MessageSync()
 0x4fb5    -- 0xF2()
 0x4fbe    op07_CallActorEvent( actor_id=Actor_0x21, event=event_0x05, priority=0x03 )
 0x4fc1    op26_Wait( time=0 )

@@ -64,6 +64,7 @@ Actor_0x01:on_push:
 
 Actor_0x01:event_0x04:
 0x00ba    opD4_MessageShowFromActor( actor_id=Actor_0x24, text_id=0x0, flags=0 )
+0x00bf    op9C_MessageSync()
 0x00c0    op00_Return()
 
 Actor_0x01:event_0x05:
@@ -278,6 +279,7 @@ Actor_0x07:event_0x08:
 Actor_0x07:event_0x09:
 0x0303    -- 0x15()
 0x0304    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x09, text_id=0x1, flags=0 )
+0x0309    op9C_MessageSync()
 0x030a    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x0310    mem[0x408] = false -- op37
 0x0313    -- 0xFE54()
@@ -395,6 +397,7 @@ Actor_0x09:event_0x06:
 0x0465    op9C_MessageSync()
 0x0466    op02_JumpToConditional( val1=(s)mem[0x14], val2=2, condition="val1 == val2", address_if_false=0x485 )
 0x046e    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x0a, text_id=0x3, flags=0 )
+0x0473    op9C_MessageSync()
 0x0474    -- 0xFE0A( ???=0x82f )
 0x0478    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x06, priority=0x00 )
 0x047b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
@@ -1179,6 +1182,7 @@ Actor_0x1f:on_push:
 
 Actor_0x1f:event_0x04:
 0x0d2a    opD4_MessageShowFromActor( actor_id=Actor_0x20, text_id=0x23, flags=CLOSE_OFF_SCREEN )
+0x0d2f    op9C_MessageSync()
 0x0d30    opD2_MessageShowDynamic( text_id=0x24, flags=CLOSE_OFF_SCREEN )
 0x0d34    op9C_MessageSync()
 0x0d35    -- 0xFE0A( ???=0x884 )
@@ -1483,6 +1487,7 @@ Actor_0x23:on_talk:
 0x10b0    -- 0x7C()
 0x10b4    opFE0D_MessageSetFace( char_id=0 )
 0x10b8    opD4_MessageShowFromActor( actor_id=Actor_0x07, text_id=0x45, flags=CLOSE_OFF_SCREEN )
+0x10bd    op9C_MessageSync()
 0x10be    -- 0xFE9A()
 0x10c8    op09_CallActorEventEndSync( actor_id=party1, event=event_0x04, priority=0x00 )
 0x10cb    -- 0xFE9A()
@@ -1512,6 +1517,7 @@ Actor_0x23:on_talk:
 0x1147    op07_CallActorEvent( actor_id=Actor_0x05, event=event_0x05, priority=0x00 )
 0x114a    opFE0D_MessageSetFace( char_id=0 )
 0x114e    opD4_MessageShowFromActor( actor_id=Actor_0x07, text_id=0x48, flags=CLOSE_OFF_SCREEN )
+0x1153    op9C_MessageSync()
 0x1154    -- 0x2A()
 0x1155    mem[0x408] = false -- op37
 0x1158    -- 0xFE54()
@@ -1719,11 +1725,14 @@ Actor_0x24:event_0x04:
 0x1476    -- 0xFE5F()
 0x147f    op01_JumpTo( address=0x1467 )
 0x1482    opD4_MessageShowFromActor( actor_id=Actor_0x24, text_id=0x51, flags=FORCE_BOTTOM )
+0x1487    op9C_MessageSync()
 0x1488    -- 0x84_ProgressLessEqualJumpTo( value=72, jump=0x1496 )
 0x148d    opD4_MessageShowFromActor( actor_id=Actor_0x24, text_id=0x52, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x1492    op9C_MessageSync()
 0x1493    op01_JumpTo( address=0x14a4 )
 0x1496    -- 0x84_ProgressLessEqualJumpTo( value=204, jump=0x14a4 )
 0x149b    opD4_MessageShowFromActor( actor_id=Actor_0x24, text_id=0x53, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
+0x14a0    op9C_MessageSync()
 0x14a1    op01_JumpTo( address=0x14a4 )
 0x14a4    op07_CallActorEvent( actor_id=Actor_0x24, event=event_0x04, priority=0x00 )
 0x14a7    op00_Return()
@@ -1755,11 +1764,13 @@ Actor_0x25:on_update:
 0x14f4    -- 0xFE0E_SoundSetVolume( volume=0, steps=0 )
 0x14fa    -- 0xFE65()
 0x1500    opD4_MessageShowFromActor( actor_id=Actor_0x07, text_id=0x55, flags=NO_FACE|FORCE_TOP )
+0x1505    op9C_MessageSync()
 0x1506    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x150c    opD2_MessageShowDynamic( text_id=0x56, flags=NO_FACE|FORCE_BOTTOM )
 0x1510    op9C_MessageSync()
 0x1511    opFE0D_MessageSetFace( char_id=0 )
 0x1515    opD4_MessageShowFromActor( actor_id=Actor_0x07, text_id=0x57, flags=FORCE_BOTTOM )
+0x151a    op9C_MessageSync()
 0x151b    op07_CallActorEvent( actor_id=Actor_0x07, event=event_0x0c, priority=0x00 )
 0x151e    opD2_MessageShowDynamic( text_id=0x58, flags=NO_FACE|FORCE_BOTTOM )
 0x1522    op9C_MessageSync()
@@ -1769,6 +1780,7 @@ Actor_0x25:on_update:
 0x152d    op9C_MessageSync()
 0x152e    opFE0D_MessageSetFace( char_id=0 )
 0x1532    opD4_MessageShowFromActor( actor_id=Actor_0x07, text_id=0x5a, flags=FORCE_BOTTOM )
+0x1537    op9C_MessageSync()
 0x1538    -- 0x21( ???=192 )
 0x153b    -- 0x4A_ActorGoToPos( variable arguments based on 0x01800000 in script call )
 0x1541    -- 0xFE0E_SoundSetVolume( volume=127, steps=1000 )
@@ -1833,4 +1845,4 @@ Actor_0x27:on_talk:
 
 Actor_0x27:on_push:
 0x15b6    op00_Return()
-0x15b7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0xf700, flag=0xa )
+0x15b7    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x6c00, flag=0x6b )
