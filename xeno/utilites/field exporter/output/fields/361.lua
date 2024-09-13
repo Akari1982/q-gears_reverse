@@ -44,7 +44,7 @@ Actor_0x00:on_update:
 0x006e    op26_Wait( time=0 )
 0x0071    opB3_FadeIn()
 0x0074    op02_JumpToConditional( val1=(s)mem[0x402], val2=15, condition="val1 < val2", address_if_false=0x8e )
-0x007c    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=mem[0xfff4] )
+0x007c    opFE1D_ModelAddTrans( trans_x=-12, trans_y=0, trans_z=(s)mem[0xfff4] )
 0x0085    mem[0x402] += 1 -- op3c
 0x0088    op26_Wait( time=1 )
 0x008b    op01_JumpTo( address=0x74 )
@@ -453,4 +453,4 @@ Actor_0x15:on_talk:
 
 Actor_0x15:on_push:
 0x02a4    op00_Return()
-0x02a5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x19d2, flag=0x14 )
+0x02a5    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x01c9, flag=0x0 )

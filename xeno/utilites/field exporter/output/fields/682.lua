@@ -278,7 +278,7 @@ Actor_0x07:event_0x04:
 0x0217    mem[0x22c] >>= (s)mem[0x5ffe] -- op42
 0x021c    op03_MessageShowFixed2( text_id=0x402, flags=NO_FACE )
 0x0220    -- 0x04()
-0x0221    op02_JumpToConditional( val1=mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
+0x0221    op02_JumpToConditional( val1=(s)mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
 0x0229    op01_JumpTo( address=0x212 )
 0x022c    -- 0x23()
 0x022d    op00_Return()
@@ -347,7 +347,7 @@ Actor_0x08:event_0x06:
 0x02d5    op01_JumpTo( address=0x2be )
 0x02d8    op26_Wait( time=15 )
 0x02db    -- 0xFE5E()-- 0xFE5F()
-0x02e7    op02_JumpToConditional( val1=(s)mem[0x2c00], val2=(s)mem[0xfe], condition="", address_if_false=0x8006 )
+0x02e7    op02_JumpToConditional( val1=mem[0x2c00], val2=(s)mem[0xfe], condition="", address_if_false=0x8006 )
 0x02ef    -- 0x19_ActorSetPosition( x=(vf80)0xff45, z=(vf40)0xfccf, flag=(flag)0xc0 )
 0x02f5    -- 0xFE07( ???=0x1 )
 0x02f8    -- 0x5F( ???=0x0 )
@@ -2122,4 +2122,4 @@ function:
 0x1b7e    opFE4D_SpritePlayAddAnim( anim_id=0x0 )
 0x1b81    op01_JumpTo( address=0x1b84 )
 0x1b84    op0D_Return()
-0x1b85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0xfc01, flag=0x19 )
+0x1b85    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0038, ???=(vf40)0x0000, flag=0x0 )

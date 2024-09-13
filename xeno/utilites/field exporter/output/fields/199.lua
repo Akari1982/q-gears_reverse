@@ -1419,7 +1419,7 @@ Actor_0x2c:on_start:
 0x0d83    -- 0xFE5E()-- 0xFE5F()
 0x0d8f    op00_Return()
 0x0d90    -- 0x10()
-0x0d9b    opD0_MessageSettings( x=20482, y=mem[0x200], letters=(s)mem[0x1000], rows=19456, flags=20482 )
+0x0d9b    opD0_MessageSettings( x=20482, y=mem[0x200], letters=mem[0x1000], rows=19456, flags=20482 )
 0x0da6    op00_Return()
 0x0da7    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x26, text_id=0x8001, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM|NO_WINDOW|0x80 )
 0x0dad    op02_JumpToConditional( condition="val1 == val2", address_if_false=0xcc00 )

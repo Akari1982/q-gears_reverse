@@ -1682,7 +1682,7 @@ Actor_0x18:on_update:
 0x1123    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x15, text_id=0x60, flags=0 )
 0x1129    -- 0x12()
 0x112d    op00_Return()
-0x112e    op02_JumpToConditional( val1=(s)mem[0x4000], val2=(s)mem[0x1138], condition="val1 != val2", address_if_false=0x1123 )
+0x112e    op02_JumpToConditional( val1=mem[0x4000], val2=(s)mem[0x1138], condition="val1 != val2", address_if_false=0x1123 )
 0x1136    op01_JumpTo( address=0x1139 )
 0x1139    -- 0x91()
 0x113d    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x04, text_id=0x61, flags=0 )
@@ -3862,4 +3862,4 @@ Actor_0x2a:on_push:
 0x2f04    op74_SoundPlayFixedVolume( sound_id=80 )
 0x2f07    mem[0x472] = true -- op36
 0x2f0a    op00_Return()
-0x2f0b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x5f6e, ???=(vf40)0x7473, flag=0x61 )
+0x2f0b    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x1b )

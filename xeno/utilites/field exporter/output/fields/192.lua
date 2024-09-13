@@ -487,4 +487,147 @@ Actor_0x0d:event_0x08:
 0x0510    op26_Wait( time=24 )
 0x0513    opFE97_ParticleReset( all=0x0 )
 0x0516    op29_ActorTurnOff( actor_id=Actor_0x0d )
-0x0518    -- MISSING OPCODE 0xFEca
+0x0518    -- 0xFECA()
+0x051b    -- 0xFECA()
+0x051e    op00_Return()
+
+function:
+0x051f    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=1, rot_x=3, rot_y=36 )
+0x0528    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=8, wait=0, ttl=32767 )
+0x0532    opFE91_ParticlePos( x=(vf80)0x00fa, y=(vf40)0x0032, z=(vf20)0x012c, speed_x=(vf10)0x00fa, speed_y=(vf08)0x03e8, speed_z=(vf04)0x0384, flag=(flag)0xfc )
+0x0541    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x005a, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x0550    opFE93_ParticleWaitTtl( s_wait=1, var2=7, sprite_id=4, var4=1, var5=1 )
+0x055c    opFE94_ParticleTranslation( trans_x=(vf80)0x0bf0, trans_y=(vf40)0x0bf0, trans_add_x=(vf20)0xffd8, trans_add_y=(vf10)0xffd8, flag=(flag)0xf0 )
+0x0567    opFE95_ParticleColour( r=(vf80)0x006e, g=(vf40)0x003c, b=(vf20)0x00a0, r_add=(vf10)0xfff6, g_add=(vf10)0xfff6, b_add=(vf10)0xfff6, flag=(flag)0xfc )
+0x0576    opFEA5_ParticleRenderSettings( use_speed=6, settings=2, rot_z=0 )
+0x057e    opFEBD_ParticleSpawnSettings( settings=0 )
+0x0586    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=8, wait=0, ttl=32767 )
+0x0590    opFE91_ParticlePos( x=(vf80)0xff06, y=(vf40)0x0032, z=(vf20)0x012c, speed_x=(vf10)0xff06, speed_y=(vf08)0x03e8, speed_z=(vf04)0x0384, flag=(flag)0xfc )
+0x059f    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x005a, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x05ae    opFE93_ParticleWaitTtl( s_wait=1, var2=7, sprite_id=4, var4=1, var5=1 )
+0x05ba    opFE94_ParticleTranslation( trans_x=(vf80)0x0bf0, trans_y=(vf40)0x0bf0, trans_add_x=(vf20)0xffd8, trans_add_y=(vf10)0xffd8, flag=(flag)0xf0 )
+0x05c5    opFE95_ParticleColour( r=(vf80)0x006e, g=(vf40)0x003c, b=(vf20)0x00a0, r_add=(vf10)0xfff6, g_add=(vf10)0xfff6, b_add=(vf10)0xfff6, flag=(flag)0xfc )
+0x05d4    opFEA5_ParticleRenderSettings( use_speed=6, settings=2, rot_z=0 )
+0x05dc    opFEBD_ParticleSpawnSettings( settings=0 )
+0x05e4    opFE96_ParticleCreate()
+0x05e6    op0D_Return()
+
+Actor_0x0e:on_start:
+0x05e7    -- 0xBC_ActorNoModelInit()
+0x05e8    -- 0x2A()
+0x05e9    -- 0x23()
+0x05ea    op00_Return()
+
+Actor_0x0e:on_update:
+0x05eb    op00_Return()
+
+Actor_0x0e:on_talk:
+
+Actor_0x0e:on_push:
+0x05ec    op00_Return()
+
+Actor_0x0f:on_start:
+0x05ed    -- 0xBC_ActorNoModelInit()
+0x05ee    -- 0x2A()
+0x05ef    -- 0x23()
+0x05f0    op00_Return()
+
+Actor_0x0f:on_update:
+0x05f1    op00_Return()
+
+Actor_0x0f:on_talk:
+
+Actor_0x0f:on_push:
+0x05f2    op00_Return()
+
+Actor_0x10:on_start:
+0x05f3    -- 0xBC_ActorNoModelInit()
+0x05f4    -- 0x2A()
+0x05f5    op00_Return()
+
+Actor_0x10:on_update:
+0x05f6    op00_Return()
+
+Actor_0x10:on_talk:
+
+Actor_0x10:on_push:
+0x05f7    op00_Return()
+
+Actor_0x11:on_start:
+0x05f8    -- 0xBC_ActorNoModelInit()
+0x05f9    -- 0x2A()
+0x05fa    op00_Return()
+
+Actor_0x11:on_update:
+0x05fb    op00_Return()
+
+Actor_0x11:on_talk:
+
+Actor_0x11:on_push:
+0x05fc    op00_Return()
+
+Actor_0x12:on_start:
+0x05fd    -- 0xBC_ActorNoModelInit()
+0x05fe    -- 0x2A()
+0x05ff    op00_Return()
+
+Actor_0x12:on_update:
+0x0600    op00_Return()
+
+Actor_0x12:on_talk:
+
+Actor_0x12:on_push:
+0x0601    op00_Return()
+
+Actor_0x13:on_start:
+0x0602    -- 0xBC_ActorNoModelInit()
+0x0603    -- 0x2A()
+0x0604    op00_Return()
+
+Actor_0x13:on_update:
+0x0605    op00_Return()
+
+Actor_0x13:on_talk:
+
+Actor_0x13:on_push:
+0x0606    op00_Return()
+
+Actor_0x14:on_start:
+0x0607    -- 0xBC_ActorNoModelInit()
+0x0608    -- 0x2A()
+0x0609    op00_Return()
+
+Actor_0x14:on_update:
+0x060a    op00_Return()
+
+Actor_0x14:on_talk:
+
+Actor_0x14:on_push:
+0x060b    op00_Return()
+
+Actor_0x15:on_start:
+0x060c    -- 0xBC_ActorNoModelInit()
+0x060d    -- 0x2A()
+0x060e    op00_Return()
+
+Actor_0x15:on_update:
+0x060f    op00_Return()
+
+Actor_0x15:on_talk:
+
+Actor_0x15:on_push:
+0x0610    op00_Return()
+
+Actor_0x16:on_start:
+0x0611    -- 0xBC_ActorNoModelInit()
+0x0612    -- 0x2A()
+0x0613    op00_Return()
+
+Actor_0x16:on_update:
+0x0614    op00_Return()
+
+Actor_0x16:on_talk:
+
+Actor_0x16:on_push:
+0x0615    op00_Return()
+0x0616    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

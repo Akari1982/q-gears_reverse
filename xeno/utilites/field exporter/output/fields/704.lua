@@ -612,4 +612,35 @@ Actor_0x1f:on_push:
 0x0346    -- 0x5A()
 0x0347    opFE8F_ParticleSystemInit1( actor_id=party1, render_settings=0, rot_x=0, rot_y=0 )
 0x0350    op74_SoundPlayFixedVolume( sound_id=466 )
-0x0353    -- MISSING OPCODE 0xFEac
+0x0353    -- 0xFEAC()
+0x0358    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=20, wait=0, ttl=1 )
+0x0362    opFE91_ParticlePos( x=(vf80)0x0050, y=(vf40)0x0000, z=(vf20)0x0050, speed_x=(vf10)0x0050, speed_y=(vf08)0xff38, speed_z=(vf04)0x0032, flag=(flag)0xfc )
+0x0371    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x1388, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x005a, flag=(flag)0xfc )
+0x0380    opFE93_ParticleWaitTtl( s_wait=1, var2=9, sprite_id=3, var4=0, var5=0 )
+0x038c    opFE94_ParticleTranslation( trans_x=(vf80)0x02f4, trans_y=(vf40)0x02f4, trans_add_x=(vf20)0x0050, trans_add_y=(vf10)0x0050, flag=(flag)0xf0 )
+0x0397    opFE95_ParticleColour( r=(vf80)0x00c8, g=(vf40)0x0064, b=(vf20)0x0000, r_add=(vf10)0x0005, g_add=(vf10)0xfffb, b_add=(vf10)0xfffb, flag=(flag)0xfc )
+0x03a6    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x03ae    opFE96_ParticleCreate()
+0x03b0    op29_ActorTurnOff( actor_id=self )
+0x03b2    op00_Return()
+
+Actor_0x20:on_start:
+0x03b3    -- 0xBC_ActorNoModelInit()
+0x03b4    -- 0xF8()
+0x03b8    -- 0x1D()
+0x03bf    -- 0x18()
+0x03c4    op00_Return()
+
+Actor_0x20:on_update:
+0x03c5    -- 0x5B()
+0x03c6    op00_Return()
+
+Actor_0x20:on_talk:
+0x03c7    op00_Return()
+
+Actor_0x20:on_push:
+0x03c8    -- 0xFE54()
+0x03ca    -- 0xB5() -- camera set direction
+0x03cf    op26_Wait( time=10 )
+0x03d2    -- 0x98_MapLoad( field_id=17087, value=1 )
+0x03d7    op00_Return()

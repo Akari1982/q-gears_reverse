@@ -94,7 +94,7 @@ Actor_0x01:event_0x07:
 0x012e    mem[0x143] >>= (s)mem[0x5ffe] -- op42
 0x0133    op03_MessageShowFixed2( text_id=0x402, flags=NO_FACE )
 0x0137    -- 0x04()
-0x0138    op02_JumpToConditional( val1=mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
+0x0138    op02_JumpToConditional( val1=(s)mem[0x3904], val2=(s)mem[0x402], condition="val1 != val2", address_if_false=0x4000 )
 0x0140    op01_JumpTo( address=0x129 )
 0x0143    -- 0x23()
 0x0144    op00_Return()
@@ -3093,4 +3093,4 @@ function:
 0x2cc4    op01_JumpTo( address=0x2cc7 )
 0x2cc7    opF4_MessageClose( type=0x1 )
 0x2cc9    op0D_Return()
-0x2cca    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )
+0x2cca    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x4000, ???=(vf40)0x2c9c, flag=0xfe )

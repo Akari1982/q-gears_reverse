@@ -880,4 +880,4 @@ function:
 0x0c3e    opFEA5_ParticleRenderSettings( use_speed=1, settings=1, rot_z=0 )
 0x0c46    opFE96_ParticleCreate()
 0x0c48    op0D_Return()
-0x0c49    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xb638, ???=(vf40)0x9a14, flag=0x0 )
+0x0c49    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xcf38, ???=(vf40)0xd3b2, flag=0x0 )

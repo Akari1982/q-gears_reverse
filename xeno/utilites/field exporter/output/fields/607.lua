@@ -1300,4 +1300,1338 @@ Actor_0x0a:event_0x06:
 0x0f3e    -- 0xF6( ???=0x1 )
 0x0f40    -- 0x10()
 0x0f4b    op29_ActorTurnOff( actor_id=Actor_0x0a )
-0x0f4d    -- MISSING OPCODE 0xFEca
+0x0f4d    -- 0xFECA()
+0x0f50    -- 0xFECA()
+0x0f53    op00_Return()
+
+Actor_0x0b:on_start:
+0x0f54    -- 0xBC_ActorNoModelInit()
+0x0f55    -- 0x2A()
+0x0f56    opFE0D_MessageSetFace( char_id=70 )
+0x0f5a    -- 0xFE1C()
+0x0f63    op00_Return()
+
+Actor_0x0b:on_update:
+0x0f64    op00_Return()
+
+Actor_0x0b:on_talk:
+
+Actor_0x0b:on_push:
+0x0f65    op00_Return()
+
+Actor_0x0b:event_0x04:
+0x0f66    opD2_MessageShowDynamic( text_id=0x30, flags=0 )
+0x0f6a    op9C_MessageSync()
+0x0f6b    op00_Return()
+
+Actor_0x0b:event_0x05:
+0x0f6c    opD2_MessageShowDynamic( text_id=0x31, flags=0 )
+0x0f70    op9C_MessageSync()
+0x0f71    mem[0x408] = 2 -- op35
+0x0f77    op00_Return()
+
+Actor_0x0b:event_0x06:
+0x0f78    opD2_MessageShowDynamic( text_id=0x32, flags=0 )
+0x0f7c    op9C_MessageSync()
+0x0f7d    op00_Return()
+
+Actor_0x0c:on_start:
+0x0f7e    -- 0x0B_InitNPC( 4 )
+0x0f81    opFE0D_MessageSetFace( char_id=9 )
+0x0f85    -- 0x19_ActorSetPosition( x=(vf80)0x032c, z=(vf40)0x03bc, flag=(flag)0xc0 )
+0x0f8b    -- 0x5F( ???=0x6 )
+0x0f8d    op00_Return()
+
+Actor_0x0c:on_update:
+0x0f8e    op00_Return()
+
+Actor_0x0c:on_talk:
+0x0f8f    op00_Return()
+
+Actor_0x0c:on_push:
+0x0f90    op00_Return()
+
+Actor_0x0c:event_0x04:
+0x0f91    op6F_ActorRotateToActor( actor_id=Actor_0x07 )
+0x0f93    op00_Return()
+
+Actor_0x0c:event_0x05:
+0x0f94    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x0f96    op00_Return()
+
+Actor_0x0d:on_start:
+0x0f97    -- 0x0B_InitNPC( 5 )
+0x0f9a    opFE0D_MessageSetFace( char_id=3 )
+0x0f9e    -- 0x19_ActorSetPosition( x=(vf80)0x0338, z=(vf40)0x035e, flag=(flag)0xc0 )
+0x0fa4    -- 0x5F( ???=0x6 )
+0x0fa6    op00_Return()
+
+Actor_0x0d:on_update:
+0x0fa7    op00_Return()
+
+Actor_0x0d:on_talk:
+0x0fa8    op00_Return()
+
+Actor_0x0d:on_push:
+0x0fa9    op00_Return()
+
+Actor_0x0d:event_0x04:
+0x0faa    op6F_ActorRotateToActor( actor_id=Actor_0x07 )
+0x0fac    op00_Return()
+
+Actor_0x0d:event_0x05:
+0x0fad    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x0faf    op00_Return()
+
+Actor_0x0d:event_0x06:
+0x0fb0    opD0_MessageSettings( x=80, y=20, letters=0, rows=0, flags=0 )
+0x0fbb    opD2_MessageShowDynamic( text_id=0x33, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0fbf    op9C_MessageSync()
+0x0fc0    op00_Return()
+
+Actor_0x0e:on_start:
+0x0fc1    -- 0x0B_InitNPC( 7 )
+0x0fc4    opFE0D_MessageSetFace( char_id=4 )
+0x0fc8    -- 0x19_ActorSetPosition( x=(vf80)0x02ea, z=(vf40)0x038c, flag=(flag)0xc0 )
+0x0fce    -- 0x5F( ???=0x6 )
+0x0fd0    op00_Return()
+
+Actor_0x0e:on_update:
+0x0fd1    op00_Return()
+
+Actor_0x0e:on_talk:
+0x0fd2    op00_Return()
+
+Actor_0x0e:on_push:
+0x0fd3    op00_Return()
+
+Actor_0x0e:event_0x04:
+0x0fd4    op6F_ActorRotateToActor( actor_id=Actor_0x07 )
+0x0fd6    op00_Return()
+
+Actor_0x0e:event_0x05:
+0x0fd7    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x0fd9    op00_Return()
+
+Actor_0x0e:event_0x06:
+0x0fda    opD0_MessageSettings( x=40, y=160, letters=0, rows=0, flags=0 )
+0x0fe5    opD2_MessageShowDynamic( text_id=0x34, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x0fe9    op9C_MessageSync()
+0x0fea    op00_Return()
+
+Actor_0x0f:on_start:
+0x0feb    -- 0x0B_InitNPC( 10 )
+0x0fee    opFE0D_MessageSetFace( char_id=6 )
+0x0ff2    -- 0x19_ActorSetPosition( x=(vf80)0x02c8, z=(vf40)0x0374, flag=(flag)0xc0 )
+0x0ff8    -- 0x5F( ???=0x6 )
+0x0ffa    op00_Return()
+
+Actor_0x0f:on_update:
+0x0ffb    op00_Return()
+
+Actor_0x0f:on_talk:
+0x0ffc    op00_Return()
+
+Actor_0x0f:on_push:
+0x0ffd    op00_Return()
+
+Actor_0x0f:event_0x04:
+0x0ffe    op6F_ActorRotateToActor( actor_id=Actor_0x07 )
+0x1000    op00_Return()
+
+Actor_0x0f:event_0x05:
+0x1001    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x1003    op00_Return()
+
+Actor_0x0f:event_0x06:
+0x1004    opD0_MessageSettings( x=100, y=100, letters=0, rows=0, flags=0 )
+0x100f    opD2_MessageShowDynamic( text_id=0x35, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x1013    op9C_MessageSync()
+0x1014    op00_Return()
+
+Actor_0x10:on_start:
+0x1015    -- 0x0B_InitNPC( 9 )
+0x1018    opFE0D_MessageSetFace( char_id=7 )
+0x101c    -- 0x19_ActorSetPosition( x=(vf80)0x0327, z=(vf40)0x039f, flag=(flag)0xc0 )
+0x1022    -- 0x5F( ???=0x6 )
+0x1024    op00_Return()
+
+Actor_0x10:on_update:
+0x1025    op00_Return()
+
+Actor_0x10:on_talk:
+0x1026    op00_Return()
+
+Actor_0x10:on_push:
+0x1027    op00_Return()
+
+Actor_0x10:event_0x04:
+0x1028    op6F_ActorRotateToActor( actor_id=Actor_0x07 )
+0x102a    op00_Return()
+
+Actor_0x10:event_0x05:
+0x102b    op6F_ActorRotateToActor( actor_id=Actor_0x09 )
+0x102d    op00_Return()
+
+Actor_0x10:event_0x06:
+0x102e    opD0_MessageSettings( x=80, y=20, letters=0, rows=0, flags=0 )
+0x1039    opD2_MessageShowDynamic( text_id=0x36, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x103d    op9C_MessageSync()
+0x103e    op00_Return()
+
+Actor_0x11:on_start:
+0x103f    -- 0x0B_InitNPC( 6 )
+0x1042    opFE0D_MessageSetFace( char_id=5 )
+0x1046    -- 0x91()
+0x104a    op29_ActorTurnOff( actor_id=Actor_0x11 )
+0x104c    op01_JumpTo( address=0x1057 )
+0x104f    -- 0x19_ActorSetPosition( x=(vf80)0x048d, z=(vf40)0x03ed, flag=(flag)0xc0 )
+0x1055    -- 0x5F( ???=0x5 )
+0x1057    op20_ActorSetFlags0( flags=1 )
+0x105a    op00_Return()
+
+Actor_0x11:on_update:
+0x105b    -- 0x91()
+0x105f    -- 0x23()
+0x1060    op01_JumpTo( address=0x106b )
+0x1063    -- 0x19_ActorSetPosition( x=(vf80)0x048d, z=(vf40)0x03ed, flag=(flag)0xc0 )
+0x1069    -- 0x5F( ???=0x6 )
+0x106b    op00_Return()
+
+Actor_0x11:on_talk:
+0x106c    op00_Return()
+
+Actor_0x11:on_push:
+0x106d    op00_Return()
+
+Actor_0x11:event_0x04:
+0x106e    opD0_MessageSettings( x=20, y=90, letters=0, rows=0, flags=0 )
+0x1079    opD2_MessageShowDynamic( text_id=0x37, flags=CLOSE_OFF_SCREEN|FORCE_TOP )
+0x107d    op9C_MessageSync()
+0x107e    op00_Return()
+
+Actor_0x12:on_start:
+0x107f    -- 0xBC_ActorNoModelInit()
+0x1080    -- 0x2A()
+0x1081    op00_Return()
+
+Actor_0x12:on_update:
+0x1082    op00_Return()
+
+Actor_0x12:on_talk:
+0x1083    op00_Return()
+
+Actor_0x12:on_push:
+0x1084    op00_Return()
+
+Actor_0x13:on_start:
+0x1085    -- 0xBC_ActorNoModelInit()
+0x1086    -- 0x2A()
+0x1087    op00_Return()
+
+Actor_0x13:on_update:
+0x1088    op00_Return()
+
+Actor_0x13:on_talk:
+0x1089    op00_Return()
+
+Actor_0x13:on_push:
+0x108a    op00_Return()
+
+Actor_0x14:on_start:
+0x108b    -- 0xBC_ActorNoModelInit()
+0x108c    -- 0x2A()
+0x108d    op00_Return()
+
+Actor_0x14:on_update:
+0x108e    op00_Return()
+
+Actor_0x14:on_talk:
+0x108f    op00_Return()
+
+Actor_0x14:on_push:
+0x1090    op00_Return()
+
+Actor_0x15:on_start:
+0x1091    -- 0xBC_ActorNoModelInit()
+0x1092    -- 0x2A()
+0x1093    op00_Return()
+
+Actor_0x15:on_update:
+0x1094    op00_Return()
+
+Actor_0x15:on_talk:
+0x1095    op00_Return()
+
+Actor_0x15:on_push:
+0x1096    op00_Return()
+
+Actor_0x16:on_start:
+0x1097    -- 0xBC_ActorNoModelInit()
+0x1098    -- 0x2A()
+0x1099    op00_Return()
+
+Actor_0x16:on_update:
+0x109a    op00_Return()
+
+Actor_0x16:on_talk:
+0x109b    op00_Return()
+
+Actor_0x16:on_push:
+0x109c    op00_Return()
+
+Actor_0x17:on_start:
+0x109d    -- 0xBC_ActorNoModelInit()
+0x109e    -- 0x2A()
+0x109f    op00_Return()
+
+Actor_0x17:on_update:
+0x10a0    op00_Return()
+
+Actor_0x17:on_talk:
+0x10a1    op00_Return()
+
+Actor_0x17:on_push:
+0x10a2    op00_Return()
+
+Actor_0x18:on_start:
+0x10a3    -- 0xBC_ActorNoModelInit()
+0x10a4    -- 0x2A()
+0x10a5    op00_Return()
+
+Actor_0x18:on_update:
+0x10a6    op00_Return()
+
+Actor_0x18:on_talk:
+0x10a7    op00_Return()
+
+Actor_0x18:on_push:
+0x10a8    op00_Return()
+
+Actor_0x19:on_start:
+0x10a9    -- 0xBC_ActorNoModelInit()
+0x10aa    -- 0x2A()
+0x10ab    op00_Return()
+
+Actor_0x19:on_update:
+0x10ac    op00_Return()
+
+Actor_0x19:on_talk:
+0x10ad    op00_Return()
+
+Actor_0x19:on_push:
+0x10ae    op00_Return()
+
+Actor_0x1a:on_start:
+0x10af    -- 0xBC_ActorNoModelInit()
+0x10b0    -- 0x2A()
+0x10b1    op00_Return()
+
+Actor_0x1a:on_update:
+0x10b2    op00_Return()
+
+Actor_0x1a:on_talk:
+0x10b3    op00_Return()
+
+Actor_0x1a:on_push:
+0x10b4    op00_Return()
+
+Actor_0x1b:on_start:
+0x10b5    -- 0xBC_ActorNoModelInit()
+0x10b6    -- 0x2A()
+0x10b7    op00_Return()
+
+Actor_0x1b:on_update:
+0x10b8    op00_Return()
+
+Actor_0x1b:on_talk:
+0x10b9    op00_Return()
+
+Actor_0x1b:on_push:
+0x10ba    op00_Return()
+
+Actor_0x1c:on_start:
+0x10bb    -- 0xBC_ActorNoModelInit()
+0x10bc    -- 0x2A()
+0x10bd    op00_Return()
+
+Actor_0x1c:on_update:
+0x10be    op00_Return()
+
+Actor_0x1c:on_talk:
+0x10bf    op00_Return()
+
+Actor_0x1c:on_push:
+0x10c0    op00_Return()
+
+Actor_0x1d:on_start:
+0x10c1    -- 0xBC_ActorNoModelInit()
+0x10c2    -- 0x2A()
+0x10c3    op00_Return()
+
+Actor_0x1d:on_update:
+0x10c4    op00_Return()
+
+Actor_0x1d:on_talk:
+0x10c5    op00_Return()
+
+Actor_0x1d:on_push:
+0x10c6    op00_Return()
+
+Actor_0x1e:on_start:
+0x10c7    -- 0xBC_ActorNoModelInit()
+0x10c8    -- 0x2A()
+0x10c9    op00_Return()
+
+Actor_0x1e:on_update:
+0x10ca    op00_Return()
+
+Actor_0x1e:on_talk:
+0x10cb    op00_Return()
+
+Actor_0x1e:on_push:
+0x10cc    op00_Return()
+
+Actor_0x1f:on_start:
+0x10cd    -- 0xBC_ActorNoModelInit()
+0x10ce    -- 0x2A()
+0x10cf    op00_Return()
+
+Actor_0x1f:on_update:
+0x10d0    op00_Return()
+
+Actor_0x1f:on_talk:
+0x10d1    op00_Return()
+
+Actor_0x1f:on_push:
+0x10d2    op00_Return()
+
+Actor_0x20:on_start:
+0x10d3    -- 0xBC_ActorNoModelInit()
+0x10d4    -- 0x2A()
+0x10d5    op00_Return()
+
+Actor_0x20:on_update:
+0x10d6    op00_Return()
+
+Actor_0x20:on_talk:
+0x10d7    op00_Return()
+
+Actor_0x20:on_push:
+0x10d8    op00_Return()
+
+Actor_0x21:on_start:
+0x10d9    -- 0xBC_ActorNoModelInit()
+0x10da    -- 0x2A()
+0x10db    op00_Return()
+
+Actor_0x21:on_update:
+0x10dc    op00_Return()
+
+Actor_0x21:on_talk:
+0x10dd    op00_Return()
+
+Actor_0x21:on_push:
+0x10de    op00_Return()
+
+Actor_0x22:on_start:
+0x10df    -- 0xBC_ActorNoModelInit()
+0x10e0    -- 0x2A()
+0x10e1    op00_Return()
+
+Actor_0x22:on_update:
+0x10e2    op00_Return()
+
+Actor_0x22:on_talk:
+0x10e3    op00_Return()
+
+Actor_0x22:on_push:
+0x10e4    op00_Return()
+
+Actor_0x23:on_start:
+0x10e5    -- 0xBC_ActorNoModelInit()
+0x10e6    -- 0x2A()
+0x10e7    op00_Return()
+
+Actor_0x23:on_update:
+0x10e8    op00_Return()
+
+Actor_0x23:on_talk:
+0x10e9    op00_Return()
+
+Actor_0x23:on_push:
+0x10ea    op00_Return()
+
+Actor_0x24:on_start:
+0x10eb    -- 0xBC_ActorNoModelInit()
+0x10ec    -- 0x2A()
+0x10ed    op00_Return()
+
+Actor_0x24:on_update:
+0x10ee    op00_Return()
+
+Actor_0x24:on_talk:
+0x10ef    op00_Return()
+
+Actor_0x24:on_push:
+0x10f0    op00_Return()
+
+Actor_0x25:on_start:
+0x10f1    -- 0xBC_ActorNoModelInit()
+0x10f2    -- 0x2A()
+0x10f3    op00_Return()
+
+Actor_0x25:on_update:
+0x10f4    op00_Return()
+
+Actor_0x25:on_talk:
+0x10f5    op00_Return()
+
+Actor_0x25:on_push:
+0x10f6    op00_Return()
+
+Actor_0x26:on_start:
+0x10f7    -- 0xBC_ActorNoModelInit()
+0x10f8    -- 0x2A()
+0x10f9    op00_Return()
+
+Actor_0x26:on_update:
+0x10fa    op00_Return()
+
+Actor_0x26:on_talk:
+0x10fb    op00_Return()
+
+Actor_0x26:on_push:
+0x10fc    op00_Return()
+
+Actor_0x27:on_start:
+0x10fd    -- 0xBC_ActorNoModelInit()
+0x10fe    -- 0x2A()
+0x10ff    op00_Return()
+
+Actor_0x27:on_update:
+0x1100    op00_Return()
+
+Actor_0x27:on_talk:
+0x1101    op00_Return()
+
+Actor_0x27:on_push:
+0x1102    op00_Return()
+
+Actor_0x28:on_start:
+0x1103    -- 0xBC_ActorNoModelInit()
+0x1104    -- 0x2A()
+0x1105    op00_Return()
+
+Actor_0x28:on_update:
+0x1106    op00_Return()
+
+Actor_0x28:on_talk:
+0x1107    op00_Return()
+
+Actor_0x28:on_push:
+0x1108    op00_Return()
+
+Actor_0x29:on_start:
+0x1109    -- 0xBC_ActorNoModelInit()
+0x110a    -- 0x2A()
+0x110b    op00_Return()
+
+Actor_0x29:on_update:
+0x110c    op00_Return()
+
+Actor_0x29:on_talk:
+0x110d    op00_Return()
+
+Actor_0x29:on_push:
+0x110e    op00_Return()
+
+Actor_0x2a:on_start:
+0x110f    -- 0xBC_ActorNoModelInit()
+0x1110    -- 0x2A()
+0x1111    op00_Return()
+
+Actor_0x2a:on_update:
+0x1112    op00_Return()
+
+Actor_0x2a:on_talk:
+0x1113    op00_Return()
+
+Actor_0x2a:on_push:
+0x1114    op00_Return()
+
+Actor_0x2b:on_start:
+0x1115    -- 0xBC_ActorNoModelInit()
+0x1116    -- 0x2A()
+0x1117    op00_Return()
+
+Actor_0x2b:on_update:
+0x1118    op00_Return()
+
+Actor_0x2b:on_talk:
+0x1119    op00_Return()
+
+Actor_0x2b:on_push:
+0x111a    op00_Return()
+
+Actor_0x2c:on_start:
+0x111b    -- 0xBC_ActorNoModelInit()
+0x111c    -- 0x2A()
+0x111d    op00_Return()
+
+Actor_0x2c:on_update:
+0x111e    op00_Return()
+
+Actor_0x2c:on_talk:
+0x111f    op00_Return()
+
+Actor_0x2c:on_push:
+0x1120    op00_Return()
+
+Actor_0x2d:on_start:
+0x1121    -- 0xBC_ActorNoModelInit()
+0x1122    -- 0x2A()
+0x1123    op00_Return()
+
+Actor_0x2d:on_update:
+0x1124    op00_Return()
+
+Actor_0x2d:on_talk:
+0x1125    op00_Return()
+
+Actor_0x2d:on_push:
+0x1126    op00_Return()
+
+Actor_0x2e:on_start:
+0x1127    -- 0xBC_ActorNoModelInit()
+0x1128    -- 0x2A()
+0x1129    op00_Return()
+
+Actor_0x2e:on_update:
+0x112a    op00_Return()
+
+Actor_0x2e:on_talk:
+0x112b    op00_Return()
+
+Actor_0x2e:on_push:
+0x112c    op00_Return()
+
+Actor_0x2f:on_start:
+0x112d    -- 0xBC_ActorNoModelInit()
+0x112e    -- 0x2A()
+0x112f    op00_Return()
+
+Actor_0x2f:on_update:
+0x1130    op00_Return()
+
+Actor_0x2f:on_talk:
+0x1131    op00_Return()
+
+Actor_0x2f:on_push:
+0x1132    op00_Return()
+
+Actor_0x30:on_start:
+0x1133    -- 0xBC_ActorNoModelInit()
+0x1134    -- 0x2A()
+0x1135    op00_Return()
+
+Actor_0x30:on_update:
+0x1136    op00_Return()
+
+Actor_0x30:on_talk:
+0x1137    op00_Return()
+
+Actor_0x30:on_push:
+0x1138    op00_Return()
+
+Actor_0x31:on_start:
+0x1139    -- 0xBC_ActorNoModelInit()
+0x113a    -- 0x2A()
+0x113b    op00_Return()
+
+Actor_0x31:on_update:
+0x113c    op00_Return()
+
+Actor_0x31:on_talk:
+0x113d    op00_Return()
+
+Actor_0x31:on_push:
+0x113e    op00_Return()
+
+Actor_0x32:on_start:
+0x113f    -- 0xBC_ActorNoModelInit()
+0x1140    -- 0x2A()
+0x1141    op00_Return()
+
+Actor_0x32:on_update:
+0x1142    op00_Return()
+
+Actor_0x32:on_talk:
+0x1143    op00_Return()
+
+Actor_0x32:on_push:
+0x1144    op00_Return()
+
+Actor_0x33:on_start:
+0x1145    -- 0xBC_ActorNoModelInit()
+0x1146    -- 0x2A()
+0x1147    op00_Return()
+
+Actor_0x33:on_update:
+0x1148    op00_Return()
+
+Actor_0x33:on_talk:
+0x1149    op00_Return()
+
+Actor_0x33:on_push:
+0x114a    op00_Return()
+
+Actor_0x34:on_start:
+0x114b    -- 0xBC_ActorNoModelInit()
+0x114c    -- 0x2A()
+0x114d    op00_Return()
+
+Actor_0x34:on_update:
+0x114e    op00_Return()
+
+Actor_0x34:on_talk:
+0x114f    op00_Return()
+
+Actor_0x34:on_push:
+0x1150    op00_Return()
+
+Actor_0x35:on_start:
+0x1151    -- 0xBC_ActorNoModelInit()
+0x1152    -- 0x2A()
+0x1153    op00_Return()
+
+Actor_0x35:on_update:
+0x1154    op00_Return()
+
+Actor_0x35:on_talk:
+0x1155    op00_Return()
+
+Actor_0x35:on_push:
+0x1156    op00_Return()
+
+Actor_0x36:on_start:
+0x1157    -- 0xBC_ActorNoModelInit()
+0x1158    -- 0x2A()
+0x1159    op00_Return()
+
+Actor_0x36:on_update:
+0x115a    op00_Return()
+
+Actor_0x36:on_talk:
+0x115b    op00_Return()
+
+Actor_0x36:on_push:
+0x115c    op00_Return()
+
+Actor_0x37:on_start:
+0x115d    -- 0xBC_ActorNoModelInit()
+0x115e    -- 0x2A()
+0x115f    op00_Return()
+
+Actor_0x37:on_update:
+0x1160    op00_Return()
+
+Actor_0x37:on_talk:
+0x1161    op00_Return()
+
+Actor_0x37:on_push:
+0x1162    op00_Return()
+
+Actor_0x38:on_start:
+0x1163    -- 0xBC_ActorNoModelInit()
+0x1164    -- 0x2A()
+0x1165    op00_Return()
+
+Actor_0x38:on_update:
+0x1166    op00_Return()
+
+Actor_0x38:on_talk:
+0x1167    op00_Return()
+
+Actor_0x38:on_push:
+0x1168    op00_Return()
+
+Actor_0x39:on_start:
+0x1169    -- 0xBC_ActorNoModelInit()
+0x116a    -- 0x2A()
+0x116b    op00_Return()
+
+Actor_0x39:on_update:
+0x116c    op00_Return()
+
+Actor_0x39:on_talk:
+0x116d    op00_Return()
+
+Actor_0x39:on_push:
+0x116e    op00_Return()
+
+Actor_0x3a:on_start:
+0x116f    -- 0xBC_ActorNoModelInit()
+0x1170    -- 0x2A()
+0x1171    op00_Return()
+
+Actor_0x3a:on_update:
+0x1172    op00_Return()
+
+Actor_0x3a:on_talk:
+0x1173    op00_Return()
+
+Actor_0x3a:on_push:
+0x1174    op00_Return()
+
+Actor_0x3b:on_start:
+0x1175    -- 0xBC_ActorNoModelInit()
+0x1176    -- 0x2A()
+0x1177    op00_Return()
+
+Actor_0x3b:on_update:
+0x1178    op00_Return()
+
+Actor_0x3b:on_talk:
+0x1179    op00_Return()
+
+Actor_0x3b:on_push:
+0x117a    op00_Return()
+
+Actor_0x3c:on_start:
+0x117b    -- 0xBC_ActorNoModelInit()
+0x117c    -- 0x2A()
+0x117d    op00_Return()
+
+Actor_0x3c:on_update:
+0x117e    op00_Return()
+
+Actor_0x3c:on_talk:
+0x117f    op00_Return()
+
+Actor_0x3c:on_push:
+0x1180    op00_Return()
+
+Actor_0x3d:on_start:
+0x1181    -- 0xBC_ActorNoModelInit()
+0x1182    -- 0x2A()
+0x1183    op00_Return()
+
+Actor_0x3d:on_update:
+0x1184    op00_Return()
+
+Actor_0x3d:on_talk:
+0x1185    op00_Return()
+
+Actor_0x3d:on_push:
+0x1186    op00_Return()
+
+Actor_0x3e:on_start:
+0x1187    -- 0xBC_ActorNoModelInit()
+0x1188    -- 0x2A()
+0x1189    op00_Return()
+
+Actor_0x3e:on_update:
+0x118a    op00_Return()
+
+Actor_0x3e:on_talk:
+0x118b    op00_Return()
+
+Actor_0x3e:on_push:
+0x118c    op00_Return()
+
+Actor_0x3f:on_start:
+0x118d    -- 0xBC_ActorNoModelInit()
+0x118e    -- 0x2A()
+0x118f    op00_Return()
+
+Actor_0x3f:on_update:
+0x1190    op00_Return()
+
+Actor_0x3f:on_talk:
+0x1191    op00_Return()
+
+Actor_0x3f:on_push:
+0x1192    op00_Return()
+
+Actor_0x40:on_start:
+0x1193    -- 0xBC_ActorNoModelInit()
+0x1194    -- 0x2A()
+0x1195    op00_Return()
+
+Actor_0x40:on_update:
+0x1196    op00_Return()
+
+Actor_0x40:on_talk:
+0x1197    op00_Return()
+
+Actor_0x40:on_push:
+0x1198    op00_Return()
+
+Actor_0x41:on_start:
+0x1199    -- 0xBC_ActorNoModelInit()
+0x119a    -- 0x2A()
+0x119b    op00_Return()
+
+Actor_0x41:on_update:
+0x119c    op00_Return()
+
+Actor_0x41:on_talk:
+0x119d    op00_Return()
+
+Actor_0x41:on_push:
+0x119e    op00_Return()
+
+Actor_0x42:on_start:
+0x119f    -- 0xBC_ActorNoModelInit()
+0x11a0    -- 0x2A()
+0x11a1    -- 0x23()
+0x11a2    op00_Return()
+
+Actor_0x42:on_update:
+0x11a3    op00_Return()
+
+Actor_0x42:on_talk:
+0x11a4    op00_Return()
+
+Actor_0x42:on_push:
+0x11a5    op00_Return()
+
+Actor_0x43:on_start:
+0x11a6    -- 0xBC_ActorNoModelInit()
+0x11a7    -- 0x2A()
+0x11a8    -- 0x23()
+0x11a9    op00_Return()
+
+Actor_0x43:on_update:
+0x11aa    op00_Return()
+
+Actor_0x43:on_talk:
+0x11ab    op00_Return()
+
+Actor_0x43:on_push:
+0x11ac    op00_Return()
+
+Actor_0x44:on_start:
+0x11ad    -- 0xBC_ActorNoModelInit()
+0x11ae    -- 0x2A()
+0x11af    op00_Return()
+
+Actor_0x44:on_update:
+0x11b0    op00_Return()
+
+Actor_0x44:on_talk:
+0x11b1    op00_Return()
+
+Actor_0x44:on_push:
+0x11b2    op00_Return()
+
+Actor_0x45:on_start:
+0x11b3    -- 0xBC_ActorNoModelInit()
+0x11b4    -- 0x2A()
+0x11b5    op00_Return()
+
+Actor_0x45:on_update:
+0x11b6    op00_Return()
+
+Actor_0x45:on_talk:
+0x11b7    op00_Return()
+
+Actor_0x45:on_push:
+0x11b8    op00_Return()
+
+Actor_0x46:on_start:
+0x11b9    -- 0x0B_InitNPC( 0 )
+0x11bc    -- 0x2A()
+0x11bd    -- 0xFE1C()
+0x11c6    -- 0x5F( ???=0x1 )
+0x11c8    -- 0x23()
+0x11c9    op00_Return()
+
+Actor_0x46:on_update:
+0x11ca    op00_Return()
+
+Actor_0x46:on_talk:
+
+Actor_0x46:on_push:
+0x11cb    op00_Return()
+
+Actor_0x46:event_0x04:
+0x11cc    opC6_ExpandRun() -- exp0x20
+0x11cd    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )
+0x11d6    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=12, wait=20, ttl=35 )
+0x11e0    opFE91_ParticlePos( x=(vf80)0xfce0, y=(vf40)0xfd30, z=(vf20)0x00c8, speed_x=(vf10)0xfce0, speed_y=(vf08)0xfcae, speed_z=(vf04)0x00c8, flag=(flag)0xfc )
+0x11ef    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0xff9c, acc_y=(vf20)0x07d0, acc_z=(vf10)0x0000, rand_start=(vf08)0x0078, rand_speed=(vf04)0x00b4, flag=(flag)0xfc )
+0x11fe    opFE93_ParticleWaitTtl( s_wait=1, var2=220, sprite_id=3, var4=1, var5=2 )
+0x120a    opFE94_ParticleTranslation( trans_x=(vf80)0x07d0, trans_y=(vf40)0x07d0, trans_add_x=(vf20)0x0014, trans_add_y=(vf10)0x0014, flag=(flag)0xf0 )
+0x1215    opFE95_ParticleColour( r=(vf80)0x00fa, g=(vf40)0x0000, b=(vf20)0x0000, r_add=(vf10)0xffff, g_add=(vf10)0x0000, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1224    opFEA5_ParticleRenderSettings( use_speed=3, settings=0, rot_z=0 )
+0x122c    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=16, wait=20, ttl=80 )
+0x1236    opFE91_ParticlePos( x=(vf80)0xfbe6, y=(vf40)0xfd12, z=(vf20)0x00c8, speed_x=(vf10)0xfbe6, speed_y=(vf08)0xf9f2, speed_z=(vf04)0x00c8, flag=(flag)0xfc )
+0x1245    opFE92_ParticleSpeed( speed=(vf80)0x0000, acc_x=(vf40)0xfed4, acc_y=(vf20)0xfed4, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x00c8, flag=(flag)0xfc )
+0x1254    opFE93_ParticleWaitTtl( s_wait=2, var2=500, sprite_id=0, var4=1, var5=3 )
+0x1260    opFE94_ParticleTranslation( trans_x=(vf80)0x1770, trans_y=(vf40)0x1770, trans_add_x=(vf20)0x006e, trans_add_y=(vf10)0x006e, flag=(flag)0xf0 )
+0x126b    opFE95_ParticleColour( r=(vf80)0x00dc, g=(vf40)0x0096, b=(vf20)0x0096, r_add=(vf10)0xfffb, g_add=(vf10)0xfffa, b_add=(vf10)0xfff5, flag=(flag)0xfc )
+0x127a    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x1282    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=1, wait=19, ttl=10 )
+0x128c    opFE91_ParticlePos( x=(vf80)0xfbe6, y=(vf40)0xfd12, z=(vf20)0x00c8, speed_x=(vf10)0xfbe6, speed_y=(vf08)0xf9f2, speed_z=(vf04)0x00c8, flag=(flag)0xfc )
+0x129b    opFE92_ParticleSpeed( speed=(vf80)0x0000, acc_x=(vf40)0x0000, acc_y=(vf20)0x01f4, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x00c8, flag=(flag)0xfc )
+0x12aa    opFE93_ParticleWaitTtl( s_wait=1, var2=1000, sprite_id=2, var4=1, var5=0 )
+0x12b6    opFE94_ParticleTranslation( trans_x=(vf80)0x2ee0, trans_y=(vf40)0x2ee0, trans_add_x=(vf20)0x01f4, trans_add_y=(vf10)0x01f4, flag=(flag)0xf0 )
+0x12c1    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x0000, b=(vf20)0x0000, r_add=(vf10)0xffff, g_add=(vf10)0x0000, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x12d0    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x12d8    opFE90_ParticleInitBase( particle_id=3, number_of_sprites=3, wait=20, ttl=100 )
+0x12e2    opFE91_ParticlePos( x=(vf80)0xfbe6, y=(vf40)0xfd12, z=(vf20)0x00c8, speed_x=(vf10)0xfbe6, speed_y=(vf08)0xf9f2, speed_z=(vf04)0x00c8, flag=(flag)0xfc )
+0x12f1    opFE92_ParticleSpeed( speed=(vf80)0x0000, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x000a, rand_speed=(vf04)0x000a, flag=(flag)0xfc )
+0x1300    opFE93_ParticleWaitTtl( s_wait=1, var2=100, sprite_id=0, var4=1, var5=3 )
+0x130c    opFE94_ParticleTranslation( trans_x=(vf80)0x03e8, trans_y=(vf40)0x1b58, trans_add_x=(vf20)0x0000, trans_add_y=(vf10)0x00c8, flag=(flag)0xf0 )
+0x1317    opFE95_ParticleColour( r=(vf80)0x00b4, g=(vf40)0x006e, b=(vf20)0x006e, r_add=(vf10)0xfff6, g_add=(vf10)0xfff6, b_add=(vf10)0xfff1, flag=(flag)0xfc )
+0x1326    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=1 )
+0x132e    opFE90_ParticleInitBase( particle_id=4, number_of_sprites=12, wait=20, ttl=100 )
+0x1338    opFE91_ParticlePos( x=(vf80)0xfcae, y=(vf40)0xfd76, z=(vf20)0x00e6, speed_x=(vf10)0xfcae, speed_y=(vf08)0xf98e, speed_z=(vf04)0x00e6, flag=(flag)0xfc )
+0x1347    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0xfe70, acc_y=(vf20)0xfed4, acc_z=(vf10)0x0000, rand_start=(vf08)0x0032, rand_speed=(vf04)0x03e8, flag=(flag)0xfc )
+0x1356    opFE93_ParticleWaitTtl( s_wait=2, var2=200, sprite_id=0, var4=1, var5=3 )
+0x1362    opFE94_ParticleTranslation( trans_x=(vf80)0x1770, trans_y=(vf40)0x1770, trans_add_x=(vf20)0xfff6, trans_add_y=(vf10)0xfff6, flag=(flag)0xf0 )
+0x136d    opFE95_ParticleColour( r=(vf80)0x00e6, g=(vf40)0x00e6, b=(vf20)0x00e6, r_add=(vf10)0xfffd, g_add=(vf10)0xfffd, b_add=(vf10)0xfffd, flag=(flag)0xfc )
+0x137c    opFEA5_ParticleRenderSettings( use_speed=1, settings=1, rot_z=0 )
+0x1384    opFE90_ParticleInitBase( particle_id=5, number_of_sprites=12, wait=30, ttl=32767 )
+0x138e    opFE91_ParticlePos( x=(vf80)0xfe70, y=(vf40)0xfce0, z=(vf20)0x012c, speed_x=(vf10)0xfe70, speed_y=(vf08)0xfc18, speed_z=(vf04)0x012c, flag=(flag)0xfc )
+0x139d    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0xfed4, acc_y=(vf20)0xfda8, acc_z=(vf10)0x0000, rand_start=(vf08)0x00b4, rand_speed=(vf04)0x00dc, flag=(flag)0xfc )
+0x13ac    opFE93_ParticleWaitTtl( s_wait=4, var2=30, sprite_id=0, var4=0, var5=2 )
+0x13b8    opFE94_ParticleTranslation( trans_x=(vf80)0x0ed8, trans_y=(vf40)0x1068, trans_add_x=(vf20)0xffec, trans_add_y=(vf10)0xffec, flag=(flag)0xf0 )
+0x13c3    opFE95_ParticleColour( r=(vf80)0x00a0, g=(vf40)0x0028, b=(vf20)0x0000, r_add=(vf10)0xfff6, g_add=(vf10)0xfffe, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x13d2    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x13da    opFE90_ParticleInitBase( particle_id=6, number_of_sprites=16, wait=0, ttl=32767 )
+0x13e4    opFE91_ParticlePos( x=(vf80)0xfe70, y=(vf40)0xfda8, z=(vf20)0x00e6, speed_x=(vf10)0xfe70, speed_y=(vf08)0xfa24, speed_z=(vf04)0x00e6, flag=(flag)0xfc )
+0x13f3    opFE92_ParticleSpeed( speed=(vf80)0x1b58, acc_x=(vf40)0xfed4, acc_y=(vf20)0xfed4, acc_z=(vf10)0x0000, rand_start=(vf08)0x0028, rand_speed=(vf04)0x0078, flag=(flag)0xfc )
+0x1402    opFE93_ParticleWaitTtl( s_wait=20, var2=150, sprite_id=0, var4=1, var5=3 )
+0x140e    opFE94_ParticleTranslation( trans_x=(vf80)0x0050, trans_y=(vf40)0x0050, trans_add_x=(vf20)0x0032, trans_add_y=(vf10)0x0032, flag=(flag)0xf0 )
+0x1419    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x00ff, b=(vf20)0x00ff, r_add=(vf10)0xfffe, g_add=(vf10)0xfffe, b_add=(vf10)0xfffe, flag=(flag)0xfc )
+0x1428    opFEA5_ParticleRenderSettings( use_speed=1, settings=1, rot_z=0 )
+0x1430    opFE90_ParticleInitBase( particle_id=7, number_of_sprites=8, wait=0, ttl=32767 )
+0x143a    opFE91_ParticlePos( x=(vf80)0xfea2, y=(vf40)0xfd44, z=(vf20)0x00fa, speed_x=(vf10)0xfea2, speed_y=(vf08)0xfa88, speed_z=(vf04)0x00fa, flag=(flag)0xfc )
+0x1449    opFE92_ParticleSpeed( speed=(vf80)0x3a98, acc_x=(vf40)0xfe70, acc_y=(vf20)0xfe70, acc_z=(vf10)0x0000, rand_start=(vf08)0x0078, rand_speed=(vf04)0x00b4, flag=(flag)0xfc )
+0x1458    opFE93_ParticleWaitTtl( s_wait=20, var2=100, sprite_id=3, var4=1, var5=1 )
+0x1464    opFE94_ParticleTranslation( trans_x=(vf80)0x0dac, trans_y=(vf40)0x0dac, trans_add_x=(vf20)0x0014, trans_add_y=(vf10)0x0014, flag=(flag)0xf0 )
+0x146f    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x0000, b=(vf20)0x0000, r_add=(vf10)0xfffe, g_add=(vf10)0x0000, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x147e    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x1486    opFE96_ParticleCreate()
+0x1488    -- 0x5A()
+0x1489    opC6_ExpandRun() -- exp0x20
+0x148a    opFE8F_ParticleSystemInit1( actor_id=self, render_settings=0, rot_x=0, rot_y=0 )
+0x1493    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=4, wait=0, ttl=32767 )
+0x149d    opFE91_ParticlePos( x=(vf80)0xfed4, y=(vf40)0xfd44, z=(vf20)0x00c8, speed_x=(vf10)0xfed4, speed_y=(vf08)0xfc7c, speed_z=(vf04)0x00c8, flag=(flag)0xfc )
+0x14ac    opFE92_ParticleSpeed( speed=(vf80)0x7530, acc_x=(vf40)0xfed4, acc_y=(vf20)0x0bb8, acc_z=(vf10)0x0000, rand_start=(vf08)0x0050, rand_speed=(vf04)0x00c8, flag=(flag)0xfc )
+0x14bb    opFE93_ParticleWaitTtl( s_wait=20, var2=60, sprite_id=3, var4=1, var5=1 )
+0x14c7    opFE94_ParticleTranslation( trans_x=(vf80)0x1194, trans_y=(vf40)0x1194, trans_add_x=(vf20)0x000a, trans_add_y=(vf10)0x001e, flag=(flag)0xf0 )
+0x14d2    opFE95_ParticleColour( r=(vf80)0x0037, g=(vf40)0x009b, b=(vf20)0x009b, r_add=(vf10)0xfffe, g_add=(vf10)0xfffe, b_add=(vf10)0xfffe, flag=(flag)0xfc )
+0x14e1    opFEA5_ParticleRenderSettings( use_speed=3, settings=1, rot_z=0 )
+0x14e9    opFE96_ParticleCreate()
+0x14eb    -- 0x5B()
+0x14ec    op00_Return()
+
+Actor_0x47:on_start:
+0x14ed    -- 0x0B_InitNPC( 0 )
+0x14f0    -- 0x5F( ???=0x0 )
+0x14f2    -- 0x23()
+0x14f3    -- 0x2A()
+0x14f4    op20_ActorSetFlags0( flags=13 )
+0x14f7    op00_Return()
+
+Actor_0x47:on_update:
+0x14f8    op00_Return()
+
+Actor_0x47:on_talk:
+0x14f9    op00_Return()
+
+Actor_0x47:on_push:
+0x14fa    op00_Return()
+
+Actor_0x47:event_0x04:
+0x14fb    opC6_ExpandRun() -- exp0x20
+0x14fc    -- 0x91()
+0x1500    opFE8F_ParticleSystemInit1( actor_id=Actor_0x03, render_settings=0, rot_x=0, rot_y=0 )
+0x1509    op01_JumpTo( address=0x1515 )
+0x150c    opFE8F_ParticleSystemInit1( actor_id=Actor_0x04, render_settings=0, rot_x=0, rot_y=0 )
+0x1515    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=18, wait=0, ttl=32767 )
+0x151f    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfff6, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xff74, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x152e    opFE92_ParticleSpeed( speed=(vf80)0x4e20, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0012, rand_speed=(vf04)0x000b, flag=(flag)0xfc )
+0x153d    opFE93_ParticleWaitTtl( s_wait=3, var2=33, sprite_id=0, var4=0, var5=1 )
+0x1549    opFE94_ParticleTranslation( trans_x=(vf80)0x02ee, trans_y=(vf40)0x04b0, trans_add_x=(vf20)0x0014, trans_add_y=(vf10)0x0014, flag=(flag)0xf0 )
+0x1554    opFE95_ParticleColour( r=(vf80)0x001c, g=(vf40)0x0084, b=(vf20)0x009b, r_add=(vf10)0xfff0, g_add=(vf10)0xfff0, b_add=(vf10)0xfff0, flag=(flag)0xfc )
+0x1563    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x156b    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1573    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=5, wait=0, ttl=32767 )
+0x157d    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x000a, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x000a, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x158c    opFE92_ParticleSpeed( speed=(vf80)0x01f4, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0003, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x159b    opFE93_ParticleWaitTtl( s_wait=1, var2=4, sprite_id=2, var4=0, var5=3 )
+0x15a7    opFE94_ParticleTranslation( trans_x=(vf80)0x0190, trans_y=(vf40)0x00fa, trans_add_x=(vf20)0x01ae, trans_add_y=(vf10)0x033e, flag=(flag)0xf0 )
+0x15b2    opFE95_ParticleColour( r=(vf80)0x005f, g=(vf40)0x0087, b=(vf20)0x009b, r_add=(vf10)0xfff2, g_add=(vf10)0xfff2, b_add=(vf10)0xfff2, flag=(flag)0xfc )
+0x15c1    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x15c9    opFEBD_ParticleSpawnSettings( settings=2 )
+0x15d1    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=3, wait=0, ttl=32767 )
+0x15db    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x0000, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x003c, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x15ea    opFE92_ParticleSpeed( speed=(vf80)0x8000, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x15f9    opFE93_ParticleWaitTtl( s_wait=4, var2=8, sprite_id=12, var4=0, var5=3 )
+0x1605    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x0358, trans_add_x=(vf20)0x0000, trans_add_y=(vf10)0x0000, flag=(flag)0xf0 )
+0x1610    opFE95_ParticleColour( r=(vf80)0x0037, g=(vf40)0x0037, b=(vf20)0x0037, r_add=(vf10)0x0000, g_add=(vf10)0x0001, b_add=(vf10)0x0001, flag=(flag)0xfc )
+0x161f    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1627    opFEBD_ParticleSpawnSettings( settings=0 )
+0x162f    opFE96_ParticleCreate()
+0x1631    op00_Return()
+
+Actor_0x47:event_0x05:
+0x1632    opC6_ExpandRun() -- exp0x20
+0x1633    opFE8F_ParticleSystemInit1( actor_id=Actor_0x08, render_settings=0, rot_x=0, rot_y=0 )
+0x163c    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=18, wait=0, ttl=32767 )
+0x1646    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffd8, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xff74, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1655    opFE92_ParticleSpeed( speed=(vf80)0x4e20, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0012, rand_speed=(vf04)0x000b, flag=(flag)0xfc )
+0x1664    opFE93_ParticleWaitTtl( s_wait=3, var2=33, sprite_id=0, var4=0, var5=2 )
+0x1670    opFE94_ParticleTranslation( trans_x=(vf80)0x02ee, trans_y=(vf40)0x04b0, trans_add_x=(vf20)0x0014, trans_add_y=(vf10)0x0014, flag=(flag)0xf0 )
+0x167b    opFE95_ParticleColour( r=(vf80)0x00d7, g=(vf40)0x002a, b=(vf20)0x0087, r_add=(vf10)0xfff0, g_add=(vf10)0xfff0, b_add=(vf10)0xfff0, flag=(flag)0xfc )
+0x168a    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1692    opFEBD_ParticleSpawnSettings( settings=0 )
+0x169a    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=5, wait=0, ttl=32767 )
+0x16a4    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x000a, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x000a, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x16b3    opFE92_ParticleSpeed( speed=(vf80)0x01f4, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0003, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x16c2    opFE93_ParticleWaitTtl( s_wait=1, var2=4, sprite_id=2, var4=0, var5=3 )
+0x16ce    opFE94_ParticleTranslation( trans_x=(vf80)0x0190, trans_y=(vf40)0x00fa, trans_add_x=(vf20)0x01ae, trans_add_y=(vf10)0x033e, flag=(flag)0xf0 )
+0x16d9    opFE95_ParticleColour( r=(vf80)0x00d7, g=(vf40)0x002d, b=(vf20)0x0087, r_add=(vf10)0xfff2, g_add=(vf10)0xfff2, b_add=(vf10)0xfff2, flag=(flag)0xfc )
+0x16e8    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x16f0    opFEBD_ParticleSpawnSettings( settings=2 )
+0x16f8    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=3, wait=0, ttl=32767 )
+0x1702    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0x0000, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffec, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1711    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1720    opFE93_ParticleWaitTtl( s_wait=4, var2=8, sprite_id=12, var4=0, var5=3 )
+0x172c    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x0358, trans_add_x=(vf20)0x0000, trans_add_y=(vf10)0x0000, flag=(flag)0xf0 )
+0x1737    opFE95_ParticleColour( r=(vf80)0x0037, g=(vf40)0x0037, b=(vf20)0x0037, r_add=(vf10)0x0000, g_add=(vf10)0x0001, b_add=(vf10)0x0001, flag=(flag)0xfc )
+0x1746    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x174e    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1756    opFE96_ParticleCreate()
+0x1758    op00_Return()
+
+Actor_0x47:event_0x06:
+0x1759    opC6_ExpandRun() -- exp0x20
+0x175a    opFE8F_ParticleSystemInit1( actor_id=Actor_0x08, render_settings=0, rot_x=0, rot_y=0 )
+0x1763    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=4, wait=0, ttl=32767 )
+0x176d    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffd8, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xff74, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x177c    opFE92_ParticleSpeed( speed=(vf80)0x4e20, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0012, rand_speed=(vf04)0x000b, flag=(flag)0xfc )
+0x178b    opFE93_ParticleWaitTtl( s_wait=3, var2=3, sprite_id=2, var4=0, var5=3 )
+0x1797    opFE94_ParticleTranslation( trans_x=(vf80)0x1068, trans_y=(vf40)0x1068, trans_add_x=(vf20)0x03e8, trans_add_y=(vf10)0x03e8, flag=(flag)0xf0 )
+0x17a2    opFE95_ParticleColour( r=(vf80)0x00d7, g=(vf40)0x002a, b=(vf20)0x0087, r_add=(vf10)0x0000, g_add=(vf10)0x0000, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x17b1    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x17b9    opFEBD_ParticleSpawnSettings( settings=0 )
+0x17c1    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=16, wait=20, ttl=32767 )
+0x17cb    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffce, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffce, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x17da    opFE92_ParticleSpeed( speed=(vf80)0x01f4, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0003, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x17e9    opFE93_ParticleWaitTtl( s_wait=1, var2=15, sprite_id=5, var4=1, var5=3 )
+0x17f5    opFE94_ParticleTranslation( trans_x=(vf80)0x0064, trans_y=(vf40)0x0064, trans_add_x=(vf20)0x008c, trans_add_y=(vf10)0x008c, flag=(flag)0xf0 )
+0x1800    opFE95_ParticleColour( r=(vf80)0x00d7, g=(vf40)0x002d, b=(vf20)0x009b, r_add=(vf10)0xfff2, g_add=(vf10)0xfff2, b_add=(vf10)0xfff2, flag=(flag)0xfc )
+0x180f    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x1817    opFEBD_ParticleSpawnSettings( settings=2 )
+0x181f    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=16, wait=0, ttl=32767 )
+0x1829    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffc4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffc4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1838    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1847    opFE93_ParticleWaitTtl( s_wait=4, var2=15, sprite_id=2, var4=0, var5=2 )
+0x1853    opFE94_ParticleTranslation( trans_x=(vf80)0x05b0, trans_y=(vf40)0x0740, trans_add_x=(vf20)0x012c, trans_add_y=(vf10)0x012c, flag=(flag)0xf0 )
+0x185e    opFE95_ParticleColour( r=(vf80)0x0037, g=(vf40)0x0037, b=(vf20)0x0037, r_add=(vf10)0x0000, g_add=(vf10)0x0001, b_add=(vf10)0x0001, flag=(flag)0xfc )
+0x186d    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1875    opFEBD_ParticleSpawnSettings( settings=0 )
+0x187d    opC6_ExpandRun() -- exp0x20
+0x187e    opFE90_ParticleInitBase( particle_id=3, number_of_sprites=18, wait=0, ttl=32767 )
+0x1888    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xff74, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffd8, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1897    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0384, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x18a6    opFE93_ParticleWaitTtl( s_wait=1, var2=6, sprite_id=18, var4=1, var5=2 )
+0x18b2    opFE94_ParticleTranslation( trans_x=(vf80)0x022b, trans_y=(vf40)0x022b, trans_add_x=(vf20)0x0000, trans_add_y=(vf10)0x0000, flag=(flag)0xf0 )
+0x18bd    opFE95_ParticleColour( r=(vf80)0x0060, g=(vf40)0x0052, b=(vf20)0x009b, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc )
+0x18cc    opFEA5_ParticleRenderSettings( use_speed=4, settings=0, rot_z=0 )
+0x18d4    opFEBD_ParticleSpawnSettings( settings=0 )
+0x18dc    opFE90_ParticleInitBase( particle_id=4, number_of_sprites=10, wait=30, ttl=32767 )
+0x18e6    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffd8, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffd8, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x18f5    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1904    opFE93_ParticleWaitTtl( s_wait=1, var2=9, sprite_id=2, var4=0, var5=2 )
+0x1910    opFE94_ParticleTranslation( trans_x=(vf80)0x1194, trans_y=(vf40)0x1194, trans_add_x=(vf20)0x00e6, trans_add_y=(vf10)0x00e6, flag=(flag)0xf0 )
+0x191b    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x009b, r_add=(vf10)0x0000, g_add=(vf10)0x0001, b_add=(vf10)0x0001, flag=(flag)0xfc )
+0x192a    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1932    opFEBD_ParticleSpawnSettings( settings=0 )
+0x193a    opFE90_ParticleInitBase( particle_id=5, number_of_sprites=6, wait=0, ttl=32767 )
+0x1944    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffe2, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffe2, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1953    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1962    opFE93_ParticleWaitTtl( s_wait=1, var2=7, sprite_id=2, var4=0, var5=0 )
+0x196e    opFE94_ParticleTranslation( trans_x=(vf80)0x0af0, trans_y=(vf40)0x0af0, trans_add_x=(vf20)0x0064, trans_add_y=(vf10)0x0064, flag=(flag)0xf0 )
+0x1979    opFE95_ParticleColour( r=(vf80)0x008a, g=(vf40)0x0016, b=(vf20)0x0091, r_add=(vf10)0xfffe, g_add=(vf10)0xfffe, b_add=(vf10)0xfffe, flag=(flag)0xfc )
+0x1988    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1990    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1998    opFE96_ParticleCreate()
+0x199a    op00_Return()
+
+Actor_0x47:event_0x07:
+0x199b    opC6_ExpandRun() -- exp0x20
+0x199c    opFE8F_ParticleSystemInit1( actor_id=Actor_0x08, render_settings=0, rot_x=0, rot_y=0 )
+0x19a5    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=5, wait=10, ttl=20 )
+0x19af    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffc4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffc4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x19be    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x19cd    opFE93_ParticleWaitTtl( s_wait=2, var2=40, sprite_id=18, var4=1, var5=1 )
+0x19d9    opFE94_ParticleTranslation( trans_x=(vf80)0x03e8, trans_y=(vf40)0x03e8, trans_add_x=(vf20)0x0046, trans_add_y=(vf10)0x0046, flag=(flag)0xf0 )
+0x19e4    opFE95_ParticleColour( r=(vf80)0x0046, g=(vf40)0x0046, b=(vf20)0x0096, r_add=(vf10)0x0000, g_add=(vf10)0xffff, b_add=(vf10)0x0006, flag=(flag)0xfc )
+0x19f3    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x19fb    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1a03    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=5, wait=0, ttl=40 )
+0x1a0d    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffc4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffc4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1a1c    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1a2b    opFE93_ParticleWaitTtl( s_wait=3, var2=10, sprite_id=1, var4=1, var5=0 )
+0x1a37    opFE94_ParticleTranslation( trans_x=(vf80)0x012c, trans_y=(vf40)0x012c, trans_add_x=(vf20)0x000a, trans_add_y=(vf10)0x000a, flag=(flag)0xf0 )
+0x1a42    opFE95_ParticleColour( r=(vf80)0x0064, g=(vf40)0x0064, b=(vf20)0x0064, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc )
+0x1a51    opFEA5_ParticleRenderSettings( use_speed=1, settings=1, rot_z=0 )
+0x1a59    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1a61    opC6_ExpandRun() -- exp0x20
+0x1a62    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=1, wait=36, ttl=1 )
+0x1a6c    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffc4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffc4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1a7b    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1a8a    opFE93_ParticleWaitTtl( s_wait=1, var2=30, sprite_id=19, var4=0, var5=0 )
+0x1a96    opFE94_ParticleTranslation( trans_x=(vf80)0x0000, trans_y=(vf40)0x0000, trans_add_x=(vf20)0x0122, trans_add_y=(vf10)0x012c, flag=(flag)0xf0 )
+0x1aa1    opFE95_ParticleColour( r=(vf80)0x0046, g=(vf40)0x0046, b=(vf20)0x0046, r_add=(vf10)0xfffc, g_add=(vf10)0xfffc, b_add=(vf10)0xfffc, flag=(flag)0xfc )
+0x1ab0    opFEA5_ParticleRenderSettings( use_speed=1, settings=1, rot_z=0 )
+0x1ab8    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1ac0    opFE90_ParticleInitBase( particle_id=3, number_of_sprites=5, wait=35, ttl=1 )
+0x1aca    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xffc4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xffc4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1ad9    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1ae8    opFE93_ParticleWaitTtl( s_wait=1, var2=30, sprite_id=0, var4=0, var5=0 )
+0x1af4    opFE94_ParticleTranslation( trans_x=(vf80)0x000a, trans_y=(vf40)0x000a, trans_add_x=(vf20)0x0320, trans_add_y=(vf10)0x0064, flag=(flag)0xf0 )
+0x1aff    opFE95_ParticleColour( r=(vf80)0x0046, g=(vf40)0x0046, b=(vf20)0x0096, r_add=(vf10)0x0000, g_add=(vf10)0xffff, b_add=(vf10)0x0006, flag=(flag)0xfc )
+0x1b0e    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1b16    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1b1e    opFE96_ParticleCreate()
+0x1b20    op00_Return()
+
+Actor_0x47:event_0x08:
+0x1b21    opC6_ExpandRun() -- exp0x20
+0x1b22    opFE8F_ParticleSystemInit1( actor_id=Actor_0x0a, render_settings=0, rot_x=0, rot_y=0 )
+0x1b2b    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=10, wait=40, ttl=32767 )
+0x1b35    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfe0c, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1b44    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0064, rand_speed=(vf04)0x0096, flag=(flag)0xfc )
+0x1b53    opFE93_ParticleWaitTtl( s_wait=2, var2=10, sprite_id=1, var4=1, var5=1 )
+0x1b5f    opFE94_ParticleTranslation( trans_x=(vf80)0x0258, trans_y=(vf40)0x0258, trans_add_x=(vf20)0x000a, trans_add_y=(vf10)0x000a, flag=(flag)0xf0 )
+0x1b6a    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1b79    opFEA5_ParticleRenderSettings( use_speed=2, settings=0, rot_z=0 )
+0x1b81    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1b89    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=6, wait=30, ttl=32767 )
+0x1b93    opFE91_ParticlePos( x=(vf80)0xff6a, y=(vf40)0xffce, z=(vf20)0xff9c, speed_x=(vf10)0x0064, speed_y=(vf08)0xfda8, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1ba2    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x001e, rand_speed=(vf04)0x0064, flag=(flag)0xfc )
+0x1bb1    opFE93_ParticleWaitTtl( s_wait=1, var2=10, sprite_id=1, var4=1, var5=1 )
+0x1bbd    opFE94_ParticleTranslation( trans_x=(vf80)0x0190, trans_y=(vf40)0x0190, trans_add_x=(vf20)0x000a, trans_add_y=(vf10)0x000a, flag=(flag)0xf0 )
+0x1bc8    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1bd7    opFEA5_ParticleRenderSettings( use_speed=2, settings=0, rot_z=0 )
+0x1bdf    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1be7    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=6, wait=30, ttl=32767 )
+0x1bf1    opFE91_ParticlePos( x=(vf80)0x0064, y=(vf40)0xffce, z=(vf20)0x0096, speed_x=(vf10)0x0000, speed_y=(vf08)0xfda8, speed_z=(vf04)0xffce, flag=(flag)0xfc )
+0x1c00    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x001e, rand_speed=(vf04)0x0064, flag=(flag)0xfc )
+0x1c0f    opFE93_ParticleWaitTtl( s_wait=2, var2=16, sprite_id=1, var4=1, var5=1 )
+0x1c1b    opFE94_ParticleTranslation( trans_x=(vf80)0x0190, trans_y=(vf40)0x0190, trans_add_x=(vf20)0x000a, trans_add_y=(vf10)0x000a, flag=(flag)0xf0 )
+0x1c26    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1c35    opFEA5_ParticleRenderSettings( use_speed=2, settings=0, rot_z=0 )
+0x1c3d    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1c45    opC6_ExpandRun() -- exp0x20
+0x1c46    opFE90_ParticleInitBase( particle_id=3, number_of_sprites=10, wait=0, ttl=32767 )
+0x1c50    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfe8e, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfe8e, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1c5f    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1c6e    opFE93_ParticleWaitTtl( s_wait=2, var2=10, sprite_id=2, var4=1, var5=1 )
+0x1c7a    opFE94_ParticleTranslation( trans_x=(vf80)0x03e8, trans_y=(vf40)0x03e8, trans_add_x=(vf20)0x0190, trans_add_y=(vf10)0x0190, flag=(flag)0xf0 )
+0x1c85    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1c94    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x1c9c    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1ca4    opFE90_ParticleInitBase( particle_id=4, number_of_sprites=3, wait=0, ttl=32767 )
+0x1cae    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfe8e, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfe8e, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1cbd    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1ccc    opFE93_ParticleWaitTtl( s_wait=3, var2=7, sprite_id=18, var4=1, var5=1 )
+0x1cd8    opFE94_ParticleTranslation( trans_x=(vf80)0x01f4, trans_y=(vf40)0x01f4, trans_add_x=(vf20)0x0032, trans_add_y=(vf10)0x0032, flag=(flag)0xf0 )
+0x1ce3    opFE95_ParticleColour( r=(vf80)0x0046, g=(vf40)0x0046, b=(vf20)0x0096, r_add=(vf10)0x0000, g_add=(vf10)0xffff, b_add=(vf10)0x0006, flag=(flag)0xfc )
+0x1cf2    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x1cfa    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1d02    opFE90_ParticleInitBase( particle_id=5, number_of_sprites=6, wait=30, ttl=32767 )
+0x1d0c    opFE91_ParticlePos( x=(vf80)0x0096, y=(vf40)0xff6a, z=(vf20)0xfe70, speed_x=(vf10)0xff38, speed_y=(vf08)0xfda8, speed_z=(vf04)0x00c8, flag=(flag)0xfc )
+0x1d1b    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x0032, flag=(flag)0xfc )
+0x1d2a    opFE93_ParticleWaitTtl( s_wait=2, var2=16, sprite_id=1, var4=1, var5=1 )
+0x1d36    opFE94_ParticleTranslation( trans_x=(vf80)0x0190, trans_y=(vf40)0x0190, trans_add_x=(vf20)0x000a, trans_add_y=(vf10)0x000a, flag=(flag)0xf0 )
+0x1d41    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1d50    opFEA5_ParticleRenderSettings( use_speed=2, settings=0, rot_z=0 )
+0x1d58    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1d60    opFE96_ParticleCreate()
+0x1d62    op00_Return()
+
+Actor_0x47:event_0x09:
+0x1d63    opC6_ExpandRun() -- exp0x20
+0x1d64    opFE8F_ParticleSystemInit1( actor_id=Actor_0x0a, render_settings=0, rot_x=0, rot_y=0 )
+0x1d6d    opFE90_ParticleInitBase( particle_id=0, number_of_sprites=16, wait=9, ttl=32767 )
+0x1d77    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfea1, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfea1, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1d86    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x07d0, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0064, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1d95    opFE93_ParticleWaitTtl( s_wait=1, var2=15, sprite_id=4, var4=1, var5=2 )
+0x1da1    opFE94_ParticleTranslation( trans_x=(vf80)0x0c1c, trans_y=(vf40)0x0834, trans_add_x=(vf20)0x000c, trans_add_y=(vf10)0x000b, flag=(flag)0xf0 )
+0x1dac    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffd, g_add=(vf10)0x0000, b_add=(vf10)0x0001, flag=(flag)0xfc )
+0x1dbb    opFEA5_ParticleRenderSettings( use_speed=3, settings=0, rot_z=0 )
+0x1dc3    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1dcb    opFE90_ParticleInitBase( particle_id=1, number_of_sprites=20, wait=30, ttl=32767 )
+0x1dd5    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1de4    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0xed40, acc_z=(vf10)0x0000, rand_start=(vf08)0x00c8, rand_speed=(vf04)0x0100, flag=(flag)0xfc )
+0x1df3    opFE93_ParticleWaitTtl( s_wait=1, var2=19, sprite_id=0, var4=0, var5=2 )
+0x1dff    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x01c8, trans_add_x=(vf20)0x008c, trans_add_y=(vf10)0x008c, flag=(flag)0xf0 )
+0x1e0a    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x00ff, b=(vf20)0x00ff, r_add=(vf10)0xffee, g_add=(vf10)0xffee, b_add=(vf10)0xffee, flag=(flag)0xfc )
+0x1e19    opFEA5_ParticleRenderSettings( use_speed=1, settings=1, rot_z=0 )
+0x1e21    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1e29    opFE90_ParticleInitBase( particle_id=2, number_of_sprites=8, wait=0, ttl=1 )
+0x1e33    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1e42    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1e51    opFE93_ParticleWaitTtl( s_wait=1, var2=37, sprite_id=2, var4=1, var5=1 )
+0x1e5d    opFE94_ParticleTranslation( trans_x=(vf80)0x0834, trans_y=(vf40)0x0834, trans_add_x=(vf20)0x0212, trans_add_y=(vf10)0x0212, flag=(flag)0xf0 )
+0x1e68    opFE95_ParticleColour( r=(vf80)0x009b, g=(vf40)0x005f, b=(vf20)0x0041, r_add=(vf10)0xfffb, g_add=(vf10)0xfffb, b_add=(vf10)0xfffb, flag=(flag)0xfc )
+0x1e77    opFEA5_ParticleRenderSettings( use_speed=3, settings=0, rot_z=0 )
+0x1e7f    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1e87    opC6_ExpandRun() -- exp0x20
+0x1e88    opFE90_ParticleInitBase( particle_id=3, number_of_sprites=24, wait=0, ttl=32767 )
+0x1e92    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1ea1    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0xf830, acc_z=(vf10)0x0000, rand_start=(vf08)0x005a, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1eb0    opFE93_ParticleWaitTtl( s_wait=1, var2=28, sprite_id=11, var4=0, var5=1 )
+0x1ebc    opFE94_ParticleTranslation( trans_x=(vf80)0x0038, trans_y=(vf40)0x0038, trans_add_x=(vf20)0x0084, trans_add_y=(vf10)0x0084, flag=(flag)0xf0 )
+0x1ec7    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x002a, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1ed6    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
+0x1ede    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1ee6    opFE90_ParticleInitBase( particle_id=4, number_of_sprites=3, wait=0, ttl=32767 )
+0x1ef0    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xff1a, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0x0000, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1eff    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x32c8, acc_z=(vf10)0x0000, rand_start=(vf08)0x00d2, rand_speed=(vf04)0x010e, flag=(flag)0xfc )
+0x1f0e    opFE93_ParticleWaitTtl( s_wait=29, var2=28, sprite_id=20, var4=0, var5=3 )
+0x1f1a    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x01c8, trans_add_x=(vf20)0x0000, trans_add_y=(vf10)0x0000, flag=(flag)0xf0 )
+0x1f25    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x1f34    opFEA5_ParticleRenderSettings( use_speed=2, settings=0, rot_z=1500 )
+0x1f3c    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1f44    opFE90_ParticleInitBase( particle_id=5, number_of_sprites=12, wait=0, ttl=32767 )
+0x1f4e    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1f5d    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0xe4a8, acc_z=(vf10)0x0000, rand_start=(vf08)0x00a0, rand_speed=(vf04)0x00c8, flag=(flag)0xfc )
+0x1f6c    opFE93_ParticleWaitTtl( s_wait=1, var2=12, sprite_id=4, var4=1, var5=3 )
+0x1f78    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x01c8, trans_add_x=(vf20)0x00c8, trans_add_y=(vf10)0x00c8, flag=(flag)0xf0 )
+0x1f83    opFE95_ParticleColour( r=(vf80)0x004b, g=(vf40)0x004b, b=(vf20)0x004b, r_add=(vf10)0xffff, g_add=(vf10)0xffff, b_add=(vf10)0xffff, flag=(flag)0xfc )
+0x1f92    opFEA5_ParticleRenderSettings( use_speed=2, settings=0, rot_z=0 )
+0x1f9a    opFEBD_ParticleSpawnSettings( settings=0 )
+0x1fa2    opC6_ExpandRun() -- exp0x20
+0x1fa3    opFE90_ParticleInitBase( particle_id=6, number_of_sprites=7, wait=0, ttl=1 )
+0x1fad    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x1fbc    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0000, rand_speed=(vf04)0x0000, flag=(flag)0xfc )
+0x1fcb    opFE93_ParticleWaitTtl( s_wait=1, var2=16, sprite_id=19, var4=0, var5=2 )
+0x1fd7    opFE94_ParticleTranslation( trans_x=(vf80)0x0578, trans_y=(vf40)0x005a, trans_add_x=(vf20)0x0340, trans_add_y=(vf10)0x0020, flag=(flag)0xf0 )
+0x1fe2    opFE95_ParticleColour( r=(vf80)0x00ff, g=(vf40)0x00af, b=(vf20)0x0091, r_add=(vf10)0xfffc, g_add=(vf10)0xfffc, b_add=(vf10)0xfffc, flag=(flag)0xfc )
+0x1ff1    opFEA5_ParticleRenderSettings( use_speed=1, settings=2, rot_z=0 )
+0x1ff9    opFEBD_ParticleSpawnSettings( settings=0 )
+0x2001    opFE90_ParticleInitBase( particle_id=7, number_of_sprites=4, wait=0, ttl=1 )
+0x200b    opFE91_ParticlePos( x=(vf80)0x0000, y=(vf40)0xfed4, z=(vf20)0x0000, speed_x=(vf10)0x0000, speed_y=(vf08)0xfed4, speed_z=(vf04)0x0000, flag=(flag)0xfc )
+0x201a    opFE92_ParticleSpeed( speed=(vf80)0x7fff, acc_x=(vf40)0x0000, acc_y=(vf20)0x0000, acc_z=(vf10)0x0000, rand_start=(vf08)0x0014, rand_speed=(vf04)0x0064, flag=(flag)0xfc )
+0x2029    opFE93_ParticleWaitTtl( s_wait=1, var2=12, sprite_id=11, var4=1, var5=1 )
+0x2035    opFE94_ParticleTranslation( trans_x=(vf80)0x01c8, trans_y=(vf40)0x01c8, trans_add_x=(vf20)0x014c, trans_add_y=(vf10)0x014c, flag=(flag)0xf0 )
+0x2040    opFE95_ParticleColour( r=(vf80)0x0080, g=(vf40)0x0020, b=(vf20)0x0000, r_add=(vf10)0xfffc, g_add=(vf10)0xffff, b_add=(vf10)0x0000, flag=(flag)0xfc )
+0x204f    opFEA5_ParticleRenderSettings( use_speed=0, settings=0, rot_z=0 )
+0x2057    opFEBD_ParticleSpawnSettings( settings=0 )
+0x205f    opFE96_ParticleCreate()
+0x2061    op00_Return()
+
+Actor_0x47:event_0x0a:
+0x2062    opFE97_ParticleReset( all=0x0 )
+0x2065    op00_Return()
+0x2066    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

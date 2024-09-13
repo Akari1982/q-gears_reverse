@@ -596,4 +596,4 @@ Actor_0x0a:event_0x04:
 0x0655    op02_JumpToConditional( val1=(s)mem[0x426], val2=0, condition="val1 == val2", address_if_false=0x660 )
 0x065d    op01_JumpTo( address=0x64f )
 0x0660    op00_Return()
-0x0661    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xae38, ???=(vf40)0x9a14, flag=0xd4 )
+0x0661    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x1d38, ???=(vf40)0xd3b2, flag=0xda )

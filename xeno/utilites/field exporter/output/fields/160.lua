@@ -270,7 +270,7 @@ Actor_0x05:event_0x04:
 Actor_0x05:event_0x05:
 0x02ec    -- 0xFE65()
 0x02f2    -- 0xFE5E()-- 0xFE5F()
-0x02fe    op02_JumpToConditional( val1=-128, val2=mem[0xff80], condition="val1 == val2", address_if_false=0x80ff )
+0x02fe    op02_JumpToConditional( val1=-128, val2=(s)mem[0xff80], condition="val1 == val2", address_if_false=0x80ff )
 0x0306    -- 0x14()
 0x0307    -- 0x80()
 0x030c    opF1_FadeSetUp( steps=2, r=0, g=0, b=0, semi_tr=1 )
