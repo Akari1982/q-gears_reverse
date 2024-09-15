@@ -34,7 +34,6 @@ A2 = 80114fe4;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
-
 loopa1428:	; 800A1428
     system_cdrom_read_chain();
 800A1430	bne    v0, zero, loopa1428 [$800a1428]
@@ -132,6 +131,7 @@ system_cdrom_start_load_file(); // set data to load in background
 
 [800965e8] = h(1); // field background already loading
 ////////////////////////////////
+
 
 
 ////////////////////////////////
@@ -294,9 +294,8 @@ if( ( h[800965ec] != 1 ) || ( h[800965ec] != 2 ) || ( h[800965ec] != 3 ) || ( h[
     system_psyq_clear_image();
 }
 
-S1 = ;
-
-La1af8:	; 800A1AF8
+while( true )
+{
     funcab2ac(); // do nothing, maybe removed debug
 
     [80071a5c] = h(0);
@@ -347,10 +346,11 @@ La1af8:	; 800A1AF8
     {
     }
 
-    loopa1c8c:	; 800A1C8C
+    do
+    {
         A0 = 1;
         system_psyq_draw_sync();
-    800A1C94	bne    v0, zero, loopa1c8c [$800a1c8c]
+    } while( V0 != 0 )
 
     if( h[800965ec] != d )
     {
@@ -444,10 +444,11 @@ La1af8:	; 800A1AF8
 
     field_main_loop();
 
-    loopa1fe4:	; 800A1FE4
+    do
+    {
         A0 = 1;
         system_psyq_draw_sync();
-    800A1FEC	bne    v0, zero, loopa1fe4 [$800a1fe4]
+    } while( V0 != 0 )
 
     A0 = 1;
     system_psyq_wait_frames(); // wait
@@ -486,7 +487,7 @@ La1af8:	; 800A1AF8
 
         if( ( hu[8009a05c] - 1 ) < 40 )
         {
-            [8009c560] = h(3);
+            [8009c560] = h(3); // world map
             func129d0();
 
             [8009abf4 + 4c] = h(3);
@@ -509,13 +510,13 @@ La1af8:	; 800A1AF8
 
         switch( bu[8009abf4 + f2] )
         {
-            case 0: [8009c560] = h(6); break;
-            case 1: [8009c560] = h(7); break;
-            case 2: [8009c560] = h(8); break;
-            case 3: [8009c560] = h(9); break;
-            case 4: [8009c560] = h(a); break;
-            case 5: [8009c560] = h(b); break;
-            case 6: [8009c560] = h(e); break;
+            case 0: [8009c560] = h(6); break; // highway
+            case 1: [8009c560] = h(7); break; // chocobo
+            case 2: [8009c560] = h(8); break; // snowboard
+            case 3: [8009c560] = h(9); break; // condor
+            case 4: [8009c560] = h(a); break; // submarine
+            case 5: [8009c560] = h(b); break; // jet
+            case 6: [8009c560] = h(e); break; // snowboard2
         }
         A0 = 0;
         system_psyq_wait_frames(); // wait
@@ -554,8 +555,7 @@ La1af8:	; 800A1AF8
 
         return;
     }
-
-800A22D0	j      La1af8 [$800a1af8]
+}
 ////////////////////////////////
 
 
@@ -625,8 +625,7 @@ S2 = 8009abf4;
 
 while( true )
 {
-    V0 = S3 << 10;
-    if (V0 == 0)
+    if( ( S3 << 10 ) == 0 )
     {
         [80075dec] = h(hu[80075dec] + 1);
     }
@@ -664,18 +663,17 @@ while( true )
 
     [800965e0] = h(hu[S2 + 2a]);
 
-    funca4430; // init screen movement
-    funca496c; // make screen movement
+    funca4430(); // init screen movement
+    funca496c(); // make screen movement
 
     A0 = 8009abf4 + 8a;
-    field_update_shaking;
+    field_update_shaking();
 
     A0 = 8009abf4 + 98;
-    field_update_shaking;
-
+    field_update_shaking();
 
     A0 = S1;
-    funca4bec;
+    funca4bec();
 
     A0 = 80074ea4 + h[800965e0] * 84; // PC data
     A1 = w[800716c4] + 38; // sector 5 triggers + 38 (triggers itself)
@@ -703,7 +701,7 @@ while( true )
 
     if( bu[8009abf4 + 1] == d )
     {
-        [8009c560] = h(c);
+        [8009c560] = h(c); // disc change
         field_stop_load_background_in_advance();
         return;
     }
@@ -764,7 +762,7 @@ while( true )
         }
         [8009abf4 + 6] = h(V0 >> c);
 
-        [8009c560] = h(2);
+        [8009c560] = h(2); // battle
         [8009abf4 + 22] = h(hu[80074ea4 + V1 * 84 + 72]);
 
         field_stop_load_background_in_advance();
@@ -802,48 +800,43 @@ while( true )
     A0 = S1;
     A1 = w[80071e40];
     A2 = w[800716c4] + 38;
-    800A2A00	jal    funcabfe8 [$800abfe8]
+    funcabfe8();
 
-    800A2A08	jal    func138ec [$800138ec]
+    func138ec();
 
     A0 = 1;
     system_psyq_wait_frames(); // wait
-
     [80114478] = w(V0);
 
-    loopa2a20:	; 800A2A20
+    do
+    {
         A0 = 1;
         system_psyq_draw_sync();
-    800A2A28	bne    v0, zero, loopa2a20 [$800a2a20]
+    } while( V0 != 0 )
 
     A0 = 1;
     system_psyq_wait_frames(); // wait
-
-    V1 = hu[80114488];
     [8011447c] = w(V0);
-    800A2A48	beq    v1, zero, La2a68 [$800a2a68]
-    A0 = 0002;
-    V1 = w[800965e4];
-    V0 = 0001;
-    800A2A5C	beq    v1, v0, La2a68 [$800a2a68]
 
-    A0 = 3;
-
-    La2a68:	; 800A2A68
-    system_psyq_wait_frames(); // wait
-
-    V0 = S3 << 10;
-    800A2A74	beq    v0, zero, La2a94 [$800a2a94]
-    800A2A78	addiu  v0, s3, $ffff (=-$1)
-    S3 = V0;
-    V0 = V0 << 10;
-    if( V0 == 0 )
+    A0 = 2;
+    if( ( hu[80114488] != 0 ) && ( w[800965e4] != 1 ) )
     {
-        A0 = 1;
-        system_psyq_set_disp_mask();
+        A0 = 3;
     }
 
-    La2a94:	; 800A2A94
+    system_psyq_wait_frames(); // wait
+
+    if( ( S3 << 10 ) != 0 )
+    {
+        S3 -= 1;
+
+        if( ( S3 << 10 ) == 0 )
+        {
+            A0 = 1;
+            system_psyq_set_disp_mask();
+        }
+    }
+
     A0 = 1;
     system_psyq_reset_graph();
 

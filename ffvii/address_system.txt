@@ -376,6 +376,8 @@
 
 80083580 we copy here akao sequence data when init music 0x10.
 
+800965ec [][]     ???
+
 80096608 struct for AKAO channel (0x108 size).
 80097ec8 some other same 0x18 structs for akao channels.
 80099890 some other same 0x18 structs for akao channels.
@@ -583,7 +585,7 @@
                 02 - encounter.
                 09 - tutorial.
                 0a - set when field reset game by all shifts and start + select.
-                0c -
+                0c - minigame start.
                 0d -
                 19 -
                 1a - game over
@@ -679,9 +681,31 @@
 + ae [][]     depth for background 3rd layer.
 + b0 [][]     depth for background 2nd layer.
 + b2          triangle lock array (bit per triangle)
-+ f2          array of background state.
++ f2          minigame:
+                0 - highway
+                1 - chocobo
+                2 - snowboard
+                3 - condor
+                4 - submarine
+                5 - jet
+                6 - snowboard2
 
-
+8009c560 [][][][] state of game:
+                    1 - field.
+                    2 - battle.
+                    3 - world map.
+                    4 - battle.
+                    5 - ???
+                    6 - highway.
+                    7 - chocobo.
+                    8 - snowboard.
+                    9 - condor.
+                    a - submarine.
+                    b - jet.
+                    c - disc change.
+                    d - ???
+                    e - snowboard2.
+                   10 - ???
 8009c564 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
 8009c56c [][]     store here reverb depth left in spu update.
 8009c56e [][]     store here reverb depth right in spu update.

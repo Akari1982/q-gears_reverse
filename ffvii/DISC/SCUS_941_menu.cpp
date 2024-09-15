@@ -7538,7 +7538,7 @@ A2 = S3;
 loop25e2c:	; 80025E2C
 A0 = w[S1 + 0000];
 A1 = w[S2 + 0000];
-80025E34	jal    func33f40 [$80033f40]
+80025E34	jal    system_cdrom_load_by_sector [$80033f40]
 A3 = 0;
 80025E3C	lui    v0, $6666
 V0 = V0 | 6667;
@@ -7762,7 +7762,7 @@ loop2613c:	; 8002613C
         A1 = w[80048fe8 + S1 * 8 + 4];
         A2 = S3;
         A3 = 0;
-        80026188	jal    func33f40 [$80033f40]
+        80026188	jal    system_cdrom_load_by_sector [$80033f40]
 
         A0 = S3;
         A1 = 3c0;

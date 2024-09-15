@@ -462,7 +462,7 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func11860()
+// system_field_run()
 
 if( h[800965ec] != 5 )
 {
@@ -476,23 +476,25 @@ if( h[800965ec] != 5 )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            loop118d0:	; 800118D0
+            do
+            {
                 system_cdrom_read_chain();
-            800118D8	bne    v0, zero, loop118d0 [$800118d0]
+            } while( V0 != 0 )
 
             A0 = 80180000;
         }
         else
         {
-            L118e8:	; 800118E8
+            do
+            {
                 system_cdrom_read_chain();
-            800118F0	bne    v0, zero, L118e8 [$800118e8]
+            } while( V0 != 0 )
 
             A0 = 801c0000;
         }
 
         A1 = 800a0000;
-        800118F8	jal    func15ca0 [$80015ca0]
+        func15ca0();
     }
 }
 
@@ -656,29 +658,18 @@ if( hu[8009c560] == 0 )
 
 
 ////////////////////////////////
-// func11bb4
-80011BB4	lui    v1, $800a
-80011BB8	addiu  v1, v1, $d588 (=-$2a78)
-[V1 + 0000] = b(1);
+// func11bb4()
+
+[8009d588] = b(1);
 [8009d274] = w(0);
 [8009d278] = h(1);
-V0 = 0074;
-80011BDC	lui    at, $800a
-[AT + d27a] = h(V0);
-80011BE4	lui    at, $800a
-[AT + d27e] = h(0);
-80011BEC	lui    at, $800a
-[AT + d280] = h(0);
-80011BF4	lui    at, $800a
-[AT + d282] = h(0);
-80011BFC	lui    at, $800a
-[AT + d284] = b(0);
-80011C04	lui    at, $800a
-[AT + d285] = b(0);
-80011C0C	lui    at, $800a
-[AT + d286] = b(0);
-80011C14	jr     ra 
-80011C18	nop
+[8009d27a] = h(74);
+[8009d27e] = h(0);
+[8009d280] = h(0);
+[8009d282] = h(0);
+[8009d284] = b(0);
+[8009d285] = b(0);
+[8009d286] = b(0);
 ////////////////////////////////
 
 
@@ -702,20 +693,19 @@ S7 = 20000000;
 
 func33b70(); // init cdrom, mdec
 
-A0 = w[80048d54]; // 1efa9 "FIELD\ENDING.X"
-A1 = w[80048d58]; // f414
-A2 = 800a0000;
+A0 = w[80048d54]; // sector 1efa9 "FIELD\ENDING.X"
+A1 = w[80048d58]; // size f414
+A2 = 800a0000; // dst
 A3 = 0;
-func33f40();
+system_cdrom_load_by_sector();
 
 // from FIELD\ENDING.X
-funca0030(); // looks like play squareenix logo
+ending_main(); // looks like play squareenix logo
 
-80011CF0	jal    func148b4 [$800148b4]
+func148b4();
 
-
-
-L11cf8:	; 80011CF8
+while( true )
+{
     [8009ac32] = h(0);
     [8009ac2f] = b(0);
 
@@ -729,7 +719,7 @@ L11cf8:	; 80011CF8
     A1 = w[80048d58]; // f414
     A2 = 800a0000
     A3 = 0;
-    func33f40();
+    system_cdrom_load_by_sector();
 
     A0 = 0;
     80011D40	jal    funca04c4 [$800a04c4]
@@ -744,31 +734,31 @@ L11cf8:	; 80011CF8
     A3 = 0;
     system_psyq_clear_image();
 
-    80011D7C	jal    func26258 [$80026258]
+    func26258();
 
-    80011D84	jal    func11920 [$80011920]
+    func11920();
 
-    80011D8C	jal    func33a90 [$80033a90]
+    func33a90();
 
-    80011D94	jal    func24e5c [$80024e5c]
+    func24e5c();
 
     if( V0 == 1 )
     {
-        80011DA4	jal    func14934 [$80014934]
+        func14934();
 
-        80011DAC	jal    func26258 [$80026258]
+        func26258();
 
-        80011DB4	jal    func33a90 [$80033a90]
+        func33a90();
 
-        80011DBC	jal    func11bb4 [$80011bb4]
+        func11bb4();
     }
 
-    80011DC4	jal    func26090 [$80026090]
+    func26090();
 
     L11dcc:	; 80011DCC
     S0 = bu[8009d588];
 
-    80011DD0	jal    func343f0 [$800343f0]
+    func343f0();
 
     if( S0 != V0 )
     {
@@ -776,7 +766,7 @@ L11cf8:	; 80011CF8
         A1 = w[80048d50]; // 1774 size
         A2 = 800a0000;
         A3 = 0;
-        func33f40()
+        system_cdrom_load_by_sector()
 
         A0 = bu[8009d588];
         80011DFC	jal    funca0000 [$800a0000]
@@ -803,7 +793,7 @@ L11cf8:	; 80011CF8
     {
         case 1: // field
         {
-            func11860();
+            system_field_run();
         }
         break;
 
@@ -1054,16 +1044,16 @@ L11cf8:	; 80011CF8
             A3 = 0;
             system_cdrom_start_load_file();
 
-
-            loop12524:	; 80012524
+            do
+            {
                 system_cdrom_read_chain();
-            8001252C	bne    v0, zero, loop12524 [$80012524]
+            } while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
-            80012534	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
-            8001253C	jal    funca00d0 [$800a00d0]
+            funca00d0();
 
             [800965ec] = h(6);
             [8009c560] = h(1);
@@ -1206,7 +1196,7 @@ L11cf8:	; 80011CF8
         case c:
         {
             S0 = bu[8009d588];
-            8001248C	jal    func343f0 [$800343f0]
+            func343f0();
 
             if( S0 != V0 )
             {
@@ -1214,10 +1204,10 @@ L11cf8:	; 80011CF8
                 A1 = w[80048d50]; // 1774 size
                 A2 = 800a0000;
                 A3 = 0;
-                func33f40();
+                system_cdrom_load_by_sector();
 
                 A0 = bu[8009d588];
-                800124B8	jal    funca0000 [$800a0000]
+                funca0000();
 
                 if( V0 == 1 )
                 {
@@ -1341,7 +1331,7 @@ L11cf8:	; 80011CF8
         A1 = w[80048d58]; // f414 size
         A2 = 800a0000;
         A3 = 0;
-        func33f40();
+        system_cdrom_load_by_sector();
 
         A0 = 1;
         800127E0	jal    funca04c4 [$800a04c4]
@@ -1371,20 +1361,19 @@ L11cf8:	; 80011CF8
     A1 = w[80048d50]; // 1774 size
     A2 = 800a0000;
     A3 = 0;
-    func33f40();
+    system_cdrom_load_by_sector();
 
-    80012798	jal    funca0c58 [$800a0c58]
+    funca0c58();
 
     [8009a000] = h(c0);
     [8009a004] = w(7f);
     system_execute_AKAO();
 
     L127f8:	; 800127F8
-    800127F8	jal    func33be0 [$80033be0]
+    func33be0();
 
-    80012800	jal    func299c8 [$800299c8]
-
-80012808	j      L11cf8 [$80011cf8]
+    func299c8();
+}
 ////////////////////////////////
 
 

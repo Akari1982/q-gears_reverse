@@ -259,22 +259,24 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func33f40()
+// system_cdrom_load_by_sector()
 
 sector = A0;
 size = A1;
 buffer = A2;
 S3 = A3;
 
-loop33f6c:	; 80033F6C
+do
+{
     A0 = sector;
     A1 = size;
     A2 = buffer;
     A3 = S3;
     system_cdrom_start_load_file();
-80033F7C	bne    v0, zero, loop33f6c [$80033f6c]
+} while( V0 != 0 )
 
-L33f84:	; 80033F84
+while( true )
+{
     system_cdrom_read_chain();
     if( V0 == 0 )
     {
@@ -283,7 +285,7 @@ L33f84:	; 80033F84
 
     A0 = 0;
     system_psyq_wait_frames();
-80033F9C	j      L33f84 [$80033f84]
+}
 ////////////////////////////////
 
 
@@ -1051,7 +1053,8 @@ V0 = w[80071a60];
 
 
 ////////////////////////////////
-// func34bb0
+// func34bb0()
+
 A2 = A0;
 T0 = 0;
 A3 = 0;
@@ -1134,24 +1137,19 @@ L34ca4:	; 80034CA4
 80034CA4	jr     ra 
 80034CA8	nop
 ////////////////////////////////
-// func34cac
-80034CAC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 0030;
-[SP + 0010] = w(RA);
-80034CB8	lui    at, $800a
-[AT + a000] = h(V0);
-80034CC0	lui    at, $800a
-[AT + a004] = w(A0);
-80034CC8	lui    at, $800a
-[AT + a008] = w(A0);
-80034CD0	jal    system_execute_AKAO [$8002da7c]
-80034CD4	nop
-80034CD8	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 003c;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80034CE8	jr     ra 
-80034CEC	nop
+
+
+
+////////////////////////////////
+// func34cac()
+
+[8009a000] = h(30);
+[8009a004] = w(A0);
+[8009a008] = w(A0);
+system_execute_AKAO();
+
+A0 = 3c;
+system_psyq_wait_frames();
 ////////////////////////////////
 
 
