@@ -468,7 +468,7 @@ if( h[800965ec] != 5 )
 {
     if( h[800965ec] != d )
     {
-        if( h[800965ec] != 2 )
+        if( h[800965ec] != 2 ) // not battle
         {
             A0 = w[80048d24]; // "FIELD/FIELD.BIN"
             A1 = w[80048d28];
@@ -494,13 +494,13 @@ if( h[800965ec] != 5 )
         }
 
         A1 = 800a0000;
-        func15ca0();
+        func15ca0(); // gzip decode and copy
     }
 }
 
-funccf60c(); // copy party to savemap
+field_copy_battle_party_to_party();
 
-funca16cc(); // field main
+field_main();
 ////////////////////////////////
 
 
@@ -1028,7 +1028,7 @@ while( true )
                 break;
             }
 
-            80012384	jal    funccf60c [$800cf60c]
+            field_copy_battle_party_to_party();
 
             [8009ac1a] = h(2);
             [800965ec] = h(5);
@@ -1075,7 +1075,7 @@ while( true )
 
             A0 = 80180000;
             A1 = 800a0000;
-            80012578	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
             80012580	jal    funca02d0 [$800a02d0]
 
@@ -1099,7 +1099,7 @@ while( true )
 
             A0 = 80180000;
             A1 = 800a0000;
-            800125BC	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
             800125C4	jal    funca0390 [$800a0390]
 
@@ -1123,7 +1123,7 @@ while( true )
 
             A0 = 80180000;
             A1 = 800a0000;
-            80012644	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
             8001264C	jal    funcb6b58 [$800b6b58]
 
@@ -1147,7 +1147,7 @@ while( true )
 
             A0 = 80180000;
             A1 = 800a0000;
-            800126E8	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
             800126F0	lui    v0, $800a
             800126F4	addiu  v0, v0, $d5e5 (=-$2a1b)
@@ -1178,7 +1178,7 @@ while( true )
 
             A0 = 80180000;
             A1 = 800a0000;
-            80012688	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
             80012690	jal    funca0450 [$800a0450]
 
@@ -1281,7 +1281,7 @@ while( true )
 
             if( bu[8009abf5] != 19 )
             {
-                80012470	jal    funccf60c [$800cf60c]
+                field_copy_battle_party_to_party();
             }
 
             [8009abf5 + 25] = h(2);
@@ -1304,7 +1304,7 @@ while( true )
 
             A0 = 80180000;
             A1 = 800a0000;
-            80012600	jal    func15ca0 [$80015ca0]
+            func15ca0();
 
             80012608	jal    funca0448 [$800a0448]
 

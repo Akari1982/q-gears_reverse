@@ -1,7 +1,7 @@
 ////////////////////////////////
-// funca1368()
+// field_load_mim_dat_files()
 
-if (h[800965e8] == 0) // if background start load earlier
+if( h[800965e8] == 0 ) // if background not loading yet
 {
     // load field mim
     V1 = h[8009a05c]; // field id to load
@@ -11,15 +11,11 @@ if (h[800965e8] == 0) // if background start load earlier
     A3 = 0;
     system_cdrom_start_load_lzs();
 
-    loopa13b8:	; 800A13B8
-        system_cdrom_read_chain();
-    800A13C0	bne    v0, zero, loopa13b8 [$800a13b8]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 }
 else
 {
-    La13d0:	; 800A13D0
-        system_cdrom_read_chain();
-    800A13D8	bne    v0, zero, La13d0 [$800a13d0]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 
     A0 = 801b0000;
     A1 = 80128000;
@@ -34,19 +30,17 @@ A2 = 80114fe4;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
-loopa1428:	; 800A1428
-    system_cdrom_read_chain();
-800A1430	bne    v0, zero, loopa1428 [$800a1428]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
-V0 = w[8009ad28];
-[800716c4] = w(w[V0]); // offset to sector 5 triggers
-// we read address of encounter section from extracted dat.
+V0 = w[8009ad28]; // triggers address
+[800716c4] = w(w[V0]); // offset to field triggers
+
 V1 = w[8009c55c];
-[80071a54] = w(w[V1]);
-// we read address of section 7 from extracted dat. Don't know what it is.
+[80071a54] = w(w[V1]); // pointer to field encounters
+
 V1 = w[80070784];
-[8007e770] = w(w[V1] + 0);
-[8008357c] = w(w[V1] + 4);
+[8007e770] = w(w[V1] + 0); // pointer to field models header
+[8008357c] = w(w[V1] + 4); // pointer to field models loding data
 ////////////////////////////////
 
 
@@ -66,6 +60,7 @@ if( h[800965e8] == 1 )
 
 ////////////////////////////////
 // field_check_and_set_load_background_in_advance()
+
 pc_data = A0;
 tr_data = A1; // triggers data
 
@@ -135,8 +130,7 @@ system_cdrom_start_load_file(); // set data to load in background
 
 
 ////////////////////////////////
-// funca16cc()
-// field main
+// field_main()
 
 [SP + 18] = w(w[800a0000]);
 [SP + 1c] = w(w[800a0004]);
@@ -280,12 +274,13 @@ system_graphic_create_draw_env_struct();
 [8011410e] = b(1);
 [80114110] = b(0);
 
-func128b8();
+func128b8(); // fade
 
 S0 = SP + 18;
 [8009ac40] = h(0);
 
-if( ( h[800965ec] != 1 ) || ( h[800965ec] != 2 ) || ( h[800965ec] != 3 ) || ( h[800965ec] != 5 ) || ( h[800965ec] != d ) )
+// not clear if game state is field, battle, worldmap, 5 or d
+if( ( h[800965ec] != 1 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != 3 ) && ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
 {
     A0 = S0;
     A1 = 0;
@@ -301,11 +296,11 @@ while( true )
     [80071a5c] = h(0);
     [80095dd0] = h(0);
 
-    if (h[800965ec] == 1 || h[800965ec] == 3)
+    if( ( h[800965ec] == 1 ) || ( h[800965ec] == 3 ) )
     {
         if( hu[8009abf4 + 4c + 0] == 0 )
         {
-            func129d0();
+            func129d0(); // fade?
 
             [8009abf4 + 4c + 0] = h(3);
             [80071a58] = b(3);
@@ -315,21 +310,20 @@ while( true )
         }
     }
 
-    if( h[800965ec] != 5 && h[800965ec] != d )
+    if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
     {
-        [8007eb64] = w(80114fe4);
-        [8009a044] = w(80114fe8);
-        [8009d848] = w(80114fec);
-        [80083578] = w(80114ff0);
-        [8009ad28] = w(80114ff4);
-        [8009c55c] = w(80114ff8);
-        [80070784] = w(80114ffc);
+        [8007eb64] = w(80114fe4); // script
+        [8009a044] = w(80114fe8); // walkmesh
+        [8009d848] = w(80114fec); // tilemap
+        [80083578] = w(80114ff0); // camera
+        [8009ad28] = w(80114ff4); // triggers
+        [8009c55c] = w(80114ff8); // encounter
+        [80070784] = w(80114ffc); // models
 
-        // load mim and dat here
-        funca1368();
+        field_load_mim_dat_files();
     }
 
-    if (h[800965ec] == 2 && h[800965ec] != d)
+    if( h[800965ec] == 2 ) // battle
     {
         V0 = bu[8007ebc8];
         [8007ebe0] = b(1);
@@ -342,9 +336,7 @@ while( true )
         }
     }
 
-    while( hu[80095dd4] != 0 )
-    {
-    }
+    while( hu[80095dd4] != 0 ) {}
 
     do
     {
@@ -362,7 +354,15 @@ while( true )
         [8009abf4 + 4c + a] = h(0);
     }
 
-    if( h[800965ec] == 0 || h[800965ec] == 1 || h[800965ec] == 3 || h[800965ec] == 6 || h[800965ec] == 7 || h[800965ec] == 8 || h[800965ec] == 9 || h[800965ec] == a || hu[800965ec] == b )
+    if( ( h[800965ec] == 0 ) ||
+        ( h[800965ec] == 1 ) ||
+        ( h[800965ec] == 3 ) ||
+        ( h[800965ec] == 6 ) ||
+        ( h[800965ec] == 7 ) ||
+        ( h[800965ec] == 8 ) ||
+        ( h[800965ec] == 9 ) ||
+        ( h[800965ec] == a ) ||
+        ( hu[800965ec] == b ) )
     {
         [8009abf4 + a6] = h(0); // x scroll for 2nd background
         [8009abf4 + a8] = h(0); // y scroll for 2nd background
@@ -371,7 +371,7 @@ while( true )
         [8009abf4 + ae] = h(1); // depth for background 3rd layer
         [8009abf4 + b0] = h(fff); // depth for background 2nd layer
 
-        [8009a100] = h(0); // manual or auto scroll. If 1 then this is manual scroll. O - we auto scroll to PC.
+        [8009a100] = h(0); // manual or auto scroll. If 1 then this is manual scroll. 0 - we auto scroll to PC.
         [80071e38] = h(0); // current screen scroll X
         [80071e3c] = h(0); // current screen scroll Y
 
@@ -464,7 +464,7 @@ while( true )
     A0 = 8007eaac + V0 * 5c;
     system_psyq_put_draw_env();
 
-    [800965ec] = h(1);
+    [800965ec] = h(1); // set current game state as field
 
     if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
     {
@@ -581,7 +581,7 @@ while( true )
 [8007eb90] = w(a0);
 [8007eb94] = w(78);
 
-if( h[800965ec] != 5 && h[800965ec] != d )
+if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
 {
     funcaa930(); // init models and their textures
 }
@@ -592,7 +592,7 @@ A0 = w[V0] + 4;
 V0 = w[V0];
 [80114458] = w(A0 + hu[V0] * 18); // walkmesh triangle access block
 
-if (h[800965ec] != 5 && h[800965ec] != 2 && h[800965ec] != d)
+if( ( h[800965ec] != 5 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != d ) )
 {
     funca5fb4(); // move PC model position init by walkmesh
 }
@@ -601,13 +601,13 @@ A0 = 800e9704; // draft 1st and 2nd layer
 A1 = 800f3344; // draft 3rd and 4th layer
 A2 = 800f5b44; // animation packets data
 A3 = 800f72cc;
-funca3020(); // we read dat background data here
+field_background_init_packets(); // we read dat background data here
 
 A0 = 80100fa0;
 A1 = 8010abe0;
 A2 = 8010d3e0;
 A3 = 8010eb68;
-funca3020(); // we read dat background data here
+field_background_init_packets(); // we read dat background data here
 
 A0 = 800e4df0; // buffer 1
 field_rain_init();
@@ -682,7 +682,7 @@ while( true )
     if( ( w[8009abf4 + 68] & 0000090f ) == 0000090f ) // reset game if all shifts and start + select pressed
     {
         [8009abf4 + 1] = b(a);
-        800A273C	jal    func35658 [$80035658]
+        func35658();
 
         field_stop_load_background_in_advance();
         return;
@@ -1049,8 +1049,7 @@ V1 = w[8009ac6c];
 
 
 ////////////////////////////////
-// funca3020()
-// init packets for background
+// field_background_init_packets()
 
 V0 = w[8009d848];
 background = w[V0];
@@ -1313,7 +1312,8 @@ La34ac:	; 800A34AC
 
 
 ////////////////////////////////
-// funca364c
+// funca364c()
+
 A3 = A0;
 T5 = 124dc;
 T0 = 00ffffff;
@@ -2170,10 +2170,11 @@ else
 
 
 ////////////////////////////////
-// funca4430
-if (bu[8009abf4 + 1f] == 0)
+// funca4430()
+
+if( bu[8009abf4 + 1f] == 0 )
 {
-    switch (bu[8009abf4 + 1d])
+    switch( bu[8009abf4 + 1d] )
     {
         case 0: // auto scroll to pc
         {
@@ -4834,7 +4835,7 @@ else
     A2 = 8009ABF4 + 2e; // walk
 }
 
-V1 = w[8008357C];
+V1 = w[8008357c];
 V0 = bu[V1 + visible_entity_id * 8 + 4];
 A0 = w[8004A62C];
 V1 = w[A0 + 4];

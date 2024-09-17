@@ -9833,16 +9833,13 @@ for( int i = 0; i < 3; ++i )
     int j = 0;
     for( ; j < 3; ++j )
     {
-        if( bu[A1 + i] == bu[A0 + j] )
-        {
-            break;
-        }
+        if( bu[A1 + i] == bu[A0 + j] ) break;
     }
 
     if( j == 3 )
     {
         [A2] = b(bu[A1 + i])
-        A2 = A2 + 1;
+        A2 += 1;
     }
 }
 
@@ -9852,16 +9849,13 @@ for( int i = 0; i < 3; ++i )
     int j = 0;
     for( ; j < 3; ++j )
     {
-        if( bu[A1 + j] == bu[A0 + i] )
-        {
-            break;
-        }
+        if( bu[A1 + j] == bu[A0 + i] ) break;
     }
 
     if( j == 3 )
     {
         [A3] = b(bu[A0 + i]);
-        A3 = A3 + 1;
+        A3 += 1;
     }
 }
 ////////////////////////////////
@@ -9869,22 +9863,23 @@ for( int i = 0; i < 3; ++i )
 
 
 ////////////////////////////////
-// field_copy_party_to_battle_party
-A0 = 8009c6e4 + 04f8; // party used in battle
-A1 = 8009c6e4 + 0cad; // party
+// field_copy_party_to_battle_party()
+
+A0 = 8009c6e4 + 4f8; // party used in battle
+A1 = 8009c6e4 + cad; // party
 A2 = SP + 10; // if something in A1 which is not in A0
 A3 = SP + 18; // if something in A0 which is not in A1
-funccf4cc;
+funccf4cc();
 
 // remove characters from battle party if they removed from party
-A0 = 8009c6e4 + 04f8;
+A0 = 8009c6e4 + 4f8;
 A1 = SP + 18;
-funccf66c;
+funccf66c();
 
 // add missing characters
-A0 = 8009c6e4 + 04f8;
+A0 = 8009c6e4 + 4f8;
 A1 = SP + 10;
-funccf6c0;
+funccf6c0();
 
 [80071e34] = b(1);
 ////////////////////////////////
@@ -9892,8 +9887,7 @@ funccf6c0;
 
 
 ////////////////////////////////
-// funccf60c()
-// copy party from real to savemap but save savemap order
+// field_copy_battle_party_to_party()
 
 A0 = 8009c6e4 + cad; // party member savemap
 A1 = 8009c6e4 + 4f8; // party member real
@@ -12908,7 +12902,7 @@ else
         [struct + 1] = b(0);
         [struct + 26] = h(0);
 
-        funccf60c;
+        field_copy_battle_party_to_party();
 
         return 0;
     }

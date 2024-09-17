@@ -376,7 +376,22 @@
 
 80083580 we copy here akao sequence data when init music 0x10.
 
-800965ec [][]     ???
+800965ec [][]     current game state. Id same as 8009c560
+                    1 - field.
+                    2 - battle.
+                    3 - world map.
+                    4 - battle.
+                    5 - ???
+                    6 - highway.
+                    7 - chocobo.
+                    8 - snowboard.
+                    9 - condor.
+                    a - submarine.
+                    b - jet.
+                    c - disc change.
+                    d - ???
+                    e - snowboard2.
+                   10 - ???
 
 80096608 struct for AKAO channel (0x108 size).
 80097ec8 some other same 0x18 structs for akao channels.
@@ -577,120 +592,7 @@
     +5e [][]     top timer. Stored in CHMPH opcode.
     +64 [][]     ???
 
-8009abf4 start of game data (message/fade/nfade/walkmesh). 8009c6e0 points here.
-+ 00 []       maybe render target (we has 2 render targets and switch between them)
-+ 01 []       some state
-                00 - normal field.
-                01 - load new field or world (finalize field in this case).
-                02 - encounter.
-                09 - tutorial.
-                0a - set when field reset game by all shifts and start + select.
-                0c - minigame start.
-                0d -
-                19 -
-                1a - game over
-+ 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu.
-+ 04 [][]     destination x during map load.
-+ 06 [][]     destination y during map load.
-+ 0a [][]     background X scroll to this position.
-+ 0c [][]     background Y scroll to this position.
-+ 10 [][]     field scale (9 bit fixed point).
-+ 12 []       set to 0 in 0x6A VWOFT opcode.
-+ 13 []       set to 0 in 0x6A VWOFT opcode.
-+ 14 []       set to 0 in 0x6A VWOFT opcode.
-+ 16 [][]     set to 2-3 bytes in 0x6A VWOFT opcode.
-+ 18 [][]     set to 0 in 0x6A VWOFT opcode.
-+ 1a [][]     set to 0 in 0x6A VWOFT opcode.
-+ 1d []       set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC).
-+ 1e []       store entity id to which we scroll background.
-+ 1f []       state of scrolling. 0-init 1-action 2-finish.
-+ 20 [][]     speed of background scroll. Number of steps?
-+ 22 [][]     destination z during map load. (most likely triangle id).
-+ 24 [][]     saved rotation for manual entity during map load.
-+ 26 [][]     battle state ?
-+ 28 [][]     number of model.
-+ 2a []       manual model id.
-+ 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
-+ 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
-+ 30 [][]     animation for run. Set in CCANM (XX,-,-,2)
-+ 32 []       0 if PC can move. 1 - otherwise.
-+ 33 []       if 1 here model will not automove. And animation will not play.
-+ 34 []       we store MENU byte here. Checked when call menu.
-+ 35 []       ???
-+ 36 []       check gateways during move or not (0 - check).
-+ 37 []       scroll lock.
-+ 38 [][]     0 here when there is no fade.
-+ 3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
-+ 3b []       battle field check on/off (0/1).
-+ 3c []       battle table to use (0 or 1).
-+ 44 [][][][] offset to battle music (global, with field file offset).
-+ 48 [][][][] offset to field music (global, with field file offset).
-+ 4c [][]     we store FADE and NFADE type here.
-+ 4e [][]     we store start value on FADE and zero on NFADE here.
-+ 50 [][]     we store FADE and NFADE speed here.
-+ 52 [][]     we store FADE R-value here.
-+ 54 [][]     we store FADE G-value here.
-+ 56 [][]     we store FADE B-value here.
-+ 58 [][]     probably current fade R.
-+ 5a [][]     probably current fade G.
-+ 5c [][]     probably current fade B.
-+ 5e [][]     we store NFADE 1/4-byte_value here.
-+ 60 [][]     we store NFADE 2/5-byte_value here.
-+ 62 [][]     we store NFADE 3/6-byte_value here.
-+ 68 [][][][] key data.
-+ 70 [][][][] key data.
-                0001 - L2
-                0002 - R2
-                0004 - L1.
-                0008 - R1.
-                0010 - triangle.
-                0020 - circle.
-                0040 - cross.
-                0080 - square.
-                0100 - select.
-                0800 - start.
-                1000 - up button.
-                2000 - right button
-                4000 - down button.
-                8000 - left button
-+ 78 [][][][] key data hold. 0020 - ok button (hold, released or pressed). Checked during text copy.
-+ 7c [][][][] key data. (repeat)
-+ 80 [][][][] key data pressed. 0020 - ok button (hold, released or pressed). Checked during window state check.
-+ 8a []       if 1 we activate X shaking. 0 - deactivate.
-+ 8b []       state of shaking single X movement (0 - init, 1 - action)
-+ 8c []       random shake array index single X movement.
-+ 8d []       store here smooth shake single X movement.
-+ 8e [][]     shake single X movement strength.
-+ 90 [][]     start position of shake single X movement.
-+ 92 [][]     end position of shake single X movement.
-+ 94 [][]     number of steps for shake single X movement.
-+ 96 [][]     current step for shake single X movement.
-+ 98 []       if 1 we activate Y shaking. 0 - deactivate.
-+ 99 []       state of shaking single Y movement (0 - init, 1 - action)
-+ 9a []       random shake array index single Y movement.
-+ 9b []       store here smooth shake single Y movement.
-+ 9c [][]     shake single Y movement strength.
-+ 9e [][]     start position of shake single Y movement.
-+ a0 [][]     end position of shake single Y movement.
-+ a2 [][]     number of steps for shake single Y movement.
-+ a4 [][]     current step for shake single Y movement.
-+ a6 [][]     x scroll for 2nd background.
-+ a8 [][]     y scroll for 2nd background.
-+ aa [][]     x scroll for 3rd background.
-+ ac [][]     y scroll for 3rd background.
-+ ae [][]     depth for background 3rd layer.
-+ b0 [][]     depth for background 2nd layer.
-+ b2          triangle lock array (bit per triangle)
-+ f2          minigame:
-                0 - highway
-                1 - chocobo
-                2 - snowboard
-                3 - condor
-                4 - submarine
-                5 - jet
-                6 - snowboard2
-
-8009c560 [][][][] state of game:
+8009c560 [][][][] requested state of game:
                     1 - field.
                     2 - battle.
                     3 - world map.
@@ -767,44 +669,44 @@
         +78 [][][][] armor materia slot 7.
         +7c [][][][] armor materia slot 8.
         +80 [][][][] exp to next level.
-    +04f8 [][][][] party member in slot1-4 (used in battle).
-    +04fc party item stock array
-    +0b7c [][][][] party gil amount.
-    +0b80 [][][][] total seconds played.
-    +0b84 [][][][] savemap seconds for timer (set in STTIM).
-    +0ba4 savemap memory bank 1/2 start
-    +0ba4 (+00) [][]     game progress
-    +0bbe [][]     number of escapes.
-    +0bc0 (+1c) [][]     menu visibility mask.
-    +0bc2 (+1e) [][]     menu locking mask.
-    +0c03       []       init with 0 on worldmap loading.
-    +0c1e (+7a) []       flags
+    + 4f8 [][][][] party member in slot1-4 (used in battle).
+    + 4fc party item stock array
+    + b7c [][][][] party gil amount.
+    + b80 [][][][] total seconds played.
+    + b84 [][][][] savemap seconds for timer (set in STTIM).
+    + ba4 savemap memory bank 1/2 start
+    + ba4 (+00) [][]     game progress
+    + bbe [][]     number of escapes.
+    + bc0 (+1c) [][]     menu visibility mask.
+    + bc2 (+1e) [][]     menu locking mask.
+    + c03       []       init with 0 on worldmap loading.
+    + c1e (+7a) []       flags
                             0x01 - used in world map.
                             0x40 - tagret text shown in battle.
                             0x80 - underwater timer in battle.
-    +0ca4 savemap memory bank 3/4 start
-    +0cad (+09) [][][]   party member in slot 1-3.
-    +0da4 savemap memory bank b/c start
-    +0ea4 savemap memory bank d/e start
-    +0eaa (+06) [][]     some value that increments each battle check.
-    +0f0c field map name for menu (0x17 size).
-    +0f24 
-    +0f2a (+86) []       flags
+    + ca4 savemap memory bank 3/4 start
+    + cad (+09) [][][]   party member in slot 1-3.
+    + da4 savemap memory bank b/c start
+    + ea4 savemap memory bank d/e start
+    + eaa (+06) [][]     some value that increments each battle check.
+    + f0c field map name for menu (0x17 size).
+    + f24 
+    + f2a (+86) []       flags
                             0x10 - used in world map
-    +0f5a [][]     ????
-    +0f5c array of coords for vehicles left on map (0x8 size 0x6 items) (cloud, wild chokobo, bronco/chocobo, buggy/highwind, submarine, diamond/ultimate/ruby).
+    + f5a [][]     ????
+    + f5c array of coords for vehicles left on map (0x8 size 0x6 items) (cloud, wild chokobo, bronco/chocobo, buggy/highwind, submarine, diamond/ultimate/ruby).
         +00 [][][][] 0x0007ffff x.
                      0x00f80000 model id.
                      0xff000000 direction.
         +04 [][][][] 0x0003ffff z.
                      0xfffc0000 y.
-    +0f98 [][][][] ???
-    +0f9c [][]     0x0fff camera rotation.
+    + f98 [][][][] ???
+    + f9c [][]     0x0fff camera rotation.
                    0x3000 camera view.
                    0xc000 camera mode.
-    +0fa6
-    +0fa2 []       set id from here as world map to load (planet, underwater, snowfield)
-    +0fa4 savemap memory bank 7/f start
+    + fa6
+    + fa2 []       set id from here as world map to load (planet, underwater, snowfield)
+    + fa4 savemap memory bank 7/f start
         +83 (+1027) []       flags.
                              0x80 - enable rain on field. If set it gradually become stronger. If unset if gradually fades away.
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)

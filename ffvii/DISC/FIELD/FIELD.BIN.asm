@@ -1,6 +1,6 @@
 // FIELD.BIN_main.cpp
 ////////////////////////////////
-// funca1368
+// field_load_mim_dat_files
 800A1368-800A1494
 ////////////////////////////////
 // field_stop_load_background_in_advance
@@ -9,7 +9,7 @@
 // field_check_and_set_load_background_in_advance
 800A14D8-800A16C8
 ////////////////////////////////
-// funca16cc
+// field_main
 800A16CC-800A2310
 ////////////////////////////////
 // field_main_loop
@@ -21,7 +21,7 @@
 // funca2f78
 800A2F78-800A301C
 ////////////////////////////////
-// funca3020
+// field_background_init_packets
 800A3020-800A3648
 ////////////////////////////////
 // funca364c
@@ -974,7 +974,7 @@
 // field_copy_party_to_battle_party
 800CF5A0-800CF608
 ////////////////////////////////
-// funccf60c
+// field_copy_battle_party_to_party
 800CF60C-800CF668
 ////////////////////////////////
 // funccf66c
