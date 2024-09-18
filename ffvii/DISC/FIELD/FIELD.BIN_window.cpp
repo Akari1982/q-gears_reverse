@@ -27,14 +27,14 @@ field_add_string_to_debug_by_id();
 
 
 ////////////////////////////////
-// field_reset_all_windows()
+// field_window_reset_all()
 
 [80071e2c] = b(0); // number of opened windows.
 
 for( int i = 0; i < 4; ++i )
 {
     A0 = i;
-    reset_window();
+    field_window_reset();
 }
 
 V1 = w[8009c6dc];
@@ -51,51 +51,43 @@ else
 
 
 ////////////////////////////////
-// reset_window()
+// field_window_reset()
 
-if (A0 == 1)
+if( A0 == 1 )
 {
-    [8008327A + A0 * 30] = h(08); // WINDOW y.
+    [8008327a + A0 * 30] = h(08); // WINDOW y.
 }
 else
 {
-    [8008327A + A0 * 30] = h(95); // WINDOW y.
+    [8008327a + A0 * 30] = h(95); // WINDOW y.
 }
 
 [80083278 + A0 * 30] = h(08);  // WINDOW x.
-[8008327C + A0 * 30] = h(130); // WINDOW width.
-[8008327E + A0 * 30] = h(49);  // WINDOW height.
+[8008327c + A0 * 30] = h(130); // WINDOW width.
+[8008327e + A0 * 30] = h(49);  // WINDOW height.
 [80083280 + A0 * 30] = h(1);   // WINDOW current width.
 [80083282 + A0 * 30] = h(1);   // WINDOW current height.
-[800832A0 + A0 * 30] = h(0);   // window state.
-[8008328D + A0 * 30] = b(0);   // WMODE style.
-[8008328F + A0 * 30] = b(0);   // WSPCL type.
+[800832a0 + A0 * 30] = h(0);   // window state.
+[8008328d + A0 * 30] = b(0);   // WMODE style.
+[8008328f + A0 * 30] = b(0);   // WSPCL type.
 [80083290 + A0 * 30] = b(0);   // ???????????????????????????????
 [80083291 + A0 * 30] = b(6);   // WNUMB number of digits in number.
-[8008329C + A0 * 30] = h(0);   // WSPCL x.
-[8008329E + A0 * 30] = h(0);   // WSPCL y.
-[800832A2 + A0 * 30] = h(0);   // WMODE cbc.
-[8008326C + A0] = b(FF);       // windows parent entity.
+[8008329c + A0 * 30] = h(0);   // WSPCL x.
+[8008329e + A0 * 30] = h(0);   // WSPCL y.
+[800832a2 + A0 * 30] = h(0);   // WMODE cbc.
+[8008326c + A0] = b(ff);       // windows parent entity.
 
-A1 = 800E4214 + A0 * 8;        // memory bank array for getting variable for windows.
-A2 = 800E4D48 + A0 * 10;       // offsets for getting variable from memory block for windows.
-A3 = 0;
+A1 = 800e4214 + A0 * 8;        // memory bank array for getting variable for windows.
+A2 = 800e4d48 + A0 * 10;       // offsets for getting variable from memory block for windows.
 
-loopd4abc:	; 800D4ABC
+for( int i = 0; i < 8; ++i )
 {
-    [A1] = b(0);
-    [A2] = h(0);
-    A2 = A2 + 2;
-    A3 = A3 + 1;
-    A1 = A1 + 1;
-
-    V0 = A3 < 8;
-
-    800D4AD0	bne    v0, zero, loopd4abc [$800d4abc]
-
+{
+    [A1 + i * 1] = b(0);
+    [A2 + i * 2] = h(0);
 }
 
-[8011445C + A0 * 2] = h(0); // time to wait for windows.
+[8011445c + A0 * 2] = h(0); // time to wait for windows.
 ////////////////////////////////
 
 

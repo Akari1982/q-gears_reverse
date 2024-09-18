@@ -1185,10 +1185,10 @@
 // funcd4848
 800D4848-800D48BC
 ////////////////////////////////
-// field_reset_all_windows
+// field_window_reset_all
 800D48C0-800D4938
 ////////////////////////////////
-// reset_window
+// field_window_reset
 800D493C-800D4B24
 ////////////////////////////////
 // set_state_to_close

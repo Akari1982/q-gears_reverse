@@ -3,43 +3,44 @@
 
 field_struct = A0;
 model_data = A1;
-field_data = A2;
+events_data = A2;
 
 [8009c6e0] = w(field_struct);
-[8009c544] = w(model_data); // offset to model related data
-[8009c6dc] = w(field_data); // current field file offset
+[8009c544] = w(model_data); // pointer to model data
+[8009c6dc] = w(events_data); // field events pointer
+
 [8007ebe0] = b(1);
 [8009fe8c] = b(0);
-
 [80095dcc] = b(0);
-if( h[field_data + 6a] & 0100 ) // if select key
+
+if( h[field_struct + 6a] & 0100 ) // if select key
 {
     [80095dcc] = b(1);
     [80099ffc] = b(4); // script related
 }
 
-if( bu[field_data + 0] < 2 )
+if( bu[events_data + 0] < 2 )
 {
-    A0 = 4b;
+    A0 = 4b; // "K"
     A1 = a;
     system_bios_system_error_boot_or_disk_failure();
 }
 
-if( bu[field_data + 1] < 5 )
+if( bu[events_data + 1] < 5 )
 {
-    A0 = 4b;
+    A0 = 4b; // "K"
     A1 = b;
     system_bios_system_error_boot_or_disk_failure();
 }
 
-if( ( bu[field_data + 0] >= 3 ) || ( bu[field_data + 1] >= 6 ) )
+if( ( bu[events_data + 0] >= 3 ) || ( bu[events_data + 1] >= 6 ) )
 {
-    A0 = 4b;
+    A0 = 4b; // "K"
     A1 = c;
     system_bios_system_error_boot_or_disk_failure();
 }
 
-field_reset_all_windows();
+field_window_reset_all();
 
 funcba7c4(); // init default values for all field structs
 
@@ -71,27 +72,27 @@ if( bu[8007ebe0] != 0 )
 
     field_debug_init_pages();
 
-    field_file_offset = w[8009c6dc];
+    events_data = w[8009c6dc];
 
     [80095dcc] = b(0);
     [8009fe8c] = b(0);
     [8007ebe0] = b(0);
 
-    if( bu[field_file_offset + 1] < 5 )
+    if( bu[events_data + 1] < 5 )
     {
         A0 = 4b;
         A1 = b;
         system_bios_system_error_boot_or_disk_failure();
     }
 
-    if( bu[field_file_offset + 0] < 2 )
+    if( bu[events_data + 0] < 2 )
     {
         A0 = 4b;
         A1 = a;
         system_bios_system_error_boot_or_disk_failure();
     }
 
-    if( bu[field_file_offset + 1] >= 6 || bu[field_file_offset + 0] >= 3 )
+    if( bu[events_data + 1] >= 6 || bu[events_data + 0] >= 3 )
     {
         A0 = 4b;
         A1 = c;
@@ -124,12 +125,12 @@ funcbc438();
 // funcba7c4()
 
 field_struct = w[8009c6e0];
-field_data = w[8009c6dc];
+events_data = w[8009c6dc];
 model_struct = w[8009c544];
 
 [field_struct + 1] = b(0); // state normal field
 [field_struct + 2] = h(0); // map to load
-[field_struct + 10] = h(hu[field_data + 8]); // field scale (9 bit fixed point)
+[field_struct + 10] = h(hu[events_data + 8]); // field scale (9 bit fixed point)
 [field_struct + 12] = b(0); // set to 0 in 0x6A VWOFT opcode
 [field_struct + 13] = b(0); // set to 0 in 0x6A VWOFT opcode
 [field_struct + 14] = b(0); // set to 0 in 0x6A VWOFT opcode
@@ -137,7 +138,7 @@ model_struct = w[8009c544];
 [field_struct + 1a] = h(0); // set to 0 in 0x6A VWOFT opcode
 [field_struct + 1d] = b(0); // set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
 [field_struct + 26] = h(0); // battle state?
-[field_struct + 28] = h(bu[field_data + 3]); // number of models
+[field_struct + 28] = h(bu[events_data + 3]); // number of models
 [field_struct + 2a] = h(0); // manual model id
 [field_struct + 2c] = h(0); // animation for stand
 [field_struct + 2e] = h(1); // animation for walk
@@ -176,7 +177,7 @@ for( int i = 0; i < 100; ++i )
 
 for( int i = 0; i < 8; ++i )
 {
-    for( int j = 0; j < bu[field_data + 2]; ++j )
+    for( int j = 0; j < bu[events_data + 2]; ++j )
     {
         [80071748 + j * 10 + i * 2] = h(0); // priority script offsets
         [800833f8 + j * 8 + i] = b(0); // array of script running state
@@ -185,7 +186,7 @@ for( int i = 0; i < 8; ++i )
     }
 }
 
-for( int i = 0; i < bu[field_data + 2]; ++i )
+for( int i = 0; i < bu[events_data + 2]; ++i )
 {
     [8009a1c4 + i] = b(7); // array of current priority slot used by entity
     [8007eb98 + i] = b(ff); // array of entity data. entity_id <-> model_id.
@@ -197,7 +198,7 @@ for( int i = 0; i < bu[field_data + 2]; ++i )
 
 A1 = 0;
 
-for( int i = 0; i < bu[field_data + 3]; ++i )
+for( int i = 0; i < bu[events_data + 3]; ++i )
 {
     [model_struct + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1
     [model_struct + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
@@ -309,12 +310,12 @@ for( int i = 0; i < 8; ++i )
 ////////////////////////////////
 // funcbaf54()
 
-field_data = w[8009c6dc];
+events_data = w[8009c6dc];
 
 [8009c6c4] = b(0); // number of already inited visible entity
 
-entity_num = bu[field_data + 2];
-akao_num = h[field_data + 6];
+entity_num = bu[events_data + 2];
+akao_num = h[events_data + 6];
 
 for( int i = 0; i < entity_num; ++i )
 {
@@ -327,7 +328,7 @@ for( int i = 0; i < entity_num; ++i )
         field_debug_copy_string();
 
         A0 = 800e4254;
-        A1 = field_data + 20 + i * 8; // field entity names
+        A1 = events_data + 20 + i * 8; // field entity names
         field_debug_concat_string();
 
         if( bu[80071e24] & 1 )
@@ -345,10 +346,10 @@ for( int i = 0; i < entity_num; ++i )
         }
     }
 
-    script = hu[field_data + 20 + entity_num * 8 + akao_num * 4 + i * 40];
+    script = hu[events_data + 20 + entity_num * 8 + akao_num * 4 + i * 40];
     [800831fc + i * 2] = h(script);
 
-    opcode = bu[field_data + script];
+    opcode = bu[events_data + script];
     [8009a058] = b(opcode);
 
     while( opcode != 0 )
@@ -357,7 +358,7 @@ for( int i = 0; i < entity_num; ++i )
         800BB0F4	jalr   w[800e0228 + opcode * 4] ra
 
         V1 = hu[800831fc + i * 2];
-        opcode = bu[field_data + V1];
+        opcode = bu[events_data + V1];
         [8009a058] = b(opcode);
     }
 
@@ -372,10 +373,10 @@ for( int i = 0; i < entity_num; ++i )
 ////////////////////////////////
 // funcbb1b4()
 
-field_data = w[8009c6dc];
+events_data = w[8009c6dc];
 model_struct = w[8009c544];
 block7_data = w[8007e770];
-number_of_entities = bu[field_data + 2];
+number_of_entities = bu[events_data + 2];
 number_of_models = hu[block7_data + 2];
 
 for( int i = 0; i < 3; ++i )
@@ -520,8 +521,8 @@ else
 models_data = w[8009c544];
 talked = 0;
 
-V0 = w[8009c6dc];
-for( int i = 0; i < bu[V0 + 3]; ++i ) // visible entity
+events_data = w[8009c6dc];
+for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
 {
     if( bu[models_data + i * 84 + 5a] != 0 ) // if model talks with somthing
     {
@@ -624,12 +625,11 @@ for( int i = 0; i < h[80095d54]; ++i )
     }
 }
 
-V0 = w[8009c6dc];
-for( int left_e = bu[V0 + 2]; left_e != 0; --left_e )// number of entity
+events_data = w[8009c6dc];
+for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entity
 {
-    V0 = w[8009c6dc];
     V1 = bu[800722c4];
-    V0 = bu[V0 + 2];
+    V0 = bu[events_data + 2];
 
     if( V1 >= V0 )
     {
@@ -670,8 +670,7 @@ for( int left_e = bu[V0 + 2]; left_e != 0; --left_e )// number of entity
 
             V0 = bu[800722c4];
             V1 = hu[800831fc + V0 * 2];
-            V0 = w[8009c6dc];
-            V0 = bu[V0 + V1];
+            V0 = bu[events_data + V1];
 
             [8009a058] = b(V0);
             V0 = bu[8009a058];
@@ -779,14 +778,14 @@ field_script_update_animation_state();
 ////////////////////////////////
 // field_script_update_animation_state()
 
-field_file = w[8009c6dc];
+events_data = w[8009c6dc];
 offset_to_model = w[8009c544];
 V1 = w[8009c6e0];
 manual_model = h[V1 + 2a];
 pc = bu[V1 + 32];
 
 
-number_of_entity = bu[field_file + 2];
+number_of_entity = bu[events_data + 2];
 
 if( number_of_entity > 0 )
 {
@@ -912,7 +911,8 @@ if( number_of_entity > 0 )
 
 
 ////////////////////////////////
-// field_script_request_run
+// field_script_request_run()
+
 entity_id                 = A0;
 priority_id               = A1;
 script_id                 = A2;
@@ -920,7 +920,7 @@ script_id                 = A2;
 model_data_offset         = w[8009C544];
 current_priority_slot     = bu[8009A1C4 + entity_id];
 script_state              = bu[800833F8 + entity_id * 8 + priority_id];
-field_file_offset         = 8009C6DC;
+field_file_offset         = 8009c6dc;
 extra_offset_number       = hu[field_file_offset + 6]
 entity_number             = bu[field_file_offset + 2];
 

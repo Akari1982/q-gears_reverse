@@ -1,0 +1,44 @@
+////////////////////////////////
+DAT file for specific field loaded into 80114fe4 and then links to it stored into different variables.
+
+    + 0 [][][][] pointer to events.
+    + 4 [][][][] pointer to walkmesh.
+    + 8 [][][][] pointer to tilemap.
+    + c [][][][] pointer to camera.
+    +10 [][][][] pointer to triggers.
+    +14 [][][][] pointer to encounter.
+    +18 [][][][] pointer to models.
+////////////////////////////////
+
+
+
+////////////////////////////////
+events data
+    +  0 [][]     ??? Always 0x0502
+    +  2 []       Number of entities
+    +  3 []       Number of models
+    +  4 [][]     Offset to strings
+    +  6 [][]     Specifies the number of Akao/tuto blocks/offsets
+    +  8 [][]     Scale of field. For move and talk calculation (9bit fixed point).
+    + 10 name of field creator (size 0x8).
+    + 18 field name (size 0x8).
+    + 20 
+
+struct FF7SCRIPTHEADER {
+   u16 unknown1;			// Always 0x0502
+   char nEntities;			// Number of entities
+   char nModels;			// Number of models
+   u16 wStringOffset;			// Offset to strings
+   u16 nAkaoOffsets;			// Specifies the number of Akao/tuto blocks/offsets
+   u16 scale;                          // Scale of field. For move and talk calculation (9bit fixed point).
+   u16 blank[3];
+   char szCreator[8];			// Field creator (never shown)
+   char szName[8];			// Field name (never shown)
+   char szEntities[nEntities][8];	// Field entity names
+   u32 dwAkaoOffsets[nAkaoOffsets];	// Akao/Tuto block offsets
+   u16 vEntityScripts[nEntities][32];	// Entity script entry points, or more
+					// explicitly, subroutine offsets
+ };
+
+
+////////////////////////////////

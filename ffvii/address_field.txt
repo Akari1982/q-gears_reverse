@@ -170,9 +170,11 @@
 
 8007ebc8 []       store 1 here during random encounter.
 
+8007ebe0 []       init with 1.
+
 80081d90 [] array of some entity data. Store 1 to pc entity here during SPLIT.
 
-80081DC4 current UC opcode state. Not actually influence on game, but it is restored from here if chenged as in ASK opcode. Real uc is set in game data.
+80081dc4 current UC opcode state. Not actually influence on game, but it is restored from here if chenged as in ASK opcode. Real uc is set in game data.
 
 80082248 [][] array of model default animation speed.
 
@@ -327,11 +329,14 @@
 
 8009ad30 player character array of assigned entity_id (items 0x8 size 0x01).
 
-8009c544 offset to model related data. 80074ea4
+8009c544 [][][][] offset to model related data 80074ea4.
 
 8009c558 [][]     total number of background scroll steps.
 
 8009c6c4 []       number of already inited visible entity.
+
+8009c6dc current pointer to field events data.
+8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
 
 8009d5a6 []       enable or disable PC pointer and triangles help.
 
@@ -340,6 +345,8 @@
 8009d820 unknown value that checked x & 3 == 0.
 8009d824 []       debug dirty and needs update.
 8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here. 4bit fixed point.
+
+8009fe8c []       init with 0. Looks like debug flag
 
 800a00bc
 

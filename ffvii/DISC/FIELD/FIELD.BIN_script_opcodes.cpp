@@ -6511,7 +6511,7 @@ V1 = hu[800831FC + V0 * 2]; // script pointer
 V0 = w[8009C6DC];           // current field file offset.
 A0 = bu[V1 + V0 + 1];
 
-reset_window
+field_window_reset();
 
 // move pointer by 2
 V1 = bu[800722C4];

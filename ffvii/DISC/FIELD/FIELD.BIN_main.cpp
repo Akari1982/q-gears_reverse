@@ -40,7 +40,7 @@ V1 = w[8009c55c];
 
 V1 = w[80070784];
 [8007e770] = w(w[V1] + 0); // pointer to field models header
-[8008357c] = w(w[V1] + 4); // pointer to field models loding data
+[8008357c] = w(w[V1] + 4); // pointer to field models loading data
 ////////////////////////////////
 
 
@@ -312,7 +312,7 @@ while( true )
 
     if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
     {
-        [8007eb64] = w(80114fe4); // script
+        [8007eb64] = w(80114fe4); // events
         [8009a044] = w(80114fe8); // walkmesh
         [8009d848] = w(80114fec); // tilemap
         [80083578] = w(80114ff0); // camera
@@ -380,8 +380,8 @@ while( true )
 
         A0 = 8009abf4; // start of game data
         A1 = 80074ea4;
-        V1 = w[8007eb64];
-        A2 = w[V1]; // field script section
+        V1 = w[8007eb64]; // events pointer to pointer
+        A2 = w[V1]; // events pointer
         funcba534(); // init field structs and run init script
 
         V0 = h[8009abf4 + 2a]; // manual model id
