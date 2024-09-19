@@ -307,16 +307,16 @@
 
 // FIELD.BIN_script.cpp
 ////////////////////////////////
-// funcba534
+// field_init_structs_events_actors
 800BA534-800BA658
 ////////////////////////////////
 // funcba65c
 800BA65C-800BA7C0
 ////////////////////////////////
-// funcba7c4
+// field_init_default_values
 800BA7C4-800BAF50
 ////////////////////////////////
-// funcbaf54
+// field_event_run_init
 800BAF54-800BB1B0
 ////////////////////////////////
 // funcbb1b4

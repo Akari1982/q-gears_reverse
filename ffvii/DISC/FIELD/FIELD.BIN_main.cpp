@@ -382,7 +382,7 @@ while( true )
         A1 = 80074ea4;
         V1 = w[8007eb64]; // events pointer to pointer
         A2 = w[V1]; // events pointer
-        funcba534(); // init field structs and run init script
+        field_init_structs_events_actors();
 
         V0 = h[8009abf4 + 2a]; // manual model id
         [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
@@ -536,7 +536,7 @@ while( true )
     {
         func129d0();
 
-        [8009abf4 + 004c] = h(d);
+        [8009abf4 + 4c] = h(d);
         [80071a58] = b(d);
         [8009abf4 + 4e] = h(0);
         [8007e768] = h(0);

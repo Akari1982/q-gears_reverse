@@ -126,12 +126,12 @@ A1 = 800a12c8; // "  Step"
 field_add_string_to_debug_by_id();
 
 A0 = 5; // id
-A1 = 5; // sub id
+A1 = 5; // row id
 A2 = 800a12d0; // "  Actor OFF"
 field_debug_copy_string_into_page();
 
 A0 = 5;
-A1 = 6; // sub id
+A1 = 6; // row id
 A2 = 800a12dc; // "  Info  OFF"
 field_debug_copy_string_into_page();
 
@@ -693,7 +693,7 @@ if( ( V1 / a ) < h[800e0754 + id1 * 17a] )
 ////////////////////////////////
 // field_debug_copy_string_into_page()
 
-A0 = 800e0758 + A0 * 17a + A1 * e;
+A0 = 800e0748 + A0 * 17a + 10 + A1 * e;
 A1 = A2;
 field_debug_copy_string();
 

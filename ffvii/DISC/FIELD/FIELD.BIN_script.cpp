@@ -1,5 +1,5 @@
 ////////////////////////////////
-// funcba534()
+// field_init_structs_events_actors()
 
 field_struct = A0;
 model_data = A1;
@@ -42,9 +42,9 @@ if( ( bu[events_data + 0] >= 3 ) || ( bu[events_data + 1] >= 6 ) )
 
 field_window_reset_all();
 
-funcba7c4(); // init default values for all field structs
+field_init_default_values();
 
-funcbaf54(); // run init part of 1st script
+field_event_run_init();
 
 if( bu[800716d4] == 0 )
 {
@@ -122,7 +122,7 @@ funcbc438();
 
 
 ////////////////////////////////
-// funcba7c4()
+// field_init_default_values()
 
 field_struct = w[8009c6e0];
 events_data = w[8009c6dc];
@@ -175,9 +175,10 @@ for( int i = 0; i < 100; ++i )
     [80075e24 + i] = b(0); // clear temp memory in script 5/6
 }
 
+// reset events scripts
 for( int i = 0; i < 8; ++i )
 {
-    for( int j = 0; j < bu[events_data + 2]; ++j )
+    for( int j = 0; j < bu[events_data + 2]; ++j ) // go through all actors
     {
         [80071748 + j * 10 + i * 2] = h(0); // priority script offsets
         [800833f8 + j * 8 + i] = b(0); // array of script running state
@@ -186,19 +187,17 @@ for( int i = 0; i < 8; ++i )
     }
 }
 
-for( int i = 0; i < bu[events_data + 2]; ++i )
+for( int i = 0; i < bu[events_data + 2]; ++i ) // go through all actors
 {
-    [8009a1c4 + i] = b(7); // array of current priority slot used by entity
-    [8007eb98 + i] = b(ff); // array of entity data. entity_id <-> model_id.
-    [800716dc + i * 2] = h(0); // entity array
-    [80081d90 + i] = b(0); // array of some entity data. Store 1 to pc entity here during SPLIT
-    [8007078c + i] = b(ff); // array of enitys lines data
-    [80114498 + i] = b(0); // arrray of something entity related
+    [8009a1c4 + i] = b(7); // array of current priority slot used by actor
+    [8007eb98 + i] = b(ff); // array of actors model id data. -1 - no model.
+    [800716dc + i * 2] = h(0); // ???
+    [80081d90 + i] = b(0); // array of some actors data. Store 1 to pc actor here during SPLIT
+    [8007078c + i] = b(ff); // array of actors lines data
+    [80114498 + i] = b(0); // arrray of something actors related
 }
 
-A1 = 0;
-
-for( int i = 0; i < bu[events_data + 3]; ++i )
+for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all models
 {
     [model_struct + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1
     [model_struct + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
@@ -284,42 +283,42 @@ for( int i = 0; i < 20; ++i )
     [8007e7ac + i * 18 + 8] = h(0); // y2
     [8007e7ac + i * 18 + a] = h(0); // z2
     [8007e7ac + i * 18 + c] = b(0); // line on/off. (1 - true/0 - false)
-    [8007e7ac + i * 18 + d] = b(0); // parent entity
-    [8007e7ac + i * 18 + e] = b(0); // entity currently in LINE (with solid).  Script call
-    [8007e7ac + i * 18 + f] = b(0); // entity cross LINE. Script call (removed after script call)
-    [8007e7ac + i * 18 + 10] = b(0); // entity move to line. Script call (removed after script call)
-    [8007e7ac + i * 18 + 11] = b(0); // entity talk to LINE. (1 - true/0 - false)
-    [8007e7ac + i * 18 + 12] = b(0); // entity enter LINE. Script call (removed after script call)
-    [8007e7ac + i * 18 + 13] = b(0); // entity leave LINE. Script call (removed after script call)
+    [8007e7ac + i * 18 + d] = b(0); // parent actor
+    [8007e7ac + i * 18 + e] = b(0); // actor currently in LINE (with solid).  Script call
+    [8007e7ac + i * 18 + f] = b(0); // actor cross LINE. Script call (removed after script call)
+    [8007e7ac + i * 18 + 10] = b(0); // actor move to line. Script call (removed after script call)
+    [8007e7ac + i * 18 + 11] = b(0); // actor talk to LINE. (1 - true/0 - false)
+    [8007e7ac + i * 18 + 12] = b(0); // actor enter LINE. Script call (removed after script call)
+    [8007e7ac + i * 18 + 13] = b(0); // actor leave LINE. Script call (removed after script call)
     [8007e7ac + i * 18 + 16] = b(0); // store SLIP byte here
 }
 [80095d84] = h(0); // number of inited lines
 
 for( int i = 0; i < 8; ++i )
 {
-    [8009ad30 + i] = b(ff); // player character array of assigned entity_id
+    [8009ad30 + i] = b(ff); // player character array of assigned actor_id
 }
 
 [800e48f0] = b(ff); // store 0xff here during end of SPLIT
 [80071c1c] = b(0);
-[8009d2a7] = b(bu[8009d2a7] | 03);
+[8009c6e4 + bc2 + 1] = b(bu[8009c6e4 + bc2 + 1] | 03); // lock PHS and SAVE menu
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcbaf54()
+// field_event_run_init()
 
 events_data = w[8009c6dc];
 
-[8009c6c4] = b(0); // number of already inited visible entity
+[8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
 
-entity_num = bu[events_data + 2];
+actor_num = bu[events_data + 2];
 akao_num = h[events_data + 6];
 
-for( int i = 0; i < entity_num; ++i )
+for( int i = 0; i < actor_num; ++i )
 {
-    [800722c4] = b(i);
+    [800722c4] = b(i); // save current actor for use inside opcodes
 
     if( bu[80071e24] & 3 )
     {
@@ -328,7 +327,7 @@ for( int i = 0; i < entity_num; ++i )
         field_debug_copy_string();
 
         A0 = 800e4254;
-        A1 = events_data + 20 + i * 8; // field entity names
+        A1 = events_data + 20 + i * 8; // field actors names
         field_debug_concat_string();
 
         if( bu[80071e24] & 1 )
@@ -346,26 +345,28 @@ for( int i = 0; i < entity_num; ++i )
         }
     }
 
-    script = hu[events_data + 20 + entity_num * 8 + akao_num * 4 + i * 40];
+    script = hu[events_data + 20 + actor_num * 8 + akao_num * 4 + i * 40]; // get offset to init script (1st)
     [800831fc + i * 2] = h(script);
 
     opcode = bu[events_data + script];
     [8009a058] = b(opcode);
 
-    while( opcode != 0 )
+    while( opcode != 0 ) // do until RET opcode
     {
         opcode = bu[8009a058];
         800BB0F4	jalr   w[800e0228 + opcode * 4] ra
 
+        // read next opcode
         V1 = hu[800831fc + i * 2];
         opcode = bu[events_data + V1];
         [8009a058] = b(opcode);
     }
 
+    // skip ret opcode for next run
     [800831fc + i * 2] = h(hu[800831fc + i * 2] + 1);
 }
 
-[800722c4] = b(0);
+[800722c4] = b(0); // clear current actor
 ////////////////////////////////
 
 
@@ -969,7 +970,7 @@ if (priority_id < current_priority_slot)
             [model_data_offset + V1 * 84 + 5D] = b(0);
         }
 
-        [800716DC + entity_id * 2] = h(0);
+        [800716dc + entity_id * 2] = h(0);
     }
 
     return 1;

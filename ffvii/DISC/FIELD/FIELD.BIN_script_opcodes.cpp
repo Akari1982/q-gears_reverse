@@ -2186,7 +2186,7 @@ A2 = bu[V0 + V1 + 2];
 A3 = bu[V0 + V1 + 2];
 A2 = A2 >> 5;
 A3 = A3 & 1F;
-funcc33b4;
+funcc33b4();
 ////////////////////////////////
 
 
@@ -2203,7 +2203,7 @@ A2 = bu[V0 + V1 + 2];
 A3 = bu[V0 + V1 + 2];
 A2 = A2 >> 5;
 A3 = A3 & 1F;
-funcc33b4;
+funcc33b4();
 ////////////////////////////////
 
 
@@ -2220,7 +2220,7 @@ A2 = bu[V0 + V1 + 2];
 A3 = bu[V0 + V1 + 2];
 A2 = A2 >> 5;
 A3 = A3 & 1F;
-funcc33b4;
+funcc33b4();
 ////////////////////////////////
 
 
@@ -2249,7 +2249,7 @@ else
     A1 = FF;
 }
 
-funcc33b4;
+funcc33b4();
 ////////////////////////////////
 
 
@@ -2278,7 +2278,7 @@ else
     A1 = FF;
 }
 
-funcc33b4;
+funcc33b4();
 ////////////////////////////////
 
 
@@ -2307,13 +2307,14 @@ else
     A1 = FF;
 }
 
-funcc33b4;
+funcc33b4();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcc33b4
+// funcc33b4()
+
 current_entity            = bu[800722c4];
 current_script_pointer    = 800831fc + current_entity * 2;
 target_script_pointer     = 800831fc + target_id * 2;
@@ -2327,17 +2328,15 @@ field_file_offset         = w[8009c6dc];
 field_extra_offset_number = hu[field_file_offset + 6]
 field_entity_number       = bu[field_file_offset + 2];
 
-if (target_id == FF)
+if( target_id == ff )
 {
-    A0 = hu[current_script_pointer];
-    A0 = A0 + 3;
-    [current_script_pointer] = h(A0);
+    [current_script_pointer] = h(hu[current_script_pointer] + 3);
     return 0;
 }
 
-if (request_id == 3)
+if( request_id == 3 )
 {
-    V1 = bu[80071A88 + target_id * 8 + priority_id];
+    V1 = bu[80071a88 + target_id * 8 + priority_id];
 
     if (V1 == current_entity)
     {
@@ -2394,7 +2393,7 @@ if (V0 != priority_id)
             [V0 + V1 * 84 + 5D] = b(0);
         }
 
-        [800716DC + target_id * 2] = h(0);
+        [800716dc + target_id * 2] = h(0);
 
         if (request_id < 3)
         {
@@ -3649,32 +3648,28 @@ return 0;
 
 ////////////////////////////////
 // 0xA1 CHAR
-current_entity = bu[800722C4];
-model_data_offset = w[8009C544];
-current_model_offset  = model_data_offset + current_model * 84;
 
-V1 = bu[8009C6C4];
-V0 = V1 + 1;
-[8009C6C4] = b(V0);
-[8007EB98 + current_entity] = b(V1);
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0924; // "char"
+    A1 = 1;
+    field_script_debug_opcode();
+}
 
-A0 = hu[800831FC + current_entity * 2]; // get current entity script pointer
-V1 = bu[8007EB98 + current_entity];     // get current entity model id
+actor_cur = bu[800722c4];
+models_data = w[8009c544];
+events_data = w[8009c6dc];
+model_cur = bu[8009c6c4];
 
-V1 = w[8009C6DC];           // current field file offset
-V1 = V1 + A0;               // current entity script pointer in global offset
+[8007eb98 + actor_cur] = b(model_cur);
+[8009c6c4] = b(model_cur + 1);
 
-V1 = bu[V1 + 1];            // read second byte
-[current_model_offset + 66] = h(V1);
+A0 = hu[800831fc + actor_cur * 2];
+[models_data + model_cur * 84 + 57] = b(actor_cur);
+[models_data + model_cur * 84 + 5c] = b(1); // make model visible
+[models_data + model_cur * 84 + 66] = h(bu[events_data + A0 + 1]);
 
-V1 = bu[8007EB98 + A1];
-[current_model_offset + 5C] = b(01);
-
-V1 = bu[8007EB98 + current_entity];
-[current_model_offset + 57] = b(current_entity);
-
-// move pointer by 2
-[800831FC + current_entity * 2] = h(hu[800831FC + current_entity * 2] + 2);
+[800831fc + actor_cur * 2] = h(hu[800831fc + actor_cur * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -9446,34 +9441,50 @@ if (V0 != ff) // if character exist
 
 ////////////////////////////////
 // 0xA0 PC
-current_entity = bu[800722C4];
-V1 = hu[800831FC + current_entity * 2];
-V0 = w[8009C6DC];
-A2 = bu[V0 + V1 + 1];
 
-[8009AD30 + A2] = b(current_entity); // assign entity to pc
-
-V0 = bu[8009D391]; // party info (1st character)
-
-if (V0 == A2)
+if( bu[8009d820] & 3 )
 {
-    V0 = [8007EB98 + current_entity];
-
-    V1 = w[8009C6E0];
-    [V1 + 2A] = h(V0);
-}
-else
-{
-    V1 = bu[8007EB98 + current_entity];
-    model_data_offset = w[8009C544];
-    [model_data_offset + V1 * 84 + 59] = b(01);
-    [model_data_offset + V1 * 84 + 5B] = b(01);
-    [model_data_offset + V1 * 84 + 5C] = b(00);
+    A0 = 800a0c88; // "pc"
+    A1 = 1;
+    field_script_debug_opcode();
 }
 
-// move pointer by 2
-[800831FC + current_entity * 2] = h(hu[800831FC + current_entity * 2] + 2);
+actor_cur = bu[800722c4];
+models_data = w[8009c544];
+events_data = w[8009c6dc];
+model_cur = bu[8007eb98 + actor_cur];
 
+V1 = hu[800831fc + actor_cur * 2];
+char_id = bu[events_data + V1 + 1];
+[8009ad30 + char_id] = b(actor_cur);
+
+for( int i = 0; i < 3; ++i )
+{
+    if( bu[8009c6e4 + cad + i] == char_id ) // party member in slot 1-3
+    {
+        if( i != 0 ) // hide not party leader
+        {
+            [models_data + model_cur * 84 + 59] = b(1); // solid off
+            [models_data + model_cur * 84 + 5b] = b(1); // talk off
+            [models_data + model_cur * 84 + 5c] = b(0); // visible off
+        }
+        else
+        {
+            V1 = w[8009c6e0]; // field game state
+            [V1 + 2a] = h(bu[8007eb98 + actor_cur]); // set manual model id
+        }
+
+        [800831fc + actor_cur * 2] = h(hu[800831fc + actor_cur * 2] + 2);
+        return 0;
+    }
+}
+
+[8009ad30 + char_id] = b(actor_cur);
+[models_data + model_cur * 84 + 59] = b(1); // solid off
+[models_data + model_cur * 84 + 5b] = b(1); // talk off
+[models_data + model_cur * 84 + 5c] = b(0); // visible off
+
+[800831fc + actor_cur * 2] = h(hu[800831fc + actor_cur * 2] + 2);
 return 0;
 ////////////////////////////////
 
@@ -10564,7 +10575,7 @@ if (S2 != 0 && V1 != 0)
         {
             entity_id = bu[8009AD30 + character_id];
             [80081D90 + entity_id] = b(0);
-            if (A1 == 0 && entity_id != FF)
+            if( ( A1 == 0 ) && ( entity_id != ff ) )
             {
                 // set solid on
                 model_id = bu[8007EB98 + entity_id];

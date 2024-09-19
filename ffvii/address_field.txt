@@ -25,93 +25,97 @@
 
 800716d4 []       store music lock here. MULCK opcode.
 
-800716dc [][]     entity array (set to 0 during script initing)
+800716dc array of ??? Init with 0. (size 0x2).
 
 8007173c [][]     danger counter.
 
-80071748 array of priority script offsets. (size 0x10 0x2).
+80071748 array of actors 0x8 priority script offsets. (size 0x10 for each actor, 0x2 for each priority).
 
 80071a54 offset to sector 6 encounters.
 
 80071a5c [][]     map for which we loading background in background.
 
-80071A88 array if priority data. Entity id that request this priority with REQ-type opcodes. (size 0x08 0x01).
+80071a88 array if priority data. Entity id that request this priority with REQ-type opcodes. (size 0x08 0x01).
 
 80071c08 []       current debug page.
 80071c0c store that we in line and SLIP byte in line == 1 during move_line_check.
 
-80071e24 []       some value used in debug draw.
+80071c1c []       init with 0.
+
+80071e24 []       some value used in debug draw. if (this & 3) then do debug draw.
 
 80071e38 current screen scroll X.
 80071e3c current screen scroll Y.
 80071e40 offset to camera section
 
+800722c4 []       current actor id.
+
 80074ea4 model related data. (size 0x84)
-+ 00 [][]     store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1 (maybe end kawai)
-+ 02 [][]     store 0 here in KAWAI opcode.
-+ 04 [][][][] offset to KAWAI opcode data in script (like offset to opcode + 3).
-+ 08 []       blinking. 0 - on, 1 - off.
-+ 09 []       store 0 here in KAWAI opcode under some curcumstances.
-+ 0c [][][][] x.
-+ 10 [][][][] y.
-+ 14 [][][][] z.
-+ 18 [][][][] x start (in JUMP and LADER).
-+ 1c [][][][] y start (in JUMP and LADER).
-+ 20 [][][][] z start (in JUMP and LADER).
-+ 2c [][]     b value for JUMP function.
-+ 30 [][]     store number of steps for JUMP and LADER here.
-+ 32 [][]     current step for JUMP and LADER.
-+ 35 []       shift addition to move direction.
-+ 36 []       move direction (used when calculated movement).
-+ 37 []       lock rotation. (1 - direction will not be changed)
-+ 38 []       model direction.
-+ 39 []       number of steps for turn.
-+ 3a []       current step for turn.
-+ 3b []       used during TURN (5th argument).
-+ 3c [][]     start direction (for TURN), we store model direction here at start of turn.
-+ 3e [][]     end direction (for TURN).
-+ 40 [][]     real X offset value.
-+ 42 [][]     start X offset value.
-+ 44 [][]     end X offset value.
-+ 46 [][]     real Y offset value.
-+ 48 [][]     start Y offset value.
-+ 4a [][]     end Y offset value.
-+ 4c [][]     real Z offset value.
-+ 4e [][]     start Z offset value.
-+ 50 [][]     end Z offset value.
-+ 52 [][]     steps in offseting.
-+ 54 [][]     current step in offsetting.
-+ 56 []       type of offsetting (LINEAR SMOOTH INSTANT).
-+ 57 []       store current entity id here during CHAR opcode.
-+ 58 []       pc entity collide with this entity. (1 - true/0 - false).
-+ 59 []       model solidity (0x01 - off/0x00 - on).
-+ 5a []       pc entity talk with this entity. (1 - true/0 - false).
-+ 5b []       model talkability (0x01 - off/0x00 - on).
-+ 5c []       model visibility (0x01 - on/0x00 - off).
-+ 5d []       model state.
-                0 - nothing.
-                1 - MOVE-type.
-                3 - JUMP.
-                4 - up/down LADER.
-                5 - left/right LADER.
-+ 5e []       animation id.
-+ 60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER. 4bit fixed point.
-+ 62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
-+ 64 [][]     number of frames. Set during MOVE and LADER opcode.
-+ 66 [][]     store CHAR byte here.
-+ 68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
-+ 6a [][]     stage of state.
-                0 - init.
-                1 - action.
-                2 - finish.
-+ 6c [][]     solid range value.
-+ 6e [][]     talk range value.
-+ 70 [][]     movement speed. For MOVE-type opcodes.
-+ 72 [][]     triangle.
-+ 74 [][]     move to triangle (LADER and JUMP).
-+ 78 [][][][] move to x (MOVE and LADER and JUMP).
-+ 7c [][][][] move to y (MOVE and LADER and JUMP).
-+ 80 [][][][] move to z (MOVE and LADER and JUMP).
+    + 00 [][]     store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1 (maybe end kawai)
+    + 02 [][]     store 0 here in KAWAI opcode.
+    + 04 [][][][] offset to KAWAI opcode data in script (like offset to opcode + 3).
+    + 08 []       blinking. 0 - on, 1 - off.
+    + 09 []       store 0 here in KAWAI opcode under some curcumstances.
+    + 0c [][][][] x.
+    + 10 [][][][] y.
+    + 14 [][][][] z.
+    + 18 [][][][] x start (in JUMP and LADER).
+    + 1c [][][][] y start (in JUMP and LADER).
+    + 20 [][][][] z start (in JUMP and LADER).
+    + 2c [][]     b value for JUMP function.
+    + 30 [][]     store number of steps for JUMP and LADER here.
+    + 32 [][]     current step for JUMP and LADER.
+    + 35 []       shift addition to move direction.
+    + 36 []       move direction (used when calculated movement).
+    + 37 []       lock rotation. (1 - direction will not be changed)
+    + 38 []       model direction.
+    + 39 []       number of steps for turn.
+    + 3a []       current step for turn.
+    + 3b []       used during TURN (5th argument).
+    + 3c [][]     start direction (for TURN), we store model direction here at start of turn.
+    + 3e [][]     end direction (for TURN).
+    + 40 [][]     real X offset value.
+    + 42 [][]     start X offset value.
+    + 44 [][]     end X offset value.
+    + 46 [][]     real Y offset value.
+    + 48 [][]     start Y offset value.
+    + 4a [][]     end Y offset value.
+    + 4c [][]     real Z offset value.
+    + 4e [][]     start Z offset value.
+    + 50 [][]     end Z offset value.
+    + 52 [][]     steps in offseting.
+    + 54 [][]     current step in offsetting.
+    + 56 []       type of offsetting (LINEAR SMOOTH INSTANT).
+    + 57 []       actor id that controls this model (set in CHAR opcode).
+    + 58 []       pc entity collide with this entity. (1 - true/0 - false).
+    + 59 []       model solidity (1 - off, 0 - on).
+    + 5a []       pc entity talk with this entity. (1 - true/0 - false).
+    + 5b []       model talkability (1 - off, 0 - on).
+    + 5c []       model visibility (1 - on, 0 - off).
+    + 5d []       model state.
+                    0 - nothing.
+                    1 - MOVE-type.
+                    3 - JUMP.
+                    4 - up/down LADER.
+                    5 - left/right LADER.
+    + 5e []       animation id.
+    + 60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER. 4bit fixed point.
+    + 62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
+    + 64 [][]     number of frames. Set during MOVE and LADER opcode.
+    + 66 [][]     store CHAR byte here. Maybe real model id.
+    + 68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
+    + 6a [][]     stage of state.
+                    0 - init.
+                    1 - action.
+                    2 - finish.
+    + 6c [][]     solid range value.
+    + 6e [][]     talk range value.
+    + 70 [][]     movement speed. For MOVE-type opcodes.
+    + 72 [][]     triangle.
+    + 74 [][]     move to triangle (LADER and JUMP).
+    + 78 [][][][] move to x (MOVE and LADER and JUMP).
+    + 7c [][][][] move to y (MOVE and LADER and JUMP).
+    + 80 [][][][] move to z (MOVE and LADER and JUMP).
 
 
 
@@ -143,30 +147,30 @@
 8007e7a8 [][][][] offset to dialog block.
 
 8007e7ac array of LINE data. (size 0x18).
-+ 00 [][] x1.
-+ 02 [][] y1.
-+ 04 [][] z1.
-+ 06 [][] x2.
-+ 08 [][] y2.
-+ 0a [][] z2.
-+ 0c []   line on/off. (1 - true/0 - false).
-+ 0d []   parent entity.
-+ 0e []   entity currently in LINE (with solid).  Script call.
-+ 0f []   entity cross LINE. Script call (removed after script call).
-+ 10 []   entity move to line. Script call (removed after script call).
-+ 11 []   entity talk to LINE. (1 - true/0 - false).
-+ 12 []   entity enter LINE (with solid). Script call (removed after script call).
-+ 13 []   entity leave LINE. Script call (removed after script call).
-+ 14 []   store direction of moving between move vector and line if we move in line.
-+ 15 []   entity move to line (for talk check).
-+ 16 []   store SLIP byte here.
+    + 00 [][] x1.
+    + 02 [][] y1.
+    + 04 [][] z1.
+    + 06 [][] x2.
+    + 08 [][] y2.
+    + 0a [][] z2.
+    + 0c []   line on/off. (1 - true/0 - false).
+    + 0d []   parent entity.
+    + 0e []   entity currently in LINE (with solid).  Script call.
+    + 0f []   entity cross LINE. Script call (removed after script call).
+    + 10 []   entity move to line. Script call (removed after script call).
+    + 11 []   entity talk to LINE. (1 - true/0 - false).
+    + 12 []   entity enter LINE (with solid). Script call (removed after script call).
+    + 13 []   entity leave LINE. Script call (removed after script call).
+    + 14 []   store direction of moving between move vector and line if we move in line.
+    + 15 []   entity move to line (for talk check).
+    + 16 []   store SLIP byte here.
 
 8007eaac packet settings for 800e8f84.
 8007eb08 packet settings for 80100820.
 
 8007eb90 [][]     some data.
 8007eb94 [][]     some data.
-8007eb98 [] array of entity data. entity_id <-> model_id. 0xFF if not visible entity. (size 0x01).
+8007eb98 [] array of actors model data. 0xff if no model assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
 
 8007ebc8 []       store 1 here during random encounter.
 
@@ -174,7 +178,7 @@
 
 80081d90 [] array of some entity data. Store 1 to pc entity here during SPLIT.
 
-80081dc4 current UC opcode state. Not actually influence on game, but it is restored from here if chenged as in ASK opcode. Real uc is set in game data.
+80081dc4 current UC opcode state. Init with 0. Not actually influence on game, but it is restored from here if changed as in ASK opcode. Real uc is set in game data.
 
 80082248 [][] array of model default animation speed.
 
@@ -182,7 +186,7 @@
 
 8008325c [] array of model default animation.
 
-800833F8 array of script running state. 0x00 - not started, 0x01 - running, 0x02 - finished. (size 0x8 0x1).
+800833f8 array of actors 0x8 script running states. (size 0x8 for each actor, 0x1 for each slot state). 0x00 - not started, 0x01 - running, 0x02 - finished.
 
 8008357c offset to field models loading data (block 7 in DAT file + 4).
 
@@ -193,7 +197,7 @@
 80095dd4 [][] set this to 0 when type 3 fade reach 22.
 80095ddc
 
-80095de0 array of stored background palletes (0x20 size).
+80095de0 array of stored background palletes (0x40 items 0x20 size)(each palette is 0x10 items 0x2 size).
 
 800965e0 we store manual visible entity here (pc).
 800965e8 [][]     1 - field background already loading, 0 - not loading. Set 2 if background loading and re make some check and it returns 0.
@@ -203,7 +207,7 @@
 
 8009a048 maybe array of states for KAWAI (byte per model). Used in 0xd kawai opcode
 
-8009a058 save current opcode here.
+8009a058 []       save current opcode here.
 8009a05c field id to load (and current field id).
 
 8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next entoty after 8 of this.
@@ -212,7 +216,7 @@
 
 8009a100 manual or auto scroll. If 1 then this is manual scroll. O - we auto scroll to PC.
 
-8009a1c4 [] array of current priority slot used by entity (size 0x01 0x08).
+8009a1c4 array of current priority slot used by actors (size 0x01).
 
 8009abf4 field game state. 8009c6e0 points here.
     + 00 []       render buffer id (there are 2 render buffers)
@@ -317,7 +321,8 @@
     + ac [][]     y scroll for 3rd background.
     + ae [][]     depth for background 3rd layer.
     + b0 [][]     depth for background 2nd layer.
-    + b2          triangle lock array (bit per triangle)
+    + b2          triangle lock array (bit per triangle) (0x40 items)
+    + f2          background state array (0x40 items)
     + f2          minigame:
                     0 - highway
                     1 - chocobo
@@ -329,11 +334,11 @@
 
 8009ad30 player character array of assigned entity_id (items 0x8 size 0x01).
 
-8009c544 [][][][] offset to model related data 80074ea4.
+8009c544 [][][][] pointer to model structs at 80074ea4.
 
 8009c558 [][]     total number of background scroll steps.
 
-8009c6c4 []       number of already inited visible entity.
+8009c6c4 []       number of already inited actors with models (this value stored into 8007eb98 for given actor).
 
 8009c6dc current pointer to field events data.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
@@ -427,7 +432,7 @@
 
 800e0738 digit->letter assosiation array (10-26 letters from character table)
 
-800e0748 debug array (0x6items 0x17a size). 1 - Actor, 3 - Word, 4 - Actor, 5 - field authtor.
+800e0748 debug array (0x6 items 0x17a size). 1 - Actor, 3 - Word, 4 - Actor, 5 - field authtor.
     +   0 [][]     x.
     +   2 [][]     y.
     +   4 [][]     width.
@@ -460,20 +465,18 @@
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
 800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
-800e4254 we copy here string "Actor:[entity name]" for debug purpose.
+800e4254 temp debug string. We copy here string "Actor:[entity name]" for debug purpose.
 800e4274 offset to walkmesh block.
 800e4278 array of name reading offset for dialog windows. (size 0x2).
 800e4280 array of current variable for windows. (size 0x2).
 
 800e42d8 some array (size 0x18)
 
-800e4254 addr for temp debug string.
-
 800e48d8
 
 800e48e0 [][][][] store akao offset here when start menu tutorial.
 
-800e48f0 []       store FF here during end of SPLIT.
+800e48f0 []       store 0xff here during end of SPLIT.
 800e48f4 array for some data for arrow or triangle (maybe tex coords). (size 0x28)
 800e4944 texts for windows to diaplay. (size 0x100)
 800e4d44 [][]     if 1 here we stop load background in advance.
