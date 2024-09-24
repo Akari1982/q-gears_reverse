@@ -2386,8 +2386,8 @@ if (V0 != priority_id)
 
         [target_current_slot] = b(priority_id);
 
-        V1 = bu[8007EB98 + target_id];
-        if (V1 != FF)
+        V1 = bu[8007eb98 + target_id];
+        if( V1 != ff )
         {
             V0 = w[8009C544];
             [V0 + V1 * 84 + 5D] = b(0);
@@ -3621,6 +3621,7 @@ return 1;
 
 ////////////////////////////////
 // 0xBF CC
+
 V0 = bu[800722C4];
 V1 = hu[800831FC + V0 * 2];
 V0 = w[8009C6DC];

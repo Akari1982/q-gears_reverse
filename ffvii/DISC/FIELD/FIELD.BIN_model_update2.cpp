@@ -46,9 +46,9 @@ V0 = bu[8009c6d8];
 V0 = V0 + 20;
 [8009c6d8] = b(V0);
 
-if (V0 == 0)
+if( V0 == 0 )
 {
-    func262d8;
+    func262d8();
 
     V1 = bu[8009d58e];
     V1 = V1 + 1;
@@ -306,7 +306,7 @@ for( int i = 0; i < 18; ++i )
     A1 = 0; // remove semi transparency
     system_change_semi_transparency_in_packet();
 
-    // colour
+    // color
     [S1 + i * 10 + 4] = b(80);
     [S1 + i * 10 + 5] = b(80);
     [S1 + i * 10 + 6] = b(80);
@@ -334,237 +334,161 @@ system_gpu_create_texture_setting_packet();
 
 
 ////////////////////////////////
-// funcabfe8
-800ABFE8	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0028] = w(S2);
+// funcabfe8()
+
 S2 = A0;
-[SP + 0020] = w(S0);
 S0 = A1;
-[SP + 0034] = w(S5);
 S5 = A2;
-V1 = bu[8009d5a6];
-V0 = 0001;
-[SP + 003c] = w(RA);
-[SP + 0038] = w(S6);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-800AC020	bne    v1, v0, Lac03c [$800ac03c]
-[SP + 0024] = w(S1);
-V0 = bu[8009ac26];
-800AC030	nop
-800AC034	beq    v0, zero, Lac048 [$800ac048]
-800AC038	nop
 
-Lac03c:	; 800AC03C
-V0 = 0002;
-800AC040	bne    v1, v0, Lac330 [$800ac330]
-800AC044	nop
+if( ( bu[8009d5a6] != 1 ) || ( bu[8009ac26] != 0 ) )
+{
+    if( bu[8009d5a6] != 2 ) return;
+}
 
-Lac048:	; 800AC048
-800AC048	jal    $func3ae38
 S4 = 0;
-800AC050	jal    $system_gte_set_rot_matrix
+func3ae38();
+
 A0 = S0;
-800AC058	jal    $system_gte_set_trans_matrix
+system_gte_set_rot_matrix();
+
 A0 = S0;
-800AC060	lui    s1, $00ff
-S1 = S1 | ffff;
-800AC068	lui    s3, $ff00
-V1 = S4 << 10;
+system_gte_set_trans_matrix();
 
 loopac070:	; 800AC070
-V0 = w[800716c4];
-S0 = V1 >> 10;
-V0 = V0 + S0;
-V1 = bu[V0 + 0218];
-V0 = 0001;
-800AC088	bne    v1, v0, Lac19c [$800ac19c]
-V0 = S4 + 0001;
-A0 = S0 << 01;
-A0 = A0 + S0;
-A0 = A0 << 03;
-A0 = A0 + S5;
-A1 = h[A0 + 0000];
-V0 = h[A0 + 0006];
-800AC0A8	nop
-A1 = A1 + V0;
-V0 = A1 >> 1f;
-A1 = A1 + V0;
-A1 = A1 >> 01;
-[SP + 0010] = h(A1);
-V0 = h[A0 + 0002];
-V1 = h[A0 + 0008];
-800AC0C8	nop
-V0 = V0 + V1;
-V1 = V0 >> 1f;
-V0 = V0 + V1;
-A2 = V0 >> 01;
-[SP + 0012] = h(A2);
-V0 = h[A0 + 0004];
-V1 = h[A0 + 000a];
-A1 = A1 << 10;
-V0 = V0 + V1;
-V1 = V0 >> 1f;
-V0 = V0 + V1;
-V0 = V0 >> 01;
-800AC0FC	bne    a1, zero, Lac110 [$800ac110]
-[SP + 0014] = h(V0);
-V0 = A2 << 10;
-800AC108	beq    v0, zero, Lac19c [$800ac19c]
-V0 = S4 + 0001;
+    V1 = S4 << 10;
+    V0 = w[800716c4];
+    S0 = V1 >> 10;
+    V0 = V0 + S0;
+    V1 = bu[V0 + 0218];
+    V0 = 0001;
+    800AC088	bne    v1, v0, Lac19c [$800ac19c]
+    V0 = S4 + 0001;
+    A0 = S0 << 01;
+    A0 = A0 + S0;
+    A0 = A0 << 03;
+    A0 = A0 + S5;
+    A1 = h[A0 + 0000];
+    V0 = h[A0 + 0006];
+    A1 = A1 + V0;
+    V0 = A1 >> 1f;
+    A1 = A1 + V0;
+    A1 = A1 >> 01;
+    [SP + 0010] = h(A1);
+    V0 = h[A0 + 0002];
+    V1 = h[A0 + 0008];
+    800AC0C8	nop
+    V0 = V0 + V1;
+    V1 = V0 >> 1f;
+    V0 = V0 + V1;
+    A2 = V0 >> 01;
+    [SP + 0012] = h(A2);
+    V0 = h[A0 + 0004];
+    V1 = h[A0 + 000a];
+    A1 = A1 << 10;
+    V0 = V0 + V1;
+    V1 = V0 >> 1f;
+    V0 = V0 + V1;
+    V0 = V0 >> 01;
+    800AC0FC	bne    a1, zero, Lac110 [$800ac110]
+    [SP + 0014] = h(V0);
+    V0 = A2 << 10;
+    800AC108	beq    v0, zero, Lac19c [$800ac19c]
+    V0 = S4 + 0001;
 
-Lac110:	; 800AC110
-A0 = SP + 0010;
-A1 = A0;
-A2 = SP + 0018;
-800AC11C	jal    $system_gte_vector_perspective_transform
-A3 = SP + 001c;
-A0 = S0 << 04;
-A1 = A0 + S2;
-V1 = 00d0;
-V0 = hu[8011446c];
-A0 = A0 + 4000;
-[A1 + 400d] = b(V1);
-V0 = V0 << 02;
-V0 = V0 & 0030;
-V0 = V0 + 0030;
-[A1 + 400c] = b(V0);
-V0 = hu[SP + 0010];
-A0 = S2 + A0;
-800AC158	addiu  v0, v0, $fff9 (=-$7)
-[A1 + 4008] = h(V0);
-V0 = hu[SP + 0012];
-V1 = w[A1 + 4000];
-800AC168	addiu  v0, v0, $fff8 (=-$8)
-[A1 + 400a] = h(V0);
-V0 = w[S2 + 0000];
-V1 = V1 & S3;
-V0 = V0 & S1;
-V1 = V1 | V0;
-[A1 + 4000] = w(V1);
-V0 = w[S2 + 0000];
-A0 = A0 & S1;
-V0 = V0 & S3;
-V0 = V0 | A0;
-[S2 + 0000] = w(V0);
-V0 = S4 + 0001;
+    Lac110:	; 800AC110
+    A0 = SP + 10;
+    A1 = SP + 10;
+    A2 = SP + 18;
+    A3 = SP + 1c;
+    system_gte_vector_perspective_transform();
 
-Lac19c:	; 800AC19C
-S4 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 000c;
+    A0 = S0 << 04;
+    A1 = A0 + S2;
+    V0 = hu[8011446c];
+    A0 = A0 + 4000;
+    [A1 + 400d] = b(d0);
+    V0 = V0 << 02;
+    V0 = V0 & 0030;
+    V0 = V0 + 0030;
+    [A1 + 400c] = b(V0);
+    V0 = hu[SP + 0010];
+    A0 = S2 + A0;
+    800AC158	addiu  v0, v0, $fff9 (=-$7)
+    [A1 + 4008] = h(V0);
+    V0 = hu[SP + 0012];
+    V1 = w[A1 + 4000];
+    800AC168	addiu  v0, v0, $fff8 (=-$8)
+    [A1 + 400a] = h(V0);
+    V0 = w[S2 + 0000];
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
+    V1 = V1 | V0;
+    [A1 + 4000] = w(V1);
+    V0 = w[S2 + 0000];
+    A0 = A0 & 00ffffff;
+    V0 = V0 & ff000000;
+    V0 = V0 | A0;
+    [S2 + 0000] = w(V0);
+    V0 = S4 + 0001;
+
+    Lac19c:	; 800AC19C
+    S4 = V0;
+    V0 = V0 < c;
 800AC1AC	bne    v0, zero, loopac070 [$800ac070]
-V1 = S4 << 10;
+
 S4 = 0;
-800AC1B8	lui    s5, $00ff
-S5 = S5 | ffff;
-800AC1C0	lui    s6, $ff00
-V0 = S4 << 10;
 
 loopac1c8:	; 800AC1C8
-S0 = V0 >> 10;
-V0 = w[800716c4];
-S3 = S0 << 04;
-V1 = V0 + S3;
-V0 = w[V1 + 0230];
-800AC1E0	nop
-800AC1E4	beq    v0, zero, Lac2c0 [$800ac2c0]
-V0 = S4 + 0001;
-A0 = SP + 0010;
-V0 = hu[V1 + 0224];
-A1 = A0;
-[SP + 0010] = h(V0);
-V0 = hu[V1 + 0228];
-A2 = SP + 0018;
-[SP + 0012] = h(V0);
-V0 = hu[V1 + 022c];
-A3 = SP + 001c;
-800AC210	jal    $system_gte_vector_perspective_transform
-[SP + 0014] = h(V0);
-S1 = S3 + S2;
-V0 = hu[8011446c];
-V1 = 00d0;
-[S1 + 40cd] = b(V1);
-V0 = V0 << 02;
-V0 = V0 & 0030;
-V0 = V0 + 0030;
-[S1 + 40cc] = b(V0);
-V0 = S0 + 000c;
-V0 = V0 << 04;
-V1 = hu[SP + 0010];
-S0 = S2 + V0;
-800AC24C	addiu  v1, v1, $fff9 (=-$7)
-[S0 + 4008] = h(V1);
-V0 = hu[SP + 0012];
-V1 = w[800716c4];
-800AC260	addiu  v0, v0, $fff8 (=-$8)
-V1 = V1 + S3;
-[S0 + 400a] = h(V0);
-V1 = w[V1 + 0230];
-V0 = 0002;
-800AC274	bne    v1, v0, Lac288 [$800ac288]
-A0 = 0100;
-800AC27C	jal    $80046634
-A1 = 01e8;
-[S0 + 400e] = h(V0);
+    S0 = S4;
+    V0 = w[800716c4];
+    S3 = S0 << 04;
+    V1 = V0 + S3;
 
-Lac288:	; 800AC288
-V1 = w[S1 + 40c0];
-V0 = w[S2 + 0000];
-V1 = V1 & S6;
-V0 = V0 & S5;
-V1 = V1 | V0;
-V0 = S3 + 40c0;
-V0 = S2 + V0;
-[S1 + 40c0] = w(V1);
-V1 = w[S2 + 0000];
-V0 = V0 & S5;
-V1 = V1 & S6;
-V1 = V1 | V0;
-[S2 + 0000] = w(V1);
-V0 = S4 + 0001;
+    if( w[V1 + 230] != 0 )
+    {
+        [SP + 10] = h(hu[V1 + 224]);
+        [SP + 12] = h(hu[V1 + 228]);
+        [SP + 14] = h(hu[V1 + 22c]);
 
-Lac2c0:	; 800AC2C0
-S4 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 000c;
+        A0 = SP + 10;
+        A1 = SP + 10;
+        A2 = SP + 18;
+        A3 = SP + 1c;
+        system_gte_vector_perspective_transform();
+
+        S1 = S3 + S2;
+        [S1 + 40cd] = b(d0);
+        [S1 + 40cc] = b(((hu[8011446c] << 2) & 30) + 30);
+        V0 = S0 + c;
+        V0 = V0 << 4;
+        S0 = S2 + V0;
+        [S0 + 4008] = h(hu[SP + 10] - 7);
+        [S0 + 400a] = h(hu[SP + 12] - 8);
+
+        V1 = w[800716c4] + S3;
+
+        if( w[V1 + 230] == 2 )
+        {
+            A0 = 100;
+            A1 = 1e8;
+            system_create_clut_for_packet();
+            [S0 + 400e] = h(V0);
+        }
+
+        [S1 + 40c0] = w((w[S1 + 40c0] & ff000000) | (w[S2] & 00ffffff));
+        [S2] = w((w[S2] & ff000000) | ((S2 + S3 + 40c0) & 00ffffff));
+    }
+
+    S4 = S4 + 1;
+    V0 = S4 < c;
 800AC2D0	bne    v0, zero, loopac1c8 [$800ac1c8]
-V0 = S4 << 10;
-800AC2D8	jal    $func3aed8
-800AC2DC	nop
-800AC2E0	lui    v1, $00ff
-V1 = V1 | ffff;
-800AC2E8	lui    a2, $ff00
-A1 = w[S2 + 4180];
-V0 = w[S2 + 0000];
-A0 = w[S2 + 0000];
-A1 = A1 & A2;
-V0 = V0 & V1;
-A1 = A1 | V0;
-A0 = A0 & A2;
-V0 = S2 + 4180;
-V0 = V0 & V1;
-V1 = hu[8011446c];
-A0 = A0 | V0;
-[S2 + 4180] = w(A1);
-[S2 + 0000] = w(A0);
-V1 = V1 + 0001;
-[8011446c] = h(V1);
 
-Lac330:	; 800AC330
-RA = w[SP + 003c];
-S6 = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0040;
-800AC354	jr     ra 
-800AC358	nop
+func3aed8();
+
+[S2 + 4180] = w((w[S2 + 4180] & ff000000) | (w[S2 + 0] & 00ffffff));
+[S2 + 0] = w((w[S2 + 0] & ff000000) | ((S2 + 4180) & 00ffffff));
+
+[8011446c] = h(hu[8011446c] + 1);
 ////////////////////////////////
 
 

@@ -111,7 +111,7 @@
 // move_talk_to_line
 800AA180-800AA328
 ////////////////////////////////
-// field_line_clear_entity_in_line
+// field_line_clear_all_actors
 800AA32C-800AA344
 ////////////////////////////////
 // move_gateway_check

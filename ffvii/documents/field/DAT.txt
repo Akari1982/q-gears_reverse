@@ -14,15 +14,37 @@ DAT file for specific field loaded into 80114fe4 and then links to it stored int
 
 ////////////////////////////////
 events data
-    +  0 [][]     ??? Always 0x0502
-    +  2 []       number of actors
-    +  3 []       number of models
-    +  4 [][]     Offset to strings
-    +  6 [][]     number of akao
+    +  0 [][]     always 0x0502. Generate error if not.
+    +  2 []       number of actors.
+    +  3 []       number of models.
+    +  4 [][]     Offset to strings.
+    +  6 [][]     number of akao.
     +  8 [][]     camera scale (for move and talk calculation)(9bit fixed point).
     + 10 name of field creator (size 0x8).
     + 18 field name (size 0x8).
     + 20 actors names (0x8 size, number of actors items).
     + xx akao offsets (0x4 size, number of akao items).
     + xx actor scripts offsets (0x2 size, 0x20 for each actor).
+////////////////////////////////
+
+
+
+////////////////////////////////
+triggers data
+    + 38 [][][][] triggers data.
+    +158 [][][][] array of background triggers (0xc items, 0x10 size).
+        +c []       enter state.
+        +c []       byte id.
+        +d []       bit id.
+        +e []       default state (0,2,4-set bit, 1,3,5-unset bit).
+////////////////////////////////
+
+
+
+////////////////////////////////
+models data
+    +0 array of models data (0x8 size)
+        +0 [][][][] address of model.
+        +4 []       ??? some number
+        +5 []       store 1 if this is model in party. 0 otherwise.
 ////////////////////////////////

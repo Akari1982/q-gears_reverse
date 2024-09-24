@@ -16,8 +16,6 @@
 800707c0 [][][][] offset to font padding file.
 
 800716c4 [][][][] offset to sector 5 triggers.
-+ 38 [][][][] triggers data.
-+158 [][][][] offset to background triggers.
 
 800716c8 []       store here entity id for which we calculate debug draw.
 
@@ -102,7 +100,7 @@
     + 60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER. 4bit fixed point.
     + 62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
     + 64 [][]     number of frames. Set during MOVE and LADER opcode.
-    + 66 [][]     store CHAR byte here. Maybe real model id.
+    + 66 [][]     char id. Set with CHAR opcode.
     + 68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
     + 6a [][]     stage of state.
                     0 - init.
@@ -154,15 +152,15 @@
     + 08 [][] y2.
     + 0a [][] z2.
     + 0c []   line on/off. (1 - true/0 - false).
-    + 0d []   parent entity.
-    + 0e []   entity currently in LINE (with solid).  Script call.
-    + 0f []   entity cross LINE. Script call (removed after script call).
-    + 10 []   entity move to line. Script call (removed after script call).
-    + 11 []   entity talk to LINE. (1 - true/0 - false).
-    + 12 []   entity enter LINE (with solid). Script call (removed after script call).
-    + 13 []   entity leave LINE. Script call (removed after script call).
+    + 0d []   parent actor.
+    + 0e []   actor currently in LINE (with solid).  Script call.
+    + 0f []   actor cross LINE. Script call (removed after script call).
+    + 10 []   actor move to line. Script call (removed after script call).
+    + 11 []   actor talk to LINE. (1 - true/0 - false).
+    + 12 []   actor enter LINE (with solid). Script call (removed after script call).
+    + 13 []   actor leave LINE. Script call (removed after script call).
     + 14 []   store direction of moving between move vector and line if we move in line.
-    + 15 []   entity move to line (for talk check).
+    + 15 []   actor move to line (for talk check).
     + 16 []   store SLIP byte here.
 
 8007eaac packet settings for 800e8f84.
@@ -170,7 +168,7 @@
 
 8007eb90 [][]     some data.
 8007eb94 [][]     some data.
-8007eb98 [] array of actors model data. 0xff if no model assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
+8007eb98 array of model_id for actors. -1 if no model assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
 
 8007ebc8 []       store 1 here during random encounter.
 
@@ -205,7 +203,7 @@
 
 80099ffc [] script related. In script function.
 
-8009a048 maybe array of states for KAWAI (byte per model). Used in 0xd kawai opcode
+8009a048 array of states for KAWAI (0x10 items 0x1 size). Used in 0xd kawai opcode. Init with -1.
 
 8009a058 []       save current opcode here.
 8009a05c field id to load (and current field id).
@@ -332,7 +330,7 @@
                     5 - jet
                     6 - snowboard2
 
-8009ad30 player character array of assigned entity_id (items 0x8 size 0x01).
+8009ad30 array of actor_id for characters (items 0x8 size 0x01).
 
 8009c544 [][][][] pointer to model structs at 80074ea4.
 
@@ -472,7 +470,7 @@
 
 800e42d8 some array (size 0x18)
 
-800e48d8
+800e48d8 []       rain force (greater value more rain lines rendered).
 
 800e48e0 [][][][] store akao offset here when start menu tutorial.
 
@@ -506,14 +504,18 @@
 800e4de2 [][]     2nd image height.
 800e4de4 [][]     texpage settings for 2nd image.
 
-800e8f7c render ordet table for some 1 element. Inited when start of field.
+800e8df0 render otag.
+
+800e8f7c render order table for some 1 element. Inited when start of field.
 
 800fc68c some data related to model rendering packet. Depth sorted polygons addreses.
 
+8010068c render otag.
+
 80100818 render ordet table for some 1 element. Inited when start of field (second budder of 800e8f7c).
 
-8011016C        [8008357C]  some model related data (size 0x08)
-8011016C + 04 []
+8011016c [8008357c]  some model related data (size 0x8)
+8011016c + 04 []
 
 80113f28 [][] store current triangle here during walkmesh_border_cross.
 

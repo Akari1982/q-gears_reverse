@@ -377,44 +377,44 @@ for( int i = 0; i < actor_num; ++i )
 events_data = w[8009c6dc];
 model_struct = w[8009c544];
 block7_data = w[8007e770];
-number_of_entities = bu[events_data + 2];
-number_of_models = hu[block7_data + 2];
+actors_n = bu[events_data + 2];
+models_n = hu[block7_data + 2];
 
 for( int i = 0; i < 3; ++i )
 {
-    party_id = bu[8009c6e4 + cad + i];
-    if( party_id != ff )
+    char_id = bu[8009c6e4 + cad + i];
+    if( char_id != ff )
     {
-        entity_id = bu[8009ad30 + party_id];
-        if( entity_id != ff )
+        actor_id = bu[8009ad30 + char_id];
+        if( actor_id != ff )
         {
-            model_id = bu[8007eb98 + entity_id];
+            model_id = bu[8007eb98 + actor_id];
             if( model_id != ff )
             {
-                if( model_id < number_of_models )
+                if( model_id < models_n )
                 {
                     V1 = w[8008357c];
-                    [V1 + model_id * 8 + 5] = b(1); // set as player model
+                    [V1 + model_id * 8 + 5] = b(1); // set as used model
                 }
             }
         }
     }
 }
 
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < models_n; ++i )
 {
     V1 = w[8008357c];
-    if( bu[V1 + i * 8 + 5] == 0 )
+    if( bu[V1 + i * 8 + 5] == 0 ) // if this model not used
     {
-        for( int j = 0; j < number_of_entities; ++j )
+        for( int j = 0; j < actors_n; ++j )
         {
-            A0 = bu[8007eb98 + j];
-            if( A0 == i )
+            model_id = bu[8007eb98 + j];
+            if( model_id == i )
             {
-                [model_struct + A0 * 84 + 59] = b(1); // model solidity (0x01 - off/0x00 - on)
-                [model_struct + A0 * 84 + 5b] = b(1); // model talkability (0x01 - off/0x00 - on)
-                [model_struct + A0 * 84 + 5c] = b(0); // model visibility (0x01 - on/0x00 - off)
-                [8007eb98 + j] = b(ff); // unlink model from entity
+                [model_struct + model_id * 84 + 59] = b(1); // model solidity (1 - off, 0 - on)
+                [model_struct + model_id * 84 + 5b] = b(1); // model talkability (1 - off, 0 - on)
+                [model_struct + model_id * 84 + 5c] = b(0); // model visibility (1 - on, 0 - off)
+                [8007eb98 + j] = b(ff); // unlink model from actor
             }
         }
     }

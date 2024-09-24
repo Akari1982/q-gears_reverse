@@ -387,21 +387,16 @@ while( true )
         V0 = h[8009abf4 + 2a]; // manual model id
         [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
 
-        if( bu[8009c6e4 + 1027] & 80 )
-        {
-            [800e48d8] = b(ff);
-        }
-        else
-        {
-            [800e48d8] = b(0);
-        }
+        // init rain force
+        if( bu[8009c6e4 + fa4 + 83] & 80 ) [800e48d8] = b(ff);
+        else                               [800e48d8] = b(0);
 
         for( int i = 0; i < 10; ++i )
         {
             [8009a048 + i] = b(-1) // init array of states for KAWAI
         }
 
-        A0 = w[800716c4] + 158; // offset to sector 5 triggers
+        A0 = w[800716c4] + 158; // offset to sector 5 background triggers
         field_init_triggered_background_state();
     }
     else
@@ -412,16 +407,16 @@ while( true )
     funcbb1b4(); // enable party models and unlink unused models
 
     A0 = 8007e7ac;
-    field_line_clear_entity_in_line();
+    field_line_clear_all_actors();
 
-    [800716d0] = b(0);
+    [800716d0] = b(0); // random encounter related
 
     A0 = 800e8df0;
-    A1 = 800e8df0 + 180;
+    A1 = 800e8df0 + 180; // 800e8f70
     funcabf0c();
 
     A0 = 8010068c;
-    A1 = 8010068c + 180;
+    A1 = 8010068c + 180; // 8010080c
     funcabf0c();
 
     if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
@@ -658,7 +653,7 @@ while( true )
     V1 = hu[V1 + 8];
     A0 = S0;
 
-    [S2 + 0088] = h(V1);
+    [S2 + 88] = h(V1);
     funcba65c(); // script update here
 
     [800965e0] = h(hu[S2 + 2a]);
@@ -2661,7 +2656,8 @@ if (bu[8009abf4 + 1f] == 1)
 
 
 ////////////////////////////////
-// funca4bec
+// funca4bec()
+
 S2 = A0;
 
 offset_to_triggers = w[800716c4];
@@ -2674,7 +2670,7 @@ offset_to_camera = w[80071e40];
 [offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
 
 A0 = h[offset_to_camera + 24];
-system_gte_set_proj_plane_dist;
+system_gte_set_proj_plane_dist();
 
 if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 {
@@ -3297,7 +3293,7 @@ for( int i = 0; i < number_of_models; ++i )
     if( i == pc_entity )
     {
         A0 = 8007e7ac;
-        field_line_clear_entity_in_line();
+        field_line_clear_all_actors();
     }
 }
 
@@ -3456,7 +3452,7 @@ for( int i = 0; i < number_of_models; ++i )
             if( i == pc_entity )
             {
                 A0 = 8007e7ac;
-                field_line_clear_entity_in_line();
+                field_line_clear_all_actors();
             }
         }
     }
@@ -3570,7 +3566,7 @@ for( int i = 0; i < number_of_models; ++i )
         if( i == pc_entity )
         {
             A0 = 8007e7ac;
-            field_line_clear_entity_in_line();
+            field_line_clear_all_actors();
         }
     }
 }
@@ -3631,8 +3627,8 @@ for( int i = 0; i < number_of_models; ++i )
 
                 if( i == pc_entity )
                 {
-                    A0 = 8007E7AC;
-                    field_line_clear_entity_in_line();
+                    A0 = 8007e7ac;
+                    field_line_clear_all_actors();
                 }
             }
             else
@@ -5128,7 +5124,7 @@ for( int i = 0; i < 20; ++i )
 
 
 ////////////////////////////////
-// field_line_clear_entity_in_line()
+// field_line_clear_all_actors()
 
 for( int i = 0; i < 20; ++i )
 {
@@ -5202,37 +5198,37 @@ loopaa3e8:	; 800AA3E8
 ////////////////////////////////
 // field_trigger_background_manipulate()
 
+trigger_data = A0;
 state = A1;
-
 ret = 0;
 
 switch( state )
 {
     case 0 2 4: // set bit
     {
-        group_id = bu[A0 + c];
-        index_id = bu[A0 + d];
-        if( ( bu[8009abf4 + f2 + group_id] & ( 1 << index_id ) ) == 0 )
+        byte_id = bu[trigger_data + c];
+        bit_id = bu[trigger_data + d];
+        if( ( bu[8009abf4 + f2 + byte_id] & ( 1 << bit_id ) ) == 0 )
         {
             ret = 1;
         }
-        [8009abf4 + f2 + group_id] = b(bu[8009abf4 + f2 + group_id] | (1 << index_id));
+        [8009abf4 + f2 + byte_id] = b(bu[8009abf4 + f2 + byte_id] | (1 << bit_id));
     }
     break;
 
     case 1 2 5: // unset bit
     {
-        group_id = bu[A0 + c];
-        index_id = bu[A0 + d];
-        if( ( ( bu[8009abf4 + f2 + group_id] | 0 NOR ( 1 << index_id ) ) & ff ) == ff )
+        byte_id = bu[trigger_data + c];
+        bit_id = bu[trigger_data + d];
+        if( ( ( bu[8009abf4 + f2 + byte_id] | ~( 1 << bit_id ) ) & ff ) == ff )
         {
             ret = 1;
         }
-        [8009abf4 + f2 + group_id] = b(bu[8009abf4 + f2 + group_id] & (0 NOR (1 << index_id)));
+        [8009abf4 + f2 + byte_id] = b(bu[8009abf4 + f2 + byte_id] & ~(1 << bit_id));
     }
 }
 
-return A3;
+return ret;
 ////////////////////////////////
 
 
@@ -5288,12 +5284,12 @@ if( V1 != ff )
         A1 = bu[S1 + e];
         field_trigger_background_manipulate();
 
-        if (V0 == 1)
+        if( V0 == 1 )
         {
             V0 = bu[S1 + f];
             A0 = hu[SP + 10 + V0 * 2];
 
-            func1117c;
+            func1117c();
         }
     }
     else
@@ -5332,7 +5328,7 @@ if( V1 != ff )
             {
                 V0 = bu[S1 + F];
                 A0 = hu[SP + 10 + V0 * 2];
-                func1117c;
+                func1117c();
             }
         }
 
@@ -5370,7 +5366,7 @@ trigger_data = A0;
 
 for( int i = 0; i < c; ++i )
 {
-    if( bu[trigger_data + i * 10 + c] != ff ) // enter state
+    if( bu[trigger_data + i * 10 + c] != ff ) // trigger exist
     {
         V1 = bu[trigger_data + i * 10 + e]; // default state
 

@@ -86,7 +86,7 @@ func3aed8(); // pop matrix
 ////////////////////////////////
 // field_rain_update()
 
-if( bu[8009c6e4 + 1027] & 80 )
+if( bu[8009c6e4 + fa4 + 83] & 80 )
 {
     if( bu[800e48d8] != ff )
     {
