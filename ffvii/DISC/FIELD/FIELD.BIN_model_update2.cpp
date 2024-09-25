@@ -1616,24 +1616,25 @@ Lad894:	; 800AD894
 ////////////////////////////////
 // field_model_new_structure_initing()
 
-block_7 = A0;
-block_7_array = block_7 + 4;
+block7_header = A0;
+block7_models = block7_header + 4;
 model_data = A1;
 model_data_array = model_data + c;
 
 [model_data + 0] = b(0);
-number_of_models = hu[block_7 + 2];
 
-for( int i = 0; i < number_of_models; ++i )
+models_n = hu[block7_header + 2];
+
+for( int i = 0; i < models_n; ++i )
 {
-    if( bu[block_7_array + i * 8 + 5] != 0 )
+    if( bu[block7_models + i * 8 + 5] != 0 )
     {
-        [block_7_array + i * 8 + 4] = b(bu[model_data + 0]);
+        [block7_models + i * 8 + 4] = b(bu[model_data + 0]);
         [model_data + 0] = b(bu[model_data + 0] + 1);
     }
     else
     {
-        [block_7_array + i * 8 + 4] = b(ff);
+        [block7_models + i * 8 + 4] = b(ff);
     }
 }
 
@@ -1644,49 +1645,46 @@ for( int i = 0; i < number_of_models; ++i )
 
 A1 = model_data_array + bu[model_data + 0] * 24;
 
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < models_n; ++i )
 {
-    if( bu[block_7_array + i * 8 + 5] != 0 ) // if model enabled
+    if( bu[block7_models + i * 8 + 5] != 0 ) // if model enabled
     {
-        V0 = bu[block_7_array + i * 8 + 7] - 1; // number of animation for addition model 3 at least
-        if( V0 < 9 )
+        // number of animation for addition model 3 at least
+        if( ( bu[block7_models + i * 8 + 7] - 1 ) < 9 )
         {
-            if( bu[block_7_array + i * 8 + 3] < 3 )
+            if( bu[block7_models + i * 8 + 3] < 3 )
             {
-                [block_7_array + i * 8 + 3] = b(3);
+                [block7_models + i * 8 + 3] = b(3);
             }
         }
 
-        model_id = bu[block_7_array + i * 8 + 4];
-        [model_data_array + model_id * 24 + 0] = b(1);
-        [model_data_array + model_id * 24 + 1] = bu(ff);
-        [model_data_array + model_id * 24 + 2] = b(bu[block_7_array + i * 8 + 1]); // bones
-        [model_data_array + model_id * 24 + 3] = b(bu[block_7_array + i * 8 + 2]); // parts
-        [model_data_array + model_id * 24 + 4] = b(bu[block_7_array + i * 8 + 3]); // animations
-        [model_data_array + model_id * 24 + 5] = b(0);
-        [model_data_array + model_id * 24 + 6] = b(0);
-        [model_data_array + model_id * 24 + 7] = b(0);
-        [model_data_array + model_id * 24 + 8] = w(0);
-        [model_data_array + model_id * 24 + c] = w(0);
+        model_id = bu[block7_models + i * 8 + 4];
+        [model_data_array + model_id * 24 +  0] = b(1);
+        [model_data_array + model_id * 24 +  1] = bu(ff);
+        [model_data_array + model_id * 24 +  2] = b(bu[block7_models + i * 8 + 1]); // bones
+        [model_data_array + model_id * 24 +  3] = b(bu[block7_models + i * 8 + 2]); // parts
+        [model_data_array + model_id * 24 +  4] = b(bu[block7_models + i * 8 + 3]); // animations
+        [model_data_array + model_id * 24 +  5] = b(0);
+        [model_data_array + model_id * 24 +  6] = b(0);
+        [model_data_array + model_id * 24 +  7] = b(0);
+        [model_data_array + model_id * 24 +  8] = w(0);
+        [model_data_array + model_id * 24 +  c] = w(0);
         [model_data_array + model_id * 24 + 10] = w(0);
-        // global model
-        [model_data_array + model_id * 24 + 14] = b(bu[block_7_array + i * 8 + 7]);
-        [model_data_array + model_id * 24 + 15] = b(bu[block_7_array + i * 8 + 0]);
+        [model_data_array + model_id * 24 + 14] = b(bu[block7_models + i * 8 + 7]); // global model id
+        [model_data_array + model_id * 24 + 15] = b(bu[block7_models + i * 8 + 0]); // face id
         [model_data_array + model_id * 24 + 16] = h(1000);
 
-        A0 = bu[block_7_array + i * 8 + 1];
-        A0 = A0 * 4;
+        A0 = bu[block7_models + i * 8 + 1] * 4;
         [model_data_array + model_id * 24 + 18] = h(A0); // local offset to model parts part.
 
-        V0 = bu[block_7_array + i * 8 + 2];
-        A0 = A0 + V0 * 20;
+        A0 += bu[block7_models + i * 8 + 2] * 20;
         [model_data_array + model_id * 24 + 1a] = h(A0); // local offset to animation part.
 
         [model_data_array + model_id * 24 + 1c] = w(A1); // start offset of data for this model
         [model_data_array + model_id * 24 + 20] = w(0);
 
         // calculate offset to next model data
-        A1 = A1 + bu[block_7_array + i * 8 + 1] * 4 + bu[block_7_array + i * 8 + 2] * 20 + bu[block_7_array + i * 8 + 3] * 10;
+        A1 += bu[block7_models + i * 8 + 1] * 4 + bu[block7_models + i * 8 + 2] * 20 + bu[block7_models + i * 8 + 3] * 10;
     }
 }
 
@@ -1703,15 +1701,15 @@ return A1;
 S3 = w[1f800000]; // CLOUD.BCX start sector.
 S5 = w[1f800004]; // FIELD.TDB start sector.
 
-block_7 = A0; // offset to block 7 in dat file.
+block7_header = A0; // offset to block 7 in dat file.
 model_data = A1; // offset to new model structure at 80138250.
 S2 = A2; // pointer to part after all new structures for the model.
 S6 = A3; // 1
 
-number_of_models = hu[block_7 + 2]; // number of models
-for( int i = 0; i < number_of_models; ++i )
+models_n = hu[block7_header + 2]; // number of models
+for( int i = 0; i < models_n; ++i )
 {
-    A0 = block_7;    // offset to block 7 in dat file.
+    A0 = block7_header;    // offset to block 7 in dat file.
     A1 = model_data; // offset to new model structure at 80138250.
     A2 = S2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
     A3 = i; // model id
@@ -1742,23 +1740,23 @@ return S2;
 ////////////////////////////////
 // field_load_and_init_global_models()
 
-block_7 = A0; // offset to block 7 in dat file.
-block_7_array = block_7 + 4;
+block7_header = A0; // offset to block 7 in dat file.
+block7_models = block7_header + 4;
 model_data = A1; // offset to new model structure at 80138250.
 S0 = A2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
 S2 = A3; // model id
 
 V1 = w[1f800000]; // CLOUD.BCX start sector.
 
-if( bu[block_7_array + S2 * 8 + 5] != 0 ) // read is model enabled
+if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
 {
     // read additional model
-    S1 = b[block_7_array + S2 * 8 + 7];
+    S1 = b[block7_models + S2 * 8 + 7];
     A1 = S1 - 1;
     if( A1 < 9 )
     {
         // read 6 byte
-        if( bu[block_7_array + S2 * 8 + 6] == 0 ) // if global model not yet loaded
+        if( bu[block7_models + S2 * 8 + 6] == 0 ) // if global model not yet loaded
         {
             switch (A1)
             {
@@ -1835,18 +1833,18 @@ if( bu[block_7_array + S2 * 8 + 5] != 0 ) // read is model enabled
             800ADE9C	bne    v0, zero, loopade94 [$800ade94]
 
             // set flag that we load this model already
-            number_of_model = hu[block_7 + 2];
+            number_of_model = hu[block7_header + 2];
             for( int i = 0; i < number_of_model; ++i )
             {
-                global_model = b[block_7_array + i * 8 + 7];
+                global_model = b[block7_models + i * 8 + 7];
 
                 if( global_model == S1 )
                 {
-                    [block_7_array + i * 8 + 6] = b(1);
+                    [block7_models + i * 8 + 6] = b(1);
                 }
             }
 
-            model_index = bu[block_7_array + S2 * 8 + 4];
+            model_index = bu[block7_models + S2 * 8 + 4];
 
             loaded_file_header = S0 + w[S0 + 4];
             [loaded_file_header + 1c] = w(S0 + w[loaded_file_header + 1c] - 80000000); // fix offset to parts
@@ -1924,7 +1922,7 @@ if( bu[block_7_array + S2 * 8 + 5] != 0 ) // read is model enabled
                 V1 = 0;
                 A2 = A0;
                 A1 = 0;
-                A0 = block_7_array;
+                A0 = block7_models;
 
                 loopae090:	; 800AE090
                     V0 = b[A0 + 7];
@@ -3588,7 +3586,7 @@ for( int i = 0; i < 10; ++i )
 
 ////////////////////////////////
 // run_kawai
-//                    A2 = bu[block7_data + S2 * 8 + 4]; // model id
+//                    A2 = bu[block7_header + S2 * 8 + 4]; // model id
 //                    A0 = w[V1 + 4] + A2 * 24;
 //                    A1 = w[80074ea4 + S2 * 84 + 04]; // offset to kawai data
 //                    A3 = w[80071e40]; // offset to camera section

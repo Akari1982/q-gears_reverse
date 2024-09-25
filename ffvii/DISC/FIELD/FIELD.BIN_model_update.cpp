@@ -1,14 +1,13 @@
 ////////////////////////////////
 // funcaa930()
-// we call function that init 0x24 model data structure here
 
 [800dfca0] = w(80128000); // address for global texture
 
 A0 = w[8007e770]; // offset to block 7 in dat file.
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
 field_model_new_structure_initing();
-[80075e10] = w(V0); // store pointer to part after all new structures for the model.
-[800e0204] = w(V0); // store pointer to part after all new structures for the model.
+[80075e10] = w(V0); // store pointer to part after all new structures for the models.
+[800e0204] = w(V0); // store pointer to part after all new structures for the models.
 
 // load field bsx
 A0 = h[8009a05c]; // looks like field id to load
@@ -18,9 +17,7 @@ A2 = 801b0000;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
-loopaa9b4:	; 800AA9B4
-    system_cdrom_read_chain();
-800AA9BC	bne    v0, zero, loopaa9b4 [$800aa9b4]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
 
 [1f800000] = w(800df08c); // CLOUD.BCX start sector.
@@ -41,25 +38,21 @@ funcac35c; // load textures and init packet drafts/ calculates lighting scale
 
 V1 = w[8004a62c];
 number_of_models = bu[V1 + 0];
-S0 = 1;
-if( S0 < number_of_models )
-{
-    loopaaa54:	; 800AAA54
-        [w[V1 + 4] + S0 * 24 + 0] = b(0);
 
-        S0 = S0 + 1;
-        V0 = S0 < number_of_models;
-    800AAA7C	bne    v0, zero, loopaaa54 [$800aaa54]
+int i = 1;
+for( ; i < number_of_models; ++i )
+{
+    [w[V1 + 4] + S0 * 24 + 0] = b(0);
 }
 
-for( int i = 0; i < number_of_models; ++i )
+for( int j = 0; j < number_of_models; ++j )
 {
     [1f800000] = b(1);
     [1f800001] = b(1);
     [1f800002] = b(0);
-    [1f800003] = b(S0);
+    [1f800003] = b(i);
     V0 = w[8004a62c];
-    A0 = w[V0 + 4] + i * 24;
+    A0 = w[V0 + 4] + j * 24;
     A1 = 1f800000;
     funcb1c7c(); // load face to vram
 }

@@ -423,7 +423,7 @@ while( true )
     {
         A0 = 0;
         A1 = 80128000;
-        funca2d5c(); // load mim to vram and init struct about it.
+        field_load_mim_to_vram();
     }
 
     if( h[800965ec] == 2 )
@@ -941,7 +941,7 @@ while( true )
 
 
 ////////////////////////////////
-// funca2d5c()
+// field_load_mim_to_vram()
 
 mim_data = A1;
 
@@ -952,7 +952,6 @@ mim_data = A1;
 [800e4d9a] = h(hu[mim_data + 6]);
 [800e4d9c] = h(hu[mim_data + 8]);
 [800e4d9e] = h(hu[mim_data + a]);
-
 
 // 2nd part 1st image
 mim_data = mim_data + ((w[mim_data + 0] >> 2) << 2);
@@ -975,35 +974,42 @@ mim_data = mim_data + ((w[mim_data + 0] >> 2) << 2);
 A0 = 0;
 system_psyq_draw_sync();
 
-[SP + 20] = h(0);
-[SP + 22] = h(1e0);
-[SP + 24] = h(100);
-[SP + 26] = h(10);
-
-A0 = SP + 20;
-A1 = w[800e4d90];
-system_psyq_load_image(); // load palette to vram
-
-A0 = 0;
-system_psyq_draw_sync();
-
-A0 = w[800e4da4]; // address
-A1 = 1; // tp 8 bit clut
-A2 = 0; // abr
-A3 = h[800e4dac]; // vram_x
-A4 = h[800e4dae]; // vram_y
-A5 = hu[800e4db0]; // width
-A6 = hu[800e4db2]; // height
-func436c0(); // load texture to vram and return texpage settings to use this texture
-[800e4db4] = h(V0);
-
-if( w[800e4dd8] != 0 )
+// load palette to vram
 {
+    [SP + 20] = h(0);
+    [SP + 22] = h(1e0);
+    [SP + 24] = h(100);
+    [SP + 26] = h(10);
+    
+    A0 = SP + 20;
+    A1 = w[800e4d90];
+    system_psyq_load_image();
+    
     A0 = 0;
     system_psyq_draw_sync();
+}
 
+// load 1st image to vram
+{
+    A0 = w[800e4da4]; // address
+    A1 = 1; // tp 8 bit clut
+    A2 = 0; // abr
+    A3 = h[800e4dac]; // vram_x
+    A4 = h[800e4dae]; // vram_y
+    A5 = hu[800e4db0]; // width
+    A6 = hu[800e4db2]; // height
+    func436c0(); // load texture to vram and return texpage settings to use this texture
+    [800e4db4] = h(V0);
+
+    A0 = 0;
+    system_psyq_draw_sync();
+}
+
+// load 2nd image to vram
+if( w[800e4dd8] != 0 )
+{
     A0 = w[800e4dd4];
-    A1 = 1; // tp
+    A1 = 1; // tp 8 bit clut
     A2 = 0; // abr
     A3 = h[800e4ddc]; // vram_x
     A4 = h[800e4dde]; // vram_y
@@ -1011,10 +1017,10 @@ if( w[800e4dd8] != 0 )
     A6 = hu[800e4de2]; // height
     func436c0(); // load texture to vram and return texpage settings to use this texture
     [800e4de4] = h(V0);
-}
 
-A0 = 0;
-system_psyq_draw_sync();
+    A0 = 0;
+    system_psyq_draw_sync();
+}
 ////////////////////////////////
 
 
@@ -3088,7 +3094,8 @@ return;
 
 
 ////////////////////////////////
-// handle_animation_update
+// handle_animation_update()
+
 model_id = A0;
 dat_block7 = w[8008357c];
 A0 = bu[dat_block7 + model_id * 8 + 4];

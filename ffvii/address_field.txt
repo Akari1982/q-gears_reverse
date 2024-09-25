@@ -166,8 +166,8 @@
 8007eaac packet settings for 800e8f84.
 8007eb08 packet settings for 80100820.
 
-8007eb90 [][]     some data.
-8007eb94 [][]     some data.
+8007eb90 [][]     some data. Init with 0xa0.
+8007eb94 [][]     some data. Init with 0x78.
 8007eb98 array of model_id for actors. -1 if no model assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
 
 8007ebc8 []       store 1 here during random encounter.
@@ -200,6 +200,19 @@
 800965e0 we store manual visible entity here (pc).
 800965e8 [][]     1 - field background already loading, 0 - not loading. Set 2 if background loading and re make some check and it returns 0.
 800965ec [][]     depending on this value we load field differently. Store 1 here when move from map to map.
+                    1 - 
+                    2 - after battle?
+                    3 - 
+                    4 - 
+                    5 - we not load mim to vram (maybe it's already there) (reload field?)
+                    6 - 
+                    7 - 
+                    8 - 
+                    9 - 
+                    a - 
+                    b - 
+                    c - 
+                    d - we not load mim to vram (maybe it's already there) (reload field?)
 
 80099ffc [] script related. In script function.
 
@@ -552,30 +565,30 @@
 
 
 80138250 [8004a62c]  header for new model structures (size 0x24).
-80138250 + 00 []       number of models.
-80138250 + 01 []       store 00 here during init.
-80138250 + 02 [][]     store 00 here during init.
-80138250 + 04 [][][][] offset to new structures (8013825c).
-80138250 + 08 [][][][] store 00 here during init. Offset to texture in bsx file.
-8013825c new structures for model data (we init it and copy data from 7 dat block during level loading) (size 0x24)
-8013825c + 00 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
-8013825c + 01 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
-8013825c + 02 []       number of bones.
-8013825c + 03 []       number of model parts.
-8013825c + 04 []       number of animation.
-8013825c + 05 []       store 00 here during init. Rotation x.
-8013825c + 06 []       store 00 here during init. Rotation y.
-8013825c + 07 []       model direction. (rotation z)
-8013825c + 08 [][][][] translation x.
-8013825c + 0c [][][][] translation y.
-8013825c + 10 [][][][] translation z.
-8013825c + 14 []       global model id.
-8013825c + 15 []       face id in global texture (load palette with this id to vram). store + 00 [] of model data in 7 block in dat file.
-8013825c + 16 [][]     model scale. Store 1000 here during init. (12bit fixed point)
-8013825c + 18 [][]     local offset to model parts part.
-8013825c + 1a [][]     local offset to animation part.
-8013825c + 1c [][][][] start offset of data for this model (data starts right after new model structure).
-8013825c + 20 [][][][] offset to packet drafts and bone matrixes. init with 0.
+    + 0 []       number of inited models.
+    + 1 []       store 00 here during init.
+    + 2 [][]     store 00 here during init.
+    + 4 [][][][] offset to new structures (8013825c).
+    + 8 [][][][] store 00 here during init. Offset to texture in bsx file.
+    + с new structures for model data (we init it and copy data from 7 dat block during level loading) (size 0x24)
+        + 00 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
+        + 01 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
+        + 02 []       number of bones.
+        + 03 []       number of model parts.
+        + 04 []       number of animation.
+        + 05 []       rotation x.
+        + 06 []       rotation y.
+        + 07 []       rotation z (direction).
+        + 08 [][][][] translation x.
+        + 0c [][][][] translation y.
+        + 10 [][][][] translation z.
+        + 14 []       global model id.
+        + 15 []       face id in global texture (load palette with this id to vram).
+        + 16 [][]     model scale. Store 1000 here during init. (12bit fixed point)
+        + 18 [][]     local offset to model parts part.
+        + 1a [][]     local offset to animation part.
+        + 1c [][][][] start offset of data for this model (data starts right after new model structure).
+        + 20 [][][][] offset to packet drafts and bone matrixes. init with 0.
 
 
 

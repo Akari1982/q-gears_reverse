@@ -376,9 +376,9 @@ for( int i = 0; i < actor_num; ++i )
 
 events_data = w[8009c6dc];
 model_struct = w[8009c544];
-block7_data = w[8007e770];
+block7_header = w[8007e770];
 actors_n = bu[events_data + 2];
-models_n = hu[block7_data + 2];
+models_n = hu[block7_header + 2];
 
 for( int i = 0; i < 3; ++i )
 {

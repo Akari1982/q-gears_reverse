@@ -43,8 +43,15 @@ triggers data
 
 ////////////////////////////////
 models data
-    +0 array of models data (0x8 size)
-        +0 [][][][] address of model.
-        +4 []       ??? some number
+    +0 [][]     size of section.
+    +2 [][]     number of models.
+    +4 array of models data (0x8 size)
+        +0 []       face id.
+        +1 []       number of bones.
+        +2 []       number of parts.
+        +3 []       number of animations.
+        +4 []       model id in 80138250 model array. -1 if model not initing.
         +5 []       store 1 if this is model in party. 0 otherwise.
+        +6 []       ???
+        +7 []       global model id (to find out which BCX to use) 
 ////////////////////////////////

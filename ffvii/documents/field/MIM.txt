@@ -1,0 +1,28 @@
+////////////////////////////////
+MIM file contains textures and clut for field background
+Loaded to 80128000.
+
+    // clut header
+    + 0 [][][][] pointer to 1st image block.
+    + 4 [][]     clut vram x.
+    + 6 [][]     clut vram y.
+    + 8 [][]     clut width.
+    + a [][]     clut height.
+    + c clut data.
+    
+    // 1st image header
+    + 0 [][][][] pointer to second image block.
+    + 4 [][]     1st image vram x.
+    + 6 [][]     1st image vram y.
+    + 8 [][]     1st image width.
+    + a [][]     1st image height.
+    + c 1st image data.
+    
+    // 2nd image header
+    + 0 [][][][] pointer to end of file.
+    + 4 [][]     2nd image vram x.
+    + 6 [][]     2nd image vram y.
+    + 8 [][]     2nd image width.
+    + a [][]     2nd image height.
+    + c 2nd image data.
+////////////////////////////////
