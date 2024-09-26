@@ -75,7 +75,7 @@ Actor_0x01:on_update:
 0x00c6    op29_ActorTurnOff( actor_id=Actor_0x03 )
 0x00c8    op29_ActorTurnOff( actor_id=Actor_0x02 )
 0x00ca    op26_Wait( time=2 )
-0x00cd    -- opFED402()
+0x00cd    opFED402_YggdrasilMapDestroy() -- deinit
 0x00d0    op26_Wait( time=2 )
 0x00d3    -- 0x98_MapLoad( field_id=290, value=8 )
 0x00d8    -- 0x5B()
@@ -253,7 +253,7 @@ Actor_0x02:event_0x04:
 Actor_0x03:on_start:
 0x0295    -- 0xBC_ActorNoModelInit()
 0x0296    -- 0x2A()
-0x0297    -- opFED400()
+0x0297    opFED400_YggdrasilMapCreate()
 0x029a    mem[0x416] = false -- op37
 0x029d    op00_Return()
 
@@ -264,7 +264,7 @@ Actor_0x03:on_update:
 0x02ac    opC6_ExpandRun() -- exp0x20
 0x02ad    mem[0x40a] = mem[0x404] -- op35
 0x02b3    op05_CallFunction( address=0x37a )
-0x02b6    -- opFED401()
+0x02b6    opFED401_YggdrasilMapRender( id=0, x=(s)mem[0x406], y=(s)mem[0x408], type=0 )
 0x02c1    opC6_ExpandRun() -- exp0x20
 0x02c2    mem[0x41a] += 16 -- op38
 0x02c8    mem[0x41a] &= 255 -- op3e
@@ -301,11 +301,11 @@ function:
 0x0330    mem[0x40a] = (s)mem[0x41e] -- op35
 0x0336    mem[0x40a] += (s)mem[0x41c] -- op38
 0x033c    op02_JumpToConditional( val1=(s)mem[0x40a], val2=24, condition="val1 < val2", address_if_false=0x352 )
-0x0344    -- opFED403()
+0x0344    opFED403_YggdrasilMapColor( id=(s)mem[0x414], r=0, g=(s)mem[0x418], b=(s)mem[0x418] )
 0x034f    op01_JumpTo( address=0x35d )
-0x0352    -- opFED403()
+0x0352    opFED403_YggdrasilMapColor( id=(s)mem[0x414], r=(s)mem[0x418], g=(s)mem[0x418], b=0 )
 0x035d    op05_CallFunction( address=0x37a )
-0x0360    -- opFED401()
+0x0360    opFED401_YggdrasilMapRender( id=(s)mem[0x414], x=(s)mem[0x406], y=(s)mem[0x408], type=1 )
 0x036b    mem[0x414] += 1 -- op3c
 0x036e    mem[0x412] >>= 1 -- op42
 0x0373    mem[0x41e] += 1 -- op3c
@@ -373,4 +373,4 @@ function:
 0x0450    op00_Return()
 0x0451    op00_Return()
 0x0452    op00_Return()
-0x0453    -- 0xE0( actor_id=Actor_0x35, ???=(vf80)0x1ab6, ???=(vf40)0x2361, flag=0x64 )
+0x0453    -- 0xE0( actor_id=Actor_0x2e, ???=(vf80)0x1d40, ???=(vf40)0xc6a3, flag=0xd4 )

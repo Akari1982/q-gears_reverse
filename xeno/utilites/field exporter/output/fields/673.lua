@@ -791,4 +791,4 @@ Actor_0x15:event_0x05:
 0x0696    opFC_MessageShowFromActorCopyFace( actor_id=Actor_0x03, text_id=0x1e, flags=CLOSE_OFF_SCREEN|FORCE_BOTTOM )
 0x069b    op9C_MessageSync()
 0x069c    op00_Return()
-0x069d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x2c38, ???=(vf40)0x9064, flag=0x4c )
+0x069d    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x3338, ???=(vf40)0x16db, flag=0x9 )

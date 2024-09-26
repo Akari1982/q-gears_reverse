@@ -43,7 +43,7 @@ Actor_0x00:on_update:
 0x005f    opFE61_MovieStartSync()
 0x0061    op26_Wait( time=40 )
 0x0064    opC6_ExpandRun() -- exp0x20
-0x0065    -- 0xFEDF()
+0x0065    -- 0xFEDF00() -- init
 0x0069    op26_Wait( time=1 )
 0x006c    opFE77_LoadTim_04_00_07( file_id=0x56, clut_y=0, x=640, y=0 )
 0x007e    op26_Wait( time=2 )
@@ -52,7 +52,7 @@ Actor_0x00:on_update:
 0x008b    mem[0x400] = false -- op37
 0x008e    -- opFEDD01()
 0x0095    op26_Wait( time=0 )
-0x0098    -- 0xFEDF()
+0x0098    -- 0xFEDF01() -- enable
 0x009c    op02_JumpToConditional( val1=(s)mem[0x400], val2=33, condition="val1 < val2", address_if_false=0xb5 )
 0x00a4    opC6_ExpandRun() -- exp0x20
 0x00a5    -- opFEDD01()

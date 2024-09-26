@@ -1688,7 +1688,7 @@ for( int i = 0; i < models_n; ++i )
     }
 }
 
-[800e0204] = w(0); // reset offset to BSX file
+[800e0204] = w(0);
 
 return A1;
 ////////////////////////////////
@@ -1698,18 +1698,16 @@ return A1;
 ////////////////////////////////
 // field_load_and_global_models_and_textures()
 
-S3 = w[1f800000]; // CLOUD.BCX start sector.
-S5 = w[1f800004]; // FIELD.TDB start sector.
-
 block7_header = A0; // offset to block 7 in dat file.
 model_data = A1; // offset to new model structure at 80138250.
 S2 = A2; // pointer to part after all new structures for the model.
 S6 = A3; // 1
 
 models_n = hu[block7_header + 2]; // number of models
+
 for( int i = 0; i < models_n; ++i )
 {
-    A0 = block7_header;    // offset to block 7 in dat file.
+    A0 = block7_header; // offset to block 7 in dat file.
     A1 = model_data; // offset to new model structure at 80138250.
     A2 = S2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
     A3 = i; // model id
@@ -1721,15 +1719,14 @@ for( int i = 0; i < models_n; ++i )
 // load globals texture
 if( S6 != 0 )
 {
-    A0 = w[S5 + 0];
-    A1 = w[S5 + 4]
+    S5 = w[1f800004];
+    A0 = w[S5 + 0]; // FIELD.TDB start sector
+    A1 = w[S5 + 4]; // FIELD.TDB size
     A2 = w[800dfca0];
     A3 = 0;
     system_cdrom_start_load_lzs();
 
-    loopadd34:	; 800ADD34
-        system_cdrom_read_chain();
-    800ADD3C	bne    v0, zero, loopadd34 [$800add34]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 }
 
 return S2;
@@ -1744,107 +1741,50 @@ block7_header = A0; // offset to block 7 in dat file.
 block7_models = block7_header + 4;
 model_data = A1; // offset to new model structure at 80138250.
 S0 = A2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
-S2 = A3; // model id
+model_id = A3;
 
 V1 = w[1f800000]; // CLOUD.BCX start sector.
 
-if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
+if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
 {
     // read additional model
-    S1 = b[block7_models + S2 * 8 + 7];
-    A1 = S1 - 1;
-    if( A1 < 9 )
+    global_model_id = b[block7_models + model_id * 8 + 7];
+
+    if( ( global_model_id - 1 ) < 9 )
     {
         // read 6 byte
-        if( bu[block7_models + S2 * 8 + 6] == 0 ) // if global model not yet loaded
+        if( bu[block7_models + model_id * 8 + 6] == 0 ) // if global model not yet loaded
         {
-            switch (A1)
+            switch( global_model_id - 1 )
             {
-                case 0:
-                {
-                    A0 = w[V1 + 0]; //79EF0100
-                    A1 = w[V1 + 4]; //A01B0000
-                }
-                break;
-
-                case 1:
-                {
-                    A0 = w[V1 + 8]; //7DEF0100
-                    A1 = w[V1 + C]; //8B1B0000
-                }
-                break;
-
-                case 2:
-                {
-                    A0 = w[V1 + 10]; // 81EF0100
-                    A1 = w[V1 + 14]; // 251F0000
-                }
-                break;
-
-                case 3:
-                {
-                    A0 = w[V1 + 18]; // 85EF0100
-                    A1 = w[V1 + 1C]; // 33200000
-                }
-                break;
-
-                case 4:
-                {
-                    A0 = w[V1 + 20]; // 8AEF0100
-                    A1 = w[V1 + 24]; // 37210000
-                }
-                break;
-
-                case 5:
-                {
-                    A0 = w[V1 + 28]; // 8FEF0100
-                    A1 = w[V1 + 2C]; // CC1C0000
-                }
-                break;
-
-                case 6:
-                {
-                    A0 = w[V1 + 30]; // 93EF0100
-                    A1 = w[V1 + 34]; // BB1D0000
-                }
-                break;
-
-                case 7:
-                {
-                    A0 = w[V1 + 38]; // 97EF0100
-                    A1 = w[V1 + 3C]; // C61C0000
-                }
-                break;
-
-                case 8:
-                {
-                    A0 = w[V1 + 38]; // 9BEF0100
-                    A1 = w[V1 + 3C]; // 8A1B0000
-                }
-                break;
+                case 0: A0 = w[V1 +  0]; A1 = w[V1 +  4]; break; // 79EF0100 A01B0000
+                case 1: A0 = w[V1 +  8]; A1 = w[V1 +  c]; break; // 7DEF0100 8B1B0000
+                case 2: A0 = w[V1 + 10]; A1 = w[V1 + 14]; break; // 81EF0100 251F0000
+                case 3: A0 = w[V1 + 18]; A1 = w[V1 + 1c]; break; // 85EF0100 33200000
+                case 4: A0 = w[V1 + 20]; A1 = w[V1 + 24]; break; // 8AEF0100 37210000
+                case 5: A0 = w[V1 + 28]; A1 = w[V1 + 2c]; break; // 8FEF0100 CC1C0000
+                case 6: A0 = w[V1 + 30]; A1 = w[V1 + 34]; break; // 93EF0100 BB1D0000
+                case 7: A0 = w[V1 + 38]; A1 = w[V1 + 3c]; break; // 97EF0100 C61C0000
+                case 8: A0 = w[V1 + 38]; A1 = w[V1 + 3c]; break; // 9BEF0100 8A1B0000
             }
 
             A2 = S0;
             A3 = 0;
             system_cdrom_start_load_lzs();
 
-            loopade94:	; 800ADE94
-                system_cdrom_read_chain;
-            800ADE9C	bne    v0, zero, loopade94 [$800ade94]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             // set flag that we load this model already
             number_of_model = hu[block7_header + 2];
             for( int i = 0; i < number_of_model; ++i )
             {
-                global_model = b[block7_models + i * 8 + 7];
-
-                if( global_model == S1 )
+                if( b[block7_models + i * 8 + 7] == global_model_id )
                 {
                     [block7_models + i * 8 + 6] = b(1);
                 }
             }
 
-            model_index = bu[block7_models + S2 * 8 + 4];
+            model_index = bu[block7_models + model_id * 8 + 4];
 
             loaded_file_header = S0 + w[S0 + 4];
             [loaded_file_header + 1c] = w(S0 + w[loaded_file_header + 1c] - 80000000); // fix offset to parts
@@ -1892,24 +1832,15 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
                 800ADFF0	bne    v0, zero, loopadf7c [$800adf7c]
             }
 
-            number_of_animations = bu[loaded_file_header + 4];
-            if (number_of_animations != 0)
+            A1 = w[new_structures_header + model_index * 24 + 1c] + hu[new_structures_header + model_index * 24 + 1a];
+            A0 = w[loaded_file_header + 1c] + hu[loaded_file_header + 1a];
+
+            for( int i = 0; i < bu[loaded_file_header + 4]; ++i ) // number of animations
             {
-                A1 = w[new_structures_header + model_index * 24 + 1c] + hu[new_structures_header + model_index * 24 + 1a];
-                A0 = w[loaded_file_header + 1c] + hu[loaded_file_header + 1a];
-                A3 = 0;
-
-                loopae020:	; 800AE020
-                    [A1 + A3 * 10 + 00] = w(w[A0 + A3 * 10 + 00]);
-                    [A1 + A3 * 10 + 04] = w(w[A0 + A3 * 10 + 04]);
-                    [A1 + A3 * 10 + 08] = w(w[A0 + A3 * 10 + 08]);
-                    [A1 + A3 * 10 + 0c] = w(w[A0 + A3 * 10 + 0C]);
-
-                    [A1 + A3 * 10 + c] = w(S0 + w[A0 + A3 * 10 + c] - 80000000);
-
-                    A3 = A3 + 1;
-                    V0 = A3 < number_of_animations;
-                800AE064	bne    v0, zero, loopae020 [$800ae020]
+                [A1 + i * 10 + 0] = w(w[A0 + i * 10 + 0]);
+                [A1 + i * 10 + 4] = w(w[A0 + i * 10 + 4]);
+                [A1 + i * 10 + 8] = w(w[A0 + i * 10 + 8]);
+                [A1 + i * 10 + c] = w(S0 + w[A0 + i * 10 + c] - 80000000);
             }
 
             [800e0204] = w(loaded_file_header);
@@ -1917,7 +1848,7 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
         }
         else
         {
-            if (S2 != 0)
+            if( model_id != 0 )
             {
                 V1 = 0;
                 A2 = A0;
@@ -1926,7 +1857,7 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
 
                 loopae090:	; 800AE090
                     V0 = b[A0 + 7];
-                    if (V0 == S1)
+                    if( V0 == global_model_id )
                     {
                         model_id = bu[A2 + 4]; // model_id
                         V0 = w[model_data + 4]; // offset to new structures data
@@ -1954,14 +1885,14 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
                         }
 
                         A1 = hu[T1 + 18];
-                        V1 = w[T1 + 1C];
+                        V1 = w[T1 + 1c];
                         A0 = hu[T0 + 18];
-                        V0 = w[T0 + 1C];
+                        V0 = w[T0 + 1c];
                         A1 = A1 + V1;
 
                         // copy model data
                         A3 = bu[T0 + 3];
-                        if (A3 != 0)
+                        if( A3 != 0 )
                         {
                             A2 = 0;
                             V0 = A0 + V0;
@@ -1971,11 +1902,11 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
                                 [A1 + 00] = w(w[A0 + 00])
                                 [A1 + 04] = w(w[A0 + 04])
                                 [A1 + 08] = w(w[A0 + 08])
-                                [A1 + 0C] = w(w[A0 + 0C])
+                                [A1 + 0c] = w(w[A0 + 0c])
                                 [A1 + 10] = w(w[A0 + 10])
                                 [A1 + 14] = w(w[A0 + 14])
                                 [A1 + 18] = w(w[A0 + 18])
-                                [A1 + 1C] = w(w[A0 + 1C])
+                                [A1 + 1c] = w(w[A0 + 1c])
 
                                 A0 = A0 + 20;
                                 A1 = A1 + 20;
@@ -1986,13 +1917,13 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
 
                         A2 = 0;
                         A3 = bu[T0 + 4];
-                        A1 = hu[T1 + 1A];
-                        V1 = w[T1 + 1C];
-                        A0 = hu[T0 + 1A];
-                        V0 = w[T0 + 1C];
+                        A1 = hu[T1 + 1a];
+                        V1 = w[T1 + 1c];
+                        A0 = hu[T0 + 1a];
+                        V0 = w[T0 + 1c];
                         A1 = A1 + V1;
                         V0 = A0 + V0;
-                        if (A3 == 0)
+                        if( A3 == 0 )
                         {
                             [800E0204] = w(S0);
                             return S0;
@@ -2001,10 +1932,10 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
                         A0 = V0;
 
                         loopae1b4:	; 800AE1B4
-                            [A1 + 00] = w(w[A0 + 00])
-                            [A1 + 04] = w(w[A0 + 04])
-                            [A1 + 08] = w(w[A0 + 08])
-                            [A1 + 0C] = w(w[A0 + 0C])
+                            [A1 + 0] = w(w[A0 + 0])
+                            [A1 + 4] = w(w[A0 + 4])
+                            [A1 + 8] = w(w[A0 + 8])
+                            [A1 + c] = w(w[A0 + c])
 
                             A0 = A0 + 10;
                             A1 = A1 + 10;
@@ -2018,7 +1949,7 @@ if( bu[block7_models + S2 * 8 + 5] != 0 ) // read is model enabled
 
                     V1 = V1 + 1;
                     A1 = A1 + 24;
-                    V0 = V1 < S2;
+                    V0 = V1 < model_id;
                     A0 = A0 + 8;
                 800AE200	bne    v0, zero, loopae090 [$800ae090]
             }

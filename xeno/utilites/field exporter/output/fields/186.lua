@@ -1973,4 +1973,4 @@ Actor_0x27:event_0x04:
 0x2888    opFEA5_ParticleRenderSettings( use_speed=1, settings=0, rot_z=0 )
 0x2890    opFE96_ParticleCreate()
 0x2892    op00_Return()
-0x2893    -- 0xE0( actor_id=Actor_0x2d, ???=(vf80)0x1ab4, ???=(vf40)0x4f7b, flag=0x67 )
+0x2893    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x0000, ???=(vf40)0x0000, flag=0x0 )

@@ -261,7 +261,7 @@ ScriptFile::GetScripts( const std::string& path )
             case 0x12:
             {
                 exp->Log( "-- 0x12()" );
-                pointer += 4;
+                pointer += 9;
             }
             break;
 
@@ -1648,7 +1648,7 @@ ScriptFile::GetScripts( const std::string& path )
             case 0xd4:
             {
                 exp->Log( "opD4_MessageShowFromActor( actor_id=" + GetEVariable( pointer + 1 ) + ", text_id=" + GetU16Variable( pointer + 2 ) + ", flags=" + GetMessageFlags( pointer + 4 ) + " )" );
-                pointer += 6;
+                pointer += 5;
             }
             break;
 
@@ -1921,7 +1921,7 @@ ScriptFile::GetScripts( const std::string& path )
             case 0xfc:
             {
                 exp->Log( "opFC_MessageShowFromActorCopyFace( actor_id=" + GetEVariable( pointer + 1 ) + ", text_id=" + GetU16Variable( pointer + 2 ) + ", flags=" + GetMessageFlags( pointer + 4 ) + " )" );
-                pointer += 6;
+                pointer += 5;
             }
             break;
 
@@ -3414,22 +3414,22 @@ ScriptFile::GetScripts( const std::string& path )
                         u8 type = GetU8( pointer + 1 );
                         if( type == 0 )
                         {
-                            exp->Log( "-- opFED400()" );
+                            exp->Log( "opFED400_YggdrasilMapCreate()" );
                             pointer += 2;
                         }
                         else if( type == 1 )
                         {
-                            exp->Log( "-- opFED401()" );
+                            exp->Log( "opFED401_YggdrasilMapRender( id=" + GetV80Variable( pointer + 2 ) + ", x=" + GetV80Variable( pointer + 4 ) + ", y=" + GetV80Variable( pointer + 6 ) + ", type=" + GetV80Variable( pointer + 8 ) + " )" );
                             pointer += 0xa;
                         }
                         else if( type == 2 )
                         {
-                            exp->Log( "-- opFED402()" );
+                            exp->Log( "opFED402_YggdrasilMapDestroy() -- deinit" );
                             pointer += 2;
                         }
                         else if( type == 3 )
                         {
-                            exp->Log( "-- opFED403()" );
+                            exp->Log( "opFED403_YggdrasilMapColor( id=" + GetV80Variable( pointer + 2 ) + ", r=" + GetV80Variable( pointer + 4 ) + ", g=" + GetV80Variable( pointer + 6 ) + ", b=" + GetV80Variable( pointer + 8 ) + " )" );
                             pointer += 0xa;
                         }
                     }
@@ -3526,7 +3526,19 @@ ScriptFile::GetScripts( const std::string& path )
 
                     case 0xdf:
                     {
-                        exp->Log( "-- 0xFEDF()" );
+                        u8 type = GetU8( pointer + 1 );
+                        if( type == 0 )
+                        {
+                            exp->Log( "-- 0xFEDF00() -- init" );
+                        }
+                        else if( type == 1 )
+                        {
+                            exp->Log( "-- 0xFEDF01() -- enable" );
+                        }
+                        else if( type == 2 )
+                        {
+                            exp->Log( "-- 0xFEDF02() -- disable" );
+                        }
                         pointer += 3;
                     }
                     break;

@@ -3,33 +3,35 @@
 
 [800dfca0] = w(80128000); // address for global texture
 
-A0 = w[8007e770]; // offset to block 7 in dat file.
+block7 = w[8007e770]; // offset to block 7 in dat file.
+
+A0 = block7;
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
 field_model_new_structure_initing();
 [80075e10] = w(V0); // store pointer to part after all new structures for the models.
-[800e0204] = w(V0); // store pointer to part after all new structures for the models.
+[800e0204] = w(V0); //
 
 // load field bsx
-A0 = h[8009a05c]; // looks like field id to load
-A1 = w[800da5b8 + A0 * 18 + 14];
-A0 = w[800da5b8 + A0 * 18 + 10]; 
+field_id = h[8009a05c];
+A0 = w[800da5b8 + field_id * 18 + 10];
+A1 = w[800da5b8 + field_id * 18 + 14];
 A2 = 801b0000;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
 do system_cdrom_read_chain(); while( V0 != 0 )
 
-
 [1f800000] = w(800df08c); // CLOUD.BCX start sector.
 [1f800004] = w(800df0d4); // FIELD.TDB start sector.
-A0 = w[8007e770]; // offset to block 7 in dat file.
+
+A0 = block7;
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
 A2 = w[80075e10]; // pointer to part after all new structures for the model.
 A3 = 1; // load global texture
 field_load_and_global_models_and_textures();
 [80075e10] = w(V0);
 
-A0 = w[8007e770]; // offset to block 7 in dat file.
+A0 = block7;
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
 A2 = 800a00dc;
 A3 = 801b0000; // loaded field bsx

@@ -5337,4 +5337,4 @@ function:
 0x47bb    opD4_MessageShowFromActor( actor_id=Actor_0x04, text_id=0x184, flags=CLOSE_OFF_SCREEN|NO_FACE )
 0x47c0    op9C_MessageSync()
 0x47c1    op0D_Return()
-0x47c2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xbac7, ???=(vf40)0x9f1a, flag=0x80 )
+0x47c2    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x4315, ???=(vf40)0x9a1c, flag=0x65 )

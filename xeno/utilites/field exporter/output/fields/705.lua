@@ -588,4 +588,4 @@ Actor_0x1f:on_push:
 0x03d5    opFE96_ParticleCreate()
 0x03d7    op29_ActorTurnOff( actor_id=self )
 0x03d9    op00_Return()
-0x03da    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0x6430, ???=(vf40)0x0000, flag=0x0 )
+0x03da    -- 0xE0( actor_id=Actor_0x00, ???=(vf80)0xd4d5, ???=(vf40)0x0000, flag=0x0 )
