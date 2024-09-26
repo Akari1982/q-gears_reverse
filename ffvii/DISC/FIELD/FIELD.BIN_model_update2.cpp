@@ -1792,44 +1792,33 @@ if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
             new_structures_header = w[model_data + 4];
 
             // copy bones data
-            number_of_bones = bu[loaded_file_header + 2];
             new_structure_data = w[new_structures_header + model_index * 24 + 1c];
             loaded_file_data = w[loaded_file_header + 1c];
 
-            for(int i = 0; i < number_of_bones; ++i )
+            for(int i = 0; i < bu[loaded_file_header + 2]; ++i ) // number of bones
             {
                 [new_structure_data + i * 4] = w(w[loaded_file_data + i * 4]);
             }
 
             // copy parts data
-            number_of_model_parts = bu[loaded_file_header + 3];
-            if (number_of_model_parts != 0)
+            new_structure_model_parts = hu[new_structures_header + model_index * 24 + 18];
+            new_structure_data = w[new_structures_header + model_index * 24 + 1c];
+            loaded_file_model_parts = hu[loaded_file_header + 18];
+            loaded_file_data = w[loaded_file_header + 1c];
+
+            A0 = loaded_file_data + loaded_file_model_parts;
+            A1 = new_structure_data + new_structure_model_parts;
+
+            for( int i = 0; i < bu[loaded_file_header + 3]; ++i ) // number of model parts
             {
-                new_structure_model_parts = hu[new_structures_header + model_index * 24 + 18];
-                new_structure_data = w[new_structures_header + model_index * 24 + 1C];
-                loaded_file_model_parts = hu[loaded_file_header + 18];
-                loaded_file_data = w[loaded_file_header + 1C];
-
-                A0 = loaded_file_data + loaded_file_model_parts;
-                A1 = new_structure_data + new_structure_model_parts;
-                A3 = 0;
-
-                loopadf7c:	; 800ADF7C
-                    [A1 + A3 * 20 + 00] = w(w[A0 + A3 * 20 + 00]);
-                    [A1 + A3 * 20 + 04] = w(w[A0 + A3 * 20 + 04]);
-                    [A1 + A3 * 20 + 08] = w(w[A0 + A3 * 20 + 08]);
-                    [A1 + A3 * 20 + 0c] = w(w[A0 + A3 * 20 + 0c]);
-                    [A1 + A3 * 20 + 10] = w(w[A0 + A3 * 20 + 10]);
-                    [A1 + A3 * 20 + 14] = w(w[A0 + A3 * 20 + 14]);
-                    [A1 + A3 * 20 + 18] = w(w[A0 + A3 * 20 + 18]);
-                    [A1 + A3 * 20 + 1c] = w(w[A0 + A3 * 20 + 1c]);
-
-                    // fix parts offset
-                    [A1 + A3 * 20 + 18] = w(S0 + w[A0 + A3 * 20 + 18] - 80000000);
-
-                    A3 = A3 + 1;
-                    V0 = A3 < number_of_model_parts;
-                800ADFF0	bne    v0, zero, loopadf7c [$800adf7c]
+                [A1 + i * 20 +  0] = w(w[A0 + i * 20 +  0]);
+                [A1 + i * 20 +  4] = w(w[A0 + i * 20 +  4]);
+                [A1 + i * 20 +  8] = w(w[A0 + i * 20 +  8]);
+                [A1 + i * 20 +  c] = w(w[A0 + i * 20 +  c]);
+                [A1 + i * 20 + 10] = w(w[A0 + i * 20 + 10]);
+                [A1 + i * 20 + 14] = w(w[A0 + i * 20 + 14]);
+                [A1 + i * 20 + 18] = w(S0 + w[A0 + i * 20 + 18] - 80000000);
+                [A1 + i * 20 + 1c] = w(w[A0 + i * 20 + 1c]);
             }
 
             A1 = w[new_structures_header + model_index * 24 + 1c] + hu[new_structures_header + model_index * 24 + 1a];
@@ -1848,110 +1837,85 @@ if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
         }
         else
         {
-            if( model_id != 0 )
+            for( int i = 0; i < model_id; ++i )
             {
-                V1 = 0;
-                A2 = A0;
-                A1 = 0;
-                A0 = block7_models;
+                if( b[block7_models + i * 8 + 7] == global_model_id )
+                {
+                    model_id = bu[block7_models + i * 8 + 4];
+                    V0 = w[model_data + 4]; // offset to new structures data
+                    T1 = V0 + model_id * 24;
+                    T0 = V0 + i * 24;
+                    V1 = w[T1 + 1c];
+                    V0 = w[T0 + 1c];
 
-                loopae090:	; 800AE090
-                    V0 = b[A0 + 7];
-                    if( V0 == global_model_id )
+                    // copy bones
+                    for( int j = 0; j < bu[T0 + 2]; ++j )
                     {
-                        model_id = bu[A2 + 4]; // model_id
-                        V0 = w[model_data + 4]; // offset to new structures data
-                        T1 = V0 + model_id * 24;
-                        T0 = V0 + A1;
-                        V1 = w[T1 + 1C];
-                        V0 = w[T0 + 1C];
+                        [V1 + j * 4] = w(w[V0 + j * 4]);
+                    }
 
-                        // copy bones
-                        A3 = bu[T0 + 2];
-                        if (A3 != 0)
-                        {
-                            A2 = 0;
-                            A0 = V1;
-                            V1 = V0;
+                    A1 = hu[T1 + 18];
+                    V1 = w[T1 + 1c];
+                    A0 = hu[T0 + 18];
+                    V0 = w[T0 + 1c];
+                    A1 = A1 + V1;
 
-                            loopae0dc:	; 800AE0DC
-                                [A0] = w(w[V1]);
-
-                                V1 = V1 + 4;
-                                A0 = A0 + 4;
-                                A2 = A2 + 1;
-                                V0 = A2 < A3;
-                            800AE0F0	bne    v0, zero, loopae0dc [$800ae0dc]
-                        }
-
-                        A1 = hu[T1 + 18];
-                        V1 = w[T1 + 1c];
-                        A0 = hu[T0 + 18];
-                        V0 = w[T0 + 1c];
-                        A1 = A1 + V1;
-
-                        // copy model data
-                        A3 = bu[T0 + 3];
-                        if( A3 != 0 )
-                        {
-                            A2 = 0;
-                            V0 = A0 + V0;
-                            A0 = V0;
-
-                            loopae120:	; 800AE120
-                                [A1 + 00] = w(w[A0 + 00])
-                                [A1 + 04] = w(w[A0 + 04])
-                                [A1 + 08] = w(w[A0 + 08])
-                                [A1 + 0c] = w(w[A0 + 0c])
-                                [A1 + 10] = w(w[A0 + 10])
-                                [A1 + 14] = w(w[A0 + 14])
-                                [A1 + 18] = w(w[A0 + 18])
-                                [A1 + 1c] = w(w[A0 + 1c])
-
-                                A0 = A0 + 20;
-                                A1 = A1 + 20;
-                                A2 = A2 + 1;
-                                V0 = A2 < A3;
-                            800AE184	bne    v0, zero, loopae120 [$800ae120]
-                        }
-
+                    // copy model data
+                    A3 = bu[T0 + 3];
+                    if( A3 != 0 )
+                    {
                         A2 = 0;
-                        A3 = bu[T0 + 4];
-                        A1 = hu[T1 + 1a];
-                        V1 = w[T1 + 1c];
-                        A0 = hu[T0 + 1a];
-                        V0 = w[T0 + 1c];
-                        A1 = A1 + V1;
                         V0 = A0 + V0;
-                        if( A3 == 0 )
-                        {
-                            [800E0204] = w(S0);
-                            return S0;
-                        }
-
                         A0 = V0;
 
-                        loopae1b4:	; 800AE1B4
-                            [A1 + 0] = w(w[A0 + 0])
-                            [A1 + 4] = w(w[A0 + 4])
-                            [A1 + 8] = w(w[A0 + 8])
-                            [A1 + c] = w(w[A0 + c])
+                        loopae120:	; 800AE120
+                            [A1 + 00] = w(w[A0 + 00])
+                            [A1 + 04] = w(w[A0 + 04])
+                            [A1 + 08] = w(w[A0 + 08])
+                            [A1 + 0c] = w(w[A0 + 0c])
+                            [A1 + 10] = w(w[A0 + 10])
+                            [A1 + 14] = w(w[A0 + 14])
+                            [A1 + 18] = w(w[A0 + 18])
+                            [A1 + 1c] = w(w[A0 + 1c])
 
-                            A0 = A0 + 10;
-                            A1 = A1 + 10;
+                            A0 = A0 + 20;
+                            A1 = A1 + 20;
                             A2 = A2 + 1;
                             V0 = A2 < A3;
-                        800AE1E8	bne    v0, zero, loopae1b4 [$800ae1b4]
+                        800AE184	bne    v0, zero, loopae120 [$800ae120]
+                    }
 
-                        [800e0204] = w(S0);
+                    A2 = 0;
+                    A3 = bu[T0 + 4];
+                    A1 = hu[T1 + 1a];
+                    V1 = w[T1 + 1c];
+                    A0 = hu[T0 + 1a];
+                    V0 = w[T0 + 1c];
+                    A1 = A1 + V1;
+                    V0 = A0 + V0;
+                    if( A3 == 0 )
+                    {
+                        [800E0204] = w(S0);
                         return S0;
                     }
 
-                    V1 = V1 + 1;
-                    A1 = A1 + 24;
-                    V0 = V1 < model_id;
-                    A0 = A0 + 8;
-                800AE200	bne    v0, zero, loopae090 [$800ae090]
+                    A0 = V0;
+
+                    loopae1b4:	; 800AE1B4
+                        [A1 + 0] = w(w[A0 + 0])
+                        [A1 + 4] = w(w[A0 + 4])
+                        [A1 + 8] = w(w[A0 + 8])
+                        [A1 + c] = w(w[A0 + c])
+
+                        A0 = A0 + 10;
+                        A1 = A1 + 10;
+                        A2 = A2 + 1;
+                        V0 = A2 < A3;
+                    800AE1E8	bne    v0, zero, loopae1b4 [$800ae1b4]
+
+                    [800e0204] = w(S0);
+                    return S0;
+                }
             }
 
             [800e0204] = w(S0);
@@ -1965,7 +1929,8 @@ return S0;
 
 
 ////////////////////////////////
-// funcae23c
+// funcae23c()
+
 model_data = A0; // pointer to new structure model specific data
 init            = b[model_data + 0];
 kawai           = b[model_data + 1];
