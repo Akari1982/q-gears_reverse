@@ -1854,64 +1854,32 @@ if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
                         [V1 + j * 4] = w(w[V0 + j * 4]);
                     }
 
-                    A1 = hu[T1 + 18];
-                    V1 = w[T1 + 1c];
-                    A0 = hu[T0 + 18];
-                    V0 = w[T0 + 1c];
-                    A1 = A1 + V1;
-
                     // copy model data
-                    A3 = bu[T0 + 3];
-                    if( A3 != 0 )
+                    A1 = w[T1 + 1c] + hu[T1 + 18];
+                    A0 = w[T0 + 1c] + hu[T0 + 18];
+
+                    for( int j = 0; j < bu[T0 + 3]; ++j )
                     {
-                        A2 = 0;
-                        V0 = A0 + V0;
-                        A0 = V0;
-
-                        loopae120:	; 800AE120
-                            [A1 + 00] = w(w[A0 + 00])
-                            [A1 + 04] = w(w[A0 + 04])
-                            [A1 + 08] = w(w[A0 + 08])
-                            [A1 + 0c] = w(w[A0 + 0c])
-                            [A1 + 10] = w(w[A0 + 10])
-                            [A1 + 14] = w(w[A0 + 14])
-                            [A1 + 18] = w(w[A0 + 18])
-                            [A1 + 1c] = w(w[A0 + 1c])
-
-                            A0 = A0 + 20;
-                            A1 = A1 + 20;
-                            A2 = A2 + 1;
-                            V0 = A2 < A3;
-                        800AE184	bne    v0, zero, loopae120 [$800ae120]
+                        [A1 + j * 20 +  0] = w(w[A0 + j * 20 +  0])
+                        [A1 + j * 20 +  4] = w(w[A0 + j * 20 +  4])
+                        [A1 + j * 20 +  8] = w(w[A0 + j * 20 +  8])
+                        [A1 + j * 20 +  c] = w(w[A0 + j * 20 +  c])
+                        [A1 + j * 20 + 10] = w(w[A0 + j * 20 + 10])
+                        [A1 + j * 20 + 14] = w(w[A0 + j * 20 + 14])
+                        [A1 + j * 20 + 18] = w(w[A0 + j * 20 + 18])
+                        [A1 + j * 20 + 1c] = w(w[A0 + j * 20 + 1c])
                     }
 
-                    A2 = 0;
-                    A3 = bu[T0 + 4];
-                    A1 = hu[T1 + 1a];
-                    V1 = w[T1 + 1c];
-                    A0 = hu[T0 + 1a];
-                    V0 = w[T0 + 1c];
-                    A1 = A1 + V1;
-                    V0 = A0 + V0;
-                    if( A3 == 0 )
+                    A1 = w[T1 + 1c] + hu[T1 + 1a];
+                    A0 = w[T0 + 1c] + hu[T0 + 1a];
+
+                    for( int j = 0; j < bu[T0 + 4]; ++j )
                     {
-                        [800E0204] = w(S0);
-                        return S0;
+                        [A1 + j * 10 + 0] = w(w[A0 + j * 10 + 0])
+                        [A1 + j * 10 + 4] = w(w[A0 + j * 10 + 4])
+                        [A1 + j * 10 + 8] = w(w[A0 + j * 10 + 8])
+                        [A1 + j * 10 + c] = w(w[A0 + j * 10 + c])
                     }
-
-                    A0 = V0;
-
-                    loopae1b4:	; 800AE1B4
-                        [A1 + 0] = w(w[A0 + 0])
-                        [A1 + 4] = w(w[A0 + 4])
-                        [A1 + 8] = w(w[A0 + 8])
-                        [A1 + c] = w(w[A0 + c])
-
-                        A0 = A0 + 10;
-                        A1 = A1 + 10;
-                        A2 = A2 + 1;
-                        V0 = A2 < A3;
-                    800AE1E8	bne    v0, zero, loopae1b4 [$800ae1b4]
 
                     [800e0204] = w(S0);
                     return S0;
@@ -1936,9 +1904,8 @@ init            = b[model_data + 0];
 kawai           = b[model_data + 1];
 number_of_parts = b[model_data + 3];
 
-
-
-if (init == 0 || number_of_parts == 0) // if not inited or number of model parts == 0
+// if not inited or number of model parts == 0
+if( ( init == 0 ) || ( number_of_parts == 0 ) )
 {
     return;
 }
@@ -2070,7 +2037,7 @@ Lae2a4:	; 800AE2A4
         }
 
         A0 = S0;
-        funcae4dc;
+        funcae4dc();
     }
 
     S0 = S0 + 20;
@@ -2082,8 +2049,9 @@ Lae2a4:	; 800AE2A4
 
 
 ////////////////////////////////
-// funcae4dc
+// funcae4dc()
 // depth sort all polygons
+
 model_parts_data = A0;
 A2 = bu[model_parts_data + 2];
 S1 = A2;
@@ -2692,7 +2660,7 @@ return;
 
 
 ////////////////////////////////
-// animation_prepare_bones_matrixes
+// animation_prepare_bones_matrixes()
 //            A0 = w[model_data + 4] + model_id * 24;
 //            A1 = SP + 10;
 // A0 - offset to specific new structure header structure
@@ -2983,10 +2951,10 @@ if (bu[model_data_struct + 00] != 0) // if inited
             }
 
             800AF3A8	mfc2   t1,ofy
-            T1 = T1 & FFFF;
+            T1 = T1 & ffff;
 
             800AF3B4	mfc2   t2,h
-            T2 = T2 & FFFF;
+            T2 = T2 & ffff;
 
             IR0 = S1;
             IR1 = T1;
