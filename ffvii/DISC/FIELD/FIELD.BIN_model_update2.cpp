@@ -1911,139 +1911,87 @@ if( ( init == 0 ) || ( number_of_parts == 0 ) )
 }
 
 S1 = w[model_data + 20];
-S3 = 0;
 S4 = 1f800000;
 S0 = w[model_data + 1c] + hu[model_data + 18]; // offset to model parts
 
-Lae2a4:	; 800AE2A4
-    S6 = w[S0];
-    if (b[S0 + 9] != 0) // enable lighting calculation
+for( int i = 0; i < number_of_parts; ++i )
+{
+    S6 = w[S0 + i * 20];
+    if( b[S0 + i * 20 + 9] != 0 ) // enable lighting calculation
     {
-        if (kawai != ff)
+        if( kawai != ff )
         {
-            T5 = w[S1 + 0000];
-            T6 = w[S1 + 0004];
-            R11R12 = T5;
-            R13R21 = T6;
-            T5 = w[S1 + 0008];
-            T6 = w[S1 + 000c];
-            T7 = w[S1 + 0010];
-            R22R23 = T5;
-            R31R32 = T6;
-            R33 = T7;
-            T5 = w[S1 + 0014];
-            T6 = w[S1 + 0018];
-            800AE2F8	ctc2   t5,vz2
-            T7 = w[S1 + 001c];
-            800AE300	ctc2   t6,rgb
-            800AE304	ctc2   t7,otz
-            V0 = S6 << 10;
-            V0 = V0 >> 18; // bone this part attached to
-            T4 = S1 + V0 * 20;
-            T5 = hu[T4 + 0000];
-            T6 = hu[T4 + 0006];
-            T7 = hu[T4 + 000c];
-            IR1 = T5;
-            IR2 = T6;
-            IR3 = T7;
-            800AE32C	nop
-            800AE330	nop
-            800AE334	gte_func18t1,dqb // ir * rotmatrix
-            V0 = IR1;
-            A1 = IR2;
-            S7 = IR3;
-            T5 = hu[T4 + 0002];
-            T6 = hu[T4 + 0008];
-            T7 = hu[T4 + 000e];
-            IR1 = T5;
-            IR2 = T6;
-            IR3 = T7;
-            800AE35C	nop
-            800AE360	nop
-            800AE364	gte_func18t1,dqb // ir * rotmatrix
-            [S4 + 0000] = h(V0);
-            [S4 + 0006] = h(A1);
-            [S4 + 000c] = h(S7);
-            V0 = IR1;
-            A1 = IR2;
-            S7 = IR3;
-            T5 = hu[T4 + 0004];
-            T6 = hu[T4 + 000a];
-            T7 = hu[T4 + 0010];
-            IR1 = T5;
-            IR2 = T6;
-            IR3 = T7;
-            800AE398	nop
-            800AE39C	nop
-            800AE3A0	gte_func18t1,dqb // ir * rotmatrix
-            [S4 + 0002] = h(V0);
-            [S4 + 0008] = h(A1);
-            [S4 + 000e] = h(S7);
-            V0 = IR1;
-            A1 = IR2;
-            S7 = IR3;
-            T6 = hu[T4 + 0018];
-            T5 = hu[T4 + 0014];
-            T6 = T6 << 10;
-            T5 = T5 | T6;
-            VXY0 = T5;
-            VZ0 = w[T4 + 001c];
-            [S4 + 4] = h(V0);
-            [S4 + a] = h(A1);
-            [S4 + 10] = h(S7);
+            R11R12 = w[S1 + 0];
+            R13R21 = w[S1 + 4];
+            R22R23 = w[S1 + 8];
+            R31R32 = w[S1 + c];
+            R33 = w[S1 + 10];
+            TRX = w[S1 + 14];
+            TRY = w[S1 + 18];
+            TRZ = w[S1 + 1c];
 
-            800AE3DC	gte_func18t0,r11r12 // v0 * rotmatrix + tr vector
-            [S4 + 0014] = w(IR1);
-            [S4 + 0018] = w(IR2);
-            [S4 + 001c] = w(IR3);
-            T5 = w[S4 + 0000];
-            T6 = w[S4 + 0004];
-            R11R12 = T5;
-            R13R21 = T6;
-            T5 = w[S4 + 0008];
-            T6 = w[S4 + 000c];
-            T7 = w[S4 + 0010];
-            R22R23 = T5;
-            R31R32 = T6;
-            R33 = T7;
-            T5 = w[S4 + 0014];
-            T6 = w[S4 + 0018];
-            800AE428	ctc2   t5,vz2
-            T7 = w[S4 + 001c];
-            800AE430	ctc2   t6,rgb
-            800AE434	ctc2   t7,otz
+            V0 = (S6 << 10) >> 18; // bone this part attached to
+            T4 = S1 + V0 * 20;
+
+            IR1 = hu[T4 + 0];
+            IR2 = hu[T4 + 6];
+            IR3 = hu[T4 + c];
+            gte_rtir12(); // ir * rotmatrix.
+            [S4 + 0] = h(IR1);
+            [S4 + 6] = h(IR2);
+            [S4 + c] = h(IR3);
+
+            IR1 = hu[T4 + 2];
+            IR2 = hu[T4 + 8];
+            IR3 = hu[T4 + e];
+            gte_rtir12(); // ir * rotmatrix.
+            [S4 + 2] = h(IR1);
+            [S4 + 8] = h(IR2);
+            [S4 + e] = h(IR3);
+
+            IR1 = hu[T4 + 4];
+            IR2 = hu[T4 + a];
+            IR3 = hu[T4 + 10];
+            gte_rtir12(); // ir * rotmatrix.
+            [S4 + 4] = h(IR1);
+            [S4 + a] = h(IR2);
+            [S4 + 10] = h(IR3);
+
+            VXY0 = (hu[T4 + 18] << 10) | hu[T4 + 14];
+            VZ0 = w[T4 + 1c];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+            [S4 + 14] = w(IR1);
+            [S4 + 18] = w(IR2);
+            [S4 + 1c] = w(IR3);
+
+            R11R12 = w[S4 + 0];
+            R13R21 = w[S4 + 4];
+            R22R23 = w[S4 + 8];
+            R31R32 = w[S4 + c];
+            R33 = w[S4 + 10];
+            TRX = w[S4 + 14];
+            TRY = w[S4 + 18];
+            TRZ = w[S4 + 1c];
         }
         else
         {
-            V0 = S6 << 10;
-            V0 = V0 >> 18; // bone this part attached to
+            V0 = (S6 << 10) >> 18; // bone this part attached to
             V0 = S1 + V0 * 20;
-            T5 = w[V0 + 0000];
-            T6 = w[V0 + 0004];
-            R11R12 = T5;
-            R13R21 = T6;
-            T5 = w[V0 + 0008];
-            T6 = w[V0 + 000c];
-            T7 = w[V0 + 0010];
-            R22R23 = T5;
-            R31R32 = T6;
-            R33 = T7;
-            T5 = w[V0 + 0014];
-            T6 = w[V0 + 0018];
-            800AE480	ctc2   t5,vz2
-            T7 = w[V0 + 001c];
-            800AE488	ctc2   t6,rgb
-            800AE48C	ctc2   t7,otz
+
+            R11R12 = w[V0 + 0];
+            R13R21 = w[V0 + 4];
+            R22R23 = w[V0 + 8];
+            R31R32 = w[V0 + c];
+            R33 = w[V0 + 10];
+            TRX = w[V0 + 14];
+            TRY = w[V0 + 18];
+            TRZ = w[V0 + 1c];
         }
 
-        A0 = S0;
+        A0 = S0 + i * 20;
         funcae4dc();
     }
-
-    S0 = S0 + 20;
-    S3 = S3 + 1;
-    V0 = S3 < number_of_parts;
-800AE4A4	bne    v0, zero, Lae2a4 [$800ae2a4]
+}
 ////////////////////////////////
 
 
@@ -2055,606 +2003,339 @@ Lae2a4:	; 800AE2A4
 model_parts_data = A0;
 A2 = bu[model_parts_data + 2];
 S1 = A2;
-S2 = w[800df118];
+rdata = w[800df118];
 vertex_data = w[model_parts_data + 18] + 4;
 A1 = 1f800008;
 S0 = 1f800008;
 
-
 // calculate vertexes
-if (S1 != 0)
+for( int i = 0; i < S1; ++i )
 {
-    A3 = 0;
-    loopae5b4:	; 800AE5B4
-        800AE5B4	lwc2   zero, $0000(vertex_data + A3 * 8)
-        800AE5B8	lwc2   at, $0004(vertex_data + A3 * 8)
+        VXY0 = w[vertex_data + A3 * 8 + 0];
+        VZ0 = w[vertex_data + A3 * 8 + 4];
         gte_RTPS(); // Perspective transform
-        800AE5D0	swc2   t6, $0000(1f800008 + A3 * 8 + 0)
-        800AE5D4	swc2   s3, $0000(1f800008 + A3 * 8 + 4)
-
-        A3 = A3 + 1;
-        V0 = A3 < S1;
-    800AE5DC	bne    v0, zero, loopae5b4 [$800ae5b4]
+        [1f800008 + A3 * 8 + 0] = w(SXY2);
+        [1f800008 + A3 * 8 + 4] = w(SZ3);
 }
 
-
-
-A2 = w[model_parts_data + 1c];
-if (bu[800df114] != 0)
+packet = w[model_parts_data + 1c];
+if( bu[800df114] != 0 )
 {
-    A2 = A2 + hu[model_parts_data + 16];
+    packet += hu[model_parts_data + 16];
 }
 
-
-
-// textured gourad quads////////////
+// textured gourad quads
 FP = w[model_parts_data + 4];
 
 S1 = FP & ff;
-if (S1 != 0)
+for( int i = 0; i < S1; ++i )
 {
-    A3 = 0;
-    loopae624:	; 800AE624
-        V1 = w[T0 + 0]; // we read vertex index here
-        vertex1_id = V0 = V1 & 00FF; // 1st vertex
-        V0 = V1 & FF00;
-        vertex2_id = V0 >> 8;
-        V0 = V1 >> 10;
-        vertex3_id = V0 & FF;
-        vertex4_id = V1 >> 18;
+        v1 = bu[T0 + 0];
+        v2 = bu[T0 + 1];
+        v3 = bu[T0 + 2];
+        v4 = bu[T0 + 3];
 
-        V0 = w[1f800008 + vertex1_id * 8];
-        V1 = w[1f800008 + vertex2_id * 8];
-        A0 = w[1f800008 + vertex3_id * 8];
-        A1 = w[1f800008 + vertex4_id * 8];
+        xy1 = w[1f800008 + v1 * 8 + 0];
+        xy2 = w[1f800008 + v2 * 8 + 0];
+        xy3 = w[1f800008 + v3 * 8 + 0];
+        xy4 = w[1f800008 + v4 * 8 + 0];
 
-        [A2 + 08] = w(V0);
-        [A2 + 14] = w(V1);
-        [A2 + 20] = w(A0);
-        [A2 + 2c] = w(A1);
+        [packet +  8] = w(xy1);
+        [packet + 14] = w(xy2);
+        [packet + 20] = w(xy3);
+        [packet + 2c] = w(xy4);
 
-        S4 = w[A2 + 00];
-        T6 = S4 & ff000000;
+        S4 = w[packet + 0];
 
-        800AE668	mtc2   v0,l33
-        800AE66C	mtc2   a0,gbk
-        800AE670	mtc2   v1,rbk
-        800AE67C	gte_func26zero,r11r12 // normal clipping
-        800AE698	mfc2   v0,ofx
+        SXY0 = xy1;
+        SXY1 = xy2;
+        SXY2 = xy3;
+        gte_NCLIP(); // normal clipping
 
-        if (V0 <= 0) // clip
+        if( MAC0 <= 0 ) // clip
         {
-            [S2 + 00] = w(T6);
+            [rdata + 0] = w(S4 & ff000000);
         }
         else
         {
-            V1 = w[1f800008 + vertex1_id * 8 + 4];
-            S5 = w[1f800008 + vertex2_id * 8 + 4];
-            V0 = w[1f800008 + vertex3_id * 8 + 4];
-            A0 = w[1f800008 + vertex4_id * 8 + 4];
+            z1 = w[1f800008 + v1 * 8 + 4];
+            z2 = w[1f800008 + v2 * 8 + 4];
+            z3 = w[1f800008 + v3 * 8 + 4];
+            z4 = w[1f800008 + v4 * 8 + 4];
 
-            middle_distance_from_screen = ((V1 + S5 + V0 + A0) >> 4) << 2;
-            T5 = w[S2 + middle_distance_from_screen];
-            [A2 + 0] = w(T6 | (T5 & 00ffffff));
-            [S2 + middle_distance_from_screen] = w((T5 & ff000000) | (A2 & 00ffffff));
+            depth = (z1 + z2 + z3 + z4) >> 4;
+
+            [packet + 0] = w(S4 & ff000000 | (w[rdata + depth * 4] & 00ffffff));
+            [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
         }
 
         T0 = T0 + 18; // move to next textured quad in data
-        A2 = A2 + 34; // move to next precompiled draft
-        A3 = A3 + 1;
-        V0 = A3 < S1;
-    800AE710	bne    v0, zero, loopae624 [$800ae624]
+        packet = packet + 34; // move to next precompiled draft
 }
 
-
-
-S6 = FF000000;
-S3 = 00FFFFFF;
-V0 = FP & ff000000;
-S1 = V0 >> 8;
-if (S1 != 0)
+S1 = (FP & ff000000) >> 8;
+for( int i = 0; i < S1; ++i )
 {
-    A3 = 0;
-    T8 = A2 + 20;
-    T6 = w[T0 + 0];
+    T6 = w[T0];
+    V0 = T6 & 00ff;
+    V0 = V0 << 03;
+    T3 = 1f800008 + V0;
+    V0 = T6 & ff00;
+    V0 = V0 >> 05;
+    T2 = 1f800008 + V0;
+    
+    V1 = T6 >> 0d;
+    V1 = V1 & 07f8;
+    A1 = 1f800008 + V1;
+    V0 = w[T3 + 0000];
+    V1 = w[T2 + 0000];
+    A0 = w[A1 + 0000];
+    SXY0 = V0;
+    SXY1 = A0;
+    SXY2 = V1;
+    gte_NCLIP(); // Normal clipping.
+    S4 = w[packet + 0000];
+    [packet + 20 + ffe8] = w(V0);
+    [packet + 20 + fff4] = w(V1);
+    [packet + 20 + 0000] = w(A0);
 
-    loopae730:	; 800AE730
-        V0 = T6 & 00ff;
-        V0 = V0 << 03;
-        T3 = 1f800008 + V0;
-        V0 = T6 & ff00;
-        V0 = V0 >> 05;
-        T2 = 1f800008 + V0;
-        
-        V1 = T6 >> 0d;
-        V1 = V1 & 07f8;
-        A1 = 1f800008 + V1;
-        V0 = w[T3 + 0000];
-        V1 = w[T2 + 0000];
-        A0 = w[A1 + 0000];
-        800AE764	mtc2   v0,l33
-        800AE768	mtc2   a0,gbk
-        800AE76C	mtc2   v1,rbk
-        A3 = A3 + 0001;
-        T0 = T0 + 0014;
-        800AE778	gte_func26zero,r11r12
-        S4 = w[A2 + 0000];
-        [T8 + ffe8] = w(V0);
-        [T8 + fff4] = w(V1);
-        [T8 + 0000] = w(A0);
-        T8 = T8 + 0028;
-        800AE790	mfc2   v0,ofx
-        800AE794	nop
-        if (V0 <= 0)
-        {
-            V0 = S4 & S6;
-            [A2 + 0] = w(V0);
-            T6 = w[T0];
-        }
-        else
-        {
-            800AE7B0	lwc2   s1, $0004(t3)
-            800AE7B4	lwc2   s2, $0004(t2)
-            800AE7B8	lwc2   s3, $0004(a1)
-            800AE7BC	nop
-            800AE7C0	nop
-            800AE7C4	gte_func26t8,r11r12
-            T6 = w[T0 + 0000];
-            V1 = S4 & S6;
-            S5 = A2 & S3;
-            V0 = OTZ;
-            800AE7D8	nop
-            V0 = V0 << 02;
-            T4 = V0 + S2;
-            T5 = w[T4 + 0000];
-            800AE7E8	nop
-            V0 = T5 & S3;
-            V1 = V1 | V0;
-            [A2 + 0000] = w(V1);
-            V0 = T5 & S6;
-            V0 = V0 | S5;
-            [T4 + 0000] = w(V0);
-        }
+    if( MAC0 <= 0 )
+    {
+        [packet + 0] = w(S4 & ff000000);
+    }
+    else
+    {
+        SZ1 = w[T3 + 4];
+        SZ2 = w[T2 + 4];
+        SZ3 = w[A1 + 4];
+        gte_AVSZ3(); // Average of three Z values.
+        depth = OTZ;
 
-        V0 = A3 < S1;
-        A2 = A2 + 0028;
-    800AE808	bne    v0, zero, loopae730 [$800ae730]
+        [packet] = w((S4 & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((T5 & ff000000) | (packet & 00ffffff));
+    }
 
+    T0 += 14;
+    packet += 28;
 }
 
-V0 = FP >> 10;
-S1 = V0 & 00ff;
-800AE818	beq    s1, zero, Lae918 [$800ae918]
-A3 = 0;
-T8 = A2 + 0020;
+S1 = (FP >> 10) & ff;
+for( int i = 0; i < S1; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
+    v4 = bu[T0 + 3];
 
-loopae824:	; 800AE824
-V1 = w[T0 + 0000];
-800AE828	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-800AE868	mtc2   v0,l33
-800AE86C	mtc2   a0,gbk
-800AE870	mtc2   v1,rbk
-A3 = A3 + 0001;
-T0 = T0 + 000c;
-800AE87C	gte_func26zero,r11r12
-S4 = w[A2 + 0000];
-[T8 + ffe8] = w(V0);
-[T8 + fff0] = w(V1);
-[T8 + fff8] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0028;
-800AE898	mfc2   v0,ofx
-800AE89C	nop
-800AE8A0	bgtz   v0, Lae8b0 [$800ae8b0]
-A1 = w[T1 + 0000];
-800AE8A8	j      Lae90c [$800ae90c]
-[A2 + 0000] = w(T6);
+    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
+    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
+    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
+    [packet + 20] = w(w[S0 + v4 * 8 + 0]);
 
-Lae8b0:	; 800AE8B0
-V1 = w[T9 + 0004];
-[T8 + ffd8] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
+    SXY0 = w[S0 + v1 * 8 + 0];
+    SXY1 = w[S0 + v3 * 8 + 0];
+    SXY2 = w[S0 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
 
-Lae8cc:	; 800AE8CC
-V0 = V1 + A0;
-800AE8D0	bgez   v0, Lae8dc [$800ae8dc]
-800AE8D4	nop
-V0 = V0 + 000f;
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        V0 = w[S0 + v1 * 8 + 4] + w[S0 + v2 * 8 + 4] + w[S0 + v3 * 8 + 4] + w[S0 + v4 * 8 + 4];
+        if( V0 < 0 ) V0 += f;
+        depth = V0 >> 4;
 
-Lae8dc:	; 800AE8DC
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800AE8EC	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+        [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
 
-Lae90c:	; 800AE90C
-V0 = A3 < S1;
-800AE910	bne    v0, zero, loopae824 [$800ae824]
-A2 = A2 + 0028;
+    T0 += c;
+    packet += 28;
+}
 
-Lae918:	; 800AE918
 S1 = FP >> 18;
-800AE91C	beq    s1, zero, Laea04 [$800aea04]
-A3 = 0;
-T8 = A2 + 0018;
-T6 = w[T0 + 0000];
+for( int i = 0; i < S1; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
 
-loopae92c:	; 800AE92C
-800AE92C	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-800AE960	mtc2   v0,l33
-800AE964	mtc2   a0,gbk
-800AE968	mtc2   v1,rbk
-A3 = A3 + 0001;
-T0 = T0 + 000c;
-800AE974	gte_func26zero,r11r12
-S4 = w[A2 + 0000];
-[T8 + fff0] = w(V0);
-[T8 + fff8] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 0020;
-800AE98C	mfc2   v0,ofx
-800AE990	nop
-800AE994	bgtz   v0, Lae9ac [$800ae9ac]
-800AE998	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800AE9A4	j      Lae9f8 [$800ae9f8]
-T6 = w[T0 + 0000];
+    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
+    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
+    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
 
-Lae9ac:	; 800AE9AC
-800AE9AC	lwc2   s1, $0004(t3)
-800AE9B0	lwc2   s2, $0004(t2)
-800AE9B4	lwc2   s3, $0004(a1)
-V1 = S4 & S6;
-S5 = A2 & S3;
-800AE9C0	gte_func26t8,r11r12
-T6 = w[T0 + 0000];
-V0 = OTZ;
-800AE9CC	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800AE9DC	nop
-V0 = T5 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = T5 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+    SXY0 = w[S0 + v1 * 8 + 0];
+    SXY1 = w[S0 + v3 * 8 + 0];
+    SXY2 = w[S0 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
 
-Lae9f8:	; 800AE9F8
-V0 = A3 < S1;
-800AE9FC	bne    v0, zero, loopae92c [$800ae92c]
-A2 = A2 + 0020;
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[S0 + v1 * 8 + 4];
+        SZ2 = w[S0 + v2 * 8 + 4];
+        SZ3 = w[S0 + v3 * 8 + 4];
+        gte_AVSZ3(); // Average of three Z values.
+        depth = OTZ;
 
-Laea04:	; 800AEA04
+        [packet] = w((w[packet + 0] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
+
+    T0 += c;
+    packet += 20;
+}
+
 FP = w[model_parts_data + 8];
-S1 = FP & 00ff;
-800AEA10	beq    s1, zero, Laeaf8 [$800aeaf8]
-A3 = 0;
-T8 = A2 + 0010;
-T6 = w[T0 + 0000];
 
-loopaea20:	; 800AEA20
-800AEA20	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-800AEA54	mtc2   v0,l33
-800AEA58	mtc2   a0,gbk
-800AEA5C	mtc2   v1,rbk
-A3 = A3 + 0001;
-T0 = T0 + 0008;
-800AEA68	gte_func26zero,r11r12
-S4 = w[A2 + 0000];
-[T8 + fff8] = w(V0);
-[T8 + fffc] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 0014;
-800AEA80	mfc2   v0,ofx
-800AEA84	nop
-800AEA88	bgtz   v0, Laeaa0 [$800aeaa0]
-800AEA8C	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800AEA98	j      Laeaec [$800aeaec]
-T6 = w[T0 + 0000];
+S1 = FP & ff;
+for( int i = 0; i < S1; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
 
-Laeaa0:	; 800AEAA0
-800AEAA0	lwc2   s1, $0004(t3)
-800AEAA4	lwc2   s2, $0004(t2)
-800AEAA8	lwc2   s3, $0004(a1)
-V1 = S4 & S6;
-S5 = A2 & S3;
-800AEAB4	gte_func26t8,r11r12
-T6 = w[T0 + 0000];
-V0 = OTZ;
-800AEAC0	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800AEAD0	nop
-V0 = T5 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = T5 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
+    [packet +  c] = w(w[S0 + v2 * 8 + 0]);
+    [packet + 10] = w(w[S0 + v3 * 8 + 0]);
 
-Laeaec:	; 800AEAEC
-V0 = A3 < S1;
-800AEAF0	bne    v0, zero, loopaea20 [$800aea20]
-A2 = A2 + 0014;
+    SXY0 = w[S0 + v1 * 8 + 0];
+    SXY1 = w[S0 + v3 * 8 + 0];
+    SXY2 = w[S0 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
 
-Laeaf8:	; 800AEAF8
-V0 = FP & ff00;
-S1 = V0 >> 08;
-800AEB00	beq    s1, zero, Laec00 [$800aec00]
-A3 = 0;
-T8 = A2 + 0014;
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[S0 + v1 * 8 + 4];
+        SZ2 = w[S0 + v2 * 8 + 4];
+        SZ3 = w[S0 + v3 * 8 + 4];
+        gte_AVSZ3(); // Average of three Z values.
+        depth = OTZ;
 
-loopaeb0c:	; 800AEB0C
-V1 = w[T0 + 0000];
-800AEB10	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-800AEB50	mtc2   v0,l33
-800AEB54	mtc2   a0,gbk
-800AEB58	mtc2   v1,rbk
-T0 = T0 + 0008;
-A3 = A3 + 0001;
-800AEB64	gte_func26zero,r11r12
-S4 = w[A2 + 0000];
-[T8 + fff4] = w(V0);
-[T8 + fff8] = w(V1);
-[T8 + fffc] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0018;
-800AEB80	mfc2   v0,ofx
-800AEB84	nop
-800AEB88	bgtz   v0, Laeb98 [$800aeb98]
-A1 = w[T1 + 0000];
-800AEB90	j      Laebf4 [$800aebf4]
-[A2 + 0000] = w(T6);
+        [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
 
-Laeb98:	; 800AEB98
-V1 = w[T9 + 0004];
-[T8 + ffe8] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
-V0 = V1 + A0;
-800AEBB8	bgez   v0, Laebc4 [$800aebc4]
-800AEBBC	nop
-V0 = V0 + 000f;
+    T0 += 8;
+    packet += 14;
+}
 
-Laebc4:	; 800AEBC4
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800AEBD4	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+S1 = (FP & ff00) >> 8;
+for( int i = 0; i < S1; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
+    v4 = bu[T0 + 3];
 
-Laebf4:	; 800AEBF4
-V0 = A3 < S1;
-800AEBF8	bne    v0, zero, loopaeb0c [$800aeb0c]
-A2 = A2 + 0018;
+    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
+    [packet +  c] = w(w[S0 + v2 * 8 + 0]);
+    [packet + 10] = w(w[S0 + v3 * 8 + 0]);
+    [packet + 14] = w(w[S0 + v4 * 8 + 0]);
 
-Laec00:	; 800AEC00
-V0 = FP >> 10;
-S1 = V0 & 00ff;
-800AEC08	beq    s1, zero, Laecf0 [$800aecf0]
-A3 = 0;
-T8 = A2 + 0018;
-T6 = w[T0 + 0000];
+    SXY0 = w[S0 + v1 * 8 + 0];
+    SXY1 = w[S0 + v3 * 8 + 0];
+    SXY2 = w[S0 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
 
-loopaec18:	; 800AEC18
-800AEC18	nop
-V0 = T6 & 00ff;
-V0 = V0 << 03;
-T3 = S0 + V0;
-V0 = T6 & ff00;
-V0 = V0 >> 05;
-T2 = S0 + V0;
-V1 = T6 >> 0d;
-V1 = V1 & 07f8;
-A1 = S0 + V1;
-V0 = w[T3 + 0000];
-V1 = w[T2 + 0000];
-A0 = w[A1 + 0000];
-800AEC4C	mtc2   v0,l33
-800AEC50	mtc2   a0,gbk
-800AEC54	mtc2   v1,rbk
-A3 = A3 + 0001;
-T0 = T0 + 0010;
-800AEC60	gte_func26zero,r11r12
-S4 = w[A2 + 0000];
-[T8 + fff0] = w(V0);
-[T8 + fff8] = w(V1);
-[T8 + 0000] = w(A0);
-T8 = T8 + 001c;
-800AEC78	mfc2   v0,ofx
-800AEC7C	nop
-800AEC80	bgtz   v0, Laec98 [$800aec98]
-800AEC84	nop
-V0 = S4 & S6;
-[A2 + 0000] = w(V0);
-800AEC90	j      Laece4 [$800aece4]
-T6 = w[T0 + 0000];
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        V0 = w[S0 + v1 * 8 + 4] + w[S0 + v2 * 8 + 4] + w[S0 + v3 * 8 + 4] + w[S0 + v4 * 8 + 4];
+        if( V0 < 0 ) V0 += f;
+        depth = V0 >> 4;
 
-Laec98:	; 800AEC98
-800AEC98	lwc2   s1, $0004(t3)
-800AEC9C	lwc2   s2, $0004(t2)
-800AECA0	lwc2   s3, $0004(a1)
-V1 = S4 & S6;
-S5 = A2 & S3;
-800AECAC	gte_func26t8,r11r12
-T6 = w[T0 + 0000];
-V0 = OTZ;
-800AECB8	nop
-V0 = V0 << 02;
-T4 = V0 + S2;
-A0 = w[T4 + 0000];
-800AECC8	nop
-V0 = A0 & S3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = A0 & S6;
-V0 = V0 | S5;
-[T4 + 0000] = w(V0);
+        [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
 
-Laece4:	; 800AECE4
-V0 = A3 < S1;
-800AECE8	bne    v0, zero, loopaec18 [$800aec18]
-A2 = A2 + 001c;
+    T0 += 8;
+    packet += 18;
+}
 
-Laecf0:	; 800AECF0
+S1 = (FP >> 10) & ff;
+for( int i = 0; i < S1; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
+
+    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
+    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
+    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
+
+    SXY0 = w[S0 + v1 * 8 + 0];
+    SXY1 = w[S0 + v3 * 8 + 0];
+    SXY2 = w[S0 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
+
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        SZ1 = w[S0 + v1 * 8 + 4];
+        SZ2 = w[S0 + v2 * 8 + 4];
+        SZ3 = w[S0 + v3 * 8 + 4];
+        gte_AVSZ3(); // Average of three Z values.
+        depth = OTZ;
+
+        [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
+
+    T0 += 10;
+    packet += 1c;
+}
+
 S1 = FP >> 18;
-800AECF4	beq    s1, zero, Laedf4 [$800aedf4]
-A3 = 0;
-T8 = A2 + 0020;
+for( int i = 0; i < S1; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
+    v4 = bu[T0 + 3];
 
-loopaed00:	; 800AED00
-V1 = w[T0 + 0000];
-800AED04	nop
-V0 = V1 & 00ff;
-V0 = V0 << 03;
-T9 = S0 + V0;
-V0 = V1 & ff00;
-V0 = V0 >> 05;
-T3 = S0 + V0;
-V0 = V1 >> 0d;
-V0 = V0 & 07f8;
-T2 = S0 + V0;
-V1 = V1 >> 18;
-V1 = V1 << 03;
-T1 = S0 + V1;
-V0 = w[T9 + 0000];
-V1 = w[T3 + 0000];
-A0 = w[T2 + 0000];
-800AED44	mtc2   v0,l33
-800AED48	mtc2   a0,gbk
-800AED4C	mtc2   v1,rbk
-A3 = A3 + 0001;
-T0 = T0 + 0014;
-800AED58	gte_func26zero,r11r12
-S4 = w[A2 + 0000];
-[T8 + ffe8] = w(V0);
-[T8 + fff0] = w(V1);
-[T8 + fff8] = w(A0);
-T6 = S4 & S6;
-T8 = T8 + 0024;
-800AED74	mfc2   v0,ofx
-800AED78	nop
-800AED7C	bgtz   v0, Laed8c [$800aed8c]
-A1 = w[T1 + 0000];
-800AED84	j      Laede8 [$800aede8]
-[A2 + 0000] = w(T6);
+    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
+    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
+    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
+    [packet + 20] = w(w[S0 + v4 * 8 + 0]);
 
-Laed8c:	; 800AED8C
-V1 = w[T9 + 0004];
-[T8 + ffdc] = w(A1);
-S5 = w[T3 + 0004];
-V0 = w[T2 + 0004];
-A0 = w[T1 + 0004];
-V1 = V1 + S5;
-V1 = V1 + V0;
-V0 = V1 + A0;
-800AEDAC	bgez   v0, Laedb8 [$800aedb8]
-800AEDB0	nop
-V0 = V0 + 000f;
+    SXY0 = w[S0 + v1 * 8 + 0];
+    SXY1 = w[S0 + v3 * 8 + 0];
+    SXY2 = w[S0 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
 
-Laedb8:	; 800AEDB8
-V0 = V0 >> 04;
-V0 = V0 << 02;
-T4 = V0 + S2;
-T5 = w[T4 + 0000];
-800AEDC8	nop
-V0 = T5 & S3;
-V1 = T6 | V0;
-[A2 + 0000] = w(V1);
-A0 = A2 & S3;
-V1 = T5 & S6;
-V1 = V1 | A0;
-[T4 + 0000] = w(V1);
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        V0 = w[S0 + v1 * 8 + 4] + w[S0 + v2 * 8 + 4] + w[S0 + v3 * 8 + 4] + w[S0 + v4 * 8 + 4];
+        if( V0 < 0 ) V0 += f;
+        depth = V0 >> 4;
 
-Laede8:	; 800AEDE8
-V0 = A3 < S1;
-800AEDEC	bne    v0, zero, loopaed00 [$800aed00]
-A2 = A2 + 0024;
+        [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
 
-Laedf4:	; 800AEDF4
-return;
+    T0 += 14;
+    packet += 24;
+}
 ////////////////////////////////
 
 

@@ -67,7 +67,7 @@ return V0;
 
 
 ////////////////////////////////
-// funcaab24
+// funcaab24()
 // here we handle KAWAI byte in new model structure
 
 [800df114] = b(hu[80075dec]);
