@@ -195,7 +195,7 @@
 // funcad858
 800AD858-800ADAA0
 ////////////////////////////////
-// field_model_new_structure_initing
+// field_model_struct_init
 800ADAA4-800ADC8C
 ////////////////////////////////
 // field_load_and_global_models_and_textures

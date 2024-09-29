@@ -3163,7 +3163,7 @@ for( int i = 0; i < number_of_models; ++i )
     V0 = bu[V1 + i * 8 + 4];
     if( V0 != ff )
     {
-        A0 = w[8004A62C];
+        A0 = w[8004a62c];
         A0 = w[A0 + 4];
         V1 = A0 + V0 * 24;
 
@@ -3588,7 +3588,7 @@ for( int i = 0; i < number_of_models; ++i )
         A0 = bu[V0 + i * 8 + 4];
         if( A0 != ff )
         {
-            V1 = w[8004A62C];
+            V1 = w[8004a62c];
             V1 = w[V1 + 4];
             V0 = V1 + A0 * 24;
             A0 = hu[V0 + 1A];
@@ -4840,7 +4840,7 @@ else
 
 V1 = w[8008357c];
 V0 = bu[V1 + visible_entity_id * 8 + 4];
-A0 = w[8004A62C];
+A0 = w[8004a62c];
 V1 = w[A0 + 4];
 V1 = bu[V1 + V0 * 24];
 

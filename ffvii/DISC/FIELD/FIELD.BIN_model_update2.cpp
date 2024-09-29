@@ -1614,14 +1614,14 @@ Lad894:	; 800AD894
 
 
 ////////////////////////////////
-// field_model_new_structure_initing()
+// field_model_struct_init()
 
 block7_header = A0;
 block7_models = block7_header + 4;
-model_data = A1;
-model_data_array = model_data + c;
+models_struct = A1;
+model_data = models_struct + c;
 
-[model_data + 0] = b(0);
+[models_struct + 0] = b(0);
 
 models_n = hu[block7_header + 2];
 
@@ -1629,8 +1629,8 @@ for( int i = 0; i < models_n; ++i )
 {
     if( bu[block7_models + i * 8 + 5] != 0 )
     {
-        [block7_models + i * 8 + 4] = b(bu[model_data + 0]);
-        [model_data + 0] = b(bu[model_data + 0] + 1);
+        [block7_models + i * 8 + 4] = b(bu[models_struct + 0]);
+        [models_struct + 0] = b(bu[models_struct + 0] + 1);
     }
     else
     {
@@ -1638,12 +1638,12 @@ for( int i = 0; i < models_n; ++i )
     }
 }
 
-[model_data + 1] = b(0);
-[model_data + 2] = h(0);
-[model_data + 4] = w(model_data_array);
-[model_data + 8] = w(0);
+[models_struct + 1] = b(0);
+[models_struct + 2] = h(0);
+[models_struct + 4] = w(model_data);
+[models_struct + 8] = w(0);
 
-A1 = model_data_array + bu[model_data + 0] * 24;
+A1 = model_data + bu[models_struct + 0] * 24;
 
 for( int i = 0; i < models_n; ++i )
 {
@@ -1659,29 +1659,29 @@ for( int i = 0; i < models_n; ++i )
         }
 
         model_id = bu[block7_models + i * 8 + 4];
-        [model_data_array + model_id * 24 +  0] = b(1);
-        [model_data_array + model_id * 24 +  1] = bu(ff);
-        [model_data_array + model_id * 24 +  2] = b(bu[block7_models + i * 8 + 1]); // bones
-        [model_data_array + model_id * 24 +  3] = b(bu[block7_models + i * 8 + 2]); // parts
-        [model_data_array + model_id * 24 +  4] = b(bu[block7_models + i * 8 + 3]); // animations
-        [model_data_array + model_id * 24 +  5] = b(0);
-        [model_data_array + model_id * 24 +  6] = b(0);
-        [model_data_array + model_id * 24 +  7] = b(0);
-        [model_data_array + model_id * 24 +  8] = w(0);
-        [model_data_array + model_id * 24 +  c] = w(0);
-        [model_data_array + model_id * 24 + 10] = w(0);
-        [model_data_array + model_id * 24 + 14] = b(bu[block7_models + i * 8 + 7]); // global model id
-        [model_data_array + model_id * 24 + 15] = b(bu[block7_models + i * 8 + 0]); // face id
-        [model_data_array + model_id * 24 + 16] = h(1000);
+        [model_data + model_id * 24 +  0] = b(1);
+        [model_data + model_id * 24 +  1] = bu(ff);
+        [model_data + model_id * 24 +  2] = b(bu[block7_models + i * 8 + 1]); // bones
+        [model_data + model_id * 24 +  3] = b(bu[block7_models + i * 8 + 2]); // parts
+        [model_data + model_id * 24 +  4] = b(bu[block7_models + i * 8 + 3]); // animations
+        [model_data + model_id * 24 +  5] = b(0);
+        [model_data + model_id * 24 +  6] = b(0);
+        [model_data + model_id * 24 +  7] = b(0);
+        [model_data + model_id * 24 +  8] = w(0);
+        [model_data + model_id * 24 +  c] = w(0);
+        [model_data + model_id * 24 + 10] = w(0);
+        [model_data + model_id * 24 + 14] = b(bu[block7_models + i * 8 + 7]); // global model id
+        [model_data + model_id * 24 + 15] = b(bu[block7_models + i * 8 + 0]); // face id
+        [model_data + model_id * 24 + 16] = h(1000);
 
         A0 = bu[block7_models + i * 8 + 1] * 4;
-        [model_data_array + model_id * 24 + 18] = h(A0); // local offset to model parts part.
+        [model_data + model_id * 24 + 18] = h(A0); // local offset to model parts part.
 
         A0 += bu[block7_models + i * 8 + 2] * 20;
-        [model_data_array + model_id * 24 + 1a] = h(A0); // local offset to animation part.
+        [model_data + model_id * 24 + 1a] = h(A0); // local offset to animation part.
 
-        [model_data_array + model_id * 24 + 1c] = w(A1); // start offset of data for this model
-        [model_data_array + model_id * 24 + 20] = w(0);
+        [model_data + model_id * 24 + 1c] = w(A1); // start offset of data for this model
+        [model_data + model_id * 24 + 20] = w(0);
 
         // calculate offset to next model data
         A1 += bu[block7_models + i * 8 + 1] * 4 + bu[block7_models + i * 8 + 2] * 20 + bu[block7_models + i * 8 + 3] * 10;
@@ -1698,22 +1698,19 @@ return A1;
 ////////////////////////////////
 // field_load_and_global_models_and_textures()
 
-block7_header = A0; // offset to block 7 in dat file.
-model_data = A1; // offset to new model structure at 80138250.
-S2 = A2; // pointer to part after all new structures for the model.
+block7_header = A0;
+models_struct = A1;
+free_mem = A2;
 S6 = A3; // 1
 
-models_n = hu[block7_header + 2]; // number of models
-
-for( int i = 0; i < models_n; ++i )
+for( int i = 0; i < hu[block7_header + 2]; ++i ) // number of models
 {
-    A0 = block7_header; // offset to block 7 in dat file.
-    A1 = model_data; // offset to new model structure at 80138250.
-    A2 = S2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
-    A3 = i; // model id
+    A0 = block7_header;
+    A1 = models_struct;
+    A2 = free_mem;
+    A3 = i;
     field_load_and_init_global_models();
-
-    S2 = V0;
+    free_mem = V0;
 }
 
 // load globals texture
@@ -1729,7 +1726,7 @@ if( S6 != 0 )
     do system_cdrom_read_chain(); while( V0 != 0 )
 }
 
-return S2;
+return free_mem;
 ////////////////////////////////
 
 
@@ -1737,23 +1734,23 @@ return S2;
 ////////////////////////////////
 // field_load_and_init_global_models()
 
-block7_header = A0; // offset to block 7 in dat file.
+block7_header = A0;
+models_struct = A1;
+free_mem = A2;
+block7_id = A3;
+
 block7_models = block7_header + 4;
-model_data = A1; // offset to new model structure at 80138250.
-S0 = A2; // pointer to part after all new structures for the model. (and after we load new part of data it's next)
-model_id = A3;
 
 V1 = w[1f800000]; // CLOUD.BCX start sector.
 
-if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
+if( bu[block7_models + block7_id * 8 + 5] != 0 ) // is model enabled
 {
-    // read additional model
-    global_model_id = b[block7_models + model_id * 8 + 7];
+    global_model_id = b[block7_models + block7_id * 8 + 7];
 
-    if( ( global_model_id - 1 ) < 9 )
+    if( ( global_model_id - 1 ) < 9 ) // global model
     {
         // read 6 byte
-        if( bu[block7_models + model_id * 8 + 6] == 0 ) // if global model not yet loaded
+        if( bu[block7_models + block7_id * 8 + 6] == 0 ) // if global model not yet loaded
         {
             switch( global_model_id - 1 )
             {
@@ -1768,83 +1765,73 @@ if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
                 case 8: A0 = w[V1 + 38]; A1 = w[V1 + 3c]; break; // 9BEF0100 8A1B0000
             }
 
-            A2 = S0;
+            A2 = free_mem;
             A3 = 0;
             system_cdrom_start_load_lzs();
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            // set flag that we load this model already
-            number_of_model = hu[block7_header + 2];
-            for( int i = 0; i < number_of_model; ++i )
+            for( int i = 0; i < hu[block7_header + 2]; ++i ) // number of block 7 models
             {
                 if( b[block7_models + i * 8 + 7] == global_model_id )
                 {
-                    [block7_models + i * 8 + 6] = b(1);
+                    [block7_models + i * 8 + 6] = b(1); // set that we load this model already
                 }
             }
 
-            model_index = bu[block7_models + model_id * 8 + 4];
+            model_id = bu[block7_models + block7_id * 8 + 4];
 
-            loaded_file_header = S0 + w[S0 + 4];
-            [loaded_file_header + 1c] = w(S0 + w[loaded_file_header + 1c] - 80000000); // fix offset to parts
+            bcx_data = free_mem + w[free_mem + 4];
+            [bcx_data + 1c] = w(free_mem + w[bcx_data + 1c] - 80000000); // fix offset to parts
 
-            new_structures_header = w[model_data + 4];
+            model_data = w[models_struct + 4];
 
             // copy bones data
-            new_structure_data = w[new_structures_header + model_index * 24 + 1c];
-            loaded_file_data = w[loaded_file_header + 1c];
-
-            for(int i = 0; i < bu[loaded_file_header + 2]; ++i ) // number of bones
+            dst = w[model_data + model_id * 24 + 1c];
+            src = w[bcx_data + 1c];
+            for(int i = 0; i < bu[bcx_data + 2]; ++i ) // number of bones
             {
-                [new_structure_data + i * 4] = w(w[loaded_file_data + i * 4]);
+                [dst + i * 4] = w(w[src + i * 4]);
             }
 
             // copy parts data
-            new_structure_model_parts = hu[new_structures_header + model_index * 24 + 18];
-            new_structure_data = w[new_structures_header + model_index * 24 + 1c];
-            loaded_file_model_parts = hu[loaded_file_header + 18];
-            loaded_file_data = w[loaded_file_header + 1c];
-
-            A0 = loaded_file_data + loaded_file_model_parts;
-            A1 = new_structure_data + new_structure_model_parts;
-
-            for( int i = 0; i < bu[loaded_file_header + 3]; ++i ) // number of model parts
+            dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 18];
+            src = w[bcx_data + 1c] + hu[bcx_data + 18];
+            for( int i = 0; i < bu[bcx_data + 3]; ++i ) // number of model parts
             {
-                [A1 + i * 20 +  0] = w(w[A0 + i * 20 +  0]);
-                [A1 + i * 20 +  4] = w(w[A0 + i * 20 +  4]);
-                [A1 + i * 20 +  8] = w(w[A0 + i * 20 +  8]);
-                [A1 + i * 20 +  c] = w(w[A0 + i * 20 +  c]);
-                [A1 + i * 20 + 10] = w(w[A0 + i * 20 + 10]);
-                [A1 + i * 20 + 14] = w(w[A0 + i * 20 + 14]);
-                [A1 + i * 20 + 18] = w(S0 + w[A0 + i * 20 + 18] - 80000000);
-                [A1 + i * 20 + 1c] = w(w[A0 + i * 20 + 1c]);
+                [dst + i * 20 +  0] = w(w[src + i * 20 +  0]);
+                [dst + i * 20 +  4] = w(w[src + i * 20 +  4]);
+                [dst + i * 20 +  8] = w(w[src + i * 20 +  8]);
+                [dst + i * 20 +  c] = w(w[src + i * 20 +  c]);
+                [dst + i * 20 + 10] = w(w[src + i * 20 + 10]);
+                [dst + i * 20 + 14] = w(w[src + i * 20 + 14]);
+                [dst + i * 20 + 18] = w(free_mem + w[src + i * 20 + 18] - 80000000);
+                [dst + i * 20 + 1c] = w(w[src + i * 20 + 1c]);
             }
 
-            A1 = w[new_structures_header + model_index * 24 + 1c] + hu[new_structures_header + model_index * 24 + 1a];
-            A0 = w[loaded_file_header + 1c] + hu[loaded_file_header + 1a];
-
-            for( int i = 0; i < bu[loaded_file_header + 4]; ++i ) // number of animations
+            dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 1a];
+            src = w[bcx_data + 1c] + hu[bcx_data + 1a];
+            for( int i = 0; i < bu[bcx_data + 4]; ++i ) // number of animations
             {
-                [A1 + i * 10 + 0] = w(w[A0 + i * 10 + 0]);
-                [A1 + i * 10 + 4] = w(w[A0 + i * 10 + 4]);
-                [A1 + i * 10 + 8] = w(w[A0 + i * 10 + 8]);
-                [A1 + i * 10 + c] = w(S0 + w[A0 + i * 10 + c] - 80000000);
+                [dst + i * 10 + 0] = w(w[src + i * 10 + 0]);
+                [dst + i * 10 + 4] = w(w[src + i * 10 + 4]);
+                [dst + i * 10 + 8] = w(w[src + i * 10 + 8]);
+                [dst + i * 10 + c] = w(free_mem + w[src + i * 10 + c] - 80000000);
             }
 
-            [800e0204] = w(loaded_file_header);
-            return loaded_file_header;
+            [800e0204] = w(bcx_data);
+            return bcx_data;
         }
         else
         {
-            for( int i = 0; i < model_id; ++i )
+            for( int i = 0; i < block7_id; ++i )
             {
                 if( b[block7_models + i * 8 + 7] == global_model_id )
                 {
                     model_id = bu[block7_models + i * 8 + 4];
-                    V0 = w[model_data + 4]; // offset to new structures data
-                    T1 = V0 + model_id * 24;
-                    T0 = V0 + i * 24;
+                    model_data = w[models_struct + 4];
+                    T1 = model_data + model_id * 24;
+                    T0 = model_data + i * 24;
                     V1 = w[T1 + 1c];
                     V0 = w[T0 + 1c];
 
@@ -1881,17 +1868,17 @@ if( bu[block7_models + model_id * 8 + 5] != 0 ) // read is model enabled
                         [A1 + j * 10 + c] = w(w[A0 + j * 10 + c])
                     }
 
-                    [800e0204] = w(S0);
-                    return S0;
+                    [800e0204] = w(free_mem);
+                    return free_mem;
                 }
             }
 
-            [800e0204] = w(S0);
+            [800e0204] = w(free_mem);
         }
     }
 }
 
-return S0;
+return free_mem;
 ////////////////////////////////
 
 
@@ -1900,23 +1887,19 @@ return S0;
 // funcae23c()
 
 model_data = A0; // pointer to new structure model specific data
-init            = b[model_data + 0];
-kawai           = b[model_data + 1];
-number_of_parts = b[model_data + 3];
+init = b[model_data + 0];
+kawai = b[model_data + 1];
+parts_n = b[model_data + 3];
 
-// if not inited or number of model parts == 0
-if( ( init == 0 ) || ( number_of_parts == 0 ) )
-{
-    return;
-}
+if( ( init == 0 ) || ( parts_n == 0 ) ) return;
 
 S1 = w[model_data + 20];
 S4 = 1f800000;
 S0 = w[model_data + 1c] + hu[model_data + 18]; // offset to model parts
 
-for( int i = 0; i < number_of_parts; ++i )
+for( int i = 0; i < parts_n; ++i )
 {
-    S6 = w[S0 + i * 20];
+    S6 = w[S0 + i * 20 + 0];
     if( b[S0 + i * 20 + 9] != 0 ) // enable lighting calculation
     {
         if( kawai != ff )
@@ -1998,143 +1981,72 @@ for( int i = 0; i < number_of_parts; ++i )
 
 ////////////////////////////////
 // funcae4dc()
-// depth sort all polygons
 
-model_parts_data = A0;
-A2 = bu[model_parts_data + 2];
-S1 = A2;
+model_part = A0;
+
 rdata = w[800df118];
-vertex_data = w[model_parts_data + 18] + 4;
-A1 = 1f800008;
-S0 = 1f800008;
+vertex_data = w[model_part + 18] + 4;
 
 // calculate vertexes
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + 2]; ++i )
 {
-        VXY0 = w[vertex_data + A3 * 8 + 0];
-        VZ0 = w[vertex_data + A3 * 8 + 4];
-        gte_RTPS(); // Perspective transform
-        [1f800008 + A3 * 8 + 0] = w(SXY2);
-        [1f800008 + A3 * 8 + 4] = w(SZ3);
+    VXY0 = w[vertex_data + A3 * 8 + 0];
+    VZ0 = w[vertex_data + A3 * 8 + 4];
+    gte_RTPS(); // Perspective transform
+    [1f800008 + A3 * 8 + 0] = w(SXY2);
+    [1f800008 + A3 * 8 + 4] = w(SZ3);
 }
 
-packet = w[model_parts_data + 1c];
-if( bu[800df114] != 0 )
-{
-    packet += hu[model_parts_data + 16];
-}
+packet = w[model_part + 1c];
+if( bu[800df114] != 0 ) packet += hu[model_part + 16];
 
 // textured gourad quads
-FP = w[model_parts_data + 4];
-
-S1 = FP & ff;
-for( int i = 0; i < S1; ++i )
-{
-        v1 = bu[T0 + 0];
-        v2 = bu[T0 + 1];
-        v3 = bu[T0 + 2];
-        v4 = bu[T0 + 3];
-
-        xy1 = w[1f800008 + v1 * 8 + 0];
-        xy2 = w[1f800008 + v2 * 8 + 0];
-        xy3 = w[1f800008 + v3 * 8 + 0];
-        xy4 = w[1f800008 + v4 * 8 + 0];
-
-        [packet +  8] = w(xy1);
-        [packet + 14] = w(xy2);
-        [packet + 20] = w(xy3);
-        [packet + 2c] = w(xy4);
-
-        S4 = w[packet + 0];
-
-        SXY0 = xy1;
-        SXY1 = xy2;
-        SXY2 = xy3;
-        gte_NCLIP(); // normal clipping
-
-        if( MAC0 <= 0 ) // clip
-        {
-            [rdata + 0] = w(S4 & ff000000);
-        }
-        else
-        {
-            z1 = w[1f800008 + v1 * 8 + 4];
-            z2 = w[1f800008 + v2 * 8 + 4];
-            z3 = w[1f800008 + v3 * 8 + 4];
-            z4 = w[1f800008 + v4 * 8 + 4];
-
-            depth = (z1 + z2 + z3 + z4) >> 4;
-
-            [packet + 0] = w(S4 & ff000000 | (w[rdata + depth * 4] & 00ffffff));
-            [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
-        }
-
-        T0 = T0 + 18; // move to next textured quad in data
-        packet = packet + 34; // move to next precompiled draft
-}
-
-S1 = (FP & ff000000) >> 8;
-for( int i = 0; i < S1; ++i )
-{
-    T6 = w[T0];
-    V0 = T6 & 00ff;
-    V0 = V0 << 03;
-    T3 = 1f800008 + V0;
-    V0 = T6 & ff00;
-    V0 = V0 >> 05;
-    T2 = 1f800008 + V0;
-    
-    V1 = T6 >> 0d;
-    V1 = V1 & 07f8;
-    A1 = 1f800008 + V1;
-    V0 = w[T3 + 0000];
-    V1 = w[T2 + 0000];
-    A0 = w[A1 + 0000];
-    SXY0 = V0;
-    SXY1 = A0;
-    SXY2 = V1;
-    gte_NCLIP(); // Normal clipping.
-    S4 = w[packet + 0000];
-    [packet + 20 + ffe8] = w(V0);
-    [packet + 20 + fff4] = w(V1);
-    [packet + 20 + 0000] = w(A0);
-
-    if( MAC0 <= 0 )
-    {
-        [packet + 0] = w(S4 & ff000000);
-    }
-    else
-    {
-        SZ1 = w[T3 + 4];
-        SZ2 = w[T2 + 4];
-        SZ3 = w[A1 + 4];
-        gte_AVSZ3(); // Average of three Z values.
-        depth = OTZ;
-
-        [packet] = w((S4 & ff000000) | (w[rdata + depth * 4] & 00ffffff));
-        [rdata + depth * 4] = w((T5 & ff000000) | (packet & 00ffffff));
-    }
-
-    T0 += 14;
-    packet += 28;
-}
-
-S1 = (FP >> 10) & ff;
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + 4]; ++i )
 {
     v1 = bu[T0 + 0];
     v2 = bu[T0 + 1];
     v3 = bu[T0 + 2];
     v4 = bu[T0 + 3];
 
-    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
-    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
-    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
-    [packet + 20] = w(w[S0 + v4 * 8 + 0]);
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet + 14] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 20] = w(w[1f800008 + v3 * 8 + 0]);
+    [packet + 2c] = w(w[1f800008 + v4 * 8 + 0]);
 
-    SXY0 = w[S0 + v1 * 8 + 0];
-    SXY1 = w[S0 + v3 * 8 + 0];
-    SXY2 = w[S0 + v2 * 8 + 0];
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v2 * 8 + 0];
+    SXY2 = w[1f800008 + v3 * 8 + 0];
+    gte_NCLIP(); // normal clipping
+
+    if( MAC0 <= 0 ) // clip
+    {
+        [rdata + 0] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        depth = (w[1f800008 + v1 * 8 + 4] + w[1f800008 + v2 * 8 + 4] + w[1f800008 + v3 * 8 + 4] + w[1f800008 + v4 * 8 + 4]) / 10;
+
+        [packet + 0] = w(w[packet] & ff000000 | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
+
+    T0 += 18;
+    packet += 34;
+}
+
+for( int i = 0; i < bu[model_part + 5]; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
+
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet + 14] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 20] = w(w[1f800008 + v3 * 8 + 0]);
+
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
     gte_NCLIP(); // Normal clipping.
 
     if( MAC0 <= 0 )
@@ -2143,9 +2055,44 @@ for( int i = 0; i < S1; ++i )
     }
     else
     {
-        V0 = w[S0 + v1 * 8 + 4] + w[S0 + v2 * 8 + 4] + w[S0 + v3 * 8 + 4] + w[S0 + v4 * 8 + 4];
-        if( V0 < 0 ) V0 += f;
-        depth = V0 >> 4;
+        SZ1 = w[1f800008 + v1 * 8 + 4];
+        SZ2 = w[1f800008 + v2 * 8 + 4];
+        SZ3 = w[1f800008 + v3 * 8 + 4];
+        gte_AVSZ3(); // Average of three Z values.
+        depth = OTZ;
+
+        [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
+        [rdata + depth * 4] = w((T5 & ff000000) | (packet & 00ffffff));
+    }
+
+    T0 += 14;
+    packet += 28;
+}
+
+for( int i = 0; i < bu[model_part + 6]; ++i )
+{
+    v1 = bu[T0 + 0];
+    v2 = bu[T0 + 1];
+    v3 = bu[T0 + 2];
+    v4 = bu[T0 + 3];
+
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet + 10] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 18] = w(w[1f800008 + v3 * 8 + 0]);
+    [packet + 20] = w(w[1f800008 + v4 * 8 + 0]);
+
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
+    gte_NCLIP(); // Normal clipping.
+
+    if( MAC0 <= 0 )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        depth = (w[1f800008 + v1 * 8 + 4] + w[1f800008 + v2 * 8 + 4] + w[1f800008 + v3 * 8 + 4] + w[1f800008 + v4 * 8 + 4]) / 10;
 
         [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
         [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
@@ -2155,20 +2102,19 @@ for( int i = 0; i < S1; ++i )
     packet += 28;
 }
 
-S1 = FP >> 18;
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + 7]; ++i )
 {
     v1 = bu[T0 + 0];
     v2 = bu[T0 + 1];
     v3 = bu[T0 + 2];
 
-    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
-    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
-    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet + 10] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 18] = w(w[1f800008 + v3 * 8 + 0]);
 
-    SXY0 = w[S0 + v1 * 8 + 0];
-    SXY1 = w[S0 + v3 * 8 + 0];
-    SXY2 = w[S0 + v2 * 8 + 0];
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
     gte_NCLIP(); // Normal clipping.
 
     if( MAC0 <= 0 )
@@ -2177,9 +2123,9 @@ for( int i = 0; i < S1; ++i )
     }
     else
     {
-        SZ1 = w[S0 + v1 * 8 + 4];
-        SZ2 = w[S0 + v2 * 8 + 4];
-        SZ3 = w[S0 + v3 * 8 + 4];
+        SZ1 = w[1f800008 + v1 * 8 + 4];
+        SZ2 = w[1f800008 + v2 * 8 + 4];
+        SZ3 = w[1f800008 + v3 * 8 + 4];
         gte_AVSZ3(); // Average of three Z values.
         depth = OTZ;
 
@@ -2191,22 +2137,19 @@ for( int i = 0; i < S1; ++i )
     packet += 20;
 }
 
-FP = w[model_parts_data + 8];
-
-S1 = FP & ff;
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + 8]; ++i )
 {
     v1 = bu[T0 + 0];
     v2 = bu[T0 + 1];
     v3 = bu[T0 + 2];
 
-    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
-    [packet +  c] = w(w[S0 + v2 * 8 + 0]);
-    [packet + 10] = w(w[S0 + v3 * 8 + 0]);
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet +  c] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 10] = w(w[1f800008 + v3 * 8 + 0]);
 
-    SXY0 = w[S0 + v1 * 8 + 0];
-    SXY1 = w[S0 + v3 * 8 + 0];
-    SXY2 = w[S0 + v2 * 8 + 0];
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
     gte_NCLIP(); // Normal clipping.
 
     if( MAC0 <= 0 )
@@ -2215,9 +2158,9 @@ for( int i = 0; i < S1; ++i )
     }
     else
     {
-        SZ1 = w[S0 + v1 * 8 + 4];
-        SZ2 = w[S0 + v2 * 8 + 4];
-        SZ3 = w[S0 + v3 * 8 + 4];
+        SZ1 = w[1f800008 + v1 * 8 + 4];
+        SZ2 = w[1f800008 + v2 * 8 + 4];
+        SZ3 = w[1f800008 + v3 * 8 + 4];
         gte_AVSZ3(); // Average of three Z values.
         depth = OTZ;
 
@@ -2229,22 +2172,21 @@ for( int i = 0; i < S1; ++i )
     packet += 14;
 }
 
-S1 = (FP & ff00) >> 8;
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + 9]; ++i )
 {
     v1 = bu[T0 + 0];
     v2 = bu[T0 + 1];
     v3 = bu[T0 + 2];
     v4 = bu[T0 + 3];
 
-    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
-    [packet +  c] = w(w[S0 + v2 * 8 + 0]);
-    [packet + 10] = w(w[S0 + v3 * 8 + 0]);
-    [packet + 14] = w(w[S0 + v4 * 8 + 0]);
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet +  c] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 10] = w(w[1f800008 + v3 * 8 + 0]);
+    [packet + 14] = w(w[1f800008 + v4 * 8 + 0]);
 
-    SXY0 = w[S0 + v1 * 8 + 0];
-    SXY1 = w[S0 + v3 * 8 + 0];
-    SXY2 = w[S0 + v2 * 8 + 0];
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
     gte_NCLIP(); // Normal clipping.
 
     if( MAC0 <= 0 )
@@ -2253,9 +2195,7 @@ for( int i = 0; i < S1; ++i )
     }
     else
     {
-        V0 = w[S0 + v1 * 8 + 4] + w[S0 + v2 * 8 + 4] + w[S0 + v3 * 8 + 4] + w[S0 + v4 * 8 + 4];
-        if( V0 < 0 ) V0 += f;
-        depth = V0 >> 4;
+        depth = (w[1f800008 + v1 * 8 + 4] + w[1f800008 + v2 * 8 + 4] + w[1f800008 + v3 * 8 + 4] + w[1f800008 + v4 * 8 + 4]) / 10;
 
         [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
         [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
@@ -2265,20 +2205,19 @@ for( int i = 0; i < S1; ++i )
     packet += 18;
 }
 
-S1 = (FP >> 10) & ff;
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + a]; ++i )
 {
     v1 = bu[T0 + 0];
     v2 = bu[T0 + 1];
     v3 = bu[T0 + 2];
 
-    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
-    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
-    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet + 10] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 18] = w(w[1f800008 + v3 * 8 + 0]);
 
-    SXY0 = w[S0 + v1 * 8 + 0];
-    SXY1 = w[S0 + v3 * 8 + 0];
-    SXY2 = w[S0 + v2 * 8 + 0];
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
     gte_NCLIP(); // Normal clipping.
 
     if( MAC0 <= 0 )
@@ -2287,9 +2226,9 @@ for( int i = 0; i < S1; ++i )
     }
     else
     {
-        SZ1 = w[S0 + v1 * 8 + 4];
-        SZ2 = w[S0 + v2 * 8 + 4];
-        SZ3 = w[S0 + v3 * 8 + 4];
+        SZ1 = w[1f800008 + v1 * 8 + 4];
+        SZ2 = w[1f800008 + v2 * 8 + 4];
+        SZ3 = w[1f800008 + v3 * 8 + 4];
         gte_AVSZ3(); // Average of three Z values.
         depth = OTZ;
 
@@ -2301,22 +2240,21 @@ for( int i = 0; i < S1; ++i )
     packet += 1c;
 }
 
-S1 = FP >> 18;
-for( int i = 0; i < S1; ++i )
+for( int i = 0; i < bu[model_part + b]; ++i )
 {
     v1 = bu[T0 + 0];
     v2 = bu[T0 + 1];
     v3 = bu[T0 + 2];
     v4 = bu[T0 + 3];
 
-    [packet +  8] = w(w[S0 + v1 * 8 + 0]);
-    [packet + 10] = w(w[S0 + v2 * 8 + 0]);
-    [packet + 18] = w(w[S0 + v3 * 8 + 0]);
-    [packet + 20] = w(w[S0 + v4 * 8 + 0]);
+    [packet +  8] = w(w[1f800008 + v1 * 8 + 0]);
+    [packet + 10] = w(w[1f800008 + v2 * 8 + 0]);
+    [packet + 18] = w(w[1f800008 + v3 * 8 + 0]);
+    [packet + 20] = w(w[1f800008 + v4 * 8 + 0]);
 
-    SXY0 = w[S0 + v1 * 8 + 0];
-    SXY1 = w[S0 + v3 * 8 + 0];
-    SXY2 = w[S0 + v2 * 8 + 0];
+    SXY0 = w[1f800008 + v1 * 8 + 0];
+    SXY1 = w[1f800008 + v3 * 8 + 0];
+    SXY2 = w[1f800008 + v2 * 8 + 0];
     gte_NCLIP(); // Normal clipping.
 
     if( MAC0 <= 0 )
@@ -2325,9 +2263,7 @@ for( int i = 0; i < S1; ++i )
     }
     else
     {
-        V0 = w[S0 + v1 * 8 + 4] + w[S0 + v2 * 8 + 4] + w[S0 + v3 * 8 + 4] + w[S0 + v4 * 8 + 4];
-        if( V0 < 0 ) V0 += f;
-        depth = V0 >> 4;
+        depth = (w[1f800008 + v1 * 8 + 4] + w[1f800008 + v2 * 8 + 4] + w[1f800008 + v3 * 8 + 4] + w[1f800008 + v4 * 8 + 4]) / 10;
 
         [packet] = w((w[packet] & ff000000) | (w[rdata + depth * 4] & 00ffffff));
         [rdata + depth * 4] = w((w[rdata + depth * 4] & ff000000) | (packet & 00ffffff));
@@ -3440,8 +3376,10 @@ else if (V1 < e)
                     T6 = w[V0 + 001c];
                     800B0318	ctc2   t5,rgb
                     800B031C	ctc2   t6,otz
-                    800B0320	jal    funcae4dc [$800ae4dc]
+
                     A0 = S0;
+                    funcae4dc();
+
                     800B0328	lbu    v0, $0003(model_data)
                     S1 = S1 + 0001;
                     V0 = S1 < V0;
@@ -12554,7 +12492,7 @@ else if (V1 == 1)
                 800B9F1C	ctc2   t6,otz
 
                 A0 = offset_to_model_parts + S0 * 20;
-                funcae4dc; // depth sort all polygons and clip backface
+                funcae4dc();
 
                 S0 = S0 + 1;
                 V0 = S0 < number_of_parts;

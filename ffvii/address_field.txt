@@ -135,7 +135,7 @@
 
 80075dec [][]     screen index (ffvii uses two render buffers). Used to render to specific buffers.
 
-80075e10 [][][][] pointer to where to load next data for model. 1) Part after all new structures for the model. 2) Part after all loaded global models.
+80075e10 [][][][] BCX start address.
 
 80077f64 message render related data. (0x3400 size each)
 
@@ -564,30 +564,30 @@
 
 
 
-80138250 [8004a62c]  header for new model structures (size 0x24).
+80138250 header for model struct. 8004a62c points here.
     + 0 []       number of inited models.
     + 1 []       store 00 here during init.
     + 2 [][]     store 00 here during init.
-    + 4 [][][][] offset to new structures (8013825c).
+    + 4 [][][][] offset to model structs (8013825c).
     + 8 [][][][] store 00 here during init. Offset to texture in bsx file.
     + с new structures for model data (we init it and copy data from 7 dat block during level loading) (size 0x24)
-        + 00 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
-        + 01 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
-        + 02 []       number of bones.
-        + 03 []       number of model parts.
-        + 04 []       number of animation.
-        + 05 []       rotation x.
-        + 06 []       rotation y.
-        + 07 []       rotation z (direction).
-        + 08 [][][][] translation x.
-        + 0c [][][][] translation y.
+        +  0 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
+        +  1 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
+        +  2 []       number of bones.
+        +  3 []       number of model parts.
+        +  4 []       number of animation.
+        +  5 []       rotation x.
+        +  6 []       rotation y.
+        +  7 []       rotation z (direction).
+        +  8 [][][][] translation x.
+        +  c [][][][] translation y.
         + 10 [][][][] translation z.
         + 14 []       global model id.
         + 15 []       face id in global texture (load palette with this id to vram).
         + 16 [][]     model scale. Store 1000 here during init. (12bit fixed point)
-        + 18 [][]     local offset to model parts part.
-        + 1a [][]     local offset to animation part.
-        + 1c [][][][] start offset of data for this model (data starts right after new model structure).
+        + 18 [][]     local offset to model parts.
+        + 1a [][]     local offset to animation.
+        + 1c [][][][] start offset of data for this model and bones offset.
         + 20 [][][][] offset to packet drafts and bone matrixes. init with 0.
 
 

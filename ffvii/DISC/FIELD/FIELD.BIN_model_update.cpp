@@ -3,13 +3,13 @@
 
 [800dfca0] = w(80128000); // address for global texture
 
-block7 = w[8007e770]; // offset to block 7 in dat file.
+block7 = w[8007e770];
 
 A0 = block7;
-A1 = w[8004a62c]; // offset to new model structure at 80138250.
-field_model_new_structure_initing();
-[80075e10] = w(V0); // store pointer to part after all new structures for the models.
-[800e0204] = w(V0); //
+A1 = w[8004a62c]; // model struct
+field_model_struct_init();
+[80075e10] = w(V0); // BCX start
+[800e0204] = w(V0); // place to load next BCX
 
 // load field bsx
 field_id = h[8009a05c];
@@ -25,8 +25,8 @@ do system_cdrom_read_chain(); while( V0 != 0 )
 [1f800004] = w(800df0d4); // FIELD.TDB start sector.
 
 A0 = block7;
-A1 = w[8004a62c]; // offset to new model structure at 80138250.
-A2 = w[80075e10]; // pointer to part after all new structures for the model.
+A1 = w[8004a62c]; // model struct
+A2 = w[80075e10]; // place for BCX
 A3 = 1; // load global texture
 field_load_and_global_models_and_textures();
 [80075e10] = w(V0);
@@ -35,7 +35,7 @@ A0 = block7;
 A1 = w[8004a62c]; // offset to new model structure at 80138250.
 A2 = 800a00dc;
 A3 = 801b0000; // loaded field bsx
-funcac35c; // load textures and init packet drafts/ calculates lighting scale
+funcac35c(); // load textures and init packet drafts/ calculates lighting scale
 [80075e10] = w(V0);
 
 V1 = w[8004a62c];
