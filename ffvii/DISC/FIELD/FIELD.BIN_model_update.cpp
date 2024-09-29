@@ -281,7 +281,7 @@ if (V0 > 0)
                 V0 = w[8004a62c];
                 A0 = w[V0 + 4] + S3;
                 A1 = S5;
-                funcb1c7c;
+                funcb1c7c();
             }
         }
 

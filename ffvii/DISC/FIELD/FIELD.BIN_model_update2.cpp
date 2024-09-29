@@ -498,7 +498,7 @@ func3aed8();
 
 block_7 = A0;
 model_data = A1;
-bsx_file S1 = A3; // bsx file
+bsx_file = A3; // bsx file
 
 if( bu[A2] != 0 ) // use CLOUD.BCX instead of bsx
 {
