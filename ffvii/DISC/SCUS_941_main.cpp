@@ -476,19 +476,13 @@ if( h[800965ec] != 5 )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            do
-            {
-                system_cdrom_read_chain();
-            } while( V0 != 0 )
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
         }
         else
         {
-            do
-            {
-                system_cdrom_read_chain();
-            } while( V0 != 0 )
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 801c0000;
         }

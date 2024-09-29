@@ -878,7 +878,8 @@ funcbca58; // copy info to start and end camera vector
 
 
 ////////////////////////////////
-// copy_camera_start_end_from_battle_setup
+// copy_camera_start_end_from_battle_setup()
+
 V1 = bu[80163b3c];
 800b4044
 [80158d00] = h(hu[8016360c + 8 + 14 + V1 * c + 0]);
@@ -938,7 +939,7 @@ if (hu[8016360c + 8] == 4e) // Final Battle - Sephiroth
 
 if ((bu[800f7ed4] == 64) && ((hu[8009d7be] & 300) == 100)) // fixed camera
 {
-    copy_camera_start_end_from_battle_setup;
+    copy_camera_start_end_from_battle_setup();
     return;
 }
 
@@ -961,7 +962,7 @@ if (A0 == -1)// if default
 {
     if ((hu[8009d7be] & 300) == 100) // fixed camera
     {
-        copy_camera_start_end_from_battle_setup;
+        copy_camera_start_end_from_battle_setup();
     }
     else
     {
@@ -975,7 +976,7 @@ if ((hu[8009d7be] & 300) == 100) // fixed camera
 {
     if (A0 != 3b && A0 != 3c && A0 != 45 && A0 != 59 && A0 != 6d && A0 != 77 && A0 != cb)
     {
-        copy_camera_start_end_from_battle_setup;
+        copy_camera_start_end_from_battle_setup();
     }
     else if (bu[800f7de4] == 1)
     {

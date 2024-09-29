@@ -366,7 +366,7 @@
 
 800a00bc
 
-800a00dc []       some flag in model loading functions. If true - load global texture.
+800a00dc []       static var in FIELD.BIN (0 in release version). Load CLOUD.BCX instead of bsx.
 
 800da5b8 data for loading field files (hardcoded into unpacked FIELD.BIN 0x3a5b8) (size 0x18)
     +00 [][][][] DAT file sector.

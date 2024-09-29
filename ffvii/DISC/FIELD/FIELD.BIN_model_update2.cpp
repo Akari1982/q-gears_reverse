@@ -498,152 +498,127 @@ func3aed8();
 
 block_7 = A0;
 model_data = A1;
-S2 = 1f800000;
+bsx_file S1 = A3; // bsx file
 
-S1 = A3; // bsx file
-
-// load global texture
-if( bu[A2] != 0 )
+if( bu[A2] != 0 ) // use CLOUD.BCX instead of bsx
 {
-    A0 = w[w[1f800000] + 00];
-    A1 = w[w[1f800000] + 04];
-    A2 = S1;
+    S5 = w[1f800000];
+    A0 = w[S5 + 0]; // CLOUD.BCX start sector
+    A1 = w[S5 + 4]; // CLOUD.BCX size
+    A2 = bsx_file;
     A3 = 0;
     system_cdrom_start_load_lzs();
 
-    Lac3bc:	; 800AC3BC
-        system_cdrom_read_chain();
-
-        800AC3C4	beq    v0, zero, Lac484 [$800ac484]
-    800AC3CC	j      Lac3bc [$800ac3bc]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 }
-
-// copy bsx to new location
-V0 = w[S1];
-T1 = V0 / 4 + (0 < V0 & 3); // count number of ints
-A0 = 0;
-loopac414:	; 800AC414
-    [w[800e0204] + A0 * 4 + 0] = w(w[S1 + A0 * 4 + 0]);
-    A0 = A0 + 1;
-    V0 = A0 < T1;
-800AC448	bne    v0, zero, loopac414 [$800ac414]
-
-S1 = w[800e0204]; // BSX file address
-
-Lac484:	; 800AC484
-bsx_header = S1 + w[S1 + 4]; // offset to start data in BSX
-S0 = bsx_header + w[bsx_header + 8]; // global offset to texture in BSX
-V0 = w[S0 + 4]; // number of textures
-if( V0 & ffffff00 )
+else
 {
-    A0 = bu[S0 + 5];
-    V0 = hu[S0 + 6];
-    A0 = A0 << 10;
-    A0 = A0 | V0;
-    A0 = S0 + A0;
-    funcad858;
+    // copy bsx to new location
+    T1 = w[bsx_file] / 4 + (0 < (w[bsx_file] & 3)); // count number of ints
+
+    for( int i = 0; i < T1; ++i )
+    {
+        [w[800e0204] + i * 4 + 0] = w(w[bsx_file + i * 4 + 0]);
+    }
+
+    bsx_file = w[800e0204]; // BSX file address
 }
 
-A0 = S0;
-bsx_texture_loading_to_vram();
+bsx_header = bsx_file + w[bsx_file + 4]; // offset to start data in BSX
+bsx_texture = bsx_header + w[bsx_header + 8]; // global offset to texture in BSX
+
+// if some offset exist
+if( w[bsx_texture + 4] & ffffff00 )
+{
+    A0 = bsx_texture + ((bu[bsx_texture + 5] << 10) | hu[bsx_texture + 6]);
+    funcad858();
+}
+
+A0 = bsx_texture;
+field_model_bsx_texture_load_to_vram();
 
 A0 = 0;
 system_psyq_draw_sync();
 
 // add additional bones parts and animations from bsx as well as scale
-S4 = 0;
-number_of_model = w[bsx_header + 4];
-A2 = S1 - 80000000;
-if( number_of_model != 0 )
+for( int i = 0; i < w[bsx_header + 4]; ++i ) // number of models
 {
-    Lac4f8:	; 800AC4F8
-        if (bu[block_7 + S4 * 8 + 5] != 0) // if model enabled
+    if( bu[block_7 + i * 8 + 5] != 0 ) // if model enabled
+    {
+        model_id = bu[block_7 + i * 8 + 4];
+
+        T0 = bsx_header + 10 + S3 * 30; // offset to start data in BSX + current offset
+
+        T4 = w[model_data + 4] + model_id * 24; // offset to new structures data.
+
+        [T4 + 16] = h(hu[T0 + 2]); // set scale
+
+        T2 = T0 + w[T0 + 4];
+
+        A0 = w[T4 + 1c];
+
+        // copy bones
+        T3 = bu[T0 + 17];
+        if( T3 != 0 )
         {
-            model_id = bu[block_7 + S4 * 8 + 4];
+            A1 = 0;
+            V0 = b[T0 + 12];
 
-            T0 = bsx_header + 10 + S3 * 30; // offset to start data in BSX + current offset
+            loopac548:	; 800AC548
+                [A0 + (V0 + A1) * 4] = w(w[T2 + 00]);
 
-            T4 = w[model_data + 4] + model_id * 24; // offset to new structures data.
-
-            [T4 + 16] = h(hu[T0 + 2]); // set scale
-
-
-
-            T2 = T0 + w[T0 + 4];
-
-            A0 = w[T4 + 1c];
-
-            // copy bones
-            T3 = bu[T0 + 17];
-            if (T3 != 0)
-            {
-                A1 = 0;
-                V0 = b[T0 + 12];
-
-                loopac548:	; 800AC548
-                    [A0 + (V0 + A1) * 4] = w(w[T2 + 00]);
-
-                    T2 = T2 + 4;
-                    A1 = A1 + 1;
-                    V0 = A1 < T3;
-                800AC568	bne    v0, zero, loopac548 [$800ac548]
-            }
-
-            // copy model parts
-            T1 = w[T4 + 1c] + hu[T4 + 18];
-
-            T3 = bu[T0 + 23];
-            if (T3 != 0)
-            {
-                A1 = 0;
-                V0 = b[T0 + 1e];
-
-                loopac590:	; 800AC590
-                    [T1 + (V0 + A1) * 20 + 00] = w(w[T2 + 00]);
-                    [T1 + (V0 + A1) * 20 + 04] = w(w[T2 + 04]);
-                    [T1 + (V0 + A1) * 20 + 08] = w(w[T2 + 08]);
-                    [T1 + (V0 + A1) * 20 + 0c] = w(w[T2 + 0c]);
-                    [T1 + (V0 + A1) * 20 + 10] = w(w[T2 + 10]);
-                    [T1 + (V0 + A1) * 20 + 14] = w(w[T2 + 14]);
-                    [T1 + (V0 + A1) * 20 + 18] = w(A2 + w[T2 + 18]);
-                    [T1 + (V0 + A1) * 20 + 1c] = w(w[T2 + 1c]);
-
-                    A1 = A1 + 1;
-                    T2 = T2 + 20;
-                    V0 = A1 < T3;
-                800AC678	bne    v0, zero, loopac590 [$800ac590]
-            }
-
-            T1 = w[T4 + 1c] + hu[T4 + 1a];
-            T3 = bu[T0 + 2f];
-            if (T3 != 0)
-            {
-                A1 = 0;
-                V0 = b[T0 + 2a];
-
-                loopac6a0:	; 800AC6A0
-                    [T1 + (V0 + A1) * 10 + 00] = w(w[T2 + 00]);
-                    [T1 + (V0 + A1) * 10 + 04] = w(w[T2 + 04]);
-                    [T1 + (V0 + A1) * 10 + 08] = w(w[T2 + 08]);
-                    [T1 + (V0 + A1) * 10 + 0c] = w(A2 + w[T2 + 0c]);
-
-                    A1 = A1 + 1;
-                    V0 = A1 < T3;
-                    T2 = T2 + 10;
-                800AC728	bne    v0, zero, loopac6a0 [$800ac6a0]
-            }
+                T2 = T2 + 4;
+                A1 = A1 + 1;
+                V0 = A1 < T3;
+            800AC568	bne    v0, zero, loopac548 [$800ac548]
         }
 
-        S4 = S4 + 1;
-        V0 = S4 < number_of_model;
-    800AC73C	bne    v0, zero, Lac4f8 [$800ac4f8]
+        // copy model parts
+        T1 = w[T4 + 1c] + hu[T4 + 18];
+        T3 = bu[T0 + 23];
+        if( T3 != 0 )
+        {
+            A1 = 0;
+            V0 = b[T0 + 1e];
+
+            loopac590:	; 800AC590
+                [T1 + (V0 + A1) * 20 + 00] = w(w[T2 + 00]);
+                [T1 + (V0 + A1) * 20 + 04] = w(w[T2 + 04]);
+                [T1 + (V0 + A1) * 20 + 08] = w(w[T2 + 08]);
+                [T1 + (V0 + A1) * 20 + 0c] = w(w[T2 + 0c]);
+                [T1 + (V0 + A1) * 20 + 10] = w(w[T2 + 10]);
+                [T1 + (V0 + A1) * 20 + 14] = w(w[T2 + 14]);
+                [T1 + (V0 + A1) * 20 + 18] = w(bsx_file + w[T2 + 18] - 80000000);
+                [T1 + (V0 + A1) * 20 + 1c] = w(w[T2 + 1c]);
+
+                A1 = A1 + 1;
+                T2 = T2 + 20;
+                V0 = A1 < T3;
+            800AC678	bne    v0, zero, loopac590 [$800ac590]
+        }
+
+        T1 = w[T4 + 1c] + hu[T4 + 1a];
+        T3 = bu[T0 + 2f];
+        if( T3 != 0 )
+        {
+            A1 = 0;
+            V0 = b[T0 + 2a];
+
+            loopac6a0:	; 800AC6A0
+                [T1 + (V0 + A1) * 10 + 00] = w(w[T2 + 00]);
+                [T1 + (V0 + A1) * 10 + 04] = w(w[T2 + 04]);
+                [T1 + (V0 + A1) * 10 + 08] = w(w[T2 + 08]);
+                [T1 + (V0 + A1) * 10 + 0c] = w(bsx_file + w[T2 + 0c] - 80000000);
+
+                A1 = A1 + 1;
+                V0 = A1 < T3;
+                T2 = T2 + 10;
+            800AC728	bne    v0, zero, loopac6a0 [$800ac6a0]
+        }
+    }
 }
 
-
-
 [SP + 40] = w(bsx_header + w[bsx_header + c]);
-
-
 
 if( number_of_model != 0 )
 {
@@ -668,144 +643,135 @@ if( number_of_model != 0 )
     800AC7F8	bne    v0, zero, loopac764 [$800ac764]
 }
 
-
-
 FP = bsx_header;
-S4 = 0;
-if( number_of_model != 0 )
+S1 = w[SP + 40];
+
+for( int i = 0; i < number_of_model; ++i )
 {
-    S1 = w[SP + 40];
+    if( bu[block_7 + i * 8 + 5] != 0 ) // if model is enabled
+    {
+        model_id = bu[block_7 + i * 8 + 4];
 
-    Lac818:	; 800AC818
-        if( bu[block_7 + S4 * 8 + 5] != 0 ) // if model is enabled
+        A0 = w[model_data + 4] + model_id * 24; // new model structure data
+        A1 = FP; // offset to start data in BSX
+        A2 = model_id; // model id
+        funcacba0(); // create draft packets and scale model
+        FP = V0;
+
+        model_data_struct = w[model_data + 4] + model_id * 24; // new model structure data
+        face_id = bu[model_data_struct + 15];
+        if( face_id < 21 )
         {
-            model_id = bu[block_7 + S4 * 8 + 4];
+            [SP + 30] = h(140);
+            [SP + 32] = h(1e0 + model_id);
+            [SP + 34] = h(10);
+            [SP + 36] = h(1);
 
-            A0 = w[model_data + 4] + model_id * 24; // new model structure data
-            A1 = FP; // offset to start data in BSX
-            A2 = model_id; // model id
-            funcacba0(); // create draft packets and scale model
-            FP = V0;
+            A0 = SP + 30;
+            A1 = w[800dfca0] + w[w[800dfca0] + c] + face_id * 20; // palette data
+            system_psyq_load_image(); // load image to VRAM
 
+            [1f800000] = b(0);
+            [1f800001] = b(0);
+            [1f800002] = b(0);
+            [1f800003] = b(model_id);
 
-
-            model_data_struct = w[model_data + 4] + model_id * 24; // new model structure data
-            face_id = bu[model_data_struct + 15];
-            if( face_id < 21 )
-            {
-                [SP + 30] = h(140);
-                [SP + 32] = h(1e0 + model_id);
-                [SP + 34] = h(10);
-                [SP + 36] = h(1);
-
-                A0 = SP + 30;
-                A1 = w[800dfca0] + w[w[800dfca0] + c] + face_id * 20; // palette data
-                system_psyq_load_image; // load image to VRAM
-
-                [1f800000] = b(0);
-                [1f800001] = b(0);
-                [1f800002] = b(0);
-                [1f800003] = b(model_id);
-
-                A1 = 1f800000;
-                A0 = w[model_data + 4] + model_id * 24;
-                funcb1c7c; // load eyes and mouth
-            }
-
-            // scale matrix
-            [SP + 10] = h(1000);
-            [SP + 12] = h(0);
-            [SP + 14] = h(0);
-            [SP + 16] = h(0);
-            [SP + 18] = h(1000);
-            [SP + 1a] = h(0);
-            [SP + 1c] = h(0);
-            [SP + 1e] = h(0);
-            [SP + 20] = h(1000);
-            [SP + 24] = w(0);
-            [SP + 28] = w(0);
-            [SP + 2c] = w(0);
-            [1f800000] = w(1);
-            A0 = w[model_data + 4] + model_id * 24;
-            A1 = SP + 10;
-            A2 = 0;
-            A3 = 0;
-            animation_prepare_bones_matrixes;
-
-            [1f800000] = b(bu[S1 + 8]);
-            [1f800001] = b(bu[S1 + 9]);
-            [1f800002] = b(bu[S1 + a]);
-
-            [1f80000c] = b(bu[S1 + c]);
-            [1f80000d] = b(bu[S1 + d]);
-            [1f80000e] = b(bu[S1 + e]);
-            [1f80000f] = b(bu[S1 + f]);
-            [1f800010] = b(bu[S1 + 10]);
-            [1f800011] = b(bu[S1 + 11]);
-
-            [1f800003] = b(bu[S1 + 14]);
-            [1f800004] = b(bu[S1 + 15]);
-            [1f800005] = b(bu[S1 + 16]);
-
-            [1f800012] = b(bu[S1 + 18]);
-            [1f800013] = b(bu[S1 + 19]);
-            [1f800014] = b(bu[S1 + 1a]);
-            [1f800015] = b(bu[S1 + 1b]);
-            [1f800016] = b(bu[S1 + 1c]);
-            [1f800017] = b(bu[S1 + 1d]);
-
-            [1f800006] = b(bu[S1 + 20]);
-            [1f800007] = b(bu[S1 + 21]);
-            [1f800008] = b(bu[S1 + 22);
-
-            [1f800018] = b(bu[S1 + 24]);
-            [1f800019] = b(bu[S1 + 25]);
-            [1f80001a] = b(bu[S1 + 26]);
-            [1f80001b] = b(bu[S1 + 27]);
-            [1f80001c] = b(bu[S1 + 28]);
-            [1f80001d] = b(bu[S1 + 29]);
-
-            [1f800009] = b(bu[S1 + 2c]);
-            [1f80000a] = b(bu[S1 + 2d]);
-            [1f80000b] = b(bu[S1 + 2e]);
-            [1f80001e] = b(0);
-
-            A0 = w[model_data + 4] + model_id * 24;
             A1 = 1f800000;
-            funcb1e40; // calculate light
-
-            [S2 + 0] = b(0);
-            [S2 + 1] = b(0);
-            [S2 + 2] = b(0);
-            [S2 + 3] = b(0);
-            [S2 + 4] = b(0);
-            [S2 + 5] = b(0);
-            [S2 + 6] = b(1);
             A0 = w[model_data + 4] + model_id * 24;
-            A1 = S2;
-            funcb0edc;
-
-            [800df114] = b(bu[800df114] XOR 1);
-
-            [S2 + 0] = b(0);
-            [S2 + 1] = b(0);
-            [S2 + 2] = b(0);
-            [S2 + 3] = b(0);
-            [S2 + 4] = b(0);
-            [S2 + 5] = b(0);
-            [S2 + 6] = b(1);
-
-            A0 = w[model_data + 4] + model_id * 24;
-            A1 = S2;
-            funcb0edc;
-
-            [800df114] = b(bu[800df114] XOR 1);
+            funcb1c7c(); // load eyes and mouth
         }
 
-        S4 = S4 + 1;
-        S1 = S1 + 30;
-        V0 = S4 < number_of_model;
-    800ACB54	bne    v0, zero, Lac818 [$800ac818]
+        // scale matrix
+        [SP + 10] = h(1000);
+        [SP + 12] = h(0);
+        [SP + 14] = h(0);
+        [SP + 16] = h(0);
+        [SP + 18] = h(1000);
+        [SP + 1a] = h(0);
+        [SP + 1c] = h(0);
+        [SP + 1e] = h(0);
+        [SP + 20] = h(1000);
+        [SP + 24] = w(0);
+        [SP + 28] = w(0);
+        [SP + 2c] = w(0);
+        [1f800000] = w(1);
+        A0 = w[model_data + 4] + model_id * 24;
+        A1 = SP + 10;
+        A2 = 0;
+        A3 = 0;
+        animation_prepare_bones_matrixes();
+
+        [1f800000] = b(bu[S1 + 8]);
+        [1f800001] = b(bu[S1 + 9]);
+        [1f800002] = b(bu[S1 + a]);
+
+        [1f80000c] = b(bu[S1 + c]);
+        [1f80000d] = b(bu[S1 + d]);
+        [1f80000e] = b(bu[S1 + e]);
+        [1f80000f] = b(bu[S1 + f]);
+        [1f800010] = b(bu[S1 + 10]);
+        [1f800011] = b(bu[S1 + 11]);
+
+        [1f800003] = b(bu[S1 + 14]);
+        [1f800004] = b(bu[S1 + 15]);
+        [1f800005] = b(bu[S1 + 16]);
+
+        [1f800012] = b(bu[S1 + 18]);
+        [1f800013] = b(bu[S1 + 19]);
+        [1f800014] = b(bu[S1 + 1a]);
+        [1f800015] = b(bu[S1 + 1b]);
+        [1f800016] = b(bu[S1 + 1c]);
+        [1f800017] = b(bu[S1 + 1d]);
+
+        [1f800006] = b(bu[S1 + 20]);
+        [1f800007] = b(bu[S1 + 21]);
+        [1f800008] = b(bu[S1 + 22);
+
+        [1f800018] = b(bu[S1 + 24]);
+        [1f800019] = b(bu[S1 + 25]);
+        [1f80001a] = b(bu[S1 + 26]);
+        [1f80001b] = b(bu[S1 + 27]);
+        [1f80001c] = b(bu[S1 + 28]);
+        [1f80001d] = b(bu[S1 + 29]);
+
+        [1f800009] = b(bu[S1 + 2c]);
+        [1f80000a] = b(bu[S1 + 2d]);
+        [1f80000b] = b(bu[S1 + 2e]);
+        [1f80001e] = b(0);
+
+        A0 = w[model_data + 4] + model_id * 24;
+        A1 = 1f800000;
+        funcb1e40(); // calculate light
+
+        [1f800000 + 0] = b(0);
+        [1f800000 + 1] = b(0);
+        [1f800000 + 2] = b(0);
+        [1f800000 + 3] = b(0);
+        [1f800000 + 4] = b(0);
+        [1f800000 + 5] = b(0);
+        [1f800000 + 6] = b(1);
+        A0 = w[model_data + 4] + model_id * 24;
+        A1 = 1f800000;
+        funcb0edc();
+
+        [800df114] = b(bu[800df114] XOR 1);
+
+        [1f800000 + 0] = b(0);
+        [1f800000 + 1] = b(0);
+        [1f800000 + 2] = b(0);
+        [1f800000 + 3] = b(0);
+        [1f800000 + 4] = b(0);
+        [1f800000 + 5] = b(0);
+        [1f800000 + 6] = b(1);
+
+        A0 = w[model_data + 4] + model_id * 24;
+        A1 = 1f800000;
+        funcb0edc();
+
+        [800df114] = b(bu[800df114] XOR 1);
+    }
+
+    S1 = S1 + 30;
 }
 
 [800e0200] = w(w[SP + 40]);
@@ -1502,33 +1468,21 @@ return draft_offset + hu[parts_data + 16] * 2;
 
 
 ////////////////////////////////
-// bsx_texture_loading_to_vram
+// field_model_bsx_texture_load_to_vram()
 
-S2 = A0; // BSX texture address
-S1 = 0;
+bsx_texture = A0; // BSX texture address
 
-S3 = bu[S2 + 4];
-if (S3 != 0)
+for( int i = 0; i < bu[bsx_texture + 4]; ++i ) // number of textures
 {
-    S0 = S2 + 8;
+    [SP + 10] = h(hu[bsx_texture + 8 + i * c + 4]); // vram x
+    [SP + 12] = h(hu[bsx_texture + 8 + i * c + 6]); // vram y
+    [SP + 14] = h(hu[bsx_texture + 8 + i * c + 0]); // width
+    [SP + 16] = h(hu[bsx_texture + 8 + i * c + 2]); // height
 
-    loopad7ec:	; 800AD7EC
-        [SP + 10] = h(hu[S0 + 4]); // vram x
-        [SP + 12] = h(hu[S0 + 6]); // vram y
-        [SP + 14] = h(hu[S0 + 0]); // width
-        [SP + 16] = h(hu[S0 + 2]); // height
-
-        A0 = SP + 10;
-        A1 = S2 + w[S0 + 8];
-        system_psyq_load_image();
-
-        S1 = S1 + 1;
-        S0 = S0 + c;
-        V0 = S1 < S3;
-    800AD830	bne    v0, zero, loopad7ec [$800ad7ec]
+    A0 = SP + 10;
+    A1 = bsx_texture + w[bsx_texture + 8 + i * c + 8];
+    system_psyq_load_image();
 }
-
-return;
 ////////////////////////////////
 
 
@@ -1536,79 +1490,63 @@ return;
 ////////////////////////////////
 // funcad858()
 
-S1 = A0;
-if( S1 == 0 )
+bsx_add = A0; // some address in bsx texture
+
+if( bsx_add == 0 ) return;
+
+for( int i = 0; i < w[bsx_add + 0]; ++i )
 {
-    return;
-}
-
-S3 = w[S1];
-if( S3 <= 0 )
-{
-    return;
-}
-
-S2 = 0;
-S0 = S1 + 8;
-
-Lad894:	; 800AD894
-    V1 = w[S0];
+    V1 = w[bsx_add + 8 + i * 14 + 0];
     if( V1 == 0 )
     {
-        A0 = w[S0 + c]; // dst
-        A1 = S1 + w[S0 + 4]; // src
-        A2 = w[S0 + 8]; // len
+        A0 = w[bsx_add + 8 + i * 14 + c]; // dst
+        A1 = bsx_add + w[bsx_add + 8 + i * 14 + 4]; // src
+        A2 = w[bsx_add + 8 + i * 14 + 8]; // size
         system_bios_memcpy();
     }
     else if( V1 == 1 ) // replace image block in global texture
     {
-        A0 = w[800dfca0]; // offset ot global tex data
-        V1 = w[S0 + c];
-        if (V1 < hu[A0 + 4]) // if something less than image count in global texture
+        global_tex = w[800dfca0]; // offset ot global tex data
+        V1 = w[bsx_add + 8 + i * 14 + c];
+        if( V1 < hu[global_tex + 4] ) // if something less than image count in global texture
         {
-            A3 = A0 + w[A0 + 8] + V1 * 200;
-            A2 = S1 + w[A0 + 4];
+            dst = global_tex + w[global_tex + 8] + V1 * 200;
+            src = bsx_add + w[bsx_add + 8 + i * 14 + 4];
+            T0 = src + 200;
 
-            T0 = A2 + 200;
-            Lad97c:	; 800AD97C
-                [A3 + 0] = w(w[A2 + 0]);
-                [A3 + 4] = w(w[A2 + 4]);
-                [A3 + 8] = w(w[A2 + 8]);
-                [A3 + c] = w(w[A2 + c]);
-                A2 = A2 + 10;
-                A3 = A3 + 10;
-            800AD9A0	bne    a2, t0, Lad97c [$800ad97c]
+            while( src != T0 )
+            {
+                [dst] = w(w[src]);
+                src += 4;
+                dst += 4;
+            }
         }
     }
     else if( V1 == 2 ) // replace palette block in global texture
     {
-        A1 = w[800dfca0]; // offset ot global tex data
-        A0 = w[S0 + c];
-        if (A0 < hu[A1 + 6])
+        global_tex = w[800dfca0]; // offset ot global tex data
+        A0 = w[bsx_add + 8 + i * 14 + c];
+        if( A0 < hu[global_tex + 6] )
         {
-            V1 = A1 + w[A1 + c] + A0 * 20;
-            V0 = S1 + w[S0 + 4];
-            [V1 +  0] = w(w[V0 +  0]);
-            [V1 +  4] = w(w[V0 +  4]);
-            [V1 +  8] = w(w[V0 +  8]);
-            [V1 +  c] = w(w[V0 +  c]);
-            [V1 + 10] = w(w[V0 + 10]);
-            [V1 + 14] = w(w[V0 + 14]);
-            [V1 + 18] = w(w[V0 + 18]);
-            [V1 + 1c] = w(w[V0 + 1c]);
+            dst = global_tex + w[global_tex + c] + A0 * 20;
+            src = bsx_add + w[bsx_add + 8 + i * 14 + 4];
+            [dst +  0] = w(w[str +  0]);
+            [dst +  4] = w(w[str +  4]);
+            [dst +  8] = w(w[str +  8]);
+            [dst +  c] = w(w[str +  c]);
+            [dst + 10] = w(w[str + 10]);
+            [dst + 14] = w(w[str + 14]);
+            [dst + 18] = w(w[str + 18]);
+            [dst + 1c] = w(w[str + 1c]);
         }
     }
     else if( V1 == 3 ) // load texture to any place in VRAM
     {
-        A0 = S0 + c; // pointer with data 2 bytes vram_x, vram_y, width, height
-        A1 = S1 + w[S0 + 4]; // pointer to image data to load
-        system_psyq_load_image;
+        A0 = bsx_add + 8 + i * 14 + c; // pointer with data 2 bytes vram_x, vram_y, width, height
+        A1 = bsx_add + w[bsx_add + 8 + i * 14 + 4]; // pointer to image data to load
+        system_psyq_load_image();
     }
-
-    S2 = S2 + 1;
-    S0 = S0 + 14;
-    V0 = S2 < S3;
-800ADA7C	bne    v0, zero, Lad894 [$800ad894]
+}
 ////////////////////////////////
 
 
@@ -1696,7 +1634,7 @@ return A1;
 
 
 ////////////////////////////////
-// field_load_and_global_models_and_textures()
+// field_model_load_global_models()
 
 block7_header = A0;
 models_struct = A1;
@@ -1709,7 +1647,7 @@ for( int i = 0; i < hu[block7_header + 2]; ++i ) // number of models
     A1 = models_struct;
     A2 = free_mem;
     A3 = i;
-    field_load_and_init_global_models();
+    field_model_load_bcx();
     free_mem = V0;
 }
 
@@ -1732,7 +1670,7 @@ return free_mem;
 
 
 ////////////////////////////////
-// field_load_and_init_global_models()
+// field_model_load_bcx()
 
 block7_header = A0;
 models_struct = A1;
@@ -1749,8 +1687,7 @@ if( bu[block7_models + block7_id * 8 + 5] != 0 ) // is model enabled
 
     if( ( global_model_id - 1 ) < 9 ) // global model
     {
-        // read 6 byte
-        if( bu[block7_models + block7_id * 8 + 6] == 0 ) // if global model not yet loaded
+        if( bu[block7_models + block7_id * 8 + 6] == 0 ) // BCX not loaded
         {
             switch( global_model_id - 1 )
             {
@@ -1809,6 +1746,7 @@ if( bu[block7_models + block7_id * 8 + 5] != 0 ) // is model enabled
                 [dst + i * 20 + 1c] = w(w[src + i * 20 + 1c]);
             }
 
+            // copy animation data
             dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 1a];
             src = w[bcx_data + 1c] + hu[bcx_data + 1a];
             for( int i = 0; i < bu[bcx_data + 4]; ++i ) // number of animations
@@ -1822,7 +1760,7 @@ if( bu[block7_models + block7_id * 8 + 5] != 0 ) // is model enabled
             [800e0204] = w(bcx_data);
             return bcx_data;
         }
-        else
+        else // BCX already loaded
         {
             for( int i = 0; i < block7_id; ++i )
             {
@@ -1830,49 +1768,45 @@ if( bu[block7_models + block7_id * 8 + 5] != 0 ) // is model enabled
                 {
                     model_id = bu[block7_models + i * 8 + 4];
                     model_data = w[models_struct + 4];
-                    T1 = model_data + model_id * 24;
-                    T0 = model_data + i * 24;
-                    V1 = w[T1 + 1c];
-                    V0 = w[T0 + 1c];
 
                     // copy bones
-                    for( int j = 0; j < bu[T0 + 2]; ++j )
+                    dst = w[model_data + model_id * 24 + 1c];
+                    src = w[model_data + i * 24 + 1c];
+                    for( int j = 0; j < bu[model_data + i * 24 + 2]; ++j ) // number of bones
                     {
-                        [V1 + j * 4] = w(w[V0 + j * 4]);
+                        [dst + j * 4] = w(w[src + j * 4]);
                     }
 
-                    // copy model data
-                    A1 = w[T1 + 1c] + hu[T1 + 18];
-                    A0 = w[T0 + 1c] + hu[T0 + 18];
-
-                    for( int j = 0; j < bu[T0 + 3]; ++j )
+                    // copy parts data
+                    dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 18];
+                    src = w[model_data + i * 24 + 1c] + hu[model_data + i * 24 + 18];
+                    for( int j = 0; j < bu[model_data + i * 24 + 3]; ++j ) // number of model parts
                     {
-                        [A1 + j * 20 +  0] = w(w[A0 + j * 20 +  0])
-                        [A1 + j * 20 +  4] = w(w[A0 + j * 20 +  4])
-                        [A1 + j * 20 +  8] = w(w[A0 + j * 20 +  8])
-                        [A1 + j * 20 +  c] = w(w[A0 + j * 20 +  c])
-                        [A1 + j * 20 + 10] = w(w[A0 + j * 20 + 10])
-                        [A1 + j * 20 + 14] = w(w[A0 + j * 20 + 14])
-                        [A1 + j * 20 + 18] = w(w[A0 + j * 20 + 18])
-                        [A1 + j * 20 + 1c] = w(w[A0 + j * 20 + 1c])
+                        [dst + j * 20 +  0] = w(w[src + j * 20 +  0])
+                        [dst + j * 20 +  4] = w(w[src + j * 20 +  4])
+                        [dst + j * 20 +  8] = w(w[src + j * 20 +  8])
+                        [dst + j * 20 +  c] = w(w[src + j * 20 +  c])
+                        [dst + j * 20 + 10] = w(w[src + j * 20 + 10])
+                        [dst + j * 20 + 14] = w(w[src + j * 20 + 14])
+                        [dst + j * 20 + 18] = w(w[src + j * 20 + 18])
+                        [dst + j * 20 + 1c] = w(w[src + j * 20 + 1c])
                     }
 
-                    A1 = w[T1 + 1c] + hu[T1 + 1a];
-                    A0 = w[T0 + 1c] + hu[T0 + 1a];
-
-                    for( int j = 0; j < bu[T0 + 4]; ++j )
+                    // copy animation data
+                    dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 1a];
+                    src = w[model_data + i * 24 + 1c] + hu[model_data + i * 24 + 1a];
+                    for( int j = 0; j < bu[model_data + i * 24 + 4]; ++j ) // number of animations
                     {
-                        [A1 + j * 10 + 0] = w(w[A0 + j * 10 + 0])
-                        [A1 + j * 10 + 4] = w(w[A0 + j * 10 + 4])
-                        [A1 + j * 10 + 8] = w(w[A0 + j * 10 + 8])
-                        [A1 + j * 10 + c] = w(w[A0 + j * 10 + c])
+                        [dst + j * 10 + 0] = w(w[src + j * 10 + 0])
+                        [dst + j * 10 + 4] = w(w[src + j * 10 + 4])
+                        [dst + j * 10 + 8] = w(w[src + j * 10 + 8])
+                        [dst + j * 10 + c] = w(w[src + j * 10 + c])
                     }
 
                     [800e0204] = w(free_mem);
                     return free_mem;
                 }
             }
-
             [800e0204] = w(free_mem);
         }
     }
@@ -3089,7 +3023,7 @@ if (V0 == 1 || V0 == 2)
 }
 
 V1 = b[model_data + 1];
-if (V1 == -1)
+if( V1 == -1 )
 {
     number_of_model_parts = bu[model_data + 3];
     if (number_of_model_parts > 0) // model parts > 0
@@ -3107,7 +3041,7 @@ if (V1 == -1)
 
     return 1;
 }
-else if (V1 < e)
+else if( V1 < e )
 {
     switch (V1)
     {
@@ -3117,7 +3051,7 @@ else if (V1 < e)
 
             A0 = model_data;
             A1 = T2;
-            funcb1c7c;
+            funcb1c7c();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -3128,7 +3062,7 @@ else if (V1 < e)
         {
             A0 = model_data;
             A1 = T2;
-            kawai_action_1;
+            kawai_action_1();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -3139,7 +3073,7 @@ else if (V1 < e)
         {
             A0 = model_data;
             A1 = T2;
-            funcb0edc;
+            funcb0edc();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -3150,7 +3084,7 @@ else if (V1 < e)
         {
             A0 = model_data;
             A1 = T2;
-            funcb0618;
+            funcb0618();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -3161,7 +3095,7 @@ else if (V1 < e)
         {
             A0 = model_data;
             A1 = T2;
-            funcb2dd4;
+            funcb2dd4();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -3222,14 +3156,14 @@ else if (V1 < e)
 
             A0 = model_data;
             A1 = 800dfe1c;
-            funcb5260;
+            funcb5260();
 
             [model_data + 1] = b(-1);
             return 1;
         }
         break;
 
-        case 6 7 8 9 B C:
+        case 6 7 8 9 b c:
         {
             A3 = bu[T2 + 0];
             if (A3 == 0)
@@ -3276,7 +3210,7 @@ else if (V1 < e)
         {
             A0 = model_data;
             A1 = T2;
-            kawai_action_a;
+            kawai_action_a();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -4866,7 +4800,7 @@ Lb1c70:	; 800B1C70
 
 
 ////////////////////////////////
-// funcb1c7c
+// funcb1c7c()
 // kawai_action_0
 // load eyes and mouth
 //                [1f800000] = b(0);
@@ -4890,7 +4824,7 @@ if( model_id < 21 )
     A0 = SP + 10;
     V0 = bu[800dfca4 + face_id * 7 + bu[S3 + 0]];
     A1 = w[800dfca0] + image_offset + V0 * 200;
-    system_psyq_load_image;
+    system_psyq_load_image();
 
     [SP + 10] = h(300 + model_id % 4 * 10 + 8);
     [SP + 12] = h(100 + model_id / 4 * 20);
@@ -4899,7 +4833,7 @@ if( model_id < 21 )
     A0 = SP + 10;
     V0 = bu[800dfca4 + face_id * 7 + bu[S3 + 1]];
     A1 = w[800dfca0] + image_offset + V0 * 200;
-    system_psyq_load_image;
+    system_psyq_load_image();
 
     [SP + 10] = h(300 + model_id % 8 * 8 + 0);
     [SP + 12] = h(1a0 + model_id / 8 * 20);
@@ -4908,7 +4842,7 @@ if( model_id < 21 )
     A0 = SP + 10;
     V0 = bu[800dfd94 + face_id * 3 + bu[S3 + 2]];
     A1 = w[800dfca0] + image_offset + V0 * 200;
-    system_psyq_load_image;
+    system_psyq_load_image();
 }
 
 return 1;

@@ -28,13 +28,13 @@ A0 = block7;
 A1 = w[8004a62c]; // model struct
 A2 = w[80075e10]; // place for BCX
 A3 = 1; // load global texture
-field_load_and_global_models_and_textures();
+field_model_load_global_models();
 [80075e10] = w(V0);
 
 A0 = block7;
-A1 = w[8004a62c]; // offset to new model structure at 80138250.
-A2 = 800a00dc;
-A3 = 801b0000; // loaded field bsx
+A1 = w[8004a62c]; // model struct
+A2 = 800a00dc; // static var in FIELD.BIN (0 in release version)
+A3 = 801b0000;
 funcac35c(); // load textures and init packet drafts/ calculates lighting scale
 [80075e10] = w(V0);
 

@@ -189,7 +189,7 @@
 // model_packet_draft_prepare
 800ACC5C-800AD7B4
 ////////////////////////////////
-// bsx_texture_loading_to_vram
+// field_model_bsx_texture_load_to_vram
 800AD7B8-800AD854
 ////////////////////////////////
 // funcad858
@@ -198,10 +198,10 @@
 // field_model_struct_init
 800ADAA4-800ADC8C
 ////////////////////////////////
-// field_load_and_global_models_and_textures
+// field_model_load_global_models
 800ADC90-800ADD6C
 ////////////////////////////////
-// field_load_and_init_global_models
+// field_model_load_bcx
 800ADD70-800AE238
 ////////////////////////////////
 // funcae23c
