@@ -1,13 +1,5 @@
 ////////////////////////////////
 FIELD.TDB file for textures.
 
-    +  0 [][][][] size of file.
-    +  4 [][][][] offset to model description.
+    + 8 [][][][] image offset.
 
-// model descripotion header
-    +  2 []       number of bones.
-    +  3 []       number of parts.
-    +  4 []       number of animation.
-    + 18 [][]     local offset to model parts.
-    + 1a [][]     local offset to animation.
-    + 1c [][][][] offset to bones data.

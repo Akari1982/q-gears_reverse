@@ -671,13 +671,13 @@ for( int i = 0; i < number_of_model; ++i )
             A1 = w[800dfca0] + w[w[800dfca0] + c] + face_id * 20; // palette data
             system_psyq_load_image(); // load image to VRAM
 
-            [1f800000] = b(0);
-            [1f800001] = b(0);
-            [1f800002] = b(0);
+            [1f800000] = b(0); // eye1
+            [1f800001] = b(0); // eye2
+            [1f800002] = b(0); // mouth
             [1f800003] = b(model_id);
 
-            A1 = 1f800000;
             A0 = w[model_data + 4] + model_id * 24;
+            A1 = 1f800000;
             funcb1c7c(); // load eyes and mouth
         }
 
@@ -4802,6 +4802,7 @@ Lb1c70:	; 800B1C70
 ////////////////////////////////
 // funcb1c7c()
 // kawai_action_0
+
 // load eyes and mouth
 //                [1f800000] = b(0);
 //                [1f800001] = b(0);
@@ -4809,21 +4810,28 @@ Lb1c70:	; 800B1C70
 //                [1f800003] = b(model_id);
 //                A1 = 1f800000;
 //                A0 = w[model_data + 4] + model_id * 24;
+
 model_data = A0;
 S3 = A1;
+
 model_id = bu[S3 + 3];
+
 if( model_id < 21 )
 {
-    image_offset = w[w[800dfca0] + 8];
+    tdb_file = w[800dfca0];
+    image_offset = w[tdb_file + 8];
     face_id = bu[model_data + 15];
+    eye1 = bu[S3 + 0];
+    eye2 = bu[S3 + 1];
+    mouth = bu[S3 + 2];
 
-    [SP + 10] = h(300 + model_id % 4 * 10 + 0);
-    [SP + 12] = h(100 + model_id / 4 * 20);
-    [SP + 14] = h(8);
-    [SP + 16] = h(20);
+    [SP + 10] = h(300 + model_id % 4 * 10 + 0); // vram x
+    [SP + 12] = h(100 + model_id / 4 * 20); // vram y
+    [SP + 14] = h(8); // width
+    [SP + 16] = h(20); // height
     A0 = SP + 10;
-    V0 = bu[800dfca4 + face_id * 7 + bu[S3 + 0]];
-    A1 = w[800dfca0] + image_offset + V0 * 200;
+    V0 = bu[800dfca4 + face_id * 7 + eye1];
+    A1 = tdb_file + image_offset + V0 * 200;
     system_psyq_load_image();
 
     [SP + 10] = h(300 + model_id % 4 * 10 + 8);
@@ -4831,8 +4839,8 @@ if( model_id < 21 )
     [SP + 14] = h(8);
     [SP + 16] = h(20);
     A0 = SP + 10;
-    V0 = bu[800dfca4 + face_id * 7 + bu[S3 + 1]];
-    A1 = w[800dfca0] + image_offset + V0 * 200;
+    V0 = bu[800dfca4 + face_id * 7 + eye2];
+    A1 = tdb_file + image_offset + V0 * 200;
     system_psyq_load_image();
 
     [SP + 10] = h(300 + model_id % 8 * 8 + 0);
@@ -4840,8 +4848,8 @@ if( model_id < 21 )
     [SP + 14] = h(8);
     [SP + 16] = h(20);
     A0 = SP + 10;
-    V0 = bu[800dfd94 + face_id * 3 + bu[S3 + 2]];
-    A1 = w[800dfca0] + image_offset + V0 * 200;
+    V0 = bu[800dfd94 + face_id * 3 + mouth];
+    A1 = tdb_file + image_offset + V0 * 200;
     system_psyq_load_image();
 }
 
