@@ -596,18 +596,18 @@ A0 = w[SP + 40];
 
 for( int i = 0; i < number_of_model; ++i )
 {
-        [A0 + i * 30 +  0] = w(w[bsx_header + 10 + i * 30 +  0]);
-        [A0 + i * 30 +  4] = w(w[bsx_header + 10 + i * 30 +  4]);
-        [A0 + i * 30 +  8] = w(w[bsx_header + 10 + i * 30 +  8]);
-        [A0 + i * 30 +  c] = w(w[bsx_header + 10 + i * 30 +  c]);
-        [A0 + i * 30 + 10] = w(w[bsx_header + 10 + i * 30 + 10]);
-        [A0 + i * 30 + 14] = w(w[bsx_header + 10 + i * 30 + 14]);
-        [A0 + i * 30 + 18] = w(w[bsx_header + 10 + i * 30 + 18]);
-        [A0 + i * 30 + 1c] = w(w[bsx_header + 10 + i * 30 + 1c]);
-        [A0 + i * 30 + 20] = w(w[bsx_header + 10 + i * 30 + 20]);
-        [A0 + i * 30 + 24] = w(w[bsx_header + 10 + i * 30 + 24]);
-        [A0 + i * 30 + 28] = w(w[bsx_header + 10 + i * 30 + 28]);
-        [A0 + i * 30 + 2c] = w(w[bsx_header + 10 + i * 30 + 2c]);
+    [A0 + i * 30 +  0] = w(w[bsx_header + 10 + i * 30 +  0]);
+    [A0 + i * 30 +  4] = w(w[bsx_header + 10 + i * 30 +  4]);
+    [A0 + i * 30 +  8] = w(w[bsx_header + 10 + i * 30 +  8]);
+    [A0 + i * 30 +  c] = w(w[bsx_header + 10 + i * 30 +  c]);
+    [A0 + i * 30 + 10] = w(w[bsx_header + 10 + i * 30 + 10]);
+    [A0 + i * 30 + 14] = w(w[bsx_header + 10 + i * 30 + 14]);
+    [A0 + i * 30 + 18] = w(w[bsx_header + 10 + i * 30 + 18]);
+    [A0 + i * 30 + 1c] = w(w[bsx_header + 10 + i * 30 + 1c]);
+    [A0 + i * 30 + 20] = w(w[bsx_header + 10 + i * 30 + 20]);
+    [A0 + i * 30 + 24] = w(w[bsx_header + 10 + i * 30 + 24]);
+    [A0 + i * 30 + 28] = w(w[bsx_header + 10 + i * 30 + 28]);
+    [A0 + i * 30 + 2c] = w(w[bsx_header + 10 + i * 30 + 2c]);
 }
 
 S1 = w[SP + 40];
@@ -619,7 +619,7 @@ for( int i = 0; i < number_of_model; ++i )
         model_id = bu[block_7 + i * 8 + 4];
 
         A0 = model_data + model_id * 24; // new model structure data
-        A1 = bsx_header; // offset to start data in BSX
+        A1 = bsx_header; // where create packets drafts
         A2 = model_id; // model id
         funcacba0(); // create draft packets and scale model
         bsx_header = V0;
@@ -751,38 +751,29 @@ return w[SP + 40];
 ////////////////////////////////
 // funcacba0)
 
-S0 = A0; // new model structure data
+model_data = S0 = A0; // new model structure data
 S3 = A1; // where create packets drafts
-S4 = A2; // model id
+model_id = A2;
 
-[S0 + 20] = w(S3);
+[model_data + 20] = w(S3);
 
-S3 = S3 + bu[S0 + 2] * 20; // skip place for bone matrixes
+S3 = S3 + bu[model_data + 2] * 20; // skip place for bone matrixes
 
-V1 = bu[S0 + 3]; // model parts
-if (V1 != 0)
+for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
-    S2 = 0;
-    S1 = w[S0 + 1c] + hu[S0 + 18]; // offset to model parts part.
-
-    loopacbf8:	; 800ACBF8
-        A0 = S1 + S2 * 20; // offset to model parts part.
-        A1 = S3; // offset to place to store packet drafts
-        A2 = 0;
-        A3 = S4; // model id
-        model_packet_draft_prepare();
-        S3 = V0;
-
-        S2 = S2 + 1;
-        V0 = S2 < V1;
-    800ACC1C	bne    v0, zero, loopacbf8 [$800acbf8]
+    A0 = w[model_data + 1c] + hu[model_data + 18] + i * 20; // offset to model parts part.
+    A1 = S3; // offset to place to store packet drafts
+    A2 = 0;
+    A3 = model_id;
+    model_packet_draft_prepare();
+    S3 = V0;
 }
 
 // scale all model related data
-A0 = S0; // model_data
+A0 = model_data;
 A1 = h[A0 + 16]; // model scale
 A2 = 0;
-funcaf6ec;
+funcaf6ec();
 
 return S3;
 ////////////////////////////////
@@ -791,29 +782,23 @@ return S3;
 
 ////////////////////////////////
 // model_packet_draft_prepare()
-//        A0 = S1 + S2 * 20; // offset to model parts part.
-//        A1 = S3; // offset to place to store packet drafts
-//        A2 = 0;
-//        A3 = S4; // model id
 
-parts_data   = A0;
-draft_offset = A1;
-model_id     = A3;
+parts_data = A0;
+packet = A1;
+model_id = A3;
 
 block4_data     = w[parts_data + 18] + hu[parts_data + 12]; // global offset to block 4
 A3 = textcoords_data = w[parts_data + 18] + hu[parts_data + 10]; // global texture coords block
 
-if (A2 != 0) // always 0
+if( A2 != 0 ) // always 0
 {
     [T1 + 18] = w(parts_data + 20);
 }
 
-T1 = draft_offset; // offset to place to store packet drafts
+T1 = packet; // offset to place to store packet drafts
 T0 = parts_data; // offset to model parts part.
 
 [T0 + 1c] = w(T1); // offset to start data in bsx
-
-
 
 global_tex_x1 = w((model_id % 4) * 40);
 global_tex_y1 = w((model_id / 4) * 20);
@@ -821,20 +806,12 @@ global_tex_y1 = w((model_id / 4) * 20);
 global_tex_x2 = w((model_id % 8) * 20);
 global_tex_y2 = w((model_id / 8) * 20);
 
-
-
-i = 0;
-
-Lacd30:	; 800ACD30
-    S5 = draft_offset;
+for( int i = 0; i < 2; ++i )
+{
+    S5 = packet;
     FP = w[parts_data + 18] + hu[parts_data + 14]; // global offset to 5th block
 
-    if (i != 0)
-    {
-        S5 = S5 + hu[parts_data + 16];
-    }
-
-
+    if( i != 0 ) S5 += hu[parts_data + 16];
 
     number_of_textured_quad = bu[parts_data + 4]; // number of textured quads
     if (number_of_textured_quad != 0)
@@ -1421,16 +1398,9 @@ Lacd30:	; 800ACD30
             V0 = S2 < S7;
         800AD74C	bne    v0, zero, loopad710 [$800ad710]
     }
+}
 
-
-
-    i = i + 1;
-    V0 = i < 2;
-800AD764	bne    v0, zero, Lacd30 [$800acd30]
-
-
-
-return draft_offset + hu[parts_data + 16] * 2;
+return packet + hu[parts_data + 16] * 2;
 ////////////////////////////////
 
 

@@ -909,12 +909,12 @@ if (V0 == 0)
         A0 = S1;
         A1 = S3;
         A2 = camera_id;
-        funcbea38; // call camera direction script
+        funcbea38(); // call camera direction script
 
         A0 = S1;
         A1 = S3;
         A2 = camera_id;
-        funcbcb1c; // call camera position script
+        funcbcb1c(); // call camera position script
 
         A1 = S1 + 1;
         V0 = S1 < 3;
@@ -1021,11 +1021,13 @@ funcbca58; // copy info to start and end camera vector
 
 
 ////////////////////////////////
-// funcbcb1c
-// camera direction script
+// funcbcb1c()
+// camera position script
+
 // A2 = -3 - win
 // A2 = -2 - init
 // A2 = -1 - default
+
 camera_id = A2;
 camera_struct_id = A0;
 S5 = A0;

@@ -2,6 +2,10 @@
 BSX file for models.
 
     +  0 [][][][] size of file.
+    +  4 [][][][] offset to header
+
+// header
+    +  0 [][][][] place in memory.
     +  4 [][][][] number of models.
     +  8 [][][][] offset to texture.
     +  c [][][][] ???
@@ -14,10 +18,6 @@ BSX file for models.
         + 23 []       number of parts.
         + 2a []       start animation id.
         + 2f []       number of animation.
-
-        + 18 [][]     local offset to model parts.
-        + 1a [][]     local offset to animation.
-        + 1c [][][][] offset to bones data.
 
 // textures descripotion header
     +  4 []       number of textures.
