@@ -51,7 +51,7 @@ models data
         +2 []       number of parts.
         +3 []       number of animations.
         +4 []       model id in 80138250 model array. -1 if model not initing.
-        +5 []       store 1 if this is model in party. 0 otherwise.
+        +5 []       1 - model enabled. Store 1 if this is model in party. 0 otherwise.
         +6 []       global model file state (1 - loaded, 0 - not loaded).
         +7 []       global model id (to find out which BCX to use) 
 ////////////////////////////////

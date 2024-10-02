@@ -1,5 +1,11 @@
 ////////////////////////////////
 FIELD.TDB file for textures.
 
-    + 8 [][][][] image offset.
+    + 4 [][]     number of images blocks.
+    + 6 [][]     number of faces palettes.
+    + 8 [][][][] images offset.
+    + c [][][][] palettes data offset.
 
+// images are blocks 0x200 size of separate eyes and mouths.
+
+// palettes are array of 0x20 size blocks by face_id.

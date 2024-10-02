@@ -3581,20 +3581,20 @@ for( int i = 0; i < number_of_models; ++i )
 // ladder update
 for( int i = 0; i < number_of_models; ++i )
 {
-    V1 = bu[80074EA4 + i * 84 + 5D];
-    if (V1 == 4 || V1 == 5)
+    V1 = bu[80074ea4 + i * 84 + 5d];
+    if( ( V1 == 4 ) || ( V1 == 5 ) )
     {
-        V0 = w[8008357C];
+        V0 = w[8008357c];
         A0 = bu[V0 + i * 8 + 4];
         if( A0 != ff )
         {
             V1 = w[8004a62c];
             V1 = w[V1 + 4];
             V0 = V1 + A0 * 24;
-            A0 = hu[V0 + 1A];
-            V0 = w[V0 + 1C];
+            A0 = hu[V0 + 1a];
+            V0 = w[V0 + 1c];
 
-            V1 = h[80074EA4 + i * 84 + 6A];
+            V1 = h[80074ea4 + i * 84 + 6a];
             S3 = A0 + V0;
             if (V1 == 0)
             {

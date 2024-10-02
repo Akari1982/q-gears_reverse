@@ -2,20 +2,20 @@
 BSX file for models.
 
     +  0 [][][][] size of file.
-    +  4 [][][][] offset to model description.
+    +  4 [][][][] number of models.
     +  8 [][][][] offset to texture.
+    + 10 array of model data (0x30 size)
+        +  2 [][]     model scale.
 
-// model descripotion header
-    +  2 []       number of bones.
-    +  3 []       number of parts.
-    +  4 []       number of animation.
-    + 18 [][]     local offset to model parts.
-    + 1a [][]     local offset to animation.
-    + 1c [][][][] offset to bones data.
+        +  3 []       number of parts.
+        +  4 []       number of animation.
+        + 18 [][]     local offset to model parts.
+        + 1a [][]     local offset to animation.
+        + 1c [][][][] offset to bones data.
 
 // textures descripotion header
     +  4 []       number of textures.
-    +  5 [][][]   some offset.
+    +  5 [][][]   texture add offset (modify FIELD.TDB or memory).
     +  8 start of textures settings (0xc size).
         + 0 [][]     width.
         + 2 [][]     height.
@@ -34,11 +34,11 @@ BSX file for models.
         // type 1 - replace texture.
         +  4 [][][][] offset to data.
         +  8 [][][][] size.
-        +  c [][][][] id of block to replace in global tex
-        // type 2 - replace CLUT
+        +  c [][][][] id of image block to replace in global tex.
+        // type 2 - replace CLUT.
         +  4 [][][][] offset to data.
         +  8 [][][][] size.
-        +  c [][][][] id of block to replace in global tex
+        +  c [][][][] id of palette (face id) to replace in global tex.
         // type 3 - load image to vram.
         +  4 [][][][] offset to data.
         +  8 [][][][] size.

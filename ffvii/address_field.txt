@@ -392,10 +392,8 @@
 800df520 normals table
 800dfca0 store 80128000 here during level models initing. We store globals texture here.
 
-800dfca4 array of eye face settings (0x7 size).
-
-800dfd94 array of mouth face settings (0x3 size).
-
+800dfca4 array of eye face settings (0x7 tdb textures id for each model 0x1 byte each).
+800dfd94 array of mouth face settings (0x3 tdb textures id for each model 0x1 byte each).
 800dfdfc array related with kawai. (0x2 size, 0x10 items) First element init with 0x10, others with 0.
 
 800dfe1c

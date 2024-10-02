@@ -497,8 +497,10 @@ func3aed8();
 // funcac35c()
 
 block_7 = A0;
-model_data = A1;
+models_struct = A1;
 bsx_file = A3; // bsx file
+
+model_data = w[models_struct + 4];
 
 if( bu[A2] != 0 ) // use CLOUD.BCX instead of bsx
 {
@@ -516,22 +518,22 @@ else
     // copy bsx to new location
     T1 = w[bsx_file] / 4 + (0 < (w[bsx_file] & 3)); // count number of ints
 
+    dst = w[800e0204]; // new BSX file address
     for( int i = 0; i < T1; ++i )
     {
-        [w[800e0204] + i * 4 + 0] = w(w[bsx_file + i * 4 + 0]);
+        [dst + i * 4 + 0] = w(w[bsx_file + i * 4 + 0]);
     }
-
-    bsx_file = w[800e0204]; // BSX file address
+    bsx_file = dst;
 }
 
 bsx_header = bsx_file + w[bsx_file + 4]; // offset to start data in BSX
 bsx_texture = bsx_header + w[bsx_header + 8]; // global offset to texture in BSX
 
-// if some offset exist
+// if tdb mod section exist
 if( w[bsx_texture + 4] & ffffff00 )
 {
     A0 = bsx_texture + ((bu[bsx_texture + 5] << 10) | hu[bsx_texture + 6]);
-    funcad858();
+    field_model_bsx_tdb_modify();
 }
 
 A0 = bsx_texture;
@@ -540,29 +542,24 @@ field_model_bsx_texture_load_to_vram();
 A0 = 0;
 system_psyq_draw_sync();
 
-// add additional bones parts and animations from bsx as well as scale
 for( int i = 0; i < w[bsx_header + 4]; ++i ) // number of models
 {
     if( bu[block_7 + i * 8 + 5] != 0 ) // if model enabled
     {
         model_id = bu[block_7 + i * 8 + 4];
 
-        T0 = bsx_header + 10 + S3 * 30; // offset to start data in BSX + current offset
+        [model_data + model_id * 24 + 16] = h(hu[bsx_header + 10 + i * 30 + 2]); // set scale
 
-        T4 = w[model_data + 4] + model_id * 24; // offset to new structures data.
+        T2 = bsx_header + 10 + i * 30 + w[bsx_header + 10 + i * 30 + 4];
 
-        [T4 + 16] = h(hu[T0 + 2]); // set scale
-
-        T2 = T0 + w[T0 + 4];
-
-        A0 = w[T4 + 1c];
+        A0 = w[model_data + model_id * 24 + 1c];
 
         // copy bones
-        T3 = bu[T0 + 17];
+        T3 = bu[bsx_header + 10 + i * 30 + 17];
         if( T3 != 0 )
         {
             A1 = 0;
-            V0 = b[T0 + 12];
+            V0 = b[bsx_header + 10 + i * 30 + 12];
 
             loopac548:	; 800AC548
                 [A0 + (V0 + A1) * 4] = w(w[T2 + 00]);
@@ -574,12 +571,12 @@ for( int i = 0; i < w[bsx_header + 4]; ++i ) // number of models
         }
 
         // copy model parts
-        T1 = w[T4 + 1c] + hu[T4 + 18];
-        T3 = bu[T0 + 23];
+        T1 = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 18];
+        T3 = bu[bsx_header + 10 + i * 30 + 23];
         if( T3 != 0 )
         {
             A1 = 0;
-            V0 = b[T0 + 1e];
+            V0 = b[bsx_header + 10 + i * 30 + 1e];
 
             loopac590:	; 800AC590
                 [T1 + (V0 + A1) * 20 + 00] = w(w[T2 + 00]);
@@ -597,12 +594,12 @@ for( int i = 0; i < w[bsx_header + 4]; ++i ) // number of models
             800AC678	bne    v0, zero, loopac590 [$800ac590]
         }
 
-        T1 = w[T4 + 1c] + hu[T4 + 1a];
-        T3 = bu[T0 + 2f];
+        T1 = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 1a];
+        T3 = bu[bsx_header + 10 + i * 30 + 2f];
         if( T3 != 0 )
         {
             A1 = 0;
-            V0 = b[T0 + 2a];
+            V0 = b[bsx_header + 10 + i * 30 + 2a];
 
             loopac6a0:	; 800AC6A0
                 [T1 + (V0 + A1) * 10 + 00] = w(w[T2 + 00]);
@@ -652,13 +649,13 @@ for( int i = 0; i < number_of_model; ++i )
     {
         model_id = bu[block_7 + i * 8 + 4];
 
-        A0 = w[model_data + 4] + model_id * 24; // new model structure data
+        A0 = model_data + model_id * 24; // new model structure data
         A1 = FP; // offset to start data in BSX
         A2 = model_id; // model id
         funcacba0(); // create draft packets and scale model
         FP = V0;
 
-        model_data_struct = w[model_data + 4] + model_id * 24; // new model structure data
+        model_data_struct = model_data + model_id * 24; // new model structure data
         face_id = bu[model_data_struct + 15];
         if( face_id < 21 )
         {
@@ -667,8 +664,10 @@ for( int i = 0; i < number_of_model; ++i )
             [SP + 34] = h(10);
             [SP + 36] = h(1);
 
+            tdb_file = w[800dfca0];
+
             A0 = SP + 30;
-            A1 = w[800dfca0] + w[w[800dfca0] + c] + face_id * 20; // palette data
+            A1 = tdb_file + w[tdb_file + c] + face_id * 20; // palette data
             system_psyq_load_image(); // load image to VRAM
 
             [1f800000] = b(0); // eye1
@@ -676,7 +675,7 @@ for( int i = 0; i < number_of_model; ++i )
             [1f800002] = b(0); // mouth
             [1f800003] = b(model_id);
 
-            A0 = w[model_data + 4] + model_id * 24;
+            A0 = model_data + model_id * 24;
             A1 = 1f800000;
             funcb1c7c(); // load eyes and mouth
         }
@@ -695,7 +694,7 @@ for( int i = 0; i < number_of_model; ++i )
         [SP + 28] = w(0);
         [SP + 2c] = w(0);
         [1f800000] = w(1);
-        A0 = w[model_data + 4] + model_id * 24;
+        A0 = model_data + model_id * 24;
         A1 = SP + 10;
         A2 = 0;
         A3 = 0;
@@ -739,7 +738,7 @@ for( int i = 0; i < number_of_model; ++i )
         [1f80000b] = b(bu[S1 + 2e]);
         [1f80001e] = b(0);
 
-        A0 = w[model_data + 4] + model_id * 24;
+        A0 = model_data + model_id * 24;
         A1 = 1f800000;
         funcb1e40(); // calculate light
 
@@ -750,7 +749,7 @@ for( int i = 0; i < number_of_model; ++i )
         [1f800000 + 4] = b(0);
         [1f800000 + 5] = b(0);
         [1f800000 + 6] = b(1);
-        A0 = w[model_data + 4] + model_id * 24;
+        A0 = model_data + model_id * 24;
         A1 = 1f800000;
         funcb0edc();
 
@@ -764,7 +763,7 @@ for( int i = 0; i < number_of_model; ++i )
         [1f800000 + 5] = b(0);
         [1f800000 + 6] = b(1);
 
-        A0 = w[model_data + 4] + model_id * 24;
+        A0 = model_data + model_id * 24;
         A1 = 1f800000;
         funcb0edc();
 
@@ -1488,9 +1487,9 @@ for( int i = 0; i < bu[bsx_texture + 4]; ++i ) // number of textures
 
 
 ////////////////////////////////
-// funcad858()
+// field_model_bsx_tdb_modify()
 
-bsx_add = A0; // some address in bsx texture
+bsx_add = A0;
 
 if( bsx_add == 0 ) return;
 
@@ -1506,11 +1505,11 @@ for( int i = 0; i < w[bsx_add + 0]; ++i )
     }
     else if( V1 == 1 ) // replace image block in global texture
     {
-        global_tex = w[800dfca0]; // offset ot global tex data
+        tdb_file = w[800dfca0]; // offset ot global tex data
         V1 = w[bsx_add + 8 + i * 14 + c];
-        if( V1 < hu[global_tex + 4] ) // if something less than image count in global texture
+        if( V1 < hu[tdb_file + 4] ) // if something less than image count in global texture
         {
-            dst = global_tex + w[global_tex + 8] + V1 * 200;
+            dst = tdb_file + w[tdb_file + 8] + V1 * 200;
             src = bsx_add + w[bsx_add + 8 + i * 14 + 4];
             T0 = src + 200;
 
@@ -1524,11 +1523,11 @@ for( int i = 0; i < w[bsx_add + 0]; ++i )
     }
     else if( V1 == 2 ) // replace palette block in global texture
     {
-        global_tex = w[800dfca0]; // offset ot global tex data
-        A0 = w[bsx_add + 8 + i * 14 + c];
-        if( A0 < hu[global_tex + 6] )
+        tdb_file = w[800dfca0]; // offset ot global tex data
+        face_id = w[bsx_add + 8 + i * 14 + c];
+        if( face_id < hu[tdb_file + 6] )
         {
-            dst = global_tex + w[global_tex + c] + A0 * 20;
+            dst = tdb_file + w[tdb_file + c] + face_id * 20;
             src = bsx_add + w[bsx_add + 8 + i * 14 + 4];
             [dst +  0] = w(w[str +  0]);
             [dst +  4] = w(w[str +  4]);
@@ -4802,14 +4801,7 @@ Lb1c70:	; 800B1C70
 ////////////////////////////////
 // funcb1c7c()
 // kawai_action_0
-
 // load eyes and mouth
-//                [1f800000] = b(0);
-//                [1f800001] = b(0);
-//                [1f800002] = b(0);
-//                [1f800003] = b(model_id);
-//                A1 = 1f800000;
-//                A0 = w[model_data + 4] + model_id * 24;
 
 model_data = A0;
 S3 = A1;

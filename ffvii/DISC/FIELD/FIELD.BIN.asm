@@ -192,7 +192,7 @@
 // field_model_bsx_texture_load_to_vram
 800AD7B8-800AD854
 ////////////////////////////////
-// funcad858
+// field_model_bsx_tdb_modify
 800AD858-800ADAA0
 ////////////////////////////////
 // field_model_struct_init
