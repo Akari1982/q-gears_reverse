@@ -765,7 +765,7 @@ for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
     A1 = S3; // offset to place to store packet drafts
     A2 = 0;
     A3 = model_id;
-    model_packet_draft_prepare();
+    field_model_create_packet();
     S3 = V0;
 }
 
@@ -781,7 +781,7 @@ return S3;
 
 
 ////////////////////////////////
-// model_packet_draft_prepare()
+// field_model_create_packet()
 
 parts_data = A0;
 packet = A1;
@@ -836,7 +836,7 @@ for( int i = 0; i < 2; ++i )
             FP = FP + 1;
 
             // get clut data
-            S1 = w[block4_data + (S6 & 0f) * 4]; // data from block 4
+            S1 = w[block4_data + (S6 & f) * 4]; // data from block 4
             if ((S1 & 0000003f) == 2)
             {
                 V0 = 0;
@@ -913,149 +913,92 @@ for( int i = 0; i < 2; ++i )
 
 
 
-    T1 = parts_data;
-    S7 = bu[T1 + 5]; // number of textured triangles
-    if (S7 != 0)
+    for( int i = 0; i < bu[parts_data + 5]; ++i ) // number of textured triangles
     {
-        S2 = 0;
-        S4 = S3 + 10;
-        S0 = S5 + 7;
+        // set color
+        [S5 +  4] = w(w[S3 + 4]); // BGR 0
+        [S5 + 10] = w(w[S3 + 8]); // BGR 1
+        [S5 + 1c] = w(w[S3 + c]); // BGR 2
 
-        Lacfd4:	; 800ACFD4
-            V0 = w[S4 + fff4];
-            800ACFD8	nop
-            [S0 + fffd] = w(V0);
-            V0 = w[S4 + fff8];
-            800ACFE4	nop
-            [S0 + 0009] = w(V0);
-            V0 = w[S4 + fffc];
-            800ACFF0	nop
-            [S0 + 0015] = w(V0);
-            V1 = w[S4 + 0000];
-            800ACFFC	nop
-            V0 = V1 & 00ff;
-            V0 = V0 << 01;
-            V0 = V0 + A3;
-            V0 = hu[V0 + 0000];
-            800AD010	nop
-            [S0 + 0005] = h(V0);
-            V0 = V1 & ff00;
-            V0 = V0 >> 07;
-            V0 = V0 + A3;
-            V1 = V1 >> 0f;
-            V1 = V1 & 01fe;
-            V0 = hu[V0 + 0000];
-            V1 = V1 + A3;
-            [S0 + 0011] = h(V0);
-            V0 = hu[V1 + 0000];
-            800AD03C	nop
-            [S0 + 001d] = h(V0);
-            S6 = bu[FP + 0000];
-            FP = FP + 0001;
-            T0 = block4_data;
-            V0 = S6 & 000f;
-            V0 = V0 << 02;
-            V0 = V0 + T0;
-            S1 = w[V0 + 0000];
-            T1 = model_id;
-            V0 = S1 & 003f;
-            V0 = V0 ^ 0002;
+        // set text coords
+        v0 = (w[S3 + 10] & ff);
+        v1 = (w[S3 + 10] & ff00) >> 8;
+        v2 = (w[S3 + 10] >> 10) & ff;
+        [S5 +  c] = h(hu[textcoords_data + v0 * 2]);
+        [S5 + 18] = h(hu[textcoords_data + v1 * 2]);
+        [S5 + 24] = h(hu[textcoords_data + v2 * 2]);
 
-            Lad06c:	; 800AD06C
-            V0 = 0 < V0;
-            V0 = 0 - V0;
-            V0 = T1 & V0;
-            V1 = S1 << 01;
-            V1 = V1 >> 17;
-            V1 = V1 + V0;
-            V1 = V1 << 06;
-            V0 = S1 >> 10;
-            V0 = V0 & 003f;
-            V1 = V1 | V0;
-            [S0 + 0007] = h(V1);
+        // read stream flags
+        s_flags = bu[FP];
+        S1 = w[block4_data + (s_flags & f) * 4];
 
-            system_gpu_get_type();
-            if (V0 != 1 && V0 != 2)
-            {
-                clut_type = (S1 & 000000c0) << 1; // clut type
-                blending  = S6 & 60;
-                ty        = ((S1 >> 4) & 0100) >> 4;
-            }
-            else
-            {
-                clut_type = (S1 & 000000c0) << 3; // store it to 0x0600 (unused part of texture page info)
-                blending  = (S6 << 2) & 180;
-                ty        = (S1 >> 7) & 0020;
-            }
-            tx = (S1 & 00000f00) >> 8;
-            [S5 + 1a] = h(clut_type | blending | ty | tx);
+        // set clut data
+        V0 = ( ( S1 & 3f ) == 2 ) ? 0 : model_id;
+        clut_x = (S1 >> 10) & 3f;
+        clut_y = ((S1 << 1) >> 17) + V0;
+        [S5 + e] = h((clut_y << 6) | clut_x);
 
+        system_gpu_get_type();
 
+        if( ( V0 != 1 ) && ( V0 != 2 ) )
+        {
+            clut_type = (S1 & 000000c0) << 1; // clut type
+            blending = s_flags & 60;
+            ty = ((S1 >> 4) & 0100) >> 4;
+        }
+        else
+        {
+            clut_type = (S1 & 000000c0) << 3; // store it to 0x0600 (unused part of texture page info)
+            blending = (s_flags << 2) & 180;
+            ty = (S1 >> 7) & 20;
+        }
+        tx = (S1 & 00000f00) >> 8;
+        [S5 + 1a] = h(clut_type | blending | ty | tx);
 
-            V1 = S1 & 003f;
-            800AD114	bne    v1, zero, Lad12c [$800ad12c]
-            V0 = 0001;
+        V1 = S1 & 3f;
+        if( V1 == 0 )
+        {
             A0 = global_tex_x1;
             A1 = global_tex_y1;
-            800AD124	j      Lad14c [$800ad14c]
-            V0 = 0009;
-
-            Lad12c:	; 800AD12C
-            800AD12C	bne    v1, v0, Lad144 [$800ad144]
-            A1 = 0;
+        }
+        else if( V1 == 1 )
+        {
             A0 = global_tex_x2;
             A1 = global_tex_y2;
-            800AD13C	j      Lad14c [$800ad14c]
-            V0 = 0009;
-
-            Lad144:	; 800AD144
+        }
+        else
+        {
             A0 = 0;
-            V0 = 0009;
+            A1 = 0;
+        }
 
-            Lad14c:	; 800AD14C
-            [S0 + fffc] = b(V0);
-            [S0 + 0] = b(34);
-            V0 = bu[S0 + 0005];
-            V1 = bu[S0 + 0006];
-            V0 = V0 + A0;
-            [S0 + 0005] = b(V0);
-            V0 = bu[S0 + 0011];
-            V1 = V1 + A1;
-            [S0 + 0006] = b(V1);
-            V1 = bu[S0 + 0012];
-            V0 = V0 + A0;
-            [S0 + 0011] = b(V0);
-            V0 = bu[S0 + 001d];
-            V1 = V1 + A1;
-            [S0 + 0012] = b(V1);
-            V1 = bu[S0 + 001e];
-            V0 = V0 + A0;
-            V1 = V1 + A1;
-            [S0 + 001d] = b(V0);
-            V0 = S6 & 0010;
-            800AD1A0	beq    v0, zero, Lad1b0 [$800ad1b0]
-            [S0 + 001e] = b(V1);
-            [S0 + 0] = b(36);
+        [S5 +  3] = b(09);
+        [S5 +  7] = b(34);
+        [S5 +  c] = b(bu[S5 +  c] + A0);
+        [S5 +  d] = b(bu[S5 +  d] + A1);
+        [S5 + 18] = b(bu[S5 + 18] + A0);
+        [S5 + 19] = b(bu[S5 + 19] + A1);
+        [S5 + 24] = b(bu[S5 + 24] + A0);
+        [S5 + 25] = b(bu[S5 + 25] + A1);
 
-            Lad1b0:	; 800AD1B0
-            S2 = S2 + 1;
-            S0 = S0 + 28;
-            S5 = S5 + 28;
-            S4 = S4 + 14;
-            V0 = S2 < S7;
-            S3 = S3 + 14;
-        800AD1C4	bne    v0, zero, Lacfd4 [$800acfd4]
+        if( s_flags & 10 )
+        {
+            [S5 + 7] = b(36);
+        }
 
-        T1 = parts_data;
+        S5 += 28;
+        S3 += 14;
+        FP += 1;
     }
 
 
 
+    T1 = parts_data;
     S7 = bu[T1 + 6];
     S2 = 0;
     if (S7 != 0)
     {
-        S0 = S5 + 0007;
+        S0 = S5 + 7;
 
         Lad1e8:	; 800AD1E8
         V0 = w[S3 + 0004];

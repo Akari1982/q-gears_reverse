@@ -186,7 +186,7 @@
 // funcacba0
 800ACBA0-800ACC58
 ////////////////////////////////
-// model_packet_draft_prepare
+// field_model_create_packet
 800ACC5C-800AD7B4
 ////////////////////////////////
 // field_model_bsx_texture_load_to_vram
