@@ -895,7 +895,7 @@ for( int i = 0; i < 2; ++i )
             [S5 + 3] = b(0c);
 
             // set packet command
-            if (S6 & 10)
+            if( S6 & 10 )
             {
                 [S5 + 7] = b(3e); // with semitransparency
             }
@@ -981,10 +981,7 @@ for( int i = 0; i < 2; ++i )
         [S5 + 24] = b(bu[S5 + 24] + A0);
         [S5 + 25] = b(bu[S5 + 25] + A1);
 
-        if( s_flags & 10 )
-        {
-            [S5 + 7] = b(36);
-        }
+        if( s_flags & 10 ) [S5 + 7] = b(36);
 
         S5 += 28;
         S3 += 14;
@@ -995,29 +992,24 @@ for( int i = 0; i < 2; ++i )
 
     T1 = parts_data;
     S7 = bu[T1 + 6];
-    S2 = 0;
-    if (S7 != 0)
-    {
-        S0 = S5 + 7;
+    S0 = S5 + 7;
 
-        Lad1e8:	; 800AD1E8
+    for( int i = 0; i < S7; ++i )
+    {
         V0 = w[S3 + 0004];
         800AD1EC	nop
         [S0 + fffd] = w(V0);
         V1 = w[S3 + 0008];
-        800AD1F8	nop
         V0 = V1 & 00ff;
         V0 = V0 << 01;
         V0 = V0 + A3;
-        V0 = hu[V0 + 0000];
-        800AD20C	nop
-        [S0 + 0005] = h(V0);
+
+        [S0 + 0005] = h(hu[V0 + 0000]);
+
         V0 = V1 & ff00;
         V0 = V0 >> 07;
         V0 = V0 + A3;
-        V0 = hu[V0 + 0000];
-        800AD224	nop
-        [S0 + 000d] = h(V0);
+        [S0 + 000d] = h(hu[V0 + 0000]);
         V0 = V1 >> 0f;
         V0 = V0 & 01fe;
         V0 = V0 + A3;
@@ -1068,78 +1060,49 @@ for( int i = 0; i < 2; ++i )
             [S0 + f] = h(clut_type | blending | ty | tx);
 
         V1 = S1 & 003f;
-        800AD328	bne    v1, zero, Lad340 [$800ad340]
-        V0 = 0001;
-        A0 = global_tex_x1;
-        A1 = global_tex_y1;
-        800AD338	j      Lad360 [$800ad360]
-        V0 = 0009;
+        if( V1 == 0 )
+        {
+            A0 = global_tex_x1;
+            A1 = global_tex_y1;
+        }
+        else if( V1 == 1 )
+        {
+            A0 = global_tex_x2;
+            A1 = global_tex_y2;
+        }
+        else
+        {
+            A0 = 0;
+            A1 = 0;
+        }
 
-        Lad340:	; 800AD340
-        800AD340	bne    v1, v0, Lad358 [$800ad358]
-        A1 = 0;
-        A0 = global_tex_x2;
-        A1 = global_tex_y2;
-        800AD350	j      Lad360 [$800ad360]
-        V0 = 0009;
+        [S0 - 4] = b(9);
+        [S0 + 0] = b(2c);
 
-        Lad358:	; 800AD358
-        A0 = 0;
-        V0 = 0009;
+        [S0 +  5] = b(bu[S0 +  5] + A0);
+        [S0 +  6] = b(bu[S0 +  6] + A1);
+        [S0 +  d] = b(bu[S0 +  d] + A0);
+        [S0 +  e] = b(bu[S0 +  e] + A1);
+        [S0 + 15] = b(bu[S0 + 15] + A0);
+        [S0 + 16] = b(bu[S0 + 16] + A1);
+        [S0 + 1d] = b(bu[S0 + 1d] + A0);
+        [S0 + 1e] = b(bu[S0 + 1e] + A1);
 
-        Lad360:	; 800AD360
-        [S0 + fffc] = b(V0);
-        [S0 + 0] = b(2C);
-        V0 = bu[S0 + 0005];
-        V1 = bu[S0 + 0006];
-        V0 = V0 + A0;
-        [S0 + 0005] = b(V0);
-        V0 = bu[S0 + 000d];
-        V1 = V1 + A1;
-        [S0 + 0006] = b(V1);
-        V1 = bu[S0 + 000e];
-        V0 = V0 + A0;
-        [S0 + 000d] = b(V0);
-        V0 = bu[S0 + 0015];
-        V1 = V1 + A1;
-        [S0 + 000e] = b(V1);
-        V1 = bu[S0 + 0016];
-        V0 = V0 + A0;
-        [S0 + 0015] = b(V0);
-        V0 = bu[S0 + 001d];
-        V1 = V1 + A1;
-        [S0 + 0016] = b(V1);
-        V1 = bu[S0 + 001e];
-        V0 = V0 + A0;
-        V1 = V1 + A1;
-        [S0 + 001d] = b(V0);
-        V0 = S4 & 0010;
-        800AD3CC	beq    v0, zero, Lad3dc [$800ad3dc]
-        [S0 + 001e] = b(V1);
-        [S0 + 0] = b(2E);
+        if( S4 & 10 ) [S0 + 0] = b(2e);
 
-        Lad3dc:	; 800AD3DC
-        S2 = S2 + 0001;
-        S0 = S0 + 0028;
-        S5 = S5 + 0028;
-        V0 = S2 < S7;
-        800AD3EC	bne    v0, zero, Lad1e8 [$800ad1e8]
-        S3 = S3 + 000c;
+        S0 += 28;
+        S5 += 28;
+        S3 += c;
     }
 
 
 
-    Lad3f4:	; 800AD3F4
     T1 = parts_data;
     S7 = bu[T1 + 7]; // number of textured triangles (Flat Shading) (24 26).
-    S2 = 0;
-    if (S7 != 0)
+    S0 = S5 + 0007;
+    for( int i = 0; i < S7; ++i )
     {
-        S0 = S5 + 0007;
-
-        Lad410:	; 800AD410
         V0 = w[S3 + 0004];
-        800AD414	nop
         [S0 + fffd] = w(V0);
         V1 = w[S3 + 0008];
         800AD420	nop
@@ -1199,147 +1162,79 @@ for( int i = 0; i < 2; ++i )
             [S0 + f] = h(clut_type | blending | ty | tx);
 
         V1 = S1 & 003f;
-        800AD538	bne    v1, zero, Lad550 [$800ad550]
-        V0 = 0001;
-        A0 = global_tex_x1;
-        A1 = global_tex_y1;
+        if( V1 == 0 )
+        {
+            A0 = global_tex_x1;
+            A1 = global_tex_y1;
+        }
+        else if( V1 == 1 )
+        {
+            A0 = global_tex_x2;
+            A1 = global_tex_y2;
+        }
+        else
+        {
+            A0 = 0;
+            A1 = 0;
+        }
 
-        Lad548:	; 800AD548
-        800AD548	j      Lad570 [$800ad570]
-        V0 = 0007;
-
-        Lad550:	; 800AD550
-        800AD550	bne    v1, v0, Lad568 [$800ad568]
-        A1 = 0;
-        A0 = global_tex_x2;
-        A1 = global_tex_y2;
-        800AD560	j      Lad570 [$800ad570]
-        V0 = 0007;
-
-        Lad568:	; 800AD568
-        A0 = 0;
-        V0 = 0007;
-
-        Lad570:	; 800AD570
-        [S0 + fffc] = b(V0);
+        [S0 + fffc] = b(7);
         [S0 + 0] = b(24);
-        V0 = bu[S0 + 0005];
-        V1 = bu[S0 + 0006];
-        V0 = V0 + A0;
-        [S0 + 0005] = b(V0);
-        V0 = bu[S0 + 000d];
-        V1 = V1 + A1;
-        [S0 + 0006] = b(V1);
-        V1 = bu[S0 + 000e];
-        V0 = V0 + A0;
-        [S0 + 000d] = b(V0);
-        V0 = bu[S0 + 0015];
-        V1 = V1 + A1;
-        [S0 + 000e] = b(V1);
-        V1 = bu[S0 + 0016];
-        V0 = V0 + A0;
-        V1 = V1 + A1;
-        [S0 + 0015] = b(V0);
-        V0 = S4 & 0010;
-        800AD5C4	beq    v0, zero, Lad5d4 [$800ad5d4]
-        [S0 + 0016] = b(V1);
-        [S0 + 0] = b(26);
 
-        Lad5d4:	; 800AD5D4
-        S2 = S2 + 0001;
-        S0 = S0 + 0020;
-        S5 = S5 + 0020;
-        V0 = S2 < S7;
-        800AD5E4	bne    v0, zero, Lad410 [$800ad410]
-        S3 = S3 + 000c;
-        T1 = parts_data;
+        [S0 +  5] = b(bu[S0 +  5] + A0);
+        [S0 +  6] = b(bu[S0 +  6] + A1);
+        [S0 +  d] = b(bu[S0 +  d] + A0);
+        [S0 +  e] = b(bu[S0 +  e] + A1);
+        [S0 + 15] = b(bu[S0 + 15] + A0);
+        [S0 + 16] = b(bu[S0 + 16] + A1);
+
+        if( S4 & 10 ) [S0 + 0] = b(26);
+
+        S0 += 20;
+        S5 += 20;
+        S3 += c;
     }
 
 
 
-    // monochrome triangles
-    S7 = bu[T1 + 8];
-    if (S7 != 0)
+    for( int i = 0; i < bu[parts_data + 8]; ++i ) // monochrome triangles
     {
-        S2 = 0;
-
-        loopad610:	; 800AD610
-            [S5 + 3] = b(4);
-            [S5 + 4] = w(w[S3 + 4]);
-            [S5 + 7] = b(20);
-
-            S3 = S3 + 8;
-            S2 = S2 + 1;
-            S5 = S5 + 14;
-            V0 = S2 < S7;
-        800AD630	bne    v0, zero, loopad610 [$800ad610]
+        [S5 + 3] = b(4);
+        [S5 + 4] = w(w[S3 + 4]);
+        [S5 + 7] = b(20);
+        S3 += 8;
+        S5 += 14;
     }
 
-
-
-    // monochrome quads
-    T0 = parts_data;
-    S7 = bu[T1 + 9];
-    if (S7 != 0)
+    for( int i = 0; i < bu[parts_data + 9]; ++i ) // monochrome quads
     {
-        S2 = 0;
-
-        loopad65c:	; 800AD65C
-            [S5 + 3] = b(5);
-            [S5 + 4] = w(w[S3 + 4]);
-            [S5 + 7] = b(28);
-
-            S3 = S3 + 8;
-            S2 = S2 + 1;
-            S5 = S5 + 18;
-            V0 = S2 < S7;
-        800AD67C	bne    v0, zero, loopad65c [$800ad65c]
+        [S5 + 3] = b(5);
+        [S5 + 4] = w(w[S3 + 4]);
+        [S5 + 7] = b(28);
+        S3 += 8;
+        S5 += 18;
     }
 
-
-
-    // gradated triangles
-    T1 = parts_data;
-    S7 = bu[T1 + A];
-    if (S7 != 0)
+    for( int i = 0; i < bu[parts_data + a]; ++i ) // gradated triangles
     {
-        S2 = 0;
-
-        loopad6ac:	; 800AD6AC
-            [S5 + 03] = b(6);
-            [S5 + 04] = w(w[S3 + 4]);
-            [S5 + 07] = b(30);
-            [S5 + 0C] = w(w[S3 + 8]);
-            [S5 + 14] = w(w[S3 + C]);
-
-            S2 = S2 + 1;
-            S3 = S3 + 10;
-            S5 = S5 + 1C;
-            V0 = S2 < S7;
-        800AD6E0	bne    v0, zero, loopad6ac [$800ad6ac]
+        [S5 + 3] = b(6);
+        [S5 + 4] = w(w[S3 + 4]);
+        [S5 + 7] = b(30);
+        [S5 + c] = w(w[S3 + 8]);
+        [S5 + 14] = w(w[S3 + c]);
+        S3 += 10;
+        S5 += 1c;
     }
 
-
-
-    // gradated quads
-    T0 = parts_data;
-    S7 = bu[T1 + B];
-    if (S7 != 0)
+    for( int i = 0; i < bu[parts_data + b]; ++i ) // gradated quads
     {
-        S2 = 0;
-
-        loopad710:	; 800AD710
-            [S5 + 03] = w(8);
-            [S5 + 04] = w(w[S2 + 04]);
-            [S5 + 07] = b(38);
-            [S5 + 0C] = w(w[S2 + 08]);
-            [S5 + 14] = w(w[S2 + 0C]);
-            [S5 + 1C] = w(w[S2 + 10]);
-
-            S5 = S5 + 24;
-            S2 = S2 + 1;
-            V0 = S2 < S7;
-        800AD74C	bne    v0, zero, loopad710 [$800ad710]
+        [S5 + 3] = w(8);
+        [S5 + 4] = w(w[S2 + 4]);
+        [S5 + 7] = b(38);
+        [S5 + c] = w(w[S2 + 8]);
+        [S5 + 14] = w(w[S2 + c]);
+        [S5 + 1c] = w(w[S2 + 10]);
+        S5 += 24;
     }
 }
 
