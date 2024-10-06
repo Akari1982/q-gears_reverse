@@ -749,24 +749,24 @@ return w[SP + 40];
 
 
 ////////////////////////////////
-// funcacba0)
+// funcacba0()
 
-model_data = S0 = A0; // new model structure data
-S3 = A1; // where create packets drafts
+model_data = A0; // new model structure data
+packet = A1; // where create packets drafts
 model_id = A2;
 
-[model_data + 20] = w(S3);
+[model_data + 20] = w(packet);
 
-S3 = S3 + bu[model_data + 2] * 20; // skip place for bone matrixes
+packet += bu[model_data + 2] * 20; // skip place for bone matrixes
 
 for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
     A0 = w[model_data + 1c] + hu[model_data + 18] + i * 20; // offset to model parts part.
-    A1 = S3; // offset to place to store packet drafts
+    A1 = packet;
     A2 = 0;
     A3 = model_id;
     field_model_create_packet();
-    S3 = V0;
+    packet = V0;
 }
 
 // scale all model related data
@@ -775,7 +775,7 @@ A1 = h[A0 + 16]; // model scale
 A2 = 0;
 funcaf6ec();
 
-return S3;
+return packet;
 ////////////////////////////////
 
 
@@ -787,18 +787,12 @@ parts_data = A0;
 packet = A1;
 model_id = A3;
 
-block4_data     = w[parts_data + 18] + hu[parts_data + 12]; // global offset to block 4
-A3 = textcoords_data = w[parts_data + 18] + hu[parts_data + 10]; // global texture coords block
+block4_data = w[parts_data + 18] + hu[parts_data + 12]; // global offset to block 4
+textcoords_data = w[parts_data + 18] + hu[parts_data + 10]; // global texture coords block
 
-if( A2 != 0 ) // always 0
-{
-    [T1 + 18] = w(parts_data + 20);
-}
+if( A2 != 0 ) [parts_data + 18] = w(parts_data + 20);
 
-T1 = packet; // offset to place to store packet drafts
-T0 = parts_data; // offset to model parts part.
-
-[T0 + 1c] = w(T1); // offset to start data in bsx
+[parts_data + 1c] = w(packet); // offset to start data in bsx
 
 global_tex_x1 = w((model_id % 4) * 40);
 global_tex_y1 = w((model_id / 4) * 20);
@@ -808,124 +802,93 @@ global_tex_y2 = w((model_id / 8) * 20);
 
 for( int i = 0; i < 2; ++i )
 {
-    S5 = packet;
     FP = w[parts_data + 18] + hu[parts_data + 14]; // global offset to 5th block
 
-    if( i != 0 ) S5 += hu[parts_data + 16];
+    if( i != 0 ) packet += hu[parts_data + 16];
 
     S3 = w[parts_data + 18] + hu[parts_data + e]; // global offset to polygon data
 
     for( int i = 0; i < bu[parts_data + 4]; ++i ) // number of textured quads
     {
         // set color
-        [S5 +  4] = w(w[S3 +  4]); // BGR 1
-        [S5 + 10] = w(w[S3 +  8]); // BGR 2
-        [S5 + 1c] = w(w[S3 +  c]); // BGR 3
-        [S5 + 28] = w(w[S3 + 10]); // BGR 4
+        [packet +  4] = w(w[S3 +  4]); // BGR 1
+        [packet + 10] = w(w[S3 +  8]); // BGR 2
+        [packet + 1c] = w(w[S3 +  c]); // BGR 3
+        [packet + 28] = w(w[S3 + 10]); // BGR 4
 
         // set text coords
         v0 = bu[S3 + 14];
         v1 = bu[S3 + 15];
         v2 = bu[S3 + 16];
         v3 = bu[S3 + 17];
-        [S5 +  c] = h(hu[textcoords_data + v0 * 2]);
-        [S5 + 18] = h(hu[textcoords_data + v1 * 2]);
-        [S5 + 24] = h(hu[textcoords_data + v2 * 2]);
-        [S5 + 30] = h(hu[textcoords_data + v3 * 2]);
+        [packet +  c] = h(hu[textcoords_data + v0 * 2]);
+        [packet + 18] = h(hu[textcoords_data + v1 * 2]);
+        [packet + 24] = h(hu[textcoords_data + v2 * 2]);
+        [packet + 30] = h(hu[textcoords_data + v3 * 2]);
 
         // read stream flags
-        S6 = bu[FP]; // data from block 5
+        s_flags = bu[FP]; // data from block 5
+        S1 = w[block4_data + (s_flags & f) * 4]; // data from block 4
 
         // get clut data
-        S1 = w[block4_data + (S6 & f) * 4]; // data from block 4
-        if ((S1 & 0000003f) == 2)
-        {
-            V0 = 0;
-        }
-        else
-        {
-            V0 = model_id;
-        }
+        V0 = ( ( S1 & 3f ) == 2 ) ? 0 : model_id;
         clut_y = ((S1 << 1) >> 17) + V0;
         clut_x = (S1 >> 10) & 3f;
-        [S5 + e] = h((clut_y << 6) | clut_x);
+        [packet + e] = h((clut_y << 6) | clut_x);
 
         system_gpu_get_type();
-        if (V0 != 1 && V0 != 2)
+        if( (V0 != 1 ) && ( V0 != 2 ) )
         {
             clut_type = (S1 & 000000c0) << 1; // clut type
-            blending  = S6 & 60;
-            ty        = ((S1 >> 4) & 0100) >> 4;
+            blending = s_flags & 60;
+            ty = ((S1 >> 4) & 0100) >> 4;
         }
         else
         {
             clut_type = (S1 & 000000c0) << 3; // store it to 0x0600 (unused part of texture page info)
-            blending  = (S6 << 2) & 180;
-            ty        = (S1 >> 7) & 0020;
+            blending = (s_flags << 2) & 180;
+            ty = (S1 >> 7) & 0020;
         }
         tx = (S1 & 00000f00) >> 8;
-        [S5 + 1a] = h(clut_type | blending | ty | tx);
+        [packet + 1a] = h(clut_type | blending | ty | tx);
 
         // update texture coords
-        if ((S1 & 0000003f) == 0)
-        {
-            A0 = global_tex_x1;
-            A1 = global_tex_y1;
-        }
-        else if ((S1 & 3f) == 1)
-        {
-            A0 = global_tex_x2;
-            A1 = global_tex_y2;
-        }
-        else
-        {
-            A0 = 0;
-            A1 = 0;
-        }
-
-        [S5 +  c] = b(bu[S5 +  c] + A0); // u1
-        [S5 +  d] = b(bu[S5 +  d] + A1); // v1
-        [S5 + 18] = b(bu[S5 + 18] + A0); // u2
-        [S5 + 19] = b(bu[S5 + 19] + A1); // v2
-        [S5 + 24] = b(bu[S5 + 24] + A0); // u3
-        [S5 + 25] = b(bu[S5 + 25] + A1); // v3
-        [S5 + 30] = b(bu[S5 + 30] + A0); // u4
-        [S5 + 31] = b(bu[S5 + 31] + A1); // v4
+             if( ( S1 & 3f ) == 0 ) A0 = global_tex_x1; A1 = global_tex_y1;
+        else if( ( S1 & 3f ) == 1 ) A0 = global_tex_x2; A1 = global_tex_y2;
+        else                        A0 = 0;             A1 = 0;
+        [packet +  c] = b(bu[packet +  c] + A0); // u1
+        [packet +  d] = b(bu[packet +  d] + A1); // v1
+        [packet + 18] = b(bu[packet + 18] + A0); // u2
+        [packet + 19] = b(bu[packet + 19] + A1); // v2
+        [packet + 24] = b(bu[packet + 24] + A0); // u3
+        [packet + 25] = b(bu[packet + 25] + A1); // v3
+        [packet + 30] = b(bu[packet + 30] + A0); // u4
+        [packet + 31] = b(bu[packet + 31] + A1); // v4
 
         //set packet header
-        [S5 + 3] = b(0c);
+        [packet + 3] = b(0c);
+        [packet + 7] = b(3c);
+        if( s_flags & 10 ) [packet + 7] = b(3e); // with semitransparency
 
-        // set packet command
-        if( S6 & 10 )
-        {
-            [S5 + 7] = b(3e); // with semitransparency
-        }
-        else
-        {
-            [S5 + 7] = b(3c); // packet header
-        }
-
-        S5 += 34;
+        packet += 34;
         S3 += 18;
         FP += 1;
     }
 
-
-
     for( int i = 0; i < bu[parts_data + 5]; ++i ) // number of textured triangles
     {
         // set color
-        [S5 +  4] = w(w[S3 + 4]); // BGR 0
-        [S5 + 10] = w(w[S3 + 8]); // BGR 1
-        [S5 + 1c] = w(w[S3 + c]); // BGR 2
+        [packet +  4] = w(w[S3 + 4]); // BGR 0
+        [packet + 10] = w(w[S3 + 8]); // BGR 1
+        [packet + 1c] = w(w[S3 + c]); // BGR 2
 
         // set text coords
         v0 = bu[S3 + 10];
         v1 = bu[S3 + 11];
         v2 = bu[S3 + 12];
-        [S5 +  c] = h(hu[textcoords_data + v0 * 2]);
-        [S5 + 18] = h(hu[textcoords_data + v1 * 2]);
-        [S5 + 24] = h(hu[textcoords_data + v2 * 2]);
+        [packet +  c] = h(hu[textcoords_data + v0 * 2]);
+        [packet + 18] = h(hu[textcoords_data + v1 * 2]);
+        [packet + 24] = h(hu[textcoords_data + v2 * 2]);
 
         // read stream flags
         s_flags = bu[FP];
@@ -935,7 +898,7 @@ for( int i = 0; i < 2; ++i )
         V0 = ( ( S1 & 3f ) == 2 ) ? 0 : model_id;
         clut_x = (S1 >> 10) & 3f;
         clut_y = ((S1 << 1) >> 17) + V0;
-        [S5 + e] = h((clut_y << 6) | clut_x);
+        [packet + e] = h((clut_y << 6) | clut_x);
 
         system_gpu_get_type();
 
@@ -952,57 +915,43 @@ for( int i = 0; i < 2; ++i )
             ty = (S1 >> 7) & 20;
         }
         tx = (S1 & 00000f00) >> 8;
-        [S5 + 1a] = h(clut_type | blending | ty | tx);
+        [packet + 1a] = h(clut_type | blending | ty | tx);
 
-        V1 = S1 & 3f;
-        if( V1 == 0 )
-        {
-            A0 = global_tex_x1;
-            A1 = global_tex_y1;
-        }
-        else if( V1 == 1 )
-        {
-            A0 = global_tex_x2;
-            A1 = global_tex_y2;
-        }
-        else
-        {
-            A0 = 0;
-            A1 = 0;
-        }
+        // update texture coords
+             if( ( S1 & 3f ) == 0 ) A0 = global_tex_x1; A1 = global_tex_y1;
+        else if( ( S1 & 3f ) == 1 ) A0 = global_tex_x2; A1 = global_tex_y2;
+        else                        A0 = 0;             A1 = 0;
+        [packet +  c] = b(bu[packet +  c] + A0);
+        [packet +  d] = b(bu[packet +  d] + A1);
+        [packet + 18] = b(bu[packet + 18] + A0);
+        [packet + 19] = b(bu[packet + 19] + A1);
+        [packet + 24] = b(bu[packet + 24] + A0);
+        [packet + 25] = b(bu[packet + 25] + A1);
 
-        [S5 +  3] = b(09);
-        [S5 +  7] = b(34);
-        [S5 +  c] = b(bu[S5 +  c] + A0);
-        [S5 +  d] = b(bu[S5 +  d] + A1);
-        [S5 + 18] = b(bu[S5 + 18] + A0);
-        [S5 + 19] = b(bu[S5 + 19] + A1);
-        [S5 + 24] = b(bu[S5 + 24] + A0);
-        [S5 + 25] = b(bu[S5 + 25] + A1);
+        //set packet header
+        [packet + 3] = b(09);
+        [packet + 7] = b(34);
+        if( s_flags & 10 ) [packet + 7] = b(36); // with semitransparency
 
-        if( s_flags & 10 ) [S5 + 7] = b(36);
-
-        S5 += 28;
+        packet += 28;
         S3 += 14;
         FP += 1;
     }
 
-
-
     for( int i = 0; i < bu[parts_data + 6]; ++i )
     {
         // set color
-        [S5 + 4] = w(w[S3 + 4]);
+        [packet + 4] = w(w[S3 + 4]);
 
         // set text coords
         v0 = bu[S3 + 8];
         v1 = bu[S3 + 9];
         v2 = bu[S3 + a];
         v3 = bu[S3 + b];
-        [S5 +  c] = h(hu[textcoords_data + v0 * 2]);
-        [S5 + 14] = h(hu[textcoords_data + v1 * 2]);
-        [S5 + 1c] = h(hu[textcoords_data + v2 * 2]);
-        [S5 + 24] = h(hu[textcoords_data + v3 * 2]);
+        [packet +  c] = h(hu[textcoords_data + v0 * 2]);
+        [packet + 14] = h(hu[textcoords_data + v1 * 2]);
+        [packet + 1c] = h(hu[textcoords_data + v2 * 2]);
+        [packet + 24] = h(hu[textcoords_data + v3 * 2]);
 
         // read stream flags
         s_flags = bu[FP];
@@ -1012,201 +961,146 @@ for( int i = 0; i < 2; ++i )
         V0 = ( ( S1 & 3f ) == 2 ) ? 0 : model_id;
         clut_x = (S1 >> 10) & 3f;
         clut_y = ((S1 << 1) >> 17) + V0;
-        [S5 + e] = h((clut_y << 6) | clut_x);
+        [packet + e] = h((clut_y << 6) | clut_x);
 
         system_gpu_get_type();
 
         if( ( V0 != 1 ) && ( V0 != 2 ) )
         {
             clut_type = (S1 & 000000c0) << 1; // clut type
-            blending = S6 & 60;
+            blending = s_flags & 60;
             ty = ((S1 >> 4) & 0100) >> 4;
         }
         else
         {
             clut_type = (S1 & 000000c0) << 3; // store it to 0x0600 (unused part of texture page info)
-            blending = (S6 << 2) & 180;
+            blending = (s_flags << 2) & 180;
             ty = (S1 >> 7) & 0020;
         }
         tx = (S1 & 00000f00) >> 8;
-        [S5 + 16] = h(clut_type | blending | ty | tx);
+        [packet + 16] = h(clut_type | blending | ty | tx);
 
-        V1 = S1 & 3f;
-        if( V1 == 0 )
-        {
-            A0 = global_tex_x1;
-            A1 = global_tex_y1;
-        }
-        else if( V1 == 1 )
-        {
-            A0 = global_tex_x2;
-            A1 = global_tex_y2;
-        }
-        else
-        {
-            A0 = 0;
-            A1 = 0;
-        }
+        // update texture coords
+             if( ( S1 & 3f ) == 0 ) A0 = global_tex_x1; A1 = global_tex_y1;
+        else if( ( S1 & 3f ) == 1 ) A0 = global_tex_x2; A1 = global_tex_y2;
+        else                        A0 = 0;             A1 = 0;
+        [packet +  c] = b(bu[packet +  c] + A0);
+        [packet +  d] = b(bu[packet +  d] + A1);
+        [packet + 14] = b(bu[packet + 14] + A0);
+        [packet + 15] = b(bu[packet + 15] + A1);
+        [packet + 1c] = b(bu[packet + 1c] + A0);
+        [packet + 1d] = b(bu[packet + 1d] + A1);
+        [packet + 24] = b(bu[packet + 24] + A0);
+        [packet + 25] = b(bu[packet + 25] + A1);
 
-        [S5 + 3] = b(9);
-        [S5 + 7] = b(2c);
+        //set packet header
+        [packet + 3] = b(09);
+        [packet + 7] = b(2c);
+        if( s_flags & 10 ) [packet + 7] = b(2e); // with semitransparency
 
-        [S5 +  c] = b(bu[S5 +  c] + A0);
-        [S5 +  d] = b(bu[S5 +  d] + A1);
-        [S5 + 14] = b(bu[S5 + 14] + A0);
-        [S5 + 15] = b(bu[S5 + 15] + A1);
-        [S5 + 1c] = b(bu[S5 + 1c] + A0);
-        [S5 + 1d] = b(bu[S5 + 1d] + A1);
-        [S5 + 24] = b(bu[S5 + 24] + A0);
-        [S5 + 25] = b(bu[S5 + 25] + A1);
-
-        if( s_flags & 10 ) [S5 + 7] = b(2e);
-
-        S5 += 28;
+        packet += 28;
         S3 += c;
         FP += 1;
     }
 
-
-
-    T1 = parts_data;
-    S7 = bu[T1 + 7]; // number of textured triangles (Flat Shading) (24 26).
-    S0 = S5 + 0007;
-    for( int i = 0; i < S7; ++i )
+    for( int i = 0; i < bu[parts_data + 7]; ++i ) // number of textured triangles (Flat Shading) (24 26)
     {
-        V0 = w[S3 + 0004];
-        [S0 + fffd] = w(V0);
-        V1 = w[S3 + 0008];
-        800AD420	nop
-        V0 = V1 & 00ff;
-        V0 = V0 << 01;
-        V0 = V0 + A3;
-        V0 = hu[V0 + 0000];
-        800AD434	nop
-        [S0 + 0005] = h(V0);
-        V0 = V1 & ff00;
-        V0 = V0 >> 07;
-        V0 = V0 + A3;
-        V1 = V1 >> 0f;
-        V1 = V1 & 01fe;
-        V0 = hu[V0 + 0000];
-        V1 = V1 + A3;
-        [S0 + 000d] = h(V0);
-        V0 = hu[V1 + 0000];
-        800AD460	nop
-        [S0 + 0015] = h(V0);
-        S4 = bu[FP + 0000];
-        T0 = block4_data;
-        V0 = S4 & 000f;
-        V0 = V0 << 02;
-        V0 = V0 + T0;
-        S1 = w[V0 + 0000];
-        T1 = model_id;
-        V0 = S1 & 003f;
-        V0 = V0 ^ 0002;
-        V0 = 0 < V0;
-        V0 = 0 - V0;
-        V0 = T1 & V0;
-        V1 = S1 << 01;
-        V1 = V1 >> 17;
-        V1 = V1 + V0;
-        V1 = V1 << 06;
-        V0 = S1 >> 10;
-        V0 = V0 & 003f;
-        V1 = V1 | V0;
-        [S0 + 0007] = h(V1);
+        // set color
+        [packet + 4] = w(w[S3 + 4]);
 
-            system_gpu_get_type();
-            if (V0 != 1 && V0 != 2)
-            {
-                clut_type = (S1 & 000000c0) << 1; // clut type
-                blending  = S6 & 60;
-                ty        = ((S1 >> 4) & 0100) >> 4;
-            }
-            else
-            {
-                clut_type = (S1 & 000000c0) << 3; // store it to 0x0600 (unused part of texture page info)
-                blending  = (S6 << 2) & 180;
-                ty        = (S1 >> 7) & 0020;
-            }
-            tx = (S1 & 00000f00) >> 8;
-            [S0 + f] = h(clut_type | blending | ty | tx);
+        // set text coords
+        v0 = bu[S3 + 8];
+        v1 = bu[S3 + 9];
+        v2 = bu[S3 + a];
+        [packet + c] = h(hu[textcoords_data + v0 * 2]);
+        [packet + 14] = h(hu[textcoords_data + v1 * 2]);
+        [packet + 1c] = h(hu[textcoords_data + v2 * 2]);
 
-        V1 = S1 & 003f;
-        if( V1 == 0 )
+        // read stream flags
+        s_flags = bu[FP];
+        S1 = w[block4_data + (s_flags & f) * 4];
+
+        // set clut data
+        V0 = ( ( S1 & 3f ) == 2 ) ? 0 : model_id;
+        clut_x = (S1 >> 10) & 3f;
+        clut_y = ((S1 << 1) >> 17) + V0;
+        [packet + 10] = h((clut_y << 6) | clut_x);
+
+        system_gpu_get_type();
+        if( ( V0 != 1 ) && ( V0 != 2 ) )
         {
-            A0 = global_tex_x1;
-            A1 = global_tex_y1;
-        }
-        else if( V1 == 1 )
-        {
-            A0 = global_tex_x2;
-            A1 = global_tex_y2;
+            clut_type = (S1 & 000000c0) << 1; // clut type
+            blending = s_flags & 60;
+            ty = ((S1 >> 4) & 0100) >> 4;
         }
         else
         {
-            A0 = 0;
-            A1 = 0;
+            clut_type = (S1 & 000000c0) << 3; // store it to 0x0600 (unused part of texture page info)
+            blending = (s_flags << 2) & 180;
+            ty = (S1 >> 7) & 0020;
         }
+        tx = (S1 & 00000f00) >> 8;
+        [packet + 16] = h(clut_type | blending | ty | tx);
 
-        [S0 + fffc] = b(7);
-        [S0 + 0] = b(24);
+        // update texture coords
+             if( ( S1 & 3f ) == 0 ) A0 = global_tex_x1; A1 = global_tex_y1;
+        else if( ( S1 & 3f ) == 1 ) A0 = global_tex_x2; A1 = global_tex_y2;
+        else                        A0 = 0;             A1 = 0;
+        [packet +  c] = b(bu[packet +  c] + A0);
+        [packet +  d] = b(bu[packet +  d] + A1);
+        [packet + 14] = b(bu[packet + 14] + A0);
+        [packet + 15] = b(bu[packet + 15] + A1);
+        [packet + 1c] = b(bu[packet + 1c] + A0);
+        [packet + 1d] = b(bu[packet + 1d] + A1);
 
-        [S0 +  5] = b(bu[S0 +  5] + A0);
-        [S0 +  6] = b(bu[S0 +  6] + A1);
-        [S0 +  d] = b(bu[S0 +  d] + A0);
-        [S0 +  e] = b(bu[S0 +  e] + A1);
-        [S0 + 15] = b(bu[S0 + 15] + A0);
-        [S0 + 16] = b(bu[S0 + 16] + A1);
+        //set packet header
+        [packet + 3] = b(07);
+        [packet + 7] = b(24);
+        if( s_flags & 10 ) [packet + 7] = b(26); // with semitransparency
 
-        if( S4 & 10 ) [S0 + 0] = b(26);
-
-        S0 += 20;
-        S5 += 20;
+        packet += 20;
         S3 += c;
         FP += 1;
     }
-
-
 
     for( int i = 0; i < bu[parts_data + 8]; ++i ) // monochrome triangles
     {
-        [S5 + 3] = b(4);
-        [S5 + 4] = w(w[S3 + 4]);
-        [S5 + 7] = b(20);
+        [packet + 3] = b(04);
+        [packet + 4] = w(w[S3 + 4]);
+        [packet + 7] = b(20);
         S3 += 8;
-        S5 += 14;
+        packet += 14;
     }
 
     for( int i = 0; i < bu[parts_data + 9]; ++i ) // monochrome quads
     {
-        [S5 + 3] = b(5);
-        [S5 + 4] = w(w[S3 + 4]);
-        [S5 + 7] = b(28);
+        [packet + 3] = b(05);
+        [packet + 4] = w(w[S3 + 4]);
+        [packet + 7] = b(28);
         S3 += 8;
-        S5 += 18;
+        packet += 18;
     }
 
     for( int i = 0; i < bu[parts_data + a]; ++i ) // gradated triangles
     {
-        [S5 + 3] = b(6);
-        [S5 + 4] = w(w[S3 + 4]);
-        [S5 + 7] = b(30);
-        [S5 + c] = w(w[S3 + 8]);
-        [S5 + 14] = w(w[S3 + c]);
+        [packet + 3] = b(06);
+        [packet + 4] = w(w[S3 + 4]);
+        [packet + 7] = b(30);
+        [packet + c] = w(w[S3 + 8]);
+        [packet + 14] = w(w[S3 + c]);
         S3 += 10;
-        S5 += 1c;
+        packet += 1c;
     }
 
     for( int i = 0; i < bu[parts_data + b]; ++i ) // gradated quads
     {
-        [S5 + 3] = w(8);
-        [S5 + 4] = w(w[S2 + 4]);
-        [S5 + 7] = b(38);
-        [S5 + c] = w(w[S2 + 8]);
-        [S5 + 14] = w(w[S2 + c]);
-        [S5 + 1c] = w(w[S2 + 10]);
-        S5 += 24;
+        [packet + 3] = w(08);
+        [packet + 4] = w(w[S2 + 4]);
+        [packet + 7] = b(38);
+        [packet + c] = w(w[S2 + 8]);
+        [packet + 14] = w(w[S2 + c]);
+        [packet + 1c] = w(w[S2 + 10]);
+        packet += 24;
     }
 }
 
@@ -2449,7 +2343,8 @@ return;
 
 
 ////////////////////////////////
-// funcaf6ec
+// funcaf6ec()
+
 // scale all model related data
 //A0 = S0; // model_data
 //A1 = h[A0 + 16]; // model scale
@@ -2487,68 +2382,43 @@ if (number_of_parts != 0)
 [1f80000c] = h(0);     [1f80000e] = h(0);     [1f800010] = h(scale);
 [1f800014] = w(0);     [1f800018] = w(0);     [1f80001c] = w(0);
 
-T4 = w[1f800000];
-T5 = w[1f800004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[1f800008];
-T5 = w[1f80000c];
-T6 = w[1f800010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-T4 = w[1f800014];
-T5 = w[1f800018];
-800AF7DC	ctc2   t4,vz2
-T6 = w[1f80001c];
-800AF7E4	ctc2   t5,rgb
-800AF7E8	ctc2   t6,otz
-
-
+R11R12 = w[1f800000];
+R13R21 = w[1f800004];
+R22R23 = w[1f800008];
+R31R32 = w[1f80000c];
+R33 = w[1f800010];
+TRX = w[1f800014];
+TRY = w[1f800018];
+TRZ = w[1f80001c];
 
 // scale length of bones
-number_of_bones = bu[S6 + 2];
-if (number_of_bones != 0)
+V1 = w[S6 + 1c];
+for( int i = 0; i < bu[S6 + 2]; ++i )
 {
-    S0 = 0;
-    V1 = w[S6 + 1c];
+    [1f800020] = h(hu[V1 + 0]);
 
-    loopaf818:	; 800AF818
-        [1f800020] = h(hu[V1 + 0]);
+    VXY0 = w[1f800020];
+    VZ0 = w[1f800024];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    [1f800028] = w(MAC1);
+    [1f80002c] = w(MAC2);
+    [1f800030] = w(MAC3);
 
-        800AF83C	lwc2   zero, $0000(1f800020)
-        800AF840	lwc2   at, $0004(1f800020)
-        800AF84C	gte_func18t0,r11r12
-        800AF850	swc2   t9, $0000(1f800028)
-        800AF854	swc2   k0, $0004(1f800028)
-        800AF858	swc2   k1, $0008(1f800028)
+    [V1 + 0] = h(hu[1f800028]);
 
-        [V1 + 0] = h(hu[1f800028]);
-
-        V1 = V1 + 4;
-        S0 = S0 + 1;
-        V0 = S0 < number_of_bones;
-    800AF884	bne    v0, zero, loopaf818 [$800af818]
+    V1 = V1 + 4;
 }
 
-
-
 // scale all animations
-number_of_animations = bu[S6 + 4];
-if (number_of_animations != 0)
+S1 = w[S6 + 1c] + hu[S6 + 1a]; // global offset to animations
+for( int i = 0; i < bu[S6 + 4]; ++i ) // number_of_animations
 {
-    S1 = w[S6 + 1c] + hu[S6 + 1a]; // global offset to animations
-    S0 = 0;
-    loopaf918:	; 800AF918
-        A0 = S1; // global offset to animations
-        A1 = scale;
-        A2 = flag;
-        funcafac4;
+    A0 = S1; // global offset to animations
+    A1 = scale;
+    A2 = flag;
+    funcafac4();
 
-        S1 = S1 + 10;
-        S0 = S0 + 1;
-        V0 = S0 < number_of_animations;
-    800AF930	bne    v0, zero, loopaf918 [$800af918]
+    S1 = S1 + 10;
 }
 ////////////////////////////////
 
