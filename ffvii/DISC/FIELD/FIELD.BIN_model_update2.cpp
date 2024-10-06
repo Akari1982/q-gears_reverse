@@ -1012,7 +1012,7 @@ for( int i = 0; i < 2; ++i )
         v0 = bu[S3 + 8];
         v1 = bu[S3 + 9];
         v2 = bu[S3 + a];
-        [packet + c] = h(hu[textcoords_data + v0 * 2]);
+        [packet +  c] = h(hu[textcoords_data + v0 * 2]);
         [packet + 14] = h(hu[textcoords_data + v1 * 2]);
         [packet + 1c] = h(hu[textcoords_data + v2 * 2]);
 
@@ -2354,24 +2354,17 @@ S6 = A0;
 scale = A1;
 flag = A2;
 
-
-
 // scale all vertexes
+S1 = w[S6 + 1c] + hu[S6 + 18];
+S0 = 0;
+
 number_of_parts = bu[S6 + 3];
-if (number_of_parts != 0)
+for( int i = 0; i < number_of_parts; ++i )
 {
-    S1 = w[S6 + 1c] + hu[S6 + 18];
-    S0 = 0;
-    loopaf75c:	; 800AF75C
-        A0 = S1 + S0 * 20; // part data
-        A1 = scale; // scale
-        A2 = flag; // 0
-        funcaf96c; // scale all vertexes for this model part
-
-        S0 = S0 + 1;
-        V0 = S0 < number_of_parts;
-    800AF774	bne    v0, zero, loopaf75c [$800af75c]
-
+    A0 = S1 + i * 20; // part data
+    A1 = scale; // scale
+    A2 = flag; // 0
+    funcaf96c(); // scale all vertexes for this model part
 }
 
 
