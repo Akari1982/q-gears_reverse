@@ -7798,7 +7798,7 @@ A0 = SP + 20;
 A0 = 0;
 system_psyq_draw_sync();
 
-A0 = 0006;
+A0 = 6;
 system_psyq_wait_frames();
 
 loop26210:	; 80026210

@@ -401,62 +401,47 @@ system_gte_init_geom();
 
 
 ////////////////////////////////
-// func11784
-80011784	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S2);
-8001178C	lui    s2, $8008
-80011790	addiu  s2, s2, $eb68 (=-$1498)
-A0 = S2;
+// func11784()
+
+A0 = 8007eb68;
 A1 = 0;
-A2 = 00e8;
-A3 = 0140;
-[SP + 0018] = w(S0);
-S0 = 00f0;
-[SP + 0024] = w(RA);
-[SP + 001c] = w(S1);
-800117B4	jal    system_graphic_create_display_env_struct [$800438d4]
-[SP + 0010] = w(S0);
-A0 = S2 + 0014;
+A2 = e8;
+A3 = 140;
+A4 = f0;
+system_graphic_create_display_env_struct();
+
+A0 = 8007eb68 + 14;
 A1 = 0;
 A2 = 0;
-A3 = 0140;
-800117CC	jal    system_graphic_create_display_env_struct [$800438d4]
-[SP + 0010] = w(S0);
-800117D4	lui    s1, $8008
-800117D8	addiu  s1, s1, $eaac (=-$1554)
-A0 = S1;
+A3 = 140;
+A4 = f0;
+system_graphic_create_display_env_struct();
+
+A0 = 8007eaac;
 A1 = 0;
-A2 = 0008;
-A3 = 0140;
-S0 = 00e0;
-800117F0	jal    system_graphic_create_draw_env_struct [$80043814]
-[SP + 0010] = w(S0);
-A0 = S1 + 005c;
+A2 = 8;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+A0 = 8007eaac + 5c;
 A1 = 0;
-A2 = 00f0;
-A3 = 0140;
-80011808	jal    system_graphic_create_draw_env_struct [$80043814]
-[SP + 0010] = w(S0);
-V0 = 0001;
-80011814	lui    at, $8008
-[AT + eac2] = b(V0);
-8001181C	lui    at, $8008
-[AT + eb1e] = b(V0);
-80011824	lui    at, $8008
-[AT + eac4] = b(0);
-8001182C	lui    at, $8008
-[AT + eb20] = b(0);
-80011834	jal    system_psyq_put_disp_env [$800444ac]
-A0 = S2;
-8001183C	jal    system_psyq_put_draw_env [$800443b0]
-A0 = S1;
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-80011858	jr     ra 
-8001185C	nop
+A2 = f0;
+A3 = 140;
+A4 = e0;
+system_graphic_create_draw_env_struct();
+
+[8007eac2] = b(1);
+[8007eb1e] = b(1);
+[8007eac4] = b(0);
+[8007eb20] = b(0);
+
+A0 = 8007eb68;
+system_psyq_put_disp_env();
+
+
+A0 = 8007eaac;
+system_psyq_put_draw_env();
 ////////////////////////////////
 
 
@@ -552,77 +537,29 @@ A0 = 801b0000;
 
 
 ////////////////////////////////
-// func119e4
-800119E4
-V0 = hu[8009c560];
-V1 = 0003;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800119F8	bne    v0, v1, L11a14 [$80011a14]
-V1 = 0002;
-80011A00	lui    v0, $800a
-80011A04	addiu  v0, v0, $d274 (=-$2d8c)
-[V0 + 0000] = w(V1);
-80011A0C	j      L11a24 [$80011a24]
-V0 = 0003;
+// func119e4()
 
-L11a14:	; 80011A14
-80011A14	lui    v0, $800a
-80011A18	addiu  v0, v0, $d274 (=-$2d8c)
-[V0 + 0000] = w(0);
-V0 = 0001;
+if( h[8009c560] == 3 )
+{
+    [8009d274] = w(2);
+    [8009d278] = h(3);
+}
+else
+{
+    [8009d274] = w(0);
+    [8009d278] = h(1);
+}
 
-L11a24:	; 80011A24
-80011A24	lui    at, $800a
-[AT + d278] = h(V0);
-80011A2C	lui    v1, $800a
-V1 = hu[V1 + a05c];
-80011A34	lui    a0, $8009
-A0 = h[A0 + 65e0];
-80011A3C	lui    v0, $800a
-80011A40	addiu  v0, v0, $d27a (=-$2d86)
-[V0 + 0000] = h(V1);
-V1 = A0 << 05;
-V1 = V1 + A0;
-V1 = V1 << 02;
-80011A54	lui    at, $8007
-AT = AT + 4eb0;
-AT = AT + V1;
-V0 = w[AT + 0000];
-80011A64	nop
-V0 = V0 >> 0c;
-80011A6C	lui    at, $800a
-[AT + d27e] = h(V0);
-80011A74	lui    at, $8007
-AT = AT + 4eb4;
-AT = AT + V1;
-V0 = w[AT + 0000];
-80011A84	lui    a0, $800a
-A0 = bu[A0 + ad2c];
-V0 = V0 >> 0c;
-80011A90	lui    at, $800a
-[AT + d280] = h(V0);
-80011A98	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-80011AA8	nop
-80011AAC	lui    at, $800a
-[AT + d282] = h(V0);
-80011AB4	lui    at, $8007
-AT = AT + 4eda;
-AT = AT + V1;
-V0 = bu[AT + 0000];
-80011AC4	lui    v1, $800a
-V1 = bu[V1 + c540];
-80011ACC	lui    at, $800a
-[AT + d284] = b(V0);
-80011AD4	lui    at, $800a
-[AT + d285] = b(V1);
-80011ADC	lui    at, $800a
-[AT + d286] = b(A0);
-80011AE4	jr     ra 
-80011AE8	nop
+[8009d27a] = h(hu[8009a05c]);
+
+A0 = h[800965e0];
+
+[8009d27e] = h(w[80074eb0 + A0 * 84] >> c);
+[8009d280] = h(w[80074eb4 + A0 * 84] >> c);
+[8009d282] = h(hu[80074f16 + A0 * 84]);
+[8009d284] = b(bu[80074eda + A0 * 84]);
+[8009d285] = b(bu[8009c540]);
+[8009d286] = b(bu[8009ad2c]);
 ////////////////////////////////
 
 
@@ -772,7 +709,7 @@ while( true )
         }
     }
 
-    80011E0C	jal    func11784 [$80011784]
+    func11784();
 
     [8007ebc8] = b(0);
     [8009c6d8] = b(0);
@@ -791,7 +728,8 @@ while( true )
         }
         break;
 
-        case 2 4: // battle
+        case 2: // battle
+        case 4: // battle
         {
             [8009d2a0 + 0] = b(bu[8009d2a0 + 0] + 1);
             if( bu[8009d2a0 + 0] == 0 )
@@ -910,7 +848,7 @@ while( true )
 
         case 3: // world map
         {
-            8001219C	jal    func119e4 [$800119e4]
+            func119e4();
 
             func112e8(); // load "WORLD\WORLD.BIN"
 
@@ -933,16 +871,15 @@ while( true )
 
         case 5:
         {
-            loop12228:	; 80012228
-                V0 = hu[80095dd4];
-            80012234	bne    v0, zero, loop12228 [$80012228]
+            while( hu[80095dd4] != 0 ) {}
 
-            loop1223c:	; 8001223C
+            do
+            {
                 A0 = 1;
                 system_psyq_draw_sync();
-            80012244	bne    v0, zero, loop1223c [$8001223c]
+            } while( V0 != 0 )
 
-            8001224C	jal    func119e4 [$800119e4]
+            func119e4();
 
             V0 = bu[80071e34];
             if( V0 == 1 )
@@ -1210,7 +1147,7 @@ while( true )
                 }
             }
 
-            800124D8	jal    func11784 [$80011784]
+            func11784();
 
             [8009ac1a] = h(2);
             [800965ec] = h(c);
@@ -1220,7 +1157,7 @@ while( true )
 
         case d:
         {
-            800123A0	jal    func119e4 [$800119e4]
+            func119e4();
 
             V0 = bu[8009abf5];
             800123B4	addiu  v1, v0, $fff1 (=-$f)

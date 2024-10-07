@@ -895,25 +895,21 @@ SP = SP + 0018;
 800140EC	jr     ra 
 800140F0	nop
 ////////////////////////////////
-// func140f4
-800140F4	addiu  sp, sp, $ffa8 (=-$58)
-[SP + 0054] = w(RA);
-[SP + 0050] = w(FP);
-[SP + 004c] = w(S7);
-[SP + 0048] = w(S6);
-[SP + 0044] = w(S5);
-[SP + 0040] = w(S4);
-[SP + 003c] = w(S3);
-[SP + 0038] = w(S2);
-[SP + 0034] = w(S1);
-[SP + 0030] = w(S0);
-80014120	lui    at, $8009
-[AT + 5dd4] = h(0);
-80014128	jal    system_psyq_wait_frames [$8003cedc]
+
+
+
+////////////////////////////////
+// func140f4()
+
+[80095dd4] = h(0);
+
 A0 = 0;
+system_psyq_wait_frames();
+
 80014130	lui    a0, $8019
-80014134	jal    func448d0 [$800448d0]
 A0 = A0 | da80;
+80014134	jal    func448d0 [$800448d0]
+
 8001413C	lui    a0, $8019
 A0 = A0 | da80;
 A1 = 0;
@@ -926,8 +922,9 @@ V0 = 00f0;
 S0 = S0 < 0011;
 S0 = S0 ^ 0001;
 S0 = 0 - S0;
-8001416C	jal    system_graphic_create_display_env_struct [$800438d4]
 S0 = S0 & 0018;
+8001416C	jal    system_graphic_create_display_env_struct [$800438d4]
+
 80014174	lui    a0, $8019
 A0 = A0 | da24;
 A1 = 0;
@@ -1152,17 +1149,4 @@ A2 = 0af4;
 V0 = 0003;
 8001449C	lui    at, $8009
 [AT + 5dd4] = h(V0);
-RA = w[SP + 0054];
-FP = w[SP + 0050];
-S7 = w[SP + 004c];
-S6 = w[SP + 0048];
-S5 = w[SP + 0044];
-S4 = w[SP + 0040];
-S3 = w[SP + 003c];
-S2 = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0058;
-800144D0	jr     ra 
-800144D4	nop
 ////////////////////////////////

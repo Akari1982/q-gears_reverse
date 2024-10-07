@@ -1,6 +1,5 @@
 ﻿////////////////////////////////
-// funca1158()
-// battle main
+// battle_main()
 
 // copy party characters from savemap 4f8
 for( int i = 0; i < 4; ++i )
@@ -13,6 +12,7 @@ for( int i = 0; i < 4; ++i )
 [8016376a] = h(hu[800707be]); // store previous battle result here.
 
 battle_id = hu[800707bc]; // battle id
+
 if( battle_id != ffff )
 {
     FP = 1; // number of battle in row

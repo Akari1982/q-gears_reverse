@@ -150,34 +150,30 @@ func15ca0(); // gzip decode and copy
 ////////////////////////////////
 // func146a4()
 
-S0 = -1;
-loop146c4:	; 800146C4
-    V0 = h[8009c560];
-    if( V0 != 2 )
+while( true )
+{
+    if( h[8009c560] == 2 )
     {
-        if( V0 != 4 )
-        {
-            S0 = 0;
-        }
-        else
-        {
-            A0 = 0;
-            func145bc(); // load sync
+        func140f4();
 
-            A0 = 3; // BROM.X
-            A1 = 800a00cc; // start func
-            func14658(); // load and run
-        }
+        A0 = 5; // BATTLE.X
+        A1 = 800a1158; // battle_main()
+        func14658(); // load and run
+    }
+    else if( h[8009c560] == 4 )
+    {
+        A0 = 0;
+        func145bc(); // load sync
+
+        A0 = 3; // BROM.X
+        A1 = 800a00cc; // start func
+        func14658(); // load and run
     }
     else
     {
-        80014708	jal    func140f4 [$800140f4]
-
-        A0 = 5; // BATTLE.X
-        A1 = 800a1158; // start func
-        func14658(); // load and run
+        return;
     }
-8001472C	bne    s0, zero, loop146c4 [$800146c4]
+}
 ////////////////////////////////
 
 
