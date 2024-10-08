@@ -183,10 +183,10 @@
 // funcac35c
 800AC35C-800ACB9C
 ////////////////////////////////
-// funcacba0
+// field_model_create_packets_and_scale
 800ACBA0-800ACC58
 ////////////////////////////////
-// field_model_create_packet
+// field_model_create_packets_for_part
 800ACC5C-800AD7B4
 ////////////////////////////////
 // field_model_bsx_texture_load_to_vram
@@ -213,13 +213,13 @@
 // animation_prepare_bones_matrixes
 800AEE24-800AF6E8
 ////////////////////////////////
-// funcaf6ec
+// field_model_scale_model
 800AF6EC-800AF968
 ////////////////////////////////
-// funcaf96c
+// field_model_scale_part_vertexes
 800AF96C-800AFAC0
 ////////////////////////////////
-// funcafac4
+// field_model_scale_animation_translations
 800AFAC4-800AFDE0
 ////////////////////////////////
 // funcafde4

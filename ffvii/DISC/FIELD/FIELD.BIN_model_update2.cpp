@@ -618,14 +618,14 @@ for( int i = 0; i < number_of_model; ++i )
     {
         model_id = bu[block_7 + i * 8 + 4];
 
-        A0 = model_data + model_id * 24; // new model structure data
+        A0 = model_data + model_id * 24;
         A1 = bsx_header; // where create packets drafts
         A2 = model_id; // model id
-        funcacba0(); // create draft packets and scale model
-        bsx_header = V0;
+        field_model_create_packets_and_scale();
+        bsx_header = V0; // next place for packets
 
-        model_data_struct = model_data + model_id * 24; // new model structure data
-        face_id = bu[model_data_struct + 15];
+        face_id = bu[model_data + model_id * 24 + 15];
+
         if( face_id < 21 )
         {
             [SP + 30] = h(140);
@@ -749,7 +749,7 @@ return w[SP + 40];
 
 
 ////////////////////////////////
-// funcacba0()
+// field_model_create_packets_and_scale()
 
 model_data = A0; // new model structure data
 packet = A1; // where create packets drafts
@@ -765,15 +765,15 @@ for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
     A1 = packet;
     A2 = 0;
     A3 = model_id;
-    field_model_create_packet();
+    field_model_create_packets_for_part();
     packet = V0;
 }
 
 // scale all model related data
 A0 = model_data;
 A1 = h[A0 + 16]; // model scale
-A2 = 0;
-funcaf6ec();
+A2 = 0; // scale even if scale already applied
+field_model_scale_model();
 
 return packet;
 ////////////////////////////////
@@ -781,18 +781,19 @@ return packet;
 
 
 ////////////////////////////////
-// field_model_create_packet()
+// field_model_create_packets_for_part()
 
 parts_data = A0;
 packet = A1;
+use_next_part = A2;
 model_id = A3;
 
 block4_data = w[parts_data + 18] + hu[parts_data + 12]; // global offset to block 4
 textcoords_data = w[parts_data + 18] + hu[parts_data + 10]; // global texture coords block
 
-if( A2 != 0 ) [parts_data + 18] = w(parts_data + 20);
+if( use_next_part != 0 ) [parts_data + 18] = w(parts_data + 20);
 
-[parts_data + 1c] = w(packet); // offset to start data in bsx
+[parts_data + 1c] = w(packet);
 
 global_tex_x1 = w((model_id % 4) * 40);
 global_tex_y1 = w((model_id / 4) * 20);
@@ -802,7 +803,7 @@ global_tex_y2 = w((model_id / 8) * 20);
 
 for( int i = 0; i < 2; ++i )
 {
-    FP = w[parts_data + 18] + hu[parts_data + 14]; // global offset to 5th block
+    FP = w[parts_data + 18] + hu[parts_data + 14]; // global offset stream data
 
     if( i != 0 ) packet += hu[parts_data + 16];
 
@@ -828,7 +829,7 @@ for( int i = 0; i < 2; ++i )
 
         // read stream flags
         s_flags = bu[FP]; // data from block 5
-        S1 = w[block4_data + (s_flags & f) * 4]; // data from block 4
+        S1 = w[block4_data + (s_flags & f) * 4]; // poly settings
 
         // get clut data
         V0 = ( ( S1 & 3f ) == 2 ) ? 0 : model_id;
@@ -837,7 +838,7 @@ for( int i = 0; i < 2; ++i )
         [packet + e] = h((clut_y << 6) | clut_x);
 
         system_gpu_get_type();
-        if( (V0 != 1 ) && ( V0 != 2 ) )
+        if( ( V0 != 1 ) && ( V0 != 2 ) )
         {
             clut_type = (S1 & 000000c0) << 1; // clut type
             blending = s_flags & 60;
@@ -2343,31 +2344,21 @@ return;
 
 
 ////////////////////////////////
-// funcaf6ec()
+// field_model_scale_model()
 
-// scale all model related data
-//A0 = S0; // model_data
-//A1 = h[A0 + 16]; // model scale
-//A2 = 0;
-
-S6 = A0;
+model_data = A0;
 scale = A1;
-flag = A2;
+scale_anyway = A2;
 
 // scale all vertexes
-S1 = w[S6 + 1c] + hu[S6 + 18];
-S0 = 0;
-
-number_of_parts = bu[S6 + 3];
-for( int i = 0; i < number_of_parts; ++i )
+S1 = w[model_data + 1c] + hu[model_data + 18];
+for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
     A0 = S1 + i * 20; // part data
-    A1 = scale; // scale
-    A2 = flag; // 0
-    funcaf96c(); // scale all vertexes for this model part
+    A1 = scale;
+    A2 = scale_anyway;
+    field_model_scale_part_vertexes();
 }
-
-
 
 // scale matrix
 [1f800000] = h(scale); [1f800002] = h(0);     [1f800004] = h(0);
@@ -2385,10 +2376,12 @@ TRY = w[1f800018];
 TRZ = w[1f80001c];
 
 // scale length of bones
-V1 = w[S6 + 1c];
-for( int i = 0; i < bu[S6 + 2]; ++i )
+V1 = w[model_data + 1c];
+for( int i = 0; i < bu[model_data + 2] / 3; ++i )
 {
-    [1f800020] = h(hu[V1 + 0]);
+    [1f800020] = h(hu[V1 + (i * 3) * 4 + 0]);
+    [1f800020] = h(hu[V1 + (i * 3) * 4 + 4]);
+    [1f800020] = h(hu[V1 + (i * 3) * 4 + 8]);
 
     VXY0 = w[1f800020];
     VZ0 = w[1f800024];
@@ -2397,36 +2390,34 @@ for( int i = 0; i < bu[S6 + 2]; ++i )
     [1f80002c] = w(MAC2);
     [1f800030] = w(MAC3);
 
-    [V1 + 0] = h(hu[1f800028]);
-
-    V1 = V1 + 4;
+    [V1 + (i * 3) * 4 + 0] = h(hu[1f800028]);
+    [V1 + (i * 3) * 4 + 4] = h(hu[1f80002c]);
+    [V1 + (i * 3) * 4 + 8] = h(hu[1f800030]);
 }
 
 // scale all animations
-S1 = w[S6 + 1c] + hu[S6 + 1a]; // global offset to animations
-for( int i = 0; i < bu[S6 + 4]; ++i ) // number_of_animations
+S1 = w[model_data + 1c] + hu[model_data + 1a]; // global offset to animations
+for( int i = 0; i < bu[model_data + 4]; ++i ) // number of animations
 {
-    A0 = S1; // global offset to animations
+    A0 = S1 + i * 10; // global offset to animations
     A1 = scale;
-    A2 = flag;
-    funcafac4();
-
-    S1 = S1 + 10;
+    A2 = scale_anyway;
+    field_model_scale_animation_translations();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcaf96c()
+// field_model_scale_part_vertexes()
 
 part_data = A0;
 scale = A1;
+scale_anyway = A2;
 
 // scale all vertexes for this model part.
-
-V0 = w[part_data + 18];
-if( ( ( w[V0 + 0] & 1 ) == 0 ) || ( A2 != 0 ) )
+vertex_data = w[part_data + 18];
+if( ( ( w[vertex_data + 0] & 1 ) == 0 ) || ( scale_anyway != 0 ) )
 {
     // scale matrix
     [1f800000] = h(scale); [1f800002] = h(0);     [1f800004] = h(0);
@@ -2443,139 +2434,91 @@ if( ( ( w[V0 + 0] & 1 ) == 0 ) || ( A2 != 0 ) )
     TRY = w[1f800018];
     TRZ = w[1f80001c];
 
-    V0 = w[part_data + 18];
-    V1 = V0 + 4;
+    vertex_data += 4;
     for( int i = 0; i < number_of_vertex; ++i ) // number of vertex
     {
-        VXY0 = w[V1 + 0];
-        VZ0 = w[V1 + 4];
+        VXY0 = w[vertex_data + i * 8 + 0];
+        VZ0 = w[vertex_data + i * 8 + 4];
         gte_rtv0tr(); // v0 * rotmatrix + tr vector.
         [1f800020] = w(MAC1);
         [1f800024] = w(MAC2);
         [1f800028] = w(MAC3);
 
-        [V1 + 0] = h(hu[1f800020]);
-        [V1 + 2] = h(hu[1f800024]);
-        [V1 + 4] = h(hu[1f800028]);
-
-        V1 = V1 + 8;
+        [vertex_data + i * 8 + 0] = h(hu[1f800020]);
+        [vertex_data + i * 8 + 2] = h(hu[1f800024]);
+        [vertex_data + i * 8 + 4] = h(hu[1f800028]);
     }
 
     V1 = w[part_data + 18];
-    [V1 + 0] = w(w[V1 + 0] | 00000001);
+    [V1 + 0] = w(w[V1 + 0] | 00000001); // set vertexes scaled
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funcafac4
-// scale animations
-//        A0 = S1; // global offset to animations
-//        A1 = scale;
-//        A2 = flag;
+// field_model_scale_animation_translations()
 
-V0 = w[w[A0 + c] + 0];
+animation_data = A0;
+scale = A1;
+scale_anyway = A2;
 
-if (V0 == 0 || A2 != 0)
+A2 = w[animation_data + c];
+
+V0 = w[A2 + 0];
+
+if( ( V0 == 0 ) || ( scale_anyway != 0 ) )
 {
     // scale matrix
-    [1f800000] = h(A1);     [1f800002] = h(0);    [1f800004] = h(0);
-    [1f800006] = h(0);      [1f800008] = h(A1);   [1f80000a] = h(0);
-    [1f80000c] = h(0);      [1f80000e] = h(0);    [1f800010] = h(A1);
-    [1f800014] = w(0);      [1f800018] = w(0);    [1f80001c] = w(0);
+    [1f800000] = h(scale); [1f800002] = h(0);     [1f800004] = h(0);
+    [1f800006] = h(0);     [1f800008] = h(scale); [1f80000a] = h(0);
+    [1f80000c] = h(0);     [1f80000e] = h(0);     [1f800010] = h(scale);
+    [1f800014] = w(0);     [1f800018] = w(0);     [1f80001c] = w(0);
 
-    T4 = w[1f800000];
-    T5 = w[1f800004];
-    R11R12 = T4;
-    R13R21 = T5;
-    T4 = w[1f800008];
-    T5 = w[1f80000c];
-    T6 = w[1f800010];
-    R22R23 = T4;
-    R31R32 = T5;
-    R33 = T6;
-    T4 = w[1f800014];
-    T5 = w[1f800018];
-    800AFB78	ctc2   t4,vz2
-    T6 = w[1f80001c];
-    800AFB80	ctc2   t5,rgb
-    800AFB84	ctc2   t6,otz
+    R11R12 = w[1f800000];
+    R13R21 = w[1f800004];
+    R22R23 = w[1f800008];
+    R31R32 = w[1f80000c];
+    R33 = w[1f800010];
+    TRX = w[1f800014];
+    TRY = w[1f800018];
+    TRZ = w[1f80001c];
 
-
-
-    number_of_frames = hu[A0 + 0];
-
-
+    number_of_frames = hu[animation_data + 0];
 
     // scale frames translation animations
-    number_of_frames_translation_bones = bu[A0 + 3];
-    if (number_of_frames_translation != 0)
+    for( int i = 0; i < bu[animation_data + 3]; ++i )
     {
-        A2 = 0;
-        T4 = 0;
+        T3 = w[animation_data + c] + hu[animation_data + 6] + number_of_frames * i * 2;
 
-        loopafbb0:	; 800AFBB0
-            T3 = w[A0 + c] + hu[A0 + 6] + T4 * 2;
-
-            if (number_of_frames != 0)
-            {
-                A1 = 0;
-                loopafc5c:	; 800AFC5C
-                    [1f800000] = h(hu[T3 + 0]);
-
-                    800AFC68	lwc2   zero, $0000(1f800000)
-                    800AFC6C	lwc2   at, $0004(1f800000)
-                    800AFC78	gte_func18t0,r11r12
-                    800AFC7C	swc2   t9, $0000(1f800008)
-                    800AFC80	swc2   k0, $0004(1f800008)
-                    800AFC84	swc2   k1, $0008(1f800008)
-
-                    [T3 + 0] = h(hu[1f800008]);
-
-                    T3 = T3 + 2;
-                    A1 = A1 + 1;
-                    V0 = A1 < number_of_frames;
-                800AFC98	bne    v0, zero, loopafc5c [$800afc5c]
-            }
-
-            T4 = T4 + number_of_frames;
-            A2 = A2 + 1;
-            V0 = A2 < number_of_frames_translation;
-        800AFCA8	bne    v0, zero, loopafbb0 [$800afbb0]
+        for( int j = 0; j < number_of_frames; ++j )
+        {
+            [1f800000] = h(hu[T3 + j * 2]);
+            VXY0 = w[1f800000];
+            VZ0 = w[1f800004];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [1f800008] = w(MAC1);
+            [1f80000c] = w(MAC2);
+            [1f800010] = w(MAC3);
+            [T3 + j * 2] = h(hu[1f800008]);
+        }
     }
-
-
 
     // scale static translation animations
-    T5 = bu[A0 + 4];
-    if (T5 != 0)
+    V1 = w[animation_data + c] + hu[animation_data + 8];
+    for( int i = 0; i < bu[animation_data + 4]; ++i )
     {
-        A2 = 0;
-        A1 = 0;
-
-        loopafcd4:	; 800AFCD4
-            V0 = w[A0 + c];
-            V1 = hu[A0 + 8];
-            V1 = V1 + V0 + A1;
-            [1f800000] = h(hu[V1]);
-            800AFD0C	lwc2   zero, $0000(1f800000)
-            800AFD10	lwc2   at, $0004(1f800000)
-            800AFD1C	gte_func18t0,r11r12
-            800AFD20	swc2   t9, $0000(1f800008)
-            800AFD24	swc2   k0, $0004(1f800008)
-            800AFD28	swc2   k1, $0008(1f800008)
-
-            [V1] = h(hu[1f800008]);
-            A1 = A1 + 6;
-            A2 = A2 + 1;
-            V0 = A2 < T0;
-        800AFD54	bne    v0, zero, loopafcd4 [$800afcd4]
+        [1f800000] = h(hu[V1 + i * 2]);
+        VXY0 = w[1f800000];
+        VZ0 = w[1f800004];
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector
+        [1f800008] = w(MAC1);
+        [1f80000c] = w(MAC2);
+        [1f800010] = w(MAC3);
+        [V1 + i * 2] = h(hu[1f800008]);
     }
 
-
-
-    V1 = w[A0 + c];
+    V1 = w[animation_data + c];
     [V1 + 0] = w(1);
 }
 ////////////////////////////////

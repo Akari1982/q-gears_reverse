@@ -570,13 +570,13 @@
     + 0 []       number of inited models.
     + 1 []       store 00 here during init.
     + 2 [][]     store 00 here during init.
-    + 4 [][][][] offset to model structs (8013825c).
+    + 4 [][][][] offset to model data (8013825c).
     + 8 [][][][] store 00 here during init. Offset to texture in bsx file.
     + с new structures for model data (we init it and copy data from 7 dat block during level loading) (size 0x24)
         +  0 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
         +  1 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
         +  2 []       number of bones.
-        +  3 []       number of model parts.
+        +  3 []       number of parts.
         +  4 []       number of animation.
         +  5 []       rotation x.
         +  6 []       rotation y.
