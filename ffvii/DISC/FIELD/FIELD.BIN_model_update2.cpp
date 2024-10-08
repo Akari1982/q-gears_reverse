@@ -2418,64 +2418,50 @@ for( int i = 0; i < bu[S6 + 4]; ++i ) // number_of_animations
 
 
 ////////////////////////////////
-// funcaf96c
-// scale all vertexes for this model part.
-//        A0 = S1; // part data
-//        A1 = A1; // scale
-//        A2 = w[SP + 10]; // 0
+// funcaf96c()
 
-V0 = w[A0 + 18];
-if ((w[V0 + 0] & 1) == 0 || A2 != 0)
+part_data = A0;
+scale = A1;
+
+// scale all vertexes for this model part.
+
+V0 = w[part_data + 18];
+if( ( ( w[V0 + 0] & 1 ) == 0 ) || ( A2 != 0 ) )
 {
     // scale matrix
-    [1f800000] = h(A1);     [1f800002] = h(0);    [1f800004] = h(0);
-    [1f800006] = h(0);      [1f800008] = h(A1);   [1f80000a] = h(0);
-    [1f80000c] = h(0);      [1f80000e] = h(0);    [1f800010] = h(A1);
-    [1f800014] = w(0);      [1f800018] = w(0);    [1f80001c] = w(0);
+    [1f800000] = h(scale); [1f800002] = h(0);     [1f800004] = h(0);
+    [1f800006] = h(0);     [1f800008] = h(scale); [1f80000a] = h(0);
+    [1f80000c] = h(0);     [1f80000e] = h(0);     [1f800010] = h(scale);
+    [1f800014] = w(0);     [1f800018] = w(0);     [1f80001c] = w(0);
 
-    T4 = w[1f800000];
-    T5 = w[1f800004];
-    R11R12 = T4;
-    R13R21 = T5;
-    T4 = w[1f800008];
-    T5 = w[1f80000c];
-    T6 = w[1f800010];
-    R22R23 = T4;
-    R31R32 = T5;
-    R33 = T6;
-    T4 = w[1f800014];
-    T5 = w[1f800018];
-    800AFA24	ctc2   t4,vz2
-    T6 = w[1f80001c];
-    800AFA2C	ctc2   t5,rgb
-    800AFA30	ctc2   t6,otz
+    R11R12 = w[1f800000];
+    R13R21 = w[1f800004];
+    R22R23 = w[1f800008];
+    R31R32 = w[1f80000c];
+    R33 = w[1f800010];
+    TRX = w[1f800014];
+    TRY = w[1f800018];
+    TRZ = w[1f80001c];
 
-    A1 = 0;
-    V0 = w[A0 + 18];
-    number_of_vertex = bu[A0 + 2];
-    if (number_of_vertex != 0)
+    V0 = w[part_data + 18];
+    V1 = V0 + 4;
+    for( int i = 0; i < number_of_vertex; ++i ) // number of vertex
     {
-        V1 = V0 + 4;
+        VXY0 = w[V1 + 0];
+        VZ0 = w[V1 + 4];
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector.
+        [1f800020] = w(MAC1);
+        [1f800024] = w(MAC2);
+        [1f800028] = w(MAC3);
 
-        loopafa50:	; 800AFA50
-            VXY0 = w[V1 + 0000];
-            VZ0 = w[V1 + 0004];
-            800AFA60	gte_func18t0,r11r12
-            800AFA64	swc2   t9, $0000(1f800020)
-            800AFA68	swc2   k0, $0004(1f800020)
-            800AFA6C	swc2   k1, $0008(1f800020)
+        [V1 + 0] = h(hu[1f800020]);
+        [V1 + 2] = h(hu[1f800024]);
+        [V1 + 4] = h(hu[1f800028]);
 
-            [V1 + 0] = h(hu[1f800020]);
-            [V1 + 2] = h(hu[1f800024]);
-            [V1 + 4] = h(hu[1f800028]);
-
-            V1 = V1 + 8;
-            A1 = A1 + 1;
-            V0 = A1 < number_of_vertex;
-        800AFA98	bne    v0, zero, loopafa50 [$800afa50]
+        V1 = V1 + 8;
     }
 
-    V1 = w[A0 + 18];
+    V1 = w[part_data + 18];
     [V1 + 0] = w(w[V1 + 0] | 00000001);
 }
 ////////////////////////////////
