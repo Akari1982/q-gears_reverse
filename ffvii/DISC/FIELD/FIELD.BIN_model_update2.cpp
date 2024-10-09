@@ -662,42 +662,36 @@ for( int i = 0; i < number_of_model; ++i )
         A3 = 0; // frame id
         field_model_animation_calculate_matrixes();
 
-        [1f800000] = b(bu[S1 + 8]);
-        [1f800001] = b(bu[S1 + 9]);
-        [1f800002] = b(bu[S1 + a]);
-
-        [1f80000c] = b(bu[S1 + c]);
-        [1f80000d] = b(bu[S1 + d]);
-        [1f80000e] = b(bu[S1 + e]);
-        [1f80000f] = b(bu[S1 + f]);
-        [1f800010] = b(bu[S1 + 10]);
-        [1f800011] = b(bu[S1 + 11]);
-
-        [1f800003] = b(bu[S1 + 14]);
-        [1f800004] = b(bu[S1 + 15]);
-        [1f800005] = b(bu[S1 + 16]);
-
-        [1f800012] = b(bu[S1 + 18]);
-        [1f800013] = b(bu[S1 + 19]);
-        [1f800014] = b(bu[S1 + 1a]);
-        [1f800015] = b(bu[S1 + 1b]);
-        [1f800016] = b(bu[S1 + 1c]);
-        [1f800017] = b(bu[S1 + 1d]);
-
-        [1f800006] = b(bu[S1 + 20]);
-        [1f800007] = b(bu[S1 + 21]);
-        [1f800008] = b(bu[S1 + 22);
-
-        [1f800018] = b(bu[S1 + 24]);
-        [1f800019] = b(bu[S1 + 25]);
-        [1f80001a] = b(bu[S1 + 26]);
-        [1f80001b] = b(bu[S1 + 27]);
-        [1f80001c] = b(bu[S1 + 28]);
-        [1f80001d] = b(bu[S1 + 29]);
-
-        [1f800009] = b(bu[S1 + 2c]);
-        [1f80000a] = b(bu[S1 + 2d]);
-        [1f80000b] = b(bu[S1 + 2e]);
+        [1f800000] = b(bu[S1 + i * 30 + 8]);
+        [1f800001] = b(bu[S1 + i * 30 + 9]);
+        [1f800002] = b(bu[S1 + i * 30 + a]);
+        [1f80000c] = b(bu[S1 + i * 30 + c]);
+        [1f80000d] = b(bu[S1 + i * 30 + d]);
+        [1f80000e] = b(bu[S1 + i * 30 + e]);
+        [1f80000f] = b(bu[S1 + i * 30 + f]);
+        [1f800010] = b(bu[S1 + i * 30 + 10]);
+        [1f800011] = b(bu[S1 + i * 30 + 11]);
+        [1f800003] = b(bu[S1 + i * 30 + 14]);
+        [1f800004] = b(bu[S1 + i * 30 + 15]);
+        [1f800005] = b(bu[S1 + i * 30 + 16]);
+        [1f800012] = b(bu[S1 + i * 30 + 18]);
+        [1f800013] = b(bu[S1 + i * 30 + 19]);
+        [1f800014] = b(bu[S1 + i * 30 + 1a]);
+        [1f800015] = b(bu[S1 + i * 30 + 1b]);
+        [1f800016] = b(bu[S1 + i * 30 + 1c]);
+        [1f800017] = b(bu[S1 + i * 30 + 1d]);
+        [1f800006] = b(bu[S1 + i * 30 + 20]);
+        [1f800007] = b(bu[S1 + i * 30 + 21]);
+        [1f800008] = b(bu[S1 + i * 30 + 22);
+        [1f800018] = b(bu[S1 + i * 30 + 24]);
+        [1f800019] = b(bu[S1 + i * 30 + 25]);
+        [1f80001a] = b(bu[S1 + i * 30 + 26]);
+        [1f80001b] = b(bu[S1 + i * 30 + 27]);
+        [1f80001c] = b(bu[S1 + i * 30 + 28]);
+        [1f80001d] = b(bu[S1 + i * 30 + 29]);
+        [1f800009] = b(bu[S1 + i * 30 + 2c]);
+        [1f80000a] = b(bu[S1 + i * 30 + 2d]);
+        [1f80000b] = b(bu[S1 + i * 30 + 2e]);
         [1f80001e] = b(0);
 
         A0 = model_data + model_id * 24;
@@ -731,8 +725,6 @@ for( int i = 0; i < number_of_model; ++i )
 
         [800df114] = b(bu[800df114] XOR 1);
     }
-
-    S1 = S1 + 30;
 }
 
 [800e0200] = w(w[SP + 40]);
@@ -1465,7 +1457,7 @@ if( ( init == 0 ) || ( parts_n == 0 ) ) return;
 
 S1 = w[model_data + 20];
 S4 = 1f800000;
-S0 = w[model_data + 1c] + hu[model_data + 18]; // offset to model parts
+parts_data = S0 = w[model_data + 1c] + hu[model_data + 18]; // offset to model parts
 
 for( int i = 0; i < parts_n; ++i )
 {
@@ -1964,6 +1956,14 @@ if( bu[model_data + 0] != 0 ) // if inited
 
     for( int i = 0; i < bu[model_data + 2]; ++i ) // number of bones
     {
+        flags = bu[bones_settings + i * 8 + 0];
+        rot_x = b[bones_settings + i * 8 + 1];
+        rot_y = b[bones_settings + i * 8 + 2];
+        rot_z = b[bones_settings + i * 8 + 3];
+        trans_x = bu[bones_settings + i * 8 + 4];
+        trans_y = bu[bones_settings + i * 8 + 5];
+        trans_z = bu[bones_settings + i * 8 + 6];
+
         bone_data = w[model_data + 1c] + i * 4;
         bone_parent_id = (w[bone_data] << 8) >> 18;
         bone_part = w[bone_data] >> 18;
@@ -1986,11 +1986,6 @@ if( bu[model_data + 0] != 0 ) // if inited
         TRX = w[parent_matrix + 14];
         TRY = w[parent_matrix + 18];
         TRZ = w[parent_matrix + 1c];
-
-        flags = bu[bones_settings + i * 8 + 0];
-        rot_x = b[bones_settings + i * 8 + 1];
-        rot_y = b[bones_settings + i * 8 + 2];
-        rot_z = b[bones_settings + i * 8 + 3];
 
         IR0 = frames_n;
         IR1 = rot_x;
@@ -2086,10 +2081,6 @@ if( bu[model_data + 0] != 0 ) // if inited
 
         if( w[1f800000] & 1 )
         {
-            trans_x = bu[bones_settings + i * 8 + 4];
-            trans_y = bu[bones_settings + i * 8 + 5];
-            trans_z = bu[bones_settings + i * 8 + 6];
-
             if( flags & 40 )
             {
                 IR0 = frames_n;
@@ -2153,10 +2144,10 @@ scale = A1;
 scale_anyway = A2;
 
 // scale all vertexes
-S1 = w[model_data + 1c] + hu[model_data + 18];
+parts_data = w[model_data + 1c] + hu[model_data + 18];
 for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
-    A0 = S1 + i * 20; // part data
+    A0 = parts_data + i * 20;
     A1 = scale;
     A2 = scale_anyway;
     field_model_scale_part_vertexes();
@@ -2371,10 +2362,10 @@ if( V1 == -1 )
     if (number_of_model_parts > 0) // model parts > 0
     {
         A1 = 0;
-        offset_to_model_parts = w[model_data + 1c] + hu[model_data + 18];
+        parts_data = w[model_data + 1c] + hu[model_data + 18];
 
         loopafebc:	; 800AFEBC
-            [offset_to_model_parts + A1 * 20 + 0] = b(1);
+            [parts_data + A1 * 20 + 0] = b(1);
 
             A1 = A1 + 1;
             V0 = A1 < number_of_model_parts;
@@ -2628,7 +2619,7 @@ else if( V1 < e )
                 }
 
                 S4 = 1;
-                S0 = w[model_data + 1c] + hu[model_data + 18];
+                parts_data = S0 = w[model_data + 1c] + hu[model_data + 18];
 
                 S1 = 0;
                 loopb02d0:	; 800B02D0
@@ -4194,117 +4185,69 @@ return 1;
 
 
 ////////////////////////////////
-// funcb1e40
-            [1f800000] = b(bu[S1 + 8]);
-            [1f800001] = b(bu[S1 + 9]);
-            [1f800002] = b(bu[S1 + a]);
+// funcb1e40()
 
-            [1f80000c] = b(bu[S1 + c]);
-            [1f80000d] = b(bu[S1 + d]);
-            [1f80000e] = b(bu[S1 + e]);
-            [1f80000f] = b(bu[S1 + f]);
-            [1f800010] = b(bu[S1 + 10]);
-            [1f800011] = b(bu[S1 + 11]);
+// [1f800000] = b(bu[S1 + 8]);
+// [1f800001] = b(bu[S1 + 9]);
+// [1f800002] = b(bu[S1 + a]);
+// [1f80000c] = b(bu[S1 + c]);
+// [1f80000d] = b(bu[S1 + d]);
+// [1f80000e] = b(bu[S1 + e]);
+// [1f80000f] = b(bu[S1 + f]);
+// [1f800010] = b(bu[S1 + 10]);
+// [1f800011] = b(bu[S1 + 11]);
+// [1f800003] = b(bu[S1 + 14]);
+// [1f800004] = b(bu[S1 + 15]);
+// [1f800005] = b(bu[S1 + 16]);
+// [1f800012] = b(bu[S1 + 18]);
+// [1f800013] = b(bu[S1 + 19]);
+// [1f800014] = b(bu[S1 + 1a]);
+// [1f800015] = b(bu[S1 + 1b]);
+// [1f800016] = b(bu[S1 + 1c]);
+// [1f800017] = b(bu[S1 + 1d]);
+// [1f800006] = b(bu[S1 + 20]);
+// [1f800007] = b(bu[S1 + 21]);
+// [1f800008] = b(bu[S1 + 22]);
+// [1f800018] = b(bu[S1 + 24]);
+// [1f800019] = b(bu[S1 + 25]);
+// [1f80001a] = b(bu[S1 + 26]);
+// [1f80001b] = b(bu[S1 + 27]);
+// [1f80001c] = b(bu[S1 + 28]);
+// [1f80001d] = b(bu[S1 + 29]);
+// [1f800009] = b(bu[S1 + 2c]);
+// [1f80000a] = b(bu[S1 + 2d]);
+// [1f80000b] = b(bu[S1 + 2e]);
+// [1f80001e] = b(0);
 
-            [1f800003] = b(bu[S1 + 14]);
-            [1f800004] = b(bu[S1 + 15]);
-            [1f800005] = b(bu[S1 + 16]);
+// A1 = 1f800000;
 
-            [1f800012] = b(bu[S1 + 18]);
-            [1f800013] = b(bu[S1 + 19]);
-            [1f800014] = b(bu[S1 + 1a]);
-            [1f800015] = b(bu[S1 + 1b]);
-            [1f800016] = b(bu[S1 + 1c]);
-            [1f800017] = b(bu[S1 + 1d]);
+model_data = A0;
 
-            [1f800006] = b(bu[S1 + 20]);
-            [1f800007] = b(bu[S1 + 21]);
-            [1f800008] = b(bu[S1 + 22);
+part_matrix = w[model_data + 20];
+parts_data = w[model_data + 1c] + hu[model_data + 18];
 
-            [1f800018] = b(bu[S1 + 24]);
-            [1f800019] = b(bu[S1 + 25]);
-            [1f80001a] = b(bu[S1 + 26]);
-            [1f80001b] = b(bu[S1 + 27]);
-            [1f80001c] = b(bu[S1 + 28]);
-            [1f80001d] = b(bu[S1 + 29]);
-
-            [1f800009] = b(bu[S1 + 2c]);
-            [1f80000a] = b(bu[S1 + 2d]);
-            [1f80000b] = b(bu[S1 + 2e]);
-            [1f80001e] = b(0);
-
-            A0 = w[model_data + 4] + model_id * 24;
-            A1 = 1f800000;
-
-
-S4 = A0;
-
-S1 = w[S4 + 20];
-A2 = w[S4 + 1c] + hu[S4 + 18];
-A0 = bu[A1 + 0]; // r
-V1 = bu[A1 + 1]; // g
-V0 = bu[A1 + 2]; // b
-
-T4 = A0 << 4;
-T5 = V1 << 4;
-T6 = V0 << 4;
-
-800B1E90	ctc2   t4,sxy1
-800B1E94	ctc2   t5,sxy2
-800B1E98	ctc2   t6,sxy2p
+RBK = bu[A1 + 0] << 4;
+BBK = bu[A1 + 1] << 4;
+GBK = bu[A1 + 2] << 4;
 
 [1f800200] = h(bu[A1 + 3] << 4);
 [1f800206] = h(bu[A1 + 4] << 4);
-V0 = bu[A1 + 0005];
-800B1EC8	nop
-V0 = V0 << 04;
-800B1ED0	lui    at, $1f80
-[AT + 020c] = h(V0);
-V0 = bu[A1 + 0006];
-800B1EDC	nop
-V0 = V0 << 04;
-800B1EE4	lui    at, $1f80
-[AT + 0202] = h(V0);
-V0 = bu[A1 + 0007];
-800B1EF0	nop
-V0 = V0 << 04;
-800B1EF8	lui    at, $1f80
-[AT + 0208] = h(V0);
-V0 = bu[A1 + 0008];
-800B1F04	nop
-V0 = V0 << 04;
-800B1F0C	lui    at, $1f80
-[AT + 020e] = h(V0);
-V0 = bu[A1 + 0009];
-800B1F18	nop
-V0 = V0 << 04;
-800B1F20	lui    at, $1f80
-[AT + 0204] = h(V0);
-V0 = bu[A1 + 000a];
-800B1F2C	nop
-V0 = V0 << 04;
-800B1F34	lui    at, $1f80
-[AT + 020a] = h(V0);
-V0 = bu[A1 + 000b];
-800B1F40	lui    at, $1f80
-[AT + 021c] = w(0);
-800B1F48	lui    at, $1f80
-[AT + 0218] = w(0);
-800B1F50	lui    at, $1f80
-[AT + 0214] = w(0);
-V0 = V0 << 04;
-800B1F5C	lui    at, $1f80
-[AT + 0210] = h(V0);
-T4 = w[V1 + 0000];
-T5 = w[V1 + 0004];
-800B1F6C	ctc2   t4,sz0
-800B1F70	ctc2   t5,sz1
-T4 = w[V1 + 0008];
-T5 = w[V1 + 000c];
-T6 = w[V1 + 0010];
-800B1F80	ctc2   t4,sz2
-800B1F84	ctc2   t5,sz3
-800B1F88	ctc2   t6,rgb0
+[1f80020c] = h(bu[A1 + 5] << 4);
+[1f800202] = h(bu[A1 + 6] << 4);
+[1f800208] = h(bu[A1 + 7] << 4);
+[1f80020e] = h(bu[A1 + 8] << 4);
+[1f800204] = h(bu[A1 + 9] << 4);
+[1f80020a] = h(bu[A1 + a] << 4);
+[1f800210] = h(bu[A1 + b] << 4);
+[1f800214] = w(0);
+[1f800218] = w(0);
+[1f80021c] = w(0);
+
+LR1LR2 = w[1f800200 + 0];
+LR3LG1 = w[1f800200 + 4];
+LG2LG3 = w[1f800200 + 8];
+LB1LB2 = w[1f800200 + c];
+LB3 = w[1f800200 + 10];
 
 [SP + 10] = h((bu[A1 + d] << 8) | bu[A1 + c]);
 [SP + 12] = h((bu[A1 + f] << 8) | bu[A1 + e]);
@@ -4315,306 +4258,160 @@ T6 = w[V1 + 0010];
 [SP + 1c] = h((bu[A1 + 19] << 8) | bu[A1 + 18]);
 [SP + 1e] = h((bu[A1 + 1b] << 8) | bu[A1 + 1a]);
 [SP + 20] = h((bu[A1 + 1d] << 8) | bu[A1 + 1c]);
-
 [SP + 24] = w(0);
 [SP + 28] = w(0);
 [SP + 2c] = w(0);
 
-S6 = bu[A1 + 1e];
-
-V0 = bu[S4 + 3];
-if (V0 != 0)
+for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
-    S3 = 0;
-    S5 = 1f800240;
-    S2 = SP + 10;
-    S0 = A2;
+    if( bu[parts_data + i * 20 + 0] != 0 )
+    {
+        V0 = bu[parts_data + i * 20 + 1];
 
-    Lb206c:	; 800B206C
-        if (bu[S0 + 0] != 0)
+        if( b[model_data + 1] != -1 )
         {
-            A0 = 1f800220;
-            V1 = b[S4 + 1];
-            if (V1 != -1)
-            {
-                // root rotation/scale matrix
-                T4 = w[S1 + 0];
-                T5 = w[S1 + 4];
-                R11R12 = T4;
-                R13R21 = T5;
-                T4 = w[S1 + 8];
-                T5 = w[S1 + c];
-                T6 = w[S1 + 10];
-                R22R23 = T4;
-                R31R32 = T5;
-                R33 = T6;
+            R11R12 = w[part_matrix + 0];
+            R13R21 = w[part_matrix + 4];
+            R22R23 = w[part_matrix + 8];
+            R31R32 = w[part_matrix + c];
+            R33 = w[part_matrix + 10];
 
-                bone_data = S1 + bu[S0 + 1] * 20; // bone this part attached to
+            IR1 = hu[part_matrix + V0 * 20 + 0];
+            IR2 = hu[part_matrix + V0 * 20 + 6];
+            IR3 = hu[part_matrix + V0 * 20 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800220] = h(IR1);
+            [1f800226] = h(IR2);
+            [1f80022c] = h(IR3);
 
-                T4 = hu[bone_data + 0];
-                T5 = hu[bone_data + 6];
-                T6 = hu[bone_data + c];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B20E4	gte_func18t1,dqb
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800220] = h(T4);
-                [1f800226] = h(T5);
-                [1f80022c] = h(T6);
+            IR1 = hu[part_matrix + V0 * 20 + 2];
+            IR2 = hu[part_matrix + V0 * 20 + 8];
+            IR3 = hu[part_matrix + V0 * 20 + e];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800222] = h(IR1);
+            [1f800228] = h(IR2);
+            [1f80022e] = h(IR3);
 
-                T4 = hu[bone_data + 2];
-                T5 = hu[bone_data + 8];
-                T6 = hu[bone_data + e];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B2134	gte_func18t1,dqb
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800222] = h(T4);
-                [1f800228] = h(T5);
-                [1f80022e] = h(T6);
+            IR1 = hu[part_matrix + V0 * 20 + 4];
+            IR2 = hu[part_matrix + V0 * 20 + a];
+            IR3 = hu[part_matrix + V0 * 20 + 10];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800224] = h(IR1);
+            [1f80022a] = h(IR2);
+            [1f800230] = h(IR3);
 
-                T4 = hu[bone_data + 4];
-                T5 = hu[bone_data + a];
-                T6 = hu[bone_data + 10];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B218C	gte_func18t1,dqb
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800224] = h(T4);
-                [1f80022a] = h(T5);
-                [1f800230] = h(T6);
+            TRX = w[part_matrix + 14];
+            TRY = w[part_matrix + 18];
+            TRZ = w[part_matrix + 1c];
 
-                T4 = w[S1 + 14];
-                T5 = w[S1 + 18];
-                800B21B8	ctc2   t4,vz2
-                T6 = w[S1 + 1c];
-                800B21C0	ctc2   t5,rgb
-                800B21C4	ctc2   t6,otz
+            VXY0 = (hu[part_matrix + V0 * 20 + 18] << 10) | hu[part_matrix + V0 * 20 + 14];
+            VZ0 = w[part_matrix + V0 * 20 + 1c];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [1f800234] = w(IR1);
+            [1f800238] = w(IR2);
+            [1f80023c] = w(IR3);
 
-                T4 = hu[bone_data + 14];
-                T5 = hu[bone_data + 18];
-                T4 = (T5 << 10) | T4;
-                VXY0 = T4;
-                800B21F0	lwc2   at, $001c(bone_data)
-                800B21FC	gte_func18t0,r11r12
-                800B2208	swc2   t1, $0000(1f800234)
-                800B220C	swc2   t2, $0004(1f800234)
-                800B2210	swc2   t3, $0008(1f800234)
+            R11R12 = w[SP + 10];
+            R13R21 = w[SP + 14];
+            R22R23 = w[SP + 18];
+            R31R32 = w[SP + 1c];
+            R33 = w[SP + 20];
 
-                // set light matrix
-                T4 = w[SP + 10];
-                T5 = w[SP + 14];
-                R11R12 = T4;
-                R13R21 = T5;
-                T4 = w[SP + 18];
-                T5 = w[SP + 1c];
-                T6 = w[SP + 20];
-                R22R23 = T4;
-                R31R32 = T5;
-                R33 = T6;
+            IR1 = hu[1f800220];
+            IR2 = hu[1f800226];
+            IR3 = hu[1f80022c];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800240] = h(IR1);
+            [1f800246] = h(IR2);
+            [1f80024c] = h(IR3);
 
-                T4 = hu[1f800220];
-                T5 = hu[1f800226];
-                T6 = hu[1f80022c];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B225C	gte_func18t1,dqb
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800240] = h(T4);
-                [1f800246] = h(T5);
-                [1f80024c] = h(T6);
+            IR1 = hu[1f800222];
+            IR2 = hu[1f800228];
+            IR3 = hu[1f80022e];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800242] = h(IR1);
+            [1f800248] = h(IR2);
+            [1f80024e] = h(IR3);
 
-                T4 = hu[1f800222];
-                T5 = hu[1f800228];
-                T6 = hu[1f80022e];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B22A0	gte_func18t1,dqb
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800242] = h(T4);
-                [1f800248] = h(T5);
-                [1f80024e] = h(T6);
+            IR1 = hu[1f800224];
+            IR2 = hu[1f80022a];
+            IR3 = hu[1f800230];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800244] = h(IR1);
+            [1f80024a] = h(IR2);
+            [1f800250] = h(IR3);
 
-                T4 = hu[1f800224];
-                T5 = hu[1f80022a];
-                T6 = hu[1f800230];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B22EC	gte_func18t1,dqb
-                800B22F0	lui    a3, $1f80
-                A3 = A3 | 0244;
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800244] = h(T4);
-                [1f80024a] = h(T5);
-                [1f800250] = h(T6);
+            TRX = w[SP + 24];
+            TRY = w[SP + 28];
+            TRZ = w[SP + 2c];
 
-                T4 = w[S2 + 14];
-                T5 = w[S2 + 18];
-                800B2318	ctc2   t4,vz2
-                T6 = w[S2 + 1c];
-                800B2320	ctc2   t5,rgb
-                800B2324	ctc2   t6,otz
+            VXY0 = (hu[1f800238] << 10) | hu[1f800234];
+            VZ0 = w[1f80023c];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [1f800254] = w(IR1);
+            [1f800258] = w(IR2);
+            [1f80025c] = w(IR3);
 
-                T5 = hu[1f800238];
-                T4 = hu[1f800234];
-                T4 = (T5 << 10) | T4;
-                VXY0 = T4;
-                VZ0 = w[A3 + 0008];
-                800B2350	gte_func18t0,r11r12
-                800B235C	swc2   t1, $0000(1f800254)
-                800B2360	swc2   t2, $0004(1f800254)
-                800B2364	swc2   t3, $0008(1f800254)
-
-                T4 = w[1f800240];
-                T5 = w[1f800244];
-                800B2370	ctc2   t4,ir0
-                800B2374	ctc2   t5,ir1
-                T4 = w[1f800248];
-                T5 = w[1f80024c];
-                T6 = w[1f800250];
-                800B2384	ctc2   t4,ir2
-                800B2388	ctc2   t5,ir3
-                800B238C	ctc2   t6,sxy0
-            }
-            else
-            {
-                T4 = w[S2 + 0000];
-                T5 = w[S2 + 0004];
-                R11R12 = T4;
-                R13R21 = T5;
-                T4 = w[S2 + 0008];
-                T5 = w[S2 + 000c];
-                T6 = w[S2 + 0010];
-                R22R23 = T4;
-                R31R32 = T5;
-                R33 = T6;
-                V0 = bu[S0 + 0001];
-                800B23C4	nop
-                V0 = V0 << 05;
-                V0 = S1 + V0;
-                T4 = hu[V0 + 0000];
-                T5 = hu[V0 + 0006];
-                T6 = hu[V0 + 000c];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B23E8	nop
-                800B23EC	nop
-                800B23F0	gte_func18t1,dqb
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [A0 + 0000] = h(T4);
-                [A0 + 0006] = h(T5);
-                [A0 + 000c] = h(T6);
-                V0 = bu[S0 + 0001];
-                800B2410	nop
-                V0 = V0 << 05;
-                V0 = S1 + V0;
-                V0 = V0 + 0002;
-                T4 = hu[V0 + 0000];
-                T5 = hu[V0 + 0006];
-                T6 = hu[V0 + 000c];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B2438	nop
-                800B243C	nop
-                800B2440	gte_func18t1,dqb
-                800B2444	lui    a3, $1f80
-                A3 = A3 | 0222;
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [A3 + 0000] = h(T4);
-                [A3 + 0006] = h(T5);
-                [A3 + 000c] = h(T6);
-                V0 = bu[S0 + 0001];
-                800B2468	nop
-                V0 = V0 << 05;
-                V0 = S1 + V0;
-                V0 = V0 + 0004;
-                T4 = hu[V0 + 0000];
-                T5 = hu[V0 + 0006];
-                T6 = hu[V0 + 000c];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
-                800B2490	nop
-                800B2494	nop
-                800B2498	gte_func18t1,dqb
-                800B249C	lui    a3, $1f80
-                A3 = A3 | 0224;
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-
-                [A3 + 0000] = h(T4);
-                [A3 + 0006] = h(T5);
-                [A3 + 000c] = h(T6);
-                T4 = w[S2 + 0014];
-                T5 = w[S2 + 0018];
-                800B24C4	ctc2   t4,vz2
-                T6 = w[S2 + 001c];
-                800B24CC	ctc2   t5,rgb
-                800B24D0	ctc2   t6,otz
-                V0 = bu[S0 + 0001];
-                800B24D8	nop
-                V0 = V0 << 05;
-                V0 = S1 + V0;
-                V0 = V0 + 0014;
-                T5 = hu[V0 + 0004];
-                T4 = hu[V0 + 0000];
-                T5 = T5 << 10;
-                T4 = T4 | T5;
-
-                VXY0 = T4;
-                VZ0 = w[V0 + 0008];
-                800B2508	gte_func18t0,r11r12
-                800B2514	swc2   t1, $0000(1f800234)
-                800B2518	swc2   t2, $0004(1f800234)
-                800B251C	swc2   t3, $0008(1f800234)
-
-                T4 = w[A0 + 0];
-                T5 = w[A0 + 4];
-                800B2528	ctc2   t4,ir0
-                800B252C	ctc2   t5,ir1
-                T4 = w[A0 + 8];
-                T4 = w[A0 + c];
-                T4 = w[A0 + 10];
-                800B253C	ctc2   t4,ir2
-                800B2540	ctc2   t5,ir3
-                800B2544	ctc2   t6,sxy0
-            }
+            L11L12 = w[1f800240];
+            L13L21 = w[1f800244];
+            L22L23 = w[1f800248];
+            L31L32 = w[1f80024c];
+            L33 = w[1f800250];
         }
+        else
+        {
+            R11R12 = w[SP + 10];
+            R13R21 = w[SP + 14];
+            R22R23 = w[SP + 18];
+            R31R32 = w[SP + 1c];
+            R33 = w[SP + 20];
 
-        Lb254c:	; 800B254C
-        A0 = S0; // model parts data
-        A1 = S6; // 0
-        funcb2598;
+            IR1 = hu[part_matrix + V0 * 20 + 0];
+            IR2 = hu[part_matrix + V0 * 20 + 6];
+            IR3 = hu[part_matrix + V0 * 20 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800220] = h(IR1);
+            [1f800226] = h(IR2);
+            [1f80022c] = h(IR3);
 
-        S3 = S3 + 1;
-        V0 = S3 < bu[S4 + 3]; // // number of model parts
-        S0 = S0 + 20;
-    800B2560	bne    v0, zero, Lb206c [$800b206c]
+            IR1 = hu[part_matrix + V0 * 20 + 2];
+            IR2 = hu[part_matrix + V0 * 20 + 8];
+            IR3 = hu[part_matrix + V0 * 20 + e];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800222] = h(IR1);
+            [1f800228] = h(IR2);
+            [1f80022e] = h(IR3);
+
+            IR1 = hu[part_matrix + V0 * 20 + 4];
+            IR2 = hu[part_matrix + V0 * 20 + a];
+            IR3 = hu[part_matrix + V0 * 20 + 10];
+            gte_rtir12(); // ir * rotmatrix
+            [1f800224] = h(IR1);
+            [1f80022a] = h(IR2);
+            [1f800230] = h(IR3);
+
+            TRX = w[SP + 24];
+            TRY = w[SP + 28];
+            TRZ = w[SP + 2c];
+
+            VXY0 = (hu[part_matrix + V0 * 20 + 18] << 10) | hu[part_matrix + V0 * 20 + 14];
+            VZ0 = w[part_matrix + V0 * 20 + 1c];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [1f800234] = w(IR1);
+            [1f800238] = w(IR2);
+            [1f80023c] = w(IR3);
+
+            L11L12 = w[1f800220];
+            L13L21 = w[1f800224];
+            L22L23 = w[1f800228];
+            L31L32 = w[1f80022c];
+            L33 = w[1f800230];
+        }
+    }
+
+    A0 = parts_data + i * 20;
+    A1 = bu[A1 + 1e];
+    funcb2598();
 }
 
 return 1;

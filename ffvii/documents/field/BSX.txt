@@ -95,15 +95,34 @@ BSX file for models.
 
 // animation data header (0x10 size)
     + 0 [][]     number of frames.
+    + 2 []       number of bones.
     + 3 []       number of frames translations.
     + 4 []       number of static translations.
-    + 6 [][]     local offset to frames translation.
-    + 8 [][]     local offset to static translation.
+    + 5 []       number of frames rotations.
+    + 6 [][]     local offset to frames translations.
+    + 8 [][]     local offset to static translations.
+    + a [][]     local offset to frames rotations.
     + c [][][][] offset to data.
         data
         + 0 [][][][] 0x00000001 flag that animations already scaled.
-        array of static translation (0x2 size)
-        + 0 [][]     translation.
-        array of arrays of frames translation (0x2 size each translation)
-        each frames translation contains flanes number of translations.
-        + 0 [][]     translation.
+        start of bones settings (0x8 size)
+            + 0 []       flags.
+                         0x01 - use frames rotation x.
+                         0x02 - use frames rotation y.
+                         0x04 - use frames rotation z.
+                         0x10 - use frames translation x.
+                         0x20 - use frames translation y.
+                         0x40 - use frames translation z.
+            + 1 []       bone rot x.
+            + 2 []       bone rot y.
+            + 3 []       bone rot z.
+            + 4 []       bone trans x.
+            + 5 []       bone trans y.
+            + 6 []       bone trans z.
+
+    array of static translation (0x2 size)
+    + 0 [][]     translation.
+
+// array of arrays of frames translation (0x2 size each translation)
+// each frames translation contains frames number of translations.
+    + 0 [][]     translation.

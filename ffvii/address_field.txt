@@ -589,8 +589,8 @@
         + 16 [][]     model scale. Store 1000 here during init. (12bit fixed point)
         + 18 [][]     local offset to model parts.
         + 1a [][]     local offset to animation.
-        + 1c [][][][] start offset of data for this model and bones offset.
-        + 20 [][][][] offset to packet drafts and bone matrixes. init with 0.
+        + 1c [][][][] offset to data for this model and bones offset.
+        + 20 [][][][] offset to part matrixes.
 
 
 
