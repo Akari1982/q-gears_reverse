@@ -210,7 +210,7 @@
 // funcae4dc
 800AE4DC-800AEE20
 ////////////////////////////////
-// animation_prepare_bones_matrixes
+// field_model_animation_calculate_matrixes
 800AEE24-800AF6E8
 ////////////////////////////////
 // field_model_scale_model

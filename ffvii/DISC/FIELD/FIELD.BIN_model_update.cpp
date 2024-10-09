@@ -121,7 +121,7 @@ if (number_of_model > 0)
                     A1 = SP + 20;
                     A2 = bu[80074ea4 + S2 * 84 + 5e];
                     A3 = h[80074ea4 + S2 * 84 + 62] / 10;
-                    animation_prepare_bones_matrixes;
+                    field_model_animation_calculate_matrixes();
 
                     // set camera matrix as root bone transformation
                     V0 = w[model_struct + 4] + bu[block7_data + S2 * 8 + 4] * 24;
@@ -143,7 +143,7 @@ if (number_of_model > 0)
                     A1 = w[80071e40]; // offset to camera section
                     A2 = bu[80074ea4 + S2 * 84 + 5e]; // animation id
                     A3 = hu[80074ea4 + S2 * 84 + 62] / 10; // current frame
-                    animation_prepare_bones_matrixes;
+                    field_model_animation_calculate_matrixes();
                 }
             }
         }

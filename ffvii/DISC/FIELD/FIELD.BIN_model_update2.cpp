@@ -658,9 +658,9 @@ for( int i = 0; i < number_of_model; ++i )
         [1f800000] = w(1); // not use model rotation and translation
         A0 = model_data + model_id * 24;
         A1 = SP + 10;
-        A2 = 0;
-        A3 = 0;
-        animation_prepare_bones_matrixes();
+        A2 = 0; // animation id
+        A3 = 0; // frame id
+        field_model_animation_calculate_matrixes();
 
         [1f800000] = b(bu[S1 + 8]);
         [1f800001] = b(bu[S1 + 9]);
@@ -1847,7 +1847,7 @@ for( int i = 0; i < bu[model_part + b]; ++i )
 
 
 ////////////////////////////////
-// animation_prepare_bones_matrixes()
+// field_model_animation_calculate_matrixes()
 
 model_data = A0;
 matrix = A1;
@@ -1955,322 +1955,190 @@ if( bu[model_data + 0] != 0 ) // if inited
         [1f80003c] = w(w[matrix + 1c]);
     }
 
-    animation_data          = w[model_data + 1c] + hu[model_data + 1a] + animation_id * 10;
+    animation_data = w[model_data + 1c] + hu[model_data + 1a] + animation_id * 10;
+    frames_translation = w[animation_data + c] + hu[animation_data + 6] + frame_id * 2;
+    static_translation = w[animation_data + c] + hu[animation_data + 8];
+    frames_rotation = w[animation_data + c] + h[animation_data + a] + frame_id;
+    bones_settings = w[animation_data + c] + 4;
+    frames_n = hu[animation_data + 0];
 
-    bones_preferenses_data  = w[animation_data + c] + 4;
-    frames_translation_data = w[animation_data + c] + hu[animation_data + 6] + frame_id * 2;
-    static_translation_data = w[animation_data + c] + hu[animation_data + 8];
-    frames_rotation_data    = w[animation_data + c] + hu[animation_data + a] + frame_id; // offset to animation angle
-
-    number_of_frames = hu[animation_data + 0];
-    number_of_bones  = bu[model_data + 2];
-
-    bone_id = 0;
-    if (number_of_bones != 0)
+    for( int i = 0; i < bu[model_data + 2]; ++i ) // number of bones
     {
-        Laf1c0:	; 800AF1C0
-            bone_data = w[model_data + 1c] + bone_id * 4;
-            T4 = w[bone_data];
-            parent_bone_id = (T4 << 8) >> 18; // get parent of this bone
+        bone_data = w[model_data + 1c] + i * 4;
+        bone_parent_id = (w[bone_data] << 8) >> 18;
+        bone_part = w[bone_data] >> 18;
+        bone_length = (w[bone_data] << 10) >> 10;
 
-            if ((T4 >> 18) != 0) // bone has part
+        parent_matrix = 1f800040 + bone_parent_id * 20;
+        bone_matrix = 1f800040 + i * 20;
+
+        part_matrix = ( bone_part != 0 ) ? w[model_data + 20] + i * 20 : 0;
+
+        [bone_matrix + 14] = w(0);
+        [bone_matrix + 18] = w(0);
+        [bone_matrix + 1c] = w(bone_length);
+
+        R11R12 = w[parent_matrix + 0];
+        R13R21 = w[parent_matrix + 4];
+        R22R23 = w[parent_matrix + 8];
+        R31R32 = w[parent_matrix + c];
+        R33 = w[parent_matrix + 10];
+        TRX = w[parent_matrix + 14];
+        TRY = w[parent_matrix + 18];
+        TRZ = w[parent_matrix + 1c];
+
+        flags = bu[bones_settings + i * 8 + 0];
+        rot_x = b[bones_settings + i * 8 + 1];
+        rot_y = b[bones_settings + i * 8 + 2];
+        rot_z = b[bones_settings + i * 8 + 3];
+
+        IR0 = frames_n;
+        IR1 = rot_x;
+        IR2 = rot_y;
+        IR3 = rot_z;
+        gte_GPF(); // General Purpose Interpolation
+
+        if( flags & 1 ) rot_x = bu[frames_rotation + MAC1];
+        if( flags & 2 ) rot_y = bu[frames_rotation + MAC2];
+        if( flags & 4 ) rot_z = bu[frames_rotation + MAC3];
+
+        sin_x = h[800df120 + rot_x * 4 + 0];
+        cos_x = h[800df120 + rot_x * 4 + 2];
+        sin_y = w[800df120 + rot_y * 4 + 0];
+        cos_y = w[800df120 + rot_y * 4 + 2];
+        sin_z = w[800df120 + rot_z * 4 + 0];
+        cos_z = w[800df120 + rot_z * 4 + 2];
+
+        IR0 = cos_x;
+        IR1 = sin_y;
+        IR2 = cos_y;
+        gte_gpf12(); // General purpose interpolation
+        IR1 = MAC1 & ffff;
+        IR2 = -sin_x;
+        IR3 = MAC2 & ffff;
+        gte_rtir12(); // ir * rotmatrix
+        [bone_matrix + 4] = h(IR1);
+        [bone_matrix + a] = h(IR2);
+        [bone_matrix + 10] = h(IR3);
+        if( part_matrix != 0 )
+        {
+            [part_matrix + 4] = h(IR1);
+            [part_matrix + a] = h(IR2);
+            [part_matrix + 10] = h(IR3);
+        }
+
+        IR0 = sin_x;
+        IR1 = sin_y;
+        IR2 = cos_y;
+        gte_gpf12(); // General purpose interpolation
+        T1 = MAC1 & ffff;
+        T2 = MAC2 & ffff;
+
+        IR0 = sin_z;
+        IR1 = T1;
+        IR2 = cos_x;
+        IR3 = T2;
+        gte_GPF(); // General Purpose Interpolation
+
+        IR0 = cos_z;
+        IR1 = cos_y;
+        IR2 = 0;
+        IR3 = -sin_y;
+        gte_gpl12(); // General purpose interpolation
+        IR1 = (MAC1 >> c) & ffff;
+        IR2 = (MAC2 >> c) & ffff;
+        IR3 = (MAC3 >> c) & ffff;
+        gte_rtir12(); // ir * rotmatrix
+        [bone_matrix + 0] = h(IR1);
+        [bone_matrix + 6] = h(IR2);
+        [bone_matrix + c] = h(IR3);
+        if( part_matrix != 0 )
+        {
+            [part_matrix + 0] = h(IR1);
+            [part_matrix + 6] = h(IR2);
+            [part_matrix + c] = h(IR3);
+        }
+
+        IR0 = cos_z;
+        IR1 = T1;
+        IR2 = cos_x;
+        IR3 = T2;
+        gte_GPF(); // General Purpose Interpolation
+
+        IR0 = sin_z;
+        IR1 = -cos_y;
+        IR2 = 0;
+        IR3 = sin_y;
+        gte_gpl12(); // General purpose interpolation
+        IR1 = (MAC1 >> c) & ffff;
+        IR2 = (MAC2 >> c) & ffff;
+        IR3 = (MAC3 >> c) & ffff;
+        gte_rtir12(); // ir * rotmatrix
+        [bone_matrix + 2] = h(IR1);
+        [bone_matrix + 8] = h(IR2);
+        [bone_matrix + e] = h(IR3);
+        if( part_matrix != 0 )
+        {
+            [part_matrix + 2] = h(IR1);
+            [part_matrix + 8] = h(IR2);
+            [part_matrix + e] = h(IR3);
+        }
+
+        if( w[1f800000] & 1 )
+        {
+            trans_x = bu[bones_settings + i * 8 + 4];
+            trans_y = bu[bones_settings + i * 8 + 5];
+            trans_z = bu[bones_settings + i * 8 + 6];
+
+            if( flags & 40 )
             {
-                bone_matrix_storage = w[model_data + 20] + bone_id * 20;
+                IR0 = frames_n;
+                IR1 = trans_z;
+                gte_GPF(); // General Purpose Interpolation
+                [bone_matrix + 1c] = w(w[bone_matrix + 1c] + h[frames_translation + MAC1 * 2]);
             }
-            else // joint
+            else if( trans_z != ff )
             {
-                bone_matrix_storage = 0;
-            }
-
-            // default translation vector
-            [1f800040 + bone_id * 20 + 14] = w(0);
-            [1f800040 + bone_id * 20 + 18] = w(0);
-            [1f800040 + bone_id * 20 + 1c] = w((T4 << 10) >> 10); // set length of bone
-
-            R11R12 = w[1f800040 + parent_bone_id * 20 + 0];
-            R13R21 = w[1f800040 + parent_bone_id * 20 + 4];
-            R22R23 = w[1f800040 + parent_bone_id * 20 + 8];
-            R31R32 = w[1f800040 + parent_bone_id * 20 + c];
-            R33 = w[1f800040 + parent_bone_id * 20 + 10];
-            TRX = w[1f800040 + parent_bone_id * 20 + 14];
-            TRY = w[1f800040 + parent_bone_id * 20 + 18];
-            TRZ = w[1f800040 + parent_bone_id * 20 + 1c];
-
-            A0 = w[bones_preferenses_data + 0];    // 4321 // flags for bone
-            flags = bu[bones_preferenses_data + 0];    // 4321 // flags for bone
-            rot_x = bu[bones_preferenses_data + 1];
-            rot_y = bu[bones_preferenses_data + 2];
-            rot_z = bu[bones_preferenses_data + 3];
-
-            800AF274	mtc2   number_of_frames,l11l12
-            800AF278	mtc2   rot_x,l13l21
-            800AF27C	mtc2   rot_y,l22l23
-            800AF280	mtc2   rot_z,l31l32
-            general_purpose_interpolation_f;
-
-            if (flags & 1)
-            {
-                800AF29C	mfc2   v0,ofy
-                rot_x = bu[frames_rotation_data + V0];
-            }
-
-            if (flags & 2)
-            {
-                800AF2B8	mfc2   v0,h
-                rot_y = bu[frames_rotation_data + V0];
-            }
-
-            if (flags & 4)
-            {
-                800AF2D4	mfc2   v0,dqa
-                rot_z = bu[frames_rotation_data + V0];
-            }
-
-            T1 = w[800df120 + rot_x * 4]; // get X rotation vector
-            A2 = w[800df120 + rot_y * 4]; // get Y rotation vector
-            A1 = w[800df120 + rot_z * 4]; // get Z rotation vector
-
-            S0 = T1 >> 10; // X-Y
-            IR0 = S0;
-            T2 = T1;
-            A3 = A2 >> 10; // Y-Y
-            IR2 = A3;
-            V1 = A2;
-            T5 = V1 & FFFF; // Y-X
-            IR1 = T5;
-
-            gte_func28t8,r11r12 // general purpose interpolation
-
-            S2 = A1 >> 10;  // Z-Y
-            S1 = A1;
-            V0 = -T1;
-
-            800AF338	mfc2   t5,ofy
-            T5 = T5 & FFFF;
-            IR1 = T5;
-
-            T6 = V0 & FFFF;
-            IR2 = T6;
-
-            800AF350	mfc2   t7,h
-            T7 = T7 & FFFF;
-            IR3 = T7;
-
-            gte_func18 t1,dqb // ir * rotmatrix
-
-            T5 = IR1;
-            T6 = IR2;
-            T7 = IR3;
-
-            IR0 = T2;
-
-            T4 = V1 & FFFF;
-
-            IR1 = T4;
-            IR2 = A3;
-
-            [1f800040 + bone_id * 20 + 4] = h(T5);
-            [1f800040 + bone_id * 20 + a] = h(T6);
-            [1f800040 + bone_id * 20 + 10] = h(T7);
-
-            gte_func28t8,r11r12 // general purpose interpolation
-
-            if (bone_matrix_storage != 0)
-            {
-                [bone_matrix_storage + 4] = h(T5);
-            }
-
-            800AF3A8	mfc2   t1,ofy
-            T1 = T1 & ffff;
-
-            800AF3B4	mfc2   t2,h
-            T2 = T2 & ffff;
-
-            IR0 = S1;
-            IR1 = T1;
-            IR2 = S0;
-            IR3 = T2;
-
-            general_purpose_interpolation_f;
-
-            if (bone_matrix_storage != 0)
-            {
-                [bone_matrix_storage + a] = h(T6);
-            }
-
-            IR0 = S2;
-            IR1 = A3;
-            IR2 = 0;
-            V0 = - A2;
-            V0 = V0 & FFFF;
-            IR3 = V0;
-
-            gte_func29zero,r11r12 // general purpose interpolation
-
-            if (bone_matrix_storage != 0)
-            {
-                [bone_matrix_storage + 10] = h(T7);
+                [bone_matrix + 1c] = w(w[bone_matrix + 1c] + h[static_translation + trans_z * 2]);
             }
 
-            800AF420	mfc2   t5,ofy
-            T5 = T5 >> 0c;
-            T5 = T5 & ffff;
-            IR1 = T5;
-            800AF434	mfc2   t6,h
-            T6 = T6 >> 0c;
-            T6 = T6 & ffff;
-            IR2 = T6;
-            800AF448	mfc2   t7,dqa
-            T7 = T7 >> 0c;
-            T7 = T7 & ffff;
-            IR3 = T7;
-            gte_func18 t1,dqb // ir * rotmatrix
-            T5 = IR1;
-            T6 = IR2;
-            T7 = IR3;
-            IR0 = S2;
-            IR1 = T1;
-            IR2 = S0;
-            IR3 = T2;
-
-            [1f800040 + bone_id * 20 + 0] = h(T5);
-            [1f800040 + bone_id * 20 + 6] = h(T6);
-            [1f800040 + bone_id * 20 + c] = h(T7);
-
-            if (bone_matrix_storage != 0)
+            if( flags & 10 )
             {
-                [bone_matrix_storage + 0] = h(T5);
+                IR0 = frames_n;
+                IR1 = trans_x;
+                gte_GPF(); // General Purpose Interpolation
+                [bone_matrix + 14] = w(h[frames_translation + MAC1 * 2]);
+            }
+            else if( trans_x != ff )
+            {
+                [bone_matrix + 14] = w(h[static_translation + trans_x * 2]);
             }
 
-            general_purpose_interpolation_f;
-
-            IR0 = S1;
-            A3 = A3 << 10;
-            A3 = A3 >> 10;
-            800AF4B0	sub    v0, zero, a3
-            V0 = V0 & ffff;
-            IR1 = V0;
-            IR2 = 0;
-            T4 = V1 & ffff;
-            IR3 = T4;
-            800AF4C8	nop
-            800AF4CC	nop
-            gte_func29zero,r11r12 // general purpose interpolation
-
-            if (bone_matrix_storage != 0)
+            if( flags & 20 )
             {
-                [bone_matrix_storage + 6] = h(T6);
+                IR0 = frames_n;
+                IR1 = trans_y;
+                gte_GPF(); // General Purpose Interpolation
+                [bone_matrix + 18] = w(h[frames_translation + MAC1 * 2]);
             }
-
-            800AF4E0	mfc2   t5,ofy
-            T5 = T5 >> 0c;
-            T5 = T5 & ffff;
-            IR1 = T5;
-            800AF4F4	mfc2   t6,h
-            T6 = T6 >> 0c;
-            T6 = T6 & ffff;
-            IR2 = T6;
-            800AF508	mfc2   t4,dqa
-            T4 = T4 >> 0c;
-            T4 = T4 & ffff;
-            IR3 = T4;
-            gte_func18 t1,dqb // ir * rotmatrix
-
-            if (bone_matrix_storage != 0)
+            else if( trans_y != ff )
             {
-                [bone_matrix_storage + c] = h(T7);
+                [bone_matrix + 18] = w(h[static_translation + trans_y * 2]);
             }
+        }
 
-            T5 = IR1;
-            T6 = IR2;
-            T7 = IR3;
-
-            if (w[1f800000] & 1)
-            {
-                800AF558	mtc2   number_of_frames,l11l12
-                A2 = w[bones_preferenses_data + 4];
-
-                V1 = A2 & 00FF0000;
-                if (flags & 40)
-                {
-                    IR1 = V0;
-                    800AF57C	general_purpose_interpolation_f
-                    800AF584	mfc2   v0,ofy
-
-                    [1f800040 + bone_id * 20 + 1c] = w(w[1f800040 + bone_id * 20 + 1c] + h[frames_translation_data + V0 * 2]);
-                }
-                else if (V1 != 00FF0000)
-                {
-                    V0 = V1 >> 10;
-                    [1f800040 + bone_id * 20 + 1c] = w(w[1f800040 + bone_id * 20 + 1c] + h[static_translation_data + V0 * 2]);
-                }
-
-                V1 = A2 & 000000FF;
-                if (flags & 10)
-                {
-                    IR1 = V1;
-                    general_purpose_interpolation_f
-                    800AF5D0	mfc2   v0,ofy
-
-                    [1f800040 + bone_id * 20 + 14] = w(h[frames_translation_data + V0 * 2]);
-                }
-                else if (V1 != 000000FF)
-                {
-                    [1f800040 + bone_id * 20 + 14] = w(h[static_translation_data + V1 * 2]);
-                }
-
-                V1 = A2 & 0000FF00;
-                if (flags & 20)
-                {
-                    V0 = V1 >> 8;
-                    IR1 = V0;
-                    general_purpose_interpolation_f;
-                    800AF620	mfc2   v0,ofy
-
-                    [1f800040 + bone_id * 20 + 18] = w(h[frames_translation_data + V0 * 2]);
-                }
-                else if (V1 != 0000FF00)
-                {
-                    V0 = V1 >> 8;
-                    [1f800040 + bone_id * 20 + 18] = w(h[static_translation_data + V0 * 2]);
-                }
-            }
-
-            T4 = hu[1f800040 + bone_id * 20 + 18];
-            V1 = hu[1f800040 + bone_id * 20 + 14];
-            T4 = T4 << 10;
-            V1 = V1 | T4;
-            VXY0 = V1;
-
-            800AF664	lwc2   at, $001c(1f800040 + bone_id * 20)
-
-            [1f800040 + bone_id * 20 + 2] = h(T5);
-            [1f800040 + bone_id * 20 + 8] = h(T6);
-            [1f800040 + bone_id * 20 + e] = h(T7);
-            gte_func18 t0,r11r12 // v0 * rotmatrix + tr vector
-
-            if (bone_matrix_storage != 0)
-            {
-                [bone_matrix_storage + 2] = h(T5);
-                [bone_matrix_storage + 8] = h(T6);
-                [bone_matrix_storage + e] = h(T7);
-            }
-
-            800AF690	swc2   t1, $0014(1f800040 + bone_id * 20)
-            800AF694	swc2   t2, $0018(1f800040 + bone_id * 20)
-            800AF698	swc2   t3, $001c(1f800040 + bone_id * 20)
-
-            if (bone_matrix_storage != 0)
-            {
-                800AF6A4	swc2   t1, $0014(bone_matrix_storage)
-                800AF6A8	swc2   t2, $0018(bone_matrix_storage)
-                800AF6AC	swc2   t3, $001c(bone_matrix_storage)
-            }
-
-            bone_id = bone_id + 1;
-            V0 = bone_id < number_of_bones;
-            S5 = S5 + 8;
-        800AF6B4	bne    v0, zero, Laf1c0 [$800af1c0]
+        VXY0 = (hu[bone_matrix + 18] << 10) | hu[bone_matrix + 14];
+        VZ0 = w[bone_matrix + 1c];
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector
+        [bone_matrix + 14] = w(IR1);
+        [bone_matrix + 18] = w(IR2);
+        [bone_matrix + 1c] = w(IR3);
+        if( part_matrix != 0 )
+        {
+            [part_matrix + 14] = w(IR1);
+            [part_matrix + 18] = w(IR2);
+            [part_matrix + 1c] = w(IR3);
+        }
     }
 }
 ////////////////////////////////
