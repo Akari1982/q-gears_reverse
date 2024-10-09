@@ -19501,7 +19501,7 @@ Lb2548:	; 800B2548
 800B2548	addu   a0, s0, zero
 
 Lb254c:	; 800B254C
-800B254C	jal    funcb2598 [$800b2598]
+800B254C	jal    field_model_lighting_apply_to_vertex_color [$800b2598]
 800B2550	addu   a1, s6, zero
 800B2554	lbu    v0, $0003(s4)
 800B2558	addiu  s3, s3, $0001
@@ -19524,7 +19524,7 @@ Lb2568:	; 800B2568
 800B2594	nop
 
 
-funcb2598:	; 800B2598
+field_model_lighting_apply_to_vertex_color:	; 800B2598
 800B2598	addiu  sp, sp, $ffc0 (=-$40)
 800B259C	lw     v1, $0018(a0)
 800B25A0	lui    t4, $800e

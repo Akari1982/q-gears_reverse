@@ -246,10 +246,10 @@
 // kawai_action_0
 800B1C7C-800B1E3C
 ////////////////////////////////
-// funcb1e40
+// field_model_lighting_apply_to_model
 800B1E40-800B2594
 ////////////////////////////////
-// funcb2598
+// field_model_lighting_apply_to_vertex_color
 800B2598-800B29FC
 ////////////////////////////////
 // kawai_action_1

@@ -8,15 +8,36 @@ BSX file for models.
     +  0 [][][][] place in memory.
     +  4 [][][][] number of models.
     +  8 [][][][] offset to texture.
-    +  c [][][][] ???
+    +  c [][][][] offset to copy of model data (used for lighting calc).
     + 10 array of model data (0x30 size)
         +  2 [][]     model scale.
         +  4 [][]     data offset (bones then parts then animation).
+        +  8 []       RBK.
+        +  9 []       BBK.
+        +  a []       GBK.
+        +  c [][]     R11 for lighting.
+        +  e [][]     R12 for lighting.
+        + 10 [][]     R13 for lighting.
         + 12 []       start bone id.
+        + 14 []       LR1.
+        + 15 []       LG1.
+        + 16 []       LB1.
         + 17 []       number of bones.
+        + 18 [][]     R21 for lighting.
+        + 1a [][]     R22 for lighting.
+        + 1c [][]     R23 for lighting.
         + 1e []       start part id.
+        + 20 []       LR2.
+        + 21 []       LG2.
+        + 22 []       LB2.
         + 23 []       number of parts.
+        + 24 [][]     R31 for lighting.
+        + 26 [][]     R32 for lighting.
+        + 28 [][]     R33 for lighting.
         + 2a []       start animation id.
+        + 2c []       LR3.
+        + 2d []       LG3.
+        + 2e []       LB3.
         + 2f []       number of animation.
 
 // textures descripotion header
