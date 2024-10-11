@@ -413,16 +413,16 @@
 800dfe2e [][]     +12[][]
 
 800dfe3c kawai structure (size 0x3c)
-800dfe3c + 00 [][]     used in function funcb0edc (it seems render data to packet draft)
-800dfe3c + 02 [][]     used in function funcb0edc (it seems render data to packet draft)
-800dfe3c + 04 [][]     used in function funcb0edc (it seems render data to packet draft)
+800dfe3c + 00 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
+800dfe3c + 02 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
+800dfe3c + 04 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
 800dfe3c + 06 [][]
 800dfe3c + 08 [][]
 800dfe3c + 0a [][]
 800dfe3c + 0c [][]
 800dfe3c + 0e [][]     store 0x0064 here during 0xD KAWAI opcode.
 800dfe3c + 10 [][]     store 0x0800 here during 0xD KAWAI opcode.
-800dfe3c + 12 []       used in function funcb0edc (it seems render data to packet draft)
+800dfe3c + 12 []       used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
 800dfe3c + 13 []
 800dfe3c + 14 [][]
 800dfe3c + 16 [][]

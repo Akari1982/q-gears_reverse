@@ -75,14 +75,19 @@ BSX file for models.
         + 12 [][]     height.
 
 // parts data header (0x20 size)
-00 01    02     03 04      05      06 07 08 09 0A     0B     0C 0D 0E 0F  10 11   12 13 14 15 16 17
-   bone  v num     qt num  tt num              t num  q num        t off  tb off
     +  1 []       bone id.
     +  2 [][]     number of vertexes.
-    +  4 []       number of textured quad.
-    +  5 []       number of textured triangle.
+    +  4 []       number of shaded textured quad 0x3c
+    +  5 []       number of shaded textured triangle 0x34
+    +  6 []       number of monochrome textured quad 0x2c
+    +  7 []       number of monochrome textured triangle 0x24.
+    +  8 []       number of monochrome triangle 0x20.
+    +  9 []       number of monochrome quad 0x28.
+    +  a []       number of shaded triangle 0x30.
+    +  b []       number of shaded quad 0x38.
+    +  e [][]     local offset to polygons.
     + 10 [][]     local global texture coords block.
-    + 12 [][]     local offset to poly settings.
+    + 12 [][]     local offset to polygons settings.
     + 14 [][]     local offset to stream data.
     + 16 [][]     size of all packets.
     + 18 [][][][] offset to data starts with vertex data.

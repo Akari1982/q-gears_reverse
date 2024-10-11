@@ -235,11 +235,11 @@
 // funcb0a48
 800B0A48-800B0ED8
 ////////////////////////////////
-// funcb0edc
+// field_model_set_color_to_model_packets
 // kawai_action_2
 800B0EDC-800B0FAC
 ////////////////////////////////
-// funcb0fb0
+// field_model_set_color_to_part_packets
 800B0FB0-800B1C78
 ////////////////////////////////
 // funcb1c7c
@@ -249,7 +249,7 @@
 // field_model_lighting_apply_to_model
 800B1E40-800B2594
 ////////////////////////////////
-// field_model_lighting_apply_to_vertex_color
+// field_model_lighting_apply_to_poly_color
 800B2598-800B29FC
 ////////////////////////////////
 // kawai_action_1
