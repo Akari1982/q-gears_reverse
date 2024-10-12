@@ -1,12 +1,13 @@
 ////////////////////////////////
-// funcaa930()
+// field_model_load_and_init()
 
 [800dfca0] = w(80128000); // address for global texture
 
 block7 = w[8007e770];
+models_struct = w[8004a62c];
 
 A0 = block7;
-A1 = w[8004a62c]; // model struct
+A1 = models_struct;
 field_model_struct_init();
 [80075e10] = w(V0); // BCX start
 [800e0204] = w(V0); // place to load next BCX
@@ -25,43 +26,38 @@ do system_cdrom_read_chain(); while( V0 != 0 )
 [1f800004] = w(800df0d4); // FIELD.TDB start sector.
 
 A0 = block7;
-A1 = w[8004a62c]; // model struct
+A1 = models_struct;
 A2 = w[80075e10]; // place for BCX
 A3 = 1; // load global texture
 field_model_load_global_models();
 [80075e10] = w(V0);
 
 A0 = block7;
-A1 = w[8004a62c]; // model struct
+A1 = models_struct;
 A2 = 800a00dc; // static var in FIELD.BIN (0 in release version)
 A3 = 801b0000;
-funcac35c(); // load textures and init packet drafts/ calculates lighting scale
+field_model_load_local_lodel_and init_all();
 [80075e10] = w(V0);
 
-V1 = w[8004a62c];
-number_of_models = bu[V1 + 0];
+model_data = w[models_struct + 4];
 
-int i = 1;
-for( ; i < number_of_models; ++i )
+for( int i = 1; i < bu[models_struct + 0]; ++i ) // number of models
 {
-    [w[V1 + 4] + S0 * 24 + 0] = b(0);
+    [model_data + i * 24 + 0] = b(0);
 }
 
-for( int j = 0; j < number_of_models; ++j )
+for( int i = 0; i < bu[models_struct + 0]; ++i ) // number of models
 {
     [1f800000] = b(1);
     [1f800001] = b(1);
     [1f800002] = b(0);
     [1f800003] = b(i);
-    V0 = w[8004a62c];
-    A0 = w[V0 + 4] + j * 24;
+    A0 = model_data + i * 24;
     A1 = 1f800000;
-    funcb1c7c(); // load face to vram
+    field_model_load_eyes_mouth_tex_to_vram();
 }
 
 funcafde4();
-
-return V0;
 ////////////////////////////////
 
 
@@ -281,7 +277,7 @@ if (V0 > 0)
                 V0 = w[8004a62c];
                 A0 = w[V0 + 4] + S3;
                 A1 = S5;
-                funcb1c7c();
+                field_model_load_eyes_mouth_tex_to_vram();
             }
         }
 

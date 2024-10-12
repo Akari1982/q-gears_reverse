@@ -494,11 +494,11 @@ func3aed8();
 
 
 ////////////////////////////////
-// funcac35c()
+// field_model_load_local_lodel_and init_all()
 
 block_7 = A0;
 models_struct = A1;
-bsx_file = A3; // bsx file
+bsx_file = A3;
 
 model_data = w[models_struct + 4];
 
@@ -642,7 +642,7 @@ for( int i = 0; i < number_of_model; ++i )
 
             A0 = model_data + model_id * 24;
             A1 = 1f800000;
-            funcb1c7c(); // load eyes and mouth
+            field_model_load_eyes_mouth_tex_to_vram();
         }
 
         // identity matrix
@@ -2376,7 +2376,7 @@ else if( V1 < e )
 
             A0 = model_data;
             A1 = T2;
-            funcb1c7c();
+            field_model_load_eyes_mouth_tex_to_vram();
 
             [model_data + 1] = b(-1);
             return 1;
@@ -2493,8 +2493,8 @@ else if( V1 < e )
             A3 = bu[T2 + 0];
             if (A3 == 0)
             {
-                [800dfdfe + model_id * 2] = b(0);
-                [800dfdff + model_id * 2] = b(model_id);
+                [800dfdfe + model_id * 2 + 0] = b(0);
+                [800dfdfe + model_id * 2 + 1] = b(model_id);
                 [T2 + 1] = b(model_id);
 
                 A0 = model_data;
@@ -2506,7 +2506,7 @@ else if( V1 < e )
             }
             else
             {
-                V0 = bu[800dfdfe + model_id * 2];
+                V0 = bu[800dfdfe + model_id * 2 + 0];
                 if (V0 != 1)
                 {
                     if (A3 != 1)
@@ -2514,8 +2514,8 @@ else if( V1 < e )
                         return 1;
                     }
 
-                    [800dfdfe + model_id * 2] = b(1);
-                    [800dfdff + model_id * 2] = b(model_id);
+                    [800dfdfe + model_id * 2 + 0] = b(1);
+                    [800dfdfe + model_id * 2 + 1] = b(model_id);
                 }
 
                 A0 = model_data;
@@ -2547,7 +2547,7 @@ else if( V1 < e )
             V1 = bu[T2 + 0]; // read KAWAI sequence
             if (V1 != 2)
             {
-                V0 = bu[800dfdfc + model_id * 2 + 2];
+                V0 = bu[800dfdfe + model_id * 2 + 0];
                 if (V0 == 1)
                 {
                     [8009a048 + model_id] = b(2);
@@ -2568,7 +2568,7 @@ else if( V1 < e )
                         [8009a048 + model_id] = b(2);
 
                         [800dfdfe + model_id * 2 + 0] = b(1);
-                        [800dfdff + model_id * 2 + 1] = b(model_id);
+                        [800dfdfe + model_id * 2 + 1] = b(model_id);
 
                         [800dfe1c + 0] = b(1);
                     }
@@ -2603,7 +2603,7 @@ else if( V1 < e )
                 [8009a048 + model_id] = b(-1);
                 [model_data + 1] = b(-1);
 
-                [800DFDFC + model_id * 2 + 2] = b(0);
+                [800dfdfe + model_id * 2 + 0] = b(0);
                 V0 = bu[model_data + 3];
                 if (V0 <= 0)
                 {
@@ -3767,9 +3767,7 @@ else
 
 
 ////////////////////////////////
-// funcb1c7c()
-// kawai_action_0
-// load eyes and mouth
+// field_model_load_eyes_mouth_tex_to_vram()
 
 model_data = A0;
 S3 = A1;

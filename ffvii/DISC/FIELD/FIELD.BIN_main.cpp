@@ -578,7 +578,7 @@ while( true )
 
 if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
 {
-    funcaa930(); // init models and their textures
+    field_model_load_and_init();
 }
 
 V0 = w[8009a044];

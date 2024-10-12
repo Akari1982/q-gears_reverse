@@ -131,7 +131,7 @@
 
 // FIELD.BIN_model_update.cpp
 ////////////////////////////////
-// funcaa930
+// field_model_load_and_init
 800AA930-800AAB20
 ////////////////////////////////
 // funcaab24
@@ -180,7 +180,7 @@
 // funcabfe8
 800ABFE8-800AC358
 ////////////////////////////////
-// funcac35c
+// field_model_load_local_lodel_and init_all
 800AC35C-800ACB9C
 ////////////////////////////////
 // field_model_create_packets_and_scale
@@ -236,14 +236,12 @@
 800B0A48-800B0ED8
 ////////////////////////////////
 // field_model_set_color_to_model_packets
-// kawai_action_2
 800B0EDC-800B0FAC
 ////////////////////////////////
 // field_model_set_color_to_part_packets
 800B0FB0-800B1C78
 ////////////////////////////////
-// funcb1c7c
-// kawai_action_0
+// field_model_load_eyes_mouth_tex_to_vram
 800B1C7C-800B1E3C
 ////////////////////////////////
 // field_model_lighting_apply_to_model
