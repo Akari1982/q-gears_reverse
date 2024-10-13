@@ -207,7 +207,7 @@
 // funcae23c
 800AE23C-800AE4D8
 ////////////////////////////////
-// funcae4dc
+// field_model_add_to_render
 800AE4DC-800AEE20
 ////////////////////////////////
 // field_model_animation_calculate_matrixes

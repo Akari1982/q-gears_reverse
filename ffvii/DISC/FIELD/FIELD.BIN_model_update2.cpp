@@ -1447,86 +1447,80 @@ parts_n = b[model_data + 3];
 
 if( ( init == 0 ) || ( parts_n == 0 ) ) return;
 
-S1 = w[model_data + 20];
-S4 = 1f800000;
-parts_data = S0 = w[model_data + 1c] + hu[model_data + 18]; // offset to model parts
+matrix = w[model_data + 20];
+parts_data = w[model_data + 1c] + hu[model_data + 18];
 
 for( int i = 0; i < parts_n; ++i )
 {
-    S6 = w[S0 + i * 20 + 0];
-    if( b[S0 + i * 20 + 9] != 0 ) // enable lighting calculation
+    parent_bone = (w[parts_data + i * 20 + 0] << 10) >> 18;
+
+    if( b[parts_data + i * 20 + 9] != 0 ) // enable lighting calculation
     {
         if( kawai != ff )
         {
-            R11R12 = w[S1 + 0];
-            R13R21 = w[S1 + 4];
-            R22R23 = w[S1 + 8];
-            R31R32 = w[S1 + c];
-            R33 = w[S1 + 10];
-            TRX = w[S1 + 14];
-            TRY = w[S1 + 18];
-            TRZ = w[S1 + 1c];
+            R11R12 = w[matrix + 0];
+            R13R21 = w[matrix + 4];
+            R22R23 = w[matrix + 8];
+            R31R32 = w[matrix + c];
+            R33 = w[matrix + 10];
+            TRX = w[matrix + 14];
+            TRY = w[matrix + 18];
+            TRZ = w[matrix + 1c];
 
-            V0 = (S6 << 10) >> 18; // bone this part attached to
-            T4 = S1 + V0 * 20;
-
-            IR1 = hu[T4 + 0];
-            IR2 = hu[T4 + 6];
-            IR3 = hu[T4 + c];
+            IR1 = hu[matrix + parent_bone * 20 + 0];
+            IR2 = hu[matrix + parent_bone * 20 + 6];
+            IR3 = hu[matrix + parent_bone * 20 + c];
             gte_rtir12(); // ir * rotmatrix.
-            [S4 + 0] = h(IR1);
-            [S4 + 6] = h(IR2);
-            [S4 + c] = h(IR3);
+            [1f800000] = h(IR1);
+            [1f800006] = h(IR2);
+            [1f80000c] = h(IR3);
 
-            IR1 = hu[T4 + 2];
-            IR2 = hu[T4 + 8];
-            IR3 = hu[T4 + e];
+            IR1 = hu[matrix + parent_bone * 20 + 2];
+            IR2 = hu[matrix + parent_bone * 20 + 8];
+            IR3 = hu[matrix + parent_bone * 20 + e];
             gte_rtir12(); // ir * rotmatrix.
-            [S4 + 2] = h(IR1);
-            [S4 + 8] = h(IR2);
-            [S4 + e] = h(IR3);
+            [1f800002] = h(IR1);
+            [1f800008] = h(IR2);
+            [1f80000e] = h(IR3);
 
-            IR1 = hu[T4 + 4];
-            IR2 = hu[T4 + a];
-            IR3 = hu[T4 + 10];
+            IR1 = hu[matrix + parent_bone * 20 + 4];
+            IR2 = hu[matrix + parent_bone * 20 + a];
+            IR3 = hu[matrix + parent_bone * 20 + 10];
             gte_rtir12(); // ir * rotmatrix.
-            [S4 + 4] = h(IR1);
-            [S4 + a] = h(IR2);
-            [S4 + 10] = h(IR3);
+            [1f800004] = h(IR1);
+            [1f80000a] = h(IR2);
+            [1f800010] = h(IR3);
 
-            VXY0 = (hu[T4 + 18] << 10) | hu[T4 + 14];
-            VZ0 = w[T4 + 1c];
+            VXY0 = (hu[matrix + parent_bone * 20 + 18] << 10) | hu[matrix + parent_bone * 20 + 14];
+            VZ0 = w[matrix + parent_bone * 20 + 1c];
             gte_rtv0tr(); // v0 * rotmatrix + tr vector.
-            [S4 + 14] = w(IR1);
-            [S4 + 18] = w(IR2);
-            [S4 + 1c] = w(IR3);
+            [1f800014] = w(IR1);
+            [1f800018] = w(IR2);
+            [1f80001c] = w(IR3);
 
-            R11R12 = w[S4 + 0];
-            R13R21 = w[S4 + 4];
-            R22R23 = w[S4 + 8];
-            R31R32 = w[S4 + c];
-            R33 = w[S4 + 10];
-            TRX = w[S4 + 14];
-            TRY = w[S4 + 18];
-            TRZ = w[S4 + 1c];
+            R11R12 = w[1f800000];
+            R13R21 = w[1f800004];
+            R22R23 = w[1f800008];
+            R31R32 = w[1f80000c];
+            R33 = w[1f800010];
+            TRX = w[1f800014];
+            TRY = w[1f800018];
+            TRZ = w[1f80001c];
         }
         else
         {
-            V0 = (S6 << 10) >> 18; // bone this part attached to
-            V0 = S1 + V0 * 20;
-
-            R11R12 = w[V0 + 0];
-            R13R21 = w[V0 + 4];
-            R22R23 = w[V0 + 8];
-            R31R32 = w[V0 + c];
-            R33 = w[V0 + 10];
-            TRX = w[V0 + 14];
-            TRY = w[V0 + 18];
-            TRZ = w[V0 + 1c];
+            R11R12 = w[matrix + parent_bone * 20 + 0];
+            R13R21 = w[matrix + parent_bone * 20 + 4];
+            R22R23 = w[matrix + parent_bone * 20 + 8];
+            R31R32 = w[matrix + parent_bone * 20 + c];
+            R33 = w[matrix + parent_bone * 20 + 10];
+            TRX = w[matrix + parent_bone * 20 + 14];
+            TRY = w[matrix + parent_bone * 20 + 18];
+            TRZ = w[matrix + parent_bone * 20 + 1c];
         }
 
-        A0 = S0 + i * 20;
-        funcae4dc();
+        A0 = parts_data + i * 20;
+        field_model_add_to_render();
     }
 }
 ////////////////////////////////
@@ -1534,7 +1528,7 @@ for( int i = 0; i < parts_n; ++i )
 
 
 ////////////////////////////////
-// funcae4dc()
+// field_model_add_to_render()
 
 model_part = A0;
 
@@ -2325,22 +2319,17 @@ for( int i = 0; i < 10; ++i )
 
 
 ////////////////////////////////
-// run_kawai
-//                    A2 = bu[block7_header + S2 * 8 + 4]; // model id
-//                    A0 = w[V1 + 4] + A2 * 24;
-//                    A1 = w[80074ea4 + S2 * 84 + 04]; // offset to kawai data
-//                    A3 = w[80071e40]; // offset to camera section
+// run_kawai()
 
-// we read KAWAI sequence here
 model_data = S2 = A0; // 0x24 data in new structures
 T2 = A1; // pointer to kawai sequence
 model_id = A2;
 offset_to_camera = T0 = A3; // offset to camera section
 
 V0 = bu[8009a048 + model_id];
-if (V0 == 1 || V0 == 2)
+if( ( V0 == 1 ) || ( V0 == 2 ) )
 {
-    if (b[model_data + 1] != d)
+    if( b[model_data + 1] != d )
     {
         [model_data + 1] = b(d);
         [8009a048 + model_id] = b(-1);
@@ -2351,7 +2340,7 @@ V1 = b[model_data + 1];
 if( V1 == -1 )
 {
     number_of_model_parts = bu[model_data + 3];
-    if (number_of_model_parts > 0) // model parts > 0
+    if( number_of_model_parts > 0 )
     {
         A1 = 0;
         parts_data = w[model_data + 1c] + hu[model_data + 18];
@@ -2491,7 +2480,7 @@ else if( V1 < e )
         case 6 7 8 9 b c:
         {
             A3 = bu[T2 + 0];
-            if (A3 == 0)
+            if( A3 == 0 )
             {
                 [800dfdfe + model_id * 2 + 0] = b(0);
                 [800dfdfe + model_id * 2 + 1] = b(model_id);
@@ -2528,8 +2517,6 @@ else if( V1 < e )
             }
         }
         break;
-
-                4C6B0B80 C
 
         case a:
         {
@@ -2637,7 +2624,7 @@ else if( V1 < e )
                     800B031C	ctc2   t6,otz
 
                     A0 = S0;
-                    funcae4dc();
+                    field_model_add_to_render();
 
                     800B0328	lbu    v0, $0003(model_data)
                     S1 = S1 + 0001;
@@ -11012,7 +10999,7 @@ else if (V1 == 1)
                 800B9F1C	ctc2   t6,otz
 
                 A0 = offset_to_model_parts + S0 * 20;
-                funcae4dc();
+                field_model_add_to_render();
 
                 S0 = S0 + 1;
                 V0 = S0 < number_of_parts;
