@@ -384,6 +384,21 @@
 
 800df0d4 FIELD.TDB start sector.
 800df0d8 FIELD.TDB size.
+800df0dc functions for KAWAI
+    800B1C7C
+    800B2A00
+    800B0EDC
+    800B0618
+    800B2DD4
+    800B5260
+    800B480C
+    800B4B04
+    800B4EAC
+    800B62C4
+    800B6AE4
+    800B86D8
+    800B6B4C
+    800B9B0C
 
 800df114 swich packet draft buffers to render. 0x00 - 1st biffer, 0x01 - second buffer.
 800df118 offset to 800fc68c.

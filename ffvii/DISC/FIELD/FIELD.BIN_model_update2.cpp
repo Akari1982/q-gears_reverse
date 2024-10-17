@@ -4152,15 +4152,18 @@ if( ( ( w[V1 + 0] & 2 ) == 0 ) || ( calculate_anyway != 0 ) )
 
 
 ////////////////////////////////
-// kawai_action_1
+// kawai_action_1()
+
+model_data = A0;
+
 V0 = hu[A0 + 18]; // model parts
-V1 = w[A0 + 1C];  // global offset
+V1 = w[A0 + 1c];  // global offset
 T1 = V1 + V0;     // global offset to model parts
 
 V0 = bu[A0 + 3];  // number of model parts
 T0 = bu[A1];
 
-if (V0 == 0)
+if( V0 == 0 )
 {
     return 1;
 }

@@ -27,19 +27,46 @@ if( b[model_data + 1] == -1 )
 
 switch( b[model_data + 1] )
 {
+    // used this inbuild addresses for function calls
+    // rewrite code to use direct call
+    // 0 800B1C7C field_model_load_eyes_mouth_tex_to_vram()
+    // 1 800B2A00 kawai_action_1()
+    // 2 800B0EDC field_model_set_color_to_model_packets()
+    // 3 800B0618 funcb0618()
+    // 4 800B2DD4 funcb2dd4()
+    // 5 800B5260 funcb5260()
+    // 6 800B480C kawai_action_6()
+    // 7 800B4B04 kawai_action_7()
+    // 8 800B4EAC kawai_action_8()
+    // 9 800B62C4 kawai_action_9()
+    // a 800B6AE4 kawai_action_a()
+    // b 800B86D8 kawai_action_b()
+    // c 800B6B4C funcb6b4c()
+    // d 800B9B0C kawai_action_d()
+
     case 0:
     {
         [kawai_data + 3] = b(model_id);
 
-        V1 = w[800df11c];
-
         A0 = model_data;
         A1 = kawai_data;
-        800B0254	jalr   w[V1 + 0 * 4] ra
+        field_model_load_eyes_mouth_tex_to_vram();
 
         [model_data + 1] = b(-1);
         return 1;
 
+    }
+    break;
+
+    case 1:
+    {
+
+        A0 = model_data;
+        A1 = kawai_data;
+        kawai_action_1();
+
+        [model_data + 1] = b(-1);
+        return 1;
     }
     break;
 
@@ -95,7 +122,6 @@ switch( b[model_data + 1] )
     }
     break;
 
-    case 1:
     case 2:
     case 3:
     case 4:
@@ -106,7 +132,6 @@ switch( b[model_data + 1] )
 
         A0 = model_data;
         A1 = kawai_data;
-
         800B0254	jalr   w[V1 + V0 * 4] ra
 
         [model_data + 1] = b(-1);
@@ -135,20 +160,20 @@ switch( b[model_data + 1] )
         V0 = V0 << 08;
         V1 = V1 | V0;
         [1f800204] = h(V1);
-        T4 = w[T0 + 0000];
-        T5 = w[T0 + 0004];
+        T4 = w[camera_data + 0000];
+        T5 = w[camera_data + 0004];
         R11R12 = T4;
         R13R21 = T5;
-        T4 = w[T0 + 0008];
-        T5 = w[T0 + 000c];
-        T6 = w[T0 + 0010];
+        T4 = w[camera_data + 0008];
+        T5 = w[camera_data + 000c];
+        T6 = w[camera_data + 0010];
         R22R23 = T4;
         R31R32 = T5;
         R33 = T6;
-        T4 = w[T0 + 0014];
-        T5 = w[T0 + 0018];
+        T4 = w[camera_data + 0014];
+        T5 = w[camera_data + 0018];
         TRX = T4;
-        T6 = w[T0 + 001c];
+        T6 = w[camera_data + 001c];
         TRY = T5;
         TRZ = T6;
         VXY0 = w[A0 + 0000];
@@ -262,8 +287,8 @@ switch( b[model_data + 1] )
         V0 = V0 + A3;
         [V0 + 0002] = b(0);
         V0 = bu[model_data + 0003];
-        800B02BC	nop
-        800B02C0	blez   v0, Lb05e8 [$800b05e8]
+        if( V0 <= 0 ) return 0;
+
         A0 = A0 + V1;
         S4 = 0001;
         S0 = A0;
@@ -342,45 +367,45 @@ switch( b[model_data + 1] )
 
         Lb03d4:	; 800B03D4
         [A1 + 1] = b(A2);
-        [A1 + 2] = b(bu[T0 + 0]);
-        [A1 + 3] = b(hu[T0 + 0] >> 8);
-        [A1 + 4] = b(bu[T0 + 2]);
-        [A1 + 5] = b(hu[T0 + 2] >> 8);
-        [A1 + 6] = b(bu[T0 + 4]);
-        [A1 + 7] = b(hu[T0 + 4] >> 8);
-        [A1 + 8] = b(bu[T0 + 6]);
-        [A1 + 9] = b(hu[T0 + 6] >> 8);
-        [A1 + a] = b(bu[T0 + 8]);
-        [A1 + b] = b(hu[T0 + 8] >> 8);
-        [A1 + c] = b(bu[T0 + a]);
-        [A1 + d] = b(hu[T0 + a] >> 8);
-        [A1 + e] = b(bu[T0 + c]);
-        [A1 + f] = b(hu[T0 + c] >> 8);
-        [A1 + 10] = b(bu[T0 + e]);
-        [A1 + 11] = b(hu[T0 + e] >> 8);
-        [A1 + 12] = b(bu[T0 + 10]);
-        [A1 + 13] = b(hu[T0 + 10] >> 8);
-        [A1 + 0e] = b(bu[T0 + c]);
-        [A1 + 0f] = b(hu[T0 + c] >> 8);
-        [A1 + 10] = b(bu[T0 + e]);
-        [A1 + 11] = b(hu[T0 + e] >> 8);
-        [A1 + 12] = b(bu[T0 + 10]);
-        [A1 + 13] = b(hu[T0 + 10] >> 8);
-        [A1 + 14] = b(bu[T0 + 14]);
-        [A1 + 15] = b(w[T0 + 14] >> 8);
-        [A1 + 16] = b(h[T0 + 16]);
-        [A1 + 17] = b(b[T0 + 17]);
-        [A1 + 18] = b(bu[T0 + 18]);
-        [A1 + 19] = b(w[T0 + 18] >> 8);
-        [A1 + 1a] = b(h[T0 + 1a]);
-        [A1 + 1b] = b(b[T0 + 1b]);
-        [A1 + 1c] = b(bu[T0 + 1c]);
-        [A1 + 1d] = b(w[T0 + 1c] >> 8);
-        [A1 + 1e] = b(h[T0 + 1e]);
-        [A1 + 1f] = b(b[T0 + 1f]);
+        [A1 + 2] = b(bu[camera_data + 0]);
+        [A1 + 3] = b(hu[camera_data + 0] >> 8);
+        [A1 + 4] = b(bu[camera_data + 2]);
+        [A1 + 5] = b(hu[camera_data + 2] >> 8);
+        [A1 + 6] = b(bu[camera_data + 4]);
+        [A1 + 7] = b(hu[camera_data + 4] >> 8);
+        [A1 + 8] = b(bu[camera_data + 6]);
+        [A1 + 9] = b(hu[camera_data + 6] >> 8);
+        [A1 + a] = b(bu[camera_data + 8]);
+        [A1 + b] = b(hu[camera_data + 8] >> 8);
+        [A1 + c] = b(bu[camera_data + a]);
+        [A1 + d] = b(hu[camera_data + a] >> 8);
+        [A1 + e] = b(bu[camera_data + c]);
+        [A1 + f] = b(hu[camera_data + c] >> 8);
+        [A1 + 10] = b(bu[camera_data + e]);
+        [A1 + 11] = b(hu[camera_data + e] >> 8);
+        [A1 + 12] = b(bu[camera_data + 10]);
+        [A1 + 13] = b(hu[camera_data + 10] >> 8);
+        [A1 + 0e] = b(bu[camera_data + c]);
+        [A1 + 0f] = b(hu[camera_data + c] >> 8);
+        [A1 + 10] = b(bu[camera_data + e]);
+        [A1 + 11] = b(hu[camera_data + e] >> 8);
+        [A1 + 12] = b(bu[camera_data + 10]);
+        [A1 + 13] = b(hu[camera_data + 10] >> 8);
+        [A1 + 14] = b(bu[camera_data + 14]);
+        [A1 + 15] = b(w[camera_data + 14] >> 8);
+        [A1 + 16] = b(h[camera_data + 16]);
+        [A1 + 17] = b(b[camera_data + 17]);
+        [A1 + 18] = b(bu[camera_data + 18]);
+        [A1 + 19] = b(w[camera_data + 18] >> 8);
+        [A1 + 1a] = b(h[camera_data + 1a]);
+        [A1 + 1b] = b(b[camera_data + 1b]);
+        [A1 + 1c] = b(bu[camera_data + 1c]);
+        [A1 + 1d] = b(w[camera_data + 1c] >> 8);
+        [A1 + 1e] = b(h[camera_data + 1e]);
+        [A1 + 1f] = b(b[camera_data + 1f]);
 
         A0 = model_data;
-        V0 = b[A0 + 0001];
+        V0 = b[A0 + 1];
         V1 = w[800df11c];
         V0 = V0 << 02;
         V0 = V0 + V1;
