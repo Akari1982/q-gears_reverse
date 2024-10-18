@@ -4134,34 +4134,26 @@ if( ( ( w[V1 + 0] & 2 ) == 0 ) || ( calculate_anyway != 0 ) )
 // kawai_action_1()
 
 model_data = A0;
+kawai_data = A1;
 
-V0 = hu[A0 + 18]; // model parts
-V1 = w[A0 + 1c];  // global offset
-T1 = V1 + V0;     // global offset to model parts
+parts_data = w[model_data + 1c] + hu[model_data + 18];
 
-V0 = bu[A0 + 3];  // number of model parts
-T0 = bu[A1];
+T0 = bu[kawai_data];
 
-if( V0 == 0 )
+for( int i = 0; i < bu[model_data + 3]; ++i ) // number of model parts
 {
-    return 1;
-}
-
-T3 = 0;
-
-Lb2a28:	; 800B2A28 // run through all model parts
     T2 = 0;
 
     Lb2a2c:	; 800B2A2C
-        A2 = w[T1 + 1C];
+        A2 = w[parts_data + 1C];
 
         if (T2 != 0)
         {
-            V0 = hu[T1 + 16];
+            V0 = hu[parts_data + 16];
             A2 = A2 + V0;
         }
 
-        A3 = bu[T1 + 4]; // number of textured quads
+        A3 = bu[parts_data + 4]; // number of textured quads
         if (A3 != 0)
         {
             A1 = 0;
@@ -4169,13 +4161,13 @@ Lb2a28:	; 800B2A28 // run through all model parts
 
             loopb2a58:	; 800B2A58
                 V0 = bu[V1];
-                if (T0 != 0)
+                if( T0 != 0 )
                 {
                     V0 = V0 | 03;
                 }
                 else
                 {
-                    V0 = V0 & FC;
+                    V0 = V0 & fc;
                 }
                 [V1] = b(V0);
 
@@ -4186,7 +4178,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2AA8	bne    v0, zero, loopb2a58 [$800b2a58]
         }
 
-        A3 = bu[T1 + 5];
+        A3 = bu[parts_data + 5];
         if (A3 != 0) // number of textured triangles
         {
             A1 = 0;
@@ -4211,7 +4203,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2B14	bne    v0, zero, loopb2ac4 [$800b2ac4]
         }
 
-        A3 = bu[T1 + 6];
+        A3 = bu[parts_data + 6];
         if (A3 != 0)
         {
             A1 = 0;
@@ -4236,7 +4228,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2B80	bne    v0, zero, loopb2b30 [$800b2b30]
         }
 
-        A3 = bu[T1 + 7];
+        A3 = bu[parts_data + 7];
         if (A3 != 0)
         {
             A1 = 0;
@@ -4261,7 +4253,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2BEC	bne    v0, zero, loopb2b9c [$800b2b9c]
         }
 
-        A3 = bu[T1 + 8];
+        A3 = bu[parts_data + 8];
         if (A3 != 0)
         {
             A1 = 0;
@@ -4286,7 +4278,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2C58	bne    v0, zero, loopb2c08 [$800b2c08]
         }
 
-        A3 = bu[T1 + 9];
+        A3 = bu[parts_data + 9];
         if (A3 != 0)
         {
             A1 = 0;
@@ -4311,7 +4303,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2CC4	bne    v0, zero, loopb2c74 [$800b2c74]
         }
 
-        A3 = bu[T1 + A];
+        A3 = bu[parts_data + A];
         if (A3 != 0)
         {
             A1 = 0;
@@ -4336,7 +4328,7 @@ Lb2a28:	; 800B2A28 // run through all model parts
             800B2D30	bne    v0, zero, loopb2ce0 [$800b2ce0]
         }
 
-        A3 = bu[T1 + B];
+        A3 = bu[parts_data + B];
         if (A3 != 0)
         {
             A1 = 0;
@@ -4364,11 +4356,8 @@ Lb2a28:	; 800B2A28 // run through all model parts
         V0 = T2 < 2;
     800B2DA8	bne    v0, zero, Lb2a2c [$800b2a2c]
 
-    V0 = bu[A0 + 3];
-    T3 = T3 + 1;
-    V0 = T3 < V0;
-    T1 = T1 + 20;
-800B2DBC	bne    v0, zero, Lb2a28 [$800b2a28]
+    parts_data = parts_data + 20;
+}
 
 return 1;
 ////////////////////////////////
