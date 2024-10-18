@@ -2321,10 +2321,13 @@ for( int i = 0; i < 10; ++i )
 ////////////////////////////////
 // run_kawai()
 
-model_data = S2 = A0; // 0x24 data in new structures
-T2 = A1; // pointer to kawai sequence
+
+model_data = A0;
+kawai_data = A1;
 model_id = A2;
-offset_to_camera = T0 = A3; // offset to camera section
+camera_data = T0 = A3;
+
+parts_data = w[model_data + 1c] + hu[model_data + 18];
 
 V0 = bu[8009a048 + model_id];
 if( ( V0 == 1 ) || ( V0 == 2 ) )
@@ -2336,307 +2339,283 @@ if( ( V0 == 1 ) || ( V0 == 2 ) )
     }
 }
 
-V1 = b[model_data + 1];
-if( V1 == -1 )
+if( b[model_data + 1] == -1 )
 {
-    number_of_model_parts = bu[model_data + 3];
-    if( number_of_model_parts > 0 )
+    for( int i = 0; i < bu[model_data + 3]; ++i )
     {
-        A1 = 0;
-        parts_data = w[model_data + 1c] + hu[model_data + 18];
-
-        loopafebc:	; 800AFEBC
-            [parts_data + A1 * 20 + 0] = b(1);
-
-            A1 = A1 + 1;
-            V0 = A1 < number_of_model_parts;
-        800AFECC	bne    v0, zero, loopafebc [$800afebc]
+        [parts_data + i * 20 + 0] = b(1);
     }
-
     return 1;
 }
-else if( V1 < e )
+
+switch( b[model_data + 1] )
 {
-    switch (V1)
+    // used this inbuild addresses for function calls
+    // rewrite code to use direct call
+    // 0 800B1C7C field_model_load_eyes_mouth_tex_to_vram()
+    // 1 800B2A00 kawai_action_1()
+    // 2 800B0EDC field_model_set_color_to_model_packets()
+    // 3 800B0618 funcb0618()
+    // 4 800B2DD4 funcb2dd4()
+    // 5 800B5260 funcb5260()
+    // 6 800B480C kawai_action_6()
+    // 7 800B4B04 kawai_action_7()
+    // 8 800B4EAC kawai_action_8()
+    // 9 800B62C4 kawai_action_9()
+    // a 800B6AE4 kawai_action_a()
+    // b 800B86D8 kawai_action_b()
+    // c 800B6B4C funcb6b4c()
+    // d 800B9B0C kawai_action_d()
+
+    case 0:
     {
-        case 0:
-        {
-            [T2 + 3] = b(model_id);
+        [kawai_data + 3] = b(model_id);
 
-            A0 = model_data;
-            A1 = T2;
-            field_model_load_eyes_mouth_tex_to_vram();
+        A0 = model_data;
+        A1 = kawai_data;
+        field_model_load_eyes_mouth_tex_to_vram();
 
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
+        [model_data + 1] = b(-1);
+        return 1;
 
-        case 1:
-        {
-            A0 = model_data;
-            A1 = T2;
-            kawai_action_1();
-
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
-
-        case 2:
-        {
-            A0 = model_data;
-            A1 = T2;
-            field_model_set_color_to_model_packets();
-
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
-
-        case 3:
-        {
-            A0 = model_data;
-            A1 = T2;
-            funcb0618();
-
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
-
-        case 4:
-        {
-            A0 = model_data;
-            A1 = T2;
-            funcb2dd4();
-
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
-
-        case 5:
-        {
-            [1f800200] = h(hu[T2 + 0]);
-            [1f800202] = h(hu[T2 + 2]);
-            [1f800204] = h(hu[T2 + 4]);
-
-            T4 = w[offset_to_camera + 0];
-            T5 = w[offset_to_camera + 4];
-            R11R12 = T4;
-            R13R21 = T5;
-            T4 = w[offset_to_camera + 8];
-            T5 = w[offset_to_camera + c];
-            T6 = w[offset_to_camera + 10];
-            R22R23 = T4;
-            R31R32 = T5;
-            R33 = T6;
-            T4 = w[offset_to_camera + 14];
-            T5 = w[offset_to_camera + 18];
-            800B00A0	ctc2   t4,vz2
-            T6 = w[offset_to_camera + 1c];
-            800B00A8	ctc2   t5,rgb
-            800B00AC	ctc2   t6,otz
-
-            800B00B0	lwc2   zero, $0000(1f800200)
-            800B00B4	lwc2   at, $0004(1f800200)
-            800B00C0	gte_func18t0,r11r12
-            T4 = IR1;
-            T5 = IR2;
-            T6 = IR3;
-
-            [1f800208] = h(T4);
-            [1f80020a] = h(T5);
-            [1f80020c] = h(T6);
-
-            [800dfe1c] = h(hu[1f800208]);
-            [800dfe1e] = h(hu[1f80020a]);
-            [800dfe20] = h(hu[1f80020c]);
-            [800dfe22] = b(bu[T2 + 6]);
-            [800dfe23] = b(bu[T2 + 7]);
-            [800dfe24] = b(bu[T2 + 8]);
-            [800dfe25] = b(bu[T2 + 9]);
-            [800dfe26] = b(bu[T2 + a]);
-            [800dfe27] = b(bu[T2 + b]);
-            [800dfe28] = b(bu[T2 + c]);
-            [800dfe29] = b(bu[T2 + d]);
-            [800dfe2a] = b(bu[T2 + e]);
-            [800dfe2b] = b(bu[T2 + f]);
-            [800dfe2c] = b(bu[T2 + 10]);
-            [800dfe2d] = b(bu[T2 + 11]);
-            [800dfe2e] = b(bu[T2 + 12]);
-            [800dfe2f] = b(bu[T2 + 13]);
-
-            A0 = model_data;
-            A1 = 800dfe1c;
-            funcb5260();
-
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
-
-        case 6 7 8 9 b c:
-        {
-            A3 = bu[T2 + 0];
-            if( A3 == 0 )
-            {
-                [800dfdfe + model_id * 2 + 0] = b(0);
-                [800dfdfe + model_id * 2 + 1] = b(model_id);
-                [T2 + 1] = b(model_id);
-
-                A0 = model_data;
-                A1 = T2;
-                V0 = b[model_data + 1];
-                run_kawai_action_function(V0);
-
-                return V0;
-            }
-            else
-            {
-                V0 = bu[800dfdfe + model_id * 2 + 0];
-                if (V0 != 1)
-                {
-                    if (A3 != 1)
-                    {
-                        return 1;
-                    }
-
-                    [800dfdfe + model_id * 2 + 0] = b(1);
-                    [800dfdfe + model_id * 2 + 1] = b(model_id);
-                }
-
-                A0 = model_data;
-                A1 = 800dfdfe;
-
-                V0 = b[model_data + 1];
-                run_kawai_action_function(V0);
-
-                return V0;
-            }
-        }
-        break;
-
-        case a:
-        {
-            A0 = model_data;
-            A1 = T2;
-            kawai_action_a();
-
-            [model_data + 1] = b(-1);
-            return 1;
-        }
-        break;
-
-        case d:
-        {
-            V1 = bu[T2 + 0]; // read KAWAI sequence
-            if (V1 != 2)
-            {
-                V0 = bu[800dfdfe + model_id * 2 + 0];
-                if (V0 == 1)
-                {
-                    [8009a048 + model_id] = b(2);
-
-                    [800dfe1c + 0] = b(1);
-                }
-                else
-                {
-                    V1 = b[8009a048 + model_id];
-                    if (V1 == -1)
-                    {
-                        [8009a048 + model_id] = b(1);
-
-                        [800dfe1c + 0] = b(0);
-                    }
-                    else if (V1 == 1)
-                    {
-                        [8009a048 + model_id] = b(2);
-
-                        [800dfdfe + model_id * 2 + 0] = b(1);
-                        [800dfdfe + model_id * 2 + 1] = b(model_id);
-
-                        [800dfe1c + 0] = b(1);
-                    }
-                }
-
-                [800dfe1c + 01] = b(model_id);
-
-                // copy camera data
-                [800dfe1c + 02] = h(hu[offset_to_camera + 00]);
-                [800dfe1c + 04] = h(hu[offset_to_camera + 02]);
-                [800dfe1c + 06] = h(hu[offset_to_camera + 04]);
-                [800dfe1c + 08] = h(hu[offset_to_camera + 06]);
-                [800dfe1c + 0a] = h(hu[offset_to_camera + 08]);
-                [800dfe1c + 0c] = h(hu[offset_to_camera + 0a]);
-                [800dfe1c + 0e] = h(hu[offset_to_camera + 0c]);
-                [800dfe1c + 10] = h(hu[offset_to_camera + 0e]);
-                [800dfe1c + 12] = h(hu[offset_to_camera + 10]);
-                [800dfe1c + 14] = w(w[offset_to_camera + 14]);
-                [800dfe1c + 18] = w(w[offset_to_camera + 18]);
-                [800dfe1c + 1c] = w(w[offset_to_camera + 1c]);
-
-                A0 = model_data;
-                A1 = 800dfe1c;
-
-                V0 = b[model_data + 1];
-                run_kawai_action_function(V0);
-            }
-            else
-            {
-                S3 = w[model_data + 20];
-
-                [8009a048 + model_id] = b(-1);
-                [model_data + 1] = b(-1);
-
-                [800dfdfe + model_id * 2 + 0] = b(0);
-                V0 = bu[model_data + 3];
-                if (V0 <= 0)
-                {
-                    return 0;
-                }
-
-                S4 = 1;
-                parts_data = S0 = w[model_data + 1c] + hu[model_data + 18];
-
-                S1 = 0;
-                loopb02d0:	; 800B02D0
-                    V0 = bu[S0 + 0001];
-                    [S0 + 0000] = b(S4);
-                    V0 = V0 << 05;
-                    V0 = S3 + V0;
-                    T4 = w[V0 + 0000];
-                    T5 = w[V0 + 0004];
-                    R11R12 = T4;
-                    R13R21 = T5;
-                    T4 = w[V0 + 0008];
-                    T5 = w[V0 + 000c];
-                    T6 = w[V0 + 0010];
-                    R22R23 = T4;
-                    R31R32 = T5;
-                    R33 = T6;
-                    T4 = w[V0 + 0014];
-                    T5 = w[V0 + 0018];
-                    800B0310	ctc2   t4,vz2
-                    T6 = w[V0 + 001c];
-                    800B0318	ctc2   t5,rgb
-                    800B031C	ctc2   t6,otz
-
-                    A0 = S0;
-                    field_model_add_to_render();
-
-                    800B0328	lbu    v0, $0003(model_data)
-                    S1 = S1 + 0001;
-                    V0 = S1 < V0;
-                    S0 = S0 + 0020;
-                800B0334	bne    v0, zero, loopb02d0 [$800b02d0]
-            }
-
-            return 0;
-        }
-        break;
     }
+    break;
+
+    case 1:
+    {
+
+        A0 = model_data;
+        A1 = kawai_data;
+        kawai_action_1();
+
+        [model_data + 1] = b(-1);
+        return 1;
+    }
+    break;
+
+    case 2:
+    {
+        A0 = model_data;
+        A1 = kawai_data;
+        field_model_set_color_to_model_packets();
+
+        [model_data + 1] = b(-1);
+        return 1;
+    }
+    break;
+
+    case 3:
+    {
+        A0 = model_data;
+        A1 = kawai_data;
+        funcb0618();
+
+        [model_data + 1] = b(-1);
+        return 1;
+    }
+    break;
+
+    case 4:
+    {
+        A0 = model_data;
+        A1 = kawai_data;
+        funcb2dd4();
+
+        [model_data + 1] = b(-1);
+        return 1;
+    }
+    break;
+
+    case 5:
+    {
+        [1f800200] = h(hu[kawai_data + 0]);
+        [1f800202] = h(hu[kawai_data + 2]);
+        [1f800204] = h(hu[kawai_data + 4]);
+
+        R11R12 = w[camera_data + 0];
+        R13R21 = w[camera_data + 4];
+        R22R23 = w[camera_data + 8];
+        R31R32 = w[camera_data + c];
+        R33 = w[camera_data + 10];
+        TRX = w[camera_data + 14];
+        TRY = w[camera_data + 18];
+        TRZ = w[camera_data + 1c];
+        VXY0 = w[1f800200];
+        VZ0 = w[1f800204];
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector
+        [1f800208] = h(IR1);
+        [1f80020a] = h(IR2);
+        [1f80020c] = h(IR3);
+
+        [800dfe1c] = h(hu[1f800208]);
+        [800dfe1e] = h(bu[1f80020a]);
+        [800dfe20] = h(bu[1f80020c]);
+        [800dfe22] = b(bu[kawai_data + 6]);
+        [800dfe23] = b(bu[kawai_data + 7]);
+        [800dfe24] = b(bu[kawai_data + 8]);
+        [800dfe25] = b(bu[kawai_data + 9]);
+        [800dfe26] = b(bu[kawai_data + a]);
+        [800dfe27] = b(bu[kawai_data + b]);
+        [800dfe28] = b(bu[kawai_data + c]);
+        [800dfe29] = b(bu[kawai_data + d]);
+        [800dfe2a] = b(bu[kawai_data + e]);
+        [800dfe2b] = b(bu[kawai_data + f]);
+        [800dfe2c] = b(bu[kawai_data + 10]);
+        [800dfe2d] = b(bu[kawai_data + 11]);
+        [800dfe2e] = b(bu[kawai_data + 12]);
+        [800dfe2f] = b(bu[kawai_data + 13]);
+
+        A0 = model_data;
+        A1 = 800dfe1c;
+        funcb5260();
+
+        [model_data + 1] = b(-1);
+        return 1;
+    }
+    break;
+
+    case a:
+    {
+        A0 = model_data;
+        A1 = kawai_data;
+        kawai_action_a();
+
+        [model_data + 1] = b(-1);
+        return 1;
+    }
+    break;
+
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case b:
+    case c:
+    {
+        if( bu[kawai_data + 0] == 0 )
+        {
+            [800dfdfe + model_id * 2 + 0] = b(0);
+            [800dfdfe + model_id * 2 + 1] = b(model_id);
+            [kawai_data + 1] = b(model_id);
+
+            V0 = b[model_data + 1];
+            V1 = w[800df11c];
+
+            A0 = model_data;
+            A1 = kawai_data;
+            800AFF74	jalr   w[V1 + V0 * 4] ra
+
+            return;
+        }
+
+        if( bu[800dfdfe + model_id * 2 + 0] == 1 )
+        {
+            V0 = b[model_data + 1];
+            V1 = w[800df11c];
+
+            A0 = model_data;
+            A1 = 800dfdfe + model_id * 2;
+            800AFFDC	jalr   w[V1 + V0 * 4] ra
+
+            return V0;
+        }
+
+        if( bu[kawai_data + 0] == 1 )
+        {
+            [800dfdfe + model_id * 2 + 0] = b(1);
+            [800dfdfe + model_id * 2 + 1] = b(model_id);
+            V0 = b[model_data + 1];
+            V1 = w[800df11c];
+
+            A0 = model_data;
+            A1 = 800dfdfe + model_id * 2;
+            800AFFDC	jalr   w[V1 + V0 * 4] ra
+
+            return V0;
+        }
+        return 1;
+    }
+    break;
+
+    case d:
+    {
+        A3 = ;
+
+        if( bu[kawai_data + 0] == 2 )
+        {
+            part_matrix = w[model_data + 20];
+
+            [8009a048 + model_id] = b(-1);
+            [model_data + 1] = b(-1);
+            [800dfe1c - 20 + model_id * 2 + 2] = b(0);
+
+            parts_data = w[model_data + 1c] + hu[model_data + 18];
+
+            for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
+            {
+                [parts_data + i * 20 + 0] = b(1);
+
+                bone_id = bu[parts_data + i * 20 + 1];
+                R11R12 = w[part_matrix + bone_id * 20 + 0];
+                R13R21 = w[part_matrix + bone_id * 20 + 4];
+                R22R23 = w[part_matrix + bone_id * 20 + 8];
+                R31R32 = w[part_matrix + bone_id * 20 + c];
+                R33 = w[part_matrix + bone_id * 20 + 10];
+                TRX = w[part_matrix + bone_id * 20 + 14];
+                TRY = w[part_matrix + bone_id * 20 + 18];
+                TRZ = w[part_matrix + bone_id * 20 + 1c];
+
+                A0 = parts_data + i * 20;
+                funcae4dc();
+            }
+        }
+        else
+        {
+            A1 = 800dfe1c;
+
+            if( bu[800dfe1c - 20 + model_id * 2 + 2] == 1 )
+            {
+                [8009a048 + model_id] = b(2);
+                [A1 + 0] = b(1);
+            }
+            else if( b[8009a048 + model_id] == -1 )
+            {
+                [8009a048 + model_id] = b(1);
+                [A1 + 0] = b(0);
+            }
+            else if( b[8009a048 + model_id] == 1 )
+            {
+                [8009a048 + model_id] = b(2);
+                [800dfe1c - 20 + model_id * 2 + 2] = b(1);
+                [800dfe1c - 20 + model_id * 2 + 3] = b(model_id);
+                [A1 + 0] = b(1);
+            }
+
+            [A1 + 1] = b(model_id);
+            [A1 + 2] = h(hu[camera_data + 0]);
+            [A1 + 4] = h(hu[camera_data + 2]);
+            [A1 + 6] = h(hu[camera_data + 4]);
+            [A1 + 8] = h(hu[camera_data + 6]);
+            [A1 + a] = h(hu[camera_data + 8]);
+            [A1 + c] = h(hu[camera_data + a]);
+            [A1 + e] = h(hu[camera_data + c]);
+            [A1 + 10] = h(hu[camera_data + e]);
+            [A1 + 12] = h(hu[camera_data + 10]);
+            [A1 + 14] = w(w[camera_data + 14]);
+            [A1 + 18] = w(w[camera_data + 18]);
+            [A1 + 1c] = w(w[camera_data + 1c]);
+
+            V0 = b[800dfdfc + model_id * 2 + 1];
+            V1 = w[800df11c];
+
+            A0 = model_data;
+            A1 = A1;
+            800B05E0	jalr   w[V1 + V0 * 4] ra
+        }
+
+        return 0;
+    }
+    break;
 }
 
 return 1;
