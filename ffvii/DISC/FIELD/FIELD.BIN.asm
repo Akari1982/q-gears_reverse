@@ -250,7 +250,7 @@
 // field_model_lighting_apply_to_poly_color
 800B2598-800B29FC
 ////////////////////////////////
-// kawai_action_1
+// field_model_set_model_transparency
 800B2A00-800B2DD0
 ////////////////////////////////
 // kawai_action_4

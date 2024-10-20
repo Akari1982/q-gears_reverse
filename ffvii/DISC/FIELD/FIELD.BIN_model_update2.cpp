@@ -2325,7 +2325,7 @@ for( int i = 0; i < 10; ++i )
 model_data = A0;
 kawai_data = A1;
 model_id = A2;
-camera_data = T0 = A3;
+camera_data = A3;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 
@@ -2353,7 +2353,7 @@ switch( b[model_data + 1] )
     // used this inbuild addresses for function calls
     // rewrite code to use direct call
     // 0 800B1C7C field_model_load_eyes_mouth_tex_to_vram()
-    // 1 800B2A00 kawai_action_1()
+    // 1 800B2A00 field_model_set_model_transparency()
     // 2 800B0EDC field_model_set_color_to_model_packets()
     // 3 800B0618 funcb0618()
     // 4 800B2DD4 funcb2dd4()
@@ -2367,7 +2367,7 @@ switch( b[model_data + 1] )
     // c 800B6B4C funcb6b4c()
     // d 800B9B0C kawai_action_d()
 
-    case 0:
+    case 0: // EYETX
     {
         [kawai_data + 3] = b(model_id);
 
@@ -2381,19 +2381,19 @@ switch( b[model_data + 1] )
     }
     break;
 
-    case 1:
+    case 1: // TRNSP
     {
 
         A0 = model_data;
         A1 = kawai_data;
-        kawai_action_1();
+        field_model_set_model_transparency();
 
         [model_data + 1] = b(-1);
         return 1;
     }
     break;
 
-    case 2:
+    case 2: // AMBNT
     {
         A0 = model_data;
         A1 = kawai_data;
@@ -2474,7 +2474,7 @@ switch( b[model_data + 1] )
     }
     break;
 
-    case a:
+    case a: // SBOBJ
     {
         A0 = model_data;
         A1 = kawai_data;
@@ -2485,7 +2485,7 @@ switch( b[model_data + 1] )
     }
     break;
 
-    case 6:
+    case 6: // LIGHT
     case 7:
     case 8:
     case 9:
@@ -2537,10 +2537,8 @@ switch( b[model_data + 1] )
     }
     break;
 
-    case d:
+    case d: // SHINE
     {
-        A3 = ;
-
         if( bu[kawai_data + 0] == 2 )
         {
             part_matrix = w[model_data + 20];
@@ -2566,7 +2564,7 @@ switch( b[model_data + 1] )
                 TRZ = w[part_matrix + bone_id * 20 + 1c];
 
                 A0 = parts_data + i * 20;
-                funcae4dc();
+                field_model_add_to_render();
             }
         }
         else
@@ -4131,7 +4129,7 @@ if( ( ( w[V1 + 0] & 2 ) == 0 ) || ( calculate_anyway != 0 ) )
 
 
 ////////////////////////////////
-// kawai_action_1()
+// field_model_set_model_transparency()
 
 model_data = A0;
 kawai_data = A1;
@@ -4140,223 +4138,69 @@ parts_data = w[model_data + 1c] + hu[model_data + 18];
 
 T0 = bu[kawai_data];
 
-for( int i = 0; i < bu[model_data + 3]; ++i ) // number of model parts
+for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
-    T2 = 0;
+    for( int buf_id = 0; buf_id < 2; ++buf_id )
+    {
+        A2 = w[parts_data + i * 20 + 1c];
+        if( buf_id != 0 ) A2 += hu[parts_data + i * 20 + 16];
 
-    Lb2a2c:	; 800B2A2C
-        A2 = w[parts_data + 1C];
-
-        if (T2 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + 4]; ++j )
         {
-            V0 = hu[parts_data + 16];
-            A2 = A2 + V0;
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03); // add Semi transparency and Brightness calculation
+            else          [A2 + 7] = b(bu[A2 + 7] & fc); // remove Semi transparency and Brightness calculation
+            A2 += 34;
         }
 
-        A3 = bu[parts_data + 4]; // number of textured quads
-        if (A3 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + 5]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2a58:	; 800B2A58
-                V0 = bu[V1];
-                if( T0 != 0 )
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & fc;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 34;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 34;
-            800B2AA8	bne    v0, zero, loopb2a58 [$800b2a58]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 28;
         }
 
-        A3 = bu[parts_data + 5];
-        if (A3 != 0) // number of textured triangles
+        for( int j = 0; j < bu[parts_data + i * 20 + 6]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2ac4:	; 800B2AC4
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 28;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 28;
-            800B2B14	bne    v0, zero, loopb2ac4 [$800b2ac4]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 28;
         }
 
-        A3 = bu[parts_data + 6];
-        if (A3 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + 7]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2b30:	; 800B2B30
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 28;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 28;
-            800B2B80	bne    v0, zero, loopb2b30 [$800b2b30]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 20;
         }
 
-        A3 = bu[parts_data + 7];
-        if (A3 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + 8]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2b9c:	; 800B2B9C
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 20;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 20;
-            800B2BEC	bne    v0, zero, loopb2b9c [$800b2b9c]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 14;
         }
 
-        A3 = bu[parts_data + 8];
-        if (A3 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + 9]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2c08:	; 800B2C08
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 14;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 14;
-            800B2C58	bne    v0, zero, loopb2c08 [$800b2c08]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 18;
         }
 
-        A3 = bu[parts_data + 9];
-        if (A3 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + a]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2c74:	; 800B2C74
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 18;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 18;
-            800B2CC4	bne    v0, zero, loopb2c74 [$800b2c74]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 1c;
         }
 
-        A3 = bu[parts_data + A];
-        if (A3 != 0)
+        for( int j = 0; j < bu[parts_data + i * 20 + b]; ++j )
         {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2ce0:	; 800B2CE0
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 1C;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-                A2 = A2 + 1C;
-            800B2D30	bne    v0, zero, loopb2ce0 [$800b2ce0]
+            if( T0 != 0 ) [A2 + 7] = b(bu[A2 + 7] | 03);
+            else          [A2 + 7] = b(bu[A2 + 7] & fc);
+            A2 += 1c;
         }
-
-        A3 = bu[parts_data + B];
-        if (A3 != 0)
-        {
-            A1 = 0;
-            V1 = A2 + 7;
-
-            loopb2d4c:	; 800B2D4C
-                V0 = bu[V1];
-                if (T0 != 0)
-                {
-                    V0 = V0 | 03;
-                }
-                else
-                {
-                    V0 = V0 & FC;
-                }
-                [V1] = b(V0);
-
-                V1 = V1 + 24;
-                A1 = A1 + 1;
-                V0 = A1 < A3;
-            800B2D30	bne    v0, zero, loopb2ce0 [$800b2ce0]
-        }
-
-        T2 = T2 + 1;
-        V0 = T2 < 2;
-    800B2DA8	bne    v0, zero, Lb2a2c [$800b2a2c]
-
-    parts_data = parts_data + 20;
+    }
 }
 
 return 1;
@@ -6393,99 +6237,65 @@ return 1;
 
 
 ////////////////////////////////
-// funcb5260
+// funcb5260()
 // kawai_action_5
-S2 = A0;
-T0 = w[S2 + 1c] + hu[S2 + 18];
-S3 = w[S2 + 10];
+
+model_data = A0;
+kawai_data = A1;
+
+parts_data = w[model_data + 1c] + hu[model_data + 18];
+S3 = w[model_data + 10];
 
 // set rgb
-T4 = hu[A1 + e] << 4;
-T5 = hu[A1 + 10] << 4;
-T6 = bu[A1 + 12] << 4;
-800B52CC	ctc2   t4,sxy1
-800B52D0	ctc2   t5,sxy2
-800B52D4	ctc2   t6,sxy2p
-
-
+RBK = hu[kawai_data + e] << 4;
+BBK = hu[kawai_data + 10] << 4;
+GBK = bu[kawai_data + 12] << 4;
 
 // set light color matrix
-[1f800200] = h(hu[A1 + 8] << 4); [1f800202] = h(0); [1f800204] = h(0);
-[1f800206] = h(hu[A1 + a] << 4); [1f800208] = h(0); [1f80020a] = h(0);
-[1f80020c] = h(hu[A1 + c] << 4); [1f80020e] = h(0); [1f800210] = h(0);
-T4 = w[1f800200 + 0];
-T5 = w[1f800200 + 4];
-800B5374	ctc2   t4,sz0
-800B5378	ctc2   t5,sz1
-T4 = w[1f800200 + 8];
-T5 = w[1f800200 + c];
-T6 = w[1f800200 + 10];
-800B5388	ctc2   t4,sz2
-800B538C	ctc2   t5,sz3
-800B5390	ctc2   t6,rgb0
+[1f800200] = h(hu[kawai_data + 8] << 4); [1f800202] = h(0); [1f800204] = h(0);
+[1f800206] = h(hu[kawai_data + a] << 4); [1f800208] = h(0); [1f80020a] = h(0);
+[1f80020c] = h(hu[kawai_data + c] << 4); [1f80020e] = h(0); [1f800210] = h(0);
 
-
+LR1LR2 = w[1f800200 + 0];
+LR3LG1 = w[1f800200 + 4];
+LG2LG3 = w[1f800200 + 8];
+LB1LB2 = w[1f800200 + c];
+LB3 = w[1f800200 + 10];
 
 // set light source matrix
 [1f800206] = h(0); [1f800208] = h(0); [1f80020a] = h(0);
 [1f80020c] = h(0); [1f80020e] = h(0); [1f800210] = h(0);
-T4 = w[A0 + 0];
-T5 = w[A0 + 4];
-800B53CC	ctc2   t4,ir0
-800B53D0	ctc2   t5,ir1
-T4 = w[A0 + 8];
-T5 = w[A0 + c];
-T6 = w[A0 + 10];
-800B53E0	ctc2   t4,ir2
-800B53E4	ctc2   t5,ir3
-800B53E8	ctc2   t6,sxy0
 
+L11L12 = w[A0 + 0];
+L13L21 = w[A0 + 4];
+L22L23 = w[A0 + 8];
+L31L32 = w[A0 + c];
+L33 = w[A0 + 10];
 
+[SP + 10] = h(hu[kawai_data + 0]);
+[SP + 12] = h(hu[kawai_data + 2]);
+[SP + 14] = h(hu[kawai_data + 4]);
+[SP + 16] = h(hu[kawai_data + 6]);
 
-[SP + 10] = h(hu[A1 + 0]);
-[SP + 12] = h(hu[A1 + 2]);
-[SP + 14] = h(hu[A1 + 4]);
-[SP + 16] = h(hu[A1 + 6]);
-
-V0 = bu[S2 + 3];
-if (V0 != 0)
+for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
-    S1 = 0;
-    S0 = T0;
+    if( bu[parts_data + i * 20 + 0] != 0 )
+    {
+        bone_id = bu[parts_data + i * 20 + 1];
 
-    loopb5460:	; 800B5460
-        if (bu[S0 + 0] != 0)
-        {
-            V0 = S3 + bu[S0 + 1] * 20;
+        R11R12 = w[S3 + bone_id * 20 + 0];
+        R13R21 = w[S3 + bone_id * 20 + 4];
+        R22R23 = w[S3 + bone_id * 20 + 8];
+        R31R32 = w[S3 + bone_id * 20 + c];
+        R33 = w[S3 + bone_id * 20 + 10];
+        TRX = w[S3 + bone_id * 20 + 14];
+        TRY = w[S3 + bone_id * 20 + 18];
+        TRZ = w[S3 + bone_id * 20 + 1c];
 
-            // set transform matrix
-            T4 = w[V0 + 0];
-            T5 = w[V0 + 4];
-            R11R12 = T4;
-            R13R21 = T5;
-            T4 = w[V0 + 8];
-            T5 = w[V0 + c];
-            T6 = w[V0 + 10];
-            R22R23 = T4;
-            R31R32 = T5;
-            R33 = T6;
-            T4 = w[V0 + 14];
-            T5 = w[V0 + 18];
-            800B54B0	ctc2   t4,vz2
-            T6 = w[V0 + 1c];
-            800B54B8	ctc2   t5,rgb
-            800B54BC	ctc2   t6,otz
-
-            A0 = S0;
-            A1 = SP + 10;
-            funcb5504;
-        }
-
-        S1 = S1 + 1;
-        V0 = bu[S2 + 3];
-        S0 = S0 + 20;
-        V0 = S1 < V0;
-    800B54D8	bne    v0, zero, loopb5460 [$800b5460]
+        A0 = parts_data + i * 20;
+        A1 = SP + 10;
+        funcb5504();
+    }
 }
 
 return 1;
@@ -6494,128 +6304,170 @@ return 1;
 
 
 ////////////////////////////////
-// funcb5504
-T9 = A0;
+// funcb5504()
+
+part_data = A0;
 S6 = A1;
 T8 = 1f800040;
+S7 = 1f800020;
 S4 = 0;
-A2 = 1f800000;
-S5 = 1f800000;
-[SP + 10] = w(1f800020);
+800B5530	lui    a2, $1f80
+800B5538	lui    s5, $1f80
 
-[S6 + 6] = h(hu[S6 + 6] + 1);
+[SP + 0010] = w(S7);
+FP = bu[T9 + 0002];
+V0 = hu[S6 + 0006];
+V1 = w[T9 + 0018];
+A0 = hu[S6 + 0002];
+A1 = hu[S6 + 0004];
+V0 = V0 + 0001;
+[S6 + 0006] = h(V0);
+V0 = hu[S6 + 0000];
+V1 = V1 + 0004;
 
-FP = bu[T9 + 2]; // number of vertex
-if (FP != 0)
+if( FP != 0 )
 {
-    [SP + 18] = w(h[S6 + 0]);
-    [SP + 20] = w(h[S6 + 2]);
-    [SP + 28] = w(h[S6 + 4]);
-    S3 = ;
-    A3 = w[T9 + 18] + 4;
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    [SP + 0018] = w(V0);
+    V0 = A0 << 10;
+    V0 = V0 >> 10;
+    [SP + 0020] = w(V0);
+    V0 = A1 << 10;
+    V0 = V0 >> 10;
+    S3 = 1f800040;
+    A3 = V1;
+    [SP + 0028] = w(V0);
 
     loopb55b0:	; 800B55B0
-        calculate vertex position after bone transformation
         VXY0 = w[A3 + 0000];
         VZ0 = w[A3 + 0004];
-        800B55C0	gte_func18t0,r11r12
+        800B55B8	nop
+        800B55BC	nop
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector
         [A2 + 0000] = w(MAC1);
         [A2 + 0004] = w(MAC2);
         [A2 + 0008] = w(MAC3);
+        S2 = w[A2 + 0000];
+        S7 = w[SP + 0018];
+        800B55D8	nop
+        S2 = S7 - S2;
+        800B55E0	mult   s2, s2
+        S1 = w[A2 + 0004];
+        S7 = w[SP + 0020];
+        800B55EC	mflo   v0
+        S1 = S7 - S1;
+        800B55F4	mult   s1, s1
+        S0 = w[A2 + 0008];
+        S7 = w[SP + 0028];
+        800B5600	mflo   v1
+        S0 = S7 - S0;
+        800B5608	mult   s0, s0
+        [SP + 0078] = w(A2);
+        [SP + 0084] = w(A3);
+        [SP + 007c] = w(T8);
+        [SP + 0080] = w(T9);
+        V0 = V0 + V1;
+        800B5620	mflo   a0
+        800B5624	jal    $80039f5c
+        A0 = V0 + A0;
+        V0 = V0 + 0002;
+        S2 = S2 << 0c;
+        800B5634	div    s2, v0
+        800B565C	mflo   s2
+        S1 = S1 << 0c;
+        800B5664	div    s1, v0
+        800B568C	mflo   s1
+        S0 = S0 << 0c;
+        800B5694	div    s0, v0
+        800B56BC	mflo   s0
+        [S3 + 0000] = h(S2);
+        [S3 + 0002] = h(S1);
+        [S3 + 0004] = h(S0);
+        V1 = h[S6 + 0006];
+        A2 = w[SP + 0078];
+        A3 = w[SP + 0084];
+        T8 = w[SP + 007c];
+        T9 = w[SP + 0080];
+        V0 = V1 - V0;
+        800B56E4	bgez   v0, Lb56f0 [$800b56f0]
+        A3 = A3 + 0008;
+        V0 = 0;
 
-        S2 = w[SP + 18] - w[A2 + 0]; // vector X to light from vertex
-        S1 = w[SP + 20] - w[A2 + 4]; // vector Y to light from vertex
-        S0 = w[SP + 28] - w[A2 + 8]; // vector Z to light from vertex
-        V0 = S2 * S2;
-        V1 = S1 * S1;
-        A0 = S0 * S0;
-
-
-        A0 = V0 + A0 + V1;
-        system_square_root;
-        V0 = V0 + 2; // vector length
-
-        [1f800040 + S4 * 8 + 0] = h((S2 >> c) / V0); // cos X
-        [1f800040 + S4 * 8 + 2] = h((S1 >> c) / V0); // cos Y
-        [1f800040 + S4 * 8 + 4] = h((S0 >> c) / V0); // cos Z
-
-        V0 = h[S6 + 6] - V0;
-        if (V0 < 0)
-        {
-            V0 = 0;
-        }
-
-        [1f800040 + S4 * 8 + 6] = h((V0 >> c) / h[S6 + 6]);
-
-        A3 = A3 + 8;
-        S4 = S4 + 1;
+        Lb56f0:	; 800B56F0
+        V0 = V0 << 0c;
+        800B56F4	div    v0, v1
+        800B571C	mflo   v0
+        S4 = S4 + 0001;
+        [S3 + 0006] = h(V0);
+        S3 = S3 + 0008;
         V0 = S4 < FP;
     800B572C	bne    v0, zero, loopb55b0 [$800b55b0]
-
 }
 
-
-
+S7 = w[SP + 0010];
 T4 = R11R12;
 T5 = R13R21;
-800B5740	sw     t4, $0000(1f800020)
-800B5744	sw     t5, $0004(1f800020)
+[S7 + 0000] = w(T4);
+[S7 + 0004] = w(T5);
 T4 = R22R23;
 T5 = R31R32;
 T6 = R33;
-800B5754	sw     t4, $0008(1f800020)
-800B5758	sw     t5, $000c(1f800020)
-800B575C	sw     t6, $0010(1f800020)
-800B5760	cfc2   t4,vz2
-800B5764	cfc2   t5,rgb
-800B5768	cfc2   t6,otz
-800B576C	sw     t4, $0014(1f800020)
-800B5770	sw     t5, $0018(1f800020)
-800B5774	sw     t6, $001c(1f800020)
-
-A0 = w[SP + 10];
-A1 = 1f800000;
-system_gte_transpose_matrix();
-
-800B5790	lw     t4, $0000(1f800000)
-800B5794	lw     t5, $0004(1f800000)
+[S7 + 0008] = w(T4);
+[S7 + 000c] = w(T5);
+[S7 + 0010] = w(T6);
+T4 = TRX;
+T5 = TRY;
+T6 = TRZ;
+[S7 + 0014] = w(T4);
+[S7 + 0018] = w(T5);
+[S7 + 001c] = w(T6);
+A0 = w[SP + 0010];
+800B577C	lui    a1, $1f80
+[SP + 007c] = w(T8);
+800B5784	jal    $system_gte_transpose_matrix
+[SP + 0080] = w(T9);
+T4 = w[1f800000];
+T5 = w[S7 + 0004];
 R11R12 = T4;
 R13R21 = T5;
-800B57A0	lw     t4, $0008(1f800000)
-800B57A4	lw     t5, $000c(1f800000)
-800B57A8	lw     t6, $0010(1f800000)
+T4 = w[S7 + 0008];
+T5 = w[S7 + 000c];
+T6 = w[S7 + 0010];
 R22R23 = T4;
 R31R32 = T5;
 R33 = T6;
-800B57B8	lw     t4, $0014(1f800000)
-800B57BC	lw     t5, $0018(1f800000)
-800B57C0	ctc2   t4,vz2
-800B57C4	lw     t6, $001c(1f800000)
-800B57C8	ctc2   t5,rgb
-800B57CC	ctc2   t6,otz
-
-
-
+T4 = w[S7 + 0014];
+T5 = w[S7 + 0018];
+TRX = T4;
+T6 = w[S7 + 001c];
+TRY = T5;
+TRZ = T6;
+T9 = w[SP + 0080];
 A0 = bu[800df114];
-V0 = hu[T9 + e];
-V1 = w[T9 + 18];
-A2 = w[T9 + 1c];
+T8 = w[SP + 007c];
+V0 = hu[T9 + 000e];
+V1 = w[T9 + 0018];
+A2 = w[T9 + 001c];
+800B57EC	beq    a0, zero, Lb5800 [$800b5800]
 A3 = V0 + V1;
-if (A0 != 0)
-{
-    A2 = A2 + hu[T9 + 16];
-}
+V0 = hu[T9 + 0016];
+800B57F8	nop
+A2 = A2 + V0;
 
-S2 = w[T9 + 4];
+Lb5800:	; 800B5800
+S2 = w[T9 + 0004];
+800B5804	nop
 FP = S2 & 00ff;
-if (SP != 0)
+if( FP != 0 )
 {
     S4 = 0;
-    T7 = A2 + 7;
+    T7 = A2 + 0007;
 
     loopb5818:	; 800B5818
-        V0 = w[A2 + 0];
-        if (V0 != 0)
+        V0 = w[A2 + 0000];
+        800B581C	nop
+        if( V0 != 0 )
         {
             S0 = A3;
             S1 = bu[T7 + 0000];
@@ -6626,239 +6478,272 @@ if (SP != 0)
             T0 = A3;
 
             loopb5844:	; 800B5844
-                A0 = bu[T0 + 0];
-                A0 = 1f800040 + A0 * 8;
-
-                [S5 + 0] = h((h[A0 + 0] * h[A0 + 6]) >> c);
-                [S5 + 2] = h((h[A0 + 2] * h[A0 + 6]) >> c);
-                [S5 + 4] = h((h[A0 + 4] * h[A0 + 6]) >> c);
-
+                A0 = bu[T0 + 0000];
+                800B5848	nop
+                A0 = A0 << 03;
+                A0 = T8 + A0;
+                V0 = hu[A0 + 0006];
+                V1 = h[A0 + 0000];
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                800B5864	mult   v1, v0
+                800B5868	mflo   v0
+                V0 = V0 >> 0c;
+                [S5 + 0000] = h(V0);
+                V1 = hu[A0 + 0002];
+                V0 = hu[A0 + 0006];
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                800B588C	mult   v1, v0
+                800B5890	mflo   v0
+                V0 = V0 >> 0c;
+                [S5 + 0002] = h(V0);
+                V1 = hu[A0 + 0004];
+                V0 = hu[A0 + 0006];
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                800B58B4	mult   v1, v0
+                800B58B8	mflo   v0
+                V0 = V0 >> 0c;
+                [S5 + 0004] = h(V0);
                 VXY0 = w[S5 + 0000];
                 VZ0 = w[S5 + 0004];
-                800B58D4	gte_func18t0,l33
+                800B58CC	nop
+                800B58D0	nop
+                gte_rtv0(); // v0 * rotmatrix
                 T4 = IR1;
                 T5 = IR2;
                 T6 = IR3;
-
-                [S5 + 0] = h(T4);
-                [S5 + 2] = h(T5);
-                [S5 + 4] = h(T6);
-
-                T4 = w[S5 + 0];
-                T5 = w[S5 + 4];
-                800B58F8	ctc2   t4,ir0
-                800B58FC	ctc2   t5,ir1
-                V0 = 800df520 + bu[T1 + 7] * 8; // normals
+                [S5 + 0000] = h(T4);
+                [S5 + 0002] = h(T5);
+                [S5 + 0004] = h(T6);
+                T4 = w[S5 + 0000];
+                T5 = w[S5 + 0004];
+                L11L12 = T4;
+                L13L21 = T5;
+                V0 = bu[T1 + 0007];
+                800B5904	lui    s7, $800e
+                800B5908	addiu  s7, s7, $f520 (=-$ae0)
+                V0 = V0 << 03;
+                V0 = S7 + V0;
                 VXY0 = w[V0 + 0000];
                 VZ0 = w[V0 + 0004];
-                800B5920	lwc2   a2, $0000(S0 + T2)
-                800B592C	gte_func24t0,r11r12
-                800B5930	swc2   s6, $0000(t3)
-
-                T3 = T3 + c;
-                T2 = T2 + 4;
-                T1 = T1 + 4;
-                A1 = A1 + 1;
-                V0 = A1 < 4;
-                T0 = T0 + 1;
+                V0 = S0 + T2;
+                RGB = w[V0 + 0000];
+                800B5924	nop
+                800B5928	nop
+                gte_NCCS(); // Normal color col. v0
+                [T3 + 0000] = w(RGB2);
+                T3 = T3 + 000c;
+                T2 = T2 + 0004;
+                T1 = T1 + 0004;
+                A1 = A1 + 0001;
+                T0 = T0 + 0001;
+                V0 = A1 < 0004;
             800B5948	bne    v0, zero, loopb5844 [$800b5844]
 
-            [T7 + 0] = b(A1);
+            [T7 + 0000] = b(S1);
         }
 
-        S4 = S4 + 1;
-        T7 = T7 + 34;
-        A2 = A2 + 34;
-        A3 = A3 + 18;
+        S4 = S4 + 0001;
+        T7 = T7 + 0034;
+        A2 = A2 + 0034;
+        A3 = A3 + 0018;
         V0 = S4 < FP;
     800B5964	bne    v0, zero, loopb5818 [$800b5818]
 }
 
 
-
 V0 = S2 & ff00;
 FP = V0 >> 08;
-800B5974	beq    fp, zero, Lb5ad4 [$800b5ad4]
-S4 = 0;
-T7 = A2 + 0007;
+if( FP != 0 )
+{
+    S4 = 0;
+    T7 = A2 + 0007;
 
-loopb5980:	; 800B5980
-V0 = w[A2 + 0000];
-800B5984	nop
-800B5988	beq    v0, zero, Lb5abc [$800b5abc]
-800B598C	nop
-S0 = A3;
-S1 = bu[T7 + 0000];
-A1 = 0;
-T3 = A2 + 0004;
-T2 = 0004;
-T1 = A3;
-T0 = A3;
+    loopb5980:	; 800B5980
+        V0 = w[A2 + 0000];
+        800B5984	nop
+        if( V0 != 0 )
+        {
+            S0 = A3;
+            S1 = bu[T7 + 0000];
+            A1 = 0;
+            T3 = A2 + 0004;
+            T2 = 0004;
+            T1 = A3;
+            T0 = A3;
 
-loopb59ac:	; 800B59AC
-A0 = bu[T0 + 0000];
-800B59B0	nop
-A0 = A0 << 03;
-A0 = T8 + A0;
-V0 = hu[A0 + 0006];
-V1 = h[A0 + 0000];
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B59CC	mult   v1, v0
-800B59D0	mflo   v0
-V0 = V0 >> 0c;
-[S5 + 0000] = h(V0);
-V1 = hu[A0 + 0002];
-V0 = hu[A0 + 0006];
-V1 = V1 << 10;
-V1 = V1 >> 10;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B59F4	mult   v1, v0
-800B59F8	mflo   v0
-V0 = V0 >> 0c;
-[S5 + 0002] = h(V0);
-V1 = hu[A0 + 0004];
-V0 = hu[A0 + 0006];
-V1 = V1 << 10;
-V1 = V1 >> 10;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B5A1C	mult   v1, v0
-800B5A20	mflo   v0
-V0 = V0 >> 0c;
-[S5 + 0004] = h(V0);
-VXY0 = w[S5 + 0000];
-VZ0 = w[S5 + 0004];
-800B5A34	nop
-800B5A38	nop
-800B5A3C	gte_func18t0,l33
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[S5 + 0000] = h(T4);
-[S5 + 0002] = h(T5);
-[S5 + 0004] = h(T6);
-T4 = w[S5 + 0000];
-T5 = w[S5 + 0004];
-800B5A60	ctc2   t4,ir0
-800B5A64	ctc2   t5,ir1
-V0 = bu[T1 + 0007];
-800B5A6C	lui    s7, $800e
-800B5A70	addiu  s7, s7, $f520 (=-$ae0)
-V0 = V0 << 03;
-V0 = S7 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-V0 = S0 + T2;
-800B5A88	lwc2   a2, $0000(v0)
-800B5A8C	nop
-800B5A90	nop
-800B5A94	gte_func24t0,r11r12
-800B5A98	swc2   s6, $0000(t3)
-T3 = T3 + 000c;
-T2 = T2 + 0004;
-T1 = T1 + 0004;
-A1 = A1 + 0001;
-V0 = A1 < 0003;
-800B5AB0	bne    v0, zero, loopb59ac [$800b59ac]
-T0 = T0 + 0001;
-[T7 + 0000] = b(S1);
+            loopb59ac:	; 800B59AC
+                A0 = bu[T0 + 0000];
+                800B59B0	nop
+                A0 = A0 << 03;
+                A0 = T8 + A0;
+                V0 = hu[A0 + 0006];
+                V1 = h[A0 + 0000];
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                800B59CC	mult   v1, v0
+                800B59D0	mflo   v0
+                V0 = V0 >> 0c;
+                [S5 + 0000] = h(V0);
+                V1 = hu[A0 + 0002];
+                V0 = hu[A0 + 0006];
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                800B59F4	mult   v1, v0
+                800B59F8	mflo   v0
+                V0 = V0 >> 0c;
+                [S5 + 0002] = h(V0);
+                V1 = hu[A0 + 0004];
+                V0 = hu[A0 + 0006];
+                V1 = V1 << 10;
+                V1 = V1 >> 10;
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                800B5A1C	mult   v1, v0
+                800B5A20	mflo   v0
+                V0 = V0 >> 0c;
+                [S5 + 0004] = h(V0);
+                VXY0 = w[S5 + 0000];
+                VZ0 = w[S5 + 0004];
+                800B5A34	nop
+                800B5A38	nop
+                gte_rtv0(); // v0 * rotmatrix
+                T4 = IR1;
+                T5 = IR2;
+                T6 = IR3;
+                [S5 + 0000] = h(T4);
+                [S5 + 0002] = h(T5);
+                [S5 + 0004] = h(T6);
+                T4 = w[S5 + 0000];
+                T5 = w[S5 + 0004];
+                L11L12 = T4;
+                L13L21 = T5;
+                V0 = bu[T1 + 0007];
+                800B5A6C	lui    s7, $800e
+                800B5A70	addiu  s7, s7, $f520 (=-$ae0)
+                V0 = V0 << 03;
+                V0 = S7 + V0;
+                VXY0 = w[V0 + 0000];
+                VZ0 = w[V0 + 0004];
+                V0 = S0 + T2;
+                RGB = w[V0 + 0000];
+                800B5A8C	nop
+                800B5A90	nop
+                gte_NCCS(); // Normal color col. v0
+                [T3 + 0000] = w(RGB2);
+                T3 = T3 + 000c;
+                T2 = T2 + 0004;
+                T1 = T1 + 0004;
+                A1 = A1 + 0001;
+                T0 = T0 + 0001;
+                V0 = A1 < 0003;
+            800B5AB0	bne    v0, zero, loopb59ac [$800b59ac]
 
-Lb5abc:	; 800B5ABC
-S4 = S4 + 0001;
-T7 = T7 + 0028;
-A2 = A2 + 0028;
-V0 = S4 < FP;
-800B5ACC	bne    v0, zero, loopb5980 [$800b5980]
-A3 = A3 + 0014;
+            [T7 + 0000] = b(S1);
+        }
 
-Lb5ad4:	; 800B5AD4
+        S4 = S4 + 0001;
+        T7 = T7 + 0028;
+        A2 = A2 + 0028;
+        A3 = A3 + 0014;
+        V0 = S4 < FP;
+    800B5ACC	bne    v0, zero, loopb5980 [$800b5980]
+}
+
 V0 = S2 >> 10;
 FP = V0 & 00ff;
-800B5ADC	beq    fp, zero, Lb5c10 [$800b5c10]
-S4 = 0;
-T1 = A3 + 0004;
-T0 = A2 + 0007;
+if( FP != 0 )
+{
+    S4 = 0;
+    T1 = A3 + 0004;
+    T0 = A2 + 0007;
 
-loopb5aec:	; 800B5AEC
-V0 = w[A2 + 0000];
-800B5AF0	nop
-800B5AF4	beq    v0, zero, Lb5bf4 [$800b5bf4]
-800B5AF8	nop
-A0 = bu[A3 + 0000];
-800B5B00	nop
-A0 = A0 << 03;
-A0 = T8 + A0;
-V0 = hu[A0 + 0006];
-V1 = h[A0 + 0000];
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B5B1C	mult   v1, v0
-A1 = bu[T0 + 0000];
-800B5B24	mflo   v0
-V0 = V0 >> 0c;
-[S5 + 0000] = h(V0);
-V1 = hu[A0 + 0002];
-V0 = hu[A0 + 0006];
-V1 = V1 << 10;
-V1 = V1 >> 10;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B5B48	mult   v1, v0
-800B5B4C	mflo   v0
-V0 = V0 >> 0c;
-[S5 + 0002] = h(V0);
-V1 = hu[A0 + 0004];
-V0 = hu[A0 + 0006];
-V1 = V1 << 10;
-V1 = V1 >> 10;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B5B70	mult   v1, v0
-V1 = A2 + 0004;
-800B5B78	mflo   v0
-V0 = V0 >> 0c;
-[S5 + 0004] = h(V0);
-VXY0 = w[S5 + 0000];
-VZ0 = w[S5 + 0004];
-800B5B8C	nop
-800B5B90	nop
-800B5B94	gte_func18t0,l33
-T4 = IR1;
-T5 = IR2;
-T6 = IR3;
-[S5 + 0000] = h(T4);
-[S5 + 0002] = h(T5);
-[S5 + 0004] = h(T6);
-T4 = w[S5 + 0000];
-T5 = w[S5 + 0004];
-800B5BB8	ctc2   t4,ir0
-800B5BBC	ctc2   t5,ir1
-V0 = bu[T1 + 0003];
-800B5BC4	lui    s7, $800e
-800B5BC8	addiu  s7, s7, $f520 (=-$ae0)
-V0 = V0 << 03;
-V0 = S7 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-800B5BDC	lwc2   a2, $0000(t1)
-800B5BE0	nop
-800B5BE4	nop
-800B5BE8	gte_func24t0,r11r12
-800B5BEC	swc2   s6, $0000(v1)
-[T0 + 0000] = b(A1);
+    loopb5aec:	; 800B5AEC
+        V0 = w[A2 + 0000];
+        800B5AF0	nop
+        if( V0 != 0 )
+        {
+            A0 = bu[A3 + 0000];
+            800B5B00	nop
+            A0 = A0 << 03;
+            A0 = T8 + A0;
+            V0 = hu[A0 + 0006];
+            V1 = h[A0 + 0000];
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
+            800B5B1C	mult   v1, v0
+            A1 = bu[T0 + 0000];
+            800B5B24	mflo   v0
+            V0 = V0 >> 0c;
+            [S5 + 0000] = h(V0);
+            V1 = hu[A0 + 0002];
+            V0 = hu[A0 + 0006];
+            V1 = V1 << 10;
+            V1 = V1 >> 10;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
+            800B5B48	mult   v1, v0
+            800B5B4C	mflo   v0
+            V0 = V0 >> 0c;
+            [S5 + 0002] = h(V0);
+            V1 = hu[A0 + 0004];
+            V0 = hu[A0 + 0006];
+            V1 = V1 << 10;
+            V1 = V1 >> 10;
+            V0 = V0 << 10;
+            V0 = V0 >> 10;
+            800B5B70	mult   v1, v0
+            V1 = A2 + 0004;
+            800B5B78	mflo   v0
+            V0 = V0 >> 0c;
+            [S5 + 0004] = h(V0);
+            VXY0 = w[S5 + 0000];
+            VZ0 = w[S5 + 0004];
+            800B5B8C	nop
+            800B5B90	nop
+            gte_rtv0(); // v0 * rotmatrix
+            T4 = IR1;
+            T5 = IR2;
+            T6 = IR3;
+            [S5 + 0000] = h(T4);
+            [S5 + 0002] = h(T5);
+            [S5 + 0004] = h(T6);
+            T4 = w[S5 + 0000];
+            T5 = w[S5 + 0004];
+            L11L12 = T4;
+            L13L21 = T5;
+            V0 = bu[T1 + 0003];
+            800B5BC4	lui    s7, $800e
+            800B5BC8	addiu  s7, s7, $f520 (=-$ae0)
+            V0 = V0 << 03;
+            V0 = S7 + V0;
+            VXY0 = w[V0 + 0000];
+            VZ0 = w[V0 + 0004];
+            RGB = w[T1 + 0000];
+            800B5BE0	nop
+            800B5BE4	nop
+            gte_NCCS(); // Normal color col. v0
+            [V1 + 0000] = w(RGB2);
+            [T0 + 0000] = b(A1);
+        }
 
-Lb5bf4:	; 800B5BF4
-S4 = S4 + 0001;
-T0 = T0 + 0028;
-A2 = A2 + 0028;
-T1 = T1 + 000c;
-V0 = S4 < FP;
-800B5C08	bne    v0, zero, loopb5aec [$800b5aec]
-A3 = A3 + 000c;
+        S4 = S4 + 0001;
+        T0 = T0 + 0028;
+        A2 = A2 + 0028;
+        T1 = T1 + 000c;
+        A3 = A3 + 000c;
+        V0 = S4 < FP;
+    800B5C08	bne    v0, zero, loopb5aec [$800b5aec]
+}
 
-Lb5c10:	; 800B5C10
 FP = S2 >> 18;
 800B5C14	beq    fp, zero, Lb5d48 [$800b5d48]
 S4 = 0;
@@ -6908,7 +6793,7 @@ VXY0 = w[S5 + 0000];
 VZ0 = w[S5 + 0004];
 800B5CC4	nop
 800B5CC8	nop
-800B5CCC	gte_func18t0,l33
+gte_rtv0(); // v0 * rotmatrix
 T4 = IR1;
 T5 = IR2;
 T6 = IR3;
@@ -6917,8 +6802,8 @@ T6 = IR3;
 [S5 + 0004] = h(T6);
 T4 = w[S5 + 0000];
 T5 = w[S5 + 0004];
-800B5CF0	ctc2   t4,ir0
-800B5CF4	ctc2   t5,ir1
+L11L12 = T4;
+L13L21 = T5;
 V0 = bu[T1 + 0003];
 800B5CFC	lui    s7, $800e
 800B5D00	addiu  s7, s7, $f520 (=-$ae0)
@@ -6926,11 +6811,11 @@ V0 = V0 << 03;
 V0 = S7 + V0;
 VXY0 = w[V0 + 0000];
 VZ0 = w[V0 + 0004];
-800B5D14	lwc2   a2, $0000(t1)
+RGB = w[T1 + 0000];
 800B5D18	nop
 800B5D1C	nop
-800B5D20	gte_func24t0,r11r12
-800B5D24	swc2   s6, $0000(v1)
+gte_NCCS(); // Normal color col. v0
+[V1 + 0000] = w(RGB2);
 [T0 + 0000] = b(A1);
 
 Lb5d2c:	; 800B5D2C
@@ -6994,7 +6879,7 @@ VXY0 = w[S5 + 0000];
 VZ0 = w[S5 + 0004];
 800B5E04	nop
 800B5E08	nop
-800B5E0C	gte_func18t0,l33
+gte_rtv0(); // v0 * rotmatrix
 T4 = IR1;
 T5 = IR2;
 T6 = IR3;
@@ -7003,8 +6888,8 @@ T6 = IR3;
 [S5 + 0004] = h(T6);
 T4 = w[S5 + 0000];
 T5 = w[S5 + 0004];
-800B5E30	ctc2   t4,ir0
-800B5E34	ctc2   t5,ir1
+L11L12 = T4;
+L13L21 = T5;
 V0 = bu[T1 + 0003];
 800B5E3C	lui    s7, $800e
 800B5E40	addiu  s7, s7, $f520 (=-$ae0)
@@ -7012,11 +6897,11 @@ V0 = V0 << 03;
 V0 = S7 + V0;
 VXY0 = w[V0 + 0000];
 VZ0 = w[V0 + 0004];
-800B5E54	lwc2   a2, $0000(t1)
+RGB = w[T1 + 0000];
 800B5E58	nop
 800B5E5C	nop
-800B5E60	gte_func24t0,r11r12
-800B5E64	swc2   s6, $0000(v1)
+gte_NCCS(); // Normal color col. v0
+[V1 + 0000] = w(RGB2);
 [T0 + 0000] = b(A1);
 
 Lb5e6c:	; 800B5E6C
@@ -7079,7 +6964,7 @@ VXY0 = w[S5 + 0000];
 VZ0 = w[S5 + 0004];
 800B5F40	nop
 800B5F44	nop
-800B5F48	gte_func18t0,l33
+gte_rtv0(); // v0 * rotmatrix
 T4 = IR1;
 T5 = IR2;
 T6 = IR3;
@@ -7088,8 +6973,8 @@ T6 = IR3;
 [S5 + 0004] = h(T6);
 T4 = w[S5 + 0000];
 T5 = w[S5 + 0004];
-800B5F6C	ctc2   t4,ir0
-800B5F70	ctc2   t5,ir1
+L11L12 = T4;
+L13L21 = T5;
 V0 = bu[T1 + 0003];
 800B5F78	lui    s7, $800e
 800B5F7C	addiu  s7, s7, $f520 (=-$ae0)
@@ -7097,11 +6982,11 @@ V0 = V0 << 03;
 V0 = S7 + V0;
 VXY0 = w[V0 + 0000];
 VZ0 = w[V0 + 0004];
-800B5F90	lwc2   a2, $0000(t1)
+RGB = w[T1 + 0000];
 800B5F94	nop
 800B5F98	nop
-800B5F9C	gte_func24t0,r11r12
-800B5FA0	swc2   s6, $0000(v1)
+gte_NCCS(); // Normal color col. v0
+[V1 + 0000] = w(RGB2);
 [T0 + 0000] = b(A1);
 
 Lb5fa8:	; 800B5FA8
@@ -7170,7 +7055,7 @@ VXY0 = w[S5 + 0000];
 VZ0 = w[S5 + 0004];
 800B608C	nop
 800B6090	nop
-800B6094	gte_func18t0,l33
+gte_rtv0(); // v0 * rotmatrix
 T4 = IR1;
 T5 = IR2;
 T6 = IR3;
@@ -7179,8 +7064,8 @@ T6 = IR3;
 [S5 + 0004] = h(T6);
 T4 = w[S5 + 0000];
 T5 = w[S5 + 0004];
-800B60B8	ctc2   t4,ir0
-800B60BC	ctc2   t5,ir1
+L11L12 = T4;
+L13L21 = T5;
 V0 = bu[T1 + 0007];
 800B60C4	lui    s7, $800e
 800B60C8	addiu  s7, s7, $f520 (=-$ae0)
@@ -7189,11 +7074,11 @@ V0 = S7 + V0;
 VXY0 = w[V0 + 0000];
 VZ0 = w[V0 + 0004];
 V0 = S0 + T2;
-800B60E0	lwc2   a2, $0000(v0)
+RGB = w[V0 + 0000];
 800B60E4	nop
 800B60E8	nop
-800B60EC	gte_func24t0,r11r12
-800B60F0	swc2   s6, $0000(t3)
+gte_NCCS(); // Normal color col. v0
+[T3 + 0000] = w(RGB2);
 T3 = T3 + 0008;
 T2 = T2 + 0004;
 T1 = T1 + 0004;
@@ -7267,7 +7152,7 @@ VXY0 = w[S5 + 0000];
 VZ0 = w[S5 + 0004];
 800B61F0	nop
 800B61F4	nop
-800B61F8	gte_func18t0,l33
+gte_rtv0(); // v0 * rotmatrix
 T4 = IR1;
 T5 = IR2;
 T6 = IR3;
@@ -7276,8 +7161,8 @@ T6 = IR3;
 [S5 + 0004] = h(T6);
 T4 = w[S5 + 0000];
 T5 = w[S5 + 0004];
-800B621C	ctc2   t4,ir0
-800B6220	ctc2   t5,ir1
+L11L12 = T4;
+L13L21 = T5;
 V0 = bu[T1 + 0007];
 800B6228	lui    s7, $800e
 800B622C	addiu  s7, s7, $f520 (=-$ae0)
@@ -7286,11 +7171,11 @@ V0 = S7 + V0;
 VXY0 = w[V0 + 0000];
 VZ0 = w[V0 + 0004];
 V0 = S0 + T2;
-800B6244	lwc2   a2, $0000(v0)
+RGB = w[V0 + 0000];
 800B6248	nop
 800B624C	nop
-800B6250	gte_func24t0,r11r12
-800B6254	swc2   s6, $0000(t3)
+gte_NCCS(); // Normal color col. v0
+[T3 + 0000] = w(RGB2);
 T3 = T3 + 0008;
 T2 = T2 + 0004;
 T1 = T1 + 0004;
@@ -7309,19 +7194,6 @@ V0 = S4 < FP;
 A3 = A3 + 0014;
 
 Lb6290:	; 800B6290
-RA = w[SP + 00ac];
-FP = w[SP + 00a8];
-S7 = w[SP + 00a4];
-S6 = w[SP + 00a0];
-S5 = w[SP + 009c];
-S4 = w[SP + 0098];
-S3 = w[SP + 0094];
-S2 = w[SP + 0090];
-S1 = w[SP + 008c];
-S0 = w[SP + 0088];
-SP = SP + 00b0;
-800B62BC	jr     ra 
-800B62C0	nop
 ////////////////////////////////
 
 
@@ -7680,23 +7552,20 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// kawai_action_a
-A3 = bu[A1 + 0];
-if (A3 > 0)
+// kawai_action_a()
+
+model_data = A0;
+kawai_data = A1;
+
+parts_data = w[model_data + 1c] + hu[model_data + 18]
+
+for( int i = 0; i < bu[kawai_data + 0]; ++i )
 {
-    A2 = 0;
-    loopb6b08:	; 800B6B08
-        V1 = bu[A1 + A2 * 2 + 1];
-        if (V1 < bu[A0 + 3])
-        {
-            [w[A0 + 1c] + hu[A0 + 18] + V1 * 20 + 0] = b(bu[A1 + A2 * 2 + 2]);
-        }
-
-        A1 = A1 + 2;
-
-        A2 = A2 + 1;
-        V0 = A2 < A3;
-    800B6B34	bne    v0, zero, loopb6b08 [$800b6b08]
+    V1 = bu[kawai_data + i * 2 + 1];
+    if( V1 < bu[model_data + 3] )
+    {
+        [parts_data + V1 * 20 + 0] = b(bu[kawai_data + i * 2 + 2]);
+    }
 }
 
 return 1;
@@ -8434,7 +8303,7 @@ A0 = S2;
 [S1 + 0018] = w(V0);
 V0 = h[S0 + 0012];
 A1 = S6;
-800B76C0	jal    $8003bf3c
+800B76C0	jal    $system_gte_transpose_matrix
 [S1 + 001c] = w(V0);
 T4 = w[S4 + 0000];
 T5 = w[S4 + 0004];
@@ -10772,54 +10641,41 @@ V0 = T8 < T9;
 T7 = T7 + 0014;
 
 Lb9ae0:	; 800B9AE0
-S7 = w[SP + 006c];
-S6 = w[SP + 0068];
-S5 = w[SP + 0064];
-S4 = w[SP + 0060];
-S3 = w[SP + 005c];
-S2 = w[SP + 0058];
-S1 = w[SP + 0054];
-S0 = w[SP + 0050];
-SP = SP + 0070;
-800B9B04	jr     ra 
-800B9B08	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// kawai_action_d
-S4 = A0; // 0x24 data in new structures
-S3 = A1; // pointer 800dfe1c
-model_id = bu[S3 + 1];
-V1 = bu[S3 + 0];
+// kawai_action_d()
+
+model_data = A0;
+kawai_data = A1;
+
+model_id = bu[kawai_data + 1];
+V1 = bu[kawai_data + 0];
 A1 = 800dfe3c;
 S2 = 800dfe3c + model_id * 3c;
 
-offset_to_model_parts = w[S4 + 1c] + hu[S4 + 18];
+parts_data = w[model_data + 1c] + hu[model_data + 18];
 
-if (V1 == 0)
+parts_n = bu[model_data + 3];
+
+if( V1 == 0 )
 {
     // remove calculating lighting and color for all model parts
-    A0 = bu[S4 + 3];
-    if (A0 > 0)
+    for( int i = 0; i < parts_n; ++i )
     {
-        A1 = 0;
-        loopb9b98:	; 800B9B98
-            [offset_to_model_parts + A1 * 20 + 0] = b(0);
-            A1 = A1 + 1;
-            V0 = A1 < A0;
-        800B9BA8	bne    v0, zero, loopb9b98 [$800b9b98]
+        [parts_data + i * 20 + 0] = b(0);
     }
 
-    [S2 + 00] = h(0); // timer used in calculation.
-    [S2 + 02] = h(0); // inner timer.
-    [S2 + 04] = h(0); // current stage.
-    [S2 + 06] = h(10); // step size for timer +0 in stage 1 and 3.
-    [S2 + 08] = h(0); // light R/intensivity.
-    [S2 + 0a] = h(0); // light G.
-    [S2 + 0c] = h(0); // light B.
-    [S2 + 0e] = h(64); // steps for stage 0.
+    [S2 + 0] = h(0); // timer used in calculation.
+    [S2 + 2] = h(0); // inner timer.
+    [S2 + 4] = h(0); // current stage.
+    [S2 + 6] = h(10); // step size for timer +0 in stage 1 and 3.
+    [S2 + 8] = h(0); // light R/intensivity.
+    [S2 + a] = h(0); // light G.
+    [S2 + c] = h(0); // light B.
+    [S2 + e] = h(64); // steps for stage 0.
     [S2 + 10] = h(0800); // light radius
     [S2 + 12] = h(4); // X compression.
     [S2 + 14] = h(4); // Y compression.
@@ -10827,14 +10683,13 @@ if (V1 == 0)
     [S2 + 18] = h(0); // Z modificator.
     [S2 + 1a] = h(0); // Z modificator.
 
-    V1 = bu[S4 + 3];
-    if (V1 == 1)
+    if( parts_n == 1 )
     {
-        V1 = bu[offset_to_model_parts + 2];
-        if (V1 == 1e)
+        vertex_n = bu[parts_data + 0 * 20 + 2];
+
+        if( vertex_n == 1e )
         {
-            V0 = bu[offset_to_model_parts + b];
-            if (V0 >= 1b)
+            if( bu[parts_data + 0 * 20 + b] >= 1b ) // shaded quad
             {
                 [S2 + 10] = h(0200);
                 [S2 + 12] = h(7);
@@ -10843,9 +10698,9 @@ if (V1 == 0)
                 [S2 + 1a] = h(10);
             }
         }
-        else if (V1 == 21)
+        else if( vertex_n == 21 )
         {
-            if (bu[offset_to_model_parts + a] == 36)
+            if( bu[parts_data + 0 * 20 + a] == 36 ) // shaded triangle
             {
                 [S2 + 10] = h(00e0);
                 [S2 + 12] = h(6);
@@ -10853,10 +10708,10 @@ if (V1 == 0)
                 [S2 + 16] = h(7);
             }
         }
-        else if (V1 == 22)
+        else if( vertex_n == 22 )
         {
-            V1 = bu[offset_to_model_parts + A];
-            if (V1 == 3b || V1 == 3e || V1 == 3f)
+            V1 = bu[parts_data + 0 * 20 + a];
+            if( ( V1 == 3b ) || ( V1 == 3e ) || ( V1 == 3f ) ) // shaded triangle
             {
                 [S2 + 10] = h(00e0);
                 [S2 + 12] = h(6);
@@ -10864,73 +10719,73 @@ if (V1 == 0)
                 [S2 + 16] = h(7);
             }
         }
-        else if (V1 == 28)
+        else if( vertex_n == 28 )
         {
-            V1 = bu[offset_to_model_parts + a];
-            if (V1 == 24)
+            if( bu[parts_data + 0 * 20 + a] == 24 ) // shaded triangle
             {
-                [S2 + 06] = h(c);
+                [S2 + 6] = h(c);
                 [S2 + 10] = h(0400);
                 [S2 + 12] = h(7);
                 [S2 + 14] = h(7);
                 [S2 + 16] = h(7);
             }
         }
-        else if (V1 == 36)
+        else if( vertex_n == 36 )
         {
-            V1 = bu[offset_to_model_parts + b];
-            if (V1 == 30)
+            if( bu[parts_data + 0 * 20 + b] == 30 ) // shaded quad
             {
-                [S2 + 06] = h(20);
-                [S2 + 0e] = h(10);
+                [S2 + 6] = h(20);
+                [S2 + e] = h(10);
                 [S2 + 10] = h(0400);
                 [S2 + 16] = h(9);
             }
         }
-        else if (V1 == 48)
+        else if( vertex_n == 48 )
         {
-            V1 = bu[offset_to_model_parts + a];
-            if (V1 == 8c)
+            if( bu[parts_data + 0 * 20 + a] == 8c ) // shaded triangle
             {
-                [S2 + 06] = h(20);
+                [S2 + 6] = h(20);
             }
         }
 
         return 1;
     }
-    else if (V1 == 2 || V1 == 3)
+    else if( ( parts_n == 2 ) || ( parts_n == 3 ) )
     {
-        [S2 + 06] = h(18);
+        [S2 + 6] = h(18);
         [S2 + 10] = h(0400);
         [S2 + 12] = h(5);
         [S2 + 14] = h(5);
         [S2 + 16] = h(5);
         [S2 + 1a] = h(10);
     }
-    else if (V1 == 4)
+    else if( parts_n == 4 )
     {
+        vertex_n0 = bu[parts_data + 0 * 20 + 2];
+        vertex_n1 = bu[parts_data + 1 * 20 + 2];
+
         // if treasure chest
-        if (bu[offset_to_model_parts + 2] == 10 && bu[offset_to_model_parts + 20 + 2] == 22)
+        if( ( vertex_n0 == 10 ) && ( vertex_n1 == 22 ) )
         {
-            [S2 + 06] = h(10);
+            [S2 + 6] = h(10);
             [S2 + 10] = h(0400);
             [S2 + 12] = h(6);
             [S2 + 14] = h(6);
             [S2 + 16] = h(5);
             [S2 + 1a] = h(10);
         }
-        else if (bu[offset_to_model_parts + 2] == 18 && bu[offset_to_model_parts + 20 + 2] == 20)
+        else if( ( vertex_n0 == 18 ) && ( vertex_n1 == 20 ) )
         {
-            [S2 + 06] = h(18);
+            [S2 + 6] = h(18);
             [S2 + 10] = h(0400);
             [S2 + 12] = h(5);
             [S2 + 14] = h(5);
             [S2 + 16] = h(6);
             [S2 + 1a] = h(28);
         }
-        else if (bu[offset_to_model_parts + 2] == 24 && bu[offset_to_model_parts + 20 + 2] == 24)
+        else if( ( vertex_n0 == 24 ) && ( vertex_n1 == 24 ) )
         {
-            [S2 + 06] = h(8);
+            [S2 + 6] = h(8);
             [S2 + 10] = h(0800);
             [S2 + 12] = h(6);
             [S2 + 14] = h(6);
@@ -10941,55 +10796,38 @@ if (V1 == 0)
 
     return 1;
 }
-else if (V1 == 1)
+else if( V1 == 1 )
 {
-    if (bu[S4 + 0] != 0)
+    if( bu[model_data + 0] != 0 )
     {
-        number_of_parts = bu[S4 + 3];
-        if (number_of_parts > 0)
+        for( int i = 0; i < parts_n; ++i )
         {
-            S0 = 0;
-            loopb9ed0:	; 800B9ED0
-                bone_data = w[S4 + 20] + bu[offset_to_model_parts + S0 * 20 + 1] * 20;
+            bone_data = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20;
 
-                T4 = w[bone_data + 00];
-                T5 = w[bone_data + 04];
-                R11R12 = T4;
-                R13R21 = T5;
-                T4 = w[bone_data + 08];
-                T5 = w[bone_data + 0c];
-                T6 = w[bone_data + 10];
-                R22R23 = T4;
-                R31R32 = T5;
-                R33 = T6;
-                T4 = w[bone_data + 14];
-                T5 = w[bone_data + 18];
-                T6 = w[bone_data + 1c];
-                800B9F10	ctc2   t4,vz2
-                800B9F18	ctc2   t5,rgb
-                800B9F1C	ctc2   t6,otz
+            R11R12 = w[bone_data + 0];
+            R13R21 = w[bone_data + 4];
+            R22R23 = w[bone_data + 8];
+            R31R32 = w[bone_data + c];
+            R33 = w[bone_data + 10];
+            TRX = w[bone_data + 14];
+            TRY = w[bone_data + 18];
+            TRZ = w[bone_data + 1c];
 
-                A0 = offset_to_model_parts + S0 * 20;
-                field_model_add_to_render();
-
-                S0 = S0 + 1;
-                V0 = S0 < number_of_parts;
-            800B9F34	bne    v0, zero, loopb9ed0 [$800b9ed0]
+            A0 = parts_data + i * 20;
+            field_model_add_to_render();
         }
 
-        if (h[S4 + 16] >= 201)
+        if( h[model_data + 16] >= 201 )
         {
-            T1 = h[S4 + 16] / 200;
+            T1 = h[model_data + 16] / 200;
         }
         else
         {
             T1 = 1;
         }
 
-
-
         // set light position
-        timer = bu[S2 + 00]; // timer
+        timer = bu[S2 + 0]; // timer
 
         posX = h[800df122 + timer * 4];
         V0 = posX >>> h[S2 + 12];
@@ -11006,175 +10844,144 @@ else if (V1 == 1)
         V0 = posY >>> h[S2 + 16];
         [1f800204] = h((V0 + h[S2 + 1a]) * T1);
 
-        [1f800200] = h(hu[1f800200] + hu[S4 + 08]);
-        [1f800202] = h(hu[1f800202] + hu[S4 + 0c]);
-        [1f800204] = h(hu[1f800204] + hu[S4 + 10]);
-
-
+        [1f800200] = h(hu[1f800200] + hu[model_data + 8]);
+        [1f800202] = h(hu[1f800202] + hu[model_data + c]);
+        [1f800204] = h(hu[1f800204] + hu[model_data + 10]);
 
         // camera data
-        [1f800210] = h(hu[S3 + 02]); // 800dfe1c
-        [1f800212] = h(hu[S3 + 04]);
-        [1f800214] = h(hu[S3 + 06]);
-        [1f800216] = h(hu[S3 + 08]);
-        [1f800218] = h(hu[S3 + 0a]);
-        [1f80021a] = h(hu[S3 + 0c]);
-        [1f80021c] = h(hu[S3 + 0e]);
-        [1f80021e] = h(hu[S3 + 10]);
-        [1f800220] = h(hu[S3 + 12]);
-        [1f800224] = w(w[S3 + 14]);
-        [1f800228] = w(w[S3 + 18]);
-        [1f80022c] = w(w[S3 + 1c]);
+        [1f800210] = h(hu[kawai_data + 2]);
+        [1f800212] = h(hu[kawai_data + 4]);
+        [1f800214] = h(hu[kawai_data + 6]);
+        [1f800216] = h(hu[kawai_data + 8]);
+        [1f800218] = h(hu[kawai_data + a]);
+        [1f80021a] = h(hu[kawai_data + c]);
+        [1f80021c] = h(hu[kawai_data + e]);
+        [1f80021e] = h(hu[kawai_data + 10]);
+        [1f800220] = h(hu[kawai_data + 12]);
+        [1f800224] = w(w[kawai_data + 14]);
+        [1f800228] = w(w[kawai_data + 18]);
+        [1f80022c] = w(w[kawai_data + 1c]);
 
-        T4 = w[1f800210];
-        T5 = w[1f800214];
-        R11R12 = T4;
-        R13R21 = T5;
-        T4 = w[1f800218];
-        T5 = w[1f80021c];
-        T6 = w[1f800220];
-        R22R23 = T4;
-        R31R32 = T5;
-        R33 = T6;
-        T4 = w[1f800224];
-        T5 = w[1f800228];
-        T6 = w[1f80022c];
-        800BA1D4	ctc2   t4,vz2
-        800BA1DC	ctc2   t5,rgb
-        800BA1E0	ctc2   t6,otz
+        R11R12 = w[1f800210];
+        R13R21 = w[1f800214];
+        R22R23 = w[1f800218];
+        R31R32 = w[1f80021c];
+        R33 = w[1f800220];
+        TRX = w[1f800224];
+        TRY = w[1f800228];
+        TRZ = w[1f80022c];
 
-        800BA1E4	lwc2   zero, $0000(1f800200)
-        800BA1E8	lwc2   at, $0004(1f800200)
-        gte_func18t0,r11r12 // v0 * rotmatrix + tr vector
-        T4 = IR1;
-        T5 = IR2;
-        T6 = IR3;
+        VXY0 = w[1f800200];
+        VZ0 = w[1f800204]
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector.
         // lighting position in camera
-        [1f800208] = h(T4);
-        [1f80020a] = h(T5);
-        [1f80020c] = h(T6);
+        [1f800208] = h(IR1);
+        [1f80020a] = h(IR2);
+        [1f80020c] = h(IR3);
 
+        [800dfe1c + 0] = h(hu[1f800208]);
+        [800dfe1c + 2] = h(hu[1f80020a]);
+        [800dfe1c + 4] = h(hu[1f80020c]);
 
+        [800dfe1c + 6] = h(h[S2 + 10] * T1);
 
-        [800dfe1c + 00] = h(hu[1f800208]);
-        [800dfe1c + 02] = h(hu[1f80020a]);
-        [800dfe1c + 04] = h(hu[1f80020c]);
+        [800dfe1c + 8] = h(hu[S2 + 8]);
+        [800dfe1c + a] = h(hu[S2 + a]);
+        [800dfe1c + c] = h(hu[S2 + c]);
 
-        [800dfe1c + 06] = h(h[S2 + 10] * T1);
-
-        [800dfe1c + 08] = h(hu[S2 + 08]);
-        [800dfe1c + 0a] = h(hu[S2 + 0a]);
-        [800dfe1c + 0c] = h(hu[S2 + 0c]);
-
-        [800dfe1c + 0e] = h(c0);
+        [800dfe1c + e] = h(c0);
         [800dfe1c + 10] = h(c0);
         [800dfe1c + 12] = h(c0);
 
         // add lighting calculation
-        V0 = bu[S4 + 3];
-        if (V0 > 0)
+        for( int i = 0; i < parts_n; ++i )
         {
-            S0 = 0;
-            loopba2e8:	; 800BA2E8
-                [offset_to_model_parts + S0 * 20 + 00] = b(1);
-                S0 = S0 + 1;
-                V0 = S0 < V0;
-            800BA2F8	bne    v0, zero, loopba2e8 [$800ba2e8]
+            [parts_data + i * 20 + 0] = b(1);
         }
 
-        if (bu[S4 + 3] == 4)
+        if( parts_n == 4 )
         {
-            V1 = bu[offset_to_model_parts + 2];
-            if (V1 == 18 && bu[offset_to_model_parts + 22] == 20)
+            vertex_n0 = bu[parts_data + 0 * 20 + 2];
+            vertex_n1 = bu[parts_data + 1 * 20 + 2];
+
+            if( ( vertex_n0 == 18 ) && ( vertex_n1 == 20 ) )
             {
-                [offset_to_model_parts + 00] = b(0);
-                [offset_to_model_parts + 60] = b(0);
+                [parts_data + 0 * 20 + 0] = b(0);
+                [parts_data + 3 * 20 + 0] = b(0);
             }
-            else if (V1 == 10 && bu[offset_to_model_parts + 22] == 22)
+            else if( ( vertex_n0 == 10 ) && ( vertex_n1 == 22 ) )
             {
-                [offset_to_model_parts + 00] = b(0);
-                [offset_to_model_parts + 40] = b(0);
+                [parts_data + 0 * 20 + 0] = b(0);
+                [parts_data + 2 * 20 + 0] = b(0);
             }
-            else if (V1 == 24 && bu[offset_to_model_parts + 22] == 24)
+            else if( vertex_n0 == 24 ) && ( vertex_n1 == 24 ) )
             {
-                [offset_to_model_parts + 00] = b(0);
-                [offset_to_model_parts + 20] = b(0);
+                [parts_data + 0 * 20 + 0] = b(0);
+                [parts_data + 1 * 20 + 0] = b(0);
             }
         }
 
-        A0 = S4;
+        A0 = model_data;
         A1 = 800dfe1c;
-        funcb5260; // kawai 5
+        funcb5260(); // kawai 5
 
         // remove lighting calculation again
-        V0 = bu[S4 + 3];
-        if (V0 > 0)
+        for( int i = 0; i < parts_n; ++i )
         {
-            S0 = 0;
-            loopba3a8:	; 800BA3A8
-                [offset_to_model_parts + S0 * 20 + 00] = b(0);
-                S0 = S0 + 1;
-                V0 = S0 < V0;
-            800BA3B8	bne    v0, zero, loopba3a8 [$800ba3a8]
+            [parts_data + i * 20 + 0] = b(0);
         }
-
-
 
         V1 = h[S2 + 4];
-        if (V1 == 0)
+        if( V1 == 0 )
         {
-            [S2 + 02] = h(hu[S2 + 02] + 1)
+            [S2 + 2] = h(hu[S2 + 2] + 1)
 
-            if (hu[S2 + 02] >= h[S2 + 0e])
+            if (hu[S2 + 2] >= h[S2 + e])
             {
-                [S2 + 00] = h(0);
-                [S2 + 04] = h(1);
-
-                [S2 + 08] = h(0400);
-                [S2 + 0a] = h(0400);
-                [S2 + 0c] = h(0400);
+                [S2 + 0] = h(0);
+                [S2 + 4] = h(1);
+                [S2 + 8] = h(0400);
+                [S2 + a] = h(0400);
+                [S2 + c] = h(0400);
             }
         }
-        else if (V1 == 1)
+        else if( V1 == 1 )
         {
-            [S2 + 00] = h(hu[S2 + 00] + hu[S2 + 06]);
+            [S2 + 0] = h(hu[S2 + 0] + hu[S2 + 6]);
 
-            if (hu[S2 + 00] >= 120)
+            if( hu[S2 + 0] >= 120 )
             {
-                [S2 + 02] = h(0);
-                [S2 + 04] = h(2);
-
-                [S2 + 08] = h(0);
-                [S2 + 0a] = h(0);
-                [S2 + 0c] = h(0);
+                [S2 + 2] = h(0);
+                [S2 + 4] = h(2);
+                [S2 + 8] = h(0);
+                [S2 + a] = h(0);
+                [S2 + c] = h(0);
             }
         }
-        else if (V1 == 2)
+        else if( V1 == 2 )
         {
-            [S2 + 02] = h(hu[S2 + 02] + 1);
+            [S2 + 2] = h(hu[S2 + 2] + 1);
 
-            if (hu[S2 + 02] >= a)
+            if( hu[S2 + 2] >= a )
             {
-                [S2 + 00] = h(0);
-                [S2 + 04] = h(3);
-
-                [S2 + 08] = h(0400);
-                [S2 + 0a] = h(0400);
-                [S2 + 0c] = h(0400);
+                [S2 + 0] = h(0);
+                [S2 + 4] = h(3);
+                [S2 + 8] = h(0400);
+                [S2 + a] = h(0400);
+                [S2 + c] = h(0400);
             }
         }
-        else if (V1 == 3)
+        else if( V1 == 3 )
         {
-            [S2 + 00] = h(hu[S2 + 00] + hu[S2 + 06]);
+            [S2 + 0] = h(hu[S2 + 0] + hu[S2 + 6]);
 
-            if (hu[S2 + 00] >= 120)
+            if( hu[S2 + 0] >= 120 )
             {
-                [S2 + 02] = h(0);
-                [S2 + 04] = h(0);
-
-                [S2 + 08] = h(0);
-                [S2 + 0a] = h(0);
-                [S2 + 0c] = h(0);
+                [S2 + 2] = h(0);
+                [S2 + 4] = h(0);
+                [S2 + 8] = h(0);
+                [S2 + a] = h(0);
+                [S2 + c] = h(0);
             }
         }
     }

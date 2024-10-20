@@ -75,7 +75,7 @@ BSX file for models.
         + 12 [][]     height.
 
 // parts data header (0x20 size)
-    +  0 []       something inited flag.
+    +  0 []       use local or global lighting.
     +  1 []       bone id.
     +  2 [][]     number of vertexes.
     +  4 []       number of shaded textured quad 0x3c
