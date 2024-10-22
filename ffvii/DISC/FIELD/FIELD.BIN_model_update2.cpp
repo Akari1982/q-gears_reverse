@@ -6310,252 +6310,149 @@ part_data = A0;
 S6 = A1;
 T8 = 1f800040;
 S7 = 1f800020;
-S4 = 0;
 A2 = 1f800000;
 S5 = 1f800000;
 
 [SP + 10] = w(S7);
 
-FP = bu[T9 + 0002];
+FP = bu[part_data + 2];
 V0 = hu[S6 + 0006];
-V1 = w[T9 + 0018];
-A0 = hu[S6 + 0002];
-A1 = hu[S6 + 0004];
+V1 = w[part_data + 18];
+A0 = h[S6 + 0002];
+A1 = h[S6 + 0004];
 V0 = V0 + 0001;
 [S6 + 0006] = h(V0);
-V0 = hu[S6 + 0000];
+V0 = h[S6 + 0000];
 V1 = V1 + 0004;
 
-if( FP != 0 )
-{
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
     [SP + 0018] = w(V0);
-    V0 = A0 << 10;
-    V0 = V0 >> 10;
+    V0 = A0;
     [SP + 0020] = w(V0);
-    V0 = A1 << 10;
-    V0 = V0 >> 10;
+    V0 = A1;
     S3 = 1f800040;
     A3 = V1;
     [SP + 0028] = w(V0);
 
-    loopb55b0:	; 800B55B0
-        VXY0 = w[A3 + 0000];
-        VZ0 = w[A3 + 0004];
-        800B55B8	nop
-        800B55BC	nop
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [A2 + 0000] = w(MAC1);
-        [A2 + 0004] = w(MAC2);
-        [A2 + 0008] = w(MAC3);
-        S2 = w[A2 + 0000];
-        S7 = w[SP + 0018];
-        800B55D8	nop
-        S2 = S7 - S2;
-        800B55E0	mult   s2, s2
-        S1 = w[A2 + 0004];
-        S7 = w[SP + 0020];
-        800B55EC	mflo   v0
-        S1 = S7 - S1;
-        800B55F4	mult   s1, s1
-        S0 = w[A2 + 0008];
-        S7 = w[SP + 0028];
-        800B5600	mflo   v1
-        S0 = S7 - S0;
-        800B5608	mult   s0, s0
-        [SP + 0078] = w(A2);
-        [SP + 0084] = w(A3);
-        [SP + 007c] = w(T8);
-        [SP + 0080] = w(T9);
-        V0 = V0 + V1;
-        800B5620	mflo   a0
-        800B5624	jal    $80039f5c
-        A0 = V0 + A0;
-        V0 = V0 + 0002;
-        S2 = S2 << 0c;
-        800B5634	div    s2, v0
-        800B565C	mflo   s2
-        S1 = S1 << 0c;
-        800B5664	div    s1, v0
-        800B568C	mflo   s1
-        S0 = S0 << 0c;
-        800B5694	div    s0, v0
-        800B56BC	mflo   s0
-        [S3 + 0000] = h(S2);
-        [S3 + 0002] = h(S1);
-        [S3 + 0004] = h(S0);
-        V1 = h[S6 + 0006];
-        A2 = w[SP + 0078];
-        A3 = w[SP + 0084];
-        T8 = w[SP + 007c];
-        T9 = w[SP + 0080];
-        V0 = V1 - V0;
-        800B56E4	bgez   v0, Lb56f0 [$800b56f0]
-        A3 = A3 + 0008;
-        V0 = 0;
+for( int i = 0; i < FP; ++i )
+{
+    VXY0 = w[A3 + 0];
+    VZ0 = w[A3 + 4];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    [A2 + 0] = w(MAC1);
+    [A2 + 4] = w(MAC2);
+    [A2 + 8] = w(MAC3);
+    S2 = w[A2 + 0000];
+    S7 = w[SP + 0018];
+    800B55D8	nop
+    S2 = S7 - S2;
+    800B55E0	mult   s2, s2
+    S1 = w[A2 + 0004];
+    S7 = w[SP + 0020];
+    800B55EC	mflo   v0
+    S1 = S7 - S1;
+    800B55F4	mult   s1, s1
+    S0 = w[A2 + 0008];
+    S7 = w[SP + 0028];
+    800B5600	mflo   v1
+    S0 = S7 - S0;
+    800B5608	mult   s0, s0
+    [SP + 0078] = w(A2);
+    [SP + 0084] = w(A3);
+    V0 = V0 + V1;
+    800B5620	mflo   a0
+    A0 = V0 + A0;
+    system_square_root();
+    V0 += 2;
 
-        Lb56f0:	; 800B56F0
-        V0 = V0 << 0c;
-        800B56F4	div    v0, v1
-        800B571C	mflo   v0
-        S4 = S4 + 0001;
-        [S3 + 0006] = h(V0);
-        S3 = S3 + 0008;
-        V0 = S4 < FP;
-    800B572C	bne    v0, zero, loopb55b0 [$800b55b0]
+    [S3 + 0] = h((S2 << c) / V0);
+    [S3 + 2] = h((S1 << c) / V0);
+    [S3 + 4] = h((S0 << c) / V0);
+
+    V1 = h[S6 + 6];
+    A2 = w[SP + 78];
+    A3 = w[SP + 84];
+    V0 = V1 - V0;
+    A3 = A3 + 8;
+    if( V0 < 0 ) V0 = 0;
+
+    [S3 + 6] = h((V0 << c) / V1);
+
+    S3 = S3 + 0008;
 }
 
-S7 = w[SP + 0010];
-T4 = R11R12;
-T5 = R13R21;
-[S7 + 0000] = w(T4);
-[S7 + 0004] = w(T5);
-T4 = R22R23;
-T5 = R31R32;
-T6 = R33;
-[S7 + 0008] = w(T4);
-[S7 + 000c] = w(T5);
-[S7 + 0010] = w(T6);
-T4 = TRX;
-T5 = TRY;
-T6 = TRZ;
-[S7 + 0014] = w(T4);
-[S7 + 0018] = w(T5);
-[S7 + 001c] = w(T6);
+S7 = w[SP + 10];
+[S7 + 0] = w(R11R12);
+[S7 + 4] = w(R13R21);
+[S7 + 8] = w(R22R23);
+[S7 + c] = w(R31R32);
+[S7 + 10] = w(R33);
+[S7 + 14] = w(TRX);
+[S7 + 18] = w(TRY);
+[S7 + 1c] = w(TRZ);
 A0 = w[SP + 0010];
 800B577C	lui    a1, $1f80
-[SP + 007c] = w(T8);
-800B5784	jal    $system_gte_transpose_matrix
-[SP + 0080] = w(T9);
-T4 = w[1f800000];
-T5 = w[S7 + 0004];
-R11R12 = T4;
-R13R21 = T5;
-T4 = w[S7 + 0008];
-T5 = w[S7 + 000c];
-T6 = w[S7 + 0010];
-R22R23 = T4;
-R31R32 = T5;
-R33 = T6;
-T4 = w[S7 + 0014];
-T5 = w[S7 + 0018];
-TRX = T4;
-T6 = w[S7 + 001c];
-TRY = T5;
-TRZ = T6;
-T9 = w[SP + 0080];
+
+system_gte_transpose_matrix();
+
+R11R12 = w[1f800000];
+R13R21 = w[S7 + 0004];
+R22R23 = w[S7 + 0008];
+R31R32 = w[S7 + 000c];
+R33 = w[S7 + 0010];
+TRX = w[S7 + 0014];
+TRY = w[S7 + 0018];
+TRZ = w[S7 + 001c];
 A0 = bu[800df114];
-T8 = w[SP + 007c];
-V0 = hu[T9 + 000e];
-V1 = w[T9 + 0018];
-A2 = w[T9 + 001c];
-800B57EC	beq    a0, zero, Lb5800 [$800b5800]
+V0 = hu[part_data + 000e];
+V1 = w[part_data + 0018];
+A2 = w[part_data + 001c];
 A3 = V0 + V1;
-V0 = hu[T9 + 0016];
-800B57F8	nop
-A2 = A2 + V0;
 
-Lb5800:	; 800B5800
-S2 = w[T9 + 0004];
-800B5804	nop
-FP = S2 & 00ff;
-if( FP != 0 )
+if( A0 != 0 )
 {
-    S4 = 0;
-    T7 = A2 + 0007;
+    A2 += hu[part_data + 16];
+}
 
-    loopb5818:	; 800B5818
-        V0 = w[A2 + 0000];
-        800B581C	nop
-        if( V0 != 0 )
+S2 = w[part_data + 4];
+FP = S2 & ff;
+
+for( int i = 0; i < FP; ++i )
+{
+    if( w[A2 + 0] != 0 )
+    {
+        S1 = bu[A2 + 7];
+
+        for( int j = 0; j < 4; ++j )
         {
-            S0 = A3;
-            S1 = bu[T7 + 0000];
-            A1 = 0;
-            T3 = A2 + 0004;
-            T2 = 0004;
-            T1 = A3;
-            T0 = A3;
+            A0 = bu[A3 + j];
+            [S5 + 0] = h((h[T8 + A0 * 8 + 0] * h[T8 + A0 * 8 + 6]) >> c);
+            [S5 + 2] = h((h[T8 + A0 * 8 + 2] * h[T8 + A0 * 8 + 6]) >> c);
+            [S5 + 4] = h((h[T8 + A0 * 8 + 4] * h[T8 + A0 * 8 + 6]) >> c);
 
-            loopb5844:	; 800B5844
-                A0 = bu[T0 + 0000];
-                800B5848	nop
-                A0 = A0 << 03;
-                A0 = T8 + A0;
-                V0 = hu[A0 + 0006];
-                V1 = h[A0 + 0000];
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B5864	mult   v1, v0
-                800B5868	mflo   v0
-                V0 = V0 >> 0c;
-                [S5 + 0000] = h(V0);
-                V1 = hu[A0 + 0002];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B588C	mult   v1, v0
-                800B5890	mflo   v0
-                V0 = V0 >> 0c;
-                [S5 + 0002] = h(V0);
-                V1 = hu[A0 + 0004];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B58B4	mult   v1, v0
-                800B58B8	mflo   v0
-                V0 = V0 >> 0c;
-                [S5 + 0004] = h(V0);
-                VXY0 = w[S5 + 0000];
-                VZ0 = w[S5 + 0004];
-                800B58CC	nop
-                800B58D0	nop
-                gte_rtv0(); // v0 * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [S5 + 0000] = h(T4);
-                [S5 + 0002] = h(T5);
-                [S5 + 0004] = h(T6);
-                T4 = w[S5 + 0000];
-                T5 = w[S5 + 0004];
-                L11L12 = T4;
-                L13L21 = T5;
-                V0 = bu[T1 + 0007];
-                800B5904	lui    s7, $800e
-                800B5908	addiu  s7, s7, $f520 (=-$ae0)
-                V0 = V0 << 03;
-                V0 = S7 + V0;
-                VXY0 = w[V0 + 0000];
-                VZ0 = w[V0 + 0004];
-                V0 = S0 + T2;
-                RGB = w[V0 + 0000];
-                800B5924	nop
-                800B5928	nop
-                gte_NCCS(); // Normal color col. v0
-                [T3 + 0000] = w(RGB2);
-                T3 = T3 + 000c;
-                T2 = T2 + 0004;
-                T1 = T1 + 0004;
-                A1 = A1 + 0001;
-                T0 = T0 + 0001;
-                V0 = A1 < 0004;
-            800B5948	bne    v0, zero, loopb5844 [$800b5844]
+            VXY0 = w[S5 + 0];
+            VZ0 = w[S5 + 4];
+            gte_rtv0(); // v0 * rotmatrix
+            [S5 + 0] = h(IR1);
+            [S5 + 2] = h(IR2);
+            [S5 + 4] = h(IR3);
 
-            [T7 + 0000] = b(S1);
+            L11L12 = w[S5 + 0];
+            L13L21 = w[S5 + 4];
+
+            V0 = bu[A3 + 7 + j * 4];
+            VXY0 = w[800df520 + V0 * 8 + 0];
+            VZ0 = w[800df520 + V0 * 8 + 4];
+
+            RGB = w[A3 + 4 + j * 4 + 0];
+            gte_NCCS(); // Normal color col. v0
+            [A2 + 4 + j * c + 0] = w(RGB2);
         }
 
-        S4 = S4 + 0001;
-        T7 = T7 + 0034;
-        A2 = A2 + 0034;
-        A3 = A3 + 0018;
-        V0 = S4 < FP;
-    800B5964	bne    v0, zero, loopb5818 [$800b5818]
+        [A2 + 7] = b(S1);
+    }
+
+    A2 += 34;
+    A3 += 18;
 }
 
 
@@ -6829,7 +6726,7 @@ if( FP != 0 )
     800B5D40	bne    v0, zero, loopb5c24 [$800b5c24]
 }
 
-S2 = w[T9 + 0008];
+S2 = w[part_data + 0008];
 800B5D4C	nop
 FP = S2 & 00ff;
 if( FP != 0 )
@@ -7802,7 +7699,7 @@ V0 = V0 >> 10;
 [S5 + 0004] = h(A0);
 V1 = V1 + A1;
 800B6F34	mflo   a0
-800B6F38	jal    $80039f5c
+800B6F38	jal    $system_square_root
 A0 = V1 + A0;
 A0 = S5;
 A1 = S4;
