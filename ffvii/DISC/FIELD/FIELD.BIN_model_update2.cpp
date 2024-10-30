@@ -6380,8 +6380,8 @@ for( int i = 0; i < bu[part_data + 4]; ++i )
             [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
             [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
 
-            VXY0 = w[1f800000 + 0];
-            VZ0 = w[1f800000 + 4];
+            VXY0 = w[1f800000];
+            VZ0 = w[1f800004];
             gte_rtv0(); // v0 * rotmatrix
             [1f800000] = h(IR1);
             [1f800002] = h(IR2);
@@ -6390,13 +6390,13 @@ for( int i = 0; i < bu[part_data + 4]; ++i )
             L11L12 = w[1f800000];
             L13L21 = w[1f800004];
 
-            V0 = bu[poly + 7 + j * 4];
+            V0 = bu[poly + j * 4 + 7];
             VXY0 = w[800df520 + V0 * 8 + 0];
             VZ0 = w[800df520 + V0 * 8 + 4];
 
-            RGB = w[poly + 4 + j * 4 + 0];
+            RGB = w[poly + j * 4 + 4];
             gte_NCCS(); // Normal color col. v0
-            [packet + 4 + j * c + 0] = w(RGB2);
+            [packet + j * c + 4] = w(RGB2);
         }
 
         [packet + 7] = b(S1);
@@ -6406,546 +6406,229 @@ for( int i = 0; i < bu[part_data + 4]; ++i )
     poly += 18;
 }
 
-
-S2 = w[part_data + 4];
-V0 = S2 & ff00;
-FP = V0 >> 08;
-if( FP != 0 )
+for( int i = 0; i < bu[part_data + 5]; ++i )
 {
-    S4 = 0;
-    T7 = packet + 0007;
-
-    loopb5980:	; 800B5980
-        V0 = w[packet + 0000];
-        800B5984	nop
-        if( V0 != 0 )
-        {
-            S0 = poly;
-            S1 = bu[T7 + 0000];
-            A1 = 0;
-            T3 = packet + 0004;
-            T2 = 0004;
-            T1 = poly;
-            T0 = poly;
-
-            loopb59ac:	; 800B59AC
-                A0 = bu[T0 + 0000];
-                800B59B0	nop
-                A0 = A0 << 03;
-                A0 = 1f800040 + A0;
-                V0 = hu[A0 + 0006];
-                V1 = h[A0 + 0000];
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B59CC	mult   v1, v0
-                800B59D0	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0000] = h(V0);
-                V1 = hu[A0 + 0002];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B59F4	mult   v1, v0
-                800B59F8	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0002] = h(V0);
-                V1 = hu[A0 + 0004];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B5A1C	mult   v1, v0
-                800B5A20	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0004] = h(V0);
-                VXY0 = w[1f800000 + 0000];
-                VZ0 = w[1f800000 + 0004];
-                800B5poly4	nop
-                800B5A38	nop
-                gte_rtv0(); // v0 * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800000 + 0000] = h(T4);
-                [1f800000 + 0002] = h(T5);
-                [1f800000 + 0004] = h(T6);
-                T4 = w[1f800000 + 0000];
-                T5 = w[1f800000 + 0004];
-                L11L12 = T4;
-                L13L21 = T5;
-                V0 = bu[T1 + 0007];
-                800B5A6C	lui    s7, $800e
-                800B5A70	addiu  s7, s7, $f520 (=-$ae0)
-                V0 = V0 << 03;
-                V0 = S7 + V0;
-                VXY0 = w[V0 + 0000];
-                VZ0 = w[V0 + 0004];
-                V0 = S0 + T2;
-                RGB = w[V0 + 0000];
-                800B5A8C	nop
-                800B5A90	nop
-                gte_NCCS(); // Normal color col. v0
-                [T3 + 0000] = w(RGB2);
-                T3 = T3 + 000c;
-                T2 = T2 + 0004;
-                T1 = T1 + 0004;
-                A1 = A1 + 0001;
-                T0 = T0 + 0001;
-                V0 = A1 < 0003;
-            800B5AB0	bne    v0, zero, loopb59ac [$800b59ac]
-
-            [T7 + 0000] = b(S1);
-        }
-
-        S4 = S4 + 0001;
-        T7 = T7 + 0028;
-        packet = packet + 0028;
-        poly = poly + 0014;
-        V0 = S4 < FP;
-    800B5ACC	bne    v0, zero, loopb5980 [$800b5980]
-}
-
-V0 = S2 >> 10;
-FP = V0 & 00ff;
-if( FP != 0 )
-{
-    S4 = 0;
-    T1 = poly + 0004;
-    T0 = packet + 0007;
-
-    loopb5aec:	; 800B5AEC
-        V0 = w[packet + 0000];
-        800B5AF0	nop
-        if( V0 != 0 )
-        {
-            A0 = bu[poly + 0000];
-            800B5B00	nop
-            A0 = A0 << 03;
-            A0 = 1f800040 + A0;
-            V0 = hu[A0 + 0006];
-            V1 = h[A0 + 0000];
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5B1C	mult   v1, v0
-            A1 = bu[T0 + 0000];
-            800B5B24	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0000] = h(V0);
-            V1 = hu[A0 + 0002];
-            V0 = hu[A0 + 0006];
-            V1 = V1 << 10;
-            V1 = V1 >> 10;
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5B48	mult   v1, v0
-            800B5B4C	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0002] = h(V0);
-            V1 = hu[A0 + 0004];
-            V0 = hu[A0 + 0006];
-            V1 = V1 << 10;
-            V1 = V1 >> 10;
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5B70	mult   v1, v0
-            V1 = packet + 0004;
-            800B5B78	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0004] = h(V0);
-            VXY0 = w[1f800000 + 0000];
-            VZ0 = w[1f800000 + 0004];
-            800B5B8C	nop
-            800B5B90	nop
-            gte_rtv0(); // v0 * rotmatrix
-            T4 = IR1;
-            T5 = IR2;
-            T6 = IR3;
-            [1f800000 + 0000] = h(T4);
-            [1f800000 + 0002] = h(T5);
-            [1f800000 + 0004] = h(T6);
-            T4 = w[1f800000 + 0000];
-            T5 = w[1f800000 + 0004];
-            L11L12 = T4;
-            L13L21 = T5;
-            V0 = bu[T1 + 0003];
-            800B5BC4	lui    s7, $800e
-            800B5BC8	addiu  s7, s7, $f520 (=-$ae0)
-            V0 = V0 << 03;
-            V0 = S7 + V0;
-            VXY0 = w[V0 + 0000];
-            VZ0 = w[V0 + 0004];
-            RGB = w[T1 + 0000];
-            800B5BE0	nop
-            800B5BE4	nop
-            gte_NCCS(); // Normal color col. v0
-            [V1 + 0000] = w(RGB2);
-            [T0 + 0000] = b(A1);
-        }
-
-        S4 = S4 + 0001;
-        T0 = T0 + 0028;
-        packet = packet + 0028;
-        T1 = T1 + 000c;
-        poly = poly + 000c;
-        V0 = S4 < FP;
-    800B5C08	bne    v0, zero, loopb5aec [$800b5aec]
-}
-
-FP = S2 >> 18;
-if( FP != 0 )
-{
-    S4 = 0;
-    T1 = poly + 0004;
-    T0 = packet + 0007;
-
-    loopb5c24:	; 800B5C24
-    V0 = w[packet + 0000];
-    if( V0 != 0 )
+    if( w[packet + 0] != 0 )
     {
-        A0 = bu[poly + 0000];
-        800B5C38	nop
-        A0 = A0 << 03;
-        A0 = 1f800040 + A0;
-        V0 = hu[A0 + 0006];
-        V1 = h[A0 + 0000];
-        V0 = V0 << 10;
-        V0 = V0 >> 10;
-        800B5C54	mult   v1, v0
-        A1 = bu[T0 + 0000];
-        800B5C5C	mflo   v0
-        V0 = V0 >> 0c;
-        [1f800000 + 0000] = h(V0);
-        V1 = hu[A0 + 0002];
-        V0 = hu[A0 + 0006];
-        V1 = V1 << 10;
-        V1 = V1 >> 10;
-        V0 = V0 << 10;
-        V0 = V0 >> 10;
-        800B5C80	mult   v1, v0
-        800B5C84	mflo   v0
-        V0 = V0 >> 0c;
-        [1f800000 + 0002] = h(V0);
-        V1 = hu[A0 + 0004];
-        V0 = hu[A0 + 0006];
-        V1 = V1 << 10;
-        V1 = V1 >> 10;
-        V0 = V0 << 10;
-        V0 = V0 >> 10;
-        800B5CA8	mult   v1, v0
-        V1 = packet + 0004;
-        800B5CB0	mflo   v0
-        V0 = V0 >> 0c;
-        [1f800000 + 0004] = h(V0);
-        VXY0 = w[1f800000 + 0000];
-        VZ0 = w[1f800000 + 0004];
-        800B5CC4	nop
-        800B5CC8	nop
-        gte_rtv0(); // v0 * rotmatrix
-        T4 = IR1;
-        T5 = IR2;
-        T6 = IR3;
-        [1f800000 + 0000] = h(T4);
-        [1f800000 + 0002] = h(T5);
-        [1f800000 + 0004] = h(T6);
-        T4 = w[1f800000 + 0000];
-        T5 = w[1f800000 + 0004];
-        L11L12 = T4;
-        L13L21 = T5;
-        V0 = bu[T1 + 0003];
-        800B5CFC	lui    s7, $800e
-        800B5D00	addiu  s7, s7, $f520 (=-$ae0)
-        V0 = V0 << 03;
-        V0 = S7 + V0;
-        VXY0 = w[V0 + 0000];
-        VZ0 = w[V0 + 0004];
-        RGB = w[T1 + 0000];
-        800B5D18	nop
-        800B5D1C	nop
-        gte_NCCS(); // Normal color col. v0
-        [V1 + 0000] = w(RGB2);
-        [T0 + 0000] = b(A1);
+        S1 = bu[packet + 7];
+
+        for( int j = 0; j < 3; ++j )
+        {
+            A0 = bu[poly + j];
+            [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+            [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+            [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+
+            VXY0 = w[1f800000];
+            VZ0 = w[1f800004];
+            gte_rtv0(); // v0 * rotmatrix
+            [1f800000] = h(IR1);
+            [1f800002] = h(IR2);
+            [1f800004] = h(IR3);
+
+            L11L12 = w[1f800000];
+            L13L21 = w[1f800004];
+
+            V0 = bu[poly + j * 4 + 7];
+            VXY0 = w[800df520 + V0 * 8 + 0];
+            VZ0 = w[800df520 + V0 * 8 + 4];
+
+            RGB = w[poly + j * 4 + 4];
+            gte_NCCS(); // Normal color col. v0
+            [packet + j * c + 4] = w(RGB2);
+
+        }
+
+        [packet + 7] = b(S1);
     }
 
-    S4 = S4 + 0001;
-    T0 = T0 + 0020;
-    packet = packet + 0020;
-    T1 = T1 + 000c;
-    poly = poly + 000c;
-    V0 = S4 < FP;
-    800B5D40	bne    v0, zero, loopb5c24 [$800b5c24]
+    packet += 28;
+    poly += 14;
 }
 
-S2 = w[part_data + 0008];
-800B5D4C	nop
-FP = S2 & 00ff;
-if( FP != 0 )
+for( int i = 0; i < bu[part_data + 6]; ++i )
 {
-    S4 = 0;
-    T1 = poly + 0004;
-    T0 = packet + 0007;
+    if( w[packet + 0] != 0 )
+    {
+        A0 = bu[poly + 0];
+        [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+        A1 = bu[packet + 7];
 
-    loopb5d64:	; 800B5D64
-        V0 = w[packet + 0000];
-        if( V0 != 0 )
+        VXY0 = w[1f800000];
+        VZ0 = w[1f800004];
+        gte_rtv0(); // v0 * rotmatrix
+        [1f800000] = h(IR1);
+        [1f800002] = h(IR2);
+        [1f800004] = h(IR3);
+
+        L11L12 = w[1f800000];
+        L13L21 = w[1f800004];
+
+        V0 = bu[poly + 7];
+        VXY0 = w[800df520 + V0 * 8 + 0];
+        VZ0 = w[800df520 + V0 * 8 + 4];
+
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+
+        [packet + 7] = b(A1);
+    }
+
+    packet += 28;
+    poly += c;
+}
+
+for( int i = 0; i < bu[part_data + 7]; ++i )
+{
+    if( w[packet + 0] != 0 )
+    {
+        A1 = bu[packet + 7];
+
+        A0 = bu[poly + 0];
+        [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+
+        VXY0 = w[1f800000];
+        VZ0 = w[1f800004];
+        gte_rtv0(); // v0 * rotmatrix
+        [1f800000] = h(IR1);
+        [1f800002] = h(IR2);
+        [1f800004] = h(IR3);
+
+        L11L12 = w[1f800000];
+        L13L21 = w[1f800004];
+
+        V0 = bu[poly + 7];
+        VXY0 = w[800df520 + V0 * 8 + 0];
+        VZ0 = w[800df520 + V0 * 8 + 4];
+
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+
+        [packet + 7] = b(A1);
+    }
+
+    packet += 20;
+    poly += c;
+}
+
+for( int i = 0; i < bu[part_data + 8]; ++i )
+{
+    if( w[packet + 0] != 0 )
+    {
+        A1 = bu[packet + 7];
+
+        A0 = bu[poly + 0];
+        [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+
+        VXY0 = w[1f800000];
+        VZ0 = w[1f800004];
+        gte_rtv0(); // v0 * rotmatrix
+        [1f800000] = h(IR1);
+        [1f800002] = h(IR2);
+        [1f800004] = h(IR3);
+
+        L11L12 = w[1f800000];
+        L13L21 = w[1f800004];
+
+        V0 = bu[poly + 7];
+        VXY0 = w[800df520 + V0 * 8 + 0];
+        VZ0 = w[800df520 + V0 * 8 + 4];
+
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+
+        [packet + 7] = b(A1);
+    }
+
+    packet += 14;
+    poly += 8;
+}
+
+for( int i = 0; i < bu[part_data + 9]; ++i )
+{
+    if( w[packet + 0] != 0 )
+    {
+        A1 = bu[packet + 7];
+
+        A0 = bu[poly + 0];
+        [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+        [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+
+        VXY0 = w[1f800000];
+        VZ0 = w[1f800004];
+        gte_rtv0(); // v0 * rotmatrix
+        [1f800000] = h(IR1);
+        [1f800002] = h(IR2);
+        [1f800004] = h(IR3);
+
+        L11L12 = w[1f800000];
+        L13L21 = w[1f800004];
+
+        V0 = bu[poly + 7];
+        VXY0 = w[800df520 + V0 * 8 + 0];
+        VZ0 = w[800df520 + V0 * 8 + 4];
+
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+
+        [packet + 7] = b(A1);
+    }
+
+    packet += 18;
+    poly += 8;
+}
+
+for( int i = 0; i < bu[part_data + a]; ++i )
+{
+    if( w[packet + 0] != 0 )
+    {
+        S1 = bu[packet + 7];
+
+        for( int j = 0; j < 3; ++j )
         {
-            A0 = bu[poly + 0000];
-            A0 = A0 << 03;
-            A0 = 1f800040 + A0;
-            V0 = hu[A0 + 0006];
-            V1 = h[A0 + 0000];
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5D94	mult   v1, v0
-            A1 = bu[T0 + 0000];
-            800B5D9C	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0000] = h(V0);
-            V1 = hu[A0 + 0002];
-            V0 = hu[A0 + 0006];
-            V1 = V1 << 10;
-            V1 = V1 >> 10;
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5DC0	mult   v1, v0
-            800B5DC4	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0002] = h(V0);
-            V1 = hu[A0 + 0004];
-            V0 = hu[A0 + 0006];
-            V1 = V1 << 10;
-            V1 = V1 >> 10;
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5DE8	mult   v1, v0
-            V1 = packet + 0004;
-            800B5DF0	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0004] = h(V0);
-            VXY0 = w[1f800000 + 0000];
-            VZ0 = w[1f800000 + 0004];
-            800B5E04	nop
-            800B5E08	nop
+            A0 = bu[poly + j];
+            [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+            [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+            [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+
+            VXY0 = w[1f800000];
+            VZ0 = w[1f800004];
             gte_rtv0(); // v0 * rotmatrix
-            T4 = IR1;
-            T5 = IR2;
-            T6 = IR3;
-            [1f800000 + 0000] = h(T4);
-            [1f800000 + 0002] = h(T5);
-            [1f800000 + 0004] = h(T6);
-            T4 = w[1f800000 + 0000];
-            T5 = w[1f800000 + 0004];
-            L11L12 = T4;
-            L13L21 = T5;
-            V0 = bu[T1 + 0003];
-            800B5E3C	lui    s7, $800e
-            800B5E40	addiu  s7, s7, $f520 (=-$ae0)
-            V0 = V0 << 03;
-            V0 = S7 + V0;
-            VXY0 = w[V0 + 0000];
-            VZ0 = w[V0 + 0004];
-            RGB = w[T1 + 0000];
-            800B5E58	nop
-            800B5E5C	nop
+            [1f800000] = h(IR1);
+            [1f800002] = h(IR2);
+            [1f800004] = h(IR3);
+
+            L11L12 = w[1f800000];
+            L13L21 = w[1f800004];
+
+            V0 = bu[poly + j * 4 + 7];
+            VXY0 = w[800df520 + V0 * 8 + 0];
+            VZ0 = w[800df520 + V0 * 8 + 4];
+
+            RGB = w[poly + 4 + j * 4];
             gte_NCCS(); // Normal color col. v0
-            [V1 + 0000] = w(RGB2);
-            [T0 + 0000] = b(A1);
+            [packet + 4 + j * 8 + 0] = w(RGB2);
         }
 
-        S4 = S4 + 0001;
-        T0 = T0 + 0014;
-        packet = packet + 0014;
-        T1 = T1 + 0008;
-        poly = poly + 0008;
-        V0 = S4 < FP;
-    800B5E80	bne    v0, zero, loopb5d64 [$800b5d64]
+        [packet + 7] = b(S1);
+    }
+
+    packet += 1c;
+    poly += 10;
 }
 
-V0 = S2 & ff00;
-FP = V0 >> 08;
-if( FP != 0 )
-{
-    S4 = 0;
-    T1 = poly + 0004;
-    T0 = packet + 0007;
-
-    loopb5ea0:	; 800B5EA0
-        V0 = w[packet + 0000];
-        if( V0 != 0 )
-        {
-            A0 = bu[poly + 0000];
-            800B5EB4	nop
-            A0 = A0 << 03;
-            A0 = 1f800040 + A0;
-            V0 = hu[A0 + 0006];
-            V1 = h[A0 + 0000];
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5ED0	mult   v1, v0
-            A1 = bu[T0 + 0000];
-            800B5ED8	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0000] = h(V0);
-            V1 = hu[A0 + 0002];
-            V0 = hu[A0 + 0006];
-            V1 = V1 << 10;
-            V1 = V1 >> 10;
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5EFC	mult   v1, v0
-            800B5F00	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0002] = h(V0);
-            V1 = hu[A0 + 0004];
-            V0 = hu[A0 + 0006];
-            V1 = V1 << 10;
-            V1 = V1 >> 10;
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            800B5F24	mult   v1, v0
-            V1 = packet + 0004;
-            800B5F2C	mflo   v0
-            V0 = V0 >> 0c;
-            [1f800000 + 0004] = h(V0);
-            VXY0 = w[1f800000 + 0000];
-            VZ0 = w[1f800000 + 0004];
-            800B5F40	nop
-            800B5F44	nop
-            gte_rtv0(); // v0 * rotmatrix
-            T4 = IR1;
-            T5 = IR2;
-            T6 = IR3;
-            [1f800000 + 0000] = h(T4);
-            [1f800000 + 0002] = h(T5);
-            [1f800000 + 0004] = h(T6);
-            T4 = w[1f800000 + 0000];
-            T5 = w[1f800000 + 0004];
-            L11L12 = T4;
-            L13L21 = T5;
-            V0 = bu[T1 + 0003];
-            800B5F78	lui    s7, $800e
-            800B5F7C	addiu  s7, s7, $f520 (=-$ae0)
-            V0 = V0 << 03;
-            V0 = S7 + V0;
-            VXY0 = w[V0 + 0000];
-            VZ0 = w[V0 + 0004];
-            RGB = w[T1 + 0000];
-            800B5F94	nop
-            800B5F98	nop
-            gte_NCCS(); // Normal color col. v0
-            [V1 + 0000] = w(RGB2);
-            [T0 + 0000] = b(A1);
-        }
-
-        S4 = S4 + 0001;
-        T0 = T0 + 0018;
-        packet = packet + 0018;
-        T1 = T1 + 0008;
-        poly = poly + 0008;
-        V0 = S4 < FP;
-    800B5FBC	bne    v0, zero, loopb5ea0 [$800b5ea0]
-}
-
-V0 = S2 >> 10;
-FP = V0 & 00ff;
-if( FP != 0 )
-{
-    S4 = 0;
-    T7 = packet + 0007;
-
-    loopb5fd8:	; 800B5FD8
-        V0 = w[packet + 0000];
-        if( V0 != 0 )
-        {
-            S0 = poly;
-            S1 = bu[T7 + 0000];
-            A1 = 0;
-            T3 = packet + 0004;
-            T2 = 0004;
-            T1 = poly;
-            T0 = poly;
-
-            loopb6004:	; 800B6004
-                A0 = bu[T0 + 0000];
-                800B6008	nop
-                A0 = A0 << 03;
-                A0 = 1f800040 + A0;
-                V0 = hu[A0 + 0006];
-                V1 = h[A0 + 0000];
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B6024	mult   v1, v0
-                800B6028	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0000] = h(V0);
-                V1 = hu[A0 + 0002];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B604C	mult   v1, v0
-                800B6050	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0002] = h(V0);
-                V1 = hu[A0 + 0004];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B6074	mult   v1, v0
-                800B6078	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0004] = h(V0);
-                VXY0 = w[1f800000 + 0000];
-                VZ0 = w[1f800000 + 0004];
-                800B608C	nop
-                800B6090	nop
-                gte_rtv0(); // v0 * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800000 + 0000] = h(T4);
-                [1f800000 + 0002] = h(T5);
-                [1f800000 + 0004] = h(T6);
-                T4 = w[1f800000 + 0000];
-                T5 = w[1f800000 + 0004];
-                L11L12 = T4;
-                L13L21 = T5;
-                V0 = bu[T1 + 0007];
-                800B60C4	lui    s7, $800e
-                800B60C8	addiu  s7, s7, $f520 (=-$ae0)
-                V0 = V0 << 03;
-                V0 = S7 + V0;
-                VXY0 = w[V0 + 0000];
-                VZ0 = w[V0 + 0004];
-                V0 = S0 + T2;
-                RGB = w[V0 + 0000];
-                800B60E4	nop
-                800B60E8	nop
-                gte_NCCS(); // Normal color col. v0
-                [T3 + 0000] = w(RGB2);
-                T3 = T3 + 0008;
-                T2 = T2 + 0004;
-                T1 = T1 + 0004;
-                A1 = A1 + 0001;
-                T0 = T0 + 0001;
-                V0 = A1 < 0003;
-            800B6108	bne    v0, zero, loopb6004 [$800b6004]
-
-            [T7 + 0000] = b(S1);
-        }
-
-        S4 = S4 + 0001;
-        T7 = T7 + 001c;
-        packet = packet + 001c;
-        poly = poly + 0010;
-        V0 = S4 < FP;
-    800B6124	bne    v0, zero, loopb5fd8 [$800b5fd8]
-}
+S2 = w[part_data + 8];
 
 FP = S2 >> 18;
 if( FP != 0 )
@@ -6966,64 +6649,25 @@ if( FP != 0 )
             T0 = poly;
 
             loopb6168:	; 800B6168
-                A0 = bu[T0 + 0000];
-                800B616C	nop
-                A0 = A0 << 03;
-                A0 = 1f800040 + A0;
-                V0 = hu[A0 + 0006];
-                V1 = h[A0 + 0000];
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B6188	mult   v1, v0
-                800B618C	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0000] = h(V0);
-                V1 = hu[A0 + 0002];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B61B0	mult   v1, v0
-                800B61B4	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0002] = h(V0);
-                V1 = hu[A0 + 0004];
-                V0 = hu[A0 + 0006];
-                V1 = V1 << 10;
-                V1 = V1 >> 10;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                800B61D8	mult   v1, v0
-                800B61DC	mflo   v0
-                V0 = V0 >> 0c;
-                [1f800000 + 0004] = h(V0);
-                VXY0 = w[1f800000 + 0000];
-                VZ0 = w[1f800000 + 0004];
-                800B61F0	nop
-                800B61F4	nop
+                A0 = bu[T0 + 0];
+                [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+                [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+                [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+
+                VXY0 = w[1f800000 + 0];
+                VZ0 = w[1f800000 + 4];
                 gte_rtv0(); // v0 * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800000 + 0000] = h(T4);
-                [1f800000 + 0002] = h(T5);
-                [1f800000 + 0004] = h(T6);
-                T4 = w[1f800000 + 0000];
-                T5 = w[1f800000 + 0004];
-                L11L12 = T4;
-                L13L21 = T5;
-                V0 = bu[T1 + 0007];
-                800B6228	lui    s7, $800e
-                800B622C	addiu  s7, s7, $f520 (=-$ae0)
-                V0 = V0 << 03;
-                V0 = S7 + V0;
-                VXY0 = w[V0 + 0000];
-                VZ0 = w[V0 + 0004];
-                V0 = S0 + T2;
-                RGB = w[V0 + 0000];
-                800B6248	nop
-                800B624C	nop
+                [1f800000] = h(IR1);
+                [1f800002] = h(IR2);
+                [1f800004] = h(IR3);
+
+                L11L12 = w[1f800000];
+                L13L21 = w[1f800004];
+
+                V0 = bu[T1 + 7];
+                VXY0 = w[800df520 + V0 * 8 + 0];
+                VZ0 = w[800df520 + V0 * 8 + 4];
+                RGB = w[S0 + T2 + 0];
                 gte_NCCS(); // Normal color col. v0
                 [T3 + 0000] = w(RGB2);
                 T3 = T3 + 0008;
