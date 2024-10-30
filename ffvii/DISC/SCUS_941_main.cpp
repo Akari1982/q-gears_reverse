@@ -83,10 +83,7 @@ A2 = 800e0000;
 A3 = 0;
 system_cdrom_start_load_file();
 
-
-loop11298:	; 80011298
-    system_cdrom_read_chain();
-800112A0	bne    v0, zero, loop11298 [$80011298]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
 A0 = w[80048d14]; // E4010000 "SOUND\INSTR2.ALL"
 A1 = w[80048d18]; // F0D40300
@@ -94,9 +91,7 @@ A2 = 800a0000;
 A3 = 0;
 system_cdrom_start_load_file();
 
-loop112c0:	; 800112C0
-    system_cdrom_read_chain();
-800112C8	bne    v0, zero, loop112c0 [$800112c0]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
 A0 = 800a0000;
 A1 = 800e0000;
@@ -110,17 +105,13 @@ func29818();
 
 if( h[800965ec] == 2 )
 {
-    loop11308:	; 80011308
-        system_cdrom_read_chain();
-    80011310	bne    v0, zero, loop11308 [$80011308]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 
     A0 = 801c0000;
 }
 else
 {
-    L11320:	; 80011320
-        system_cdrom_read_chain();
-    80011328	bne    v0, zero, L11320 [$80011320]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 
     A0 = w[80048d2c]; // 360B0000 "WORLD\WORLD.BIN"
     A1 = w[80048d30]; // 9B040100
@@ -128,9 +119,7 @@ else
     A3 = 0;
     system_cdrom_start_load_file();
 
-    loop11348:	; 80011348
-        system_cdrom_read_chain();
-    80011350	bne    v0, zero, loop11348 [$80011348]
+    do system_cdrom_read_chain(); while( V0 != 0 )
 
     A0 = 80180000;
 }
@@ -178,195 +167,70 @@ else
 
 
 ////////////////////////////////
-// func1146c
-8001146C	lui    v0, $8007
-V0 = bu[V0 + 1a58];
-80011474	addiu  sp, sp, $ffe8 (=-$18)
-80011478	beq    v0, zero, L1154c [$8001154c]
-[SP + 0010] = w(RA);
-80011480	lui    v0, $8007
-V0 = hu[V0 + 5dec];
-80011488	nop
-V0 = V0 + 0001;
-80011490	lui    at, $8007
-[AT + 5dec] = h(V0);
-80011498	lui    v0, $8007
-V0 = hu[V0 + 5dec];
-800114A0	nop
-800114A4	lui    v0, $8007
-V0 = hu[V0 + 5dec];
-800114AC	nop
-V0 = V0 & 0001;
-800114B4	lui    at, $8007
-[AT + 5dec] = h(V0);
-800114BC	jal    func13800 [$80013800]
-800114C0	nop
-800114C4	lui    v0, $8007
-V0 = hu[V0 + 5dec];
-800114CC	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
-A0 = V0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 02;
-800114E4	lui    v0, $8008
-800114E8	addiu  v0, v0, $eb68 (=-$1498)
-800114EC	jal    system_psyq_put_disp_env [$800444ac]
-A0 = A0 + V0;
-800114F4	lui    v0, $8007
-V0 = hu[V0 + 5dec];
-800114FC	nop
-V0 = V0 << 10;
-V0 = V0 >> 10;
-A0 = V0 << 01;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 02;
-8001151C	lui    v0, $8008
-80011520	addiu  v0, v0, $eaac (=-$1554)
-80011524	jal    system_psyq_put_draw_env [$800443b0]
-A0 = A0 + V0;
-8001152C	lui    a0, $8007
-A0 = hu[A0 + 5dec];
-80011534	lui    v0, $8008
-80011538	addiu  v0, v0, $e7a0 (=-$1860)
-A0 = A0 << 10;
-A0 = A0 >> 0e;
-80011544	jal    system_psyq_draw_otag [$8004433c]
-A0 = A0 + V0;
+// func1146c()
 
-L1154c:	; 8001154C
-RA = w[SP + 0010];
-SP = SP + 0018;
-80011554	jr     ra 
-80011558	nop
+if( bu[80071a58] != 0 )
+{
+    [80075dec] = h(hu[80075dec] + 1);
+    [80075dec] = h(hu[80075dec] & 1);
+
+    func13800();
+
+    A0 = 8007eb68 + h[80075dec] * 14;
+    system_psyq_put_disp_env();
+
+    A0 = 8007eaac + h[80075dec] * 5c;
+    system_psyq_put_draw_env();
+
+    A0 = 8007e7a0 + h[80075dec] * 4;
+    system_psyq_draw_otag();
+}
 ////////////////////////////////
-// func1155c
-8001155C	lui    v0, $8009
-V0 = hu[V0 + 5dd4];
-80011564	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 << 10;
-V1 = V0 >> 10;
-V0 = V1 < 0005;
-80011574	beq    v0, zero, L115d4 [$800115d4]
-[SP + 0010] = w(RA);
-V0 = V1 << 02;
-80011580	lui    at, $8001
-AT = AT + 0000;
-AT = AT + V0;
-V0 = w[AT + 0000];
-80011590	nop
-80011594	jr     v0 
-80011598	nop
 
-8001159C	jal    func1146c [$8001146c]
-800115A0	nop
-800115A4	j      L115d4 [$800115d4]
-800115A8	nop
-800115AC	jal    $800d8d78
-800115B0	nop
-800115B4	j      L115d4 [$800115d4]
-800115B8	nop
-800115BC	jal    func140a4 [$800140a4]
-800115C0	nop
-800115C4	j      L115d4 [$800115d4]
-800115C8	nop
-800115CC	jal    func22b5c [$80022b5c]
-800115D0	nop
 
-L115d4:	; 800115D4
-V0 = bu[80062d98];
 
-800115E0	bne    v0, zero, L11704 [$80011704]
-V0 = 0001;
-800115E8	lui    v0, $8006
-V0 = bu[V0 + 2d99];
-800115F0	nop
-800115F4	bne    v0, zero, L11704 [$80011704]
-V0 = 0001;
-800115FC	lui    v1, $800a
-80011600	addiu  v1, v1, $d26c (=-$2d94)
-V0 = w[V1 + 0000];
-80011608	nop
-V0 = V0 + 0444;
-[V1 + 0000] = w(V0);
-V0 = w[V1 + 0000];
-80011618	nop
-V0 = V0 >> 10;
-80011620	beq    v0, zero, L1165c [$8001165c]
-80011624	nop
-80011628	lui    v0, $800a
-V0 = w[V0 + d264];
-80011630	nop
-V0 = V0 + 0001;
-80011638	lui    at, $800a
-[AT + d264] = w(V0);
-80011640	lui    v0, $800a
-V0 = w[V0 + d264];
-80011648	nop
-V0 = w[V1 + 0000];
-80011650	nop
-V0 = V0 & ffff;
-[V1 + 0000] = w(V0);
+////////////////////////////////
+// func1155c()
 
-L1165c:	; 8001165C
-8001165C	lui    v0, $800a
-V0 = w[V0 + d270];
-80011664	nop
-V0 = V0 + 0444;
-8001166C	lui    at, $800a
-[AT + d270] = w(V0);
-80011674	lui    v0, $800a
-V0 = w[V0 + d270];
-8001167C	nop
-V0 = V0 >> 10;
-80011684	beq    v0, zero, L11704 [$80011704]
-V0 = 0001;
-8001168C	lui    v0, $800a
-V0 = bu[V0 + d2e7];
-80011694	nop
-V0 = V0 & 0002;
-8001169C	bne    v0, zero, L116c8 [$800116c8]
-800116A0	nop
-800116A4	lui    v0, $800a
-V0 = w[V0 + d268];
-800116AC	nop
-800116B0	beq    v0, zero, L116e8 [$800116e8]
-800116B4	nop
-800116B8	lui    v0, $800a
-V0 = w[V0 + d268];
-800116C0	j      L116d8 [$800116d8]
-800116C4	addiu  v0, v0, $ffff (=-$1)
+switch( h[80095dd4] )
+{
+    case 1: func1146c(); break;
+    case 2: funcd8d78(); break;
+    case 3: func140a4(); break;
+    case 4: func22b5c(); break;
+}
 
-L116c8:	; 800116C8
-800116C8	lui    v0, $800a
-V0 = w[V0 + d268];
-800116D0	nop
-V0 = V0 + 0001;
+if( ( bu[80062d98] == 0 ) && ( bu[80062d99] == 0 ) )
+{
+    [8009d26c] = w(w[8009d26c] + 444);
 
-L116d8:	; 800116D8
-800116D8	lui    at, $800a
-[AT + d268] = w(V0);
-800116E0	lui    v0, $800a
-V0 = w[V0 + d268];
+    if( ( w[8009d26c] >> 10 ) != 0 )
+    {
+        [8009d264] = w(w[8009d264] + 1);
+        [8009d26c] = w(w[8009d26c] & ffff);
+    }
 
-L116e8:	; 800116E8
-800116E8	lui    v1, $800a
-800116EC	addiu  v1, v1, $d270 (=-$2d90)
-V0 = w[V1 + 0000];
-800116F4	nop
-V0 = V0 & ffff;
-[V1 + 0000] = w(V0);
-V0 = 0001;
+    [8009d270] = w(w[8009d270] + 444);
 
-L11704:	; 80011704
-80011704	lui    at, $8008
-[AT + e768] = h(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80011714	jr     ra 
-80011718	nop
+    if( ( w[8009d270] >> 10 ) != 0 )
+    {
+        if( bu[8009d2e7] & 2 )
+        {
+            [8009d268] = w(w[8009d268] + 1);
+            [8009d270] = w(w[8009d270] & ffff);
+        }
+        else
+        {
+            if( w[8009d268] != 0 )
+            {
+                [8009d268] = w(w[8009d268] - 1);
+            }
+            [8009d270] = w(w[8009d270] & ffff);
+        }
+    }
+}
+
+[8007e768] = h(1);
 ////////////////////////////////
 
 
@@ -502,9 +366,7 @@ A2 = 800f0000;
 A3 = 0;
 system_cdrom_start_load_file();
 
-loop1195c:	; 8001195C
-    system_cdrom_read_chain();
-80011964	bne    v0, zero, loop1195c [$8001195c]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
 A0 = w[80048d04]; // C7010000 "SOUND\EFFECT.ALL"
 A1 = w[80048d08]; // 00C80000
@@ -512,9 +374,7 @@ A2 = 801b0000;
 A3 = 0;
 system_cdrom_start_load_file();
 
-loop11984:	; 80011984
-    system_cdrom_read_chain();
-8001198C	bne    v0, zero, loop11984 [$80011984]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
 A0 = w[80048d0c]; // E0010000 "SOUND\INSTR.DAT"
 A1 = w[80048d10]; // 00200000
@@ -522,16 +382,14 @@ A2 = 801bc800;
 A3 = 0;
 system_cdrom_start_load_file();
 
-loop119b0:	; 800119B0
-    system_cdrom_read_chain();
-800119B8	bne    v0, zero, loop119b0 [$800119b0]
+do system_cdrom_read_chain(); while( V0 != 0 )
 
 A0 = 800f0000;
 A1 = 801bc800;
-800119C4	jal    func2988c [$8002988c]
+func2988c();
 
 A0 = 801b0000;
-800119CC	jal    func29998 [$80029998]
+func29998();
 ////////////////////////////////
 
 
@@ -975,10 +833,7 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            do
-            {
-                system_cdrom_read_chain();
-            } while( V0 != 0 )
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
@@ -1000,15 +855,13 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            loop12568:	; 80012568
-                system_cdrom_read_chain();
-            80012570	bne    v0, zero, loop12568 [$80012568]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
             func15ca0();
 
-            80012580	jal    funca02d0 [$800a02d0]
+            funca02d0();
 
             [800965ec] = h(7);
             [8009c560] = h(1);
@@ -1024,15 +877,13 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            loop125ac:	; 800125AC
-                system_cdrom_read_chain();
-            800125B4	bne    v0, zero, loop125ac [$800125ac]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
             func15ca0();
 
-            800125C4	jal    funca0390 [$800a0390]
+            funca0390();
 
             [800965ec] = h(8);
             [8009c560] = h(1);
@@ -1048,15 +899,13 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            loop12634:	; 80012634
-                system_cdrom_read_chain();
-            8001263C	bne    v0, zero, loop12634 [$80012634]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
             func15ca0();
 
-            8001264C	jal    funcb6b58 [$800b6b58]
+            funcb6b58();
 
             [800965ec] = h(9);
             [8009c560] = h(1);
@@ -1072,23 +921,17 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            loop126d8:	; 800126D8
-                system_cdrom_read_chain();
-            800126E0	bne    v0, zero, loop126d8 [$800126d8]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
             func15ca0();
 
-            800126F0	lui    v0, $800a
-            800126F4	addiu  v0, v0, $d5e5 (=-$2a1b)
-            A0 = bu[V0 + 0000];
-            800126FC	jal    funca00bc [$800a00bc]
+            A0 = bu[8009d5e5];
+            funca00bc();
 
-            A0 = V0;
-            V0 = A0 >> 08;
-            [8009d5e6] = b(A0);
-            [8009d5e7] = b(V0);
+            [8009d5e6] = b(V0);
+            [8009d5e7] = b(V0 >> 8);
             [800965ec] = h(a);
             [8009c560] = h(1);
             [8009abf5] = b(1);
@@ -1103,21 +946,16 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            loop12678:	; 80012678
-                system_cdrom_read_chain();
-            80012680	bne    v0, zero, loop12678 [$80012678]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
             func15ca0();
 
-            80012690	jal    funca0450 [$800a0450]
+            funca0450();
 
-            A0 = V0;
-            V0 = A0 >> 08;
-            V1 = 8009d3ea;
-            [8009d3ea] = b(A0);
-            [8009d3eb] = b(V0);
+            [8009d3ea] = b(V0);
+            [8009d3eb] = b(V0 >> 8);
             [800965ec] = h(b);
             [8009c560] = h(1);
             [8009abf5] = b(1);
@@ -1229,15 +1067,13 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file()
 
-            loop125f0:	; 800125F0
-                system_cdrom_read_chain();
-            800125F8	bne    v0, zero, loop125f0 [$800125f0]
+            do system_cdrom_read_chain(); while( V0 != 0 )
 
             A0 = 80180000;
             A1 = 800a0000;
             func15ca0();
 
-            80012608	jal    funca0448 [$800a0448]
+            funca0448();
 
             [800965ec] = h(e);
             [8009c560] = h(1);

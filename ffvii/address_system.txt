@@ -374,6 +374,8 @@
 
 80083580 we copy here akao sequence data when init music 0x10.
 
+80095dd4 [][]     ???
+
 800965ec [][]     current game state. Id same as 8009c560
                     1 - field.
                     2 - battle.
