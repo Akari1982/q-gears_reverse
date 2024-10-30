@@ -250,7 +250,8 @@ func362b8(); // init spu
 
 [80095dd4] = h(0);
 
-A0 = 8001155c;
+// set render func
+A0 = 8001155c; // func1155c()
 func3d150();
 
 A0 = 0;

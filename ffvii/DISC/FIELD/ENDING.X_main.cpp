@@ -115,7 +115,7 @@ for( int i = fe; i <= 0; i -= 2 )
 
     A0 = S0;
     A1 = 1;
-    system_change_semi_transparency_in_packet();
+    system_psyq_set_semi_trans();
 
     [A1 + 4] = b(i);
     [A1 + 5] = b(S4);
@@ -261,7 +261,7 @@ for( int i = 0; i < fe; i += 2 )
     A0 = S0;
     A0 = S0;
     A1 = 0001;
-    system_change_semi_transparency_in_packet();
+    system_psyq_set_semi_trans();
 
     A0 = S1;
     A1 = S0;

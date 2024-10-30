@@ -1173,7 +1173,7 @@ system_gpu_create_texture_setting_packet();
 
 A0 = S0 + 360;
 A1 = 1;
-system_change_semi_transparency_in_packet();
+system_psyq_set_semi_trans();
 
 [S0 + 364] = b(bu[col + 0]);
 [S0 + 365] = b(bu[col + 0]);

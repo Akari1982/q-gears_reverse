@@ -55,7 +55,7 @@ system_memory_allocate();
 
 A0 = offset_18 + 48; // packet start
 A1 = 1; // enable transparency
-system_set_draw_packet_transparency(); 
+system_psyq_set_semi_trans(); 
 
 // copy packet from 1st buffer to 2nd
 [offset_18 + 48 + 10] = w(w[offset_18 + 48 + 0]);

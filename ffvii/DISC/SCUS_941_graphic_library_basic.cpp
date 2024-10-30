@@ -1742,11 +1742,11 @@ return e1000000 | V1 | V0;
 // system_create_texture_page_settings_for_packet()
 
 tp = A0 & 3;
-abr = A1 & 3;
+abr = A1 & 3; // Semi transparent state
 vram_x = A2 & 3ff;
 vram_y = A3;
 
-if( bu[80062c00] == 1 || bu[80062c00] == 2 )
+if( ( bu[80062c00] == 1 ) || ( bu[80062c00] == 2 ) )
 {
     return (tp << 9) | (abr << 7) | ((vram_y & 300) >> 3) | (vram_x >> 6);
 }
@@ -1822,11 +1822,11 @@ else
 
 
 ////////////////////////////////
-// system_change_semi_transparency_in_packet
+// system_psyq_set_semi_trans()
 
 if( A1 != 0 )
 {
-    [A0 + 7] = b(bu[A0 + 7] | 2);
+    [A0 + 7] = b(bu[A0 + 7] | 02);
 }
 else
 {
@@ -1837,11 +1837,12 @@ else
 
 
 ////////////////////////////////
-// system_change_brightness_calculation_in_packet
+// system_psyq_set_shade_tex()
+// Sets the shading attribute of the primitive pointed to by p to the value specified by tge.
 
 if( A1 != 0 )
 {
-    [A0 + 7] = b(bu[A0 + 7] | 1);
+    [A0 + 7] = b(bu[A0 + 7] | 01);
 }
 else
 {
@@ -2219,7 +2220,22 @@ A0 = S2;
 L44898:	; 80044898
 A0 = 80062c6c;
 A1 = S0;
-A2 = 0014;
+A2 = 14;
+system_bios_memcpy();
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_get_disp_env()
+
+S0 = A0;
+
+A0 = S0;
+A1 = 80062c6c;
+A2 = 14;
 system_bios_memcpy();
 
 return S0;

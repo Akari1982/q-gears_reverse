@@ -2246,7 +2246,7 @@ func43b3c();
 
 A0 = S3;
 A1 = 0;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 [S3 + 8] = h(S6);
 [S3 + a] = h(S5);
@@ -2262,7 +2262,7 @@ func43b3c();
 
 A0 = S4;
 A1 = 0;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 [S4 + 8] = h(S6);
 [S4 + a] = h(S5);

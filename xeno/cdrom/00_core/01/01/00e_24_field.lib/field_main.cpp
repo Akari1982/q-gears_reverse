@@ -1450,7 +1450,7 @@ if( w[800ad03c] == 80 )
 
 A0 = 800af328;
 A1 = 1;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 [800af32c] = b(0);
 [800af32d] = b(0);
@@ -2136,7 +2136,7 @@ system_graphic_get_clut_by_param(); // pack clut
 
 A0 = packet + 20;
 A1 = 1; // transparency on
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 [packet + 20 + c] = b(0);
 [packet + 20 + d] = b(e0);

@@ -709,7 +709,7 @@ for( int i = 0; i < 5; ++i )
     // transparency for packet
     A0 = S3;
     A1 = transparency;
-    system_set_draw_packet_transparency();
+    system_psyq_set_semi_trans();
 
     A0 = 2;
     A1 = semi_tr;
@@ -1060,7 +1060,7 @@ for( int y = 0; y < e; ++y )
 
         A0 = S0;
         A1 = 1;
-        system_set_draw_packet_transparency();
+        system_psyq_set_semi_trans();
 
         buf2 = alloc + 38e0 + (y * 14 + x) * 34;
         buf1 = S0;

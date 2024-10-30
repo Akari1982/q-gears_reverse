@@ -5534,7 +5534,7 @@ A0 = w[S0 + 0000];
 800D9AA4	jal    $80046848
 A1 = 0001;
 A0 = w[S0 + 0000];
-800D9AB0	jal    $system_change_brightness_calculation_in_packet
+800D9AB0	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 V1 = w[80062f24];
 V0 = hu[800f3898];
@@ -6103,7 +6103,7 @@ S1 = 800f5194;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DA454	jal    $system_change_brightness_calculation_in_packet
+800DA454	jal    $system_psyq_set_shade_tex
 A0 = A0 + S1;
 A1 = 0002;
 A2 = 0196;
@@ -6239,7 +6239,7 @@ A1 = 0001;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DA6C8	jal    $system_change_brightness_calculation_in_packet
+800DA6C8	jal    $system_psyq_set_shade_tex
 A0 = A0 + S1;
 V1 = w[800f1994];
 800DA6D8	nop
@@ -6430,7 +6430,7 @@ V0 = 800f5194;
 A0 = V1 << 02;
 A0 = A0 + V1;
 A0 = A0 << 04;
-800DAA40	jal    $system_change_brightness_calculation_in_packet
+800DAA40	jal    $system_psyq_set_shade_tex
 A0 = A0 + V0;
 V1 = w[800f1994];
 800DAA50	nop
@@ -6643,7 +6643,7 @@ S1 = 800f5194;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DAE10	jal    $system_change_brightness_calculation_in_packet
+800DAE10	jal    $system_psyq_set_shade_tex
 A0 = A0 + S1;
 A1 = 0002;
 A2 = 00a6;
@@ -6785,7 +6785,7 @@ A1 = 0001;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DB094	jal    $system_change_brightness_calculation_in_packet
+800DB094	jal    $system_psyq_set_shade_tex
 A0 = A0 + S1;
 V1 = w[800f1994];
 800DB0A4	nop
@@ -6975,7 +6975,7 @@ S0 = 800f5194;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 04;
-800DB40C	jal    $system_change_brightness_calculation_in_packet
+800DB40C	jal    $system_psyq_set_shade_tex
 A0 = A0 + S0;
 S3 = ffffff;
 V1 = w[800f1994];
@@ -7238,7 +7238,7 @@ S0 = 800f5234;
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 02;
-800DB8B4	jal    $system_change_brightness_calculation_in_packet
+800DB8B4	jal    $system_psyq_set_shade_tex
 A0 = A0 + S0;
 V1 = w[800f1994];
 800DB8C4	nop
@@ -8136,7 +8136,7 @@ A0 = w[80163c74];
 800DC62C	jal    $80046960
 S0 = S0 + 0001;
 A0 = w[80163c74];
-800DC63C	jal    $system_change_brightness_calculation_in_packet
+800DC63C	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 A0 = FP;
 T0 = 0006;
@@ -8237,7 +8237,7 @@ A0 = w[80163c74];
 800DC7D4	jal    $80046938
 800DC7D8	nop
 A0 = w[80163c74];
-800DC7E4	jal    $system_change_brightness_calculation_in_packet
+800DC7E4	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 V1 = w[S0 + 0000];
 800DC7F0	nop
@@ -8290,7 +8290,7 @@ A0 = w[80163c74];
 800DC8B8	jal    $8004694c
 800DC8BC	nop
 A0 = w[80163c74];
-800DC8C8	jal    $system_change_brightness_calculation_in_packet
+800DC8C8	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 V1 = w[S0 + 0000];
 800DC8D4	nop
@@ -8343,7 +8343,7 @@ A0 = w[80163c74];
 800DC99C	jal    $80046960
 800DC9A0	nop
 A0 = w[80163c74];
-800DC9AC	jal    $system_change_brightness_calculation_in_packet
+800DC9AC	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 V1 = w[S0 + 0000];
 800DC9B8	nop
@@ -13025,7 +13025,7 @@ V0 = 0004;
 A0 = S2;
 [S2 + 0003] = b(V0);
 V0 = 0064;
-800E1710	jal    $system_change_brightness_calculation_in_packet
+800E1710	jal    $system_psyq_set_shade_tex
 [S2 + 0007] = b(V0);
 V0 = S6 + 0020;
 [S2 + 0008] = h(V0);
@@ -13073,7 +13073,7 @@ A1 = 0001;
 V0 = 0004;
 [S1 + 0003] = b(V0);
 V0 = 0064;
-800E17D8	jal    $system_change_brightness_calculation_in_packet
+800E17D8	jal    $system_psyq_set_shade_tex
 [S1 + 0007] = b(V0);
 V0 = 66666667;
 800E17E8	mult   s0, v0
@@ -15941,7 +15941,7 @@ A0 = w[S0 + 0000];
 800E4288	jal    $80046960
 800E428C	nop
 A0 = w[S0 + 0000];
-800E4294	jal    $system_change_brightness_calculation_in_packet
+800E4294	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 A1 = 0003;
 V0 = w[80062f24];
@@ -16796,7 +16796,7 @@ S0 = bu[AT + 0000];
 800E4F24	jal    $800468fc
 800E4F28	nop
 A0 = w[S7 + 0000];
-800E4F30	jal    $system_change_brightness_calculation_in_packet
+800E4F30	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 V0 = w[80062f24];
 T4 = hu[SP + 0020];
@@ -17605,7 +17605,7 @@ V0 = V0 << 02;
 800E5BA8	jal    $80046960
 S1 = S1 + V0;
 A0 = w[S7 + 0000];
-800E5BB4	jal    $system_change_brightness_calculation_in_packet
+800E5BB4	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 V0 = S5 << 05;
 T0 = w[SP + 0020];

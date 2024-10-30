@@ -46,7 +46,7 @@ field_set_quad_uv();
 
 A0 = sprite_data + 50;
 A1 = 1;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 A0 = 0;
 A1 = tranc; // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)

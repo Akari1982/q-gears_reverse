@@ -484,7 +484,7 @@ id = A0;
 
     A0 = background;
     A1 = 1;
-    system_set_draw_packet_transparency();
+    system_psyq_set_semi_trans();
 
     [background + 10 + 0] = w(w[background + 0]);
     [background + 10 + 4] = w(w[background + 4]);
@@ -682,7 +682,7 @@ for( int i = 0; i < 8; ++i )
 
         A0 = border;
         A1 = 1;
-        system_set_draw_packet_transparency();
+        system_psyq_set_semi_trans();
 
         [border +  8] = h(0);
         [border +  a] = h(0);

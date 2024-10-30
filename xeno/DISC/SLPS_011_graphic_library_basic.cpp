@@ -296,7 +296,7 @@ p1 = A1;
 
 
 ////////////////////////////////
-// system_set_draw_packet_transparency()
+// system_psyq_set_semi_trans()
 
 if( A1 != 0 )
 {
@@ -311,20 +311,17 @@ else
 
 
 ////////////////////////////////
-// func43a9c
+// system_psyq_set_shade_tex()
+// Sets the shading attribute of the primitive pointed to by p to the value specified by tge.
 
-V0 = bu[A0 + 0007];
-
-80043A9C	beq    a1, zero, L43ab0 [$80043ab0]
-
-80043AA8	j      L43abc [$80043abc]
-V0 = V0 | 0001;
-
-L43ab0:	; 80043AB0
-V0 = bu[A0 + 7] & fe;
-
-L43abc:	; 80043ABC
-[A0 + 7] = b(V0);
+if( A1 != 0 )
+{
+    [A0 + 7] = b(bu[A0 + 7] | 01);
+}
+else
+{
+    [A0 + 7] = b(bu[A0 + 7] & fe);
+}
 ////////////////////////////////
 
 

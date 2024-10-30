@@ -338,7 +338,7 @@ for( int i = 0; i < 6d; ++i )
 
     A0 = buffer1;
     A1 = 1;
-    system_set_draw_packet_transparency();
+    system_psyq_set_semi_trans();
 
     V0 = hu[800ae3e4 + i * 8 + 4];
     tex_x = hu[800ae03c + V0 * 8 + 0];

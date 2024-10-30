@@ -145,7 +145,7 @@ for( int i = 0; i < 3; ++i )
 
     A0 = packet;
     A1 = 1;
-    system_set_draw_packet_transparency();
+    system_psyq_set_semi_trans();
 
     [packet +  c] = b(0);  // u0
     [packet +  d] = b(0);  // v0

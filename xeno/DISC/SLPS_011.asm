@@ -2879,10 +2879,10 @@
 // func43a5c
 80043A5C-80043A70
 ////////////////////////////////
-// system_set_draw_packet_transparency
+// system_psyq_set_semi_trans
 80043A74-80043A98
 ////////////////////////////////
-// func43a9c
+// system_psyq_set_shade_tex
 80043A9C-80043AC0
 ////////////////////////////////
 // system_graphic_mono_triangle_header

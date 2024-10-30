@@ -2004,7 +2004,7 @@ system_graphic_create_texpage_settings_packet()
 
 A0 = pack2;
 A1 = 1;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 // duplicate packet
 A3 = pack2 + 24;

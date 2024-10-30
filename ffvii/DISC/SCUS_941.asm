@@ -2962,7 +2962,7 @@
 
 
 
-// SCUS_941_gpu.cpp
+// SCUS_941_graphic_library_basic.cpp
 ////////////////////////////////
 // func42dd4
 80042DD8-80043630
@@ -3310,24 +3310,12 @@ SP = SP + 0018;
 // system_psyq_put_disp_env
 800444AC-800448CC
 ////////////////////////////////
+// system_psyq_get_disp_env
+800448D0-80044904
+////////////////////////////////
 
 
 
-func448d0:	; 800448D0
-800448D0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-800448DC	lui    a1, $8006
-A1 = A1 + 2c6c;
-[SP + 0014] = w(RA);
-800448E8	jal    system_bios_memcpy [$80042d98]
-A2 = 0014;
-V0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80044900	jr     ra 
-80044904	nop
 
 80044908	lui    v0, $8006
 V0 = w[V0 + 2bf8];
@@ -4638,10 +4626,10 @@ V0 = V0 | V1;
 
 
 ////////////////////////////////
-// system_change_semi_transparency_in_packet
+// system_psyq_set_semi_trans
 80046848-8004686C
 ////////////////////////////////
-// system_change_brightness_calculation_in_packet
+// system_psyq_set_shade_tex
 80046870-80046894
 ////////////////////////////////
 

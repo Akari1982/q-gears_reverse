@@ -1910,7 +1910,7 @@ V0 = w[80061c30];
 801C6FB4	nop
 A0 = w[V0 + 0348];
 A1 = 0001;
-801C6FC0	jal    $system_set_draw_packet_transparency
+801C6FC0	jal    $system_psyq_set_semi_trans
 A0 = S1 + A0;
 V0 = w[80061c30];
 801C6FD0	nop
@@ -2021,7 +2021,7 @@ V0 = w[80061c30];
 A1 = 0001;
 A0 = w[V0 + 0348];
 S0 = S0 + 0018;
-801C71B0	jal    $system_set_draw_packet_transparency
+801C71B0	jal    $system_psyq_set_semi_trans
 A0 = S2 + A0;
 A0 = 0;
 A1 = 0;
@@ -10404,11 +10404,11 @@ if( bu[V0 + 9] != 0 )
 
                 A0 = S0 + 8c0 + id * 28;
                 A1 = 1;
-                system_set_draw_packet_transparency();
+                system_psyq_set_semi_trans();
 
                 A0 = S0 + 8c0 + id * 28;
                 A1 = 0;
-                func43a9c();
+                system_psyq_set_shade_tex();
 
                 [S0 + 8c0 + id * 28 + 4] = b(20);
                 [S0 + 8c0 + id * 28 + 5] = b(20);
@@ -10432,7 +10432,7 @@ if( bu[V0 + 9] != 0 )
                 A0 = A0 + V0;
                 A0 = A0 << 03;
                 A0 = A0 + V1;
-                system_set_draw_packet_transparency();
+                system_psyq_set_semi_trans();
 
                 V1 = w[rdata + 0350];
                 V0 = bu[V1 + 1190];
@@ -10442,7 +10442,7 @@ if( bu[V0 + 9] != 0 )
                 A0 = A0 + V0;
                 A0 = A0 << 03;
                 A0 = A0 + V1;
-                func43a9c();
+                system_psyq_set_shade_tex();
 
                 A0 = w[rdata + 0350];
                 V1 = bu[A0 + 1190];
@@ -10503,7 +10503,7 @@ if( bu[V0 + 9] != 0 )
                     A0 = A0 << 03;
                     A0 = A0 + 08c0;
                     A0 = A0 + V1;
-                    system_set_draw_packet_transparency();
+                    system_psyq_set_semi_trans();
 
                     V1 = w[rdata + 0350];
                     801CEFF8	nop
@@ -10514,7 +10514,7 @@ if( bu[V0 + 9] != 0 )
                     A0 = A0 + V0;
                     A0 = A0 << 03;
                     A0 = A0 + 08c0;
-                    801CF018	jal    $func43a9c
+                    801CF018	jal    $system_psyq_set_shade_tex
                     A0 = A0 + V1;
                     A0 = w[rdata + 0350];
                     801CF030	nop
@@ -10582,7 +10582,7 @@ if( bu[V0 + 9] != 0 )
                     A0 = A0 + V0;
                     A0 = A0 << 03;
                     A0 = A0 + V1;
-                    system_set_draw_packet_transparency();
+                    system_psyq_set_semi_trans();
 
                     V1 = w[rdata + 0350];
                     801CF178	nop
@@ -10593,7 +10593,7 @@ if( bu[V0 + 9] != 0 )
                     A0 = A0 + V0;
                     A0 = A0 << 03;
                     A0 = A0 + V1;
-                    801CF194	jal    $func43a9c
+                    801CF194	jal    $system_psyq_set_shade_tex
 
                     A0 = w[rdata + 0350];
                     801CF1AC	nop
@@ -17307,7 +17307,7 @@ A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 + 0a00;
-801D5AC8	jal    $func43a9c
+801D5AC8	jal    $system_psyq_set_shade_tex
 A0 = S2 + A0;
 V0 = w[80061c30];
 801D5AD8	nop
@@ -18768,7 +18768,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 V0 = w[V1 + 0358];
 A0 = A0 + 0aa0;
-801D7154	jal    $func43a9c
+801D7154	jal    $system_psyq_set_shade_tex
 A0 = A0 + V0;
 A0 = w[80061c30];
 801D7164	nop
@@ -19814,7 +19814,7 @@ A0 = V0 << 02;
 A0 = A0 + V0;
 V0 = w[V1 + 035c];
 A0 = A0 << 03;
-801D81A0	jal    $func43a9c
+801D81A0	jal    $system_psyq_set_shade_tex
 A0 = A0 + V0;
 A0 = w[80061c30];
 801D81B0	nop
@@ -20079,7 +20079,7 @@ S0 = S0 + S1;
 S0 = S0 << 03;
 S0 = S4 + S0;
 A0 = S0;
-801D8524	jal    $func43a9c
+801D8524	jal    $system_psyq_set_shade_tex
 A1 = 0;
 V0 = bu[SP + 0010];
 801D8530	nop
@@ -22708,7 +22708,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 V0 = w[V1 + 042c];
 A0 = A0 + 1000;
-801DAD2C	jal    $system_set_draw_packet_transparency
+801DAD2C	jal    $system_psyq_set_semi_trans
 A0 = A0 + V0;
 A0 = w[80061c30];
 801DAD3C	nop
@@ -22749,7 +22749,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 V0 = w[V1 + 042c];
 A0 = A0 + 1080;
-801DADE0	jal    $system_set_draw_packet_transparency
+801DADE0	jal    $system_psyq_set_semi_trans
 A0 = A0 + V0;
 V0 = w[80061c30];
 801DADF0	nop
@@ -25226,7 +25226,7 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 V0 = w[V1 + 0430];
 A0 = A0 + 0e00;
-801DD22C	jal    $system_set_draw_packet_transparency
+801DD22C	jal    $system_psyq_set_semi_trans
 A0 = A0 + V0;
 V0 = w[80061c30];
 801DD23C	nop
@@ -34045,7 +34045,7 @@ S0 = S0 + S5;
 [S0 + 04c6] = b(S3);
 [S0 + 04cc] = b(S3);
 [S0 + 04cd] = b(S3);
-801E5400	jal    $system_set_draw_packet_transparency
+801E5400	jal    $system_psyq_set_semi_trans
 [S0 + 04ce] = b(S3);
 A0 = 0;
 V0 = w[80061c30];
@@ -34082,7 +34082,7 @@ S0 = S5 + S0;
 801E5484	jal    $80043b28
 A0 = S0;
 A0 = S0;
-801E5490	jal    $func43a9c
+801E5490	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 S1 = S2 + S5;
 [S1 + 0144] = b(S3);
@@ -34106,7 +34106,7 @@ A0 = S0;
 801E54EC	jal    $80043b28
 [S1 + 014e] = h(V0);
 A0 = S0;
-801E54F8	jal    $func43a9c
+801E54F8	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 [S1 + 01e4] = b(S3);
 [S1 + 01e5] = b(S3);
@@ -34129,7 +34129,7 @@ A0 = S0;
 801E5550	jal    $80043b28
 [S1 + 01ee] = h(V0);
 A0 = S0;
-801E555C	jal    $func43a9c
+801E555C	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 [S1 + 0284] = b(S3);
 [S1 + 0285] = b(S3);
@@ -34152,7 +34152,7 @@ A0 = S2;
 801E55B4	jal    $80043b28
 [S1 + 028e] = h(V0);
 A0 = S2;
-801E55C0	jal    $func43a9c
+801E55C0	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 [S1 + 0324] = b(S3);
 [S1 + 0325] = b(S3);
@@ -34253,7 +34253,7 @@ A1 = 0001;
 V0 = 0080;
 [S1 + 00b4] = b(V0);
 [S1 + 00b5] = b(V0);
-801E5750	jal    $system_set_draw_packet_transparency
+801E5750	jal    $system_psyq_set_semi_trans
 [S1 + 00b6] = b(V0);
 V0 = hu[S4 + 0000];
 801E575C	nop
@@ -36629,7 +36629,7 @@ L1e7b94:	; 801E7B94
 A0 = 0;
 S1 = 0020;
 A0 = S0;
-801E7BA4	jal    $system_set_draw_packet_transparency
+801E7BA4	jal    $system_psyq_set_semi_trans
 A1 = 0001;
 [S0 + 0004] = b(S1);
 [S0 + 0005] = b(S1);
@@ -37768,7 +37768,7 @@ S1 = A0;
 [SP + 0010] = w(S0);
 S0 = A1;
 [SP + 0018] = w(RA);
-801E8D0C	jal    $func43a9c
+801E8D0C	jal    $system_psyq_set_shade_tex
 A1 = 0;
 S0 = S0 & 00ff;
 V0 = 0001;
@@ -37795,13 +37795,13 @@ L1e8d5c:	; 801E8D5C
 V0 = hu[S1 + 0016];
 A1 = 0001;
 V0 = V0 | 0020;
-801E8D68	jal    $system_set_draw_packet_transparency
+801E8D68	jal    $system_psyq_set_semi_trans
 [S1 + 0016] = h(V0);
 801E8D70	j      L1e8d84 [$801e8d84]
 V0 = 0021;
 
 L1e8d78:	; 801E8D78
-801E8D78	jal    $system_set_draw_packet_transparency
+801E8D78	jal    $system_psyq_set_semi_trans
 A1 = 0;
 
 L1e8d80:	; 801E8D80
@@ -37987,10 +37987,10 @@ SP = SP + 0028;
 [SP + 0010] = w(S0);
 S0 = A0;
 [SP + 0014] = w(RA);
-801E901C	jal    $system_set_draw_packet_transparency
+801E901C	jal    $system_psyq_set_semi_trans
 A1 = 0001;
 A0 = S0;
-801E9028	jal    $func43a9c
+801E9028	jal    $system_psyq_set_shade_tex
 A1 = 0;
 V0 = 0080;
 [S0 + 0004] = b(V0);
@@ -38039,10 +38039,10 @@ V1 = V1 + T1;
 801E90D0	jal    $80043b28
 S0 = A0;
 A0 = S0;
-801E90DC	jal    $system_set_draw_packet_transparency
+801E90DC	jal    $system_psyq_set_semi_trans
 A1 = 0;
 A0 = S0;
-801E90E8	jal    $func43a9c
+801E90E8	jal    $system_psyq_set_shade_tex
 A1 = 0;
 V0 = 0080;
 [S0 + 0004] = b(V0);

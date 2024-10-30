@@ -8,7 +8,7 @@ system_graphic_monochrome_rectangle_header();
 
 A0 = 800b1598 + id * 58 + 18;
 A1 = 1;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 [800b1598 + id * 58 + 18 + 8] = h(0);   // x
 [800b1598 + id * 58 + 18 + a] = h(0);   // y

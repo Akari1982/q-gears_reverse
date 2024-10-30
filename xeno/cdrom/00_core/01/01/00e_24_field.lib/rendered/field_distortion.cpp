@@ -69,7 +69,7 @@ if( w[800acffc] == 0 ) // if not inited
 
             A0 = buffer1;
             A1 = 0;
-            system_set_draw_packet_transparency();
+            system_psyq_set_semi_trans();
 
             [buffer1 +  4] = b(80);          // R
             [buffer1 +  5] = b(80);          // G

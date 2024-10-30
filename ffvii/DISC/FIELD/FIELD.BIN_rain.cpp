@@ -14,7 +14,7 @@ for( int i = 0; i < 40; ++i )
 
     A0 = packet + 1749c + i * 10;
     A1 = 1;
-    system_change_semi_transparency_in_packet();
+    system_psyq_set_semi_trans();
 
     [packet + 1749c + i * 10 + 4] = b(10); // r
     [packet + 1749c + i * 10 + 5] = b(10); // g

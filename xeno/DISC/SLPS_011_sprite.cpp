@@ -8476,10 +8476,10 @@ S1 = S5 + V0;
 80025F00	jal    system_graphic_textured_quad_header [$80043b28]
 A0 = S1;
 A0 = S1;
-80025F0C	jal    system_set_draw_packet_transparency [$80043a74]
+80025F0C	jal    system_psyq_set_semi_trans [$80043a74]
 A1 = 0;
 A0 = S1;
-80025F18	jal    func43a9c [$80043a9c]
+80025F18	jal    system_psyq_set_shade_tex [$80043a9c]
 A1 = 0001;
 S0 = S7 + S4;
 A0 = h[S0 + 0010];
@@ -8777,10 +8777,10 @@ A0 = S0;
 80026338	jal    system_graphic_textured_quad_header [$80043b28]
 S4 = V0 >> 0c;
 A0 = S0;
-80026344	jal    system_set_draw_packet_transparency [$80043a74]
+80026344	jal    system_psyq_set_semi_trans [$80043a74]
 A1 = 0;
 A0 = S0;
-80026350	jal    func43a9c [$80043a9c]
+80026350	jal    system_psyq_set_shade_tex [$80043a9c]
 A1 = 0001;
 A0 = h[S1 + 0010];
 A2 = h[S1 + 0016];
@@ -9020,10 +9020,10 @@ S5 = V0 >> 0c;
 8002666C	jal    system_graphic_textured_quad_header [$80043b28]
 A0 = S0;
 A0 = S0;
-80026678	jal    system_set_draw_packet_transparency [$80043a74]
+80026678	jal    system_psyq_set_semi_trans [$80043a74]
 A1 = 0;
 A0 = S0;
-80026684	jal    func43a9c [$80043a9c]
+80026684	jal    system_psyq_set_shade_tex [$80043a9c]
 A1 = 0001;
 A0 = h[S1 + 0010];
 A2 = h[S1 + 0016];
@@ -9173,10 +9173,10 @@ A1 = h[S0 + 0014];
 S4 = S4 + 0028;
 A0 = S1;
 A1 = 0;
-800268BC	jal    system_set_draw_packet_transparency [$80043a74]
+800268BC	jal    system_psyq_set_semi_trans [$80043a74]
 [S1 + 000e] = h(V0);
 A0 = S1;
-800268C8	jal    func43a9c [$80043a9c]
+800268C8	jal    system_psyq_set_shade_tex [$80043a9c]
 A1 = 0001;
 V0 = hu[S0 + 0008];
 V1 = hu[S0 + 000a];
@@ -9626,7 +9626,7 @@ loop26fc0:	; 80026FC0
 80026FC0	jal    system_graphic_textured_quad_header [$80043b28]
 A0 = S0;
 A0 = S0;
-80026FCC	jal    func43a9c [$80043a9c]
+80026FCC	jal    system_psyq_set_shade_tex [$80043a9c]
 A1 = 0001;
 A0 = w[SP + 00b0];
 A1 = w[SP + 00b4];

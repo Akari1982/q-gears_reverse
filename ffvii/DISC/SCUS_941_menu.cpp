@@ -6,7 +6,7 @@ system_gpu_textured_quad_header();
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 V0 = w[80062f24];
 [V0 + 8] = h(0);
@@ -70,7 +70,7 @@ system_gpu_textured_quad_header();
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 S3 = S4;
 S0 = S0 << 10;
@@ -79,7 +79,7 @@ if( S0 != 0 )
 {
     A0 = w[80062f24];
     A1 = 1;
-    system_change_semi_transparency_in_packet();
+    system_psyq_set_semi_trans();
 }
 
 V0 = w[80062f24];
@@ -144,7 +144,7 @@ system_gpu_textured_quad_header();
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 S3 = S4;
 S0 = S0 << 10;
@@ -153,7 +153,7 @@ if( S0 != 0 )
 {
     A0 = w[80062f24];
     A1 = 1;
-    system_change_semi_transparency_in_packet();
+    system_psyq_set_semi_trans();
 }
 
 V0 = w[80062f24];
@@ -357,13 +357,13 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         A0 = w[80062f24];
         A1 = 1;
-        system_change_brightness_calculation_in_packet();
+        system_psyq_set_shade_tex();
 
         if( w[GP + 7c] != 0 )
         {
             A0 = w[80062f24];
             A1 = 1;
-            system_change_semi_transparency_in_packet();
+            system_psyq_set_semi_trans();
         }
 
         V1 = w[80062f24];
@@ -578,13 +578,13 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         A0 = w[80062f24];
         A1 = 1;
-        system_change_brightness_calculation_in_packet();
+        system_psyq_set_shade_tex();
 
         if( w[GP + 7c] != 0 )
         {
             A0 = w[80062f24];
             A1 = 1;
-            system_change_semi_transparency_in_packet();
+            system_psyq_set_semi_trans();
         }
 
         V0 = w[80062f24];
@@ -724,7 +724,7 @@ V1 = w[80062f24];
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 V1 = w[80062f24];
 [V1 + 4] = b(r);
@@ -761,7 +761,7 @@ if( rect_w >= 9 )
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     [packet + 8] = h(rect_x + 4);
     [packet + a] = h(rect_y);
@@ -803,7 +803,7 @@ if( rect_w >= 9 )
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     [packet + 8] = h(rect_x + 4);
     [packet + a] = h(rect_y + rect_h - 4);
@@ -848,7 +848,7 @@ if( rect_h >= 9 )
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     [packet + 8] = h(rect_x + rect_w - 4);
     [packet + a] = h(rect_y + 4);
@@ -890,7 +890,7 @@ if( rect_h >= 9 )
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     [packet + 8] = h(rect_x);
     [packet + a] = h(rect_y + 4);
@@ -933,7 +933,7 @@ if( rect_h >= 9 )
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 [packet + 8] = h(rect_x);
 [packet + a] = h(rect_y);
@@ -958,7 +958,7 @@ packet = packet + 14;
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 [packet + 8] = h(rect_x + rect_w - 4);
 [packet + a] = h(rect_y);
@@ -983,7 +983,7 @@ packet = packet + 14;
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 [packet + 8] = h(rect_x);
 [packet + a] = h(rect_y + rect_h - 4);
@@ -1008,7 +1008,7 @@ packet = packet + 14;
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 [packet + 8] = h(rect_x + rect_w - 4);
 [packet + a] = h(rect_y + rect_h - 4);
@@ -1054,7 +1054,7 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
     {
         A0 = w[80062f24];
         A1 = 1;
-        system_change_semi_transparency_in_packet();
+        system_psyq_set_semi_trans();
     }
 
     [packet + 4] = b(bu[80049208]);
@@ -1119,11 +1119,11 @@ packet = w[80062f24];
 
 A0 = packet;
 A1 = 1;
-system_change_semi_transparency_in_packet();
+system_psyq_set_semi_trans();
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 [packet + 8] = h(x);
 [packet + a] = h(y);
@@ -1176,7 +1176,7 @@ V1 = w[80062f24];
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 V1 = w[80062f24];
 [V1 + 8] = h(x + 20);
@@ -1224,7 +1224,7 @@ for( int i = 0; i < 4; ++i )
 
     A0 = w[80062f24];
     A1 = 1;
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     V1 = w[80062f24];
     [V1 + 8] = h(x);
@@ -1301,7 +1301,7 @@ for( int i = 0 i < 8; +i )
 
     A0 = w[80062f24];
     A1 = 1;
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     V1 = w[80062f24];
     [V1 + 8] = h(x);
@@ -3059,7 +3059,7 @@ A0 = A0 + S0;
 A0 = w[GP + 0214];
 A1 = 0001;
 A0 = A0 << 04;
-800215A4	jal    system_change_semi_transparency_in_packet [$80046848]
+800215A4	jal    system_psyq_set_semi_trans [$80046848]
 A0 = A0 + S0;
 V1 = 0180;
 V0 = w[GP + 0214];
@@ -4620,7 +4620,7 @@ A0 = A0 + S0;
 A0 = w[GP + 0214];
 A1 = 0001;
 A0 = A0 << 04;
-80022D20	jal    system_change_semi_transparency_in_packet [$80046848]
+80022D20	jal    system_psyq_set_semi_trans [$80046848]
 A0 = A0 + S0;
 V1 = 0180;
 V0 = w[GP + 0214];
@@ -5180,7 +5180,7 @@ S0 = S0 - V0;
 A0 = w[GP + 0214];
 A1 = 0001;
 A0 = A0 << 04;
-80023590	jal    system_change_semi_transparency_in_packet [$80046848]
+80023590	jal    system_psyq_set_semi_trans [$80046848]
 A0 = A0 + S1;
 V0 = w[GP + 0214];
 V1 = 0180;
@@ -8531,7 +8531,7 @@ S2 = S2 + V0;
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_brightness_calculation_in_packet();
+system_psyq_set_shade_tex();
 
 V0 = w[80062f24];
 [V0 + 8] = h(S3);
@@ -8665,7 +8665,7 @@ if (character < 29) // dakuten characters
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet;
+    system_psyq_set_shade_tex;
 
     [packet + 8] = h(pos_x);
     [packet + a] = h(pos_y - 8);
@@ -8695,7 +8695,7 @@ else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // ha
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet;
+    system_psyq_set_shade_tex;
 
     [packet + 8] = h(pos_x);
     [packet + a] = h(pos_y - 8);
@@ -8727,7 +8727,7 @@ packet = w[80062f24];
 
 A0 = packet;
 A1 = 1;
-system_change_brightness_calculation_in_packet;
+system_psyq_set_shade_tex;
 
 [packet + 8] = h(pos_x);
 [packet + a] = h(pos_y);
@@ -9128,7 +9128,7 @@ S2 = 0040;
 [V0 + 0007] = b(S2);
 80027BC0	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80027BC8	jal    system_change_semi_transparency_in_packet [$80046848]
+80027BC8	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 80027BD0	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -9183,7 +9183,7 @@ V0 = w[80062f24];
 [V0 + 0007] = b(S2);
 80027C9C	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80027CA4	jal    system_change_semi_transparency_in_packet [$80046848]
+80027CA4	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 80027CAC	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -9244,7 +9244,7 @@ V0 = w[80062f24];
 [V0 + 0007] = b(S2);
 80027D90	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80027D98	jal    system_change_semi_transparency_in_packet [$80046848]
+80027D98	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 80027DA0	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -9299,7 +9299,7 @@ V0 = w[80062f24];
 [V0 + 0007] = b(S2);
 80027E6C	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80027E74	jal    system_change_semi_transparency_in_packet [$80046848]
+80027E74	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 V0 = hu[S0 + 0000];
 V1 = hu[S0 + 0004];
@@ -9360,7 +9360,7 @@ V0 = 0060;
 [V1 + 0007] = b(V0);
 80027F60	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80027F68	jal    system_change_semi_transparency_in_packet [$80046848]
+80027F68	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 80027F70	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -9748,7 +9748,7 @@ func46910;
 
 A0 = packet;
 A1 = 1;
-system_change_semi_transparency_in_packet;
+system_psyq_set_semi_trans;
 
 [packet + 8] = h(pos_x);
 [packet + a] = h(pos_y);
@@ -9782,7 +9782,7 @@ A0 = w[80062f24];
 
 A0 = w[80062f24];
 A1 = 1;
-system_change_semi_transparency_in_packet;
+system_psyq_set_semi_trans;
 
 [packet + 8] = h(pos_x);
 [packet + a] = h(pos_y + height / 2);
@@ -9832,7 +9832,7 @@ S5 = A3;
 [SP + 0018] = w(S2);
 8002896C	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80028974	jal    system_change_semi_transparency_in_packet [$80046848]
+80028974	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 8002897C	lui    a1, $5555
 A1 = A1 | 5556;
@@ -9935,7 +9935,7 @@ A0 = w[A0 + 2f24];
 S1 = S1 - S2;
 80028B08	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80028B10	jal    system_change_semi_transparency_in_packet [$80046848]
+80028B10	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0001;
 80028B18	lui    v0, $8006
 V0 = w[80062f24];
@@ -10063,14 +10063,14 @@ V0 = 0 | 0064;
 [V1 + 0007] = b(V0);
 80028D08	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80028D10	jal    system_change_brightness_calculation_in_packet [$80046870]
+80028D10	jal    system_psyq_set_shade_tex [$80046870]
 S3 = A3;
 S0 = S0 << 10;
 80028D1C	beq    s0, zero, L28d34 [$80028d34]
 80028D20	nop
 80028D24	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80028D2C	jal    system_change_semi_transparency_in_packet [$80046848]
+80028D2C	jal    system_psyq_set_semi_trans [$80046848]
 A1 = 0 | 0001;
 
 L28d34:	; 80028D34
@@ -10167,7 +10167,7 @@ loop28ea8:	; 80028EA8
 
     A0 = packet;
     A1 = 1;
-    system_change_brightness_calculation_in_packet;
+    system_psyq_set_shade_tex;
 
     S3 = S1 / S0;
 
@@ -10217,7 +10217,7 @@ V1 = w[80062f24];
 V0 = 0064;
 [V1 + 0007] = b(V0);
 A0 = w[80062f24];
-80029028	jal    system_change_brightness_calculation_in_packet [$80046870]
+80029028	jal    system_psyq_set_shade_tex [$80046870]
 A1 = 0001;
 
 [packet + 8] = h(x_pos + (number_of_digits - 1) * 7);
@@ -10302,7 +10302,7 @@ V0 = 0064;
 [V1 + 0007] = b(V0);
 800291BC	lui    a0, $8006
 A0 = w[A0 + 2f24];
-800291C4	jal    system_change_brightness_calculation_in_packet [$80046870]
+800291C4	jal    system_psyq_set_shade_tex [$80046870]
 A1 = 0001;
 800291CC	divu   s0, s1
 800291D0	bne    s1, zero, L291dc [$800291dc]
@@ -10380,7 +10380,7 @@ V0 = 0064;
 [V1 + 0007] = b(V0);
 800292E4	lui    a0, $8006
 A0 = w[A0 + 2f24];
-800292EC	jal    system_change_brightness_calculation_in_packet [$80046870]
+800292EC	jal    system_psyq_set_shade_tex [$80046870]
 A1 = 0001;
 V0 = S3 & 00ff;
 800292F8	addiu  v0, v0, $ffff (=-$1)

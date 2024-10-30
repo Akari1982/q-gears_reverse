@@ -700,7 +700,7 @@ V0 = S0 + 0028;
 80280CB0	jal    $system_graphic_textured_quad_header
 A0 = S0;
 A0 = S0;
-80280CBC	jal    $func43a9c
+80280CBC	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 A0 = 0001;
 A1 = 0;
@@ -744,7 +744,7 @@ V0 = S0 + 0028;
 80280D68	jal    $system_graphic_textured_quad_header
 A0 = S0;
 A0 = S0;
-80280D74	jal    $func43a9c
+80280D74	jal    $system_psyq_set_shade_tex
 A1 = 0001;
 A0 = 0001;
 A1 = 0;

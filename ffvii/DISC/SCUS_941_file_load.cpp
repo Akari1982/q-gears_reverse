@@ -154,7 +154,7 @@ while( true )
 {
     if( h[8009c560] == 2 )
     {
-        func140f4();
+        func140f4(); // init swirl effect and set it to render
 
         A0 = 5; // BATTLE.X
         A1 = 800a1158; // battle_main()
@@ -393,12 +393,12 @@ SP = SP + 0018;
 ////////////////////////////////
 // func14a00()
 
-to = A0;
-from = A1;
+dst = A0;
+src = A1;
 size = A2 / 4;
 
 for( int i = 0; i < size; ++ i )
 {
-    [to + i * 4] = w(w[from + i * 4]);
+    [dst + i * 4] = w(w[src + i * 4]);
 }
 ////////////////////////////////

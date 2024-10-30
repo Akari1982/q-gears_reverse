@@ -300,11 +300,11 @@ for( int i = 0; i < 18; ++i )
 
     A0 = S1 + i * 10;
     A1 = 1; // add brightness calculation
-    system_change_brightness_calculation_in_packet();
+    system_psyq_set_shade_tex();
 
     A0 = S1 + i * 10;
     A1 = 0; // remove semi transparency
-    system_change_semi_transparency_in_packet();
+    system_psyq_set_semi_trans();
 
     // color
     [S1 + i * 10 + 4] = b(80);

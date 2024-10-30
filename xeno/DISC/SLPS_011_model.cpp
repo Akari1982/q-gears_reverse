@@ -621,7 +621,7 @@ S0 = w[80058ac0];
 8002D920	jal    func43ad8 [$80043ad8]
 A0 = S0;
 A0 = S0;
-8002D92C	jal    func43a9c [$80043a9c]
+8002D92C	jal    system_psyq_set_shade_tex [$80043a9c]
 A1 = 0001;
 A0 = 0001;
 A1 = 0;

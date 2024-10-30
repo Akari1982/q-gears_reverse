@@ -304,11 +304,11 @@ system_graphic_get_clut_by_param();
 
 A0 = 800aec5c;
 A1 = 1;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 A0 = 800aecc4;
 A1 = 1;
-system_set_draw_packet_transparency();
+system_psyq_set_semi_trans();
 
 // copy packet to buffer 2
 src = 800aec5c;
@@ -348,7 +348,7 @@ for( int i = 0; i < 10; ++i )
 
     A0 = S0;
     A1 = 0;
-    system_set_draw_packet_transparency();
+    system_psyq_set_semi_trans();
 
     A0 = 0;
     A1 = 1ff;

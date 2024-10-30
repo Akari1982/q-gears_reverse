@@ -212,7 +212,7 @@ for( int i = 0; i < 4; ++i )
 
     A0 = S1;
     A1 = 1;
-    system_set_draw_packet_transparency();
+    system_psyq_set_semi_trans();
 
     A0 = 0;
     A1 = 2;
