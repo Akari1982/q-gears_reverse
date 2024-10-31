@@ -188,9 +188,8 @@ if( A0 != 0 )
     A3 = 1; // lzs
     wm_load_txz_file();
 
-    loopa0ea0:	; 800A0EA0
-        V0 = hu[80095dd4];
-    800A0EAC	bne    v0, zero, loopa0ea0 [$800a0ea0]
+    // wait until render sets to base 0
+    while( hu[80095dd4] != 0 ) {}
 
     // load needed images to vram
     S0 = 80117000;
@@ -242,9 +241,8 @@ else
     A3 = 1; // lzs
     wm_load_txz_file();
 
-    loopa0f90:	; 800A0F90
-        V0 = hu[80095dd4];
-    800A0F9C	bne    v0, zero, loopa0f90 [$800a0f90]
+    // wait until render sets to base 0
+    while( hu[80095dd4] != 0 ) {}
 
     txz_data = 8013a7d0;
 }

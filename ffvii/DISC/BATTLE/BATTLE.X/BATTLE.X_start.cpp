@@ -33,9 +33,8 @@ battle_update_render();
 
 battle_update_render();
 
-while( hu[80095dd4] != 0 )
-{
-}
+// wait until render sets to base 0
+while( hu[80095dd4] != 0 ) {}
 
 S1 = 3;
 
@@ -335,7 +334,7 @@ A1 = -1;
 A2 = 0;
 800B3818	jal    funcd9e0c [$800d9e0c]
 
-[80095dd4] = h(2);
+[80095dd4] = h(2); // set render func to 2
 ////////////////////////////////
 
 

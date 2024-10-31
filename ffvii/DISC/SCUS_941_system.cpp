@@ -20,7 +20,7 @@ K0 = K0 + 0008;
 [AT + 33f4] = w(A0);
 8003CE50	lui    at, $8007
 [AT + e11c] = w(V0);
-8003CE58	jal    func3d0c0 [$8003d0c0]
+8003CE58	jal    system_interrupts_timer_dma_initialize [$8003d0c0]
 8003CE5C	nop
 8003CE60	lui    a0, $2000
 8003CE64	lui    a1, $8007
@@ -155,51 +155,48 @@ if( w[80051568] < A0 )
 
 
 ////////////////////////////////
-// func3d0c0()
+// system_interrupts_timer_dma_initialize()
 
 V0 = w[80051534]; // 80051514
-V0 = w[V0 + c]; // 8003d258
-8003D0D8	jalr   v0 ra // func3d258()
+8003D0D8	jalr   w[V0 + c] ra // system_interrupts_timer_dma_initialize_inter()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3d0f0()
+// system_int_set_interrupt_callback()
 
 V0 = w[80051534]; // 80051514
-V0 = w[V0 + 8]; // 8003d51c
-8003D108	jalr   v0 ra // func3d51c()
+8003D108	jalr   w[V0 + 8] ra // system_int_set_interrupt_callback_inter()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3d120()
+// system_dma_additional_callback()
 
 V0 = w[80051534]; // 80051514
-V0 = w[V0 + 4];
-8003D138	jalr   v0 ra
+8003D138	jalr   w[V0 + 4] ra // system_dma_additional_callback_inter()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3d150()
+// system_call_main_timer_additional_callback_0()
 
 V0 = w[80051534];
 A1 = A0;
 A0 = 0;
-8003D16C	jalr   w[V0 + 14] ra
+8003D16C	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3d184()
+// system_call_main_timer_additional_callback_any()
 
 V0 = w[80051534];
-8003D19C	jalr   w[V0 + 14] ra
+8003D19C	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -208,40 +205,33 @@ V0 = w[80051534];
 // func3d1b4()
 
 V0 = w[80051534]; // 80051514
-V0 = w[V0 + 10]; // 8003d670
-8003D1CC	jalr   v0 ra // call func3d670()
+8003D1CC	jalr   w[V0 + 10] ra // func3d670()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3d1e4
-8003D1E4	lui    v0, $8005
-V0 = w[V0 + 1534];
-8003D1EC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = w[V0 + 0018];
-8003D1F8	nop
-8003D1FC	jalr   v0 ra
-8003D200	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003D20C	jr     ra 
-8003D210	nop
+// func3d1e4()
+
+V0 = w[80051534];
+8003D1FC	jalr   w[V0 + 18] ra // func3d71c()
 ////////////////////////////////
-// func3d214
-8003D214	lui    v0, $8005
-V0 = hu[V0 + 04ae];
-8003D21C	jr     ra 
-8003D220	nop
+
+
+
 ////////////////////////////////
-// func3d224
-8003D224	lui    v0, $8005
-V0 = w[V0 + 153c];
-8003D22C	nop
-V0 = hu[V0 + 0000];
-8003D234	jr     ra 
-8003D238	nop
+// func3d214()
+
+return hu[800504ae];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_interrupt_mask_register()
+
+V0 = w[8005153c];
+return hu[V0 + 0];
 ////////////////////////////////
 
 
@@ -258,7 +248,7 @@ return V0;
 
 
 ////////////////////////////////
-// func3d258()
+// system_interrupts_timer_dma_initialize_inter()
 
 if( hu[800504ac] != 0 )
 {
@@ -394,7 +384,7 @@ system_bios_return_from_exception();
 
 
 ////////////////////////////////
-// func3d51c()
+// system_int_set_interrupt_callback_inter()
 
 intr_mask = w[8005153c]; // 1f801074 Interrupt mask register
 
@@ -522,11 +512,6 @@ L3d78c:	; 8003D78C
 V0 = 0;
 
 L3d790:	; 8003D790
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8003D79C	jr     ra 
-8003D7A0	nop
 ////////////////////////////////
 
 
@@ -565,9 +550,9 @@ loop3d8dc:	; 8003D8DC
 
 A0 = 0;
 A1 = 8003d828; // func3d828()
-func3d0f0();
+system_int_set_interrupt_callback();
 
-return 8003d8a0; // func3d8a0()
+return 8003d8a0; // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
@@ -591,7 +576,7 @@ loop3d860:	; 8003D860
 
 
 ////////////////////////////////
-// func3d8a0()
+// system_main_timer_additional_callback_inter()
 
 if( A1 != w[80051548 + A0 * 4] )
 {
@@ -633,7 +618,7 @@ V0 = w[80051570];
 
 A0 = 3;
 A1 = 8003d948;
-func3d0f0();
+system_int_set_interrupt_callback();
 
 return 8003dacc;
 ////////////////////////////////
@@ -760,7 +745,7 @@ SP = SP + 0030;
 
 
 ////////////////////////////////
-// func3dacc()
+// system_dma_additional_callback_inter()
 
 A2 = A0;
 A3 = w[80051574 + A2 * 4];

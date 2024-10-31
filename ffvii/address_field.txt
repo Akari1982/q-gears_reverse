@@ -192,8 +192,6 @@
 
 80095dcc []   ???
 80095dd0 [][] store here map id to whish trigger player character closer to load it's texture in advance.
-80095dd4 [][] set this to 0 when type 3 fade reach 22.
-80095ddc
 
 80095de0 array of stored background palletes (0x40 items 0x20 size)(each palette is 0x10 items 0x2 size).
 

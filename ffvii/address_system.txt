@@ -374,7 +374,9 @@
 
 80083580 we copy here akao sequence data when init music 0x10.
 
-80095dd4 [][]     ???
+80095dd4 [][]     render type func. Render called in separate thread so we set type of render func to call from main thread.
+                  0 - normal render.
+                  3 - battle swirl effect.
 
 800965ec [][]     current game state. Id same as 8009c560
                     1 - field.

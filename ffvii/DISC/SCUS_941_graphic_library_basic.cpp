@@ -746,55 +746,1089 @@ return V0;
 
 
 
+////////////////////////////////
+// func437ac
+
+800437AC	addiu  sp, sp, $ffd8 (=-$28)
+V0 = A0;
+[SP + 0018] = w(S0);
+S0 = A1;
+[SP + 001c] = w(S1);
+S1 = A2;
+A0 = SP + 0010;
+A1 = V0;
+V0 = 0100;
+[SP + 0014] = h(V0);
+V0 = 0001;
+[SP + 0020] = w(RA);
+[SP + 0010] = h(S0);
+[SP + 0012] = h(S1);
+800437E4	jal    system_psyq_load_image [$80044000]
+[SP + 0016] = h(V0);
+A0 = S0;
+800437F0	jal    system_create_clut_for_packet [$80046634]
+A1 = S1;
+V0 = V0 & ffff;
+RA = w[SP + 0020];
+S1 = w[SP + 001c];
+S0 = w[SP + 0018];
+SP = SP + 0028;
+8004380C	jr     ra 
+80043810	nop
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_graphic_create_draw_env_struct()
+
+[A0 + 00] = h(A1); // clip rect x
+[A0 + 02] = h(A2); // clip rect y
+[A0 + 04] = h(A3); // clip rect width
+[A0 + 06] = h(A4); // clip rect height
+[A0 + 08] = h(A1); // offset to primitive x
+[A0 + 0a] = h(A2); // offset to primitive y
+[A0 + 0c] = h(0); // texture window rect x
+[A0 + 0e] = h(0); // texture window rect y
+[A0 + 10] = h(0); // texture window rect width
+[A0 + 12] = h(0); // texture window rect height
+[A0 + 14] = h(a); // tpage
+[A0 + 16] = b(1); // dithering processing flag (on)
+[A0 + 17] = b(0); // drawing to display area is blocked
+[A0 + 18] = b(0); // not clear drawing area when drawing environment is set
+[A0 + 19] = b(0); // background color r
+[A0 + 1a] = b(0); // background color g
+[A0 + 1b] = b(0); // background color b
+
+return A0;
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_graphic_create_display_env_struct()
+
+[A0 + 00] = h(A1); // x
+[A0 + 02] = h(A2); // y
+[A0 + 04] = h(A3); // width
+[A0 + 06] = h(A4); // height
+[A0 + 08] = h(0);
+[A0 + 0a] = h(0);
+[A0 + 0c] = h(0);
+[A0 + 0e] = h(0);
+[A0 + 10] = b(0);
+[A0 + 11] = b(0);
+[A0 + 12] = b(0);
+[A0 + 13] = b(0);
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func43910
+80043910-80043924
+80043910	lui    v0, $8006
+V0 = w[V0 + 2bb4];
+80043918	lui    at, $8006
+[AT + 2bb4] = w(A0);
+80043920	jr     ra 
+80043924	nop
+////////////////////////////////
+// func43928
+80043928-80043934
+80043928	lui    v0, $8006
+V0 = w[V0 + 2bb4];
+80043930	jr     ra 
+80043934	nop
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_reset_graph()
+// Initialize drawing engine.
+// Resets the graphic system according to mode:
+// 0 Complete reset. The drawing environment and display environment are initialized.
+// 1 Cancels the current drawing and flushes the command buffer.
+// 3 Initializes the drawing engine while preserving the current display environment (i.e. the screen is not cleared or the screen mode changed).
+// This function does not actually change the display environment. It merely sets the members of the specified
+// structure as desired. Use PutDispEnv() with this structure to change the actual environment.
+// Note: While the screen width and height are set to (0, 0), internally they are processed as (256, 240).
+// Return value: Pointer to the display environment set.
+
+mode = A0;
+
+if( ( mode & 7 ) == 0 )
+{
+    A0 = 80010ccc; // "ResetGraph:jtb=%08x,env=%08x"
+    A1 = 80062bb8;
+    A2 = 80062c00;
+    system_bios_printf();
+
+    A0 = 80062c00;
+    V0 = 80 - 1;
+    loop46540:	; 80046540
+        [A0] = b(0);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
+
+    system_interrupts_timer_dma_initialize();
+
+    A0 = w[80062bf8] & 00ffffff;
+    system_bios_gpu_cw();
+
+    A0 = mode;
+    func4602c();
+    [80062c00] = b(V0); // 3 in normal cases
+
+    [80062c01] = b(1);
+
+    V0 = bu[80062c00];
+    [80062c04] = h(hu[80062c80 + V0 * 4]);
+    [80062c06] = h(hu[80062c94 + V0 * 4]);
+
+    A0 = 80062c00 + 10;
+    V0 = 5c - 1;
+    loop46540:	; 80046540
+        [A0] = b(-1);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
+
+    A0 = 80062c00 + 006c;
+    V0 = 14 - 1;
+    loop46540:	; 80046540
+        [A0] = b(-1);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
+
+    return bu[80062c00];
+}
+else
+{
+    if( bu[80062c02] >= 0002 )
+    {
+        A0 = 80010cec; // "ResetGraph(%d)..."
+        A1 = mode;
+        80043A58	jalr   w[80062bfc] ra
+    }
+
+    V0 = w[80062bf8];
+    A0 = 1;
+    80043A74	jalr   w[V0 + 34] ra
+}
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func43a94
+
+80043A94	lui    v0, $8006
+V0 = bu[V0 + 2c02];
+80043AA8	lui    s0, $8006
+S0 = S0 + 2c03;
+S2 = bu[S0 + 0000];
+V0 = V0 < 0002;
+80043AC0	bne    v0, zero, L43ae4 [$80043ae4]
+S1 = A0;
+80043AC8	lui    a0, $8001
+A0 = A0 + 0d00;
+80043AD0	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80043AD8	nop
+80043ADC	jalr   v0 ra
+A1 = S1;
+
+L43ae4:	; 80043AE4
+80043AE4	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+[S0 + 0000] = b(S1);
+V0 = w[V0 + 0028];
+80043AF4	nop
+80043AF8	jalr   v0 ra
+A0 = 0008;
+V1 = bu[S0 + 0000];
+80043B04	nop
+80043B08	beq    v1, zero, L43b1c [$80043b1c]
+A0 = V0;
+80043B10	lui    v0, $0800
+80043B14	j      L43b20 [$80043b20]
+V0 = V0 | 0080;
+
+L43b1c:	; 80043B1C
+80043B1C	lui    v0, $0800
+
+L43b20:	; 80043B20
+A0 = A0 | V0;
+80043B24	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+80043B2C	nop
+V0 = w[V0 + 0010];
+80043B34	nop
+80043B38	jalr   v0 ra
+80043B3C	nop
+80043B40	lui    v1, $8006
+V1 = bu[V1 + 2c00];
+V0 = 0002;
+80043B4C	bne    v1, v0, L43b8c [$80043b8c]
+V0 = S2;
+80043B54	lui    a0, $2000
+80043B58	lui    v0, $8006
+V0 = bu[V0 + 2c03];
+80043B60	lui    v1, $8006
+V1 = w[V1 + 2bf8];
+80043B68	beq    v0, zero, L43b78 [$80043b78]
+A0 = A0 | 0504;
+80043B70	lui    a0, $2000
+A0 = A0 | 0501;
+
+L43b78:	; 80043B78
+V0 = w[V1 + 0010];
+80043B7C	nop
+80043B80	jalr   v0 ra
+80043B84	nop
+V0 = S2;
+
+L43b8c:	; 80043B8C
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_set_graph_debug()
+
+S0 = bu[80062c02];
+[80062c02] = b(A0);
+
+if( A0 & 00ff )
+{
+    A0 = 80010d18; // "SetGraphDebug:level:%d,type:%d reverse:%d"
+    A1 = bu[80062c02];
+    A2 = bu[80062c00];
+    A3 = bu[80062c03];
+    80043BF4	jalr   w[80062bfc] ra
+}
+
+return S0;
+////////////////////////////////
 
 
 
+////////////////////////////////
+// fucn43c14
+
+80043C14	lui    v0, $8006
+V0 = bu[V0 + 2c02];
+80043C28	lui    s1, $8006
+S1 = S1 + 2c01;
+S2 = bu[S1 + 0000];
+V0 = V0 < 0002;
+80043C40	bne    v0, zero, L43c64 [$80043c64]
+S0 = A0;
+80043C48	lui    a0, $8001
+A0 = A0 + 0d44;
+80043C50	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80043C58	nop
+80043C5C	jalr   v0 ra
+A1 = S0;
+
+L43c64:	; 80043C64
+V0 = bu[S1 + 0000];
+80043C68	nop
+80043C6C	beq    s0, v0, L43ca4 [$80043ca4]
+V0 = S2;
+80043C74	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+80043C7C	nop
+V0 = w[V0 + 0034];
+80043C84	nop
+80043C88	jalr   v0 ra
+A0 = 0001;
+A0 = 0002;
+A1 = 0;
+80043C98	jal    system_dma_additional_callback [$8003d120]
+[S1 + 0000] = b(S0);
+V0 = S2;
+
+L43ca4:	; 80043CA4
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_gpu_get_type()
+
+return bu[80062c00];
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func43cd0()
+
+return bu[80062c02]; // get debug
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func43ce0
+
+80043CE0	lui    v0, $8006
+V0 = bu[V0 + 2c02];
+S0 = A0;
+V0 = V0 < 0002;
+80043CF8	bne    v0, zero, L43d18 [$80043d18]
+
+80043D00	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80043D08	lui    a0, $8001
+A0 = A0 + 0d58;
+80043D10	jalr   v0 ra
+A1 = S0;
+
+L43d18:	; 80043D18
+80043D18	lui    v0, $8006
+V0 = w[V0 + 2c0c];
+80043D20	lui    at, $8006
+[AT + 2c0c] = w(S0);
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_set_disp_mask()
+// Puts display mask into the status specified by mask.
+// mask = 0: not displayed on screen;
+// mask = 1; displayed on screen.
+
+mask = A0;
+
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010d74; // "SetDispMask(%d)..."
+    A1 = mask;
+    80043D7C	jalr   w[80062bfc] ra // system_bios_printf()
+}
+
+if( mask == 0 )
+{
+    A0 = 80062c6c;
+    A1 = -1;
+    A2 = 14;
+    func46530();
+}
+
+A0 = 03000001;
+if( mask != 0 )
+{
+    A0 = 03000000;
+}
+
+V0 = w[80062bf8];
+V0 = w[V0 + 10];
+80043DB8	jalr   v0 ra
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_draw_sync()
+// Waits for drawing to terminate.
+// If DrawSync(0) is used, and execution of the primitive list takes an exceptionally long time (approximately
+// longer than 8 Vsync) to complete, a timeout is generated and the GPU is reset. Reasons why this might
+// occur include an exceptionally long primitive list, or one that renders exceptionally large numbers of pixels.
+// Another possibility is that the primitive list has been corrupted in some way. To avoid this, the application
+// can use a loop such as:
+// while(DrawSync(1));
+// The following routines use the GPU queue, and therefore their termination can be detected using
+// DrawSync(), or by setting a callback with DrawSyncCallback(): ClearImage(), ClearImage2(), DrawOTag(),
+// DrawOTagEnv(), LoadImage(), MoveImage(), PutDrawEnv(), StoreImage().
+// Return value - Number of positions in the execution queue.
+
+type = A0;
+
+if( bu[80062c02] >= 0002 ) // debug
+{
+    A0 = 80010d88; // "DrawSync(%d)..."
+    A1 = type;
+    80043E0C	jalr   w[80062bfc] ra
+}
+
+V0 = w[80062bf8];
+V0 = w[V0 + 3c];
+A0 = type;
+80043E28	jalr   v0 ra
+
+return V0;
+////////////////////////////////
 
 
 
+////////////////////////////////
+// func43e44()
+
+string = A0;
+S0 = A1;
+
+if( bu[80062c02] == 1 ) // Checks coordinating registered and drawn primitives.
+{
+    if( ( h[80062c04] >= h[S0 + 4] ) && ( h[S0 + 4] > 0 ) && ( h[80062c04] >= h[S0 + 4] + h[S0 + 0] ) && ( h[S0 + 0] >= 0 ) &&
+        ( h[80062c06] >= h[S0 + 2] ) && ( h[S0 + 2] >= 0 ) && ( h[80062c06] >= h[S0 + 2] + h[S0 + 6] ) && (h[S0 + 6] > 0 ) )
+    {
+        return;
+    }
+
+    A0 = 80010d9c; // "%s:bad RECT"
+}
+else if( bu[80062c02] == 2 ) // Registered and drawn primitives are dumped.
+{
+    A0 = 80010dbc; // "%s:"
+}
+else
+{
+    return;
+}
+
+A1 = string;
+80043F28	jalr   w[80062bfc] ra
+
+A0 = 80010da8; // "(%d,%d)-(%d,%d)"
+A1 = h[S0 + 0];
+A2 = h[S0 + 2];
+A3 = h[S0 + 4];
+A4 = h[S0 + 6];
+80043F50	jalr   w[80062bfc] ra
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_clear_image()
+// Sets the rectangular area rect in the Frame Buffer to RGB color values (r, g, b).
+// Because this is a non-blocking function, the end of the operation must be detected using DrawSync() or by
+// installing a callback with DrawSyncCallback(). The drawing area is not affected by the drawing environment (clip/offset).
+// When the width and height of the rectangular area exceeds (w,h)=(1024,512), only the (w,h)=(1023,511) area is cleared.
+// When in interlace mode, use ClearImage2() instead.
+// Return value - position of this command in the libgpu command queue.
+
+rect = A0; // pointer to rectangular area to be cleared
+r = A1;
+g = A2;
+b = A3;
+
+A0 = 80010dc0; // "ClearImage"
+A1 = rect;
+func43e44(); // libgpu debug string
+
+V0 = w[80062bf8];
+A0 = w[V0 + c];
+A1 = rect;
+A2 = 8;
+A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
+80043FD8	jalr   w[V0 + 8] ra
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_load_image()
+// Transfer data to a frame buffer.
+// Transfers the contents of memory from the address p to the rectangular area in the frame buffer specified by recp.
+// Because LoadImage() is a non-blocking function, transmission termination must be detected by DrawSync()
+// or by installing a callback routine with DrawSyncCallback().
+// The source and destination areas are not affected by the drawing environment (clip, offset). The destination
+// area must be located within a drawable area (0, 0) - (1023, 511). See the description of the DR_LOAD primitive.
+// Return value position of this command in the libgpu command queue.
+
+S0 = A0; // RECT *recp, Pointer to destination rectangular area
+S1 = A1; // Pointer to main memory address of source of transmission
+
+A0 = 80010dcc; // "LoadImage"
+A1 = S0;
+func43e44(); // libgpu debug string
+
+A1 = S0;
+
+V0 = w[80062bf8];
+A0 = w[V0 + 20];
+V0 = w[V0 + 8];
+
+A2 = 8;
+A3 = S1;
+80044044	jalr   v0 ra
+////////////////////////////////
 
 
 
+////////////////////////////////
+// system_psyq_store_image()
+// Transfers the rectangular area of the frame buffer specified by recp to the main memory storage location
+// starting at the address specified by p.
+// Because StoreImage() is a non-blocking function, use DrawSync() to determine when the operation has
+// completed, or install a callback with DrawSyncCallback().
+// The source and destination areas are not affected by the drawing environment (clip, offset). The source
+// area must be located within a drawable area (0, 0) - (1023, 511).
+// Return value - position of this command in the libgpu command queue.
 
+recp = A0; // pointer to destination rectangular area
+p = A1; // pointer to main memory address of destination of transmission
+
+A0 = 80010dd8; // "StoreImage"
+A1 = recp;
+func43e44(); // libgpu debug string
+
+V0 = w[80062bf8];
+A0 = w[V0 + 1c];
+A1 = recp;
+A2 = 8;
+A3 = p;
+800440A8	jalr   w[V0 + 8] ra
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_move_image()
+
+S0 = A0;
+S2 = A1;
+S1 = A2;
+A0 = 80010de4; // "MoveImage"
+A1 = S0;
+800440F0	jal    func43e44 [$80043e44]
+
+V0 = h[S0 + 0004];
+800440FC	nop
+80044100	beq    v0, zero, L44170 [$80044170]
+80044104	addiu  v0, zero, $ffff (=-$1)
+V0 = h[S0 + 0006];
+8004410C	nop
+80044110	bne    v0, zero, L44120 [$80044120]
+V0 = S1 << 10;
+80044118	j      L44170 [$80044170]
+8004411C	addiu  v0, zero, $ffff (=-$1)
+
+L44120:	; 80044120
+V1 = S2 & ffff;
+V0 = V0 | V1;
+80044128	lui    a1, $8006
+A1 = A1 + 2cb0;
+A0 = w[S0 + 0000];
+80044134	lui    v1, $8006
+V1 = w[V1 + 2bf8];
+A2 = 0014;
+80044140	lui    at, $8006
+[AT + 2cb4] = w(V0);
+[A1 + 0000] = w(A0);
+V0 = w[S0 + 0004];
+A3 = 0;
+80044154	lui    at, $8006
+[AT + 2cb8] = w(V0);
+A0 = w[V1 + 0018];
+V0 = w[V1 + 0008];
+80044164	nop
+80044168	jalr   v0 ra
+8004416C	addiu  a1, a1, $fff8 (=-$8)
+
+L44170:	; 80044170
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_clear_o_tag()
+// Walks the array specified by ot and sets each element to be a pointer to the following element, except the
+// last, which is set to a pointer to a special terminator value which the PlayStation® uses to recognize the
+// end of a primitive list. n specifies the number entries in the array.
+// To execute the OT initialized by ClearOTag(), call DrawOTag(ot).
+
+S0 = A0;
+number_of_entries = A1;
+
+if( bu[80062c02] >= 2 )
+{
+    V0 = w[80062bfc];
+    A0 = 80010df0; // "ClearOTag(%08x,%d)..."
+    A1 = S0;
+    A2 = number_of_entries;
+    800441C8	jalr   v0 ra
+}
+
+number = number - 1;
+if( number != 0 )
+{
+    loop441e8:	; 800441E8
+        [S0] = w((S0 + 4) & 00ffffff);
+        S0 = S0 + 4;
+        number = number - 1;
+    80044208	bne    number, zero, loop441e8 [$800441e8]
+}
+
+[S0] = w(80062cbc & 00ffffff);
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_clear_o_tag_r()
+// Initialize an array to a linked list for use as an ordering table.
+// Walks the array specified by ot and sets each element to be a pointer to the previous element, except the
+// first, which is set to a pointer to a special terminator value which the PlayStation uses to recognize the end
+// of a primitive list. n specifies how many entries are present in the array.
+// To execute the OT initialized by ClearOTagR(), execute DrawOTag(ot+n-1).
+
+head = A0; // head pointer of OT
+number = A1; // number of entries in OT
+
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010e08; // "ClearOTagR(%08x,%d)..."
+    A1 = head;
+    A2 = number;
+    80044284	jalr   w[80062bfc] ra
+}
+
+V0 = w[80062bf8]; // 80062bb8
+A0 = head;
+A1 = number;
+800442A0	jalr   w[V0 + 2c] ra // func450f8
+
+[head] = w(80062cbc & 00ffffff);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func442dc
+
+S0 = A0;
+800442E8	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+V0 = w[V0 + 003c];
+S1 = bu[S0 + 0003];
+80044300	jalr   v0 ra
+A0 = 0;
+80044308	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+A0 = S0 + 0004;
+V0 = w[V0 + 0014];
+80044318	nop
+8004431C	jalr   v0 ra
+A1 = S1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_draw_otag()
+
+V0 = bu[80062c02];
+S0 = A0;
+V0 = V0 < 0002;
+if( V0 == 0 )
+{
+    A0 = 80010e20; // "DrawOTag(%08x)..."
+    V0 = w[80062bfc];
+    A1 = S0;
+    80044370	jalr   v0 ra
+
+}
+
+V0 = w[80062bf8];
+A0 = w[V0 + 18];
+A1 = S0;
+A2 = 0;
+A3 = 0;
+80044394	jalr   w[V0 + 8] ra
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_put_draw_env()
+// Set the drawing environment
+// The basic drawing parameters (such as the drawing offset and the drawing clip area) are set according to
+// the values specified in env.
+// The drawing environment is effective until the next time PutDrawEnv() is executed, or until the DR_ENV primitive is executed.
+// Return value - a pointer to the drawing environment set. On failure, returns 0
+
+S1 = A0; // pointer to drawing environment start address
+
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010e34; // "PutDrawEnv(%08x)..."
+    A1 = S1;
+    800443F4	jalr   w[80062bfc] ra
+}
+
+A0 = S1 + 1c;
+A1 = S1;
+system_prepare_draw_env_packets();
+
+[S1 + 1c] = w(w[S1 + 1c] | 00ffffff);
+
+V1 = w[80062bf8];
+A0 = w[V1 + 18];
+A1 = S1 + 1c;
+A2 = 40;
+A3 = 0;
+8004443C	jalr   w[V1 + 8] ra
+
+A0 = 80062c10;
+A1 = S1;
+A2 = 005c;
+system_bios_memcpy();
+
+return S1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func44474
+
+S0 = A0;
+A1 = 80062c10;
+A2 = 005c;
+system_bios_memcpy();
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_put_disp_env()
+
+S0 = A0;
+
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010e4c; // "PutDispEnv(%08x)..."
+    A1 = S0;
+    800444F8	jalr   w[80062bfc] ra
+}
+
+800444E0	lui    s2, $0800
+
+if( ( bu[80062c00] - 1 ) < 2 )
+{
+    8004451C	jal    func45024 [$80045024]
+    A0 = S0;
+    V1 = hu[S0 + 0002];
+    V0 = V0 & 0fff;
+    V1 = V1 & 0fff;
+    V1 = V1 << 0c;
+    V1 = V1 | V0;
+    80044538	j      L4455c [$8004455c]
+    8004453C	lui    v0, $0500
+}
+
+V0 = hu[S0 + 0002];
+V1 = hu[S0 + 0000];
+V0 = V0 & 03ff;
+V0 = V0 << 0a;
+V1 = V1 & 03ff;
+V0 = V0 | V1;
+80044558	lui    v1, $0500
+
+L4455c:	; 8004455C
+A0 = V0 | V1;
+80044560	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+80044568	nop
+V0 = w[V0 + 0010];
+80044570	nop
+80044574	jalr   v0 ra
+80044578	nop
+8004457C	lui    v1, $8006
+V1 = w[V1 + 2c74];
+V0 = w[S0 + 0008];
+80044588	nop
+8004458C	bne    v1, v0, L445ac [$800445ac]
+80044590	nop
+80044594	lui    v1, $8006
+V1 = w[V1 + 2c78];
+V0 = w[S0 + 000c];
+800445A0	nop
+800445A4	beq    v1, v0, L44768 [$80044768]
+800445A8	nop
+
+L445ac:	; 800445AC
+800445AC	jal    func43928 [$80043928]
+800445B0	nop
+V1 = h[S0 + 0008];
+[S0 + 0012] = b(V0);
+V0 = V1 << 02;
+V0 = V0 + V1;
+V0 = V0 << 01;
+A1 = V0 + 0260;
+V0 = bu[S0 + 0012];
+A0 = h[S0 + 000a];
+800445D4	bne    v0, zero, L445e0 [$800445e0]
+S1 = A0 + 0013;
+S1 = A0 + 0010;
+
+L445e0:	; 800445E0
+V1 = h[S0 + 000c];
+800445E4	nop
+800445E8	beq    v1, zero, L44600 [$80044600]
+V0 = V1 << 02;
+V0 = V0 + V1;
+V0 = V0 << 01;
+800445F8	j      L44604 [$80044604]
+A2 = A1 + V0;
+
+L44600:	; 80044600
+A2 = A1 + 0a00;
+
+L44604:	; 80044604
+V0 = h[S0 + 000e];
+80044608	nop
+8004460C	bne    v0, zero, L44618 [$80044618]
+S3 = S1 + V0;
+S3 = S1 + 00f0;
+
+L44618:	; 80044618
+V0 = A1 < 01f4;
+8004461C	bne    v0, zero, L44638 [$80044638]
+A0 = 01f4;
+A0 = A1;
+V0 = A0 < 0cdb;
+8004462C	bne    v0, zero, L4463c [$8004463c]
+A1 = A0;
+A0 = 0cda;
+
+L44638:	; 80044638
+A1 = A0;
+
+L4463c:	; 8004463C
+V1 = A1 + 0050;
+80044640	slt    v0, a2, v1
+80044644	bne    v0, zero, L44658 [$80044658]
+V0 = A2 < 0cdb;
+8004464C	bne    v0, zero, L44658 [$80044658]
+V1 = A2;
+V1 = 0cda;
+
+L44658:	; 80044658
+80044658	bltz   s1, L446ac [$800446ac]
+A2 = V1;
+V0 = bu[S0 + 0012];
+80044664	nop
+80044668	beq    v0, zero, L44680 [$80044680]
+V0 = S1 < 0137;
+80044670	beq    v0, zero, L4468c [$8004468c]
+80044674	nop
+80044678	j      L446b0 [$800446b0]
+A0 = S1;
+
+L44680:	; 80044680
+V0 = S1 < 00ff;
+80044684	bne    v0, zero, L446a4 [$800446a4]
+80044688	nop
+
+L4468c:	; 8004468C
+V0 = bu[S0 + 0012];
+80044690	nop
+80044694	beq    v0, zero, L446b0 [$800446b0]
+A0 = 00fe;
+8004469C	j      L446b0 [$800446b0]
+A0 = 0136;
+
+L446a4:	; 800446A4
+800446A4	j      L446b0 [$800446b0]
+A0 = S1;
+
+L446ac:	; 800446AC
+A0 = 0;
+
+L446b0:	; 800446B0
+S1 = A0;
+V1 = S1 + 0001;
+800446B8	slt    v0, s3, v1
+800446BC	bne    v0, zero, L4470c [$8004470c]
+800446C0	nop
+V0 = bu[S0 + 0012];
+800446C8	nop
+800446CC	beq    v0, zero, L446e4 [$800446e4]
+V0 = S3 < 0139;
+800446D4	beq    v0, zero, L446f0 [$800446f0]
+800446D8	nop
+800446DC	j      L4470c [$8004470c]
+V1 = S3;
+
+L446e4:	; 800446E4
+V0 = S3 < 0101;
+800446E8	bne    v0, zero, L44708 [$80044708]
+800446EC	nop
+
+L446f0:	; 800446F0
+V0 = bu[S0 + 0012];
+800446F4	nop
+800446F8	beq    v0, zero, L4470c [$8004470c]
+V1 = 0100;
+80044700	j      L4470c [$8004470c]
+V1 = 0138;
+
+L44708:	; 80044708
+V1 = S3;
+
+L4470c:	; 8004470C
+S3 = V1;
+V0 = A2 & 0fff;
+V0 = V0 << 0c;
+A0 = A1 & 0fff;
+8004471C	lui    v1, $0600
+80044720	lui    a1, $8006
+A1 = w[A1 + 2bf8];
+A0 = A0 | V1;
+V1 = w[A1 + 0010];
+80044730	nop
+80044734	jalr   v1 ra
+A0 = V0 | A0;
+V0 = S3 & 03ff;
+V0 = V0 << 0a;
+A0 = S1 & 03ff;
+80044748	lui    v1, $0700
+8004474C	lui    a1, $8006
+A1 = w[A1 + 2bf8];
+A0 = A0 | V1;
+V1 = w[A1 + 0010];
+8004475C	nop
+80044760	jalr   v1 ra
+A0 = V0 | A0;
+
+L44768:	; 80044768
+80044768	lui    v1, $8006
+V1 = w[V1 + 2c7c];
+V0 = w[S0 + 0010];
+80044774	nop
+80044778	bne    v1, v0, L447b0 [$800447b0]
+8004477C	nop
+80044780	lui    v1, $8006
+V1 = w[V1 + 2c6c];
+V0 = w[S0 + 0000];
+8004478C	nop
+80044790	bne    v1, v0, L447b0 [$800447b0]
+80044794	nop
+80044798	lui    v1, $8006
+V1 = w[V1 + 2c70];
+V0 = w[S0 + 0004];
+800447A4	nop
+800447A8	beq    v1, v0, L44898 [$80044898]
+800447AC	nop
+
+L447b0:	; 800447B0
+800447B0	jal    func43928 [$80043928]
+800447B4	nop
+[S0 + 0012] = b(V0);
+V1 = bu[S0 + 0012];
+V0 = 0001;
+800447C4	bne    v1, v0, L447d0 [$800447d0]
+800447C8	nop
+S2 = S2 | 0008;
+
+L447d0:	; 800447D0
+V0 = bu[S0 + 0011];
+800447D4	nop
+800447D8	beq    v0, zero, L447e4 [$800447e4]
+800447DC	nop
+S2 = S2 | 0010;
+
+L447e4:	; 800447E4
+V0 = bu[S0 + 0010];
+800447E8	nop
+800447EC	beq    v0, zero, L447f8 [$800447f8]
+800447F0	nop
+S2 = S2 | 0020;
+
+L447f8:	; 800447F8
+800447F8	lui    v0, $8006
+V0 = V0 + 2c03;
+V0 = bu[V0 + 0000];
+80044804	nop
+80044808	beq    v0, zero, L44814 [$80044814]
+8004480C	nop
+S2 = S2 | 0080;
+
+L44814:	; 80044814
+V1 = h[S0 + 0004];
+80044818	nop
+V0 = V1 < 0119;
+80044820	bne    v0, zero, L4485c [$8004485c]
+V0 = V1 < 0161;
+80044828	beq    v0, zero, L44838 [$80044838]
+V0 = V1 < 0191;
+80044830	j      L4485c [$8004485c]
+S2 = S2 | 0001;
+
+L44838:	; 80044838
+80044838	beq    v0, zero, L44848 [$80044848]
+V0 = V1 < 0231;
+80044840	j      L4485c [$8004485c]
+S2 = S2 | 0040;
+
+L44848:	; 80044848
+80044848	beq    v0, zero, L44858 [$80044858]
+8004484C	nop
+80044850	j      L4485c [$8004485c]
+S2 = S2 | 0002;
+
+L44858:	; 80044858
+S2 = S2 | 0003;
+
+L4485c:	; 8004485C
+V0 = bu[S0 + 0012];
+V1 = h[S0 + 0006];
+80044864	bne    v0, zero, L44870 [$80044870]
+V0 = V1 < 0121;
+V0 = V1 < 0101;
+
+L44870:	; 80044870
+80044870	bne    v0, zero, L4487c [$8004487c]
+80044874	nop
+S2 = S2 | 0024;
+
+L4487c:	; 8004487C
+8004487C	lui    v0, $8006
+V0 = w[V0 + 2bf8];
+80044884	nop
+V0 = w[V0 + 0010];
+8004488C	nop
+80044890	jalr   v0 ra
+A0 = S2;
+
+L44898:	; 80044898
+A0 = 80062c6c;
+A1 = S0;
+A2 = 14;
+system_bios_memcpy();
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_get_disp_env()
+
+S0 = A0;
+
+A0 = S0;
+A1 = 80062c6c;
+A2 = 14;
+system_bios_memcpy();
+
+return S0;
+////////////////////////////////
 
 
 
@@ -921,29 +1955,6 @@ return A0 + (w[texture + 0] / 4) + 2; // tim size in int
 
 
 
-////////////////////////////////
-// system_psyq_draw_otag()
-
-V0 = bu[80062c02];
-S0 = A0;
-V0 = V0 < 0002;
-if( V0 == 0 )
-{
-    A0 = 80010e20; // "DrawOTag(%08x)..."
-    V0 = w[80062bfc];
-    A1 = S0;
-    80044370	jalr   v0 ra
-
-}
-
-V0 = w[80062bf8];
-A0 = w[V0 + 18];
-A1 = S0;
-A2 = 0;
-A3 = 0;
-80044394	jalr   w[V0 + 8] ra
-////////////////////////////////
-
 
 
 ////////////////////////////////
@@ -1016,71 +2027,6 @@ if( bu[env + 18] != 0 )
 
 
 ////////////////////////////////
-// system_psyq_clear_o_tag()
-// Walks the array specified by ot and sets each element to be a pointer to the following element, except the
-// last, which is set to a pointer to a special terminator value which the PlayStation® uses to recognize the
-// end of a primitive list. n specifies the number entries in the array.
-// To execute the OT initialized by ClearOTag(), call DrawOTag(ot).
-
-S0 = A0;
-number_of_entries = A1;
-
-if( bu[80062c02] >= 2 )
-{
-    V0 = w[80062bfc];
-    A0 = 80010df0; // "ClearOTag(%08x,%d)..."
-    A1 = S0;
-    A2 = number_of_entries;
-    800441C8	jalr   v0 ra
-}
-
-number = number - 1;
-if( number != 0 )
-{
-    loop441e8:	; 800441E8
-        [S0] = w((S0 + 4) & 00ffffff);
-        S0 = S0 + 4;
-        number = number - 1;
-    80044208	bne    number, zero, loop441e8 [$800441e8]
-}
-
-[S0] = w(80062cbc & 00ffffff);
-
-return S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_clear_o_tag_r()
-// Initialize an array to a linked list for use as an ordering table.
-// Walks the array specified by ot and sets each element to be a pointer to the previous element, except the
-// first, which is set to a pointer to a special terminator value which the PlayStation uses to recognize the end
-// of a primitive list. n specifies how many entries are present in the array.
-// To execute the OT initialized by ClearOTagR(), execute DrawOTag(ot+n-1).
-
-head = A0; // head pointer of OT
-number = A1; // number of entries in OT
-
-if( bu[80062c02] >= 2 )
-{
-    A0 = 80010e08; // "ClearOTagR(%08x,%d)..."
-    A1 = head;
-    A2 = number;
-    80044284	jalr   w[80062bfc] ra
-}
-
-V0 = w[80062bf8]; // 80062bb8
-A0 = head;
-A1 = number;
-800442A0	jalr   w[V0 + 2c] ra // func450f8
-
-[head] = w(80062cbc & 00ffffff);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func450f8()
 
 head = A0;
@@ -1118,54 +2064,6 @@ if( w[dma6_channel_control] & 01000000 )
 }
 
 return number;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_move_image()
-
-S0 = A0;
-S2 = A1;
-S1 = A2;
-A0 = 80010de4; // "MoveImage"
-A1 = S0;
-800440F0	jal    func43e44 [$80043e44]
-
-V0 = h[S0 + 0004];
-800440FC	nop
-80044100	beq    v0, zero, L44170 [$80044170]
-80044104	addiu  v0, zero, $ffff (=-$1)
-V0 = h[S0 + 0006];
-8004410C	nop
-80044110	bne    v0, zero, L44120 [$80044120]
-V0 = S1 << 10;
-80044118	j      L44170 [$80044170]
-8004411C	addiu  v0, zero, $ffff (=-$1)
-
-L44120:	; 80044120
-V1 = S2 & ffff;
-V0 = V0 | V1;
-80044128	lui    a1, $8006
-A1 = A1 + 2cb0;
-A0 = w[S0 + 0000];
-80044134	lui    v1, $8006
-V1 = w[V1 + 2bf8];
-A2 = 0014;
-80044140	lui    at, $8006
-[AT + 2cb4] = w(V0);
-[A1 + 0000] = w(A0);
-V0 = w[S0 + 0004];
-A3 = 0;
-80044154	lui    at, $8006
-[AT + 2cb8] = w(V0);
-A0 = w[V1 + 0018];
-V0 = w[V1 + 0008];
-80044164	nop
-80044168	jalr   v0 ra
-8004416C	addiu  a1, a1, $fff8 (=-$8)
-
-L44170:	; 80044170
 ////////////////////////////////
 
 
@@ -1241,277 +2139,6 @@ A0 = w[80062d14];
 system_set_interrupt_mask_register();
 
 return -1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_clear_image()
-// Sets the rectangular area rect in the Frame Buffer to RGB color values (r, g, b).
-// Because this is a non-blocking function, the end of the operation must be detected using DrawSync() or by
-// installing a callback with DrawSyncCallback(). The drawing area is not affected by the drawing environment (clip/offset).
-// When the width and height of the rectangular area exceeds (w,h)=(1024,512), only the (w,h)=(1023,511) area is cleared.
-// When in interlace mode, use ClearImage2() instead.
-// Return value - position of this command in the libgpu command queue.
-
-rect = A0; // pointer to rectangular area to be cleared
-r = A1;
-g = A2;
-b = A3;
-
-A0 = 80010dc0; // "ClearImage"
-A1 = rect;
-func43e44(); // libgpu debug string
-
-V0 = w[80062bf8];
-A0 = w[V0 + c];
-A1 = rect;
-A2 = 8;
-A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
-80043FD8	jalr   w[V0 + 8] ra
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_set_graph_debug()
-
-S0 = bu[80062c02];
-[80062c02] = b(A0);
-
-if( A0 & 00ff )
-{
-    A0 = 80010d18; // "SetGraphDebug:level:%d,type:%d reverse:%d"
-    A1 = bu[80062c02];
-    A2 = bu[80062c00];
-    A3 = bu[80062c03];
-    80043BF4	jalr   w[80062bfc] ra
-}
-
-return S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_gpu_get_type()
-
-return bu[80062c00];
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func43cd0()
-
-return bu[80062c02]; // get debug
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_draw_sync()
-// Waits for drawing to terminate.
-// If DrawSync(0) is used, and execution of the primitive list takes an exceptionally long time (approximately
-// longer than 8 Vsync) to complete, a timeout is generated and the GPU is reset. Reasons why this might
-// occur include an exceptionally long primitive list, or one that renders exceptionally large numbers of pixels.
-// Another possibility is that the primitive list has been corrupted in some way. To avoid this, the application
-// can use a loop such as:
-// while(DrawSync(1));
-// The following routines use the GPU queue, and therefore their termination can be detected using
-// DrawSync(), or by setting a callback with DrawSyncCallback(): ClearImage(), ClearImage2(), DrawOTag(),
-// DrawOTagEnv(), LoadImage(), MoveImage(), PutDrawEnv(), StoreImage().
-// Return value - Number of positions in the execution queue.
-
-type = A0;
-
-if( bu[80062c02] >= 0002 ) // debug
-{
-    A0 = 80010d88; // "DrawSync(%d)..."
-    A1 = type;
-    80043E0C	jalr   w[80062bfc] ra
-}
-
-V0 = w[80062bf8];
-V0 = w[V0 + 3c];
-A0 = type;
-80043E28	jalr   v0 ra
-
-return V0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_load_image()
-// Transfer data to a frame buffer.
-// Transfers the contents of memory from the address p to the rectangular area in the frame buffer specified by recp.
-// Because LoadImage() is a non-blocking function, transmission termination must be detected by DrawSync()
-// or by installing a callback routine with DrawSyncCallback().
-// The source and destination areas are not affected by the drawing environment (clip, offset). The destination
-// area must be located within a drawable area (0, 0) - (1023, 511). See the description of the DR_LOAD primitive.
-// Return value position of this command in the libgpu command queue.
-
-S0 = A0; // RECT *recp, Pointer to destination rectangular area
-S1 = A1; // Pointer to main memory address of source of transmission
-
-A0 = 80010dcc; // "LoadImage"
-A1 = S0;
-func43e44(); // libgpu debug string
-
-A1 = S0;
-
-V0 = w[80062bf8];
-A0 = w[V0 + 20];
-V0 = w[V0 + 8];
-
-A2 = 8;
-A3 = S1;
-80044044	jalr   v0 ra
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_store_image()
-// Transfers the rectangular area of the frame buffer specified by recp to the main memory storage location
-// starting at the address specified by p.
-// Because StoreImage() is a non-blocking function, use DrawSync() to determine when the operation has
-// completed, or install a callback with DrawSyncCallback().
-// The source and destination areas are not affected by the drawing environment (clip, offset). The source
-// area must be located within a drawable area (0, 0) - (1023, 511).
-// Return value - position of this command in the libgpu command queue.
-
-recp = A0; // pointer to destination rectangular area
-p = A1; // pointer to main memory address of destination of transmission
-
-A0 = 80010dd8; // "StoreImage"
-A1 = recp;
-func43e44(); // libgpu debug string
-
-V0 = w[80062bf8];
-A0 = w[V0 + 1c];
-A1 = recp;
-A2 = 8;
-A3 = p;
-800440A8	jalr   w[V0 + 8] ra
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func43e44()
-
-string = A0;
-S0 = A1;
-
-if( bu[80062c02] == 1 ) // Checks coordinating registered and drawn primitives.
-{
-    if( ( h[80062c04] >= h[S0 + 4] ) && ( h[S0 + 4] > 0 ) && ( h[80062c04] >= h[S0 + 4] + h[S0 + 0] ) && ( h[S0 + 0] >= 0 ) &&
-        ( h[80062c06] >= h[S0 + 2] ) && ( h[S0 + 2] >= 0 ) && ( h[80062c06] >= h[S0 + 2] + h[S0 + 6] ) && (h[S0 + 6] > 0 ) )
-    {
-        return;
-    }
-
-    A0 = 80010d9c; // "%s:bad RECT"
-}
-else if( bu[80062c02] == 2 ) // Registered and drawn primitives are dumped.
-{
-    A0 = 80010dbc; // "%s:"
-}
-else
-{
-    return;
-}
-
-A1 = string;
-80043F28	jalr   w[80062bfc] ra
-
-A0 = 80010da8; // "(%d,%d)-(%d,%d)"
-A1 = h[S0 + 0];
-A2 = h[S0 + 2];
-A3 = h[S0 + 4];
-A4 = h[S0 + 6];
-80043F50	jalr   w[80062bfc] ra
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_reset_graph()
-// Initialize drawing engine.
-// Resets the graphic system according to mode:
-// 0 Complete reset. The drawing environment and display environment are initialized.
-// 1 Cancels the current drawing and flushes the command buffer.
-// 3 Initializes the drawing engine while preserving the current display environment (i.e. the screen is not cleared or the screen mode changed).
-// This function does not actually change the display environment. It merely sets the members of the specified
-// structure as desired. Use PutDispEnv() with this structure to change the actual environment.
-// Note: While the screen width and height are set to (0, 0), internally they are processed as (256, 240).
-// Return value: Pointer to the display environment set.
-
-mode = A0;
-
-if( ( mode & 7 ) == 0 )
-{
-    A0 = 80010ccc; // "ResetGraph:jtb=%08x,env=%08x"
-    A1 = 80062bb8;
-    A2 = 80062c00;
-    system_bios_printf();
-
-    A0 = 80062c00;
-    V0 = 80 - 1;
-    loop46540:	; 80046540
-        [A0] = b(0);
-        A0 = A0 + 1;
-        V0 = V0 - 1;
-    80046548	bne    v0, -1, loop46540 [$80046540]
-
-    func3d0c0();
-
-    A0 = w[80062bf8] & 00ffffff;
-    system_bios_gpu_cw();
-
-    A0 = mode;
-    func4602c();
-    [80062c00] = b(V0); // 3 in normal cases
-
-    [80062c01] = b(1);
-
-    V0 = bu[80062c00];
-    [80062c04] = h(hu[80062c80 + V0 * 4]);
-    [80062c06] = h(hu[80062c94 + V0 * 4]);
-
-    A0 = 80062c00 + 10;
-    V0 = 5c - 1;
-    loop46540:	; 80046540
-        [A0] = b(-1);
-        A0 = A0 + 1;
-        V0 = V0 - 1;
-    80046548	bne    v0, -1, loop46540 [$80046540]
-
-    A0 = 80062c00 + 006c;
-    V0 = 14 - 1;
-    loop46540:	; 80046540
-        [A0] = b(-1);
-        A0 = A0 + 1;
-        V0 = V0 - 1;
-    80046548	bne    v0, -1, loop46540 [$80046540]
-
-    return bu[80062c00];
-}
-else
-{
-    if( bu[80062c02] >= 0002 )
-    {
-        A0 = 80010cec; // "ResetGraph(%d)..."
-        A1 = mode;
-        80043A58	jalr   w[80062bfc] ra
-    }
-
-    V0 = w[80062bf8];
-    A0 = 1;
-    80043A74	jalr   w[V0 + 34] ra
-}
 ////////////////////////////////
 
 
@@ -1871,419 +2498,6 @@ packet = A1;
 
 [packet] = w((w[packet] & ff000000) | (w[ot] & 00ffffff));
 [ot] = w((w[ot] & ff000000) | (packet & 00ffffff));
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_put_draw_env()
-// Set the drawing environment
-// The basic drawing parameters (such as the drawing offset and the drawing clip area) are set according to
-// the values specified in env.
-// The drawing environment is effective until the next time PutDrawEnv() is executed, or until the DR_ENV primitive is executed.
-// Return value - a pointer to the drawing environment set. On failure, returns 0
-
-S1 = A0; // pointer to drawing environment start address
-
-if( bu[80062c02] >= 2 )
-{
-    A0 = 80010e34; // "PutDrawEnv(%08x)..."
-    A1 = S1;
-    800443F4	jalr   w[80062bfc] ra
-}
-
-A0 = S1 + 1c;
-A1 = S1;
-system_prepare_draw_env_packets();
-
-[S1 + 1c] = w(w[S1 + 1c] | 00ffffff);
-
-V1 = w[80062bf8];
-A0 = w[V1 + 18];
-A1 = S1 + 1c;
-A2 = 40;
-A3 = 0;
-8004443C	jalr   w[V1 + 8] ra
-
-A0 = 80062c10;
-A1 = S1;
-A2 = 005c;
-system_bios_memcpy();
-
-return S1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_put_disp_env()
-
-S0 = A0;
-
-if( bu[80062c02] >= 2 )
-{
-    A0 = 80010e4c; // "PutDispEnv(%08x)..."
-    A1 = S0;
-    800444F8	jalr   w[80062bfc] ra
-}
-
-800444E0	lui    s2, $0800
-
-if( ( bu[80062c00] - 1 ) < 2 )
-{
-    8004451C	jal    func45024 [$80045024]
-    A0 = S0;
-    V1 = hu[S0 + 0002];
-    V0 = V0 & 0fff;
-    V1 = V1 & 0fff;
-    V1 = V1 << 0c;
-    V1 = V1 | V0;
-    80044538	j      L4455c [$8004455c]
-    8004453C	lui    v0, $0500
-}
-
-V0 = hu[S0 + 0002];
-V1 = hu[S0 + 0000];
-V0 = V0 & 03ff;
-V0 = V0 << 0a;
-V1 = V1 & 03ff;
-V0 = V0 | V1;
-80044558	lui    v1, $0500
-
-L4455c:	; 8004455C
-A0 = V0 | V1;
-80044560	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80044568	nop
-V0 = w[V0 + 0010];
-80044570	nop
-80044574	jalr   v0 ra
-80044578	nop
-8004457C	lui    v1, $8006
-V1 = w[V1 + 2c74];
-V0 = w[S0 + 0008];
-80044588	nop
-8004458C	bne    v1, v0, L445ac [$800445ac]
-80044590	nop
-80044594	lui    v1, $8006
-V1 = w[V1 + 2c78];
-V0 = w[S0 + 000c];
-800445A0	nop
-800445A4	beq    v1, v0, L44768 [$80044768]
-800445A8	nop
-
-L445ac:	; 800445AC
-800445AC	jal    func43928 [$80043928]
-800445B0	nop
-V1 = h[S0 + 0008];
-[S0 + 0012] = b(V0);
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 01;
-A1 = V0 + 0260;
-V0 = bu[S0 + 0012];
-A0 = h[S0 + 000a];
-800445D4	bne    v0, zero, L445e0 [$800445e0]
-S1 = A0 + 0013;
-S1 = A0 + 0010;
-
-L445e0:	; 800445E0
-V1 = h[S0 + 000c];
-800445E4	nop
-800445E8	beq    v1, zero, L44600 [$80044600]
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 01;
-800445F8	j      L44604 [$80044604]
-A2 = A1 + V0;
-
-L44600:	; 80044600
-A2 = A1 + 0a00;
-
-L44604:	; 80044604
-V0 = h[S0 + 000e];
-80044608	nop
-8004460C	bne    v0, zero, L44618 [$80044618]
-S3 = S1 + V0;
-S3 = S1 + 00f0;
-
-L44618:	; 80044618
-V0 = A1 < 01f4;
-8004461C	bne    v0, zero, L44638 [$80044638]
-A0 = 01f4;
-A0 = A1;
-V0 = A0 < 0cdb;
-8004462C	bne    v0, zero, L4463c [$8004463c]
-A1 = A0;
-A0 = 0cda;
-
-L44638:	; 80044638
-A1 = A0;
-
-L4463c:	; 8004463C
-V1 = A1 + 0050;
-80044640	slt    v0, a2, v1
-80044644	bne    v0, zero, L44658 [$80044658]
-V0 = A2 < 0cdb;
-8004464C	bne    v0, zero, L44658 [$80044658]
-V1 = A2;
-V1 = 0cda;
-
-L44658:	; 80044658
-80044658	bltz   s1, L446ac [$800446ac]
-A2 = V1;
-V0 = bu[S0 + 0012];
-80044664	nop
-80044668	beq    v0, zero, L44680 [$80044680]
-V0 = S1 < 0137;
-80044670	beq    v0, zero, L4468c [$8004468c]
-80044674	nop
-80044678	j      L446b0 [$800446b0]
-A0 = S1;
-
-L44680:	; 80044680
-V0 = S1 < 00ff;
-80044684	bne    v0, zero, L446a4 [$800446a4]
-80044688	nop
-
-L4468c:	; 8004468C
-V0 = bu[S0 + 0012];
-80044690	nop
-80044694	beq    v0, zero, L446b0 [$800446b0]
-A0 = 00fe;
-8004469C	j      L446b0 [$800446b0]
-A0 = 0136;
-
-L446a4:	; 800446A4
-800446A4	j      L446b0 [$800446b0]
-A0 = S1;
-
-L446ac:	; 800446AC
-A0 = 0;
-
-L446b0:	; 800446B0
-S1 = A0;
-V1 = S1 + 0001;
-800446B8	slt    v0, s3, v1
-800446BC	bne    v0, zero, L4470c [$8004470c]
-800446C0	nop
-V0 = bu[S0 + 0012];
-800446C8	nop
-800446CC	beq    v0, zero, L446e4 [$800446e4]
-V0 = S3 < 0139;
-800446D4	beq    v0, zero, L446f0 [$800446f0]
-800446D8	nop
-800446DC	j      L4470c [$8004470c]
-V1 = S3;
-
-L446e4:	; 800446E4
-V0 = S3 < 0101;
-800446E8	bne    v0, zero, L44708 [$80044708]
-800446EC	nop
-
-L446f0:	; 800446F0
-V0 = bu[S0 + 0012];
-800446F4	nop
-800446F8	beq    v0, zero, L4470c [$8004470c]
-V1 = 0100;
-80044700	j      L4470c [$8004470c]
-V1 = 0138;
-
-L44708:	; 80044708
-V1 = S3;
-
-L4470c:	; 8004470C
-S3 = V1;
-V0 = A2 & 0fff;
-V0 = V0 << 0c;
-A0 = A1 & 0fff;
-8004471C	lui    v1, $0600
-80044720	lui    a1, $8006
-A1 = w[A1 + 2bf8];
-A0 = A0 | V1;
-V1 = w[A1 + 0010];
-80044730	nop
-80044734	jalr   v1 ra
-A0 = V0 | A0;
-V0 = S3 & 03ff;
-V0 = V0 << 0a;
-A0 = S1 & 03ff;
-80044748	lui    v1, $0700
-8004474C	lui    a1, $8006
-A1 = w[A1 + 2bf8];
-A0 = A0 | V1;
-V1 = w[A1 + 0010];
-8004475C	nop
-80044760	jalr   v1 ra
-A0 = V0 | A0;
-
-L44768:	; 80044768
-80044768	lui    v1, $8006
-V1 = w[V1 + 2c7c];
-V0 = w[S0 + 0010];
-80044774	nop
-80044778	bne    v1, v0, L447b0 [$800447b0]
-8004477C	nop
-80044780	lui    v1, $8006
-V1 = w[V1 + 2c6c];
-V0 = w[S0 + 0000];
-8004478C	nop
-80044790	bne    v1, v0, L447b0 [$800447b0]
-80044794	nop
-80044798	lui    v1, $8006
-V1 = w[V1 + 2c70];
-V0 = w[S0 + 0004];
-800447A4	nop
-800447A8	beq    v1, v0, L44898 [$80044898]
-800447AC	nop
-
-L447b0:	; 800447B0
-800447B0	jal    func43928 [$80043928]
-800447B4	nop
-[S0 + 0012] = b(V0);
-V1 = bu[S0 + 0012];
-V0 = 0001;
-800447C4	bne    v1, v0, L447d0 [$800447d0]
-800447C8	nop
-S2 = S2 | 0008;
-
-L447d0:	; 800447D0
-V0 = bu[S0 + 0011];
-800447D4	nop
-800447D8	beq    v0, zero, L447e4 [$800447e4]
-800447DC	nop
-S2 = S2 | 0010;
-
-L447e4:	; 800447E4
-V0 = bu[S0 + 0010];
-800447E8	nop
-800447EC	beq    v0, zero, L447f8 [$800447f8]
-800447F0	nop
-S2 = S2 | 0020;
-
-L447f8:	; 800447F8
-800447F8	lui    v0, $8006
-V0 = V0 + 2c03;
-V0 = bu[V0 + 0000];
-80044804	nop
-80044808	beq    v0, zero, L44814 [$80044814]
-8004480C	nop
-S2 = S2 | 0080;
-
-L44814:	; 80044814
-V1 = h[S0 + 0004];
-80044818	nop
-V0 = V1 < 0119;
-80044820	bne    v0, zero, L4485c [$8004485c]
-V0 = V1 < 0161;
-80044828	beq    v0, zero, L44838 [$80044838]
-V0 = V1 < 0191;
-80044830	j      L4485c [$8004485c]
-S2 = S2 | 0001;
-
-L44838:	; 80044838
-80044838	beq    v0, zero, L44848 [$80044848]
-V0 = V1 < 0231;
-80044840	j      L4485c [$8004485c]
-S2 = S2 | 0040;
-
-L44848:	; 80044848
-80044848	beq    v0, zero, L44858 [$80044858]
-8004484C	nop
-80044850	j      L4485c [$8004485c]
-S2 = S2 | 0002;
-
-L44858:	; 80044858
-S2 = S2 | 0003;
-
-L4485c:	; 8004485C
-V0 = bu[S0 + 0012];
-V1 = h[S0 + 0006];
-80044864	bne    v0, zero, L44870 [$80044870]
-V0 = V1 < 0121;
-V0 = V1 < 0101;
-
-L44870:	; 80044870
-80044870	bne    v0, zero, L4487c [$8004487c]
-80044874	nop
-S2 = S2 | 0024;
-
-L4487c:	; 8004487C
-8004487C	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80044884	nop
-V0 = w[V0 + 0010];
-8004488C	nop
-80044890	jalr   v0 ra
-A0 = S2;
-
-L44898:	; 80044898
-A0 = 80062c6c;
-A1 = S0;
-A2 = 14;
-system_bios_memcpy();
-
-return S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_get_disp_env()
-
-S0 = A0;
-
-A0 = S0;
-A1 = 80062c6c;
-A2 = 14;
-system_bios_memcpy();
-
-return S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_graphic_create_draw_env_struct()
-
-[A0 + 00] = h(A1); // clip rect x
-[A0 + 02] = h(A2); // clip rect y
-[A0 + 04] = h(A3); // clip rect width
-[A0 + 06] = h(A4); // clip rect height
-[A0 + 08] = h(A1); // offset to primitive x
-[A0 + 0a] = h(A2); // offset to primitive y
-[A0 + 0c] = h(0); // texture window rect x
-[A0 + 0e] = h(0); // texture window rect y
-[A0 + 10] = h(0); // texture window rect width
-[A0 + 12] = h(0); // texture window rect height
-[A0 + 14] = h(a); // tpage
-[A0 + 16] = b(1); // dithering processing flag (on)
-[A0 + 17] = b(0); // drawing to display area is blocked
-[A0 + 18] = b(0); // not clear drawing area when drawing environment is set
-[A0 + 19] = b(0); // background color r
-[A0 + 1a] = b(0); // background color g
-[A0 + 1b] = b(0); // background color b
-
-return A0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_graphic_create_display_env_struct()
-
-[A0 + 00] = h(A1); // x
-[A0 + 02] = h(A2); // y
-[A0 + 04] = h(A3); // width
-[A0 + 06] = h(A4); // height
-[A0 + 08] = h(0);
-[A0 + 0a] = h(0);
-[A0 + 0c] = h(0);
-[A0 + 0e] = h(0);
-[A0 + 10] = b(0);
-[A0 + 11] = b(0);
-[A0 + 12] = b(0);
-[A0 + 13] = b(0);
 ////////////////////////////////
 
 

@@ -336,6 +336,7 @@ while( true )
         }
     }
 
+    // wait until render sets to base 0
     while( hu[80095dd4] != 0 ) {}
 
     do

@@ -458,16 +458,19 @@ SP = SP + 0018;
 8003E284	jr     ra 
 8003E288	nop
 ////////////////////////////////
-// func3e28c
-8003E28C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
+
+
+////////////////////////////////
+// func3e28c()
+
 A1 = A0;
-8003E298	jal    func3d120 [$8003d120]
-A0 = 0003;
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003E2A8	jr     ra 
-8003E2AC	nop
+A0 = 3;
+system_dma_additional_callback();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3e2b0
 8003E2B0	addiu  sp, sp, $ffe8 (=-$18)
@@ -1504,11 +1507,11 @@ return 0;
 [8005163c] = w(0);
 [80051638] = w(0);
 
-func3d0c0();
+system_interrupts_timer_dma_initialize();
 
 A0 = 2;
 A1 = 8003faac;
-func3d0f0();
+system_int_set_interrupt_callback();
 ////////////////////////////////
 
 
@@ -1530,11 +1533,11 @@ system_bios_printf();
 [8005163c] = w(0);
 [80051638] = w(0);
 
-func3d0c0();
+system_interrupts_timer_dma_initialize();
 
 A0 = 2;
 A1 = 8003faac;
-func3d0f0();
+system_int_set_interrupt_callback();
 
 V1 = w[800518ec];
 [V1] = b(1);
@@ -4513,7 +4516,7 @@ return V0;
 S0 = A0;
 if( S0 == 0 )
 {
-    func3d0c0()
+    system_interrupts_timer_dma_initialize()
 }
 
 A0 = S0;
@@ -4676,27 +4679,25 @@ SP = SP + 0018;
 80042118	jr     ra 
 8004211C	nop
 ////////////////////////////////
-// func42120
-80042120	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A1 = A0;
-8004212C	jal    func3d120 [$8003d120]
-A0 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-8004213C	jr     ra 
-80042140	nop
+
+
+
 ////////////////////////////////
-// func42144
-80042144	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+// func42120()
+
 A1 = A0;
-80042150	jal    func3d120 [$8003d120]
-A0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80042160	jr     ra 
-80042164	nop
+A0 = 0;
+system_dma_additional_callback();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func42144()
+
+A1 = A0;
+A0 = 1;
+system_dma_additional_callback();
 ////////////////////////////////
 
 

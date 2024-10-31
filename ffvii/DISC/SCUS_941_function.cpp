@@ -127,10 +127,10 @@ V0 = V0 + 2cf4;
 V0 = 0;
 
 L45b70:	; 80045B70
-80045B70	lui    a1, $8004
-A1 = A1 + 5d18;
-80045B78	jal    func3d120 [$8003d120]
-A0 = 0 | 0002;
+A0 = 2;
+A1 = 80045d18;
+system_dma_additional_callback();
+
 80045B80	beq    s1, zero, L45c34 [$80045c34]
 A2 = 0;
 80045B88	lui    t0, $800a
@@ -245,42 +245,6 @@ S0 = w[SP + 0010];
 SP = SP + 0028;
 80045D10	jr     ra 
 80045D14	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_set_disp_mask()
-// Puts display mask into the status specified by mask.
-// mask = 0: not displayed on screen;
-// mask = 1; displayed on screen.
-
-mask = A0;
-
-if( bu[80062c02] >= 2 )
-{
-    A0 = 80010d74; // "SetDispMask(%d)..."
-    A1 = mask;
-    80043D7C	jalr   w[80062bfc] ra // system_bios_printf()
-}
-
-if( mask == 0 )
-{
-    A0 = 80062c6c;
-    A1 = -1;
-    A2 = 14;
-    func46530();
-}
-
-A0 = 03000001;
-if( mask != 0 )
-{
-    A0 = 03000000;
-}
-
-V0 = w[80062bf8];
-V0 = w[V0 + 10];
-80043DB8	jalr   v0 ra
 ////////////////////////////////
 
 

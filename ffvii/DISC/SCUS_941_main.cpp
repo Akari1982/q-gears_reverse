@@ -67,7 +67,7 @@ if( ( bu[8009d5e9] & 30 ) == 0 )
 [800707be] = h(hu[8009ac32]);
 [800707be] = h(bu[800716d0] | hu[8009ac32]);
 
-func146a4();
+func146a4(); // load BATTLE.X or BROM.X and run it
 
 [800716d0] = b(0);
 ////////////////////////////////
@@ -194,10 +194,10 @@ if( bu[80071a58] != 0 )
 
 switch( h[80095dd4] )
 {
-    case 1: func1146c(); break;
-    case 2: funcd8d78(); break;
-    case 3: func140a4(); break;
-    case 4: func22b5c(); break;
+    case 1: func1146c(); break; // some field render
+    case 2: funcd8d78(); break; // world map render
+    case 3: system_battle_swirl_render(); break;
+    case 4: func22b5c(); break; // menu render
 }
 
 if( ( bu[80062d98] == 0 ) && ( bu[80062d99] == 0 ) )
@@ -240,7 +240,7 @@ if( ( bu[80062d98] == 0 ) && ( bu[80062d99] == 0 ) )
 
 func3d1b4(); // disable dma, set default exit from exception
 
-func3d0c0(); // config interupts
+system_interrupts_timer_dma_initialize();
 
 A0 = 0;
 system_psyq_reset_graph();
@@ -252,7 +252,7 @@ func362b8(); // init spu
 
 // set render func
 A0 = 8001155c; // func1155c()
-func3d150();
+system_call_main_timer_additional_callback_0();
 
 A0 = 0;
 system_psyq_set_graph_debug();
@@ -492,7 +492,7 @@ system_cdrom_load_by_sector();
 // from FIELD\ENDING.X
 ending_main(); // looks like play squareenix logo
 
-func148b4();
+func148b4(); // load INIT\WINDOW.BIN and INIT\KERNEL.BIN
 
 while( true )
 {
@@ -534,7 +534,7 @@ while( true )
 
     if( V0 == 1 )
     {
-        func14934();
+        func14934(); // load INIT\KERNEL.BIN
 
         func26258();
 
@@ -679,7 +679,7 @@ while( true )
                 }
                 else
                 {
-                    if( ( ( hu[800707be] & 1 ) != 0 ) || ( w[8009d268] == 0 && ( ( w[80095ddc] & S7 ) != 0  ) ) )
+                    if( ( ( hu[800707be] & 1 ) != 0 ) || ( ( w[8009d268] == 0 ) && ( ( w[80095ddc] & S7 ) != 0  ) ) )
                     {
                         [800707be] = h(0);
                         [8009abf6 - 1] = b(1a);
@@ -999,52 +999,33 @@ while( true )
             func119e4();
 
             V0 = bu[8009abf5];
-            800123B4	addiu  v1, v0, $fff1 (=-$f)
+            V1 = V0 - f;
 
             switch( V1 )
             {
-                case 00:
-                {
-                    800123E0	jal    func24ecc [$80024ecc]
-                }
-                break;
+                case 0: func24ecc(); break;
+                case 1: func24f04(); break;
+                case 6: func250b4(); break;
+                case 9: func25040(); break;
 
-                case 01:
-                {
-                    800123F0	jal    func24f04 [$80024f04]
-                }
-                break;
-
-                case 02:
+                case 2:
                 {
                     A0 = h[8009abf6];
-                    80012408	jal    func24f3c [$80024f3c]
+                    func24f3c();
                 }
                 break;
 
-                case 06:
-                {
-                    80012418	jal    func250b4 [$800250b4]
-                }
-                break;
-
-                case 07:
+                case 7:
                 {
                     A0 = h[8009abf6];
-                    80012430	jal    func250ec [$800250ec]
+                    func250ec();
                 }
                 break;
 
-                case 08:
+                case 8:
                 {
                     A0 = h[8009abf6];
-                    80012448	jal    func25130 [$80025130]
-                }
-                break;
-
-                case 09:
-                {
-                    80012458	jal    func25040 [$80025040]
+                    func25130();
                 }
                 break;
             }
@@ -1142,32 +1123,4 @@ while( true )
 
     func299c8();
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func12840()
-
-A1 = A0;
-A0 = 0;
-A2 = 0;
-A3 = 0;
-system_create_texture_page_settings_for_packet;
-
-80012864	lui    s1, $800a
-80012868	addiu  s1, s1, $a068 (=-$5f98)
-8001286C	addu   a0, s1, zero
-80012870	addu   a1, zero, zero
-80012874	addu   a2, zero, zero
-80012878	andi   s0, v0, $ffff
-8001287C	addu   a3, s0, zero
-80012880	jal    system_gpu_create_texture_setting_packet [$80044a68]
-80012884	sw     zero, $0010(sp)
-80012888	addiu  a0, s1, $0030
-8001288C	addu   a1, zero, zero
-80012890	addu   a2, zero, zero
-80012894	addu   a3, s0, zero
-80012898	jal    system_gpu_create_texture_setting_packet [$80044a68]
-8001289C	sw     zero, $0010(sp)
 ////////////////////////////////

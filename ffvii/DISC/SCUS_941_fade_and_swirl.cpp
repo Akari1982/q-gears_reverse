@@ -1,4 +1,31 @@
 ﻿////////////////////////////////
+// func12840()
+
+A1 = A0;
+A0 = 0;
+A2 = 0;
+A3 = 0;
+system_create_texture_page_settings_for_packet();
+S0 = V0 & ffff;
+
+A0 = 8009a068;
+A1 = 0;
+A2 = 0;
+A3 = S0;
+A4 = 0;
+system_gpu_create_texture_setting_packet();
+
+A0 = 8009a068 + 30;
+A1 = 0;
+A2 = 0;
+A3 = S0;
+A4 = 0;
+system_gpu_create_texture_setting_packet();
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func128b8()
 
 for( int i = 0; i < 2; ++i )
@@ -254,7 +281,7 @@ if( bu[80071a58] == 3 )
     if( hu[8009ac42] == 22 )
     {
         [8009ac40] = h(0);
-        [80095dd4] = h(0);
+        [80095dd4] = h(0); // set render func to 0
         [80071a58] = b(0);
     }
 
@@ -271,7 +298,7 @@ else
     if( hu[8009ac42] == 12 )
     {
         [8009ac40] = h(0);
-        [80095dd4] = h(0);
+        [80095dd4] = h(0); // set render func to 0
         [80071a58] = b(0);
     }
 
@@ -337,7 +364,7 @@ switch( V1 )
         if (V0 == 22)
         {
             [8009abf4 + 4c] = h(0);
-            [80095dd4] = h(0);
+            [80095dd4] = h(0); // set render func to 0
         }
         else
         {
@@ -471,7 +498,7 @@ switch( V1 )
         if (V0 == 12)
         {
             [8009ac40] = h(0);
-            [80095dd4] = h(0);
+            [80095dd4] = h(0); // set render func to 0
         }
         else
         {
@@ -490,7 +517,7 @@ return;
 
 
 ////////////////////////////////
-// func13c9c()
+// system_battle_swirl_update()
 
 A0 = 80062d44;
 A1 = 0;
@@ -530,7 +557,7 @@ if( V1 >= 2f )
 
     if( w[8019da9c] >= 4f )
     {
-        [80095dd4] = h(0);
+        [80095dd4] = h(0); // set render func to 0
     }
 }
 else
@@ -627,7 +654,7 @@ for( int i = 0; i < 7; ++i )
 
 
 ////////////////////////////////
-// func140a4()
+// system_battle_swirl_render()
 
 [8019daa0] = w(w[8019daa0] + 1);
 
@@ -636,17 +663,16 @@ if( ( w[8019daa0] & 1 ) == 0 )
     A0 = w[8019d5e8];
     system_psyq_draw_otag();
 
-    func13c9c(); // render swirl
+    system_battle_swirl_update();
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func140f4()
-// swirl effect main
+// system_battle_swirl_init()
 
-[80095dd4] = h(0);
+[80095dd4] = h(0); // set render func to 0
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -808,7 +834,7 @@ A1 = 8019c000; // src
 A2 = af4; // size
 func14a00(); // copy to second buffer
 
-func13c9c(); // render
+system_battle_swirl_update();
 
-[80095dd4] = h(3); // set 3rd render func
+[80095dd4] = h(3); //  // set render func to 3 (swirl render)
 ////////////////////////////////

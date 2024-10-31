@@ -185,8 +185,6 @@ if( battle_id != ffff )
             A0 = hu[800f83a4 + 22] & ffdd;
             [800f83a4 + 22] = h(A0);
 
-
-
             // some petrify check
             V0 = hu[800f7dce]; // petrified units
             V1 = hu[8016375a];
@@ -204,24 +202,12 @@ if( battle_id != ffff )
                 [800f83a4 + 22] = h(A0 | 0022);
             }
 
-
-
-            if (hu[8016376A] & 0002 && w[8009d268] == 0)
+            if( ( hu[8016376a] & 0002 ) && ( w[8009d268] == 0 ) )
             {
-                V0 = hu[800f83a4 + 22];
-                V0 = V0 | 0030;
-                [800f83a4 + 22] = h(V0);
-
-                V0 = hu[800707be]; // battle result
-                V0 = V0 | 0002;
-                [800707be] = h(V0);
-
-                V1 = hu[80163624];
-                V1 = V1 & fff7;
-                [80163624] = h(V1);
+                [800f83a4 + 22] = h(hu[800f83a4 + 22] | 0030);
+                [800707be] = h(hu[800707be] | 0002); // battle result
+                [80163624] = h(hu[80163624] & fff7);
             }
-
-
 
             // possibly check to end battle
             if ((hu[800f83a4 + 2c] & 0004) && (bu[800f6b9b] == bu[800f6b94]))

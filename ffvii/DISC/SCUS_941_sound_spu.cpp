@@ -12,7 +12,7 @@ func362b8();
 
 S0 = A0;
 
-func3d0c0();
+system_interrupts_timer_dma_initialize();
 
 A0 = S0;
 func3642c();
@@ -845,7 +845,7 @@ while( w[SP + 0] < f0 )
 
 A1 = A0;
 A0 = 4;
-func3d120();
+system_dma_additional_callback();
 ////////////////////////////////
 
 
@@ -2921,7 +2921,7 @@ return S0;
 
 A1 = A0;
 A0 = 9;
-80038C54	jal    func3d0f0 [$8003d0f0]
+system_int_set_interrupt_callback();
 ////////////////////////////////
 
 
