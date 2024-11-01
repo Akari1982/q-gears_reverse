@@ -269,11 +269,10 @@
 // kawai_action_8
 800B4EAC-800B525C
 ////////////////////////////////
-// funcb5260
-// kawai_action_5
+// field_model_set_lighting_to_model_packets
 800B5260-800B5500
 ////////////////////////////////
-// funcb5504
+// field_model_set_lighting_to_part_packets
 800B5504-800B62C0
 ////////////////////////////////
 // kawai_action_9

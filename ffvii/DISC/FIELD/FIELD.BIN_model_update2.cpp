@@ -2357,7 +2357,7 @@ switch( b[model_data + 1] )
     // 2 800B0EDC field_model_set_color_to_model_packets()
     // 3 800B0618 funcb0618()
     // 4 800B2DD4 funcb2dd4()
-    // 5 800B5260 funcb5260()
+    // 5 800B5260 field_model_set_lighting_to_model_packets()
     // 6 800B480C kawai_action_6()
     // 7 800B4B04 kawai_action_7()
     // 8 800B4EAC kawai_action_8()
@@ -2467,7 +2467,7 @@ switch( b[model_data + 1] )
 
         A0 = model_data;
         A1 = 800dfe1c;
-        funcb5260();
+        field_model_set_lighting_to_model_packets();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -6237,8 +6237,7 @@ return 1;
 
 
 ////////////////////////////////
-// funcb5260()
-// kawai_action_5
+// field_model_set_lighting_to_model_packets()
 
 model_data = A0;
 kawai_data = A1;
@@ -6272,10 +6271,10 @@ L22L23 = w[A0 + 8];
 L31L32 = w[A0 + c];
 L33 = w[A0 + 10];
 
-[SP + 10] = h(hu[kawai_data + 0]);
-[SP + 12] = h(hu[kawai_data + 2]);
-[SP + 14] = h(hu[kawai_data + 4]);
-[SP + 16] = h(hu[kawai_data + 6]);
+[SP + 10] = h(hu[kawai_data + 0]); // x
+[SP + 12] = h(hu[kawai_data + 2]); // y
+[SP + 14] = h(hu[kawai_data + 4]); // z
+[SP + 16] = h(hu[kawai_data + 6]); // dist
 
 for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
@@ -6294,7 +6293,7 @@ for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 
         A0 = parts_data + i * 20;
         A1 = SP + 10;
-        funcb5504();
+        field_model_set_lighting_to_part_packets();
     }
 }
 
@@ -6304,10 +6303,12 @@ return 1;
 
 
 ////////////////////////////////
-// funcb5504()
+// field_model_set_lighting_to_part_packets()
 
 part_data = A0;
 kawai_data = A1;
+
+normals = 800df520;
 
 vertex_data = w[part_data + 18];
 
@@ -6328,13 +6329,14 @@ for( int i = 0; i < bu[part_data + 2]; ++i ) // vertex number
 
     A0 = x * x + y * y + z * z;
     system_square_root();
-    V0 += 2;
+    len += 2;
 
-    [1f800040 + i * 8 + 0] = h((x << c) / V0);
-    [1f800040 + i * 8 + 2] = h((y << c) / V0);
-    [1f800040 + i * 8 + 4] = h((z << c) / V0);
+    // normalize
+    [1f800040 + i * 8 + 0] = h((x << c) / len);
+    [1f800040 + i * 8 + 2] = h((y << c) / len);
+    [1f800040 + i * 8 + 4] = h((z << c) / len);
 
-    V0 = h[kawai_data + 6] - V0;
+    V0 = h[kawai_data + 6] - len;
     if( V0 < 0 ) V0 = 0;
 
     [1f800040 + i * 8 + 6] = h((V0 << c) / h[kawai_data + 6]);
@@ -6353,7 +6355,7 @@ A0 = 1f800020;
 A1 = 1f800000;
 system_gte_transpose_matrix();
 
-R11R12 = w[1f800000];
+R11R12 = w[1f800020];
 R13R21 = w[1f800024];
 R22R23 = w[1f800028];
 R31R32 = w[1f80002c];
@@ -6391,8 +6393,8 @@ for( int i = 0; i < bu[part_data + 4]; ++i )
             L13L21 = w[1f800004];
 
             V0 = bu[poly + j * 4 + 7];
-            VXY0 = w[800df520 + V0 * 8 + 0];
-            VZ0 = w[800df520 + V0 * 8 + 4];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
 
             RGB = w[poly + j * 4 + 4];
             gte_NCCS(); // Normal color col. v0
@@ -6430,8 +6432,8 @@ for( int i = 0; i < bu[part_data + 5]; ++i )
             L13L21 = w[1f800004];
 
             V0 = bu[poly + j * 4 + 7];
-            VXY0 = w[800df520 + V0 * 8 + 0];
-            VZ0 = w[800df520 + V0 * 8 + 4];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
 
             RGB = w[poly + j * 4 + 4];
             gte_NCCS(); // Normal color col. v0
@@ -6467,8 +6469,8 @@ for( int i = 0; i < bu[part_data + 6]; ++i )
         L13L21 = w[1f800004];
 
         V0 = bu[poly + 7];
-        VXY0 = w[800df520 + V0 * 8 + 0];
-        VZ0 = w[800df520 + V0 * 8 + 4];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
 
         RGB = w[poly + 4];
         gte_NCCS(); // Normal color col. v0
@@ -6503,8 +6505,8 @@ for( int i = 0; i < bu[part_data + 7]; ++i )
         L13L21 = w[1f800004];
 
         V0 = bu[poly + 7];
-        VXY0 = w[800df520 + V0 * 8 + 0];
-        VZ0 = w[800df520 + V0 * 8 + 4];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
 
         RGB = w[poly + 4];
         gte_NCCS(); // Normal color col. v0
@@ -6539,8 +6541,8 @@ for( int i = 0; i < bu[part_data + 8]; ++i )
         L13L21 = w[1f800004];
 
         V0 = bu[poly + 7];
-        VXY0 = w[800df520 + V0 * 8 + 0];
-        VZ0 = w[800df520 + V0 * 8 + 4];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
 
         RGB = w[poly + 4];
         gte_NCCS(); // Normal color col. v0
@@ -6575,8 +6577,8 @@ for( int i = 0; i < bu[part_data + 9]; ++i )
         L13L21 = w[1f800004];
 
         V0 = bu[poly + 7];
-        VXY0 = w[800df520 + V0 * 8 + 0];
-        VZ0 = w[800df520 + V0 * 8 + 4];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
 
         RGB = w[poly + 4];
         gte_NCCS(); // Normal color col. v0
@@ -6613,8 +6615,8 @@ for( int i = 0; i < bu[part_data + a]; ++i )
             L13L21 = w[1f800004];
 
             V0 = bu[poly + j * 4 + 7];
-            VXY0 = w[800df520 + V0 * 8 + 0];
-            VZ0 = w[800df520 + V0 * 8 + 4];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
 
             RGB = w[poly + 4 + j * 4];
             gte_NCCS(); // Normal color col. v0
@@ -6628,65 +6630,43 @@ for( int i = 0; i < bu[part_data + a]; ++i )
     poly += 10;
 }
 
-S2 = w[part_data + 8];
-
-FP = S2 >> 18;
-if( FP != 0 )
+for( int i = 0; i < bu[part_data + b]; ++i )
 {
-    S4 = 0;
-    T7 = packet + 0007;
+    if( w[packet + 0] != 0 )
+    {
+        S1 = bu[packet + 7];
 
-    loopb613c:	; 800B613C
-        V0 = w[packet + 0000];
-        if( V0 != 0 )
+        for( int j = 0; j < 4; ++j )
         {
-            S0 = poly;
-            S1 = bu[T7 + 0000];
-            A1 = 0;
-            T3 = packet + 0004;
-            T2 = 0004;
-            T1 = poly;
-            T0 = poly;
+            A0 = bu[poly + j];
+            [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
+            [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
+            [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
 
-            loopb6168:	; 800B6168
-                A0 = bu[T0 + 0];
-                [1f800000] = h((h[1f800040 + A0 * 8 + 0] * h[1f800040 + A0 * 8 + 6]) >> c);
-                [1f800002] = h((h[1f800040 + A0 * 8 + 2] * h[1f800040 + A0 * 8 + 6]) >> c);
-                [1f800004] = h((h[1f800040 + A0 * 8 + 4] * h[1f800040 + A0 * 8 + 6]) >> c);
+            VXY0 = w[1f800000];
+            VZ0 = w[1f800004];
+            gte_rtv0(); // v0 * rotmatrix
+            [1f800000] = h(IR1);
+            [1f800002] = h(IR2);
+            [1f800004] = h(IR3);
 
-                VXY0 = w[1f800000 + 0];
-                VZ0 = w[1f800000 + 4];
-                gte_rtv0(); // v0 * rotmatrix
-                [1f800000] = h(IR1);
-                [1f800002] = h(IR2);
-                [1f800004] = h(IR3);
+            L11L12 = w[1f800000];
+            L13L21 = w[1f800004];
 
-                L11L12 = w[1f800000];
-                L13L21 = w[1f800004];
+            V0 = bu[poly + j * 7 + 7];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
 
-                V0 = bu[T1 + 7];
-                VXY0 = w[800df520 + V0 * 8 + 0];
-                VZ0 = w[800df520 + V0 * 8 + 4];
-                RGB = w[S0 + T2 + 0];
-                gte_NCCS(); // Normal color col. v0
-                [T3 + 0000] = w(RGB2);
-                T3 = T3 + 0008;
-                T2 = T2 + 0004;
-                T1 = T1 + 0004;
-                A1 = A1 + 0001;
-                T0 = T0 + 0001;
-                V0 = A1 < 0004;
-            800B626C	bne    v0, zero, loopb6168 [$800b6168]
-
-            [T7 + 0000] = b(S1);
+            RGB = w[poly + 4 + j * 4];
+            gte_NCCS(); // Normal color col. v0
+            [packet + j * 8 + 4] = w(RGB2);
         }
 
-        S4 = S4 + 0001;
-        T7 = T7 + 0024;
-        packet = packet + 0024;
-        poly = poly + 0014;
-        V0 = S4 < FP;
-    800B6288	bne    v0, zero, loopb613c [$800b613c]
+        [packet + 7] = b(S1);
+    }
+
+    packet += 24;
+    poly += 14;
 }
 ////////////////////////////////
 
@@ -10418,7 +10398,7 @@ else if( V1 == 1 )
 
         A0 = model_data;
         A1 = 800dfe1c;
-        funcb5260(); // kawai 5
+        field_model_set_lighting_to_model_packets();
 
         // remove lighting calculation again
         for( int i = 0; i < parts_n; ++i )

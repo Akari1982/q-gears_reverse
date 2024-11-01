@@ -1832,128 +1832,117 @@ return S0;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ////////////////////////////////
-// system_read_tim_set_address()
+// func44908()
 
-[80070690] = w(A0);
-
-return 0;
+V0 = w[80062bf8];
+80044920	jalr   w[V0 + 38] ra
+return V0 >> 1f;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_read_tim()
+// func4493c()
 
-ret = A0;
+S0 = A0;
+V0 = 0002;
+A0 = A1;
+[S0 + 0003] = b(V0);
+system_gpu_get_texture_window_setting_command();
 
-A0 = w[80070690]; // texture addr
-A1 = ret;
-system_read_tim_get_sizes();
-
-if( V0 != -1 )
-{
-    [80070690] = w(w[80070690] + V0 * 4); // offset to next tim
-    return ret;
-}
-return 0;
+[S0 + 0004] = w(V0);
+[S0 + 0008] = w(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_read_tim_get_sizes()
+// func44978()
 
-texture = A0;
-ret = A1;
+S1 = A0;
+S0 = A1;
+V0 = 0002;
+[S1 + 0003] = b(V0);
+A0 = h[S0 + 0000];
+A1 = h[S0 + 0002];
+system_gpu_set_drawing_area_top_left();
 
-if( w[texture] != 10 )
-{
-    return -1;
-}
-texture = texture + 4;
-[ret + 0] = w(w[texture]); // bpp
-texture = texture + 4;
+[S1 + 0004] = w(V0);
+A0 = hu[S0 + 0000];
+V0 = hu[S0 + 0004];
+A1 = hu[S0 + 0002];
+A0 = A0 + V0;
+800449BC	addiu  a0, a0, $ffff (=-$1)
+A0 = A0 << 10;
+V0 = hu[S0 + 0006];
+A0 = A0 >> 10;
+A1 = A1 + V0;
+800449D0	addiu  a1, a1, $ffff (=-$1)
+A1 = A1 << 10;
+A1 = A1 >> 10;
+system_gpu_set_drawing_area_bottom_right();
 
-func43cd0();
-if( V0 == 2 )
-{
-    A0 = 80010f80; // "id  =%08x"
-    A1 = 10;
-    system_bios_printf();
-
-    A0 = 80010f8c; // "mode=%08x"
-    A1 = w[ret + 0];
-    system_bios_printf();
-
-    A0 = 80010f98; // "timaddr=%08x"
-    A1 = texture;
-    system_bios_printf();
-}
-
-if( w[ret + 0] & 8 )
-{
-    [ret + 4] = w(texture + 4); // clut sizes
-    [ret + 8] = w(texture + c); // clut data
-    A0 = w[texture + 0] / 4; // clut length
-    texture = texture + (A0 * 4);
-}
-else
-{
-    A0 = 0;
-    [ret + 4] = w(0);
-    [ret + 8] = w(0);
-}
-
-[ret + c] = w(texture + 4); // image sizes
-[ret + 10] = w(texture + c); // image data
-
-return A0 + (w[texture + 0] / 4) + 2; // tim size in int
+[S1 + 0008] = w(V0);
 ////////////////////////////////
 
 
+
+////////////////////////////////
+// func449fc()
+
+S0 = A0;
+V0 = 0002;
+[S0 + 0003] = b(V0);
+A0 = h[A1 + 0000];
+A1 = h[A1 + 0002];
+system_gpu_set_drawing_offset();
+
+[S0 + 0004] = w(V0);
+[S0 + 0008] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func44a40()
+
+V0 = 0002;
+[A0 + 0003] = b(V0);
+80044A48	beq    a1, zero, L44a54 [$80044a54]
+80044A4C	lui    v1, $e600
+V1 = V1 | 0002;
+
+L44a54:	; 80044A54
+V0 = 0 < A2;
+V0 = V1 | V0;
+[A0 + 0004] = w(V0);
+[A0 + 0008] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_create_texture_setting_packet()
+
+buffer = A0;
+display_area = A1;
+dithering = A2;
+init_value = A3;
+window_rect = A4;
+
+[buffer + 3] = b(2);
+
+A0 = display_area; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
+A1 = dithering; // dithering processing flag. 0: off; 1: on
+A2 = init_value; // initial values of texture page
+system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
+[buffer + 4] = w(V0);
+
+A0 = window_rect; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
+system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
+[buffer + 8] = w(V0);
+////////////////////////////////
 
 
 
@@ -2027,6 +2016,204 @@ if( bu[env + 18] != 0 )
 
 
 ////////////////////////////////
+// system_gpu_get_draw_mode_setting_command()
+
+if( ( bu[80062c00] - 1 ) < 2 ) // old gpu
+{
+    if( A1 != 0 )
+    {
+        V1 = 00000800;
+    }
+
+    V0 = A2 & 27ff;
+
+    if( A0 != 0 )
+    {
+        V0 = V0 | 00001000;
+    }
+}
+else
+{
+    if( A1 != 0 )
+    {
+        V1 = 00000200; // Dither 24bit to 15bit Dither Enabled
+    }
+
+    //  0-3   Texture page X Base   (N*64) (ie. in 64-halfword steps)    ;GPUSTAT.0-3
+    //  4     Texture page Y Base   (N*256) (ie. 0 or 256)               ;GPUSTAT.4
+    //  5-6   Semi Transparency     (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)   ;GPUSTAT.5-6
+    //  7-8   Texture page colors   (0=4bit, 1=8bit, 2=15bit, 3=Reserved);GPUSTAT.7-8
+    //  11    Texture Disable (0=Normal, 1=Disable if GP1(09h).Bit0=1)   ;GPUSTAT.15
+    V0 = A2 & 09ff;
+
+    if( A0 != 0 )
+    {
+        V0 = V0 | 00000400; // Drawing to display area Allowed
+    }
+}
+
+// GP0(E1h) - Draw Mode setting (aka "Texpage")
+return e1000000 | V1 | V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_set_drawing_area_top_left()
+
+x = (A0 << 10) >> 10;
+y = (A1 << 10) >> 10;
+
+width = h[80062c04] - 1;
+height = h[80062c06] - 1;
+
+x = ( x >= 0 ) ? ( ( width < x ) ? width : x ) : 0;
+y = ( y >= 0 ) ? ( ( height < y ) ? height : y ) : 0;
+
+if( ( bu[80062c00] - 1 ) >= 2 )
+{
+    return e3000000 | ((y & 03ff) << a) | (x & 03ff);
+}
+else
+{
+    return e3000000 | ((y & 0fff) << c) | (x & 0fff);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_set_drawing_area_bottom_right()
+
+x = (A0 << 10) >> 10;
+y = (A1 << 10) >> 10;
+
+width = h[80062c04] - 1;
+height = h[80062c06] - 1;
+
+x = ( x >= 0 ) > ( ( width < x ) ? width : x ) : 0;
+y = ( y >= 0 ) > ( ( height < y ) ? height : y ) : 0;
+
+if( bu[80062c00] - 1 >= 2 )
+{
+    return e4000000 | ((A1 & 03ff) << a) | (x & 03ff);
+}
+else
+{
+    return e4000000 | ((A1 & 0fff) << c) | (x & 0fff);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_set_drawing_offset()
+
+if( ( bu[80062c00] - 1 ) >= 2 )
+{
+    return e5000000 | ((A1 & 07ff) << 0b) | (A0 & 07ff);
+}
+else
+{
+    return e5000000 | ((A1 & 0fff) << 0c) | (A0 & 0fff);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_gpu_get_texture_window_setting_command()
+
+A0 = A0; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
+
+if( A0 == 0 )
+{
+    return 0;
+}
+
+off_x = bu[A0 + 0] >> 3;
+off_y = bu[A0 + 2] >> 3;
+mask_x = ((0 - h[A0 + 4]) & ff) >> 3;
+mask_y = ((0 - h[A0 + 6]) & ff) >> 3;
+return e2000000 | (off_y << f) | (off_x << a) | (mask_y << 5) | mask_x;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45024()
+
+80045024	lui    v0, $8006
+V0 = V0 + 2c00;
+V0 = bu[V0 + 0000];
+80045030	nop
+V1 = V0 & 00ff;
+V0 = 0001;
+8004503C	beq    v1, v0, L45054 [$80045054]
+V0 = 0002;
+80045044	beq    v1, v0, L4507c [$8004507c]
+80045048	nop
+8004504C	j      L450d4 [$800450d4]
+80045050	nop
+
+L45054:	; 80045054
+80045054	lui    v0, $8006
+V0 = bu[V0 + 2c03];
+8004505C	nop
+80045060	beq    v0, zero, L450d4 [$800450d4]
+V0 = 0400;
+V1 = h[A0 + 0004];
+A0 = h[A0 + 0000];
+
+L45070:	; 80045070
+V0 = V0 - V1;
+80045074	j      L450d8 [$800450d8]
+V0 = V0 - A0;
+
+L4507c:	; 8004507C
+8004507C	lui    v0, $8006
+V0 = bu[V0 + 2c03];
+80045084	nop
+80045088	beq    v0, zero, L450b4 [$800450b4]
+8004508C	nop
+V0 = hu[A0 + 0004];
+A0 = h[A0 + 0000];
+V0 = V0 << 10;
+V1 = V0 >> 10;
+V0 = V0 >> 1f;
+V1 = V1 + V0;
+V1 = V1 >> 01;
+800450AC	j      L45070 [$80045070]
+V0 = 0400;
+
+L450b4:	; 800450B4
+V0 = hu[A0 + 0000];
+800450B8	nop
+V0 = V0 << 10;
+V1 = V0 >> 10;
+V0 = V0 >> 1f;
+V1 = V1 + V0;
+800450CC	j      L450d8 [$800450d8]
+V0 = V1 >> 01;
+
+L450d4:	; 800450D4
+V0 = h[A0 + 0000];
+
+L450d8:	; 800450D8
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func450e0()
+
+V0 = w[80062cd4];
+return w[V0 + 0];
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func450f8()
 
 head = A0;
@@ -2064,6 +2251,1266 @@ if( w[dma6_channel_control] & 01000000 )
 }
 
 return number;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func451e0
+800451E0	addiu  sp, sp, $ffe0 (=-$20)
+T0 = A0;
+[SP + 0018] = w(RA);
+[SP + 0014] = w(S1);
+[SP + 0010] = w(S0);
+V1 = h[T0 + 0004];
+800451F8	nop
+800451FC	bltz   v1, L45238 [$80045238]
+T1 = A1;
+80045204	lui    v0, $8006
+V0 = V0 + 2c04;
+V0 = hu[V0 + 0000];
+80045210	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+8004521C	addiu  a0, v0, $ffff (=-$1)
+80045220	slt    v0, a0, v1
+80045224	beq    v0, zero, L4523c [$8004523c]
+V0 = V1;
+V1 = A0;
+80045230	j      L4523c [$8004523c]
+V0 = V1;
+
+L45238:	; 80045238
+V0 = 0;
+
+L4523c:	; 8004523C
+V1 = h[T0 + 0006];
+80045240	nop
+80045244	bltz   v1, L4527c [$8004527c]
+[T0 + 0004] = h(V0);
+8004524C	lui    v0, $8006
+V0 = V0 + 2c06;
+V0 = hu[V0 + 0000];
+80045258	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+80045264	addiu  a0, v0, $ffff (=-$1)
+80045268	slt    v0, a0, v1
+8004526C	beq    v0, zero, L45280 [$80045280]
+80045270	nop
+80045274	j      L45280 [$80045280]
+V1 = A0;
+
+L4527c:	; 8004527C
+V1 = 0;
+
+L45280:	; 80045280
+V0 = hu[T0 + 0000];
+80045284	nop
+V0 = V0 & 003f;
+8004528C	bne    v0, zero, L452a8 [$800452a8]
+[T0 + 0006] = h(V1);
+V0 = hu[T0 + 0004];
+80045298	nop
+V0 = V0 & 003f;
+800452A0	beq    v0, zero, L45380 [$80045380]
+800452A4	lui    v0, $04ff
+
+L452a8:	; 800452A8
+800452A8	lui    a0, $00ff
+A0 = A0 | ffff;
+800452B0	lui    a1, $e4ff
+A1 = A1 | ffff;
+800452B8	lui    a3, $03ff
+800452BC	lui    a2, $8007
+A2 = A2 + 0570;
+V0 = A2 & A0;
+800452C8	lui    v1, $0700
+V0 = V0 | V1;
+800452D0	lui    s0, $e300
+800452D4	lui    s1, $e500
+800452D8	lui    at, $8007
+[AT + 0550] = w(V0);
+800452E0	lui    v0, $e600
+A0 = T1 & A0;
+800452E8	lui    at, $8007
+[AT + 0560] = w(V0);
+800452F0	lui    v0, $6000
+A0 = A0 | V0;
+800452F8	lui    at, $8007
+[AT + 0554] = w(S0);
+80045300	lui    at, $8007
+[AT + 0558] = w(A1);
+80045308	lui    at, $8007
+[AT + 055c] = w(S1);
+80045310	lui    at, $8007
+[AT + 0564] = w(A0);
+V0 = w[T0 + 0000];
+A3 = A3 | ffff;
+80045320	lui    at, $8007
+[AT + 0568] = w(V0);
+V0 = w[T0 + 0004];
+[A2 + 0000] = w(A3);
+80045330	lui    at, $8007
+[AT + 056c] = w(V0);
+80045338	jal    func459d0 [$800459d0]
+A0 = 0003;
+V0 = V0 | S0;
+80045344	lui    at, $8007
+[AT + 0574] = w(V0);
+8004534C	jal    func459d0 [$800459d0]
+A0 = 0004;
+80045354	lui    v1, $e400
+V0 = V0 | V1;
+8004535C	lui    at, $8007
+[AT + 0578] = w(V0);
+80045364	jal    func459d0 [$800459d0]
+A0 = 0005;
+V0 = V0 | S1;
+80045370	lui    at, $8007
+[AT + 057c] = w(V0);
+80045378	j      L453d4 [$800453d4]
+8004537C	nop
+
+L45380:	; 80045380
+V0 = V0 | ffff;
+80045384	lui    v1, $00ff
+V1 = V1 | ffff;
+8004538C	lui    at, $8007
+[AT + 0550] = w(V0);
+80045394	lui    v0, $e600
+V1 = T1 & V1;
+8004539C	lui    at, $8007
+[AT + 0554] = w(V0);
+800453A4	lui    v0, $0200
+V1 = V1 | V0;
+800453AC	lui    at, $8007
+[AT + 0558] = w(V1);
+V0 = w[T0 + 0000];
+800453B8	nop
+800453BC	lui    at, $8007
+[AT + 055c] = w(V0);
+V0 = w[T0 + 0004];
+800453C8	nop
+800453CC	lui    at, $8007
+[AT + 0560] = w(V0);
+
+L453d4:	; 800453D4
+800453D4	lui    a0, $8007
+A0 = A0 + 0550;
+800453DC	jal    func45984 [$80045984]
+800453E0	nop
+V0 = 0;
+RA = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0020;
+800453F8	jr     ra 
+800453FC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45400
+80045400	addiu  sp, sp, $ffc0 (=-$40)
+[SP + 0024] = w(S1);
+S1 = A0;
+[SP + 0028] = w(S2);
+S2 = A1;
+[SP + 0038] = w(RA);
+[SP + 0034] = w(S5);
+[SP + 0030] = w(S4);
+[SP + 002c] = w(S3);
+80045424	jal    func462b0 [$800462b0]
+[SP + 0020] = w(S0);
+A0 = h[S1 + 0004];
+S5 = 0;
+80045434	bltz   a0, L4546c [$8004546c]
+V1 = A0;
+8004543C	lui    a1, $8006
+A1 = A1 + 2c04;
+V0 = hu[A1 + 0000];
+80045448	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+80045454	slt    v0, v0, a0
+80045458	beq    v0, zero, L45470 [$80045470]
+8004545C	nop
+V1 = hu[A1 + 0000];
+80045464	j      L45470 [$80045470]
+80045468	nop
+
+L4546c:	; 8004546C
+V1 = 0;
+
+L45470:	; 80045470
+A1 = h[S1 + 0006];
+[S1 + 0004] = h(V1);
+80045478	bltz   a1, L454b0 [$800454b0]
+V1 = A1;
+80045480	lui    a2, $8006
+A2 = A2 + 2c06;
+V0 = hu[A2 + 0000];
+8004548C	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+80045498	slt    v0, v0, a1
+8004549C	beq    v0, zero, L454b4 [$800454b4]
+A0 = V1;
+A0 = hu[A2 + 0000];
+800454A8	j      L454b8 [$800454b8]
+V0 = A0 << 10;
+
+L454b0:	; 800454B0
+A0 = 0;
+
+L454b4:	; 800454B4
+V0 = A0 << 10;
+
+L454b8:	; 800454B8
+V1 = h[S1 + 0004];
+V0 = V0 >> 10;
+800454C0	mult   v1, v0
+[S1 + 0006] = h(A0);
+800454C8	mflo   v0
+V0 = V0 + 0001;
+V1 = V0 >> 1f;
+V0 = V0 + V1;
+A0 = V0 >> 01;
+800454DC	bgtz   a0, L454ec [$800454ec]
+S0 = V0 >> 05;
+800454E4	j      L4562c [$8004562c]
+800454E8	addiu  v0, zero, $ffff (=-$1)
+
+L454ec:	; 800454EC
+V1 = S0;
+V0 = V1 << 04;
+S0 = A0 - V0;
+800454F8	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+S4 = V1;
+V0 = w[V0 + 0000];
+80045508	lui    v1, $0400
+V0 = V0 & V1;
+80045510	bne    v0, zero, L4554c [$8004554c]
+80045514	lui    a0, $a000
+80045518	lui    s3, $0400
+
+loop4551c:	; 8004551C
+8004551C	jal    func462e4 [$800462e4]
+80045520	nop
+80045524	bne    v0, zero, L4562c [$8004562c]
+80045528	addiu  v0, zero, $ffff (=-$1)
+8004552C	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+80045534	nop
+V0 = w[V0 + 0000];
+8004553C	nop
+V0 = V0 & S3;
+80045544	beq    v0, zero, loop4551c [$8004551c]
+80045548	lui    a0, $a000
+
+L4554c:	; 8004554C
+8004554C	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+80045554	lui    v0, $0400
+[V1 + 0000] = w(V0);
+8004555C	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+80045564	lui    v0, $0100
+[V1 + 0000] = w(V0);
+8004556C	lui    v0, $8006
+V0 = w[V0 + 2cd0];
+80045574	beq    s5, zero, L45580 [$80045580]
+80045578	nop
+8004557C	lui    a0, $b000
+
+L45580:	; 80045580
+[V0 + 0000] = w(A0);
+80045584	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+V0 = w[S1 + 0000];
+80045590	nop
+[V1 + 0000] = w(V0);
+80045598	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+V0 = w[S1 + 0004];
+800455A4	addiu  s0, s0, $ffff (=-$1)
+[V1 + 0000] = w(V0);
+800455AC	addiu  v0, zero, $ffff (=-$1)
+800455B0	beq    s0, v0, L455dc [$800455dc]
+800455B4	nop
+800455B8	addiu  a0, zero, $ffff (=-$1)
+
+loop455bc:	; 800455BC
+V1 = w[S2 + 0000];
+S2 = S2 + 0004;
+800455C4	lui    v0, $8006
+V0 = w[V0 + 2cd0];
+800455CC	addiu  s0, s0, $ffff (=-$1)
+[V0 + 0000] = w(V1);
+800455D4	bne    s0, a0, loop455bc [$800455bc]
+800455D8	nop
+
+L455dc:	; 800455DC
+800455DC	beq    s4, zero, L45628 [$80045628]
+800455E0	lui    v1, $0400
+800455E4	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+V1 = V1 | 0002;
+[V0 + 0000] = w(V1);
+800455F4	lui    v0, $8006
+V0 = w[V0 + 2cd8];
+800455FC	lui    a0, $0100
+[V0 + 0000] = w(S2);
+V0 = S4 << 10;
+80045608	lui    v1, $8006
+V1 = w[V1 + 2cdc];
+V0 = V0 | 0010;
+[V1 + 0000] = w(V0);
+80045618	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+A0 = A0 | 0201;
+[V0 + 0000] = w(A0);
+
+L45628:	; 80045628
+V0 = 0;
+
+L4562c:	; 8004562C
+RA = w[SP + 0038];
+S5 = w[SP + 0034];
+S4 = w[SP + 0030];
+S3 = w[SP + 002c];
+S2 = w[SP + 0028];
+S1 = w[SP + 0024];
+S0 = w[SP + 0020];
+SP = SP + 0040;
+8004564C	jr     ra 
+80045650	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45654
+80045654	addiu  sp, sp, $ffc8 (=-$38)
+[SP + 0024] = w(S1);
+S1 = A0;
+[SP + 0028] = w(S2);
+S2 = A1;
+[SP + 0034] = w(RA);
+[SP + 0030] = w(S4);
+[SP + 002c] = w(S3);
+80045674	jal    func462b0 [$800462b0]
+[SP + 0020] = w(S0);
+A0 = h[S1 + 0004];
+80045680	nop
+80045684	bltz   a0, L456bc [$800456bc]
+V1 = A0;
+8004568C	lui    a1, $8006
+A1 = A1 + 2c04;
+V0 = hu[A1 + 0000];
+80045698	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+800456A4	slt    v0, v0, a0
+800456A8	beq    v0, zero, L456c0 [$800456c0]
+800456AC	nop
+V1 = hu[A1 + 0000];
+800456B4	j      L456c0 [$800456c0]
+800456B8	nop
+
+L456bc:	; 800456BC
+V1 = 0;
+
+L456c0:	; 800456C0
+A1 = h[S1 + 0006];
+[S1 + 0004] = h(V1);
+800456C8	bltz   a1, L45700 [$80045700]
+V1 = A1;
+800456D0	lui    a2, $8006
+A2 = A2 + 2c06;
+V0 = hu[A2 + 0000];
+800456DC	nop
+V0 = V0 << 10;
+V0 = V0 >> 10;
+800456E8	slt    v0, v0, a1
+800456EC	beq    v0, zero, L45704 [$80045704]
+A0 = V1;
+A0 = hu[A2 + 0000];
+800456F8	j      L45708 [$80045708]
+V0 = A0 << 10;
+
+L45700:	; 80045700
+A0 = 0;
+
+L45704:	; 80045704
+V0 = A0 << 10;
+
+L45708:	; 80045708
+V1 = h[S1 + 0004];
+V0 = V0 >> 10;
+80045710	mult   v1, v0
+[S1 + 0006] = h(A0);
+80045718	mflo   v0
+V0 = V0 + 0001;
+V1 = V0 >> 1f;
+V0 = V0 + V1;
+A0 = V0 >> 01;
+8004572C	bgtz   a0, L4573c [$8004573c]
+S0 = V0 >> 05;
+80045734	j      L458cc [$800458cc]
+80045738	addiu  v0, zero, $ffff (=-$1)
+
+L4573c:	; 8004573C
+V1 = S0;
+V0 = V1 << 04;
+S0 = A0 - V0;
+80045748	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+S4 = V1;
+V0 = w[V0 + 0000];
+80045758	lui    v1, $0400
+V0 = V0 & V1;
+80045760	bne    v0, zero, L4579c [$8004579c]
+80045764	nop
+80045768	lui    s3, $0400
+
+loop4576c:	; 8004576C
+8004576C	jal    func462e4 [$800462e4]
+80045770	nop
+80045774	bne    v0, zero, L458cc [$800458cc]
+80045778	addiu  v0, zero, $ffff (=-$1)
+8004577C	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+80045784	nop
+V0 = w[V0 + 0000];
+8004578C	nop
+V0 = V0 & S3;
+80045794	beq    v0, zero, loop4576c [$8004576c]
+80045798	nop
+
+L4579c:	; 8004579C
+8004579C	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+800457A4	lui    v0, $0400
+[V1 + 0000] = w(V0);
+800457AC	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+800457B4	lui    v0, $0100
+[V1 + 0000] = w(V0);
+800457BC	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+800457C4	lui    v0, $c000
+[V1 + 0000] = w(V0);
+800457CC	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+V0 = w[S1 + 0000];
+800457D8	nop
+[V1 + 0000] = w(V0);
+800457E0	lui    v1, $8006
+V1 = w[V1 + 2cd0];
+V0 = w[S1 + 0004];
+800457EC	nop
+[V1 + 0000] = w(V0);
+800457F4	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+800457FC	nop
+V0 = w[V0 + 0000];
+80045804	lui    v1, $0800
+V0 = V0 & V1;
+8004580C	bne    v0, zero, L45848 [$80045848]
+80045810	nop
+80045814	lui    s1, $0800
+
+loop45818:	; 80045818
+80045818	jal    func462e4 [$800462e4]
+8004581C	nop
+80045820	bne    v0, zero, L458cc [$800458cc]
+80045824	addiu  v0, zero, $ffff (=-$1)
+80045828	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+80045830	nop
+V0 = w[V0 + 0000];
+80045838	nop
+V0 = V0 & S1;
+80045840	beq    v0, zero, loop45818 [$80045818]
+80045844	nop
+
+L45848:	; 80045848
+80045848	addiu  s0, s0, $ffff (=-$1)
+8004584C	addiu  v0, zero, $ffff (=-$1)
+80045850	beq    s0, v0, L4587c [$8004587c]
+80045854	nop
+80045858	addiu  v1, zero, $ffff (=-$1)
+
+loop4585c:	; 8004585C
+8004585C	lui    v0, $8006
+V0 = w[V0 + 2cd0];
+80045864	nop
+V0 = w[V0 + 0000];
+8004586C	addiu  s0, s0, $ffff (=-$1)
+[S2 + 0000] = w(V0);
+80045874	bne    s0, v1, loop4585c [$8004585c]
+S2 = S2 + 0004;
+
+L4587c:	; 8004587C
+8004587C	beq    s4, zero, L458c8 [$800458c8]
+80045880	lui    v1, $0400
+80045884	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+V1 = V1 | 0003;
+[V0 + 0000] = w(V1);
+80045894	lui    v0, $8006
+V0 = w[V0 + 2cd8];
+8004589C	lui    a0, $0100
+[V0 + 0000] = w(S2);
+V0 = S4 << 10;
+800458A8	lui    v1, $8006
+V1 = w[V1 + 2cdc];
+V0 = V0 | 0010;
+[V1 + 0000] = w(V0);
+800458B8	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+A0 = A0 | 0200;
+[V0 + 0000] = w(A0);
+
+L458c8:	; 800458C8
+V0 = 0;
+
+L458cc:	; 800458CC
+RA = w[SP + 0034];
+S4 = w[SP + 0030];
+S3 = w[SP + 002c];
+S2 = w[SP + 0028];
+S1 = w[SP + 0024];
+S0 = w[SP + 0020];
+SP = SP + 0038;
+800458E8	jr     ra 
+800458EC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func458f0
+800458F0	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+800458F8	nop
+[V0 + 0000] = w(A0);
+V0 = A0 >> 18;
+80045904	lui    at, $8007
+AT = AT + 0590;
+AT = AT + V0;
+[AT + 0000] = b(A0);
+80045914	jr     ra 
+80045918	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4591c
+8004591C	lui    at, $8007
+AT = AT + 0590;
+AT = AT + A0;
+V0 = bu[AT + 0000];
+8004592C	jr     ra 
+80045930	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45934
+80045934	addiu  sp, sp, $fff8 (=-$8)
+80045938	addiu  a2, a1, $ffff (=-$1)
+8004593C	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+80045944	lui    v0, $0400
+[V1 + 0000] = w(V0);
+8004594C	beq    a1, zero, L45978 [$80045978]
+V0 = 0;
+80045954	addiu  a1, zero, $ffff (=-$1)
+
+loop45958:	; 80045958
+V1 = w[A0 + 0000];
+A0 = A0 + 0004;
+80045960	lui    v0, $8006
+V0 = w[V0 + 2cd0];
+80045968	addiu  a2, a2, $ffff (=-$1)
+[V0 + 0000] = w(V1);
+80045970	bne    a2, a1, loop45958 [$80045958]
+V0 = 0;
+
+L45978:	; 80045978
+SP = SP + 0008;
+8004597C	jr     ra 
+80045980	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45984:	; 80045984
+80045984	lui    v1, $0400
+80045988	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+V1 = V1 | 0002;
+[V0 + 0000] = w(V1);
+80045998	lui    v0, $8006
+V0 = w[V0 + 2cd8];
+800459A0	nop
+[V0 + 0000] = w(A0);
+800459A8	lui    v0, $8006
+V0 = w[V0 + 2cdc];
+800459B0	lui    v1, $0100
+[V0 + 0000] = w(0);
+800459B8	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+V1 = V1 | 0401;
+[V0 + 0000] = w(V1);
+800459C8	jr     ra 
+800459CC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func459d0:	; 800459D0
+800459D0	lui    v0, $1000
+800459D4	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+A0 = A0 | V0;
+[V1 + 0000] = w(A0);
+800459E4	lui    v0, $8006
+V0 = w[V0 + 2cd0];
+800459EC	lui    v1, $00ff
+V0 = w[V0 + 0000];
+V1 = V1 | ffff;
+800459F8	jr     ra 
+V0 = V0 & V1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45a00
+80045A00	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+A3 = A2;
+80045A0C	jal    func45a24 [$80045a24]
+A2 = 0;
+RA = w[SP + 0010];
+SP = SP + 0018;
+80045A1C	jr     ra 
+80045A20	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45a24
+80045A24	addiu  sp, sp, $ffd8 (=-$28)
+[SP + 001c] = w(S3);
+S3 = A0;
+[SP + 0010] = w(S0);
+S0 = A1;
+[SP + 0014] = w(S1);
+S1 = A2;
+[SP + 0018] = w(S2);
+[SP + 0020] = w(RA);
+80045A48	jal    func462b0 [$800462b0]
+S2 = A3;
+80045A50	j      L45a70 [$80045a70]
+80045A54	nop
+
+loop45a58:	; 80045A58
+80045A58	jal    func462e4 [$800462e4]
+80045A5C	nop
+80045A60	bne    v0, zero, L45cf8 [$80045cf8]
+80045A64	addiu  v0, zero, $ffff (=-$1)
+80045A68	jal    func45d18 [$80045d18]
+80045A6C	nop
+
+L45a70:	; 80045A70
+80045A70	lui    v0, $8006
+V0 = w[V0 + 2d04];
+80045A78	lui    v1, $8006
+V1 = w[V1 + 2d08];
+V0 = V0 + 0001;
+V0 = V0 & 003f;
+80045A88	beq    v0, v1, loop45a58 [$80045a58]
+80045A8C	nop
+80045A90	jal    system_set_interrupt_mask_register [$8003d23c]
+A0 = 0;
+80045A98	lui    v1, $8006
+V1 = V1 + 2c08;
+A0 = 0 | 0001;
+[V1 + 0000] = w(A0);
+80045AA8	lui    v1, $8006
+V1 = bu[V1 + 2c01];
+80045AB0	lui    at, $8006
+[AT + 2d0c] = w(V0);
+80045AB8	beq    v1, zero, L45b10 [$80045b10]
+80045ABC	lui    a0, $0400
+80045AC0	lui    v1, $8006
+V1 = w[V1 + 2d04];
+80045AC8	lui    v0, $8006
+V0 = w[V0 + 2d08];
+80045AD0	nop
+80045AD4	bne    v1, v0, L45b70 [$80045b70]
+80045AD8	nop
+80045ADC	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+80045AE4	nop
+V0 = w[V0 + 0000];
+80045AEC	lui    v1, $0100
+V0 = V0 & V1;
+80045AF4	bne    v0, zero, L45b70 [$80045b70]
+80045AF8	nop
+80045AFC	lui    v0, $8006
+V0 = w[V0 + 2c0c];
+80045B04	nop
+80045B08	bne    v0, zero, L45b70 [$80045b70]
+80045B0C	nop
+
+L45b10:	; 80045B10
+80045B10	lui    v1, $8006
+V1 = w[V1 + 2cd4];
+
+loop45b18:	; 80045B18
+80045B18	nop
+V0 = w[V1 + 0000];
+80045B20	nop
+V0 = V0 & A0;
+80045B28	beq    v0, zero, loop45b18 [$80045b18]
+80045B2C	nop
+A0 = S0;
+80045B34	jalr   s3 ra
+A1 = S2;
+80045B3C	lui    a0, $8006
+A0 = w[A0 + 2d0c];
+80045B44	lui    v0, $8006
+V0 = V0 + 2cf4;
+[V0 + 0000] = w(S3);
+80045B50	lui    at, $8006
+[AT + 2cf8] = w(S0);
+80045B58	lui    at, $8006
+[AT + 2cfc] = w(S2);
+80045B60	jal    system_set_interrupt_mask_register [$8003d23c]
+80045B64	nop
+80045B68	j      L45cf8 [$80045cf8]
+V0 = 0;
+
+L45b70:	; 80045B70
+A0 = 2;
+A1 = 80045d18;
+system_dma_additional_callback();
+
+80045B80	beq    s1, zero, L45c34 [$80045c34]
+A2 = 0;
+80045B88	lui    t0, $800a
+80045B8C	addiu  t0, t0, $ad4c (=-$52b4)
+A3 = S0;
+V0 = S1;
+
+L45b98:	; 80045B98
+80045B98	bgez   v0, L45ba4 [$80045ba4]
+80045B9C	nop
+V0 = V0 + 0003;
+
+L45ba4:	; 80045BA4
+V0 = V0 >> 02;
+80045BA8	slt    v0, a2, v0
+80045BAC	beq    v0, zero, L45be8 [$80045be8]
+A0 = A2 << 02;
+A1 = w[A3 + 0000];
+A3 = A3 + 0004;
+80045BBC	lui    v1, $8006
+V1 = w[V1 + 2d04];
+A2 = A2 + 0001;
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+V0 = V0 + T0;
+A0 = A0 + V0;
+[A0 + 0000] = w(A1);
+80045BE0	j      L45b98 [$80045b98]
+V0 = S1;
+
+L45be8:	; 80045BE8
+80045BE8	lui    v0, $8006
+V0 = w[V0 + 2d04];
+80045BF0	lui    v1, $8006
+V1 = w[V1 + 2d04];
+A0 = V0 << 01;
+A0 = A0 + V0;
+A0 = A0 << 05;
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045C10	lui    v1, $800a
+80045C14	addiu  v1, v1, $ad4c (=-$52b4)
+V0 = V0 + V1;
+80045C1C	lui    at, $800a
+80045C20	addiu  at, at, $ad44 (=-$52bc)
+AT = AT + A0;
+[AT + 0000] = w(V0);
+80045C2C	j      L45c5c [$80045c5c]
+80045C30	nop
+
+L45c34:	; 80045C34
+80045C34	lui    v1, $8006
+V1 = w[V1 + 2d04];
+80045C3C	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045C4C	lui    at, $800a
+80045C50	addiu  at, at, $ad44 (=-$52bc)
+AT = AT + V0;
+[AT + 0000] = w(S0);
+
+L45c5c:	; 80045C5C
+80045C5C	lui    v1, $8006
+V1 = w[V1 + 2d04];
+80045C64	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045C74	lui    at, $800a
+80045C78	addiu  at, at, $ad48 (=-$52b8)
+AT = AT + V0;
+[AT + 0000] = w(S2);
+80045C84	lui    v1, $8006
+V1 = w[V1 + 2d04];
+80045C8C	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045C9C	lui    at, $800a
+80045CA0	addiu  at, at, $ad40 (=-$52c0)
+AT = AT + V0;
+[AT + 0000] = w(S3);
+80045CAC	lui    v0, $8006
+V0 = w[V0 + 2d04];
+80045CB4	lui    a0, $8006
+A0 = w[A0 + 2d0c];
+V0 = V0 + 0001;
+V0 = V0 & 003f;
+80045CC4	lui    at, $8006
+[AT + 2d04] = w(V0);
+80045CCC	jal    system_set_interrupt_mask_register [$8003d23c]
+80045CD0	nop
+80045CD4	jal    func45d18 [$80045d18]
+80045CD8	nop
+80045CDC	lui    v0, $8006
+V0 = w[V0 + 2d04];
+80045CE4	lui    v1, $8006
+V1 = w[V1 + 2d08];
+80045CEC	nop
+V0 = V0 - V1;
+V0 = V0 & 003f;
+
+L45cf8:	; 80045CF8
+RA = w[SP + 0020];
+S3 = w[SP + 001c];
+S2 = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0028;
+80045D10	jr     ra 
+80045D14	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func45d18
+80045D18	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+80045D20	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0014] = w(RA);
+[SP + 0010] = w(S0);
+V0 = w[V0 + 0000];
+80045D30	lui    s0, $0100
+V0 = V0 & S0;
+80045D38	bne    v0, zero, L46018 [$80046018]
+V0 = 0001;
+80045D40	jal    system_set_interrupt_mask_register [$8003d23c]
+A0 = 0;
+80045D48	lui    a0, $8006
+A0 = w[A0 + 2d04];
+80045D50	lui    v1, $8006
+V1 = w[V1 + 2d08];
+80045D58	lui    at, $8006
+[AT + 2d10] = w(V0);
+80045D60	beq    a0, v1, L45f6c [$80045f6c]
+80045D64	nop
+80045D68	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+80045D70	nop
+V0 = w[V0 + 0000];
+80045D78	nop
+V0 = V0 & S0;
+80045D80	bne    v0, zero, L45f6c [$80045f6c]
+80045D84	nop
+80045D88	lui    s0, $8006
+S0 = S0 + 2cf4;
+
+L45d90:	; 80045D90
+80045D90	lui    v0, $8006
+V0 = w[V0 + 2d08];
+80045D98	lui    v1, $8006
+V1 = w[V1 + 2d04];
+V0 = V0 + 0001;
+V0 = V0 & 003f;
+80045DA8	bne    v0, v1, L45dd0 [$80045dd0]
+80045DAC	nop
+80045DB0	lui    v0, $8006
+V0 = V0 + 2c0c;
+V0 = w[V0 + 0000];
+80045DBC	nop
+80045DC0	bne    v0, zero, L45dd0 [$80045dd0]
+A0 = 0002;
+80045DC8	jal    system_dma_additional_callback [$8003d120]
+A1 = 0;
+
+L45dd0:	; 80045DD0
+80045DD0	lui    a0, $8006
+A0 = w[A0 + 2cd4];
+80045DD8	nop
+V0 = w[A0 + 0000];
+80045DE0	lui    v1, $0400
+V0 = V0 & V1;
+80045DE8	bne    v0, zero, L45e08 [$80045e08]
+V1 = A0;
+80045DF0	lui    a0, $0400
+
+loop45df4:	; 80045DF4
+V0 = w[V1 + 0000];
+80045DF8	nop
+V0 = V0 & A0;
+80045E00	beq    v0, zero, loop45df4 [$80045df4]
+80045E04	nop
+
+L45e08:	; 80045E08
+80045E08	lui    a1, $8006
+A1 = w[A1 + 2d08];
+80045E10	lui    v1, $8006
+V1 = w[V1 + 2d08];
+80045E18	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+V1 = A1 << 01;
+V1 = V1 + A1;
+80045E30	lui    at, $800a
+80045E34	addiu  at, at, $ad44 (=-$52bc)
+AT = AT + V0;
+A0 = w[AT + 0000];
+80045E40	lui    a1, $8006
+A1 = w[A1 + 2d08];
+V1 = V1 << 05;
+V0 = A1 << 01;
+V0 = V0 + A1;
+V0 = V0 << 05;
+80045E58	lui    at, $800a
+80045E5C	addiu  at, at, $ad48 (=-$52b8)
+AT = AT + V0;
+A1 = w[AT + 0000];
+80045E68	lui    at, $800a
+80045E6C	addiu  at, at, $ad40 (=-$52c0)
+AT = AT + V1;
+V0 = w[AT + 0000];
+80045E78	nop
+80045E7C	jalr   v0 ra
+80045E80	nop
+80045E84	lui    v1, $8006
+V1 = w[V1 + 2d08];
+80045E8C	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045E9C	lui    at, $800a
+80045EA0	addiu  at, at, $ad40 (=-$52c0)
+AT = AT + V0;
+V0 = w[AT + 0000];
+80045EAC	nop
+[S0 + 0000] = w(V0);
+80045EB4	lui    v1, $8006
+V1 = w[V1 + 2d08];
+80045EBC	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045ECC	lui    at, $800a
+80045ED0	addiu  at, at, $ad44 (=-$52bc)
+AT = AT + V0;
+V0 = w[AT + 0000];
+80045EDC	nop
+[S0 + 0004] = w(V0);
+80045EE4	lui    v1, $8006
+V1 = w[V1 + 2d08];
+80045EEC	nop
+V0 = V1 << 01;
+V0 = V0 + V1;
+V0 = V0 << 05;
+80045EFC	lui    at, $800a
+80045F00	addiu  at, at, $ad48 (=-$52b8)
+AT = AT + V0;
+V0 = w[AT + 0000];
+80045F0C	nop
+[S0 + 0008] = w(V0);
+80045F14	lui    v0, $8006
+V0 = w[V0 + 2d08];
+80045F1C	nop
+V0 = V0 + 0001;
+V0 = V0 & 003f;
+80045F28	lui    at, $8006
+[AT + 2d08] = w(V0);
+80045F30	lui    v1, $8006
+V1 = w[V1 + 2d04];
+80045F38	lui    v0, $8006
+V0 = w[V0 + 2d08];
+80045F40	nop
+80045F44	beq    v1, v0, L45f6c [$80045f6c]
+80045F48	nop
+80045F4C	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+80045F54	nop
+V0 = w[V0 + 0000];
+80045F5C	lui    v1, $0100
+V0 = V0 & V1;
+80045F64	beq    v0, zero, L45d90 [$80045d90]
+80045F68	nop
+
+L45f6c:	; 80045F6C
+80045F6C	lui    a0, $8006
+A0 = w[A0 + 2d10];
+80045F74	jal    system_set_interrupt_mask_register [$8003d23c]
+80045F78	nop
+80045F7C	lui    v1, $8006
+V1 = w[V1 + 2d04];
+80045F84	lui    v0, $8006
+V0 = w[V0 + 2d08];
+80045F8C	nop
+80045F90	bne    v1, v0, L45ffc [$80045ffc]
+80045F94	nop
+80045F98	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+80045FA0	nop
+V0 = w[V0 + 0000];
+80045FA8	lui    v1, $0100
+V0 = V0 & V1;
+80045FB0	bne    v0, zero, L45ffc [$80045ffc]
+80045FB4	nop
+80045FB8	lui    v1, $8006
+V1 = V1 + 2c08;
+V0 = w[V1 + 0000];
+80045FC4	nop
+80045FC8	beq    v0, zero, L45ffc [$80045ffc]
+80045FCC	nop
+80045FD0	lui    v0, $8006
+V0 = w[V0 + 2c0c];
+80045FD8	nop
+80045FDC	beq    v0, zero, L45ffc [$80045ffc]
+80045FE0	nop
+[V1 + 0000] = w(0);
+80045FE8	lui    v0, $8006
+V0 = w[V0 + 2c0c];
+80045FF0	nop
+80045FF4	jalr   v0 ra
+80045FF8	nop
+
+L45ffc:	; 80045FFC
+80045FFC	lui    v0, $8006
+V0 = w[V0 + 2d04];
+80046004	lui    v1, $8006
+V1 = w[V1 + 2d08];
+8004600C	nop
+V0 = V0 - V1;
+V0 = V0 & 003f;
+
+L46018:	; 80046018
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+80046024	jr     ra 
+80046028	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4602c()
+
+mode = A0;
+
+// GP1 Send GP1 Commands (Display Control)
+// GPUSTAT Read GPU Status Register
+gpu_1f801814 = w[80062cd4];
+
+dma2_channel_control = w[80062ce0]; // 1f8010a8
+dma_control = w[80062cf0]; // 1f8010f0
+
+A0 = 0;
+system_set_interrupt_mask_register();
+[80062d14] = w(V0);
+
+[80062d08] = w(0);
+[80062d04] = w(0);
+
+if( ( mode & 7 ) == 0 )
+{
+    [dma2_channel_control] = w(00000401);
+    [dma_control] = w(w[dma_control] | 00000800);
+    [gpu_1f801814] = w(00000000);
+
+    A0 = 80070590;
+    V0 = 100 - 1;
+    loop46540:	; 80046540
+        [A0] = b(0);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
+
+    A0 = 8009ad40;
+    V0 = 1800 - 1;
+    loop46540:	; 80046540
+        [A0] = b(0);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
+}
+else if( ( mode & 7 ) == 1 )
+{
+    [dma2_channel_control] = w(00000401);
+    [dma_control] = w(w[dma_control] | 00000800);
+    [gpu_1f801814] = w(02000000);
+    [gpu_1f801814] = w(01000000);
+}
+
+A0 = w[80062d14];
+system_set_interrupt_mask_register();
+
+if( mode & 7 )
+{
+    return 0;
+}
+
+A0 = mode;
+func46450();
+
+return V0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func46168
+80046168	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0014] = w(RA);
+80046170	bne    a0, zero, L4621c [$8004621c]
+[SP + 0010] = w(S0);
+80046178	jal    func462b0 [$800462b0]
+8004617C	nop
+80046180	j      L461a0 [$800461a0]
+80046184	nop
+
+L46188:	; 80046188
+80046188	jal    func45d18 [$80045d18]
+8004618C	nop
+80046190	jal    func462e4 [$800462e4]
+80046194	nop
+80046198	bne    v0, zero, L4629c [$8004629c]
+8004619C	addiu  v0, zero, $ffff (=-$1)
+
+L461a0:	; 800461A0
+800461A0	lui    v1, $8006
+V1 = w[V1 + 2d04];
+800461A8	lui    v0, $8006
+V0 = w[V0 + 2d08];
+800461B0	nop
+800461B4	beq    v1, v0, L461d4 [$800461d4]
+800461B8	nop
+800461BC	j      L46188 [$80046188]
+800461C0	nop
+
+loop461c4:	; 800461C4
+800461C4	jal    func462e4 [$800462e4]
+800461C8	nop
+800461CC	bne    v0, zero, L4629c [$8004629c]
+800461D0	addiu  v0, zero, $ffff (=-$1)
+
+L461d4:	; 800461D4
+800461D4	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+800461DC	nop
+V0 = w[V0 + 0000];
+800461E4	lui    v1, $0100
+V0 = V0 & V1;
+800461EC	bne    v0, zero, loop461c4 [$800461c4]
+800461F0	nop
+800461F4	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+800461FC	nop
+V0 = w[V0 + 0000];
+80046204	lui    v1, $0400
+V0 = V0 & V1;
+8004620C	beq    v0, zero, loop461c4 [$800461c4]
+V0 = 0;
+80046214	j      L4629c [$8004629c]
+80046218	nop
+
+L4621c:	; 8004621C
+8004621C	lui    v0, $8006
+V0 = w[V0 + 2d04];
+80046224	lui    v1, $8006
+V1 = w[V1 + 2d08];
+8004622C	nop
+V0 = V0 - V1;
+S0 = V0 & 003f;
+80046238	beq    s0, zero, L46248 [$80046248]
+8004623C	nop
+80046240	jal    func45d18 [$80045d18]
+80046244	nop
+
+L46248:	; 80046248
+80046248	lui    v0, $8006
+V0 = w[V0 + 2ce0];
+80046250	nop
+V0 = w[V0 + 0000];
+80046258	lui    v1, $0100
+V0 = V0 & V1;
+80046260	bne    v0, zero, L46288 [$80046288]
+80046264	nop
+80046268	lui    v0, $8006
+V0 = w[V0 + 2cd4];
+80046270	nop
+V0 = w[V0 + 0000];
+80046278	lui    v1, $0400
+V0 = V0 & V1;
+80046280	bne    v0, zero, L46298 [$80046298]
+80046284	nop
+
+L46288:	; 80046288
+80046288	bne    s0, zero, L4629c [$8004629c]
+V0 = S0;
+80046290	j      L4629c [$8004629c]
+V0 = 0001;
+
+L46298:	; 80046298
+V0 = S0;
+
+L4629c:	; 8004629C
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+800462A8	jr     ra 
+800462AC	nop
 ////////////////////////////////
 
 
@@ -2144,71 +3591,6 @@ return -1;
 
 
 ////////////////////////////////
-// func4602c()
-
-mode = A0;
-
-// GP1 Send GP1 Commands (Display Control)
-// GPUSTAT Read GPU Status Register
-gpu_1f801814 = w[80062cd4];
-
-dma2_channel_control = w[80062ce0]; // 1f8010a8
-dma_control = w[80062cf0]; // 1f8010f0
-
-A0 = 0;
-system_set_interrupt_mask_register();
-[80062d14] = w(V0);
-
-[80062d08] = w(0);
-[80062d04] = w(0);
-
-if( ( mode & 7 ) == 0 )
-{
-    [dma2_channel_control] = w(00000401);
-    [dma_control] = w(w[dma_control] | 00000800);
-    [gpu_1f801814] = w(00000000);
-
-    A0 = 80070590;
-    V0 = 100 - 1;
-    loop46540:	; 80046540
-        [A0] = b(0);
-        A0 = A0 + 1;
-        V0 = V0 - 1;
-    80046548	bne    v0, -1, loop46540 [$80046540]
-
-    A0 = 8009ad40;
-    V0 = 1800 - 1;
-    loop46540:	; 80046540
-        [A0] = b(0);
-        A0 = A0 + 1;
-        V0 = V0 - 1;
-    80046548	bne    v0, -1, loop46540 [$80046540]
-}
-else if( ( mode & 7 ) == 1 )
-{
-    [dma2_channel_control] = w(00000401);
-    [dma_control] = w(w[dma_control] | 00000800);
-    [gpu_1f801814] = w(02000000);
-    [gpu_1f801814] = w(01000000);
-}
-
-A0 = w[80062d14];
-system_set_interrupt_mask_register();
-
-if( mode & 7 )
-{
-    return 0;
-}
-
-A0 = mode;
-func46450();
-
-return V0;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func46450()
 
 mode = A0;
@@ -2262,105 +3644,29 @@ return 3;
 
 
 ////////////////////////////////
-// system_gpu_textured_quad_header()
+// func46530()
 
-[A0 + 3] = b(9);
-[A0 + 7] = b(2c);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func46910()
-
-[A0 + 3] = b(8);
-[A0 + 7] = b(38);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_gpu_create_texture_setting_packet()
-
-buffer = A0;
-display_area = A1;
-dithering = A2;
-init_value = A3;
-window_rect = A4;
-
-[buffer + 3] = b(2);
-
-A0 = display_area; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
-A1 = dithering; // dithering processing flag. 0: off; 1: on
-A2 = init_value; // initial values of texture page
-system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
-[buffer + 4] = w(V0);
-
-A0 = window_rect; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
-system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
-[buffer + 8] = w(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_gpu_get_texture_window_setting_command()
-
-A0 = A0; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
-
-if( A0 == 0 )
+if( A2 != 0 )
 {
-    return 0;
+    V0 = A2 - 1;
+    loop46540:	; 80046540
+        [A0] = b(A1);
+        A0 = A0 + 1;
+        V0 = V0 - 1;
+    80046548	bne    v0, -1, loop46540 [$80046540]
 }
-
-off_x = bu[A0 + 0] >> 3;
-off_y = bu[A0 + 2] >> 3;
-mask_x = ((0 - h[A0 + 4]) & ff) >> 3;
-mask_y = ((0 - h[A0 + 6]) & ff) >> 3;
-return e2000000 | (off_y << f) | (off_x << a) | (mask_y << 5) | mask_x;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_gpu_get_draw_mode_setting_command()
-
-if( ( bu[80062c00] - 1 ) < 2 ) // old gpu
-{
-    if( A1 != 0 )
-    {
-        V1 = 00000800;
-    }
-
-    V0 = A2 & 27ff;
-
-    if( A0 != 0 )
-    {
-        V0 = V0 | 00001000;
-    }
-}
-else
-{
-    if( A1 != 0 )
-    {
-        V1 = 00000200; // Dither 24bit to 15bit Dither Enabled
-    }
-
-    //  0-3   Texture page X Base   (N*64) (ie. in 64-halfword steps)    ;GPUSTAT.0-3
-    //  4     Texture page Y Base   (N*256) (ie. 0 or 256)               ;GPUSTAT.4
-    //  5-6   Semi Transparency     (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)   ;GPUSTAT.5-6
-    //  7-8   Texture page colors   (0=4bit, 1=8bit, 2=15bit, 3=Reserved);GPUSTAT.7-8
-    //  11    Texture Disable (0=Normal, 1=Disable if GP1(09h).Bit0=1)   ;GPUSTAT.15
-    V0 = A2 & 09ff;
-
-    if( A0 != 0 )
-    {
-        V0 = V0 | 00000400; // Drawing to display area Allowed
-    }
-}
-
-// GP0(E1h) - Draw Mode setting (aka "Texpage")
-return e1000000 | V1 | V0;
+// system_bios_gpu_cw()
+// A(49h) - GPU_cw(gp0cmd)      ;send GP0 command word
+// Calls gpu_sync(), and does then write [1F801810h]=gp0cmd. Returns the return
+// value from the gpu_sync() call.
+T2 = 00a0;
+T1 = 0049;
+80046560	jr     t2 
 ////////////////////////////////
 
 
@@ -2386,64 +3692,166 @@ else
 
 
 ////////////////////////////////
-// system_gpu_set_drawing_area_top_left()
+// system_create_clut_for_packet()
 
-x = (A0 << 10) >> 10;
-y = (A1 << 10) >> 10;
+x = A0;
+y = A1;
 
-width = h[80062c04] - 1;
-height = h[80062c06] - 1;
-
-x = ( x >= 0 ) ? ( ( width < x ) ? width : x ) : 0;
-y = ( y >= 0 ) ? ( ( height < y ) ? height : y ) : 0;
-
-if( ( bu[80062c00] - 1 ) >= 2 )
-{
-    return e3000000 | ((y & 03ff) << a) | (x & 03ff);
-}
-else
-{
-    return e3000000 | ((y & 0fff) << c) | (x & 0fff);
-}
+return ((y << 6) | ((x >> 4) & 3f)) & ffff
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_gpu_set_drawing_area_bottom_right()
+// func4664c
 
-x = (A0 << 10) >> 10;
-y = (A1 << 10) >> 10;
 
-width = h[80062c04] - 1;
-height = h[80062c06] - 1;
+8004664C	addiu  sp, sp, $ffe0 (=-$20)
+[SP + 0018] = w(S0);
+[SP + 001c] = w(RA);
+80046658	jal    system_gpu_get_type [$80043cc0]
+S0 = A0;
+V1 = 0001;
+80046664	beq    v0, v1, L46680 [$80046680]
+80046668	nop
+8004666C	jal    system_gpu_get_type [$80043cc0]
+80046670	nop
+V1 = 0002;
+80046678	bne    v0, v1, L466c4 [$800466c4]
+V0 = S0 & ffff;
 
-x = ( x >= 0 ) > ( ( width < x ) ? width : x ) : 0;
-y = ( y >= 0 ) > ( ( height < y ) ? height : y ) : 0;
+L46680:	; 80046680
+80046680	lui    a0, $8001
+A0 = A0 + 0eb0;
+V0 = S0 & ffff;
+A1 = V0 >> 09;
+A1 = A1 & 0003;
+A2 = V0 >> 07;
+A2 = A2 & 0003;
+A3 = V0 << 06;
+A3 = A3 & 07c0;
+V0 = V0 << 03;
+800466A8	lui    v1, $8006
+V1 = w[V1 + 2bfc];
+V0 = V0 & 0300;
+800466B4	jalr   v1 ra
+[SP + 0010] = w(V0);
+800466BC	j      L46708 [$80046708]
+800466C0	nop
 
-if( bu[80062c00] - 1 >= 2 )
-{
-    return e4000000 | ((A1 & 03ff) << a) | (x & 03ff);
-}
-else
-{
-    return e4000000 | ((A1 & 0fff) << c) | (x & 0fff);
-}
+L466c4:	; 800466C4
+800466C4	lui    a0, $8001
+A0 = A0 + 0eb0;
+A1 = V0 >> 07;
+A1 = A1 & 0003;
+A2 = V0 >> 05;
+A2 = A2 & 0003;
+A3 = V0 << 06;
+A3 = A3 & 07c0;
+V1 = V0 << 04;
+V1 = V1 & 0100;
+V0 = V0 >> 02;
+V0 = V0 & 0200;
+800466F4	lui    t0, $8006
+T0 = w[T0 + 2bfc];
+V1 = V1 + V0;
+80046700	jalr   t0 ra
+[SP + 0010] = w(V1);
+
+L46708:	; 80046708
+RA = w[SP + 001c];
+S0 = w[SP + 0018];
+SP = SP + 0020;
+80046714	jr     ra 
+80046718	nop
+////////////////////////////////
+// func4671c
+8004671C	addiu  sp, sp, $ffe8 (=-$18)
+A2 = A0;
+A1 = A2 & 003f;
+A2 = A2 & ffff;
+8004672C	lui    a0, $8001
+A0 = A0 + 0ec8;
+A1 = A1 << 04;
+80046738	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+[SP + 0010] = w(RA);
+80046744	jalr   v0 ra
+A2 = A2 >> 06;
+RA = w[SP + 0010];
+SP = SP + 0018;
+80046754	jr     ra 
+80046758	nop
+////////////////////////////////
+// func4675c
+8004675C	lui    v1, $00ff
+V0 = w[A0 + 0000];
+V1 = V1 | ffff;
+V0 = V0 & V1;
+8004676C	lui    v1, $8000
+80046770	jr     ra 
+V0 = V0 | V1;
+////////////////////////////////
+// func46778
+80046778	lui    v1, $00ff
+V0 = w[A0 + 0000];
+V1 = V1 | ffff;
+V0 = V0 & V1;
+V0 = V0 ^ V1;
+8004678C	jr     ra 
+V0 = V0 < 0001;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_gpu_set_drawing_offset()
+// system_add_render_packet_to_queue()
 
-if( ( bu[80062c00] - 1 ) >= 2 )
-{
-    return e5000000 | ((A1 & 07ff) << 0b) | (A0 & 07ff);
-}
-else
-{
-    return e5000000 | ((A1 & 0fff) << 0c) | (A0 & 0fff);
-}
+ot = A0;
+packet = A1;
+
+[packet] = w((w[packet] & ff000000) | (w[ot] & 00ffffff));
+[ot] = w((w[ot] & ff000000) | (packet & 00ffffff));
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func467d0
+800467D0	lui    a3, $00ff
+A3 = A3 | ffff;
+800467D8	lui    t0, $ff00
+V1 = w[A2 + 0000];
+V0 = w[A0 + 0000];
+V1 = V1 & T0;
+V0 = V0 & A3;
+V1 = V1 | V0;
+[A2 + 0000] = w(V1);
+V0 = w[A0 + 0000];
+A1 = A1 & A3;
+V0 = V0 & T0;
+V0 = V0 | A1;
+80046804	jr     ra 
+[A0 + 0000] = w(V0);
+////////////////////////////////
+// func4680c
+8004680C	lui    a2, $00ff
+A2 = A2 | ffff;
+80046814	lui    v1, $ff00
+V0 = w[A0 + 0000];
+A1 = A1 & A2;
+V0 = V0 & V1;
+V0 = V0 | A1;
+80046828	jr     ra 
+[A0 + 0000] = w(V0);
+////////////////////////////////
+// func46830
+80046830	lui    v1, $00ff
+V0 = w[A0 + 0000];
+V1 = V1 | ffff;
+V0 = V0 | V1;
+80046840	jr     ra 
+[A0 + 0000] = w(V0);
 ////////////////////////////////
 
 
@@ -2480,24 +3888,58 @@ else
 
 
 ////////////////////////////////
-// system_create_clut_for_packet()
-
-x = A0;
-y = A1;
-
-return ((y << 6) | ((x >> 4) & 3f)) & ffff
+// func46898
+V0 = 0004;
+[A0 + 0003] = b(V0);
+V0 = 0020;
+800468A4	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func468ac
+V0 = 0007;
+[A0 + 0003] = b(V0);
+V0 = 0024;
+800468B8	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func468c0
+V0 = 0006;
+[A0 + 0003] = b(V0);
+V0 = 0030;
+800468CC	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func468d4
+V0 = 0009;
+[A0 + 0003] = b(V0);
+V0 = 0034;
+800468E0	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func468e8
+V0 = 0005;
+[A0 + 0003] = b(V0);
+V0 = 0028;
+800468F4	jr     ra 
+[A0 + 0007] = b(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_render_packet_to_queue()
+// system_gpu_textured_quad_header()
 
-ot = A0;
-packet = A1;
+[A0 + 3] = b(9);
+[A0 + 7] = b(2c);
+////////////////////////////////
 
-[packet] = w((w[packet] & ff000000) | (w[ot] & 00ffffff));
-[ot] = w((w[ot] & ff000000) | (packet & 00ffffff));
+
+
+////////////////////////////////
+// func46910()
+
+[A0 + 3] = b(8);
+[A0 + 7] = b(38);
 ////////////////////////////////
 
 
@@ -2552,4 +3994,2482 @@ packet = A1;
 
 [A0 + 3] = b(2);
 [A0 + 7] = b(70);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func4699c
+V0 = 0002;
+[A0 + 0003] = b(V0);
+V0 = 0078;
+800469A8	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func469b0
+V0 = 0003;
+[A0 + 0003] = b(V0);
+V0 = 0060;
+800469BC	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func469c4
+V0 = 0003;
+[A0 + 0003] = b(V0);
+V0 = 0040;
+800469D0	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func469d8
+V0 = 0004;
+[A0 + 0003] = b(V0);
+V0 = 0050;
+800469E4	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func469ec
+800469EC	lui    v1, $5555
+V1 = V1 | 5555;
+V0 = 0005;
+[A0 + 0003] = b(V0);
+V0 = 0048;
+[A0 + 0007] = b(V0);
+80046A04	jr     ra 
+[A0 + 0014] = w(V1);
+////////////////////////////////
+// func46a0c
+80046A0C	lui    v1, $5555
+V1 = V1 | 5555;
+V0 = 0007;
+[A0 + 0003] = b(V0);
+V0 = 0058;
+[A0 + 0007] = b(V0);
+80046A24	jr     ra 
+[A0 + 001c] = w(V1);
+////////////////////////////////
+// func46a2c
+80046A2C	lui    v1, $5555
+V1 = V1 | 5555;
+V0 = 0006;
+[A0 + 0003] = b(V0);
+V0 = 004c;
+[A0 + 0007] = b(V0);
+80046A44	jr     ra 
+[A0 + 0018] = w(V1);
+////////////////////////////////
+// func46a4c
+80046A4C	lui    v1, $5555
+V1 = V1 | 5555;
+V0 = 0009;
+[A0 + 0003] = b(V0);
+V0 = 005c;
+[A0 + 0007] = b(V0);
+80046A64	jr     ra 
+[A0 + 0024] = w(V1);
+////////////////////////////////
+// func46a6c
+V0 = 0003;
+[A0 + 0003] = b(V0);
+V0 = 0002;
+80046A78	jr     ra 
+[A0 + 0007] = b(V0);
+////////////////////////////////
+// func46a80
+V0 = 0005;
+[A0 + 0003] = b(V0);
+V0 = 0001;
+[A0 + 0007] = b(V0);
+80046A90	lui    v0, $8000
+80046A94	jr     ra 
+[A0 + 0008] = w(V0);
+////////////////////////////////
+// func46a9c
+V0 = bu[A0 + 0003];
+V1 = bu[A1 + 0003];
+80046AA4	nop
+V0 = V0 + V1;
+V1 = V0 + 0001;
+V0 = V1 < 0021;
+80046AB4	beq    v0, zero, L46ac4 [$80046ac4]
+V0 = 0;
+80046ABC	j      L46ac8 [$80046ac8]
+[A0 + 0003] = b(V1);
+
+L46ac4:	; 80046AC4
+80046AC4	addiu  v0, zero, $ffff (=-$1)
+
+L46ac8:	; 80046AC8
+80046AC8	jr     ra 
+80046ACC	nop
+////////////////////////////////
+// func46ad0
+80046AD0	addiu  sp, sp, $ffe0 (=-$20)
+[SP + 0018] = w(S0);
+S0 = A0;
+[SP + 001c] = w(RA);
+A1 = h[S0 + 0000];
+A2 = h[S0 + 0002];
+A3 = h[S0 + 0004];
+V0 = h[S0 + 0006];
+80046AF0	lui    v1, $8006
+V1 = w[V1 + 2bfc];
+80046AF8	lui    a0, $8001
+A0 = A0 + 0ed8;
+80046B00	jalr   v1 ra
+[SP + 0010] = w(V0);
+A1 = h[S0 + 0008];
+A2 = h[S0 + 000a];
+80046B10	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80046B18	lui    a0, $8001
+A0 = A0 + 0ef0;
+80046B20	jalr   v0 ra
+80046B24	nop
+A1 = h[S0 + 000c];
+A2 = h[S0 + 000e];
+A3 = h[S0 + 0010];
+V0 = h[S0 + 0012];
+80046B38	lui    v1, $8006
+V1 = w[V1 + 2bfc];
+80046B40	lui    a0, $8001
+A0 = A0 + 0f00;
+80046B48	jalr   v1 ra
+[SP + 0010] = w(V0);
+A1 = bu[S0 + 0016];
+80046B54	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80046B5C	lui    a0, $8001
+A0 = A0 + 0f18;
+80046B64	jalr   v0 ra
+80046B68	nop
+A1 = bu[S0 + 0017];
+80046B70	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80046B78	lui    a0, $8001
+A0 = A0 + 0f24;
+80046B80	jalr   v0 ra
+80046B84	nop
+80046B88	jal    system_gpu_get_type [$80043cc0]
+80046B8C	nop
+V1 = 0001;
+80046B94	beq    v0, v1, L46bb0 [$80046bb0]
+80046B98	nop
+80046B9C	jal    system_gpu_get_type [$80043cc0]
+80046BA0	nop
+V1 = 0002;
+80046BA8	bne    v0, v1, L46bf4 [$80046bf4]
+80046BAC	nop
+
+L46bb0:	; 80046BB0
+80046BB0	lui    a0, $8001
+A0 = A0 + 0eb0;
+V0 = hu[S0 + 0014];
+80046BBC	lui    v1, $8006
+V1 = w[V1 + 2bfc];
+A1 = V0 >> 09;
+A1 = A1 & 0003;
+A2 = V0 >> 07;
+A2 = A2 & 0003;
+A3 = V0 << 06;
+A3 = A3 & 07c0;
+V0 = V0 << 03;
+V0 = V0 & 0300;
+80046BE4	jalr   v1 ra
+[SP + 0010] = w(V0);
+80046BEC	j      L46c3c [$80046c3c]
+80046BF0	nop
+
+L46bf4:	; 80046BF4
+80046BF4	lui    a0, $8001
+A0 = A0 + 0eb0;
+V0 = hu[S0 + 0014];
+80046C00	lui    t0, $8006
+T0 = w[T0 + 2bfc];
+A1 = V0 >> 07;
+A1 = A1 & 0003;
+A2 = V0 >> 05;
+A2 = A2 & 0003;
+A3 = V0 << 06;
+A3 = A3 & 07c0;
+V1 = V0 << 04;
+V1 = V1 & 0100;
+V0 = V0 >> 02;
+V0 = V0 & 0200;
+V1 = V1 + V0;
+80046C34	jalr   t0 ra
+[SP + 0010] = w(V1);
+
+L46c3c:	; 80046C3C
+RA = w[SP + 001c];
+S0 = w[SP + 0018];
+SP = SP + 0020;
+80046C48	jr     ra 
+80046C4C	nop
+////////////////////////////////
+// func46c50
+80046C50	addiu  sp, sp, $ffe0 (=-$20)
+[SP + 0018] = w(S0);
+S0 = A0;
+[SP + 001c] = w(RA);
+A1 = h[S0 + 0000];
+A2 = h[S0 + 0002];
+A3 = h[S0 + 0004];
+V0 = h[S0 + 0006];
+80046C70	lui    v1, $8006
+V1 = w[V1 + 2bfc];
+80046C78	lui    a0, $8001
+A0 = A0 + 0f30;
+80046C80	jalr   v1 ra
+[SP + 0010] = w(V0);
+A1 = h[S0 + 0008];
+A2 = h[S0 + 000a];
+A3 = h[S0 + 000c];
+V0 = h[S0 + 000e];
+80046C98	lui    v1, $8006
+V1 = w[V1 + 2bfc];
+80046CA0	lui    a0, $8001
+A0 = A0 + 0f4c;
+80046CA8	jalr   v1 ra
+[SP + 0010] = w(V0);
+A1 = bu[S0 + 0010];
+80046CB4	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80046CBC	lui    a0, $8001
+A0 = A0 + 0f68;
+80046CC4	jalr   v0 ra
+80046CC8	nop
+A1 = bu[S0 + 0011];
+80046CD0	lui    v0, $8006
+V0 = w[V0 + 2bfc];
+80046CD8	lui    a0, $8001
+A0 = A0 + 0f74;
+80046CE0	jalr   v0 ra
+80046CE4	nop
+RA = w[SP + 001c];
+S0 = w[SP + 0018];
+SP = SP + 0020;
+80046CF4	jr     ra 
+80046CF8	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_read_tim_set_address()
+
+[80070690] = w(A0);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_read_tim()
+
+ret = A0;
+
+A0 = w[80070690]; // texture addr
+A1 = ret;
+system_read_tim_get_sizes();
+
+if( V0 != -1 )
+{
+    [80070690] = w(w[80070690] + V0 * 4); // offset to next tim
+    return ret;
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func46d74
+80046D74	addiu  sp, sp, $ffe0 (=-$20)
+80046D78	lui    v0, $8007
+V0 = V0 + 0698;
+80046D80	lui    a2, $8007
+A2 = A2 + 069c;
+80046D88	lui    a3, $8007
+A3 = A3 + 0694;
+[SP + 0018] = w(RA);
+80046D94	jal    func47180 [$80047180]
+[SP + 0010] = w(V0);
+80046D9C	lui    at, $8007
+[AT + 06a0] = w(V0);
+RA = w[SP + 0018];
+SP = SP + 0020;
+80046DAC	jr     ra 
+80046DB0	nop
+////////////////////////////////
+// func46db4
+80046DB4	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+S0 = A0;
+80046DC0	lui    a0, $8007
+A0 = w[A0 + 069c];
+[SP + 0014] = w(RA);
+80046DCC	jal    func47318 [$80047318]
+A1 = S0;
+A2 = V0;
+80046DD8	bltz   a2, L4704c [$8004704c]
+V0 = 0;
+80046DE0	lui    a1, $8007
+A1 = w[A1 + 0694];
+V0 = hu[S0 + 0070];
+80046DEC	lui    a0, $8007
+A0 = w[A0 + 0698];
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0060] = w(A1);
+[S0 + 0064] = w(A0);
+V1 = hu[V0 + 0000];
+V0 = hu[S0 + 0070];
+80046E0C	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0040] = h(V1);
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 0070];
+80046E24	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0042] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = hu[S0 + 0072];
+80046E3C	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0044] = h(V1);
+V1 = hu[V0 + 0000];
+V0 = hu[S0 + 0072];
+80046E54	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0048] = h(V1);
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 0072];
+80046E6C	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 004a] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = hu[S0 + 0074];
+80046E84	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 004c] = h(V1);
+V1 = hu[V0 + 0000];
+V0 = hu[S0 + 0074];
+80046E9C	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0050] = h(V1);
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 0074];
+80046EB4	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 0052] = h(V1);
+V1 = hu[S0 + 0076];
+V0 = hu[V0 + 0004];
+V1 = V1 << 03;
+V1 = V1 + A0;
+[S0 + 0054] = h(V0);
+80046ED8	lui    v0, $8007
+V0 = w[V0 + 069c];
+V1 = hu[V1 + 0000];
+V0 = A2 + V0;
+80046EE8	lui    at, $8007
+[AT + 069c] = w(V0);
+[S0 + 0058] = h(V1);
+V0 = hu[S0 + 0076];
+80046EF8	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 0076];
+80046F0C	nop
+V0 = V0 << 03;
+V0 = V0 + A0;
+[S0 + 005a] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = hu[S0 + 0068];
+80046F24	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 005c] = h(V1);
+V1 = hu[V0 + 0000];
+V0 = hu[S0 + 0068];
+80046F3C	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0020] = h(V1);
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 0068];
+80046F54	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0022] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = hu[S0 + 006a];
+80046F6C	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0024] = h(V1);
+V1 = hu[V0 + 0000];
+V0 = hu[S0 + 006a];
+80046F84	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0028] = h(V1);
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 006a];
+80046F9C	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 002a] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = hu[S0 + 006c];
+80046FB4	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 002c] = h(V1);
+V1 = hu[V0 + 0000];
+V0 = hu[S0 + 006c];
+80046FCC	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0030] = h(V1);
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 006c];
+80046FE4	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0032] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = hu[S0 + 006e];
+80046FFC	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 0034] = h(V1);
+V0 = hu[V0 + 0000];
+80047010	nop
+[S0 + 0038] = h(V0);
+V0 = hu[S0 + 006e];
+8004701C	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+V1 = hu[V0 + 0002];
+V0 = hu[S0 + 006e];
+80047030	nop
+V0 = V0 << 03;
+V0 = V0 + A1;
+[S0 + 003a] = h(V1);
+V1 = hu[V0 + 0004];
+V0 = S0;
+[V0 + 003c] = h(V1);
+
+L4704c:	; 8004704C
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+80047058	jr     ra 
+8004705C	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_read_tim_get_sizes()
+
+texture = A0;
+ret = A1;
+
+if( w[texture] != 10 )
+{
+    return -1;
+}
+texture = texture + 4;
+[ret + 0] = w(w[texture]); // bpp
+texture = texture + 4;
+
+func43cd0();
+if( V0 == 2 )
+{
+    A0 = 80010f80; // "id  =%08x"
+    A1 = 10;
+    system_bios_printf();
+
+    A0 = 80010f8c; // "mode=%08x"
+    A1 = w[ret + 0];
+    system_bios_printf();
+
+    A0 = 80010f98; // "timaddr=%08x"
+    A1 = texture;
+    system_bios_printf();
+}
+
+if( w[ret + 0] & 8 )
+{
+    [ret + 4] = w(texture + 4); // clut sizes
+    [ret + 8] = w(texture + c); // clut data
+    A0 = w[texture + 0] / 4; // clut length
+    texture = texture + (A0 * 4);
+}
+else
+{
+    A0 = 0;
+    [ret + 4] = w(0);
+    [ret + 8] = w(0);
+}
+
+[ret + c] = w(texture + 4); // image sizes
+[ret + 10] = w(texture + c); // image data
+
+return A0 + (w[texture + 0] / 4) + 2; // tim size in int
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func47180:	; 80047180
+80047180	addiu  sp, sp, $ffc8 (=-$38)
+[SP + 0030] = w(S6);
+S6 = w[SP + 0048];
+[SP + 0018] = w(S0);
+S0 = A0;
+[SP + 001c] = w(S1);
+S1 = A1;
+[SP + 002c] = w(S5);
+S5 = A2;
+[SP + 0028] = w(S4);
+S4 = A3;
+[SP + 0034] = w(RA);
+[SP + 0024] = w(S3);
+800471B4	jal    func43cd0 [$80043cd0]
+[SP + 0020] = w(S2);
+S3 = 0002;
+800471C0	bne    v0, s3, L471d8 [$800471d8]
+S2 = S0 + 000c;
+800471C8	lui    a0, $8001
+A0 = A0 + 0fa8;
+800471D0	jal    system_bios_printf [$80042dc8]
+800471D4	nop
+
+L471d8:	; 800471D8
+800471D8	jal    func43cd0 [$80043cd0]
+800471DC	nop
+800471E0	bne    v0, s3, L47208 [$80047208]
+800471E4	nop
+[SP + 0010] = w(S1);
+A1 = w[S0 + 0000];
+A2 = w[S0 + 0004];
+A3 = w[S0 + 0008];
+800471F8	lui    a0, $8001
+A0 = A0 + 0fbc;
+80047200	jal    system_bios_printf [$80042dc8]
+80047204	nop
+
+L47208:	; 80047208
+80047208	jal    func43cd0 [$80043cd0]
+8004720C	nop
+80047210	bne    v0, s3, L4723c [$8004723c]
+V0 = S1 << 03;
+V0 = V0 - S1;
+V0 = V0 << 02;
+V0 = V0 + S2;
+A1 = w[V0 + 0000];
+A2 = w[V0 + 0004];
+8004722C	lui    a0, $8001
+A0 = A0 + 0fe4;
+80047234	jal    system_bios_printf [$80042dc8]
+80047238	nop
+
+L4723c:	; 8004723C
+8004723C	jal    func43cd0 [$80043cd0]
+80047240	nop
+80047244	bne    v0, s3, L47270 [$80047270]
+V0 = S1 << 03;
+V0 = V0 - S1;
+V0 = V0 << 02;
+V0 = V0 + S2;
+A1 = w[V0 + 0008];
+A2 = w[V0 + 000c];
+80047260	lui    a0, $8001
+A0 = A0 + 0ffc;
+80047268	jal    system_bios_printf [$80042dc8]
+8004726C	nop
+
+L47270:	; 80047270
+80047270	jal    func43cd0 [$80043cd0]
+80047274	nop
+80047278	bne    v0, s3, L472ac [$800472ac]
+V1 = S1 << 03;
+V0 = S1 << 03;
+V0 = V0 - S1;
+V0 = V0 << 02;
+V0 = V0 + S2;
+A1 = w[V0 + 0010];
+A2 = w[V0 + 0014];
+80047298	lui    a0, $8001
+A0 = A0 + 1014;
+800472A0	jal    system_bios_printf [$80042dc8]
+800472A4	nop
+V1 = S1 << 03;
+
+L472ac:	; 800472AC
+V1 = V1 - S1;
+V1 = V1 << 02;
+V1 = V1 + S2;
+V0 = w[V1 + 0000];
+800472BC	nop
+V0 = S2 + V0;
+[S4 + 0000] = w(V0);
+V0 = w[V1 + 0008];
+800472CC	nop
+V0 = S2 + V0;
+[S6 + 0000] = w(V0);
+V0 = w[V1 + 0010];
+800472DC	nop
+V0 = S2 + V0;
+[S5 + 0000] = w(V0);
+V0 = w[V1 + 0014];
+RA = w[SP + 0034];
+S6 = w[SP + 0030];
+S5 = w[SP + 002c];
+S4 = w[SP + 0028];
+S3 = w[SP + 0024];
+S2 = w[SP + 0020];
+S1 = w[SP + 001c];
+S0 = w[SP + 0018];
+SP = SP + 0038;
+80047310	jr     ra 
+80047314	nop
+////////////////////////////////
+// func47318:	; 80047318
+80047318	addiu  sp, sp, $ffe0 (=-$20)
+[SP + 0010] = w(S0);
+S0 = A0;
+[SP + 0014] = w(S1);
+S1 = A1;
+A0 = S1;
+A1 = 0;
+[SP + 0018] = w(RA);
+80047338	jal    func48498 [$80048498]
+A2 = 0004;
+80047340	lui    v1, $fdff
+V1 = V1 | ffff;
+80047348	lui    a0, $2d01
+V0 = w[S0 + 0000];
+A0 = A0 | 0709;
+V1 = V0 & V1;
+80047358	beq    v1, a0, L481a4 [$800481a4]
+[S1 + 0000] = w(V0);
+V0 = A0 < V1;
+80047364	bne    v0, zero, L47408 [$80047408]
+80047368	lui    v0, $3501
+8004736C	lui    v0, $2501
+V0 = V0 | 0607;
+80047374	beq    v1, v0, L47974 [$80047974]
+V0 = V0 < V1;
+8004737C	bne    v0, zero, L473c8 [$800473c8]
+80047380	lui    v0, $2901
+80047384	lui    v0, $2101
+V0 = V0 | 0304;
+8004738C	beq    v1, v0, L47804 [$80047804]
+V0 = V0 < V1;
+80047394	bne    v0, zero, L473b4 [$800473b4]
+80047398	lui    v0, $2400
+8004739C	lui    v0, $2000
+V0 = V0 | 0304;
+800473A4	beq    v1, v0, L474ac [$800474ac]
+800473A8	lui    v0, $fdff
+800473AC	j      L48464 [$80048464]
+800473B0	nop
+
+L473b4:	; 800473B4
+V0 = V0 | 0507;
+800473B8	beq    v1, v0, L47664 [$80047664]
+800473BC	lui    v0, $fdff
+800473C0	j      L48464 [$80048464]
+800473C4	nop
+
+L473c8:	; 800473C8
+V0 = V0 | 0305;
+800473CC	beq    v1, v0, L47fd4 [$80047fd4]
+V0 = V0 < V1;
+800473D4	bne    v0, zero, L473f4 [$800473f4]
+800473D8	lui    v0, $2c00
+800473DC	lui    v0, $2800
+V0 = V0 | 0405;
+800473E4	beq    v1, v0, L47ba4 [$80047ba4]
+800473E8	lui    v0, $fdff
+800473EC	j      L48464 [$80048464]
+800473F0	nop
+
+L473f4:	; 800473F4
+V0 = V0 | 0709;
+800473F8	beq    v1, v0, L47dd4 [$80047dd4]
+800473FC	lui    v0, $fdff
+80047400	j      L48464 [$80048464]
+80047404	nop
+
+L47408:	; 80047408
+V0 = V0 | 0809;
+8004740C	beq    v1, v0, L47a8c [$80047a8c]
+V0 = V0 < V1;
+80047414	bne    v0, zero, L47460 [$80047460]
+80047418	lui    v0, $3901
+8004741C	lui    v0, $3101
+V0 = V0 | 0506;
+80047424	beq    v1, v0, L478bc [$800478bc]
+V0 = V0 < V1;
+8004742C	bne    v0, zero, L4744c [$8004744c]
+80047430	lui    v0, $3400
+80047434	lui    v0, $3000
+V0 = V0 | 0406;
+8004743C	beq    v1, v0, L47588 [$80047588]
+80047440	lui    v0, $fdff
+80047444	j      L48464 [$80048464]
+80047448	nop
+
+L4744c:	; 8004744C
+V0 = V0 | 0609;
+80047450	beq    v1, v0, L47734 [$80047734]
+80047454	lui    v0, $fdff
+80047458	j      L48464 [$80048464]
+8004745C	nop
+
+L47460:	; 80047460
+V0 = V0 | 0608;
+80047464	beq    v1, v0, L480bc [$800480bc]
+V0 = V0 < V1;
+8004746C	bne    v0, zero, L4748c [$8004748c]
+80047470	lui    v0, $3c00
+80047474	lui    v0, $3800
+V0 = V0 | 0508;
+8004747C	beq    v1, v0, L47cbc [$80047cbc]
+80047480	lui    v0, $fdff
+80047484	j      L48464 [$80048464]
+80047488	nop
+
+L4748c:	; 8004748C
+V0 = V0 | 080c;
+80047490	beq    v1, v0, L47ed4 [$80047ed4]
+80047494	lui    v0, $3d01
+V0 = V0 | 0a0c;
+8004749C	beq    v1, v0, L48304 [$80048304]
+800474A0	lui    v0, $fdff
+800474A4	j      L48464 [$80048464]
+800474A8	nop
+
+L474ac:	; 800474AC
+800474AC	jal    func43cd0 [$80043cd0]
+800474B0	nop
+V1 = 0002;
+800474B8	bne    v0, v1, L474d0 [$800474d0]
+800474BC	nop
+800474C0	lui    a0, $8001
+A0 = A0 + 102c;
+800474C8	jal    system_bios_printf [$80042dc8]
+800474CC	nop
+
+L474d0:	; 800474D0
+V0 = bu[S0 + 0004];
+800474D4	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+800474E0	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+800474EC	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0004];
+800474F8	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0005];
+80047504	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0006];
+80047510	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0004];
+8004751C	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0005];
+80047528	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0006];
+80047534	nop
+[S1 + 000e] = b(V0);
+V0 = hu[S0 + 000a];
+80047540	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 000c];
+8004754C	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 000e];
+80047558	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0008];
+80047564	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 0008];
+80047570	nop
+[S1 + 0072] = h(V0);
+V1 = hu[S0 + 0008];
+V0 = 0010;
+80047580	j      L48480 [$80048480]
+[S1 + 0074] = h(V1);
+
+L47588:	; 80047588
+80047588	jal    func43cd0 [$80043cd0]
+8004758C	nop
+V1 = 0002;
+80047594	bne    v0, v1, L475ac [$800475ac]
+80047598	nop
+8004759C	lui    a0, $8001
+A0 = A0 + 1034;
+800475A4	jal    system_bios_printf [$80042dc8]
+800475A8	nop
+
+L475ac:	; 800475AC
+V0 = bu[S0 + 0004];
+800475B0	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+800475BC	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+800475C8	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0004];
+800475D4	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0005];
+800475E0	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0006];
+800475EC	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0004];
+800475F8	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0005];
+80047604	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0006];
+80047610	nop
+[S1 + 000e] = b(V0);
+V0 = hu[S0 + 000a];
+8004761C	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 000e];
+80047628	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 0012];
+80047634	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0008];
+80047640	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 000c];
+8004764C	nop
+[S1 + 0072] = h(V0);
+V1 = hu[S0 + 0010];
+V0 = 0014;
+8004765C	j      L48480 [$80048480]
+[S1 + 0074] = h(V1);
+
+L47664:	; 80047664
+80047664	jal    func43cd0 [$80043cd0]
+80047668	nop
+V1 = 0002;
+80047670	bne    v0, v1, L47688 [$80047688]
+80047674	nop
+80047678	lui    a0, $8001
+A0 = A0 + 103c;
+80047680	jal    system_bios_printf [$80042dc8]
+80047684	nop
+
+L47688:	; 80047688
+V0 = hu[S0 + 000a];
+8004768C	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+80047698	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+800476A4	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+800476B0	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+800476BC	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+800476C8	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+800476D4	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+800476E0	nop
+[S1 + 001d] = b(V0);
+V0 = hu[S0 + 0012];
+800476EC	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0014];
+800476F8	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 0016];
+80047704	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0010];
+80047710	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 0010];
+8004771C	nop
+[S1 + 0072] = h(V0);
+V1 = hu[S0 + 0010];
+V0 = 0018;
+8004772C	j      L48480 [$80048480]
+[S1 + 0074] = h(V1);
+
+L47734:	; 80047734
+80047734	jal    func43cd0 [$80043cd0]
+80047738	nop
+V1 = 0002;
+80047740	bne    v0, v1, L47758 [$80047758]
+80047744	nop
+80047748	lui    a0, $8001
+A0 = A0 + 1044;
+80047750	jal    system_bios_printf [$80042dc8]
+80047754	nop
+
+L47758:	; 80047758
+V0 = hu[S0 + 000a];
+8004775C	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+80047768	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+80047774	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+80047780	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+8004778C	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+80047798	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+800477A4	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+800477B0	nop
+[S1 + 001d] = b(V0);
+V0 = hu[S0 + 0012];
+800477BC	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0016];
+800477C8	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 001a];
+800477D4	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0010];
+800477E0	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 0014];
+800477EC	nop
+[S1 + 0072] = h(V0);
+V1 = hu[S0 + 0018];
+V0 = 001c;
+800477FC	j      L48480 [$80048480]
+[S1 + 0074] = h(V1);
+
+L47804:	; 80047804
+80047804	jal    func43cd0 [$80043cd0]
+80047808	nop
+V1 = 0002;
+80047810	bne    v0, v1, L47828 [$80047828]
+80047814	nop
+80047818	lui    a0, $8001
+A0 = A0 + 104c;
+80047820	jal    system_bios_printf [$80042dc8]
+80047824	nop
+
+L47828:	; 80047828
+V0 = bu[S0 + 0004];
+8004782C	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+80047838	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+80047844	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0004];
+80047850	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0005];
+8004785C	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0006];
+80047868	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0004];
+80047874	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0005];
+80047880	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0006];
+8004788C	nop
+[S1 + 000e] = b(V0);
+V0 = hu[S0 + 0008];
+80047898	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 000a];
+800478A4	nop
+[S1 + 006a] = h(V0);
+V1 = hu[S0 + 000c];
+V0 = 0010;
+800478B4	j      L48480 [$80048480]
+[S1 + 006c] = h(V1);
+
+L478bc:	; 800478BC
+800478BC	jal    func43cd0 [$80043cd0]
+800478C0	nop
+V1 = 0002;
+800478C8	bne    v0, v1, L478e0 [$800478e0]
+800478CC	nop
+800478D0	lui    a0, $8001
+A0 = A0 + 1050;
+800478D8	jal    system_bios_printf [$80042dc8]
+800478DC	nop
+
+L478e0:	; 800478E0
+V0 = bu[S0 + 0004];
+800478E4	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+800478F0	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+800478FC	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0008];
+80047908	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0009];
+80047914	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 000a];
+80047920	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 000c];
+8004792C	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 000d];
+80047938	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 000e];
+80047944	nop
+[S1 + 000e] = b(V0);
+V0 = hu[S0 + 0010];
+80047950	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0012];
+8004795C	nop
+[S1 + 006a] = h(V0);
+V1 = hu[S0 + 0014];
+V0 = 0018;
+8004796C	j      L48480 [$80048480]
+[S1 + 006c] = h(V1);
+
+L47974:	; 80047974
+80047974	jal    func43cd0 [$80043cd0]
+80047978	nop
+V1 = 0002;
+80047980	bne    v0, v1, L47998 [$80047998]
+80047984	nop
+80047988	lui    a0, $8001
+A0 = A0 + 1054;
+80047990	jal    system_bios_printf [$80042dc8]
+80047994	nop
+
+L47998:	; 80047998
+V0 = hu[S0 + 000a];
+8004799C	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+800479A8	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+800479B4	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+800479C0	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+800479CC	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+800479D8	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+800479E4	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+800479F0	nop
+[S1 + 001d] = b(V0);
+V0 = bu[S0 + 0010];
+800479FC	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0011];
+80047A08	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0012];
+80047A14	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0010];
+80047A20	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0011];
+80047A2C	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0012];
+80047A38	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0010];
+80047A44	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0011];
+80047A50	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0012];
+80047A5C	nop
+[S1 + 000e] = b(V0);
+V0 = hu[S0 + 0014];
+80047A68	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0016];
+80047A74	nop
+[S1 + 006a] = h(V0);
+V1 = hu[S0 + 0018];
+V0 = 001c;
+80047A84	j      L48480 [$80048480]
+[S1 + 006c] = h(V1);
+
+L47a8c:	; 80047A8C
+80047A8C	jal    func43cd0 [$80043cd0]
+80047A90	nop
+V1 = 0002;
+80047A98	bne    v0, v1, L47ab0 [$80047ab0]
+80047A9C	nop
+80047AA0	lui    a0, $8001
+A0 = A0 + 105c;
+80047AA8	jal    system_bios_printf [$80042dc8]
+80047AAC	nop
+
+L47ab0:	; 80047AB0
+V0 = hu[S0 + 000a];
+80047AB4	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+80047AC0	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+80047ACC	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+80047AD8	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+80047AE4	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+80047AF0	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+80047AFC	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+80047B08	nop
+[S1 + 001d] = b(V0);
+V0 = hu[S0 + 001c];
+80047B14	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 001e];
+80047B20	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 0020];
+80047B2C	nop
+[S1 + 006c] = h(V0);
+V0 = bu[S0 + 0010];
+80047B38	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0011];
+80047B44	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0012];
+80047B50	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0014];
+80047B5C	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0015];
+80047B68	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0016];
+80047B74	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0018];
+80047B80	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0019];
+80047B8C	nop
+[S1 + 000d] = b(V0);
+V1 = bu[S0 + 001a];
+V0 = 0024;
+80047B9C	j      L48480 [$80048480]
+[S1 + 000e] = b(V1);
+
+L47ba4:	; 80047BA4
+80047BA4	jal    func43cd0 [$80043cd0]
+80047BA8	nop
+V1 = 0002;
+80047BB0	bne    v0, v1, L47bc8 [$80047bc8]
+80047BB4	nop
+80047BB8	lui    a0, $8001
+A0 = A0 + 1064;
+80047BC0	jal    system_bios_printf [$80042dc8]
+80047BC4	nop
+
+L47bc8:	; 80047BC8
+V0 = bu[S0 + 0004];
+80047BCC	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+80047BD8	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+80047BE4	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0004];
+80047BF0	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0005];
+80047BFC	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0006];
+80047C08	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0004];
+80047C14	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0005];
+80047C20	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0006];
+80047C2C	nop
+[S1 + 000e] = b(V0);
+V0 = bu[S0 + 0004];
+80047C38	nop
+[S1 + 0010] = b(V0);
+V0 = bu[S0 + 0005];
+80047C44	nop
+[S1 + 0011] = b(V0);
+V0 = bu[S0 + 0006];
+80047C50	nop
+[S1 + 0012] = b(V0);
+V0 = hu[S0 + 000a];
+80047C5C	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 000c];
+80047C68	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 000e];
+80047C74	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0010];
+80047C80	nop
+[S1 + 006e] = h(V0);
+V0 = hu[S0 + 0008];
+80047C8C	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 0008];
+80047C98	nop
+[S1 + 0072] = h(V0);
+V0 = hu[S0 + 0008];
+80047CA4	nop
+[S1 + 0074] = h(V0);
+V1 = hu[S0 + 0008];
+V0 = 0014;
+80047CB4	j      L48480 [$80048480]
+[S1 + 0076] = h(V1);
+
+L47cbc:	; 80047CBC
+80047CBC	jal    func43cd0 [$80043cd0]
+80047CC0	nop
+V1 = 0002;
+80047CC8	bne    v0, v1, L47ce0 [$80047ce0]
+80047CCC	nop
+80047CD0	lui    a0, $8001
+A0 = A0 + 106c;
+80047CD8	jal    system_bios_printf [$80042dc8]
+80047CDC	nop
+
+L47ce0:	; 80047CE0
+V0 = bu[S0 + 0004];
+80047CE4	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+80047CF0	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+80047CFC	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0004];
+80047D08	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0005];
+80047D14	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0006];
+80047D20	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0004];
+80047D2C	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0005];
+80047D38	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0006];
+80047D44	nop
+[S1 + 000e] = b(V0);
+V0 = bu[S0 + 0004];
+80047D50	nop
+[S1 + 0010] = b(V0);
+V0 = bu[S0 + 0005];
+80047D5C	nop
+[S1 + 0011] = b(V0);
+V0 = bu[S0 + 0006];
+80047D68	nop
+[S1 + 0012] = b(V0);
+V0 = hu[S0 + 000a];
+80047D74	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 000e];
+80047D80	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 0012];
+80047D8C	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0016];
+80047D98	nop
+[S1 + 006e] = h(V0);
+V0 = hu[S0 + 0008];
+80047DA4	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 000c];
+80047DB0	nop
+[S1 + 0072] = h(V0);
+V0 = hu[S0 + 0010];
+80047DBC	nop
+[S1 + 0074] = h(V0);
+V1 = hu[S0 + 0014];
+V0 = 0018;
+80047DCC	j      L48480 [$80048480]
+[S1 + 0076] = h(V1);
+
+L47dd4:	; 80047DD4
+80047DD4	jal    func43cd0 [$80043cd0]
+80047DD8	nop
+V1 = 0002;
+80047DE0	bne    v0, v1, L47df8 [$80047df8]
+80047DE4	nop
+80047DE8	lui    a0, $8001
+A0 = A0 + 1074;
+80047DF0	jal    system_bios_printf [$80042dc8]
+80047DF4	nop
+
+L47df8:	; 80047DF8
+V0 = hu[S0 + 000a];
+80047DFC	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+80047E08	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+80047E14	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+80047E20	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+80047E2C	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+80047E38	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+80047E44	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+80047E50	nop
+[S1 + 001d] = b(V0);
+V0 = bu[S0 + 0010];
+80047E5C	nop
+[S1 + 001e] = b(V0);
+V0 = bu[S0 + 0011];
+80047E68	nop
+[S1 + 001f] = b(V0);
+V0 = hu[S0 + 0016];
+80047E74	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0018];
+80047E80	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 001a];
+80047E8C	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 001c];
+80047E98	nop
+[S1 + 006e] = h(V0);
+V0 = hu[S0 + 0014];
+80047EA4	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 0014];
+80047EB0	nop
+[S1 + 0072] = h(V0);
+V0 = hu[S0 + 0014];
+80047EBC	nop
+[S1 + 0074] = h(V0);
+V1 = hu[S0 + 0014];
+V0 = 0020;
+80047ECC	j      L48480 [$80048480]
+[S1 + 0076] = h(V1);
+
+L47ed4:	; 80047ED4
+80047ED4	jal    func43cd0 [$80043cd0]
+80047ED8	nop
+V1 = 0002;
+80047EE0	bne    v0, v1, L47ef8 [$80047ef8]
+80047EE4	nop
+80047EE8	lui    a0, $8001
+A0 = A0 + 107c;
+80047EF0	jal    system_bios_printf [$80042dc8]
+80047EF4	nop
+
+L47ef8:	; 80047EF8
+V0 = hu[S0 + 000a];
+80047EFC	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+80047F08	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+80047F14	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+80047F20	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+80047F2C	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+80047F38	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+80047F44	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+80047F50	nop
+[S1 + 001d] = b(V0);
+V0 = bu[S0 + 0010];
+80047F5C	nop
+[S1 + 001e] = b(V0);
+V0 = bu[S0 + 0011];
+80047F68	nop
+[S1 + 001f] = b(V0);
+V0 = hu[S0 + 0016];
+80047F74	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 001a];
+80047F80	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 001e];
+80047F8C	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 0022];
+80047F98	nop
+[S1 + 006e] = h(V0);
+V0 = hu[S0 + 0014];
+80047FA4	nop
+[S1 + 0070] = h(V0);
+V0 = hu[S0 + 0018];
+80047FB0	nop
+[S1 + 0072] = h(V0);
+V0 = hu[S0 + 001c];
+80047FBC	nop
+[S1 + 0074] = h(V0);
+V1 = hu[S0 + 0020];
+V0 = 0024;
+80047FCC	j      L48480 [$80048480]
+[S1 + 0076] = h(V1);
+
+L47fd4:	; 80047FD4
+80047FD4	jal    func43cd0 [$80043cd0]
+80047FD8	nop
+V1 = 0002;
+80047FE0	bne    v0, v1, L47ff8 [$80047ff8]
+80047FE4	nop
+80047FE8	lui    a0, $8001
+A0 = A0 + 1084;
+80047FF0	jal    system_bios_printf [$80042dc8]
+80047FF4	nop
+
+L47ff8:	; 80047FF8
+V0 = bu[S0 + 0004];
+80047FFC	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+80048008	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+80048014	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0004];
+80048020	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0005];
+8004802C	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0006];
+80048038	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0004];
+80048044	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0005];
+80048050	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0006];
+8004805C	nop
+[S1 + 000e] = b(V0);
+V0 = bu[S0 + 0004];
+80048068	nop
+[S1 + 0010] = b(V0);
+V0 = bu[S0 + 0005];
+80048074	nop
+[S1 + 0011] = b(V0);
+V0 = bu[S0 + 0006];
+80048080	nop
+[S1 + 0012] = b(V0);
+V0 = hu[S0 + 0008];
+8004808C	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 000a];
+80048098	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 000c];
+800480A4	nop
+[S1 + 006c] = h(V0);
+V1 = hu[S0 + 000e];
+V0 = 0010;
+800480B4	j      L48480 [$80048480]
+[S1 + 006e] = h(V1);
+
+L480bc:	; 800480BC
+800480BC	jal    func43cd0 [$80043cd0]
+800480C0	nop
+V1 = 0002;
+800480C8	bne    v0, v1, L480e0 [$800480e0]
+800480CC	nop
+800480D0	lui    a0, $8001
+A0 = A0 + 1088;
+800480D8	jal    system_bios_printf [$80042dc8]
+800480DC	nop
+
+L480e0:	; 800480E0
+V0 = bu[S0 + 0004];
+800480E4	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0005];
+800480F0	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0006];
+800480FC	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0008];
+80048108	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0009];
+80048114	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 000a];
+80048120	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 000c];
+8004812C	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 000d];
+80048138	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 000e];
+80048144	nop
+[S1 + 000e] = b(V0);
+V0 = bu[S0 + 0010];
+80048150	nop
+[S1 + 0010] = b(V0);
+V0 = bu[S0 + 0011];
+8004815C	nop
+[S1 + 0011] = b(V0);
+V0 = bu[S0 + 0012];
+80048168	nop
+[S1 + 0012] = b(V0);
+V0 = hu[S0 + 0014];
+80048174	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0016];
+80048180	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 0018];
+8004818C	nop
+[S1 + 006c] = h(V0);
+V1 = hu[S0 + 001a];
+V0 = 001c;
+8004819C	j      L48480 [$80048480]
+[S1 + 006e] = h(V1);
+
+L481a4:	; 800481A4
+800481A4	jal    func43cd0 [$80043cd0]
+800481A8	nop
+V1 = 0002;
+800481B0	bne    v0, v1, L481c8 [$800481c8]
+800481B4	nop
+800481B8	lui    a0, $8001
+A0 = A0 + 108c;
+800481C0	jal    system_bios_printf [$80042dc8]
+800481C4	nop
+
+L481c8:	; 800481C8
+V0 = hu[S0 + 000a];
+800481CC	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+800481D8	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+800481E4	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+800481F0	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+800481FC	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+80048208	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+80048214	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+80048220	nop
+[S1 + 001d] = b(V0);
+V0 = bu[S0 + 0010];
+8004822C	nop
+[S1 + 001e] = b(V0);
+V0 = bu[S0 + 0011];
+80048238	nop
+[S1 + 001f] = b(V0);
+V0 = bu[S0 + 0014];
+80048244	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0015];
+80048250	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0016];
+8004825C	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0014];
+80048268	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0015];
+80048274	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 0016];
+80048280	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 0014];
+8004828C	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 0015];
+80048298	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 0016];
+800482A4	nop
+[S1 + 000e] = b(V0);
+V0 = bu[S0 + 0014];
+800482B0	nop
+[S1 + 0010] = b(V0);
+V0 = bu[S0 + 0015];
+800482BC	nop
+[S1 + 0011] = b(V0);
+V0 = bu[S0 + 0016];
+800482C8	nop
+[S1 + 0012] = b(V0);
+V0 = hu[S0 + 0018];
+800482D4	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 001a];
+800482E0	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 001c];
+800482EC	nop
+[S1 + 006c] = h(V0);
+V1 = hu[S0 + 001e];
+V0 = 0020;
+800482FC	j      L48480 [$80048480]
+[S1 + 006e] = h(V1);
+
+L48304:	; 80048304
+80048304	jal    func43cd0 [$80043cd0]
+80048308	nop
+V1 = 0002;
+80048310	bne    v0, v1, L48328 [$80048328]
+80048314	nop
+80048318	lui    a0, $8001
+A0 = A0 + 1094;
+80048320	jal    system_bios_printf [$80042dc8]
+80048324	nop
+
+L48328:	; 80048328
+V0 = hu[S0 + 000a];
+8004832C	nop
+[S1 + 0014] = h(V0);
+V0 = hu[S0 + 0006];
+80048338	nop
+[S1 + 0016] = h(V0);
+V0 = bu[S0 + 0004];
+80048344	nop
+[S1 + 0018] = b(V0);
+V0 = bu[S0 + 0005];
+80048350	nop
+[S1 + 0019] = b(V0);
+V0 = bu[S0 + 0008];
+8004835C	nop
+[S1 + 001a] = b(V0);
+V0 = bu[S0 + 0009];
+80048368	nop
+[S1 + 001b] = b(V0);
+V0 = bu[S0 + 000c];
+80048374	nop
+[S1 + 001c] = b(V0);
+V0 = bu[S0 + 000d];
+80048380	nop
+[S1 + 001d] = b(V0);
+V0 = bu[S0 + 0010];
+8004838C	nop
+[S1 + 001e] = b(V0);
+V0 = bu[S0 + 0011];
+80048398	nop
+[S1 + 001f] = b(V0);
+V0 = hu[S0 + 0024];
+800483A4	nop
+[S1 + 0068] = h(V0);
+V0 = hu[S0 + 0026];
+800483B0	nop
+[S1 + 006a] = h(V0);
+V0 = hu[S0 + 0028];
+800483BC	nop
+[S1 + 006c] = h(V0);
+V0 = hu[S0 + 002a];
+800483C8	nop
+[S1 + 006e] = h(V0);
+V0 = bu[S0 + 0014];
+800483D4	nop
+[S1 + 0004] = b(V0);
+V0 = bu[S0 + 0015];
+800483E0	nop
+[S1 + 0005] = b(V0);
+V0 = bu[S0 + 0016];
+800483EC	nop
+[S1 + 0006] = b(V0);
+V0 = bu[S0 + 0018];
+800483F8	nop
+[S1 + 0008] = b(V0);
+V0 = bu[S0 + 0019];
+80048404	nop
+[S1 + 0009] = b(V0);
+V0 = bu[S0 + 001a];
+80048410	nop
+[S1 + 000a] = b(V0);
+V0 = bu[S0 + 001c];
+8004841C	nop
+[S1 + 000c] = b(V0);
+V0 = bu[S0 + 001d];
+80048428	nop
+[S1 + 000d] = b(V0);
+V0 = bu[S0 + 001e];
+80048434	nop
+[S1 + 000e] = b(V0);
+V0 = bu[S0 + 0020];
+80048440	nop
+[S1 + 0010] = b(V0);
+V0 = bu[S0 + 0021];
+8004844C	nop
+[S1 + 0011] = b(V0);
+V1 = bu[S0 + 0022];
+V0 = 002c;
+8004845C	j      L48480 [$80048480]
+[S1 + 0012] = b(V1);
+
+L48464:	; 80048464
+V0 = V0 | ffff;
+A1 = w[S1 + 0000];
+8004846C	lui    a0, $8001
+A0 = A0 + 109c;
+80048474	jal    system_bios_printf [$80042dc8]
+A1 = A1 & V0;
+8004847C	addiu  v0, zero, $ffff (=-$1)
+
+L48480:	; 80048480
+RA = w[SP + 0018];
+S1 = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0020;
+80048490	jr     ra 
+80048494	nop
+////////////////////////////////
+// func48498:	; 80048498
+T2 = 00a0;
+8004849C	jr     t2 
+T1 = 002b;
+800484A4	nop
+////////////////////////////////
+// func484a8:	; 800484A8
+800484A8	lui    a0, $8006
+A0 = w[A0 + 2d28];
+800484B0	addiu  sp, sp, $fff8 (=-$8)
+V0 = w[A0 + 0000];
+800484B8	lui    v1, $0100
+V0 = V0 & V1;
+800484C0	beq    v0, zero, L48534 [$80048534]
+V0 = 0;
+V0 = w[A0 + 0000];
+V1 = 0004;
+V0 = V0 & 0700;
+V0 = V0 >> 08;
+800484D8	bne    v0, v1, L48534 [$80048534]
+800484DC	addiu  v0, zero, $ffff (=-$1)
+800484E0	lui    v1, $feff
+V0 = w[A0 + 0000];
+V1 = V1 | ffff;
+V0 = V0 & V1;
+[A0 + 0000] = w(V0);
+800484F4	lui    v0, $8006
+V0 = w[V0 + 2d28];
+800484FC	lui    v1, $8006
+V1 = w[V1 + 2d20];
+V0 = w[V0 + 0000];
+80048508	nop
+[SP + 0000] = w(V0);
+V0 = w[V1 + 0000];
+80048514	lui    v1, $00ff
+[SP + 0000] = w(V0);
+V0 = w[SP + 0000];
+V1 = V1 | ffff;
+V0 = V0 & V1;
+80048528	beq    v0, v1, L48534 [$80048534]
+V0 = 0;
+V0 = w[SP + 0000];
+
+L48534:	; 80048534
+SP = SP + 0008;
+80048538	jr     ra 
+8004853C	nop
+////////////////////////////////
+// func48540:	; 80048540
+80048540	lui    a2, $8006
+A2 = w[A2 + 2d30];
+A1 = 0;
+V0 = w[A2 + 0000];
+80048550	lui    v1, $0400
+V0 = V0 & V1;
+80048558	bne    v0, zero, L48598 [$80048598]
+V0 = 0;
+V1 = A2;
+80048564	lui    a2, $0400
+V0 = A1;
+
+loop4856c:	; 8004856C
+8004856C	slt    v0, a0, v0
+80048570	beq    v0, zero, L48580 [$80048580]
+A1 = A1 + 0001;
+80048578	j      L48598 [$80048598]
+8004857C	addiu  v0, zero, $ffff (=-$1)
+
+L48580:	; 80048580
+V0 = w[V1 + 0000];
+80048584	nop
+V0 = V0 & A2;
+8004858C	beq    v0, zero, loop4856c [$8004856c]
+V0 = A1;
+V0 = 0;
+
+L48598:	; 80048598
+80048598	jr     ra 
+8004859C	nop
+////////////////////////////////
+// func485a0
+T0 = A0;
+T1 = A1;
+800485A8	lui    a0, $1000
+A0 = A0 | 0002;
+800485B0	lui    a1, $000f
+A1 = A1 | ffff;
+V0 = 0005;
+800485BC	lui    a2, $1000
+800485C0	lui    v1, $8006
+V1 = w[V1 + 2d30];
+A2 = A2 | 0003;
+800485CC	lui    at, $8009
+[AT + 65f3] = b(V0);
+[V1 + 0000] = w(A0);
+800485D8	lui    v0, $8006
+V0 = w[V0 + 2d2c];
+800485E0	lui    v1, $e200
+V0 = w[V0 + 0000];
+800485E8	lui    a0, $8006
+A0 = w[A0 + 2d30];
+V0 = V0 & A1;
+V0 = V0 | V1;
+800485F8	lui    at, $8009
+[AT + 65f4] = w(V0);
+[A0 + 0000] = w(A2);
+80048604	lui    a2, $1000
+A2 = A2 | 0004;
+8004860C	lui    v0, $8006
+V0 = w[V0 + 2d2c];
+80048614	lui    v1, $e300
+V0 = w[V0 + 0000];
+8004861C	lui    a0, $8006
+A0 = w[A0 + 2d30];
+V0 = V0 & A1;
+V0 = V0 | V1;
+8004862C	lui    at, $8009
+[AT + 65f8] = w(V0);
+[A0 + 0000] = w(A2);
+80048638	lui    a2, $1000
+A2 = A2 | 0005;
+80048640	lui    v0, $8006
+V0 = w[V0 + 2d2c];
+80048648	lui    v1, $e400
+V0 = w[V0 + 0000];
+80048650	lui    a0, $8006
+A0 = w[A0 + 2d30];
+V0 = V0 & A1;
+V0 = V0 | V1;
+80048660	lui    v1, $007f
+80048664	lui    at, $8009
+[AT + 65fc] = w(V0);
+[A0 + 0000] = w(A2);
+80048670	lui    v0, $8006
+V0 = w[V0 + 2d2c];
+V1 = V1 | ffff;
+V0 = w[V0 + 0000];
+80048680	lui    a0, $8006
+A0 = w[A0 + 2d30];
+V0 = V0 & V1;
+8004868C	lui    v1, $e500
+V0 = V0 | V1;
+80048694	lui    at, $8009
+[AT + 6600] = w(V0);
+V0 = w[A0 + 0000];
+800486A0	lui    a0, $00ff
+800486A4	lui    v1, $e100
+A0 = A0 | ffff;
+V0 = V0 & 07ff;
+V0 = V0 | V1;
+800486B4	lui    at, $8009
+[AT + 6604] = w(V0);
+V0 = w[T0 + 0000];
+800486C0	lui    v1, $8000
+V0 = V0 & A0;
+V0 = V0 | V1;
+V0 = w[V0 + 0000];
+800486D0	nop
+V0 = V0 & A0;
+800486D8	beq    v0, a0, L48720 [$80048720]
+A3 = T0;
+800486E0	lui    v1, $00ff
+V1 = V1 | ffff;
+800486E8	lui    a0, $8000
+
+loop486ec:	; 800486EC
+V0 = w[A3 + 0000];
+800486F0	nop
+V0 = V0 & V1;
+A3 = V0 | A0;
+V0 = w[A3 + 0000];
+80048700	nop
+V0 = V0 & V1;
+V0 = V0 | A0;
+V0 = w[V0 + 0000];
+80048710	nop
+V0 = V0 & V1;
+80048718	bne    v0, v1, loop486ec [$800486ec]
+8004871C	nop
+
+L48720:	; 80048720
+80048720	beq    t1, zero, L48750 [$80048750]
+80048724	lui    a0, $00ff
+A0 = A0 | ffff;
+8004872C	lui    a1, $8009
+A1 = A1 + 65f0;
+80048734	lui    v1, $ff00
+V0 = w[A1 + 0000];
+A0 = T1 & A0;
+V0 = V0 & V1;
+V0 = V0 | A0;
+80048748	j      L4877c [$8004877c]
+[A1 + 0000] = w(V0);
+
+L48750:	; 80048750
+80048750	lui    a1, $00ff
+A1 = A1 | ffff;
+80048758	lui    a2, $8009
+A2 = A2 + 65f0;
+80048760	lui    a0, $ff00
+V1 = w[A2 + 0000];
+V0 = w[A3 + 0000];
+V1 = V1 & A0;
+V0 = V0 & A1;
+V1 = V1 | V0;
+[A2 + 0000] = w(V1);
+
+L4877c:	; 8004877C
+8004877C	lui    a0, $00ff
+A0 = A0 | ffff;
+80048784	lui    a1, $0400
+A1 = A1 | 0002;
+V1 = w[A3 + 0000];
+80048790	lui    v0, $ff00
+V1 = V1 & V0;
+80048798	lui    v0, $8009
+V0 = V0 + 65f0;
+V0 = V0 & A0;
+800487A4	lui    a0, $8006
+A0 = w[A0 + 2d30];
+V1 = V1 | V0;
+[A3 + 0000] = w(V1);
+[A0 + 0000] = w(A1);
+800487B8	lui    v0, $8006
+V0 = w[V0 + 2d20];
+800487C0	nop
+[V0 + 0000] = w(T0);
+800487C8	lui    v0, $8006
+V0 = w[V0 + 2d24];
+800487D0	lui    v1, $0100
+[V0 + 0000] = w(0);
+800487D8	lui    v0, $8006
+V0 = w[V0 + 2d28];
+V1 = V1 | 0401;
+[V0 + 0000] = w(V1);
+800487E8	jr     ra 
+800487EC	nop
+////////////////////////////////
+// func487f0
+T0 = A0;
+A2 = A1;
+V0 = 0002;
+800487FC	lui    a0, $00ff
+80048800	lui    v1, $8006
+V1 = w[V1 + 2d30];
+A0 = A0 | ffff;
+8004880C	lui    at, $8009
+[AT + 65f3] = b(V0);
+V0 = w[V1 + 0000];
+80048818	lui    v1, $e100
+8004881C	lui    at, $8009
+[AT + 65f8] = w(0);
+V0 = V0 & 07ff;
+V0 = V0 | V1;
+8004882C	lui    at, $8009
+[AT + 65f4] = w(V0);
+V0 = w[T0 + 0000];
+80048838	lui    v1, $8000
+V0 = V0 & A0;
+V0 = V0 | V1;
+V0 = w[V0 + 0000];
+80048848	nop
+V0 = V0 & A0;
+80048850	beq    v0, a0, L48898 [$80048898]
+A3 = T0;
+80048858	lui    v1, $00ff
+V1 = V1 | ffff;
+80048860	lui    a0, $8000
+
+loop48864:	; 80048864
+V0 = w[A3 + 0000];
+80048868	nop
+V0 = V0 & V1;
+A3 = V0 | A0;
+V0 = w[A3 + 0000];
+80048878	nop
+V0 = V0 & V1;
+V0 = V0 | A0;
+V0 = w[V0 + 0000];
+80048888	nop
+V0 = V0 & V1;
+80048890	bne    v0, v1, loop48864 [$80048864]
+80048894	nop
+
+L48898:	; 80048898
+80048898	beq    a2, zero, L488c8 [$800488c8]
+8004889C	lui    a0, $00ff
+A0 = A0 | ffff;
+800488A4	lui    a1, $8009
+A1 = A1 + 65f0;
+800488AC	lui    v1, $ff00
+V0 = w[A1 + 0000];
+A0 = A2 & A0;
+V0 = V0 & V1;
+V0 = V0 | A0;
+800488C0	j      L488f4 [$800488f4]
+[A1 + 0000] = w(V0);
+
+L488c8:	; 800488C8
+800488C8	lui    a1, $00ff
+A1 = A1 | ffff;
+800488D0	lui    a2, $8009
+A2 = A2 + 65f0;
+800488D8	lui    a0, $ff00
+V1 = w[A2 + 0000];
+V0 = w[A3 + 0000];
+V1 = V1 & A0;
+V0 = V0 & A1;
+V1 = V1 | V0;
+[A2 + 0000] = w(V1);
+
+L488f4:	; 800488F4
+800488F4	lui    a0, $00ff
+A0 = A0 | ffff;
+800488FC	lui    a1, $0400
+A1 = A1 | 0002;
+V1 = w[A3 + 0000];
+80048908	lui    v0, $ff00
+V1 = V1 & V0;
+80048910	lui    v0, $8009
+V0 = V0 + 65f0;
+V0 = V0 & A0;
+8004891C	lui    a0, $8006
+A0 = w[A0 + 2d30];
+V1 = V1 | V0;
+[A3 + 0000] = w(V1);
+[A0 + 0000] = w(A1);
+80048930	lui    v0, $8006
+V0 = w[V0 + 2d20];
+80048938	nop
+[V0 + 0000] = w(T0);
+80048940	lui    v0, $8006
+V0 = w[V0 + 2d24];
+80048948	lui    v1, $0100
+[V0 + 0000] = w(0);
+80048950	lui    v0, $8006
+V0 = w[V0 + 2d28];
+V1 = V1 | 0401;
+[V0 + 0000] = w(V1);
+80048960	jr     ra 
+80048964	nop
+////////////////////////////////
+// func48968
+T2 = 00a0;
+8004896C	jr     t2 
+T1 = 00ab;
+////////////////////////////////
+// func48974
+80048974	nop
+T2 = 00a0;
+8004897C	jr     t2 
+T1 = 00ac;
+////////////////////////////////
+// func48984
+80048984	nop
+T2 = 00a0;
+8004898C	jr     t2 
+T1 = 00ad;
+////////////////////////////////
+// func48994
+80048994	nop
+80048998	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+[SP + 0014] = w(RA);
+800489A4	jal    func489e0 [$800489e0]
+S0 = A0;
+A0 = S0;
+A1 = 003f;
+800489B4	jal    func489d0 [$800489d0]
+A2 = 0;
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+800489C8	jr     ra 
+800489CC	nop
+////////////////////////////////
+// func489d0:	; 800489D0
+T2 = 00b0;
+800489D4	jr     t2 
+T1 = 004e;
+800489DC	nop
+////////////////////////////////
+// func489e0:	; 800489E0
+T2 = 00b0;
+800489E4	jr     t2 
+T1 = 0050;
+800489EC	nop
+////////////////////////////////
+// func489f0
+800489F0	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(S0);
+S0 = A0;
+[SP + 0014] = w(RA);
+80048A00	jal    system_bios_change_clear_pad [$80042ba0]
+A0 = 0;
+80048A08	jal    system_bios_enter_critical_section [$80042af0]
+80048A0C	nop
+80048A10	jal    func48aac [$80048aac]
+A0 = S0;
+80048A18	jal    func48b34 [$80048b34]
+80048A1C	nop
+80048A20	jal    func48bec [$80048bec]
+80048A24	nop
+80048A28	jal    system_bios_exit_critical_section [$80042b00]
+80048A2C	nop
+RA = w[SP + 0014];
+S0 = w[SP + 0010];
+SP = SP + 0018;
+80048A3C	jr     ra 
+80048A40	nop
+////////////////////////////////
+// func48a44
+80048A44	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+80048A4C	jal    system_bios_enter_critical_section [$80042af0]
+80048A50	nop
+80048A54	jal    func48abc [$80048abc]
+80048A58	nop
+80048A5C	jal    system_bios_change_clear_pad [$80042ba0]
+A0 = 0;
+80048A64	jal    system_bios_exit_critical_section [$80042b00]
+80048A68	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+80048A74	jr     ra 
+80048A78	nop
+////////////////////////////////
+// func48a7c
+80048A7C	addiu  sp, sp, $ffe8 (=-$18)
+[SP + 0010] = w(RA);
+80048A84	jal    func48acc [$80048acc]
+80048A88	nop
+80048A8C	jal    func48bec [$80048bec]
+80048A90	nop
+80048A94	jal    func48c7c [$80048c7c]
+80048A98	nop
+RA = w[SP + 0010];
+SP = SP + 0018;
+80048AA4	jr     ra 
+80048AA8	nop
+////////////////////////////////
+// func48aac:	; 80048AAC
+T2 = 00b0;
+80048AB0	jr     t2 
+T1 = 004a;
+80048AB8	nop
+////////////////////////////////
+// func48abc:	; 80048ABC
+T2 = 00b0;
+80048AC0	jr     t2 
+T1 = 004b;
+80048AC8	nop
+////////////////////////////////
+// func48acc:	; 80048ACC
+T2 = 00b0;
+80048AD0	jr     t2 
+T1 = 004c;
+80048AD8	nop
+////////////////////////////////
+// func48adc
+80048ADC	lui    v0, $8005
+80048AE0	addiu  v0, v0, $8af0 (=-$7510)
+80048AE4	jr     v0 
+80048AE8	nop
+80048AEC	nop
+////////////////////////////////
+// func48af0
+V0 = w[V1 + 1074];
+80048AF4	nop
+V0 = V0 & 0080;
+80048AFC	beq    v0, zero, L48b2c [$80048b2c]
+80048B00	nop
+
+loop48b04:	; 80048B04
+V0 = w[V1 + 1044];
+80048B08	nop
+V0 = V0 & 0080;
+80048B10	bne    v0, zero, loop48b04 [$80048b04]
+80048B14	nop
+80048B18	lui    v0, $8006
+V0 = w[V0 + 2ee4];
+80048B20	nop
+80048B24	jr     v0 
+80048B28	nop
+
+
+L48b2c:	; 80048B2C
+80048B2C	jr     ra 
+80048B30	nop
+////////////////////////////////
+// func48b34:	; 80048B34
+80048B34	lui    at, $8006
+[AT + 2ee0] = w(RA);
+80048B3C	jal    system_bios_enter_critical_section [$80042af0]
+80048B40	nop
+T2 = 00b0;
+80048B48	jalr   t2 ra
+T1 = 0056;
+V0 = w[V0 + 0018];
+80048B54	nop
+V1 = w[V0 + 0070];
+80048B5C	nop
+T1 = V1 & ffff;
+V1 = w[V0 + 0074];
+T1 = T1 << 10;
+T2 = V1 & ffff;
+V1 = T1 + T2;
+80048B74	lui    t2, $8005
+80048B78	lui    t1, $8005
+V0 = V1 + 0028;
+80048B80	addiu  t2, t2, $8adc (=-$7524)
+80048B84	addiu  t1, t1, $8af0 (=-$7510)
+
+loop48b88:	; 80048B88
+V1 = w[T2 + 0000];
+T2 = T2 + 0004;
+V0 = V0 + 0004;
+80048B94	bne    t2, t1, loop48b88 [$80048b88]
+[V0 + fffc] = w(V1);
+80048B9C	lui    at, $8006
+80048BA0	jal    system_bios_flush_cache [$800429a0]
+[AT + 2ee4] = w(V0);
+80048BA8	lui    ra, $8006
+RA = w[RA + 2ee0];
+80048BB0	nop
+80048BB4	jr     ra 
+80048BB8	nop
+////////////////////////////////
+// func48bbc
+80048BBC	lui    t0, $8005
+80048BC0	addiu  t0, t0, $8bbc (=-$7444)
+80048BC4	jalr   t0 ra
+80048BC8	nop
+80048BCC	nop
+80048BD0	nop
+T0 = 00c8;
+
+loop48bd8:	; 80048BD8
+80048BD8	addiu  t0, t0, $ffff (=-$1)
+80048BDC	bne    t0, zero, loop48bd8 [$80048bd8]
+80048BE0	nop
+80048BE4	jr     ra 
+80048BE8	nop
+////////////////////////////////
+// func48bec:	; 80048BEC
+80048BEC	lui    at, $8006
+[AT + 2ee0] = w(RA);
+80048BF4	jal    system_bios_enter_critical_section [$80042af0]
+80048BF8	nop
+T2 = 00b0;
+80048C00	jalr   t2 ra
+T1 = 0057;
+V0 = w[V0 + 016c];
+80048C0C	lui    t2, $8005
+80048C10	lui    t1, $8005
+V1 = w[V0 + 09c8];
+80048C18	addiu  t2, t2, $8bbc (=-$7444)
+80048C1C	addiu  t1, t1, $8bd0 (=-$7430)
+
+loop48c20:	; 80048C20
+V1 = w[V0 + 09c8];
+T0 = w[T2 + 0000];
+T2 = T2 + 0004;
+[T2 + fffc] = w(V1);
+V0 = V0 + 0004;
+80048C34	bne    t2, t1, loop48c20 [$80048c20]
+[V0 + 09c4] = w(T0);
+80048C3C	jal    system_bios_flush_cache [$800429a0]
+80048C40	nop
+80048C44	lui    ra, $8006
+RA = w[RA + 2ee0];
+80048C4C	nop
+80048C50	jr     ra 
+80048C54	nop
+////////////////////////////////
+// func48c58
+80048C58	lui    t6, $0032
+80048C5C	addiu  t6, t6, $ffff (=-$1)
+
+loop48c60:	; 80048C60
+80048C60	bne    t6, zero, loop48c60 [$80048c60]
+80048C64	addiu  t6, t6, $ffff (=-$1)
+80048C68	jr     ra 
+80048C6C	nop
+80048C70	nop
+80048C74	nop
+80048C78	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func48c7c
+80048C7C	lui    at, $8006
+[AT + 2ef0] = w(RA);
+80048C84	jal    system_bios_enter_critical_section [$80042af0]
+80048C88	nop
+T2 = 00b0;
+80048C90	jalr   t2 ra
+T1 = 0056;
+80048C98	lui    t2, $8005
+80048C9C	lui    t1, $8005
+V0 = w[V0 + 0018];
+80048CA4	addiu  t2, t2, $8ce4 (=-$731c)
+80048CA8	addiu  t1, t1, $8cf0 (=-$7310)
+
+loop48cac:	; 80048CAC
+V1 = w[T2 + 0000];
+T2 = T2 + 0004;
+V0 = V0 + 0004;
+80048CB8	bne    t2, t1, loop48cac [$80048cac]
+[V0 + 006c] = w(V1);
+80048CC0	jal    system_bios_flush_cache [$800429a0]
+80048CC4	nop
+80048CC8	jal    system_bios_exit_critical_section [$80042b00]
+80048CCC	nop
+80048CD0	lui    ra, $8006
+RA = w[RA + 2ef0];
+80048CD8	nop
+80048CDC	jr     ra 
+80048CE0	nop
 ////////////////////////////////
