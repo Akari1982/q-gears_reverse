@@ -2624,6 +2624,7 @@ return 1;
 ////////////////////////////////
 // funcb0618
 // kawai_action_3
+
 S5 = A0;
 V1 = hu[S5 + 18];
 V0 = w[S5 + 1c];
@@ -6024,6 +6025,7 @@ Lb47e0:	; 800B47E0
 
 ////////////////////////////////
 // kawai_action_6
+
 model_id = bu[A1 + 1];
 S0 = 800dfe3c + model_id * 3c;
 V1 = bu[A1 + 0];
@@ -6102,10 +6104,12 @@ return 1;
 
 ////////////////////////////////
 // kawai_action_7
+
 model_id = bu[A1 + 1];
 A2 = 800dfe3c + model_id * 3c;
+
 V1 = bu[A1 + 0];
-if (V1 == 0)
+if( V1 == 0 )
 {
     [A2 + 0] = h(hu[A1 + 2]);
     [A2 + 2] = h(hu[A1 + 4]);
@@ -6124,7 +6128,7 @@ if (V1 == 0)
     [A2 + 1c] = b(bu[A1 + 1e]);
     return 1;
 }
-else if (V1 == 1)
+else if( V1 == 1 )
 {
     [800dfe1c] = h(hu[A2 + 0]);
     [800dfe1e] = h(hu[A2 + 2]);
@@ -6143,7 +6147,7 @@ else if (V1 == 1)
     [800dfe38] = h(hu[A2 + 1c]);
     [800dfe3a] = h(hu[A2 + 1e]);
     A1 = 800dfe1c;
-    funcb0618;
+    funcb0618();
 
     return 0;
 }
