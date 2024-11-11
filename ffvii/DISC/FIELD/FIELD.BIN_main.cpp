@@ -4375,13 +4375,13 @@ return (V0 + T2 + A3 - A1 - V1) / (vec1 + 0);
 // main_walkmesh_move()
 
 triggers_block_offset = w[800716C4];
-id_block_offset       = w[800E4274];
+id_block_offset = w[800E4274];
 
-visible_entity_id    = A0;
+visible_entity_id = A0;
 current_model_offset = 80074ea4 + visible_entity_id * 84
 [SP + 18] = visible_entity_id;
 
-current_triangle = h[80074EA4 + 72];
+current_triangle = h[80074ea4 + 72];
 [current_triangle_address] = current_triangle;
 Ax = h[id_block_offset + current_triangle * 18 + 00];
 Ay = h[id_block_offset + current_triangle * 18 + 02];
@@ -4403,80 +4403,45 @@ Cz = h[id_block_offset + current_triangle * 18 + 14];
 A0 = 1f800040;
 A1 = 1f800050;
 A2 = 1f800060;
-system_gte_outer_product_0;
+system_gte_outer_product_0();
 
 [1f800060] = w(w[1f800060] >> 8);
-
-V1 = [1F800064];
-V1 >> 8;
-[1F800064] = w(V1);
-
-A2 = [1F800068];
-A2 >> 8;
-[1F800068] = w(A2);
+[1F800064] = w(w[1f800064] >> 8);
+[1f800068] = w(w[1f800068] >> 8);
 
 A0 = 1f800060;
 A1 = 1f800060;
-system_normalize_vector_A0_to_A1;
+system_normalize_vector_A0_to_A1();
 
+V0 = w[1f800060];
+A0 = w[1f800068];
+A0 = ((V0 * V0) >> c) + ((A0 * A0) >> c);
+func3a59c();
+[1f800060] = w((w[1f800068] << c) / V0);
 
+V0 = w[1f800064];
+A0 = w[1f800068];
+A0 = ((V0 * V0) >> c) + ((A0 * A0) >> c);
+func3a59c();
+[1f800064] = w((w[1f800068] << c) / V0);
 
-V0 = w[1F800060];
-HI/LO = V0 * V0;
-V1 = LO;
-V0 = w[1F800068];
-HI/LO = V0 * V0;
-A0 = LO;
-V0 = V1 >> 0C;
-A0 = A0 >> 0C;
-A0 = V0 + A0;
-func3a59c;
-A0 = w[1F800068];
-V1 = A0 << 0C;
-HI/LO = V1 / V0;
-V1 = LO;
-[1F800060] = w(V1);
+V0 = w[1f800060];
+[1f800060] = (V0 >= 1001) ? w(1000) : w(V0);
+[1f800060] = (V0 < -1000) ? w(-1000) : w(V0);
 
+V0 = w[1f800064];
+[1f800064] = (V0 >= 1001) ? w(1000) : w(V0);
+[1f800064] = (V0 < -1000) ? w(-1000) : w(V0);
 
+V0 = w[1f800068];
+[1f800068] = (V0 >= 1001) ? w(1000) : w(V0);
+[1f800068] = (V0 < -1000) ? w(-1000) : w(V0);
 
-V0 = w[1F800064];
-HI/LO = V0 * V0;
-V0 = LO;
-A0 = w[1F800068];
-HI/LO = A0 * A0;
-A0 = LO;
-V0 = V0 >> 0C;
-A0 = A0 >> 0C;
-A0 = V0 + A0;
-func3a59c;
-V1 = w[1F800068]
-V1 = V1 << 0C;
-HI/LO = V1 / V0;
-V1 = LO;
-[1F800064] = w(V1);
-
-
-
-V0 = w[1F800060];
-[1F800060] = (V0 >= 1001) ? w(1000) : w(V0);
-[1F800060] = (V0 < -1000) ? w(-1000) : w(V0);
-
-V0 = w[1F800064];
-[1F800064] = (V0 >= 1001) ? w(1000) : w(V0);
-[1F800064] = (V0 < -1000) ? w(-1000) : w(V0);
-
-V0 = w[1F800068];
-[1F800068] = (V0 >= 1001) ? w(1000) : w(V0);
-[1F800068] = (V0 < -1000) ? w(-1000) : w(V0);
-
-
-T3 = w[1F800060];
+T3 = w[1f800060];
 [SP + 38] = (T3 < 0) ? w(-T3) : w(T3);
 
-T3 = w[1F800064];
+T3 = w[1f800064];
 [SP + 40] = (T3 < 0) ? w(-T3) : w(T3);
-
-
 
 S7 = 0;
 
@@ -4484,46 +4449,28 @@ S7 = 0;
 La92f4:	; 800A92F4
 S7 = S7 + 1;
 
-if (visible_entity_id == h[800965E0] && bu[80071C0C] == 1 && S7 >= 3)
+if( ( visible_entity_id == h[800965e0] ) && ( bu[80071c0c] == 1 ) && ( S7 >= 3 ) )
 {
-    [80071C0C] = b(0);
+    [80071c0c] = b(0);
 }
-else if (((visible_entity_id != h[800965E0]) ||
-          (visible_entity_id == h[800965E0] && bu[80071C0C] == 1 && S7 < 3) ||
-          (visible_entity_id == h[800965E0] && bu[80071C0C] != 1 && S7 < 11))
+else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0] && bu[80071C0C] == 1 && S7 < 3) || (visible_entity_id == h[800965E0] && bu[80071C0C] != 1 && S7 < 11))
 {
     {
         A0 = bu[current_model_offset + 36];
-        get_direction_vector_x;
-        [1f800070] = w(( V0 * w[SP + 38] ) >> 0c);
-
-
+        get_direction_vector_x();
+        [1f800070] = w(( V0 * w[SP + 38] ) >> c);
 
         A0 = bu[current_model_offset + 36];
-        get_direction_vector_y;
-        [1F800074] = w(( 0 - ( V0 * w[SP + 40] ) ) >> 0c);
-
-
+        get_direction_vector_y();
+        [1f800074] = w(( 0 - ( V0 * w[SP + 40] ) ) >> c);
 
         // multiply move vector by speed
         [1f800070] = w(( hu[current_model_offset + 70] * w[1f800070] ) >> 8);
         [1f800074] = w(( hu[current_model_offset + 70] * w[1f800074] ) >> 8);
 
-        // x with move vector
-        V0 = w[current_model_offset + 0C];
-        V1 = w[1F800070];
-        V0 = V0 + V1;
-        [1F800070] = w(V0);
-
-        // y with move vector
-        V0 = w[current_model_offset + 10];
-        V1 = w[1F800074];
-        V0 = V0 + V1;
-        [1F800074] = w(V0);
-
-        // store z as is
-        V0 = w[current_model_offset + 14];
-        [1F800078] = w(V0);
+        [1f800070] = w(w[1f800070] + w[current_model_offset + c]); // x with move vector
+        [1f800074] = w(w[1f800074] + w[current_model_offset + 10]); // y with move vector
+        [1f800078] = w(w[current_model_offset + 14]); // store z as is
 
         // with solid range x
         A0 = bu[current_model_offset + 36];
@@ -4780,7 +4727,8 @@ A1 = 1f800070;
 A2 = 1f800090;
 A3 = 1f800040;
 walkmesh_border_cross();
-last_border_cross  = w(V0);
+
+last_border_cross = w(V0);
 
 // if entity we moving is PC entity and we are moving it ourself
 if( visible_entity_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
@@ -4812,25 +4760,15 @@ if (third_border_cross != 0 || first_border_cross != 0 || second_border_cross !=
     return 0;
 }
 
-V1 = w[1F800070];
-[current_model_offset + 0C] = w(V1); // X
-V0 = w[1F800074];
-[current_model_offset + 10] = w(V0); // Y
-V0 = w[1F800078];
-V0 = V0 << C;
-[current_model_offset + 14] = w(V0); // Z
+[current_model_offset + c] = w(w[1f800070]); // X
+[current_model_offset + 10] = w(w[1f800074]); // Y
+[current_model_offset + 14] = w(w[1f800078] << c); // Z
 
-V1 = bu[current_model_offset + 5D];
-if (V1 != 0 || visible_entity_id != h[800965E0])
-{
-    return 1;
-}
+if( ( bu[current_model_offset + 5d] != 0 ) || ( visible_entity_id != h[800965e0] ) ) return 1;
 
-// set animation if this is manual movement
-[current_model_offset + 60] = h(10);
+[current_model_offset + 60] = h(10); // set animation if this is manual movement
 
-V0 = w[80114454];
-if (V0 & 0040) // if run button pressed
+if( w[80114454] & 0040 ) // if run button pressed
 {
     A2 = 8009ABF4 + 30; // run
 }
@@ -4846,13 +4784,12 @@ V1 = w[A0 + 4];
 V1 = bu[V1 + V0 * 24];
 
 A0 = 0;
-V0 = h[A2]; // load animation id
-if (V0 < V1)
+if( h[A2] < V1 )
 {
-    A0 = bu[A2];
+    A0 = bu[A2]; // load animation id
 }
+[current_model_offset + 5e] = b(A0);
 
-[current_model_offset + 5E] = b(A0);
 return 1;
 ////////////////////////////////
 
