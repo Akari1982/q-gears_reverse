@@ -51,10 +51,22 @@
 
 
 80062bb8 array of some function pointers (0x4 size).
-+08 [][][][] 80045a24 function. Called when copy data from palette to ram and back.
++00 [][][][] 80010C98 function.
++04 [][][][] 80045A00 function.
++08 [][][][] 80045A24 function. inner func that handles dma work.
++0c [][][][] 800451E0 function.
++10 [][][][] 800458F0 function.
++14 [][][][] 80045934 function.
++18 [][][][] 80045984 function. A0 param to DrawOTag inner.
 +1c [][][][] 80045654 function. Passed as parameter when copy palette to ram.
 +20 [][][][] 80045400 function. Passed as parameter when copy palette from ram.
-+2c [][][][]
++24 [][][][] 80045D18 function.
++28 [][][][] 8004591C function.
++2c [][][][] 800450F8 function.
++30 [][][][] 800459D0 function.
++34 [][][][] 8004602C function.
++38 [][][][] 800450E0 function.
++3c [][][][] 80046168 function.
 80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
 80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).

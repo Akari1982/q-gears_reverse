@@ -1,7 +1,7 @@
 ////////////////////////////////
 // field_rain_init()
 
-packet = A0;
+ot = A0;
 
 for( int i = 0; i < 40; ++i )
 {
@@ -9,16 +9,16 @@ for( int i = 0; i < 40; ++i )
     [800e42d8 + i * 18 + 12] = h(i * 4); // rnd seed
     [800e42d8 + i * 18 + 16] = h(0); // render off
 
-    A0 = packet + 1749c + i * 10;
+    A0 = ot + 1749c + i * 10;
     system_psyq_set_line_f2();
 
-    A0 = packet + 1749c + i * 10;
+    A0 = ot + 1749c + i * 10;
     A1 = 1;
     system_psyq_set_semi_trans();
 
-    [packet + 1749c + i * 10 + 4] = b(10); // r
-    [packet + 1749c + i * 10 + 5] = b(10); // g
-    [packet + 1749c + i * 10 + 6] = b(10); // b
+    [ot + 1749c + i * 10 + 4] = b(10); // r
+    [ot + 1749c + i * 10 + 5] = b(10); // g
+    [ot + 1749c + i * 10 + 6] = b(10); // b
 }
 
 A0 = 0; // tp
@@ -27,7 +27,7 @@ A2 = 0; // vram_x
 A3 = 0; // vram_y
 system_psyq_get_tpage();
 
-A0 = packet + 17490;
+A0 = ot + 17490;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
@@ -41,9 +41,9 @@ system_psyq_set_draw_mode();
 // field_rain_add_to_render()
 
 otag = A0;
-S1 = A1;
+rain_packets = A1;
 matrix = A2;
-packet = A3;
+draw_mode_packet = A3;
 
 system_psyq_push_matrix();
 
@@ -58,27 +58,27 @@ for( int i = 0; i < 40; ++i )
     if( h[800e42d8 + i * 18 + 16] == 1 )
     {
         A0 = 800e42d8 + i * 18 + 0;
-        A1 = S1 + i * 10 + 8;
+        A1 = rain_packets + i * 10 + 8;
         A2 = SP + 10;
         A3 = SP + 14;
         system_psyq_rot_trans_pers();
 
         A0 = 800e42d8 + i * 18 + 8;
-        A1 = S1 + i * 10 + c;
+        A1 = rain_packets + i * 10 + c;
         A2 = SP + 10;
         A3 = SP + 14;
         system_psyq_rot_trans_pers();
 
         A0 = otag;
-        A1 = S1 + i * 10;
+        A1 = rain_packets + i * 10;
         system_psyq_add_prim();
     }
 }
 
 system_psyq_pop_matrix();
 
-[packet] = w((w[packet] & ff000000) | (w[otag] & 00ffffff));
-[otag] = w((w[otag] & ff000000) | (packet & 00ffffff));
+[draw_mode_packet] = w((w[draw_mode_packet] & ff000000) | (w[otag] & 00ffffff));
+[otag] = w((w[otag] & ff000000) | (draw_mode_packet & 00ffffff));
 ////////////////////////////////
 
 

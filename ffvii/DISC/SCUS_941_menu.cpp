@@ -1364,12 +1364,12 @@ system_menu_create_and_add_texture_setting_packet();
 
 windows = A0;
 number_to_render = A1; // 4 in field, 1 in wm
-buffer = A2;
+ot = A2;
 buffer_id = A3;
 
 [80062dfd] = b(1);
 [GP + 76] = h(hu[GP + 76] + 1);
-[GP + 280] = w(buffer);
+[GP + 280] = w(ot);
 [80062f24] = w(80077f64 + buffer_id * 3400);
 
 for( int i = 0; i < number_to_render; ++i )
@@ -1448,7 +1448,7 @@ for( int i = 0; i < number_to_render; ++i )
         A1 = SP + 18;
         system_prepare_draw_env_packets();
 
-        A0 = buffer;
+        A0 = ot;
         A1 = w[80062f24];
         system_psyq_add_prim();
 
@@ -1506,7 +1506,7 @@ for( int i = 0; i < number_to_render; ++i )
         A1 = SP + 18;
         system_prepare_draw_env_packets();
 
-        A0 = buffer;
+        A0 = ot;
         A1 = w[80062f24];
         system_psyq_add_prim();
 

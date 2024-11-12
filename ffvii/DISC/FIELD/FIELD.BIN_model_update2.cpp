@@ -336,9 +336,9 @@ system_psyq_set_draw_mode();
 ////////////////////////////////
 // funcabfe8()
 
-S2 = A0;
-S0 = A1;
-S5 = A2;
+ot = A0;
+matrix = A1;
+triggers = A2;
 
 if( ( bu[8009d5a6] != 1 ) || ( bu[8009ac26] != 0 ) )
 {
@@ -348,10 +348,10 @@ if( ( bu[8009d5a6] != 1 ) || ( bu[8009ac26] != 0 ) )
 S4 = 0;
 system_psyq_push_matrix();
 
-A0 = S0;
+A0 = matrix;
 system_psyq_set_rot_matrix();
 
-A0 = S0;
+A0 = matrix;
 system_psyq_set_trans_matrix();
 
 loopac070:	; 800AC070
@@ -366,7 +366,7 @@ loopac070:	; 800AC070
     A0 = S0 << 01;
     A0 = A0 + S0;
     A0 = A0 << 03;
-    A0 = A0 + S5;
+    A0 = A0 + triggers;
     A1 = h[A0 + 0000];
     V0 = h[A0 + 0006];
     A1 = A1 + V0;
@@ -403,7 +403,7 @@ loopac070:	; 800AC070
     system_psyq_rot_trans_pers();
 
     A0 = S0 << 04;
-    A1 = A0 + S2;
+    A1 = A0 + ot;
     V0 = hu[8011446c];
     A0 = A0 + 4000;
     [A1 + 400d] = b(d0);
@@ -412,23 +412,23 @@ loopac070:	; 800AC070
     V0 = V0 + 0030;
     [A1 + 400c] = b(V0);
     V0 = hu[SP + 0010];
-    A0 = S2 + A0;
+    A0 = ot + A0;
     800AC158	addiu  v0, v0, $fff9 (=-$7)
     [A1 + 4008] = h(V0);
     V0 = hu[SP + 0012];
     V1 = w[A1 + 4000];
     800AC168	addiu  v0, v0, $fff8 (=-$8)
     [A1 + 400a] = h(V0);
-    V0 = w[S2 + 0000];
+    V0 = w[ot + 0000];
     V1 = V1 & ff000000;
     V0 = V0 & 00ffffff;
     V1 = V1 | V0;
     [A1 + 4000] = w(V1);
-    V0 = w[S2 + 0000];
+    V0 = w[ot + 0000];
     A0 = A0 & 00ffffff;
     V0 = V0 & ff000000;
     V0 = V0 | A0;
-    [S2 + 0000] = w(V0);
+    [ot + 0000] = w(V0);
     V0 = S4 + 0001;
 
     Lac19c:	; 800AC19C
@@ -456,12 +456,12 @@ loopac1c8:	; 800AC1C8
         A3 = SP + 1c;
         system_psyq_rot_trans_pers();
 
-        S1 = S3 + S2;
+        S1 = S3 + ot;
         [S1 + 40cd] = b(d0);
         [S1 + 40cc] = b(((hu[8011446c] << 2) & 30) + 30);
         V0 = S0 + c;
         V0 = V0 << 4;
-        S0 = S2 + V0;
+        S0 = ot + V0;
         [S0 + 4008] = h(hu[SP + 10] - 7);
         [S0 + 400a] = h(hu[SP + 12] - 8);
 
@@ -475,8 +475,8 @@ loopac1c8:	; 800AC1C8
             [S0 + 400e] = h(V0);
         }
 
-        [S1 + 40c0] = w((w[S1 + 40c0] & ff000000) | (w[S2] & 00ffffff));
-        [S2] = w((w[S2] & ff000000) | ((S2 + S3 + 40c0) & 00ffffff));
+        [S1 + 40c0] = w((w[S1 + 40c0] & ff000000) | (w[ot] & 00ffffff));
+        [ot] = w((w[ot] & ff000000) | ((ot + S3 + 40c0) & 00ffffff));
     }
 
     S4 = S4 + 1;
@@ -485,8 +485,8 @@ loopac1c8:	; 800AC1C8
 
 system_psyq_pop_matrix();
 
-[S2 + 4180] = w((w[S2 + 4180] & ff000000) | (w[S2 + 0] & 00ffffff));
-[S2 + 0] = w((w[S2 + 0] & ff000000) | ((S2 + 4180) & 00ffffff));
+[ot + 4180] = w((w[ot + 4180] & ff000000) | (w[ot + 0] & 00ffffff));
+[ot + 0] = w((w[ot + 0] & ff000000) | ((ot + 4180) & 00ffffff));
 
 [8011446c] = h(hu[8011446c] + 1);
 ////////////////////////////////

@@ -908,7 +908,7 @@ if( ( mode & 7 ) == 0 )
 }
 else
 {
-    if( bu[80062c02] >= 0002 )
+    if( bu[80062c02] >= 2 )
     {
         A0 = 80010cec; // "ResetGraph(%d)..."
         A1 = mode;
@@ -1417,8 +1417,8 @@ A0 = 0;
 80044300	jalr   v0 ra
 
 V0 = w[80062bf8];
-A0 = S0 + 0004;
 V0 = w[V0 + 14];
+A0 = S0 + 4;
 A1 = S1;
 8004431C	jalr   v0 ra
 ////////////////////////////////
@@ -1428,24 +1428,23 @@ A1 = S1;
 ////////////////////////////////
 // system_psyq_draw_otag()
 
-V0 = bu[80062c02];
-S0 = A0;
-V0 = V0 < 0002;
-if( V0 == 0 )
+ot = A0;
+
+if( bu[80062c02] >= 2 )
 {
     A0 = 80010e20; // "DrawOTag(%08x)..."
     V0 = w[80062bfc];
-    A1 = S0;
+    A1 = ot;
     80044370	jalr   v0 ra
-
 }
 
-V0 = w[80062bf8];
+V0 = w[80062bf8]; // 80062bb8
+
 A0 = w[V0 + 18];
-A1 = S0;
+A1 = ot;
 A2 = 0;
 A3 = 0;
-80044394	jalr   w[V0 + 8] ra
+80044394	jalr   w[V0 + 8] ra // func45a24
 ////////////////////////////////
 
 
@@ -1925,23 +1924,23 @@ V0 = V1 | V0;
 // system_psyq_set_draw_mode()
 // Initialize content of a drawing mode primitive.
 
-buffer = A0;
+packet = A0;
 display_area = A1;
 dithering = A2;
 init_value = A3;
 window_rect = A4;
 
-[buffer + 3] = b(2);
+[packet + 3] = b(2);
 
 A0 = display_area; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = dithering; // dithering processing flag. 0: off; 1: on
 A2 = init_value; // initial values of texture page
 system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
-[buffer + 4] = w(V0);
+[packet + 4] = w(V0);
 
 A0 = window_rect; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
-[buffer + 8] = w(V0);
+[packet + 8] = w(V0);
 ////////////////////////////////
 
 
@@ -2911,98 +2910,75 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func45a24
-80045A24	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S3);
+// func45a24()
+// inner func that calls from almost all commands that require send something to GPU
+
 S3 = A0;
-[SP + 0010] = w(S0);
 S0 = A1;
-[SP + 0014] = w(S1);
 S1 = A2;
-[SP + 0018] = w(S2);
-[SP + 0020] = w(RA);
-80045A48	jal    func462b0 [$800462b0]
 S2 = A3;
+
+func462b0();
+
 80045A50	j      L45a70 [$80045a70]
-80045A54	nop
 
 loop45a58:	; 80045A58
-80045A58	jal    func462e4 [$800462e4]
-80045A5C	nop
-80045A60	bne    v0, zero, L45cf8 [$80045cf8]
-80045A64	addiu  v0, zero, $ffff (=-$1)
-80045A68	jal    func45d18 [$80045d18]
-80045A6C	nop
+    func462e4()
 
-L45a70:	; 80045A70
-80045A70	lui    v0, $8006
-V0 = w[V0 + 2d04];
-80045A78	lui    v1, $8006
-V1 = w[V1 + 2d08];
-V0 = V0 + 0001;
-V0 = V0 & 003f;
+    if( V0 != 0 ) return -1;
+
+    func45d18();
+
+    L45a70:	; 80045A70
+    V0 = w[80062d04];
+    V1 = w[80062d08];
+    V0 = V0 + 0001;
+    V0 = V0 & 003f;
 80045A88	beq    v0, v1, loop45a58 [$80045a58]
-80045A8C	nop
-80045A90	jal    system_set_interrupt_mask_register [$8003d23c]
+
 A0 = 0;
-80045A98	lui    v1, $8006
-V1 = V1 + 2c08;
+system_set_interrupt_mask_register();
+
+V1 = 80062c08;
 A0 = 0 | 0001;
 [V1 + 0000] = w(A0);
-80045AA8	lui    v1, $8006
-V1 = bu[V1 + 2c01];
-80045AB0	lui    at, $8006
-[AT + 2d0c] = w(V0);
+V1 = bu[80062c01];
+[80062d0c] = w(V0);
 80045AB8	beq    v1, zero, L45b10 [$80045b10]
 80045ABC	lui    a0, $0400
-80045AC0	lui    v1, $8006
-V1 = w[V1 + 2d04];
-80045AC8	lui    v0, $8006
-V0 = w[V0 + 2d08];
-80045AD0	nop
+V1 = w[80062d04];
+V0 = w[80062d08];
 80045AD4	bne    v1, v0, L45b70 [$80045b70]
-80045AD8	nop
-80045ADC	lui    v0, $8006
-V0 = w[V0 + 2ce0];
-80045AE4	nop
+
+V0 = w[80062ce0];
 V0 = w[V0 + 0000];
 80045AEC	lui    v1, $0100
 V0 = V0 & V1;
 80045AF4	bne    v0, zero, L45b70 [$80045b70]
-80045AF8	nop
-80045AFC	lui    v0, $8006
-V0 = w[V0 + 2c0c];
-80045B04	nop
+
+V0 = w[80062c0c];
 80045B08	bne    v0, zero, L45b70 [$80045b70]
-80045B0C	nop
 
 L45b10:	; 80045B10
-80045B10	lui    v1, $8006
-V1 = w[V1 + 2cd4];
+V1 = w[80062cd4];
 
 loop45b18:	; 80045B18
-80045B18	nop
-V0 = w[V1 + 0000];
-80045B20	nop
-V0 = V0 & A0;
+    V0 = w[V1 + 0000] & A0;
 80045B28	beq    v0, zero, loop45b18 [$80045b18]
-80045B2C	nop
+
 A0 = S0;
-80045B34	jalr   s3 ra
 A1 = S2;
-80045B3C	lui    a0, $8006
-A0 = w[A0 + 2d0c];
-80045B44	lui    v0, $8006
-V0 = V0 + 2cf4;
+80045B34	jalr   s3 ra
+
+A0 = w[80062d0c];
+V0 = 80062cf4;
 [V0 + 0000] = w(S3);
-80045B50	lui    at, $8006
-[AT + 2cf8] = w(S0);
-80045B58	lui    at, $8006
-[AT + 2cfc] = w(S2);
-80045B60	jal    system_set_interrupt_mask_register [$8003d23c]
-80045B64	nop
-80045B68	j      L45cf8 [$80045cf8]
-V0 = 0;
+[80062cf8] = w(S0);
+[80062cfc] = w(S2);
+
+system_set_interrupt_mask_register();
+
+return 0;
 
 L45b70:	; 80045B70
 A0 = 2;
@@ -3017,34 +2993,27 @@ A3 = S0;
 V0 = S1;
 
 L45b98:	; 80045B98
-80045B98	bgez   v0, L45ba4 [$80045ba4]
-80045B9C	nop
-V0 = V0 + 0003;
+    V0 = V0 / 4;
+    80045BA8	slt    v0, a2, v0
+    80045BAC	beq    v0, zero, L45be8 [$80045be8]
 
-L45ba4:	; 80045BA4
-V0 = V0 >> 02;
-80045BA8	slt    v0, a2, v0
-80045BAC	beq    v0, zero, L45be8 [$80045be8]
-A0 = A2 << 02;
-A1 = w[A3 + 0000];
-A3 = A3 + 0004;
-80045BBC	lui    v1, $8006
-V1 = w[V1 + 2d04];
-A2 = A2 + 0001;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 05;
-V0 = V0 + T0;
-A0 = A0 + V0;
-[A0 + 0000] = w(A1);
+    A0 = A2 << 02;
+    A1 = w[A3 + 0000];
+    A3 = A3 + 0004;
+    V1 = w[80062d04];
+    A2 = A2 + 0001;
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 05;
+    V0 = V0 + T0;
+    A0 = A0 + V0;
+    [A0 + 0000] = w(A1);
+    V0 = S1;
 80045BE0	j      L45b98 [$80045b98]
-V0 = S1;
 
 L45be8:	; 80045BE8
-80045BE8	lui    v0, $8006
-V0 = w[V0 + 2d04];
-80045BF0	lui    v1, $8006
-V1 = w[V1 + 2d04];
+V0 = w[80062d04];
+V1 = w[80062d04];
 A0 = V0 << 01;
 A0 = A0 + V0;
 A0 = A0 << 05;
@@ -3059,12 +3028,9 @@ V0 = V0 + V1;
 AT = AT + A0;
 [AT + 0000] = w(V0);
 80045C2C	j      L45c5c [$80045c5c]
-80045C30	nop
 
 L45c34:	; 80045C34
-80045C34	lui    v1, $8006
-V1 = w[V1 + 2d04];
-80045C3C	nop
+V1 = w[80062d04];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 05;
@@ -3074,9 +3040,7 @@ AT = AT + V0;
 [AT + 0000] = w(S0);
 
 L45c5c:	; 80045C5C
-80045C5C	lui    v1, $8006
-V1 = w[V1 + 2d04];
-80045C64	nop
+V1 = w[80062d04];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 05;
@@ -3084,9 +3048,7 @@ V0 = V0 << 05;
 80045C78	addiu  at, at, $ad48 (=-$52b8)
 AT = AT + V0;
 [AT + 0000] = w(S2);
-80045C84	lui    v1, $8006
-V1 = w[V1 + 2d04];
-80045C8C	nop
+V1 = w[80062d04];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 05;
@@ -3094,35 +3056,19 @@ V0 = V0 << 05;
 80045CA0	addiu  at, at, $ad40 (=-$52c0)
 AT = AT + V0;
 [AT + 0000] = w(S3);
-80045CAC	lui    v0, $8006
-V0 = w[V0 + 2d04];
-80045CB4	lui    a0, $8006
-A0 = w[A0 + 2d0c];
+V0 = w[80062d04];
+A0 = w[80062d0c];
 V0 = V0 + 0001;
 V0 = V0 & 003f;
-80045CC4	lui    at, $8006
-[AT + 2d04] = w(V0);
-80045CCC	jal    system_set_interrupt_mask_register [$8003d23c]
-80045CD0	nop
+[80062d04] = w(V0);
+system_set_interrupt_mask_register();
+
 80045CD4	jal    func45d18 [$80045d18]
-80045CD8	nop
-80045CDC	lui    v0, $8006
-V0 = w[V0 + 2d04];
-80045CE4	lui    v1, $8006
-V1 = w[V1 + 2d08];
-80045CEC	nop
-V0 = V0 - V1;
-V0 = V0 & 003f;
+
+V0 = w[80062d04] - w[80062d08];
+V0 = V0 & 3f;
 
 L45cf8:	; 80045CF8
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-80045D10	jr     ra 
-80045D14	nop
 ////////////////////////////////
 
 

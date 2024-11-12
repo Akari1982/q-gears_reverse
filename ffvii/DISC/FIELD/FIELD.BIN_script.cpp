@@ -60,7 +60,7 @@ if( bu[800716d4] == 0 )
 ////////////////////////////////
 // funcba65c()
 
-S0 = A0;
+ot = A0;
 
 if( bu[8007ebe0] != 0 )
 {
@@ -109,13 +109,13 @@ if( bu[80071e2c] ) // if at least 1 window is opened
 {
     A0 = 80083274;
     A1 = 4; // render max 4 dialogs
-    A2 = S0;
+    A2 = ot;
     V0 = w[8009c6e0]; // 8009abf4 start of game data
     A3 = bu[V0 + 0] XOR 1;
     system_menu_add_dialog_to_render();
 }
 
-A0 = S0;
+A0 = ot;
 funcbc438();
 ////////////////////////////////
 

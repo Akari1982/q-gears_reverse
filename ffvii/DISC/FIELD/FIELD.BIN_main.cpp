@@ -605,14 +605,15 @@ A2 = 8010d3e0;
 A3 = 8010eb68;
 field_background_init_packets(); // we read dat background data here
 
-A0 = 800e4df0; // buffer 1
+ot = 800e4df0;
+
+A0 = ot; // buffer 1
 field_rain_init();
 
-A0 = 800fc68c; // buffer 2
+A0 = ot + 1789c; // buffer 2
 field_rain_init();
 
 S3 = 1;
-S2 = 8009abf4;
 [80114488] = h(0);
 [801142c8] = h(0);
 [800e4d44] = h(0);
@@ -628,18 +629,15 @@ while( true )
 
     [80075dec] = h(hu[80075dec] + 1);
 
-    A2 = hu[80075dec];
-    V1 = h[80075dec];
-    S1 = 800e4df0 + V1 * 1789c;
-    [S2] = b(A2);
+    [8009abf4] = b(hu[80075dec]);
 
-    A0 = S1;
+    ot += h[80075dec] * 1789c;
+
+    A0 = ot;
     A1 = 1000;
     system_psyq_clear_otag_r();
 
-    S0 = S1 + 1748c;
-
-    A0 = S0;
+    A0 = ot + 1748c;
     A1 = 1;
     system_psyq_clear_otag_r();
 
@@ -652,12 +650,12 @@ while( true )
 
     V1 = w[80075d00];
     V1 = hu[V1 + 8];
-    A0 = S0;
+    [8009abf4 + 88] = h(V1);
 
-    [S2 + 88] = h(V1);
+    A0 = ot + 1748c;
     funcba65c(); // script update here
 
-    [800965e0] = h(hu[S2 + 2a]);
+    [800965e0] = h(hu[8009abf4 + 2a]);
 
     funca4430(); // init screen movement
     funca496c(); // make screen movement
@@ -668,7 +666,7 @@ while( true )
     A0 = 8009abf4 + 98;
     field_update_shaking();
 
-    A0 = S1;
+    A0 = ot;
     funca4bec();
 
     A0 = 80074ea4 + h[800965e0] * 84; // PC data
@@ -725,11 +723,11 @@ while( true )
         return;
     }
 
-    if( ( w[80114454] & 10 ) && ( bu[S2 + 34] == 0 ) && ( hu[800e4d44] == 0 ) && ( hu[80114488] == 0 ) )
+    if( ( w[80114454] & 10 ) && ( bu[8009abf4 + 34] == 0 ) && ( hu[800e4d44] == 0 ) && ( hu[80114488] == 0 ) )
     {
         [8009c560] = h(5);
-        [S2 + 1] = b(9);
-        [S2 + 2] = h(0);
+        [8009abf4 + 1] = b(9);
+        [8009abf4 + 2] = h(0);
         field_stop_load_background_in_advance();
         return;
     }
@@ -778,22 +776,22 @@ while( true )
 
     if ((hu[80114488] == 0) || (w[8009a060] == 1))
     {
-        A0 = S1;
+        A0 = ot;
         funca364c(); // update background drafts
     }
 
-    A0 = S1;
+    A0 = ot;
     funcaab24(); // update models (animations drafts and kawai)
 
     field_rain_update();
 
-    A0 = S1; // packet
-    A1 = S1 + 1749c;
+    A0 = ot;
+    A1 = ot + 1749c; // rain packets
     A2 = w[80071e40]; // matrix
-    A3 = S1 + 17490; // otag
+    A3 = ot + 17490; // draw_mode_packet
     field_rain_add_to_render();
 
-    A0 = S1;
+    A0 = ot;
     A1 = w[80071e40];
     A2 = w[800716c4] + 38;
     funcabfe8();
@@ -918,13 +916,13 @@ while( true )
 
     if( bu[8009abf4 + 38] == 0 )
     {
-        A0 = S1 + 4190;
+        A0 = ot + 4190;
         system_psyq_draw_otag();
 
-        A0 = S1 + 3ffc;
+        A0 = ot + 3ffc;
         system_psyq_draw_otag();
 
-        A0 = S1 + 418c;
+        A0 = ot + 418c;
         system_psyq_draw_otag();
 
         if( hu[8009abf4 + 4c] != 0 ) // fade type
@@ -934,7 +932,7 @@ while( true )
         }
     }
 
-    A0 = S1 + 1748c;
+    A0 = ot + 1748c;
     system_psyq_draw_otag();
 }
 ////////////////////////////////
