@@ -137,11 +137,11 @@ system_cdrom_start_load_file(); // set data to load in background
 
 A0 = 800e8f7c;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = 80100818;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = 800e8f84;
 A1 = 8007eaac;
@@ -218,11 +218,11 @@ system_graphic_create_draw_env_struct();
 
 A0 = 800e8f80;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = 8010081c;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = 800e8fc4;
 A1 = 80113f2c;
@@ -635,13 +635,13 @@ while( true )
 
     A0 = S1;
     A1 = 1000;
-    system_psyq_clear_o_tag_r();
+    system_psyq_clear_otag_r();
 
     S0 = S1 + 1748c;
 
     A0 = S0;
     A1 = 1;
-    system_psyq_clear_o_tag_r();
+    system_psyq_clear_otag_r();
 
     funcab2b4();
 
@@ -1089,7 +1089,7 @@ La3098:	; 800A3098
         A3 = hu[block3];
         block3 = block3 + 2;
         A4 = 0;
-        system_gpu_create_texture_setting_packet();
+        system_psyq_set_draw_mode();
 
         [8011448c] = h(hu[8011448c] + 1);
 
@@ -1144,7 +1144,7 @@ La31d4:	; 800A31D4
             A2 = 1;
             A3 = hu[block4 + 8]; // texture page settings
             A4 = 0;
-            system_gpu_create_texture_setting_packet();
+            system_psyq_set_draw_mode();
 
             [801144d0] = h(hu[801144d0] + 1);
 
@@ -1200,7 +1200,7 @@ La3334:	; 800A3334
         A3 = hu[block3];
         block3 = block3 + 2;
         A4 = 0;
-        system_gpu_create_texture_setting_packet();
+        system_psyq_set_draw_mode();
     }
     else
     {
@@ -1264,7 +1264,7 @@ La34ac:	; 800A34AC
         A3 = hu[block3];
         block3 = block3 + 2;
         A4 = 0;
-        system_gpu_create_texture_setting_packet();
+        system_psyq_set_draw_mode();
     }
     else
     {
@@ -2002,14 +2002,15 @@ T7 = T7 + 0006;
 
 
 ////////////////////////////////
-// calculate_current_value_by_steps
-start        = A0;
-final        = A1;
+// calculate_current_value_by_steps()
+
+start = A0;
+final = A1;
 steps_number = A2;
-step         = A3;
+step = A3;
 delta = final - start;
-V1 = delta + 0007FFFF;
-if (V1 <= 000FFFFE)
+V1 = delta + 0007ffff;
+if( V1 <= 000ffffe )
 {
     V0 = (delta * step) / steps_number;
 }
@@ -2024,7 +2025,8 @@ return start + V0;
 
 
 ////////////////////////////////
-// calculate_smooth_current_value_by_steps
+// calculate_smooth_current_value_by_steps()
+
 start = A0;
 end = A1;
 steps = A2;
@@ -2047,17 +2049,18 @@ return V0;
 
 
 ////////////////////////////////
-// field_calculate_distance_to_screen
+// field_calculate_distance_to_screen()
+
 S0 = A0;
 S1 = A1;
 
-func3ae38;
+system_psyq_push_matrix();
 
 A0 = w[80071e40];
-PsyQSetRotMatrix;
+system_psyq_set_rot_matrix();
 
 A0 = w[80071e40];
-PsyQSetTransMatrix;
+system_psyq_set_trans_matrix();
 
 A0 = 0;
 A1 = 0;
@@ -2067,9 +2070,9 @@ A0 = S0;
 A1 = S1;
 A2 = SP + 10;
 A3 = SP + 14;
-PsyQRotTransPers;
+system_psyq_rot_trans_pers();
 
-func3aed8;
+system_psyq_pop_matrix();
 
 return V0;
 ////////////////////////////////

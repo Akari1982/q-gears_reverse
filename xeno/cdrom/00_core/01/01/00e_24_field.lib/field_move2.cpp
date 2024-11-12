@@ -1691,10 +1691,10 @@ else
 }
 
 A0 = temp + 40;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = temp + 40;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 S7 = temp + 14;
 S1 = temp + 3c;

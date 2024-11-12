@@ -2704,7 +2704,7 @@ if( w[rdata + 1d4] == A0 )
 
 A0 = w[rdata + 1d4] + 70;
 A1 = 10;
-system_clear_otagr();
+system_psyq_clear_otag_r();
 
 A0 = 0;
 A1 = ff;
@@ -12282,7 +12282,7 @@ V0 = w[V1 + 0714];
 801D0CBC	nop
 801D0CC0	bne    v0, zero, L1d0d48 [$801d0d48]
 801D0CC4	nop
-801D0CC8	jal    $system_gte_push_matrix
+801D0CC8	jal    $system_psyq_push_matrix
 801D0CCC	nop
 A0 = SP + 0010;
 A1 = S1;
@@ -12297,9 +12297,9 @@ V0 = 0200;
 A0 = S1;
 801D0CFC	jal    $func49c44
 A1 = SP + 0018;
-801D0D04	jal    $system_gte_set_rotation_matrix
+801D0D04	jal    $system_psyq_set_rot_matrix
 A0 = S1;
-801D0D0C	jal    $system_gte_set_translation_vector
+801D0D0C	jal    $system_psyq_set_trans_matrix
 A0 = S1;
 V0 = w[80061c30];
 801D0D1C	nop
@@ -12309,7 +12309,7 @@ V0 = w[V0 + 0364];
 A1 = bu[V0 + 071d];
 801D0D30	jal    func1d09e0 [$801d09e0]
 A0 = S0;
-801D0D38	jal    $system_gte_pop_matrix
+801D0D38	jal    $system_psyq_pop_matrix
 S0 = S0 + 0001;
 801D0D40	j      L1d0d5c [$801d0d5c]
 V0 = S0 < 0007;
@@ -13480,10 +13480,10 @@ A1 = rdata + 1e0;
 func49c44();
 
 A0 = rdata + 1f0;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = rdata + 1f0;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 ////////////////////////////////
 
 

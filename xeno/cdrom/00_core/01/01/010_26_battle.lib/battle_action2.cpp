@@ -5984,7 +5984,7 @@ A0 = A2 + 0070;
 [S2 + 0000] = w(A2);
 [800cc224] = w(A0);
 A1 = 1000;
-system_clear_otagr();
+system_psyq_clear_otag_r();
 
 V1 = w[800cc254];
 

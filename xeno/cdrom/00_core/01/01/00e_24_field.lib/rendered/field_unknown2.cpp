@@ -11,7 +11,7 @@ for( int i = 0; i < 5; ++i )
     A1 = 0; // semi_tr
     A2 = 280 + i * 40; // x_base
     A3 = 0; // y_base
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     [SP + 18] = h(0);
     [SP + 1a] = h(0);
@@ -23,24 +23,24 @@ for( int i = 0; i < 5; ++i )
     A2 = 0;
     A3 = V0 & ffff;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     // texture settings for buffer 2
     A0 = 1; //col_bit
     A1 = 0; // semi_tr
     A2 = 280 + i * 40; // x_base
     A3 = 0; // y_base
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = 800af65c + i * 18 + c;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = 800af65c + 78 + i * 28;
-    system_graphic_textured_rectangle_header();
+    system_psyq_set_sprt();
 
     [800af65c + 78 + i * 28 + 4] = b(80); // r
     [800af65c + 78 + i * 28 + 5] = b(80); // g

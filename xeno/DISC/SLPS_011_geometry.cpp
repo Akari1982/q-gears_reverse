@@ -636,8 +636,8 @@ return A2;
 
 
 ////////////////////////////////
-// system_gte_push_matrix()
-// Saves a constant rotation matrix on a stack. The stack has 20 slots.
+// system_psyq_push_matrix()
+// Save a constant rotation matrix in a stack.
 
 T6 = w[800563cc];
 if( T6 >= 280 )
@@ -662,8 +662,8 @@ else
 
 
 ////////////////////////////////
-// system_gte_pop_matrix()
-// Resets a constant rotation matrix from a stack.
+// system_psyq_pop_matrix()
+// Reset a constant rotation matrix from a stack.
 
 T6 = w[800563cc];
 if( T6 <= 0 )
@@ -1049,7 +1049,8 @@ return A0;
 
 
 ////////////////////////////////
-// system_gte_set_rotation_matrix()
+// system_psyq_set_rot_matrix()
+// Set a constant rotation matrix.
 
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
@@ -1061,43 +1062,34 @@ R33 = w[A0 + 10];
 
 
 ////////////////////////////////
-// func49dd4
-T0 = w[A0 + 0000];
-T1 = w[A0 + 0004];
-T2 = w[A0 + 0008];
-T3 = w[A0 + 000c];
-T4 = w[A0 + 0010];
-80049DE8	ctc2   t0,ir0
-80049DEC	ctc2   t1,ir1
-80049DF0	ctc2   t2,ir2
-80049DF4	ctc2   t3,ir3
-80049DF8	ctc2   t4,sxy0
-80049DFC	jr     ra 
-80049E00	nop
+// system_psyq_set_light_matrix()
+// Set a local light matrix.
+
+L11L12 = w[A0 + 0];
+L13L21 = w[A0 + 4];
+L22L23 = w[A0 + 8];
+L31L32 = w[A0 + c];
+L33 = w[A0 + 10];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func49e04
-T0 = w[A0 + 0000];
-T1 = w[A0 + 0004];
-T2 = w[A0 + 0008];
-T3 = w[A0 + 000c];
-T4 = w[A0 + 0010];
-80049E18	ctc2   t0,sz0
-80049E1C	ctc2   t1,sz1
-80049E20	ctc2   t2,sz2
-80049E24	ctc2   t3,sz3
-80049E28	ctc2   t4,rgb0
-80049E2C	jr     ra 
-80049E30	nop
+// system_psyq_set_color_matrix()
+// Set a local color matrix.
+
+LR1LR2 = w[A0 + 0];
+LR3LG1 = w[A0 + 4];
+LG2LG3 = w[A0 + 8];
+LB1LB2 = w[A0 + c];
+LB3 = w[A0 + 10];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_gte_set_translation_vector()
+// system_psyq_set_trans_matrix()
+// Set a constant parallel transfer vector.
 
 TRX = w[A0 + 14];
 TRY = w[A0 + 18];
@@ -1796,7 +1788,8 @@ V0 = A1;
 
 
 ////////////////////////////////
-// system_gte_vector_perspective_transform()
+// system_psyq_rot_trans_pers()
+// Perform coordinate and perspective transformation for one vertex.
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];

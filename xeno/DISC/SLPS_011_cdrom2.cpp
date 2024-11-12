@@ -197,7 +197,7 @@ L278c8:	; 800278C8
     [SP + 0018] = w(T2);
     [SP + 001c] = w(T3);
     [SP + 0020] = w(T4);
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     [S0 + 0000] = h(V0);
     T4 = w[SP + 0020];
@@ -446,7 +446,7 @@ if( tries >= 4 )
     {
         A0 = SP + a8;
         A1 = 8;
-        system_clear_otagr();
+        system_psyq_clear_otag_r();
 
         A0 = 800188bc; // "\n%d"
         A1 = w[8004f4b8] + w[800595a8] - 1; // global file id

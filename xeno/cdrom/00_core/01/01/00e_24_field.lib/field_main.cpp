@@ -1469,27 +1469,27 @@ A0 = 0;
 A1 = 2;
 A2 = 0;
 A3 = 0;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 A0 = 800af2f8 + 0;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = 0;
 A1 = 2;
 A2 = 0;
 A3 = 0;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 A0 = 800af2f8 + c;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 field_deallocate_memory_for_party_sprites();
 
@@ -2126,7 +2126,7 @@ A0 = 0;
 A1 = 2;
 A2 = 280;
 A3 = 1e0;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [packet + 20 + 16] = h(V0);
 
 A0 = 100;

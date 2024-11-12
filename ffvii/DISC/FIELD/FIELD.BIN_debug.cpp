@@ -66,14 +66,14 @@ for( int i = 0; i < 6; ++i )
     A2 = 0;
     A3 = S3;
     A4 = 0;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = 800e4128 + 1 * 48 + i * c;
     A1 = 0;
     A2 = 0;
     A3 = S3;
     A4 = 0;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 }
 ////////////////////////////////
 
@@ -346,7 +346,7 @@ if( bu[8009d824] != 0 )
     rb = h[800e1024];
     A0 = 800e41c8 + rb * 1c;
     A1 = 7;
-    system_psyq_clear_o_tag();
+    system_psyq_clear_otag();
 
     for( int i = 0; i < 6; ++i )
     {

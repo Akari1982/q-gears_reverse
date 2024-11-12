@@ -2849,7 +2849,7 @@
 // system_graphic_create_display_env_struct
 80043858-80043890
 ////////////////////////////////
-// system_graphic_get_texpage_by_param
+// system_psyq_get_tpage
 80043894-800438CC
 ////////////////////////////////
 // system_graphic_get_clut_by_param
@@ -2885,67 +2885,67 @@
 // system_psyq_set_shade_tex
 80043A9C-80043AC0
 ////////////////////////////////
-// system_graphic_mono_triangle_header
+// system_psyq_set_poly_f3
 80043AC4-80043AD4
 ////////////////////////////////
-// func43ad8
+// system_psyq_set_poly_ft3
 80043AD8-80043AE8
 ////////////////////////////////
-// func43aec
+// system_psyq_set_poly_g3
 80043AEC-80043AFC
 ////////////////////////////////
-// func43b00
+// system_psyq_set_poly_gt3
 80043B00-80043B10
 ////////////////////////////////
-// func43b14
+// system_psyq_set_poly_f4
 80043B14-80043B24
 ////////////////////////////////
-// system_graphic_textured_quad_header
+// system_psyq_set_poly_ft4
 80043B28-80043B38
 ////////////////////////////////
-// func43b3c
+// system_psyq_set_poly_g4
 80043B3C-80043B4C
 ////////////////////////////////
-// system_graphic_shaded_quad_header
+// system_psyq_set_poly_gt4
 80043B50-80043B60
 ////////////////////////////////
-// func43b64
+// system_psyq_set_sprt8
 80043B64-80043B74
 ////////////////////////////////
-// func43b78
+// system_psyq_set_sprt16
 80043B78-80043B88
 ////////////////////////////////
-// system_graphic_textured_rectangle_header
+// system_psyq_set_sprt
 80043B8C-80043B9C
 ////////////////////////////////
-// func43ba0
+// system_psyq_set_tile1
 80043BA0-80043BB0
 ////////////////////////////////
-// func43bb4
+// system_psyq_set_tile8
 80043BB4-80043BC4
 ////////////////////////////////
-// func43bc8
+// system_psyq_set_tile16
 80043BC8-80043BD8
 ////////////////////////////////
-// system_graphic_monochrome_rectangle_header
+// system_psyq_set_tile
 80043BDC-80043BEC
 ////////////////////////////////
-// func43bf0
+// system_psyq_set_line_f2
 80043BF0-80043C00
 ////////////////////////////////
-// system_graphic_shaded_line_header
+// system_psyq_set_line_g2
 80043C04-80043C14
 ////////////////////////////////
-// func43c13
+// system_psyq_set_line_f3
 80043C18-80043C34
 ////////////////////////////////
-// func43c38
+// system_psyq_set_line_g3
 80043C38-80043C54
 ////////////////////////////////
-// func43c58
+// system_psyq_set_line_f4
 80043C58-80043C74
 ////////////////////////////////
-// func43c78
+// system_psyq_set_line_g4
 80043C78-80043C94
 ////////////////////////////////
 // system_graphic_create_texpage_settings_packet
@@ -3011,10 +3011,10 @@
 // system_move_image
 800447D4-80044894
 ////////////////////////////////
-// system_clear_otag
+// system_psyq_clear_otag
 80044898-8004494C
 ////////////////////////////////
-// system_clear_otagr
+// system_psyq_clear_otag_r
 80044950-800449E4
 ////////////////////////////////
 // func449e8
@@ -3053,7 +3053,7 @@
 // system_gpu_create_mask_bit_setting_packet
 80045328-80045350
 ////////////////////////////////
-// system_gpu_create_texture_setting_packet
+// system_psyq_set_draw_mode
 80045354-800453A8
 ////////////////////////////////
 // func453ac
@@ -3229,10 +3229,10 @@
 // system_gte_rotate_vector
 80049484-800494B0
 ////////////////////////////////
-// system_gte_push_matrix
+// system_psyq_push_matrix
 800494B4-80049550
 ////////////////////////////////
-// system_gte_pop_matrix
+// system_psyq_pop_matrix
 80049554-800495F0
 ////////////////////////////////
 // func495f4
@@ -3262,16 +3262,16 @@
 // system_gte_multiply_matrix_by_vector
 80049C74-80049DA0
 ////////////////////////////////
-// system_gte_set_rotation_matrix
+// system_psyq_set_rot_matrix
 80049DA4-80049DD0
 ////////////////////////////////
-// func49dd4
+// system_psyq_set_light_matrix
 80049DD4-80049E00
 ////////////////////////////////
-// func49e04
+// system_psyq_set_color_matrix
 80049E04-80049E30
 ////////////////////////////////
-// system_gte_set_translation_vector
+// system_psyq_set_trans_matrix
 80049E34-80049E50
 ////////////////////////////////
 // func49e54
@@ -3421,7 +3421,7 @@
 // func4a4c4
 8004A4C4-8004A4F0
 ////////////////////////////////
-// system_gte_vector_perspective_transform
+// system_psyq_rot_trans_pers
 8004A4F4-8004A520
 ////////////////////////////////
 // func4a524

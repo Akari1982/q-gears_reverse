@@ -725,7 +725,7 @@ for( int i = 0; i < 2; ++i )
     A1 = 0;
     A2 = 1;
     A4 = 0;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     // init map markers
     for( int j = 0; j < 6; ++j )
@@ -750,7 +750,7 @@ for( int i = 0; i < 2; ++i )
     A1 = 0;
     A2 = 1;
     A4 = 0;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     [800c738c + i * 1c + 3] = b(6);
     [800c738c + i * 1c + 7] = b(32); // shaded three-point polygon, semi-transparent
@@ -768,7 +768,7 @@ for( int i = 0; i < 2; ++i )
     A1 = 0;
     A2 = 1;
     A4 = 0;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 }
 
 [801164fc] = w(0);
@@ -909,10 +909,10 @@ if( ( V0 == 2 ) || ( V0 == 3 ) )
     system_gte_copy_matrix_translation_part();
 
     A0 = S0;
-    system_gte_set_rot_matrix();
+    system_psyq_set_rot_matrix();
 
     A0 = S0;
-    system_gte_set_trans_matrix();
+    system_psyq_set_trans_matrix();
 
     V1 = w[80116500];
     if( V1 == 8 )

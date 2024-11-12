@@ -359,7 +359,7 @@ L7099c:	; 8007099C
 
     A0 = w[V1 + 70];
     A1 = 400;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     A0 = w[8009cbd8];
     system_sprite_reset_buffers();
@@ -1906,7 +1906,7 @@ A0 = 2; // colors 15bit
 A1 = 0; // semi transparency B/2+F/2
 A2 = 2c0; // x_base
 A3 = 100; // y_base
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [pack1 + 28 * 0 + 16] = h(V0);
 
 [pack1 + 28 * 1 + 3] = b(9);
@@ -1935,7 +1935,7 @@ A0 = 2; // colors 15bit
 A1 = 0; // semi transparency B/2+F/2
 A2 = 340; // x_base
 A3 = 100; // y_base
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [pack1 + 28 * 1 + 16] = h(V0);
 
 [pack1 + 28 * 2 + 3] = b(9);
@@ -1964,14 +1964,14 @@ A0 = 2; // colors 15bit
 A1 = 0; // semi transparency B/2+F/2
 A2 = 3c0; // x_base
 A3 = 100; // y_base
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [pack1 + 28 * 2 + 16] = h(V0);
 
 A0 = 2; // colors 15bit
 A1 = blend_mode;
 A2 = 0; // x_base
 A3 = 0; // y_base
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 A0 = pack3; // dst
 A1 = 0; // draw to display area prohibited
@@ -2045,7 +2045,7 @@ while( render_num != 0 )
 
     A0 = start_ptr;
     A1 = 400;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     pack1_0 = pack1 & 00ffffff;
     [pack1 + 0] = w((w[pack1 + 0] & ff000000) | (w[start_ptr + 4] & 00ffffff));
@@ -2538,7 +2538,7 @@ A3 = 0100;
 [SP + 0024] = w(S3);
 [SP + 0020] = w(S2);
 [SP + 001c] = w(S1);
-80073018	jal    $system_graphic_get_texpage_by_param
+80073018	jal    $system_psyq_get_tpage
 [SP + 0018] = w(S0);
 A0 = 0110;
 A1 = 01fe;
@@ -2837,7 +2837,7 @@ V1 = 00ff;
 [8009b9ac] = b(V0);
 [8009b9ad] = b(V0);
 [8009b9ae] = b(V0);
-80073554	jal    $system_graphic_get_texpage_by_param
+80073554	jal    $system_psyq_get_tpage
 A3 = 0100;
 A0 = 0100;
 [8009b9be] = h(V0);
@@ -2870,7 +2870,7 @@ V1 = w[S0 + 0004];
 A0 = 0;
 A1 = 0001;
 A2 = 0380;
-800735DC	jal    $system_graphic_get_texpage_by_param
+800735DC	jal    $system_psyq_get_tpage
 A3 = 0100;
 A0 = 8009b988;
 A1 = 0001;
@@ -3315,7 +3315,7 @@ A0 = 0;
 A1 = 0;
 A2 = 0380;
 A3 = 0100;
-80073CD0	jal    $system_graphic_get_texpage_by_param
+80073CD0	jal    $system_psyq_get_tpage
 [S0 + fff8] = h(V0);
 A0 = S2;
 A1 = 0001;
@@ -8728,7 +8728,7 @@ A2 = 0340;
 V0 = 002c;
 A3 = 0100;
 [S0 + fffd] = b(S5);
-800794A8	jal    $system_graphic_get_texpage_by_param
+800794A8	jal    $system_psyq_get_tpage
 [S0 + 0001] = b(V0);
 A0 = 0100;
 A1 = 01ff;
@@ -13324,7 +13324,7 @@ A2 = 0300;
 V0 = 002c;
 A3 = 0100;
 [S0 + fffd] = b(S6);
-8007E000	jal    $system_graphic_get_texpage_by_param
+8007E000	jal    $system_psyq_get_tpage
 [S0 + 0001] = b(V0);
 A0 = 0;
 A1 = 01ff;
@@ -16032,7 +16032,7 @@ A1 = S3;
 A2 = 0180;
 A3 = 0;
 [S0 + fffc] = b(S6);
-80080B1C	jal    $system_graphic_get_texpage_by_param
+80080B1C	jal    $system_psyq_get_tpage
 [S0 + 0000] = b(S5);
 V1 = bu[S0 + 0000];
 S1 = S1 + 0001;
@@ -16398,7 +16398,7 @@ A3 = 0100;
 [S0 + ffef] = b(S2);
 [S0 + fff0] = b(S2);
 V0 = V0 | 0001;
-800810C8	jal    $system_graphic_get_texpage_by_param
+800810C8	jal    $system_psyq_get_tpage
 [S0 + fff1] = b(V0);
 [S0 + 0000] = h(V0);
 V0 = S1 < 00c0;
@@ -17684,7 +17684,7 @@ A1 = S2;
 A2 = 02c0;
 A3 = 0100;
 [S0 + fffc] = b(S7);
-80082550	jal    $system_graphic_get_texpage_by_param
+80082550	jal    $system_psyq_get_tpage
 [S0 + 0000] = b(S6);
 V1 = bu[S0 + 0000];
 8008255C	addiu  s1, s1, $ffff (=-$1)
@@ -20569,7 +20569,7 @@ A0 = 0;
 A1 = 0;
 A2 = 0380;
 A3 = 0100;
-80085488	jal    $system_graphic_get_texpage_by_param
+80085488	jal    $system_psyq_get_tpage
 [S0 + fff8] = h(V0);
 S1 = S1 + 0001;
 [S0 + 0000] = h(V0);
@@ -20916,7 +20916,7 @@ A3 = 0100;
 [S0 + fff9] = b(S4);
 [S0 + fff6] = b(S3);
 [S0 + fff7] = b(S3);
-80085A0C	jal    $system_graphic_get_texpage_by_param
+80085A0C	jal    $system_psyq_get_tpage
 [S0 + fff8] = b(S3);
 A0 = 0130;
 A1 = 01fe;
@@ -22195,7 +22195,7 @@ loop86d20:	; 80086D20
 A0 = 0;
 A1 = S3;
 A2 = 01a0;
-80086D2C	jal    $system_graphic_get_texpage_by_param
+80086D2C	jal    $system_psyq_get_tpage
 A3 = 00a0;
 V1 = bu[S0 + 0000];
 S1 = S1 + 0001;
@@ -23686,7 +23686,7 @@ A1 = 0001;
 A2 = 0340;
 A3 = 0100;
 [S0 + fffc] = b(S4);
-80088478	jal    $system_graphic_get_texpage_by_param
+80088478	jal    $system_psyq_get_tpage
 [S0 + 0000] = b(S3);
 A0 = 0100;
 A1 = 01ff;
@@ -33512,7 +33512,7 @@ A3 = 0100;
 [SP + 0014] = w(S1);
 S0 = S0 + V0;
 V0 = 00f8;
-800917C8	jal    $system_graphic_get_texpage_by_param
+800917C8	jal    $system_psyq_get_tpage
 [S0 + 0050] = w(V0);
 A0 = 8009c6f8;
 A1 = 0001;
@@ -33628,7 +33628,7 @@ A3 = 0100;
 
 L91a00:	; 80091A00
 [8009b560] = w(S1);
-80091A08	jal    $system_graphic_get_texpage_by_param
+80091A08	jal    $system_psyq_get_tpage
 80091A0C	nop
 A0 = 8009c6f8;
 A1 = 0001;
@@ -34163,7 +34163,7 @@ V0 = 003f;
 [8009c6a4] = b(V1);
 [8009c6a5] = b(V1);
 [8009c6a6] = b(V1);
-8009232C	jal    $system_graphic_get_texpage_by_param
+8009232C	jal    $system_psyq_get_tpage
 A3 = 0100;
 A0 = 0130;
 [8009c6b6] = h(V0);
@@ -39275,7 +39275,7 @@ loop96f04:	; 80096F04
 A0 = 0001;
 A1 = 0;
 A2 = S0;
-80096F10	jal    $system_graphic_get_texpage_by_param
+80096F10	jal    $system_psyq_get_tpage
 A3 = S3;
 [S1 + 0000] = h(V0);
 S0 = S0 + 0080;
@@ -39292,7 +39292,7 @@ loop96f44:	; 80096F44
 A0 = 0001;
 A1 = 0;
 A2 = S0;
-80096F50	jal    $system_graphic_get_texpage_by_param
+80096F50	jal    $system_psyq_get_tpage
 A3 = S3;
 [S1 + 0000] = h(V0);
 S0 = S0 + 0080;

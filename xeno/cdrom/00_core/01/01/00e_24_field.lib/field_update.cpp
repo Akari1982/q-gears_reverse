@@ -1098,7 +1098,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
                                     A1 = SP + 98;
                                     A2 = SP + 9c;
                                     A3 = SP + a0;
-                                    system_gte_vector_perspective_transform();
+                                    system_psyq_rot_trans_pers();
                                     [SP + a4] = w(V0);
                                 }
                                 else if( ( V1 >= 5 ) && ( V1 < 8 ) )
@@ -1111,7 +1111,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
                                     A1 = SP + 98;
                                     A2 = SP + 9c;
                                     A3 = SP + a0;
-                                    system_gte_vector_perspective_transform();
+                                    system_psyq_rot_trans_pers();
                                     [SP + a4] = w(V0);
                                 }
                             }
@@ -1164,7 +1164,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
                                 [SP + 10] = h(0);
                                 [SP + 12] = h(12c);
                                 [SP + 14] = h(0);
-                                system_gte_vector_perspective_transform();
+                                system_psyq_rot_trans_pers();
                                 S0 = V0 >> w[8004f7a4];
 
                                 A0 = struct_164;
@@ -1211,7 +1211,7 @@ for( int i = 0; i < w[800ad0d4]; ++i ) // number_of_entity
                                         A1 = SP + 98;
                                         A2 = SP + 9c;
                                         A3 = SP + a0;
-                                        system_gte_vector_perspective_transform();
+                                        system_psyq_rot_trans_pers();
 
                                         S0 = V0 >> w[8004f7a4];
                                         if( S0 >= 2 )

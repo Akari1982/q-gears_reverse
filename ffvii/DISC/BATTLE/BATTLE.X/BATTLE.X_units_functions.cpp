@@ -57,10 +57,10 @@ A2 = S0;
 funcd4284;
 
 A0 = S0;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = S0;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = 800f01e8;
 A1 = w[801517c0] + 70;
@@ -99,10 +99,10 @@ S2 = 801621f0 + h[801590d4] * 20;
 [800f0218 + 4] = b(h[S2 + 2] * 20); // dust frame y tex
 
 A0 = 800fa63c; // camera matrix
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800fa63c;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = S2 + 4; // vector to transform
 A1 = SP + 24; // result vector
@@ -116,10 +116,10 @@ system_gte_rot_trans();
 [SP + 2c] = w(w[SP + 2c] - h[S2 + 10] / 10);
 
 A0 = SP + 10;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = SP + 10;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 
 A0 = 800f0218;
@@ -409,10 +409,10 @@ S3 = A1;
 S2 = A2;
 
 A0 = 800fa63c;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800fa63c;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = S1;
 A1 = S2 + 14;
@@ -448,10 +448,10 @@ collision = A2;
 [800f0238] = h(scale);
 
 A0 = 800fa63c;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800fa63c;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = position;
 A1 = 800f023c;
@@ -470,10 +470,10 @@ if (collision != 0)
 }
 
 A0 = 800f0228;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800f0228;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 return 800f0228;
 ////////////////////////////////
@@ -495,7 +495,7 @@ A2 = 0001;
 800D44B0	jal    $80044a68
 A0 = S0;
 A0 = S1;
-800D44BC	jal    $system_add_render_packet_to_queue
+800D44BC	jal    $system_psyq_add_prim
 A1 = S0;
 S0 = S0 + 000c;
 [80163c74] = w(S0);
@@ -1599,14 +1599,14 @@ system_execute_AKAO;
 [SP + 0024] = w(S1);
 S1 = A0;
 S0 = 800fa63c;
-800D56C4	jal    system_gte_set_rot_matrix [$8003b48c]
+800D56C4	jal    system_psyq_set_rot_matrix [$8003b48c]
 A0 = S0;
-800D56CC	jal    system_gte_set_trans_matrix [$8003b51c]
+800D56CC	jal    system_psyq_set_trans_matrix [$8003b51c]
 A0 = S0;
 A0 = S1;
 A1 = SP + 0010;
 A2 = SP + 0018;
-800D56E0	jal    system_gte_vector_perspective_transform [$8003bbdc]
+800D56E0	jal    system_psyq_rot_trans_pers [$8003bbdc]
 A3 = SP + 001c;
 V0 = h[SP + 0010];
 800D56EC	nop
@@ -1931,7 +1931,7 @@ A0 = A0 << 02;
 [S2 + 0014] = w(V0);
 V0 = w[801517c0];
 A0 = A0 + 0070;
-800D5C5C	jal    $system_add_render_packet_to_queue
+800D5C5C	jal    $system_psyq_add_prim
 A0 = A0 + V0;
 V0 = S2 + 0024;
 [80163c74] = w(V0);
@@ -3373,10 +3373,10 @@ A2 = A1;
 system_transformation_data_multiply;
 
 A0 = SP + 10;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = SP + 10;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = 800f1904;
 A1 = w[801517c0] + 70;
@@ -3450,10 +3450,10 @@ A2 = SP + 28;
 system_transformation_data_multiply;
 
 A0 = SP + 28;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = SP + 28;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 
 
@@ -3494,7 +3494,7 @@ if (A0 > 0)
 
     A0 = w[801517c0] + A0 & fffffffc + 70;
     A1 = S0;
-    system_add_render_packet_to_queue;
+    system_psyq_add_prim;
 
     [80163c74] = w(S0 + 28); // add quad
 }
@@ -3546,10 +3546,10 @@ if (bu[80062d98] != 0 || current_frame == 0)
     system_transformation_data_multiply;
 
     A0 = SP + 10;
-    system_gte_set_rot_matrix();
+    system_psyq_set_rot_matrix();
 
     A0 = SP + 10;
-    system_gte_set_trans_matrix();
+    system_psyq_set_trans_matrix();
 
     // load effect geometry
     A0 = 800f197c; // offset to effect 3d data
@@ -4922,11 +4922,11 @@ if( w[800f1990] != w[800f8368] )
 
 A0 = 800f508c + w[800f1994] * 10;
 A1 = 2;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 A0 = 800f4e8c + w[800f1994] * 100;
 A1 = 40;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 800D8EB8	jal    $800484a8
 
@@ -4982,7 +4982,7 @@ A0 = A1 << 08;
 A0 = A0 + S1;
 A1 = A1 << 04;
 A1 = A1 + A2;
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 A2 = 00a6;
 V0 = w[800f8368];
@@ -5010,7 +5010,7 @@ A0 = w[800f1994];
 A1 = S0;
 A0 = A0 << 08;
 A0 = A0 + S1;
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 A0 = w[800f1994];
 V0 = S1 + 0004;
@@ -5224,7 +5224,7 @@ S2 = S3 + 008c;
 A1 = w[S0 + 0000];
 A0 = S2;
 V0 = A1 + 0010;
-800D94D4	jal    $system_add_render_packet_to_queue
+800D94D4	jal    $system_psyq_add_prim
 [S0 + 0000] = w(V0);
 A2 = 00a6;
 V0 = w[800f8368];
@@ -5249,7 +5249,7 @@ V0 = 005f;
 800D9538	jal    $system_prepare_draw_env_packets
 A1 = S1;
 A1 = w[S0 + 0000];
-800D9544	jal    $system_add_render_packet_to_queue
+800D9544	jal    $system_psyq_add_prim
 A0 = S2;
 V0 = w[S0 + 0000];
 800D9550	nop
@@ -5561,7 +5561,7 @@ V1 = w[80062f24];
 V0 = 0010;
 [V1 + 0012] = h(V0);
 A1 = w[S0 + 0000];
-800D9B40	jal    $system_add_render_packet_to_queue
+800D9B40	jal    $system_psyq_add_prim
 A0 = S2;
 V0 = w[S0 + 0000];
 A2 = 00a6;
@@ -5589,7 +5589,7 @@ V0 = 005f;
 800D9BB0	jal    $system_prepare_draw_env_packets
 A1 = S1;
 A1 = w[S0 + 0000];
-800D9BBC	jal    $system_add_render_packet_to_queue
+800D9BBC	jal    $system_psyq_add_prim
 A0 = S2;
 V0 = w[S0 + 0000];
 800D9BC8	nop
@@ -5708,7 +5708,7 @@ V1 = 005f;
 800D9DAC	addiu  a1, a2, $fffc (=-$4)
 A0 = w[80062fc4];
 A1 = w[S0 + 0000];
-800D9DBC	jal    $system_add_render_packet_to_queue
+800D9DBC	jal    $system_psyq_add_prim
 800D9DC0	nop
 V0 = w[S0 + 0000];
 800D9DC8	nop
@@ -6335,7 +6335,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DA884	jal    $system_add_render_packet_to_queue
+800DA884	jal    $system_psyq_add_prim
 A1 = A1 + A2;
 A1 = 0002;
 A2 = 0196;
@@ -6536,7 +6536,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DAC30	jal    $system_add_render_packet_to_queue
+800DAC30	jal    $system_psyq_add_prim
 A1 = A1 + A2;
 A2 = 00a6;
 V1 = w[800f1994];
@@ -6881,7 +6881,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DB258	jal    $system_add_render_packet_to_queue
+800DB258	jal    $system_psyq_add_prim
 A1 = A1 + A2;
 A1 = 0002;
 A2 = 00a6;
@@ -7069,7 +7069,7 @@ A0 = w[80062fc4];
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DB5D0	jal    $system_add_render_packet_to_queue
+800DB5D0	jal    $system_psyq_add_prim
 A1 = A1 + S0;
 V1 = w[800f1994];
 S0 = S0 + 0010;
@@ -7114,7 +7114,7 @@ A0 = FP;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DB69C	jal    $system_add_render_packet_to_queue
+800DB69C	jal    $system_psyq_add_prim
 A1 = A1 + S0;
 A1 = 0002;
 A2 = 00a6;
@@ -7340,7 +7340,7 @@ A0 = S1;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 05;
-800DBA90	jal    $system_add_render_packet_to_queue
+800DBA90	jal    $system_psyq_add_prim
 A1 = A1 + A2;
 V0 = S4 << 10;
 A2 = V0 >> 10;
@@ -8157,7 +8157,7 @@ V0 = 000c;
 V0 = A1 + 0014;
 [A1 + 000e] = h(S3);
 [80163c74] = w(V0);
-800DC6A0	jal    $system_add_render_packet_to_queue
+800DC6A0	jal    $system_psyq_add_prim
 S2 = S2 + S1;
 
 Ldc6a8:	; 800DC6A8
@@ -8186,7 +8186,7 @@ A1 = w[80163c74];
 800DC710	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DC720	jal    $system_add_render_packet_to_queue
+800DC720	jal    $system_psyq_add_prim
 A0 = FP;
 T0 = hu[SP + 0118];
 800DC72C	nop
@@ -8405,7 +8405,7 @@ V0 = A1 + 0014;
 [A1 + 0012] = h(V1);
 
 Ldcaac:	; 800DCAAC
-800DCAAC	jal    $system_add_render_packet_to_queue
+800DCAAC	jal    $system_psyq_add_prim
 800DCAB0	nop
 A1 = 0;
 
@@ -8425,7 +8425,7 @@ A1 = w[80163c74];
 800DCB00	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCB10	jal    $system_add_render_packet_to_queue
+800DCB10	jal    $system_psyq_add_prim
 A0 = FP;
 V1 = S7 + 0001;
 
@@ -8496,7 +8496,7 @@ A1 = w[80163c74];
 800DCC38	nop
 V0 = A1 + 0010;
 [80163c74] = w(V0);
-800DCC48	jal    $system_add_render_packet_to_queue
+800DCC48	jal    $system_psyq_add_prim
 A0 = FP;
 A1 = 0;
 A2 = 0001;
@@ -8514,7 +8514,7 @@ A1 = w[80163c74];
 800DCC9C	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCCAC	jal    $system_add_render_packet_to_queue
+800DCCAC	jal    $system_psyq_add_prim
 A0 = FP;
 
 Ldccb4:	; 800DCCB4
@@ -8534,7 +8534,7 @@ A1 = w[80163c74];
 800DCD00	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCD10	jal    $system_add_render_packet_to_queue
+800DCD10	jal    $system_psyq_add_prim
 A0 = FP;
 A0 = w[80163c74];
 800DCD20	jal    $80046910
@@ -8611,7 +8611,7 @@ A1 = w[80163c74];
 800DCEA4	nop
 V0 = A1 + 0024;
 [80163c74] = w(V0);
-800DCEB4	jal    $system_add_render_packet_to_queue
+800DCEB4	jal    $system_psyq_add_prim
 A0 = FP;
 A1 = 0;
 A2 = 0001;
@@ -8631,7 +8631,7 @@ A1 = w[80163c74];
 800DCF0C	nop
 V0 = A1 + 000c;
 [80163c74] = w(V0);
-800DCF1C	jal    $system_add_render_packet_to_queue
+800DCF1C	jal    $system_psyq_add_prim
 A0 = FP;
 RA = w[SP + 0164];
 FP = w[SP + 0160];
@@ -9359,7 +9359,7 @@ V0 = 005f;
 800DDA98	jal    $system_prepare_draw_env_packets
 [V1 + 0000] = h(V0);
 A1 = w[S0 + 0000];
-800DDAA4	jal    $system_add_render_packet_to_queue
+800DDAA4	jal    $system_psyq_add_prim
 A0 = S2;
 V0 = w[S0 + 0000];
 800DDAB0	nop
@@ -9536,7 +9536,7 @@ S4 = 0001;
 800DDD6C	jal    $system_prepare_draw_env_packets
 A1 = S6;
 A1 = w[S1 + 0000];
-800DDD78	jal    $system_add_render_packet_to_queue
+800DDD78	jal    $system_psyq_add_prim
 A0 = S5;
 S3 = 800f3148;
 V0 = w[S1 + 0000];
@@ -9584,7 +9584,7 @@ A0 = w[S1 + 0000];
 800DDE40	jal    $system_prepare_draw_env_packets
 A1 = S6;
 A1 = w[S1 + 0000];
-800DDE4C	jal    $system_add_render_packet_to_queue
+800DDE4C	jal    $system_psyq_add_prim
 A0 = S5;
 V0 = w[S1 + 0000];
 800DDE58	nop
@@ -13052,7 +13052,7 @@ V0 = 0015;
 A1 = S2;
 [S2 + 000e] = h(V0);
 S2 = S2 + 0014;
-800E176C	jal    $system_add_render_packet_to_queue
+800E176C	jal    $system_psyq_add_prim
 A0 = S7;
 V0 = S5 < 1770;
 800E1778	bne    v0, zero, Le1784 [$800e1784]
@@ -13110,7 +13110,7 @@ A1 = S1;
 [S1 + 000e] = h(V0);
 S1 = S1 + 0014;
 S2 = S2 + 0014;
-800E1860	jal    $system_add_render_packet_to_queue
+800E1860	jal    $system_psyq_add_prim
 A0 = S7;
 V0 = 0001;
 800E186C	bne    s4, v0, Le1878 [$800e1878]
@@ -13140,7 +13140,7 @@ A3 = 003f;
 [SP + 0010] = w(V0);
 A1 = S2;
 S2 = S2 + 000c;
-800E18F4	jal    $system_add_render_packet_to_queue
+800E18F4	jal    $system_psyq_add_prim
 A0 = S7;
 [80163c74] = w(S2);
 ////////////////////////////////
@@ -13929,7 +13929,7 @@ V0 = SP + 0020;
 A1 = w[S0 + 0000];
 A0 = w[80062fc4];
 V0 = A1 + 000c;
-800E24E8	jal    $system_add_render_packet_to_queue
+800E24E8	jal    $system_psyq_add_prim
 [S0 + 0000] = w(V0);
 800E24F0	j      Le25fc [$800e25fc]
 V0 = S4 << 10;
@@ -15104,7 +15104,7 @@ V0 = V0 + S0;
 A1 = w[800f8368];
 A0 = w[80062fc4];
 A1 = A1 << 04;
-800E3640	jal    $system_add_render_packet_to_queue
+800E3640	jal    $system_psyq_add_prim
 A1 = A1 + S0;
 A0 = 0;
 A1 = 0001;
@@ -15975,7 +15975,7 @@ V1 = w[80062f24];
 A1 = w[S0 + 0000];
 A0 = w[80062fc4];
 V0 = A1 + 0014;
-800E4344	jal    $system_add_render_packet_to_queue
+800E4344	jal    $system_psyq_add_prim
 [S0 + 0000] = w(V0);
 A0 = 0;
 A1 = 0001;
@@ -16868,7 +16868,7 @@ V1 = w[80062f24];
 A0 = w[80062fc4];
 [V1 + 0016] = h(V0);
 A1 = w[S7 + 0000];
-800E5094	jal    $system_add_render_packet_to_queue
+800E5094	jal    $system_psyq_add_prim
 S4 = S4 + 0030;
 V0 = w[S7 + 0000];
 S5 = S5 + 0001;
@@ -17639,7 +17639,7 @@ S4 = S4 + 0001;
 A1 = w[S7 + 0000];
 A0 = w[80062fc4];
 V0 = A1 + 0014;
-800E5C60	jal    $system_add_render_packet_to_queue
+800E5C60	jal    $system_psyq_add_prim
 [S7 + 0000] = w(V0);
 V0 = S4 < 0004;
 800E5C6C	bne    v0, zero, loope5af8 [$800e5af8]

@@ -42,10 +42,10 @@ system_gte_rotate_translate_vector();
 [800af5bc + 1c] = w(w[SP + 18]);
 
 A0 = 800af5bc;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800af5bc;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 S0 = h[struct_model + 20];
 
@@ -57,7 +57,7 @@ A0 = SP + 20;
 A1 = SP + 2c;
 A2 = SP + 30;
 A3 = SP + 28;
-system_gte_vector_perspective_transform();
+system_psyq_rot_trans_pers();
 [SP + 20] = h(S0);
 [SP + 22] = h(S0);
 [SP + 24] = h(0);
@@ -69,7 +69,7 @@ A0 = SP + 20;
 A1 = SP + 2c;
 A2 = SP + 30;
 A3 = SP + 28;
-system_gte_vector_perspective_transform();
+system_psyq_rot_trans_pers();
 
 x_check2 = (w[SP + 2c] << 10) >> 10;
 y_check2 = w[SP + 2c] >> 10;

@@ -645,7 +645,7 @@ for( int i = 0; i < 5; ++i )
     S3 = 800b0748 + i * 50;
 
     A0 = S3;
-    system_graphic_textured_quad_header();
+    system_psyq_set_poly_ft4();
 
     [S3 + 4] = b(80);           // r
     [S3 + 5] = b(80);           // g
@@ -683,28 +683,28 @@ for( int i = 0; i < 5; ++i )
     A1 = semi_tr;
     A2 = 2c0 + i * 40;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = 800b0748 - c8 + i * 18; // packet
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = 800b0748 - 50 + i * 10; // rect
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     // settings for buffer 2
     A0 = 2;
     A1 = semi_tr;
     A2 = 2c0 + i * 40;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = 800b0748 - c8 + i * 18 + c; // packet
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = 800b0748 - 80 + i * 10 + 8; // rect
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     // transparency for packet
     A0 = S3;
@@ -715,7 +715,7 @@ for( int i = 0; i < 5; ++i )
     A1 = semi_tr;
     A2 = 2c0 + i * 40;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
     [S3 + 16] = h(V0);
 
     // copy packet for buffer 2
@@ -856,10 +856,10 @@ A1 = SP + 48;
 system_gte_multiply_matrix_by_vector();
 
 A0 = SP + 28;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = SP + 28;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 for( int i = 0; i < 5; ++i )
 {
@@ -1020,7 +1020,7 @@ for( int y = 0; y < e; ++y )
         S0 = alloc + (y * 14 + x) * 34;
 
         A0 = S0;
-        system_graphic_shaded_quad_header();
+        system_psyq_set_poly_gt4();
 
         [S0 +  4] = b(80);                   // r1
         [S0 +  5] = b(80);                   // g1
@@ -1055,7 +1055,7 @@ for( int y = 0; y < e; ++y )
         A1 = 1;
         A2 = 2c0 + (x / 4) * 40;
         A3 = 100;
-        system_graphic_get_texpage_by_param();
+        system_psyq_get_tpage();
         [S0 + 1a] = h(V0);
 
         A0 = S0;

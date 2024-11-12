@@ -49,7 +49,7 @@ for( int i = 0 ; i < 10; ++i )
     [80285bbc + i * 68 + c] = h(0);
 
     A0 = 80285bbc + 20 + i * 68;
-    system_graphic_shaded_line_header();
+    system_psyq_set_line_g2();
 
     //  1st   Color1+Command    (CcBbGgRrh)
     //  2nd   Vertex1           (YyyyXxxxh)
@@ -139,13 +139,13 @@ buffer_id = A3;
 
 S0 = packets + 40 + buffer_id * 14;
 
-system_gte_push_matrix();
+system_psyq_push_matrix();
 
 A0 = transform;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = transform;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 A0 = packets + 30;
 A1 = packets + 38;
@@ -161,7 +161,7 @@ func4a524(); // some perspective transform
 [S0 + 0] = w((w[S0 + 0] & ff000000) | (w[otag + 4] & 00ffffff));
 [otag + 4] = w((w[otag + 4] & ff000000) | (S0 & 00ffffff));
 
-system_gte_pop_matrix();
+system_psyq_pop_matrix();
 ////////////////////////////////
 
 
@@ -177,13 +177,13 @@ if( w[800c1b60] == 0 )
         A1 = 80285b9c + i * 68;
         system_calculate_rotation_matrix();
 
-        system_gte_push_matrix();
+        system_psyq_push_matrix();
 
         A0 = 800aef38; // camera?
         A1 = 80285b9c + i * 68;
         system_gte_matrix_multiplication_to_A1();
 
-        system_gte_pop_matrix();
+        system_psyq_pop_matrix();
 
         A0 = 80285bbc + i * 68 + 8;
         A1 = 80285bb0 + i * 68;

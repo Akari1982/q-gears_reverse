@@ -396,31 +396,31 @@ battle_cdrom_read_chain();
 
 A0 = w[801517c0] + 40a4; // 800faff4 + 40a4 = 800ff098
 A1 = 10;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = w[801517c0] + 4070;
 A1 = 2;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 A0 = w[801517c0] + 4078;
 A1 = 2;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 A0 = w[801517c0] + 70;
 A1 = 1000;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = w[801517c0] + 4080;
 A1 = 9;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 A0 = w[801517c0] + 40e4;
 A1 = 2;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 A0 = w[801517c0] + 40ec;
 A1 = 2;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 if( w[800f8368] == 0 )
 {
@@ -594,12 +594,12 @@ A1 = 1; // drawing to display area is permitted
 A2 = 1; // dithering processing flag on
 A3 = (type & 3) * 20; // initial value of texture page
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = w[801517c0] + 4078; // inited OT for 2 packets
 A1 = w[80163c74];
 [80163c74] = w(A1 + c);
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 ////////////////////////////////
 
 
@@ -1349,7 +1349,7 @@ if( ( hu[8009d7be] & 0300 ) == 0100 )
         A1 = SP + 10; // 2d XY
         A2 = SP + 14;
         A3 = SP + 18;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
 
         [80151700 + i * 8 + 0] = h(hu[SP + 10]);
         [80151702 + i * 8 + 0] = h(h[SP + 12]);
@@ -1360,16 +1360,16 @@ if( ( hu[8009d7be] & 0300 ) == 0100 )
         bone_id = bu[8015477f + i * b9c + 0];
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_rot_matrix();
+        system_psyq_set_rot_matrix();
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_trans_matrix();
+        system_psyq_set_trans_matrix();
 
         A0 = 800e7d08;
         A1 = SP + 10; // 2d XY
         A2 = SP + 14;
         A3 = SP + 18;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
 
         [80151700 + i * 8 + 0] = h(hu[SP + 10]);
         [80151702 + i * 8 + 0] = h(h[SP + 12]);
@@ -1382,16 +1382,16 @@ else
         bone_id = bu[801518e4 + i * b9c + 2b]; // get bone for first joint
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_rot_matrix();
+        system_psyq_set_rot_matrix();
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
-        system_gte_set_trans_matrix();
+        system_psyq_set_trans_matrix();
 
         A0 = 800e7d08;
         A1 = SP + 10; // 2d XY
         A2 = SP + 14;
         A3 = SP + 18;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
 
         [80151700 + i * 8 + 0] = h(hu[SP + 10]);
         [80151702 + i * 8 + 0] = h(h[SP + 12]);
@@ -2557,10 +2557,10 @@ A1 = bone_matrix;
 system_gte_matrixes_multiply_A0_A1_to_A1;
 
 A0 = 1f800024;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 1f800024;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = bone_matrix + 28; // vector
 A1 = bone_matrix + 14; // result vector
@@ -2568,10 +2568,10 @@ A2 = SP + 10;
 system_gte_rot_trans();
 
 A0 = bone_matrix;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = bone_matrix;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 ////////////////////////////////
 
 
@@ -2587,10 +2587,10 @@ A1 = scale;
 system_scale_matrix_by_vector();
 
 A0 = matrix;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = matrix;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 ////////////////////////////////
 
 
@@ -2631,9 +2631,9 @@ A2 = bu[AT + 0000];
 S6 = V1;
 V0 = 80151a24;
 S0 = S0 + V0;
-800BB0CC	jal    $system_gte_set_rot_matrix
+800BB0CC	jal    $system_psyq_set_rot_matrix
 A0 = S0;
-800BB0D4	jal    $system_gte_set_trans_matrix
+800BB0D4	jal    $system_psyq_set_trans_matrix
 A0 = S0;
 S1 = S1 << 06;
 AT = 800fa714;

@@ -65,7 +65,7 @@ if( w[800acffc] == 0 ) // if not inited
             buffer2 = w[800b1594] + (i * 14 + j) * 28;
 
             A0 = buffer1;
-            system_graphic_textured_quad_header();
+            system_psyq_set_poly_ft4();
 
             A0 = buffer1;
             A1 = 0;
@@ -98,7 +98,7 @@ if( w[800acffc] == 0 ) // if not inited
                 A1 = 0;
                 A2 = 3c0; // x base
                 A3 = 0; // y base
-                system_graphic_get_texpage_by_param();
+                system_psyq_get_tpage();
                 [buffer1 + 16] = h(V0);
 
                 A2 = buffer1;
@@ -125,7 +125,7 @@ if( w[800acffc] == 0 ) // if not inited
                 A1 = 0; // semi transparency
                 A2 = (j * 10) & ffc0; // x base
                 A3 = 0; // y base
-                system_graphic_get_texpage_by_param();
+                system_psyq_get_tpage();
                 [buffer1 + 16] = h(V0);
 
                 A2 = buffer1;
@@ -141,7 +141,7 @@ if( w[800acffc] == 0 ) // if not inited
                 A1 = 0;
                 A2 = (j * 10) & ffc0; // x base
                 A3 = 100; // y base
-                system_graphic_get_texpage_by_param();
+                system_psyq_get_tpage();
                 [buffer2 + 16] = h(V0);
             }
         }

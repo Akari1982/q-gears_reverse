@@ -138,27 +138,27 @@ A0 = 0; // Texture page colors (0=4bit, 1=8bit, 2=15bit, 3=Reserved)
 A1 = 0;
 A2 = u_tex;
 A3 = v_tex;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 A0 = offset_18 + 30;
 A1 = 0; // dfe
 A2 = 0; // dtd
 A3 = V0 & ffff; // tpage
 A4 = 0; // rect
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = 0; // Texture page colors (0=4bit, 1=8bit, 2=15bit, 3=Reserved)
 A1 = 0;
 A2 = u_tex + 40;
 A3 = v_tex;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 A0 = offset_18 + 3c;
 A1 = 0; // dfe
 A2 = 0; // dtd
 A3 = V0 & ffff;
 A4 = 0; // rect
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 ////////////////////////////////
 
 

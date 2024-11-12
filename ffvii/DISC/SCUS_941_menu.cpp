@@ -2,7 +2,7 @@
 // func1cda4()
 
 A0 = w[80062f24];
-system_gpu_textured_quad_header();
+system_psyq_set_poly_ft4();
 
 A0 = w[80062f24];
 A1 = 1;
@@ -37,14 +37,14 @@ A0 = 1;
 A1 = 0;
 A2 = 340;
 A3 = 0;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 V1 = w[80062f24];
 [V1 + 16] = h(V0);
 
 A0 = w[80062fc4];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + 28);
 ////////////////////////////////
@@ -66,7 +66,7 @@ FP = A3;
 [SP + 18] = h(A7);
 
 A0 = w[80062f24];
-system_gpu_textured_quad_header();
+system_psyq_set_poly_ft4();
 
 A0 = w[80062f24];
 A1 = 1;
@@ -111,14 +111,14 @@ A0 = 1;
 A1 = 0;
 A2 = 3c0;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 V1 = w[80062f24];
 [V1 + 16] = h(V0);
 
 A0 = w[80062fc4];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + 28);
 ////////////////////////////////
@@ -140,7 +140,7 @@ FP = A3;
 [SP + 18] = h(A7);
 
 A0 = w[80062f24];
-system_gpu_textured_quad_header();
+system_psyq_set_poly_ft4();
 
 A0 = w[80062f24];
 A1 = 1;
@@ -185,14 +185,14 @@ A0 = 1;
 A1 = 0;
 A2 = 340;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 V1 = w[80062f24];
 [V1 + 16] = h(V0);
 
 A0 = w[80062fc4];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + 28);
 ////////////////////////////////
@@ -206,7 +206,7 @@ S0 = A0;
 S1 = A1;
 
 A0 = w[80062f24];
-func46974();
+system_psyq_set_tile1();
 
 V0 = w[80062f24];
 [V0 + 4] = b(ff);
@@ -217,7 +217,7 @@ V0 = w[80062f24];
 
 A0 = w[80062fc4];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + c);
 ////////////////////////////////
@@ -233,7 +233,7 @@ S3 = A1;
 S1 = A2;
 
 A0 = w[80062f24];
-func469c4();
+system_psyq_set_line_f2();
 
 V0 = w[80062f24];
 [V0 + 4] = b(S0 >> 10);
@@ -246,7 +246,7 @@ V0 = w[80062f24];
 
 A0 = w[80062fc4];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + 10);
 ////////////////////////////////
@@ -264,7 +264,7 @@ S3 = A3;
 if( A4 != 0 )
 {
     A0 = w[80062f24];
-    func469c4();
+    system_psyq_set_line_f2();
 
     V0 = w[80062f24];
     [V0 + 4] = b(ff);
@@ -274,7 +274,7 @@ if( A4 != 0 )
 else
 {
     A0 = w[80062f24];
-    func469c4();
+    system_psyq_set_line_f2();
 
     V0 = w[80062f24];
     [V0 + 4] = b(80);
@@ -290,7 +290,7 @@ V0 = w[80062f24];
 
 A0 = w[80062fc4];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 V0 = w[80062f24];
 [80062f24] = w(V0 + 10);
@@ -338,7 +338,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         A1 = 1;
         A2 = 380;
         A3 = 100;
-        system_create_texture_page_settings_for_packet();
+        system_psyq_get_tpage();
 
         [SP + 10] = h(0);
         [SP + 12] = h(0);
@@ -406,7 +406,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         A0 = w[80062fc4];
         A1 = w[80062f24];
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
 
         [80062f24] = w(w[80062f24] + 14);
 
@@ -416,7 +416,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         A1 = 1;
         A2 = 3c0;
         A3 = 100;
-        system_create_texture_page_settings_for_packet();
+        system_psyq_get_tpage();
 
         [SP + 10] = h(0);
         [SP + 12] = h(0);
@@ -604,7 +604,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         A0 = w[80062fc4];
         A1 = w[80062f24];
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
 
         [80062f24] = w(w[80062f24] + 14);
 
@@ -627,7 +627,7 @@ A0 = 0;
 A1 = 1;
 A2 = 380;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -738,7 +738,7 @@ V1 = w[80062f24];
 A0 = w[80062fc4];
 A1 = w[80062f24];
 [80062f24] = w(A1 + 10);
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 ////////////////////////////////
 
 
@@ -777,7 +777,7 @@ if( rect_w >= 9 )
 
     A0 = w[80062fc4];
     A1 = packet;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     packet = packet + 14;
 
@@ -785,7 +785,7 @@ if( rect_w >= 9 )
     A1 = 1;
     A2 = 3c0;
     A3 = 100;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     [SP + 10] = h(0);
     [SP + 12] = h(e0);
@@ -819,7 +819,7 @@ if( rect_w >= 9 )
 
     A0 = w[80062fc4];
     A1 = packet;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     packet = packet + 14;
 
@@ -827,7 +827,7 @@ if( rect_w >= 9 )
     A1 = 1;
     A2 = 3c0;
     A3 = 100;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     [SP + 10] = h(10);
     [SP + 12] = h(e8);
@@ -864,7 +864,7 @@ if( rect_h >= 9 )
 
     A0 = w[80062fc4];
     A1 = packet;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     packet = packet + 14;
 
@@ -872,7 +872,7 @@ if( rect_h >= 9 )
     A1 = 1;
     A2 = 3c0;
     A3 = 100;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     [SP + 10] = h(10);
     [SP + 12] = h(f0);
@@ -906,7 +906,7 @@ if( rect_h >= 9 )
 
     A0 = w[80062fc4];
     A1 = packet;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     packet = packet + 14;
 
@@ -914,7 +914,7 @@ if( rect_h >= 9 )
     A1 = 1;
     A2 = 3c0;
     A3 = 100;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     [SP + 10] = h(0);
     [SP + 12] = h(f0);
@@ -949,7 +949,7 @@ system_create_clut_for_packet();
 
 A0 = w[80062fc4];
 A1 = packet;
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 packet = packet + 14;
 
@@ -974,7 +974,7 @@ system_create_clut_for_packet();
 
 A0 = w[80062fc4];
 A1 = packet;
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 packet = packet + 14;
 
@@ -999,7 +999,7 @@ system_create_clut_for_packet();
 
 A0 = w[80062fc4];
 A1 = packet;
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 packet = packet + 14;
 
@@ -1024,7 +1024,7 @@ system_create_clut_for_packet();
 
 A0 = w[80062fc4];
 A1 = packet;
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 packet = packet + 14;
 
@@ -1032,7 +1032,7 @@ A0 = 0;
 A1 = 1;
 A2 = 3c0;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -1080,7 +1080,7 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
 
     A0 = w[80062fc4];
     A1 = packet;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     packet = packet + 24;
 
@@ -1088,7 +1088,7 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
     A1 = 0;
     A2 = 3c0;
     A3 = 100;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     [SP + 10] = h(60);
     [SP + 12] = h(e0);
@@ -1140,13 +1140,13 @@ system_create_clut_for_packet();
 A0 = w[80062fc4]; // OT for render
 A1 = w[80062f24];
 [80062f24] = w(A1 + 14);
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 A0 = 0; // tp
 A1 = 2; // abr
 A2 = 3c0; // vram x
 A3 = 100; // vram y
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -1205,7 +1205,7 @@ V1 = w[80062f24];
 A0 = w[80062fc4];
 A1 = w[80062f24];
 [80062f24] = w(A1 + 14);
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 // set cap for timer
 if( value >= 1770 )
@@ -1252,7 +1252,7 @@ for( int i = 0; i < 4; ++i )
     A0 = w[80062fc4];
     A1 = w[80062f24];
     [80062f24] = w(A1 + 14);
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     if( i == 1 )
     {
@@ -1266,7 +1266,7 @@ A0 = 0;
 A1 = 1;
 A2 = 3c0;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -1331,7 +1331,7 @@ for( int i = 0 i < 8; +i )
         A0 = w[80062fc4];
         A1 = w[80062f24];
         [80062f24] = w(A1 + 14);
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
 
         x = x + 10;
     }
@@ -1343,7 +1343,7 @@ A0 = 0;
 A1 = 1;
 A2 = 3c0;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -1450,7 +1450,7 @@ for( int i = 0; i < number_to_render; ++i )
 
         A0 = buffer;
         A1 = w[80062f24];
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
 
         [80062f24] = w(w[80062f24] + 40);
 
@@ -1508,7 +1508,7 @@ for( int i = 0; i < number_to_render; ++i )
 
         A0 = buffer;
         A1 = w[80062f24];
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
 
         [GP + 84] = w(0);
         [80062f24] = w(w[80062f24] + 40);
@@ -3054,7 +3054,7 @@ L21580:	; 80021580
 A0 = w[GP + 0214];
 S0 = 800696fc;
 A0 = A0 << 04;
-80021590	jal    func469b0 [$800469b0]
+80021590	jal    system_psyq_set_tile [$800469b0]
 A0 = A0 + S0;
 A0 = w[GP + 0214];
 A1 = 0001;
@@ -3085,7 +3085,7 @@ V0 = V0 + S0;
 A1 = w[GP + 0214];
 A0 = w[GP + 0160];
 A1 = A1 << 04;
-8002160C	jal    system_add_render_packet_to_queue [$80046794]
+8002160C	jal    system_psyq_add_prim [$80046794]
 A1 = A1 + S0;
 A0 = 0;
 A1 = 0001;
@@ -3860,7 +3860,7 @@ V0 = 0100;
 [SP + 0028] = h(0);
 [SP + 002a] = h(0);
 [SP + 002c] = h(V0);
-80022184	jal    system_create_texture_page_settings_for_packet [$8004656c]
+80022184	jal    system_psyq_get_tpage [$8004656c]
 [SP + 002e] = h(V0);
 A0 = 0;
 A1 = 0001;
@@ -4576,7 +4576,7 @@ A0 = A0 << 04;
 V0 = 8006974c;
 A0 = A0 + V0;
 [GP + 0160] = w(A0);
-80022C64	jal    system_psyq_clear_o_tag [$8004418c]
+80022C64	jal    system_psyq_clear_otag [$8004418c]
 A1 = 0014;
 V0 = w[GP + 0214];
 80022C70	nop
@@ -4618,7 +4618,7 @@ V0 = w[AT + 0000];
 A0 = w[GP + 0214];
 S0 = 800696fc;
 A0 = A0 << 04;
-80022D0C	jal    func469b0 [$800469b0]
+80022D0C	jal    system_psyq_set_tile [$800469b0]
 A0 = A0 + S0;
 A0 = w[GP + 0214];
 A1 = 0001;
@@ -4649,7 +4649,7 @@ V0 = V0 + S0;
 A1 = w[GP + 0214];
 A0 = w[GP + 0160];
 A1 = A1 << 04;
-80022D88	jal    system_add_render_packet_to_queue [$80046794]
+80022D88	jal    system_psyq_add_prim [$80046794]
 A1 = A1 + S0;
 A0 = 0;
 A1 = 0001;
@@ -5177,7 +5177,7 @@ V0 = w[GP + 01dc];
 A0 = A0 << 04;
 A0 = A0 + S1;
 V0 = V0 << 04;
-8002357C	jal    func469b0 [$800469b0]
+8002357C	jal    system_psyq_set_tile [$800469b0]
 S0 = S0 - V0;
 A0 = w[GP + 0214];
 A1 = 0001;
@@ -5206,7 +5206,7 @@ V0 = V0 + S1;
 A1 = w[GP + 0214];
 A0 = w[GP + 0160];
 A1 = A1 << 04;
-800235F0	jal    system_add_render_packet_to_queue [$80046794]
+800235F0	jal    system_psyq_add_prim [$80046794]
 A1 = A1 + S1;
 
 L235f8:	; 800235F8
@@ -6173,7 +6173,7 @@ L24b90:	; 80024B90
     A0 = 80069844 + w[GP + 214] * 50;
     [GP + 160] = w(A0);
     A1 = 14;
-    system_psyq_clear_o_tag();
+    system_psyq_clear_otag();
 
     [GP + 280] = w(w[GP + 160]);
 
@@ -8278,12 +8278,12 @@ A1 = display_area;
 A2 = dithering;
 A3 = init_value;
 A4 = window_rect;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = w[GP + 280];
 A1 = w[80062f24];
 [80062f24] = w(A1 + c);
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 ////////////////////////////////
 
 
@@ -8327,7 +8327,7 @@ V0 = 003f;
 A0 = w[GP + 0280];
 80026B20	lui    a1, $8006
 A1 = w[A1 + 2f24];
-80026B28	jal    system_add_render_packet_to_queue [$80046794]
+80026B28	jal    system_psyq_add_prim [$80046794]
 80026B2C	nop
 80026B30	lui    v0, $8006
 V0 = w[80062f24];
@@ -8552,7 +8552,7 @@ V1 = w[80062f24];
 
 A0 = w[GP + 280];
 A1 = w[80062f24];
-system_add_render_packet_to_queue();
+system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + 14);
 
@@ -8572,11 +8572,11 @@ if( bu[GP + b9] == 0 )
     A2 = 1;
     A3 = (((S5 + 380) & 3ff) >> 6) | 30;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = w[GP + 280];
     A1 = w[80062f24];
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     [80062f24] = w(w[80062f24] + c);
 }
@@ -8639,11 +8639,11 @@ if( bu[GP + b9] != 0 )
     A2 = 1;
     A3 = 3e;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = w[GP + 280];
     A1 = w[80062f24];
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     [80062f24] = w(w[80062f24] + c);
 }
@@ -8685,7 +8685,7 @@ if (character < 29) // dakuten characters
 
     A0 = w[GP + 280];
     A1 = packet;
-    system_add_render_packet_to_queue;
+    system_psyq_add_prim;
 
     character = character + 40;
 }
@@ -8715,7 +8715,7 @@ else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // ha
 
     A0 = w[GP + 280];
     A1 = packet;
-    system_add_render_packet_to_queue;
+    system_psyq_add_prim;
 
     character = character + 17;
 }
@@ -8747,7 +8747,7 @@ system_create_clut_for_packet;
 
 A0 = w[GP + 280];
 A1 = packet;
-system_add_render_packet_to_queue;
+system_psyq_add_prim;
 ////////////////////////////////
 
 
@@ -8815,8 +8815,7 @@ height = hu[S1 + 6];
 FP = V1;
 A0 = w[80062f24];
 S7 = A1;
-
-800274DC	jal    func46910 [$80046910]
+system_psyq_set_poly_g4();
 
 packet = w[80062f24];
 
@@ -8851,7 +8850,7 @@ A1 = w[80062f24];
 A0 = w[GP + 0280];
 V0 = A1 + 0024;
 [80062f24] = w(V0);
-80027644	jal    system_add_render_packet_to_queue [$80046794]
+80027644	jal    system_psyq_add_prim [$80046794]
 80027648	nop
 
 A0 = h(S1 + c);
@@ -8871,7 +8870,7 @@ if (A0 != 0)
     }
 
     A0 = w[80062f24];
-    80027684	jal    func46910 [$80046910]
+    80027684	jal    system_psyq_set_poly_g4 [$80046910]
     80027688	nop
     V0 = w[80062f24];
     80027694	nop
@@ -8927,12 +8926,12 @@ if (A0 != 0)
     A0 = w[GP + 0280];
     V0 = A1 + 0024;
     [80062f24] = w(V0);
-    800277E4	jal    system_add_render_packet_to_queue [$80046794]
+    800277E4	jal    system_psyq_add_prim [$80046794]
     800277E8	nop
 }
 
 A0 = w[80062f24];
-800277F4	jal    func46910 [$80046910]
+800277F4	jal    system_psyq_set_poly_g4 [$80046910]
 800277F8	nop
 V0 = w[80062f24];
 80027804	nop
@@ -8976,7 +8975,7 @@ A1 = w[80062f24];
 A0 = w[GP + 0280];
 V0 = A1 + 0024;
 [80062f24] = w(V0);
-80027954	jal    system_add_render_packet_to_queue [$80046794]
+80027954	jal    system_psyq_add_prim [$80046794]
 80027958	nop
 
 L2795c:	; 8002795C
@@ -9057,7 +9056,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 001c;
 80027AA4	lui    at, $8006
 [AT + 2f24] = w(V0);
-80027AAC	jal    system_add_render_packet_to_queue [$80046794]
+80027AAC	jal    system_psyq_add_prim [$80046794]
 80027AB0	nop
 80027AB4	lui    v1, $8006
 V1 = w[V1 + 2f24];
@@ -9101,7 +9100,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80027B54	lui    at, $8006
 [AT + 2f24] = w(V0);
-80027B5C	jal    system_add_render_packet_to_queue [$80046794]
+80027B5C	jal    system_psyq_add_prim [$80046794]
 80027B60	nop
 RA = w[SP + 0020];
 S3 = w[SP + 001c];
@@ -9173,7 +9172,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80027C6C	lui    at, $8006
 [AT + 2f24] = w(V0);
-80027C74	jal    system_add_render_packet_to_queue [$80046794]
+80027C74	jal    system_psyq_add_prim [$80046794]
 S1 = 0070;
 80027C7C	lui    v0, $8006
 V0 = w[80062f24];
@@ -9234,7 +9233,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80027D60	lui    at, $8006
 [AT + 2f24] = w(V0);
-80027D68	jal    system_add_render_packet_to_queue [$80046794]
+80027D68	jal    system_psyq_add_prim [$80046794]
 80027D6C	nop
 80027D70	lui    v0, $8006
 V0 = w[80062f24];
@@ -9289,7 +9288,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80027E3C	lui    at, $8006
 [AT + 2f24] = w(V0);
-80027E44	jal    system_add_render_packet_to_queue [$80046794]
+80027E44	jal    system_psyq_add_prim [$80046794]
 80027E48	nop
 80027E4C	lui    v0, $8006
 V0 = w[80062f24];
@@ -9350,7 +9349,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80027F30	lui    at, $8006
 [AT + 2f24] = w(V0);
-80027F38	jal    system_add_render_packet_to_queue [$80046794]
+80027F38	jal    system_psyq_add_prim [$80046794]
 80027F3C	nop
 80027F40	lui    v0, $8006
 V0 = w[80062f24];
@@ -9402,7 +9401,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80028000	lui    at, $8006
 [AT + 2f24] = w(V0);
-80028008	jal    system_add_render_packet_to_queue [$80046794]
+80028008	jal    system_psyq_add_prim [$80046794]
 8002800C	nop
 RA = w[SP + 0020];
 S3 = w[SP + 001c];
@@ -9465,7 +9464,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80028104	lui    at, $8006
 [AT + 2f24] = w(V0);
-8002810C	jal    system_add_render_packet_to_queue [$80046794]
+8002810C	jal    system_psyq_add_prim [$80046794]
 80028110	nop
 80028114	lui    v0, $8006
 V0 = w[80062f24];
@@ -9522,7 +9521,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 800281E8	lui    at, $8006
 [AT + 2f24] = w(V0);
-800281F0	jal    system_add_render_packet_to_queue [$80046794]
+800281F0	jal    system_psyq_add_prim [$80046794]
 800281F4	nop
 800281F8	lui    v0, $8006
 V0 = w[80062f24];
@@ -9573,7 +9572,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 800282B4	lui    at, $8006
 [AT + 2f24] = w(V0);
-800282BC	jal    system_add_render_packet_to_queue [$80046794]
+800282BC	jal    system_psyq_add_prim [$80046794]
 800282C0	nop
 800282C4	lui    v0, $8006
 V0 = w[80062f24];
@@ -9630,7 +9629,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80028398	lui    at, $8006
 [AT + 2f24] = w(V0);
-800283A0	jal    system_add_render_packet_to_queue [$80046794]
+800283A0	jal    system_psyq_add_prim [$80046794]
 800283A4	nop
 800283A8	lui    v0, $8006
 V0 = w[80062f24];
@@ -9678,7 +9677,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0010;
 80028458	lui    at, $8006
 [AT + 2f24] = w(V0);
-80028460	jal    system_add_render_packet_to_queue [$80046794]
+80028460	jal    system_psyq_add_prim [$80046794]
 ////////////////////////////////
 // func28484
 
@@ -9746,7 +9745,7 @@ width = A2;
 height = A3;
 
 A0 = packet;
-func46910;
+system_psyq_set_poly_g4;
 
 A0 = packet;
 A1 = 1;
@@ -9777,10 +9776,10 @@ system_psyq_set_semi_trans;
 
 A0 = w[GP + 280];
 A1 = packet;
-system_add_render_packet_to_queue;
+system_psyq_add_prim;
 
 A0 = w[80062f24];
-80028788	jal    func46910 [$80046910]
+80028788	jal    system_psyq_set_poly_g4 [$80046910]
 
 A0 = w[80062f24];
 A1 = 1;
@@ -9810,7 +9809,7 @@ system_psyq_set_semi_trans;
 A0 = w[GP + 280];
 A1 = w[80062f24];
 [80062f24] = w(A1 + 24);
-system_add_render_packet_to_queue;
+system_psyq_add_prim;
 ////////////////////////////////
 
 
@@ -9830,7 +9829,7 @@ S0 = A2;
 S5 = A3;
 [SP + 0028] = w(RA);
 [SP + 0020] = w(S4);
-80028964	jal    func46910 [$80046910]
+80028964	jal    system_psyq_set_poly_g4 [$80046910]
 [SP + 0018] = w(S2);
 8002896C	lui    a0, $8006
 A0 = w[A0 + 2f24];
@@ -9929,11 +9928,11 @@ A0 = w[GP + 0280];
 V0 = A1 + 0024;
 80028AE8	lui    at, $8006
 [AT + 2f24] = w(V0);
-80028AF0	jal    system_add_render_packet_to_queue [$80046794]
+80028AF0	jal    system_psyq_add_prim [$80046794]
 S1 = S1 + S5;
 80028AF8	lui    a0, $8006
 A0 = w[A0 + 2f24];
-80028B00	jal    func46910 [$80046910]
+80028B00	jal    system_psyq_set_poly_g4 [$80046910]
 S1 = S1 - S2;
 80028B08	lui    a0, $8006
 A0 = w[A0 + 2f24];
@@ -10025,7 +10024,7 @@ A0 = w[GP + 0280];
 V0 = A1 + 0024;
 80028C68	lui    at, $8006
 [AT + 2f24] = w(V0);
-80028C70	jal    system_add_render_packet_to_queue [$80046794]
+80028C70	jal    system_psyq_add_prim [$80046794]
 80028C74	nop
 RA = w[SP + 0028];
 S5 = w[SP + 0024];
@@ -10107,7 +10106,7 @@ A0 = w[GP + 0280];
 [V1 + 000e] = h(V0);
 80028DA8	lui    a1, $8006
 A1 = w[A1 + 2f24];
-80028DB0	jal    system_add_render_packet_to_queue [$80046794]
+80028DB0	jal    system_psyq_add_prim [$80046794]
 80028DB4	nop
 80028DB8	lui    v0, $8006
 V0 = w[80062f24];
@@ -10191,7 +10190,7 @@ loop28ea8:	; 80028EA8
         S5 = 0;
         A0 = w[GP + 0280];
         A1 = w[80062f24];
-        80028F98	jal    system_add_render_packet_to_queue [$80046794]
+        80028F98	jal    system_psyq_add_prim [$80046794]
 
         V0 = w[80062f24];
         80028FA8	nop
@@ -10242,7 +10241,7 @@ V1 = w[80062f24];
 A0 = w[GP + 0280];
 [V1 + 000e] = h(V0);
 A1 = w[80062f24];
-800290C0	jal    system_add_render_packet_to_queue [$80046794]
+800290C0	jal    system_psyq_add_prim [$80046794]
 800290C4	nop
 V0 = w[80062f24];
 800290D0	nop
@@ -10351,7 +10350,7 @@ A0 = w[GP + 0280];
 [V1 + 000e] = h(V0);
 80029270	lui    a1, $8006
 A1 = w[A1 + 2f24];
-80029278	jal    system_add_render_packet_to_queue [$80046794]
+80029278	jal    system_psyq_add_prim [$80046794]
 8002927C	nop
 80029280	lui    v0, $cccc
 V0 = V0 | cccd;
@@ -10420,7 +10419,7 @@ A0 = w[GP + 0280];
 [V1 + 000e] = h(V0);
 8002937C	lui    a1, $8006
 A1 = w[A1 + 2f24];
-80029384	jal    system_add_render_packet_to_queue [$80046794]
+80029384	jal    system_psyq_add_prim [$80046794]
 80029388	nop
 8002938C	lui    v0, $8006
 V0 = w[80062f24];

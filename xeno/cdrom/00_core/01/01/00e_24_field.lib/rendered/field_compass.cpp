@@ -8,13 +8,13 @@ rb = A3;
 
 packet = packets + rb * 28 + 20;
 
-system_gte_push_matrix();
+system_psyq_push_matrix();
 
 A0 = matrix;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = matrix;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 A0 = packets +  0; // xyz0
 A1 = packets +  8; // xyz1
@@ -43,7 +43,7 @@ V1 = h[packet + 22];
 [packet] = w((w[packet] & ff000000) | (w[otag + 4] & 00ffffff));
 [otag + 4] = w((w[otag + 4] & ff000000) | (packet & 00ffffff));
 
-system_gte_pop_matrix();
+system_psyq_pop_matrix();
 ////////////////////////////////
 
 
@@ -58,13 +58,13 @@ rb = A3;
 
 packet = packets + rb * 28 + 20;
 
-system_gte_push_matrix();
+system_psyq_push_matrix();
 
 A0 = matrix;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = matrix;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 A0 = packets +  0; // xyz0
 A1 = packets +  8; // xyz1
@@ -81,7 +81,7 @@ system_psyq_rot_average_4();
 [packet] = w((w[packet] & ff000000) | (w[otag + 4] & 00ffffff));
 [otag + 4] = w((w[otag + 4] & ff000000) | (packet & 00ffffff));
 
-system_gte_pop_matrix();
+system_psyq_pop_matrix();
 ////////////////////////////////
 
 
@@ -95,7 +95,7 @@ y_id = A2;
 tex_id = A3;
 
 A0 = packet + 20;
-system_graphic_textured_quad_header();
+system_psyq_set_poly_ft4();
 
 // data hardcoded in field.lib
 // x
@@ -133,7 +133,7 @@ A0 = h[800ad2d8 + tex_id * c + 0];
 A1 = h[800ad2d8 + tex_id * c + 2];
 A2 = h[800ad2d8 + tex_id * c + 4];
 A3 = h[800ad2d8 + tex_id * c + 6];
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [packet + 20 + 16] = h(V0);
 
 A0 = h[800ad2d8 + tex_id * c + 8];
@@ -180,7 +180,7 @@ for( int i = 0; i < 4; ++i )
     S1 = 800afb90 + (15 + i) * 70 + 20;
 
     A0 = S1;
-    system_graphic_textured_quad_header();
+    system_psyq_set_poly_ft4();
 
     [S0 +  0] = h(hu[800ad308 + i * 10 + 0]);
     [S0 +  2] = h(0);
@@ -218,7 +218,7 @@ for( int i = 0; i < 4; ++i )
     A1 = 2;
     A2 = 280;
     A3 = 1c0;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
     [S1 + 16] = h(V0);
 
     A0 = 100;
@@ -307,10 +307,10 @@ field_get_identity_matrix();
 [SP + 2c] = w(80);
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = SP + 10;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 pc_entity_id = hu[800b1812];
 struct_5c_p = w[800aefe4];
@@ -384,10 +384,10 @@ A2 = 800aef58; // res
 system_gte_matrix_multiplication_to_A2();
 
 A0 = SP + 10;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = SP + 10;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 A0 = SP + 50;
 field_get_identity_matrix();

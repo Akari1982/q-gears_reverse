@@ -74,10 +74,10 @@ func30840(); // set Light color matrix source
 [800aefdc] = h(hu[S0 + 34] << 4);
 
 A0 = 800aee64;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800aee64;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 A0 = 800aef30; // vector
 A1 = 800aef4c; // res
@@ -88,10 +88,10 @@ A0 = 800aef38; // camera matrix
 system_gte_calculate_and_set_lighting_matrix();
 
 A0 = 800aef38; // camera matrix
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800aef38; // camera matrix
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 ////////////////////////////////
 
 
@@ -1415,10 +1415,10 @@ A1 = S0;
 system_gte_matrix_multiplication_to_A1();
 
 A0 = S2;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = S2;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 A0 = S1 + 008c;
 A1 = S1 + 00a8;
@@ -1434,9 +1434,9 @@ A1 = SP + 10;
 system_gte_multiply_matrix_by_vector();
 
 A0 = S0;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
-800718BC	jal    $system_gte_set_translation_vector
+800718BC	jal    $system_psyq_set_trans_matrix
 A0 = S0;
 
 ////////////////////////////////
@@ -1472,10 +1472,10 @@ system_gte_multiply_matrix_by_vector();
 8007198C	jal    func717e0 [$800717e0]
 
 A0 = 800aef38; // camera matrix
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800aef38; // camera matrix
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 
 if( w[800c1b60] == 0 )
 {
@@ -2130,7 +2130,7 @@ func72404(); // update cam move and shake
 S1 = A0;
 cam_pos = A1;
 
-system_gte_push_matrix();
+system_psyq_push_matrix();
 
 A0 = 800aeeb8; // rot angles vector
 A1 = SP + 10;
@@ -2148,7 +2148,7 @@ system_gte_apply_matrix_lv();
 [S1 + 0] = w(w[cam_pos + 0] + w[SP + 40]);
 [S1 + 8] = w(w[cam_pos + 8] + w[SP + 48]);
 
-system_gte_pop_matrix();
+system_psyq_pop_matrix();
 ////////////////////////////////
 
 
@@ -2526,7 +2526,7 @@ V1 = V1 - V0;
 
 A0 = w[800c3740] + 80d4; // interface otag
 A1 = 8;
-system_clear_otagr();
+system_psyq_clear_otag_r();
 ////////////////////////////////
 
 
@@ -2538,13 +2538,13 @@ func735e0();
 
 A0 = w[800c3740] + cc; // scene otag
 A1 = 1000;
-system_clear_otagr();
+system_psyq_clear_otag_r();
 
 if( w[800ad024] != 0 )
 {
     A0 = w[800c3740] + 40d0; // top scene otag
     A1 = 1000;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 }
 ////////////////////////////////
 

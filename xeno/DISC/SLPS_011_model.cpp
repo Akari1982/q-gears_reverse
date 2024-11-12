@@ -440,7 +440,7 @@ A2 = A0 & ffff; // TX as 0x3c0
 A3 = A1 & ffff; // TY as 0x100
 A0 = 0;
 A1 = 0;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [800589b0] = w(V0 & 1f);
 [8004f7ac] = w(1);
 ////////////////////////////////
@@ -613,39 +613,36 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// func2d90c
-8002D90C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+// func2d90c()
+
 S0 = w[80058ac0];
-[SP + 0014] = w(RA);
-8002D920	jal    func43ad8 [$80043ad8]
+
 A0 = S0;
+system_psyq_set_poly_ft3();
+
 A0 = S0;
-8002D92C	jal    system_psyq_set_shade_tex [$80043a9c]
-A1 = 0001;
+A1 = 1;
+system_psyq_set_shade_tex();
+
 A0 = 0001;
 A1 = 0;
 A2 = 0280;
 A3 = 0;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 A0 = 0;
 A1 = 01e0;
 V1 = w[800589b0];
 V0 = V0 & ffe0;
 V0 = V0 | V1;
-8002D960	jal    system_graphic_get_clut_by_param [$800438d0]
 [S0 + 0016] = h(V0);
+system_graphic_get_clut_by_param();
+
 V1 = V0 & 000f;
 A0 = w[800589b4];
 V0 = 0001;
 V1 = V1 | A0;
 [S0 + 000e] = h(V1);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002D98C	jr     ra 
-8002D990	nop
 ////////////////////////////////
 
 

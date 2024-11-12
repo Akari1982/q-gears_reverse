@@ -1289,95 +1289,63 @@ T1 = T1 >> 0c;
 8003AE30	jr     ra 
 [A0 + 0010] = w(T1);
 ////////////////////////////////
-// func3ae38
-8003AE38	lui    t6, $8005
-T6 = w[T6 + b994];
-8003AE40	nop
-AT = T6 < 0280;
-8003AE48	bne    at, zero, L3ae74 [$8003ae74]
-8003AE4C	lui    at, $8005
-[AT + b988] = w(RA);
-A0 = 8004bc18; // "Error: Can't push matrix,stack(max 20) is full!\n"
-system_bios_printf();
-
-8003AE60	lui    ra, $8005
-RA = w[RA + b988];
-8003AE68	nop
-8003AE6C	jr     ra 
-8003AE70	nop
 
 
-L3ae74:	; 8003AE74
-8003AE74	lui    t7, $8005
-T7 = T7 + T6;
-8003AE7C	addiu  t7, t7, $b998 (=-$4668)
-T0 = R11R12;
-T1 = R13R21;
-[T7 + 0000] = w(T0);
-[T7 + 0004] = w(T1);
-T0 = R22R23;
-T1 = R31R32;
-[T7 + 0008] = w(T0);
-[T7 + 000c] = w(T1);
-T0 = R33;
-8003AEA4	nop
-[T7 + 0010] = w(T0);
-T0 = TRX;
-T1 = TRY;
-T2 = TRZ;
-[T7 + 0014] = w(T0);
-[T7 + 0018] = w(T1);
-[T7 + 001c] = w(T2);
-T6 = T6 + 0020;
-8003AEC8	lui    at, $8005
-[AT + b994] = w(T6);
-8003AED0	jr     ra 
-8003AED4	nop
+
 ////////////////////////////////
-// func3aed8
-8003AED8	lui    t6, $8005
-T6 = w[T6 + b994];
-8003AEE0	nop
-8003AEE4	bgtz   t6, L3af10 [$8003af10]
-8003AEE8	lui    at, $8005
-[AT + b988] = w(RA);
-A0 = 8004bc49; // "Error: Can't pop matrix,stack is empty!\n"
-system_bios_printf();
+// system_psyq_push_matrix()
+// Save a constant rotation matrix in a stack.
 
-8003AEFC	lui    ra, $8005
-RA = w[RA + b988];
-8003AF04	nop
-8003AF08	jr     ra 
-8003AF0C	nop
+T6 = w[8004b994];
+if( T6 >= 280 )
+{
+    A0 = 8004bc18; // "Error: Can't push matrix,stack(max 20) is full!\n"
+    system_bios_printf();
+}
+else
+{
+
+    [8004b998 + T6 + 0] = w(R11R12);
+    [8004b998 + T6 + 4] = w(R13R21);
+    [8004b998 + T6 + 8] = w(R22R23);
+    [8004b998 + T6 + c] = w(R31R32);
+    [8004b998 + T6 + 10] = w(R33);
+    [8004b998 + T6 + 14] = w(TRX);
+    [8004b998 + T6 + 18] = w(TRY);
+    [8004b998 + T6 + 1c] = w(TRZ);
+    [8004b994] = w(T6 + 20);
+}
+////////////////////////////////
 
 
-L3af10:	; 8003AF10
-8003AF10	addi   t6, t6, $ffe0 (=-$20)
-8003AF14	lui    at, $8005
-[AT + b994] = w(T6);
-8003AF1C	lui    t7, $8005
-T7 = T7 + T6;
-8003AF24	addiu  t7, t7, $b998 (=-$4668)
-T0 = w[T7 + 0000];
-T1 = w[T7 + 0004];
-R11R12 = T0;
-R13R21 = T1;
-T0 = w[T7 + 0008];
-T1 = w[T7 + 000c];
-R22R23 = T0;
-R31R32 = T1;
-T0 = w[T7 + 0010];
-8003AF4C	nop
-R33 = T0;
-8003AF54	nop
-T0 = w[T7 + 0014];
-T1 = w[T7 + 0018];
-T2 = w[T7 + 001c];
-TRX = T0;
-TRY = T1;
-TRZ = T2;
-8003AF70	jr     ra 
-8003AF74	nop
+
+////////////////////////////////
+// system_psyq_pop_matrix()
+// Reset a constant rotation matrix from a stack.
+
+T6 = w[8004b994];
+if( T6 <= 0 )
+{
+    A0 = 8004bc49; // "Error: Can't pop matrix,stack is empty!\n"
+    system_bios_printf();
+}
+else
+{
+    T6 = T6 - 20;
+    [8004b994] = w(T6);
+    R11R12 = w[8004b998 + T6 + 0];
+    R13R21 = w[8004b998 + T6 + 4];
+    R22R23 = w[8004b998 + T6 + 8];
+    R31R32 = w[8004b998 + T6 + c];
+    R33 = w[8004b998 + T6 + 10];
+    TRX = w[8004b998 + T6 + 14];
+    TRY = w[8004b998 + T6 + 18];
+    TRZ = w[8004b998 + T6 + 1c];
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3af78
 T0 = R11R12;
@@ -1643,7 +1611,8 @@ return A0;
 
 
 ////////////////////////////////
-// system_gte_set_rot_matrix()
+// system_psyq_set_rot_matrix()
+// Set a constant rotation matrix.
 
 R11R12 = w[A0 + 0];
 R13R21 = w[A0 + 4];
@@ -1655,7 +1624,8 @@ R33 = w[A0 + 10];
 
 
 ////////////////////////////////
-// system_gte_set_lighting_matrix()
+// system_psyq_set_light_matrix()
+// Set a local light matrix.
 
 L11L12 = w[A0 + 0];
 L13L21 = w[A0 + 4];
@@ -1667,7 +1637,8 @@ L33 = w[A0 + 10];
 
 
 ////////////////////////////////
-// system_gte_set_light_colour_matrix()
+// system_psyq_set_color_matrix()
+// Set a local color matrix.
 
 LR1LR2 = w[A0 + 0];
 LR3LG1 = w[A0 + 4];
@@ -1679,7 +1650,8 @@ LB3 = w[A0 + 10];
 
 
 ////////////////////////////////
-// system_gte_set_trans_matrix()
+// system_psyq_set_trans_matrix()
+// Set a constant parallel transfer vector.
 
 TRX = w[A0 + 14];
 TRY = w[A0 + 18];
@@ -2245,15 +2217,16 @@ V0 = A1;
 
 
 ////////////////////////////////
-// system_gte_vector_perspective_transform()
+// system_psyq_rot_trans_pers()
+// Perform coordinate and perspective transformation for one vertex.
 
 VXY0 = w[A0 + 0];
 VZ0 = w[A0 + 4];
 gte_RTPS(); // Perspective transform
-[A1 + 0] = w(SXY2);
-[A2 + 0] = w(IR0);
-[A3 + 0] = w(FLAG);
-V0 = SZ3 >> 2;
+[A1] = w(SXY2);
+[A2] = w(IR0);
+[A3] = w(FLAG);
+return SZ3 / 4;
 ////////////////////////////////
 
 

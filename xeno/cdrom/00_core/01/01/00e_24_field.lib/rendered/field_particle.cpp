@@ -6,7 +6,7 @@ sprite_id = A1;
 tranc = A2;
 
 A0 = sprite_data + 50;
-system_graphic_textured_quad_header();
+system_psyq_set_poly_ft4();
 
 [sprite_data + 54] = b(80);
 [sprite_data + 55] = b(80);
@@ -52,7 +52,7 @@ A0 = 0;
 A1 = tranc; // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
 A2 = 3c0;
 A3 = 140;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [sprite_data + 66] = h(V0);
 
 A0 = 100;
@@ -634,14 +634,14 @@ if( use_scale == 3 )
     [sprite_data + 50 + buffer_id * 20 + 6] = b(bu[sprite_data + 4a]); // b
 
     A0 = SP + 28;
-    system_gte_set_translation_vector();
+    system_psyq_set_trans_matrix();
 
     A0 = SP + 28;
     A1 = scale_vector;
     system_gte_multiply_matrix_by_vector();
 
     A0 = SP + 28;
-    system_gte_set_rotation_matrix();
+    system_psyq_set_rot_matrix();
 }
 else
 {
@@ -668,10 +668,10 @@ else
     [sprite_data + 50 + buffer_id * 20 + 6] = b(bu[sprite_data + 4a]); // b
 
     A0 = SP + 28;
-    system_gte_set_translation_vector();
+    system_psyq_set_trans_matrix();
 
     A0 = SP + 28;
-    system_gte_set_rotation_matrix();
+    system_psyq_set_rot_matrix();
 }
 
 A0 = sprite_data + a0; // xyz0
@@ -771,10 +771,10 @@ if( hu[sprite_data + 2] != 0 )
             800A96A8	jal    func1e72cc [$801e72cc]
 
             A0 = SP + 30;
-            system_gte_set_rotation_matrix();
+            system_psyq_set_rot_matrix();
 
             A0 = SP + 30;
-            system_gte_set_translation_vector();
+            system_psyq_set_trans_matrix();
 
             [SP + 28] = h(hu[particle_data +  c]);
             [SP + 2a] = h(hu[particle_data +  e]);
@@ -802,10 +802,10 @@ if( hu[sprite_data + 2] != 0 )
             [SP + 4c] = w(w[V1 + entity_id * 5c + 48]);
 
             A0 = SP + 30;
-            system_gte_set_rotation_matrix();
+            system_psyq_set_rot_matrix();
 
             A0 = SP + 30;
-            system_gte_set_translation_vector();
+            system_psyq_set_trans_matrix();
 
             [SP + 28] = h(hu[particle_data +  c]);
             [SP + 2a] = h(hu[particle_data +  e]);
@@ -850,10 +850,10 @@ if( hu[sprite_data + 2] != 0 )
         [SP + 4c] = w(0);
 
         A0 = SP + 30;
-        system_gte_set_rotation_matrix();
+        system_psyq_set_rot_matrix();
 
         A0 = SP + 30;
-        system_gte_set_translation_vector();
+        system_psyq_set_trans_matrix();
 
         // update speed vector with needed rotation
         [SP + 28] = h(w[sprite_data + 18]);
@@ -882,10 +882,10 @@ if( hu[sprite_data + 2] != 0 )
         }
 
         A0 = SP + 30;
-        system_gte_set_rotation_matrix();
+        system_psyq_set_rot_matrix();
 
         A0 = SP + 30;
-        system_gte_set_translation_vector();
+        system_psyq_set_trans_matrix();
 
         // sprite pos
         [SP + 28] = h(w[sprite_data +  8]);
@@ -908,10 +908,10 @@ if( hu[sprite_data + 2] != 0 )
             800A98F4	jal    func4aa64 [$8004aa64]
 
             A0 = SP + 50;
-            system_gte_set_rotation_matrix();
+            system_psyq_set_rot_matrix();
 
             A0 = SP + 50;
-            system_gte_set_translation_vector();
+            system_psyq_set_trans_matrix();
 
             [SP + 80] = w(0);
             [SP + 84] = w(w[SP + 1c]);

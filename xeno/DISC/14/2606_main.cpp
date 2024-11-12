@@ -72,7 +72,7 @@ while( work != 0 )
     [800cc220] = w(V1);
 
     A1 = 1000;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     V1 = bu[800d2734];
     switch( V1 )

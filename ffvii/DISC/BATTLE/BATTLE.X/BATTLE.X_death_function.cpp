@@ -1159,14 +1159,14 @@ A1 = 1; // 1: drawing to display area is permitted
 A2 = 0; // dithering processing flag off
 A3 = 40; // initial value of texture page
 A4 = 0; // texture window rect
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = S0 + 90;
 A1 = 1;
 A2 = 0;
 A3 = 20;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 [S0 + 360 + 3] = b(8);
 [S0 + 360 + 7] = b(38);
@@ -1859,7 +1859,7 @@ A1 = S2 + 0008;
 A2 = SP + 0010;
 S0 = SP + 0014;
 A3 = S0;
-system_gte_vector_perspective_transform()
+system_psyq_rot_trans_pers()
 
 A0 = S1 + 0008;
 A1 = S2 + 0010;

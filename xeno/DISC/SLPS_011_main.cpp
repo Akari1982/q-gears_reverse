@@ -768,7 +768,7 @@ S0 = 80058c84 + A0 * 88;
 [S0 + 1b] = b(20); // b
 
 A0 = S0 + 74;
-system_graphic_mono_triangle_header();
+system_psyq_set_poly_f3();
 
 [S0 + 78] = b(ff); // r
 [S0 + 79] = b(ff); // g
@@ -2475,7 +2475,7 @@ if( V0 == A0 )
 
 A0 = w[mem + 1d4] + 70;
 A1 = 10;
-system_clear_otagr();
+system_psyq_clear_otag_r();
 
 V0 = w[8005881c];
 if( w[V0 + 0] != -1 )

@@ -308,7 +308,7 @@ for( int i = 0; i < 6d; ++i )
     buffer2 = w[800af138] + i * 28;
 
     A0 = buffer1;
-    system_graphic_textured_quad_header();
+    system_psyq_set_poly_ft4();
 
     [buffer1 + 4] = b(80); // r
     [buffer1 + 5] = b(80); // g
@@ -333,7 +333,7 @@ for( int i = 0; i < 6d; ++i )
     A1 = semi_tr;
     A2 = 380;
     A3 = 0;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
     [buffer1 + 16] = h(V0);
 
     A0 = buffer1;

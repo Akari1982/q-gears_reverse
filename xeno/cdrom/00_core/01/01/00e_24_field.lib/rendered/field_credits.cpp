@@ -213,10 +213,10 @@ system_cdrom_action_sync();
 // field_credits_create_packets()
 
 A0 = 800aec5c;
-system_graphic_shaded_quad_header();
+system_psyq_set_poly_gt4();
 
 A0 = 800aecc4;
-system_graphic_shaded_quad_header();
+system_psyq_set_poly_gt4();
 
 // upper shading
 [800aec5c +  4] = b(ff);  // r1
@@ -282,14 +282,14 @@ A0 = 1;
 A1 = 2;
 A2 = 3c0;
 A3 = 100;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [800aec5c + 1a] = h(V0);
 
 A0 = 1;
 A1 = 2;
 A2 = 3c0;
 A3 = 100;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [800aecc4 + 1a] = h(V0);
 
 A0 = 0;
@@ -340,7 +340,7 @@ for( int i = 0; i < 10; ++i )
     S0 = w[800aec44] + 60 + i * 100;
 
     A0 = S0;
-    system_graphic_textured_rectangle_header();
+    system_psyq_set_sprt();
 
     [S0 + 0 * 14 + 4] = b(80); // r
     [S0 + 0 * 14 + 5] = b(80); // g
@@ -409,27 +409,27 @@ for( int i = 0; i < 10; ++i )
         A1 = 0;
         A2 = 300 + j * 40;
         A3 = 0;
-        system_graphic_get_texpage_by_param();
+        system_psyq_get_tpage();
 
         A0 = w[800aec44] + i * 100 + j * c;
         A1 = 0;
         A2 = 0;
         A3 = V0 & ffff;
         A4 = 0;
-        system_gpu_create_texture_setting_packet();
+        system_psyq_set_draw_mode();
 
         A0 = 1;
         A1 = 0;
         A2 = 300 + j * 40;
         A3 = 0;
-        system_graphic_get_texpage_by_param();
+        system_psyq_get_tpage();
 
         A0 = w[800aec44] + i * 100 + 30 + j * c;
         A1 = 0;
         A2 = 0;
         A3 = V0 & ffff;
         A4 = 0;
-        system_gpu_create_texture_setting_packet();
+        system_psyq_set_draw_mode();
     }
 }
 ////////////////////////////////

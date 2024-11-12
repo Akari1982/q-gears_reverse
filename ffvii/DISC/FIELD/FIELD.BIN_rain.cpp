@@ -10,7 +10,7 @@ for( int i = 0; i < 40; ++i )
     [800e42d8 + i * 18 + 16] = h(0); // render off
 
     A0 = packet + 1749c + i * 10;
-    func469c4(); // header for Monochrome line, opaque (0x40)
+    system_psyq_set_line_f2();
 
     A0 = packet + 1749c + i * 10;
     A1 = 1;
@@ -25,14 +25,14 @@ A0 = 0; // tp
 A1 = 1; // abr
 A2 = 0; // vram_x
 A3 = 0; // vram_y
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 A0 = packet + 17490;
 A1 = 0;
 A2 = 0;
 A3 = V0 & ffff;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 ////////////////////////////////
 
 
@@ -45,13 +45,13 @@ S1 = A1;
 matrix = A2;
 packet = A3;
 
-func3ae38(); // push matrix
+system_psyq_push_matrix();
 
 A0 = matrix;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = matrix;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 for( int i = 0; i < 40; ++i )
 {
@@ -61,21 +61,21 @@ for( int i = 0; i < 40; ++i )
         A1 = S1 + i * 10 + 8;
         A2 = SP + 10;
         A3 = SP + 14;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
 
         A0 = 800e42d8 + i * 18 + 8;
         A1 = S1 + i * 10 + c;
         A2 = SP + 10;
         A3 = SP + 14;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
 
         A0 = otag;
         A1 = S1 + i * 10;
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
     }
 }
 
-func3aed8(); // pop matrix
+system_psyq_pop_matrix();
 
 [packet] = w((w[packet] & ff000000) | (w[otag] & 00ffffff));
 [otag] = w((w[otag] & ff000000) | (packet & 00ffffff));

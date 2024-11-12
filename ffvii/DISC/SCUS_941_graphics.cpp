@@ -739,7 +739,7 @@ A0 = tp;
 A1 = abr;
 A2 = vram_x;
 A3 = vram_y;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 return V0;
 ////////////////////////////////
@@ -1341,7 +1341,7 @@ L44170:	; 80044170
 
 
 ////////////////////////////////
-// system_psyq_clear_o_tag()
+// system_psyq_clear_otag()
 // Walks the array specified by ot and sets each element to be a pointer to the following element, except the
 // last, which is set to a pointer to a special terminator value which the PlayStation® uses to recognize the
 // end of a primitive list. n specifies the number entries in the array.
@@ -1377,7 +1377,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_psyq_clear_o_tag_r()
+// system_psyq_clear_otag_r()
 // Initialize an array to a linked list for use as an ordering table.
 // Walks the array specified by ot and sets each element to be a pointer to the previous element, except the
 // first, which is set to a pointer to a special terminator value which the PlayStation uses to recognize the end
@@ -1413,15 +1413,14 @@ S0 = A0;
 V0 = w[V0 + 2bf8];
 V0 = w[V0 + 003c];
 S1 = bu[S0 + 0003];
-80044300	jalr   v0 ra
 A0 = 0;
-80044308	lui    v0, $8006
-V0 = w[V0 + 2bf8];
+80044300	jalr   v0 ra
+
+V0 = w[80062bf8];
 A0 = S0 + 0004;
-V0 = w[V0 + 0014];
-80044318	nop
-8004431C	jalr   v0 ra
+V0 = w[V0 + 14];
 A1 = S1;
+8004431C	jalr   v0 ra
 ////////////////////////////////
 
 
@@ -1923,7 +1922,8 @@ V0 = V1 | V0;
 
 
 ////////////////////////////////
-// system_gpu_create_texture_setting_packet()
+// system_psyq_set_draw_mode()
+// Initialize content of a drawing mode primitive.
 
 buffer = A0;
 display_area = A1;
@@ -3672,7 +3672,8 @@ T1 = 0049;
 
 
 ////////////////////////////////
-// system_create_texture_page_settings_for_packet()
+// system_psyq_get_tpage()
+// Calculate value of member tpage in a primitive.
 
 tp = A0 & 3;
 abr = A1 & 3; // Semi transparent state
@@ -3783,29 +3784,35 @@ SP = SP + 0018;
 80046754	jr     ra 
 80046758	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func4675c
-8004675C	lui    v1, $00ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-8004676C	lui    v1, $8000
-80046770	jr     ra 
-V0 = V0 | V1;
+
+return 80000000 | (w[A0 + 0000] & 00ffffff);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func46778
-80046778	lui    v1, $00ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-V0 = V0 ^ V1;
-8004678C	jr     ra 
-V0 = V0 < 0001;
+
+V0 = w[A0] & 00ffffff;
+V0 = V0 ^ 00ffffff;
+return V0 < 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_add_render_packet_to_queue()
+// system_psyq_add_prim()
+// AddPrim
+// Register a primitive to the OT.
+// Registers a primitive beginning with the address *p to the OT entry *ot in OT table. ot is an ordering table or
+// pointer to another primitive.
+// A primitive may be added to a primitive list only once in the same frame. Attempting to add it multiple times
+// in the same frame results in a corrupted list.
 
 ot = A0;
 packet = A1;
@@ -3817,41 +3824,41 @@ packet = A1;
 
 
 ////////////////////////////////
-// func467d0
-800467D0	lui    a3, $00ff
-A3 = A3 | ffff;
-800467D8	lui    t0, $ff00
-V1 = w[A2 + 0000];
-V0 = w[A0 + 0000];
-V1 = V1 & T0;
-V0 = V0 & A3;
-V1 = V1 | V0;
-[A2 + 0000] = w(V1);
-V0 = w[A0 + 0000];
-A1 = A1 & A3;
-V0 = V0 & T0;
-V0 = V0 | A1;
-80046804	jr     ra 
-[A0 + 0000] = w(V0);
+// system_psyq_add_prims()
+// AddPrims
+// Collectively register primitives to the OT.
+// Registers primitives beginning with p0 and ending with p1 to the *ot entry in the OT.
+// The primitive list is a list of primitives connected by AddPrim() or created by the local ordering table
+
+ot = A0;
+p0 = A1;
+p1 = A2;
+
+[p1] = w(w[p1] & ff000000 | w[ot] & 00ffffff);
+[ot] = w(w[ot] & ff000000 | p0 & 00ffffff);
 ////////////////////////////////
-// func4680c
-8004680C	lui    a2, $00ff
-A2 = A2 | ffff;
-80046814	lui    v1, $ff00
-V0 = w[A0 + 0000];
-A1 = A1 & A2;
-V0 = V0 & V1;
-V0 = V0 | A1;
-80046828	jr     ra 
-[A0 + 0000] = w(V0);
+
+
+
+////////////////////////////////
+// system_psyq_cat_prim()
+// CatPrim
+// Concatenate primitives.
+// Links the primitive p1 to the primitive p0.
+// AddPrim() adds a primitive to a primitive list. CatPrim() simply concatenates two primitives.
+
+p0 = A0;
+p1 = A1;
+
+[p0] = w(w[p0] & ff000000 | p1 & 00ffffff);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func46830
-80046830	lui    v1, $00ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 | V1;
-80046840	jr     ra 
-[A0 + 0000] = w(V0);
+
+[A0 + 0] = w(w[A0 + 0] | 00ffffff);
 ////////////////////////////////
 
 
@@ -3888,46 +3895,58 @@ else
 
 
 ////////////////////////////////
-// func46898
-V0 = 0004;
-[A0 + 0003] = b(V0);
-V0 = 0020;
-800468A4	jr     ra 
-[A0 + 0007] = b(V0);
-////////////////////////////////
-// func468ac
-V0 = 0007;
-[A0 + 0003] = b(V0);
-V0 = 0024;
-800468B8	jr     ra 
-[A0 + 0007] = b(V0);
-////////////////////////////////
-// func468c0
-V0 = 0006;
-[A0 + 0003] = b(V0);
-V0 = 0030;
-800468CC	jr     ra 
-[A0 + 0007] = b(V0);
-////////////////////////////////
-// func468d4
-V0 = 0009;
-[A0 + 0003] = b(V0);
-V0 = 0034;
-800468E0	jr     ra 
-[A0 + 0007] = b(V0);
-////////////////////////////////
-// func468e8
-V0 = 0005;
-[A0 + 0003] = b(V0);
-V0 = 0028;
-800468F4	jr     ra 
-[A0 + 0007] = b(V0);
+// system_psyq_set_poly_f3()
+// Flat shaded triangle primitive.
+
+[A0 + 3] = b(4);
+[A0 + 7] = b(20);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_gpu_textured_quad_header()
+// system_psyq_set_poly_ft3()
+// Flat textured triangle primitive.
+
+[A0 + 3] = b(7);
+[A0 + 7] = b(24);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_poly_g3()
+// Gouraud shaded triangle primitive.
+
+[A0 + 3] = b(6);
+[A0 + 7] = b(30);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_poly_gt3()
+// Gouraud textured triangle primitive.
+
+[A0 + 3] = b(9);
+[A0 + 7] = b(34);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_poly_f4()
+// Flat shaded quadrangle primitive.
+
+[A0 + 3] = b(5);
+[A0 + 7] = b(28);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_poly_ft4()
+// Flat textured quadrangle primitive.
 
 [A0 + 3] = b(9);
 [A0 + 7] = b(2c);
@@ -3936,7 +3955,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func46910()
+// system_psyq_set_poly_g4()
+// Gouraud shaded quadrangle primitive.
 
 [A0 + 3] = b(8);
 [A0 + 7] = b(38);
@@ -3945,7 +3965,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func46924()
+// system_psyq_set_poly_gt4()
+// Gouraud textured quadrangle primitive.
 
 [A0 + 3] = b(с);
 [A0 + 7] = b(3с);
@@ -3954,7 +3975,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func46938()
+// system_psyq_set_sprt8()
+// Initialize a SPRT8 primitive.
 
 [A0 + 3] = b(3);
 [A0 + 7] = b(74);
@@ -3963,7 +3985,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func4694с()
+// system_psyq_set_sprt16()
+// Initialize a SPRT16 primitive.
 
 [A0 + 3] = b(3);
 [A0 + 7] = b(7c);
@@ -3972,7 +3995,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func46960
+// system_psyq_set_sprt()
+// Initialize a SPRT primitive.
 
 [A0 + 3] = b(4);
 [A0 + 7] = b(64);
@@ -3981,7 +4005,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func46974()
+// system_psyq_set_tile1()
+// Initialize a TILE1 primitive.
 
 [A0 + 3] = b(2);
 [A0 + 7] = b(68);
@@ -3990,7 +4015,8 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func46988()
+// system_psyq_set_tile8()
+// Initialize a TILE8 primitive.
 
 [A0 + 3] = b(2);
 [A0 + 7] = b(70);
@@ -3999,89 +4025,108 @@ V0 = 0028;
 
 
 ////////////////////////////////
-// func4699c
-V0 = 0002;
-[A0 + 0003] = b(V0);
-V0 = 0078;
-800469A8	jr     ra 
-[A0 + 0007] = b(V0);
+// system_psyq_set_tile16()
+// Initialize a TILE16 primitive.
+
+[A0 + 3] = b(2);
+[A0 + 7] = b(78);
 ////////////////////////////////
-// func469b0
-V0 = 0003;
-[A0 + 0003] = b(V0);
-V0 = 0060;
-800469BC	jr     ra 
-[A0 + 0007] = b(V0);
+
+
+
 ////////////////////////////////
-// func469c4
-V0 = 0003;
-[A0 + 0003] = b(V0);
-V0 = 0040;
-800469D0	jr     ra 
-[A0 + 0007] = b(V0);
+// system_psyq_set_tile()
+// Initialize a TILE primitive.
+
+[A0 + 3] = b(3);
+[A0 + 7] = b(60);
 ////////////////////////////////
-// func469d8
-V0 = 0004;
-[A0 + 0003] = b(V0);
-V0 = 0050;
-800469E4	jr     ra 
-[A0 + 0007] = b(V0);
+
+
+
 ////////////////////////////////
-// func469ec
-800469EC	lui    v1, $5555
-V1 = V1 | 5555;
-V0 = 0005;
-[A0 + 0003] = b(V0);
-V0 = 0048;
-[A0 + 0007] = b(V0);
-80046A04	jr     ra 
-[A0 + 0014] = w(V1);
+// system_psyq_set_line_f2()
+// Flat unconnected straight line drawing primitive.
+
+[A0 + 3] = b(3);
+[A0 + 7] = b(40);
 ////////////////////////////////
-// func46a0c
-80046A0C	lui    v1, $5555
-V1 = V1 | 5555;
-V0 = 0007;
-[A0 + 0003] = b(V0);
-V0 = 0058;
-[A0 + 0007] = b(V0);
-80046A24	jr     ra 
-[A0 + 001c] = w(V1);
+
+
+
 ////////////////////////////////
-// func46a2c
-80046A2C	lui    v1, $5555
-V1 = V1 | 5555;
-V0 = 0006;
-[A0 + 0003] = b(V0);
-V0 = 004c;
-[A0 + 0007] = b(V0);
-80046A44	jr     ra 
-[A0 + 0018] = w(V1);
+// system_psyq_set_line_g2()
+// Gouraud unconnected straight line drawing primitive.
+
+[A0 + 3] = b(4);
+[A0 + 7] = b(50);
 ////////////////////////////////
-// func46a4c
-80046A4C	lui    v1, $5555
-V1 = V1 | 5555;
-V0 = 0009;
-[A0 + 0003] = b(V0);
-V0 = 005c;
-[A0 + 0007] = b(V0);
-80046A64	jr     ra 
-[A0 + 0024] = w(V1);
+
+
+
+////////////////////////////////
+// system_psyq_set_line_f3()
+// Flat connected 2-straight line drawing primitive.
+
+[A0 + 3] = b(5);
+[A0 + 7] = b(48);
+[A0 + 14] = w(55555555);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_line_g3()
+// Gouraud connected 2-straight line drawing primitive.
+
+[A0 + 3] = b(7);
+[A0 + 7] = b(58);
+[A0 + 1c] = w(55555555);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_line_f4()
+// Flat connected 3-straight line drawing primitive.
+
+[A0 + 3] = b(6);
+[A0 + 7] = b(4c);
+[A0 + 18] = w(55555555);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_set_line_g4()
+// Gouraud connected 3-straight line drawing primitive.
+
+[A0 + 3] = b(9);
+[A0 + 7] = b(5c);
+[A0 + 24] = w(55555555);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func46a6c
-V0 = 0003;
-[A0 + 0003] = b(V0);
-V0 = 0002;
-80046A78	jr     ra 
-[A0 + 0007] = b(V0);
+
+[A0 + 3] = b(3);
+[A0 + 7] = b(2);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func46a80
-V0 = 0005;
-[A0 + 0003] = b(V0);
-V0 = 0001;
-[A0 + 0007] = b(V0);
-80046A90	lui    v0, $8000
-80046A94	jr     ra 
-[A0 + 0008] = w(V0);
+
+[A0 + 3] = b(5);
+[A0 + 7] = b(1);
+[A0 + 8] = w(80000000);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func46a9c
 V0 = bu[A0 + 0003];
@@ -4101,6 +4146,10 @@ L46ac4:	; 80046AC4
 L46ac8:	; 80046AC8
 80046AC8	jr     ra 
 80046ACC	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func46ad0
 80046AD0	addiu  sp, sp, $ffe0 (=-$20)

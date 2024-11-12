@@ -31,32 +31,32 @@ for( int i = 0; i < 21; ++i )
     A1 = 0;
     A2 = 3c0;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = w[800af13c] + i * 18;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = 0;
     A1 = 0;
     A2 = 3c0;
     A3 = 140;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = w[800af13c] + i * 18 + c;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     packet = w[800af13c] + 318 + i * 28;
 
     A0 = packet;
-    system_graphic_textured_rectangle_header();
+    system_psyq_set_sprt();
 
     [packet + 4] = b(80); // r
     [packet + 5] = b(80); // g

@@ -13690,7 +13690,7 @@ V0 = S1 < 000a;
 A0 = S0;
 A0 = w[801e8644];
 S1 = 0;
-func49e04();
+system_psyq_set_color_matrix();
 
 loop1e7efc:	; 801E7EFC
 A0 = w[S0 + 0000];

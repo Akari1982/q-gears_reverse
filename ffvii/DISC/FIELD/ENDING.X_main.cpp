@@ -105,13 +105,13 @@ for( int i = fe; i <= 0; i -= 2 )
 
     A0 = S1;
     A1 = 1;
-    system_psyq_clear_o_tag_r();
+    system_psyq_clear_otag_r();
 
     S0 = S2 << 04;
     V0 = 800a6504;
     S0 = S0 + V0;
     A0 = S0;
-    func469b0();
+    system_psyq_set_tile();
 
     A0 = S0;
     A1 = 1;
@@ -127,13 +127,13 @@ for( int i = fe; i <= 0; i -= 2 )
 
     A0 = S1;
     A1 = S0;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     A0 = 2;
     A1 = 2;
     A2 = 0;
     A3 = 0;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     S0 = S2 << 01;
     S0 = S0 + S2;
@@ -145,11 +145,11 @@ for( int i = fe; i <= 0; i -= 2 )
     A2 = 0001;
     A3 = V0 & ffff;
     [SP + 0010] = w(0);
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = S1;
     A1 = S0;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     A0 = S1;
     system_psyq_draw_otag();
@@ -252,12 +252,12 @@ for( int i = 0; i < fe; i += 2 )
     V0 = 800a64e4;
     S1 = S1 + V0;
     A0 = S1;
-    800A03C4	jal    $system_psyq_clear_o_tag_r
+    800A03C4	jal    $system_psyq_clear_otag_r
     A1 = 0001;
     S0 = S2 << 04;
     V0 = 800a6504;
     S0 = S0 + V0;
-    800A03DC	jal    $func469b0
+    800A03DC	jal    $system_psyq_set_tile
     A0 = S0;
     A0 = S0;
     A1 = 0001;
@@ -276,13 +276,13 @@ for( int i = 0; i < fe; i += 2 )
     [A1 + 0004] = b(i);
     [A1 + 0005] = b(S4);
     [A1 + 0006] = b(S5);
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     A0 = 0002;
     A1 = 0002;
     A2 = 0;
     A3 = 0;
-    system_create_texture_page_settings_for_packet();
+    system_psyq_get_tpage();
 
     S0 = S2 << 01;
     S0 = S0 + S2;
@@ -294,11 +294,11 @@ for( int i = 0; i < fe; i += 2 )
     A2 = 0001;
     A3 = V0 & ffff;
     A4 = 0;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = S1;
     A1 = S0;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     A0 = S1;
     800A0478	jal    $system_psyq_draw_otag
@@ -456,7 +456,7 @@ La0694:	; 800A0694
 A0 = w[A0 + f408];
 A1 = 0001;
 A0 = A0 << 02;
-800A06A4	jal    $system_psyq_clear_o_tag_r
+800A06A4	jal    $system_psyq_clear_otag_r
 A0 = A0 + S1;
 800A06AC	lui    v0, $800b
 V0 = w[V0 + f408];
@@ -545,7 +545,7 @@ La0778:	; 800A0778
     A1 = 1;
     A0 = A0 << 02;
     A0 = A0 + S3;
-    system_psyq_clear_o_tag_r();
+    system_psyq_clear_otag_r();
 
     V0 = w[800af408];
     V0 = V0 << 02;
@@ -563,12 +563,12 @@ La0778:	; 800A0778
     A1 = 1;
     A0 = A0 << 02;
     A0 = A0 + S2;
-    system_psyq_clear_o_tag_r();
+    system_psyq_clear_otag_r();
 
     A0 = w[800af408];
     A0 = A0 << 04;
     A0 = A0 + S1;
-    func469b0();
+    system_psyq_set_tile();
 
     A0 = w[800af408];
     A1 = 0001;
@@ -599,7 +599,7 @@ La0778:	; 800A0778
     [A1 + a] = h(0);
     [A1 + c] = h(140);
     [A1 + e] = h(f0);
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     A0 = 2;
     A1 = 2;
@@ -627,7 +627,7 @@ La0778:	; 800A0778
     A1 = A1 + V0;
     A1 = A1 << 02;
     A1 = A1 + S4;
-    system_add_render_packet_to_queue();
+    system_psyq_add_prim();
 
     A0 = w[800af408];
     A0 = A0 << 02;
@@ -917,7 +917,7 @@ V0 = V0 + 763c;
 [SP + 0024] = w(RA);
 [SP + 0010] = w(S0);
 A1 = A1 << 04;
-800A0EB4	jal    $system_add_render_packet_to_queue
+800A0EB4	jal    $system_psyq_add_prim
 A1 = A1 + V0;
 800A0EBC	lui    v0, $800a
 V0 = V0 + 765c;
@@ -926,7 +926,7 @@ A1 = w[A1 + f408];
 800A0ECC	lui    a0, $800b
 A0 = w[A0 + f3e8];
 A1 = A1 << 04;
-800A0ED8	jal    $system_add_render_packet_to_queue
+800A0ED8	jal    $system_psyq_add_prim
 A1 = A1 + V0;
 
 loopa0ee0:	; 800A0EE0
@@ -1047,11 +1047,11 @@ S0 = 0;
 loopa1084:	; 800A1084
 800A1084	lui    a0, $800a
 A0 = A0 + 763c;
-800A108C	jal    $func469b0
+800A108C	jal    $system_psyq_set_tile
 A0 = S0 + A0;
 800A1094	lui    a0, $800a
 A0 = A0 + 765c;
-800A109C	jal    $func469b0
+800A109C	jal    $system_psyq_set_tile
 A0 = S0 + A0;
 V0 = 00c8;
 800A10A8	lui    at, $800a
@@ -1964,7 +1964,7 @@ S3 = S3 + 004c;
 A1 = V0 << 02;
 A1 = A1 + V0;
 A1 = A1 << 0a;
-800A1DD0	jal    $system_add_render_packet_to_queue
+800A1DD0	jal    $system_psyq_add_prim
 A1 = A1 + V1;
 V0 = S1 < 1400;
 800A1DDC	bne    v0, zero, La1b60 [$800a1b60]
@@ -3743,7 +3743,7 @@ V1 = V1 | V0;
 
 La3740:	; 800A3740
 A0 = w[SP + 0010];
-800A3744	jal    $system_add_render_packet_to_queue
+800A3744	jal    $system_psyq_add_prim
 A1 = S3;
 S0 = S0 + 0028;
 S3 = S3 + 0028;

@@ -59,7 +59,7 @@ A0 = S0;
 A1 = S2;
 A2 = S1;
 A3 = S3;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 
 return V0 & ffff;
 ////////////////////////////////
@@ -171,7 +171,7 @@ else
 
 
 ////////////////////////////////
-// system_graphic_get_texpage_by_param()
+// system_psyq_get_tpage()
 
 col_bit = A0; // Texture page colors (0=4bit, 1=8bit, 2=15bit, 3=Reserved)
 semi_tr = A1; // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
@@ -327,7 +327,8 @@ else
 
 
 ////////////////////////////////
-// system_graphic_mono_triangle_header()
+// system_psyq_set_poly_f3()
+// Flat shaded triangle primitive.
 
 [A0 + 3] = b(4);
 [A0 + 7] = b(20);
@@ -336,8 +337,8 @@ else
 
 
 ////////////////////////////////
-// func43ad8()
-// system_graphic_tex_triangle_header
+// system_psyq_set_poly_ft3()
+// Flat textured triangle primitive.
 
 [A0 + 3] = b(7);
 [A0 + 7] = b(24);
@@ -346,8 +347,8 @@ else
 
 
 ////////////////////////////////
-// func43aec()
-// system_graphic_shaded_triangle_header
+// system_psyq_set_poly_g3()
+// Gouraud shaded triangle primitive.
 
 [A0 + 3] = b(6);
 [A0 + 7] = b(30);
@@ -356,7 +357,8 @@ else
 
 
 ////////////////////////////////
-// func43b00()
+// system_psyq_set_poly_gt3()
+// Gouraud textured triangle primitive.
 
 [A0 + 3] = b(9);
 [A0 + 7] = b(34);
@@ -365,7 +367,8 @@ else
 
 
 ////////////////////////////////
-// func43b14()
+// system_psyq_set_poly_f4()
+// Flat shaded quadrangle primitive.
 
 [A0 + 3] = b(5);
 [A0 + 7] = b(28);
@@ -374,16 +377,18 @@ else
 
 
 ////////////////////////////////
-// system_graphic_textured_quad_header()
+// system_psyq_set_poly_ft4()
+// Flat textured quadrangle primitive.
 
 [A0 + 3] = b(9);
-[A0 + 7] = b(2c); // Textured four-point polygon, opaque, texture-blending
+[A0 + 7] = b(2c);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43b3c()
+// system_psyq_set_poly_g4()
+// Gouraud shaded quadrangle primitive.
 
 [A0 + 3] = b(8);
 [A0 + 7] = b(38);
@@ -392,16 +397,18 @@ else
 
 
 ////////////////////////////////
-// system_graphic_shaded_quad_header()
+// system_psyq_set_poly_gt4()
+// Gouraud textured quadrangle primitive.
 
 [A0 + 3] = b(c);
-[A0 + 7] = b(3c); // Shaded Textured four-point polygon, opaque, texture-blending
+[A0 + 7] = b(3c);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43b64()
+// system_psyq_set_sprt8()
+// Initialize a SPRT8 primitive.
 
 [A0 + 3] = b(3);
 [A0 + 7] = b(74);
@@ -410,7 +417,8 @@ else
 
 
 ////////////////////////////////
-// func43b78()
+// system_psyq_set_sprt16()
+// Initialize a SPRT16 primitive.
 
 [A0 + 3] = b(3);
 [A0 + 7] = b(7c);
@@ -419,7 +427,8 @@ else
 
 
 ////////////////////////////////
-// system_graphic_textured_rectangle_header()
+// system_psyq_set_sprt()
+// Initialize a SPRT primitive.
 
 [A0 + 3] = b(4);
 [A0 + 7] = b(64); // Textured Rectangle, variable size, opaque, texture-blending
@@ -428,7 +437,8 @@ else
 
 
 ////////////////////////////////
-// func43ba0()
+// system_psyq_set_tile1()
+// Initialize a TILE1 primitive.
 
 [A0 + 3] = b(2);
 [A0 + 7] = b(68);
@@ -437,7 +447,8 @@ else
 
 
 ////////////////////////////////
-// func43bb4()
+// system_psyq_set_tile8()
+// Initialize a TILE8 primitive.
 
 [A0 + 3] = b(2);
 [A0 + 7] = b(70);
@@ -446,7 +457,8 @@ else
 
 
 ////////////////////////////////
-// func43bc8()
+// system_psyq_set_tile16()
+// Initialize a TILE16 primitive.
 
 [A0 + 3] = b(2);
 [A0 + 7] = b(78);
@@ -455,16 +467,18 @@ else
 
 
 ////////////////////////////////
-// system_graphic_monochrome_rectangle_header()
+// system_psyq_set_tile()
+// Initialize a TILE primitive.
 
 [A0 + 3] = b(3);
-[A0 + 7] = b(60); // Monochrome Rectangle (variable size) (opaque)
+[A0 + 7] = b(60);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43bf0()
+// system_psyq_set_line_f2()
+// Flat unconnected straight line drawing primitive.
 
 [A0 + 3] = b(3);
 [A0 + 7] = b(40);
@@ -473,7 +487,8 @@ else
 
 
 ////////////////////////////////
-// system_graphic_shaded_line_header()
+// system_psyq_set_line_g2()
+// Gouraud unconnected straight line drawing primitive.
 
 [A0 + 3] = b(4);
 [A0 + 7] = b(50);
@@ -482,7 +497,8 @@ else
 
 
 ////////////////////////////////
-// func43c13()
+// system_psyq_set_line_f3()
+// Flat connected 2-straight line drawing primitive.
 
 [A0 + 3] = b(5);
 [A0 + 7] = b(48);
@@ -492,7 +508,8 @@ else
 
 
 ////////////////////////////////
-// func43c38()
+// system_psyq_set_line_g3()
+// Gouraud connected 2-straight line drawing primitive.
 
 [A0 + 3] = b(7);
 [A0 + 7] = b(58);
@@ -502,7 +519,8 @@ else
 
 
 ////////////////////////////////
-// func43c58()
+// system_psyq_set_line_f4()
+// Flat connected 3-straight line drawing primitive.
 
 [A0 + 3] = b(6);
 [A0 + 7] = b(4c);
@@ -512,7 +530,8 @@ else
 
 
 ////////////////////////////////
-// func43c78
+// system_psyq_set_line_g4()
+// Gouraud connected 3-straight line drawing primitive.
 
 [A0 + 3] = b(9);
 [A0 + 7] = b(5c);
@@ -1163,7 +1182,7 @@ return -1;
 
 
 ////////////////////////////////
-// system_clear_otag()
+// system_psyq_clear_otag()
 
 ot_ptr = A0;
 number = A1;
@@ -1193,7 +1212,7 @@ return ot_ptr;
 
 
 ////////////////////////////////
-// system_clear_otagr()
+// system_psyq_clear_otag_r()
 // Initialize an array to a linked list for use as an ordering table.
 
 ot_ptr = A0;
@@ -1830,7 +1849,8 @@ if( A2 != 0 )
 
 
 ////////////////////////////////
-// system_gpu_create_texture_setting_packet()
+// system_psyq_set_draw_mode()
+// Initialize content of a drawing mode primitive.
 
 packet = A0;
 dfe = A1;
@@ -1838,7 +1858,7 @@ dtd = A2;
 tpage = A3;
 rect = A4;
 
-[packet + 3] = b(02);
+[packet + 3] = b(2);
 
 A0 = dfe;
 A1 = dtd;

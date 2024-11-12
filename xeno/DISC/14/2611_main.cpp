@@ -697,7 +697,7 @@ S0 = w[80058c1c];
 80280CA0	nop
 V0 = S0 + 0028;
 [80058c1c] = w(V0);
-80280CB0	jal    $system_graphic_textured_quad_header
+80280CB0	jal    $system_psyq_set_poly_ft4
 A0 = S0;
 A0 = S0;
 80280CBC	jal    $system_psyq_set_shade_tex
@@ -726,7 +726,7 @@ S5 = 00ff;
 [S0 + 001c] = b(0);
 [S0 + 001d] = b(S5);
 [S0 + 0024] = b(S3);
-80280D24	jal    $system_graphic_get_texpage_by_param
+80280D24	jal    $system_psyq_get_tpage
 [S0 + 0025] = b(S5);
 A0 = 0;
 A1 = 01cc;
@@ -741,7 +741,7 @@ S0 = w[80058c1c];
 80280D58	nop
 V0 = S0 + 0028;
 [80058c1c] = w(V0);
-80280D68	jal    $system_graphic_textured_quad_header
+80280D68	jal    $system_psyq_set_poly_ft4
 A0 = S0;
 A0 = S0;
 80280D74	jal    $system_psyq_set_shade_tex
@@ -766,7 +766,7 @@ V0 = 0080;
 [S0 + 001c] = b(0);
 [S0 + 001d] = b(S5);
 [S0 + 0024] = b(S3);
-80280DCC	jal    $system_graphic_get_texpage_by_param
+80280DCC	jal    $system_psyq_get_tpage
 [S0 + 0025] = b(S5);
 A0 = 0;
 A1 = 01cc;
@@ -844,9 +844,9 @@ V0 = w[802821c4];
 80280F1C	nop
 V0 = V0 + 0001;
 [802821c4] = w(V0);
-80280F2C	jal    $system_gte_set_rotation_matrix
+80280F2C	jal    $system_psyq_set_rot_matrix
 A0 = S0;
-80280F34	jal    $system_gte_set_translation_vector
+80280F34	jal    $system_psyq_set_trans_matrix
 A0 = S0;
 S2 = SP + 0018;
 A0 = S2;
@@ -1272,7 +1272,7 @@ S3 = A1;
 S4 = A2;
 V0 = S0 + 0018;
 [80058c1c] = w(V0);
-802815E0	jal    $func43bf0
+802815E0	jal    $system_psyq_set_line_f2
 A0 = S0;
 A0 = SP + 0010;
 A1 = SP + 0020;
@@ -1321,7 +1321,7 @@ S2 = A2;
 S3 = A3;
 V0 = S0 + 0018;
 [80058c1c] = w(V0);
-802816D4	jal    $func43bf0
+802816D4	jal    $system_psyq_set_line_f2
 A0 = S0;
 A0 = SP + 0010;
 A1 = SP + 0018;
@@ -1364,7 +1364,7 @@ V0 = 00c8;
 [SP + 003c] = w(V0);
 80281788	jal    $func49c44
 [SP + 0040] = w(0);
-80281790	jal    $system_gte_set_translation_vector
+80281790	jal    $system_psyq_set_trans_matrix
 A0 = SP + 0010;
 S0 = SP + 0030;
 A0 = S0;
@@ -1375,7 +1375,7 @@ A1 = SP + 0010;
 802817B0	addiu  v0, v0, $fc00 (=-$400)
 802817B4	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-802817BC	jal    $system_gte_set_rotation_matrix
+802817BC	jal    $system_psyq_set_rot_matrix
 A0 = SP + 0010;
 S1 = 80282144;
 A0 = S1;
@@ -1391,7 +1391,7 @@ A1 = SP + 0010;
 802817F4	addiu  v0, v0, $fc00 (=-$400)
 802817F8	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-80281800	jal    $system_gte_set_rotation_matrix
+80281800	jal    $system_psyq_set_rot_matrix
 A0 = SP + 0010;
 A0 = 0014;
 A1 = 0;
@@ -1406,7 +1406,7 @@ A1 = SP + 0010;
 80281830	addiu  v0, v0, $fc00 (=-$400)
 80281834	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-8028183C	jal    $system_gte_set_rotation_matrix
+8028183C	jal    $system_psyq_set_rot_matrix
 A0 = SP + 0010;
 A0 = S1 + 0018;
 A1 = 00ff;
@@ -1421,7 +1421,7 @@ A1 = SP + 0010;
 8028186C	addiu  v0, v0, $fc00 (=-$400)
 80281870	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(V0);
-80281878	jal    $system_gte_set_rotation_matrix
+80281878	jal    $system_psyq_set_rot_matrix
 A0 = SP + 0010;
 A0 = 001e;
 A1 = 00ff;
@@ -1447,7 +1447,7 @@ A1 = SP + 0010;
 [SP + 0032] = h(0);
 802818C8	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(S1);
-802818D0	jal    $system_gte_set_rotation_matrix
+802818D0	jal    $system_psyq_set_rot_matrix
 A0 = SP + 0010;
 A0 = 00ff;
 A1 = 0;
@@ -1477,7 +1477,7 @@ A1 = SP + 0010;
 [SP + 0032] = h(0);
 80281928	jal    $system_calculate_rotation_matrix
 [SP + 0034] = h(S1);
-80281930	jal    $system_gte_set_rotation_matrix
+80281930	jal    $system_psyq_set_rot_matrix
 A0 = SP + 0010;
 A0 = 0;
 A1 = 0;
@@ -1597,9 +1597,9 @@ S0 = 800d27dc;
 [SP + 0012] = h(V0);
 V0 = h[S1 + 000a];
 A0 = S0;
-80281B40	jal    $system_gte_set_rotation_matrix
+80281B40	jal    $system_psyq_set_rot_matrix
 [SP + 0014] = h(V0);
-80281B48	jal    $system_gte_set_translation_vector
+80281B48	jal    $system_psyq_set_trans_matrix
 A0 = S0;
 A0 = SP + 0010;
 A1 = SP + 0028;

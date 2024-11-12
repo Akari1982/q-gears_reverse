@@ -5,7 +5,7 @@ A1 = A0;
 A0 = 0;
 A2 = 0;
 A3 = 0;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 S0 = V0 & ffff;
 
 A0 = 8009a068;
@@ -13,14 +13,14 @@ A1 = 0;
 A2 = 0;
 A3 = S0;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = 8009a068 + 30;
 A1 = 0;
 A2 = 0;
 A3 = S0;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 ////////////////////////////////
 
 
@@ -33,7 +33,7 @@ for( int i = 0; i < 2; ++i )
     for( int j = 0; j < 2; ++j )
     {
         A0 = 8009a074 + i * 30 + j * 10;
-        func469b0();
+        system_psyq_set_tile();
 
         A0 = 8009a074 + i * 30 + j * 10;
         A1 = 1;
@@ -91,7 +91,7 @@ rb = hu[80075dec];
 
 A0 = 8007e7a0 + rb * 4;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 [8009a078 + rb * 30] = b(gray);
 [8009a088 + rb * 30] = b(gray);
@@ -124,7 +124,7 @@ fade_start = hu[8009abf4 + 4e]; // start value of fade
 
 A0 = 8007e7a0 + rb * 4;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 [8009a078 + rb * 30] = b((fade_start * red) >> 8);
 [8009a088 + rb * 30] = b((fade_start * red) >> 8);
@@ -156,7 +156,7 @@ rb = hu[80075dec];
 
 A0 = 8007e7a0 + rb * 4;
 A1 = 1;
-system_psyq_clear_o_tag_r();
+system_psyq_clear_otag_r();
 
 [8009a078 + rb * 30] = b(red);
 [8009a088 + rb * 30] = b(red);
@@ -583,7 +583,7 @@ else
             A0 = 2; // tp
             A2 = (j << 5) & ffffffc0; // vram_x
             A3 = 0; // vram_y
-            system_create_texture_page_settings_for_packet();
+            system_psyq_get_tpage();
             [ot + j * 118 + i * 28 + 1a] = h(V0);
         }
     }
@@ -598,10 +598,10 @@ A1 = 8019da14; // vector
 system_scale_matrix_by_vector();
 
 A0 = 80063028; // rot matrix
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 80063028; // rot matrix
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = w[8019da98];
 [8019da98] = w(A0 + a);
@@ -620,14 +620,14 @@ for( int i = 0; i < 8; ++i )
         A1 = 8019d8ac + j * 20 + i * 4;
         A2 = SP + 18;
         A3 = SP + 1c;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
     }
 
 }
 
 A0 = ot;
 A1 = 1;
-system_psyq_clear_o_tag();
+system_psyq_clear_otag();
 
 for( int i = 0; i < 7; ++i )
 {
@@ -646,7 +646,7 @@ for( int i = 0; i < 7; ++i )
 
         A0 = ot;
         A1 = packet + 4;
-        system_add_render_packet_to_queue();
+        system_psyq_add_prim();
     }
 }
 ////////////////////////////////
@@ -805,7 +805,7 @@ for( int i = 0; i < 7; ++i )
         packet = 8019c000 + j * 118 + i * 28;
 
         A0 = packet + 4;
-        system_gpu_textured_quad_header();
+        system_psyq_set_poly_ft4();
 
         A0 = packet + 4;
         A1 = 1;

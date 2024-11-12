@@ -2201,10 +2201,10 @@
 // func3ad14
 8003AD14-8003AE34
 ////////////////////////////////
-// func3ae38
+// system_psyq_push_matrix
 8003AE38-8003AED4
 ////////////////////////////////
-// func3aed8
+// system_psyq_pop_matrix
 8003AED8-8003AF74
 ////////////////////////////////
 // func3af78
@@ -2234,16 +2234,16 @@
 // system_scale_matrix_by_vector
 8003B35C-8003B488
 ////////////////////////////////
-// system_gte_set_rot_matrix
+// system_psyq_set_rot_matrix
 8003B48C-8003B4B8
 ////////////////////////////////
-// system_gte_set_lighting_matrix
+// system_psyq_set_light_matrix
 8003B4BC-8003B4E8
 ////////////////////////////////
-// system_gte_set_light_colour_matrix
+// system_psyq_set_color_matrix
 8003B4EC-8003B518
 ////////////////////////////////
-// system_gte_set_trans_matrix
+// system_psyq_set_trans_matrix
 8003B51C-8003B538
 ////////////////////////////////
 // func3b53с
@@ -2393,7 +2393,7 @@
 // func3bbac
 8003BBAC-8003BBD8
 ////////////////////////////////
-// system_gte_vector_perspective_transform
+// system_psyq_rot_trans_pers
 8003BBDC-8003BC08
 ////////////////////////////////
 // func3bc0c
@@ -3036,10 +3036,10 @@
 // system_psyq_move_image
 800440C8-80044188
 ////////////////////////////////
-// system_psyq_clear_o_tag
+// system_psyq_clear_otag
 8004418C-80044240
 ////////////////////////////////
-// system_psyq_clear_o_tag_r
+// system_psyq_clear_otag_r
 80044244-800442D8
 ////////////////////////////////
 // func442dc
@@ -3075,7 +3075,7 @@
 // func44a40
 80044A40-80044A64
 ////////////////////////////////
-// system_gpu_create_texture_setting_packet
+// system_psyq_set_draw_mode
 80044A68-80044ABC
 ////////////////////////////////
 // system_prepare_draw_env_packets
@@ -3159,7 +3159,7 @@
 // system_bios_gpu_cw
 8004655C-80046568
 ////////////////////////////////
-// system_create_texture_page_settings_for_packet
+// system_psyq_get_tpage
 8004656C-80046630
 ////////////////////////////////
 // system_create_clut_for_packet
@@ -3177,13 +3177,13 @@
 // func46778
 80046778-80046790
 ////////////////////////////////
-// system_add_render_packet_to_queue
+// system_psyq_add_prim
 80046794-800467CC
 ////////////////////////////////
-// func467d0
+// system_psyq_add_prims
 800467D0-80046808
 ////////////////////////////////
-// func4680c
+// system_psyq_cat_prim
 8004680C-8004682c
 ////////////////////////////////
 // func46830
@@ -3195,67 +3195,67 @@
 // system_psyq_set_shade_tex
 80046870-80046894
 ////////////////////////////////
-// func46898
+// system_psyq_set_poly_f3
 80046898-800468A8
 ////////////////////////////////
-// func468ac
+// system_psyq_set_poly_ft3
 800468AC-800468BC
 ////////////////////////////////
-// func468c0
+// system_psyq_set_poly_g3
 800468C0-800468D0
 ////////////////////////////////
-// func468d4
+// system_psyq_set_poly_gt3
 800468D4-800468E4
 ////////////////////////////////
-// func468e8
+// system_psyq_set_poly_f4
 800468E8-800468F8
 ////////////////////////////////
-// system_gpu_textured_quad_header
+// system_psyq_set_poly_ft4
 800468FC-8004690C
 ////////////////////////////////
-// func46910
+// system_psyq_set_poly_g4
 80046910-80046920
 ////////////////////////////////
-// func46924
+// system_psyq_set_poly_gt4
 80046924-80046934
 ////////////////////////////////
-// func46938
+// system_psyq_set_sprt8
 80046938-80046948
 ////////////////////////////////
-// func4694с
+// system_psyq_set_sprt16
 8004694C-8004695C
 ////////////////////////////////
-// func46960
+// system_psyq_set_sprt
 80046960-80046970
 ////////////////////////////////
-// func46974
+// system_psyq_set_tile1
 80046974-80046984
 ////////////////////////////////
-// func46988
+// system_psyq_set_tile8
 80046988-80046998
 ////////////////////////////////
-// func4699c
+// system_psyq_set_tile16
 8004699C-800469AC
 ////////////////////////////////
-// func469b0
+// system_psyq_set_tile
 800469B0-800469C0
 ////////////////////////////////
-// func469c4
+// system_psyq_set_line_f2
 800469C4-800469D4
 ////////////////////////////////
-// func469d8
+// system_psyq_set_line_g2
 800469D8-800469E8
 ////////////////////////////////
-// func469ec
+// system_psyq_set_line_f3
 800469EC-80046A08
 ////////////////////////////////
-// func46a0c
+// system_psyq_set_line_g3
 80046A0C-80046A28
 ////////////////////////////////
-// func46a2c
+// system_psyq_set_line_f4
 80046A2C-80046A48
 ////////////////////////////////
-// func46a4c
+// system_psyq_set_line_g4
 80046A4C-80046A68
 ////////////////////////////////
 // func46a6c

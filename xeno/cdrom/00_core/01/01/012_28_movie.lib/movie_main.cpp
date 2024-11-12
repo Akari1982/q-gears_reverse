@@ -69,7 +69,7 @@ while( true )
 
     A0 = V1 + 70;
     A1 = 20;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     func70954();
 
@@ -1621,7 +1621,7 @@ L71b4c:	; 80071B4C
     [80076adc] = w(V0);
 
     A1 = 20;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     system_cdrom2_get_disc_number();
 
@@ -2242,7 +2242,7 @@ for( int i = 0; i < 4; ++i )
 }
 
 A0 = S3;
-func43b3c();
+system_psyq_set_poly_g4();
 
 A0 = S3;
 A1 = 0;
@@ -2258,7 +2258,7 @@ system_psyq_set_semi_trans();
 [S3 + 22] = h(S5 + FP);
 
 A0 = S4;
-func43b3c();
+system_psyq_set_poly_g4();
 
 A0 = S4;
 A1 = 0;
@@ -2386,7 +2386,7 @@ for( int i = 0; i < 4; ++i )
 }
 
 A0 = S3;
-func43b3c();
+system_psyq_set_poly_g4();
 
 [S3 + 8] = h(S6);
 [S3 + a] = h(S5);
@@ -2398,7 +2398,7 @@ func43b3c();
 [S3 + 22] = h(S5 + FP);
 
 A0 = S4;
-func43b3c();
+system_psyq_set_poly_g4();
 
 [S4 + 8] = h(S6);
 [S4 + a] = h(S5);
@@ -2724,7 +2724,7 @@ while( true )
 
     A0 = V1 + 70;
     A1 = 20;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     system_cdrom2_get_disc_number();
 
@@ -4110,7 +4110,7 @@ L74ce8:	; 80074CE8
 
     A0 = V1 + 70;
     A1 = 20;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     A0 = 8006fa4c; // "\n[ MONITOR ]\n"
     system_print();
@@ -4410,7 +4410,7 @@ L75474:	; 80075474
     V0 = S4 - V0;
     [80076adc] = w(V0);
     A1 = 0020;
-    system_clear_otagr();
+    system_psyq_clear_otag_r();
 
     A0 = 8006fae0; // "\n[ FAT CHECK MODE "
     system_print()
@@ -5124,7 +5124,7 @@ A0 = 80076700;
 [8007670e] = h(0);
 [80076710] = h(0);
 
-func49e04();
+system_psyq_set_color_matrix();
 
 A0 = 60;
 A1 = 60;
@@ -5140,10 +5140,10 @@ func49f94();
 func76334();
 
 A0 = 800766e0;
-system_gte_set_rotation_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800766e0;
-system_gte_set_translation_vector();
+system_psyq_set_trans_matrix();
 ////////////////////////////////
 
 

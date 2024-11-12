@@ -117,9 +117,10 @@ system_gte_matrixes_multiply_A0_A1_to_A1;
 
 // multiply field translation vector
 A0 = S1;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
+
 A0 = S1;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 A0 = S0 - 28; // vector to transform
 A1 = S0 + 14; // result
@@ -5088,7 +5089,7 @@ tex_v = A3;
 packet = w[80163c74];
 
 A0 = packet;
-system_gpu_textured_quad_header();
+system_psyq_set_poly_ft4();
 
 A0 = 100;
 A1 = 1e1;
@@ -5106,10 +5107,10 @@ A2 = 1f800008;
 system_gte_rot_trans();
 
 A0 = 800e7d30;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = 800e7d30;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 [1f800010] = w(0);
 [1f800014] = w(0);
@@ -5272,7 +5273,7 @@ V0 = w[80163c74];
 for( int i = 0; i < 2; ++i )
 {
     A0 = w[SP + 28 + i * 4];
-    system_gpu_textured_quad_header();
+    system_psyq_set_poly_ft4();
 
     V1 = w[SP + 28 + i * 4];
     [V1 + 0016] = h(3f);
@@ -5298,10 +5299,10 @@ system_gte_rot_trans();
 800C2314	addiu  s0, s0, $ffec (=-$14)
 
 A0 = S0;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = S0;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 S1 = 0;
 800C232C	lui    s6, $1f80
@@ -5563,10 +5564,10 @@ A3 = 001f;
 [SP + 0010] = w(0);
 S1 = S2 + f0;
 A0 = S2;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 
 A0 = S1;
-func46960();
+system_psyq_set_sprt();
 
 S0 = S0 & 0001;
 800C2780	bne    s0, zero, Lc2790 [$800c2790]
@@ -5769,7 +5770,7 @@ A1 = 1f800004;
 A2 = 1f800008;
 800C2AF0	lui    a3, $1f80
 A3 = A3 | 000c;
-system_gte_vector_perspective_transform();
+system_psyq_rot_trans_pers();
 
 A0 = 1f800004;
 V1 = hu[A0 + 0000];

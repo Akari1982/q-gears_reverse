@@ -22,32 +22,32 @@ for( int i = 0; i < 4; ++i )
     A1 = 0;
     A2 = 3c0;
     A3 = 140;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = w[800b12c4] + i * 18;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     A0 = 0;
     A1 = 0;
     A2 = 3c0;
     A3 = 140;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = w[800b12c4] + i * 18 + c;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = SP + 18;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     packet = w[800b12c4] + 180 + i * 28; // triangle monochrome packet
 
     A0 = packet;
-    system_graphic_textured_rectangle_header();
+    system_psyq_set_sprt();
 
     [packet + 4] = b(80); // r
     [packet + 5] = b(80); // g
@@ -89,7 +89,7 @@ for( int i = 0; i < 3; ++i )
     packet = alloc + c8 + i * 50;
 
     A0 = packet;
-    system_graphic_textured_quad_header();
+    system_psyq_set_poly_ft4();
 
     [packet +  8] = h(i * 80);      // v0 x
     [packet +  a] = h(0);           // v0 y
@@ -116,28 +116,28 @@ for( int i = 0; i < 3; ++i )
     A1 = 0;
     A2 = 300 + i * 40;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = alloc + i * 18;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = alloc + 78 + i * 10; // data for texture setting (e2)
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     // texture settings for buffer 2
     A0 = 1;
     A1 = 0;
     A2 = 300 + i * 40;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
 
     A0 = alloc + i * 18 + c;
     A1 = 0;
     A2 = 0;
     A3 = V0 & ffff;
     A4 = alloc + 78 + i * 10 + 8;
-    system_gpu_create_texture_setting_packet();
+    system_psyq_set_draw_mode();
 
     [packet + 4] = b(80);
     [packet + 5] = b(80);
@@ -160,7 +160,7 @@ for( int i = 0; i < 3; ++i )
     A1 = 0;
     A2 = 300 + i * 40;
     A3 = 100;
-    system_graphic_get_texpage_by_param();
+    system_psyq_get_tpage();
     [packet + 16] = h(V0); // tex page
 
     A0 = 0;

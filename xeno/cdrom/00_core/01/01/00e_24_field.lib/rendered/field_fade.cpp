@@ -4,7 +4,7 @@
 id = A0;
 
 A0 = 800b1598 + id * 58 + 18;
-system_graphic_monochrome_rectangle_header();
+system_psyq_set_tile();
 
 A0 = 800b1598 + id * 58 + 18;
 A1 = 1;
@@ -51,7 +51,7 @@ for( int i = 0; i < 2; ++i )
         A1 = h[800b1598 + i * 58 + 50]; // semi_tr
         A2 = 0;
         A3 = 0;
-        system_graphic_get_texpage_by_param();
+        system_psyq_get_tpage();
 
         S0 = 800b1598 + i * 58 + rb * c;
 
@@ -60,7 +60,7 @@ for( int i = 0; i < 2; ++i )
         A2 = 0;
         A3 = V0 & ffff;
         A4 = 800af310 + i * 8;
-        system_gpu_create_texture_setting_packet();
+        system_psyq_set_draw_mode();
 
         A0 = (i ^ 1) < 1;
         A0 = otag + A0 * 4;

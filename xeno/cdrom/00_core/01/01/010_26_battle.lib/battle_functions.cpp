@@ -42642,7 +42642,7 @@ A0 = 0;
 A1 = 0001;
 A2 = 0380;
 A3 = 0;
-800A2218	jal    $system_graphic_get_texpage_by_param
+800A2218	jal    $system_psyq_get_tpage
 [S1 + 003a] = h(V0);
 V1 = 000f;
 [S1 + 0048] = b(V1);
@@ -47597,7 +47597,7 @@ S0 = S0 >> 10;
 A3 = A3 << 18;
 A2 = S0;
 A3 = A3 >> 10;
-800A68FC	jal    $system_graphic_get_texpage_by_param
+800A68FC	jal    $system_psyq_get_tpage
 [SP + 00f8] = w(T1);
 T5 = hu[SP + 0040];
 T6 = hu[SP + 0048];
@@ -49562,7 +49562,7 @@ A0 = 0;
 A1 = 0002;
 A2 = 0380;
 A3 = 0;
-800A84D8	jal    $system_graphic_get_texpage_by_param
+800A84D8	jal    $system_psyq_get_tpage
 [S2 + 00c6] = h(V0);
 [S2 + 00ce] = h(V0);
 [S2 + 00c4] = b(S7);
@@ -61387,7 +61387,7 @@ V0 = 00f0;
 [S1 + 0016] = h(V0);
 [S1 + 0006] = b(A1);
 A1 = bu[S0 + 0041];
-800B2DCC	jal    $system_graphic_get_texpage_by_param
+800B2DCC	jal    $system_psyq_get_tpage
 S0 = S1 + 0018;
 A0 = S0;
 A1 = 0;
@@ -63168,7 +63168,7 @@ A3 = 01f0;
 [S0 + 0025] = b(T0);
 V0 = V0 & 0007;
 800B4960	addiu  v0, v0, $ffc1 (=-$3f)
-800B4964	jal    $system_graphic_get_texpage_by_param
+800B4964	jal    $system_psyq_get_tpage
 [S0 + 0024] = b(V0);
 A0 = 03f0;
 A1 = 01ee;
@@ -65552,7 +65552,7 @@ A2 = T0 + 02c0;
 T0 = 00ff;
 V0 = V0 & 00fd;
 [S0 + 0005] = b(T0);
-800B6C88	jal    $system_graphic_get_texpage_by_param
+800B6C88	jal    $system_psyq_get_tpage
 [S0 + 0007] = b(V0);
 [S0 + 0016] = h(V0);
 T0 = w[SP + 0060];
@@ -65691,7 +65691,7 @@ Lb6e84:	; 800B6E84
 A0 = V1 + 0070;
 [S2 + 0000] = w(V1);
 [800cc224] = w(A0);
-800B6E94	jal    $system_clear_otagr
+800B6E94	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 V1 = 800c4158;
 V0 = 0001;
@@ -65728,7 +65728,7 @@ A0 = V1 + 0070;
 Lb6f28:	; 800B6F28
 [A2 + 0000] = w(V1);
 [800cc224] = w(A0);
-800B6F34	jal    $system_clear_otagr
+800B6F34	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 V0 = 0001;
 V1 = w[800cc254];
@@ -66787,7 +66787,7 @@ Lb7f5c:	; 800B7F5C
 [800cc220] = w(A0);
 A0 = A0 + 0070;
 [800cc224] = w(A0);
-800B7F70	jal    $system_clear_otagr
+800B7F70	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 800B7F78	addiu  v1, s0, $be34 (=-$41cc)
 A0 = bu[V1 + bfa8];

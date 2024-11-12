@@ -296,7 +296,7 @@ S4 = A1;
 for( int i = 0; i < 18; ++i )
 {
     A0 = S1 + i * 10;
-    func4694с(); // header for Textured Rectangle, 16x16, opaque, texture-blending
+    system_psyq_set_sprt16();
 
     A0 = S1 + i * 10;
     A1 = 1; // add brightness calculation
@@ -321,14 +321,14 @@ A0 = 0;
 A1 = 0;
 A2 = 3c0;
 A3 = 100;
-system_create_texture_page_settings_for_packet();
+system_psyq_get_tpage();
 
 A0 = S4;
 A1 = 0;
 A2 = 1;
 A3 = V0 & ffff;
 A4 = 0;
-system_gpu_create_texture_setting_packet();
+system_psyq_set_draw_mode();
 ////////////////////////////////
 
 
@@ -346,13 +346,13 @@ if( ( bu[8009d5a6] != 1 ) || ( bu[8009ac26] != 0 ) )
 }
 
 S4 = 0;
-func3ae38();
+system_psyq_push_matrix();
 
 A0 = S0;
-system_gte_set_rot_matrix();
+system_psyq_set_rot_matrix();
 
 A0 = S0;
-system_gte_set_trans_matrix();
+system_psyq_set_trans_matrix();
 
 loopac070:	; 800AC070
     V1 = S4 << 10;
@@ -400,7 +400,7 @@ loopac070:	; 800AC070
     A1 = SP + 10;
     A2 = SP + 18;
     A3 = SP + 1c;
-    system_gte_vector_perspective_transform();
+    system_psyq_rot_trans_pers();
 
     A0 = S0 << 04;
     A1 = A0 + S2;
@@ -454,7 +454,7 @@ loopac1c8:	; 800AC1C8
         A1 = SP + 10;
         A2 = SP + 18;
         A3 = SP + 1c;
-        system_gte_vector_perspective_transform();
+        system_psyq_rot_trans_pers();
 
         S1 = S3 + S2;
         [S1 + 40cd] = b(d0);
@@ -483,7 +483,7 @@ loopac1c8:	; 800AC1C8
     V0 = S4 < c;
 800AC2D0	bne    v0, zero, loopac1c8 [$800ac1c8]
 
-func3aed8();
+system_psyq_pop_matrix();
 
 [S2 + 4180] = w((w[S2 + 4180] & ff000000) | (w[S2 + 0] & 00ffffff));
 [S2 + 0] = w((w[S2 + 0] & ff000000) | ((S2 + 4180) & 00ffffff));

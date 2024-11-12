@@ -1316,7 +1316,7 @@ A0 = 0;
 A1 = 0;
 A2 = texpage_x;
 A3 = texpage_y;
-system_graphic_get_texpage_by_param();
+system_psyq_get_tpage();
 [mem + 2] = h(V0);
 
 A0 = clut_x;
