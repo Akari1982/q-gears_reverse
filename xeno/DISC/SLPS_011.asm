@@ -2855,16 +2855,16 @@
 // system_graphic_get_clut_by_param
 800438D0-800438E4
 ////////////////////////////////
-// system_gpu_print_tpage_info
+// system_psyq_dump_tpage
 800438E8-80043944
 ////////////////////////////////
-// system_gpu_print_clut_info
+// system_psyq_dump_clut
 80043948-80043984
 ////////////////////////////////
 // func43988
 80043988-800439A0
 ////////////////////////////////
-// func439a4
+// system_psyq_is_end_prim
 800439A4-800439BC
 ////////////////////////////////
 // system_psyq_add_prim
@@ -2876,7 +2876,7 @@
 // system_psyq_cat_prim
 80043A38-80043A58
 ////////////////////////////////
-// func43a5c
+// system_psyq_term_prim
 80043A5C-80043A70
 ////////////////////////////////
 // system_psyq_set_semi_trans
@@ -2960,10 +2960,10 @@
 // func43d90
 80043D90-80043DC4
 ////////////////////////////////
-// system_gpu_print_draw_enviroment_info
+// system_psyq_dump_draw_env
 80043DC8-80043ED8
 ////////////////////////////////
-// system_gpu_print_display_enviroment_info
+// system_psyq_dump_disp_env
 80043EDC-80043F84
 ////////////////////////////////
 // system_psyq_reset_graph
@@ -2978,7 +2978,7 @@
 // system_psyq_set_grap_que
 80044284-8004432C
 ////////////////////////////////
-// func44330
+// system_gpu_get_type
 80044330-8004433C
 ////////////////////////////////
 // system_psyq_get_graph_debug

@@ -924,137 +924,112 @@ else
 
 
 ////////////////////////////////
-// func43a94
+// system_psyq_set_graph_reverse()
 
-80043A94	lui    v0, $8006
-V0 = bu[V0 + 2c02];
-80043AA8	lui    s0, $8006
-S0 = S0 + 2c03;
-S2 = bu[S0 + 0000];
-V0 = V0 < 0002;
-80043AC0	bne    v0, zero, L43ae4 [$80043ae4]
-S1 = A0;
-80043AC8	lui    a0, $8001
-A0 = A0 + 0d00;
-80043AD0	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80043AD8	nop
-80043ADC	jalr   v0 ra
-A1 = S1;
+reverse = A0;
+reverse_old = bu[80062c03];
 
-L43ae4:	; 80043AE4
-80043AE4	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-[S0 + 0000] = b(S1);
-V0 = w[V0 + 0028];
-80043AF4	nop
-80043AF8	jalr   v0 ra
-A0 = 0008;
-V1 = bu[S0 + 0000];
-80043B04	nop
-80043B08	beq    v1, zero, L43b1c [$80043b1c]
-A0 = V0;
-80043B10	lui    v0, $0800
-80043B14	j      L43b20 [$80043b20]
-V0 = V0 | 0080;
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010d00; // "SetGraphReverse(%d)...\n"
+    A1 = reverse;
+    80043ADC	jalr   w[80062bfc] ra
+}
 
-L43b1c:	; 80043B1C
-80043B1C	lui    v0, $0800
+[80062c03] = b(reverse);
 
-L43b20:	; 80043B20
-A0 = A0 | V0;
-80043B24	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80043B2C	nop
-V0 = w[V0 + 0010];
-80043B34	nop
-80043B38	jalr   v0 ra
-80043B3C	nop
-80043B40	lui    v1, $8006
-V1 = bu[V1 + 2c00];
-V0 = 0002;
-80043B4C	bne    v1, v0, L43b8c [$80043b8c]
-V0 = S2;
-80043B54	lui    a0, $2000
-80043B58	lui    v0, $8006
-V0 = bu[V0 + 2c03];
-80043B60	lui    v1, $8006
-V1 = w[V1 + 2bf8];
-80043B68	beq    v0, zero, L43b78 [$80043b78]
-A0 = A0 | 0504;
-80043B70	lui    a0, $2000
-A0 = A0 | 0501;
+A0 = 8;
+V0 = w[80062bf8];
+80043AF8	jalr   w[V0 + 28] ra
 
-L43b78:	; 80043B78
-V0 = w[V1 + 0010];
-80043B7C	nop
-80043B80	jalr   v0 ra
-80043B84	nop
-V0 = S2;
+last_display_mode = V0;
 
-L43b8c:	; 80043B8C
+if( bu[80062c03] != 0 )
+{
+    A0 = last_display_mode | 08000080; // add reverse flag to display mode GP1 command
+}
+else
+{
+    A0 = last_display_mode | 08000000;
+}
+
+V0 = w[80062bf8];
+80043B38	jalr   w[V0 + 10] ra
+
+if( bu[80062c00] == 2 ) // if old gpu
+{
+    if( bu[80062c03] != 0 )
+    {
+        A0 = 20000501; // Ancient Texture enable
+    }
+    else
+    {
+        A0 = 20000504; // Ancient Texture Disable
+    }
+
+    V1 = w[80062bf8];
+    80043B80	jalr   w[V1 + 10] ra
+}
+
+return reverse_old;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // system_psyq_set_graph_debug()
+// Sets a debugging level for the graphics system. level can be one of the following:
+// 0 No checks are performed. (Highest speed mode)
+// 1 Checks coordinating registered and drawn primitives.
+// 2 Registered and drawn primitives are dumped.
+// Return value the previously set debug level.
 
-S0 = bu[80062c02];
-[80062c02] = b(A0);
+level = A0;
+level_old = bu[80062c02];
 
-if( A0 & 00ff )
+[80062c02] = b(level);
+
+if( level & 00ff )
 {
     A0 = 80010d18; // "SetGraphDebug:level:%d,type:%d reverse:%d"
-    A1 = bu[80062c02];
+    A1 = level;
     A2 = bu[80062c00];
     A3 = bu[80062c03];
     80043BF4	jalr   w[80062bfc] ra
 }
 
-return S0;
+return level_old;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// fucn43c14
+// system_psyq_set_grap_que()
 
-80043C14	lui    v0, $8006
-V0 = bu[V0 + 2c02];
-80043C28	lui    s1, $8006
-S1 = S1 + 2c01;
-S2 = bu[S1 + 0000];
-V0 = V0 < 0002;
-80043C40	bne    v0, zero, L43c64 [$80043c64]
-S0 = A0;
-80043C48	lui    a0, $8001
-A0 = A0 + 0d44;
-80043C50	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80043C58	nop
-80043C5C	jalr   v0 ra
-A1 = S0;
+que_old = bu[80062c01];
+que = A0;
 
-L43c64:	; 80043C64
-V0 = bu[S1 + 0000];
-80043C68	nop
-80043C6C	beq    s0, v0, L43ca4 [$80043ca4]
-V0 = S2;
-80043C74	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80043C7C	nop
-V0 = w[V0 + 0034];
-80043C84	nop
-80043C88	jalr   v0 ra
-A0 = 0001;
-A0 = 0002;
-A1 = 0;
-80043C98	jal    system_dma_additional_callback [$8003d120]
-[S1 + 0000] = b(S0);
-V0 = S2;
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010d44;
+    A1 = que;
+    80043C5C	jalr   w[80062bfc] ra
+}
 
-L43ca4:	; 80043CA4
+if( que != que_old )
+{
+    A0 = 1; // Cancels the current drawing and flushes the command buffer.
+    V0 = w[80062bf8];
+    80043C88	jalr   w[V0 + 34] ra
+
+    [80062c01] = b(que);
+
+    A0 = 2; // GPU (lists + image data)
+    A1 = 0; // remove callback
+    system_dma_additional_callback();
+}
+
+return que_old;
 ////////////////////////////////
 
 
@@ -1068,34 +1043,40 @@ return bu[80062c00];
 
 
 ////////////////////////////////
-// func43cd0()
+// system_psyq_get_graph_debug()
 
-return bu[80062c02]; // get debug
+return bu[80062c02];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func43ce0
+// system_psyq_draw_sync_callback()
+// Defines a routine to be used as a callback when drawing is completed. When all requests in the queue
+// have terminated, the function func is called. If func is set to 0, then any previous callback routine is
+// disabled.
+// Inside the callback, subsequent drawing termination interrupts are masked. Therefore, the callback routine
+// should return as soon as possible. Although the specified function is called during an interrupt, it is not an
+// interrupt handler; it should be written as a normal subroutine that is called by the main interrupt handler.
+// The following routines use the GPU queue, and therefore their termination can be detected using
+// DrawSync(), or by setting a callback with DrawSyncCallback():  ClearImage(), ClearImage2(), DrawOTag(),
+// DrawOTagEnv(), LoadImage(), MoveImage(), PutDrawEnv(), StoreImage().
+// It is important to note that the callback is called when the GPU queue is empty. If a particular set of
+// drawing commands has terminated, but new commands have already been placed in the queue, the
+// callback isn’t called until all the commands have terminated.
 
-80043CE0	lui    v0, $8006
-V0 = bu[V0 + 2c02];
-S0 = A0;
-V0 = V0 < 0002;
-80043CF8	bne    v0, zero, L43d18 [$80043d18]
+callback = A0;
+callback_old = w[80062c0c];
 
-80043D00	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80043D08	lui    a0, $8001
-A0 = A0 + 0d58;
-80043D10	jalr   v0 ra
-A1 = S0;
+[80062c0c] = w(callback);
 
-L43d18:	; 80043D18
-80043D18	lui    v0, $8006
-V0 = w[V0 + 2c0c];
-80043D20	lui    at, $8006
-[AT + 2c0c] = w(S0);
+if( bu[80062c02] >= 2 )
+{
+    A0 = 80010d58; // "DrawSyncCallback(%08x)...\n"
+    A1 = callback;
+    80043D10	jalr   w[80062bfc] ra
+}
+return callback_old;
 ////////////////////////////////
 
 
@@ -1156,7 +1137,7 @@ if( bu[80062c02] >= 0002 ) // debug
 {
     A0 = 80010d88; // "DrawSync(%d)..."
     A1 = type;
-    80043E0C	jalr   w[80062bfc] ra
+    80043E0C	jalr   w[80062bfc] ra // system_bios_printf()
 }
 
 V0 = w[80062bf8];
@@ -1170,7 +1151,7 @@ return V0;
 
 
 ////////////////////////////////
-// func43e44()
+// system_graphic_debug_print_rect()
 
 string = A0;
 S0 = A1;
@@ -1195,14 +1176,14 @@ else
 }
 
 A1 = string;
-80043F28	jalr   w[80062bfc] ra
+80043F28	jalr   w[80062bfc] ra // system_bios_printf()
 
 A0 = 80010da8; // "(%d,%d)-(%d,%d)"
 A1 = h[S0 + 0];
 A2 = h[S0 + 2];
 A3 = h[S0 + 4];
 A4 = h[S0 + 6];
-80043F50	jalr   w[80062bfc] ra
+80043F50	jalr   w[80062bfc] ra // system_bios_printf()
 ////////////////////////////////
 
 
@@ -1223,7 +1204,7 @@ b = A3;
 
 A0 = 80010dc0; // "ClearImage"
 A1 = rect;
-func43e44(); // libgpu debug string
+system_graphic_debug_print_rect(); // libgpu debug string
 
 V0 = w[80062bf8];
 A0 = w[V0 + c];
@@ -1250,7 +1231,7 @@ S1 = A1; // Pointer to main memory address of source of transmission
 
 A0 = 80010dcc; // "LoadImage"
 A1 = S0;
-func43e44(); // libgpu debug string
+system_graphic_debug_print_rect(); // libgpu debug string
 
 A1 = S0;
 
@@ -1280,7 +1261,7 @@ p = A1; // pointer to main memory address of destination of transmission
 
 A0 = 80010dd8; // "StoreImage"
 A1 = recp;
-func43e44(); // libgpu debug string
+system_graphic_debug_print_rect(); // libgpu debug string
 
 V0 = w[80062bf8];
 A0 = w[V0 + 1c];
@@ -1300,7 +1281,7 @@ S2 = A1;
 S1 = A2;
 A0 = 80010de4; // "MoveImage"
 A1 = S0;
-800440F0	jal    func43e44 [$80043e44]
+800440F0	jal    system_graphic_debug_print_rect [$80043e44]
 
 V0 = h[S0 + 0004];
 800440FC	nop
@@ -1352,11 +1333,10 @@ number_of_entries = A1;
 
 if( bu[80062c02] >= 2 )
 {
-    V0 = w[80062bfc];
     A0 = 80010df0; // "ClearOTag(%08x,%d)..."
     A1 = S0;
     A2 = number_of_entries;
-    800441C8	jalr   v0 ra
+    800441C8	jalr   w[80062bfc] ra
 }
 
 number = number - 1;
@@ -1433,9 +1413,8 @@ ot = A0;
 if( bu[80062c02] >= 2 )
 {
     A0 = 80010e20; // "DrawOTag(%08x)..."
-    V0 = w[80062bfc];
     A1 = ot;
-    80044370	jalr   v0 ra
+    80044370	jalr   w[80062bfc] ra
 }
 
 V0 = w[80062bf8]; // 80062bb8
@@ -3650,110 +3629,71 @@ return ((y << 6) | ((x >> 4) & 3f)) & ffff
 
 
 ////////////////////////////////
-// func4664c
+// system_psyq_dump_tpage()
+// Print contents of tpage member of primitive.
 
+tpage = A0 & ffff;
 
-8004664C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-[SP + 001c] = w(RA);
-80046658	jal    system_gpu_get_type [$80043cc0]
-S0 = A0;
-V1 = 0001;
-80046664	beq    v0, v1, L46680 [$80046680]
-80046668	nop
-8004666C	jal    system_gpu_get_type [$80043cc0]
-80046670	nop
-V1 = 0002;
-80046678	bne    v0, v1, L466c4 [$800466c4]
-V0 = S0 & ffff;
+system_gpu_get_type();
 
-L46680:	; 80046680
-80046680	lui    a0, $8001
-A0 = A0 + 0eb0;
-V0 = S0 & ffff;
-A1 = V0 >> 09;
-A1 = A1 & 0003;
-A2 = V0 >> 07;
-A2 = A2 & 0003;
-A3 = V0 << 06;
-A3 = A3 & 07c0;
-V0 = V0 << 03;
-800466A8	lui    v1, $8006
-V1 = w[V1 + 2bfc];
-V0 = V0 & 0300;
-800466B4	jalr   v1 ra
-[SP + 0010] = w(V0);
-800466BC	j      L46708 [$80046708]
-800466C0	nop
-
-L466c4:	; 800466C4
-800466C4	lui    a0, $8001
-A0 = A0 + 0eb0;
-A1 = V0 >> 07;
-A1 = A1 & 0003;
-A2 = V0 >> 05;
-A2 = A2 & 0003;
-A3 = V0 << 06;
-A3 = A3 & 07c0;
-V1 = V0 << 04;
-V1 = V1 & 0100;
-V0 = V0 >> 02;
-V0 = V0 & 0200;
-800466F4	lui    t0, $8006
-T0 = w[T0 + 2bfc];
-V1 = V1 + V0;
-80046700	jalr   t0 ra
-[SP + 0010] = w(V1);
-
-L46708:	; 80046708
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80046714	jr     ra 
-80046718	nop
-////////////////////////////////
-// func4671c
-8004671C	addiu  sp, sp, $ffe8 (=-$18)
-A2 = A0;
-A1 = A2 & 003f;
-A2 = A2 & ffff;
-8004672C	lui    a0, $8001
-A0 = A0 + 0ec8;
-A1 = A1 << 04;
-80046738	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-[SP + 0010] = w(RA);
-80046744	jalr   v0 ra
-A2 = A2 >> 06;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80046754	jr     ra 
-80046758	nop
+if( ( V0 == 1 ) || ( V0 == 2 ) )
+{
+    A0 = 80010eb0; // "tpage: (%d,%d,%d,%d)\n"
+    A1 = (tpage >> 9) & 3;
+    A2 = (tpage >> 7) & 3;
+    A3 = (tpage << 6) & 7c0;
+    A4 = (tpage << 3) & 300;
+    800466B4	jalr   w[80062bfc] ra
+}
+else
+{
+    A0 = 80010eb0; // "tpage: (%d,%d,%d,%d)\n"
+    A1 = (tpage >> 7) & 3;
+    A2 = (tpage >> 5) & 3;
+    A3 = (tpage << 6) & 7c0;
+    A4 = ((tpage << 4) & 100) + ((tpage >> 2) & 200);
+    80046700	jalr   w[80062bfc] ra
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4675c
+// system_psyq_dump_clut()
+// Print contents of clut member of primitive.
 
-return 80000000 | (w[A0 + 0000] & 00ffffff);
+clut = A0;
+
+A0 = 80010ec8; // "clut: (%d,%d)\n"
+A1 = (clut & 3f) << 4;
+A2 = (clut & ffff) >> 6;
+80046744	jalr   w[80062bfc] ra
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func46778
+// func4675c()
 
-V0 = w[A0] & 00ffffff;
-V0 = V0 ^ 00ffffff;
-return V0 < 1;
+return 80000000 | (w[A0] & 00ffffff);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_is_end_prim()
+// Determine if a primitive is the last in a list.
+// 1: final end case; 0: non-final end case.
+
+if( ( w[A0] & 00ffffff ) == 00ffffff ) return 1;
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // system_psyq_add_prim()
-// AddPrim
 // Register a primitive to the OT.
 // Registers a primitive beginning with the address *p to the OT entry *ot in OT table. ot is an ordering table or
 // pointer to another primitive.
@@ -3761,17 +3701,16 @@ return V0 < 1;
 // in the same frame results in a corrupted list.
 
 ot = A0;
-packet = A1;
+p = A1;
 
-[packet] = w((w[packet] & ff000000) | (w[ot] & 00ffffff));
-[ot] = w((w[ot] & ff000000) | (packet & 00ffffff));
+[p] = w((w[p] & ff000000) | (w[ot] & 00ffffff));
+[ot] = w((w[ot] & ff000000) | (p & 00ffffff));
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // system_psyq_add_prims()
-// AddPrims
 // Collectively register primitives to the OT.
 // Registers primitives beginning with p0 and ending with p1 to the *ot entry in the OT.
 // The primitive list is a list of primitives connected by AddPrim() or created by the local ordering table
@@ -3788,7 +3727,6 @@ p1 = A2;
 
 ////////////////////////////////
 // system_psyq_cat_prim()
-// CatPrim
 // Concatenate primitives.
 // Links the primitive p1 to the primitive p0.
 // AddPrim() adds a primitive to a primitive list. CatPrim() simply concatenates two primitives.
@@ -3796,15 +3734,17 @@ p1 = A2;
 p0 = A0;
 p1 = A1;
 
-[p0] = w(w[p0] & ff000000 | p1 & 00ffffff);
+[p0] = w((w[p0] & ff000000) | (p1 & 00ffffff));
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func46830
+// system_psyq_term_prim()
+// Sets the tag pointer of the primitive specified by p to point at a special terminator value that signals the end
+// of the list when it is executed. Any primitives already pointed to by p are removed from the list.
 
-[A0 + 0] = w(w[A0 + 0] | 00ffffff);
+[A0] = w(w[A0] | 00ffffff);
 ////////////////////////////////
 
 
@@ -4097,154 +4037,89 @@ L46ac8:	; 80046AC8
 
 
 ////////////////////////////////
-// func46ad0
-80046AD0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-S0 = A0;
-[SP + 001c] = w(RA);
-A1 = h[S0 + 0000];
-A2 = h[S0 + 0002];
-A3 = h[S0 + 0004];
-V0 = h[S0 + 0006];
-80046AF0	lui    v1, $8006
-V1 = w[V1 + 2bfc];
-80046AF8	lui    a0, $8001
-A0 = A0 + 0ed8;
-80046B00	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = h[S0 + 0008];
-A2 = h[S0 + 000a];
-80046B10	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80046B18	lui    a0, $8001
-A0 = A0 + 0ef0;
-80046B20	jalr   v0 ra
-80046B24	nop
-A1 = h[S0 + 000c];
-A2 = h[S0 + 000e];
-A3 = h[S0 + 0010];
-V0 = h[S0 + 0012];
-80046B38	lui    v1, $8006
-V1 = w[V1 + 2bfc];
-80046B40	lui    a0, $8001
-A0 = A0 + 0f00;
-80046B48	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = bu[S0 + 0016];
-80046B54	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80046B5C	lui    a0, $8001
-A0 = A0 + 0f18;
-80046B64	jalr   v0 ra
-80046B68	nop
-A1 = bu[S0 + 0017];
-80046B70	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80046B78	lui    a0, $8001
-A0 = A0 + 0f24;
-80046B80	jalr   v0 ra
-80046B84	nop
-80046B88	jal    system_gpu_get_type [$80043cc0]
-80046B8C	nop
-V1 = 0001;
-80046B94	beq    v0, v1, L46bb0 [$80046bb0]
-80046B98	nop
-80046B9C	jal    system_gpu_get_type [$80043cc0]
-80046BA0	nop
-V1 = 0002;
-80046BA8	bne    v0, v1, L46bf4 [$80046bf4]
-80046BAC	nop
+// system_psyq_dump_draw_env()
+// Print contents of drawing environment structure.
 
-L46bb0:	; 80046BB0
-80046BB0	lui    a0, $8001
-A0 = A0 + 0eb0;
-V0 = hu[S0 + 0014];
-80046BBC	lui    v1, $8006
-V1 = w[V1 + 2bfc];
-A1 = V0 >> 09;
-A1 = A1 & 0003;
-A2 = V0 >> 07;
-A2 = A2 & 0003;
-A3 = V0 << 06;
-A3 = A3 & 07c0;
-V0 = V0 << 03;
-V0 = V0 & 0300;
-80046BE4	jalr   v1 ra
-[SP + 0010] = w(V0);
-80046BEC	j      L46c3c [$80046c3c]
-80046BF0	nop
+env = A0;
 
-L46bf4:	; 80046BF4
-80046BF4	lui    a0, $8001
-A0 = A0 + 0eb0;
-V0 = hu[S0 + 0014];
-80046C00	lui    t0, $8006
-T0 = w[T0 + 2bfc];
-A1 = V0 >> 07;
-A1 = A1 & 0003;
-A2 = V0 >> 05;
-A2 = A2 & 0003;
-A3 = V0 << 06;
-A3 = A3 & 07c0;
-V1 = V0 << 04;
-V1 = V1 & 0100;
-V0 = V0 >> 02;
-V0 = V0 & 0200;
-V1 = V1 + V0;
-80046C34	jalr   t0 ra
-[SP + 0010] = w(V1);
+A0 = 80010ed8; // "clip (%3d,%3d)-(%d,%d)\n"
+A1 = h[env + 0];
+A2 = h[env + 2];
+A3 = h[env + 4];
+A4 = h[env + 6];
+80046B00	jalr   w[80062bfc] ra // system_bios_printf()
 
-L46c3c:	; 80046C3C
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80046C48	jr     ra 
-80046C4C	nop
+A0 = 80010ef0; // "ofs  (%3d,%3d)\n"
+A1 = h[env + 8];
+A2 = h[env + a];
+80046B20	jalr   w[80062bfc] ra // system_bios_printf()
+
+A0 = 80010f00; // "tw   (%d,%d)-(%d,%d)\n"
+A1 = h[env + c];
+A2 = h[env + e];
+A3 = h[env + 10];
+A4 = h[env + 12];
+80046B48	jalr   w[80062bfc] ra // system_bios_printf()
+
+A0 = 80010f18; // "dtd   %d\n"
+A1 = bu[env + 16];
+80046B64	jalr   w[80062bfc] ra // system_bios_printf()
+
+A0 = 80010f24; // "dfe   %d\n"
+A1 = bu[env + 17];
+80046B80	jalr   w[80062bfc] ra // system_bios_printf()
+
+system_gpu_get_type();
+
+if( ( V0 == 1 ) || ( V0 == 2 ) )
+{
+    A0 = 80010eb0; // "tpage: (%d,%d,%d,%d)\n"
+    A1 = (hu[env + 14] >> 9) & 3;
+    A2 = (hu[env + 14] >> 7) & 3;
+    A3 = (hu[env + 14] << 6) & 7c0;
+    A4 = (hu[env + 14] << 3) & 300;
+    80046BE4	jalr   w[80062bfc] ra // system_bios_printf()
+}
+else
+{
+    A0 = 80010eb0; // "tpage: (%d,%d,%d,%d)\n"
+    A1 = (hu[env + 14] >> 7) & 3;
+    A2 = (hu[env + 14] >> 5) & 3;
+    A3 = (hu[env + 14] << 6) & 7c0;
+    A4 = ((hu[env + 14] << 4) & 100) + ((hu[env + 14] >> 2) & 200);
+    80046C34	jalr   w[80062bfc] ra // system_bios_printf()
+}
 ////////////////////////////////
-// func46c50
-80046C50	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-S0 = A0;
-[SP + 001c] = w(RA);
-A1 = h[S0 + 0000];
-A2 = h[S0 + 0002];
-A3 = h[S0 + 0004];
-V0 = h[S0 + 0006];
-80046C70	lui    v1, $8006
-V1 = w[V1 + 2bfc];
-80046C78	lui    a0, $8001
-A0 = A0 + 0f30;
-80046C80	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = h[S0 + 0008];
-A2 = h[S0 + 000a];
-A3 = h[S0 + 000c];
-V0 = h[S0 + 000e];
-80046C98	lui    v1, $8006
-V1 = w[V1 + 2bfc];
-80046CA0	lui    a0, $8001
-A0 = A0 + 0f4c;
-80046CA8	jalr   v1 ra
-[SP + 0010] = w(V0);
-A1 = bu[S0 + 0010];
-80046CB4	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80046CBC	lui    a0, $8001
-A0 = A0 + 0f68;
-80046CC4	jalr   v0 ra
-80046CC8	nop
-A1 = bu[S0 + 0011];
-80046CD0	lui    v0, $8006
-V0 = w[V0 + 2bfc];
-80046CD8	lui    a0, $8001
-A0 = A0 + 0f74;
-80046CE0	jalr   v0 ra
-80046CE4	nop
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80046CF4	jr     ra 
-80046CF8	nop
+
+
+
+////////////////////////////////
+// system_psyq_dump_disp_env()
+// Print contents of display environment Structure.
+
+env = A0;
+
+A0 = 80010f30; // "disp   (%3d,%3d)-(%d,%d)\n"
+A1 = h[env + 0];
+A2 = h[env + 2];
+A3 = h[env + 4];
+A4 = h[env + 6];
+80046C80	jalr   w[80062bfc] ra // system_bios_printf()
+
+A0 = 80010f4c; // "screen (%3d,%3d)-(%d,%d)\n"
+A1 = h[env + 8];
+A2 = h[env + a];
+A3 = h[env + c];
+A4 = h[env + e];
+80046CA8	jalr   w[80062bfc] ra // system_bios_printf()
+
+A0 = 80010f68; // "isinter %d\n"
+A1 = bu[env + 10];
+80046CC4	jalr   w[80062bfc] ra // system_bios_printf()
+
+A0 = 80010f74; // "isrgb24 %d\n"
+A1 = bu[env + 11];
+80046CE0	jalr   w[80062bfc] ra // system_bios_printf()
 ////////////////////////////////
 
 
@@ -4489,7 +4364,7 @@ texture = texture + 4;
 [ret + 0] = w(w[texture]); // bpp
 texture = texture + 4;
 
-func43cd0();
+system_psyq_get_graph_debug();
 if( V0 == 2 )
 {
     A0 = 80010f80; // "id  =%08x"
@@ -4542,7 +4417,7 @@ S5 = A2;
 S4 = A3;
 [SP + 0034] = w(RA);
 [SP + 0024] = w(S3);
-800471B4	jal    func43cd0 [$80043cd0]
+800471B4	jal    system_psyq_get_graph_debug [$80043cd0]
 [SP + 0020] = w(S2);
 S3 = 0002;
 800471C0	bne    v0, s3, L471d8 [$800471d8]
@@ -4553,7 +4428,7 @@ A0 = A0 + 0fa8;
 800471D4	nop
 
 L471d8:	; 800471D8
-800471D8	jal    func43cd0 [$80043cd0]
+800471D8	jal    system_psyq_get_graph_debug [$80043cd0]
 800471DC	nop
 800471E0	bne    v0, s3, L47208 [$80047208]
 800471E4	nop
@@ -4567,7 +4442,7 @@ A0 = A0 + 0fbc;
 80047204	nop
 
 L47208:	; 80047208
-80047208	jal    func43cd0 [$80043cd0]
+80047208	jal    system_psyq_get_graph_debug [$80043cd0]
 8004720C	nop
 80047210	bne    v0, s3, L4723c [$8004723c]
 V0 = S1 << 03;
@@ -4582,7 +4457,7 @@ A0 = A0 + 0fe4;
 80047238	nop
 
 L4723c:	; 8004723C
-8004723C	jal    func43cd0 [$80043cd0]
+8004723C	jal    system_psyq_get_graph_debug [$80043cd0]
 80047240	nop
 80047244	bne    v0, s3, L47270 [$80047270]
 V0 = S1 << 03;
@@ -4597,7 +4472,7 @@ A0 = A0 + 0ffc;
 8004726C	nop
 
 L47270:	; 80047270
-80047270	jal    func43cd0 [$80043cd0]
+80047270	jal    system_psyq_get_graph_debug [$80043cd0]
 80047274	nop
 80047278	bne    v0, s3, L472ac [$800472ac]
 V1 = S1 << 03;
@@ -4760,7 +4635,7 @@ V0 = V0 | 0a0c;
 800474A8	nop
 
 L474ac:	; 800474AC
-800474AC	jal    func43cd0 [$80043cd0]
+800474AC	jal    system_psyq_get_graph_debug [$80043cd0]
 800474B0	nop
 V1 = 0002;
 800474B8	bne    v0, v1, L474d0 [$800474d0]
@@ -4819,7 +4694,7 @@ V0 = 0010;
 [S1 + 0074] = h(V1);
 
 L47588:	; 80047588
-80047588	jal    func43cd0 [$80043cd0]
+80047588	jal    system_psyq_get_graph_debug [$80043cd0]
 8004758C	nop
 V1 = 0002;
 80047594	bne    v0, v1, L475ac [$800475ac]
@@ -4878,7 +4753,7 @@ V0 = 0014;
 [S1 + 0074] = h(V1);
 
 L47664:	; 80047664
-80047664	jal    func43cd0 [$80043cd0]
+80047664	jal    system_psyq_get_graph_debug [$80043cd0]
 80047668	nop
 V1 = 0002;
 80047670	bne    v0, v1, L47688 [$80047688]
@@ -4934,7 +4809,7 @@ V0 = 0018;
 [S1 + 0074] = h(V1);
 
 L47734:	; 80047734
-80047734	jal    func43cd0 [$80043cd0]
+80047734	jal    system_psyq_get_graph_debug [$80043cd0]
 80047738	nop
 V1 = 0002;
 80047740	bne    v0, v1, L47758 [$80047758]
@@ -4990,7 +4865,7 @@ V0 = 001c;
 [S1 + 0074] = h(V1);
 
 L47804:	; 80047804
-80047804	jal    func43cd0 [$80043cd0]
+80047804	jal    system_psyq_get_graph_debug [$80043cd0]
 80047808	nop
 V1 = 0002;
 80047810	bne    v0, v1, L47828 [$80047828]
@@ -5040,7 +4915,7 @@ V0 = 0010;
 [S1 + 006c] = h(V1);
 
 L478bc:	; 800478BC
-800478BC	jal    func43cd0 [$80043cd0]
+800478BC	jal    system_psyq_get_graph_debug [$80043cd0]
 800478C0	nop
 V1 = 0002;
 800478C8	bne    v0, v1, L478e0 [$800478e0]
@@ -5090,7 +4965,7 @@ V0 = 0018;
 [S1 + 006c] = h(V1);
 
 L47974:	; 80047974
-80047974	jal    func43cd0 [$80043cd0]
+80047974	jal    system_psyq_get_graph_debug [$80043cd0]
 80047978	nop
 V1 = 0002;
 80047980	bne    v0, v1, L47998 [$80047998]
@@ -5164,7 +5039,7 @@ V0 = 001c;
 [S1 + 006c] = h(V1);
 
 L47a8c:	; 80047A8C
-80047A8C	jal    func43cd0 [$80043cd0]
+80047A8C	jal    system_psyq_get_graph_debug [$80043cd0]
 80047A90	nop
 V1 = 0002;
 80047A98	bne    v0, v1, L47ab0 [$80047ab0]
@@ -5238,7 +5113,7 @@ V0 = 0024;
 [S1 + 000e] = b(V1);
 
 L47ba4:	; 80047BA4
-80047BA4	jal    func43cd0 [$80043cd0]
+80047BA4	jal    system_psyq_get_graph_debug [$80043cd0]
 80047BA8	nop
 V1 = 0002;
 80047BB0	bne    v0, v1, L47bc8 [$80047bc8]
@@ -5312,7 +5187,7 @@ V0 = 0014;
 [S1 + 0076] = h(V1);
 
 L47cbc:	; 80047CBC
-80047CBC	jal    func43cd0 [$80043cd0]
+80047CBC	jal    system_psyq_get_graph_debug [$80043cd0]
 80047CC0	nop
 V1 = 0002;
 80047CC8	bne    v0, v1, L47ce0 [$80047ce0]
@@ -5386,7 +5261,7 @@ V0 = 0018;
 [S1 + 0076] = h(V1);
 
 L47dd4:	; 80047DD4
-80047DD4	jal    func43cd0 [$80043cd0]
+80047DD4	jal    system_psyq_get_graph_debug [$80043cd0]
 80047DD8	nop
 V1 = 0002;
 80047DE0	bne    v0, v1, L47df8 [$80047df8]
@@ -5454,7 +5329,7 @@ V0 = 0020;
 [S1 + 0076] = h(V1);
 
 L47ed4:	; 80047ED4
-80047ED4	jal    func43cd0 [$80043cd0]
+80047ED4	jal    system_psyq_get_graph_debug [$80043cd0]
 80047ED8	nop
 V1 = 0002;
 80047EE0	bne    v0, v1, L47ef8 [$80047ef8]
@@ -5522,7 +5397,7 @@ V0 = 0024;
 [S1 + 0076] = h(V1);
 
 L47fd4:	; 80047FD4
-80047FD4	jal    func43cd0 [$80043cd0]
+80047FD4	jal    system_psyq_get_graph_debug [$80043cd0]
 80047FD8	nop
 V1 = 0002;
 80047FE0	bne    v0, v1, L47ff8 [$80047ff8]
@@ -5584,7 +5459,7 @@ V0 = 0010;
 [S1 + 006e] = h(V1);
 
 L480bc:	; 800480BC
-800480BC	jal    func43cd0 [$80043cd0]
+800480BC	jal    system_psyq_get_graph_debug [$80043cd0]
 800480C0	nop
 V1 = 0002;
 800480C8	bne    v0, v1, L480e0 [$800480e0]
@@ -5646,7 +5521,7 @@ V0 = 001c;
 [S1 + 006e] = h(V1);
 
 L481a4:	; 800481A4
-800481A4	jal    func43cd0 [$80043cd0]
+800481A4	jal    system_psyq_get_graph_debug [$80043cd0]
 800481A8	nop
 V1 = 0002;
 800481B0	bne    v0, v1, L481c8 [$800481c8]
@@ -5738,7 +5613,7 @@ V0 = 0020;
 [S1 + 006e] = h(V1);
 
 L48304:	; 80048304
-80048304	jal    func43cd0 [$80043cd0]
+80048304	jal    system_psyq_get_graph_debug [$80043cd0]
 80048308	nop
 V1 = 0002;
 80048310	bne    v0, v1, L48328 [$80048328]

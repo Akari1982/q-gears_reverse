@@ -916,7 +916,7 @@ while( ( w[8005896c] != 0 ) || ( w[80058964] == 0 ) )
     otag = V0 + 70;
 
     A0 = otag;
-    func43a5c();
+    system_psyq_term_prim();
 
     A0 = otag;
     system_print_render_strings();

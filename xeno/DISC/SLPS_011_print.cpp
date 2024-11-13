@@ -1097,7 +1097,7 @@ if( S2 != 0 )
         S5 = 1;
 
         A0 = otag;
-        func43a5c();
+        system_psyq_term_prim();
     }
 
     S0 = h[S2 + 34];

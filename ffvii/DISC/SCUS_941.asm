@@ -2997,22 +2997,22 @@
 // system_psyq_reset_graph
 80043938-80043A90
 ////////////////////////////////
-// func43a94
+// system_psyq_set_graph_reverse
 80043A94-80043BA4
 ////////////////////////////////
 // system_psyq_set_graph_debug
 80043BA8-80043C10
 ////////////////////////////////
-// fucn43c14
+// system_psyq_set_grap_que
 80043C14-80043CBC
 ////////////////////////////////
 // system_gpu_get_type
 80043CC0-80043CCC
 ////////////////////////////////
-// func43cd0
+// system_psyq_get_graph_debug
 80043CD0-80043CDC
 ////////////////////////////////
-// func43ce0
+// system_psyq_draw_sync_callback
 80043CE0-80043D38
 ////////////////////////////////
 // system_psyq_set_disp_mask
@@ -3021,7 +3021,7 @@
 // system_psyq_draw_sync
 80043DD8-80043E40
 ////////////////////////////////
-// func43e44
+// system_graphic_debug_print_rect
 80043E44-80043F68
 ////////////////////////////////
 // system_psyq_clear_image
@@ -3165,16 +3165,16 @@
 // system_create_clut_for_packet
 80046634-80046648
 ////////////////////////////////
-// func4664c
+// system_psyq_dump_tpage
 8004664C-80046718
 ////////////////////////////////
-// func4671c
+// system_psyq_dump_clut
 8004671C-80046758
 ////////////////////////////////
 // func4675c
 8004675C-80046774
 ////////////////////////////////
-// func46778
+// system_psyq_is_end_prim
 80046778-80046790
 ////////////////////////////////
 // system_psyq_add_prim
@@ -3186,7 +3186,7 @@
 // system_psyq_cat_prim
 8004680C-8004682c
 ////////////////////////////////
-// func46830
+// system_psyq_term_prim
 80046830-80046844
 ////////////////////////////////
 // system_psyq_set_semi_trans
@@ -3267,10 +3267,10 @@
 // func46a9c
 80046A9C-80046ACC
 ////////////////////////////////
-// func46ad0
+// system_psyq_dump_draw_env
 80046AD0-80046C4C
 ////////////////////////////////
-// func46c50
+// system_psyq_dump_disp_env
 80046C50-80046CF8
 ////////////////////////////////
 // system_read_tim_set_address

@@ -192,7 +192,8 @@ return ((A1 << 6) | ((A0 >> 4) & 3f)) & ffff;
 
 
 ////////////////////////////////
-// system_gpu_print_tpage_info()
+// system_psyq_dump_tpage()
+// Print contents of tpage member of primitive.
 
 tpage = A0 & ffff;
 
@@ -207,7 +208,8 @@ A4 = ((tpage << 4) & 100) + ((tpage >> 2) & 200);
 
 
 ////////////////////////////////
-// system_gpu_print_clut_info()
+// system_psyq_dump_clut()
+// Print contents of clut member of primitive.
 
 clut = A0;
 
@@ -222,24 +224,25 @@ A2 = (clut & ffff) >> 6;
 ////////////////////////////////
 // func43988
 
-return 80000000 | (w[A0 + 0000] & 00ffffff);
+return 80000000 | (w[A0] & 00ffffff);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func439a4()
+// system_psyq_is_end_prim()
+// Determine if a primitive is the last in a list.
+// 1: final end case; 0: non-final end case.
 
-V0 = w[A0] & 00ffffff;
-V0 = V0 ^ 00ffffff;
-return V0 < 1;
+if( ( w[A0] & 00ffffff ) == 00ffffff ) return 1;
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // system_psyq_add_prim()
-// AddPrim
 // Register a primitive to the OT.
 // Registers a primitive beginning with the address *p to the OT entry *ot in OT table. ot is an ordering table or
 // pointer to another primitive.
@@ -257,7 +260,6 @@ p = A1;
 
 ////////////////////////////////
 // system_psyq_add_prims()
-// AddPrims
 // Collectively register primitives to the OT.
 // Registers primitives beginning with p0 and ending with p1 to the *ot entry in the OT.
 // The primitive list is a list of primitives connected by AddPrim() or created by the local ordering table
@@ -274,7 +276,6 @@ p1 = A2;
 
 ////////////////////////////////
 // system_psyq_cat_prim()
-// CatPrim
 // Concatenate primitives.
 // Links the primitive p1 to the primitive p0.
 // AddPrim() adds a primitive to a primitive list. CatPrim() simply concatenates two primitives.
@@ -288,7 +289,9 @@ p1 = A1;
 
 
 ////////////////////////////////
-// func43a5c()
+// system_psyq_term_prim()
+// Sets the tag pointer of the primitive specified by p to point at a special terminator value that signals the end
+// of the list when it is executed. Any primitives already pointed to by p are removed from the list.
 
 [A0] = w(w[A0] | 00ffffff);
 ////////////////////////////////
@@ -641,72 +644,74 @@ L43dc0:	; 80043DC0
 
 
 ////////////////////////////////
-// system_gpu_print_draw_enviroment_info()
+// system_psyq_dump_draw_env()
+// Print contents of drawing environment structure.
 
-S0 = A0;
+env = A0;
 
 A0 = 80019044; // "clip (%3d,%3d)-(%d,%d)\n"
-A1 = h[S0 + 0];
-A2 = h[S0 + 2];
-A3 = h[S0 + 4];
-A4 = h[S0 + 6];
+A1 = h[env + 0];
+A2 = h[env + 2];
+A3 = h[env + 4];
+A4 = h[env + 6];
 80043DF8	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 8001905c; // "ofs  (%3d,%3d)\n"
-A1 = h[S0 + 8];
-A2 = h[S0 + a];
+A1 = h[env + 8];
+A2 = h[env + a];
 80043E18	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 8001906c; // "tw   (%d,%d)-(%d,%d)\n"
-A1 = h[S0 + c];
-A2 = h[S0 + e];
-A3 = h[S0 + 10];
-A4 = h[S0 + 12];
+A1 = h[env + c];
+A2 = h[env + e];
+A3 = h[env + 10];
+A4 = h[env + 12];
 80043E40	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 80019084; // "dtd   %d\n"
-A1 = bu[S0 + 0016];
+A1 = bu[env + 16];
 80043E5C	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 80019090; // "dfe   %d\n"
-A1 = bu[S0 + 0017];
+A1 = bu[env + 17];
 80043E78	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 8001901c; // "tpage: (%d,%d,%d,%d)\n"
-A1 = (hu[S0 + 14] >> 7) & 3;
-A2 = (hu[S0 + 14] >> 5) & 3;
-A3 = (hu[S0 + 14] << 6) & 7c0;
-A4 = ((hu[S0 + 14] << 4) & 100) + ((hu[S0 + 14] >> 2) & 200);
+A1 = (hu[env + 14] >> 7) & 3;
+A2 = (hu[env + 14] >> 5) & 3;
+A3 = (hu[env + 14] << 6) & 7c0;
+A4 = ((hu[env + 14] << 4) & 100) + ((hu[env + 14] >> 2) & 200);
 80043EC0	jalr   w[80055f6c] ra // system_bios_printf()
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_gpu_print_display_enviroment_info()
+// system_psyq_dump_disp_env()
+// Print contents of display environment Structure.
 
-S0 = A0;
+env = A0;
 
 A0 = 8001909c; // "disp   (%3d,%3d)-(%d,%d)\n"
-A1 = h[S0 + 0];
-A2 = h[S0 + 2];
-A3 = h[S0 + 4];
-A4 = h[S0 + 6];
+A1 = h[env + 0];
+A2 = h[env + 2];
+A3 = h[env + 4];
+A4 = h[env + 6];
 80043F0C	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 800190b8; // "screen (%3d,%3d)-(%d,%d)\n"
-A1 = h[S0 + 8];
-A2 = h[S0 + a];
-A3 = h[S0 + c];
-A4 = h[S0 + e];
+A1 = h[env + 8];
+A2 = h[env + a];
+A3 = h[env + c];
+A4 = h[env + e];
 80043F34	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 800190d4; // "isinter %d\n"
-A1 = bu[S0 + 10];
+A1 = bu[env + 10];
 80043F50	jalr   w[80055f6c] ra // system_bios_printf()
 
 A0 = 800190e0; // "isrgb24 %d\n"
-A1 = bu[S0 + 11];
+A1 = bu[env + 11];
 80043F6C	jalr   w[80055f6c] ra // system_bios_printf()
 ////////////////////////////////
 
@@ -791,7 +796,7 @@ reverse_old = bu[80055f73];
 
 if( bu[80055f72] > 2 )
 {
-    A0 = 80019154; // "SetGraphReverse(%d)..."
+    A0 = 80019154; // "SetGraphReverse(%d)...\n"
     A1 = reverse;
     80044154	jalr   w[80055f6c] ra
 }
@@ -864,8 +869,8 @@ return level_old;
 ////////////////////////////////
 // system_psyq_set_grap_que()
 
-que_old = bu[80055f71];
 que = A0;
+que_old = bu[80055f71];
 
 if( bu[80055f72] >= 2 )
 {
@@ -892,7 +897,7 @@ return que_old;
 
 
 ////////////////////////////////
-// func44330()
+// system_gpu_get_type()
 
 return bu[80055f70];
 ////////////////////////////////
