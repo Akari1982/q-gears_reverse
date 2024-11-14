@@ -389,7 +389,7 @@ if( tries >= 4 )
     A0 = 0;
     system_psyq_reset_graph();
 
-    system_gte_init();
+    system_psyq_init_geom();
 
     A0 = SP + 38; // draw env
     A1 = 0;

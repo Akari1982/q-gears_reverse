@@ -7936,7 +7936,7 @@ A0 = SP + 0088;
 80025770	jal    func49f64 [$80049f64]
 A1 = SP + 008c;
 A0 = 00a0;
-8002577C	jal    system_gte_set_screen_offset [$80049fd4]
+8002577C	jal    system_psyq_set_geom_offset [$80049fd4]
 A1 = 0070;
 V0 = w[S2 + 003c];
 80025788	lui    v1, $0200
@@ -7990,7 +7990,7 @@ V0 = w[S2 + 003c];
 80025844	nop
 A0 = w[SP + 0088];
 A1 = w[SP + 008c];
-80025850	jal    system_gte_set_screen_offset [$80049fd4]
+80025850	jal    system_psyq_set_geom_offset [$80049fd4]
 80025854	nop
 
 L25858:	; 80025858
@@ -8446,9 +8446,9 @@ S1 = S1 << 10;
 A0 = S1 >> 10;
 S2 = S2 << 10;
 A1 = S2 >> 10;
-80025E98	jal    system_gte_set_screen_offset [$80049fd4]
+80025E98	jal    system_psyq_set_geom_offset [$80049fd4]
 [SP + 0078] = w(V0);
-80025EA0	jal    system_gte_set_projection_plane_distance [$80049ff4]
+80025EA0	jal    system_psyq_set_geom_screen [$80049ff4]
 A0 = 1000;
 80025EA8	jal    system_psyq_set_rot_matrix [$80049da4]
 A0 = S0;
@@ -8605,10 +8605,10 @@ S5 = S5 + 0050;
 L260dc:	; 800260DC
 A0 = w[SP + 0058];
 A1 = w[SP + 005c];
-800260E4	jal    system_gte_set_screen_offset [$80049fd4]
+800260E4	jal    system_psyq_set_geom_offset [$80049fd4]
 800260E8	nop
 A0 = w[SP + 0078];
-800260F0	jal    system_gte_set_projection_plane_distance [$80049ff4]
+800260F0	jal    system_psyq_set_geom_screen [$80049ff4]
 800260F4	nop
 800260F8	jal    system_psyq_pop_matrix [$80049554]
 800260FC	nop

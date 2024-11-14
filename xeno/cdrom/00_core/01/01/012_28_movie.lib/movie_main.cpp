@@ -5079,11 +5079,11 @@ if( ( ( w[80076a44] & 0800 ) == 0 ) && ( w[80076a3c] & 0800 ) )
 // func76180
 
 A0 = 200;
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 A0 = a0;
 A1 = 78;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = 80076700;
 [80076748] = h(1000);

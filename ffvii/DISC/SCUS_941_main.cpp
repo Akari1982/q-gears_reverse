@@ -236,7 +236,7 @@ if( ( bu[80062d98] == 0 ) && ( bu[80062d99] == 0 ) )
 
 
 ////////////////////////////////
-// func1171c()
+// system_init_base()
 
 func3d1b4(); // disable dma, set default exit from exception
 
@@ -260,7 +260,7 @@ system_psyq_set_graph_debug();
 A0 = 0;
 system_psyq_set_disp_mask();
 
-system_gte_init_geom();
+system_psyq_init_geom();
 ////////////////////////////////
 
 
@@ -477,7 +477,7 @@ if( hu[8009c560] == 0 )
 A0 = 8;
 system_bios_set_mem_size();
 
-func1171c(); // init intr, graph, spu, gte and so on
+system_init_base(); // init intr, graph, spu, gte and so on
 
 S7 = 20000000;
 

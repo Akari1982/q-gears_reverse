@@ -1925,10 +1925,10 @@ if( w[800b1738] != 0 )
 
 A0 = a0;
 A1 = 70;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = w[800aeecc];
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 field_allocate_memory_for_party_sprites();
 

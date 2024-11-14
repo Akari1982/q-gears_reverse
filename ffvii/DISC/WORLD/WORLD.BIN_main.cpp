@@ -395,7 +395,7 @@ wm_create_skybox_overlay_render_buffers();
 wm_set_render_buffers();
 
 A0 = w[800c65ec];
-system_gte_set_proj_plane_dist();
+system_psyq_set_geom_screen();
 
 if( w[800e5630] != 0 ) // shake enabled
 {
@@ -413,7 +413,7 @@ else
     A1 = w[800e55f0];
 }
 
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 [800c752d] = b(c);
 [800c7530] = w(w[800bd130]);
@@ -3542,7 +3542,7 @@ while( w[800e566c] < 9 )
         800A4C44	jal    funcb2e90 [$800b2e90]
 
         A0 = w[800c65ec];
-        system_gte_set_proj_plane_dist();
+        system_psyq_set_geom_screen();
 
         if( w[800e566c] >= 0 )
         {

@@ -277,11 +277,11 @@ A1 = 800af1f8; // src
 system_load_image();
 
 A0 = 80;
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 A0 = 10a;
 A1 = a6;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 [SP + b8] = w(0);
 [SP + bc] = w(w[800aed58] - w[800aed68]);
@@ -478,8 +478,8 @@ V1 = 800b12d4 + rb * c0;
 
 A0 = a0;
 A1 = 70;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = w[800aeecc];
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 ////////////////////////////////

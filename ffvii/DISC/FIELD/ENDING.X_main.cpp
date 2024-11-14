@@ -2546,9 +2546,9 @@ A0 = S3 + A0;
 A0 = A0 >> 01;
 A1 = S2 >> 1f;
 A1 = S2 + A1;
-800A25BC	jal    $8003b6bc
+800A25BC	jal    $system_psyq_set_geom_offset
 A1 = A1 >> 01;
-800A25C4	jal    $8003b6dc
+800A25C4	jal    $system_psyq_set_geom_screen
 A0 = S1;
 800A25CC	lui    s1, $800b
 800A25D0	addiu  s1, s1, $f2e0 (=-$d20)

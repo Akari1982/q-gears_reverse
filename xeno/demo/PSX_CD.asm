@@ -10335,7 +10335,7 @@ L1969c:	; 8001969C
 80019710	addu   a0, zero, zero
 80019714	jal    system_psyq_set_disp_mask [$80044178]
 80019718	ori    a0, zero, $0001
-8001971C	jal    system_gte_init [$80048838]
+8001971C	jal    system_psyq_init_geom [$80048838]
 80019720	nop
 80019724	jal    func360c8 [$800360c8]  // init gamepad and related functions and data.
 80019728	nop
@@ -11031,7 +11031,7 @@ func1a0c0:	; 8001A0C0
 8001A110	sw     v0, $0024(sp)
 8001A114	jal    func373d0 [$800373d0]
 8001A118	sw     zero, $0028(sp)
-8001A11C	jal    system_gte_init [$80048838]
+8001A11C	jal    system_psyq_init_geom [$80048838]
 8001A120	ori    s0, zero, $00f0
 8001A124	ori    a0, zero, $00a0
 8001A128	jal    func49ab0 [$80049ab0]
@@ -12709,7 +12709,7 @@ func1b7a0:	; 8001B7A0
 8001B7E4	sw     v0, $0014(sp)
 8001B7E8	jal    func378b8 [$800378b8]
 8001B7EC	addu   a0, v0, zero
-8001B7F0	jal    system_gte_init [$80048838]
+8001B7F0	jal    system_psyq_init_geom [$80048838]
 8001B7F4	ori    s1, zero, $00e0
 8001B7F8	ori    a0, zero, $00a0
 8001B7FC	jal    func49ab0 [$80049ab0]
@@ -66126,7 +66126,7 @@ L4881c:	; 8004881C
 80048830	bne    t0, t1, $80065574
 80048834	00409F9C	œŸ@.
 
-system_gte_init:	; 80048838
+system_psyq_init_geom:	; 80048838
 80048838	lui    at, $8005
 8004883C	sw     ra, $5bbc(at)
 80048840	jal    func4ae30 [$8004ae30]

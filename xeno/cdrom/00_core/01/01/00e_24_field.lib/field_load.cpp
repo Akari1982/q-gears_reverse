@@ -622,7 +622,7 @@ for( int i = 0; i < 200; ++i )
 }
 
 A0 = 200;
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 
 A0 = 800aee64;
@@ -1280,11 +1280,11 @@ system_draw_sync();
 A0 = 0;
 system_psyq_wait_frames();
 
-system_gte_init();
+system_psyq_init_geom();
 
-A0 = 00a0;
-A1 = 0070;
-system_gte_set_screen_offset();
+A0 = a0;
+A1 = 70;
+system_psyq_set_geom_offset();
 
 A0 = 800b1970;
 A1 = 0;

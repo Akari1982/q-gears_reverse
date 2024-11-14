@@ -494,7 +494,7 @@ funcd8a88(); // switch buffers
 [80158d08] = w(V0);
 
 A0 = h[80162084];
-system_gte_set_proj_plane_dist();
+system_psyq_set_geom_screen();
 
 [801516f4] = b(bu[801516f4] + 1);
 

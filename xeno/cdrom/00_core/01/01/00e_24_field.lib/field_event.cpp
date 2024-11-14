@@ -1066,7 +1066,7 @@ dest_x = A0;
 dest_y = A1;
 
 A0 = 200;
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);

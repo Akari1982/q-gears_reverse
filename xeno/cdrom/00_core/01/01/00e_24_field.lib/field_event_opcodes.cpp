@@ -15734,7 +15734,7 @@ field_event_help_read_v80();
 A0 = V0;
 [800aeecc] = w(A0);
 
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 V1 = w[800af54c];
 [V1 + cc] = h(hu[V1 + cc] + 7);

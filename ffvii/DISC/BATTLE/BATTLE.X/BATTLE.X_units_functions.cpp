@@ -5004,7 +5004,7 @@ system_graphic_create_draw_env_struct();
 S0 = 800f50ac;
 A0 = S0;
 A1 = S2;
-system_prepare_draw_env_packets();
+system_psyq_set_draw_env();
 
 A0 = w[800f1994];
 A1 = S0;
@@ -5098,14 +5098,14 @@ func1cb48(); // update pressed repeated buttons mask
 
 func1c980(); // update pressed repeated buttons mask
 
-system_gte_init_geom();
+system_psyq_init_geom();
 
 A0 = screen_size_x / 2;
 A1 = screen_size_y / 2;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = proj_plane_dist;
-system_gte_set_proj_plane_dist();
+system_psyq_set_geom_screen();
 
 A0 = 800faff4;
 A1 = 0; // clip rect x
@@ -5246,7 +5246,7 @@ V0 = 0001;
 V0 = 005f;
 [800f57f0] = b(0);
 [800f57ec] = h(V0);
-800D9538	jal    $system_prepare_draw_env_packets
+800D9538	jal    $system_psyq_set_draw_env
 A1 = S1;
 A1 = w[S0 + 0000];
 800D9544	jal    $system_psyq_add_prim
@@ -5586,7 +5586,7 @@ V0 = 0001;
 V0 = 005f;
 [800f57f0] = b(0);
 [800f57ec] = h(V0);
-800D9BB0	jal    $system_prepare_draw_env_packets
+800D9BB0	jal    $system_psyq_set_draw_env
 A1 = S1;
 A1 = w[S0 + 0000];
 800D9BBC	jal    $system_psyq_add_prim
@@ -5704,7 +5704,7 @@ V1 = 005f;
 [800f57ec] = h(V1);
 800D9D9C	addiu  v0, v0, $fffa (=-$6)
 [800f57de] = h(V0);
-800D9DA8	jal    $system_prepare_draw_env_packets
+800D9DA8	jal    $system_psyq_set_draw_env
 800D9DAC	addiu  a1, a2, $fffc (=-$4)
 A0 = w[80062fc4];
 A1 = w[S0 + 0000];
@@ -6030,7 +6030,7 @@ V1 = 005f;
 AT = 800f5530;
 AT = AT + V0;
 [AT + 0000] = h(V1);
-800DA318	jal    $system_prepare_draw_env_packets
+800DA318	jal    $system_psyq_set_draw_env
 A1 = V0 + S3;
 V1 = w[800f1994];
 V0 = w[S4 + 0000];
@@ -6203,7 +6203,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DA62C	jal    $system_prepare_draw_env_packets
+800DA62C	jal    $system_psyq_set_draw_env
 A1 = V1 + T2;
 S1 = S1 + 0014;
 A1 = w[800f1994];
@@ -6389,7 +6389,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DA984	jal    $system_prepare_draw_env_packets
+800DA984	jal    $system_psyq_set_draw_env
 A1 = V1 + T2;
 V1 = w[800f1994];
 V0 = w[FP + 0000];
@@ -6597,7 +6597,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DAD44	jal    $system_prepare_draw_env_packets
+800DAD44	jal    $system_psyq_set_draw_env
 A1 = V1 + S3;
 V1 = w[800f1994];
 V0 = w[FP + 0000];
@@ -6749,7 +6749,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DAFF8	jal    $system_prepare_draw_env_packets
+800DAFF8	jal    $system_psyq_set_draw_env
 A1 = V1 + T2;
 S1 = S1 + 0014;
 A1 = w[800f1994];
@@ -6935,7 +6935,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DB358	jal    $system_prepare_draw_env_packets
+800DB358	jal    $system_psyq_set_draw_env
 A1 = V1 + T2;
 V1 = w[800f1994];
 V0 = w[FP + 0000];
@@ -7169,7 +7169,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DB79C	jal    $system_prepare_draw_env_packets
+800DB79C	jal    $system_psyq_set_draw_env
 A1 = V1 + S1;
 800DB7A4	lui    t2, $ff00
 V1 = w[800f1994];
@@ -7402,7 +7402,7 @@ V1 = V1 << 02;
 AT = 800f5530;
 AT = AT + V1;
 [AT + 0000] = h(V0);
-800DBBAC	jal    $system_prepare_draw_env_packets
+800DBBAC	jal    $system_psyq_set_draw_env
 A1 = V1 + S4;
 V1 = w[800f1994];
 V0 = w[S1 + 0000];
@@ -9356,7 +9356,7 @@ V1 = 800f57ec;
 S0 = 80062f24;
 A0 = w[S0 + 0000];
 V0 = 005f;
-800DDA98	jal    $system_prepare_draw_env_packets
+800DDA98	jal    $system_psyq_set_draw_env
 [V1 + 0000] = h(V0);
 A1 = w[S0 + 0000];
 800DDAA4	jal    $system_psyq_add_prim
@@ -9533,7 +9533,7 @@ A0 = w[S1 + 0000];
 S4 = 0001;
 [800f57f0] = b(0);
 [800f57ef] = b(S4);
-800DDD6C	jal    $system_prepare_draw_env_packets
+800DDD6C	jal    $system_psyq_set_draw_env
 A1 = S6;
 A1 = w[S1 + 0000];
 800DDD78	jal    $system_psyq_add_prim
@@ -9581,7 +9581,7 @@ A2 = A2 & 00f0;
 A0 = w[S1 + 0000];
 [800f57f0] = b(0);
 [800f57ef] = b(S4);
-800DDE40	jal    $system_prepare_draw_env_packets
+800DDE40	jal    $system_psyq_set_draw_env
 A1 = S6;
 A1 = w[S1 + 0000];
 800DDE4C	jal    $system_psyq_add_prim

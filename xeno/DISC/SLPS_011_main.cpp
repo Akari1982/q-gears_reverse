@@ -73,7 +73,7 @@ system_draw_sync();
 A0 = 1; // display on screen
 system_psyq_set_disp_mask();
 
-system_gte_init();
+system_psyq_init_geom();
 
 func3615c(); // init gamepad and related functions and data.
 
@@ -1972,14 +1972,14 @@ func37878(); // nothing
 A0 = V0;
 func37878(); // nothing
 
-system_gte_init();
+system_psyq_init_geom();
 
 A0 = a0;
 A1 = b4;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = 200;
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 A0 = 800c419c;
 A1 = 0;
@@ -2315,10 +2315,10 @@ return V0;
 
 A0 = a0;
 A1 = 70;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = 200;
-system_gte_set_projection_plane_distance();
+system_psyq_set_geom_screen();
 
 mem = w[80061c30];
 

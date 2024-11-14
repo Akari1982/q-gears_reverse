@@ -293,20 +293,21 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// system_gte_init_geom()
+// system_psyq_init_geom()
+// Initialize the geometry transform engine.
 
 [8004b658] = w(RA);
 
-func3cd9c(); // patch C(06h) - ExceptionHandler()
+system_patch_bios_exception_handler();
 
 RA = w[8004b658];
 
-SR = 40000000 | SR; // CU2 COP2 Enable (0=Disable, 1=Enable) (GTE in PSX)
+SR |= 40000000; // CU2 COP2 Enable (0=Disable, 1=Enable) (GTE in PSX)
 ZSF3 = 155;
 ZSF4 = 100;
 H = 3e8;
 DQA = -1062;
-DQB = 140;
+DQB = 1400000;
 OFX = 0;
 OFY = 0;
 ////////////////////////////////
@@ -1702,92 +1703,117 @@ VZ2 = w[A2 + 4];
 
 ////////////////////////////////
 // func3b58с
-RGB0 = w[A0 + 0000];
-RGB1 = w[A1 + 0000];
-RGB2 = w[A2 + 0000];
-8003B598	jr     ra 
-8003B59C	nop
+RGB0 = w[A0];
+RGB1 = w[A1];
+RGB2 = w[A2];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b5a0
 IR1 = A0;
 IR2 = A1;
 IR3 = A2;
-8003B5AC	jr     ra 
-8003B5B0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b5b4
+
 IR0 = A0;
-8003B5B8	jr     ra 
-8003B5BC	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b5c0
 SZ1 = A0;
 SZ2 = A1;
 SZ3 = A2;
-8003B5CC	jr     ra 
-8003B5D0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b5d4
+
 SZ0 = A0;
 SZ1 = A1;
 SZ2 = A2;
 SZ3 = A3;
-8003B5E4	jr     ra 
-8003B5E8	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b5ec
+
 SXY0 = A0;
 SXY1 = A1;
 SXY2P = A2;
-8003B5F8	jr     ra 
-8003B5FC	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b600
+
 R11R12 = A0;
 R22R23 = A1;
 R33 = A2;
-8003B60C	jr     ra 
-8003B610	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b614
+
 MAC1 = A0;
 MAC2 = A1;
 MAC3 = A2;
-8003B620	jr     ra 
-8003B624	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b628
+
 LZCS = A0;
-8003B62C	jr     ra 
-8003B630	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b634
-8003B634
+
 DQA = A0;
-8003B638	jr     ra 
-8003B63C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b640
-8003B640
+
 DQB = A0;
-8003B644	jr     ra 
-8003B648	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b64c
-T0 = OFX;
-T1 = OFY;
-T0 = T0 >> 10;
-T1 = T1 >> 10;
-[A0 + 0000] = w(T0);
-[A1 + 0000] = w(T1);
-8003B664	jr     ra 
-8003B668	nop
+
+[A0] = w(OFX >> 10);
+[A1] = w(OFY >> 10);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func3b66c
-V0 = H;
-8003B670	jr     ra 
-8003B674	nop
-8003B678	nop
+
+return H;
 ////////////////////////////////
 
 
@@ -1813,7 +1839,7 @@ BFC = A2 << 4;
 
 
 ////////////////////////////////
-// system_gte_set_screen_offset()
+// system_psyq_set_geom_offset()
 
 OFX = A0 << 10;
 OFY = A1 << 10;
@@ -1822,7 +1848,7 @@ OFY = A1 << 10;
 
 
 ////////////////////////////////
-// system_gte_set_proj_plane_dist()
+// system_psyq_set_geom_screen()
 
 H = A0;
 ////////////////////////////////
@@ -3000,17 +3026,37 @@ L3cd94:	; 8003CD94
 
 
 ////////////////////////////////
-// func3cd9c()
-// patch C(06h) - ExceptionHandler()
+// system_patch_bios_exception_handler()
 
 [80062ed0] = w(RA);
 
 system_bios_enter_critical_section();
 
+// B(56h) GetC0Table()
+// Retrieves the address of the jump lists for C(NNh) functions,
+// allowing to patch entries in that lists (however, the BIOS does often jump
+// directly to the function addresses, rather than indirectly via the list, so
+// patching may have little effect in such cases).
 T2 = 00b0;
 T1 = 0056;
 8003CDB0	jalr   t2 ra // B(56h) GetC0Table()
 
+// patch C(06h) - ExceptionHandler()
+// The C(06h) vector points to the exception handler, ie. to the function that is
+// invoked from the 4 opcodes at address 80000080h, that opcodes jump directly to
+// the exception handler, so patching the C(06h) vector has no effect.
+// Reading the C(06h) entry can be used to let a custom 80000080h handler pass
+// control back to the default handler (that, by a "direct" jump, not by the usual
+// "MOV R9,06h / CALL 0C0h" method, which would destroy main programs R9
+// register).
+// Also, reading C(06h) may be useful for patching the exception handler (which
+// contains a bunch of NOP opcodes, which seem to be intended to insert additional
+// opcodes, such like debugger exception handling) (Note: some of that NOPs are
+// reserved for Memory Card IRQ handling).
+// BUG: Early BIOS versions did try to examine a copy of cop0r13 in r2 register,
+// but did forgot cop0r13 to r2 (so they examined garbage), this was fixed in
+// newer BIOS versions, additionally, most commercial games still include patches
+// for compatibility with the old BIOS.
 V0 = w[V0 + 18];
 T2 = 8003ce04; // new ExceptionHandler() func
 loop3cdcc:	; 8003CDCC

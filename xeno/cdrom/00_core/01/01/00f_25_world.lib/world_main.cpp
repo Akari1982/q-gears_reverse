@@ -13,7 +13,7 @@ system_psyq_wait_frames();
 A0 = 800361f4;
 system_call_main_timer_additional_callback_4();
 
-system_gte_init();
+system_psyq_init_geom();
 
 S0 = 8006efe4;
 V1 = hu[S0 + 0000];
@@ -642,7 +642,7 @@ L7099c:	; 8007099C
 
     A0 = a0; // x
     A1 = w[8009b1f4]; // y
-    system_gte_set_screen_offset();
+    system_psyq_set_geom_offset();
 
     V0 = w[8009b224];
     A0 = w[V0 + 70] + 0ffc;

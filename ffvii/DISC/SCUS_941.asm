@@ -24,7 +24,7 @@
 // func1155c
 8001155C-80011718
 ////////////////////////////////
-// func1171c
+// system_init_base
 8001171C-80011780
 ////////////////////////////////
 // func11784
@@ -2106,11 +2106,6 @@
 // system_sound_spu_set_release_rate_mode_sync
 800399D0-80039A70
 ////////////////////////////////
-
-
-
-// SCUS_941_gte.cpp
-////////////////////////////////
 // system_get_sin
 80039A74-80039AAC
 ////////////////////////////////
@@ -2129,7 +2124,7 @@
 // func39e40
 80039E40-80039ED8
 ////////////////////////////////
-// system_gte_init_geom
+// system_psyq_init_geom
 80039EDC-80039F58
 ////////////////////////////////
 // system_square_root
@@ -2303,10 +2298,10 @@
 // system_gte_set_far_colour
 8003B69C-8003B6B8
 ////////////////////////////////
-// system_gte_set_screen_offset
+// system_psyq_set_geom_offset
 8003B6BC-8003B6D8
 ////////////////////////////////
-// system_gte_set_proj_plane_dist
+// system_psyq_set_geom_screen
 8003B6DC-8003B6E8
 ////////////////////////////////
 // func3b6ec
@@ -2441,7 +2436,7 @@
 // func3cc1c
 8003CC1C-8003CD98
 ////////////////////////////////
-// func3cd9c
+// system_patch_bios_exception_handler
 8003CD9C-8003CE08
 ////////////////////////////////
 
@@ -3078,7 +3073,7 @@
 // system_psyq_set_draw_mode
 80044A68-80044ABC
 ////////////////////////////////
-// system_prepare_draw_env_packets
+// system_psyq_set_draw_env
 80044AC0-80044D60
 ////////////////////////////////
 // system_gpu_get_draw_mode_setting_command

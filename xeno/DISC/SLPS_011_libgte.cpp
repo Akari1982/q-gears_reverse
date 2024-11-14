@@ -28,13 +28,14 @@ if( A3 >= 64 )
 
 
 ////////////////////////////////
-// func48a6c()
+// system_psyq_init_geom()
+// Initialize the geometry transform engine.
 
 [80056090] = w(RA);
 system_patch_bios_exception_handler();
 RA = w[80056090];
 
-SR = SR | 40000000;
+SR |= 40000000;
 ZSF3 = 155;
 ZSF4 = 100;
 H = 3e8;
@@ -1297,7 +1298,7 @@ GFC = A1 << 4;
 
 
 ////////////////////////////////
-// system_gte_set_screen_offset()
+// system_psyq_set_geom_offset()
 
 OFX = A0 << 10;
 OFY = A1 << 10;
@@ -1306,7 +1307,7 @@ OFY = A1 << 10;
 
 
 ////////////////////////////////
-// system_gte_set_projection_plane_distance()
+// system_psyq_set_geom_screen()
 
 H = A0;
 ////////////////////////////////
@@ -2792,4 +2793,74 @@ if (A3 != 0)
 }
 
 V0 = V1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_patch_bios_exception_handler()
+
+[80058a70] = w(RA);
+
+system_enter_critical_section();
+
+// B(56h) GetC0Table()
+// Retrieves the address of the jump lists for C(NNh) functions,
+// allowing to patch entries in that lists (however, the BIOS does often jump
+// directly to the function addresses, rather than indirectly via the list, so
+// patching may have little effect in such cases).
+T2 = b0;
+T1 = 56;
+8004B368	jalr   t2 ra
+
+// patch C(06h) - ExceptionHandler()
+// The C(06h) vector points to the exception handler, ie. to the function that is
+// invoked from the 4 opcodes at address 80000080h, that opcodes jump directly to
+// the exception handler, so patching the C(06h) vector has no effect.
+// Reading the C(06h) entry can be used to let a custom 80000080h handler pass
+// control back to the default handler (that, by a "direct" jump, not by the usual
+// "MOV R9,06h / CALL 0C0h" method, which would destroy main programs R9
+// register).
+// Also, reading C(06h) may be useful for patching the exception handler (which
+// contains a bunch of NOP opcodes, which seem to be intended to insert additional
+// opcodes, such like debugger exception handling) (Note: some of that NOPs are
+// reserved for Memory Card IRQ handling).
+// BUG: Early BIOS versions did try to examine a copy of cop0r13 in r2 register,
+// but did forgot cop0r13 to r2 (so they examined garbage), this was fixed in
+// newer BIOS versions, additionally, most commercial games still include patches
+// for compatibility with the old BIOS.
+
+V0 = w[V0 + 18];
+T2 = 8004b3bc; // system_bios_new_exception_handler()
+loop4b384:	; 8004B384
+    [V0] = w(w[T2]);
+    T2 = T2 + 4;
+    V0 = V0 + 4;
+8004B390	bne    t2, 8004b3f4, loop4b384 [$8004b384]
+
+system_bios_flush_cache();
+
+system_exit_critical_section();
+
+RA = w[80058a70];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_new_exception_handler()
+8004B3BC	nop
+8004B3C0	nop
+K0 = 0100;
+K0 = w[K0 + 0008];
+8004B3CC	nop
+K0 = w[K0 + 0000];
+8004B3D4	nop
+K0 = K0 + 0008;
+[K0 + 0004] = w(AT);
+[K0 + 0008] = w(V0);
+[K0 + 000c] = w(V1);
+[K0 + 007c] = w(RA);
+8004B3EC	mfc0   v0,cause
+8004B3F0	nop
 ////////////////////////////////

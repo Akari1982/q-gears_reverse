@@ -1447,7 +1447,7 @@ if( bu[80062c02] >= 2 )
 
 A0 = S1 + 1c;
 A1 = S1;
-system_prepare_draw_env_packets();
+system_psyq_set_draw_env();
 
 [S1 + 1c] = w(w[S1 + 1c] | 00ffffff);
 
@@ -1925,39 +1925,40 @@ system_gpu_get_texture_window_setting_command(); // prepare texture window rect 
 
 
 ////////////////////////////////
-// system_prepare_draw_env_packets()
+// system_psyq_set_draw_env()
+// Initialize content of drawing environment change primitive.
 
+prim = A0; // draw env packets
 env = A1; // draw env
-packets = A0; // draw env packets
 
 A0 = h[env + 0]; // x top clip
 A1 = h[env + 2]; // y top clip
 system_gpu_set_drawing_area_top_left(); // create packet for clip
-[packets + 4] = w(V0);
+[prim + 4] = w(V0);
 
 A0 = h[env + 0] + h[env + 4] - 1;
 A1 = h[env + 2] + h[env + 6] - 1;
 system_gpu_set_drawing_area_bottom_right(); // create packet for сlip
-[packets + 8] = w(V0);
+[prim + 8] = w(V0);
 
 A0 = h[env + 8]; // offset x
 A1 = h[env + a]; // offset y
 system_gpu_set_drawing_offset(); // create packet for offset
-[packets + c] = w(V0);
+[prim + c] = w(V0);
 
 A0 = bu[env + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = bu[env + 16]; // dithering processing flag. 0: off; 1: on
 A2 = hu[env + 14]; // initial values of texture page
 system_gpu_get_draw_mode_setting_command(); // create packet
-[packets + 10] = w(V0);
+[prim + 10] = w(V0);
 
 A0 = env + c; // texture window rect
 system_gpu_get_texture_window_setting_command(); // create packet
-[packets + 14] = w(V0);
+[prim + 14] = w(V0);
 
-[packets + 18] = w(e6000000);
+[prim + 18] = w(e6000000);
 
-[packets + 3] = b(6); // number of 0x4 packets to gpu
+[prim + 3] = b(6); // number of 0x4 packets to gpu
 
 if( bu[env + 18] != 0 )
 {
@@ -1977,17 +1978,17 @@ if( bu[env + 18] != 0 )
         rect_x = rect_x - hu[env + 8];
         rect_y = rect_y - hu[env + a];
 
-        [packets + 7 * 4] = w(60000000 | (bu[env + 1a] << 08) | (bu[env + 1b] << 10) | bu[env + 19]);
-        [packets + 8 * 4] = w((rect_y << 10) | rect_x);
-        [packets + 9 * 4] = w((rect_h << 10) | rect_w);
+        [prim + 7 * 4] = w(60000000 | (bu[env + 1a] << 08) | (bu[env + 1b] << 10) | bu[env + 19]);
+        [prim + 8 * 4] = w((rect_y << 10) | rect_x);
+        [prim + 9 * 4] = w((rect_h << 10) | rect_w);
     }
     else
     {
-        [packets + 7 * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
-        [packets + 8 * 4] = w((rect_y << 10) | rect_x);
-        [packets + 9 * 4] = w((rect_h << 10) | rect_w);
+        [prim + 7 * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
+        [prim + 8 * 4] = w((rect_y << 10) | rect_x);
+        [prim + 9 * 4] = w((rect_h << 10) | rect_w);
     }
-    [packets + 3] = b(9);
+    [prim + 3] = b(9);
 }
 ////////////////////////////////
 

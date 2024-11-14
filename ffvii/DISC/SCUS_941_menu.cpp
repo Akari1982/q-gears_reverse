@@ -1446,7 +1446,7 @@ for( int i = 0; i < number_to_render; ++i )
 
         A0 = w[80062f24];
         A1 = SP + 18;
-        system_prepare_draw_env_packets();
+        system_psyq_set_draw_env();
 
         A0 = ot;
         A1 = w[80062f24];
@@ -1504,7 +1504,7 @@ for( int i = 0; i < number_to_render; ++i )
 
         A0 = w[80062f24];
         A1 = SP + 18;
-        system_prepare_draw_env_packets();
+        system_psyq_set_draw_env();
 
         A0 = ot;
         A1 = w[80062f24];
@@ -8322,7 +8322,7 @@ A1 = SP + 0018;
 V1 = hu[S0 + 0006];
 V0 = 003f;
 [SP + 002c] = h(V0);
-80026B14	jal    system_prepare_draw_env_packets [$80044ac0]
+80026B14	jal    system_psyq_set_draw_env [$80044ac0]
 [SP + 001e] = h(V1);
 A0 = w[GP + 0280];
 80026B20	lui    a1, $8006

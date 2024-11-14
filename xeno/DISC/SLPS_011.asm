@@ -3164,18 +3164,13 @@
 // system_graphic_fill_buffer
 80048928-80048954
 ////////////////////////////////
-
-
-
-// SLPS_011_gte.cpp
-////////////////////////////////
 // func48958
 80048958-80048A60
 ////////////////////////////////
 80048A64	bne    t0, t1, $800657a8
 80048A68	00409F9C	œŸ@.
 ////////////////////////////////
-// system_gte_init
+// system_psyq_init_geom
 80048A6C-80048AF0
 ////////////////////////////////
 // system_square_root
@@ -3331,10 +3326,10 @@
 // func49fb4
 80049FB4-80049FD0
 ////////////////////////////////
-// system_gte_set_screen_offset
+// system_psyq_set_geom_offset
 80049FD4-80049FF0
 ////////////////////////////////
-// system_gte_set_projection_plane_distance
+// system_psyq_set_geom_screen
 80049FF4-8004A000
 ////////////////////////////////
 // func4a004

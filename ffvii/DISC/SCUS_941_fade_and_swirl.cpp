@@ -715,10 +715,10 @@ system_psyq_put_draw_env();
 
 A0 = 9f;
 A1 = 77;
-system_gte_set_screen_offset();
+system_psyq_set_geom_offset();
 
 A0 = 1e0;
-system_gte_set_proj_plane_dist();
+system_psyq_set_geom_screen();
 
 [8019daa0] = w(0);
 

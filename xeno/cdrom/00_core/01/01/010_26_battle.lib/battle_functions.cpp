@@ -62221,12 +62221,12 @@ func243e4(); // play animation
 800B3ADC	j      Lb43e8 [$800b43e8]
 800B3AE0	nop
 A0 = 00a0;
-800B3AE8	jal    $system_gte_set_screen_offset
+800B3AE8	jal    $system_psyq_set_geom_offset
 A1 = 0070;
 800B3AF0	j      Lb43e8 [$800b43e8]
 800B3AF4	nop
 A0 = 00a0;
-800B3AFC	jal    $system_gte_set_screen_offset
+800B3AFC	jal    $system_psyq_set_geom_offset
 A1 = 00a4;
 800B3B04	j      Lb43e8 [$800b43e8]
 800B3B08	nop
@@ -65163,7 +65163,7 @@ A0 = SP + 0020;
 S7 = 0;
 A0 = 00a0;
 A1 = 0070;
-800B66DC	jal    $system_gte_set_screen_offset
+800B66DC	jal    $system_psyq_set_geom_offset
 [SP + 0058] = w(V0);
 800B66E4	jal    $80049ff4
 A0 = 0200;
@@ -65244,7 +65244,7 @@ V0 = 0002;
 800B67FC	nop
 A0 = w[SP + 0020];
 A1 = w[SP + 0024];
-800B6808	jal    $system_gte_set_screen_offset
+800B6808	jal    $system_psyq_set_geom_offset
 800B680C	nop
 A0 = w[SP + 0058];
 800B6814	jal    $80049ff4
@@ -66302,7 +66302,7 @@ SP = SP + 0018;
 A0 = 00a0;
 A1 = 00a4;
 
-800B7840	jal    $system_gte_set_screen_offset
+800B7840	jal    $system_psyq_set_geom_offset
 
 S1 = 800c419c;
 A0 = S1;
