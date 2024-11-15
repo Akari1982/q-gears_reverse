@@ -155,24 +155,23 @@ for( int i = 0; i < number_of_model; ++i )
         A1 = SP + 18;
         field_calculate_distance_to_screen();
 
-        if( V0 < 0f00 )
+        if( V0 < f00 )
         {
-            A0 = model_data + bu[block7_data + i * 8 + 4] * 24;
-            S0 = b[A0 + 1]; // +1[] KAWAI byte in new structure
+            model_id = bu[block7_data + i * 8 + 4];
+            S0 = b[model_data + model_id * 24 + 1]; // +1[] KAWAI byte in new structure
             if( ( S0 == 4 ) || ( S0 == 8 ) || ( S0 == 9 ) || ( S0 == b ) || ( S0 == c ) )
             {
-                A0 = model_data + bu[block7_data + i * 8 + 4] * 24;
+                A0 = model_data + model_id * 24;
                 funcae23c();
             }
             else
             {
-                [A0 + 1] = b(ff);
+                [model_data + model_id * 24 + 1] = b(ff);
 
-                A0 = model_data + bu[block7_data + i * 8 + 4] * 24;
+                A0 = model_data + model_id] * 24;
                 funcae23c();
 
-                 A0 = model_data + bu[block7_data + i * 8 + 4] * 24;
-                [A0 + 1] = b(S0);
+                [model_data + model_id * 24 + 1] = b(S0);
             }
         }
     }
@@ -183,17 +182,17 @@ for( int i = 0; i < number_of_model; ++i )
 {
     if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
     {
-        S3 = h[80074ea4 + i * 84 + 00];
-        if( S3 == 1 )
+        S3 = h[80074ea4 + i * 84 + 0];
+        if( S3 == 1 ) // if kawaii
         {
-            [SP + 10] = h(w[80074ea4 + S3 + c] >> c);
-            [SP + 12] = h(w[80074ea4 + S3 + 10] >> c);
-            [SP + 14] = h((w[80074ea4 + S3 + 14] >> c) - a);
+            [SP + 10] = h(w[80074ea4 + i * 84 + c] >> c);
+            [SP + 12] = h(w[80074ea4 + i * 84 + 10] >> c);
+            [SP + 14] = h((w[80074ea4 + i * 84 + 14] >> c) - a);
             A0 = SP + 10;
             A1 = SP + 18;
             field_calculate_distance_to_screen();
 
-            if( V0 < 0f00 )
+            if( V0 < f00 )
             {
                 V1 = w[8004a62c];
                 A2 = bu[block7_data + i * 8 + 4]; // model id
@@ -204,7 +203,7 @@ for( int i = 0; i < number_of_model; ++i )
 
                 if( V0 == 1 )
                 {
-                    [80074ea4 + i * 84 + 00] = h(2);
+                    [80074ea4 + i * 84 + 0] = h(2);
                 }
             }
         }

@@ -49,7 +49,7 @@
 800722c4 []       current actor id.
 
 80074ea4 model related data. (size 0x84)
-    + 00 [][]     store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1 (maybe end kawai)
+    + 00 [][]     store 1 here in KAWAI opcode. Store 2 here if run_kawai function returns 1 (maybe end kawai)
     + 02 [][]     store 0 here in KAWAI opcode.
     + 04 [][][][] offset to KAWAI opcode data in script (like offset to opcode + 3).
     + 08 []       blinking. 0 - on, 1 - off.
