@@ -642,7 +642,7 @@ for( int i = 0; i < number_of_model; ++i )
 
             A0 = model_data + model_id * 24;
             A1 = 1f800000;
-            field_model_load_eyes_mouth_tex_to_vram();
+            field_model_kawai_load_eyes_mouth_tex_to_vram();
         }
 
         // identity matrix
@@ -702,7 +702,7 @@ for( int i = 0; i < number_of_model; ++i )
         [1f800000 + 6] = b(1); // for all packets
         A0 = model_data + model_id * 24;
         A1 = 1f800000;
-        field_model_set_color_to_model_packets();
+        field_model_kawai_set_color_to_model_packets();
 
         [800df114] = b(bu[800df114] ^ 1); // switch to second buffer
 
@@ -713,7 +713,7 @@ for( int i = 0; i < number_of_model; ++i )
 
         A0 = model_data + model_id * 24;
         A1 = 1f800000;
-        field_model_set_color_to_model_packets();
+        field_model_kawai_set_color_to_model_packets();
 
         [800df114] = b(bu[800df114] ^ 1); // switch back
     }
@@ -2322,7 +2322,6 @@ for( int i = 0; i < 10; ++i )
 ////////////////////////////////
 // run_kawai()
 
-
 model_data = A0;
 kawai_data = A1;
 model_id = A2;
@@ -2353,19 +2352,19 @@ switch( b[model_data + 1] )
 {
     // used this inbuild addresses for function calls
     // rewrite code to use direct call
-    // 0 800B1C7C field_model_load_eyes_mouth_tex_to_vram()
-    // 1 800B2A00 field_model_set_model_transparency()
-    // 2 800B0EDC field_model_set_color_to_model_packets()
-    // 3 800B0618 funcb0618()
-    // 4 800B2DD4 funcb2dd4() // set color to model packet based on water level
-    // 5 800B5260 field_model_set_lighting_to_model_packets()
+    // 0 800B1C7C field_model_kawai_load_eyes_mouth_tex_to_vram()
+    // 1 800B2A00 field_model_kawai_set_model_transparency()
+    // 2 800B0EDC field_model_kawai_set_color_to_model_packets()
+    // 3 800B0618 field_model_kawai_set_custom_lighting_to_model_packets()
+    // 4 800B2DD4 field_model_kawai_set_color_to_model_packets_below_level()
+    // 5 800B5260 field_model_kawai_set_lighting_to_model_packets()
     // 6 800B480C kawai_action_6()
     // 7 800B4B04 kawai_action_7()
     // 8 800B4EAC kawai_action_8()
     // 9 800B62C4 kawai_action_9()
     // a 800B6AE4 kawai_action_a()
     // b 800B86D8 kawai_action_b()
-    // c 800B6B4C funcb6b4c()
+    // c 800B6B4C kawai_action_c()
     // d 800B9B0C kawai_action_d()
 
     case 0: // EYETX
@@ -2374,7 +2373,7 @@ switch( b[model_data + 1] )
 
         A0 = model_data;
         A1 = kawai_data;
-        field_model_load_eyes_mouth_tex_to_vram();
+        field_model_kawai_load_eyes_mouth_tex_to_vram();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -2387,7 +2386,7 @@ switch( b[model_data + 1] )
 
         A0 = model_data;
         A1 = kawai_data;
-        field_model_set_model_transparency();
+        field_model_kawai_set_model_transparency();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -2398,7 +2397,7 @@ switch( b[model_data + 1] )
     {
         A0 = model_data;
         A1 = kawai_data;
-        field_model_set_color_to_model_packets();
+        field_model_kawai_set_color_to_model_packets();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -2409,7 +2408,7 @@ switch( b[model_data + 1] )
     {
         A0 = model_data;
         A1 = kawai_data;
-        funcb0618();
+        field_model_kawai_set_custom_lighting_to_model_packets();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -2420,7 +2419,7 @@ switch( b[model_data + 1] )
     {
         A0 = model_data;
         A1 = kawai_data;
-        funcb2dd4();
+        field_model_kawai_set_color_to_model_packets_below_level();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -2468,7 +2467,7 @@ switch( b[model_data + 1] )
 
         A0 = model_data;
         A1 = 800dfe1c;
-        field_model_set_lighting_to_model_packets();
+        field_model_kawai_set_lighting_to_model_packets();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -2623,8 +2622,7 @@ return 1;
 
 
 ////////////////////////////////
-// funcb0618
-// kawai_action_3
+// field_model_kawai_set_custom_lighting_to_model_packets()
 
 model_data = A0;
 kawai_data = A1;
@@ -2735,369 +2733,177 @@ return 1;
 
 ////////////////////////////////
 // funcb0a48()
+// set vertex color based on lighting matrixes and normals
 
-part_data = T8 = A0;
+part_data = A0;
 
-V0 = hu[T8 + 000e];
-V1 = w[T8 + 0018];
-800B0A54	lui    t6, $800e
-800B0A58	addiu  t6, t6, $f520 (=-$ae0)
-T1 = V0 + V1;
-V0 = bu[800df114];
-A3 = w[T8 + 001c];
-800B0A6C	beq    v0, zero, Lb0a80 [$800b0a80]
-800B0A70	addiu  sp, sp, $ffc0 (=-$40)
-V0 = hu[T8 + 0016];
-800B0A78	nop
-A3 = A3 + V0;
+normals = 800df520;
+poly = w[part_data + 18] + hu[part_data + e];
+packet = w[part_data + 1c];
 
-Lb0a80:	; 800B0A80
-T7 = w[T8 + 0004];
-800B0A84	nop
-T3 = T7 & 00ff;
-if( T3 != 0 )
+if( bu[800df114] != 0 ) packet += hu[part_data + 16];
+
+for( int i = 0; i < bu[part_data + 4]; ++i )
 {
-    T0 = 0;
-    T2 = A3 + 0007;
-
-    loopb0a98:	; 800B0A98
-        V0 = w[A3 + 0000];
-        if( V0 != 0 )
+    if( w[packet] != 0 )
+    {
+        T5 = bu[packet + 7];
+        for( int j = 0; j < 4; ++j )
         {
-            T4 = T1;
-            T5 = bu[T2 + 0000];
-            V1 = 0;
-            A2 = A3 + 0004;
-            A1 = 0004;
-            A0 = T1;
-
-            loopb0ac0:	; 800B0AC0
-                V0 = bu[A0 + 0007];
-                V0 = V0 << 03;
-                V0 = T6 + V0;
-                VXY0 = w[V0 + 0000];
-                VZ0 = w[V0 + 0004];
-                V0 = T4 + A1;
-                RGB = w[V0 + 0000];
-                gte_NCCS(); // Normal color col. v0
-                [A2 + 0000] = w(RGB2);
-                A2 = A2 + 000c;
-                A1 = A1 + 0004;
-                V1 = V1 + 0001;
-                A0 = A0 + 0004;
-                V0 = V1 < 0004;
-            800B0B00	bne    v0, zero, loopb0ac0 [$800b0ac0]
-
-            [T2 + 0000] = b(T5);
+            V0 = bu[poly + 4 + j * 4 + 3];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
+            RGB = w[poly + 4 + j * 4];
+            gte_NCCS(); // Normal color col. v0
+            [packet + 4 + j * c] = w(RGB2);
         }
-
-        T0 = T0 + 0001;
-        T2 = T2 + 0034;
-        A3 = A3 + 0034;
-        T1 = T1 + 0018;
-        V0 = T0 < T3;
-    800B0B1C	bne    v0, zero, loopb0a98 [$800b0a98]
+        [packet + 7] = b(T5);
+    }
+    packet += 34;
+    poly += 18;
 }
 
-V0 = T7 & ff00;
-T3 = V0 >> 08;
-800B0B2C	beq    t3, zero, Lb0bc4 [$800b0bc4]
-T0 = 0;
-T2 = A3 + 0007;
-
-loopb0b38:	; 800B0B38
-V0 = w[A3 + 0000];
-if( V0 != 0 )
+for( int i = 0; i < bu[part_data + 5]; ++i )
 {
-    T4 = T1;
-    T5 = bu[T2 + 0000];
-    V1 = 0;
-    A2 = A3 + 0004;
-    A1 = 0004;
-    A0 = T1;
-
-    loopb0b60:	; 800B0B60
-        V0 = bu[A0 + 0007];
-        800B0B64	nop
-        V0 = V0 << 03;
-        V0 = T6 + V0;
-        VXY0 = w[V0 + 0000];
-        VZ0 = w[V0 + 0004];
-        V0 = T4 + A1;
-        RGB = w[V0 + 0000];
-        800B0B80	nop
-        800B0B84	nop
-        gte_NCCS(); // Normal color col. v0
-        [A2 + 0000] = w(RGB2);
-        A2 = A2 + 000c;
-        A1 = A1 + 0004;
-        V1 = V1 + 0001;
-        A0 = A0 + 0004;
-        V0 = V1 < 0003;
-    800B0BA0	bne    v0, zero, loopb0b60 [$800b0b60]
-
-    [T2 + 0000] = b(T5);
+    if( w[packet] != 0 )
+    {
+        T5 = bu[packet + 7];
+        for( int j = 0; j < 3; ++j )
+        {
+            V0 = bu[poly + 4 + j * 4 + 3];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
+            RGB = w[poly + 4 + j * 4];
+            gte_NCCS(); // Normal color col. v0
+            [packet + 4 + j * c] = w(RGB2);
+        }
+        [packet + 7] = b(T5);
+    }
+    packet += 28;
+    poly += 14;
 }
 
-T0 = T0 + 0001;
-T2 = T2 + 0028;
-A3 = A3 + 0028;
-V0 = T0 < T3;
-800B0BBC	bne    v0, zero, loopb0b38 [$800b0b38]
-T1 = T1 + 0014;
+for( int i = 0; i < bu[part_data + 6]; ++i )
+{
+    if( w[packet] != 0 )
+    {
+        V1 = bu[packet + 7];
+        V0 = bu[poly + 4 + 3];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+        [packet + 7] = b(V1);
+    }
+    packet += 28;
+    poly += c;
+}
 
-Lb0bc4:	; 800B0BC4
-V0 = T7 >> 10;
-T3 = V0 & 00ff;
-800B0BCC	beq    t3, zero, Lb0c38 [$800b0c38]
-T0 = 0;
-A2 = T1 + 0004;
-A1 = A3 + 0007;
+for( int i = 0; i < bu[part_data + 7]; ++i )
+{
+    if( w[packet] != 0 )
+    {
+        V1 = bu[packet + 7];
+        V0 = bu[poly + 4 + 3];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+        [packet + 7] = b(V1);
+    }
+    packet += 20;
+    poly += c;
+}
 
-loopb0bdc:	; 800B0BDC
-V0 = w[A3 + 0000];
-800B0BE0	nop
-800B0BE4	beq    v0, zero, Lb0c1c [$800b0c1c]
-A0 = A3 + 0004;
-V0 = bu[A2 + 0003];
-V1 = bu[A1 + 0000];
-V0 = V0 << 03;
-V0 = T6 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-RGB = w[A2 + 0000];
-800B0C08	nop
-800B0C0C	nop
-gte_NCCS(); // Normal color col. v0
-[A0 + 0000] = w(RGB2);
-[A1 + 0000] = b(V1);
+for( int i = 0; i < bu[part_data + 8]; ++i )
+{
+    if( w[packet] != 0 )
+    {
+        V1 = bu[packet + 7];
+        V0 = bu[poly + 4 + 3];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+        [packet + 7] = b(V1);
+    }
+    packet += 14;
+    poly += 8;
+}
 
-Lb0c1c:	; 800B0C1C
-T0 = T0 + 0001;
-A1 = A1 + 0028;
-A3 = A3 + 0028;
-A2 = A2 + 000c;
-V0 = T0 < T3;
-800B0C30	bne    v0, zero, loopb0bdc [$800b0bdc]
-T1 = T1 + 000c;
+for( int i = 0; i < bu[part_data + 9]; ++i )
+{
+    if( w[packet] != 0 )
+    {
+        V1 = bu[packet + 7];
+        V0 = bu[poly + 4 + 3];
+        VXY0 = w[normals + V0 * 8 + 0];
+        VZ0 = w[normals + V0 * 8 + 4];
+        RGB = w[poly + 4];
+        gte_NCCS(); // Normal color col. v0
+        [packet + 4] = w(RGB2);
+        [packet + 7] = b(V1);
+    }
+    packet += 18;
+    poly += 8;
+}
 
-Lb0c38:	; 800B0C38
-T3 = T7 >> 18;
-800B0C3C	beq    t3, zero, Lb0ca8 [$800b0ca8]
-T0 = 0;
-A2 = T1 + 0004;
-A1 = A3 + 0007;
+for( int i = 0; i < bu[part_data + a]; ++i )
+{
+    if( w[packet] != 0 )
+    {
+        T5 = bu[packet + 7];
+        for( int j = 0; j < 3; ++j )
+        {
+            V0 = bu[poly + 4 + j * 4 + 3];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
+            RGB = w[poly + 4 + j * 4];
+            gte_NCCS(); // Normal color col. v0
+            [packet + 4 + j * 8] = w(RGB2);
+        }
+        [packet + 7] = b(T5);
+    }
+    packet += 1c;
+    poly += 10;
+}
 
-loopb0c4c:	; 800B0C4C
-V0 = w[A3 + 0000];
-800B0C50	nop
-800B0C54	beq    v0, zero, Lb0c8c [$800b0c8c]
-A0 = A3 + 0004;
-V0 = bu[A2 + 0003];
-V1 = bu[A1 + 0000];
-V0 = V0 << 03;
-V0 = T6 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-RGB = w[A2 + 0000];
-800B0C78	nop
-800B0C7C	nop
-gte_NCCS(); // Normal color col. v0
-[A0 + 0000] = w(RGB2);
-[A1 + 0000] = b(V1);
-
-Lb0c8c:	; 800B0C8C
-T0 = T0 + 0001;
-A1 = A1 + 0020;
-A3 = A3 + 0020;
-A2 = A2 + 000c;
-V0 = T0 < T3;
-800B0CA0	bne    v0, zero, loopb0c4c [$800b0c4c]
-T1 = T1 + 000c;
-
-Lb0ca8:	; 800B0CA8
-T7 = w[T8 + 0008];
-800B0CAC	nop
-T3 = T7 & 00ff;
-800B0CB4	beq    t3, zero, Lb0d20 [$800b0d20]
-T0 = 0;
-A2 = T1 + 0004;
-A1 = A3 + 0007;
-
-loopb0cc4:	; 800B0CC4
-V0 = w[A3 + 0000];
-800B0CC8	nop
-800B0CCC	beq    v0, zero, Lb0d04 [$800b0d04]
-A0 = A3 + 0004;
-V0 = bu[A2 + 0003];
-V1 = bu[A1 + 0000];
-V0 = V0 << 03;
-V0 = T6 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-RGB = w[A2 + 0000];
-800B0CF0	nop
-800B0CF4	nop
-gte_NCCS(); // Normal color col. v0
-[A0 + 0000] = w(RGB2);
-[A1 + 0000] = b(V1);
-
-Lb0d04:	; 800B0D04
-T0 = T0 + 0001;
-A1 = A1 + 0014;
-A3 = A3 + 0014;
-A2 = A2 + 0008;
-V0 = T0 < T3;
-800B0D18	bne    v0, zero, loopb0cc4 [$800b0cc4]
-T1 = T1 + 0008;
-
-Lb0d20:	; 800B0D20
-V0 = T7 & ff00;
-T3 = V0 >> 08;
-800B0D28	beq    t3, zero, Lb0d94 [$800b0d94]
-T0 = 0;
-A2 = T1 + 0004;
-A1 = A3 + 0007;
-
-loopb0d38:	; 800B0D38
-V0 = w[A3 + 0000];
-800B0D3C	nop
-800B0D40	beq    v0, zero, Lb0d78 [$800b0d78]
-A0 = A3 + 0004;
-V0 = bu[A2 + 0003];
-V1 = bu[A1 + 0000];
-V0 = V0 << 03;
-V0 = T6 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-RGB = w[A2 + 0000];
-800B0D64	nop
-800B0D68	nop
-gte_NCCS(); // Normal color col. v0
-[A0 + 0000] = w(RGB2);
-[A1 + 0000] = b(V1);
-
-Lb0d78:	; 800B0D78
-T0 = T0 + 0001;
-A1 = A1 + 0018;
-A3 = A3 + 0018;
-A2 = A2 + 0008;
-V0 = T0 < T3;
-800B0D8C	bne    v0, zero, loopb0d38 [$800b0d38]
-T1 = T1 + 0008;
-
-Lb0d94:	; 800B0D94
-V0 = T7 >> 10;
-T3 = V0 & 00ff;
-800B0D9C	beq    t3, zero, Lb0e34 [$800b0e34]
-T0 = 0;
-T2 = A3 + 0007;
-
-loopb0da8:	; 800B0DA8
-V0 = w[A3 + 0000];
-800B0DAC	nop
-800B0DB0	beq    v0, zero, Lb0e1c [$800b0e1c]
-800B0DB4	nop
-T4 = T1;
-T5 = bu[T2 + 0000];
-V1 = 0;
-A2 = A3 + 0004;
-A1 = 0004;
-A0 = T1;
-
-loopb0dd0:	; 800B0DD0
-V0 = bu[A0 + 0007];
-800B0DD4	nop
-V0 = V0 << 03;
-V0 = T6 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-V0 = T4 + A1;
-RGB = w[V0 + 0000];
-800B0DF0	nop
-800B0DF4	nop
-gte_NCCS(); // Normal color col. v0
-[A2 + 0000] = w(RGB2);
-A2 = A2 + 0008;
-A1 = A1 + 0004;
-V1 = V1 + 0001;
-V0 = V1 < 0003;
-800B0E10	bne    v0, zero, loopb0dd0 [$800b0dd0]
-A0 = A0 + 0004;
-[T2 + 0000] = b(T5);
-
-Lb0e1c:	; 800B0E1C
-T0 = T0 + 0001;
-T2 = T2 + 001c;
-A3 = A3 + 001c;
-V0 = T0 < T3;
-800B0E2C	bne    v0, zero, loopb0da8 [$800b0da8]
-T1 = T1 + 0010;
-
-Lb0e34:	; 800B0E34
-T3 = T7 >> 18;
-800B0E38	beq    t3, zero, Lb0ed0 [$800b0ed0]
-T0 = 0;
-T2 = A3 + 0007;
-
-loopb0e44:	; 800B0E44
-V0 = w[A3 + 0000];
-800B0E48	nop
-800B0E4C	beq    v0, zero, Lb0eb8 [$800b0eb8]
-800B0E50	nop
-T4 = T1;
-T5 = bu[T2 + 0000];
-V1 = 0;
-A2 = A3 + 0004;
-A1 = 0004;
-A0 = T1;
-
-loopb0e6c:	; 800B0E6C
-V0 = bu[A0 + 0007];
-800B0E70	nop
-V0 = V0 << 03;
-V0 = T6 + V0;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-V0 = T4 + A1;
-RGB = w[V0 + 0000];
-800B0E8C	nop
-800B0E90	nop
-gte_NCCS(); // Normal color col. v0
-[A2 + 0000] = w(RGB2);
-A2 = A2 + 0008;
-A1 = A1 + 0004;
-V1 = V1 + 0001;
-V0 = V1 < 0004;
-800B0EAC	bne    v0, zero, loopb0e6c [$800b0e6c]
-A0 = A0 + 0004;
-[T2 + 0000] = b(T5);
-
-Lb0eb8:	; 800B0EB8
-T0 = T0 + 0001;
-T2 = T2 + 0024;
-A3 = A3 + 0024;
-V0 = T0 < T3;
-800B0EC8	bne    v0, zero, loopb0e44 [$800b0e44]
-T1 = T1 + 0014;
-
-Lb0ed0:	; 800B0ED0
-SP = SP + 0040;
-800B0ED4	jr     ra 
-800B0ED8	nop
+for( int i = 0; i < bu[part_data + b]; ++i )
+{
+    if( w[packet] != 0 )
+    {
+        T5 = bu[packet + 7];
+        for( int j = 0; j < 4; ++j )
+        {
+            V0 = bu[poly + 4 + j * 4 + 3];
+            VXY0 = w[normals + V0 * 8 + 0];
+            VZ0 = w[normals + V0 * 8 + 4];
+            RGB = w[poly + 4 + j * 4];
+            gte_NCCS(); // Normal color col. v0
+            [packet + 4 + j * 8] = w(RGB2);
+        }
+        [packet + 7] = b(T5);
+    }
+    packet += 24;
+    poly += 14;
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// field_model_set_color_to_model_packets()
+// field_model_kawai_set_color_to_model_packets()
 
 model_data = A0;
 
 R = h[A1 + 0];
 G = h[A1 + 2];
 B = h[A1 + 4];
-[1f800200] = w(bu[A1 + 6]);
+[1f800200] = w(bu[A1 + 6]); // flags
+// 0x1 - 1 - for all packets, 0 - only for inserted packets
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 
@@ -3128,9 +2934,9 @@ if( bu[800df114] != 0 ) packet += hu[part_data + 16]; // if second buffer
 
 poly = w[part_data + 18] + hu[part_data + e];
 
-IR0 = 10;
+IR0 = 10; // scaling factor
 
-if( w[1f800200] & 1 )
+if( w[1f800200] & 1 ) // 0x1 - 1 - for all packets, 0 - only for inserted packets
 {
     for( int i = 0; i < bu[part_data + 4]; ++i ) // number of shaded textured quad
     {
@@ -3142,7 +2948,7 @@ if( w[1f800200] & 1 )
         IR1 = bu[poly + 4];
         IR2 = bu[poly + 5];
         IR3 = bu[poly + 6];
-        gte_gpl12(); // General purpose interpolation
+        gte_gpl12(); // General purpose interpolation ( MAC1=A1[MAC1 + IR0 * IR1] )
 
         MAC1 = R;
         MAC2 = G;
@@ -3647,7 +3453,7 @@ else
 
 
 ////////////////////////////////
-// field_model_load_eyes_mouth_tex_to_vram()
+// field_model_kawai_load_eyes_mouth_tex_to_vram()
 
 model_data = A0;
 S3 = A1;
@@ -4045,7 +3851,7 @@ if( ( ( w[V1 + 0] & 2 ) == 0 ) || ( calculate_anyway != 0 ) )
 
 
 ////////////////////////////////
-// field_model_set_model_transparency()
+// field_model_kawai_set_model_transparency()
 
 model_data = A0;
 kawai_data = A1;
@@ -4125,8 +3931,7 @@ return 1;
 
 
 ////////////////////////////////
-// kawai_action_4
-// funcb2dd4
+// field_model_kawai_set_color_to_model_packets_below_level()
 
 model_data = A0;
 kawai_data = A1;
@@ -4136,13 +3941,16 @@ g = h[kawai_data + 2];
 b = h[kawai_data + 4];
 level = h[kawai_data + 6];
 flags = h[kawai_data + 8];
+// 0x1 - 1 - per vertex check, 0 - averege check
+// 0x2 - 1 - for all packets, 0 - only for inserted packets
+// 0x4 - 1 - use Y, 0 - use Z for level
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 
 for( int i = 0; i < bu[model_data + 3]; ++i )
 {
-    [1f800200] = h(S4);
-    [1f800204] = h(S5);
+    [1f800200] = h(flags);
+    [1f800204] = h(level);
 
     bone_data = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20;
 
@@ -4159,7 +3967,7 @@ for( int i = 0; i < bu[model_data + 3]; ++i )
     A1 = r;
     A2 = g;
     A3 = b;
-    funcb2f40();
+    field_model_set_color_to_part_packets_below_level();
 }
 
 return 1;
@@ -4168,7 +3976,7 @@ return 1;
 
 
 ////////////////////////////////
-// funcb2f40()
+// field_model_set_color_to_part_packets_below_level()
 
 part_data = A0; // offset to model_part
 r = A1 << 4;
@@ -4177,6 +3985,9 @@ b = A3 << 4;
 
 vertexes = 1f800010;
 flags = w[1f800200];
+// 0x1 - 1 - per vertex check, 0 - averege check
+// 0x2 - 1 - for all packets, 0 - only for inserted packets
+// 0x4 - 1 - use Y, 0 - use Z for level
 level = (w[1f800204] << 10) >> 10;
 
 for( int i = 0; i < bu[part_data + 2]; ++i ) // number of vertex
@@ -4187,8 +3998,8 @@ for( int i = 0; i < bu[part_data + 2]; ++i ) // number of vertex
     VZ0 = w[V1 + i * 8 + 4];
     gte_rtv0tr(); // v0 * rotmatrix + tr vector
 
-    if( flags & 4 ) [vertexes + i * 4] = w(MAC2);
-    else         [vertexes + i * 4] = w(MAC3);
+    if( flags & 4 ) [vertexes + i * 4] = w(MAC2); // y
+    else            [vertexes + i * 4] = w(MAC3); // z
 }
 
 poly = w[part_data + 18] + hu[part_data + e];
@@ -4196,7 +4007,7 @@ poly = w[part_data + 18] + hu[part_data + e];
 packet = w[part_data + 1c];
 if( bu[800df114] != 0 ) packet += hu[part_data + 16];
 
-IR0 = 10;
+IR0 = 10; // scaling factor
 
 if( flags & 2 )
 {
@@ -4218,7 +4029,7 @@ if( flags & 2 )
                     IR1 = V1 & ff;
                     IR2 = (V1 >> 8) & ff;
                     IR3 = (V1 >> 10) & ff;
-                    gte_gpl12(); // General purpose interpolation
+                    gte_gpl12(); // General purpose interpolation ( MAC1=A1[MAC1 + IR0 * IR1] )
                     [packet + 4 + j * c] = w(RGB2);
 
                 }
@@ -4273,7 +4084,7 @@ if( flags & 2 )
         {
             for( int j = 0; j < 3; ++j )
             {
-                V0 = (w[poly] >> (j * 8)) & ff;
+                V0 = (w[poly] >> (j << 3)) & ff;
                 if( w[vertexes + V0 * 4] < level )
                 {
                     MAC1 = r;
@@ -4360,157 +4171,380 @@ if( flags & 2 )
         poly += c;
     }
 
-    S3 = w[part_data + 4];
-    T7 = S3 >> 18;
-    if( T7 != 0 )
+    for( int i = 0; i < bu[part_data + 7]; ++i )
     {
-        T3 = 0;
-        V0 = level << 10;
-        T1 = V0 >> 10;
-        A3 = poly + 0004;
-        A1 = packet + 0007;
+        T6 = bu[packet + 7];
 
-        loopb3560:	; 800B3560
-            A2 = w[poly + 0000];
-            V1 = A2 & 00ff;
-            V1 = V1 << 02;
-            V1 = V1 + vertexes;
-            A0 = A2 >> 06;
-            A0 = A0 & 03fc;
-            A0 = A0 + vertexes;
-            V0 = A2 >> 0e;
-            V0 = V0 & 03fc;
-            V0 = V0 + vertexes;
-            V1 = w[V1 + 0000];
-            A0 = w[A0 + 0000];
-            V0 = w[V0 + 0000];
-            V1 = V1 + A0;
-            V1 = V1 + V0;
-            T6 = bu[A1 + 0000];
-            if( ( V0 / 3 ) < T1 )
+        A2 = w[poly];
+        v1 = A2 & ff;
+        v2 = A2 >> 8 & ff;
+        v3 = (A2 >> 10) & ff;
+        if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
+        {
+            MAC1 = r;
+            MAC2 = g;
+            MAC3 = b;
+            V1 = w[poly + 4];
+            IR1 = V1 & ff;
+            IR2 = (V1 >> 8) & ff;
+            IR3 = (V1 >> 10) & ff;
+            gte_gpl12(); // General purpose interpolation
+            [packet + 4] = w(RGB2);
+        }
+        else
+        {
+            [packet + 4] = w(w[poly + 4]);
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 20;
+        poly += c;
+    }
+
+    for( int i = 0; i < bu[part_data + 8]; ++i )
+    {
+        T6 = bu[packet + 7];
+
+        A2 = w[poly];
+        v1 = A2 & ff;
+        v2 = A2 >> 8 & ff;
+        v3 = (A2 >> 10) & ff;
+        if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
+        {
+            MAC1 = r;
+            MAC2 = g;
+            MAC3 = b;
+            V1 = w[poly + 4];
+            IR1 = V1 & ff;
+            IR2 = (V1 >> 8) & ff;
+            IR3 = (V1 >> 10) & ff;
+            gte_gpl12(); // General purpose interpolation
+            [packet + 4] = w(RGB2);
+        }
+        else
+        {
+            [packet + 4] = w(w[poly + 4]);
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 14;
+        poly += 8;
+    }
+
+    for( int i = 0; i < bu[part_data + 9]; ++i )
+    {
+        T6 = bu[packet + 7];
+
+        A2 = w[poly];
+        v1 = A2 & ff;
+        v2 = (A2 >> 8) & ff;
+        v3 = (A2 >> 10) & ff;
+        v4 = A2 >> 18;
+        if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] + w[vertexes + v4 * 4] ) / 4 ) < level )
+        {
+            MAC1 = r;
+            MAC2 = g;
+            MAC3 = b;
+            V1 = w[poly + 4];
+            IR1 = V1 & ff;
+            IR2 = (V1 >> 8) & ff;
+            IR3 = (V1 >> 10) & ff;
+            gte_gpl12(); // General purpose interpolation
+            [packet + 4] = w(RGB2);
+        }
+        else
+        {
+            [packet + 4] = w(w[poly + 4]);
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 18;
+        poly += 8;
+    }
+
+    for( int i = 0; i < bu[part_data + a]; ++i )
+    {
+        T6 = bu[packet + 7];
+
+        if( flags & 1 )
+        {
+            for( int j = 0; j < 3; ++j )
             {
-                V1 = w[A3 + 0000];
-                MAC1 = r;
-                MAC2 = g;
-                MAC3 = b;
-                IR1 = V1 & ff;
-                IR2 = (V1 >> 8) & ff;
-                IR3 = (V1 >> 10) & ff;
-                gte_gpl12(); // General purpose interpolation
-                V0 = packet + 0004;
-                [V0 + 0000] = w(RGB2);
+                V0 = (w[poly] >> (j << 3)) & ff;
+                if( w[vertexes + V0 * 4] < level )
+                {
+                    MAC1 = r;
+                    MAC2 = g;
+                    MAC3 = b;
+                    V1 = w[poly + 4 + j * 4];
+                    IR1 = V1 & ff;
+                    IR2 = (V1 >> 8) & ff;
+                    IR3 = (V1 >> 10) & ff;
+                    gte_gpl12(); // General purpose interpolation
+                    [packet + 4 + j * 8] = w(RGB2);
+                }
+                else
+                {
+                    [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
+                }
+            }
+        }
+        else
+        {
+            A2 = w[poly];
+            v1 = A2 & ff;
+            v2 = (A2 >> 8) & ff;
+            v3 = (A2 >> 10) & ff;
+            if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
+            {
+                for( int j = 0; i < 3; ++i )
+                {
+                    MAC1 = r;
+                    MAC2 = g;
+                    MAC3 = b;
+                    V1 = w[poly + 4 + j * 4];
+                    IR1 = V1 & ff;
+                    IR2 = (V1 >> 8) & ff;
+                    IR3 = (V1 >> 10) & ff;
+                    gte_gpl12(); // General purpose interpolation
+                    [packet + 4 + j * 8] = w(RGB2);
+                }
             }
             else
             {
-                V0 = w[A3 + 0000];
-                [A1 + fffd] = w(V0);
+                for( int j = 0; j < 3; ++j )
+                {
+                    [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
+                }
             }
+        }
 
-            [A1 + 0000] = b(T6);
-            T3 = T3 + 0001;
-            A1 = A1 + 0020;
-            packet = packet + 0020;
-            A3 = A3 + 000c;
-            poly = poly + 000c;
-            V0 = T3 < T7;
-        800B3630	bne    v0, zero, loopb3560 [$800b3560]
+        [packet + 7] = b(T6);
+
+        packet += 1c;
+        poly += 10;
     }
 
-    S3 = w[part_data + 0008];
-    T7 = S3 & 00ff;
-    if( T7 != 0 )
+    for( int i = 0; i < bu[part_data + b]; ++i )
     {
-        T3 = 0;
-        V0 = level << 10;
-        T1 = V0 >> 10;
-        A3 = poly + 0004;
-        A1 = packet + 0007;
+        T6 = bu[packet + 7];
 
-        loopb3664:	; 800B3664
-            A2 = w[poly + 0000];
-            800B3668	nop
-            V1 = A2 & 00ff;
-            V1 = V1 << 02;
-            V1 = V1 + vertexes;
-            A0 = A2 >> 06;
-            A0 = A0 & 03fc;
-            A0 = A0 + vertexes;
-            V0 = A2 >> 0e;
-            V0 = V0 & 03fc;
-            V0 = V0 + vertexes;
-            V1 = w[V1 + 0000];
-            A0 = w[A0 + 0000];
-            V0 = w[V0 + 0000];
-            V1 = V1 + A0;
-            V1 = V1 + V0;
-            T6 = bu[A1 + 0000];
-            if( ( V0 / 3 ) < T1 )
+        if( flags & 1 )
+        {
+            for( int j = 0; j < 4; ++j )
             {
-                V1 = w[A3 + 0000];
-                MAC1 = r;
-                MAC2 = g;
-                MAC3 = b;
-                IR1 = V1 & ff;
-                IR2 = (V1 >> 8) & ff;
-                IR3 = (V1 >> 10) & ff;
-                gte_gpl12(); // General purpose interpolation
-                V0 = packet + 0004;
-                [V0 + 0000] = w(RGB2);
+                V0 = (w[poly] >> (j << 3)) & ff;
+                if( w[vertexes + V0 * 4] < level )
+                {
+                    MAC1 = r;
+                    MAC2 = g;
+                    MAC3 = b;
+                    V1 = w[poly + 4 + j * 4];
+                    IR1 = V1 & ff;
+                    IR2 = (V1 >> 8) & ff;
+                    IR3 = (V1 >> 10) & ff;
+                    gte_gpl12(); // General purpose interpolation
+                    [packet + 4 + j * 8] = w(RGB2);
+                }
+                else
+                {
+                    [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
+                }
+            }
+        }
+        else
+        {
+            A2 = w[poly];
+            v1 = A2 & ff;
+            v2 = (A2 >> 8) & ff;
+            v3 = (A2 >> 10) & ff;
+            v4 = A2 >> 18;
+            if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] + w[vertexes + v4 * 4] ) / 4 ) < level )
+            {
+                for( int j = 0; j < 4; ++j )
+                {
+                    MAC1 = r;
+                    MAC2 = g;
+                    MAC3 = b;
+                    V1 = w[poly + 4 + j * 4];
+                    IR1 = V1 & ff;
+                    IR2 = (V1 >> 8) & ff;
+                    IR3 = (V1 >> 10) & ff;
+                    gte_gpl12(); // General purpose interpolation
+                    [packet + 4 + j * 8] = w(RGB2);
+                }
+            }
+
+            else
+            {
+                for( int j = 0; j < 4; ++j )
+                {
+                    [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
+                }
+            }
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 24;
+        poly += 14;
+    }
+}
+else
+{
+    for( int i = 0; i < bu[part_data + 4]; ++i )
+    {
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
+
+            if( flags & 1 )
+            {
+                for( int j = 0; j < 4; ++j )
+                {
+                    V0 = (w[poly] >> (j << 3)) & ff;
+                    if( w[vertexes + V0 * 4] < level )
+                    {
+                        MAC1 = r;
+                        MAC2 = g;
+                        MAC3 = b;
+                        V1 = w[poly + 4 + j * 4];
+                        IR1 = V1 & ff;
+                        IR2 = (V1 >> 8) & ff;
+                        IR3 = (V1 >> 10) & ff;
+                        gte_gpl12(); // General purpose interpolation
+                        [packet + 4 + j * c] = w(RGB2);
+                    }
+                    else
+                    {
+                        [packet + 4 + j * c] = w(w[poly + 4 + j * 4]);
+                    }
+                }
             }
             else
             {
-                V0 = w[A3 + 0000];
-                [A1 + fffd] = w(V0);
+                A2 = w[poly];
+                v1 = A2 & ff;
+                v2 = (A2 >> 8) & ff;
+                v3 = (A2 >> 10) & ff;
+                v4 = A2 >> 18;
+                if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] + w[vertexes + v4 * 4] ) / 4 ) < level )
+                {
+                    for( int j = 0; j < 4; ++j )
+                    {
+                        MAC1 = r;
+                        MAC2 = g;
+                        MAC3 = b;
+                        V1 = w[poly + 4 + j * 4];
+                        IR1 = V1 & ff;
+                        IR2 = (V1 >> 8) & ff;
+                        IR3 = (V1 >> 10) & ff;
+                        gte_gpl12(); // General purpose interpolation
+                        [packet + 4 + j * c] = w(RGB2);
+                    }
+                }
+                else
+                {
+                    for( int j = 0; j < 4; ++j )
+                    {
+                        [packet + 4 + j * c] = w(w[poly + 4 + j * 4]);
+                    }
+                }
             }
+        }
 
-            [A1 + 0000] = b(T6);
-            T3 = T3 + 0001;
-            A1 = A1 + 0014;
-            packet = packet + 0014;
-            A3 = A3 + 0008;
-            poly = poly + 0008;
-            V0 = T3 < T7;
-        800B3734	bne    v0, zero, loopb3664 [$800b3664]
+        [packet + 7] = b(T6);
+
+        packet += 34;
+        poly += 18;
     }
 
-    V0 = S3 & ff00;
-    T7 = V0 >> 08;
-    if( T7 != 0 )
+    for( int i = 0; i < bu[part_data + 5]; ++i )
     {
-        T3 = 0;
-        V0 = level << 10;
-        T1 = V0 >> 10;
-        A3 = poly + 0004;
-        A1 = packet + 0007;
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
 
-        loopb375c:	; 800B375C
-            A2 = w[poly + 0000];
-            T6 = bu[A1 + 0000];
-            V1 = A2 & 00ff;
-            V1 = V1 << 02;
-            V1 = V1 + vertexes;
-            V0 = A2 >> 06;
-            V0 = V0 & 03fc;
-            V0 = V0 + vertexes;
-            A0 = w[V1 + 0000];
-            V1 = A2 >> 0e;
-            V1 = V1 & 03fc;
-            V1 = V1 + vertexes;
-            V0 = w[V0 + 0000];
-            V1 = w[V1 + 0000];
-            A0 = A0 + V0;
-            V0 = A2 >> 18;
-            V0 = V0 << 02;
-            V0 = V0 + vertexes;
-            V0 = w[V0 + 0000];
-            A0 = A0 + V1;
-            V0 = A0 + V0;
-            if( ( V0 / 4 ) < T1 )
+            if( flags & 1 )
+            {
+                for( int j = 0; j < 3; ++j )
+                {
+                    V0 = (w[poly] >> (j << 3)) & ff;
+                    if( w[vertexes + V0 * 4] < level )
+                    {
+                        MAC1 = r;
+                        MAC2 = g;
+                        MAC3 = b;
+                        V1 = w[poly + 4 + j * 4];
+                        IR1 = V1 & ff;
+                        IR2 = (V1 >> 8) & ff;
+                        IR3 = (V1 >> 10) & ff;
+                        gte_gpl12(); // General purpose interpolation
+                        [packet + 4 + j * c] = w(RGB2);
+                    }
+                    else
+                    {
+                        [packet + 4 + j * c] = w(w[poly + 4 + j * 4]);
+                    }
+                }
+            }
+            else
+            {
+                A2 = w[poly];
+                v1 = A2 & ff;
+                v2 = (A2 >> 8) & ff;
+                v3 = (A2 >> 10) & ff;
+                if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
+                {
+                    for( int j = 0; j < 3; ++j )
+                    {
+                        MAC1 = r;
+                        MAC2 = g;
+                        MAC3 = b;
+                        V1 = w[poly + 4 + j * 4];
+                        IR1 = V1 & ff;
+                        IR2 = (V1 >> 8) & ff;
+                        IR3 = (V1 >> 10) & ff;
+                        gte_gpl12(); // General purpose interpolation
+                        [packet + 4 + j * c] = w(RGB2);
+                    }
+                }
+                else
+                {
+                    for( int j = 0; j < 3; ++j )
+                    {
+                        [packet + 4 + j * c] = w(w[poly + 4 + j * 4]);
+                    }
+                }
+            }
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 28;
+        poly += 14;
+    }
+
+    for( int i = 0; i < bu[part_data + 6]; ++i )
+    {
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
+
+            A2 = w[poly];
+            v1 = A2 & ff;
+            v2 = (A2 >> 8) & ff;
+            v3 = (A2 >> 10) & ff;
+            v4 = A2 >> 18;
+            if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] + w[vertexes + v4 * 4] ) / 4 ) < level )
             {
                 MAC1 = r;
                 MAC2 = g;
                 MAC3 = b;
-                V1 = w[A3 + 0000];
+                V1 = w[poly + 4];
                 IR1 = V1 & ff;
                 IR2 = (V1 >> 8) & ff;
                 IR3 = (V1 >> 10) & ff;
@@ -4519,79 +4553,159 @@ if( flags & 2 )
             }
             else
             {
-                [A1 + fffd] = w(w[A3 + 0000]);
+                [packet + 4] = w(w[poly + 4]);
             }
+        }
 
-            [A1 + 0000] = b(T6);
-            T3 = T3 + 0001;
-            A1 = A1 + 0018;
-            packet = packet + 0018;
-            A3 = A3 + 0008;
-            poly = poly + 0008;
-            V0 = T3 < T7;
-        800B383C	bne    v0, zero, loopb375c [$800b375c]
+        [packet + 7] = b(T6);
+
+        packet += 28;
+        poly += c;
     }
 
-    V0 = S3 >> 10;
-    T7 = V0 & 00ff;
-    if( T7 != 0 )
+    for( int i = 0; i < bu[part_data + 7]; ++i )
     {
-        T3 = 0;
-        V0 = level << 10;
-        S2 = V0 >> 10;
-        S1 = packet + 0007;
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
 
-        Lb3860:	; 800B3860
-            V0 = flags & 0001;
-            A2 = w[poly + 0000];
-            T6 = bu[S1 + 0000];
-            if( V0 != 0 )
+            A2 = w[poly];
+            v1 = A2 & ff;
+            v2 = (A2 >> 8) & ff;
+            v3 = (A2 >> 10) & ff;
+            if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
             {
-                A0 = 0;
-                T1 = packet;
-                A3 = 0004;
-                A1 = poly;
+                MAC1 = r;
+                MAC2 = g;
+                MAC3 = b;
+                V1 = w[poly + 4];
+                IR1 = V1 & ff;
+                IR2 = (V1 >> 8) & ff;
+                IR3 = (V1 >> 10) & ff;
+                gte_gpl12(); // General purpose interpolation
+                [packet + 4] = w(RGB2);
+            }
+            else
+            {
+                [packet + 4] = w(w[poly + 4]);
+            }
+        }
 
-                loopb3880:	; 800B3880
-                    V0 = A0 << 03;
-                    V0 = A2 >> V0;
-                    V0 = V0 & 00ff;
-                    V0 = V0 << 02;
-                    V0 = V0 + vertexes;
-                    V0 = w[V0 + 0000];
-                    V1 = w[A1 + 0004];
-                    if( V0 < S2 )
+        [packet + 7] = b(T6);
+
+        packet += 20;
+        poly += c;
+    }
+
+    for( int i = 0; i < bu[part_data + 8]; ++i )
+    {
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
+
+            A2 = w[poly];
+            v1 = A2 & ff;
+            v2 = (A2 >> 8) & ff;
+            v3 = (A2 >> 10) & ff;
+            if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
+            {
+                MAC1 = r;
+                MAC2 = g;
+                MAC3 = b;
+                V1 = w[poly + 4];
+                IR1 = V1 & ff;
+                IR2 = (V1 >> 8) & ff;
+                IR3 = (V1 >> 10) & ff;
+                gte_gpl12(); // General purpose interpolation
+                [packet + 4] = w(RGB2);
+            }
+            else
+            {
+                [packet + 4] = w(w[poly + 4]);
+            }
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 14;
+        poly += 8;
+    }
+
+    for( int i = 0; i < bu[part_data + 9]; ++i )
+    {
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
+
+            A2 = w[poly];
+            v1 = A2 & ff;
+            v2 = (A2 >> 8) & ff;
+            v3 = (A2 >> 10) & ff;
+            v4 = A2 >> 18;
+            if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] + w[vertexes + v4 * 4] ) / 4 ) < level )
+            {
+                MAC1 = r;
+                MAC2 = g;
+                MAC3 = b;
+                V1 = w[poly + 4];
+                IR1 = V1 & ff;
+                IR2 = (V1 >> 8) & ff;
+                IR3 = (V1 >> 10) & ff;
+                gte_gpl12(); // General purpose interpolation
+                [packet + 4] = w(RGB2);
+            }
+            else
+            {
+                [packet + 4] = w(w[poly + 4]);
+            }
+        }
+
+        [packet + 7] = b(T6);
+
+        packet += 18;
+        poly += 8;
+    }
+
+    for( int i = 0; i < bu[part_data + a]; ++i )
+    {
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
+
+            if( flags & 1 )
+            {
+                A2 = w[poly];
+
+                for( int j = 0; j < 3; ++j )
+                {
+                    if( w[vertexes + (A2 & ff) * 4] < level )
                     {
                         MAC1 = r;
                         MAC2 = g;
                         MAC3 = b;
+                        V1 = w[poly + 4 + j * 4];
                         IR1 = V1 & ff;
                         IR2 = (V1 >> 8) & ff;
                         IR3 = (V1 >> 10) & ff;
                         gte_gpl12(); // General purpose interpolation
-                        V0 = packet + A3;
-                        [V0 + 0000] = w(RGB2);
+                        [packet + 4 + j * 8] = w(RGB2);
                     }
                     else
                     {
-                        [T1 + 0004] = w(V1);
+                        [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
                     }
-
-                    T1 = T1 + 0008;
-                    A3 = A3 + 0008;
-                    A0 = A0 + 0001;
-                    A1 = A1 + 0004;
-                    V0 = A0 < 0003;
-                800B3904	bne    v0, zero, loopb3880 [$800b3880]
+                    A2 >>= 8;
+                }
             }
             else
             {
+                A2 = w[poly];
                 v1 = A2 & ff;
                 v2 = (A2 >> 8) & ff;
                 v3 = (A2 >> 10) & ff;
-                if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < S2 )
+                if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] ) / 3 ) < level )
                 {
-                    for( int j = 0; i < 3; ++i )
+                    for( int j = 0; j < 3; ++j )
                     {
                         MAC1 = r;
                         MAC2 = g;
@@ -4606,933 +4720,88 @@ if( flags & 2 )
                 }
                 else
                 {
-                    A1 = poly;
-                    V1 = packet;
-
-                    loopb39e0:	; 800B39E0
-                        V0 = w[A1 + 0004];
-                        A1 = A1 + 0004;
-                        A0 = A0 + 0001;
-                        [V1 + 0004] = w(V0);
-                        V1 = V1 + 0008;
-                        V0 = A0 < 0003;
-                    800B39F4	bne    v0, zero, loopb39e0 [$800b39e0]
+                    for( int j = 0; j < 3; ++j )
+                    {
+                        [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
+                    }
                 }
             }
+        }
 
-            [S1 + 0000] = b(T6);
-            T3 = T3 + 0001;
-            S1 = S1 + 001c;
-            packet = packet + 001c;
-            poly = poly + 0010;
-            V0 = T3 < T7;
-        800B3A10	bne    v0, zero, Lb3860 [$800b3860]
+        [packet + 7] = b(T6);
+
+        packet += 1c;
+        poly += 10;
     }
 
-    T7 = S3 >> 18;
-    if( T7 != 0 )
+    for( int i = 0; i < bu[part_data + b]; ++i )
     {
-        T3 = 0;
-        V0 = level << 10;
-        S2 = V0 >> 10;
-        S1 = packet + 0007;
+        if( ( w[packet] << 8 ) != 0 )
+        {
+            T6 = bu[packet + 7];
 
-        Lb3a30:	; 800B3A30
-            V0 = flags & 0001;
-            A2 = w[poly + 0000];
-            T6 = bu[S1 + 0000];
-            if( V0 != 0 )
+            if( flags & 1 )
             {
-                A0 = 0;
-                T1 = packet;
-                A3 = 0004;
-                A1 = poly;
+                A2 = w[poly];
 
-                loopb3a50:	; 800B3A50
-                    V0 = A0 << 03;
-                    V0 = A2 >> V0;
-                    V0 = V0 & 00ff;
-                    V0 = V0 << 02;
-                    V0 = V0 + vertexes;
-                    V0 = w[V0 + 0000];
-                    V1 = w[A1 + 0004];
-                    if( V0 < S2 )
+                for( int j = 0; j < 4; ++j )
+                {
+                    if( w[vertexes + (A2 & ff) * 4] < level )
                     {
                         MAC1 = r;
                         MAC2 = g;
                         MAC3 = b;
+                        V1 = w[poly + 4 + j * 4];
                         IR1 = V1 & ff;
                         IR2 = (V1 >> 8) & ff;
                         IR3 = (V1 >> 10) & ff;
                         gte_gpl12(); // General purpose interpolation
-                        V0 = packet + A3;
-                        [V0 + 0000] = w(RGB2);
+                        [packet + 4 + j * 8] = w(RGB2);
                     }
                     else
                     {
-                        [T1 + 0004] = w(V1);
-
+                        [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
                     }
 
-                    T1 = T1 + 0008;
-                    A3 = A3 + 0008;
-                    A0 = A0 + 0001;
-                    A1 = A1 + 0004;
-                    V0 = A0 < 0004;
-                800B3AD4	bne    v0, zero, loopb3a50 [$800b3a50]
+                    A2 >>= 8;
+                }
             }
             else
             {
-                V1 = A2 & 00ff;
-                V1 = V1 << 02;
-                V1 = V1 + vertexes;
-                V0 = A2 >> 06;
-                V0 = V0 & 03fc;
-                V0 = V0 + vertexes;
-                A0 = w[V1 + 0000];
-                V1 = A2 >> 0e;
-                V1 = V1 & 03fc;
-                V1 = V1 + vertexes;
-                V0 = w[V0 + 0000];
-                V1 = w[V1 + 0000];
-                A0 = A0 + V0;
-                V0 = A2 >> 18;
-                V0 = V0 << 02;
-                V0 = V0 + vertexes;
-                V0 = w[V0 + 0000];
-                A0 = A0 + V1;
-                V0 = A0 + V0;
-                if( ( V0 / 4 ) < S2 )
+                A2 = w[poly];
+                v1 = A2 & ff;
+                v2 = (A2 >> 8) & ff;
+                v3 = (A2 >> 10) & ff;
+                v4 = A2 >> 18;
+                if( ( ( w[vertexes + v1 * 4] + w[vertexes + v2 * 4] + w[vertexes + v3 * 4] + w[vertexes + v4 * 4] ) / 4 ) < level )
                 {
-                    A0 = 0;
-                    A2 = 0004;
-                    A1 = poly;
-
-                    loopb3b54:	; 800B3B54
+                    for( int j = 0; j < 4; ++j )
+                    {
                         MAC1 = r;
                         MAC2 = g;
                         MAC3 = b;
-                        V1 = w[A1 + 4];
+                        V1 = w[poly + 4 + j * 4];
                         IR1 = V1 & ff;
                         IR2 = (V1 >> 8) & ff;
                         IR3 = (V1 >> 10) & ff;
                         gte_gpl12(); // General purpose interpolation
-                        [packet + A2] = w(RGB2);
-                        A2 = A2 + 0008;
-                        A0 = A0 + 0001;
-                        A1 = A1 + 0004;
-                        V0 = A0 < 0004;
-                    800B3BA4	bne    v0, zero, loopb3b54 [$800b3b54]
-                }
-
-                else
-                {
-                    A1 = poly;
-                    V1 = packet;
-
-                    loopb3bbc:	; 800B3BBC
-                        V0 = w[A1 + 0004];
-                        A1 = A1 + 0004;
-                        A0 = A0 + 0001;
-                        [V1 + 0004] = w(V0);
-                        V1 = V1 + 0008;
-                        V0 = A0 < 0004;
-                    800B3BD0	bne    v0, zero, loopb3bbc [$800b3bbc]
-                }
-            }
-
-            [S1 + 0000] = b(T6);
-
-            T3 = T3 + 0001;
-            S1 = S1 + 0024;
-            packet = packet + 0024;
-            poly = poly + 0014;
-            V0 = T3 < T7;
-        800B3BEC	bne    v0, zero, Lb3a30 [$800b3a30]
-    }
-}
-else
-{
-    S3 = w[part_data + 4];
-    T7 = S3 & ff;
-    if( T7 != 0 )
-    {
-        T3 = 0;
-        S2 = level;
-        S1 = packet + 7;
-
-        Lb3c1c:	; 800B3C1C  
-            V0 = w[packet];
-            V0 = V0 << 8;
-            if (V0 != 0)
-            {
-                A2 = w[poly];
-                T6 = bu[S1];
-                if( flags & 1 )
-                {
-                    A0 = 0;
-                    T1 = packet;
-                    A3 = 4;
-                    A1 = poly;
-
-                    loopb3c4c:	; 800B3C4C
-                        V0 = A0 * 8;
-                        V0 = A2 >> V0;
-                        V0 = V0 & ff;
-                        V0 = w[vertexes + V0 * 4];
-                        V1 = w[A1 + 4];
-                        if (V0 < S2)
-                        {
-                            MAC1 = r;
-                            MAC2 = g;
-                            MAC3 = b;
-                            IR1 = V1 & ff;
-                            IR2 = (V1 >> 8) & ff;
-                            IR3 = (V1 >> 10) & ff;
-                            gte_gpl12(); // General purpose interpolation
-                            [packet + A3] = w(RGB2);
-                        }
-                        else
-                        {
-                            [T1 + 4] = w(V1);
-                        }
-
-                        T1 = T1 + c;
-                        A3 = A3 + c;
-                        A1 = A1 + 4;
-                        A0 = A0 + 1;
-                        V0 = A0 < 4;
-                    800B3CD0	bne    v0, zero, loopb3c4c [$800b3c4c]
-                }
-                else
-                {
-                    V1 = A2 & 00ff;
-                    V1 = V1 << 02;
-                    V1 = V1 + vertexes;
-                    V0 = A2 >> 06;
-                    V0 = V0 & 03fc;
-                    V0 = V0 + vertexes;
-                    A0 = w[V1 + 0000];
-                    V1 = A2 >> 0e;
-                    V1 = V1 & 03fc;
-                    V1 = V1 + vertexes;
-                    V0 = w[V0 + 0000];
-                    V1 = w[V1 + 0000];
-                    A0 = A0 + V0;
-                    V0 = A2 >> 18;
-                    V0 = V0 << 02;
-                    V0 = V0 + vertexes;
-                    V0 = w[V0 + 0000];
-                    A0 = A0 + V1;
-                    V0 = A0 + V0;
-                    V0 = V0 / 4;
-                    V0 = V0 < S2;
-                    800B3D40	beq    v0, zero, Lb3db0 [$800b3db0]
-                    A0 = 0;
-                    A2 = 0004;
-                    A1 = poly;
-
-                    loopb3d50:	; 800B3D50
-                    V1 = w[A1 + 0004];
-                    MAC1 = r;
-                    MAC2 = g;
-                    MAC3 = b;
-                    IR1 = V1 & ff;
-                    IR2 = (V1 >> 8) & ff;
-                    IR3 = (V1 >> 10) & ff;
-                    gte_gpl12(); // General purpose interpolation
-                    V0 = packet + A2;
-                    [V0 + 0000] = w(RGB2);
-                    A2 = A2 + 000c;
-                    A0 = A0 + 0001;
-                    V0 = A0 < 0004;
-                    800B3DA0	bne    v0, zero, loopb3d50 [$800b3d50]
-                    A1 = A1 + 0004;
-                    800B3DA8	j      Lb3dd8 [$800b3dd8]
-
-                    Lb3db0:	; 800B3DB0
-                    A1 = poly;
-                    V1 = packet;
-
-                    loopb3db8:	; 800B3DB8
-                        V0 = w[A1 + 0004];
-                        A1 = A1 + 0004;
-                        A0 = A0 + 0001;
-                        [V1 + 0004] = w(V0);
-                        V0 = A0 < 0004;
-                        V1 = V1 + 000c;
-                    800B3DCC	bne    v0, zero, loopb3db8 [$800b3db8]
-                }
-            }
-
-
-            Lb3dd8:	; 800B3DD8
-            [S1] = b(T6);
-            T3 = T3 + 1;
-            S1 = S1 + 34;
-            packet = packet + 34;
-            poly = poly + 18;
-            V0 = T3 < T7;
-        800B3DE8	bne    v0, zero, Lb3c1c [$800b3c1c]
-    }
-
-
-
-    V0 = S3 & ff00;
-    T7 = V0 >> 08;
-    800B3DF8	beq    t7, zero, Lb3fd8 [$800b3fd8]
-    T3 = 0;
-    V0 = level << 10;
-    S2 = V0 >> 10;
-    S1 = packet + 0007;
-
-    Lb3e0c:	; 800B3E0C
-    V0 = w[packet + 0000];
-    800B3E10	nop
-    V0 = V0 << 08;
-    800B3E18	beq    v0, zero, Lb3fc0 [$800b3fc0]
-    V0 = flags & 0001;
-    A2 = w[poly + 0000];
-    T6 = bu[S1 + 0000];
-    800B3E28	beq    v0, zero, Lb3ed0 [$800b3ed0]
-    A0 = 0;
-    T1 = packet;
-    A3 = 0004;
-    A1 = poly;
-
-    loopb3e3c:	; 800B3E3C
-    V0 = A0 << 03;
-    V0 = A2 >> V0;
-    V0 = V0 & 00ff;
-    V0 = V0 << 02;
-    V0 = V0 + vertexes;
-    V0 = w[V0 + 0000];
-    V1 = w[A1 + 0004];
-    V0 = V0 < S2;
-    800B3E5C	beq    v0, zero, Lb3eac [$800b3eac]
-    800B3E60	nop
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    gte_gpl12(); // General purpose interpolation
-    V0 = packet + A3;
-    [V0 + 0000] = w(RGB2);
-    800B3EA4	j      Lb3eb4 [$800b3eb4]
-    T1 = T1 + 000c;
-
-    Lb3eac:	; 800B3EAC
-    [T1 + 0004] = w(V1);
-    T1 = T1 + 000c;
-
-    Lb3eb4:	; 800B3EB4
-    A3 = A3 + 000c;
-    A0 = A0 + 0001;
-    V0 = A0 < 0003;
-    800B3EC0	bne    v0, zero, loopb3e3c [$800b3e3c]
-    A1 = A1 + 0004;
-    800B3EC8	j      Lb3fc0 [$800b3fc0]
-    [S1 + 0000] = b(T6);
-
-    Lb3ed0:	; 800B3ED0
-    800B3ED0	lui    a1, $5555
-    A1 = A1 | 5556;
-    V1 = A2 & 00ff;
-    V1 = V1 << 02;
-    V1 = V1 + vertexes;
-    A0 = A2 >> 06;
-    A0 = A0 & 03fc;
-    A0 = A0 + vertexes;
-    V0 = A2 >> 0e;
-    V0 = V0 & 03fc;
-    V0 = V0 + vertexes;
-    V1 = w[V1 + 0000];
-    A0 = w[A0 + 0000];
-    V0 = w[V0 + 0000];
-    V1 = V1 + A0;
-    V1 = V1 + V0;
-    800B3F10	mult   v1, a1
-    V1 = V1 >> 1f;
-    800B3F18	mfhi   v0
-    V0 = V0 - V1;
-    V0 = V0 < S2;
-    800B3F24	beq    v0, zero, Lb3f98 [$800b3f98]
-    A0 = 0;
-    A2 = 0004;
-    A1 = poly;
-
-    loopb3f34:	; 800B3F34
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    V1 = w[A1 + 0004];
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    gte_gpl12(); // General purpose interpolation
-    V0 = packet + A2;
-    [V0 + 0000] = w(RGB2);
-    A2 = A2 + 000c;
-    A0 = A0 + 0001;
-    V0 = A0 < 0003;
-    800B3F88	bne    v0, zero, loopb3f34 [$800b3f34]
-    A1 = A1 + 0004;
-    800B3F90	j      Lb3fc0 [$800b3fc0]
-    [S1 + 0000] = b(T6);
-
-    Lb3f98:	; 800B3F98
-    A1 = poly;
-    V1 = packet;
-
-    loopb3fa0:	; 800B3FA0
-    V0 = w[A1 + 0004];
-    A1 = A1 + 0004;
-    A0 = A0 + 0001;
-    [V1 + 0004] = w(V0);
-    V0 = A0 < 0003;
-    800B3FB4	bne    v0, zero, loopb3fa0 [$800b3fa0]
-    V1 = V1 + 000c;
-    [S1 + 0000] = b(T6);
-
-    Lb3fc0:	; 800B3FC0
-    T3 = T3 + 0001;
-    S1 = S1 + 0028;
-    packet = packet + 0028;
-    V0 = T3 < T7;
-    800B3FD0	bne    v0, zero, Lb3e0c [$800b3e0c]
-    poly = poly + 0014;
-
-    Lb3fd8:	; 800B3FD8
-    V0 = S3 >> 10;
-    T7 = V0 & 00ff;
-    800B3FE0	beq    t7, zero, Lb40f4 [$800b40f4]
-    T3 = 0;
-    V0 = level << 10;
-
-    Lb3fec:	; 800B3FEC
-    T1 = V0 >> 10;
-    A3 = poly + 0004;
-    A1 = packet + 0007;
-
-    loopb3ff8:	; 800B3FF8
-    V0 = w[packet + 0000];
-    800B3FFC	nop
-    V0 = V0 << 08;
-    800B4004	beq    v0, zero, Lb40d8 [$800b40d8]
-    800B4008	nop
-    A2 = w[poly + 0000];
-    T6 = bu[A1 + 0000];
-    V1 = A2 & 00ff;
-    V1 = V1 << 02;
-    V1 = V1 + vertexes;
-    V0 = A2 >> 06;
-    V0 = V0 & 03fc;
-    V0 = V0 + vertexes;
-    A0 = w[V1 + 0000];
-    V1 = A2 >> 0e;
-    V1 = V1 & 03fc;
-    V1 = V1 + vertexes;
-    V0 = w[V0 + 0000];
-    V1 = w[V1 + 0000];
-    A0 = A0 + V0;
-    V0 = A2 >> 18;
-    V0 = V0 << 02;
-    V0 = V0 + vertexes;
-    V0 = w[V0 + 0000];
-    A0 = A0 + V1;
-    V0 = A0 + V0;
-    800B4060	bgez   v0, Lb406c [$800b406c]
-    800B4064	nop
-    V0 = V0 + 0003;
-
-    Lb406c:	; 800B406C
-    V0 = V0 >> 02;
-    V0 = V0 < T1;
-    800B4074	beq    v0, zero, Lb40c8 [$800b40c8]
-    800B4078	nop
-    V1 = w[A3 + 0000];
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    gte_gpl12(); // General purpose interpolation
-    V0 = packet + 0004;
-    [V0 + 0000] = w(RGB2);
-    800B40C0	j      Lb40d8 [$800b40d8]
-    [A1 + 0000] = b(T6);
-
-    Lb40c8:	; 800B40C8
-    V0 = w[A3 + 0000];
-    800B40CC	nop
-    [A1 + fffd] = w(V0);
-    [A1 + 0000] = b(T6);
-
-    Lb40d8:	; 800B40D8
-    T3 = T3 + 0001;
-    A1 = A1 + 0028;
-    packet = packet + 0028;
-    A3 = A3 + 000c;
-    V0 = T3 < T7;
-    800B40EC	bne    v0, zero, loopb3ff8 [$800b3ff8]
-    poly = poly + 000c;
-
-    Lb40f4:	; 800B40F4
-    T7 = S3 >> 18;
-    800B40F8	beq    t7, zero, Lb41fc [$800b41fc]
-    T3 = 0;
-    V0 = level << 10;
-    S1 = V0 >> 10;
-    T1 = poly + 0004;
-    A3 = packet + 0007;
-
-    loopb4110:	; 800B4110
-    V0 = w[packet + 0000];
-    800B4114	nop
-    V0 = V0 << 08;
-    800B411C	beq    v0, zero, Lb41e0 [$800b41e0]
-    800B4120	lui    a1, $5555
-    A2 = w[poly + 0000];
-    A1 = A1 | 5556;
-    V1 = A2 & 00ff;
-    V1 = V1 << 02;
-    V1 = V1 + vertexes;
-    A0 = A2 >> 06;
-    A0 = A0 & 03fc;
-    A0 = A0 + vertexes;
-    V0 = A2 >> 0e;
-    V0 = V0 & 03fc;
-    V0 = V0 + vertexes;
-    V1 = w[V1 + 0000];
-    A0 = w[A0 + 0000];
-    V0 = w[V0 + 0000];
-    V1 = V1 + A0;
-    V1 = V1 + V0;
-    800B4164	mult   v1, a1
-    T6 = bu[A3 + 0000];
-    V1 = V1 >> 1f;
-    800B4170	mfhi   v0
-    V0 = V0 - V1;
-    V0 = V0 < S1;
-    800B417C	beq    v0, zero, Lb41d0 [$800b41d0]
-    800B4180	nop
-    V1 = w[T1 + 0000];
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    gte_gpl12(); // General purpose interpolation
-    V0 = packet + 0004;
-    [V0 + 0000] = w(RGB2);
-    800B41C8	j      Lb41e0 [$800b41e0]
-    [A3 + 0000] = b(T6);
-
-    Lb41d0:	; 800B41D0
-    V0 = w[T1 + 0000];
-    800B41D4	nop
-    [A3 + fffd] = w(V0);
-    [A3 + 0000] = b(T6);
-
-    Lb41e0:	; 800B41E0
-    T3 = T3 + 0001;
-    A3 = A3 + 0020;
-    packet = packet + 0020;
-    T1 = T1 + 000c;
-    V0 = T3 < T7;
-    800B41F4	bne    v0, zero, loopb4110 [$800b4110]
-    poly = poly + 000c;
-
-    Lb41fc:	; 800B41FC
-    S3 = w[part_data + 8];
-    800B4200	nop
-    T7 = S3 & 00ff;
-    if( T7 != 0 )
-    {
-        T3 = 0;
-        V0 = level << 10;
-        S1 = V0 >> 10;
-        T1 = poly + 0004;
-        A3 = packet + 0007;
-
-        loopb4220:	; 800B4220
-            V0 = w[packet + 0000];
-            800B4224	nop
-            V0 = V0 << 08;
-            if( V0 != 0 )
-            {
-                A2 = w[poly + 0000];
-                V1 = A2 & 00ff;
-                V1 = V1 << 02;
-                V1 = V1 + vertexes;
-                A0 = A2 >> 06;
-                A0 = A0 & 03fc;
-                A0 = A0 + vertexes;
-                V0 = A2 >> 0e;
-                V0 = V0 & 03fc;
-                V0 = V0 + vertexes;
-                V1 = w[V1 + 0000];
-                A0 = w[A0 + 0000];
-                V0 = w[V0 + 0000];
-                V1 = V1 + A0;
-                V1 = V1 + V0;
-                T6 = bu[A3 + 0000];
-                if( ( V0 / 3 ) < S1 )
-                {
-                    V1 = w[T1 + 0000];
-                    MAC1 = r;
-                    MAC2 = g;
-                    MAC3 = b;
-                    IR1 = V1 & ff;
-                    IR2 = (V1 >> 8) & ff;
-                    IR3 = (V1 >> 10) & ff;
-                    gte_gpl12(); // General purpose interpolation
-                    V0 = packet + 0004;
-                    [V0 + 0000] = w(RGB2);
-                }
-                else
-                {
-                    Lb42e0:	; 800B42E0
-                    V0 = w[T1 + 0000];
-                    800B42E4	nop
-                    [A3 + fffd] = w(V0);
-                }
-            }
-
-            [A3 + 0000] = b(T6);
-            T3 = T3 + 0001;
-            A3 = A3 + 0014;
-            packet = packet + 0014;
-            T1 = T1 + 0008;
-            poly = poly + 0008;
-            V0 = T3 < T7;
-        800B4304	bne    v0, zero, loopb4220 [$800b4220]
-    }
-
-    V0 = S3 & ff00;
-    T7 = V0 >> 08;
-    800B4314	beq    t7, zero, Lb4428 [$800b4428]
-    T3 = 0;
-    V0 = level << 10;
-    T1 = V0 >> 10;
-    A3 = poly + 0004;
-    A1 = packet + 0007;
-
-    loopb432c:	; 800B432C
-    V0 = w[packet + 0000];
-    800B4330	nop
-    V0 = V0 << 08;
-    800B4338	beq    v0, zero, Lb440c [$800b440c]
-    800B433C	nop
-    A2 = w[poly + 0000];
-    T6 = bu[A1 + 0000];
-    V1 = A2 & 00ff;
-    V1 = V1 << 02;
-    V1 = V1 + vertexes;
-    V0 = A2 >> 06;
-    V0 = V0 & 03fc;
-    V0 = V0 + vertexes;
-    A0 = w[V1 + 0000];
-    V1 = A2 >> 0e;
-    V1 = V1 & 03fc;
-    V1 = V1 + vertexes;
-    V0 = w[V0 + 0000];
-    V1 = w[V1 + 0000];
-    A0 = A0 + V0;
-    V0 = A2 >> 18;
-    V0 = V0 << 02;
-    V0 = V0 + vertexes;
-    V0 = w[V0 + 0000];
-    A0 = A0 + V1;
-    V0 = A0 + V0;
-    V0 = V0 / 4;
-    V0 = V0 < T1;
-    800B43A8	beq    v0, zero, Lb43fc [$800b43fc]
-    800B43AC	nop
-    V1 = w[A3 + 0000];
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    gte_gpl12(); // General purpose interpolation
-    V0 = packet + 0004;
-    [V0 + 0000] = w(RGB2);
-    [A1 + 0000] = b(T6);
-    800B43F4	j      Lb440c [$800b440c]
-
-    Lb43fc:	; 800B43FC
-    V0 = w[A3 + 0000];
-    [A1 + fffd] = w(V0);
-    [A1 + 0000] = b(T6);
-
-    Lb440c:	; 800B440C
-    T3 = T3 + 0001;
-    A1 = A1 + 0018;
-    packet = packet + 0018;
-    A3 = A3 + 0008;
-    V0 = T3 < T7;
-    800B4420	bne    v0, zero, loopb432c [$800b432c]
-    poly = poly + 0008;
-
-    Lb4428:	; 800B4428
-    V0 = S3 >> 10;
-    T7 = V0 & 00ff;
-    800B4430	beq    t7, zero, Lb45f8 [$800b45f8]
-    T3 = 0;
-    V0 = level << 10;
-    S2 = V0 >> 10;
-    S1 = packet + 0007;
-
-    Lb4444:	; 800B4444
-    V0 = w[packet + 0000];
-    800B4448	nop
-    V0 = V0 << 08;
-    800B4450	beq    v0, zero, Lb45e0 [$800b45e0]
-    V0 = flags & 0001;
-    A2 = w[poly + 0000];
-    T6 = bu[S1 + 0000];
-    800B4460	beq    v0, zero, Lb4500 [$800b4500]
-    A0 = 0;
-    T1 = packet;
-    A1 = poly;
-    V1 = w[A1 + 0004];
-
-    loopb4474:	; 800B4474
-    V0 = A2 & 00ff;
-    V0 = V0 << 02;
-    V0 = V0 + vertexes;
-    V0 = w[V0 + 0000];
-    800B4484	nop
-    V0 = V0 < S2;
-    800B448C	beq    v0, zero, Lb44dc [$800b44dc]
-    A1 = A1 + 0004;
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    A0 = A0 + 0001;
-    gte_gpl12(); // General purpose interpolation
-    V1 = w[A1 + 0004];
-    [T1 + 0004] = w(RGB2);
-    800B44D4	j      Lb44ec [$800b44ec]
-    T1 = T1 + 0008;
-
-    Lb44dc:	; 800B44DC
-    [T1 + 0004] = w(V1);
-    T1 = T1 + 0008;
-    A0 = A0 + 0001;
-    V1 = w[A1 + 0004];
-
-    Lb44ec:	; 800B44EC
-    V0 = A0 < 0003;
-    800B44F0	bne    v0, zero, loopb4474 [$800b4474]
-    A2 = A2 >> 08;
-    800B44F8	j      Lb45e0 [$800b45e0]
-    [S1 + 0000] = b(T6);
-
-    Lb4500:	; 800B4500
-    800B4500	lui    a1, $5555
-    A1 = A1 | 5556;
-    V1 = A2 & 00ff;
-    V1 = V1 << 02;
-    V1 = V1 + vertexes;
-    A0 = A2 >> 06;
-    A0 = A0 & 03fc;
-    A0 = A0 + vertexes;
-    V0 = A2 >> 0e;
-    V0 = V0 & 03fc;
-    V0 = V0 + vertexes;
-    V1 = w[V1 + 0000];
-    A0 = w[A0 + 0000];
-    V0 = w[V0 + 0000];
-    V1 = V1 + A0;
-    V1 = V1 + V0;
-    800B4540	mult   v1, a1
-    V1 = V1 >> 1f;
-    800B4548	mfhi   v0
-    A2 = packet + 0004;
-    A0 = poly;
-    V0 = V0 - V1;
-    V0 = V0 < S2;
-    800B455C	beq    v0, zero, Lb45bc [$800b45bc]
-    A1 = 0;
-    V1 = w[A0 + 0004];
-
-    loopb4568:	; 800B4568
-    MAC1 = r;
-    MAC2 = g;
-    MAC3 = b;
-    IR1 = V1 & ff;
-    IR2 = (V1 >> 8) & ff;
-    IR3 = (V1 >> 10) & ff;
-    A1 = A1 + 0001;
-    A0 = A0 + 0004;
-    gte_gpl12(); // General purpose interpolation
-    V1 = w[A0 + 0004];
-    [A2 + 0000] = w(RGB2);
-    V0 = A1 < 0003;
-    800B45AC	bne    v0, zero, loopb4568 [$800b4568]
-    A2 = A2 + 0008;
-    800B45B4	j      Lb45e0 [$800b45e0]
-    [S1 + 0000] = b(T6);
-
-    Lb45bc:	; 800B45BC
-    V1 = packet;
-
-    loopb45c0:	; 800B45C0
-    V0 = w[A0 + 0004];
-    A0 = A0 + 0004;
-    A1 = A1 + 0001;
-    [V1 + 0004] = w(V0);
-    V0 = A1 < 0003;
-    800B45D4	bne    v0, zero, loopb45c0 [$800b45c0]
-    V1 = V1 + 0008;
-    [S1 + 0000] = b(T6);
-
-    Lb45e0:	; 800B45E0
-    T3 = T3 + 0001;
-    S1 = S1 + 001c;
-    packet = packet + 001c;
-    V0 = T3 < T7;
-    800B45F0	bne    v0, zero, Lb4444 [$800b4444]
-    poly = poly + 0010;
-
-    Lb45f8:	; 800B45F8
-    T7 = S3 >> 18;
-    if( T7 != 0 )
-    {
-        T3 = 0;
-        V0 = level << 10;
-        S2 = V0 >> 10;
-        S1 = packet + 0007;
-
-        Lb4610:	; 800B4610
-            V0 = w[packet + 0000];
-            V0 = V0 << 08;
-            if( V0 != 0 )
-            {
-                A2 = w[poly + 0000];
-                T6 = bu[S1 + 0000];
-                if( flags & 1 )
-                {
-                    A0 = 0;
-                    T1 = packet;
-                    A1 = poly;
-                    V1 = w[A1 + 0004];
-
-                    loopb4640:	; 800B4640
-                        V0 = A2 & 00ff;
-                        V0 = V0 << 02;
-                        V0 = V0 + vertexes;
-                        V0 = w[V0 + 0000];
-                        if( V0 < S2 )
-                        {
-                            MAC1 = r;
-                            MAC2 = g;
-                            MAC3 = b;
-                            IR1 = V1 & ff;
-                            IR2 = (V1 >> 8) & ff;
-                            IR3 = (V1 >> 10) & ff;
-                            A0 = A0 + 0001;
-                            A1 = A1 + 0004;
-                            gte_gpl12(); // General purpose interpolation
-                            V1 = w[A1 + 0004];
-                            [T1 + 0004] = w(RGB2);
-                            T1 = T1 + 0008;
-                        }
-                        else
-                        {
-                            Lb46a8:	; 800B46A8
-                            [T1 + 0004] = w(V1);
-                            T1 = T1 + 0008;
-                            A1 = A1 + 0004;
-                            A0 = A0 + 0001;
-                            V1 = w[A1 + 0004];
-                        }
-
-                        A2 = A2 >> 08;
-                        V0 = A0 < 0004;
-                    800B46C0	bne    v0, zero, loopb4640 [$800b4640]
-                }
-                else
-                {
-                    V1 = A2 & 00ff;
-                    V1 = V1 << 02;
-                    V1 = V1 + vertexes;
-                    V0 = A2 >> 06;
-                    V0 = V0 & 03fc;
-                    V0 = V0 + vertexes;
-                    A0 = w[V1 + 0000];
-                    V1 = A2 >> 0e;
-                    V1 = V1 & 03fc;
-                    V1 = V1 + vertexes;
-                    V0 = w[V0 + 0000];
-                    V1 = w[V1 + 0000];
-                    A0 = A0 + V0;
-                    V0 = A2 >> 18;
-                    V0 = V0 << 02;
-                    V0 = V0 + vertexes;
-                    V0 = w[V0 + 0000];
-                    A0 = A0 + V1;
-                    V0 = A0 + V0;
-                    V0 = V0 / 4;
-                    V0 = V0 < S2;
-                    if( V0 != 0 )
-                    {
-                        A1 = 0;
-                        A2 = 0004;
-                        A0 = poly;
-
-                        loopb4740:	; 800B4740
-                            V1 = w[A0 + 0004];
-                            MAC1 = r;
-                            MAC2 = g;
-                            MAC3 = b;
-                            IR1 = V1 & ff;
-                            IR2 = (V1 >> 8) & ff;
-                            IR3 = (V1 >> 10) & ff;
-                            gte_gpl12(); // General purpose interpolation
-                            V0 = packet + A2;
-                            [V0 + 0000] = w(RGB2);
-                            A2 = A2 + 0008;
-                            A1 = A1 + 0001;
-                            V0 = A1 < 0004;
-                            A0 = A0 + 0004;
-                        800B4790	bne    v0, zero, loopb4740 [$800b4740]
-
+                        [packet + 4 + j * 8] = w(RGB2);
                     }
-                    else
+                }
+                else
+                {
+                    for( int j = 0; j < 4; ++j )
                     {
-                        A0 = poly;
-                        V1 = packet;
-
-                        loopb47a8:	; 800B47A8
-                            V0 = w[A0 + 0004];
-                            A0 = A0 + 0004;
-                            A1 = A1 + 0001;
-                            [V1 + 0004] = w(V0);
-                            V1 = V1 + 0008;
-                            V0 = A1 < 0004;
-                        800B47BC	bne    v0, zero, loopb47a8 [$800b47a8]
+                        [packet + 4 + j * 8] = w(w[poly + 4 + j * 4]);
                     }
                 }
             }
+        }
 
-            [S1 + 0000] = b(T6);
-            T3 = T3 + 0001;
-            S1 = S1 + 0024;
-            packet = packet + 0024;
-            poly = poly + 0014;
-            V0 = T3 < T7;
-        800B47D8	bne    v0, zero, Lb4610 [$800b4610]
+        [packet + 7] = b(T6);
+
+        packet += 24;
+        poly += 14;
     }
 }
 ////////////////////////////////
@@ -5567,7 +4836,7 @@ else if (V1 == 1)
     [800dfe20] = h(hu[S0 + 4]); // B
     [800dfe22] = b(bu[S0 + 12]); // 1 - for all packets
     A1 = 800dfe1c;
-    field_model_set_color_to_model_packets();
+    field_model_kawai_set_color_to_model_packets();
 
     V0 = bu[S0 + 13];
     if (V0 == 0)
@@ -5663,7 +4932,7 @@ else if( V1 == 1 )
     [800dfe38] = h(hu[A2 + 1c]);
     [800dfe3a] = h(hu[A2 + 1e]);
     A1 = 800dfe1c;
-    funcb0618();
+    field_model_kawai_set_custom_lighting_to_model_packets();
 
     return 0;
 }
@@ -5707,7 +4976,7 @@ else if( V1 == 1 )
     [800dfe24] = b(bu[S0 + 18]);
 
     A1 = 800dfe1c;
-    funcb2dd4();
+    field_model_kawai_set_color_to_model_packets_below_level();
 
     if (bu[S0 + 19] == 0)
     {
@@ -5758,7 +5027,7 @@ return 1;
 
 
 ////////////////////////////////
-// field_model_set_lighting_to_model_packets()
+// field_model_kawai_set_lighting_to_model_packets()
 
 model_data = A0;
 kawai_data = A1;
@@ -5776,21 +5045,21 @@ GBK = bu[kawai_data + 12] << 4;
 [1f800206] = h(hu[kawai_data + a] << 4); [1f800208] = h(0); [1f80020a] = h(0);
 [1f80020c] = h(hu[kawai_data + c] << 4); [1f80020e] = h(0); [1f800210] = h(0);
 
-LR1LR2 = w[1f800200 + 0];
-LR3LG1 = w[1f800200 + 4];
-LG2LG3 = w[1f800200 + 8];
-LB1LB2 = w[1f800200 + c];
-LB3 = w[1f800200 + 10];
+LR1LR2 = w[1f800200];
+LR3LG1 = w[1f800204];
+LG2LG3 = w[1f800208];
+LB1LB2 = w[1f80020c];
+LB3 = w[1f800210];
 
 // set light source matrix
 [1f800206] = h(0); [1f800208] = h(0); [1f80020a] = h(0);
 [1f80020c] = h(0); [1f80020e] = h(0); [1f800210] = h(0);
 
-L11L12 = w[A0 + 0];
-L13L21 = w[A0 + 4];
-L22L23 = w[A0 + 8];
-L31L32 = w[A0 + c];
-L33 = w[A0 + 10];
+L11L12 = w[1f800200];
+L13L21 = w[1f800204];
+L22L23 = w[1f800208];
+L31L32 = w[1f80020c];
+L33 = w[1f800210];
 
 [SP + 10] = h(hu[kawai_data + 0]); // x
 [SP + 12] = h(hu[kawai_data + 2]); // y
@@ -6200,40 +5469,37 @@ S2 = A0;
 S1 = bu[A1 + 1];
 V1 = bu[A1 + 0];
 S0 = 800dfe3c + model_id * 3c;
-if (V1 == 0)
+if( V1 == 0 )
 {
-    [S0 + 00] = h(hu[A1 + 02]);
-    [S0 + 02] = h(hu[A1 + 04]);
-    [S0 + 04] = h(hu[A1 + 06]);
-    [S0 + 06] = h(hu[A1 + 08]);
-    [S0 + 08] = h(0);
-    [S0 + 0a] = h(0);
-    [S0 + 0c] = b(bu[A1 + 0a]);
+    [S0 + 0] = h(hu[A1 + 2]);
+    [S0 + 2] = h(hu[A1 + 4]);
+    [S0 + 4] = h(hu[A1 + 6]);
+    [S0 + 6] = h(hu[A1 + 8]);
+    [S0 + 8] = h(0);
+    [S0 + a] = h(0);
+    [S0 + c] = b(bu[A1 + a]);
 
     A0 = S2;
     A1 = S1;
     funcb69c0;
 }
-else if (V1 == 1)
+else if( V1 == 1 )
 {
     S3 = 800df118;
 
-
-    [800dfe1c] = h(hu[S0 + 02]);
-    [800dfe1e] = h(hu[S0 + 04]);
-    [800dfe20] = h(hu[S0 + 06]);
-    [800dfe22] = h(hu[S0 + 00]);
-    [800dfe24] = b(bu[S0 + 0c]);
+    [800dfe1c] = h(hu[S0 + 2]);
+    [800dfe1e] = h(hu[S0 + 4]);
+    [800dfe20] = h(hu[S0 + 6]);
+    [800dfe22] = h(hu[S0 + 0]);
+    [800dfe24] = b(bu[S0 + c]);
 
     A0 = S2;
     A1 = 800dfe1c;
-    funcb2dd4();
-
-
+    field_model_kawai_set_color_to_model_packets_below_level();
 
     // add effect if animation id != idle
     V0 = bu[80074ea4 + S1 * 84 + 5e]; // animation id
-    if (V0 != 0)
+    if( V0 != 0 )
     {
         T8 = bu[S2 + 2];
         S5 = w[S2 + 1c];
@@ -6241,212 +5507,172 @@ else if (V1 == 1)
         A0 = bu[800df114];
 
         // identity matrix and translation
-        [SP + 10] = h(1000); [SP + 12] = h(0); [SP + 14] = h(0);
-        [SP + 16] = h(0); [SP + 18] = h(1000); [SP + 1a] = h(0);
-        [SP + 1c] = h(0); [SP + 1e] = h(0); [SP + 20] = h(1000);
-        [SP + 24] = w(0);
-        [SP + 28] = w(0);
-        [SP + 2c] = w(0);
+        [SP + 10] = h(1000); [SP + 12] = h(0);    [SP + 14] = h(0);
+        [SP + 16] = h(0);    [SP + 18] = h(1000); [SP + 1a] = h(0);
+        [SP + 1c] = h(0);    [SP + 1e] = h(0);    [SP + 20] = h(1000);
+        [SP + 24] = w(0);    [SP + 28] = w(0);    [SP + 2c] = w(0);
 
         V1 = w[800e0200] + S1 * ac8; // 80181dd4 + 
 
-        T1 = 1;
-        if (T1 < T8)
-        {
             T7 = A0 * 28;
             A2 = V1 + 5c;
 
-            Lb6504:	; 800B6504
-                if (b[S5 + T1 * 4 + 3] != 0)
+        for( int i = 1; < T8; ++i )
+        {
+            if( b[S5 + i * 4 + 3] != 0 )
+            {
+                V0 = w[S2 + 20] + i * 20;
+
+                // bone matrix
+                R11R12 = w[V0 + 0];
+                R13R21 = w[V0 + 4];
+                R22R23 = w[V0 + 8];
+                R31R32 = w[V0 + c];
+                R33 = w[V0 + 10];
+                TRX = w[V0 + 14];
+                TRY = w[V0 + 18];
+                TRZ = w[V0 + 1c];
+
+                [SP + 30] = h(0);
+                [SP + 32] = h(0);
+                [SP + 34] = h(0);
+
+                VXY0 = w[SP + 30];
+                VZ0 = w[SP + 34];
+                gte_RTPS(); // Perspective transform
+                [1f800200] = h(IR1);
+                [1f800202] = h(IR2);
+                [1f800204] = h(IR3);
+
+                [1f800210] = w(SZ3);
+                [SP + 30] = h(0);
+                [SP + 32] = h(0);
+                V0 = hu[A2 + 58];
+                V0 = 0 NOR V0;
+                [SP + 34] = h(V0);
+
+                VXY0 = w[SP + 30];
+                VZ0 = w[SP + 34];
+                gte_RTPS(); // Perspective transform
+                [1f800208] = h(IR1);
+                [1f80020a] = h(IR2);
+                [1f80020c] = h(IR3);
+
+                [1f800214] = w(SZ3);
+                V0 = h[1f80020c];
+                A0 = ((h[S0 + 0] - h[1f800204]) << c) / (V0 - h[1f800204]);
+                if (V0 != h[1f800204] && A0 < 1200)
                 {
-                    V0 = w[S2 + 20] + T1 * 20;
-
-                    // bone matrix
-                    T4 = w[V0 + 0];
-                    T5 = w[V0 + 4];
-                    R11R12 = T4;
-                    R13R21 = T5;
-                    T4 = w[V0 + 8];
-                    T5 = w[V0 + c];
-                    T6 = w[V0 + 10];
-                    R22R23 = T4;
-                    R31R32 = T5;
-                    R33 = T6;
-                    T4 = w[V0 + 14];
-                    T5 = w[V0 + 18];
-                    TRX = T4;
-                    T6 = w[V0 + 1c];
-                    TRY = T5;
-                    TRZ = T6;
-
-                    [SP + 30] = h(0);
-                    [SP + 32] = h(0);
-                    [SP + 34] = h(0);
-
-                    800B658C	lwc2   zero, $0000(SP + 30)
-                    800B6590	lwc2   at, $0004(SP + 30)
-                    gte_RTPS(); // Perspective transform
-                    T4 = IR1;
-                    T5 = IR2;
-                    T6 = IR3;
-
-                    [1f800200] = h(T4);
-                    [1f800202] = h(T5);
-                    [1f800204] = h(T6);
-                    800B65B8	swc2   s3, $0000(1f800210)
-                    [SP + 30] = h(0);
-                    [SP + 32] = h(0);
-                    V0 = hu[A2 + 58];
-                    V0 = 0 NOR V0;
-                    [SP + 34] = h(V0);
-
-                    800B65D4	lwc2   zero, $0000(SP + 30)
-                    800B65D8	lwc2   at, $0004(SP + 30)
-                    gte_RTPS(); // Perspective transform
-                    T4 = IR1;
-                    T5 = IR2;
-                    T6 = IR3;
-
-                    [1f800208] = h(T4);
-                    [1f80020a] = h(T5);
-                    [1f80020c] = h(T6);
-                    800B6608	swc2   s3, $0000(1f800214)
-                    V0 = h[1f80020c];
-                    A0 = ((h[S0 + 0] - h[1f800204]) << c) / (V0 - h[1f800204]);
-                    if (V0 != h[1f800204] && A0 < 1200)
-                    {
-                        [A2 + 5a] = h(1);
-                        [A2 + 54] = h((hu[S0 + 0]);
-                        V0 = h[1f800208];
-                        V1 = h[1f800200];
-                        V0 = V0 - V1;
-                        V0 = A0 * V0;
-                        V0 = V) >> c;
-                        V0 = V0 + V1;
-                        [A2 + 50] = h(V0);
-                        V0 = h[1f80020a];
-                        V1 = h[1f800202];
-                        V0 = V0 - V1;
-                        V0 = A0 * V0;
-                        V0 = V0 >> c;
-                        V0 = V0 + V1;
-                        [A2 + 52] = h(V0);
-
-                        S6 = w[S2 + 20];
-
-                        T4 = w[S6 + 0];
-                        T5 = w[S6 + 4];
-                        R11R12 = T4;
-                        R13R21 = T5;
-                        T4 = w[S6 + 8];
-                        T5 = w[S6 + c];
-                        T6 = w[S6 + 10];
-                        R22R23 = T4;
-                        R31R32 = T5;
-                        R33 = T6;
-                        T4 = w[S6 + 14];
-                        T5 = w[S6 + 18];
-                        TRX = T4;
-                        T6 = w[S6 + 1c];
-                        TRY = T5;
-                        TRZ = T6;
-
-                        [SP + 30] = h(hu[A2 + 50]);
-                        [SP + 32] = h(hu[A2 + 52]);
-                        [SP + 34] = h(hu[A2 + 54]);
-
-                        800B6740	lwc2   zero, $0000(SP + 30)
-                        800B6744	lwc2   at, $0004(SP + 30)
-                        gte_RTPS(); // Perspective transform
-
-                        V0 = SP + 38;
-                        [V0 + 0000] = w(SXY2);
-
-                        800B6764	swc2   s3, $0000(1f800218)
-                        V1 = w[1f800218];
-
-                        V0 = V1 << 02;
-                        V0 = V0 + V1;
-                        V0 = V0 << 02;
-                        V0 = V0 >> 0b;
-
-                        V0 = 0 - V0;
-
-                        V0 = V0 + 0028;
-                        A1 = V0;
-                        V0 = V0 < 8;
-                        A0 = T7 + A2;
-                        if (V0 != 0)
-                        {
-                            A1 = 8;
-                        }
-
-                        [A0 + 8] = h(hu[SP + 38] - A1 / 2);
-                        [A0 + a] = h(hu[SP + 3a] - A1 / 2);
-                        [A0 + 10] = h(hu[SP + 38] + A1 / 2);
-                        [A0 + 12] = h(hu[SP + 3a] - A1 / 2);
-                        [A0 + 18] = h(hu[SP + 38] - A1 / 2);
-                        [A0 + 1a] = h(hu[SP + 3a] + A1 / 2);
-                        [A0 + 20] = h(hu[SP + 38] + A1 / 2);
-                        [A0 + 22] = h(hu[SP + 3a] + A1 / 2);
-                        [A0 + d] = b(90);
-
-                        [A0 + c] = b(h[S0 + 8] * 20);
-                        [A0 + 15] = b(90);
-                        [A0 + 14] = b(h[S0 + 8] * 20 + 20);
-                        [A0 + 1d] = b(b0);
-                        [A0 + 1c] = b(h[S0 + 8] * 20);
-                        [A0 + 25] = b(b0);
-                        [A0 + 24] = b(h[S0 + 8] * 20 + 20);
-                    }
-                    else
-                    {
-                        [A2 + 5a] = h(0);
-                    }
-
-                    V0 = w[1f800210];
-                    V1 = w[1f800214];
+                    [A2 + 5a] = h(1);
+                    [A2 + 54] = h((hu[S0 + 0]);
+                    V0 = h[1f800208];
+                    V1 = h[1f800200];
+                    V0 = V0 - V1;
+                    V0 = A0 * V0;
+                    V0 = V) >> c;
                     V0 = V0 + V1;
-                    V1 = h[A2 + 0058];
-                    V0 = V0 >> 01;
-                    V0 = V1;
+                    [A2 + 50] = h(V0);
+                    V0 = h[1f80020a];
+                    V1 = h[1f800202];
+                    V0 = V0 - V1;
+                    V0 = A0 * V0;
+                    V0 = V0 >> c;
+                    V0 = V0 + V1;
+                    [A2 + 52] = h(V0);
+
+                    S6 = w[S2 + 20];
+
+                    R11R12 = w[S6 + 0];
+                    R13R21 = w[S6 + 4];
+                    R22R23 = w[S6 + 8];
+                    R31R32 = w[S6 + c];
+                    R33 = w[S6 + 10];
+                    TRX = w[S6 + 14];
+                    TRY = w[S6 + 18];
+                    TRZ = w[S6 + 1c];
+
+                    [SP + 30] = h(hu[A2 + 50]);
+                    [SP + 32] = h(hu[A2 + 52]);
+                    [SP + 34] = h(hu[A2 + 54]);
+
+                    VXY0 = w[SP + 30];
+                    VZ0 = w[SP + 34];
+                    gte_RTPS(); // Perspective transform
+                    [SP + 38] = w(SXY2);
+                    [1f800218] = w(SZ3);
+
                     V1 = w[1f800218];
-                    V0 = V0 >> 1f;
-                    V0 = V1 - V0;
-                    [1f800218] = w(V0);
-                    if (V0 != 0)
-                    {
-                        [1f800218] = w(0);
-                    }
-
-                    V1 = h[A2 + 5a];
+                    V0 = V1 << 02;
+                    V0 = V0 + V1;
+                    V0 = V0 << 02;
+                    V0 = V0 >> 0b;
+                    V0 = 0 - V0;
+                    V0 = V0 + 0028;
+                    A1 = V0;
                     A0 = T7 + A2;
-                    if (V1 == 1)
+                    if( V0 < 8 )
                     {
-                        V0 = w[1f800218];
-                        V1 = w[A0 + 0000];
-                        V0 = V0 << 02;
-                        V0 = V0 + S3;
-                        V0 = w[V0 + 0000];
-                        V1 = V1 & ff000000;
-                        V0 = V0 & 00ffffff;
-                        V1 = V1 | V0;
-                        [A0 + 0000] = w(V1);
-
-                        V1 = w[1f800218];
-                        [w[800df118] + V1 * 4] = w((w[w[800df118] + V1 * 4] & ff000000) | (A0 & 00ffffff));
+                        A1 = 8;
                     }
+
+                    [A0 + 8] = h(hu[SP + 38] - A1 / 2);
+                    [A0 + a] = h(hu[SP + 3a] - A1 / 2);
+                    [A0 + 10] = h(hu[SP + 38] + A1 / 2);
+                    [A0 + 12] = h(hu[SP + 3a] - A1 / 2);
+                    [A0 + 18] = h(hu[SP + 38] - A1 / 2);
+                    [A0 + 1a] = h(hu[SP + 3a] + A1 / 2);
+                    [A0 + 20] = h(hu[SP + 38] + A1 / 2);
+                    [A0 + 22] = h(hu[SP + 3a] + A1 / 2);
+                    [A0 + d] = b(90);
+
+                    [A0 + c] = b(h[S0 + 8] * 20);
+                    [A0 + 15] = b(90);
+                    [A0 + 14] = b(h[S0 + 8] * 20 + 20);
+                    [A0 + 1d] = b(b0);
+                    [A0 + 1c] = b(h[S0 + 8] * 20);
+                    [A0 + 25] = b(b0);
+                    [A0 + 24] = b(h[S0 + 8] * 20 + 20);
+                }
+                else
+                {
+                    [A2 + 5a] = h(0);
                 }
 
-                T1 = T1 + 1;
-                V0 = T1 < T8;
-                A2 = A2 + 5c;
-            800B6940	bne    v0, zero, Lb6504 [$800b6504]
+                V0 = w[1f800210];
+                V1 = w[1f800214];
+                V0 = V0 + V1;
+                V1 = h[A2 + 0058];
+                V0 = V0 >> 01;
+                V0 = V1;
+                V1 = w[1f800218];
+                V0 = V0 >> 1f;
+                V0 = V1 - V0;
+                [1f800218] = w(V0);
+                if( V0 != 0 )
+                {
+                    [1f800218] = w(0);
+                }
+
+                V1 = h[A2 + 5a];
+                A0 = T7 + A2;
+                if( V1 == 1 )
+                {
+                    V0 = w[1f800218];
+                    V1 = w[A0];
+                    V0 = V0 << 02;
+                    V0 = V0 + S3;
+                    V1 = (V1 & ff000000) | (w[V0] & 00ffffff);
+                    [A0 + 0000] = w(V1);
+
+                    V1 = w[1f800218];
+                    [w[800df118] + V1 * 4] = w((w[w[800df118] + V1 * 4] & ff000000) | (A0 & 00ffffff));
+                }
+            }
+
+            A2 = A2 + 5c;
         }
     }
 }
-
-
 
 // frames in effect?
 [S0 + a] = h(h[S0 + a] + 1);
@@ -6460,7 +5686,7 @@ if (h[S0 + a] >= 3)
     }
 }
 
-return 0.
+return 0;
 ////////////////////////////////
 
 
@@ -6570,18 +5796,8 @@ return 1;
 
 
 ////////////////////////////////
-// funcb6b4c
-800B6B4C	addiu  sp, sp, $ff68 (=-$98)
-[SP + 0094] = w(RA);
-[SP + 0090] = w(FP);
-[SP + 008c] = w(S7);
-[SP + 0088] = w(S6);
-[SP + 0084] = w(S5);
-[SP + 0080] = w(S4);
-[SP + 007c] = w(S3);
-[SP + 0078] = w(S2);
-[SP + 0074] = w(S1);
-[SP + 0070] = w(S0);
+// kawai_action_c()
+
 [SP + 0010] = w(A0);
 V0 = bu[A1 + 0001];
 A0 = bu[A1 + 0000];
@@ -7482,19 +6698,6 @@ Lb7980:	; 800B7980
 V0 = 0001;
 
 Lb7984:	; 800B7984
-RA = w[SP + 0094];
-FP = w[SP + 0090];
-S7 = w[SP + 008c];
-S6 = w[SP + 0088];
-S5 = w[SP + 0084];
-S4 = w[SP + 0080];
-S3 = w[SP + 007c];
-S2 = w[SP + 0078];
-S1 = w[SP + 0074];
-S0 = w[SP + 0070];
-SP = SP + 0098;
-800B79B0	jr     ra 
-800B79B4	nop
 ////////////////////////////////
 
 
@@ -8439,7 +7642,8 @@ SP = SP + 0060;
 
 
 ////////////////////////////////
-// kawai_action_b
+// kawai_action_b()
+
 S2 = A0;
 T2 = 800dfe3c + bu[A1 + 1] * 3c;
 
@@ -8491,74 +7695,44 @@ else if (A0 == 1)
                 T7 = w[S2 + 20];
 
                 // set root rotation matrix
-                T4 = w[T7 + 0];
-                T5 = w[T7 + 4];
-                R11R12 = T4;
-                R13R21 = T5;
-                T4 = w[T7 + 8];
-                T5 = w[T7 + c];
-                T6 = w[T7 + 10];
-                R22R23 = T4;
-                R31R32 = T5;
-                R33 = T6;
+                R11R12 = w[T7 + 0];
+                R13R21 = w[T7 + 4];
+                R22R23 = w[T7 + 8];
+                R31R32 = w[T7 + c];
+                R33 = w[T7 + 10];
 
                 // multiply with bone rotation matrix
                 V0 = w[S2 + 20] + bu[S1 + 1] * 20; // bone this part attached to
-                T4 = hu[V0 + 0];
-                T5 = hu[V0 + 6];
-                T6 = hu[V0 + c];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
+                IR1 = hu[V0 + 0];
+                IR2 = hu[V0 + 6];
+                IR3 = hu[V0 + c];
                 gte_rtir12(); // ir * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800000] = h(T4);
-                [1f800006] = h(T5);
-                [1f80000c] = h(T6);
+                [1f800000] = h(IR1);
+                [1f800006] = h(IR2);
+                [1f80000c] = h(IR3);
 
                 V0 = w[S2 + 20] + bu[S1 + 1] * 20; // bone this part attached to
-                T4 = hu[V0 + 2];
-                T5 = hu[V0 + 8];
-                T6 = hu[V0 + e];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
+                IR1 = hu[V0 + 2];
+                IR2 = hu[V0 + 8];
+                IR3 = hu[V0 + e];
                 gte_rtir12(); // ir * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800002] = h(T4);
-                [1f800008] = h(T5);
-                [1f80000e] = h(T6);
+                [1f800002] = h(IR1);
+                [1f800008] = h(IR2);
+                [1f80000e] = h(IR3);
 
                 V0 = w[S2 + 20] + bu[S1 + 1] * 20; // bone this part attached to
-                T4 = hu[V0 + 4];
-                T5 = hu[V0 + a];
-                T6 = hu[V0 + 10];
-                IR1 = T4;
-                IR2 = T5;
-                IR3 = T6;
+                IR1 = hu[V0 + 4];
+                IR2 = hu[V0 + a];
+                IR3 = hu[V0 + 10];
                 gte_rtir12(); // ir * rotmatrix
-                T4 = IR1;
-                T5 = IR2;
-                T6 = IR3;
-                [1f800004] = h(T4);
-                [1f80000a] = h(T5);
-                [1f800010] = h(T6);
-
-
+                [1f800004] = h(IR1);
+                [1f80000a] = h(IR2);
+                [1f800010] = h(IR3);
 
                 T7 = w[S2 + 20];
-                T4 = w[T7 + 14];
-                T5 = w[T7 + 18];
-                TRX = T4;
-                T6 = w[T7 + 1c];
-                TRY = T5;
-                TRZ = T6;
-
-
+                TRX = w[T7 + 14];
+                TRY = w[T7 + 18];
+                TRZ = w[T7 + 1c];
 
                 V0 = w[S2 + 20] + bu[S1 + 1] * 20 + 14;
                 T4 = (hu[V0 + 4] << 10) | hu[V0 + 0];
@@ -9181,19 +8355,6 @@ V0 = V0 >> 10;
 V0 = V0 - T3;
 V0 = V0 << 0c;
 800B94A0	div    v0, t2
-800B94A4	bne    t2, zero, Lb94b0 [$800b94b0]
-800B94A8	nop
-800B94AC	break   $01c00
-
-Lb94b0:	; 800B94B0
-800B94B0	addiu  at, zero, $ffff (=-$1)
-800B94B4	bne    t2, at, Lb94c8 [$800b94c8]
-800B94B8	lui    at, $8000
-800B94BC	bne    v0, at, Lb94c8 [$800b94c8]
-800B94C0	nop
-800B94C4	break   $01800
-
-Lb94c8:	; 800B94C8
 800B94C8	mflo   v0
 800B94CC	nop
 IR0 = V0;
@@ -9293,19 +8454,6 @@ V0 = V0 >> 10;
 V0 = V0 - T3;
 V0 = V0 << 0c;
 800B9630	div    v0, t2
-800B9634	bne    t2, zero, Lb9640 [$800b9640]
-800B9638	nop
-800B963C	break   $01c00
-
-Lb9640:	; 800B9640
-800B9640	addiu  at, zero, $ffff (=-$1)
-800B9644	bne    t2, at, Lb9658 [$800b9658]
-800B9648	lui    at, $8000
-800B964C	bne    v0, at, Lb9658 [$800b9658]
-800B9650	nop
-800B9654	break   $01800
-
-Lb9658:	; 800B9658
 800B9658	mflo   v0
 800B965C	nop
 IR0 = V0;
@@ -9409,19 +8557,6 @@ V0 = V1 >> 10;
 V0 = V0 - T3;
 V0 = V0 << 0c;
 800B97D0	div    v0, t2
-800B97D4	bne    t2, zero, Lb97e0 [$800b97e0]
-800B97D8	nop
-800B97DC	break   $01c00
-
-Lb97e0:	; 800B97E0
-800B97E0	addiu  at, zero, $ffff (=-$1)
-800B97E4	bne    t2, at, Lb97f8 [$800b97f8]
-800B97E8	lui    at, $8000
-800B97EC	bne    v0, at, Lb97f8 [$800b97f8]
-800B97F0	nop
-800B97F4	break   $01800
-
-Lb97f8:	; 800B97F8
 800B97F8	mflo   v0
 800B97FC	nop
 IR0 = V0;
@@ -9920,7 +9055,7 @@ else if( V1 == 1 )
 
         A0 = model_data;
         A1 = 800dfe1c;
-        field_model_set_lighting_to_model_packets();
+        field_model_kawai_set_lighting_to_model_packets();
 
         // remove lighting calculation again
         for( int i = 0; i < parts_n; ++i )

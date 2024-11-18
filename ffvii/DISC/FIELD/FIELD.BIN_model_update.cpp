@@ -54,7 +54,7 @@ for( int i = 0; i < bu[models_struct + 0]; ++i ) // number of models
     [1f800003] = b(i);
     A0 = model_data + i * 24;
     A1 = 1f800000;
-    field_model_load_eyes_mouth_tex_to_vram();
+    field_model_kawai_load_eyes_mouth_tex_to_vram();
 }
 
 funcafde4();
@@ -240,7 +240,7 @@ for( int i = 0; i < h[8009ac1c]; ++i )
             V0 = w[8004a62c];
             A0 = w[V0 + 4] + i * 24;
             A1 = S5;
-            field_model_load_eyes_mouth_tex_to_vram();
+            field_model_kawai_load_eyes_mouth_tex_to_vram();
         }
     }
 }

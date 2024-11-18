@@ -228,20 +228,19 @@
 // run_kawai
 800AFE1C-800B0614
 ////////////////////////////////
-// funcb0618
-// kawai_action_3
+// field_model_kawai_set_custom_lighting_to_model_packets
 800B0618-800B0A44
 ////////////////////////////////
 // funcb0a48
 800B0A48-800B0ED8
 ////////////////////////////////
-// field_model_set_color_to_model_packets
+// field_model_kawai_set_color_to_model_packets
 800B0EDC-800B0FAC
 ////////////////////////////////
 // field_model_set_color_to_part_packets
 800B0FB0-800B1C78
 ////////////////////////////////
-// field_model_load_eyes_mouth_tex_to_vram
+// field_model_kawai_load_eyes_mouth_tex_to_vram
 800B1C7C-800B1E3C
 ////////////////////////////////
 // field_model_lighting_apply_to_model
@@ -250,14 +249,13 @@
 // field_model_lighting_apply_to_poly_color
 800B2598-800B29FC
 ////////////////////////////////
-// field_model_set_model_transparency
+// field_model_kawai_set_model_transparency
 800B2A00-800B2DD0
 ////////////////////////////////
-// kawai_action_4
-// funcb2dd4
+// field_model_kawai_set_color_to_model_packets_below_level
 800B2DD4-800B2F3C
 ////////////////////////////////
-// funcb2f40
+// field_model_set_color_to_part_packets_below_level
 800B2F40-800B4808
 ////////////////////////////////
 // kawai_action_6
@@ -269,7 +267,7 @@
 // kawai_action_8
 800B4EAC-800B525C
 ////////////////////////////////
-// field_model_set_lighting_to_model_packets
+// field_model_kawai_set_lighting_to_model_packets
 800B5260-800B5500
 ////////////////////////////////
 // field_model_set_lighting_to_part_packets
@@ -284,7 +282,7 @@
 // kawai_action_a
 800B6AE4-800B6B48
 ////////////////////////////////
-// funcb6b4c
+// kawai_action_c
 800B6B4C-800B79B4
 ////////////////////////////////
 // funcb79b8
