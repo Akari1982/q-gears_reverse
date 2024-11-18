@@ -1188,18 +1188,18 @@ BOOL CALLBACK ConfigureMcdsDlgProc(HWND hW, UINT uMsg, WPARAM wParam, LPARAM lPa
 
 						// save dir data + save data
 						memcpy(Mcd1Data + (i+1) * 128, Mcd2Data + (copy+1) * 128, 128);
-						SaveMcd(0, str, Mcd1Data, (i+1) * 128, 128);
+						SaveMcd(str, Mcd1Data, (i+1) * 128, 128);
 						memcpy(Mcd1Data + (i+1) * 1024 * 8, Mcd2Data + (copy+1) * 1024 * 8, 1024 * 8);
-						SaveMcd(0, str, Mcd1Data, (i+1) * 1024 * 8, 1024 * 8);
+						SaveMcd(str, Mcd1Data, (i+1) * 1024 * 8, 1024 * 8);
 					} else { // 2
 						Edit_GetText(GetDlgItem(hW,IDC_MCD2), str, 256);
 						i = ListView_GetSelectionMark(GetDlgItem(mcdDlg, IDC_LIST2));
 
 						// save dir data + save data
 						memcpy(Mcd2Data + (i+1) * 128, Mcd1Data + (copy+1) * 128, 128);
-						SaveMcd(0, str, Mcd2Data, (i+1) * 128, 128);
+						SaveMcd(str, Mcd2Data, (i+1) * 128, 128);
 						memcpy(Mcd2Data + (i+1) * 1024 * 8, Mcd1Data + (copy+1) * 1024 * 8, 1024 * 8);
-						SaveMcd(0, str, Mcd2Data, (i+1) * 1024 * 8, 1024 * 8);
+						SaveMcd(str, Mcd2Data, (i+1) * 1024 * 8, 1024 * 8);
 					}
 
 					UpdateMcdDlg();
@@ -1234,7 +1234,7 @@ BOOL CALLBACK ConfigureMcdsDlgProc(HWND hW, UINT uMsg, WPARAM wParam, LPARAM lPa
 					for (j=0; j<127; j++) xor^=*ptr++;
 					*ptr = xor;
 
-					SaveMcd(0, str, data, i * 128, 128);
+					SaveMcd(str, data, i * 128, 128);
 					UpdateMcdDlg();
 				}
 
@@ -1268,7 +1268,7 @@ BOOL CALLBACK ConfigureMcdsDlgProc(HWND hW, UINT uMsg, WPARAM wParam, LPARAM lPa
 					for (j=0; j<127; j++) xor^=*ptr++;
 					*ptr = xor;
 
-					SaveMcd(0, str, data, i * 128, 128);
+					SaveMcd(str, data, i * 128, 128);
 					UpdateMcdDlg();
 				}
 

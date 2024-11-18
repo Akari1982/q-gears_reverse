@@ -493,7 +493,12 @@ int docop2(int op) {
 		SXY1 = SXY2;
 		SX2 = Lm_G1(F((s64) OFX + ((s64) IR1 * h_over_sz3) * (Config.Widescreen ? 0.75 : 1)) >> 16);
 		SY2 = Lm_G2(F((s64) OFY + ((s64) IR2 * h_over_sz3)) >> 16);
-		
+
+        //char Text[ 256 ];
+        //sprintf( Text, _( "RTPS: R11(%x), R12(%x), R13(%x), TRX(%x), VX0(%x), VY0(%x), VZ0(%x), MAC1(%x), MAC2(%x), MAC3(%x), SX2(%x), SY2(%x)\n" ),
+        //                         R11,     R12,     R13,     TRX,     VX0,     VY0,     VZ0,     MAC1,     MAC2,     MAC3,     SX2,     SY2 );
+        //GPU_displayText( Text );
+
 		PGXP_pushSXYZ2s(Lm_G1_ia((s64)OFX + (s64)(IR1 * h_over_sz3) * (Config.Widescreen ? 0.75 : 1)), 
 			Lm_G2_ia((s64)OFY + (s64)(IR2 * h_over_sz3)),
 			max(SZ3, H/2), SXY2);

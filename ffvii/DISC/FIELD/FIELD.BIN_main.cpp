@@ -239,14 +239,14 @@ system_psyq_set_draw_env();
 
 A0 = 80113fe4;
 A1 = 0;
-A2 = 0008;
-A3 = 0140;
-A4 = 00e0; // height
+A2 = 8;
+A3 = 140;
+A4 = e0; // height
 system_graphic_create_draw_env_struct();
 [80113ffa] = b(1);
 [80113ffc] = b(0);
 
-A0 = 80113fe4 + 005c;
+A0 = 80113fe4 + 5c;
 A1 = 0;
 A2 = f0;
 A3 = 140;
@@ -3294,7 +3294,7 @@ for( int i = 0; i < number_of_models; ++i )
             move_add_shift_rotate();
 
             // set idle animation id by default
-            [80074EA4 + pc_entity * 84 + 5e] = b(bu[8009ABF4 + 2C]);
+            [80074EA4 + pc_entity * 84 + 5e] = b(bu[8009ABF4 + 2c]);
 
             field_scale = h[8009abf4 + 10];
 
@@ -4097,7 +4097,7 @@ return 0;
 // walkmesh_border_cross
 triangle_info_offset      = A0;
 triangle_id               = hu[triangle_info_offset];
-offset_to_id_block        = w[800E4274];
+offset_to_id_block        = w[800e4274];
 offset_to_id_access_block = w[80114458];
 offset_to_triangle        = offset_to_id_block + triangle_id * 18
 offset_to_triangle_access = offset_to_id_access_block + triangle_id * 6
@@ -4106,52 +4106,42 @@ S4 = A2; // we multiply board vector with this vector and return +8 or -8 accord
 S1 = A3; // we store collision board here
 S3 = 0;
 
-V0 = w[position + 0];
-V0 = V0 >> 0C;
-[1F800030] = w(V0);
+[1f800030] = w(w[position + 0] >> c);
+[1f800034] = w(w[position + 4] >> c);
+[1f800038] = w(0);
 
-V0 = w[position + 4];
-V0 = V0 >> 0C;
-[1F800034] = w(V0);
-
-[1F800038] = w(0);
-
-[80113F28] = h(FFFF);
-
-
+[80113f28] = h(ffff);
 
 // jump here if we can cross side of previous triangle
 La89f0:	; 800A89F0
-A0 = 1F800000;
+A0 = 1f800000;
 A1 = offset_to_triangle + 8;
 A2 = offset_to_triangle;
 field_walkmesh_vector_sub();
 
-A0 = 1F800010;
+A0 = 1f800010;
 A1 = offset_to_triangle + 10;
 A2 = offset_to_triangle + 8;
 field_walkmesh_vector_sub();
 
-A0 = 1F800020;
+A0 = 1f800020;
 A1 = offset_to_triangle;
 A2 = offset_to_triangle + 10;
 field_walkmesh_vector_sub();
 
-
-
-A3 = (w[1F800030] - h[offset_to_triangle + 00]) * w[1F800004];
-T2 = (w[1F800034] - h[offset_to_triangle + 02]) * w[1F800000];
-T1 = (w[1F800030] - h[offset_to_triangle + 08]) * w[1F800014];
-T0 = (w[1F800034] - h[offset_to_triangle + 0a]) * w[1F800010];
-A0 = (w[1F800030] + h[offset_to_triangle + 10]) * w[1F800024];
-V0 = (w[1F800034] - h[offset_to_triangle + 12]) * w[1F800020];
+A3 = (w[1F800030] - h[offset_to_triangle + 00]) * w[1f800004];
+T2 = (w[1F800034] - h[offset_to_triangle + 02]) * w[1f800000];
+T1 = (w[1F800030] - h[offset_to_triangle + 08]) * w[1f800014];
+T0 = (w[1F800034] - h[offset_to_triangle + 0a]) * w[1f800010];
+A0 = (w[1F800030] + h[offset_to_triangle + 10]) * w[1f800024];
+V0 = (w[1F800034] - h[offset_to_triangle + 12]) * w[1f800020];
 
 A3 = A3 - T2;
 T1 = T1 - T0;
 A0 = A0 - V0;
 
 // if we cross AB
-if (A3 < 0)
+if( A3 < 0 )
 {
     A0 = hu[offset_to_triangle_access + 0];
     if (A0 >= 0)
@@ -4167,12 +4157,9 @@ if (A3 < 0)
         }
     }
 
-    V0 = w[1F800000];
-    [S1] = w(V0);
-    V0 = w[1F800004];
-    [S1] = w(V0 + 4);
-    V0 = w[1F800008];
-    [S1] = w(V0 + 8);
+    [S1] = w(w[1f800000] + 0);
+    [S1] = w(w[1f800004] + 4);
+    [S1] = w(w[1f800008] + 8);
 
     V1 = w[1F800000];
     V0 = w[S4];

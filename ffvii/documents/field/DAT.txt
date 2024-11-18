@@ -30,6 +30,26 @@ events data
 
 
 ////////////////////////////////
+walkmesh data
+    +  0 [][][][] number of triangles.
+    +  4 start of triangles (0x18 size)
+        +  0 [][]     x1.
+        +  2 [][]     y1.
+        +  4 [][]     z1.
+        +  8 [][]     x2.
+        +  a [][]     y2.
+        +  c [][]     z2.
+        + 10 [][]     x3.
+        + 12 [][]     y3.
+        + 14 [][]     z3.
+    + xx start of access (+4 + number of triangles * 0x18) (0x6 size).
+        +  0 [][]     access1.
+        +  2 [][]     access2.
+        +  4 [][]     access3.
+////////////////////////////////
+
+
+////////////////////////////////
 triggers data
     + 38 [][][][] triggers data.
     +158 [][][][] array of background triggers (0xc items, 0x10 size).

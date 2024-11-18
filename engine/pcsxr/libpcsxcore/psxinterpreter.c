@@ -705,12 +705,14 @@ void psxBNE() {	RepBranchi32(!=) }  // Branch if Rs != Rt
 void psxJ()   {               doBranch(_JumpTarget_); }
 void psxJAL()
 {
-    psxMemWrite32( 0x80010000, 0 );
+    //psxMemWrite32( 0x80010000, 0 );
 
     //psxMemWrite32(0x800af51c, 0); // transition type
 
     // FFVII DEBUG
+    psxMemWrite8( 0x8009c6e4 + 0xfa4 + 0x83, 0x80 );
     //psxMemWrite8(0x8009d820, 0xff);
+
 
     if( 0 ) {}
 
@@ -744,7 +746,7 @@ void psxJAL()
         //GPU_displayText("CALL DISABLED");
     //}
 
-
+/*
     else if( _JumpTarget_ == 0x80AAF70 ) // call given func when SELECT is pressed instead of map
     {
         _SetLink(31);
@@ -754,11 +756,14 @@ void psxJAL()
     //else if( _JumpTarget_ == 0x8003e7a8 ) { execI(); P_Xeno_System_SoundUpdateSPU(); }
     //else if( _JumpTarget_ == 0x8003c36c ) { execI(); P_Xeno_System_SoundUpdateBaseValues(); }
     //else if (_JumpTarget_ == 0x8003c590 ) { execI(); P_Xeno_System_SoundUpdateSequence(); }
-
+*/
     // FFVII DEBUG
     //else if (_JumpTarget_ == 0x800AB5E8)
     //{
-    //
+        //char Text[ 256 ];
+        //sprintf( Text, _( "Pos: X(%x), Y(%x), Z(%x)\n" ), psxMemRead32( 0x80074ea4 + 0xc ), psxMemRead32( 0x80074ea4 + 0x10 ), psxMemRead32( 0x80074ea4 + 0x14 ) );
+        //GPU_displayText( Text );
+    //}
     //
     //    psxMemWrite8(0x800e0748 + 0 * 0x17a + 0x178, 0);
     //    psxMemWrite8(0x800e0748 + 1 * 0x17a + 0x178, 0);
@@ -1335,7 +1340,7 @@ static void intShutdown() {
 
 // interpreter execution
 static inline void execI() {
-    if( psxRegs.pc == 0x800A72B8 )
+    /*if( psxRegs.pc == 0x800A72B8 )
     {
         char Text[ 256 ];
         sprintf( Text, _( "MEM: s2:0x%x" ), psxRegs.GPR.n.s2 );
@@ -1344,7 +1349,7 @@ static inline void execI() {
 
         //GPU_displayText("SKIP PART");
         //psxRegs.pc = 0x8007F918;
-    }
+    }*/
 
 	u32 *code = Read_ICache(psxRegs.pc, FALSE);
 	psxRegs.code = ((code == NULL) ? 0 : SWAP32(*code));
