@@ -322,17 +322,19 @@ events_data = w[8009c6dc];
 actors_n = bu[events_data + 2];
 akao_n = h[events_data + 6];
 
+string = 800e4254;
+
 for( int i = 0; i < actors_n; ++i )
 {
     [800722c4] = b(i); // save current actor for use inside opcodes
 
     if( bu[80071e24] & 3 )
     {
-        A0 = 800e4254;
+        A0 = string;
         A1 = 800e0628; // "Actor:"
         field_debug_copy_string();
 
-        A0 = 800e4254;
+        A0 = string;
         A1 = events_data + 20 + i * 8; // field actors names
         field_debug_concat_string();
 
@@ -340,13 +342,13 @@ for( int i = 0; i < actors_n; ++i )
         {
             A0 = 4;
             A1 = 0;
-            A2 = 800e4254;
+            A2 = string;
             field_debug_copy_string_into_page();
         }
 
         if( bu[80071e24] & 2 )
         {
-            A0 = 800e4254;
+            A0 = string;
             funcd4840(); // empty. Was used for debug
         }
     }
@@ -2380,8 +2382,8 @@ walkmesh_data = w[800e4274];
 ////////////////////////////////
 // field_script_debug_opcode()
 
-S2 = A0; // opcode name text
-S1 = A1; // number of arg
+opcode_name = A0; // opcode name text
+args_n = A1; // number of arg
 
 current_actor_id = bu[800722c4];
 
@@ -2393,65 +2395,65 @@ if( bu[80071e24] & 04 )
     }
 }
 
+string = 800e4254;
+temp = 800e4288;
+
 // create debug string "Word:[OPCODE]"
-A0 = 800e4254;
+A0 = string;
 A1 = 800e0630; // "Word:"
 field_debug_copy_string();
 
-A0 = 800e4254;
-A1 = S2;
+A0 = string;
+A1 = opcode_name;
 field_debug_concat_string();
 
 if( bu[8009d820] & 01 )
 {
     A0 = 3;
     A1 = 0;
-    A2 = 800e4254; // copy this to temp
+    A2 = string;
     field_debug_copy_string_into_page();
 }
 
-S4 = S1 + 1;
+S4 = args_n + 1;
 
-if( S1 != 0 )
+// create string "argX=XX"
+while( args_n != 0 )
 {
-    // create string "argX=XX"
+    A0 = string;
+    A1 = 800a02f8; // "arg"
+    field_debug_copy_string();
 
-    loopbeba8:	; 800BEBA8
-        A0 = 800e4254;
-        A1 = 800a02f8; // "arg"
-        field_debug_copy_string();
+    A0 = S4 - args_n; // current opcode number
+    A1 = temp;
+    field_int_to_string();
 
-        A0 = S4 - S1; // current opcode number
-        A1 = 800e4288;
-        field_int_to_string();
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
 
-        A0 = 800e4254;
-        A1 = 800e4288;
-        field_debug_concat_string();
+    A0 = string;
+    A1 = 800a02fc; // "="
+    field_debug_concat_string();
 
-        A0 = 800e4254;
-        A1 = 800a02fc; // "="
-        field_debug_concat_string();
+    V0 = w[8009c6dc] + hu[800831fc + current_actor_id * 2] + S4 - args_n;
+    A0 = bu[V0]; // argument value
+    A1 = temp;
+    field_int2_to_string();
 
-        V0 = w[8009c6dc] + hu[800831fc + current_actor_id * 2] + S4 - S1;
-        A0 = bu[V0]; // argument value
-        A1 = 800e4288;
-        field_int2_to_string();
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
 
-        A0 = 800e4254;
-        A1 = 800e4288;
-        field_debug_concat_string();
+    if( bu[8009d820] & 01 )
+    {
+        A0 = 3;
+        A1 = S4 - args_n;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
 
-        if( bu[8009d820] & 01 )
-        {
-            A0 = 3;
-            A1 = S4 - S1;
-            A2 = 800e4254; // copy this to temp
-            field_debug_copy_string_into_page();
-        }
-
-        S1 = S1 - 1;
-    800BEC78	bne    s1, zero, loopbeba8 [$800beba8]
+    args_n -= 1;
 }
 ////////////////////////////////
 
@@ -2460,9 +2462,9 @@ if( S1 != 0 )
 ////////////////////////////////
 // funcbeca4()
 
-str = A0;
+param = A0;
 value = A1;
-S0 = A2;
+val_size = A2;
 
 if( bu[80071e24] & 4 )
 {
@@ -2473,67 +2475,71 @@ if( bu[80071e24] & 4 )
     }
 }
 
-A0 = 800e4254;
-A1 = str;
+string = 800e4254;
+temp = 800e4288;
+
+A0 = string;
+A1 = param;
 field_debug_copy_string();
 
-if( S0 == 1 )
+if( val_size == 1 )
 {
     A0 = value;
-    A1 = 800e4288;
+    A1 = temp;
     field_int_to_string();
 }
-else if( S0 == 2 )
+else if( val_size == 2 )
 {
     A0 = value;
-    A1 = 800e4288;
+    A1 = temp;
     field_int2_to_string();
 }
-else if( S0 == 4 )
+else if( val_size == 4 )
 {
-    A1 = 800e4288;
+    A1 = temp;
     A0 = value;
     field_int4_to_string();
 }
 else
 {
-    A0 = 800e4288;
+    A0 = temp;
     A1 = 800a0270; // ""
     field_debug_copy_string();
 }
 
-A0 = 800e4254;
-A1 = 800e4288;
+A0 = string;
+A1 = temp;
 field_debug_concat_string();
 
 if( bu[8009d820] & 1 )
 {
     A0 = 2;
-    A1 = 800e4254;
+    A1 = string;
     field_add_string_to_debug_by_id();
 }
 
 if( bu[8009d820] & 2 )
 {
-    A0 = 800e4254;
-    800BEDF0	jal    funcd4840 [$800d4840]
+    A0 = string;
+    funcd4840(); // empty. Was used for debug
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// read_memory_block_one_byte
+// read_memory_block_one_byte()
+
 //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
 //A1 - offset to byte offset in opcode
-800BEE10	addiu  sp, sp, $ffe8 (=-$18)
+
 800BEE14	addiu  a0, a0, $ffff (=-$1)
 A0 = A0 << 10;
 A0 = A0 >> 10;
 V0 = A0 < 0006;
-[SP + 0014] = w(RA);
+
 800BEE28	beq    v0, zero, Lbefb8 [$800befb8]  // skip halfbyte reading if halfbyte number > 6
-[SP + 0010] = w(S0);
+
 V0 = A0 << 02;
 800BEE34	lui    at, $800a
 AT = AT + 033c;
@@ -2638,10 +2644,8 @@ A0 = V1 & 00ff;
 V0 = A0 < 0010;
 800BEFC0	beq    v0, zero, Lbf35c [$800bf35c]
 V0 = A0 << 02;
-800BEFC8	lui    at, $800a
-AT = AT + 0354;
-AT = AT + V0;
-V0 = w[AT + 0000];
+
+V0 = w[800a0354 + V0];
 800BEFD8	nop
 800BEFDC	jr     v0 
 800BEFE0	nop
@@ -2689,11 +2693,13 @@ S0 = bu[AT + 0000];
 800BF098	beq    v0, zero, Lbf398 [$800bf398]
 V0 = S0;
 A0 = 800a0308; // "G indx="
+A2 = 4;
 800BF0A8	jal    funcbeca4 [$800beca4]
-A2 = 0004;
+
 A0 = 800a0310; // "G glov="
-800BF0B8	j      Lbf34c [$800bf34c]
 A1 = S0;
+800BF0B8	j      Lbf34c [$800bf34c]
+
 
 // memory bank 3, 4
 V0 = bu[800722c4];
@@ -2717,12 +2723,15 @@ S0 = bu[AT + 0000];
 V0 = V0 & 0003;
 800BF11C	beq    v0, zero, Lbf398 [$800bf398]
 V0 = S0;
-A0 = 800a0308;
-800BF12C	jal    funcbeca4 [$800beca4]
-A2 = 0004;
-A0 = 800a0310;
-800BF13C	j      Lbf34c [$800bf34c]
+
+A0 = 800a0308; // "G indx="
+A2 = 4;
+funcbeca4();
+
+A0 = 800a0310; // "G glov="
 A1 = S0;
+800BF13C	j      Lbf34c [$800bf34c]
+
 
 // memory bank B, C
 V0 = bu[800722c4];
@@ -2746,10 +2755,11 @@ S0 = bu[AT + 0000];
 V0 = V0 & 0003;
 800BF1A0	beq    v0, zero, Lbf398 [$800bf398]
 V0 = S0;
-A0 = 800a0308;
+A0 = 800a0308; // "G indx="
+A2 = 4;
 800BF1B0	jal    funcbeca4 [$800beca4]
-A2 = 0004;
-A0 = 800a0310;
+
+A0 = 800a0310; // "G glov="
 800BF1C0	j      Lbf34c [$800bf34c]
 A1 = S0;
 
@@ -2775,12 +2785,13 @@ S0 = bu[AT + 0000];
 V0 = V0 & 0003;
 800BF224	beq    v0, zero, Lbf398 [$800bf398]
 V0 = S0;
-A0 = 800a0308;
+A0 = 800a0308; // "G indx="
+A2 = 4;
 800BF234	jal    funcbeca4 [$800beca4]
-A2 = 0004;
-A0 = 800a0310;
-800BF244	j      Lbf34c [$800bf34c]
+
+A0 = 800a0310; // "G glov="
 A1 = S0;
+800BF244	j      Lbf34c [$800bf34c]
 
 // memory bank 7, F
 V0 = bu[800722c4];
@@ -2804,12 +2815,13 @@ S0 = bu[AT + 0000];
 V0 = V0 & 0003;
 800BF2A8	beq    v0, zero, Lbf398 [$800bf398]
 V0 = S0;
-A0 = 800a0308;
-800BF2B8	jal    funcbeca4 [$800beca4]
-A2 = 0004;
-A0 = 800a0310;
-800BF2C8	j      Lbf34c [$800bf34c]
+A0 = 800a0308; // "G indx="
+A2 = 4;
+funcbeca4();
+
+A0 = 800a0310; // "G glov="
 A1 = S0;
+800BF2C8	j      Lbf34c [$800bf34c]
 
 // memory bank 5, 6
 V0 = bu[800722c4];
@@ -2833,15 +2845,17 @@ AT = AT + A1;
 S0 = bu[AT + 0000];
 800BF328	beq    v0, zero, Lbf398 [$800bf398]
 V0 = S0;
-A0 = 800a0308;
+A0 = 800a0308; // "G indx="
+A2 = 4;
 800BF338	jal    funcbeca4 [$800beca4]
-A2 = 0004;
-A0 = 800a0318;
+
+A0 = 800a0318; // "G mapv="
 A1 = S0;
 
 Lbf34c:	; 800BF34C
-800BF34C	jal    funcbeca4 [$800beca4]
-A2 = 0002;
+A2 = 2;
+funcbeca4();
+
 800BF354	j      Lbf398 [$800bf398]
 V0 = S0;
 
@@ -2852,14 +2866,15 @@ V0 = bu[8009d820];
 V0 = V0 & 0003;
 800BF36C	beq    v0, zero, Lbf384 [$800bf384]
 A1 = V1 & 00ff;
-A0 = 800a0320;
-800BF37C	jal    funcbeca4 [$800beca4]
-A2 = 0002;
+A0 = 800a0320; // "G data err="
+A2 = 2;
+funcbeca4();
+
 
 Lbf384:	; 800BF384
-A0 = 800a032c;
-800BF38C	jal    funcd4848 [$800d4848]
-800BF390	nop
+A0 = 800a032c; // "Bad Event arg!"
+funcd4848();
+
 V0 = 0;
 
 Lbf398:	; 800BF398
