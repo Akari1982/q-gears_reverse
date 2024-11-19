@@ -2323,7 +2323,7 @@ for( int i = 0; i < 10; ++i )
 // run_kawai()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 model_id = A2;
 camera_data = A3;
 
@@ -2369,10 +2369,10 @@ switch( b[model_data + 1] )
 
     case 0: // EYETX
     {
-        [kawai_data + 3] = b(model_id);
+        [kawai_settings + 3] = b(model_id);
 
         A0 = model_data;
-        A1 = kawai_data;
+        A1 = kawai_settings;
         field_model_kawai_load_eyes_mouth_tex_to_vram();
 
         [model_data + 1] = b(-1);
@@ -2385,7 +2385,7 @@ switch( b[model_data + 1] )
     {
 
         A0 = model_data;
-        A1 = kawai_data;
+        A1 = kawai_settings;
         field_model_kawai_set_model_transparency();
 
         [model_data + 1] = b(-1);
@@ -2396,7 +2396,7 @@ switch( b[model_data + 1] )
     case 2: // AMBNT
     {
         A0 = model_data;
-        A1 = kawai_data;
+        A1 = kawai_settings;
         field_model_kawai_set_color_to_model_packets();
 
         [model_data + 1] = b(-1);
@@ -2407,7 +2407,7 @@ switch( b[model_data + 1] )
     case 3:
     {
         A0 = model_data;
-        A1 = kawai_data;
+        A1 = kawai_settings;
         field_model_kawai_set_custom_lighting_to_model_packets();
 
         [model_data + 1] = b(-1);
@@ -2418,7 +2418,7 @@ switch( b[model_data + 1] )
     case 4:
     {
         A0 = model_data;
-        A1 = kawai_data;
+        A1 = kawai_settings;
         field_model_kawai_set_color_to_model_packets_below_level();
 
         [model_data + 1] = b(-1);
@@ -2428,9 +2428,9 @@ switch( b[model_data + 1] )
 
     case 5:
     {
-        [1f800200] = h(hu[kawai_data + 0]);
-        [1f800202] = h(hu[kawai_data + 2]);
-        [1f800204] = h(hu[kawai_data + 4]);
+        [1f800200] = h(hu[kawai_settings + 0]);
+        [1f800202] = h(hu[kawai_settings + 2]);
+        [1f800204] = h(hu[kawai_settings + 4]);
 
         R11R12 = w[camera_data + 0];
         R13R21 = w[camera_data + 4];
@@ -2450,20 +2450,20 @@ switch( b[model_data + 1] )
         [800dfe1c] = h(hu[1f800208]);
         [800dfe1e] = h(bu[1f80020a]);
         [800dfe20] = h(bu[1f80020c]);
-        [800dfe22] = b(bu[kawai_data + 6]);
-        [800dfe23] = b(bu[kawai_data + 7]);
-        [800dfe24] = b(bu[kawai_data + 8]);
-        [800dfe25] = b(bu[kawai_data + 9]);
-        [800dfe26] = b(bu[kawai_data + a]);
-        [800dfe27] = b(bu[kawai_data + b]);
-        [800dfe28] = b(bu[kawai_data + c]);
-        [800dfe29] = b(bu[kawai_data + d]);
-        [800dfe2a] = b(bu[kawai_data + e]);
-        [800dfe2b] = b(bu[kawai_data + f]);
-        [800dfe2c] = b(bu[kawai_data + 10]);
-        [800dfe2d] = b(bu[kawai_data + 11]);
-        [800dfe2e] = b(bu[kawai_data + 12]);
-        [800dfe2f] = b(bu[kawai_data + 13]);
+        [800dfe22] = b(bu[kawai_settings + 6]);
+        [800dfe23] = b(bu[kawai_settings + 7]);
+        [800dfe24] = b(bu[kawai_settings + 8]);
+        [800dfe25] = b(bu[kawai_settings + 9]);
+        [800dfe26] = b(bu[kawai_settings + a]);
+        [800dfe27] = b(bu[kawai_settings + b]);
+        [800dfe28] = b(bu[kawai_settings + c]);
+        [800dfe29] = b(bu[kawai_settings + d]);
+        [800dfe2a] = b(bu[kawai_settings + e]);
+        [800dfe2b] = b(bu[kawai_settings + f]);
+        [800dfe2c] = b(bu[kawai_settings + 10]);
+        [800dfe2d] = b(bu[kawai_settings + 11]);
+        [800dfe2e] = b(bu[kawai_settings + 12]);
+        [800dfe2f] = b(bu[kawai_settings + 13]);
 
         A0 = model_data;
         A1 = 800dfe1c;
@@ -2477,7 +2477,7 @@ switch( b[model_data + 1] )
     case a: // SBOBJ
     {
         A0 = model_data;
-        A1 = kawai_data;
+        A1 = kawai_settings;
         kawai_action_a();
 
         [model_data + 1] = b(-1);
@@ -2492,17 +2492,17 @@ switch( b[model_data + 1] )
     case b:
     case c:
     {
-        if( bu[kawai_data + 0] == 0 )
+        if( bu[kawai_settings + 0] == 0 )
         {
             [800dfdfe + model_id * 2 + 0] = b(0);
             [800dfdfe + model_id * 2 + 1] = b(model_id);
-            [kawai_data + 1] = b(model_id);
+            [kawai_settings + 1] = b(model_id);
 
             V0 = b[model_data + 1];
             V1 = w[800df11c];
 
             A0 = model_data;
-            A1 = kawai_data;
+            A1 = kawai_settings;
             800AFF74	jalr   w[V1 + V0 * 4] ra
 
             return;
@@ -2520,7 +2520,7 @@ switch( b[model_data + 1] )
             return V0;
         }
 
-        if( bu[kawai_data + 0] == 1 )
+        if( bu[kawai_settings + 0] == 1 )
         {
             [800dfdfe + model_id * 2 + 0] = b(1);
             [800dfdfe + model_id * 2 + 1] = b(model_id);
@@ -2539,7 +2539,7 @@ switch( b[model_data + 1] )
 
     case d: // SHINE
     {
-        if( bu[kawai_data + 0] == 2 )
+        if( bu[kawai_settings + 0] == 2 )
         {
             part_matrix = w[model_data + 20];
 
@@ -2625,25 +2625,25 @@ return 1;
 // field_model_kawai_set_custom_lighting_to_model_packets()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 part_matrix = w[model_data + 20];
 
-RBK = bu[kawai_data + 0] << 4;
-BBK = bu[kawai_data + 1] << 4;
-GBK = bu[kawai_data + 2] << 4;
+RBK = bu[kawai_settings + 0] << 4;
+BBK = bu[kawai_settings + 1] << 4;
+GBK = bu[kawai_settings + 2] << 4;
 
 // colour matrix
-[1f800200] = h(bu[kawai_data + 3] << 4);
-[1f800206] = h(bu[kawai_data + 4] << 4);
-[1f80020c] = h(bu[kawai_data + 5] << 4);
-[1f800202] = h(bu[kawai_data + 6] << 4);
-[1f800208] = h(bu[kawai_data + 7] << 4);
-[1f80020e] = h(bu[kawai_data + 8] << 4);
-[1f800204] = h(bu[kawai_data + 9] << 4);
-[1f80020a] = h(bu[kawai_data + a] << 4);
-[1f800210] = h(bu[kawai_data + b] << 4);
+[1f800200] = h(bu[kawai_settings + 3] << 4);
+[1f800206] = h(bu[kawai_settings + 4] << 4);
+[1f80020c] = h(bu[kawai_settings + 5] << 4);
+[1f800202] = h(bu[kawai_settings + 6] << 4);
+[1f800208] = h(bu[kawai_settings + 7] << 4);
+[1f80020e] = h(bu[kawai_settings + 8] << 4);
+[1f800204] = h(bu[kawai_settings + 9] << 4);
+[1f80020a] = h(bu[kawai_settings + a] << 4);
+[1f800210] = h(bu[kawai_settings + b] << 4);
 [1f800214] = w(0);
 [1f800218] = w(0);
 [1f80021c] = w(0);
@@ -2655,15 +2655,15 @@ LB1LB2 = w[V1 + c];
 LB3 = w[V1 + 10];
 
 // lighting matrix
-[SP + 10] = h(hu[kawai_data + c]);
-[SP + 12] = h(hu[kawai_data + e]);
-[SP + 14] = h(hu[kawai_data + 10]);
-[SP + 16] = h(hu[kawai_data + 12]);
-[SP + 18] = h(hu[kawai_data + 14]);
-[SP + 1a] = h(hu[kawai_data + 16]);
-[SP + 1c] = h(hu[kawai_data + 18]);
-[SP + 1e] = h(hu[kawai_data + 1a]);
-[SP + 20] = h(hu[kawai_data + 1c]);
+[SP + 10] = h(hu[kawai_settings + c]);
+[SP + 12] = h(hu[kawai_settings + e]);
+[SP + 14] = h(hu[kawai_settings + 10]);
+[SP + 16] = h(hu[kawai_settings + 12]);
+[SP + 18] = h(hu[kawai_settings + 14]);
+[SP + 1a] = h(hu[kawai_settings + 16]);
+[SP + 1c] = h(hu[kawai_settings + 18]);
+[SP + 1e] = h(hu[kawai_settings + 1a]);
+[SP + 20] = h(hu[kawai_settings + 1c]);
 [SP + 24] = w(0);
 [SP + 28] = w(0);
 [SP + 2c] = w(0);
@@ -3854,11 +3854,11 @@ if( ( ( w[V1 + 0] & 2 ) == 0 ) || ( calculate_anyway != 0 ) )
 // field_model_kawai_set_model_transparency()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 
-T0 = bu[kawai_data];
+T0 = bu[kawai_settings];
 
 for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
@@ -3934,13 +3934,13 @@ return 1;
 // field_model_kawai_set_color_to_model_packets_below_level()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
-r = h[kawai_data + 0];
-g = h[kawai_data + 2];
-b = h[kawai_data + 4];
-level = h[kawai_data + 6];
-flags = h[kawai_data + 8];
+r = h[kawai_settings + 0];
+g = h[kawai_settings + 2];
+b = h[kawai_settings + 4];
+level = h[kawai_settings + 6];
+flags = h[kawai_settings + 8];
 // 0x1 - 1 - per vertex check, 0 - averege check
 // 0x2 - 1 - for all packets, 0 - only for inserted packets
 // 0x4 - 1 - use Y, 0 - use Z for level
@@ -5030,20 +5030,20 @@ return 1;
 // field_model_kawai_set_lighting_to_model_packets()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 S3 = w[model_data + 10];
 
 // set rgb
-RBK = hu[kawai_data + e] << 4;
-BBK = hu[kawai_data + 10] << 4;
-GBK = bu[kawai_data + 12] << 4;
+RBK = hu[kawai_settings + e] << 4;
+BBK = hu[kawai_settings + 10] << 4;
+GBK = bu[kawai_settings + 12] << 4;
 
 // set light color matrix
-[1f800200] = h(hu[kawai_data + 8] << 4); [1f800202] = h(0); [1f800204] = h(0);
-[1f800206] = h(hu[kawai_data + a] << 4); [1f800208] = h(0); [1f80020a] = h(0);
-[1f80020c] = h(hu[kawai_data + c] << 4); [1f80020e] = h(0); [1f800210] = h(0);
+[1f800200] = h(hu[kawai_settings + 8] << 4); [1f800202] = h(0); [1f800204] = h(0);
+[1f800206] = h(hu[kawai_settings + a] << 4); [1f800208] = h(0); [1f80020a] = h(0);
+[1f80020c] = h(hu[kawai_settings + c] << 4); [1f80020e] = h(0); [1f800210] = h(0);
 
 LR1LR2 = w[1f800200];
 LR3LG1 = w[1f800204];
@@ -5061,10 +5061,10 @@ L22L23 = w[1f800208];
 L31L32 = w[1f80020c];
 L33 = w[1f800210];
 
-[SP + 10] = h(hu[kawai_data + 0]); // x
-[SP + 12] = h(hu[kawai_data + 2]); // y
-[SP + 14] = h(hu[kawai_data + 4]); // z
-[SP + 16] = h(hu[kawai_data + 6]); // dist
+[SP + 10] = h(hu[kawai_settings + 0]); // x
+[SP + 12] = h(hu[kawai_settings + 2]); // y
+[SP + 14] = h(hu[kawai_settings + 4]); // z
+[SP + 16] = h(hu[kawai_settings + 6]); // dist
 
 for( int i = 0; i < bu[model_data + 3]; ++i ) // number of parts
 {
@@ -5096,13 +5096,13 @@ return 1;
 // field_model_set_lighting_to_part_packets()
 
 part_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
 normals = 800df520;
 
 vertex_data = w[part_data + 18];
 
-[kawai_data + 6] = h(hu[kawai_data + 6] + 1);
+[kawai_settings + 6] = h(hu[kawai_settings + 6] + 1);
 
 for( int i = 0; i < bu[part_data + 2]; ++i ) // vertex number
 {
@@ -5113,9 +5113,9 @@ for( int i = 0; i < bu[part_data + 2]; ++i ) // vertex number
     [1f800004] = w(MAC2);
     [1f800008] = w(MAC3);
 
-    x = h[kawai_data + 0] - w[1f800000];
-    y = h[kawai_data + 2] - w[1f800004];
-    z = h[kawai_data + 4] - w[1f800008];
+    x = h[kawai_settings + 0] - w[1f800000];
+    y = h[kawai_settings + 2] - w[1f800004];
+    z = h[kawai_settings + 4] - w[1f800008];
 
     A0 = x * x + y * y + z * z;
     system_square_root();
@@ -5126,10 +5126,10 @@ for( int i = 0; i < bu[part_data + 2]; ++i ) // vertex number
     [1f800040 + i * 8 + 2] = h((y << c) / len);
     [1f800040 + i * 8 + 4] = h((z << c) / len);
 
-    V0 = h[kawai_data + 6] - len;
+    V0 = h[kawai_settings + 6] - len;
     if( V0 < 0 ) V0 = 0;
 
-    [1f800040 + i * 8 + 6] = h((V0 << c) / h[kawai_data + 6]);
+    [1f800040 + i * 8 + 6] = h((V0 << c) / h[kawai_settings + 6]);
 }
 
 [1f800020] = w(R11R12);
@@ -5777,16 +5777,16 @@ SP = SP + 0020;
 // kawai_action_a()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18]
 
-for( int i = 0; i < bu[kawai_data + 0]; ++i )
+for( int i = 0; i < bu[kawai_settings + 0]; ++i )
 {
-    V1 = bu[kawai_data + i * 2 + 1];
+    V1 = bu[kawai_settings + i * 2 + 1];
     if( V1 < bu[model_data + 3] )
     {
-        [parts_data + V1 * 20 + 0] = b(bu[kawai_data + i * 2 + 2]);
+        [parts_data + V1 * 20 + 0] = b(bu[kawai_settings + i * 2 + 2]);
     }
 }
 
@@ -7645,21 +7645,21 @@ SP = SP + 0060;
 // kawai_action_b()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
-T2 = 800dfe3c + bu[kawai_data + 1] * 3c;
+T2 = 800dfe3c + bu[kawai_settings + 1] * 3c;
 
-if( bu[kawai_data + 0] == 0 )
+if( bu[kawai_settings + 0] == 0 )
 {
-    [T2 + 00] = h(hu[kawai_data + 2]);
-    [T2 + 02] = h(hu[kawai_data + 4]);
-    [T2 + 04] = h(hu[kawai_data + 6]);
-    [T2 + 06] = h(hu[kawai_data + 8]);
-    [T2 + 08] = h(hu[kawai_data + a]);
-    [T2 + 0a] = h(hu[kawai_data + c]);
-    [T2 + 0c] = h(hu[kawai_data + e]);
-    [T2 + 0e] = h(hu[kawai_data + 10]);
-    [T2 + 10] = b(bu[kawai_data + 12]);
+    [T2 + 00] = h(hu[kawai_settings + 2]);
+    [T2 + 02] = h(hu[kawai_settings + 4]);
+    [T2 + 04] = h(hu[kawai_settings + 6]);
+    [T2 + 06] = h(hu[kawai_settings + 8]);
+    [T2 + 08] = h(hu[kawai_settings + a]);
+    [T2 + 0a] = h(hu[kawai_settings + c]);
+    [T2 + 0c] = h(hu[kawai_settings + e]);
+    [T2 + 0e] = h(hu[kawai_settings + 10]);
+    [T2 + 10] = b(bu[kawai_settings + 12]);
 
     if ((hu[T2 + 10] & 18) == 18)
     {
@@ -7669,7 +7669,7 @@ if( bu[kawai_data + 0] == 0 )
 
     return 1;
 }
-else if( bu[kawai_data + 0] == 1 )
+else if( bu[kawai_settings + 0] == 1 )
 {
     [1f8003ec] = w(bu[T2 + 10]);
     [1f8003f0] = h(hu[T2 + 0]); // R
@@ -8719,10 +8719,10 @@ Lb9ae0:	; 800B9AE0
 // kawai_action_d()
 
 model_data = A0;
-kawai_data = A1;
+kawai_settings = A1;
 
-model_id = bu[kawai_data + 1];
-V1 = bu[kawai_data + 0];
+model_id = bu[kawai_settings + 1];
+V1 = bu[kawai_settings + 0];
 A1 = 800dfe3c;
 S2 = 800dfe3c + model_id * 3c;
 
@@ -8919,18 +8919,18 @@ else if( V1 == 1 )
         [1f800204] = h(hu[1f800204] + hu[model_data + 10]);
 
         // camera data
-        [1f800210] = h(hu[kawai_data + 2]);
-        [1f800212] = h(hu[kawai_data + 4]);
-        [1f800214] = h(hu[kawai_data + 6]);
-        [1f800216] = h(hu[kawai_data + 8]);
-        [1f800218] = h(hu[kawai_data + a]);
-        [1f80021a] = h(hu[kawai_data + c]);
-        [1f80021c] = h(hu[kawai_data + e]);
-        [1f80021e] = h(hu[kawai_data + 10]);
-        [1f800220] = h(hu[kawai_data + 12]);
-        [1f800224] = w(w[kawai_data + 14]);
-        [1f800228] = w(w[kawai_data + 18]);
-        [1f80022c] = w(w[kawai_data + 1c]);
+        [1f800210] = h(hu[kawai_settings + 2]);
+        [1f800212] = h(hu[kawai_settings + 4]);
+        [1f800214] = h(hu[kawai_settings + 6]);
+        [1f800216] = h(hu[kawai_settings + 8]);
+        [1f800218] = h(hu[kawai_settings + a]);
+        [1f80021a] = h(hu[kawai_settings + c]);
+        [1f80021c] = h(hu[kawai_settings + e]);
+        [1f80021e] = h(hu[kawai_settings + 10]);
+        [1f800220] = h(hu[kawai_settings + 12]);
+        [1f800224] = w(w[kawai_settings + 14]);
+        [1f800228] = w(w[kawai_settings + 18]);
+        [1f80022c] = w(w[kawai_settings + 1c]);
 
         R11R12 = w[1f800210];
         R13R21 = w[1f800214];

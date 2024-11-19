@@ -51,7 +51,7 @@
 80074ea4 entities_data. (size 0x84)
     + 00 [][]     store 1 here in KAWAI opcode. Store 2 here if run_kawai function returns 1 (maybe end kawai)
     + 02 [][]     store 0 here in KAWAI opcode.
-    + 04 [][][][] offset to KAWAI opcode data in script (like offset to opcode + 3).
+    + 04 [][][][] kawai settings. Offset to KAWAI opcode data in script (like offset to opcode + 3).
     + 08 []       blinking. 0 - on, 1 - off.
     + 09 []       store 0 here in KAWAI opcode under some curcumstances.
     + 0c [][][][] x.
@@ -258,7 +258,7 @@
     + 22 [][]     destination z during map load. (most likely triangle id).
     + 24 [][]     saved rotation for manual entity during map load.
     + 26 [][]     battle state ?
-    + 28 [][]     number of actors.
+    + 28 [][]     number of entities.
     + 2a []       manual actor id.
     + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
     + 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)

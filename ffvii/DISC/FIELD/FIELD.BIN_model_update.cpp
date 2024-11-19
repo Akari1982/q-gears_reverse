@@ -197,7 +197,7 @@ for( int i = 0; i < actors_n; ++i )
                 V1 = w[8004a62c];
                 A2 = bu[block7_data + i * 8 + 4]; // model id
                 A0 = w[V1 + 4] + A2 * 24;
-                A1 = w[80074ea4 + i * 84 + 4]; // offset to kawai data
+                A1 = w[80074ea4 + i * 84 + 4]; // kawai_settings
                 A3 = w[80071e40]; // offset to camera section
                 run_kawai();
 
