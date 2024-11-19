@@ -777,7 +777,7 @@ void psxJAL()
     //    psxRegs.GPR.n.a0 = psxRegs.GPR.n.a0 + 0x1748c;
     //
     //    _SetLink(31);
-    //    doBranch(0x800D85FC);
+    //    doBranch(0x800D85FC); // field_debug_render
     //    GPU_displayText("CALL FFVII FUNC");
     //}
     // FFVII Window

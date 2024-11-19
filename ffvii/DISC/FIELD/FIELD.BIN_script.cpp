@@ -19,25 +19,28 @@ if( h[field_struct + 6a] & 0100 ) // if select key
     [80099ffc] = b(4); // script related
 }
 
-if( bu[events_data + 0] < 2 )
+// file version check
 {
-    A0 = 4b; // "K"
-    A1 = a;
-    system_bios_system_error_boot_or_disk_failure();
-}
+    if( bu[events_data + 0] < 2 )
+    {
+        A0 = 4b; // "K"
+        A1 = a;
+        system_bios_system_error_boot_or_disk_failure();
+    }
 
-if( bu[events_data + 1] < 5 )
-{
-    A0 = 4b; // "K"
-    A1 = b;
-    system_bios_system_error_boot_or_disk_failure();
-}
+    if( bu[events_data + 1] < 5 )
+    {
+        A0 = 4b; // "K"
+        A1 = b;
+        system_bios_system_error_boot_or_disk_failure();
+    }
 
-if( ( bu[events_data + 0] >= 3 ) || ( bu[events_data + 1] >= 6 ) )
-{
-    A0 = 4b; // "K"
-    A1 = c;
-    system_bios_system_error_boot_or_disk_failure();
+    if( ( bu[events_data + 0] >= 3 ) || ( bu[events_data + 1] >= 6 ) )
+    {
+        A0 = 4b; // "K"
+        A1 = c;
+        system_bios_system_error_boot_or_disk_failure();
+    }
 }
 
 field_window_reset_all();
@@ -64,9 +67,9 @@ ot = A0;
 
 if( bu[8007ebe0] != 0 )
 {
-    800BA678	jal    funcd4bfc [$800d4bfc]
+    funcd4bfc();
 
-    800BA680	jal    funcbc338 [$800bc338]
+    funcbc338();
 
     field_debug_init_buffers();
 
@@ -78,25 +81,28 @@ if( bu[8007ebe0] != 0 )
     [8009fe8c] = b(0);
     [8007ebe0] = b(0);
 
-    if( bu[events_data + 1] < 5 )
+    // file check version
     {
-        A0 = 4b;
-        A1 = b;
-        system_bios_system_error_boot_or_disk_failure();
-    }
+        if( bu[events_data + 1] < 5 )
+        {
+            A0 = 4b;
+            A1 = b;
+            system_bios_system_error_boot_or_disk_failure();
+        }
 
-    if( bu[events_data + 0] < 2 )
-    {
-        A0 = 4b;
-        A1 = a;
-        system_bios_system_error_boot_or_disk_failure();
-    }
+        if( bu[events_data + 0] < 2 )
+        {
+            A0 = 4b;
+            A1 = a;
+            system_bios_system_error_boot_or_disk_failure();
+        }
 
-    if( bu[events_data + 1] >= 6 || bu[events_data + 0] >= 3 )
-    {
-        A0 = 4b;
-        A1 = c;
-        system_bios_system_error_boot_or_disk_failure();
+        if( ( bu[events_data + 1] >= 6 ) || ( bu[events_data + 0] >= 3 ) )
+        {
+            A0 = 4b;
+            A1 = c;
+            system_bios_system_error_boot_or_disk_failure();
+        }
     }
 }
 
@@ -110,8 +116,8 @@ if( bu[80071e2c] ) // if at least 1 window is opened
     A0 = 80083274;
     A1 = 4; // render max 4 dialogs
     A2 = ot;
-    V0 = w[8009c6e0]; // 8009abf4 start of game data
-    A3 = bu[V0 + 0] XOR 1;
+    field_struct = w[8009c6e0];
+    A3 = bu[field_struct + 0] XOR 1;
     system_menu_add_dialog_to_render();
 }
 
@@ -194,7 +200,7 @@ for( int i = 0; i < bu[events_data + 2]; ++i ) // go through all actors
     [800716dc + i * 2] = h(0); // ???
     [80081d90 + i] = b(0); // array of some actors data. Store 1 to pc actor here during SPLIT
     [8007078c + i] = b(ff); // array of actors lines data
-    [80114498 + i] = b(0); // arrray of something actors related
+    [80114498 + i] = b(0); // not debug script output
 }
 
 for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all entities
@@ -523,35 +529,36 @@ entities_data = w[8009c544];
 talked = 0;
 
 events_data = w[8009c6dc];
+
 for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
 {
     if( bu[entities_data + i * 84 + 5a] != 0 ) // if model talks with somthing
     {
-        V0 = w[8009c6e0];
-        if( bu[V0 + 32] == 0 )
+        field_struct = w[8009c6e0];
+        if( bu[field_struct + 32] == 0 ) // player has control
         {
             if( talked == 0 )
             {
                 talked = 1;
 
-                A0 = bu[entities_data + i * 84 + 57];
+                A0 = bu[entities_data + i * 84 + 57]; // actor id
                 A1 = 1;
                 A2 = 1;
                 field_script_request_run();
             }
         }
 
-        [entities_data + i * 84 + 5a] = b(0);
+        [entities_data + i * 84 + 5a] = b(0); // talk finishes
     }
 
-    if( bu[entities_data + i * 84 + 58] != 0 ) // if model collide with something
+    if( bu[entities_data + i * 84 + 58] != 0 ) // if entity push something
     {
-        A0 = bu[entities_data + i * 84 + 57]; // entity id
+        A0 = bu[entities_data + i * 84 + 57]; // actor id
         A1 = 1;
         A2 = 2;
         field_script_request_run();
 
-        [entities_data + i * 84 + 58] = b(0);
+        [entities_data + i * 84 + 58] = b(0); // push finished
     }
 }
 
@@ -562,9 +569,9 @@ for( int i = 0; i < h[80095d54]; ++i )
     if( bu[8007e7ac + i * 18 + 11] != 0 )
     {
         field_struct = w[8009c6e0];
-        if( bu[field_struct + 32] == 0 ) // if PC can perform action
+        if( bu[field_struct + 32] == 0 ) // player has control
         {
-            A0 = bu[8007e7ac + i * 18 + d];
+            A0 = bu[8007e7ac + i * 18 + d]; // actor id
             A1 = 1;
             A2 = 1;
             field_script_request_run();
@@ -626,21 +633,17 @@ for( int i = 0; i < h[80095d54]; ++i )
     }
 }
 
-events_data = w[8009c6dc];
 for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entity
 {
-    V1 = bu[800722c4];
-    V0 = bu[events_data + 2];
-
-    if( V1 >= V0 )
+    if( bu[800722c4] >= bu[events_data + 2] )
     {
         [800722c4] = b(0);
     }
 
     if( bu[80071e24] & 3 )
     {
-        A0 = 4;
-        A1 = bu[800722c4]; // current entity
+        A0 = 4; // page id
+        A1 = bu[800722c4];
         field_script_update_debug();
     }
 
@@ -656,12 +659,12 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
                 if( bu[8009d820] & 1 )
                 {
                     V0 = bu[800722c4];
-                    if( ( ( bu[80071e24] & 4 ) == 0 ) || ( bu[80114498 + V0] != 0 ) )
+                    if( ( ( bu[80071e24] & 4 ) == 0 ) || ( bu[80114498 + V0] != 0 ) ) // if we want to debug actor data
                     {
                         for( int i = 1; i < 9; ++i )
                         {
                             A0 = 3;
-                            A1 = S1;
+                            A1 = i;
                             A2 = 800a013c; // ""
                             field_debug_copy_string_into_page();
                         }
@@ -680,19 +683,19 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
             800BB9C8	jalr   v0 ra
 
             // call opcode function
-            // 0c 540B0C80
-            // 0d 540B0C80
-            // 1a 540B0C80
-            // 1b 540B0C80
-            // 1c 540B0C80
-            // 1d 540B0C80
-            // 1e 540B0C80
-            // 1f 540B0C80
-            // 44 540B0C80
-            // 46 540B0C80
-            // 4c 540B0C80
-            // 4e 540B0C80
-            // be 540B0C80
+            // 0c 800C0B54
+            // 0d 800C0B54
+            // 1a 800C0B54
+            // 1b 800C0B54
+            // 1c 800C0B54
+            // 1d 800C0B54
+            // 1e 800C0B54
+            // 1f 800C0B54
+            // 44 800C0B54
+            // 46 800C0B54
+            // 4c 800C0B54
+            // 4e 800C0B54
+            // be 800C0B54
 
             800BB9D0	beq    v0, zero, Lbba54 [$800bba54]
 
@@ -781,9 +784,9 @@ field_script_update_animation_state();
 
 events_data = w[8009c6dc];
 entities_data = w[8009c544];
-V1 = w[8009c6e0];
-manual_model = h[V1 + 2a];
-pc = bu[V1 + 32];
+field_struct = w[8009c6e0];
+manual_model = h[field_struct + 2a];
+pc = bu[field_struct + 32];
 
 
 number_of_entity = bu[events_data + 2];
@@ -1019,16 +1022,16 @@ else
 // funcbc438()
 // enable disable pointer and triangles?
 
-struct = w[8009c6e0];
-if (w[struct + 80] & 100) // key pressed
+field_struct = w[8009c6e0];
+if (w[field_struct + 80] & 100) // key pressed
 {
     [8009d5a6] = b(bu[8009d5a6] ^ 1);
 }
 
-if (( bu[8009d5a6] == 1 && bu[struct + 32] == 0 ) || ( bu[8009d5a6] & 2) )
+if (( bu[8009d5a6] == 1 && bu[field_struct + 32] == 0 ) || ( bu[8009d5a6] & 2) )
 {
     A0 = A0;
-    funcbc4d4;
+    funcbc4d4();
 }
 ////////////////////////////////
 
@@ -1128,1817 +1131,1247 @@ V1 = 800e48f4 + V0 * 28;
 ////////////////////////////////
 // field_script_update_debug()
 
-debug_id = A0; // 4
-entity_id = A1;
+page_id = A0;
+actor_id = A1;
 
-if( debug_id == 4 )
+string = 800e4254;
+temp = 800e4288;
+
 {
-    if( bu[80071e24] & 4 )
+    if( page_id == 4 )
     {
-        if( bu[80114498 + entity_id] == 0 )
+        if( bu[80071e24] & 4 )
         {
-            return;
+            // debug output for this actor not set
+            if( bu[80114498 + actor_id] == 0 ) return;
         }
-    }
 
-    [800716c8] = b(entity_id);
+        [800716c8] = b(actor_id);
 
-    if( bu[80114498 + entity_id] != 0 )
-    {
-        A0 = 4;
-        A1 = 7f;
-        A2 = 1;
-        A3 = 7f;
-        field_debug_set_page_color();
-    }
-    else
-    {
-        A0 = 4;
-        A1 = 7;
-        A2 = f;
-        A3 = 1f;
-        field_debug_set_page_color();
-    }
-
-    A0 = 800e4254;
-    A1 = 800e0628; // "Actor:"
-    field_debug_copy_string();
-}
-else
-{
-    A0 = 800e4254;
-    A1 = 800a01d4; // "ctrl:"
-    field_debug_copy_string();
-}
-
-A0 = 800e4254;
-A1 = w[8009c6dc] + 20 + entity_id * 8; // name of entity
-field_debug_concat_string();
-
-if( ( bu[8009fe8c] | ( bu[80071e24] & 1 ) ) != 0 )
-{
-    A0 = debug_id;
-    A1 = 0;
-    A2 = 800e4254;
-    field_debug_copy_string_into_page();
-}
-
-A0 = 800e4254;
-A1 = 800a01dc; // "RqLv=" (request level)
-field_debug_copy_string();
-
-A0 = bu[8009a1c4 + entity_id]; // currently used priority slot
-A1 = 800e4288;
-field_int_to_string();
-
-A0 = 800e4254;
-A1 = 800e4288;
-field_debug_concat_string();
-
-A0 = 800e4254;
-A1 = 800a01e4; // " Tg="
-field_debug_concat_string();
-
-V1 = bu[8009a1c4 + entity_id];
-V1 = bu[801142d4 + entity_id * 8 + V1]; // priority queue script id
-if( V1 == 0 )
-{
-    A0 = 800e4254;
-    A1 = 800a01ec; // "dft"
-    field_debug_concat_string();
-}
-else if( V1 == 1 )
-{
-    A0 = 800e4254;
-    A1 = 800a01f0; // "tlk"
-    field_debug_concat_string();
-}
-else if( V1 == 2 )
-{
-    A0 = 800e4254;
-    A1 = 800a01f4; // "psh"
-    field_debug_concat_string();
-}
-else
-{
-    V1 = bu[8009a1c4 + V1];
-    A0 = bu[801142d4 + entity_id * 8 + V1]; // priority queue script id
-    A1 = 800e4288;
-    field_int2_to_string();
-
-    A0 = 800e4254;
-    A1 = 800e4288;
-    field_debug_concat_string();
-}
-
-if( ( bu[8009fe8c] | (bu[80071e24] & 1) ) != 0 )
-{
-    A0 = debug_id;
-    A1 = 1;
-    A2 = 800e4254;
-    field_debug_copy_string_into_page();
-}
-
-V0 = entity_id << 10;
-S2 = V0 >> 10;
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-V0 = 00ff;
-800BCD10	bne    v1, v0, Lbce4c [$800bce4c]
-
-V0 = bu[8007078c + S2];
-
-800BCD2C	bne    v0, v1, Lbcd7c [$800bcd7c]
-
-A0 = 800e4254;
-A1 = 800a01f8; // "Abst"
-field_debug_copy_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-800BCD64	beq    v1, zero, Lbcf4c [$800bcf4c]
-
-A0 = debug_id;
-A1 = 2;
-A2 = 6;
-800BCD74	j      Lbcf10 [$800bcf10]
-
-Lbcd7c:	; 800BCD7C
-S1 = 800e4254;
-A0 = S1;
-A1 = 800a0200; // "line="
-field_debug_copy_string();
-
-S0 = 800e4288;
-A0 = bu[8007078c + S2];
-A1 = S0;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-800BCDC0	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BCDD0	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7b8;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800BCDF0	nop
-800BCDF4	beq    v0, zero, Lbce0c [$800bce0c]
-A0 = S1;
-A1 = 800a0208; // " on"
-800BCE04	j      Lbce14 [$800bce14]
-800BCE08	nop
-
-Lbce0c:	; 800BCE0C
-A1 = 800a020c; // " off"
-
-Lbce14:	; 800BCE14
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-800BCE34	beq    v1, zero, Lbcf4c [$800bcf4c]
-
-A0 = debug_id;
-A1 = 2;
-A2 = 3;
-800BCE44	j      Lbcf10 [$800bcf10]
-
-Lbce4c:	; 800BCE4C
-S1 = 800e4254;
-A0 = S1;
-A1 = 800a0214; // "man="
-field_debug_copy_string();
-
-S0 = 800e4288;
-A0 = bu[8007eb98 + S2]; // model id
-A1 = S0;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A0 = S1;
-A1 = 800a021c; // " dir="
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BCEB0	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = bu[V0 + 0038];
-A1 = S0;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-800BCEFC	beq    v1, zero, Lbcf4c [$800bcf4c]
-
-A0 = debug_id;
-A1 = 2;
-A2 = 2;
-
-Lbcf10:	; 800BCF10
-field_debug_set_row_color();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 2;
-    A2 = 800e4254;
-    field_debug_copy_string_into_page();
-}
-
-Lbcf4c:	; 800BCF4C
-V0 = entity_id << 10;
-S2 = V0 >> 10;
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-V0 = 00ff;
-800BCF90	beq    v1, v0, Lbd6a0 [$800bd6a0]
-800BCF94	nop
-S1 = 800e4254;
-A0 = S1;
-A1 = 800a0224; // "X="
-field_debug_copy_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-S3 = 800e4288;
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = w[V0 + 000c];
-A1 = S3;
-A0 = A0 >> 0c;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S3;
-field_debug_concat_string();
-
-A1 = 800a0228;
-A0 = S1;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD01C	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = w[V0 + 0010];
-A1 = S3;
-A0 = A0 >> 0c;
-field_int4_to_string();
-
-A0 = S1;
-800BD04C	jal    field_debug_concat_string [$800da368]
-A1 = S3;
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 3;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 3;
-    A2 = 1;
-    field_debug_set_row_color();
-}
-
-A0 = S1;
-A1 = 800a022c; // "Z="
-field_debug_copy_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD0D8	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = w[V0 + 0014];
-A1 = S3;
-A0 = A0 >> 0c;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S3;
-field_debug_concat_string();
-
-A1 = 800a0230;
-A0 = S1;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD130	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = hu[V0 + 0072];
-A1 = S3;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S3;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 4;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-}
-
-AT = 8007eb98;
-AT = AT + S2;
-V0 = bu[AT + 0000];
-800BD1C4	nop
-800BD1C8	lui    at, $8007
-AT = AT + 56e8;
-AT = AT + V0;
-A0 = bu[AT + 0000];
-A1 = S1;
-field_int_to_string();
-
-A1 = 800a0234;
-A0 = S1;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD200	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = bu[V0 + 005e];
-A1 = S3;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S3;
-field_debug_concat_string();
-
-
-S5 = 800a0238; // "."
-A0 = S1;
-A1 = S5;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD258	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = h[V0 + 0062];
-A1 = S3;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S3;
-field_debug_concat_string();
-
-A0 = S1;
-A1 = S5;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = h[V0 + 0064];
-A1 = S3;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S3;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 5;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 5;
-    A2 = 7;
-    field_debug_set_row_color();
-}
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD350	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-
-A0 = S1;
-if( bu[V0 + 5c] != 0 )
-{
-    A1 = 800a023c; // "V"
-}
-else
-{
-    A1 = S5;
-}
-field_debug_copy_string();
-
-V0 = entity_id << 10;
-V0 = V0 >> 10;
-AT = 8007eb98;
-AT = AT + V0;
-V1 = bu[AT + 0000];
-800BD3B0	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = bu[V0 + 005b];
-800BD3D0	nop
-800BD3D4	beq    v0, zero, Lbd3f4 [$800bd3f4]
-800BD3D8	nop
-A0 = 800e4254;
-A1 = 800a0238;
-800BD3EC	j      Lbd404 [$800bd404]
-800BD3F0	nop
-
-Lbd3f4:	; 800BD3F4
-A0 = 800e4254;
-A1 = 800a0240;
-
-Lbd404:	; 800BD404
-field_debug_concat_string();
-
-V0 = entity_id << 10;
-V0 = V0 >> 10;
-AT = 8007eb98;
-AT = AT + V0;
-V1 = bu[AT + 0000];
-800BD424	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-V0 = bu[V0 + 0059];
-800BD444	nop
-800BD448	beq    v0, zero, Lbd468 [$800bd468]
-800BD44C	nop
-A0 = 800e4254;
-A1 = 800a0238;
-800BD460	j      Lbd478 [$800bd478]
-800BD464	nop
-
-Lbd468:	; 800BD468
-A0 = 800e4254;
-A1 = 800a0244;
-
-Lbd478:	; 800BD478
-field_debug_concat_string();
-
-S1 = 800e4254;
-A1 = 800a0248;
-A0 = S1;
-field_debug_concat_string();
-
-V0 = entity_id << 10;
-S2 = V0 >> 10;
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-S0 = 800e4288;
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = hu[V0 + 006e];
-A1 = S0;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A1 = 800a024c;
-A0 = S1;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD508	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = hu[V0 + 006c];
-A1 = S0;
-field_int2_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 6;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-}
-
-A0 = S1;
-A1 = 800a0250; // "MS"
-field_debug_copy_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD5AC	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = hu[V0 + 0070];
-A1 = S0;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A1 = 800a0254;
-A0 = S1;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD600	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = h[V0 + 0060];
-A1 = S0;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 7;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 7;
-    A2 = 7;
-    field_debug_set_row_color();
-}
-
-800BD698	j      Lbda90 [$800bda90]
-
-Lbd6a0:	; 800BD6A0
-800BD6A0	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V0 = bu[AT + 0000];
-800BD6B0	nop
-800BD6B4	beq    v0, v1, Lbda0c [$800bda0c]
-800BD6B8	nop
-S0 = 800e4254;
-A0 = S0;
-A1 = 800a0258; // "AX"
-field_debug_copy_string();
-
-800BD6D4	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-S1 = 800e4288;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7ac;
-AT = AT + V0;
-A0 = h[AT + 0000];
-A1 = S1;
-field_int4_to_string();
-
-A0 = S0;
-A1 = S1;
-field_debug_concat_string();
-
-A1 = 800a025c;
-A0 = S0;
-field_debug_concat_string();
-
-800BD72C	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD73C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7ae;
-AT = AT + V0;
-A0 = h[AT + 0000];
-A1 = S1;
-field_int4_to_string();
-
-A0 = S0;
-A1 = S1;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 3;
-    A2 = S0;
-    field_debug_copy_string_into_page();
-}
-
-A0 = S0;
-A1 = 800a0260; // "AZ"
-field_debug_copy_string();
-
-800BD7D0	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD7E0	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7b0;
-AT = AT + V0;
-A0 = h[AT + 0000];
-A1 = S1;
-field_int4_to_string();
-
-A0 = S0;
-A1 = S1;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 4;
-    A2 = S0;
-    field_debug_copy_string_into_page();
-}
-
-A0 = S0;
-A1 = 800a0264; // "BX"
-field_debug_copy_string();
-
-800BD874	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD884	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7b2;
-AT = AT + V0;
-A0 = h[AT + 0000];
-A1 = S1;
-field_int4_to_string();
-
-A0 = S0;
-A1 = S1;
-field_debug_concat_string();
-
-A1 = 800a0268;
-A0 = S0;
-field_debug_concat_string();
-
-800BD8C8	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD8D8	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7b4;
-AT = AT + V0;
-A0 = h[AT + 0000];
-A1 = S1;
-field_int4_to_string();
-
-A0 = S0;
-A1 = S1;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 5;
-    A2 = S0;
-    field_debug_copy_string_into_page();
-}
-
-A1 = 800a026c;
-A0 = S0;
-field_debug_copy_string();
-
-800BD96C	lui    at, $8007
-AT = AT + 078c;
-AT = AT + S2;
-V1 = bu[AT + 0000];
-800BD97C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 8007e7b6;
-AT = AT + V0;
-A0 = h[AT + 0000];
-A1 = S1;
-field_int4_to_string();
-
-A0 = S0;
-A1 = S1;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 6;
-    A2 = S0;
-    field_debug_copy_string_into_page();
-}
-
-800BDA04	j      Lbda7c [$800bda7c]
-
-Lbda0c:	; 800BDA0C
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    S1 = 800a0270;
-
-    A0 = debug_id;
-    A1 = 3;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 4;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 5;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 6;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    Lbda7c:	; 800BDA7C
-    A0 = debug_id;
-    A1 = 7;
-    A2 = 800a0270;
-    field_debug_copy_string_into_page();
-}
-
-Lbda90:	; 800BDA90
-S0 = debug_id;
-
-if( debug_id == 4 )
-{
-    return;
-}
-
-S1 = 800e4254;
-A0 = S1;
-A1 = 800a0274; // "SX"
-field_debug_copy_string();
-
-S2 = 800e4288;
-A0 = h[80071e38];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-A1 = 800a0278;
-A0 = S1;
-field_debug_concat_string();
-
-A0 = h[80071e3c];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V1 = bu[8009fe8c] | (bu[80071e24] & 01);
-
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 8;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 8;
-    A2 = 3;
-    field_debug_set_row_color();
-}
-
-A1 = 800a027c;
-A0 = S1;
-field_debug_copy_string();
-
-S3 = 8009ac1e;
-V1 = h[S3 + 0000];
-800BDB80	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDB90	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDBA0	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0000];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 9;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 9;
-    A2 = 2;
-    field_debug_set_row_color();
-}
-
-A0 = S1;
-S7 = 800a0288; // "Y="
-A1 = S7;
-field_debug_copy_string();
-
-V1 = h[S3 + 0000];
-800BDC48	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDC58	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDC68	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0002];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-A0 = S1;
-S5 = 800a028c;
-A1 = S5;
-field_debug_concat_string();
-
-V1 = h[S3 + 0000];
-800BDCB4	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDCC4	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDCD4	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0004];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = a;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-}
-
-A1 = 800a0290;
-A0 = S1;
-field_debug_copy_string();
-
-V1 = h[S3 + 0000];
-800BDD68	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDD78	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDD88	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0008];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = b;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = b;
-    A2 = 4;
-    field_debug_set_row_color();
-}
-
-A0 = S1;
-A1 = S7;
-field_debug_copy_string();
-
-V1 = h[S3 + 0000];
-800BDE28	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDE38	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDE48	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 000a];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-A0 = S1;
-A1 = S5;
-field_debug_concat_string();
-
-V1 = h[S3 + 0000];
-800BDE8C	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDE9C	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDEAC	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 000c];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = c;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-}
-
-A0 = S1;
-A1 = 800a029c; // "G-B    X="
-field_debug_copy_string();
-
-V1 = h[S3 + 0000];
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BDF50	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BDF60	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0010];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = d;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = d;
-    A2 = 3;
-    field_debug_set_row_color();
-}
-
-A0 = S1;
-A1 = S7;
-field_debug_copy_string();
-
-V1 = h[S3 + 0000];
-800BE008	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BE018	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BE028	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0012];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-A0 = S1;
-A1 = S5;
-field_debug_concat_string();
-
-V1 = h[S3 + 0000];
-800BE06C	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800BE07C	lui    at, $8007
-AT = AT + 4f16;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-800BE08C	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V1 = w[800e4274];
-V0 = V0 << 03;
-V0 = V0 + V1;
-A0 = h[V0 + 0014];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = e;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-}
-
-A1 = 800a02a8;
-A0 = S1;
-field_debug_copy_string();
-
-V0 = entity_id << 10;
-S3 = V0 >> 10;
-AT = 8007eb98;
-AT = AT + S3;
-V1 = bu[AT + 0000];
-800BE138	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = h[V0 + 0040];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = f;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = f;
-    A2 = 2;
-    field_debug_set_row_color();
-}
-
-A0 = S1;
-A1 = S7;
-field_debug_copy_string();
-
-AT = 8007eb98;
-AT = AT + S3;
-V1 = bu[AT + 0000];
-800BE1EC	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = h[V0 + 0046];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-A0 = S1;
-A1 = S5;
-field_debug_concat_string();
-
-AT = 8007eb98;
-AT = AT + S3;
-V1 = bu[AT + 0000];
-800BE23C	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V1 = w[8009c544];
-V0 = V0 << 02;
-V0 = V0 + V1;
-A0 = h[V0 + 004c];
-A1 = S2;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = (debug_id << 10) >> 10;
-    A1 = 10;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-}
-
-A1 = 800a02b4;
-A0 = S1;
-field_debug_copy_string();
-
-A1 = S2;
-A0 = bu[8009d289];
-V0 = bu[8009d288];
-A0 = A0 << 08;
-A0 = V0 | A0;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S2;
-field_debug_concat_string();
-
-V0 = w[8009c6e0];
-800BE304	nop
-V0 = bu[V0 + 0032];
-800BE30C	nop
-800BE310	beq    v0, zero, Lbe34c [$800be34c]
-800BE314	nop
-V0 = bu[80081dc4];
-800BE320	nop
-800BE324	beq    v0, zero, Lbe33c [$800be33c]
-
-A1 = 800a0238;
-800BE334	j      Lbe37c [$800be37c]
-A0 = S1;
-
-Lbe33c:	; 800BE33C
-A1 = 800a02b8;
-800BE344	j      Lbe37c [$800be37c]
-A0 = S1;
-
-Lbe34c:	; 800BE34C
-V0 = bu[80081dc4];
-800BE354	nop
-800BE358	beq    v0, zero, Lbe370 [$800be370]
-800BE35C	nop
-A1 = 800a02bc;
-800BE368	j      Lbe37c [$800be37c]
-A0 = S1;
-
-Lbe370:	; 800BE370
-A0 = S1;
-A1 = 800a02c0;
-
-Lbe37c:	; 800BE37C
-field_debug_concat_string();
-
-S1 = 800e4254;
-A1 = 800a02c4;
-A0 = S1;
-field_debug_concat_string();
-
-S0 = 800e4288;
-A0 = bu[8009cbdc];
-A1 = S0;
-field_int_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A0 = bu[8009cbdd];
-A1 = S0;
-field_int_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A0 = bu[8009cbde];
-A1 = S0;
-field_int_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-V0 = w[8009c6e0];
-800BE400	nop
-V0 = bu[V0 + 003b];
-800BE408	nop
-800BE40C	beq    v0, zero, Lbe424 [$800be424]
-A0 = S1;
-A1 = 800a02c8;
-800BE41C	j      Lbe42c [$800be42c]
-800BE420	nop
-
-Lbe424:	; 800BE424
-A1 = 800a02c0;
-
-Lbe42c:	; 800BE42C
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A2 = 800e4254;
-    A1 = 11;
-    field_debug_copy_string_into_page();
-
-    A0 = debug_id;
-    A1 = 11;
-    A2 = 6;
-    field_debug_set_row_color();
-}
-
-S1 = 800e4254;
-A1 = 800a02cc;
-A0 = S1;
-field_debug_copy_string();
-
-S0 = 800e4288;
-A0 = hu[80075e12];
-A1 = S0;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A1 = 800a02d0;
-A0 = S1;
-field_debug_concat_string();
-
-A0 = hu[80075e10];
-A1 = S0;
-field_int4_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-V0 = bu[800716d4];
-800BE514	nop
-800BE518	beq    v0, zero, Lbe530 [$800be530]
-800BE51C	nop
-A1 = 800a02d4;
-A0 = S1;
-field_debug_concat_string();
-
-Lbe530:	; 800BE530
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
-{
-    A0 = debug_id;
-    A1 = 12;
-    A2 = S1;
-    field_debug_copy_string_into_page();
-
-    if( 801affff < w[80075e10] )
-    {
-        if( bu[8009d29b] & 10 )
+        if( bu[80114498 + actor_id] != 0 )
         {
-            A0 = debug_id;
-            A1 = 12;
-            A2 = 5;
+            A0 = 4;
+            A1 = 7f;
+            A2 = 1;
+            A3 = 7f;
+            field_debug_set_page_color();
         }
         else
         {
-            A0 = debug_id;
-            A1 = 12;
-            A2 = 3;
+            A0 = 4;
+            A1 = 7;
+            A2 = f;
+            A3 = 1f;
+            field_debug_set_page_color();
         }
-        field_debug_set_row_color();
-    }
 
-    if( 801adfff < w[80075e10] )
-    {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 5;
-    }
-    else if( 801aafff < w[80075e10] )
-    {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 4;
-    }
-    else if( 801a7fff < w[80075e10] )
-    {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 1;
-    }
-
-    else if( 801a3fff < w[80075e10] )
-    {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 3;
-    }
-    else if( 8019ffff < w[80075e10] )
-    {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 2;
-    }
-    else if( 80197fff < w[80075e10] )
-    {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 0;
+        A0 = string;
+        A1 = 800e0628; // "Actor:"
+        field_debug_copy_string();
     }
     else
     {
-        A0 = debug_id;
-        A1 = 12;
-        A2 = 7;
+        A0 = string;
+        A1 = 800a01d4; // "ctrl:"
+        field_debug_copy_string();
     }
-    field_debug_set_row_color();
+
+    A0 = string;
+    A1 = w[8009c6dc] + 20 + actor_id * 8; // name of entity
+    field_debug_concat_string();
+
+    if( ( bu[8009fe8c] | ( bu[80071e24] & 1 ) ) != 0 )
+    {
+        A0 = page_id;
+        A1 = 0;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
 }
 
-S0 = 800e4288;
-
-A0 = bu[8009c6e4 + cad];
-A1 = 800e4288;
-field_int_to_string();
-
-S1 = 800e4254;
-A0 = S1;
-A1 = 800e4288;
-field_debug_copy_string();
-
-A0 = bu[8009d392];
-A1 = S0;
-field_int_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-A0 = bu[8009d393];
-A1 = S0;
-field_int_to_string();
-
-A0 = S1;
-A1 = S0;
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE734	nop
-V0 = V0 & 0001;
-800BE73C	beq    v0, zero, Lbe754 [$800be754]
-A0 = S1;
-A1 = 800a02d8;
-800BE74C	j      Lbe75c [$800be75c]
-800BE750	nop
-
-Lbe754:	; 800BE754
-A1 = 800a0238;
-
-Lbe75c:	; 800BE75C
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE76C	nop
-V0 = V0 & 0002;
-800BE774	beq    v0, zero, Lbe794 [$800be794]
-800BE778	nop
-A0 = 800e4254;
-A1 = 800a02c4;
-800BE78C	j      Lbe7a4 [$800be7a4]
-800BE790	nop
-
-Lbe794:	; 800BE794
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe7a4:	; 800BE7A4
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE7B4	nop
-V0 = V0 & 0004;
-800BE7BC	beq    v0, zero, Lbe7dc [$800be7dc]
-800BE7C0	nop
-A0 = 800e4254;
-A1 = 800a0240;
-800BE7D4	j      Lbe7ec [$800be7ec]
-800BE7D8	nop
-
-Lbe7dc:	; 800BE7DC
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe7ec:	; 800BE7EC
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE7FC	nop
-V0 = V0 & 0008;
-800BE804	beq    v0, zero, Lbe824 [$800be824]
-800BE808	nop
-A0 = 800e4254;
-A1 = 800a02dc;
-800BE81C	j      Lbe834 [$800be834]
-800BE820	nop
-
-Lbe824:	; 800BE824
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe834:	; 800BE834
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE844	nop
-V0 = V0 & 0010;
-800BE84C	beq    v0, zero, Lbe86c [$800be86c]
-800BE850	nop
-A0 = 800e4254;
-A1 = 800a02e0;
-800BE864	j      Lbe87c [$800be87c]
-800BE868	nop
-
-Lbe86c:	; 800BE86C
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe87c:	; 800BE87C
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE88C	nop
-V0 = V0 & 0020;
-800BE894	beq    v0, zero, Lbe8b4 [$800be8b4]
-800BE898	nop
-A0 = 800e4254;
-A1 = 800a02e4;
-800BE8AC	j      Lbe8c4 [$800be8c4]
-800BE8B0	nop
-
-Lbe8b4:	; 800BE8B4
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe8c4:	; 800BE8C4
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE8D4	nop
-V0 = V0 & 0040;
-800BE8DC	beq    v0, zero, Lbe8fc [$800be8fc]
-800BE8E0	nop
-A0 = 800e4254;
-A1 = 800a02e8;
-800BE8F4	j      Lbe90c [$800be90c]
-800BE8F8	nop
-
-Lbe8fc:	; 800BE8FC
-A0 = 800e4254;
-A1 = 800a0238; // "."
-
-Lbe90c:	; 800BE90C
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE91C	nop
-V0 = V0 & 0080;
-800BE924	beq    v0, zero, Lbe944 [$800be944]
-800BE928	nop
-A0 = 800e4254;
-A1 = 800a023c;
-800BE93C	j      Lbe954 [$800be954]
-800BE940	nop
-
-Lbe944:	; 800BE944
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe954:	; 800BE954
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE964	nop
-V0 = V0 & 0100;
-800BE96C	beq    v0, zero, Lbe98c [$800be98c]
-800BE970	nop
-A0 = 800e4254;
-A1 = 800a02ec;
-800BE984	j      Lbe99c [$800be99c]
-800BE988	nop
-
-Lbe98c:	; 800BE98C
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe99c:	; 800BE99C
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE9AC	nop
-V0 = V0 & 0200;
-800BE9B4	beq    v0, zero, Lbe9d4 [$800be9d4]
-800BE9B8	nop
-A0 = 800e4254;
-A1 = 800a02f0;
-800BE9CC	j      Lbe9e4 [$800be9e4]
-800BE9D0	nop
-
-Lbe9d4:	; 800BE9D4
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbe9e4:	; 800BE9E4
-field_debug_concat_string();
-
-V0 = hu[8009d78a];
-800BE9F4	nop
-V0 = V0 & 0400;
-800BE9FC	beq    v0, zero, Lbea1c [$800bea1c]
-800BEA00	nop
-A0 = 800e4254;
-A1 = 800a02f4;
-800BEA14	j      Lbea2c [$800bea2c]
-800BEA18	nop
-
-Lbea1c:	; 800BEA1C
-A0 = 800e4254;
-A1 = 800a0238;
-
-Lbea2c:	; 800BEA2C
-field_debug_concat_string();
-
-V0 = bu[80071e24];
-V1 = bu[8009fe8c];
-V0 = V0 & 0001;
-V1 = V1 | V0;
-if( V1 != 0 )
 {
-    A0 = debug_id;
-    A1 = 13;
-    A2 = 800e4254;
-    field_debug_copy_string_into_page();
+    A0 = string;
+    A1 = 800a01dc; // "RqLv=" (request level)
+    field_debug_copy_string();
 
-    A0 = debug_id;
-    A1 = 13;
-    A2 = 0;
-    field_debug_set_row_color();
+    priority = bu[8009a1c4 + actor_id]; // currently used priority slot
+
+    A0 = priority;
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a01e4; // " Tg="
+    field_debug_concat_string();
+
+    script_id = bu[801142d4 + actor_id * 8 + priority]; // priority queue script id
+
+    if( script_id == 0 )
+    {
+        A0 = string;
+        A1 = 800a01ec; // "dft"
+        field_debug_concat_string();
+    }
+    else if( script_id == 1 )
+    {
+        A0 = string;
+        A1 = 800a01f0; // "tlk"
+        field_debug_concat_string();
+    }
+    else if( script_id == 2 )
+    {
+        A0 = string;
+        A1 = 800a01f4; // "psh"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = script_id;
+        A1 = temp;
+        field_int2_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+    }
+
+    if( ( bu[8009fe8c] | (bu[80071e24] & 1) ) != 0 )
+    {
+        A0 = page_id;
+        A1 = 1;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+}
+
+entity_id = bu[8007eb98 + actor_id];
+line_id = bu[8007078c + actor_id];
+entities_data = w[8009c544];
+
+if( entity_id != ff )
+{
+    A0 = string;
+    A1 = 800a0214; // "man="
+    field_debug_copy_string();
+
+    A0 = entity_id;
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a021c; // " dir="
+    field_debug_concat_string();
+
+    A0 = bu[entities_data + entity_id * 84 + 38]; // direction
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 2;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 2;
+        A2 = 2;
+        field_debug_set_row_color();
+    }
+}
+else if( line_id != ff )
+{
+    A0 = string;
+    A1 = 800a0200; // "line="
+    field_debug_copy_string();
+
+    A0 = line_id;
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( bu[8007e7ac + line_id * 18 + c] != 0 ) // line on
+    {
+        A0 = string;
+        A1 = 800a0208; // " on"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a020c; // " off"
+        field_debug_concat_string();
+    }
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 2;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 2;
+        A2 = 3;
+        field_debug_set_row_color();
+    }
+}
+else
+{
+    A0 = string;
+    A1 = 800a01f8; // "Abst"
+    field_debug_copy_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 2;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 2;
+        A2 = 6;
+        field_debug_set_row_color();
+    }
+}
+
+if( entity_id != ff )
+{
+    A0 = string;
+    A1 = 800a0224; // "X="
+    field_debug_copy_string();
+
+    A0 = w[entities_data + entity_id * 84 + c] >> c;
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a0228; // " Y="
+    field_debug_concat_string();
+
+    A0 = w[entities_data + entity_id * 84 + 10] >> c;
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 3;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 3;
+        A2 = 1;
+        field_debug_set_row_color();
+    }
+
+    A0 = string;
+    A1 = 800a022c; // "Z="
+    field_debug_copy_string();
+
+    A0 = w[entities_data + entity_id * 84 + 14] >> c;
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a0230; // " I="
+    field_debug_concat_string();
+
+    A0 = hu[entities_data + entity_id * 84 + 72]; // triangle id
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 4;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+
+    A0 = bu[800756e8 + entity_id];
+    A1 = string;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = 800a0234; // "am"
+    field_debug_concat_string();
+
+    A0 = bu[entities_data + entity_id * 84 + 5e]; // animation id
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a0238; // ".";
+    field_debug_concat_string();
+
+    A0 = h[entities_data + entity_id * 84 + 62]; // current frame
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a0238; // ".";
+    field_debug_concat_string();
+
+    A0 = h[entities_data + entity_id * 84 + 64]; // frames number
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 5;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 5;
+        A2 = 7;
+        field_debug_set_row_color();
+    }
+
+    if( bu[entities_data + entity_id * 84 + 5c] != 0 ) // visibility
+    {
+        A0 = string;
+        A1 = 800a023c; // "V"
+        field_debug_copy_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // ".";
+        field_debug_copy_string();
+    }
+
+    if( bu[entities_data + entity_id * 84 + 5b] != 0 ) // talkability
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0240; // "T"
+        field_debug_concat_string();
+    }
+
+    if( bu[entities_data + entity_id * 84 + 59] != 0 ) // solidity
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0244; // "S"
+        field_debug_concat_string();
+    }
+
+    A0 = string;
+    A1 = 800a0248; // ":TR"
+    field_debug_concat_string();
+
+    A0 = hu[entities_data + entity_id * 84 + 6e]; // talk range
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a024c; // ".SR"
+    field_debug_concat_string();
+
+    A0 = hu[entities_data + entity_id * 84 + 6c]; // solid range
+    A1 = temp;
+    field_int2_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 6;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+
+    A0 = string;
+    A1 = 800a0250; // "MS"
+    field_debug_copy_string();
+
+    A0 = hu[entities_data + entity_id * 84 + 70]; // movement speed
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a0254; // " AS"
+    field_debug_concat_string();
+
+    A0 = h[entities_data + entity_id * 84 + 60]; // animation speed
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 7;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 7;
+        A2 = 7;
+        field_debug_set_row_color();
+    }
+}
+else if( line_id != ff )
+{
+    A0 = string;
+    A1 = 800a0258; // "AX"
+    field_debug_copy_string();
+
+    A0 = h[8007e7ac + line_id * 18 + 0];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a025c; // " AY"
+    field_debug_concat_string();
+
+    A0 = h[8007e7ac + line_id * 18 + 2];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 3;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+
+    A0 = string;
+    A1 = 800a0260; // "AZ"
+    field_debug_copy_string();
+
+    A0 = h[8007e7ac + line_id * 18 + 4];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 4;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+
+    A0 = string;
+    A1 = 800a0264; // "BX"
+    field_debug_copy_string();
+
+    A0 = h[8007e7ac + line_id * 18 + 6];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a0268; // " BY"
+    field_debug_concat_string();
+
+    A0 = h[8007e7ac + line_id * 18 + 8];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 5;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+
+    A0 = string;
+    A1 = 800a026c; // "BZ"
+    field_debug_copy_string();
+
+    A0 = h[8007e7ac + line_id * 18 + a];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 6;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 7;
+        A2 = 800a0270; // ""
+        field_debug_copy_string_into_page();
+    }
+}
+else
+{
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 3;
+        A2 = 800a0270; // ""
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 4;
+        A2 = 800a0270; // ""
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 5;
+        A2 = 800a0270; // ""
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 6;
+        A2 = 800a0270; // ""
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 7;
+        A2 = 800a0270; // ""
+        field_debug_copy_string_into_page();
+    }
+}
+
+if( page_id == 4 ) return;
+
+{
+    A0 = string;
+    A1 = 800a0274; // "SX"
+    field_debug_copy_string();
+
+    A0 = h[80071e38]; // current screen scroll X
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A1 = 800a0278; // " SY"
+    A0 = string;
+    field_debug_concat_string();
+
+    A0 = h[80071e3c]; // current screen scroll Y
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 01)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 8;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 8;
+        A2 = 3;
+        field_debug_set_row_color();
+    }
+}
+
+manual_entity_id = h[8009abf4 + 2a];
+triangle_id = hu[80074ea4 + manual_entity_id * 84 + 72];
+walkmesh_data = w[800e4274];
+
+{
+    A0 = string;
+    A1 = 800a027c; // "B-R    X="
+    field_debug_copy_string();
+
+    A0 = h[walkmesh_data + triangle_id * 18 + 0];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 9;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 9;
+        A2 = 2;
+        field_debug_set_row_color();
+    }
+}
+
+{
+    A0 = string;
+    A1 = 800a0288; // "Y="
+    field_debug_copy_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + 2];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a028c; // " Z="
+    field_debug_concat_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + 4];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = a;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+}
+
+{
+    A1 = 800a0290; // "R-G    X="
+    A0 = string;
+    field_debug_copy_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + 8];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = b;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = b;
+        A2 = 4;
+        field_debug_set_row_color();
+    }
+}
+
+{
+    A0 = string;
+    A1 = 800a0288; // "Y="
+    field_debug_copy_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + a];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a028c; // " Z="
+    field_debug_concat_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + c];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = c;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+}
+
+{
+    A0 = string;
+    A1 = 800a029c; // "G-B    X="
+    field_debug_copy_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + 10];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = d;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = d;
+        A2 = 3;
+        field_debug_set_row_color();
+    }
+}
+
+{
+    A0 = string;
+    A1 = 800a0288; // "Y="
+    field_debug_copy_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + 12];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a028c; // " Z="
+    field_debug_concat_string();
+
+    A0 = h[h[walkmesh_data + triangle_id * 18 + 14];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = e;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+}
+
+{
+    A1 = 800a02a8; // "Offset X="
+    A0 = string;
+    field_debug_copy_string();
+
+    entity_id = bu[8007eb98 + actor_id];
+    entities_data = w[8009c544];
+
+    A0 = h[entities_data + entity_id * 84 + 40];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = f;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = f;
+        A2 = 2;
+        field_debug_set_row_color();
+    }
+}
+
+{
+    A0 = string;
+    A1 = 800a0288; // "Y=";
+    field_debug_copy_string();
+
+    A0 = h[entities_data + entity_id * 84 + 46];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a028c; // " Z="
+    field_debug_concat_string();
+
+    A0 = h[entities_data + entity_id * 84 + 4c];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 10;
+        A2 = string;
+        field_debug_copy_string_into_page();
+    }
+}
+
+// game progress, control, battle members and battle check
+{
+    A1 = 800a02b4; // "SF"
+    A0 = string;
+    field_debug_copy_string();
+
+    A0 = hu[8009c6e4 + ba4]; // game progress
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    field_struct = w[8009c6e0];
+
+    if( bu[field_struct + 32] != 0 ) // PC cant move
+    {
+        if( bu[80081dc4] != 0 ) // UC move state
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a02b8; // "/"
+            field_debug_concat_string();
+        }
+    }
+    else // PC can move
+    {
+        if( bu[80081dc4] != 0 ) // UC move state
+        {
+            A0 = string;
+            A1 = 800a02bc; // "+"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a02c0; // "*"
+            field_debug_concat_string();
+        }
+    }
+
+    A0 = string;
+    A1 = 800a02c4; // "B"
+    field_debug_concat_string();
+
+    A0 = bu[8009c6e4 + 4f8]; // party member in slot1 (used in battle)
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = bu[8009c6e4 + 4f9]; // party member in slot2 (used in battle)
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = bu[8009c6e4 + 4fa]; // party member in slot3 (used in battle)
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( bu[game_state + 3b] != 0 ) // battle field check on/off (0/1).
+    {
+        A0 = string;
+        A1 = 800a02c8; // ">"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a02c0; // "*"
+        field_debug_concat_string();
+    }
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A2 = string;
+        A1 = 11;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 11;
+        A2 = 6;
+        field_debug_set_row_color();
+    }
+}
+
+{
+
+    A0 = string;
+    A1 = 800a02cc; // "DP "
+    field_debug_copy_string();
+
+    A0 = hu[80075e12];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = string;
+    A1 = 800a02d0; // " "
+    field_debug_concat_string();
+
+    A0 = hu[80075e10];
+    A1 = temp;
+    field_int4_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( bu[800716d4] != 0 ) // music locked
+    {
+        A0 = string;
+        A1 = 800a02d4; // "M"
+        field_debug_concat_string();
+    }
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 12;
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        if( 801affff < w[80075e10] )
+        {
+            if( bu[8009d29b] & 10 )
+            {
+                A0 = page_id;
+                A1 = 12;
+                A2 = 5;
+                field_debug_set_row_color();
+            }
+            else
+            {
+                A0 = page_id;
+                A1 = 12;
+                A2 = 3;
+                field_debug_set_row_color();
+            }
+        }
+
+        if( 801adfff < w[80075e10] )      A2 = 5;
+        else if( 801aafff < w[80075e10] ) A2 = 4;
+        else if( 801a7fff < w[80075e10] ) A2 = 1;
+        else if( 801a3fff < w[80075e10] ) A2 = 3;
+        else if( 8019ffff < w[80075e10] ) A2 = 2;
+        else if( 80197fff < w[80075e10] ) A2 = 0;
+        else                              A2 = 7;
+
+        A0 = page_id;
+        A1 = 12;
+        field_debug_set_row_color();
+    }
+}
+
+// print party members and character availability mask
+{
+    A0 = bu[8009c6e4 + cad]; // party member in slot 1
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_copy_string();
+
+    A0 = bu[8009c6e4 + cae]; // party member in slot 2
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    A0 = bu[8009c6e4 + caf]; // party member in slot 3
+    A1 = temp;
+    field_int_to_string();
+
+    A0 = string;
+    A1 = temp;
+    field_debug_concat_string();
+
+    if( hu[8009c6e4 + 10a6] & 1 )
+    {
+        A0 = string;
+        A1 = 800a02d8; // "C"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 2 )
+    {
+        A0 = string;
+        A1 = 800a02c4; // "B"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 4 )
+    {
+        A0 = string;
+        A1 = 800a0240; // "T"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 8 )
+    {
+        A0 = string;
+        A1 = 800a02dc; // "E"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 10 )
+    {
+        A0 = string;
+        A1 = 800a02e0; // "R"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 20 )
+    {
+        A0 = string;
+        A1 = 800a02e4; // "Y"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 40 )
+    {
+        A0 = string;
+        A1 = 800a02e8; // "K"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 80 )
+    {
+        A0 = string;
+        A1 = 800a023c; // "V"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 100 )
+    {
+        A0 = string;
+        A1 = 800a02ec; // "D"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 200 )
+    {
+        A0 = string;
+        A1 = 800a02f0; // "U"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( hu[8009c6e4 + 10a6] & 400 )
+    {
+        A0 = string;
+        A1 = 800a02f4; // "F"
+        field_debug_concat_string();
+    }
+    else
+    {
+        A0 = string;
+        A1 = 800a0238; // "."
+        field_debug_concat_string();
+    }
+
+    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    {
+        A0 = page_id;
+        A1 = 13; // row
+        A2 = string;
+        field_debug_copy_string_into_page();
+
+        A0 = page_id;
+        A1 = 13; // row
+        A2 = 0; // color
+        field_debug_set_row_color();
+    }
 }
 ////////////////////////////////
 
@@ -2950,11 +2383,11 @@ if( V1 != 0 )
 S2 = A0; // opcode name text
 S1 = A1; // number of arg
 
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 if( bu[80071e24] & 04 )
 {
-    if( bu[80114498 + current_entity] == 0 )
+    if( bu[80114498 + current_actor_id] == 0 )
     {
         return;
     }
@@ -3000,7 +2433,7 @@ if( S1 != 0 )
         A1 = 800a02fc; // "="
         field_debug_concat_string();
 
-        V0 = w[8009c6dc] + hu[800831fc + current_entity * 2] + S4 - S1;
+        V0 = w[8009c6dc] + hu[800831fc + current_actor_id * 2] + S4 - S1;
         A0 = bu[V0]; // argument value
         A1 = 800e4288;
         field_int2_to_string();
@@ -4091,8 +3524,6 @@ A1 = V0 | 0300;
 V0 = bu[8009d820];
 AT = 8009d288;
 AT = AT + A1;
-
-funcbfee0:	; 800BFEE0
 S0 = bu[AT + 0000];
 V0 = V0 & 0003;
 800BFEE8	beq    v0, zero, Lc0234 [$800c0234]
@@ -4829,18 +4260,18 @@ SP = SP + 0018;
 
 if( bu[8009d820] & 3 )
 {
-    S0 = 800e4288;
+    string = 800e4288;
 
     A0 = bu[8009a058];
-    A1 = S0;
+    A1 = string;
     field_int2_to_string();
 
 
-    A0 = S0;
+    A0 = string;
     A1 = 800a04c0; // "???"
     field_debug_concat_string();
 
-    A0 = S0;
+    A0 = string;
     A1 = 8;
     field_script_debug_opcode();
 

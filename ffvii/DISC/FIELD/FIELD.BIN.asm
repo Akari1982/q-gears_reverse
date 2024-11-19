@@ -180,7 +180,7 @@
 // funcabfe8
 800ABFE8-800AC358
 ////////////////////////////////
-// field_model_load_local_lodel_and init_all
+// field_model_load_local_lodel_and_init_all
 800AC35C-800ACB9C
 ////////////////////////////////
 // field_model_create_packets_and_scale
@@ -1172,13 +1172,13 @@
 // funcd4840
 800D4840-800D4844
 ////////////////////////////////
+// funcd4848
+800D4848-800D48BC
+////////////////////////////////
 
 
 
 // FIELD.BIN_dialog.cpp
-////////////////////////////////
-// funcd4848
-800D4848-800D48BC
 ////////////////////////////////
 // field_window_reset_all
 800D48C0-800D4938

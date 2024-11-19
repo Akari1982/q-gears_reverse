@@ -385,7 +385,7 @@ while( true )
         A2 = w[V1]; // events pointer
         field_init_structs_events_actors();
 
-        V0 = h[8009abf4 + 2a]; // manual model id
+        V0 = h[8009abf4 + 2a]; // manual entity id
         [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
 
         // init rain force

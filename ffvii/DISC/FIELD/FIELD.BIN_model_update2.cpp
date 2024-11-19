@@ -494,7 +494,7 @@ system_psyq_pop_matrix();
 
 
 ////////////////////////////////
-// field_model_load_local_lodel_and init_all()
+// field_model_load_local_lodel_and_init_all()
 
 block_7 = A0;
 models_struct = A1;

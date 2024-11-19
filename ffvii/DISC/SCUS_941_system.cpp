@@ -788,17 +788,9 @@ if( A1 != 0 )
 
 
 ////////////////////////////////
-// func3dba0
-8003DBA0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8003DBA8	lui    at, $800a
-[AT + c6d4] = w(A0);
-8003DBB0	lui    at, $800a
-[AT + fe90] = w(A1);
-8003DBB8	jal    func40898 [$80040898]
-8003DBBC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003DBC8	jr     ra 
-8003DBCC	nop
+// func3dba0()
+
+[8009c6d4] = w(A0);
+[8009fe90] = w(A1);
+func40898();
 ////////////////////////////////

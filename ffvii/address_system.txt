@@ -677,7 +677,9 @@
         +78 [][][][] armor materia slot 7.
         +7c [][][][] armor materia slot 8.
         +80 [][][][] exp to next level.
-    + 4f8 [][][][] party member in slot1-4 (used in battle).
+    + 4f8 []       party member slot 1 (used in battle).
+    + 4f9 []       party member slot 2 (used in battle).
+    + 4fa []       party member slot 3 (used in battle).
     + 4fc party item stock array
     + b7c [][][][] party gil amount.
     + b80 [][][][] total seconds played.
@@ -703,7 +705,9 @@
                             0x40 - tagret text shown in battle.
                             0x80 - underwater timer in battle.
     + ca4 savemap memory bank 3/4 start
-    + cad (+09) [][][]   party member in slot 1-3.
+    + cad (+09) []       party member in slot 1.
+    + cae (+0a) []       party member in slot 2.
+    + caf (+0b) []       party member in slot 3.
     + da4 savemap memory bank b/c start
     + ea4 savemap memory bank d/e start
     + eaa (+06) [][]     some value that increments each battle check.
@@ -729,6 +733,16 @@
                              0x80 - enable rain on field. If set it gradually become stronger. If unset if gradually fades away.
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
     +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
+                        0x0001 - Cloud.
+                        0x0002 - Barret.
+                        0x0004 - Tifa.
+                        0x0008 - Aerith.
+                        0x0010 - Red XIII.
+                        0x0020 - Yuffie.
+                        0x0040 - Cait Sith.
+                        0x0080 - Vincent.
+                        0x0100 - Cid.
+                        0x0200 - U (unknown).
     +10d8 []       battle speed.
     8009d7bd []       battle message speed (used as value >> 2 + 4)
     +10da [][]     config flags

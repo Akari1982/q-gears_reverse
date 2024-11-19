@@ -11,7 +11,7 @@
 
 800707be [][]     battle result stored here. Loaded by 0x23 BTRLD.
 
-8007078c []       array of enities lines data. (size 0x01).
+8007078c []       array of actor to line data. (size 0x01).
 
 800707c0 [][][][] offset to font padding file.
 
@@ -40,7 +40,10 @@
 
 80071c1c []       init with 0.
 
-80071e24 []       some value used in debug draw. if (this & 3) then do debug draw.
+80071e24 []       debug flags.
+                  0x01 - base debug.
+                  0x02 - was removed.
+                  0x04 - if set then require exact actor debug to be set.
 
 80071e38 current screen scroll X.
 80071e3c current screen scroll Y.
@@ -66,7 +69,7 @@
     + 35 []       shift addition to move direction.
     + 36 []       move direction (used when calculated movement).
     + 37 []       lock rotation. (1 - direction will not be changed)
-    + 38 []       model direction.
+    + 38 []       direction.
     + 39 []       number of steps for turn.
     + 3a []       current step for turn.
     + 3b []       used during TURN (5th argument).
@@ -109,7 +112,7 @@
     + 6c [][]     solid range value.
     + 6e [][]     talk range value.
     + 70 [][]     movement speed. For MOVE-type opcodes.
-    + 72 [][]     triangle.
+    + 72 [][]     triangle id.
     + 74 [][]     move to triangle (LADER and JUMP).
     + 78 [][][][] move to x (MOVE and LADER and JUMP).
     + 7c [][][][] move to y (MOVE and LADER and JUMP).
@@ -127,6 +130,9 @@
             6 - play and set to 3.
 
 80075cf8 [][]     current background scroll step.
+80075e10 [][][][] BCX start address. Color data. Looks like free place to do something.
+80075e10 [][]     DP ???
+80075e12 [][]     DP ???
 80075e14 [][]     start X position of scroll.
 80075e18 [][]     end X position of scroll.
 80075e1c [][]     start Y position of scroll.
@@ -135,14 +141,14 @@
 
 80075dec [][]     screen index (ffvii uses two render buffers). Used to render to specific buffers.
 
-80075e10 [][][][] BCX start address. Color data. Looks like free place to do something.
-
 80077f64 message render related data. (0x3400 size each)
 
 8007e770 [][][][] offset to field models header (block 7 in DAT file).
 
 8007e7a0          array of some fade data. (size 0x4).
 8007e7a8 [][][][] offset to dialog block.
+
+8007e7b8
 
 8007e7ac array of LINE data. (size 0x18).
     + 00 [][] x1.
@@ -152,7 +158,7 @@
     + 08 [][] y2.
     + 0a [][] z2.
     + 0c []   line on/off. (1 - true/0 - false).
-    + 0d []   parent actor.
+    + 0d []   actor id.
     + 0e []   actor currently in LINE (with solid).  Script call.
     + 0f []   actor cross LINE. Script call (removed after script call).
     + 10 []   actor move to line. Script call (removed after script call).
@@ -227,7 +233,7 @@
 
 8009a1c4 array of current priority slot used by actors (size 0x01).
 
-8009abf4 field game state. 8009c6e0 points here.
+8009abf4 field_struct. 8009c6e0 points here.
     + 00 []       render buffer id (there are 2 render buffers)
     + 01 []       some state
                     00 - normal field.
@@ -259,11 +265,11 @@
     + 24 [][]     saved rotation for manual entity during map load.
     + 26 [][]     battle state ?
     + 28 [][]     number of entities.
-    + 2a []       manual actor id.
+    + 2a []       manual entity id.
     + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
     + 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
     + 30 [][]     animation for run. Set in CCANM (XX,-,-,2)
-    + 32 []       0 if PC can move. 1 - otherwise.
+    + 32 []       0 if player has control. 1 - otherwise.
     + 33 []       if 1 here model will not automove. And animation will not play.
     + 34 []       we store MENU byte here. Checked when call menu.
     + 35 []       ???
@@ -564,7 +570,7 @@
 
 80114490 buffer index for something like array or triangles.
 
-80114498 arrray of something entity related (size 0x1).
+80114498 array of debug actors opcodes and data or not (size 0x1).
 
 801144cc [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 

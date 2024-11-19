@@ -592,8 +592,8 @@ SP = SP + 0028;
 ////////////////////////////////
 // 0x9F SEARCHX
 field_file_offset     = w[8009c6dc];
-current_entity        = bu[800722c4];
-script_pointer_offset = 800831fc + current_entity * 2;
+current_actor_id        = bu[800722c4];
+script_pointer_offset = 800831fc + current_actor_id * 2;
 script = field_file_offset + hu[script_pointer_offset];
 
 S0 = bu[script + 1] >> 4;
@@ -851,36 +851,41 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0xD0 LINE
 
-number_of_lines = h[80095d84];
+current_actor_id = bu[800722c4];
+current_line_id = h[80095d84];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
-if( number_of_lines < 20 ) // number of inited lines
+if( bu[8009d820] & 3 )
 {
-    current_entity = bu[800722c4];
-    [8007078c + current_entity] = b(number_of_lines);
-    A2 = w[8009c6dc];
+    A0 = 800a0610; // "line"
+    A1 = 8;
+    field_script_debug_opcode();
+}
 
-    script_offset = hu[800831fc + current_entity * 2];
+if( current_line_id < 20 )
+{
+    [8007078c + current_actor_id] = b(current_line_id);
 
-    [8007e7ac + number_of_lines * 18 + 0] = h(hu[A2 + script_offset + 1]); // x1
-    [8007e7ac + number_of_lines * 18 + 2] = h(hu[A2 + script_offset + 3]); // y1
-    [8007e7ac + number_of_lines * 18 + 4] = h(hu[A2 + script_offset + 5]); // z1
-    [8007e7ac + number_of_lines * 18 + 6] = h(hu[A2 + script_offset + 7]); // x2
-    [8007e7ac + number_of_lines * 18 + 8] = h(hu[A2 + script_offset + 9]); // y2
-    [8007e7ac + number_of_lines * 18 + a] = h(hu[A2 + script_offset + b]); // z2
-    [8007e7ac + number_of_lines * 18 + c] = b(1); // line on
-    [8007e7ac + number_of_lines * 18 + d] = b(current_entity); // parent entity
+    [8007e7ac + current_line_id * 18 + 0] = h(hu[script + 1]); // x1
+    [8007e7ac + current_line_id * 18 + 2] = h(hu[script + 3]); // y1
+    [8007e7ac + current_line_id * 18 + 4] = h(hu[script + 5]); // z1
+    [8007e7ac + current_line_id * 18 + 6] = h(hu[script + 7]); // x2
+    [8007e7ac + current_line_id * 18 + 8] = h(hu[script + 9]); // y2
+    [8007e7ac + current_line_id * 18 + a] = h(hu[script + b]); // z2
+    [8007e7ac + current_line_id * 18 + c] = b(1); // line on
+    [8007e7ac + current_line_id * 18 + d] = b(current_actor_id);
 
-    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + d);
-
-    [80095d84] = h(number_of_lines + 1);
+    [80095d84] = h(current_line_id + 1);
 }
 else
 {
-    A0 = 800a0618;
+    Lc1a6c:	; 800C1A6C
+    A0 = 800a0618; // "many lineobj!"
     funcd4848();
-
-    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + d);
 }
+
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + d);
+
 return 0;
 ////////////////////////////////
 
@@ -889,8 +894,8 @@ return 0;
 ////////////////////////////////
 // 0xD3 SLINE
 
-current_entity = bu[800722c4];
-line_id = bu[8007078c + current_entity];
+current_actor_id = bu[800722c4];
+line_id = bu[8007078c + current_actor_id];
 
 A0 = 1;
 A1 = 4;
@@ -922,7 +927,7 @@ A1 = e;
 read_memory_block_two_bytes();
 [8007e7ac + line_id * 18 + a] = h(V0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 10);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 10);
 
 return 0;
 ////////////////////////////////
@@ -931,10 +936,10 @@ return 0;
 
 ////////////////////////////////
 // 0xD1 LINON
-current_entity = bu[800722C4];
+current_actor_id = bu[800722C4];
 
-A1 = bu[8007078C + current_entity];
-A0 = hu[800831FC + current_entity * 2];
+A1 = bu[8007078C + current_actor_id];
+A0 = hu[800831FC + current_actor_id * 2];
 V0 = w[8009C6DC];
 line_on = bu[V0 + A0 + 1];
 [8007E7AC + A1 * 18 + C] = b(line_on);
@@ -2315,8 +2320,8 @@ funcc33b4();
 ////////////////////////////////
 // funcc33b4()
 
-current_entity            = bu[800722c4];
-current_script_pointer    = 800831fc + current_entity * 2;
+current_actor_id            = bu[800722c4];
+current_script_pointer    = 800831fc + current_actor_id * 2;
 target_script_pointer     = 800831fc + target_id * 2;
 target_current_slot       = 8009a1c4 + target_id;
 request_id                = A0; // 3 - reqEW
@@ -2338,7 +2343,7 @@ if( request_id == 3 )
 {
     V1 = bu[80071a88 + target_id * 8 + priority_id];
 
-    if (V1 == current_entity)
+    if (V1 == current_actor_id)
     {
         V1 = bu[script_state];
 
@@ -2405,7 +2410,7 @@ if (V0 != priority_id)
 
         if (request_id == 3)
         {
-            [80071A88 + target_id * 8 + priority_id] = b(current_entity);
+            [80071A88 + target_id * 8 + priority_id] = b(current_actor_id);
             [script_state] = b(1);
         }
         return 1;
@@ -2430,7 +2435,7 @@ if (V0 != priority_id)
 
             if (request_id == 3)
             {
-                [80071A88 + target_id * 8 + priority_id] = b(current_entity);
+                [80071A88 + target_id * 8 + priority_id] = b(current_actor_id);
                 [script_state] = b(1);
             }
 
@@ -2452,8 +2457,8 @@ return 1;
 
 ////////////////////////////////
 // 0x00 RET
-current_entity = bu[800722c4];
-current_priority = bu[8009a1c4 + current_entity];
+current_actor_id = bu[800722c4];
+current_priority = bu[8009a1c4 + current_actor_id];
 
 if (current_priority >= 7)
 {
@@ -2461,17 +2466,17 @@ if (current_priority >= 7)
 }
 
 // if script set to REQEW then te this script as finished
-V1 = bu[800833F8 + current_entity * 8 + current_priority];
+V1 = bu[800833F8 + current_actor_id * 8 + current_priority];
 if (V1 == 1)
 {
-    [800833F8 + current_entity * 8 + current_priority] = b(02);
+    [800833F8 + current_actor_id * 8 + current_priority] = b(02);
 }
 
 current_priority = current_priority + 1;
-[8009A1C4 + current_entity] = b(current_priority);
+[8009A1C4 + current_actor_id] = b(current_priority);
 
-V1 = hu[80071748 + current_entity * 10 + current_priority * 2]; // get current script pointer for next script
-[800831FC + current_entity * 2] = h(V1);                      // set new script pointer
+V1 = hu[80071748 + current_actor_id * 10 + current_priority * 2]; // get current script pointer for next script
+[800831FC + current_actor_id * 2] = h(V1);                      // set new script pointer
 
 if (V1 == 0)
 {
@@ -2485,16 +2490,16 @@ if (V1 == 0)
 
         // go to next script
         current_priority = current_priority + 1;
-        [8009A1C4 + current_entity] = b(current_priority);
+        [8009A1C4 + current_actor_id] = b(current_priority);
 
-        V0 = hu[80071748 + current_entity * 10 + current_priority * 2]; // get new script pointer for next script
-        [800831fc + current_entity * 2] = h(V0);                      // set new script pointer
+        V0 = hu[80071748 + current_actor_id * 10 + current_priority * 2]; // get new script pointer for next script
+        [800831fc + current_actor_id * 2] = h(V0);                      // set new script pointer
 
         800C3BB4	beq    v0, zero, loopc3b28 [$800c3b28]
     }
 }
 
-[80071748 + current_entity * 10 + current_priority * 2] = h(00); // set current script pointer for this script to 0
+[80071748 + current_actor_id * 10 + current_priority * 2] = h(00); // set current script pointer for this script to 0
 return 0;
 ////////////////////////////////
 
@@ -2502,10 +2507,10 @@ return 0;
 
 ////////////////////////////////
 // 0x07 RETTO
-current_entity            = bu[800722c4];
-current_script_pointer    = 800831fc + current_entity * 2;
+current_actor_id            = bu[800722c4];
+current_script_pointer    = 800831fc + current_actor_id * 2;
 field_file_offset         = w[8009c6dc];
-entity_current_slot       = 8009a1c4 + current_entity;
+entity_current_slot       = 8009a1c4 + current_actor_id;
 
 V1 = hu[current_script_pointer];
 V1 = bu[field_file_offset + V1 + 1];
@@ -2525,10 +2530,10 @@ if (V0 < priority_id)
             break;
         }
 
-        V0 = bu[800833F8 + current_entity * 8 + V1];
+        V0 = bu[800833F8 + current_actor_id * 8 + V1];
         if (V0 == 1)
         {
-            [800833F8 + current_entity * 8 + V1] = b(2);
+            [800833F8 + current_actor_id * 8 + V1] = b(2);
         }
 
         V0 = bu[entity_current_slot];
@@ -2536,17 +2541,17 @@ if (V0 < priority_id)
         [entity_current_slot] = b(V0);
 
         V0 = bu[entity_current_slot];
-        [80071748 + current_entity * 10 + V0 * 2] = h(0);
+        [80071748 + current_actor_id * 10 + V0 * 2] = h(0);
         V0 = bu[entity_current_slot];
         V0 = V0 < priority_id;
 
     800C3D90	bne    v0, zero, loopc3cd8 [$800c3cd8]
 }
 
-[801142D4 + current_entity * 8 + priority_id] = b(script_id);
+[801142D4 + current_actor_id * 8 + priority_id] = b(script_id);
 A2 = hu[field_file_offset + 6];
 V0 = bu[field_file_offset + 2];
-A0 = hu[field_file_offset + current_entity * 40 + V0 * 8 + A2 * 4 + script_id * 2 + 20];
+A0 = hu[field_file_offset + current_actor_id * 40 + V0 * 8 + A2 * 4 + script_id * 2 + 20];
 [current_script_pointer] = h(A0);
 [entity_current_slot] = b(priority_id);
 
@@ -2557,8 +2562,8 @@ return 0;
 
 ////////////////////////////////
 // 0x12 JMPB
-current_entity            = bu[800722c4];
-current_script_pointer    = 800831fc + current_entity * 2;
+current_actor_id            = bu[800722c4];
+current_script_pointer    = 800831fc + current_actor_id * 2;
 field_file_offset         = w[8009c6dc];
 A0 = hu[current_script_pointer + 0];
 
@@ -2993,7 +2998,7 @@ V1 = bu[A0 + 1];
 
 if (V1 == 0)
 {
-    funcd4bfc
+    funcd4bfc();
 
     [A0 + 01] = b(2);
     [A0 + 26] = h(0);
@@ -3233,8 +3238,8 @@ V1 = V1 + 6;
 // set_and_apply_field_music_params
 
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 if (b[800716d4] == 0) // if music not locked
 {
@@ -3252,7 +3257,7 @@ if (b[800716d4] == 0) // if music not locked
 }
 
 // move pointer by 2
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 2);
 return 0;
 ////////////////////////////////
 
@@ -3354,8 +3359,8 @@ return 0;
 ////////////////////////////////
 // 0x21 TUTOR
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 if( bu[struct + 1] == 0 )
 {
@@ -3376,7 +3381,7 @@ else if( bu[struct + 1] == 9  && h[struct + 26] == 2 )
     [struct + 1] = b(0);
     [struct + 26] = h(0);
 
-    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+    [800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 2);
 
     return 0;
 }
@@ -3390,6 +3395,7 @@ else
 
 ////////////////////////////////
 // 0xF5 MULCK
+
 A0 = bu[800722c4];
 V1 = hu[800831fc + A0 * 2];
 V0 = w[8009c6dc];
@@ -3404,12 +3410,12 @@ return 0;
 ////////////////////////////////
 // 0x27 BGMOVIE
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 [struct + 3a] = b(bu[script + 1]);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -3420,12 +3426,12 @@ return 0;
 // 0x61 SCRLO
 // scroll lock
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 [struct + 37] = b(bu[script + 1]);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -3550,16 +3556,16 @@ return 0;
 ////////////////////////////////
 // 0x69 MPDSP
 struct = w[8009c6e0];
-current_entity            = bu[800722c4];
-current_script_pointer    = 800831fc + current_entity * 2;
+current_actor_id            = bu[800722c4];
+current_script_pointer    = 800831fc + current_actor_id * 2;
 field_file_offset         = w[8009c6dc];
 
 argument1 = hu[current_script_pointer + 0];
 
-[struct + 38] = b(bu[current_entity + argument1 + 1]);
+[struct + 38] = b(bu[current_actor_id + argument1 + 1]);
 
 // move pointer by 9
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 2);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 2);
 ////////////////////////////////
 
 
@@ -3679,9 +3685,9 @@ return 0;
 
 ////////////////////////////////
 // 0xA2 DFANM
-current_entity        = bu[800722c4];
-current_model         = bu[8007eb98 + current_entity];
-script_pointer_offset = 800831fc + current_entity * 2;
+current_actor_id        = bu[800722c4];
+current_model         = bu[8007eb98 + current_actor_id];
+script_pointer_offset = 800831fc + current_actor_id * 2;
 
 if( current_model != ff )
 {
@@ -3731,9 +3737,9 @@ else if (V1 == 2)
 
 ////////////////////////////////
 // funcc5b38
-current_entity         = bu[800722c4];
-current_model          = bu[8007eb98 + current_entity];
-current_script_pointer = hu[800831fc + current_entity * 2];
+current_actor_id         = bu[800722c4];
+current_model          = bu[8007eb98 + current_actor_id];
+current_script_pointer = hu[800831fc + current_actor_id * 2];
 field_file_offset      = w[8009c6dc];
 entities_data          = w[8009c544];
 
@@ -3757,9 +3763,9 @@ A1 = w[V0 + V1 * 24 + 1c];
 ////////////////////////////////
 // 0xA3 ANIME1
 // 0xAE ANIME2
-current_entity        = bu[800722c4];
-current_model         = bu[8007eb98 + current_entity];
-script_pointer_offset = 800831fc + current_entity * 2;
+current_actor_id        = bu[800722c4];
+current_model         = bu[8007eb98 + current_actor_id];
+script_pointer_offset = 800831fc + current_actor_id * 2;
 
 if( current_model != ff )
 {
@@ -3801,8 +3807,8 @@ if( current_model != ff )
 ////////////////////////////////
 // 0xAF ANIM!1
 // 0xBA ANIM!2
-current_entity = bu[800722c4];
-current_model = bu[8007eb98 + current_entity];
+current_actor_id = bu[800722c4];
+current_model = bu[8007eb98 + current_actor_id];
 
 if( current_model != ff )
 {
@@ -3844,10 +3850,10 @@ if( current_model != ff )
 ////////////////////////////////
 // 0xB0 CANIM1
 // 0xBB CANIM2
-current_entity        = bu[800722C4];
-current_model         = bu[8007EB98 + current_entity]; // A1
+current_actor_id        = bu[800722C4];
+current_model         = bu[8007EB98 + current_actor_id]; // A1
 entities_data     = w[8009C544];
-script_pointer_offset = 800831FC + current_entity * 2;
+script_pointer_offset = 800831FC + current_actor_id * 2;
 
 if (current_model != FF)
 {
@@ -3933,10 +3939,10 @@ return 0;
 ////////////////////////////////
 // 0xB1 CANM!1
 // 0xBC CANM!2
-current_entity        = bu[800722C4];
-current_model         = bu[8007EB98 + current_entity]; // A1
+current_actor_id        = bu[800722C4];
+current_model         = bu[8007EB98 + current_actor_id]; // A1
 entities_data     = w[8009C544];
-script_pointer_offset = 800831FC + current_entity * 2;
+script_pointer_offset = 800831FC + current_actor_id * 2;
 
 if (current_model != FF)
 {
@@ -4018,11 +4024,11 @@ if (current_model != FF)
 
 ////////////////////////////////
 // 0xAC ANIMW
-current_entity        = bu[800722c4];
+current_actor_id        = bu[800722c4];
 entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + current_entity];
+current_model         = bu[8007eb98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
-script_pointer_offset = 800831fc + current_entity * 2;
+script_pointer_offset = 800831fc + current_actor_id * 2;
 
 if (current_model != FF)
 {
@@ -4068,11 +4074,11 @@ return 0;
 
 ////////////////////////////////
 // 0xA8 MOVE
-current_entity        = bu[800722c4];
+current_actor_id        = bu[800722c4];
 entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + current_entity];
+current_model         = bu[8007eb98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
-script_pointer_offset = 800831fc + current_entity * 2;
+script_pointer_offset = 800831fc + current_actor_id * 2;
 game_data_offset      = w[8009c6e0];
 movement_speed        = hu[current_model_offset + 70]
 
@@ -4253,11 +4259,11 @@ return 1;
 
 ////////////////////////////////
 // 0xAD FMOVE
-current_entity        = bu[800722C4];
+current_actor_id        = bu[800722C4];
 entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_model         = bu[8007EB98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
-script_pointer_offset = 800831FC + current_entity * 2;
+script_pointer_offset = 800831FC + current_actor_id * 2;
 
 if (current_model == FF) // if not visible entity
 {
@@ -4317,11 +4323,11 @@ return 1;
 
 ////////////////////////////////
 // 0xA9 CMOVE
-current_entity        = bu[800722C4];
+current_actor_id        = bu[800722C4];
 entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_model         = bu[8007EB98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
-script_pointer_offset = 800831FC + current_entity * 2;
+script_pointer_offset = 800831FC + current_actor_id * 2;
 
 if (current_model == FF) // if not visible entity
 {
@@ -4385,12 +4391,12 @@ return 1;
 
 ////////////////////////////////
 // 0xDB FCFIX
-V1 = entity_id = bu[800722C4];
-A0 = bu[8007EB98 + entity_id];
+V1 = current_actor_id = bu[800722C4];
+A0 = bu[8007EB98 + current_actor_id];
 if (A0 != FF)
 {
     V0 = A0 * 84;
-    A0 = hu[800831FC + entity_id * 2];
+    A0 = hu[800831FC + current_actor_id * 2];
 
     V1 = V1 + A0;
     V1 = bu[V1 + 1];
@@ -4400,7 +4406,7 @@ if (A0 != FF)
     [V0 + 37] = b(V1);
 }
 
-V1 = hu[800831FC + entity_id * 2];
+V1 = hu[800831FC + current_actor_id * 2];
 V1 = V1 + 2;
 [800831FC + A0 * 2] = hu[V1];
 
@@ -4411,15 +4417,15 @@ return 0;
 
 ////////////////////////////////
 // 0xC0 JUMP
-A0 = current_entity    = bu[800722C4];
-V1 = model_id          = bu[8007EB98 + current_entity];
+A0 = current_actor_id    = bu[800722C4];
+V1 = model_id          = bu[8007EB98 + current_actor_id];
 entities_data = w[8009C544];
 model_data_offset = entities_data + model_id * 84;
 
 if (model_id == FF)
 {
     // move pointer by B
-    V0 = hu[800831FC + current_entity * 2];
+    V0 = hu[800831FC + current_actor_id * 2];
     V0 = V0 + F;
     [800831FC + V1 * 2] = h(V0);
     return 0;
@@ -4441,7 +4447,7 @@ if (V1 == 3)
         [model_data_offset + 6A] = h(0);
 
         // move pointer by B
-        V0 = hu[800831FC + current_entity * 2];
+        V0 = hu[800831FC + current_actor_id * 2];
         V0 = V0 + F;
         [800831FC + V1 * 2] = h(V0);
         return 0;
@@ -4480,14 +4486,14 @@ return 1;
 
 ////////////////////////////////
 // 0xC2 LADER
-current_entity    = bu[800722C4];
-model_id          = bu[8007EB98 + current_entity];
+current_actor_id    = bu[800722C4];
+model_id          = bu[8007EB98 + current_actor_id];
 entities_data = w[8009C544] + model_id * 84;
 
 if (model_id == FF)
 {
     // move pointer by 15
-    V0 = hu[800831FC + current_entity * 2];
+    V0 = hu[800831FC + current_actor_id * 2];
     V0 = V0 + F;
     [800831FC + V1 * 2] = h(V0);
     return 0;
@@ -4508,9 +4514,9 @@ if (V1 == 4 || V1 == 5)
         [entities_data + 6A] = h(0);
 
         // move pointer by 15
-        V0 = hu[800831FC + current_entity * 2];
+        V0 = hu[800831FC + current_actor_id * 2];
         V0 = V0 + F;
-        [800831FC + current_entity * 2] = h(V0);
+        [800831FC + current_actor_id * 2] = h(V0);
         return 0;
     }
 }
@@ -4518,7 +4524,7 @@ if (V1 == 4 || V1 == 5)
 
 
 // init
-V1 = hu[800831FC + current_entity * 2];
+V1 = hu[800831FC + current_actor_id * 2];
 V0 = w[8009C6DC];
 V0 = V0 + V1;
 V1 = bu[V0 + B];
@@ -4569,7 +4575,7 @@ read_memory_block_two_bytes;
 
 
 // animation id
-V1 = hu[800831FC + current_entity * 2];
+V1 = hu[800831FC + current_actor_id * 2];
 V0 = w[8009C6DC];
 V1 = bu[V0 + V1 + c];
 [entities_data + 5E] = b(V1);
@@ -4577,7 +4583,7 @@ V1 = bu[V0 + V1 + c];
 
 
 // speed of movement
-A1 = hu[800831FC + current_entity * 2];
+A1 = hu[800831FC + current_actor_id * 2];
 V0 = w[8009C6DC];
 V1 = h[8009d828 + model_id * 2] / bu[V0 + A1 + e];
 [entities_data + 60] = h(V1);
@@ -4608,7 +4614,7 @@ V0 = V0 - 1;
 
 
 // set direction for model
-A1 = hu[800831FC + current_entity * 2];
+A1 = hu[800831FC + current_actor_id * 2];
 A0 = w[8009C6DC];
 A0 = bu[A0 + A1 + D];
 // set direction
@@ -4827,7 +4833,7 @@ V1 = hu[800831FC + V0 * 2];
 V0 = w[8009C6DC];
 A0 = bu[V0 + V1 + 1]; // entity id
 
-set_direction_to_current_entity_by_entity_id
+set_direction_to_current_actor_id_by_entity_id
 
 return V0;
 ////////////////////////////////
@@ -4865,7 +4871,7 @@ AT = AT + A0;
 A0 = bu[AT + 0000];
 
 Lc8254:	; 800C8254
-800C8254	jal    set_direction_to_current_entity_by_entity_id [$800c826c]
+800C8254	jal    set_direction_to_current_actor_id_by_entity_id [$800c826c]
 800C8258	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -4876,7 +4882,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// set_direction_to_current_entity_by_entity_id
+// set_direction_to_current_actor_id_by_entity_id
 A0 - entity to get
 
 // if current entity not visible entity
@@ -5039,10 +5045,10 @@ SP = SP + 0018;
 ////////////////////////////////
 // funcc8634
 rotate_entity = A0;
-current_entity         = bu[800722C4];
-current_model          = bu[8007EB98 + current_entity];
+current_actor_id         = bu[800722C4];
+current_model          = bu[8007EB98 + current_actor_id];
 rotate_model          = bu[8007EB98 + rotate_entity];
-current_script_pointer = hu[800831FC + current_entity * 2];
+current_script_pointer = hu[800831FC + current_actor_id * 2];
 field_file_offset      = w[8009C6DC];
 entities_data          = w[8009C544];
 
@@ -5052,7 +5058,7 @@ if (current_model == FF || rotate_entity == FF)
 {
     // move pointer by 4
     current_script_pointer = current_script_pointer + 4;
-    [800831FC + current_entity * 2] = h(current_script_pointer);
+    [800831FC + current_actor_id * 2] = h(current_script_pointer);
     return 0;
 }
 
@@ -5064,7 +5070,7 @@ if (V1 == 3)
     [entities_data + current_model * 84 + 39] = b(0)
     // move pointer by 4
     current_script_pointer = current_script_pointer + 4;
-    [800831FC + current_entity * 2] = h(current_script_pointer);
+    [800831FC + current_actor_id * 2] = h(current_script_pointer);
     return 0;
 }
 
@@ -5293,11 +5299,11 @@ return 0;
 ////////////////////////////////
 // 0xB5 TURN
 field_file_offset    = w[8009C6DC];
-current_entity       = bu[800722C4];
-model_id             = bu[8007EB98 + current_entity];
+current_actor_id       = bu[800722C4];
+model_id             = bu[8007EB98 + current_actor_id];
 entities_data = w[8009C544];
 model_data           = entities_data + model_id * 84;
-script_pointer       = hu[800831FC + current_entity * 2]
+script_pointer       = hu[800831FC + current_actor_id * 2]
 
 if (model_id != FF)
 {
@@ -5339,7 +5345,7 @@ if (model_id != FF)
 
 // move pointer by 6
 script_pointer = script_pointer + 6;
-[800831FC + current_entity * 2] = h(script_pointer);
+[800831FC + current_actor_id * 2] = h(script_pointer);
 ////////////////////////////////
 
 
@@ -5347,13 +5353,13 @@ script_pointer = script_pointer + 6;
 ////////////////////////////////
 // 0xB4 TURNGEN
 field_file_offset    = w[8009C6DC];
-current_entity       = bu[800722C4];
-model_id             = bu[8007EB98 + current_entity];
+current_actor_id       = bu[800722C4];
+model_id             = bu[8007EB98 + current_actor_id];
 entities_data = w[8009C544];
 model_data           = entities_data + model_id * 84;
-script_pointer       = hu[800831FC + current_entity * 2]
+script_pointer       = hu[800831FC + current_actor_id * 2]
 
-V1 = bu[8007EB98 + current_entity];
+V1 = bu[8007EB98 + current_actor_id];
 if (V1 != FF)
 {
     A2 = bu[model_data + 3B];
@@ -5439,7 +5445,7 @@ if (V1 != FF)
 }
 
 script_pointer = script_pointer + 6;
-[800831FC + current_entity * 2] = hu(script_pointer);
+[800831FC + current_actor_id * 2] = hu(script_pointer);
 return 0;
 ////////////////////////////////
 
@@ -5490,11 +5496,11 @@ return V0;
 
 ////////////////////////////////
 // 0xC6 SLIDR
-current_entity        = bu[800722c4];
+current_actor_id        = bu[800722c4];
 entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + current_entity];
+current_model         = bu[8007eb98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
-script_pointer_offset = 800831fc + current_entity * 2;
+script_pointer_offset = 800831fc + current_actor_id * 2;
 
 
 V0 = bu[800722C4];
@@ -5640,11 +5646,11 @@ return 0;
 
 ////////////////////////////////
 // 0xB2 MSPED
-current_entity        = bu[800722c4];
+current_actor_id        = bu[800722c4];
 entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + current_entity];
+current_model         = bu[8007eb98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
-script_pointer_offset = 800831fc + current_entity * 2;
+script_pointer_offset = 800831fc + current_actor_id * 2;
 game_data_offset      = w[8009c6e0];
 
 if( current_model != ff )
@@ -5664,8 +5670,8 @@ if( current_model != ff )
 
 ////////////////////////////////
 // 0xBD ASPED
-current_entity = bu[800722c4];
-current_model = bu[8007eb98 + current_entity];
+current_actor_id = bu[800722c4];
+current_model = bu[8007eb98 + current_actor_id];
 entities_data = w[8009c544];
 
 if( current_model != ff )
@@ -5678,7 +5684,7 @@ if( current_model != ff )
     [8009d828 + current_model * 2] = h(V0);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 4);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 4);
 ////////////////////////////////
 
 
@@ -6150,9 +6156,9 @@ return 0;
 
 ////////////////////////////////
 // 0xA5 XYZI
-current_entity        = bu[800722C4];
+current_actor_id        = bu[800722C4];
 entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_model         = bu[8007EB98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
 
 if (current_model != FF)
@@ -6182,9 +6188,9 @@ if (current_model != FF)
 }
 
 // move pointer by B
-V0 = hu[800831FC + current_entity * 2];
+V0 = hu[800831FC + current_actor_id * 2];
 V0 = V0 + B;
-[800831FC + current_entity * 2] = h(V0);
+[800831FC + current_actor_id * 2] = h(V0);
 
 return 1;
 ////////////////////////////////
@@ -6193,9 +6199,9 @@ return 1;
 
 ////////////////////////////////
 // 0xA7 XYZ
-current_entity        = bu[800722C4];
+current_actor_id        = bu[800722C4];
 entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_model         = bu[8007EB98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
 
 if (current_model != FF)
@@ -6220,9 +6226,9 @@ if (current_model != FF)
 }
 
 // move pointer by 9
-V0 = hu[800831FC + current_entity  * 2];
+V0 = hu[800831FC + current_actor_id  * 2];
 V0 = V0 + 9;
-[800831FC + current_entity  * 2] = h(V0);
+[800831FC + current_actor_id  * 2] = h(V0);
 
 return 1;
 ////////////////////////////////
@@ -6231,9 +6237,9 @@ return 1;
 
 ////////////////////////////////
 // 0xA6 XYI
-current_entity        = bu[800722C4];
+current_actor_id        = bu[800722C4];
 entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + current_entity];
+current_model         = bu[8007EB98 + current_actor_id];
 current_model_offset  = entities_data + current_model * 84;
 
 if (current_model != FF)
@@ -6257,7 +6263,7 @@ if (current_model != FF)
 }
 
 // move pointer by 9
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 9);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 9);
 
 return 1;
 ////////////////////////////////
@@ -6274,8 +6280,8 @@ if( bu[8009d820] & 3 )
     field_script_debug_opcode();
 }
 
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A0 = bu[script + 1];
 A1 = bu[script + 2];
@@ -6286,7 +6292,7 @@ if( V0 == 0 )
     return 1;
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 3);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -6397,8 +6403,8 @@ if( bu[8009d820] & 3 )
     field_script_debug_opcode();
 }
 
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 S0 = bu[script + 1];
 V1 = bu[8008326c + S0];
@@ -6409,7 +6415,7 @@ if( V1 == ff )
 
     return V0;
 }
-else if( V1 == current_entity )
+else if( V1 == current_actor_id )
 {
     set_state_to_close();
 
@@ -6433,8 +6439,8 @@ if( bu[8009d820] & 3 )
     field_script_debug_opcode();
 }
 
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A0 = bu[script + 1];
 A1 = h[script + 2];
@@ -6443,7 +6449,7 @@ A3 = h[script + 6];
 A4 = h[script + 8];
 field_dialog_set_size();
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + a);
 
 return 0;
 ////////////////////////////////
@@ -7968,7 +7974,7 @@ return 0;
 // 0xE0 BGON
 
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 A0 = 1;
 A1 = 2;
@@ -7982,7 +7988,7 @@ index_id = V0;
 
 [struct + f2 + group_id] = b(bu[struct + f2 + group_id] | (1 << index_id));
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 4);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 4);
 
 return 0;
 ////////////////////////////////
@@ -7992,7 +7998,7 @@ return 0;
 ////////////////////////////////
 // 0xE1 BGOFF
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 A0 = 1;
 A1 = 2;
@@ -8006,7 +8012,7 @@ index_id = V0;
 
 [struct + f2 + group_id] = b(bu[struct + f2 + group_id] | (0 NOR (1 << index_id)));
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 4);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 4);
 
 return 0;
 ////////////////////////////////
@@ -8016,7 +8022,7 @@ return 0;
 ////////////////////////////////
 // 0xE4 BGCLR
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 A0 = 2;
 A1 = 2;
@@ -8025,7 +8031,7 @@ group_id = V0;
 
 [struct + f2 + group_id] = b(0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 3);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -8035,7 +8041,7 @@ return 0;
 ////////////////////////////////
 // 0xE2 BGROL
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 A0 = 2;
 A1 = 2;
@@ -8043,7 +8049,7 @@ read_memory_block_one_byte
 
 [struct + f2 + group_id] = b(bu[struct + f2 + group_id] << 1);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 3);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -8053,7 +8059,7 @@ return 0;
 ////////////////////////////////
 // 0xE3 BGROL2
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 A0 = 2;
 A1 = 2;
@@ -8061,7 +8067,7 @@ read_memory_block_one_byte;
 
 [struct + f2 + group_id] = b(bu[struct + f2 + group_id] >> 1);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 3);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -8362,7 +8368,7 @@ SP = SP + 0020;
 // 0x64 SCR2D
 // scroll to coordinates (type instant)
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 [struct + 1d] = b(4);
 [struct + 1f] = b(0);
@@ -8377,7 +8383,7 @@ A1 = 4;
 read_memory_block_two_bytes;
 [struct + 0c] = h(V0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 6);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 6);
 
 return 0;
 ////////////////////////////////
@@ -8389,8 +8395,8 @@ return 0;
 // scroll to playable character with specified type.
 
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 [struct + 1d] = b(bu[script + 4]);
 [struct + 1f] = b(0);
@@ -8401,7 +8407,7 @@ A1 = 2;
 read_memory_block_two_bytes();
 [struct + 20] = b(V0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 
 return 0;
 ////////////////////////////////
@@ -8412,8 +8418,8 @@ return 0;
 // 0x63 SCRLA
 // scroll to entity with specified type.
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A1 = bu[script + 4];
 A1 = bu[8007eb98 + A1];
@@ -8430,7 +8436,7 @@ if (A1 != ff)
     [struct + 20] = h(V0);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 6);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 6);
 
 return 0;
 ////////////////////////////////
@@ -8441,8 +8447,8 @@ return 0;
 // 0x6F SCRLP
 // scroll to party member with specified type
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 V0 = bu[script + 4];
 V1 = bu[8009d391 + V0];
@@ -8469,7 +8475,7 @@ if (A1 != ff)
     [struct + 20] = h(V0);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 6);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 6);
 
 return 0;
 ////////////////////////////////
@@ -8480,13 +8486,13 @@ return 0;
 // 0x65 SCRCC
 // auto scroll to pc.
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 [struct + 1d] = b(0);
 [struct + 1e] = b(bu[struct + 2a]); // manual model id
 [struct + 1f] = b(0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 1);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 1);
 
 return 0;
 ////////////////////////////////
@@ -8497,7 +8503,7 @@ return 0;
 // 0x66 SCR2DC
 // scroll to coordinates (type smooth).
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 [struct + 1d] = b(6);
 [struct + 1f] = b(0);
@@ -8517,7 +8523,7 @@ A1 = 7;
 read_memory_block_two_bytes;
 [struct + 20] = h(V0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 9);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 9);
 
 return 0;
 ////////////////////////////////
@@ -8528,7 +8534,7 @@ return 0;
 // 0x68 SCR2DL
 // scroll to coordinates (type linear)
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 [struct + 1d] = b(5);
 [struct + 1f] = b(0);
@@ -8548,7 +8554,7 @@ A1 = 7;
 read_memory_block_two_bytes;
 [struct + 20] = h(V0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 9);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 9);
 
 return 0;
 ////////////////////////////////
@@ -8559,7 +8565,7 @@ return 0;
 // 0x67 SCRLW
 // wait for scroll
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
+current_actor_id = bu[800722c4];
 
 if (bu[struct + 1f] != 2)
 {
@@ -8578,7 +8584,7 @@ else if (V1 == 5 || V1 == 6)
 
 [struct + 1f] = b(0);
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 1);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 1);
 
 return 0;
 ////////////////////////////////
@@ -8587,8 +8593,8 @@ return 0;
 
 ////////////////////////////////
 // 0xE5 STPAL
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A0 = 1;
 A1 = 2;
@@ -8607,15 +8613,15 @@ A0 = SP + 10;
 A1 = 80095de0 + V0 * 20;
 system_psyq_store_image();
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xEB STPLS
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 [SP + 10] = h(bu[script + 3]);
 [SP + 12] = h(1e0 + bu[script + 1]);
@@ -8626,15 +8632,15 @@ A0 = SP + 10;
 A1 = 80095de0 + bu[script + 2] * 20 + bu[script + 3] * 2;
 system_psyq_store_image();
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xE6 LDPAL
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A0 = 2;
 A1 = 3;
@@ -8652,7 +8658,7 @@ A0 = SP + 10;
 A1 = 80095de0 + V0 * 20;
 system_psyq_load_image();
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 
 return 0;
 ////////////////////////////////
@@ -8661,8 +8667,8 @@ return 0;
 
 ////////////////////////////////
 // 0xEC LDPLS
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A2 = bu[script + 3];
 [SP + 10] = h(A2);
@@ -8674,7 +8680,7 @@ A0 = SP + 10;
 A1 = 80095de0 + bu[script + 1] * 20 + A2 * 2;
 system_psyq_load_image;
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 ////////////////////////////////
 
 
@@ -8691,8 +8697,8 @@ system_psyq_load_image;
 
 ////////////////////////////////
 // 0xE7 CPPAL
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 length = bu[script + 4] + 1;
 
@@ -8716,7 +8722,7 @@ if( length != 0 )
     800CDCF8	bne    v1, zero, loopcdcd0 [$800cdcd0]
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 ////////////////////////////////
 
 
@@ -8814,8 +8820,8 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0xE8 RTPAL
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 size = bu[script + 6] + 1;
 
@@ -8860,7 +8866,7 @@ if (size >= A2)
     800CE004	beq    v0, zero, loopcdfd0 [$800cdfd0]
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 7);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 7);
 
 return 0;
 ////////////////////////////////
@@ -8993,8 +8999,8 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0xE9 ADPAL
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 S4 = bu[script + 9] + 1;
 
@@ -9072,7 +9078,7 @@ if( S4 != 0 )
     800CE42C	bne    v0, zero, loopce32c [$800ce32c]
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + a);
 ////////////////////////////////
 
 
@@ -9267,8 +9273,8 @@ SP = SP + 0030;
 ////////////////////////////////
 // 0xEA MPPAL2
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 length = bu[script + 9] + 1;
 
@@ -9335,15 +9341,15 @@ if( length != 0 )
     800CE8B0	bne    v0, zero, loopce7e8 [$800ce7e8]
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + a);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + a);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xDF MPPAL
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 src_id = bu[script + 4];
 dst_id = bu[script + 5];
@@ -9413,7 +9419,7 @@ if( start < end )
     800CEAC8	bne    v0, zero, loopcea00 [$800cea00]
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + b);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + b);
 
 return 0;
 ////////////////////////////////
@@ -10055,88 +10061,43 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0xCC IFMEMBQ
-V0 = bu[8009d820];
-800CF87C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-V0 = V0 & 0003;
-800CF888	beq    v0, zero, Lcf8a0 [$800cf8a0]
-[SP + 0018] = w(S0);
-800CF890	lui    a0, $800a
-A0 = A0 + 0ce4;
-800CF898	jal    field_script_debug_opcode [$800bead4]
-A1 = 0002;
 
-Lcf8a0:	; 800CF8A0
-V0 = bu[800722c4];
-800CF8A8	nop
-V0 = V0 << 01;
-800CF8B0	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800CF8C8	nop
-V0 = V0 + V1;
-V1 = hu[8009d78a];
-V0 = bu[V0 + 0001];
-800CF8DC	lui    s0, $8008
-S0 = S0 + 31fc;
-V1 = V1 >> V0;
-V1 = V1 & 0001;
-800CF8EC	beq    v1, zero, Lcf944 [$800cf944]
-800CF8F0	nop
-V0 = bu[8009d820];
-800CF8FC	nop
-V0 = V0 & 0003;
-800CF904	beq    v0, zero, Lcf91c [$800cf91c]
-A1 = 0;
-800CF90C	lui    a0, $800a
-A0 = A0 + 0cec;
-800CF914	jal    funcbeca4 [$800beca4]
-A2 = 0;
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0ce4; // "membq"
+    A1 = 2;
+    field_script_debug_opcode();
+}
 
-Lcf91c:	; 800CF91C
-A0 = bu[800722c4];
-800CF924	nop
-A0 = A0 << 01;
-A0 = A0 + S0;
-V1 = hu[A0 + 0000];
-V0 = 0;
-V1 = V1 + 0003;
-800CF93C	j      Lcf9a4 [$800cf9a4]
-[A0 + 0000] = h(V1);
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
-Lcf944:	; 800CF944
-V0 = bu[8009d820];
-800CF94C	nop
-V0 = V0 & 0003;
-800CF954	beq    v0, zero, Lcf96c [$800cf96c]
-A1 = 0;
-800CF95C	lui    a0, $800a
-A0 = A0 + 0cf8;
-800CF964	jal    funcbeca4 [$800beca4]
-A2 = 0;
+if( (hu[8009c6e4 + 10a6] >> bu[script + 1]) & 1 )
+{
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a0cec; // "memb=TRUE"
+        A1 = 0;
+        A2 = 0;
+        funcbeca4();
+    }
 
-Lcf96c:	; 800CF96C
-A1 = bu[800722c4];
-A0 = w[8009c6dc];
-A1 = A1 << 01;
-A1 = A1 + S0;
-V1 = hu[A1 + 0000];
-V0 = 0;
-A0 = A0 + V1;
-V1 = hu[A1 + 0000];
-A0 = bu[A0 + 0002];
-V1 = V1 + 0002;
-A0 = A0 + V1;
-[A1 + 0000] = h(A0);
+    [800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 3);
+}
+else
+{
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a0cf8; // "memb=FALSE"
+        A1 = 0;
+        A2 = 0;
+        funcbeca4();
+    }
 
-Lcf9a4:	; 800CF9A4
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-800CF9B0	jr     ra 
-800CF9B4	nop
+    [800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 2 + bu[script + 2]);
+}
+
+return 0;
 ////////////////////////////////
 
 
@@ -10254,8 +10215,8 @@ return 0;
 ////////////////////////////////
 // 0x6A VWOFT
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 byte6 = bu[script + 6];
 
@@ -10290,7 +10251,7 @@ else
     [struct + 1a] = h(0);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 7);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 7);
 
 return 0;
 ////////////////////////////////
@@ -11984,8 +11945,8 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x5E SHAKE
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 S0 = bu[script + 3];
 
 if (S0 & 1)
@@ -12026,7 +11987,7 @@ else
     [struct + 98] = b(0);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 8);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 8);
 
 return 0;
 ////////////////////////////////
@@ -12615,8 +12576,8 @@ Ld2780:	; 800D2780
 // 0x2D BGSCR
 // set position for layers 2 and 3
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 V1 = bu[script + 2];
 
 A0 = 1;
@@ -12640,7 +12601,7 @@ else if (V1 == 3)
     [struct + ac] = h(param2);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 7);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 7);
 
 return 0;
 ////////////////////////////////
@@ -12651,8 +12612,8 @@ return 0;
 // 0x2C BGPDH
 // set depth to layers 2 and 3
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 V1 = bu[script + 2];
 
 A0 = 1;
@@ -12668,7 +12629,7 @@ else if (V1 == 3)
     [struct + ae] = h(V0);
 }
 
-[800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 5);
+[800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 5);
 
 return 0
 ////////////////////////////////
@@ -12875,8 +12836,8 @@ SP = SP + 0020;
 ////////////////////////////////
 // 0x49 MENU
 struct = w[8009c6e0];
-current_entity = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_entity * 2];
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
 A0 = bu[struct + 1];
 if (A0 == 0)
@@ -12899,7 +12860,7 @@ if (A0 == 0)
         return 1;
     }
 
-    [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 4);
+    [800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 4);
     return 1;
 }
 else
@@ -12911,7 +12872,7 @@ else
             return 1;
         }
 
-        [800831fc + current_entity * 2] = h(hu[800831fc + current_entity * 2] + 4);
+        [800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 4);
         [struct + 1] = b(0);
         [struct + 26] = h(0);
 
@@ -13787,8 +13748,8 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x3B CHGLD
-current_entity        = bu[800722c4];
-script_pointer_offset = 800831fc + current_entity * 2;
+current_actor_id        = bu[800722c4];
+script_pointer_offset = 800831fc + current_actor_id * 2;
 
 system_get_party_gil;
 gil = V0;
@@ -14133,4 +14094,32 @@ return 0;
 
 ////////////////////////////////
 // funcd4840
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funcd4848()
+
+S0 = A0;
+
+A0 = 0;
+A1 = 64;
+A2 = 64;
+A3 = 96;
+A4 = c;
+field_debug_init_page();
+
+A0 = 0;
+A1 = 7f;
+A2 = 0;
+A3 = 0;
+field_debug_set_page_color();
+
+A0 = 0;
+A1 = S0;
+field_add_string_to_debug_by_id();
+
+[80095dcc] = b(1);
+[80099ffc] = b(4);
 ////////////////////////////////

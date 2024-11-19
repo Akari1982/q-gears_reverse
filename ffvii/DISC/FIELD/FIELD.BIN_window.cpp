@@ -1,32 +1,4 @@
 ////////////////////////////////
-// funcd4848()
-
-S0 = A0;
-
-A0 = 0;
-A1 = 64;
-A2 = 64;
-A3 = 96;
-A4 = c;
-field_debug_init_page();
-
-A0 = 0;
-A1 = 7f;
-A2 = 0;
-A3 = 0;
-field_debug_set_page_color();
-
-A0 = 0;
-A1 = S0;
-field_add_string_to_debug_by_id();
-
-[80095dcc] = b(1);
-[80099ffc] = b(4);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // field_window_reset_all()
 
 [80071e2c] = b(0); // number of opened windows.

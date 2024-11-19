@@ -36,7 +36,7 @@ A0 = block7;
 A1 = models_struct;
 A2 = 800a00dc; // static var in FIELD.BIN (0 in release version)
 A3 = 801b0000;
-field_model_load_local_lodel_and init_all();
+field_model_load_local_lodel_and_init_all();
 [80075e10] = w(V0);
 
 models_data = w[models_struct + 4];
@@ -302,13 +302,10 @@ if( V0 == 0 )
 
     if( ( bu[8009abf4 + 1] == 3 ) && ( actors_n == 0 ) )
     {
-        A0 = w[80075e10];
         A1 = h[8009abf4 + 2]; // map id to load
 
-        if( A0 >= 801affff )
-        {
-            A0 = 801b0000;
-        }
+        A0 = w[80075e10];
+        if( A0 >= 801affff ) A0 = 801b0000;
 
         func34fc8();
 
