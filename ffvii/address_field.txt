@@ -48,7 +48,7 @@
 
 800722c4 []       current actor id.
 
-80074ea4 model related data. (size 0x84)
+80074ea4 entities_data. (size 0x84)
     + 00 [][]     store 1 here in KAWAI opcode. Store 2 here if run_kawai function returns 1 (maybe end kawai)
     + 02 [][]     store 0 here in KAWAI opcode.
     + 04 [][][][] offset to KAWAI opcode data in script (like offset to opcode + 3).
@@ -168,7 +168,7 @@
 
 8007eb90 [][]     some data. Init with 0xa0.
 8007eb94 [][]     some data. Init with 0x78.
-8007eb98 array of model_id for actors. -1 if no model assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
+8007eb98 array of entity_id for actors. -1 if no entity assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
 
 8007ebc8 []       store 1 here during random encounter.
 
@@ -180,7 +180,7 @@
 
 80082248 [][] array of model default animation speed.
 
-800831fc entity current script pointers table.
+800831fc actors current script pointers array (0x2 size for each actor).
 
 8008325c [] array of model default animation.
 
@@ -258,8 +258,8 @@
     + 22 [][]     destination z during map load. (most likely triangle id).
     + 24 [][]     saved rotation for manual entity during map load.
     + 26 [][]     battle state ?
-    + 28 [][]     number of model.
-    + 2a []       manual model id.
+    + 28 [][]     number of actors.
+    + 2a []       manual actor id.
     + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
     + 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
     + 30 [][]     animation for run. Set in CCANM (XX,-,-,2)
@@ -343,11 +343,11 @@
 
 8009ad30 array of actor_id for characters (items 0x8 size 0x01).
 
-8009c544 [][][][] pointer to model structs at 80074ea4.
+8009c544 [][][][] pointer to entity structs at 80074ea4.
 
 8009c558 [][]     total number of background scroll steps.
 
-8009c6c4 []       number of already inited actors with models (this value stored into 8007eb98 for given actor).
+8009c6c4 []       number of already inited actors with entities (this value stored into 8007eb98 for given actor).
 
 8009c6dc current pointer to field events data.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
@@ -427,30 +427,30 @@
 800dfe2e [][]     +12[][]
 
 800dfe3c kawai structure (size 0x3c)
-800dfe3c + 00 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
-800dfe3c + 02 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
-800dfe3c + 04 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
-800dfe3c + 06 [][]
-800dfe3c + 08 [][]
-800dfe3c + 0a [][]
-800dfe3c + 0c [][]
-800dfe3c + 0e [][]     store 0x0064 here during 0xD KAWAI opcode.
-800dfe3c + 10 [][]     store 0x0800 here during 0xD KAWAI opcode.
-800dfe3c + 12 []       used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
-800dfe3c + 13 []
-800dfe3c + 14 [][]
-800dfe3c + 16 [][]
-800dfe3c + 18 []
-800dfe3c + 19 []       store 0x00 here during 0x8 KAWAI opcode.
-800dfe3c + 1a [][]
-800dfe3c + 1c [][][][]
-800dfe3c + 20 [][][][]
-800dfe3c + 24 [][][][]
-800dfe3c + 28 [][][][]
-800dfe3c + 2c [][][][]
-800dfe3c + 30 [][][][]
-800dfe3c + 34 [][][][]
-800dfe3c + 38 [][][][]
+    + 00 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
+    + 02 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
+    + 04 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
+    + 06 [][]
+    + 08 [][]
+    + 0a [][]
+    + 0c [][]
+    + 0e [][]     store 0x0064 here during 0xD KAWAI opcode.
+    + 10 [][]     store 0x0800 here during 0xD KAWAI opcode.
+    + 12 []       used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
+    + 13 []
+    + 14 [][]
+    + 16 [][]
+    + 18 []
+    + 19 []       store 0x00 here during 0x8 KAWAI opcode.
+    + 1a [][]
+    + 1c [][][][]
+    + 20 [][][][]
+    + 24 [][][][]
+    + 28 [][][][]
+    + 2c [][][][]
+    + 30 [][][][]
+    + 34 [][][][]
+    + 38 [][][][]
 
 800e0200 [][][][] offset to color data from BSX file.
 800e0204 [][][][] offset to BSX file.

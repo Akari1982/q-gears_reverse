@@ -4341,9 +4341,9 @@ return (V0 + T2 + A3 - A1 - V1) / (vec1 + 0);
 triggers_block_offset = w[800716C4];
 id_block_offset = w[800E4274];
 
-visible_entity_id = A0;
-current_model_offset = 80074ea4 + visible_entity_id * 84
-[SP + 18] = visible_entity_id;
+actor_id = A0;
+actor_data = 80074ea4 + actor_id * 84
+[SP + 18] = actor_id;
 
 current_triangle = h[80074ea4 + 72];
 [current_triangle_address] = current_triangle;
@@ -4413,46 +4413,46 @@ S7 = 0;
 La92f4:	; 800A92F4
 S7 = S7 + 1;
 
-if( ( visible_entity_id == h[800965e0] ) && ( bu[80071c0c] == 1 ) && ( S7 >= 3 ) )
+if( ( actor_id == h[800965e0] ) && ( bu[80071c0c] == 1 ) && ( S7 >= 3 ) )
 {
     [80071c0c] = b(0);
 }
-else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0] && bu[80071C0C] == 1 && S7 < 3) || (visible_entity_id == h[800965E0] && bu[80071C0C] != 1 && S7 < 11))
+else if (((actor_id != h[800965E0]) || (actor_id == h[800965E0] && bu[80071C0C] == 1 && S7 < 3) || (actor_id == h[800965E0] && bu[80071C0C] != 1 && S7 < 11))
 {
     {
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         get_direction_vector_x();
         [1f800070] = w(( V0 * w[SP + 38] ) >> c);
 
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         get_direction_vector_y();
         [1f800074] = w(( 0 - ( V0 * w[SP + 40] ) ) >> c);
 
         // multiply move vector by speed
-        [1f800070] = w(( hu[current_model_offset + 70] * w[1f800070] ) >> 8);
-        [1f800074] = w(( hu[current_model_offset + 70] * w[1f800074] ) >> 8);
+        [1f800070] = w(( hu[actor_data + 70] * w[1f800070] ) >> 8);
+        [1f800074] = w(( hu[actor_data + 70] * w[1f800074] ) >> 8);
 
-        [1f800070] = w(w[1f800070] + w[current_model_offset + c]); // x with move vector
-        [1f800074] = w(w[1f800074] + w[current_model_offset + 10]); // y with move vector
-        [1f800078] = w(w[current_model_offset + 14]); // store z as is
+        [1f800070] = w(w[1f800070] + w[actor_data + c]); // x with move vector
+        [1f800074] = w(w[1f800074] + w[actor_data + 10]); // y with move vector
+        [1f800078] = w(w[actor_data + 14]); // store z as is
 
         // with solid range x
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         A0 = A0 + 20;
         A0 = A0 & FF;
         get_direction_vector_x;
-        V1 = hu[current_model_offset + 6C];
+        V1 = hu[actor_data + 6C];
         HI/LO = V1 * V0;
         V0 = LO;
         [1F800090] = w(V0);
 
         // with solid range y
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         A0 = A0 + 20;
         A0 = A0 & FF;
         get_direction_vector_y;
         V0 = 0 - V0;
-        V1 = hu[current_model_offset + 6C];
+        V1 = hu[actor_data + 6C];
         HI/LO = V1 * V0;
         V0 = LO;
         [1F800094] = w(V0);
@@ -4488,36 +4488,36 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
 
 
 
-        A0 = visible_entity_id;
+        A0 = actor_id;
         A1 = 1F800080;
         entity_collision_check;
         first_entity_collision = V0;
 
 
 
-        V1 = hu[current_model_offset + 72];
+        V1 = hu[actor_data + 72];
         [current_triangle_address] = h(V1);
     }
 
 
 
     {
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         A0 = A0 - 20;
         A0 = A0 & FF;
         get_direction_vector_x;
-        V1 = hu[current_model_offset + 6C];
+        V1 = hu[actor_data + 6C];
         HI/LO = V1 * V0;
         V0 = LO;
         [1F800090] = w(V0);
 
 
 
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         A0 = A0 - 20;
         A0 = A0 & FF;
         get_direction_vector_y;
-        V1 = bu[current_model_offset + 6C];
+        V1 = bu[actor_data + 6C];
         HI/LO = V1 * (0 - V0);
         V0 = LO;
         [1F800094] = w(V0);
@@ -4548,29 +4548,29 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
 
 
 
-        A0 = visible_entity_id;
+        A0 = actor_id;
         A1 = 1F800080;
         entity_collision_check;
         second_entity_collision = V0;
 
 
-        V1 = hu[current_model_offset + 72];
+        V1 = hu[actor_data + 72];
         [current_triangle_address] = h(V1);
     }
 
 
 
     {
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         get_direction_vector_x;
-        V1 = hu[current_model_offset + 6C];
+        V1 = hu[actor_data + 6C];
         HI/LO = V1 * V0;
         V0 = LO;
         [1F800090] = w(V0);
 
-        A0 = bu[current_model_offset + 36];
+        A0 = bu[actor_data + 36];
         get_direction_vector_y;
-        V1 = hu[current_model_offset + 6C];
+        V1 = hu[actor_data + 6C];
         V0 = 0 - V0;
         HI/LO = V1 * V0;
         V0 = LO;
@@ -4598,7 +4598,7 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
 
 
 
-        A0 = visible_entity_id;
+        A0 = actor_id;
         A1 = 1F800080;
         entity_collision_check;
 
@@ -4614,26 +4614,20 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
         }
     }
 
-
-
-    if (third_border_cross != 0 || first_border_cross != 0 || second_border_cross != 0 || S4 != 0 || first_entity_collision != 0 || second_entity_collision != 0)
+    if( ( third_border_cross != 0 ) || ( first_border_cross != 0 ) || ( second_border_cross != 0 ) || ( S4 != 0 ) || ( first_entity_collision != 0 ) || ( second_entity_collision != 0 ) )
     {
         // NPC
-        if (visible_entity_id != h[800965E0] || bu[8009ABF4 + 32] != 0)
+        if( ( actor_id != h[800965e0] ) || ( bu[8009abf4 + 32] != 0 ) )
         {
             // if we collide only directly into triangle border
             if (third_border_cross != 0 && first_border_cross == 0 && second_border_cross == 0)
             {
-                V0 = bu[current_model_offset + 36];
-                V0 = V0 - 5;
-                [current_model_offset + 36] = b(V0);
+                [actor_data + 36] = b(bu[actor_data + 36] - 5);
             }
             // or if we only collide into others entity directly
             else if (S4 != 0 && first_entity_collision == 0 && second_entity_collision == 0)
             {
-                V0 = bu[current_model_offset + 36];
-                V0 = V0 - S4;
-                [current_model_offset + 36] = b(V0);
+                [actor_data + 36] = b(bu[actor_data + 36] - S4);
             }
 
             // if not both left and right check was fail
@@ -4642,17 +4636,17 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
                 if ((first_border_cross == 0 && first_entity_collision != 0) ||
                     (first_border_cross != 0 && second_border_cross == 0))
                 {
-                    V0 = bu[current_model_offset + 36];
+                    V0 = bu[actor_data + 36];
                     V0 = V0 - 8;
-                    [current_model_offset + 36] = b(V0);
+                    [actor_data + 36] = b(V0);
                 }
                 if (first_border_cross == 0 &&
                     first_entity_collision == 0 &&
                     (second_border_cross != 0 || second_entity_collision != 0))
                 {
-                    V0 = bu[current_model_offset + 36];
+                    V0 = bu[actor_data + 36];
                     V0 = V0 + 8;
-                    [current_model_offset + 36] = b(V0);
+                    [actor_data + 36] = b(V0);
                 }
 
                 800A98E8	j      La92f4 [$800a92f4]
@@ -4667,17 +4661,17 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
                 if ((first_border_cross == 0 && first_entity_collision != 0) ||
                     (first_border_cross != 0 && second_border_cross == 0))
                 {
-                    V0 = bu[current_model_offset + 36];
+                    V0 = bu[actor_data + 36];
                     V0 = V0 - 8;
-                    [current_model_offset + 36] = b(V0);
+                    [actor_data + 36] = b(V0);
                 }
                 if (first_border_cross == 0 &&
                     first_entity_collision == 0 &&
                     (second_border_cross != 0 || second_entity_collision != 0))
                 {
-                    V0 = bu[current_model_offset + 36];
+                    V0 = bu[actor_data + 36];
                     V0 = V0 + 8;
-                    [current_model_offset + 36] = b(V0);
+                    [actor_data + 36] = b(V0);
                 }
 
                 800A98E8	j      La92f4 [$800a92f4]
@@ -4686,7 +4680,7 @@ else if (((visible_entity_id != h[800965E0]) || (visible_entity_id == h[800965E0
     }
 }
 
-A0 = 80074EA4 + visible_entity_id * 84 + 72;
+A0 = 80074ea4 + actor_id * 84 + 72; // actor_data
 A1 = 1f800070;
 A2 = 1f800090;
 A3 = 1f800040;
@@ -4695,9 +4689,9 @@ walkmesh_border_cross();
 last_border_cross = w(V0);
 
 // if entity we moving is PC entity and we are moving it ourself
-if( visible_entity_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
+if( actor_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
 {
-    A0 = 80074ea4 + visible_entity_id * 84;
+    A0 = 80074ea4 + actor_id * 84;
     A1 = 8007e7ac;
     A2 = 1f800070;
     move_line_check();
@@ -4706,14 +4700,14 @@ if( visible_entity_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
     // gateways check
     if( bu[8009abf4 + 36] == 0 )
     {
-        A0 = 80074ea4 + visible_entity_id * 84;
+        A0 = 80074ea4 + actor_id * 84;
         A1 = triggers_block_offset + 38;
         A2 = 1f800070;
         move_gateway_check();
     }
 
     // triggers check
-    A0 = 80074ea4 + visible_entity_id * 84;
+    A0 = 80074ea4 + actor_id * 84;
     A1 = triggers_block_offset + 158;
     A2 = 1F800070;
     move_trigger_check();
@@ -4724,13 +4718,13 @@ if (third_border_cross != 0 || first_border_cross != 0 || second_border_cross !=
     return 0;
 }
 
-[current_model_offset + c] = w(w[1f800070]); // X
-[current_model_offset + 10] = w(w[1f800074]); // Y
-[current_model_offset + 14] = w(w[1f800078] << c); // Z
+[actor_data + c] = w(w[1f800070]); // X
+[actor_data + 10] = w(w[1f800074]); // Y
+[actor_data + 14] = w(w[1f800078] << c); // Z
 
-if( ( bu[current_model_offset + 5d] != 0 ) || ( visible_entity_id != h[800965e0] ) ) return 1;
+if( ( bu[actor_data + 5d] != 0 ) || ( actor_id != h[800965e0] ) ) return 1;
 
-[current_model_offset + 60] = h(10); // set animation if this is manual movement
+[actor_data + 60] = h(10); // set animation if this is manual movement
 
 if( w[80114454] & 0040 ) // if run button pressed
 {
@@ -4742,7 +4736,7 @@ else
 }
 
 V1 = w[8008357c];
-V0 = bu[V1 + visible_entity_id * 8 + 4];
+V0 = bu[V1 + actor_id * 8 + 4];
 A0 = w[8004a62c];
 V1 = w[A0 + 4];
 V1 = bu[V1 + V0 * 24];
@@ -4752,7 +4746,7 @@ if( h[A2] < V1 )
 {
     A0 = bu[A2]; // load animation id
 }
-[current_model_offset + 5e] = b(A0);
+[actor_data + 5e] = b(A0);
 
 return 1;
 ////////////////////////////////
@@ -4760,7 +4754,8 @@ return 1;
 
 
 ////////////////////////////////
-// entity_collision_check
+// entity_collision_check()
+
 given_visible_entity     = A0;
 number_of_visible_entity = h[8009AC1C]
 given_position           = A1;

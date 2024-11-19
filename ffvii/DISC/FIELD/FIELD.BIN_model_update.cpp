@@ -39,11 +39,11 @@ A3 = 801b0000;
 field_model_load_local_lodel_and init_all();
 [80075e10] = w(V0);
 
-model_data = w[models_struct + 4];
+models_data = w[models_struct + 4];
 
 for( int i = 1; i < bu[models_struct + 0]; ++i ) // number of models
 {
-    [model_data + i * 24 + 0] = b(0);
+    [models_data + i * 24 + 0] = b(0);
 }
 
 for( int i = 0; i < bu[models_struct + 0]; ++i ) // number of models
@@ -52,7 +52,7 @@ for( int i = 0; i < bu[models_struct + 0]; ++i ) // number of models
     [1f800001] = b(1);
     [1f800002] = b(0);
     [1f800003] = b(i);
-    A0 = model_data + i * 24;
+    A0 = models_data + i * 24;
     A1 = 1f800000;
     field_model_kawai_load_eyes_mouth_tex_to_vram();
 }
@@ -75,10 +75,10 @@ block7_data = w[8007e770] + 4;
 model_struct = w[8004a62c];
 model_data = w[model_struct + 4];
 
-number_of_model = h[8009abf4 + 28]; // number of model
+actors_n = h[8009abf4 + 28];
 
 // update bone matrixes
-for( int i = 0; i < number_of_model; ++i )
+for( int i = 0; i < actors_n; ++i )
 {
     if( bu[S1 + 4] != ff )
     {
@@ -144,7 +144,7 @@ for( int i = 0; i < number_of_model; ++i )
 }
 
 // update vervexes in drafts
-for( int i = 0; i < number_of_model; ++i )
+for( int i = 0; i < actors_n; ++i )
 {
     if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
     {
@@ -178,7 +178,7 @@ for( int i = 0; i < number_of_model; ++i )
 }
 
 // update model kawai
-for( int i = 0; i < number_of_model; ++i )
+for( int i = 0; i < actors_n; ++i )
 {
     if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
     {
@@ -298,7 +298,9 @@ system_cdrom_read_chain();
 
 if( V0 == 0 )
 {
-    if( ( bu[8009abf4 + 1] == 3 ) && ( h[8009abf4 + 28] == 0 ) )
+    actors_n = h[8009abf4 + 28];
+
+    if( ( bu[8009abf4 + 1] == 3 ) && ( actors_n == 0 ) )
     {
         A0 = w[80075e10];
         A1 = h[8009abf4 + 2]; // map id to load

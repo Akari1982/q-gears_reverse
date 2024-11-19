@@ -2,11 +2,11 @@
 // field_init_structs_events_actors()
 
 field_struct = A0;
-model_data = A1;
+entities_data = A1;
 events_data = A2;
 
 [8009c6e0] = w(field_struct);
-[8009c544] = w(model_data); // pointer to model data
+[8009c544] = w(entities_data); // pointer to model data
 [8009c6dc] = w(events_data); // field events pointer
 
 [8007ebe0] = b(1);
@@ -126,7 +126,7 @@ funcbc438();
 
 field_struct = w[8009c6e0];
 events_data = w[8009c6dc];
-model_struct = w[8009c544];
+entities_data = w[8009c544];
 
 [field_struct + 1] = b(0); // state normal field
 [field_struct + 2] = h(0); // map to load
@@ -199,55 +199,55 @@ for( int i = 0; i < bu[events_data + 2]; ++i ) // go through all actors
 
 for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all models
 {
-    [model_struct + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1
-    [model_struct + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
-    [model_struct + i * 84 + 4] = w(0); // offset to KAWAI opcode data in script
-    [model_struct + i * 84 + 8] = b(0); // blinking. 0 - on, 1 - off.
-    [model_struct + i * 84 + 9] = b(0); // store 0 here in KAWAI opcode under some curcumstances.
-    [model_struct + i * 84 + c] = w(0); // x
-    [model_struct + i * 84 + 10] = w(0); // y
-    [model_struct + i * 84 + 14] = w(0); // z
-    [model_struct + i * 84 + 36] = b(0); // move direction
-    [model_struct + i * 84 + 37] = b(0); // lock rotation
-    [model_struct + i * 84 + 38] = b(0); // model direction
-    [model_struct + i * 84 + 39] = b(0); // number of steps for turn
-    [model_struct + i * 84 + 3a] = b(0); // current step for turn
-    [model_struct + i * 84 + 3b] = b(0); // used during TURN
-    [model_struct + i * 84 + 3c] = h(0); // start direction
-    [model_struct + i * 84 + 3e] = h(0); // end direction
-    [model_struct + i * 84 + 40] = h(0); // real X offset value
-    [model_struct + i * 84 + 42] = h(0); // start X offset value
-    [model_struct + i * 84 + 44] = h(0); // end X offset value
-    [model_struct + i * 84 + 46] = h(0); // real Y offset value.
-    [model_struct + i * 84 + 48] = h(0); // start Y offset value.
-    [model_struct + i * 84 + 4a] = h(0); // end Y offset value.
-    [model_struct + i * 84 + 4c] = h(0); // real Z offset value.
-    [model_struct + i * 84 + 4e] = h(0); // start Z offset value.
-    [model_struct + i * 84 + 50] = h(0); // end Z offset value.
-    [model_struct + i * 84 + 52] = h(0); // steps in offseting
-    [model_struct + i * 84 + 54] = h(0); // current step in offsetting
-    [model_struct + i * 84 + 56] = b(0); // type of offsetting (LINEAR SMOOTH INSTANT)
-    [model_struct + i * 84 + 58] = b(0); // pc entity collide with this entity. (1 - true/0 - false)
-    [model_struct + i * 84 + 59] = b(0); // model solidity (0x01 - off/0x00 - on)
-    [model_struct + i * 84 + 5a] = b(0); // pc entity talk with this entity. (1 - true/0 - false)
-    [model_struct + i * 84 + 5b] = b(0); // model talkability (0x01 - off/0x00 - on)
-    [model_struct + i * 84 + 5c] = b(0); // model visibility (0x01 - on/0x00 - off)
-    [model_struct + i * 84 + 5d] = b(0); // model state
-    [model_struct + i * 84 + 5e] = b(0); // animation id
-    [model_struct + i * 84 + 60] = h(10); // animation speed
-    [model_struct + i * 84 + 62] = h(0); // current frame
-    [model_struct + i * 84 + 64] = h(0); // number of frames
-    [model_struct + i * 84 + 66] = h(0); // store CHAR byte here
-    [model_struct + i * 84 + 68] = h(0); // 0 or 1 during LADER (forward or reverse)
-    [model_struct + i * 84 + 6a] = h(0); // stage of state
-    [model_struct + i * 84 + 6c] = h((h[field_struct + 10] * 1e) / 200); // solid range value
-    [model_struct + i * 84 + 6e] = h((h[field_struct + 10] * 50) / 200); // talk range value
-    [model_struct + i * 84 + 70] = h(h[field_struct + 10] * 2); // movement speed
-    [model_struct + i * 84 + 72] = h(0); // triangle
-    [model_struct + i * 84 + 74] = h(0); // move to triangle
-    [model_struct + i * 84 + 78] = w(0); // move to x
-    [model_struct + i * 84 + 7c] = w(0); // move to y
-    [model_struct + i * 84 + 80] = w(0); // move to z
+    [entities_data + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1
+    [entities_data + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
+    [entities_data + i * 84 + 4] = w(0); // offset to KAWAI opcode data in script
+    [entities_data + i * 84 + 8] = b(0); // blinking. 0 - on, 1 - off.
+    [entities_data + i * 84 + 9] = b(0); // store 0 here in KAWAI opcode under some curcumstances.
+    [entities_data + i * 84 + c] = w(0); // x
+    [entities_data + i * 84 + 10] = w(0); // y
+    [entities_data + i * 84 + 14] = w(0); // z
+    [entities_data + i * 84 + 36] = b(0); // move direction
+    [entities_data + i * 84 + 37] = b(0); // lock rotation
+    [entities_data + i * 84 + 38] = b(0); // model direction
+    [entities_data + i * 84 + 39] = b(0); // number of steps for turn
+    [entities_data + i * 84 + 3a] = b(0); // current step for turn
+    [entities_data + i * 84 + 3b] = b(0); // used during TURN
+    [entities_data + i * 84 + 3c] = h(0); // start direction
+    [entities_data + i * 84 + 3e] = h(0); // end direction
+    [entities_data + i * 84 + 40] = h(0); // real X offset value
+    [entities_data + i * 84 + 42] = h(0); // start X offset value
+    [entities_data + i * 84 + 44] = h(0); // end X offset value
+    [entities_data + i * 84 + 46] = h(0); // real Y offset value.
+    [entities_data + i * 84 + 48] = h(0); // start Y offset value.
+    [entities_data + i * 84 + 4a] = h(0); // end Y offset value.
+    [entities_data + i * 84 + 4c] = h(0); // real Z offset value.
+    [entities_data + i * 84 + 4e] = h(0); // start Z offset value.
+    [entities_data + i * 84 + 50] = h(0); // end Z offset value.
+    [entities_data + i * 84 + 52] = h(0); // steps in offseting
+    [entities_data + i * 84 + 54] = h(0); // current step in offsetting
+    [entities_data + i * 84 + 56] = b(0); // type of offsetting (LINEAR SMOOTH INSTANT)
+    [entities_data + i * 84 + 58] = b(0); // pc entity collide with this entity. (1 - true/0 - false)
+    [entities_data + i * 84 + 59] = b(0); // model solidity (0x01 - off/0x00 - on)
+    [entities_data + i * 84 + 5a] = b(0); // pc entity talk with this entity. (1 - true/0 - false)
+    [entities_data + i * 84 + 5b] = b(0); // model talkability (0x01 - off/0x00 - on)
+    [entities_data + i * 84 + 5c] = b(0); // model visibility (0x01 - on/0x00 - off)
+    [entities_data + i * 84 + 5d] = b(0); // model state
+    [entities_data + i * 84 + 5e] = b(0); // animation id
+    [entities_data + i * 84 + 60] = h(10); // animation speed
+    [entities_data + i * 84 + 62] = h(0); // current frame
+    [entities_data + i * 84 + 64] = h(0); // number of frames
+    [entities_data + i * 84 + 66] = h(0); // store CHAR byte here
+    [entities_data + i * 84 + 68] = h(0); // 0 or 1 during LADER (forward or reverse)
+    [entities_data + i * 84 + 6a] = h(0); // stage of state
+    [entities_data + i * 84 + 6c] = h((h[field_struct + 10] * 1e) / 200); // solid range value
+    [entities_data + i * 84 + 6e] = h((h[field_struct + 10] * 50) / 200); // talk range value
+    [entities_data + i * 84 + 70] = h(h[field_struct + 10] * 2); // movement speed
+    [entities_data + i * 84 + 72] = h(0); // triangle
+    [entities_data + i * 84 + 74] = h(0); // move to triangle
+    [entities_data + i * 84 + 78] = w(0); // move to x
+    [entities_data + i * 84 + 7c] = w(0); // move to y
+    [entities_data + i * 84 + 80] = w(0); // move to z
 
     [8008325c + i] = b(0); // model default animation
     [800756e8 + i] = b(0); // model animation state
@@ -313,10 +313,10 @@ events_data = w[8009c6dc];
 
 [8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
 
-actor_num = bu[events_data + 2];
-akao_num = h[events_data + 6];
+actors_n = bu[events_data + 2];
+akao_n = h[events_data + 6];
 
-for( int i = 0; i < actor_num; ++i )
+for( int i = 0; i < actors_n; ++i )
 {
     [800722c4] = b(i); // save current actor for use inside opcodes
 
@@ -345,7 +345,7 @@ for( int i = 0; i < actor_num; ++i )
         }
     }
 
-    script = hu[events_data + 20 + actor_num * 8 + akao_num * 4 + i * 40]; // get offset to init script (1st)
+    script = hu[events_data + 20 + actors_n * 8 + akao_n * 4 + i * 40]; // get offset to init script (1st)
     [800831fc + i * 2] = h(script);
 
     opcode = bu[events_data + script];
@@ -375,7 +375,7 @@ for( int i = 0; i < actor_num; ++i )
 // funcbb1b4()
 
 events_data = w[8009c6dc];
-model_struct = w[8009c544];
+entities_data = w[8009c544];
 block7_header = w[8007e770];
 actors_n = bu[events_data + 2];
 models_n = hu[block7_header + 2];
@@ -411,9 +411,9 @@ for( int i = 0; i < models_n; ++i )
             model_id = bu[8007eb98 + j];
             if( model_id == i )
             {
-                [model_struct + model_id * 84 + 59] = b(1); // model solidity (1 - off, 0 - on)
-                [model_struct + model_id * 84 + 5b] = b(1); // model talkability (1 - off, 0 - on)
-                [model_struct + model_id * 84 + 5c] = b(0); // model visibility (1 - on, 0 - off)
+                [entities_data + model_id * 84 + 59] = b(1); // model solidity (1 - off, 0 - on)
+                [entities_data + model_id * 84 + 5b] = b(1); // model talkability (1 - off, 0 - on)
+                [entities_data + model_id * 84 + 5c] = b(0); // model visibility (1 - on, 0 - off)
                 [8007eb98 + j] = b(ff); // unlink model from actor
             }
         }
@@ -519,13 +519,13 @@ else
     }
 }
 
-models_data = w[8009c544];
+entities_data = w[8009c544];
 talked = 0;
 
 events_data = w[8009c6dc];
 for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
 {
-    if( bu[models_data + i * 84 + 5a] != 0 ) // if model talks with somthing
+    if( bu[entities_data + i * 84 + 5a] != 0 ) // if model talks with somthing
     {
         V0 = w[8009c6e0];
         if( bu[V0 + 32] == 0 )
@@ -534,24 +534,24 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
             {
                 talked = 1;
 
-                A0 = bu[models_data + i * 84 + 57];
+                A0 = bu[entities_data + i * 84 + 57];
                 A1 = 1;
                 A2 = 1;
                 field_script_request_run();
             }
         }
 
-        [models_data + i * 84 + 5a] = b(0);
+        [entities_data + i * 84 + 5a] = b(0);
     }
 
-    if( bu[models_data + i * 84 + 58] != 0 ) // if model collide with something
+    if( bu[entities_data + i * 84 + 58] != 0 ) // if model collide with something
     {
-        A0 = bu[models_data + i * 84 + 57]; // entity id
+        A0 = bu[entities_data + i * 84 + 57]; // entity id
         A1 = 1;
         A2 = 2;
         field_script_request_run();
 
-        [models_data + i * 84 + 58] = b(0);
+        [entities_data + i * 84 + 58] = b(0);
     }
 }
 
@@ -780,7 +780,7 @@ field_script_update_animation_state();
 // field_script_update_animation_state()
 
 events_data = w[8009c6dc];
-offset_to_model = w[8009c544];
+entities_data = w[8009c544];
 V1 = w[8009c6e0];
 manual_model = h[V1 + 2a];
 pc = bu[V1 + 32];
@@ -801,14 +801,14 @@ if( number_of_entity > 0 )
                 {
                     case 0:
                     {
-                        animation_id = bu[offset_to_model + model * 84 + 5e];
+                        animation_id = bu[entities_data + model * 84 + 5e];
                         default_animation = bu[8008325c + model];
                         if( animation_id != default_animation )
                         {
-                            [offset_to_model + model * 84 + 5e] = b(default_animation);
+                            [entities_data + model * 84 + 5e] = b(default_animation);
                             default_animation_speed = hu[80082248 + model * 2];
-                            [offset_to_model + model * 84 + 60] = h(default_animation_speed);
-                            [offset_to_model + model * 84 + 62] = h(0);
+                            [entities_data + model * 84 + 60] = h(default_animation_speed);
+                            [entities_data + model * 84 + 62] = h(0);
 
                             V1 = w[8008357c];
                             A1 = bu[V1 + model * 8 + 4];
@@ -817,7 +817,7 @@ if( number_of_entity > 0 )
                             A1 = hu[V1 + A1 * 24 + 1a];
                             A0 = w[V1 + A1 * 24 + 1c];
                             number_of_frames = hu[A0 + A1 + default_animation * 10];
-                            [offset_to_model + model * 84 + 64] = h(number_of_frames - 1);
+                            [entities_data + model * 84 + 64] = h(number_of_frames - 1);
                         }
                         else
                         {
@@ -827,16 +827,16 @@ if( number_of_entity > 0 )
                             V1 = w[V1 + 4];
                             A0 = hu[V1 + model * 24 + 1a];
                             V1 = w[V1 + model * 24 + 1c];
-                            animation_id = bu[offset_to_model + model * 84 + 5e];
+                            animation_id = bu[entities_data + model * 84 + 5e];
                             number_of_frames = hu[A0 + V1 + animation_id * 10];
-                            [offset_to_model + model * 84 + 64] = h(number_of_frames - 1);
+                            [entities_data + model * 84 + 64] = h(number_of_frames - 1);
 
-                            current_frame_value = hu[offset_to_model + model * 84 + 62];
-                            number_of_frames = h[offset_to_model + model * 84 + 64];
+                            current_frame_value = hu[entities_data + model * 84 + 62];
+                            number_of_frames = h[entities_data + model * 84 + 64];
 
                             if (current_frame_value / 10 >= number_of_frames)
                             {
-                                [offset_to_model + model * 84 + 62] = h(0);
+                                [entities_data + model * 84 + 62] = h(0);
                             }
                         }
                     }
@@ -844,25 +844,25 @@ if( number_of_entity > 0 )
 
                     case 1:
                     {
-                        current_frame_value = hu[offset_to_model + model * 84 + 62];
-                        number_of_frames = h[offset_to_model + model * 84 + 64];
+                        current_frame_value = hu[entities_data + model * 84 + 62];
+                        number_of_frames = h[entities_data + model * 84 + 64];
 
                         if (current_frame_value / 10 >= number_of_frames)
                         {
-                            [offset_to_model + model * 84 + 62] = h(0);
+                            [entities_data + model * 84 + 62] = h(0);
                         }
                     }
                     break;
 
                     case 2:
                     {
-                        current_frame_value = hu[offset_to_model + model * 84 + 62];
-                        number_of_frames = h[offset_to_model + model * 84 + 64];
+                        current_frame_value = hu[entities_data + model * 84 + 62];
+                        number_of_frames = h[entities_data + model * 84 + 64];
 
                         if (current_frame_value / 10 >= number_of_frames)
                         {
                             [800756e8 + model] = b(4);
-                            [offset_to_model + model * 84 + 62] = h(number_of_frames * 10);
+                            [entities_data + model * 84 + 62] = h(number_of_frames * 10);
                         }
                     }
                     break;
@@ -870,15 +870,15 @@ if( number_of_entity > 0 )
                     case 3:
                     case 4:
                     {
-                        number_of_frames = hu[offset_to_model + model * 84 + 64];
-                        [offset_to_model + model * 84 + 62] = h(number_of_frames * 10);
+                        number_of_frames = hu[entities_data + model * 84 + 64];
+                        [entities_data + model * 84 + 62] = h(number_of_frames * 10);
                     }
                     break;
 
                     case 5:
                     {
-                        current_frame_value = hu[offset_to_model + model * 84 + 62];
-                        number_of_frames = h[offset_to_model + model * 84 + 64];
+                        current_frame_value = hu[entities_data + model * 84 + 62];
+                        number_of_frames = h[entities_data + model * 84 + 64];
 
                         if( current_frame_value / 10 >= number_of_frames )
                         {
@@ -889,9 +889,9 @@ if( number_of_entity > 0 )
 
                     case 6:
                     {
-                        V0 = hu[offset_to_model + model * 84 + 62];
+                        V0 = hu[entities_data + model * 84 + 62];
                         V0 = V0 / 10;
-                        V1 = h[offset_to_model + model * 84 + 64];
+                        V1 = h[entities_data + model * 84 + 64];
 
                         if (V0 >= V1)
                         {
@@ -914,71 +914,62 @@ if( number_of_entity > 0 )
 ////////////////////////////////
 // field_script_request_run()
 
-entity_id                 = A0;
-priority_id               = A1;
-script_id                 = A2;
+entity_id = A0;
+priority_id = A1;
+script_id = A2;
 
-model_data_offset         = w[8009C544];
-current_priority_slot     = bu[8009A1C4 + entity_id];
-script_state              = bu[800833F8 + entity_id * 8 + priority_id];
-field_file_offset         = 8009c6dc;
-extra_offset_number       = hu[field_file_offset + 6]
-entity_number             = bu[field_file_offset + 2];
+entities_data = w[8009c544];
+current_priority_slot = bu[8009a1c4 + entity_id];
+script_state = bu[800833f8 + entity_id * 8 + priority_id];
+field_file_offset = 8009c6dc;
+extra_offset_number = hu[field_file_offset + 6]
+entity_number = bu[field_file_offset + 2];
 
+if( priority_id >= current_priority_slot ) return 0;
 
-if (priority_id < current_priority_slot)
+if( script_state != 0 ) return script_state;
+
+// get offset for this script
+script_offset = hu[field_file_offset + entity_id * 40 + entity_number * 8 + extra_offset_number * 4 + script_id * 2 + 20];
+
+// read opcode
+V0 = bu[field_file_offset + script_offset];
+
+// if not return opcode - add this script to priority slot
+if( V0 != 0 )
 {
-    if (script_state != 0)
+    // add script to priority queue
+    [801142d4 + T0 * 8 + priority_id] = b(script_id);
+
+    // store curently active script pointer
+    active_slot = bu[8009a1c4 + entity_id];
+    current_pointer = hu[800831fc + entity_id * 2];
+    [80071748 + entity_id * 10 + active_slot * 2] = h(current_pointer);
+
+    // set new active script pointer and new priority slot
+    [800831fc + entity_id * 2] = h(script_offset);
+    [8009a1c4 + entity_id] = b(priority_id);
+
+    // get model data
+    V1 = bu[8007eb98 + entity_id];
+    if( V1 != ff )
     {
-        return script_state;
-    }
+        V0 = bu[entities_data + V1 * 84 + 5d];
 
-    // get offset for this script
-    script_offset = hu[field_file_offset + entity_id * 40 + entity_number * 8 + extra_offset_number * 4 + script_id * 2 + 20];
-
-    // read opcode
-    V0 = bu[field_file_offset + script_offset];
-
-    // if not return opcode - add this script to priority slot
-    if (V0 != 0)
-    {
-        // add script to priority queue
-        [801142D4 + T0 * 8 + priority_id] = b(script_id);
-
-        // store curently active script pointer
-        active_slot     = bu[8009A1C4 + entity_id];
-        current_pointer = hu[800831FC + entity_id * 2];
-        [80071748 + entity_id * 10 + active_slot * 2] = h(current_pointer);
-
-        // set new active script pointer and new priority slot
-        [800831FC + entity_id * 2] = h(script_offset);
-        [8009A1C4 + entity_id] = b(priority_id);
-
-        // get model data
-        V1 = bu[8007EB98 + entity_id];
-        if (V1 != FF)
+        if( V0 == 1 )
         {
-            V0 = bu[model_data_offset + V1 * 84 + 5D];
-
-            if (V0 == 1)
-            {
-                [model_data_offset + V1 * 84 + 5E] = b(0);
-                [model_data_offset + V1 * 84 + 62] = h(0);
-                [model_data_offset + V1 * 84 + 64] = h(0);
-            }
-
-            [model_data_offset + V1 * 84 + 5D] = b(0);
+            [entities_data + V1 * 84 + 5e] = b(0);
+            [entities_data + V1 * 84 + 62] = h(0);
+            [entities_data + V1 * 84 + 64] = h(0);
         }
 
-        [800716dc + entity_id * 2] = h(0);
+        [entities_data + V1 * 84 + 5d] = b(0);
     }
 
-    return 1;
+    [800716dc + entity_id * 2] = h(0);
 }
-else
-{
-    return 0;
-}
+
+return 1;
 ////////////////////////////////
 
 
