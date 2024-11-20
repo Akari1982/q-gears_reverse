@@ -7647,45 +7647,46 @@ SP = SP + 0060;
 model_data = A0;
 kawai_settings = A1;
 
-T2 = 800dfe3c + bu[kawai_settings + 1] * 3c;
+kawai_id = bu[kawai_settings + 1]
+kawai_data = 800dfe3c + kawai_id * 3c;
 
 if( bu[kawai_settings + 0] == 0 )
 {
-    [T2 + 00] = h(hu[kawai_settings + 2]);
-    [T2 + 02] = h(hu[kawai_settings + 4]);
-    [T2 + 04] = h(hu[kawai_settings + 6]);
-    [T2 + 06] = h(hu[kawai_settings + 8]);
-    [T2 + 08] = h(hu[kawai_settings + a]);
-    [T2 + 0a] = h(hu[kawai_settings + c]);
-    [T2 + 0c] = h(hu[kawai_settings + e]);
-    [T2 + 0e] = h(hu[kawai_settings + 10]);
-    [T2 + 10] = b(bu[kawai_settings + 12]);
+    [kawai_data + 00] = h(hu[kawai_settings + 2]);
+    [kawai_data + 02] = h(hu[kawai_settings + 4]);
+    [kawai_data + 04] = h(hu[kawai_settings + 6]);
+    [kawai_data + 06] = h(hu[kawai_settings + 8]);
+    [kawai_data + 08] = h(hu[kawai_settings + a]);
+    [kawai_data + 0a] = h(hu[kawai_settings + c]);
+    [kawai_data + 0c] = h(hu[kawai_settings + e]);
+    [kawai_data + 0e] = h(hu[kawai_settings + 10]);
+    [kawai_data + 10] = b(bu[kawai_settings + 12]);
 
-    if ((hu[T2 + 10] & 18) == 18)
+    if( ( hu[kawai_data + 10] & 18 ) == 18 )
     {
-        [T2 + 6] = h(0 - hu[T2 + 6]);
-        [T2 + e] = h(0 - hu[T2 + e]);
+        [kawai_data + 6] = h(0 - hu[kawai_data + 6]);
+        [kawai_data + e] = h(0 - hu[kawai_data + e]);
     }
 
     return 1;
 }
 else if( bu[kawai_settings + 0] == 1 )
 {
-    [1f8003ec] = w(bu[T2 + 10]);
-    [1f8003f0] = h(hu[T2 + 0]); // R
-    [1f8003f2] = h(hu[T2 + 2]); // G
-    [1f8003f4] = h(hu[T2 + 4]); // B
-    [1f8003f6] = h(hu[T2 + 6]);
-    [1f8003f8] = h(hu[T2 + 8]); // FC R
-    [1f8003fa] = h(hu[T2 + a]); // FC G
-    [1f8003fc] = h(hu[T2 + c]); // FC B
-    [1f8003fe] = h(hu[T2 + e]);
+    [1f8003ec] = w(bu[kawai_data + 10]);
+    [1f8003f0] = h(hu[kawai_data + 0]); // R
+    [1f8003f2] = h(hu[kawai_data + 2]); // G
+    [1f8003f4] = h(hu[kawai_data + 4]); // B
+    [1f8003f6] = h(hu[kawai_data + 6]);
+    [1f8003f8] = h(hu[kawai_data + 8]); // FC R
+    [1f8003fa] = h(hu[kawai_data + a]); // FC G
+    [1f8003fc] = h(hu[kawai_data + c]); // FC B
+    [1f8003fe] = h(hu[kawai_data + e]);
 
-    S4 = w[model_data + 1c] + hu[model_data + 18];
+    parts_data = w[model_data + 1c] + hu[model_data + 18];
 
     for( int i = 0; i < bu[model_data + 3]; ++i )
     {
-        if (w[1f8003ec] & 10)
+        if( w[1f8003ec] & 10 )
         {
             T7 = w[model_data + 20];
 
@@ -7697,7 +7698,7 @@ else if( bu[kawai_settings + 0] == 1 )
             R33 = w[T7 + 10];
 
             // multiply with bone rotation matrix
-            V0 = w[model_data + 20] + bu[S4 + i * 20 + 1] * 20; // bone this part attached to
+            V0 = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20; // bone this part attached to
             IR1 = hu[V0 + 0];
             IR2 = hu[V0 + 6];
             IR3 = hu[V0 + c];
@@ -7706,7 +7707,7 @@ else if( bu[kawai_settings + 0] == 1 )
             [1f800006] = h(IR2);
             [1f80000c] = h(IR3);
 
-            V0 = w[model_data + 20] + bu[S4 + i * 20 + 1] * 20; // bone this part attached to
+            V0 = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20; // bone this part attached to
             IR1 = hu[V0 + 2];
             IR2 = hu[V0 + 8];
             IR3 = hu[V0 + e];
@@ -7715,7 +7716,7 @@ else if( bu[kawai_settings + 0] == 1 )
             [1f800008] = h(IR2);
             [1f80000e] = h(IR3);
 
-            V0 = w[model_data + 20] + bu[S4 + i * 20 + 1] * 20; // bone this part attached to
+            V0 = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20; // bone this part attached to
             IR1 = hu[V0 + 4];
             IR2 = hu[V0 + a];
             IR3 = hu[V0 + 10];
@@ -7729,7 +7730,7 @@ else if( bu[kawai_settings + 0] == 1 )
             TRY = w[T7 + 18];
             TRZ = w[T7 + 1c];
 
-            V0 = w[model_data + 20] + bu[S4 + i * 20 + 1] * 20 + 14;
+            V0 = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20 + 14;
             T4 = (hu[V0 + 4] << 10) | hu[V0 + 0];
             VXY0 = T4;
             VZ0 = w[V0 + 0008];
@@ -7740,7 +7741,7 @@ else if( bu[kawai_settings + 0] == 1 )
         }
         else
         {
-            V1 = w[model_data + 20] + bu[S4 + i * 20 + 1] * 20; // bone this part attached to
+            V1 = w[model_data + 20] + bu[parts_data + i * 20 + 1] * 20; // bone this part attached to
 
             [1f800000] = w(w[V1 + 0]);
             [1f800004] = w(w[V1 + 4]);
@@ -7815,7 +7816,7 @@ else if( bu[kawai_settings + 0] == 1 )
             TRZ = w[1f80001c];
         }
 
-        A0 = S4 + i * 20;
+        A0 = parts_data + i * 20;
         funcb8cf0();
     }
 
@@ -7828,18 +7829,18 @@ return 1;
 
 
 ////////////////////////////////
-// funcb8cf0
+// funcb8cf0()
 
-S5 = A0;
+part_data = A0;
 V0 = aaaaaaab;
-T9 = bu[S5 + 2];
+T9 = bu[part_data + 2];
 T8 = 0;
 
 800B8D28	multu  t9, v0
 S0 = 1f800000;
 S7 = hu[1f8003f6];
 V1 = hu[1f8003fe];
-V0 = w[S5 + 0018];
+V0 = w[part_data + 0018];
 V1 = V1 - S7;
 T4 = w[V0 + 0004];
 T5 = w[V0 + 0008];
@@ -7883,20 +7884,20 @@ if( A0 != 0 )
         T6 = w[V0 + 8];
         T7 = w[V0 + c];
 
-        800B8DE8	mfc2   a2,ofy // MAC1
+        A2 = MAC1;
         A1 = A1 + 1;
         A0 = 1f800000 + A0;
         [A0 + 0] = w(A2 >> 1f);
         [A0 + 4] = w((A2 << c) / A3);
 
-        800B8E34	mfc2   a2,h // MAC2
+        A2 = MAC2;
         V1 = 1f800000 + A1 * 8;
         [V1 + 0] = w(A2 >> 1f);
         [V1 + 4] = w((A2 << c) / A3);
 
         A1 = A1 + 1;
 
-        800B8E84	mfc2   a2,dqa // MAC3
+        A2 = MAC3;
         A1 = 1f800000 + A1 * 8;
         [A1 + 0] = w(A2 >> 1f);
         [A1 + 4] = w((A2 << c) / A3);
@@ -7908,71 +7909,59 @@ if( A0 != 0 )
 
 V0 = T8 << 01;
 T8 = T8 + V0;
-V0 = T8 < T9;
-800B8EE8	beq    v0, zero, Lb8f80 [$800b8f80]
-800B8EEC	nop
-S6 = hu[SP + 0048];
-800B8EF4	nop
-V0 = S6 << 10;
-A3 = V0 >> 10;
-V0 = T8 << 03;
-A0 = V0 + S0;
-A1 = V0 + T0;
+if( T8 < T9 )
+{
+    S6 = hu[SP + 0048];
+    V0 = S6 << 10;
+    A3 = V0 >> 10;
+    V0 = T8 << 03;
+    A0 = V0 + S0;
+    A1 = V0 + T0;
 
-loopb8f0c:	; 800B8F0C
-    T4 = w[A1 + 0000];
-    T5 = w[A1 + 0004];
-    R11R12 = T4;
-    R13R21 = T5;
-    800B8F1C	nop
-    800B8F20	nop
-    gte_rtv0tr(); // v0 * rotmatrix + tr vector
-    A2 = MAC1;
-    800B8F2C	nop
-    V1 = A2 << 0c;
-    800B8F34	div    v1, a3
-    800B8F5C	mflo   v1
-    A1 = A1 + 0008;
-    T8 = T8 + 0001;
-    V0 = A2 >> 1f;
-    [A0 + 0000] = w(V0);
-    V0 = T8 < T9;
-    [A0 + 0004] = w(V1);
-    A0 = A0 + 0008;
-800B8F78	bne    v0, zero, loopb8f0c [$800b8f0c]
+    loopb8f0c:	; 800B8F0C
+        R11R12 = w[A1 + 0000];
+        R13R21 = w[A1 + 0004];
+        gte_rtv0tr(); // v0 * rotmatrix + tr vector
+        A2 = MAC1;
 
+        V1 = A2 << 0c;
+        V1 = V1 / A3;
+        A1 = A1 + 0008;
+        T8 = T8 + 0001;
+        V0 = A2 >> 1f;
+        [A0 + 0000] = w(V0);
+        V0 = T8 < T9;
+        [A0 + 0004] = w(V1);
+        A0 = A0 + 0008;
+    800B8F78	bne    v0, zero, loopb8f0c [$800b8f0c]
+}
 
-Lb8f80:	; 800B8F80
-T1 = w[S5 + 001c];
-V0 = hu[S5 + 000e];
-V1 = w[S5 + 0018];
+T1 = w[part_data + 001c];
+V0 = hu[part_data + 000e];
+V1 = w[part_data + 0018];
 A0 = bu[800df114];
 T7 = V0 + V1;
 if (A0 != 0)
 {
-    V0 = hu[S5 + 0016];
-    800B8FA4	nop
+    V0 = hu[part_data + 0016];
     T1 = T1 + V0;
 }
 
 S6 = 10;
-800B8FB0	mtc2   s6,l11l12 // IR0
+IR0 = S6;
 
 S1 = h[1f8003f0] << 4;
 S2 = h[1f8003f2] << 4;
 S3 = h[1f8003f4] << 4;
 
-T4 = h[1f8003f8] << 4;
-T5 = h[1f8003fa] << 4;
-T6 = h[1f8003fc] << 4;
-800B8FFC	ctc2   t4,rgb1 // FC R
-800B9000	ctc2   t5,rgb2 // FC G
-800B9004	ctc2   t6,17 // FC B
+RFC = h[1f8003f8] << 4;
+GFC = h[1f8003fa] << 4;
+BFC = h[1f8003fc] << 4;
 
-S4 = w[S5 + 4];
+S4 = w[part_data + 4];
 
 T9 = S4 & ff;
-if (T9 != 0)
+if( T9 != 0 )
 {
     T8 = 0;
     T5 = T1 + 7;
@@ -7980,7 +7969,7 @@ if (T9 != 0)
     loopb9020:	; 800B9020
         V0 = w[T1];
         V0 = V0 << 8;
-        if (V0 != 0)
+        if( V0 != 0 )
         {
             A3 = 0;
             T3 = T1;
@@ -8001,28 +7990,28 @@ if (T9 != 0)
                     V0 = V1;
                     V0 = w[V0 + 4];
 
-                    800B9078	mtc2   v0,l11l12 // IR0
-                    800B907C	mtc2   s3,l13l21 // IR1
-                    800B9080	mtc2   s2,l22l23 // IR2
-                    800B9084	mtc2   s1,l31l32 // IR3
-                    800B9090	gte_func20t8,r11r12
-                    800B9094	mfc2   v0,l13l21 // IR1
-                    800B9098	mfc2   v1,l22l23 // IR2
-                    800B909C	mfc2   a0,l31l32 // IR3
+                    IR0 = V0;
+                    IR1 = S3;
+                    IR2 = S2;
+                    IR3 = S1;
+                    gte_INTPL(); // Interpolation of vector and far color.
+                    V0 = IR1;
+                    V1 = IR2;
+                    A0 = IR3;
 
                     S6 = 10;
-                    800B90A4	mtc2   s6,l11l12 // IR0
-                    800B90B0	mtc2   v0,ofy // MAC1
+                    IR0 = S6;
+                    MAC1 = V0;
                     V0 = V1;
-                    800B90BC	mtc2   v0,h // MAC2
+                    MAC2 = V0;
                     V0 = A0;
-                    800B90C8	mtc2   v0,dqa // MAC3
+                    MAC3 = V0;
                     T4 = A1 & ff; // R
-                    800B90D0	mtc2   t4,l13l21 // IR1
+                    IR1 = T4;
                     T4 = (A1 >> 8) & ff; // G
-                    800B90DC	mtc2   t4,l22l23 // IR2
+                    IR2 = T4;
                     T4 = (A1 >> 10) & ff; // B
-                    800B90E8	mtc2   t4,l31l32 // IR3
+                    IR3 = T4;
                     gte_gpl12(); // General purpose interpolation
                     800B90FC	swc2   s6, $0000(T1 + T2)
                 }
@@ -8052,665 +8041,656 @@ if (T9 != 0)
 
 V0 = S4 & ff00;
 T9 = V0 >> 08;
-800B9148	beq    t9, zero, Lb9274 [$800b9274]
-T8 = 0;
-T5 = T1 + 0007;
+if( T9 != 0 )
+{
+    T8 = 0;
+    T5 = T1 + 0007;
 
-loopb9154:	; 800B9154
-V0 = w[T1 + 0000];
-800B9158	nop
-V0 = V0 << 08;
-800B9160	beq    v0, zero, Lb925c [$800b925c]
-800B9164	nop
-A3 = 0;
-T3 = T1;
-T2 = 0004;
-T0 = T7;
-A2 = w[T7 + 0000];
-T6 = bu[T5 + 0000];
+    loopb9154:	; 800B9154
+        V0 = w[T1 + 0000];
+        800B9158	nop
+        V0 = V0 << 08;
+        800B9160	beq    v0, zero, Lb925c [$800b925c]
+        800B9164	nop
+        A3 = 0;
+        T3 = T1;
+        T2 = 0004;
+        T0 = T7;
+        A2 = w[T7 + 0000];
+        T6 = bu[T5 + 0000];
 
-loopb9180:	; 800B9180
-V0 = A3 << 03;
-V0 = A2 >> V0;
-V0 = V0 & 00ff;
-V0 = V0 << 03;
-V1 = V0 + S0;
-V0 = h[V1 + 0000];
-A1 = w[T0 + 0004];
-800B919C	beq    v0, zero, Lb923c [$800b923c]
-V0 = V1;
-V0 = w[V0 + 0004];
-800B91A8	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B91BC	nop
-800B91C0	nop
-800B91C4	gte_func20t8,r11r12
-V0 = IR1;
-V1 = IR2;
-A0 = IR3;
-S6 = 0010;
-IR0 = S6;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-MAC1 = V0;
-V0 = V1 << 10;
-V0 = V0 >> 10;
-MAC2 = V0;
-V0 = A0 << 10;
-V0 = V0 >> 10;
-MAC3 = V0;
-T4 = A1 & 00ff;
-IR1 = T4;
-T4 = A1 >> 08;
-T4 = T4 & 00ff;
-IR2 = T4;
-T4 = A1 >> 10;
-T4 = T4 & 00ff;
-IR3 = T4;
-800B9220	nop
-800B9224	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + T2;
-[V0 + 0000] = w(RGB2);
-800B9234	j      Lb9244 [$800b9244]
-T3 = T3 + 000c;
+        loopb9180:	; 800B9180
+        V0 = A3 << 03;
+        V0 = A2 >> V0;
+        V0 = V0 & 00ff;
+        V0 = V0 << 03;
+        V1 = V0 + S0;
+        V0 = h[V1 + 0000];
+        A1 = w[T0 + 0004];
+        800B919C	beq    v0, zero, Lb923c [$800b923c]
+        V0 = V1;
+        V0 = w[V0 + 0004];
+        800B91A8	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B91BC	nop
+        800B91C0	nop
+        800B91C4	gte_func20t8,r11r12
+        V0 = IR1;
+        V1 = IR2;
+        A0 = IR3;
+        S6 = 0010;
+        IR0 = S6;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        MAC1 = V0;
+        V0 = V1 << 10;
+        V0 = V0 >> 10;
+        MAC2 = V0;
+        V0 = A0 << 10;
+        V0 = V0 >> 10;
+        MAC3 = V0;
+        T4 = A1 & 00ff;
+        IR1 = T4;
+        T4 = A1 >> 08;
+        T4 = T4 & 00ff;
+        IR2 = T4;
+        T4 = A1 >> 10;
+        T4 = T4 & 00ff;
+        IR3 = T4;
+        800B9220	nop
+        800B9224	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + T2;
+        [V0 + 0000] = w(RGB2);
+        800B9234	j      Lb9244 [$800b9244]
+        T3 = T3 + 000c;
 
-Lb923c:	; 800B923C
-[T3 + 0004] = w(A1);
-T3 = T3 + 000c;
+        Lb923c:	; 800B923C
+        [T3 + 0004] = w(A1);
+        T3 = T3 + 000c;
 
-Lb9244:	; 800B9244
-T2 = T2 + 000c;
-A3 = A3 + 0001;
-V0 = A3 < 0003;
-800B9250	bne    v0, zero, loopb9180 [$800b9180]
-T0 = T0 + 0004;
-[T5 + 0000] = b(T6);
+        Lb9244:	; 800B9244
+        T2 = T2 + 000c;
+        A3 = A3 + 0001;
+        V0 = A3 < 0003;
+        800B9250	bne    v0, zero, loopb9180 [$800b9180]
+        T0 = T0 + 0004;
+        [T5 + 0000] = b(T6);
 
-Lb925c:	; 800B925C
-T8 = T8 + 0001;
-T5 = T5 + 0028;
-T1 = T1 + 0028;
-V0 = T8 < T9;
-800B926C	bne    v0, zero, loopb9154 [$800b9154]
-T7 = T7 + 0014;
+        Lb925c:	; 800B925C
+        T8 = T8 + 0001;
+        T5 = T5 + 0028;
+        T1 = T1 + 0028;
+        T7 = T7 + 0014;
+        V0 = T8 < T9;
+    800B926C	bne    v0, zero, loopb9154 [$800b9154]
+}
 
-Lb9274:	; 800B9274
 V0 = S4 >> 10;
 T9 = V0 & 00ff;
-800B927C	beq    t9, zero, Lb940c [$800b940c]
-T8 = 0;
-V0 = S7 << 10;
-T3 = V0 >> 10;
-S6 = hu[SP + 0048];
-T0 = T7 + 0004;
-A3 = T1 + 0007;
-V0 = S6 << 10;
-T2 = V0 >> 10;
+if( T9 != 0 )
+{
+    T8 = 0;
+    V0 = S7 << 10;
+    T3 = V0 >> 10;
+    S6 = hu[SP + 0048];
+    T0 = T7 + 0004;
+    A3 = T1 + 0007;
+    V0 = S6 << 10;
+    T2 = V0 >> 10;
 
-loopb92a0:	; 800B92A0
-V0 = w[T1 + 0000];
-800B92A4	nop
-V0 = V0 << 08;
-800B92AC	beq    v0, zero, Lb93f0 [$800b93f0]
-800B92B0	nop
-A2 = w[T7 + 0000];
-T6 = bu[A3 + 0000];
-V1 = A2 & 00ff;
-V1 = V1 << 03;
-V1 = V1 + S0;
-V0 = A2 >> 05;
-V0 = V0 & 07f8;
-V0 = V0 + S0;
-A0 = w[V1 + 0000];
-V1 = A2 >> 0d;
-V1 = V1 & 07f8;
-V1 = V1 + S0;
-V0 = w[V0 + 0000];
-V1 = w[V1 + 0000];
-A0 = A0 + V0;
-V0 = A2 >> 18;
-V0 = V0 << 03;
-V0 = V0 + S0;
-V0 = w[V0 + 0000];
-A0 = A0 + V1;
-A0 = A0 + V0;
-800B9308	addiu  v0, a0, $fffe (=-$2)
-800B930C	beq    v0, zero, Lb93e0 [$800b93e0]
-V0 = V0 - T3;
-V0 = V0 << 0c;
-800B9318	div    v0, t2
-800B931C	bne    t2, zero, Lb9328 [$800b9328]
-800B9320	nop
-800B9324	break   $01c00
+    loopb92a0:	; 800B92A0
+        V0 = w[T1 + 0000];
+        800B92A4	nop
+        V0 = V0 << 08;
+        800B92AC	beq    v0, zero, Lb93f0 [$800b93f0]
+        800B92B0	nop
+        A2 = w[T7 + 0000];
+        T6 = bu[A3 + 0000];
+        V1 = A2 & 00ff;
+        V1 = V1 << 03;
+        V1 = V1 + S0;
+        V0 = A2 >> 05;
+        V0 = V0 & 07f8;
+        V0 = V0 + S0;
+        A0 = w[V1 + 0000];
+        V1 = A2 >> 0d;
+        V1 = V1 & 07f8;
+        V1 = V1 + S0;
+        V0 = w[V0 + 0000];
+        V1 = w[V1 + 0000];
+        A0 = A0 + V0;
+        V0 = A2 >> 18;
+        V0 = V0 << 03;
+        V0 = V0 + S0;
+        V0 = w[V0 + 0000];
+        A0 = A0 + V1;
+        A0 = A0 + V0;
+        800B9308	addiu  v0, a0, $fffe (=-$2)
+        800B930C	beq    v0, zero, Lb93e0 [$800b93e0]
+        V0 = V0 - T3;
+        V0 = V0 << 0c;
+        800B9318	div    v0, t2
+        800B9340	mflo   v0
+        800B9344	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B9360	gte_func20t8,r11r12
+        V0 = IR1;
+        V1 = IR2;
+        A0 = IR3;
+        S6 = 0010;
+        IR0 = S6;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        MAC1 = V0;
+        V1 = V1 << 10;
+        V1 = V1 >> 10;
+        MAC2 = V1;
+        A0 = A0 << 10;
+        A0 = A0 >> 10;
+        MAC3 = A0;
+        A1 = w[T0 + 0000];
+        800B93A0	nop
+        T4 = A1 & 00ff;
+        IR1 = T4;
+        T4 = A1 >> 08;
+        T4 = T4 & 00ff;
+        IR2 = T4;
+        T4 = A1 >> 10;
+        T4 = T4 & 00ff;
+        IR3 = T4;
+        800B93C4	nop
+        800B93C8	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + 0004;
+        [V0 + 0000] = w(RGB2);
+        800B93D8	j      Lb93f0 [$800b93f0]
+        [A3 + 0000] = b(T6);
 
-Lb9328:	; 800B9328
-800B9328	addiu  at, zero, $ffff (=-$1)
-800B932C	bne    t2, at, Lb9340 [$800b9340]
-800B9330	lui    at, $8000
-800B9334	bne    v0, at, Lb9340 [$800b9340]
-800B9338	nop
-800B933C	break   $01800
+        Lb93e0:	; 800B93E0
+        V0 = w[T0 + 0000];
+        800B93E4	nop
+        [A3 + fffd] = w(V0);
+        [A3 + 0000] = b(T6);
 
-Lb9340:	; 800B9340
-800B9340	mflo   v0
-800B9344	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B9358	nop
-800B935C	nop
-800B9360	gte_func20t8,r11r12
-V0 = IR1;
-V1 = IR2;
-A0 = IR3;
-S6 = 0010;
-IR0 = S6;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-MAC1 = V0;
-V1 = V1 << 10;
-V1 = V1 >> 10;
-MAC2 = V1;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-MAC3 = A0;
-A1 = w[T0 + 0000];
-800B93A0	nop
-T4 = A1 & 00ff;
-IR1 = T4;
-T4 = A1 >> 08;
-T4 = T4 & 00ff;
-IR2 = T4;
-T4 = A1 >> 10;
-T4 = T4 & 00ff;
-IR3 = T4;
-800B93C4	nop
-800B93C8	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + 0004;
-[V0 + 0000] = w(RGB2);
-800B93D8	j      Lb93f0 [$800b93f0]
-[A3 + 0000] = b(T6);
+        Lb93f0:	; 800B93F0
+        T8 = T8 + 0001;
+        A3 = A3 + 0028;
+        T1 = T1 + 0028;
+        T0 = T0 + 000c;
+        T7 = T7 + 000c;
+        V0 = T8 < T9;
+    800B9404	bne    v0, zero, loopb92a0 [$800b92a0]
+}
 
-Lb93e0:	; 800B93E0
-V0 = w[T0 + 0000];
-800B93E4	nop
-[A3 + fffd] = w(V0);
-[A3 + 0000] = b(T6);
-
-Lb93f0:	; 800B93F0
-T8 = T8 + 0001;
-A3 = A3 + 0028;
-T1 = T1 + 0028;
-T0 = T0 + 000c;
-V0 = T8 < T9;
-800B9404	bne    v0, zero, loopb92a0 [$800b92a0]
-T7 = T7 + 000c;
-
-Lb940c:	; 800B940C
 T9 = S4 >> 18;
-800B9410	beq    t9, zero, Lb9594 [$800b9594]
-T8 = 0;
-V0 = S7 << 10;
-T3 = V0 >> 10;
-S6 = hu[SP + 0048];
-T0 = T7 + 0004;
-A3 = T1 + 0007;
-V0 = S6 << 10;
-T2 = V0 >> 10;
+if( T9 != 0 )
+{
+    T8 = 0;
+    V0 = S7 << 10;
+    T3 = V0 >> 10;
+    S6 = hu[SP + 0048];
+    T0 = T7 + 0004;
+    A3 = T1 + 0007;
+    V0 = S6 << 10;
+    T2 = V0 >> 10;
 
-loopb9434:	; 800B9434
-V0 = w[T1 + 0000];
-800B9438	nop
-V0 = V0 << 08;
-800B9440	beq    v0, zero, Lb9578 [$800b9578]
-800B9444	nop
-A2 = w[T7 + 0000];
-T6 = bu[A3 + 0000];
-V0 = A2 & 00ff;
-V0 = V0 << 03;
-V0 = V0 + S0;
-A0 = A2 >> 05;
-A0 = A0 & 07f8;
-A0 = A0 + S0;
-V1 = A2 >> 0d;
-V1 = V1 & 07f8;
-V1 = V1 + S0;
-V0 = hu[V0 + 0000];
-A0 = hu[A0 + 0000];
-V1 = hu[V1 + 0000];
-V0 = V0 + A0;
-V0 = V0 + V1;
-800B9488	addiu  v0, v0, $fffe (=-$2)
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B9494	beq    v0, zero, Lb9568 [$800b9568]
-V0 = V0 - T3;
-V0 = V0 << 0c;
-800B94A0	div    v0, t2
-800B94C8	mflo   v0
-800B94CC	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B94E0	nop
-800B94E4	nop
-800B94E8	gte_func20t8,r11r12
-V0 = IR1;
-V1 = IR2;
-A0 = IR3;
-S6 = 0010;
-IR0 = S6;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-MAC1 = V0;
-V0 = V1 << 10;
-V0 = V0 >> 10;
-MAC2 = V0;
-V0 = A0 << 10;
-V0 = V0 >> 10;
-MAC3 = V0;
-A1 = w[T0 + 0000];
-800B9528	nop
-T4 = A1 & 00ff;
-IR1 = T4;
-T4 = A1 >> 08;
-T4 = T4 & 00ff;
-IR2 = T4;
-T4 = A1 >> 10;
-T4 = T4 & 00ff;
-IR3 = T4;
-800B954C	nop
-800B9550	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + 0004;
-[V0 + 0000] = w(RGB2);
-800B9560	j      Lb9578 [$800b9578]
-[A3 + 0000] = b(T6);
+    loopb9434:	; 800B9434
+        V0 = w[T1 + 0000];
+        800B9438	nop
+        V0 = V0 << 08;
+        800B9440	beq    v0, zero, Lb9578 [$800b9578]
+        800B9444	nop
+        A2 = w[T7 + 0000];
+        T6 = bu[A3 + 0000];
+        V0 = A2 & 00ff;
+        V0 = V0 << 03;
+        V0 = V0 + S0;
+        A0 = A2 >> 05;
+        A0 = A0 & 07f8;
+        A0 = A0 + S0;
+        V1 = A2 >> 0d;
+        V1 = V1 & 07f8;
+        V1 = V1 + S0;
+        V0 = hu[V0 + 0000];
+        A0 = hu[A0 + 0000];
+        V1 = hu[V1 + 0000];
+        V0 = V0 + A0;
+        V0 = V0 + V1;
+        800B9488	addiu  v0, v0, $fffe (=-$2)
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        800B9494	beq    v0, zero, Lb9568 [$800b9568]
+        V0 = V0 - T3;
+        V0 = V0 << 0c;
+        800B94A0	div    v0, t2
+        800B94C8	mflo   v0
+        800B94CC	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B94E0	nop
+        800B94E4	nop
+        800B94E8	gte_func20t8,r11r12
+        V0 = IR1;
+        V1 = IR2;
+        A0 = IR3;
+        S6 = 0010;
+        IR0 = S6;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        MAC1 = V0;
+        V0 = V1 << 10;
+        V0 = V0 >> 10;
+        MAC2 = V0;
+        V0 = A0 << 10;
+        V0 = V0 >> 10;
+        MAC3 = V0;
+        A1 = w[T0 + 0000];
+        800B9528	nop
+        T4 = A1 & 00ff;
+        IR1 = T4;
+        T4 = A1 >> 08;
+        T4 = T4 & 00ff;
+        IR2 = T4;
+        T4 = A1 >> 10;
+        T4 = T4 & 00ff;
+        IR3 = T4;
+        800B954C	nop
+        800B9550	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + 0004;
+        [V0 + 0000] = w(RGB2);
+        800B9560	j      Lb9578 [$800b9578]
+        [A3 + 0000] = b(T6);
 
-Lb9568:	; 800B9568
-V0 = w[T0 + 0000];
-800B956C	nop
-[A3 + fffd] = w(V0);
-[A3 + 0000] = b(T6);
+        Lb9568:	; 800B9568
+        V0 = w[T0 + 0000];
+        800B956C	nop
+        [A3 + fffd] = w(V0);
+        [A3 + 0000] = b(T6);
 
-Lb9578:	; 800B9578
-T8 = T8 + 0001;
-A3 = A3 + 0020;
-T1 = T1 + 0020;
-T0 = T0 + 000c;
-V0 = T8 < T9;
-800B958C	bne    v0, zero, loopb9434 [$800b9434]
-T7 = T7 + 000c;
+        Lb9578:	; 800B9578
+        T8 = T8 + 0001;
+        A3 = A3 + 0020;
+        T1 = T1 + 0020;
+        T0 = T0 + 000c;
+        T7 = T7 + 000c;
+        V0 = T8 < T9;
+    800B958C	bne    v0, zero, loopb9434 [$800b9434]
+}
 
-Lb9594:	; 800B9594
-S4 = w[S5 + 0008];
+S4 = w[part_data + 8];
 800B9598	nop
 T9 = S4 & 00ff;
-800B95A0	beq    t9, zero, Lb9724 [$800b9724]
-T8 = 0;
-V0 = S7 << 10;
-T3 = V0 >> 10;
-S6 = hu[SP + 0048];
-T0 = T7 + 0004;
-A3 = T1 + 0007;
-V0 = S6 << 10;
-T2 = V0 >> 10;
+if( T9 != 0 )
+{
+    T8 = 0;
+    V0 = S7 << 10;
+    T3 = V0 >> 10;
+    S6 = hu[SP + 0048];
+    T0 = T7 + 0004;
+    A3 = T1 + 0007;
+    V0 = S6 << 10;
+    T2 = V0 >> 10;
 
-loopb95c4:	; 800B95C4
-V0 = w[T1 + 0000];
-800B95C8	nop
-V0 = V0 << 08;
-800B95D0	beq    v0, zero, Lb9708 [$800b9708]
-800B95D4	nop
-A2 = w[T7 + 0000];
-T6 = bu[A3 + 0000];
-V0 = A2 & 00ff;
-V0 = V0 << 03;
-V0 = V0 + S0;
-A0 = A2 >> 05;
-A0 = A0 & 07f8;
-A0 = A0 + S0;
-V1 = A2 >> 0d;
-V1 = V1 & 07f8;
-V1 = V1 + S0;
-V0 = hu[V0 + 0000];
-A0 = hu[A0 + 0000];
-V1 = hu[V1 + 0000];
-V0 = V0 + A0;
-V0 = V0 + V1;
-800B9618	addiu  v0, v0, $fffe (=-$2)
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B9624	beq    v0, zero, Lb96f8 [$800b96f8]
-V0 = V0 - T3;
-V0 = V0 << 0c;
-800B9630	div    v0, t2
-800B9658	mflo   v0
-800B965C	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B9670	nop
-800B9674	nop
-800B9678	gte_func20t8,r11r12
-V0 = IR1;
-V1 = IR2;
-A0 = IR3;
-S6 = 0010;
-IR0 = S6;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-MAC1 = V0;
-V0 = V1 << 10;
-V0 = V0 >> 10;
-MAC2 = V0;
-V0 = A0 << 10;
-V0 = V0 >> 10;
-MAC3 = V0;
-A1 = w[T0 + 0000];
-800B96B8	nop
-T4 = A1 & 00ff;
-IR1 = T4;
-T4 = A1 >> 08;
-T4 = T4 & 00ff;
-IR2 = T4;
-T4 = A1 >> 10;
-T4 = T4 & 00ff;
-IR3 = T4;
-800B96DC	nop
-800B96E0	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + 0004;
-[V0 + 0000] = w(RGB2);
-800B96F0	j      Lb9708 [$800b9708]
-[A3 + 0000] = b(T6);
+    loopb95c4:	; 800B95C4
+        V0 = w[T1 + 0000];
+        800B95C8	nop
+        V0 = V0 << 08;
+        800B95D0	beq    v0, zero, Lb9708 [$800b9708]
+        800B95D4	nop
+        A2 = w[T7 + 0000];
+        T6 = bu[A3 + 0000];
+        V0 = A2 & 00ff;
+        V0 = V0 << 03;
+        V0 = V0 + S0;
+        A0 = A2 >> 05;
+        A0 = A0 & 07f8;
+        A0 = A0 + S0;
+        V1 = A2 >> 0d;
+        V1 = V1 & 07f8;
+        V1 = V1 + S0;
+        V0 = hu[V0 + 0000];
+        A0 = hu[A0 + 0000];
+        V1 = hu[V1 + 0000];
+        V0 = V0 + A0;
+        V0 = V0 + V1;
+        800B9618	addiu  v0, v0, $fffe (=-$2)
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        800B9624	beq    v0, zero, Lb96f8 [$800b96f8]
+        V0 = V0 - T3;
+        V0 = V0 << 0c;
+        800B9630	div    v0, t2
+        800B9658	mflo   v0
+        800B965C	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B9670	nop
+        800B9674	nop
+        800B9678	gte_func20t8,r11r12
+        V0 = IR1;
+        V1 = IR2;
+        A0 = IR3;
+        S6 = 0010;
+        IR0 = S6;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        MAC1 = V0;
+        V0 = V1 << 10;
+        V0 = V0 >> 10;
+        MAC2 = V0;
+        V0 = A0 << 10;
+        V0 = V0 >> 10;
+        MAC3 = V0;
+        A1 = w[T0 + 0000];
+        800B96B8	nop
+        T4 = A1 & 00ff;
+        IR1 = T4;
+        T4 = A1 >> 08;
+        T4 = T4 & 00ff;
+        IR2 = T4;
+        T4 = A1 >> 10;
+        T4 = T4 & 00ff;
+        IR3 = T4;
+        800B96DC	nop
+        800B96E0	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + 0004;
+        [V0 + 0000] = w(RGB2);
+        800B96F0	j      Lb9708 [$800b9708]
+        [A3 + 0000] = b(T6);
 
-Lb96f8:	; 800B96F8
-V0 = w[T0 + 0000];
-800B96FC	nop
-[A3 + fffd] = w(V0);
-[A3 + 0000] = b(T6);
+        Lb96f8:	; 800B96F8
+        V0 = w[T0 + 0000];
+        800B96FC	nop
+        [A3 + fffd] = w(V0);
+        [A3 + 0000] = b(T6);
 
-Lb9708:	; 800B9708
-T8 = T8 + 0001;
-A3 = A3 + 0014;
-T1 = T1 + 0014;
-T0 = T0 + 0008;
-V0 = T8 < T9;
-800B971C	bne    v0, zero, loopb95c4 [$800b95c4]
-T7 = T7 + 0008;
+        Lb9708:	; 800B9708
+        T8 = T8 + 0001;
+        A3 = A3 + 0014;
+        T1 = T1 + 0014;
+        T0 = T0 + 0008;
+        T7 = T7 + 0008;
+        V0 = T8 < T9;
+    800B971C	bne    v0, zero, loopb95c4 [$800b95c4]
+}
 
-Lb9724:	; 800B9724
 V0 = S4 & ff00;
 T9 = V0 >> 08;
-800B972C	beq    t9, zero, Lb98c4 [$800b98c4]
-T8 = 0;
-V0 = S7 << 10;
-T3 = V0 >> 10;
-S6 = hu[SP + 0048];
-T0 = T7 + 0004;
-A3 = T1 + 0007;
-V0 = S6 << 10;
-T2 = V0 >> 10;
+if( T9 != 0 )
+{
+    T8 = 0;
+    V0 = S7 << 10;
+    T3 = V0 >> 10;
+    S6 = hu[SP + 0048];
+    T0 = T7 + 0004;
+    A3 = T1 + 0007;
+    V0 = S6 << 10;
+    T2 = V0 >> 10;
 
-loopb9750:	; 800B9750
-V0 = w[T1 + 0000];
-800B9754	nop
-V0 = V0 << 08;
-800B975C	beq    v0, zero, Lb98a8 [$800b98a8]
-800B9760	nop
-A2 = w[T7 + 0000];
-T6 = bu[A3 + 0000];
-V1 = A2 & 00ff;
-V1 = V1 << 03;
-V1 = V1 + S0;
-V0 = A2 >> 05;
-V0 = V0 & 07f8;
-V0 = V0 + S0;
-A0 = A2 >> 0d;
-A0 = A0 & 07f8;
-A0 = A0 + S0;
-V1 = hu[V1 + 0000];
-V0 = hu[V0 + 0000];
-A0 = hu[A0 + 0000];
-V1 = V1 + V0;
-V0 = A2 >> 18;
-V0 = V0 << 03;
-V0 = V0 + S0;
-V0 = hu[V0 + 0000];
-V1 = V1 + A0;
-V1 = V1 + V0;
-800B97B8	addiu  v1, v1, $fffe (=-$2)
-V1 = V1 << 10;
-V0 = V1 >> 10;
-800B97C4	beq    v0, zero, Lb9898 [$800b9898]
-V0 = V0 - T3;
-V0 = V0 << 0c;
-800B97D0	div    v0, t2
-800B97F8	mflo   v0
-800B97FC	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B9810	nop
-800B9814	nop
-800B9818	gte_func20t8,r11r12
-V0 = IR1;
-V1 = IR2;
-A0 = IR3;
-S6 = 0010;
-IR0 = S6;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-MAC1 = V0;
-V0 = V1 << 10;
-V0 = V0 >> 10;
-MAC2 = V0;
-V0 = A0 << 10;
-V0 = V0 >> 10;
-MAC3 = V0;
-A1 = w[T0 + 0000];
-800B9858	nop
-T4 = A1 & 00ff;
-IR1 = T4;
-T4 = A1 >> 08;
-T4 = T4 & 00ff;
-IR2 = T4;
-T4 = A1 >> 10;
-T4 = T4 & 00ff;
-IR3 = T4;
-800B987C	nop
-800B9880	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + 0004;
-[V0 + 0000] = w(RGB2);
-800B9890	j      Lb98a8 [$800b98a8]
-[A3 + 0000] = b(T6);
+    loopb9750:	; 800B9750
+        V0 = w[T1 + 0000];
+        800B9754	nop
+        V0 = V0 << 08;
+        800B975C	beq    v0, zero, Lb98a8 [$800b98a8]
+        800B9760	nop
+        A2 = w[T7 + 0000];
+        T6 = bu[A3 + 0000];
+        V1 = A2 & 00ff;
+        V1 = V1 << 03;
+        V1 = V1 + S0;
+        V0 = A2 >> 05;
+        V0 = V0 & 07f8;
+        V0 = V0 + S0;
+        A0 = A2 >> 0d;
+        A0 = A0 & 07f8;
+        A0 = A0 + S0;
+        V1 = hu[V1 + 0000];
+        V0 = hu[V0 + 0000];
+        A0 = hu[A0 + 0000];
+        V1 = V1 + V0;
+        V0 = A2 >> 18;
+        V0 = V0 << 03;
+        V0 = V0 + S0;
+        V0 = hu[V0 + 0000];
+        V1 = V1 + A0;
+        V1 = V1 + V0;
+        800B97B8	addiu  v1, v1, $fffe (=-$2)
+        V1 = V1 << 10;
+        V0 = V1 >> 10;
+        800B97C4	beq    v0, zero, Lb9898 [$800b9898]
+        V0 = V0 - T3;
+        V0 = V0 << 0c;
+        800B97D0	div    v0, t2
+        800B97F8	mflo   v0
+        800B97FC	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B9810	nop
+        800B9814	nop
+        800B9818	gte_func20t8,r11r12
+        V0 = IR1;
+        V1 = IR2;
+        A0 = IR3;
+        S6 = 0010;
+        IR0 = S6;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        MAC1 = V0;
+        V0 = V1 << 10;
+        V0 = V0 >> 10;
+        MAC2 = V0;
+        V0 = A0 << 10;
+        V0 = V0 >> 10;
+        MAC3 = V0;
+        A1 = w[T0 + 0000];
+        800B9858	nop
+        T4 = A1 & 00ff;
+        IR1 = T4;
+        T4 = A1 >> 08;
+        T4 = T4 & 00ff;
+        IR2 = T4;
+        T4 = A1 >> 10;
+        T4 = T4 & 00ff;
+        IR3 = T4;
+        800B987C	nop
+        800B9880	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + 0004;
+        [V0 + 0000] = w(RGB2);
+        800B9890	j      Lb98a8 [$800b98a8]
+        [A3 + 0000] = b(T6);
 
-Lb9898:	; 800B9898
-V0 = w[T0 + 0000];
-800B989C	nop
-[A3 + fffd] = w(V0);
-[A3 + 0000] = b(T6);
+        Lb9898:	; 800B9898
+        V0 = w[T0 + 0000];
+        800B989C	nop
+        [A3 + fffd] = w(V0);
+        [A3 + 0000] = b(T6);
 
-Lb98a8:	; 800B98A8
-T8 = T8 + 0001;
-A3 = A3 + 0018;
-T1 = T1 + 0018;
-T0 = T0 + 0008;
-V0 = T8 < T9;
-800B98BC	bne    v0, zero, loopb9750 [$800b9750]
-T7 = T7 + 0008;
+        Lb98a8:	; 800B98A8
+        T8 = T8 + 0001;
+        A3 = A3 + 0018;
+        T1 = T1 + 0018;
+        T0 = T0 + 0008;
+        T7 = T7 + 0008;
+        V0 = T8 < T9;
+    800B98BC	bne    v0, zero, loopb9750 [$800b9750]
+}
 
-Lb98c4:	; 800B98C4
 V0 = S4 >> 10;
 T9 = V0 & 00ff;
-800B98CC	beq    t9, zero, Lb99d4 [$800b99d4]
-T8 = 0;
-T4 = T1 + 0007;
+if( T9 != 0 )
+{
+    T8 = 0;
+    T4 = T1 + 0007;
 
-loopb98d8:	; 800B98D8
-V0 = w[T1 + 0000];
-800B98DC	nop
-V0 = V0 << 08;
-800B98E4	beq    v0, zero, Lb99bc [$800b99bc]
-800B98E8	nop
-A3 = 0;
-T3 = T1;
-T0 = T7;
-T2 = 0004;
-A2 = w[T7 + 0000];
-T6 = bu[T4 + 0000];
+    loopb98d8:	; 800B98D8
+        V0 = w[T1 + 0000];
+        800B98DC	nop
+        V0 = V0 << 08;
+        800B98E4	beq    v0, zero, Lb99bc [$800b99bc]
+        800B98E8	nop
+        A3 = 0;
+        T3 = T1;
+        T0 = T7;
+        T2 = 0004;
+        A2 = w[T7 + 0000];
+        T6 = bu[T4 + 0000];
 
-loopb9904:	; 800B9904
-V0 = A2 & 00ff;
-V0 = V0 << 03;
-V1 = V0 + S0;
-V0 = h[V1 + 0000];
-800B9914	nop
-800B9918	beq    v0, zero, Lb9994 [$800b9994]
-A2 = A2 >> 08;
-V0 = V1;
-V0 = w[V0 + 0004];
-800B9928	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B993C	nop
-800B9940	nop
-800B9944	gte_func20t8,r11r12
-A1 = w[T0 + 0004];
-S6 = 0001;
-A0 = A1 << 04;
-A0 = A0 & 0ff0;
-IR0 = S6;
-V1 = A1 >> 04;
-V1 = V1 & 0ff0;
-V0 = A1 >> 0c;
-V0 = V0 & 0ff0;
-MAC1 = A0;
-MAC2 = V1;
-MAC3 = V0;
-800B9978	nop
-800B997C	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + T2;
-[V0 + 0000] = w(RGB2);
-800B998C	j      Lb99a4 [$800b99a4]
-T3 = T3 + 0008;
+        loopb9904:	; 800B9904
+        V0 = A2 & 00ff;
+        V0 = V0 << 03;
+        V1 = V0 + S0;
+        V0 = h[V1 + 0000];
+        800B9914	nop
+        800B9918	beq    v0, zero, Lb9994 [$800b9994]
+        A2 = A2 >> 08;
+        V0 = V1;
+        V0 = w[V0 + 0004];
+        800B9928	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B993C	nop
+        800B9940	nop
+        800B9944	gte_func20t8,r11r12
+        A1 = w[T0 + 0004];
+        S6 = 0001;
+        A0 = A1 << 04;
+        A0 = A0 & 0ff0;
+        IR0 = S6;
+        V1 = A1 >> 04;
+        V1 = V1 & 0ff0;
+        V0 = A1 >> 0c;
+        V0 = V0 & 0ff0;
+        MAC1 = A0;
+        MAC2 = V1;
+        MAC3 = V0;
+        800B9978	nop
+        800B997C	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + T2;
+        [V0 + 0000] = w(RGB2);
+        800B998C	j      Lb99a4 [$800b99a4]
+        T3 = T3 + 0008;
 
-Lb9994:	; 800B9994
-A1 = w[T0 + 0004];
-800B9998	nop
-[T3 + 0004] = w(A1);
-T3 = T3 + 0008;
+        Lb9994:	; 800B9994
+        A1 = w[T0 + 0004];
+        800B9998	nop
+        [T3 + 0004] = w(A1);
+        T3 = T3 + 0008;
 
-Lb99a4:	; 800B99A4
-T0 = T0 + 0004;
-A3 = A3 + 0001;
-V0 = A3 < 0003;
-800B99B0	bne    v0, zero, loopb9904 [$800b9904]
-T2 = T2 + 0008;
-[T4 + 0000] = b(T6);
+        Lb99a4:	; 800B99A4
+        T0 = T0 + 0004;
+        A3 = A3 + 0001;
+        V0 = A3 < 0003;
+        800B99B0	bne    v0, zero, loopb9904 [$800b9904]
+        T2 = T2 + 0008;
+        [T4 + 0000] = b(T6);
 
-Lb99bc:	; 800B99BC
-T8 = T8 + 0001;
-T4 = T4 + 001c;
-T1 = T1 + 001c;
-V0 = T8 < T9;
-800B99CC	bne    v0, zero, loopb98d8 [$800b98d8]
-T7 = T7 + 0010;
+        Lb99bc:	; 800B99BC
+        T8 = T8 + 0001;
+        T4 = T4 + 001c;
+        T1 = T1 + 001c;
+        T7 = T7 + 0010;
+        V0 = T8 < T9;
+    800B99CC	bne    v0, zero, loopb98d8 [$800b98d8]
+}
 
-Lb99d4:	; 800B99D4
 T9 = S4 >> 18;
-800B99D8	beq    t9, zero, Lb9ae0 [$800b9ae0]
-T8 = 0;
-T3 = T1 + 0007;
+if( T9 != 0 )
+{
+    T8 = 0;
+    T3 = T1 + 0007;
 
-loopb99e4:	; 800B99E4
-V0 = w[T1 + 0000];
-800B99E8	nop
-V0 = V0 << 08;
-800B99F0	beq    v0, zero, Lb9ac8 [$800b9ac8]
-800B99F4	nop
-A3 = 0;
-T2 = T1;
-A0 = T7;
-T0 = 0004;
-A2 = w[T7 + 0000];
-T6 = bu[T3 + 0000];
+    loopb99e4:	; 800B99E4
+        V0 = w[T1 + 0000];
+        800B99E8	nop
+        V0 = V0 << 08;
+        800B99F0	beq    v0, zero, Lb9ac8 [$800b9ac8]
+        800B99F4	nop
+        A3 = 0;
+        T2 = T1;
+        A0 = T7;
+        T0 = 0004;
+        A2 = w[T7 + 0000];
+        T6 = bu[T3 + 0000];
 
-loopb9a10:	; 800B9A10
-V0 = A2 & 00ff;
-V0 = V0 << 03;
-V1 = V0 + S0;
-V0 = h[V1 + 0000];
-800B9A20	nop
-800B9A24	beq    v0, zero, Lb9aa0 [$800b9aa0]
-A2 = A2 >> 08;
-V0 = V1;
-V0 = w[V0 + 0004];
-800B9A34	nop
-IR0 = V0;
-IR1 = S3;
-IR2 = S2;
-IR3 = S1;
-800B9A48	nop
-800B9A4C	nop
-800B9A50	gte_func20t8,r11r12
-S6 = 0001;
-A1 = w[A0 + 0004];
-IR0 = S6;
-V0 = A1 << 04;
-V0 = V0 & 0ff0;
-MAC1 = V0;
-V0 = A1 >> 04;
-V0 = V0 & 0ff0;
-MAC2 = V0;
-V0 = A1 >> 0c;
-V0 = V0 & 0ff0;
-MAC3 = V0;
-800B9A84	nop
-800B9A88	nop
-gte_gpl12(); // General purpose interpolation
-V0 = T1 + T0;
-[V0 + 0000] = w(RGB2);
-800B9A98	j      Lb9ab0 [$800b9ab0]
-T2 = T2 + 0008;
+        loopb9a10:	; 800B9A10
+        V0 = A2 & 00ff;
+        V0 = V0 << 03;
+        V1 = V0 + S0;
+        V0 = h[V1 + 0000];
+        800B9A20	nop
+        800B9A24	beq    v0, zero, Lb9aa0 [$800b9aa0]
+        A2 = A2 >> 08;
+        V0 = V1;
+        V0 = w[V0 + 0004];
+        800B9A34	nop
+        IR0 = V0;
+        IR1 = S3;
+        IR2 = S2;
+        IR3 = S1;
+        800B9A48	nop
+        800B9A4C	nop
+        800B9A50	gte_func20t8,r11r12
+        S6 = 0001;
+        A1 = w[A0 + 0004];
+        IR0 = S6;
+        V0 = A1 << 04;
+        V0 = V0 & 0ff0;
+        MAC1 = V0;
+        V0 = A1 >> 04;
+        V0 = V0 & 0ff0;
+        MAC2 = V0;
+        V0 = A1 >> 0c;
+        V0 = V0 & 0ff0;
+        MAC3 = V0;
+        800B9A84	nop
+        800B9A88	nop
+        gte_gpl12(); // General purpose interpolation
+        V0 = T1 + T0;
+        [V0 + 0000] = w(RGB2);
+        800B9A98	j      Lb9ab0 [$800b9ab0]
+        T2 = T2 + 0008;
 
-Lb9aa0:	; 800B9AA0
-A1 = w[A0 + 0004];
-800B9AA4	nop
-[T2 + 0004] = w(A1);
-T2 = T2 + 0008;
+        Lb9aa0:	; 800B9AA0
+        A1 = w[A0 + 0004];
+        800B9AA4	nop
+        [T2 + 0004] = w(A1);
+        T2 = T2 + 0008;
 
-Lb9ab0:	; 800B9AB0
-A0 = A0 + 0004;
-A3 = A3 + 0001;
-V0 = A3 < 0004;
-800B9ABC	bne    v0, zero, loopb9a10 [$800b9a10]
-T0 = T0 + 0008;
-[T3 + 0000] = b(T6);
+        Lb9ab0:	; 800B9AB0
+        A0 = A0 + 0004;
+        A3 = A3 + 0001;
+        V0 = A3 < 0004;
+        800B9ABC	bne    v0, zero, loopb9a10 [$800b9a10]
+        T0 = T0 + 0008;
+        [T3 + 0000] = b(T6);
 
-Lb9ac8:	; 800B9AC8
-T8 = T8 + 0001;
-T3 = T3 + 0024;
-T1 = T1 + 0024;
-V0 = T8 < T9;
-800B9AD8	bne    v0, zero, loopb99e4 [$800b99e4]
-T7 = T7 + 0014;
-
-Lb9ae0:	; 800B9AE0
+        Lb9ac8:	; 800B9AC8
+        T8 = T8 + 0001;
+        T3 = T3 + 0024;
+        T1 = T1 + 0024;
+        T7 = T7 + 0014;
+        V0 = T8 < T9;
+    800B9AD8	bne    v0, zero, loopb99e4 [$800b99e4]
+}
 ////////////////////////////////
 
 

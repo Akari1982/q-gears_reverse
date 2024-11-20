@@ -130,7 +130,7 @@ if( x < 8 )
     {
         A0 = 800a103c; // "win limit x="
         A2 = 2;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
 }
 
@@ -142,7 +142,7 @@ if( x + width >= 139 )
     {
         A0 = 800a103c; // "win limit x="
         A2 = 3;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
 }
 
@@ -154,7 +154,7 @@ if( y < 8 )
     {
         A0 = 800a104c; // "win limit y="
         A2 = 2;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
 }
 
@@ -166,7 +166,7 @@ if( y + height >= e1 )
     {
         A0 = 800a104c; // "win limit y="
         A2 = 3;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
 }
 
@@ -675,7 +675,7 @@ if( b[8008326c + window_id] != -1 ) // parent exist
         A0 = 800a10ec; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
     return 0;
 }
@@ -731,7 +731,7 @@ if( bu[8008326C + window_id] != bu[800722c4] )
         A0 = 800a10ec; // "mes busy="
         A1 = window_id;
         A2 = 1;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
     return;
 }
@@ -779,7 +779,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a10ec; // "mes busy="
         A1 = window_id
         A2 = 1;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
     return;
 }
@@ -1057,7 +1057,7 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                             A0 = 800a10f8; // "mpara="
                             A1 = S0 & ffff;
                             A2 = 4;
-                            funcbeca4();
+                            field_debug_add_parse_value_to_page2();
                         }
 
                         V0 = w[800e4234 + window_id * 4];
@@ -1166,12 +1166,12 @@ for( ; S5 < h[80114470 + window_id * 2]; )
                             A0 = 800a1100; // "gstr="
                             A1 = gstr;
                             A2 = 4;
-                            funcbeca4();
+                            field_debug_add_parse_value_to_page2();
 
                             A0 = 800a1108; // "glen="
                             A1 = glen;
                             A2 = 4;
-                            funcbeca4();
+                            field_debug_add_parse_value_to_page2();
                         }
 
                         int i = 0;
@@ -1314,7 +1314,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a10ec; // "mes busy="
         A1 = window_id
         A2 = 1;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
     return;
 }
@@ -1343,7 +1343,7 @@ if( bu[8008326c + window_id] != bu[800722c4] )
         A0 = 800a10ec; // "mes busy="
         A1 = window_id
         A2 = 1;
-        funcbeca4();
+        field_debug_add_parse_value_to_page2();
     }
     return;
 }

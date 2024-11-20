@@ -2380,7 +2380,7 @@ walkmesh_data = w[800e4274];
 
 
 ////////////////////////////////
-// field_script_debug_opcode()
+// field_debug_event_opcode()
 
 opcode_name = A0; // opcode name text
 args_n = A1; // number of arg
@@ -2410,7 +2410,7 @@ field_debug_concat_string();
 if( bu[8009d820] & 01 )
 {
     A0 = 3;
-    A1 = 0;
+    A1 = 0; // row
     A2 = string;
     field_debug_copy_string_into_page();
 }
@@ -2447,8 +2447,8 @@ while( args_n != 0 )
 
     if( bu[8009d820] & 01 )
     {
-        A0 = 3;
-        A1 = S4 - args_n;
+        A0 = 3; // page
+        A1 = S4 - args_n; // row
         A2 = string;
         field_debug_copy_string_into_page();
     }
@@ -2460,7 +2460,7 @@ while( args_n != 0 )
 
 
 ////////////////////////////////
-// funcbeca4()
+// field_debug_add_parse_value_to_page2()
 
 param = A0;
 value = A1;
@@ -2513,9 +2513,9 @@ field_debug_concat_string();
 
 if( bu[8009d820] & 1 )
 {
-    A0 = 2;
+    A0 = 2; // page
     A1 = string;
-    field_add_string_to_debug_by_id();
+    field_debug_add_string_to_page_next_row();
 }
 
 if( bu[8009d820] & 2 )
@@ -2531,359 +2531,185 @@ if( bu[8009d820] & 2 )
 // read_memory_block_one_byte()
 
 //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
-//A1 - offset to byte offset in opcode
+off = A1; // offset to byte offset in opcode
 
-800BEE14	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V0 = A0 < 0006;
+current_actor_id = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
 
-800BEE28	beq    v0, zero, Lbefb8 [$800befb8]  // skip halfbyte reading if halfbyte number > 6
+switch( A0 )
+{
+    case 1: V1 = bu[script + 1] >> 4; break; // 1 halfbyte
+    case 2: V1 = bu[script + 1] & f; break; // 2 halfbyte
+    case 3: V1 = bu[script + 2] >> 4; break; // 3 halfbyte
+    case 4: V1 = bu[script + 2] & f; break; // 4 halfbyte
+    case 5: V1 = bu[script + 3] >> 4; break; // 5 halfbyte
+    case 6: V1 = bu[script + 3] & f; break; // 6 halfbyte
+}
 
-V0 = A0 << 02;
-800BEE34	lui    at, $800a
-AT = AT + 033c;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800BEE44	nop
-800BEE48	jr     v0 
-800BEE4C	nop
+switch( V1 )
+{
+    case 0: // memory bank 0
+    {
+        val = bu[script + off];
 
-// 1 halfbyte
-V0 = bu[800722c4];
-800BEE58	nop
-V0 = V0 << 01;
-800BEE60	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800BEE78	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800BEE84	j      Lbefb8 [$800befb8]
-V1 = V0 >> 04;
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0300; // "G cons="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-// 2 halfbyte
-V0 = bu[800722c4];
-800BEE94	nop
-V0 = V0 << 01;
-800BEE9C	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800BEEB4	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800BEEC0	j      Lbefb8 [$800befb8]
-V1 = V0 & 000f;
+    case 1: // memory bank 1
+    case 2: // memory bank 2
+    {
+        indx = bu[script + off];
+        val = bu[8009d288 + indx];
 
-// 3 halfbyte
-V0 = bu[800722c4];
-800BEED0	nop
-V0 = V0 << 01;
-800BEED8	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800BEEF0	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800BEEFC	j      Lbefb8 [$800befb8]
-V1 = V0 >> 04;
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0308; // "G indx="
+            A1 = indx;
+            A2 = 4;
+            field_debug_add_parse_value_to_page2();
 
-// 4 halfbyte
-V0 = bu[800722c4];
-800BEF0C	nop
-V0 = V0 << 01;
-800BEF14	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800BEF2C	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800BEF38	j      Lbefb8 [$800befb8]
-V1 = V0 & 000f;
+            A0 = 800a0310; // "G glov="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-// 5 halfbyte
-V0 = bu[800722c4];
-800BEF48	nop
-V0 = V0 << 01;
-800BEF50	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800BEF68	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800BEF74	j      Lbefb8 [$800befb8]
-V1 = V0 >> 04;
+    case 3: // memory bank 3
+    case 4: // memory bank 4
+    {
+        indx = bu[script + off];
+        val = bu[8009d288 + 100 + indx];
 
-// 6 halfbyte
-V0 = bu[800722c4];
-800BEF84	nop
-V0 = V0 << 01;
-800BEF8C	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800BEFA4	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800BEFB0	nop
-V1 = V0 & 000f;
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0308; // "G indx="
+            A1 = indx;
+            A2 = 4;
+            field_debug_add_parse_value_to_page2();
 
-Lbefb8:	; 800BEFB8
-A0 = V1 & 00ff;
-V0 = A0 < 0010;
-800BEFC0	beq    v0, zero, Lbf35c [$800bf35c]
-V0 = A0 << 02;
+            A0 = 800a0310; // "G glov="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-V0 = w[800a0354 + V0];
-800BEFD8	nop
-800BEFDC	jr     v0 
-800BEFE0	nop
+    case b: // memory bank B
+    case c: // memory bank C
+    {
+        indx = bu[script + off];
+        val = bu[8009d288 + 200 + indx];
 
-// memory bank 0
-A0 = A1 << 10;
-V0 = bu[800722c4];
-V1 = w[8009c6dc];
-V0 = V0 << 01;
-800BEFFC	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-A0 = A0 >> 10;
-V1 = V1 + V0;
-V1 = V1 + A0;
-V0 = bu[8009d820];
-S0 = bu[V1 + 0000];
-V0 = V0 & 0003;
-800BF028	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
-A0 = 800a0300; // "G cons="
-800BF038	j      Lbf34c [$800bf34c]
-A1 = S0;
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0308; // "G indx="
+            A1 = indx;
+            A2 = 4;
+            field_debug_add_parse_value_to_page2();
 
-// memory bank 1, 2
-V0 = bu[800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-800BF050	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-V0 = bu[8009d820];
-800BF080	nop
-V0 = V0 & 0003;
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-800BF098	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-800BF0A8	jal    funcbeca4 [$800beca4]
+            A0 = 800a0310; // "G glov="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-A0 = 800a0310; // "G glov="
-A1 = S0;
-800BF0B8	j      Lbf34c [$800bf34c]
+    case d: // memory bank D
+    case e: // memory bank E
+    {
+        indx = bu[script + off];
+        val = bu[8009d288 + 300 + indx];
 
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0308; // "G indx="
+            A1 = indx;
+            A2 = 4;
+            field_debug_add_parse_value_to_page2();
 
-// memory bank 3, 4
-V0 = bu[800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-800BF0D0	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF0F8	nop
-A1 = V0 | 0100;
-V0 = bu[8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BF11C	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
+            A0 = 800a0310; // "G glov="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-A0 = 800a0308; // "G indx="
-A2 = 4;
-funcbeca4();
+    case 7: // memory bank 7
+    case f: // memory bank F
+    {
+        indx = bu[script + off];
+        val = bu[8009d288 + 400 + indx];
 
-A0 = 800a0310; // "G glov="
-A1 = S0;
-800BF13C	j      Lbf34c [$800bf34c]
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0308; // "G indx="
+            A1 = indx;
+            A2 = 4;
+            field_debug_add_parse_value_to_page2();
 
+            A0 = 800a0310; // "G glov="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-// memory bank B, C
-V0 = bu[800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-800BF154	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF17C	nop
-A1 = V0 | 0200;
-V0 = bu[8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BF1A0	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-800BF1B0	jal    funcbeca4 [$800beca4]
+    case 5: // memory bank 5
+    case 6: // memory bank 6
+    {
+        indx = bu[script + off];
+        val = bu[80075e24 + indx];
 
-A0 = 800a0310; // "G glov="
-800BF1C0	j      Lbf34c [$800bf34c]
-A1 = S0;
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0308; // "G indx="
+            A1 = indx;
+            A2 = 4;
+            field_debug_add_parse_value_to_page2();
 
-// memory bank D, E
-V0 = bu[800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-800BF1D8	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF200	nop
-A1 = V0 | 0300;
-V0 = bu[8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BF224	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-800BF234	jal    funcbeca4 [$800beca4]
+            A0 = 800a0318; // "G mapv="
+            A1 = val;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
+        return val;
+    }
 
-A0 = 800a0310; // "G glov="
-A1 = S0;
-800BF244	j      Lbf34c [$800bf34c]
+    default:
+    {
+        if( bu[8009d820] & 3 )
+        {
+            A0 = 800a0320; // "G data err="
+            A1 = V1 & 00ff;
+            A2 = 2;
+            field_debug_add_parse_value_to_page2();
+        }
 
-// memory bank 7, F
-V0 = bu[800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-800BF25C	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BF284	nop
-A1 = V0 | 0400;
-V0 = bu[8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BF2A8	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-funcbeca4();
+        A0 = 800a032c; // "Bad Event arg!"
+        funcd4848();
 
-A0 = 800a0310; // "G glov="
-A1 = S0;
-800BF2C8	j      Lbf34c [$800bf34c]
-
-// memory bank 5, 6
-V0 = bu[800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-800BF2E0	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-V0 = bu[8009d820];
-800BF310	nop
-V0 = V0 & 0003;
-800BF318	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-800BF328	beq    v0, zero, Lbf398 [$800bf398]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-800BF338	jal    funcbeca4 [$800beca4]
-
-A0 = 800a0318; // "G mapv="
-A1 = S0;
-
-Lbf34c:	; 800BF34C
-A2 = 2;
-funcbeca4();
-
-800BF354	j      Lbf398 [$800bf398]
-V0 = S0;
-
-// memory bank 8, 9, A, >F
-Lbf35c:	; 800BF35C
-V0 = bu[8009d820];
-800BF364	nop
-V0 = V0 & 0003;
-800BF36C	beq    v0, zero, Lbf384 [$800bf384]
-A1 = V1 & 00ff;
-A0 = 800a0320; // "G data err="
-A2 = 2;
-funcbeca4();
-
-
-Lbf384:	; 800BF384
-A0 = 800a032c; // "Bad Event arg!"
-funcd4848();
-
-V0 = 0;
-
-Lbf398:	; 800BF398
+        return 0;
+    }
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// store_memory_block_one_byte
+// store_memory_block_one_byte()
 
 S0 = A2;
 800BF3B8	addiu  a0, a0, $ffff (=-$1)
@@ -3016,7 +2842,7 @@ V0 = V0 & 0003;
 800BF5E4	beq    v0, zero, Lbf8f4 [$800bf8f4]
 800BF5E8	nop
 A0 = 800a0394;
-800BF5F4	jal    funcbeca4 [$800beca4]
+800BF5F4	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800BF604	j      Lbf8ac [$800bf8ac]
@@ -3044,7 +2870,7 @@ V0 = V0 & 0003;
 800BF66C	beq    v0, zero, Lbf8f4 [$800bf8f4]
 800BF670	nop
 A0 = 800a0394;
-800BF67C	jal    funcbeca4 [$800beca4]
+800BF67C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800BF68C	j      Lbf8ac [$800bf8ac]
@@ -3072,7 +2898,7 @@ V0 = V0 & 0003;
 800BF6F4	beq    v0, zero, Lbf8f4 [$800bf8f4]
 800BF6F8	nop
 A0 = 800a0394;
-800BF704	jal    funcbeca4 [$800beca4]
+800BF704	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800BF714	j      Lbf8ac [$800bf8ac]
@@ -3100,7 +2926,7 @@ V0 = V0 & 0003;
 800BF77C	beq    v0, zero, Lbf8f4 [$800bf8f4]
 800BF780	nop
 A0 = 800a0394;
-800BF78C	jal    funcbeca4 [$800beca4]
+800BF78C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800BF79C	j      Lbf8ac [$800bf8ac]
@@ -3130,7 +2956,7 @@ V0 = V0 & 0003;
 800BF804	beq    v0, zero, Lbf8f4 [$800bf8f4]
 800BF808	nop
 A0 = 800a0394;
-800BF814	jal    funcbeca4 [$800beca4]
+800BF814	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800BF824	j      Lbf8ac [$800bf8ac]
@@ -3158,13 +2984,13 @@ V0 = V0 & 0003;
 800BF888	beq    v0, zero, Lbf8f4 [$800bf8f4]
 800BF88C	nop
 A0 = 800a0394;
-800BF898	jal    funcbeca4 [$800beca4]
+800BF898	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a03a4;
 A1 = S0 & 00ff;
 
 Lbf8ac:	; 800BF8AC
-800BF8AC	jal    funcbeca4 [$800beca4]
+800BF8AC	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0002;
 800BF8B4	j      Lbf8f4 [$800bf8f4]
 800BF8B8	nop
@@ -3176,7 +3002,7 @@ V0 = V0 & 0003;
 800BF8CC	beq    v0, zero, Lbf8e4 [$800bf8e4]
 A1 = V1 & 00ff;
 A0 = 800a03ac;
-800BF8DC	jal    funcbeca4 [$800beca4]
+800BF8DC	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0002;
 
 Lbf8e4:	; 800BF8E4
@@ -3359,7 +3185,7 @@ S0 = bu[AT + 0000];
 800BFB98	beq    v0, zero, Lc0234 [$800c0234]
 V0 = S0;
 A0 = 800a0308;
-800BFBA8	jal    funcbeca4 [$800beca4]
+800BFBA8	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFBB8	j      Lc0140 [$800c0140]
@@ -3391,7 +3217,7 @@ V1 = V1 << 08;
 800BFC2C	beq    v0, zero, Lc01ec [$800c01ec]
 S0 = S0 | V1;
 A0 = 800a0308;
-800BFC3C	jal    funcbeca4 [$800beca4]
+800BFC3C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFC4C	j      Lc01e0 [$800c01e0]
@@ -3420,7 +3246,7 @@ V0 = V0 & 0003;
 800BFCB0	beq    v0, zero, Lc0234 [$800c0234]
 V0 = S0;
 A0 = 800a0308;
-800BFCC0	jal    funcbeca4 [$800beca4]
+800BFCC0	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFCD0	j      Lc0140 [$800c0140]
@@ -3453,7 +3279,7 @@ V0 = V0 & 0003;
 800BFD48	beq    v0, zero, Lc01ec [$800c01ec]
 S0 = S0 | V1;
 A0 = 800a0308;
-800BFD58	jal    funcbeca4 [$800beca4]
+800BFD58	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFD68	j      Lc01e0 [$800c01e0]
@@ -3482,7 +3308,7 @@ V0 = V0 & 0003;
 800BFDCC	beq    v0, zero, Lc0234 [$800c0234]
 V0 = S0;
 A0 = 800a0308;
-800BFDDC	jal    funcbeca4 [$800beca4]
+800BFDDC	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFDEC	j      Lc0140 [$800c0140]
@@ -3515,7 +3341,7 @@ V0 = V0 & 0003;
 800BFE64	beq    v0, zero, Lc01ec [$800c01ec]
 S0 = S0 | V1;
 A0 = 800a0308;
-800BFE74	jal    funcbeca4 [$800beca4]
+800BFE74	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFE84	j      Lc01e0 [$800c01e0]
@@ -3544,7 +3370,7 @@ V0 = V0 & 0003;
 800BFEE8	beq    v0, zero, Lc0234 [$800c0234]
 V0 = S0;
 A0 = 800a0308;
-800BFEF8	jal    funcbeca4 [$800beca4]
+800BFEF8	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFF08	j      Lc0140 [$800c0140]
@@ -3577,7 +3403,7 @@ V0 = V0 & 0003;
 800BFF80	beq    v0, zero, Lc01ec [$800c01ec]
 S0 = S0 | V1;
 A0 = 800a0308;
-800BFF90	jal    funcbeca4 [$800beca4]
+800BFF90	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800BFFA0	j      Lc01e0 [$800c01e0]
@@ -3606,7 +3432,7 @@ V0 = V0 & 0003;
 800C0004	beq    v0, zero, Lc0234 [$800c0234]
 V0 = S0;
 A0 = 800a0308;
-800C0014	jal    funcbeca4 [$800beca4]
+800C0014	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800C0024	j      Lc0140 [$800c0140]
@@ -3646,7 +3472,7 @@ V0 = V0 & 0003;
 800C009C	beq    v0, zero, Lc01ec [$800c01ec]
 S0 = S0 | V1;
 A0 = 800a0308;
-800C00AC	jal    funcbeca4 [$800beca4]
+800C00AC	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0310;
 800C00BC	j      Lc01e0 [$800c01e0]
@@ -3675,13 +3501,13 @@ S0 = bu[AT + 0000];
 800C011C	beq    v0, zero, Lc0234 [$800c0234]
 V0 = S0;
 A0 = 800a0308;
-800C012C	jal    funcbeca4 [$800beca4]
+800C012C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0318;
 A1 = S0;
 
 Lc0140:	; 800C0140
-800C0140	jal    funcbeca4 [$800beca4]
+800C0140	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 800C0148	j      Lc0234 [$800c0234]
 V0 = S0;
@@ -3716,14 +3542,14 @@ V1 = V1 << 08;
 800C01BC	beq    v0, zero, Lc01ec [$800c01ec]
 S0 = S0 | V1;
 A0 = 800a0308;
-800C01CC	jal    funcbeca4 [$800beca4]
+800C01CC	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a0318;
 A1 = S0 << 10;
 
 Lc01e0:	; 800C01E0
 A1 = A1 >> 10;
-800C01E4	jal    funcbeca4 [$800beca4]
+800C01E4	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 
 Lc01ec:	; 800C01EC
@@ -3739,7 +3565,7 @@ V0 = V0 & 0003;
 800C0208	beq    v0, zero, Lc0220 [$800c0220]
 A1 = V1 & 00ff;
 A0 = 800a0320;
-800C0218	jal    funcbeca4 [$800beca4]
+800C0218	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0002;
 
 Lc0220:	; 800C0220
@@ -3890,7 +3716,7 @@ V0 = V0 & 0003;
 800C0480	beq    v0, zero, Lc0b40 [$800c0b40]
 800C0484	nop
 A0 = 800a0394;
-800C0490	jal    funcbeca4 [$800beca4]
+800C0490	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C04A0	j      Lc0a50 [$800c0a50]
@@ -3923,7 +3749,7 @@ V0 = V0 & 0003;
 800C0518	beq    v0, zero, Lc0b40 [$800c0b40]
 S0 = V1 >> 10;
 A0 = 800a0394;
-800C0528	jal    funcbeca4 [$800beca4]
+800C0528	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C0538	j      Lc0af8 [$800c0af8]
@@ -3951,7 +3777,7 @@ V0 = V0 & 0003;
 800C05A0	beq    v0, zero, Lc0b40 [$800c0b40]
 800C05A4	nop
 A0 = 800a0394;
-800C05B0	jal    funcbeca4 [$800beca4]
+800C05B0	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C05C0	j      Lc0a50 [$800c0a50]
@@ -3983,7 +3809,7 @@ V0 = V0 & 0003;
 800C063C	beq    v0, zero, Lc0b40 [$800c0b40]
 S0 = A0 >> 10;
 A0 = 800a0394;
-800C064C	jal    funcbeca4 [$800beca4]
+800C064C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C065C	j      Lc0af8 [$800c0af8]
@@ -4011,7 +3837,7 @@ V0 = V0 & 0003;
 800C06C4	beq    v0, zero, Lc0b40 [$800c0b40]
 800C06C8	nop
 A0 = 800a0394;
-800C06D4	jal    funcbeca4 [$800beca4]
+800C06D4	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C06E4	j      Lc0a50 [$800c0a50]
@@ -4043,7 +3869,7 @@ V0 = V0 & 0003;
 800C0760	beq    v0, zero, Lc0b40 [$800c0b40]
 S0 = A0 >> 10;
 A0 = 800a0394;
-800C0770	jal    funcbeca4 [$800beca4]
+800C0770	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 
 funcc0774:	; 800C0774
 A2 = 0004;
@@ -4073,7 +3899,7 @@ V0 = V0 & 0003;
 800C07E8	beq    v0, zero, Lc0b40 [$800c0b40]
 800C07EC	nop
 A0 = 800a0394;
-800C07F8	jal    funcbeca4 [$800beca4]
+800C07F8	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C0808	j      Lc0a50 [$800c0a50]
@@ -4107,7 +3933,7 @@ V0 = V0 & 0003;
 800C0884	beq    v0, zero, Lc0b40 [$800c0b40]
 S0 = A0 >> 10;
 A0 = 800a0394;
-800C0894	jal    funcbeca4 [$800beca4]
+800C0894	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C08A4	j      Lc0af8 [$800c0af8]
@@ -4135,7 +3961,7 @@ V0 = V0 & 0003;
 800C090C	beq    v0, zero, Lc0b40 [$800c0b40]
 800C0910	nop
 A0 = 800a0394;
-800C091C	jal    funcbeca4 [$800beca4]
+800C091C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C092C	j      Lc0a50 [$800c0a50]
@@ -4167,7 +3993,7 @@ V0 = V0 & 0003;
 800C09A8	beq    v0, zero, Lc0b40 [$800c0b40]
 S0 = A0 >> 10;
 A0 = 800a0394;
-800C09B8	jal    funcbeca4 [$800beca4]
+800C09B8	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a039c;
 800C09C8	j      Lc0af8 [$800c0af8]
@@ -4195,14 +4021,14 @@ V0 = V0 & 0003;
 800C0A2C	beq    v0, zero, Lc0b40 [$800c0b40]
 800C0A30	nop
 A0 = 800a0394;
-800C0A3C	jal    funcbeca4 [$800beca4]
+800C0A3C	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a03a4;
 A1 = S0 << 10;
 
 Lc0a50:	; 800C0A50
 A1 = A1 >> 10;
-800C0A54	jal    funcbeca4 [$800beca4]
+800C0A54	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0002;
 800C0A5C	j      Lc0b40 [$800c0b40]
 800C0A60	nop
@@ -4234,13 +4060,13 @@ V0 = V0 & 0003;
 800C0AD4	beq    v0, zero, Lc0b40 [$800c0b40]
 S0 = V1 >> 10;
 A0 = 800a0394;
-800C0AE4	jal    funcbeca4 [$800beca4]
+800C0AE4	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 A0 = 800a03a4;
 A1 = S0;
 
 Lc0af8:	; 800C0AF8
-800C0AF8	jal    funcbeca4 [$800beca4]
+800C0AF8	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0004;
 800C0B00	j      Lc0b40 [$800c0b40]
 800C0B04	nop
@@ -4252,7 +4078,7 @@ V0 = V0 & 0003;
 800C0B18	beq    v0, zero, Lc0b30 [$800c0b30]
 A1 = V1 & 00ff;
 A0 = 800a03ac;
-800C0B28	jal    funcbeca4 [$800beca4]
+800C0B28	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0002;
 
 Lc0b30:	; 800C0B30
@@ -4277,7 +4103,7 @@ if( bu[8009d820] & 3 )
 {
     string = 800e4288;
 
-    A0 = bu[8009a058];
+    A0 = bu[8009a058]; // saved current opcode
     A1 = string;
     field_int2_to_string();
 
@@ -4288,7 +4114,7 @@ if( bu[8009d820] & 3 )
 
     A0 = string;
     A1 = 8;
-    field_script_debug_opcode();
+    field_debug_event_opcode();
 
     A0 = 3;
     A1 = 7f;

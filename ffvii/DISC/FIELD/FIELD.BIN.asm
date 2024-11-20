@@ -338,10 +338,10 @@
 // field_script_update_debug
 800BC9FC-800BEAD0
 ////////////////////////////////
-// field_script_debug_opcode
+// field_debug_event_opcode
 800BEAD4-800BECA0
 ////////////////////////////////
-// funcbeca4
+// field_debug_add_parse_value_to_page2
 800BECA4-800BEE0C
 ////////////////////////////////
 // read_memory_block_one_byte
@@ -1296,7 +1296,7 @@
 // field_debug_render_string
 800D9C04-800D9EFC
 ////////////////////////////////
-// field_add_string_to_debug_by_id
+// field_debug_add_string_to_page_next_row
 800D9F00-800D9FF8
 ////////////////////////////////
 // funcd9ffc

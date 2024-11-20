@@ -432,7 +432,7 @@
 800dfe2c [][]     +10[][]
 800dfe2e [][]     +12[][]
 
-800dfe3c kawai structure (size 0x3c)
+800dfe3c kawai data (size 0x3c)
     + 00 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
     + 02 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)
     + 04 [][]     used in function field_model_set_color_to_model_packets (it seems render data to packet draft)

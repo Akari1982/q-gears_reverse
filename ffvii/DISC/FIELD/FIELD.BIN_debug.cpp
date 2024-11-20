@@ -99,31 +99,31 @@ field_debug_concat_string();
 
 A0 = 5;
 A1 = 800e4254;
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 800e4254;
 A1 = 800a12b0; // "Event:"
 field_debug_copy_string();
 
 A0 = 800e4254;
-A1 = w[8009c6dc] + 18;
+A1 = w[8009c6dc] + 18; // from field file
 field_debug_concat_string();
 
 A0 = 5;
 A1 = 800e4254;
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 5;
 A1 = 800a12b8; // "  Go"
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 5;
 A1 = 800a12c0; // "  Stop"
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 5;
 A1 = 800a12c8; // "  Step"
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 5; // id
 A1 = 5; // row id
@@ -147,7 +147,7 @@ field_debug_init_page();
 
 A0 = 4;
 A1 = 800e0628; // "Actor:"
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 4;
 funcda2cc();
@@ -161,7 +161,7 @@ field_debug_init_page();
 
 A0 = 3;
 A1 = 800e0630; // "Word:"
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 3;
 funcda2cc();
@@ -175,7 +175,7 @@ field_debug_init_page();
 
 A0 = 1;
 A1 = 800e0628; // "Actor:"
-field_add_string_to_debug_by_id();
+field_debug_add_string_to_page_next_row();
 
 A0 = 1;
 funcda2cc();
@@ -641,21 +641,21 @@ while( bu[string] != 0 )
 
 
 ////////////////////////////////
-// field_add_string_to_debug_by_id()
+// field_debug_add_string_to_page_next_row()
 
-id = A0;
-src = A1;
+page_id = A0;
+string = A1;
 
-A0 = 800e0748 + id * 17a + 10 + h[800e0748 + id * 17a + c] * e;
-A1 = src;
+A0 = 800e0748 + page_id * 17a + 10 + h[800e0748 + page_id * 17a + c] * e;
+A1 = string;
 field_debug_copy_string();
 
-[800e0748 + id * 17a + c] = h(hu[800e0748 + id * 17a + c] + 1);
+[800e0748 + page_id * 17a + c] = h(hu[800e0748 + page_id * 17a + c] + 1);
 
 // if number of rows greater than height
-if( ( ( h[800e0748 + id * 17a + 6] - 8 ) / a ) < h[800e0748 + id * 17a + c] )
+if( ( ( h[800e0748 + page_id * 17a + 6] - 8 ) / a ) < h[800e0748 + page_id * 17a + c] )
 {
-    [800e0748 + id * 17a + c] = h(0);
+    [800e0748 + page_id * 17a + c] = h(0);
 }
 
 [8009d824] = b(1);
