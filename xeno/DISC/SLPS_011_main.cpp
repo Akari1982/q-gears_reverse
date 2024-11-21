@@ -616,7 +616,7 @@ A1 = 0;
 A2 = 0;
 A3 = 180;
 A4 = f0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = SP + e8;
 A1 = 0;
@@ -630,7 +630,7 @@ A1 = 0;
 A2 = f0;
 A3 = 180;
 A4 = f0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = SP + fc;
 A1 = 0;
@@ -679,14 +679,14 @@ L19f48:	; 80019F48
     A0 = SP + 008c;
 
     L19f58:	; 80019F58
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     80019F60	bne    s0, zero, L19f6c [$80019f6c]
     A0 = SP + 00e8;
     A0 = SP + 00fc;
 
     L19f6c:	; 80019F6C
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = 0;
     system_print_render_strings();
@@ -802,14 +802,14 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 80058c84 + 88;
 A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 80058c84 + 5c;
 A1 = 0;
@@ -934,10 +934,10 @@ while( ( w[8005896c] != 0 ) || ( w[80058964] == 0 ) )
     system_psyq_wait_frames();
 
     A0 = w[80058968];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[80058968] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = otag;
     system_psyq_draw_otag();
@@ -1993,7 +1993,7 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800c419c + 4070;
 A1 = 0;
@@ -2007,7 +2007,7 @@ A1 = 0;
 A2 = e0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800c4140 + 4014;
 func1b7d8();
@@ -2334,7 +2334,7 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = mem + 17c;
 A1 = 0;
@@ -2348,7 +2348,7 @@ A1 = 0;
 A2 = e0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = mem + 6c;
 kernel_menu_draw_env_settings();
@@ -2504,10 +2504,10 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = w[mem + 1d4];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[mem + 1d4] + 5c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[mem + 1d4] + ac;
 system_psyq_draw_otag();
@@ -2870,16 +2870,16 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = mem + 6c;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = mem + 120;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = mem + c8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = mem + 17c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = 1;
 system_psyq_set_disp_mask();

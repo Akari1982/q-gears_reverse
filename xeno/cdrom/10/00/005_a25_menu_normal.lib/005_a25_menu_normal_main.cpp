@@ -2730,10 +2730,10 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = w[rdata + 1d4];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[rdata + 1d4] + 5c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[rdata + 350] + 1180;
 A1 = 0;

@@ -468,14 +468,14 @@ A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800b9a64;
 A1 = 0;
 A2 = 100;
 A3 = 280;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800b1970 + b8;
 A1 = 0;
@@ -496,10 +496,10 @@ system_graphic_create_display_env_struct();
 
 A0 = w[800c3740];
 A0 = A0 + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 [SP + 18] = h(300);
 [SP + 1a] = h(0);
@@ -544,10 +544,10 @@ while( w[800afb74] < 18e2 ) // current frame
     system_clear_image();
 
     A0 = w[800c3740] + b8;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800c3740] + 0;
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800c3740] + 80f0;
     system_psyq_draw_otag();
@@ -572,14 +572,14 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800b9a64;
 A1 = 0;
 A2 = 100;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800b1970 + b8;
 A1 = 0;
@@ -749,10 +749,10 @@ do
         system_psyq_wait_frames();
 
         A0 = w[800c3740] + b8;
-        system_psyq_put_disp_env();
+        system_psyq_put_dispenv();
 
         A0 = w[800c3740];
-        system_psyq_put_draw_env();
+        system_psyq_put_drawenv();
 
         A0 = 3;
         field_movie_mdec_update();
@@ -765,10 +765,10 @@ do
 
         A0 = w[800c3740];
         A0 = A0 + b8;
-        system_psyq_put_disp_env();
+        system_psyq_put_dispenv();
 
         A0 = w[800c3740];
-        system_psyq_put_draw_env();
+        system_psyq_put_drawenv();
 
         A0 = 3;
         field_movie_mdec_update();
@@ -851,10 +851,10 @@ mdec_deinit();
 field_flush_sync();
 
 A0 = w[800c3740] + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = 0;
 system_psyq_wait_frames();
@@ -893,10 +893,10 @@ S1 = S0 + b8;
 [800c3740] = w(S0);
 
 A0 = S1;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 if( w[800ad04c] != 2 )
 {
@@ -911,10 +911,10 @@ system_psyq_wait_frames();
 [800c3740] = w(800b1a39 - c9);
 
 A0 = 800b1a39 - 11;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 [SP + 10] = h(0);
 [SP + 12] = h(100);
@@ -936,10 +936,10 @@ system_psyq_wait_frames();
 [800c3740] = w(S0);
 
 A0 = S1;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 if( w[800af358] != 0 )
 {

@@ -377,10 +377,10 @@ L7099c:	; 8007099C
     system_reset_check(); // pressed buttons start select L1 R1 reset?
 
     A0 = w[8009b224] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[8009b224];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     V0 = bu[80058819];
 
@@ -676,7 +676,7 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = 8009b084;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 ////////////////////////////////
 
 
@@ -2023,10 +2023,10 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = 8009b084;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = 8009b028;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 S0 = 8009afb0;
 S6 = 0;
@@ -2091,10 +2091,10 @@ while( render_num != 0 )
     system_psyq_wait_frames();
 
     A0 = S0 + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = S0;
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = start_ptr + ffc;
     system_psyq_draw_otag();
@@ -2109,7 +2109,7 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = 8009b084;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = pack1;
 system_memory_free();
@@ -5140,9 +5140,9 @@ V0 = 0140;
 
 L759d4:	; 800759D4
 S0 = 8009b084;
-800759DC	jal    $system_psyq_put_disp_env
+800759DC	jal    $system_psyq_put_dispenv
 A0 = S0;
-800759E4	jal    system_psyq_put_draw_env
+800759E4	jal    system_psyq_put_drawenv
 800759E8	addiu  a0, s0, $ffa4 (=-$5c)
 800759EC	jal    $80037d8c
 800759F0	nop
@@ -5221,14 +5221,14 @@ S0 = 8009b00c;
 A0 = V0 << 04;
 A0 = A0 - V0;
 A0 = A0 << 03;
-80075B74	jal    $system_psyq_put_disp_env
+80075B74	jal    $system_psyq_put_dispenv
 A0 = A0 + S0;
 V0 = w[8009cbd8];
 80075B84	addiu  s0, s0, $ffa4 (=-$5c)
 A0 = V0 << 04;
 A0 = A0 - V0;
 A0 = A0 << 03;
-80075B94	jal    system_psyq_put_draw_env
+80075B94	jal    system_psyq_put_drawenv
 A0 = A0 + S0;
 [80058b24] = w(S1);
 RA = w[SP + 0020];

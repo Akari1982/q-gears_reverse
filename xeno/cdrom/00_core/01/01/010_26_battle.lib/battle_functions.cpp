@@ -65845,10 +65845,10 @@ V1 = V1 << 04;
 [800c415b + V1] = b(V0);
 
 A0 = w[800cc220] + 5c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800cc220];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[800cc220] + 406c;
 system_psyq_draw_otag();
@@ -66322,13 +66322,13 @@ A3 = 0140;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-800B7894	jal    $system_graphic_create_draw_env_struct
+800B7894	jal    $system_psyq_set_def_drawenv
 [SP + 0010] = w(S0);
 A0 = S1 + 4014;
 A1 = 0;
 A2 = 00e0;
 A3 = 0140;
-800B78AC	jal    $system_graphic_create_draw_env_struct
+800B78AC	jal    $system_psyq_set_def_drawenv
 [SP + 0010] = w(S0);
 V0 = 000a;
 [800c8216] = h(V0);

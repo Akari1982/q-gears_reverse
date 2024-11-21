@@ -7985,35 +7985,26 @@ if( T9 != 0 )
                 V1 = 1f800000 + V0 * 8;
                 A1 = w[T0 + 4];
                 V0 = h[V1];
-                if (V0 != 0)
+                if( V0 != 0 )
                 {
-                    V0 = V1;
-                    V0 = w[V0 + 4];
+                    IR0 = w[V1 + 4];
 
-                    IR0 = V0;
                     IR1 = S3;
                     IR2 = S2;
                     IR3 = S1;
                     gte_INTPL(); // Interpolation of vector and far color.
-                    V0 = IR1;
-                    V1 = IR2;
-                    A0 = IR3;
 
-                    S6 = 10;
-                    IR0 = S6;
-                    MAC1 = V0;
-                    V0 = V1;
-                    MAC2 = V0;
-                    V0 = A0;
-                    MAC3 = V0;
-                    T4 = A1 & ff; // R
-                    IR1 = T4;
-                    T4 = (A1 >> 8) & ff; // G
-                    IR2 = T4;
+                    IR0 = 10;
+
+                    MAC1 = IR1;
+                    MAC2 = IR2;
+                    MAC3 = IR3;
+                    IR1 = A1 & ff; // R
+                    IR2 = (A1 >> 8) & ff; // G
                     T4 = (A1 >> 10) & ff; // B
                     IR3 = T4;
                     gte_gpl12(); // General purpose interpolation
-                    800B90FC	swc2   s6, $0000(T1 + T2)
+                    [T1 + T2] = w(RGB2);
                 }
                 else
                 {

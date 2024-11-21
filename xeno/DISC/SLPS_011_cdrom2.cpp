@@ -396,7 +396,7 @@ if( tries >= 4 )
     A2 = 0;
     A3 = 140;
     A4 = 100;
-    system_graphic_create_draw_env_struct();
+    system_psyq_set_def_drawenv();
 
     A0 = SP + 94;
     A1 = 0; // display area x
@@ -409,11 +409,11 @@ if( tries >= 4 )
     [SP + 4e] = b(0); // dithering processing flag. 0: off
     [SP + 4f] = b(1); // 1: drawing to display area is permitted
     [SP + 50] = b(0); // 0: Does not clear drawing area when drawing environment is set.
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = SP + 94;
     [SP + a4] = b(0); // Interlace mode flag. 0: non-interlace;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = 10;    // start x
     A1 = 10;    // start y

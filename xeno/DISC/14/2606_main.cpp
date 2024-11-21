@@ -2,16 +2,16 @@
 // func1e0124()
 
 A0 = 800c4140;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = 800c4140 + 4070;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = 800c4140 + 005c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = 800c4140 + 40cc;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = 1;
 system_psyq_set_disp_mask();
@@ -623,10 +623,10 @@ while( work != 0 )
     system_psyq_wait_frames();
 
     A0 = w[800cc220];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800cc220] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800cc220] + 406c;
     system_psyq_draw_otag();

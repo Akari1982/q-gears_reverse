@@ -177,10 +177,10 @@ if( bu[80071a58] != 0 )
     func13800();
 
     A0 = 8007eb68 + h[80075dec] * 14;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = 8007eaac + h[80075dec] * 5c;
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = 8007e7a0 + h[80075dec] * 4;
     system_psyq_draw_otag();
@@ -287,14 +287,14 @@ A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 8007eaac + 5c;
 A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 [8007eac2] = b(1);
 [8007eb1e] = b(1);
@@ -302,11 +302,11 @@ system_graphic_create_draw_env_struct();
 [8007eb20] = b(0);
 
 A0 = 8007eb68;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 
 A0 = 8007eaac;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 ////////////////////////////////
 
 

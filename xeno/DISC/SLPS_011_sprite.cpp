@@ -9575,7 +9575,7 @@ A1 = 0;
 S4 = V0;
 80026F18	beq    s4, zero, L271a0 [$800271a0]
 V0 = 0;
-80026F20	jal    system_psyq_get_draw_env [$80044cdc]
+80026F20	jal    system_psyq_get_drawenv [$80044cdc]
 A0 = SP + 0010;
 [S4 + 0328] = w(S7);
 [S4 + 032c] = w(FP);

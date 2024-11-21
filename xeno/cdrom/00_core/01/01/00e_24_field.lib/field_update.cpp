@@ -730,10 +730,10 @@ else
 }
 
 A0 = w[800c3740] + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740] + 0;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
@@ -826,10 +826,10 @@ A2 = w[800acfe0] << 8;
 system_move_image();
 
 A0 = w[800c3740] + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740] + 0;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[800c3740] + 80f0;
 system_psyq_draw_otag();

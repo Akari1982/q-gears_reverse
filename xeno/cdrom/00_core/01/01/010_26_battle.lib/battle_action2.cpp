@@ -6114,10 +6114,10 @@ else
 system_psyq_wait_frames();
 
 A0 = w[800cc220] + 5c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800cc220];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 func24e3c();
 

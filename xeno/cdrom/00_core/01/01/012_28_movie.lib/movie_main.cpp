@@ -23,7 +23,7 @@ A1 = 0;   // x
 A2 = 0;   // y
 A3 = 280; // width
 A4 = f0;  // height
-system_graphic_create_draw_env_struct()
+system_psyq_set_def_drawenv()
 
 A0 = 800767b4 + 194;
 A1 = 0;   // x
@@ -44,7 +44,7 @@ A1 = 0;   // x
 A2 = f0;  // y
 A3 = 280; // width
 A4 = f0;  // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 // set Paints entire clip area with brightness values (r0, g0, b0) when drawing
 [800767b4 + 18] = b(1);
@@ -321,10 +321,10 @@ while( true )
     system_psyq_wait_frames();
 
     A0 = w[800767b0];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800767b0] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
@@ -365,7 +365,7 @@ while( true )
                 A2 = 0;
                 A3 = 140;
                 A4 = f0;
-                system_graphic_create_draw_env_struct();
+                system_psyq_set_def_drawenv();
 
                 A0 = 800767b4 + 5c;
                 A1 = 0;
@@ -379,7 +379,7 @@ while( true )
                 A2 = f0;
                 A3 = 140;
                 A4 = f0;
-                system_graphic_create_draw_env_struct();
+                system_psyq_set_def_drawenv();
 
                 A0 = 800767b4 + 194;
                 A1 = 0;
@@ -1871,10 +1871,10 @@ L71b4c:	; 80071B4C
     system_psyq_wait_frames();
 
     A0 = w[800767b0];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800767b0] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
@@ -2568,7 +2568,7 @@ A1 = 0;   // x
 A2 = 0;   // y
 A3 = 140; // width
 A4 = f0;  // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 [800767b4 + 16] = b(1); // dithering processing flag on
 [800767b4 + 18] = b(1); // paints entire clip area with brightness values (r0, g0, b0) when drawing
@@ -2594,7 +2594,7 @@ A1 = 0;   // x
 A2 = f0;  // y
 A3 = 140; // width
 A4 = f0;  // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 [800767b4 + 138 + 16] = b(1); // dithering processing flag on
 [800767b4 + 138 + 18] = b(1); // paints entire clip area with brightness values (r0, g0, b0) when drawing
@@ -2619,10 +2619,10 @@ system_graphic_create_display_env_struct();
 [800767b0] = w(800767b4);
 
 A0 = 800767b4;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[800767b0] + 5c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 if( w[80076ae0] != 0 ) // CD-ROM MODE2 or PC HDD MODE
 {
@@ -3178,10 +3178,10 @@ while( true )
     system_psyq_wait_frames();
 
     A0 = w[800767b0];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800767b0] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
@@ -4053,7 +4053,7 @@ A0 = 800767b4;
 A2 = 0;
 A3 = 280;
 A4 = f0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800767b4 + 5c;
 A1 = 0;
@@ -4067,7 +4067,7 @@ A1 = 0;
 A2 = f0;
 A3 = 280;
 A4 = f0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800767b4 + 194;
 A1 = 0;
@@ -4302,10 +4302,10 @@ L74ce8:	; 80074CE8
     system_psyq_wait_frames();
 
     A0 = w[800767b0];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800767b0] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
@@ -4329,7 +4329,7 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = f0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800767b4 + 5c;
 A1 = 0;
@@ -4343,7 +4343,7 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = f0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = 800767b4 + 194;
 A1 = 0;
@@ -4598,10 +4598,10 @@ L75474:	; 80075474
     system_psyq_wait_frames();
 
     A0 = w[800767b0];
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     A0 = w[800767b0] + 5c;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     A0 = w[800767b0] + ec;
     system_psyq_draw_otag();
@@ -4859,13 +4859,13 @@ mdec_movie_set_to_play();
 
 V0 = w[800766a8];
 A0 = 800767b4 + V0 * 138;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 S0 = 800767b4 + 5c;
 V0 = w[800766a8];
 FP = S0;
 A0 = FP + V0 * 138;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = 1;
 system_psyq_set_disp_mask();
@@ -4930,7 +4930,7 @@ while( true )
 
     V0 = w[800766ac];
     A0 = FP + V0 * 138;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     [800766ac] = w(w[800766a8]);
 
@@ -4975,7 +4975,7 @@ A0 = 0;
 system_psyq_wait_frames();
 
 A0 = FP + 138;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 return 0;
 ////////////////////////////////

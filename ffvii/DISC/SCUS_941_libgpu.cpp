@@ -780,27 +780,33 @@ SP = SP + 0028;
 
 
 ////////////////////////////////
-// system_graphic_create_draw_env_struct()
+// system_psyq_set_def_drawenv()
 
-[A0 + 00] = h(A1); // clip rect x
-[A0 + 02] = h(A2); // clip rect y
-[A0 + 04] = h(A3); // clip rect width
-[A0 + 06] = h(A4); // clip rect height
-[A0 + 08] = h(A1); // offset to primitive x
-[A0 + 0a] = h(A2); // offset to primitive y
-[A0 + 0c] = h(0); // texture window rect x
-[A0 + 0e] = h(0); // texture window rect y
-[A0 + 10] = h(0); // texture window rect width
-[A0 + 12] = h(0); // texture window rect height
-[A0 + 14] = h(a); // tpage
-[A0 + 16] = b(1); // dithering processing flag (on)
-[A0 + 17] = b(0); // drawing to display area is blocked
-[A0 + 18] = b(0); // not clear drawing area when drawing environment is set
-[A0 + 19] = b(0); // background color r
-[A0 + 1a] = b(0); // background color g
-[A0 + 1b] = b(0); // background color b
+env = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
 
-return A0;
+[env + 0] = h(x); // clip rect x
+[env + 2] = h(y); // clip rect y
+[env + 4] = h(w); // clip rect width
+[env + 6] = h(h); // clip rect height
+[env + 8] = h(x); // offset to primitive x
+[env + a] = h(y); // offset to primitive y
+[env + c] = h(0); // texture window rect x
+[env + e] = h(0); // texture window rect y
+[env + 10] = h(0); // texture window rect width
+[env + 12] = h(0); // texture window rect height
+[env + 14] = h(a); // tpage
+[env + 16] = b(1); // dithering processing flag (on)
+[env + 17] = b(0); // drawing to display area is blocked
+[env + 18] = b(0); // not clear drawing area when drawing environment is set
+[env + 19] = b(0); // background color r
+[env + 1a] = b(0); // background color g
+[env + 1b] = b(0); // background color b
+
+return env;
 ////////////////////////////////
 
 
@@ -1429,7 +1435,7 @@ A3 = 0;
 
 
 ////////////////////////////////
-// system_psyq_put_draw_env()
+// system_psyq_put_drawenv()
 // Set the drawing environment
 // The basic drawing parameters (such as the drawing offset and the drawing clip area) are set according to
 // the values specified in env.
@@ -1447,7 +1453,7 @@ if( bu[80062c02] >= 2 )
 
 A0 = S1 + 1c;
 A1 = S1;
-system_psyq_set_draw_env();
+system_psyq_set_drawenv();
 
 [S1 + 1c] = w(w[S1 + 1c] | 00ffffff);
 
@@ -1482,7 +1488,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_psyq_put_disp_env()
+// system_psyq_put_dispenv()
 
 S0 = A0;
 
@@ -1795,7 +1801,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_psyq_get_disp_env()
+// system_psyq_get_dispenv()
 
 S0 = A0;
 
@@ -1925,40 +1931,40 @@ system_gpu_get_texture_window_setting_command(); // prepare texture window rect 
 
 
 ////////////////////////////////
-// system_psyq_set_draw_env()
+// system_psyq_set_drawenv()
 // Initialize content of drawing environment change primitive.
 
-prim = A0; // draw env packets
+dr_env = A0; // draw env packets
 env = A1; // draw env
 
 A0 = h[env + 0]; // x top clip
 A1 = h[env + 2]; // y top clip
 system_gpu_set_drawing_area_top_left(); // create packet for clip
-[prim + 4] = w(V0);
+[dr_env + 4] = w(V0);
 
 A0 = h[env + 0] + h[env + 4] - 1;
 A1 = h[env + 2] + h[env + 6] - 1;
 system_gpu_set_drawing_area_bottom_right(); // create packet for сlip
-[prim + 8] = w(V0);
+[dr_env + 8] = w(V0);
 
 A0 = h[env + 8]; // offset x
 A1 = h[env + a]; // offset y
 system_gpu_set_drawing_offset(); // create packet for offset
-[prim + c] = w(V0);
+[dr_env + c] = w(V0);
 
 A0 = bu[env + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = bu[env + 16]; // dithering processing flag. 0: off; 1: on
 A2 = hu[env + 14]; // initial values of texture page
 system_gpu_get_draw_mode_setting_command(); // create packet
-[prim + 10] = w(V0);
+[dr_env + 10] = w(V0);
 
 A0 = env + c; // texture window rect
 system_gpu_get_texture_window_setting_command(); // create packet
-[prim + 14] = w(V0);
+[dr_env + 14] = w(V0);
 
-[prim + 18] = w(e6000000);
+[dr_env + 18] = w(e6000000);
 
-[prim + 3] = b(6); // number of 0x4 packets to gpu
+[dr_env + 3] = b(6); // number of 0x4 packets to gpu
 
 if( bu[env + 18] != 0 )
 {
@@ -1978,17 +1984,17 @@ if( bu[env + 18] != 0 )
         rect_x = rect_x - hu[env + 8];
         rect_y = rect_y - hu[env + a];
 
-        [prim + 7 * 4] = w(60000000 | (bu[env + 1a] << 08) | (bu[env + 1b] << 10) | bu[env + 19]);
-        [prim + 8 * 4] = w((rect_y << 10) | rect_x);
-        [prim + 9 * 4] = w((rect_h << 10) | rect_w);
+        [dr_env + 7 * 4] = w(60000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 8) | bu[env + 19]);
+        [dr_env + 8 * 4] = w((rect_y << 10) | rect_x);
+        [dr_env + 9 * 4] = w((rect_h << 10) | rect_w);
     }
     else
     {
-        [prim + 7 * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
-        [prim + 8 * 4] = w((rect_y << 10) | rect_x);
-        [prim + 9 * 4] = w((rect_h << 10) | rect_w);
+        [dr_env + 7 * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
+        [dr_env + 8 * 4] = w((rect_y << 10) | rect_x);
+        [dr_env + 9 * 4] = w((rect_h << 10) | rect_w);
     }
-    [prim + 3] = b(9);
+    [dr_env + 3] = b(9);
 }
 ////////////////////////////////
 

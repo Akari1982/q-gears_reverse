@@ -125,7 +125,7 @@ A1 = 0; // x
 A2 = 8; // y
 A3 = 140; // width
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [800c84f4 + 18] = b(1);
 [800c84f4 + 19] = b(0);
 [800c84f4 + 1a] = b(0);
@@ -136,7 +136,7 @@ A1 = 0;
 A2 = 00f0;
 A3 = 0140;
 A4 = e0;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [800cc568 + 18] = b(1);
 [800cc568 + 19] = b(0);
 [800cc568 + 1a] = b(0);
@@ -484,10 +484,10 @@ A0 = 1;
 system_psyq_reset_graph();
 
 A0 = w[800d05e4];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[800d05e4] + 5c;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800bd130] + 2710;
 system_psyq_draw_otag();

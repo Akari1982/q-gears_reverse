@@ -2843,7 +2843,7 @@
 // func43738
 80043738-8004379C
 ////////////////////////////////
-// system_graphic_create_draw_env_struct
+// system_psyq_set_def_drawenv
 800437A0-80043854
 ////////////////////////////////
 // system_graphic_create_display_env_struct
@@ -3023,19 +3023,19 @@
 // system_psyq_draw_otag
 80044A48-80044AB8
 ////////////////////////////////
-// system_psyq_put_draw_env
+// system_psyq_put_drawenv
 80044ABC-80044BBC
 ////////////////////////////////
 // system_psyq_draw_otag_env
 80044BC0-80044CD8
 ////////////////////////////////
-// system_psyq_get_draw_env
+// system_psyq_get_drawenv
 80044CDC-80044D10
 ////////////////////////////////
-// system_psyq_put_disp_env
+// system_psyq_put_dispenv
 80044D14-800451B8
 ////////////////////////////////
-// system_psyq_get_disp_env
+// system_psyq_get_dispenv
 800451BC-800451F0
 ////////////////////////////////
 // system_gpu_get_odd_even_line
@@ -3056,7 +3056,7 @@
 // system_psyq_set_draw_mode
 80045354-800453A8
 ////////////////////////////////
-// func453ac
+// system_psyq_set_drawenv
 800453AC-800455C0
 ////////////////////////////////
 // system_gpu_create_set_draw_env_packet

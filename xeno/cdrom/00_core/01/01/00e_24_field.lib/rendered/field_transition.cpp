@@ -1156,11 +1156,11 @@ A3 = 0;
 system_clear_image();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = w[800c3740];
 A0 = A0 + 00b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740] + 80f0;
 system_psyq_draw_otag();

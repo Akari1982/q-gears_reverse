@@ -1304,10 +1304,10 @@ V1 = V1 - V0;
 [800acfe0] = w(V1);
 
 A0 = V0 + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 ////////////////////////////////
 
 
@@ -1342,10 +1342,10 @@ A2 = rb * 100; // y
 system_move_image();
 
 A0 = rdata + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = rdata;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 A0 = rdata + d0;
 system_psyq_draw_otag();
@@ -1751,10 +1751,10 @@ system_move_image();
 field_draw_sync();
 
 A0 = w[800c3740] + b8;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 A0 = w[800c3740];
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 [800af320 + 0] = h(2c0);
 [800af320 + 2] = h(100);

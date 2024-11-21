@@ -2557,7 +2557,7 @@ A1 = 0;
 A2 = 0;
 A3 = S3;
 A4 = S2;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 S0 = 800af398;
 
@@ -2573,7 +2573,7 @@ A1 = 0;
 A2 = S4;
 A3 = S3;
 A4 = S2;
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 
 A0 = S0 + 0014;
 A1 = 0;
@@ -2638,7 +2638,7 @@ A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 02;
 A0 = 800af398 + A0;
-system_psyq_put_disp_env();
+system_psyq_put_dispenv();
 
 V0 = w[800af408];
 A0 = V0 << 01;
@@ -2647,7 +2647,7 @@ A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
 A0 = 800af2e0 + A0;
-system_psyq_put_draw_env();
+system_psyq_put_drawenv();
 
 V1 = w[800af408];
 800A27CC	nop

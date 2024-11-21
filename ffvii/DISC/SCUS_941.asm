@@ -2977,7 +2977,7 @@
 // func437ac
 800437AC-80043810
 ////////////////////////////////
-// system_graphic_create_draw_env_struct
+// system_psyq_set_def_drawenv
 80043814-800438D0
 ////////////////////////////////
 // system_graphic_create_display_env_struct
@@ -3043,16 +3043,16 @@
 // system_psyq_draw_otag
 8004433C-800443AC
 ////////////////////////////////
-// system_psyq_put_draw_env
+// system_psyq_put_drawenv
 800443B0-80044470
 ////////////////////////////////
 // func44474
 80044474-800444A8
 ////////////////////////////////
-// system_psyq_put_disp_env
+// system_psyq_put_dispenv
 800444AC-800448CC
 ////////////////////////////////
-// system_psyq_get_disp_env
+// system_psyq_get_dispenv
 800448D0-80044904
 ////////////////////////////////
 // func44908
@@ -3073,7 +3073,7 @@
 // system_psyq_set_draw_mode
 80044A68-80044ABC
 ////////////////////////////////
-// system_psyq_set_draw_env
+// system_psyq_set_drawenv
 80044AC0-80044D60
 ////////////////////////////////
 // system_gpu_get_draw_mode_setting_command

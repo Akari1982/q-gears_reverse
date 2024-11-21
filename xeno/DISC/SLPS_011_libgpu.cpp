@@ -116,36 +116,40 @@ return V0 & ffff;
 
 
 ////////////////////////////////
-// system_graphic_create_draw_env_struct()
+// system_psyq_set_def_drawenv()
 
-S2 = A4;
-S1 = A0;
+env = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
 
-[S1 + 0] = h(A1); // clip x
-[S1 + 2] = h(A2); // clip y
-[S1 + 4] = h(A3); // clip width
-[S1 + 6] = h(S2); // clip height
-[S1 + 8] = h(A1); // offset x
-[S1 + a] = h(A2); // offset y
-[S1 + c] = h(0); // tw x
-[S1 + e] = h(0); // tw y
-[S1 + 10] = h(0); // tw width
-[S1 + 12] = h(0); // tw height
-[S1 + 14] = h(a); // initial value of texture page
-[S1 + 16] = b(1); // dithering processing flag. 0: off; 1: on
-[S1 + 18] = b(0); // 0: Does not clear drawing area when drawing environment is set.1: Paints entire clip area with brightness values (r0, g0, b0) when drawing
-[S1 + 19] = b(0); // r
-[S1 + 1a] = b(0); // g
-[S1 + 1b] = b(0); // b
+[env + 0] = h(x); // clip rect x
+[env + 2] = h(y); // clip rect y
+[env + 4] = h(w); // clip rect width
+[env + 6] = h(h); // clip rect height
+[env + 8] = h(x); // offset to primitive x
+[env + a] = h(y); // offset to primitive y
+[env + c] = h(0); // texture window rect x
+[env + e] = h(0); // texture window rect y
+[env + 10] = h(0); // texture window rect width
+[env + 12] = h(0); // texture window rect height
+[env + 14] = h(a); // tpage
+[env + 16] = b(1); // dithering processing flag (on)
+[env + 17] = b(0); // drawing to display area is blocked
+[env + 18] = b(0); // not clear drawing area when drawing environment is set
+[env + 19] = b(0); // background color r
+[env + 1a] = b(0); // background color g
+[env + 1b] = b(0); // background color b
 
 func4c1b0(); // get data from 80058030
 if( V0 != 0 )
 {
-    [S1 + 17] = b(S2 < 121); // 0: drawing to display area is blocked1: drawing to display area is permitted
+    [env + 17] = b(h < 121); // 0: drawing to display area is blocked1: drawing to display area is permitted
 }
 else
 {
-    [S1 + 17] = b(S2 < 101); // 0: drawing to display area is blocked1: drawing to display area is permitted
+    [env + 17] = b(h < 101); // 0: drawing to display area is blocked1: drawing to display area is permitted
 }
 ////////////////////////////////
 
@@ -1287,7 +1291,7 @@ A3 = 0; // src
 
 
 ////////////////////////////////
-// system_psyq_put_draw_env()
+// system_psyq_put_drawenv()
 // The basic drawing parameters (such as the drawing offset and the drawing clip area) are set according to
 // the values specified in env.
 // The drawing environment is effective until the next time PutDrawEnv() is executed, or until the 
@@ -1391,7 +1395,7 @@ loop44c78:	; 80044C78
 
 
 ////////////////////////////////
-// system_psyq_get_draw_env()
+// system_psyq_get_drawenv()
 
 S0 = A0;
 
@@ -1405,7 +1409,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_psyq_put_disp_env()
+// system_psyq_put_dispenv()
 
 S0 = A0;
 S3 = 08000000;
@@ -1743,7 +1747,7 @@ return S0;
 
 
 ////////////////////////////////
-// system_psyq_get_disp_env()
+// system_psyq_get_dispenv()
 
 dst = A0;
 
@@ -1879,96 +1883,60 @@ system_gpu_get_texture_window_setting_command();
 
 
 ////////////////////////////////
-// func453ac
+// system_psyq_set_drawenv()
+// Initialize content of drawing environment change primitive.
 
-S0 = A1;
-S1 = A0;
-A0 = h[S0 + 0];
-A1 = h[S0 + 2];
-system_gpu_get_set_drawing_area_tl_command();
-[S1 + 4] = w(V0);
+dr_env = A0; // draw env packets
+env = A1; // draw env
 
-A0 = h[S0 + 0] + h[S0 + 4] - 1;
-A1 = h[S0 + 2] + h[S0 + 6] - 1;
-system_gpu_get_set_drawing_area_br_command();
-[S1 + 8] = w(V0);
+A0 = h[env + 0]; // x top clip
+A1 = h[env + 2]; // y top clip
+system_gpu_get_set_drawing_area_tl_command(); // create packet for clip
+[dr_env + 4] = w(V0);
 
-A0 = h[S0 + 8];
-A1 = h[S0 + a];
-system_gpu_get_set_drawing_offset_command();
-[S1 + c] = w(V0);
+A0 = h[env + 0] + h[env + 4] - 1;
+A1 = h[env + 2] + h[env + 6] - 1;
+system_gpu_get_set_drawing_area_br_command(); // create packet for сlip
+[dr_env + 8] = w(V0);
 
-A0 = bu[S0 + 17];
-A1 = bu[S0 + 16];
-A2 = hu[S0 + 14];
-system_gpu_get_draw_mode_setting_command();
-[S1 + 10] = w(V0);
+A0 = h[env + 8]; // offset x
+A1 = h[env + a]; // offset y
+system_gpu_get_set_drawing_offset_command()(); // create packet for offset
+[dr_env + c] = w(V0);
 
-A0 = S0 + c;
-system_gpu_get_texture_window_setting_command();
-[S1 + 14] = w(V0);
+A0 = bu[env + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
+A1 = bu[env + 16]; // dithering processing flag. 0: off; 1: on
+A2 = hu[env + 14]; // initial values of texture page
+system_gpu_get_draw_mode_setting_command(); // create packet
+[dr_env + 10] = w(V0);
 
-[S1 + 18] = w(e6000000);
+A0 = env + c; // texture window rect
+system_gpu_get_texture_window_setting_command(); // create packet
+[dr_env + 14] = w(V0);
 
-V0 = bu[S0 + 0018];
-80045454	nop
-80045458	beq    v0, zero, L455a4 [$800455a4]
-A3 = 0007;
+[dr_env + 18] = w(e6000000);
 
-[SP + 0010] = h(h[S0 + 0000]);
-[SP + 0012] = h(h[S0 + 0002]);
-[SP + 0014] = h(h[S0 + 0004]);
-[SP + 0016] = h(h[S0 + 0006]);
-A0 = h[S0 + 0004];
+[dr_env + 3] = b(6);
 
-A1 = A0;
-80045498	bltz   a1, L454c4 [$800454c4]
-V0 = 0;
-V0 = h[80055f74];
-V1 = V0;
-800454B0	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A1;
-800454B8	bne    v0, zero, L454c4 [$800454c4]
-800454BC	addiu  v0, v1, $ffff (=-$1)
-V0 = A0;
+if( bu[env + 18] != 0 )
+{
+    rect_x = hu[env + 0];
+    rect_y = hu[env + 2];
+    rect_w = hu[env + 4];
+    rect_h = hu[env + 6];
 
-L454c4:	; 800454C4
-A1 = h[SP + 0016];
-[SP + 0014] = h(V0);
-800454CC	bltz   a1, L454fc [$800454fc]
-A0 = A1;
-V0 = h[80055f76];
-800454DC	nop
-V1 = V0;
-800454E4	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < A1;
-800454EC	bne    v0, zero, L45500 [$80045500]
-800454F0	addiu  v0, v1, $ffff (=-$1)
-800454F4	j      L45500 [$80045500]
-V0 = A0;
+    m_width = h[80062с04] - 1;
+    m_height = h[80062c06] - 1;
 
-L454fc:	; 800454FC
-V0 = 0;
+    rect_x = rect_x - hu[env + 8];
+    rect_y = rect_y - hu[env + a];
 
-L45500:	; 80045500
-A2 = A3 << 02;
-A3 = A3 + 0001;
-A1 = A3 << 02;
-A3 = A3 + 0001;
-[SP + 0016] = h(V0);
-A2 = A2 + S1;
-[SP + 10] = h(hu[SP + 10] - hu[S0 + 8]);
-[SP + 12] = h(hu[SP + 12] - hu[S0 + a]);
-[A2 + 0000] = w(60000000 | (bu[S0 + 1b] << 10) | (bu[S0 + 1a] << 08) | bu[S0 + 19]);
-[A1 + S1] = w(w[SP + 10]);
-V0 = A3 << 02;
-[S1 + V0] = w(w[SP + 14]);
-[SP + 10] = h(hu[SP + 10] + hu[S0 + 8]);
-[SP + 12] = h(hu[SP + 12] + hu[S0 + a]);
-A3 = A3 + 1;
+    [dr_env + 7 * 4] = w(60000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 8) | bu[env + 19]);
+    [dr_env + 8 * 4] = w((rect_y << 10) | rect_x);
+    [dr_env + 9 * 4] = w((rect_h << 10) | rect_w);
 
-L455a4:	; 800455A4
-[S1 + 0003] = b(A3 - 1);
+    [dr_env + 3] = b(9);
+}
 ////////////////////////////////
 
 

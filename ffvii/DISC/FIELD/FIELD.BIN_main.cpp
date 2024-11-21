@@ -143,13 +143,13 @@ A0 = 80100818;
 A1 = 1;
 system_psyq_clear_otag_r();
 
-A0 = 800e8f84;
-A1 = 8007eaac;
-system_psyq_set_draw_env();
+A0 = 800e8f84; // DR_ENV prim
+A1 = 8007eaac; // DRAWENV struct
+system_psyq_set_drawenv();
 
-A0 = 80100820;
-A1 = 8007eb08;
-system_psyq_set_draw_env();
+A0 = 80100820; // DR_ENV prim
+A1 = 8007eb08; // DRAWENV struct
+system_psyq_set_drawenv();
 
 T2 = w[800e8f84];
 T1 = w[800e8f7c];
@@ -161,57 +161,57 @@ V1 = w[80100818];
 [80100820] = w((T0 & ff000000) | (V1 & 00ffffff));
 [80100818] = w((V1 & ff000000) | (80100820 & 00ffffff));
 
-A0 = 80113f2c;
+A0 = 80113f2c; // DRAWENV struct
 A1 = 0; // x
 A2 = 8; // y
 A3 = 140; // width
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [80113f2c + 16] = b(1); // dithering processing flag (on)
 [80113f2c + 18] = b(0); // not clear drawing area when drawing environment is set
 
-A0 = 80113f88;
+A0 = 80113f88; // DRAWENV struct
 A1 = 0; // x
 A2 = f0; // y
 A3 = 140; // width
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [80113f88 + 16] = b(1);
 [80113f88 + 18] = b(0);
 
-A0 = 80114154;
+A0 = 80114154; // DRAWENV struct
 A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [80114154 + 16] = b(1);
 [80114154 + 18] = b(0);
 
-A0 = 801141b0;
+A0 = 801141b0; // DRAWENV struct
 A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [801141b0 + 16] = b(1);
 [801141b0 + 18] = b(0);
 
-A0 = 8011420c;
+A0 = 8011420c; // DRAWENV struct
 A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [8011420c + 16] = b(1);
 [8011420c + 18] = b(0);
 
-A0 = 80114268;
+A0 = 80114268; // DRAWENV struct
 A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [80114268 + 16] = b(1);
 [80114268 + 18] = b(0);
 
@@ -224,53 +224,53 @@ A0 = 8010081c;
 A1 = 1;
 system_psyq_clear_otag_r();
 
-A0 = 800e8fc4;
-A1 = 80113f2c;
-system_psyq_set_draw_env();
+A0 = 800e8fc4; // DR_ENV prim
+A1 = 80113f2c; // DRAWENV struct
+system_psyq_set_drawenv();
 
-A0 = 80100860;
-A1 = 80113f88;
-system_psyq_set_draw_env();
+A0 = 80100860; // DR_ENV prim
+A1 = 80113f88; // DRAWENV struct
+system_psyq_set_drawenv();
 
 [800e8fc4] = w((w[800e8fc4] & ff000000) | (w[800e8f80] & 00ffffff));
 [800e8f80] = w((w[800e8f80] & ff000000) | (800e8fc4 & 00ffffff));
 [80100860] = w((w[80100860] & ff000000) | (w[8010081c] & 00ffffff));
 [8010081c] = w((w[8010081c] & ff000000) | (80100860 & 00ffffff));
 
-A0 = 80113fe4;
+A0 = 80113fe4; // DRAWENV struct
 A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [80113ffa] = b(1);
 [80113ffc] = b(0);
 
-A0 = 80113fe4 + 5c;
+A0 = 80113fe4 + 5c; // DRAWENV struct
 A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [80114056] = b(1);
 [80114058] = b(0);
 
-S0 = 8011409c;
+S0 = 8011409c; // DRAWENV struct
 A0 = S0;
 A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [801140b2] = b(1);
 [801140b4] = b(0);
 
-A0 = S0 + 005c;
+A0 = S0 + 5c; // DRAWENV struct
 A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0; // height
-system_graphic_create_draw_env_struct();
+system_psyq_set_def_drawenv();
 [8011410e] = b(1);
 [80114110] = b(0);
 
@@ -454,11 +454,11 @@ while( true )
 
     V0 = h[80075dec];
     A0 = 8007eb68 + V0 * 14;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     V0 = h[80075dec];
     A0 = 8007eaac + V0 * 5c;
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     [800965ec] = h(1); // set current game state as field
 
@@ -848,12 +848,12 @@ while( true )
 
     V0 = h[80075dec];
     A0 = 8007eb68 + V0 * 14;
-    system_psyq_put_disp_env();
+    system_psyq_put_dispenv();
 
     V0 = h[80075dec];
     S0 = 8007eaac;
     A0 = S0 + V0 * 5c;
-    system_psyq_put_draw_env();
+    system_psyq_put_drawenv();
 
     if( hu[80114488] == 0 )
     {
@@ -2691,7 +2691,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 
             A0 = S2 + 41d4;
             A1 = 80113f34 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
         else
         {
@@ -2700,7 +2700,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 
             A0 = 80100860;
             A1 = 80113f88;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
     }
     else
@@ -2712,7 +2712,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 
             A0 = 80100860;
             A1 = 80113f90 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
         else
         {
@@ -2721,7 +2721,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 
             A0 = S2 + 41d4;
             A1 = 80113f34 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
     }
 }
@@ -2808,35 +2808,35 @@ else
 
             A0 = 800e4df0 + 41d4;
             A1 = 80113f34 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [8011415e] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
             [8011415c] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
 
             A0 = 800e4df0 + 4294;
             A1 = 8011415c - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114216] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
             [80114214] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
 
             A0 = 800e4df0 + 42d4;
             A1 = 80114214 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80113fec] = h(b[8009ac81] - hu[8007eb90] - S5);
             [80113fee] = h(b[8009ac8f] + hu[8007eb94] - S4);
 
             A0 = 800e4df0 + 4214;
             A1 = 80113fec - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [801140a4] = h(b[8009ac81] + hu[8007eb90] - S7);
             [801140a6] = h(b[8009ac8f] + hu[8007eb94] - S6);
 
             A0 = 800e4df0 + 4254;
             A1 = 801140a4 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
         else
         {
@@ -2845,35 +2845,35 @@ else
 
             A0 = 80100860;
             A1 = 80113f90 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [801141ba] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
             [801141b8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
 
             A0 = 80100860 + c0;
             A1 = 801141b8 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114272] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
             [80114270] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
 
             A0 = 80100860 + 100;
             A1 = 80114270 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114048] = h(b[8009ac81] + hu[8007eb90] - S5);
             [8011404a] = h(b[8009ac8f] + hu[8007eb94] - S4 + e8);
 
             A0 = 80100860 + 40;
             A1 = 80114048 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114100] = h(b[8009ac81] + hu[8007eb90] - S7);
             [80114102] = h(b[8009ac8f] + hu[8007eb94] - S6 + e8);
 
             A0 = 80100860 + 80;
             A1 = 80114100 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
 
         [80071e38] = h(0 - hu[SP + 18]);
@@ -2902,35 +2902,35 @@ else
 
             A0 = 800e8fc4;
             A1 = 80113f2c;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [8011415c] = h(val1);
             [8011415e] = h(val2);
 
             A0 = 800e9084;
             A1 = 80114154;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114214] = h(val1);
             [80114216] = h(val2);
 
             A0 = 800e90c4;
             A1 = 8011420c;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80113fec] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S3);
             [80113fee] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S4);
 
             A0 = 800e9004;
             A1 = 80113fe4;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [801140a4] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S5);
             [801140a6] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S6);
 
             A0 = 800e9044;
             A1 = 8011409c;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
         else
         {
@@ -2942,35 +2942,35 @@ else
 
             A0 = 80100830;
             A1 = 80113f90 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [801141b8] = h(val1);
             [801141ba] = h(val2 + e8);
 
             A0 = 80100830 + c0;
             A1 = 801141b8 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114270] = h(val1);
             [80114272] = h(val2 + e8);
 
             A0 = 80100830 + 100;
             A1 = 80114270 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114048] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S3);
             [8011404a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S4 + e8);
 
             A0 = 80100830 + 40;
             A1 = 80114048 - 8;
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
 
             [80114100] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S5);
             [80114102] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S6 + e8);
 
             A0 = 80100830 + 80; // prim
             A1 = 80114100 - 8; // env
-            system_psyq_set_draw_env();
+            system_psyq_set_drawenv();
         }
 
         [80071a48] = h(140 - hu[80071e38] - hu[8007eb90] - b[8009abf4 + 8d]); // background X centered

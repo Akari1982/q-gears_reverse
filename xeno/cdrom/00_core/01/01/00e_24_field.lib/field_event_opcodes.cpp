@@ -201,14 +201,14 @@ if( V0 == 0 )
     A2 = 0;
     A3 = 280;
     A4 = e0;
-    system_graphic_create_draw_env_struct();
+    system_psyq_set_def_drawenv();
 
     A0 = 800b9a64;
     A1 = 0;
     A2 = 100;
     A3 = 280;
     A4 = e0;
-    system_graphic_create_draw_env_struct();
+    system_psyq_set_def_drawenv();
 
     A0 = 800b1970 + b8;
     A1 = 0;
