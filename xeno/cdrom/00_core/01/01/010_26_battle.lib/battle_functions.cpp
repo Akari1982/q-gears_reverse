@@ -66310,13 +66310,13 @@ A1 = 0;
 A2 = 00e0;
 A3 = 0140;
 S0 = 00e0;
-800B7864	jal    $system_graphic_create_display_env_struct
+800B7864	jal    $system_psyq_set_def_dispenv
 [SP + 0010] = w(S0);
 A0 = S1 + 4070;
 A1 = 0;
 A2 = 0;
 A3 = 0140;
-800B787C	jal    $system_graphic_create_display_env_struct
+800B787C	jal    $system_psyq_set_def_dispenv
 [SP + 0010] = w(S0);
 800B7884	addiu  a0, s1, $ffa4 (=-$5c)
 A1 = 0;

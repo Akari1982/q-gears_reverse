@@ -169,11 +169,10 @@
     + 15 []   actor move to line (for talk check).
     + 16 []   store SLIP byte here.
 
-8007eaac packet settings for 800e8f84.
 8007eb08 packet settings for 80100820.
 
-8007eb90 [][]     some data. Init with 0xa0.
-8007eb94 [][]     some data. Init with 0x78.
+8007eb90 [][]     base offset x for DRAWENV. Init with 0xa0.
+8007eb94 [][]     base offset y for DRAWENV. Init with 0x78.
 8007eb98 array of entity_id for actors. -1 if no entity assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
 
 8007ebc8 []       store 1 here during random encounter.
@@ -553,6 +552,8 @@
 8011016c + 04 []
 
 80113f28 [][] store current triangle here during walkmesh_border_cross.
+
+80113f2c array DRAWENV structs (0xa items 0x5c size).
 
 80114278 [][] some data for windows. Set this to zero during window initialization
 

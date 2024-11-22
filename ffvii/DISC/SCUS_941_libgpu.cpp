@@ -812,20 +812,26 @@ return env;
 
 
 ////////////////////////////////
-// system_graphic_create_display_env_struct()
+// system_psyq_set_def_dispenv()
 
-[A0 + 00] = h(A1); // x
-[A0 + 02] = h(A2); // y
-[A0 + 04] = h(A3); // width
-[A0 + 06] = h(A4); // height
-[A0 + 08] = h(0);
-[A0 + 0a] = h(0);
-[A0 + 0c] = h(0);
-[A0 + 0e] = h(0);
-[A0 + 10] = b(0);
-[A0 + 11] = b(0);
-[A0 + 12] = b(0);
-[A0 + 13] = b(0);
+disp = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
+
+[disp + 0] = h(x);
+[disp + 2] = h(y);
+[disp + 4] = h(w);
+[disp + 6] = h(h);
+[disp + 8] = h(0);
+[disp + a] = h(0);
+[disp + c] = h(0);
+[disp + e] = h(0);
+[disp + 10] = b(0);
+[disp + 11] = b(0);
+[disp + 12] = b(0);
+[disp + 13] = b(0);
 ////////////////////////////////
 
 

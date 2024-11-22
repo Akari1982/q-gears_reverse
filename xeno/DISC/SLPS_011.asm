@@ -2846,7 +2846,7 @@
 // system_psyq_set_def_drawenv
 800437A0-80043854
 ////////////////////////////////
-// system_graphic_create_display_env_struct
+// system_psyq_set_def_dispenv
 80043858-80043890
 ////////////////////////////////
 // system_psyq_get_tpage

@@ -27,7 +27,7 @@
 // system_init_base
 8001171C-80011780
 ////////////////////////////////
-// func11784
+// system_init_dispenv_drawenv
 80011784-8001185C
 ////////////////////////////////
 // system_field_run
@@ -48,7 +48,7 @@
 // func11bb4
 80011BB4-80011C18
 ////////////////////////////////
-// func11c1c
+// system_main
 80011C1C-8001283C
 ////////////////////////////////
 
@@ -2980,7 +2980,7 @@
 // system_psyq_set_def_drawenv
 80043814-800438D0
 ////////////////////////////////
-// system_graphic_create_display_env_struct
+// system_psyq_set_def_dispenv
 800438D4-8004390C
 ////////////////////////////////
 // func43910

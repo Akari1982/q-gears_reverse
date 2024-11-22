@@ -28,7 +28,7 @@ A1 = w[80011170] - w[80062d34] - 0009fe94; // heap size
 system_bios_init_heap();
 RA = w[80062e0c];
 
-func11c1c();
+system_main();
 
 80011168	break   $00001
 ////////////////////////////////
@@ -266,30 +266,30 @@ system_psyq_init_geom();
 
 
 ////////////////////////////////
-// func11784()
+// system_init_dispenv_drawenv()
 
-A0 = 8007eb68;
+A0 = 8007eb68 + 0 * 14; // DISPENV
 A1 = 0;
 A2 = e8;
 A3 = 140;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
-A0 = 8007eb68 + 14;
+A0 = 8007eb68 + 1 * 14; // DISPENV
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
-A0 = 8007eaac;
+A0 = 8007eaac + 0 * 5c; // DRAWENV
 A1 = 0;
 A2 = 8;
 A3 = 140;
 A4 = e0;
 system_psyq_set_def_drawenv();
 
-A0 = 8007eaac + 5c;
+A0 = 8007eaac + 1 * 5c; // DRAWENV
 A1 = 0;
 A2 = f0;
 A3 = 140;
@@ -465,7 +465,7 @@ if( hu[8009c560] == 0 )
 
 
 ////////////////////////////////
-// func11c1c()
+// system_main()
 
 [SP + 10] = w(w[80010014]); // "batt"
 [SP + 14] = w(w[80010018]); // "le.x"
@@ -568,7 +568,7 @@ while( true )
         }
     }
 
-    func11784();
+    system_init_dispenv_drawenv();
 
     [8007ebc8] = b(0);
     [8009c6d8] = b(0);
@@ -986,7 +986,7 @@ while( true )
                 }
             }
 
-            func11784();
+            system_init_dispenv_drawenv();
 
             [8009ac1a] = h(2);
             [800965ec] = h(c);

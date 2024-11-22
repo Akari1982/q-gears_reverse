@@ -30,14 +30,14 @@ A1 = 0;   // x
 A2 = 0;   // y
 A3 = 280; // width
 A4 = f0;  // height
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800767b4 + 5c;
 A1 = 0;   // x
 A2 = f0;  // y
 A3 = 280; // width
 A4 = f0;  // height
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800767b4 + 138;
 A1 = 0;   // x
@@ -372,7 +372,7 @@ while( true )
                 A2 = f0;
                 A3 = 140;
                 A4 = f0;
-                system_graphic_create_display_env_struct();
+                system_psyq_set_def_dispenv();
 
                 A0 = 800767b4 + 138;
                 A1 = 0;
@@ -386,7 +386,7 @@ while( true )
                 A2 = 0;
                 A3 = 140;
                 A4 = f0;
-                system_graphic_create_display_env_struct();
+                system_psyq_set_def_dispenv();
 
                 [80076818] = h(0);
                 [8007681a] = h(a);
@@ -2581,7 +2581,7 @@ A1 = 0;   // x
 A2 = f0;  // y
 A3 = 140; // width
 A4 = f0;  // height
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 [800767b4 + 5c + 8] = h(0);   //output screen display area x
 [800767b4 + 5c + a] = h(a);   // output screen display area y
@@ -2607,7 +2607,7 @@ A1 = 0;   // x
 A2 = 0;   // y
 A3 = 140; // width
 A4 = f0;  // height
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 [800767b4 + 194 + 8] = h(0);   //output screen display area x
 [800767b4 + 194 + a] = h(a);   // output screen display area y
@@ -4060,7 +4060,7 @@ A1 = 0;
 A2 = f0;
 A3 = 280;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800767b4 + 138;
 A1 = 0;
@@ -4074,7 +4074,7 @@ A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 [800767cc] = b(1);
 [80076904] = b(1);
@@ -4336,7 +4336,7 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = f0;
-system_graphic_create_display_env_struct()
+system_psyq_set_def_dispenv()
 
 A0 = 800767b4 + 138;
 A1 = 0;
@@ -4350,7 +4350,7 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 [800767cc] = b(1);
 [80076904] = b(1);

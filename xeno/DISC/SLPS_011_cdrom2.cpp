@@ -403,7 +403,7 @@ if( tries >= 4 )
     A2 = 0; // display area y
     A3 = 140; // display area width
     A4 = f0; // display area height
-    system_graphic_create_display_env_struct();
+    system_psyq_set_def_dispenv();
 
     A0 = SP + 38;
     [SP + 4e] = b(0); // dithering processing flag. 0: off

@@ -691,7 +691,7 @@ A1 = 0;
 A2 = e8;
 A3 = 140;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 8019da24;
 A1 = 0;

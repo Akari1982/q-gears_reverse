@@ -623,7 +623,7 @@ A1 = 0;
 A2 = f0;
 A3 = 180;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = SP + 8c;
 A1 = 0;
@@ -637,7 +637,7 @@ A1 = 0;
 A2 = 0;
 A3 = 180;
 A4 = f0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 0;
 system_psyq_draw_sync_callback();
@@ -816,14 +816,14 @@ A1 = 0;
 A2 = f0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 80058c84 + e4;
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 0; // buffer 0
 kernel_create_cursor();
@@ -1986,7 +1986,7 @@ A1 = 0;
 A2 = e0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800c4140;
 A1 = 0;
@@ -2000,7 +2000,7 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800c4140 + 4070;
 A1 = 0;
@@ -2327,7 +2327,7 @@ A1 = 0;
 A2 = e0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = mem + 6c;
 A1 = 0;
@@ -2341,7 +2341,7 @@ A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = mem + 120;
 A1 = 0;

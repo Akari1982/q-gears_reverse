@@ -482,14 +482,14 @@ A1 = 0;
 A2 = 100;
 A3 = 280;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800b9b1c;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 [800b9b2d] = b(0);
 [800b1a39] = b(0);
@@ -586,14 +586,14 @@ A1 = 0;
 A2 = 100;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800b9b1c;
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 [800b9b2d] = b(1);
 [800b1a39] = b(1);

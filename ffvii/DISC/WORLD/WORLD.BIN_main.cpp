@@ -144,19 +144,19 @@ system_psyq_set_def_drawenv();
 
 A0 = 800c8550;
 A1 = 0;
-A2 = 00f0;
-A3 = 0140;
+A2 = f0;
+A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 [800c8550 + a] = h(8);
 [800c8550 + e] = h(e0);
 
 A0 = 800cc5c4;
 A1 = 0;
-A2 = 0008;
-A3 = 0140;
+A2 = 8;
+A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 [800cc5c4 + c] = h(8);
 [800cc5c4 + e] = h(e0);
 

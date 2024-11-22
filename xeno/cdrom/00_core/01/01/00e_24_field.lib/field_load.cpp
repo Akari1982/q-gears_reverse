@@ -1320,14 +1320,14 @@ A1 = 0;
 A2 = 100;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800b9b1c;
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = e0;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 0;
 A1 = 0;

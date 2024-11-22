@@ -2744,13 +2744,13 @@ A1 = 0;
 A2 = 00e8;
 A3 = 016c;
 S1 = 00f0;
-800210F4	jal    system_graphic_create_display_env_struct [$800438d4]
+800210F4	jal    system_psyq_set_def_dispenv [$800438d4]
 [SP + 0010] = w(S1);
 A0 = S4 + 0014;
 A1 = 0;
 A2 = 0;
 A3 = 016c;
-8002110C	jal    system_graphic_create_display_env_struct [$800438d4]
+8002110C	jal    system_psyq_set_def_dispenv [$800438d4]
 [SP + 0010] = w(S1);
 [S3 + 0074] = b(S0);
 [S3 + 0018] = b(S0);

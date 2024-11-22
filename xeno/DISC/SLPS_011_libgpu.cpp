@@ -156,20 +156,26 @@ else
 
 
 ////////////////////////////////
-// system_graphic_create_display_env_struct()
+// system_psyq_set_def_dispenv()
 
-[A0 + 0] = h(A1); // display area x
-[A0 + 2] = h(A2); // display area y
-[A0 + 4] = h(A3); // display area width
-[A0 + 6] = h(A4); // display area height
-[A0 + 8] = h(0); // output screen display area x.
-[A0 + a] = h(0); // output screen display area y.
-[A0 + c] = h(0); // output screen display area width.
-[A0 + e] = h(0); // output screen display area height.
-[A0 + 10] = b(0); // Interlace mode flag. 0: non-interlace; 1: interlace
-[A0 + 11] = b(0); // 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
-[A0 + 12] = b(0);
-[A0 + 13] = b(0);
+disp = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
+
+[disp + 0] = h(x);
+[disp + 2] = h(y);
+[disp + 4] = h(w);
+[disp + 6] = h(h);
+[disp + 8] = h(0); // output screen display area x.
+[disp + a] = h(0); // output screen display area y.
+[disp + c] = h(0); // output screen display area width.
+[disp + e] = h(0); // output screen display area height.
+[disp + 10] = b(0); // Interlace mode flag. 0: non-interlace; 1: interlace
+[disp + 11] = b(0); // 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
+[disp + 12] = b(0);
+[disp + 13] = b(0);
 ////////////////////////////////
 
 

@@ -5160,14 +5160,14 @@ A1 = 0;
 A2 = f0;
 A3 = screen_size_x;
 A4 = screen_size_y;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 
 A0 = 800ff144;
 A1 = 0;
 A2 = 0;
 A3 = screen_size_x;
 A4 = screen_size_y;
-system_graphic_create_display_env_struct();
+system_psyq_set_def_dispenv();
 ////////////////////////////////
 
 
