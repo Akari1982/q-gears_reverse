@@ -4303,7 +4303,7 @@ system_gte_outer_product_0();
 
 A0 = 1f800060;
 A1 = 1f800060;
-system_normalize_vector_A0_to_A1();
+system_psyq_vector_normal();
 
 V0 = w[1f800060];
 A0 = w[1f800068];

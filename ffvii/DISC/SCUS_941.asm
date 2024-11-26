@@ -2133,13 +2133,13 @@
 // func39fec
 80039FEC-8003A074
 ////////////////////////////////
-// func3a078
+// system_psyq_vector_normal_s
 8003A078-8003A0E4
 ////////////////////////////////
-// system_normalize_vector_A0_to_A1
+// system_psyq_vector_normal
 8003A08C-8003A0B4
 ////////////////////////////////
-// func3a0b8
+// system_psyq_vector_normal_ss
 8003A0B8-8003A0E4
 ////////////////////////////////
 // system_normalize_vector_T0_T1_T2

@@ -400,53 +400,47 @@ L3a070:	; 8003A070
 8003A070	jr     ra 
 8003A074	addiu  v0, zero, $ffff (=-$1)
 ////////////////////////////////
-// func3a078
-8003A078
-T0 = w[A0 + 0000];
-T1 = w[A0 + 0004];
-T2 = w[A0 + 0008];
-A3 = RA;
-
-8003A0CC	jal    system_normalize_vector_T0_T1_T2 [$8003a0e8]
-8003A0D0	nop
-RA = A3;
-[A1 + 0000] = h(T0);
-[A1 + 0002] = h(T1);
-8003A0E0	jr     ra 
-[A1 + 0004] = h(T2);
-////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_normalize_vector_A0_to_A1()
+// system_psyq_vector_normal_s()
 
-T0 = [A0 + 0];
-T1 = [A0 + 4];
-T2 = [A0 + 8];
+T0 = w[A0 + 0];
+T1 = w[A0 + 4];
+T2 = w[A0 + 8];
 system_normalize_vector_T0_T1_T2();
-[A1 + 0] = T0;
-[A1 + 4] = T1;
-[A1 + 8] = T2;
+[A1 + 0] = h(T0);
+[A1 + 2] = h(T1);
+[A1 + 4] = h(T2);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3a0b8
-8003A0B8
-T0 = h[A0 + 0000];
-T1 = h[A0 + 0002];
-T2 = h[A0 + 0004];
-8003A0C4	nop
-A3 = RA;
-8003A0CC	jal    system_normalize_vector_T0_T1_T2 [$8003a0e8]
-8003A0D0	nop
-RA = A3;
-[A1 + 0000] = h(T0);
-[A1 + 0002] = h(T1);
-8003A0E0	jr     ra 
-[A1 + 0004] = h(T2);
+// system_psyq_vector_normal()
+
+T0 = w[A0 + 0];
+T1 = w[A0 + 4];
+T2 = w[A0 + 8];
+system_normalize_vector_T0_T1_T2();
+[A1 + 0] = w(T0);
+[A1 + 4] = w(T1);
+[A1 + 8] = w(T2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_vector_normal_ss()
+
+T0 = h[A0 + 0];
+T1 = h[A0 + 2];
+T2 = h[A0 + 4];
+system_normalize_vector_T0_T1_T2();
+[A1 + 0] = h(T0);
+[A1 + 2] = h(T1);
+[A1 + 4] = h(T2);
 ////////////////////////////////
 
 

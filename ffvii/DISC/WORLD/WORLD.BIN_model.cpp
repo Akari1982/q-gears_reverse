@@ -2392,7 +2392,7 @@ if( A0 == 0 )
 
     A0 = 1f800200;
     A1 = 1f800208;
-    func3a0b8(); // normalize
+    system_psyq_vector_normal_ss();
 
     // z vector
     [S0 + 8] = h(hu[1f800208]);
@@ -2447,7 +2447,7 @@ if( A0 == 0 )
 
     A0 = 1f800220;
     A1 = 1f800228;
-    func3a0b8(); // normalize
+    system_psyq_vector_normal_ss();
 
     if( ( h[1f800228] == 0 ) && ( hu[1f80022a] == 0 ) && ( hu[1f80022c] == 0 ) )
     {

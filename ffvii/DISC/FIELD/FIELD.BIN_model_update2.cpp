@@ -5807,652 +5807,499 @@ A0 = bu[kawai_settings + 0];
 kawai_id = bu[kawai_settings + 1]
 kawai_data = S0 + 800dfe3c + kawai_id * 3c;
 
-800B6B98	beq    a0, zero, Lb6bb4 [$800b6bb4]
-
-800B6BA4	beq    a0, 1, Lb71e8 [$800b71e8]
-
-return 1;
-
-Lb6bb4:	; 800B6BB4
-
-[kawai_data + 0] = h(hu[kawai_settings + 2]);
-[kawai_data + 2] = h(hu[kawai_settings + 4]);
-[kawai_data + 4] = h(hu[kawai_settings + 6]);
-[kawai_data + 6] = h(hu[kawai_settings + 8]);
-
-[1f800200] = h(hu[kawai_data + 0]);
-[1f800202] = h(hu[kawai_data + 2]);
-[1f800204] = h(hu[kawai_data + 4]);
-[1f800206] = h(0);
-
-A0 = 1f800200;
-A1 = 1f800208;
-func3a0b8();
-
-[kawai_data + 8] = h(hu[1f800208]);
-[kawai_data + a] = h(hu[1f80020a]);
-[kawai_data + c] = h(hu[1f80020c]);
-
-S5 = 1f800220;
-S4 = 1f800228;
-S2 = 1f800208;
-S1 = 1f800218;
-
-if( h[1f80020c] != 0 )
+if( A0 == 0 )
 {
-    [1f800210] = h(0);
-    [1f800212] = h(0);
-    [1f800214] = h((h[kawai_data + 6] << c) / V1);
-}
-else if( h[1f80020a] != 0 )
-{
-    [1f800210] = h(0);
-    [1f800212] = h((h[kawai_data + 6] << c) / V1);
-    [1f800214] = h(0);
-}
-else if( h[1f800208] != 0 )
-{
-    [1f800210] = h((h[kawai_data + 6] << c) / V1);
-    [1f800212] = h(0);
-    [1f800214] = h(0);
-}
-else
-{
+    [kawai_data + 0] = h(hu[kawai_settings + 2]);
+    [kawai_data + 2] = h(hu[kawai_settings + 4]);
+    [kawai_data + 4] = h(hu[kawai_settings + 6]);
+    [kawai_data + 6] = h(hu[kawai_settings + 8]);
+
+    [1f800200] = h(hu[kawai_data + 0]);
+    [1f800202] = h(hu[kawai_data + 2]);
+    [1f800204] = h(hu[kawai_data + 4]);
+    [1f800206] = h(0);
+
+    A0 = 1f800200;
+    A1 = 1f800208;
+    system_psyq_vector_normal_ss();
+
+    [kawai_data + 8] = h(hu[1f800208]);
+    [kawai_data + a] = h(hu[1f80020a]);
+    [kawai_data + c] = h(hu[1f80020c]);
+
+    S5 = 1f800220;
+    S4 = 1f800228;
+    S2 = 1f800208;
+    S1 = 1f800218;
+
+    if( h[1f80020c] != 0 )
+    {
+        [1f800210] = h(0);
+        [1f800212] = h(0);
+        [1f800214] = h((h[kawai_data + 6] << c) / V1);
+    }
+    else if( h[1f80020a] != 0 )
+    {
+        [1f800210] = h(0);
+        [1f800212] = h((h[kawai_data + 6] << c) / V1);
+        [1f800214] = h(0);
+    }
+    else if( h[1f800208] != 0 )
+    {
+        [1f800210] = h((h[kawai_data + 6] << c) / V1);
+        [1f800212] = h(0);
+        [1f800214] = h(0);
+    }
+    else
+    {
+        return 1;
+    }
+
+    [kawai_data + e] = h(hu[1f800210]);
+    [kawai_data + 10] = h(hu[1f800212]);
+    [kawai_data + 12] = h(hu[1f800214]);
+
+    [S1 + 0000] = h(0);
+    V1 = h[1f800208];
+    V0 = h[S1 + 0000];
+    800B6DF0	nop
+    800B6DF4	mult   v1, v0
+    V0 = hu[S2 + 0002];
+    [S1 + 0002] = h(0);
+    V0 = V0 << 10;
+    A2 = V0 >> 10;
+    V0 = hu[S1 + 0002];
+    800B6E0C	mflo   a0
+    V0 = V0 << 10;
+    A1 = V0 >> 10;
+    800B6E18	mult   a2, a1
+    S3 = 1000;
+    [S1 + 0004] = h(S3);
+    V0 = hu[S2 + 0004];
+    800B6E28	nop
+    V0 = V0 << 10;
+    800B6E30	mflo   v1
+    A0 = A0 + V1;
+    V1 = V0 >> 10;
+    V0 = V1 << 0c;
+    A0 = A0 + V0;
+    800B6E48	mult   a1, v1
+    V1 = A2 << 0c;
+    800B6E54	mflo   v0
+    A1 = V1 - V0;
+    S6 = A0 / 1000;
+    V0 = hu[S2 + 0004];
+    V1 = h[S1 + 0000];
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    800B6E78	mult   v1, v0
+    V0 = hu[S1 + 0004];
+    V1 = h[S2 + 0000];
+    800B6E84	mflo   a0
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    800B6E90	mult   v1, v0
+    V0 = A1 / 1000;
+    [S5 + 0000] = h(V0);
+    800B6E9C	mflo   v0
+    A1 = A0 - V0;
+    V0 = hu[S1 + 0002];
+    V1 = h[S2 + 0000];
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    800B6EC0	mult   v1, v0
+    V0 = hu[S2 + 0002];
+    V1 = h[S1 + 0000];
+    800B6ECC	mflo   a0
+    V0 = V0 << 10;
+    V0 = V0 >> 10;
+    800B6ED8	mult   v1, v0
+    V0 = A1 / 1000;
+    [S5 + 0002] = h(V0);
+    800B6EE4	mflo   v0
+    A0 = A0 - V0;
+    V0 = h[S5 + 0000];
+    V1 = V0 * V0;
+    V0 = h[S5 + 2];
+    A1 = V0 * V0;
+    A0 = A0 / 1000;
+    V0 = (A0 << 10) >> 10;
+    [S5 + 0004] = h(A0);
+    A0 = V0 * V0;
+    V1 = V1 + A1;
+    A0 = V1 + A0;
+
+    system_square_root();
+    S1 = V0;
+
+    A0 = S5;
+    A1 = S4;
+    system_psyq_vector_normal_ss();
+
+    if( ( h[S4 + 0] == 0 ) && ( hu[S4 + 2] == 0 ) && ( hu[S4 + 4] == 0 ) )
+    {
+        [kawai_data + 14] = h(S3);
+        [kawai_data + 16] = h(0);
+        [kawai_data + 18] = h(0);
+        [kawai_data + 1a] = h(0);
+        [kawai_data + 1c] = h(S3);
+        [kawai_data + 1e] = h(0);
+        [kawai_data + 20] = h(0);
+        [kawai_data + 22] = h(0);
+        [kawai_data + 24] = h(S3);
+    }
+    else
+    {
+        A1 = h[S4 + 0];
+        T2 = A1 * A1;
+        A0 = hu[S4 + 2];
+        A0 = (A0 << 10) >> 10;
+        T3 = A0 * A0;
+        V1 = hu[S4 + 4];
+        V1 = (V1 << 10) >> 10;
+        T6 = V1 * V1;
+        A2 = A1 * A0;
+        A3 = A1 * V1;
+        T0 = A0 * V1;
+        V0 = (S1 << 10) >> 10;
+        T5 = A1 * V0;
+        T4 = A0 * V0;
+        T1 = V1 * V0;
+        A1 = (S6 << 10) >> 10;
+        A0 = 1000 - A1;
+        [kawai_data + 14] = h((T2 + (A1 * ((1000000 - T2) / 1000))) / 1000);
+        V0 = A2;
+        V0 = V0 / 1000;
+        V1 = V0 * A0;
+        V0 = V1 - T1;
+        V0 = V0 / 1000;
+        [kawai_data + 16] = h(V0);
+        V0 = A3;
+        V0 = V0 / 1000;
+        T2 = V0 * A0;
+        V0 = T2 + T4;
+        V0 = V0 / 1000;
+        [kawai_data + 0018] = h(V0);
+        [kawai_data + 1a] = h((V1 + T1) / 1000);
+        [kawai_data + 1c] = h((T3 + (A1 * ((1000000 - T3) / 1000))) / 1000);
+        V1 = (T0 / 1000) * A0;
+        [kawai_data + 1e] = h((V1 - T5) / 1000);
+        [kawai_data + 20] = h((T2 - T4) / 1000);
+        [kawai_data + 22] = h((V1 + T5) / 1000);
+        [kawai_data + 24] = h((T6 + (A1 * ((1000000 - T6) / 1000))) / 1000);
+    }
+
+    T7 = w[SP + 0010];
+    A1 = 0;
+    V0 = hu[T7 + 0018];
+    V1 = w[T7 + 001c];
+    A0 = bu[T7 + 0003];
+    800B71B0	nop
+    if( A0 != 0 )
+    {
+
+        V0 = V0 + V1;
+        V1 = V0;
+
+        loopb71c0:	; 800B71C0
+            [V1 + 0000] = b(0);
+            T7 = w[SP + 0010];
+            V0 = bu[T7 + 0003];
+            A1 = A1 + 0001;
+            V1 = V1 + 0020;
+            V0 = A1 < V0;
+        800B71D8	bne    v0, zero, loopb71c0 [$800b71c0]
+    }
     return 1;
 }
-
-[kawai_data + e] = h(hu[1f800210]);
-[kawai_data + 10] = h(hu[1f800212]);
-[kawai_data + 12] = h(hu[1f800214]);
-
-[S1 + 0000] = h(0);
-V1 = h[1f800208];
-V0 = h[S1 + 0000];
-800B6DF0	nop
-800B6DF4	mult   v1, v0
-V0 = hu[S2 + 0002];
-[S1 + 0002] = h(0);
-V0 = V0 << 10;
-A2 = V0 >> 10;
-V0 = hu[S1 + 0002];
-800B6E0C	mflo   a0
-V0 = V0 << 10;
-A1 = V0 >> 10;
-800B6E18	mult   a2, a1
-S3 = 1000;
-[S1 + 0004] = h(S3);
-V0 = hu[S2 + 0004];
-800B6E28	nop
-V0 = V0 << 10;
-800B6E30	mflo   v1
-A0 = A0 + V1;
-V1 = V0 >> 10;
-V0 = V1 << 0c;
-A0 = A0 + V0;
-800B6E44	bgez   a0, Lb6e50 [$800b6e50]
-800B6E48	mult   a1, v1
-A0 = A0 + 0fff;
-
-Lb6e50:	; 800B6E50
-V1 = A2 << 0c;
-800B6E54	mflo   v0
-A1 = V1 - V0;
-800B6E5C	bgez   a1, Lb6e68 [$800b6e68]
-S6 = A0 >> 0c;
-A1 = A1 + 0fff;
-
-Lb6e68:	; 800B6E68
-V0 = hu[S2 + 0004];
-V1 = h[S1 + 0000];
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B6E78	mult   v1, v0
-V0 = hu[S1 + 0004];
-V1 = h[S2 + 0000];
-800B6E84	mflo   a0
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B6E90	mult   v1, v0
-V0 = A1 >> 0c;
-[S5 + 0000] = h(V0);
-800B6E9C	mflo   v0
-A1 = A0 - V0;
-800B6EA4	bgez   a1, Lb6eb0 [$800b6eb0]
-800B6EA8	nop
-A1 = A1 + 0fff;
-
-Lb6eb0:	; 800B6EB0
-V0 = hu[S1 + 0002];
-V1 = h[S2 + 0000];
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B6EC0	mult   v1, v0
-V0 = hu[S2 + 0002];
-V1 = h[S1 + 0000];
-800B6ECC	mflo   a0
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B6ED8	mult   v1, v0
-V0 = A1 >> 0c;
-[S5 + 0002] = h(V0);
-800B6EE4	mflo   v0
-A0 = A0 - V0;
-800B6EEC	bgez   a0, Lb6ef8 [$800b6ef8]
-800B6EF0	nop
-A0 = A0 + 0fff;
-
-Lb6ef8:	; 800B6EF8
-V0 = h[S5 + 0000];
-800B6EFC	nop
-800B6F00	mult   v0, v0
-V0 = hu[S5 + 0002];
-800B6F08	mflo   v1
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800B6F14	mult   v0, v0
-A0 = A0 >> 0c;
-800B6F1C	mflo   a1
-V0 = A0 << 10;
-V0 = V0 >> 10;
-800B6F28	mult   v0, v0
-[S5 + 0004] = h(A0);
-V1 = V1 + A1;
-800B6F34	mflo   a0
-A0 = V1 + A0;
-
-system_square_root();
-
-A0 = S5;
-A1 = S4;
-800B6F48	jal    $8003a0b8
-S1 = V0;
-V0 = h[S4 + 0000];
-800B6F54	nop
-800B6F58	bne    v0, zero, Lb6fa8 [$800b6fa8]
-800B6F5C	nop
-V0 = hu[S4 + 0002];
-800B6F64	nop
-800B6F68	bne    v0, zero, Lb6fa8 [$800b6fa8]
-800B6F6C	nop
-V0 = hu[S4 + 0004];
-800B6F74	nop
-800B6F78	bne    v0, zero, Lb6fa8 [$800b6fa8]
-800B6F7C	nop
-[kawai_data + 14] = h(S3);
-[kawai_data + 16] = h(0);
-[kawai_data + 18] = h(0);
-[kawai_data + 1a] = h(0);
-[kawai_data + 1c] = h(S3);
-[kawai_data + 1e] = h(0);
-[kawai_data + 20] = h(0);
-[kawai_data + 22] = h(0);
-800B6FA0	j      Lb719c [$800b719c]
-[kawai_data + 0024] = h(S3);
-
-Lb6fa8:	; 800B6FA8
-A1 = h[S4 + 0000];
-800B6FAC	nop
-800B6FB0	mult   a1, a1
-A0 = hu[S4 + 0002];
-800B6FB8	mflo   t2
-A0 = A0 << 10;
-A0 = A0 >> 10;
-800B6FC4	mult   a0, a0
-V1 = hu[S4 + 0004];
-800B6FCC	mflo   t3
-V1 = V1 << 10;
-V1 = V1 >> 10;
-800B6FD8	mult   v1, v1
-800B6FDC	mflo   t6
-800B6FE0	mult   a1, a0
-800B6FE4	mflo   a2
-800B6FE8	mult   a1, v1
-800B6FEC	mflo   a3
-800B6FF0	mult   a0, v1
-800B6FF4	mflo   t0
-V0 = S1 << 10;
-V0 = V0 >> 10;
-800B7000	mult   a1, v0
-800B7004	mflo   t5
-800B7008	mult   a0, v0
-800B700C	mflo   t4
-800B7010	mult   v1, v0
-800B7014	lui    v0, $0100
-V1 = V0 - T2;
-V0 = S6 << 10;
-A1 = V0 >> 10;
-V0 = 1000;
-800B7028	mflo   t1
-800B702C	bgez   v1, Lb7038 [$800b7038]
-A0 = V0 - A1;
-V1 = V1 + 0fff;
-
-Lb7038:	; 800B7038
-V0 = V1 >> 0c;
-800B703C	mult   a1, v0
-800B7040	mflo   v0
-V0 = T2 + V0;
-800B7048	bgez   v0, Lb7054 [$800b7054]
-800B704C	nop
-V0 = V0 + 0fff;
-
-Lb7054:	; 800B7054
-V0 = V0 >> 0c;
-[kawai_data + 0014] = h(V0);
-800B705C	bgez   a2, Lb7068 [$800b7068]
-V0 = A2;
-V0 = A2 + 0fff;
-
-Lb7068:	; 800B7068
-V0 = V0 >> 0c;
-800B706C	mult   v0, a0
-800B7070	mflo   v1
-V0 = V1 - T1;
-800B7078	bgez   v0, Lb7084 [$800b7084]
-800B707C	nop
-V0 = V0 + 0fff;
-
-Lb7084:	; 800B7084
-V0 = V0 >> 0c;
-[kawai_data + 0016] = h(V0);
-800B708C	bgez   a3, Lb7098 [$800b7098]
-V0 = A3;
-V0 = A3 + 0fff;
-
-Lb7098:	; 800B7098
-V0 = V0 >> 0c;
-800B709C	mult   v0, a0
-800B70A0	mflo   t2
-V0 = T2 + T4;
-800B70A8	bgez   v0, Lb70b4 [$800b70b4]
-800B70AC	nop
-V0 = V0 + 0fff;
-
-Lb70b4:	; 800B70B4
-V0 = V0 >> 0c;
-[kawai_data + 0018] = h(V0);
-V0 = V1 + T1;
-800B70C0	bgez   v0, Lb70cc [$800b70cc]
-800B70C4	lui    a2, $0100
-V0 = V0 + 0fff;
-
-Lb70cc:	; 800B70CC
-V0 = V0 >> 0c;
-[kawai_data + 001a] = h(V0);
-V0 = A2 - T3;
-800B70D8	bgez   v0, Lb70e4 [$800b70e4]
-800B70DC	nop
-V0 = V0 + 0fff;
-
-Lb70e4:	; 800B70E4
-V0 = V0 >> 0c;
-800B70E8	mult   a1, v0
-800B70EC	mflo   v0
-V0 = T3 + V0;
-800B70F4	bgez   v0, Lb7100 [$800b7100]
-800B70F8	nop
-V0 = V0 + 0fff;
-
-Lb7100:	; 800B7100
-V0 = V0 >> 0c;
-[kawai_data + 001c] = h(V0);
-800B7108	bgez   t0, Lb7114 [$800b7114]
-V0 = T0;
-V0 = T0 + 0fff;
-
-Lb7114:	; 800B7114
-V0 = V0 >> 0c;
-800B7118	mult   v0, a0
-800B711C	mflo   v1
-V0 = V1 - T5;
-800B7124	bgez   v0, Lb7130 [$800b7130]
-800B7128	nop
-V0 = V0 + 0fff;
-
-Lb7130:	; 800B7130
-V0 = V0 >> 0c;
-[kawai_data + 001e] = h(V0);
-V0 = T2 - T4;
-800B713C	bgez   v0, Lb7148 [$800b7148]
-800B7140	nop
-V0 = V0 + 0fff;
-
-Lb7148:	; 800B7148
-V0 = V0 >> 0c;
-[kawai_data + 0020] = h(V0);
-V0 = V1 + T5;
-800B7154	bgez   v0, Lb7160 [$800b7160]
-800B7158	nop
-V0 = V0 + 0fff;
-
-Lb7160:	; 800B7160
-V0 = V0 >> c;
-[kawai_data + 0022] = h(V0);
-V0 = A2 - T6;
-800B716C	bgez   v0, Lb7178 [$800b7178]
-800B7170	nop
-V0 = V0 + 0fff;
-
-Lb7178:	; 800B7178
-V0 = V0 >> c;
-V0 = A1 * V0;
-V0 = T6 + V0;
-800B7188	bgez   v0, Lb7194 [$800b7194]
-800B718C	nop
-V0 = V0 + 0fff;
-
-Lb7194:	; 800B7194
-V0 = V0 >> 0c;
-[kawai_data + 0024] = h(V0);
-
-Lb719c:	; 800B719C
-T7 = w[SP + 0010];
-A1 = 0;
-V0 = hu[T7 + 0018];
-V1 = w[T7 + 001c];
-A0 = bu[T7 + 0003];
-800B71B0	nop
-if( A0 != 0 )
+else if( A0 == 1 )
 {
+    T7 = 1f800200;
+    S1 = 1f800208;
+    S2 = 1f800228;
+    S6 = 1f800248;
+    [SP + 0028] = w(T7);
+    T7 = w[SP + 0010];
+    FP = 1f800268;
+    A0 = hu[T7 + 0018];
+    V1 = w[T7 + 001c];
+    S4 = w[T7 + 0020];
+    [1f800218] = h(1000);
+    [1f800210] = h(1000);
+    [S1 + 0000] = h(1000);
+    [1f800224] = w(0);
+    [1f800220] = w(0);
+    [1f80021c] = w(0);
+    [1f800216] = h(0);
+    [1f800214] = h(0);
+    [1f800212] = h(0);
+    [1f80020e] = h(0);
+    [1f80020c] = h(0);
+    [1f80020a] = h(0);
+    [1f800244] = w(0);
+    [1f800240] = w(0);
+    [1f80023c] = w(0);
+    [1f800264] = w(0);
+    [1f800260] = w(0);
+    [1f80025c] = w(0);
 
-    V0 = V0 + V1;
-    V1 = V0;
+    T7 = w[SP + 0028];
+    [T7 + 0000] = h(hu[kawai_data + 8]);
+    T7 = w[SP + 0010];
+    S5 = 1f800288;
+    [1f800202] = h(hu[kawai_data + a]);
 
-    loopb71c0:	; 800B71C0
-        [V1 + 0000] = b(0);
-        T7 = w[SP + 0010];
-        V0 = bu[T7 + 0003];
-        A1 = A1 + 0001;
-        V1 = V1 + 0020;
-        V0 = A1 < V0;
-    800B71D8	bne    v0, zero, loopb71c0 [$800b71c0]
+    S7 = 0;
+    [1f800206] = h(0);
+    [1f800204] = h(hu[kawai_data + c]);
+    V0 = bu[T7 + 3];
+
+    if( V0 != 0 )
+    {
+        A0 = A0 + V1;
+        [SP + 30] = w(1f80026a);
+        [SP + 38] = w(1f80026c);
+        [SP + 40] = w(1f80027c);
+        [SP + 48] = w(1f80028a);
+        [SP + 50] = w(1f80028c);
+        [SP + 58] = w(1f80029c);
+
+        S3 = A0;
+
+
+        Lb7348:	; 800B7348
+            [S1 + 14] = w(0 - h[kawai_data + e]);
+            [S1 + 18] = w(0 - h[kawai_data + 10]);
+            [S1 + 1c] = w(0 - h[kawai_data + 12]);
+
+            [S2 + 0] = h(hu[kawai_data + 14]);
+            [S2 + 2] = h(hu[kawai_data + 16]);
+            [S2 + 4] = h(hu[kawai_data + 18]);
+            [S2 + 6] = h(hu[kawai_data + 1a]);
+            [S2 + 8] = h(hu[kawai_data + 1c]);
+            [S2 + a] = h(hu[kawai_data + 1e]);
+            [S2 + c] = h(hu[kawai_data + 20]);
+            [S2 + e] = h(hu[kawai_data + 22]);
+            [S2 + 10] = h(hu[kawai_data + 24]);
+
+            R11R12 = w[S1 + 0];
+            R13R21 = w[S1 + 4];
+            R22R23 = w[S1 + 8];
+            R31R32 = w[S1 + c];
+            R33 = w[S1 + 10];
+            V0 = bu[S3 + 0001];
+            V0 = V0 << 05;
+            V0 = S4 + V0;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [FP + 0] = h(IR1);
+            [FP + 6] = h(IR2);
+            [FP + c] = h(IR3);
+            V0 = bu[S3 + 0001];
+            V0 = V0 << 05;
+            V0 = S4 + V0;
+            V0 = V0 + 0002;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            T7 = w[SP + 0030];
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+            V0 = bu[S3 + 0001];
+            800B74B0	nop
+            V0 = V0 << 05;
+            V0 = S4 + V0;
+            V0 = V0 + 0004;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            T7 = w[SP + 0038];
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+            TRX = w[S1 + 14];
+            TRY = w[S1 + 18];
+            TRZ = w[S1 + 1c];
+            V0 = bu[S3 + 0001];
+            V0 = V0 << 05;
+            V0 = S4 + V0;
+            V0 = V0 + 0014;
+            T5 = hu[V0 + 0004];
+            T4 = hu[V0 + 0000];
+            T5 = T5 << 10;
+            T4 = T4 | T5;
+            VXY0 = T4;
+            VZ0 = w[V0 + 0008];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            T7 = w[SP + 0040];
+            [T7 + 0] = w(IR1);
+            [T7 + 4] = w(IR2);
+            [T7 + 8] = w(IR3);
+
+            R11R12 = w[S2 + 0];
+            R13R21 = w[S2 + 4];
+            R22R23 = w[S2 + 8];
+            R31R32 = w[S2 + c];
+            R33 = w[S2 + 10];
+
+            IR1 = hu[FP + 0];
+            IR2 = hu[FP + 6];
+            IR3 = hu[FP + c];
+            gte_rtir12(); // ir * rotmatrix
+            [FP + 0] = h(IR1);
+            [FP + 6] = h(IR2);
+            [FP + c] = h(IR3);
+
+            T7 = w[SP + 30];
+            IR1 = hu[T7 + 0];
+            IR2 = hu[T7 + 6];
+            IR3 = hu[T7 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+
+            T7 = w[SP + 0038];
+            IR1 = hu[T7 + 0];
+            IR2 = hu[T7 + 6];
+            IR3 = hu[T7 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+
+            TRX = w[S2 + 14];
+            TRY = w[S2 + 18];
+            TRZ = w[S2 + 1c];
+            T7 = w[SP + 40];
+            VXY0 = (hu[T7 + 4] << 10) | hu[T7 + 0];
+            VZ0 = w[T7 + 8];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            [T7 + 0] = w(IR1);
+            [T7 + 4] = w(IR2);
+            [T7 + 8] = w(IR3);
+            [S1 + 14] = w(h[kawai_data + 000e]);
+            [S1 + 18] = w(h[kawai_data + 0010]);
+            [S1 + 1c] = w(h[kawai_data + 0012]);
+
+            A0 = S2;
+            A1 = S6;
+            system_gte_transpose_matrix();
+
+            R11R12 = w[S4 + 0];
+            R13R21 = w[S4 + 4];
+            R22R23 = w[S4 + 8];
+            R31R32 = w[S4 + c];
+            R33 = w[S4 + 10];
+
+            IR1 = hu[S1 + 0];
+            IR2 = hu[S1 + 6];
+            IR3 = hu[S1 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [S5 + 0] = h(IR1);
+            [S5 + 6] = h(IR2);
+            [S5 + c] = h(IR3);
+
+            V0 = S1 + 0002;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            T7 = w[SP + 0048];
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+            V0 = S1 + 0004;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            T7 = w[SP + 0050];
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+
+            TRX = w[S4 + 14];
+            TRY = w[S4 + 18];
+            TRZ = w[S4 + 1c];
+            V0 = S1 + 14;
+
+            VXY0 = (hu[V0 + 4] << 10) | hu[V0 + 0];
+            VZ0 = w[V0 + 8];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            T7 = w[SP + 0058];
+            [T7 + 0] = w(IR1);
+            [T7 + 4] = w(IR2);
+            [T7 + 8] = w(IR3);
+
+            R11R12 = w[S5 + 0];
+            R13R21 = w[S5 + 4];
+            R22R23 = w[S5 + 8];
+            R31R32 = w[S5 + c];
+            R33 = w[S5 + 10];
+            IR1 = hu[S6 + 0];
+            IR2 = hu[S6 + 6];
+            IR3 = hu[S6 + c];
+            gte_rtir12(); // ir * rotmatrix
+            [S5 + 0] = h(IR1);
+            [S5 + 6] = h(IR2);
+            [S5 + c] = h(IR3);
+
+            V0 = S6 + 0002;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            T7 = w[SP + 0048];
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+
+            V0 = S6 + 0004;
+            IR1 = hu[V0 + 0];
+            IR2 = hu[V0 + 6];
+            IR3 = hu[V0 + c];
+            gte_rtir12(); // ir * rotmatrix
+            T7 = w[SP + 0050];
+            [T7 + 0] = h(IR1);
+            [T7 + 6] = h(IR2);
+            [T7 + c] = h(IR3);
+
+            TRX = w[S5 + 14];
+            TRY = w[S5 + 18];
+            TRZ = w[S5 + 1c];
+            V0 = S6 + 14;
+            VXY0 = (hu[V0 + 4] << 10) | hu[V0 + 0];
+            VZ0 = w[V0 + 8];
+            gte_rtv0tr(); // v0 * rotmatrix + tr vector
+            T7 = w[SP + 0058];
+            [T7 + 0] = w(IR1);
+            [T7 + 4] = w(IR2);
+            [T7 + 8] = w(IR3);
+
+            A0 = S3;
+            A1 = w[SP + 28];
+            A2 = FP;
+            A3 = S5;
+            funcb79b8();
+
+            T7 = w[SP + 0010];
+            V0 = bu[T7 + 0003];
+            S7 = S7 + 0001;
+            S3 = S3 + 0020;
+            V0 = S7 < V0;
+        800B7970	bne    v0, zero, Lb7348 [$800b7348]
+    }
+
+    return 0;
 }
+
 return 1;
-
-Lb71e8:	; 800B71E8
-T7 = 1f800200;
-S1 = 1f800208;
-S2 = 1f800228;
-S6 = 1f800248;
-[SP + 0028] = w(T7);
-T7 = w[SP + 0010];
-FP = 1f800268;
-A0 = hu[T7 + 0018];
-V1 = w[T7 + 001c];
-S4 = w[T7 + 0020];
-[1f800218] = h(1000);
-[1f800210] = h(1000);
-[S1 + 0000] = h(1000);
-[1f800224] = w(0);
-[1f800220] = w(0);
-[1f80021c] = w(0);
-[1f800216] = h(0);
-[1f800214] = h(0);
-[1f800212] = h(0);
-[1f80020e] = h(0);
-[1f80020c] = h(0);
-[1f80020a] = h(0);
-[1f800244] = w(0);
-[1f800240] = w(0);
-[1f80023c] = w(0);
-[1f800264] = w(0);
-[1f800260] = w(0);
-[1f80025c] = w(0);
-
-T7 = w[SP + 0028];
-[T7 + 0000] = h(hu[kawai_data + 8]);
-T7 = w[SP + 0010];
-S5 = 1f800288;
-[1f800202] = h(hu[kawai_data + a]);
-
-S7 = 0;
-[1f800206] = h(0);
-[1f800204] = h(hu[kawai_data + c]);
-V0 = bu[T7 + 3];
-
-if( V0 != 0 )
-{
-    A0 = A0 + V1;
-    [SP + 30] = w(1f80026a);
-    [SP + 38] = w(1f80026c);
-    [SP + 40] = w(1f80027c);
-    [SP + 48] = w(1f80028a);
-    [SP + 50] = w(1f80028c);
-    [SP + 58] = w(1f80029c);
-
-    S3 = A0;
-
-
-    Lb7348:	; 800B7348
-        [S1 + 14] = w(0 - h[kawai_data + e]);
-        [S1 + 18] = w(0 - h[kawai_data + 10]);
-        [S1 + 1c] = w(0 - h[kawai_data + 12]);
-
-        [S2 + 0] = h(hu[kawai_data + 14]);
-        [S2 + 2] = h(hu[kawai_data + 16]);
-        [S2 + 4] = h(hu[kawai_data + 18]);
-        [S2 + 6] = h(hu[kawai_data + 1a]);
-        [S2 + 8] = h(hu[kawai_data + 1c]);
-        [S2 + a] = h(hu[kawai_data + 1e]);
-        [S2 + c] = h(hu[kawai_data + 20]);
-        [S2 + e] = h(hu[kawai_data + 22]);
-        [S2 + 10] = h(hu[kawai_data + 24]);
-
-        R11R12 = w[S1 + 0];
-        R13R21 = w[S1 + 4];
-        R22R23 = w[S1 + 8];
-        R31R32 = w[S1 + c];
-        R33 = w[S1 + 10];
-        V0 = bu[S3 + 0001];
-        V0 = V0 << 05;
-        V0 = S4 + V0;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        [FP + 0] = h(IR1);
-        [FP + 6] = h(IR2);
-        [FP + c] = h(IR3);
-        V0 = bu[S3 + 0001];
-        V0 = V0 << 05;
-        V0 = S4 + V0;
-        V0 = V0 + 0002;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        T7 = w[SP + 0030];
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-        V0 = bu[S3 + 0001];
-        800B74B0	nop
-        V0 = V0 << 05;
-        V0 = S4 + V0;
-        V0 = V0 + 0004;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        T7 = w[SP + 0038];
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-        TRX = w[S1 + 14];
-        TRY = w[S1 + 18];
-        TRZ = w[S1 + 1c];
-        V0 = bu[S3 + 0001];
-        V0 = V0 << 05;
-        V0 = S4 + V0;
-        V0 = V0 + 0014;
-        T5 = hu[V0 + 0004];
-        T4 = hu[V0 + 0000];
-        T5 = T5 << 10;
-        T4 = T4 | T5;
-        VXY0 = T4;
-        VZ0 = w[V0 + 0008];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        T7 = w[SP + 0040];
-        [T7 + 0] = w(IR1);
-        [T7 + 4] = w(IR2);
-        [T7 + 8] = w(IR3);
-
-        R11R12 = w[S2 + 0];
-        R13R21 = w[S2 + 4];
-        R22R23 = w[S2 + 8];
-        R31R32 = w[S2 + c];
-        R33 = w[S2 + 10];
-
-        IR1 = hu[FP + 0];
-        IR2 = hu[FP + 6];
-        IR3 = hu[FP + c];
-        gte_rtir12(); // ir * rotmatrix
-        [FP + 0] = h(IR1);
-        [FP + 6] = h(IR2);
-        [FP + c] = h(IR3);
-
-        T7 = w[SP + 30];
-        IR1 = hu[T7 + 0];
-        IR2 = hu[T7 + 6];
-        IR3 = hu[T7 + c];
-        gte_rtir12(); // ir * rotmatrix
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-
-        T7 = w[SP + 0038];
-        IR1 = hu[T7 + 0];
-        IR2 = hu[T7 + 6];
-        IR3 = hu[T7 + c];
-        gte_rtir12(); // ir * rotmatrix
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-
-        TRX = w[S2 + 14];
-        TRY = w[S2 + 18];
-        TRZ = w[S2 + 1c];
-        T7 = w[SP + 40];
-        VXY0 = (hu[T7 + 4] << 10) | hu[T7 + 0];
-        VZ0 = w[T7 + 8];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        [T7 + 0] = w(IR1);
-        [T7 + 4] = w(IR2);
-        [T7 + 8] = w(IR3);
-        [S1 + 14] = w(h[kawai_data + 000e]);
-        [S1 + 18] = w(h[kawai_data + 0010]);
-        [S1 + 1c] = w(h[kawai_data + 0012]);
-
-        A0 = S2;
-        A1 = S6;
-        system_gte_transpose_matrix();
-
-        R11R12 = w[S4 + 0];
-        R13R21 = w[S4 + 4];
-        R22R23 = w[S4 + 8];
-        R31R32 = w[S4 + c];
-        R33 = w[S4 + 10];
-
-        IR1 = hu[S1 + 0];
-        IR2 = hu[S1 + 6];
-        IR3 = hu[S1 + c];
-        gte_rtir12(); // ir * rotmatrix
-        [S5 + 0] = h(IR1);
-        [S5 + 6] = h(IR2);
-        [S5 + c] = h(IR3);
-
-        V0 = S1 + 0002;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        T7 = w[SP + 0048];
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-        V0 = S1 + 0004;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        T7 = w[SP + 0050];
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-
-        TRX = w[S4 + 14];
-        TRY = w[S4 + 18];
-        TRZ = w[S4 + 1c];
-        V0 = S1 + 14;
-
-        VXY0 = (hu[V0 + 4] << 10) | hu[V0 + 0];
-        VZ0 = w[V0 + 8];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        T7 = w[SP + 0058];
-        [T7 + 0] = w(IR1);
-        [T7 + 4] = w(IR2);
-        [T7 + 8] = w(IR3);
-
-        R11R12 = w[S5 + 0];
-        R13R21 = w[S5 + 4];
-        R22R23 = w[S5 + 8];
-        R31R32 = w[S5 + c];
-        R33 = w[S5 + 10];
-        IR1 = hu[S6 + 0];
-        IR2 = hu[S6 + 6];
-        IR3 = hu[S6 + c];
-        gte_rtir12(); // ir * rotmatrix
-        [S5 + 0] = h(IR1);
-        [S5 + 6] = h(IR2);
-        [S5 + c] = h(IR3);
-
-        V0 = S6 + 0002;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        T7 = w[SP + 0048];
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-
-        V0 = S6 + 0004;
-        IR1 = hu[V0 + 0];
-        IR2 = hu[V0 + 6];
-        IR3 = hu[V0 + c];
-        gte_rtir12(); // ir * rotmatrix
-        T7 = w[SP + 0050];
-        [T7 + 0] = h(IR1);
-        [T7 + 6] = h(IR2);
-        [T7 + c] = h(IR3);
-
-        TRX = w[S5 + 14];
-        TRY = w[S5 + 18];
-        TRZ = w[S5 + 1c];
-        V0 = S6 + 14;
-        VXY0 = (hu[V0 + 4] << 10) | hu[V0 + 0];
-        VZ0 = w[V0 + 8];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        T7 = w[SP + 0058];
-        [T7 + 0] = w(IR1);
-        [T7 + 4] = w(IR2);
-        [T7 + 8] = w(IR3);
-
-        A0 = S3;
-        A1 = w[SP + 28];
-        A2 = FP;
-        A3 = S5;
-        funcb79b8();
-
-        T7 = w[SP + 0010];
-        V0 = bu[T7 + 0003];
-        S7 = S7 + 0001;
-        S3 = S3 + 0020;
-        V0 = S7 < V0;
-    800B7970	bne    v0, zero, Lb7348 [$800b7348]
-}
-
-return 0;
 ////////////////////////////////
 
 

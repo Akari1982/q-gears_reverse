@@ -423,7 +423,7 @@ if (S3 != 0)
 {
     A0 = S2 + 14;
     A1 = SP + 10;
-    system_normalize_vector_A0_to_A1;
+    system_psyq_vector_normal();
 
     [S2 + 14] = w(w[S2 + 14] + ((S3 * w[SP + 10]) >> c));
     [S2 + 18] = w(w[S2 + 18] + ((S3 * w[SP + 14]) >> c));
@@ -462,7 +462,7 @@ if (collision != 0)
 {
     A0 = 800f023c;
     A1 = SP + 10;
-    system_normalize_vector_A0_to_A1;
+    system_psyq_vector_normal();
 
     [800f023c] = w(w[800f023c] + (collision * w[SP + 10]) >> c);
     [800f0240] = w(w[800f0240] + (collision * w[SP + 14]) >> c);
@@ -4444,7 +4444,7 @@ S0 = A3; // some static vector (0, -1, 0)
 [SP + 18] = w(h[A2 + 4] - h[S4 + 4]);
 A0 = SP + 10;
 A1 = SP + 40;
-system_normalize_vector_A0_to_A1;
+system_psyq_vector_normal();
 
 if (w[SP + 48] == w[S0 + 8])
 {
@@ -4465,7 +4465,7 @@ gte_op12; // outer product
 [SP + 18] = w(MAC3);
 A0 = SP + 10;
 A1 = SP + 20;
-system_normalize_vector_A0_to_A1;
+system_psyq_vector_normal();
 
 
 
@@ -4483,7 +4483,7 @@ gte_op12; // outer product
 [SP + 18] = w(MAC3);
 A0 = SP + 10;
 A1 = SP + 30;
-system_normalize_vector_A0_to_A1;
+system_psyq_vector_normal();
 
 
 
