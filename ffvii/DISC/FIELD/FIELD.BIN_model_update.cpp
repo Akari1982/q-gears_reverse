@@ -66,9 +66,10 @@ funcafde4();
 // funcaab24()
 // here we handle KAWAI byte in new model structure
 
-[800df114] = b(hu[80075dec]);
+ot = A0;
 
-[800df118] = w(A0);
+[800df114] = b(hu[80075dec]);
+[800df118] = w(ot);
 
 S5 = 1f800000;
 block7_data = w[8007e770] + 4;
