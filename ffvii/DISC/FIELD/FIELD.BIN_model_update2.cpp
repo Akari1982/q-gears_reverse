@@ -6167,68 +6167,54 @@ part_data = A0;
 
 ot = w[800df118];
 
-R11R12 = w[A2 + 0000];
-R13R21 = w[A2 + 0004];
-R22R23 = w[A2 + 0008];
-R31R32 = w[A2 + 000c];
-R33 = w[A2 + 0010];
-TRX = w[A2 + 0014];
-TRY = w[A2 + 0018];
-TRZ = w[A2 + 001c];
+R11R12 = w[A2 + 0];
+R13R21 = w[A2 + 4];
+R22R23 = w[A2 + 8];
+R31R32 = w[A2 + c];
+R33 = w[A2 + 10];
+TRX = w[A2 + 14];
+TRY = w[A2 + 18];
+TRZ = w[A2 + 1c];
 
-V0 = w[part_data + 0018];
-T9 = bu[part_data + 0002];
-T8 = V0 + 0004;
-V0 = h[A1 + 0000];
+vertex_data = w[part_data + 18] + 4;
+
 T7 = w[800e01fc];
-800B7A30	bne    v0, zero, Lb7a58 [$800b7a58]
 A0 = 0;
-V0 = h[A1 + 0002];
-800B7A3C	nop
-800B7A40	bne    v0, zero, Lb7a58 [$800b7a58]
-800B7A44	addiu  v1, zero, $f000 (=-$1000)
-V0 = h[A1 + 0004];
-800B7A4C	nop
-V0 = V0 ^ V1;
-A0 = V0 < 0001;
 
-Lb7a58:	; 800B7A58
-T1 = 0;
-if( T9 != 0 )
+if( ( h[A1 + 0] == 0 ) && ( h[A1 + 2] == 0 ) )
 {
-    V1 = T7;
-
-    loopb7a64:	; 800B7A64
-        VXY0 = w[T8 + 0000];
-        VZ0 = w[T8 + 0004];
-        gte_rtv0tr(); // v0 * rotmatrix + tr vector
-        T8 = T8 + 0008;
-        V0 = V1 + 0008;
-        [V0 + 0] = h(IR1);
-        [V0 + 2] = h(IR2);
-        [V0 + 4] = h(IR3);
-        800B7A98	beq    a0, zero, Lb7ab8 [$800b7ab8]
-
-        V0 = h[V1 + 000c];
-
-        800B7AA8	blez   v0, Lb7acc [$800b7acc]
-
-        [V1 + 000c] = h(0);
-        800B7AB0	j      Lb7acc [$800b7acc]
-
-        Lb7ab8:	; 800B7AB8
-        V0 = h[V1 + 000c];
-
-        800B7AC0	bgez   v0, Lb7acc [$800b7acc]
-
-        [V1 + 000c] = h(0);
-
-        Lb7acc:	; 800B7ACC
-        T1 = T1 + 0001;
-        V1 = V1 + 0010;
-        V0 = T1 < T9;
-    800B7AD4	bne    v0, zero, loopb7a64 [$800b7a64]
+    800B7A44	addiu  v1, zero, $f000 (=-$1000)
+    V0 = h[A1 + 0004];
+    V0 = V0 ^ V1;
+    A0 = V0 < 0001;
 }
+
+V1 = T7;
+
+for( int i = 0; i < bu[part_data + 2]; ++i )
+{
+    VXY0 = w[vertex_data + 0];
+    VZ0 = w[vertex_data + 4];
+    gte_rtv0tr(); // v0 * rotmatrix + tr vector
+    vertex_data += 8;
+
+    [V1 + 8 + 0] = h(IR1);
+    [V1 + 8 + 2] = h(IR2);
+    [V1 + 8 + 4] = h(IR3);
+
+    if( A0 != 0 )
+    {
+        if( h[V1 + c] > 0 ) [V1 + c] = h(0);
+    }
+    else
+    {
+        if( h[V1 + c] < 0 ) [V1 + c] = h(0);
+    }
+
+    V1 = V1 + 10;
+}
+
+poly = vertex_data;
 
 R11R12 = w[A3 + 0];
 R13R21 = w[A3 + 4];
@@ -6239,48 +6225,22 @@ TRX = w[A3 + 14];
 TRY = w[A3 + 18];
 TRZ = w[A3 + 1c];
 
-800B7B1C	beq    t9, zero, Lb7b5c [$800b7b5c]
-T1 = 0;
-V1 = T7;
+for( int i = 0; i < bu[part_data + 2]; ++i )
+{
+    VXY0 = w[T7 + i * 10 + 8];
+    VZ0 = w[T7 + i * 10 + 8 + 4];
+    gte_RTPS(); // Perspective transform
+    [T7 + i * 10 + 0] = w(SXY2);
+    [T7 + i * 10 + 4] = w(SZ3);
+}
 
-loopb7b28:	; 800B7B28
-V0 = V1 + 0008;
-VXY0 = w[V0 + 0000];
-VZ0 = w[V0 + 0004];
-800B7B34	nop
-800B7B38	nop
-gte_RTPS(); // Perspective transform
-[V1 + 0000] = w(SXY2);
-V0 = V1 + 0004;
-[V0 + 0000] = w(SZ3);
-T1 = T1 + 0001;
-V0 = T1 < T9;
-800B7B54	bne    v0, zero, loopb7b28 [$800b7b28]
-V1 = V1 + 0010;
-
-Lb7b5c:	; 800B7B5C
 V0 = bu[800df114];
-T0 = w[part_data + 001c];
-800B7B68	beq    v0, zero, Lb7b7c [$800b7b7c]
-T1 = 0;
-V0 = hu[part_data + 0016];
-800B7B74	nop
-T0 = T0 + V0;
+packet = w[part_data + 1c];
+if( V0 != 0 ) packet += hu[part_data + 16];
 
-Lb7b7c:	; 800B7B7C
-S2 = w[part_data + 0004];
-800B7B80	nop
-T9 = S2 & 00ff;
-800B7B88	beq    t9, zero, Lb7d14 [$800b7d14]
-V0 = S2 & ff00;
-800B7B90	lui    s1, $ff00
-800B7B94	lui    t6, $00ff
-T6 = T6 | ffff;
-T4 = T0 + 002c;
-
-loopb7ba0:	; 800B7BA0
-    V1 = w[T8 + 0000];
-    T5 = T0;
+for( int i = 0; i < bu[part_data + 4]; ++i )
+{
+    V1 = w[poly + 0];
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     T3 = T7 + V0;
@@ -6293,105 +6253,39 @@ loopb7ba0:	; 800B7BA0
     V1 = V1 >> 18;
     V1 = V1 << 04;
     A2 = T7 + V1;
-    V0 = w[T3 + 0000];
-    V1 = w[T2 + 0000];
-    A0 = w[A3 + 0000];
-    A1 = w[A2 + 0000];
+    V0 = w[T3 + 0];
+    V1 = w[T2 + 0];
+    A0 = w[A3 + 0];
+    A1 = w[A2 + 0];
     SXY0 = V0;
     SXY2P = A0;
     SXY1 = V1;
-    800B7BF4	nop
-    800B7BF8	nop
     gte_NCLIP(); // Normal clipping
-    [T4 + ffdc] = w(V0);
-    [T4 + ffe8] = w(V1);
-    [T4 + fff4] = w(A0);
-    [T4 + 0000] = w(A1);
-    V0 = MAC0;
-    800B7C14	nop
-    800B7C18	blez   v0, Lb7c60 [$800b7c60]
-    800B7C1C	nop
-    V0 = h[T3 + 000c];
-    800B7C24	nop
-    800B7C28	bne    v0, zero, Lb7c74 [$800b7c74]
-    800B7C2C	nop
-    V0 = h[T2 + 000c];
-    800B7C34	nop
-    800B7C38	bne    v0, zero, Lb7c74 [$800b7c74]
-    800B7C3C	nop
-    V0 = h[A3 + 000c];
-    800B7C44	nop
-    800B7C48	bne    v0, zero, Lb7c74 [$800b7c74]
-    800B7C4C	nop
-    V0 = h[A2 + 000c];
-    800B7C54	nop
-    800B7C58	bne    v0, zero, Lb7c74 [$800b7c74]
-    800B7C5C	nop
+    [packet + 8] = w(V0);
+    [packet + 14] = w(V1);
+    [packet + 20] = w(A0);
+    [packet + 2c] = w(A1);
 
-    Lb7c60:	; 800B7C60
-    V0 = w[T0 + 0000];
-    800B7C64	nop
-    V0 = V0 & S1;
-    800B7C6C	j      Lb7cf8 [$800b7cf8]
-    [T0 + 0000] = w(V0);
+    if( ( MAC0 <= 0 ) || ( ( h[T3 + c] == 0 ) && ( h[T2 + c] == 0 ) && ( h[A3 + c] == 0 ) & ( h[A2 + c] == 0 ) ) )
+    {
+        [packet] = w(w[packet] & ff000000);
+    }
+    else
+    {
+        depth = (w[T3 + 4] + w[T2 + 4] + w[A3 + 4] + w[A2 + 4]) / 10;
 
-    Lb7c74:	; 800B7C74
-    V0 = w[T3 + 0004];
-    V1 = w[T2 + 0004];
-    800B7C7C	nop
-    V0 = V0 + V1;
-    V1 = w[A3 + 0004];
-    A0 = w[A2 + 0004];
-    V0 = V0 + V1;
-    V0 = V0 + A0;
-    V0 = V0 >> 04;
-    V0 = V0 << 02;
-    V0 = V0 + ot;
-    V1 = w[T5 + 0000];
-    V0 = w[V0 + 0000];
-    V1 = V1 & S1;
-    V0 = V0 & T6;
-    V1 = V1 | V0;
-    [T5 + 0000] = w(V1);
-    V1 = w[T3 + 0004];
-    V0 = w[T2 + 0004];
-    800B7CC0	nop
-    V1 = V1 + V0;
-    V0 = w[A3 + 0004];
-    A0 = w[A2 + 0004];
-    V1 = V1 + V0;
-    V1 = V1 + A0;
-    V1 = V1 >> 04;
-    V1 = V1 << 02;
-    V1 = V1 + ot;
-    V0 = w[V1 + 0000];
-    A0 = T5 & T6;
-    V0 = V0 & S1;
-    V0 = V0 | A0;
-    [V1 + 0000] = w(V0);
+        [packet] = w((w[packet] & ff000000) | (w[ot + depth * 4] & 00ffffff));
+        [ot + depth * 4] = w((w[ot + depth * 4] & ff000000) | (packet & 00ffffff));
+    }
 
-    Lb7cf8:	; 800B7CF8
-    T1 = T1 + 0001;
-    T4 = T4 + 0034;
-    T0 = T0 + 0034;
-    T8 = T8 + 0018;
-    V0 = T1 < T9;
-800B7D08	bne    v0, zero, loopb7ba0 [$800b7ba0]
+    packet += 34;
+    poly += 18;
+}
 
-V0 = S2 & ff00;
-
-Lb7d14:	; 800B7D14
-T9 = V0 >> 08;
-800B7D18	beq    t9, zero, Lb7e58 [$800b7e58]
-T1 = 0;
-800B7D20	lui    t5, $ff00
-800B7D24	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = T0 + 0020;
-
-loopb7d30:	; 800B7D30
-    V1 = w[T8 + 0000];
-    T3 = T0;
+for( int i = 0; i < bu[part_data + 5]; ++i )
+{
+    V1 = w[poly + 0000];
+    T3 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     A3 = T7 + V0;
@@ -6410,9 +6304,9 @@ loopb7d30:	; 800B7D30
     800B7D74	nop
     800B7D78	nop
     gte_NCLIP(); // Normal clipping
-    [T2 + ffe8] = w(V0);
-    [T2 + fff4] = w(V1);
-    [T2 + 0000] = w(A0);
+    [packet + 20 + ffe8] = w(V0);
+    [packet + 20 + fff4] = w(V1);
+    [packet + 20 + 0000] = w(A0);
     V0 = MAC0;
     800B7D90	nop
     800B7D94	blez   v0, Lb7dcc [$800b7dcc]
@@ -6431,11 +6325,11 @@ loopb7d30:	; 800B7D30
     800B7DC8	nop
 
     Lb7dcc:	; 800B7DCC
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B7DD0	nop
-    V0 = V0 & T5;
+    V0 = V0 & ff000000;
     800B7DD8	j      Lb7e40 [$800b7e40]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb7de0:	; 800B7DE0
     A3 = w[A3 + 0004];
@@ -6453,37 +6347,21 @@ loopb7d30:	; 800B7D30
     A0 = A0 + ot;
     V1 = w[T3 + 0000];
     V0 = w[A0 + 0000];
-    V1 = V1 & T5;
-    V0 = V0 & T4;
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
     V1 = V1 | V0;
     [T3 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    V1 = T3 & T4;
-    V0 = V0 & T5;
-    V0 = V0 | V1;
-    [A0 + 0000] = w(V0);
+    [A0] = w((w[A0] & ff000000) | (T3 & 00ffffff));
 
     Lb7e40:	; 800B7E40
-    T1 = T1 + 0001;
-    T2 = T2 + 0028;
-    T0 = T0 + 0028;
-    T8 = T8 + 0014;
-    V0 = T1 < T9;
-800B7E50	bne    v0, zero, loopb7d30 [$800b7d30]
+    packet += 28;
+    poly += 14;
+}
 
-Lb7e58:	; 800B7E58
-V0 = S2 >> 10;
-T9 = V0 & 00ff;
-800B7E60	beq    t9, zero, Lb7fe8 [$800b7fe8]
-T1 = 0;
-800B7E68	lui    s1, $ff00
-800B7E6C	lui    t6, $00ff
-T6 = T6 | ffff;
-T4 = T0 + 0020;
-
-loopb7e78:	; 800B7E78
-    V1 = w[T8 + 0000];
-    T5 = T0;
+for( int i = 0; i < bu[part_data + 6]; ++i )
+{
+    V1 = w[poly + 0000];
+    T5 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     T3 = T7 + V0;
@@ -6506,10 +6384,10 @@ loopb7e78:	; 800B7E78
     800B7ECC	nop
     800B7ED0	nop
     gte_NCLIP(); // Normal clipping
-    [T4 + ffe8] = w(V0);
-    [T4 + fff0] = w(V1);
-    [T4 + fff8] = w(A0);
-    [T4 + 0000] = w(A1);
+    [packet + 20 + ffe8] = w(V0);
+    [packet + 20 + fff0] = w(V1);
+    [packet + 20 + fff8] = w(A0);
+    [packet + 20 + 0000] = w(A1);
     V0 = MAC0;
     800B7EEC	nop
     800B7EF0	blez   v0, Lb7f38 [$800b7f38]
@@ -6532,11 +6410,11 @@ loopb7e78:	; 800B7E78
     800B7F34	nop
 
     Lb7f38:	; 800B7F38
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B7F3C	nop
-    V0 = V0 & S1;
+    V0 = V0 & ff000000;
     800B7F44	j      Lb7fd0 [$800b7fd0]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb7f4c:	; 800B7F4C
     V0 = w[T3 + 0004];
@@ -6552,8 +6430,8 @@ loopb7e78:	; 800B7E78
     V0 = V0 + ot;
     V1 = w[T5 + 0000];
     V0 = w[V0 + 0000];
-    V1 = V1 & S1;
-    V0 = V0 & T6;
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
     V1 = V1 | V0;
     [T5 + 0000] = w(V1);
     V1 = w[T3 + 0004];
@@ -6564,35 +6442,19 @@ loopb7e78:	; 800B7E78
     A0 = w[A2 + 0004];
     V1 = V1 + V0;
     V1 = V1 + A0;
-    V1 = V1 >> 04;
-    V1 = V1 << 02;
-    V1 = V1 + ot;
-    V0 = w[V1 + 0000];
-    A0 = T5 & T6;
-    V0 = V0 & S1;
-    V0 = V0 | A0;
-    [V1 + 0000] = w(V0);
+    depth = V1 >> 04;
+    [ot + depth * 4] = w((w[ot + depth * 4] & ff000000) | (T5 & 00ffffff));
+
 
     Lb7fd0:	; 800B7FD0
-    T1 = T1 + 0001;
-    T4 = T4 + 0028;
-    T0 = T0 + 0028;
-    T8 = T8 + 000c;
-    V0 = T1 < T9;
-800B7FE0	bne    v0, zero, loopb7e78 [$800b7e78]
+    packet += 28;
+    poly += c;
+}
 
-Lb7fe8:	; 800B7FE8
-T9 = S2 >> 18;
-800B7FEC	beq    t9, zero, Lb812c [$800b812c]
-T1 = 0;
-800B7FF4	lui    t5, $ff00
-800B7FF8	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = T0 + 0018;
-
-loopb8004:	; 800B8004
-    V1 = w[T8 + 0000];
-    T3 = T0;
+for( int i = 0; i < bu[part_data + 7]; ++i )
+{
+    V1 = w[poly + 0000];
+    T3 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     A3 = T7 + V0;
@@ -6611,9 +6473,9 @@ loopb8004:	; 800B8004
     800B8048	nop
     800B804C	nop
     gte_NCLIP(); // Normal clipping
-    [T2 + fff0] = w(V0);
-    [T2 + fff8] = w(V1);
-    [T2 + 0000] = w(A0);
+    [packet + 18 + fff0] = w(V0);
+    [packet + 18 + fff8] = w(V1);
+    [packet + 18 + 0000] = w(A0);
     V0 = MAC0;
     800B8064	nop
     800B8068	blez   v0, Lb80a0 [$800b80a0]
@@ -6632,11 +6494,11 @@ loopb8004:	; 800B8004
     800B809C	nop
 
     Lb80a0:	; 800B80A0
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B80A4	nop
-    V0 = V0 & T5;
+    V0 = V0 & ff000000;
     800B80AC	j      Lb8114 [$800b8114]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb80b4:	; 800B80B4
     A3 = w[A3 + 0004];
@@ -6654,38 +6516,21 @@ loopb8004:	; 800B8004
     A0 = A0 + ot;
     V1 = w[T3 + 0000];
     V0 = w[A0 + 0000];
-    V1 = V1 & T5;
-    V0 = V0 & T4;
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
     V1 = V1 | V0;
     [T3 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    V1 = T3 & T4;
-    V0 = V0 & T5;
-    V0 = V0 | V1;
-    [A0 + 0000] = w(V0);
+    [A0] = w((w[A0] & ff000000) | (T3 & 00ffffff));
 
     Lb8114:	; 800B8114
-    T1 = T1 + 0001;
-    T2 = T2 + 0020;
-    T0 = T0 + 0020;
-    T8 = T8 + 000c;
-    V0 = T1 < T9;
-800B8124	bne    v0, zero, loopb8004 [$800b8004]
+    packet += 20;
+    poly += c;
+}
 
-Lb812c:	; 800B812C
-S2 = w[part_data + 0008];
-800B8130	nop
-T9 = S2 & 00ff;
-800B8138	beq    t9, zero, Lb8278 [$800b8278]
-T1 = 0;
-800B8140	lui    t5, $ff00
-800B8144	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = T0 + 0010;
-
-loopb8150:	; 800B8150
-    V1 = w[T8 + 0000];
-    T3 = T0;
+for( int i = 0; i < bu[part_data + 8]; ++i )
+{
+    V1 = w[poly + 0000];
+    T3 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     A3 = T7 + V0;
@@ -6704,9 +6549,9 @@ loopb8150:	; 800B8150
     800B8194	nop
     800B8198	nop
     gte_NCLIP(); // Normal clipping
-    [T2 + fff8] = w(V0);
-    [T2 + fffc] = w(V1);
-    [T2 + 0000] = w(A0);
+    [packet + 10 + fff8] = w(V0);
+    [packet + 10 + fffc] = w(V1);
+    [packet + 10 + 0000] = w(A0);
     V0 = MAC0;
     800B81B0	nop
     800B81B4	blez   v0, Lb81ec [$800b81ec]
@@ -6725,11 +6570,11 @@ loopb8150:	; 800B8150
     800B81E8	nop
 
     Lb81ec:	; 800B81EC
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B81F0	nop
-    V0 = V0 & T5;
+    V0 = V0 & ff000000;
     800B81F8	j      Lb8260 [$800b8260]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb8200:	; 800B8200
     A3 = w[A3 + 0004];
@@ -6747,37 +6592,21 @@ loopb8150:	; 800B8150
     A0 = A0 + ot;
     V1 = w[T3 + 0000];
     V0 = w[A0 + 0000];
-    V1 = V1 & T5;
-    V0 = V0 & T4;
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
     V1 = V1 | V0;
     [T3 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    V1 = T3 & T4;
-    V0 = V0 & T5;
-    V0 = V0 | V1;
-    [A0 + 0000] = w(V0);
+    [A0] = w((w[A0] & ff000000) | (T3 & 00ffffff));
 
     Lb8260:	; 800B8260
-    T1 = T1 + 0001;
-    T2 = T2 + 0014;
-    T0 = T0 + 0014;
-    T8 = T8 + 0008;
-    V0 = T1 < T9;
-800B8270	bne    v0, zero, loopb8150 [$800b8150]
+    packet += 14;
+    poly += 8;
+}
 
-Lb8278:	; 800B8278
-V0 = S2 & ff00;
-T9 = V0 >> 08;
-800B8280	beq    t9, zero, Lb83f8 [$800b83f8]
-T1 = 0;
-800B8288	lui    s1, $ff00
-800B828C	lui    t6, $00ff
-T6 = T6 | ffff;
-T4 = T0 + 0014;
-
-loopb8298:	; 800B8298
-    V1 = w[T8 + 0000];
-    T5 = T0;
+for( int i = 0; i < bu[part_data + 9]; ++i )
+{
+    V1 = w[poly + 0000];
+    T5 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     T2 = T7 + V0;
@@ -6800,10 +6629,10 @@ loopb8298:	; 800B8298
     800B82EC	nop
     800B82F0	nop
     gte_NCLIP(); // Normal clipping
-    [T4 + fff4] = w(V0);
-    [T4 + fff8] = w(V1);
-    [T4 + fffc] = w(A0);
-    [T4 + 0000] = w(A1);
+    [packet + 14 + fff4] = w(V0);
+    [packet + 14 + fff8] = w(V1);
+    [packet + 14 + fffc] = w(A0);
+    [packet + 14 + 0000] = w(A1);
     V0 = MAC0;
     800B830C	nop
     800B8310	blez   v0, Lb8348 [$800b8348]
@@ -6822,11 +6651,11 @@ loopb8298:	; 800B8298
     800B8344	nop
 
     Lb8348:	; 800B8348
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B834C	nop
-    V0 = V0 & S1;
+    V0 = V0 & ff000000;
     800B8354	j      Lb83e0 [$800b83e0]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb835c:	; 800B835C
     V0 = w[T2 + 0004];
@@ -6840,50 +6669,27 @@ loopb8298:	; 800B8298
     V0 = V0 >> 04;
     V0 = V0 << 02;
     V0 = V0 + ot;
-    V1 = w[T5 + 0000];
-    V0 = w[V0 + 0000];
-    V1 = V1 & S1;
-    V0 = V0 & T6;
-    V1 = V1 | V0;
-    [T5 + 0000] = w(V1);
+    [T5] = w((w[T5] & ff000000) | (w[V0] & 00ffffff));
+
     V1 = w[T2 + 0004];
     V0 = w[A3 + 0004];
-    800B83A8	nop
     V1 = V1 + V0;
     V0 = w[A2 + 0004];
     A0 = w[T3 + 0004];
     V1 = V1 + V0;
     V1 = V1 + A0;
-    V1 = V1 >> 04;
-    V1 = V1 << 02;
-    V1 = V1 + ot;
-    V0 = w[V1 + 0000];
-    A0 = T5 & T6;
-    V0 = V0 & S1;
-    V0 = V0 | A0;
-    [V1 + 0000] = w(V0);
+    depth = V1 >> 04;
+    [ot + depth * 4] = w((w[ot + depth * 4] & ff000000) | (T5 & 00ffffff));
 
     Lb83e0:	; 800B83E0
-    T1 = T1 + 0001;
-    T4 = T4 + 0018;
-    T0 = T0 + 0018;
-    T8 = T8 + 0008;
-    V0 = T1 < T9;
-800B83F0	bne    v0, zero, loopb8298 [$800b8298]
+    packet += 18;
+    poly += 8;
+}
 
-Lb83f8:	; 800B83F8
-V0 = S2 >> 10;
-T9 = V0 & 00ff;
-800B8400	beq    t9, zero, Lb8540 [$800b8540]
-T1 = 0;
-800B8408	lui    t5, $ff00
-800B840C	lui    t4, $00ff
-T4 = T4 | ffff;
-T2 = T0 + 0018;
-
-loopb8418:	; 800B8418
-    V1 = w[T8 + 0000];
-    T3 = T0;
+for( int i = 0; i < bu[part_data + a]; ++i )
+{
+    V1 = w[poly + 0000];
+    T3 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     A3 = T7 + V0;
@@ -6902,9 +6708,9 @@ loopb8418:	; 800B8418
     800B845C	nop
     800B8460	nop
     gte_NCLIP(); // Normal clipping
-    [T2 + fff0] = w(V0);
-    [T2 + fff8] = w(V1);
-    [T2 + 0000] = w(A0);
+    [packet + 18 + fff0] = w(V0);
+    [packet + 18 + fff8] = w(V1);
+    [packet + 18 + 0000] = w(A0);
     V0 = MAC0;
     800B8478	nop
     800B847C	blez   v0, Lb84b4 [$800b84b4]
@@ -6923,58 +6729,31 @@ loopb8418:	; 800B8418
     800B84B0	nop
 
     Lb84b4:	; 800B84B4
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B84B8	nop
-    V0 = V0 & T5;
+    V0 = V0 & ff000000;
     800B84C0	j      Lb8528 [$800b8528]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb84c8:	; 800B84C8
-    A3 = w[A3 + 0004];
-    A2 = w[A2 + 0004];
-    A1 = w[A1 + 0004];
-    SZ1 = A3;
-    SZ2 = A2;
-    SZ3 = A1;
-    800B84E0	nop
-    800B84E4	nop
+    SZ1 = w[A3 + 4];
+    SZ2 = w[A2 + 4];
+    SZ3 = w[A1 + 4];
     gte_AVSZ3(); // Average of three Z values
-    A0 = OTZ;
-    800B84F0	nop
-    A0 = A0 << 02;
-    A0 = A0 + ot;
-    V1 = w[T3 + 0000];
-    V0 = w[A0 + 0000];
-    V1 = V1 & T5;
-    V0 = V0 & T4;
-    V1 = V1 | V0;
-    [T3 + 0000] = w(V1);
-    V0 = w[A0 + 0000];
-    V1 = T3 & T4;
-    V0 = V0 & T5;
-    V0 = V0 | V1;
-    [A0 + 0000] = w(V0);
+    depth = OTZ;
+
+    [T3] = w((w[T3] & ff000000) | (w[ot + depth * 4] & 00ffffff));
+    [ot + depth * 4] = w((w[ot + depth * 4] & ff000000) | (T3 & 00ffffff));
 
     Lb8528:	; 800B8528
-    T1 = T1 + 0001;
-    T2 = T2 + 001c;
-    T0 = T0 + 001c;
-    T8 = T8 + 0010;
-    V0 = T1 < T9;
-800B8538	bne    v0, zero, loopb8418 [$800b8418]
+    packet += 1c;
+    poly += 10;
+}
 
-Lb8540:	; 800B8540
-T9 = S2 >> 18;
-800B8544	beq    t9, zero, Lb86bc [$800b86bc]
-T1 = 0;
-800B854C	lui    s1, $ff00
-800B8550	lui    t6, $00ff
-T6 = T6 | ffff;
-T4 = T0 + 0020;
-
-loopb855c:	; 800B855C
-    V1 = w[T8 + 0000];
-    T5 = T0;
+for( int i = 0; i < bu[part_data + b]; ++i )
+{
+    V1 = w[poly + 0000];
+    T5 = packet;
     V0 = V1 & 00ff;
     V0 = V0 << 04;
     T2 = T7 + V0;
@@ -6997,10 +6776,10 @@ loopb855c:	; 800B855C
     800B85B0	nop
     800B85B4	nop
     gte_NCLIP(); // Normal clipping
-    [T4 + ffe8] = w(V0);
-    [T4 + fff0] = w(V1);
-    [T4 + fff8] = w(A0);
-    [T4 + 0000] = w(A1);
+    [packet + 20 + ffe8] = w(V0);
+    [packet + 20 + fff0] = w(V1);
+    [packet + 20 + fff8] = w(A0);
+    [packet + 20 + 0000] = w(A1);
     V0 = MAC0;
     800B85D0	nop
     800B85D4	blez   v0, Lb860c [$800b860c]
@@ -7019,11 +6798,11 @@ loopb855c:	; 800B855C
     800B8608	nop
 
     Lb860c:	; 800B860C
-    V0 = w[T0 + 0000];
+    V0 = w[packet + 0000];
     800B8610	nop
-    V0 = V0 & S1;
+    V0 = V0 & ff000000;
     800B8618	j      Lb86a4 [$800b86a4]
-    [T0 + 0000] = w(V0);
+    [packet + 0000] = w(V0);
 
     Lb8620:	; 800B8620
     V0 = w[T2 + 0004];
@@ -7039,8 +6818,8 @@ loopb855c:	; 800B855C
     V0 = V0 + ot;
     V1 = w[T5 + 0000];
     V0 = w[V0 + 0000];
-    V1 = V1 & S1;
-    V0 = V0 & T6;
+    V1 = V1 & ff000000;
+    V0 = V0 & 00ffffff;
     V1 = V1 | V0;
     [T5 + 0000] = w(V1);
     V1 = w[T2 + 0004];
@@ -7051,24 +6830,13 @@ loopb855c:	; 800B855C
     A0 = w[T3 + 0004];
     V1 = V1 + V0;
     V1 = V1 + A0;
-    V1 = V1 >> 04;
-    V1 = V1 << 02;
-    V1 = V1 + ot;
-    V0 = w[V1 + 0000];
-    A0 = T5 & T6;
-    V0 = V0 & S1;
-    V0 = V0 | A0;
-    [V1 + 0000] = w(V0);
+    depth = V1 >> 04;
+    [ot + depth * 4] = w((w[ot + depth * 4] & ff000000) | (T5 & 00ffffff));
 
     Lb86a4:	; 800B86A4
-    T1 = T1 + 0001;
-    T4 = T4 + 0024;
-    T0 = T0 + 0024;
-    T8 = T8 + 0014;
-    V0 = T1 < T9;
-800B86B4	bne    v0, zero, loopb855c [$800b855c]
-
-Lb86bc:	; 800B86BC
+    packet += 24;
+    poly += 14;
+}
 ////////////////////////////////
 
 
