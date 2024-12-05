@@ -205,7 +205,7 @@ for( int i = 0; i < bu[events_data + 2]; ++i ) // go through all actors
 
 for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all entities
 {
-    [entities_data + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir run_kawai function returns 1
+    [entities_data + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir field_model_kawai_execute function returns 1
     [entities_data + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
     [entities_data + i * 84 + 4] = w(0); // offset to KAWAI opcode data in script
     [entities_data + i * 84 + 8] = b(0); // blinking. 0 - on, 1 - off.

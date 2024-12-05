@@ -457,7 +457,7 @@
     + 34 [][][][]
     + 38 [][][][]
 
-800e0200 [][][][] offset to color data from BSX file.
+800e0200 [][][][] offset to model data from BSX file.
 800e0204 [][][][] offset to BSX file.
 
 800e0228 opcode address table.

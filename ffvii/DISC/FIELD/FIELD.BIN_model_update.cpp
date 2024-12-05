@@ -76,10 +76,10 @@ block7_data = w[8007e770] + 4;
 model_struct = w[8004a62c];
 model_data = w[model_struct + 4];
 
-actors_n = h[8009abf4 + 28];
+entities_n = h[8009abf4 + 28];
 
 // update bone matrixes
-for( int i = 0; i < actors_n; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     if( bu[S1 + 4] != ff )
     {
@@ -97,7 +97,7 @@ for( int i = 0; i < actors_n; ++i )
         A1 = SP + 18;
         field_calculate_distance_to_screen(); // calculate distance to screen
 
-        if( V0 < 0f00 )
+        if( V0 < f00 )
         {
             [model_data + model_id * 24 + 7] = b(bu[80074ea4 + i * 84 + 38]); // model direction
 
@@ -145,7 +145,7 @@ for( int i = 0; i < actors_n; ++i )
 }
 
 // update vervexes in drafts
-for( int i = 0; i < actors_n; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
     {
@@ -179,7 +179,7 @@ for( int i = 0; i < actors_n; ++i )
 }
 
 // update model kawai
-for( int i = 0; i < actors_n; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
     {
@@ -189,6 +189,7 @@ for( int i = 0; i < actors_n; ++i )
             [SP + 10] = h(w[80074ea4 + i * 84 + c] >> c);
             [SP + 12] = h(w[80074ea4 + i * 84 + 10] >> c);
             [SP + 14] = h((w[80074ea4 + i * 84 + 14] >> c) - a);
+
             A0 = SP + 10;
             A1 = SP + 18;
             field_calculate_distance_to_screen();
@@ -200,7 +201,7 @@ for( int i = 0; i < actors_n; ++i )
                 A0 = w[V1 + 4] + A2 * 24;
                 A1 = w[80074ea4 + i * 84 + 4]; // kawai_settings
                 A3 = w[80071e40]; // offset to camera section
-                run_kawai();
+                field_model_kawai_execute();
 
                 if( V0 == 1 )
                 {
@@ -299,9 +300,9 @@ system_cdrom_read_chain();
 
 if( V0 == 0 )
 {
-    actors_n = h[8009abf4 + 28];
+    entities_n = h[8009abf4 + 28];
 
-    if( ( bu[8009abf4 + 1] == 3 ) && ( actors_n == 0 ) )
+    if( ( bu[8009abf4 + 1] == 3 ) && ( entities_n == 0 ) )
     {
         A1 = h[8009abf4 + 2]; // map id to load
 

@@ -225,7 +225,7 @@
 // funcafde4
 800AFDE4-800AFE18
 ////////////////////////////////
-// run_kawai
+// field_model_kawai_execute
 800AFE1C-800B0614
 ////////////////////////////////
 // field_model_kawai_set_custom_lighting_to_model_packets
@@ -252,7 +252,7 @@
 // field_model_kawai_set_model_transparency
 800B2A00-800B2DD0
 ////////////////////////////////
-// field_model_kawai_set_color_to_model_packets_below_level
+// field_model_kawai_set_color_to_packets_below_level
 800B2DD4-800B2F3C
 ////////////////////////////////
 // field_model_set_color_to_part_packets_below_level
@@ -273,10 +273,10 @@
 // field_model_set_lighting_to_part_packets
 800B5504-800B62C0
 ////////////////////////////////
-// kawai_action_9
+// field_model_kawai_set_splash_to_packets_below_level
 800B62C4-800B69BC
 ////////////////////////////////
-// funcb69c0
+// field_model_kawai_init_splash_packets
 800B69C0-800B6AE0
 ////////////////////////////////
 // kawai_action_a

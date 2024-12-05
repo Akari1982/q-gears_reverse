@@ -590,7 +590,7 @@ for( int i = 0; i < w[bsx_header + 4]; ++i ) // number of models
     }
 }
 
-color_data = bsx_header + w[bsx_header + c]);
+color_data = bsx_header + w[bsx_header + c];
 
 for( int i = 0; i < number_of_model; ++i )
 {
@@ -2320,7 +2320,7 @@ for( int i = 0; i < 10; ++i )
 
 
 ////////////////////////////////
-// run_kawai()
+// field_model_kawai_execute()
 
 model_data = A0;
 kawai_settings = A1;
@@ -2356,12 +2356,12 @@ switch( b[model_data + 1] )
     // 1 800B2A00 field_model_kawai_set_model_transparency()
     // 2 800B0EDC field_model_kawai_set_color_to_model_packets()
     // 3 800B0618 field_model_kawai_set_custom_lighting_to_model_packets()
-    // 4 800B2DD4 field_model_kawai_set_color_to_model_packets_below_level()
+    // 4 800B2DD4 field_model_kawai_set_color_to_packets_below_level()
     // 5 800B5260 field_model_kawai_set_lighting_to_model_packets()
     // 6 800B480C kawai_action_6()
     // 7 800B4B04 kawai_action_7()
     // 8 800B4EAC kawai_action_8()
-    // 9 800B62C4 kawai_action_9()
+    // 9 800B62C4 field_model_kawai_set_splash_to_packets_below_level()
     // a 800B6AE4 kawai_action_a()
     // b 800B86D8 kawai_action_b()
     // c 800B6B4C kawai_action_c()
@@ -2419,7 +2419,7 @@ switch( b[model_data + 1] )
     {
         A0 = model_data;
         A1 = kawai_settings;
-        field_model_kawai_set_color_to_model_packets_below_level();
+        field_model_kawai_set_color_to_packets_below_level();
 
         [model_data + 1] = b(-1);
         return 1;
@@ -3456,18 +3456,18 @@ else
 // field_model_kawai_load_eyes_mouth_tex_to_vram()
 
 model_data = A0;
-S3 = A1;
+kawai_settings = A1;
 
-model_id = bu[S3 + 3];
+model_id = bu[kawai_settings + 3];
 
 if( model_id < 21 )
 {
     tdb_file = w[800dfca0];
     image_offset = w[tdb_file + 8];
     face_id = bu[model_data + 15];
-    eye1 = bu[S3 + 0];
-    eye2 = bu[S3 + 1];
-    mouth = bu[S3 + 2];
+    eye1 = bu[kawai_settings + 0];
+    eye2 = bu[kawai_settings + 1];
+    mouth = bu[kawai_settings + 2];
 
     [SP + 10] = h(300 + model_id % 4 * 10 + 0); // vram x
     [SP + 12] = h(100 + model_id / 4 * 20); // vram y
@@ -3931,7 +3931,7 @@ return 1;
 
 
 ////////////////////////////////
-// field_model_kawai_set_color_to_model_packets_below_level()
+// field_model_kawai_set_color_to_packets_below_level()
 
 model_data = A0;
 kawai_settings = A1;
@@ -4811,71 +4811,74 @@ else
 ////////////////////////////////
 // kawai_action_6()
 
-model_id = bu[A1 + 1];
-S0 = 800dfe3c + model_id * 3c;
-V1 = bu[A1 + 0];
-if (V1 == 0)
+model_data = A0;
+kawai_settings = A1;
+
+entity_id = bu[kawai_settings + 1];
+kawai_data = 800dfe3c + entity_id * 3c;
+
+if( bu[kawai_settings + 0] == 0 )
 {
-    [S0 + 0] = h(hu[A1 + 2]);
-    [S0 + 2] = h(hu[A1 + 4]);
-    [S0 + 4] = h(hu[A1 + 6]);
-    [S0 + 6] = h(hu[A1 + 8]);
-    [S0 + 8] = h(hu[A1 + a]);
-    [S0 + a] = h(hu[A1 + c]);
-    [S0 + c] = h(hu[A1 + e]);
-    [S0 + e] = h(hu[A1 + 10]);
-    [S0 + 10] = h(hu[A1 + 12]);
-    [S0 + 12] = b(bu[A1 + 14]);
-    [S0 + 14] = b(0);
+    [kawai_data + 0] = h(hu[kawai_settings + 2]);
+    [kawai_data + 2] = h(hu[kawai_settings + 4]);
+    [kawai_data + 4] = h(hu[kawai_settings + 6]);
+    [kawai_data + 6] = h(hu[kawai_settings + 8]);
+    [kawai_data + 8] = h(hu[kawai_settings + a]);
+    [kawai_data + a] = h(hu[kawai_settings + c]);
+    [kawai_data + c] = h(hu[kawai_settings + e]);
+    [kawai_data + e] = h(hu[kawai_settings + 10]);
+    [kawai_data + 10] = h(hu[kawai_settings + 12]);
+    [kawai_data + 12] = b(bu[kawai_settings + 14]);
+    [kawai_data + 14] = b(0);
+
     return 1;
 }
-else if (V1 == 1)
+else if( bu[kawai_settings + 0] == 1 )
 {
-    [800dfe1c] = h(hu[S0 + 0]); // R
-    [800dfe1e] = h(hu[S0 + 2]); // G
-    [800dfe20] = h(hu[S0 + 4]); // B
-    [800dfe22] = b(bu[S0 + 12]); // 1 - for all packets
+    [800dfe1c] = h(hu[kawai_data + 0]); // R
+    [800dfe1e] = h(hu[kawai_data + 2]); // G
+    [800dfe20] = h(hu[kawai_data + 4]); // B
+    [800dfe22] = b(bu[kawai_data + 12]); // 1 - for all packets
+
+    A0 = model_data;
     A1 = 800dfe1c;
     field_model_kawai_set_color_to_model_packets();
 
-    V0 = bu[S0 + 13];
-    if (V0 == 0)
+    if( bu[kawai_data + 13] == 0 )
     {
         S1 = 0;
 
-        [S0 + 0] = h(hu[S0 + 0] + hu[S0 + c]);
-        if (((h[S0 + c] >= 0) && (h[S0 + 0] >= h[S0 + 6])) || (h[S0 + 6] >= h[S0 + 0]))
+        [kawai_data + 0] = h(hu[kawai_data + 0] + hu[kawai_data + c]);
+        if( ( ( h[kawai_data + c] >= 0 ) && ( h[kawai_data + 0] >= h[kawai_data + 6] ) ) || ( h[kawai_data + 6] >= h[kawai_data + 0] ) )
         {
-            [S0 + 0] = h(hu[S0 + 6]);
+            [kawai_data + 0] = h(hu[kawai_data + 6]);
             S1 = S1 | 1;
         }
 
-        [S0 + 2] = h(hu[S0 + 2] + hu[S0 + e]);
-        if (((h[S0 + e] >= 0) && (h[S0 + 2] >= h[S0 + 8])) || (h[S0 + 8] >= h[S0 + 2]))
+        [kawai_data + 2] = h(hu[kawai_data + 2] + hu[kawai_data + e]);
+        if( ( ( h[kawai_data + e] >= 0 ) && ( h[kawai_data + 2] >= h[kawai_data + 8] ) ) || ( h[kawai_data + 8] >= h[kawai_data + 2] ) )
         {
-            [S0 + 2] = h(hu[S0 + 8]);
+            [kawai_data + 2] = h(hu[kawai_data + 8]);
             S1 = S1 | 2;
         }
 
-        [S0 + 4] = h(hu[S0 + 4] + hu[S0 + 10]);
-        if (((h[S0 + 10] >= 0) && (h[S0 + 4] >= h[S0 + a])) || (h[S0 + a] >= h[S0 + 4]))
+        [kawai_data + 4] = h(hu[kawai_data + 4] + hu[kawai_data + 10]);
+        if( ( ( h[kawai_data + 10] >= 0 ) && ( h[kawai_data + 4] >= h[kawai_data + a] ) ) || ( h[kawai_data + a] >= h[kawai_data + 4] ) )
         {
-            [S0 + 4] = h(hu[S0 + a]);
+            [kawai_data + 4] = h(hu[kawai_data + a]);
             S1 = S1 | 4;
-            }
         }
 
-        [S0 + 6] = h(hu[S0 + 6] + hu[S0 + 16]);
-        if (((h[S0 + 16] >= 0) && (h[S0 + 6] >= h[S0 + e])) || (h[S0 + e] >= h[S0 + 6]))
-        if (h[S0 + 16] >= 0)
+        [kawai_data + 6] = h(hu[kawai_data + 6] + hu[kawai_data + 16]);
+        if( ( ( h[kawai_data + 16] >= 0 ) && ( h[kawai_data + 6] >= h[kawai_data + e] ) ) || ( h[kawai_data + e] >= h[kawai_data + 6] ) )
         {
-            [S0 + 6] = h(hu[S0 + e]);
+            [kawai_data + 6] = h(hu[kawai_data + e]);
             S1 = S1 | 8;
         }
 
-        if (S1 == 7)
+        if( S1 == 7 )
         {
-            [S0 + 13] = b(bu[S0 + 13] + 1);
+            [kawai_data + 13] = b(bu[kawai_data + 13] + 1);
         }
 
         return 0;
@@ -4890,47 +4893,52 @@ return 1;
 ////////////////////////////////
 // kawai_action_7()
 
-model_id = bu[A1 + 1];
-A2 = 800dfe3c + model_id * 3c;
+model_data = A0;
+kawai_settings = A1;
 
-V1 = bu[A1 + 0];
-if( V1 == 0 )
+entity_id = bu[kawai_settings + 1];
+kawai_data = 800dfe3c + entity_id * 3c;
+
+if( bu[kawai_settings + 0] == 0 )
 {
-    [A2 + 0] = h(hu[A1 + 2]);
-    [A2 + 2] = h(hu[A1 + 4]);
-    [A2 + 4] = h(hu[A1 + 6]);
-    [A2 + 6] = h(hu[A1 + 8]);
-    [A2 + 8] = h(hu[A1 + a]);
-    [A2 + a] = h(hu[A1 + c]);
-    [A2 + c] = h(hu[A1 + e]);
-    [A2 + e] = h(hu[A1 + 10]);
-    [A2 + 10] = h(hu[A1 + 12]);
-    [A2 + 12] = b(bu[A1 + 14]);
-    [A2 + 14] = b(bu[A1 + 16]);
-    [A2 + 16] = b(bu[A1 + 18]);
-    [A2 + 18] = b(bu[A1 + 1a]);
-    [A2 + 1a] = b(bu[A1 + 1c]);
-    [A2 + 1c] = b(bu[A1 + 1e]);
+    [kawai_data + 0] = h(hu[kawai_settings + 2]);
+    [kawai_data + 2] = h(hu[kawai_settings + 4]);
+    [kawai_data + 4] = h(hu[kawai_settings + 6]);
+    [kawai_data + 6] = h(hu[kawai_settings + 8]);
+    [kawai_data + 8] = h(hu[kawai_settings + a]);
+    [kawai_data + a] = h(hu[kawai_settings + c]);
+    [kawai_data + c] = h(hu[kawai_settings + e]);
+    [kawai_data + e] = h(hu[kawai_settings + 10]);
+    [kawai_data + 10] = h(hu[kawai_settings + 12]);
+    [kawai_data + 12] = b(bu[kawai_settings + 14]);
+    [kawai_data + 14] = b(bu[kawai_settings + 16]);
+    [kawai_data + 16] = b(bu[kawai_settings + 18]);
+    [kawai_data + 18] = b(bu[kawai_settings + 1a]);
+    [kawai_data + 1a] = b(bu[kawai_settings + 1c]);
+    [kawai_data + 1c] = b(bu[kawai_settings + 1e]);
+
     return 1;
 }
-else if( V1 == 1 )
+else if( bu[kawai_settings + 0] == 1 )
 {
-    [800dfe1c] = h(hu[A2 + 0]);
-    [800dfe1e] = h(hu[A2 + 2]);
-    [800dfe20] = h(hu[A2 + 4]);
-    [800dfe22] = h(hu[A2 + 6]);
-    [800dfe24] = h(hu[A2 + 8]);
-    [800dfe26] = h(hu[A2 + a]);
-    [800dfe28] = h(hu[A2 + c]);
-    [800dfe2a] = h(hu[A2 + e]);
-    [800dfe2c] = h(hu[A2 + 10]);
-    [800dfe2e] = h(hu[A2 + 12]);
-    [800dfe30] = h(hu[A2 + 14]);
-    [800dfe32] = h(hu[A2 + 16]);
-    [800dfe34] = h(hu[A2 + 18]);
-    [800dfe36] = h(hu[A2 + 1a]);
-    [800dfe38] = h(hu[A2 + 1c]);
-    [800dfe3a] = h(hu[A2 + 1e]);
+    [800dfe1c] = h(hu[kawai_data + 0]);
+    [800dfe1e] = h(hu[kawai_data + 2]);
+    [800dfe20] = h(hu[kawai_data + 4]);
+    [800dfe22] = h(hu[kawai_data + 6]);
+    [800dfe24] = h(hu[kawai_data + 8]);
+    [800dfe26] = h(hu[kawai_data + a]);
+    [800dfe28] = h(hu[kawai_data + c]);
+    [800dfe2a] = h(hu[kawai_data + e]);
+    [800dfe2c] = h(hu[kawai_data + 10]);
+    [800dfe2e] = h(hu[kawai_data + 12]);
+    [800dfe30] = h(hu[kawai_data + 14]);
+    [800dfe32] = h(hu[kawai_data + 16]);
+    [800dfe34] = h(hu[kawai_data + 18]);
+    [800dfe36] = h(hu[kawai_data + 1a]);
+    [800dfe38] = h(hu[kawai_data + 1c]);
+    [800dfe3a] = h(hu[kawai_data + 1e]);
+
+    A0 = model_data;
     A1 = 800dfe1c;
     field_model_kawai_set_custom_lighting_to_model_packets();
 
@@ -4945,76 +4953,78 @@ return 1;
 ////////////////////////////////
 // kawai_action_8()
 
-model_id = bu[A1 + 1];
-S0 = 800dfe3c + model_id * 3c;
+model_data = A0;
+kawai_settings = A1;
 
-V1 = bu[A1 + 0];
-if (V1 == 0)
+entity_id = bu[kawai_settings + 1];
+kawai_data = 800dfe3c + entity_id * 3c;
+
+if( bu[kawai_settings + 0] == 0 )
 {
-    [S0 + 00] = h(hu[A1 + 02]);
-    [S0 + 02] = h(hu[A1 + 04]);
-    [S0 + 04] = h(hu[A1 + 06]);
-    [S0 + 06] = h(hu[A1 + 08]);
-    [S0 + 08] = h(hu[A1 + 0a]);
-    [S0 + 0a] = h(hu[A1 + 0c]);
-    [S0 + 0c] = h(hu[A1 + 0e]);
-    [S0 + 0e] = h(hu[A1 + 10]);
-    [S0 + 10] = h(hu[A1 + 12]);
-    [S0 + 12] = h(hu[A1 + 14]);
-    [S0 + 14] = h(hu[A1 + 16]);
-    [S0 + 16] = h(hu[A1 + 18]);
-    [S0 + 18] = b(bu[A1 + 1a]);
-    [S0 + 19] = b(0);
+    [kawai_data + 0] = h(hu[kawai_settings + 2]);
+    [kawai_data + 2] = h(hu[kawai_settings + 4]);
+    [kawai_data + 4] = h(hu[kawai_settings + 6]);
+    [kawai_data + 6] = h(hu[kawai_settings + 8]);
+    [kawai_data + 8] = h(hu[kawai_settings + a]);
+    [kawai_data + a] = h(hu[kawai_settings + c]);
+    [kawai_data + c] = h(hu[kawai_settings + e]);
+    [kawai_data + e] = h(hu[kawai_settings + 10]);
+    [kawai_data + 10] = h(hu[kawai_settings + 12]);
+    [kawai_data + 12] = h(hu[kawai_settings + 14]);
+    [kawai_data + 14] = h(hu[kawai_settings + 16]);
+    [kawai_data + 16] = h(hu[kawai_settings + 18]);
+    [kawai_data + 18] = b(bu[kawai_settings + 1a]);
+    [kawai_data + 19] = b(0);
+
     return 1;
 }
-else if( V1 == 1 )
+else if( bu[kawai_settings + 0] == 1 )
 {
-    [800dfe1c] = h(hu[S0 + 00]);
-    [800dfe1e] = h(hu[S0 + 02]);
-    [800dfe20] = h(hu[S0 + 04]);
-    [800dfe22] = h(hu[S0 + 06]);
-    [800dfe24] = b(bu[S0 + 18]);
+    [800dfe1c] = h(hu[kawai_data + 0]);
+    [800dfe1e] = h(hu[kawai_data + 2]);
+    [800dfe20] = h(hu[kawai_data + 4]);
+    [800dfe22] = h(hu[kawai_data + 6]);
+    [800dfe24] = b(bu[kawai_data + 18]);
 
+    A0 = model_data;
     A1 = 800dfe1c;
-    field_model_kawai_set_color_to_model_packets_below_level();
+    field_model_kawai_set_color_to_packets_below_level();
 
-    if (bu[S0 + 19] == 0)
+    if( bu[kawai_data + 19] == 0 )
     {
         S1 = 0;
 
-        [S0 + 0] = h(hu[S0 + 0] + hu[S0 + 10]);
-        if (((h[S0 + 10] >= 0) && (h[S0 + 0] >= h[S0 + 8])) || (h[S0 + 8] >= h[S0 + 0]))
+        [kawai_data + 0] = h(hu[kawai_data + 0] + hu[kawai_data + 10]);
+        if( ( ( h[kawai_data + 10] >= 0 ) && ( h[kawai_data + 0] >= h[kawai_data + 8] ) ) || ( h[kawai_data + 8] >= h[kawai_data + 0] ) )
         {
-            [S0 + 0] = h(hu[S0 + 8]);
+            [kawai_data + 0] = h(hu[kawai_data + 8]);
             S1 = S1 | 1;
         }
 
-        [S0 + 2] = h(hu[S0 + 2] + hu[S0 + 12]);
-        if (((h[S0 + 12] >= 0) && (h[S0 + 2] >= h[S0 + a])) || (h[S0 + a] >= h[S0 + 2]))
+        [kawai_data + 2] = h(hu[kawai_data + 2] + hu[kawai_data + 12]);
+        if( ( ( h[kawai_data + 12] >= 0 ) && ( h[kawai_data + 2] >= h[kawai_data + a] ) ) || ( h[kawai_data + a] >= h[kawai_data + 2] ) )
         {
-            [S0 + 2] = h(hu[S0 + a]);
+            [kawai_data + 2] = h(hu[kawai_data + a]);
             S1 = S1 | 2;
         }
 
-        [S0 + 4] = h(hu[S0 + 4] + hu[S0 + 14]);
-        if (((h[S0 + 14] >= 0) && (h[S0 + 4] >= h[S0 + c])) || (h[S0 + c] >= h[S0 + 4]))
+        [kawai_data + 4] = h(hu[kawai_data + 4] + hu[kawai_data + 14]);
+        if( ( ( h[kawai_data + 14] >= 0 ) && ( h[kawai_data + 4] >= h[kawai_data + c] ) ) || ( h[kawai_data + c] >= h[kawai_data + 4] ) )
         {
-            [S0 + 4] = h(hu[S0 + c]);
+            [kawai_data + 4] = h(hu[kawai_data + c]);
             S1 = S1 | 4;
-            }
         }
 
-        [S0 + 6] = h(hu[S0 + 6] + hu[S0 + 16]);
-        if (((h[S0 + 16] >= 0) && (h[S0 + 6] >= h[S0 + e])) || (h[S0 + e] >= h[S0 + 6]))
-        if (h[S0 + 16] >= 0)
+        [kawai_data + 6] = h(hu[kawai_data + 6] + hu[kawai_data + 16]);
+        if( ( ( h[kawai_data + 16] >= 0 ) && ( h[kawai_data + 6] >= h[kawai_data + e] ) ) || ( h[kawai_data + e] >= h[kawai_data + 6] ) )
         {
-            [S0 + 6] = h(hu[S0 + e]);
+            [kawai_data + 6] = h(hu[kawai_data + e]);
             S1 = S1 | 8;
         }
 
-        if (S1 == f)
+        if( S1 == f )
         {
-            [S0 + 19] = b(bu[S0 + 19] + 1);
+            [kawai_data + 19] = b(bu[kawai_data + 19] + 1);
         }
 
         return 0;
@@ -5463,48 +5473,45 @@ for( int i = 0; i < bu[part_data + b]; ++i )
 
 
 ////////////////////////////////
-// kawai_action_9()
+// field_model_kawai_set_splash_to_packets_below_level()
 
-S2 = A0;
-S1 = bu[A1 + 1];
-V1 = bu[A1 + 0];
-S0 = 800dfe3c + model_id * 3c;
-if( V1 == 0 )
+model_data = A0;
+kawai_settings = A1;
+
+entity_id = bu[kawai_settings + 1];
+kawai_data = 800dfe3c + entity_id * 3c;
+
+if( bu[kawai_settings + 0] == 0 ) // init
 {
-    [S0 + 0] = h(hu[A1 + 2]);
-    [S0 + 2] = h(hu[A1 + 4]);
-    [S0 + 4] = h(hu[A1 + 6]);
-    [S0 + 6] = h(hu[A1 + 8]);
-    [S0 + 8] = h(0);
-    [S0 + a] = h(0);
-    [S0 + c] = b(bu[A1 + a]);
+    [kawai_data + 0] = h(hu[kawai_settings + 2]);
+    [kawai_data + 2] = h(hu[kawai_settings + 4]);
+    [kawai_data + 4] = h(hu[kawai_settings + 6]);
+    [kawai_data + 6] = h(hu[kawai_settings + 8]);
+    [kawai_data + 8] = h(0);
+    [kawai_data + a] = h(0);
+    [kawai_data + c] = b(bu[kawai_settings + a]);
 
-    A0 = S2;
-    A1 = S1;
-    funcb69c0();
+    A0 = model_data;
+    A1 = entity_id;
+    field_model_kawai_init_splash_packets();
 }
-else if( V1 == 1 )
+else if( bu[kawai_settings + 0] == 1 ) // render
 {
-    S3 = 800df118;
+    [800dfe1c] = h(hu[kawai_data + 2]);
+    [800dfe1e] = h(hu[kawai_data + 4]);
+    [800dfe20] = h(hu[kawai_data + 6]);
+    [800dfe22] = h(hu[kawai_data + 0]);
+    [800dfe24] = b(bu[kawai_data + c]);
 
-    [800dfe1c] = h(hu[S0 + 2]);
-    [800dfe1e] = h(hu[S0 + 4]);
-    [800dfe20] = h(hu[S0 + 6]);
-    [800dfe22] = h(hu[S0 + 0]);
-    [800dfe24] = b(bu[S0 + c]);
-
-    A0 = S2;
+    A0 = model_data;
     A1 = 800dfe1c;
-    field_model_kawai_set_color_to_model_packets_below_level();
+    field_model_kawai_set_color_to_packets_below_level();
 
-    // add effect if animation id != idle
-    V0 = bu[80074ea4 + S1 * 84 + 5e]; // animation id
-    if( V0 != 0 )
+    // add splash water effect if animation id != idle
+    if( bu[80074ea4 + entity_id * 84 + 5e] != 0 ) // animation id
     {
-        T8 = bu[S2 + 2];
-        S5 = w[S2 + 1c];
-
-        A0 = bu[800df114];
+        bone_data = w[model_data + 1c];
+        rb = bu[800df114];
 
         // identity matrix and translation
         [SP + 10] = h(1000); [SP + 12] = h(0);    [SP + 14] = h(0);
@@ -5512,26 +5519,22 @@ else if( V1 == 1 )
         [SP + 1c] = h(0);    [SP + 1e] = h(0);    [SP + 20] = h(1000);
         [SP + 24] = w(0);    [SP + 28] = w(0);    [SP + 2c] = w(0);
 
-        V1 = w[800e0200] + S1 * ac8; // 80181dd4 + 
+        splash_data = w[800e0200] + entity_id * ac8;
 
-            T7 = A0 * 28;
-            A2 = V1 + 5c;
-
-        for( int i = 1; < T8; ++i )
+        for( int i = 1; i < bu[model_data + 2]; ++i ) // number of bones
         {
-            if( b[S5 + i * 4 + 3] != 0 )
+            if( b[bone_data + i * 4 + 3] != 0 ) // parent bone id
             {
-                V0 = w[S2 + 20] + i * 20;
+                part_matrix = w[model_data + 20] + i * 20;
 
-                // bone matrix
-                R11R12 = w[V0 + 0];
-                R13R21 = w[V0 + 4];
-                R22R23 = w[V0 + 8];
-                R31R32 = w[V0 + c];
-                R33 = w[V0 + 10];
-                TRX = w[V0 + 14];
-                TRY = w[V0 + 18];
-                TRZ = w[V0 + 1c];
+                R11R12 = w[part_matrix + 0];
+                R13R21 = w[part_matrix + 4];
+                R22R23 = w[part_matrix + 8];
+                R31R32 = w[part_matrix + c];
+                R33 = w[part_matrix + 10];
+                TRX = w[part_matrix + 14];
+                TRY = w[part_matrix + 18];
+                TRZ = w[part_matrix + 1c];
 
                 [SP + 30] = h(0);
                 [SP + 32] = h(0);
@@ -5545,11 +5548,10 @@ else if( V1 == 1 )
                 [1f800204] = h(IR3);
 
                 [1f800210] = w(SZ3);
+
                 [SP + 30] = h(0);
                 [SP + 32] = h(0);
-                V0 = hu[A2 + 58];
-                V0 = 0 NOR V0;
-                [SP + 34] = h(V0);
+                [SP + 34] = h(0 NOR hu[splash_data + i * 5c + 58]);
 
                 VXY0 = w[SP + 30];
                 VZ0 = w[SP + 34];
@@ -5559,132 +5561,90 @@ else if( V1 == 1 )
                 [1f80020c] = h(IR3);
 
                 [1f800214] = w(SZ3);
-                V0 = h[1f80020c];
-                A0 = ((h[S0 + 0] - h[1f800204]) << c) / (V0 - h[1f800204]);
-                if (V0 != h[1f800204] && A0 < 1200)
+
+                [splash_data + i * 5c + 5a] = h(0);
+
+                if( h[1f80020c] != h[1f800204] )
                 {
-                    [A2 + 5a] = h(1);
-                    [A2 + 54] = h((hu[S0 + 0]);
-                    V0 = h[1f800208];
-                    V1 = h[1f800200];
-                    V0 = V0 - V1;
-                    V0 = A0 * V0;
-                    V0 = V) >> c;
-                    V0 = V0 + V1;
-                    [A2 + 50] = h(V0);
-                    V0 = h[1f80020a];
-                    V1 = h[1f800202];
-                    V0 = V0 - V1;
-                    V0 = A0 * V0;
-                    V0 = V0 >> c;
-                    V0 = V0 + V1;
-                    [A2 + 52] = h(V0);
+                    A0 = ((h[kawai_data + 0] - h[1f800204]) << c) / (h[1f80020c] - h[1f800204]);
 
-                    S6 = w[S2 + 20];
-
-                    R11R12 = w[S6 + 0];
-                    R13R21 = w[S6 + 4];
-                    R22R23 = w[S6 + 8];
-                    R31R32 = w[S6 + c];
-                    R33 = w[S6 + 10];
-                    TRX = w[S6 + 14];
-                    TRY = w[S6 + 18];
-                    TRZ = w[S6 + 1c];
-
-                    [SP + 30] = h(hu[A2 + 50]);
-                    [SP + 32] = h(hu[A2 + 52]);
-                    [SP + 34] = h(hu[A2 + 54]);
-
-                    VXY0 = w[SP + 30];
-                    VZ0 = w[SP + 34];
-                    gte_RTPS(); // Perspective transform
-                    [SP + 38] = w(SXY2);
-                    [1f800218] = w(SZ3);
-
-                    V1 = w[1f800218];
-                    V0 = V1 << 02;
-                    V0 = V0 + V1;
-                    V0 = V0 << 02;
-                    V0 = V0 >> 0b;
-                    V0 = 0 - V0;
-                    V0 = V0 + 0028;
-                    A1 = V0;
-                    A0 = T7 + A2;
-                    if( V0 < 8 )
+                    if( A0 < 1200 )
                     {
-                        A1 = 8;
+                        [splash_data + i * 5c + 50] = h(((A0 * (h[1f800208] - h[1f800200])) >> c) + h[1f800200]);
+                        [splash_data + i * 5c + 52] = h(((A0 * (h[1f80020a] - h[1f800202])) >> c) + h[1f800202]);
+                        [splash_data + i * 5c + 54] = h(hu[kawai_data + 0]);
+                        [splash_data + i * 5c + 5a] = h(1);
+
+                        root_matrix = w[model_data + 20];
+
+                        R11R12 = w[root_matrix + 0];
+                        R13R21 = w[root_matrix + 4];
+                        R22R23 = w[root_matrix + 8];
+                        R31R32 = w[root_matrix + c];
+                        R33 = w[root_matrix + 10];
+                        TRX = w[root_matrix + 14];
+                        TRY = w[root_matrix + 18];
+                        TRZ = w[root_matrix + 1c];
+
+                        [SP + 30] = h(hu[splash_data + i * 5c + 50]);
+                        [SP + 32] = h(hu[splash_data + i * 5c + 52]);
+                        [SP + 34] = h(hu[splash_data + i * 5c + 54]);
+
+                        VXY0 = w[SP + 30];
+                        VZ0 = w[SP + 34];
+                        gte_RTPS(); // Perspective transform
+                        [SP + 38] = w(SXY2);
+                        [1f800218] = w(SZ3);
+
+                        size = 28 - ((w[1f800218] * 14) / 800);
+
+                        if( size < 8 ) size = 8;
+
+                        [splash_data + i * 5c + rb * 28 + 8] = h(hu[SP + 38] - size / 2);       // x1
+                        [splash_data + i * 5c + rb * 28 + a] = h(hu[SP + 3a] - size / 2);       // y1
+                        [splash_data + i * 5c + rb * 28 + c] = b(h[kawai_data + 8] * 20);       // u1
+                        [splash_data + i * 5c + rb * 28 + d] = b(90);                           // v1
+                        [splash_data + i * 5c + rb * 28 + 10] = h(hu[SP + 38] + size / 2);      // x2
+                        [splash_data + i * 5c + rb * 28 + 12] = h(hu[SP + 3a] - size / 2);      // y2
+                        [splash_data + i * 5c + rb * 28 + 14] = b(h[kawai_data + 8] * 20 + 20); // u2
+                        [splash_data + i * 5c + rb * 28 + 15] = b(90);                          // v2
+                        [splash_data + i * 5c + rb * 28 + 18] = h(hu[SP + 38] - size / 2);      // x3
+                        [splash_data + i * 5c + rb * 28 + 1a] = h(hu[SP + 3a] + size / 2);      // y3
+                        [splash_data + i * 5c + rb * 28 + 1c] = b(h[kawai_data + 8] * 20);      // u3
+                        [splash_data + i * 5c + rb * 28 + 1d] = b(b0);                          // v3
+                        [splash_data + i * 5c + rb * 28 + 20] = h(hu[SP + 38] + size / 2);      // x4
+                        [splash_data + i * 5c + rb * 28 + 22] = h(hu[SP + 3a] + size / 2);      // y4
+                        [splash_data + i * 5c + rb * 28 + 24] = b(h[kawai_data + 8] * 20 + 20); // u4
+                        [splash_data + i * 5c + rb * 28 + 25] = b(b0);                          // v4
                     }
-
-                    [A0 + 8] = h(hu[SP + 38] - A1 / 2);
-                    [A0 + a] = h(hu[SP + 3a] - A1 / 2);
-                    [A0 + 10] = h(hu[SP + 38] + A1 / 2);
-                    [A0 + 12] = h(hu[SP + 3a] - A1 / 2);
-                    [A0 + 18] = h(hu[SP + 38] - A1 / 2);
-                    [A0 + 1a] = h(hu[SP + 3a] + A1 / 2);
-                    [A0 + 20] = h(hu[SP + 38] + A1 / 2);
-                    [A0 + 22] = h(hu[SP + 3a] + A1 / 2);
-                    [A0 + d] = b(90);
-
-                    [A0 + c] = b(h[S0 + 8] * 20);
-                    [A0 + 15] = b(90);
-                    [A0 + 14] = b(h[S0 + 8] * 20 + 20);
-                    [A0 + 1d] = b(b0);
-                    [A0 + 1c] = b(h[S0 + 8] * 20);
-                    [A0 + 25] = b(b0);
-                    [A0 + 24] = b(h[S0 + 8] * 20 + 20);
-                }
-                else
-                {
-                    [A2 + 5a] = h(0);
                 }
 
-                V0 = w[1f800210];
-                V1 = w[1f800214];
-                V0 = V0 + V1;
-                V1 = h[A2 + 0058];
-                V0 = V0 >> 01;
-                V0 = V1;
-                V1 = w[1f800218];
-                V0 = V0 >> 1f;
-                V0 = V1 - V0;
-                [1f800218] = w(V0);
-                if( V0 != 0 )
-                {
-                    [1f800218] = w(0);
-                }
+                V0 = (w[1f800210] + w[1f800214]) / 2;
 
-                V1 = h[A2 + 5a];
-                A0 = T7 + A2;
-                if( V1 == 1 )
-                {
-                    V0 = w[1f800218];
-                    V1 = w[A0];
-                    V0 = V0 << 02;
-                    V0 = V0 + S3;
-                    V1 = (V1 & ff000000) | (w[V0] & 00ffffff);
-                    [A0 + 0000] = w(V1);
+                [1f800218] = w(w[1f800218] - (h[splash_data + i * 5c + 58] >> 1f));
 
-                    V1 = w[1f800218];
+                if( w[1f800218] != 0 ) [1f800218] = w(0);
+
+                if( h[splash_data + i * 5c + 5a] == 1 )
+                {
                     ot = w[800df118];
-                    [ot + V1 * 4] = w((w[ot + V1 * 4] & ff000000) | (A0 & 00ffffff));
+                    depth = w[1f800218];
+                    [splash_data + i * 5c + rb * 28] = w((w[splash_data + i * 5c + rb * 28] & ff000000) | (w[ot + depth * 4] & 00ffffff));
+                    [ot + depth * 4] = w((w[ot + depth * 4] & ff000000) | ((splash_data + i * 5c + rb * 28) & 00ffffff));
                 }
             }
-
-            A2 = A2 + 5c;
         }
     }
 }
 
-// frames in effect?
-[S0 + a] = h(h[S0 + a] + 1);
-if (h[S0 + a] >= 3)
+// splash animation
+[kawai_data + a] = h(h[kawai_data + a] + 1);
+if( h[kawai_data + a] >= 3 )
 {
-    [S0 + a] = h(0);
-    [S0 + 8] = h(h[S0 + 8] + 1);
-    if (h[S0 + 8] >= 4)
-    {
-        [S0 + 8] = h(0);
-    }
+    [kawai_data + a] = h(0);
+
+    [kawai_data + 8] = h(h[kawai_data + 8] + 1);
+    if( h[kawai_data + 8] >= 4 ) [kawai_data + 8] = h(0);
 }
 
 return 0;
@@ -5693,66 +5653,45 @@ return 0;
 
 
 ////////////////////////////////
-// funcb69c0()
+// field_model_kawai_init_splash_packets()
 
-S2 = A0;
+model_data = A0;
+entity_id = A1;
 
-V0 = A1 << 01;
-V0 = V0 + A1;
-V0 = V0 << 03;
-V0 = V0 - A1;
-V1 = V0 << 04;
-V1 = V1 - V0;
-V1 = V1 << 03;
-
-V0 = w[800e0200];
-
-S0 = V1 + V0;
+S0 = w[800e0200] + entity_id * ac8;
 
 system_gpu_get_type();
+if( ( V0 == 1 ) || ( V0 == 2 ) ) T0 = 22b;
+else                             T0 = 9b;
 
-if( ( V0 == 1 ) || ( V0 == 2 ) )
-{
-    T0 = 22b;
-}
-else
-{
-    T0 = 9b;
-}
-
-V0 = w[S2 + 1c];
-A0 = S0 + 5c;
-A2 = V0 + 4;
+bone_data = w[model_data + 1c];
 
 for( int i = 1; i < 1f; ++i )
 {
-    [A0 + 3] = b(9);
-    [A0 + 4] = b(80);
-    [A0 + 5] = b(80);
-    [A0 + 6] = b(80);
-    [A0 + 7] = b(2c);
-    [A0 + 7] = b(bu[A0 + 7] | 02);
-    [A0 + e] = h(6c2c);
-    [A0 + 16] = h(T0);
-
-    [A0 + 2b] = b(9);
-    [A0 + 2c] = b(80);
-    [A0 + 2d] = b(80);
-    [A0 + 2e] = b(80);
-    [A0 + 2f] = b(2c);
-    [A0 + 2f] = b(bu[A0 + 2f] | 02);
-
-    [A0 + 36] = h(6c2c);
-    [A0 + 3e] = h(T0);
-
-    [A0 + 50] = h(0);
-    [A0 + 52] = h(0);
-    [A0 + 54] = h(0);
-    [A0 + 58] = h(0 - hu[A2 + 0000]);
-    [A0 + 5a] = h(0);
-
-    A2 = A2 + 4;
-    A0 = A0 + 5c;
+    // splash 1
+    [S0 + i * 5c + 0 * 28 + 3] = b(9);
+    [S0 + i * 5c + 0 * 28 + 4] = b(80);
+    [S0 + i * 5c + 0 * 28 + 5] = b(80);
+    [S0 + i * 5c + 0 * 28 + 6] = b(80);
+    [S0 + i * 5c + 0 * 28 + 7] = b(2c);
+    [S0 + i * 5c + 0 * 28 + 7] = b(bu[S0 + i * 5c + 0 * 28 + 7] | 02);
+    [S0 + i * 5c + 0 * 28 + e] = h(6c2c); // clut
+    [S0 + i * 5c + 0 * 28 + 16] = h(T0);
+    // splash 2
+    [S0 + i * 5c + 1 * 28 + 3] = b(9);
+    [S0 + i * 5c + 1 * 28 + 4] = b(80);
+    [S0 + i * 5c + 1 * 28 + 5] = b(80);
+    [S0 + i * 5c + 1 * 28 + 6] = b(80);
+    [S0 + i * 5c + 1 * 28 + 7] = b(2c);
+    [S0 + i * 5c + 1 * 28 + 7] = b(bu[S0 + i * 5c + 1 * 28 + 7] | 02);
+    [S0 + i * 5c + 1 * 28 + e] = h(6c2c);
+    [S0 + i * 5c + 1 * 28 + 16] = h(T0);
+    // settings
+    [S0 + i * 5c + 50] = h(0); // x
+    [S0 + i * 5c + 52] = h(0); // y
+    [S0 + i * 5c + 54] = h(0); // z
+    [S0 + i * 5c + 58] = h(0 - hu[bone_data + i * 4]);
+    [S0 + i * 5c + 5a] = h(0); // not draw splash effect
 }
 ////////////////////////////////
 
@@ -5786,8 +5725,8 @@ return 1;
 model_data = A0;
 kawai_settings = A1;
 
-kawai_id = bu[kawai_settings + 1]
-kawai_data = 800dfe3c + kawai_id * 3c;
+entity_id = bu[kawai_settings + 1]
+kawai_data = 800dfe3c + entity_id * 3c;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 
@@ -6491,8 +6430,8 @@ for( int i = 0; i < bu[part_data + b]; ++i )
 model_data = A0;
 kawai_settings = A1;
 
-kawai_id = bu[kawai_settings + 1]
-kawai_data = 800dfe3c + kawai_id * 3c;
+entity_id = bu[kawai_settings + 1]
+kawai_data = 800dfe3c + entity_id * 3c;
 
 if( bu[kawai_settings + 0] == 0 )
 {
@@ -7044,16 +6983,16 @@ for( int i = 0; i < bu[part_data + b]; ++i )
 model_data = A0;
 kawai_settings = A1;
 
-model_id = bu[kawai_settings + 1];
-V1 = bu[kawai_settings + 0];
+entity_id = bu[kawai_settings + 1];
+V1 = ;
 A1 = 800dfe3c;
-S2 = 800dfe3c + model_id * 3c;
+kawai_data = S2 = 800dfe3c + entity_id * 3c;
 
 parts_data = w[model_data + 1c] + hu[model_data + 18];
 
 parts_n = bu[model_data + 3];
 
-if( V1 == 0 )
+if( bu[kawai_settings + 0] == 0 )
 {
     // remove calculating lighting and color for all model parts
     for( int i = 0; i < parts_n; ++i )
@@ -7189,7 +7128,7 @@ if( V1 == 0 )
 
     return 1;
 }
-else if( V1 == 1 )
+else if( bu[kawai_settings + 0] == 1 )
 {
     if( bu[model_data + 0] != 0 )
     {

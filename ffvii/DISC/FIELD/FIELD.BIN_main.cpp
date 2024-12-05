@@ -2964,7 +2964,7 @@ if( bu[8009abf4 + 32] == 0 ) // 0 if PC can move
     [80074ea4 + model_id * 84 + 70] = h(h[8009abf4 + 10] * 2); // movement speed
 }
 
-for( int i = 0; i < h[8009ac1c]; ++i )
+for( int i = 0; i < h[8009abf4 + 28]; ++i ) // numbers of entities
 {
     [80074ea4 + i * 84 + 35] = b(0); // shift addition to move direction
 }
@@ -3054,16 +3054,12 @@ return;
 
 input = A0;
 
-number_of_models = h[8009abf4 + 28];
-
-if( number_of_models <= 0)
-{
-    return;
-}
-
+entities_n = h[8009abf4 + 28];
 pc_entity = h[800965e0];
 
-for( int i = 0; i < number_of_models; ++i )
+if( entities_n <= 0) return;
+
+for( int i = 0; i < entities_n; ++i )
 {
     V1 = w[8008357c];
     V0 = bu[V1 + i * 8 + 4];
@@ -3073,20 +3069,14 @@ for( int i = 0; i < number_of_models; ++i )
         A0 = w[A0 + 4];
         V1 = A0 + V0 * 24;
 
-        V0 = bu[80074EA4 + i * 84 + 5C]; // model visibility
-        if( V0 == 1 )
-        {
-            [V1] = b(1);
-        }
-        else
-        {
-            [V1] = b(0);
-        }
+        V0 = bu[80074ea4 + i * 84 + 5c]; // model visibility
+        if( V0 == 1 ) [V1] = b(1);
+        else          [V1] = b(0);
     }
 }
 
 // turn update
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     V1 = bu[80074ea4 + i * 84 + 3b];
     if( V1 == 1 )
@@ -3136,7 +3126,7 @@ for( int i = 0; i < number_of_models; ++i )
 }
 
 // offset update
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     V1 = bu[80074EA4 + i * 84 + 56];
 
@@ -3211,7 +3201,7 @@ for( int i = 0; i < number_of_models; ++i )
 }
 
 // manual move update
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     // if model not performing auto action
     if( bu[80074ea4 + i * 84 + 5d] == 0 )
@@ -3327,7 +3317,7 @@ for( int i = 0; i < number_of_models; ++i )
 }
 
 // auto move update
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     V0 = bu[80074ea4 + i * 84 + 5d];
 
@@ -3372,7 +3362,7 @@ for( int i = 0; i < number_of_models; ++i )
 }
 
 // jump update
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     V1 = bu[80074EA4 + i * 84 + 5D];
     // if jump
@@ -3485,7 +3475,7 @@ for( int i = 0; i < number_of_models; ++i )
 }
 
 // ladder update
-for( int i = 0; i < number_of_models; ++i )
+for( int i = 0; i < entities_n; ++i )
 {
     V1 = bu[80074ea4 + i * 84 + 5d];
     if( ( V1 == 4 ) || ( V1 == 5 ) )
@@ -3702,6 +3692,7 @@ for( int i = 0; i < number_of_models; ++i )
 ////////////////////////////////
 // funca8304
 // we check talk here
+
 if (w[8009abf4 + 78] & 0020) // if ok button pressed
 {
     V0 = w[8009abf4 + 7c];
@@ -3779,7 +3770,7 @@ if (w[8009abf4 + 78] & 0020) // if ok button pressed
                 }
 
                 S1 = S1 + 84;
-                V0 = h[8009ac1c];
+                V0 = h[8009abf4 + 28];
                 S0 = S0 + 1;
                 S2 = S2 + 2;
                 V0 = S0 < V0;
@@ -3787,7 +3778,7 @@ if (w[8009abf4 + 78] & 0020) // if ok button pressed
         }
 
         A3 = 40;
-        V0 = h[8009ac1c];
+        V0 = h[8009abf4 + 28];
         A2 = hu[800965e0];
 
         if (V0 > 0)
@@ -4684,66 +4675,34 @@ return 1;
 ////////////////////////////////
 // entity_collision_check()
 
-given_visible_entity     = A0;
-number_of_visible_entity = h[8009AC1C]
-given_position           = A1;
-visible_entity_to_check  = 0;
-solid_range              = hu[80074EA4 + given_visible_entity * 84 + 6C];
+entity_check = A0;
+entities_n = h[8009abf4 + 28];
+given_position = A1;
+solid_range = hu[80074ea4 + entity_check * 84 + 6c];
+
 T2 = 0;
 
-if (number_of_visible_entity > 0)
+for( int i = 0; i < entities_n; ++i )
 {
-    loopa9bb4:	; 800A9BB4
-
-    if (visible_entity_to_check != given_visible_entity)
+    if( i != entity_check )
     {
-        // if entity solid
-        V0 = bu[80074EA4 + visible_entity_to_check * 84 + 59];
-        if (V0 == 0)
+        if( bu[80074ea4 + i * 84 + 59] == 0 ) // if entity solid
         {
-            // if Z value not very different
-            V0 = bu[80074EA4 + visible_entity_to_check * 84 + 14];
-            V0 = V0 >> 0C;
-            V0 = V0 - w[given_position + 8] + 7E;
-            if (V0 < FE)
+            if( ( ((bu[80074ea4 + i * 84 + 14]) >> c) - w[given_position + 8] + 7e ) < fe ) // if Z value not very different
             {
-                // sum of solid range
-                A0 = solid_range + hu[80074EA4 + visible_entity_to_check * 84 + 6C];
-                A0 = A0 >> 1;
-                HI/LO = A0 * A0;
-                A0 = LO;
+                A0 = (solid_range + hu[80074ea4 + i * 84 + 6c]) / 2;
+                V1 = (w[80074ea4 + i * 84 + 0C] - w[given_position + 0]) >> c;
+                V0 = (w[80074ea4 + i * 84 + 10] - w[given_position + 4]) >> c;
 
-                V0 = w[80074EA4 + visible_entity_to_check * 84 + 0C] - w[given_position + 0];
-                V0 = V0 >> 0C
-                HI/LO = V0 * V0;
-                V1 = LO;
-
-                V0 = w[80074EA4 + visible_entity_to_check * 84 + 10] - w[given_position + 4];
-                V0 = V0 >> 0C;
-                HI/LO = V0 * V0;
-                V0 = LO;
-
-                // if we collide
-                V1 = V1 + V0;
-                if (V1 < A0)
+                if( ( ( V1 * V1 ) + ( V0 * V0 ) ) < ( A0 * A0 ) ) // if we collide
                 {
                     T2 = 1;
-
-                    V0 = h[800965E0];
-                    if (given_visible_entity == V0)
-                    {
-                        [80074EA4 + visible_entity_to_check * 84 + 58] = b(1);
-                    }
+                    if( entity_check == h[800965e0] ) [80074ea4 + i * 84 + 58] = b(1); // if PC
                 }
             }
         }
     }
-
-    visible_entity_to_check = visible_entity_to_check + 1;
-    V0 = visible_entity_to_check < number_of_visible_entity;
-    800A9CD0	bne    v0, zero, loopa9bb4 [$800a9bb4]
 }
-
 return T2;
 ////////////////////////////////
 
