@@ -749,32 +749,24 @@ return V0;
 ////////////////////////////////
 // func437ac
 
-800437AC	addiu  sp, sp, $ffd8 (=-$28)
 V0 = A0;
-[SP + 0018] = w(S0);
 S0 = A1;
-[SP + 001c] = w(S1);
 S1 = A2;
 A0 = SP + 0010;
 A1 = V0;
 V0 = 0100;
-[SP + 0014] = h(V0);
+[SP + 0014] = h(100);
 V0 = 0001;
-[SP + 0020] = w(RA);
 [SP + 0010] = h(S0);
 [SP + 0012] = h(S1);
-800437E4	jal    system_psyq_load_image [$80044000]
 [SP + 0016] = h(V0);
+800437E4	jal    system_psyq_load_image [$80044000]
+
 A0 = S0;
-800437F0	jal    system_create_clut_for_packet [$80046634]
 A1 = S1;
-V0 = V0 & ffff;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8004380C	jr     ra 
-80043810	nop
+system_create_clut_for_packet();
+
+return V0 & ffff;
 ////////////////////////////////
 
 
@@ -1399,10 +1391,9 @@ A1 = number;
 // func442dc
 
 S0 = A0;
-800442E8	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-V0 = w[V0 + 003c];
-S1 = bu[S0 + 0003];
+V0 = w[80062bf8];
+V0 = w[V0 + 3c];
+S1 = bu[S0 + 3];
 A0 = 0;
 80044300	jalr   v0 ra
 
@@ -1745,8 +1736,7 @@ system_gpu_get_texture_window_setting_command();
 
 
 ////////////////////////////////
-// func44978()
-// SetDrawArea
+// system_psyq_set_draw_area()
 
 prim = A0; // DR_AREA
 rect = A1;
@@ -1767,8 +1757,7 @@ system_gpu_set_drawing_area_bottom_right();
 
 
 ////////////////////////////////
-// func449fc()
-// SetDrawOffset
+// system_psyq_set_draw_offset()
 
 prim = A0;
 ofs = A1;
@@ -4274,22 +4263,16 @@ return A0 + (w[texture + 0] / 4) + 2; // tim size in int
 
 
 ////////////////////////////////
-// func47180:	; 80047180
-80047180	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0030] = w(S6);
+// func47180()
+
 S6 = w[SP + 0048];
-[SP + 0018] = w(S0);
 S0 = A0;
-[SP + 001c] = w(S1);
 S1 = A1;
-[SP + 002c] = w(S5);
 S5 = A2;
-[SP + 0028] = w(S4);
 S4 = A3;
-[SP + 0034] = w(RA);
-[SP + 0024] = w(S3);
+
 800471B4	jal    system_psyq_get_graph_debug [$80043cd0]
-[SP + 0020] = w(S2);
+
 S3 = 0002;
 800471C0	bne    v0, s3, L471d8 [$800471d8]
 S2 = S0 + 000c;
@@ -4376,29 +4359,20 @@ V0 = w[V1 + 0010];
 V0 = S2 + V0;
 [S5 + 0000] = w(V0);
 V0 = w[V1 + 0014];
-RA = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-80047310	jr     ra 
-80047314	nop
 ////////////////////////////////
-// func47318:	; 80047318
-80047318	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func47318()
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
 A0 = S1;
 A1 = 0;
-[SP + 0018] = w(RA);
+A2 = 4;
 80047338	jal    func48498 [$80048498]
-A2 = 0004;
+
 80047340	lui    v1, $fdff
 V1 = V1 | ffff;
 80047348	lui    a0, $2d01
