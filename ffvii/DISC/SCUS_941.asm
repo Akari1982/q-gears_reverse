@@ -2983,10 +2983,10 @@
 // system_psyq_set_def_dispenv
 800438D4-8004390C
 ////////////////////////////////
-// func43910
+// system_psyq_set_video_mode
 80043910-80043924
 ////////////////////////////////
-// func43928
+// system_psyq_get_video_mode
 80043928-80043934
 ////////////////////////////////
 // system_psyq_reset_graph
@@ -3046,7 +3046,7 @@
 // system_psyq_put_drawenv
 800443B0-80044470
 ////////////////////////////////
-// func44474
+// system_psyq_get_drawenv
 80044474-800444A8
 ////////////////////////////////
 // system_psyq_put_dispenv

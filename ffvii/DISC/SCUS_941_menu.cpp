@@ -521,7 +521,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
                     }
                 }
             }
-            break
+            break;
         }
 
         if( h[GP + 74] != 0 ) // rainbow colour

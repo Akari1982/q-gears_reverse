@@ -837,21 +837,19 @@ h = A4;
 
 
 ////////////////////////////////
-// func43910
-80043910-80043924
-80043910	lui    v0, $8006
-V0 = w[V0 + 2bb4];
-80043918	lui    at, $8006
-[AT + 2bb4] = w(A0);
-80043920	jr     ra 
-80043924	nop
+// system_psyq_set_video_mode()
+
+V0 = w[80062bb4];
+[80062bb4] = w(A0);
+return V0;
 ////////////////////////////////
-// func43928
-80043928-80043934
-80043928	lui    v0, $8006
-V0 = w[V0 + 2bb4];
-80043930	jr     ra 
-80043934	nop
+
+
+
+////////////////////////////////
+// system_psyq_get_video_mode()
+
+return w[80062bb4];
 ////////////////////////////////
 
 
@@ -1448,47 +1446,51 @@ A3 = 0;
 // The drawing environment is effective until the next time PutDrawEnv() is executed, or until the DR_ENV primitive is executed.
 // Return value - a pointer to the drawing environment set. On failure, returns 0
 
-S1 = A0; // pointer to drawing environment start address
+env = A0; // pointer to drawing environment start address
 
 if( bu[80062c02] >= 2 )
 {
     A0 = 80010e34; // "PutDrawEnv(%08x)..."
-    A1 = S1;
+    A1 = env;
     800443F4	jalr   w[80062bfc] ra
 }
 
-A0 = S1 + 1c;
-A1 = S1;
+dr_env = env + 1c;
+
+A0 = dr_env;
+A1 = env;
 system_psyq_set_drawenv();
 
-[S1 + 1c] = w(w[S1 + 1c] | 00ffffff);
+[dr_env] = w(w[dr_env] | 00ffffff);
 
 V1 = w[80062bf8];
 A0 = w[V1 + 18];
-A1 = S1 + 1c;
+A1 = dr_env;
 A2 = 40;
 A3 = 0;
 8004443C	jalr   w[V1 + 8] ra
 
 A0 = 80062c10;
-A1 = S1;
-A2 = 005c;
+A1 = env;
+A2 = 5c;
 system_bios_memcpy();
 
-return S1;
+return env;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func44474
+// system_psyq_get_drawenv()
 
-S0 = A0;
+env = A0;
+
+A0 = env;
 A1 = 80062c10;
-A2 = 005c;
+A2 = 5c;
 system_bios_memcpy();
 
-return S0;
+return env;
 ////////////////////////////////
 
 
@@ -1496,312 +1498,210 @@ return S0;
 ////////////////////////////////
 // system_psyq_put_dispenv()
 
-S0 = A0;
+env = A0;
 
 if( bu[80062c02] >= 2 )
 {
     A0 = 80010e4c; // "PutDispEnv(%08x)..."
-    A1 = S0;
+    A1 = env;
     800444F8	jalr   w[80062bfc] ra
 }
 
-800444E0	lui    s2, $0800
-
-if( ( bu[80062c00] - 1 ) < 2 )
 {
-    8004451C	jal    func45024 [$80045024]
-    A0 = S0;
-    V1 = hu[S0 + 0002];
-    V0 = V0 & 0fff;
-    V1 = V1 & 0fff;
-    V1 = V1 << 0c;
-    V1 = V1 | V0;
-    80044538	j      L4455c [$8004455c]
-    8004453C	lui    v0, $0500
+    // GP1(05h) - Start of Display area (in VRAM)
+    //   0-9   X (0-1023)    (halfword address in VRAM)  (relative to begin of VRAM)
+    //   10-18 Y (0-511)     (scanline number in VRAM)   (relative to begin of VRAM)
+    //   19-23 Not used (zero)
+    // Upper/left Display source address in VRAM. The size and target position on
+    // screen is set via Display Range registers; target=X1,Y2;
+    // size=(X2-X1/cycles_per_pix), (Y2-Y1).
+
+    if( ( bu[80062c00] - 1 ) < 2 )
+    {
+        A0 = env;
+        func45024();
+
+        V1 = 05000000 | ((hu[env + 2] & fff) << c) | (V0 & fff); // Start of Display area (in VRAM)
+    }
+    else
+    {
+        V1 = 05000000 | ((hu[env + 2] & 3ff) << a) | (hu[env + 0] & 3ff); // Start of Display area (in VRAM)
+    }
+
+    A0 = V1;
+    V0 = w[80062bf8];
+    80044574	jalr   w[V0 + 10] ra
 }
 
-V0 = hu[S0 + 0002];
-V1 = hu[S0 + 0000];
-V0 = V0 & 03ff;
-V0 = V0 << 0a;
-V1 = V1 & 03ff;
-V0 = V0 | V1;
-80044558	lui    v1, $0500
+if( ( w[80062c74] != w[env + 8] ) || ( w[80062c78] != w[env + c] ) )
+{
+    system_psyq_get_video_mode();
+    [env + 12] = b(V0); // pad0
 
-L4455c:	; 8004455C
-A0 = V0 | V1;
-80044560	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80044568	nop
-V0 = w[V0 + 0010];
-80044570	nop
-80044574	jalr   v0 ra
-80044578	nop
-8004457C	lui    v1, $8006
-V1 = w[V1 + 2c74];
-V0 = w[S0 + 0008];
-80044588	nop
-8004458C	bne    v1, v0, L445ac [$800445ac]
-80044590	nop
-80044594	lui    v1, $8006
-V1 = w[V1 + 2c78];
-V0 = w[S0 + 000c];
-800445A0	nop
-800445A4	beq    v1, v0, L44768 [$80044768]
-800445A8	nop
+    x1 = 260 + h[env + 8] * a; // screen.x
 
-L445ac:	; 800445AC
-800445AC	jal    func43928 [$80043928]
-800445B0	nop
-V1 = h[S0 + 0008];
-[S0 + 0012] = b(V0);
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 01;
-A1 = V0 + 0260;
-V0 = bu[S0 + 0012];
-A0 = h[S0 + 000a];
-800445D4	bne    v0, zero, L445e0 [$800445e0]
-S1 = A0 + 0013;
-S1 = A0 + 0010;
+    if( bu[env + 12] == 0 ) y1 = h[env + a] + 10;
+    else                    y1 = h[env + a] + 13;
 
-L445e0:	; 800445E0
-V1 = h[S0 + 000c];
-800445E4	nop
-800445E8	beq    v1, zero, L44600 [$80044600]
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 01;
-800445F8	j      L44604 [$80044604]
-A2 = A1 + V0;
+    if( h[env + c] != 0 ) x2 = x1 + h[env + c] * a;
+    else                  x2 = x1 + a00;
 
-L44600:	; 80044600
-A2 = A1 + 0a00;
+    if( h[env + e] != 0 ) y2 = y1 + h[env + e];
+    else                  y2 = y1 + f0;
 
-L44604:	; 80044604
-V0 = h[S0 + 000e];
-80044608	nop
-8004460C	bne    v0, zero, L44618 [$80044618]
-S3 = S1 + V0;
-S3 = S1 + 00f0;
+    if( x1 < 1f4 )       x1 = 1f4;
+    else if( x1 >= cdb ) x1 = cda;
 
-L44618:	; 80044618
-V0 = A1 < 01f4;
-8004461C	bne    v0, zero, L44638 [$80044638]
-A0 = 01f4;
-A0 = A1;
-V0 = A0 < 0cdb;
-8004462C	bne    v0, zero, L4463c [$8004463c]
-A1 = A0;
-A0 = 0cda;
+    if( x2 >= x1 + 50 )
+    {
+        if( x2 >= cdb ) x2 = 0cda;
+    }
+    else
+    {
+        x2 = x1 + 50;
+    }
 
-L44638:	; 80044638
-A1 = A0;
+    if( y1 < 0 )
+    {
+        y1 = 0;
+    }
+    else
+    {
+        if( bu[env + 12] != 0 )
+        {
+            if( y1 >= 137 ) y1 = 136;
+        }
+        else
+        {
+            if( y1 >= ff ) y1 = fe;
+        }
+    }
 
-L4463c:	; 8004463C
-V1 = A1 + 0050;
-80044640	slt    v0, a2, v1
-80044644	bne    v0, zero, L44658 [$80044658]
-V0 = A2 < 0cdb;
-8004464C	bne    v0, zero, L44658 [$80044658]
-V1 = A2;
-V1 = 0cda;
+    if( y2 >= y1 + 1 )
+    {
+        if( bu[env + 12] != 0 )
+        {
+            if( y2 >= 139 ) y2 = 138;
+        }
+        else
+        {
+            if( y2 >= 101 ) y2 = 100;
+        }
+    }
+    else
+    {
+        y2 = y1 + 1;
+    }
 
-L44658:	; 80044658
-80044658	bltz   s1, L446ac [$800446ac]
-A2 = V1;
-V0 = bu[S0 + 0012];
-80044664	nop
-80044668	beq    v0, zero, L44680 [$80044680]
-V0 = S1 < 0137;
-80044670	beq    v0, zero, L4468c [$8004468c]
-80044674	nop
-80044678	j      L446b0 [$800446b0]
-A0 = S1;
+    // GP1(06h) - Horizontal Display range (on Screen)
+    //   0-11   X1 (260h+0)       ;12bit       ;\counted in 53.222400MHz units,
+    //   12-23  X2 (260h+320*8)   ;12bit       ;/relative to HSYNC
+    // Specifies the horizontal range within which the display area is displayed. For
+    // resolutions other than 320 pixels it may be necessary to fine adjust the value
+    // to obtain an exact match (eg. X2=X1+pixels*cycles_per_pix).
+    // The number of displayed pixels per line is "(((X2-X1)/cycles_per_pix)+2) AND
+    // NOT 3" (ie. the hardware is rounding the width up/down to a multiple of 4
+    // pixels).
+    // Most games are using a width equal to the horizontal resolution (ie. 256, 320,
+    // 368, 512, 640 pixels). A few games are using slightly smaller widths (probably
+    // due to programming bugs). Pandemonium 2 is using a bigger "overscan" width
+    // (ensuring an intact picture without borders even on mis-calibrated TV sets).
+    // The 260h value is the first visible pixel on normal TV Sets, this value is used
+    // by MOST NTSC games, and SOME PAL games (see below notes on Mis-Centered PAL
+    // games).
 
-L44680:	; 80044680
-V0 = S1 < 00ff;
-80044684	bne    v0, zero, L446a4 [$800446a4]
-80044688	nop
+    A0 = 06000000 | ((x2 & fff) << c) | (x1 & fff);
+    A1 = w[80062bf8];
+    80044734	jalr   w[A1 + 10] ra
 
-L4468c:	; 8004468C
-V0 = bu[S0 + 0012];
-80044690	nop
-80044694	beq    v0, zero, L446b0 [$800446b0]
-A0 = 00fe;
-8004469C	j      L446b0 [$800446b0]
-A0 = 0136;
+    // GP1(07h) - Vertical Display range (on Screen)
+    //   0-9   Y1 (NTSC=88h-(224/2), (PAL=A3h-(264/2))  ;\scanline numbers on screen,
+    //   10-19 Y2 (NTSC=88h+(224/2), (PAL=A3h+(264/2))  ;/relative to VSYNC
+    //   20-23 Not used (zero)
+    // Specifies the vertical range within which the display area is displayed. The
+    // number of lines is Y2-Y1 (unlike as for the width, there's no rounding applied
+    // to the height). If Y2 is set to a much too large value, then the hardware stops
+    // to generate vblank interrupts (IRQ0).
+    // The 88h/A3h values are the middle-scanlines on normal TV Sets, these values are
+    // used by MOST NTSC games, and SOME PAL games (see below notes on Mis-Centered
+    // PAL games).
+    // The 224/264 values are for fullscreen pictures. Many NTSC games display 240
+    // lines (overscan with hidden lines). Many PAL games display only 256 lines
+    // (underscan with black borders).
 
-L446a4:	; 800446A4
-800446A4	j      L446b0 [$800446b0]
-A0 = S1;
+    A1 = w[80062bf8];
+    A0 = 07000000 | ((y2 & 3ff) << a) | (y1 & 3ff);
+    80044760	jalr   w[A1 + 10] ra
+}
 
-L446ac:	; 800446AC
-A0 = 0;
+if( ( w[80062c7c] != w[env + 10] ) || ( w[80062c6c] != w[env + 0] ) || ( w[80062c70] != w[env + 4] ) )
+{
+    // GP1(08h) - Display mode
+    //   0-1   Horizontal Resolution 1     (0=256, 1=320, 2=512, 3=640) ;GPUSTAT.17-18
+    //   2     Vertical Resolution         (0=240, 1=480, when Bit5=1)  ;GPUSTAT.19
+    //   3     Video Mode                  (0=NTSC/60Hz, 1=PAL/50Hz)    ;GPUSTAT.20
+    //   4     Display Area Color Depth    (0=15bit, 1=24bit)           ;GPUSTAT.21
+    //   5     Vertical Interlace          (0=Off, 1=On)                ;GPUSTAT.22
+    //   6     Horizontal Resolution 2     (0=256/320/512/640, 1=368)   ;GPUSTAT.16
+    //   7     "Reverseflag"               (0=Normal, 1=Distorted)      ;GPUSTAT.14
+    //   8-23  Not used (zero)
+    // Note: Interlace must be enabled to see all lines in 480-lines mode (interlace
+    // is causing ugly flickering, so a non-interlaced low resolution image is
+    // typically having better quality than a high resolution interlaced image, a
+    // pretty bad example are the intro screens shown by the BIOS). The Display Area
+    // Color Depth does NOT affect the Drawing Area (the Drawing Area is <always>
+    // 15bit).
+    // When the "Reverseflag" is set, the display scrolls down 2 lines or so, and
+    // colored regions are getting somehow hatched/distorted, but black and white
+    // regions are still looking okay. Don't know what that's good for? Probably
+    // relates to PAL/NTSC-Color Clock vs PSX-Dot Clock mismatches: Bit7=0 causes
+    // Flimmering errors (errors at different locations in each frame), and Bit7=1
+    // causes Static errors (errors at same locations in all frames)?
 
-L446b0:	; 800446B0
-S1 = A0;
-V1 = S1 + 0001;
-800446B8	slt    v0, s3, v1
-800446BC	bne    v0, zero, L4470c [$8004470c]
-800446C0	nop
-V0 = bu[S0 + 0012];
-800446C8	nop
-800446CC	beq    v0, zero, L446e4 [$800446e4]
-V0 = S3 < 0139;
-800446D4	beq    v0, zero, L446f0 [$800446f0]
-800446D8	nop
-800446DC	j      L4470c [$8004470c]
-V1 = S3;
+    S2 = 08000000;
 
-L446e4:	; 800446E4
-V0 = S3 < 0101;
-800446E8	bne    v0, zero, L44708 [$80044708]
-800446EC	nop
+    system_psyq_get_video_mode();
+    [env + 12] = b(V0);
 
-L446f0:	; 800446F0
-V0 = bu[S0 + 0012];
-800446F4	nop
-800446F8	beq    v0, zero, L4470c [$8004470c]
-V1 = 0100;
-80044700	j      L4470c [$8004470c]
-V1 = 0138;
+    if( bu[env + 12] == 1 ) S2 |= 08; // Video Mode (1=PAL/50Hz)
+    if( bu[env + 11] != 0 ) S2 |= 10; // Display Area Color Depth (1=24bit)
+    if( bu[env + 10] != 0 ) S2 |= 20; // Vertical Interlace (1=On)
+    if( bu[80062c03] != 0 ) S2 |= 80; // "Reverseflag" (1=Distorted)
 
-L44708:	; 80044708
-V1 = S3;
+    if( h[env + 4] >= 119 )
+    {
+        if( h[env + 4] >= 161 )
+        {
+            if( h[env + 4] < 191 )      S2 |= 40; // Horizontal Resolution 2 (1=368)
+            else if( h[env + 4] < 231 ) S2 |= 02; // Horizontal Resolution 1 (2=512)
+            else                        S2 |= 03; // Horizontal Resolution 1 (3=640)
+        }
+        else
+        {
+            S2 |= 01; //  // Horizontal Resolution 1 (1=320)
+        }
+    }
+    else
+    {
+        S2 |= 00; //  // Horizontal Resolution 1 (0=256)
+    }
 
-L4470c:	; 8004470C
-S3 = V1;
-V0 = A2 & 0fff;
-V0 = V0 << 0c;
-A0 = A1 & 0fff;
-8004471C	lui    v1, $0600
-80044720	lui    a1, $8006
-A1 = w[A1 + 2bf8];
-A0 = A0 | V1;
-V1 = w[A1 + 0010];
-80044730	nop
-80044734	jalr   v1 ra
-A0 = V0 | A0;
-V0 = S3 & 03ff;
-V0 = V0 << 0a;
-A0 = S1 & 03ff;
-80044748	lui    v1, $0700
-8004474C	lui    a1, $8006
-A1 = w[A1 + 2bf8];
-A0 = A0 | V1;
-V1 = w[A1 + 0010];
-8004475C	nop
-80044760	jalr   v1 ra
-A0 = V0 | A0;
+    if( bu[env + 12] == 0 ) V0 = h[env + 6] < 101;
+    else                    V0 = h[env + 6] < 121;
 
-L44768:	; 80044768
-80044768	lui    v1, $8006
-V1 = w[V1 + 2c7c];
-V0 = w[S0 + 0010];
-80044774	nop
-80044778	bne    v1, v0, L447b0 [$800447b0]
-8004477C	nop
-80044780	lui    v1, $8006
-V1 = w[V1 + 2c6c];
-V0 = w[S0 + 0000];
-8004478C	nop
-80044790	bne    v1, v0, L447b0 [$800447b0]
-80044794	nop
-80044798	lui    v1, $8006
-V1 = w[V1 + 2c70];
-V0 = w[S0 + 0004];
-800447A4	nop
-800447A8	beq    v1, v0, L44898 [$80044898]
-800447AC	nop
+    if( V0 == 0 ) S2 |= 24; // Vertical Resolution (1=480), Vertical Interlace (1=On)
 
-L447b0:	; 800447B0
-800447B0	jal    func43928 [$80043928]
-800447B4	nop
-[S0 + 0012] = b(V0);
-V1 = bu[S0 + 0012];
-V0 = 0001;
-800447C4	bne    v1, v0, L447d0 [$800447d0]
-800447C8	nop
-S2 = S2 | 0008;
+    V0 = w[80062bf8];
+    A0 = S2;
+    80044890	jalr   w[V0 + 10] ra
+}
 
-L447d0:	; 800447D0
-V0 = bu[S0 + 0011];
-800447D4	nop
-800447D8	beq    v0, zero, L447e4 [$800447e4]
-800447DC	nop
-S2 = S2 | 0010;
-
-L447e4:	; 800447E4
-V0 = bu[S0 + 0010];
-800447E8	nop
-800447EC	beq    v0, zero, L447f8 [$800447f8]
-800447F0	nop
-S2 = S2 | 0020;
-
-L447f8:	; 800447F8
-800447F8	lui    v0, $8006
-V0 = V0 + 2c03;
-V0 = bu[V0 + 0000];
-80044804	nop
-80044808	beq    v0, zero, L44814 [$80044814]
-8004480C	nop
-S2 = S2 | 0080;
-
-L44814:	; 80044814
-V1 = h[S0 + 0004];
-80044818	nop
-V0 = V1 < 0119;
-80044820	bne    v0, zero, L4485c [$8004485c]
-V0 = V1 < 0161;
-80044828	beq    v0, zero, L44838 [$80044838]
-V0 = V1 < 0191;
-80044830	j      L4485c [$8004485c]
-S2 = S2 | 0001;
-
-L44838:	; 80044838
-80044838	beq    v0, zero, L44848 [$80044848]
-V0 = V1 < 0231;
-80044840	j      L4485c [$8004485c]
-S2 = S2 | 0040;
-
-L44848:	; 80044848
-80044848	beq    v0, zero, L44858 [$80044858]
-8004484C	nop
-80044850	j      L4485c [$8004485c]
-S2 = S2 | 0002;
-
-L44858:	; 80044858
-S2 = S2 | 0003;
-
-L4485c:	; 8004485C
-V0 = bu[S0 + 0012];
-V1 = h[S0 + 0006];
-80044864	bne    v0, zero, L44870 [$80044870]
-V0 = V1 < 0121;
-V0 = V1 < 0101;
-
-L44870:	; 80044870
-80044870	bne    v0, zero, L4487c [$8004487c]
-80044874	nop
-S2 = S2 | 0024;
-
-L4487c:	; 8004487C
-8004487C	lui    v0, $8006
-V0 = w[V0 + 2bf8];
-80044884	nop
-V0 = w[V0 + 0010];
-8004488C	nop
-80044890	jalr   v0 ra
-A0 = S2;
-
-L44898:	; 80044898
 A0 = 80062c6c;
-A1 = S0;
+A1 = env;
 A2 = 14;
 system_bios_memcpy();
 
-return S0;
+return env;
 ////////////////////////////////
 
 
@@ -1809,14 +1709,14 @@ return S0;
 ////////////////////////////////
 // system_psyq_get_dispenv()
 
-S0 = A0;
+env = A0;
 
-A0 = S0;
+A0 = env;
 A1 = 80062c6c;
 A2 = 14;
 system_bios_memcpy();
 
-return S0;
+return env;
 ////////////////////////////////
 
 
@@ -1835,60 +1735,51 @@ return V0 >> 1f;
 // func4493c()
 
 S0 = A0;
-V0 = 0002;
 A0 = A1;
-[S0 + 0003] = b(V0);
+[S0 + 3] = b(2);
 system_gpu_get_texture_window_setting_command();
-
-[S0 + 0004] = w(V0);
-[S0 + 0008] = w(0);
+[S0 + 4] = w(V0);
+[S0 + 8] = w(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func44978()
+// SetDrawArea
 
-S1 = A0;
-S0 = A1;
-V0 = 0002;
-[S1 + 0003] = b(V0);
-A0 = h[S0 + 0000];
-A1 = h[S0 + 0002];
+prim = A0; // DR_AREA
+rect = A1;
+
+[prim + 3] = b(2);
+
+A0 = h[rect + 0];
+A1 = h[rect + 2];
 system_gpu_set_drawing_area_top_left();
+[prim + 4] = w(V0);
 
-[S1 + 0004] = w(V0);
-A0 = hu[S0 + 0000];
-V0 = hu[S0 + 0004];
-A1 = hu[S0 + 0002];
-A0 = A0 + V0;
-800449BC	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-V0 = hu[S0 + 0006];
-A0 = A0 >> 10;
-A1 = A1 + V0;
-800449D0	addiu  a1, a1, $ffff (=-$1)
-A1 = A1 << 10;
-A1 = A1 >> 10;
+A0 = h[rect + 0] + h[rect + 4] - 1;
+A1 = h[rect + 2] + h[rect + 6] - 1;
 system_gpu_set_drawing_area_bottom_right();
-
-[S1 + 0008] = w(V0);
+[prim + 8] = w(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func449fc()
+// SetDrawOffset
 
-S0 = A0;
-V0 = 0002;
-[S0 + 0003] = b(V0);
-A0 = h[A1 + 0000];
-A1 = h[A1 + 0002];
+prim = A0;
+ofs = A1;
+
+[prim + 3] = b(2);
+
+A0 = h[ofs + 0];
+A1 = h[ofs + 2];
 system_gpu_set_drawing_offset();
-
-[S0 + 0004] = w(V0);
-[S0 + 0008] = w(0);
+[prim + 4] = w(V0);
+[prim + 8] = w(0);
 ////////////////////////////////
 
 
@@ -1896,17 +1787,29 @@ system_gpu_set_drawing_offset();
 ////////////////////////////////
 // func44a40()
 
-V0 = 0002;
-[A0 + 0003] = b(V0);
-80044A48	beq    a1, zero, L44a54 [$80044a54]
-80044A4C	lui    v1, $e600
-V1 = V1 | 0002;
+// GP0(E6h) - Mask Bit Setting
+//   0     Set mask while drawing (0=TextureBit15, 1=ForceBit15=1)   ;GPUSTAT.11
+//   1     Check mask before draw (0=Draw Always, 1=Draw if Bit15=0) ;GPUSTAT.12
+//   2-23  Not used (zero)
+//   24-31 Command  (E6h)
+// When bit0 is off, the upper bit of the data written to the framebuffer is equal
+// to bit15 of the texture color (ie. it is set for colors that are marked as
+// "semi-transparent") (for untextured polygons, bit15 is set to zero).
+// When bit1 is on, any (old) pixels in the framebuffer with bit15=1 are
+// write-protected, and cannot be overwritten by (new) rendering commands.
+// The mask setting affects all rendering commands, as well as CPU-to-VRAM and
+// VRAM-to-VRAM transfer commands (where it acts on the separate halfwords, ie. as
+// for 15bit textures). However, Mask does NOT affect the Fill-VRAM command.
 
-L44a54:	; 80044A54
+[A0 + 3] = b(2);
+
+V1 = e6000000;
+
+if( A1 != 0 ) V1 |= 02;
+
 V0 = 0 < A2;
-V0 = V1 | V0;
-[A0 + 0004] = w(V0);
-[A0 + 0008] = w(0);
+[A0 + 4] = w(V1 | V0);
+[A0 + 8] = w(0);
 ////////////////////////////////
 
 
@@ -1915,23 +1818,23 @@ V0 = V1 | V0;
 // system_psyq_set_draw_mode()
 // Initialize content of a drawing mode primitive.
 
-packet = A0;
+prim = A0;
 display_area = A1;
 dithering = A2;
 init_value = A3;
 window_rect = A4;
 
-[packet + 3] = b(2);
+[prim + 3] = b(2);
 
 A0 = display_area; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
 A1 = dithering; // dithering processing flag. 0: off; 1: on
 A2 = init_value; // initial values of texture page
 system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
-[packet + 4] = w(V0);
+[prim + 4] = w(V0);
 
 A0 = window_rect; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
 system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
-[packet + 8] = w(V0);
+[prim + 8] = w(V0);
 ////////////////////////////////
 
 
@@ -2162,8 +2065,7 @@ V0 = V0 - V1;
 V0 = V0 - A0;
 
 L4507c:	; 8004507C
-8004507C	lui    v0, $8006
-V0 = bu[V0 + 2c03];
+V0 = bu[80062c03];
 80045084	nop
 80045088	beq    v0, zero, L450b4 [$800450b4]
 8004508C	nop
@@ -2248,11 +2150,8 @@ return number;
 
 ////////////////////////////////
 // func451e0
-800451E0	addiu  sp, sp, $ffe0 (=-$20)
+
 T0 = A0;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V1 = h[T0 + 0004];
 800451F8	nop
 800451FC	bltz   v1, L45238 [$80045238]
@@ -2390,31 +2289,19 @@ L453d4:	; 800453D4
 800453D4	lui    a0, $8007
 A0 = A0 + 0550;
 800453DC	jal    func45984 [$80045984]
-800453E0	nop
-V0 = 0;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800453F8	jr     ra 
-800453FC	nop
+
+return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func45400
-80045400	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0024] = w(S1);
+
 S1 = A0;
-[SP + 0028] = w(S2);
 S2 = A1;
-[SP + 0038] = w(RA);
-[SP + 0034] = w(S5);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
 80045424	jal    func462b0 [$800462b0]
-[SP + 0020] = w(S0);
+
 A0 = h[S1 + 0004];
 S5 = 0;
 80045434	bltz   a0, L4546c [$8004546c]
@@ -2569,32 +2456,17 @@ L45628:	; 80045628
 V0 = 0;
 
 L4562c:	; 8004562C
-RA = w[SP + 0038];
-S5 = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0040;
-8004564C	jr     ra 
-80045650	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func45654
-80045654	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0024] = w(S1);
+
 S1 = A0;
-[SP + 0028] = w(S2);
 S2 = A1;
-[SP + 0034] = w(RA);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
 80045674	jal    func462b0 [$800462b0]
-[SP + 0020] = w(S0);
+
 A0 = h[S1 + 0004];
 80045680	nop
 80045684	bltz   a0, L456bc [$800456bc]
@@ -2771,15 +2643,6 @@ L458c8:	; 800458C8
 V0 = 0;
 
 L458cc:	; 800458CC
-RA = w[SP + 0034];
-S4 = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0038;
-800458E8	jr     ra 
-800458EC	nop
 ////////////////////////////////
 
 
@@ -2887,16 +2750,11 @@ V0 = V0 & V1;
 
 
 ////////////////////////////////
-// func45a00
-80045A00	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+// func45a00()
+
 A3 = A2;
-80045A0C	jal    func45a24 [$80045a24]
 A2 = 0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80045A1C	jr     ra 
-80045A20	nop
+func45a24();
 ////////////////////////////////
 
 
@@ -5540,9 +5398,8 @@ V1 = 0002;
 800481B0	bne    v0, v1, L481c8 [$800481c8]
 800481B4	nop
 800481B8	lui    a0, $8001
-A0 = A0 + 108c;
-800481C0	jal    system_bios_printf [$80042dc8]
-800481C4	nop
+A0 = 8001108c; // "FT4 "
+system_bios_printf();
 
 L481c8:	; 800481C8
 V0 = hu[S0 + 000a];

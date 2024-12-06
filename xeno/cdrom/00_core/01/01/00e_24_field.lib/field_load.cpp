@@ -2510,6 +2510,11 @@ for( int i = 0; i < w[800aefe0]; ++i )
 
 if( w[800c1b60] == 0 )
 {
+    // 0x0400 Poll host PC (To service PC data request etc)
+    // Preserves all registers.
+    // This function polls the host PC and allows it access to the
+    // PSX memory, necessary for example, during real time
+    // debugging.
     800735F4	break   $00400
 }
 

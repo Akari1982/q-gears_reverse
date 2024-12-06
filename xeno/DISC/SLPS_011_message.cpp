@@ -2644,6 +2644,11 @@ if( w[80010000] != -1 )
 {
     if( w[80058a2c] != 0 )
     {
+        // 0x0400 Poll host PC (To service PC data request etc)
+        // Preserves all registers.
+        // This function polls the host PC and allows it access to the
+        // PSX memory, necessary for example, during real time
+        // debugging.
         80036274	break   $00400
     }
 }

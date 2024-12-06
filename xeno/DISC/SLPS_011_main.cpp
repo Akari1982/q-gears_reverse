@@ -50,8 +50,8 @@ system_interrupts_timer_dma_initialize();
 A0 = 0;
 system_psyq_set_graph_debug();
 
-A0 = 0;
-func4c198();
+A0 = 0; // MODE_NTSC 0, MODE_PAL 1
+system_psyq_set_video_mode();
 
 A0 = 0;
 system_psyq_reset_graph();

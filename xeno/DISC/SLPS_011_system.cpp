@@ -771,7 +771,7 @@ if( A1 != 0 )
 
 
 ////////////////////////////////
-// func4c198()
+// system_psyq_set_video_mode()
 
 V0 = w[80058030];
 [80058030] = w(A0);
@@ -781,7 +781,7 @@ return V0;
 
 
 ////////////////////////////////
-// func4c1b0()
+// system_psyq_get_video_mode()
 
 return w[80058030];
 ////////////////////////////////
@@ -790,6 +790,7 @@ return w[80058030];
 
 ////////////////////////////////
 // system_devkit_pc_open()
+
 A2 = A1; // accessmode
 A1 = A0; // filename
 8004C1C8	break   $00103
@@ -804,6 +805,7 @@ return V1;
 
 ////////////////////////////////
 // system_devkit_pc_close()
+
 A1 = A0; // filehandle
 8004C1E4	break   $00104
 ////////////////////////////////
@@ -812,6 +814,7 @@ A1 = A0; // filehandle
 
 ////////////////////////////////
 // system_devkit_pc_seek()
+
 A3 = A2; // seekmode
 A2 = A1; // file_offset
 A1 = A0; // filehandle
@@ -827,6 +830,7 @@ return V1;
 
 ////////////////////////////////
 // system_devkit_pc_create()
+
 A1 = A0; // filename
 A2 = 0; // fileattributes
 8004C21C	break   $00102
@@ -841,6 +845,7 @@ return V1; // return filehandle
 
 ////////////////////////////////
 // system_devkit_pc_init()
+
 8004C234	break   $00101
 ////////////////////////////////
 

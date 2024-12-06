@@ -3571,10 +3571,10 @@
 // func4c16c
 8004C16C-8004C194
 ////////////////////////////////
-// func4c198
+// system_psyq_set_video_mode
 8004C198-8004C1AC
 ////////////////////////////////
-// func4c1b0
+// system_psyq_get_video_mode
 8004C1B0-8004C1BC
 ////////////////////////////////
 // system_devkit_pc_open

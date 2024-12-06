@@ -222,6 +222,11 @@ system_memory_allocate();
 
 if( w[800c1b60] == 0 ) // debug
 {
+    // 0x0400 Poll host PC (To service PC data request etc)
+    // Preserves all registers.
+    // This function polls the host PC and allows it access to the
+    // PSX memory, necessary for example, during real time
+    // debugging.
     800777BC	break   $00400
 
     A0 = w[800b1740]; // entity id which controls party leader

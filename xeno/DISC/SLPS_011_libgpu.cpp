@@ -142,7 +142,7 @@ h = A4;
 [env + 1a] = b(0); // background color g
 [env + 1b] = b(0); // background color b
 
-func4c1b0(); // get data from 80058030
+system_psyq_get_video_mode();
 if( V0 != 0 )
 {
     [env + 17] = b(h < 121); // 0: drawing to display area is blocked1: drawing to display area is permitted
@@ -1486,7 +1486,7 @@ V0 = V0 >> 10;
 80044E4C	nop
 
 L44e50:	; 80044E50
-80044E50	jal    func4c1b0 [$8004c1b0]
+80044E50	jal    system_psyq_get_video_mode [$8004c1b0]
 80044E54	nop
 A0 = h[S0 + 0008];
 [S0 + 0012] = b(V0);
@@ -1667,7 +1667,7 @@ V0 = V0 >> 10;
 8004509C	nop
 
 L450a0:	; 800450A0
-800450A0	jal    func4c1b0 [$8004c1b0]
+800450A0	jal    system_psyq_get_video_mode [$8004c1b0]
 800450A4	nop
 [S0 + 0012] = b(V0);
 V0 = V0 & 00ff;
