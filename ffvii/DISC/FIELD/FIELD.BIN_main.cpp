@@ -1064,157 +1064,145 @@ V1 = w[8009ac6c];
 V0 = w[8009d848];
 background = w[V0];
 
-draft1 = A0;
+poly1 = A0;
 draft2 = A1;
 S5 = A2;
-[SP + 20] = h(0);
-[SP + 28] = h(0);
+count1 = 0;
+count2 = 0;
 [8011448c] = h(0);
 [801144d0] = h(0);
 
-FP = A3;
+dr_mode_p = A3;
 
 block1 = background + 10;
 block2 = background + w[background + 0];
-block3 = background + w[background + 4];
+tpage = background + w[background + 4];
 block4 = background + w[background + 8];
 block5 = background + w[background + c];
 
-La3098:	; 800A3098
+while( true )
+{
     V1 = h[block1];
 
-    if (V1 == 7fff)
+    if( V1 == 7fff )
     {
-        block1 = block1 + 2;
-        800A30A8	j      La31a0 [$800a31a0]
+        block1 += 2;
+        break;
     }
-
-    A0 = FP;
-    if (V1 == 7ffe)
+    else if( V1 == 7ffe )
     {
-        A1 = 0;
-        A2 = 1;
-        A3 = hu[block3];
-        block3 = block3 + 2;
-        A4 = 0;
+        A0 = dr_mode_p; // DR_MODE *p Pointer to drawing mode primitive
+        A1 = 0; // dfe, 0: drawing not allowed in display area
+        A2 = 1; // int dtd, 1: dithering on
+        A3 = hu[tpage]; // tpage
+        A4 = 0; // RECT *tw Pointer to texture window
         system_psyq_set_draw_mode();
+
+        tpage += 2;
 
         [8011448c] = h(hu[8011448c] + 1);
 
-        FP = FP + c;
+        dr_mode_p += c;
     }
     else
     {
-        S3 = h[block1 + 4];
-        if (S3 != 0)
+        for( int i = h[block1 + 4]; i != 0; --i )
         {
-            loopa3110:	; 800A3110
-                [draft1 + 3] = b(3);
-                [draft1 + 4] = b(80);
-                [draft1 + 5] = b(80);
-                [draft1 + 6] = b(80);
-                [draft1 + 7] = b(7d);
-                [draft1 + 8] = h(hu[block2 + 0]);
-                [draft1 + a] = h(hu[block2 + 2]);
-                [draft1 + c] = b(bu[block2 + 4]);
-                [draft1 + d] = b(bu[block2 + 5]);
-                [draft1 + e] = h(hu[block2 + 6]);
+            [poly1 + 3] = b(3);
+            [poly1 + 4] = b(80);
+            [poly1 + 5] = b(80);
+            [poly1 + 6] = b(80);
+            [poly1 + 7] = b(7d);
+            [poly1 + 8] = h(hu[block2 + 0]);
+            [poly1 + a] = h(hu[block2 + 2]);
+            [poly1 + c] = b(bu[block2 + 4]);
+            [poly1 + d] = b(bu[block2 + 5]);
+            [poly1 + e] = h(hu[block2 + 6]);
 
-                [SP + 20] = h(hu[SP + 20] + 1);
-                draft1 = draft1 + 10;
-                block2 = block2 + 8;
-                S5 = S5 + 2;
-                S3 = S3 - 1;
-            800A3190	bne    s3, zero, loopa3110 [$800a3110]
+            count1 += 1;
+            poly1 += 10;
+            block2 += 8;
+            S5 += 2;
         }
     }
 
-    block1 = block1 + 6;
-800A3198	j      La3098 [$800a3098]
+    block1 += 6;
+}
 
-La31a0:	; 800A31A0
+[8011448c] = h(count1 - hu[8011448c]);
 
-[8011448c] = h(hu[SP + 20] - hu[8011448c]);
-
-La31d4:	; 800A31D4
-    if (h[block1] == 7fff)
+while( true )
+{
+    if( h[block1] == 7fff )
     {
-        block1 = block1 + 2;
-        800A30A8	j      La3304 [$800a31a0]
+        block1 += 2;
+        break;
     }
 
-    S3 = h[block1 + 4];
-    if (S3 != 0)
+    for( int i = h[block1 + 4]; i != 0; --i )
     {
-        loopa3204:	; 800A3204
-            A0 = FP;
-            A1 = 0;
-            A2 = 1;
-            A3 = hu[block4 + 8]; // texture page settings
-            A4 = 0;
-            system_psyq_set_draw_mode();
-
-            [801144d0] = h(hu[801144d0] + 1);
-
-            [draft1 + 3] = b(3);
-            [draft1 + 7] = b(7d);
-
-            if (hu[block4 + c] & 80)
-            {
-                [draft1 + 7] = b(7f);
-            }
-
-            [draft1 + 4] = h(hu[block4 + a]); // distance
-            [draft1 + 6] = b(80);
-            [draft1 + 8] = h(hu[block4 + 0]); // dest x
-            [draft1 + a] = h(hu[block4 + 2]); // dest y
-            [draft1 + c] = b(bu[block4 + 4]); // src x
-            [draft1 + d] = b(bu[block4 + 5]); // src y
-            [draft1 + e] = h(hu[block4 + 6]); // clut
-
-            [S5 + 0] = b(bu[block4 + c]); // animation
-            [S5 + 1] = b(bu[block4 + d]); // index
-
-            [SP + 20] = h(hu[SP + 20] + 1);
-            draft1 = draft1 + 10;
-            block4 = block4 + e;
-            FP = FP + c;
-            S5 = S5 + 2;
-            S3 = S3 - 1;
-        800A32F4	bne    s3, zero, loopa3204 [$800a3204]
-    }
-
-    block1 = block1 + 6;
-800A32FC	j      La31d4 [$800a31d4]
-
-La3304:	; 800A3304
-
-[801144c8] = h(hu[SP + 20]);
-
-La3334:	; 800A3334
-    V1 = h[block1];
-    if (V1 == 7fff)
-    {
-        block1 = block1 + 2;
-        800A3344	j      La34a8 [$800a34a8]
-    }
-
-    if (V1 == 7ffe)
-    {
-        A0 = FP;
+        A0 = dr_mode_p;
         A1 = 0;
         A2 = 1;
-        FP = FP + c;
-        A3 = hu[block3];
-        block3 = block3 + 2;
+        A3 = hu[block4 + 8]; // texture page settings
         A4 = 0;
         system_psyq_set_draw_mode();
+
+        [801144d0] = h(hu[801144d0] + 1);
+
+        [poly1 + 3] = b(3);
+        [poly1 + 7] = b(7d);
+
+        if( hu[block4 + c] & 80 ) [poly1 + 7] = b(7f);
+
+        [poly1 + 4] = h(hu[block4 + a]); // distance
+        [poly1 + 6] = b(80);
+        [poly1 + 8] = h(hu[block4 + 0]); // dest x
+        [poly1 + a] = h(hu[block4 + 2]); // dest y
+        [poly1 + c] = b(bu[block4 + 4]); // src x
+        [poly1 + d] = b(bu[block4 + 5]); // src y
+        [poly1 + e] = h(hu[block4 + 6]); // clut
+
+        [S5 + 0] = b(bu[block4 + c]); // animation
+        [S5 + 1] = b(bu[block4 + d]); // index
+
+        count1 += 1;
+        poly1 += 10;
+        block4 += e;
+        dr_mode_p += c;
+        S5 = S5 + 2;
+    }
+
+    block1 += 6;
+}
+
+[801144c8] = h(count1);
+
+while( true )
+{
+    V1 = h[block1];
+    if( V1 == 7fff )
+    {
+        block1 += 2;
+        break;
+    }
+    else if( V1 == 7ffe )
+    {
+        A0 = dr_mode_p;
+        A1 = 0;
+        A2 = 1;
+        A3 = hu[tpage];
+        A4 = 0;
+        system_psyq_set_draw_mode();
+
+        dr_mode_p += c;
+        tpage += 2;
     }
     else
     {
         S3 = h[block1 + 4];
 
-        [block1 + 2] = h(hu[SP + 28]);
+        [block1 + 2] = h(count2);
 
         if (S3 != 0)
         {
@@ -1242,7 +1230,7 @@ La3334:	; 800A3334
                 [S5 + 0] = b(bu[block5 + 8]);
                 [S5 + 1] = b(bu[block5 + 9]);
 
-                [SP + 28] = h(hu[SP + 28] + 1);
+                count2 += 1;
                 draft2 = draft2 + 14;
                 block5 = block5 + a;
                 S5 = S5 + 2;
@@ -1251,35 +1239,35 @@ La3334:	; 800A3334
         }
     }
 
-    block1 = block1 + 6;
-800A34A0	j      La3334 [$800a3334]
+    block1 += 6;
+}
 
-La34a8:	; 800A34A8
-
-La34ac:	; 800A34AC
+while( true )
+{
     V1 = h[block1];
-    if (V1 == 7fff)
-    {
-        return;
-    }
 
-    if (V1 == 7ffe)
+    if( V1 == 7fff )
     {
-        A0 = FP;
+        break;
+    }
+    else if( V1 == 7ffe )
+    {
+        A0 = dr_mode_p;
         A1 = 0;
         A2 = 1;
-        FP = FP + c;
-        A3 = hu[block3];
-        block3 = block3 + 2;
+        A3 = hu[tpage];
         A4 = 0;
         system_psyq_set_draw_mode();
+
+        dr_mode_p += c;
+        tpage += 2;
     }
     else
     {
-        S3 = h[block1 + 4];
+        [block1 + 2] = h(count2);
 
-        [block1 + 2] = h(hu[SP + 28]);
-        if (S3 != 0)
+        S3 = h[block1 + 4];
+        if( S3 != 0 )
         {
             loopa3508:	; 800A3508
                 [draft2 + 3] = b(4);
@@ -1306,7 +1294,7 @@ La34ac:	; 800A34AC
                 [S5 + 0] = b(bu[V1 + 8]);
                 [S5 + 1] = b(bu[V1 + 9]);
 
-                [SP + 28] = h(hu[SP + 28] + 1);
+                count2 += 1;
                 [8007ebd4] = w(w[8007ebd4] + a);
                 draft2 = draft2 + 14;
                 S5 = S5 + 2;
@@ -1315,8 +1303,8 @@ La34ac:	; 800A34AC
         }
     }
 
-    block1 = block1 + 6;
-800A3610	j      La34ac [$800a34ac]
+    block1 += 6;
+}
 ////////////////////////////////
 
 

@@ -51,6 +51,84 @@ walkmesh data (block 2)
 
 
 ////////////////////////////////
+tilemap data (block 3)
+    +  0 [][][][] offset to block 2.
+    +  4 [][][][] offset to block 3.
+    +  8 [][][][] offset to block 4.
+    +  c [][][][] offset to block 5.
+    + 10 start of block 1.
+
+block1
+A list of data structures (size == 6 or 2 bytes). The first UINT16 indicates layer or not a layer. 
+struct {
+ UINT16 Type;
+ UINT16 TilePos;
+ UINT16 TileCount;
+} Section1LayerChange;
+Type 0x7FFE is a sprite use Section 3 to find it's texture page.
+Type 0x7FFF is the End of layer information Data Record.
+
+block2
+A series of Layer 1 tile data structures (basic background information) 
+struct {
+ INT16 DestinationX;
+ INT16 DestinationY;
+ UINT8 TexPageSourceX;
+ UINT8 TexPageSourceY;
+ UINT16 TileClutData;
+} Layer1Tile;
+
+Destination X and Y are signed, this is used for the walkmesh information and the center of the background field. The only used portion of the tile data is:
+{
+ unsigned ZZ1:6;
+ unsigned ClutNumber;
+ unsigned ZZ2:6;
+} TileClutData;
+
+block3
+A list of UINT16, bit fields, because the ordering of fields within such an object are unspecifiable in the C and C++ standards (IE the compilor can choose any way which it may be done the standard doesn't care), this structure will be shown (a BIT?) differently.
+
+{
+  unsigned ZZ:7; // 7 MSB
+  unsigned deph:2;
+  unsigned blending_mode:2;
+  unsigned page_y:1;
+  unsigned page_x:4; // 4 LSB
+} SpriteTP_Blend;
+
+block4
+This section consists of the sprite data (2d data that is either non static or can be walked behind).
+
+struct {
+ INT16 DestinationX;
+ INT16 DestinationY;
+ UINT8 TexPageSourceX;
+ UINT8 TexPageSourceY;
+ UINT16 TileClutData;
+ UINT16 SpriteTP_Blend;
+ UINT16 Group; // 12 lsb bits only
+ UINT8 Parameter;
+ UINT8 State;
+} SpriteTile;
+
+block5
+This section looks like section 4, it is used for additional layers. For SpriteTP_Blend infos, you must use section 3.
+
+struct {
+ INT16 DestinationX;
+ INT16 DestinationY;
+ UINT8 TexPageSourceX;
+ UINT8 TexPageSourceY;
+ UINT16 TileClutData;
+ UINT8 Parameter;
+ UINT8 State;
+} SpriteTile2;
+
+////////////////////////////////
+
+
+
+////////////////////////////////
 camera data (block 4)
     +  0 [][]     triggers data.
     +  0 [][][][] R11R12.
