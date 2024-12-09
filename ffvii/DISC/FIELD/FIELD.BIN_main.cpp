@@ -673,7 +673,7 @@ while( true )
     [800965e0] = h(hu[8009abf4 + 2a]);
 
     funca4430(); // init screen movement
-    funca496c(); // make screen movement
+    funca496c(); // update screen movement
 
     A0 = 8009abf4 + 8a;
     field_update_shaking();
@@ -682,7 +682,7 @@ while( true )
     field_update_shaking();
 
     A0 = ot;
-    funca4bec();
+    funca4bec(); // update draw env
 
     A0 = 80074ea4 + h[800965e0] * 84; // PC data
     A1 = w[800716c4] + 38; // sector 5 triggers + 38 (triggers itself)
@@ -1335,76 +1335,76 @@ T1 = V0 + 14;
 
 
 La3698:	; 800A3698
-V1 = h[T7];
-V0 = 7fff;
-800A36A0	bne    v1, v0, La36b0 [$800a36b0]
-V0 = 7ffe;
-800A36A8	j      La37d4 [$800a37d4]
-T7 = T7 + 0002;
+    V1 = h[T7];
+    V0 = 7fff;
+    800A36A0	bne    v1, v0, La36b0 [$800a36b0]
+    V0 = 7ffe;
+    800A36A8	j      La37d4 [$800a37d4]
+    T7 = T7 + 0002;
 
-La36b0:	; 800A36B0
-800A36B0	bne    v1, v0, La371c [$800a371c]
-800A36B4	nop
-V1 = h[T1 + fffe];
-800A36BC	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = V0 + T5;
-A0 = w[V0 + 0000];
-V1 = w[A3 + 3ffc];
-A0 = A0 & T2;
-V1 = V1 & T0;
-A0 = A0 | V1;
-[V0 + 0000] = w(A0);
-A0 = w[A3 + 3ffc];
-V1 = h[T1 + fffe];
-A0 = A0 & T2;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + T5;
-V0 = A3 + V0;
-V0 = V0 & T0;
-A0 = A0 | V0;
-800A3714	j      La37c8 [$800a37c8]
-[A3 + 3ffc] = w(A0);
+    La36b0:	; 800A36B0
+    800A36B0	bne    v1, v0, La371c [$800a371c]
+    800A36B4	nop
+    V1 = h[T1 + fffe];
+    800A36BC	nop
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + A3;
+    V0 = V0 + T5;
+    A0 = w[V0 + 0000];
+    V1 = w[A3 + 3ffc];
+    A0 = A0 & T2;
+    V1 = V1 & T0;
+    A0 = A0 | V1;
+    [V0 + 0000] = w(A0);
+    A0 = w[A3 + 3ffc];
+    V1 = h[T1 + fffe];
+    A0 = A0 & T2;
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + T5;
+    V0 = A3 + V0;
+    V0 = V0 & T0;
+    A0 = A0 | V0;
+    800A3714	j      La37c8 [$800a37c8]
+    [A3 + 3ffc] = w(A0);
 
-La371c:	; 800A371C
-800A371C	lui    a0, $8007
-A0 = h[A0 + 1a4a];
-800A3724	nop
-800A3728	addiu  v0, a0, $ff00 (=-$100)
-V0 = V0 < V1;
-800A3730	beq    v0, zero, La37c8 [$800a37c8]
-V0 = V1 < A0;
-800A3738	beq    v0, zero, La37c8 [$800a37c8]
-800A373C	nop
+    La371c:	; 800A371C
+    800A371C	lui    a0, $8007
+    A0 = h[A0 + 1a4a];
+    800A3724	nop
+    800A3728	addiu  v0, a0, $ff00 (=-$100)
+    V0 = V0 < V1;
+    800A3730	beq    v0, zero, La37c8 [$800a37c8]
+    V0 = V1 < A0;
+    800A3738	beq    v0, zero, La37c8 [$800a37c8]
+    800A373C	nop
 
-// 1st layer draft clip by x screen
-T3 = hu[T1 - 2];
-T4 = h[T1 + 0];
-if (T4 != 0)
-{
-    loopa3754:	; 800A3754
-        V1 = h[A3 + T3 * 10 + 4914 + 8]; // dest x
+    // 1st layer draft clip by x screen
+    T3 = hu[T1 - 2];
+    T4 = h[T1 + 0];
+    if( T4 != 0 )
+    {
+        loopa3754:	; 800A3754
+            V1 = h[A3 + T3 * 10 + 4914 + 8]; // dest x
 
-        if (((h[80071a48] - 150) < V1) && (V1 < h[80071a48]))
-        {
-            [A3 + 4914 + T3 * 10] = w((w[A3 + 4914 + T3 * 10] & ff000000) | (w[A3 + 3ffc] & 00ffffff));
-            [A3 + 3ffc] = w(((w[A3 + 3ffc]) & ff000000) | ((A3 + 4914 + T3 * 10) & 00ffffff));
-        }
+            if (((h[80071a48] - 150) < V1) && (V1 < h[80071a48]))
+            {
+                [A3 + 4914 + T3 * 10] = w((w[A3 + 4914 + T3 * 10] & ff000000) | (w[A3 + 3ffc] & 00ffffff));
+                [A3 + 3ffc] = w(((w[A3 + 3ffc]) & ff000000) | ((A3 + 4914 + T3 * 10) & 00ffffff));
+            }
 
-        T3 = T3 + 1;
-        T4 = T4 - 1;
-    800A37C0	bne    t4, zero, loopa3754 [$800a3754]
-}
+            T3 = T3 + 1;
+            T4 = T4 - 1;
+        800A37C0	bne    t4, zero, loopa3754 [$800a3754]
+    }
 
-La37c8:	; 800A37C8
-T1 = T1 + 0006;
+    La37c8:	; 800A37C8
+    T1 = T1 + 0006;
+    T7 = T7 + 0006;
 800A37CC	j      La3698 [$800a3698]
-T7 = T7 + 0006;
 
 La37d4:	; 800A37D4
 T0 = 00ffffff;
@@ -1420,8 +1420,7 @@ V0 = 7fff;
 T7 = T7 + 0002;
 
 La3800:	; 800A3800
-800A3800	lui    a0, $8007
-A0 = h[A0 + 1a4a];
+A0 = h[80071a4a];
 800A3808	nop
 800A380C	addiu  v0, a0, $ff00 (=-$100)
 V0 = V0 < V1;
@@ -1433,8 +1432,8 @@ V0 = h[T7 + 0004];
 T3 = h[T7 + 0002];
 800A382C	beq    v0, zero, La3964 [$800a3964]
 T4 = V0;
-800A3834	lui    t6, $0001
-T6 = T6 | 24dc;
+
+T6 = 000124dc;
 
 loopa383c:	; 800A383C
     T1 = T3;
@@ -1472,11 +1471,7 @@ loopa383c:	; 800A383C
         V0 = V0 & ff000000;
         V0 = V0 | A1;
         [A0 + 0000] = w(V0);
-        V0 = w[A2 + 0000];
-        V1 = V1 & 00ffffff;
-        V0 = V0 & ff000000;
-        V0 = V0 | V1;
-        [A2 + 0000] = w(V0);
+        [A2] = w((w[A2] & ff000000) | (V1 & 00ffffff));
     }
 
     T3 = T3 + 1;
@@ -1489,8 +1484,7 @@ La3964:	; 800A3964
 T7 = T7 + 0006;
 
 La396c:	; 800A396C
-800A396C	lui    a1, $00ff
-A1 = A1 | ffff;
+A1 = 00ffffff;
 800A3974	lui    v0, $800a
 800A3978	addiu  v0, v0, $aca4 (=-$535c)
 T1 = V0;
@@ -1734,14 +1728,12 @@ T5 = T5 + 0006;
 T7 = T7 + 0006;
 
 La3cd8:	; 800A3CD8
-800A3CD8	lui    a1, $00ff
-A1 = A1 | ffff;
+A1 = 00ffffff;
 800A3CE0	lui    v0, $800a
 800A3CE4	addiu  v0, v0, $aca2 (=-$535e)
 T2 = V0;
 
 T1 = 00ffffff;
-T8 = ff000000;
 
 V0 = A3 + 4254;
 S4 = V0 & T1;
@@ -1772,215 +1764,161 @@ V1 = V1 | V0;
 [A0 + 0000] = w(V1);
 
 La3d74:	; 800A3D74
-V1 = h[T7 + 0000];
-if( V1 == 7fff )
-{
+    if( h[T7] == 7fff )
+    {
+        depth = hu[T2];
+        [A3 + 4254] = w((w[A3 + 4254] & ff000000) | (w[A3 + depth * 4] & T1));
+        [A3 + depth * 4] = w((w[A3 + depth * 4] & ff000000) | S4);
+        return;
+    }
+
+    V0 = 7ffe;
+    800A3DD0	bne    v1, v0, La3e64 [$800a3e64]
+    800A3DD4	nop
+    V0 = h[T6 + fffe];
+    A2 = h[801144d0];
+    800A3DE4	nop
+    V0 = V0 + A2;
+    A0 = V0 << 01;
+    A0 = A0 + V0;
+    A0 = A0 << 02;
+    A0 = A0 + A3;
+    A0 = A0 + S1;
     V0 = hu[T2 + 0000];
-    V1 = w[A3 + 4254];
+    V1 = w[A0 + 0000];
     V0 = V0 << 02;
     V0 = V0 + A3;
     V0 = w[V0 + 0000];
-    V1 = V1 & T8;
+    V1 = V1 & ff000000;
     V0 = V0 & T1;
     V1 = V1 | V0;
-    [A3 + 4254] = w(V1);
-    V1 = hu[T2 + 0000];
-    V1 = A3 + V1 * 4;
-    [V1] = w((w[V1] & T8) | S4);
-    return;
-}
+    [A0 + 0000] = w(V1);
+    A1 = hu[T2 + 0000];
+    V1 = h[T6 + fffe];
+    A1 = A1 << 02;
+    A1 = A1 + A3;
+    V1 = V1 + A2;
+    V0 = V1 << 01;
+    V0 = V0 + V1;
+    V0 = V0 << 02;
+    V0 = V0 + S1;
+    V0 = A3 + V0;
+    A0 = w[A1 + 0000];
+    V0 = V0 & T1;
+    A0 = A0 & ff000000;
+    A0 = A0 | V0;
+    [A1 + 0000] = w(A0);
+    800A3E5C	j      La4068 [$800a4068]
 
-V0 = 7ffe;
-800A3DD0	bne    v1, v0, La3e64 [$800a3e64]
-800A3DD4	nop
-V0 = h[T6 + fffe];
-800A3DDC	lui    a2, $8011
-A2 = h[A2 + 44d0];
-800A3DE4	nop
-V0 = V0 + A2;
-A0 = V0 << 01;
-A0 = A0 + V0;
-A0 = A0 << 02;
-A0 = A0 + A3;
-A0 = A0 + S1;
-V0 = hu[T2 + 0000];
-V1 = w[A0 + 0000];
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-V1 = V1 & T8;
-V0 = V0 & T1;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-A1 = hu[T2 + 0000];
-V1 = h[T6 + fffe];
-A1 = A1 << 02;
-A1 = A1 + A3;
-V1 = V1 + A2;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + S1;
-V0 = A3 + V0;
-A0 = w[A1 + 0000];
-V0 = V0 & T1;
-A0 = A0 & T8;
-A0 = A0 | V0;
-800A3E5C	j      La4068 [$800a4068]
-[A1 + 0000] = w(A0);
+    La3e64:	; 800A3E64
+    V0 = h[T6 + 0000];
+    T3 = hu[T6 + fffe];
+    800A3E6C	beq    v0, zero, La4068 [$800a4068]
+    T4 = V0;
+    S0 = S3 >> 10;
+    T9 = e554;
 
-La3e64:	; 800A3E64
-V0 = h[T6 + 0000];
-T3 = hu[T6 + fffe];
-800A3E6C	beq    v0, zero, La4068 [$800a4068]
-T4 = V0;
-S0 = S3 >> 10;
-T9 = e554;
+    La3e7c:	; 800A3E7C
+    V0 = T3 << 10;
+    V0 = V0 >> 10;
+    V1 = V0 << 02;
+    V1 = V1 + V0;
+    V1 = V1 << 02;
+    A2 = A3 + V1;
+    A0 = h[0001e55c + A2];
+    V1 = h[S2 + 0000];
+    800A3EA4	nop
+    800A3EA8	addiu  v0, v1, $fea0 (=-$160)
+    V0 = V0 < A0;
+    800A3EB0	beq    v0, zero, La3ec4 [$800a3ec4]
+    A1 = A0;
+    V0 = A0 < V1;
+    800A3EBC	bne    v0, zero, La3efc [$800a3efc]
+    V0 = T3 << 10;
 
-La3e7c:	; 800A3E7C
-V0 = T3 << 10;
-V0 = V0 >> 10;
-V1 = V0 << 02;
-V1 = V1 + V0;
-V1 = V1 << 02;
-A2 = A3 + V1;
-A0 = h[0001e55c + A2];
-V1 = h[S2 + 0000];
-800A3EA4	nop
-800A3EA8	addiu  v0, v1, $fea0 (=-$160)
-V0 = V0 < A0;
-800A3EB0	beq    v0, zero, La3ec4 [$800a3ec4]
-A1 = A0;
-V0 = A0 < V1;
-800A3EBC	bne    v0, zero, La3efc [$800a3efc]
-V0 = T3 << 10;
+    La3ec4:	; 800A3EC4
+    800A3EC4	addiu  v0, v1, $ff60 (=-$a0)
+    V0 = A0 < V0;
+    800A3ECC	beq    v0, zero, La3ee0 [$800a3ee0]
+    800A3ED0	nop
+    V0 = hu[T5 + 001c];
+    800A3ED8	j      La3eec [$800a3eec]
+    V0 = A1 + V0;
 
-La3ec4:	; 800A3EC4
-800A3EC4	addiu  v0, v1, $ff60 (=-$a0)
-V0 = A0 < V0;
-800A3ECC	beq    v0, zero, La3ee0 [$800a3ee0]
-800A3ED0	nop
-V0 = hu[T5 + 001c];
-800A3ED8	j      La3eec [$800a3eec]
-V0 = A1 + V0;
+    La3ee0:	; 800A3EE0
+    V0 = hu[T5 + 001c];
+    800A3EE4	nop
+    V0 = A1 - V0;
 
-La3ee0:	; 800A3EE0
-V0 = hu[T5 + 001c];
-800A3EE4	nop
-V0 = A1 - V0;
+    La3eec:	; 800A3EEC
+    [0001e55c + A2] = h(V0);
+    V0 = T3 << 10;
 
-La3eec:	; 800A3EEC
-[0001e55c + A2] = h(V0);
-V0 = T3 << 10;
+    La3efc:	; 800A3EFC
+    V0 = V0 >> 10;
+    V1 = V0 << 02;
+    V1 = V1 + V0;
+    V1 = V1 << 02;
+    A2 = A3 + V1;
+    A0 = h[0001e55e + A2];
+    V1 = h[80071a52];
+    A1 = A0;
 
-La3efc:	; 800A3EFC
-V0 = V0 >> 10;
-V1 = V0 << 02;
-V1 = V1 + V0;
-V1 = V1 << 02;
-A2 = A3 + V1;
-800A3F10	lui    at, $0001
-AT = A2 + AT;
-A0 = h[AT + e55e];
-800A3F1C	lui    v1, $8007
-V1 = h[V1 + 1a52];
-800A3F24	nop
-800A3F28	addiu  v0, v1, $ff00 (=-$100)
-V0 = V0 < A0;
-800A3F30	beq    v0, zero, La3f44 [$800a3f44]
-A1 = A0;
-V0 = A0 < V1;
-800A3F3C	bne    v0, zero, La3f7c [$800a3f7c]
-V0 = T3 << 10;
+    if( ( ( V1 - 100 ) >= A0 ) || ( A0 < V1 ) )
+    {
+        if( A0 < ( V1 - 70 ) )
+        {
+            [0001e55e + A2] = h(A1 + hu[T5 + 1e]);
+        }
+        else
+        {
+            [0001e55e + A2] = h(A1 - hu[T5 + 1e]);
+        }
+    }
 
-La3f44:	; 800A3F44
-800A3F44	addiu  v0, v1, $ff90 (=-$70)
-V0 = A0 < V0;
-800A3F4C	beq    v0, zero, La3f60 [$800a3f60]
-800A3F50	nop
-V0 = hu[T5 + 001e];
-800A3F58	j      La3f6c [$800a3f6c]
-V0 = A1 + V0;
+    V0 = T3 << 10;
+    A2 = V0 >> 10;
+    V0 = A2 << 02;
+    V0 = V0 + A2;
+    T0 = V0 << 02;
+    A0 = A3 + T0;
+    A1 = h[S2 + 0000];
+    V1 = h[0001e55c + A0];
+    800A3FA0	addiu  v0, a1, $fea0 (=-$160)
 
-La3f60:	; 800A3F60
-V0 = hu[T5 + 001e];
-V0 = A1 - V0;
+    if( V0 < V1 )
+    {
+        if( V1 < A1 )
+        {
+            V0 = A2 + S0;
+            V0 = V0 << 01;
+            V1 = A3 + V0;
+            V0 = bu[00010d54 + V1];
+            V0 = V0 & 003f;
 
-La3f6c:	; 800A3F6C
-[0001e55e + A2] = h(V0);
-V0 = T3 << 10;
+            A0 = A0 + T9;
 
-La3f7c:	; 800A3F7C
-A2 = V0 >> 10;
-V0 = A2 << 02;
-V0 = V0 + A2;
-T0 = V0 << 02;
-A0 = A3 + T0;
-A1 = h[S2 + 0000];
-800A3F94	lui    at, $0001
-AT = A0 + AT;
-V1 = h[AT + e55c];
-800A3FA0	addiu  v0, a1, $fea0 (=-$160)
-V0 = V0 < V1;
-800A3FA8	beq    v0, zero, La4054 [$800a4054]
-V0 = V1 < A1;
-800A3FB0	beq    v0, zero, La4054 [$800a4054]
-V0 = A2 + S0;
-V0 = V0 << 01;
-V1 = A3 + V0;
-800A3FC0	lui    at, $0001
-AT = V1 + AT;
-V0 = bu[AT + 0d54];
-800A3FCC	nop
-V0 = V0 & 003f;
-800A3FD4	beq    v0, zero, La4008 [$800a4008]
-A0 = A0 + T9;
-800A3FDC	lui    at, $0001
-AT = V1 + AT;
-V1 = bu[AT + 0d55];
-800A3FE8	lui    at, $800a
-800A3FEC	addiu  at, at, $ace6 (=-$531a)
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800A3FF8	nop
-V0 = V0 & V1;
-800A4000	beq    v0, zero, La4058 [$800a4058]
-800A4004	addiu  v0, t4, $ffff (=-$1)
+            if( ( V0 == 0 ) || ( bu[8009ace6 + V0] & bu[00010d55 + V1] ) )
+            {
+                V0 = hu[T2];
+                [A0] = w((w[A0] & ff000000) | (w[A3 + V0 * 4] & T1));
+                V0 = A3 + T0 + T9;
+                A0 = hu[T2];
+                [A3 + A0 * 4] = w((w[A3 + A0 * 4] & ff000000) | (V0 & T1));
+            }
+        }
+    }
 
-La4008:	; 800A4008
-V0 = hu[T2 + 0000];
-V1 = w[A0 + 0000];
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-V1 = V1 & T8;
-V0 = V0 & T1;
-V1 = V1 | V0;
-V0 = T0 + T9;
-[A0 + 0000] = w(V1);
-A0 = hu[T2 + 0000];
-V0 = A3 + V0;
-A0 = A0 << 02;
-A0 = A0 + A3;
-V1 = w[A0 + 0000];
-V0 = V0 & T1;
-V1 = V1 & T8;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
+    V0 = T4 - 1;
+    T4 = V0;
+    V0 = V0 << 10;
+    800A4060	bne    v0, zero, La3e7c [$800a3e7c]
+    T3 = T3 + 0001;
 
-La4054:	; 800A4054
-800A4054	addiu  v0, t4, $ffff (=-$1)
-
-La4058:	; 800A4058
-T4 = V0;
-V0 = V0 << 10;
-800A4060	bne    v0, zero, La3e7c [$800a3e7c]
-T3 = T3 + 0001;
-
-La4068:	; 800A4068
-T6 = T6 + 0006;
+    La4068:	; 800A4068
+    T6 = T6 + 0006;
+    T7 = T7 + 0006;
 800A406C	j      La3d74 [$800a3d74]
-T7 = T7 + 0006;
 ////////////////////////////////
 
 
@@ -2087,7 +2025,7 @@ if( bu[S0 + 0] == 1 )
             A1 = h[S0 + 8]; // end
             A2 = h[S0 + a]; // steps
             A3 = h[S0 + c]; // cur step
-            calculate_smooth_current_value_by_steps;
+            calculate_smooth_current_value_by_steps();
 
             [S0 + 3] = b(V0);
             return;
@@ -2425,10 +2363,11 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// funca496c
-if (bu[8009abf4 + 1f] == 1)
+// funca496c()
+
+if( bu[8009abf4 + 1f] == 1 )
 {
-    switch (bu[8009abf4 + 1d])
+    switch( bu[8009abf4 + 1d] )
     {
         case 1:
         {
@@ -2505,10 +2444,10 @@ if (bu[8009abf4 + 1f] == 1)
             800A4AC4	lui    a3, $8007
             A3 = h[A3 + 5cf8];
             A1 = h[SP + 0012];
-            800A4AD0	lui    at, $8007
-            [AT + 1e38] = h(V0);
-            800A4AD8	jal    calculate_smooth_current_value_by_steps [$800a4134]
+            [80071e38] = h(V0);
             A1 = 0 - A1;
+            calculate_smooth_current_value_by_steps();
+
             [80071e3c] = h(V0);
 
             if (h[8009c558] == h[80075cf8])
@@ -2528,14 +2467,14 @@ if (bu[8009abf4 + 1f] == 1)
             A1 = h[80075e18];
             A2 = h[8009c558];
             A3 = h[80075cf8];
-            calculate_current_value_by_steps;
+            calculate_current_value_by_steps();
             [80071e38] = h(V0);
 
             A0 = h[80075e1c];
             A1 = h[80075e20];
             A2 = h[8009c558];
             A3 = h[80075cf8];
-            calculate_current_value_by_steps;
+            calculate_current_value_by_steps();
             [80071e3c] = h(V0);
 
             if (h[8009c558] == h[80075cf8])
@@ -2555,14 +2494,14 @@ if (bu[8009abf4 + 1f] == 1)
             A1 = h[80075e18];
             A2 = h[8009c558];
             A3 = h[80075cf8];
-            calculate_smooth_current_value_by_steps;
+            calculate_smooth_current_value_by_steps();
             [80071e38] = h(V0);
 
             A0 = h[80075e1c];
             A1 = h[80075e20];
             A2 = h[8009c558];
             A3 = h[80075cf8];
-            calculate_smooth_current_value_by_steps;
+            calculate_smooth_current_value_by_steps();
             [80071e3c] = h(V0);
 
             if (h[8009c558] == h[80075cf8])
@@ -3779,10 +3718,10 @@ if (w[8009abf4 + 78] & 0020) // if ok button pressed
             800A8590	bne    v0, zero, loopa8564 [$800a8564]
         }
 
-        if (A2 != h[800965e0])
+        if( A2 != h[800965e0] )
         {
             V0 = A3;
-            if (V0 != 40)
+            if( V0 != 40 )
             {
                 [80074efe + A2 * 84] = b(1);
             }
@@ -3794,15 +3733,17 @@ if (w[8009abf4 + 78] & 0020) // if ok button pressed
 
 
 ////////////////////////////////
-// get_direction_vector_x
-V0 = h[800DF120 + A0 * 4];
+// get_direction_vector_x()
+
+V0 = h[800df120 + A0 * 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// get_direction_vector_y
-V0 = [800DF122 + A0 * 4];
+// get_direction_vector_y()
+
+V0 = [800df122 + A0 * 4];
 ////////////////////////////////
 
 
@@ -4371,137 +4312,78 @@ else if (((actor_id != h[800965E0]) || (actor_id == h[800965E0] && bu[80071C0C] 
         V1 = V1 + T2;
         [1F800084] = w(V1);
 
-
-
         // check if we cross border of triangle
         A0 = current_triangle_address;
-        A1 = 1F800080;
-        A2 = 1F800090;
-        A3 = 1F800060;
-        walkmesh_border_cross;
+        A1 = 1f800080;
+        A2 = 1f800090;
+        A3 = 1f800060;
+        walkmesh_border_cross();
         first_border_cross = V0;
 
-
-
         A0 = actor_id;
-        A1 = 1F800080;
-        entity_collision_check;
+        A1 = 1f800080;
+        entity_collision_check();
         first_entity_collision = V0;
 
-
-
-        V1 = hu[actor_data + 72];
-        [current_triangle_address] = h(V1);
+        [current_triangle_address] = h(hu[actor_data + 72]);
     }
 
-
-
     {
-        A0 = bu[actor_data + 36];
-        A0 = A0 - 20;
-        A0 = A0 & FF;
-        get_direction_vector_x;
-        V1 = hu[actor_data + 6C];
-        HI/LO = V1 * V0;
-        V0 = LO;
-        [1F800090] = w(V0);
+        A0 = (bu[actor_data + 36] - 20) & ff;
+        get_direction_vector_x();
+        [1f800090] = w(hu[actor_data + 6c] * V0);
 
+        A0 = (bu[actor_data + 36] - 20) & ff;
+        get_direction_vector_y();
+        [1f800094] = w(bu[actor_data + 6c] * (0 - V0));
 
-
-        A0 = bu[actor_data + 36];
-        A0 = A0 - 20;
-        A0 = A0 & FF;
-        get_direction_vector_y;
-        V1 = bu[actor_data + 6C];
-        HI/LO = V1 * (0 - V0);
-        V0 = LO;
-        [1F800094] = w(V0);
-
-
-
-        T0 = w[1F800078];
-        [1F800088] = w(T0);
-
-        T1 = w[1F800090];
-        V0 = w[1F800070];
-        V0 = V0 + T1;
-        [1F800080] = w(V0);
-
-        T2 = w[1F800094];
-        V1 = w[1F800074];
-        V1 = V1 + T2;
-        [1F800084] = w(V1);
-
-
+        [1f800080] = w(w[1f800070] + w[1f800090]);
+        [1f800084] = w(w[1f800074] + w[1f800094]);
+        [1f800088] = w(w[1f800078]);
 
         A0 = current_triangle_address;
-        A1 = 1F800080;
-        A2 = 1F800090;
-        A3 = 1F800060;
-        walkmesh_border_cross;
+        A1 = 1f800080;
+        A2 = 1f800090;
+        A3 = 1f800060;
+        walkmesh_border_cross();
         second_border_cross = V0;
 
-
-
         A0 = actor_id;
-        A1 = 1F800080;
-        entity_collision_check;
+        A1 = 1f800080;
+        entity_collision_check();
         second_entity_collision = V0;
 
-
-        V1 = hu[actor_data + 72];
-        [current_triangle_address] = h(V1);
+        [current_triangle_address] = h(hu[actor_data + 72]);
     }
-
-
 
     {
         A0 = bu[actor_data + 36];
-        get_direction_vector_x;
-        V1 = hu[actor_data + 6C];
-        HI/LO = V1 * V0;
-        V0 = LO;
-        [1F800090] = w(V0);
+        get_direction_vector_x();
+        [1f800090] = w(hu[actor_data + 6c] * V0);
 
         A0 = bu[actor_data + 36];
-        get_direction_vector_y;
-        V1 = hu[actor_data + 6C];
-        V0 = 0 - V0;
-        HI/LO = V1 * V0;
-        V0 = LO;
-        [1F800094] = w(V0);
+        get_direction_vector_y();
+        [1f800094] = w(hu[actor_data + 6c] * (0 - V0));
 
-        T0 = w[1F800078];
-        [1F800088] = w(T0);
-
-        T1 = w[1F800090];
-        V0 = w[1F800070];
-        V0 = V0 + T1;
-        [1F800080] = w(V0);
-
-        T2 = w[1F800094];
-        V1 = w[1F800074];
-        V1 = V1 + T2;
-        [1F800084] = w(V1);
+        [1f800080] = w(w[1f800070] + w[1f800090]);
+        [1f800084] = w(w[1f800074] + w[1f800094]);
+        [1f800088] = w(w[1f800078]);
 
         A0 = current_triangle_address;
-        A1 = 1F800080;
-        A2 = 1F800090;
-        A3 = 1F800040;
-        walkmesh_border_cross;
+        A1 = 1f800080;
+        A2 = 1f800090;
+        A3 = 1f800040;
+        walkmesh_border_cross();
         third_border_cross = V0;
 
-
-
         A0 = actor_id;
-        A1 = 1F800080;
-        entity_collision_check;
-
-
+        A1 = 1f800080;
+        entity_collision_check();
 
         S4 = 0;
+
         // if we collide with entity
-        if (V0 != 0)
+        if( V0 != 0 )
         {
             // 0 and -8 => S4 = 8 else 0;
             V0 = third_border_cross < 1;
@@ -4515,21 +4397,21 @@ else if (((actor_id != h[800965E0]) || (actor_id == h[800965E0] && bu[80071C0C] 
         if( ( actor_id != h[800965e0] ) || ( bu[8009abf4 + 32] != 0 ) )
         {
             // if we collide only directly into triangle border
-            if (third_border_cross != 0 && first_border_cross == 0 && second_border_cross == 0)
+            if( ( third_border_cross != 0 ) && ( first_border_cross == 0 ) && ( second_border_cross == 0 ) )
             {
                 [actor_data + 36] = b(bu[actor_data + 36] - 5);
             }
             // or if we only collide into others entity directly
-            else if (S4 != 0 && first_entity_collision == 0 && second_entity_collision == 0)
+            else if( ( S4 != 0 ) && ( first_entity_collision == 0 ) && ( second_entity_collision == 0 ) )
             {
                 [actor_data + 36] = b(bu[actor_data + 36] - S4);
             }
 
             // if not both left and right check was fail
-            if (first_border_cross == 0 || second_border_cross == 0)
+            if( ( first_border_cross == 0 ) || ( second_border_cross == 0 ) )
             {
-                if ((first_border_cross == 0 && first_entity_collision != 0) ||
-                    (first_border_cross != 0 && second_border_cross == 0))
+                if( ( ( first_border_cross == 0 ) && ( first_entity_collision != 0 ) ) ||
+                    ( ( first_border_cross != 0 ) && ( second_border_cross == 0 ) ) )
                 {
                     V0 = bu[actor_data + 36];
                     V0 = V0 - 8;
@@ -4608,7 +4490,7 @@ if( actor_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
     move_trigger_check();
 }
 
-if (third_border_cross != 0 || first_border_cross != 0 || second_border_cross != 0 || S4 != 0 || first_entity_collision != 0 || second_entity_collision != 0 || last_border_cross != 0)
+if( ( third_border_cross != 0 ) || ( first_border_cross != 0 ) || ( second_border_cross != 0 ) || ( S4 != 0 ) || ( first_entity_collision != 0 ) || ( second_entity_collision != 0 ) || ( last_border_cross != 0 ) )
 {
     return 0;
 }
@@ -4909,36 +4791,35 @@ S1 = A1;
 new_pos = A2;
 
 // old position
-[1F800000] = w(w[entity_data + c] >> c);
-[1F800004] = w(w[entity_data + 10] >> c);
-[1F800008] = w(w[entity_data + 14] >> c);
+[1f800000] = w(w[entity_data + c] >> c);
+[1f800004] = w(w[entity_data + 10] >> c);
+[1f800008] = w(w[entity_data + 14] >> c);
 
 // new position x
-[1F800010] = w(w[new_pos + 0] >> c);
-[1F800014] = w(w[new_pos + 4] >> c);
-[1F800018] = w(w[new_pos + 8] >> c);
+[1f800010] = w(w[new_pos + 0] >> c);
+[1f800014] = w(w[new_pos + 4] >> c);
+[1f800018] = w(w[new_pos + 8] >> c);
 
-S2 = 0;
-loopaa3e8:	; 800AA3E8
+for( int i = 0; i < c; ++i )
+{
     V1 = hu[S0 + a];
     if( V1 != 7fff )
     {
-        A0 = S1 + S2 * 18;
-        A1 = S4 = 1F800000;
-        A2 = S6 = 1F800020;
+        A0 = S1 + i * 18;
+        A1 = 1f800000;
+        A2 = 1f800020;
         move_distance_to_line();
         V1 = V0;
 
         if( V1 != -1 )
         {
             V0 = hu[entity_data + 6c];
-            V0 = V0 * V0;
-            if( V1 < V0 )
+            if( V1 < ( V0 * V0 ) )
             {
-                x1 = h[S1 + S2 * 18 + 0];
-                y1 = h[S1 + S2 * 18 + 2];
-                x2 = h[S1 + S2 * 18 + 6];
-                y2 = h[S1 + S2 * 18 + 8];
+                x1 = h[S1 + i * 18 + 0];
+                y1 = h[S1 + i * 18 + 2];
+                x2 = h[S1 + i * 18 + 6];
+                y2 = h[S1 + i * 18 + 8];
                 old_x = w[1f800000];
                 old_y = w[1f800004];
                 new_x = w[1f800010];
@@ -4949,15 +4830,13 @@ loopaa3e8:	; 800AA3E8
 
                 if( ( A0 > 0 && T0 <= 0 ) || ( T0 > 0 && A0 <= 0 ) || ( A0 >= 0 && T0 < 0 ) || ( T0 >= 0 && A0 < 0 )
                 {
-                    A0 = S1 + S2 * 18;
+                    A0 = S1 + i * 18;
                     set_gateway_to_map_load();
                 }
             }
         }
     }
-    S2 = S2 + 1;
-    V0 = S2 < c;
-800AA4E0	bne    v0, zero, loopaa3e8 [$800aa3e8]
+}
 ////////////////////////////////
 
 
@@ -4971,7 +4850,10 @@ ret = 0;
 
 switch( state )
 {
-    case 0 2 4: // set bit
+    // set bit
+    case 0:
+    case 2:
+    case 4:
     {
         byte_id = bu[trigger_data + c];
         bit_id = bu[trigger_data + d];
@@ -4983,7 +4865,10 @@ switch( state )
     }
     break;
 
-    case 1 2 5: // unset bit
+    // unset bit
+    case 1:
+    case 3:
+    case 5:
     {
         byte_id = bu[trigger_data + c];
         bit_id = bu[trigger_data + d];
