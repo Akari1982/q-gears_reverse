@@ -25,7 +25,7 @@ else
 // load field dat
 V1 = h[8009a05c]; // field id to load
 A1 = w[800da5b8 + V1 * 18 + 0];
-A0 = w[800da5b8 + V1 * 18 + 4]; 
+A0 = w[800da5b8 + V1 * 18 + 4];
 A2 = 80114fe4;
 A3 = 0;
 system_cdrom_start_load_lzs();
