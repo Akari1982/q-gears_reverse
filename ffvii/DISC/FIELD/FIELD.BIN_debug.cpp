@@ -337,7 +337,7 @@ for( int i = 0; i < 18; ++i )
 ////////////////////////////////
 // field_debug_render()
 
-otag = A0;
+ot = A0;
 
 if( bu[8009d824] != 0 )
 {
@@ -362,8 +362,8 @@ if( bu[8009d824] != 0 )
 
 rb = h[800e1024];
 packet = 800e41e0 + rb * 1c;
-[packet] = w((packet & ff000000) | (w[otag] & 00ffffff));
-[otag] = w((w[otag] & ff000000) | (packet & 00ffffff));
+[packet] = w((packet & ff000000) | (w[ot] & 00ffffff));
+[ot] = w((w[ot] & ff000000) | (packet & 00ffffff));
 ////////////////////////////////
 
 

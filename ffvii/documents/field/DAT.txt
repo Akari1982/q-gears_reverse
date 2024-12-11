@@ -149,12 +149,24 @@ camera data (block 4)
 
 ////////////////////////////////
 triggers data (block 5)
-    + 38 [][][][] triggers data.
-    +158 [][][][] array of background triggers (0xc items, 0x10 size).
-        +c []       enter state.
-        +c []       byte id.
-        +d []       bit id.
-        +e []       default state (0,2,4-set bit, 1,3,5-unset bit).
+    +  38 [][][][] array of gateways (0xc items 0x18 size).
+        +  0 [][]     x1.
+        +  2 [][]     y1.
+        +  4 [][]     z1.
+        +  6 [][]     x2.
+        +  8 [][]     y2.
+        +  a [][]     z2.
+    + 158 [][][][] array of background triggers (0xc items, 0x10 size).
+        + c []       enter state.
+        + c []       byte id.
+        + d []       bit id.
+        + e []       default state (0,2,4-set bit, 1,3,5-unset bit).
+    + 218 array of show arrows for gateways (0xc items 0x1 size)
+    + 224 array of arrows (0xc items ox10 size)
+        + 0 [][]     x.
+        + 4 [][]     y.
+        + 8 [][]     z.
+        + c [][][][] some check.
 ////////////////////////////////
 
 

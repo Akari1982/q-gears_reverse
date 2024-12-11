@@ -133,7 +133,7 @@
                         0 - 
                         1 - enabled
                         2 - 
-    +280 (80062fc4) [][][][] OT for render.
+    +280 (80062fc4) [][][][] menu OT for render (store needed OT here for all menu render).
     +2b8 []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
     +2dc []       0 - we load battle, 1 - we load menu.
 

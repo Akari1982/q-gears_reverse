@@ -509,7 +509,7 @@
 800e48e0 [][][][] store akao offset here when start menu tutorial.
 
 800e48f0 []       store 0xff here during end of SPLIT.
-800e48f4 array for some data for arrow or triangle (maybe tex coords). (size 0x28)
+800e48f4 array of poly for pointer (0x2 items 0x28 size)
 800e4944 texts for windows to diaplay. (size 0x100)
 800e4d44 [][]     if 1 here we stop load background in advance.
 800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
@@ -538,9 +538,26 @@
 800e4de2 [][]     2nd image height.
 800e4de4 [][]     texpage settings for 2nd image.
 
-800e8df0 render otag.
+800e4df0 render struct array (0x2 items 0x1789c size).
+    +     0 scene OT (0x1000 items 0x4 size)
+    +  4000 array of poly for gateway arrows (0xc items 0x10 size)
+    +  40c0 array of poly for additional help arrows (0xc items 0x10 size)
+    +  4180 draw mode for arrows 4000 and 40c0.
+    +  418c OT for 4194 DR_ENV global (0x4 size)
+    +  4190 OT for 41d4 DR_ENV prim 1 (0x4 size)
+    +  4194 DR_ENV prim global (0x40 size)
+    +  41d4 DR_ENV prim 1 (0x40 size)
+    +  4214 DR_ENV prim 2 (0x40 size)
+    +  4254 DR_ENV prim 3 (0x40 size)
+    +  4294 DR_ENV prim 4 (0x40 size)
+    +  42d4 DR_ENV prim 5 (0x40 size)
+    +  4314 ???
+    +  4914 background prims (0x10 size)
+    + 17488 ???
+    + 1748c ui OT (0x1 item 0x4 size)
+    + 17490 draw mode for rain (0xc size)
+    + 1749c array of poly for rain (0x40 items 0x10 size)
 
-800e8f7c render order table for some 1 element. Inited when start of field.
 
 800fc68c some data related to model rendering packet. Depth sorted polygons addreses.
 

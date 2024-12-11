@@ -42,7 +42,7 @@ system_psyq_get_tpage();
 V1 = w[80062f24];
 [V1 + 16] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -116,7 +116,7 @@ system_psyq_get_tpage();
 V1 = w[80062f24];
 [V1 + 16] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -190,7 +190,7 @@ system_psyq_get_tpage();
 V1 = w[80062f24];
 [V1 + 16] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -215,7 +215,7 @@ V0 = w[80062f24];
 [V0 + 8] = h(S0);
 [V0 + a] = h(S1);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -244,7 +244,7 @@ V0 = w[80062f24];
 [V0 + c] = h(S3);
 [V0 + e] = h(S1);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -288,7 +288,7 @@ V0 = w[80062f24];
 [V0 + c] = h(S2);
 [V0 + e] = h(S3);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -349,7 +349,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         A1 = 1;
         A2 = V0 & ffff;
         A3 = SP + 10;
-        system_menu_create_and_add_texture_setting_packet();
+        system_add_draw_mode();
 
         V1 = w[80062f24];
         [V1 + 3] = b(4);
@@ -404,7 +404,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         message = message + 1;
 
-        A0 = w[80062fc4];
+        A0 = w[80062fc4]; // linked prim list
         A1 = w[80062f24];
         system_psyq_add_prim();
 
@@ -427,7 +427,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         A1 = 1;
         A2 = V0 & ffff;
         A3 = SP + 10;
-        system_menu_create_and_add_texture_setting_packet();
+        system_add_draw_mode();
 
         [GP + 2ac] = w(w[GP + 2ac] + 1);
         pos_x = pos_x + 10;
@@ -602,7 +602,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         V1 = w[80062f24];
         [V1 + e] = h(V0);
 
-        A0 = w[80062fc4];
+        A0 = w[80062fc4]; // linked prim list
         A1 = w[80062f24];
         system_psyq_add_prim();
 
@@ -638,7 +638,7 @@ A0 = 0;
 A1 = 01;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 return pos_y;
 ////////////////////////////////
@@ -735,7 +735,7 @@ V1 = w[80062f24];
 [V1 + c] = h(hu[rect + 4]);
 [V1 + e] = h(hu[rect + 6]);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 [80062f24] = w(A1 + 10);
 system_psyq_add_prim();
@@ -775,7 +775,7 @@ if( rect_w >= 9 )
     system_create_clut_for_packet();
     [packet + e] = h(V0);
 
-    A0 = w[80062fc4];
+    A0 = w[80062fc4]; // linked prim list
     A1 = packet;
     system_psyq_add_prim();
 
@@ -796,7 +796,7 @@ if( rect_w >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_menu_create_and_add_texture_setting_packet();
+    system_add_draw_mode();
 
     [packet + 3] = b(4);
     [packet + 7] = b(64);
@@ -817,7 +817,7 @@ if( rect_w >= 9 )
     system_create_clut_for_packet();
     [packet + e] = h(V0);
 
-    A0 = w[80062fc4];
+    A0 = w[80062fc4]; // linked prim list
     A1 = packet;
     system_psyq_add_prim();
 
@@ -838,7 +838,7 @@ if( rect_w >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_menu_create_and_add_texture_setting_packet();
+    system_add_draw_mode();
 }
 
 if( rect_h >= 9 )
@@ -862,7 +862,7 @@ if( rect_h >= 9 )
     system_create_clut_for_packet();
     [packet + e] = h(V0);
 
-    A0 = w[80062fc4];
+    A0 = w[80062fc4]; // linked prim list
     A1 = packet;
     system_psyq_add_prim();
 
@@ -883,7 +883,7 @@ if( rect_h >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_menu_create_and_add_texture_setting_packet();
+    system_add_draw_mode();
 
     [packet + 3] = b(4);
     [packet + 7] = b(64);
@@ -904,7 +904,7 @@ if( rect_h >= 9 )
     system_create_clut_for_packet();
     [packet + e] = h(V0);
 
-    A0 = w[80062fc4];
+    A0 = w[80062fc4]; // linked prim list
     A1 = packet;
     system_psyq_add_prim();
 
@@ -925,7 +925,7 @@ if( rect_h >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_menu_create_and_add_texture_setting_packet();
+    system_add_draw_mode();
 }
 
 [packet + 3] = b(4);
@@ -947,7 +947,7 @@ A1 = 1e0;
 system_create_clut_for_packet();
 [packet + e] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = packet;
 system_psyq_add_prim();
 
@@ -972,7 +972,7 @@ A1 = 1e0;
 system_create_clut_for_packet();
 [packet + e] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = packet;
 system_psyq_add_prim();
 
@@ -997,7 +997,7 @@ A1 = 1e0;
 system_create_clut_for_packet();
 [packet + e] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = packet;
 system_psyq_add_prim();
 
@@ -1022,7 +1022,7 @@ A1 = 1e0;
 system_create_clut_for_packet();
 [packet + e] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = packet;
 system_psyq_add_prim();
 
@@ -1043,7 +1043,7 @@ A0 = 0;
 A1 = 1;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
 {
@@ -1078,7 +1078,7 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
     [packet + 20] = h(rect_x + rect_w - 3);
     [packet + 22] = h(rect_y + rect_h - 3);
 
-    A0 = w[80062fc4];
+    A0 = w[80062fc4]; // linked prim list
     A1 = packet;
     system_psyq_add_prim();
 
@@ -1099,7 +1099,7 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_menu_create_and_add_texture_setting_packet();
+    system_add_draw_mode();
 }
 
 [80062f24] = w(packet);
@@ -1137,7 +1137,7 @@ A1 = 1e1;
 system_create_clut_for_packet();
 [packet + e] = h(V0);
 
-A0 = w[80062fc4]; // OT for render
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 [80062f24] = w(A1 + 14);
 system_psyq_add_prim();
@@ -1157,7 +1157,7 @@ A0 = 0; // drawing to display area is blocked
 A1 = 1; // dithering on
 A2 = V0 & ffff; // init value
 A3 = SP + 10; // window rect
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 ////////////////////////////////
 
 
@@ -1202,7 +1202,7 @@ system_create_clut_for_packet();
 V1 = w[80062f24];
 [V1 + e] = h(V0);
 
-A0 = w[80062fc4];
+A0 = w[80062fc4]; // linked prim list
 A1 = w[80062f24];
 [80062f24] = w(A1 + 14);
 system_psyq_add_prim();
@@ -1249,7 +1249,7 @@ for( int i = 0; i < 4; ++i )
     V1 = w[80062f24];
     [V1 + 000e] = h(V0);
 
-    A0 = w[80062fc4];
+    A0 = w[80062fc4]; // linked prim list
     A1 = w[80062f24];
     [80062f24] = w(A1 + 14);
     system_psyq_add_prim();
@@ -1277,7 +1277,7 @@ A0 = 0;
 A1 = 1;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 ////////////////////////////////
 
 
@@ -1328,7 +1328,7 @@ for( int i = 0 i < 8; +i )
 
     if( num >= ( 8 - i ) )
     {
-        A0 = w[80062fc4];
+        A0 = w[80062fc4]; // linked prim list
         A1 = w[80062f24];
         [80062f24] = w(A1 + 14);
         system_psyq_add_prim();
@@ -1354,7 +1354,7 @@ A0 = 0;
 A1 = 1;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 ////////////////////////////////
 
 
@@ -1369,8 +1369,8 @@ buffer_id = A3;
 
 [80062dfd] = b(1);
 [GP + 76] = h(hu[GP + 76] + 1);
-[GP + 280] = w(ot);
-[80062f24] = w(80077f64 + buffer_id * 3400);
+[80062fc4] = w(ot);
+[80062f24] = w(80077f64 + buffer_id * 3400); // set buffer for primitives
 
 for( int i = 0; i < number_to_render; ++i )
 {
@@ -1450,7 +1450,7 @@ for( int i = 0; i < number_to_render; ++i )
 
         A0 = ot;
         A1 = w[80062f24];
-        system_psyq_add_prim();
+        system_psyq_add_prim(); // add drawenv prim
 
         [80062f24] = w(w[80062f24] + 40);
 
@@ -1508,7 +1508,7 @@ for( int i = 0; i < number_to_render; ++i )
 
         A0 = ot;
         A1 = w[80062f24];
-        system_psyq_add_prim();
+        system_psyq_add_prim(); // add drawenv prim
 
         [GP + 84] = w(0);
         [80062f24] = w(w[80062f24] + 40);
@@ -2447,7 +2447,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 ////////////////////////////////
 
 
@@ -2693,7 +2693,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 ////////////////////////////////
 
 
@@ -3096,7 +3096,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 V0 = h[GP + 0168];
 80021640	nop
@@ -3269,7 +3269,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 A0 = 0008;
 A1 = 0018;
@@ -3492,7 +3492,7 @@ V0 = 0100;
 [SP + 001a] = h(0);
 [SP + 001c] = h(V0);
 [SP + 001e] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 A0 = S1 + 0008;
 A1 = S2 + 0006;
@@ -3554,7 +3554,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 80021CE0	jal    func21258 [$80021258]
 A0 = S3;
@@ -3622,7 +3622,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 A0 = 0008;
 A1 = 0025;
@@ -3866,7 +3866,7 @@ A0 = 0;
 A1 = 0001;
 A2 = V0 & ffff;
 A3 = SP + 0028;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 A0 = 0008;
 A1 = 0010;
@@ -4274,8 +4274,9 @@ V0 = 0080;
 [SP + 0010] = w(V0);
 V0 = 0020;
 [SP + 0014] = w(V0);
-800227FC	jal    func285ac [$800285ac]
 [SP + 0018] = w(V0);
+func285ac();
+
 A0 = 0118;
 A1 = S7 + 0018;
 A1 = A1 << 10;
@@ -4348,7 +4349,7 @@ T0 = 0100;
 [SP + 0028] = h(0);
 [SP + 002a] = h(0);
 [SP + 002e] = h(T0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 A0 = 0016;
 A1 = S4 + 0004;
@@ -4375,7 +4376,7 @@ T0 = 0100;
 [SP + 0028] = h(0);
 [SP + 002a] = h(0);
 [SP + 002e] = h(T0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 L22998:	; 80022998
 V0 = 0038;
@@ -4660,7 +4661,7 @@ A3 = SP + 0010;
 [SP + 0012] = h(0);
 [SP + 0014] = h(V0);
 [SP + 0016] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 V0 = 0005;
 [GP + 0094] = h(V0);
@@ -4867,7 +4868,8 @@ else if( A0 == 5 )
 
 
 ////////////////////////////////
-// func230c4
+// func230c4()
+
 S3 = A0;
 system_cdrom_read_chain();
 
@@ -5219,7 +5221,7 @@ V0 = 00ff;
 [SP + 001a] = h(0);
 [SP + 001c] = h(V0);
 [SP + 001e] = h(V0);
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 A1 = SP + 0018;
 V1 = w[GP + 0214];
@@ -5838,7 +5840,7 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 30;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 
 
 [SP + 28] = h(S3);
@@ -5887,7 +5889,7 @@ L245bc:	; 800245BC
         A4 = 80;
         A5 = 20;
         A6 = 20;
-        func285ac;
+        func285ac();
 
         V0 = bu[8009c6e4 + 0054 + S1 + f]; // limit progress bar
         if (V0 == ff)
@@ -5940,7 +5942,7 @@ L245bc:	; 800245BC
         A4 = T2;
         A5 = T1;
         A6 = T0;
-        func285ac;
+        func285ac();
 
         S0 = S3 + ca;
         A0 = S0; // x
@@ -5990,7 +5992,7 @@ L245bc:	; 800245BC
         A1 = 1;
         A2 = 3f;
         A3 = SP + 30;
-        system_menu_create_and_add_texture_setting_packet();
+        system_add_draw_mode();
 
         A0 = S3 + ba;
         A1 = y_pos + 11;
@@ -6175,7 +6177,7 @@ L24b90:	; 80024B90
     A1 = 14;
     system_psyq_clear_otag();
 
-    [GP + 280] = w(w[GP + 160]);
+    [80062fc4] = w(w[GP + 160]);
 
     if (w[80062fa0] != 0)
     {
@@ -8220,53 +8222,58 @@ else if( V1 & 0004 ) // L1
 
 
 ////////////////////////////////
-// func269c0
-800269C0	lui    at, $8006
-[AT + 2f24] = w(A0);
-800269C8	jr     ra 
-800269CC	nop
+// func269c0()
+
+[80062f24] = w(A0);
 ////////////////////////////////
-// func269d0
-800269D0	lui    v0, $8006
-V0 = w[80062f24];
-800269D8	nop
-[GP + 02c4] = w(V0);
-800269E0	jr     ra 
-800269E4	nop
+
+
+
 ////////////////////////////////
-// func269e8
-V0 = w[GP + 02c4];
-800269EC	nop
-800269F0	lui    at, $8006
-[AT + 2f24] = w(V0);
-800269F8	jr     ra 
-800269FC	nop
+// func269d0()
+
+[GP + 2c4] = w(w[80062f24]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func269e8()
+
+V0 = w[GP + 2c4];
+[80062f24] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func26a00
-80026A00
-[GP + 0280] = w(A0);
-80026A04	jr     ra 
-80026A08	nop
+
+[80062fc4] = w(A0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func26a0c
+
 V0 = w[GP + 0280];
-80026A10	nop
 [GP + 02c8] = w(V0);
-80026A18	jr     ra 
-80026A1C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func26a20
-V0 = w[GP + 02c8];
-80026A24	nop
-[GP + 0280] = w(V0);
-80026A2C	jr     ra 
-80026A30	nop
+
+V0 = w[GP + 2c8];
+[80062fc4] = w(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_menu_create_and_add_texture_setting_packet()
+// system_add_draw_mode()
 
 display_area = A0;
 dithering = A1
@@ -8280,7 +8287,7 @@ A3 = init_value;
 A4 = window_rect;
 system_psyq_set_draw_mode();
 
-A0 = w[GP + 280];
+A0 = w[80062fc4];
 A1 = w[80062f24];
 [80062f24] = w(A1 + c);
 system_psyq_add_prim();
@@ -8289,72 +8296,65 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// func26a94
-80026A94	addiu  sp, sp, $ff80 (=-$80)
+// func26a94()
+
 V0 = A0;
-[SP + 0078] = w(S0);
 S0 = A1;
-[SP + 007c] = w(RA);
 A1 = h[V0 + 0008];
 A2 = h[V0 + 000a];
 A3 = h[V0 + 0004];
 V0 = h[V0 + 0006];
 A0 = SP + 0018;
-80026ABC	jal    system_psyq_set_def_drawenv [$80043814]
 [SP + 0010] = w(V0);
-V0 = 0001;
-[SP + 002f] = b(V0);
+system_psyq_set_def_drawenv();
+
+[SP + 002f] = b(1);
 V0 = hu[SP + 0018];
 [SP + 0030] = b(0);
 V1 = hu[S0 + 0000];
-80026AD8	nop
 V0 = V0 + V1;
 [SP + 0018] = h(V0);
 V0 = hu[SP + 001a];
 V1 = hu[S0 + 0002];
-80026AEC	lui    a0, $8006
-A0 = w[A0 + 2f24];
+A0 = w[80062f24];
 V0 = V0 + V1;
 [SP + 001a] = h(V0);
 V0 = hu[S0 + 0004];
 A1 = SP + 0018;
 [SP + 001c] = h(V0);
 V1 = hu[S0 + 0006];
-V0 = 003f;
-[SP + 002c] = h(V0);
-80026B14	jal    system_psyq_set_drawenv [$80044ac0]
+[SP + 002c] = h(3f);
 [SP + 001e] = h(V1);
-A0 = w[GP + 0280];
-80026B20	lui    a1, $8006
-A1 = w[A1 + 2f24];
-80026B28	jal    system_psyq_add_prim [$80046794]
-80026B2C	nop
-80026B30	lui    v0, $8006
+system_psyq_set_drawenv();
+
+A0 = w[80062fc4];
+A1 = w[80062f24];
+system_psyq_add_prim();
+
 V0 = w[80062f24];
-80026B38	nop
 V0 = V0 + 0040;
-80026B40	lui    at, $8006
-[AT + 2f24] = w(V0);
-RA = w[SP + 007c];
-S0 = w[SP + 0078];
-SP = SP + 0080;
-80026B54	jr     ra 
-80026B58	nop
-////////////////////////////////
-// func26b5c
-80026B5C	jr     ra 
-80026B60	nop
-////////////////////////////////
-// func26b64
-[GP + 00b8] = b(A0);
-80026B68	jr     ra 
-80026B6C	nop
+[80062f24] = w(V0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_get_single_string_width
+// func26b5c()
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func26b64()
+
+[GP + b8] = b(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_single_string_width()
+
 A2 = 0;
 
 if( bu[GP + b8] <= 0 )
@@ -8550,7 +8550,7 @@ system_create_clut_for_packet();
 V1 = w[80062f24];
 [V1 + e] = h(V0);
 
-A0 = w[GP + 280];
+A0 = w[80062fc4];
 A1 = w[80062f24];
 system_psyq_add_prim();
 
@@ -8574,7 +8574,7 @@ if( bu[GP + b9] == 0 )
     A4 = SP + 18;
     system_psyq_set_draw_mode();
 
-    A0 = w[GP + 280];
+    A0 = w[80062fc4];
     A1 = w[80062f24];
     system_psyq_add_prim();
 
@@ -8641,7 +8641,7 @@ if( bu[GP + b9] != 0 )
     A4 = SP + 18;
     system_psyq_set_draw_mode();
 
-    A0 = w[GP + 280];
+    A0 = w[80062fc4];
     A1 = w[80062f24];
     system_psyq_add_prim();
 
@@ -8667,7 +8667,7 @@ if (character < 29) // dakuten characters
 
     A0 = packet;
     A1 = 1;
-    system_psyq_set_shade_tex;
+    system_psyq_set_shade_tex();
 
     [packet + 8] = h(pos_x);
     [packet + a] = h(pos_y - 8);
@@ -8677,15 +8677,15 @@ if (character < 29) // dakuten characters
     A0 = 100;
     A1 = S4 & ff;
     A1 = A1 + 1e0;
-    system_create_clut_for_packet; // clut
+    system_create_clut_for_packet();
 
     [packet + e] = h(V0);
 
     [80062f24] = w(packet + 10);
 
-    A0 = w[GP + 280];
+    A0 = w[80062fc4];
     A1 = packet;
-    system_psyq_add_prim;
+    system_psyq_add_prim();
 
     character = character + 40;
 }
@@ -8697,7 +8697,7 @@ else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // ha
 
     A0 = packet;
     A1 = 1;
-    system_psyq_set_shade_tex;
+    system_psyq_set_shade_tex();
 
     [packet + 8] = h(pos_x);
     [packet + a] = h(pos_y - 8);
@@ -8707,15 +8707,15 @@ else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // ha
     A0 = 100;
     A1 = S4 & ff;
     A1 = A1 + 1e0;
-    system_create_clut_for_packet; // clut
+    system_create_clut_for_packet();
 
     [packet + e] = h(V0);
 
     [80062f24] = w(packet + 10);
 
-    A0 = w[GP + 280];
+    A0 = w[80062fc4];
     A1 = packet;
-    system_psyq_add_prim;
+    system_psyq_add_prim();
 
     character = character + 17;
 }
@@ -8745,9 +8745,9 @@ system_create_clut_for_packet;
 
 [80062f24] = w(packet + 10);
 
-A0 = w[GP + 280];
+A0 = w[80062fc4];
 A1 = packet;
-system_psyq_add_prim;
+system_psyq_add_prim();
 ////////////////////////////////
 
 
@@ -8850,8 +8850,7 @@ A1 = w[80062f24];
 A0 = w[GP + 0280];
 V0 = A1 + 0024;
 [80062f24] = w(V0);
-80027644	jal    system_psyq_add_prim [$80046794]
-80027648	nop
+system_psyq_add_prim();
 
 A0 = h(S1 + c);
 if (A0 != 0)
@@ -9728,13 +9727,14 @@ A0 = 0;
 A1 = 0001;
 A2 = 001f;
 A3 = 0;
-system_menu_create_and_add_texture_setting_packet();
+system_add_draw_mode();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func285ac
+// func285ac()
+
 pos_x = A0;
 packet = w[80062f24];
 col_r = A4;
@@ -9745,11 +9745,11 @@ width = A2;
 height = A3;
 
 A0 = packet;
-system_psyq_set_poly_g4;
+system_psyq_set_poly_g4();
 
 A0 = packet;
 A1 = 1;
-system_psyq_set_semi_trans;
+system_psyq_set_semi_trans();
 
 [packet + 8] = h(pos_x);
 [packet + a] = h(pos_y);
@@ -9774,9 +9774,9 @@ system_psyq_set_semi_trans;
 
 [80062f24] = w(packet + 24);
 
-A0 = w[GP + 280];
+A0 = w[80062fc4];
 A1 = packet;
-system_psyq_add_prim;
+system_psyq_add_prim();
 
 A0 = w[80062f24];
 80028788	jal    system_psyq_set_poly_g4 [$80046910]
@@ -9806,10 +9806,10 @@ system_psyq_set_semi_trans;
 [packet + 1d] = b(0);
 [packet + 1e] = b(0);
 
-A0 = w[GP + 280];
+A0 = w[80062fc4];
 A1 = w[80062f24];
 [80062f24] = w(A1 + 24);
-system_psyq_add_prim;
+system_psyq_add_prim();
 ////////////////////////////////
 
 

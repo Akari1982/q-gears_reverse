@@ -980,7 +980,7 @@
 // func26a20
 80026A20-80026A30
 ////////////////////////////////
-// system_menu_create_and_add_texture_setting_packet
+// system_add_draw_mode
 80026A34-80026A90
 ////////////////////////////////
 // func26a94

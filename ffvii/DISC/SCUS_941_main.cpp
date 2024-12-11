@@ -288,6 +288,8 @@ A2 = 8;
 A3 = 140;
 A4 = e0;
 system_psyq_set_def_drawenv();
+[8007eaac + 0 * 5c + 16] = b(1); // dithering processing flag (on)
+[8007eaac + 0 * 5c + 18] = b(0); // not clear drawing area when drawing environment is set
 
 A0 = 8007eaac + 1 * 5c; // DRAWENV
 A1 = 0;
@@ -295,15 +297,11 @@ A2 = f0;
 A3 = 140;
 A4 = e0;
 system_psyq_set_def_drawenv();
-
-[8007eac2] = b(1);
-[8007eb1e] = b(1);
-[8007eac4] = b(0);
-[8007eb20] = b(0);
+[8007eaac + 1 * 5c + 16] = b(1);
+[8007eaac + 1 * 5c + 18] = b(0);
 
 A0 = 8007eb68;
 system_psyq_put_dispenv();
-
 
 A0 = 8007eaac;
 system_psyq_put_drawenv();

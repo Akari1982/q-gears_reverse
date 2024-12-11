@@ -136,10 +136,10 @@ system_cdrom_start_load_file(); // set data to load in background
 [SP + 1c] = w(w[800a0004]);
 
 {
-    ot1 = 800e8f7c + 0 * 1789c;
-    ot2 = 800e8f7c + 1 * 1789c;
-    drenv_prim1 = 800e8f84 + 0 * 1789c;
-    drenv_prim2 = 800e8f84 + 1 * 1789c;
+    ot1 = 800e4df0 + 0 * 1789c + 418c;
+    ot2 = 800e4df0 + 1 * 1789c + 418c;
+    drenv_prim1 = 800e4df0 + 0 * 1789c + 4194;
+    drenv_prim2 = 800e4df0 + 1 * 1789c + 4194;
 
     A0 = ot1;
     A1 = 1;
@@ -175,10 +175,10 @@ system_cdrom_start_load_file(); // set data to load in background
     drawenv9 = 80113f2c + 8 * 5c;
     drawenva = 80113f2c + 9 * 5c;
 
-    ot1 = 800e8f80 + 0 * 1789c;
-    ot2 = 800e8f80 + 1 * 1789c;
-    drenv_prim1 = 800e8fc4 + 0 * 1789c;
-    drenv_prim2 = 800e8fc4 + 1 * 1789c;
+    ot1 = 800e4df0 + 0 * 1789c + 4190;
+    ot2 = 800e4df0 + 1 * 1789c + 4190;
+    drenv_prim1 = 800e4df0 + 0 * 1789c + 41d4;
+    drenv_prim2 = 800e4df0 + 1 * 1789c + 41d4;
 
     A0 = drawenv1;
     A1 = 0; // x
@@ -343,9 +343,9 @@ while( true )
 
     if( h[800965ec] == 2 ) // battle
     {
-        V0 = bu[8007ebc8];
         [8007ebe0] = b(1);
-        if( V0 == 1 )
+
+        if( bu[8007ebc8] == 1 )
         {
             [8007ebc8] = b(0);
             [8009c6d8] = b(0);
@@ -430,13 +430,13 @@ while( true )
 
     [800716d0] = b(0); // random encounter related
 
-    A0 = 800e8df0;
-    A1 = 800e8f70;
-    funcabf0c();
+    A0 = 800e4df0 + 0 * 1789c + 4000; // arrows poly
+    A1 = 800e4df0 + 0 * 1789c + 4180; // draw mode
+    field_arrows_init();
 
-    A0 = 8010068c;
-    A1 = 8010080c;
-    funcabf0c();
+    A0 = 800e4df0 + 1 * 1789c + 4000; // arrows poly
+    A1 = 800e4df0 + 1 * 1789c + 4180; // draw mode
+    field_arrows_init();
 
     if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
     {
@@ -623,12 +623,12 @@ A2 = 8010d3e0;
 A3 = 8010eb68;
 field_background_init_packets(); // we read dat background data here
 
-ot = 800e4df0;
+render_data = 800e4df0;
 
-A0 = ot; // buffer 1
+A0 = render_data; // buffer 1
 field_rain_init();
 
-A0 = ot + 1789c; // buffer 2
+A0 = render_data + 1789c; // buffer 2
 field_rain_init();
 
 S3 = 1;
@@ -646,13 +646,13 @@ while( true )
     buf_id = h[80075dec];
     [8009abf4] = b(buf_id);
 
-    ot += buf_id * 1789c;
+    render_data += buf_id * 1789c;
 
-    A0 = ot;
+    A0 = render_data; // scene OT
     A1 = 1000;
     system_psyq_clear_otag_r();
 
-    A0 = ot + 1748c;
+    A0 = render_data + 1748c; // ui OT (top level)
     A1 = 1;
     system_psyq_clear_otag_r();
 
@@ -667,8 +667,8 @@ while( true )
     V1 = hu[V1 + 8];
     [8009abf4 + 88] = h(V1);
 
-    A0 = ot + 1748c;
-    funcba65c(); // script update here
+    A0 = render_data + 1748c; // ui OT (top level)
+    funcba65c(); // script update here (add dialogs and pointer to render)
 
     [800965e0] = h(hu[8009abf4 + 2a]);
 
@@ -681,11 +681,11 @@ while( true )
     A0 = 8009abf4 + 98;
     field_update_shaking();
 
-    A0 = ot;
-    funca4bec(); // update draw env
+    A0 = render_data; // scene OT
+    field_update_drawenv();
 
     A0 = 80074ea4 + h[800965e0] * 84; // PC data
-    A1 = w[800716c4] + 38; // sector 5 triggers + 38 (triggers itself)
+    A1 = w[800716c4] + 38; // gateways
     field_check_and_set_load_background_in_advance();
 
     if( ( w[8009abf4 + 68] & 0000090f ) == 0000090f ) // reset game if all shifts and start + select pressed
@@ -791,25 +791,25 @@ while( true )
 
     if ((hu[80114488] == 0) || (w[8009a060] == 1))
     {
-        A0 = ot;
+        A0 = render_data; // scene OT
         funca364c(); // update background drafts
     }
 
-    A0 = ot;
+    A0 = render_data; // scene OT
     funcaab24(); // update models (animations drafts and kawai)
 
     field_rain_update();
 
-    A0 = ot;
-    A1 = ot + 1749c; // rain packets
+    A0 = render_data; // scene OT
+    A1 = render_data + 1749c; // rain packets
     A2 = w[80071e40]; // matrix
-    A3 = ot + 17490; // draw_mode_packet
+    A3 = render_data + 17490; // draw_mode_packet
     field_rain_add_to_render();
 
-    A0 = ot;
+    A0 = render_data; // scene OT
     A1 = w[80071e40];
     A2 = w[800716c4] + 38;
-    funcabfe8();
+    field_arrows_add_to_render();
 
     func138ec();
 
@@ -926,13 +926,13 @@ while( true )
 
     if( bu[8009abf4 + 38] == 0 )
     {
-        A0 = ot + 4190;
+        A0 = render_data + 4190; // OT for 41d4 DR_ENV prim 1
         system_psyq_draw_otag();
 
-        A0 = ot + 3ffc;
+        A0 = render_data + 3ffc; // scene OT (rendered reversed)
         system_psyq_draw_otag();
 
-        A0 = ot + 418c;
+        A0 = render_data + 418c; // OT for 4194 DR_ENV global
         system_psyq_draw_otag();
 
         if( hu[8009abf4 + 4c] != 0 ) // fade type
@@ -942,7 +942,7 @@ while( true )
         }
     }
 
-    A0 = ot + 1748c;
+    A0 = render_data + 1748c; // menu OT (top level)
     system_psyq_draw_otag();
 }
 ////////////////////////////////
@@ -1312,7 +1312,7 @@ while( true )
 ////////////////////////////////
 // funca364c()
 
-A3 = A0;
+render_data = A0;
 T5 = 124dc;
 T0 = 00ffffff;
 T2 = ff000000;
@@ -1338,26 +1338,26 @@ La3698:	; 800A3698
     V0 = V1 << 01;
     V0 = V0 + V1;
     V0 = V0 << 02;
-    V0 = V0 + A3;
+    V0 = V0 + render_data;
     V0 = V0 + T5;
     A0 = w[V0 + 0000];
-    V1 = w[A3 + 3ffc];
+    V1 = w[render_data + 3ffc];
     A0 = A0 & T2;
     V1 = V1 & T0;
     A0 = A0 | V1;
     [V0 + 0000] = w(A0);
-    A0 = w[A3 + 3ffc];
+    A0 = w[render_data + 3ffc];
     V1 = h[T1 + fffe];
     A0 = A0 & T2;
     V0 = V1 << 01;
     V0 = V0 + V1;
     V0 = V0 << 02;
     V0 = V0 + T5;
-    V0 = A3 + V0;
+    V0 = render_data + V0;
     V0 = V0 & T0;
     A0 = A0 | V0;
     800A3714	j      La37c8 [$800a37c8]
-    [A3 + 3ffc] = w(A0);
+    [render_data + 3ffc] = w(A0);
 
     La371c:	; 800A371C
     800A371C	lui    a0, $8007
@@ -1376,12 +1376,12 @@ La3698:	; 800A3698
     if( T4 != 0 )
     {
         loopa3754:	; 800A3754
-            V1 = h[A3 + T3 * 10 + 4914 + 8]; // dest x
+            V1 = h[render_data + T3 * 10 + 4914 + 8]; // dest x
 
             if (((h[80071a48] - 150) < V1) && (V1 < h[80071a48]))
             {
-                [A3 + 4914 + T3 * 10] = w((w[A3 + 4914 + T3 * 10] & ff000000) | (w[A3 + 3ffc] & 00ffffff));
-                [A3 + 3ffc] = w(((w[A3 + 3ffc]) & ff000000) | ((A3 + 4914 + T3 * 10) & 00ffffff));
+                [render_data + 4914 + T3 * 10] = w((w[render_data + 4914 + T3 * 10] & ff000000) | (w[render_data + 3ffc] & 00ffffff));
+                [render_data + 3ffc] = w(((w[render_data + 3ffc]) & ff000000) | ((render_data + 4914 + T3 * 10) & 00ffffff));
             }
 
             T3 = T3 + 1;
@@ -1428,19 +1428,19 @@ loopa383c:	; 800A383C
     A1 = 
     V1 = h[A1 + 4914 + 8]; // dest x
 
-    if ((h[80071a48] - 150 < V1) && (V1 < h[80071a48]) && (((bu[A3 + T1 * 2 + 10d54] & 3f) == 0) || ((bu[8009ace6 + V0] & bu[A3 + T1 * 2 + 10d55]) != 0)))
+    if ((h[80071a48] - 150 < V1) && (V1 < h[80071a48]) && (((bu[render_data + T1 * 2 + 10d54] & 3f) == 0) || ((bu[8009ace6 + V0] & bu[render_data + T1 * 2 + 10d55]) != 0)))
     {
-        V1 = (bu[A3 + T1 * 10 + 4914 + 5] << 8) + (bu[A3 + T1 * 10 + 4914 + 4]);
+        V1 = (bu[render_data + T1 * 10 + 4914 + 5] << 8) + (bu[render_data + T1 * 10 + 4914 + 4]);
         A2 = V1 * 4;
-        A2 = A2 + A3;
-        V0 = w[A3 + T1 * 10 + 4914];
+        A2 = A2 + render_data;
+        V0 = w[render_data + T1 * 10 + 4914];
 
         V1 = w[A2];
         V1 = V1 & 00ffffff;
 
-        [A3 + T1 * 10 + 4914] = w((V0 & ff000000) | V1);
+        [render_data + T1 * 10 + 4914] = w((V0 & ff000000) | V1);
 
-        V0 = A3 + T1 * 10 + 4914;
+        V0 = render_data + T1 * 10 + 4914;
         A1 = w[A2];
         V0 = V0 & 00ffffff;
         A1 = (A1 & ff000000) | V0;
@@ -1449,13 +1449,13 @@ loopa383c:	; 800A383C
         V1 = V0 << 01;
         V1 = V1 + V0;
         V1 = V1 << 02;
-        A0 = V1 + A3;
+        A0 = V1 + render_data;
         A0 = A0 + T6;
         [A2 + 0000] = w(A1);
         A1 = A1 & 00ffffff;
         V1 = V1 + T6;
         V0 = w[A0 + 0000];
-        V1 = A3 + V1;
+        V1 = render_data + V1;
         V0 = V0 & ff000000;
         V0 = V0 | A1;
         [A0 + 0000] = w(V0);
@@ -1478,29 +1478,29 @@ A1 = 00ffffff;
 T1 = V0;
 T0 = 00ffffff;
 T6 = ff000000;
-V0 = A3 + 4214;
+V0 = render_data + 4214;
 S2 = V0 & T0;
 800A3994	lui    s0, $0001
 S0 = S0 | 24dc;
 T5 = T7 + 0004;
 800A39A0	lui    a2, $ff00
 V0 = hu[T1 + 0000];
-V1 = w[A3 + 4294];
+V1 = w[render_data + 4294];
 800A39AC	lui    t2, $8007
 T2 = w[T2 + 16c4];
 800A39B4	lui    s1, $8011
 S1 = h[S1 + 44c8];
 V0 = V0 << 02;
-V0 = V0 + A3;
+V0 = V0 + render_data;
 V0 = w[V0 + 0000];
 V1 = V1 & A2;
 V0 = V0 & A1;
 V1 = V1 | V0;
-[A3 + 4294] = w(V1);
+[render_data + 4294] = w(V1);
 A0 = hu[T1 + 0000];
-V0 = A3 + 4294;
+V0 = render_data + 4294;
 A0 = A0 << 02;
-A0 = A0 + A3;
+A0 = A0 + render_data;
 V1 = w[A0 + 0000];
 V0 = V0 & A1;
 V1 = V1 & A2;
@@ -1508,405 +1508,310 @@ V1 = V1 | V0;
 [A0 + 0000] = w(V1);
 
 La39fc:	; 800A39FC
-V1 = h[T7 + 0000];
-V0 = 7fff;
-800A3A04	bne    v1, v0, La3a58 [$800a3a58]
-V0 = 7ffe;
-V0 = hu[T1 + 0000];
-V1 = w[A3 + 4214];
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-V1 = V1 & T6;
-V0 = V0 & T0;
-V1 = V1 | V0;
-[A3 + 4214] = w(V1);
-V1 = hu[T1 + 0000];
-800A3A34	nop
-V1 = V1 << 02;
-V1 = V1 + A3;
-V0 = w[V1 + 0000];
-T7 = T7 + 0002;
-V0 = V0 & T6;
-V0 = V0 | S2;
-800A3A50	j      La3cd8 [$800a3cd8]
-[V1 + 0000] = w(V0);
-
-La3a58:	; 800A3A58
-800A3A58	bne    v1, v0, La3aec [$800a3aec]
-800A3A5C	nop
-V0 = h[T5 + fffe];
-800A3A64	lui    a2, $8011
-A2 = h[A2 + 44d0];
-800A3A6C	nop
-V0 = V0 + A2;
-A0 = V0 << 01;
-A0 = A0 + V0;
-A0 = A0 << 02;
-A0 = A0 + A3;
-A0 = A0 + S0;
-V0 = hu[T1 + 0000];
-V1 = w[A0 + 0000];
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-V1 = V1 & T6;
-V0 = V0 & T0;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-A1 = hu[T1 + 0000];
-V1 = h[T5 + fffe];
-A1 = A1 << 02;
-A1 = A1 + A3;
-V1 = V1 + A2;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-
-La3acc:	; 800A3ACC
-V0 = V0 + S0;
-V0 = A3 + V0;
-A0 = w[A1 + 0000];
-V0 = V0 & T0;
-A0 = A0 & T6;
-A0 = A0 | V0;
-800A3AE4	j      La3ccc [$800a3ccc]
-[A1 + 0000] = w(A0);
-
-La3aec:	; 800A3AEC
-V0 = h[T5 + 0000];
-T3 = hu[T5 + fffe];
-800A3AF4	beq    v0, zero, La3ccc [$800a3ccc]
-T4 = V0;
-T8 = e554;
-
-La3b00:	; 800A3B00
-V0 = T3 << 10;
-V0 = V0 >> 10;
-V1 = V0 << 02;
-V1 = V1 + V0;
-V1 = V1 << 02;
-A2 = A3 + V1;
-A0 = h[0001e55c + A2];
-V1 = h[80071a4c];
-800A3B2C	nop
-800A3B30	addiu  v0, v1, $fea0 (=-$160)
-V0 = V0 < A0;
-800A3B38	beq    v0, zero, La3b4c [$800a3b4c]
-A1 = A0;
-V0 = A0 < V1;
-800A3B44	bne    v0, zero, La3b84 [$800a3b84]
-V0 = T3 << 10;
-
-La3b4c:	; 800A3B4C
-800A3B4C	addiu  v0, v1, $ff60 (=-$a0)
-V0 = A0 < V0;
-800A3B54	beq    v0, zero, La3b68 [$800a3b68]
-800A3B58	nop
-V0 = hu[T2 + 0018];
-800A3B60	j      La3b74 [$800a3b74]
-V0 = A1 + V0;
-
-La3b68:	; 800A3B68
-V0 = hu[T2 + 0018];
-800A3B6C	nop
-V0 = A1 - V0;
-
-La3b74:	; 800A3B74
-[0001e55c + A2] = h(V0);
-V0 = T3 << 10;
-
-La3b84:	; 800A3B84
-V0 = V0 >> 10;
-V1 = V0 << 02;
-V1 = V1 + V0;
-V1 = V1 << 02;
-A2 = A3 + V1;
-800A3B98	lui    at, $0001
-AT = A2 + AT;
-A0 = h[AT + e55e];
-800A3BA4	lui    v1, $8007
-V1 = h[V1 + 1a4e];
-800A3BAC	nop
-800A3BB0	addiu  v0, v1, $ff00 (=-$100)
-V0 = V0 < A0;
-800A3BB8	beq    v0, zero, La3bcc [$800a3bcc]
-A1 = A0;
-V0 = A0 < V1;
-800A3BC4	bne    v0, zero, La3c04 [$800a3c04]
-V0 = T3 << 10;
-
-La3bcc:	; 800A3BCC
-800A3BCC	addiu  v0, v1, $ff90 (=-$70)
-V0 = A0 < V0;
-800A3BD4	beq    v0, zero, La3be8 [$800a3be8]
-800A3BD8	nop
-V0 = hu[T2 + 001a];
-800A3BE0	j      La3bf4 [$800a3bf4]
-V0 = A1 + V0;
-
-La3be8:	; 800A3BE8
-V0 = hu[T2 + 001a];
-800A3BEC	nop
-V0 = A1 - V0;
-
-La3bf4:	; 800A3BF4
-[0001e55e + A2] = h(V0);
-V0 = T3 << 10;
-
-La3c04:	; 800A3C04
-A1 = V0 >> 10;
-V0 = A1 + S1;
-V0 = V0 << 01;
-V1 = A3 + V0;
-800A3C14	lui    at, $0001
-AT = V1 + AT;
-V0 = bu[AT + 0d54];
-800A3C20	nop
-V0 = V0 & 003f;
-800A3C28	beq    v0, zero, La3c5c [$800a3c5c]
-A0 = A1 << 02;
-800A3C30	lui    at, $0001
-AT = V1 + AT;
-V1 = bu[AT + 0d55];
-800A3C3C	lui    at, $800a
-800A3C40	addiu  at, at, $ace6 (=-$531a)
-AT = AT + V0;
-V0 = bu[AT + 0000];
-800A3C4C	nop
-V0 = V0 & V1;
-800A3C54	beq    v0, zero, La3cbc [$800a3cbc]
-800A3C58	addiu  v0, t4, $ffff (=-$1)
-
-La3c5c:	; 800A3C5C
-A0 = A0 + A1;
-A0 = A0 << 02;
-A1 = A0 + A3;
-A1 = A1 + T8;
-A0 = A0 + T8;
-V0 = hu[T1 + 0000];
-V1 = w[A1 + 0000];
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-V1 = V1 & T6;
-V0 = V0 & T0;
-V1 = V1 | V0;
-[A1 + 0000] = w(V1);
-V1 = hu[T1 + 0000];
-A0 = A3 + A0;
-V1 = V1 << 02;
-V1 = V1 + A3;
-V0 = w[V1 + 0000];
-A0 = A0 & T0;
-V0 = V0 & T6;
-V0 = V0 | A0;
-[V1 + 0000] = w(V0);
-800A3CB8	addiu  v0, t4, $ffff (=-$1)
-
-La3cbc:	; 800A3CBC
-T4 = V0;
-V0 = V0 << 10;
-800A3CC4	bne    v0, zero, La3b00 [$800a3b00]
-T3 = T3 + 0001;
-
-La3ccc:	; 800A3CCC
-T5 = T5 + 0006;
-800A3CD0	j      La39fc [$800a39fc]
-T7 = T7 + 0006;
-
-La3cd8:	; 800A3CD8
-A1 = 00ffffff;
-800A3CE0	lui    v0, $800a
-800A3CE4	addiu  v0, v0, $aca2 (=-$535e)
-T2 = V0;
-
-T1 = 00ffffff;
-
-V0 = A3 + 4254;
-S4 = V0 & T1;
-S1 = 000124dc;
-S2 = 80071a50;
-T6 = T7 + 0004;
-A2 = ff000000;
-V0 = hu[T2 + 0000];
-V1 = w[A3 + 42d4];
-T5 = w[800716c4];
-V0 = V0 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-V1 = V1 & A2;
-V0 = V0 & A1;
-V1 = V1 | V0;
-[A3 + 42d4] = w(V1);
-A0 = hu[T2 + 0000];
-V0 = hu[801144c8];
-A0 = A0 << 02;
-A0 = A0 + A3;
-S3 = V0 << 10;
-V0 = A3 + 42d4;
-V1 = w[A0 + 0000];
-V0 = V0 & A1;
-V1 = V1 & A2;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-
-La3d74:	; 800A3D74
-    if( h[T7] == 7fff )
-    {
-        depth = hu[T2];
-        [A3 + 4254] = w((w[A3 + 4254] & ff000000) | (w[A3 + depth * 4] & T1));
-        [A3 + depth * 4] = w((w[A3 + depth * 4] & ff000000) | S4);
-        return;
-    }
-
+    V1 = h[T7 + 0000];
+    V0 = 7fff;
+    800A3A04	bne    v1, v0, La3a58 [$800a3a58]
     V0 = 7ffe;
-    800A3DD0	bne    v1, v0, La3e64 [$800a3e64]
-    800A3DD4	nop
-    V0 = h[T6 + fffe];
-    A2 = h[801144d0];
-    800A3DE4	nop
+    V0 = hu[T1 + 0000];
+    V1 = w[render_data + 4214];
+    V0 = V0 << 02;
+    V0 = V0 + render_data;
+    V0 = w[V0 + 0000];
+    V1 = V1 & T6;
+    V0 = V0 & T0;
+    V1 = V1 | V0;
+    [render_data + 4214] = w(V1);
+    V1 = hu[T1 + 0000];
+    800A3A34	nop
+    V1 = V1 << 02;
+    V1 = V1 + render_data;
+    V0 = w[V1 + 0000];
+    T7 = T7 + 0002;
+    V0 = V0 & T6;
+    V0 = V0 | S2;
+    [V1 + 0000] = w(V0);
+    800A3A50	j      La3cd8 [$800a3cd8]
+
+    La3a58:	; 800A3A58
+    800A3A58	bne    v1, v0, La3aec [$800a3aec]
+    800A3A5C	nop
+    V0 = h[T5 + fffe];
+    800A3A64	lui    a2, $8011
+    A2 = h[A2 + 44d0];
+    800A3A6C	nop
     V0 = V0 + A2;
     A0 = V0 << 01;
     A0 = A0 + V0;
     A0 = A0 << 02;
-    A0 = A0 + A3;
-    A0 = A0 + S1;
-    V0 = hu[T2 + 0000];
+    A0 = A0 + render_data;
+    A0 = A0 + S0;
+    V0 = hu[T1 + 0000];
     V1 = w[A0 + 0000];
     V0 = V0 << 02;
-    V0 = V0 + A3;
+    V0 = V0 + render_data;
     V0 = w[V0 + 0000];
-    V1 = V1 & ff000000;
-    V0 = V0 & T1;
+    V1 = V1 & T6;
+    V0 = V0 & T0;
     V1 = V1 | V0;
     [A0 + 0000] = w(V1);
-    A1 = hu[T2 + 0000];
-    V1 = h[T6 + fffe];
+    A1 = hu[T1 + 0000];
+    V1 = h[T5 + fffe];
     A1 = A1 << 02;
-    A1 = A1 + A3;
+    A1 = A1 + render_data;
     V1 = V1 + A2;
     V0 = V1 << 01;
     V0 = V0 + V1;
     V0 = V0 << 02;
-    V0 = V0 + S1;
-    V0 = A3 + V0;
+
+    La3acc:	; 800A3ACC
+    V0 = V0 + S0;
+    V0 = render_data + V0;
     A0 = w[A1 + 0000];
-    V0 = V0 & T1;
-    A0 = A0 & ff000000;
+    V0 = V0 & T0;
+    A0 = A0 & T6;
     A0 = A0 | V0;
+    800A3AE4	j      La3ccc [$800a3ccc]
     [A1 + 0000] = w(A0);
-    800A3E5C	j      La4068 [$800a4068]
 
-    La3e64:	; 800A3E64
-    V0 = h[T6 + 0000];
-    T3 = hu[T6 + fffe];
-    800A3E6C	beq    v0, zero, La4068 [$800a4068]
+    La3aec:	; 800A3AEC
+    V0 = h[T5 + 0000];
+    T3 = hu[T5 + fffe];
+    800A3AF4	beq    v0, zero, La3ccc [$800a3ccc]
     T4 = V0;
-    S0 = S3 >> 10;
-    T9 = e554;
+    T8 = e554;
 
-    La3e7c:	; 800A3E7C
+    La3b00:	; 800A3B00
     V0 = T3 << 10;
     V0 = V0 >> 10;
     V1 = V0 << 02;
     V1 = V1 + V0;
     V1 = V1 << 02;
-    A2 = A3 + V1;
+    A2 = render_data + V1;
     A0 = h[0001e55c + A2];
-    V1 = h[S2 + 0000];
-    800A3EA4	nop
-    800A3EA8	addiu  v0, v1, $fea0 (=-$160)
+    V1 = h[80071a4c];
+    800A3B2C	nop
+    800A3B30	addiu  v0, v1, $fea0 (=-$160)
     V0 = V0 < A0;
-    800A3EB0	beq    v0, zero, La3ec4 [$800a3ec4]
+    800A3B38	beq    v0, zero, La3b4c [$800a3b4c]
     A1 = A0;
     V0 = A0 < V1;
-    800A3EBC	bne    v0, zero, La3efc [$800a3efc]
+    800A3B44	bne    v0, zero, La3b84 [$800a3b84]
     V0 = T3 << 10;
 
-    La3ec4:	; 800A3EC4
-    800A3EC4	addiu  v0, v1, $ff60 (=-$a0)
+    La3b4c:	; 800A3B4C
+    800A3B4C	addiu  v0, v1, $ff60 (=-$a0)
     V0 = A0 < V0;
-    800A3ECC	beq    v0, zero, La3ee0 [$800a3ee0]
-    800A3ED0	nop
-    V0 = hu[T5 + 001c];
-    800A3ED8	j      La3eec [$800a3eec]
+    800A3B54	beq    v0, zero, La3b68 [$800a3b68]
+    800A3B58	nop
+    V0 = hu[T2 + 0018];
+    800A3B60	j      La3b74 [$800a3b74]
     V0 = A1 + V0;
 
-    La3ee0:	; 800A3EE0
-    V0 = hu[T5 + 001c];
-    800A3EE4	nop
+    La3b68:	; 800A3B68
+    V0 = hu[T2 + 0018];
+    800A3B6C	nop
     V0 = A1 - V0;
 
-    La3eec:	; 800A3EEC
+    La3b74:	; 800A3B74
     [0001e55c + A2] = h(V0);
     V0 = T3 << 10;
 
-    La3efc:	; 800A3EFC
+    La3b84:	; 800A3B84
     V0 = V0 >> 10;
     V1 = V0 << 02;
     V1 = V1 + V0;
     V1 = V1 << 02;
-    A2 = A3 + V1;
-    A0 = h[0001e55e + A2];
-    V1 = h[80071a52];
+    A2 = render_data + V1;
+    800A3B98	lui    at, $0001
+    AT = A2 + AT;
+    A0 = h[AT + e55e];
+    800A3BA4	lui    v1, $8007
+    V1 = h[V1 + 1a4e];
+    800A3BAC	nop
+    800A3BB0	addiu  v0, v1, $ff00 (=-$100)
+    V0 = V0 < A0;
+    800A3BB8	beq    v0, zero, La3bcc [$800a3bcc]
     A1 = A0;
-
-    if( ( ( V1 - 100 ) >= A0 ) || ( A0 < V1 ) )
-    {
-        if( A0 < ( V1 - 70 ) )
-        {
-            [0001e55e + A2] = h(A1 + hu[T5 + 1e]);
-        }
-        else
-        {
-            [0001e55e + A2] = h(A1 - hu[T5 + 1e]);
-        }
-    }
-
+    V0 = A0 < V1;
+    800A3BC4	bne    v0, zero, La3c04 [$800a3c04]
     V0 = T3 << 10;
-    A2 = V0 >> 10;
-    V0 = A2 << 02;
-    V0 = V0 + A2;
-    T0 = V0 << 02;
-    A0 = A3 + T0;
-    A1 = h[S2 + 0000];
-    V1 = h[0001e55c + A0];
-    800A3FA0	addiu  v0, a1, $fea0 (=-$160)
 
-    if( V0 < V1 )
-    {
-        if( V1 < A1 )
-        {
-            V0 = A2 + S0;
-            V0 = V0 << 01;
-            V1 = A3 + V0;
-            V0 = bu[00010d54 + V1];
-            V0 = V0 & 003f;
+    La3bcc:	; 800A3BCC
+    800A3BCC	addiu  v0, v1, $ff90 (=-$70)
+    V0 = A0 < V0;
+    800A3BD4	beq    v0, zero, La3be8 [$800a3be8]
+    800A3BD8	nop
+    V0 = hu[T2 + 001a];
+    800A3BE0	j      La3bf4 [$800a3bf4]
+    V0 = A1 + V0;
 
-            A0 = A0 + T9;
+    La3be8:	; 800A3BE8
+    V0 = hu[T2 + 001a];
+    800A3BEC	nop
+    V0 = A1 - V0;
 
-            if( ( V0 == 0 ) || ( bu[8009ace6 + V0] & bu[00010d55 + V1] ) )
-            {
-                V0 = hu[T2];
-                [A0] = w((w[A0] & ff000000) | (w[A3 + V0 * 4] & T1));
-                V0 = A3 + T0 + T9;
-                A0 = hu[T2];
-                [A3 + A0 * 4] = w((w[A3 + A0 * 4] & ff000000) | (V0 & T1));
-            }
-        }
-    }
+    La3bf4:	; 800A3BF4
+    [0001e55e + A2] = h(V0);
+    V0 = T3 << 10;
 
-    V0 = T4 - 1;
+    La3c04:	; 800A3C04
+    A1 = V0 >> 10;
+    V0 = A1 + S1;
+    V0 = V0 << 01;
+    V1 = render_data + V0;
+    V0 = bu[00010d54 + AT];
+    800A3C20	nop
+    V0 = V0 & 003f;
+    800A3C28	beq    v0, zero, La3c5c [$800a3c5c]
+    A0 = A1 << 02;
+    V1 = bu[00010d55 + AT];
+    V0 = bu[8009ace6 + V0];
+    V0 = V0 & V1;
+    800A3C54	beq    v0, zero, La3cbc [$800a3cbc]
+    800A3C58	addiu  v0, t4, $ffff (=-$1)
+
+    La3c5c:	; 800A3C5C
+    A0 = A0 + A1;
+    A0 = A0 << 02;
+    A1 = A0 + render_data;
+    A1 = A1 + T8;
+    A0 = A0 + T8;
+    V0 = hu[T1 + 0000];
+    V1 = w[A1 + 0000];
+    V0 = V0 << 02;
+    V0 = V0 + render_data;
+    V0 = w[V0 + 0000];
+    V1 = V1 & T6;
+    V0 = V0 & T0;
+    V1 = V1 | V0;
+    [A1 + 0000] = w(V1);
+    V1 = hu[T1 + 0000];
+    A0 = render_data + A0;
+    V1 = V1 << 02;
+    V1 = V1 + render_data;
+    V0 = w[V1 + 0000];
+    A0 = A0 & T0;
+    V0 = V0 & T6;
+    V0 = V0 | A0;
+    [V1 + 0000] = w(V0);
+    800A3CB8	addiu  v0, t4, $ffff (=-$1)
+
+    La3cbc:	; 800A3CBC
     T4 = V0;
     V0 = V0 << 10;
-    800A4060	bne    v0, zero, La3e7c [$800a3e7c]
+    800A3CC4	bne    v0, zero, La3b00 [$800a3b00]
     T3 = T3 + 0001;
 
-    La4068:	; 800A4068
-    T6 = T6 + 0006;
+    La3ccc:	; 800A3CCC
+    T5 = T5 + 0006;
     T7 = T7 + 0006;
-800A406C	j      La3d74 [$800a3d74]
+800A3CD0	j      La39fc [$800a39fc]
+
+La3cd8:	; 800A3CD8
+
+// add DR_ENV prim 5
+[render_data + 42d4] = w((w[render_data + 42d4] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+[render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 42d4) & 00ffffff));
+
+depth = hu[8009abf4 + ae]; // depth for background 3rd layer
+
+T5 = w[800716c4];
+
+while( true )
+{
+    if( h[T7] == 7fff )
+    {
+        // add DR_ENV prim 3
+        [render_data + 4254] = w((w[render_data + 4254] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4254) & 00ffffff));
+        break;
+    }
+    else if( V1 == 7ffe )
+    {
+        V0 = h[T7 + 2] + h[801144d0];
+        [render_data + 124dc + V0 * c] = w((w[render_data + 124dc + V0 * c] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 124dc + V0 * c) & 00ffffff));
+    }
+    else
+    {
+        T3 = h[T7 + 2];
+        if( h[T7 + 4] != 0 )
+        {
+            T4 = h[T7 + 4];
+            S0 = h[801144c8];
+
+            La3e7c:	; 800A3E7C
+                A2 = render_data + T3 * 14;
+                A0 = h[0001e55c + A2];
+                V1 = h[80071a50];
+                800A3EA8	addiu  v0, v1, $fea0 (=-$160)
+                V0 = V0 < A0;
+                800A3EB0	beq    v0, zero, La3ec4 [$800a3ec4]
+                A1 = A0;
+                V0 = A0 < V1;
+                800A3EBC	bne    v0, zero, La3efc [$800a3efc]
+
+                La3ec4:	; 800A3EC4
+                800A3EC4	addiu  v0, v1, $ff60 (=-$a0)
+                V0 = A0 < V0;
+                800A3ECC	beq    v0, zero, La3ee0 [$800a3ee0]
+                800A3ED0	nop
+                V0 = hu[T5 + 1c];
+                800A3ED8	j      La3eec [$800a3eec]
+                V0 = A1 + V0;
+
+                La3ee0:	; 800A3EE0
+                V0 = hu[T5 + 1c];
+                V0 = A1 - V0;
+
+                La3eec:	; 800A3EEC
+                [0001e55c + A2] = h(V0);
+
+                La3efc:	; 800A3EFC
+                A2 = render_data + T3 * 14;
+                A0 = h[0001e55e + A2];
+                V1 = h[80071a52];
+                A1 = A0;
+
+                if( ( ( V1 - 100 ) >= A0 ) || ( A0 < V1 ) )
+                {
+                    if( A0 < ( V1 - 70 ) )
+                    {
+                        [1e55e + A2] = h(A1 + hu[T5 + 1e]);
+                    }
+                    else
+                    {
+                        [1e55e + A2] = h(A1 - hu[T5 + 1e]);
+                    }
+                }
+
+                V1 = h[render_data + 1e55c + T3 * 14];
+
+                if( ( h[80071a50] - 160 ) < V1 )
+                {
+                    if( V1 < h[80071a50] )
+                    {
+                        V1 = T3 + S0;
+                        V0 = bu[render_data + 10d54 + V1 * 2];
+
+                        if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 10d55 + V1 * 2] ) )
+                        {
+                            [render_data + e554 + T3 * 14] = w((w[render_data + e554 + T3 * 14] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+                            [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + e554 + T3 * 14) & 00ffffff));
+                        }
+                    }
+                }
+
+                V0 = T4 - 1;
+                T4 = V0;
+                V0 = V0 << 10;
+                T3 = T3 + 1;
+            800A4060	bne    v0, zero, La3e7c [$800a3e7c]
+        }
+    }
+
+    T7 += 6;
+}
 ////////////////////////////////
 
 
@@ -2243,16 +2148,16 @@ La47ec:	; 800A47EC
 
 
 ////////////////////////////////
-// funca47f8
+// funca47f8()
+
 V0 = w[800716c4];
-800A4800	nop
 V0 = h[V0 + 0010];
 V1 = h[A0 + 0000];
 A1 = V0;
 800A4810	addiu  v0, v0, $ff60 (=-$a0)
 V0 = V0 < V1;
 800A4818	beq    v0, zero, La4828 [$800a4828]
-800A481C	addiu  sp, sp, $ffe0 (=-$20)
+
 800A4820	addiu  v0, a1, $ff60 (=-$a0)
 [A0 + 0000] = h(V0);
 
@@ -2293,9 +2198,6 @@ V0 = A1 + 0078;
 [A0 + 0002] = h(V0);
 
 La48ac:	; 800A48AC
-SP = SP + 0020;
-800A48B0	jr     ra 
-800A48B4	nop
 ////////////////////////////////
 
 
@@ -2363,7 +2265,7 @@ if( bu[8009abf4 + 1f] == 1 )
             800A49B8	jal    funca48b8 [$800a48b8]
 
             A0 = SP + 10;
-            800A49C0	jal    funca47f8 [$800a47f8]
+            funca47f8();
 
             [80071e38] = h(-hu[SP + 10]);
             [80071e3c] = h(-hu[SP + 12]);
@@ -2509,13 +2411,13 @@ if( bu[8009abf4 + 1f] == 1 )
 
 
 ////////////////////////////////
-// funca4bec()
+// field_update_drawenv()
 
-S2 = A0;
+current_rd = A0;
 
+render_data = 800e4df0;
 offset_to_triggers = w[800716c4];
 camera_data = w[80071e40];
-ot = 800e4df0;
 drawenv1 = 80113f2c + 0 * 5c;
 drawenv2 = 80113f2c + 1 * 5c;
 drawenv3 = 80113f2c + 2 * 5c;
@@ -2540,11 +2442,11 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 {
     if( bu[8009ac2d] != 1 )
     {
-        if( S2 == ot )
+        if( current_rd == render_data )
         {
             [drawenv1 + 8] = h(hu[8007eb90] - hu[camera_data + 20]);
             [drawenv1 + a] = h(hu[8007eb94] + hu[camera_data + 22]);
-            A0 = S2 + 41d4; // DR_ENV prim
+            A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
             A1 = drawenv1; // DRAWENV struct
             system_psyq_set_drawenv();
         }
@@ -2552,18 +2454,18 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
         {
             [drawenv2 + 8] = h(hu[8007eb90] - hu[camera_data + 20]);
             [drawenv2 + a] = h(hu[8007eb94] + hu[camera_data + 22] + e8);
-            A0 = 80100860;
+            A0 = render_data + 1 * 1789c + 41d4;
             A1 = drawenv2;
             system_psyq_set_drawenv();
         }
     }
     else
     {
-        if( S2 == ot )
+        if( current_rd == render_data )
         {
             [drawenv1 + 8] = h(hu[8007eb90] + hu[80071e38]);
             [drawenv1 + 8] = h(hu[8007eb94] + hu[80071e3c]);
-            A0 = S2 + 41d4;
+            A0 = render_data + 0 * 1789c + 41d4;
             A1 = drawenv1;
             system_psyq_set_drawenv();
         }
@@ -2571,10 +2473,9 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
         {
             [drawenv2 + 8] = h(hu[8007eb90] + hu[80071e38]);
             [drawenv2 + a] = h(hu[8007eb94] + hu[80071e3c] + e8);
-            A0 = 80100860;
+            A0 = render_data + 1 * 1789c + 41d4;
             A1 = drawenv2;
             system_psyq_set_drawenv();
-
         }
     }
 }
@@ -2652,68 +2553,68 @@ else
         [SP + 28] = h(S7);
         [SP + 30] = h(S6);
 
-        if( S2 == ot )
+        if( current_rd == render_data )
         {
             [drawenv1 + 8] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
             [drawenv1 + a] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a]);
-            A0 = ot + 41d4; // DR_ENV prim
+            A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
             A1 = drawenv1;
             system_psyq_set_drawenv();
 
-            [8011415c] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [8011415e] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
-            A0 = ot + 4294;
-            A1 = 8011415c - 8;
+            [drawenv3 + 8] = h(b[8009ac81] - hu[8007eb90] - S5);
+            [drawenv3 + a] = h(b[8009ac8f] + hu[8007eb94] - S4);
+            A0 = render_data + 0 * 1789c + 4214;
+            A1 = drawenv3;
             system_psyq_set_drawenv();
 
-            [80114214] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [80114216] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
-            A0 = ot + 42d4;
-            A1 = 80114214 - 8;
+            [drawenv5 + 8] = h(b[8009ac81] + hu[8007eb90] - S7);
+            [drawenv5 + a] = h(b[8009ac8f] + hu[8007eb94] - S6);
+            A0 = render_data + 0 * 1789c + 4254;
+            A1 = drawenv5;
             system_psyq_set_drawenv();
 
-            [80113fec] = h(b[8009ac81] - hu[8007eb90] - S5);
-            [80113fee] = h(b[8009ac8f] + hu[8007eb94] - S4);
-            A0 = ot + 4214;
-            A1 = 80113fec - 8;
+            [drawenv7 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenv7 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
+            A0 = render_data + 0 * 1789c + 4294;
+            A1 = drawenv7;
             system_psyq_set_drawenv();
 
-            [801140a4] = h(b[8009ac81] + hu[8007eb90] - S7);
-            [801140a6] = h(b[8009ac8f] + hu[8007eb94] - S6);
-            A0 = ot + 4254;
-            A1 = 801140a4 - 8;
+            [drawenv9 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenv9 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
+            A0 = render_data + 0 * 1789c + 42d4;
+            A1 = drawenv9;
             system_psyq_set_drawenv();
         }
         else
         {
-            [80113f90] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
-            [80113f92] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a] + e8);
-            A0 = 80100860;
-            A1 = 80113f90 - 8;
+            [drawenv2 + 8] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
+            [drawenv2 + a] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a] + e8);
+            A0 = render_data + 1 * 1789c + 41d4;
+            A1 = drawenv2;
             system_psyq_set_drawenv();
 
-            [801141b8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [801141ba] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
-            A0 = 80100860 + c0;
-            A1 = 801141b8 - 8;
+            [drawenv4 + 8] = h(b[8009ac81] + hu[8007eb90] - S5);
+            [drawenv4 + a] = h(b[8009ac8f] + hu[8007eb94] - S4 + e8);
+            A0 = render_data + 1 * 1789c + 4214;
+            A1 = drawenv4;
             system_psyq_set_drawenv();
 
-            [80114270] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [80114272] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
-            A0 = 80100860 + 100;
-            A1 = 80114270 - 8;
+            [drawenv6 + 8] = h(b[8009ac81] + hu[8007eb90] - S7);
+            [drawenv6 + a] = h(b[8009ac8f] + hu[8007eb94] - S6 + e8);
+            A0 = render_data + 1 * 1789c + 4254;
+            A1 = drawenv6;
             system_psyq_set_drawenv();
 
-            [80114048] = h(b[8009ac81] + hu[8007eb90] - S5);
-            [8011404a] = h(b[8009ac8f] + hu[8007eb94] - S4 + e8);
-            A0 = 80100860 + 40;
-            A1 = 80114048 - 8;
+            [drawenv8 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenv8 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
+            A0 = render_data + 1 * 1789c + 4294;
+            A1 = drawenv8;
             system_psyq_set_drawenv();
 
-            [80114100] = h(b[8009ac81] + hu[8007eb90] - S7);
-            [80114102] = h(b[8009ac8f] + hu[8007eb94] - S6 + e8);
-            A0 = 80100860 + 80;
-            A1 = 80114100 - 8;
+            [drawenva + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenva + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
+            A0 = render_data + 1 * 1789c + 42d4;
+            A1 = drawenva;
             system_psyq_set_drawenv();
         }
 
@@ -2733,38 +2634,38 @@ else
         S5 = ((h[offset_to_triggers + 24] >> 4) - ((h[80071e38] * h[offset_to_triggers + 2c]) >> 8)) / h[offset_to_triggers + 1c];
         S6 = ((h[offset_to_triggers + 26] >> 4) - ((h[80071e3c] * h[offset_to_triggers + 2e]) >> 8)) / h[offset_to_triggers + 1e];
 
-        if( S2 == ot ) // if 1st buffer
+        if( current_rd == render_data ) // if 1st buffer
         {
             ofsx = b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] + h[80071e38];
             ofsy = b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] + w[80071e3c];
 
             [drawenv1 + 8] = h(ofsx); // offset x
             [drawenv1 + a] = h(ofsy); // offset y
-            A0 = 800e8fc4; // DR_ENV prim
-            A1 = drawenv1 + 0 * 5c; // DRAWENV struct
+            A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
+            A1 = drawenv1;
             system_psyq_set_drawenv();
 
             [drawenv3 + 8] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S3);
             [drawenv3 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S4);
-            A0 = 800e9004;
+            A0 = render_data + 0 * 1789c + 4214;
             A1 = drawenv3;
             system_psyq_set_drawenv();
 
             [drawenv5 + 8] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S5);
             [drawenv5 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S6);
-            A0 = 800e9044;
+            A0 = render_data + 0 * 1789c + 4254;
             A1 = drawenv5;
             system_psyq_set_drawenv();
 
             [drawenv7 + 8] = h(ofsx);
             [drawenv7 + a] = h(ofsy);
-            A0 = 800e9084;
+            A0 = render_data + 0 * 1789c + 4294;
             A1 = drawenv7;
             system_psyq_set_drawenv();
 
             [drawenv9 + 8] = h(ofsx);
             [drawenv9 + a] = h(ofsy);
-            A0 = 800e90c4;
+            A0 = render_data + 0 * 1789c + 42d4;
             A1 = drawenv9;
             system_psyq_set_drawenv();
         }
@@ -2775,32 +2676,32 @@ else
 
             [drawenv2 + 8] = h(ofsx);
             [drawenv2 + a] = h(ofsy + e8);
-            A0 = 80100830;
+            A0 = render_data + 1 * 1789c + 41d4;
             A1 = drawenv2;
-            system_psyq_set_drawenv();
-
-            [drawenv8 + 8] = h(ofsx);
-            [drawenv8 + a] = h(ofsy + e8);
-            A0 = 80100830 + c0;
-            A1 = drawenv8;
-            system_psyq_set_drawenv();
-
-            [drawenva + 8] = h(ofsx);
-            [drawenva + a] = h(ofsy + e8);
-            A0 = 80100830 + 100;
-            A1 = drawenva;
             system_psyq_set_drawenv();
 
             [drawenv4 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S3);
             [drawenv4 + a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S4 + e8);
-            A0 = 80100830 + 40;
+            A0 = render_data + 1 * 1789c + 4214;
             A1 = drawenv4;
             system_psyq_set_drawenv();
 
             [drawenv6 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S5);
             [drawenv6 + a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S6 + e8);
-            A0 = 80100830 + 80;
+            A0 = render_data + 1 * 1789c + 4254;
             A1 = drawenv6;
+            system_psyq_set_drawenv();
+
+            [drawenv8 + 8] = h(ofsx);
+            [drawenv8 + a] = h(ofsy + e8);
+            A0 = render_data + 1 * 1789c + 4294;
+            A1 = drawenv8;
+            system_psyq_set_drawenv();
+
+            [drawenva + 8] = h(ofsx);
+            [drawenva + a] = h(ofsy + e8);
+            A0 = render_data + 1 * 1789c + 42d4;
+            A1 = drawenva;
             system_psyq_set_drawenv();
         }
 

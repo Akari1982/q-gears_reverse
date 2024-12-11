@@ -12835,7 +12835,7 @@ if (A0 == 0)
 
     A0 = 2;
     A1 = 3;
-    read_memory_block_one_byte;
+    read_memory_block_one_byte();
 
     [struct + 2] = h(V0);
 

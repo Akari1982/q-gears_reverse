@@ -54,7 +54,7 @@
 // funca496c
 800A496C-800A4BE8
 ////////////////////////////////
-// funca4bec
+// field_update_drawenv
 800A4BEC-800A5FB0
 ////////////////////////////////
 // funca5fb4
@@ -174,10 +174,10 @@
 // funcaba70
 800ABA70-800ABF08
 ////////////////////////////////
-// funcabf0c
+// field_arrows_init
 800ABF0C-800ABFE4
 ////////////////////////////////
-// funcabfe8
+// field_arrows_add_to_render
 800ABFE8-800AC358
 ////////////////////////////////
 // field_model_load_local_lodel_and_init_all

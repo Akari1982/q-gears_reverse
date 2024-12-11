@@ -40,7 +40,7 @@ system_psyq_set_draw_mode();
 ////////////////////////////////
 // field_rain_add_to_render()
 
-otag = A0;
+ot = A0;
 rain_packets = A1;
 matrix = A2;
 draw_mode_packet = A3;
@@ -69,7 +69,8 @@ for( int i = 0; i < 40; ++i )
         A3 = SP + 14;
         system_psyq_rot_trans_pers();
 
-        A0 = otag;
+        // add to top of all scene
+        A0 = ot;
         A1 = rain_packets + i * 10;
         system_psyq_add_prim();
     }
@@ -77,8 +78,8 @@ for( int i = 0; i < 40; ++i )
 
 system_psyq_pop_matrix();
 
-[draw_mode_packet] = w((w[draw_mode_packet] & ff000000) | (w[otag] & 00ffffff));
-[otag] = w((w[otag] & ff000000) | (draw_mode_packet & 00ffffff));
+[draw_mode_packet] = w((w[draw_mode_packet] & ff000000) | (w[ot] & 00ffffff));
+[ot] = w((w[ot] & ff000000) | (draw_mode_packet & 00ffffff));
 ////////////////////////////////
 
 
