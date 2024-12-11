@@ -552,7 +552,10 @@
     +  4294 DR_ENV prim 4 (0x40 size)
     +  42d4 DR_ENV prim 5 (0x40 size)
     +  4314 ???
-    +  4914 background prims (0x10 size)
+    +  4914 background prims fpr 1st and 2nd layer (0x10 size)
+    +  e554 background prims fpr 3rd and 4th layer (0x14 size)
+    + 10d54 animation packets data.
+    + 124dc draw mode for backgrounds prims (0xc size).
     + 17488 ???
     + 1748c ui OT (0x1 item 0x4 size)
     + 17490 draw mode for rain (0xc size)
