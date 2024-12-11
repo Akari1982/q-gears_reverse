@@ -1,1 +1,1 @@
-adisasm PSX_CD.EXE PSX_CD.asm -v -b 8000F800 8000F800 -u -a
+adisasm FIELD.BIN FIELD.BIN.asm -v -b 8000F800 800115F8 -u -a

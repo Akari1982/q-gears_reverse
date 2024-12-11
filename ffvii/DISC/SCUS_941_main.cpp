@@ -557,7 +557,7 @@ while( true )
         system_cdrom_load_by_sector()
 
         A0 = bu[8009d588];
-        80011DFC	jal    funca0000 [$800a0000]
+        funca0000();
 
         if( V0 == 1 )
         {
