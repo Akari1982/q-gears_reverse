@@ -814,7 +814,7 @@ while( true )
     func138ec();
 
     A0 = 1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_wait_frames();
     [80114478] = w(V0);
 
     do
@@ -824,16 +824,19 @@ while( true )
     } while( V0 != 0 )
 
     A0 = 1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_wait_frames();
     [8011447c] = w(V0);
 
-    A0 = 2;
     if( ( hu[80114488] != 0 ) && ( w[800965e4] != 1 ) )
     {
         A0 = 3;
+        system_psyq_wait_frames();
     }
-
-    system_psyq_wait_frames(); // wait
+    else
+    {
+        A0 = 2;
+        system_psyq_wait_frames();
+    }
 
     if( ( S3 << 10 ) != 0 )
     {
