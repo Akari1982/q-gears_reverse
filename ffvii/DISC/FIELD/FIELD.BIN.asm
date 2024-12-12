@@ -317,7 +317,7 @@
 // funcbb1b4
 800BB1B4-800BB3A4
 ////////////////////////////////
-// opcode_cycle
+// field_event_opcode_cycle
 800BB3A8-800BBBC8
 ////////////////////////////////
 // field_script_update_animation_state

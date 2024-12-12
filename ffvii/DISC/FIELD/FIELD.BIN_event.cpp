@@ -23,21 +23,21 @@ if( h[field_struct + 6a] & 0100 ) // if select key
 {
     if( bu[events_data + 0] < 2 )
     {
-        A0 = 4b; // "K"
+        A0 = 4b; // "K" (old Event data!)
         A1 = a;
         system_bios_system_error_boot_or_disk_failure();
     }
 
     if( bu[events_data + 1] < 5 )
     {
-        A0 = 4b; // "K"
+        A0 = 4b; // "K" (old Event version!)
         A1 = b;
         system_bios_system_error_boot_or_disk_failure();
     }
 
     if( ( bu[events_data + 0] >= 3 ) || ( bu[events_data + 1] >= 6 ) )
     {
-        A0 = 4b; // "K"
+        A0 = 4b; // "K" (old Event program!)
         A1 = c;
         system_bios_system_error_boot_or_disk_failure();
     }
@@ -106,9 +106,9 @@ if( bu[8007ebe0] != 0 )
     }
 }
 
-if( bu[80099ffc] != 4 || bu[80099ffc] != 5 || bu[80070788] != 0 )
+if( ( bu[80099ffc] != 4 ) && ( ( bu[80099ffc] != 5 ) || ( bu[80070788] != 0 ) ) )
 {
-    opcode_cycle();
+    field_event_opcode_cycle();
 }
 
 if( bu[80071e2c] ) // if at least 1 window is opened
@@ -117,7 +117,7 @@ if( bu[80071e2c] ) // if at least 1 window is opened
     A1 = 4; // render max 4 dialogs
     A2 = ot;
     field_struct = w[8009c6e0];
-    A3 = bu[field_struct + 0] XOR 1;
+    A3 = bu[field_struct + 0] ^ 1;
     system_menu_add_dialog_to_render();
 }
 
@@ -316,11 +316,10 @@ for( int i = 0; i < 8; ++i )
 // field_event_run_init()
 
 events_data = w[8009c6dc];
-
-[8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
-
 actors_n = bu[events_data + 2];
 akao_n = h[events_data + 6];
+
+[8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
 
 string = 800e4254;
 
@@ -349,7 +348,7 @@ for( int i = 0; i < actors_n; ++i )
         if( bu[80071e24] & 2 )
         {
             A0 = string;
-            funcd4840(); // empty. Was used for debug
+            funcd4840(); // empty
         }
     }
 
@@ -432,7 +431,7 @@ for( int i = 0; i < models_n; ++i )
 
 
 ////////////////////////////////
-// opcode_cycle()
+// field_event_opcode_cycle()
 
 V0 = w[8009d264];
 A1 = 91a2b3c5;

@@ -1,0 +1,9 @@
+80053624 []       current actor id.
+
+800536cc current pointer to field events data.
+
+80120000 load MIM file to this address
+
+801a4000 load MAP file to this address.
+
+801b0000 load ATE file to this address.

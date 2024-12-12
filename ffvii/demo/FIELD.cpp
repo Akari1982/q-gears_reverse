@@ -80,48 +80,50 @@ A0 = A0 | V1;
 [S2 + 0000] = w(A2);
 [S1 + 0000] = w(A1);
 [S3 + 0000] = w(A0);
-800A04E0	jal    funca17c0 [$800a17c0]
 
-V0 = hu[8006a850];
-V1 = 0002;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-800A04FC	beq    v0, v1, La050c [$800a050c]
-800A0500	nop
-800A0504	jal    funca09bc [$800a09bc]
-800A0508	nop
+funca17c0();
 
-La050c:	; 800A050C
+if( h[8006a850] != 2 )
+{
+    funca09bc();
+}
+
 [8006a920] = h(0);
-S0 = 0002;
-S1 = 0001;
-800A051C	lui    s2, $800c
-800A0520	addiu  s2, s2, $9430 (=-$6bd0)
-S5 = S2 + 0004;
-S4 = S2 + 0008;
-S3 = S2 + 000c;
 
-La0530:	; 800A0530
+do
+{
     funca09cc();
 
-    if( h[8006a850] != S0 )
+    if( h[8006a850] != 2 )
     {
         [8008bdc4] = h(0);
         [80065d9c] = h(0);
         [80065da0] = h(0);
     }
 
-    if( h[8006a850] == S1 )
+    if( h[8006a850] == 1 )
     {
         [8006a920] = h(3);
         [80065da8] = h(0);
         [8006a720] = h(0);
-        [8006aef0] = h(S1);
+        [8006aef0] = h(1);
     }
 
+    // 800b9430   MIM                  ATE                  MAP                  CA                   ID                   BSC
+    // MD1STIN    000008E9 0002ED92    00000947 000014C0    0000094A 00001BAC    0000094E 0000002D    0000094F 0000023C    00000950 000114CE
+    // MD1_1      00000973 0003F3FF    000009F2 00000922    000009F4 00002043    000009F9 0000002D    000009FA 000005F0    000009FB 0000CE12
+    // MD1_2      00000A15 00038AC7    00000A87 0000084D    00000A89 0000200F    00000A8E 0000002D    00000A8F 000005EE    00000A90 0000AE86
+    // NRTHMK     00000AA6 0003358A    00000B0D 000010B8    00000B10 00001EA1    00000B14 0000002B    00000B15 000000D3    00000B16 0000B369
+    // NMKIN_1    00000B2D 00034C16    00000B97 00001875    00000B9B 00001ADA    00000B9F 0000002B    00000BA0 0000064F    00000BA1 000151CA
+    // ELEVTR     00000BCC 0000D9C1    00000BE8 000009AA    00000BEA 00000993    00000BEC 00000028    00000BED 000000AE    00000BEE 00008095
+    // NMKIN_2    00000BFF 00043828    00000C87 00001578    00000C8A 000024B8    00000C8F 0000002B    00000C90 0000091B    00000C92 00006D5C
+    // NMKIN_3    00000CA0 0003B741    00000D17 00001695    00000D1A 0000245D    00000D1F 0000002B    00000D20 00000373    00000D21 00006759
+    // NMKIN_4    00000D2E 00044594    00000DB7 000014A3    00000DBA 00002424    00000DBF 0000002B    00000DC0 000002E4    00000DC1 00002A7F
+    // NMKIN_5    00000DC7 0003600C    00000E34 0000110B    00000E37 0000234D    00000E3C 00000029    00000E3D 000000A0    00000E3E 000055A0
+
     V0 = h[8006527c];
-    A0 = w[S2 + V0 * 30];
-    A1 = w[S5 + V0 * 30];
+    A0 = w[800b9430 + V0 * 30 + 0]; // MIM sector
+    A1 = w[800b9430 + V0 * 30 + 4];
     A2 = 80120000;
     A3 = 0;
     func14d08(); // load file
@@ -131,8 +133,8 @@ La0530:	; 800A0530
     800A05E0	bne    v0, zero, loopa05d8 [$800a05d8]
 
     V0 = h[8006527c];
-    A0 = w[S4 + V0 * 30];
-    A1 = w[S3 + V0 * 30];
+    A0 = w[800b9430 + V0 * 30 + 8]; // ATE sector
+    A1 = w[800b9430 + V0 * 30 + c];
     A2 = 801b0000;
     A3 = 0;
     func14d08(); // load file
@@ -141,62 +143,36 @@ La0530:	; 800A0530
         func150dc();
     800A0620	bne    v0, zero, loopa0618 [$800a0618]
 
-    A2 = 801a4000;
     V1 = h[8006527c];
-    800A0634	lui    a1, $800c
-    800A0638	addiu  a1, a1, $9440 (=-$6bc0)
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 04;
-    V1 = V0 + A1;
-    A1 = A1 + V0;
-    A0 = w[V1 + 0000];
-    A1 = w[A1 + 0004];
+    A0 = w[800b9430 + V1 * 30 + 10]; // MAP sector
+    A1 = w[800b9430 + V1 * 30 + 14];
+    A2 = 801a4000;
     A3 = 0;
     func14d08(); // load file
 
-    V0 = hu[8006a850];
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800A0674	beq    v0, s0, La06d4 [$800a06d4]
-    800A0678	nop
-    800A067C	lui    a0, $8009
-    800A0680	addiu  a0, a0, $be0c (=-$41f4)
-    A1 = 80065dbc;
-    800A068C	jal    funcaa648 [$800aa648]
-    800A0690	lui    a2, $801b
-    V0 = h[8008b808];
-    800A069C	nop
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 + V0;
-    V0 = bu[8008be24];
-    V1 = V1 << 02;
-    AT = 80065df6;
-    AT = AT + V1;
-    [AT + 0000] = b(V0);
-    800A06CC	j      La06dc [$800a06dc]
-    800A06D0	nop
+    if( h[8006a850] != 2 )
+    {
+        A0 = 8008be0c; // field_struct
+        A1 = 80065dbc; // entities_data
+        A2 = 801b0000; // events_data
+        field_init_structs_events_actors();
 
-    La06d4:	; 800A06D4
-    [8008be26] = h(S0);
+        V0 = h[8008b808];
+        [80065df6 + V0 * 64] = b(bu[8008be24]);
+    }
+    else
+    {
+        [8008be26] = h(2);
+    }
 
     La06dc:	; 800A06DC
-    800A06DC	jal    $func150dc
-    800A06E0	nop
+        func150dc();
     800A06E4	bne    v0, zero, La06dc [$800a06dc]
-    A2 = 801aff00;
+
     V1 = h[8006527c];
-    800A06F8	lui    a1, $800c
-    800A06FC	addiu  a1, a1, $9448 (=-$6bb8)
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 04;
-    V1 = V0 + A1;
-    A1 = A1 + V0;
-    A0 = w[V1 + 0000];
-    A1 = w[A1 + 0004];
+    A0 = w[800b9430 + V1 * 30 + 18]; // CA sector
+    A1 = w[800b9430 + V1 * 30 + 1c];
+    A2 = 801aff00;
     A3 = 0;
     func14d08(); // load file
 
@@ -204,17 +180,10 @@ La0530:	; 800A0530
         func150dc();
     800A072C	bne    v0, zero, loopa0724 [$800a0724]
 
-    800A0730	lui    a2, $801a
     V1 = h[8006527c];
-    800A073C	lui    a1, $800c
-    800A0740	addiu  a1, a1, $9450 (=-$6bb0)
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 04;
-    V1 = V0 + A1;
-    A1 = A1 + V0;
-    A0 = w[V1 + 0000];
-    A1 = w[A1 + 0004];
+    A0 = w[800b9430 + V1 * 30 + 20]; // ID sector
+    A1 = w[800b9430 + V1 * 30 + 24];
+    A2 = 801a0000;
     A3 = 0;
     func14d08(); // load file
 
@@ -222,17 +191,10 @@ La0530:	; 800A0530
         func150dc();
     800A0770	bne    v0, zero, loopa0768 [$800a0768]
 
-    800A0774	lui    a2, $801c
     V1 = h[8006527c];
-    800A0780	lui    a1, $800c
-    800A0784	addiu  a1, a1, $9458 (=-$6ba8)
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 04;
-    V1 = V0 + A1;
-    A1 = A1 + V0;
-    A0 = w[V1 + 0000];
-    A1 = w[A1 + 0004];
+    A0 = w[800b9430 + V1 * 30 + 28]; // BSC sector
+    A1 = w[800b9430 + V1 * 30 + 2c];
+    A2 = 801c0000;
     A3 = 0;
     func14d08(); // load file
 
@@ -240,7 +202,7 @@ La0530:	; 800A0530
         func150dc();
     800A07B4	bne    v0, zero, loopa07ac [$800a07ac]
 
-    A0 = e49;
+    A0 = e49; // NARITA\TDB.LZS sector
     A1 = 1925;
     A2 = 801b8000;
     A3 = 0;
@@ -250,51 +212,38 @@ La0530:	; 800A0530
         func150dc();
     800A07D8	bne    v0, zero, loopa07d0 [$800a07d0]
 
-    V0 = hu[8006a850];
-    800A07E8	nop
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    800A07F4	bne    v0, s0, La0818 [$800a0818]
-    800A07F8	nop
+    if( h[8006a850] == 2 )
+    {
+        loopa07fc:	; 800A07FC
+            V0 = hu[8006aef0];
+        800A0808	bne    v0, zero, loopa07fc [$800a07fc]
+    }
+    else
+    {
+        [8006aef0] = h(0);
+    }
 
-    loopa07fc:	; 800A07FC
-    V0 = hu[8006aef0];
-    800A0804	nop
-    800A0808	bne    v0, zero, loopa07fc [$800a07fc]
     A0 = 0;
-    800A0810	j      La0824 [$800a0824]
-    800A0814	nop
-
-    La0818:	; 800A0818
-    [8006aef0] = h(0);
-    A0 = 0;
-
-    La0824:	; 800A0824
-    800A0828	lui    a1, $8012
-    800A0824	jal    funca5394 [$800a5394]
+    A1 = 80120000;
+    funca5394();
 
     field_main_loop();
 
-    800A0834	lui    a0, $8009
-    800A0838	addiu  a0, a0, $be0d (=-$41f3)
-    [8006a850] = h(S1);
-    V1 = bu[A0 + 0000];
-    V0 = 0005;
-    800A084C	beq    v1, v0, La0880 [$800a0880]
-    800A0850	nop
-    800A0854	bne    v1, s1, La0870 [$800a0870]
-    800A0858	nop
-    V0 = hu[8008be0e];
-    800A0864	nop
-    [8008b828] = h(V0);
+    [8006a850] = h(1);
 
-    La0870:	; 800A0870
-    V0 = bu[A0 + 0000];
-800A0878	bne    v0, s0, La0530 [$800a0530]
+    if( bu[8008be0d] == 5 )
+    {
+        A0 = 0;
+        system_psyq_wait_frames();
 
-La0880:	; 800A0880
-A0 = 0;
-system_psyq_wait_frames();
+        return;
+    }
+
+    if( bu[8008be0d] == 1 )
+    {
+        [8008b828] = h(hu[8008be0e]);
+    }
+} while( bu[8008be0d] != 2 )
 ////////////////////////////////
 
 
@@ -373,20 +322,15 @@ funca09bc:	; 800A09BC
 800A09C8	nop
 
 
-funca09cc:	; 800A09CC
+
+////////////////////////////////
+// funca09cc()
+800A09CC-800A0A04
+
 V0 = h[8008b828];
-800A09D4	nop
-V1 = V0 << 01;
-V1 = V1 + V0;
-V1 = V1 << 02;
-800A09E4	lui    at, $800c
-800A09E8	addiu  at, at, $9610 (=-$69f0)
-AT = AT + V1;
-V0 = hu[AT + 0000];
-800A09F4	nop
-[8006527c] = h(V0);
-800A0A00	jr     ra 
-800A0A04	nop
+[8006527c] = h(hu[800b9610 + V0 * c]);
+////////////////////////////////
+
 
 
 funca0a08:	; 800A0A08
@@ -10901,152 +10845,114 @@ V0 = V0 & A1;
 V0 = V1 | V0;
 
 
-funcaa648:	; 800AA648
-800AA648	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A2;
-V0 = 0001;
-[SP + 0014] = w(RA);
-[800536d0] = w(A0);
-[800536b0] = w(A1);
-[800536cc] = w(S0);
+
+////////////////////////////////
+// field_init_structs_events_actors()
+800AA648-800AA7D4
+
+field_struct = A0;
+entities_data = A1;
+events_data = A2;
+
+[800536d0] = w(field_struct);
+[800536b0] = w(entities_data);
+[800536cc] = w(events_data);
+
+[80053620] = b(1);
 [80053680] = b(0);
-[80053620] = b(V0);
 [800536dc] = b(0);
-800AA68C	jal    funcb74f0 [$800b74f0]
-800AA690	nop
-V0 = bu[S0 + 0000];
-800AA698	nop
-800AA69C	bne    v0, zero, Laa6bc [$800aa6bc]
-V0 = V0 < 0002;
-A0 = 800a0084;
-800AA6AC	jal    funcb93b8 [$800b93b8]
-800AA6B0	nop
-800AA6B4	j      Laa7c4 [$800aa7c4]
-800AA6B8	nop
 
-Laa6bc:	; 800AA6BC
-800AA6BC	beq    v0, zero, Laa6d8 [$800aa6d8]
-800AA6C0	nop
-V1 = bu[S0 + 0001];
-800AA6C8	nop
-V0 = V1 < 0004;
-800AA6D0	bne    v0, zero, Laa6f0 [$800aa6f0]
-V0 = V1 < 0003;
+funcb74f0();
 
-Laa6d8:	; 800AA6D8
-A0 = 800a0094;
-800AA6E0	jal    funcb93b8 [$800b93b8]
-800AA6E4	nop
-800AA6E8	j      Laa7c4 [$800aa7c4]
-800AA6EC	nop
+if( bu[events_data + 0] == 0 )
+{
+    A0 = 800a0084; // "old Event data!"
+    funcb93b8(); // print
 
-Laa6f0:	; 800AA6F0
-800AA6F0	beq    v0, zero, Laa710 [$800aa710]
-800AA6F4	nop
-A0 = 800a00a8;
-800AA700	jal    funcb93b8 [$800b93b8]
-800AA704	nop
-800AA708	j      Laa7c4 [$800aa7c4]
-800AA70C	nop
+    return;
+}
 
-Laa710:	; 800AA710
-800AA710	jal    funcb6774 [$800b6774]
-800AA714	nop
-800AA718	jal    funcb93a8 [$800b93a8]
-A0 = S0;
-800AA720	jal    funcb76bc [$800b76bc]
-800AA724	nop
-V0 = w[800536d0];
-800AA730	nop
-[V0 + 0001] = b(0);
-V0 = w[800536d0];
+if( ( bu[events_data + 0] >= 2 ) || ( bu[events_data + 1] >= 4 ) )
+{
+    A0 = 800a0094; // "old Event program!"
+    funcb93b8();
+
+    return;
+}
+
+if( bu[events_data + 1] < 3 )
+{
+    A0 = 800a00a8; // "old Event version!"
+    funcb93b8();
+
+    return;
+}
+
+funcb6774();
+
+A0 = events_data;
+funcb93a8(); // empty
+
+funcb76bc();
+
 V1 = w[800536cc];
-[V0 + 0002] = h(0);
-[V0 + 001a] = h(0);
-A0 = bu[V1 + 0003];
-[V0 + 0020] = b(0);
-V1 = w[800536d0];
-[V0 + 001e] = h(0);
-[V0 + 001c] = h(A0);
-[V1 + 0021] = b(0);
 V0 = w[800536d0];
-800AA774	nop
-[V0 + 0022] = b(0);
-V0 = w[800536d0];
-800AA784	nop
-[V0 + 0023] = b(0);
-V0 = w[800536d0];
-800AA794	nop
-[V0 + 0024] = b(0);
-V0 = w[800536d0];
-800AA7A4	nop
-[V0 + 0025] = b(0);
-V0 = w[800536d0];
-800AA7B4	jal    funcaa8a0 [$800aa8a0]
-[V0 + 0026] = b(0);
-800AA7BC	jal    funcaab6c [$800aab6c]
-800AA7C0	nop
 
-Laa7c4:	; 800AA7C4
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800AA7D0	jr     ra 
-800AA7D4	nop
+[V0 + 1] = b(0);
+[V0 + 2] = h(0);
+[V0 + 1a] = h(0);
+[V0 + 1c] = h(bu[V1 + 3]);
+[V0 + 1e] = h(0);
+[V0 + 20] = b(0);
+[V0 + 21] = b(0);
+[V0 + 22] = b(0);
+[V0 + 23] = b(0);
+[V0 + 24] = b(0);
+[V0 + 25] = b(0);
+[V0 + 26] = b(0);
+
+funcaa8a0();
+
+field_event_run_init();
+////////////////////////////////
 
 
-funcaa7d8:	; 800AA7D8
+
+////////////////////////////////
+// funcaa7d8()
+// func funcba65c in released ffvii
+800AA7D8-800AA89C
+
 V0 = bu[80053620];
-800AA7E0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
 S0 = A0;
-800AA7EC	beq    v0, zero, Laa81c [$800aa81c]
-[SP + 0014] = w(RA);
-800AA7F4	jal    funcb74f0 [$800b74f0]
-800AA7F8	nop
-800AA7FC	jal    funcb76bc [$800b76bc]
-800AA800	nop
-[80053680] = b(0);
-[800536dc] = b(0);
-[80053620] = b(0);
 
-Laa81c:	; 800AA81C
-V1 = bu[80053694];
-V0 = 0005;
-800AA828	beq    v1, v0, Laa854 [$800aa854]
-V0 = 0006;
-800AA830	bne    v1, v0, Laa84c [$800aa84c]
-800AA834	nop
-V0 = bu[800535fc];
-800AA840	nop
-800AA844	beq    v0, zero, Laa854 [$800aa854]
-800AA848	nop
+if( V0 != 0 )
+{
+    800AA7F4	jal    funcb74f0 [$800b74f0]
 
-Laa84c:	; 800AA84C
-800AA84C	jal    funcaadcc [$800aadcc]
-800AA850	nop
+    800AA7FC	jal    funcb76bc [$800b76bc]
 
-Laa854:	; 800AA854
-V0 = bu[8005361c];
-800AA85C	nop
-800AA860	beq    v0, zero, Laa88c [$800aa88c]
-A1 = 0004;
-800AA868	lui    a0, $8007
-800AA86C	addiu  a0, a0, $a9a4 (=-$565c)
-V0 = w[800536d0];
-800AA878	nop
-A3 = bu[V0 + 0000];
-A2 = S0;
-800AA884	jal    $8001c074
-A3 = A3 ^ 0001;
+    [80053680] = b(0);
+    [800536dc] = b(0);
+    [80053620] = b(0);
+}
 
-Laa88c:	; 800AA88C
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800AA898	jr     ra 
-800AA89C	nop
+if( ( bu[80053694] != 5 ) && ( ( bu[80053694] != 6 ) || ( bu[800535fc] != 0 ) ) )
+{
+    field_event_opcode_cycle();
+}
+
+if( bu[8005361c] != 0 ) // if at least 1 window is opened
+{
+    A0 = 8006a9a4;
+    A1 = 4; // render max 4 dialogs
+    A2 = S0;
+    field_struct = w[800536d0];
+    A3 = bu[field_struct + 0] ^ 1;
+    func1c074();
+}
+////////////////////////////////
+
 
 
 funcaa8a0:	; 800AA8A0
@@ -11232,162 +11138,92 @@ SP = SP + 0020;
 800AAB68	nop
 
 
-funcaab6c:	; 800AAB6C
+
+////////////////////////////////
+// field_event_run_init()
+800AAB6C-800AADC8
+
+events_data = w[800536cc];
+actors_n = bu[events_data + 2];
+akao_n = h[events_data + 6];
+
+[800536c0] = b(0); // start index into model struct
+
+string = 800becb0;
+
+for( int i = 0; i < actors_n; ++i )
+{
+    [80053624] = b(i); // save current actor for use inside opcodes
+
+    if( bu[80053618] & 3 )
+    {
+        A0 = string;
+        A1 = 800ba8f0; // "Actor:"
+        field_debug_copy_string();
+
+        A0 = string;
+        A1 = events_data + 18 + i * 8; // field actors names
+        field_debug_concat_string();
+
+        if( bu[80053618] & 1 )
+        {
+            A0 = 4;
+            A1 = 0;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+
+        if( bu[80053618] & 2 )
+        {
+            A0 = string;
+            funcb93b0(); // empty
+        }
+    }
+
+    script = hu[events_data + akao_n * 4 + i * 20 + actors_n * 8 + 18];
+    [8006a8a0 + i * 2] = h(script);
+    opcode = bu[events_data + script];
+    [8005369c] = b(opcode);
+
+    while( opcode != 0 ) // do until RET opcode
+    {
+        // opcodes
+           0        1        2        3        4        5        6        7        8        9        a        b        c        d        e        f
+        00 800B058C 800AFA78 800AFA78 800AFA78
+        10 800B0958 800B09D4 800B0858          800AE964          800AEF28
+        30 800AF50C 800AF50C 800AF50C
+        50 800B42D0 800B4470 800B4678 800B4538 800B45D8 800B43CC 800B471C
+        60 800B0A5C 800B1180                   800B5B48 800B5BF0 800B5C8C 800B5E0C 800B5D4C 800B12D0
+        80 800AE684 800AE700 800AE780 800AE820 800AE8C4 800B4CEC 800B4D84 800B4E20 800B4EB8 800B4F54 800B4FF0 800B5090 800B5140 800B5214 800B52C0 800B4950
+        90 800B49E8 800B4A84 800B4B1C 800B4BB8 800B4C50 800B5394 800B5414 800B5498 800B5518 800B559C
+        a0          800B1554 800B1708 800B17F4 800B3C5C 800B3D50 800B4098 800B3F1C 800B202C          800B2E90                   800B2360
+        b0                   800B3670 800B3578                   800B3250          800B392C 800B3828 800B1AAC 800B1CB4 800B1E70 800B374C          800B147C
+        c0 800B25E4 800B3A80 800B28F0
+        e0 800B5614 800B56BC 800B57E8 800B5874 800B5768 800B5E8C 800B5F6C 800B604C 800B6164 800B632C 800B6578
+        f0 800B0F74 800B0EA0 800B0D40 800B0FE4 800B1054                            800B5900 800B5A00 800B5ACC 800B1378                            800B1420
+
+        opcode = bu[8005369c];
+        800AAD0C	jalr   w[800ba4c4 + opcode * 4] ra
+
+        V1 = hu[8006a8a0 + i * 2];
+        opcode = bu[events_data + V1];
+        [8005369c] = b(opcode);
+    }
+
+    [8006a8a0 + i * 2] = h(hu[8006a8a0 + i * 2] + 1);
+}
+
+[80053624] = b(0); // clear current actor
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_event_opcode_cycle()
+800AADCC-800AB3F4
+
 V0 = w[800536cc];
-800AAB74	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-[800536c0] = b(0);
-[80053624] = b(0);
-V0 = bu[V0 + 0002];
-800AABA0	nop
-800AABA4	beq    v0, zero, Laadac [$800aadac]
-800AABA8	nop
-800AABAC	lui    s1, $800c
-800AABB0	addiu  s1, s1, $ecb0 (=-$1350)
-800AABB4	lui    s2, $8007
-800AABB8	addiu  s2, s2, $a8a0 (=-$5760)
-800AABBC	lui    s3, $800c
-800AABC0	addiu  s3, s3, $a4c4 (=-$5b3c)
-
-Laabc4:	; 800AABC4
-V0 = bu[80053618];
-800AABCC	nop
-V0 = V0 & 0003;
-800AABD4	beq    v0, zero, Laac54 [$800aac54]
-800AABD8	nop
-800AABDC	lui    a1, $800c
-800AABE0	addiu  a1, a1, $a8f0 (=-$5710)
-800AABE4	jal    funcb91e0 [$800b91e0]
-A0 = S1;
-A0 = S1;
-A1 = bu[80053624];
-V0 = w[800536cc];
-A1 = A1 << 03;
-A1 = A1 + 0018;
-800AAC08	jal    funcb9214 [$800b9214]
-A1 = A1 + V0;
-V0 = bu[80053618];
-800AAC18	nop
-V0 = V0 & 0001;
-800AAC20	beq    v0, zero, Laac34 [$800aac34]
-A0 = 0004;
-A1 = 0;
-800AAC2C	jal    funcb9040 [$800b9040]
-A2 = S1;
-
-Laac34:	; 800AAC34
-V0 = bu[80053618];
-800AAC3C	nop
-V0 = V0 & 0002;
-800AAC44	beq    v0, zero, Laac54 [$800aac54]
-800AAC48	nop
-800AAC4C	jal    funcb93b0 [$800b93b0]
-A0 = S1;
-
-Laac54:	; 800AAC54
-V1 = bu[80053624];
-A0 = w[800536cc];
-A3 = V1 << 01;
-V1 = V1 << 05;
-A2 = hu[A0 + 0006];
-V0 = bu[A0 + 0002];
-A2 = A2 << 12;
-A2 = A2 >> 10;
-V0 = V0 << 03;
-V0 = V1 + V0;
-V0 = V0 + A2;
-V0 = V0 + A0;
-A1 = bu[V0 + 0018];
-A3 = A3 + S2;
-[A3 + 0000] = h(A1);
-V0 = bu[A0 + 0002];
-800AAC9C	nop
-V0 = V0 << 03;
-V1 = V1 + V0;
-V1 = V1 + A0;
-V1 = V1 + A2;
-V0 = bu[V1 + 0019];
-800AACB4	nop
-V0 = V0 << 08;
-A1 = A1 | V0;
-[A3 + 0000] = h(A1);
-V0 = hu[A3 + 0000];
-800AACC8	nop
-A0 = A0 + V0;
-V0 = bu[A0 + 0000];
-800AACD4	nop
-[8005369c] = b(V0);
-800AACE0	beq    v0, zero, Laad54 [$800aad54]
-800AACE4	nop
-800AACE8	lui    s0, $8007
-800AACEC	addiu  s0, s0, $a8a0 (=-$5760)
-
-loopaacf0:	; 800AACF0
-V0 = bu[8005369c];
-800AACF8	nop
-V0 = V0 << 02;
-V0 = V0 + S3;
-V0 = w[V0 + 0000];
-800AAD08	nop
-800AAD0C	jalr   v0 ra
-800AAD10	nop
-V0 = bu[80053624];
-800AAD1C	nop
-V0 = V0 << 01;
-V0 = V0 + S0;
-V1 = hu[V0 + 0000];
-V0 = w[800536cc];
-800AAD34	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800AAD40	nop
-[8005369c] = b(V0);
-800AAD4C	bne    v0, zero, loopaacf0 [$800aacf0]
-800AAD50	nop
-
-Laad54:	; 800AAD54
-V0 = bu[80053624];
-800AAD5C	nop
-A0 = V0 << 01;
-A0 = A0 + S2;
-V1 = hu[A0 + 0000];
-V0 = V0 + 0001;
-[80053624] = b(V0);
-V1 = V1 + 0001;
-[A0 + 0000] = h(V1);
-V1 = w[800536cc];
-V0 = bu[80053624];
-V1 = bu[V1 + 0002];
-800AAD94	nop
-V0 = V0 < V1;
-800AAD9C	bne    v0, zero, Laabc4 [$800aabc4]
-800AADA0	nop
-[80053624] = b(0);
-
-Laadac:	; 800AADAC
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-800AADC4	jr     ra 
-800AADC8	nop
-
-
-funcaadcc:	; 800AADCC
-V0 = w[800536cc];
-800AADD4	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S2);
 S2 = 0006;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 S3 = bu[V0 + 0002];
 
 Laadf4:	; 800AADF4
@@ -11436,18 +11272,16 @@ V0 = bu[AT + 0000];
 800AAEB0	nop
 
 Laaeb4:	; 800AAEB4
-A0 = 0003;
 
 loopaaeb8:	; 800AAEB8
-A1 = S0 << 10;
-800AAEBC	lui    a2, $800c
-800AAEC0	addiu  a2, a2, $a8ec (=-$5714)
-800AAEC4	jal    funcb9040 [$800b9040]
-A1 = A1 >> 10;
-S0 = S0 + 0001;
-V0 = S0 < 0009;
+    A0 = 3;
+    A1 = S0;
+    A2 = 800ba8ec;
+    field_debug_copy_string_into_page();
+
+    S0 = S0 + 0001;
+    V0 = S0 < 0009;
 800AAED4	bne    v0, zero, loopaaeb8 [$800aaeb8]
-A0 = 0003;
 
 Laaedc:	; 800AAEDC
 V0 = bu[80053624];
@@ -11464,12 +11298,7 @@ V0 = bu[V0 + 0000];
 800AAF10	nop
 [8005369c] = b(V0);
 V0 = bu[8005369c];
-800AAF24	nop
-V0 = V0 << 02;
-800AAF2C	lui    at, $800c
-800AAF30	addiu  at, at, $a4c4 (=-$5b3c)
-AT = AT + V0;
-V0 = w[AT + 0000];
+V0 = w[800ba4c4 + V0 * 4];
 800AAF3C	nop
 800AAF40	jalr   v0 ra
 800AAF44	nop
@@ -11765,14 +11594,8 @@ V0 = S3 < V0;
 T0 = T0 + 0001;
 
 Lab3d8:	; 800AB3D8
-RA = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-800AB3F0	jr     ra 
-800AB3F4	nop
+////////////////////////////////
+
 
 
 funcab3f8:	; 800AB3F8
@@ -11840,7 +11663,7 @@ Lab4c8:	; 800AB4C8
 800AB4D4	addiu  a1, a1, $a900 (=-$5700)
 
 Lab4d8:	; 800AB4D8
-800AB4D8	jal    funcb91e0 [$800b91e0]
+800AB4D8	jal    field_debug_copy_string [$800b91e0]
 800AB4DC	nop
 800AB4E0	lui    s1, $800c
 800AB4E4	addiu  s1, s1, $ecb0 (=-$1350)
@@ -11850,7 +11673,7 @@ S2 = V0 >> 10;
 S3 = S2 << 03;
 V0 = w[800536cc];
 A1 = S3 + 0018;
-800AB504	jal    funcb9214 [$800b9214]
+800AB504	jal    field_debug_concat_string [$800b9214]
 A1 = A1 + V0;
 V0 = bu[80053618];
 V1 = bu[800536dc];
@@ -11860,7 +11683,7 @@ V1 = V1 | V0;
 A0 = S4 << 10;
 A0 = A0 >> 10;
 A1 = 0;
-800AB534	jal    funcb9040 [$800b9040]
+800AB534	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 
 Lab53c:	; 800AB53C
@@ -11875,7 +11698,7 @@ A0 = S1;
 Lab55c:	; 800AB55C
 800AB55C	lui    a1, $800c
 800AB560	addiu  a1, a1, $a908 (=-$56f8)
-800AB564	jal    funcb91e0 [$800b91e0]
+800AB564	jal    field_debug_copy_string [$800b91e0]
 A0 = S1;
 800AB56C	lui    s0, $800c
 800AB570	addiu  s0, s0, $ecd4 (=-$132c)
@@ -11886,11 +11709,11 @@ A0 = bu[AT + 0000];
 800AB584	jal    funcb92d0 [$800b92d0]
 A1 = S0;
 A0 = S1;
-800AB590	jal    funcb9214 [$800b9214]
+800AB590	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
 800AB598	lui    a1, $800c
 800AB59C	addiu  a1, a1, $a910 (=-$56f0)
-800AB5A0	jal    funcb9214 [$800b9214]
+800AB5A0	jal    field_debug_concat_string [$800b9214]
 A0 = S1;
 800AB5A8	lui    v0, $8007
 800AB5AC	addiu  v0, v0, $acf0 (=-$5310)
@@ -11957,7 +11780,7 @@ A1 = S0;
 A1 = S0;
 
 Lab67c:	; 800AB67C
-800AB67C	jal    funcb9214 [$800b9214]
+800AB67C	jal    field_debug_concat_string [$800b9214]
 800AB680	nop
 V0 = bu[80053618];
 V1 = bu[800536dc];
@@ -11968,7 +11791,7 @@ A0 = S4 << 10;
 A0 = A0 >> 10;
 800AB6A8	lui    a2, $800c
 800AB6AC	addiu  a2, a2, $ecb0 (=-$1350)
-800AB6B0	jal    funcb9040 [$800b9040]
+800AB6B0	jal    field_debug_copy_string_into_page [$800b9040]
 A1 = 0001;
 
 Lab6b8:	; 800AB6B8
@@ -11996,7 +11819,7 @@ V0 = 00ff;
 800AB708	addiu  a0, a0, $ecb0 (=-$1350)
 800AB70C	lui    a1, $800c
 800AB710	addiu  a1, a1, $a924 (=-$56dc)
-800AB714	jal    funcb91e0 [$800b91e0]
+800AB714	jal    field_debug_copy_string [$800b91e0]
 800AB718	nop
 800AB71C	j      Lab7c4 [$800ab7c4]
 800AB720	nop
@@ -12006,7 +11829,7 @@ Lab724:	; 800AB724
 800AB728	addiu  s1, s1, $ecb0 (=-$1350)
 800AB72C	lui    a1, $800c
 800AB730	addiu  a1, a1, $a92c (=-$56d4)
-800AB734	jal    funcb91e0 [$800b91e0]
+800AB734	jal    field_debug_copy_string [$800b91e0]
 A0 = S1;
 800AB73C	lui    s0, $800c
 800AB740	addiu  s0, s0, $ecd4 (=-$132c)
@@ -12017,11 +11840,11 @@ A0 = bu[AT + 0000];
 800AB754	jal    funcb92f0 [$800b92f0]
 A1 = S0;
 A0 = S1;
-800AB760	jal    funcb9214 [$800b9214]
+800AB760	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
 800AB768	lui    a1, $800c
 800AB76C	addiu  a1, a1, $a934 (=-$56cc)
-800AB770	jal    funcb9214 [$800b9214]
+800AB770	jal    field_debug_concat_string [$800b9214]
 A0 = S1;
 800AB778	lui    at, $8007
 800AB77C	addiu  at, at, $a85c (=-$57a4)
@@ -12039,7 +11862,7 @@ A0 = bu[V0 + 003a];
 800AB7B0	jal    funcb92f0 [$800b92f0]
 A1 = S0;
 A0 = S1;
-800AB7BC	jal    funcb9214 [$800b9214]
+800AB7BC	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
 
 Lab7c4:	; 800AB7C4
@@ -12052,7 +11875,7 @@ A0 = S4 << 10;
 A0 = A0 >> 10;
 800AB7E8	lui    a2, $800c
 800AB7EC	addiu  a2, a2, $ecb0 (=-$1350)
-800AB7F0	jal    funcb9040 [$800b9040]
+800AB7F0	jal    field_debug_copy_string_into_page [$800b9040]
 A1 = 0002;
 
 Lab7f8:	; 800AB7F8
@@ -12080,7 +11903,7 @@ V0 = 00ff;
 800AB848	addiu  s1, s1, $ecb0 (=-$1350)
 800AB84C	lui    a1, $800c
 800AB850	addiu  a1, a1, $a93c (=-$56c4)
-800AB854	jal    funcb91e0 [$800b91e0]
+800AB854	jal    field_debug_copy_string [$800b91e0]
 A0 = S1;
 800AB85C	lui    at, $8007
 800AB860	addiu  at, at, $a85c (=-$57a4)
@@ -12100,11 +11923,11 @@ A1 = S3;
 800AB89C	jal    funcb932c [$800b932c]
 A0 = A0 >> 0c;
 A0 = S1;
-800AB8A8	jal    funcb9214 [$800b9214]
+800AB8A8	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 800AB8B0	lui    a1, $800c
 800AB8B4	addiu  a1, a1, $a940 (=-$56c0)
-800AB8B8	jal    funcb9214 [$800b9214]
+800AB8B8	jal    field_debug_concat_string [$800b9214]
 A0 = S1;
 800AB8C0	lui    at, $8007
 800AB8C4	addiu  at, at, $a85c (=-$57a4)
@@ -12123,7 +11946,7 @@ A1 = S3;
 800AB8FC	jal    funcb932c [$800b932c]
 A0 = A0 >> 0c;
 A0 = S1;
-800AB908	jal    funcb9214 [$800b9214]
+800AB908	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 V0 = bu[80053618];
 V1 = bu[800536dc];
@@ -12133,7 +11956,7 @@ V1 = V1 | V0;
 A0 = S4 << 10;
 A0 = A0 >> 10;
 A1 = 0003;
-800AB938	jal    funcb9040 [$800b9040]
+800AB938	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 
 Lab940:	; 800AB940
@@ -12148,7 +11971,7 @@ A0 = S1;
 Lab960:	; 800AB960
 800AB960	lui    a1, $800c
 800AB964	addiu  a1, a1, $a944 (=-$56bc)
-800AB968	jal    funcb91e0 [$800b91e0]
+800AB968	jal    field_debug_copy_string [$800b91e0]
 A0 = S1;
 800AB970	lui    at, $8007
 800AB974	addiu  at, at, $a85c (=-$57a4)
@@ -12167,11 +11990,11 @@ A1 = S3;
 800AB9AC	jal    funcb932c [$800b932c]
 A0 = A0 >> 0c;
 A0 = S1;
-800AB9B8	jal    funcb9214 [$800b9214]
+800AB9B8	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 800AB9C0	lui    a1, $800c
 800AB9C4	addiu  a1, a1, $a948 (=-$56b8)
-800AB9C8	jal    funcb9214 [$800b9214]
+800AB9C8	jal    field_debug_concat_string [$800b9214]
 A0 = S1;
 800AB9D0	lui    at, $8007
 800AB9D4	addiu  at, at, $a85c (=-$57a4)
@@ -12189,7 +12012,7 @@ A0 = hu[V0 + 0054];
 800ABA08	jal    funcb932c [$800b932c]
 A1 = S3;
 A0 = S1;
-800ABA14	jal    funcb9214 [$800b9214]
+800ABA14	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 V0 = bu[80053618];
 V1 = bu[800536dc];
@@ -12199,7 +12022,7 @@ V1 = V1 | V0;
 A0 = S4 << 10;
 A0 = A0 >> 10;
 A1 = 0004;
-800ABA44	jal    funcb9040 [$800b9040]
+800ABA44	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 
 Laba4c:	; 800ABA4C
@@ -12214,7 +12037,7 @@ A0 = S1;
 Laba6c:	; 800ABA6C
 800ABA6C	lui    a1, $800c
 800ABA70	addiu  a1, a1, $a94c (=-$56b4)
-800ABA74	jal    funcb91e0 [$800b91e0]
+800ABA74	jal    field_debug_copy_string [$800b91e0]
 A0 = S1;
 800ABA7C	lui    at, $8007
 800ABA80	addiu  at, at, $a85c (=-$57a4)
@@ -12232,12 +12055,12 @@ A0 = bu[V0 + 0043];
 800ABAB4	jal    funcb92f0 [$800b92f0]
 A1 = S3;
 A0 = S1;
-800ABAC0	jal    funcb9214 [$800b9214]
+800ABAC0	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 A0 = S1;
 800ABACC	lui    s0, $800c
 800ABAD0	addiu  s0, s0, $a954 (=-$56ac)
-800ABAD4	jal    funcb9214 [$800b9214]
+800ABAD4	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
 800ABADC	lui    at, $8007
 800ABAE0	addiu  at, at, $a85c (=-$57a4)
@@ -12255,10 +12078,10 @@ A0 = h[V0 + 0046];
 800ABB14	jal    funcb92f0 [$800b92f0]
 A1 = S3;
 A0 = S1;
-800ABB20	jal    funcb9214 [$800b9214]
+800ABB20	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 A0 = S1;
-800ABB2C	jal    funcb9214 [$800b9214]
+800ABB2C	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
 800ABB34	lui    at, $8007
 800ABB38	addiu  at, at, $a85c (=-$57a4)
@@ -12276,7 +12099,7 @@ A0 = h[V0 + 0048];
 800ABB6C	jal    funcb92f0 [$800b92f0]
 A1 = S3;
 A0 = S1;
-800ABB78	jal    funcb9214 [$800b9214]
+800ABB78	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 V0 = bu[80053618];
 V1 = bu[800536dc];
@@ -12286,7 +12109,7 @@ V1 = V1 | V0;
 A0 = S4 << 10;
 A0 = A0 >> 10;
 A1 = 0005;
-800ABBA8	jal    funcb9040 [$800b9040]
+800ABBA8	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 
 Labbb0:	; 800ABBB0
@@ -12312,15 +12135,15 @@ A0 = S0;
 A1 = 0003;
 800ABC04	lui    s1, $800c
 800ABC08	addiu  s1, s1, $a958 (=-$56a8)
-800ABC0C	jal    funcb9040 [$800b9040]
+800ABC0C	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 A0 = S0;
 A1 = 0004;
-800ABC1C	jal    funcb9040 [$800b9040]
+800ABC1C	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 A0 = S0;
 A1 = 0005;
-800ABC2C	jal    funcb9040 [$800b9040]
+800ABC2C	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S1;
 
 Labc34:	; 800ABC34
@@ -12364,10 +12187,10 @@ Labcb8:	; 800ABCB8
 800ABCBC	addiu  s0, s0, $ecb0 (=-$1350)
 800ABCC0	lui    a1, $800c
 800ABCC4	addiu  a1, a1, $a8f8 (=-$5708)
-800ABCC8	jal    funcb91e0 [$800b91e0]
+800ABCC8	jal    field_debug_copy_string [$800b91e0]
 A0 = S0;
 A0 = S0;
-800ABCD4	jal    funcb9214 [$800b9214]
+800ABCD4	jal    field_debug_concat_string [$800b9214]
 A1 = S2;
 V0 = bu[80053600];
 800ABCE4	nop
@@ -12375,7 +12198,7 @@ V0 = V0 & 0001;
 800ABCEC	beq    v0, zero, Labd00 [$800abd00]
 A0 = 0003;
 A1 = 0;
-800ABCF8	jal    funcb9040 [$800b9040]
+800ABCF8	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S0;
 
 Labd00:	; 800ABD00
@@ -12396,18 +12219,18 @@ S2 = S0;
 loopabd30:	; 800ABD30
 800ABD30	lui    a1, $800c
 800ABD34	addiu  a1, a1, $a95c (=-$56a4)
-800ABD38	jal    funcb91e0 [$800b91e0]
+800ABD38	jal    field_debug_copy_string [$800b91e0]
 A0 = S2;
 S0 = S4 - S1;
 A0 = S0;
 800ABD48	jal    funcb92d0 [$800b92d0]
 A1 = S3;
 A0 = S2;
-800ABD54	jal    funcb9214 [$800b9214]
+800ABD54	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 800ABD5C	lui    a1, $800c
 800ABD60	addiu  a1, a1, $a960 (=-$56a0)
-800ABD64	jal    funcb9214 [$800b9214]
+800ABD64	jal    field_debug_concat_string [$800b9214]
 A0 = S2;
 V0 = bu[80053624];
 800ABD74	nop
@@ -12424,7 +12247,7 @@ A0 = bu[V0 + 0000];
 800ABDA4	jal    funcb92f0 [$800b92f0]
 A1 = S3;
 A0 = S2;
-800ABDB0	jal    funcb9214 [$800b9214]
+800ABDB0	jal    field_debug_concat_string [$800b9214]
 A1 = S3;
 V0 = bu[80053600];
 800ABDC0	nop
@@ -12433,7 +12256,7 @@ V0 = V0 & 0001;
 A0 = 0003;
 A1 = S0 << 10;
 A1 = A1 >> 10;
-800ABDD8	jal    funcb9040 [$800b9040]
+800ABDD8	jal    field_debug_copy_string_into_page [$800b9040]
 A2 = S2;
 
 Labde0:	; 800ABDE0
@@ -12483,7 +12306,7 @@ V0 = bu[AT + 0000];
 Labe80:	; 800ABE80
 800ABE80	lui    a0, $800c
 800ABE84	addiu  a0, a0, $ecb0 (=-$1350)
-800ABE88	jal    funcb91e0 [$800b91e0]
+800ABE88	jal    field_debug_copy_string [$800b91e0]
 A1 = V1;
 V0 = 0002;
 800ABE94	beq    s0, v0, Labee0 [$800abee0]
@@ -12531,7 +12354,7 @@ Labf10:	; 800ABF10
 800ABF14	addiu  a0, a0, $ecd4 (=-$132c)
 800ABF18	lui    a1, $800c
 800ABF1C	addiu  a1, a1, $a958 (=-$56a8)
-800ABF20	jal    funcb91e0 [$800b91e0]
+800ABF20	jal    field_debug_copy_string [$800b91e0]
 800ABF24	nop
 
 Labf28:	; 800ABF28
@@ -12539,7 +12362,7 @@ Labf28:	; 800ABF28
 800ABF2C	addiu  s0, s0, $ecb0 (=-$1350)
 800ABF30	lui    a1, $800c
 800ABF34	addiu  a1, a1, $ecd4 (=-$132c)
-800ABF38	jal    funcb9214 [$800b9214]
+800ABF38	jal    field_debug_concat_string [$800b9214]
 A0 = S0;
 V0 = bu[800536d4];
 800ABF48	nop
@@ -12750,7 +12573,7 @@ Lac29c:	; 800AC29C
 800AC2A0	addiu  a0, a0, $ecb0 (=-$1350)
 800AC2A4	lui    a1, $800c
 800AC2A8	addiu  a1, a1, $a96c (=-$5694)
-800AC2AC	jal    funcb91e0 [$800b91e0]
+800AC2AC	jal    field_debug_copy_string [$800b91e0]
 800AC2B0	nop
 800AC2B4	lui    a1, $800c
 800AC2B8	addiu  a1, a1, $ecd4 (=-$132c)
@@ -12760,7 +12583,7 @@ A0 = S0;
 800AC2C8	addiu  a0, a0, $ecb0 (=-$1350)
 800AC2CC	lui    a1, $800c
 800AC2D0	addiu  a1, a1, $ecd4 (=-$132c)
-800AC2D4	jal    funcb9214 [$800b9214]
+800AC2D4	jal    field_debug_concat_string [$800b9214]
 800AC2D8	nop
 V0 = bu[800536d4];
 800AC2E4	nop
@@ -12845,7 +12668,7 @@ Lac41c:	; 800AC41C
 800AC420	addiu  a0, a0, $ecb0 (=-$1350)
 800AC424	lui    a1, $800c
 800AC428	addiu  a1, a1, $a96c (=-$5694)
-800AC42C	jal    funcb91e0 [$800b91e0]
+800AC42C	jal    field_debug_copy_string [$800b91e0]
 800AC430	nop
 800AC434	lui    a1, $800c
 800AC438	addiu  a1, a1, $ecd4 (=-$132c)
@@ -12855,7 +12678,7 @@ A0 = S0;
 800AC448	addiu  a0, a0, $ecb0 (=-$1350)
 800AC44C	lui    a1, $800c
 800AC450	addiu  a1, a1, $ecd4 (=-$132c)
-800AC454	jal    funcb9214 [$800b9214]
+800AC454	jal    field_debug_concat_string [$800b9214]
 800AC458	nop
 V0 = bu[800536d4];
 800AC464	nop
@@ -12939,7 +12762,7 @@ Lac598:	; 800AC598
 800AC59C	addiu  a0, a0, $ecb0 (=-$1350)
 800AC5A0	lui    a1, $800c
 800AC5A4	addiu  a1, a1, $a96c (=-$5694)
-800AC5A8	jal    funcb91e0 [$800b91e0]
+800AC5A8	jal    field_debug_copy_string [$800b91e0]
 800AC5AC	nop
 800AC5B0	lui    a1, $800c
 800AC5B4	addiu  a1, a1, $ecd4 (=-$132c)
@@ -12949,7 +12772,7 @@ A0 = S0;
 800AC5C4	addiu  a0, a0, $ecb0 (=-$1350)
 800AC5C8	lui    a1, $800c
 800AC5CC	addiu  a1, a1, $ecd4 (=-$132c)
-800AC5D0	jal    funcb9214 [$800b9214]
+800AC5D0	jal    field_debug_concat_string [$800b9214]
 800AC5D4	nop
 V0 = bu[800536d4];
 800AC5E0	nop
@@ -12995,7 +12818,7 @@ Lac668:	; 800AC668
 800AC674	addiu  a1, a1, $a97c (=-$5684)
 
 Lac678:	; 800AC678
-800AC678	jal    funcb91e0 [$800b91e0]
+800AC678	jal    field_debug_copy_string [$800b91e0]
 800AC67C	nop
 800AC680	lui    a1, $800c
 800AC684	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13005,7 +12828,7 @@ A0 = S0;
 800AC694	addiu  a0, a0, $ecb0 (=-$1350)
 800AC698	lui    a1, $800c
 800AC69C	addiu  a1, a1, $ecd4 (=-$132c)
-800AC6A0	jal    funcb9214 [$800b9214]
+800AC6A0	jal    field_debug_concat_string [$800b9214]
 800AC6A4	nop
 V0 = bu[800536d4];
 800AC6B0	nop
@@ -13055,7 +12878,7 @@ Lac758:	; 800AC758
 800AC758	lui    a0, $800c
 800AC75C	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a00d4;
-800AC768	jal    funcb91e0 [$800b91e0]
+800AC768	jal    field_debug_copy_string [$800b91e0]
 800AC76C	nop
 800AC770	lui    a1, $800c
 800AC774	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13065,7 +12888,7 @@ A0 = S0;
 800AC784	addiu  a0, a0, $ecb0 (=-$1350)
 800AC788	lui    a1, $800c
 800AC78C	addiu  a1, a1, $ecd4 (=-$132c)
-800AC790	jal    funcb9214 [$800b9214]
+800AC790	jal    field_debug_concat_string [$800b9214]
 800AC794	nop
 V0 = bu[800536d4];
 800AC7A0	nop
@@ -13089,9 +12912,9 @@ V0 = V0 & 0002;
 800AC7E4	nop
 
 Lac7e8:	; 800AC7E8
-A0 = 800a00e0;
-800AC7F0	jal    funcb93b8 [$800b93b8]
-800AC7F4	nop
+A0 = 800a00e0; // "Bad Event arg!"
+funcb93b8();
+
 V0 = 0;
 
 Lac7fc:	; 800AC7FC
@@ -13255,7 +13078,7 @@ Laca98:	; 800ACA98
 800ACA9C	addiu  a0, a0, $ecb0 (=-$1350)
 800ACAA0	lui    a1, $800c
 800ACAA4	addiu  a1, a1, $a984 (=-$567c)
-800ACAA8	jal    funcb91e0 [$800b91e0]
+800ACAA8	jal    field_debug_copy_string [$800b91e0]
 800ACAAC	nop
 800ACAB0	lui    a1, $800c
 800ACAB4	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13265,7 +13088,7 @@ A0 = S0;
 800ACAC4	addiu  a0, a0, $ecb0 (=-$1350)
 800ACAC8	lui    a1, $800c
 800ACACC	addiu  a1, a1, $ecd4 (=-$132c)
-800ACAD0	jal    funcb9214 [$800b9214]
+800ACAD0	jal    field_debug_concat_string [$800b9214]
 800ACAD4	nop
 V0 = bu[800536d4];
 800ACAE0	nop
@@ -13353,7 +13176,7 @@ Lacc28:	; 800ACC28
 800ACC2C	addiu  a0, a0, $ecb0 (=-$1350)
 800ACC30	lui    a1, $800c
 800ACC34	addiu  a1, a1, $a984 (=-$567c)
-800ACC38	jal    funcb91e0 [$800b91e0]
+800ACC38	jal    field_debug_copy_string [$800b91e0]
 800ACC3C	nop
 800ACC40	lui    a1, $800c
 800ACC44	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13363,7 +13186,7 @@ A0 = S0;
 800ACC54	addiu  a0, a0, $ecb0 (=-$1350)
 800ACC58	lui    a1, $800c
 800ACC5C	addiu  a1, a1, $ecd4 (=-$132c)
-800ACC60	jal    funcb9214 [$800b9214]
+800ACC60	jal    field_debug_concat_string [$800b9214]
 800ACC64	nop
 V0 = bu[800536d4];
 800ACC70	nop
@@ -13450,7 +13273,7 @@ Lacdb4:	; 800ACDB4
 800ACDB8	addiu  a0, a0, $ecb0 (=-$1350)
 800ACDBC	lui    a1, $800c
 800ACDC0	addiu  a1, a1, $a984 (=-$567c)
-800ACDC4	jal    funcb91e0 [$800b91e0]
+800ACDC4	jal    field_debug_copy_string [$800b91e0]
 800ACDC8	nop
 800ACDCC	lui    a1, $800c
 800ACDD0	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13460,7 +13283,7 @@ A0 = S0;
 800ACDE0	addiu  a0, a0, $ecb0 (=-$1350)
 800ACDE4	lui    a1, $800c
 800ACDE8	addiu  a1, a1, $ecd4 (=-$132c)
-800ACDEC	jal    funcb9214 [$800b9214]
+800ACDEC	jal    field_debug_concat_string [$800b9214]
 800ACDF0	nop
 V0 = bu[800536d4];
 800ACDFC	nop
@@ -13506,7 +13329,7 @@ Lace84:	; 800ACE84
 800ACE90	addiu  a1, a1, $a994 (=-$566c)
 
 Lace94:	; 800ACE94
-800ACE94	jal    funcb91e0 [$800b91e0]
+800ACE94	jal    field_debug_copy_string [$800b91e0]
 800ACE98	nop
 800ACE9C	lui    a1, $800c
 800ACEA0	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13516,7 +13339,7 @@ A0 = S0;
 800ACEB0	addiu  a0, a0, $ecb0 (=-$1350)
 800ACEB4	lui    a1, $800c
 800ACEB8	addiu  a1, a1, $ecd4 (=-$132c)
-800ACEBC	jal    funcb9214 [$800b9214]
+800ACEBC	jal    field_debug_concat_string [$800b9214]
 800ACEC0	nop
 V0 = bu[800536d4];
 800ACECC	nop
@@ -13566,7 +13389,7 @@ Lacf74:	; 800ACF74
 800ACF74	lui    a0, $800c
 800ACF78	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a00f0;
-800ACF84	jal    funcb91e0 [$800b91e0]
+800ACF84	jal    field_debug_copy_string [$800b91e0]
 800ACF88	nop
 800ACF8C	lui    a1, $800c
 800ACF90	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13576,7 +13399,7 @@ A0 = S0;
 800ACFA0	addiu  a0, a0, $ecb0 (=-$1350)
 800ACFA4	lui    a1, $800c
 800ACFA8	addiu  a1, a1, $ecd4 (=-$132c)
-800ACFAC	jal    funcb9214 [$800b9214]
+800ACFAC	jal    field_debug_concat_string [$800b9214]
 800ACFB0	nop
 V0 = bu[800536d4];
 800ACFBC	nop
@@ -13600,9 +13423,9 @@ V0 = V0 & 0002;
 800AD000	nop
 
 Lad004:	; 800AD004
-A0 = 800a00e0;
-800AD00C	jal    funcb93b8 [$800b93b8]
-800AD010	nop
+A0 = 800a00e0; // "Bad Event arg!"
+funcb93b8();
+
 
 Lad014:	; 800AD014
 RA = w[SP + 0018];
@@ -13816,7 +13639,7 @@ Lad36c:	; 800AD36C
 800AD370	addiu  a0, a0, $ecb0 (=-$1350)
 800AD374	lui    a1, $800c
 800AD378	addiu  a1, a1, $a96c (=-$5694)
-800AD37C	jal    funcb91e0 [$800b91e0]
+800AD37C	jal    field_debug_copy_string [$800b91e0]
 800AD380	nop
 800AD384	lui    a1, $800c
 800AD388	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13826,7 +13649,7 @@ A0 = S0;
 800AD398	addiu  a0, a0, $ecb0 (=-$1350)
 800AD39C	lui    a1, $800c
 800AD3A0	addiu  a1, a1, $ecd4 (=-$132c)
-800AD3A4	jal    funcb9214 [$800b9214]
+800AD3A4	jal    field_debug_concat_string [$800b9214]
 800AD3A8	nop
 V0 = bu[800536d4];
 800AD3B4	nop
@@ -13915,7 +13738,7 @@ Lad4f4:	; 800AD4F4
 800AD4F8	addiu  a0, a0, $ecb0 (=-$1350)
 800AD4FC	lui    a1, $800c
 800AD500	addiu  a1, a1, $a96c (=-$5694)
-800AD504	jal    funcb91e0 [$800b91e0]
+800AD504	jal    field_debug_copy_string [$800b91e0]
 800AD508	nop
 800AD50C	lui    a1, $800c
 800AD510	addiu  a1, a1, $ecd4 (=-$132c)
@@ -13925,7 +13748,7 @@ A0 = S0;
 800AD520	addiu  a0, a0, $ecb0 (=-$1350)
 800AD524	lui    a1, $800c
 800AD528	addiu  a1, a1, $ecd4 (=-$132c)
-800AD52C	jal    funcb9214 [$800b9214]
+800AD52C	jal    field_debug_concat_string [$800b9214]
 800AD530	nop
 V0 = bu[800536d4];
 800AD53C	nop
@@ -14016,7 +13839,7 @@ Lad688:	; 800AD688
 800AD68C	addiu  a0, a0, $ecb0 (=-$1350)
 800AD690	lui    a1, $800c
 800AD694	addiu  a1, a1, $a96c (=-$5694)
-800AD698	jal    funcb91e0 [$800b91e0]
+800AD698	jal    field_debug_copy_string [$800b91e0]
 800AD69C	nop
 800AD6A0	lui    a1, $800c
 800AD6A4	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14026,7 +13849,7 @@ A0 = S0;
 800AD6B4	addiu  a0, a0, $ecb0 (=-$1350)
 800AD6B8	lui    a1, $800c
 800AD6BC	addiu  a1, a1, $ecd4 (=-$132c)
-800AD6C0	jal    funcb9214 [$800b9214]
+800AD6C0	jal    field_debug_concat_string [$800b9214]
 800AD6C4	nop
 V0 = bu[800536d4];
 800AD6D0	nop
@@ -14073,7 +13896,7 @@ Lad75c:	; 800AD75C
 800AD768	addiu  a1, a1, $a97c (=-$5684)
 
 Lad76c:	; 800AD76C
-800AD76C	jal    funcb91e0 [$800b91e0]
+800AD76C	jal    field_debug_copy_string [$800b91e0]
 800AD770	nop
 800AD774	lui    a1, $800c
 800AD778	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14083,7 +13906,7 @@ A0 = S0;
 800AD788	addiu  a0, a0, $ecb0 (=-$1350)
 800AD78C	lui    a1, $800c
 800AD790	addiu  a1, a1, $ecd4 (=-$132c)
-800AD794	jal    funcb9214 [$800b9214]
+800AD794	jal    field_debug_concat_string [$800b9214]
 800AD798	nop
 V0 = bu[800536d4];
 800AD7A4	nop
@@ -14138,7 +13961,7 @@ Lad850:	; 800AD850
 800AD850	lui    a0, $800c
 800AD854	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a00d4;
-800AD860	jal    funcb91e0 [$800b91e0]
+800AD860	jal    field_debug_copy_string [$800b91e0]
 800AD864	nop
 800AD868	lui    a1, $800c
 800AD86C	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14148,7 +13971,7 @@ A0 = S0;
 800AD87C	addiu  a0, a0, $ecb0 (=-$1350)
 800AD880	lui    a1, $800c
 800AD884	addiu  a1, a1, $ecd4 (=-$132c)
-800AD888	jal    funcb9214 [$800b9214]
+800AD888	jal    field_debug_concat_string [$800b9214]
 800AD88C	nop
 V0 = bu[800536d4];
 800AD898	nop
@@ -14172,9 +13995,9 @@ V0 = V0 & 0002;
 800AD8DC	nop
 
 Lad8e0:	; 800AD8E0
-A0 = 800a00e0;
-800AD8E8	jal    funcb93b8 [$800b93b8]
-800AD8EC	nop
+A0 = 800a00e0; // "Bad Event arg!"
+funcb93b8();
+
 V0 = 0;
 
 Lad8f4:	; 800AD8F4
@@ -14348,7 +14171,7 @@ Ladbac:	; 800ADBAC
 800ADBB0	addiu  a0, a0, $ecb0 (=-$1350)
 800ADBB4	lui    a1, $800c
 800ADBB8	addiu  a1, a1, $a984 (=-$567c)
-800ADBBC	jal    funcb91e0 [$800b91e0]
+800ADBBC	jal    field_debug_copy_string [$800b91e0]
 800ADBC0	nop
 800ADBC4	lui    a1, $800c
 800ADBC8	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14358,7 +14181,7 @@ A0 = S0;
 800ADBD8	addiu  a0, a0, $ecb0 (=-$1350)
 800ADBDC	lui    a1, $800c
 800ADBE0	addiu  a1, a1, $ecd4 (=-$132c)
-800ADBE4	jal    funcb9214 [$800b9214]
+800ADBE4	jal    field_debug_concat_string [$800b9214]
 800ADBE8	nop
 V0 = bu[800536d4];
 800ADBF4	nop
@@ -14452,7 +14275,7 @@ Ladd50:	; 800ADD50
 800ADD54	addiu  a0, a0, $ecb0 (=-$1350)
 800ADD58	lui    a1, $800c
 800ADD5C	addiu  a1, a1, $a984 (=-$567c)
-800ADD60	jal    funcb91e0 [$800b91e0]
+800ADD60	jal    field_debug_copy_string [$800b91e0]
 800ADD64	nop
 800ADD68	lui    a1, $800c
 800ADD6C	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14462,7 +14285,7 @@ A0 = S0;
 800ADD7C	addiu  a0, a0, $ecb0 (=-$1350)
 800ADD80	lui    a1, $800c
 800ADD84	addiu  a1, a1, $ecd4 (=-$132c)
-800ADD88	jal    funcb9214 [$800b9214]
+800ADD88	jal    field_debug_concat_string [$800b9214]
 800ADD8C	nop
 V0 = bu[800536d4];
 800ADD98	nop
@@ -14555,7 +14378,7 @@ Ladef0:	; 800ADEF0
 800ADEF4	addiu  a0, a0, $ecb0 (=-$1350)
 800ADEF8	lui    a1, $800c
 800ADEFC	addiu  a1, a1, $a984 (=-$567c)
-800ADF00	jal    funcb91e0 [$800b91e0]
+800ADF00	jal    field_debug_copy_string [$800b91e0]
 800ADF04	nop
 800ADF08	lui    a1, $800c
 800ADF0C	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14565,7 +14388,7 @@ A0 = S0;
 800ADF1C	addiu  a0, a0, $ecb0 (=-$1350)
 800ADF20	lui    a1, $800c
 800ADF24	addiu  a1, a1, $ecd4 (=-$132c)
-800ADF28	jal    funcb9214 [$800b9214]
+800ADF28	jal    field_debug_concat_string [$800b9214]
 800ADF2C	nop
 V0 = bu[800536d4];
 800ADF38	nop
@@ -14612,7 +14435,7 @@ Ladfc4:	; 800ADFC4
 800ADFD0	addiu  a1, a1, $a994 (=-$566c)
 
 Ladfd4:	; 800ADFD4
-800ADFD4	jal    funcb91e0 [$800b91e0]
+800ADFD4	jal    field_debug_copy_string [$800b91e0]
 800ADFD8	nop
 800ADFDC	lui    a1, $800c
 800ADFE0	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14622,7 +14445,7 @@ A0 = S0;
 800ADFF0	addiu  a0, a0, $ecb0 (=-$1350)
 800ADFF4	lui    a1, $800c
 800ADFF8	addiu  a1, a1, $ecd4 (=-$132c)
-800ADFFC	jal    funcb9214 [$800b9214]
+800ADFFC	jal    field_debug_concat_string [$800b9214]
 800AE000	nop
 V0 = bu[800536d4];
 800AE00C	nop
@@ -14672,7 +14495,7 @@ Lae0b4:	; 800AE0B4
 800AE0B4	lui    a0, $800c
 800AE0B8	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a00f0;
-800AE0C4	jal    funcb91e0 [$800b91e0]
+800AE0C4	jal    field_debug_copy_string [$800b91e0]
 800AE0C8	nop
 800AE0CC	lui    a1, $800c
 800AE0D0	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14682,7 +14505,7 @@ A0 = S0;
 800AE0E0	addiu  a0, a0, $ecb0 (=-$1350)
 800AE0E4	lui    a1, $800c
 800AE0E8	addiu  a1, a1, $ecd4 (=-$132c)
-800AE0EC	jal    funcb9214 [$800b9214]
+800AE0EC	jal    field_debug_concat_string [$800b9214]
 800AE0F0	nop
 V0 = bu[800536d4];
 800AE0FC	nop
@@ -14706,9 +14529,8 @@ V0 = V0 & 0002;
 800AE140	nop
 
 Lae144:	; 800AE144
-A0 = 800a00e0;
-800AE14C	jal    funcb93b8 [$800b93b8]
-800AE150	nop
+A0 = 800a00e0; // "Bad Event arg!"
+funcb93b8();
 
 Lae154:	; 800AE154
 RA = w[SP + 0018];
@@ -14718,57 +14540,55 @@ SP = SP + 0020;
 800AE164	jr     ra 
 800AE168	nop
 
-V0 = bu[80053600];
-800AE174	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-V0 = V0 & 0003;
-800AE180	beq    v0, zero, Lae1d8 [$800ae1d8]
-[SP + 0010] = w(S0);
-A0 = bu[8005369c];
-800AE190	lui    s0, $800c
-800AE194	addiu  s0, s0, $ecd4 (=-$132c)
-800AE198	jal    funcb92f0 [$800b92f0]
-A1 = S0;
-800AE1A0	lui    a1, $800c
-800AE1A4	addiu  a1, a1, $a99c (=-$5664)
-800AE1A8	jal    funcb9214 [$800b9214]
-A0 = S0;
-A0 = S0;
-800AE1B4	jal    funcabc5c [$800abc5c]
-A1 = 0008;
-A0 = 0003;
-A1 = 007f;
-A2 = 0;
-800AE1C8	jal    funcb90e4 [$800b90e4]
-A3 = 0;
-800AE1D0	j      Lae1ec [$800ae1ec]
-V0 = 0;
 
-Lae1d8:	; 800AE1D8
-A0 = 800a00fc;
-800AE1E0	jal    funcb93b8 [$800b93b8]
-800AE1E4	nop
-V0 = 0;
 
-Lae1ec:	; 800AE1EC
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800AE1F8	jr     ra 
-800AE1FC	nop
+////////////////////////////////
+// field_event_opcode_bad()
+800AE16C-800AE1FC
 
-V0 = bu[80053600];
-800AE208	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
-V0 = V0 & 0003;
-800AE214	beq    v0, zero, Lae22c [$800ae22c]
-[SP + 0010] = w(S0);
-800AE21C	lui    a0, $800c
-800AE220	addiu  a0, a0, $a9a0 (=-$5660)
-800AE224	jal    funcabc5c [$800abc5c]
-A1 = 0002;
+// this opcode called for 04-0f 15 17-23 25-2f 34-3f 41-4f 57-5f 62-63 6a-6f 71-7f 9a-a0 a9 ab-ac ae-b1 b4-b5 b7 be c3-df eb-ef f5-f7 fc-fe
 
-Lae22c:	; 800AE22C
+if( bu[80053600] & 3 )
+{
+    A0 = bu[8005369c];
+    A1 = 800becd4;
+    funcb92f0();
+
+    A0 = 800becd4;
+    A1 = 800ba99c; // "???"
+    field_debug_concat_string();
+
+    A0 = 800becd4;
+    A1 = 8;
+    funcabc5c();
+
+    A0 = 3;
+    A1 = 7f;
+    A2 = 0;
+    A3 = 0;
+    funcb90e4();
+}
+else
+{
+    A0 = 800a00fc; // "Bad Event code!"
+    funcb93b8();
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_event_opcode_24_wait()
+800AE200-800AE680
+
+if( bu[80053600] & 3 )
+{
+    A0 = 800ba9a0; // "wait"
+    A1 = 2;
+    funcabc5c();
+}
+
 A2 = bu[80053624];
 A0 = 8006528c;
 V1 = A2 << 04;
@@ -14834,7 +14654,7 @@ Lae32c:	; 800AE32C
 800AE330	addiu  a0, a0, $ecb0 (=-$1350)
 800AE334	lui    a1, $800c
 800AE338	addiu  a1, a1, $a9a8 (=-$5658)
-800AE33C	jal    funcb91e0 [$800b91e0]
+800AE33C	jal    field_debug_copy_string [$800b91e0]
 800AE340	nop
 800AE344	lui    a1, $800c
 800AE348	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14844,7 +14664,7 @@ A0 = S0;
 800AE358	addiu  a0, a0, $ecb0 (=-$1350)
 800AE35C	lui    a1, $800c
 800AE360	addiu  a1, a1, $ecd4 (=-$132c)
-800AE364	jal    funcb9214 [$800b9214]
+800AE364	jal    field_debug_concat_string [$800b9214]
 800AE368	nop
 V0 = bu[800536d4];
 800AE374	nop
@@ -14917,7 +14737,7 @@ Lae470:	; 800AE470
 800AE474	addiu  a0, a0, $ecb0 (=-$1350)
 800AE478	lui    a1, $800c
 800AE47C	addiu  a1, a1, $a9a8 (=-$5658)
-800AE480	jal    funcb91e0 [$800b91e0]
+800AE480	jal    field_debug_copy_string [$800b91e0]
 800AE484	nop
 800AE488	lui    a1, $800c
 800AE48C	addiu  a1, a1, $ecd4 (=-$132c)
@@ -14927,7 +14747,7 @@ A0 = 0001;
 800AE49C	addiu  a0, a0, $ecb0 (=-$1350)
 800AE4A0	lui    a1, $800c
 800AE4A4	addiu  a1, a1, $ecd4 (=-$132c)
-800AE4A8	jal    funcb9214 [$800b9214]
+800AE4A8	jal    field_debug_concat_string [$800b9214]
 800AE4AC	nop
 V0 = bu[800536d4];
 800AE4B8	nop
@@ -14995,7 +14815,7 @@ Lae5a0:	; 800AE5A0
 800AE5A4	addiu  a0, a0, $ecb0 (=-$1350)
 800AE5A8	lui    a1, $800c
 800AE5AC	addiu  a1, a1, $a9a8 (=-$5658)
-800AE5B0	jal    funcb91e0 [$800b91e0]
+800AE5B0	jal    field_debug_copy_string [$800b91e0]
 800AE5B4	nop
 800AE5B8	lui    a1, $800c
 800AE5BC	addiu  a1, a1, $ecd4 (=-$132c)
@@ -15005,7 +14825,7 @@ A0 = S0;
 800AE5CC	addiu  a0, a0, $ecb0 (=-$1350)
 800AE5D0	lui    a1, $800c
 800AE5D4	addiu  a1, a1, $ecd4 (=-$132c)
-800AE5D8	jal    funcb9214 [$800b9214]
+800AE5D8	jal    field_debug_concat_string [$800b9214]
 800AE5DC	nop
 V0 = bu[800536d4];
 800AE5E8	nop
@@ -15047,11 +14867,9 @@ Lae66c:	; 800AE66C
 [A0 + 0000] = h(V1);
 
 Lae670:	; 800AE670
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800AE67C	jr     ra 
-800AE680	nop
+////////////////////////////////
+
+
 
 V0 = bu[80053600];
 800AE68C	addiu  sp, sp, $ffe8 (=-$18)
@@ -15422,7 +15240,7 @@ Laec24:	; 800AEC24
 800AEC24	lui    a0, $800c
 800AEC28	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a010c;
-800AEC34	jal    funcb91e0 [$800b91e0]
+800AEC34	jal    field_debug_copy_string [$800b91e0]
 800AEC38	nop
 800AEC3C	lui    a1, $800c
 800AEC40	addiu  a1, a1, $ecd4 (=-$132c)
@@ -15432,7 +15250,7 @@ A0 = S1;
 800AEC50	addiu  a0, a0, $ecb0 (=-$1350)
 800AEC54	lui    a1, $800c
 800AEC58	addiu  a1, a1, $ecd4 (=-$132c)
-800AEC5C	jal    funcb9214 [$800b9214]
+800AEC5C	jal    field_debug_concat_string [$800b9214]
 800AEC60	nop
 V0 = bu[800536d4];
 800AEC6C	nop
@@ -15486,19 +15304,19 @@ Laed18:	; 800AED18
 800AED1C	addiu  a0, a0, $ecb0 (=-$1350)
 800AED20	lui    a1, $800c
 800AED24	addiu  a1, a1, $a9d8 (=-$5628)
-800AED28	jal    funcb91e0 [$800b91e0]
+800AED28	jal    field_debug_copy_string [$800b91e0]
 800AED2C	nop
 800AED30	lui    a0, $800c
 800AED34	addiu  a0, a0, $ecd4 (=-$132c)
 800AED38	lui    a1, $800c
 800AED3C	addiu  a1, a1, $a958 (=-$56a8)
-800AED40	jal    funcb91e0 [$800b91e0]
+800AED40	jal    field_debug_copy_string [$800b91e0]
 800AED44	nop
 800AED48	lui    a0, $800c
 800AED4C	addiu  a0, a0, $ecb0 (=-$1350)
 800AED50	lui    a1, $800c
 800AED54	addiu  a1, a1, $ecd4 (=-$132c)
-800AED58	jal    funcb9214 [$800b9214]
+800AED58	jal    field_debug_concat_string [$800b9214]
 800AED5C	nop
 V0 = bu[800536d4];
 800AED68	nop
@@ -15559,19 +15377,19 @@ Laee34:	; 800AEE34
 800AEE38	addiu  a0, a0, $ecb0 (=-$1350)
 800AEE3C	lui    a1, $800c
 800AEE40	addiu  a1, a1, $a9e0 (=-$5620)
-800AEE44	jal    funcb91e0 [$800b91e0]
+800AEE44	jal    field_debug_copy_string [$800b91e0]
 800AEE48	nop
 800AEE4C	lui    a0, $800c
 800AEE50	addiu  a0, a0, $ecd4 (=-$132c)
 800AEE54	lui    a1, $800c
 800AEE58	addiu  a1, a1, $a958 (=-$56a8)
-800AEE5C	jal    funcb91e0 [$800b91e0]
+800AEE5C	jal    field_debug_copy_string [$800b91e0]
 800AEE60	nop
 800AEE64	lui    a0, $800c
 800AEE68	addiu  a0, a0, $ecb0 (=-$1350)
 800AEE6C	lui    a1, $800c
 800AEE70	addiu  a1, a1, $ecd4 (=-$132c)
-800AEE74	jal    funcb9214 [$800b9214]
+800AEE74	jal    field_debug_concat_string [$800b9214]
 800AEE78	nop
 V0 = bu[800536d4];
 800AEE84	nop
@@ -15807,7 +15625,7 @@ Laf208:	; 800AF208
 800AF208	lui    a0, $800c
 800AF20C	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a010c;
-800AF218	jal    funcb91e0 [$800b91e0]
+800AF218	jal    field_debug_copy_string [$800b91e0]
 800AF21C	nop
 800AF220	lui    a1, $800c
 800AF224	addiu  a1, a1, $ecd4 (=-$132c)
@@ -15817,7 +15635,7 @@ A0 = S1;
 800AF234	addiu  a0, a0, $ecb0 (=-$1350)
 800AF238	lui    a1, $800c
 800AF23C	addiu  a1, a1, $ecd4 (=-$132c)
-800AF240	jal    funcb9214 [$800b9214]
+800AF240	jal    field_debug_concat_string [$800b9214]
 800AF244	nop
 V0 = bu[800536d4];
 800AF250	nop
@@ -15871,19 +15689,19 @@ Laf2fc:	; 800AF2FC
 800AF300	addiu  a0, a0, $ecb0 (=-$1350)
 800AF304	lui    a1, $800c
 800AF308	addiu  a1, a1, $a9d8 (=-$5628)
-800AF30C	jal    funcb91e0 [$800b91e0]
+800AF30C	jal    field_debug_copy_string [$800b91e0]
 800AF310	nop
 800AF314	lui    a0, $800c
 800AF318	addiu  a0, a0, $ecd4 (=-$132c)
 800AF31C	lui    a1, $800c
 800AF320	addiu  a1, a1, $a958 (=-$56a8)
-800AF324	jal    funcb91e0 [$800b91e0]
+800AF324	jal    field_debug_copy_string [$800b91e0]
 800AF328	nop
 800AF32C	lui    a0, $800c
 800AF330	addiu  a0, a0, $ecb0 (=-$1350)
 800AF334	lui    a1, $800c
 800AF338	addiu  a1, a1, $ecd4 (=-$132c)
-800AF33C	jal    funcb9214 [$800b9214]
+800AF33C	jal    field_debug_concat_string [$800b9214]
 800AF340	nop
 V0 = bu[800536d4];
 800AF34C	nop
@@ -15944,19 +15762,19 @@ Laf418:	; 800AF418
 800AF41C	addiu  a0, a0, $ecb0 (=-$1350)
 800AF420	lui    a1, $800c
 800AF424	addiu  a1, a1, $a9e0 (=-$5620)
-800AF428	jal    funcb91e0 [$800b91e0]
+800AF428	jal    field_debug_copy_string [$800b91e0]
 800AF42C	nop
 800AF430	lui    a0, $800c
 800AF434	addiu  a0, a0, $ecd4 (=-$132c)
 800AF438	lui    a1, $800c
 800AF43C	addiu  a1, a1, $a958 (=-$56a8)
-800AF440	jal    funcb91e0 [$800b91e0]
+800AF440	jal    field_debug_copy_string [$800b91e0]
 800AF444	nop
 800AF448	lui    a0, $800c
 800AF44C	addiu  a0, a0, $ecb0 (=-$1350)
 800AF450	lui    a1, $800c
 800AF454	addiu  a1, a1, $ecd4 (=-$132c)
-800AF458	jal    funcb9214 [$800b9214]
+800AF458	jal    field_debug_concat_string [$800b9214]
 800AF45C	nop
 V0 = bu[800536d4];
 800AF468	nop
@@ -16114,7 +15932,7 @@ Laf69c:	; 800AF69C
 800AF69C	lui    a0, $800c
 800AF6A0	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a0118;
-800AF6AC	jal    funcb91e0 [$800b91e0]
+800AF6AC	jal    field_debug_copy_string [$800b91e0]
 800AF6B0	nop
 800AF6B4	lui    a1, $800c
 800AF6B8	addiu  a1, a1, $ecd4 (=-$132c)
@@ -16124,7 +15942,7 @@ A0 = S0;
 800AF6C8	addiu  a0, a0, $ecb0 (=-$1350)
 800AF6CC	lui    a1, $800c
 800AF6D0	addiu  a1, a1, $ecd4 (=-$132c)
-800AF6D4	jal    funcb9214 [$800b9214]
+800AF6D4	jal    field_debug_concat_string [$800b9214]
 800AF6D8	nop
 V0 = bu[800536d4];
 800AF6E4	nop
@@ -16167,7 +15985,7 @@ Laf76c:	; 800AF76C
 800AF76C	lui    a0, $800c
 800AF770	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a0124;
-800AF77C	jal    funcb91e0 [$800b91e0]
+800AF77C	jal    field_debug_copy_string [$800b91e0]
 800AF780	nop
 800AF784	lui    a1, $800c
 800AF788	addiu  a1, a1, $ecd4 (=-$132c)
@@ -16177,7 +15995,7 @@ A0 = S0;
 800AF798	addiu  a0, a0, $ecb0 (=-$1350)
 800AF79C	lui    a1, $800c
 800AF7A0	addiu  a1, a1, $ecd4 (=-$132c)
-800AF7A4	jal    funcb9214 [$800b9214]
+800AF7A4	jal    field_debug_concat_string [$800b9214]
 800AF7A8	nop
 V0 = bu[800536d4];
 800AF7B4	nop
@@ -16232,19 +16050,19 @@ Laf864:	; 800AF864
 800AF868	addiu  a0, a0, $ecb0 (=-$1350)
 800AF86C	lui    a1, $800c
 800AF870	addiu  a1, a1, $aa04 (=-$55fc)
-800AF874	jal    funcb91e0 [$800b91e0]
+800AF874	jal    field_debug_copy_string [$800b91e0]
 800AF878	nop
 800AF87C	lui    a0, $800c
 800AF880	addiu  a0, a0, $ecd4 (=-$132c)
 800AF884	lui    a1, $800c
 800AF888	addiu  a1, a1, $a958 (=-$56a8)
-800AF88C	jal    funcb91e0 [$800b91e0]
+800AF88C	jal    field_debug_copy_string [$800b91e0]
 800AF890	nop
 800AF894	lui    a0, $800c
 800AF898	addiu  a0, a0, $ecb0 (=-$1350)
 800AF89C	lui    a1, $800c
 800AF8A0	addiu  a1, a1, $ecd4 (=-$132c)
-800AF8A4	jal    funcb9214 [$800b9214]
+800AF8A4	jal    field_debug_concat_string [$800b9214]
 800AF8A8	nop
 V0 = bu[800536d4];
 800AF8B4	nop
@@ -16305,19 +16123,19 @@ Laf980:	; 800AF980
 800AF984	addiu  a0, a0, $ecb0 (=-$1350)
 800AF988	lui    a1, $800c
 800AF98C	addiu  a1, a1, $aa0c (=-$55f4)
-800AF990	jal    funcb91e0 [$800b91e0]
+800AF990	jal    field_debug_copy_string [$800b91e0]
 800AF994	nop
 800AF998	lui    a0, $800c
 800AF99C	addiu  a0, a0, $ecd4 (=-$132c)
 800AF9A0	lui    a1, $800c
 800AF9A4	addiu  a1, a1, $a958 (=-$56a8)
-800AF9A8	jal    funcb91e0 [$800b91e0]
+800AF9A8	jal    field_debug_copy_string [$800b91e0]
 800AF9AC	nop
 800AF9B0	lui    a0, $800c
 800AF9B4	addiu  a0, a0, $ecb0 (=-$1350)
 800AF9B8	lui    a1, $800c
 800AF9BC	addiu  a1, a1, $ecd4 (=-$132c)
-800AF9C0	jal    funcb9214 [$800b9214]
+800AF9C0	jal    field_debug_concat_string [$800b9214]
 800AF9C4	nop
 V0 = bu[800536d4];
 800AF9D0	nop
@@ -16395,17 +16213,17 @@ S2 = A0 & 001f;
 800AFAEC	addiu  s0, s0, $ecd4 (=-$132c)
 800AFAF0	lui    a1, $800c
 800AFAF4	addiu  a1, a1, $aa14 (=-$55ec)
-800AFAF8	jal    funcb91e0 [$800b91e0]
+800AFAF8	jal    field_debug_copy_string [$800b91e0]
 A0 = S0;
 A0 = S0;
 A1 = S4 << 03;
 V0 = w[800536cc];
 A1 = A1 + 0018;
-800AFB14	jal    funcb9214 [$800b9214]
+800AFB14	jal    field_debug_concat_string [$800b9214]
 A1 = A1 + V0;
 800AFB1C	lui    a1, $800c
 800AFB20	addiu  a1, a1, $aa1c (=-$55e4)
-800AFB24	jal    funcb9214 [$800b9214]
+800AFB24	jal    field_debug_concat_string [$800b9214]
 A0 = S0;
 V0 = bu[80053618];
 800AFB34	nop
@@ -16425,14 +16243,14 @@ V0 = bu[AT + 0000];
 Lafb6c:	; 800AFB6C
 800AFB6C	lui    a0, $800c
 800AFB70	addiu  a0, a0, $ecb0 (=-$1350)
-800AFB74	jal    funcb91e0 [$800b91e0]
+800AFB74	jal    field_debug_copy_string [$800b91e0]
 A1 = S0;
 A0 = S1;
 800AFB80	jal    funcb92f0 [$800b92f0]
 A1 = S0;
 800AFB88	lui    a0, $800c
 800AFB8C	addiu  a0, a0, $ecb0 (=-$1350)
-800AFB90	jal    funcb9214 [$800b9214]
+800AFB90	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
 V0 = bu[800536d4];
 800AFBA0	nop
@@ -16584,19 +16402,19 @@ Lafdb8:	; 800AFDB8
 800AFDB8	lui    a0, $800c
 800AFDBC	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a013c;
-800AFDC8	jal    funcb91e0 [$800b91e0]
+800AFDC8	jal    field_debug_copy_string [$800b91e0]
 800AFDCC	nop
 800AFDD0	lui    a0, $800c
 800AFDD4	addiu  a0, a0, $ecd4 (=-$132c)
 800AFDD8	lui    a1, $800c
 800AFDDC	addiu  a1, a1, $a958 (=-$56a8)
-800AFDE0	jal    funcb91e0 [$800b91e0]
+800AFDE0	jal    field_debug_copy_string [$800b91e0]
 800AFDE4	nop
 800AFDE8	lui    a0, $800c
 800AFDEC	addiu  a0, a0, $ecb0 (=-$1350)
 800AFDF0	lui    a1, $800c
 800AFDF4	addiu  a1, a1, $ecd4 (=-$132c)
-800AFDF8	jal    funcb9214 [$800b9214]
+800AFDF8	jal    field_debug_concat_string [$800b9214]
 800AFDFC	nop
 V0 = bu[800536d4];
 800AFE08	nop
@@ -16727,19 +16545,19 @@ Lafffc:	; 800AFFFC
 800AFFFC	lui    a0, $800c
 800B0000	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a0148;
-800B000C	jal    funcb91e0 [$800b91e0]
+800B000C	jal    field_debug_copy_string [$800b91e0]
 800B0010	nop
 800B0014	lui    a0, $800c
 800B0018	addiu  a0, a0, $ecd4 (=-$132c)
 800B001C	lui    a1, $800c
 800B0020	addiu  a1, a1, $a958 (=-$56a8)
-800B0024	jal    funcb91e0 [$800b91e0]
+800B0024	jal    field_debug_copy_string [$800b91e0]
 800B0028	nop
 800B002C	lui    a0, $800c
 800B0030	addiu  a0, a0, $ecb0 (=-$1350)
 800B0034	lui    a1, $800c
 800B0038	addiu  a1, a1, $ecd4 (=-$132c)
-800B003C	jal    funcb9214 [$800b9214]
+800B003C	jal    field_debug_concat_string [$800b9214]
 800B0040	nop
 V0 = bu[800536d4];
 800B004C	nop
@@ -16827,19 +16645,19 @@ Lb0180:	; 800B0180
 800B0180	lui    a0, $800c
 800B0184	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a0154;
-800B0190	jal    funcb91e0 [$800b91e0]
+800B0190	jal    field_debug_copy_string [$800b91e0]
 800B0194	nop
 800B0198	lui    a0, $800c
 800B019C	addiu  a0, a0, $ecd4 (=-$132c)
 800B01A0	lui    a1, $800c
 800B01A4	addiu  a1, a1, $a958 (=-$56a8)
-800B01A8	jal    funcb91e0 [$800b91e0]
+800B01A8	jal    field_debug_copy_string [$800b91e0]
 800B01AC	nop
 800B01B0	lui    a0, $800c
 800B01B4	addiu  a0, a0, $ecb0 (=-$1350)
 800B01B8	lui    a1, $800c
 800B01BC	addiu  a1, a1, $ecd4 (=-$132c)
-800B01C0	jal    funcb9214 [$800b9214]
+800B01C0	jal    field_debug_concat_string [$800b9214]
 800B01C4	nop
 V0 = bu[800536d4];
 800B01D0	nop
@@ -16893,19 +16711,19 @@ Lb0278:	; 800B0278
 A1 = 800a0160;
 
 Lb0288:	; 800B0288
-800B0288	jal    funcb91e0 [$800b91e0]
+800B0288	jal    field_debug_copy_string [$800b91e0]
 800B028C	nop
 800B0290	lui    a0, $800c
 800B0294	addiu  a0, a0, $ecd4 (=-$132c)
 800B0298	lui    a1, $800c
 800B029C	addiu  a1, a1, $a958 (=-$56a8)
-800B02A0	jal    funcb91e0 [$800b91e0]
+800B02A0	jal    field_debug_copy_string [$800b91e0]
 800B02A4	nop
 800B02A8	lui    a0, $800c
 800B02AC	addiu  a0, a0, $ecb0 (=-$1350)
 800B02B0	lui    a1, $800c
 800B02B4	addiu  a1, a1, $ecd4 (=-$132c)
-800B02B8	jal    funcb9214 [$800b9214]
+800B02B8	jal    field_debug_concat_string [$800b9214]
 800B02BC	nop
 V0 = bu[800536d4];
 800B02C8	nop
@@ -17003,19 +16821,19 @@ Lb0434:	; 800B0434
 800B0434	lui    a0, $800c
 800B0438	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a0148;
-800B0444	jal    funcb91e0 [$800b91e0]
+800B0444	jal    field_debug_copy_string [$800b91e0]
 800B0448	nop
 800B044C	lui    a0, $800c
 800B0450	addiu  a0, a0, $ecd4 (=-$132c)
 800B0454	lui    a1, $800c
 800B0458	addiu  a1, a1, $a958 (=-$56a8)
-800B045C	jal    funcb91e0 [$800b91e0]
+800B045C	jal    field_debug_copy_string [$800b91e0]
 800B0460	nop
 800B0464	lui    a0, $800c
 800B0468	addiu  a0, a0, $ecb0 (=-$1350)
 800B046C	lui    a1, $800c
 800B0470	addiu  a1, a1, $ecd4 (=-$132c)
-800B0474	jal    funcb9214 [$800b9214]
+800B0474	jal    field_debug_concat_string [$800b9214]
 800B0478	nop
 V0 = bu[800536d4];
 800B0484	nop
@@ -17234,7 +17052,7 @@ Lb07b0:	; 800B07B0
 800B07B4	addiu  a0, a0, $ecb0 (=-$1350)
 800B07B8	lui    a1, $800c
 800B07BC	addiu  a1, a1, $aa38 (=-$55c8)
-800B07C0	jal    funcb91e0 [$800b91e0]
+800B07C0	jal    field_debug_copy_string [$800b91e0]
 800B07C4	nop
 800B07C8	lui    a1, $800c
 800B07CC	addiu  a1, a1, $ecd4 (=-$132c)
@@ -17244,7 +17062,7 @@ A0 = S0;
 800B07DC	addiu  a0, a0, $ecb0 (=-$1350)
 800B07E0	lui    a1, $800c
 800B07E4	addiu  a1, a1, $ecd4 (=-$132c)
-800B07E8	jal    funcb9214 [$800b9214]
+800B07E8	jal    field_debug_concat_string [$800b9214]
 800B07EC	nop
 V0 = bu[800536d4];
 800B07F8	nop
@@ -17308,38 +17126,28 @@ SP = SP + 0018;
 800B08CC	jr     ra 
 800B08D0	nop
 
-V0 = bu[80053600];
-800B08DC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800B08E4	beq    v0, zero, Lb08fc [$800b08fc]
-[SP + 0010] = w(RA);
-800B08EC	lui    a0, $800c
-800B08F0	addiu  a0, a0, $aa48 (=-$55b8)
-800B08F4	jal    funcabc5c [$800abc5c]
-A1 = 0002;
 
-Lb08fc:	; 800B08FC
+
+////////////////////////////////
+// field_event_opcode_13_lback()
+800B08D4-800B0954
+
+if( bu[80053600] & 3 )
+{
+    A0 = 800baa48; // "lback"
+    A1 = 2;
+    funcabc5c();
+}
+
 A1 = bu[80053624];
-800B0904	lui    v0, $8007
-800B0908	addiu  v0, v0, $a8a0 (=-$5760)
-A1 = A1 << 01;
-A1 = A1 + V0;
-V1 = hu[A1 + 0000];
+V1 = hu[8006a8a0 + A1 * 2];
 V0 = w[800536cc];
-800B0920	nop
-V0 = V0 + V1;
-A0 = bu[V0 + 0002];
-V0 = bu[V0 + 0001];
-V1 = hu[A1 + 0000];
-A0 = A0 << 08;
-V0 = V0 | A0;
-V1 = V1 - V0;
-V0 = 0001;
-[A1 + 0000] = h(V1);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B0950	jr     ra 
-800B0954	nop
+[8006a8a0 + A1 * 2] = h(hu[8006a8a0 + A1 * 2] - hu[V0 + V1 + 1]);
+
+return 1;
+////////////////////////////////
+
+
 
 V0 = bu[80053600];
 800B0960	addiu  sp, sp, $ffe8 (=-$18)
@@ -17525,19 +17333,20 @@ SP = SP + 0018;
 800B0C24	jr     ra 
 800B0C28	nop
 
-V0 = bu[80053600];
-800B0C34	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800B0C3C	beq    v0, zero, Lb0c54 [$800b0c54]
-[SP + 0010] = w(RA);
-800B0C44	lui    a0, $800c
-800B0C48	addiu  a0, a0, $aa68 (=-$5598)
-800B0C4C	jal    funcabc5c [$800abc5c]
-A1 = 0003;
 
-Lb0c54:	; 800B0C54
+
+////////////////////////////////
+// field_event_opcode_70_batle()
+800B0C2C-800B0D10
+
+if( bu[80053600] & 3 )
+{
+    A0 = 800baa68; // "batle"
+    A1 = 3;
+    funcabc5c();
+}
+
 A2 = w[800536d0];
-800B0C5C	nop
 V1 = bu[A2 + 0001];
 800B0C64	nop
 800B0C68	beq    v1, zero, Lb0c80 [$800b0c80]
@@ -17581,10 +17390,9 @@ V0 = 0;
 [V1 + 001a] = h(0);
 
 Lb0d04:	; 800B0D04
-RA = w[SP + 0010];
-SP = SP + 0018;
-800B0D0C	jr     ra 
-800B0D10	nop
+////////////////////////////////
+
+
 
 V0 = w[80053698];
 A0 = 0005;
@@ -17909,19 +17717,20 @@ SP = SP + 0020;
 800B1220	jr     ra 
 800B1224	nop
 
-V0 = bu[80053600];
-800B1230	addiu  sp, sp, $ffe0 (=-$20)
-V0 = V0 & 0003;
-800B1238	beq    v0, zero, Lb1250 [$800b1250]
-[SP + 0018] = w(RA);
-800B1240	lui    a0, $800c
-800B1244	addiu  a0, a0, $aa9c (=-$5564)
-800B1248	jal    funcabc5c [$800abc5c]
-A1 = 0001;
 
-Lb1250:	; 800B1250
+
+////////////////////////////////
+// field_event_opcode_33_uc()
+800B1228-800B12CC
+
+if( bu[80053600] & 3 )
+{
+    A0 = 800baa9c; // "uc"
+    A1 = 1;
+    funcabc5c();
+}
+
 V0 = bu[80053624];
-800B1258	nop
 V0 = V0 << 01;
 800B1260	lui    at, $8007
 800B1264	addiu  at, at, $a8a0 (=-$5760)
@@ -17943,11 +17752,11 @@ V0 = hu[V1 + 0000];
 800B12B0	nop
 V0 = V0 + 0002;
 [V1 + 0000] = h(V0);
-V0 = 0;
-RA = w[SP + 0018];
-SP = SP + 0020;
-800B12C8	jr     ra 
-800B12CC	nop
+
+return 0;
+////////////////////////////////
+
+
 
 V0 = bu[80053600];
 800B12D8	addiu  sp, sp, $ffe0 (=-$20)
@@ -18302,7 +18111,7 @@ Lb1880:	; 800B1880
 800B1880	lui    a0, $800c
 800B1884	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a016c;
-800B1890	jal    funcb91e0 [$800b91e0]
+800B1890	jal    field_debug_copy_string [$800b91e0]
 800B1894	nop
 800B1898	lui    a1, $800c
 800B189C	addiu  a1, a1, $ecd4 (=-$132c)
@@ -18312,7 +18121,7 @@ A0 = S0;
 800B18AC	addiu  a0, a0, $ecb0 (=-$1350)
 800B18B0	lui    a1, $800c
 800B18B4	addiu  a1, a1, $ecd4 (=-$132c)
-800B18B8	jal    funcb9214 [$800b9214]
+800B18B8	jal    field_debug_concat_string [$800b9214]
 800B18BC	nop
 V0 = bu[800536d4];
 800B18C8	nop
@@ -20923,20 +20732,20 @@ SP = SP + 0018;
 800B420C	jr     ra 
 800B4210	nop
 
-V0 = bu[80053600];
-800B421C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 001c] = w(RA);
-V0 = V0 & 0003;
-800B4228	beq    v0, zero, Lb4240 [$800b4240]
-[SP + 0018] = w(S0);
-800B4230	lui    a0, $800c
-800B4234	addiu  a0, a0, $ab60 (=-$54a0)
-800B4238	jal    funcabc5c [$800abc5c]
-A1 = 0002;
 
-Lb4240:	; 800B4240
+
+////////////////////////////////
+// field_event_opcode_40_mes()
+800B4214-800B42CC
+
+if( bu[80053600] & 3 )
+{
+    A0 = 800bab60; // "mes"
+    A1 = 2;
+    funcabc5c();
+}
+
 V0 = bu[80053624];
-800B4248	nop
 V0 = V0 << 01;
 800B4250	lui    at, $8007
 800B4254	addiu  at, at, $a8a0 (=-$5760)
@@ -20950,7 +20759,7 @@ A1 = bu[V0 + 0002];
 800B4278	lui    s0, $8007
 800B427C	addiu  s0, s0, $a8a0 (=-$5760)
 800B4280	jal    funcb6a58 [$800b6a58]
-800B4284	nop
+
 800B4288	bne    v0, zero, Lb4298 [$800b4298]
 V0 = 0;
 800B4290	j      Lb42bc [$800b42bc]
@@ -20958,20 +20767,15 @@ V0 = 0001;
 
 Lb4298:	; 800B4298
 A0 = bu[80053624];
-800B42A0	nop
 A0 = A0 << 01;
 A0 = A0 + S0;
 V1 = hu[A0 + 0000];
-800B42B0	nop
-V1 = V1 + 0003;
-[A0 + 0000] = h(V1);
+[A0 + 0000] = h(V1 + 3);
 
 Lb42bc:	; 800B42BC
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-800B42C8	jr     ra 
-800B42CC	nop
+////////////////////////////////
+
+
 
 V0 = bu[80053600];
 800B42D8	addiu  sp, sp, $ffd8 (=-$28)
@@ -21338,7 +21142,7 @@ Lb486c:	; 800B486C
 800B486C	lui    a0, $800c
 800B4870	addiu  a0, a0, $ecb0 (=-$1350)
 A1 = 800a00d4;
-800B487C	jal    funcb91e0 [$800b91e0]
+800B487C	jal    field_debug_copy_string [$800b91e0]
 800B4880	nop
 800B4884	lui    a1, $800c
 800B4888	addiu  a1, a1, $ecd4 (=-$132c)
@@ -21348,7 +21152,7 @@ A0 = S0;
 800B4898	addiu  a0, a0, $ecb0 (=-$1350)
 800B489C	lui    a1, $800c
 800B48A0	addiu  a1, a1, $ecd4 (=-$132c)
-800B48A4	jal    funcb9214 [$800b9214]
+800B48A4	jal    field_debug_concat_string [$800b9214]
 800B48A8	nop
 V0 = bu[800536d4];
 800B48B4	nop
@@ -21372,9 +21176,9 @@ V0 = V0 & 0002;
 800B48F8	nop
 
 Lb48fc:	; 800B48FC
-A0 = 800a00e0;
-800B4904	jal    funcb93b8 [$800b93b8]
-800B4908	nop
+A0 = 800a00e0; // "Bad Event arg!"
+funcb93b8();
+
 800B490C	j      Lb493c [$800b493c]
 V0 = 0001;
 
@@ -23645,9 +23449,9 @@ V0 = w[80053638];
 800B6ABC	nop
 800B6AC0	bne    v0, zero, Lb6ae0 [$800b6ae0]
 V0 = S2 << 10;
-A0 = 800a02b0;
-800B6AD0	jal    funcb93b8 [$800b93b8]
-800B6AD4	nop
+A0 = 800a02b0; // "No mes data!"
+funcb93b8();
+
 800B6AD8	j      Lb7448 [$800b7448]
 V0 = 0001;
 
@@ -24502,22 +24306,22 @@ V0 = 003e;
 800B76EC	addiu  s0, s0, $ecb0 (=-$1350)
 800B76F0	lui    a1, $800c
 800B76F4	addiu  a1, a1, $acb4 (=-$534c)
-800B76F8	jal    funcb91e0 [$800b91e0]
+800B76F8	jal    field_debug_copy_string [$800b91e0]
 A0 = S0;
 A1 = w[800536cc];
 A0 = S0;
-800B770C	jal    funcb9214 [$800b9214]
+800B770C	jal    field_debug_concat_string [$800b9214]
 A1 = A1 + 0008;
 A0 = 0005;
 800B7718	jal    funcb8f4c [$800b8f4c]
 A1 = S0;
 800B7720	lui    a1, $800c
 800B7724	addiu  a1, a1, $acbc (=-$5344)
-800B7728	jal    funcb91e0 [$800b91e0]
+800B7728	jal    field_debug_copy_string [$800b91e0]
 A0 = S0;
 A1 = w[800536cc];
 A0 = S0;
-800B773C	jal    funcb9214 [$800b9214]
+800B773C	jal    field_debug_concat_string [$800b9214]
 A1 = A1 + 0010;
 A0 = 0005;
 800B7748	jal    funcb8f4c [$800b8f4c]
@@ -24540,15 +24344,15 @@ A0 = 0005;
 A0 = 0005;
 A0 = 0005;
 A2 = 800a02e4;
-800B779C	jal    funcb9040 [$800b9040]
+800B779C	jal    field_debug_copy_string_into_page [$800b9040]
 A1 = 0006;
 A0 = 0005;
 A2 = 800a02f0;
-800B77B0	jal    funcb9040 [$800b9040]
+800B77B0	jal    field_debug_copy_string_into_page [$800b9040]
 A1 = 0007;
 A0 = 0005;
 A2 = 800a02fc;
-800B77C4	jal    funcb9040 [$800b9040]
+800B77C4	jal    field_debug_copy_string_into_page [$800b9040]
 A1 = 0008;
 800B77CC	jal    funcb919c [$800b919c]
 A0 = 0005;
@@ -26128,7 +25932,7 @@ AT = AT + S1;
 A0 = h[AT + 0000];
 V0 = S1 + S0;
 A0 = A0 << 04;
-800B8F98	jal    funcb91e0 [$800b91e0]
+800B8F98	jal    field_debug_copy_string [$800b91e0]
 A0 = V0 + A0;
 800B8FA0	lui    a0, $6666
 800B8FA4	addiu  s0, s0, $fff0 (=-$10)
@@ -26173,7 +25977,7 @@ SP = SP + 0020;
 800B903C	nop
 
 
-funcb9040:	; 800B9040
+field_debug_copy_string_into_page:	; 800B9040
 800B9040	addiu  sp, sp, $ffe8 (=-$18)
 V0 = A0 << 10;
 V0 = V0 >> 10;
@@ -26189,7 +25993,7 @@ A1 = A1 << 10;
 A1 = A1 >> 0c;
 A0 = A0 + A1;
 [SP + 0010] = w(RA);
-800B907C	jal    funcb91e0 [$800b91e0]
+800B907C	jal    field_debug_copy_string [$800b91e0]
 A1 = A2;
 V0 = 0001;
 [800536d8] = b(V0);
@@ -26287,7 +26091,7 @@ V0 = 0001;
 800B91DC	nop
 
 
-funcb91e0:	; 800B91E0
+field_debug_copy_string:	; 800B91E0
 V0 = bu[A1 + 0000];
 800B91E4	nop
 800B91E8	beq    v0, zero, Lb920c [$800b920c]
@@ -26307,7 +26111,7 @@ Lb920c:	; 800B920C
 [A0 + 0000] = b(0);
 
 
-funcb9214:	; 800B9214
+field_debug_concat_string:	; 800B9214
 V0 = bu[A0 + 0000];
 800B9218	nop
 800B921C	beq    v0, zero, Lb923c [$800b923c]
@@ -26438,14 +26242,19 @@ V0 = bu[AT + 0000];
 [A1 + 0003] = b(V0);
 
 
-funcb93a8:	; 800B93A8
-800B93A8	jr     ra 
-800B93AC	nop
+
+////////////////////////////////
+// funcb93a8()
+800B93A8-800B93AC
+////////////////////////////////
 
 
-funcb93b0:	; 800B93B0
-800B93B0	jr     ra 
-800B93B4	nop
+
+////////////////////////////////
+// funcb93b0()
+800B93B0-800B93B4
+////////////////////////////////
+
 
 
 funcb93b8:	; 800B93B8
