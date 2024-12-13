@@ -11213,14 +11213,11 @@ for( int i = 0; i < actors_n; ++i )
 800AADCC-800AB3F4
 
 events_data = w[800536cc];
-S2 = 6;
 actors_n = bu[events_data + 2];
 
 Laadf4:	; 800AADF4
-    V0 = w[800536cc];
     V1 = bu[80053624];
-    V0 = bu[V0 + 2];
-    V1 = V1 < V0;
+    V1 = V1 < actors_n;
     if( V1 == 0 )
     {
         [80053624] = b(0);
@@ -11238,7 +11235,7 @@ Laadf4:	; 800AADF4
     Laae48:	; 800AAE48
     V0 = bu[80053694];
     800AAE50	nop
-    800AAE54	bne    v0, s2, Laaedc [$800aaedc]
+    800AAE54	bne    v0, 6, Laaedc [$800aaedc]
     800AAE58	nop
     V0 = bu[80053600];
     800AAE64	nop
@@ -11280,9 +11277,7 @@ Laadf4:	; 800AADF4
     800AAEF0	addiu  at, at, $a8a0 (=-$5760)
     AT = AT + V0;
     V1 = hu[AT + 0000];
-    V0 = w[800536cc];
-    800AAF04	nop
-    V0 = V0 + V1;
+    V0 = events_data + V1;
     V0 = bu[V0 + 0000];
     800AAF10	nop
     [8005369c] = b(V0);
@@ -11295,7 +11290,7 @@ Laadf4:	; 800AADF4
     800AAF4C	nop
     V0 = bu[80053694];
     800AAF58	nop
-    800AAF5C	bne    v0, s2, Lab08c [$800ab08c]
+    800AAF5C	bne    v0, 6, Lab08c [$800ab08c]
     800AAF60	nop
     V0 = bu[80053600];
     800AAF6C	nop
@@ -11320,7 +11315,7 @@ Laadf4:	; 800AADF4
     Laafcc:	; 800AAFCC
     V0 = bu[80053694];
     800AAFD4	nop
-    800AAFD8	bne    v0, s2, Lab080 [$800ab080]
+    800AAFD8	bne    v0, 6, Lab080 [$800ab080]
     800AAFDC	nop
     V0 = bu[80053600];
     800AAFE8	nop
@@ -11364,7 +11359,7 @@ Laadf4:	; 800AADF4
     V1 = bu[80053694];
     V0 = V0 + 0001;
     [80053624] = b(V0);
-    800AB0A8	bne    v1, s2, Lab0f8 [$800ab0f8]
+    800AB0A8	bne    v1, 6, Lab0f8 [$800ab0f8]
     800AB0AC	addiu  actors_n, actors_n, $ffff (=-$1)
     V1 = bu[80053618];
     800AB0B8	nop
@@ -11374,202 +11369,175 @@ Laadf4:	; 800AADF4
     800AB0C8	beq    v0, zero, Lab100 [$800ab100]
     800AB0CC	nop
     V0 = bu[80053624];
-    800AB0D8	nop
-    800AB0DC	lui    at, $800e
-    800AB0E0	addiu  at, at, $f9a8 (=-$658)
-    AT = AT + V0;
-    V0 = bu[AT + 0000];
-    800AB0EC	nop
+    V0 = bu[800df9a8 + V0];
     800AB0F0	bne    v0, zero, Lab100 [$800ab100]
     800AB0F4	nop
 
     Lab0f8:	; 800AB0F8
 800AB0F8	bne    actors_n, zero, Laadf4 [$800aadf4]
-800AB0FC	nop
 
 Lab100:	; 800AB100
-V1 = bu[80053694];
-V0 = 0006;
-800AB10C	bne    v1, v0, Lab11c [$800ab11c]
-S3 = 0;
-[800535fc] = b(0);
+if( bu[80053694] == 6 )
+{
+    [800535fc] = b(0);
+}
 
-Lab11c:	; 800AB11C
-T1 = 0006;
 A3 = 80066590;
 A2 = 8006a964;
 A1 = 8006a85c;
 T0 = 8006a924;
 
-V0 = w[800536cc];
-V0 = bu[V0 + 0002];
-800AB130	blez   v0, Lab3d8 [$800ab3d8]
 
-
-Lab158:	; 800AB158
-    A0 = bu[A1 + 0000];
-    V0 = 00ff;
-    800AB160	beq    a0, v0, Lab3ac [$800ab3ac]
-    800AB164	nop
+for( int i = 0; i < actors_n; ++i )
+{
+    A0 = bu[A1];
     V1 = w[800536d0];
-    800AB170	nop
-    V0 = h[V1 + 001e];
-    800AB178	nop
-    800AB17C	bne    v0, a0, Lab194 [$800ab194]
-    800AB180	nop
-    V0 = bu[V1 + 0020];
-    800AB188	nop
-    800AB18C	beq    v0, zero, Lab3ac [$800ab3ac]
-    800AB190	nop
 
-    Lab194:	; 800AB194
-    V1 = bu[A3 + 0000];
-    800AB198	nop
-    V0 = V1 < 0006;
-    800AB1A0	beq    v0, zero, Lab3ac [$800ab3ac]
-    V0 = V1 << 02;
-    AT = 800a00bc;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    800AB1B8	nop
-    800AB1BC	jr     v0 
-    800AB1C0	nop
+    if( ( A0 != ff ) && ( ( h[V1 + 1e] != A0 ) || ( bu[V1 + 20] != 0 ) ) )
+    {
+        switch( bu[A3] )
+        {
+            case 0:
+            {
+                V1 = bu[A1 + 0000];
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 03;
+                V0 = V0 + V1;
+                V1 = w[800536b0];
+                V0 = V0 << 02;
+                A0 = V0 + V1;
+                V0 = bu[A0 + 0043];
+                V1 = bu[T0 + 0000];
+                if( V0 == V1 )
+                {
+                    if( h[A0 + 46] >= h[A0 + 48] )
+                    {
+                        [A0 + 46] = h(0);
+                    }
+                }
+                else
+                {
+                    [A0 + 0043] = b(V1);
+                    V0 = bu[A1 + 0000];
+                    V1 = V0 << 01;
+                    V1 = V1 + V0;
+                    V1 = V1 << 03;
+                    V1 = V1 + V0;
+                    V0 = w[800536b0];
+                    V1 = V1 << 02;
+                    V1 = V1 + V0;
+                    [V1 + 0046] = h(0);
+                }
+            }
+            break;
 
-    V1 = bu[A1 + 0000];
-    800AB1C8	nop
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = w[800536b0];
-    V0 = V0 << 02;
-    A0 = V0 + V1;
-    V0 = bu[A0 + 0043];
-    V1 = bu[T0 + 0000];
-    800AB1F4	nop
-    800AB1F8	beq    v0, v1, Lab2a0 [$800ab2a0]
-    800AB1FC	nop
-    800AB200	j      Lab248 [$800ab248]
-    [A0 + 0043] = b(V1);
-    V1 = bu[A1 + 0000];
-    800AB20C	nop
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = w[800536b0];
-    V0 = V0 << 02;
-    A0 = V0 + V1;
-    V0 = bu[A0 + 0043];
-    V1 = bu[T0 + 0000];
-    800AB238	nop
-    800AB23C	beq    v0, v1, Lab3ac [$800ab3ac]
-    800AB240	nop
-    [A0 + 0043] = b(V1);
+            case 1:
+            {
+                V1 = bu[A1 + 0000];
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 03;
+                V0 = V0 + V1;
+                V1 = w[800536b0];
+                V0 = V0 << 02;
+                A0 = V0 + V1;
+                V0 = bu[A0 + 0043];
+                V1 = bu[T0 + 0000];
+                if( V0 != V1 )
+                {
+                    [A0 + 0043] = b(V1);
+                    V0 = bu[A1 + 0000];
+                    V1 = V0 << 01;
+                    V1 = V1 + V0;
+                    V1 = V1 << 03;
+                    V1 = V1 + V0;
+                    V0 = w[800536b0];
+                    V1 = V1 << 02;
+                    V1 = V1 + V0;
+                    [V1 + 0046] = h(0);
+                }
+            }
+            break;
 
-    Lab248:	; 800AB248
-    V0 = bu[A1 + 0000];
-    800AB24C	nop
-    V1 = V0 << 01;
-    V1 = V1 + V0;
-    V1 = V1 << 03;
-    V1 = V1 + V0;
-    V0 = w[800536b0];
-    V1 = V1 << 02;
-    V1 = V1 + V0;
-    800AB270	j      Lab3ac [$800ab3ac]
-    [V1 + 0046] = h(0);
-    V1 = bu[A1 + 0000];
-    800AB27C	nop
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = w[800536b0];
-    V0 = V0 << 02;
-    A0 = V0 + V1;
+            case 2:
+            {
+                V1 = bu[A1 + 0000];
+                800AB27C	nop
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 03;
+                V0 = V0 + V1;
+                V1 = w[800536b0];
+                V0 = V0 << 02;
+                A0 = V0 + V1;
+                if( h[A0 + 46] >= h[A0 + 48] )
+                {
+                    [A0 + 46] = h(0);
+                }
+            }
+            break;
 
-    Lab2a0:	; 800AB2A0
-    V0 = h[A0 + 0046];
-    V1 = h[A0 + 0048];
-    800AB2A8	nop
-    V0 = V0 < V1;
-    800AB2B0	bne    v0, zero, Lab3ac [$800ab3ac]
-    800AB2B4	nop
-    800AB2B8	j      Lab3ac [$800ab3ac]
-    [A0 + 0046] = h(0);
-    V1 = bu[A1 + 0000];
-    800AB2C4	nop
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = w[800536b0];
-    V0 = V0 << 02;
-    V0 = V0 + V1;
-    V1 = h[V0 + 0046];
-    V0 = h[V0 + 0048];
-    800AB2F0	nop
-    V1 = V1 < V0;
-    800AB2F8	bne    v1, zero, Lab3ac [$800ab3ac]
-    800AB2FC	nop
-    800AB300	j      Lab3ac [$800ab3ac]
-    [A3 + 0000] = b(T1);
-    V1 = bu[A1 + 0000];
-    800AB30C	nop
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = w[800536b0];
-    V0 = V0 << 02;
-    A0 = V0 + V1;
-    V0 = h[A0 + 0046];
-    V1 = bu[A2 + 0000];
-    800AB338	nop
-    V0 = V0 < V1;
-    800AB340	bne    v0, zero, Lab3ac [$800ab3ac]
-    800AB344	nop
-    V0 = bu[A2 + 0000];
-    800AB34C	j      Lab3ac [$800ab3ac]
-    [A0 + 0046] = h(V0);
-    V1 = bu[A1 + 0000];
-    800AB358	nop
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = w[800536b0];
-    V0 = V0 << 02;
-    V1 = V0 + V1;
-    A0 = h[V1 + 0046];
-    V0 = bu[A2 + 0000];
-    800AB384	nop
-    V0 = A0 < V0;
-    800AB38C	beq    v0, zero, Lab3a8 [$800ab3a8]
-    800AB390	nop
-    V0 = h[V1 + 0048];
-    800AB398	nop
-    V0 = A0 < V0;
-    800AB3A0	bne    v0, zero, Lab3ac [$800ab3ac]
-    800AB3A4	nop
+            case 3:
+            {
+                V1 = bu[A1 + 0000];
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 03;
+                V0 = V0 + V1;
+                V1 = w[800536b0];
+                V0 = V0 << 02;
+                V0 = V0 + V1;
+                if( h[V0 + 46] >= h[V0 + 48] )
+                {
+                    [A3] = b(6);
+                }
+            }
+            break;
 
-    Lab3a8:	; 800AB3A8
-    [A3 + 0000] = b(T1);
+            case 4:
+            {
+                V1 = bu[A1 + 0000];
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 03;
+                V0 = V0 + V1;
+                V1 = w[800536b0];
+                V0 = V0 << 02;
+                A0 = V0 + V1;
+                if( h[A0 + 46] >= bu[A2] )
+                {
+                    [A0 + 46] = h(bu[A2]);
+                }
+            }
+            break;
+
+            case 5:
+            {
+                V1 = bu[A1 + 0000];
+                V0 = V1 << 01;
+                V0 = V0 + V1;
+                V0 = V0 << 03;
+                V0 = V0 + V1;
+                V1 = w[800536b0];
+                V0 = V0 << 02;
+                V1 = V0 + V1;
+                A0 = h[V1 + 46];
+                if( ( A0 >= bu[A2] ) || ( A0 >= h[V1 + 48] ) )
+                {
+                    [A3 + 0000] = b(6);
+                }
+            }
+            break;
+        }
+    }
 
     Lab3ac:	; 800AB3AC
     A3 = A3 + 0001;
     A2 = A2 + 0001;
     A1 = A1 + 0001;
-    V0 = w[800536cc];
-    800AB3C0	nop
-    V0 = bu[V0 + 0002];
-    S3 = S3 + 0001;
     T0 = T0 + 0001;
-    V0 = S3 < V0;
-800AB3D0	bne    v0, zero, Lab158 [$800ab158]
-
-Lab3d8:	; 800AB3D8
+}
 ////////////////////////////////
 
 
