@@ -24,7 +24,7 @@
 // field_background_init_packets
 800A3020-800A3648
 ////////////////////////////////
-// funca364c
+// field_background_add_to_render
 800A364C-800A4090
 ////////////////////////////////
 // calculate_current_value_by_steps

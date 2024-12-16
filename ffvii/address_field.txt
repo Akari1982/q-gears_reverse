@@ -223,7 +223,7 @@
 
 8009a058 []       save current opcode here.
 8009a05c field id to load (and current field id).
-
+8009a060
 8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next entoty after 8 of this.
 
 8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
@@ -545,12 +545,12 @@
     +  4180 draw mode for arrows 4000 and 40c0.
     +  418c OT for 4194 DR_ENV global (0x4 size)
     +  4190 OT for 41d4 DR_ENV prim 1 (0x4 size)
-    +  4194 DR_ENV prim global (0x40 size)
-    +  41d4 DR_ENV prim 1 (0x40 size)
-    +  4214 DR_ENV prim 2 (0x40 size)
-    +  4254 DR_ENV prim 3 (0x40 size)
-    +  4294 DR_ENV prim 4 (0x40 size)
-    +  42d4 DR_ENV prim 5 (0x40 size)
+    +  4194 DR_ENV prim global (0x40 size). After scene render.
+    +  41d4 DR_ENV prim 1 (0x40 size). Before scene render.
+    +  4214 DR_ENV prim 2 (0x40 size). At end of layer 3.
+    +  4254 DR_ENV prim 3 (0x40 size). At end of layer 4.
+    +  4294 DR_ENV prim 4 (0x40 size). Between layer 2 and 3.
+    +  42d4 DR_ENV prim 5 (0x40 size). Between layer 3 and 4.
     +  4314 ???
     +  4914 background prims fpr 1st and 2nd layer (0x10 size)
     +  e554 background prims fpr 3rd and 4th layer (0x14 size)
@@ -560,13 +560,6 @@
     + 1748c ui OT (0x1 item 0x4 size)
     + 17490 draw mode for rain (0xc size)
     + 1749c array of poly for rain (0x40 items 0x10 size)
-
-
-800fc68c some data related to model rendering packet. Depth sorted polygons addreses.
-
-8010068c render otag.
-
-80100818 render ordet table for some 1 element. Inited when start of field (second budder of 800e8f7c).
 
 8011016c [8008357c]  some model related data (size 0x8)
 8011016c + 04 []
@@ -588,6 +581,8 @@
 80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
 
 80114488 we read something from here during reading unknown data in triggers and check if this != 0. If this != 0 then battle will not be activated during field battle check. (0)
+
+8011448c [][][][] number of draw mode packets for background prims inited.
 
 80114490 buffer index for something like array or triangles.
 
