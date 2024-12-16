@@ -1305,13 +1305,12 @@ block1 = background + 10;
 
 while( true )
 {
-    V1 = h[block1];
-    if( V1 == 7fff )
+    if( h[block1 + 0] == 7fff )
     {
         block1 += 2;
         break;
     }
-    else if( V1 == 7ffe )
+    else if( h[block1 + 0] == 7ffe )
     {
         V1 = h[block1 + 2];
         [render_data + 124dc + V1 * c] = w((w[render_data + 124dc + V1 * c] & ff000000) | (w[render_data + 3ffc] & 00ffffff));
@@ -1319,30 +1318,21 @@ while( true )
     }
     else
     {
-        A0 = h[80071a4a];
-
-        if( ( A0 - 100 ) < V1 )
+        if( ( ( h[80071a4a] - 100 ) < h[block1 + 0] ) && ( h[block1 + 0] < h[80071a4a] ) )
         {
-            if( V1 < A0 )
+            // 1st layer draft clip by x screen
+            T3 = hu[block1 + 2];
+            for( int i = h[block1 + 4]; i != 0; --i )
             {
-                // 1st layer draft clip by x screen
-                T3 = hu[block1 + 4 - 2];
-                T4 = h[block1 + 4 + 0];
-                if( T4 != 0 )
+                V1 = h[render_data + 4914 + T3 * 10 + 8]; // dest x
+
+                if( ( ( h[80071a48] - 150 ) < V1 ) && ( V1 < h[80071a48] ) )
                 {
-                    loopa3754:	; 800A3754
-                        V1 = h[render_data + T3 * 10 + 4914 + 8]; // dest x
-
-                        if (((h[80071a48] - 150) < V1) && (V1 < h[80071a48]))
-                        {
-                            [render_data + 4914 + T3 * 10] = w((w[render_data + 4914 + T3 * 10] & ff000000) | (w[render_data + 3ffc] & 00ffffff));
-                            [render_data + 3ffc] = w(((w[render_data + 3ffc]) & ff000000) | ((render_data + 4914 + T3 * 10) & 00ffffff));
-                        }
-
-                        T3 = T3 + 1;
-                        T4 = T4 - 1;
-                    800A37C0	bne    t4, zero, loopa3754 [$800a3754]
+                    [render_data + 4914 + T3 * 10] = w((w[render_data + 4914 + T3 * 10] & ff000000) | (w[render_data + 3ffc] & 00ffffff));
+                    [render_data + 3ffc] = w(((w[render_data + 3ffc]) & ff000000) | ((render_data + 4914 + T3 * 10) & 00ffffff));
                 }
+
+                T3 += 1;
             }
         }
     }
@@ -1350,319 +1340,116 @@ while( true )
     block1 += 6;
 }
 
-T0 = 00ffffff;
-T5 = ff000000;
-T8 = h[8011448c];
-
-La37e8:	; 800A37E8
-V1 = h[block1 + 0000];
-V0 = 7fff;
-800A37F0	bne    v1, v0, La3800 [$800a3800]
-800A37F4	nop
-800A37F8	j      La396c [$800a396c]
-block1 = block1 + 0002;
-
-La3800:	; 800A3800
-A0 = h[80071a4a];
-800A3808	nop
-800A380C	addiu  v0, a0, $ff00 (=-$100)
-V0 = V0 < V1;
-800A3814	beq    v0, zero, La3964 [$800a3964]
-V0 = V1 < A0;
-800A381C	beq    v0, zero, La3964 [$800a3964]
-800A3820	nop
-V0 = h[block1 + 0004];
-T3 = h[block1 + 0002];
-800A382C	beq    v0, zero, La3964 [$800a3964]
-T4 = V0;
-
-T6 = 000124dc;
-
-loopa383c:	; 800A383C
-    T1 = T3;
-    A1 = 
-    V1 = h[A1 + 4914 + 8]; // dest x
-
-    if ((h[80071a48] - 150 < V1) && (V1 < h[80071a48]) && (((bu[render_data + T1 * 2 + 10d54] & 3f) == 0) || ((bu[8009ace6 + V0] & bu[render_data + T1 * 2 + 10d55]) != 0)))
+while( true )
+{
+    if( h[block1 + 0] == 7fff )
     {
-        V1 = (bu[render_data + T1 * 10 + 4914 + 5] << 8) + (bu[render_data + T1 * 10 + 4914 + 4]);
-        A2 = V1 * 4;
-        A2 = A2 + render_data;
-        V0 = w[render_data + T1 * 10 + 4914];
-
-        V1 = w[A2];
-        V1 = V1 & 00ffffff;
-
-        [render_data + T1 * 10 + 4914] = w((V0 & ff000000) | V1);
-
-        V0 = render_data + T1 * 10 + 4914;
-        A1 = w[A2];
-        V0 = V0 & 00ffffff;
-        A1 = (A1 & ff000000) | V0;
-        V0 = T1 - T8;
-
-        V1 = V0 << 01;
-        V1 = V1 + V0;
-        V1 = V1 << 02;
-        A0 = V1 + render_data;
-        A0 = A0 + T6;
-        [A2 + 0000] = w(A1);
-        A1 = A1 & 00ffffff;
-        V1 = V1 + T6;
-        V0 = w[A0 + 0000];
-        V1 = render_data + V1;
-        V0 = V0 & ff000000;
-        V0 = V0 | A1;
-        [A0 + 0000] = w(V0);
-        [A2] = w((w[A2] & ff000000) | (V1 & 00ffffff));
+        block1 += 2;
+        break;
     }
 
-    T3 = T3 + 1;
-    T4 = T4 - 1;
-800A395C	bne    t4, zero, loopa383c [$800a383c]
+    if( ( ( h[80071a4a] - 100 ) < h[block1 + 0] ) && ( h[block1 + 0] < h[80071a4a] ) )
+    {
+        T3 = h[block1 + 2];
 
+        for( int i = h[block1 + 4]; i != 0; --i )
+        {
+            V1 = h[render_data + 4914 + T3 * 10 + 8]; // dest x
 
-La3964:	; 800A3964
-800A3964	j      La37e8 [$800a37e8]
-block1 = block1 + 0006;
+            if( ( h[80071a48] - 150 < V1 ) && ( V1 < h[80071a48] ) && ( ( ( bu[render_data + T3 * 2 + 10d54 ] & 3f ) == 0 ) || ( ( bu[8009ace6 + V0] & bu[render_data + T3 * 2 + 10d55] ) != 0 ) ) )
+            {
+                depth = (bu[render_data + 4914 + T3 * 10 + 5] << 8) + (bu[render_data + 4914 + T3 * 10 + 4]);
 
-La396c:	; 800A396C
-A1 = 00ffffff;
-800A3974	lui    v0, $800a
-800A3978	addiu  v0, v0, $aca4 (=-$535c)
-T1 = V0;
-T0 = 00ffffff;
-T6 = ff000000;
-V0 = render_data + 4214;
-S2 = V0 & T0;
-800A3994	lui    s0, $0001
-S0 = S0 | 24dc;
-T5 = block1 + 0004;
-800A39A0	lui    a2, $ff00
-V0 = hu[T1 + 0000];
-V1 = w[render_data + 4294];
-800A39AC	lui    t2, $8007
-T2 = w[T2 + 16c4];
-800A39B4	lui    s1, $8011
-S1 = h[S1 + 44c8];
-V0 = V0 << 02;
-V0 = V0 + render_data;
-V0 = w[V0 + 0000];
-V1 = V1 & A2;
-V0 = V0 & A1;
-V1 = V1 | V0;
-[render_data + 4294] = w(V1);
-A0 = hu[T1 + 0000];
-V0 = render_data + 4294;
-A0 = A0 << 02;
-A0 = A0 + render_data;
-V1 = w[A0 + 0000];
-V0 = V0 & A1;
-V1 = V1 & A2;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
+                [render_data + 4914 + T3 * 10] = w((w[render_data + 4914 + T3 * 10] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+                [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4914 + T3 * 10) & 00ffffff));
 
-La39fc:	; 800A39FC
-    V1 = h[block1 + 0000];
-    V0 = 7fff;
-    800A3A04	bne    v1, v0, La3a58 [$800a3a58]
-    V0 = 7ffe;
-    V0 = hu[T1 + 0000];
-    V1 = w[render_data + 4214];
-    V0 = V0 << 02;
-    V0 = V0 + render_data;
-    V0 = w[V0 + 0000];
-    V1 = V1 & T6;
-    V0 = V0 & T0;
-    V1 = V1 | V0;
-    [render_data + 4214] = w(V1);
-    V1 = hu[T1 + 0000];
-    800A3A34	nop
-    V1 = V1 << 02;
-    V1 = V1 + render_data;
-    V0 = w[V1 + 0000];
-    block1 = block1 + 0002;
-    V0 = V0 & T6;
-    V0 = V0 | S2;
-    [V1 + 0000] = w(V0);
-    800A3A50	j      La3cd8 [$800a3cd8]
+                V0 = T3 - h[8011448c];
+                [render_data + 124dc + V0 * c] = w((w[render_data + 124dc + V0 * c] & ff000000) | ((render_data + depth * 4) & 00ffffff));
+                [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 124dc + V0 * c) & 00ffffff));
+            }
 
-    La3a58:	; 800A3A58
-    800A3A58	bne    v1, v0, La3aec [$800a3aec]
-    800A3A5C	nop
-    V0 = h[T5 + fffe];
-    800A3A64	lui    a2, $8011
-    A2 = h[A2 + 44d0];
-    800A3A6C	nop
-    V0 = V0 + A2;
-    A0 = V0 << 01;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    A0 = A0 + render_data;
-    A0 = A0 + S0;
-    V0 = hu[T1 + 0000];
-    V1 = w[A0 + 0000];
-    V0 = V0 << 02;
-    V0 = V0 + render_data;
-    V0 = w[V0 + 0000];
-    V1 = V1 & T6;
-    V0 = V0 & T0;
-    V1 = V1 | V0;
-    [A0 + 0000] = w(V1);
-    A1 = hu[T1 + 0000];
-    V1 = h[T5 + fffe];
-    A1 = A1 << 02;
-    A1 = A1 + render_data;
-    V1 = V1 + A2;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
+            T3 += 1;
+        }
+    }
 
-    La3acc:	; 800A3ACC
-    V0 = V0 + S0;
-    V0 = render_data + V0;
-    A0 = w[A1 + 0000];
-    V0 = V0 & T0;
-    A0 = A0 & T6;
-    A0 = A0 | V0;
-    800A3AE4	j      La3ccc [$800a3ccc]
-    [A1 + 0000] = w(A0);
+    block1 += 6;
+}
 
-    La3aec:	; 800A3AEC
-    V0 = h[T5 + 0000];
-    T3 = hu[T5 + fffe];
-    800A3AF4	beq    v0, zero, La3ccc [$800a3ccc]
-    T4 = V0;
-    T8 = e554;
+T2 = w[800716c4];
 
-    La3b00:	; 800A3B00
-    V0 = T3 << 10;
-    V0 = V0 >> 10;
-    V1 = V0 << 02;
-    V1 = V1 + V0;
-    V1 = V1 << 02;
-    A2 = render_data + V1;
-    A0 = h[0001e55c + A2];
-    V1 = h[80071a4c];
-    800A3B2C	nop
-    800A3B30	addiu  v0, v1, $fea0 (=-$160)
-    V0 = V0 < A0;
-    800A3B38	beq    v0, zero, La3b4c [$800a3b4c]
-    A1 = A0;
-    V0 = A0 < V1;
-    800A3B44	bne    v0, zero, La3b84 [$800a3b84]
-    V0 = T3 << 10;
+depth = hu[8009abf4 + b0];
+[render_data + 4294] = w((w[render_data + 4294] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+[render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4294) & 00ffffff));
 
-    La3b4c:	; 800A3B4C
-    800A3B4C	addiu  v0, v1, $ff60 (=-$a0)
-    V0 = A0 < V0;
-    800A3B54	beq    v0, zero, La3b68 [$800a3b68]
-    800A3B58	nop
-    V0 = hu[T2 + 0018];
-    800A3B60	j      La3b74 [$800a3b74]
-    V0 = A1 + V0;
+while( true )
+{
+    V1 = h[block1 + 0];
+    if( V1 == 7fff )
+    {
+        [render_data + 4214] = w((w[render_data + 4214] & ff000000) | (w[render_data + V0 * 4] & 00ffffff));
+        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4214) & 00ffffff));
 
-    La3b68:	; 800A3B68
-    V0 = hu[T2 + 0018];
-    800A3B6C	nop
-    V0 = A1 - V0;
+        block1 += 2;
+        break;
+    }
+    else if( V1 == 7ffe )
+    {
+        V0 = h[block1 + 2] + h[801144d0];
+        [render_data + 124dc + V0 * c] = w((w[render_data + 124dc + V0 * c] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 124dc + V0 * c) & 00ffffff));
+    }
+    else
+    {
+        T3 = h[block1 + 2];
+        T4 = h[block1 + 4];
 
-    La3b74:	; 800A3B74
-    [0001e55c + A2] = h(V0);
-    V0 = T3 << 10;
+        for( int i = h[block1 + 4]; i != 0; --i )
+        {
+            A0 = h[render_data + 1e55c + T3 * 14];
+            A1 = h[render_data + 1e55c + T3 * 14];
 
-    La3b84:	; 800A3B84
-    V0 = V0 >> 10;
-    V1 = V0 << 02;
-    V1 = V1 + V0;
-    V1 = V1 << 02;
-    A2 = render_data + V1;
-    800A3B98	lui    at, $0001
-    AT = A2 + AT;
-    A0 = h[AT + e55e];
-    800A3BA4	lui    v1, $8007
-    V1 = h[V1 + 1a4e];
-    800A3BAC	nop
-    800A3BB0	addiu  v0, v1, $ff00 (=-$100)
-    V0 = V0 < A0;
-    800A3BB8	beq    v0, zero, La3bcc [$800a3bcc]
-    A1 = A0;
-    V0 = A0 < V1;
-    800A3BC4	bne    v0, zero, La3c04 [$800a3c04]
-    V0 = T3 << 10;
+            if( ( (h[80071a4c] - 160) >= A0 ) || ( A0 >= h[80071a4c] ) )
+            {
+                if( A0 < (h[80071a4c] - a0) )
+                {
+                    [render_data + 1e55c + T3 * 14] = h(A1 + hu[T2 + 18]);
+                }
+                else
+                {
+                    [render_data + 1e55c + T3 * 14] = h(A1 - hu[T2 + 18]);
+                }
+            }
 
-    La3bcc:	; 800A3BCC
-    800A3BCC	addiu  v0, v1, $ff90 (=-$70)
-    V0 = A0 < V0;
-    800A3BD4	beq    v0, zero, La3be8 [$800a3be8]
-    800A3BD8	nop
-    V0 = hu[T2 + 001a];
-    800A3BE0	j      La3bf4 [$800a3bf4]
-    V0 = A1 + V0;
+            A0 = h[render_data + 1e55e + T3 * 14];
+            A1 = h[render_data + 1e55e + T3 * 14];
 
-    La3be8:	; 800A3BE8
-    V0 = hu[T2 + 001a];
-    800A3BEC	nop
-    V0 = A1 - V0;
+            if( ( (h[80071a4e] - 100) >= A0 ) || ( A0 >= h[80071a4e] ) )
+            {
+                if( A0 < (h[80071a4e] - 70) )
+                {
+                    [render_data + 1e55e + T3 * 14] = h(A1 + hu[T2 + 1a]);
+                }
+                else
+                {
+                    [render_data + 1e55e + T3 * 14] = h(A1 - hu[T2 + 1a]);
+                }
+            }
 
-    La3bf4:	; 800A3BF4
-    [0001e55e + A2] = h(V0);
-    V0 = T3 << 10;
+            V0 = T3 + h[801144c8];
+            V0 = bu[render_data + 10d54 + V0 * 2] & 3f;
 
-    La3c04:	; 800A3C04
-    A1 = V0 >> 10;
-    V0 = A1 + S1;
-    V0 = V0 << 01;
-    V1 = render_data + V0;
-    V0 = bu[00010d54 + AT];
-    800A3C20	nop
-    V0 = V0 & 003f;
-    800A3C28	beq    v0, zero, La3c5c [$800a3c5c]
-    A0 = A1 << 02;
-    V1 = bu[00010d55 + AT];
-    V0 = bu[8009ace6 + V0];
-    V0 = V0 & V1;
-    800A3C54	beq    v0, zero, La3cbc [$800a3cbc]
-    800A3C58	addiu  v0, t4, $ffff (=-$1)
+            if( ( V0 == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 10d55 + V0 * 2] ) )
+            {
+                [render_data + e554 + T3 * 14] = w((w[render_data + e554 + T3 * 14] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+                [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + e554 + T3 * 14) & 00ffffff));
+            }
 
-    La3c5c:	; 800A3C5C
-    A0 = A0 + A1;
-    A0 = A0 << 02;
-    A1 = A0 + render_data;
-    A1 = A1 + T8;
-    A0 = A0 + T8;
-    V0 = hu[T1 + 0000];
-    V1 = w[A1 + 0000];
-    V0 = V0 << 02;
-    V0 = V0 + render_data;
-    V0 = w[V0 + 0000];
-    V1 = V1 & T6;
-    V0 = V0 & T0;
-    V1 = V1 | V0;
-    [A1 + 0000] = w(V1);
-    V1 = hu[T1 + 0000];
-    A0 = render_data + A0;
-    V1 = V1 << 02;
-    V1 = V1 + render_data;
-    V0 = w[V1 + 0000];
-    A0 = A0 & T0;
-    V0 = V0 & T6;
-    V0 = V0 | A0;
-    [V1 + 0000] = w(V0);
-    800A3CB8	addiu  v0, t4, $ffff (=-$1)
+            T3 += 1;
+        }
+    }
 
-    La3cbc:	; 800A3CBC
-    T4 = V0;
-    V0 = V0 << 10;
-    800A3CC4	bne    v0, zero, La3b00 [$800a3b00]
-    T3 = T3 + 0001;
-
-    La3ccc:	; 800A3CCC
-    T5 = T5 + 0006;
-    block1 = block1 + 0006;
-800A3CD0	j      La39fc [$800a39fc]
-
-La3cd8:	; 800A3CD8
+    block1 += 6;
+}
 
 // add DR_ENV prim 5
 [render_data + 42d4] = w((w[render_data + 42d4] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
@@ -1690,78 +1477,58 @@ while( true )
     else
     {
         T3 = h[block1 + 2];
-        if( h[block1 + 4] != 0 )
+        T4 = h[block1 + 4];
+
+        for( int i = h[block1 + 4]; i != 0; --i )
         {
-            T4 = h[block1 + 4];
-            S0 = h[801144c8];
+            A0 = h[render_data + 1e55c + T3 * 14];
+            A1 = h[render_data + 1e55c + T3 * 14];
 
-            La3e7c:	; 800A3E7C
-                A2 = render_data + T3 * 14;
-                A0 = h[0001e55c + A2];
-                V1 = h[80071a50];
-                800A3EA8	addiu  v0, v1, $fea0 (=-$160)
-                V0 = V0 < A0;
-                800A3EB0	beq    v0, zero, La3ec4 [$800a3ec4]
-                A1 = A0;
-                V0 = A0 < V1;
-                800A3EBC	bne    v0, zero, La3efc [$800a3efc]
-
-                La3ec4:	; 800A3EC4
-                800A3EC4	addiu  v0, v1, $ff60 (=-$a0)
-                V0 = A0 < V0;
-                800A3ECC	beq    v0, zero, La3ee0 [$800a3ee0]
-                800A3ED0	nop
-                V0 = hu[T5 + 1c];
-                800A3ED8	j      La3eec [$800a3eec]
-                V0 = A1 + V0;
-
-                La3ee0:	; 800A3EE0
-                V0 = hu[T5 + 1c];
-                V0 = A1 - V0;
-
-                La3eec:	; 800A3EEC
-                [0001e55c + A2] = h(V0);
-
-                La3efc:	; 800A3EFC
-                A2 = render_data + T3 * 14;
-                A0 = h[0001e55e + A2];
-                V1 = h[80071a52];
-                A1 = A0;
-
-                if( ( ( V1 - 100 ) >= A0 ) || ( A0 < V1 ) )
+            if( ( (h[80071a50] - 160) >= A0 ) || ( A0 >= h[80071a50] ) )
+            {
+                if( A0 < (h[80071a50] - a0) )
                 {
-                    if( A0 < ( V1 - 70 ) )
+                    [render_data + 1e55c + T3 * 14] = h(A1 + hu[T5 + 1c]);
+                }
+                else
+                {
+                    [render_data + 1e55c + T3 * 14] = h(A1 - hu[T5 + 1c]);
+                }
+            }
+
+            A0 = h[render_data + 1e55e + T3 * 14];
+            A1 = h[render_data + 1e55e + T3 * 14];
+
+            if( ( ( h[80071a52] - 100 ) >= A0 ) || ( A0 < h[80071a52] ) )
+            {
+                if( A0 < ( h[80071a52] - 70 ) )
+                {
+                    [render_data + 1e55e + T3 * 14] = h(A1 + hu[T5 + 1e]);
+                }
+                else
+                {
+                    [render_data + 1e55e + T3 * 14] = h(A1 - hu[T5 + 1e]);
+                }
+            }
+
+            V1 = h[render_data + 1e55c + T3 * 14];
+
+            if( ( h[80071a50] - 160 ) < V1 )
+            {
+                if( V1 < h[80071a50] )
+                {
+                    V1 = T3 + h[801144c8];
+                    V0 = bu[render_data + 10d54 + V1 * 2];
+
+                    if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 10d55 + V1 * 2] ) )
                     {
-                        [1e55e + A2] = h(A1 + hu[T5 + 1e]);
-                    }
-                    else
-                    {
-                        [1e55e + A2] = h(A1 - hu[T5 + 1e]);
+                        [render_data + e554 + T3 * 14] = w((w[render_data + e554 + T3 * 14] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
+                        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + e554 + T3 * 14) & 00ffffff));
                     }
                 }
+            }
 
-                V1 = h[render_data + 1e55c + T3 * 14];
-
-                if( ( h[80071a50] - 160 ) < V1 )
-                {
-                    if( V1 < h[80071a50] )
-                    {
-                        V1 = T3 + S0;
-                        V0 = bu[render_data + 10d54 + V1 * 2];
-
-                        if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 10d55 + V1 * 2] ) )
-                        {
-                            [render_data + e554 + T3 * 14] = w((w[render_data + e554 + T3 * 14] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-                            [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + e554 + T3 * 14) & 00ffffff));
-                        }
-                    }
-                }
-
-                V0 = T4 - 1;
-                T4 = V0;
-                V0 = V0 << 10;
-                T3 = T3 + 1;
-            800A4060	bne    v0, zero, La3e7c [$800a3e7c]
+            T3 += 1;
         }
     }
 
@@ -3712,43 +3479,28 @@ return V0;
 model_data_offset = A0;
 model_data_68 = A1;
 
-// x_cur
-current_x = w[model_data_offset + C];
-current_x = current_x >> C;
+current_x = w[model_data_offset + c] >> c;
 [SP + 10] = w(current_x);
-
-// y_cur
-current_y = w[model_data_offset + 10];
-current_y = current_y >> C;
+current_y = w[model_data_offset + 10] >> c;
 [SP + 14] = w(current_y);
-
-// x_to
-to_x = w[model_data_offset + 78];
-to_x = to_x >> C;
+to_x = w[model_data_offset + 78] >> c;
 [SP + 20] = w(to_x);
-
-// y_to
-to_y = w[model_data_offset + 7C];
-to_y = to_y >> C;
+to_y = w[model_data_offset + 7c] >> c;
 [SP + 24] = w(to_y);
 
 length_square = (to_x - current_x) * (to_x - current_x) + (to_y - current_y) * (to_y - current_y);
 [SP + 30] = w(length_square);
 
-solid_range = hu[model_data_offset + 6C]; // solid
+solid_range = hu[model_data_offset + 6c];
 V0 = (solid_range + model_data_68) * (solid_range + model_data_68);
 
-if (model_data_68 != 0)
+if( model_data_68 != 0 )
 {
-    if (V0 + 1000 >= length_square) // 40 * 40 = 1000
-    {
-        return 0;
-    }
+    if( ( V0 + 1000 ) >= length_square ) return 0;
 }
 
-V0 = hu[model_data_offset + 70]; // movement speed
-V0 = V0 * V0;
-V0 = V0 >> 10;
+m_speed = hu[model_data_offset + 70]; // movement speed
+V0 = (m_speed * m_speed) >> 10;
 length_square = w[SP + 30];
 
 if (length_square >= V0 && length_square >= 4)
@@ -3756,17 +3508,15 @@ if (length_square >= V0 && length_square >= 4)
     A0 = SP + 10; // current pos
     A1 = SP + 20; // destination pos
     A2 = SP + 30; // length_square
-    calculate_direction_by_vectors;
+    calculate_direction_by_vectors();
 
-    V1 = b[model_data_offset + 35];
-    V1 = V0 - V1;
-    [model_data_offset + 36] = b(V1);
+    [model_data_offset + 36] = b(V0 - b[model_data_offset + 35]);
 
     return 1;
 }
 
-[model_data_offset + C] = w(w[model_data_offset + 78]);
-[model_data_offset + 10] = w(w[model_data_offset + 7C]);
+[model_data_offset + c] = w(w[model_data_offset + 78]);
+[model_data_offset + 10] = w(w[model_data_offset + 7c]);
 
 return 0;
 ////////////////////////////////
@@ -3774,7 +3524,8 @@ return 0;
 
 
 ////////////////////////////////
-// walkmesh_border_cross
+// walkmesh_border_cross()
+
 triangle_info_offset      = A0;
 triangle_id               = hu[triangle_info_offset];
 offset_to_id_block        = w[800e4274];
