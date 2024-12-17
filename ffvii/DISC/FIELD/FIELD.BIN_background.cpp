@@ -452,3 +452,615 @@ while( true )
     block1 += 6;
 }
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// field_background_scrolling_init()
+
+if( bu[8009abf4 + 1f] == 0 ) // init state
+{
+    switch( bu[8009abf4 + 1d] )
+    {
+        case 0: // instant auto scroll to pc (SCRCC)
+        {
+            [8009abf4 + 1f] = b(2); // finished state
+            [8009a100] = h(0); // auto scroll to PC
+
+            [80071e38] = h(0);
+            [80071e3c] = h(0);
+        }
+        break;
+
+        case 1:
+        {
+            [8009abf4 + 1f] = b(1); // action state
+            [8009a100] = h(1); // scripted scroll
+        }
+        break;
+
+        case 2: // linear scroll from current to party member
+        case 3: // smooth scroll from current to party member
+        {
+            [8009abf4 + 1f] = b(1); // action state
+
+            [8009a100] = h(1); // scripted scroll
+            [80075cf8] = h(0);
+            [8009c558] = h(hu[8009abf4 + 20]);
+            [80075e14] = h(hu[80071e38]); // start
+            [80075e1c] = h(hu[80071e3c]); // start
+        }
+        break;
+
+        case 4: // instant scroll to coordinates (SCR2D)
+        {
+            [8009abf4 + 1f] = b(2); // finished state
+            [8009a100] = h(1); // scripted scroll
+
+            [80071e38] = h(hu[8009abf4 + a]); // set current screen scroll x
+            [80071e3c] = h(hu[8009abf4 + c]); // set current screen scroll y
+        }
+        break;
+
+        case 5: // linear scroll to coordinates (SCR2DL)
+        case 6: // smooth scroll to coordinates (SCR2DC)
+        {
+            [8009abf4 + 1f] = b(1); // action state
+            [8009a100] = h(1); // scripted scroll
+
+            [80075cf8] = h(0); // current step
+            [8009c558] = h(hu[8009abf4 + 20]); // steps
+            [80075e14] = h(hu[80071e38]); // start
+            [80075e18] = h(hu[8009abf4 + a]); // end
+            [80075e1c] = h(hu[80071e3c]); // start
+            [80075e20] = h(hu[8009abf4 + c]); // end
+        }
+        break;
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_background_scrolling_update()
+
+if( bu[8009abf4 + 1f] == 1 )
+{
+    switch( bu[8009abf4 + 1d] )
+    {
+        case 1:
+        {
+            A0 = SP + 10;
+            funca48b8();
+
+            A0 = SP + 10;
+            funca47f8();
+
+            [80071e38] = h(-hu[SP + 10]);
+            [80071e3c] = h(-hu[SP + 12]);
+        }
+        break;
+
+        case 2:
+        {
+            A0 = SP + 10;
+            funca48b8();
+
+            A0 = SP + 10;
+            funca47f8();
+
+            A0 = h[80075e14];
+            A2 = h[8009c558];
+            A1 = h[SP + 10];
+            A3 = h[80075cf8];
+            A1 = 0 - A1;
+            field_calculate_current_value_by_steps();
+            [80071e38] = h(V0);
+
+            A0 = h[80075e1c];
+            A1 = 0 - h[SP + 12];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_current_value_by_steps();
+            [80071e3c] = h(V0);
+
+            if( h[8009c558] == h[80075cf8] )
+            {
+                [8009abf4 + 1f] = b(2);
+            }
+            else
+            {
+                [80075cf8] = h(h[80075cf8] + 1);
+            }
+        }
+        break;
+
+        case 3:
+        {
+            A0 = SP + 10;
+            funca48b8();
+
+            A0 = SP + 10;
+            funca47f8();
+
+            A0 = h[80075e14];
+            A1 = 0 - h[SP + 10];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_smooth_current_value_by_steps();
+            [80071e38] = h(V0);
+
+            A0 = h[80075e1c];
+            A1 = 0 - h[SP + 12];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_smooth_current_value_by_steps();
+            [80071e3c] = h(V0);
+
+            if( h[8009c558] == h[80075cf8] )
+            {
+                [8009abf4 + 1f] = b(2);
+            }
+            else
+            {
+                [80075cf8] = h(h[80075cf8] + 1);
+            }
+        }
+        break;
+
+        case 5:
+        {
+            A0 = h[80075e14];
+            A1 = h[80075e18];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_current_value_by_steps();
+            [80071e38] = h(V0);
+
+            A0 = h[80075e1c];
+            A1 = h[80075e20];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_current_value_by_steps();
+            [80071e3c] = h(V0);
+
+            if( h[8009c558] == h[80075cf8] )
+            {
+                [8009abf4 + 1f] = b(2);
+            }
+            else
+            {
+                [80075cf8] = h(h[80075cf8] + 1);
+            }
+        }
+        break;
+
+        case 6: // scroll to coordinates (type smooth)
+        {
+            A0 = h[80075e14];
+            A1 = h[80075e18];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_smooth_current_value_by_steps();
+            [80071e38] = h(V0);
+
+            A0 = h[80075e1c];
+            A1 = h[80075e20];
+            A2 = h[8009c558];
+            A3 = h[80075cf8];
+            field_calculate_smooth_current_value_by_steps();
+            [80071e3c] = h(V0);
+
+            if( h[8009c558] == h[80075cf8] )
+            {
+                [8009abf4 + 1f] = b(2);
+            }
+            else
+            {
+                [80075cf8] = h(h[80075cf8] + 1);
+            }
+        }
+        break;
+    }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_background_shaking_update()
+
+S0 = A0;
+
+if( bu[S0 + 0] == 1 )
+{
+    if( bu[S0 + 1] == 0 )
+    {
+        [S0 + c] = h(0);
+        [S0 + 6] = h(0);
+
+        V0 = bu[S0 + 2];
+        V0 = ((bu[800e0638 + V0] * h[S0 + 4]) << 10) >> 10;
+        if (V0 < 0)
+        {
+            V0 = V0 + ff;
+        }
+        [S0 + 8]= h(V0 >> 8);
+        [S0 + 1] = b(1);
+        [S0 + 2] = b(bu[S0 + 2] + 1);
+    }
+    else
+    {
+        if( h[S0 + a] >= h[S0 + c] )
+        {
+            [S0 + c] = h(h[S0 + c] + 1);
+
+            A0 = h[S0 + 6]; // start
+            A1 = h[S0 + 8]; // end
+            A2 = h[S0 + a]; // steps
+            A3 = h[S0 + c]; // cur step
+            field_calculate_smooth_current_value_by_steps();
+
+            [S0 + 3] = b(V0);
+            return;
+        }
+
+        [S0 + c] = h(0);
+        [S0 + 6] = h(h[S0 + 8]);
+
+        V0 = bu[S0 + 2];
+        V0 = ((bu[800e0638 + V0] * h[S0 + 4]) << 10) >> 10;
+
+        if( h[S0 + 8] >= 0 ) V0 = -V0;
+
+        if( V0 < 0 ) V0 += ff;
+
+        [S0 + 8]= h(V0 >> 8);
+        [S0 + 2] = b(bu[S0 + 2] + 1);
+    }
+}
+else
+{
+    if( bu[S0 + 1] == 1 )
+    {
+        if( h[S0 + a] < h[S0 + c] )
+        {
+            [S0 + 6] = h(hu[S0 + 8]);
+            [S0 + c] = h(0);
+            [S0 + 8] = h(0);
+            [S0 + 1] = b(0);
+
+            [S0 + 2] = b(bu[S0 + 2] + 1);
+            return;
+        }
+    }
+    else
+    {
+        if( h[S0 + a] == h[S0 + c] )
+        {
+            [S0 + 3] = b(0);
+            return;
+        }
+    }
+
+    [S0 + c] = h(h[S0 + c] + 1);
+
+    A0 = hu[S0 + 6];
+    A1 = hu[S0 + 8];
+    A2 = hu[S0 + a];
+    A3 = h[S0 + c];
+    field_calculate_smooth_current_value_by_steps();
+
+    [S0 + 3] = b(V0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_background_update_drawenv()
+
+current_rd = A0;
+
+render_data = 800e4df0;
+offset_to_triggers = w[800716c4];
+camera_data = w[80071e40];
+drawenv1 = 80113f2c + 0 * 5c;
+drawenv2 = 80113f2c + 1 * 5c;
+drawenv3 = 80113f2c + 2 * 5c;
+drawenv4 = 80113f2c + 3 * 5c;
+drawenv5 = 80113f2c + 4 * 5c;
+drawenv6 = 80113f2c + 5 * 5c;
+drawenv7 = 80113f2c + 6 * 5c;
+drawenv8 = 80113f2c + 7 * 5c;
+drawenv9 = 80113f2c + 8 * 5c;
+drawenva = 80113f2c + 9 * 5c;
+
+[offset_to_triggers + 20] = h((hu[offset_to_triggers + 20] + hu[8009abf4 + a6]) % (h[offset_to_triggers + 18] * 10)); // add x scroll for 2nd background
+[offset_to_triggers + 22] = h((hu[offset_to_triggers + 22] + hu[8009abf4 + a8]) % (h[offset_to_triggers + 1a] * 10)); // add y scroll for 2nd background
+
+[offset_to_triggers + 24] = h((hu[offset_to_triggers + 24] + hu[8009abf4 + aa]) % (h[offset_to_triggers + 1c] * 10)); // add x scroll for 3nd background
+[offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
+
+A0 = h[camera_data + 24];
+system_psyq_set_geom_screen();
+
+if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
+{
+    if( bu[8009ac2d] != 1 )
+    {
+        if( current_rd == render_data )
+        {
+            [drawenv1 + 8] = h(hu[8007eb90] - hu[camera_data + 20]);
+            [drawenv1 + a] = h(hu[8007eb94] + hu[camera_data + 22]);
+            A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
+            A1 = drawenv1; // DRAWENV struct
+            system_psyq_set_drawenv();
+        }
+        else
+        {
+            [drawenv2 + 8] = h(hu[8007eb90] - hu[camera_data + 20]);
+            [drawenv2 + a] = h(hu[8007eb94] + hu[camera_data + 22] + e8);
+            A0 = render_data + 1 * 1789c + 41d4;
+            A1 = drawenv2;
+            system_psyq_set_drawenv();
+        }
+    }
+    else
+    {
+        if( current_rd == render_data )
+        {
+            [drawenv1 + 8] = h(hu[8007eb90] + hu[80071e38]);
+            [drawenv1 + 8] = h(hu[8007eb94] + hu[80071e3c]);
+            A0 = render_data + 0 * 1789c + 41d4;
+            A1 = drawenv1;
+            system_psyq_set_drawenv();
+        }
+        else
+        {
+            [drawenv2 + 8] = h(hu[8007eb90] + hu[80071e38]);
+            [drawenv2 + a] = h(hu[8007eb94] + hu[80071e3c] + e8);
+            A0 = render_data + 1 * 1789c + 41d4;
+            A1 = drawenv2;
+            system_psyq_set_drawenv();
+        }
+    }
+}
+else
+{
+    if( h[8009a100] == 0 ) // auto scroll
+    {
+        A0 = h[8009abf4 + 18];
+        A1 = h[8009abf4 + 1a];
+        A2 = bu[8009abf4 + 12];
+        A3 = bu[8009abf4 + 13];
+
+        V1 = bu[8009abf4 + 14];
+        if( V1 == 1 )
+        {
+            field_calculate_current_value_by_steps();
+        }
+        else if( V1 == 2 )
+        {
+            field_calculate_smooth_current_value_by_steps();
+        }
+
+        [8009abf4 + 16] = h(V0 & ff);
+
+        A0 = bu[8009abf4 + 13];
+        if( A0 == bu[8009abf4 + 12] )
+        {
+            [8009abf4 + 14] = b(3);
+        }
+        else
+        {
+            [8009abf4 + 13] = b(A0 + 1);
+        }
+
+        V0 = h[800965e0];
+        [SP + 10] = h((w[80074ea4 + V0 * 84 +  c] >> c) + hu[80074ea4 + V0 * 84 + 40]);
+        [SP + 12] = h((w[80074ea4 + V0 * 84 + 10] >> c) + hu[80074ea4 + V0 * 84 + 46]);
+        [SP + 14] = h((w[80074ea4 + V0 * 84 + 14] >> c) + hu[80074ea4 + V0 * 84 + 4c] + (h[8009abf4] >> 2)); // with field scale
+
+        A0 = SP + 10;
+        A1 = SP + 18;
+        field_calculate_distance_to_screen();
+
+        [80114464] = h(hu[8007eb90] + hu[SP + 18]);
+        [80114468] = h(hu[8007eb94] + hu[SP + 1a]);
+
+        V0 = h[800965e0];
+        [SP + 10] = h(w[80074ea4 + V0 * 84 + 0c] >> c);
+        [SP + 12] = h(w[80074ea4 + V0 * 84 + 10] >> c);
+        [SP + 14] = h(w[80074ea4 + V0 * 84 + 14] + hu[8009abf4 + 16] >> c);
+
+        A0 = SP + 10;
+        A1 = SP + 18;
+        field_calculate_distance_to_screen();
+
+        [800e48ec] = w(V0);
+        [800e48e4] = h(hu[SP + 18]);
+        [800e48e6] = h(hu[SP + 1a]);
+        A0 = SP + 18;
+        funca47f8();
+
+        A0 = offset_to_triggers;
+        A1 = SP + 18;
+        funca45d4();
+
+        S5 = (((((h[SP + 18] * h[offset_to_triggers + 28]) >> 8) + (h[offset_to_triggers + 20] >> 4)) << 10) >> 10) % h[offset_to_triggers + 18];
+        S4 = (((((h[SP + 1a] * h[offset_to_triggers + 2a]) >> 8) + (h[offset_to_triggers + 22] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1a];
+        S7 = (((((h[SP + 18] * h[offset_to_triggers + 2c]) >> 8) + (h[offset_to_triggers + 24] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1c];
+        S6 = (((((h[SP + 1a] * h[offset_to_triggers + 2e]) >> 8) + (h[offset_to_triggers + 26] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1e];
+
+        [80114468] = h(hu[80114468] - h[SP + 1a]);
+        [80114464] = h(hu[80114464] - h[SP + 18]);
+
+        [SP + 20] = h(S4);
+        [SP + 28] = h(S7);
+        [SP + 30] = h(S6);
+
+        if( current_rd == render_data )
+        {
+            [drawenv1 + 8] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
+            [drawenv1 + a] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a]);
+            A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
+            A1 = drawenv1;
+            system_psyq_set_drawenv();
+
+            [drawenv3 + 8] = h(b[8009ac81] - hu[8007eb90] - S5);
+            [drawenv3 + a] = h(b[8009ac8f] + hu[8007eb94] - S4);
+            A0 = render_data + 0 * 1789c + 4214;
+            A1 = drawenv3;
+            system_psyq_set_drawenv();
+
+            [drawenv5 + 8] = h(b[8009ac81] + hu[8007eb90] - S7);
+            [drawenv5 + a] = h(b[8009ac8f] + hu[8007eb94] - S6);
+            A0 = render_data + 0 * 1789c + 4254;
+            A1 = drawenv5;
+            system_psyq_set_drawenv();
+
+            [drawenv7 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenv7 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
+            A0 = render_data + 0 * 1789c + 4294;
+            A1 = drawenv7;
+            system_psyq_set_drawenv();
+
+            [drawenv9 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenv9 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
+            A0 = render_data + 0 * 1789c + 42d4;
+            A1 = drawenv9;
+            system_psyq_set_drawenv();
+        }
+        else
+        {
+            [drawenv2 + 8] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
+            [drawenv2 + a] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a] + e8);
+            A0 = render_data + 1 * 1789c + 41d4;
+            A1 = drawenv2;
+            system_psyq_set_drawenv();
+
+            [drawenv4 + 8] = h(b[8009ac81] + hu[8007eb90] - S5);
+            [drawenv4 + a] = h(b[8009ac8f] + hu[8007eb94] - S4 + e8);
+            A0 = render_data + 1 * 1789c + 4214;
+            A1 = drawenv4;
+            system_psyq_set_drawenv();
+
+            [drawenv6 + 8] = h(b[8009ac81] + hu[8007eb90] - S7);
+            [drawenv6 + a] = h(b[8009ac8f] + hu[8007eb94] - S6 + e8);
+            A0 = render_data + 1 * 1789c + 4254;
+            A1 = drawenv6;
+            system_psyq_set_drawenv();
+
+            [drawenv8 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenv8 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
+            A0 = render_data + 1 * 1789c + 4294;
+            A1 = drawenv8;
+            system_psyq_set_drawenv();
+
+            [drawenva + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
+            [drawenva + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
+            A0 = render_data + 1 * 1789c + 42d4;
+            A1 = drawenva;
+            system_psyq_set_drawenv();
+        }
+
+        [80071e38] = h(0 - hu[SP + 18]);
+        [80071e3c] = h(0 - hu[SP + 1a]);
+        [80071a48] = h(hu[SP + 18] + 140 - hu[8007eb90] - b[8009ac81]);
+        [80071a4a] = h(hu[SP + 1a] + e8 - hu[8007eb94] - b[8009ac8f]);
+        [80071a4c] = h(S5          + 140 - hu[8007eb90] - b[8009ac81]);
+        [80071a4e] = h(hu[SP + 20] + e8 - hu[8007eb94] - b[8009ac8f]);
+        [80071a50] = h(hu[SP + 28] + 140 - hu[8007eb90] - b[8009ac81]);
+        [80071a52] = h(hu[SP + 30] + e8 - hu[8007eb94] - b[8009ac8f]);
+    }
+    else
+    {
+        S3 = ((h[offset_to_triggers + 20] >> 4) - ((h[80071e38] * h[offset_to_triggers + 28]) >> 8)) / h[offset_to_triggers + 18];
+        S4 = ((h[offset_to_triggers + 22] >> 4) - ((h[80071e3c] * h[offset_to_triggers + 2a]) >> 8)) / h[offset_to_triggers + 1a];
+        S5 = ((h[offset_to_triggers + 24] >> 4) - ((h[80071e38] * h[offset_to_triggers + 2c]) >> 8)) / h[offset_to_triggers + 1c];
+        S6 = ((h[offset_to_triggers + 26] >> 4) - ((h[80071e3c] * h[offset_to_triggers + 2e]) >> 8)) / h[offset_to_triggers + 1e];
+
+        if( current_rd == render_data ) // if 1st buffer
+        {
+            ofsx = b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] + h[80071e38];
+            ofsy = b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] + w[80071e3c];
+
+            [drawenv1 + 8] = h(ofsx); // offset x
+            [drawenv1 + a] = h(ofsy); // offset y
+            A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
+            A1 = drawenv1;
+            system_psyq_set_drawenv();
+
+            [drawenv3 + 8] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S3);
+            [drawenv3 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S4);
+            A0 = render_data + 0 * 1789c + 4214;
+            A1 = drawenv3;
+            system_psyq_set_drawenv();
+
+            [drawenv5 + 8] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S5);
+            [drawenv5 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S6);
+            A0 = render_data + 0 * 1789c + 4254;
+            A1 = drawenv5;
+            system_psyq_set_drawenv();
+
+            [drawenv7 + 8] = h(ofsx);
+            [drawenv7 + a] = h(ofsy);
+            A0 = render_data + 0 * 1789c + 4294;
+            A1 = drawenv7;
+            system_psyq_set_drawenv();
+
+            [drawenv9 + 8] = h(ofsx);
+            [drawenv9 + a] = h(ofsy);
+            A0 = render_data + 0 * 1789c + 42d4;
+            A1 = drawenv9;
+            system_psyq_set_drawenv();
+        }
+        else // 2nd buffer
+        {
+            ofsx = b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] + h[80071e38];
+            ofsy = b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] + w[80071e3c];
+
+            [drawenv2 + 8] = h(ofsx);
+            [drawenv2 + a] = h(ofsy + e8);
+            A0 = render_data + 1 * 1789c + 41d4;
+            A1 = drawenv2;
+            system_psyq_set_drawenv();
+
+            [drawenv4 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S3);
+            [drawenv4 + a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S4 + e8);
+            A0 = render_data + 1 * 1789c + 4214;
+            A1 = drawenv4;
+            system_psyq_set_drawenv();
+
+            [drawenv6 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S5);
+            [drawenv6 + a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S6 + e8);
+            A0 = render_data + 1 * 1789c + 4254;
+            A1 = drawenv6;
+            system_psyq_set_drawenv();
+
+            [drawenv8 + 8] = h(ofsx);
+            [drawenv8 + a] = h(ofsy + e8);
+            A0 = render_data + 1 * 1789c + 4294;
+            A1 = drawenv8;
+            system_psyq_set_drawenv();
+
+            [drawenva + 8] = h(ofsx);
+            [drawenva + a] = h(ofsy + e8);
+            A0 = render_data + 1 * 1789c + 42d4;
+            A1 = drawenva;
+            system_psyq_set_drawenv();
+        }
+
+        [80071a48] = h(140 - hu[80071e38] - hu[8007eb90] - b[8009abf4 + 8d]); // background X centered
+        [80071a4a] = h(e8 - hu[80071e3c] - hu[8007eb94] - b[8009abf4 + 9b]); // background Y centered
+
+        [80071a4c] = h(S3 + 140 - hu[8007eb90] - b[8009abf4 + 8d]);
+        [80071a4e] = h(S4 + e8 - hu[8007eb94] - b[8009abf4 + 9b]);
+
+        [80071a50] = h(S5 + 140 - hu[8007eb90] - b[8009abf4 + 8d]);
+        [80071a52] = h(S6 + e8 - hu[8007eb94] - b[8009abf4 + 9b]);
+    }
+}
+////////////////////////////////

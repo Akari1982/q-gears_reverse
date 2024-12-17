@@ -45,8 +45,8 @@
                   0x02 - was removed.
                   0x04 - if set then require exact actor debug to be set.
 
-80071e38 current screen scroll X.
-80071e3c current screen scroll Y.
+80071e38 [][]     current screen scroll X.
+80071e3c [][]     current screen scroll Y.
 80071e40 offset to camera section
 
 800722c4 []       current actor id.
@@ -228,7 +228,7 @@
 
 8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
 
-8009a100 manual or auto scroll. If 1 then this is manual scroll. O - we auto scroll to PC.
+8009a100 manual or auto scroll. If 1 then this is manual scroll. 0 - we auto scroll to PC.
 
 8009a1c4 array of current priority slot used by actors (size 0x01).
 

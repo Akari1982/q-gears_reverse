@@ -27,19 +27,19 @@
 // field_background_add_to_render
 800A364C-800A4090
 ////////////////////////////////
-// calculate_current_value_by_steps
+// field_calculate_current_value_by_steps
 800A4094-800A4130
 ////////////////////////////////
-// calculate_smooth_current_value_by_steps
+// field_calculate_smooth_current_value_by_steps
 800A4134-800A41C8
 ////////////////////////////////
 // field_calculate_distance_to_screen
 800A41CC-800A4248
 ////////////////////////////////
-// field_update_shaking
+// field_background_shaking_update
 800A424C-800A442C
 ////////////////////////////////
-// funca4430
+// field_background_scrolling_init
 800A4430-800A45D0
 ////////////////////////////////
 // funca45d4
@@ -51,10 +51,10 @@
 // funca48b8
 800A48B8-800A4968
 ////////////////////////////////
-// funca496c
+// field_background_scrolling_update
 800A496C-800A4BE8
 ////////////////////////////////
-// field_update_drawenv
+// field_background_update_drawenv
 800A4BEC-800A5FB0
 ////////////////////////////////
 // funca5fb4
@@ -876,7 +876,7 @@
 // 0xD2 MPJPO
 800CD0C4-800CD168
 ////////////////////////////////
-// 0x64 SCR2D
+// field_event_opcode_64_scr2d
 800CD16C-800CD210
 ////////////////////////////////
 // 0x62 SCRLC

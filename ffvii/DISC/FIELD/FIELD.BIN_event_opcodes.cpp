@@ -8354,23 +8354,31 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// 0x64 SCR2D
+// field_event_opcode_64_scr2d()
 // scroll to coordinates (type instant)
-struct = w[8009c6e0];
+
+field_struct = w[8009c6e0];
 current_actor_id = bu[800722c4];
 
-[struct + 1d] = b(4);
-[struct + 1f] = b(0);
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0c08; // "scr2d"
+    A1 = 5;
+    field_debug_event_opcode();
+}
+
+[field_struct + 1d] = b(4); // set scroll type
+[field_struct + 1f] = b(0); // set init state
 
 A0 = 1;
 A1 = 2;
-read_memory_block_two_bytes;
-[struct + 0a] = h(V0);
+read_memory_block_two_bytes();
+[field_struct + a] = h(V0);
 
 A0 = 2;
 A1 = 4;
-read_memory_block_two_bytes;
-[struct + 0c] = h(V0);
+read_memory_block_two_bytes();
+[field_struct + c] = h(V0);
 
 [800831fc + current_actor_id * 2] = h(hu[800831fc + current_actor_id * 2] + 6);
 
