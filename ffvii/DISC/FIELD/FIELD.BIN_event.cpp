@@ -2369,11 +2369,11 @@ walkmesh_data = w[800e4274];
 opcode_name = A0; // opcode name text
 args_n = A1; // number of arg
 
-current_actor_id = bu[800722c4];
+actor_id_cur = bu[800722c4];
 
 if( bu[80071e24] & 04 )
 {
-    if( bu[80114498 + current_actor_id] == 0 )
+    if( bu[80114498 + actor_id_cur] == 0 )
     {
         return;
     }
@@ -2420,7 +2420,7 @@ while( args_n != 0 )
     A1 = 800a02fc; // "="
     field_debug_concat_string();
 
-    V0 = w[8009c6dc] + hu[800831fc + current_actor_id * 2] + S4 - args_n;
+    V0 = w[8009c6dc] + hu[800831fc + actor_id_cur * 2] + S4 - args_n;
     A0 = bu[V0]; // argument value
     A1 = temp;
     field_int2_to_string();
@@ -2517,8 +2517,8 @@ if( bu[8009d820] & 2 )
 //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
 off = A1; // offset to byte offset in opcode
 
-current_actor_id = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + current_actor_id * 2];
+actor_id_cur = bu[800722c4];
+script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
 
 switch( A0 )
 {

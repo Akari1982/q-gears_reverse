@@ -95,7 +95,7 @@ for( int i = 0; i < entities_n; ++i )
 
         A0 = SP + 10;
         A1 = SP + 18;
-        field_calculate_distance_to_screen(); // calculate distance to screen
+        field_calculate_world_to_screen_pos(); // return distance to screen
 
         if( V0 < f00 )
         {
@@ -154,7 +154,7 @@ for( int i = 0; i < entities_n; ++i )
         [SP + 14] = h((w[80074ea4 + i * 84 + 14] >> c) - a);
         A0 = SP + 10;
         A1 = SP + 18;
-        field_calculate_distance_to_screen();
+        field_calculate_world_to_screen_pos(); // return distance to screen
 
         if( V0 < f00 )
         {
@@ -192,7 +192,7 @@ for( int i = 0; i < entities_n; ++i )
 
             A0 = SP + 10;
             A1 = SP + 18;
-            field_calculate_distance_to_screen();
+            field_calculate_world_to_screen_pos(); // return distance to screen
 
             if( V0 < f00 )
             {

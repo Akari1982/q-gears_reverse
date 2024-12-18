@@ -120,6 +120,10 @@ camera data (block 4)
 
 ////////////////////////////////
 triggers data (block 5)
+    +   c [][]     min x screen pos.
+    +   e [][]     min y screen pos.
+    +  10 [][]     max x screen pos.
+    +  12 [][]     max y screen pos.
     +  38 [][][][] array of gateways (0xc items 0x18 size).
         +  0 [][]     x1.
         +  2 [][]     y1.

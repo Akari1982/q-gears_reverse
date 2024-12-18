@@ -238,7 +238,7 @@ render_data = A0;
 V0 = w[8009d848];
 background = w[V0];
 
-settings = w[800716c4];
+offset_to_triggers = w[800716c4];
 
 block1 = background + 10;
 
@@ -353,11 +353,11 @@ while( true )
             {
                 if( A0 < (h[80071a4c] - a0) )
                 {
-                    [render_data + 1e55c + T3 * 14] = h(A1 + hu[settings + 18]);
+                    [render_data + 1e55c + T3 * 14] = h(A1 + hu[offset_to_triggers + 18]);
                 }
                 else
                 {
-                    [render_data + 1e55c + T3 * 14] = h(A1 - hu[settings + 18]);
+                    [render_data + 1e55c + T3 * 14] = h(A1 - hu[offset_to_triggers + 18]);
                 }
             }
 
@@ -368,11 +368,11 @@ while( true )
             {
                 if( A0 < (h[80071a4e] - 70) )
                 {
-                    [render_data + e55e + T3 * 14] = h(A1 + hu[settings + 1a]);
+                    [render_data + e55e + T3 * 14] = h(A1 + hu[offset_to_triggers + 1a]);
                 }
                 else
                 {
-                    [render_data + e55e + T3 * 14] = h(A1 - hu[settings + 1a]);
+                    [render_data + e55e + T3 * 14] = h(A1 - hu[offset_to_triggers + 1a]);
                 }
             }
 
@@ -422,15 +422,15 @@ while( true )
             x = h[render_data + e554 + T3 * 14 + 8];
             if( ( (h[80071a50] - 160) >= x ) || ( x >= h[80071a50] ) )
             {
-                if( x < (h[80071a50] - a0) ) [render_data + e554 + T3 * 14 + 8] = h(x + hu[settings + 1c]);
-                else                         [render_data + e554 + T3 * 14 + 8] = h(x - hu[settings + 1c]);
+                if( x < (h[80071a50] - a0) ) [render_data + e554 + T3 * 14 + 8] = h(x + hu[offset_to_triggers + 1c]);
+                else                         [render_data + e554 + T3 * 14 + 8] = h(x - hu[offset_to_triggers + 1c]);
             }
 
             y = h[render_data + e554 + T3 * 14 + a];
             if( ( ( h[80071a52] - 100 ) >= y ) || ( y < h[80071a52] ) )
             {
-                if( y < ( h[80071a52] - 70 ) ) [render_data + e554 + T3 * 14 + a] = h(y + hu[settings + 1e]);
-                else                           [render_data + e554 + T3 * 14 + a] = h(y - hu[settings + 1e]);
+                if( y < ( h[80071a52] - 70 ) ) [render_data + e554 + T3 * 14 + a] = h(y + hu[offset_to_triggers + 1e]);
+                else                           [render_data + e554 + T3 * 14 + a] = h(y - hu[offset_to_triggers + 1e]);
             }
 
             if( ( ( h[80071a50] - 160 ) < x ) && ( x < h[80071a50] ) )
@@ -467,14 +467,14 @@ if( bu[8009abf4 + 1f] == 0 ) // init state
             [8009abf4 + 1f] = b(2); // finished state
             [8009a100] = h(0); // auto scroll to PC
 
-            [80071e38] = h(0);
-            [80071e3c] = h(0);
+            [80071e38] = h(0); // set current screen scroll x
+            [80071e3c] = h(0); // set current screen scroll y
         }
         break;
 
         case 1:
         {
-            [8009abf4 + 1f] = b(1); // action state
+            [8009abf4 + 1f] = b(1); // update state
             [8009a100] = h(1); // scripted scroll
         }
         break;
@@ -482,9 +482,9 @@ if( bu[8009abf4 + 1f] == 0 ) // init state
         case 2: // linear scroll from current to party member
         case 3: // smooth scroll from current to party member
         {
-            [8009abf4 + 1f] = b(1); // action state
-
+            [8009abf4 + 1f] = b(1); // update state
             [8009a100] = h(1); // scripted scroll
+
             [80075cf8] = h(0);
             [8009c558] = h(hu[8009abf4 + 20]);
             [80075e14] = h(hu[80071e38]); // start
@@ -505,7 +505,7 @@ if( bu[8009abf4 + 1f] == 0 ) // init state
         case 5: // linear scroll to coordinates (SCR2DL)
         case 6: // smooth scroll to coordinates (SCR2DC)
         {
-            [8009abf4 + 1f] = b(1); // action state
+            [8009abf4 + 1f] = b(1); // update state
             [8009a100] = h(1); // scripted scroll
 
             [80075cf8] = h(0); // current step
@@ -525,18 +525,19 @@ if( bu[8009abf4 + 1f] == 0 ) // init state
 ////////////////////////////////
 // field_background_scrolling_update()
 
-if( bu[8009abf4 + 1f] == 1 )
+if( bu[8009abf4 + 1f] == 1 ) // update state
 {
     switch( bu[8009abf4 + 1d] )
     {
         case 1:
         {
             A0 = SP + 10;
-            funca48b8();
+            field_background_get_entity_screen_pos();
 
             A0 = SP + 10;
-            funca47f8();
+            field_background_clamp_pos();
 
+            // compensate entity screen pos to get it to center
             [80071e38] = h(-hu[SP + 10]);
             [80071e3c] = h(-hu[SP + 12]);
         }
@@ -545,16 +546,15 @@ if( bu[8009abf4 + 1f] == 1 )
         case 2:
         {
             A0 = SP + 10;
-            funca48b8();
+            field_background_get_entity_screen_pos();
 
             A0 = SP + 10;
-            funca47f8();
+            field_background_clamp_pos();
 
             A0 = h[80075e14];
+            A1 = 0 - h[SP + 10];
             A2 = h[8009c558];
-            A1 = h[SP + 10];
             A3 = h[80075cf8];
-            A1 = 0 - A1;
             field_calculate_current_value_by_steps();
             [80071e38] = h(V0);
 
@@ -579,10 +579,10 @@ if( bu[8009abf4 + 1f] == 1 )
         case 3:
         {
             A0 = SP + 10;
-            funca48b8();
+            field_background_get_entity_screen_pos();
 
             A0 = SP + 10;
-            funca47f8();
+            field_background_clamp_pos();
 
             A0 = h[80075e14];
             A1 = 0 - h[SP + 10];
@@ -664,6 +664,41 @@ if( bu[8009abf4 + 1f] == 1 )
         break;
     }
 }
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_background_get_entity_screen_pos()
+
+ret = A0;
+
+entity_id = bu[8009abf4 + 1e]; // entity we scroll bg to
+[SP + 10] = h(w[80074ea4 + entity_id * 84 + c] >> c); // entity x
+[SP + 12] = h(w[80074ea4 + entity_id * 84 + 10] >> c); // entity y
+[SP + 14] = h((w[80074ea4 + entity_id * 84 + 14] >> c) + hu[8009ac0a]);  // entity z
+
+A0 = SP + 10;
+A1 = ret;
+field_calculate_world_to_screen_pos();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// field_background_clamp_pos()
+
+offset_to_triggers = w[800716c4];
+
+min_x = h[offset_to_triggers + c];
+min_y = h[offset_to_triggers + e];
+max_x = h[offset_to_triggers + 10];
+max_y = h[offset_to_triggers + 12];
+
+if( h[A0 + 0] > ( max_x - a0 ) ) [A0 + 0] = h(max_x - a0);
+if( h[A0 + 0] < ( min_x + a0 ) ) [A0 + 0] = h(min_x + a0);
+if( h[A0 + 2] > ( max_y - 78 ) ) [A0 + 2] = h(max_y - 78);
+if( h[A0 + 2] < ( min_y + 78 ) ) [A0 + 2] = h(min_y + 78);
 ////////////////////////////////
 
 
@@ -865,7 +900,7 @@ else
 
         A0 = SP + 10;
         A1 = SP + 18;
-        field_calculate_distance_to_screen();
+        field_calculate_world_to_screen_pos();
 
         [80114464] = h(hu[8007eb90] + hu[SP + 18]);
         [80114468] = h(hu[8007eb94] + hu[SP + 1a]);
@@ -877,13 +912,13 @@ else
 
         A0 = SP + 10;
         A1 = SP + 18;
-        field_calculate_distance_to_screen();
+        field_calculate_world_to_screen_pos();
 
         [800e48ec] = w(V0);
         [800e48e4] = h(hu[SP + 18]);
         [800e48e6] = h(hu[SP + 1a]);
         A0 = SP + 18;
-        funca47f8();
+        field_background_clamp_pos();
 
         A0 = offset_to_triggers;
         A1 = SP + 18;

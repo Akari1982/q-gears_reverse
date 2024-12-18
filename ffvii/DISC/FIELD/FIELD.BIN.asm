@@ -33,7 +33,7 @@
 // field_calculate_smooth_current_value_by_steps
 800A4134-800A41C8
 ////////////////////////////////
-// field_calculate_distance_to_screen
+// field_calculate_world_to_screen_pos
 800A41CC-800A4248
 ////////////////////////////////
 // field_background_shaking_update
@@ -45,10 +45,10 @@
 // funca45d4
 800A45D4-800A47F4
 ////////////////////////////////
-// funca47f8
+// field_background_clamp_pos
 800A47f8-800A48B4
 ////////////////////////////////
-// funca48b8
+// field_background_get_entity_screen_pos
 800A48B8-800A4968
 ////////////////////////////////
 // field_background_scrolling_update
@@ -879,7 +879,7 @@
 // field_event_opcode_64_scr2d
 800CD16C-800CD210
 ////////////////////////////////
-// 0x62 SCRLC
+// field_event_opcode_62_scrlc
 800CD214-800CD2E4
 ////////////////////////////////
 // 0x63 SCRLA

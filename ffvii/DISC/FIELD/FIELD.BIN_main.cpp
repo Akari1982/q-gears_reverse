@@ -390,7 +390,7 @@ while( true )
         [8009abf4 + ae] = h(1); // depth for background 3rd layer
         [8009abf4 + b0] = h(fff); // depth for background 2nd layer
 
-        [8009a100] = h(0); // manual or auto scroll. If 1 then this is manual scroll. 0 - we auto scroll to PC.
+        [8009a100] = h(0); // script or auto scroll. If 1 then this is script scroll. 0 - we auto scroll to PC.
         [80071e38] = h(0); // current screen scroll X
         [80071e3c] = h(0); // current screen scroll Y
 
@@ -1101,10 +1101,10 @@ return start + (((V0 + 1000) * (end - start)) >> c) / 2;
 
 
 ////////////////////////////////
-// field_calculate_distance_to_screen()
+// field_calculate_world_to_screen_pos()
 
-S0 = A0;
-S1 = A1;
+world_pos = A0;
+screen_pos = A1;
 
 system_psyq_push_matrix();
 
@@ -1118,8 +1118,8 @@ A0 = 0;
 A1 = 0;
 system_psyq_set_geom_offset();
 
-A0 = S0;
-A1 = S1;
+A0 = world_pos;
+A1 = screen_pos;
 A2 = SP + 10;
 A3 = SP + 14;
 system_psyq_rot_trans_pers();
@@ -1235,111 +1235,6 @@ V1 = V1 + V0;
 [T4 + 0002] = h(V1);
 
 La47ec:	; 800A47EC
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca47f8()
-
-V0 = w[800716c4];
-V0 = h[V0 + 0010];
-V1 = h[A0 + 0000];
-A1 = V0;
-800A4810	addiu  v0, v0, $ff60 (=-$a0)
-V0 = V0 < V1;
-800A4818	beq    v0, zero, La4828 [$800a4828]
-
-800A4820	addiu  v0, a1, $ff60 (=-$a0)
-[A0 + 0000] = h(V0);
-
-La4828:	; 800A4828
-V0 = w[800716c4];
-800A4830	nop
-V1 = h[V0 + 000c];
-V0 = h[A0 + 0000];
-A1 = V1;
-V1 = V1 + 00a0;
-V0 = V0 < V1;
-800A4848	beq    v0, zero, La4854 [$800a4854]
-V0 = A1 + 00a0;
-[A0 + 0000] = h(V0);
-
-La4854:	; 800A4854
-V0 = w[800716c4];
-800A485C	nop
-V0 = h[V0 + 0012];
-V1 = h[A0 + 0002];
-A1 = V0;
-800A486C	addiu  v0, v0, $ff88 (=-$78)
-V0 = V0 < V1;
-800A4874	beq    v0, zero, La4880 [$800a4880]
-800A4878	addiu  v0, a1, $ff88 (=-$78)
-[A0 + 0002] = h(V0);
-
-La4880:	; 800A4880
-V0 = w[800716c4];
-800A4888	nop
-V1 = h[V0 + 000e];
-V0 = h[A0 + 0002];
-A1 = V1;
-V1 = V1 + 0078;
-V0 = V0 < V1;
-800A48A0	beq    v0, zero, La48ac [$800a48ac]
-V0 = A1 + 0078;
-[A0 + 0002] = h(V0);
-
-La48ac:	; 800A48AC
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca48b8
-800A48B8	addiu  sp, sp, $ffe0 (=-$20)
-A1 = A0;
-800A48C0	lui    a0, $800a
-800A48C4	addiu  a0, a0, $ac12 (=-$53ee)
-[SP + 0018] = w(RA);
-V1 = bu[A0 + 0000];
-800A48D0	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800A48E0	lui    at, $8007
-AT = AT + 4eb0;
-AT = AT + V0;
-V0 = w[AT + 0000];
-V1 = bu[A0 + 0000];
-V0 = V0 >> 0c;
-[SP + 0010] = h(V0);
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800A4908	lui    at, $8007
-AT = AT + 4eb4;
-AT = AT + V0;
-V0 = w[AT + 0000];
-V1 = bu[A0 + 0000];
-A0 = SP + 0010;
-V0 = V0 >> 0c;
-[SP + 0012] = h(V0);
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-800A4934	lui    at, $8007
-AT = AT + 4eb8;
-AT = AT + V0;
-V0 = w[AT + 0000];
-V1 = hu[8009ac0a];
-V0 = V0 >> 0c;
-V0 = V0 + V1;
-800A4954	jal    field_calculate_distance_to_screen [$800a41cc]
-[SP + 0014] = h(V0);
-RA = w[SP + 0018];
-SP = SP + 0020;
-800A4964	jr     ra 
-800A4968	nop
 ////////////////////////////////
 
 
