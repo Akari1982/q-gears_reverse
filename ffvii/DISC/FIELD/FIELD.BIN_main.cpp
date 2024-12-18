@@ -1065,18 +1065,18 @@ V1 = w[8009ac6c];
 // field_calculate_current_value_by_steps()
 
 start = A0;
-final = A1;
-steps_number = A2;
+end = A1;
+steps_n = A2;
 step = A3;
-delta = final - start;
+delta = end - start;
 V1 = delta + 0007ffff;
 if( V1 <= 000ffffe )
 {
-    V0 = (delta * step) / steps_number;
+    V0 = (delta * step) / steps_n;
 }
 else
 {
-    V0 = (delta / steps_number) * step;
+    V0 = (delta / steps_n) * step;
 }
 
 return start + V0;
@@ -1089,10 +1089,10 @@ return start + V0;
 
 start = A0;
 end = A1;
-steps = A2;
+steps_n = A2;
 step = A3 << c;
 
-A0 = (((step / steps) >> 5) - 80) & ff;
+A0 = (((step / steps_n) >> 5) - 80) & ff;
 get_direction_vector_y();
 
 return start + (((V0 + 1000) * (end - start)) >> c) / 2;
@@ -1127,114 +1127,6 @@ system_psyq_rot_trans_pers();
 system_psyq_pop_matrix();
 
 return V0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca45d4()
-
-T3 = A0;
-V1 = bu[T3 + 0014];
-V0 = 0001;
-800A45E4	bne    v1, v0, La46e4 [$800a46e4]
-T4 = A1;
-V1 = h[T4 + 0000];
-T0 = h[T3 + 000c];
-A2 = h[T3 + 0010];
-800A45F8	addiu  v1, v1, $ff60 (=-$a0)
-V1 = T0 - V1;
-V0 = T0 + 0140;
-A2 = A2 - V0;
-800A4608	mult   v1, a2
-A0 = h[T3 + 0012];
-V1 = h[T4 + 0002];
-V0 = h[T3 + 000e];
-800A4618	addiu  v1, v1, $ff88 (=-$78)
-V1 = V0 - V1;
-800A4620	mflo   a1
-V0 = V0 + 00f0;
-A0 = A0 - V0;
-800A462C	mult   v1, a0
-800A4630	mflo   v0
-800A4634	mult   a2, a2
-800A4638	mflo   v1
-800A463C	mult   a0, a0
-800A4640	mflo   a3
-A1 = A1 + V0;
-T2 = 0 - A1;
-800A464C	mult   t2, a2
-800A4650	mflo   v0
-V1 = V1 + A3;
-A2 = V1 >> 08;
-800A465C	div    v0, a2
-800A4684	mflo   v0
-800A4688	mult   t2, a0
-800A468C	mflo   v1
-800A4690	div    v1, a2
-800A46B8	mflo   v1
-V0 = V0 >> 08;
-V0 = V0 + 00a0;
-V0 = V0 + T0;
-[T4 + 0000] = h(V0);
-V0 = hu[T3 + 000e];
-V1 = V1 >> 08;
-V1 = V1 + 0078;
-V1 = V1 + V0;
-[T4 + 0002] = h(V1);
-V1 = bu[T3 + 0014];
-
-La46e4:	; 800A46E4
-V0 = 0002;
-800A46E8	bne    v1, v0, La47ec [$800a47ec]
-800A46EC	nop
-V1 = h[T4 + 0000];
-T1 = h[T3 + 000c];
-T0 = h[T3 + 0010];
-800A46FC	addiu  v1, v1, $ff60 (=-$a0)
-V1 = T1 - V1;
-V0 = T1 + 0140;
-T0 = T0 - V0;
-800A470C	mult   v1, t0
-A2 = h[T3 + 0012];
-800A4714	nop
-800A4718	addiu  a1, a2, $ff10 (=-$f0)
-V0 = h[T4 + 0002];
-V1 = h[T3 + 000e];
-V0 = V0 + 0078;
-800A4728	mflo   a3
-V0 = A2 - V0;
-A1 = V1 - A1;
-800A4734	mult   v0, a1
-800A4738	mflo   v0
-800A473C	mult   t0, t0
-800A4740	mflo   a0
-V1 = V1 - A2;
-800A4748	mult   v1, a1
-800A474C	mflo   v1
-A3 = A3 + V0;
-T2 = 0 - A3;
-800A4758	mult   t2, t0
-800A475C	mflo   v0
-A0 = A0 + V1;
-A2 = A0 >> 08;
-800A4768	div    v0, a2
-800A4790	mflo   v0
-800A4794	mult   t2, a1
-800A4798	mflo   v1
-800A479C	div    v1, a2
-800A47C4	mflo   v1
-V0 = V0 >> 08;
-V0 = V0 + 00a0;
-V0 = V0 + T1;
-[T4 + 0000] = h(V0);
-V0 = hu[T3 + 0012];
-V1 = V1 >> 08;
-800A47E0	addiu  v1, v1, $ff88 (=-$78)
-V1 = V1 + V0;
-[T4 + 0002] = h(V1);
-
-La47ec:	; 800A47EC
 ////////////////////////////////
 
 

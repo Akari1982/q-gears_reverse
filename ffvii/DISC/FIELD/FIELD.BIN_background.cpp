@@ -479,20 +479,20 @@ if( bu[8009abf4 + 1f] == 0 ) // init state
         }
         break;
 
-        case 2: // linear scroll from current to party member
-        case 3: // smooth scroll from current to party member
+        case 2: // linear scroll bg to entity
+        case 3: // smooth scroll bg to entity
         {
             [8009abf4 + 1f] = b(1); // update state
             [8009a100] = h(1); // scripted scroll
 
             [80075cf8] = h(0);
-            [8009c558] = h(hu[8009abf4 + 20]);
+            [8009c558] = h(hu[8009abf4 + 20]); // steps
             [80075e14] = h(hu[80071e38]); // start
             [80075e1c] = h(hu[80071e3c]); // start
         }
         break;
 
-        case 4: // instant scroll to coordinates (SCR2D)
+        case 4: // instant scroll bg to coord (SCR2D)
         {
             [8009abf4 + 1f] = b(2); // finished state
             [8009a100] = h(1); // scripted scroll
@@ -502,8 +502,8 @@ if( bu[8009abf4 + 1f] == 0 ) // init state
         }
         break;
 
-        case 5: // linear scroll to coordinates (SCR2DL)
-        case 6: // smooth scroll to coordinates (SCR2DC)
+        case 5: // linear scroll bg to coord (SCR2DL)
+        case 6: // smooth scroll bg to coord (SCR2DC)
         {
             [8009abf4 + 1f] = b(1); // update state
             [8009a100] = h(1); // scripted scroll
@@ -529,7 +529,7 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
 {
     switch( bu[8009abf4 + 1d] )
     {
-        case 1:
+        case 1: // instant scroll bg to entity
         {
             A0 = SP + 10;
             field_background_get_entity_screen_pos();
@@ -538,12 +538,12 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
             field_background_clamp_pos();
 
             // compensate entity screen pos to get it to center
-            [80071e38] = h(-hu[SP + 10]);
-            [80071e3c] = h(-hu[SP + 12]);
+            [80071e38] = h(0 - hu[SP + 10]);
+            [80071e3c] = h(0 - hu[SP + 12]);
         }
         break;
 
-        case 2:
+        case 2: // linear scroll bg to entity
         {
             A0 = SP + 10;
             field_background_get_entity_screen_pos();
@@ -551,32 +551,32 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
             A0 = SP + 10;
             field_background_clamp_pos();
 
-            A0 = h[80075e14];
-            A1 = 0 - h[SP + 10];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A0 = h[80075e14]; // start
+            A1 = 0 - h[SP + 10]; // end
+            A2 = h[8009c558]; // steps_n
+            A3 = h[80075cf8]; // step
             field_calculate_current_value_by_steps();
             [80071e38] = h(V0);
 
-            A0 = h[80075e1c];
-            A1 = 0 - h[SP + 12];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A0 = h[80075e1c]; // start
+            A1 = 0 - h[SP + 12]; // end
+            A2 = h[8009c558]; // steps_n
+            A3 = h[80075cf8]; // step
             field_calculate_current_value_by_steps();
             [80071e3c] = h(V0);
 
             if( h[8009c558] == h[80075cf8] )
             {
-                [8009abf4 + 1f] = b(2);
+                [8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1);
+                [80075cf8] = h(h[80075cf8] + 1); // step
             }
         }
         break;
 
-        case 3:
+        case 3: // smooth scroll bg to entity
         {
             A0 = SP + 10;
             field_background_get_entity_screen_pos();
@@ -600,19 +600,19 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
 
             if( h[8009c558] == h[80075cf8] )
             {
-                [8009abf4 + 1f] = b(2);
+                [8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1);
+                [80075cf8] = h(h[80075cf8] + 1); // step
             }
         }
         break;
 
-        case 5:
+        case 5: // linear scroll bg to coord
         {
-            A0 = h[80075e14];
-            A1 = h[80075e18];
+            A0 = h[80075e14]; // start
+            A1 = h[80075e18]; // end
             A2 = h[8009c558];
             A3 = h[80075cf8];
             field_calculate_current_value_by_steps();
@@ -627,16 +627,16 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
 
             if( h[8009c558] == h[80075cf8] )
             {
-                [8009abf4 + 1f] = b(2);
+                [8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1);
+                [80075cf8] = h(h[80075cf8] + 1); // step
             }
         }
         break;
 
-        case 6: // scroll to coordinates (type smooth)
+        case 6: // smooth scroll bg to coord
         {
             A0 = h[80075e14];
             A1 = h[80075e18];
@@ -654,11 +654,11 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
 
             if( h[8009c558] == h[80075cf8] )
             {
-                [8009abf4 + 1f] = b(2);
+                [8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1);
+                [80075cf8] = h(h[80075cf8] + 1); // step
             }
         }
         break;
@@ -823,7 +823,7 @@ system_psyq_set_geom_screen();
 
 if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
 {
-    if( bu[8009ac2d] != 1 )
+    if( bu[8009abf4 + 39] != 1 )
     {
         if( current_rd == render_data )
         {
@@ -846,6 +846,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
     {
         if( current_rd == render_data )
         {
+            // set base scroll and bg scroll
             [drawenv1 + 8] = h(hu[8007eb90] + hu[80071e38]);
             [drawenv1 + 8] = h(hu[8007eb94] + hu[80071e3c]);
             A0 = render_data + 0 * 1789c + 41d4;
@@ -854,6 +855,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
         }
         else
         {
+            // set base scroll and bg scroll
             [drawenv2 + 8] = h(hu[8007eb90] + hu[80071e38]);
             [drawenv2 + a] = h(hu[8007eb94] + hu[80071e3c] + e8);
             A0 = render_data + 1 * 1789c + 41d4;
@@ -866,49 +868,41 @@ else
 {
     if( h[8009a100] == 0 ) // auto scroll
     {
-        A0 = h[8009abf4 + 18];
-        A1 = h[8009abf4 + 1a];
-        A2 = bu[8009abf4 + 12];
-        A3 = bu[8009abf4 + 13];
-
-        V1 = bu[8009abf4 + 14];
-        if( V1 == 1 )
-        {
-            field_calculate_current_value_by_steps();
-        }
-        else if( V1 == 2 )
-        {
-            field_calculate_smooth_current_value_by_steps();
-        }
-
+        // VWOFT update
+        A0 = h[8009abf4 + 18]; // start
+        A1 = h[8009abf4 + 1a]; // end
+        A2 = bu[8009abf4 + 12]; // steps_n
+        A3 = bu[8009abf4 + 13]; // step
+             if( bu[8009abf4 + 14] == 1 ) field_calculate_current_value_by_steps();
+        else if( bu[8009abf4 + 14] == 2 ) field_calculate_smooth_current_value_by_steps();
         [8009abf4 + 16] = h(V0 & ff);
 
-        A0 = bu[8009abf4 + 13];
-        if( A0 == bu[8009abf4 + 12] )
+        if( bu[8009abf4 + 13] == bu[8009abf4 + 12] )
         {
-            [8009abf4 + 14] = b(3);
+            [8009abf4 + 14] = b(3); // finish
         }
         else
         {
-            [8009abf4 + 13] = b(A0 + 1);
+            [8009abf4 + 13] = b(bu[8009abf4 + 13] + 1);
         }
 
-        V0 = h[800965e0];
-        [SP + 10] = h((w[80074ea4 + V0 * 84 +  c] >> c) + hu[80074ea4 + V0 * 84 + 40]);
-        [SP + 12] = h((w[80074ea4 + V0 * 84 + 10] >> c) + hu[80074ea4 + V0 * 84 + 46]);
-        [SP + 14] = h((w[80074ea4 + V0 * 84 + 14] >> c) + hu[80074ea4 + V0 * 84 + 4c] + (h[8009abf4] >> 2)); // with field scale
+        // entity pos + entity offset
+        pc_entity_id = h[800965e0];
+        [SP + 10] = h((w[80074ea4 + pc_entity_id * 84 +  c] >> c) + hu[80074ea4 + pc_entity_id * 84 + 40]);
+        [SP + 12] = h((w[80074ea4 + pc_entity_id * 84 + 10] >> c) + hu[80074ea4 + pc_entity_id * 84 + 46]);
+        [SP + 14] = h((w[80074ea4 + pc_entity_id * 84 + 14] >> c) + hu[80074ea4 + pc_entity_id * 84 + 4c] + (h[8009abf4 + 10] >> 2)); // with field scale
 
         A0 = SP + 10;
         A1 = SP + 18;
         field_calculate_world_to_screen_pos();
 
+        // base scroll + entity scroll
         [80114464] = h(hu[8007eb90] + hu[SP + 18]);
         [80114468] = h(hu[8007eb94] + hu[SP + 1a]);
 
-        V0 = h[800965e0];
-        [SP + 10] = h(w[80074ea4 + V0 * 84 + 0c] >> c);
-        [SP + 12] = h(w[80074ea4 + V0 * 84 + 10] >> c);
-        [SP + 14] = h(w[80074ea4 + V0 * 84 + 14] + hu[8009abf4 + 16] >> c);
+        [SP + 10] = h(w[80074ea4 + pc_entity_id * 84 +  c] >> c);
+        [SP + 12] = h(w[80074ea4 + pc_entity_id * 84 + 10] >> c);
+        [SP + 14] = h(w[80074ea4 + pc_entity_id * 84 + 14] + hu[8009abf4 + 16] >> c);
 
         A0 = SP + 10;
         A1 = SP + 18;
@@ -1097,5 +1091,111 @@ else
         [80071a50] = h(S5 + 140 - hu[8007eb90] - b[8009abf4 + 8d]);
         [80071a52] = h(S6 + e8 - hu[8007eb94] - b[8009abf4 + 9b]);
     }
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca45d4()
+
+offset_to_triggers = T3 = A0;
+V1 = bu[offset_to_triggers + 0014];
+V0 = 0001;
+800A45E4	bne    v1, v0, La46e4 [$800a46e4]
+T4 = A1;
+V1 = h[T4 + 0000];
+T0 = h[offset_to_triggers + 000c];
+A2 = h[offset_to_triggers + 0010];
+800A45F8	addiu  v1, v1, $ff60 (=-$a0)
+V1 = T0 - V1;
+V0 = T0 + 0140;
+A2 = A2 - V0;
+800A4608	mult   v1, a2
+A0 = h[v + 0012];
+V1 = h[T4 + 0002];
+V0 = h[offset_to_triggers + 000e];
+800A4618	addiu  v1, v1, $ff88 (=-$78)
+V1 = V0 - V1;
+800A4620	mflo   a1
+V0 = V0 + 00f0;
+A0 = A0 - V0;
+800A462C	mult   v1, a0
+800A4630	mflo   v0
+800A4634	mult   a2, a2
+800A4638	mflo   v1
+800A463C	mult   a0, a0
+800A4640	mflo   a3
+A1 = A1 + V0;
+T2 = 0 - A1;
+800A464C	mult   t2, a2
+800A4650	mflo   v0
+V1 = V1 + A3;
+A2 = V1 >> 08;
+800A465C	div    v0, a2
+800A4684	mflo   v0
+800A4688	mult   t2, a0
+800A468C	mflo   v1
+800A4690	div    v1, a2
+800A46B8	mflo   v1
+V0 = V0 >> 08;
+V0 = V0 + 00a0;
+V0 = V0 + T0;
+[T4 + 0000] = h(V0);
+V0 = hu[offset_to_triggers + 000e];
+V1 = V1 >> 08;
+V1 = V1 + 0078;
+V1 = V1 + V0;
+[T4 + 0002] = h(V1);
+V1 = bu[offset_to_triggers + 0014];
+
+La46e4:	; 800A46E4
+if( V1 == 2 )
+{
+    V1 = h[T4 + 0000];
+    T1 = h[offset_to_triggers + 000c];
+    T0 = h[offset_to_triggers + 0010];
+    800A46FC	addiu  v1, v1, $ff60 (=-$a0)
+    V1 = T1 - V1;
+    V0 = T1 + 0140;
+    T0 = T0 - V0;
+    800A470C	mult   v1, t0
+    A2 = h[offset_to_triggers + 0012];
+    800A4714	nop
+    800A4718	addiu  a1, a2, $ff10 (=-$f0)
+    V0 = h[T4 + 0002];
+    V1 = h[offset_to_triggers + 000e];
+    V0 = V0 + 0078;
+    800A4728	mflo   a3
+    V0 = A2 - V0;
+    A1 = V1 - A1;
+    800A4734	mult   v0, a1
+    800A4738	mflo   v0
+    800A473C	mult   t0, t0
+    800A4740	mflo   a0
+    V1 = V1 - A2;
+    800A4748	mult   v1, a1
+    800A474C	mflo   v1
+    A3 = A3 + V0;
+    T2 = 0 - A3;
+    800A4758	mult   t2, t0
+    800A475C	mflo   v0
+    A0 = A0 + V1;
+    A2 = A0 >> 08;
+    800A4768	div    v0, a2
+    800A4790	mflo   v0
+    800A4794	mult   t2, a1
+    800A4798	mflo   v1
+    800A479C	div    v1, a2
+    800A47C4	mflo   v1
+    V0 = V0 >> 08;
+    V0 = V0 + 00a0;
+    V0 = V0 + T1;
+    [T4 + 0000] = h(V0);
+    V0 = hu[offset_to_triggers + 12];
+    V1 = V1 >> 08;
+    800A47E0	addiu  v1, v1, $ff88 (=-$78)
+    V1 = V1 + V0;
+    [T4 + 0002] = h(V1);
 }
 ////////////////////////////////

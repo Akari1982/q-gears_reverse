@@ -124,6 +124,8 @@ triggers data (block 5)
     +   e [][]     min y screen pos.
     +  10 [][]     max x screen pos.
     +  12 [][]     max y screen pos.
+    +  18 [][]     ???
+    +  1a [][]     ???
     +  38 [][][][] array of gateways (0xc items 0x18 size).
         +  0 [][]     x1.
         +  2 [][]     y1.

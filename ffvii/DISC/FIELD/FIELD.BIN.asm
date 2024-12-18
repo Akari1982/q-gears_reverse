@@ -553,7 +553,7 @@
 // 0x27 BGMOVIE
 800C50EC-800C5190
 ////////////////////////////////
-// 0x61 SCRLO
+// field_event_opcode_61_scrlo
 800C5194-800C5238
 ////////////////////////////////
 // 0x0E DSKCG
@@ -882,22 +882,22 @@
 // field_event_opcode_62_scrlc
 800CD214-800CD2E4
 ////////////////////////////////
-// 0x63 SCRLA
+// field_event_opcode_63_scrla
 800CD2E8-800CD3EC
 ////////////////////////////////
-// 0x6F SCRLP
+// field_event_opcode_6f_scrlp
 800CD3F0-800CD550
 ////////////////////////////////
-// 0x65 SCRCC
+// field_event_opcode_65_scrcc
 800CD554-800CD5EC
 ////////////////////////////////
-// 0x66 SCR2DC
+// field_event_opcode_66_scr2dc
 800CD5F0-800CD6AC
 ////////////////////////////////
-// 0x68 SCR2DL
+// field_event_opcode_68_scr2dl
 800CD6B0-800CD76C
 ////////////////////////////////
-// 0x67 SCRLW
+// field_event_opcode_67_scrlw
 800CD770-800CD830
 ////////////////////////////////
 // 0xE5 STPAL
@@ -1044,7 +1044,7 @@
 // 0x6E LSTMP
 800D1D3C-800D1DB4
 ////////////////////////////////
-// 0x5E SHAKE
+// field_event_opcode_5e_shake
 800D1DB8-800D1F1C
 ////////////////////////////////
 // 0x58 STITM
@@ -1059,10 +1059,10 @@
 // 0x0F SPECIAL
 800D2164-800D2790
 ////////////////////////////////
-// 0x2D BGSCR
+// field_event_opcode_2d_bgscr
 800D2794-800D28A4
 ////////////////////////////////
-// 0x2C BGPDH
+// field_event_opcode_2c_bgdph
 800D28A8-800D2988
 ////////////////////////////////
 // 0x5B SMTRA

@@ -250,15 +250,15 @@
     + 0a [][]     background X scroll to this position.
     + 0c [][]     background Y scroll to this position.
     + 10 [][]     field scale (9 bit fixed point).
-    + 12 []       set to 0 in 0x6A VWOFT opcode.
-    + 13 []       set to 0 in 0x6A VWOFT opcode.
-    + 14 []       set to 0 in 0x6A VWOFT opcode.
+    + 12 []       steps number. Set to 0 in 0x6A VWOFT opcode.
+    + 13 []       current step. Set to 0 in 0x6A VWOFT opcode.
+    + 14 []       type and state of VWOFT. (1-linear, 2-smooth, 3-finish)
     + 16 [][]     set to 2-3 bytes in 0x6A VWOFT opcode.
-    + 18 [][]     set to 0 in 0x6A VWOFT opcode.
-    + 1a [][]     set to 0 in 0x6A VWOFT opcode.
-    + 1d []       set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC).
+    + 18 [][]     start. Set to 0 in 0x6A VWOFT opcode.
+    + 1a [][]     end. Set to 0 in 0x6A VWOFT opcode.
+    + 1d []       type of background scroll. (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
     + 1e []       store entity id to which we scroll background.
-    + 1f []       state of scrolling. 0-init 1-action 2-finish.
+    + 1f []       state of background scroll. (0-init 1-action 2-finish).
     + 20 [][]     speed of background scroll. Number of steps?
     + 22 [][]     destination z during map load. (most likely triangle id).
     + 24 [][]     saved rotation for manual entity during map load.
@@ -274,7 +274,8 @@
     + 35 []       ???
     + 36 []       check gateways during move or not (0 - check).
     + 37 []       scroll lock.
-    + 38 [][]     0 here when there is no fade.
+    + 38 []       0 - disable fade.
+    + 39 []       ???
     + 3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
     + 3b []       battle field check on/off (0/1).
     + 3c []       battle table to use (0 or 1).
