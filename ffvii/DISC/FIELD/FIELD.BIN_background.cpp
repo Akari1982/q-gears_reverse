@@ -923,8 +923,8 @@ else
         S7 = (((((h[SP + 18] * h[offset_to_triggers + 2c]) >> 8) + (h[offset_to_triggers + 24] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1c];
         S6 = (((((h[SP + 1a] * h[offset_to_triggers + 2e]) >> 8) + (h[offset_to_triggers + 26] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1e];
 
-        [80114468] = h(hu[80114468] - h[SP + 1a]);
         [80114464] = h(hu[80114464] - h[SP + 18]);
+        [80114468] = h(hu[80114468] - h[SP + 1a]);
 
         [SP + 20] = h(S4);
         [SP + 28] = h(S7);
@@ -932,64 +932,65 @@ else
 
         if( current_rd == render_data )
         {
-            [drawenv1 + 8] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
-            [drawenv1 + a] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a]);
+            // base scroll + shake - 
+            [drawenv1 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - h[SP + 18]);
+            [drawenv1 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - h[SP + 1a]);
             A0 = render_data + 0 * 1789c + 41d4; // DR_ENV prim
             A1 = drawenv1;
             system_psyq_set_drawenv();
 
-            [drawenv3 + 8] = h(b[8009ac81] - hu[8007eb90] - S5);
-            [drawenv3 + a] = h(b[8009ac8f] + hu[8007eb94] - S4);
+            [drawenv3 + 8] = h(b[8009abf4 + 8d] - hu[8007eb90] - S5);
+            [drawenv3 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] - S4);
             A0 = render_data + 0 * 1789c + 4214;
             A1 = drawenv3;
             system_psyq_set_drawenv();
 
-            [drawenv5 + 8] = h(b[8009ac81] + hu[8007eb90] - S7);
-            [drawenv5 + a] = h(b[8009ac8f] + hu[8007eb94] - S6);
+            [drawenv5 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - S7);
+            [drawenv5 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - S6);
             A0 = render_data + 0 * 1789c + 4254;
             A1 = drawenv5;
             system_psyq_set_drawenv();
 
-            [drawenv7 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [drawenv7 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
+            [drawenv7 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[SP + 18]);
+            [drawenv7 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - hu[SP + 1a]);
             A0 = render_data + 0 * 1789c + 4294;
             A1 = drawenv7;
             system_psyq_set_drawenv();
 
-            [drawenv9 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [drawenv9 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a]);
+            [drawenv9 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[SP + 18]);
+            [drawenv9 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - hu[SP + 1a]);
             A0 = render_data + 0 * 1789c + 42d4;
             A1 = drawenv9;
             system_psyq_set_drawenv();
         }
         else
         {
-            [drawenv2 + 8] = h(b[8009ac81] + hu[8007eb90] - h[SP + 18]);
-            [drawenv2 + a] = h(b[8009ac8f] + hu[8007eb94] - h[SP + 1a] + e8);
+            [drawenv2 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - h[SP + 18]);
+            [drawenv2 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - h[SP + 1a] + e8);
             A0 = render_data + 1 * 1789c + 41d4;
             A1 = drawenv2;
             system_psyq_set_drawenv();
 
-            [drawenv4 + 8] = h(b[8009ac81] + hu[8007eb90] - S5);
-            [drawenv4 + a] = h(b[8009ac8f] + hu[8007eb94] - S4 + e8);
+            [drawenv4 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - S5);
+            [drawenv4 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - S4 + e8);
             A0 = render_data + 1 * 1789c + 4214;
             A1 = drawenv4;
             system_psyq_set_drawenv();
 
-            [drawenv6 + 8] = h(b[8009ac81] + hu[8007eb90] - S7);
-            [drawenv6 + a] = h(b[8009ac8f] + hu[8007eb94] - S6 + e8);
+            [drawenv6 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - S7);
+            [drawenv6 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - S6 + e8);
             A0 = render_data + 1 * 1789c + 4254;
             A1 = drawenv6;
             system_psyq_set_drawenv();
 
-            [drawenv8 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [drawenv8 + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
+            [drawenv8 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[SP + 18]);
+            [drawenv8 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - hu[SP + 1a] + e8);
             A0 = render_data + 1 * 1789c + 4294;
             A1 = drawenv8;
             system_psyq_set_drawenv();
 
-            [drawenva + 8] = h(b[8009ac81] + hu[8007eb90] - hu[SP + 18]);
-            [drawenva + a] = h(b[8009ac8f] + hu[8007eb94] - hu[SP + 1a] + e8);
+            [drawenva + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[SP + 18]);
+            [drawenva + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - hu[SP + 1a] + e8);
             A0 = render_data + 1 * 1789c + 42d4;
             A1 = drawenva;
             system_psyq_set_drawenv();
@@ -997,12 +998,12 @@ else
 
         [80071e38] = h(0 - hu[SP + 18]);
         [80071e3c] = h(0 - hu[SP + 1a]);
-        [80071a48] = h(hu[SP + 18] + 140 - hu[8007eb90] - b[8009ac81]);
-        [80071a4a] = h(hu[SP + 1a] + e8 - hu[8007eb94] - b[8009ac8f]);
-        [80071a4c] = h(S5          + 140 - hu[8007eb90] - b[8009ac81]);
-        [80071a4e] = h(hu[SP + 20] + e8 - hu[8007eb94] - b[8009ac8f]);
-        [80071a50] = h(hu[SP + 28] + 140 - hu[8007eb90] - b[8009ac81]);
-        [80071a52] = h(hu[SP + 30] + e8 - hu[8007eb94] - b[8009ac8f]);
+        [80071a48] = h(hu[SP + 18] + 140 - hu[8007eb90] - b[8009abf4 + 8d]);
+        [80071a4a] = h(hu[SP + 1a] + e8 - hu[8007eb94] - b[8009abf4 + 9b]);
+        [80071a4c] = h(S5          + 140 - hu[8007eb90] - b[8009abf4 + 8d]);
+        [80071a4e] = h(hu[SP + 20] + e8 - hu[8007eb94] - b[8009abf4 + 9b]);
+        [80071a50] = h(hu[SP + 28] + 140 - hu[8007eb90] - b[8009abf4 + 8d]);
+        [80071a52] = h(hu[SP + 30] + e8 - hu[8007eb94] - b[8009abf4 + 9b]);
     }
     else
     {
@@ -1014,7 +1015,7 @@ else
         if( current_rd == render_data ) // if 1st buffer
         {
             ofsx = b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] + h[80071e38];
-            ofsy = b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] + w[80071e3c];
+            ofsy = b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] + h[80071e3c];
 
             [drawenv1 + 8] = h(ofsx); // offset x
             [drawenv1 + a] = h(ofsy); // offset y
@@ -1022,14 +1023,14 @@ else
             A1 = drawenv1;
             system_psyq_set_drawenv();
 
-            [drawenv3 + 8] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S3);
-            [drawenv3 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S4);
+            [drawenv3 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S3);
+            [drawenv3 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S4);
             A0 = render_data + 0 * 1789c + 4214;
             A1 = drawenv3;
             system_psyq_set_drawenv();
 
-            [drawenv5 + 8] = h(b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] - S5);
-            [drawenv5 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] - S6);
+            [drawenv5 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S5);
+            [drawenv5 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S6);
             A0 = render_data + 0 * 1789c + 4254;
             A1 = drawenv5;
             system_psyq_set_drawenv();
@@ -1048,8 +1049,9 @@ else
         }
         else // 2nd buffer
         {
-            ofsx = b[8009abf4 + 8d] + hu[8007eb90] - hu[camera_data + 20] + h[80071e38];
-            ofsy = b[8009abf4 + 9b] + hu[8007eb94] + hu[camera_data + 22] + w[80071e3c];
+            // base scroll + shake + ??? + screen scroll
+            ofsx = hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] + h[80071e38];
+            ofsy = hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] + h[80071e3c];
 
             [drawenv2 + 8] = h(ofsx);
             [drawenv2 + a] = h(ofsy + e8);
@@ -1057,14 +1059,14 @@ else
             A1 = drawenv2;
             system_psyq_set_drawenv();
 
-            [drawenv4 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S3);
-            [drawenv4 + a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S4 + e8);
+            [drawenv4 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S3);
+            [drawenv4 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S4 + e8);
             A0 = render_data + 1 * 1789c + 4214;
             A1 = drawenv4;
             system_psyq_set_drawenv();
 
-            [drawenv6 + 8] = h(b[8009ac81] + hu[8007eb90] - hu[camera_data + 20] - S5);
-            [drawenv6 + a] = h(b[8009ac8f] + hu[8007eb94] + hu[camera_data + 22] - S6 + e8);
+            [drawenv6 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S5);
+            [drawenv6 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S6 + e8);
             A0 = render_data + 1 * 1789c + 4254;
             A1 = drawenv6;
             system_psyq_set_drawenv();
@@ -1099,103 +1101,49 @@ else
 ////////////////////////////////
 // funca45d4()
 
-offset_to_triggers = T3 = A0;
-V1 = bu[offset_to_triggers + 0014];
-V0 = 0001;
-800A45E4	bne    v1, v0, La46e4 [$800a46e4]
+offset_to_triggers = A0;
 T4 = A1;
-V1 = h[T4 + 0000];
-T0 = h[offset_to_triggers + 000c];
-A2 = h[offset_to_triggers + 0010];
-800A45F8	addiu  v1, v1, $ff60 (=-$a0)
-V1 = T0 - V1;
-V0 = T0 + 0140;
-A2 = A2 - V0;
-800A4608	mult   v1, a2
-A0 = h[v + 0012];
-V1 = h[T4 + 0002];
-V0 = h[offset_to_triggers + 000e];
-800A4618	addiu  v1, v1, $ff88 (=-$78)
-V1 = V0 - V1;
-800A4620	mflo   a1
-V0 = V0 + 00f0;
-A0 = A0 - V0;
-800A462C	mult   v1, a0
-800A4630	mflo   v0
-800A4634	mult   a2, a2
-800A4638	mflo   v1
-800A463C	mult   a0, a0
-800A4640	mflo   a3
-A1 = A1 + V0;
-T2 = 0 - A1;
-800A464C	mult   t2, a2
-800A4650	mflo   v0
-V1 = V1 + A3;
-A2 = V1 >> 08;
-800A465C	div    v0, a2
-800A4684	mflo   v0
-800A4688	mult   t2, a0
-800A468C	mflo   v1
-800A4690	div    v1, a2
-800A46B8	mflo   v1
-V0 = V0 >> 08;
-V0 = V0 + 00a0;
-V0 = V0 + T0;
-[T4 + 0000] = h(V0);
-V0 = hu[offset_to_triggers + 000e];
-V1 = V1 >> 08;
-V1 = V1 + 0078;
-V1 = V1 + V0;
-[T4 + 0002] = h(V1);
-V1 = bu[offset_to_triggers + 0014];
 
-La46e4:	; 800A46E4
-if( V1 == 2 )
+if( bu[offset_to_triggers + 14] == 1 )
 {
-    V1 = h[T4 + 0000];
-    T1 = h[offset_to_triggers + 000c];
-    T0 = h[offset_to_triggers + 0010];
-    800A46FC	addiu  v1, v1, $ff60 (=-$a0)
-    V1 = T1 - V1;
-    V0 = T1 + 0140;
-    T0 = T0 - V0;
-    800A470C	mult   v1, t0
-    A2 = h[offset_to_triggers + 0012];
-    800A4714	nop
-    800A4718	addiu  a1, a2, $ff10 (=-$f0)
-    V0 = h[T4 + 0002];
-    V1 = h[offset_to_triggers + 000e];
-    V0 = V0 + 0078;
-    800A4728	mflo   a3
-    V0 = A2 - V0;
-    A1 = V1 - A1;
-    800A4734	mult   v0, a1
-    800A4738	mflo   v0
-    800A473C	mult   t0, t0
-    800A4740	mflo   a0
-    V1 = V1 - A2;
-    800A4748	mult   v1, a1
-    800A474C	mflo   v1
-    A3 = A3 + V0;
-    T2 = 0 - A3;
-    800A4758	mult   t2, t0
-    800A475C	mflo   v0
-    A0 = A0 + V1;
-    A2 = A0 >> 08;
-    800A4768	div    v0, a2
-    800A4790	mflo   v0
-    800A4794	mult   t2, a1
-    800A4798	mflo   v1
-    800A479C	div    v1, a2
-    800A47C4	mflo   v1
-    V0 = V0 >> 08;
-    V0 = V0 + 00a0;
-    V0 = V0 + T1;
-    [T4 + 0000] = h(V0);
-    V0 = hu[offset_to_triggers + 12];
-    V1 = V1 >> 08;
-    800A47E0	addiu  v1, v1, $ff88 (=-$78)
-    V1 = V1 + V0;
-    [T4 + 0002] = h(V1);
+    V1 = h[T4 + 0];
+    T0 = h[offset_to_triggers + c];
+    A2 = h[offset_to_triggers + 10];
+    V1 = V1 - a0;
+    V1 = T0 - V1;
+    V0 = T0 + 140;
+    A2 = A2 - V0;
+    A1 = V1 * A2;
+    A0 = h[offset_to_triggers + 12];
+    V1 = h[T4 + 2];
+    V0 = h[offset_to_triggers + e];
+    V1 = V1 - 78;
+    V1 = V0 - V1;
+    V0 = V0 + f0;
+    A0 = A0 - V0;
+    V0 = V1 * A0;
+    V1 = A2 * A2;
+    A3 = A0 * A0;
+    A1 = A1 + V0;
+    T2 = 0 - A1;
+    V0 = T2 * A2;
+    V1 = V1 + A3;
+    A2 = V1 >> 08;
+    V0 = V0 / A2;
+    V1 = T2 * A0;
+    V1 = V1 / A2;
+    [T4 + 0] = h(T0 + (V0 >> 8) + a0);
+    [T4 + 2] = h(hu[offset_to_triggers + e] + (V1 >> 8) + 78);
+}
+
+if( bu[offset_to_triggers + 14] == 2 )
+{
+    T0 = h[offset_to_triggers + 10] - h[offset_to_triggers + c] - 140;
+    A3 = (h[offset_to_triggers + c] - h[T4 + 0] + a0) * T0;
+    A1 = h[offset_to_triggers + e] - h[offset_to_triggers + 12] + f0;
+    T2 = 0 - (A3 + ((h[offset_to_triggers + 12] - h[T4 + 2] - 78) * A1));
+    A2 = ((T0 * T0) + ((h[offset_to_triggers + e] - h[offset_to_triggers + 12]) * A1)) >> 8;
+    [T4 + 0] = h(h[offset_to_triggers + c] + (((T2 * T0) / A2) >> 8) + a0);
+    [T4 + 2] = h(hu[offset_to_triggers + 12] + (((T2 * A1) / A2) >> 8) - 78);
 }
 ////////////////////////////////

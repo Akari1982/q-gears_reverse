@@ -546,7 +546,7 @@
     +  4180 draw mode for arrows 4000 and 40c0.
     +  418c OT for 4194 DR_ENV global (0x4 size)
     +  4190 OT for 41d4 DR_ENV prim 1 (0x4 size)
-    +  4194 DR_ENV prim global (0x40 size). After scene render.
+    +  4194 DR_ENV prim global (0x40 size). After scene render. This env don't scroll because fade and UI needs to rendered normaly.
     +  41d4 DR_ENV prim 1 (0x40 size). Before scene render.
     +  4214 DR_ENV prim 2 (0x40 size). At end of layer 3.
     +  4254 DR_ENV prim 3 (0x40 size). At end of layer 4.
