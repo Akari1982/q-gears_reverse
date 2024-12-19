@@ -846,7 +846,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
     {
         if( current_rd == render_data )
         {
-            // set base scroll and bg scroll
+            // base scroll + bg scroll
             [drawenv1 + 8] = h(hu[8007eb90] + hu[80071e38]);
             [drawenv1 + 8] = h(hu[8007eb94] + hu[80071e3c]);
             A0 = render_data + 0 * 1789c + 41d4;
@@ -855,7 +855,7 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
         }
         else
         {
-            // set base scroll and bg scroll
+            // base scroll + bg scroll
             [drawenv2 + 8] = h(hu[8007eb90] + hu[80071e38]);
             [drawenv2 + a] = h(hu[8007eb94] + hu[80071e3c] + e8);
             A0 = render_data + 1 * 1789c + 41d4;
