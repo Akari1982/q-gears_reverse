@@ -101,7 +101,6 @@ tilemap data (block 3)
 
 ////////////////////////////////
 camera data (block 4)
-    +  0 [][]     triggers data.
     +  0 [][][][] R11R12.
     +  4 [][][][] R13R21.
     +  8 [][][][] R22R23.

@@ -1,0 +1,107 @@
+800CFCE4	lui    v0, $800a
+800CFCE8	lbu    v0, $d820(v0)
+800CFCEC	addiu  sp, sp, $ffe0 (=-$20)
+800CFCF0	sw     ra, $001c(sp)
+800CFCF4	andi   v0, v0, $0003
+800CFCF8	beq    v0, zero, Lcfd10 [$800cfd10]
+800CFCFC	sw     s0, $0018(sp)
+800CFD00	lui    a0, $800a
+800CFD04	addiu  a0, a0, $0d24
+800CFD08	jal    funcbead4 [$800bead4]
+800CFD0C	ori    a1, zero, $0006
+
+Lcfd10:	; 800CFD10
+800CFD10	lui    v0, $8007
+800CFD14	lbu    v0, $22c4(v0)
+800CFD18	nop
+800CFD1C	sll    v0, v0, $01
+800CFD20	lui    at, $8008
+800CFD24	addiu  at, at, $31fc
+800CFD28	addu   at, at, v0
+800CFD2C	lhu    v1, $0000(at)
+800CFD30	lui    v0, $800a
+800CFD34	lw     v0, $c6dc(v0)
+800CFD38	nop
+800CFD3C	addu   v0, v0, v1
+800CFD40	lbu    v0, $0006(v0)
+800CFD44	lui    s0, $8008
+800CFD48	addiu  s0, s0, $31fc
+800CFD4C	beq    v0, zero, Lcfdfc [$800cfdfc]
+800CFD50	ori    a0, zero, $0001
+800CFD54	lui    v1, $800a
+800CFD58	lw     v1, $c6e0(v1)
+800CFD5C	nop
+800CFD60	lhu    v0, $0016(v1)
+800CFD64	ori    a1, zero, $0002
+800CFD68	jal    funcbf908 [$800bf908]
+800CFD6C	sh     v0, $0018(v1)
+800CFD70	ori    a0, zero, $0002
+800CFD74	lui    v1, $800a
+800CFD78	lw     v1, $c6e0(v1)
+800CFD7C	ori    a1, zero, $0004
+800CFD80	jal    funcbf908 [$800bf908]
+800CFD84	sh     v0, $001a(v1)
+800CFD88	lui    v1, $800a
+800CFD8C	lw     v1, $c6e0(v1)
+800CFD90	nop
+800CFD94	sb     v0, $0012(v1)
+800CFD98	lui    v0, $8007
+800CFD9C	lbu    v0, $22c4(v0)
+800CFDA0	nop
+800CFDA4	sll    v0, v0, $01
+800CFDA8	addu   v0, v0, s0
+800CFDAC	lhu    v1, $0000(v0)
+800CFDB0	lui    v0, $800a
+800CFDB4	lw     v0, $c6dc(v0)
+800CFDB8	nop
+800CFDBC	addu   v0, v0, v1
+800CFDC0	lui    v1, $800a
+800CFDC4	lw     v1, $c6e0(v1)
+800CFDC8	lbu    v0, $0006(v0)
+800CFDCC	nop
+800CFDD0	sb     v0, $0014(v1)
+800CFDD4	lui    v0, $800a
+800CFDD8	lw     v0, $c6e0(v0)
+800CFDDC	nop
+800CFDE0	sb     zero, $0013(v0)
+800CFDE4	lui    a0, $8007
+800CFDE8	lbu    a0, $22c4(a0)
+800CFDEC	nop
+800CFDF0	sll    a0, a0, $01
+800CFDF4	j      Lcfe54 [$800cfe54]
+800CFDF8	addu   a0, a0, s0
+
+Lcfdfc:	; 800CFDFC
+800CFDFC	jal    funcbf908 [$800bf908]
+800CFE00	ori    a1, zero, $0002
+800CFE04	lui    v1, $800a
+800CFE08	lw     v1, $c6e0(v1)
+800CFE0C	nop
+800CFE10	sb     zero, $0012(v1)
+800CFE14	lui    a0, $800a
+800CFE18	lw     a0, $c6e0(a0)
+800CFE1C	sh     v0, $0016(v1)
+800CFE20	sb     zero, $0013(a0)
+800CFE24	lui    v0, $800a
+800CFE28	lw     v0, $c6e0(v0)
+800CFE2C	nop
+800CFE30	sb     zero, $0014(v0)
+800CFE34	lui    a0, $8007
+800CFE38	lbu    a0, $22c4(a0)
+800CFE3C	lui    v0, $800a
+800CFE40	lw     v0, $c6e0(v0)
+800CFE44	sll    a0, a0, $01
+800CFE48	addu   a0, a0, s0
+800CFE4C	sh     zero, $0018(v0)
+800CFE50	sh     zero, $001a(v0)
+
+Lcfe54:	; 800CFE54
+800CFE54	lhu    v1, $0000(a0)
+800CFE58	addu   v0, zero, zero
+800CFE5C	addiu  v1, v1, $0007
+800CFE60	sh     v1, $0000(a0)
+800CFE64	lw     ra, $001c(sp)
+800CFE68	lw     s0, $0018(sp)
+800CFE6C	addiu  sp, sp, $0020
+800CFE70	jr     ra 
+800CFE74	nop

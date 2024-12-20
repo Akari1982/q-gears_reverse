@@ -561,7 +561,7 @@ while( true )
 
         if( V0 == 1 )
         {
-            [8009abf5] = b(0);
+            [8009abf4 + 1] = b(0);
             800127C0	j      L127f8 [$800127f8]
         }
     }
@@ -596,9 +596,9 @@ while( true )
 
             if( bu[80071e34] == 1 )
             {
-                80011ED0	jal    func260dc [$800260dc]
+                func260dc();
 
-                80011ED8	jal    func26090 [$80026090]
+                func26090();
 
                 [80071e34] = b(0);
             }
@@ -634,7 +634,7 @@ while( true )
                 {
                     if( bu[8009ac31] == 0 )
                     {
-                        [8009abf5] = b(1a);
+                        [8009abf4 + 1] = b(1a);
                         [800707be] = h(0);
                     }
                 }
@@ -721,7 +721,7 @@ while( true )
             }
             else if( w[80071e28] == 2 )
             {
-                [8009abf5] = b(a);
+                [8009abf4 + 1] = b(a);
             }
         }
         break;
@@ -738,80 +738,77 @@ while( true )
 
             func119e4();
 
-            V0 = bu[80071e34];
-            if( V0 == 1 )
+            if( bu[80071e34] == 1 )
             {
-                80012268	jal    func260dc [$800260dc]
+                func260dc();
 
-                80012270	jal    func26090 [$80026090]
+                func26090();
 
                 [80071e34] = b(0);
             }
 
-            V0 = bu[8009abf5];
-            8001228C	addiu  v1, v0, $fffa (=-$6)
-            switch( V1 )
+            switch( bu[8009abf4 + 1] )
             {
-                case 00:
+                case 6:
                 {
                     A0 = h[8009abf6];
-                    800122C4	jal    func24d88 [$80024d88]
+                    func24d88();
                 }
                 break;
 
-                case 01:
+                case 7:
                 {
                     A0 = h[8009abf6];
-                    800122DC	jal    func24dd4 [$80024dd4]
+                    func24dd4();
 
-                    800122E4	jal    func260dc [$800260dc]
+                    func260dc();
 
-                    800122EC	jal    func26090 [$80026090]
+                    func26090();
                 }
                 break;
 
-                case 02:
+                case 8:
                 {
                     A0 = h[8009abf6];
-                    80012304	jal    func24e18 [$80024e18]
+                    func24e18();
                 }
                 break;
 
-                case 03:
+                case 9:
                 {
                     V0 = h[8009abf6];
                     if( V0 == 1 )
                     {
                         A0 = w[800e48e0]; // pointer to tutorial settings
-                        8001232C	jal    func24a3c [$80024a3c]
+                        func24a3c();
                     }
                     else
                     {
                         A0 = 0;
-                        8001233C	jal    func24a3c [$80024a3c]
+                        func24a3c();
 
-                        [8009abf5] = b(0);
+                        [8009abf4 + 1] = b(0);
                     }
                 }
                 break;
 
-                case 08:
+                case e:
                 {
-                    8001234C	jal    func24e94 [$80024e94]
+                    func24e94();
                 }
                 break;
 
-                case 0c:
+                case 12:
                 {
                     A0 = h[8009abf6];
-                    80012364	jal    func24fc4 [$80024fc4]
+                    func24fc4();
                 }
                 break;
 
-                case 0d:
+                case 13:
                 {
                     A0 = h[8009abf6];
-                    8001237C	jal    func24f80 [$80024f80]
+                    func24f80();
                 }
                 break;
             }
@@ -842,7 +839,7 @@ while( true )
 
             [800965ec] = h(6);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -864,7 +861,7 @@ while( true )
 
             [800965ec] = h(7);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -886,7 +883,7 @@ while( true )
 
             [800965ec] = h(8);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -908,7 +905,7 @@ while( true )
 
             [800965ec] = h(9);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -933,7 +930,7 @@ while( true )
             [8009d5e7] = b(V0 >> 8);
             [800965ec] = h(a);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -957,7 +954,7 @@ while( true )
             [8009d3eb] = b(V0 >> 8);
             [800965ec] = h(b);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -979,7 +976,7 @@ while( true )
 
                 if( V0 == 1 )
                 {
-                    [8009abf5] = b(a);
+                    [8009abf4 + 1] = b(a);
                     break;
                 }
             }
@@ -996,7 +993,7 @@ while( true )
         {
             func119e4();
 
-            V0 = bu[8009abf5];
+            V0 = bu[8009abf4 + 1];
             V1 = V0 - f;
 
             switch( V1 )
@@ -1028,12 +1025,12 @@ while( true )
                 break;
             }
 
-            if( bu[8009abf5] != 19 )
+            if( bu[8009abf4 + 1] != 19 )
             {
                 field_copy_battle_party_to_party();
             }
 
-            [8009abf5 + 25] = h(2);
+            [8009abf4 + 26] = h(2);
             [800965ec] = h(d);
             [8009c560] = h(1);
         }
@@ -1057,7 +1054,7 @@ while( true )
 
             [800965ec] = h(e);
             [8009c560] = h(1);
-            [8009abf5] = b(1);
+            [8009abf4 + 1] = b(1);
         }
         break;
 
@@ -1072,7 +1069,7 @@ while( true )
         break;
     }
 
-    if( bu[8009abf5] == 5 )
+    if( bu[8009abf4 + 1] == 5 )
     {
         A0 = w[80048d54]; // 1efa9 FIELD\ENDING.X
         A1 = w[80048d58]; // f414 size
@@ -1081,12 +1078,12 @@ while( true )
         system_cdrom_load_by_sector();
 
         A0 = 1;
-        800127E0	jal    funca04c4 [$800a04c4]
+        funca04c4();
 
         800127E8	j      L127f8 [$800127f8]
     }
 
-    V1 = bu[8009abf5];
+    V1 = bu[8009abf4 + 1];
 
     8001274C	beq    v1, 1a, L12774 [$80012774]
 
@@ -1096,12 +1093,12 @@ while( true )
 
     80012764	bne    v1, a, L11dcc [$80011dcc]
 
-    [8009abf5] = b(0);
+    [8009abf4 + 1] = b(0);
 
     8001276C	j      L127f8 [$800127f8]
 
     L12774:	; 80012774
-    [8009abf5] = b(0);
+    [8009abf4 + 1] = b(0);
     system_execute_AKAO();
 
     A0 = w[80048d4c]; // 1efa6 FIELD\DSCHANGE.X

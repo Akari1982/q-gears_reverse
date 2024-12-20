@@ -864,13 +864,13 @@
 // 0xE3 BGROL2
 800CCCC8-800CCD50
 ////////////////////////////////
-// 0xF8 PMVIE
+// field_event_opcode_f8_pmvie
 800CCD54-800CCE90
 ////////////////////////////////
-// 0xF9 MOVIE
+// field_event_opcode_f9_movie
 800CCE94-800CCFE4
 ////////////////////////////////
-// 0xFA MVIEF
+// field_event_opcode_fa_mvief
 800CCFE8-800CD0C0
 ////////////////////////////////
 // 0xD2 MPJPO
@@ -996,7 +996,7 @@
 // 0xC7 SOLID
 800CFC1C-800CFCE0
 ////////////////////////////////
-// 0x6A VWOFT
+// field_event_opcode_6a_vwoft
 800CFCE4-800CFE74
 ////////////////////////////////
 // 0x08 JOIN

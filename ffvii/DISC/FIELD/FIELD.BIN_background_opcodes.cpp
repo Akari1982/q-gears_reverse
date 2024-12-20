@@ -421,6 +421,58 @@ return 0;
 
 
 ////////////////////////////////
+// field_event_opcode_6a_vwoft()
+
+field_struct = w[8009c6e0];
+events_data = w[8009c6dc];
+actor_id_cur = bu[800722c4];
+script_cur = hu[800831fc + actor_id_cur * 2];
+
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a0d24; // "vwoft"
+    A1 = 6;
+    field_debug_event_opcode();
+}
+
+if( bu[events_data + script_cur + 6] != 0 )
+{
+    [field_struct + 13] = b(0);
+    [field_struct + 14] = b(bu[events_data + script_cur + 6]);
+    [field_struct + 18] = h(hu[field_struct + 16]);
+
+    A0 = 1;
+    A1 = 2;
+    read_memory_block_two_bytes();
+    [field_struct + 1a] = h(V0);
+
+    A0 = 2;
+    A1 = 4;
+    read_memory_block_two_bytes();
+    [field_struct + 12] = b(V0);
+}
+else
+{
+    [field_struct + 12] = b(0);
+    [field_struct + 13] = b(0);
+    [field_struct + 14] = b(0);
+    [field_struct + 18] = h(0);
+    [field_struct + 1a] = h(0);
+
+    A0 = 1;
+    A1 = 2;
+    read_memory_block_two_bytes();
+    [field_struct + 16] = h(V0);
+}
+
+[800831fc + actor_id_cur * 2] = h(script_cur + 7);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
 // field_event_opcode_6f_scrlp()
 // scroll to party member with specified type
 

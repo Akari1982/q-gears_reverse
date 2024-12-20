@@ -47,7 +47,7 @@
 
 80071e38 [][]     current screen scroll X.
 80071e3c [][]     current screen scroll Y.
-80071e40 offset to camera section
+80071e40 [][][][] pointer to camera data section in DAT file or movie camera (contains matrix and offsets).
 
 800722c4 []       current actor id.
 
@@ -238,13 +238,14 @@
                     00 - normal field.
                     01 - load new field or world (finalize field in this case).
                     02 - encounter.
+                    03 - play movie.
                     09 - tutorial.
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
                     0d -
                     19 -
                     1a - game over
-    + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu.
+    + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play.
     + 04 [][]     destination x during map load.
     + 06 [][]     destination y during map load.
     + 0a [][]     background X scroll to this position.
@@ -546,12 +547,12 @@
     +  4180 draw mode for arrows 4000 and 40c0.
     +  418c OT for 4194 DR_ENV global (0x4 size)
     +  4190 OT for 41d4 DR_ENV prim 1 (0x4 size)
-    +  4194 DR_ENV prim global (0x40 size). After scene render. This env don't scroll because fade and UI needs to rendered normaly.
-    +  41d4 DR_ENV prim 1 (0x40 size). Before scene render.
-    +  4214 DR_ENV prim 2 (0x40 size). At end of layer 3.
-    +  4254 DR_ENV prim 3 (0x40 size). At end of layer 4.
-    +  4294 DR_ENV prim 4 (0x40 size). Between layer 2 and 3.
-    +  42d4 DR_ENV prim 5 (0x40 size). Between layer 3 and 4.
+    +  4194 DR_ENV prim global (0x40 size). After scene render. UI settings (this env don't scroll because fade and UI needs to rendered normaly).
+    +  41d4 DR_ENV prim 1 (0x40 size). Scene settings.
+    +  4214 DR_ENV prim 2 (0x40 size). At start of dynamic layer 3.
+    +  4254 DR_ENV prim 3 (0x40 size). At start of dynamic layer 4.
+    +  4294 DR_ENV prim 4 (0x40 size). At end of dynamic layer 3.
+    +  42d4 DR_ENV prim 5 (0x40 size). At end of dynamic layer 4.
     +  4314 ???
     +  4914 background prims fpr 1st and 2nd layer (0x10 size)
     +  e554 background prims fpr 3rd and 4th layer (0x14 size)

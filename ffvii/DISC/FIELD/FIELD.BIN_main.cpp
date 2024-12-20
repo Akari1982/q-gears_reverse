@@ -88,7 +88,7 @@ if( V1 == 0 )
     800A15A0	bne    v0, zero, loopa153c [$800a153c]
 }
 
-if ( (bu[8009abf4 + 1] == 3) || (hu[800e4d44] == 1) || (bu[8009abf4 + 1] == 2) ) // if something something or encounter
+if( ( bu[8009abf4 + 1] == 3 ) || ( hu[800e4d44] == 1 ) || ( bu[8009abf4 + 1] == 2 ) ) // if something something or encounter
 {
     field_stop_load_background_in_advance();
     return;
@@ -316,13 +316,13 @@ while( true )
 
     if( ( h[800965ec] == 1 ) || ( h[800965ec] == 3 ) )
     {
-        if( hu[8009abf4 + 4c + 0] == 0 )
+        if( hu[8009abf4 + 4c] == 0 )
         {
             func129d0(); // fade?
 
-            [8009abf4 + 4c + 0] = h(3);
+            [8009abf4 + 4c] = h(3);
             [80071a58] = b(3);
-            [8009abf4 + 4c + 2] = h(0);
+            [8009abf4 + 4e] = h(0);
             [8007e768] = h(0);
             [80095dd4] = h(1);
         }
@@ -365,12 +365,12 @@ while( true )
 
     if( h[800965ec] != d )
     {
-        [8009abf4 + 4c + 0] = h(1);
-        [8009abf4 + 4c + 2] = h(100);
-        [8009abf4 + 4c + 4] = h(10);
-        [8009abf4 + 4c + 6] = h(0);
-        [8009abf4 + 4c + 8] = h(0);
-        [8009abf4 + 4c + a] = h(0);
+        [8009abf4 + 4c] = h(1);
+        [8009abf4 + 4e] = h(100);
+        [8009abf4 + 50] = h(10);
+        [8009abf4 + 52] = h(0);
+        [8009abf4 + 54] = h(0);
+        [8009abf4 + 56] = h(0);
     }
 
     if( ( h[800965ec] == 0 ) ||
@@ -644,7 +644,7 @@ while( true )
 
     [80075dec] = h(hu[80075dec] + 1);
     buf_id = h[80075dec];
-    [8009abf4] = b(buf_id);
+    [8009abf4 + 0] = b(buf_id);
 
     render_data += buf_id * 1789c;
 
