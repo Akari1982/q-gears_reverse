@@ -243,6 +243,7 @@
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
                     0d -
+                    14 - ???
                     19 -
                     1a - game over
     + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play.
@@ -313,6 +314,7 @@
     + 78 [][][][] key data hold. 0020 - ok button (hold, released or pressed). Checked during text copy.
     + 7c [][][][] key data. (repeat)
     + 80 [][][][] key data pressed. 0020 - ok button (hold, released or pressed). Checked during window state check.
+    + 88 [][]     movie frame.
     + 8a []       if 1 we activate X shaking. 0 - deactivate.
     + 8b []       state of shaking single X movement (0 - init, 1 - action)
     + 8c []       random shake array index single X movement.

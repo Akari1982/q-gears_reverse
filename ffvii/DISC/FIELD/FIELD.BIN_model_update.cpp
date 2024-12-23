@@ -298,13 +298,13 @@ if( bu[8009abf4 + 1] == 14 )
 
 system_cdrom_read_chain();
 
-if( V0 == 0 )
+if( V0 == 0 ) // do nothing
 {
     entities_n = h[8009abf4 + 28];
 
     if( ( bu[8009abf4 + 1] == 3 ) && ( entities_n == 0 ) )
     {
-        A1 = h[8009abf4 + 2]; // map id to load
+        A1 = h[8009abf4 + 2]; // movie to play?
 
         A0 = w[80075e10];
         if( A0 >= 801affff ) A0 = 801b0000;
@@ -324,7 +324,7 @@ if( V0 == 0 )
         [8009ac1a] = h(2);
     }
 }
-else if( V0 == a )
+else if( V0 == a ) // do nothing
 {
     if( bu[8009abf4 + 1] == 3 )
     {
@@ -334,7 +334,7 @@ else if( V0 == a )
     {
         [8009ac1a] = h(1);
 
-        800AB488	jal    func354cc [$800354cc]
+        func354cc();
 
         [80114488] = h(1);
     }

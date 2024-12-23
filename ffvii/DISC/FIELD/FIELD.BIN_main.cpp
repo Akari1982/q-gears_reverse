@@ -665,7 +665,7 @@ while( true )
 
     V1 = w[80075d00];
     V1 = hu[V1 + 8];
-    [8009abf4 + 88] = h(V1);
+    [8009abf4 + 88] = h(V1); // movie frame
 
     A0 = render_data + 1748c; // ui OT (top level)
     funcba65c(); // script update here (add dialogs and pointer to render)
@@ -925,7 +925,7 @@ while( true )
     [8007ebd8] = w(8007eb68 + buf_id * 14);
     [8007ebd0] = w(80113f2c + buf_id * 5c); // DRAWENV
 
-    funcab310();
+    funcab310(); // play movie?
 
     if( bu[8009abf4 + 38] == 0 )
     {
