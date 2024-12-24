@@ -1322,7 +1322,7 @@ while( true )
 // func34f3c()
 
 A0 = 0;
-func41f14();
+system_psyq_dec_dct_reset();
 ////////////////////////////////
 
 
@@ -1385,7 +1385,7 @@ if( w[80071a64] == 1 )
 system_execute_AKAO();
 
 A0 = 1;
-func41f14();
+system_psyq_dec_dct_reset();
 
 [80095da8] = w(0);
 [80095db0] = w(0);
@@ -1434,7 +1434,7 @@ else if( V1 == 0 )
     [80083270] = w(80077f3c);
 
     A0 = 80036038; // func36038()
-    func42144();
+    system_psyq_dec_dct_out_callback();
 
     A0 = 1;
     A1 = 0;
@@ -1464,7 +1464,6 @@ else if( ( V1 == 2 ) || ( V1 == 3 ) )
     [80095d90] = w(hu[8009a1f4 + movie_id * 14 + c]);
     [80095d94] = w(hu[8009a1f4 + movie_id * 14 + e]);
     V0 = w[8009a1f4 + movie_id * 14 + 4];
-    A0 = 80036190;
     [8006e0fc] = w(S1);
     V0 = V0 + 0003;
     V0 = V0 >> 02;
@@ -1477,7 +1476,8 @@ else if( ( V1 == 2 ) || ( V1 == 3 ) )
     [80095da4] = w(S1);
     S1 = S1 + 1c00;
 
-    func42144();
+    A0 = 80036190;
+    system_psyq_dec_dct_out_callback();
 
     A0 = ff;
     A1 = 0;
@@ -1628,11 +1628,11 @@ if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
 
     if( hu[80095dc4] == 0 )
     {
-        800356A8	jal    func408f8 [$800408f8]
+        func408f8();
     }
 
     A0 = 0;
-    800356B0	jal    func42144 [$80042144]
+    system_psyq_dec_dct_out_callback();
 
     [80071a60] = w(0);
     [800965e4] = w(0);
@@ -1740,8 +1740,8 @@ A1 = w[80095db0];
 V0 = V0 << 02;
 V0 = S0 + V0;
 A0 = w[V0 + ffd8];
-80035894	jal    func42044 [$80042044]
-80035898	nop
+system_psyq_dec_dct_in();
+
 V1 = h[80095db8];
 V0 = h[80095dba];
 800358AC	nop
@@ -1750,8 +1750,9 @@ A0 = w[80095da4];
 800358BC	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-800358C8	jal    func420c0 [$800420c0]
 A1 = A1 >> 01;
+system_psyq_dec_dct_out();
+
 
 L358d0:	; 800358D0
 800358D0	jal    func35f14 [$80035f14]
@@ -1795,8 +1796,9 @@ V0 = hu[80095dc4];
 8003596C	nop
 
 L35970:	; 80035970
-80035970	jal    func42144 [$80042144]
 A0 = 0;
+system_psyq_dec_dct_out_callback();
+
 V0 = w[8007ebd8];
 [80071a60] = w(0);
 [800965e4] = w(0);
@@ -1853,8 +1855,9 @@ V0 = w[80095da8];
 V0 = V0 << 02;
 V0 = V0 + S0;
 A0 = w[V0 + 0000];
-80035A7C	jal    func42044 [$80042044]
-A1 = 0002;
+A1 = 2;
+system_psyq_dec_dct_in();
+
 V1 = h[80095db8];
 V0 = h[80095dba];
 80035A94	nop
@@ -1863,8 +1866,9 @@ A0 = w[80095da4];
 80035AA4	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-80035AB0	jal    func420c0 [$800420c0]
 A1 = A1 >> 01;
+system_psyq_dec_dct_out();
+
 A0 = w[8006e0fc];
 V0 = w[80095da8];
 A1 = w[8006e110];
@@ -1896,8 +1900,9 @@ V0 = w[80095da8];
 V0 = V0 << 02;
 V0 = V0 + S0;
 A0 = w[V0 + 0000];
-80035B54	jal    func42044 [$80042044]
-A1 = 0002;
+A1 = 2;
+system_psyq_dec_dct_in();
+
 V1 = h[80095db8];
 V0 = h[80095dba];
 80035B6C	nop
@@ -1906,8 +1911,9 @@ A0 = w[80095da4];
 80035B7C	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-80035B88	jal    func420c0 [$800420c0]
 A1 = A1 >> 01;
+system_psyq_dec_dct_out();
+
 A0 = w[8006e0fc];
 V0 = w[80095da8];
 A1 = w[8006e110];
@@ -1948,8 +1954,9 @@ V0 = hu[80095dc4];
 80035C4C	nop
 
 L35c50:	; 80035C50
-80035C50	jal    func42144 [$80042144]
 A0 = 0;
+system_psyq_dec_dct_out_callback();
+
 V0 = w[8007ebd8];
 [80071a60] = w(0);
 [800965e4] = w(0);
@@ -2266,9 +2273,9 @@ system_psyq_load_image();
 
 if( h[80095db4] < h[80095dc0] )
 {
-    A0 = w[80095da4];
-    A1 = (h[80095db8] * h[80095dba]) / 2;
-    func420c0();
+    A0 = w[80095da4]; // dst
+    A1 = (h[80095db8] * h[80095dba]) / 2; // size
+    system_psyq_dec_dct_out();
 }
 else
 {
@@ -2357,8 +2364,9 @@ A0 = w[A0 + 5da4];
 80036200	mflo   a1
 V0 = A1 >> 1f;
 A1 = A1 + V0;
-8003620C	jal    func420c0 [$800420c0]
 A1 = A1 >> 01;
+system_psyq_dec_dct_out();
+
 80036214	j      L36228 [$80036228]
 80036218	nop
 

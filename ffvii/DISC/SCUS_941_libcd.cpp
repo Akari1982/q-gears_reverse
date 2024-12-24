@@ -465,22 +465,16 @@ SP = SP + 0018;
 // func3e28c()
 
 A1 = A0;
-A0 = 3;
+A0 = 3; // DMA3 channel 3  CDROM   (CDROM to RAM)
 system_dma_additional_callback();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func3e2b0
-8003E2B0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8003E2B8	jal    func3f830 [$8003f830]
-8003E2BC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8003E2C8	jr     ra 
-8003E2CC	nop
+// func3e2b0()
+
+func3f830();
 ////////////////////////////////
 
 
@@ -2870,29 +2864,26 @@ func40b84();
 
 
 ////////////////////////////////
-// func408f8
-800408F8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80040900	jal    system_bios_enter_critical_section [$80042af0]
-80040904	nop
-80040908	jal    func3e28c [$8003e28c]
+// func408f8()
+
+system_bios_enter_critical_section()
+
 A0 = 0;
-80040910	jal    func3de84 [$8003de84]
+func3e28c();
+
 A0 = 0;
-80040918	lui    v0, $8005
-V0 = w[V0 + 194c];
-80040920	nop
-[V0 + 0000] = b(0);
-80040928	lui    v0, $8005
-V0 = w[V0 + 1958];
-80040930	nop
-[V0 + 0000] = b(0);
-80040938	jal    system_bios_exit_critical_section [$80042b00]
-8004093C	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80040948	jr     ra 
-8004094C	nop
+func3de84();
+
+V0 = w[8005194c];
+[V0] = b(0);
+V0 = w[80051958];
+[V0] = b(0);
+
+system_bios_exit_critical_section();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func40950
 80040950	lui    v0, $800a
@@ -2964,41 +2955,33 @@ SP = SP + 0018;
 80040A38	jr     ra 
 80040A3C	nop
 ////////////////////////////////
-// func40a40
-80040A40	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func40a40()
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A3;
-[SP + 0018] = w(S2);
 S2 = w[SP + 0030];
-[SP + 001c] = w(RA);
-80040A60	jal    func40c88 [$80040c88]
-A0 = 0001;
+
+A0 = 1;
+func40c88();
+
 S0 = S0 & 0001;
-80040A6C	lui    at, $800a
-[AT + c6c0] = w(0);
-80040A74	lui    at, $8007
-[AT + 4ea0] = w(S1);
-80040A7C	lui    at, $8007
-[AT + 1c14] = w(S0);
-80040A84	lui    at, $8008
-[AT + 1dc0] = w(0);
-80040A8C	lui    at, $8008
-[AT + e764] = w(0);
-80040A94	lui    at, $8007
-[AT + 1c10] = h(0);
-80040A9C	lui    at, $8007
-[AT + 1740] = w(0);
-80040AA4	lui    at, $8007
-[AT + 56e4] = w(S2);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80040AC0	jr     ra 
-80040AC4	nop
+
+[8009c6c0] = w(0);
+[80074ea0] = w(S1);
+[80071c14] = w(S0);
+[80081dc0] = w(0);
+[8007e764] = w(0);
+[80071c10] = h(0);
+[80071740] = w(0);
+[800756e4] = w(S2);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func40ac8
 80040AC8	lui    a1, $8208
@@ -3131,23 +3114,27 @@ L40c80:	; 80040C80
 80040C80	jr     ra 
 80040C84	nop
 ////////////////////////////////
-// func40c88
-80040C88	lui    at, $800a
-[AT + c6cc] = w(A0);
-80040C90	lui    at, $8008
-[AT + e76c] = w(A1);
-80040C98	lui    at, $800a
-[AT + c6c8] = w(A2);
-80040CA0	jr     ra 
-80040CA4	nop
+
+
+
 ////////////////////////////////
-// func40ca8
-80040CA8	addiu  sp, sp, $ffc0 (=-$40)
+// func40c88()
+
+[8009c6cc] = w(A0);
+[8007e76c] = w(A1);
+[8009c6c8] = w(A2);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func40ca8()
+
 80040CAC	lui    v0, $8009
 V0 = w[V0 + 5d80];
 A0 = 0001;
 80040CB8	beq    v0, a0, L41610 [$80041610]
-[SP + 0038] = w(RA);
+
 80040CC0	lui    v0, $8007
 V0 = w[V0 + 1c14];
 80040CC8	nop
@@ -3831,10 +3818,10 @@ V0 = w[V0 + 5d80];
 8004160C	nop
 
 L41610:	; 80041610
-RA = w[SP + 0038];
-SP = SP + 0040;
-80041618	jr     ra 
-8004161C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func41620
 80041620	addiu  sp, sp, $fff8 (=-$8)
@@ -4503,7 +4490,9 @@ return V0;
 
 
 ////////////////////////////////
-// func41f14()
+// system_psyq_dec_dct_reset()
+// Resets the image processing subsystem.
+// Processing time is longer for mode 0 than for mode 1 because internal tables are initialized.
 
 S0 = A0;
 if( S0 == 0 )
@@ -4600,84 +4589,85 @@ V0 = hu[A0 + 0000];
 8004203C	jr     ra 
 80042040	nop
 ////////////////////////////////
-// func42044
-80042044	addiu  sp, sp, $ffe8 (=-$18)
-V0 = A1 & 0001;
-8004204C	beq    v0, zero, L42068 [$80042068]
-[SP + 0010] = w(RA);
-80042054	lui    v1, $f7ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-80042060	j      L42074 [$80042074]
-V0 = V0 & V1;
 
-L42068:	; 80042068
-V0 = w[A0 + 0000];
-8004206C	lui    v1, $0800
-V0 = V0 | V1;
 
-L42074:	; 80042074
-[A0 + 0000] = w(V0);
-V0 = A1 & 0002;
-8004207C	beq    v0, zero, L42090 [$80042090]
-80042080	lui    v1, $0200
-V0 = w[A0 + 0000];
-80042088	j      L420a0 [$800420a0]
-V0 = V0 | V1;
 
-L42090:	; 80042090
-80042090	lui    v1, $fdff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
+////////////////////////////////
+// system_psyq_dec_dct_in()
+// Begins decoding the RLE-encoded MDEC image data at the address specified by runlevel. A maximum of
+// 128k may be decoded at a time. The resulting image data is retrieved by the DecDCTout() function.
+// Bit 0 of the mode parameter controls the depth of the output pixels: 0 = 16-bit direct color; 1 = 24-bit
+// direct color. In 16-bit mode, bit 1 of mode is the STP bit that determines bit 15 of the pixel.
+// The image data produced is raw pixel data without any header information. The width and height of the
+// image is not maintained; the application or a higher level structure (such as the STR format) must maintain
+// such information.
+// Data decoded from a single DecDCTin() call may be read using multiple DecDCTout() calls, or the data
+// created by multiple DecDCTin() calls may be read using a single DecDCTout() call.
+// DecDCTin() is non-blocking. To detect when execution of the primitive list is complete, use DecDCTinSync()
+// or install a callback routine with DecDCTinCallback(). If DecDCTin() is called before a previous DecDCTin()
+// operation has finished, it is blocked until the previous operation is complete
 
-L420a0:	; 800420A0
-[A0 + 0000] = w(V0);
-A1 = hu[A0 + 0000];
-800420A8	jal    func42270 [$80042270]
-800420AC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800420B8	jr     ra 
-800420BC	nop
+if( A1 & 1 ) [A0] = w(w[A0] & f7ffffff);
+else         [A0] = w(w[A0] | 08000000);
+
+if( A1 & 2 ) [A0] = w(w[A0] | 02000000);
+else         [A0] = w(w[A0] & fdffffff);
+
+A0 = A0; // src
+A1 = hu[A0]; // size
+func42270();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func420c0()
+// system_psyq_dec_dct_out()
+// The RLE-encoded MDEC image data previously specified in a DecDCTin() call is decoded and stored in the
+// buffer specified by the cell parameter. The amount of data is specified in long words by size (e.g. size=1000
+// to transfer 4000 bytes of data). Multiple calls to DecDCTout() may be made to retrieve image data.
+// You must specify a size value that is the same as or smaller than the available decoded data. If there is
+// more data available than is read by one DecDCTout() call, additional calls must be made to avoid MDEC
+// transmission deadlocks.
+// The decoded image is output one 16 x 16 macroblock at a time. size must be a multiple of the total
+// macroblock size for the current decoding mode. If decoding to 16-bit, a macroblock is 128 words. If
+// decoding to 24-bit, the macroblock length is 192 words.
+// DecDCTout() is non-blocking. To detect when execution is complete, use DecDCToutSync() or install a
+// callback routine with DecDCToutCallback(). If a DecDCTout() call is executed before a previous one has
+// finished, the transmission is blocked until the previous operation is complete.
 
+dst = A0;
+size = A1;
+
+A0 = dst;
+A1 = size;
 func42304();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func420e0
-800420E0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800420E8	jal    func42394 [$80042394]
-800420EC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800420F8	jr     ra 
-800420FC	nop
-////////////////////////////////
-// func42100
-80042100	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80042108	jal    func4242c [$8004242c]
-8004210C	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80042118	jr     ra 
-8004211C	nop
+// system_psyq_dec_dct_in_sync()
+
+func42394();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func42120()
+// system_psyq_dec_dct_out_sync()
+
+func4242c();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_dec_dct_in_callback()
+// Installs the user-defined callback routine specified by func. This routine is called when the data transmission
+// initiated by a DecDCTin() call has been completed. If func is 0, any previous callback routine is disabled.
+// Although the callback is called during an interrupt, it is not an interrupt handler; it should be written as a
+// normal subroutine that is called by the main interrupt handler. Inside the callback, subsequent termination
+// interrupts are masked; therefore, the callback should return as soon as possible.
 
 A1 = A0;
 A0 = 0;
@@ -4687,7 +4677,12 @@ system_dma_additional_callback();
 
 
 ////////////////////////////////
-// func42144()
+// system_psyq_dec_dct_out_callback()
+// Installs the user-defined callback routine specified by func. This routine is called when the data transmission
+// initiated by a DecDCTout() call has been completed. If func is 0, any previous callback routine is disabled.
+// Although the specified function is called during an interrupt, it is not an interrupt handler; it should be
+// written as a normal subroutine that is called by the main interrupt handler. Inside the callback, subsequent
+// transmission termination interrupts are masked; therefore, the callback should return as soon as possible
 
 A1 = A0;
 A0 = 1;
@@ -4711,11 +4706,11 @@ if( A0 == 0 )
     [V1 + 0000] = w(60000000);
 
     A0 = 80051a4c;
-    A1 = 0020;
+    A1 = 20;
     func42270();
 
     A0 = 80051ad0;
-    A1 = 0020;
+    A1 = 20;
     func42270();
 
     return V0;
@@ -4747,21 +4742,27 @@ return V0;
 ////////////////////////////////
 // func42270()
 
-S1 = A0;
-S0 = A1;
+src = A0;
+size = A1;
 
 func42394();
 
+// 1f8010f0 DPCR - DMA Control register
+// enable MDECin (RAM to MDEC) and MDECout (MDEC to RAM)
 V1 = w[80051b8c];
-[V1] = w(w[V1] | 0088);
-V1 = w[80051b54];
-[V1] = w(S1 + 4);
-V0 = w[80051b58];
-[V0] = w(((S0 >> 05) << 10) | 20);
-V1 = w[80051b84];
-[V1] = w(w[S1]);
-V0 = w[80051b5c];
-[V0] = w(01000201);
+[V1] = w(w[V1] | 00000088);
+
+V1 = w[80051b54]; // 1f801080
+[V1] = w(src + 4); // DMA base address (Channel 0..6) (R/W)
+
+V0 = w[80051b58]; //  1f801084
+[V0] = w(((size / 20) << 10) | 00000020); // set MDEC transfer size and amount of blocks
+
+V1 = w[80051b84]; // 1f801820 MDEC0 - MDEC Command/Parameter Register (W)
+[V1] = w(w[src]); // MDEC command
+
+V0 = w[80051b5c]; // 1f801088
+[V0] = w(01000201); // 1=From Main RAM, Sync blocks to DMA requests   (used for MDEC, SPU, and GPU-data) and start
 ////////////////////////////////
 
 
@@ -4769,28 +4770,28 @@ V0 = w[80051b5c];
 ////////////////////////////////
 // func42304()
 
-S1 = A0;
-S0 = A1;
+dst = A0;
+size = A1;
 
-func4242c [$8004242c]
+func4242c();
 
+// 1f8010f0 DPCR - DMA Control register
+// enable MDECin (RAM to MDEC) and MDECout (MDEC to RAM)
 V1 = w[80051b8c];
-V0 = w[V1 + 0000];
-S0 = S0 >> 05;
-V0 = V0 | 0088;
-[V1 + 0000] = w(V0);
+[V1] = w(w[V1] | 00000088);
+
+// DMA1 channel 1  MDECout (MDEC to RAM) settings
+V0 = w[80051b68]; // 1f801098
+[V0] = w(00000000); // 0=To Main RAM
+
+V0 = w[80051b60]; // 1f801090
+[V0] = w(dst); // DMA base address (Channel 0..6) (R/W)
+
+V0 = w[80051b64]; // 1f801094
+[V0] = w(((size / 20) << 10) | 0020); // set MDEC transfer size and amount of blocks
+
 V0 = w[80051b68];
-S0 = S0 << 10;
-[V0 + 0000] = w(0);
-V0 = w[80051b60];
-S0 = S0 | 0020;
-[V0 + 0000] = w(S1);
-V0 = w[80051b64];
-80042364	lui    v1, $0100
-[V0 + 0000] = w(S0);
-V0 = w[80051b68];
-V1 = V1 | 0200;
-[V0 + 0000] = w(V1);
+[V0] = w(01000200);
 ////////////////////////////////
 
 
@@ -4809,8 +4810,7 @@ if( w[V1] & 20000000 )
         if( wait == -1 )
         {
             A0 = 80010b2c; // "MDEC_in_sync"
-
-            800423EC	jal    func424c4 [$800424c4]
+            func424c4();
 
             return -1;
         }
@@ -4826,12 +4826,10 @@ return 0;
 
 
 ////////////////////////////////
-// func4242c
-8004242C	addiu  sp, sp, $ffe0 (=-$20)
-80042430	lui    v1, $8005
-V1 = w[V1 + 1b68];
+// func4242c()
+
+V1 = w[80051b68];
 80042438	lui    v0, $0010
-[SP + 0018] = w(RA);
 [SP + 0010] = w(V0);
 V0 = w[V1 + 0000];
 80042448	lui    v1, $0100
@@ -4849,10 +4847,9 @@ V0 = w[SP + 0010];
 80042470	nop
 80042474	bne    v0, a0, L42494 [$80042494]
 80042478	nop
-8004247C	lui    a0, $8001
-A0 = A0 + 0b3c;
-80042484	jal    func424c4 [$800424c4]
-80042488	nop
+A0 = 80010b3c; // "MDEC_out_sync"
+func424c4();
+
 8004248C	j      L424b4 [$800424b4]
 80042490	addiu  v0, zero, $ffff (=-$1)
 
@@ -4863,48 +4860,40 @@ V0 = w[V0 + 1b68];
 V0 = w[V0 + 0000];
 800424A4	nop
 V0 = V0 & V1;
-800424AC	bne    v0, zero, loop4245c [$8004245c]
 V0 = 0;
+800424AC	bne    v0, zero, loop4245c [$8004245c]
 
 L424b4:	; 800424B4
-RA = w[SP + 0018];
-SP = SP + 0020;
-800424BC	jr     ra 
-800424C0	nop
 ////////////////////////////////
-// func424c4
-800424C4	addiu  sp, sp, $ffd8 (=-$28)
+
+
+
+////////////////////////////////
+// func424c4()
+
 A1 = A0;
-800424CC	lui    a0, $8001
-A0 = A0 + 0bac;
-[SP + 0024] = w(RA);
-800424D8	jal    system_bios_printf [$80042dc8]
-[SP + 0020] = w(S0);
-800424E0	lui    a0, $8001
-A0 = A0 + 0b4c;
-800424E8	lui    v0, $8005
-V0 = w[V0 + 1b88];
-800424F0	lui    v1, $8005
-V1 = w[V1 + 1b5c];
+A0 = 80010bac; // "%s timeout:\n"
+system_bios_printf();
+
+A0 = 80010b4c; // "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n"
+V0 = w[80051b88];
+V1 = w[80051b5c];
 S0 = w[V0 + 0000];
 A1 = w[V1 + 0000];
-80042500	lui    v0, $8005
-V0 = w[V0 + 1b68];
-80042508	lui    v1, $8005
-V1 = w[V1 + 1b54];
+V0 = w[80051b68];
+V1 = w[80051b54];
 A1 = A1 >> 18;
 A2 = w[V0 + 0000];
-80042518	lui    v0, $8005
-V0 = w[V0 + 1b60];
+V0 = w[80051b60];
 A1 = A1 & 0001;
 V0 = w[V0 + 0000];
 A2 = A2 >> 18;
 [SP + 0010] = w(V0);
 A3 = w[V1 + 0000];
-80042534	jal    system_bios_printf [$80042dc8]
 A2 = A2 & 0001;
-8004253C	lui    a0, $8001
-A0 = A0 + 0b74;
+system_bios_printf()
+
+A0 = 80010b74; // "\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n"
 A1 = 0 NOR S0;
 A1 = A1 >> 1f;
 A2 = S0 >> 1e;
@@ -4922,34 +4911,25 @@ V0 = V0 & 0001;
 S0 = S0 >> 17;
 S0 = S0 & 0001;
 [SP + 0018] = w(V0);
-80042588	jal    system_bios_printf [$80042dc8]
 [SP + 001c] = w(S0);
-80042590	lui    v1, $8005
-V1 = w[V1 + 1b88];
-80042598	lui    v0, $8000
-[V1 + 0000] = w(V0);
-800425A0	lui    v0, $8005
-V0 = w[V0 + 1b5c];
-800425A8	nop
+system_bios_printf();
+
+V1 = w[80051b88];
+[V1 + 0000] = w(80000000);
+V0 = w[80051b5c];
 [V0 + 0000] = w(0);
-800425B0	lui    v0, $8005
-V0 = w[V0 + 1b68];
-800425B8	nop
+V0 = w[80051b68];
 [V0 + 0000] = w(0);
-V0 = 0;
-800425C4	lui    v1, $8005
-V1 = w[V1 + 1b68];
-800425CC	lui    a0, $8005
-A0 = w[A0 + 1b88];
+V1 = w[80051b68];
+A0 = w[80051b88];
 V1 = w[V1 + 0000];
-800425D8	nop
-800425DC	lui    v1, $6000
-[A0 + 0000] = w(V1);
-RA = w[SP + 0024];
-S0 = w[SP + 0020];
-SP = SP + 0028;
-800425F0	jr     ra 
-800425F4	nop
+[A0] = w(60000000);
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 800425F8	00FFFFFF	....
 ////////////////////////////////
