@@ -232,6 +232,16 @@
 
 8009a1c4 array of current priority slot used by actors (size 0x01).
 
+8009a1f4
+    +  0 [][][][] ???
+    +  4 [][][][] ???
+    +  8 [][]     ???
+    +  a [][]     ???
+    +  c [][]     ???
+    +  e [][]     ???
+    + 10 [][]     ???
+    + 12 [][]     ???
+
 8009abf4 field_struct. 8009c6e0 points here.
     + 00 []       render buffer id (there are 2 render buffers)
     + 01 []       some state
@@ -515,7 +525,7 @@
 800e48f0 []       store 0xff here during end of SPLIT.
 800e48f4 array of poly for pointer (0x2 items 0x28 size)
 800e4944 texts for windows to diaplay. (size 0x100)
-800e4d44 [][]     if 1 here we stop load background in advance.
+800e4d44 [][]     movie played. If set we dont load background in advance.
 800e4d48 offsets for getting variable from memory block for windows. 8 for each window. (size 0x10 0x2)
 
 // MIM data

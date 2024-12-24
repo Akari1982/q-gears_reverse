@@ -304,14 +304,14 @@ if( V0 == 0 ) // do nothing
 
     if( ( bu[8009abf4 + 1] == 3 ) && ( entities_n == 0 ) )
     {
-        A1 = h[8009abf4 + 2]; // movie to play?
+        A1 = h[8009abf4 + 2]; // movie to play
 
         A0 = w[80075e10];
         if( A0 >= 801affff ) A0 = 801b0000;
 
         func34fc8();
 
-        [8009abf4 + 28] = h(1);
+        [8009abf4 + 28] = h(1); // number of entities
         [800e4d44] = h(1);
     }
 
