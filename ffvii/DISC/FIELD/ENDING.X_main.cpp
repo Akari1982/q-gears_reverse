@@ -28,7 +28,7 @@ loopa006c:	; 800A006C
     A0 = 2; // Setloc
     A1 = SP + 20;
     A2 = 0;
-    func3e100(); // execute command
+    system_psyq_cd_control_b(); // execute command
 
     A0 = (w[SP + 24] + 07ff) >> 0b;
     A1 = 80180000;
