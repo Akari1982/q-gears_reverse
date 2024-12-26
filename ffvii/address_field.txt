@@ -195,6 +195,8 @@
 
 80095d84 number of inited lines.
 
+80095dc4 [][]     played movie type.
+
 80095dcc []   ???
 80095dd0 [][] store here map id to whish trigger player character closer to load it's texture in advance.
 
@@ -232,7 +234,61 @@
 
 8009a1c4 array of current priority slot used by actors (size 0x01).
 
-8009a1f4
+8009a1f4 array of movie settings. This is "\MINT\MOVIE_ID.BIN;1" file (0x14 size)
+    0  E4F80100 D8130400 0000 0000 4001 8000 2C00 0200          fship2.avi 	Clouds rolling
+    1  67F90100 84260400 0000 0000 4001 8000 2C00 0200          
+    2  ECF90100 E0684000 0000 0000 FF00 FF00 8600 0000          d_ropego.avi   Ropeway Up to Gold Saucer
+    3  FB000200 E0614E00 0000 0000 FF00 FF00 A000 0000          d_ropein.avi   Ropeway Down to Gold Saucer
+    4  92090200 E06A3C00 0000 0000 FF00 FF00 9100 0000          u_ropein.avi   Arriving at Gold Saucer
+    5  31100200 E0933300 0000 0000 FF00 FF00 8800 0000          u_ropego.avi   Leaving Gold Saucer
+    6  D8150200 E0F44C00 0000 0000 FF00 FF00 C300 0000          gold2.avi      Gold Saucer ride; ends with moon
+    7  471E0200 E0664400 0000 0000 CC00 CC00 A500 0000          gold3.avi      Chocobo Races go past; view from carriage
+    8  C6250200 E04AC500 0000 0000 A900 A900 DF01 0000          gold4.avi      Gold Saucer flythrough; ends with gold statue
+    9  653B0200 E0424300 0000 0000 F600 F600 9500 0000          gold6.avi      Balloons released past the carriage
+    A  C4420200 00902E00 0000 0000 0000 0000 9200 0000          gold5.avi      Haunted house from the carriage
+    B  96480200 00601300 0000 0000 0000 0000 3B00 0000          boogup.avi     Up to Bugenhagen's machine
+    C  024B0200 00601300 0000 0000 0000 0000 3B00 0000          boogdown.avi   Down from Bugenhagen's machine
+    D  6E4D0200 00001400 0000 0000 0000 0000 3D00 0000          junair_u.avi   Up on Junon Airstrip mechanism
+    E  EE4F0200 00001400 0000 0000 0000 0000 3D00 0000          junair_d.avi   Down on Junon Airstrip mechanism
+    F  6E520200 00001E00 0000 0000 0000 0000 5D00 0000          junelein.avi   Junon elevator up (top level)
+    10 2E560200 00001E00 0000 0000 0000 0000 5D00 0000          junelego.avi   Junon elevator down (top level)
+    11 EE590200 00B02200 0000 0000 0000 0000 6C00 0000          junin_in.avi   Junon elevator down (bottom level)
+    12 445E0200 00B02200 0000 0000 0000 0000 6C00 0000          junin_go.avi   Junon elevator up (bottom level)
+    13 9A620200 4CE30200 0000 0800 4001 E000 1D00 0300          moriya.avi     Unknown
+    14 F7620200 00302A00 0000 0000 0000 0000 8400 0000          mkup.avi       Cloud looks up to the first Mako reactor
+    15 3D680200 E0815700 0000 0000 A000 A000 C700 0000          northmk.avi    North Mako reactor explodes
+    16 D4710200 00401000 0000 0000 0000 0000 3200 0000          mk8.avi        Jessie's bomb explodes to escape
+    17 DC730200 E0F84400 0000 0000 F600 F600 BD00 0000          ontrain.avi    Cloud jumps on train
+    18 6B7B0200 E0155400 0000 0000 EA00 EA00 C300 0000          mainplr.avi    Train circles the pillar
+    19 A2840200 00000900 0000 0000 0000 0000 2300 0000          smk.avi        South Reactor platform explodes after boss defeat
+    1A C2850200 E0306700 0000 0000 A200 A200 F000 0000          southmk.avi    Cloud falls from platform
+    1B 11910200 E0375900 0000 0000 FF00 FF00 E400 0000          plrexp.avi     Sector 7 pillar bomb explodes
+    1C D89A0200 E0AD2301 0000 0000 FF00 FF00 1D03 0000          fallpl.avi     Party escapes as pillar crumbles
+    1D CFBA0200 00502300 0000 0000 4001 E000 7100 0000          monitor.avi    Snoozing guard at Shinra HQ; elevator door opens
+    1E 39BF0200 E06A1701 0000 0000 FF00 FF00 EC02 0000          bike.avi       Cloud's bike and party escape on truck
+    1F D8DD0200 00605E00 0000 0000 0000 0000 2B01 0000          mtnvl.avi      Nibelheim mountain, reactor, and rope bridge pan
+    20 A4E90200 00103600 0000 0000 0000 0000 AA00 0000          mtnvl2.avi     Pan to Nibelheim reactor
+    21 66F00200 E0864D00 0000 0000 FF00 FF00 C700 0000          brgnvl.avi     Nibelheim ropebridge snaps
+    22 E5F80200 E0DB7E00 0000 0000 F900 F900 3C01 0000          nvlmk.avi      Pod in Nibelheim reactor explodes, releasing monster
+    23 CC060300 E0418E00 0000 0000 FF00 FF00 2B01 0000          nivlsfs.avi    Nibelheim fire; Sephiroth looks up & moves through flames
+    24 63160300 0080FF00 0000 0000 E300 E300 7F02 0000          jenova_e.avi   Sephiroth talks to Jenova and pulls off the statue
+    25 63320300 00A09600 0000 0000 0000 0000 E001 0000          junon.avi      Junon to Mako Cannon pan
+    26 37450300 E0E56A00 0000 0000 FF00 FF00 1A01 0000          hiwind0.avi    Cloud climbs up to Junon airfield; Highwind
+    27 EE500300 00601300 0000 0000 0000 0000 3A00 0000          mtcrl.avi      Falling down scaffolding (Corel route)
+    28 5A530300 E09A0001 0000 0000 FF00 FF00 A302 0000          gold1.avi      Skyway to Gold Saucer (first visit)
+    29 796F0300 00C02B00 0000 0000 0000 0000 8900 0000          biskdead.avi   Dyne & Barret in the past; Barret loses grip
+    2A F1740300 00C09900 0000 0000 0000 0000 E801 0000          boogdemo.avi   Bugenhagen's demo; shooting star & black hole
+    2B 29880300 00908701 0000 0000 0000 0000 9204 0000          boogstar.avi   Bugenhagen's demo; Earth & the Lifestream
+    2C 1BB90300 00002D00 0000 0000 0000 0000 8E00 0000          setogake.avi   Stone Seto and the moon
+    2D BBBE0300 E0F1E400 0000 0000 C800 C800 FE01 0000          rcktfail.avi   Rocket takes off, then stalls and tilts
+    2E D2D70300 E0A6E800 0000 0000 FF00 FF00 6602 0000          jairofly.avi   Tiny Bronco take-off and shooting
+    2F 51F10300 E0CD5100 0000 0000 F600 F600 E300 0000          jairofal.avi   Tiny Bronco crashes
+    30 48FA0300 E06C8100 0000 0000 FF00 FF00 2001 0000          gold7.avi
+    31 77080400 E0629500 0000 0000 FF00 FF00 5801 0000          gold7_2.avi
+    32 D6180400 E0EA8401 0000 0000 BC00 BC00 1104 0000          earithdd.avi   Aeris death
+    33 75430400 0060A900 0000 0000 0000 0000 1B02 0000          funeral.avi    Aeris funeral
+    34 A1580400 00504F01 0000 0000 FF00 FF00 3004 0000          car_1209.avi
+    35 8B820400 0061AA02 0000 0000 9800 9800 FD06 0000          opening.avi    Opening
     +  0 [][][][] ???
     +  4 [][][][] ???
     +  8 [][]     ???
@@ -240,7 +296,7 @@
     +  c [][]     left volume.
     +  e [][]     right volume.
     + 10 [][]     ???
-    + 12 [][]     ???
+    + 12 [][]     some type (0, 1, 2, 3)
 
 8009abf4 field_struct. 8009c6e0 points here.
     + 00 []       render buffer id (there are 2 render buffers)

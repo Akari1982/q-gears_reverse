@@ -1888,10 +1888,10 @@
 // func34f3c
 80034F3C-80034F58
 ////////////////////////////////
-// func34f5c
+// system_movie_load_movie_settings
 80034F5C-80034FC4
 ////////////////////////////////
-// func34fc8
+// system_movie_play
 80034FC8-8003542C
 ////////////////////////////////
 // func35430
@@ -2746,13 +2746,13 @@
 // system_psyq_dec_dct_reset
 80041F14-80041F48
 ////////////////////////////////
-// func41f4c
+// system_psyq_dec_dct_get_env
 80041F4C-80041FD4
 ////////////////////////////////
-// func41fd8
+// system_psyq_dec_dct_put_env
 80041FD8-80042034
 ////////////////////////////////
-// func42038
+// system_psyq_dec_dct_buf_size
 80042038-80042040
 ////////////////////////////////
 // system_psyq_dec_dct_in
