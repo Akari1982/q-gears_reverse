@@ -1683,7 +1683,6 @@ else
     [80095dc0] = h(V0);
 }
 
-S0 = 80095dc4;
 V1 = hu[80095dc4];
 if( V1 == 0 )
 {
@@ -1692,13 +1691,8 @@ if( V1 == 0 )
     A1 = w[80095db0];
     system_psyq_dec_dct_in();
 
-    V1 = h[80095db8];
-    V0 = h[80095dba];
-    A1 = V1 * V0;
     A0 = w[80095da4];
-    V0 = A1 >> 1f;
-    A1 = A1 + V0;
-    A1 = A1 >> 01;
+    A1 = (h[80095db8] * h[80095dba]) / 2;
     system_psyq_dec_dct_out();
 
     while( true )
@@ -1721,156 +1715,7 @@ if( V1 == 0 )
 
     func36100();
 
-    V1 = w[80095dac];
-    if( V1 == 1 )
-    {
-        V1 = w[80071a60];
-        if( V1 < b )
-        {
-            S0 = SP + 0018;
-            V0 = V1 < 0008;
-            if( V0 == 0 )
-            {
-                A0 = 9; // CdlPause
-                A1 = 0;
-                A2 = 0;
-                system_psyq_cd_control();
-
-                if( hu[80095dc4] == 0 )
-                {
-                    func408f8();
-                }
-
-                A0 = 0;
-                system_psyq_dec_dct_out_callback();
-
-                V0 = w[8007ebd8];
-                [80071a60] = w(0);
-                [800965e4] = w(0);
-                [8009a060] = w(0);
-                V0 = bu[V0 + 0011];
-                if( V0 != 0 )
-                {
-                    A1 = 0;
-                    A0 = S0;
-                    A2 = 0;
-                    V0 = w[8007ebd0];
-                    A3 = 0;
-                    [SP + 0018] = h(0);
-                    [SP + 001a] = h(0);
-                    V1 = h[V0 + 0004];
-                    V0 = 01e0;
-                    [SP + 001e] = h(V0);
-                    V0 = V1 << 01;
-                    V0 = V0 + V1;
-                    V1 = V0 >> 1f;
-                    V0 = V0 + V1;
-                    V0 = V0 >> 01;
-                    [SP + 001c] = h(V0);
-                    system_psyq_clear_image();
-
-                    A0 = 0;
-                    system_psyq_draw_sync();
-                }
-            }
-        }
-    }
-
-    if( w[8006e10c] == 0 )
-    {
-        V0 = w[80075d00];
-        V1 = w[80095d98] - 1;
-        V0 = w[V0 + 8];
-        if( V0 >= V1 )
-        {
-            [8009a000] = h(c9);
-            [8009a004] = w(1e);
-            [8009a008] = w(0);
-            system_execute_AKAO();
-
-            [8006e10c] = w(1);
-        }
-    }
-}
-else if( V1 == 2 )
-{
-    rb = w[80095da8];
-    S0 = 80095dc4 - 28;
-    V0 = S0 + rb * 4;
-    A0 = w[V0 + 0000];
-    A1 = 2;
-    system_psyq_dec_dct_in();
-
-    V1 = h[80095db8];
-    V0 = h[80095dba];
-    80035A94	nop
-    80035A98	mult   v1, v0
-    A0 = w[80095da4];
-    80035AA4	mflo   a1
-    V0 = A1 >> 1f;
-    A1 = A1 + V0;
-    A1 = A1 >> 01;
-    system_psyq_dec_dct_out();
-
-    [80095da8] = w(w[80095da8] < 1);
-
-    A0 = w[8006e0fc];
-    A1 = w[8006e110];
-    func34d18();
-
-    rb = w[80095da8];
-    V1 = S0 + rb * 4;
-    A1 = w[V1 + 0000];
-    A0 = V0;
-    func4262c();
-
-    V0 = w[8006e110];
-    A0 = w[80095d98];
-    V1 = V0 + 0001;
-    V0 = V0 < A0;
-    [8006e110] = w(V1);
-    if( V0 == 0 )
-    {
-        [8006e110] = w(0);
-    }
-
-    func36100();
-}
-else if( V1 == 3 )
-{
-    rb = w[80095da8];
-    A0 = w[80095dc4 + rb * 4 - 28];
-    A1 = 2;
-    system_psyq_dec_dct_in();
-
-    V1 = h[80095db8];
-    V0 = h[80095dba];
-    80035B6C	nop
-    A1 = V1 * V0;
-    A0 = w[80095da4];
-    V0 = A1 >> 1f;
-    A1 = A1 + V0;
-    A1 = A1 >> 01;
-    system_psyq_dec_dct_out();
-
-    [80095da8] = w(w[80095da8] < 1);
-
-    A0 = w[8006e0fc];
-    A1 = w[8006e110];
-    func34d18();
-
-    rb = w[80095da8];
-    A1 = w[80095dc4 + rb * 4 - 28];
-    A0 = V0;
-    func4262c();
-
-    V0 = w[8006e110];
-    A0 = w[80095d98];
-    V1 = V0 + 1;
-    V0 = V0 < A0;
-    [8006e110] = w(V1);
-
-    if( V0 == 0 )
+    if( w[80095dac] == 1 )
     {
         V1 = w[80071a60];
         if( V1 < b )
@@ -1895,16 +1740,132 @@ else if( V1 == 3 )
                 [8009a060] = w(0);
 
                 V0 = w[8007ebd8];
-                V0 = bu[V0 + 11];
+                if( bu[V0 + 11] != 0 )
+                {
+                    V0 = w[8007ebd0];
+                    [SP + 18] = h(0);
+                    [SP + 1a] = h(0);
+                    [SP + 1e] = h(1e0);
+                    [SP + 1c] = h((h[V0 + 4] * 3) / 2);
 
-                if( V0 != 0 )
+                    A0 = SP + 18;
+                    A1 = 0;
+                    A2 = 0;
+                    A3 = 0;
+                    system_psyq_clear_image();
+
+                    A0 = 0;
+                    system_psyq_draw_sync();
+                }
+            }
+        }
+    }
+
+    if( w[8006e10c] == 0 )
+    {
+        V0 = w[80075d00];
+        if( w[V0 + 8] >= ( w[80095d98] - 1 ) )
+        {
+            [8009a000] = h(c9);
+            [8009a004] = w(1e);
+            [8009a008] = w(0);
+            system_execute_AKAO();
+
+            [8006e10c] = w(1);
+        }
+    }
+}
+else if( V1 == 2 )
+{
+    rb = w[80095da8];
+    A0 = w[80095dc4 - 28 + rb * 4];
+    A1 = 2;
+    system_psyq_dec_dct_in();
+
+    A0 = w[80095da4];
+    A1 = (h[80095db8] * h[80095dba]) / 2;
+    system_psyq_dec_dct_out();
+
+    [80095da8] = w(w[80095da8] < 1);
+
+    A0 = w[8006e0fc];
+    A1 = w[8006e110];
+    func34d18();
+
+    rb = w[80095da8];
+    A0 = V0;
+    A1 = w[80095dc4 - 28 + rb * 4];
+    func4262c();
+
+    V0 = w[8006e110];
+    A0 = w[80095d98];
+    V1 = V0 + 0001;
+    [8006e110] = w(V1);
+    if( V0 >= A0 )
+    {
+        [8006e110] = w(0);
+    }
+
+    func36100();
+}
+else if( V1 == 3 )
+{
+    rb = w[80095da8];
+    A0 = w[80095dc4 + rb * 4 - 28];
+    A1 = 2;
+    system_psyq_dec_dct_in();
+
+    A0 = w[80095da4];
+    A1 = (h[80095db8] * h[80095dba]) / 2;
+    system_psyq_dec_dct_out();
+
+    [80095da8] = w(w[80095da8] < 1);
+
+    A0 = w[8006e0fc];
+    A1 = w[8006e110];
+    func34d18();
+
+    rb = w[80095da8];
+    A0 = V0;
+    A1 = w[80095dc4 + rb * 4 - 28];
+    func4262c();
+
+    V0 = w[8006e110];
+    [8006e110] = w(V0 + 1);
+
+    if( V0 >= w[80095d98] )
+    {
+        V1 = w[80071a60];
+        if( V1 < b )
+        {
+            if( V1 >= 8 )
+            {
+                A0 = 9; // CdlPause
+                A1 = 0;
+                A2 = 0;
+                system_psyq_cd_control();
+
+                if( hu[80095dc4] == 0 ) 
+                {
+                    func408f8();
+                }
+
+                A0 = 0;
+                system_psyq_dec_dct_out_callback();
+
+                [80071a60] = w(0);
+                [800965e4] = w(0);
+                [8009a060] = w(0);
+
+                V0 = w[8007ebd8];
+                if( bu[V0 + 11] != 0 )
                 {
                     [SP + 18] = h(0);
                     [SP + 1a] = h(0);
                     [SP + 1e] = h(1e0);
 
                     V0 = w[8007ebd0];
-                    V1 = h[V0 + 0004];
+                    V1 = h[V0 + 4];
                     V0 = V1 << 01;
                     V0 = V0 + V1;
                     V0 = V0 / 2;
