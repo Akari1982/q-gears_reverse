@@ -2548,7 +2548,7 @@
 // func3dcb0
 8003DCB0-8003DCD4
 ////////////////////////////////
-// func3dcd8
+// system_cdrom_get_status_code
 8003DCD8-8003DCE4
 ////////////////////////////////
 // func3dce8
@@ -2560,19 +2560,19 @@
 // func3dd08
 8003DD08-8003DD14
 ////////////////////////////////
-// func3dd18
+// system_cdrom_and_audio_init
 8003DD18-8003DD80
 ////////////////////////////////
 // func3dd84
 8003DD84-8003DDA0
 ////////////////////////////////
-// func3dda4
+// system_psyq_cd_set_debug
 8003DDA4-8003DDB8
 ////////////////////////////////
-// func3ddbc
+// system_psyq_cd_comstr
 8003DDBC-8003DDF0
 ////////////////////////////////
-// func3ddf4
+// system_psyq_cd_intstr
 8003DDF4-8003DE28
 ////////////////////////////////
 // func3de2c
@@ -2581,10 +2581,10 @@
 // func3de4c
 8003DE4C-8003DE68
 ////////////////////////////////
-// func3de6c
+// system_psyq_cd_sync_callback
 8003DE6C-8003DE80
 ////////////////////////////////
-// func3de84
+// system_psyq_cd_ready_callback
 8003DE84-8003DE98
 ////////////////////////////////
 // system_psyq_cd_control
@@ -2599,13 +2599,13 @@
 // system_psyq_cd_mix
 8003E244-8003E264
 ////////////////////////////////
-// func3e268
+// system_psyq_cd_get_sector
 8003E268-8003E288
 ////////////////////////////////
-// func3e28c
+// system_psyq_cd_data_callback
 8003E28C-8003E2AC
 ////////////////////////////////
-// func3e2b0
+// system_psyq_cd_data_sync
 8003E2B0-8003E2CC
 ////////////////////////////////
 // system_psyq_cd_int_to_pos
@@ -2614,7 +2614,7 @@
 // system_psyq_cd_pos_to_int
 8003E3D4-8003E450
 ////////////////////////////////
-// func3e454
+// system_cdrom_get_response_from_interrupt
 8003E454-8003E9D8
 ////////////////////////////////
 // system_psyq_cd_sync
@@ -2623,7 +2623,7 @@
 // func3ec60
 8003EC60-8003EF2C
 ////////////////////////////////
-// func3ef30
+// system_cdrom_cdl_command_exec
 8003EF30-8003F394
 ////////////////////////////////
 // func3f398
@@ -2632,13 +2632,13 @@
 // func3f420
 8003F420-8003F4FC
 ////////////////////////////////
-// func3f500
+// system_cdrom_audio_init
 8003F500-8003F5F0
 ////////////////////////////////
-// func3f5f4
+// system_cdrom_reinit_inter
 8003F5F4-8003F640
 ////////////////////////////////
-// func3f644
+// system_cdrom_init_inter
 8003F644-8003F82C
 ////////////////////////////////
 // func3f830
@@ -2650,7 +2650,7 @@
 // func3fa9c
 8003FA9C-8003FAA8
 ////////////////////////////////
-// func3faac
+// system_cdrom_interrupt_handler
 8003FAAC-8003FB88
 ////////////////////////////////
 // system_psyq_cd_search_file
@@ -2822,7 +2822,7 @@
 // system_bios_system_error_boot_or_disk_failure
 800429E0-800429EC
 ////////////////////////////////
-// func429f0
+// system_bios_deliver_event
 800429F0-800429FC
 ////////////////////////////////
 // system_bios_open_event

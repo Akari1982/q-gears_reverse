@@ -132,10 +132,7 @@ if( S0 == 2 )
 else
 {
     system_cdrom_init_inter();
-    if( V0 != 0 )
-    {
-        return 0;
-    }
+    if( V0 != 0 ) return 0;
 
     if( S0 == 1 )
     {
@@ -157,7 +154,7 @@ func423a4();
 
 
 ////////////////////////////////
-// system_cdrom_set_debug_level()
+// system_psyq_cd_set_debug()
 
 V0 = w[80055b54];
 [80055b54] = w(A0);
@@ -456,7 +453,7 @@ return V0 < 1;
 
 func42a20();
 
-V0 = V0 < 0001;
+V0 = V0 < 1;
 ////////////////////////////////
 
 
@@ -1258,9 +1255,9 @@ if( ( hu[spu_reg + 1b8] == 0 ) && ( hu[spu_reg + 1ba] == 0 ) )
     [spu_reg + 182] = h(0); // mainvolume right
 }
 
+[spu_reg + 1aa] = h(c001); // spu control register (SPUCNT)
 [spu_reg + 1b0] = h(3fff); // cd volume left
 [spu_reg + 1b2] = h(3fff); // cd volume right
-[spu_reg + 1aa] = h(c001); // spu control register (SPUCNT)
 
 // set stereo cd volume output
 [cd_1800] = b(02); // set port

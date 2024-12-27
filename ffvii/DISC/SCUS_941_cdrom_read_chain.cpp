@@ -8,7 +8,7 @@ loop33b78:	; 80033B78
 [80071a60] = w(0);
 
 A0 = 0;
-func3dda4(); // set text debug to 0
+system_psyq_cd_set_debug();
 
 func34f3c(); // init MDEC
 
@@ -35,14 +35,15 @@ system_movie_load_movie_settings(); // load "\MINT\MOVIE_ID.BIN;1" into 8009a1f4
 
 system_cdrom_abort_loading();
 
-loop33bf0:	; 80033BF0
+do
+{
     system_cdrom_read_chain();
-80033BF8	bne    v0, zero, loop33bf0 [$80033bf0]
+} while( V0 != 0 )
 
 80033C00	jal    func3dd84 [$8003dd84]
 
 A0 = 0;
-80033C08	jal    func3dd18 [$8003dd18]
+system_cdrom_and_audio_init();
 ////////////////////////////////
 
 
@@ -86,7 +87,8 @@ size = A2;
 buffer = A3;
 callback = A4;
 
-loop33cf4:	; 80033CF4
+do
+{
     system_cdrom_read_chain();
 
     if( V0 == 8 || V0 == 9 || V0 == a )
@@ -100,7 +102,7 @@ loop33cf4:	; 80033CF4
         A2 = 0;
         system_psyq_cd_control();
     }
-80033D40	bne    v0, zero, loop33cf4 [$80033cf4]
+} while( V0 != 0 )
 
 A0 = sector;
 A1 = 80071a68; // store pos here
@@ -120,7 +122,7 @@ system_psyq_cd_int_to_pos();
 sector = A0;
 callback = A1;
 
-A0 = 1; // just set location
+A0 = 1;
 A1 = sector;
 A2 = 0; // size
 A3 = 0; // buffer
@@ -203,38 +205,27 @@ return 0;
 
 
 ////////////////////////////////
-// func33edc
-80033EDC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+// func33edc()
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
-[SP + 0018] = w(RA);
-A0 = S0;
 
-loop33ef8:	; 80033EF8
-80033EF8	jal    func33dac [$80033dac]
-A1 = S1;
-80033F00	bne    v0, zero, loop33ef8 [$80033ef8]
-A0 = S0;
+do
+{
+    A0 = S0;
+    A1 = S1;
+    func33dac();
+} while( V0 != 0 )
 
-L33f08:	; 80033F08
-80033F08	jal    system_cdrom_read_chain [$80034b44]
-80033F0C	nop
-80033F10	beq    v0, zero, L33f28 [$80033f28]
-V0 = 0;
-80033F18	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0;
-80033F20	j      L33f08 [$80033f08]
-80033F24	nop
+while( true )
+{
+    system_cdrom_read_chain();
 
-L33f28:	; 80033F28
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80033F38	jr     ra 
-80033F3C	nop
+    if( V0 == 0 ) return 0;
+
+    A0 = 0;
+    system_psyq_wait_frames();
+}
 ////////////////////////////////
 
 
@@ -324,10 +315,10 @@ switch( w[80071a60] )
     case 5 6 d e:
     {
         A0 = 0;
-        func3de6c(); // unset callback
+        system_psyq_cd_sync_callback();
 
         A0 = 0;
-        func3de84(); // unset callback
+        system_psyq_cd_ready_callback();
 
         func34048(); // set type 13
     }
@@ -530,11 +521,13 @@ L3433c:	; 8003433C
 ////////////////////////////////
 // func34350()
 
-loop34358:	; 80034358
+do
+{
     system_cdrom_read_chain();
-80034360	bne    v0, zero, loop34358 [$80034358]
+} while( V0 != 0 )
 
-loop34368:	; 80034368
+do
+{
     A0 = SP + 10;
     A1 = 80010484; // "\MINT\DISKINFO.CNF;1"
     system_psyq_cd_search_file();
@@ -557,12 +550,14 @@ loop34368:	; 80034368
     A2 = 80;
     system_psyq_cd_read();
 
-    loop343b8:	; 800343B8
+    do
+    {
+
         A0 = 1;
         A1 = 0;
         system_psyq_cd_read_sync();
-    800343C0	bgtz   v0, loop343b8 [$800343b8]
-800343C8	bne    v0, zero, loop34368 [$80034368]
+    } while( V0 > 0 )
+} while( V0 != 0 )
 
 return bu[800698f7] - 30;
 ////////////////////////////////
@@ -655,14 +650,15 @@ else if( V0 == 5 ) // CdlDiskError
     {
         [800698ec] = w(0);
 
-        8003452C	jal    func34104 [$80034104]
+        func34104();
 
-        loop34534:	; 80034534
+        do
+        {
             A0 = 3;
-            80034534	jal    func34cac [$80034cac]
+            func34cac();
 
-            8003453C	jal    func34150 [$80034150]
-        80034544	bne    v0, zero, loop34534 [$80034534]
+            func34150();
+        } while( V0 != 0 )
     }
 
     [80071a60] = w(1);
@@ -682,7 +678,7 @@ else
         {
             [80071a60] = w(1);
             A0 = 3;
-            800345A4	jal    func34cac [$80034cac]
+            func34cac();
         }
     }
 }
@@ -727,7 +723,7 @@ else if( V0 == 5 )
 
         loop34670:	; 80034670
             A0 = 3;
-            80034670	jal    func34cac [$80034cac]
+            func34cac();
 
             80034678	jal    func34150 [$80034150]
         80034680	bne    v0, zero, loop34670 [$80034670]
@@ -749,7 +745,7 @@ else
         {
             [80071a60] = w(3);
             A0 = 3;
-            800346E0	jal    func34cac [$80034cac]
+            func34cac();
         }
     }
 }
@@ -769,7 +765,7 @@ if( V0 == 0 ) // fail
 {
     [80071a60] = w(3);
     A0 = 10;
-    8003472C	jal    func34cac [$80034cac]
+    func34cac();
 }
 else // success
 {
@@ -789,8 +785,8 @@ system_psyq_cd_read_sync();
 if( V0 == -1 ) // error
 {
     [80071a60] = w(3);
-    A0 = 0003;
-    8003479C	jal    func34cac [$80034cac]
+    A0 = 3;
+    func34cac();
 }
 else if( V0 == 0 ) // finish read
 {
@@ -837,7 +833,7 @@ else if( V0 == 5 )
 
         loop34670:	; 80034670
             A0 = 3;
-            80034670	jal    func34cac [$80034cac]
+            func34cac();
 
             80034678	jal    func34150 [$80034150]
         80034680	bne    v0, zero, loop34670 [$80034670]
@@ -859,7 +855,7 @@ else
         {
             [80071a60] = w(b);
             A0 = 3;
-            800346E0	jal    func34cac [$80034cac]
+            func34cac();
         }
     }
 }
@@ -886,7 +882,7 @@ if( V0 == 0 )
 {
     [80071a60] = w(b);
     A0 = 3;
-    8003494C	jal    func34cac [$80034cac]
+    func34cac();
 }
 else
 {
@@ -911,7 +907,7 @@ if( V0 == -1 ) // error
 
     [80071a60] = w(b);
     A0 = 3;
-    80034A38	jal    func34cac [$80034cac]
+    func34cac();
 }
 else if( V0 == 0 ) // finish read
 {
@@ -980,7 +976,7 @@ else
         {
             [80071a60] = w(13);
             A0 = 3;
-            80034B2C	jal    func34cac [$80034cac]
+            func34cac();
         }
     }
 }
@@ -1010,7 +1006,7 @@ V0 = w[8004a634 + V0 * 4];
 // 6  func34754() check if read finished and set to 11 or wait in this status. If error retry with 3.
 // 7  func34428() do nothing.
 // 8  func35744() 
-// 9  func35430() 
+// 9  func35430() set in movie callback. set to a.
 // a  func34420() do nothing.
 // b  func347b4() set cd loc and set status to c.
 // c  func347f8() check prev command in success then d, if not retry with b.
@@ -1380,12 +1376,12 @@ system_psyq_dec_dct_reset();
 [8007e110] = w(e0);
 [8007e114] = w(0);
 
-V1 = hu[80095dc4];
-if( V1 == 1 )
+movie_type = hu[80095dc4];
+if( movie_type == 1 )
 {
     return 0;
 }
-else if( V1 == 0 )
+else if( movie_type == 0 )
 {
     [80095d88] = w(hu[8009a1f4 + movie_id * 14 + 8]);
     [80095d8c] = w(hu[8009a1f4 + movie_id * 14 + a]);
@@ -1431,7 +1427,7 @@ else if( V1 == 0 )
     [800965e4] = w(0);
     [8009a060] = w(0);
 }
-else if( ( V1 == 2 ) || ( V1 == 3 ) )
+else if( ( movie_type == 2 ) || ( movie_type == 3 ) )
 {
     [80095d88] = w(hu[8009a1f4 + movie_id * 14 + 8]);
     [80095d8c] = w(hu[8009a1f4 + movie_id * 14 + a]);
@@ -1440,13 +1436,13 @@ else if( ( V1 == 2 ) || ( V1 == 3 ) )
     [80095d98] = w(hu[8009a1f4 + movie_id * 14 + 10]);
 
     [8006e0fc] = w(memory); // buffer for movie from cd
-    memory = memory + (w[8009a1f4 + movie_id * 14 + 4] / 4) * 4;
+    memory += (w[8009a1f4 + movie_id * 14 + 4] / 4) * 4;
     [80095d9c + 0] = w(memory); // rb1
-    memory = memory + c800;
+    memory += c800;
     [80095d9c + 4] = w(memory); // rb2
-    memory = memory + c800;
+    memory += c800;
     [80095da4] = w(memory); // unpacked image buf
-    memory = memory + 1c00;
+    memory += 1c00;
 
     A0 = 80036190; // func36190()
     system_psyq_dec_dct_out_callback();
@@ -1482,16 +1478,13 @@ return memory;
 ////////////////////////////////
 // func35430()
 
-if( w[80071a60] != 9 )
-{
-    return;
-}
+if( w[80071a60] != 9 ) return;
 
-if( hu[80095dc4] == 0 )
+if( hu[80095dc4] == 0 ) // movie type
 {
     A0 = SP + 10;
     A1 = SP + 12;
-    80035468	jal    func41810 [$80041810]
+    func41810();
 
     if( h[SP + 12] < 8 )
     {
@@ -1891,12 +1884,13 @@ while( true )
 
     if( V0 != 0 ) return;
 
-    loop35d98:	; 80035D98
+    do
+    {
         A0 = 2; // CdlSetloc
         A1 = 80071a68;
         A2 = 0;
         system_psyq_cd_control();
-    80035DA8	beq    v0, zero, loop35d98 [$80035d98]
+    } while( V0 == 0 )
 }
 ////////////////////////////////
 

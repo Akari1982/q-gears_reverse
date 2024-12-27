@@ -78,12 +78,16 @@ T1 = a1;
 
 
 ////////////////////////////////
-// func429f0
-800429F0
-T2 = 00b0;
+// system_bios_deliver_event()
+// B(07h) DeliverEvent(class, spec)
+// This function is usually called by the kernel, it triggers all events that are
+// enabled/busy, and that have the specified class and spec values. Depending on
+// the mode, either the callback function is called (mode=1000h), or the event is
+// marked as enabled/ready (mode=2000h).
+
+T2 = b0;
+T1 = 7;
 800429F4	jr     t2 
-T1 = 0007;
-800429FC	nop
 ////////////////////////////////
 
 

@@ -499,7 +499,7 @@ if( S0 == 0 || S0 == -1 )
     } while( V0 == 0 );
 
     A0 = 0; // no checks performed
-    system_cdrom_set_debug_level();
+    system_psyq_cd_set_debug();
 
     A0 = 0; // unset internal callbacks
     system_cdrom_dma_callback();

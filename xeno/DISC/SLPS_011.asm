@@ -2703,7 +2703,7 @@
 // func40d4c
 80040D4C-80040D68
 ////////////////////////////////
-// system_cdrom_set_debug_level
+// system_psyq_cd_set_debug
 80040D6C-80040D80
 ////////////////////////////////
 // func40d84
