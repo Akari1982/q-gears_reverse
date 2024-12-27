@@ -922,9 +922,9 @@ while( true )
         }
     }
 
-    [8007ebd8] = w(8007eb68 + buf_id * 14);
+    // store env for movie
+    [8007ebd8] = w(8007eb68 + buf_id * 14); // DISPENV
     [8007ebd0] = w(80113f2c + buf_id * 5c); // DRAWENV
-
     funcab310(); // play movie?
 
     if( bu[8009abf4 + 38] == 0 )

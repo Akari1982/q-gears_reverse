@@ -177,6 +177,8 @@
 
 8007ebc8 []       store 1 here during random encounter.
 
+8007ebd8 [][][][] 
+
 8007ebe0 []       init with 1.
 
 80081d90 [] array of some entity data. Store 1 to pc entity here during SPLIT.
@@ -235,6 +237,7 @@
 8009a1c4 array of current priority slot used by actors (size 0x01).
 
 8009a1f4 array of movie settings. This is "\MINT\MOVIE_ID.BIN;1" file (0x14 size)
+       0        4        8    a    c    e    10   12
     0  E4F80100 D8130400 0000 0000 4001 8000 2C00 0200          fship2.avi 	Clouds rolling
     1  67F90100 84260400 0000 0000 4001 8000 2C00 0200          
     2  ECF90100 E0684000 0000 0000 FF00 FF00 8600 0000          d_ropego.avi   Ropeway Up to Gold Saucer
@@ -293,9 +296,11 @@
     +  4 [][][][] ???
     +  8 [][]     ???
     +  a [][]     ???
-    +  c [][]     left volume.
-    +  e [][]     right volume.
-    + 10 [][]     ???
+    +  c [][]     type 0: left volume.
+                  type 2: some x.
+    +  e [][]     type 0: right volume.
+                  type 2: some y.
+    + 10 [][]     some z.
     + 12 [][]     some type (0, 1, 2, 3)
 
 8009abf4 field_struct. 8009c6e0 points here.

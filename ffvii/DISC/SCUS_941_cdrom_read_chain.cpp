@@ -1025,7 +1025,7 @@ V0 = w[8004a634 + V0 * 4];
 
 80034B90	jalr   v0 ra
 
-V0 = w[80071a60];
+return w[80071a60];
 ////////////////////////////////
 
 
@@ -1389,16 +1389,17 @@ else if( V1 == 0 )
 {
     [80095d88] = w(hu[8009a1f4 + movie_id * 14 + 8]);
     [80095d8c] = w(hu[8009a1f4 + movie_id * 14 + a]);
-    A2 = hu[8009a1f4 + movie_id * 14 + 10];
-    [80095d9c] = w(memory);
-    memory = memory + 19b00;
-    [80095da0] = w(memory);
-    memory = memory + 19b00;
-    [80095da4] = w(memory);
-    memory = memory + 2d00;
+
+    [80095d9c + 0] = w(memory); // rb1
+    memory += 19b00;
+    [80095d9c + 4] = w(memory); // rb2
+    memory += 19b00;
+    [80095da4] = w(memory); // unpacked image buf
+    memory += 2d00;
+
     [80095d90] = w(140);
     [80095d94] = w(e0);
-    [80095d98] = w(A2);
+    [80095d98] = w(hu[8009a1f4 + movie_id * 14 + 10]);
 
     A0 = memory;
     A1 = 24;
@@ -1438,14 +1439,13 @@ else if( ( V1 == 2 ) || ( V1 == 3 ) )
     [80095d94] = w(hu[8009a1f4 + movie_id * 14 + e]);
     [80095d98] = w(hu[8009a1f4 + movie_id * 14 + 10]);
 
-    V0 = w[8009a1f4 + movie_id * 14 + 4] / 4;
-    [8006e0fc] = w(memory);
-    memory = memory + V0 * 4;
-    [80095d9c] = w(memory);
+    [8006e0fc] = w(memory); // buffer for movie from cd
+    memory = memory + (w[8009a1f4 + movie_id * 14 + 4] / 4) * 4;
+    [80095d9c + 0] = w(memory); // rb1
     memory = memory + c800;
-    [80095da0] = w(memory);
+    [80095d9c + 4] = w(memory); // rb2
     memory = memory + c800;
-    [80095da4] = w(memory);
+    [80095da4] = w(memory); // unpacked image buf
     memory = memory + 1c00;
 
     A0 = 80036190; // func36190()
@@ -1466,7 +1466,7 @@ else if( ( V1 == 2 ) || ( V1 == 3 ) )
 
     A0 = w[8009a1f4 + movie_id * 14 + 0]; // sector
     A1 = w[8009a1f4 + movie_id * 14 + 4]; // size
-    A2 = w[8006e0fc]; // buffer
+    A2 = w[8006e0fc]; // buffer for movie from cd
     A3 = 80035d64; // func35d64()
     system_cdrom_start_load_file();
 
@@ -1501,8 +1501,9 @@ if( hu[80095dc4] == 0 )
 
 [80071a60] = w(a);
 
-V1 = w[8007ebd8];
-[V1 + 11] = b(0);
+disp_env = w[8007ebd8];
+[disp_env + 11] = b(0);
+
 [8006e108] = w(0);
 [8006e104] = w(0);
 [8006e100] = w(0);
@@ -1569,7 +1570,7 @@ if( w[80071a60] == a )
     }
     else
     {
-        A0 = w[8006e0fc];
+        A0 = w[8006e0fc]; // buffer for movie from cd
         A1 = 0;
         func34d18();
 
@@ -1610,24 +1611,20 @@ if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
     [800965e4] = w(0);
     [8009a060] = w(0);
 
-    V0 = w[8007ebd8];
-    if( bu[V0 + 11] != 0 )
+    disp_env = w[8007ebd8];
+    draw_env = w[8007ebd0];
+
+    if( bu[disp_env + 11] != 0 ) // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
     {
+        [SP + 10] = h(0);
+        [SP + 12] = h(0);
+        [SP + 14] = h((h[draw_env + 4] * 3) / 2);
+        [SP + 16] = h(1e0);
+
         A0 = SP + 10;
         A1 = 0;
         A2 = 0;
-        V0 = w[8007ebd0];
         A3 = 0;
-        [SP + 0010] = h(0);
-        [SP + 0012] = h(0);
-        V1 = h[V0 + 4];
-        [SP + 0016] = h(1e0);
-        V0 = V1 << 01;
-        V0 = V0 + V1;
-        V1 = V0 >> 1f;
-        V0 = V0 + V1;
-        V0 = V0 >> 01;
-        [SP + 0014] = h(V0);
         system_psyq_clear_image();
 
         A0 = 0;
@@ -1641,58 +1638,39 @@ if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
 ////////////////////////////////
 // func35744()
 
-V1 = w[8007ebd8];
-V0 = bu[8006e104];
-[V1 + 11] = b(V0);
-A0 = w[8007ebd0];
-A1 = hu[A0 + 0000];
-A3 = 80095dbc;
-[A3 + 0000] = h(A1);
-A2 = hu[A0 + 0002];
-V0 = hu[80095d90];
-[80095dbe] = h(A2);
-V1 = hu[A0 + 0000];
-T0 = V1 + V0;
-[80095dc0] = h(T0);
-V0 = hu[A3 + ffcc];
-V1 = hu[A0 + 0002];
-A1 = A1 + V0;
-V0 = hu[80095d8c];
-A0 = hu[80095d94];
-A2 = A2 + V0;
-V0 = w[80095db0];
-V1 = V1 + A0;
-[80095db4] = h(A1);
-[80095dba] = h(A0);
-[80095dc2] = h(V1);
-[80095db6] = h(A2);
+disp_env = w[8007ebd8];
+draw_env = w[8007ebd0];
 
-if( V0 == 0 )
+[disp_env + 11] = b(bu[8006e104]); // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
+
+[80095db4] = h(hu[80095d88] + hu[draw_env + 0]);
+[80095db6] = h(hu[80095d8c] + hu[draw_env + 2]);
+[80095dba] = h(hu[80095d94]); // y image size
+[80095dbc] = h(hu[draw_env + 0]); // drawing area x
+[80095dbe] = h(hu[draw_env + 2]); // drawing area y
+[80095dc0] = h(hu[80095d90] + hu[draw_env + 0]);
+[80095dc2] = h(hu[80095d94] + hu[draw_env + 2]);
+
+if( w[80095db0] == 0 )
 {
-    [A3 + fffc] = h(10);
+    [80095db8] = h(10); // x image size
 }
 else
 {
-    V1 = (T0 << 10) >> 10;
-    [80095db8] = h(18);
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V1 = V0 >> 1f;
-    V0 = V0 + V1;
-    V0 = V0 >> 01;
-    [80095dc0] = h(V0);
+    [80095db8] = h(18); // x image size
+    [80095dc0] = h((h[80095dc0] * 3) / 2);
 }
 
 V1 = hu[80095dc4];
 if( V1 == 0 )
 {
     rb = w[80095da8];
-    A0 = w[80095dc4 + rb * 4 - 28];
-    A1 = w[80095db0];
+    A0 = w[80095d9c + rb * 4]; // input
+    A1 = w[80095db0]; // mode
     system_psyq_dec_dct_in();
 
-    A0 = w[80095da4];
-    A1 = (h[80095db8] * h[80095dba]) / 2;
+    A0 = w[80095da4]; // unpacked image buf
+    A1 = (h[80095db8] * h[80095dba]) / 2; // (x * y) / 2 size
     system_psyq_dec_dct_out();
 
     while( true )
@@ -1704,7 +1682,7 @@ if( V1 == 0 )
         A0 = SP + 10;
         func409e0();
 
-        A0 = 0001;
+        A0 = 1;
         A1 = V0;
         A2 = -1;
         func40c88();
@@ -1717,46 +1695,40 @@ if( V1 == 0 )
 
     if( w[80095dac] == 1 )
     {
-        V1 = w[80071a60];
-        if( V1 < b )
+        if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
         {
-            if( V1 >= 8 )
+            A0 = 9; // CdlPause
+            A1 = 0;
+            A2 = 0;
+            system_psyq_cd_control();
+
+            if( hu[80095dc4] == 0 )
             {
-                A0 = 9; // CdlPause
+                func408f8();
+            }
+
+            A0 = 0;
+            system_psyq_dec_dct_out_callback();
+
+            [80071a60] = w(0);
+            [800965e4] = w(0);
+            [8009a060] = w(0);
+
+            if( bu[disp_env + 11] != 0 ) // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
+            {
+                [SP + 18] = h(0);
+                [SP + 1a] = h(0);
+                [SP + 1e] = h(1e0);
+                [SP + 1c] = h((h[draw_env + 4] * 3) / 2);
+
+                A0 = SP + 18;
                 A1 = 0;
                 A2 = 0;
-                system_psyq_cd_control();
-
-                if( hu[80095dc4] == 0 )
-                {
-                    func408f8();
-                }
+                A3 = 0;
+                system_psyq_clear_image();
 
                 A0 = 0;
-                system_psyq_dec_dct_out_callback();
-
-                [80071a60] = w(0);
-                [800965e4] = w(0);
-                [8009a060] = w(0);
-
-                V0 = w[8007ebd8];
-                if( bu[V0 + 11] != 0 )
-                {
-                    V0 = w[8007ebd0];
-                    [SP + 18] = h(0);
-                    [SP + 1a] = h(0);
-                    [SP + 1e] = h(1e0);
-                    [SP + 1c] = h((h[V0 + 4] * 3) / 2);
-
-                    A0 = SP + 18;
-                    A1 = 0;
-                    A2 = 0;
-                    A3 = 0;
-                    system_psyq_clear_image();
-
-                    A0 = 0;
-                    system_psyq_draw_sync();
-                }
+                system_psyq_draw_sync();
             }
         }
     }
@@ -1778,108 +1750,92 @@ if( V1 == 0 )
 else if( V1 == 2 )
 {
     rb = w[80095da8];
-    A0 = w[80095dc4 - 28 + rb * 4];
-    A1 = 2;
+    A0 = w[80095d9c + rb * 4]; // input
+    A1 = 2; // mode
     system_psyq_dec_dct_in();
 
-    A0 = w[80095da4];
-    A1 = (h[80095db8] * h[80095dba]) / 2;
+    A0 = w[80095da4]; // unpacked image buf
+    A1 = (h[80095db8] * h[80095dba]) / 2; // (x * y) / 2 size
     system_psyq_dec_dct_out();
 
     [80095da8] = w(w[80095da8] < 1);
 
-    A0 = w[8006e0fc];
+    A0 = w[8006e0fc]; // buffer for movie from cd
     A1 = w[8006e110];
     func34d18();
 
     rb = w[80095da8];
     A0 = V0;
-    A1 = w[80095dc4 - 28 + rb * 4];
+    A1 = w[80095d9c + rb * 4];
     func4262c();
 
     V0 = w[8006e110];
-    A0 = w[80095d98];
-    V1 = V0 + 0001;
-    [8006e110] = w(V1);
-    if( V0 >= A0 )
-    {
-        [8006e110] = w(0);
-    }
+    [8006e110] = w(V0 + 1);
+
+    if( V0 >= w[80095d98] ) [8006e110] = w(0);
 
     func36100();
 }
 else if( V1 == 3 )
 {
     rb = w[80095da8];
-    A0 = w[80095dc4 + rb * 4 - 28];
-    A1 = 2;
+    A0 = w[80095d9c + rb * 4]; // input
+    A1 = 2; // mode
     system_psyq_dec_dct_in();
 
-    A0 = w[80095da4];
-    A1 = (h[80095db8] * h[80095dba]) / 2;
+    A0 = w[80095da4]; // unpacked image buf
+    A1 = (h[80095db8] * h[80095dba]) / 2; // (x * y) / 2 size
     system_psyq_dec_dct_out();
 
     [80095da8] = w(w[80095da8] < 1);
 
-    A0 = w[8006e0fc];
+    A0 = w[8006e0fc]; // buffer for movie from cd
     A1 = w[8006e110];
     func34d18();
 
-    rb = w[80095da8];
     A0 = V0;
-    A1 = w[80095dc4 + rb * 4 - 28];
+    rb = w[80095da8];
+    A1 = w[80095d9c + rb * 4];
     func4262c();
 
-    V0 = w[8006e110];
-    [8006e110] = w(V0 + 1);
+    [8006e110] = w(w[8006e110] + 1);
 
-    if( V0 >= w[80095d98] )
+    if( w[8006e110] >= w[80095d98] )
     {
-        V1 = w[80071a60];
-        if( V1 < b )
+        if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
         {
-            if( V1 >= 8 )
+            A0 = 9; // CdlPause
+            A1 = 0;
+            A2 = 0;
+            system_psyq_cd_control();
+
+            if( hu[80095dc4] == 0 ) 
             {
-                A0 = 9; // CdlPause
+                func408f8();
+            }
+
+            A0 = 0;
+            system_psyq_dec_dct_out_callback();
+
+            [80071a60] = w(0);
+            [800965e4] = w(0);
+            [8009a060] = w(0);
+
+            if( bu[disp_env + 11] != 0 ) // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
+            {
+                [SP + 18] = h(0);
+                [SP + 1a] = h(0);
+                [SP + 1e] = h(1e0);
+                [SP + 1c] = h((h[draw_env + 4] * 3) / 2);
+
+                A0 = SP + 18;
                 A1 = 0;
                 A2 = 0;
-                system_psyq_cd_control();
-
-                if( hu[80095dc4] == 0 ) 
-                {
-                    func408f8();
-                }
+                A3 = 0;
+                system_psyq_clear_image();
 
                 A0 = 0;
-                system_psyq_dec_dct_out_callback();
-
-                [80071a60] = w(0);
-                [800965e4] = w(0);
-                [8009a060] = w(0);
-
-                V0 = w[8007ebd8];
-                if( bu[V0 + 11] != 0 )
-                {
-                    [SP + 18] = h(0);
-                    [SP + 1a] = h(0);
-                    [SP + 1e] = h(1e0);
-
-                    V0 = w[8007ebd0];
-                    V1 = h[V0 + 4];
-                    V0 = V1 << 01;
-                    V0 = V0 + V1;
-                    V0 = V0 / 2;
-                    [SP + 1c] = h(V0);
-
-                    A0 = SP + 18;
-                    A1 = 0;
-                    A2 = 0;
-                    A3 = 0;
-                    system_psyq_clear_image();
-
-                    A0 = 0;
-                    system_psyq_draw_sync();
-                }
+                system_psyq_draw_sync();
             }
         }
     }
@@ -2151,14 +2107,14 @@ if( w[80075cfc] != 0 )
 }
 
 A0 = 80095db4;
-A1 = w[80095da4];
+A1 = w[80095da4]; // unpacked image buf
 system_psyq_load_image();
 
 [80095db4] = h(h[80095db4] + h[80095db8]);
 
 if( h[80095db4] < h[80095dc0] )
 {
-    A0 = w[80095da4]; // dst
+    A0 = w[80095da4]; // unpacked image buf
     A1 = (h[80095db8] * h[80095dba]) / 2; // size
     system_psyq_dec_dct_out();
 }
@@ -2207,14 +2163,14 @@ while( w[8006e118] == 0 )
 // func36190()
 
 A0 = 80095db4;
-A1 = w[80095da4];
+A1 = w[80095da4]; // unpacked image buf
 system_psyq_load_image();
 
 [80095db4] = h(h[80095db4] + h[80095db8]);
 
 if( h[80095db4] < h[80095dc0] )
 {
-    A0 = w[80095da4];
+    A0 = w[80095da4]; // unpacked image buf
     A1 = (h[80095db8] * h[80095dba]) / 2;
     system_psyq_dec_dct_out();
 
