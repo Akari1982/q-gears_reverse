@@ -1393,8 +1393,8 @@ else if( movie_type == 0 )
     [80095da4] = w(memory); // unpacked image buf
     memory += 2d00;
 
-    [80095d90] = w(140);
-    [80095d94] = w(e0);
+    [80095d90] = w(140); // width
+    [80095d94] = w(e0); // height
     [80095d98] = w(hu[8009a1f4 + movie_id * 14 + 10]);
 
     A0 = memory;
@@ -1410,7 +1410,7 @@ else if( movie_type == 0 )
     A0 = 1;
     A1 = 0;
     A2 = -1;
-    A3 = 0;
+    A3 = 0; // callback
     A4 = 0;
     func40a40();
 
@@ -1444,7 +1444,7 @@ else if( ( movie_type == 2 ) || ( movie_type == 3 ) )
     [80095da4] = w(memory); // unpacked image buf
     memory += 1c00;
 
-    A0 = 80036190; // func36190()
+    A0 = 80036190; // system_dec_dct_out_handler()
     system_psyq_dec_dct_out_callback();
 
     A0 = ff; // left vol
@@ -1456,7 +1456,7 @@ else if( ( movie_type == 2 ) || ( movie_type == 3 ) )
     A0 = 0;
     A1 = 0;
     A2 = -1;
-    A3 = 0;
+    A3 = 0; // callback
     A4 = 0;
     func40a40();
 
@@ -1512,54 +1512,50 @@ if( w[80071a60] == a )
 {
     if( hu[80095dc4] == 0 )
     {
-        80035504	lui    s0, $0080
+        S0 = 800000;
 
         loop35508:	; 80035508
             func35dc8();
 
             S1 = V0;
-            80035514	bne    s1, zero, L3552c [$8003552c]
-            80035518	addiu  s0, s0, $ffff (=-$1)
+            S0 = S0 - 1;
+            if( S1 != 0 )
+            {
+                for( int i = 0; i < a; ++i )
+                {
+                    [80077f3c + i * 4] = w(w[S1]);
+                    S1 += 4;
+                }
+
+                if( w[8006e108] != 0 )
+                {
+                    [8006e108] = w(0);
+                    [80095db0] = w(w[8006e104]);
+                }
+                else
+                {
+                    V1 = hu[80067f62];
+                    if( w[8006e100] != V1 )
+                    {
+                        [8006e100] = w(V1);
+                        [8006e104] = w(V1);
+                        [8006e108] = w(1);
+                    }
+                }
+
+                rb = w[80095da8];
+                A1 = w[80095d9c + rb * 4];
+                A0 = S1;
+                func4262c();
+
+                A0 = S1;
+                func40ac8();
+
+                return w[80071a60];
+            }
         8003551C	bne    s0, zero, loop35508 [$80035508]
 
         return 0;
-
-        L3552c:	; 8003552C
-        S0 = 0;
-        V1 = 80077f3c;
-
-        loop35538:	; 80035538
-            V0 = w[S1 + 0000];
-            S1 = S1 + 0004;
-            S0 = S0 + 0001;
-            [V1 + 0000] = w(V0);
-            V1 = V1 + 0004;
-            V0 = S0 < 000a;
-        8003554C	bne    v0, zero, loop35538 [$80035538]
-
-        if( w[8006e108] != 0 )
-        {
-            [8006e108] = w(0);
-            [80095db0] = w(w[8006e104]);
-        }
-        else
-        {
-            V1 = hu[80067f62];
-            if( w[8006e100] != V1 )
-            {
-                [8006e100] = w(V1);
-                [8006e104] = w(V1);
-                [8006e108] = w(1);
-            }
-        }
-
-        rb = w[80095da8];
-        A1 = w[80095d9c + rb * 4];
-        A0 = S1;
-        func4262c();
-
-        A0 = S1;
-        func40ac8();
     }
     else
     {
@@ -1636,21 +1632,23 @@ draw_env = w[8007ebd0];
 
 [disp_env + 11] = b(bu[8006e104]); // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
 
-[80095db4] = h(hu[80095d88] + hu[draw_env + 0]);
-[80095db6] = h(hu[80095d8c] + hu[draw_env + 2]);
-[80095dba] = h(hu[80095d94]); // y image size
+// rect for image chunk load
+[80095db4] = h(hu[80095d88] + hu[draw_env + 0]); // movie_x + drawing area x
+[80095db6] = h(hu[80095d8c] + hu[draw_env + 2]); // movie_y + drawing area y
+[80095dba] = h(hu[80095d94]); // chunk height
+
 [80095dbc] = h(hu[draw_env + 0]); // drawing area x
 [80095dbe] = h(hu[draw_env + 2]); // drawing area y
-[80095dc0] = h(hu[80095d90] + hu[draw_env + 0]);
-[80095dc2] = h(hu[80095d94] + hu[draw_env + 2]);
+[80095dc0] = h(hu[80095d90] + hu[draw_env + 0]); // width  + drawing area x
+[80095dc2] = h(hu[80095d94] + hu[draw_env + 2]); // height + drawing area y
 
 if( w[80095db0] == 0 )
 {
-    [80095db8] = h(10); // x image size
+    [80095db8] = h(10); // chunk width
 }
 else
 {
-    [80095db8] = h(18); // x image size
+    [80095db8] = h(18); // chunk width
     [80095dc0] = h((h[80095dc0] * 3) / 2);
 }
 
@@ -2100,7 +2098,7 @@ if( w[80075cfc] != 0 )
     [80075cfc] = w(0);
 }
 
-A0 = 80095db4;
+A0 = 80095db4; // rect where to load
 A1 = w[80095da4]; // unpacked image buf
 system_psyq_load_image();
 
@@ -2109,7 +2107,7 @@ system_psyq_load_image();
 if( h[80095db4] < h[80095dc0] )
 {
     A0 = w[80095da4]; // unpacked image buf
-    A1 = (h[80095db8] * h[80095dba]) / 2; // size
+    A1 = (h[80095db8] * h[80095dba]) / 2; // (x * y) / 2 size
     system_psyq_dec_dct_out();
 }
 else
@@ -2136,15 +2134,10 @@ while( w[8006e118] == 0 )
 
     if( A3 == 0 )
     {
-        V0 = hu[A2 + 0008];
-        A0 = hu[A2 + ffd4];
-        V1 = hu[A2 + 000a];
-        A1 = hu[A2 + ffd8];
+        [A2 + 0] = h(hu[A2 + 8] + hu[A2 + ffd4]);
+        [A2 + 2] = h(hu[A2 + a] + hu[A2 + ffd8]);
+
         [8006e118] = w(1);
-        V0 = V0 + A0;
-        V1 = V1 + A1;
-        [A2 + 0000] = h(V0);
-        [A2 + 0002] = h(V1);
     }
 }
 
@@ -2154,49 +2147,36 @@ while( w[8006e118] == 0 )
 
 
 ////////////////////////////////
-// func36190()
+// system_dec_dct_out_handler()
 
-A0 = 80095db4;
+// load decoded chunk to vram
+A0 = 80095db4; // rect
 A1 = w[80095da4]; // unpacked image buf
 system_psyq_load_image();
 
-[80095db4] = h(h[80095db4] + h[80095db8]);
+[80095db4] = h(h[80095db4] + h[80095db8]); // move rect start x to next chank
 
-if( h[80095db4] < h[80095dc0] )
+if( h[80095db4] < h[80095dc0] ) // if not max width
 {
     A0 = w[80095da4]; // unpacked image buf
-    A1 = (h[80095db8] * h[80095dba]) / 2;
+    A1 = (h[80095db8] * h[80095dba]) / 2; // (x * y) / 2 size
     system_psyq_dec_dct_out();
-
-    return;
 }
-
-[8006e118] = w(1);
+else
+{
+    [8006e118] = w(1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func36244
-V1 = h[A0 + 0002];
-V0 = A1 << 03;
-V1 = V1 << 02;
-A2 = V0 + V1;
-A2 = A2 + A0;
-A2 = A2 + 0004;
-V0 = h[A2 + 0002];
-80036260	nop
-V0 = V0 << 02;
-A3 = V0 + A0;
-A3 = w[A3 + 0004];
-80036270	nop
-A3 = A3 + A0;
-V0 = w[A3 + 0000];
-A3 = A3 + 0004;
-80036280	lui    at, $8003
-[AT + 623c] = w(A2);
-80036288	lui    at, $8003
-[AT + 6240] = w(A3);
-80036290	jr     ra 
-80036294	nop
+// func36244()
+
+A2 = A1 * 8 + h[A0 + 2] * 4 + A0 + 4;
+A3 = A0 + h[A2 + 2] * 4;
+[8003623c] = w(A2);
+[80036240] = w(w[A3 + 4] + A0 + 4);
+
+return w[A3];
 ////////////////////////////////
