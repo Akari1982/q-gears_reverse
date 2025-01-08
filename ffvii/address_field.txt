@@ -309,12 +309,13 @@
                     00 - normal field.
                     01 - load new field or world (finalize field in this case).
                     02 - encounter.
-                    03 - play movie.
+                    03 - start play movie.
+                    04 - continue play movie.
                     09 - tutorial.
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
                     0d -
-                    14 - ???
+                    14 - we abort movie play if this.
                     19 -
                     1a - game over
     + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play.
@@ -335,7 +336,7 @@
     + 20 [][]     speed of background scroll. Number of steps?
     + 22 [][]     destination z during map load. (most likely triangle id).
     + 24 [][]     saved rotation for manual entity during map load.
-    + 26 [][]     battle state ?
+    + 26 [][]     movie state (0-not played, 1-start, )
     + 28 [][]     number of entities.
     + 2a []       manual entity id.
     + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)

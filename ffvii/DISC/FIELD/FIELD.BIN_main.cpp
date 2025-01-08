@@ -691,7 +691,7 @@ while( true )
     if( ( w[8009abf4 + 68] & 0000090f ) == 0000090f ) // reset game if all shifts and start + select pressed
     {
         [8009abf4 + 1] = b(a);
-        func35658();
+        system_movie_abort_play();
 
         field_stop_load_background_in_advance();
         return;

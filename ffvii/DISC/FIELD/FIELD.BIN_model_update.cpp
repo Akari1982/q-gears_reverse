@@ -288,11 +288,11 @@ if( h[800965e8] == 1 )
 
 if( bu[8009abf4 + 1] == 14 )
 {
-    func35658();
+    system_movie_abort_play();
 
     [80114488] = h(0);
     [800e4d44] = h(0);
-    [8009ac1a] = h(2);
+    [8009abf4 + 26] = h(2);
     return;
 }
 
@@ -300,16 +300,14 @@ system_cdrom_read_chain();
 
 if( V0 == 0 ) // do nothing
 {
-    entities_n = h[8009abf4 + 28];
-
-    if( ( bu[8009abf4 + 1] == 3 ) && ( entities_n == 0 ) )
+    if( ( bu[8009abf4 + 1] == 3 ) && ( h[8009abf4 + 26] == 0 ) )
     {
         A0 = w[80075e10];
         if( A0 >= 801affff ) A0 = 801b0000;
         A1 = h[8009abf4 + 2]; // movie id
         system_movie_play();
 
-        [8009abf4 + 28] = h(1); // number of entities
+        [8009abf4 + 26] = h(1);
         [800e4d44] = h(1);
     }
 
@@ -319,18 +317,18 @@ if( V0 == 0 ) // do nothing
 
         [80114488] = h(0);
         [800e4d44] = h(0);
-        [8009ac1a] = h(2);
+        [8009abf4 + 26] = h(2);
     }
 }
-else if( V0 == a ) // do nothing
+else if( V0 == a ) // movie played
 {
     if( bu[8009abf4 + 1] == 3 )
     {
-        [8009ac1a] = h(2);
+        [8009abf4 + 26] = h(2);
     }
     else if( bu[8009abf4 + 1] == 4 )
     {
-        [8009ac1a] = h(1);
+        [8009abf4 + 26] = h(1);
 
         func354cc();
 

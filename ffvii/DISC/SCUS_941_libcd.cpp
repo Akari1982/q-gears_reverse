@@ -1,4 +1,18 @@
 ////////////////////////////////
+// system_psyq_st_set_ring()
+
+ring_addr = A0;
+ring_size = A1;
+
+[8009c6d4] = w(ring_addr);
+[8009fe90] = w(ring_size);
+
+func40898();
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_psyq_cd_init()
 
 // try to init 4 times
@@ -2427,34 +2441,34 @@ L404c8:	; 800404C8
 
 
 ////////////////////////////////
-// func404f4
-800404F4	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 001c] = w(S1);
+// func404f4();
+
 S1 = A0;
-A0 = A1;
-A1 = SP + 0010;
-[SP + 0018] = w(S0);
-[SP + 0020] = w(RA);
-80040510	jal    system_psyq_cd_int_to_pos [$8003e2d0]
 S0 = A2;
+
+A0 = A1;
+A1 = SP + 10;
+system_psyq_cd_int_to_pos();
+
 A0 = 2; // CdlSetloc
 A1 = SP + 0010;
-80040520	jal    system_psyq_cd_control [$8003de9c]
 A2 = 0;
+system_psyq_cd_control();
+
 A0 = S1;
 A1 = S0;
-80040530	jal    system_psyq_cd_read [$80041d28]
-A2 = 0080;
+A2 = 80;
+system_psyq_cd_read();
+
 A0 = 0;
-8004053C	jal    system_psyq_cd_read_sync [$80041e30]
 A1 = 0;
+system_psyq_cd_read_sync();
+
 V0 = V0 < 0001;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-80040558	jr     ra 
-8004055C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func40560
 80040560	addiu  sp, sp, $fff8 (=-$8)
@@ -2479,25 +2493,33 @@ SP = SP + 0008;
 
 
 ////////////////////////////////
-// func40594()
+// system_psyq_cd_read2()
 
-S0 = A0; // usually 1e0
+// Start reading data from the CD-ROM.
+// Seeks to the position specified by CdlSetloc and starts reading data into the internal sector buffer. Starts
+// streaming when the CdlModeStream flag is set in mode (see Table 10-4 for a list of modes). Starts ADPCM
+// audio play when the CdlModeRT flag is set in the mode parameter. CdlModeSpeed can be used for multi-
+// speed play.
+// This function must be used in conjunction with CdGetSector() to transfer data from the internal sector buffer
+// to the program’s desired destination buffer. CdGetSector() should be called to transfer data as soon as
+// either CdReady() or CdReadyCallback() return the CdlDataReady flag.
 
-[SP + 10] = b(S0);
+mode = A0; // usually 1e0
 
 // CdlModeSpeed 0x80 Transfer speed 0: Normal speed 1: Double speed
 // CdlModeRT 0x40 ADPCM play 0: ADPCM OFF 1: ADPCM ON
 // CdlModeSize1 0x20 Sector size 0: 2048 byte 1: 2340byte
 
 A0 = e; // CdlSetmode
+[SP + 10] = b(mode);
 A1 = SP + 10;
 A2 = 0;
 system_psyq_cd_control();
 
-if( S0 & 100 )
+if( mode & 100 )
 {
-    if( S0 & 20 ) [80071c18] = w(0);
-    else          [80071c18] = w(1);
+    if( mode & 20 ) [80071c18] = w(0);
+    else            [80071c18] = w(1);
 
     A0 = 80040950; // func40950()
     system_psyq_cd_data_callback();
@@ -2517,7 +2539,7 @@ system_psyq_cd_control();
 ////////////////////////////////
 // func40628()
 
-func40ca8();
+system_psyq_st_cd_interrupt();
 ////////////////////////////////
 
 
@@ -2713,7 +2735,9 @@ func40b84();
 
 
 ////////////////////////////////
-// func408f8()
+// system_psyq_st_unset_ring()
+
+// Release interrupt used by streaming library
 
 system_bios_enter_critical_section()
 
@@ -2737,18 +2761,14 @@ system_bios_exit_critical_section();
 // func40950()
 
 V0 = w[8009c54c];
-V1 = w[8009c6d4];
-V0 = V0 << 05;
-V0 = V0 + V1;
-V1 = 0002;
-[V0 + 0000] = h(V1);
-A2 = 80070544;
-[A2 + 0] = w(w[V0 + 1c]);
-V0 = w[V0 + 0008];
-V1 = w[8009c548];
-[80070548] = w(V0);
-[8009c54c] = w(V1);
+ring_addr = w[8009c6d4];
+[ring_addr + V0 * 20 + 0] = h(2);
+[80070544] = w(w[ring_addr + V0 * 20 + 1c]);
+[80070548] = w(w[ring_addr + V0 * 20 + 8]);
 
+[8009c54c] = w(w[8009c548]);
+
+// end of frame callback
 if( w[80074ea0] != 0 )
 {
     800409C0	jalr   w[80074ea0] ra
@@ -2782,37 +2802,41 @@ return -1;
 
 
 ////////////////////////////////
-// func40a40()
+// system_psyq_st_set_stream()
 
-S0 = A0;
-callback = A3;
-S2 = A4;
+mode = A0; // mode sets color mode. 0 = 16-bit mode; 1 = 24-bit mode
+start_frame = A1;
+end_frame = A2;
+callback1 = A3; // address of function called back for each frame of data. If 0, no callback occurs
+callback2 = A4; // address of function called back when streaming ends. If 0, no callback occurs
 
 A0 = 1;
-A1 = A1;
-A2 = A2;
+A1 = start_frame;
+A2 = end_frame;
 func40c88();
 
 [8009c6c0] = w(0);
-[80074ea0] = w(callback);
-[80071c14] = w(S0 & 1);
+[80074ea0] = w(callback1);
+[80071c14] = w(mode & 1);
 [80081dc0] = w(0);
 [8007e764] = w(0);
 [80071c10] = h(0);
 [80071740] = w(0);
-[800756e4] = w(S2);
+[800756e4] = w(callback2);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func40ac8
+// func40ac8()
+// StFreeRing
+// Release ring buffer.
 
+base = A0;
 A1 = 82082083;
-V0 = w[8009fe90];
-A2 = w[8009c6d4];
-V0 = V0 << 05;
-V0 = V0 + A2;
+ring_max = w[8009fe90];
+ring_addr = w[8009c6d4];
+V0 = ring_addr + ring_max * 20;
 A0 = A0 - V0;
 V1 = A0 >> 02;
 80040AF0	mult   v1, a1
@@ -2821,22 +2845,14 @@ A0 = A0 >> 1f;
 V0 = V0 + V1;
 V0 = V0 >> 08;
 A1 = V0 - A0;
-V0 = A1 << 05;
-V0 = V0 + A2;
-A0 = 0004;
-V1 = h[V0 + 0000];
-V0 = h[V0 + 0006];
-if( V1 != A0 )
-{
-    return 1;
-}
+V0 = ring_addr + A1 * 20;
+
+if( h[V0 + 0] != 4 ) return 1;
 
 int i = 0;
-for( ; i < V0; ++i )
+for( ; i < h[V0 + 6]; ++i )
 {
-    V0 = i + A1;
-    V1 = w[8009c6d4];
-    [V1 + V0 * 20] = h(0);
+    [ring_addr + (i + A1) * 20 + 0] = h(0);
 }
 [8009c550] = w(A1 + i);
 
@@ -2850,8 +2866,8 @@ return 0;
 
 for( int i = 0; i < A1; +i )
 {
-    V1 = w[8009c6d4];
-    [V1 + (A0 + i) * 20] = w(0);
+    ring_addr = w[8009c6d4];
+    [ring_addr + (A0 + i) * 20 + 0] = w(0);
 }
 ////////////////////////////////
 
@@ -2860,54 +2876,33 @@ for( int i = 0; i < A1; +i )
 ////////////////////////////////
 // func40bc4()
 
-A3 = A0;
-V0 = w[8009c550];
-80040BD0	lui    v1, $800a
-V1 = w[V1 + c6d4];
-V0 = V0 << 05;
-A2 = V0 + V1;
-V0 = hu[A2 + 0000];
-V1 = 0001;
-V0 = V0 & ffff;
-80040BEC	bne    v0, v1, L40c28 [$80040c28]
-T0 = A1;
-V0 = w[8009c6c8];
-[8009c550] = w(0);
-80040C04	beq    v0, zero, L40c10 [$80040c10]
-80040C08	nop
-[A2 + 0000] = h(0);
+addr = A0;
+header = A1;
 
-L40c10:	; 80040C10
-V0 = w[8009c550];
-80040C18	lui    v1, $800a
-V1 = w[V1 + c6d4];
-V0 = V0 << 05;
-A2 = V0 + V1;
+ring_cur = w[8009c550];
+ring_addr = w[8009c6d4];
+ring_max = w[8009fe90];
 
-L40c28:	; 80040C28
-V0 = hu[A2 + 0000];
-V1 = 0002;
-V0 = V0 & ffff;
-80040C34	bne    v0, v1, L40c80 [$80040c80]
-V0 = 0001;
-V0 = 0004;
-[A2 + 0000] = h(V0);
-V0 = 0;
-80040C48	lui    a0, $800a
-A0 = w[A0 + fe90];
-80040C50	lui    v1, $800a
-V1 = w[V1 + c6d4];
-A1 = w[8009c550];
-A0 = A0 << 05;
-A0 = A0 + V1;
-V1 = A1 << 06;
-V1 = V1 - A1;
-V1 = V1 << 05;
-A0 = A0 + V1;
-[A3 + 0000] = w(A0);
-[T0 + 0000] = w(A2);
+if( hu[ring_addr + ring_cur * 20 + 0] == 1 )
+{
+    [8009c550] = w(0);
 
-L40c80:	; 80040C80
+    if( w[8009c6c8] != 0 ) [ring_addr + ring_cur * 20 + 0] = h(0);
+
+    ring_cur = w[8009c550];
+}
+
+if( hu[ring_addr + ring_cur * 20 + 0] == 2 )
+{
+    [ring_addr + ring_cur * 20 + 0] = h(4);
+
+    [addr] = w(ring_addr + ring_max * 20 + ring_cur * 7e0);
+    [header] = w(ring_addr + ring_cur * 20);
+
+    return 0;
+}
+
+return 1;
 ////////////////////////////////
 
 
@@ -2915,15 +2910,29 @@ L40c80:	; 80040C80
 ////////////////////////////////
 // func40c88()
 
+start_frame = A1;
+end_frame = A2;
+
 [8009c6cc] = w(A0);
-[8007e76c] = w(A1);
-[8009c6c8] = w(A2);
+[8007e76c] = w(start_frame);
+[8009c6c8] = w(end_frame);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func40ca8()
+// system_psyq_st_cd_interrupt()
+
+// Used as the CdReadyCallback routine by StSetStream() and StSetEmulate(). It transfers sectors from the
+// CD controller to the streaming ring buffer as they become available. This function does not need to be
+// called directly by the user when playing movies in 16-bit mode.
+// When playing a movie in 24-bit mode, there is a potential hardware conflict between the CD subsystem
+// and the MDEC image decompression system which can result in corrupted data. To avoid this,
+// StCdInterrupt() may defer transferring a sector and instead set a flag variable called StCdInterFlag to
+// indicate that a CD sector is ready to be transferred. Once the MDEC is finished transferring data, your
+// application should check StCdIntrFlag and call StCdInterrupt() directly if it is set. Please consult the Sony
+// sample code for movie playback for examples of the proper workaround.
+
 
 V0 = w[80095d80];
 A0 = 0001;
@@ -2977,9 +2986,8 @@ V0 = 0003;
 
 L40d7c:	; 80040D7C
 V0 = w[8009c548];
-V1 = w[8009c6d4];
-V0 = V0 << 05;
-V0 = V0 + V1;
+ring_addr = w[8009c6d4];
+V0 = ring_addr + V0 * 20;
 [8007054c] = w(V0);
 V0 = hu[V0 + 0000];
 
@@ -3493,7 +3501,7 @@ V0 = V0 + 0001;
 
 if( w[80095d80] != 0 )
 {
-    func40950();
+    func40950(); // end of frame
 }
 
 L41610:	; 80041610
@@ -3503,7 +3511,7 @@ L41610:	; 80041610
 
 ////////////////////////////////
 // func41620
-80041620	addiu  sp, sp, $fff8 (=-$8)
+
 80041624	beq    a2, zero, L41648 [$80041648]
 V1 = 0;
 
@@ -3517,30 +3525,20 @@ V0 = V1 < A2;
 A0 = A0 + 0004;
 
 L41648:	; 80041648
-SP = SP + 0008;
-8004164C	jr     ra 
-80041650	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func41654
-80041654	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0018] = w(S0);
+
 S0 = A0;
-[SP + 0020] = w(S2);
 S2 = A1;
-[SP + 0024] = w(S3);
 S3 = A2;
-[SP + 0028] = w(S4);
 S4 = A3;
 A0 = 0;
 A1 = S0 << 04;
 80041680	lui    v0, $0100
-[SP + 0030] = w(RA);
-[SP + 002c] = w(S5);
-[SP + 001c] = w(S1);
 80041690	lui    at, $1f80
 AT = A1 + AT;
 V1 = w[AT + 1088];
@@ -3641,16 +3639,6 @@ L417d8:	; 800417D8
 V0 = w[A1 + 0000];
 800417E0	nop
 [SP + 0010] = w(V0);
-RA = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0038;
-80041808	jr     ra 
-8004180C	nop
 ////////////////////////////////
 
 
@@ -3658,46 +3646,47 @@ SP = SP + 0038;
 ////////////////////////////////
 // func41810()
 
-A2 = w[8009fe90];
+ring_addr = w[8009c6d4];
+
+A2 = w[8009fe90]; // ring_max
 [A0] = h(0);
 V1 = h[8009c550];
 V0 = h[8009c548] - V1;
 [A1] = h(V0);
 V0 = V0 << 10;
-8004183C	bgez   v0, L418c4 [$800418c4]
-80041840	nop
-80041844	addiu  a2, a2, $ffff (=-$1)
-80041848	bltz   a2, L41880 [$80041880]
-A3 = 0001;
 
-V1 = w[8009c6d4];
-V0 = A2 << 05;
-V0 = V0 + V1;
+if( V0 < 0 )
+{
+    A2 -= 1;
+    V0 = ring_addr + A2 * 20;
 
-loop41860:	; 80041860
-    V1 = V0;
-    V0 = hu[V1 + 0000];
-    80041868	nop
-    8004186C	beq    v0, a3, L41880 [$80041880]
-    80041870	nop
-    80041874	addiu  a2, a2, $ffff (=-$1)
-80041878	bgez   a2, loop41860 [$80041860]
-8004187C	addiu  v0, v1, $ffe0 (=-$20)
+    if( A2 >= 0 )
+    {
+        loop41860:	; 80041860
+            V1 = V0;
+            V0 = hu[V1];
+            if( V0 == 1 ) break;
 
-L41880:	; 80041880
-A2 = A2 + 1;
-V0 = hu[A1] + A2;
-[A1 + 0000] = h(V0);
-8004188C	j      L418c4 [$800418c4]
+            A2 -= 1;
+            V0 = V1 - 20;
+        80041878	bgez   a2, loop41860 [$80041860]
+    }
 
-loop41894:	; 80041894
-    V0 = w[8009c6d4];
-    if( hu[V0 + V1] == 0 ) [A0] = h(hu[A0] + 1);
+    A2 = A2 + 1;
+    [A1] = h(hu[A1] + A2);
+}
 
-    L418c4:	; 800418C4
-    A2 = A2 - 1;
-800418C8	bgez   a2, loop41894 [$80041894]
+A2 = A2 - 1;
 V1 = A2 << 05;
+if( A2 >= 0 )
+{
+    loop41894:	; 80041894
+        if( hu[ring_addr + V1] == 0 ) [A0] = h(hu[A0] + 1);
+
+        A2 = A2 - 1;
+    800418C8	bgez   a2, loop41894 [$80041894]
+    V1 = A2 << 05;
+}
 ////////////////////////////////
 
 

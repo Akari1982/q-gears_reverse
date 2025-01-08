@@ -93,7 +93,7 @@ do
 
     if( V0 == 8 || V0 == 9 || V0 == a )
     {
-        func35658();
+        system_movie_abort_play();
     }
     else if( V0 == 12 )
     {
@@ -109,7 +109,7 @@ A1 = 80071a68; // store pos here
 system_psyq_cd_int_to_pos();
 
 [80071a60] = w(start_chain_type);
-[80071a6c] = w((size + 7ff) >> b);
+[80071a6c] = w(size / 800);
 [80071a80] = w(buffer);
 [80071a84] = w(callback);
 ////////////////////////////////
@@ -122,7 +122,7 @@ system_psyq_cd_int_to_pos();
 sector = A0;
 callback = A1;
 
-A0 = 1;
+A0 = 1; // chain type
 A1 = sector;
 A2 = 0; // size
 A3 = 0; // buffer
@@ -139,19 +139,20 @@ return 0;
 
 sector = A0;
 
-A0 = 0;
+A0 = 0; // chain type
 A1 = sector;
 A2 = 0; // size
 A3 = 0; // buffer
 A4 = 0; // callback
 system_cdrom_set_chain_param();
 
-loop33e08:	; 80033E08
+do
+{
     A0 = 2; // CdlSetloc
     A1 = 80071a68; // param_ptr
     A2 = 0; // return_ptr
     system_psyq_cd_control();
-80033E18	beq    v0, zero, loop33e08 [$80033e08]
+} while( V0 == 0 )
 
 return 0;
 ////////////////////////////////
@@ -312,7 +313,10 @@ system_cdrom_read_chain();
 
 switch( w[80071a60] )
 {
-    case 5 6 d e:
+    case 5:
+    case 6:
+    case d:
+    case e:
     {
         A0 = 0;
         system_psyq_cd_sync_callback();
@@ -324,13 +328,24 @@ switch( w[80071a60] )
     }
     break;
 
-    case 8 9 a:
+    case 8:
+    case 9:
+    case a:
     {
-        func35658();
+        system_movie_abort_play();
     }
     break;
 
-    case 1 2 3 4 b c f 10 11 12:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case b:
+    case c:
+    case f:
+    case 10:
+    case 11:
+    case 12:
     {
         func34048(); // set type 13
     }
@@ -1005,7 +1020,7 @@ V0 = w[8004a634 + V0 * 4];
 // 5  func346f8() set cd read and set to 6 if success, if not retry with 3.
 // 6  func34754() check if read finished and set to 11 or wait in this status. If error retry with 3.
 // 7  func34428() do nothing.
-// 8  func35744() 
+// 8  func35744() callback to load next movie decoded chunk to vram and set next chunk to decode.
 // 9  func35430() set in movie callback. set to a.
 // a  func34420() do nothing.
 // b  func347b4() set cd loc and set status to c.
@@ -1129,13 +1144,9 @@ system_psyq_wait_frames();
 
 
 ////////////////////////////////
-// func34d18
-80034D18
-A1 = A1 << 02;
-V1 = A0 + A1;
-V0 = w[V1 + 0000];
-80034D24	jr     ra 
-V0 = V0 + A0;
+// func34d18()
+
+return A0 + w[A0 + A1 * 4];
 ////////////////////////////////
 
 
@@ -1395,24 +1406,24 @@ else if( movie_type == 0 )
 
     [80095d90] = w(140); // width
     [80095d94] = w(e0); // height
-    [80095d98] = w(hu[8009a1f4 + movie_id * 14 + 10]);
+    [80095d98] = w(hu[8009a1f4 + movie_id * 14 + 10]); // frames n
 
     A0 = memory;
-    A1 = 24;
-    func3dba0();
+    A1 = 24; // size
+    system_psyq_st_set_ring();
+    memory += 12000;
 
-    memory = memory + 12000;
     [80083270] = w(80077f3c);
 
     A0 = 80036038; // func36038()
     system_psyq_dec_dct_out_callback();
 
-    A0 = 1;
-    A1 = 0;
-    A2 = -1;
-    A3 = 0; // callback
-    A4 = 0;
-    func40a40();
+    A0 = 1; // 0 = 16-bit mode; 1 = 24-bit mode
+    A1 = 0; // start frame
+    A2 = -1; // end frame
+    A3 = 0; // callback1
+    A4 = 0; // callback2
+    system_psyq_st_set_stream(); // StSetStream
 
     A0 = w[8009a1f4 + movie_id * 14 + 0];
     A1 = 80035d64; // func35d64()
@@ -1453,12 +1464,12 @@ else if( ( movie_type == 2 ) || ( movie_type == 3 ) )
     A3 = 0; // right to l
     func33c20();
 
-    A0 = 0;
+    A0 = 0; // 0 = 16-bit mode; 1 = 24-bit mode
     A1 = 0;
     A2 = -1;
     A3 = 0; // callback
     A4 = 0;
-    func40a40();
+    system_psyq_st_set_stream();
 
     A0 = w[8009a1f4 + movie_id * 14 + 0]; // sector
     A1 = w[8009a1f4 + movie_id * 14 + 4]; // size
@@ -1510,15 +1521,13 @@ disp_env = w[8007ebd8];
 
 if( w[80071a60] == a )
 {
-    if( hu[80095dc4] == 0 )
+    if( hu[80095dc4] == 0 ) // movie type
     {
-        S0 = 800000;
-
-        loop35508:	; 80035508
+        for( int i = 800000; i != 0; --i )
+        {
             func35dc8();
-
             S1 = V0;
-            S0 = S0 - 1;
+
             if( S1 != 0 )
             {
                 for( int i = 0; i < a; ++i )
@@ -1544,16 +1553,16 @@ if( w[80071a60] == a )
                 }
 
                 rb = w[80095da8];
-                A1 = w[80095d9c + rb * 4];
                 A0 = S1;
+                A1 = w[80095d9c + rb * 4];
                 func4262c();
 
                 A0 = S1;
-                func40ac8();
+                func40ac8(); // StFreeRing
 
                 return w[80071a60];
             }
-        8003551C	bne    s0, zero, loop35508 [$80035508]
+        }
 
         return 0;
     }
@@ -1579,7 +1588,7 @@ return w[80071a60];
 
 
 ////////////////////////////////
-// func35658()
+// system_movie_abort_play()
 
 if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
 {
@@ -1588,9 +1597,9 @@ if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
     A2 = 0;
     system_psyq_cd_control();
 
-    if( hu[80095dc4] == 0 )
+    if( hu[80095dc4] == 0 ) // movie type
     {
-        func408f8();
+        system_psyq_st_unset_ring();
     }
 
     A0 = 0;
@@ -1652,7 +1661,7 @@ else
     [80095dc0] = h((h[80095dc0] * 3) / 2);
 }
 
-V1 = hu[80095dc4];
+V1 = hu[80095dc4]; // movie type
 if( V1 == 0 )
 {
     rb = w[80095da8];
@@ -1695,7 +1704,7 @@ if( V1 == 0 )
 
             if( hu[80095dc4] == 0 )
             {
-                func408f8();
+                system_psyq_st_unset_ring();
             }
 
             A0 = 0;
@@ -1727,7 +1736,7 @@ if( V1 == 0 )
     if( w[8006e10c] == 0 )
     {
         V0 = w[80075d00];
-        if( w[V0 + 8] >= ( w[80095d98] - 1 ) )
+        if( w[V0 + 8] >= ( w[80095d98] - 1 ) ) // greater than number of frames
         {
             [8009a000] = h(c9);
             [8009a004] = w(1e);
@@ -1763,6 +1772,7 @@ else if( V1 == 2 )
     V0 = w[8006e110];
     [8006e110] = w(V0 + 1);
 
+    // greater than number of frames
     if( V0 >= w[80095d98] ) [8006e110] = w(0);
 
     func36100();
@@ -1791,6 +1801,7 @@ else if( V1 == 3 )
 
     [8006e110] = w(w[8006e110] + 1);
 
+    // greater than number of frames
     if( w[8006e110] >= w[80095d98] )
     {
         if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
@@ -1802,7 +1813,7 @@ else if( V1 == 3 )
 
             if( hu[80095dc4] == 0 ) 
             {
-                func408f8();
+                system_psyq_st_unset_ring();
             }
 
             A0 = 0;
@@ -1838,10 +1849,9 @@ else if( V1 == 3 )
 
 
 ////////////////////////////////
-// func35cf0
+// func35cf0()
 
 S0 = A0;
-[SP + 10] = b(80);
 
 loop35d0c:	; 80035D0C
     loop35d0c:	; 80035D0C
@@ -1853,6 +1863,7 @@ loop35d0c:	; 80035D0C
 
     loop35d24:	; 80035D24
         A0 = e; // CdlSetmode
+        [SP + 10] = b(80);
         A1 = SP + 10;
         A2 = 0;
         system_psyq_cd_control();
@@ -1862,7 +1873,7 @@ loop35d0c:	; 80035D0C
     system_psyq_wait_frames();
 
     A0 = 1e0;
-    func40594();
+    system_psyq_cd_read2();
 80035D48	beq    v0, zero, loop35d0c [$80035d0c]
 ////////////////////////////////
 
@@ -1878,7 +1889,7 @@ if( hu[80095dc4] != 0 ) return;
 while( true )
 {
     A0 = 1e0;
-    func40594();
+    system_psyq_cd_read2();
 
     if( V0 != 0 ) return;
 
@@ -1895,108 +1906,61 @@ while( true )
 
 
 ////////////////////////////////
-// func35dc8
-80035DC8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-80035DD0	lui    s0, $0080
-[SP + 001c] = w(RA);
+// func35dc8()
 
-loop35dd8:	; 80035DD8
-80035DD8	lui    a1, $8007
-A1 = A1 + 5d00;
-80035DE0	jal    func40bc4 [$80040bc4]
-A0 = SP + 0010;
-80035DE8	beq    v0, zero, L35e00 [$80035e00]
-80035DEC	addiu  s0, s0, $ffff (=-$1)
-80035DF0	bne    s0, zero, loop35dd8 [$80035dd8]
-V0 = 0;
-80035DF8	j      L35f00 [$80035f00]
-80035DFC	nop
+for( int i = 800000; i != 0; --i )
+{
+    A0 = SP + 10;
+    A1 = 80075d00;
+    func40bc4();
 
-L35e00:	; 80035E00
-80035E00	lui    a1, $8007
-A1 = w[A1 + 5d00];
-80035E08	lui    v1, $8009
-V1 = w[V1 + 5d98];
-V0 = w[A1 + 0008];
-80035E14	nop
-V0 = V0 < V1;
-80035E1C	bne    v0, zero, L35e2c [$80035e2c]
-V0 = 0001;
-80035E24	lui    at, $8009
-[AT + 5dac] = w(V0);
+    if( V0 == 0 )
+    {
+        A1 = w[80075d00];
 
-L35e2c:	; 80035E2C
-80035E2C	lui    v0, $8007
-V0 = w[V0 + e114];
-V1 = w[A1 + 0008];
-80035E38	nop
-V0 = V0 < V1;
-80035E40	bne    v0, zero, L35e50 [$80035e50]
-V0 = 0001;
-80035E48	lui    at, $8009
-[AT + 5dac] = w(V0);
+        if( w[A1 + 8] >= w[80095d98] )
+        {
+            [80095dac] = w(1);
+        }
 
-L35e50:	; 80035E50
-A0 = hu[A1 + 0010];
-80035E54	lui    v0, $8009
-V0 = w[V0 + 5d90];
-80035E5C	nop
-80035E60	bne    v0, a0, L35e80 [$80035e80]
-80035E64	nop
-V1 = hu[A1 + 0012];
-80035E6C	lui    v0, $8009
-V0 = w[V0 + 5d94];
-80035E74	nop
-80035E78	beq    v0, v1, L35ee4 [$80035ee4]
-80035E7C	nop
+        if( w[8006e114] >= w[A1 + 8] )
+        {
+            [80095dac] = w(1);
+        }
 
-L35e80:	; 80035E80
-80035E80	lui    at, $8009
-[AT + 5d90] = w(A0);
-V0 = hu[A1 + 0012];
-80035E8C	lui    v1, $8009
-V1 = w[V1 + 5db0];
-80035E94	lui    at, $8009
-[AT + 5d94] = w(V0);
-80035E9C	bne    v1, zero, L35ebc [$80035ebc]
-V0 = A0 << 01;
-80035EA4	lui    v0, $8009
-V0 = hu[V0 + 5d90];
-80035EAC	lui    v1, $8009
-V1 = hu[V1 + 5d94];
-80035EB4	j      L35ecc [$80035ecc]
-80035EB8	nop
+        if( ( w[80095d90] != hu[A1 + 10] ) || ( w[80095d94] != hu[A1 + 12] ) )
+        {
+            [80095d90] = w(hu[A1 + 10]);
+            [80095d94] = w(hu[A1 + 12]);
 
-L35ebc:	; 80035EBC
-V0 = V0 + A0;
-80035EC0	lui    v1, $8009
-V1 = hu[V1 + 5d94];
-V0 = V0 >> 01;
+            if( w[80095db0] == 0 )
+            {
+                V0 = hu[80095d90];
+                V1 = hu[80095d94];
+            }
+            else
+            {
+                V0 = (hu[A1 + 10] * 3) / 2;
+                V1 = hu[80095d94];
+            }
 
-L35ecc:	; 80035ECC
-80035ECC	lui    at, $8009
-[AT + 5dc0] = h(V0);
-80035ED4	lui    at, $8009
-[AT + 5dc2] = h(V1);
-80035EDC	lui    at, $8009
-[AT + 5dba] = h(V1);
+            [80095dc0] = h(V0);
+            [80095dc2] = h(V1);
+            [80095dba] = h(V1);
+        }
 
-L35ee4:	; 80035EE4
-80035EE4	lui    v1, $8007
-V1 = w[V1 + 5d00];
-V0 = w[SP + 0010];
-V1 = w[V1 + 0008];
-80035EF4	nop
-80035EF8	lui    at, $8007
-[AT + e114] = w(V1);
+        V1 = w[80075d00];
+        [8006e114] = w(w[V1 + 8]);
 
-L35f00:	; 80035F00
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-80035F0C	jr     ra 
-80035F10	nop
+        return w[SP + 10];
+    }
+}
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func35f14
 80035F14	addiu  sp, sp, $ffe0 (=-$20)
@@ -2071,19 +2035,14 @@ V1 = w[V1 + 5da8];
 V1 = V1 << 02;
 V0 = V0 + V1;
 A1 = w[V0 + fff4];
-8003600C	jal    func4262c [$8004262c]
 A0 = S1;
+func4262c();
+
 80036014	jal    func40ac8 [$80040ac8]
 A0 = S1;
 V0 = 0001;
 
 L36020:	; 80036020
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80036030	jr     ra 
-80036034	nop
 ////////////////////////////////
 
 
@@ -2091,9 +2050,9 @@ SP = SP + 0020;
 ////////////////////////////////
 // func36038()
 
-if( w[80075cfc] != 0 )
+if( w[80075cfc] != 0 ) // StCdIntrFlag
 {
-    func40ca8();
+    system_psyq_st_cd_interrupt();
 
     [80075cfc] = w(0);
 }
@@ -2134,8 +2093,8 @@ while( w[8006e118] == 0 )
 
     if( A3 == 0 )
     {
-        [A2 + 0] = h(hu[A2 + 8] + hu[A2 + ffd4]);
-        [A2 + 2] = h(hu[A2 + a] + hu[A2 + ffd8]);
+        [A2 + 0] = h(hu[A2 + 8] + hu[A2 - 2c]);
+        [A2 + 2] = h(hu[A2 + a] + hu[A2 - 28]);
 
         [8006e118] = w(1);
     }
