@@ -356,179 +356,143 @@ switch( w[80071a60] )
 
 
 ////////////////////////////////
-// func34104
-80034104	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 000e;
+// func34104()
+
+A0 = e;
 A1 = 0;
-[SP + 0010] = w(RA);
-80034114	jal    system_psyq_cd_control_b [$8003e100]
 A2 = 0;
-8003411C	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0003;
-A0 = 0008;
+system_psyq_cd_control_b();
+
+A0 = 3;
+system_psyq_wait_frames();
+
+A0 = 8;
 A1 = 0;
-8003412C	jal    system_psyq_cd_control_b [$8003e100]
 A2 = 0;
-V0 = 0007;
-80034138	lui    at, $8007
-[AT + 1a60] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-80034148	jr     ra 
-8003414C	nop
+system_psyq_cd_control_b();
+
+[80071a60] = w(7);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func34150
+// func34150()
 
-80034154	lui    v1, $8007
-V1 = w[V1 + 1a60];
-V0 = 0007;
-80034164	bne    v1, v0, L34338 [$80034338]
+V1 = w[80071a60];
 
-A0 = 0001;
+if( V1 != 7 ) return 0;
+
+A0 = 1;
 A1 = 0;
-80034174	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-V0 = bu[SP + 0010];
-80034180	nop
-V0 = V0 & 0010;
-80034188	beq    v0, zero, L34198 [$80034198]
-S0 = 0258;
-80034190	j      L3433c [$8003433c]
-V0 = 0003;
+A2 = SP + 10;
+system_psyq_cd_control_b();
 
-L34198:	; 80034198
-A0 = 0007;
+if( bu[SP + 10] & 10 ) return 3;
+
+A0 = 7;
 A1 = 0;
-800341A0	jal    system_psyq_cd_control_b [$8003e100]
 A2 = 0;
+system_psyq_cd_control_b();
+
+S0 = 258;
 
 loop341a8:	; 800341A8
-800341A8	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0;
-800341B0	addiu  s0, s0, $ffff (=-$1)
-800341B4	beq    s0, zero, L34328 [$80034328]
-A0 = 0001;
-A1 = 0;
-800341C0	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-V0 = bu[SP + 0010];
-800341CC	nop
-V0 = V0 & 0002;
+    A0 = 0;
+    system_psyq_wait_frames();
+
+    S0 -= 1;
+
+    if( S0 == 0 ) return 5;
+
+    A0 = 1;
+    A1 = 0;
+    A2 = SP + 10;
+    system_psyq_cd_control_b();
+
+    V0 = bu[SP + 10] & 02;
 800341D4	beq    v0, zero, loop341a8 [$800341a8]
-800341D8	nop
-800341DC	jal    func40648 [$80040648]
+
 A0 = 0;
+func40648();
 S0 = V0;
-V0 = 0005;
-800341EC	beq    s0, v0, L34220 [$80034220]
-V0 = S0 < 0006;
-800341F4	beq    v0, zero, L3420c [$8003420c]
-V0 = 0002;
-800341FC	beq    s0, v0, L34228 [$80034228]
-V0 = 0001;
-80034204	j      L3433c [$8003433c]
-80034208	nop
 
-L3420c:	; 8003420C
-V0 = 0010;
-80034210	beq    s0, v0, L3433c [$8003433c]
-V0 = 0003;
-80034218	j      L3433c [$8003433c]
-V0 = 0001;
+if( S0 == 5 ) return 2;
 
-L34220:	; 80034220
-80034220	j      L3433c [$8003433c]
-V0 = 0002;
+if( S0 >= 6 )
+{
+    if( S0 != 10 ) return 1;
 
-L34228:	; 80034228
-80034228	jal    func4076c [$8004076c]
-8003422C	nop
+    return 3;
+}
+
+if( S0 != 0 ) return 1;
+
+func4076c();
 V1 = V0;
-V0 = 0001;
-80034238	beq    v1, v0, L34270 [$80034270]
-V0 = V1 < 0002;
-80034240	beq    v0, zero, L34258 [$80034258]
-80034244	nop
-80034248	beq    v1, zero, L3433c [$8003433c]
-V0 = 0005;
-80034250	j      L3433c [$8003433c]
-V0 = 0001;
 
-L34258:	; 80034258
-80034258	beq    v1, s0, L34278 [$80034278]
-V0 = 0010;
-80034260	beq    v1, v0, L3433c [$8003433c]
-V0 = 0003;
-80034268	j      L3433c [$8003433c]
-V0 = 0001;
+if( V1 == 1 ) return 4;
 
-L34270:	; 80034270
-80034270	j      L3433c [$8003433c]
-V0 = 0004;
+if( V1 < 2 )
+{
+    if( V1 == 0 ) return 5;
 
-L34278:	; 80034278
-A0 = 0017;
-S0 = SP + 0018;
-80034280	jal    system_psyq_cd_int_to_pos [$8003e2d0]
+    return 1;
+}
+
+if( V1 != S0 )
+{
+    if( V1 == 10 ) return 3;
+
+    return 1;
+}
+
+A0 = 17;
+S0 = SP + 18;
 A1 = S0;
-A0 = 0015;
+system_psyq_cd_int_to_pos();
+
+A0 = 15;
 A1 = S0;
-80034290	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-V0 = bu[SP + 0010];
-8003429C	nop
-V0 = V0 & 0001;
-800342A4	bne    v0, zero, L3433c [$8003433c]
-V0 = 0001;
-V0 = bu[SP + 0011];
-800342B0	nop
-V0 = V0 & 0040;
-800342B8	bne    v0, zero, L3433c [$8003433c]
-V0 = 0001;
-A0 = 000e;
-A1 = 0080;
-800342C8	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-800342D0	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0003;
-800342D8	lui    at, $8007
-[AT + 1a60] = w(0);
-800342E0	jal    func34350 [$80034350]
-800342E4	nop
+A2 = SP + 10;
+system_psyq_cd_control_b();
+
+if( bu[SP + 10] & 01 ) return 1;
+
+if( bu[SP + 11] & 40 ) return 1;
+
+A0 = e;
+A1 = 80;
+A2 = SP + 10;
+system_psyq_cd_control_b();
+
+A0 = 3;
+system_psyq_wait_frames();
+
+[80071a60] = w(0);
+
+func34350();
 V1 = V0;
-800342EC	addiu  v0, zero, $ffff (=-$1)
-800342F0	lui    at, $8007
-[AT + 1a64] = w(V1);
-800342F8	beq    v1, v0, L34318 [$80034318]
-800342FC	nop
-80034300	bne    v1, zero, L34330 [$80034330]
-80034304	nop
-80034308	jal    func34104 [$80034104]
-8003430C	nop
-80034310	j      L3433c [$8003433c]
-V0 = 0006;
 
-L34318:	; 80034318
-80034318	jal    func34104 [$80034104]
-8003431C	nop
-80034320	j      L3433c [$8003433c]
-V0 = 0001;
+[80071a64] = w(V1);
 
-L34328:	; 80034328
-80034328	j      L3433c [$8003433c]
-V0 = 0005;
+if( V1 == -1 )
+{
+    func34104();
 
-L34330:	; 80034330
-system_movie_load_movie_settings();
+    return 1;
+}
 
-L34338:	; 80034338
-V0 = 0;
+if( V1 != 0 )
+{
+    system_movie_load_movie_settings();
 
-L3433c:	; 8003433C
+    return 0;
+}
+
+func34104();
+
+return 6;
 ////////////////////////////////
 
 
@@ -580,21 +544,17 @@ return bu[800698f7] - 30;
 
 
 ////////////////////////////////
-// func343f0
-800343F0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800343F8	jal    func34350 [$80034350]
-800343FC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80034408	jr     ra 
-8003440C	nop
+// func343f0()
+
+func34350();
 ////////////////////////////////
-// func34410
-80034410	lui    v0, $8007
-V0 = w[V0 + 1a60];
-80034418	jr     ra 
-8003441C	nop
+
+
+
+////////////////////////////////
+// func34410()
+
+return w[80071a60];
 ////////////////////////////////
 
 
@@ -734,14 +694,15 @@ else if( V0 == 5 )
     {
         [800698ec] = w(0);
 
-        80034668	jal    func34104 [$80034104]
+        func34104();
 
-        loop34670:	; 80034670
+        do
+        {
             A0 = 3;
             func34cac();
 
-            80034678	jal    func34150 [$80034150]
-        80034680	bne    v0, zero, loop34670 [$80034670]
+            func34150();
+        } while( V0 != 0 )
     }
     [80071a60] = w(3);
 }
@@ -844,14 +805,15 @@ else if( V0 == 5 )
     {
         [800698ec] = w(0);
 
-        80034668	jal    func34104 [$80034104]
+        func34104();
 
-        loop34670:	; 80034670
+        do
+        {
             A0 = 3;
             func34cac();
 
-            80034678	jal    func34150 [$80034150]
-        80034680	bne    v0, zero, loop34670 [$80034670]
+            func34150();
+        } while( V0 != 0 )
     }
     [80071a60] = w(b);
 }
@@ -866,6 +828,7 @@ else
 
         V0 = w[8006e0f4] + 1;
         [8006e0f4] = w(V0);
+
         if( V0 == e10 )
         {
             [80071a60] = w(b);
@@ -1853,28 +1816,31 @@ else if( V1 == 3 )
 
 S0 = A0;
 
-loop35d0c:	; 80035D0C
-    loop35d0c:	; 80035D0C
+do
+{
+    do
+    {
         A0 = 2; // CdlSetloc
         A1 = S0;
         A2 = 0;
         system_psyq_cd_control();
-    80035D18	beq    v0, zero, loop35d0c [$80035d0c]
+    } while( V0 == 0 )
 
-    loop35d24:	; 80035D24
+    do
+    {
         A0 = e; // CdlSetmode
         [SP + 10] = b(80);
         A1 = SP + 10;
         A2 = 0;
         system_psyq_cd_control();
-    80035D30	beq    v0, zero, loop35d24 [$80035d24]
+    } while( V0 == 0 )
 
     A0 = 3;
     system_psyq_wait_frames();
 
     A0 = 1e0;
     system_psyq_cd_read2();
-80035D48	beq    v0, zero, loop35d0c [$80035d0c]
+} while( V0 == 0 )
 ////////////////////////////////
 
 
@@ -1962,12 +1928,9 @@ return 0;
 
 
 ////////////////////////////////
-// func35f14
-80035F14	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+// func35f14()
+
 80035F1C	lui    s0, $0080
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
 
 loop35f28:	; 80035F28
 80035F28	jal    func35dc8 [$80035dc8]

@@ -2545,90 +2545,72 @@ system_psyq_st_cd_interrupt();
 
 
 ////////////////////////////////
-// func40648
-80040648	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S0);
+// func40648()
+// CdDiskReady
+
 S0 = A0;
-A0 = 0001;
+
+A0 = 1; // CdlNop
 A1 = 0;
-A2 = SP + 0010;
-[SP + 0020] = w(RA);
-80040664	jal    system_psyq_cd_control_b [$8003e100]
-[SP + 001c] = w(S1);
-V0 = bu[SP + 0010];
-80040670	nop
-V0 = V0 & 0010;
-80040678	bne    v0, zero, L40754 [$80040754]
-V0 = 0010;
-A0 = 0013;
+A2 = SP + 10;
+system_psyq_cd_control_b();
+
+if( bu[SP + 10] & 10 ) return 10; // CdlStatShellOpen
+
+A0 = 13; // CdlGetTN
 A1 = 0;
-80040688	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-A1 = V0;
-V0 = 0001;
-80040698	bne    s0, v0, L406c0 [$800406c0]
-S1 = 0002;
-A0 = bu[SP + 0010];
-V1 = 0002;
-800406A8	bne    a0, v1, L40754 [$80040754]
-V0 = 0005;
-800406B0	beq    a1, zero, L40754 [$80040754]
-800406B4	nop
-800406B8	j      L40754 [$80040754]
-V0 = 0002;
+A2 = SP + 10;
+system_psyq_cd_control_b();
+success = V0;
 
-L406c0:	; 800406C0
-S0 = 0;
+if( S0 == 1 )
+{
+    if( bu[SP + 10] != 2 ) return 5; // CdlStatError | CdlStatSeekError
 
-loop406c4:	; 800406C4
-V0 = bu[SP + 0010];
-800406C8	nop
-V0 = V0 & 0002;
-800406D0	beq    v0, zero, L40728 [$80040728]
-800406D4	nop
-V0 = bu[SP + 0010];
-800406DC	nop
-800406E0	bne    v0, s1, L406f0 [$800406f0]
-800406E4	nop
-800406E8	bne    a1, zero, L40754 [$80040754]
-V0 = 0002;
+    if( success == 0 ) return 5; // CdlStatError | CdlStatSeekError
 
-L406f0:	; 800406F0
-800406F0	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 001e;
-A0 = 0013;
-A1 = 0;
-80040700	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-V1 = bu[SP + 0010];
-8004070C	nop
-80040710	bne    v1, s1, L406f0 [$800406f0]
-A1 = V0;
-80040718	beq    a1, zero, L406f0 [$800406f0]
-V0 = 0002;
-80040720	j      L40754 [$80040754]
-80040724	nop
+    return 2; // CdlStatStandby
+}
 
-L40728:	; 80040728
-80040728	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 001e;
-A0 = 0013;
-A1 = 0;
-80040738	jal    system_psyq_cd_control_b [$8003e100]
-A2 = SP + 0010;
-A1 = V0;
-S0 = S0 + 0001;
-V0 = S0 < 000a;
-8004074C	bne    v0, zero, loop406c4 [$800406c4]
-V0 = 0005;
+for( int i = 0; i < a; ++i )
+{
+    if( bu[SP + 10] & 02 ) // Spindle Motor (0=Motor off, or in spin-up phase, 1=Motor on)
+    {
+        if( bu[SP + 10] == 2 )
+        {
+            if( success != 0 ) return 2; // CdlStatStandby
+        }
 
-L40754:	; 80040754
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-80040764	jr     ra 
-80040768	nop
+        do
+        {
+            A0 = 1e;
+            system_psyq_wait_frames();
+
+            A0 = 13; // CdlGetTN
+            A1 = 0;
+            A2 = SP + 10;
+            system_psyq_cd_control_b();
+            success = V0;
+        } while( ( bu[SP + 10] != 2 ) || ( success == 0 ) )
+
+        return 2; // CdlStatStandby
+    }
+
+    A0 = 1e;
+    system_psyq_wait_frames();
+
+    A0 = 13; // CdlGetTN
+    A1 = 0;
+    A2 = SP + 10;
+    system_psyq_cd_control_b();
+    success = V0;
+}
+
+return 5; // CdlStatError | CdlStatSeekError
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func4076c
 8004076C	addiu  sp, sp, $f7c8 (=-$838)
