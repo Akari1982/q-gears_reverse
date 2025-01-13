@@ -1,9 +1,10 @@
 ////////////////////////////////
-// func33b70()
+// system_cdrom_init()
 
-loop33b78:	; 80033B78
+do
+{
     system_psyq_cd_init();
-80033B80	beq    v0, zero, loop33b78 [$80033b78]
+} while( V0 == 0 )
 
 [80071a60] = w(0);
 
@@ -40,7 +41,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-80033C00	jal    func3dd84 [$8003dd84]
+func3dd84();
 
 A0 = 0;
 system_cdrom_and_audio_init();
@@ -105,7 +106,7 @@ do
 } while( V0 != 0 )
 
 A0 = sector;
-A1 = 80071a68; // store pos here
+A1 = 80071a68;
 system_psyq_cd_int_to_pos();
 
 [80071a60] = w(start_chain_type);
@@ -118,6 +119,7 @@ system_psyq_cd_int_to_pos();
 
 ////////////////////////////////
 // func33dac()
+// set cdrom location
 
 sector = A0;
 callback = A1;
@@ -149,7 +151,7 @@ system_cdrom_set_chain_param();
 do
 {
     A0 = 2; // CdlSetloc
-    A1 = 80071a68; // param_ptr
+    A1 = 80071a68; // param
     A2 = 0; // return_ptr
     system_psyq_cd_control();
 } while( V0 == 0 )
@@ -357,8 +359,9 @@ switch( w[80071a60] )
 
 ////////////////////////////////
 // func34104()
+// stops disc and wait for new one
 
-A0 = e;
+A0 = e; // CdlSetmode
 A1 = 0;
 A2 = 0;
 system_psyq_cd_control_b();
@@ -366,7 +369,7 @@ system_psyq_cd_control_b();
 A0 = 3;
 system_psyq_wait_frames();
 
-A0 = 8;
+A0 = 8; // CdlStop
 A1 = 0;
 A2 = 0;
 system_psyq_cd_control_b();
@@ -379,25 +382,31 @@ system_psyq_cd_control_b();
 ////////////////////////////////
 // func34150()
 
-V1 = w[80071a60];
+CdlStatNoDisk = 0;
+CdlOtherFormat = 1;
+CdlCdromFormat = 2;
+CdlStatShellOpen = 10;
+CdlComplete = 2;
+CdlDiskError = 5;
 
-if( V1 != 7 ) return 0;
+if( w[80071a60] != 7 ) return 0;
 
-A0 = 1;
+A0 = 1; // CdlNop
 A1 = 0;
 A2 = SP + 10;
 system_psyq_cd_control_b();
 
-if( bu[SP + 10] & 10 ) return 3;
+if( bu[SP + 10] & 10 ) return 3; // Once shell open (0=Closed, 1=Is/was Open)
 
-A0 = 7;
+A0 = 7; // CdlStandby
 A1 = 0;
 A2 = 0;
 system_psyq_cd_control_b();
 
 S0 = 258;
 
-loop341a8:	; 800341A8
+do
+{
     A0 = 0;
     system_psyq_wait_frames();
 
@@ -405,55 +414,47 @@ loop341a8:	; 800341A8
 
     if( S0 == 0 ) return 5;
 
-    A0 = 1;
+    A0 = 1; // CdlNop
     A1 = 0;
     A2 = SP + 10;
     system_psyq_cd_control_b();
+} while( ( bu[SP + 10] & 02 ) == 0 ) // spindle Motor (0=Motor off, or in spin-up phase, 1=Motor on)
 
-    V0 = bu[SP + 10] & 02;
-800341D4	beq    v0, zero, loop341a8 [$800341a8]
+A0 = 0; // 0: Blocking type, 1: Non-blocking type
+system_psyq_cd_disk_ready();
+disc_ready = V0;
 
-A0 = 0;
-func40648();
-S0 = V0;
+if( disc_ready == CdlDiskError ) return 2;
 
-if( S0 == 5 ) return 2;
+if( disc_ready == CdlStatShellOpen ) return 3;
 
-if( S0 >= 6 )
+if( disc_ready != CdlComplete ) return 1;
+
+system_psyq_cd_get_disk_type();
+disk_type = V0;
+
+if( disk_type == CdlOtherFormat ) return 4;
+
+if( disk_type < 2 )
 {
-    if( S0 != 10 ) return 1;
-
-    return 3;
-}
-
-if( S0 != 0 ) return 1;
-
-func4076c();
-V1 = V0;
-
-if( V1 == 1 ) return 4;
-
-if( V1 < 2 )
-{
-    if( V1 == 0 ) return 5;
+    if( disk_type == CdlStatNoDisk ) return 5;
 
     return 1;
 }
 
-if( V1 != S0 )
+if( disk_type != CdlCdromFormat )
 {
-    if( V1 == 10 ) return 3;
+    if( disk_type == CdlStatShellOpen ) return 3;
 
     return 1;
 }
 
 A0 = 17;
-S0 = SP + 18;
-A1 = S0;
+A1 = SP + 18;
 system_psyq_cd_int_to_pos();
 
-A0 = 15;
-A1 = S0;
+A0 = 15; // CdlSeekL
+A1 = SP + 18;
 A2 = SP + 10;
 system_psyq_cd_control_b();
 
@@ -461,7 +462,7 @@ if( bu[SP + 10] & 01 ) return 1;
 
 if( bu[SP + 11] & 40 ) return 1;
 
-A0 = e;
+A0 = e; // CdlSetmode
 A1 = 80;
 A2 = SP + 10;
 system_psyq_cd_control_b();
@@ -471,26 +472,28 @@ system_psyq_wait_frames();
 
 [80071a60] = w(0);
 
+// load "\MINT\DISKINFO.CNF;1" into 800698f0
+// and return bu[800698f7] - 30 (disk number)
 func34350();
-V1 = V0;
+disc_number = V0;
 
-[80071a64] = w(V1);
+[80071a64] = w(disc_number);
 
-if( V1 == -1 )
+if( disc_number == -1 )
 {
-    func34104();
+    func34104(); // stops disc and wait for new one
 
     return 1;
 }
 
-if( V1 != 0 )
+if( disc_number != 0 )
 {
     system_movie_load_movie_settings();
 
     return 0;
 }
 
-func34104();
+func34104(); // stops disc and wait for new one
 
 return 6;
 ////////////////////////////////
@@ -567,12 +570,14 @@ return w[80071a60];
 
 ////////////////////////////////
 // func34428()
+// 80071a60 7 state
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func34430()
+// 80071a60 11 state
 
 [80071a60] = w(10);
 ////////////////////////////////
@@ -581,6 +586,7 @@ return w[80071a60];
 
 ////////////////////////////////
 // func34444()
+// 80071a60 10 state
 
 [80071a60] = w(0);
 
@@ -594,20 +600,22 @@ if( w[80071a84] != 0 )
 
 ////////////////////////////////
 // func3447c()
+// 80071a60 1 state
 
 A0 = 2; // CdlSetloc Set the seek target position.
-A1 = 80071a68; // stored params
+A1 = 80071a68; // params
 system_psyq_cd_control_f();
 
 [80071a60] = w(2);
-[8006e0f4] = w(0);
-[800698ec] = w(0);
+[8006e0f4] = w(0); // wait timer
+[800698ec] = w(0); // retry number
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func344c0()
+// 80071a60 2 state
 
 A0 = 1; // poll once
 A1 = 0;
@@ -619,37 +627,38 @@ if( V0 == 2 ) // CdlComplete
 }
 else if( V0 == 5 ) // CdlDiskError
 {
-    V0 = w[800698ec] + 1;
-    [800698ec] = w(V0);
-    if( V0 >= 10 )
+    [800698ec] = w(w[800698ec] + 1);
+
+    if( w[800698ec] >= 10 )
     {
         [800698ec] = w(0);
 
-        func34104();
+        func34104(); // stops disc and wait for new one
 
         do
         {
             A0 = 3;
             func34cac();
 
-            func34150();
+            func34150(); // load new disc
         } while( V0 != 0 )
     }
 
     [80071a60] = w(1);
 }
-else
+else // CdlNoIntr
 {
     A0 = -1;
     system_psyq_wait_frames(); // wait
+    time = V0;
 
-    if( w[8006e0f0] != V0 )
+    if( w[8006e0f0] != time )
     {
-        [8006e0f0] = w(V0);
+        [8006e0f0] = w(time);
 
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
-        if( V0 == e10 )
+        [8006e0f4] = w(w[8006e0f4] + 1);
+
+        if( w[8006e0f4] == e10 )
         {
             [80071a60] = w(1);
             A0 = 3;
@@ -663,61 +672,64 @@ else
 
 ////////////////////////////////
 // func345bc()
+// 80071a60 3 state
 
-A0 = 2;
-A1 = 80071a68; // stored params
+A0 = 2; // CdlSetloc
+A1 = 80071a68; // params
 system_psyq_cd_control_f();
 
 [80071a60] = w(4);
-[8006e0f4] = w(0);
-[800698ec] = w(0);
+[8006e0f4] = w(0); // wait timer
+[800698ec] = w(0); // retry number
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func34600()
+// 80071a60 4 state
 
 A0 = 1;
 A1 = 0;
 system_psyq_cd_sync()
 
-if( V0 == 2 )
+if( V0 == 2 ) // CdlComplete
 {
     [80071a60] = w(5);
 }
-else if( V0 == 5 )
+else if( V0 == 5 ) // CdlDiskError
 {
-    V0 = w[800698ec] + 1;
-    [800698ec] = w(V0);
-    if( V0 >= 10 )
+    [800698ec] = w(w[800698ec] + 1);
+
+    if( w[800698ec] >= 10 )
     {
         [800698ec] = w(0);
 
-        func34104();
+        func34104(); // stops disc and wait for new one
 
         do
         {
             A0 = 3;
             func34cac();
 
-            func34150();
+            func34150(); // load new disc
         } while( V0 != 0 )
     }
     [80071a60] = w(3);
 }
-else
+else // CdlNoIntr
 {
     A0 = -1;
     system_psyq_wait_frames(); // wait
+    time = V0;
 
-    if( w[8006e0f0] != V0 )
+    if( w[8006e0f0] != time )
     {
-        [8006e0f0] = w(V0);
+        [8006e0f0] = w(time);
 
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
-        if( V0 == e10 )
+        [8006e0f4] = w(w[8006e0f4] + 1);
+
+        if( w[8006e0f4] == e10 )
         {
             [80071a60] = w(3);
             A0 = 3;
@@ -731,6 +743,7 @@ else
 
 ////////////////////////////////
 // func346f8()
+// 80071a60 5 state
 
 A0 = w[80071a6c]; // size
 A1 = w[80071a80]; // buffer
@@ -740,6 +753,7 @@ system_psyq_cd_read();
 if( V0 == 0 ) // fail
 {
     [80071a60] = w(3);
+
     A0 = 10;
     func34cac();
 }
@@ -753,6 +767,7 @@ else // success
 
 ////////////////////////////////
 // func34754()
+// 80071a60 6 state
 
 A0 = 1; // return current status
 A1 = 0;
@@ -761,6 +776,7 @@ system_psyq_cd_read_sync();
 if( V0 == -1 ) // error
 {
     [80071a60] = w(3);
+
     A0 = 3;
     func34cac();
 }
@@ -775,63 +791,65 @@ else if( V0 == 0 ) // finish read
 ////////////////////////////////
 // func347b4()
 
-A0 = 2;
-A1 = 80071a68; // stored params
+A0 = 2; // CdlSetloc
+A1 = 80071a68; // params
 system_psyq_cd_control_f();
 
 [80071a60] = w(c);
-[8006e0f4] = w(0);
-[800698ec] = w(0);
+[8006e0f4] = w(0); // wait timer
+[800698ec] = w(0); // retry number
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func347f8()
+// 80071a60 c state
 
 A0 = 1;
 A1 = 0;
 system_psyq_cd_sync();
 
-if( V0 == 2 )
+if( V0 == 2 ) // CdlComplete
 {
     [80071a60] = w(d);
 }
-else if( V0 == 5 )
+else if( V0 == 5 ) // CdlDiskError
 {
-    V0 = w[800698ec] + 1;
-    [800698ec] = w(V0);
-    if( V0 >= 10 )
+    [800698ec] = w(w[800698ec] + 1);
+
+    if( w[800698ec] >= 10 )
     {
         [800698ec] = w(0);
 
-        func34104();
+        func34104(); // stops disc and wait for new one
 
         do
         {
             A0 = 3;
             func34cac();
 
-            func34150();
+            func34150(); // load new disc
         } while( V0 != 0 )
     }
     [80071a60] = w(b);
 }
-else
+else // CdlNoIntr
 {
     A0 = -1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_wait_frames();
+    time = V0
 
-    if( w[8006e0f0] != V0 )
+    if( w[8006e0f0] != time )
     {
-        [8006e0f0] = w(V0);
+        [8006e0f0] = w(time);
 
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
+        [8006e0f4] = w(w[8006e0f4] + 1);
 
-        if( V0 == e10 )
+        if( w[8006e0f4] == e10 )
         {
             [80071a60] = w(b);
+
             A0 = 3;
             func34cac();
         }
@@ -843,6 +861,7 @@ else
 
 ////////////////////////////////
 // func348f4()
+// 80071a60 d state
 
 [8006e0f8] = w(w[80071a6c]); // size
 
@@ -859,6 +878,7 @@ system_psyq_cd_read();
 if( V0 == 0 )
 {
     [80071a60] = w(b);
+
     A0 = 3;
     func34cac();
 }
@@ -872,6 +892,7 @@ else
 
 ////////////////////////////////
 // func34974()
+// 80071a60 e state
 
 A0 = 1;
 A1 = 0;
@@ -880,7 +901,7 @@ system_psyq_cd_read_sync();
 if( V0 == -1 ) // error
 {
     A0 = w[800698e8]; // sector
-    A1 = 80071a68; // stored params
+    A1 = 80071a68;
     system_psyq_cd_int_to_pos();
 
     [80071a60] = w(b);
@@ -893,7 +914,8 @@ else if( V0 == 0 ) // finish read
     [80071a6c] = w(w[80071a6c] - 9); // size
     [800698e8] = w(w[800698e8] + 9); // sector
 
-    func34d5c(); // handle loaded buffer
+    func34d5c(); // extract lzs loaded part buffer
+
     if( V0 == 0 ) // lzs finished
     {
         [80071a60] = w(11);
@@ -901,7 +923,7 @@ else if( V0 == 0 ) // finish read
     else // not finished
     {
         A0 = w[800698e8]; // sector
-        A1 = 80071a68; // stored params
+        A1 = 80071a68;
         system_psyq_cd_int_to_pos();
 
         [80071a60] = w(b);
@@ -913,44 +935,47 @@ else if( V0 == 0 ) // finish read
 
 ////////////////////////////////
 // func34a58()
+// 80071a60 13 state
 
 A0 = 9; // CdlPause
 A1 = 0;
 system_psyq_cd_control_f();
 
 [80071a60] = w(14);
-[8006e0f4] = w(0);
+[8006e0f4] = w(0); // wait timer
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func34a90()
+// 80071a60 14 state
 
 A0 = 1;
 A1 = 0;
 system_psyq_cd_sync();
 
-if( V0 == 2 ) // success
+if( V0 == 2 ) // CdlComplete
 {
     func34444();
 }
-else if( V0 == 5 )
+else if( V0 == 5 ) // CdlDiskError
 {
     [80071a60] = w(13);
 }
-else
+else // CdlNoIntr
 {
     A0 = -1;
     system_psyq_wait_frames(); // wait
+    time = V0;
 
-    if( w[8006e0f0] != V0 )
+    if( w[8006e0f0] != time )
     {
-        [8006e0f0] = w(V0);
+        [8006e0f0] = w(time);
 
-        V0 = w[8006e0f4] + 1;
-        [8006e0f4] = w(V0);
-        if( V0 == e10 )
+        [8006e0f4] = w(w[8006e0f4] + 1);
+
+        if( w[8006e0f4] == e10 )
         {
             [80071a60] = w(13);
             A0 = 3;
@@ -968,8 +993,7 @@ else
 // infinite loop
 if( w[80071a60] >= 15 )
 {
-    L34b60:	; 80034B60
-    80034B60	j      L34b60 [$80034b60]
+    while( true ) {}
 }
 
 V0 = w[80071a60];
@@ -1086,8 +1110,6 @@ A3 = A3 >> 01;
 80034CA0	addiu  t0, t0, $ffff (=-$1)
 
 L34ca4:	; 80034CA4
-80034CA4	jr     ra 
-80034CA8	nop
 ////////////////////////////////
 
 
@@ -1320,7 +1342,7 @@ if( w[80071a60] != 0 ) return 0;
 [8009a004] = w(0000001e);
 [8009a008] = w(00007fff);
 
-if( w[80071a64] == 1 )
+if( w[80071a64] == 1 ) // disc number
 {
     if( movie_id == 26 )      [8009a008] = w(0);
     else if( movie_id == 31 ) [8009a008] = w(00001800);
@@ -1862,7 +1884,7 @@ while( true )
     do
     {
         A0 = 2; // CdlSetloc
-        A1 = 80071a68;
+        A1 = 80071a68; // params
         A2 = 0;
         system_psyq_cd_control();
     } while( V0 == 0 )

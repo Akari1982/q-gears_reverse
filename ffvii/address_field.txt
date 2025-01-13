@@ -314,7 +314,7 @@
                     09 - tutorial.
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
-                    0d -
+                    0d - disc change
                     14 - we abort movie play if this.
                     19 -
                     1a - game over
@@ -432,6 +432,8 @@
 
 8009c6dc current pointer to field events data.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
+
+8009d588 []       change disc requirement.
 
 8009d5a6 []       enable or disable PC pointer and triangles help.
 

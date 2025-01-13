@@ -60,10 +60,14 @@ system_bios_stop_pad();
 
 ////////////////////////////////
 // system_psyq_wait_frames()
+// VSync
+// Wait for the next vertical blank, or return the vertical blank counter value.
+// libetc.h
 
-// if A0 == -1 - return value from 80051568
-// if A0 == 1 - return delta time from prev update
-// if A0 == 2 and greater - wait number of frames
+// 0 Blocks until vertical sync is generated
+// 1 Returns time elapsed from the point VSync() processing is last completed when mode=1or n in horizontal sync units
+// n (n>1) Blocks from the point VSync() processing is last completed when mode=1 or n until n number of vertical syncs are generated.
+// -n (n>0) Returns absolute time after program boot in vertical sync interval units.
 
 gpustat = w[8005049c]; // 1f801814 GPUSTAT Read GPU Status Register
 timer1_value = w[800504a0]; // 1f801110 Timer 1 Current Counter Value

@@ -479,7 +479,7 @@ system_init_base(); // init intr, graph, spu, gte and so on
 
 S7 = 20000000;
 
-func33b70(); // init cdrom, mdec
+system_cdrom_init();
 
 A0 = w[80048d54]; // sector 1efa9 "FIELD\ENDING.X"
 A1 = w[80048d58]; // size f414
@@ -562,7 +562,11 @@ while( true )
         if( V0 == 1 )
         {
             [8009abf4 + 1] = b(0);
-            800127C0	j      L127f8 [$800127f8]
+            func33be0();
+
+            func299c8();
+
+            return;
         }
     }
 
@@ -958,7 +962,7 @@ while( true )
         }
         break;
 
-        case c:
+        case c: // disc change
         {
             S0 = bu[8009d588];
             func343f0();
@@ -1080,7 +1084,11 @@ while( true )
         A0 = 1;
         funca04c4();
 
-        800127E8	j      L127f8 [$800127f8]
+        func33be0();
+
+        func299c8();
+
+        return;
     }
 
     V1 = bu[8009abf4 + 1];
@@ -1095,7 +1103,11 @@ while( true )
 
     [8009abf4 + 1] = b(0);
 
-    8001276C	j      L127f8 [$800127f8]
+    func33be0();
+
+    func299c8();
+
+    return;
 
     L12774:	; 80012774
     [8009abf4 + 1] = b(0);
@@ -1113,7 +1125,6 @@ while( true )
     [8009a004] = w(7f);
     system_execute_AKAO();
 
-    L127f8:	; 800127F8
     func33be0();
 
     func299c8();

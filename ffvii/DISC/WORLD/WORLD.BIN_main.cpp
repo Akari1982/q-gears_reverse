@@ -98,7 +98,7 @@ while( true )
         break;
     }
 
-    func33b70(); // cd reinit
+    system_cdrom_init();
 }
 ////////////////////////////////
 

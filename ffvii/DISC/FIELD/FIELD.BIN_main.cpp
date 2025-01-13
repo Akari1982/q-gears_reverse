@@ -538,6 +538,7 @@ while( true )
         return;
     }
 
+    // encounter or disc change
     if( ( bu[8009abf4 + 1] == 2 ) || ( bu[8009abf4 + 1] == d ) )
     {
         A0 = 0;
@@ -708,7 +709,7 @@ while( true )
         return;
     }
 
-    if( bu[8009abf4 + 1] == d )
+    if( bu[8009abf4 + 1] == d ) // disc change
     {
         [8009c560] = h(c); // disc change
         field_stop_load_background_in_advance();

@@ -3423,69 +3423,38 @@ return 0;
 
 
 ////////////////////////////////
-// 0x0E DSKCG
-V0 = bu[8009d820];
-800C5244	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C524C	beq    v0, zero, Lc5264 [$800c5264]
-[SP + 0010] = w(RA);
-800C5254	lui    a0, $800a
-A0 = A0 + 08f4;
-800C525C	jal    field_debug_event_opcode [$800bead4]
-A1 = 0001;
+// field_event_opcode_0e_dskcg()
 
-Lc5264:	; 800C5264
-A0 = w[8009c6e0];
-800C526C	nop
-V1 = bu[A0 + 0001];
-800C5274	nop
-800C5278	beq    v1, zero, Lc5294 [$800c5294]
-V0 = 000d;
-V0 = 000d;
-800C5284	beq    v1, v0, Lc52e0 [$800c52e0]
-V0 = 0002;
-800C528C	j      Lc531c [$800c531c]
-V0 = 0001;
+field_struct = w[8009c6e0];
+events_data = w[8009c6dc];
+actor_id_cur = bu[800722c4];
+script_cur = hu[800831fc + actor_id_cur * 2];
 
-Lc5294:	; 800C5294
-[A0 + 0001] = b(V0);
-V0 = bu[800722c4];
-800C52A0	nop
-V0 = V0 << 01;
-800C52A8	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
-800C52C0	nop
-V0 = V0 + V1;
-V1 = bu[V0 + 0001];
-800C52CC	nop
-[8009d588] = b(V1);
-800C52D8	j      Lc531c [$800c531c]
-V0 = 0001;
+if( bu[8009d820] & 3 )
+{
+    A0 = 800a08f4; // "dskcg"
+    A1 = 1;
+    field_debug_event_opcode();
+}
 
-Lc52e0:	; 800C52E0
-V1 = h[A0 + 0026];
-800C52E4	nop
-800C52E8	bne    v1, v0, Lc531c [$800c531c]
-V0 = 0001;
-[A0 + 0001] = b(0);
-V1 = bu[800722c4];
-800C52FC	lui    v0, $8008
-V0 = V0 + 31fc;
-V1 = V1 << 01;
-V1 = V1 + V0;
-A0 = hu[V1 + 0000];
-V0 = 0;
-A0 = A0 + 0002;
-[V1 + 0000] = h(A0);
+if( bu[field_struct + 1] == 0 ) // normal field state
+{
+    [field_struct + 1] = b(d); // set to disc change
+    [8009d588] = b(bu[events_data + script_cur + 1]);
+}
+else if( bu[field_struct + 1] == d )
+{
+    // check movie state
+    if( h[field_struct + 26] != 2 ) return 1;
 
-Lc531c:	; 800C531C
-RA = w[SP + 0010];
-SP = SP + 0018;
-800C5324	jr     ra 
-800C5328	nop
+    [field_struct + 1] = b(0); // set to normal state
+
+    [800831fc + actor_id_cur * 2] = h(script_cur + 2);
+
+    return 0;
+}
+
+return 1;
 ////////////////////////////////
 
 

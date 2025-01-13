@@ -2545,10 +2545,19 @@ system_psyq_st_cd_interrupt();
 
 
 ////////////////////////////////
-// func40648()
-// CdDiskReady
+// system_psyq_cd_disk_ready()
 
-S0 = A0;
+// Determine CD-ROM status after disc change.
+// Checks the CD-ROM status after a disc change to determine whether a command can be issued safely.
+// (Immediately after a disc is changed, there is a delay of a few seconds during which commands may not be
+// issued.)
+// When mode is 0, this function waits until the CD-ROM status has stabilized and commands may be issued
+// before returning. When the mode parameter is 1, this function simply returns the current status.
+// It is recommended that your program use this function immediately after initiating a disc change to wait for
+// the disc cover to be closed and the CD-ROM status to stabilize. After this is done, check the disc format
+// using the CDGetDiskType() and proceed accordingly.
+
+mode = A0; // 0: Blocking type, 1: Non-blocking type
 
 A0 = 1; // CdlNop
 A1 = 0;
@@ -2563,13 +2572,13 @@ A2 = SP + 10;
 system_psyq_cd_control_b();
 success = V0;
 
-if( S0 == 1 )
+if( mode == 1 )
 {
-    if( bu[SP + 10] != 2 ) return 5; // CdlStatError | CdlStatSeekError
+    if( bu[SP + 10] != 2 ) return 5; // CdlDiskError
 
-    if( success == 0 ) return 5; // CdlStatError | CdlStatSeekError
+    if( success == 0 ) return 5; // CdlDiskError
 
-    return 2; // CdlStatStandby
+    return 2; // CdlComplete
 }
 
 for( int i = 0; i < a; ++i )
@@ -2578,7 +2587,7 @@ for( int i = 0; i < a; ++i )
     {
         if( bu[SP + 10] == 2 )
         {
-            if( success != 0 ) return 2; // CdlStatStandby
+            if( success != 0 ) return 2; // CdlComplete
         }
 
         do
@@ -2593,7 +2602,7 @@ for( int i = 0; i < a; ++i )
             success = V0;
         } while( ( bu[SP + 10] != 2 ) || ( success == 0 ) )
 
-        return 2; // CdlStatStandby
+        return 2; // CdlComplete
     }
 
     A0 = 1e;
@@ -2606,79 +2615,72 @@ for( int i = 0; i < a; ++i )
     success = V0;
 }
 
-return 5; // CdlStatError | CdlStatSeekError
+return 5; // CdlDiskError
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func4076c
-8004076C	addiu  sp, sp, $f7c8 (=-$838)
-A0 = 0001;
+// system_psyq_cd_get_disk_type()
+
+[SP + 820] = b(80);
+
+A0 = 1;
 A1 = 0;
-A2 = SP + 0818;
-V0 = 0080;
-[SP + 0830] = w(RA);
-[SP + 082c] = w(S1);
-[SP + 0828] = w(S0);
-8004078C	jal    system_psyq_cd_control [$8003de9c]
-[SP + 0820] = b(V0);
-V0 = bu[SP + 0818];
-80040798	nop
-V0 = V0 & 0010;
-800407A0	bne    v0, zero, L40880 [$80040880]
-V0 = 0010;
-A0 = 0010;
-800407AC	jal    system_psyq_cd_int_to_pos [$8003e2d0]
-A1 = SP + 0010;
-A0 = 000e;
-A1 = SP + 0820;
-800407BC	jal    system_psyq_cd_control [$8003de9c]
+A2 = SP + 818;
+system_psyq_cd_control();
+
+if( bu[SP + 818] & 10 ) return 10;
+
+A0 = 10;
+A1 = SP + 10;
+system_psyq_cd_int_to_pos();
+
+A0 = e;
+A1 = SP + 820;
 A2 = 0;
-A0 = 001b;
-A1 = SP + 0010;
-800407CC	jal    system_psyq_cd_control [$8003de9c]
+system_psyq_cd_control();
+
+A0 = 1b;
+A1 = SP + 10;
 A2 = 0;
+system_psyq_cd_control();
+
 S0 = 0;
-S1 = 0001;
-A0 = 0;
 
-L407e0:	; 800407E0
-800407E0	jal    func3de4c [$8003de4c]
-A1 = SP + 0818;
-V1 = V0;
-800407EC	beq    v1, s1, L40814 [$80040814]
-S0 = S0 + 0001;
-V0 = S0 < 000a;
-800407F8	beq    v0, zero, L40814 [$80040814]
-A0 = 001b;
-A1 = SP + 0010;
-80040804	jal    system_psyq_cd_control [$8003de9c]
-A2 = 0;
-8004080C	j      L407e0 [$800407e0]
-A0 = 0;
+while( true )
+{
+    A0 = 0;
+    A1 = SP + 818;
+    func3de4c();
+    V1 = V0;
 
-L40814:	; 80040814
-V0 = 0001;
-80040818	beq    v1, v0, L40844 [$80040844]
-A0 = 0009;
-V1 = bu[SP + 0818];
-80040824	nop
-V0 = V1 & 0010;
-8004082C	beq    v0, zero, L4083c [$8004083c]
-V0 = V1 & 0002;
-80040834	j      L40880 [$80040880]
-V0 = 0010;
+    S0 += 1;
 
-L4083c:	; 8004083C
-8004083C	j      L40880 [$80040880]
-V0 = 0 < V0;
+    if( V1 == 1 ) break;
 
-L40844:	; 80040844
+    if( S0 >= a ) break;
+
+    A0 = 1b;
+    A1 = SP + 10;
+    A2 = 0;
+    system_psyq_cd_control();
+}
+
+if( V1 != 1 )
+{
+    V1 = bu[SP + 818];
+    if( V1 & 10 ) return 10;
+
+    return 0 < (V1 & 2); // CdlStatNoDisk
+}
+
+A0 = 9;
 A1 = 0;
-80040848	jal    system_psyq_cd_control [$8003de9c]
 A2 = 0;
-A0 = SP + 0018;
+system_psyq_cd_control();
+
+A0 = SP + 18;
 A1 = 200;
 system_psyq_cd_get_sector();
 
@@ -2687,12 +2689,9 @@ A1 = 80010aac; // "CD001"
 A2 = 5;
 system_bios_strncmp();
 
-V1 = V0;
-80040874	bne    v1, zero, L40880 [$80040880]
-V0 = 0001;
-V0 = 0002;
+if( V0 != 0 ) return 1; // CdlOtherFormat
 
-L40880:	; 80040880
+return 2; // CdlCdromFormat
 ////////////////////////////////
 
 
