@@ -1,1 +1,1 @@
-adisasm FIELD FIELD.BIN.asm -v -b 800a0000 800a038c -u -a
+adisasm DSCHANGE.X DSCHANGE.X.asm -v -b 800a0000 800a0000 -u -a
