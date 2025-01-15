@@ -946,24 +946,18 @@ La1368:	; 800A1368
     V0 = V0 + S4;
     [800a16c8] = w(V0);
     system_get_current_pad_buttons();
-
     T0 = V0 >> 10;
-    S2 = w[800a15e0];
     A3 = w[800a16cc];
     A2 = w[800a16d0];
-    V1 = 0 NOR V0;
-    [800a16cc] = w(V1);
-    V1 = 0 NOR T0;
-    [800a16d0] = w(V1);
-    V1 = 800a16e4;
+    [800a16cc] = w(0 NOR V0);
+    [800a16d0] = w(0 NOR T0);
     [800a16d4] = w(V0);
     [800a16d8] = w(T0);
-    S1 = S2 << 02;
-    S1 = S1 + V1;
-    A3 = A3 & V0;
-    A2 = A2 & T0;
-    [800a16dc] = w(A3);
-    [800a16e0] = w(A2);
+    [800a16dc] = w(A3 & V0);
+    [800a16e0] = w(A2 & T0);
+
+    S2 = w[800a15e0];
+    S1 = 800a16e4 + S2 * 4;
 
     A0 = S1;
     A1 = 1;
@@ -996,11 +990,8 @@ La1368:	; 800A1368
     A3 = 0;
     system_psyq_get_tpage();
 
-    S0 = S2 << 01;
-    S0 = S0 + S2;
-    S0 = S0 << 02;
-    V1 = 800a170c;
-    S0 = S0 + V1;
+    S0 = 800a170c + S2 * c;
+
     A0 = S0;
     A1 = 0;
     A2 = 0;
@@ -1015,7 +1006,7 @@ La1368:	; 800A1368
     A0 = S1;
     system_psyq_draw_otag();
 
-    800A1540	addiu  v0, s3, $ffff (=-$1)
+    V0 = S3 - 1;
     S3 = V0;
     V0 = V0 << 10;
 800A154C	bne    v0, zero, La1368 [$800a1368]
