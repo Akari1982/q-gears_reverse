@@ -2,16 +2,13 @@
 // funca0000()
 
 FP = A0;
-A2 = 800b0000;
-V0 = FP - 1;
-S0 = 800a1580;
-V0 = V0 << 03;
-V1 = V0 + S0;
-S1 = S0 + 0004;
-V0 = V0 + S1;
 
-A0 = w[V1 + 0000];
-A1 = w[V0 + 0000];
+drawenv = 800a15e4;
+dispenv = 800a169c;
+
+A0 = w[800a1580 + (FP - 1) * 8 + 0];
+A1 = w[800a1580 + (FP - 1) * 8 + 4];
+A2 = 800b0000;
 A3 = 0;
 func33fc4();
 
@@ -20,7 +17,6 @@ system_psyq_wait_frames();
 
 V1 = 38e38e39;
 800A0070	mult   v0, v1
-A2 = 800c8000;
 V1 = V0 >> 1f;
 800A008C	mfhi   a0
 A0 = A0 >> 01;
@@ -29,12 +25,13 @@ V1 = A0 << 03;
 V1 = V1 + A0;
 V0 = V0 - V1;
 V0 = V0 << 03;
-V0 = V0 + 0018;
-S0 = V0 + S0;
-V0 = V0 + S1;
+V0 = V0 + 18;
+S0 = S0 + V0;
+V0 = 800a1584 + V0;
 
 A0 = w[S0];
 A1 = w[V0];
+A2 = 800c8000;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
@@ -59,41 +56,38 @@ while( V0 != 0 )
 A0 = 1;
 system_psyq_reset_graph();
 
-A0 = 800a15e4;
+A0 = drawenv + 0 * 5c;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = 1e0;
 system_psyq_set_def_drawenv();
 
-A0 = 800a169c;
+A0 = dispenv + 0 * 14;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = 1e0;
 system_psyq_set_def_dispenv();
 
-A0 = 800a1640;
+A0 = drawenv + 1 * 5c;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = 1e0;
 system_psyq_set_def_drawenv();
 
-A0 = 800a16b0;
+A0 = dispenv + 1 * 14;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = 1e0;
 system_psyq_set_def_dispenv();
 
-S0 = 800a16ac;
 [800a16c1] = b(0);
 [800a16ad] = b(0);
 [800a16c0] = b(1);
-
-[S0 + 0000] = b(1);
-
+[800a16ac] = b(1);
 [800a1658] = b(0);
 [800a15fc] = b(0);
 [800a1657] = b(0);
@@ -127,22 +121,17 @@ system_psyq_draw_sync();
 A0 = 0;
 system_psyq_wait_frames();
 
-V0 = w[800a15e0];
-S0 = S0 - 10;
-V0 = V0 < 0001;
-[800a15e0] = w(V0);
+[800a15e0] = w(w[800a15e0] < 1);
 
-A0 = S0 + V0 * 14;
+A0 = dispenv + w[800a15e0] * 14;
 system_psyq_put_dispenv();
 
-S1 = 800a15e4;
-
-A0 = S1 + w[800a15e0] * 7c;
+A0 = drawenv + w[800a15e0] * 5c;
 system_psyq_put_drawenv();
 
 V1 = w[800a15e0];
-[800a16c4] = w(S0 + V1 * 14);
-[800a16c8] = w(S1 + V1 * 7c);
+[800a16c4] = w(dispenv + V1 * 14);
+[800a16c8] = w(drawenv + V1 * 5c);
 
 system_get_current_pad_buttons();
 A2 = V0 >> 10;
@@ -166,24 +155,17 @@ system_psyq_draw_sync();
 A0 = 0;
 system_psyq_wait_frames();
 
-V0 = w[800a15e0];
-S5 = 800a169c;
-V0 = V0 < 0001;
-[800a15e0] = w(V0);
+[800a15e0] = w(w[800a15e0] < 1);
 
-A0 = S5 + V0 * 14;
+A0 = dispenv + w[800a15e0] * 14;
 system_psyq_put_dispenv();
 
-S4 = 800a15e4;
-
-A0 = S4 + w[800a15e0] * 7c;
+A0 = drawenv + w[800a15e0] * 5c;
 system_psyq_put_drawenv();
 
 V1 = w[800a15e0];
-[800a16c4] = w(S5 + V1 * 14);
-[800a16c8] = w(S4 + V1 * 7c);
-
-S7 = 0078;
+[800a16c4] = w(dispenv + V1 * 14);
+[800a16c8] = w(drawenv + V1 * 5c);
 
 system_get_current_pad_buttons();
 A3 = V0 >> 10;
@@ -209,18 +191,17 @@ La0480:	; 800A0480
     A0 = 0;
     system_psyq_wait_frames();
 
-    V0 = w[800a15e0];
-    V0 = V0 < 0001;
-    [800a15e0] = w(V0);
-    A0 = S5 + V0 * 14;
+    [800a15e0] = w(w[800a15e0] < 1);
+
+    A0 = dispenv + w[800a15e0] * 14;
     system_psyq_put_dispenv();
 
-    A0 = S4 + w[800a15e0] * 7c;
+    A0 = drawenv + w[800a15e0] * 5c;
     system_psyq_put_drawenv();
 
     V1 = w[800a15e0];
-    [800a16c4] = w(S5 + V1 * 13);
-    [800a16c8] = w(S4 + V1 * 7c);
+    [800a16c4] = w(dispenv + V1 * 13);
+    [800a16c8] = w(drawenv + V1 * 5c);
 
     system_get_current_pad_buttons();
     A2 = V0 >> 10;
@@ -244,7 +225,7 @@ La0480:	; 800A0480
     [SP + 1a] = h(V0);
     V0 = V0 << 10;
     V0 = V0 >> 10;
-    [SP + 18] = h(S7);
+    [SP + 18] = h(78);
     [SP + 1a] = h(154);
     [SP + 1c] = h(190);
     [SP + 1e] = h(1);
@@ -269,7 +250,7 @@ La0480:	; 800A0480
 
     V0 = S1 + 20;
     [SP + 1a] = h(V0);
-    [SP + 18] = h(S7);
+    [SP + 18] = h(78);
     V0 = V0 << 10;
     V0 = V0 >> 10;
 
@@ -304,7 +285,7 @@ La0480:	; 800A0480
     [A1 + 4] = b(S3);
     [A1 + 5] = b(S3);
     [A1 + 6] = b(S3);
-    [A1 + 8] = h(S7);
+    [A1 + 8] = h(78);
     [A1 + a] = h(20);
     [A1 + c] = h(190);
     [A1 + e] = h(1c0);
@@ -350,31 +331,17 @@ loopa0784:	; 800A0784
     A0 = 0;
     system_psyq_wait_frames();
 
-    V0 = w[800a15e0];
-    V0 = V0 < 0001;
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    [800a15e0] = w(V0);
-    A0 = A0 + S5;
+    [800a15e0] = w(w[800a15e0] < 1);
+
+    A0 = dispenv + w[800a15e0] * 14;
     system_psyq_put_dispenv();
 
-    A0 = S4 + w[800a15e0] * 7c;
+    A0 = drawenv + w[800a15e0] * 5c;
     system_psyq_put_drawenv();
 
     V1 = w[800a15e0];
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + S5;
-    [800a16c4] = w(V0);
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 - V1;
-    V0 = V0 << 02;
-    V0 = V0 + S4;
-    [800a16c8] = w(V0);
+    [800a16c4] = w(dispenv + V1 * 14);
+    [800a16c8] = w(drawenv + V1 * 5c);
 
     system_get_current_pad_buttons();
     A1 = V0 >> 10;
@@ -408,21 +375,17 @@ loopa08c0:	; 800A08C0
     A0 = 0;
     system_psyq_wait_frames();
 
-    V0 = w[800a15e0];
-    V0 = V0 < 0001;
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    [800a15e0] = w(V0);
-    A0 = A0 + S5;
+    [800a15e0] = w(w[800a15e0] < 1);
+
+    A0 = dispenv + w[800a15e0] * 14;
     system_psyq_put_dispenv();
 
-    A0 = S4 + w[800a15e0] * 7c;
+    A0 = drawenv + w[800a15e0] * 5c;
     system_psyq_put_drawenv();
 
     V1 = w[800a15e0];
-    [800a16c4] = w(S5 + V1 * 14);
-    [800a16c8] = w(S4 + V1 * 7c);
+    [800a16c4] = w(dispenv + V1 * 14);
+    [800a16c8] = w(drawenv + V1 * 5c);
 
     system_get_current_pad_buttons();
     A1 = V0 >> 10;
@@ -435,7 +398,7 @@ loopa08c0:	; 800A08C0
     [800a16dc] = w(A2 & V0);
     [800a16e0] = w(A0 & A1);
 
-    V1 = 090f;
+    V1 = 90f;
     800A09C8	beq    v0, v1, La0c1c [$800a0c1c]
     V0 = A2 & 00f0;
     800A09D0	bne    v0, zero, La09fc [$800a09fc]
@@ -458,21 +421,17 @@ La09fc:	; 800A09FC
         A0 = 0;
         system_psyq_wait_frames();
 
-        V0 = w[800a15e0];
-        V0 = V0 < 0001;
-        A0 = V0 << 02;
-        A0 = A0 + V0;
-        A0 = A0 << 02;
-        [800a15e0] = w(V0);
-        A0 = A0 + S5;
+        [800a15e0] = w(w[800a15e0] < 1);
+
+        A0 = dispenv + w[800a15e0] * 14;
         system_psyq_put_dispenv();
 
-        A0 = S4 + w[800a15e0] * 7c;
+        A0 = drawenv + w[800a15e0] * 5c;
         system_psyq_put_drawenv();
 
         V1 = w[800a15e0];
-        [800a16c4] = w(S5 + V1 * 14);
-        [800a16c8] = w(S4 + V1 * 7c);
+        [800a16c4] = w(dispenv + V1 * 14);
+        [800a16c8] = w(drawenv + V1 * 5c);
 
         system_get_current_pad_buttons();
         T0 = V0 >> 10;
@@ -552,7 +511,7 @@ La09fc:	; 800A09FC
     disc_number = V0;
 
     800A0C0C	bne    v0, fp, La0480 [$800a0480]
-    S3 = 00ff;
+    S3 = ff;
     return 0;
 
     La0c1c:	; 800A0C1C
@@ -564,6 +523,9 @@ La09fc:	; 800A09FC
 
 ////////////////////////////////
 // funca0c58()
+
+drawenv = 800a15e4;
+dispenv = 800a169c;
 
 A0 = 0;
 system_psyq_set_disp_mask();
@@ -586,28 +548,28 @@ while( V0 != 0 )
 A0 = 1;
 system_psyq_reset_graph();
 
-A0 = 800a15e4;
+A0 = drawenv + 0 * 5c;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = 1e0;
 system_psyq_set_def_drawenv();
 
-A0 = 800a169c;
+A0 = dispenv + 0 * 14;
 A1 = 0;
 A2 = 0;
 A3 = 0280;
 A4 = 1e0;
 system_psyq_set_def_dispenv();
 
-A0 = 800a1640;
+A0 = drawenv + 1 * 5c;
 A1 = 0;
 A2 = 0;
 A3 = 280;
 A4 = 1e0;
 system_psyq_set_def_drawenv();
 
-A0 = 800a16b0;
+A0 = dispenv + 0 * 14;
 A1 = 0;
 A2 = 0;
 A3 = 280;
@@ -642,8 +604,6 @@ A2 = 800b0000;
 A3 = 0;
 system_cdrom_load_by_sector();
 
-S1 = S1 - 10;
-
 [8009a000] = h(10);
 [8009a004] = w(800b0000);
 system_execute_AKAO();
@@ -671,32 +631,17 @@ system_psyq_draw_sync();
 A0 = 0;
 system_psyq_wait_frames();
 
-V0 = w[800a15e0];
-V0 = V0 < 0001;
-A0 = V0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 02;
-[800a15e0] = w(V0);
-A0 = A0 + S1;
+[800a15e0] = w(w[800a15e0] < 1);
+
+A0 = dispenv + w[800a15e0] * 14;
 system_psyq_put_dispenv();
 
-S0 = 800a15e4;
-A0 = S0 + w[800a15e0] * 7c;
+A0 = drawenv + w[800a15e0] * 5c;
 system_psyq_put_drawenv();
 
 V1 = w[800a15e0];
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + S1;
-[800a16c4] = w(V0);
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = V0 + S0;
-[800a16c8] = w(V0);
+[800a16c4] = w(dispenv + V1 * 14);
+[800a16c8] = w(drawenv + V1 * 5c);
 
 system_get_current_pad_buttons();
 A2 = V0 >> 10;
@@ -718,8 +663,6 @@ A0 = 1;
 system_psyq_set_disp_mask();
 
 S3 = ff;
-S6 = 800a169c;
-S5 = 800a15e4;
 
 La0f94:	; 800A0F94
     A0 = 0;
@@ -728,55 +671,30 @@ La0f94:	; 800A0F94
     A0 = 0;
     system_psyq_wait_frames();
 
-    V0 = w[800a15e0];
-    V0 = V0 < 0001;
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    [800a15e0] = w(V0);
-    A0 = A0 + S6;
+    [800a15e0] = w(w[800a15e0] < 1);
+
+    A0 = dispenv + w[800a15e0] * 14;
     system_psyq_put_dispenv();
 
-    V0 = w[800a15e0];
-    800A0FD8	nop
-    A0 = V0 << 01;
-    A0 = A0 + V0;
-    A0 = A0 << 03;
-    A0 = A0 - V0;
-    A0 = A0 << 02;
-    A0 = A0 + S5;
+    A0 = drawenv + w[800a15e0] * 5c;
     system_psyq_put_drawenv();
 
     V1 = w[800a15e0];
-    800A1000	nop
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + S6;
-    [800a16c4] = w(V0);
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 - V1;
-    V0 = V0 << 02;
-    V0 = V0 + S5;
-    [800a16c8] = w(V0);
-    system_get_current_pad_buttons();
+    [800a16c4] = w(dispenv + V1 * 14);
+    [800a16c8] = w(drawenv + V1 * 5c);
 
+    system_get_current_pad_buttons();
     A2 = V0 >> 10;
-    S2 = w[800a15e0];
     A1 = w[800a16cc];
     A0 = w[800a16d0];
-    V1 = 0 NOR V0;
-    [800a16cc] = w(V1);
-    V1 = 0 NOR A2;
+    [800a16cc] = w(0 NOR V0);
     [800a16d4] = w(V0);
     [800a16d8] = w(A2);
-    [800a16d0] = w(V1);
-    A1 = A1 & V0;
-    A0 = A0 & A2;
-    [800a16dc] = w(A1);
-    [800a16e0] = w(A0);
+    [800a16d0] = w(0 NOR A2);
+    [800a16dc] = w(A1 & V0);
+    [800a16e0] = w(A0 & A2);
+
+    S2 = w[800a15e0];
 
     func44908();
 
@@ -785,10 +703,9 @@ La0f94:	; 800A0F94
 
     V0 = V0 + 20;
 
-    [SP + 1c] = h(240);
-    [SP + 1a] = h(20);
-    [SP + 1a] = h(V0);
     [SP + 18] = h(20);
+    [SP + 1a] = h(V0);
+    [SP + 1c] = h(240);
     [SP + 1e] = h(1);
 
     V0 = V0 << 10;
@@ -801,10 +718,9 @@ La0f94:	; 800A0F94
             A1 = S0;
             system_psyq_load_image();
 
-            V0 = h[SP + 1a] + 2;
-            [SP + 1a] = h(V0);
-            V0 = V0 < 01c0;
-            S0 = S0 + 0900;
+            S0 = S0 + 900;
+            [SP + 1a] = h(h[SP + 1a] + 2);
+            V0 = h[SP + 1a] < 1c0;
         800A1118	bne    v0, zero, loopa10f0 [$800a10f0]
     }
 
@@ -861,9 +777,6 @@ La0f94:	; 800A0F94
     V0 = V0 << 10;
 800A1208	bgez   v0, La0f94 [$800a0f94]
 
-S1 = 800a169c;
-S0 = 800a15e4;
-
 loopa1220:	; 800A1220
     A0 = 0;
     system_psyq_draw_sync();
@@ -871,21 +784,17 @@ loopa1220:	; 800A1220
     A0 = 0;
     system_psyq_wait_frames();
 
-    V0 = w[800a15e0];
-    V0 = V0 < 1;
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    [800a15e0] = w(V0);
-    A0 = A0 + S1;
+    [800a15e0] = w(w[800a15e0] < 1);
+
+    A0 = dispenv + w[800a15e0] * 14;
     system_psyq_put_dispenv();
 
-    A0 = S0 + w[800a15e0] * 7c;
+    A0 = drawenv + w[800a15e0] * 5c;
     system_psyq_put_drawenv();
 
     V1 = w[800a15e0];
-    [800a16c4] = w(S1 + V1 * 14);
-    [800a16c8] = w(S0 + V1 * 7c);
+    [800a16c4] = w(dispenv + V1 * 14);
+    [800a16c8] = w(drawenv + V1 * 5c);
 
     system_get_current_pad_buttons();
     A2 = V0 >> 10;
@@ -910,8 +819,6 @@ La1330:	; 800A1330
 system_execute_AKAO();
 
 S3 = 40;
-S5 = 800a169c;
-S4 = 800a15e4;
 
 La1368:	; 800A1368
     A0 = 0;
@@ -920,31 +827,18 @@ La1368:	; 800A1368
     A0 = 0;
     system_psyq_wait_frames();
 
-    V0 = w[800a15e0];
-    V0 = V0 < 1;
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    A0 = A0 << 02;
-    [800a15e0] = w(V0);
-    A0 = A0 + S5;
+    [800a15e0] = w(w[800a15e0] < 1);
+
+    A0 = dispenv + w[800a15e0] * 14;
     system_psyq_put_dispenv();
 
-    A0 = S4 + w[800a15e0] * 7c;
+    A0 = drawenv + w[800a15e0] * 5c;
     system_psyq_put_drawenv();
 
     V1 = w[800a15e0];
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    V0 = V0 + S5;
-    [800a16c4] = w(V0);
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 - V1;
-    V0 = V0 << 02;
-    V0 = V0 + S4;
-    [800a16c8] = w(V0);
+    [800a16c4] = w(dispenv + V1 * 14);
+    [800a16c8] = w(drawenv + V1 * 5c);
+
     system_get_current_pad_buttons();
     T0 = V0 >> 10;
     A3 = w[800a16cc];
