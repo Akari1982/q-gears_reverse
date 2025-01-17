@@ -1781,10 +1781,10 @@
 // func33edc
 80033EDC-80033F3C
 ////////////////////////////////
-// system_cdrom_load_by_sector
+// system_cdrom_load_file
 80033F40-80033FC0
 ////////////////////////////////
-// func33fc4
+// system_cdrom_load_lzs
 80033FC4-80034044
 ////////////////////////////////
 // func34048

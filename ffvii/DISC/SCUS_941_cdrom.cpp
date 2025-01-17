@@ -24,7 +24,7 @@ system_psyq_wait_frames();
 // load "\MINT\DISKINFO.CNF;1" into 800698f0
 // and return bu[800698f7] - 30 (disk number)
 func34350();
-[80071a64] = w(V0);
+[80071a64] = w(V0); // disc_number
 
 system_movie_load_movie_settings(); // load "\MINT\MOVIE_ID.BIN;1" into 8009a1f4
 ////////////////////////////////
@@ -234,19 +234,19 @@ while( true )
 
 
 ////////////////////////////////
-// system_cdrom_load_by_sector()
+// system_cdrom_load_file()
 
 sector = A0;
 size = A1;
 buffer = A2;
-S3 = A3;
+callback = A3;
 
 do
 {
     A0 = sector;
     A1 = size;
     A2 = buffer;
-    A3 = S3;
+    A3 = callback;
     system_cdrom_start_load_file();
 } while( V0 != 0 )
 
@@ -266,19 +266,19 @@ while( true )
 
 
 ////////////////////////////////
-// func33fc4()
+// system_cdrom_load_lzs()
 
-S0 = A0;
-S1 = A1;
-S2 = A2;
-S3 = A3;
+sector = A0;
+size = A1;
+buffer = A2;
+callback = A3;
 
 do
 {
-    A0 = S0;
-    A1 = S1;
-    A2 = S2;
-    A3 = S3;
+    A0 = sector;
+    A1 = size;
+    A2 = buffer;
+    A3 = callback;
     system_cdrom_start_load_lzs();
 }
 while( V0 != 0 )
@@ -326,7 +326,7 @@ switch( w[80071a60] )
         A0 = 0;
         system_psyq_cd_ready_callback();
 
-        func34048(); // set type 13
+        func34048(); // abort cdrom chain
     }
     break;
 
@@ -349,7 +349,7 @@ switch( w[80071a60] )
     case 11:
     case 12:
     {
-        func34048(); // set type 13
+        func34048(); // abort cdrom chain
     }
     break;
 }
@@ -1503,6 +1503,7 @@ disp_env = w[8007ebd8];
 
 ////////////////////////////////
 // func354cc()
+// update movie frame
 
 if( w[80071a60] == a )
 {

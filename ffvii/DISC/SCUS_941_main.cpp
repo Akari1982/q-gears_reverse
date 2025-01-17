@@ -485,7 +485,7 @@ A0 = w[80048d54]; // sector 1efa9 "FIELD\ENDING.X"
 A1 = w[80048d58]; // size f414
 A2 = 800a0000; // dst
 A3 = 0;
-system_cdrom_load_by_sector();
+system_cdrom_load_file();
 
 // from FIELD\ENDING.X
 ending_main(); // looks like play squareenix logo
@@ -507,7 +507,7 @@ while( true )
     A1 = w[80048d58]; // f414
     A2 = 800a0000
     A3 = 0;
-    system_cdrom_load_by_sector();
+    system_cdrom_load_file();
 
     A0 = 0;
     80011D40	jal    funca04c4 [$800a04c4]
@@ -554,7 +554,7 @@ while( true )
         A1 = w[80048d50]; // 1774 size
         A2 = 800a0000;
         A3 = 0;
-        system_cdrom_load_by_sector()
+        system_cdrom_load_file()
 
         A0 = bu[8009d588];
         funca0000();
@@ -973,7 +973,7 @@ while( true )
                 A1 = w[80048d50]; // 1774 size
                 A2 = 800a0000;
                 A3 = 0;
-                system_cdrom_load_by_sector();
+                system_cdrom_load_file();
 
                 A0 = bu[8009d588];
                 funca0000();
@@ -1079,7 +1079,7 @@ while( true )
         A1 = w[80048d58]; // f414 size
         A2 = 800a0000;
         A3 = 0;
-        system_cdrom_load_by_sector();
+        system_cdrom_load_file();
 
         A0 = 1;
         funca04c4();
@@ -1117,7 +1117,7 @@ while( true )
     A1 = w[80048d50]; // 1774 size
     A2 = 800a0000;
     A3 = 0;
-    system_cdrom_load_by_sector();
+    system_cdrom_load_file();
 
     funca0c58();
 

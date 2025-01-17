@@ -401,12 +401,9 @@ A0 = w[A0 + f40c];
 [AT + f3fc] = w(V0);
 
 La05e0:	; 800A05E0
-800A05E0	lui    a0, $8008
-A0 = w[A0 + ebd0];
-800A05E8	lui    v1, $8008
-V1 = w[V1 + ebd8];
+A0 = w[8007ebd0];
+V1 = w[8007ebd8];
 V0 = hu[A0 + 0000];
-800A05F4	nop
 [SP + 0118] = h(V0);
 V0 = hu[A0 + 0002];
 800A0600	nop
@@ -437,51 +434,48 @@ V0 = w[V0 + ebd0];
 A2 = 0;
 V0 = hu[V0 + 0006];
 A3 = 0;
-800A0660	jal    $system_psyq_clear_image
 [SP + 011e] = h(V0);
-800A0668	jal    $system_psyq_draw_sync
-A0 = 0;
-800A0670	jal    $system_psyq_wait_frames
-A0 = 0001;
-800A0678	jal    $system_cdrom_read_chain
-800A067C	nop
-V1 = 000a;
-800A0684	bne    v0, v1, La0694 [$800a0694]
-800A0688	nop
-800A068C	jal    $func354cc
-800A0690	nop
+system_psyq_clear_image();
 
-La0694:	; 800A0694
-800A0694	lui    a0, $800b
-A0 = w[A0 + f408];
+A0 = 0;
+system_psyq_draw_sync();
+
+A0 = 1;
+system_psyq_wait_frames();
+
+
+system_cdrom_read_chain();
+
+if( V0 == a )
+{
+    func354cc();
+}
+
+A0 = w[800af408];
 A1 = 0001;
 A0 = A0 << 02;
-800A06A4	jal    $system_psyq_clear_otag_r
 A0 = A0 + S1;
-800A06AC	lui    v0, $800b
-V0 = w[V0 + f408];
-800A06B4	nop
+system_psyq_clear_otag_r();
+
+V0 = w[800af408];
 V0 = V0 << 02;
 V0 = V0 + S1;
-800A06C0	lui    at, $800b
-[AT + f3e8] = w(V0);
+[800af3e8] = w(V0);
 800A06C8	jal    funca1e20 [$800a1e20]
-800A06CC	nop
+
 800A06D0	jal    funca3210 [$800a3210]
-800A06D4	nop
-800A06D8	lui    a0, $800b
-A0 = w[A0 + f408];
-800A06E0	nop
+
+A0 = w[800af408];
 A0 = A0 << 02;
-800A06E8	jal    $system_psyq_draw_otag
 A0 = A0 + S1;
-800A06F0	jal    $system_psyq_wait_frames
-A0 = 0001;
+system_psyq_draw_otag();
+
+A0 = 1;
+system_psyq_wait_frames();
+
 800A06F8	bne    s0, zero, La0718 [$800a0718]
-800A06FC	nop
-800A0700	lui    v0, $800b
-V0 = w[V0 + f3ec];
-800A0708	nop
+
+V0 = w[800af3ec];
 V0 = V0 & 09f0;
 800A0710	bne    v0, zero, La0734 [$800a0734]
 V0 = 00c1;
@@ -653,66 +647,30 @@ system_psyq_reset_graph();
 
 
 ////////////////////////////////
-// funca09dc
-800A09DC	addiu  sp, sp, $fee0 (=-$120)
-[SP + 0118] = w(S2);
-S2 = 0;
-[SP + 0114] = w(S1);
-S1 = 0;
-[SP + 011c] = w(RA);
-[SP + 0110] = w(S0);
+// funca09dc()
 
-loopa09f8:	; 800A09F8
-800A09F8	lui    at, $800a
-AT = AT + 652c;
-AT = AT + S1;
-V0 = hu[AT + 0000];
-800A0A08	nop
-V0 = V0 & 0001;
-800A0A10	beq    v0, zero, La0a90 [$800a0a90]
-S2 = S2 + 0001;
-800A0A18	lui    s0, $800a
-S0 = S0 + 652c;
-S0 = S1 + S0;
-V0 = 0028;
-800A0A28	lui    at, $800a
-AT = AT + 6588;
-AT = AT + S1;
-[AT + 0000] = h(V0);
-V0 = 0020;
-800A0A3C	lui    at, $800a
-AT = AT + 658a;
-AT = AT + S1;
-[AT + 0000] = h(V0);
-800A0A4C	lui    at, $800a
-AT = AT + 658c;
-AT = AT + S1;
-[AT + 0000] = h(0);
-800A0A5C	jal    funca34c4 [$800a34c4]
-A0 = S0;
-800A0A64	jal    funca343c [$800a343c]
-A0 = S0;
-A1 = 0;
-800A0A70	lui    a0, $800b
-A0 = w[A0 + f3e8];
-800A0A78	lui    a2, $800b
-A2 = w[A2 + f3fc];
-800A0A80	jal    funca358c [$800a358c]
-A3 = S0;
-800A0A88	lui    at, $800b
-[AT + f3fc] = w(V0);
+for( int i = 0; i < 20; ++i )
+{
+    if( hu[800a652c + i * 88] & 1 )
+    {
+        [800a6588 + i * 88] = h(28);
+        [800a658a + i * 88] = h(20);
+        [800a658c + i * 88] = h(0);
 
-La0a90:	; 800A0A90
-V0 = S2 < 0020;
-800A0A94	bne    v0, zero, loopa09f8 [$800a09f8]
-S1 = S1 + 0088;
-RA = w[SP + 011c];
-S2 = w[SP + 0118];
-S1 = w[SP + 0114];
-S0 = w[SP + 0110];
-SP = SP + 0120;
-800A0AB0	jr     ra 
-800A0AB4	nop
+        A0 = 800a652c + i * 88;
+        funca34c4();
+
+        A0 = 800a652c + i * 88;
+        funca343c();
+
+        A0 = w[800af3e8];
+        A1 = 0;
+        A2 = w[800af3fc];
+        A3 = 800a652c + i * 88;
+        funca358c();
+        [800af3fc] = w(V0);
+    }
+}
 ////////////////////////////////
 
 
@@ -1458,7 +1416,7 @@ S3 = S3 + 0001;
 V0 = S3 < 0002;
 800A1964	bne    v0, zero, loopa18ac [$800a18ac]
 S4 = S4 + 1400;
-800A196C	jal    $80043d3c
+800A196C	jal    $system_psyq_set_disp_mask
 A0 = 0001;
 V0 = 0001;
 ////////////////////////////////
@@ -2031,7 +1989,7 @@ V0 = V1 + 0002;
 800A21A4	lui    at, $800a
 [AT + 6528] = w(V0);
 A0 = h[V1 + 0000];
-800A21B0	jal    $80043d3c
+800A21B0	jal    $system_psyq_set_disp_mask
 800A21B4	nop
 V0 = 0001;
 RA = w[SP + 0010];
@@ -2255,7 +2213,7 @@ SP = SP + 0018;
 [SP + 0014] = w(RA);
 
 La24b8:	; 800A24B8
-800A24B8	jal    $800484a8
+800A24B8	jal    $func484a8
 800A24BC	nop
 800A24C0	bne    v0, s0, La24d8 [$800a24d8]
 800A24C4	nop
@@ -2269,7 +2227,7 @@ La24d8:	; 800A24D8
 800A24DC	nop
 
 loopa24e0:	; 800A24E0
-800A24E0	jal    $80048540
+800A24E0	jal    $func48540
 A0 = 0001;
 800A24E8	bne    v0, zero, loopa24e0 [$800a24e0]
 800A24EC	nop
@@ -2297,44 +2255,45 @@ V0 = 0 < V0;
 S6 = A5;
 V0 = 0 - V0;
 S4 = V0 & 00f0;
-800A2550	addiu  s0, zero, $ffff (=-$1)
 
-La2558:	; 800A2558
-800A2558	jal    $800484a8
-800A255C	nop
-800A2560	bne    v0, s0, La2578 [$800a2578]
-800A2564	nop
-800A2568	jal    $system_psyq_wait_frames
-A0 = 0;
-800A2570	j      La2558 [$800a2558]
-800A2574	nop
+while( true )
+{
+    func484a8();
 
-La2578:	; 800A2578
+    if( V0 != -1 ) break;
+
+    A0 = 0;
+    system_psyq_wait_frames();
+}
+
 800A2578	beq    v0, zero, La2590 [$800a2590]
-800A257C	nop
 
 loopa2580:	; 800A2580
-800A2580	jal    $80048540
-A0 = 0001;
+    A0 = 1;
+    func48540();
 800A2588	bne    v0, zero, loopa2580 [$800a2580]
-800A258C	nop
 
 La2590:	; 800A2590
-800A2590	jal    $system_psyq_reset_graph
-A0 = 0001;
-800A2598	jal    $80043d3c
+A0 = 1;
+system_psyq_reset_graph();
+
 A0 = 0;
-800A25A0	jal    $80043ba8
+system_psyq_set_disp_mask();
+
 A0 = 0;
+system_psyq_set_graph_debug();
+
 A0 = S3 >> 1f;
 A0 = S3 + A0;
 A0 = A0 >> 01;
 A1 = S2 >> 1f;
 A1 = S2 + A1;
-800A25BC	jal    $system_psyq_set_geom_offset
 A1 = A1 >> 01;
-800A25C4	jal    $system_psyq_set_geom_screen
+system_psyq_set_geom_offset();
+
 A0 = S1;
+system_psyq_set_geom_screen();
+
 800A25CC	lui    s1, $800b
 800A25D0	addiu  s1, s1, $f2e0 (=-$d20)
 A0 = S1;
@@ -2351,7 +2310,7 @@ A1 = 0;
 A2 = S4;
 A3 = S3;
 A4 = S2;
-800A2604	jal    $800438d4
+system_psyq_set_def_dispenv();
 
 A0 = S1 + 005c;
 A1 = 0;
@@ -2364,8 +2323,9 @@ A0 = S0 + 0014;
 A1 = 0;
 A2 = 0;
 A3 = S3;
-800A2634	jal    $800438d4
-[SP + 0010] = w(S2);
+A4 = S2;
+system_psyq_set_def_dispenv();
+
 A0 = SP + 0018;
 A1 = 0;
 A2 = 0;
@@ -2396,10 +2356,11 @@ V0 = V0 >> 01;
 [SP + 18] = h(0);
 [SP + 1a] = h(0);
 [SP + 1e] = h(1e0);
-800A26FC	jal    $system_psyq_clear_image
 
-800A2704	jal    funca273c [$800a273c]
+system_psyq_clear_image();
+
 A0 = 0;
+funca273c();
 ////////////////////////////////
 
 

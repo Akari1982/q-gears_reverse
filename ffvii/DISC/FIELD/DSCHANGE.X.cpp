@@ -10,7 +10,7 @@ A0 = w[800a1580 + (FP - 1) * 8 + 0];
 A1 = w[800a1580 + (FP - 1) * 8 + 4];
 A2 = 800b0000;
 A3 = 0;
-func33fc4();
+system_cdrom_load_lzs();
 
 A0 = -1;
 system_psyq_wait_frames();
@@ -602,7 +602,7 @@ A0 = 1f480;
 A1 = 800;
 A2 = 800b0000;
 A3 = 0;
-system_cdrom_load_by_sector();
+system_cdrom_load_file();
 
 [8009a000] = h(10);
 [8009a004] = w(800b0000);
@@ -612,7 +612,7 @@ A0 = 1f400;
 A1 = 40000;
 A2 = 800b0000;
 A3 = 0;
-func33fc4();
+system_cdrom_load_lzs();
 
 [SP + 18] = h(0);
 [SP + 1a] = h(0);
