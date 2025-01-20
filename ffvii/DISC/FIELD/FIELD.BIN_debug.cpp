@@ -291,8 +291,13 @@ h = A4;
 ////////////////////////////////
 // funcd83a8()
 
-[800e0748 + A0 * 17a + 0] = h(hu[800e0748 + A0 * 17a + 0] + A1);
-[800e0748 + A0 * 17a + 2] = h(hu[800e0748 + A0 * 17a + 2] + A2);
+page = A0;
+x = A1;
+y = A2;
+
+[800e0748 + page * 17a + 0] = h(hu[800e0748 + page * 17a + 0] + x);
+[800e0748 + page * 17a + 2] = h(hu[800e0748 + page * 17a + 2] + y);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -301,8 +306,13 @@ h = A4;
 ////////////////////////////////
 // funcd8420()
 
-[800e0748 + A0 * 17a + 4] = h(hu[800e0748 + A0 * 17a + 4] + A1);
-[800e0748 + A0 * 17a + 6] = h(hu[800e0748 + A0 * 17a + 6] + A2);
+page = A0;
+w = A1;
+h = A2;
+
+[800e0748 + page * 17a + 4] = h(hu[800e0748 + page * 17a + 4] + w);
+[800e0748 + page * 17a + 6] = h(hu[800e0748 + page * 17a + 6] + h);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -311,7 +321,9 @@ h = A4;
 ////////////////////////////////
 // funcd8498()
 
-return bu[800e0748 + A0 * 17a + 178] < 1;
+page = A0;
+
+return bu[800e0748 + page * 17a + 178] < 1;
 ////////////////////////////////
 
 
@@ -395,10 +407,7 @@ n_polyline = h[800e41bc];
 n_monorect = h[800e41c0];
 n_drawmode = h[800e41c4];
 
-if( n_polyline >= 18 )
-{
-    return;
-}
+if( n_polyline >= 18 ) return;
 
 x = h[800e0748 + page * 17a + 0] + 2;
 y = h[800e0748 + page * 17a + 2] + 2;
@@ -414,45 +423,45 @@ for( row = 0; y < max_y ; y += a, ++row )
     field_debug_render_string();
 }
 
-buffer_id = h[800e1024];
+rb = h[800e1024];
 
 if( h[800e0748 + page * 17a + e] != 0 )
 {
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b(bu[800e0748 + page * 17a + 8] | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18] = w((w[800e3b28 + buffer_id * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + n_polyline * 18) & 00ffffff));
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b(bu[800e0748 + page * 17a + 8] | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
+    [800e3b28 + rb * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3b28 + rb * 240 + n_polyline * 18] = w((w[800e3b28 + rb * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3b28 + rb * 240 + n_polyline * 18) & 00ffffff));
     n_polyline += 1;
 
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 2) | 7f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9] | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 1) | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18] = w((w[800e3b28 + buffer_id * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + n_polyline * 18) & 00ffffff));
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 2) | 7f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9] | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 1) | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a + a);
+    [800e3b28 + rb * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3b28 + rb * 240 + n_polyline * 18] = w((w[800e3b28 + rb * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3b28 + rb * 240 + n_polyline * 18) & 00ffffff));
     n_polyline += 1
 
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 7f);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + e] = h(a);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + c] = h(hu[800e0748 + page * 17a + 4] - 4);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10] = w((w[800e3fa8 + buffer_id * c0 + n_monorect * 10] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3fa8 + buffer_id * c0 + n_monorect * 10) & 00ffffff));
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 7f);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + a] = h(hu[800e0748 + page * 17a + 2] + (h[800e0748 + page * 17a + e] - 1) * a);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + e] = h(a);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + c] = h(hu[800e0748 + page * 17a + 4] - 4);
+    [800e3fa8 + rb * c0 + n_monorect * 10] = w((w[800e3fa8 + rb * c0 + n_monorect * 10] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3fa8 + rb * c0 + n_monorect * 10) & 00ffffff));
     n_monorect += 1;
 }
 else
@@ -464,109 +473,108 @@ else
     }
     else // if there is no strings on page
     {
-        V1 = h[800e0748 + page * 17a + 6] + 2;
-        S1 = (V1 / a) - 1;
+        S1 = ((h[800e0748 + page * 17a + 6] + 2) / a) - 1;
     }
 
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] >> 1) | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 2) | 7f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + S1 * a);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18] = w((w[800e3b28 + buffer_id * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + n_polyline * 18) & 00ffffff));
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] >> 1) | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 2) | 7f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a] | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0] + 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
+    [800e3b28 + rb * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + S1 * a + a);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4] - 2);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2] + S1 * a);
+    [800e3b28 + rb * 240 + n_polyline * 18] = w((w[800e3b28 + rb * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3b28 + rb * 240 + n_polyline * 18) & 00ffffff));
     n_polyline += 1;
 }
 
 // monochrome loly-line, opaque
 // draw bottom and right border for page
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
+[800e3b28 + rb * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
+[800e3b28 + rb * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
+[800e3b28 + rb * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
+[800e3b28 + rb * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
+[800e3b28 + rb * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
+[800e3b28 + rb * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
 
 if( page == bu[80071c08] )
 {
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b(bu[800e0748 + page * 17a + 8] >> 1);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a] >> 1);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b(bu[800e0748 + page * 17a + 8] >> 1);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9] >> 1);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a] >> 1);
 }
 else
 {
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b(bu[800e0748 + page * 17a + 8]);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9]);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b(bu[800e0748 + page * 17a + 8]);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b(bu[800e0748 + page * 17a + 9]);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b(bu[800e0748 + page * 17a + a]);
 }
 
-[800e3b28 + buffer_id * 240 + n_polyline * 18] = w((w[800e3b28 + buffer_id * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-[800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + n_polyline * 18) & 00ffffff));
+[800e3b28 + rb * 240 + n_polyline * 18] = w((w[800e3b28 + rb * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+[800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3b28 + rb * 240 + n_polyline * 18) & 00ffffff));
 n_polyline += 1;
 
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
-[800e3b28 + buffer_id * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
+[800e3b28 + rb * 240 + n_polyline * 18 + 8] = h(hu[800e0748 + page * 17a + 0]);
+[800e3b28 + rb * 240 + n_polyline * 18 + a] = h(hu[800e0748 + page * 17a + 2] + hu[800e0748 + page * 17a + 6]);
+[800e3b28 + rb * 240 + n_polyline * 18 + c] = h(hu[800e0748 + page * 17a + 0]);
+[800e3b28 + rb * 240 + n_polyline * 18 + e] = h(hu[800e0748 + page * 17a + 2]);
+[800e3b28 + rb * 240 + n_polyline * 18 + 10] = h(hu[800e0748 + page * 17a + 0] + hu[800e0748 + page * 17a + 4]);
+[800e3b28 + rb * 240 + n_polyline * 18 + 12] = h(hu[800e0748 + page * 17a + 2]);
 
 if( page == bu[80071c08] )
 {
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 2) | 7f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 2) | 7f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 2) | 7f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 2) | 7f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 2) | 7f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 2) | 7f);
 }
 else
 {
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 1) | 3f);
-    [800e3b28 + buffer_id * 240 + n_polyline * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 1) | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 4] = b((bu[800e0748 + page * 17a + 8] << 1) | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 5] = b((bu[800e0748 + page * 17a + 9] << 1) | 3f);
+    [800e3b28 + rb * 240 + n_polyline * 18 + 6] = b((bu[800e0748 + page * 17a + a] << 1) | 3f);
 }
 
-[800e3b28 + buffer_id * 240 + n_polyline * 18] = w((w[800e3b28 + buffer_id * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-[800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3b28 + buffer_id * 240 + n_polyline * 18) & 00ffffff));
+[800e3b28 + rb * 240 + n_polyline * 18] = w((w[800e3b28 + rb * 240 + n_polyline * 18] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+[800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3b28 + rb * 240 + n_polyline * 18) & 00ffffff));
 n_polyline += 1;
 
-[800e3fa8 + buffer_id * c0 + n_monorect * 10 + 8] = h(hu[800e0748 + page * 17a + 0]);
-[800e3fa8 + buffer_id * c0 + n_monorect * 10 + a] = h(hu[800e0748 + page * 17a + 2]);
-[800e3fa8 + buffer_id * c0 + n_monorect * 10 + c] = h(hu[800e0748 + page * 17a + 4]);
-[800e3fa8 + buffer_id * c0 + n_monorect * 10 + e] = h(hu[800e0748 + page * 17a + 6]);
+[800e3fa8 + rb * c0 + n_monorect * 10 + 8] = h(hu[800e0748 + page * 17a + 0]);
+[800e3fa8 + rb * c0 + n_monorect * 10 + a] = h(hu[800e0748 + page * 17a + 2]);
+[800e3fa8 + rb * c0 + n_monorect * 10 + c] = h(hu[800e0748 + page * 17a + 4]);
+[800e3fa8 + rb * c0 + n_monorect * 10 + e] = h(hu[800e0748 + page * 17a + 6]);
 
 if( page == bu[80071c08] )
 {
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 4] = b(bu[800e0748 + page * 17a + 8] << 1);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 5] = b(bu[800e0748 + page * 17a + 9] << 1);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 6] = b(bu[800e0748 + page * 17a + a] << 1);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 4] = b(bu[800e0748 + page * 17a + 8] << 1);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 5] = b(bu[800e0748 + page * 17a + 9] << 1);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 6] = b(bu[800e0748 + page * 17a + a] << 1);
 }
 else
 {
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 4] = b(bu[800e0748 + page * 17a + 8]);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 5] = b(bu[800e0748 + page * 17a + 9]);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 6] = b(bu[800e0748 + page * 17a + a]);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 4] = b(bu[800e0748 + page * 17a + 8]);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 5] = b(bu[800e0748 + page * 17a + 9]);
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 6] = b(bu[800e0748 + page * 17a + a]);
 }
 
 V1 = h[800e4210];
 if( V1 == 1 ) // opaque
 {
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 7] = b(bu[800e3fa8 + buffer_id * c0 + n_monorect * 10 + 7] | 2);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10] = w((w[800e3fa8 + buffer_id * c0 + n_monorect * 10] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3fa8 + buffer_id * c0 + n_monorect * 10) & 00ffffff));
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 7] = b(bu[800e3fa8 + rb * c0 + n_monorect * 10 + 7] | 2);
+    [800e3fa8 + rb * c0 + n_monorect * 10] = w((w[800e3fa8 + rb * c0 + n_monorect * 10] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3fa8 + rb * c0 + n_monorect * 10) & 00ffffff));
 }
 else if( V1 == 2 ) // semi-transparent
 {
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10 + 7] = b(bu[800e3fa8 + buffer_id * c0 + n_monorect * 10 + 7] & fd);
-    [800e3fa8 + buffer_id * c0 + n_monorect * 10] = w((w[800e3fa8 + buffer_id * c0 + n_monorect * 10] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-    [800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e3fa8 + buffer_id * c0 + n_monorect * 10) & 00ffffff));
+    [800e3fa8 + rb * c0 + n_monorect * 10 + 7] = b(bu[800e3fa8 + rb * c0 + n_monorect * 10 + 7] & fd);
+    [800e3fa8 + rb * c0 + n_monorect * 10] = w((w[800e3fa8 + rb * c0 + n_monorect * 10] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e3fa8 + rb * c0 + n_monorect * 10) & 00ffffff));
 }
 n_monorect += 1;
 
-[800e4128 + buffer_id * 48 + n_drawmode * c] = w((w[800e4128 + buffer_id * 48 + n_drawmode * c] & ff000000) | (w[800e41c8 + buffer_id * 1c + page * 4] & 00ffffff));
-[800e41c8 + buffer_id * 1c + page * 4] = w((w[800e41c8 + buffer_id * 1c + page * 4] & ff000000) | ((800e4128 + buffer_id * 48 + n_drawmode * c) & 00ffffff));
+[800e4128 + rb * 48 + n_drawmode * c] = w((w[800e4128 + rb * 48 + n_drawmode * c] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+[800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e4128 + rb * 48 + n_drawmode * c) & 00ffffff));
 n_drawmode += 1;
 
 [800e41bc] = h(n_polyline);
@@ -587,15 +595,10 @@ y = A4;
 
 while( bu[string] != 0 )
 {
-    if( x > ( h[800e0748 + page * 17a + 0] + h[800e0748 + page * 17a + 4] - 8 ) )
-    {
-        break;
-    }
+    if( x > ( h[800e0748 + page * 17a + 0] + h[800e0748 + page * 17a + 4] - 8 ) ) break;
 
-    if( h[800e41b8] >= 158 ) // max number of sprites reached
-    {
-        break;
-    }
+    // max number of sprites reached
+    if( h[800e41b8] >= 158 ) break;
 
     switch( bu[string] )
     {
@@ -614,28 +617,19 @@ while( bu[string] != 0 )
 
         default:
         {
-            if( bu[string] < 3a )
-            {
-                A0 = bu[string] + 3;
-            }
-            else if( bu[string] < 61 )
-            {
-                A0 = bu[string] + 73;
-            }
-            else
-            {
-                A0 = bu[string] + 53;
-            }
+                 if( bu[string] < 3a ) A0 = bu[string] + 3;
+            else if( bu[string] < 61 ) A0 = bu[string] + 73;
+            else                       A0 = bu[string] + 53;
         }
     }
 
-    V0 = bu[800e0748 + page * 17a + 160 + row]; // color
-    V1 = h[800e1024];
+    color_id = bu[800e0748 + page * 17a + 160 + row]; // color
+    rb = h[800e1024];
     T1 = h[800e41b8];
-    [800e1028 + V1 * 1580 + T1 * 10 + 8] = h(x);
-    [800e1028 + V1 * 1580 + T1 * 10 + a] = h(y);
-    [800e1028 + V1 * 1580 + T1 * 10 + c] = b(((A0 & f) << 3) - 80);
-    [800e1028 + V1 * 1580 + T1 * 10 + d] = b(((A0 >> 1) & 78) - 80);
+    [800e1028 + rb * 1580 + T1 * 10 + 8] = h(x);
+    [800e1028 + rb * 1580 + T1 * 10 + a] = h(y);
+    [800e1028 + rb * 1580 + T1 * 10 + c] = b(((A0 & f) << 3) - 80);
+    [800e1028 + rb * 1580 + T1 * 10 + d] = b(((A0 >> 1) & 78) - 80);
 
     // 0 79D0
     // 1 7990
@@ -645,10 +639,10 @@ while( bu[string] != 0 )
     // 5 7890
     // 6 7850
     // 7 7810
-    [800e1028 + V1 * 1580 + T1 * 10 + e] = h(hu[800e4200 + V0 * 2]); // clut
+    [800e1028 + rb * 1580 + T1 * 10 + e] = h(hu[800e4200 + color_id * 2]); // clut
 
-    [800e1028 + V1 * 1580 + T1 * 10 + 0] = w((w[800e1028 + V1 * 1580 + T1 * 10 + 0] & ff000000) | (w[800e41c8 + V1 * 1c + page * 4] & 00ffffff));
-    [800e41c8 + V1 * 1c + page * 4] = w((w[800e41c8 + V1 * 1c + page * 4] & ff000000) | ((800e1028 + V1 * 1580 + T1 * 10 + 0) & 00ffffff));
+    [800e1028 + rb * 1580 + T1 * 10 + 0] = w((w[800e1028 + rb * 1580 + T1 * 10 + 0] & ff000000) | (w[800e41c8 + rb * 1c + page * 4] & 00ffffff));
+    [800e41c8 + rb * 1c + page * 4] = w((w[800e41c8 + rb * 1c + page * 4] & ff000000) | ((800e1028 + rb * 1580 + T1 * 10 + 0) & 00ffffff));
 
     [800e41b8] = h(T1 + 1);
     x += 8;
