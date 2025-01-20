@@ -1,0 +1,25 @@
+Debug was removed from field, but we can activate it by calling debug render function somewhere.
+
+There are 6 pages with different data.
+
+Page 0 (64 64 96 c) - error page
+
+Page 1 (0 0 6c ca)
+Actor:
+
+Page 2
+
+Page 3 (6c a4 6c 5c)
+"Word:
+
+Page 4 (6c 52 6c 52)
+Actor:
+
+Page 5 (6c 0 6c 52) - map data
+Authr:creator name
+Event:field name
+  Go
+  Stop
+  Step
+  Actor OFF
+  Info  OFF

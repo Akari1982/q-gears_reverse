@@ -129,7 +129,7 @@
 
 
 
-// FIELD.BIN_model_update.cpp
+// FIELD.BIN_model.cpp
 ////////////////////////////////
 // field_model_load_and_init
 800AA930-800AAB20
@@ -163,7 +163,7 @@
 
 
 
-// FIELD.BIN_model_update2.cpp
+// FIELD.BIN_model_render.cpp
 ////////////////////////////////
 // funcab9c8
 800AB9C8-800ABA30
@@ -180,7 +180,7 @@
 // field_arrows_add_to_render
 800ABFE8-800AC358
 ////////////////////////////////
-// field_model_load_local_lodel_and_init_all
+// field_model_load_local_model_and_init_all
 800AC35C-800ACB9C
 ////////////////////////////////
 // field_model_create_packets_and_scale
@@ -403,7 +403,7 @@
 // 0x84 BITXOR
 800C17B8-800C1854
 ////////////////////////////////
-// 0xD0 LINE
+// field_event_opcode_d0_line
 800C1858-800C1AB0
 ////////////////////////////////
 // 0xD3 SLINE

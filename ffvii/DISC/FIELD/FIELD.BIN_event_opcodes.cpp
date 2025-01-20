@@ -849,7 +849,7 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0xD0 LINE
+// field_event_opcode_d0_line()
 
 actor_id_cur = bu[800722c4];
 current_line_id = h[80095d84];
@@ -879,7 +879,6 @@ if( current_line_id < 20 )
 }
 else
 {
-    Lc1a6c:	; 800C1A6C
     A0 = 800a0618; // "many lineobj!"
     funcd4848();
 }
@@ -13411,11 +13410,11 @@ return 0;
 
 string = A0;
 
-A0 = 0;
-A1 = 64;
-A2 = 64;
-A3 = 96;
-A4 = c;
+A0 = 0; // page
+A1 = 64; // x
+A2 = 64; // y
+A3 = 96; // w
+A4 = c; // h
 field_debug_init_page();
 
 A0 = 0;

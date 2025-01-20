@@ -6717,7 +6717,7 @@ F4980A80 1c
             800A8FE4	nop
             800A8FE8	j      La9bf8 [$800a9bf8]
             V0 = 0;
-            800A8FF0	jal    system_get_random_byte_from_table [$80014b70]
+            800A8FF0	jal    system_get_random_byte_from_table [$system_get_random_byte_from_table]
             800A8FF4	nop
             A0 = w[80063014];
             800A9000	nop
@@ -15148,10 +15148,11 @@ Lb1da0:	; 800B1DA0
                 }
                 else if (V0 == 1)
                 {
-                    800B29E8	jal    battle_opcodes_load_values [$800b18a8]
-                    A0 = 0001;
-                    800B29F0	jal    battle_opcodes_load_values [$800b18a8]
+                    A0 = 1;
+                    battle_opcodes_load_values();
+
                     A0 = 0;
+                    battle_opcodes_load_values();
                 }
             }
             break;
@@ -15353,15 +15354,10 @@ return 0;
 
 
 ////////////////////////////////
-// funcb2f30
-800B2F30	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800B2F38	jal    $80014b70
-800B2F3C	nop
-RA = w[SP + 0010];
-V0 = V0 & 00ff;
-800B2F48	jr     ra 
-SP = SP + 0018;
+// funcb2f30()
+
+system_get_random_byte_from_table()
+return V0 & ff;
 ////////////////////////////////
 
 
@@ -15379,8 +15375,10 @@ return V0 & ffff;
 ////////////////////////////////
 // battle_get_random_1_64
 // get random value from 1 to 0x64
-battle_opcodes_get_random;
+
+battle_opcodes_get_random();
 V0 = V0 & ffff;
+
 V1 = V0 * 61;
 A1 = hi[V1 * 80008001];
 V0 = A1 + V1;
@@ -15392,22 +15390,17 @@ V0 = V0 - V1 + 1;
 
 
 ////////////////////////////////
-// funcb2fc4
-800B2FC4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-800B2FD0	jal    funcb2f30 [$800b2f30]
+// funcb2fc4()
+
 S0 = A0;
+
+funcb2f30();
+
 V0 = V0 & 00ff;
 V0 = V0 + 0f01;
 800B2FE0	mult   s0, v0
 800B2FE4	mflo   v1
 V0 = V1 >> 0c;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800B2FF8	jr     ra 
-800B2FFC	nop
 ////////////////////////////////
 
 
@@ -15416,10 +15409,10 @@ SP = SP + 0018;
 // battle_opcodes_count_active_bits
 V0 = A0 & ffff;
 V1 = 0;
-if (V0 != 0)
+if( V0 != 0 )
 {
     loopb300c:	; 800B300C
-        if (A0 & 1)
+        if( A0 & 1 )
         {
             V1 = V1 + 1;
         }
@@ -15434,60 +15427,35 @@ return V1;
 
 
 ////////////////////////////////
-// battle_opcodes_get_random_bit
-800B3030	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S2);
+// battle_opcodes_get_random_bit()
+
 S2 = A0;
-[SP + 0014] = w(S1);
 S1 = 0;
+
 A0 = S2 & ffff;
-[SP + 001c] = w(RA);
-800B304C	jal    battle_opcodes_count_active_bits [$800b3000]
-[SP + 0010] = w(S0);
+battle_opcodes_count_active_bits();
 S0 = V0;
-800B3058	beq    s0, zero, Lb30c8 [$800b30c8]
-V0 = S1 & ffff;
-800B3060	jal    funcb2f30 [$800b2f30]
-S1 = 0001;
-V0 = V0 & 00ff;
-800B306C	div    v0, s0
-800B3070	bne    s0, zero, Lb307c [$800b307c]
-800B3074	nop
-800B3078	break   $01c00
 
-Lb307c:	; 800B307C
-800B307C	addiu  at, zero, $ffff (=-$1)
-800B3080	bne    s0, at, Lb3094 [$800b3094]
-800B3084	lui    at, $8000
-800B3088	bne    v0, at, Lb3094 [$800b3094]
-800B308C	nop
-800B3090	break   $01800
+if( S0 == 0 ) return S1;
 
-Lb3094:	; 800B3094
-800B3094	mfhi   s0
-V0 = S2 & S1;
+S1 = 1;
 
-loopb309c:	; 800B309C
-V0 = V0 & ffff;
-800B30A0	beq    v0, zero, Lb30b4 [$800b30b4]
-800B30A4	nop
-800B30A8	addiu  s0, s0, $ffff (=-$1)
-800B30AC	bltz   s0, Lb30c8 [$800b30c8]
-V0 = S1 & ffff;
+funcb2f30();
+V0 = V0 & ff;
 
-Lb30b4:	; 800B30B4
-S1 = S1 << 01;
-V0 = S1 & ffff;
-800B30BC	bne    v0, zero, loopb309c [$800b309c]
-V0 = S2 & S1;
-V0 = S1 & ffff;
+S0 = V0 % S0;
 
-Lb30c8:	; 800B30C8
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800B30DC	jr     ra 
-800B30E0	nop
+do
+{
+    if( S2 & S1 )
+    {
+        S0 -= 1;
+
+        if( S0 < 0 ) return S1;
+    }
+
+    S1 <<= 1;
+} while( S1 != 0 )
+
+return S1;
 ////////////////////////////////

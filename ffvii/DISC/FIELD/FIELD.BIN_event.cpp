@@ -564,7 +564,7 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
 }
 
 // go through all inited lines
-for( int i = 0; i < h[80095d54]; ++i )
+for( int i = 0; i < h[80095d84]; ++i )
 {
     // talk to line
     if( bu[8007e7ac + i * 18 + 11] != 0 )
@@ -657,15 +657,15 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
         {
             if( bu[80099ffc] == 5 )
             {
-                if( bu[8009d820] & 1 )
+                if( bu[8009d820] & 1 ) // debug
                 {
-                    V0 = bu[800722c4];
-                    if( ( ( bu[80071e24] & 4 ) == 0 ) || ( bu[80114498 + V0] != 0 ) ) // if we want to debug actor data
+                    actor_id_cur = bu[800722c4];
+                    if( ( ( bu[80071e24] & 4 ) == 0 ) || ( bu[80114498 + actor_id_cur] != 0 ) ) // if we want to debug actor data
                     {
                         for( int i = 1; i < 9; ++i )
                         {
-                            A0 = 3;
-                            A1 = i;
+                            A0 = 3; // page
+                            A1 = i; // row
                             A2 = 800a013c; // ""
                             field_debug_copy_string_into_page();
                         }
@@ -673,8 +673,8 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
                 }
             }
 
-            V0 = bu[800722c4];
-            V1 = hu[800831fc + V0 * 2];
+            actor_id_cur = bu[800722c4];
+            V1 = hu[800831fc + actor_id_cur * 2];
             V0 = bu[events_data + V1];
 
             [8009a058] = b(V0);
@@ -703,14 +703,14 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
             V0 = bu[80099ffc];
             800BB9E4	bne    v0, 5, Lbbb14 [$800bbb14]
 
-            V0 = bu[8009d820] & 1;
+            V0 = bu[8009d820] & 1; // debug
             800BB9FC	beq    v0, zero, Lbbb14 [$800bbb14]
 
             V0 = bu[80071e24] & 4;
             800BBA14	beq    v0, zero, Lbba44 [$800bba44]
 
-            V0 = bu[800722c4];
-            V0 = bu[80114498 + V0];
+            actor_id_cur = bu[800722c4];
+            V0 = bu[80114498 + actor_id_cur];
             800BBA3C	beq    v0, zero, Lbbb14 [$800bbb14]
 
             Lbba44:	; 800BBA44
@@ -721,15 +721,15 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
             V0 = bu[80099ffc];
             800BBA60	bne    v0, 5, Lbbb08 [$800bbb08]
 
-            V0 = bu[8009d820] & 1;
+            V0 = bu[8009d820] & 1; // debug
             800BBA78	beq    v0, zero, Lbbb08 [$800bbb08]
 
             V0 = bu[80071e24] & 4;
             800BBA90	beq    v0, zero, Lbbac0 [$800bbac0]
 
-            V0 = bu[800722c4];
-            V0 = bu[80114498 + V0];
-            800BBAB4	nop
+            actor_id_cur = bu[800722c4];
+            V0 = bu[80114498 + actor_id_cur];
+
             800BBAB8	beq    v0, zero, Lbbb08 [$800bbb08]
             800BBABC	nop
 
@@ -750,32 +750,205 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of entit
     Lbbb14:	; 800BBB14
     [800722c4] = b(bu[800722c4] + 1);
 
-    V1 = bu[80099ffc];
-    800BBB30	bne    v1, 5, Lbbb80 [$800bbb80]
+    if( bu[80099ffc] == 5 )
+    {
+        if( bu[80071e24] & 1 )
+        {
+            if( ( bu[80071e24] & 4 ) == 0 ) break;
 
-    V1 = ;
-
-    V0 = bu[80071e24] & 1;
-    800BBB48	beq    v0, zero, Lbbb80 [$800bbb80]
-
-    V0 = bu[80071e24] & 4;
-    800BBB50	beq    v0, zero, Lbbb88 [$800bbb88]
-
-    V0 = bu[800722c4];
-    V0 = bu[80114498 + V0];
-
-    800BBB78	bne    v0, zero, Lbbb88 [$800bbb88]
-
-    Lbbb80:	; 800BBB80
+            actor_id_cur = bu[800722c4];
+            if( bu[80114498 + actor_id_cur] != 0 ) break;
+        }
+    }
 }
 
 Lbbb88:	; 800BBB88
-if( bu[80099ffc] == 5 )
-{
-    [80070788] = b(0);
-}
+if( bu[80099ffc] == 5 ) [80070788] = b(0);
 
 field_script_update_animation_state();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+V0 = w[8009c6dc];
+S2 = bu[V0 + 2];
+
+do
+{
+    V0 = w[8009c6dc];
+    actor_id_cur = bu[800722c4];
+    V0 = bu[V0 + 2];
+
+    if( actor_id_cur >= V0 )
+    {
+        [800722c4] = b(0);
+    }
+
+    if( bu[80071e24] & 3 )
+    {
+        A0 = 4; // page
+        A1 = bu[800722c4]; // actor_id_cur
+        field_script_update_debug()
+    }
+
+    actor_id_cur = bu[800722c4];
+    V0 = bu[80081d90 + actor_id_cur];
+
+    800BB8B0	beq    v0, zero, Lbb8cc [$800bb8cc]
+
+    V0 = bu[800e48f0];
+    800BB8C4	bne    v0, actor_id_cur, Lbbb14 [$800bbb14]
+
+    Lbb8cc:	; 800BB8CC
+    S0 = 0008;
+
+    Lbb8d0:	; 800BB8D0
+        V0 = bu[80099ffc];
+        800BB8D8	nop
+        800BB8DC	bne    v0, 5, Lbb964 [$800bb964]
+        800BB8E0	nop
+        V0 = bu[8009d820]; // debug
+        800BB8EC	nop
+        V0 = V0 & 0001;
+        800BB8F4	beq    v0, zero, Lbb964 [$800bb964]
+        800BB8F8	nop
+        V0 = bu[80071e24];
+        800BB904	nop
+        V0 = V0 & 0004;
+        800BB90C	beq    v0, zero, Lbb93c [$800bb93c]
+        A0 = 0003;
+        actor_id_cur = bu[800722c4];
+        V0 = bu[80114498 + actor_id_cur];
+        800BB930	nop
+        800BB934	beq    v0, zero, Lbb964 [$800bb964]
+        800BB938	nop
+
+        Lbb93c:	; 800BB93C
+        S1 = 0001;
+
+        loopbb940:	; 800BB940
+        A1 = S1 << 10;
+        A2 = 800a013c;
+        800BB94C	jal    funcda124 [$800da124]
+        A1 = A1 >> 10;
+        S1 = S1 + 0001;
+        V0 = S1 < 0009;
+        800BB95C	bne    v0, zero, loopbb940 [$800bb940]
+        A0 = 0003;
+
+        Lbb964:	; 800BB964
+        actor_id_cur = bu[800722c4];
+        V0 = actor_id_cur * 2;
+        AT = 800831fc;
+        AT = AT + V0;
+        V1 = hu[AT + 0000];
+        V0 = w[8009c6dc];
+        800BB98C	nop
+        V0 = V0 + V1;
+        V0 = bu[V0 + 0000];
+        800BB998	nop
+        [8009a058] = b(V0);
+        V0 = bu[8009a058];
+        800BB9AC	nop
+        V0 = V0 << 02;
+        AT = 800e0228;
+        AT = AT + V0;
+        V0 = w[AT + 0000];
+        800BB9C4	nop
+        800BB9C8	jalr   v0 ra
+
+        800BB9D0	beq    v0, zero, Lbba54 [$800bba54]
+
+        V0 = bu[80099ffc];
+        800BB9E4	bne    v0, 5, Lbbb14 [$800bbb14]
+
+        V0 = bu[8009d820] & 0001; // debug
+        800BB9FC	beq    v0, zero, Lbbb14 [$800bbb14]
+
+        V0 = bu[80071e24] & 0004;
+        800BBA14	beq    v0, zero, Lbba44 [$800bba44]
+
+        actor_id_cur = bu[800722c4];
+        V0 = bu[80114498 + actor_id_cur];
+
+        800BBA3C	beq    v0, zero, Lbbb14 [$800bbb14]
+        800BBA40	nop
+
+        Lbba44:	; 800BBA44
+        [800722c4] = b(bu[800722c4] + 1);
+        800BBB00	j      Lbbb88 [$800bbb88]
+
+        Lbba54:	; 800BBA54
+        V0 = bu[80099ffc];
+        800BBA60	bne    v0, 5, Lbbb08 [$800bbb08]
+
+        V0 = bu[8009d820] & 1; // debug
+        800BBA78	beq    v0, zero, Lbbb08 [$800bbb08]
+
+        V0 = bu[80071e24] & 4;
+        800BBA90	beq    v0, zero, Lbbac0 [$800bbac0]
+
+        actor_id_cur = bu[800722c4];
+        V0 = bu[80114498 + actor_id_cur];
+        800BBAB8	beq    v0, zero, Lbbb08 [$800bbb08]
+
+        Lbbac0:	; 800BBAC0
+        [8009a064] = w(w[8009a064] + 1);
+
+        if( w[8009a064] >= 8 )
+        {
+            [8009a064] = w(0);
+            [800722c4] = b(bu[800722c4] + 1);
+        }
+        800BBB00	j      Lbbb88 [$800bbb88]
+
+        Lbbb08:	; 800BBB08
+        S0 -= 1;
+    800BBB0C	bne    s0, zero, Lbb8d0 [$800bb8d0]
+
+    Lbbb14:	; 800BBB14
+    [800722c4] = b(bu[800722c4] + 1);
+    S2 -= 1;
+
+    if( bu[80099ffc] == 5 )
+    {
+        if( bu[80071e24] & 1 )
+        {
+            if( ( bu[80071e24] & 4 ) == 0 ) break;
+
+            actor_id_cur = bu[800722c4];
+            if( bu[80114498 + actor_id_cur] != 0 ) break;
+        }
+    }
+} while( S2 != 0 )
+
+Lbbb88:	; 800BBB88
+if( bu[80099ffc] == 5 ) [80070788] = b(0);
+
+field_script_update_animation_state()
 ////////////////////////////////
 
 
@@ -2373,10 +2546,7 @@ actor_id_cur = bu[800722c4];
 
 if( bu[80071e24] & 04 )
 {
-    if( bu[80114498 + actor_id_cur] == 0 )
-    {
-        return;
-    }
+    if( bu[80114498 + actor_id_cur] == 0 ) return;
 }
 
 string = 800e4254;
@@ -2391,7 +2561,7 @@ A0 = string;
 A1 = opcode_name;
 field_debug_concat_string();
 
-if( bu[8009d820] & 01 )
+if( bu[8009d820] & 1 ) // debug
 {
     A0 = 3;
     A1 = 0; // row
@@ -2429,7 +2599,7 @@ while( args_n != 0 )
     A1 = temp;
     field_debug_concat_string();
 
-    if( bu[8009d820] & 01 )
+    if( bu[8009d820] & 1 ) // debug
     {
         A0 = 3; // page
         A1 = S4 - args_n; // row
@@ -2495,14 +2665,14 @@ A0 = string;
 A1 = temp;
 field_debug_concat_string();
 
-if( bu[8009d820] & 1 )
+if( bu[8009d820] & 1 ) // debug
 {
     A0 = 2; // page
     A1 = string;
     field_debug_add_string_to_page_next_row();
 }
 
-if( bu[8009d820] & 2 )
+if( bu[8009d820] & 2 ) // debug
 {
     A0 = string;
     funcd4840(); // empty. Was used for debug
@@ -2536,7 +2706,7 @@ switch( V1 )
     {
         val = bu[script + off];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0300; // "G cons="
             A1 = val;
@@ -2552,7 +2722,7 @@ switch( V1 )
         indx = bu[script + off];
         val = bu[8009d288 + indx];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2573,7 +2743,7 @@ switch( V1 )
         indx = bu[script + off];
         val = bu[8009d288 + 100 + indx];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2594,7 +2764,7 @@ switch( V1 )
         indx = bu[script + off];
         val = bu[8009d288 + 200 + indx];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2615,7 +2785,7 @@ switch( V1 )
         indx = bu[script + off];
         val = bu[8009d288 + 300 + indx];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2636,7 +2806,7 @@ switch( V1 )
         indx = bu[script + off];
         val = bu[8009d288 + 400 + indx];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2657,7 +2827,7 @@ switch( V1 )
         indx = bu[script + off];
         val = bu[80075e24 + indx];
 
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2674,7 +2844,7 @@ switch( V1 )
 
     default:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[8009d820] & 3 ) // debug
         {
             A0 = 800a0320; // "G data err="
             A1 = V1 & 00ff;
@@ -2990,9 +3160,8 @@ A0 = 800a03ac;
 A2 = 0002;
 
 Lbf8e4:	; 800BF8E4
-A0 = 800a032c;
-800BF8EC	jal    funcd4848 [$800d4848]
-800BF8F0	nop
+A0 = 800a032c; // "Bad Event arg!"
+funcd4848();
 
 Lbf8f4:	; 800BF8F4
 ////////////////////////////////
@@ -3000,17 +3169,18 @@ Lbf8f4:	; 800BF8F4
 
 
 ////////////////////////////////
-// read_memory_block_two_bytes
+// read_memory_block_two_bytes()
+
 //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
 //A1 - offset to byte offset in opcode
-800BF908	addiu  sp, sp, $ffe8 (=-$18)
+
 800BF90C	addiu  a0, a0, $ffff (=-$1)
 A0 = A0 << 10;
 A0 = A0 >> 10;
 V0 = A0 < 0006;
-[SP + 0014] = w(RA);
+
 800BF920	beq    v0, zero, Lbfab0 [$800bfab0]  // skip halfbyte reading if halfbyte number >6
-[SP + 0010] = w(S0);
+
 V0 = A0 << 02;
 800BF92C	lui    at, $800a
 AT = AT + 0414;
@@ -3553,8 +3723,8 @@ A0 = 800a0320;
 A2 = 0002;
 
 Lc0220:	; 800C0220
-A0 = 800a032c;
-800C0228	jal    funcd4848 [$800d4848]
+A0 = 800a032c; // "Bad Event arg!"
+funcd4848();
 
 V0 = 0;
 
@@ -3564,21 +3734,17 @@ Lc0234:	; 800C0234
 
 
 ////////////////////////////////
-// store_memory_block_two_bytes
-800C0248	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+// store_memory_block_two_bytes()
+
 S0 = A2;
 800C0254	addiu  a0, a0, $ffff (=-$1)
 A0 = A0 << 10;
 A0 = A0 >> 10;
 V0 = A0 < 0006;
 800C0264	beq    v0, zero, Lc03f4 [$800c03f4]
-[SP + 0014] = w(RA);
+
 V0 = A0 << 02;
-800C0270	lui    at, $800a
-AT = AT + 046c;
-AT = AT + V0;
-V0 = w[AT + 0000];
+V0 = w[800a046c + V0];
 800C0280	nop
 800C0284	jr     v0 
 800C0288	nop
@@ -3985,20 +4151,13 @@ A1 = S0;
 V0 = bu[800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
-800C09E0	lui    at, $8008
-AT = AT + 31fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
+A0 = hu[800731fc + V0];
 V0 = w[8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
-800C0A08	nop
-800C0A0C	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + A1;
-[AT + 0000] = b(S0);
+[80075e24 + A1] = b(S0);
 V0 = bu[8009d820];
 800C0A24	nop
 V0 = V0 & 0003;
@@ -4062,20 +4221,14 @@ V0 = V0 & 0003;
 800C0B18	beq    v0, zero, Lc0b30 [$800c0b30]
 A1 = V1 & 00ff;
 A0 = 800a03ac;
-800C0B28	jal    field_debug_add_parse_value_to_page2 [$800beca4]
-A2 = 0002;
+A2 = 2;
+field_debug_add_parse_value_to_page2();
 
 Lc0b30:	; 800C0B30
-A0 = 800a032c;
-800C0B38	jal    funcd4848 [$800d4848]
-800C0B3C	nop
+A0 = 800a032c; // "Bad Event arg!"
+funcd4848();
 
 Lc0b40:	; 800C0B40
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-800C0B4C	jr     ra 
-800C0B50	nop
 ////////////////////////////////
 
 
@@ -4083,7 +4236,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // funcc0b54()
 
-if( bu[8009d820] & 3 )
+if( bu[8009d820] & 3 ) // debug
 {
     string = 800e4288;
 

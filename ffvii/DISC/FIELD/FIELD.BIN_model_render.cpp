@@ -1,5 +1,5 @@
 ////////////////////////////////
-// field_model_load_local_lodel_and_init_all()
+// field_model_load_local_model_and_init_all()
 
 block_7 = A0;
 models_struct = A1;

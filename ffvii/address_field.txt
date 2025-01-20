@@ -222,6 +222,9 @@
                     d - we not load mim to vram (maybe it's already there) (reload field?)
 
 80099ffc [] script related. In script function.
+            3 - set when init debug.
+            4 - set when there is an error in event script (bad opcode, bad arguments, too many lines, no message data).
+            5 - 
 
 8009a048 array of states for KAWAI (0x10 items 0x1 size). Used in 0xd kawai opcode. Init with -1.
 
@@ -553,10 +556,9 @@
     +   c [][]     index into +10 array of strings. Next id to insert new string.
     +   e [][]     init with 0. Set to 4 after init.
     +  10 array of strings (0x18 items 0xe size)
-    +  78 []       init with 0. If this is 2 then we not init some data but set this to 0.
     + 160 array of row colors (0x18 items 0x1 size)
-        + 0 []       clut for render.
-    + 178 []       ???
+        + 0 []       clut id for render.
+    + 178 []       hide page (2 - hide, 1 - not inited, 0 - render). If not 2 then we reset string in init.
 
 800e1024 [][]     init with 0.
 800e1028 debug packets buffer (2 buffer with size 0x1580 with 0x158 packets 0x10 size) (textured rectangle, 8x8, opaque, raw-texture).
@@ -570,7 +572,7 @@
 800e41c4 [][]     debug render draw mode settings count.
 800e41c8 otc pointers for debug rendering (0x1c size per buffer, 0x04 per page).
 
-800e4200 some debug array.
+800e4200 debug clut array for pages (0x2 size 0x8 items).
 800e4210 [][]     opaque or semi-transparent 800e3fa8 monochrome rectangle. Init with 0.
 800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
 800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
@@ -664,7 +666,7 @@
 
 80114490 buffer index for something like array or triangles.
 
-80114498 array of debug actors opcodes and data or not (size 0x1).
+80114498 array of debug actors opcodes and data (1) or not (0) (size 0x1).
 
 801144cc [][] store which side we cross here during walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 

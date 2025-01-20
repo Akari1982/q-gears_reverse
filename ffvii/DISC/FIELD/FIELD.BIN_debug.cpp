@@ -1,11 +1,10 @@
 ////////////////////////////////
 // field_debug_init_buffers()
 
-V0 = 762;
-loopd7d8c:	; 800D7D8C
-    [800e08c0 + V0] = b(1);
-    800D7D9C	addiu  v0, v0, $fe86 (=-$17a)
-800D7DA0	bgez   v0, loopd7d8c [$800d7d8c]
+for( int i = 0; i < 6; ++i )
+{
+    [800e0748 + i * 17a + 178] = b(1);
+}
 
 [8009d824] = b(1); // debug dirty and needs update
 [800e1024] = h(0);
@@ -50,14 +49,8 @@ for( int i = 0; i < 18; ++i )
 system_gpu_get_type();
 type = V0;
 
-if( ( type == 1 ) || ( type == 2 ) )
-{
-    S3 = 2f;
-}
-else
-{
-    S3 = 1f;
-}
+if( ( type == 1 ) || ( type == 2 ) ) S3 = 2f;
+else                                 S3 = 1f;
 
 for( int i = 0; i < 6; ++i )
 {
@@ -82,103 +75,112 @@ for( int i = 0; i < 6; ++i )
 ////////////////////////////////
 // field_debug_init_pages()
 
-A0 = 5; // page
-A1 = 6c; // x
-A2 = 0; // y
-A3 = 6c; // width
-A4 = 52; // height
-field_debug_init_page();
+// page 5
+{
+    A0 = 5; // page
+    A1 = 6c; // x
+    A2 = 0; // y
+    A3 = 6c; // w
+    A4 = 52; // h
+    field_debug_init_page();
 
-A0 = 800e4254;
-A1 = 800a12a8; // "Authr:"
-field_debug_copy_string();
+    A0 = 800e4254;
+    A1 = 800a12a8; // "Authr:"
+    field_debug_copy_string();
 
-A0 = 800e4254;
-A1 = w[8009c6dc] + 10; // from field file
-field_debug_concat_string();
+    A0 = 800e4254;
+    A1 = w[8009c6dc] + 10; // from field file
+    field_debug_concat_string();
 
-A0 = 5;
-A1 = 800e4254;
-field_debug_add_string_to_page_next_row();
+    A0 = 5; // page
+    A1 = 800e4254;
+    field_debug_add_string_to_page_next_row(); // row 0
 
-A0 = 800e4254;
-A1 = 800a12b0; // "Event:"
-field_debug_copy_string();
+    A0 = 800e4254;
+    A1 = 800a12b0; // "Event:"
+    field_debug_copy_string();
 
-A0 = 800e4254;
-A1 = w[8009c6dc] + 18; // from field file
-field_debug_concat_string();
+    A0 = 800e4254;
+    A1 = w[8009c6dc] + 18; // from field file
+    field_debug_concat_string();
 
-A0 = 5;
-A1 = 800e4254;
-field_debug_add_string_to_page_next_row();
+    A0 = 5; // page
+    A1 = 800e4254;
+    field_debug_add_string_to_page_next_row(); // row 1
 
-A0 = 5;
-A1 = 800a12b8; // "  Go"
-field_debug_add_string_to_page_next_row();
+    A0 = 5; // page
+    A1 = 800a12b8; // "  Go"
+    field_debug_add_string_to_page_next_row(); // row 2
 
-A0 = 5;
-A1 = 800a12c0; // "  Stop"
-field_debug_add_string_to_page_next_row();
+    A0 = 5; // page
+    A1 = 800a12c0; // "  Stop"
+    field_debug_add_string_to_page_next_row(); // row 3
 
-A0 = 5;
-A1 = 800a12c8; // "  Step"
-field_debug_add_string_to_page_next_row();
+    A0 = 5; // page
+    A1 = 800a12c8; // "  Step"
+    field_debug_add_string_to_page_next_row(); // row 4
 
-A0 = 5; // id
-A1 = 5; // row id
-A2 = 800a12d0; // "  Actor OFF"
-field_debug_copy_string_into_page();
+    A0 = 5; // page
+    A1 = 5; // row
+    A2 = 800a12d0; // "  Actor OFF"
+    field_debug_copy_string_into_page();
 
-A0 = 5;
-A1 = 6; // row id
-A2 = 800a12dc; // "  Info  OFF"
-field_debug_copy_string_into_page();
+    A0 = 5; // page
+    A1 = 6; // row
+    A2 = 800a12dc; // "  Info  OFF"
+    field_debug_copy_string_into_page();
 
-A0 = 5;
-funcda2cc();
+    A0 = 5; // page
+    funcda2cc();
+}
 
-A0 = 4;
-A1 = 6c;
-A2 = 52;
-A3 = 6c;
-A4 = 52;
-field_debug_init_page();
+{
+    A0 = 4; // page
+    A1 = 6c; // x
+    A2 = 52; // y
+    A3 = 6c; // w
+    A4 = 52; // h
+    field_debug_init_page();
 
-A0 = 4;
-A1 = 800e0628; // "Actor:"
-field_debug_add_string_to_page_next_row();
+    A0 = 4; // page
+    A1 = 800e0628; // "Actor:"
+    field_debug_add_string_to_page_next_row();
 
-A0 = 4;
-funcda2cc();
+    A0 = 4; // page
+    funcda2cc();
+}
 
-A0 = 3;
-A1 = 6c;
-A2 = a4;
-A3 = 6c;
-A4 = 5c;
-field_debug_init_page();
+{
+    A0 = 3; // page
+    A1 = 6c; // x
+    A2 = a4; // y
+    A3 = 6c; // w
+    A4 = 5c; // h
+    field_debug_init_page();
 
-A0 = 3;
-A1 = 800e0630; // "Word:"
-field_debug_add_string_to_page_next_row();
+    A0 = 3; // page
+    A1 = 800e0630; // "Word:"
+    field_debug_add_string_to_page_next_row();
 
-A0 = 3;
-funcda2cc();
+    A0 = 3; // page
+    funcda2cc();
+}
 
-A0 = 1;
-A1 = 0;
-A2 = 0;
-A3 = 6c;
-A4 = ca;
-field_debug_init_page();
+{
+    A0 = 1; // page
+    A1 = 0; // x
+    A2 = 0; // y
+    A3 = 6c; // w
+    A4 = ca; // h
+    field_debug_init_page();
 
-A0 = 1;
-A1 = 800e0628; // "Actor:"
-field_debug_add_string_to_page_next_row();
+    A0 = 1; // page
+    A1 = 800e0628; // "Actor:"
+    field_debug_add_string_to_page_next_row();
 
-A0 = 1;
-funcda2cc();
+    A0 = 1; // page
+    funcda2cc();
+}
 
 [80099ffc] = b(3);
 [8007ebcc] = b(4);
@@ -239,23 +241,28 @@ return 0;
 ////////////////////////////////
 // field_debug_init_page()
 
-id = A0;
+page = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
 
-A0 = id;
-A1 = A1;
-A2 = A2;
-A3 = A3;
-A4 = A4;
+A0 = page;
+A1 = x;
+A2 = y;
+A3 = w;
+A4 = h;
 field_debug_set_pos_size();
 
-if( bu[800e0848 + id * 17a + 78] != 2 )
+if( bu[800e0748 + page * 17a + 178] != 2 )
 {
-    A0 = id;
+    A0 = page;
     field_debug_reset_strings();
 }
 else
 {
-    [800e0848 + id * 17a + 78] = b(0);
+    [800e0748 + page * 17a + 178] = b(0);
+
     [8009d824] = b(1);
 }
 ////////////////////////////////
@@ -265,10 +272,17 @@ else
 ////////////////////////////////
 // field_debug_set_pos_size()
 
-[800e0748 + A0 * 17a + 0] = h(A1);
-[800e0748 + A0 * 17a + 2] = h(A2);
-[800e0748 + A0 * 17a + 4] = h(A3);
-[800e0748 + A0 * 17a + 6] = h(A4);
+page = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
+
+[800e0748 + page * 17a + 0] = h(x);
+[800e0748 + page * 17a + 2] = h(y);
+[800e0748 + page * 17a + 4] = h(w);
+[800e0748 + page * 17a + 6] = h(h);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -297,7 +311,7 @@ else
 ////////////////////////////////
 // funcd8498()
 
-return bu[800e08c0 + A0 * 17a] < 1;
+return bu[800e0748 + A0 * 17a + 178] < 1;
 ////////////////////////////////
 
 
@@ -305,18 +319,22 @@ return bu[800e08c0 + A0 * 17a] < 1;
 ////////////////////////////////
 // field_debug_reset_strings()
 
+page = A0;
+
 for( int i = 0; i < 18; ++i )
 {
-    [800e0748 + A0 * 17a + 10 + i * e] = b(0);
-    [800e0748 + A0 * 17a + 160 + i] = b(0);
+    [800e0748 + page * 17a + 10 + i * e] = b(0); // reset string
+    [800e0748 + page * 17a + 160 + i] = b(0); // set color id
 }
 
-[800e0748 + A0 * 17a + 8] = b(7);
-[800e0748 + A0 * 17a + 9] = b(f);
-[800e0748 + A0 * 17a + a] = b(1f);
-[800e0748 + A0 * 17a + c] = h(0);
-[800e0748 + A0 * 17a + e] = h(0);
-[800e0748 + A0 * 17a + 78] = b(0);
+[800e0748 + page * 17a + 8] = b(7);
+[800e0748 + page * 17a + 9] = b(f);
+[800e0748 + page * 17a + a] = b(1f);
+[800e0748 + page * 17a + c] = h(0);
+[800e0748 + page * 17a + e] = h(0);
+
+[800e0748 + page * 17a + 178] = b(0);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -611,7 +629,7 @@ while( bu[string] != 0 )
         }
     }
 
-    V0 = bu[800e0748 + page * 17a + 160 + row]; // colour
+    V0 = bu[800e0748 + page * 17a + 160 + row]; // color
     V1 = h[800e1024];
     T1 = h[800e41b8];
     [800e1028 + V1 * 1580 + T1 * 10 + 8] = h(x);
@@ -643,19 +661,19 @@ while( bu[string] != 0 )
 ////////////////////////////////
 // field_debug_add_string_to_page_next_row()
 
-page_id = A0;
+page = A0;
 string = A1;
 
-A0 = 800e0748 + page_id * 17a + 10 + h[800e0748 + page_id * 17a + c] * e;
+A0 = 800e0748 + page * 17a + 10 + h[800e0748 + page * 17a + c] * e;
 A1 = string;
 field_debug_copy_string();
 
-[800e0748 + page_id * 17a + c] = h(hu[800e0748 + page_id * 17a + c] + 1);
+[800e0748 + page * 17a + c] = h(hu[800e0748 + page * 17a + c] + 1);
 
 // if number of rows greater than height
-if( ( ( h[800e0748 + page_id * 17a + 6] - 8 ) / a ) < h[800e0748 + page_id * 17a + c] )
+if( ( ( h[800e0748 + page * 17a + 6] - 8 ) / a ) < h[800e0748 + page * 17a + c] )
 {
-    [800e0748 + page_id * 17a + c] = h(0);
+    [800e0748 + page * 17a + c] = h(0);
 }
 
 [8009d824] = b(1);
@@ -667,22 +685,22 @@ if( ( ( h[800e0748 + page_id * 17a + 6] - 8 ) / a ) < h[800e0748 + page_id * 17a
 // funcd9ffc()
 // not used
 
-id1 = A0;
-S1 = A2;
+page = A0;
+string = A1;
+color = A2;
 
-A0 = 800e0758 + id1 * 17a + h[800e0754 + id1 * 17a] * e;
-A1 = A1;
+A0 = 800e0748 + page * 17a + 10 + h[800e0748 + page * 17a + c] * e;
+A1 = string;
 field_debug_copy_string();
 
-V0 = h[800e0754 + id1 * 17a];
-[800e0758 + id1 * 17a + 150 + V0] = b(S1);
+row = h[800e0748 + page * 17a + c];
+[800e0748 + page * 17a + 160 + row] = b(color);
 
-[800e0748 + id1 * 17a + c] = h(hu[800e0754 + id1 * 17a] + 1);
+[800e0748 + page * 17a + c] = h(row + 1);
 
-V1 = h[800e074e + id1 * 17a] - 8;
-if( ( V1 / a ) < h[800e0754 + id1 * 17a] )
+if( ( ( h[800e0748 + page * 17a + 6] - 8 ) / a ) < h[800e0748 + page * 17a + c] )
 {
-    [800e0754 + id1 * 17a] = h(0);
+    [800e0748 + page * 17a + c] = h(0);
 }
 
 [8009d824] = b(1);
@@ -707,10 +725,11 @@ field_debug_copy_string();
 ////////////////////////////////
 // field_debug_set_row_color()
 
-page_id = A0;
-row_id = A1;
+page = A0;
+row = A1;
+color = A2;
 
-[800e0748 + page_id * 17a + 160 + row_id] = b(A2);
+[800e0748 + page * 17a + 160 + row] = b(color);
 return 1;
 ////////////////////////////////
 
@@ -719,9 +738,10 @@ return 1;
 ////////////////////////////////
 // funcda1d4()
 
-page_id = A0;
+page = A0;
 
-[800e0748 + page_id * 17a + e] = b(A1);
+[800e0748 + page * 17a + e] = b(A1);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -730,13 +750,17 @@ page_id = A0;
 ////////////////////////////////
 // field_debug_set_page_color()
 
-page_id = A0;
+page = A0;
+r = A1;
+g = A2;
+b = A3;
 
-if( bu[800e0748 + page_id * 17a + 78] == 0 )
+if( bu[800e0748 + page * 17a + 78] == 0 )
 {
-    [800e0748 + page_id * 17a + 8] = b(A1);
-    [800e0748 + page_id * 17a + 9] = b(A2);
-    [800e0748 + page_id * 17a + a] = b(A3);
+    [800e0748 + page * 17a + 8] = b(r);
+    [800e0748 + page * 17a + 9] = b(g);
+    [800e0748 + page * 17a + a] = b(b);
+
     [8009d824] = b(1);
 }
 ////////////////////////////////
@@ -746,7 +770,10 @@ if( bu[800e0748 + page_id * 17a + 78] == 0 )
 ////////////////////////////////
 // funcda28c()
 
-[800e0748 + A0 * 17a + 178] = b(1);
+page = A0;
+
+[800e0748 + page * 17a + 178] = b(1);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -755,7 +782,10 @@ if( bu[800e0748 + page_id * 17a + 78] == 0 )
 ////////////////////////////////
 // funcda2cc()
 
-[800e0748 + A0 * 17a + 78] = b(2);
+page = A0;
+
+[800e0748 + page * 17a + 178] = b(2);
+
 [8009d824] = b(1);
 ////////////////////////////////
 
@@ -830,12 +860,12 @@ return V1;
 800DA3FC	addiu  a2, zero, $ffff (=-$1)
 
 loopda400:	; 800DA400
-V0 = bu[A1 + 0000];
-A1 = A1 + 0001;
-800DA408	addiu  v1, v1, $ffff (=-$1)
-[A0 + 0000] = b(V0);
+    V0 = bu[A1 + 0000];
+    A1 = A1 + 0001;
+    800DA408	addiu  v1, v1, $ffff (=-$1)
+    [A0 + 0000] = b(V0);
+    A0 = A0 + 0001;
 800DA410	bne    v1, a2, loopda400 [$800da400]
-A0 = A0 + 0001;
 
 Lda418:	; 800DA418
 ////////////////////////////////
