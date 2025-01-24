@@ -2856,6 +2856,8 @@ for( int i = 0; i < A1; +i )
 
 ////////////////////////////////
 // func40bc4()
+// StGetNext
+// Get one frame of ring buffer data.
 
 addr = A0;
 header = A1;

@@ -27,11 +27,10 @@ return bu[800e0638 + V0]; // random
 
 
 ////////////////////////////////
-// funcaba70
+// funcaba70()
 
 // get encounter table address
-V0 = bu[8009ABF4 + 3c];
-if (V0 == 0)
+if( bu[8009abf4 + 3c] == 0 )
 {
     S1 = w[80071a54];
 }
@@ -40,43 +39,34 @@ else
     S1 = w[80071a54] + 18;
 }
 
+[8009c6d8] = b(bu[8009c6d8] + 20);
 
-
-V0 = bu[8009c6d8];
-V0 = V0 + 20;
-[8009c6d8] = b(V0);
-
-if( V0 == 0 )
+if( bu[8009c6d8] == 0 )
 {
     func262d8();
 
-    V1 = bu[8009d58e];
-    V1 = V1 + 1;
-    [8009d58e] = b(V1);
+    [8009d58e] = b(bu[8009d58e] + 1);
 
-    if (bu[8009d58e] == 0 && bu[8009d58f] != ff)
+    if( ( bu[8009d58e] == 0 ) && ( bu[8009d58f] != ff ) )
     {
         [8009d58f] = b(bu[8009d58f] + 1);
     }
 
     A0 = hu[S1];
-    if (A0 & 1 && hu[80114488] == 0 && bu[8009ABF4 + 3b] == 0)
+    if( ( A0 & 1 ) && ( hu[80114488] == 0 ) && ( bu[8009abf4 + 3b] == 0 ) )
     {
         V1 = h[800965e0]; // manual visible entity
         V1 = hu[80074EA4 + V1 * 84 + 70]; // movement speed
 
         V0 = A0 >> 8; // encounter Value for this battle table
         V1 = V1 / V0;
-
-        V0 = hu[8007173c];
-        V0 = V0 + V1;
-        [8007173c] = h(V0);
+        [8007173c] = h(hu[8007173c] + V1);
 
         funcab9c8(); // random
 
         V1 = bu[80062f1b];
         V1 = V1 & 7f;
-        if (V0 < V1)
+        if( V0 < V1 )
         {
             [800716d0] = b(4);
         }
@@ -92,9 +82,9 @@ if( V0 == 0 )
         V1 = bu[80062f19];
         V1 = A0 * V1;
         V1 = V1 >> c;
-        if (V0 < V1)
+        if( V0 < V1 )
         {
-            field_stop_load_background_in_advance;
+            field_stop_load_next_map_in_advance();
 
             [8009abf4 + 01] = b(2);
             [8007ebc8] = b(1);
@@ -104,20 +94,18 @@ if( V0 == 0 )
             V0 = V0 & ff;
             V1 = bu[80062f1b];
             A0 = V0 >> 2;
-            if ((V1 & 80) == 0) // Ambush Alert
+            if( ( V1 & 80 ) == 0 ) // Ambush Alert
             {
-                V0 = hu[S1 + e];
-                S0 = V0 >> a; // normal rate
+                S0 = hu[S1 + e] >> a; // normal rate
             }
             else
             {
-                V0 = hu[S1 + e];
-                S0 = V0 >> b; // half rate
+                S0 = hu[S1 + e] >> b; // half rate
             }
 
             V0 = A0 & ff;
             V1 = S0 & ff;
-            if (V0 < V1)
+            if( V0 < V1 )
             {
                 V0 = hu[S1 + e];
                 [800716d0] = b(0);

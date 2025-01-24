@@ -357,11 +357,9 @@ switch( V1 )
 
     case 3:
     {
-        V0 = hu[8009abf4 + 4e];
-        V0 = V0 + 1;
-        [8009abf4 + 4e] = hu[V0];
+        [8009abf4 + 4e] = hu[hu[8009abf4 + 4e] + 1];
 
-        if (V0 == 22)
+        if( hu[8009abf4 + 4e] == 22 )
         {
             [8009abf4 + 4c] = h(0);
             [80095dd4] = h(0); // set render func to 0
@@ -491,11 +489,9 @@ switch( V1 )
 
     case d:
     {
-        V0 = hu[8009abf4 + 4e];
-        V0 = V0 + 1;
-        [8009abf4 + 4e] = hu(V0);
+        [8009abf4 + 4e] = hu(hu[8009abf4 + 4e] + 1);
 
-        if (V0 == 12)
+        if( hu[8009abf4 + 4e] == 12 )
         {
             [8009ac40] = h(0);
             [80095dd4] = h(0); // set render func to 0
@@ -504,6 +500,7 @@ switch( V1 )
         {
             A0 = 2;
             func12840();
+
             A0 = 20;
             func12a8c();
         }

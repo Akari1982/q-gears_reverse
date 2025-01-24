@@ -10910,7 +10910,7 @@ field_event_run_init();
 
 ////////////////////////////////
 // funcaa7d8()
-// func funcba65c in released ffvii
+// func field_event_update in released ffvii
 800AA7D8-800AA89C
 
 V0 = bu[80053620];

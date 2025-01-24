@@ -1354,21 +1354,26 @@ A0 = 1;
 system_psyq_dec_dct_reset();
 
 [80095da8] = w(0); // rb
-[80095db0] = w(0);
 [80095dac] = w(0);
-[80075df0] = h(0);
-[80075e00] = h(140); // x
-[80075e02] = h(e0); // y
-[80075d00] = w(80075df0);
+[80095db0] = w(0);
+
+[80075d00] = w(80075df0); // StHEADER
 [80095dc4] = h(hu[8009a1f4 + movie_id * 14 + 12]);
+// StHEADER - CD-ROM STR structure
+[80075df0] = h(0); // id
+[80075df2] = h(0); // type
+[80075df4] = h(0); // secCount
+[80075df6] = h(0); // nSectors
+[80075df8] = w(0); // frameCount
+[80075dfc] = w(0); // frameSize
+[80075e00] = h(140); // width
+[80075e02] = h(e0); // height
+[80075e04] = w(0); // dummy1
+[80075e08] = w(0); // dummy2
+// next CdlLOC loc;
+
 [8006e118] = w(0);
-[80075df2] = h(0);
-[80075df4] = h(0);
-[80075df6] = h(0);
-[80075dfc] = w(0);
-[80075e04] = w(0);
-[80075e08] = w(0);
-[80075df8] = w(0);
+
 [8007e110] = w(e0);
 [8007e114] = w(0);
 
@@ -1398,7 +1403,7 @@ else if( movie_type == 0 )
     system_psyq_st_set_ring();
     memory += 12000;
 
-    [80083270] = w(80077f3c);
+    [80083270] = w(80077f3c); // pointer to camera data
 
     A0 = 80036038; // func36038()
     system_psyq_dec_dct_out_callback();
@@ -1512,14 +1517,14 @@ if( w[80071a60] == a )
         for( int i = 800000; i != 0; --i )
         {
             func35dc8();
-            S1 = V0;
+            addr = V0;
 
-            if( S1 != 0 )
+            if( addr != 0 )
             {
                 for( int i = 0; i < a; ++i )
                 {
-                    [80077f3c + i * 4] = w(w[S1]);
-                    S1 += 4;
+                    [80077f3c + i * 4] = w(w[addr]); // read camera
+                    addr += 4;
                 }
 
                 if( w[8006e108] != 0 )
@@ -1539,11 +1544,11 @@ if( w[80071a60] == a )
                 }
 
                 rb = w[80095da8];
-                A0 = S1;
+                A0 = addr;
                 A1 = w[80095d9c + rb * 4];
                 func4262c();
 
-                A0 = S1;
+                A0 = addr;
                 func40ac8(); // StFreeRing
 
                 return w[80071a60];
@@ -1899,47 +1904,41 @@ while( true )
 
 for( int i = 800000; i != 0; --i )
 {
-    A0 = SP + 10;
+    A0 = SP + 10; // addr
     A1 = 80075d00;
     func40bc4();
 
     if( V0 == 0 )
     {
-        A1 = w[80075d00];
+        header = w[80075d00];
 
-        if( w[A1 + 8] >= w[80095d98] )
-        {
-            [80095dac] = w(1);
-        }
+        // current frame greater than number of frames
+        if( w[header + 8] >= w[80095d98] ) [80095dac] = w(1);
 
-        if( w[8006e114] >= w[A1 + 8] )
-        {
-            [80095dac] = w(1);
-        }
+        if( w[8006e114] >= w[header + 8] ) [80095dac] = w(1);
 
-        if( ( w[80095d90] != hu[A1 + 10] ) || ( w[80095d94] != hu[A1 + 12] ) )
+        if( ( w[80095d90] != hu[header + 10] ) || ( w[80095d94] != hu[header + 12] ) )
         {
-            [80095d90] = w(hu[A1 + 10]);
-            [80095d94] = w(hu[A1 + 12]);
+            [80095d90] = w(hu[header + 10]);
+            [80095d94] = w(hu[header + 12]);
 
             if( w[80095db0] == 0 )
             {
-                V0 = hu[80095d90];
-                V1 = hu[80095d94];
+                w = hu[80095d90];
+                h = hu[80095d94];
             }
             else
             {
-                V0 = (hu[A1 + 10] * 3) / 2;
-                V1 = hu[80095d94];
+                w = (hu[header + 10] * 3) / 2;
+                h = hu[80095d94];
             }
 
-            [80095dc0] = h(V0);
-            [80095dc2] = h(V1);
-            [80095dba] = h(V1);
+            [80095dc0] = h(w);
+            [80095dc2] = h(h);
+            [80095dba] = h(h);
         }
 
-        V1 = w[80075d00];
-        [8006e114] = w(w[V1 + 8]);
+        [8006e114] = w(w[header + 8]);
 
         return w[SP + 10];
     }
@@ -1953,82 +1952,50 @@ return 0;
 ////////////////////////////////
 // func35f14()
 
-80035F1C	lui    s0, $0080
+S0 = 800000;
+while( true )
+{
+    func35dc8();
+    addr = V0;
+    if( addr != 0 ) break;
 
-loop35f28:	; 80035F28
-80035F28	jal    func35dc8 [$80035dc8]
-80035F2C	nop
-S1 = V0;
-80035F34	bne    s1, zero, L35f4c [$80035f4c]
-80035F38	addiu  s0, s0, $ffff (=-$1)
-80035F3C	bne    s0, zero, loop35f28 [$80035f28]
-V0 = 0;
-80035F44	j      L36020 [$80036020]
-80035F48	nop
+    S0 -= 1;
+    if( S0 == 0 ) return 0;
+}
 
-L35f4c:	; 80035F4C
-S0 = 0;
-80035F50	lui    v1, $8007
-V1 = V1 + 7f3c;
+for( int i = 0; i < a; ++i )
+{
+    [80077f3c + i * 4] = w(w[addr]); // read camera
+    addr += 4;
+}
 
-loop35f58:	; 80035F58
-V0 = w[S1 + 0000];
-S1 = S1 + 0004;
-S0 = S0 + 0001;
-[V1 + 0000] = w(V0);
-V0 = S0 < 000a;
-80035F6C	bne    v0, zero, loop35f58 [$80035f58]
-V1 = V1 + 0004;
-80035F74	lui    v0, $8007
-V0 = w[V0 + e108];
-80035F7C	nop
-80035F80	beq    v0, zero, L35fa8 [$80035fa8]
-80035F84	nop
-80035F88	lui    v0, $8007
-V0 = w[V0 + e104];
-80035F90	lui    at, $8007
-[AT + e108] = w(0);
-80035F98	lui    at, $8009
-[AT + 5db0] = w(V0);
-80035FA0	j      L35fdc [$80035fdc]
-80035FA4	nop
+if( w[8006e108] != 0 )
+{
+    [8006e108] = w(0);
+    [80095db0] = w(w[8006e104]);
+}
+else
+{
+    V1 = hu[80067f62];
+    if( w[8006e100] != V1 )
+    {
+        [8006e100] = w(V1);
+        [8006e104] = w(V1);
+        [8006e108] = w(1);
+    }
+}
 
-L35fa8:	; 80035FA8
-80035FA8	lui    v1, $8007
-V1 = hu[V1 + 7f62];
-80035FB0	lui    v0, $8007
-V0 = w[V0 + e100];
-80035FB8	nop
-80035FBC	beq    v0, v1, L35fdc [$80035fdc]
-V0 = 0001;
-80035FC4	lui    at, $8007
-[AT + e100] = w(V1);
-80035FCC	lui    at, $8007
-[AT + e104] = w(V1);
-80035FD4	lui    at, $8007
-[AT + e108] = w(V0);
+[80095da8] = w(w[80095da8] < 1);
+rb = w[80095da8];
 
-L35fdc:	; 80035FDC
-80035FDC	lui    v0, $8009
-V0 = V0 + 5da8;
-V1 = w[V0 + 0000];
-80035FE8	nop
-V1 = V1 < 0001;
-[V0 + 0000] = w(V1);
-80035FF4	lui    v1, $8009
-V1 = w[V1 + 5da8];
-80035FFC	nop
-V1 = V1 << 02;
-V0 = V0 + V1;
-A1 = w[V0 + fff4];
-A0 = S1;
+A0 = addr;
+A1 = w[80095d9c + rb * 4]; // memory
 func4262c();
 
-80036014	jal    func40ac8 [$80040ac8]
-A0 = S1;
-V0 = 0001;
+A0 = addr;
+func40ac8(); // StFreeRing
 
-L36020:	; 80036020
+return 1;
 ////////////////////////////////
 
 

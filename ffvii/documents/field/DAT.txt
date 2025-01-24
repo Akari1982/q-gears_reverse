@@ -132,6 +132,7 @@ triggers data (block 5)
         +  6 [][]     x2.
         +  8 [][]     y2.
         +  a [][]     z2.
+        + 12 [][]     map id.
     + 158 [][][][] array of background triggers (0xc items, 0x10 size).
         + c []       enter state.
         + c []       byte id.

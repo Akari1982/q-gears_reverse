@@ -118,8 +118,6 @@
     + 7c [][][][] move to y (MOVE and LADER and JUMP).
     + 80 [][][][] move to z (MOVE and LADER and JUMP).
 
-
-
 800756e8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
             0 - play default animation.
             1 - if current frame >= number of frames - set first frame. (we start load anim after this)
@@ -130,6 +128,21 @@
             6 - play and set to 3.
 
 80075cf8 [][]     current background scroll step.
+
+80075d00 [][][][] store pointer to StHEADER (ring header) here for movie reading (80075df0)
+80075df0 StHEADER (0x20 size)
+    +  0 [][]     id.
+    +  2 [][]     type.
+    +  4 [][]     secCount.
+    +  6 [][]     nSectors.
+    +  8 [][][][] frameCount.
+    +  c [][][][] frameSize.
+    + 10 [][]     width.
+    + 12 [][]     height.
+    + 14 [][][][] dummy1.
+    + 18 [][][][] dummy2.
+    + 1c [][][][] CdlLOC loc;
+
 80075e10 [][][][] BCX start address. Color data. Looks like free place to do something.
 80075e10 [][]     DP ???
 80075e12 [][]     DP ???
@@ -200,7 +213,7 @@
 80095dc4 [][]     played movie type.
 
 80095dcc []   ???
-80095dd0 [][] store here map id to whish trigger player character closer to load it's texture in advance.
+80095dd0 [][] store here map id to which trigger player character closer to load it's texture in advance.
 
 80095de0 array of stored background palletes (0x40 items 0x20 size)(each palette is 0x10 items 0x2 size).
 
@@ -231,7 +244,7 @@
 8009a058 []       save current opcode here.
 8009a05c field id to load (and current field id).
 8009a060
-8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next entoty after 8 of this.
+8009a064 [][][][] script related. In script function. We increase this every opcode (maybe number of proseed opcodes). We go to next actor after 8 of this.
 
 8009a074 structures for fade (size 0x30). Index for using fade structure here 80075dec.
 
@@ -314,10 +327,17 @@
                     02 - encounter.
                     03 - start play movie.
                     04 - continue play movie.
-                    09 - tutorial.
+                    05 - some menu
+                    06 - some menu
+                    07 - some menu
+                    08 - some menu
+                    09 - some menu
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
                     0d - disc change
+                    0e - some menu
+                    12 - some menu
+                    13 - some menu
                     14 - we abort movie play if this.
                     19 -
                     1a - game over
@@ -370,8 +390,14 @@
     + 5e [][]     we store NFADE 1/4-byte_value here.
     + 60 [][]     we store NFADE 2/5-byte_value here.
     + 62 [][]     we store NFADE 3/6-byte_value here.
-    + 68 [][][][] key data.
-    + 70 [][][][] key data.
+    + 68 [][][][] currently pressed buttons for both controllers without remap.
+    + 6c [][][][] previously pressed buttons for both controllers without remap.
+    + 70 [][][][] new pressed buttons for both controllers without remap.
+    + 74 [][][][] released buttons for both controllers without remap.
+    + 78 [][][][] currently pressed buttons for both controllers with remap.
+    + 7c [][][][] previously pressed buttons for both controllers with remap.
+    + 80 [][][][] new pressed buttons for both controllers with remap.
+    + 84 [][][][] released buttons for both controllers with remap.
                     0001 - L2
                     0002 - R2
                     0004 - L1.
@@ -386,9 +412,6 @@
                     2000 - right button
                     4000 - down button.
                     8000 - left button
-    + 78 [][][][] key data hold. 0020 - ok button (hold, released or pressed). Checked during text copy.
-    + 7c [][][][] key data. (repeat)
-    + 80 [][][][] key data pressed. 0020 - ok button (hold, released or pressed). Checked during window state check.
     + 88 [][]     movie frame.
     + 8a []       if 1 we activate X shaking. 0 - deactivate.
     + 8b []       state of shaking single X movement (0 - init, 1 - action)
@@ -462,6 +485,7 @@
 
 800def80 [][][][] WORLD/WM.PRE file sector.
 800def84 [][][][] WORLD/WM.PRE file size.
+800def88 rotations table (0x1 size).
 
 800df08c CLOUD.BCX start sector. After it pointers and sezes for all global models.
 800df090 CLOUD.BCX size.
@@ -654,6 +678,7 @@
 
 801142D4 [] priority queue script id. (size 0x08 0x01).
 
+80114454 [][][][] currently pressed buttons for both controllers with remap.
 80114458 [][][][] offset to walkmesh triangle access block.
 8011445C [][] time to wait for windows. (size 0x2).
 

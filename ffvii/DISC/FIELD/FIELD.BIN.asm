@@ -3,10 +3,10 @@
 // field_load_mim_dat_files
 800A1368-800A1494
 ////////////////////////////////
-// field_stop_load_background_in_advance
+// field_stop_load_next_map_in_advance
 800A1498-800A14D4
 ////////////////////////////////
-// field_check_and_set_load_background_in_advance
+// field_load_next_map_in_advance
 800A14D8-800A16C8
 ////////////////////////////////
 // field_main
@@ -66,13 +66,13 @@
 // handle_animation_update
 800A6418-800A65A0
 ////////////////////////////////
-// handle_update
+// field_entity_movement_update
 800A65A4-800A829C
 ////////////////////////////////
 // set_gateway_to_map_load
 800A82A0-800A8300
 ////////////////////////////////
-// funca8304
+// field_entity_check_talk
 800A8304-800A85FC
 ////////////////////////////////
 // get_direction_vector_x
@@ -81,7 +81,7 @@
 // get_direction_vector_y
 800A8620-800A863C
 ////////////////////////////////
-// calculate_direction_by_vectors
+// field_entity_calculate_direction_by_vectors
 800A8640-800A8854
 ////////////////////////////////
 // funca8858
@@ -96,7 +96,7 @@
 // field_walkmesh_calculate_z
 800A8E34-800A8F84
 ////////////////////////////////
-// main_walkmesh_move
+// field_entity_move_by_walkmesh
 800A8F88-800A9B60
 ////////////////////////////////
 // entity_collision_check
@@ -108,7 +108,7 @@
 // move_line_check
 800A9EEC-800AA17C
 ////////////////////////////////
-// move_talk_to_line
+// field_entity_check_line_interact
 800AA180-800AA328
 ////////////////////////////////
 // field_line_clear_all_actors
@@ -300,12 +300,12 @@
 
 
 
-// FIELD.BIN_script.cpp
+// FIELD.BIN_event.cpp
 ////////////////////////////////
 // field_init_structs_events_actors
 800BA534-800BA658
 ////////////////////////////////
-// funcba65c
+// field_event_update
 800BA65C-800BA7C0
 ////////////////////////////////
 // field_init_default_values

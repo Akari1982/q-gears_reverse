@@ -4908,7 +4908,7 @@ A0 = SP + 10;
 A1 = SP + 20;
 A2 = SP + 30;
 
-calculate_direction_by_vectors;
+field_entity_calculate_direction_by_vectors();
 
 V1 = bu[800722C4];
 A0 = bu[8007EB98 + V1];
@@ -5066,7 +5066,7 @@ if (bu[entities_data + current_model * 84 + 3A] != 0 &&
     A0 = SP + 10;
     A1 = SP + 20;
     A2 = SP + 30;
-    calculate_direction_by_vectors;
+    field_entity_calculate_direction_by_vectors();
 
     [entities_data + current_model * 84 + 3E] = h(V0);
 
@@ -10071,8 +10071,8 @@ V0 = V1 < 0002;
 800D05E8	nop
 800D05EC	beq    v1, zero, Ld0618 [$800d0618]
 A0 = SP + 0018;
-800D05F4	j      Ld0918 [$800d0918]
-V0 = 0;
+
+return 0;
 
 Ld05fc:	; 800D05FC
 V0 = 0002;
@@ -10161,8 +10161,9 @@ V0 = V0 + A2;
 V0 = w[V0 + 0014];
 A2 = SP + 0038;
 V0 = V0 >> 0c;
-800D0750	jal    calculate_direction_by_vectors [$800a8640]
 [SP + 0030] = w(V0);
+field_entity_calculate_direction_by_vectors();
+
 800D0758	lui    at, $8008
 800D075C	addiu  at, at, $eb98 (=-$1468)
 AT = AT + S0;
@@ -10174,15 +10175,11 @@ A1 = w[8009c544];
 V1 = V1 << 02;
 V1 = V1 + A1;
 A1 = bu[V1 + 0038];
-800D0788	jal    funcd1350 [$800d1350]
 A2 = V0 & 00ff;
-V0 = 0002;
-800D0794	lui    at, $8008
-AT = AT + 1d90;
-AT = AT + S0;
-[AT + 0000] = b(V0);
-800D07A4	j      Ld0918 [$800d0918]
-V0 = 0;
+funcd1350();
+
+[80081d90 + S0] = b(2);
+return 0;
 
 Ld07ac:	; 800D07AC
 800D07AC	jal    funcd1200 [$800d1200]
@@ -10227,8 +10224,7 @@ V1 = 0003;
 AT = AT + 1d90;
 AT = AT + S0;
 [AT + 0000] = b(V1);
-800D0860	j      Ld0918 [$800d0918]
-V0 = 0001;
+return 1;
 
 Ld0868:	; 800D0868
 800D0868	jal    funcd152c [$800d152c]
@@ -10268,25 +10264,15 @@ A1 = 0;
 A0 = A0 + 0d54;
 800D08FC	jal    field_debug_add_parse_value_to_page2 [$800beca4]
 A2 = 0;
-800D0904	j      Ld0918 [$800d0918]
-V0 = 0;
+return 0;
 
 Ld090c:	; 800D090C
-800D090C	j      Ld0918 [$800d0918]
-V0 = 0001;
+return 1;
 
 Ld0914:	; 800D0914
 V0 = 0;
 
 Ld0918:	; 800D0918
-RA = w[SP + 0050];
-S3 = w[SP + 004c];
-S2 = w[SP + 0048];
-S1 = w[SP + 0044];
-S0 = w[SP + 0040];
-SP = SP + 0058;
-800D0930	jr     ra 
-800D0934	nop
 ////////////////////////////////
 
 
@@ -10637,8 +10623,9 @@ V0 = V0 + A2;
 V0 = w[V0 + 0014];
 A2 = SP + 0030;
 V0 = V0 >> 0c;
-800D0F9C	jal    calculate_direction_by_vectors [$800a8640]
 [SP + 0028] = w(V0);
+field_entity_calculate_direction_by_vectors();
+
 V0 = S6 << 10;
 A0 = w[SP + 0030];
 V0 = V0 >> 10;
