@@ -2433,10 +2433,10 @@ A0 = w[800af3c4];
 S0 = A1;
 S1 = A2;
 
-system_read_tim_set_address();
+system_psyq_open_tim();
 
 A0 = SP + 10;
-system_read_tim();
+system_psyq_read_tim();
 
 A1 = w[SP + 0020];
 800A28B0	nop

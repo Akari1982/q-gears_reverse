@@ -3984,7 +3984,7 @@ A1 = bu[env + 11];
 
 
 ////////////////////////////////
-// system_read_tim_set_address()
+// system_psyq_open_tim()
 
 [80070690] = w(A0);
 
@@ -3994,7 +3994,7 @@ return 0;
 
 
 ////////////////////////////////
-// system_read_tim()
+// system_psyq_read_tim()
 
 ret = A0;
 

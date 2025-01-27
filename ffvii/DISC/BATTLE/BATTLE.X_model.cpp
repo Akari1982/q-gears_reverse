@@ -7243,10 +7243,10 @@ x_add = A1;
 y_add = A2;
 
 A0 = texture;
-system_read_tim_set_address();
+system_psyq_open_tim();
 
 A0 = SP + 10;
-system_read_tim();
+system_psyq_read_tim();
 
 clut_sizes = w[SP + 14];
 if( ( clut_sizes != 0 ) && ( w[SP + 18] != 0 ) ) // and clut data
@@ -7275,10 +7275,10 @@ texture = A0;
 S0 = A1;
 
 A0 = texture;
-system_read_tim_set_address();
+system_psyq_open_tim();
 
 A0 = SP + 10;
-system_read_tim()
+system_psyq_read_tim()
 
 image_sizes = w[SP + 1c];
 if( ( w[SP + 1c] != 0 ) && ( w[SP + 20] != 0 ) ) // and image data

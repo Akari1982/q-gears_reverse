@@ -3,6 +3,42 @@
 80034cfc lzs extracted buffer.
 80034d14 lzs extract function.
 
+80048f60 file array
+     0 00000000 00000000
+     1 D9D20000 00480000 ???
+     2 E2D20000 00300000
+     3 E8D20000 00780100
+     4 E8D20000 00780100
+     5 17D30000 00600000
+     6 23D30000 00080000
+     7 24D30000 00280000 ???
+     8 29D30000 00280000
+     9 77D30000 00F00000
+     a 95D30000 00C00100 ???
+     b 4FD30000 00780000
+     c 2ED30000 00100000 ???
+     d 5ED30000 00C80000 ???
+     e 77D30000 00F00000 ???
+     f 30D30000 00F80000 ???
+    10 95D30000 00C00100 ???
+    11 BFD20000 00100000
+    12 C1D20000 00100000
+    13 C3D20000 00100000
+    14 C5D20000 00100000
+    15 C7D20000 00100000
+    16 C9D20000 00100000
+    17 CBD20000 00100000
+    18 CDD20000 00100000
+    19 CFD20000 00100000
+    1a D1D20000 00100000
+    1b D3D20000 00100000
+    1c D5D20000 00100000
+    1d D7D20000 00100000
+    1e D7D20000 00100000
+    1f D7D20000 00100000
+    + 0 [][][][] sector
+    + 4 [][][][] size
+
 800491b0 elemental bit accordinance array (00 - 0x0001, 01 - 0x0002 etc)
 
 800491d0 character id -> savemap block assosiation id. (0-0, 1-1, 2-2, 3-3, 4-4, 5-5, 6-6, 7-7, 8-8, 9-6, A-7)
@@ -72,70 +108,73 @@
 80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).
 
 80062d44 GP
-    + 1c [][]     first pad start button delay (0 - delay, 1 - fast)
-    + 1e [][]     second pad start button delay (0 - delay, 1 - fast)
-    + 20 [][]     first pad repeat button delay time (f/3).
-    + 22 [][]     second pad repeat button delay time (f/3).
-    + 24 [][]     first pad start button delay (0 - delay, 1 - fast)
-    + 26 [][]     second pad start button delay (0 - delay, 1 - fast)
-    + 28 [][]     first pad repeat button delay time (7/1).
-    + 2a [][]     second pad repeat button delay time (7/1).
-    + 2c []       if 1 then system pad started and inited.
-    + 44 [][]     10c?
-    + 70 [][]     colour for dialog text
-    + 72 [][]
-    + 74 [][]
-    + 76 [][]
-    + 78 [][]     number letters to render.
-    + 80 [][][][] monowidth text
-    + 97 []       ??? some type of text.
-    + 98 []       colour of tutorial text window.
-    + a0 []       ??? some type of text.
-    + a2 [][]     x position of tutorial text window.
-    + a4 [][]     y position of tutorial text window.
-    + b4 [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
-    + b8 []       number of something.
-    +110 []       store array of values from 0x5 type materia to use in paired functions.
-    +118 []       init with 0. Store 1 here if we has mastered Preemptive materia.
-    +11c [][][][] pointer to unit data (8009d84c).
-    +120 []       number of enabled commands.
-    +124 []       number of enabled spells.
-    +128 [][]     init with 0. Add gil plus value. Limit to 0x20.
-    +12a [][]     init with 0. Add encounter value (enemy lure/away). Limit to 0xff.
-    +12c [][]     init with 0. Add chokobo lure value. Limit to 0x20.
-    +12e [][]     init with 0. Add preemptive value. Limit it to 0x55.
-    +130 [][]     init with 0. Add here number of stars equipped enemy away materia has. Limit to 0xff.
-    +134 []       Store 1 2 8 or 10 here in case of hp absorb, mp absorb, steal as well, added cut nateria pairing. used in appropriate function.
-    +138 [][][][] number of command (used in cycle during copy commands from temp to unit structure)
-    +13c [][][][] number of counter materia already applied (8 max)
-    +140 [][][][] store 8 here if we have counter materia equipped (set in pair check). Used when set counter command.
-    +144 [][]     store 0 here. Used when set counter command.
-    +148 []       store 1 here if we has magic or master magic materia in battle, 2 in case of w-magic.
-    +14c []       store 1 here if we has summon or master summon materia in battle, 2 in case of w-summon.
-    +150 [][][][] wait tutorial opcode value.
-    +158 [][][][]
-    +174 [][][][] store here pointer to text of tutorial menu.
-    +1cc [][][][] store AP to next star here (in case of menu).
-    +1d0 [][][][] store -1 here at the start of total battle circle. We set error id here.
-    +1d4 []       add gil plus value from all player structure. Limit to 0x20.
-    +1d5 []       calculate and add enemy lure value (Limit 0x2-0x20).
-    +1d6 []       add chokobo lure value from all player structure. Limit to 0x20.
-    +1d7 []       add preemptive value from all player structure. Limit to 0x55. Add bit 0x80 if we have mastered preemptive materia equipped.
-    +220 [][][][] current main menu level (0 1 or 2)
-    +238 [][][][] address to store materia data in case of menu. Init 8 items [][] from +a with 0.
+    + 1c            [][]     first pad start button delay (0 - delay, 1 - fast)
+    + 1e            [][]     second pad start button delay (0 - delay, 1 - fast)
+    + 20            [][]     first pad repeat button delay time (f/3).
+    + 22            [][]     second pad repeat button delay time (f/3).
+    + 24            [][]     first pad start button delay (0 - delay, 1 - fast)
+    + 26            [][]     second pad start button delay (0 - delay, 1 - fast)
+    + 28            [][]     first pad repeat button delay time (7/1).
+    + 2a            [][]     second pad repeat button delay time (7/1).
+    + 2c            []       if 1 then system pad started and inited.
+    + 44            [][]     10c?
+    + 70            [][]     colour for dialog text
+    + 72            [][]
+    + 74            [][]
+    + 76            [][]
+    + 78            [][]     number letters to render.
+    + 80            [][][][] monowidth text
+    + 8c            [][][][] some prev menu (stack)
+    + 90            [][][][] some request menu (stack).
+    + 97            []       ??? some type of text.
+    + 98            []       colour of tutorial text window.
+    + a0            []       ??? some type of text.
+    + a2            [][]     x position of tutorial text window.
+    + a4            [][]     y position of tutorial text window.
+    + a8 (80062dec) [][][][] pointer to some load address.
+    + b4            [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
+    + b8            []       number of something.
+    +110            []       store array of values from 0x5 type materia to use in paired functions.
+    +118            []       init with 0. Store 1 here if we has mastered Preemptive materia.
+    +11c            [][][][] pointer to unit data (8009d84c).
+    +120            []       number of enabled commands.
+    +124            []       number of enabled spells.
+    +128            [][]     init with 0. Add gil plus value. Limit to 0x20.
+    +12a            [][]     init with 0. Add encounter value (enemy lure/away). Limit to 0xff.
+    +12c            [][]     init with 0. Add chokobo lure value. Limit to 0x20.
+    +12e            [][]     init with 0. Add preemptive value. Limit it to 0x55.
+    +130            [][]     init with 0. Add here number of stars equipped enemy away materia has. Limit to 0xff.
+    +134            []       Store 1 2 8 or 10 here in case of hp absorb, mp absorb, steal as well, added cut nateria pairing. used in appropriate function.
+    +138            [][][][] number of command (used in cycle during copy commands from temp to unit structure)
+    +13c            [][][][] number of counter materia already applied (8 max)
+    +140            [][][][] store 8 here if we have counter materia equipped (set in pair check). Used when set counter command.
+    +144            [][]     store 0 here. Used when set counter command.
+    +148            []       store 1 here if we has magic or master magic materia in battle, 2 in case of w-magic.
+    +14c            []       store 1 here if we has summon or master summon materia in battle, 2 in case of w-summon.
+    +150            [][][][] wait tutorial opcode value.
+    +158 (80062e9c) [][][][]
+    +174            [][][][] store here pointer to text of tutorial menu.
+    +1cc            [][][][] store AP to next star here (in case of menu).
+    +1d0            [][][][] store -1 here at the start of total battle circle. We set error id here.
+    +1d4            []       add gil plus value from all player structure. Limit to 0x20.
+    +1d5            []       calculate and add enemy lure value (Limit 0x2-0x20).
+    +1d6            []       add chokobo lure value from all player structure. Limit to 0x20.
+    +1d7            []       add preemptive value from all player structure. Limit to 0x55. Add bit 0x80 if we have mastered preemptive materia equipped.
+    +220            [][][][] current main menu level (0 1 or 2)
+    +238            [][][][] address to store materia data in case of menu. Init 8 items [][] from +a with 0.
         +0 []       number of learned stars in materia.
         +1 []       total number of stars in materia.
         +4 [][][][] ap to next star in materia.
-    +244 [][][][] some flags. used in loading units.
-    +258 [][][][] text row count.
-    +278 [][][][] total number of stars currently parsing materia has.
-    +27c [][][][] enable or disable input in menu? we only handle input if this == 1.
-                        0 - 
-                        1 - enabled
-                        2 - 
+    +244            [][][][] some flags. used in loading units.
+    +258            [][][][] text row count.
+    +278            [][][][] total number of stars currently parsing materia has.
+    +27c            [][][][] enable or disable input in menu? we only handle input if this == 1.
+                             0 - 
+                             1 - enabled
+                             2 - 
     +280 (80062fc4) [][][][] menu OT for render (store needed OT here for all menu render).
-    +2b8 []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
-    +2dc []       0 - we load battle, 1 - we load menu.
+    +2b8            []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
+    +2dc            []       0 - we load battle, 1 - we load menu.
 
 80062cd0 [][][][] 1f801810. GP0 Send GP0 Commands/Packets (Rendering and VRAM Access). GPUREAD Read responses to GP0(C0h) and GP1(10h) commands.
 80062cd4 [][][][] 1f801814. GP1 Send GP1 Commands (Display Control). GPUSTAT Read GPU Status Register.
@@ -393,7 +432,7 @@
                     2 - battle.
                     3 - world map.
                     4 - battle.
-                    5 - menu???
+                    5 - menu.
                     6 - highway.
                     7 - chocobo.
                     8 - snowboard.
@@ -401,7 +440,7 @@
                     a - submarine.
                     b - jet.
                     c - disc change.
-                    d - ???
+                    d - menu.
                     e - snowboard2.
                    10 - ???
 

@@ -2122,10 +2122,10 @@ while( bu[801518dc] != 0 )
 unit_id = A1;
 
 A0 = A0;
-system_read_tim_set_address();
+system_psyq_open_tim();
 
 A0 = SP + 10; // ret
-system_read_tim();
+system_psyq_read_tim();
 
 clut_data = w[SP + 18];
 for( int i = 0; i < 18; ++i )

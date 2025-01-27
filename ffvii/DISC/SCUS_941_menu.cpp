@@ -1565,7 +1565,8 @@ else
 
 
 ////////////////////////////////
-// func1f710
+// func1f710()
+
 if( bu[GP + 97] == 0 )
 {
     return 0;
@@ -2699,18 +2700,13 @@ system_add_draw_mode();
 
 
 ////////////////////////////////
-// func21044
-80021044	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0024] = w(S3);
+// func21044()
+
 S3 = A0;
-[SP + 0028] = w(S4);
 S4 = A1;
 A0 = 0;
-[SP + 002c] = w(RA);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
 80021068	jal    system_psyq_wait_frames [$8003cedc]
-[SP + 0018] = w(S0);
+
 A0 = S3;
 A1 = 0;
 A2 = 0;
@@ -2786,20 +2782,14 @@ A0 = S4;
 A0 = S3;
 8002118C	jal    system_psyq_set_disp_mask [$80043d3c]
 A0 = 0001;
-RA = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-800211B0	jr     ra 
-800211B4	nop
 ////////////////////////////////
-// func211b8
-[GP + 00a8] = w(A0);
-800211BC	jr     ra 
-800211C0	nop
+
+
+
+////////////////////////////////
+// func211b8()
+
+[GP + a8] = w(A0);
 ////////////////////////////////
 
 
@@ -2819,16 +2809,17 @@ system_cdrom_read_chain();
 
 
 ////////////////////////////////
-// func2120c
+// func2120c()
+
 V0 = w[GP + 90];
 [GP + 8c] = w(V0);
 [GP + 90] = w(A0);
 
 if( A0 != 0 )
 {
-    if( ( V0 - 3 >= 2 ) || ( A0 - 3 >= 2 ) )
+    if( ( ( V0 - 3 ) >= 2 ) || ( ( A0 - 3 ) >= 2 ) )
     {
-        80021240	jal    func211c4 [$800211c4]
+        func211c4();
     }
 }
 ////////////////////////////////
@@ -2836,17 +2827,16 @@ if( A0 != 0 )
 
 
 ////////////////////////////////
-// func21258
-80021258	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+// func21258()
+
 A1 = A0;
-A0 = 000d;
-80021268	jal    func15248 [$80015248]
-A2 = 0008;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80021278	jr     ra 
-8002127C	nop
+A0 = d;
+A2 = 8;
+func15248();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func21280
 80021280	addiu  sp, sp, $ffe8 (=-$18)
@@ -5245,19 +5235,15 @@ A0 = A0 + V0;
 
 
 ////////////////////////////////
-// func2368c
-8002368C	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0040] = w(S2);
+// func2368c()
+
 S2 = 8009a0c8;
 A0 = S2;
 A1 = 0;
 A2 = 0;
 A3 = 0001;
 V0 = 000a;
-[SP + 003c] = w(S1);
 S1 = 0001;
-[SP + 0044] = w(RA);
-[SP + 0038] = w(S0);
 [GP + 0220] = w(0);
 [SP + 0010] = w(V0);
 [SP + 0014] = w(0);
@@ -5299,15 +5285,9 @@ A3 = 0001;
 [SP + 0028] = w(0);
 [SP + 002c] = w(0);
 [SP + 0030] = w(S1);
-80023764	jal    func26448 [$80026448]
 [SP + 0034] = w(0);
-RA = w[SP + 0044];
-S2 = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-SP = SP + 0048;
-80023780	jr     ra 
-80023784	nop
+
+80023764	jal    func26448 [$80026448]
 ////////////////////////////////
 
 
@@ -5368,7 +5348,7 @@ V0 = 0002;
 
 
 ////////////////////////////////
-// func23ad4
+// func23ad4()
 
 [SP + 478] = w(A0);
 
@@ -5403,7 +5383,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
             if( b[8009a0c8 + b] != 5 )
             {
                 A0 = 1;
-                system_menu_sound;
+                system_menu_sound();
 
                 V0 = b[8009a0c8 + b];
                 if( V0 == 0 || V0 == 7 || V0 == 8 || V0 == 9 ) // item config phs save menu
@@ -5415,7 +5395,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
 
                     V0 = b[8009a0c8 + b];
                     A0 = bu[80049450 + V0];
-                    func2120c;
+                    func2120c();
 
                     if( b[8009a0c8 + b] == 8 ) // phs menu
                     {
@@ -5479,7 +5459,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
 
                 V0 = b[8009a0c8 + b];
                 A0 = bu[80049450 + V0];
-                80023DE8	jal    func2120c [$8002120c]
+                func2120c();
 
                 [GP + 220] = w(0);
                 [GP + 228] = w(b[8009a0e5]);
@@ -5660,7 +5640,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     system_psyq_draw_sync();
 
                     A0 = S6;
-                    80024190	jal    func25c94 [$80025c94]
+                    func25c94();
 
                     A0 = 0;
                     system_psyq_draw_sync();
@@ -6083,87 +6063,73 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func24a3c
-// A0 - pointer to tutorial settings
+// func24a3c()
+
+tutorial_data = A0;
 
 [GP + b4] = w(1);
 
-[GP + 027c] = w(0);
-[GP + 01c8] = w(0);
-[GP + 0250] = w(0);
+[GP + 27c] = w(0);
+[GP + 1c8] = w(0);
+[GP + 250] = w(0);
 
 [GP + 8c] = w(0);
 [GP + 90] = w(0);
 
 [80062dfd] = b(0);
-if( A0 == 0 )
+
+if( tutorial_data == 0 )
 {
-    A1 = 0;
     A0 = 0;
-    80024A88	jal    func1f6e4 [$8001f6e4]
+    A1 = 0;
     A2 = 0;
+    func1f6e4();
+
     [80062fa0] = w(0);
 }
 else
 {
     [GP + 150] = w(14);
-    [GP + 158] = w(A0);
+    [GP + 158] = w(tutorial_data);
     [80062fa0] = w(1); // tutorial ON
 }
 
-S0 = bu[8009d2a4];
-80024AB8	nop
-V0 = S0 & 0004;
-80024AC0	beq    v0, zero, L24ad4 [$80024ad4]
-V0 = 0001;
-[GP + 02e0] = b(V0);
-80024ACC	j      L24adc [$80024adc]
-S0 = 0;
+if( bu[8009d2a4] & 4 ) [GP + 2e0] = b(1);
+else                   [GP + 2e0] = b(0);
 
-L24ad4:	; 80024AD4
-[GP + 02e0] = b(0);
-S0 = 0;
+for( int i = 0; i < 3; ++i )
+{
+    if( bu[8009c6e4 + 4f8 + i] != ff )
+    {
+        A0 = i;
+        system_init_player_stat_from_equip();
 
-L24adc:	; 80024ADC
-S1 = 00ff;
+        A0 = i;
+        system_init_player_stat_from_materia();
 
-loop24ae0:	; 80024AE0
-A0 = S0 & ffff;
-AT = 8009cbdc;
-AT = AT + A0;
-V0 = bu[AT + 0000];
-80024AF4	nop
-80024AF8	beq    v0, s1, L24b18 [$80024b18]
-80024AFC	nop
-80024B00	jal    system_init_player_stat_from_equip [$80020058]
-80024B04	nop
-80024B08	jal    system_init_player_stat_from_materia [$8001786c]
-A0 = S0 & 00ff;
-80024B10	jal    system_calculate_total_lure_gil_preemptive_value [$80017678]
-80024B14	nop
+        system_calculate_total_lure_gil_preemptive_value();
+    }
+}
 
-L24b18:	; 80024B18
-S0 = S0 + 0001;
-V0 = S0 & ffff;
-V0 = V0 < 0003;
-80024B24	bne    v0, zero, loop24ae0 [$80024ae0]
-80024B28	nop
 A0 = 800706a4;
 A1 = 8007075c;
-80024B3C	jal    func21044 [$80021044]
-S0 = 0;
+func21044();
+
 [GP + 164] = h(64);
 [GP + 2b0] = h(-3);
 
-80024B54	jal    func25cd4 [$80025cd4]
-A0 = SP + 0020;
-A0 = 800756f8;
-80024B64	jal    func25c94 [$80025c94]
-80024B68	addiu  s4, zero, $ffff (=-$1)
-[GP + 027c] = w(0);
-80024B70	jal    func2368c [$8002368c]
-80024B74	nop
+A0 = SP + 20;
+func25cd4();
 
+A0 = 800756f8;
+func25c94();
+
+[GP + 027c] = w(0);
+
+func2368c();
+
+S4 = -1;
+S0 = 0;
 S1 = SP + 0720;
 [GP + 0214] = w(0);
 
@@ -6179,9 +6145,9 @@ L24b90:	; 80024B90
 
     [80062fc4] = w(w[GP + 160]);
 
-    if (w[80062fa0] != 0)
+    if( w[80062fa0] != 0 )
     {
-        if (w[GP + 27c] != S4)
+        if( w[GP + 27c] != S4 )
         {
             if( S0 & 0010 )
             {
@@ -6192,7 +6158,7 @@ L24b90:	; 80024B90
                 func26f44(); // text
 
                 A0 = 80049320;
-                system_get_single_string_width;
+                system_get_single_string_width();
 
                 [S1 + 0] = h(20); // x
                 [S1 + 2] = h(c8); // y
@@ -6205,11 +6171,11 @@ L24b90:	; 80024B90
         }
     }
 
-    func1f710; // draw tutorial text
+    func1f710(); // draw tutorial text
 
     V0 = w[GP + b4];
 
-    if (V0 == 2 || V0 == 4 || V0 == 5)
+    if( ( V0 == 2 ) || ( V0 == 4 ) || ( V0 == 5 ) )
     {
         V0 = w[GP + 8c] * 4;
     }
@@ -6222,33 +6188,33 @@ L24b90:	; 80024B90
     A9 = S0;
     80024CB4	jalr   v0 ra // call menu draw function, at least config here
 
-D43A0280 // 0
-800E1D80 // 1 item
-90041D80 // 2 magic
-2C6C1D80 // 3 materia
-D00B1D80
-7C161D80
-C4001D80
-2C041D80
-0C081D80 // 8 config
-940E1D80
-B0061D80
-50021D80
-C4001D80
-800E1D80
-800E1D80
-D00B1D80
-800E1D80
-800E1D80
-800E1D80
-800E1D80
-800E1D80
+80023AD4 // 0
+801D0E80 // 1 item
+801D0490 // 2 magic
+801D6C2C // 3 materia
+801D0BD0
+801D167C
+801D00C4
+801D042C
+801D080C // 8 config
+801D0E94
+801D06B0
+801D0250
+801D00C4
+801D0E80
+801D0E80
+801D0BD0
+801D0E80
+801D0E80
+801D0E80
+801D0E80
+801D0E80
 
     A0 = 0;
     system_psyq_draw_sync();
 
     A0 = 0;
-    80024CC4	jal    system_psyq_wait_frames [$8003cedc]
+    system_psyq_wait_frames();
 
     V0 = w[GP + 0214];
     80024CD0	nop
@@ -6256,8 +6222,9 @@ D00B1D80
     A0 = A0 + V0;
     A0 = A0 << 02;
     V0 = 8007075c;
-    80024CE8	jal    system_psyq_put_dispenv [$800444ac]
     A0 = A0 + V0;
+    system_psyq_put_dispenv();
+
     V0 = w[GP + 0214];
     80024CF4	nop
     A0 = V0 << 01;
@@ -6266,249 +6233,232 @@ D00B1D80
     A0 = A0 - V0;
     A0 = A0 << 02;
     V0 = 800706a4;
-    80024D14	jal    system_psyq_put_drawenv [$800443b0]
     A0 = A0 + V0;
+    system_psyq_put_drawenv();
+
     A0 = w[GP + 0160];
-    80024D20	jal    system_psyq_draw_otag [$8004433c]
     S0 = S0 + 0001;
+
+    system_psyq_draw_otag();
+
     V0 = w[GP + 0214];
     V1 = w[GP + 027c];
     V0 = V0 ^ 0001;
     [GP + 0214] = w(V0);
 80024D38	bne    v1, s4, L24b90 [$80024b90]
 
+A0 = SP + 20;
+func25c94();
 
+func24a04();
 
-80024D40	jal    func25c94 [$80025c94]
-A0 = SP + 0020;
-80024D48	jal    func24a04 [$80024a04]
-80024D4C	nop
 [80062fa0] = w(0);
-80024D58	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 0004;
+
+A0 = 4;
+system_psyq_wait_frames();
+
 return 0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func24d88
-80024D88	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+// func24d88()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80024D98	jal    func211c4 [$800211c4]
-A0 = 000d;
 
-loop24da0:	; 80024DA0
-80024DA0	jal    system_cdrom_read_chain [$80034b44]
-80024DA4	nop
-80024DA8	bne    v0, zero, loop24da0 [$80024da0]
-80024DAC	nop
-80024DB0	jal    system_psyq_wait_frames [$8003cedc]
-A0 = 001e;
-80024DB8	jal    $801d131c
+A0 = d;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+A0 = 1e;
+system_psyq_wait_frames();
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80024DCC	jr     ra 
-80024DD0	nop
+func1d131c();
 ////////////////////////////////
-// func24dd4
-80024DD4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func24dd4()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80024DE4	jal    func211c4 [$800211c4]
-A0 = 000e;
 
-loop24dec:	; 80024DEC
-80024DEC	jal    system_cdrom_read_chain [$80034b44]
-80024DF0	nop
-80024DF4	bne    v0, zero, loop24dec [$80024dec]
-80024DF8	nop
-80024DFC	jal    $801d1a6c
+A0 = e;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80024E10	jr     ra 
-80024E14	nop
+func1d1a6c();
 ////////////////////////////////
-// func24e18
-80024E18	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func24e18()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80024E28	jal    func211c4 [$800211c4]
-A0 = 000f;
 
-loop24e30:	; 80024E30
-80024E30	jal    system_cdrom_read_chain [$80034b44]
-80024E34	nop
-80024E38	bne    v0, zero, loop24e30 [$80024e30]
-80024E3C	nop
-80024E40	jal    $801d4118
+A0 = f;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80024E54	jr     ra 
-80024E58	nop
+func1d4118();
 ////////////////////////////////
-// func24e5c
-80024E5C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80024E64	jal    func211c4 [$800211c4]
-A0 = 0010;
 
-loop24e6c:	; 80024E6C
-80024E6C	jal    system_cdrom_read_chain [$80034b44]
-80024E70	nop
-80024E74	bne    v0, zero, loop24e6c [$80024e6c]
-80024E78	nop
-80024E7C	jal    $801d4cc0
-80024E80	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80024E8C	jr     ra 
-80024E90	nop
-////////////////////////////////
-// func24e94
-80024E94	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80024E9C	jal    func211c4 [$800211c4]
-A0 = 000a;
 
-loop24ea4:	; 80024EA4
-80024EA4	jal    system_cdrom_read_chain [$80034b44]
-80024EA8	nop
-80024EAC	bne    v0, zero, loop24ea4 [$80024ea4]
-80024EB0	nop
-80024EB4	jal    $801d1774
-80024EB8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80024EC4	jr     ra 
-80024EC8	nop
-////////////////////////////////
-// func24ecc
-80024ECC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80024ED4	jal    func211c4 [$800211c4]
-A0 = 0001;
 
-loop24edc:	; 80024EDC
-80024EDC	jal    system_cdrom_read_chain [$80034b44]
-80024EE0	nop
-80024EE4	bne    v0, zero, loop24edc [$80024edc]
-80024EE8	nop
-80024EEC	jal    $801d2d74
-80024EF0	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80024EFC	jr     ra 
-80024F00	nop
 ////////////////////////////////
-// func24f04
-80024F04	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80024F0C	jal    func211c4 [$800211c4]
-A0 = 0001;
+// func24e5c()
 
-loop24f14:	; 80024F14
-80024F14	jal    system_cdrom_read_chain [$80034b44]
-80024F18	nop
-80024F1C	bne    v0, zero, loop24f14 [$80024f14]
-80024F20	nop
-80024F24	jal    $801d2e84
-80024F28	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80024F34	jr     ra 
-80024F38	nop
+A0 = 10;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+func1d4cc0();
 ////////////////////////////////
-// func24f3c
-80024F3C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func24e94()
+
+A0 = a;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+func1d1774();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func24ecc()
+
+A0 = 1;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+func1d2d74();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func24f04()
+
+A0 = 1;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+func1d2e84()
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func24f3c()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80024F4C	jal    func211c4 [$800211c4]
-A0 = 0001;
 
-loop24f54:	; 80024F54
-80024F54	jal    system_cdrom_read_chain [$80034b44]
-80024F58	nop
-80024F5C	bne    v0, zero, loop24f54 [$80024f54]
-80024F60	nop
-80024F64	jal    $801d2f00
+A0 = 1;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80024F78	jr     ra 
-80024F7C	nop
+func1d2f00();
 ////////////////////////////////
-// func24f80
-80024F80	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func24f80()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80024F90	jal    func211c4 [$800211c4]
-A0 = 0001;
 
-loop24f98:	; 80024F98
-80024F98	jal    system_cdrom_read_chain [$80034b44]
-80024F9C	nop
-80024FA0	bne    v0, zero, loop24f98 [$80024f98]
-80024FA4	nop
-80024FA8	jal    $801d3138
+A0 = 1;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80024FBC	jr     ra 
-80024FC0	nop
+func1d3138();
 ////////////////////////////////
-// func24fc4
-80024FC4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
+
+
+////////////////////////////////
+// func24fc4()
+
 S0 = A0;
-[SP + 0014] = w(RA);
-80024FD4	jal    func211c4 [$800211c4]
-A0 = 0001;
 
-loop24fdc:	; 80024FDC
-80024FDC	jal    system_cdrom_read_chain [$80034b44]
-80024FE0	nop
-80024FE4	bne    v0, zero, loop24fdc [$80024fdc]
-80024FE8	nop
-80024FEC	jal    $801d3018
+A0 = 1;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80025000	jr     ra 
-80025004	nop
+func1d3018();
 ////////////////////////////////
-// func25008
-80025008	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80025010	jal    func211c4 [$800211c4]
-A0 = 0001;
 
-loop25018:	; 80025018
-80025018	jal    system_cdrom_read_chain [$80034b44]
-8002501C	nop
-80025020	bne    v0, zero, loop25018 [$80025018]
-80025024	nop
-80025028	jal    $801d3228
-8002502C	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80025038	jr     ra 
-8002503C	nop
+
+
+////////////////////////////////
+// func25008()
+
+A0 = 1;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+func1d3228();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25040
 80025040
@@ -6542,65 +6492,63 @@ A1 = A1 + 0004;
 800250AC	jr     ra 
 800250B0	nop
 ////////////////////////////////
-// func250b4
-800250B4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800250BC	jal    func211c4 [$800211c4]
-A0 = 000c;
 
-loop250c4:	; 800250C4
-800250C4	jal    system_cdrom_read_chain [$80034b44]
-800250C8	nop
-800250CC	bne    v0, zero, loop250c4 [$800250c4]
-800250D0	nop
-800250D4	jal    $801d027c
-800250D8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800250E4	jr     ra 
-800250E8	nop
+
+
 ////////////////////////////////
-// func250ec
-800250EC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(RA);
-800250FC	jal    func211c4 [$800211c4]
-A0 = 000c;
+// func250b4()
 
-loop25104:	; 80025104
-80025104	jal    system_cdrom_read_chain [$80034b44]
-80025108	nop
-8002510C	bne    v0, zero, loop25104 [$80025104]
-80025110	nop
-80025114	jal    $801d05c4
-A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80025128	jr     ra 
-8002512C	nop
+A0 = c;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+func1d027c();
 ////////////////////////////////
-// func25130
-80025130	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(RA);
-80025140	jal    func211c4 [$800211c4]
-A0 = 000c;
 
-loop25148:	; 80025148
-80025148	jal    system_cdrom_read_chain [$80034b44]
-8002514C	nop
-80025150	bne    v0, zero, loop25148 [$80025148]
-80025154	nop
-80025158	jal    $801d0704
+
+
+////////////////////////////////
+// func250ec()
+
+S0 = A0;
+
+A0 = c;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
 A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002516C	jr     ra 
-80025170	nop
+func1d05c4()
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func25130()
+
+S0 = A0;
+
+A0 = c;
+func211c4();
+
+do
+{
+    system_cdrom_read_chain();
+} while( V0 != 0 )
+
+A0 = S0;
+func1d0704();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25174
 80025174	addiu  sp, sp, $ffe8 (=-$18)
@@ -7388,142 +7336,127 @@ SP = SP + 0020;
 80025C0C	jr     ra 
 80025C10	nop
 ////////////////////////////////
-// func25c14
-80025C14	addiu  sp, sp, $ffe0 (=-$20)
-A1 = A0;
-V0 = 0180;
-[SP + 0010] = h(V0);
-V0 = 0100;
-[SP + 0014] = h(V0);
-V0 = 0009;
-A0 = SP + 0010;
-[SP + 0018] = w(RA);
-[SP + 0012] = h(0);
-80025C3C	jal    system_psyq_store_image [$80044064]
-[SP + 0016] = h(V0);
-RA = w[SP + 0018];
-SP = SP + 0020;
-80025C4C	jr     ra 
-80025C50	nop
-////////////////////////////////
-// func25c54
-80025C54	addiu  sp, sp, $ffe0 (=-$20)
-A1 = A0;
-V0 = 0180;
-[SP + 0010] = h(V0);
-V0 = 0100;
-[SP + 0014] = h(V0);
-V0 = 0009;
-A0 = SP + 0010;
-[SP + 0018] = w(RA);
-[SP + 0012] = h(0);
-80025C7C	jal    system_psyq_load_image [$80044000]
-[SP + 0016] = h(V0);
-RA = w[SP + 0018];
-SP = SP + 0020;
-80025C8C	jr     ra 
-80025C90	nop
-////////////////////////////////
-// func25c94
-80025C94	addiu  sp, sp, $ffe0 (=-$20)
-A1 = A0;
-V1 = 0100;
-V0 = 01ed;
-[SP + 0012] = h(V0);
-V0 = 0003;
-A0 = SP + 0010;
-[SP + 0018] = w(RA);
-[SP + 0010] = h(V1);
-[SP + 0014] = h(V1);
-80025CBC	jal    system_psyq_load_image [$80044000]
-[SP + 0016] = h(V0);
-RA = w[SP + 0018];
-SP = SP + 0020;
-80025CCC	jr     ra 
-80025CD0	nop
-////////////////////////////////
-// func25cd4
-80025CD4	addiu  sp, sp, $ffe0 (=-$20)
-A1 = A0;
-V1 = 0100;
-V0 = 01ed;
-[SP + 0012] = h(V0);
-V0 = 0003;
-A0 = SP + 0010;
-[SP + 0018] = w(RA);
-[SP + 0010] = h(V1);
-[SP + 0014] = h(V1);
-80025CFC	jal    system_psyq_store_image [$80044064]
-[SP + 0016] = h(V0);
-RA = w[SP + 0018];
-SP = SP + 0020;
-80025D0C	jr     ra 
-80025D10	nop
-////////////////////////////////
-// func25d14
-80025D14	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0034] = w(S3);
-S3 = w[SP + 0050];
-[SP + 0028] = w(S0);
-S0 = A1;
-[SP + 002c] = w(S1);
-S1 = A2;
-[SP + 0030] = w(S2);
-[SP + 0038] = w(RA);
-80025D38	jal    system_read_tim_set_address [$80046cfc]
-S2 = A3;
 
-loop25d40:	; 80025D40
-80025D40	jal    system_read_tim [$80046d0c]
-A0 = SP + 0010;
-80025D48	beq    v0, zero, L25dd8 [$80025dd8]
-80025D4C	nop
-V0 = w[SP + 0018];
-80025D54	nop
-80025D58	beq    v0, zero, L25d90 [$80025d90]
-80025D5C	nop
-V0 = w[SP + 0014];
-80025D64	nop
-[V0 + 0000] = h(S2);
-V0 = w[SP + 0014];
-80025D70	nop
-[V0 + 0002] = h(S3);
-A0 = w[SP + 0014];
-A1 = w[SP + 0018];
-80025D80	jal    system_psyq_load_image [$80044000]
-80025D84	nop
-80025D88	jal    system_psyq_draw_sync [$80043dd8]
-A0 = 0;
 
-L25d90:	; 80025D90
-V0 = w[SP + 0020];
-80025D94	nop
-80025D98	beq    v0, zero, loop25d40 [$80025d40]
-80025D9C	nop
-V0 = w[SP + 001c];
-80025DA4	nop
-[V0 + 0000] = h(S0);
-V0 = w[SP + 001c];
-80025DB0	nop
-[V0 + 0002] = h(S1);
-A0 = w[SP + 001c];
-A1 = w[SP + 0020];
-80025DC0	jal    system_psyq_load_image [$80044000]
-80025DC4	nop
-80025DC8	jal    system_psyq_draw_sync [$80043dd8]
-A0 = 0;
-80025DD0	j      loop25d40 [$80025d40]
-80025DD4	nop
 
-L25dd8:	; 80025DD8
-RA = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-SP = SP + 0040;
-80025DF0	jr     ra 
-80025DF4	nop
+////////////////////////////////
+// func25c14()
+
+dst = A0;
+
+[SP + 10] = h(180); // x
+[SP + 12] = h(0); // y
+[SP + 14] = h(100); // w
+[SP + 16] = h(9); // h
+
+A0 = SP + 10;
+A1 = dst;
+system_psyq_store_image();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func25c54()
+
+src = A0;
+
+[SP + 10] = h(180);
+[SP + 12] = h(0);
+[SP + 14] = h(100);
+[SP + 16] = h(9);
+
+A0 = SP + 10;
+A1 = src;
+system_psyq_load_image();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func25c94()
+
+src = A0;
+
+[SP + 10] = h(100);
+[SP + 12] = h(1ed);
+[SP + 14] = h(100);
+[SP + 16] = h(3);
+
+A0 = SP + 10;
+A1 = src;
+system_psyq_load_image();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func25cd4()
+
+dst = A0;
+
+[SP + 10] = h(100);
+[SP + 12] = h(1ed);
+[SP + 14] = h(100);
+[SP + 16] = h(3);
+
+A0 = SP + 10;
+A1 = dst;
+system_psyq_store_image();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_menu_load_image()
+
+src = A0;
+img_x = A1;
+img_y = A2;
+clut_x = A3;
+clut_y = A4;
+
+A0 = src;
+system_psyq_open_tim();
+
+while( true )
+{
+    A0 = SP + 10;
+    system_psyq_read_tim();
+    if( V0 == 0 ) return;
+
+    if( w[SP + 18] != 0 ) // CLUT data
+    {
+        V0 = w[SP + 14];
+        [V0 + 0] = h(clut_x);
+        [V0 + 2] = h(clut_y);
+
+        A0 = w[SP + 14]; // Pointer to destination rectangular area
+        A1 = w[SP + 18]; // Pointer to main memory address of source of transmission
+        system_psyq_load_image();
+
+        A0 = 0;
+        system_psyq_draw_sync();
+    }
+
+    if( w[SP + 20] != 0 ) // image data
+    {
+        V0 = w[SP + 1c];
+        [V0 + 0] = h(img_x);
+        [V0 + 2] = h(img_y);
+
+        A0 = w[SP + 1c]; // Pointer to destination rectangular area
+        A1 = w[SP + 20]; // Pointer to main memory address of source of transmission
+        system_psyq_load_image();
+
+        A0 = 0;
+        system_psyq_draw_sync();
+    }
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25df8
 80025DF8	addiu  sp, sp, $efc8 (=-$1038)
@@ -7566,22 +7499,20 @@ V0 = S0 - V0;
 A2 = V0 << 01;
 A2 = A2 + V0;
 A2 = A2 << 04;
-80025E94	jal    func25d14 [$80025d14]
 A2 = A2 + 0100;
-80025E9C	jal    system_psyq_draw_sync [$80043dd8]
+system_menu_load_image();
+
 A0 = 0;
+system_psyq_draw_sync();
+
 S0 = S0 + 0001;
 V0 = S0 < 0009;
 80025EAC	bne    v0, zero, loop25e2c [$80025e2c]
 A2 = S3;
-RA = w[SP + 1030];
-S3 = w[SP + 102c];
-S2 = w[SP + 1028];
-S1 = w[SP + 1024];
-S0 = w[SP + 1020];
-SP = SP + 1038;
-80025ECC	jr     ra 
-80025ED0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25ed4
 80025ED4	addiu  sp, sp, $ffc8 (=-$38)
@@ -7710,20 +7641,22 @@ V0 = bu[AT + 0000];
 
 
 ////////////////////////////////
-// func26090
+// func26090()
 
-loop26098:	; 80026098
+do
+{
     system_cdrom_read_chain();
-800260A0	bne    v0, zero, loop26098 [$80026098]
+} while( V0 != 0 )
 
 A0 = 7;
-800260A8	jal    func211c4 [$800211c4]
+func211c4();
 
-loop260b0:	; 800260B0
+do
+{
     system_cdrom_read_chain();
-800260B8	bne    v0, zero, loop260b0 [$800260b0]
+} while( V0 != 0 )
 
-800260C0	jal    func1d11a8 [$801d11a8]
+func1d11a8();
 
 [GP + 24c] = w(0);
 ////////////////////////////////
@@ -7733,56 +7666,51 @@ loop260b0:	; 800260B0
 ////////////////////////////////
 // func260dc()
 
-loop260fc:	; 800260FC
+do
+{
     system_cdrom_read_chain();
-80026104	bne    v0, zero, loop260fc [$800260fc]
+} while( V0 != 0 )
 
 A0 = 0;
 system_psyq_draw_sync();
 
 A0 = SP + 20;
-80026114	jal    func25c14 [$80025c14]
+func25c14(); // store clut?
 
 A0 = 0;
 system_psyq_draw_sync();
 
-S0 = 0;
-S3 = SP + 1220;
-S2 = 0138;
-
-loop2613c:	; 8002613C
-    S1 = bu[8009cbdc + S0];
-    if( S1 != ff )
+for( int i = 0; i < 3; ++i ) // go through all party slots
+{
+    char_id = bu[8009c6e4 + 4f8 + i];
+    if( char_id != ff )
     {
-        A0 = S0;
+        A0 = i;
         system_init_player_stat_from_equip();
 
-        A0 = S0 & ff;
-        80026160	jal    func1786c [$8001786c]
+        A0 = i;
+        system_init_player_stat_from_materia();
 
         system_calculate_total_lure_gil_preemptive_value();
 
-        A0 = w[80048fe8 + S1 * 8 + 0];
-        A1 = w[80048fe8 + S1 * 8 + 4];
-        A2 = S3;
+        // load avatars
+        A0 = w[80048fe8 + char_id * 8 + 0];
+        A1 = w[80048fe8 + char_id * 8 + 4];
+        A2 = SP + 1220;
         A3 = 0;
         system_cdrom_load_file();
 
-        A0 = S3;
-        A1 = 3c0;
-        A2 = S2;
-        A3 = 180;
-        A4 = S0;
-        800261A0	jal    func25d14 [$80025d14]
+        A0 = SP + 1220;
+        A1 = 3c0; // img x
+        A2 = 138 + i * 30; // img y
+        A3 = 180; // clut x
+        A4 = i; // clut y
+        system_menu_load_image();
 
         A0 = 0;
         system_psyq_draw_sync();
     }
-
-    S2 = S2 + 0030;
-    S0 = S0 + 0001;
-    V0 = S0 < 0003;
-800261B8	bne    v0, zero, loop2613c [$8002613c]
+}
 
 [SP + 18] = h(180);
 [SP + 1c] = h(100);
@@ -7797,7 +7725,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = SP + 20;
-800261F4	jal    func25c54 [$80025c54]
+func25c54(); // restore clut?
 
 A0 = 0;
 system_psyq_draw_sync();
@@ -7805,31 +7733,33 @@ system_psyq_draw_sync();
 A0 = 6;
 system_psyq_wait_frames();
 
-loop26210:	; 80026210
-    80026210	jal    func484a8 [$800484a8]
-80026218	beq    v0, -1, loop26210 [$80026210]
+do
+{
+    func484a8();
+} while( V0 == -1 )
 
-loop26220:	; 80026220
+do
+{
     A0 = 1;
-    80026220	jal    func48540 [$80048540]
-80026228	bne    v0, zero, loop26220 [$80026220]
+    func48540();
+} while( V0 != 0 )
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func26258
-80026258	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 [GP + 024c] = w(0);
+
 80026264	jal    func1c434 [$8001c434]
-80026268	nop
-8002626C	jal    func26090 [$80026090]
-80026270	nop
+
+func26090();
+
 80026274	jal    func25008 [$80025008]
-80026278	nop
-8002627C	jal    func260dc [$800260dc]
-80026280	nop
+
+func260dc();
+
 A0 = 000f;
 V0 = 8009d7bc;
 A1 = V0 + 0013;
@@ -7941,8 +7871,8 @@ system_execute_AKAO;
 
 
 ////////////////////////////////
-// func26448
-80026448
+// func26448()
+
 V0 = w[SP + 0010];
 V1 = w[SP + 0014];
 T0 = w[SP + 0018];
@@ -7965,7 +7895,6 @@ T7 = hu[SP + 0034];
 [A0 + 000f] = b(T4);
 [A0 + 0010] = b(T5);
 [A0 + 0011] = b(T6);
-800264A0	jr     ra 
 [A0 + 0008] = h(T7);
 ////////////////////////////////
 

@@ -3246,13 +3246,13 @@ if (b[800716d4] == 0) // if music not locked
 
     A0 = S0;
     A1 = S0;
-    get_akao_offset_in_field;
+    get_akao_offset_in_field();
 
     V0 = w[8009c6dc] + V0;
     [8009a004] = w(V0);
     [struct + 48] = w(V0);
 
-    system_execute_AKAO;
+    system_execute_AKAO();
 }
 
 // move pointer by 2
@@ -3263,18 +3263,13 @@ return 0;
 
 
 ////////////////////////////////
-// get_akao_offset_in_field
+// get_akao_offset_in_field()
 
 field_file_offset = w[8009c6dc];
 number_of_entity = bu[field_file_offset + 2];
-music_offset = field_file_offset + number_of_entity * 8 + 20;
+music_offset = field_file_offset + 20 + number_of_entity * 8;
 
-x1 = bu[music_offset + A0 * 4 + 0];
-x2 = bu[music_offset + A0 * 4 + 1];
-x3 = bu[music_offset + A0 * 4 + 2];
-x4 = bu[music_offset + A0 * 4 + 3];
-V0 = x1 | (x2 << 08) | (x3 << 10) | (x4 << 18);
-return V0;
+return w[music_offset + A0 * 4];
 ////////////////////////////////
 
 
@@ -3292,7 +3287,7 @@ if (V0 == 0)
 
     A0 = S0;
     A1 = S0;
-    get_akao_offset_in_field;
+    get_akao_offset_in_field();
 
     V1 = w[8009C6DC];
     V0 = V0 + V1;
@@ -3330,7 +3325,7 @@ if (V0 == 0)
 
     A0 = S0;
     A1 = S0;
-    get_akao_offset_in_field;
+    get_akao_offset_in_field();
 
     V1 = w[8009C6DC];
     V0 = V0 + V1;
@@ -3356,38 +3351,64 @@ return 0;
 
 
 ////////////////////////////////
-// 0x21 TUTOR
-struct = w[8009c6e0];
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+// field_event_opcode_21_tutor()
 
-if( bu[struct + 1] == 0 )
+field_struct = w[8009c6e0];
+events_data = w[8009c6dc];
+actor_id_cur = bu[800722c4];
+script_cur = hu[800831fc + actor_id_cur * 2];
+
+if( bu[8009d820] & 3 )
 {
-    [struct + 1] = b(9);
-    [struct + 2] = h(1);
-    [struct + 26] = h(0);
+    A0 = 800a08c0; // "tutor"
+    A1 = 1;
+    field_debug_event_opcode();
+}
+
+if( bu[field_struct + 1] == 0 ) // normal field
+{
+    [field_struct + 1] = b(9);
+    [field_struct + 2] = h(1);
+    [field_struct + 26] = h(0);
+
     [8007ebe0] = b(1);
 
-    A0 = bu[script + 1];
-    get_akao_offset_in_field;
+    tut_id = bu[events_data + script_cur + 1];
 
-    [800e48e0] = w(w[8009c6dc] + V0); // store akao offset here
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a08c8; // "data="
+        A1 = tut_id;
+        A2 = 2;
+        field_debug_add_parse_value_to_page2();
+    }
 
-    return 1;
+    A0 = tut_id;
+    get_akao_offset_in_field();
+    [800e48e0] = w(events_data + V0);
 }
-else if( bu[struct + 1] == 9  && h[struct + 26] == 2 )
+else if( bu[field_struct + 1] == 9 ) // tutorial
 {
-    [struct + 1] = b(0);
-    [struct + 26] = h(0);
+    if( bu[8009d820] & 3 )
+    {
+        A0 = 800a08d0; // "evt result="
+        A1 = h[field_struct + 26];
+        A2 = 2;
+        field_debug_add_parse_value_to_page2();
+    }
 
-    [800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 2);
+    if( h[field_struct + 26] == 2 )
+    {
+        [field_struct + 1] = b(0);
+        [field_struct + 26] = h(0);
 
-    return 0;
+        [800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 2);
+
+        return 0;
+    }
 }
-else
-{
-    return 1;
-}
+
+return 1;
 ////////////////////////////////
 
 

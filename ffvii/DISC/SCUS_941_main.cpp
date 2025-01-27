@@ -63,7 +63,7 @@ if( ( bu[8009d5e9] & 30 ) == 0 )
     func1117c();
 }
 
-[800707bc] = h(hu[8009abf6]);
+[800707bc] = h(hu[8009abf4 + 2]);
 [800707be] = h(hu[8009ac32]);
 [800707be] = h(bu[800716d0] | hu[8009ac32]);
 
@@ -161,7 +161,7 @@ else
     [800965e8] = h(0);
 }
 
-[8009a05c] = h(hu[8009abf6]);
+[8009a05c] = h(hu[8009abf4 + 2]);
 ////////////////////////////////
 
 
@@ -663,7 +663,7 @@ while( true )
                 }
 
                 [800722c8] = w(801c0000);
-                [8009abf6] = h(hu[80095ddc]);
+                [8009abf4 + 2] = h(hu[80095ddc]);
                 [80071744] = w(w[80048d2c]);
                 [80095dd8] = w(w[80048d30]);
 
@@ -684,7 +684,7 @@ while( true )
                     if( ( ( hu[800707be] & 1 ) != 0 ) || ( ( w[8009d268] == 0 ) && ( ( w[80095ddc] & S7 ) != 0  ) ) )
                     {
                         [800707be] = h(0);
-                        [8009abf6 - 1] = b(1a);
+                        [8009abf4 + 1] = b(1a);
                     }
                     else
                     {
@@ -755,14 +755,14 @@ while( true )
             {
                 case 6:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func24d88();
                 }
                 break;
 
                 case 7:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func24dd4();
 
                     func260dc();
@@ -773,15 +773,14 @@ while( true )
 
                 case 8:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func24e18();
                 }
                 break;
 
-                case 9:
+                case 9: // tutorial
                 {
-                    V0 = h[8009abf6];
-                    if( V0 == 1 )
+                    if( h[8009abf4 + 2] == 1 )
                     {
                         A0 = w[800e48e0]; // pointer to tutorial settings
                         func24a3c();
@@ -804,14 +803,14 @@ while( true )
 
                 case 12:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func24fc4();
                 }
                 break;
 
                 case 13:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func24f80();
                 }
                 break;
@@ -997,10 +996,7 @@ while( true )
         {
             func119e4();
 
-            V0 = bu[8009abf4 + 1];
-            V1 = V0 - f;
-
-            switch( V1 )
+            switch( bu[8009abf4 + 1] - f )
             {
                 case 0: func24ecc(); break;
                 case 1: func24f04(); break;
@@ -1009,21 +1005,21 @@ while( true )
 
                 case 2:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func24f3c();
                 }
                 break;
 
                 case 7:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func250ec();
                 }
                 break;
 
                 case 8:
                 {
-                    A0 = h[8009abf6];
+                    A0 = h[8009abf4 + 2];
                     func25130();
                 }
                 break;

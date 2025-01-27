@@ -331,7 +331,7 @@
                     06 - some menu
                     07 - some menu
                     08 - some menu
-                    09 - some menu
+                    09 - tutorial set from events
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
                     0d - disc change
@@ -341,7 +341,7 @@
                     14 - we abort movie play if this.
                     19 -
                     1a - game over
-    + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play.
+    + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play. 1 in case of tutorial.
     + 04 [][]     destination x during map load.
     + 06 [][]     destination y during map load.
     + 0a [][]     background X scroll to this position.
@@ -359,7 +359,7 @@
     + 20 [][]     speed of background scroll. Number of steps?
     + 22 [][]     destination z during map load. (most likely triangle id).
     + 24 [][]     saved rotation for manual entity during map load.
-    + 26 [][]     movie state (0-not played, 1-start, )
+    + 26 [][]     movie state (0-not played, 1-start, ) tutorial state (0 from tutor opcode).
     + 28 [][]     number of entities.
     + 2a []       manual entity id.
     + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
@@ -610,7 +610,7 @@
 
 800e48d8 []       rain force (greater value more rain lines rendered).
 
-800e48e0 [][][][] store akao offset here when start menu tutorial.
+800e48e0 [][][][] store tutorial offset here.
 
 800e48f0 []       store 0xff here during end of SPLIT.
 800e48f4 array of poly for pointer (0x2 items 0x28 size)

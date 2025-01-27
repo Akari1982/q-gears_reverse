@@ -926,7 +926,7 @@
 // func25cd4
 80025CD4-80025D10
 ////////////////////////////////
-// func25d14
+// system_menu_load_image
 80025D14-80025DF4
 ////////////////////////////////
 // func25df8
@@ -3258,10 +3258,10 @@
 // system_psyq_dump_disp_env
 80046C50-80046CF8
 ////////////////////////////////
-// system_read_tim_set_address
+// system_psyq_open_tim
 80046CFC-80046D08
 ////////////////////////////////
-// system_read_tim
+// system_psyq_read_tim
 80046D0C-80046D70
 ////////////////////////////////
 // func46d74
