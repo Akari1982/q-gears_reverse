@@ -102,10 +102,10 @@ a2 = cbc
 
 for( int i = 0; i < 4; ++i )
 {
-    [800832a0 + i * 30 + 0] = h(0);
-    [80083286 + i * 30 + 0] = h(0);
-    [8008326c + i] = b(ff);
-    [8011445c + i * 2] = h(0);
+    [80083274 + i * 30 + 2c] = h(0); // window state
+    [80083274 + i * 30 + 12] = h(0); // number of letters in window string
+    [8008326c + i] = b(ff); // reset window parent entity
+    [8011445c + i * 2] = h(0); // reset wait time
 }
 
 [80071e2c] = b(0);

@@ -64,7 +64,6 @@ if( ( bu[8009d5e9] & 30 ) == 0 )
 }
 
 [800707bc] = h(hu[8009abf4 + 2]);
-[800707be] = h(hu[8009ac32]);
 [800707be] = h(bu[800716d0] | hu[8009ac32]);
 
 func146a4(); // load BATTLE.X or BROM.X and run it

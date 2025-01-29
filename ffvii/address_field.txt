@@ -9,8 +9,6 @@
 
 80063048 start of font padding file.
 
-800707be [][]     battle result stored here. Loaded by 0x23 BTRLD.
-
 8007078c []       array of actor to line data. (size 0x01).
 
 800707c0 [][][][] offset to font padding file.
@@ -192,7 +190,7 @@
 
 8007ebd8 [][][][] 
 
-8007ebe0 []       init with 1.
+8007ebe0 []       init with 1. Set to 1 when start battle via opcode.
 
 80081d90 [] array of some entity data. Store 1 to pc entity here during SPLIT.
 
@@ -376,6 +374,15 @@
     + 3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
     + 3b []       battle field check on/off (0/1).
     + 3c []       battle table to use (0 or 1).
+    + 3d []       battle flags.
+                    0x01 Disable game over. After a party defeat, the game returns to the previous field.
+    + 3e [][]     battle flags.
+                    0x80 Do not display the AP/EXP/Gil/items received screens.
+                    0x40 Activates the battle arena. The next chosen BATTLE instead takes place in the arena, but keeping the same enemy formation. The "keep going/no way" interface is enabled.
+                    0x20 Do not play the battle victory music.
+                    0x08 The party cannot escape the battle.
+                    0x04 Pre-emptive attack.
+                    0x02 The battle is timed; the player must complete the battle before the timer reaches zero, or the battle exits, with no AP/EXP/Gil/items received screens displayed. 
     + 44 [][][][] offset to battle music (global, with field file offset).
     + 48 [][][][] offset to field music (global, with field file offset).
     + 4c [][]     we store FADE and NFADE type here.

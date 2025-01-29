@@ -304,7 +304,7 @@
 8006e0f8 [][][][] size to read. Clamp to 0x9 if greater.
 
 800707bc [][]     battle id.
-800707be [][]     battle result stored here. Loaded by 0x23 BTRLD.
+800707be [][]     battle result stored here. Loaded by opcode 0x23 btrlt.
 800707c0 font width data.
 800707c4 command data in kernel (size 0x8).
     + 0  []       default something.
