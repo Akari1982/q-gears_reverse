@@ -30,37 +30,26 @@ return bu[800e0638 + V0]; // random
 // funcaba70()
 
 // get encounter table address
-if( bu[8009abf4 + 3c] == 0 )
-{
-    S1 = w[80071a54];
-}
-else
-{
-    S1 = w[80071a54] + 18;
-}
+if( bu[8009abf4 + 3c] == 0 ) enc_data = w[80071a54];
+else                         enc_data = w[80071a54] + 18;
 
 [8009c6d8] = b(bu[8009c6d8] + 20);
 
 if( bu[8009c6d8] == 0 )
 {
-    func262d8();
+    func262d8(); // Restores HP as you walk
 
-    [8009d58e] = b(bu[8009d58e] + 1);
+    // some savemap counters increment
+    [8009c6e4 + eaa] = b(bu[8009c6e4 + eaa] + 1);
+    if( ( bu[8009c6e4 + eaa] == 0 ) && ( bu[8009c6e4 + eab] != ff ) ) [8009c6e4 + eab] = b(bu[8009c6e4 + eab] + 1);
 
-    if( ( bu[8009d58e] == 0 ) && ( bu[8009d58f] != ff ) )
-    {
-        [8009d58f] = b(bu[8009d58f] + 1);
-    }
-
-    A0 = hu[S1];
+    A0 = hu[enc_data + 0];
     if( ( A0 & 1 ) && ( hu[80114488] == 0 ) && ( bu[8009abf4 + 3b] == 0 ) )
     {
-        V1 = h[800965e0]; // manual visible entity
-        V1 = hu[80074ea4 + V1 * 84 + 70]; // movement speed
+        pc_entity_id = h[800965e0];
+        move_speed = hu[80074ea4 + pc_entity_id * 84 + 70];
 
-        V0 = A0 >> 8; // encounter Value for this battle table
-        V1 = V1 / V0;
-        [8007173c] = h(hu[8007173c] + V1);
+        [8007173c] = h(hu[8007173c] + (move_speed / (A0 >> 8))); // add encounter rate for this battle table
 
         funcab9c8(); // random
 
@@ -69,10 +58,9 @@ if( bu[8009c6d8] == 0 )
 
         funcab9c8(); // random 0-ff
 
-        A0 = hu[8007173c]; // danger counter
+        danger_counter = hu[8007173c]; // danger counter
 
-        V1 = (A0 * bu[80062f19]) >> c;
-        if( V0 < V1 )
+        if( V0 < ( (danger_counter * bu[80062f19]) >> c ) ) // danger check
         {
             field_stop_load_next_map_in_advance();
 
@@ -84,27 +72,27 @@ if( bu[8009c6d8] == 0 )
 
             if( bu[80062f1b] & 80 )
             {
-                S0 = hu[S1 + e] >> b; // half rate
+                S0 = hu[enc_data + e] >> b; // half rate
             }
             else // Ambush Alert
             {
-                S0 = hu[S1 + e] >> a; // normal rate
+                S0 = hu[enc_data + e] >> a; // normal rate
             }
 
             if( ( A0 & ff ) < ( S0 & ff ) )
             {
                 [800716d0] = b(0);
-                [8009abf6] = h(hu[S1 + e] & 3ff);
+                [8009abf6] = h(hu[enc_data + e] & 3ff);
                 return;
             }
 
             if( bu[80062f1b] & 80 )
             {
-                V0 = h[S1 + 10] >> b; // half rate
+                V0 = h[enc_data + 10] >> b; // half rate
             }
             else // Ambush Alert
             {
-                V0 = h[S1 + 10] >> a; // normal rate
+                V0 = h[enc_data + 10] >> a; // normal rate
             }
 
             S0 = S0 + V0;
@@ -113,39 +101,39 @@ if( bu[8009c6d8] == 0 )
             if( A2 < (S0 & ff) )
             {
                 [800716d0] = b(0);
-                [8009abf6] = h(hu[S1 + 10] & 3ff);
+                [8009abf6] = h(hu[enc_data + 10] & 3ff);
                 return;
             }
 
-            A1 = h[S1 + 12] >> a;
+            A1 = h[enc_data + 12] >> a;
 
             if( A2 < ( ( S0 + A1 ) & ff ) )
             {
-                [8009abf6] = h(h[S1 + 12] & 3ff);
+                [8009abf6] = h(h[enc_data + 12] & 3ff);
             }
             else
             {
                 if( bu[80062f1b] & 80 )
                 {
-                    V0 = h[S1 + 14] >> b;
+                    V0 = h[enc_data + 14] >> b;
                 }
                 else
                 {
-                    V0 = h[S1 + 14] >> a;
+                    V0 = h[enc_data + 14] >> a;
                 }
 
                 if( ( A0 & ff ) < ( ( V1 + V0 ) & ff ) )
                 {
-                    [8009abf6] = h(hu[S1 + 14] & 3ff);
+                    [8009abf6] = h(hu[enc_data + 14] & 3ff);
                     return;
                 }
 
                 funcaba34(); // random
                 A2 = (V0 & ff) / 4;
 
-                [8009abf6] = h(hu[S1 + c] & 3ff);
+                [8009abf6] = h(hu[enc_data + c] & 3ff);
 
-                A1 = S1;
+                A1 = enc_data;
 
                 S0 = 0;
                 for( int i = 0; i < 5; ++i )
@@ -172,17 +160,17 @@ if( bu[8009c6d8] == 0 )
                 funcaba34(); // random
                 A2 = (V0 & ff) / 4;
 
-                [8009abf6] = h(hu[S1 + c] & 3ff);
+                [8009abf6] = h(hu[enc_data + c] & 3ff);
 
                 S0 = 0;
                 for( int i = 0; i < 5; ++i )
                 {
-                    V1 = h[S1 + i * 2 + 2] >> a;
+                    V1 = h[enc_data + i * 2 + 2] >> a;
                     S0 = S0 + V1;
                     if( A2 < ( S0 & ff ) )
                     {
-                        [8009abf6] = h(h[S1 + i * 2 + 2] & 3ff);
-                        [8007e774] = h(h[S1 + i * 2 + 2] & 3ff);
+                        [8009abf6] = h(h[enc_data + i * 2 + 2] & 3ff);
+                        [8007e774] = h(h[enc_data + i * 2 + 2] & 3ff);
                         return;
                     }
                 }

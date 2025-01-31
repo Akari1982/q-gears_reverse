@@ -643,6 +643,8 @@
     +5e [][]     top timer. Stored in CHMPH opcode.
     +64 [][]     ???
 
+8009c540 []       seed for battle random in field.
+
 8009c560 [][][][] requested state of game:
                     1 - field.
                     2 - battle.
@@ -666,7 +668,7 @@
 8009c5a2 array of some volume mod for channels. (0x2 size)
 
 8009c6e4 savemap start
-    +0054          savemap character name data (0x84 size).
+    +  54          savemap character data (0x84 size).
         +00 []       character id.
         +01 []       level.
         +02 []       strength.
@@ -747,7 +749,8 @@
     + caf (+0b) []       party member in slot 3.
     + da4 savemap memory bank b/c start
     + ea4 savemap memory bank d/e start
-    + eaa (+06) [][]     some value that increments each battle check.
+    + eaa (+06) []       some value that increments each battle check.
+    + eab (+07) []       some value that increments each battle check.
     + f0c field map name for menu (0x17 size).
     + f24 
     + f2a (+86) []       flags

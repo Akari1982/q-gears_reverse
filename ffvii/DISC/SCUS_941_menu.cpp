@@ -1881,17 +1881,17 @@ party_id = A0;
 type = A1;
 
 char_id = bu[8009c6e4 + 4f8 + party_id];
-save_id = w[800491d0 + char_id * 4];
+char_save_id = w[800491d0 + char_id * 4];
 
 if( type == 0 )
 {
-    V1 = bu[8009c738 + save_id * 84 + 1c]; // weapon
+    V1 = bu[8009c738 + char_save_id * 84 + 1c]; // weapon
     A2 = bu[800738a0 + V1 * 2c + 4]; // weapon attack
     return A2;
 }
 if( type == 1 )
 {
-    V1 = bu[8009c738 + save_id * 84 + 1d]; // armor
+    V1 = bu[8009c738 + char_save_id * 84 + 1d]; // armor
     A2 = bu[80071e44 + V1 * 24 + 2]; // defense
     return A2;
 }
@@ -2014,7 +2014,7 @@ if( char_id != ff )
 {
     // convert character id into savemap char block id
     // because some characters share same savemap block
-    save_id = w[800491d0 + char_id * 4];
+    char_save_id = w[800491d0 + char_id * 4];
 
     // init base stats
     [8009d84c + party_id * 440 + 2] = b(0); // strength
@@ -2024,9 +2024,9 @@ if( char_id != ff )
     [8009d84c + party_id * 440 + 6] = b(0); // dexterity
     [8009d84c + party_id * 440 + 7] = b(0); // luck
 
-    [8009d84c + party_id * 440 + 10] = h(hu[8009c738 + save_id * 84 + 2c]); // init current hp
-    [8009d84c + party_id * 440 + 12] = h(hu[8009c738 + save_id * 84 + 2e]); // init base hp
-    [8009d84c + party_id * 440 + 16] = h(hu[8009c738 + save_id * 84 + 32]); // init base mp
+    [8009d84c + party_id * 440 + 10] = h(hu[8009c738 + char_save_id * 84 + 2c]); // init current hp
+    [8009d84c + party_id * 440 + 12] = h(hu[8009c738 + char_save_id * 84 + 2e]); // init base hp
+    [8009d84c + party_id * 440 + 16] = h(hu[8009c738 + char_save_id * 84 + 32]); // init base mp
 
     // init statuses and elements
     [8009d84c + party_id * 440 + 3c] = h(0); // init attack type
@@ -2036,7 +2036,7 @@ if( char_id != ff )
     [8009d84c + party_id * 440 + 44] = w(0); // status attack
     [8009d84c + party_id * 440 + 48] = w(0); // status protect
 
-    weapon_id = bu[8009c738 + save_id * 84 + 1c];
+    weapon_id = bu[8009c738 + char_save_id * 84 + 1c];
 
     // copy weapon data to unit data
     [8009d84c + party_id * 440 + 408 + 00] = w(w[800738a0 + weapon_id * 2c + 00]);
@@ -2068,7 +2068,7 @@ if( char_id != ff )
     A1 = bu[8009d84c + party_id * 440 + 408 + 5];
     system_add_status_attack_bit;
 
-    armor_id = bu[8009c738 + save_id * 84 + 1d];
+    armor_id = bu[8009c738 + char_save_id * 84 + 1d];
 
     // add stat bonus from armor
     for( int i = 0; i < 4; ++i )
@@ -2090,7 +2090,7 @@ if( char_id != ff )
     A1 = bu[80071e44 + armor_id * 24 + 6];
     system_add_status_protect_bit;
 
-    accessory_id = bu[8009c738 + save_id * 84 + 1e];
+    accessory_id = bu[8009c738 + char_save_id * 84 + 1e];
 
     if( accessory_id != ff )
     {
@@ -2115,33 +2115,33 @@ if( char_id != ff )
         system_add_status_protect();
     }
 
-    A1 = bu[8009c6e4 + 54 + save_id * 84 + 2]; // strength
-    V0 = bu[8009c6e4 + 54 + save_id * 84 + 8]; // strength bonus
+    A1 = bu[8009c6e4 + 54 + char_save_id * 84 + 2]; // strength
+    V0 = bu[8009c6e4 + 54 + char_save_id * 84 + 8]; // strength bonus
     A2 = bu[8009d84c + party_id * 440 + 2]; // strength bonus from weapon/armor/accessory
     strength = A1 + A2 + A1; // total strength
 
-    A0 = bu[8009c6e4 + 54 + save_id * 84 + 3]; // vitality
-    A1 = bu[8009c6e4 + 54 + save_id * 84 + 9]; // vitality bonus
+    A0 = bu[8009c6e4 + 54 + char_save_id * 84 + 3]; // vitality
+    A1 = bu[8009c6e4 + 54 + char_save_id * 84 + 9]; // vitality bonus
     A2 = bu[8009d84c + party_id * 440 + 3]; // vitality bonus from weapon/armor/accessory
     vitality = A0 + A1 + A2;
 
-    A1 = bu[8009c6e4 + 54 + save_id * 84 + 4]; // magic
-    A0 = bu[8009c6e4 + 54 + save_id * 84 + a]; // magic bonus
+    A1 = bu[8009c6e4 + 54 + char_save_id * 84 + 4]; // magic
+    A0 = bu[8009c6e4 + 54 + char_save_id * 84 + a]; // magic bonus
     A2 = bu[8009d84c + party_id * 440 + 4]; // magic bonus from weapon/armor/accessory
     magic = A2 + A1 + A0;
 
-    V0 = bu[8009c6e4 + 54 + save_id * 84 + 5]; // spirit
-    A1 = bu[8009c6e4 + 54 + save_id * 84 + b]; // spirit bonus
+    V0 = bu[8009c6e4 + 54 + char_save_id * 84 + 5]; // spirit
+    A1 = bu[8009c6e4 + 54 + char_save_id * 84 + b]; // spirit bonus
     A2 = bu[8009d84c + party_id * 440 + 5]; // spirit bonus from weapon/armor/accessory
     spirit = V0 + A1 + A2;
 
-    V0 = bu[8009c6e4 + 54 + save_id * 84 + 6]; // dexterity
-    A0 = bu[8009c6e4 + 54 + save_id * 84 + c]; // dexterity bonus
+    V0 = bu[8009c6e4 + 54 + char_save_id * 84 + 6]; // dexterity
+    A0 = bu[8009c6e4 + 54 + char_save_id * 84 + c]; // dexterity bonus
     A2 = bu[8009d84c + party_id * 440 + 6]; // dexterity bonus from weapon/armor/accessory
     dexterity = V0 + A0 + A2; // total dexterity
 
-    A0 = bu[8009c6e4 + 54 + save_id * 84 + 7]; // luck
-    V0 = bu[8009c6e4 + 54 + save_id * 84 + d]; // luck bonus
+    A0 = bu[8009c6e4 + 54 + char_save_id * 84 + 7]; // luck
+    V0 = bu[8009c6e4 + 54 + char_save_id * 84 + d]; // luck bonus
     A1 = bu[8009d84c + party_id * 440 + 7]; // luck bonus from weapon/armor/accessory
     luck = A0 + V0 + A1;
 
@@ -2460,7 +2460,7 @@ S6 = A1;
 FP = A2;
 
 V0 = bu[8009cbdc + FP];
-character_data = w[800491d0 + V0 * 4];
+char_save_id = w[800491d0 + V0 * 4];
 
 
 
@@ -2520,11 +2520,11 @@ if (V0 != 0)
     S4 = 7;
 }
 
-T0 = character_data;
+T0 = char_save_id;
 
 
 
-if (bu[8009c757 + character_data * 84] & 10)
+if (bu[8009c757 + char_save_id * 84] & 10)
 {
     A0 = S7 + 24;
     A1 = S6 + b;
@@ -2535,7 +2535,7 @@ if (bu[8009c757 + character_data * 84] & 10)
 
 
 
-if (bu[8009c757 + character_data * 84] & 20)
+if (bu[8009c757 + char_save_id * 84] & 20)
 {
     A0 = S7 + 24;
     A1 = S6 + b;
@@ -2548,7 +2548,7 @@ if (bu[8009c757 + character_data * 84] & 20)
 
 A0 = S7;
 A1 = S6;
-A2 = 8009c748 + character_data * 84; // name
+A2 = 8009c748 + char_save_id * 84; // name
 if (S2 != 0)
 {
     A3 = 2;
@@ -2572,7 +2572,7 @@ system_draw_menu_8width_font;
 
 A0 = S7 + 12;
 A1 = S0;
-A2 = bu[8009c6e4 + 0054 + character_data * 84 + 1]; // level value
+A2 = bu[8009c6e4 + 0054 + char_save_id * 84 + 1]; // level value
 A3 = 2;
 if (S2 != 0)
 {
@@ -5503,11 +5503,11 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     V1 = bu[8009c6e4 + 04f8 + V1 ];
                     if( V1 != ff )
                     {
-                        V0 = w[800491d0 + V1 * 4];
-                        [8009c6e4 + 54 + V0 * 84 + 20] = b(bu[8009c6e4 + 54 + V0 * 84 + 20] ^ 1); // char order
+                        char_save_id = w[800491d0 + V1 * 4];
+                        [8009c6e4 + 54 + char_save_id * 84 + 20] = b(bu[8009c6e4 + 54 + char_save_id * 84 + 20] ^ 1); // char order
 
                         A0 = 1;
-                        system_menu_sound;
+                        system_menu_sound();
                     }
                 }
                 else
@@ -6963,9 +6963,9 @@ char_id = bu[8009c6e4 + 4f8 + party_id];
 
 if( char_id != ff )
 {
-    save_id = w[800491d0 + char_id * 4];
+    char_save_id = w[800491d0 + char_id * 4];
 
-    return 80071e4d + bu[8009c738 + save_id * 84 + 1d] * 24;
+    return 80071e4d + bu[8009c738 + char_save_id * 84 + 1d] * 24;
 }
 ////////////////////////////////
 
@@ -7091,9 +7091,7 @@ V0 = V0 + V1;
 V1 = A0 << 04;
 V1 = V1 + A0;
 V1 = V1 << 06;
-AT = 8009d85c;
-AT = AT + V1;
-V1 = hu[AT + 0000];
+V1 = hu[8009d84c + V1 + 10];
 V0 = V0 << 02;
 AT = 8009c764;
 AT = AT + V0;
@@ -7103,54 +7101,32 @@ L258b4:	; 800258B4
 800258B4	jr     ra 
 800258B8	nop
 ////////////////////////////////
-// func258bc
-AT = 8009cbdc;
-AT = AT + A0;
-V1 = bu[AT + 0000];
-V0 = 00ff;
-800258D0	beq    v1, v0, L2597c [$8002597c]
-800258D4	addiu  sp, sp, $fff8 (=-$8)
-V1 = V1 << 02;
-V0 = A0 << 04;
-V0 = V0 + A0;
-A0 = V0 << 06;
-AT = 8009d85c;
-AT = AT + A0;
-V0 = hu[AT + 0000];
-AT = 800491d0;
-AT = AT + V1;
-A2 = w[AT + 0000];
-AT = 8009d85e;
-AT = AT + A0;
-V1 = h[AT + 0000];
-V0 = V0 + A1;
-AT = 8009d85c;
-AT = AT + A0;
-[AT + 0000] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
-A1 = V1;
-V1 = V1 < V0;
-8002593C	beq    v1, zero, L25954 [$80025954]
-V0 = A2 << 05;
-AT = 8009d85c;
-AT = AT + A0;
-[AT + 0000] = h(A1);
 
-L25954:	; 80025954
-V0 = V0 + A2;
-AT = 8009d85c;
-AT = AT + A0;
-V1 = hu[AT + 0000];
-V0 = V0 << 02;
-AT = 8009c764;
-AT = AT + V0;
-[AT + 0000] = h(V1);
 
-L2597c:	; 8002597C
-SP = SP + 0008;
-80025980	jr     ra 
-80025984	nop
+
+////////////////////////////////
+// func258bc()
+
+char_id = bu[8009cbdc + A0];
+restore = A1;
+
+if( char_id != ff )
+{
+    char_save_id = w[800491d0 + char_id * 4];
+
+    [8009d84c + A0 * 440 + 10] = h(h[8009d84c + A0 * 440 + 10] + restore);
+
+    if( h[8009d84c + A0 * 440 + 12] < h[8009d84c + A0 * 440 + 10] ) // clamp
+    {
+        [8009d84c + A0 * 440 + 10] = h(h[8009d84c + A0 * 440 + 12]);
+    }
+
+    [8009c6e4 + 54 + char_save_id * 84 + 2c] = h(hu[8009d84c + A0 * 440 + 10]);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25988
 AT = 8009cbdc;
@@ -7783,79 +7759,37 @@ SP = SP + 0018;
 800262D0	jr     ra 
 800262D4	nop
 ////////////////////////////////
-// func262d8
-800262D8	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S2);
-S2 = 0;
-[SP + 0024] = w(S3);
-S3 = 800491d0;
-[SP + 001c] = w(S1);
-S1 = 8009cbdc;
-[SP + 0018] = w(S0);
-S0 = 0;
-[SP + 0028] = w(RA);
 
-loop26308:	; 80026308
-V1 = bu[S1 + 0000];
-V0 = 00ff;
-80026310	beq    v1, v0, L263d4 [$800263d4]
-V0 = V1 << 02;
-V0 = V0 + S3;
-V1 = w[V0 + 0000];
-80026320	nop
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-AT = 8009c756;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-V1 = 013b;
-V0 = V0 + 0120;
-80026348	bne    v0, v1, L263d4 [$800263d4]
-A0 = S2;
-80026350	jal    func258bc [$800258bc]
-A1 = 0003;
-AT = 8009d85c;
-AT = AT + S0;
-V1 = h[AT + 0000];
-AT = 8009d85e;
-AT = AT + S0;
-V0 = h[AT + 0000];
-80026378	nop
-8002637C	beq    v1, v0, L263d4 [$800263d4]
-A0 = V1;
-V0 = A0 & fffe;
-AT = 8009d85c;
-AT = AT + S0;
-[AT + 0000] = h(V0);
-V0 = bu[S1 + 0000];
-8002639C	nop
-V1 = V0 << 05;
-V1 = V1 + V0;
-V1 = V1 << 02;
-AT = 8009c764;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-800263BC	nop
-V0 = V0 & fffe;
-AT = 8009c764;
-AT = AT + V1;
-[AT + 0000] = h(V0);
 
-L263d4:	; 800263D4
-S1 = S1 + 0001;
-S2 = S2 + 0001;
-V0 = S2 < 0003;
-800263E0	bne    v0, zero, loop26308 [$80026308]
-S0 = S0 + 0440;
-RA = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-80026400	jr     ra 
-80026404	nop
+
+////////////////////////////////
+// func262d8()
+// Restores HP as you walk
+
+for( int i = 0; i < 3; ++i ) // go through all party members
+{
+    char_id = bu[8009c6e4 + 4а8 + i];
+    if( char_id != ff )
+    {
+        char_save_id = w[800491d0 + char_id * 4];
+
+        if( ( bu[8009c6e4 + 54 + char_save_id * 84 + 1e] + 120 ) == 13b ) // equipped accessory = 0x1b (Restores HP as you walk)
+        {
+            A0 = i;
+            A1 = 3; // restore amoint
+            func258bc();
+
+            current_hp = h[8009d84c + i * 440 + 10];
+            max_hp = h[8009d84c + i * 440 + 12]
+
+            if( current_hp != max_hp )
+            {
+                [8009d84c + i * 440 + 10] = h(current_hp & fffe);
+                [8009c6e4 + 54 + char_save_id * 84 + 2c] = h(hu[8009c6e4 + 54 + char_save_id * 84 + 2c] & fffe);
+            }
+        }
+    }
+}
 ////////////////////////////////
 
 

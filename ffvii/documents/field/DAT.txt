@@ -149,6 +149,14 @@ triggers data (block 5)
 
 
 ////////////////////////////////
+encounter data (block 6)
+has two tables of encounters (0x18 size)
+    +  0 
+////////////////////////////////
+
+
+
+////////////////////////////////
 models data (block 7)
     +0 [][]     size of section.
     +2 [][]     number of models.

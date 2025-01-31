@@ -463,6 +463,7 @@
 
 8009c6c4 []       number of already inited actors with entities (this value stored into 8007eb98 for given actor).
 
+8009c6d8 []       wait timer before encounter check.
 8009c6dc current pointer to field events data.
 8009c6e0 [][][][] address of game data (fade/nfade/walkmesh/key data).
 
@@ -573,6 +574,8 @@
 800e0204 [][][][] offset to BSX file.
 
 800e0228 opcode address table.
+
+800e0638 array of random values (0x100 items 0x1 size)
 
 800e0738 digit->letter assosiation array (10-26 letters from character table)
 
@@ -692,7 +695,7 @@
 80114470 [][] field dialog value which content value how mush characters add at current character copy. (size 0x08 0x2).
 80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
 
-80114488 we read something from here during reading unknown data in triggers and check if this != 0. If this != 0 then battle will not be activated during field battle check. (0)
+80114488 [][]     movie played (1 - played).
 
 8011448c [][][][] number of draw mode packets for background prims inited.
 

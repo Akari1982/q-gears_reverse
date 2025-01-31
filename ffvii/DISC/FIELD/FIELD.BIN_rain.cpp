@@ -99,7 +99,7 @@ else if( bu[800e48d8] != 0 )
     [800e48d8] = b(bu[800e48d8] - 1);
 }
 
-entity_id = h[800965e0]; // manual visible entity
+pc_entity_id = h[800965e0]; // manual visible entity
 
 for( int i = 0; i < 40; ++i )
 {
@@ -115,13 +115,13 @@ for( int i = 0; i < 40; ++i )
             rnd1 = bu[800e0638 + rnd_seed];
             rnd2 = bu[800e0638 + ((rnd_seed * 3) & ff)];
 
-            [800e42d8 + i * 18 + 8] = h((w[80074ea4 + entity_id * 84 + c] >> c) + rnd1 * c - 600); // x2
-            [800e42d8 + i * 18 + a] = h((w[80074ea4 + entity_id * 84 + 10] >> c) + rnd2 * c - 600); // y2
+            [800e42d8 + i * 18 + 8] = h((w[80074ea4 + pc_entity_id * 84 + c] >> c) + rnd1 * c - 600); // x2
+            [800e42d8 + i * 18 + a] = h((w[80074ea4 + pc_entity_id * 84 + 10] >> c) + rnd2 * c - 600); // y2
             // copy x and y
             [800e42d8 + i * 18 + 0] = h(hu[800e42d8 + i * 18 + 8]); // x
             [800e42d8 + i * 18 + 2] = h(hu[800e42d8 + i * 18 + a]); // y
 
-            [800e42d8 + i * 18 + 14] = h((w[80074ea4 + entity_id * 84 + 14] >> c) - 300); // Z
+            [800e42d8 + i * 18 + 14] = h((w[80074ea4 + pc_entity_id * 84 + 14] >> c) - 300); // Z
         }
         else
         {

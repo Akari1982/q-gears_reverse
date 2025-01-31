@@ -1862,10 +1862,10 @@ if( w[8009abf4 + 78] & 0020 ) // if ok button pressed
 {
     if( ( w[8009abf4 + 7c] & 0020 ) == 0 ) // if ok not repeated
     {
-        pc = h[800965e0];
-        [SP + 10] = w(w[80074ea4 + pc * 84 + c] >> c); // x
-        [SP + 14] = w(w[80074ea4 + pc * 84 + 10] >> c); // y
-        [SP + 18] = w(w[80074ea4 + pc * 84 + 14] >> c); // z
+        pc_entity_id = h[800965e0];
+        [SP + 10] = w(w[80074ea4 + pc_entity_id * 84 + c] >> c); // x
+        [SP + 14] = w(w[80074ea4 + pc_entity_id * 84 + 10] >> c); // y
+        [SP + 18] = w(w[80074ea4 + pc_entity_id * 84 + 14] >> c); // z
 
         entities_n = h[8009abf4 + 28];
 
@@ -1873,7 +1873,7 @@ if( w[8009abf4 + 78] & 0020 ) // if ok button pressed
         {
             [SP + 30 + i * 2] = h(100);
 
-            if( i != pc )
+            if( i != pc_entity_id )
             {
                 if( bu[80074ea4 + i * 84 + 5b] == 0 ) // if model talkable
                 {
@@ -1890,13 +1890,13 @@ if( w[8009abf4 + 78] & 0020 ) // if ok button pressed
                             A2 = SP + 50;
                             field_entity_calculate_direction_by_vectors();
 
-                            dir = (bu[80074ea4 + pc * 84 + 38] - V0) & ff;
+                            dir = (bu[80074ea4 + pc_entity_id * 84 + 38] - V0) & ff;
 
                             if( dir >= 81 ) [SP + 30 + i * 2] = h(100 - dir);
                             else            [SP + 30 + i * 2] = h(dir);
 
                             // if pc solid + entity talk less than distance than we too far
-                            if( ( hu[80074ea4 + i * 84 + 6e] + hu[80074ea4 + pc * 84 + 6c] ) <= w[SP + 50] )
+                            if( ( hu[80074ea4 + i * 84 + 6e] + hu[80074ea4 + pc_entity_id * 84 + 6c] ) <= w[SP + 50] )
                             {
                                 [SP + 30 + i * 2] = h(100);
                             }
@@ -1907,7 +1907,7 @@ if( w[8009abf4 + 78] & 0020 ) // if ok button pressed
         }
 
         A3 = 40;
-        A2 = pc;
+        A2 = pc_entity_id;
 
         for( int i = 0; i < entities_n; ++i )
         {
@@ -1918,7 +1918,7 @@ if( w[8009abf4 + 78] & 0020 ) // if ok button pressed
             }
         }
 
-        if( A2 != pc )
+        if( A2 != pc_entity_id )
         {
             if( A3 != 40 )
             {
