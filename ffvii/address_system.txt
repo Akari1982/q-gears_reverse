@@ -722,10 +722,18 @@
     + 4fc party item stock array
     + b7c [][][][] party gil amount.
     + b80 [][][][] total seconds played.
-    + b84 [][][][] savemap seconds for timer (set in STTIM).
+    + b84 [][][][] countdown seconds for timer (set in STTIM).
     + ba4 savemap memory bank 1/2 start
     + ba4 (+00) [][]     game progress
-    + bbe [][]     number of escapes.
+    + bb4 (+10) []       played hours.
+    + bb5 (+11) []       played minutes.
+    + bb6 (+12) []       played seconds.
+    + bb7 (+13) []       played frames. From 0 to 30 (dec) in one sec.
+    + bb8 (+14) []       countdown timer hours.
+    + bb9 (+15) []       countdown timer minutes.
+    + bba (+16) []       countdown timer seconds.
+    + bbb (+17) []       countdown timer frames. From 0 to 30 (dec) in one sec.
+    + bbe       [][]     number of escapes.
     + bc0 (+1c) [][]     menu visibility mask.
     + bc2 (+1e) [][]     menu locking mask.
                             0x0001 - item

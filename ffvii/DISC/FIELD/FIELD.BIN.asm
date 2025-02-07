@@ -335,7 +335,7 @@
 // funcbc4d4
 800BC4D4-800BC9F8
 ////////////////////////////////
-// field_script_update_debug
+// field_event_update_actor_debug
 800BC9FC-800BEAD0
 ////////////////////////////////
 // field_debug_event_opcode
@@ -1136,7 +1136,7 @@
 // 0xFE CHMST
 800D3DCC-800D3E60
 ////////////////////////////////
-// 0x38 STTIM
+// field_event_opcode_38_sttim
 800D3E64-800D3F2C
 ////////////////////////////////
 // 0x36 WSPCL
