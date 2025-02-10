@@ -192,7 +192,7 @@
 
 8007ebe0 []       init with 1. Set to 1 when start battle via opcode.
 
-80081d90 [] array of some entity data. Store 1 to pc entity here during SPLIT.
+80081d90 array of actors split state (0x1 size).
 
 80081dc4 current UC opcode state. Init with 0. Not actually influence on game, but it is restored from here if changed as in ASK opcode. Real uc is set in game data.
 
@@ -615,6 +615,8 @@
 800e4274 offset to walkmesh block.
 800e4278 array of name reading offset for dialog windows. (size 0x2).
 800e4280 array of current variable for windows. (size 0x2).
+
+800e42a8 array of stored entities move speed (0x2 size).
 
 800e42d8 some array (size 0x18)
 

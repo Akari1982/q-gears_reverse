@@ -999,10 +999,10 @@
 // field_event_opcode_6a_vwoft
 800CFCE4-800CFE74
 ////////////////////////////////
-// 0x08 JOIN
+// field_event_opcode_08_join
 800CFE78-800D017C
 ////////////////////////////////
-// 0x09 SPLIT
+// field_event_opcode_09_split
 800D0180-800D0514
 ////////////////////////////////
 // funcd0518
@@ -1011,7 +1011,7 @@
 // funcd0938
 800D0938-800D0B48
 ////////////////////////////////
-// funcd0b4c
+// field_event_set_split_join_move
 800D0B4C-800D11FC
 ////////////////////////////////
 // funcd1200

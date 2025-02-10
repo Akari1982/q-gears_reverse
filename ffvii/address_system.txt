@@ -752,9 +752,9 @@
                             0x40 - tagret text shown in battle.
                             0x80 - underwater timer in battle.
     + ca4 savemap memory bank 3/4 start
-    + cad (+09) []       party member in slot 1.
-    + cae (+0a) []       party member in slot 2.
-    + caf (+0b) []       party member in slot 3.
+    + cad (+09) []       character id in slot 1.
+    + cae (+0a) []       character id in slot 2.
+    + caf (+0b) []       character id in slot 3.
     + da4 savemap memory bank b/c start
     + ea4 savemap memory bank d/e start
     + eaa (+06) []       some value that increments each battle check.
