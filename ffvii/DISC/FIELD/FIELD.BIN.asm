@@ -1005,22 +1005,22 @@
 // field_event_opcode_09_split
 800D0180-800D0514
 ////////////////////////////////
-// funcd0518
+// field_event_join_set
 800D0518-800D0934
 ////////////////////////////////
-// funcd0938
+// field_event_split_set
 800D0938-800D0B48
 ////////////////////////////////
-// field_event_set_split_join_move
+// field_event_split_join_set_move
 800D0B4C-800D11FC
 ////////////////////////////////
-// funcd1200
+// field_event_split_join_end_move
 800D1200-800D134C
 ////////////////////////////////
-// funcd1350
+// field_event_split_join_set_turn
 800D1350-800D1528
 ////////////////////////////////
-// funcd152c
+// field_event_split_join_end_turn
 800D152C-800D1650
 ////////////////////////////////
 // 0x6B FADE

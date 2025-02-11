@@ -1206,49 +1206,44 @@ return;
 ////////////////////////////////
 // handle_animation_update()
 
-model_id = A0;
+entity_id = A0;
 dat_block7 = w[8008357c];
-A0 = bu[dat_block7 + model_id * 8 + 4];
+A0 = bu[dat_block7 + entity_id * 8 + 4];
 if( A0 != ff )
 {
-    V1 = w[8004a62c];
-    V1 = w[V1 + 4];
-    new_structure_data = w[V1 + A0 * 24 + 1c];
-    new_structure_animation = hu[V1 + A0 * 24 + 1a];
+    models_struct = w[8004a62c];
+    models_data = w[models_struct + 4];
+    offst = w[models_data + A0 * 24 + 1c];
+    anim_offst = hu[models_data + A0 * 24 + 1a];
 
     // don't play automove
-    if( bu[8009abf4 + 33] == 1 )
-    {
-        return;
-    }
+    if( bu[8009abf4 + 33] == 1 ) return;
 
     // increase current frame if value by animation speed
-    [80074ea4 + model_id * 84 + 62] = h(hu[80074ea4 + model_id * 84 + 62] + hu[80074ea4 + model_id * 84 + 60]);
+    [80074ea4 + entity_id * 84 + 62] = h(hu[80074ea4 + entity_id * 84 + 62] + hu[80074ea4 + entity_id * 84 + 60]);
 
-    // if manual visible entity and UC == 0
-    if( model_id == h[800965e0] && bu[8009abf4 + 32] == 0 )
+    // if this is controllable entity
+    if( ( entity_id == h[800965e0] ) && ( bu[8009abf4 + 32] == 0 ) )
     {
-        animation_id = bu[80074ea4 + model_id * 84 + 5e];
-        number_of_frame = hu[new_structure_data + new_structure_animation + animation_id * 10];
-        [80074ea4 + model_id * 84 + 64] = h(number_of_frame - 1);
+        animation_id = bu[80074ea4 + entity_id * 84 + 5e];
+        frame_n = hu[offst + anim_offst + animation_id * 10 + 0];
+        [80074ea4 + entity_id * 84 + 64] = h(frame_n - 1);
 
-        if( h[80074ea4 + model_id * 84 + 62] > ( number_of_frame - 1 ) * 10 )
+        if( h[80074ea4 + entity_id * 84 + 62] > ( frame_n - 1 ) << 4 )
         {
-            [80074ea4 + model_id * 84 + 62] = h(0);
+            [80074ea4 + entity_id * 84 + 62] = h(0);
         }
     }
     else
     {
-        number_of_frame = h[80074ea4 + model_id * 84 + 64];
+        frame_n = h[80074ea4 + entity_id * 84 + 64];
 
-        if( h[80074ea4 + model_id * 84 + 62] > ( number_of_frame << 4 ) )
+        if( h[80074ea4 + entity_id * 84 + 62] > ( frame_n << 4 ) )
         {
-            [80074ea4 + model_id * 84 + 62] = h(number_of_frame << 4);
+            [80074ea4 + entity_id * 84 + 62] = h(frame_n << 4);
         }
     }
 }
-
-return;
 ////////////////////////////////
 
 
@@ -1282,29 +1277,26 @@ for( int i = 0; i < entities_n; ++i )
 // turn update
 for( int i = 0; i < entities_n; ++i )
 {
-    V1 = bu[80074ea4 + i * 84 + 3b];
-    if( V1 == 1 )
+    state = bu[80074ea4 + i * 84 + 3b];
+    if( state == 1 )
     {
-        A0 = h[80074ea4 + i * 84 + 3C];
-        A1 = h[80074ea4 + i * 84 + 3E];
+        A0 = h[80074ea4 + i * 84 + 3c];
+        A1 = h[80074ea4 + i * 84 + 3e];
         A2 = bu[80074ea4 + i * 84 + 39];
-        A3 = bu[80074ea4 + i * 84 + 3A];
+        A3 = bu[80074ea4 + i * 84 + 3a];
         field_calculate_current_value_by_steps();
         [80074ea4 + i * 84 + 38] = b(V0);
 
-        A0 = bu[80074ea4 + i * 84 + 3A];
-        V1 = bu[80074ea4 + i * 84 + 39];
-        if (A0 == V1)
+        if( bu[80074ea4 + i * 84 + 3a] == bu[80074ea4 + i * 84 + 39] )
         {
-            [80074ea4 + i * 84 + 3B] = b(3);
+            [80074ea4 + i * 84 + 3b] = b(3);
         }
         else
         {
-            V1 = A0 + 1;
-            [80074ea4 + i * 84 + 3A] = b(V1);
+            [80074ea4 + i * 84 + 3a] = b(bu[80074ea4 + i * 84 + 3a] + 1);
         }
     }
-    else if( V1 == 2 )
+    else if( state == 2 )
     {
         A0 = h[80074ea4 + i * 84 + 3c];
         A1 = h[80074ea4 + i * 84 + 3e];
@@ -1313,15 +1305,13 @@ for( int i = 0; i < entities_n; ++i )
         field_calculate_smooth_current_value_by_steps();
         [80074ea4 + i * 84 + 38] = b(V0);
 
-        A0 = bu[80074ea4 + i * 84 + 3a];
-
-        if( A0 == bu[80074ea4 + i * 84 + 39] )
+        if( bu[80074ea4 + i * 84 + 3a] == bu[80074ea4 + i * 84 + 39] )
         {
             [80074ea4 + i * 84 + 3b] = b(3);
         }
         else
         {
-            [80074ea4 + i * 84 + 3a] = b(A0 + 1);
+            [80074ea4 + i * 84 + 3a] = b(bu[80074ea4 + i * 84 + 3a] + 1);
         }
     }
 }
@@ -1329,9 +1319,9 @@ for( int i = 0; i < entities_n; ++i )
 // offset update
 for( int i = 0; i < entities_n; ++i )
 {
-    V1 = bu[80074ea4 + i * 84 + 56];
+    type = bu[80074ea4 + i * 84 + 56];
 
-    if( V1 == 1 )
+    if( type == 1 )
     {
         A0 = hu[80074ea4 + i * 84 + 42];
         A1 = hu[80074ea4 + i * 84 + 44];
@@ -1354,7 +1344,7 @@ for( int i = 0; i < entities_n; ++i )
         field_calculate_current_value_by_steps();
         [80074ea4 + i * 84 + 4c] = h(V0);
     }
-    else if( V1 == 2 )
+    else if( type == 2 )
     {
         A0 = hu[80074ea4 + i * 84 + 42];
         A1 = hu[80074ea4 + i * 84 + 44];
@@ -1382,11 +1372,9 @@ for( int i = 0; i < entities_n; ++i )
         continue;
     }
 
-    A0 = hu[80074ea4 + i * 84 + 54];
-
-    if( A0 != hu[80074ea4 + i * 84 + 52] )
+    if( hu[80074ea4 + i * 84 + 54] != hu[80074ea4 + i * 84 + 52] )
     {
-        [80074ea4 + i * 84 + 54] = h(A0 + 1);
+        [80074ea4 + i * 84 + 54] = h(hu[80074ea4 + i * 84 + 54] + 1);
     }
     else
     {
@@ -1412,7 +1400,7 @@ for( int i = 0; i < entities_n; ++i )
             move_add_shift_rotate();
 
             // set idle animation id by default
-            [80074ea4 + pc_entity * 84 + 5e] = b(bu[8009ABF4 + 2c]);
+            [80074ea4 + pc_entity * 84 + 5e] = b(bu[8009abf4 + 2c]);
 
             field_scale = h[8009abf4 + 10];
 
@@ -1615,8 +1603,8 @@ for( int i = 0; i < entities_n; ++i )
                 field_calculate_current_value_by_steps();
                 [80074ea4 + i * 84 + c] = w(V0); // real X
 
-                A0 = w[80074EC0 + i * 84];
-                A1 = w[80074F20 + i * 84];
+                A0 = w[80074ec0 + i * 84];
+                A1 = w[80074f20 + i * 84];
                 A2 = h[80074ea4 + i * 84 + 30];
                 A3 = h[80074ea4 + i * 84 + 32];
                 field_calculate_current_value_by_steps();
@@ -1666,7 +1654,7 @@ for( int i = 0; i < entities_n; ++i )
                 X_cur = w[80074ea4 + i * 84 + с];
                 [80074ea4 + i * 84 + 18] = w(X_cur);
                 Y_cur = w[80074ea4 + i * 84 + 10];
-                [80074ea4 + i * 84 + 1C] = w(Y_cur);
+                [80074ea4 + i * 84 + 1c] = w(Y_cur);
                 Z_cur = w[80074ea4 + i * 84 + 14];
                 [80074ea4 + i * 84 + 20] = w(Z_cur);
 
@@ -2268,9 +2256,9 @@ else if (A0 < 0)
     [80113F28] = h(triangle_id);
 }
 
-A0 = 1F800000;
-A1 = 1F800010;
-A2 = 1F800030;
+A0 = 1f800000;
+A1 = 1f800010;
+A2 = 1f800030;
 A3 = offset_to_triangle;
 field_walkmesh_calculate_z();
 [position + 8] = w(V0);
@@ -3021,10 +3009,10 @@ if( V1 != ff )
     [SP + 18] = w(V1);
 
     // if we closer to line than solid range
-    if( V1 != -1 && V1 < ( hu[S4 + 6c] * hu[S4 + 6c] ) )
+    if( ( V1 != -1 ) && ( V1 < ( hu[S4 + 6c] * hu[S4 + 6c] ) ) )
     {
         // if coords change
-        if( w[1f800000] != w[1f800020] || w[1f800004] != w[1f800024] )
+        if( ( w[1f800000] != w[1f800020] ) || ( w[1f800004] != w[1f800024] ) )
         {
             A0 = 1f800000;
             A1 = 1f800020;
@@ -3058,7 +3046,7 @@ if( V1 != ff )
     {
         A3 = bu[S1 + e]; // default state
 
-        if (A3 >= 4)
+        if( A3 >= 4 )
         {
             x1 = h[S1 + 0];
             y1 = h[S1 + 2];
@@ -3080,7 +3068,7 @@ if( V1 != ff )
             }
         }
 
-        if( A3 == 2 || A3 == 4 )
+        if( ( A3 == 2 ) || ( A3 == 4 ) )
         {
             A0 = S1;
             A1 = 1;
@@ -3088,13 +3076,13 @@ if( V1 != ff )
 
             if( V0 == 1 )
             {
-                V0 = bu[S1 + F];
+                V0 = bu[S1 + f];
                 A0 = hu[SP + 10 + V0 * 2];
                 func1117c();
             }
         }
 
-        if (A3 == 3 || A3 == 5)
+        if( ( A3 == 3 ) || ( A3 == 5 ) )
         {
             A0 = S1;
             A1 = 0;

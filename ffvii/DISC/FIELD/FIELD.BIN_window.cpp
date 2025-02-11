@@ -664,7 +664,7 @@ dialog = w[8007e7a8];
 if( dialog == 0 ) // if there is no dialogs in this field
 {
     A0 = 800a10dc; // "No mes data!"
-    funcd4848()
+    funcd4848();
     return 1;
 }
 

@@ -305,7 +305,7 @@ for( int i = 0; i < 8; ++i )
     [8009ad30 + i] = b(ff); // player character array of assigned actor_id
 }
 
-[800e48f0] = b(ff); // store 0xff here during end of SPLIT
+[800e48f0] = b(ff); // entity that perform split/join
 [80071c1c] = b(0);
 [8009c6e4 + bc2 + 1] = b(bu[8009c6e4 + bc2 + 1] | 03); // lock PHS and SAVE menu
 ////////////////////////////////
@@ -590,7 +590,7 @@ for( int i = 0; i < h[80095d84]; ++i )
 }
 
 // update events
-for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of actors
+for( int left_a = bu[events_data + 2]; left_a != 0; --left_a )// number of actors
 {
     // if current actor id greater than number of actors - then use 0 as id
     if( bu[800722c4] >= bu[events_data + 2] ) [800722c4] = b(0);
@@ -604,6 +604,8 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of actor
 
     actor_id_cur = bu[800722c4];
 
+    // update actor that called split/join and actors that not perform split/join
+    // events of actors that perform split/join are paused
     if( ( bu[80081d90 + actor_id_cur] == 0 ) || ( bu[800e48f0] == actor_id_cur ) )
     {
         for( int left_o = 8; left_o != 0; --left_o )
@@ -672,7 +674,11 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of actor
                 [800722c4] = b(bu[800722c4] + 1);
             }
 
-            800BBB00	j      Lbbb88 [$800bbb88]
+            if( bu[80099ffc] == 5 ) [80070788] = b(0); // stop script update
+
+            field_script_update_animation_state();
+
+            return;
         }
     }
 
@@ -690,8 +696,7 @@ for( int left_e = bu[events_data + 2]; left_e != 0; --left_e )// number of actor
     }
 }
 
-Lbbb88:	; 800BBB88
-if( bu[80099ffc] == 5 ) [80070788] = b(0);
+if( bu[80099ffc] == 5 ) [80070788] = b(0); // stop script update
 
 field_script_update_animation_state();
 ////////////////////////////////

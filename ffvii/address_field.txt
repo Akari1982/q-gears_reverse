@@ -70,7 +70,8 @@
     + 38 []       direction.
     + 39 []       number of steps for turn.
     + 3a []       current step for turn.
-    + 3b []       used during TURN (5th argument).
+    + 3b []       state of turn.
+                    3 - finish.
     + 3c [][]     start direction (for TURN), we store model direction here at start of turn.
     + 3e [][]     end direction (for TURN).
     + 40 [][]     real X offset value.
@@ -192,7 +193,17 @@
 
 8007ebe0 []       init with 1. Set to 1 when start battle via opcode.
 
-80081d90 array of actors split state (0x1 size).
+80081d90 array of actors split/join state (0x1 size).
+         // split
+         0 - not active split.
+         1 - init split move.
+         2 - perform split move and then finish.
+         3 - finish split.
+         // join
+         0 - not active join.
+         1 - perform join move and then finish.
+         2 - perform join and then init move turn.
+         3 - finish join.
 
 80081dc4 current UC opcode state. Init with 0. Not actually influence on game, but it is restored from here if changed as in ASK opcode. Real uc is set in game data.
 
@@ -235,7 +246,7 @@
 80099ffc [] script related. In script function.
             3 - set when init debug.
             4 - set when there is an error in event script (bad opcode, bad arguments, too many lines, no message data).
-            5 - 
+            5 - if set then we pause script after each opcode for debug.
 
 8009a048 array of states for KAWAI (0x10 items 0x1 size). Used in 0xd kawai opcode. Init with -1.
 
@@ -624,7 +635,7 @@
 
 800e48e0 [][][][] store tutorial offset here.
 
-800e48f0 []       store 0xff here during end of SPLIT.
+800e48f0 []       stroe actor that called split/join opcode here.
 800e48f4 array of poly for pointer (0x2 items 0x28 size)
 800e4944 texts for windows to diaplay. (size 0x100)
 800e4d44 [][]     movie played. If set we dont load background in advance.
