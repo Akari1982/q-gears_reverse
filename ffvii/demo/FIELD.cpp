@@ -11216,12 +11216,7 @@ events_data = w[800536cc];
 actors_n = bu[events_data + 2];
 
 Laadf4:	; 800AADF4
-    V1 = bu[80053624];
-    V1 = V1 < actors_n;
-    if( V1 == 0 )
-    {
-        [80053624] = b(0);
-    }
+    if( bu[80053624] >= actors_n ) [80053624] = b(0);
 
     S1 = 8;
 
@@ -11234,25 +11229,18 @@ Laadf4:	; 800AADF4
 
     Laae48:	; 800AAE48
     V0 = bu[80053694];
-    800AAE50	nop
+
+    actor_id_cur = bu[80053624];
+
     800AAE54	bne    v0, 6, Laaedc [$800aaedc]
-    800AAE58	nop
-    V0 = bu[80053600];
-    800AAE64	nop
-    V0 = V0 & 0001;
+
+    V0 = bu[80053600] & 1;
     800AAE6C	beq    v0, zero, Laaedc [$800aaedc]
-    800AAE70	nop
-    V0 = bu[80053618];
-    800AAE7C	nop
-    V0 = V0 & 0004;
+
+    V0 = bu[80053618] & 4;
     800AAE84	beq    v0, zero, Laaeb4 [$800aaeb4]
-    S0 = 0001;
-    V0 = bu[80053624];
-    800AAE94	nop
-    800AAE98	lui    at, $800e
-    800AAE9C	addiu  at, at, $f9a8 (=-$658)
-    AT = AT + V0;
-    V0 = bu[AT + 0000];
+
+    V0 = bu[800df9a8 + actor_id_cur];
     800AAEA8	nop
     800AAEAC	beq    v0, zero, Laaedc [$800aaedc]
     800AAEB0	nop
@@ -11260,32 +11248,23 @@ Laadf4:	; 800AADF4
     Laaeb4:	; 800AAEB4
 
     loopaaeb8:	; 800AAEB8
-        A0 = 3;
-        A1 = S0;
-        A2 = 800ba8ec;
+    for( int i = 1; i < 9; ++i )
+    {
+        A0 = 3; // page
+        A1 = i; // row
+        A2 = 800ba8ec; // ""
         field_debug_copy_string_into_page();
-
-        S0 = S0 + 0001;
-        V0 = S0 < 0009;
-    800AAED4	bne    v0, zero, loopaaeb8 [$800aaeb8]
+    }
 
     Laaedc:	; 800AAEDC
-    V0 = bu[80053624];
-    800AAEE4	nop
-    V0 = V0 << 01;
-    800AAEEC	lui    at, $8007
-    800AAEF0	addiu  at, at, $a8a0 (=-$5760)
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = events_data + V1;
-    V0 = bu[V0 + 0000];
-    800AAF10	nop
-    [8005369c] = b(V0);
+    actor_id_cur = bu[80053624];
+    V1 = hu[8006a8a0 + actor_id_cur * 2];
+    [8005369c] = b(bu[events_data + V1]);
+
     V0 = bu[8005369c];
     V0 = w[800ba4c4 + V0 * 4];
-    800AAF3C	nop
     800AAF40	jalr   v0 ra
-    800AAF44	nop
+
     800AAF48	beq    v0, zero, Laafcc [$800aafcc]
     800AAF4C	nop
     V0 = bu[80053694];
@@ -11302,15 +11281,16 @@ Laadf4:	; 800AADF4
     V0 = V0 & 0004;
     800AAF8C	beq    v0, zero, Laafbc [$800aafbc]
     800AAF90	nop
-    V0 = bu[80053624];
-    V0 = bu[800df9a8 + V0];
+    actor_id_cur = bu[80053624];
+    V0 = bu[800df9a8 + actor_id_cur];
     800AAFB4	beq    v0, zero, Lab08c [$800ab08c]
     800AAFB8	nop
 
     Laafbc:	; 800AAFBC
-    V0 = bu[80053624];
+    actor_id_cur = bu[80053624];
+    V0 = actor_id_cur + 0001;
+    [80053624] = b(V0);
     800AAFC4	j      Lab070 [$800ab070]
-    V0 = V0 + 0001;
 
     Laafcc:	; 800AAFCC
     V0 = bu[80053694];
@@ -11343,9 +11323,9 @@ Laadf4:	; 800AADF4
     V0 = bu[80053624];
     [800536a0] = w(0);
     V0 = V0 + 0001;
+    [80053624] = b(V0);
 
     Lab070:	; 800AB070
-    [80053624] = b(V0);
     800AB078	j      Lab100 [$800ab100]
     800AB07C	nop
 
@@ -11377,38 +11357,25 @@ Laadf4:	; 800AADF4
 800AB0F8	bne    actors_n, zero, Laadf4 [$800aadf4]
 
 Lab100:	; 800AB100
-if( bu[80053694] == 6 )
-{
-    [800535fc] = b(0);
-}
-
-A3 = 80066590;
-A2 = 8006a964;
-A1 = 8006a85c;
-T0 = 8006a924;
-
+if( bu[80053694] == 6 ) [800535fc] = b(0);
 
 for( int i = 0; i < actors_n; ++i )
 {
-    A0 = bu[A1];
+    A0 = bu[8006a85c + i];
     V1 = w[800536d0];
 
     if( ( A0 != ff ) && ( ( h[V1 + 1e] != A0 ) || ( bu[V1 + 20] != 0 ) ) )
     {
-        switch( bu[A3] )
+        switch( bu[80066590 + i] )
         {
             case 0:
             {
-                V1 = bu[A1 + 0000];
-                V0 = V1 << 01;
-                V0 = V0 + V1;
-                V0 = V0 << 03;
-                V0 = V0 + V1;
+                V1 = bu[8006a85c + i];
+                V0 = V1 * 64;
                 V1 = w[800536b0];
-                V0 = V0 << 02;
                 A0 = V0 + V1;
                 V0 = bu[A0 + 0043];
-                V1 = bu[T0 + 0000];
+                V1 = bu[8006a924 + i];
                 if( V0 == V1 )
                 {
                     if( h[A0 + 46] >= h[A0 + 48] )
@@ -11419,13 +11386,9 @@ for( int i = 0; i < actors_n; ++i )
                 else
                 {
                     [A0 + 0043] = b(V1);
-                    V0 = bu[A1 + 0000];
-                    V1 = V0 << 01;
-                    V1 = V1 + V0;
-                    V1 = V1 << 03;
-                    V1 = V1 + V0;
+                    V0 = bu[8006a85c + i];
+                    V1 = V0 * 64;
                     V0 = w[800536b0];
-                    V1 = V1 << 02;
                     V1 = V1 + V0;
                     [V1 + 0046] = h(0);
                 }
@@ -11434,26 +11397,18 @@ for( int i = 0; i < actors_n; ++i )
 
             case 1:
             {
-                V1 = bu[A1 + 0000];
-                V0 = V1 << 01;
-                V0 = V0 + V1;
-                V0 = V0 << 03;
-                V0 = V0 + V1;
+                V1 = bu[8006a85c + i];
+                V0 = V1 * 64;
                 V1 = w[800536b0];
-                V0 = V0 << 02;
                 A0 = V0 + V1;
                 V0 = bu[A0 + 0043];
-                V1 = bu[T0 + 0000];
+                V1 = bu[8006a924 + i];
                 if( V0 != V1 )
                 {
                     [A0 + 0043] = b(V1);
-                    V0 = bu[A1 + 0000];
-                    V1 = V0 << 01;
-                    V1 = V1 + V0;
-                    V1 = V1 << 03;
-                    V1 = V1 + V0;
+                    V0 = bu[8006a85c + i];
+                    V1 = V0 * 64;
                     V0 = w[800536b0];
-                    V1 = V1 << 02;
                     V1 = V1 + V0;
                     [V1 + 0046] = h(0);
                 }
@@ -11462,14 +11417,9 @@ for( int i = 0; i < actors_n; ++i )
 
             case 2:
             {
-                V1 = bu[A1 + 0000];
-                800AB27C	nop
-                V0 = V1 << 01;
-                V0 = V0 + V1;
-                V0 = V0 << 03;
-                V0 = V0 + V1;
+                V1 = bu[8006a85c + i];
+                V0 = V1 * 64;
                 V1 = w[800536b0];
-                V0 = V0 << 02;
                 A0 = V0 + V1;
                 if( h[A0 + 46] >= h[A0 + 48] )
                 {
@@ -11480,63 +11430,45 @@ for( int i = 0; i < actors_n; ++i )
 
             case 3:
             {
-                V1 = bu[A1 + 0000];
-                V0 = V1 << 01;
-                V0 = V0 + V1;
-                V0 = V0 << 03;
-                V0 = V0 + V1;
+                V1 = bu[8006a85c + i];
+                V0 = V1 * 64;
                 V1 = w[800536b0];
-                V0 = V0 << 02;
                 V0 = V0 + V1;
                 if( h[V0 + 46] >= h[V0 + 48] )
                 {
-                    [A3] = b(6);
+                    [80066590 + i] = b(6);
                 }
             }
             break;
 
             case 4:
             {
-                V1 = bu[A1 + 0000];
-                V0 = V1 << 01;
-                V0 = V0 + V1;
-                V0 = V0 << 03;
-                V0 = V0 + V1;
+                V1 = bu[8006a85c + i];
+                V0 = V1 * 64;
                 V1 = w[800536b0];
-                V0 = V0 << 02;
                 A0 = V0 + V1;
-                if( h[A0 + 46] >= bu[A2] )
+                if( h[A0 + 46] >= bu[8006a964 + i] )
                 {
-                    [A0 + 46] = h(bu[A2]);
+                    [A0 + 46] = h(bu[8006a964 + i]);
                 }
             }
             break;
 
             case 5:
             {
-                V1 = bu[A1 + 0000];
-                V0 = V1 << 01;
-                V0 = V0 + V1;
-                V0 = V0 << 03;
-                V0 = V0 + V1;
+                V1 = bu[8006a85c + i];
+                V0 = V1 * 64;
                 V1 = w[800536b0];
-                V0 = V0 << 02;
-                V1 = V0 + V1;
+                V1 = V1 + V0;
                 A0 = h[V1 + 46];
-                if( ( A0 >= bu[A2] ) || ( A0 >= h[V1 + 48] ) )
+                if( ( A0 >= bu[8006a964 + i] ) || ( A0 >= h[V1 + 48] ) )
                 {
-                    [A3 + 0000] = b(6);
+                    [80066590 + i] = b(6);
                 }
             }
             break;
         }
     }
-
-    Lab3ac:	; 800AB3AC
-    A3 = A3 + 0001;
-    A2 = A2 + 0001;
-    A1 = A1 + 0001;
-    T0 = T0 + 0001;
 }
 ////////////////////////////////
 
