@@ -6267,7 +6267,7 @@ return 0;
 
 S0 = A0;
 
-A0 = d;
+A0 = d; // NAMEMENU.MNU
 func211c4();
 
 do
@@ -6289,7 +6289,7 @@ func1d131c();
 
 S0 = A0;
 
-A0 = e;
+A0 = e; // FORMMENU.MNU
 func211c4();
 
 do
@@ -6308,7 +6308,7 @@ func1d1a6c();
 
 S0 = A0;
 
-A0 = f;
+A0 = f; // SHOPMENU.MNU
 func211c4();
 
 do
@@ -6325,7 +6325,7 @@ func1d4118();
 ////////////////////////////////
 // func24e5c()
 
-A0 = 10;
+A0 = 10; // SAVEMENU.MNU
 func211c4();
 
 do
@@ -6341,7 +6341,7 @@ func1d4cc0();
 ////////////////////////////////
 // func24e94()
 
-A0 = a;
+A0 = a; // SAVEMENU.MNU
 func211c4();
 
 do
@@ -6357,7 +6357,7 @@ func1d1774();
 ////////////////////////////////
 // func24ecc()
 
-A0 = 1;
+A0 = 1; // ITEMMENU.MNU
 func211c4();
 
 do
@@ -6373,7 +6373,7 @@ func1d2d74();
 ////////////////////////////////
 // func24f04()
 
-A0 = 1;
+A0 = 1; // ITEMMENU.MNU
 func211c4();
 
 do
@@ -6391,7 +6391,7 @@ func1d2e84()
 
 S0 = A0;
 
-A0 = 1;
+A0 = 1; // ITEMMENU.MNU
 func211c4();
 
 do
@@ -6410,7 +6410,7 @@ func1d2f00();
 
 S0 = A0;
 
-A0 = 1;
+A0 = 1; // ITEMMENU.MNU
 func211c4();
 
 do
@@ -6429,7 +6429,7 @@ func1d3138();
 
 S0 = A0;
 
-A0 = 1;
+A0 = 1; // ITEMMENU.MNU
 func211c4();
 
 do
@@ -6446,7 +6446,7 @@ func1d3018();
 ////////////////////////////////
 // func25008()
 
-A0 = 1;
+A0 = 1; // ITEMMENU.MNU
 func211c4();
 
 do
@@ -6460,8 +6460,8 @@ func1d3228();
 
 
 ////////////////////////////////
-// func25040
-80025040
+// func25040()
+
 A0 = 0;
 A2 = 8009d78a;
 A1 = 80049500;
@@ -6489,8 +6489,6 @@ A0 = A0 + 0001;
 V0 = A0 < 0008;
 800250A4	bne    v0, zero, loop25054 [$80025054]
 A1 = A1 + 0004;
-800250AC	jr     ra 
-800250B0	nop
 ////////////////////////////////
 
 
@@ -6498,7 +6496,7 @@ A1 = A1 + 0004;
 ////////////////////////////////
 // func250b4()
 
-A0 = c;
+A0 = c; // BGINMENU.MNU
 func211c4();
 
 do
@@ -6516,7 +6514,7 @@ func1d027c();
 
 S0 = A0;
 
-A0 = c;
+A0 = c; // BGINMENU.MNU
 func211c4();
 
 do
@@ -6535,7 +6533,7 @@ func1d05c4()
 
 S0 = A0;
 
-A0 = c;
+A0 = c; // BGINMENU.MNU
 func211c4();
 
 do
@@ -7624,7 +7622,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-A0 = 7;
+A0 = 7; // LIMTMENU.MNU
 func211c4();
 
 do

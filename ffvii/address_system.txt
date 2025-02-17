@@ -3,39 +3,41 @@
 80034cfc lzs extracted buffer.
 80034d14 lzs extract function.
 
-80048f60 file array
+80048f60 menu file array
      0 00000000 00000000
-     1 D9D20000 00480000 ???
-     2 E2D20000 00300000
-     3 E8D20000 00780100
-     4 E8D20000 00780100
-     5 17D30000 00600000
-     6 23D30000 00080000
-     7 24D30000 00280000 ???
-     8 29D30000 00280000
-     9 77D30000 00F00000
-     a 95D30000 00C00100 ???
-     b 4FD30000 00780000
-     c 2ED30000 00100000 ???
-     d 5ED30000 00C80000 ???
-     e 77D30000 00F00000 ???
-     f 30D30000 00F80000 ???
-    10 95D30000 00C00100 ???
-    11 BFD20000 00100000
-    12 C1D20000 00100000
-    13 C3D20000 00100000
-    14 C5D20000 00100000
-    15 C7D20000 00100000
-    16 C9D20000 00100000
-    17 CBD20000 00100000
-    18 CDD20000 00100000
-    19 CFD20000 00100000
-    1a D1D20000 00100000
-    1b D3D20000 00100000
-    1c D5D20000 00100000
-    1d D7D20000 00100000
-    1e D7D20000 00100000
-    1f D7D20000 00100000
+     1 0000D2D9 00004800 ITEMMENU.MNU
+     2 0000D2E2 00003000 MGICMENU.MNU
+     3 0000D2E8 00017800 EQIPMENU.MNU
+     4 0000D2E8 00017800 EQIPMENU.MNU
+     5 0000D317 00006000 STATMENU.MNU
+     6 0000D323 00000800 CHNGMENU.MNU
+     7 0000D324 00002800 LIMTMENU.MNU
+     8 0000D329 00002800 CNFGMENU.MNU
+     9 0000D377 0000F000 FORMMENU.MNU
+     a 0000D395 0001C000 SAVEMENU.MNU
+     b 0000D34F 00007800 PATYMENU.MNU
+     c 0000D32E 00001000 BGINMENU.MNU
+     d 0000D35E 0000C800 NAMEMENU.MNU
+     e 0000D377 0000F000 FORMMENU.MNU
+     f 0000D330 0000F800 SHOPMENU.MNU
+    10 0000D395 0001C000 SAVEMENU.MNU
+
+80048fe8 avatars file array
+    00 0000D2BF 00001000
+    01 0000D2C1 00001000
+    02 0000D2C3 00001000
+    03 0000D2C5 00001000
+    04 0000D2C7 00001000
+    05 0000D2C9 00001000
+    06 0000D2CB 00001000
+    07 0000D2CD 00001000
+    08 0000D2CF 00001000
+    09 0000D2D1 00001000
+    0a 0000D2D3 00001000
+    0b 0000D2D5 00001000
+    0c 0000D2D7 00001000
+    0d 0000D2D7 00001000
+    0e 0000D2D7 00001000
     + 0 [][][][] sector
     + 4 [][][][] size
 
@@ -131,7 +133,7 @@
     + a0            []       ??? some type of text.
     + a2            [][]     x position of tutorial text window.
     + a4            [][]     y position of tutorial text window.
-    + a8 (80062dec) [][][][] pointer to some load address.
+    + a8 (80062dec) [][][][] pointer to menu load address.
     + b4            [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
     + b8            []       number of something.
     +110            []       store array of values from 0x5 type materia to use in paired functions.

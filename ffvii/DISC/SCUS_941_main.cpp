@@ -745,32 +745,32 @@ while( true )
             {
                 func260dc();
 
-                func26090();
+                func26090(); // LIMTMENU.MNU
 
                 [80071e34] = b(0);
             }
 
             switch( bu[8009abf4 + 1] )
             {
-                case 6:
+                case 6: // NAMEMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func24d88();
                 }
                 break;
 
-                case 7:
+                case 7: // FORMMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func24dd4();
 
                     func260dc();
 
-                    func26090();
+                    func26090(); // LIMTMENU.MNU
                 }
                 break;
 
-                case 8:
+                case 8: // SHOPMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func24e18();
@@ -794,20 +794,20 @@ while( true )
                 }
                 break;
 
-                case e:
+                case e: // SAVEMENU.MNU
                 {
                     func24e94();
                 }
                 break;
 
-                case 12:
+                case 12: // ITEMMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func24fc4();
                 }
                 break;
 
-                case 13:
+                case 13: // ITEMMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func24f80();
@@ -997,26 +997,26 @@ while( true )
 
             switch( bu[8009abf4 + 1] - f )
             {
-                case 0: func24ecc(); break;
-                case 1: func24f04(); break;
-                case 6: func250b4(); break;
+                case 0: func24ecc(); break; // ITEMMENU.MNU
+                case 1: func24f04(); break; // ITEMMENU.MNU
+                case 6: func250b4(); break; // BGINMENU.MNU
                 case 9: func25040(); break;
 
-                case 2:
+                case 2: // ITEMMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func24f3c();
                 }
                 break;
 
-                case 7:
+                case 7: // BGINMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func250ec();
                 }
                 break;
 
-                case 8:
+                case 8: // BGINMENU.MNU
                 {
                     A0 = h[8009abf4 + 2];
                     func25130();
