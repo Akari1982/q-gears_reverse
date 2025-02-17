@@ -65,8 +65,7 @@ V0 = 3fcf;
 [SP + 0020] = w(S2);
 [SP + 001c] = w(S1);
 [SP + 0018] = w(S0);
-800294F8	lui    at, $800a
-[AT + a104] = w(V1);
+[8009a104] = w(V1);
 80029500	lui    at, $8008
 [AT + 33de] = h(0);
 80029508	lui    at, $8008
@@ -9855,65 +9854,40 @@ AKAO_opcode_a0();
 
 
 ////////////////////////////////
-// func33a90
-V1 = 04ff;
-80033A94	lui    v0, $800a
-80033A98	addiu  v0, v0, $d787 (=-$2879)
+// func33a90()
 
-loop33a9c:	; 80033A9C
-[V0 + 0000] = b(0);
-80033AA0	addiu  v1, v1, $ffff (=-$1)
-80033AA4	bgez   v1, loop33a9c [$80033a9c]
-80033AA8	addiu  v0, v0, $ffff (=-$1)
-V1 = 0;
-A0 = 00ff;
+for( int i = 4ff; V1 >=0; --i )
+{
+    [8009c6e4 + ba4 + i] = b(0);// clear memorybanks
+}
 
-loop33ab4:	; 80033AB4
-80033AB4	lui    at, $800a
-80033AB8	addiu  at, at, $cbdc (=-$3424)
-AT = AT + V1;
-[AT + 0000] = b(A0);
-80033AC4	lui    at, $800a
-80033AC8	addiu  at, at, $d391 (=-$2c6f)
-AT = AT + V1;
-[AT + 0000] = b(A0);
-V1 = V1 + 0001;
-V0 = V1 < 0003;
-80033ADC	bne    v0, zero, loop33ab4 [$80033ab4]
-V0 = 0001;
-80033AE4	lui    at, $800a
-[AT + d78a] = h(V0);
-V0 = 00ff;
-80033AF0	lui    at, $8007
-[AT + 16d4] = b(0);
-80033AF8	lui    at, $8007
-[AT + 16cc] = b(0);
-80033B00	lui    at, $8007
-[AT + 1e30] = b(0);
-80033B08	lui    at, $800a
-[AT + cbdc] = b(0);
-80033B10	lui    at, $800a
-[AT + d391] = b(0);
-80033B18	lui    at, $800a
-[AT + d5f0] = b(V0);
-80033B20	lui    at, $800a
-[AT + d2a4] = b(V0);
-80033B28	lui    at, $800a
-[AT + d2a5] = b(V0);
-80033B30	lui    at, $800a
-[AT + d264] = w(0);
-80033B38	lui    at, $800a
-[AT + d268] = w(0);
-80033B40	lui    at, $800a
-[AT + ac4c] = h(0);
-80033B48	lui    at, $800a
-[AT + ac4e] = h(0);
-80033B50	lui    at, $800a
-[AT + ac50] = h(0);
-80033B58	lui    at, $800a
-[AT + ac2d] = b(0);
-80033B60	lui    at, $8007
-[AT + 1e34] = b(0);
-80033B68	jr     ra 
-80033B6C	nop
+for( int i = 0; i < 3; ++i )
+{
+    [8009c6e4 + 4f8 + i] = b(ff); // clear party member slot
+    [8009c6e4 + cad + i] = b(ff); // clear party member slot copy in savemap
+}
+
+[8009c6e4 + 4f8] = b(0); // set first party member to cloud
+[8009c6e4 + cad] = b(0); // set first party member copy in memorybank to cloud
+
+[8009c6e4 + 10a6] = h(0001); // character availability mask (cloud only)
+
+[8009c6e4 + f0c] = b(ff); // field map name for menu
+
+[8009c6e4 + bc0] = b(ff); // menu visibility mask
+[8009c6e4 + bc1] = b(ff); // menu visibility mask??
+
+[8009c6e4 + b80] = w(0); // total seconds played
+[8009c6e4 + b84] = w(0); // countdown seconds for timer
+
+[8009ac4c] = h(0);
+[8009ac4e] = h(0);
+[8009ac50] = h(0);
+
+[8009ac2d] = b(0);
+
+[800716d4] = b(0); // music lock
+[800716cc] = b(0); // movie lock
+[80071e30] = b(0); // battle lock
+[80071e34] = b(0);
 ////////////////////////////////

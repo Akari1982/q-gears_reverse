@@ -7728,36 +7728,27 @@ do
 
 [GP + 024c] = w(0);
 
-80026264	jal    func1c434 [$8001c434]
+func1c434();
 
 func26090();
 
-80026274	jal    func25008 [$80025008]
+func25008();
 
 func260dc();
 
-A0 = 000f;
+A0 = f;
 V0 = 8009d7bc;
 A1 = V0 + 0013;
-V1 = 0080;
-[V0 + 0000] = b(V1);
-V0 = 0041;
-800262A0	lui    at, $800a
-[AT + d7bd] = b(V1);
-800262A8	lui    at, $800a
-[AT + d7d0] = b(V1);
-800262B0	lui    at, $800a
-[AT + d7be] = h(V0);
+[V0 + 0000] = b(80);
+[8009d7bd] = b(80);
+[8009d7d0] = b(80);
+[8009d7be] = h(41);
 
 loop262b8:	; 800262B8
-[A1 + 0000] = b(A0);
-800262BC	addiu  a0, a0, $ffff (=-$1)
+    [A1 + 0000] = b(A0);
+    800262BC	addiu  a0, a0, $ffff (=-$1)
+    800262C4	addiu  a1, a1, $ffff (=-$1)
 800262C0	bgez   a0, loop262b8 [$800262b8]
-800262C4	addiu  a1, a1, $ffff (=-$1)
-RA = w[SP + 0010];
-SP = SP + 0018;
-800262D0	jr     ra 
-800262D4	nop
 ////////////////////////////////
 
 
@@ -7776,7 +7767,7 @@ for( int i = 0; i < 3; ++i ) // go through all party members
         if( ( bu[8009c6e4 + 54 + char_save_id * 84 + 1e] + 120 ) == 13b ) // equipped accessory = 0x1b (Restores HP as you walk)
         {
             A0 = i;
-            A1 = 3; // restore amoint
+            A1 = 3; // restore amount
             func258bc();
 
             current_hp = h[8009d84c + i * 440 + 10];

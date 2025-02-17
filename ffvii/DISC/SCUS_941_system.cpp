@@ -13,6 +13,12 @@ K0 = K0 + 0008;
 [K0 + 007c] = w(RA);
 8003CE34	mfc0   v0,cause
 8003CE38	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func3ce3c()
 8003CE3C	addiu  sp, sp, $ffe8 (=-$18)
 8003CE40	addiu  v0, zero, $ffff (=-$1)
 [SP + 0010] = w(RA);
@@ -33,7 +39,12 @@ RA = w[SP + 0010];
 SP = SP + 0018;
 8003CE84	jr     ra 
 8003CE88	nop
+////////////////////////////////
 
+
+
+////////////////////////////////
+// func3ce8c()
 8003CE8C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
 8003CE94	jal    system_bios_outdated_pad_get_buttons [$80042aa0]

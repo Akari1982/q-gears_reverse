@@ -525,7 +525,7 @@ while( true )
 
     func11920();
 
-    func33a90();
+    func33a90(); // init savemap
 
     func24e5c();
 
@@ -535,7 +535,7 @@ while( true )
 
         func26258();
 
-        func33a90();
+        func33a90(); // init savemap
 
         func11bb4();
     }
