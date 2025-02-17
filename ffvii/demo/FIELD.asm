@@ -5031,7 +5031,7 @@ La4ac0:	; 800A4AC0
 800A4AC8	ori    a0, a0, $0644
 800A4ACC	lhu    v0, $0008(v0)
 800A4AD0	addu   a0, s1, a0
-800A4AD4	jal    funcaa7d8 [$800aa7d8]
+800A4AD4	jal    field_event_update [$800aa7d8]
 800A4AD8	sh     v0, $0000(s3)
 800A4ADC	lhu    v0, $ffe2(s3)
 800A4AE0	nop
@@ -11769,7 +11769,7 @@ Laa7c4:	; 800AA7C4
 800AA7D4	nop
 
 
-funcaa7d8:	; 800AA7D8
+field_event_update:	; 800AA7D8
 800AA7D8	lui    v0, $8005
 800AA7DC	lbu    v0, $3620(v0)
 800AA7E0	addiu  sp, sp, $ffe8 (=-$18)

@@ -44,11 +44,11 @@ A0 = S2;
 V0 = 0001;
 [8006a786] = b(V0);
 [8006a7e2] = b(V0);
-800A0448	jal    $800325e8
+800A0448	jal    $system_psyq_clear_otag_r
 A1 = 0001;
 S3 = 800d3344;
 A0 = S3;
-800A045C	jal    $800325e8
+800A045C	jal    $system_psyq_clear_otag_r
 A1 = 0001;
 S0 = S2 + 0004;
 A0 = S0;
@@ -392,67 +392,71 @@ SP = SP + 0020;
 800A0ADC	nop
 
 
-funca0ae0:	; 800A0AE0
-V0 = bu[8008be1f];
-800A0AE8	nop
-800A0AEC	bne    v0, zero, La0c04 [$800a0c04]
-800A0AF0	nop
-V1 = bu[8008be1d];
-800A0AFC	nop
-V0 = V1 < 000a;
-800A0B04	beq    v0, zero, La0c04 [$800a0c04]
-V0 = V1 << 02;
-AT = 800a0000;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800A0B1C	nop
-800A0B20	jr     v0 
-800A0B24	nop
 
-V0 = 0002;
-[8008bdc4] = h(0);
-[80065d9c] = h(0);
-[80065da0] = h(0);
-[8008be1f] = b(V0);
-800A0B4C	j      La0c04 [$800a0c04]
-800A0B50	nop
-V1 = hu[8008be16];
-A0 = hu[8008be18];
-V0 = 0001;
-[8008bdc4] = h(V0);
-V0 = 0002;
-[8008be1f] = b(V0);
-[80065d9c] = h(V1);
-[80065da0] = h(A0);
-800A0B8C	j      La0c04 [$800a0c04]
-800A0B90	nop
-V1 = hu[8008be20];
-A0 = hu[80065d9c];
-A1 = hu[80065da0];
-A2 = hu[8008be16];
-A3 = hu[8008be18];
-V0 = 0001;
-[8008bdc4] = h(V0);
-V0 = 0001;
-[800665d0] = h(0);
-[8008be1f] = b(V0);
-[8008d67c] = h(V1);
-[800665e4] = h(A0);
-[800665ec] = h(A1);
-[800665e8] = h(A2);
-[800665f0] = h(A3);
+////////////////////////////////
+// field_background_scrolling_init()
+800A0AE0-800A0C08
 
+if( bu[8008be1f] == 0 ) // init state
+{
+    V1 = bu[8008be1d];
+    800A0AFC	nop
+    V0 = V1 < 000a;
+    800A0B04	beq    v0, zero, La0c04 [$800a0c04]
+    V0 = V1 << 02;
+    AT = 800a0000;
+    AT = AT + V0;
+    V0 = w[AT + 0000];
+    800A0B1C	nop
+    800A0B20	jr     v0 
+    800A0B24	nop
+
+    V0 = 0002;
+    [8008bdc4] = h(0);
+    [80065d9c] = h(0);
+    [80065da0] = h(0);
+    [8008be1f] = b(V0);
+    800A0B4C	j      La0c04 [$800a0c04]
+    800A0B50	nop
+    V1 = hu[8008be16];
+    A0 = hu[8008be18];
+    V0 = 0001;
+    [8008bdc4] = h(V0);
+    V0 = 0002;
+    [8008be1f] = b(V0);
+    [80065d9c] = h(V1);
+    [80065da0] = h(A0);
+    800A0B8C	j      La0c04 [$800a0c04]
+    800A0B90	nop
+    V1 = hu[8008be20];
+    A0 = hu[80065d9c];
+    A1 = hu[80065da0];
+    A2 = hu[8008be16];
+    A3 = hu[8008be18];
+    V0 = 0001;
+    [8008bdc4] = h(V0);
+    V0 = 0001;
+    [800665d0] = h(0);
+    [8008be1f] = b(V0);
+    [8008d67c] = h(V1);
+    [800665e4] = h(A0);
+    [800665ec] = h(A1);
+    [800665e8] = h(A2);
+    [800665f0] = h(A3);
+}
 La0c04:	; 800A0C04
-800A0C04	jr     ra 
-800A0C08	nop
+////////////////////////////////
 
 
-funca0c0c:	; 800A0C0C
+
+////////////////////////////////
+// field_background_scrolling_update()
+800A0C0C-800A0D70
+
 V1 = bu[8008be1d];
-800A0C14	addiu  sp, sp, $ffd8 (=-$28)
 V0 = V1 < 000a;
 800A0C1C	beq    v0, zero, La0d64 [$800a0d64]
-[SP + 0020] = w(RA);
+
 V0 = V1 << 02;
 AT = 800a0028;
 AT = AT + V0;
@@ -515,10 +519,8 @@ La0d5c:	; 800A0D5C
 [800665d0] = h(V0);
 
 La0d64:	; 800A0D64
-RA = w[SP + 0020];
-SP = SP + 0028;
-800A0D6C	jr     ra 
-800A0D70	nop
+////////////////////////////////
+
 
 
 funca0d74:	; 800A0D74
@@ -554,12 +556,13 @@ SP = SP + 0028;
 800A0DF0	nop
 
 
-funca0df4:	; 800A0DF4
+
+////////////////////////////////
+// funca0df4()
+800A0DF4-800A1204
+
 V0 = w[80065da4];
-800A0DFC	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0040] = w(S0);
 S0 = A0;
-[SP + 0044] = w(RA);
 A0 = h[V0 + 0024];
 800A0E10	jal    $80028c00
 800A0E14	nop
@@ -780,11 +783,8 @@ V0 = V0 + 00e8;
 [8006a77a] = h(V0);
 
 La11f4:	; 800A11F4
-RA = w[SP + 0044];
-S0 = w[SP + 0040];
-SP = SP + 0048;
-800A1200	jr     ra 
-800A1204	nop
+////////////////////////////////
+
 
 
 funca1208:	; 800A1208
@@ -985,8 +985,11 @@ SP = SP + 0058;
 800A14DC	nop
 
 
-funca14e0:	; 800A14E0
-800A14E0	addiu  sp, sp, $ffe0 (=-$20)
+
+////////////////////////////////
+// funca14e0()
+800A14E0-800A17BC
+
 T6 = A0;
 [SP + 0014] = w(S1);
 S1 = A1;
@@ -1186,12 +1189,8 @@ T9 = T9 + 0006;
 T7 = T7 + 0006;
 
 La17a8:	; 800A17A8
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800A17B8	jr     ra 
-800A17BC	nop
+////////////////////////////////
+
 
 
 funca17c0:	; 800A17C0
@@ -1287,7 +1286,7 @@ A1 = 0001;
 [SP + 0024] = w(RA);
 A0 = A0 << 10;
 A0 = A0 >> 0e;
-800A1978	jal    $800325e8
+800A1978	jal    $system_psyq_clear_otag_r
 A0 = A0 + S0;
 800A1980	lui    a3, $8009
 800A1984	addiu  a3, a3, $b938 (=-$46c8)
@@ -1508,7 +1507,7 @@ A1 = 0001;
 [SP + 0024] = w(RA);
 A0 = A0 << 10;
 A0 = A0 >> 0e;
-800A1D54	jal    $800325e8
+800A1D54	jal    $system_psyq_clear_otag_r
 A0 = A0 + S0;
 800A1D5C	lui    a3, $8009
 800A1D60	addiu  a3, a3, $b938 (=-$46c8)
@@ -4315,23 +4314,26 @@ funca2288();
 
 A0 = 800c4540;
 A1 = A0 + 7000;
-800A494C	jal    funca1208 [$800a1208]
 A2 = A0 + 7e00;
+funca1208(); // field_background_init_packets???
+
+S4 = 0001;
+
+
 A0 = 800d4b88;
 800A495C	lui    a1, $800e
 800A4960	addiu  a1, a1, $bb88 (=-$4478)
 800A4964	lui    a2, $800e
 800A4968	addiu  a2, a2, $c988 (=-$3678)
 800A496C	jal    funca1208 [$800a1208]
-S4 = 0001;
+
 A0 = SP + 0010;
 A1 = 0;
 A2 = 0;
 A3 = 0;
 system_psyq_clear_image();
 
-800A4988	lui    s3, $8009
-800A498C	addiu  s3, s3, $be48 (=-$41b8)
+S3 = 8008be48;
 800A4990	lui    s6, $8007
 800A4994	addiu  s6, s6, $a770 (=-$5890)
 
@@ -4344,16 +4346,14 @@ while( true )
     [800665e0] = h(hu[800665e0] + 1);
 
     V0 = hu[800665e0];
-    800A49D8	nop
     V0 = hu[800665e0];
-    800A49E4	nop
     V0 = V0 & 0001;
     [800665e0] = h(V0);
+
     A2 = hu[800665e0];
-    V1 = hu[800665e0];
-    A1 = 1000;
-    V1 = V1 << 10;
-    V1 = V1 >> 10;
+    [8008be0c] = b(A2);
+
+    V1 = h[800665e0];
     V0 = V1 << 05;
     V0 = V0 + V1;
     V0 = V0 << 02;
@@ -4365,55 +4365,48 @@ while( true )
     V0 = V0 << 03;
     800A4A34	lui    v1, $800c
     800A4A38	addiu  v1, v1, $ecfc (=-$1304)
-    S1 = V0 + V1;
-    [8008be0c] = b(A2);
-    800A4A48	jal    $800325e8
-    A0 = S1;
-    A0 = 10644;
-    A0 = S1 + A0;
-    800A4A5C	jal    $800325e8
-    A1 = 0001;
+    render_data = V0 + V1;
+
+    A0 = render_data;
+    A1 = 1000;
+    system_psyq_clear_otag_r();
+
+    A0 = render_data + 10644;
+    A1 = 1;
+    system_psyq_clear_otag_r();
+
     800A4A64	jal    funca5250 [$800a5250]
-    800A4A68	nop
-    800A4A6C	lui    a0, $8007
-    800A4A70	addiu  a0, a0, $a854 (=-$57ac)
-    800A4A74	lui    a1, $8007
-    800A4A78	addiu  a1, a1, $a858 (=-$57a8)
-    800A4A7C	jal    funca5538 [$800a5538]
-    800A4A80	nop
+
+    A0 = 8006a854; // screen scroll X
+    A1 = 8006a858; // screen scroll Y
+    funca5538(); // update buttons
     [800df98c] = w(V0);
-    V0 = V0 & 0100;
-    800A4A90	beq    v0, zero, La4ab8 [$800a4ab8]
-    V0 = S5;
-    800A4A98	bne    v0, zero, La4ac0 [$800a4ac0]
-    800A4A9C	lui    a0, $0001
-    S2 = S2 + 0001;
-    V0 = 0003;
-    800A4AA8	bne    s2, v0, La4ac0 [$800a4ac0]
-    S5 = 0001;
-    800A4AB0	j      La4ac0 [$800a4ac0]
-    S2 = 0;
 
-    La4ab8:	; 800A4AB8
-    S5 = 0;
-    800A4ABC	lui    a0, $0001
+    if( V0 & 0100 )
+    {
+        if( S5 == 0 )
+        {
+            S2 += 1;
+            S5 = 1;
 
-    La4ac0:	; 800A4AC0
+            if( S2 == 3 ) S2 = 0;
+        }
+    }
+    else
+    {
+        S5 = 0;
+    }
+
     V0 = w[80053628];
-    A0 = A0 | 0644;
-    V0 = hu[V0 + 0008];
-    A0 = S1 + A0;
-    [S3 + 0000] = h(V0);
+    [S3 + 0] = h(hu[V0 + 8]);
 
-    funcaa7d8(); // update events
+    A0 = render_data + 10644; // ui OT (top level)
+    field_event_update();
 
-    V0 = hu[S3 + ffe2];
+    [8008b808] = h(hu[S3 + ffe2]);
 
-    [8008b808] = h(V0);
-
-    800A4AEC	jal    funca0ae0 [$800a0ae0]
-
-    800A4AF4	jal    funca0c0c [$800a0c0c]
+    field_background_scrolling_init();
+    field_background_scrolling_update();
 
     V1 = bu[S3 + ffc5];
 
@@ -4450,44 +4443,34 @@ while( true )
         800A4BE4	j      La4bd4 [$800a4bd4]
     }
 
-    S0 = 0;
+    field_background_scrolling_init();
 
-    funca0ae0();
-
-    A0 = S1;
-    funca0df4();
+    A0 = render_data;
+    funca0df4(); // field_background_add_to_render???
 
     V0 = w[800b9688];
-    V0 = hu[V0 + 0000];
+    V0 = hu[V0 + 0];
 
-    800A4C10	blez   v0, La4c48 [$800a4c48]
-    800A4C14	nop
-
-    loopa4c18:	; 800A4C18
-        A0 = w[800df98c];
-        800A4C20	jal    funca2b00 [$800a2b00]
-        A1 = S0;
-        V0 = w[800b9688];
-        800A4C30	nop
-        V0 = hu[V0 + 0000];
-        S0 = S0 + 0001;
-        V0 = S0 < V0;
-    800A4C40	bne    v0, zero, loopa4c18 [$800a4c18]
-
-    La4c48:	; 800A4C48
-    if( hu[800df99c] == 0 )
+    for( int i = 0; i < V0; ++i )
     {
-        A0 = S1;
-        A1 = S1 + 5844;
-        A2 = S1 + c844;
-        A3 = S1 + d644;
-        funca14e0();
+        A0 = w[800df98c];
+        A1 = i;
+        funca2b00();
     }
 
-    A0 = S1;
-    funca4fd8();
+    if( hu[800df99c] == 0 )
+    {
+        A0 = render_data;
+        A1 = render_data + 5844;
+        A2 = render_data + c844;
+        A3 = render_data + d644;
+        funca14e0(); // field_rain_add_to_render??
+    }
 
-    funca20d8();
+    A0 = render_data; // scene OT
+    funca4fd8(); // update models (animations drafts and kawai) ???
+
+    funca20d8(); // fade update ????
 
     A0 = 1;
     system_psyq_wait_frames();
@@ -4575,10 +4558,10 @@ while( true )
 
     if( bu[8008be33] == 0 )
     {
-        A0 = S1 + 3ffc;
+        A0 = render_data + 3ffc;
         system_psyq_draw_otag();
 
-        A0 = S1 + 4000;
+        A0 = render_data + 4000;
         system_psyq_draw_otag();
 
         if( hu[8006a920] != 0 )
@@ -4588,7 +4571,7 @@ while( true )
         }
     }
 
-    A0 = S1 + 10644; // menu OT (top level)
+    A0 = render_data + 10644; // menu OT (top level)
     system_psyq_draw_otag();
 }
 ////////////////////////////////
@@ -10909,14 +10892,12 @@ field_event_run_init();
 
 
 ////////////////////////////////
-// funcaa7d8()
-// func field_event_update in released ffvii
+// field_event_update()
 800AA7D8-800AA89C
 
-V0 = bu[80053620];
-S0 = A0;
+ot = A0;
 
-if( V0 != 0 )
+if( bu[80053620] != 0 )
 {
     800AA7F4	jal    funcb74f0 [$800b74f0]
 
@@ -10936,7 +10917,7 @@ if( bu[8005361c] != 0 ) // if at least 1 window is opened
 {
     A0 = 8006a9a4;
     A1 = 4; // render max 4 dialogs
-    A2 = S0;
+    A2 = ot;
     field_struct = w[800536d0];
     A3 = bu[field_struct + 0] ^ 1;
     func1c074();
@@ -11361,80 +11342,54 @@ if( bu[80053694] == 6 ) [800535fc] = b(0);
 
 for( int i = 0; i < actors_n; ++i )
 {
-    A0 = bu[8006a85c + i];
-    V1 = w[800536d0];
+    entity_id = bu[8006a85c + i];
+    entities_data = w[800536b0];
 
-    if( ( A0 != ff ) && ( ( h[V1 + 1e] != A0 ) || ( bu[V1 + 20] != 0 ) ) )
+    field_struct = w[800536d0];
+
+    if( ( entity_id != ff ) && ( ( h[field_struct + 1e] != entity_id ) || ( bu[field_struct + 20] != 0 ) ) )
     {
         switch( bu[80066590 + i] )
         {
             case 0:
             {
-                V1 = bu[8006a85c + i];
-                V0 = V1 * 64;
-                V1 = w[800536b0];
-                A0 = V0 + V1;
-                V0 = bu[A0 + 0043];
-                V1 = bu[8006a924 + i];
-                if( V0 == V1 )
+                if( bu[entities_data + entity_id * 64 + 43] == bu[8006a924 + i] )
                 {
-                    if( h[A0 + 46] >= h[A0 + 48] )
+                    if( h[entities_data + entity_id * 64 + 46] >= h[entities_data + entity_id * 64 + 48] )
                     {
-                        [A0 + 46] = h(0);
+                        [entities_data + entity_id * 64 + 46] = h(0);
                     }
                 }
                 else
                 {
-                    [A0 + 0043] = b(V1);
-                    V0 = bu[8006a85c + i];
-                    V1 = V0 * 64;
-                    V0 = w[800536b0];
-                    V1 = V1 + V0;
-                    [V1 + 0046] = h(0);
+                    [entities_data + entity_id * 64 + 43] = b(bu[8006a924 + i]);
+                    [entities_data + entity_id * 64 + 46] = h(0);
                 }
             }
             break;
 
             case 1:
             {
-                V1 = bu[8006a85c + i];
-                V0 = V1 * 64;
-                V1 = w[800536b0];
-                A0 = V0 + V1;
-                V0 = bu[A0 + 0043];
-                V1 = bu[8006a924 + i];
-                if( V0 != V1 )
+                if( bu[entities_data + entity_id * 64 + 43] != bu[8006a924 + i] )
                 {
-                    [A0 + 0043] = b(V1);
-                    V0 = bu[8006a85c + i];
-                    V1 = V0 * 64;
-                    V0 = w[800536b0];
-                    V1 = V1 + V0;
-                    [V1 + 0046] = h(0);
+                    [entities_data + entity_id * 64 + 43] = b(bu[8006a924 + i]);
+                    [entities_data + entity_id * 64 + 46] = h(0);
                 }
             }
             break;
 
             case 2:
             {
-                V1 = bu[8006a85c + i];
-                V0 = V1 * 64;
-                V1 = w[800536b0];
-                A0 = V0 + V1;
-                if( h[A0 + 46] >= h[A0 + 48] )
+                if( h[entities_data + entity_id * 64 + 46] >= h[entities_data + entity_id * 64 + 48] )
                 {
-                    [A0 + 46] = h(0);
+                    [entities_data + entity_id * 64 + 46] = h(0);
                 }
             }
             break;
 
             case 3:
             {
-                V1 = bu[8006a85c + i];
-                V0 = V1 * 64;
-                V1 = w[800536b0];
-                V0 = V0 + V1;
-                if( h[V0 + 46] >= h[V0 + 48] )
+                if( h[entities_data + entity_id * 64 + 46] >= h[entities_data + entity_id * 64 + 48] )
                 {
                     [80066590 + i] = b(6);
                 }
@@ -11443,25 +11398,18 @@ for( int i = 0; i < actors_n; ++i )
 
             case 4:
             {
-                V1 = bu[8006a85c + i];
-                V0 = V1 * 64;
-                V1 = w[800536b0];
-                A0 = V0 + V1;
-                if( h[A0 + 46] >= bu[8006a964 + i] )
+                if( h[entities_data + entity_id * 64 + 46] >= bu[8006a964 + i] )
                 {
-                    [A0 + 46] = h(bu[8006a964 + i]);
+                    [entities_data + entity_id * 64 + 46] = h(bu[8006a964 + i]);
                 }
             }
             break;
 
             case 5:
             {
-                V1 = bu[8006a85c + i];
-                V0 = V1 * 64;
-                V1 = w[800536b0];
-                V1 = V1 + V0;
-                A0 = h[V1 + 46];
-                if( ( A0 >= bu[8006a964 + i] ) || ( A0 >= h[V1 + 48] ) )
+                A0 = h[entities_data + entity_id * 64 + 46];
+
+                if( ( A0 >= bu[8006a964 + i] ) || ( A0 >= h[entities_data + entity_id * 64 + 48] ) )
                 {
                     [80066590 + i] = b(6);
                 }
