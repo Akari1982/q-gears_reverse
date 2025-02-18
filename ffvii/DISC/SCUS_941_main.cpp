@@ -509,7 +509,7 @@ while( true )
     system_cdrom_load_file();
 
     A0 = 0;
-    80011D40	jal    funca04c4 [$800a04c4]
+    funca04c4();
 
     [8009a000] = h(c0);
     [8009a004] = w(7f);

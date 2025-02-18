@@ -2522,8 +2522,6 @@ if (V0 != 0)
 
 T0 = char_save_id;
 
-
-
 if (bu[8009c757 + char_save_id * 84] & 10)
 {
     A0 = S7 + 24;
@@ -2533,8 +2531,6 @@ if (bu[8009c757 + char_save_id * 84] & 10)
     func26f44();
 }
 
-
-
 if (bu[8009c757 + char_save_id * 84] & 20)
 {
     A0 = S7 + 24;
@@ -2543,8 +2539,6 @@ if (bu[8009c757 + char_save_id * 84] & 20)
     A3 = 3;
     func26f44();
 }
-
-
 
 A0 = S7;
 A1 = S6;
@@ -2859,7 +2853,6 @@ V0 = 0002;
 [SP + 003c] = w(S1);
 800212C0	bne    v1, v0, L21350 [$80021350]
 [SP + 0038] = w(S0);
-800212C8	lui    v0, $8006
 V0 = hu[80062d7e];
 800212D0	nop
 V0 = V0 & 0820;
@@ -2962,7 +2955,6 @@ V0 = V0 >> 18;
 80021448	nop
 
 L2144c:	; 8002144C
-8002144C	lui    v0, $8006
 V0 = hu[80062d7c];
 80021454	nop
 V1 = V0 & 0820;
@@ -5238,56 +5230,55 @@ A0 = A0 + V0;
 // func2368c()
 
 S2 = 8009a0c8;
+[GP + 220] = w(0);
+
 A0 = S2;
 A1 = 0;
 A2 = 0;
-A3 = 0001;
-V0 = 000a;
-S1 = 0001;
-[GP + 0220] = w(0);
-[SP + 0010] = w(V0);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(S1);
-[SP + 0020] = w(V0);
-[SP + 0024] = w(0);
-[SP + 0028] = w(0);
-[SP + 002c] = w(0);
-[SP + 0030] = w(S1);
-800236E8	jal    func26448 [$80026448]
-[SP + 0034] = w(0);
-A0 = S2 + 0012;
-A1 = 0;
-A2 = 0;
-A3 = 0001;
-S0 = 0003;
-[SP + 0010] = w(S0);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(S1);
-[SP + 0020] = w(S0);
-[SP + 0024] = w(0);
-[SP + 0028] = w(0);
-[SP + 002c] = w(0);
-[SP + 0030] = w(S1);
-80023728	jal    func26448 [$80026448]
-[SP + 0034] = w(0);
-A0 = S2 + 0024;
-A1 = 0;
-A2 = 0;
-A3 = 0001;
-[SP + 0010] = w(S0);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(S1);
-[SP + 0020] = w(S0);
-[SP + 0024] = w(0);
-[SP + 0028] = w(0);
-[SP + 002c] = w(0);
-[SP + 0030] = w(S1);
-[SP + 0034] = w(0);
+A3 = 1;
+A4 = a;
+A5 = 0;
+A6 = 0;
+A7 = 1;
+A8 = a;
+A9 = 0;
+A10 = 0;
+A11 = 0;
+A12 = 1;
+A13 = 0;
+func26448();
 
-80023764	jal    func26448 [$80026448]
+A0 = S2 + 12;
+A1 = 0;
+A2 = 0;
+A3 = 1;
+A4 = 3;
+A5 = 0;
+A6 = 0;
+A7 = 1;
+A8 = 3;
+A9 = 0;
+A10 = 0;
+A11 = 0;
+A12 = 1;
+A13 = 0;
+func26448();
+
+A0 = S2 + 24;
+A1 = 0;
+A2 = 0;
+A3 = 1;
+A4 = 3;
+A5 = 0;
+A6 = 0;
+A7 = 1;
+A8 = 3;
+A9 = 0;
+A10 = 0;
+A11 = 0;
+A12 = 1;
+A13 = 0;
+func26448();
 ////////////////////////////////
 
 
@@ -5357,8 +5348,8 @@ if( w[GP + 24c] != 0 )
     func26090();
 }
 
-[GP + 208] = h(hu[8009c6e4 + 0bc0]); // menu visibility mask
-A1 = hu[8009c6e4 + 0bc2]; // menu locking mask
+[GP + 208] = h(hu[8009c6e4 + bc0]); // menu visibility mask
+A1 = hu[8009c6e4 + bc2]; // menu locking mask
 
 [GP + 20c] = h(A1);
 
@@ -5366,8 +5357,6 @@ if( bu[8009c6e4 + 0e13] & 1 ) // little cloud event?
 {
     [GP + 20c] = h(A1 | 0041);
 }
-
-
 
 if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
 {
@@ -5392,13 +5381,13 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                     func2305c();
 
                     V0 = b[8009a0c8 + b];
-                    A0 = bu[80049450 + V0];
+                    A0 = bu[80049450 + V0]; // menu id
                     func2120c();
 
                     if( b[8009a0c8 + b] == 8 ) // phs menu
                     {
                         A0 = 1c3;
-                        system_menu_sound;
+                        system_menu_sound();
                     }
                 }
                 else if( V0 == 1 || V0 == 2 || V0 == 3 || V0 == 4 || V0 == 6 ) // magic materia equip status limit menu
@@ -5431,7 +5420,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
             if( hu[80062d7c] & 0040 != 0 ) // cancel
             {
                 A0 = 4;
-                system_menu_sound;
+                system_menu_sound();
 
                 [GP + 220] = w(0);
             }
@@ -5443,12 +5432,12 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
             if(  bu[8009c6e4 + 4f8 + V0] == ff ) // party member slot
             {
                 A0 = 3;
-                system_menu_sound;
+                system_menu_sound();
             }
             else
             {
                 A0 = 1;
-                system_menu_sound;
+                system_menu_sound();
 
                 V0 = b[8009a0c8 + b];
                 A1 = bu[80049450 + V0];
@@ -5456,7 +5445,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                 func2305c();
 
                 V0 = b[8009a0c8 + b];
-                A0 = bu[80049450 + V0];
+                A0 = bu[80049450 + V0]; // menu id
                 func2120c();
 
                 [GP + 220] = w(0);
@@ -5486,7 +5475,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
             if( w[GP + 23c] == 0 )
             {
                 A0 = 1;
-                system_menu_sound;
+                system_menu_sound();
 
                 [GP + 23c] = w(1);
                 [GP + 2d8] = w(b[8009a0c8 + 2 * 12 + b]);
@@ -5511,7 +5500,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                 else
                 {
                     A0 = 1;
-                    system_menu_sound;
+                    system_menu_sound();
 
                     V1 = b[8009a0c8 + 2 * 12 + b];
                     V0 = 8009c6e4 + 04f8 + w[GP + 2d8];
@@ -5648,8 +5637,6 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
     }
 }
 
-
-
 if( w[GP + b4] == 1 )
 {
     if (w[GP + 27c] == 1)
@@ -5698,26 +5685,22 @@ if( w[GP + b4] == 1 )
     }
 }
 
-
-
-S2 = SP + 0030;
+S2 = SP + 30;
 A1 = S2;
-V1 = w[GP + 0214];
-V0 = 0005;
-[SP + 0032] = h(V0);
-V0 = 016c;
-[SP + 0034] = h(V0);
-V0 = 00db;
-[SP + 0036] = h(V0);
-V0 = 800706a4;
-[SP + 0030] = h(0);
+V1 = w[GP + 214];
+
+[SP + 30] = h(0);
+[SP + 32] = h(5);
+[SP + 34] = h(16c);
+[SP + 36] = h(db);
+
 A0 = V1 << 01;
 A0 = A0 + V1;
 A0 = A0 << 03;
 A0 = A0 - V1;
 A0 = A0 << 02;
-80024354	jal    func26a94 [$80026a94]
-A0 = A0 + V0;
+A0 = 800706a4 + A0;
+func26a94();
 
 A0 = w[GP + 214];
 func230c4; // draw menu
@@ -5804,7 +5787,7 @@ func29114;
 
 A0 = S3 + b;
 A1 = ba;
-A2 = w[8009c6e4 + 0b7c]; // gil
+A2 = w[8009c6e4 + b7c]; // gil
 A3 = a;
 A4 = 7;
 func28e00;
@@ -5828,8 +5811,6 @@ system_add_draw_mode();
 
 A0 = SP + 28
 system_menu_add_window_to_render();
-
-
 
 S3 = h[GP + 164] * 9.2 - b8;
 
@@ -5862,40 +5843,35 @@ L245bc:	; 800245BC
 
         A0 = S3 + cb;
         A1 = y_pos + 1d;
-        A2 = bu[8009c6e4 + 0054 + S1 + 21]; // level progress bar
+        A2 = bu[8009c6e4 + 54 + S1 + 21]; // level progress bar
         A3 = 6;
         A4 = 80;
         A5 = 20;
         A6 = 20;
         func285ac();
 
-        V0 = bu[8009c6e4 + 0054 + S1 + f]; // limit progress bar
-        if (V0 == ff)
+        V0 = bu[8009c6e4 + 54 + S1 + f]; // limit progress bar
+        if( V0 == ff )
         {
             T3 = w[SP + 0478];
-            800246C4	nop
             V0 = T3 >> 01;
             V0 = V0 & 0007;
             V1 = V0 << 01;
             V1 = V1 + V0;
             T2 = bu[8004948c + V1];
-            AT = 8004948d;
-            AT = AT + V1;
-            T1 = bu[AT + 0000];
-            AT = 8004948e;
-            AT = AT + V1;
-            T0 = bu[AT + 0000];
+            T1 = bu[8004948d + V1];
+            T0 = bu[8004948e + V1];
         }
         else
         {
             V1 = b[8009c757 + S1];
-            if (V1 & 10)
+            if( V1 & 10 )
             {
                 T2 = bu[8004948c];
                 T1 = bu[8004948d];
                 T0 = bu[8004948e];
             }
-            else if (V1 & 20)
+            else if( V1 & 20 )
             {
                 T2 = bu[80049492];
                 T1 = bu[80049493];
@@ -5937,14 +5913,11 @@ L245bc:	; 800245BC
         A1 = y_pos + 31;
         A2 = 0088;
         A3 = 0008;
-        T3 = 0040;
-        [SP + 0010] = w(T3);
-        T3 = 0008;
-        [SP + 0014] = w(T3);
-        T3 = 0007;
-        [SP + 0018] = w(T3);
-        8002484C	jal    func28ca0 [$80028ca0]
+        [SP + 0010] = w(40);
+        [SP + 0014] = w(8);
+        [SP + 0018] = w(7);
         [SP + 001c] = w(0);
+        func28ca0();
 
         A0 = S3 + fa;
         T3 = 800491d0;
@@ -5956,7 +5929,7 @@ L245bc:	; 800245BC
         V0 = V0 + T3;
         V1 = w[V0 + 0000];
 
-        A2 = bu[8009c6e4 + 0054 + V1 * 84 + e]; // current limit level
+        A2 = bu[8009c6e4 + 54 + V1 * 84 + e]; // current limit level
         A3 = 1;
         A4 = 7;
         func28e00;
@@ -6041,21 +6014,13 @@ L249d0:	; 800249D0
 
 
 ////////////////////////////////
-// func24a04
-80024A04	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80024A0C	lui    a0, $8007
-A0 = A0 + 075c;
-80024A14	jal    system_psyq_put_dispenv [$800444ac]
-80024A18	nop
-80024A1C	lui    a0, $8007
-A0 = A0 + 0700;
-80024A24	jal    system_psyq_put_drawenv [$800443b0]
-80024A28	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-80024A34	jr     ra 
-80024A38	nop
+// func24a04()
+
+A0 = 8007075c;
+system_psyq_put_dispenv();
+
+A0 = 80070700;
+system_psyq_put_drawenv();
 ////////////////////////////////
 
 
@@ -7720,9 +7685,9 @@ do
 
 
 ////////////////////////////////
-// func26258
+// func26258()
 
-[GP + 024c] = w(0);
+[GP + 24c] = w(0);
 
 func1c434();
 
@@ -7783,10 +7748,12 @@ for( int i = 0; i < 3; ++i ) // go through all party members
 
 ////////////////////////////////
 // func26408
+
 [8009a000] = w(30);
 [8009a004] = w(A0 & ffff);
 [8009a008] = w(A0 & ffff);
-system_execute_AKAO;
+
+system_execute_AKAO();
 ////////////////////////////////
 
 
@@ -7794,29 +7761,19 @@ system_execute_AKAO;
 ////////////////////////////////
 // func26448()
 
-V0 = w[SP + 0010];
-V1 = w[SP + 0014];
-T0 = w[SP + 0018];
-T1 = w[SP + 001c];
-T2 = w[SP + 0020];
-T3 = w[SP + 0024];
-T4 = w[SP + 0028];
-T5 = w[SP + 002c];
-T6 = w[SP + 0030];
-T7 = hu[SP + 0034];
-[A0 + 000a] = b(A1);
-[A0 + 000b] = b(A2);
-[A0 + 000c] = b(A3);
-[A0 + 000d] = b(V0);
-[A0 + 0000] = h(V1);
-[A0 + 0002] = h(T0);
-[A0 + 0004] = h(T1);
-[A0 + 0006] = h(T2);
-[A0 + 000e] = b(T3);
-[A0 + 000f] = b(T4);
-[A0 + 0010] = b(T5);
-[A0 + 0011] = b(T6);
-[A0 + 0008] = h(T7);
+[A0 + 0] = h(A5);
+[A0 + 2] = h(A6);
+[A0 + 4] = h(A7);
+[A0 + 6] = h(A8);
+[A0 + 8] = h(A13);
+[A0 + a] = b(A1);
+[A0 + b] = b(A2);
+[A0 + c] = b(A3);
+[A0 + d] = b(A4);
+[A0 + e] = b(A9);
+[A0 + f] = b(A10);
+[A0 + 10] = b(A11);
+[A0 + 11] = b(A12);
 ////////////////////////////////
 
 

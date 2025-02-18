@@ -2065,12 +2065,7 @@ V0 = w[8009c6e0];
 A0 = hu[V0 + 0084];
 
 Lc2de8:	; 800C2DE8
-800C2DE8	jal    funcc2e00 [$800c2e00]
-800C2DEC	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800C2DF8	jr     ra 
-800C2DFC	nop
+funcc2e00();
 ////////////////////////////////
 
 

@@ -320,18 +320,12 @@ system_psyq_set_disp_mask();
 
 
 ////////////////////////////////
-// funca04c4
-800A04C4	addiu  sp, sp, $fec8 (=-$138)
-[SP + 0120] = w(S0);
+// funca04c4()
+
 S0 = A0;
-[SP + 0128] = w(S2);
 S2 = 01e0;
-[SP + 0124] = w(S1);
 800A04DC	lui    s1, $800b
 800A04E0	addiu  s1, s1, $f400 (=-$c00)
-[SP + 0134] = w(RA);
-[SP + 0130] = w(S4);
-[SP + 012c] = w(S3);
 A0 = 0140;
 
 La04f4:	; 800A04F4
