@@ -2932,7 +2932,7 @@ func1d2cdc(); // remove materia from players equipment and store it to savemap
 
 ////////////////////////////////
 // func1d2e84()
-// restore all stolen materia to equipment and materia list
+// restore all stolen materia to equipment and materia stock
 
 for( int i = 0; i < 30; ++i )
 {
@@ -2943,7 +2943,7 @@ for( int i = 0; i < 30; ++i )
         if( V0 != 0 ) // if not added to equipment
         {
             A0 = w[8009c6e4 + a9c + i * 4];
-            func2542c(); // insert stolen materia to list
+            func2542c(); // insert materia to stock
         }
     }
 }
@@ -2953,59 +2953,41 @@ for( int i = 0; i < 30; ++i )
 
 ////////////////////////////////
 // func1d2f00()
+// remove all materia and accessory from char
 
-S2 = A0;
-V0 = S2 << 05;
-V0 = V0 + S2;
-V0 = V0 << 02;
-V1 = 8009c778;
-S0 = V0 + V1;
+char_id = A0;
 
 for( int i = 0; i < 8; ++i )
 {
-    A0 = w[S0 + 0000];
+    A0 = w[8009c6e4 + 54 + char_id * 84 + 40 + i * 4];
     if( A0 != -1 )
     {
-        func2542c();
+        func2542c(); // insert materia to stock
 
-        [S0 + 0000] = w(-1);
+        [8009c6e4 + 54 + char_id * 84 + 40 + i * 4] = w(-1);
     }
-
-    S0 = S0 + 4;
 }
-
-V0 = S2 << 05;
-V0 = V0 + S2;
-V0 = V0 << 02;
-V1 = 8009c798;
-S0 = V0 + V1;
 
 for( int i = 0; i < 8; ++i )
 {
-    A0 = w[S0 + 0000];
+    A0 = w[8009c6e4 + 54 + char_id * 84 + 60 + i * 4];
     if( A0 != -1 )
     {
-        func2542c();
+        func2542c(); // insert materia to stock
 
-        [S0 + 0000] = w(-1);
+        [8009c6e4 + 54 + char_id * 84 + 60 + i * 4] = w(-1);
     }
-
-    S0 = S0 + 4;
 }
 
-V0 = S2 << 05;
-V0 = V0 + S2;
-S0 = V0 << 02;
-
-A0 = bu[8009c756 + S0];
-
+A0 = bu[8009c6e4 + 54 + char_id * 84 + 1e]; // equipped accessory
 if( A0 != ff )
 {
-    A0 = A0 + 0120;
-    A0 = A0 | 0200;
-    func25380();
+    A0 = A0 + 120; // change into global item id
+    A0 = A0 | 200; // one item
+    func25380(); // add item to party slock
 
-    [8009c756 + S0] = b(ff);
+
+    [8009c6e4 + 54 + char_id * 84 + 1e] = b(ff);
 }
 ////////////////////////////////
 

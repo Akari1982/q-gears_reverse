@@ -6353,8 +6353,9 @@ func1d2e84()
 
 ////////////////////////////////
 // func24f3c()
+// remove all materia and accessory from char
 
-S0 = A0;
+char_id = A0;
 
 A0 = 1; // ITEMMENU.MNU
 func211c4();
@@ -6364,7 +6365,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-A0 = S0;
+A0 = char_id;
 func1d2f00();
 ////////////////////////////////
 
@@ -6679,60 +6680,46 @@ SP = SP + 0018;
 80025378	jr     ra 
 8002537C	nop
 ////////////////////////////////
-// func25380
-T0 = A0 & 01ff;
-V0 = A0 & ffff;
-A2 = V0 >> 09;
-A1 = 0;
-T1 = ffff;
-A3 = 8009cbe0;
 
-loop2539c:	; 8002539C
-V0 = hu[A3 + 0000];
-800253A0	nop
-V1 = V0 & ffff;
-800253A8	beq    v1, t1, L253dc [$800253dc]
-V0 = V0 & 01ff;
-800253B0	bne    t0, v0, L253dc [$800253dc]
-V0 = V1 >> 09;
-A2 = A2 + V0;
-V0 = A2 < 0064;
-800253C0	bne    v0, zero, L253d0 [$800253d0]
-V0 = A2 << 09;
-A2 = 0063;
-V0 = A2 << 09;
 
-L253d0:	; 800253D0
-V0 = V0 | T0;
-800253D4	j      L25424 [$80025424]
-[A3 + 0000] = h(V0);
 
-L253dc:	; 800253DC
-A1 = A1 + 0001;
-V0 = A1 < 0140;
-800253E4	bne    v0, zero, loop2539c [$8002539c]
-A3 = A3 + 0002;
-A1 = 0;
-A2 = ffff;
-V1 = 8009cbe0;
+////////////////////////////////
+// func25380()
+// add item to party slock
 
-loop253fc:	; 800253FC
-V0 = hu[V1 + 0000];
-80025400	nop
-80025404	bne    v0, a2, L25414 [$80025414]
-80025408	nop
-8002540C	j      L25424 [$80025424]
-[V1 + 0000] = h(A0);
+item_data = A0;
+item_id = item_data & 1ff;
+item_n = item_data >> 9;
 
-L25414:	; 80025414
-A1 = A1 + 0001;
-V0 = A1 < 0140;
-8002541C	bne    v0, zero, loop253fc [$800253fc]
-V1 = V1 + 0002;
+// add items number if item exist
+for( int i = 0; i < 140; ++i )
+{
+    V0 = hu[8009c6e4 + 4fc + i * 2];
+    if( ( V0 & ffff ) != ffff )
+    {
+        if( item_id == ( V0 & 1ff ) )
+        {
+            item_n += (V1 >> 9);
+            if( item_n >= 64 )
+            {
+                item_n = 63;
+            }
 
-L25424:	; 80025424
-80025424	jr     ra 
-80025428	nop
+            [8009c6e4 + 4fc + i * 2] = h((item_n << 9) | item_id);
+            return;
+        }
+    }
+}
+
+// add this item as new
+for( int i = 0; i < 140; ++i )
+{
+    if( hu[8009c6e4 + 4fc + i * 2] == ffff )
+    {
+        [8009c6e4 + 4fc + i * 2] = h(item_data);
+        return;
+    }
+}
 ////////////////////////////////
 
 

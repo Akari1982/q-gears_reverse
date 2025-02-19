@@ -1004,8 +1004,8 @@ while( true )
 
                 case 2: // ITEMMENU.MNU
                 {
-                    A0 = h[8009abf4 + 2];
-                    func24f3c();
+                    A0 = h[8009abf4 + 2]; // char id
+                    func24f3c(); // remove all materia and accessory from char
                 }
                 break;
 
