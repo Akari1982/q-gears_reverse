@@ -6319,6 +6319,7 @@ func1d1774();
 
 ////////////////////////////////
 // func24ecc()
+// stole materia from player and store it to savemap
 
 A0 = 1; // ITEMMENU.MNU
 func211c4();
@@ -6335,6 +6336,7 @@ func1d2d74();
 
 ////////////////////////////////
 // func24f04()
+// restore all stolen materia to equipment and materia list
 
 A0 = 1; // ITEMMENU.MNU
 func211c4();
@@ -6732,59 +6734,39 @@ L25424:	; 80025424
 80025424	jr     ra 
 80025428	nop
 ////////////////////////////////
-// func2542c
-8002542C	addiu  sp, sp, $ffe0 (=-$20)
-A1 = 0;
-80025434	addiu  a2, zero, $ffff (=-$1)
-[SP + 0014] = w(S1);
-S1 = A0 & 00ff;
-[SP + 0010] = w(S0);
-S0 = 8009ce60;
-V1 = S0;
-[SP + 0018] = w(RA);
 
-loop25454:	; 80025454
-V0 = w[V1 + 0000];
-80025458	nop
-8002545C	bne    v0, a2, L254b0 [$800254b0]
-A1 = A1 + 0001;
-[V1 + 0000] = w(A0);
-80025468	jal    func2603c [$8002603c]
-A0 = S1;
-V1 = 000a;
-80025474	bne    v0, v1, L25490 [$80025490]
-V0 = 002c;
-V0 = bu[S0 + 0473];
-80025480	nop
-V0 = V0 | 0001;
-[S0 + 0473] = b(V0);
-V0 = 002c;
 
-L25490:	; 80025490
-80025490	bne    s1, v0, L254a8 [$800254a8]
-80025494	nop
-V0 = bu[S0 + 0473];
-8002549C	nop
-V0 = V0 | 0002;
-[S0 + 0473] = b(V0);
 
-L254a8:	; 800254A8
-800254A8	j      L254c0 [$800254c0]
-800254AC	addiu  v0, zero, $ffff (=-$1)
+////////////////////////////////
+// func2542c()
 
-L254b0:	; 800254B0
-V0 = A1 < 00c8;
-800254B4	bne    v0, zero, loop25454 [$80025454]
-V1 = V1 + 0004;
-V0 = A0;
+materia_data = A0;
 
-L254c0:	; 800254C0
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800254D0	jr     ra 
-800254D4	nop
+materia_id = materia_data & ff;
+
+for( int i = 0; i < c8; ++i )
+{
+    // search for first empty slot
+    if( w[8009c6e4 + 77c + i * 4] == -1 )
+    {
+        // insert new materia here
+        [8009c6e4 + 77c + i * 4] = w(materia_data);
+
+        A0 = materia_id;
+        func2603c();
+
+        if( V0 == a ) [8009c6e4 + bef] = b(bu[8009c6e4 + bef] | 1); // summon
+        if( materia_id == 2c ) [8009c6e4 + bef] = b(bu[8009c6e4 + bef] | 2); // "enemy skill" materia
+
+        return -1;
+    }
+}
+
+return materia_data;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func254d8
 [GP + 0178] = b(0);
@@ -7552,27 +7534,17 @@ SP = SP + 0038;
 80026034	jr     ra 
 80026038	nop
 ////////////////////////////////
-// func2603c
-8002603C
-A0 = A0 & 00ff;
-V0 = A0 << 02;
-V0 = V0 + A0;
-V0 = V0 << 02;
-8002604C	lui    at, $8007
-AT = AT + 30dd;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-8002605C	nop
-V0 = V0 & 000f;
-AT = 80049528;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-80026074	nop
-AT = 80049520;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-80026088	jr     ra 
-8002608C	nop
+
+
+
+////////////////////////////////
+// func2603c()
+
+materia_id = A0 & ff;
+
+base_type = bu[800730d0 + materia_id * 14 + d] & f;
+materia_type = bu[80049528 + base_type];
+return bu[80049520 + materia_type];
 ////////////////////////////////
 
 

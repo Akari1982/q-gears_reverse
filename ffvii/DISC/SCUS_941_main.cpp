@@ -997,8 +997,8 @@ while( true )
 
             switch( bu[8009abf4 + 1] - f )
             {
-                case 0: func24ecc(); break; // ITEMMENU.MNU
-                case 1: func24f04(); break; // ITEMMENU.MNU
+                case 0: func24ecc(); break; // ITEMMENU.MNU stole materia from player and store it to savemap
+                case 1: func24f04(); break; // ITEMMENU.MNU restore all stolen materia to equipment and materia list
                 case 6: func250b4(); break; // BGINMENU.MNU
                 case 9: func25040(); break;
 

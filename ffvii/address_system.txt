@@ -50,6 +50,7 @@
     0000003C  60 0X:00
     0000000A  10 00:X0
     00000001   1 00:0X
+
 80049224
     00989680 10000000
     000F4240  1000000
@@ -59,6 +60,17 @@
     00000064      100
     0000000A       10
     00000001        1
+
+80049520 array materia type to something (0x1 size 0x5 items)
+    09 05 08 04 0A
+
+80049528 array of base type to materia type translation (0x1 size 0xf items).
+    00 00 02 02 00 01 02 02 02 03 03 04 04 00 00 00
+    0 - Independent
+    1 - Support
+    2 - Command
+    3 - Magic
+    4 - Summon
 
 800498a8 size of opcodes.
 80049c28 pause table.
@@ -345,7 +357,6 @@
 80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
 
 80071e44 armor data in kernel (0x24 size).
-
 800722cc item data in kernel (0x1c size).
 800730d0 materia data in kernel file (0x14 size).
 800738a0 weapon data in kernel (0x2c size).
@@ -721,7 +732,12 @@
     + 4f8 []       party member slot 1 (used in battle).
     + 4f9 []       party member slot 2 (used in battle).
     + 4fa []       party member slot 3 (used in battle).
-    + 4fc party item stock array
+    + 4fc party item stock array.
+    + 77c party materia stock (0x4 size 0xc8 items).
+    + a9c materia stolen by yuffie (0x4 size 0x30 items).
+            0xffffff00 materia exp (0xffffff - mastered).
+            0x000000ff materia id.
+    + b5c end of array
     + b7c [][][][] party gil amount.
     + b80 [][][][] total seconds played.
     + b84 [][][][] countdown seconds for timer (set in STTIM).
@@ -748,6 +764,9 @@
                             0x0080 - config
                             0x0100 - PHS
                             0x0200 - SAVE
+    + bef       []       some flags.
+                            0x01 set when any summon equiped.
+                            0x02 set when enemy skill equipped.
     + c03       []       init with 0 on worldmap loading.
     + c1e (+7a) []       flags
                             0x01 - used in world map.

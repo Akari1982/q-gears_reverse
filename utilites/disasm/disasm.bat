@@ -1,1 +1,1 @@
-adisasm DSCHANGE.X DSCHANGE.X.asm -v -b 800a0000 800a0000 -u -a
+adisasm ITEMMENU.MNU ITEMMENU.MNU.asm -v -b 801d0000 801d0000 -u -a
