@@ -219,45 +219,29 @@ loop1d02b0:	; 801D02B0
 
 801D0324	addiu  v0, zero, $ff00 (=-$100)
 A0 = A0 | V0;
-T2 = 8009d78a;
-T0 = T2 - ff2;
-A3 = T2 - 1012;
 
 for( int char_id = 0; char_id < 9; ++char_id )
 {
-    if( ( hu[T2 + 0000] >> char_id ) & 1 )
+    if( ( hu[8009c6e4 + 10a6] >> char_id ) & 1 )
     {
-        V1 = A3;
-
         for( int i = 0; i < 8; ++i )
         {
-            V0 = w[V1 + 0000];
-            if( V0 == A0 )
+            if( w[8009c6e4 + 54 + char_id * 84 + 40 + i * 4] == A0 )
             {
-                [V1 + 0000] = w(-1);
+                [8009c6e4 + 54 + char_id * 84 + 40 + i * 4] = w(-1);
                 return;
             }
-
-            V1 = V1 + 0004;
         }
 
-        V1 = T0;
-
         for( int i = 0; i < 8; ++i )
         {
-            V0 = w[V1 + 0000];
-            if( V0 == A0 )
+            if( w[8009c6e4 + 54 + char_id * 84 + 60 + i * 4] == A0 )
             {
-                [V1 + 0000] = w(-1);
+                [8009c6e4 + 54 + char_id * 84 + 60 + i * 4] = w(-1);
                 return;
             }
-
-            V1 = V1 + 0004;
         }
     }
-
-    T0 = T0 + 0084;
-    A3 = A3 + 0084;
 }
 
 for( int i = 0; i < c8; ++i )
