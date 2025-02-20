@@ -705,6 +705,17 @@
         +1f []       flags (0x10 sadness, 0x20 fury).
         +20 []       char order (0xff normal, 0xfe back row).
         +21 []       level progress bar (0-255)
+        +22 [][]     mask of learned limit skills
+                        0x0001: Limit Lv. 1-1
+                        0x0002: Limit Lv. 1-2
+                        0x0004: Always 0 (reserved bit or spacer/breaker/end of limit)
+                        0x0008: Limit Lv. 2-1
+                        0x0010: Limit Lv. 2-2
+                        0x0020: Always 0 (reserved bit or spacer/breaker/end of limit)
+                        0x0040: Limit Lv. 3-1
+                        0x0080: Limit Lv. 3-2
+                        0x0100: Always 0 (reserved bit or spacer/breaker/end of limit)
+                        0x0200: Limit Lv. 4
         +24 [][]     number of kills.
         +2c [][]     current hp.
         +2e [][]     max hp (before materia alterations).
@@ -764,6 +775,7 @@
                             0x0080 - config
                             0x0100 - PHS
                             0x0200 - SAVE
+    + be4 bit array of key items (0x1bit size 0x40 items 0x8 bytes total)
     + bef       []       some flags.
                             0x01 set when any summon equiped.
                             0x02 set when enemy skill equipped.

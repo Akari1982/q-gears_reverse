@@ -1,10 +1,8 @@
 ////////////////////////////////
-// func1d01e8
-801D01E8	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 0030;
+// func1d01e8()
+
 A0 = A0 & ffff;
-[SP + 0010] = w(RA);
-[8009a000] = h(V0);
+[8009a000] = h(30);
 [8009a004] = w(A0);
 [8009a008] = w(A0);
 system_execute_AKAO();
@@ -13,12 +11,11 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// func1d0228
-801D0228
-801D0228	addiu  sp, sp, $ffd8 (=-$28)
+// func1d0228()
+
 V0 = A2 < 0080;
 801D0230	beq    v0, zero, L1d0240 [$801d0240]
-[SP + 0020] = w(RA);
+
 801D0238	j      L1d02c8 [$801d02c8]
 A3 = 0;
 
@@ -78,61 +75,38 @@ A1 = A1 >> 10;
 A2 = A2 | 0060;
 A3 = A3 + 0070;
 [SP + 0018] = w(V0);
-801D0304	jal    $80028ca0
 [SP + 001c] = w(0);
-RA = w[SP + 0020];
-SP = SP + 0028;
-801D0314	jr     ra 
-801D0318	nop
+func28ca0();
 ////////////////////////////////
-// func1d031c
-801D031C
-A0 = 0;
+
+
+
+////////////////////////////////
+// func1d031c()
+// copy owned key items to temp
+
 A1 = 0;
-A2 = 801d3d90;
 
-loop1d032c:	; 801D032C
-801D032C	bgez   a0, L1d0338 [$801d0338]
-V0 = A0;
-V0 = A0 + 0007;
+for( int i = 0; i < 40; ++i )
+{
+    if( ( bu[8009c6e4 + be4 + i / 8] >> (i & 7) ) & 1 )
+    {
+        [801d3d90 + i] = b(i);
+        A1 += 1;
+    }
+}
 
-L1d0338:	; 801D0338
-V0 = V0 >> 03;
-801D033C	lui    at, $800a
-801D0340	addiu  at, at, $d2c8 (=-$2d38)
-AT = AT + V0;
-V0 = bu[AT + 0000];
-V1 = A0 & 0007;
-V0 = V0 >> V1;
-V0 = V0 & 0001;
-801D0358	beq    v0, zero, L1d036c [$801d036c]
-801D035C	nop
-[A2 + 0000] = b(A0);
-A2 = A2 + 0001;
-A1 = A1 + 0001;
+if( A1 < 40 )
+{
+    for( ; A1 < 40; ++A1 )
+    {
+        [801d3d90 + A1] = b(ff);
+    }
+}
+////////////////////////////////
 
-L1d036c:	; 801D036C
-A0 = A0 + 0001;
-V0 = A0 < 0040;
-801D0374	bne    v0, zero, loop1d032c [$801d032c]
-801D0378	nop
-V0 = A1 < 0040;
-801D0380	beq    v0, zero, L1d03ac [$801d03ac]
-801D0384	nop
-V1 = 00ff;
 
-loop1d038c:	; 801D038C
-AT = 801d3d90;
-AT = AT + A1;
-[AT + 0000] = b(V1);
-A1 = A1 + 0001;
-V0 = A1 < 0040;
-801D03A4	bne    v0, zero, loop1d038c [$801d038c]
-801D03A8	nop
 
-L1d03ac:	; 801D03AC
-801D03AC	jr     ra 
-801D03B0	nop
 ////////////////////////////////
 // func1d03b4
 801D03B4
@@ -312,22 +286,21 @@ L1d05e0:	; 801D05E0
 V0 = 0001;
 
 L1d05f8:	; 801D05F8
-RA = w[SP + 0230];
-S3 = w[SP + 022c];
-S2 = w[SP + 0228];
-S1 = w[SP + 0224];
-S0 = w[SP + 0220];
-SP = SP + 0238;
-801D0610	jr     ra 
-801D0614	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d0618
-801D0618
+
 V0 = hu[A1 + 0000];
 V1 = hu[A0 + 0000];
 [A0 + 0000] = h(V0);
-801D0624	jr     ra 
 [A1 + 0000] = h(V1);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d062c
 801D062C
@@ -482,15 +455,15 @@ SP = SP + 0018;
 801D0814	jr     ra 
 801D0818	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func1d081c
-801D081C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A2;
 A0 = A0 << 10;
 A0 = A0 >> 0f;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0010] = w(S0);
 V0 = w[S1 + 0000];
 801D0840	nop
 A0 = A0 + V0;
@@ -503,7 +476,7 @@ S2 = A1;
 S0 = 0;
 
 L1d0864:	; 801D0864
-801D0864	jal    $8001faf8
+801D0864	jal    $func1faf8
 A0 = A0 & 01ff;
 V0 = V0 & 0004;
 801D0870	beq    v0, zero, L1d087c [$801d087c]
@@ -524,7 +497,7 @@ V1 = A0 & ffff;
 A0 = 0;
 
 L1d08a8:	; 801D08A8
-801D08A8	jal    $8001faf8
+801D08A8	jal    $func1faf8
 A0 = A0 & 01ff;
 V0 = V0 & 0004;
 801D08B4	beq    v0, zero, L1d08c0 [$801d08c0]
@@ -534,13 +507,10 @@ A0 = 0001;
 L1d08c0:	; 801D08C0
 801D08C0	jal    func1d062c [$801d062c]
 A0 = A0 - S0;
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-801D08DC	jr     ra 
-801D08E0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d08e4
 801D08E4	addiu  sp, sp, $ffe0 (=-$20)
@@ -563,7 +533,7 @@ S2 = A1;
 S0 = 0;
 
 L1d092c:	; 801D092C
-801D092C	jal    $8001faf8
+801D092C	jal    $func1faf8
 A0 = A0 & 01ff;
 V0 = V0 & 0002;
 801D0938	beq    v0, zero, L1d0944 [$801d0944]
@@ -584,7 +554,7 @@ V1 = A0 & ffff;
 A0 = 0;
 
 L1d0970:	; 801D0970
-801D0970	jal    $8001faf8
+801D0970	jal    $func1faf8
 A0 = A0 & 01ff;
 V0 = V0 & 0002;
 801D097C	beq    v0, zero, L1d0988 [$801d0988]
@@ -623,7 +593,7 @@ S2 = A1;
 S0 = 0;
 
 L1d09f4:	; 801D09F4
-801D09F4	jal    $8001faf8
+801D09F4	jal    $func1faf8
 A0 = A0 & 01ff;
 V0 = V0 & 0008;
 801D0A00	beq    v0, zero, L1d0a0c [$801d0a0c]
@@ -644,7 +614,7 @@ V1 = A0 & ffff;
 A0 = 0;
 
 L1d0a38:	; 801D0A38
-801D0A38	jal    $8001faf8
+801D0A38	jal    $func1faf8
 A0 = A0 & 01ff;
 V0 = V0 & 0008;
 801D0A44	beq    v0, zero, L1d0a50 [$801d0a50]
@@ -662,21 +632,24 @@ SP = SP + 0020;
 801D0A6C	jr     ra 
 801D0A70	nop
 ////////////////////////////////
-// func1d0a74
-801D0A74	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func1d0a74()
+
 A0 = A0 << 10;
 A0 = A0 >> 0f;
 A1 = A1 << 10;
-[SP + 0010] = w(RA);
 V0 = w[A2 + 0000];
 A1 = A1 >> 0f;
 A0 = V0 + A0;
-801D0A94	jal    func1d0618 [$801d0618]
 A1 = V0 + A1;
-RA = w[SP + 0010];
-SP = SP + 0018;
-801D0AA4	jr     ra 
-801D0AA8	nop
+func1d0618();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d0aac
 801D0AAC
@@ -738,19 +711,19 @@ SP = SP + 0018;
 801D0B98	jr     ra 
 801D0B9C	nop
 ////////////////////////////////
-// func1d0ba0
-801D0BA0	addiu  sp, sp, $ffb8 (=-$48)
-[SP + 0040] = w(S2);
+
+
+
+////////////////////////////////
+// func1d0ba0()
+
 S2 = 801d3ddc;
 A0 = S2;
 A1 = 0;
 A2 = 0;
 A3 = 0003;
-[SP + 0038] = w(S0);
 S0 = 0001;
-[SP + 003c] = w(S1);
 S1 = 0003;
-[SP + 0044] = w(RA);
 [801d3e48] = w(S0);
 [SP + 0010] = w(S0);
 [SP + 0014] = w(0);
@@ -761,8 +734,10 @@ S1 = 0003;
 [SP + 0028] = w(0);
 [SP + 002c] = w(S0);
 [SP + 0030] = w(0);
-801D0C00	jal    $80026448
 [SP + 0034] = w(0);
+
+func26448();
+
 A0 = S2 + 0012;
 A1 = 0;
 A2 = 0;
@@ -778,7 +753,7 @@ V0 = 0140;
 [SP + 0028] = w(0);
 [SP + 002c] = w(0);
 [SP + 0030] = w(0);
-801D0C44	jal    $80026448
+801D0C44	jal    $func26448
 [SP + 0034] = w(0);
 A0 = S2 + 0024;
 A1 = 0;
@@ -793,17 +768,14 @@ A3 = 0001;
 [SP + 0028] = w(0);
 [SP + 002c] = w(0);
 [SP + 0030] = w(S0);
-801D0C80	jal    $80026448
 [SP + 0034] = w(0);
-801D0C88	jal    func1d031c [$801d031c]
-801D0C8C	nop
-RA = w[SP + 0044];
-S2 = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-SP = SP + 0048;
-801D0CA4	jr     ra 
-801D0CA8	nop
+801D0C80	jal    $func26448
+
+func1d031c();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d0cac
 801D0CAC
@@ -895,7 +867,7 @@ SP = SP + 0028;
 801D0DCC	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(S0);
 [SP + 0014] = w(RA);
-801D0DD8	jal    $8001faf8
+801D0DD8	jal    $func1faf8
 S0 = A0;
 V1 = V0;
 V0 = 0046;
@@ -923,43 +895,30 @@ L1d0e34:	; 801D0E34
 V0 = V1;
 
 L1d0e38:	; 801D0E38
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-801D0E44	jr     ra 
-801D0E48	nop
 ////////////////////////////////
-// func1d0e4c
-801D0E4C
-V1 = 0;
 
-loop1d0e50:	; 801D0E50
-V0 = bu[A0 + 0000];
-801D0E54	nop
-AT = 801d3e60;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-V1 = V1 + 0001;
-V0 = V1 < 0050;
-801D0E70	bne    v0, zero, loop1d0e50 [$801d0e50]
-A0 = A0 + 0001;
-801D0E78	jr     ra 
-801D0E7C	nop
+
+
 ////////////////////////////////
-// func1d0e80
-801D0E80	addiu  sp, sp, $ff80 (=-$80)
-[SP + 0074] = w(S7);
+// func1d0e4c()
+
+for( int i = 0; i < 50; ++i )
+{
+    [801d3e60 + i] = b(bu[A0 + i]);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1d0e80()
+// render
+
 S7 = A0;
+
 A0 = w[80062f58];
-[SP + 0078] = w(RA);
-[SP + 0070] = w(S6);
-[SP + 006c] = w(S5);
-[SP + 0068] = w(S4);
-[SP + 0064] = w(S3);
-[SP + 0060] = w(S2);
-[SP + 005c] = w(S1);
-801D0EB0	jal    $800230c4
-[SP + 0058] = w(S0);
+func230c4();
+
 V1 = w[801d3e48];
 V0 = 0002;
 801D0EC4	bne    v1, v0, L1d0fb8 [$801d0fb8]
@@ -970,14 +929,9 @@ V0 = w[801d3e5c];
 V0 = S7 & 0002;
 V0 = b[801d3df9];
 V1 = h[801d3df0];
-801D0EF0	nop
 V0 = V0 + V1;
 V0 = V0 << 01;
-801D0EFC	lui    at, $800a
-801D0F00	addiu  at, at, $cbe0 (=-$3420)
-AT = AT + V0;
-V0 = hu[AT + 0000];
-801D0F0C	nop
+V0 = hu[8009cbe0 + V0];
 V1 = V0 & 01ff;
 V0 = 0006;
 801D0F18	beq    v1, v0, L1d0f30 [$801d0f30]
@@ -1003,12 +957,12 @@ L1d0f58:	; 801D0F58
 V0 = b[801d3e0b];
 
 L1d0f60:	; 801D0F60
-801D0F60	nop
 A1 = V0 << 03;
 A1 = A1 - V0;
 A1 = A1 << 03;
-801D0F70	jal    $8001eb2c
 A1 = A1 + 004b;
+system_menu_add_cursor_to_render();
+
 V0 = S7 & 0002;
 
 L1d0f7c:	; 801D0F7C
@@ -1017,7 +971,7 @@ A0 = 00a9;
 A1 = b[801d3df9];
 801D0F8C	nop
 A1 = A1 << 04;
-801D0F94	jal    $8001eb2c
+801D0F94	jal    $system_menu_add_cursor_to_render
 A1 = A1 + 003c;
 
 L1d0f9c:	; 801D0F9C
@@ -1047,7 +1001,7 @@ A1 = 000c;
 A0 = V0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 03;
-801D100C	jal    $8001eb2c
+801D100C	jal    $system_menu_add_cursor_to_render
 A0 = A0 + 0008;
 801D1014	j      L1d12d8 [$801d12d8]
 801D1018	nop
@@ -1059,7 +1013,7 @@ V0 = b[801d3de6];
 A0 = V0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 03;
-801D1040	jal    $8001eb2c
+801D1040	jal    $system_menu_add_cursor_to_render
 A0 = A0 + 0008;
 
 L1d1048:	; 801D1048
@@ -1067,7 +1021,7 @@ S0 = 801d3df9;
 A1 = b[S0 + 0000];
 A0 = 00a9;
 A1 = A1 << 04;
-801D105C	jal    $8001eb2c
+801D105C	jal    $system_menu_add_cursor_to_render
 A1 = A1 + 003c;
 V1 = b[S0 + 0000];
 V0 = h[801d3df0];
@@ -1081,7 +1035,7 @@ V0 = b[801d3de6];
 A0 = V0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 03;
-801D109C	jal    $8001eb2c
+801D109C	jal    $system_menu_add_cursor_to_render
 A0 = A0 + 0008;
 
 L1d10a4:	; 801D10A4
@@ -1097,7 +1051,7 @@ A1 = 000c;
 A0 = V0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 03;
-801D10E0	jal    $8001eb2c
+801D10E0	jal    $system_menu_add_cursor_to_render
 A0 = A0 + 0008;
 
 L1d10e8:	; 801D10E8
@@ -1111,7 +1065,7 @@ A0 = A0 + V0;
 A0 = A0 + V1;
 A0 = A0 + 0003;
 A1 = A1 << 04;
-801D1118	jal    $8001eb2c
+801D1118	jal    $system_menu_add_cursor_to_render
 A1 = A1 + 003c;
 V0 = b[801d3e1d];
 V1 = h[801d3e14];
@@ -1136,7 +1090,7 @@ A1 = 000c;
 A0 = V0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 03;
-801D118C	jal    $8001eb2c
+801D118C	jal    $system_menu_add_cursor_to_render
 A0 = A0 + 0008;
 S0 = 0;
 
@@ -1153,7 +1107,7 @@ A1 = A1 + V0;
 A1 = A1 << 02;
 V0 = h[801d3d76];
 A1 = A1 + 0008;
-801D11D8	jal    $8001eb2c
+801D11D8	jal    $system_menu_add_cursor_to_render
 A1 = V0 + A1;
 
 loop1d11e0:	; 801D11E0
@@ -1164,7 +1118,7 @@ S0 = S0 + 0001;
 A0 = h[S3 + 0000];
 A1 = h[S3 + 0002];
 A0 = A0 + 0008;
-801D11FC	jal    $80026f44
+801D11FC	jal    $func26f44
 A1 = A1 + S1;
 V0 = S0 < 0008;
 801D1208	bne    v0, zero, loop1d11e0 [$801d11e0]
@@ -1180,7 +1134,7 @@ V0 = 0100;
 801D1230	jal    $80026a34
 [SP + 0046] = h(V0);
 A0 = 801d3d74;
-801D1240	jal    $8001e040
+801D1240	jal    $system_menu_add_window_to_render
 801D1244	nop
 801D1248	j      L1d12d8 [$801d12d8]
 801D124C	nop
@@ -1192,7 +1146,7 @@ V0 = b[801d3de6];
 A0 = V0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 03;
-801D1274	jal    $8001eb2c
+801D1274	jal    $system_menu_add_cursor_to_render
 A0 = A0 + 0008;
 
 L1d127c:	; 801D127C
@@ -1214,12 +1168,12 @@ A0 = 0004;
 A1 = A1 & 01ff;
 
 L1d12bc:	; 801D12BC
-801D12BC	jal    $80015248
+801D12BC	jal    $func15248
 A2 = 0;
 A0 = 0010;
 A1 = 0023;
 A2 = V0;
-801D12D0	jal    $80026f44
+801D12D0	jal    $func26f44
 A3 = 0007;
 
 L1d12d8:	; 801D12D8
@@ -1266,7 +1220,7 @@ A3 = 0030;
 [SP + 0018] = w(S6);
 [SP + 001c] = w(S6);
 [SP + 0020] = w(S1);
-801D1380	jal    $8001cf3c
+801D1380	jal    $func1cf3c
 [SP + 0024] = w(0);
 A0 = 0;
 A1 = 0001;
@@ -1291,9 +1245,9 @@ V0 = 00ab;
 A0 = SP + 0038;
 A1 = 0;
 A2 = 0032;
-801D13DC	jal    $8001de0c
+801D13DC	jal    $func1de0c
 A3 = 00aa;
-801D13E4	jal    $8001e040
+801D13E4	jal    $system_menu_add_window_to_render
 A0 = SP + 0038;
 
 L1d13ec:	; 801D13EC
@@ -1305,7 +1259,7 @@ loop1d13fc:	; 801D13FC
 A0 = S0;
 A1 = 000d;
 A2 = S1;
-801D1408	jal    $80026f44
+801D1408	jal    $func26f44
 A3 = 0007;
 S1 = S1 + 000c;
 S2 = S2 + 0001;
@@ -1326,7 +1280,7 @@ A0 = A0 + V1;
 A0 = A0 << 03;
 A0 = A0 - V1;
 A0 = A0 << 02;
-801D1464	jal    $80026a94
+801D1464	jal    $func26a94
 A0 = A0 + V0;
 V1 = b[801d3de6];
 V0 = 0002;
@@ -1354,7 +1308,7 @@ V0 = V1 + 000b;
 V0 = V0 < 010f;
 801D14E4	beq    v0, zero, L1d14f4 [$801d14f4]
 A0 = 00a5;
-801D14EC	jal    $8001eb2c
+801D14EC	jal    $system_menu_add_cursor_to_render
 A1 = V1 + 0038;
 
 L1d14f4:	; 801D14F4
@@ -1362,7 +1316,7 @@ A0 = 00a9;
 A1 = b[801d3e41];
 S5 = 0005;
 A1 = A1 << 04;
-801D1508	jal    $8001eb2c
+801D1508	jal    $system_menu_add_cursor_to_render
 A1 = A1 + 003c;
 801D1510	j      L1d151c [$801d151c]
 801D1514	nop
@@ -1390,7 +1344,7 @@ V0 = 00a5;
 [801d3e56] = h(V1);
 [801d3e58] = h(V0);
 [801d3e50] = h(A1);
-801D1588	jal    $80028484
+801D1588	jal    $func28484
 S6 = 000a;
 AT = 801d3de4;
 AT = AT + S0;
@@ -1429,7 +1383,7 @@ V0 = 0 - V0;
 S3 = V0 & 0007;
 A0 = 0004;
 A1 = S4;
-801D161C	jal    $80015248
+801D161C	jal    $func15248
 A2 = 0008;
 A0 = 00d6;
 A2 = V0;
@@ -1440,7 +1394,7 @@ A1 = b[AT + 0000];
 V0 = S2 << 04;
 A1 = A1 << 02;
 A1 = A1 + 003a;
-801D164C	jal    $80026f44
+801D164C	jal    $func26f44
 A1 = V0 + A1;
 
 L1d1654:	; 801D1654
@@ -1534,7 +1488,7 @@ V0 = 0035;
 V0 = 00a5;
 [801d3e58] = h(V0);
 [801d3e50] = h(V1);
-801D17CC	jal    $80028484
+801D17CC	jal    $func28484
 S2 = 0;
 801D17D4	jal    $80026b5c
 A0 = 0009;
@@ -1555,7 +1509,7 @@ A1 = bu[AT + 0000];
 V0 = 00ff;
 801D1810	beq    a1, v0, L1d1844 [$801d1844]
 A0 = 000e;
-801D1818	jal    $80015248
+801D1818	jal    $func15248
 A2 = 0008;
 A0 = S3;
 A2 = V0;
@@ -1563,7 +1517,7 @@ A1 = b[801d3e21];
 A3 = 0007;
 A1 = A1 << 02;
 A1 = A1 + 003a;
-801D183C	jal    $80026f44
+801D183C	jal    $func26f44
 A1 = S5 + A1;
 
 L1d1844:	; 801D1844
@@ -1596,11 +1550,11 @@ A0 = A0 + V1;
 A0 = A0 << 03;
 A0 = A0 - V1;
 A0 = A0 << 02;
-801D18B4	jal    $80026a94
+801D18B4	jal    $func26a94
 A0 = A0 + V0;
 
 loop1d18bc:	; 801D18BC
-801D18BC	jal    $8001e040
+801D18BC	jal    $system_menu_add_window_to_render
 A0 = S1;
 S0 = S0 + 0001;
 V0 = S0 < 0003;
@@ -1677,7 +1631,7 @@ V0 = 0008;
 [SP + 0028] = w(0);
 [SP + 002c] = w(0);
 [SP + 0030] = w(V1);
-801D19F0	jal    $80026448
+801D19F0	jal    $func26448
 [SP + 0034] = w(0);
 V0 = 0004;
 [801d3e48] = w(V0);
@@ -1699,7 +1653,7 @@ V0 = 0020;
 [SP + 0028] = w(0);
 [SP + 002c] = w(V1);
 [SP + 0030] = w(0);
-801D1A44	jal    $80026448
+801D1A44	jal    $func26448
 [SP + 0034] = w(0);
 V0 = 0003;
 [801d3e48] = w(V0);
@@ -1920,27 +1874,17 @@ V0 = 0006;
 801D1DE0	addiu  v0, s4, $ffa9 (=-$57)
 801D1DE4	jal    func1d01e8 [$801d01e8]
 A0 = 0180;
-AT = 801d3d25;
-AT = AT + S4;
-V0 = bu[AT + 0000];
-801D1DFC	nop
-V1 = V0 << 05;
-V1 = V1 + V0;
-V1 = V1 << 02;
-801D1E0C	lui    at, $800a
-801D1E10	addiu  at, at, $c75a (=-$38a6)
-AT = AT + V1;
-V0 = hu[AT + 0000];
-801D1E1C	nop
-V0 = V0 | 0200;
-801D1E24	lui    at, $800a
-801D1E28	addiu  at, at, $c75a (=-$38a6)
-AT = AT + V1;
-[AT + 0000] = h(V0);
-801D1E34	jal    $func25288
+AT = ;
+AT = ;
+V0 = bu[801d3d25 + S4];
+[8009c6e4 + 54 + V0 * 84 + 22] = h(hu[8009c6e4 + 54 + V0 * 84 + 22] | 0200); // learn Limit Lv. 4
+
 A0 = S4 | 0200;
-801D1E3C	jal    $func25310
+func25288();
+
 A0 = S4;
+func25310();
+
 V0 = V0 & ffff;
 V1 = ffff;
 801D1E4C	bne    v0, v1, L1d1e64 [$801d1e64]
@@ -1959,7 +1903,7 @@ V0 = 801d3260;
 801D1E80	jal    func1d0e4c [$801d0e4c]
 A0 = A0 + V0;
 A0 = 801d3e60;
-801D1E90	jal    $8001f6c0
+801D1E90	jal    $func1f6c0
 A1 = 0007;
 801D1E98	j      L1d293c [$801d293c]
 801D1E9C	nop
@@ -1977,7 +1921,7 @@ L1d1ec0:	; 801D1EC0
 801D1EC0	jal    func1d0e4c [$801d0e4c]
 801D1EC4	nop
 A0 = 801d3e60;
-801D1ED0	jal    $8001f6c0
+801D1ED0	jal    $func1f6c0
 A1 = 0007;
 801D1ED8	j      L1d2724 [$801d2724]
 801D1EDC	nop
@@ -2582,7 +2526,7 @@ V0 = 0140;
 [SP + 0028] = w(0);
 [SP + 002c] = w(0);
 [SP + 0030] = w(0);
-801D27DC	jal    $80026448
+801D27DC	jal    $func26448
 [SP + 0034] = w(0);
 V0 = 0005;
 [801d3d84] = w(0);
@@ -2665,22 +2609,12 @@ L1d2934:	; 801D2934
 [801d3e48] = w(0);
 
 L1d293c:	; 801D293C
-RA = w[SP + 0078];
-S7 = w[SP + 0074];
-S6 = w[SP + 0070];
-S5 = w[SP + 006c];
-S4 = w[SP + 0068];
-S3 = w[SP + 0064];
-S2 = w[SP + 0060];
-S1 = w[SP + 005c];
-S0 = w[SP + 0058];
-SP = SP + 0080;
-801D2964	jr     ra 
-801D2968	nop
 ////////////////////////////////
-// func1d296c
-801D296C	jr     ra 
-801D2970	nop
+
+
+
+////////////////////////////////
+// func1d296c()
 ////////////////////////////////
 
 
@@ -2994,166 +2928,87 @@ if( A0 != ff )
 
 
 ////////////////////////////////
-// func1d3018
-A3 = A0;
-A1 = 0;
-801D3020	lui    t1, $800a
-801D3024	addiu  t1, t1, $d180 (=-$2e80)
-V1 = T1;
+// func1d3018()
+// store party and char equipment and materia
 
-loop1d302c:	; 801D302C
-801D302C	lui    at, $800a
-801D3030	addiu  at, at, $cbdc (=-$3424)
-AT = AT + A1;
-V0 = bu[AT + 0000];
-A1 = A1 + 0001;
-[V1 + 0000] = b(V0);
-V0 = A1 < 0003;
-801D3048	bne    v0, zero, loop1d302c [$801d302c]
-V1 = V1 + 0001;
-A1 = 0;
-801D3054	addiu  a2, zero, $ffff (=-$1)
-V0 = A3 << 05;
-V0 = V0 + A3;
-V0 = V0 << 02;
-801D3064	lui    at, $800a
-801D3068	addiu  at, at, $c754 (=-$38ac)
-AT = AT + V0;
-V1 = bu[AT + 0000];
-801D3074	lui    a0, $800a
-801D3078	addiu  a0, a0, $ce60 (=-$31a0)
-[T1 + 0004] = b(V1);
-801D3080	lui    at, $800a
-801D3084	addiu  at, at, $c755 (=-$38ab)
-AT = AT + V0;
-V0 = bu[AT + 0000];
-V1 = T1;
-[T1 + 0005] = b(V0);
+char_id = A0;
 
-loop1d3098:	; 801D3098
-V0 = w[A0 + 0000];
-A1 = A1 + 0001;
-[V1 + 0048] = w(V0);
-[A0 + 0000] = w(A2);
-A0 = A0 + 0004;
-V0 = A1 < 0003;
-801D30B0	bne    v0, zero, loop1d3098 [$801d3098]
-V1 = V1 + 0004;
-A1 = 0;
-801D30BC	addiu  t0, zero, $ffff (=-$1)
-V0 = A3 << 05;
-V0 = V0 + A3;
-V0 = V0 << 02;
-801D30CC	lui    a0, $800a
-801D30D0	addiu  a0, a0, $c778 (=-$3888)
-V1 = A0 + 0020;
-A2 = V0 + V1;
-A0 = V0 + A0;
-V1 = T1;
+store = 8009c6e4 + a9c;
 
-loop1d30e4:	; 801D30E4
-V0 = w[A0 + 0000];
-A1 = A1 + 0001;
-[V1 + 0008] = w(V0);
-[A0 + 0000] = w(T0);
-V0 = w[A2 + 0000];
-A0 = A0 + 0004;
-[V1 + 0028] = w(V0);
-[A2 + 0000] = w(T0);
-A2 = A2 + 0004;
-V0 = A1 < 0008;
-801D310C	bne    v0, zero, loop1d30e4 [$801d30e4]
-V1 = V1 + 0004;
-V0 = A3 << 05;
-V0 = V0 + A3;
-V0 = V0 << 02;
-801D3120	lui    at, $800a
-801D3124	addiu  at, at, $c754 (=-$38ac)
-AT = AT + V0;
-[AT + 0000] = b(0);
-801D3130	jr     ra 
-801D3134	nop
+// store party
+for( int i = 0; i < 3; ++i )
+{
+    [store + i] = b(bu[8009c6e4 + 4f8 + i]);
+}
+
+// store char equipment
+[store + 4] = b(bu[8009c6e4 + 54 + char_id * 84 + 1c]); // equipped weapon
+[store + 5] = b(bu[8009c6e4 + 54 + char_id * 84 + 1d]); // equipped armor
+
+// store some materia from party stock
+for( int i = 0; i < 3; ++i )
+{
+    [store + 48 + i * 4] = w(w[8009c6e4 + 77c + i * 4]);
+    [8009c6e4 + 77c + i * 4] = w(-1);
+}
+
+for( int i = 0; i < 8; ++i )
+{
+    // store materia from weapon
+    [store + 8 + i * 4] = w(w[8009c6e4 + 54 + char_id * 84 + 40 + i * 4]);
+    [8009c6e4 + 54 + char_id * 84 + 40 + i * 4] = w(-1);
+    // store materia from armor
+    [store + 28 + i * 4] = w(w[8009c6e4 + 54 + char_id * 84 + 60 + i * 4]);
+    [8009c6e4 + 54 + char_id * 84 + 60 + i * 4] = w(-1);
+}
+
+// set weapon for char
+[8009c6e4 + 54 + char_id * 84 + 1c] = b(0);
 ////////////////////////////////
-// func1d3138
-A1 = 0;
-801D313C	lui    t0, $800a
-801D3140	addiu  t0, t0, $d180 (=-$2e80)
-V1 = T0;
 
-loop1d3148:	; 801D3148
-V0 = bu[V1 + 0000];
-801D314C	nop
-801D3150	lui    at, $800a
-801D3154	addiu  at, at, $cbdc (=-$3424)
-AT = AT + A1;
-[AT + 0000] = b(V0);
-A1 = A1 + 0001;
-V0 = A1 < 0003;
-801D3168	bne    v0, zero, loop1d3148 [$801d3148]
-V1 = V1 + 0001;
-A1 = 0;
-801D3174	lui    a3, $800a
-801D3178	addiu  a3, a3, $ce60 (=-$31a0)
-V0 = A0 << 05;
-V0 = V0 + A0;
-V1 = bu[T0 + 0004];
-V0 = V0 << 02;
-801D318C	lui    at, $800a
-801D3190	addiu  at, at, $c754 (=-$38ac)
-AT = AT + V0;
-[AT + 0000] = b(V1);
-V1 = bu[T0 + 0005];
-A2 = T0;
-801D31A4	lui    at, $800a
-801D31A8	addiu  at, at, $c755 (=-$38ab)
-AT = AT + V0;
-[AT + 0000] = b(V1);
 
-loop1d31b4:	; 801D31B4
-V0 = w[A2 + 0048];
-A2 = A2 + 0004;
-A1 = A1 + 0001;
-[A3 + 0000] = w(V0);
-V0 = A1 < 0003;
-801D31C8	bne    v0, zero, loop1d31b4 [$801d31b4]
-A3 = A3 + 0004;
-A1 = 0;
-V0 = A0 << 05;
-V0 = V0 + A0;
-V0 = V0 << 02;
-801D31E0	lui    a0, $800a
-801D31E4	addiu  a0, a0, $c778 (=-$3888)
-V1 = A0 + 0020;
-A2 = V0 + V1;
-A0 = V0 + A0;
-V1 = T0;
 
-loop1d31f8:	; 801D31F8
-V0 = w[V1 + 0008];
-A1 = A1 + 0001;
-[A0 + 0000] = w(V0);
-A0 = A0 + 0004;
-V0 = w[V1 + 0028];
-V1 = V1 + 0004;
-[A2 + 0000] = w(V0);
-V0 = A1 < 0008;
-801D3218	bne    v0, zero, loop1d31f8 [$801d31f8]
-A2 = A2 + 0004;
-801D3220	jr     ra 
-801D3224	nop
+////////////////////////////////
+// func1d3138()
+// restore party and char equipment and materia
 
-801D3228	addiu  sp, sp, $ffe0 (=-$20)
-V0 = 01e0;
-A0 = 801d3890;
-A1 = 03f0;
-A2 = 0120;
-A3 = 0110;
-[SP + 0018] = w(RA);
-[SP + 0010] = w(V0);
+char_id = A0;
+
+store = 8009c6e4 + a9c;
+
+// restore party
+for( int i = 0; i < 3; ++i )
+{
+    [8009cbdc + i] = b(bu[store + i]);
+}
+
+// restore char equipment
+[8009c6e4 + 54 + char_id * 84 + 1c] = b(bu[store + 4]);
+[8009c6e4 + 54 + char_id * 84 + 1d] = b(bu[store + 5]);
+
+// restore some materia
+for( int i = 0; i < 3; ++i )
+{
+    [8009c6e4 + 77c + i * 4] = w(w[store + 48 + i * 4]);
+}
+
+for( int i = 0; i < 8; ++i )
+{
+    [8009c6e4 + 54 + char_id * 84 + 40 + i * 4] = w(w[store + 8 + i * 4]); // restore materia to weapon
+    [8009c6e4 + 54 + char_id * 84 + 60 + i * 4] = w(w[store + 28 + i * 4]); // restore materia to armor
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1d3228()
+// load ZENI image for сoin command
+
+A0 = 801d3890; // src
+A1 = 3f0; // x
+A2 = 120; // y
+A3 = 110; // clut x
+A4 = 1e0; // clut y
 system_menu_load_image();
-
-RA = w[SP + 0018];
-SP = SP + 0020;
-801D3258	jr     ra 
-801D325C	nop
 ////////////////////////////////

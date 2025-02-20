@@ -6152,7 +6152,7 @@ L24b90:	; 80024B90
     80024CB4	jalr   v0 ra // call menu draw function, at least config here
 
 80023AD4 // 0
-801D0E80 // 1 item
+1 801D0E80 // 1 item func1d0e80
 801D0490 // 2 magic
 801D6C2C // 3 materia
 801D0BD0
@@ -6373,8 +6373,9 @@ func1d2f00();
 
 ////////////////////////////////
 // func24f80()
+// restore party and char equipment and materia
 
-S0 = A0;
+char_id = A0;
 
 A0 = 1; // ITEMMENU.MNU
 func211c4();
@@ -6384,7 +6385,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-A0 = S0;
+A0 = char_id;
 func1d3138();
 ////////////////////////////////
 
@@ -6392,8 +6393,9 @@ func1d3138();
 
 ////////////////////////////////
 // func24fc4()
+// store party and char equipment and materia
 
-S0 = A0;
+char_id = A0;
 
 A0 = 1; // ITEMMENU.MNU
 func211c4();
@@ -6403,7 +6405,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-A0 = S0;
+A0 = char_id;
 func1d3018();
 ////////////////////////////////
 
@@ -6411,6 +6413,7 @@ func1d3018();
 
 ////////////////////////////////
 // func25008()
+// load ZENI image for сoin command
 
 A0 = 1; // ITEMMENU.MNU
 func211c4();
@@ -6726,6 +6729,7 @@ for( int i = 0; i < 140; ++i )
 
 ////////////////////////////////
 // func2542c()
+ // insert materia to stock
 
 materia_data = A0;
 
@@ -7652,7 +7656,7 @@ func1c434();
 
 func26090();
 
-func25008();
+func25008(); // load ZENI image for сoin command
 
 func260dc();
 

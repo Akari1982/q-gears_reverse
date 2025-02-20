@@ -802,15 +802,15 @@ while( true )
 
                 case 12: // ITEMMENU.MNU
                 {
-                    A0 = h[8009abf4 + 2];
-                    func24fc4();
+                    A0 = h[8009abf4 + 2]; // char id
+                    func24fc4(); // store party and char equipment and materia
                 }
                 break;
 
                 case 13: // ITEMMENU.MNU
                 {
-                    A0 = h[8009abf4 + 2];
-                    func24f80();
+                    A0 = h[8009abf4 + 2]; // char id
+                    func24f80(); // restore party and char equipment and materia
                 }
                 break;
             }
