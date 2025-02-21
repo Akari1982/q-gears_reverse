@@ -752,6 +752,9 @@
     + b7c [][][][] party gil amount.
     + b80 [][][][] total seconds played.
     + b84 [][][][] countdown seconds for timer (set in STTIM).
+    + b90 [][][][] ???
+    + b94 [][]     ???
+    + b96 [][]     field id.
     + ba4 savemap memory bank 1/2 start
     + ba4 (+00) [][]     game progress
     + bb4 (+10) []       played hours.
@@ -810,8 +813,9 @@
     + fa6
     + fa2 []       set id from here as world map to load (planet, underwater, snowfield)
     + fa4 savemap memory bank 7/f start
-        +83 (+1027) []       flags.
-                             0x80 - enable rain on field. If set it gradually become stronger. If unset if gradually fades away.
+    +1013 (+6f) []       all mastered materia for given type exist.
+    +1027 (+83) []       flags.
+                         0x80 - enable rain on field. If set it gradually become stronger. If unset if gradually fades away.
     +10a4 [][]     character lock mask. You cant move character from and out party (in game methods)
     +10a6 [][]     character availability mask. Add character here when adding it to party or enable it with opcode.
                         0x0001 - Cloud.

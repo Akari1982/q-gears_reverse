@@ -4826,6 +4826,7 @@ V0 = w[GP + 00b4];
 
 ////////////////////////////////
 // func2305c()
+
 V1 = w[GP + 250];
 [GP + b4] = w(A0);
 [GP + 250] = w(A1 - 1);
@@ -6151,27 +6152,27 @@ L24b90:	; 80024B90
     A9 = S0;
     80024CB4	jalr   v0 ra // call menu draw function, at least config here
 
-80023AD4 // 0
-1 801D0E80 // 1 item func1d0e80
-801D0490 // 2 magic
-801D6C2C // 3 materia
-801D0BD0
-801D167C
-801D00C4
-801D042C
-801D080C // 8 config
-801D0E94
-801D06B0
-801D0250
-801D00C4
-801D0E80
-801D0E80
-801D0BD0
-801D0E80
-801D0E80
-801D0E80
-801D0E80
-801D0E80
+    //  0 80023AD4 //
+    //  1 801D0E80 // item func1d0e80
+    //  2 801D0490 // magic
+    //  3 801D6C2C // materia
+    //  4 801D0BD0
+    //  5 801D167C
+    //  6 801D00C4
+    //  7 801D042C
+    //  8 801D080C // 8 config
+    //  9 801D0E94
+    //  a 801D06B0
+    //  b 801D0250
+    //  c 801D00C4 BGINMENU.MNU func1d00c4()
+    //  d 801D0E80
+    //  e 801D0E80
+    //  f 801D0BD0
+    // 10 801D0E80
+    // 11 801D0E80
+    // 12 801D0E80
+    // 13 801D0E80
+    // 14 801D0E80
 
     A0 = 0;
     system_psyq_draw_sync();
@@ -6430,34 +6431,17 @@ func1d3228();
 
 ////////////////////////////////
 // func25040()
+// store characters lv for Jenova Synthesis Boost formula
 
-A0 = 0;
-A2 = 8009d78a;
-A1 = 80049500;
-
-loop25054:	; 80025054
-V0 = hu[A2 + 0000];
-V1 = w[A1 + 0000];
-8002505C	nop
-V0 = V0 >> V1;
-V0 = V0 & 0001;
-80025068	beq    v0, zero, L2509c [$8002509c]
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-AT = 8009c739;
-AT = AT + V0;
-V0 = bu[AT + 0000];
-80025088	nop
-AT = 8009d44c;
-AT = AT + A0;
-[AT + 0000] = b(V0);
-
-L2509c:	; 8002509C
-A0 = A0 + 0001;
-V0 = A0 < 0008;
-800250A4	bne    v0, zero, loop25054 [$80025054]
-A1 = A1 + 0004;
+for( int i = 0; i < 8; ++i )
+{
+    char_id = w[80049500 + i * 4];
+    if( ( hu[8009c6e4 + 10a6] >> char_id ) & 1 )
+    {
+        // Northern Cave: Lv just before Jenova Synthesis battle start. Used as lv placeholder for Jenova Synthesis Boost formula.
+        [8009c6e4 + d68 + i] = b(bu[8009c6e4 + 54 + char_id * 84 + 1]); // level
+    }
+}
 ////////////////////////////////
 
 
@@ -6480,8 +6464,9 @@ func1d027c();
 
 ////////////////////////////////
 // func250ec()
+// check criteria for master materia or bahamut zero
 
-S0 = A0;
+type = A0;
 
 A0 = c; // BGINMENU.MNU
 func211c4();
@@ -6491,7 +6476,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-A0 = S0;
+A0 = type;
 func1d05c4()
 ////////////////////////////////
 
@@ -6499,8 +6484,9 @@ func1d05c4()
 
 ////////////////////////////////
 // func25130()
+// removes needed mastered materia and give master materia or bahamut zero
 
-S0 = A0;
+type = A0;
 
 A0 = c; // BGINMENU.MNU
 func211c4();
@@ -6510,7 +6496,7 @@ do
     system_cdrom_read_chain();
 } while( V0 != 0 )
 
-A0 = S0;
+A0 = type;
 func1d0704();
 ////////////////////////////////
 
@@ -7742,7 +7728,8 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// func264a8
+// func264a8()
+
 A1 = A0;
 
 if( h[A1 + 8] != 0 )
@@ -7769,8 +7756,6 @@ if( h[A1 + 8] != 0 )
     }
 }
 
-
-
 V1 = hu[80062d7e];
 
 if( V1 & 1000 ) // up
@@ -7787,7 +7772,7 @@ if( V1 & 1000 ) // up
             }
 
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
     else
@@ -7802,13 +7787,13 @@ if( V1 & 1000 ) // up
                 [A1 + f] = b(-3);
                 [A1 + 8] = h(1);
                 A0 = 1;
-                system_menu_sound;
+                system_menu_sound();
             }
         }
         else
         {
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
 }
@@ -7826,7 +7811,7 @@ else if( V1 & 4000 ) // down
             }
 
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
     else
@@ -7841,13 +7826,13 @@ else if( V1 & 4000 ) // down
                 [A1 + 8] = h(2);
 
                 A0 = 1;
-                system_menu_sound;
+                system_menu_sound();
             }
         }
         else
         {
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
 }
@@ -7863,7 +7848,7 @@ else if( V1 & 8000 == 0 ) // left
         }
 
         A0 = 1;
-        system_menu_sound;
+        system_menu_sound();
     }
     else if( b[A1 + 10] == 1 )
     {
@@ -7874,7 +7859,7 @@ else if( V1 & 8000 == 0 ) // left
         }
 
         A0 = 1;
-        system_menu_sound;
+        system_menu_sound();
     }
     else if( b[A1 + 10] == 2 )
     {
@@ -7900,7 +7885,7 @@ else if( V1 & 8000 == 0 ) // left
             }
 
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
 }
@@ -7917,7 +7902,7 @@ else if( V1 & 2000 ) // right
         else
         {
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
     else if( b[A1 + 10] == 1 )
@@ -7930,7 +7915,7 @@ else if( V1 & 2000 ) // right
         }
 
         A0 = 1;
-        system_menu_sound;
+        system_menu_sound();
     }
     else if( b[A1 + 10] == 2 )
     {
@@ -7955,7 +7940,7 @@ else if( V1 & 2000 ) // right
                 }
             }
             A0 = 1;
-            system_menu_sound;
+            system_menu_sound();
         }
     }
 }
@@ -7970,7 +7955,7 @@ else if( V1 & 0008 ) // R1
     else
     {
         A0 = 1;
-        system_menu_sound;
+        system_menu_sound();
     }
 }
 else if( V1 & 0004 ) // L1
@@ -7984,7 +7969,7 @@ else if( V1 & 0004 ) // L1
     else
     {
         A0 = 1;
-        system_menu_sound;
+        system_menu_sound();
     }
 }
 ////////////////////////////////
@@ -8359,42 +8344,36 @@ return S3;
 ////////////////////////////////
 // func26f44()
 
-S1 = A1;
-S0 = A2;
-S3 = A3;
+x = A0;
+y = A1;
+text = A2;
+color = A3;
 
-if( S0 == 0 )
-{
-    return;
-}
+if( text == 0 ) return;
 
 for( int i = 0; i < bu[GP + b8]; ++i )
 {
-    opcode = bu[S0];
+    letter = bu[text];
 
-    if( opcode == ff )
-    {
-        break;
-    }
+    if( letter == ff ) break;
 
     // fa fb fc fd fe f8
-    if( ( ((opcode + 6) & ff) < 5 ) || ( opcode == f8 ) )
+    if( ( ( ( letter + 6 ) & ff ) < 5 ) || ( letter == f8 ) )
     {
-        A3 = (bu[S0 + 1]) | opcode;
-        S0 = S0 + 2;
+        A3 = bu[text + 1] | letter;
+        text += 2;
     }
     else
     {
-        A3 = opcode;
-        S0 = S0 + 1;
+        A3 = letter;
+        text += 1;
     }
 
-    A0 = A0;
-    A1 = S1;
-    A2 = S3 & ff;
+    A0 = x;
+    A1 = y;
+    A2 = color;
     func26c5c();
-
-    A0 = V0;
+    x = V0;
 }
 
 if( bu[GP + b9] != 0 )

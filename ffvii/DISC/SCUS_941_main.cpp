@@ -395,27 +395,26 @@ func29998();
 ////////////////////////////////
 // func119e4()
 
-if( h[8009c560] == 3 )
+if( h[8009c560] == 3 ) // current gamestate worlkmap
 {
-    [8009d274] = w(2);
-    [8009d278] = h(3);
+    [8009c6e4 + b90] = w(2);
+    [8009c6e4 + b94] = h(3); // store worldmap gamestate
 }
 else
 {
-    [8009d274] = w(0);
-    [8009d278] = h(1);
+    [8009c6e4 + b90] = w(0);
+    [8009c6e4 + b94] = h(1); // store field gamestate
 }
 
-[8009d27a] = h(hu[8009a05c]);
+[8009c6e4 + b96] = h(hu[8009a05c]); // current field id
 
-A0 = h[800965e0];
-
-[8009d27e] = h(w[80074eb0 + A0 * 84] >> c);
-[8009d280] = h(w[80074eb4 + A0 * 84] >> c);
-[8009d282] = h(hu[80074f16 + A0 * 84]);
-[8009d284] = b(bu[80074eda + A0 * 84]);
-[8009d285] = b(bu[8009c540]);
-[8009d286] = b(bu[8009ad2c]);
+pc_entity = h[800965e0];
+[8009c6e4 + b9a] = h(w[80074eb0 + pc_entity * 84] >> c); // x location on field map
+[8009c6e4 + b9c] = h(w[80074eb4 + pc_entity * 84] >> c); // y location on field map
+[8009c6e4 + b9e] = h(hu[80074f16 + pc_entity * 84]); // triangle id on field map
+[8009c6e4 + ba0] = b(bu[80074eda + pc_entity * 84]); // direction on field map
+[8009c6e4 + ba1] = b(bu[8009c540]); // seed for battle random in field
+[8009c6e4 + ba2] = b(bu[8009ad2c]); // field encounter timer: offset
 ////////////////////////////////
 
 
@@ -423,23 +422,19 @@ A0 = h[800965e0];
 ////////////////////////////////
 // func11aec()
 
-[80071e28] = w(w[8009d274]);
+[80071e28] = w(w[8009c6e4 + b90]);
+[8009c560] = h(hu[8009c6e4 + b94]); // restore gamestate
 
-[8009c560] = h(hu[8009d278]);
+if( hu[8009c560] == 0 ) [8009c560] = h(1); // initial gamestate
 
-if( hu[8009c560] == 0 )
-{
-    [8009c560] = h(1);
-}
-
-[8009a05c] = h(hu[8009d27a]);
-[8009ac58] = h(hu[8009d27a]);
-[8009abf8] = h(hu[8009d27e]);
-[8009abfa] = h(hu[8009d280]);
-[8009ac16] = h(hu[8009d282]);
-[8009ac18] = h(bu[8009d284]);
-[8009c540] = b(bu[8009d285]);
-[8009ad2c] = b(bu[8009d286]);
+[8009a05c] = h(hu[8009c6e4 + b96]); // current field id
+[8009ac58] = h(hu[8009c6e4 + b96]); // current field id
+[8009abf8] = h(hu[8009c6e4 + b9a]); // x location on field map
+[8009abfa] = h(hu[8009c6e4 + b9c]); // y location on field map
+[8009ac16] = h(hu[8009c6e4 + b9e]); // triangle id on field map
+[8009ac18] = h(bu[8009c6e4 + ba0]); // direction on field map
+[8009c540] = b(bu[8009c6e4 + ba1]); // seed for battle random in field
+[8009ad2c] = b(bu[8009c6e4 + ba2]); // field encounter timer: offset
 ////////////////////////////////
 
 
@@ -447,16 +442,16 @@ if( hu[8009c560] == 0 )
 ////////////////////////////////
 // func11bb4()
 
-[8009d588] = b(1);
-[8009d274] = w(0);
-[8009d278] = h(1);
-[8009d27a] = h(74);
-[8009d27e] = h(0);
-[8009d280] = h(0);
-[8009d282] = h(0);
-[8009d284] = b(0);
-[8009d285] = b(0);
-[8009d286] = b(0);
+[8009c6e4 + ea4] = b(1); // current disc
+[8009c6e4 + b90] = w(0);
+[8009c6e4 + b94] = h(1); // field gamestate
+[8009c6e4 + b96] = h(74); // current map
+[8009c6e4 + b9a] = h(0); // x location on field map
+[8009c6e4 + b9c] = h(0); // y location on field map
+[8009c6e4 + b9e] = h(0); // triangle id on field map
+[8009c6e4 + ba0] = b(0); // direction on field map
+[8009c6e4 + ba1] = b(0); // seed for battle random in field
+[8009c6e4 + ba2] = b(0); // field encounter timer: offset
 ////////////////////////////////
 
 
@@ -540,7 +535,7 @@ while( true )
         func11bb4();
     }
 
-    func26090();
+    func26090(); // LIMTMENU.MNU
 
     L11dcc:	; 80011DCC
     S0 = bu[8009d588];
@@ -601,7 +596,7 @@ while( true )
             {
                 func260dc();
 
-                func26090();
+                func26090(); // LIMTMENU.MNU
 
                 [80071e34] = b(0);
             }
@@ -643,7 +638,7 @@ while( true )
                 }
 
                 [800965ec] = h(2);
-                [8009c560] = h(1);
+                [8009c560] = h(1); // set gamestate to field
             }
             else
             {
@@ -694,14 +689,14 @@ while( true )
                             8001215C	bne    v0, zero, loop12150 [$80012150]
 
                             [800965ec] = h(1);
-                            [8009c560] = h(1);
+                            [8009c560] = h(1); // set gamestate to field
                             break;
                         }
                     }
                 }
 
                 [800965ec] = h(2);
-                [8009c560] = h(3);
+                [8009c560] = h(3); // set gamestate to worldmap
             }
         }
         break;
@@ -715,12 +710,12 @@ while( true )
             if( w[80071e28] == 0 )
             {
                 [800965ec] = h(3);
-                [8009c560] = h(1);
+                [8009c560] = h(1); // set gamestate to field
             }
             else if( w[80071e28] == 1 )
             {
                 [800965ec] = h(3);
-                [8009c560] = h(2);
+                [8009c560] = h(2); // set gamestate to battle
             }
             else if( w[80071e28] == 2 )
             {
@@ -819,7 +814,7 @@ while( true )
 
             [8009ac1a] = h(2);
             [800965ec] = h(5);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
         }
         break;
 
@@ -840,7 +835,7 @@ while( true )
             funca00d0();
 
             [800965ec] = h(6);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -862,7 +857,7 @@ while( true )
             funca02d0();
 
             [800965ec] = h(7);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -884,7 +879,7 @@ while( true )
             funca0390();
 
             [800965ec] = h(8);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -906,7 +901,7 @@ while( true )
             funcb6b58();
 
             [800965ec] = h(9);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -931,7 +926,7 @@ while( true )
             [8009d5e6] = b(V0);
             [8009d5e7] = b(V0 >> 8);
             [800965ec] = h(a);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -955,7 +950,7 @@ while( true )
             [8009d3ea] = b(V0);
             [8009d3eb] = b(V0 >> 8);
             [800965ec] = h(b);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -987,7 +982,7 @@ while( true )
 
             [8009ac1a] = h(2);
             [800965ec] = h(c);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
         }
         break;
 
@@ -1000,7 +995,7 @@ while( true )
                 case 0: func24ecc(); break; // ITEMMENU.MNU stole materia from player and store it to savemap
                 case 1: func24f04(); break; // ITEMMENU.MNU restore all stolen materia to equipment and materia list
                 case 6: func250b4(); break; // BGINMENU.MNU
-                case 9: func25040(); break;
+                case 9: func25040(); break; // store characters lv for Jenova Synthesis Boost formula
 
                 case 2: // ITEMMENU.MNU
                 {
@@ -1011,15 +1006,15 @@ while( true )
 
                 case 7: // BGINMENU.MNU
                 {
-                    A0 = h[8009abf4 + 2];
-                    func250ec();
+                    A0 = h[8009abf4 + 2]; // type of action
+                    func250ec(); // check criteria for master materia or bahamut zero
                 }
                 break;
 
                 case 8: // BGINMENU.MNU
                 {
-                    A0 = h[8009abf4 + 2];
-                    func25130();
+                    A0 = h[8009abf4 + 2]; // type of action
+                    func25130(); // removes needed mastered materia and give master materia or bahamut zero
                 }
                 break;
             }
@@ -1031,7 +1026,7 @@ while( true )
 
             [8009abf4 + 26] = h(2);
             [800965ec] = h(d);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
         }
         break;
 
@@ -1052,7 +1047,7 @@ while( true )
             funca0448();
 
             [800965ec] = h(e);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
             [8009abf4 + 1] = b(1);
         }
         break;
@@ -1063,7 +1058,7 @@ while( true )
 
             [8009ac1a] = h(2);
             [800965ec] = h(10);
-            [8009c560] = h(1);
+            [8009c560] = h(1); // set gamestate to field
         }
         break;
     }
