@@ -8183,88 +8183,85 @@ return A1;
 ////////////////////////////////
 // func26c5c()
 
-S3 = A0;
-S6 = A1;
-S7 = A2;
+x = A0;
+y = A1;
+color = A2;
+letter = A3;
+
 S4 = 0;
 S5 = 0;
-[SP + 0020] = h(A3);
+[SP + 20] = h(letter);
 
 V0 = bu[SP + 20];
 V1 = SP + 20;
-[SP + 0028] = w(S0);
 
 switch( V0 )
 {
     case f8:
     {
-        return S3;
+        return x;
     }
 
     case fa:
     {
         V1 = V1 + 1;
-        S2 = 84;
-        S1 = e7;
+        v = 84;
+        set_start = e7;
     }
 
     case fb:
     {
         V1 = V1 + 1;
-        S2 = 0;
+        v = 0;
         S4 = 10;
-        S1 = 1b9;
+        set_start = 1b9;
     }
 
     case fc:
     {
         V1 = V1 + 1;
-        S2 = 84;
+        v = 84;
         S4 = 10;
-        S1 = 2a0;
+        set_start = 2a0;
     }
 
     case fd:
     {
         V1 = V1 + 1;
-        S2 = 0084;
-        S1 = 0372;
+        v = 0084;
+        set_start = 0372;
         S5 = -40;
     }
 
     case fe:
     {
         V1 = V1 + 1;
-        S2 = 84;
+        v = 84;
         S4 = 10;
-        S1 = 444;
+        set_start = 444;
         S5 = -40;
     }
 
     default:
     {
-        S1 = 0;
-        S2 = 0;
+        set_start = 0;
+        v = 0;
     }
 }
 
-A3 = bu[V1 + 0];
-V0 = w[800707c0];
-[SP + 0020] = h(A3);
-A3 = A3 & ffff;
-A2 = hi(A3 * 86186187);
-
-V1 = A3 + S1;
-V0 = V0 + V1;
+letter = bu[V1];
+font_padding = w[800707c0];
+[SP + 20] = h(letter);
+A2 = hi(letter * 86186187);
 
 A0 = w[80062f24];
 [A0 + 3] = b(4);
-[A0 + 7] = b(64);
+[A0 + 7] = b(64); // Textured Rectangle, variable size, opaque, texture-blending
 
-V1 = bu[V0 + 0000];
-S3 = S3 + V1 * 20;
+letter_w = bu[font_padding + letter + set_start];
+x += letter_w * 20;
 
-V0 = A3 - A2;
+V0 = letter - A2;
 V0 = V0 >> 01;
 A2 = A2 + V0;
 A2 = A2 >> 04;
@@ -8273,33 +8270,28 @@ V0 = A2 << 02;
 V0 = V0 + A2;
 V0 = V0 << 02;
 V0 = V0 + A2;
-A3 = A3 - V0;
+A3 = letter - V0;
 
 A3 = A3 & ffff;
-S0 = A3 << 01;
-S0 = S0 + A3;
-S0 = S0 << 02;
+u = A3 * c;
 
 A2 = A2 & ffff;
-V0 = A2 << 01;
-V0 = V0 + A2;
-V0 = V0 << 02;
-S2 = S2 + V0;
+v += A2 * c;
 
 A0 = w[80062f24];
 A1 = 1;
 system_psyq_set_shade_tex();
 
 V0 = w[80062f24];
-[V0 + 8] = h(S3);
-[V0 + a] = h(S6);
-[V0 + c] = b(S0);
-[V0 + d] = b(S2);
+[V0 + 8] = h(x);
+[V0 + a] = h(y);
+[V0 + c] = b(u);
+[V0 + d] = b(v);
 [V0 + 10] = h(c);
 [V0 + 12] = h(c);
 
 A0 = ((S4 << 10) >> 10) | 100;
-A1 = S7 + 1f0;
+A1 = color + 1f0;
 system_create_clut_for_packet();
 
 V1 = w[80062f24];
@@ -8311,9 +8303,8 @@ system_psyq_add_prim();
 
 [80062f24] = w(w[80062f24] + 14);
 
-V0 = hu[SP + 20];
-V1 = w[800707c0];
-S3 = S3 + (bu[V1 + V0 + S1 + 0] & 1f);
+letter = hu[SP + 20];
+x += bu[font_padding + letter + set_start] & 1f; // letter_w
 
 if( bu[GP + b9] == 0 )
 {
@@ -8336,7 +8327,7 @@ if( bu[GP + b9] == 0 )
     [80062f24] = w(w[80062f24] + c);
 }
 
-return S3;
+return x;
 ////////////////////////////////
 
 
