@@ -360,7 +360,8 @@ return 0;
 
 
 ////////////////////////////////
-// manage_ask_window_states
+// manage_ask_window_states()
+
 a0 = window id
 a1 = dialog id
 a2 = first
@@ -372,19 +373,15 @@ v1 = state from window structure;
 s1 = [sp + 40]; // sp + 18 from ASK opcode where we stored data from mb/offset
 s3 = a3;
 
-if (v1 < F)
+if( V1 < f )
 {
-    switch (v1)
+    switch( V1 )
     {
-        case 0x0:
+        case 0:
         {
-            field_dialog_window_init;
+            field_dialog_window_init();
 
-            if (v0 == 0)
-            {
-                return 0;
-            }
-
+            if( V0 == 0 ) return 0;
             return 1;
         }
         break;
@@ -399,7 +396,7 @@ if (v1 < F)
 
         case 2:
         {
-            field_dialog_copy_text_from_field;
+            field_dialog_copy_text_from_field();
 
             return 0;
         }
@@ -407,21 +404,21 @@ if (v1 < F)
 
         case 8:
         {
-            dialog_scroll_text;
+            dialog_scroll_text();
 
             return 0;
         }
         break;
 
-        case C:
+        case c:
         {
-            dialog_scroll_text_during_ok;
+            dialog_scroll_text_during_ok();
 
             return 0;
         }
         break;
 
-        case 0xD:
+        case d:
         {
             V0 = w[8009c6e0];
             V0 = w[V0 + 80];
@@ -434,52 +431,33 @@ if (v1 < F)
         }
         break;
 
-        case 0x3:
+        case 3:
         {
-            V0 = h[8011445C + A0 * 2];
+            V0 = h[8011445c + A0 * 2];
 
             if (V0 == 0)
             {
                 // set state to 2
-                [800832A0 + A0 * 30] = h(2);
+                [800832a0 + A0 * 30] = h(2);
                 return 0;
             }
 
             V0 = V0 - 1;
-            [8011445C + A0 * 2] = V0;
+            [8011445c + A0 * 2] = V0;
             return 0;
         }
         break;
 
-        case 0x4:
+        case 4:
         {
-
-            V0 = w[8009C6E0];
-            V0 = w[V0 + 80];
-
-            if (V0 & 0020)
+            V0 = w[8009c6e0];
+            if( w[V0 + 80] & 0020 )
             {
-                V0 = h[8008327E + A0 * 30];
-                V1 = V0 - 9;
-                V0 = h[801142CC + A0 * 2];
-                V1 = V1 / 10 + V0 - 1;
+                if( h[8008328a + A0 * 30] == ( (h[8008327e + A0 * 30] - 9) / 10 + h[801142cc + A0 * 2] - 1 ) ) return 0;
 
-                A2 = h[8008328A + A0 * 30];
-
-                if (A2 == V1)
-                {
-                    return 0;
-                }
-
-                [800832A0 + A0 * 30] = h(08); // set state to 8
-
-                V0 = h[80083284 + A0 * 30];
-                V0 = V0 - 2;
-                [80083284 + A0 * 30] = h(V0);
-
-                V0 = hu[801142CC + A0 * 2];
-                V0 = V0 + 1;
-                [801142CC + A0 * 2] = h(V0);
+                [800832a0 + A0 * 30] = h(8); // set state
+                [80083284 + A0 * 30] = h(h[80083284 + A0 * 30] - 2);
+                [801142cc + A0 * 2] = h(hu[801142cc + A0 * 2] + 1);
             }
 
             return 0;
