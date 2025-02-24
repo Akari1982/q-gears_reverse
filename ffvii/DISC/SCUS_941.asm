@@ -995,10 +995,10 @@
 // system_get_single_string_width
 80026B70-80026C58
 ////////////////////////////////
-// func26c5c
+// system_menu_draw_single_letter
 80026C5C-80026F40
 ////////////////////////////////
-// func26f44
+// system_menu_draw_string
 80026F44-80027088
 ////////////////////////////////
 // system_draw_single_menu_font_character

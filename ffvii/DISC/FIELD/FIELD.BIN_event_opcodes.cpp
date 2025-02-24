@@ -6287,7 +6287,7 @@ if ([8008326C + S0] != FF)
 {
     A0 = S0;
 
-    set_state_to_close;
+    field_window_set_state_to_close();
 
     A0 = S0;
     A1 = 0;
@@ -6330,7 +6330,7 @@ if( V1 == ff )
 }
 else if( V1 == actor_id_cur )
 {
-    set_state_to_close();
+    field_window_set_state_to_close();
 
     A0 = S0;
     A1 = 0;
@@ -6444,7 +6444,7 @@ return 0;
 // 0x54 WCLSE
 a0 = param1;
 
-set_state_to_close;
+field_window_set_state_to_close();
 
 if (v0 == 0)
 {

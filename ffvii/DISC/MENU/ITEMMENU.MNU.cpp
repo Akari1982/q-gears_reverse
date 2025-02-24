@@ -1118,7 +1118,7 @@ S0 = S0 + 0001;
 A0 = h[S3 + 0000];
 A1 = h[S3 + 0002];
 A0 = A0 + 0008;
-801D11FC	jal    $func26f44
+801D11FC	jal    $system_menu_draw_string
 A1 = A1 + S1;
 V0 = S0 < 0008;
 801D1208	bne    v0, zero, loop1d11e0 [$801d11e0]
@@ -1173,7 +1173,7 @@ A2 = 0;
 A0 = 0010;
 A1 = 0023;
 A2 = V0;
-801D12D0	jal    $func26f44
+801D12D0	jal    $system_menu_draw_string
 A3 = 0007;
 
 L1d12d8:	; 801D12D8
@@ -1259,7 +1259,7 @@ loop1d13fc:	; 801D13FC
 A0 = S0;
 A1 = 000d;
 A2 = S1;
-801D1408	jal    $func26f44
+801D1408	jal    $system_menu_draw_string
 A3 = 0007;
 S1 = S1 + 000c;
 S2 = S2 + 0001;
@@ -1394,7 +1394,7 @@ A1 = b[AT + 0000];
 V0 = S2 << 04;
 A1 = A1 << 02;
 A1 = A1 + 003a;
-801D164C	jal    $func26f44
+801D164C	jal    $system_menu_draw_string
 A1 = V0 + A1;
 
 L1d1654:	; 801D1654
@@ -1517,7 +1517,7 @@ A1 = b[801d3e21];
 A3 = 0007;
 A1 = A1 << 02;
 A1 = A1 + 003a;
-801D183C	jal    $func26f44
+801D183C	jal    $system_menu_draw_string
 A1 = S5 + A1;
 
 L1d1844:	; 801D1844

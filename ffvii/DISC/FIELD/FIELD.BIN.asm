@@ -1186,7 +1186,7 @@
 // field_window_reset
 800D493C-800D4B24
 ////////////////////////////////
-// set_state_to_close
+// field_window_set_state_to_close
 800D4B28-800D4BBC
 ////////////////////////////////
 // set_window_style_cbc

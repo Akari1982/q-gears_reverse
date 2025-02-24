@@ -1,1 +1,1 @@
-adisasm ITEMMENU.MNU ITEMMENU.MNU.asm -v -b 801d0000 801d0000 -u -a
+adisasm BGINMENU.MNU BGINMENU.MNU.asm -v -b 801d0000 801d0000 -u -a

@@ -65,22 +65,27 @@ for( int i = 0; i < 8; ++i )
 
 
 ////////////////////////////////
-// set_state_to_close
-a0 = window id
+// field_window_set_state_to_close()
 
-V0 = hu[800832A0 + A0 * 30]; // window state
+window_id = A0;
 
-if (V0 == 1)
+switch( hu[80083274 + window_id * 30 + 2c] ) // window state
 {
-    return 0;
+    case 1:
+    {
+        return 0; // wait till window opens
+    }
+    case 2:
+    case 4:
+    case 6:
+    case 8:
+    case b:
+    case d:
+    {
+        [80083274 + window_id * 30 + 2c] = h(7); // set to close
+    }
+    break;
 }
-
-if (V0 = {2 4 6 8 B D})
-{
-    [800832A0 + A0 * 30] = h(07);
-}
-
-// 0 3 5 7 9 A C E
 return 1;
 ////////////////////////////////
 
@@ -211,10 +216,7 @@ switch( V1 )
         A1 = message_id;
         field_dialog_window_init();
 
-        if( V0 != 0 )
-        {
-            return 1;
-        }
+        if( V0 != 0 ) return 1;
     }
     break;
 

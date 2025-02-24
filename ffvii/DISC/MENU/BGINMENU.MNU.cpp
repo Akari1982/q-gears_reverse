@@ -1,40 +1,36 @@
 ////////////////////////////////
-// func1d0000
+// func1d0000()
 
-S2 = 801d0860;
-A0 = S2;
-A1 = 0;
-A2 = 0;
-A3 = 0001;
-S1 = 0003;
-S0 = 0001;
-[SP + 0010] = w(S1);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(S0);
-[SP + 0020] = w(S1);
-[SP + 0024] = w(0);
-[SP + 0028] = w(0);
-[SP + 002c] = w(0);
-[SP + 0030] = w(S0);
-[SP + 0034] = w(0);
+A0 = 801d0860;
+A1 = 0; // x cursor pos
+A2 = 0; // y cursor pos
+A3 = 1; // max x pos
+A4 = 3; // max y pos
+A5 = 0;
+A6 = 0; // cur page
+A7 = 1;
+A8 = 3; // max page
+A9 = 0;
+A10 = 0;
+A11 = 0; // x warp
+A12 = 1; // y warp
+A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
 func26448();
 
-A0 = S2 + 0012;
-A1 = 0;
-A2 = 0;
-A3 = 0001;
-V0 = 0009;
-[SP + 0010] = w(S1);
-[SP + 0014] = w(0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(S0);
-[SP + 0020] = w(V0);
-[SP + 0024] = w(0);
-[SP + 0028] = w(0);
-[SP + 002c] = w(0);
-[SP + 0030] = w(0);
-[SP + 0034] = w(0);
+A0 = 801d0860 + 12;
+A1 = 0; // x cursor pos
+A2 = 0; // y cursor pos
+A3 = 1; // max x pos
+A4 = 3; // max y pos
+A5 = 0;
+A6 = 0; // cur page
+A7 = 1;
+A8 = 9; // max page
+A9 = 0;
+A10 = 0;
+A11 = 0; // x warp
+A12 = 0; // y warp
+A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
 func26448();
 
 [801d07f0] = w(0);
@@ -43,26 +39,30 @@ func26448();
 
 
 ////////////////////////////////
-// func1d00c4
+// func1d00c4()
 
 A0 = w[80062f58];
 func230c4();
 
 if( w[801d07f0] == 0 )
 {
-    A0 = 0;
-    A1 = h[801d07fe] + b[801d086b] * 40 + 20;
+    A0 = 0; // x
+    A1 = h[801d07f4 + 1 * 8 + 2] + b[801d0860 + b] * 40 + 20; // y
     system_menu_add_cursor_to_render();
 }
 
-A0 = 10;
-A1 = b;
+A0 = 10; // x
+A1 = b; // y
 A2 = 801d0804; // text
-A3 = 7;
-func26f44();
+A3 = 7; // color
+system_menu_draw_string();
 
 for( int i = 0; i < 2; ++i )
 {
+    // x    y    w    h
+    // 0000 0500 6C01 1800
+    // 0000 1D00 6C01 C300
+
     A0 = 801d07f4 + i * 8;
     system_menu_add_window_to_render();
 }

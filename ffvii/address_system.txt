@@ -147,7 +147,8 @@
     + a4            [][]     y position of tutorial text window.
     + a8 (80062dec) [][][][] pointer to menu load address.
     + b4            [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
-    + b8            []       number of something.
+    + b8            []       number of letters in string to render.
+    + b0            []       global or single letter draw mode for menu text render (0 - single letter, whole string otherwise).
     +110            []       store array of values from 0x5 type materia to use in paired functions.
     +118            []       init with 0. Store 1 here if we has mastered Preemptive materia.
     +11c            [][][][] pointer to unit data (8009d84c).
@@ -174,6 +175,7 @@
     +1d5            []       calculate and add enemy lure value (Limit 0x2-0x20).
     +1d6            []       add chokobo lure value from all player structure. Limit to 0x20.
     +1d7            []       add preemptive value from all player structure. Limit to 0x55. Add bit 0x80 if we have mastered preemptive materia equipped.
+    +214 (80062f58) [][][][] 
     +220            [][][][] current main menu level (0 1 or 2)
     +238            [][][][] address to store materia data in case of menu. Init 8 items [][] from +a with 0.
         +0 []       number of learned stars in materia.
