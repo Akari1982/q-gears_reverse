@@ -506,12 +506,15 @@ L152ac:	; 800152AC
     A1 = V1;
     A2 = 0;
     system_get_pointer_to_text_in_kernel_with_block_and_text_id();
-
-    80015320	bne    s0, zero, L15580 [$80015580]
     T0 = V0;
+
+    if( S0 != 0 ) return T0;
+
     A0 = T0;
-    8001532C	j      L15564 [$80015564]
     A1 = A0;
+    system_decompress_kernel_string_with_f9();
+
+    return V0;
 
     L15334:	; 80015334
     A0 = bu[80010118 + A1];
@@ -523,39 +526,61 @@ V0 = 0007;
 80015354	beq    a0, v0, L153b0 [$800153b0]
 V0 = A0 < 0008;
 8001535C	beq    v0, zero, L15374 [$80015374]
-V0 = 0006;
-80015364	beq    a0, v0, L15390 [$80015390]
-V0 = V1 < 0010;
-8001536C	j      L15584 [$80015584]
-V0 = T0;
+
+if( A0 == 6 )
+{
+    A0 = 9;
+    if( V1 < 10 ) A0 = 11;
+
+    A1 = V1;
+    A2 = 0;
+    system_get_pointer_to_text_in_kernel_with_block_and_text_id();
+
+    return V0;
+}
+
+return T0;
 
 L15374:	; 80015374
-V0 = 0008;
-80015378	beq    a0, v0, L15528 [$80015528]
-V0 = 0009;
-80015380	beq    a0, v0, L15574 [$80015574]
-V1 = V1 << 05;
-80015388	j      L15584 [$80015584]
-V0 = T0;
+if( A0 == 8 )
+{
+    if( V1 >= 100 )
+    {
+        A0 = V1 - 100;
+        funca5f90();
+    }
+    else
+    {
+        A0 = V1;
+        system_get_pointer_to_battle_text_in_kernel_with_id();
+    }
 
-L15390:	; 80015390
-80015390	beq    v0, zero, L1539c [$8001539c]
-A0 = 0009;
-A0 = 0011;
+    S0 = V0;
 
-L1539c:	; 8001539C
-A1 = V1;
-800153A0	jal    system_get_pointer_to_text_in_kernel_with_block_and_text_id [$80014d9c]
-A2 = 0;
-800153A8	j      L15580 [$80015580]
-T0 = V0;
+    A0 = SP + 10;
+    A1 = S0;
+    func14e74();
+
+    A0 = V0;
+    A1 = S0;
+    system_decompress_kernel_string_with_f9();
+
+    return V0;
+}
+else if( A0 == 9 )
+{
+    V1 = V1 << 05;
+    return 800f652c + V1;
+}
+
+return T0;
 
 L153b0:	; 800153B0
 V0 = V1 < 0006;
-800153B4	beq    v0, zero, L15580 [$80015580]
+if( V0 == 0 ) return T0;
+
 V0 = V1 << 04;
-800153BC	lui    a0, $8006
-A0 = A0 + 3660;
+A0 = 80063660;
 A2 = 0020;
 800153C8	lui    at, $8016
 AT = AT + V0;
@@ -598,13 +623,15 @@ V0 = w[AT + 83e4];
 80015458	nop
 V0 = V0 & 0040;
 80015460	beq    v0, zero, L15484 [$80015484]
-80015464	nop
-80015468	jal    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id [$8001521c]
-A0 = 0071;
+
+A0 = 71;
+system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
+
 A0 = S0;
 A1 = V0;
-80015478	jal    func14d58 [$80014d58]
 8001547C	addiu  a2, zero, $ffff (=-$1)
+func14d58();
+
 S0 = V0;
 
 L15484:	; 80015484
@@ -613,84 +640,47 @@ AT = AT + S3;
 V0 = bu[AT + 5be1];
 80015490	nop
 V0 = V0 & 0040;
-80015498	beq    v0, zero, L15514 [$80015514]
-A0 = 007f;
-800154A0	lui    at, $800f
-AT = AT + S3;
-V0 = hu[AT + 5bf4];
-800154AC	nop
-[SP + 0110] = h(V0);
-800154B4	lui    at, $8010
-AT = AT + S1;
-V0 = w[AT + 8410];
-800154C0	jal    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id [$8001521c]
-[SP + 0112] = h(V0);
-A0 = S0;
-A1 = V0;
-800154D0	jal    func14d58 [$80014d58]
-800154D4	addiu  a2, zero, $ffff (=-$1)
-S0 = V0;
-800154DC	jal    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id [$8001521c]
-A0 = 0072;
-A0 = S0;
-A1 = V0;
-800154EC	jal    $800a5e0c
-A2 = SP + 0110;
-A0 = SP + 0010;
-800154F8	jal    func14e74 [$80014e74]
-A1 = S0;
-A0 = S0;
-A1 = SP + 0010;
-80015508	jal    func14d58 [$80014d58]
-8001550C	addiu  a2, zero, $ffff (=-$1)
-S0 = V0;
+if( V0 != 0 )
+{
+    A0 = 007f;
+    800154A0	lui    at, $800f
+    AT = AT + S3;
+    V0 = hu[AT + 5bf4];
+    [SP + 0110] = h(V0);
+    800154B4	lui    at, $8010
+    AT = AT + S1;
+    V0 = w[AT + 8410];
+    [SP + 0112] = h(V0);
+    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
 
-L15514:	; 80015514
-V0 = 00ff;
-80015518	lui    t0, $8006
-T0 = T0 + 3660;
-80015520	j      L15580 [$80015580]
-[S0 + 0000] = b(V0);
+    A0 = S0;
+    A1 = V0;
+    800154D4	addiu  a2, zero, $ffff (=-$1)
+    800154D0	jal    func14d58 [$80014d58]
 
-L15528:	; 80015528
-V0 = V1 < 0100;
-8001552C	bne    v0, zero, L15544 [$80015544]
+    S0 = V0;
+    A0 = 0072;
+    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
 
-A0 = V1 - 100;
-80015534	jal    $800a5f90
+    A0 = S0;
+    A1 = V0;
+    A2 = SP + 0110;
+    funca5e0c();
 
-8001553C	j      L15550 [$80015550]
-S0 = V0;
+    A0 = SP + 0010;
+    A1 = S0;
+    800154F8	jal    func14e74 [$80014e74]
 
-L15544:	; 80015544
-A0 = V1;
-system_get_pointer_to_battle_text_in_kernel_with_id();
+    A0 = S0;
+    A1 = SP + 0010;
+    8001550C	addiu  a2, zero, $ffff (=-$1)
+    80015508	jal    func14d58 [$80014d58]
 
-S0 = V0;
+    S0 = V0;
+}
 
-L15550:	; 80015550
-A0 = SP + 0010;
-A1 = S0;
-80015554	jal    func14e74 [$80014e74]
-
-A0 = V0;
-A1 = S0;
-
-L15564:	; 80015564
-80015564	jal    system_decompress_kernel_string_with_f9 [$800150e4]
-
-8001556C	j      L15580 [$80015580]
-T0 = V0;
-
-L15574:	; 80015574
-80015574	lui    v0, $800f
-V0 = V0 + 652c;
-T0 = V1 + V0;
-
-L15580:	; 80015580
-V0 = T0;
-
-L15584:	; 80015584
+[S0 + 0000] = b(ff);
+return 80063660;
 ////////////////////////////////
 
 

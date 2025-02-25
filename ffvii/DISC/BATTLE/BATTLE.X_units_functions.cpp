@@ -9966,7 +9966,7 @@ V0 = w[800f99e4];
 800DE4DC	bne    v0, zero, Lde5c4 [$800de5c4]
 800DE4E0	nop
 A0 = 800f92e2;
-800DE4EC	jal    $func264a8
+800DE4EC	jal    $system_menu_handle_buttons
 800DE4F0	nop
 V0 = hu[80062d7e];
 800DE4FC	nop
@@ -10488,7 +10488,7 @@ S0 = bu[S1 + 000b];
 V0 = V0 << 18;
 S3 = V0 >> 18;
 S0 = S0 << 18;
-800DECD4	jal    $func264a8
+800DECD4	jal    $system_menu_handle_buttons
 S0 = S0 >> 18;
 A1 = 0;
 T0 = 00ff;
@@ -10889,7 +10889,7 @@ V0 = w[800f99e4];
 800DF348	nop
 800DF34C	bne    v0, zero, Ldf50c [$800df50c]
 800DF350	nop
-800DF354	jal    $func264a8
+800DF354	jal    $system_menu_handle_buttons
 A0 = S0;
 V0 = h[S0 + 0008];
 800DF360	nop
@@ -11078,7 +11078,7 @@ V0 = w[800f99e4];
 800DF640	nop
 800DF644	bne    v0, zero, Ldf7a0 [$800df7a0]
 800DF648	nop
-800DF64C	jal    $func264a8
+800DF64C	jal    $system_menu_handle_buttons
 A0 = S0;
 V0 = h[S0 + 0008];
 800DF658	nop
@@ -11385,7 +11385,7 @@ V0 = w[800f99e4];
 800DFB04	nop
 800DFB08	bne    v0, zero, Ldfc1c [$800dfc1c]
 800DFB0C	nop
-800DFB10	jal    $func264a8
+800DFB10	jal    $system_menu_handle_buttons
 A0 = S0;
 V0 = h[S0 + 0008];
 800DFB1C	nop
@@ -11514,7 +11514,7 @@ if( h[800f3896] == 4 )
     if( w[800f99e4] == 0 )
     {
         A0 = S0;
-        func264a8();
+        system_menu_handle_buttons();
 
         if( h[S0 + 8] == 0 )
         {
@@ -11683,7 +11683,7 @@ V0 = w[800f99e4];
 800E0170	nop
 800E0174	bne    v0, zero, Le0254 [$800e0254]
 800E0178	nop
-800E017C	jal    $func264a8
+800E017C	jal    $system_menu_handle_buttons
 A0 = S0;
 V1 = hu[80062d7e];
 800E018C	nop
@@ -11987,7 +11987,7 @@ V0 = w[AT + 0000];
 800E062C	nop
 
 A0 = 800f9132;
-800E0638	jal    $func264a8
+800E0638	jal    $system_menu_handle_buttons
 
 Le063c:	; 800E063C
 800E063C	nop
@@ -12126,7 +12126,7 @@ V0 = 0009;
 800E085C	bne    v1, v0, Le08b4 [$800e08b4]
 [SP + 0010] = w(RA);
 A0 = 800f9144;
-800E086C	jal    $func264a8
+800E086C	jal    $system_menu_handle_buttons
 800E0870	nop
 V0 = hu[80062d7c];
 800E087C	nop

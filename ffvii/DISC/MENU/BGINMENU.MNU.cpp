@@ -41,7 +41,7 @@ func26448();
 ////////////////////////////////
 // func1d00c4()
 
-A0 = w[80062f58];
+A0 = w[80062f58]; // GP + 214
 func230c4();
 
 if( w[801d07f0] == 0 )
@@ -68,7 +68,7 @@ for( int i = 0; i < 2; ++i )
 }
 
 A0 = 801d0860 + w[801d07f0] * 12;
-func264a8(); // handle buttons
+system_menu_handle_buttons();
 
 if( hu[80062d7e] & 0040 ) // cross pressed
 {
