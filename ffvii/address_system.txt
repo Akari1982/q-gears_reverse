@@ -254,7 +254,7 @@
 80063014 [][][][] pointer to temp array for action calculation.
 
 80063560 we copy kernel string here to display.
-80063690 command description in kernel
+80063690 kernel.bin start
 8006893e battle and battle-screen text in kernel
 
 // temp data to init

@@ -22,23 +22,24 @@ loop14c48:	; 80014C48
 80014C78	jr     ra 
 80014C7C	nop
 ////////////////////////////////
-// func14c80
-80014C80
+
+
+
+////////////////////////////////
+// func14c80()
+
 V0 = w[GP + 00d8];
-80014C84	nop
-V1 = V0 + 0001;
-[GP + 00d8] = w(V1);
-V1 = w[GP + 00dc];
-V0 = V0 << 01;
+V1 = V0 + 1;
+[GP + d8] = w(V1);
+V1 = w[GP + dc];
 A0 = V1 + A0;
-80014C9C	lui    at, $8007
-AT = AT + V0;
-[AT + 9490] = h(V1);
-80014CA8	lui    v0, $8006
-V0 = V0 + 3690;
+[80069490 + V0 * 2] = h(V1);
 [GP + 00dc] = w(A0);
-80014CB4	jr     ra 
-V0 = V1 + V0;
+return 80063690 + V1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func14cbc
 V1 = 00ff;
@@ -220,10 +221,11 @@ V0 = w[AT + 0138];
 
 80014EFC	j      L14fd4 [$80014fd4]
 A0 = V1 & ffff;
-A0 = 0004;
+A0 = 4;
 A1 = V1 & ffff;
-80014F0C	jal    func15248 [$80015248]
-A2 = 0008;
+A2 = 8;
+func15248();
+
 A0 = S0;
 A1 = V0;
 80014F1C	j      L15028 [$80015028]
@@ -454,232 +456,198 @@ system_decompress_kernel_string_with_f9();
 
 ////////////////////////////////
 // func15248()
+// get some string
 
 A0 = A0; // 8
 V1 = A1; // text id??
 S0 = A2; // 8
 
-T0 = 80062d50;
+string = 80062d50; // empty string
 
 if( A0 == 4 )
 {
-    T1 = 8001010e;
-    A2 = 8001010e;
-
     for( int i = 0; i < 5; ++i )
     {
-        V0 = V1 < hu[A2];
+        V0 = V1 < hu[8001010e + i * 2];
         A3 = A1 << 1;
-        80015294	bne    v0, zero, L15334 [$80015334]
-
-        A2 = A2 + 2;
+        if( V0 != 0 )
+        {
+            A0 = bu[80010118 + A1];
+            V1 = V1 - hu[8001010e + A3 - 2];
+            break;
+        }
     }
 }
 
-L152ac:	; 800152AC
-    if( A0 == 3 )
+if( A0 == 3 )
+{
+    if( V1 == 7f ) V1 = ff;
+}
+
+if( V1 == ff ) return string;
+
+if( A0 < 4 )
+{
+    A1 = V1 + bu[80010120 + A0];
+    if( A1 < e0 )
     {
-        if( V1 == 7f )
-        {
-            V1 = 00ff;
-        }
+        V1 = A1;
     }
+}
 
-    if( V1 == ff )
-    {
-        return T0;
-    }
-
-    if( A0 < 4 )
-    {
-        A1 = V1 + bu[80010120 + A0];
-        if( A1 < 00e0 )
-        {
-            V1 = A1;
-        }
-    }
-
-    S2 = bu[80010124 + A0];
-    8001530C	beq    s2, ff, L15350 [$80015350]
-
+S2 = bu[80010124 + A0];
+if( S2 != ff )
+{
     A0 = S2 + S0;
     A1 = V1;
     A2 = 0;
     system_get_pointer_to_text_in_kernel_with_block_and_text_id();
-    T0 = V0;
+    string = V0;
 
-    if( S0 != 0 ) return T0;
+    if( S0 != 0 ) return string;
 
-    A0 = T0;
+    A0 = string;
     A1 = A0;
     system_decompress_kernel_string_with_f9();
 
     return V0;
-
-    L15334:	; 80015334
-    A0 = bu[80010118 + A1];
-    V1 = V1 - hu[T1 + A3 - 2];
-80015348	j      L152ac [$800152ac]
-
-L15350:	; 80015350
-V0 = 0007;
-80015354	beq    a0, v0, L153b0 [$800153b0]
-V0 = A0 < 0008;
-8001535C	beq    v0, zero, L15374 [$80015374]
-
-if( A0 == 6 )
-{
-    A0 = 9;
-    if( V1 < 10 ) A0 = 11;
-
-    A1 = V1;
-    A2 = 0;
-    system_get_pointer_to_text_in_kernel_with_block_and_text_id();
-
-    return V0;
 }
 
-return T0;
-
-L15374:	; 80015374
-if( A0 == 8 )
+if( A0 != 7 )
 {
-    if( V1 >= 100 )
+    if( A0 < 8 )
     {
-        A0 = V1 - 100;
-        funca5f90();
-    }
-    else
-    {
-        A0 = V1;
-        system_get_pointer_to_battle_text_in_kernel_with_id();
+        if( A0 == 6 )
+        {
+            A0 = 9;
+            if( V1 < 10 ) A0 = 11;
+
+            A1 = V1;
+            A2 = 0;
+            system_get_pointer_to_text_in_kernel_with_block_and_text_id();
+
+            return V0;
+        }
+
+        return string;
     }
 
-    S0 = V0;
+    if( A0 == 8 )
+    {
+        if( V1 >= 100 )
+        {
+            A0 = V1 - 100;
+            funca5f90();
+        }
+        else
+        {
+            A0 = V1;
+            system_get_pointer_to_battle_text_in_kernel_with_id();
+        }
 
-    A0 = SP + 10;
-    A1 = S0;
-    func14e74();
+        S0 = V0;
 
-    A0 = V0;
-    A1 = S0;
-    system_decompress_kernel_string_with_f9();
+        A0 = SP + 10;
+        A1 = S0;
+        func14e74();
 
-    return V0;
+        A0 = V0;
+        A1 = S0;
+        system_decompress_kernel_string_with_f9();
+
+        return V0;
+    }
+    else if( A0 == 9 )
+    {
+        V1 = V1 << 05;
+        return 800f652c + V1;
+    }
+
+    return string;
 }
-else if( A0 == 9 )
-{
-    V1 = V1 << 05;
-    return 800f652c + V1;
-}
 
-return T0;
-
-L153b0:	; 800153B0
-V0 = V1 < 0006;
-if( V0 == 0 ) return T0;
+if( V1 >= 6 ) return string;
 
 V0 = V1 << 04;
 A0 = 80063660;
 A2 = 0020;
-800153C8	lui    at, $8016
-AT = AT + V0;
-V0 = h[AT + 3658];
+V0 = h[80163658 + V0];
 S1 = V1 + 0004;
 A1 = V0 << 01;
 A1 = A1 + V0;
 A1 = A1 << 03;
 A1 = A1 - V0;
 A1 = A1 << 03;
-800153EC	lui    v0, $800f
-V0 = V0 + 5f44;
-800153F4	jal    func14d58 [$80014d58]
+V0 = 800f5f44;
 A1 = A1 + V0;
+func14d58();
+
 V1 = S1 << 04;
 V1 = V1 + S1;
 S3 = V1 << 02;
-80015408	lui    at, $800f
-AT = AT + S3;
-V1 = bu[AT + 5bc7];
-80015414	nop
-80015418	beq    v1, s2, L15438 [$80015438]
+V1 = bu[800f5bc7 + S3];
 S0 = V0;
-80015420	lui    v0, $800f
-V0 = w[V0 + 7ed0];
-80015428	nop
-V0 = V1 + V0;
-[S0 + 0000] = b(V0);
-S0 = S0 + 0001;
 
-L15438:	; 80015438
+if( V1 != S2 )
+{
+    V0 = w[800f7ed0];
+    V0 = V1 + V0;
+    [S0 + 0000] = b(V0);
+    S0 = S0 + 0001;
+}
+
 V0 = S1 << 01;
 V0 = V0 + S1;
 V0 = V0 << 02;
 V0 = V0 + S1;
 S1 = V0 << 03;
-8001544C	lui    at, $8010
-AT = AT + S1;
-V0 = w[AT + 83e4];
-80015458	nop
-V0 = V0 & 0040;
-80015460	beq    v0, zero, L15484 [$80015484]
-
-A0 = 71;
-system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
-
-A0 = S0;
-A1 = V0;
-8001547C	addiu  a2, zero, $ffff (=-$1)
-func14d58();
-
-S0 = V0;
-
-L15484:	; 80015484
-80015484	lui    at, $800f
-AT = AT + S3;
-V0 = bu[AT + 5be1];
-80015490	nop
-V0 = V0 & 0040;
-if( V0 != 0 )
+if( w[800f83e4 + S1] & 40 )
 {
-    A0 = 007f;
-    800154A0	lui    at, $800f
-    AT = AT + S3;
-    V0 = hu[AT + 5bf4];
-    [SP + 0110] = h(V0);
-    800154B4	lui    at, $8010
-    AT = AT + S1;
-    V0 = w[AT + 8410];
-    [SP + 0112] = h(V0);
+    A0 = 71;
     system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
 
     A0 = S0;
     A1 = V0;
-    800154D4	addiu  a2, zero, $ffff (=-$1)
-    800154D0	jal    func14d58 [$80014d58]
+    A2 = -1;
+    func14d58();
+    S0 = V0;
+}
+
+if( bu[800f5be1 + S3] & 40 )
+{
+    [SP + 110] = h(hu[800f5bf4 + S3]);
+    [SP + 112] = h(w[800f8410 + S1]);
+
+    A0 = 7f;
+    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
+
+    A0 = S0;
+    A1 = V0;
+    A2 = -1;
+    func14d58();
 
     S0 = V0;
-    A0 = 0072;
+    A0 = 72;
     system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
 
     A0 = S0;
     A1 = V0;
-    A2 = SP + 0110;
+    A2 = SP + 110;
     funca5e0c();
 
     A0 = SP + 0010;
     A1 = S0;
-    800154F8	jal    func14e74 [$80014e74]
+    func14e74();
 
     A0 = S0;
-    A1 = SP + 0010;
-    8001550C	addiu  a2, zero, $ffff (=-$1)
-    80015508	jal    func14d58 [$80014d58]
-
+    A1 = SP + 10;
+    A2 = -1;
+    func14d58();
     S0 = V0;
 }
 
-[S0 + 0000] = b(ff);
+[S0] = b(ff);
+
 return 80063660;
 ////////////////////////////////
 
