@@ -1803,60 +1803,12 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// func1faf8
-V0 = A0 < 0080;
-8001FAFC	beq    v0, zero, L1fb24 [$8001fb24]
-V0 = A0 << 03;
-V0 = V0 - A0;
-V0 = V0 << 02;
-8001FB0C	lui    at, $8007
-AT = AT + 22d6;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-8001FB1C	j      L1fba4 [$8001fba4]
-8001FB20	nop
+// func1faf8()
 
-L1fb24:	; 8001FB24
-V0 = A0 < 0100;
-8001FB28	beq    v0, zero, L1fb5c [$8001fb5c]
-8001FB2C	addiu  v1, a0, $ff80 (=-$80)
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 - V1;
-V0 = V0 << 02;
-8001FB44	lui    at, $8007
-AT = AT + 38ca;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-8001FB54	j      L1fba4 [$8001fba4]
-8001FB58	nop
-
-L1fb5c:	; 8001FB5C
-V0 = A0 < 0120;
-8001FB60	bne    v0, zero, L1fb88 [$8001fb88]
-8001FB64	addiu  v1, a0, $ff00 (=-$100)
-8001FB68	addiu  v0, a0, $fee0 (=-$120)
-V0 = V0 << 04;
-8001FB70	lui    at, $8007
-AT = AT + 1c32;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-8001FB80	j      L1fba4 [$8001fba4]
-8001FB84	nop
-
-L1fb88:	; 8001FB88
-V0 = V1 << 03;
-V0 = V0 + V1;
-V0 = V0 << 02;
-8001FB94	lui    at, $8007
-AT = AT + 1e64;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-
-L1fba4:	; 8001FBA4
-8001FBA4	jr     ra 
-8001FBA8	nop
+if( A0 <  80 ) return hu[800722d6 + A0 * 1c];
+if( A0 < 100 ) return hu[800738ca + (A0 - 80) * 2c];
+if( A0 < 120 ) return hu[80071e64 + (A0 - 100) * 24];
+else           return hu[80071c32 + (A0 - 120) * 10];
 ////////////////////////////////
 
 
@@ -2181,25 +2133,19 @@ S2 = SP + 0028;
 [SP + 002c] = h(S4);
 [SP + 002e] = h(S3);
 [SP + 0028] = h(T0);
-AT = 8009c764;
-AT = AT + S5;
-V0 = hu[AT + 0000];
+V0 = hu[8009c764 + S5];
 A0 = S2;
 [SP + 0030] = h(V0);
-AT = 8009c764;
-AT = AT + S5;
-V0 = hu[AT + 0000];
+V0 = hu[8009c764 + S5];
 S1 = 0080;
 [SP + 0036] = h(V0);
-AT = 8009c770;
-AT = AT + S5;
-V0 = hu[AT + 0000];
-S0 = 00ff;
-[SP + 0034] = h(0);
-[SP + 0038] = b(0);
-[SP + 0039] = b(S1);
-[SP + 003a] = b(S0);
-[SP + 0032] = h(V0);
+V0 = hu[8009c770 + S5];
+S0 = ff;
+[SP + 34] = h(0);
+[SP + 38] = b(0);
+[SP + 39] = b(S1);
+[SP + 3a] = b(S0);
+[SP + 32] = h(V0);
 func27408();
 
 T0 = hu[SP + 0040];
@@ -2208,19 +2154,12 @@ V0 = S6 + 0029;
 [SP + 002c] = h(S4);
 [SP + 002e] = h(S3);
 [SP + 0028] = h(T0);
-AT = 8009c768;
-AT = AT + S5;
-V0 = hu[AT + 0000];
-800207D8	nop
+V0 = hu[8009c768 + S5];
 [SP + 0030] = h(V0);
-AT = 8009c768;
-AT = AT + S5;
-V0 = hu[AT + 0000];
+V0 = hu[8009c768 + S5];
 S3 = 0006;
 [SP + 0036] = h(V0);
-AT = 8009c772;
-AT = AT + S5;
-V0 = hu[AT + 0000];
+V0 = hu[8009c772 + S5];
 A0 = S2;
 [SP + 0034] = h(0);
 [SP + 0038] = b(0);
@@ -2229,13 +2168,8 @@ A0 = S2;
 [SP + 0032] = h(V0);
 func27408();
 
-AT = 8009c764;
-AT = AT + S5;
-V1 = hu[AT + 0000];
-AT = 8009c770;
-AT = AT + S5;
-V0 = hu[AT + 0000];
-80020844	nop
+V1 = hu[8009c764 + S5];
+V0 = hu[8009c770 + S5];
 V0 = V0 >> 02;
 V0 = V0 < V1;
 80020850	beq    v0, zero, L2085c [$8002085c]
@@ -2243,12 +2177,8 @@ S1 = V1 < 0001;
 S3 = 0007;
 
 L2085c:	; 8002085C
-AT = 8009c772;
-AT = AT + S5;
-V0 = hu[AT + 0000];
-AT = 8009c768;
-AT = AT + S5;
-V1 = hu[AT + 0000];
+V0 = hu[8009c772 + S5];
+V1 = hu[8009c768 + S5];
 V0 = V0 >> 02;
 V0 = V0 < V1;
 80020884	beq    v0, zero, L20890 [$80020890]
@@ -2256,48 +2186,45 @@ S2 = 0006;
 S2 = 0007;
 
 L20890:	; 80020890
-AT = 8009c757;
-AT = AT + S5;
-V0 = bu[AT + 0000];
-800208A0	nop
+V0 = bu[8009c757 + S5];
 V0 = V0 & 0010;
 800208A8	beq    v0, zero, L208c4 [$800208c4]
-A0 = S7 + 0024;
-A1 = S6 + 000b;
+A0 = S7 + 24;
+A1 = S6 + b;
 A2 = 80049350;
-800208BC	jal    system_menu_draw_string [$80026f44]
-A3 = 0003;
+A3 = 3;
+system_menu_draw_string();
 
 L208c4:	; 800208C4
-AT = 8009c757;
-AT = AT + S5;
-V0 = bu[AT + 0000];
-800208D4	nop
+V0 = bu[8009c757 + S5];
 V0 = V0 & 0020;
 800208DC	beq    v0, zero, L208f8 [$800208f8]
-A0 = S7 + 0024;
-A1 = S6 + 000b;
+A0 = S7 + 24;
+A1 = S6 + b;
 A2 = 80049344;
-800208F0	jal    system_menu_draw_string [$80026f44]
-A3 = 0003;
+A3 = 3;
+system_menu_draw_string();
 
 L208f8:	; 800208F8
 A3 = 0007;
 V0 = 8009c748;
-80020904	beq    s1, zero, L20910 [$80020910]
 A2 = S5 + V0;
+80020904	beq    s1, zero, L20910 [$80020910]
+
 A3 = 0002;
 
 L20910:	; 80020910
 A0 = S7;
-80020914	jal    system_menu_draw_string [$80026f44]
 A1 = S6;
+system_menu_draw_string();
+
 A0 = S7;
-S0 = S6 + 000d;
+S0 = S6 + d;
 A1 = S0;
 A2 = 800493a0;
-80020930	jal    system_draw_menu_8width_font [$80027354]
-A3 = 0005;
+A3 = 5;
+system_menu_draw_8width_font();
+
 A0 = w[SP + 0040];
 AT = 8009c739;
 AT = AT + S5;
@@ -2312,13 +2239,15 @@ V0 = 0007;
 
 L20960:	; 80020960
 [SP + 0010] = w(V0);
-80020964	jal    func28e00 [$80028e00]
-A3 = 0002;
+A3 = 2;
+func28e00();
+
 A0 = S7;
-A1 = S6 + 0018;
+A1 = S6 + 18;
 A2 = 80049390;
-8002097C	jal    system_draw_menu_8width_font [$80027354]
-A3 = 0005;
+A3 = 5;
+system_menu_draw_8width_font();
+
 A0 = S7 + 0012;
 V0 = FP << 05;
 V0 = V0 + FP;
@@ -2336,15 +2265,14 @@ V0 = 0002;
 [SP + 0010] = w(V0);
 
 L209bc:	; 800209BC
-800209BC	jal    func28e00 [$80028e00]
-A3 = 0004;
+A3 = 4;
+func28e00();
+
 A0 = S7 + 0032;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-AT = 8009c770;
-AT = AT + V0;
-A2 = hu[AT + 0000];
+A2 = hu[8009c770 + V0];
 800209E4	beq    s1, zero, L209f4 [$800209f4]
 A1 = S6 + 0017;
 800209EC	j      L209f8 [$800209f8]
@@ -2358,17 +2286,16 @@ L209f8:	; 800209F8
 800209FC	jal    func28e00 [$80028e00]
 A3 = 0004;
 A0 = S7;
-A1 = S6 + 0022;
+A1 = S6 + 22;
 A2 = 80049398;
-80020A14	jal    system_draw_menu_8width_font [$80027354]
-A3 = 0005;
+A3 = 5;
+system_menu_draw_8width_font();
+
 A0 = S7 + 0012;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-AT = 8009c768;
-AT = AT + V0;
-A2 = hu[AT + 0000];
+A2 = hu[8009c768 + V0];
 80020A3C	bne    s1, zero, L20a4c [$80020a4c]
 A1 = S6 + 0021;
 80020A44	j      L20a54 [$80020a54]
@@ -2379,15 +2306,14 @@ V0 = 0002;
 [SP + 0010] = w(V0);
 
 L20a54:	; 80020A54
-80020A54	jal    func28e00 [$80028e00]
-A3 = 0004;
+A3 = 4;
+func28e00();
+
 A0 = S7 + 0032;
 V0 = FP << 05;
 V0 = V0 + FP;
 V0 = V0 << 02;
-AT = 8009c772;
-AT = AT + V0;
-A2 = hu[AT + 0000];
+A2 = hu[8009c772 + V0];
 80020A7C	beq    s1, zero, L20a8c [$80020a8c]
 A1 = S6 + 0021;
 80020A84	j      L20a90 [$80020a90]
@@ -2398,45 +2324,44 @@ V0 = 0007;
 
 L20a90:	; 80020A90
 [SP + 0010] = w(V0);
-80020A94	jal    func28e00 [$80028e00]
-A3 = 0004;
+A3 = 4;
+func28e00();
+
 S0 = S7 + 002e;
 S0 = S0 << 10;
 S0 = S0 >> 10;
 A0 = S0;
-A1 = S6 + 0021;
-A1 = A1 << 10;
-A1 = A1 >> 10;
-A2 = 00d8;
+A1 = ((S6 + 21) << 10) >> 10;
+A2 = d8;
 A3 = 0;
-S3 = 0004;
-S2 = 0008;
-S1 = 0001;
-[SP + 0010] = w(S3);
-[SP + 0014] = w(S2);
-[SP + 0018] = w(S1);
-80020AD8	jal    func28ca0 [$80028ca0]
-[SP + 001c] = w(0);
+S3 = 4;
+S2 = 8;
+S1 = 1;
+[SP + 10] = w(S3);
+[SP + 14] = w(S2);
+[SP + 18] = w(S1);
+[SP + 1c] = w(0);
+func28ca0();
+
 A0 = S0;
-A1 = S6 + 0017;
-A1 = A1 << 10;
-A1 = A1 >> 10;
-A2 = 00d8;
+A1 = ((S6 + 17) << 10) >> 10;
+A2 = d8;
 A3 = 0;
-[SP + 0010] = w(S3);
-[SP + 0014] = w(S2);
-[SP + 0018] = w(S1);
-80020B04	jal    func28ca0 [$80028ca0]
-[SP + 001c] = w(0);
+A4 = S3;
+A5 = S2;
+A6 = S1;
+A7 = 0;
+func28ca0();
+
+[SP + 20] = h(0);
+[SP + 22] = h(0);
+[SP + 24] = h(100);
+[SP + 26] = h(100);
+
 A0 = 0;
-A1 = 0001;
-A2 = 007f;
-A3 = SP + 0020;
-V0 = 0100;
-[SP + 0020] = h(0);
-[SP + 0022] = h(0);
-[SP + 0024] = h(V0);
-[SP + 0026] = h(V0);
+A1 = 1;
+A2 = 7f;
+A3 = SP + 20;
 system_add_draw_mode();
 ////////////////////////////////
 
@@ -2542,7 +2467,7 @@ S0 = S6 + d;
 A1 = S0;
 A2 = 800493a0; // LV
 A3 = 5;
-system_draw_menu_8width_font();
+system_menu_draw_8width_font();
 
 A0 = S7 + 12;
 A1 = S0;
@@ -2562,7 +2487,7 @@ A0 = S7;
 A1 = S6 + 18;
 A2 = 80049390; // HP
 A3 = 5;
-system_draw_menu_8width_font();
+system_menu_draw_8width_font();
 
 A0 = S7 + 12;
 A1 = S6 + 17;
@@ -2597,7 +2522,7 @@ A0 = S7;
 A1 = S6 + 22;
 A2 = 80049398; // MP
 A3 = 5;
-system_draw_menu_8width_font();
+system_menu_draw_8width_font();
 
 A0 = S7 + 12;
 A1 = S6 + 21;
@@ -5612,7 +5537,7 @@ else
 {
     A3 = 7;
 }
-system_draw_single_menu_font_character();
+system_menu_draw_single_font_letter();
 
 A0 = w[8009d264];
 system_get_minutes_from_seconds;
@@ -5629,7 +5554,7 @@ A0 = S3 + 3e;
 A1 = ad;
 A2 = d5;
 A3 = 7;
-system_draw_single_menu_font_character();
+system_menu_draw_single_font_letter();
 
 A0 = w[8009d264];
 system_get_seconds_from_seconds;
@@ -8204,14 +8129,14 @@ if( bu[GP + b9] != 0 )
 
 
 ////////////////////////////////
-// system_draw_single_menu_font_character()
+// system_menu_draw_single_font_letter()
 
 pos_x = A0;
 pos_y = A1;
-colour = S4 = A3;
 character = A2;
+color = A3;
 
-if (character < 29) // dakuten characters
+if( character < 29 ) // dakuten characters
 {
     packet = w[80062f24];
     [packet + 3] = b(3);
@@ -8227,7 +8152,7 @@ if (character < 29) // dakuten characters
     [packet + d] = b(98);
 
     A0 = 100;
-    A1 = (S4 & ff) + 1e0;
+    A1 = (color & ff) + 1e0;
     system_create_clut_for_packet();
 
     [packet + e] = h(V0);
@@ -8240,7 +8165,7 @@ if (character < 29) // dakuten characters
 
     character = character + 40;
 }
-else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // handakuten characters
+else if( ( ( ( character + 4c ) & ff ) >= 1a ) && ( ( ( character - 29 ) & ff ) < a ) ) // handakuten characters
 {
     packet = w[80062f24];
     [packet + 3] = b(3);
@@ -8256,7 +8181,7 @@ else if ((((character + 4c) & ff) >= 1a) && (((character - 29) & ff) < a)) // ha
     [packet + d] = b(98);
 
     A0 = 100;
-    A1 = (S4 & ff) + 1e0;
+    A1 = (color & ff) + 1e0;
     system_create_clut_for_packet();
 
     [packet + e] = h(V0);
@@ -8279,7 +8204,7 @@ packet = w[80062f24];
 
 A0 = packet;
 A1 = 1;
-system_psyq_set_shade_tex;
+system_psyq_set_shade_tex();
 
 [packet + 8] = h(pos_x);
 [packet + a] = h(pos_y);
@@ -8287,9 +8212,8 @@ system_psyq_set_shade_tex;
 [packet + d] = b(tex_y);
 
 A0 = 100;
-A1 = (S4 & ff) + 1e0;
-system_create_clut_for_packet;
-
+A1 = (color & ff) + 1e0;
+system_create_clut_for_packet();
 [packet + e] = h(V0);
 
 [80062f24] = w(packet + 10);
@@ -8302,12 +8226,12 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// system_draw_menu_8width_font()
+// system_menu_draw_8width_font()
 
 pointer = A2;
 pos_y = A1;
 pos_x = A0;
-colour = A3;
+color = A3;
 
 if( pointer == 0 )
 {
@@ -8324,8 +8248,8 @@ for( int i = 0; i < bu[GP + b8]; ++i )
 
     A0 = pos_x + i * 8;
     A1 = pos_y;
-    A3 = colour;
-    system_draw_single_menu_font_character();
+    A3 = color;
+    system_menu_draw_single_font_letter();
 
     pointer = pointer + 1;
 }

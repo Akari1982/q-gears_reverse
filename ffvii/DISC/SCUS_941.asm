@@ -1001,10 +1001,10 @@
 // system_menu_draw_string
 80026F44-80027088
 ////////////////////////////////
-// system_draw_single_menu_font_character
+// system_menu_draw_single_font_letter
 8002708C-80027350
 ////////////////////////////////
-// system_draw_menu_8width_font
+// system_menu_draw_8width_font
 80027354-80027404
 ////////////////////////////////
 // func27408
