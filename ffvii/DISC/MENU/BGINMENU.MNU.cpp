@@ -93,44 +93,15 @@ if( hu[80062d7e] & 0040 ) // cross pressed
 // func1d01c4()
 
 A2 = 0;
-801D01CC	addiu  a3, zero, $ffff (=-$1)
-V0 = A0 << 05;
-V0 = V0 + A0;
-V0 = V0 << 02;
-801D01DC	lui    v1, $800a
-801D01E0	addiu  v1, v1, $c778 (=-$3888)
-V1 = V0 + V1;
 
 for( int i = 0; i < 8; ++i )
 {
-    V0 = w[V1 + 0000];
-    801D01EC	nop
-    801D01F0	beq    v0, a3, L1d01fc [$801d01fc]
-    801D01F4	nop
-    A2 = A2 + 0001;
-
-    L1d01fc:	; 801D01FC
-    V1 = V1 + 0004;
+    if( w[8009c778 + A0 * 84 + i * 4] != -1 ) A2 += 1;
 }
 
-801D0210	addiu  a3, zero, $ffff (=-$1)
-V0 = A0 << 05;
-V0 = V0 + A0;
-V0 = V0 << 02;
-801D0220	lui    v1, $800a
-801D0224	addiu  v1, v1, $c798 (=-$3868)
-V1 = V0 + V1;
-
 for( int i = 0; i < 8; ++i )
 {
-    V0 = w[V1 + 0000];
-    801D0230	nop
-    801D0234	beq    v0, a3, L1d0240 [$801d0240]
-    801D0238	nop
-    A2 = A2 + 0001;
-
-    L1d0240:	; 801D0240
-    V1 = V1 + 0004;
+    if( w[8009c798 + A0 * 84 + i * 4] != -1 ) A2 += 1;
 }
 
 return A2;

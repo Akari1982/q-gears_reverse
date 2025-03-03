@@ -76,7 +76,7 @@ A2 = A2 | 0060;
 A3 = A3 + 0070;
 [SP + 0018] = w(V0);
 [SP + 001c] = w(0);
-func28ca0();
+system_menu_draw_textured_rect();
 ////////////////////////////////
 
 
@@ -1162,7 +1162,7 @@ V0 = w[801d0020 + V0];
     [SP + 0040] = h(0);
     [SP + 0042] = h(0);
     [SP + 0044] = h(V0);
-    801D1230	jal    $80026a34
+    801D1230	jal    $system_add_draw_mode
     [SP + 0046] = h(V0);
     A0 = 801d3d74;
     801D1240	jal    $system_menu_add_window_to_render
@@ -1218,7 +1218,7 @@ V0 = 0100;
 [SP + 0040] = h(0);
 [SP + 0042] = h(0);
 [SP + 0044] = h(V0);
-801D1300	jal    $80026a34
+801D1300	jal    $system_add_draw_mode
 [SP + 0046] = h(V0);
 V1 = b[801d3de6];
 V0 = 0002;
@@ -1251,8 +1251,9 @@ A3 = 0030;
 [SP + 0018] = w(S6);
 [SP + 001c] = w(S6);
 [SP + 0020] = w(S1);
-801D1380	jal    $func1cf3c
 [SP + 0024] = w(0);
+system_menu_draw_avatar();
+
 A0 = 0;
 A1 = 0001;
 A2 = 007f;
@@ -1260,8 +1261,8 @@ A3 = SP + 0040;
 [SP + 0040] = h(0);
 [SP + 0042] = h(0);
 [SP + 0044] = h(S5);
-801D13A4	jal    $80026a34
 [SP + 0046] = h(S5);
+system_add_draw_mode();
 
 L1d13ac:	; 801D13AC
 S1 = S1 + 0001;

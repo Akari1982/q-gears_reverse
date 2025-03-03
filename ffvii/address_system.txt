@@ -846,29 +846,29 @@
 
 
 8009d84c start of some unit structure (size 0x440).
-    +000 []       set exp modifier from temp.
-    +001 []       set cover modifier from temp.
-    +002 []       strength.  Init with 0. Add strength bonus from weapon. Add base stat + bonus stat.
-    +003 []       vitality.  Init with 0. Add vitality bonus from weapon. Add base stat + bonus stat.
-    +004 []       magic.     Init with 0. Add magic bonus from weapon. Add base stat + bonus stat.
-    +005 []       spirit.    Init with 0. Add spirit bonus from weapon. Add base stat + bonus stat.
-    +006 []       dexterity. Init with 0. Add dexterity bonus from weapon. Add base stat + bonus stat.
-    +007 []       luck.      Init with 0. Add luck bonus from weapon. Add base stat + bonus stat.
-    +008 [][]     set with attack from temp.
-    +00a [][]     set with defense from temp.
-    +00c [][]     set with magic attack.
-    +00e [][]     set with magic defense.
-    +010 [][]     init with current hp. Limit to max hp.
-    +012 [][]     init with base hp (before materia alterations). Set modified value from temp with all boost. Lower limit to 10.
-    +014 [][]     init with current mp. Limit to max mp.
-    +016 [][]     init with base mp (before materia alterations). Set modified value from temp with all boost. Lower limit to 10.
-    +018 [][]     init with 0. Copy initial time value here.
-    +01a [][]     init with 0. Set limit bar value * 0x100 here.
-    +01c [][][][] init with 0. Set this here w[80082290 + FP * 38 + limit_level * 4 + V0].
-    +020 []       init with 1. Set current player limit level (1-4).
-    +021 []       number of command columns in battle UI. Calculated as number of commands / 4.
-    +022 []       init with 0.
-    +023 []       Init with 0. Flags.
+    +  0 []       set exp modifier from temp.
+    +  1 []       set cover modifier from temp.
+    +  2 []       strength.  Init with 0. Add strength bonus from weapon. Add base stat + bonus stat.
+    +  3 []       vitality.  Init with 0. Add vitality bonus from weapon. Add base stat + bonus stat.
+    +  4 []       magic.     Init with 0. Add magic bonus from weapon. Add base stat + bonus stat.
+    +  5 []       spirit.    Init with 0. Add spirit bonus from weapon. Add base stat + bonus stat.
+    +  6 []       dexterity. Init with 0. Add dexterity bonus from weapon. Add base stat + bonus stat.
+    +  7 []       luck.      Init with 0. Add luck bonus from weapon. Add base stat + bonus stat.
+    +  8 [][]     set with attack from temp.
+    +  a [][]     set with defense from temp.
+    +  c [][]     set with magic attack.
+    +  e [][]     set with magic defense.
+    + 10 [][]     init with current hp. Limit to max hp.
+    + 12 [][]     init with base hp (before materia alterations). Set modified value from temp with all boost. Lower limit to 10.
+    + 14 [][]     init with current mp. Limit to max mp.
+    + 16 [][]     init with base mp (before materia alterations). Set modified value from temp with all boost. Lower limit to 10.
+    + 18 [][]     init with 0. Copy initial time value here.
+    + 1a [][]     init with 0. Set limit bar value * 0x100 here.
+    + 1c [][][][] init with 0. Set this here w[80082290 + FP * 38 + limit_level * 4 + V0].
+    + 20 []       init with 1. Set current player limit level (1-4).
+    + 21 []       number of command columns in battle UI. Calculated as number of commands / 4.
+    + 22 []       init with 0.
+    + 23 []       Init with 0. Flags.
                   01 - underwater materia equipped.
                   04 - long range materia equipped.
                   08 - hp<->mp materia equipped.
