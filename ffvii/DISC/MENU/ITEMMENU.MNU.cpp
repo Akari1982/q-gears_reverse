@@ -1278,7 +1278,7 @@ V0 = 00ab;
 A0 = SP + 0038;
 A1 = 0;
 A2 = 0032;
-801D13DC	jal    $func1de0c
+801D13DC	jal    $system_menu_set_window_rect
 A3 = 00aa;
 
 A0 = SP + 38;

@@ -640,7 +640,7 @@ return pos_y;
 
 
 ////////////////////////////////
-// func1de0c()
+// system_menu_set_window_rect()
 
 [A0 + 0] = h(A1);
 [A0 + 2] = h(A2);
@@ -651,7 +651,7 @@ return pos_y;
 
 
 ////////////////////////////////
-// func1de24()
+// system_menu_move_window_rect()
 
 [A0 + 0] = h(hu[A0 + 0] + A1);
 [A0 + 2] = h(hu[A0 + 2] + A2);
@@ -660,7 +660,7 @@ return pos_y;
 
 
 ////////////////////////////////
-// func1de40()
+// system_menu_copy_window_rect()
 
 [A0 + 0] = h(hu[A1 + 0]);
 [A0 + 2] = h(hu[A1 + 2]);
@@ -1476,10 +1476,12 @@ for( int i = 0; i < number_to_render; ++i )
                 V0 = h[windows + i * 30 + a];
             }
 
-            [SP + 78 + 0] = h(A1);
-            [SP + 78 + 2] = h(A2);
-            [SP + 78 + 4] = h(A3);
-            [SP + 78 + 6] = h(V0);
+            A0 = SP + 78; // rect
+            A1 = A1; // x
+            A2 = A2; // y
+            A3 = A3; // w
+            A4 = V0; // h
+            system_menu_set_window_rect();
 
             A0 = SP + 78;
             system_menu_draw_window();
@@ -3128,68 +3130,69 @@ L21abc:	; 80021ABC
 A0 = S1;
 A1 = 0;
 A2 = 0;
-A3 = 016c;
-V0 = 0020;
-80021AD0	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(V0);
+A3 = 16c;
+A4 = 20;
+system_menu_set_window_rect();
 
 A0 = S1;
 system_menu_draw_window();
+
+S0 = 18;
 
 A0 = S1;
 A1 = 0;
-A2 = 0020;
-A3 = 00b8;
-S0 = 0018;
-80021AF4	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(S0);
+A2 = 20;
+A3 = b8;
+A4 = S0;
+system_menu_set_window_rect();
 
 A0 = S1;
 system_menu_draw_window();
 
 A0 = S1;
-A1 = 00b0;
-A2 = 0020;
-A3 = 00bc;
-80021B14	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(S0);
+A1 = b0;
+A2 = 20;
+A3 = bc;
+A4 = S0;
+system_menu_set_window_rect();
 
 A0 = S1;
 system_menu_draw_window();
 
-V0 = w[GP + 015c];
-80021B28	nop
-80021B2C	beq    v0, zero, L21b6c [$80021b6c]
-A1 = 0;
-A0 = S1;
-A2 = 0038;
-A3 = 00b8;
-S0 = 00a8;
-80021B44	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(S0);
+if( w[GP + 15c] != 0 )
+{
+    A1 = 0;
+    A0 = S1;
+    A2 = 38;
+    A3 = b8;
+    A4 = a8;
+    system_menu_set_window_rect();
 
-A0 = S1;
-system_menu_draw_window();
+    A0 = S1;
+    system_menu_draw_window();
 
-A0 = S1;
-A1 = 00b0;
-A2 = 0038;
-A3 = 00bc;
-80021B64	j      L21b80 [$80021b80]
-[SP + 0010] = w(S0);
+    A0 = S1;
+    A1 = b0;
+    A2 = 38;
+    A3 = bc;
+    A4 = a8;
+    system_menu_set_window_rect();
 
-L21b6c:	; 80021B6C
-V0 = 00a8;
-[SP + 0010] = w(V0);
-A0 = S1;
-A2 = 0038;
-A3 = 016c;
+    A0 = S1;
+    system_menu_draw_window();
+}
+else
+{
+    A1 = 0;
+    A4 = a8;
+    A0 = S1;
+    A2 = 38;
+    A3 = 16c;
+    system_menu_set_window_rect();
 
-L21b80:	; 80021B80
-func1de0c();
-
-A0 = S1;
-system_menu_draw_window();
+    A0 = S1;
+    system_menu_draw_window();
+}
 ////////////////////////////////
 
 
@@ -3222,7 +3225,7 @@ A1 = x;
 A2 = y;
 A3 = 50;
 A4 = 14;
-func1de0c();
+system_menu_set_window_rect();
 
 A0 = SP + 20;
 system_menu_draw_window();
@@ -3283,14 +3286,15 @@ A1 = S2 + 0012;
 A2 = 80049338;
 80021D0C	jal    system_menu_draw_string [$80026f44]
 A3 = 0006;
-S0 = SP + 0028;
+
+S0 = SP + 28;
+
 A0 = S0;
 A1 = S1;
 A2 = S2;
-A3 = 0082;
-V0 = 0020;
-80021D2C	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(V0);
+A3 = 82;
+A4 = 20;
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
@@ -3354,14 +3358,15 @@ A1 = S0;
 A2 = V0;
 80021E24	jal    system_menu_draw_string [$80026f44]
 A3 = 0007;
-S0 = SP + 0028;
+
+S0 = SP + 28;
+
 A0 = S0;
 A1 = S1;
 A2 = S2;
-A3 = 0082;
-V0 = 0023;
-80021E44	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(V0);
+A3 = 82;
+A4 = 23;
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
@@ -3409,7 +3414,7 @@ A1 = S1;
 A2 = S2;
 A3 = 82;
 A4 = 23;
-func1de0c();
+system_menu_set_window_rect();
 
 A0 = SP + 20;
 system_menu_draw_window();
@@ -3594,35 +3599,37 @@ A1 = T0 | 0006;
 A2 = V0;
 80022208	jal    system_menu_draw_string [$80026f44]
 A3 = 0007;
+
 S0 = SP + 0030;
+
 A0 = S0;
 A1 = 0;
 A2 = S5;
-A3 = 016c;
-V0 = 0020;
-80022228	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(V0);
+A3 = 16c;
+A4 = 20;
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
 
+S1 = 18;
+
 A0 = S0;
 A1 = S3;
 A2 = S7;
-A3 = 00b8;
-S1 = 0018;
-8002224C	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(S1);
+A3 = b8;
+A4 = S1;
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
 
 A0 = S0;
 A1 = S4;
-A2 = 0020;
-A3 = 00bc;
-8002226C	jal    func1de0c [$8001de0c]
-[SP + 0010] = w(S1);
+A2 = 20;
+A3 = bc;
+A4 = S1;
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
@@ -4084,15 +4091,15 @@ T0 = 0100;
 system_add_draw_mode();
 
 L22998:	; 80022998
-V0 = 0038;
-[SP + 0010] = w(V0);
 S0 = SP + 0030;
+
 A0 = S0;
 A1 = 0;
 A2 = S7 << 10;
 A2 = A2 >> 10;
-800229B4	jal    func1de0c [$8001de0c]
-A3 = 016c;
+A3 = 16c;
+A4 = 38;
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
@@ -4798,14 +4805,17 @@ if( w[GP + 27c] == 1 )
 
     A0 = 800706a4 + S3 * 5c;
     A1 = SP + 18;
-    func26a94();
+    func26a94(); // add draw env
 }
 
 S0 = SP + 20;
-[S0 + 0] = h(116);
-[S0 + 2] = h(S4 + 5);
-[S0 + 4] = h(56);
-[S0 + 6] = h(w[GP + ac]);
+
+A0 = S0;
+A1 = 116;
+A2 = S4 + 5;
+A3 = 56;
+A4 = w[GP + ac];
+system_menu_set_window_rect();
 
 A0 = S0;
 system_menu_draw_window();
@@ -4869,7 +4879,7 @@ system_add_draw_mode();
 V1 = w[GP + 214];
 A0 = 800706a4 + V1 * 5c;
 A1 = SP + 18;
-func26a94();
+func26a94(); // add draw env
 ////////////////////////////////
 
 
@@ -5334,131 +5344,118 @@ V1 = w[GP + 214];
 [SP + 36] = h(db);
 
 A0 = 800706a4 + V1 * 5c;
-func26a94();
+func26a94(); // add draw env
 
 A0 = w[GP + 214];
-func230c4; // draw menu
+func230c4(); // draw menu
 
-A0 = c0;
-A1 = 11c - h[GP + 164] * 4.2f + 6;
-A2 = 8009d5f0; // field name
-A3 = 7;
-system_menu_draw_string();
+// field name block
+{
+    A0 = c0;
+    A1 = 11c - (h[GP + 164] * 54) / 14 + 6;
+    A2 = 8009d5f0; // field name
+    A3 = 7; // white
+    system_menu_draw_string();
 
-[SP + 28] = h(b8);
-[SP + 2a] = h(11c - h[GP + 164] * 4.2f);
-[SP + 2c] = h(b4);
-[SP + 2e] = h(18);
+    A0 = SP + 28;
+    A1 = b8;
+    A2 = b4;
+    A3 = 11c - (h[GP + 164] * 54) / 14;
+    A4 = 18;
+    system_menu_set_window_rect();
 
-A0 = SP + 28;
-system_menu_draw_window();
+    A0 = SP + 28;
+    system_menu_draw_window();
+}
 
 // block of time/gil
-S3 = 1ce - h[GP + 164] * 9.2f;
-
-A0 = S3 + 4;
-A1 = aa;
-A2 = 800492f0; // text "Time"
-A3 = 7;
-system_menu_draw_string();
-
-A0 = S3 + 5;
-A1 = b8;
-A2 = 800492fc; // text "Gil"
-A3 = 7;
-system_menu_draw_string();
-
-A0 = w[8009c6e4 + 0b80];
-system_get_hours_from_seconds();
-
-A0 = S3 + 1f;
-A1 = ac;
-A2 = V0;
-A3 = 2; // digits number
-A4 = 7;
-system_menu_draw_digits_without_leading_zeroes();
-
-A0 = S3 + 2c;
-A1 = ad;
-A2 = d5;
-if( w[8009c6e4 + 0b88] < 7fff )
 {
-    A3 = 0;
+    x = 1ce - (h[GP + 164] * b8) / 14;
+
+    A0 = x + 4;
+    A1 = aa;
+    A2 = 800492f0; // "Time"
+    A3 = 7; // white
+    system_menu_draw_string();
+
+    A0 = x + 5;
+    A1 = b8;
+    A2 = 800492fc; // "Gil"
+    A3 = 7; // white
+    system_menu_draw_string();
+
+    A0 = w[8009c6e4 + b80];
+    system_get_hours_from_seconds();
+
+    A0 = x + 1f;
+    A1 = ac;
+    A2 = V0; // hours
+    A3 = 2; // digits number
+    A4 = 7; // white
+    system_menu_draw_digits_without_leading_zeroes();
+
+    A0 = x + 2c;
+    A1 = ad;
+    A2 = d5; // ":"
+    A3 = ( w[8009c6e4 + b88] < 7fff ) ? 0 : 7; // grey or white
+    system_menu_draw_single_font_letter();
+
+    A0 = w[8009c6e4 + b80];
+    system_get_minutes_from_seconds();
+
+    A0 = x + 32;
+    A1 = ac;
+    A2 = V0; // minutes
+    A3 = 2; // digits number
+    A4 = 7; // white
+    system_menu_draw_digits_with_leading_zeroes();
+
+    A0 = x + 3e;
+    A1 = ad;
+    A2 = d5; // ":"
+    A3 = 7; // white
+    system_menu_draw_single_font_letter();
+
+    A0 = w[8009c6e4 + b80];
+    system_get_seconds_from_seconds();
+
+    A0 = x + 43;
+    A1 = ac;
+    A2 = V0; // seconds
+    A3 = 2; // digits number
+    A4 = 7; // white
+    system_menu_draw_digits_with_leading_zeroes();
+
+    A0 = x + b;
+    A1 = ba;
+    A2 = w[8009c6e4 + b7c]; // gil
+    A3 = a; // digits number
+    A4 = 7; // white
+    system_menu_draw_digits_without_leading_zeroes();
+
+    [SP + 30] = h(0);
+    [SP + 32] = h(0);
+    [SP + 34] = h(100);
+    [SP + 36] = h(100);
+
+    A0 = 0;
+    A1 = 1;
+    A2 = 7f;
+    A3 = SP + 30;
+    system_add_draw_mode();
+
+    A0 = SP + 28;
+    A1 = x;
+    A2 = a4;
+    A3 = 56;
+    A4 = 24;
+    system_menu_set_window_rect();
+
+    A0 = SP + 28
+    system_menu_draw_window();
 }
-else
-{
-    A3 = 7;
-}
-system_menu_draw_single_font_letter();
 
-A0 = w[8009d264];
-system_get_minutes_from_seconds();
-
-A0 = S3 + 32;
-A1 = ac;
-A2 = V0; // minutes
-A3 = 2;
-A4 = 7;
-system_menu_draw_digits_with_leading_zeroes();
-
-A0 = S3 + 3e;
-A1 = ad;
-A2 = d5;
-A3 = 7;
-system_menu_draw_single_font_letter();
-
-A0 = w[8009d264];
-system_get_seconds_from_seconds();
-
-A0 = S3 + 43;
-A1 = ac;
-A2 = V0; // seconds
-A3 = 2;
-A4 = 7;
-system_menu_draw_digits_with_leading_zeroes();
-
-A0 = S3 + b;
-A1 = ba;
-A2 = w[8009c6e4 + b7c]; // gil
-A3 = a; // digits number
-A4 = 7;
-system_menu_draw_digits_without_leading_zeroes();
-
-[SP + 30] = h(0);
-[SP + 32] = h(0);
-[SP + 34] = h(100);
-[SP + 36] = h(100);
-
-A0 = 0;
-A1 = 1;
-A2 = 7f;
-A3 = SP + 30;
-system_add_draw_mode();
-
-[SP + 28] = h(S3);
-[SP + 2a] = h(a4);
-[SP + 2c] = h(56);
-[SP + 2e] = h(24);
-
-A0 = SP + 28
-system_menu_draw_window();
-
-S3 = h[GP + 164] * 9.2 - b8;
-
-V1 = h[GP + 164] * b8
-
-80024584	mult   v1, 66666667
-800245A0	sra    v1, v1, $1f
-800245A4	mfhi   t3
-
-800245A8	sra    v0, t3, $03
-800245AC	subu   v0, v0, v1
-
-S3 = V0 - b8;
-
-800245B4	addiu  v0, v0, $0013
-800245B8	sw     v0, $0488(sp)
-
+x = ((h[GP + 164] * b8) / 14) - b8;
 
 // draw characters info
 for( int i = 0; i < 3; ++i )
@@ -5469,12 +5466,12 @@ for( int i = 0; i < 3; ++i )
     {
         save_char_id = bu[800491d0 + char_id * 4];
 
-        A0 = S3 + 66; // x
+        A0 = x + 66; // x
         A1 = 11 + i * 3c + e; // y
         A2 = i; // party_id
         system_menu_draw_char_name_lv_hp_mp_by_party_id();
 
-        A0 = S3 + ((bu[8009c6e4 + 54 + save_char_id * 84 + 20] ^ 1) & 1) * 18 + 16; // moved if in back row
+        A0 = x + ((bu[8009c6e4 + 54 + save_char_id * 84 + 20] ^ 1) & 1) * 18 + 16; // moved if in back row
         A1 = 1f + i * 3c; // y
         A2 = 30; // width
         A3 = 30; // height
@@ -5486,7 +5483,7 @@ for( int i = 0; i < 3; ++i )
         A9 = 0; // transparency
         system_menu_draw_avatar();
 
-        A0 = S3 + cb; // x
+        A0 = x + cb; // x
         A1 = 2e + i * 3c; // y
         A2 = bu[8009c6e4 + 54 + save_char_id * 84 + 21]; // level progress bar as width
         A3 = 6; // height
@@ -5525,7 +5522,7 @@ for( int i = 0; i < 3; ++i )
             }
         }
 
-        A0 = S3 + cb;
+        A0 = x + cb;
         A1 = 11 + i * 3c + 32;
         A2 = (limit * 3d) >> 8; // current limit bar as width
         A3 = 6;// height
@@ -5534,7 +5531,7 @@ for( int i = 0; i < 3; ++i )
         A6 = b;
         system_menu_draw_progress_bar();
 
-        A0 = S3 + ca; // x
+        A0 = x + ca; // x
         A1 = 11 + i * 3c + 1c; // y
         A2 = 88; //u
         A3 = 8; // v
@@ -5544,7 +5541,7 @@ for( int i = 0; i < 3; ++i )
         A7 = 0; // transparency
         system_menu_draw_textured_rect(); // box for level progress bar
 
-        A0 = S3 + ca;
+        A0 = x + ca;
         A1 = 11 + i * 3c + 31;
         A2 = 88;
         A3 = 8;
@@ -5554,7 +5551,7 @@ for( int i = 0; i < 3; ++i )
         A7 = 0;
         system_menu_draw_textured_rect(); // box for limit progress bar
 
-        A0 = S3 + fa;
+        A0 = x + fa;
         A1 = 11 + i * 3c + 28;
         A2 = bu[8009c6e4 + 54 + save_char_id * 84 + e]; // current limit level
         A3 = 1; // digits number
@@ -5572,13 +5569,13 @@ for( int i = 0; i < 3; ++i )
         A3 = SP + 30;
         system_add_draw_mode();
 
-        A0 = S3 + ba;
+        A0 = x + ba;
         A1 = 11 + i * 3c + 11;
         A2 = 80049308; // "next level"
         A3 = 7;
         system_menu_draw_string();
 
-        A0 = S3 + ba;
+        A0 = x + ba;
         A1 = 11 + i * 3c + 26;
         A2 = 80049314; // "Limit level"
         A3 = 7;
@@ -5586,10 +5583,12 @@ for( int i = 0; i < 3; ++i )
     }
 }
 
-[SP + 28] = h(S3);
-[SP + 2a] = h(11);
-[SP + 2c] = h(12c);
-[SP + 2e] = h(be);
+A0 = SP + 28;
+A1 = x;
+A2 = 11;
+A3 = 12c;
+A4 = be;
+system_menu_set_window_rect();
 
 A0 = SP + 28;
 system_menu_draw_window();
@@ -5732,10 +5731,12 @@ L24b90:	; 80024B90
                 A0 = 80049320;
                 system_get_single_string_width();
 
-                [S1 + 0] = h(20); // x
-                [S1 + 2] = h(c8); // y
-                [S1 + 4] = h(V0 + 10); // width
-                [S1 + 6] = h(18); // height
+                A0 = S1;
+                A1 = 20;
+                A2 = c8;
+                A3 = V0 + 10;
+                A4 = 18;
+                system_menu_set_window_rect();
 
                 A0 = S1;
                 system_menu_draw_window();

@@ -611,13 +611,13 @@
 // system_menu_add_dialog_string_to_render
 8001D6A8-8001DE08
 ////////////////////////////////
-// func1de0c
+// system_menu_set_window_rect
 8001DE0C-8001DE20
 ////////////////////////////////
-// func1de24
+// system_menu_move_window_rect
 8001DE24-8001DE3C
 ////////////////////////////////
-// func1de40
+// system_menu_copy_window_rect
 8001DE40-8001DE6C
 ////////////////////////////////
 // func1de70

@@ -754,6 +754,7 @@
     + b7c [][][][] party gil amount.
     + b80 [][][][] total seconds played.
     + b84 [][][][] countdown seconds for timer (set in STTIM).
+    + b88 [][][][] seconds fraction.
     + b90 [][][][] ???
     + b94 [][]     ???
     + b96 [][]     field id.
