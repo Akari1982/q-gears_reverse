@@ -4723,28 +4723,23 @@ switch( w[GP + b4] )
 
     case 5:
     {
-        V0 = w[GP + 1dc];
-        
-        80023394	beq    v0, zero, L233c8 [$800233c8]
-        80023398	addiu  v0, v0, $ffff (=-$1)
-        [GP + 1dc] = w(V0);
-        800233A0	bne    v0, zero, L233d4 [$800233d4]
+        if( w[GP + 1dc] == 0 )
+        {
+            [GP + b4] = w(6);
+        }
+        else
+        {
+            [GP + 1dc] = w(w[GP + 1dc] - 1);
 
-        V1 = w[GP + 027c];
-        800233B0	bne    v1, 2, L233d8 [$800233d8]
-
-        [GP + 27c] = w(-1);
-        V0 = 1;
-        800233C0	j      L233cc [$800233cc]
-
-        L233c8:	; 800233C8
-        V0 = 0006;
-
-        L233cc:	; 800233CC
-        [GP + 00b4] = w(V0);
-
-        L233d4:	; 800233D4
-        L233d8:	; 800233D8
+            if( w[GP + 1dc] == 0 )
+            {
+                if( w[GP + 27c] == 2 )
+                {
+                    [GP + 27c] = w(-1);
+                    [GP + b4] = w(1);
+                }
+            }
+        }
 
         A0 = 126;
         A1 = b;
@@ -4784,11 +4779,8 @@ switch( w[GP + b4] )
         system_menu_draw_string();
 
         V1 = w[GP + 188];
-        V0 = V1 << 03;
-        V0 = V0 - V1;
-        V0 = V0 << 02;
-        V0 = V0 - V1;
-        V0 = V0 << 02;
+        V0 = V1 * 6с;
+
         V0 = V0 / 10;
         [GP + ac] = w(V0 + 18);
         [GP + 188] = w(V1 + 1);
@@ -4808,55 +4800,39 @@ if( w[GP + 27c] == 1 )
     func26a94(); // add draw env
 }
 
-S0 = SP + 20;
-
-A0 = S0;
+A0 = SP + 20;
 A1 = 116;
 A2 = S4 + 5;
 A3 = 56;
 A4 = w[GP + ac];
 system_menu_set_window_rect();
 
-A0 = S0;
+A0 = SP + 20;
 system_menu_draw_window();
 
 if( w[GP + b4] >= 2 )
 {
-    S1 = 800696fc;
-    A0 = w[GP + 0214];
-    V0 = w[GP + 01dc];
-    A0 = A0 << 04;
-    A0 = A0 + S1;
-    V0 = V0 << 04;
-    S0 = ff - V0;
+    color = ff - w[GP + 1dc] * 10;
+
+    poly = 800696fc + w[GP + 214] * 10;
+
+    A0 = poly;
     system_psyq_set_tile();
 
-    A0 = w[GP + 0214];
-    A1 = 0001;
-    A0 = A0 << 04;
-    A0 = A0 + S1;
+    A0 = poly;
+    A1 = 1;
     system_psyq_set_semi_trans();
 
-    V0 = w[GP + 0214];
-    V0 = V0 << 04;
-    V0 = V0 + S1;
-    [V0 + 000c] = h(180);
-    [V0 + 0004] = b(S0);
-    V1 = w[GP + 0214];
-    [V0 + 0008] = h(0);
-    [V0 + 000a] = h(0);
-    [V0 + 000e] = h(e0);
-    V1 = V1 << 04;
-    V1 = V1 + S1;
-    [V1 + 0005] = b(S0);
-    V0 = w[GP + 0214];
-    V0 = V0 << 04;
-    V0 = V0 + S1;
-    [V0 + 0006] = b(S0);
-    A1 = w[GP + 0214];
-    A0 = w[GP + 0160];
-    A1 = A1 << 04;
-    A1 = A1 + S1;
+    [poly + 4] = b(color);
+    [poly + 5] = b(color);
+    [poly + 6] = b(color);
+    [poly + 8] = h(0);
+    [poly + a] = h(0);
+    [poly + c] = h(180);
+    [poly + e] = h(e0);
+
+    A0 = w[GP + 160];
+    A1 = poly;
     system_psyq_add_prim();
 }
 
@@ -4876,8 +4852,7 @@ system_add_draw_mode();
 [SP + 1c] = h(16c);
 [SP + 1e] = h(db);
 
-V1 = w[GP + 214];
-A0 = 800706a4 + V1 * 5c;
+A0 = 800706a4 + w[GP + 214] * 5c;
 A1 = SP + 18;
 func26a94(); // add draw env
 ////////////////////////////////
