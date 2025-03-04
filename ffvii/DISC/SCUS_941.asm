@@ -632,7 +632,7 @@
 // system_menu_add_colored_rect_to_render
 8001DF24-8001E03C
 ////////////////////////////////
-// system_menu_add_window_to_render
+// system_menu_draw_window
 8001E040-8001EB28
 ////////////////////////////////
 // system_menu_add_cursor_to_render
@@ -1031,10 +1031,10 @@
 // system_menu_draw_textured_rect
 80028CA0-80028DFC
 ////////////////////////////////
-// system_menu_draw_digits
+// system_menu_draw_digits_without_leading_zeroes
 80028E00-80029110
 ////////////////////////////////
-// func29114
+// system_menu_draw_digits_with_leading_zeroes
 80029114-800293CC
 ////////////////////////////////
 // func293d0

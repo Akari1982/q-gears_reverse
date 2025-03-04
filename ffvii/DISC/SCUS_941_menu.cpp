@@ -738,7 +738,7 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// system_menu_add_window_to_render()
+// system_menu_draw_window()
 
 rect = A0;
 rect_x = hu[rect + 0];
@@ -1482,7 +1482,7 @@ for( int i = 0; i < number_to_render; ++i )
             [SP + 78 + 6] = h(V0);
 
             A0 = SP + 78;
-            system_menu_add_window_to_render();
+            system_menu_draw_window();
         }
 
         A0 = SP + 18;
@@ -1750,7 +1750,7 @@ A0 = 80049384;
 func1def0();
 
 A0 = SP + 18;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
 func1deb0();
 ////////////////////////////////
@@ -2187,7 +2187,7 @@ A1 = y + d;
 A2 = bu[8009c6e4 + 54 + save_char_id * 84 + 1]; // level
 A3 = 2; // digits number
 A4 = ( dead != 0 ) ? 2 : 7; // red or white
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x;
 A1 = y + 18;
@@ -2200,14 +2200,14 @@ A1 = y + 17;
 A2 = hp_current;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2: hp_color; // red if dead
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x + 32;
 A1 = y + 17;
 A2 = hp_max;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2 : 7; // red or white
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x;
 A1 = y + 22;
@@ -2220,14 +2220,14 @@ A1 = y + 21;
 A2 = mp_current;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2: mp_color; // red if dead
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x + 32;
 A1 = y + 21;
 A2 = mp_max;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2 : 7; // red or white
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 // draw slashes between numbers
 {
@@ -2349,7 +2349,7 @@ A1 = S0;
 A2 = bu[8009c6e4 + 54 + save_char_id * 84 + 1]; // level value
 A3 = 2; // digits number
 A4 = ( dead != 0 ) ? 2 : 7; // red or white
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x;
 A1 = y + 18;
@@ -2362,14 +2362,14 @@ A1 = y + 17;
 A2 = hp_current;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2 : hp_color; // red if dead
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x + 32;
 A1 = y + 17;
 A2 = hp_max;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2 : 7; // red or white
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x;
 A1 = y + 22;
@@ -2382,14 +2382,14 @@ A1 = y + 21;
 A2 = mp_current;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2 : mp_color; // red if dead
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = x + 32;
 A1 = y + 21;
 A2 = mp_max;
 A3 = 4; // digits number
 A4 = ( dead != 0 ) ? 2 : 7; // red or white
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 // draw slashes between numbers
 {
@@ -2848,7 +2848,7 @@ A1 = 28;
 A2 = w[8009d260];
 A3 = a; // digits number
 A4 = S1;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = 00a0;
 A1 = 0028;
@@ -2865,7 +2865,7 @@ A1 = 28;
 A2 = w[8009d7e0];
 A3 = 7; // digits number
 A4 = S1;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 V0 = w[GP + 015c];
 800216FC	nop
@@ -2945,7 +2945,7 @@ L217fc:	; 800217FC
 L21800:	; 80021800
 A0 = 9c;
 A3 = 2; // digits number
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 V0 = S2 << 10;
 A1 = V0 >> 10;
@@ -2964,7 +2964,7 @@ A1 = A1 + 0055;
 A2 = h[8009d80a + V1];
 A3 = 2; // digits number
 A4 = S0;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 V0 = S2 + 0001;
 
@@ -3134,7 +3134,7 @@ V0 = 0020;
 [SP + 0010] = w(V0);
 
 A0 = S1;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
 A0 = S1;
 A1 = 0;
@@ -3143,16 +3143,20 @@ A3 = 00b8;
 S0 = 0018;
 80021AF4	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S0);
-80021AFC	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S1;
+system_menu_draw_window();
+
 A0 = S1;
 A1 = 00b0;
 A2 = 0020;
 A3 = 00bc;
 80021B14	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S0);
-80021B1C	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S1;
+system_menu_draw_window();
+
 V0 = w[GP + 015c];
 80021B28	nop
 80021B2C	beq    v0, zero, L21b6c [$80021b6c]
@@ -3165,7 +3169,7 @@ S0 = 00a8;
 [SP + 0010] = w(S0);
 
 A0 = S1;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
 A0 = S1;
 A1 = 00b0;
@@ -3185,7 +3189,7 @@ L21b80:	; 80021B80
 func1de0c();
 
 A0 = S1;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 ////////////////////////////////
 
 
@@ -3221,7 +3225,7 @@ A4 = 14;
 func1de0c();
 
 A0 = SP + 20;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 ////////////////////////////////
 
 
@@ -3287,16 +3291,13 @@ A3 = 0082;
 V0 = 0020;
 80021D2C	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021D34	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S0;
-RA = w[SP + 0040];
-S3 = w[SP + 003c];
-S2 = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0048;
-80021D54	jr     ra 
-80021D58	nop
+system_menu_draw_window();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func21d5c
 80021D5C	addiu  sp, sp, $ffc0 (=-$40)
@@ -3361,15 +3362,9 @@ A3 = 0082;
 V0 = 0023;
 80021E44	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80021E4C	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S0;
-RA = w[SP + 003c];
-S2 = w[SP + 0038];
-S1 = w[SP + 0034];
-S0 = w[SP + 0030];
-SP = SP + 0040;
-80021E68	jr     ra 
-80021E6C	nop
+system_menu_draw_window();
 ////////////////////////////////
 
 
@@ -3417,7 +3412,7 @@ A4 = 23;
 func1de0c();
 
 A0 = SP + 20;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 ////////////////////////////////
 
 
@@ -3531,7 +3526,7 @@ S6 = 0;
 A2 = w[8009d7d8];
 FP = 80069830;
 A4 = S1;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = S4 + 009e;
 A0 = A0 << 10;
@@ -3552,7 +3547,7 @@ A1 = S2;
 A2 = w[8009d7dc];
 A3 = 9; // digits number
 A4 = S1;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = 0;
 A1 = 0001;
@@ -3607,8 +3602,10 @@ A3 = 016c;
 V0 = 0020;
 80022228	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(V0);
-80022230	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S0;
+system_menu_draw_window();
+
 A0 = S0;
 A1 = S3;
 A2 = S7;
@@ -3616,16 +3613,20 @@ A3 = 00b8;
 S1 = 0018;
 8002224C	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S1);
-80022254	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S0;
+system_menu_draw_window();
+
 A0 = S0;
 A1 = S4;
 A2 = 0020;
 A3 = 00bc;
 8002226C	jal    func1de0c [$8001de0c]
 [SP + 0010] = w(S1);
-80022274	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S0;
+system_menu_draw_window();
+
 V0 = S6 << 10;
 
 L22280:	; 80022280
@@ -4027,7 +4028,7 @@ A1 = S4 + c;
 A2 = w[8009d7e8 + S5];
 A3 = a; // digits number
 A4 = S2;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 S0 = S4 + 24;
 
@@ -4036,14 +4037,14 @@ A1 = S0;
 A2 = w[8009d7e4 + S5];
 A3 = a; // digits number
 A4 = S2;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = 91;
 A1 = S0;
 A2 = bu[8009d7ed + S5];
 A3 = 2; // digits number
 A4 = S2;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = 0;
 A1 = 0001;
@@ -4092,8 +4093,10 @@ A2 = S7 << 10;
 A2 = A2 >> 10;
 800229B4	jal    func1de0c [$8001de0c]
 A3 = 016c;
-800229BC	jal    system_menu_add_window_to_render [$8001e040]
+
 A0 = S0;
+system_menu_draw_window();
+
 V0 = S6 + 0001;
 S6 = V0;
 V0 = V0 << 10;
@@ -4805,7 +4808,7 @@ S0 = SP + 20;
 [S0 + 6] = h(w[GP + ac]);
 
 A0 = S0;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
 if( w[GP + b4] >= 2 )
 {
@@ -5336,10 +5339,9 @@ func26a94();
 A0 = w[GP + 214];
 func230c4; // draw menu
 
-// block of fieldname
 A0 = c0;
 A1 = 11c - h[GP + 164] * 4.2f + 6;
-A2 = 8009d5f0; // text field name
+A2 = 8009d5f0; // field name
 A3 = 7;
 system_menu_draw_string();
 
@@ -5349,7 +5351,7 @@ system_menu_draw_string();
 [SP + 2e] = h(18);
 
 A0 = SP + 28;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
 // block of time/gil
 S3 = 1ce - h[GP + 164] * 9.2f;
@@ -5374,12 +5376,12 @@ A1 = ac;
 A2 = V0;
 A3 = 2; // digits number
 A4 = 7;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 A0 = S3 + 2c;
 A1 = ad;
 A2 = d5;
-if (w[8009c6e4 + 0b88] < 7fff)
+if( w[8009c6e4 + 0b88] < 7fff )
 {
     A3 = 0;
 }
@@ -5397,8 +5399,7 @@ A1 = ac;
 A2 = V0; // minutes
 A3 = 2;
 A4 = 7;
-func29114;
-
+system_menu_draw_digits_with_leading_zeroes();
 
 A0 = S3 + 3e;
 A1 = ad;
@@ -5414,14 +5415,14 @@ A1 = ac;
 A2 = V0; // seconds
 A3 = 2;
 A4 = 7;
-func29114;
+system_menu_draw_digits_with_leading_zeroes();
 
 A0 = S3 + b;
 A1 = ba;
 A2 = w[8009c6e4 + b7c]; // gil
 A3 = a; // digits number
 A4 = 7;
-system_menu_draw_digits();
+system_menu_draw_digits_without_leading_zeroes();
 
 [SP + 30] = h(0);
 [SP + 32] = h(0);
@@ -5434,16 +5435,30 @@ A2 = 7f;
 A3 = SP + 30;
 system_add_draw_mode();
 
-
 [SP + 28] = h(S3);
 [SP + 2a] = h(a4);
 [SP + 2c] = h(56);
 [SP + 2e] = h(24);
 
 A0 = SP + 28
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
 S3 = h[GP + 164] * 9.2 - b8;
+
+V1 = h[GP + 164] * b8
+
+80024584	mult   v1, 66666667
+800245A0	sra    v1, v1, $1f
+800245A4	mfhi   t3
+
+800245A8	sra    v0, t3, $03
+800245AC	subu   v0, v0, v1
+
+S3 = V0 - b8;
+
+800245B4	addiu  v0, v0, $0013
+800245B8	sw     v0, $0488(sp)
+
 
 // draw characters info
 for( int i = 0; i < 3; ++i )
@@ -5544,7 +5559,7 @@ for( int i = 0; i < 3; ++i )
         A2 = bu[8009c6e4 + 54 + save_char_id * 84 + e]; // current limit level
         A3 = 1; // digits number
         A4 = 7;
-        system_menu_draw_digits();
+        system_menu_draw_digits_without_leading_zeroes();
 
         [SP + 30] = h(0);
         [SP + 32] = h(0);
@@ -5577,45 +5592,32 @@ for( int i = 0; i < 3; ++i )
 [SP + 2e] = h(be);
 
 A0 = SP + 28;
-system_menu_add_window_to_render();
+system_menu_draw_window();
 
-V0 = w[GP + 027c];
-80024954	nop
-80024958	beq    v0, zero, L24970 [$80024970]
-S0 = 0002;
-80024960	beq    v0, s0, L249a4 [$800249a4]
-80024964	nop
-80024968	j      L249d0 [$800249d0]
-8002496C	nop
+V0 = w[GP + 27c];
+if( V0 != 0 )
+{
+    if( V0 == 2 )
+    {
+        [GP + 164] = h(hu[GP + 164] + hu[GP + 2b0]);
 
-L24970:	; 80024970
-V0 = h[GP + 164];
-V1 = h[GP + 2b0];
-[GP + 164] = h(V0 + V1);
+        if( h[GP + 164] >= 65 )
+        {
+            [GP + 27c] = w(-1);
+        }
+    }
+}
+else
+{
+    V0 = h[GP + 164];
+    [GP + 164] = h(V0 + h[GP + 2b0]);
 
-V0 = V0 < 0014;
-80024990	beq    v0, zero, L249d0 [$800249d0]
-V0 = 0014;
-[GP + 0164] = h(V0);
-8002499C	j      L249cc [$800249cc]
-V0 = 0001;
-
-L249a4:	; 800249A4
-V0 = hu[GP + 0164];
-V1 = hu[GP + 02b0];
-800249AC	nop
-V0 = V0 + V1;
-[GP + 0164] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0065;
-800249C4	bne    v0, zero, L249d0 [$800249d0]
-800249C8	addiu  v0, zero, $ffff (=-$1)
-
-L249cc:	; 800249CC
-[GP + 027c] = w(V0);
-
-L249d0:	; 800249D0
+    if( V0 < 14 )
+    {
+        [GP + 164] = h(14);
+        [GP + 27c] = w(1);
+    }
+}
 ////////////////////////////////
 
 
@@ -5736,7 +5738,7 @@ L24b90:	; 80024B90
                 [S1 + 6] = h(18); // height
 
                 A0 = S1;
-                system_menu_add_window_to_render();
+                system_menu_draw_window();
             }
         }
     }
@@ -9337,7 +9339,7 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// system_menu_draw_digits()
+// system_menu_draw_digits_without_leading_zeroes()
 
 x = A0;
 y = A1;
@@ -9431,163 +9433,82 @@ for( int i = 1; i < digits_n; ++i )
 
 
 ////////////////////////////////
-// func29114
+// system_menu_draw_digits_with_leading_zeroes()
 
-S1 = 0001;
-S2 = 0001;
-S4 = A0;
-S5 = A1;
-S3 = A3;
-V1 = S3 & 00ff;
-S6 = bu[SP + 0040];
-V0 = S1 < V1;
-80029154	beq    v0, zero, L29184 [$80029184]
+x = A0;
+y = A1;
+value = A2;
+digits_n = A3;
+color = A4;
 
+div = 1;
+for( int i = 1; i < digits_n; ++i )
+{
+    div *= a;
+}
 
-loop29160:	; 80029160
-    V0 = S1 << 02;
-    V0 = V0 + S1;
-    S1 = V0 << 01;
-    V0 = S2 + 0001;
-    S2 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < V1;
-8002917C	bne    v0, zero, loop29160 [$80029160]
+poly = w[80062f24];
 
-L29184:	; 80029184
-S0 = A2;
-V0 = 0001;
-V1 = S3 & 00ff;
-V0 = V0 < V1;
-80029194	beq    v0, zero, L292c4 [$800292c4]
-S2 = 0001;
+for( int i = 1; i < digits_n; ++i )
+{
+    digit = value / div;
 
-loop2919c:	; 8002919C
-    8002919C	lui    v1, $8006
-    V1 = w[V1 + 2f24];
-    V0 = 0004;
-    [V1 + 0003] = b(V0);
-    800291AC	lui    v1, $8006
-    V1 = w[V1 + 2f24];
-    V0 = 0064;
-    [V1 + 0007] = b(V0);
-    800291BC	lui    a0, $8006
-    A0 = w[A0 + 2f24];
-    800291C4	jal    system_psyq_set_shade_tex [$80046870]
-    A1 = 0001;
-    800291CC	divu   s0, s1
-    800291DC	mflo   a1
-    800291E0	mfhi   s0
-    V0 = S2 << 10;
-    V0 = V0 >> 10;
-    800291EC	addiu  v0, v0, $ffff (=-$1)
-    V1 = V0 << 03;
-    V1 = V1 - V0;
-    800291F8	lui    v0, $8006
-    V0 = w[80062f24];
-    V1 = S4 + V1;
-    [V0 + 0008] = h(V1);
-    80029208	lui    v0, $8006
-    V0 = w[80062f24];
-    A0 = 0100;
-    [V0 + 000a] = h(S5);
-    80029218	lui    v0, $8006
-    V0 = w[80062f24];
-    A1 = A1 << 03;
-    A1 = A1 + 0088;
-    [V0 + 000c] = b(A1);
-    8002922C	lui    v0, $8006
-    V0 = w[80062f24];
-    A1 = S6 + 01e0;
-    [V0 + 000d] = b(0);
-    8002923C	lui    v1, $8006
-    V1 = w[V1 + 2f24];
-    V0 = 0007;
-    [V1 + 0010] = h(V0);
-    8002924C	lui    v1, $8006
-    V1 = w[V1 + 2f24];
-    V0 = 0008;
-    80029258	jal    system_create_clut_for_packet [$80046634]
-    [V1 + 0012] = h(V0);
-    80029260	lui    v1, $8006
-    V1 = w[V1 + 2f24];
-    A0 = w[GP + 0280];
-    [V1 + 000e] = h(V0);
-    80029270	lui    a1, $8006
-    A1 = w[A1 + 2f24];
-    80029278	jal    system_psyq_add_prim [$80046794]
-    8002927C	nop
-    80029280	lui    v0, $cccc
-    V0 = V0 | cccd;
-    80029288	multu  s1, v0
-    V1 = S2 + 0001;
-    S2 = V1;
-    V1 = V1 << 10;
-    80029298	lui    v0, $8006
-    V0 = w[80062f24];
-    V1 = V1 >> 10;
-    V0 = V0 + 0014;
-    800292A8	lui    at, $8006
-    [AT + 2f24] = w(V0);
-    V0 = S3 & 00ff;
-    V1 = V1 < V0;
-    800292B8	mfhi   t0
-    S1 = T0 >> 03;
-800292BC	bne    v1, zero, loop2919c [$8002919c]
+    [poly + 3] = b(4);
+    [poly + 7] = b(64);
 
-L292c4:	; 800292C4
-800292C4	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0004;
-[V1 + 0003] = b(V0);
-800292D4	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0064;
-[V1 + 0007] = b(V0);
-800292E4	lui    a0, $8006
-A0 = w[A0 + 2f24];
-800292EC	jal    system_psyq_set_shade_tex [$80046870]
-A1 = 0001;
-V0 = S3 & 00ff;
-800292F8	addiu  v0, v0, $ffff (=-$1)
-V1 = V0 << 03;
-V1 = V1 - V0;
-80029304	lui    v0, $8006
-V0 = w[80062f24];
-V1 = S4 + V1;
-[V0 + 0008] = h(V1);
-80029314	lui    v0, $8006
-V0 = w[80062f24];
-A0 = 0100;
-[V0 + 000a] = h(S5);
-V0 = S0 << 03;
-80029328	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = V0 + 0088;
-[V1 + 000c] = b(V0);
-80029338	lui    v0, $8006
-V0 = w[80062f24];
-A1 = S6 + 01e0;
-[V0 + 000d] = b(0);
-80029348	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0007;
-[V1 + 0010] = h(V0);
-80029358	lui    v1, $8006
-V1 = w[V1 + 2f24];
-V0 = 0008;
-80029364	jal    system_create_clut_for_packet [$80046634]
-[V1 + 0012] = h(V0);
-V1 = w[80062f24];
-A0 = w[GP + 0280];
-[V1 + 000e] = h(V0);
-A1 = w[80062f24];
-80029384	jal    system_psyq_add_prim [$80046794]
+    A0 = poly;
+    A1 = 1;
+    system_psyq_set_shade_tex();
 
-V0 = w[80062f24];
-V0 = V0 + 0014;
-[80062f24] = w(V0);
+    [poly + 8] = h(x + (i - 1) * 7);
+    [poly + a] = h(y);
+    [poly + c] = b(88 + digit * 8);
+    [poly + d] = b(0);
+    [poly + 10] = h(7);
+    [poly + 12] = h(8);
+
+    A0 = 100;
+    A1 = 1e0 + color;
+    system_create_clut_for_packet();
+    [poly + e] = h(V0);
+
+    A0 = w[GP + 280];
+    A1 = poly;
+    system_psyq_add_prim();
+
+    poly += 14;
+    value %= div;
+    div /= a;
+}
+
+{
+    [poly + 3] = b(4);
+    [poly + 7] = b(64);
+
+    A0 = poly;
+    A1 = 1;
+    system_psyq_set_shade_tex();
+
+    [poly + 8] = h(x + (digits_n - 1) * 7);
+    [poly + a] = h(y);
+    [poly + c] = b(88 + value * 8);
+    [poly + d] = b(0);
+    [poly + 10] = h(7);
+    [poly + 12] = h(8);
+
+    A0 = 100;
+    A1 = 1e0 + color;
+    system_create_clut_for_packet();
+    [poly + e] = h(V0);
+
+    A0 = w[GP + 280];
+    A1 = poly;
+    system_psyq_add_prim();
+
+    poly += 14;
+}
+
+[80062f24] = w(poly);
 ////////////////////////////////
 
 

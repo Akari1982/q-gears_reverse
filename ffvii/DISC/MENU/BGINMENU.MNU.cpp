@@ -64,7 +64,7 @@ for( int i = 0; i < 2; ++i )
     // 0000 1D00 6C01 C300
 
     A0 = 801d07f4 + i * 8;
-    system_menu_add_window_to_render();
+    system_menu_draw_window();
 }
 
 A0 = 801d0860 + w[801d07f0] * 12;

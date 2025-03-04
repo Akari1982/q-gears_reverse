@@ -1164,9 +1164,10 @@ V0 = w[801d0020 + V0];
     [SP + 0044] = h(V0);
     801D1230	jal    $system_add_draw_mode
     [SP + 0046] = h(V0);
+
     A0 = 801d3d74;
-    801D1240	jal    $system_menu_add_window_to_render
-    801D1244	nop
+    system_menu_draw_window();
+
     801D1248	j      L1d12d8 [$801d12d8]
     801D124C	nop
 
@@ -1279,8 +1280,9 @@ A1 = 0;
 A2 = 0032;
 801D13DC	jal    $func1de0c
 A3 = 00aa;
-801D13E4	jal    $system_menu_add_window_to_render
-A0 = SP + 0038;
+
+A0 = SP + 38;
+system_menu_draw_window();
 
 L1d13ec:	; 801D13EC
 S2 = 0;
@@ -1586,8 +1588,9 @@ A0 = A0 << 02;
 A0 = A0 + V0;
 
 loop1d18bc:	; 801D18BC
-801D18BC	jal    $system_menu_add_window_to_render
 A0 = S1;
+system_menu_draw_window();
+
 S0 = S0 + 0001;
 V0 = S0 < 0003;
 801D18CC	bne    v0, zero, loop1d18bc [$801d18bc]
