@@ -918,7 +918,7 @@ for( int i = 0; i < 50; ++i )
 S7 = A0;
 
 A0 = w[80062f58];
-func230c4();
+system_menu_draw_menu_list();
 
 V1 = w[801d3e48];
 V0 = 0002;

@@ -42,7 +42,7 @@ func26448();
 // func1d00c4()
 
 A0 = w[80062f58]; // GP + 214
-func230c4();
+system_menu_draw_menu_list();
 
 if( w[801d07f0] == 0 )
 {

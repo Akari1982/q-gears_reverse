@@ -4243,7 +4243,7 @@ V0 = 0001;
 A0 = 0001;
 80022BE4	lui    a0, $8007
 A0 = A0 + 56f8;
-80022BEC	jal    func25c94 [$80025c94]
+80022BEC	jal    system_menu_load_character_clut_from_ram [$80025c94]
 80022BF0	nop
 80022BF4	j      L22c08 [$80022c08]
 80022BF8	nop
@@ -4546,31 +4546,33 @@ V0 = w[GP + 00b4];
 ////////////////////////////////
 // func2305c()
 
+menu_id = A1;
+
 V1 = w[GP + 250];
 [GP + b4] = w(A0);
-[GP + 250] = w(A1 - 1);
+[GP + 250] = w(menu_id - 1);
 [GP + 1c8] = w(V1);
 
 if( A0 == 2 )
 {
-    [GP + 1dc] = w(10);
+    [GP + 1dc] = w(10); // menu change animation frames
 }
 else if( A0 == 4 )
 {
-    [GP + 1dc] = w(10);
+    [GP + 1dc] = w(10); // menu change animation frames
 }
 else if( A0 == 5 )
 {
     [8009a0d3] = b(V1);
     [GP + 188] = w(0);
-    [GP + 1dc] = w(10);
+    [GP + 1dc] = w(10); // menu change animation frames
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func230c4()
+// system_menu_draw_menu_list()
 
 S3 = A0;
 
@@ -4586,129 +4588,133 @@ A0 = 800706a4 + S3 * 5c; // settings
 A1 = SP + 18; // additional offset
 func26a94(); // add draw env
 
-S4 = 0;
+y = 0;
 
 switch( w[GP + b4] )
 {
-    case 0:
+    case 0: // normal single menu item header
     {
-        [GP + ac] = w(18);
-
         A0 = 126;
         A1 = b;
-        A2 = 80049248 + w[GP + 250] * c; // text "Item"
-        A3 = 7;
+        A2 = 80049248 + w[GP + 250] * c; // menu name
+        A3 = 7; // white
         system_menu_draw_string();
+
+        [GP + ac] = w(18); // window height
     }
     break;
 
-    case 1:
+    case 1: // normal menu list
     {
-        [GP + ac] = w(84);
-
-        if( w[GP + 27c] != 1 )
-        {
-            S4 = h[GP + 164] * 5 - 64;
-        }
+        if( w[GP + 27c] != 1 ) y = h[GP + 164] * 5 - 64; // play animation if it appears or disappears
 
         for( int i = 0; i < a; ++i )
         {
             if( ( hu[GP + 208] >> i ) & 1 ) // visibility mask
             {
                 A0 = 126;
-                A1 = S4 + i * c + b;
-                A2 = 80049248 + i * c;
-                A3 = ( ( hu[GP + 20c] >> i ) & 1 ) ? 0 : 7; // color
+                A1 = y + i * c + b;
+                A2 = 80049248 + i * c; // menu names
+                A3 = ( ( hu[GP + 20c] >> i ) & 1 ) ? 0 : 7; // grey or white color based on locking mask
                 system_menu_draw_string();
             }
         }
+
+        [GP + ac] = w(84); // window height
     }
     break;
 
+    // init new menu
+    // hide all menu items
+    // play animation thac collapse menu window and move selected menu to top
     case 2:
     {
-        if( w[GP + 1dc] != 0 )
+        if( w[GP + 1dc] != 0 ) // menu change animation frames and fade
         {
-            [GP + 1dc] = w(w[GP + 1dc] - 1);
+            [GP + 1dc] = w(w[GP + 1dc] - 1); // fade in
         }
-        else
+        else // animation finished
         {
             if( S0 == 0 )
             {
                 V0 = w[GP + 90];
 
+                // init functions
+                // 0 8002368C main
+                // 1 801D0BA0 item
+                // 2 801D0164 magic
+                // 3 801D3CB0 materia
+                // 4 801D0574
+                // 5 801D0040
+                // 6 801D0000
+                // 7 801D006C
+                // 8 801D069C config
+                // 9 801D0C1C
+                // a 801D05C0
+                // b 801D0198
+                // c 801D0000 begin func1d0000()
+                // d 801D006C
+                // e 801D0BA0
+                // f 801D0574
+                // 10 801D0BA0
+                // 11 801D0BA0
+                // 12 801D0BA0
+                // 13 801D0BA0
+                // 14 801D0BA0
+
+                // call new menu init function
                 A0 = 0;
                 800231A8	jalr   w[800493a8 + V0 * 4] ra
 
-                //  0 800236A0 // main
-                //  1 801D0BA0 // item
-                //  2 801D01A0 // magic
-                //  3 801D3CA0 // materia
-                //  4 801D05A0
-                //  5 801D0074
-                //  6 801D00A0
-                //  7 801D006C
-                //  8 801D0600 // config
-                //  9 801D0C98
-                //  a 801D05C0
-                //  b 801D011C
-                //  c 801D009C
-                //  d 801D006C
-                //  e 801D0B00
-                //  f 801D0540
-                // 10 801D0B74
-                // 11 801D0BB0
-                // 12 801D0B64
-                // 13 801D0BA0
-                // 14 801D0B8C
-
-                [GP + b4] = w(3);
+                [GP + b4] = w(3); // set to fade out
             }
         }
 
-        A0 = 126;
-        A1 = ((w[GP + 250] * w[GP + 1dc] * c) / 10) + b;
-        A2 = 80049248 + V1 * c; // text "Item"
+        A0 = 126; // x
+        A1 = b + ((w[GP + 250] * w[GP + 1dc] * c) / 10); // y
+        A2 = 80049248 + w[GP + 250] * c; // menu name
         A3 = 7;
         system_menu_draw_string();
 
-        [GP + ac] = w(((w[GP + 1dc] * 6c) / 10) + 18);
+        [GP + ac] = w(18 + ((w[GP + 1dc] * 6c) / 10)); // window height
     }
     break;
 
-    case 3:
+    case 3: // fadeout
     {
         if( w[GP + 1dc] < f )
         {
-            [GP + 1dc] = w(w[GP + 1dc] + 1);
+            [GP + 1dc] = w(w[GP + 1dc] + 1); // fade out
         }
         else
         {
-            [GP + b4] = w(0);
+            [GP + b4] = w(0); // normal single menu item header
         }
-
-        [GP + ac] = w(18);
 
         A0 = 126;
         A1 = b;
-        A2 = 80049248 + w[GP + 250] * c; // text "Item"
+        A2 = 80049248 + w[GP + 250] * c; // menu name
         A3 = 7;
         system_menu_draw_string();
+
+        [GP + ac] = w(18); // window height
     }
     break;
 
+    // change from one menu to another without return
     case 4:
     {
         if( w[GP + 1dc] != 0 )
         {
-            [GP + 1dc] = w(w[GP + 1dc] - 1);
+            [GP + 1dc] = w(w[GP + 1dc] - 1); // fade in
         }
         else
         {
-            [GP + b4] = w(3);
-
+            // call new menu init function
             V0 = w[GP + 90];
             8002328C	jalr   w[800493a8 + V0 * 4] ra
+
+            [GP + b4] = w(3); // set to fade out
         }
 
         A0 = 126;
@@ -4717,27 +4723,25 @@ switch( w[GP + b4] )
         A3 = 7;
         system_menu_draw_string();
 
-        [GP + ac] = w(18);
+        [GP + ac] = w(18); // window height
     }
     break;
 
+    // back to main menu
     case 5:
     {
         if( w[GP + 1dc] == 0 )
         {
-            [GP + b4] = w(6);
+            [GP + b4] = w(6); // if starts from 0 then go directly to fadeout and expand menu list
         }
         else
         {
-            [GP + 1dc] = w(w[GP + 1dc] - 1);
+            [GP + 1dc] = w(w[GP + 1dc] - 1); // fade in
 
-            if( w[GP + 1dc] == 0 )
+            if( ( w[GP + 27c] == 2 ) && ( w[GP + 1dc] == 0 ) ) // set when close main menu
             {
-                if( w[GP + 27c] == 2 )
-                {
-                    [GP + 27c] = w(-1);
-                    [GP + b4] = w(1);
-                }
+                [GP + 27c] = w(-1);
+                [GP + b4] = w(1); // normal menu list
             }
         }
 
@@ -4747,43 +4751,30 @@ switch( w[GP + b4] )
         A3 = 7;
         system_menu_draw_string();
 
-        [GP + ac] = w(18);
+        [GP + ac] = w(18); // window height
     }
     break;
 
+    // play fadeout and menu list expand animation
     case 6:
     {
         if( w[GP + 1dc] < f )
         {
-            [GP + 1dc] = w(w[GP + 1dc] + 1);
+            [GP + 1dc] = w(w[GP + 1dc] + 1); // fade out
         }
         else
         {
-            [GP + b4] = w(1);
+            [GP + b4] = w(1); // normal menu list
         }
 
-        V1 = w[GP + 188];
-        V0 = V1 << 01;
-        V0 = V0 + V1;
-        V1 = w[GP + 1c8];
-        V0 = V0 << 02;
-        A1 = V1 * V0;
-
         A0 = 126;
-        A1 = (A1 / 10) + b;
-        A2 = V1 << 01;
-        A2 = A2 + V1;
-        A2 = A2 << 02;
-        A2 = 80049248 + A2;
+        A1 = b + ((w[GP + 1c8] * w[GP + 188] * c) / 10);
+        A2 = 80049248 + w[GP + 1c8] * c;
         A3 = 7;
         system_menu_draw_string();
 
-        V1 = w[GP + 188];
-        V0 = V1 * 6с;
-
-        V0 = V0 / 10;
-        [GP + ac] = w(V0 + 18);
-        [GP + 188] = w(V1 + 1);
+        [GP + ac] = w(((w[GP + 188] * 6с) / 10) + 18); // window height
+        [GP + 188] = w(w[GP + 188] + 1);
     }
     break;
 }
@@ -4791,7 +4782,7 @@ switch( w[GP + b4] )
 if( w[GP + 27c] == 1 )
 {
     [SP + 18] = h(11a);
-    [SP + 1a] = h(S4 + 8);
+    [SP + 1a] = h(y + 8);
     [SP + 1c] = h(56);
     [SP + 1e] = h(w[GP + ac] - 6);
 
@@ -4801,16 +4792,16 @@ if( w[GP + 27c] == 1 )
 }
 
 A0 = SP + 20;
-A1 = 116;
-A2 = S4 + 5;
-A3 = 56;
-A4 = w[GP + ac];
+A1 = 116; // x
+A2 = y + 5; // y
+A3 = 56; // w
+A4 = w[GP + ac]; // h
 system_menu_set_window_rect();
 
 A0 = SP + 20;
 system_menu_draw_window();
 
-if( w[GP + b4] >= 2 )
+if( w[GP + b4] >= 2 ) // set fade
 {
     color = ff - w[GP + 1dc] * 10;
 
@@ -4863,7 +4854,7 @@ func26a94(); // add draw env
 // func2368c()
 
 S2 = 8009a0c8;
-[GP + 220] = w(0);
+[GP + 220] = w(0); // menu list selection
 
 A0 = S2;
 A1 = 0;
@@ -4973,56 +4964,51 @@ if( w[GP + 24c] != 0 )
 }
 
 [GP + 208] = h(hu[8009c6e4 + bc0]); // menu visibility mask
-A1 = hu[8009c6e4 + bc2]; // menu locking mask
+[GP + 20c] = h(hu[8009c6e4 + bc2]); // menu locking mask
+if( bu[8009c6e4 + e13] & 1 ) [GP + 20c] = h(hu[8009c6e4 + bc2] | 0041); // little cloud event?
 
-[GP + 20c] = h(A1);
-
-if( bu[8009c6e4 + 0e13] & 1 ) // little cloud event?
-{
-    [GP + 20c] = h(A1 | 0041);
-}
-
-if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
+// if menu on screen and menu list displays
+if( ( w[GP + b4] == 1 ) && ( w[GP + 27c] == 1 ) )
 {
     A0 = 8009a0c8 + w[GP + 220] * 12;
     system_menu_handle_buttons();
 
-    if( w[GP + 220] == 0 )
+    if( w[GP + 220] == 0 ) // menu list selection
     {
-        if( ( hu[80062d7c] & 0020 ) && ( ( hu[GP + 208] >> b[8009a0c8 + b] ) & 1 ) && ( ( ( hu[GP + 208] >> hu[GP + 20c] ) & 1 ) == 0 ) ) // confirm and allowed to do it
+        if( ( hu[80062d7c] & 0020 ) && ( ( hu[GP + 208] >> b[8009a0c8 + 0 * 24 + b] ) & 1 ) && ( ( ( hu[GP + 208] >> hu[GP + 20c] ) & 1 ) == 0 ) ) // confirm and allowed to do it
         {
-            if( b[8009a0c8 + b] != 5 )
+            if( b[8009a0c8 + 0 * 24 + b] != 5 )
             {
                 A0 = 1;
                 system_menu_sound();
 
-                V0 = b[8009a0c8 + b];
-                if( V0 == 0 || V0 == 7 || V0 == 8 || V0 == 9 ) // item config phs save menu
+                pos = b[8009a0c8 + 0 * 24 + b];
+                if( ( pos == 0 ) || ( pos == 7 ) || ( pos == 8 ) || ( pos == 9 ) ) // item config phs save menu
                 {
+                    menu_id = bu[80049450 + pos];
+
                     A0 = 2;
-                    V0 = b[8009a0c8 + b];
-                    A1 = bu[80049450 + V0];
+                    A1 = menu_id;
                     func2305c();
 
-                    V0 = b[8009a0c8 + b];
-                    A0 = bu[80049450 + V0]; // menu id
-                    func2120c();
+                    A0 = menu_id;
+                    func2120c(); // load menu
 
-                    if( b[8009a0c8 + b] == 8 ) // phs menu
+                    if( pos == 8 ) // phs menu
                     {
                         A0 = 1c3;
                         system_menu_sound();
                     }
                 }
-                else if( V0 == 1 || V0 == 2 || V0 == 3 || V0 == 4 || V0 == 6 ) // magic materia equip status limit menu
+                else if( ( pos == 1 ) || ( pos == 2 ) || ( pos == 3 ) || ( pos == 4 ) || ( pos == 6 ) ) // magic materia equip status limit menu
                 {
-                    [GP + 220] = w(1);
+                    [GP + 220] = w(1); // character selection
                 }
             }
             else // order menu
             {
-                [GP + 220] = w(2);
-                [GP + 23c] = w(0);
+                [GP + 220] = w(2); // order menu
+                [GP + 23c] = w(0); // party member selected
             }
         }
         else
@@ -5037,7 +5023,7 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
             }
         }
     }
-    else if( w[GP + 220] == 1 )
+    else if( w[GP + 220] == 1 ) // character selection
     {
         if( hu[80062d7c] & 0020 == 0 )
         {
@@ -5046,14 +5032,14 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                 A0 = 4;
                 system_menu_sound();
 
-                [GP + 220] = w(0);
+                [GP + 220] = w(0); // menu list selection
             }
         }
         else // confirm
         {
-            V0 = b[8009a0c8 + 12 + b];
+            V0 = b[8009a0c8 + 1 * 12 + b];
 
-            if(  bu[8009c6e4 + 4f8 + V0] == ff ) // party member slot
+            if(  bu[8009c6e4 + 4f8 + V0] == ff ) // party member slot empty
             {
                 A0 = 3;
                 system_menu_sound();
@@ -5063,195 +5049,163 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
                 A0 = 1;
                 system_menu_sound();
 
-                V0 = b[8009a0c8 + b];
-                A1 = bu[80049450 + V0];
+                pos = b[8009a0c8 + 0 * 24 + b];
+                menu_id = bu[80049450 + pos];
+
                 A0 = 2;
+                A1 = menu_id;
                 func2305c();
 
-                V0 = b[8009a0c8 + b];
-                A0 = bu[80049450 + V0]; // menu id
-                func2120c();
+                A0 = menu_id;
+                func2120c(); // load menu
 
-                [GP + 220] = w(0);
+                [GP + 220] = w(0); // menu list selection
                 [GP + 228] = w(b[8009a0e5]);
             }
         }
     }
-    else if( w[GP + 220] == 2 )
+    else if( w[GP + 220] == 2 ) // order menu
     {
         if( hu[80062d7c] & 0020 == 0 )
         {
             if( hu[80062d7c] & 0040 != 0 ) // cancel
-            A0 = 4;
-            system_menu_sound();
+            {
+                A0 = 4;
+                system_menu_sound();
 
-            if( w[GP + 23c] != 0 )
-            {
-                [GP + 23c] = w(w[GP + 23c] - 1);
-            }
-            else
-            {
-                [GP + 220] = w(0);
+                if( w[GP + 23c] != 0 )
+                {
+                    [GP + 23c] = w(w[GP + 23c] - 1); // unselect char
+                }
+                else
+                {
+                    [GP + 220] = w(0); // menu list selection
+                }
             }
         }
         else // confirm
         {
-            if( w[GP + 23c] == 0 )
+            if( w[GP + 23c] == 0 ) // char not selected yet
             {
                 A0 = 1;
                 system_menu_sound();
 
-                [GP + 23c] = w(1);
-                [GP + 2d8] = w(b[8009a0c8 + 2 * 12 + b]);
+                [GP + 23c] = w(1); // char selected
+                [GP + 2d8] = w(b[8009a0c8 + 2 * 12 + b]); // store selected char
             }
-            else
+            else // char selected
             {
-                [GP + 23c] = w(0);
+                [GP + 23c] = w(0); // unselect char
 
-                if( w[GP + 2d8] == b[8009a0c8 + 2 * 12 + b] )
+                if( w[GP + 2d8] == b[8009a0c8 + 2 * 12 + b] ) // if selected and current char match (we want to change row)
                 {
-                    V1 = w[GP + 2d8];
-                    V1 = bu[8009c6e4 + 04f8 + V1 ];
-                    if( V1 != ff )
+                    party_id = w[GP + 2d8];
+                    char_id = bu[8009c6e4 + 4f8 + party_id];
+                    if( char_id != ff )
                     {
-                        save_char_id = w[800491d0 + V1 * 4];
+                        save_char_id = w[800491d0 + char_id * 4];
                         [8009c6e4 + 54 + save_char_id * 84 + 20] = b(bu[8009c6e4 + 54 + save_char_id * 84 + 20] ^ 1); // char order
 
                         A0 = 1;
                         system_menu_sound();
                     }
                 }
-                else
+                else // swap characters
                 {
                     A0 = 1;
                     system_menu_sound();
 
-                    V1 = b[8009a0c8 + 2 * 12 + b];
-                    V0 = 8009c6e4 + 04f8 + w[GP + 2d8];
-                    [V0] = b(bu[8009cbdc + V1]);
-                    A0 = bu[V0];
-                    V0 = b[8009a0c8 + 2 * 12 + b];
-                    [8009cbdc + V0] = b(A0);
+                    party_id1 = w[GP + 2d8];
+                    char_id1 = bu[8009c6e4 + 4f8 + party_id1];
+                    party_id2 = b[8009a0c8 + 2 * 12 + b];
+                    char_id2 = bu[8009c6e4 + 4f8 + party_id2];
+                    [8009c6e4 + 4f8 + party_id1] = b(char_id2);
+                    [8009c6e4 + 4f8 + party_id2] = b(char_id1);
 
-                    A3 = SP + 38;
-                    A2 = 8009d84c + b[8009a0c8 + 2 * 12 + b] * 440;
-                    T0 = A2 + 440;
+                    src2 = 8009d84c + party_id2 * 440;
+                    end = src2 + 440;
+                    temp = SP + 38;
+                    while( A2 != end )
+                    {
+                        [temp] = w(w[src2]);
+                        src2 += 4;
+                        temp += 4;
+                    }
 
-                    loop23f64:	; 80023F64
-                        [A3 + 0] = w(w[A2 + 0]);
-                        [A3 + 4] = w(w[A2 + 4]);
-                        [A3 + 8] = w(w[A2 + 8]);
-                        [A3 + c] = w(w[A2 + c]);
-                        A2 = A2 + 10;
-                        A3 = A3 + 10;
-                    80023F88	bne    a2, t0, loop23f64 [$80023f64]
+                    src = 8009d84c + party_id1 * 440;
+                    end = src + 440;
+                    dst = 8009d84c + party_id2 * 440;
+                    while( src != end )
+                    {
+                        [dst] = w(w[src]);
+                        src += 4;
+                        dst += 4;
+                    }
 
-                    V1 = b[8009a0c8 + 2 * 12 + b];
-                    A0 = 8009d84c;
-                    V0 = V1 * 440;
-                    V1 = w[GP + 2d8];
-                    A3 = V0 + A0;
-                    V0 = V1 * 440;
-                    A2 = V0 + A0;
-                    T0 = A2 + 440;
+                    temp = SP + 38;
+                    end = temp + 440;
+                    dst = 8009d84c + party_id1 * 440;
+                    while( temp != end )
+                    {
+                        [dst] = w(w[temp]);
+                        temp += 4;
+                        dst += 4;
+                    }
 
-                    loop23fc8:	; 80023FC8
-                        [A3 + 0] = w(w[A2 + 0]);
-                        [A3 + 4] = w(w[A2 + 4]);
-                        [A3 + 8] = w(w[A2 + 8]);
-                        [A3 + c] = w(w[A2 + c]);
-                        A2 = A2 + 10;
-                        A3 = A3 + 10;
-                    80023FEC	bne    a2, t0, loop23fc8 [$80023fc8]
-
-                    A3 = SP + 38;
-                    T0 = SP + 478;
-                    V0 = w[GP + 2d8];
-                    A0 = 8009d84c;
-                    V1 = V0 * 440;
-                    A2 = V1 + A0;
-
-                    loop24018:	; 80024018
-                        [A2 + 0] = w(w[A3 + 0]);
-                        [A2 + 4] = w(w[A3 + 4]);
-                        [A2 + 8] = w(w[A3 + 8]);
-                        [A2 + c] = w(w[A3 + c]);
-                        A2 = A2 + 10;
-                        A3 = A3 + 10;
-                    8002403C	bne    a3, t0, loop24018 [$80024018]
-
-                    S2 = SP + 30;
+                    [SP + 30] = h(100);
+                    [SP + 32] = h(1ed + party_id2);
+                    [SP + 34] = h(100);
+                    [SP + 36] = h(1);
                     A0 = SP + 30;
-                    S3 = 100;
-                    S5 = 8009a0c8 + 2 * 12 + b;
-                    S0 = 1;
-                    [SP + 30] = h(S3);
-                    [SP + 34] = h(S3);
-                    [SP + 32] = h(b[S5] + 1ed);
-                    A1 = w[GP + 2d8];
-                    S6 = 800756f8;
-                    [SP + 36] = h(S0);
-                    A1 = S6 + A1 * 200;
+                    A1 = 800756f8 + party_id1 * 200;
                     system_psyq_store_image();
 
-                    A1 = b[S5];
-                    V0 = w[GP + 2d8];
+                    [SP + 30] = h(100);
+                    [SP + 32] = h(1ed + party_id1);
+                    [SP + 34] = h(100);
+                    [SP + 36] = h(1);
                     A0 = SP + 30;
-                    [SP + 30] = h(S3);
-                    [SP + 34] = h(S3);
-                    [SP + 36] = h(S0);
-                    A1 = S6 + A1 * 200;
-                    V0 = V0 + 1ed;
-                    [SP + 32] = h(V0);
+                    A1 = 800756f8 + party_id2 * 200;
                     system_psyq_store_image();
 
-                    A0 = S2;
-                    A1 = 0340;
-                    A2 = 0100;
-                    S4 = 03c0;
-                    S1 = 0018;
-                    V1 = w[GP + 02d8];
-                    S0 = 0030;
-                    [SP + 0030] = h(S4);
-                    [SP + 0034] = h(S1);
-                    [SP + 0036] = h(S0);
-                    V0 = V1 << 01;
-                    V0 = V0 + V1;
-                    V0 = V0 << 04;
-                    V0 = V0 + 0138;
-                    [SP + 0032] = h(V0);
+                    [SP + 30] = h(3c0);
+                    [SP + 32] = h(138 + party_id1 * 30);
+                    [SP + 34] = h(18);
+                    [SP + 36] = h(30);
+                    A0 = SP + 30;
+                    A1 = 340;
+                    A2 = 100;
                     system_psyq_move_image();
 
                     A0 = 0;
                     system_psyq_draw_sync();
 
-                    A0 = S2;
+                    [SP + 30] = h(3c0);
+                    [SP + 32] = h(138 + party_id2 * 30);
+                    [SP + 34] = h(18);
+                    [SP + 36] = h(30);
+                    A0 = SP + 30;
                     A1 = 3c0;
-                    [SP + 30] = h(S4);
-                    [SP + 34] = h(S1);
-                    [SP + 36] = h(S0);
-                    A2 = w[GP + 2d8] * 30 + 138;
-                    [SP + 32] = h(b[S5] * 30 + 138);
+                    A2 = 138 + party_id1 * 30;
                     system_psyq_move_image();
 
                     A0 = 0;
                     system_psyq_draw_sync();
 
-                    A0 = S2;
-                    A1 = 3c0;
-                    V1 = b[S5];
                     [SP + 30] = h(340);
-                    [SP + 32] = h(S3);
-                    [SP + 34] = h(S1);
-                    [SP + 36] = h(S0);
-                    A2 = V1 * 30 + 138;
+                    [SP + 32] = h(100);
+                    [SP + 34] = h(18);
+                    [SP + 36] = h(30);
+                    A0 = SP + 30;
+                    A1 = 3c0;
+                    A2 = 138 + party_id2 * 30;
                     system_psyq_move_image();
 
                     A0 = 0;
                     system_psyq_draw_sync();
 
-                    A0 = S6;
-                    func25c94();
+                    A0 = 800756f8;
+                    system_menu_load_character_clut_from_ram();
 
                     A0 = 0;
                     system_psyq_draw_sync();
@@ -5263,66 +5217,63 @@ if( w[GP + b4] == 1 && w[GP + 27c] == 1 )
 
 if( w[GP + b4] == 1 )
 {
-    if (w[GP + 27c] == 1)
+    if( w[GP + 27c] == 1 )
     {
-        if( w[GP + 220] == 0 )
+        if( w[GP + 220] == 0 ) // menu list selection
         {
             A0 = 10b;
-            A1 = b[8009a0c8 + b] * c + d;
+            A1 = d + b[8009a0c8 + 0 * 24 + b] * c;
             system_menu_add_cursor_to_render();
         }
-        else if( w[GP + 220] == 1 )
+        else if( w[GP + 220] == 1 ) // character selection
         {
             if( w[SP + 478] & 2 )
             {
                 A0 = 10b;
-                A1 = b[8009a0c8 + b] * c + d;
+                A1 = d + b[8009a0c8 + 0 * 24 + b] * c;
                 system_menu_add_cursor_to_render();
             }
 
-            V1 = w[GP + 220];
             A0 = 0;
-            A1 = b[8009a0c8 + V1 * 24 + b] * 3c + 2f;
+            A1 = 2f + b[8009a0c8 + 1 * 24 + b] * 3c;
             system_menu_add_cursor_to_render();
         }
-        else if( w[GP + 220] == 2 )
+        else if( w[GP + 220] == 2 ) // order menu
         {
             if( w[SP + 478] & 2 )
             {
                 if( w[GP + 23c] != 0 )
                 {
                     A0 = -4;
-                    A1 = w[GP + 2d8] * 3c + 2b;
+                    A1 = 2b + w[GP + 2d8] * 3c;
                     system_menu_add_cursor_to_render();
                 }
 
                 A0 = 10b;
-                A1 = b[8009a0c8 + b] * c + d;
+                A1 = d + b[8009a0c8 + 0 * 24 + b] * c;
                 system_menu_add_cursor_to_render();
             }
 
-            V1 = w[GP + 220];
             A0 = 0;
-            A1 = b[8009a0d3 + V1 * 24] * 3c + 2f;
+            A1 = b[8009a0c8 + 2 * 24 + b] * 3c + 2f;
             system_menu_add_cursor_to_render();
         }
     }
 }
 
 S2 = SP + 30;
-A1 = S2;
-V1 = w[GP + 214];
 
 [SP + 30] = h(0);
 [SP + 32] = h(5);
 [SP + 34] = h(16c);
 [SP + 36] = h(db);
 
-A0 = 800706a4 + V1 * 5c;
+A0 = 800706a4 + w[GP + 214] * 5c;
+A1 = S2;
 func26a94(); // add draw env
 
 A0 = w[GP + 214];
-func230c4(); // draw menu
+system_menu_draw_menu_list();
 
 // field name block
 {
@@ -5568,10 +5519,9 @@ system_menu_set_window_rect();
 A0 = SP + 28;
 system_menu_draw_window();
 
-V0 = w[GP + 27c];
-if( V0 != 0 )
+if( w[GP + 27c] != 0 )
 {
-    if( V0 == 2 )
+    if( w[GP + 27c] == 2 )
     {
         [GP + 164] = h(hu[GP + 164] + hu[GP + 2b0]);
 
@@ -5668,7 +5618,7 @@ A0 = SP + 20;
 func25cd4();
 
 A0 = 800756f8;
-func25c94();
+system_menu_load_character_clut_from_ram();
 
 [GP + 27c] = w(0);
 
@@ -5796,7 +5746,7 @@ L24b90:	; 80024B90
 80024D38	bne    v1, s4, L24b90 [$80024b90]
 
 A0 = SP + 20;
-func25c94();
+system_menu_load_character_clut_from_ram();
 
 func24a04();
 
@@ -6826,7 +6776,7 @@ system_psyq_load_image();
 
 
 ////////////////////////////////
-// func25c94()
+// system_menu_load_character_clut_from_ram()
 
 src = A0;
 
