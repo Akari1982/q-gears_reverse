@@ -41,7 +41,7 @@ func26448();
 ////////////////////////////////
 // func1d00c4()
 
-A0 = w[80062f58]; // GP + 214
+A0 = w[80062f58]; // GP + 214 rb
 system_menu_draw_menu_list();
 
 if( w[801d07f0] == 0 )
@@ -54,7 +54,7 @@ if( w[801d07f0] == 0 )
 A0 = 10; // x
 A1 = b; // y
 A2 = 801d0804; // text
-A3 = 7; // color
+A3 = 7; // white
 system_menu_draw_string();
 
 for( int i = 0; i < 2; ++i )
@@ -74,10 +74,10 @@ if( hu[80062d7e] & 0040 ) // cross pressed
 {
     A0 = 5;
     A1 = 0;
-    func2305c();
+    system_menu_set_menu_list_animation();
 
     A0 = 0; // close menu
-    func2120c();
+    system_menu_load_menu_file_by_id();
 }
 ////////////////////////////////
 

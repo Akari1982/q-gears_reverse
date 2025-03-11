@@ -2528,8 +2528,10 @@ A0 = 0001;
 ////////////////////////////////
 // func211c4();
 
-A0 = w[80048f60 + A0 * 8 + 0];
-A1 = w[80048f60 + A0 * 8 + 4];
+menu_id = A0;
+
+A0 = w[80048f60 + menu_id * 8 + 0];
+A1 = w[80048f60 + menu_id * 8 + 4];
 A2 = w[GP + a8];
 A3 = 0;
 system_cdrom_start_load_file();
@@ -2540,18 +2542,19 @@ system_cdrom_read_chain();
 
 
 ////////////////////////////////
-// func2120c()
+// system_menu_load_menu_file_by_id()
 
-V0 = w[GP + 90];
-[GP + 8c] = w(V0);
-[GP + 90] = w(A0);
+menu_id = A0;
+menu_id_old = w[GP + 90];
 
-if( A0 != 0 )
+[GP + 8c] = w(menu_id_old);
+[GP + 90] = w(menu_id); // menu func to call
+
+// do not load EQIPMENU.MNU if previous and current are equip (it is same MNU file)
+if( ( menu_id != 0 ) && ( ( ( menu_id_old - 3 ) >= 2 ) || ( ( menu_id - 3 ) >= 2 ) ) )
 {
-    if( ( ( V0 - 3 ) >= 2 ) || ( ( A0 - 3 ) >= 2 ) )
-    {
-        func211c4();
-    }
+    A0 = menu_id;
+    func211c4();
 }
 ////////////////////////////////
 
@@ -4544,28 +4547,30 @@ V0 = w[GP + 00b4];
 
 
 ////////////////////////////////
-// func2305c()
+// system_menu_set_menu_list_animation()
 
-menu_id = A1;
+type = A0;
+menu_id = A1 - 1;
 
-V1 = w[GP + 250];
-[GP + b4] = w(A0);
-[GP + 250] = w(menu_id - 1);
-[GP + 1c8] = w(V1);
+menu_id_cur = w[GP + 250]; // current menu
+[GP + b4] = w(type);
+[GP + 250] = w(menu_id); // new menu
+[GP + 1c8] = w(menu_id_cur); // old menu
 
-if( A0 == 2 )
+if( type == 2 ) // normal submenu enter
 {
     [GP + 1dc] = w(10); // menu change animation frames
 }
-else if( A0 == 4 )
+else if( type == 4 ) // change from one menu to another without return
 {
     [GP + 1dc] = w(10); // menu change animation frames
 }
-else if( A0 == 5 )
+else if( type == 5 ) // back to main menu
 {
-    [8009a0d3] = b(V1);
-    [GP + 188] = w(0);
     [GP + 1dc] = w(10); // menu change animation frames
+
+    [8009a0c8 + 0 * 12 + b] = b(menu_id_cur); // cursor pos
+    [GP + 188] = w(0); // start expand height
 }
 ////////////////////////////////
 
@@ -4574,7 +4579,7 @@ else if( A0 == 5 )
 ////////////////////////////////
 // system_menu_draw_menu_list()
 
-S3 = A0;
+rb = A0;
 
 system_cdrom_read_chain();
 S0 = V0;
@@ -4584,7 +4589,7 @@ S0 = V0;
 [SP + 1c] = h(16c); // w
 [SP + 1e] = h(db); // h
 
-A0 = 800706a4 + S3 * 5c; // settings
+A0 = 800706a4 + rb * 5c; // settings
 A1 = SP + 18; // additional offset
 func26a94(); // add draw env
 
@@ -4626,7 +4631,7 @@ switch( w[GP + b4] )
 
     // init new menu
     // hide all menu items
-    // play animation thac collapse menu window and move selected menu to top
+    // play animation that collapse menu window and move selected menu to top
     case 2:
     {
         if( w[GP + 1dc] != 0 ) // menu change animation frames and fade
@@ -4786,7 +4791,7 @@ if( w[GP + 27c] == 1 )
     [SP + 1c] = h(56);
     [SP + 1e] = h(w[GP + ac] - 6);
 
-    A0 = 800706a4 + S3 * 5c;
+    A0 = 800706a4 + rb * 5c;
     A1 = SP + 18;
     func26a94(); // add draw env
 }
@@ -4954,9 +4959,9 @@ return (A0 / w[80049484]) * a + (A0 % w[80049484]) / w[80049488];
 
 
 ////////////////////////////////
-// func23ad4()
+// system_menu_draw_main_menu()
 
-[SP + 478] = w(A0);
+frame = A0;
 
 if( w[GP + 24c] != 0 )
 {
@@ -4989,10 +4994,10 @@ if( ( w[GP + b4] == 1 ) && ( w[GP + 27c] == 1 ) )
 
                     A0 = 2;
                     A1 = menu_id;
-                    func2305c();
+                    system_menu_set_menu_list_animation();
 
                     A0 = menu_id;
-                    func2120c(); // load menu
+                    system_menu_load_menu_file_by_id();
 
                     if( pos == 8 ) // phs menu
                     {
@@ -5018,7 +5023,7 @@ if( ( w[GP + b4] == 1 ) && ( w[GP + 27c] == 1 ) )
                 A0 = 4;
                 system_menu_sound();
 
-                [GP + 2b0] = h(3);
+                [GP + 2b0] = h(3); // step value for dissapearing
                 [GP + 27c] = w(2);
             }
         }
@@ -5054,13 +5059,13 @@ if( ( w[GP + b4] == 1 ) && ( w[GP + 27c] == 1 ) )
 
                 A0 = 2;
                 A1 = menu_id;
-                func2305c();
+                system_menu_set_menu_list_animation();
 
                 A0 = menu_id;
-                func2120c(); // load menu
+                system_menu_load_menu_file_by_id();
 
                 [GP + 220] = w(0); // menu list selection
-                [GP + 228] = w(b[8009a0e5]);
+                [GP + 228] = w(b[8009a0c8 + 1 * 12 + b]);
             }
         }
     }
@@ -5215,34 +5220,34 @@ if( ( w[GP + b4] == 1 ) && ( w[GP + 27c] == 1 ) )
     }
 }
 
-if( w[GP + b4] == 1 )
+if( w[GP + b4] == 1 ) // normal menu list
 {
-    if( w[GP + 27c] == 1 )
+    if( w[GP + 27c] == 1 ) // menu on screen
     {
         if( w[GP + 220] == 0 ) // menu list selection
         {
             A0 = 10b;
-            A1 = d + b[8009a0c8 + 0 * 24 + b] * c;
+            A1 = d + b[8009a0c8 + 0 * 12 + b] * c;
             system_menu_add_cursor_to_render();
         }
         else if( w[GP + 220] == 1 ) // character selection
         {
-            if( w[SP + 478] & 2 )
+            if( frame & 2 ) // blinking selected
             {
                 A0 = 10b;
-                A1 = d + b[8009a0c8 + 0 * 24 + b] * c;
+                A1 = d + b[8009a0c8 + 0 * 12 + b] * c;
                 system_menu_add_cursor_to_render();
             }
 
             A0 = 0;
-            A1 = 2f + b[8009a0c8 + 1 * 24 + b] * 3c;
+            A1 = 2f + b[8009a0c8 + 1 * 12 + b] * 3c;
             system_menu_add_cursor_to_render();
         }
         else if( w[GP + 220] == 2 ) // order menu
         {
-            if( w[SP + 478] & 2 )
+            if( frame & 2 ) // blinking selected
             {
-                if( w[GP + 23c] != 0 )
+                if( w[GP + 23c] != 0 ) // if char selected
                 {
                     A0 = -4;
                     A1 = 2b + w[GP + 2d8] * 3c;
@@ -5250,12 +5255,12 @@ if( w[GP + b4] == 1 )
                 }
 
                 A0 = 10b;
-                A1 = d + b[8009a0c8 + 0 * 24 + b] * c;
+                A1 = d + b[8009a0c8 + 0 * 12 + b] * c;
                 system_menu_add_cursor_to_render();
             }
 
             A0 = 0;
-            A1 = b[8009a0c8 + 2 * 24 + b] * 3c + 2f;
+            A1 = b[8009a0c8 + 2 * 12 + b] * 3c + 2f;
             system_menu_add_cursor_to_render();
         }
     }
@@ -5421,10 +5426,10 @@ for( int i = 0; i < 3; ++i )
         limit = bu[8009c6e4 + 54 + save_char_id * 84 + f]; // limit progress bar
         if( limit == ff )
         {
-            frame = (w[SP + 478] / 2) & 7;
-            r = bu[8004948c + frame * 3];
-            g = bu[8004948d + frame * 3];
-            b = bu[8004948e + frame * 3];
+            color = (frame / 2) & 7;
+            r = bu[8004948c + color * 3];
+            g = bu[8004948d + color * 3];
+            b = bu[8004948e + color * 3];
         }
         else
         {
@@ -5519,27 +5524,23 @@ system_menu_set_window_rect();
 A0 = SP + 28;
 system_menu_draw_window();
 
-if( w[GP + 27c] != 0 )
+if( w[GP + 27c] == 0 ) // appearing
 {
-    if( w[GP + 27c] == 2 )
-    {
-        [GP + 164] = h(hu[GP + 164] + hu[GP + 2b0]);
+    [GP + 164] = h(h[GP + 164] + h[GP + 2b0]);
 
-        if( h[GP + 164] >= 65 )
-        {
-            [GP + 27c] = w(-1);
-        }
-    }
-}
-else
-{
-    V0 = h[GP + 164];
-    [GP + 164] = h(V0 + h[GP + 2b0]);
-
-    if( V0 < 14 )
+    if( h[GP + 164] < 14 )
     {
         [GP + 164] = h(14);
         [GP + 27c] = w(1);
+    }
+}
+else if( w[GP + 27c] == 2 ) // dissapearing
+{
+    [GP + 164] = h(hu[GP + 164] + hu[GP + 2b0]);
+
+    if( h[GP + 164] >= 65 )
+    {
+        [GP + 27c] = w(-1);
     }
 }
 ////////////////////////////////
@@ -5563,9 +5564,9 @@ system_psyq_put_drawenv();
 
 tutorial_data = A0;
 
-[GP + b4] = w(1);
+[GP + b4] = w(1); // normal menu list
 
-[GP + 27c] = w(0);
+[GP + 27c] = w(0); // menu appearing
 [GP + 1c8] = w(0);
 [GP + 250] = w(0);
 
@@ -5612,7 +5613,7 @@ A1 = 8007075c;
 func21044();
 
 [GP + 164] = h(64);
-[GP + 2b0] = h(-3);
+[GP + 2b0] = h(-3); // step value for appearing
 
 A0 = SP + 20;
 func25cd4();
@@ -5620,16 +5621,18 @@ func25cd4();
 A0 = 800756f8;
 system_menu_load_character_clut_from_ram();
 
-[GP + 27c] = w(0);
+[GP + 27c] = w(0); // menu appearing
 
 func2368c();
 
 S4 = -1;
 S0 = 0;
-S1 = SP + 0720;
-[GP + 0214] = w(0);
+S1 = SP + 720;
 
-L24b90:	; 80024B90
+[GP + 214] = w(0);
+
+do
+{
     func1cb48(); // update pressed repeated buttons mask
 
     [80062f24] = w(80077f64 + w[GP + 214] * 3400);
@@ -5649,9 +5652,9 @@ L24b90:	; 80024B90
             {
                 A0 = 28;
                 A1 = ce;
-                A2 = 80049320; // text "Tutorial"
+                A2 = 80049320; // "Tutorial"
                 A3 = 4;
-                system_menu_draw_string(); // text
+                system_menu_draw_string();
 
                 A0 = 80049320;
                 system_get_single_string_width();
@@ -5673,6 +5676,8 @@ L24b90:	; 80024B90
 
     V0 = w[GP + b4];
 
+    // if collapse, switch or expands
+    // we need to update as old menu
     if( ( V0 == 2 ) || ( V0 == 4 ) || ( V0 == 5 ) )
     {
         V0 = w[GP + 8c] * 4;
@@ -5683,10 +5688,10 @@ L24b90:	; 80024B90
     }
 
     V0 = 800493fc + V0;
-    A9 = S0;
+    A0 = S0;
     80024CB4	jalr   v0 ra // call menu draw function, at least config here
 
-    //  0 80023AD4 // main func23ad4
+    //  0 80023AD4 // main - system_menu_draw_main_menu()
     //  1 801D0E80 // item func1d0e80
     //  2 801D0490 // magic
     //  3 801D6C2C // materia
@@ -5739,11 +5744,9 @@ L24b90:	; 80024B90
 
     system_psyq_draw_otag();
 
-    V0 = w[GP + 0214];
-    V1 = w[GP + 027c];
-    V0 = V0 ^ 0001;
-    [GP + 0214] = w(V0);
-80024D38	bne    v1, s4, L24b90 [$80024b90]
+    [GP + 214] = w(w[GP + 214] ^ 1);
+
+} while( w[GP + 27c] != S4 )
 
 A0 = SP + 20;
 system_menu_load_character_clut_from_ram();

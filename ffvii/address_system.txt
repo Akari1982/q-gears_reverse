@@ -61,6 +61,8 @@
     0000000A       10
     00000001        1
 
+80049450 array of cursor pos to menu id (0x1 size ) 01 02 03 04 05 06 07 08 09 0A 0B
+
 80049520 array materia type to something (0x1 size 0x5 items)
     09 05 08 04 0A
 
@@ -147,7 +149,14 @@
     + a4            [][]     y position of tutorial text window.
     + a8 (80062dec) [][][][] pointer to menu load address.
     + ac            [][][][] menu window height.
-    + b4            [][][][] enable or disable input in menu? we only handle input if this == 1. Tutorial opcode readed if this != 1.
+    + b4            [][][][] type of menu show.
+                             0 - normal single menu item header
+                             1 - normal menu list
+                             2 - collapse menu
+                             3 - fadeout
+                             4 - change from one menu to another without return
+                             5 - back to main menu
+                             6 - play fadeout and menu list expand animation
     + b8            []       number of letters in string to render.
     + b0            []       global or single letter draw mode for menu text render (0 - single letter, whole string otherwise).
     +110            []       store array of values from 0x5 type materia to use in paired functions.
@@ -197,10 +206,12 @@
     +258            [][][][] text row count.
     +278            [][][][] total number of stars currently parsing materia has.
     +27c            [][][][] state of main menu.
-                             0 - appearing or disappearing
-                             1 - cursor in menu list
-                             2 - cursor in party list
+                            -1 - dissapear complete.
+                             0 - appearing.
+                             1 - appear complete.
+                             2 - disappearing.
     +280 (80062fc4) [][][][] menu OT for render (store needed OT here for all menu render).
+    +2b0            [][]     value step of menu appearing/disappearing.
     +2b8            []       we store magic number here according to added materia. (0x11 in case Underwater or HP<->MP)
     +2d8            [][][][] selected char in order menu.
     +2dc            []       0 - we load battle, 1 - we load menu.
