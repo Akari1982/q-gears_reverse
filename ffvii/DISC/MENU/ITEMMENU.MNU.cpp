@@ -962,7 +962,7 @@ A1 = V0 << 03;
 A1 = A1 - V0;
 A1 = A1 << 03;
 A1 = A1 + 004b;
-system_menu_add_cursor_to_render();
+system_menu_draw_cursor();
 
 V0 = S7 & 0002;
 
@@ -972,7 +972,7 @@ A0 = 00a9;
 A1 = b[801d3df9];
 801D0F8C	nop
 A1 = A1 << 04;
-801D0F94	jal    $system_menu_add_cursor_to_render
+801D0F94	jal    $system_menu_draw_cursor
 A1 = A1 + 003c;
 
 L1d0f9c:	; 801D0F9C
@@ -1003,7 +1003,7 @@ V0 = w[801d0020 + V0];
     A0 = V0 << 03;
     A0 = A0 - V0;
     A0 = A0 << 03;
-    801D100C	jal    $system_menu_add_cursor_to_render
+    801D100C	jal    $system_menu_draw_cursor
     A0 = A0 + 0008;
     801D1014	j      L1d12d8 [$801d12d8]
     801D1018	nop
@@ -1014,12 +1014,12 @@ V0 = w[801d0020 + V0];
         {
             A0 = b[801d3de6] * 38 + 8;
             A1 = c;
-            system_menu_add_cursor_to_render();
+            system_menu_draw_cursor();
         }
 
         A0 = a9;
         A1 = b[801d3df9] * 10 + 3c;
-        system_menu_add_cursor_to_render();
+        system_menu_draw_cursor();
 
         S4 = h[801d3df0] + b[801d3df9];
 
@@ -1052,7 +1052,7 @@ V0 = w[801d0020 + V0];
     A0 = V0 << 03;
     A0 = A0 - V0;
     A0 = A0 << 03;
-    801D109C	jal    $system_menu_add_cursor_to_render
+    801D109C	jal    $system_menu_draw_cursor
     A0 = A0 + 0008;
 
     L1d10a4:	; 801D10A4
@@ -1071,7 +1071,7 @@ V0 = w[801d0020 + V0];
     A0 = V0 << 03;
     A0 = A0 - V0;
     A0 = A0 << 03;
-    801D10E0	jal    $system_menu_add_cursor_to_render
+    801D10E0	jal    $system_menu_draw_cursor
     A0 = A0 + 0008;
 
     L1d10e8:	; 801D10E8
@@ -1085,7 +1085,7 @@ V0 = w[801d0020 + V0];
     A0 = A0 + V1;
     A0 = A0 + 0003;
     A1 = A1 << 04;
-    801D1118	jal    $system_menu_add_cursor_to_render
+    801D1118	jal    $system_menu_draw_cursor
     A1 = A1 + 003c;
     V0 = b[801d3e1d];
     V1 = h[801d3e14];
@@ -1121,7 +1121,7 @@ V0 = w[801d0020 + V0];
     A0 = V0 << 03;
     A0 = A0 - V0;
     A0 = A0 << 03;
-    801D118C	jal    $system_menu_add_cursor_to_render
+    801D118C	jal    $system_menu_draw_cursor
     A0 = A0 + 0008;
     S0 = 0;
 
@@ -1138,7 +1138,7 @@ V0 = w[801d0020 + V0];
     A1 = A1 << 02;
     V0 = h[801d3d76];
     A1 = A1 + 0008;
-    801D11D8	jal    $system_menu_add_cursor_to_render
+    801D11D8	jal    $system_menu_draw_cursor
     A1 = V0 + A1;
 
     loop1d11e0:	; 801D11E0
@@ -1181,7 +1181,7 @@ V0 = w[801d0020 + V0];
     A0 = V0 << 03;
     A0 = A0 - V0;
     A0 = A0 << 03;
-    801D1274	jal    $system_menu_add_cursor_to_render
+    801D1274	jal    $system_menu_draw_cursor
     A0 = A0 + 0008;
 
     L1d127c:	; 801D127C
@@ -1342,7 +1342,7 @@ V0 = V1 + 000b;
 V0 = V0 < 010f;
 801D14E4	beq    v0, zero, L1d14f4 [$801d14f4]
 A0 = 00a5;
-801D14EC	jal    $system_menu_add_cursor_to_render
+801D14EC	jal    $system_menu_draw_cursor
 A1 = V1 + 0038;
 
 L1d14f4:	; 801D14F4
@@ -1350,7 +1350,7 @@ A0 = 00a9;
 A1 = b[801d3e41];
 S5 = 0005;
 A1 = A1 << 04;
-801D1508	jal    $system_menu_add_cursor_to_render
+801D1508	jal    $system_menu_draw_cursor
 A1 = A1 + 003c;
 801D1510	j      L1d151c [$801d151c]
 801D1514	nop

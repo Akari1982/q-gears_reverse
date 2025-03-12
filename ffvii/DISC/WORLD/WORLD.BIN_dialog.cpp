@@ -123,7 +123,7 @@ if( V0 != 0 )
     A1 = 1;
     A2 = w[800bd130]; // OT for render
     A3 = V0 < 1;
-    system_menu_add_dialog_to_render();
+    system_menu_draw_dialog();
 }
 ////////////////////////////////
 

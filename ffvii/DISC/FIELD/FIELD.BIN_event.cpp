@@ -118,7 +118,7 @@ if( bu[80071e2c] ) // if at least 1 window is opened
     A2 = ot;
     field_struct = w[8009c6e0];
     A3 = bu[field_struct + 0] ^ 1;
-    system_menu_add_dialog_to_render();
+    system_menu_draw_dialog();
 }
 
 A0 = ot;

@@ -608,7 +608,7 @@
 // func1d56c
 8001D56C-8001D6A4
 ////////////////////////////////
-// system_menu_add_dialog_string_to_render
+// system_menu_draw_dialog_string
 8001D6A8-8001DE08
 ////////////////////////////////
 // system_menu_set_window_rect
@@ -629,22 +629,22 @@
 // func1def0
 8001DEF0-8001DF20
 ////////////////////////////////
-// system_menu_add_colored_rect_to_render
+// system_menu_draw_colored_rect
 8001DF24-8001E03C
 ////////////////////////////////
 // system_menu_draw_window
 8001E040-8001EB28
 ////////////////////////////////
-// system_menu_add_cursor_to_render
+// system_menu_draw_cursor
 8001EB2C-8001EC6C
 ////////////////////////////////
-// system_menu_add_timer_to_render
+// system_menu_draw_dialog_timer
 8001EC70-8001EF80
 ////////////////////////////////
-// system_menu_add_digits_to_render
+// system_menu_draw_dialog_digits
 8001EF84-8001F1B8
 ////////////////////////////////
-// system_menu_add_dialog_to_render
+// system_menu_draw_dialog
 8001F1BC-8001F6A8
 ////////////////////////////////
 // func1f6ac
@@ -707,7 +707,7 @@
 // system_menu_draw_char_name_lv_hp_mp_by_party_id
 80020B68-80021040
 ////////////////////////////////
-// func21044
+// system_menu_create_drawenv_dispenv
 80021044-800211B4
 ////////////////////////////////
 // func211b8
@@ -923,7 +923,7 @@
 // system_menu_load_character_clut_from_ram
 80025C94-80025CD0
 ////////////////////////////////
-// func25cd4
+// system_menu_store_character_clut_to_ram
 80025CD4-80025D10
 ////////////////////////////////
 // system_menu_load_image

@@ -48,7 +48,7 @@ if( w[801d07f0] == 0 )
 {
     A0 = 0; // x
     A1 = h[801d07f4 + 1 * 8 + 2] + b[801d0860 + b] * 40 + 20; // y
-    system_menu_add_cursor_to_render();
+    system_menu_draw_cursor();
 }
 
 A0 = 10; // x

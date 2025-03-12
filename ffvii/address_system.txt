@@ -191,7 +191,7 @@
     +1dc            [][][][] menu change fade and current animation frame.
     +208            [][]     menu visibility mask.
     +20c            [][]     menu locking mask.
-    +214 (80062f58) [][][][] 
+    +214 (80062f58) [][][][] frame buffer id.
     +220            [][][][] current main menu state
                              0 - menu list selection
                              1 - party selection
@@ -206,7 +206,7 @@
     +258            [][][][] text row count.
     +278            [][][][] total number of stars currently parsing materia has.
     +27c            [][][][] state of main menu.
-                            -1 - dissapear complete.
+                            -1 - dissapear complete (exit menu cycle).
                              0 - appearing.
                              1 - appear complete.
                              2 - disappearing.
@@ -646,11 +646,17 @@
                     Store 0x0000 here in all cases in AKAO2 and AKAO.
     +18 [][][][] clear with 0.
 
-
-
 8009a0c8 array of menu cursor data (0x12 size).
-    +0b []       vertical cursor position.
-    +0d []       total number of vertical positions.
+    + 2 [][]     current page
+    + 6 [][]     max page
+    + 8 [][]     page scroll dir (0 - not scroll, 1 - down, 2 - up)
+    + a []       x cursor pos
+    + b []       y cursor pos
+    + c []       x pos items
+    + d []       y pos items
+    + f []       ???
+    +10 []       x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move)
+    +11 []       y warp around (0 - not warp)
 
 8009a104 start of music channels config
     +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
