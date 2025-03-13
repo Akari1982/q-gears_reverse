@@ -4606,8 +4606,8 @@ switch( w[GP + b4] )
                 menu_id = w[GP + 90];
 
                 // init functions
-                // 0 8002368C main
-                // 1 801D0BA0 item
+                // 0 8002368C main func2368c()
+                // 1 801D0BA0 item func1d0ba0()
                 // 2 801D0164 magic
                 // 3 801D3CB0 materia
                 // 4 801D0574
@@ -4824,12 +4824,12 @@ func26a94(); // add draw env
 A0 = 8009a0c8 + 0 * 12; // menu list
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
-A3 = 1; // max x pos
-A4 = a; // max y pos
+A3 = 1; // x pos items
+A4 = a; // y pos items
 A5 = 0;
-A6 = 0; // cur page
+A6 = 0; // scroll pos
 A7 = 1;
-A8 = a; // max page
+A8 = a; // total y items
 A9 = 0;
 A10 = 0;
 A11 = 0; // x warp
@@ -4840,12 +4840,12 @@ func26448();
 A0 = 8009a0c8 + 1 * 12; // char selection 1
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
-A3 = 1; // max x pos
-A4 = 3; // max y pos
+A3 = 1; // x pos items
+A4 = 3; // y pos items
 A5 = 0;
-A6 = 0; // cur page
+A6 = 0; // scroll pos
 A7 = 1;
-A8 = 3; // max page
+A8 = 3; // total y items
 A9 = 0;
 A10 = 0;
 A11 = 0; // x warp
@@ -4856,12 +4856,12 @@ func26448();
 A0 = 8009a0c8 + 2 * 12; // char selection 2
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
-A3 = 1; // max x pos
-A4 = 3; // max y pos
+A3 = 1; // x pos items
+A4 = 3; // y pos items
 A5 = 0;
-A6 = 0; // cur page
+A6 = 0; // scroll pos
 A7 = 1;
-A8 = 3; // max page
+A8 = 3; // total y items
 A9 = 0;
 A10 = 0;
 A11 = 0; // x warp
@@ -5640,7 +5640,7 @@ do
     80024CB4	jalr   w[800493fc + menu_id * 4] ra // call menu draw function
 
     //  0 80023AD4 // main - system_menu_draw_main_menu()
-    //  1 801D0E80 // item func1d0e80
+    //  1 801D0E80 // item func1d0e80()
     //  2 801D0490 // magic
     //  3 801D6C2C // materia
     //  4 801D0BD0
@@ -7189,7 +7189,10 @@ if( pressed & 1000 ) // up
     {
         if( ( b[data + 11] >= 0 ) && ( b[data + 11] < 3 ) )
         {
-            if( b[data + b] < 0 ) [data + b] = b(bu[data + d] - 1);
+            if( b[data + b] < 0 )
+            {
+                [data + b] = b(bu[data + d] - 1);
+            }
 
             A0 = 1;
             system_menu_sound();
@@ -7359,6 +7362,7 @@ else if( pressed & 2000 ) // right
                     }
                 }
             }
+
             A0 = 1;
             system_menu_sound();
         }

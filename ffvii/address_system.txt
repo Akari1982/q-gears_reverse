@@ -647,16 +647,16 @@
     +18 [][][][] clear with 0.
 
 8009a0c8 array of menu cursor data (0x12 size).
-    + 2 [][]     current page
-    + 6 [][]     max page
-    + 8 [][]     page scroll dir (0 - not scroll, 1 - down, 2 - up)
-    + a []       x cursor pos
-    + b []       y cursor pos
-    + c []       x pos items
-    + d []       y pos items
-    + f []       ???
-    +10 []       x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move)
-    +11 []       y warp around (0 - not warp)
+    + 2 [][]     scroll pos.
+    + 6 [][]     total y items.
+    + 8 [][]     scroll dir (0 - not scroll, 1 - up, 2 - down).
+    + a []       x cursor pos.
+    + b []       y cursor pos.
+    + c []       x pos items.
+    + d []       y pos items.
+    + f []       scroll animation frame.
+    +10 []       x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move).
+    +11 []       y warp around (0 - not warp).
 
 8009a104 start of music channels config
     +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
