@@ -919,70 +919,52 @@ frame = A0;
 A0 = w[80062f58];
 system_menu_draw_menu_list();
 
-V1 = w[801d3e48];
-V0 = 0002;
-801D0EC4	bne    v1, v0, L1d0fb8 [$801d0fb8]
-801D0EC8	nop
-V0 = w[801d3e5c];
-801D0ED4	nop
-801D0ED8	bne    v0, zero, L1d0f7c [$801d0f7c]
-V0 = frame & 0002;
-V0 = b[801d3df9];
-V1 = h[801d3df0];
-V0 = V0 + V1;
-V0 = V0 << 01;
-V0 = hu[8009cbe0 + V0];
-V1 = V0 & 01ff;
-V0 = 0006;
-801D0F18	beq    v1, v0, L1d0f30 [$801d0f30]
-
-V0 = 0046;
-801D0F24	bne    v1, v0, L1d0f58 [$801d0f58]
-A0 = 0;
-
-L1d0f30:	; 801D0F30
-801D0F2C	lui    v0, $5555
-V0 = V0 | 5556;
-801D0F34	mult   frame, v0
-A0 = 0;
-V1 = frame >> 1f;
-801D0F40	mfhi   t0
-V1 = T0 - V1;
-V0 = V1 << 01;
-V0 = V0 + V1;
-801D0F50	j      L1d0f60 [$801d0f60]
-V0 = frame - V0;
-
-L1d0f58:	; 801D0F58
-V0 = b[801d3e0b];
-
-L1d0f60:	; 801D0F60
-A1 = V0 << 03;
-A1 = A1 - V0;
-A1 = A1 << 03;
-A1 = A1 + 004b;
-system_menu_draw_cursor();
-
-V0 = frame & 0002;
-
-L1d0f7c:	; 801D0F7C
-if( V0 != 0 )
+if( w[801d3e48] == 2 )
 {
-    A0 = a9;
-    A1 = b[801d3df9];
-    A1 = A1 << 04;
-    A1 = A1 + 3c;
-    system_menu_draw_cursor();
+    if( w[801d3e5c] == 0 )
+    {
+        V0 = h[801d3df0] + b[801d3df9];
+        V0 = hu[8009cbe0 + V0 * 2];
+        V1 = V0 & 1ff;
+
+        if( ( V1 == 6 ) || ( V1 == 46 ) )
+        {
+            V0 = 55555556;
+            801D0F34	mult   frame, v0
+            V1 = frame >> 1f;
+            801D0F40	mfhi   t0
+            V1 = T0 - V1;
+            V0 = V1 << 01;
+            V0 = V0 + V1;
+            V0 = frame - V0;
+        }
+        else
+        {
+            V0 = b[801d3e0b];
+        }
+
+        A0 = 0;
+        A1 = 4b + V0 * 38;
+        system_menu_draw_cursor();
+    }
+
+    if( frame & 2 )
+    {
+        A0 = a9;
+        A1 = 3c + b[801d3df9] * 10;
+        system_menu_draw_cursor();
+    }
+
+    if( w[801d3e5c] != 0 )
+    {
+        [801d3e5c] = w(w[801d3e5c] - 1);
+    }
 }
 
-if( w[801d3e5c] != 0 ) [801d3e5c] = w(w[801d3e5c] - 1);
-
-L1d0fb8:	; 801D0FB8
 A0 = 80;
 func26b5c();
 
-V1 = w[801d3e48];
-switch( V1 )
+switch( w[801d3e48] )
 {
     case 0:
     {
@@ -1033,9 +1015,7 @@ switch( V1 )
             system_menu_draw_cursor();
         }
 
-        V1 = b[801d3df9];
-        V0 = h[801d3df0];
-        S4 = V1 + V0;
+        S4 = h[801d3df0] + b[801d3df9];
         A1 = hu[8009cbe0 + S4 * 2];
         if( ( A1 & ffff ) != ffff )
         {
@@ -1063,23 +1043,16 @@ switch( V1 )
         }
 
         V1 = b[801d3e1c];
-        A1 = b[801d3e1d];
-        A0 = V1 << 02;
-        A0 = A0 + V1;
-        V0 = A0 << 05;
-        A0 = A0 + V0;
-        A0 = A0 + V1;
-        A0 = A0 + 3;
-        A1 = A1 << 04;
-        A1 = A1 + 3c;
+        A0 = V1 << 02; // *4
+        A0 = A0 + V1; // *5
+        V0 = A0 << 05; // *a0
+        A0 = A0 + V0; // *a5
+        A0 = A0 + V1; // *a6
+        A0 = 3 + A0;
+        A1 = 3c + b[801d3e1d] * 10;
         system_menu_draw_cursor();
 
-        V0 = b[801d3e1d];
-        V1 = h[801d3e14];
-        V0 = V0 + V1;
-        V1 = b[801d3e1c];
-        V0 = V0 << 01;
-        S4 = V0 + V1;
+        S4 = (h[801d3e14] + b[801d3e1d]) * 2 + b[801d3e1c];
         A1 = bu[801d3d90 + S4];
 
         if( A1 != ff )
@@ -1289,16 +1262,17 @@ V0 = V1 + 000b;
 V0 = V0 < 010f;
 801D14E4	beq    v0, zero, L1d14f4 [$801d14f4]
 A0 = 00a5;
-801D14EC	jal    $system_menu_draw_cursor
-A1 = V1 + 0038;
+A1 = V1 + 38;
+system_menu_draw_cursor();
 
 L1d14f4:	; 801D14F4
 A0 = 00a9;
 A1 = b[801d3e41];
 S5 = 0005;
 A1 = A1 << 04;
-801D1508	jal    $system_menu_draw_cursor
 A1 = A1 + 003c;
+system_menu_draw_cursor();
+
 801D1510	j      L1d151c [$801d151c]
 801D1514	nop
 
@@ -1336,119 +1310,82 @@ V0 = h[AT + 0000];
 S6 = 000b;
 
 L1d15b0:	; 801D15B0
-801D15B0	jal    $func26b5c
-A0 = 0009;
-801D15B8	beq    s6, zero, L1d1664 [$801d1664]
-S2 = 0;
+A0 = 9;
+func26b5c();
 
-loop1d15c0:	; 801D15C0
-    V0 = h[801d3dde + S0];
-    S1 = V0 + S2;
-    V0 = S1 << 01;
-    801D15DC	lui    at, $800a
-    801D15E0	addiu  at, at, $cbe0 (=-$3420)
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = ffff;
+for( int i = 0; i < S6; ++i )
+{
+    S1 = h[801d3dde + S0] + i;
+    A0 = hu[8009cbe0 + S1 * 2];
+
     V1 = A0 & ffff;
-    801D15F4	beq    v1, v0, L1d1654 [$801d1654]
-    S4 = A0 & 01ff;
-    801D15FC	jal    func1d0dcc [$801d0dcc]
-    A0 = S4;
-    V0 = V0 & 0004;
-    V0 = V0 < 0001;
-    V0 = 0 - V0;
-    S3 = V0 & 0007;
-    A0 = 0004;
-    A1 = S4;
-    A2 = 8;
-    func15248();
+    if( V1 != ffff )
+    {
+        S4 = A0 & 1ff;
 
-    A0 = d6;
-    A2 = V0;
-    A3 = S3;
-    A1 = b[801d3deb + S0];
-    V0 = S2 << 04;
-    A1 = A1 << 02;
-    A1 = A1 + 3a;
-    A1 = V0 + A1;
-    system_menu_draw_string();
+        A0 = S4;
+        func1d0dcc();
 
-    L1d1654:	; 801D1654
-    S2 = S2 + 0001;
-    V0 = S2 < S6;
-801D165C	bne    v0, zero, loop1d15c0 [$801d15c0]
-801D1660	nop
+        V0 = V0 & 0004;
+        V0 = V0 < 0001;
+        V0 = 0 - V0;
+        S3 = V0 & 0007;
 
-L1d1664:	; 801D1664
-801D1664	beq    s6, zero, L1d1864 [$801d1864]
-S2 = 0;
-V0 = S5 << 03;
-V0 = V0 + S5;
-S5 = V0 << 01;
+        A0 = 4;
+        A1 = S4;
+        A2 = 8;
+        func15248();
 
-loop1d1678:	; 801D1678
-AT = 801d3dde;
-AT = AT + S5;
-V0 = h[AT + 0000];
-801D1688	nop
-S1 = V0 + S2;
-V0 = S1 << 01;
-801D1694	lui    at, $800a
-801D1698	addiu  at, at, $cbe0 (=-$3420)
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = ffff;
-S1 = V1 & ffff;
-801D16AC	beq    s1, v0, L1d175c [$801d175c]
-S4 = V1 & 01ff;
-A0 = S4;
-801D16B8	jal    func1d0dcc [$801d0dcc]
-S1 = S1 >> 09;
-V0 = V0 & 0004;
-V0 = V0 < 0001;
-V0 = 0 - V0;
-S3 = V0 & 0007;
-A0 = 00c4;
-A2 = S4;
-A3 = 0;
-AT = 801d3deb;
-AT = AT + S5;
-A1 = b[AT + 0000];
-S0 = S2 << 04;
-A1 = A1 << 02;
-A1 = A1 + 0038;
-801D16F8	jal    func1d0228 [$801d0228]
-A1 = S0 + A1;
-A0 = 013f;
-A2 = 00d5;
-AT = 801d3deb;
-AT = AT + S5;
-A1 = b[AT + 0000];
-A3 = S3;
-A1 = A1 << 02;
-A1 = A1 + 003c;
-801D1724	jal    $system_menu_draw_single_font_letter
-A1 = S0 + A1;
-A0 = 0140;
-A2 = S1;
-AT = 801d3deb;
-AT = AT + S5;
-A1 = b[AT + 0000];
-A3 = 0003;
-[SP + 0010] = w(S3);
-A1 = A1 << 02;
-A1 = A1 + 003b;
-801D1754	jal    $system_menu_draw_digits_without_leading_zeroes
-A1 = S0 + A1;
+        A0 = d6;
+        A1 = 3a + i * 10 + b[801d3deb + S0] * 4;
+        A2 = V0;
+        A3 = S3;
+        system_menu_draw_string();
+    }
+}
 
-L1d175c:	; 801D175C
-S2 = S2 + 0001;
-V0 = S2 < S6;
-801D1764	bne    v0, zero, loop1d1678 [$801d1678]
-801D1768	nop
+S5 = S5 * 12;
+
+for( int i = 0; i < S6; i++ )
+{
+    S1 = h[801d3dde + S5] + i;
+    V1 = hu[8009cbe0 + S1 * 2];
+    S1 = V1 & ffff;
+
+    if( S1 != ffff )
+    {
+        S4 = V1 & 1ff;
+
+        A0 = S4;
+        S1 = S1 >> 09;
+        func1d0dcc();
+
+        V0 = V0 & 0004;
+        V0 = V0 < 0001;
+        V0 = 0 - V0;
+        S3 = V0 & 0007;
+
+        A0 = c4;
+        A1 = 38 + i * 10 + b[801d3deb + S5] * 4;
+        A2 = S4;
+        A3 = 0;
+        func1d0228();
+
+        A0 = 13f;
+        A1 = 3c + i * 10 + b[801d3deb + S5] * 4;
+        A2 = d5;
+        A3 = S3;
+        system_menu_draw_single_font_letter();
+
+        A0 = 140;
+        A1 = 3b + i * 10 + b[801d3deb + S5] * 4;
+        A2 = S1;
+        A3 = 3;
+        A4 = S3;
+        system_menu_draw_digits_without_leading_zeroes();
+    }
+}
 801D176C	j      L1d1868 [$801d1868]
-A1 = SP + 0040;
 
 L1d1774:	; 801D1774
 A0 = 801d3e4c;
@@ -1507,10 +1444,8 @@ V0 = S2 < 000c;
 801D185C	bne    v0, zero, loop1d17e0 [$801d17e0]
 S0 = 0;
 
-L1d1864:	; 801D1864
-A1 = SP + 0040;
-
 L1d1868:	; 801D1868
+A1 = SP + 40;
 S0 = 0;
 S1 = 801d3d5c;
 V1 = w[80062f58];

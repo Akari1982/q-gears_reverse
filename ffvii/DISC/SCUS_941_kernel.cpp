@@ -130,22 +130,21 @@ return 80063690 + V1 + V0;
 
 
 ////////////////////////////////
-// func14dd0
-80014DD0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+// func14dd0()
+
 S0 = A2;
-[SP + 0014] = w(RA);
-80014DE0	jal    system_get_pointer_to_text_in_kernel_with_block_and_text_id [$80014d9c]
+
 A2 = 0;
+system_get_pointer_to_text_in_kernel_with_block_and_text_id();
+
 A0 = S0;
 A1 = V0;
-80014DF0	jal    func14d58 [$80014d58]
-80014DF4	addiu  a2, zero, $ffff (=-$1)
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80014E04	jr     ra 
-80014E08	nop
+A2 = -1;
+func14d58();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func14e0c
 80014E0C	addiu  sp, sp, $ffe8 (=-$18)
@@ -456,7 +455,7 @@ system_decompress_kernel_string_with_f9();
 
 ////////////////////////////////
 // func15248()
-// get some string
+// get kernel string
 
 A0 = A0; // 8
 V1 = A1; // text id??
@@ -1156,6 +1155,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // func15c3c()
+// load kernel from temp
 
 T0 = -1;
 80015C44	j      L15c78 [$80015c78]
