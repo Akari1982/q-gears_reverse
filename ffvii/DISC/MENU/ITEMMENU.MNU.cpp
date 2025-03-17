@@ -992,10 +992,10 @@ switch( w[801d3e48] )
         A1 = hu[8009cbe0 + S4 * 2];
         if( ( A1 & ffff ) != ffff )
         {
-            A0 = 4;
-            A1 = A1 & 1ff;
-            A2 = 0;
-            func15248();
+            A0 = 4; // items
+            A1 = A1 & 1ff; // id
+            A2 = 0; // description
+            system_kernel_get_string();
 
             A0 = 10;
             A1 = 23;
@@ -1019,10 +1019,10 @@ switch( w[801d3e48] )
         A1 = hu[8009cbe0 + S4 * 2];
         if( ( A1 & ffff ) != ffff )
         {
-            A0 = 4;
-            A1 = A1 & 1ff;
-            A2 = 0;
-            func15248();
+            A0 = 4; // items
+            A1 = A1 & 1ff; // id
+            A2 = 0; // description
+            system_kernel_get_string();
 
             A0 = 10;
             A1 = 23;
@@ -1057,9 +1057,9 @@ switch( w[801d3e48] )
 
         if( A1 != ff )
         {
-            A0 = e;
-            A2 = 0;
-            func15248();
+            A0 = e; // key item
+            A2 = 0; // description
+            system_kernel_get_string();
 
             A0 = 10;
             A1 = 23;
@@ -1126,10 +1126,10 @@ switch( w[801d3e48] )
         A1 = hu[8009cbe0 + S4 * 2];
         if( ( A1 & ffff ) != ffff )
         {
-            A0 = 4;
-            A1 = A1 & 1ff;
-            A2 = 0;
-            func15248();
+            A0 = 4; // item
+            A1 = A1 & 1ff; // id
+            A2 = 0; // description
+            system_kernel_get_string();
 
             A0 = 10;
             A1 = 23;
@@ -1331,10 +1331,10 @@ for( int i = 0; i < S6; ++i )
         V0 = 0 - V0;
         S3 = V0 & 0007;
 
-        A0 = 4;
-        A1 = S4;
-        A2 = 8;
-        func15248();
+        A0 = 4; // item
+        A1 = S4; // id
+        A2 = 8; // name
+        system_kernel_get_string();
 
         A0 = d6;
         A1 = 3a + i * 10 + b[801d3deb + S0] * 4;
@@ -1422,9 +1422,11 @@ AT = AT + S4;
 A1 = bu[AT + 0000];
 V0 = 00ff;
 801D1810	beq    a1, v0, L1d1844 [$801d1844]
-A0 = 000e;
-801D1818	jal    $func15248
-A2 = 0008;
+
+A0 = e; // key item
+A2 = 8; // name
+system_kernel_get_string();
+
 A0 = S3;
 A2 = V0;
 A1 = b[801d3e21];

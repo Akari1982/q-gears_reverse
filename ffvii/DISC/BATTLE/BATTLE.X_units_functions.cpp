@@ -8716,7 +8716,7 @@ if( V0 != 0 )
     A0 = 8;
     A1 = hu[800f1e50];
     A2 = 8;
-    func15248();
+    system_kernel_get_string();
 
     [800f55d4] = w(V0);
 
@@ -8797,7 +8797,7 @@ V0 = V0 + V1;
 V0 = V0 << 01;
 A1 = A1 + V0;
 A1 = bu[A1 + 004c];
-800DD18C	jal    func15248 [$80015248]
+800DD18C	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD194	j      Ldd658 [$800dd658]
 800DD198	nop
@@ -8807,7 +8807,7 @@ V0 = 0002;
 800DD1A8	bne    v1, v0, Ldd660 [$800dd660]
 A0 = 0005;
 A1 = 0012;
-800DD1B4	jal    func15248 [$80015248]
+800DD1B4	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD1BC	j      Ldd658 [$800dd658]
 800DD1C0	nop
@@ -8817,7 +8817,7 @@ V0 = 0002;
 800DD1D0	bne    v1, v0, Ldd660 [$800dd660]
 A0 = 0005;
 A1 = 0013;
-800DD1DC	jal    func15248 [$80015248]
+800DD1DC	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD1E4	j      Ldd658 [$800dd658]
 800DD1E8	nop
@@ -8850,7 +8850,7 @@ A1 = hu[AT + 0000];
 V0 = ffff;
 800DD260	beq    a1, v0, Ldd660 [$800dd660]
 A0 = 0004;
-800DD268	jal    func15248 [$80015248]
+800DD268	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD270	j      Ldd658 [$800dd658]
 800DD274	nop
@@ -8890,7 +8890,7 @@ A1 = bu[V0 + 0000];
 V0 = 00ff;
 800DD310	beq    a1, v0, Ldd660 [$800dd660]
 A0 = 0;
-800DD318	jal    func15248 [$80015248]
+800DD318	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD320	j      Ldd658 [$800dd658]
 800DD324	nop
@@ -8926,7 +8926,7 @@ A1 = bu[V1 + 0000];
 V0 = 00ff;
 800DD3B0	beq    a1, v0, Ldd660 [$800dd660]
 A0 = 0001;
-800DD3B8	jal    func15248 [$80015248]
+800DD3B8	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD3C0	j      Ldd658 [$800dd658]
 800DD3C4	nop
@@ -8964,7 +8964,7 @@ A1 = bu[V1 + 0000];
 V0 = 00ff;
 800DD458	beq    a1, v0, Ldd660 [$800dd660]
 A0 = 0002;
-800DD460	jal    func15248 [$80015248]
+800DD460	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD468	j      Ldd658 [$800dd658]
 800DD46C	nop
@@ -8988,7 +8988,7 @@ V0 = b[AT + 0000];
 V1 = V1 + A2;
 V1 = V1 + V0;
 A1 = bu[V1 + 0000];
-800DD4C8	jal    func15248 [$80015248]
+800DD4C8	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD4D0	j      Ldd658 [$800dd658]
 800DD4D4	nop
@@ -9021,7 +9021,7 @@ V0 = V0 + V1;
 V0 = V0 << 01;
 A1 = A1 + V0;
 A1 = bu[A1 + 004c];
-800DD558	jal    func15248 [$80015248]
+800DD558	jal    system_kernel_get_string [$80015248]
 A2 = 0;
 800DD560	j      Ldd658 [$800dd658]
 800DD564	nop
@@ -9048,14 +9048,14 @@ V0 = V0 < 0003;
 800DD5B8	bne    v0, zero, Ldd5d4 [$800dd5d4]
 A0 = 0008;
 A1 = 0006;
-800DD5C4	jal    func15248 [$80015248]
+800DD5C4	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 800DD5CC	j      Ldd658 [$800dd658]
 800DD5D0	nop
 
 Ldd5d4:	; 800DD5D4
 A1 = 0005;
-800DD5D8	jal    func15248 [$80015248]
+800DD5D8	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 800DD5E0	j      Ldd658 [$800dd658]
 800DD5E4	nop
@@ -9068,7 +9068,7 @@ V0 = A1 < 0003;
 800DD5F8	bne    v0, zero, Ldd614 [$800dd614]
 A0 = 0007;
 800DD600	addiu  a1, a1, $fffc (=-$4)
-800DD604	jal    func15248 [$80015248]
+800DD604	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 800DD60C	j      Ldd658 [$800dd658]
 800DD610	nop

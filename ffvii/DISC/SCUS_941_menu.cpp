@@ -2562,7 +2562,7 @@ if( ( menu_id != 0 ) && ( ( ( menu_id_old - 3 ) >= 2 ) || ( ( menu_id - 3 ) >= 2
 A1 = A0;
 A0 = d;
 A2 = 8;
-func15248();
+system_kernel_get_string();
 ////////////////////////////////
 
 
@@ -2573,7 +2573,7 @@ func15248();
 A1 = A0;
 A0 = 4;
 A2 = 8;
-func15248();
+system_kernel_get_string();
 ////////////////////////////////
 
 
@@ -2989,19 +2989,22 @@ V0 = 0100;
 [SP + 0026] = h(V0);
 system_add_draw_mode();
 
-A0 = 0008;
-A1 = 0018;
-800218B0	jal    func15248 [$80015248]
-A2 = 0008;
-A0 = 0020;
-A1 = 0026;
+A0 = 8;
+A1 = 18;
+A2 = 8;
+system_kernel_get_string();
+
+A0 = 20;
+A1 = 26;
 A2 = V0;
-800218C4	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-A0 = 0008;
-A1 = 0019;
-800218D4	jal    func15248 [$80015248]
-A2 = 0008;
+A3 = 7;
+system_menu_draw_string();
+
+A0 = 8;
+A1 = 19;
+A2 = 8;
+system_kernel_get_string();
+
 A0 = 00c8;
 A1 = 0026;
 A2 = V0;
@@ -3011,9 +3014,10 @@ V0 = w[GP + 015c];
 800218F4	nop
 800218F8	beq    v0, zero, L21a70 [$80021a70]
 A1 = 0015;
-A0 = 0008;
-80021904	jal    func15248 [$80015248]
-A2 = 0008;
+A0 = 8;
+A2 = 8;
+system_kernel_get_string();
+
 A0 = 0010;
 A1 = 000c;
 A2 = V0;
@@ -3021,8 +3025,9 @@ A2 = V0;
 A3 = 0007;
 A0 = 0008;
 A1 = 001a;
-80021928	jal    func15248 [$80015248]
-A2 = 0008;
+A2 = 8;
+system_kernel_get_string();
+
 A0 = 0018;
 A1 = 003e;
 A2 = V0;
@@ -3030,7 +3035,7 @@ A2 = V0;
 A3 = 0007;
 A0 = 0008;
 A1 = 001c;
-8002194C	jal    func15248 [$80015248]
+8002194C	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 00c0;
 A1 = 003e;
@@ -3039,7 +3044,7 @@ A2 = V0;
 A3 = 0007;
 A0 = 0008;
 A1 = 001b;
-80021970	jal    func15248 [$80015248]
+80021970	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 0018;
 A1 = 00ca;
@@ -3061,7 +3066,7 @@ A1 = h[AT + 0000];
 800219B8	beq    a1, v0, L21a50 [$80021a50]
 V0 = S2 + 0001;
 A0 = 0004;
-800219C4	jal    func15248 [$80015248]
+800219C4	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 0030;
 V1 = S0 << 05;
@@ -3085,7 +3090,7 @@ A0 = 0004;
 AT = 8009d808;
 AT = AT + S1;
 A1 = h[AT + 0000];
-80021A30	jal    func15248 [$80015248]
+80021A30	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 00e0;
 A1 = S0;
@@ -3107,7 +3112,7 @@ S1 = SP + 0028;
 L21a70:	; 80021A70
 A0 = 0008;
 A1 = 0016;
-80021A78	jal    func15248 [$80015248]
+80021A78	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 0010;
 A1 = 000c;
@@ -3116,7 +3121,7 @@ A2 = V0;
 A3 = 0007;
 A0 = 0008;
 A1 = 001d;
-80021A9C	jal    func15248 [$80015248]
+80021A9C	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 0018;
 A1 = 003e;
@@ -3342,7 +3347,7 @@ system_add_draw_mode();
 
 A0 = 0008;
 A1 = 0025;
-80021DF0	jal    func15248 [$80015248]
+80021DF0	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = S1 + 0020;
 A1 = S2 + 0012;
@@ -3384,7 +3389,7 @@ S3 = A3;
 A0 = 8;
 A1 = 24;
 A2 = 8;
-func15248();
+system_kernel_get_string();
 
 A0 = S1 + 2f;
 A1 = S2 + 12;
@@ -3400,7 +3405,7 @@ system_get_limit_command_id();
 A0 = 3;
 A1 = V0;
 A2 = 8;
-func15248();
+system_kernel_get_string();
 
 A0 = S1 + 8;
 A1 = S2 + 5;
@@ -3572,7 +3577,7 @@ system_add_draw_mode();
 
 A0 = 0008;
 A1 = 0010;
-800221A8	jal    func15248 [$80015248]
+800221A8	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 0010;
 A1 = S5 + 000c;
@@ -3581,7 +3586,7 @@ A2 = V0;
 A3 = 0007;
 A0 = 0008;
 A1 = 0013;
-800221CC	jal    func15248 [$80015248]
+800221CC	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = S3 + 0020;
 A1 = S7 | 0006;
@@ -3590,7 +3595,7 @@ A2 = V0;
 A3 = 0007;
 A0 = 0008;
 A1 = 0014;
-800221F0	jal    func15248 [$80015248]
+800221F0	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = S4 + 0030;
 T0 = 0020;
@@ -3933,7 +3938,7 @@ S2 = 0006;
 L2271c:	; 8002271C
 A0 = 0008;
 A1 = 002b;
-80022724	jal    func15248 [$80015248]
+80022724	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 006b;
 S4 = S7 << 10;
@@ -3945,7 +3950,7 @@ A2 = V0;
 A3 = S2;
 A0 = 0008;
 A1 = 002c;
-80022754	jal    func15248 [$80015248]
+80022754	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 00b8;
 A1 = S0;
@@ -3954,7 +3959,7 @@ A2 = V0;
 A3 = S2;
 A0 = 0008;
 A1 = 0009;
-80022778	jal    func15248 [$80015248]
+80022778	jal    system_kernel_get_string [$80015248]
 A2 = 0008;
 A0 = 00e2;
 A1 = S4 + 0009;

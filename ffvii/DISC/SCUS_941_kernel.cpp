@@ -15,27 +15,28 @@ loop14c48:	; 80014C48
 
 
 ////////////////////////////////
-// func14c70
-80014C70
-[GP + 00d8] = w(0);
-[GP + 00dc] = w(0);
-80014C78	jr     ra 
-80014C7C	nop
+// func14c70()
+// reset kernel string load
+
+[GP + d8] = w(0);
+[GP + dc] = w(0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func14c80()
+// get dst for next string pack
 
-V0 = w[GP + 00d8];
-V1 = V0 + 1;
-[GP + d8] = w(V1);
-V1 = w[GP + dc];
-A0 = V1 + A0;
-[80069490 + V0 * 2] = h(V1);
-[GP + 00dc] = w(A0);
-return 80063690 + V1;
+size = A0;
+
+pack_id = w[GP + d8];
+[GP + d8] = w(pack_id + 1);
+
+dst_offset = w[GP + dc];
+[80069490 + pack_id * 2] = h(dst_offset);
+[GP + dc] = w(dst_offset + size);
+return 80063690 + dst_offset;
 ////////////////////////////////
 
 
@@ -122,9 +123,12 @@ V0 = A0;
 ////////////////////////////////
 // system_get_pointer_to_text_in_kernel_with_block_and_text_id()
 
-V1 = hu[80069490 + (A0 + A2) * 2]; // 0x52ae
-V0 = hu[80063690 + V1 + A1 * 2]; // kernel begin
-return 80063690 + V1 + V0;
+pack_id = A0;
+string_id = A1;
+add = A2;
+
+offset = hu[80069490 + (pack_id + add) * 2];
+return 80063690 + offset + hu[80063690 + offset + string_id * 2];
 ////////////////////////////////
 
 
@@ -132,8 +136,12 @@ return 80063690 + V1 + V0;
 ////////////////////////////////
 // func14dd0()
 
+pack_id = A0;
+string_id = A1;
 S0 = A2;
 
+A0 = pack_id;
+A1 = string_id;
 A2 = 0;
 system_get_pointer_to_text_in_kernel_with_block_and_text_id();
 
@@ -180,18 +188,16 @@ V0 = A0;
 80014E6C	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func14e74
-80014E74	addiu  sp, sp, $ff98 (=-$68)
-[SP + 0060] = w(S4);
+
 S4 = A0;
-[SP + 0050] = w(S0);
 S0 = S4;
-[SP + 005c] = w(S3);
 S3 = SP + 0010;
-[SP + 0054] = w(S1);
 S1 = A1;
-[SP + 0064] = w(RA);
-[SP + 0058] = w(S2);
 
 L14ea0:	; 80014EA0
 S2 = bu[S1 + 0000];
@@ -223,7 +229,7 @@ A0 = V1 & ffff;
 A0 = 4;
 A1 = V1 & ffff;
 A2 = 8;
-func15248();
+system_kernel_get_string();
 
 A0 = S0;
 A1 = V0;
@@ -354,15 +360,6 @@ L150b4:	; 800150B4
 V0 = 00ff;
 800150B8	bne    v1, v0, L14ea0 [$80014ea0]
 V0 = S4;
-RA = w[SP + 0064];
-S4 = w[SP + 0060];
-S3 = w[SP + 005c];
-S2 = w[SP + 0058];
-S1 = w[SP + 0054];
-S0 = w[SP + 0050];
-SP = SP + 0068;
-800150DC	jr     ra 
-800150E0	nop
 ////////////////////////////////
 
 
@@ -431,8 +428,10 @@ return 80063560;
 ////////////////////////////////
 // system_get_pointer_to_battle_text_in_kernel_with_id()
 
-A1 = A0;
-A0 = 10;
+string_id = A0;
+
+A0 = 10; // battle and battle-screen text
+A1 = string_id;
 A2 = 0;
 system_get_pointer_to_text_in_kernel_with_block_and_text_id();
 
@@ -454,200 +453,210 @@ system_decompress_kernel_string_with_f9();
 
 
 ////////////////////////////////
-// func15248()
-// get kernel string
+// system_kernel_get_string()
 
-A0 = A0; // 8
-V1 = A1; // text id??
-S0 = A2; // 8
+type = A0;
+// 0 - magic
+// 1 - summon
+// 2 - enemy skill
+// 3 - limits
+// 4 - items
+// 5 - commands
+// 6 - summon or magic attack names
+// 7 - battle texts
+// 8 - battle texts
+// 9 - battle texts
+// a - weapon
+// b - armor
+// c - accessory
+// d - materia
+// e - key item
+string_id = A1;
+add = A2; // used to switch names or description (8 - names)
 
 string = 80062d50; // empty string
 
-if( A0 == 4 )
+if( type == 4 ) // items
 {
     for( int i = 0; i < 5; ++i )
     {
-        V0 = V1 < hu[8001010e + i * 2];
-        A3 = A1 << 1;
-        if( V0 != 0 )
+        // if string id less than 80 then this is items
+        // if less than 100 then weapon
+        // if less than 120 then armor
+        // if less than 180 then accessory
+        // othersise this is materia
+        // correct string id by this value to search in correct pack
+
+        // 0080 0100 0120 0180 FFFF
+        if( string_id < hu[8001010e + i * 2] )
         {
-            A0 = bu[80010118 + A1];
-            V1 = V1 - hu[8001010e + A3 - 2];
+            type = bu[80010118 + i]; // 04 0A 0B 0C 0D
+            string_id -= hu[8001010e + i * 2 - 2];
             break;
         }
     }
 }
 
-if( A0 == 3 )
+// limits
+if( ( type == 3 ) && ( string_id == 7f ) ) string_id = ff;
+
+if( string_id == ff ) return string;
+
+if( type < 4 )
 {
-    if( V1 == 7f ) V1 = ff;
+    // magic pack splited into four types
+    // 0-37 magic
+    // 38-47 summon
+    // 48-7f enemy skill
+    // 80- limits
+    A1 = string_id + bu[80010120 + type]; // 00 38 48 80
+    if( A1 < e0 ) string_id = A1;
 }
 
-if( V1 == ff ) return string;
-
-if( A0 < 4 )
+pack = bu[80010124 + type]; // 01 01 01 01 02 00 FF FF FF FF 03 04 05 06 07
+if( pack != ff )
 {
-    A1 = V1 + bu[80010120 + A0];
-    if( A1 < e0 )
-    {
-        V1 = A1;
-    }
-}
-
-S2 = bu[80010124 + A0];
-if( S2 != ff )
-{
-    A0 = S2 + S0;
-    A1 = V1;
+    A0 = pack + add; // pack id
+    A1 = string_id;
     A2 = 0;
     system_get_pointer_to_text_in_kernel_with_block_and_text_id();
     string = V0;
 
-    if( S0 != 0 ) return string;
+    if( add == 0 )
+    {
+        A0 = string;
+        A1 = string;
+        system_decompress_kernel_string_with_f9();
+        string = V0;
+    }
+    return string;
+}
 
-    A0 = string;
-    A1 = A0;
+if( type == 6 )
+{
+    A0 = ( string_id < 10 ) ? 11 : 9; // summon attack or magic names
+    A1 = string_id;
+    A2 = 0;
+    system_get_pointer_to_text_in_kernel_with_block_and_text_id();
+    return V0;
+}
+else if( type == 7 )
+{
+    if( string_id >= 6 ) return string;
+
+    V0 = string_id << 04;
+    V0 = h[80163658 + V0];
+    S1 = string_id + 4;
+
+    A0 = 80063660;
+    A1 = V0 << 01;
+    A1 = A1 + V0;
+    A1 = A1 << 03;
+    A1 = A1 - V0;
+    A1 = A1 << 03;
+    A1 = 800f5f44 + A1;
+    A2 = 20;
+    func14d58();
+
+    V1 = S1 << 04;
+    V1 = V1 + S1;
+    S3 = V1 << 02;
+    V1 = bu[800f5bc7 + S3];
+    S0 = V0;
+
+    if( V1 != ff )
+    {
+        V0 = w[800f7ed0];
+        V0 = V1 + V0;
+        [S0 + 0000] = b(V0);
+        S0 = S0 + 0001;
+    }
+
+    V0 = S1 << 01;
+    V0 = V0 + S1;
+    V0 = V0 << 02;
+    V0 = V0 + S1;
+    S1 = V0 << 03;
+    if( w[800f83e4 + S1] & 40 )
+    {
+        A0 = 71;
+        system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
+
+        A0 = S0;
+        A1 = V0;
+        A2 = -1;
+        func14d58();
+        S0 = V0;
+    }
+
+    if( bu[800f5be1 + S3] & 40 )
+    {
+        [SP + 110] = h(hu[800f5bf4 + S3]);
+        [SP + 112] = h(w[800f8410 + S1]);
+
+        A0 = 7f;
+        system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
+
+        A0 = S0;
+        A1 = V0;
+        A2 = -1;
+        func14d58();
+
+        S0 = V0;
+        A0 = 72;
+        system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
+
+        A0 = S0;
+        A1 = V0;
+        A2 = SP + 110;
+        funca5e0c();
+
+        A0 = SP + 0010;
+        A1 = S0;
+        func14e74();
+
+        A0 = S0;
+        A1 = SP + 10;
+        A2 = -1;
+        func14d58();
+        S0 = V0;
+    }
+
+    [S0] = b(ff);
+
+    return 80063660;
+}
+else if( type == 8 )
+{
+    if( string_id >= 100 )
+    {
+        A0 = string_id - 100;
+        battle_get_string_pointer_from_string_buffer();
+        string = V0;
+    }
+    else
+    {
+        A0 = string_id;
+        system_get_pointer_to_battle_text_in_kernel_with_id();
+        string = V0;
+    }
+
+    A0 = SP + 10;
+    A1 = string;
+    func14e74();
+
+    A0 = V0;
+    A1 = string;
     system_decompress_kernel_string_with_f9();
 
     return V0;
 }
-
-if( A0 != 7 )
+else if( type == 9 )
 {
-    if( A0 < 8 )
-    {
-        if( A0 == 6 )
-        {
-            A0 = 9;
-            if( V1 < 10 ) A0 = 11;
-
-            A1 = V1;
-            A2 = 0;
-            system_get_pointer_to_text_in_kernel_with_block_and_text_id();
-
-            return V0;
-        }
-
-        return string;
-    }
-
-    if( A0 == 8 )
-    {
-        if( V1 >= 100 )
-        {
-            A0 = V1 - 100;
-            funca5f90();
-        }
-        else
-        {
-            A0 = V1;
-            system_get_pointer_to_battle_text_in_kernel_with_id();
-        }
-
-        S0 = V0;
-
-        A0 = SP + 10;
-        A1 = S0;
-        func14e74();
-
-        A0 = V0;
-        A1 = S0;
-        system_decompress_kernel_string_with_f9();
-
-        return V0;
-    }
-    else if( A0 == 9 )
-    {
-        V1 = V1 << 05;
-        return 800f652c + V1;
-    }
-
-    return string;
+    return 800f652c + string_id * 20;
 }
 
-if( V1 >= 6 ) return string;
-
-V0 = V1 << 04;
-A0 = 80063660;
-A2 = 0020;
-V0 = h[80163658 + V0];
-S1 = V1 + 0004;
-A1 = V0 << 01;
-A1 = A1 + V0;
-A1 = A1 << 03;
-A1 = A1 - V0;
-A1 = A1 << 03;
-V0 = 800f5f44;
-A1 = A1 + V0;
-func14d58();
-
-V1 = S1 << 04;
-V1 = V1 + S1;
-S3 = V1 << 02;
-V1 = bu[800f5bc7 + S3];
-S0 = V0;
-
-if( V1 != S2 )
-{
-    V0 = w[800f7ed0];
-    V0 = V1 + V0;
-    [S0 + 0000] = b(V0);
-    S0 = S0 + 0001;
-}
-
-V0 = S1 << 01;
-V0 = V0 + S1;
-V0 = V0 << 02;
-V0 = V0 + S1;
-S1 = V0 << 03;
-if( w[800f83e4 + S1] & 40 )
-{
-    A0 = 71;
-    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
-
-    A0 = S0;
-    A1 = V0;
-    A2 = -1;
-    func14d58();
-    S0 = V0;
-}
-
-if( bu[800f5be1 + S3] & 40 )
-{
-    [SP + 110] = h(hu[800f5bf4 + S3]);
-    [SP + 112] = h(w[800f8410 + S1]);
-
-    A0 = 7f;
-    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
-
-    A0 = S0;
-    A1 = V0;
-    A2 = -1;
-    func14d58();
-
-    S0 = V0;
-    A0 = 72;
-    system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
-
-    A0 = S0;
-    A1 = V0;
-    A2 = SP + 110;
-    funca5e0c();
-
-    A0 = SP + 0010;
-    A1 = S0;
-    func14e74();
-
-    A0 = S0;
-    A1 = SP + 10;
-    A2 = -1;
-    func14d58();
-    S0 = V0;
-}
-
-[S0] = b(ff);
-
-return 80063660;
+return string;
 ////////////////////////////////
 
 
@@ -1069,66 +1078,51 @@ return 7f;
 
 
 ////////////////////////////////
-// func15b44
-80015B44
-[GP + 00ec] = w(A0);
-80015B48	jr     ra 
-80015B4C	nop
-////////////////////////////////
-// func15b50
-80015B50
-A0 = w[GP + 00ec];
-80015B54	nop
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0000];
-V0 = V0 << 08;
-V1 = V1 | V0;
-80015B68	beq    v1, zero, L15b80 [$80015b80]
-A1 = ffff;
-V0 = bu[A0 + 0005];
-V1 = bu[A0 + 0004];
-V0 = V0 << 08;
-A1 = V1 | V0;
+// func15b44()
 
-L15b80:	; 80015B80
-80015B80	jr     ra 
-V0 = A1;
+[GP + ec] = w(A0);
 ////////////////////////////////
-// func15b88
-80015B88
-A0 = w[GP + 00ec];
-80015B8C	nop
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0000];
-V0 = V0 << 08;
-V1 = V1 | V0;
-80015BA0	beq    v1, zero, L15bb8 [$80015bb8]
-A1 = 0;
-V0 = bu[A0 + 0003];
-V1 = bu[A0 + 0002];
-V0 = V0 << 08;
-A1 = V1 | V0;
 
-L15bb8:	; 80015BB8
-80015BB8	jr     ra 
-V0 = A1;
+
+
 ////////////////////////////////
-// func15bc0
-80015BC0	addiu  sp, sp, $ffe8 (=-$18)
-A1 = A0;
-A0 = w[GP + 00ec];
-80015BCC	addiu  a2, zero, $ffff (=-$1)
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
-V0 = bu[A0 + 0001];
-V1 = bu[A0 + 0000];
-V0 = V0 << 08;
-V1 = V1 | V0;
+// func15b50()
+// get kernel type
+
+A0 = w[GP + ec];
+
+return ( hu[A0 + 0] != 0 ) ? hu[A0 + 4] : ffff;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func15b88()
+// get kernel string offsets
+
+A0 = w[GP + ec];
+
+return ( hu[A0 + 0] != 0 ) ? hu[A0 + 2] : 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func15bc0()
+
+dst = A0;
+
+A0 = w[GP + ec];
+A2 = -1;
+V1 = hu[A0 + 0];
 80015BE8	beq    v1, zero, L15c24 [$80015c24]
 S0 = V1;
-80015BF0	jal    func17108 [$80017108]
-A0 = A0 + 0006;
-A0 = w[GP + 00ec];
+
+A0 = A0 + 6; // src
+A1 = dst;
+func17108();
+
+A0 = w[GP + ec];
 A2 = V0;
 V0 = bu[A0 + 0003];
 V1 = bu[A0 + 0002];
@@ -1144,11 +1138,6 @@ L15c24:	; 80015C24
 V0 = A2;
 
 L15c28:	; 80015C28
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-80015C34	jr     ra 
-80015C38	nop
 ////////////////////////////////
 
 
@@ -1158,6 +1147,7 @@ SP = SP + 0018;
 // load kernel from temp
 
 src = A0;
+dst = A1;
 
 T0 = -1;
 while( hu[src + 0] != 0 )
@@ -1168,7 +1158,7 @@ while( hu[src + 0] != 0 )
         src += 6;
 
         A0 = src;
-        A1 = A1;
+        A1 = dst;
         func17108();
         return V0;
     }
@@ -1723,13 +1713,13 @@ V0 = T1 < A2;
 L16388:	; 80016388
 if( V0 != 0 )
 {
-    T0 = w[GP + f8];
+    src = w[GP + f8];
 
     loop16394:	; 80016394
         V0 = T2 & A0;
         V1 = w[GP + 00f4];
         V0 = V1 + 0001;
-        V1 = T0 + V1;
+        V1 = src + V1;
         [GP + 00f4] = w(V0);
         V0 = bu[V1 + 0000];
         V0 = V0 << T1;
@@ -1967,99 +1957,61 @@ return 0;
 ////////////////////////////////
 // func166c0()
 
-A1 = w[GP + 0104];
-A0 = w[GP + 0108];
-T0 = w[GP + 00f0];
-A3 = A0 & 0007;
+A1 = w[GP + 104];
+A0 = w[GP + 108];
+dst_offset = w[GP + f0];
+A3 = A0 & 7;
 A0 = A0 - A3;
-V0 = A0 < 0010;
-800166D8	beq    v0, zero, L16718 [$80016718]
-800166DC	srlv   a1, a3, a1
-A2 = w[GP + 00f8];
+A1 = A1 >> A3;
 
-loop166e4:	; 800166E4
-V1 = w[GP + 00f4];
-800166E8	nop
-V0 = V1 + 0001;
-V1 = A2 + V1;
-[GP + 00f4] = w(V0);
-V0 = bu[V1 + 0000];
-800166FC	nop
-V0 = V0 << A0;
-A1 = A1 | V0;
-A0 = A0 + 0008;
-V0 = A0 < 0010;
-80016710	bne    v0, zero, loop166e4 [$800166e4]
-80016714	nop
+src = w[GP + f8];
 
-L16718:	; 80016718
+for( ; A0 < 10; A0 += 8 )
+{
+    src_offset = w[GP + f4];
+    [GP + f4] = w(src_offset + 1);
+
+    A1 |= bu[src + src_offset] << A0;
+}
+
 A3 = A1 & ffff;
-8001671C	addiu  a0, a0, $fff0 (=-$10)
-V0 = A0 < 0010;
-80016724	beq    v0, zero, L16764 [$80016764]
+A0 = A0 - 10;
 A1 = A1 >> 10;
-A2 = w[GP + 00f8];
 
-loop16730:	; 80016730
-V1 = w[GP + 00f4];
-80016734	nop
-V0 = V1 + 0001;
-V1 = A2 + V1;
-[GP + 00f4] = w(V0);
-V0 = bu[V1 + 0000];
-80016748	nop
-V0 = V0 << A0;
-A1 = A1 | V0;
-A0 = A0 + 0008;
-V0 = A0 < 0010;
-8001675C	bne    v0, zero, loop16730 [$80016730]
-80016760	nop
+for( ; A0 < 10; A0 += 8 )
+{
+    src_offset = w[GP + f4];
+    [GP + f4] = w(src_offset + 1);
 
-L16764:	; 80016764
+    A1 |= bu[src + src_offset] << A0;
+}
+
 V0 = 0 NOR A1;
 V0 = V0 & ffff;
 if( A3 != V0 ) return 1;
 
 A1 = A1 >> 10;
-80016778	addiu  a3, a3, $ffff (=-$1)
-8001677C	addiu  v0, zero, $ffff (=-$1)
-80016780	beq    a3, v0, L167f0 [$800167f0]
-80016784	addiu  a0, a0, $fff0 (=-$10)
-80016788	addiu  t1, zero, $ffff (=-$1)
+A3 = A3 - 1;
+A0 = A0 - 10;
+while( A3 != -1 )
+{
+    for( ; A0 < 8; A0 += 8 )
+    {
+        src_offset = w[GP + f4];
+        [GP + f4] = w(src_offset + 1);
 
-loop1678c:	; 8001678C
-V0 = A0 < 0008;
-80016790	beq    v0, zero, L167d0 [$800167d0]
-80016794	nop
-A2 = w[GP + 00f8];
+        A1 |= bu[src + src_offset] << A0;
+    }
 
-loop1679c:	; 8001679C
-V1 = w[GP + 00f4];
-800167A0	nop
-V0 = V1 + 0001;
-V1 = A2 + V1;
-[GP + 00f4] = w(V0);
-V0 = bu[V1 + 0000];
-800167B4	nop
-V0 = V0 << A0;
-A1 = A1 | V0;
-A0 = A0 + 0008;
-V0 = A0 < 0008;
-800167C8	bne    v0, zero, loop1679c [$8001679c]
-800167CC	nop
+    A0 -= 8;
+    A3 = A3 - 1;
+    dst = w[GP + fc];
+    [dst + dst_offset] = b(A1);
+    A1 >>= 8;
+    dst_offset += 1;
+}
 
-L167d0:	; 800167D0
-800167D0	addiu  a0, a0, $fff8 (=-$8)
-V0 = w[GP + 00fc];
-800167D8	addiu  a3, a3, $ffff (=-$1)
-V0 = V0 + T0;
-T0 = T0 + 0001;
-[V0 + 0000] = b(A1);
-800167E8	bne    a3, t1, loop1678c [$8001678c]
-A1 = A1 >> 08;
-
-L167f0:	; 800167F0
-[GP + f0] = w(T0);
+[GP + f0] = w(dst_offset);
 [GP + 104] = w(A1);
 [GP + 108] = w(A0);
 
@@ -2635,79 +2587,55 @@ L16f6c:	; 80016F6C
 ////////////////////////////////
 // func16f90()
 
-A1 = w[GP + 108];
 A2 = w[GP + 104];
+A1 = w[GP + 108];
 
-80016F9C	bne    a1, zero, L16fd4 [$80016fd4]
+src = w[GP + f8];
 
-A3 = w[GP + 00f8];
+while( A1 == 0 )
+{
+    src_offset = w[GP + f4];
+    [GP + f4] = w(src_offset + 1);
 
-loop16fa8:	; 80016FA8
-V1 = w[GP + 00f4];
-80016FAC	nop
-V0 = V1 + 0001;
-V1 = A3 + V1;
-[GP + 00f4] = w(V0);
-V0 = bu[V1 + 0000];
-80016FC0	nop
-V0 = V0 << A1;
-A1 = A1 + 0008;
-80016FCC	beq    a1, zero, loop16fa8 [$80016fa8]
-A2 = A2 | V0;
+    A2 |= bu[src + src_offset] << A1;
+    A1 += 8;
+}
 
-L16fd4:	; 80016FD4
-V0 = A2 & 0001;
-[A0 + 0000] = w(V0);
-80016FDC	addiu  a1, a1, $ffff (=-$1)
-V0 = A1 < 0002;
-80016FE4	beq    v0, zero, L17024 [$80017024]
-A2 = A2 >> 01;
-A0 = w[GP + 00f8];
+[A0] = w(A2 & 1);
+A1 = A1 - 1;
+A2 = A2 >> 1;
 
-loop16ff0:	; 80016FF0
-V1 = w[GP + 00f4];
-80016FF4	nop
-V0 = V1 + 0001;
-V1 = A0 + V1;
-[GP + 00f4] = w(V0);
-V0 = bu[V1 + 0000];
-80017008	nop
-V0 = V0 << A1;
-A2 = A2 | V0;
-A1 = A1 + 0008;
-V0 = A1 < 0002;
-8001701C	bne    v0, zero, loop16ff0 [$80016ff0]
-80017020	nop
+while( A1 < 2 )
+{
+    src_offset = w[GP + f4];
+    [GP + f4] = w(src_offset + 1);
 
-L17024:	; 80017024
-V1 = A2 & 0003;
-A2 = A2 >> 02;
-8001702C	addiu  a1, a1, $fffe (=-$2)
-V0 = 0002;
-[GP + 0104] = w(A2);
-[GP + 0108] = w(A1);
-8001703C	bne    v1, v0, L17054 [$80017054]
-80017040	nop
-80017044	jal    func169b8 [$800169b8]
-80017048	nop
-8001704C	j      L1707c [$8001707c]
-80017050	nop
+    A2 |= bu[src + src_offset] << A1;
+    A1 += 8;
+}
 
-L17054:	; 80017054
-80017054	bne    v1, zero, L1706c [$8001706c]
-V0 = 0001;
-func166c0();
+[GP + 104] = w(A2 >> 2);
+[GP + 108] = w(A1 - 2);
 
-80017064	j      L1707c [$8001707c]
-80017068	nop
+V1 = A2 & 3;
 
-L1706c:	; 8001706C
-8001706C	bne    v1, v0, L1707c [$8001707c]
-V0 = 0002;
-80017074	jal    func16808 [$80016808]
-80017078	nop
+if( V1 == 0 )
+{
+    func166c0();
+    return V0;
+}
+else if( V1 == 1 )
+{
+    func16808();
+    return V0;
+}
+else if( V1 == 2 )
+{
+    func169b8();
+    return V0;
+}
 
-L1707c:	; 8001707C
+return 2;
 ////////////////////////////////
 
 
@@ -2715,21 +2643,21 @@ L1707c:	; 8001707C
 ////////////////////////////////
 // func1708c()
 
-[GP + f0] = w(0);
-[GP + 108] = w(0);
-[GP + 104] = w(0);
+[GP + f0] = w(0); // offset in dst
 
-loop170a0:	; 800170A0
-    [GP + 010c] = w(0);
+[GP + 104] = w(0);
+[GP + 108] = w(0);
+
+do
+{
+    [GP + 10c] = w(0);
 
     A0 = SP + 10;
     func16f90();
 
     if( V0 != 0 ) return V0;
 
-    V0 = w[SP + 10];
-
-800170BC	beq    v0, zero, loop170a0 [$800170a0]
+} while( w[SP + 10] == 0 )
 
 while( w[GP + 108] >= 8 )
 {
@@ -2745,32 +2673,30 @@ return 0;
 ////////////////////////////////
 // func17108()
 
+src = A0;
+dst = A1;
+
 [GP + 100] = w(SP + 18);
-[GP + f8] = w(A0);
-[GP + fc] = w(A1);
-[GP + f4] = w(0);
-[GP + f0] = w(0);
-[GP + f4] = w(1);
-V1 = bu[A0 + 0];
-[GP + f4] = w(2);
-V0 = bu[A0 + 1];
-V1 = V1 ^ 1f;
-V1 = 0 < V1;
-V0 = V0 ^ 8b;
-V0 = 0 < V0;
+[GP + f8] = w(src);
+[GP + fc] = w(dst);
+[GP + f0] = w(0); // offset in dst
+[GP + f4] = w(2); // offset in src
+
+V1 = 0 < (bu[src + 0] ^ 1f);
+V0 = 0 < (bu[src + 1] ^ 8b);
 V1 = V1 | V0;
 
 if( V1 != 0 ) return -1;
 
-[GP + f4] = w(3);
+[GP + f4] = w(3); // offset in src
 
-if( bu[A0 + 2] != 8 ) return -1;
+if( bu[src + 2] != 8 ) return -1;
 
-[GP + f4] = w(4);
+[GP + f4] = w(4); // offset in src
 
-if( bu[A0 + 3] != 0 ) return -1;
+if( bu[src + 3] != 0 ) return -1;
 
-[GP + f4] = w(a);
+[GP + f4] = w(a); // offset in src
 
 func1708c();
 
@@ -2779,29 +2705,18 @@ if( V0 == 3 ) return -1;
 if( V0 != 0 ) return -1;
 
 A1 = SP + 10;
-A2 = SP + 18;
+do
+{
+    src = w[GP + f8];
+    src_offset = w[GP + f4];
+    [GP + f4] = w(src_offset + 1);
 
-loop171bc:	; 800171BC
-    V1 = w[GP + f8];
-    [GP + f4] = w(w[GP + f4] + 1);
-    [A1] = b(bu[V1 + A0]);
-    A1 = A1 + 1;
-    V0 = A1 < A2;
-800171E4	bne    v0, zero, loop171bc [$800171bc]
+    [A1] = b(bu[src + src_offset]);
 
-V1 = bu[SP + 15];
-A1 = bu[SP + 14];
-V1 = V1 << 08;
-A1 = A1 | V1;
-V1 = bu[SP + 17];
-A0 = bu[SP + 16];
-V1 = V1 << 08;
-A0 = A0 | V1;
-A0 = A0 << 10;
-V1 = w[GP + f0];
-A1 = A1 | A0;
+    A1 += 1;
+} while( A1 < ( SP + 18 ) )
 
-if( V1 != A1 ) return -1;
+if( w[GP + f0] != w[SP + 14] ) return -1;
 
-return A1;
+return w[SP + 14];
 ////////////////////////////////

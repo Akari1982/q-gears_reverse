@@ -165,34 +165,37 @@ while( true )
 
 ////////////////////////////////
 // func14750()
+// callback to kernel load
 
 A0 = 801b0000;
 func15b44();
 
 while( true )
 {
-    func15b50();
-    S0 = V0 & ffff;
+    func15b50(); // get kernel type
+    type = V0;
 
-    if( S0 == ffff ) return;
+    if( type == ffff ) return;
 
     func15b88();
+    size = V0;
 
-    if( S0 == 9 )
+    if( type == 9 ) // strings
     {
-        A0 = V0 & ffff;
+        A0 = size;
         func14c80();
 
-        A0 = V0;
+        A0 = V0; // dst
         func15bc0();
     }
     else
     {
-        A0 = w[80048dd4 + S0 * 4];
+        dst = w[80048dd4 + type * 4];
 
-        if( A0 != 0 )
+        if( dst != 0 )
         {
-            func15bc0();
+            A0 = dst;
+            func15bc0(); // load kernel data
         }
     }
 }
@@ -208,8 +211,7 @@ func15b44();
 
 while( true )
 {
-    func15b50();
-    V0 = V0 & ffff;
+    func15b50(); // get kernel type
 
     if( V0 == ffff ) return;
 
@@ -264,7 +266,7 @@ func145bc(); // load sync
 
 A0 = 2; // INIT\KERNEL.BIN
 A1 = 801b0000; // dst
-A2 = 80014750; // callback
+A2 = 80014750; // callback func14750()
 func14578(); // start load file
 
 A0 = 0;
@@ -288,8 +290,9 @@ func14578(); // start load file
 A0 = 0;
 func145bc(); // load sync
 
+// load initialization data to savemap
 A0 = 801b0000;
-A1 = 8009c738;
+A1 = 8009c6e4 + 54;
 A2 = 3;
 func15c3c();
 ////////////////////////////////

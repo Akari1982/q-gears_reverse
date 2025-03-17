@@ -230,7 +230,7 @@
 // system_get_pointer_to_decompressed_battle_text_in_kernel_with_id
 8001521C-80015244
 ////////////////////////////////
-// func15248
+// system_kernel_get_string
 80015248-800155A0
 ////////////////////////////////
 // func155a4
