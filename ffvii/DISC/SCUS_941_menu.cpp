@@ -2559,9 +2559,11 @@ if( ( menu_id != 0 ) && ( ( ( menu_id_old - 3 ) >= 2 ) || ( ( menu_id - 3 ) >= 2
 ////////////////////////////////
 // func21258()
 
-A1 = A0;
-A0 = d;
-A2 = 8;
+string_id = A0;
+
+A0 = d; // materia
+A1 = string_id;
+A2 = 8; // name
 system_kernel_get_string();
 ////////////////////////////////
 
@@ -2570,9 +2572,11 @@ system_kernel_get_string();
 ////////////////////////////////
 // func21280()
 
-A1 = A0;
-A0 = 4;
-A2 = 8;
+string_id = A0;
+
+A0 = 4; // item
+A1 = string_id;
+A2 = 8; // name
 system_kernel_get_string();
 ////////////////////////////////
 
@@ -2899,94 +2903,69 @@ V1 = V1 + V0;
 
 L21758:	; 80021758
 A0 = A1;
-A1 = V1 << 10;
-A1 = A1 >> 10;
-A2 = 00e0;
-A3 = 0008;
-V0 = 0018;
-[SP + 0010] = w(V0);
-V0 = 0010;
-[SP + 0014] = w(V0);
-V0 = 0001;
-[SP + 0018] = w(V0);
-[SP + 001c] = w(V0);
+A1 = (V1 << 10) >> 10;
+A2 = e0;
+A3 = 8;
+A4 = 18;
+A5 = 10;
+A6 = 1;
+A7 = 1;
 system_menu_draw_textured_rect();
 
-S2 = 0;
-S0 = 0007;
-V0 = S2 << 10;
+for( int i = 0; i < 4; ++i )
+{
+    A0 = i;
+    V0 = A0 << 01;
+    V0 = V0 + A0;
+    A2 = V0 << 01;
+    V1 = h[8009d808 + A2];
 
-loop21798:	; 80021798
-A0 = V0 >> 10;
-V0 = A0 << 01;
-V0 = V0 + A0;
-A2 = V0 << 01;
-AT = 8009d808;
-AT = AT + A2;
-V1 = h[AT + 0000];
-800217B8	addiu  v0, zero, $ffff (=-$1)
-800217BC	beq    v1, v0, L21868 [$80021868]
-V0 = S2 + 0001;
-V0 = A0 << 05;
-A1 = V0 + 0055;
-AT = 8009d80c;
-AT = AT + A2;
-V0 = hu[AT + 0000];
-AT = 8009d80a;
-AT = AT + A2;
-A2 = h[AT + 0000];
-800217EC	bne    v0, zero, L217fc [$800217fc]
-800217F0	nop
-800217F4	j      L21800 [$80021800]
-[SP + 0010] = w(S0);
+    if( V1 != -1 )
+    {
+        V0 = A0 << 05;
+        A1 = V0 + 0055;
+        V0 = hu[8009d80c + A2];
+        A2 = h[8009d80a + A2];
+        if( V0 == 0 )
+        {
+            [SP + 10] = w(7);
+        }
+        else
+        {
+            [SP + 10] = w(0);
+        }
 
-L217fc:	; 800217FC
-[SP + 0010] = w(0);
+        A0 = 9c;
+        A3 = 2; // digits number
+        system_menu_draw_digits_without_leading_zeroes();
 
-L21800:	; 80021800
-A0 = 9c;
-A3 = 2; // digits number
-system_menu_draw_digits_without_leading_zeroes();
+        A1 = i;
+        V0 = A1 << 01;
+        V0 = V0 + A1;
+        V1 = V0 << 1;
+        if( hu[8009d80c + V1] != 0 )
+        {
+            A0 = 14c;
+            A1 = 55 + A1 * 20;
+            A2 = h[8009d80a + V1];
+            A3 = 2; // digits number
+            A4 = 7;
+            system_menu_draw_digits_without_leading_zeroes();
+        }
+    }
+}
 
-V0 = S2 << 10;
-A1 = V0 >> 10;
-V0 = A1 << 01;
-V0 = V0 + A1;
-V1 = V0 << 01;
-AT = 8009d80c;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-80021830	nop
-80021834	beq    v0, zero, L21868 [$80021868]
-V0 = S2 + 0001;
-A0 = 014c;
-A1 = A1 << 05;
-A1 = A1 + 0055;
-A2 = h[8009d80a + V1];
-A3 = 2; // digits number
-A4 = S0;
-system_menu_draw_digits_without_leading_zeroes();
-
-V0 = S2 + 0001;
-
-L21868:	; 80021868
-S2 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0004;
-80021878	bne    v0, zero, loop21798 [$80021798]
-V0 = S2 << 10;
 A0 = 0;
 
 L21884:	; 80021884
-A1 = 0001;
-A2 = 005f;
-A3 = SP + 0020;
-V0 = 0100;
-[SP + 0020] = h(0);
-[SP + 0022] = h(0);
-[SP + 0024] = h(V0);
-[SP + 0026] = h(V0);
+[SP + 20] = h(0);
+[SP + 22] = h(0);
+[SP + 24] = h(100);
+[SP + 26] = h(100);
+
+A1 = 1;
+A2 = 5f;
+A3 = SP + 20;
 system_add_draw_mode();
 
 A0 = 8;
@@ -3005,132 +2984,129 @@ A1 = 19;
 A2 = 8;
 system_kernel_get_string();
 
-A0 = 00c8;
-A1 = 0026;
+A0 = c8;
+A1 = 26;
 A2 = V0;
-800218E8	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-V0 = w[GP + 015c];
-800218F4	nop
-800218F8	beq    v0, zero, L21a70 [$80021a70]
-A1 = 0015;
-A0 = 8;
-A2 = 8;
-system_kernel_get_string();
+A3 = 7;
+system_menu_draw_string();
 
-A0 = 0010;
-A1 = 000c;
-A2 = V0;
-80021918	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-A0 = 0008;
-A1 = 001a;
-A2 = 8;
-system_kernel_get_string();
+if( w[GP + 15c] != 0 )
+{
+    A0 = 8;
+    A1 = 15;
+    A2 = 8;
+    system_kernel_get_string();
 
-A0 = 0018;
-A1 = 003e;
-A2 = V0;
-8002193C	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-A0 = 0008;
-A1 = 001c;
-8002194C	jal    system_kernel_get_string [$80015248]
-A2 = 0008;
-A0 = 00c0;
-A1 = 003e;
-A2 = V0;
-80021960	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-A0 = 0008;
-A1 = 001b;
-80021970	jal    system_kernel_get_string [$80015248]
-A2 = 0008;
-A0 = 0018;
-A1 = 00ca;
-A2 = V0;
-80021984	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-S2 = 0;
-V0 = S2 << 10;
+    A0 = 10;
+    A1 = c;
+    A2 = V0;
+    A3 = 7;
+    system_menu_draw_string();
 
-loop21994:	; 80021994
-S0 = V0 >> 10;
-V0 = S0 << 01;
-V0 = V0 + S0;
-S1 = V0 << 01;
-AT = 8009d808;
-AT = AT + S1;
-A1 = h[AT + 0000];
-800219B4	addiu  v0, zero, $ffff (=-$1)
-800219B8	beq    a1, v0, L21a50 [$80021a50]
-V0 = S2 + 0001;
-A0 = 0004;
-800219C4	jal    system_kernel_get_string [$80015248]
-A2 = 0008;
-A0 = 0030;
-V1 = S0 << 05;
-S0 = V1 + 0053;
-A1 = S0;
-AT = 8009d80c;
-AT = AT + S1;
-A3 = hu[AT + 0000];
-A2 = V0;
-A3 = A3 < 0001;
-A3 = 0 - A3;
-800219F8	jal    system_menu_draw_string [$80026f44]
-A3 = A3 & 0007;
-AT = 8009d80c;
-AT = AT + S1;
-V0 = hu[AT + 0000];
-80021A10	nop
-80021A14	beq    v0, zero, L21a50 [$80021a50]
-V0 = S2 + 0001;
-A0 = 0004;
-AT = 8009d808;
-AT = AT + S1;
-A1 = h[AT + 0000];
-80021A30	jal    system_kernel_get_string [$80015248]
-A2 = 0008;
-A0 = 00e0;
-A1 = S0;
-A2 = V0;
-80021A44	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-V0 = S2 + 0001;
+    A0 = 8;
+    A1 = 1a;
+    A2 = 8;
+    system_kernel_get_string();
 
-L21a50:	; 80021A50
-S2 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < 0004;
-80021A60	bne    v0, zero, loop21994 [$80021994]
-V0 = S2 << 10;
-80021A68	j      L21abc [$80021abc]
+    A0 = 18;
+    A1 = 3e;
+    A2 = V0;
+    A3 = 7;
+    system_menu_draw_string();
+
+    A0 = 8;
+    A1 = 1c;
+    A2 = 8;
+    system_kernel_get_string();
+
+    A0 = c0;
+    A1 = 3e;
+    A2 = V0;
+    A3 = 7;
+    system_menu_draw_string();
+
+    A0 = 8;
+    A1 = 1b;
+    A2 = 8;
+    system_kernel_get_string();
+
+    A0 = 18;
+    A1 = ca;
+    A2 = V0;
+    A3 = 7;
+    system_menu_draw_string();
+
+    S2 = 0;
+
+    loop21994:	; 80021994
+        V0 = S2 << 10;
+        S0 = V0 >> 10;
+        V0 = S0 << 01;
+        V0 = V0 + S0;
+        S1 = V0 << 01;
+        A1 = h[8009d808 + S1];
+
+        if( A1 != -1 )
+        {
+            A0 = 4;
+            A2 = 8;
+            system_kernel_get_string();
+
+            A0 = 30;
+            A1 = 53 + S0 * 20;
+            A2 = V0;
+            A3 = (0 - (hu[8009d80c + S1] < 1)) & 7;
+            system_menu_draw_string();
+
+            if( hu[8009d80c + S1] != 0 )
+            {
+                A0 = 4;
+                A1 = h[8009d808 + S1];
+                A2 = 8;
+                system_kernel_get_string();
+
+                A0 = e0;
+                A1 = 53 + S0 * 20;
+                A2 = V0;
+                A3 = 7;
+                system_menu_draw_string();
+
+            }
+        }
+
+        V0 = S2 + 0001;
+        S2 = V0;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        V0 = V0 < 0004;
+    80021A60	bne    v0, zero, loop21994 [$80021994]
+}
+else
+{
+    A0 = 8;
+    A1 = 16;
+    A2 = 8;
+    system_kernel_get_string();
+
+    A0 = 10;
+    A1 = c;
+    A2 = V0;
+    A3 = 7;
+    system_menu_draw_string();
+
+    A0 = 8;
+    A1 = 1d;
+    A2 = 8;
+    system_kernel_get_string();
+
+    A0 = 18;
+    A1 = 3e;
+    A2 = V0;
+    A3 = 7;
+    system_menu_draw_string();
+}
+
 S1 = SP + 0028;
-
-L21a70:	; 80021A70
-A0 = 0008;
-A1 = 0016;
-80021A78	jal    system_kernel_get_string [$80015248]
-A2 = 0008;
-A0 = 0010;
-A1 = 000c;
-A2 = V0;
-80021A8C	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-A0 = 0008;
-A1 = 001d;
-80021A9C	jal    system_kernel_get_string [$80015248]
-A2 = 0008;
-A0 = 0018;
-A1 = 003e;
-A2 = V0;
-80021AB0	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
-S1 = SP + 0028;
-
-L21abc:	; 80021ABC
 A0 = S1;
 A1 = 0;
 A2 = 0;
@@ -4474,35 +4450,31 @@ system_psyq_wait_frames();
 
 
 ////////////////////////////////
-// func22fe0
-80022FE0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80022FE8	jal    func159b0 [$800159b0]
-80022FEC	nop
-V0 = w[GP + 0214];
-80022FF4	nop
+// func22fe0()
+
+func159b0()
+
+V0 = w[GP + 214];
+
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 02;
-80023004	lui    v0, $8007
-V0 = V0 + 075c;
-8002300C	jal    system_psyq_put_dispenv [$800444ac]
-A0 = A0 + V0;
-V0 = w[GP + 0214];
-80023018	nop
+A0 = 8007075c + A0;
+system_psyq_put_dispenv();
+
+V0 = w[GP + 214];
 A0 = V0 << 01;
 A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-80023030	lui    v0, $8007
-V0 = V0 + 06a4;
-80023038	jal    system_psyq_put_drawenv [$800443b0]
-A0 = A0 + V0;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80023048	jr     ra 
-8002304C	nop
+
+A0 = 800706a4 + A0;
+system_psyq_put_drawenv();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func23050
 V0 = w[GP + 00b4];
