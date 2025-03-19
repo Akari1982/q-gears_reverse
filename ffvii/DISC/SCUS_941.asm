@@ -674,7 +674,7 @@
 // func1faf0
 8001FAF0-8001FAF4
 ////////////////////////////////
-// func1faf8
+// system_menu_get_inventory_restriction_mask
 8001FAF8-8001FBA8
 ////////////////////////////////
 // system_get_player_base_attack_defense
@@ -956,7 +956,7 @@
 // func26408
 80026408-80026444
 ////////////////////////////////
-// func26448
+// system_menu_set_cursor_movement
 80026448-800264A4
 ////////////////////////////////
 // system_menu_handle_buttons
@@ -1013,13 +1013,13 @@
 // func27990
 80027990-80027B80
 ////////////////////////////////
-// func27b84
+// system_menu_draw_scrollbar_track
 80027B84-8002802C
 ////////////////////////////////
-// func28030
+// system_menu_draw_scrollbar_slider
 80028030-80028480
 ////////////////////////////////
-// func28484
+// system_menu_draw_scrollbar
 80028484-800285A8
 ////////////////////////////////
 // system_menu_draw_progress_bar

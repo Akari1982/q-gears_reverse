@@ -91,7 +91,7 @@ for( int i = 0; i < 40; ++i )
 {
     if( ( bu[8009c6e4 + be4 + i / 8] >> (i & 7) ) & 1 )
     {
-        [801d3d90 + i] = b(i);
+        [801d3d90 + i] = b(i); // temp array of owned key items
         A1 += 1;
     }
 }
@@ -100,7 +100,7 @@ if( A1 < 40 )
 {
     for( ; A1 < 40; ++A1 )
     {
-        [801d3d90 + A1] = b(ff);
+        [801d3d90 + A1] = b(ff); // temp array of owned key items
     }
 }
 ////////////////////////////////
@@ -477,7 +477,7 @@ S2 = A1;
 S0 = 0;
 
 L1d0864:	; 801D0864
-801D0864	jal    $func1faf8
+801D0864	jal    $system_menu_get_inventory_restriction_mask
 A0 = A0 & 01ff;
 V0 = V0 & 0004;
 801D0870	beq    v0, zero, L1d087c [$801d087c]
@@ -498,7 +498,7 @@ V1 = A0 & ffff;
 A0 = 0;
 
 L1d08a8:	; 801D08A8
-801D08A8	jal    $func1faf8
+801D08A8	jal    $system_menu_get_inventory_restriction_mask
 A0 = A0 & 01ff;
 V0 = V0 & 0004;
 801D08B4	beq    v0, zero, L1d08c0 [$801d08c0]
@@ -534,7 +534,7 @@ S2 = A1;
 S0 = 0;
 
 L1d092c:	; 801D092C
-801D092C	jal    $func1faf8
+801D092C	jal    $system_menu_get_inventory_restriction_mask
 A0 = A0 & 01ff;
 V0 = V0 & 0002;
 801D0938	beq    v0, zero, L1d0944 [$801d0944]
@@ -555,7 +555,7 @@ V1 = A0 & ffff;
 A0 = 0;
 
 L1d0970:	; 801D0970
-801D0970	jal    $func1faf8
+801D0970	jal    $system_menu_get_inventory_restriction_mask
 A0 = A0 & 01ff;
 V0 = V0 & 0002;
 801D097C	beq    v0, zero, L1d0988 [$801d0988]
@@ -594,7 +594,7 @@ S2 = A1;
 S0 = 0;
 
 L1d09f4:	; 801D09F4
-801D09F4	jal    $func1faf8
+801D09F4	jal    $system_menu_get_inventory_restriction_mask
 A0 = A0 & 01ff;
 V0 = V0 & 0008;
 801D0A00	beq    v0, zero, L1d0a0c [$801d0a0c]
@@ -615,7 +615,7 @@ V1 = A0 & ffff;
 A0 = 0;
 
 L1d0a38:	; 801D0A38
-801D0A38	jal    $func1faf8
+801D0A38	jal    $system_menu_get_inventory_restriction_mask
 A0 = A0 & 01ff;
 V0 = V0 & 0008;
 801D0A44	beq    v0, zero, L1d0a50 [$801d0a50]
@@ -656,7 +656,7 @@ func1d0618();
 
 switch( A0 )
 {
-    case 1:
+    case 1: // "Field"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -666,7 +666,7 @@ switch( A0 )
     }
     break;
 
-    case 2:
+    case 2: // "Battle"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -676,7 +676,7 @@ switch( A0 )
     }
     break;
 
-    case 3:
+    case 3: // "Throw"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -686,7 +686,7 @@ switch( A0 )
     }
     break;
 
-    case 4:
+    case 4: // "Type"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -696,7 +696,7 @@ switch( A0 )
     }
     break;
 
-    case 5:
+    case 5: // "Name"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -706,7 +706,7 @@ switch( A0 )
     }
     break;
 
-    case 6:
+    case 6: // "Most"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -716,7 +716,7 @@ switch( A0 )
     }
     break;
 
-    case 7:
+    case 7: // "Least"
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
@@ -750,7 +750,7 @@ A10 = 0;
 A11 = 1; // x warp
 A12 = 0; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 // items list
 A0 = 801d3ddc + 1 * 12;
@@ -767,7 +767,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 0; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 // character selection
 A0 = 801d3ddc + 2 * 12;
@@ -784,7 +784,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 func1d031c();
 ////////////////////////////////
@@ -845,36 +845,24 @@ V0 = V0 < 0001;
 
 ////////////////////////////////
 // func1d0dcc()
+// get restriction mask
 
-S0 = A0;
-func1faf8();
+item_id = A0;
 
-V1 = V0;
-V0 = 0046;
-801D0DE8	beq    s0, v0, L1d0e18 [$801d0e18]
-V0 = 0062;
-801D0DF0	bne    s0, v0, L1d0e38 [$801d0e38]
-V0 = V1;
-V0 = bu[8009d5e8];
-801D0E00	nop
-V0 = V0 & 0002;
-801D0E08	bne    v0, zero, L1d0e38 [$801d0e38]
-V0 = V1;
-801D0E10	j      L1d0e34 [$801d0e34]
-V1 = V1 | 0004;
+system_menu_get_inventory_restriction_mask();
+mask = V0;
 
-L1d0e18:	; 801D0E18
-V0 = hu[80062f50];
-801D0E20	nop
-V0 = V0 & 0200;
-801D0E28	beq    v0, zero, L1d0e38 [$801d0e38]
-V0 = V1;
-V1 = V1 | 0004;
+if( item_id == 46 ) // Tent (Restores ally’s max HP/MP. Use at save Point)
+{
+    // if SAVE menu locked
+    if( hu[GP + 20c] & 0200 ) mask |= 04; // can't be used in field
+}
+else if( item_id == 62 ) // Save Crystal (Used to create a SAVE Point in the ‘North Cave’)
+{
+    if( ( bu[8009c6e4 + f04] & 02 ) == 0 ) mask |= 04; // can't be used in field
+}
 
-L1d0e34:	; 801D0E34
-V0 = V1;
-
-L1d0e38:	; 801D0E38
+return mask;
 ////////////////////////////////
 
 
@@ -903,7 +891,7 @@ if( w[801d3e48] == 2 )
 {
     if( w[801d3e5c] == 0 )
     {
-        V0 = h[801d3df0] + b[801d3df9];
+        V0 = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
         V0 = hu[8009c6e4 + 4fc + V0 * 2];
         V1 = V0 & 1ff;
 
@@ -931,7 +919,7 @@ if( w[801d3e48] == 2 )
     if( frame & 2 )
     {
         A0 = a9;
-        A1 = 3c + b[801d3df9] * 10;
+        A1 = 3c + b[801d3ddc + 1 * 12 + b] * 10;
         system_menu_draw_cursor();
     }
 
@@ -964,10 +952,10 @@ switch( w[801d3e48] )
         }
 
         A0 = a9;
-        A1 = b[801d3df9] * 10 + 3c;
+        A1 = b[801d3ddc + 1 * 12 + b] * 10 + 3c;
         system_menu_draw_cursor();
 
-        S4 = h[801d3df0] + b[801d3df9];
+        S4 = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
 
         A1 = hu[8009c6e4 + 4fc + S4 * 2];
         if( ( A1 & ffff ) != ffff )
@@ -995,7 +983,7 @@ switch( w[801d3e48] )
             system_menu_draw_cursor();
         }
 
-        S4 = h[801d3df0] + b[801d3df9];
+        S4 = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
         A1 = hu[8009c6e4 + 4fc + S4 * 2];
         if( ( A1 & ffff ) != ffff )
         {
@@ -1033,7 +1021,7 @@ switch( w[801d3e48] )
         system_menu_draw_cursor();
 
         S4 = (h[801d3e14] + b[801d3e1d]) * 2 + b[801d3e1c];
-        A1 = bu[801d3d90 + S4];
+        A1 = bu[801d3d90 + S4]; // temp array of owned key items
 
         if( A1 != ff )
         {
@@ -1243,7 +1231,7 @@ if( b[801d3de6] != 2 )
     [801d3e58] = h(a5);
     [801d3e50] = h(A1);
 
-    func28484();
+    system_menu_draw_scrollbar();
 
     S6 = ( h[801d3de4 + S0] != 0 ) ? b : a;
 
@@ -1258,10 +1246,10 @@ if( b[801d3de6] != 2 )
         V1 = A0 & ffff;
         if( V1 != ffff )
         {
-            S4 = A0 & 1ff;
+            item_id = A0 & 1ff;
 
-            A0 = S4;
-            func1d0dcc();
+            A0 = item_id;
+            func1d0dcc(); // get restriction mask
 
             V0 = V0 & 0004;
             V0 = V0 < 0001;
@@ -1269,7 +1257,7 @@ if( b[801d3de6] != 2 )
             S3 = V0 & 0007;
 
             A0 = 4; // item
-            A1 = S4; // id
+            A1 = item_id;
             A2 = 8; // name
             system_kernel_get_string();
 
@@ -1295,7 +1283,7 @@ if( b[801d3de6] != 2 )
 
             A0 = S4;
             S1 = S1 >> 09;
-            func1d0dcc();
+            func1d0dcc(); // get restriction mask
 
             V0 = V0 & 4;
             V0 = V0 < 1;
@@ -1325,30 +1313,27 @@ if( b[801d3de6] != 2 )
 }
 else
 {
-    A0 = 801d3e4c;
-    [A0 + 0000] = h(a);
-    [801d3e56] = h(a);
-    V1 = hu[801d3e14];
-    [801d3e4e] = h(20);
-    [801d3e52] = h(160);
-    [801d3e54] = h(35);
-    [801d3e58] = h(a5);
-    [801d3e50] = h(V1);
+    scroll = h[801d3e14];
 
-    func28484();
+    [801d3e4c + 0] = h(a);
+    [801d3e4c + 2] = h(20);
+    [801d3e4c + 4] = h(scroll);
+    [801d3e4c + 6] = h(160); // x
+    [801d3e4c + 8] = h(35); // y
+    [801d3e4c + a] = h(a); // w
+    [801d3e4c + c] = h(a5); // h
+
+    A0 = 801d3e4c;
+    system_menu_draw_scrollbar();
 
     A0 = 9;
     func26b5c();
 
     for( int i = 0; i < c; ++i )
     {
-        V0 = h[801d3e14];
-        V0 = V0 + i;
-        S1 = V0 << 01;
-
         for( int j = 0; j < 2; ++j )
         {
-            A1 = bu[801d3d90 + S1 + j];
+            A1 = bu[801d3d90 + (scroll + i) * 2 + j]; // temp array of owned key items
 
             if( A1 != ff )
             {
@@ -1357,1100 +1342,1115 @@ else
                 system_kernel_get_string();
 
                 A0 = 20 + j * a6;
+                A1 = 3a + i * 10 + b[801d3e21] * 4;
                 A2 = V0;
-                A1 = b[801d3e21];
-                A3 = 0007;
-                A1 = A1 << 02;
-                A1 = A1 + 003a;
-                A1 = i * 10 + A1;
+                A3 = 7;
                 system_menu_draw_string();
             }
         }
     }
 }
 
+[SP + 40] = h(0);
+[SP + 42] = h(35);
+[SP + 44] = h(16c);
+[SP + 46] = h(a5);
+
+A0 = 800706a4 + w[80062f58] * 5c;
 A1 = SP + 40;
-S0 = 0;
-S1 = 801d3d5c;
-V1 = w[80062f58];
-V0 = 0035;
-[SP + 0042] = h(V0);
-V0 = 016c;
-[SP + 0044] = h(V0);
-V0 = 00a5;
-[SP + 0046] = h(V0);
-V0 = 800706a4;
-[SP + 0040] = h(0);
-A0 = V1 << 01;
-A0 = A0 + V1;
-A0 = A0 << 03;
-A0 = A0 - V1;
-A0 = A0 << 02;
-A0 = A0 + V0;
-func26a94();
+func26a94(); // add draw env
 
-loop1d18bc:	; 801D18BC
-    A0 = S1;
+for( int i = 0; i < 3; ++i )
+{
+    A0 = 801d3d5c + i * 8;
     system_menu_draw_window();
+}
 
-    S0 = S0 + 0001;
-    S1 = S1 + 0008;
-    V0 = S0 < 0003;
-801D18CC	bne    v0, zero, loop1d18bc [$801d18bc]
+func23050(); // get menu list type
 
-801D18D4	jal    $func23050
-801D18D8	nop
-801D18DC	bne    v0, zero, L1d293c [$801d293c]
-801D18E0	nop
+if( V0 != 0 ) return;
 
 A0 = 801d3ddc + w[801d3e48] * 12;
 system_menu_handle_buttons();
 
-V1 = w[801d3e48];
-V0 = V1 < 0006;
-801D191C	beq    v0, zero, L1d293c [$801d293c]
-801D1920	nop
-V0 = V1 << 02;
-AT = 801d0038;
-AT = AT + V0;
-V0 = w[AT + 0000];
-801D1938	nop
-801D193C	jr     v0 
-801D1940	nop
+switch( w[801d3e48] )
+{
+    case 0: // upper selection (use arrange keyitems)
+    {
+        if( hu[80062d7c] & 0020 ) // circle pressed
+        {
+            A0 = 1;
+            func1d01e8(); // play sound
 
-0 801D1944
+            cur_x = b[801d3ddc + 0 * 12 + a];
 
-    V0 = hu[80062d7c];
-    801D194C	nop
-    V0 = V0 & 0020;
-    801D1954	beq    v0, zero, L1d1a60 [$801d1a60]
-    801D1958	nop
-    801D195C	jal    func1d01e8 [$801d01e8]
-    A0 = 0001;
-    A0 = 801d3ddc + 0 * 12 + a;
-    V1 = b[A0 + 0000];
-    A1 = 0001;
-    801D1974	beq    v1, a1, L1d19b8 [$801d19b8]
-    V0 = V1 < 0002;
-    801D197C	beq    v0, zero, L1d1994 [$801d1994]
-    801D1980	nop
-    801D1984	beq    v1, zero, L1d19a8 [$801d19a8]
-    801D1988	nop
-    801D198C	j      L1d293c [$801d293c]
-    801D1990	nop
+            if( cur_x == 0 ) // use
+            {
+                [801d3e48] = w(1);
+            }
+            else if( cur_x == 1 )
+            {
+                // arrange type list
+                A0 = 801d3ddc + 4 * 12;
+                A1 = 0; // x cursor pos
+                A2 = 0; // y cursor pos
+                A3 = 1; // x pos items
+                A4 = 8; // y pos items
+                A5 = 0;
+                A6 = 0; // scroll pos
+                A7 = 1;
+                A8 = 8; // total y items
+                A9 = 0;
+                A10 = 0;
+                A11 = 0; // x not warp around
+                A12 = 1; // y warp around
+                A13 = 0; // page scroll dir
+                system_menu_set_cursor_movement();
 
-    L1d1994:	; 801D1994
-    V0 = 0002;
-    801D1998	beq    v1, v0, L1d1a0c [$801d1a0c]
-    A0 = A0 + 002c;
-    801D19A0	j      L1d293c [$801d293c]
-    801D19A4	nop
+                [801d3e48] = w(4);
+            }
+            else if( cur_x == 2 )
+            {
+                // key item list
+                A0 = 801d3ddc + 3 * 12;
+                A1 = 0; // x cursor pos
+                A2 = 0; // y cursor pos
+                A3 = 2; // x pos items
+                A4 = a; // y pos items
+                A5 = 0;
+                A6 = 0; // scroll pos
+                A7 = 2;
+                A8 = 20; // total y items
+                A9 = 0;
+                A10 = 0;
+                A11 = 2; // x warp around with y move
+                A12 = 0; // y not warp around
+                A13 = 0; // page scroll dir
+                system_menu_set_cursor_movement();
 
-    L1d19a8:	; 801D19A8
-    [801d3e48] = w(A1);
-    801D19B0	j      L1d293c [$801d293c]
-    801D19B4	nop
+                [801d3e48] = w(3);
+            }
+        }
+        else if( hu[80062d7e] & 0040 ) // cross repeated
+        {
+            A0 = 4;
+            func1d01e8(); // play sound
 
-    L1d19b8:	; 801D19B8
-    A0 = A0 + 003e;
-    A1 = 0;
-    A2 = 0;
-    A3 = 0001;
-    V0 = 0008;
-    [SP + 0010] = w(V0);
-    [SP + 0014] = w(0);
-    [SP + 0018] = w(0);
-    [SP + 001c] = w(V1);
-    [SP + 0020] = w(V0);
-    [SP + 0024] = w(0);
-    [SP + 0028] = w(0);
-    [SP + 002c] = w(0);
-    [SP + 0030] = w(V1);
-    801D19F0	jal    $func26448
-    [SP + 0034] = w(0);
-    V0 = 0004;
-    [801d3e48] = w(V0);
-    return;
+            A0 = 5;
+            A1 = 0;
+            system_menu_set_menu_list_animation();
 
-    L1d1a0c:	; 801D1A0C
-    A1 = 0;
-    A2 = 0;
-    A3 = 0002;
-    V0 = 000a;
-    [SP + 0010] = w(V0);
-    V0 = 0020;
-    [SP + 0014] = w(0);
-    [SP + 0018] = w(0);
-    [SP + 001c] = w(V1);
-    [SP + 0020] = w(V0);
-    [SP + 0024] = w(0);
-    [SP + 0028] = w(0);
-    [SP + 002c] = w(V1);
-    [SP + 0030] = w(0);
-    801D1A44	jal    $func26448
-    [SP + 0034] = w(0);
-    V0 = 0003;
-    [801d3e48] = w(V0);
-    return;
+            A0 = 0; // close menu
+            system_menu_load_menu_file_by_id();
+        }
+        return;
+    }
+    break;
 
-    L1d1a60:	; 801D1A60
-    V0 = hu[80062d7e];
-    801D1A68	nop
-    V0 = V0 & 0040;
-    801D1A70	beq    v0, zero, L1d293c [$801d293c]
-    801D1A74	nop
-    801D1A78	jal    func1d01e8 [$801d01e8]
-    A0 = 0004;
-    A0 = 0005;
-    801D1A84	jal    $8002305c
-    A1 = 0;
-    801D1A8C	jal    $8002120c
-    A0 = 0;
-    801D1A94	j      L1d293c [$801d293c]
-    801D1A98	nop
+    case 1:
+    {
+        if( h[801d3df6] != 0 ) return;
 
-1 801D1A9C
+        if( hu[80062d7c] & 0020 ) // circle pressed
+        {
+            cur_y = b[801d3ddc + 1 * 12 + b]
+            cur_scroll = h[801d3ddc + 1 * 12 + 2]
 
-    V0 = h[801d3df6];
-    801D1AA4	nop
-    801D1AA8	bne    v0, zero, L1d293c [$801d293c]
-    801D1AAC	nop
-    V1 = hu[80062d7c];
-    801D1AB8	nop
-    V0 = V1 & 0020;
-    801D1AC0	beq    v0, zero, L1d2924 [$801d2924]
-    V0 = V1 & 0040;
-    V1 = b[801d3df9];
-    V0 = h[801d3df0];
-    801D1AD8	nop
-    S4 = V1 + V0;
-    V0 = S4 << 01;
-    AT = 8009c6e4 + 4fc + V0;
-    A0 = hu[AT + 0000];
-    V0 = ffff;
-    V1 = A0 & ffff;
-    801D1AFC	beq    v1, v0, L1d2724 [$801d2724]
-    S4 = A0 & 01ff;
-    801D1B04	jal    func1d0dcc [$801d0dcc]
-    A0 = S4;
-    V0 = V0 & 0004;
-    801D1B10	bne    v0, zero, L1d2724 [$801d2724]
-    V0 = 0062;
-    801D1B18	beq    s4, v0, L1d1ba0 [$801d1ba0]
-    V0 = 0067;
-    801D1B20	bne    s4, v0, L1d1be4 [$801d1be4]
-    801D1B24	nop
-    801D1B28	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A1 = ffffff;
-    V1 = 0001;
-    V0 = 0006;
-    A0 = 00ff;
-    [8009ca50] = b(V0);
-    V0 = 0007;
-    [8009ca51] = b(V1);
-    [8009ca5e] = b(V1);
-    [8009ca5f] = b(A0);
-    [8009ca8c] = w(A1);
-    [8009cad5] = b(V1);
-    [8009cad4] = b(V0);
-    [8009cae2] = b(V1);
-    [8009cae3] = b(A0);
-    [8009cb10] = w(A1);
-    801D1B98	j      L1d293c [$801d293c]
-    801D1B9C	nop
+            item = hu[8009c6e4 + 4fc + (cur_y + cur_scroll) * 2];
 
-    L1d1ba0:	; 801D1BA0
-    801D1BA0	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = 0005;
-    V0 = bu[8009d5e8];
-    801D1BB4	nop
-    V0 = V0 | 0001;
-    [8009d5e8] = b(V0);
-    801D1BC4	jal    $8002305c
-    A1 = 0;
-    801D1BCC	jal    $8002120c
-    A0 = 0;
-    801D1BD4	jal    $80023ac4
-    801D1BD8	nop
-    801D1BDC	j      L1d293c [$801d293c]
-    801D1BE0	nop
+            if( item == ffff ) // if there is no item in this slot
+            {
+                A0 = 3;
+                func1d01e8(); // play sound
+            }
+            else
+            {
+                item_id = item & 1ff;
 
-    L1d1be4:	; 801D1BE4
-    801D1BE4	jal    func1d01e8 [$801d01e8]
-    A0 = 0001;
-    V0 = 0002;
-    [801d3e5c] = w(0);
-    [801d3e48] = w(V0);
-    801D1C00	j      L1d293c [$801d293c]
-    801D1C04	nop
+                A0 = item_id;
+                func1d0dcc(); // get restriction mask
 
-2 801D1C08
+                if( V0 & 04 ) // can't be used
+                {
+                    A0 = 3;
+                    func1d01e8(); // play sound
+                }
+                else
+                {
+                    if( item_id == 62 ) // Save Crystal (Used to create a SAVE Point in the ‘North Cave’)
+                    {
+                        A0 = 107;
+                        func1d01e8(); // play sound
 
-    V0 = w[801d3e5c];
-    801D1C10	nop
-    801D1C14	bne    v0, zero, L1d293c [$801d293c]
-    801D1C18	nop
-    V1 = hu[80062d7c];
-    801D1C24	nop
-    V0 = V1 & 0020;
-    801D1C2C	beq    v0, zero, L1d2734 [$801d2734]
-    V0 = V1 & 0040;
-    V0 = b[801d3df9];
-    V1 = h[801d3df0];
-    801D1C44	nop
-    V0 = V0 + V1;
-    V0 = V0 << 01;
-    AT = 8009c6e4 + 4fc + V0;
-    V0 = hu[AT + 0000];
-    V1 = b[801d3e0b];
-    S4 = V0 & 01ff;
-    801D1C6C	lui    at, $800a
-    801D1C70	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + V1;
-    A0 = bu[AT + 0000];
-    V0 = 00ff;
-    801D1C80	bne    a0, v0, L1d1ca0 [$801d1ca0]
-    V0 = S4 < 005f;
-    V0 = 0006;
-    801D1C8C	beq    s4, v0, L1d1c9c [$801d1c9c]
-    V0 = 0046;
-    801D1C94	bne    s4, v0, L1d2724 [$801d2724]
-    801D1C98	nop
+                        [8009d5e8] = b(bu[8009d5e8] | 01);
 
-    L1d1c9c:	; 801D1C9C
-    V0 = S4 < 005f;
+                        A0 = 5;
+                        A1 = 0;
+                        system_menu_set_menu_list_animation();
 
-    L1d1ca0:	; 801D1CA0
-    801D1CA0	beq    v0, zero, L1d293c [$801d293c]
-    801D1CA4	nop
-    V0 = S4 << 02;
-    AT = ;
-    AT = 801d0050 + V0;
-    V0 = w[AT + 0000];
-    801D1CBC	nop
-    801D1CC0	jr     v0 
-    801D1CC4	nop
+                        A0 = 0; // close menu
+                        system_menu_load_menu_file_by_id();
 
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D1CD4	lui    at, $800a
-    801D1CD8	addiu  at, at, $c757 (=-$38a9)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D1CE4	nop
-    V0 = V1 & 0020;
-    801D1CEC	bne    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 & 0010;
-    801D1CF4	bne    v0, zero, L1d1d00 [$801d1d00]
-    V0 = V1 & 00ef;
-    V0 = V1 | 0020;
+                        func23ac4();
+                    }
+                    else if( item_id == 67 ) // Earth Harp (Calms the hearts of all who hear it)
+                    {
+                        A0 = 107;
+                        func1d01e8(); // play sound
 
-    L1d1d00:	; 801D1D00
-    801D1D00	lui    at, $800a
-    801D1D04	addiu  at, at, $c757 (=-$38a9)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D1D10	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    801D1D18	jal    $func25288
-    A0 = S4 | 0200;
-    801D1D20	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D1D30	bne    v0, v1, L1d293c [$801d293c]
-    801D1D34	nop
-    801D1D38	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D1D4C	lui    at, $800a
-    801D1D50	addiu  at, at, $c757 (=-$38a9)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D1D5C	nop
-    V0 = V1 & 0020;
-    801D1D64	bne    v0, zero, L1d1d78 [$801d1d78]
-    V0 = V1 & 00df;
-    V0 = V1 & 0010;
-    801D1D70	bne    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 | 0010;
+                        // Cait Sith (or Young Cloud)
+                        [8009c6e4 + 54 + 6 * 84 + 0] = b(6); // character id (Cait Sith)
+                        [8009c6e4 + 54 + 6 * 84 + 1] = b(1); // level
+                        [8009c6e4 + 54 + 6 * 84 + e] = b(1); // current limit level
+                        [8009c6e4 + 54 + 6 * 84 + f] = b(ff);
+                        [8009c6e4 + 54 + 6 * 84 + 3c] = w(00ffffff); // current exp
 
-    L1d1d78:	; 801D1D78
-    801D1D78	lui    at, $800a
-    801D1D7C	addiu  at, at, $c757 (=-$38a9)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D1D88	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    801D1D90	jal    $func25288
-    A0 = S4 | 0200;
-    801D1D98	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D1DA8	bne    v0, v1, L1d293c [$801d293c]
-    801D1DAC	nop
-    801D1DB0	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    AT = 801d3d25;
-    AT = AT + S4;
-    V0 = bu[AT + 0000];
-    801D1DC8	nop
-    801D1DCC	bne    a0, v0, L1d1ee0 [$801d1ee0]
-    V0 = 0006;
-    801D1DD4	jal    func1d0d24 [$801d0d24]
-    801D1DD8	nop
-    801D1DDC	beq    v0, zero, L1d1ea0 [$801d1ea0]
-    801D1DE0	addiu  v0, s4, $ffa9 (=-$57)
+                        // Vincent (or Sephiroth)
+                        [8009c6e4 + 54 + 7 * 84 + 0] = b(7); // Vincent
+                        [8009c6e4 + 54 + 7 * 84 + 1] = b(1);
+                        [8009c6e4 + 54 + 7 * 84 + e] = b(1);
+                        [8009c6e4 + 54 + 7 * 84 + f] = b(ff);
+                        [8009c6e4 + 54 + 7 * 84 + 3c] = w(00ffffff);
+                    }
+                    else
+                    {
+                        A0 = 1;
+                        func1d01e8(); // play sound
 
-    A0 = 180;
-    func1d01e8();
+                        [801d3e5c] = w(0);
+                        [801d3e48] = w(2);
+                    }
+                }
+            }
+        }
+        else if( hu[80062d7c] & 0040 )
+        {
+            A0 = 4;
+            func1d01e8(); // play sound
 
-    V0 = bu[801d3d25 + S4];
-    [8009c6e4 + 54 + V0 * 84 + 22] = h(hu[8009c6e4 + 54 + V0 * 84 + 22] | 0200); // learn Limit Lv. 4
+            [801d3e48] = w(0);
+        }
+        return;
+    }
+    break;
 
-    A0 = S4 | 0200;
-    func25288();
+    case 2:
+    {
+        if( w[801d3e5c] != 0 ) return;
 
-    A0 = S4;
-    func25310();
+        V1 = hu[80062d7c];
+        V0 = V1 & 0020;
+        801D1C2C	beq    v0, zero, L1d2734 [$801d2734]
+        V0 = V1 & 0040;
 
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D1E4C	bne    v0, v1, L1d1e64 [$801d1e64]
-    801D1E50	addiu  v0, s4, $ffa9 (=-$57)
-    V0 = 0001;
-    [801d3e48] = w(V0);
-    801D1E60	addiu  v0, s4, $ffa9 (=-$57)
+        cur_y = b[801d3ddc + 1 * 12 + b];
+        cur_scroll = h[801d3ddc + 1 * 12 + 2];
+        V0 = hu[8009c6e4 + 4fc + (cur_y + cur_scroll) * 2];
+        V1 = b[801d3e0b];
+        S4 = V0 & 01ff;
+        A0 = bu[8009cdbc + V1];
+        V0 = 00ff;
+        801D1C80	bne    a0, v0, L1d1ca0 [$801d1ca0]
 
-    L1d1e64:	; 801D1E64
-    A0 = V0 << 01;
-    A0 = A0 + V0;
-    V0 = A0 << 04;
-    A0 = A0 + V0;
-    A0 = A0 << 01;
-    V0 = 801d3260;
-    801D1E80	jal    func1d0e4c [$801d0e4c]
-    A0 = A0 + V0;
-    A0 = 801d3e60;
-    801D1E90	jal    $func1f6c0
-    A1 = 0007;
-    801D1E98	j      L1d293c [$801d293c]
-    801D1E9C	nop
+        V0 = 0006;
+        801D1C8C	beq    s4, v0, L1d1c9c [$801d1c9c]
+        V0 = 0046;
+        801D1C94	bne    s4, v0, L1d2724 [$801d2724]
+        801D1C98	nop
 
-    L1d1ea0:	; 801D1EA0
-    A0 = V0 << 01;
-    A0 = A0 + V0;
-    V0 = A0 << 04;
-    A0 = A0 + V0;
-    A0 = A0 << 01;
-    V0 = 801d3282;
-    A0 = A0 + V0;
+        L1d1c9c:	; 801D1C9C
+        L1d1ca0:	; 801D1CA0
+        V0 = S4 < 005f;
+        801D1CA0	beq    v0, zero, L1d293c [$801d293c]
+        801D1CA4	nop
 
-    L1d1ec0:	; 801D1EC0
-    801D1EC0	jal    func1d0e4c [$801d0e4c]
-    801D1EC4	nop
-    A0 = 801d3e60;
-    801D1ED0	jal    $func1f6c0
-    A1 = 0007;
-    801D1ED8	j      L1d2724 [$801d2724]
-    801D1EDC	nop
 
-    L1d1ee0:	; 801D1EE0
-    801D1EE0	bne    a0, v0, L1d1ef8 [$801d1ef8]
-    V0 = A0 < 0006;
-    A0 = 801d3590;
-    801D1EF0	j      L1d1ec0 [$801d1ec0]
-    801D1EF4	nop
+id0d 801D1CC8
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D1CD4	lui    at, $800a
+        801D1CD8	addiu  at, at, $c757 (=-$38a9)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D1CE4	nop
+        V0 = V1 & 0020;
+        801D1CEC	bne    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 & 0010;
+        801D1CF4	bne    v0, zero, L1d1d00 [$801d1d00]
+        V0 = V1 & 00ef;
+        V0 = V1 | 0020;
 
-    L1d1ef8:	; 801D1EF8
-    801D1EF8	bne    v0, zero, L1d1f0c [$801d1f0c]
-    801D1EFC	addiu  v1, a0, $ffff (=-$1)
-    V0 = V1 << 01;
-    801D1F04	j      L1d1f14 [$801d1f14]
-    V0 = V0 + V1;
+        L1d1d00:	; 801D1D00
+        801D1D00	lui    at, $800a
+        801D1D04	addiu  at, at, $c757 (=-$38a9)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
 
-    L1d1f0c:	; 801D1F0C
-    V0 = A0 << 01;
-    V0 = V0 + A0;
+        A0 = 107;
+        func1d01e8(); // play sound
 
-    L1d1f14:	; 801D1F14
-    V0 = V0 + 0002;
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 01;
-    V0 = 801d3260;
-    801D1F2C	j      L1d1ec0 [$801d1ec0]
-    A0 = V1 + V0;
-    801D1F34	addiu  v1, s4, $ffb9 (=-$47)
-    V0 = V1 < 0006;
-    801D1F3C	beq    v0, zero, L1d20f0 [$801d20f0]
-    V0 = V1 << 02;
-    AT = 801d01d0;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    801D1F54	nop
-    801D1F58	jr     v0 
-    801D1F5C	nop
+        801D1D18	jal    $func25288
+        A0 = S4 | 0200;
+        801D1D20	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D1D30	bne    v0, v1, L1d293c [$801d293c]
+        801D1D34	nop
+        801D1D38	j      L1d2748 [$801d2748]
+        V0 = 0001;
 
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D1F6C	lui    at, $800a
-    801D1F70	addiu  at, at, $c740 (=-$38c0)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D1F7C	nop
-    V0 = V1 < 00ff;
-    801D1F84	beq    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 + 0001;
-    801D1F8C	lui    at, $800a
-    801D1F90	addiu  at, at, $c740 (=-$38c0)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D1F9C	j      L1d20f0 [$801d20f0]
-    801D1FA0	nop
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D1FB0	lui    at, $800a
-    801D1FB4	addiu  at, at, $c741 (=-$38bf)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D1FC0	nop
-    V0 = V1 < 00ff;
-    801D1FC8	beq    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 + 0001;
-    801D1FD0	lui    at, $800a
-    801D1FD4	addiu  at, at, $c741 (=-$38bf)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D1FE0	j      L1d20f0 [$801d20f0]
-    801D1FE4	nop
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D1FF4	lui    at, $800a
-    801D1FF8	addiu  at, at, $c742 (=-$38be)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D2004	nop
-    V0 = V1 < 00ff;
-    801D200C	beq    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 + 0001;
-    801D2014	lui    at, $800a
-    801D2018	addiu  at, at, $c742 (=-$38be)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D2024	j      L1d20f0 [$801d20f0]
-    801D2028	nop
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D2038	lui    at, $800a
-    801D203C	addiu  at, at, $c743 (=-$38bd)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D2048	nop
-    V0 = V1 < 00ff;
-    801D2050	beq    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 + 0001;
-    801D2058	lui    at, $800a
-    801D205C	addiu  at, at, $c743 (=-$38bd)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D2068	j      L1d20f0 [$801d20f0]
-    801D206C	nop
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D207C	lui    at, $800a
-    801D2080	addiu  at, at, $c744 (=-$38bc)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D208C	nop
-    V0 = V1 < 00ff;
-    801D2094	beq    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 + 0001;
-    801D209C	lui    at, $800a
-    801D20A0	addiu  at, at, $c744 (=-$38bc)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
-    801D20AC	j      L1d20f0 [$801d20f0]
-    801D20B0	nop
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    A0 = V0 << 02;
-    801D20C0	lui    at, $800a
-    801D20C4	addiu  at, at, $c745 (=-$38bb)
-    AT = AT + A0;
-    V1 = bu[AT + 0000];
-    801D20D0	nop
-    V0 = V1 < 00ff;
-    801D20D8	beq    v0, zero, L1d2724 [$801d2724]
-    V0 = V1 + 0001;
-    801D20E0	lui    at, $800a
-    801D20E4	addiu  at, at, $c745 (=-$38bb)
-    AT = AT + A0;
-    [AT + 0000] = b(V0);
+id0e 801D1D40
 
-    L1d20f0:	; 801D20F0
-    801D20F0	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D2104	jal    $80020058
-    801D2108	nop
-    A0 = bu[S0 + 0000];
-    801D2110	jal    $8001786c
-    801D2114	nop
-    801D2118	jal    $func25288
-    A0 = S4 | 0200;
-    801D2120	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D2130	bne    v0, v1, L1d293c [$801d293c]
-    801D2134	nop
-    801D2138	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D214C	jal    func1d0cac [$801d0cac]
-    801D2150	nop
-    801D2154	bne    v0, zero, L1d2724 [$801d2724]
-    801D2158	nop
-    V0 = b[S0 + 0000];
-    801D2160	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D2170	lui    at, $800a
-    801D2174	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D2180	nop
-    801D2184	beq    v0, zero, L1d2724 [$801d2724]
-    801D2188	nop
-    801D218C	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D2198	jal    $func258bc
-    A1 = 0064;
-    801D21A0	jal    $func25288
-    A0 = S4 | 0200;
-    801D21A8	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D21B8	bne    v0, v1, L1d293c [$801d293c]
-    801D21BC	nop
-    801D21C0	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D21D4	jal    func1d0cac [$801d0cac]
-    801D21D8	nop
-    801D21DC	bne    v0, zero, L1d2724 [$801d2724]
-    801D21E0	nop
-    V0 = b[S0 + 0000];
-    801D21E8	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D21F8	lui    at, $800a
-    801D21FC	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D2208	nop
-    801D220C	beq    v0, zero, L1d2724 [$801d2724]
-    801D2210	nop
-    801D2214	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D2220	jal    $func258bc
-    A1 = 01f4;
-    801D2228	jal    $func25288
-    A0 = S4 | 0200;
-    801D2230	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D2240	bne    v0, v1, L1d293c [$801d293c]
-    801D2244	nop
-    801D2248	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D225C	jal    func1d0ce8 [$801d0ce8]
-    801D2260	nop
-    801D2264	bne    v0, zero, L1d2724 [$801d2724]
-    801D2268	nop
-    V0 = b[S0 + 0000];
-    801D2270	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D2280	lui    at, $800a
-    801D2284	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D2290	nop
-    801D2294	beq    v0, zero, L1d2724 [$801d2724]
-    801D2298	nop
-    801D229C	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D22A8	jal    $func25a44
-    A1 = 0064;
-    801D22B0	jal    $func25288
-    A0 = S4 | 0200;
-    801D22B8	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D22C8	bne    v0, v1, L1d293c [$801d293c]
-    801D22CC	nop
-    801D22D0	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D22E4	jal    func1d0ce8 [$801d0ce8]
-    801D22E8	nop
-    801D22EC	bne    v0, zero, L1d2724 [$801d2724]
-    801D22F0	nop
-    V0 = b[S0 + 0000];
-    801D22F8	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D2308	lui    at, $800a
-    801D230C	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D2318	nop
-    801D231C	beq    v0, zero, L1d2724 [$801d2724]
-    801D2320	nop
-    801D2324	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D2330	jal    $func25a44
-    A1 = 2710;
-    801D2338	jal    $func25288
-    A0 = S4 | 0200;
-    801D2340	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D2350	bne    v0, v1, L1d293c [$801d293c]
-    801D2354	nop
-    801D2358	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    V0 = b[S0 + 0000];
-    801D236C	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D237C	lui    at, $800a
-    801D2380	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D238C	nop
-    801D2390	bne    v0, zero, L1d2724 [$801d2724]
-    801D2394	nop
-    801D2398	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D23A4	nop
-    V0 = A0 << 04;
-    V0 = V0 + A0;
-    V0 = V0 << 06;
-    801D23B4	lui    at, $800a
-    801D23B8	addiu  at, at, $d85e (=-$27a2)
-    AT = AT + V0;
-    A1 = h[AT + 0000];
-    801D23C4	nop
-    801D23C8	bgez   a1, L1d23d4 [$801d23d4]
-    801D23CC	nop
-    A1 = A1 + 0003;
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D1D4C	lui    at, $800a
+        801D1D50	addiu  at, at, $c757 (=-$38a9)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D1D5C	nop
+        V0 = V1 & 0020;
+        801D1D64	bne    v0, zero, L1d1d78 [$801d1d78]
+        V0 = V1 & 00df;
+        V0 = V1 & 0010;
+        801D1D70	bne    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 | 0010;
 
-    L1d23d4:	; 801D23D4
-    801D23D4	jal    $func258bc
-    A1 = A1 >> 02;
-    801D23DC	jal    $func25288
-    A0 = S4 | 0200;
-    801D23E4	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D23F4	bne    v0, v1, L1d293c [$801d293c]
-    801D23F8	nop
-    801D23FC	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 0;
-    S1 = 0;
-    S2 = 00ff;
+        L1d1d78:	; 801D1D78
+        801D1D78	lui    at, $800a
+        801D1D7C	addiu  at, at, $c757 (=-$38a9)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
 
-    loop1d2410:	; 801D2410
-    801D2410	lui    at, $800a
-    801D2414	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + S0;
-    V0 = bu[AT + 0000];
-    801D2420	nop
-    801D2424	beq    v0, s2, L1d2450 [$801d2450]
-    801D2428	nop
-    801D242C	jal    func1d0cac [$801d0cac]
-    A0 = S0;
-    801D2434	beq    v0, zero, L1d244c [$801d244c]
-    801D2438	nop
-    801D243C	jal    func1d0ce8 [$801d0ce8]
-    A0 = S0;
-    801D2444	bne    v0, zero, L1d2450 [$801d2450]
-    801D2448	nop
+        A0 = 107;
+        func1d01e8(); // play sound
 
-    L1d244c:	; 801D244C
-    S1 = 0001;
+        801D1D90	jal    $func25288
+        A0 = S4 | 0200;
+        801D1D98	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D1DA8	bne    v0, v1, L1d293c [$801d293c]
+        801D1DAC	nop
+        801D1DB0	j      L1d2748 [$801d2748]
+        V0 = 0001;
 
-    L1d2450:	; 801D2450
-    S0 = S0 + 0001;
-    V0 = S0 < 0003;
-    801D2458	bne    v0, zero, loop1d2410 [$801d2410]
-    801D245C	nop
-    801D2460	beq    s1, zero, L1d2724 [$801d2724]
-    S0 = 0;
-    S2 = 00ff;
-    S1 = 0;
+id57-5e 801D1DB8
 
-    loop1d2470:	; 801D2470
-    801D2470	lui    at, $800a
-    801D2474	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + S1;
-    V0 = h[AT + 0000];
-    801D2480	nop
-    801D2484	beq    v0, zero, L1d24bc [$801d24bc]
-    801D2488	nop
-    801D248C	lui    at, $800a
-    801D2490	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + S0;
-    V0 = bu[AT + 0000];
-    801D249C	nop
-    801D24A0	beq    v0, s2, L1d24bc [$801d24bc]
-    A0 = S0;
-    801D24A8	jal    $func258bc
-    A1 = 2710;
-    A0 = S0;
-    801D24B4	jal    $func25a44
-    A1 = 2710;
+        AT = 801d3d25;
+        AT = AT + S4;
+        V0 = bu[AT + 0000];
+        801D1DC8	nop
+        801D1DCC	bne    a0, v0, L1d1ee0 [$801d1ee0]
+        V0 = 0006;
+        801D1DD4	jal    func1d0d24 [$801d0d24]
+        801D1DD8	nop
+        801D1DDC	beq    v0, zero, L1d1ea0 [$801d1ea0]
+        801D1DE0	addiu  v0, s4, $ffa9 (=-$57)
 
-    L1d24bc:	; 801D24BC
-    S0 = S0 + 0001;
-    V0 = S0 < 0003;
-    801D24C4	bne    v0, zero, loop1d2470 [$801d2470]
-    S1 = S1 + 0440;
-    801D24CC	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    801D24D4	jal    $func25288
-    A0 = S4 | 0200;
-    801D24DC	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D24EC	bne    v0, v1, L1d293c [$801d293c]
-    801D24F0	nop
-    801D24F4	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D2508	jal    func1d0cac [$801d0cac]
-    801D250C	nop
-    801D2510	bne    v0, zero, L1d2724 [$801d2724]
-    801D2514	nop
-    V0 = b[S0 + 0000];
-    801D251C	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D252C	lui    at, $800a
-    801D2530	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D253C	nop
-    801D2540	beq    v0, zero, L1d2724 [$801d2724]
-    801D2544	nop
-    801D2548	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D2554	jal    $func258bc
-    A1 = 2710;
-    801D255C	jal    $func25288
-    A0 = S4 | 0200;
-    801D2564	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D2574	bne    v0, v1, L1d293c [$801d293c]
-    801D2578	nop
-    801D257C	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 801d3e0b;
-    A0 = b[S0 + 0000];
-    801D2590	jal    func1d0cac [$801d0cac]
-    801D2594	nop
-    801D2598	beq    v0, zero, L1d25b4 [$801d25b4]
-    801D259C	nop
-    A0 = b[S0 + 0000];
-    801D25A4	jal    func1d0ce8 [$801d0ce8]
-    801D25A8	nop
-    801D25AC	bne    v0, zero, L1d2724 [$801d2724]
-    801D25B0	nop
+        A0 = 180;
+        func1d01e8(); // play sound
 
-    L1d25b4:	; 801D25B4
-    V0 = b[S0 + 0000];
-    801D25B8	nop
-    V1 = V0 << 04;
-    V1 = V1 + V0;
-    V1 = V1 << 06;
-    801D25C8	lui    at, $800a
-    801D25CC	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + V1;
-    V0 = h[AT + 0000];
-    801D25D8	nop
-    801D25DC	beq    v0, zero, L1d2724 [$801d2724]
-    801D25E0	nop
-    801D25E4	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    A0 = b[S0 + 0000];
-    801D25F0	jal    $func258bc
-    A1 = 2710;
-    A0 = b[S0 + 0000];
-    801D25FC	jal    $func25a44
-    A1 = 2710;
-    801D2604	jal    $func25288
-    A0 = S4 | 0200;
-    801D260C	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D261C	bne    v0, v1, L1d293c [$801d293c]
-    801D2620	nop
-    801D2624	j      L1d2748 [$801d2748]
-    V0 = 0001;
-    S0 = 0;
-    S1 = 0;
-    S2 = 00ff;
+        V0 = bu[801d3d25 + S4];
+        [8009c6e4 + 54 + V0 * 84 + 22] = h(hu[8009c6e4 + 54 + V0 * 84 + 22] | 0200); // learn Limit Lv. 4
 
-    loop1d2638:	; 801D2638
-    801D2638	lui    at, $800a
-    801D263C	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + S0;
-    V0 = bu[AT + 0000];
-    801D2648	nop
-    801D264C	beq    v0, s2, L1d2678 [$801d2678]
-    801D2650	nop
-    801D2654	jal    func1d0cac [$801d0cac]
-    A0 = S0;
-    801D265C	beq    v0, zero, L1d2674 [$801d2674]
-    801D2660	nop
-    801D2664	jal    func1d0ce8 [$801d0ce8]
-    A0 = S0;
-    801D266C	bne    v0, zero, L1d2678 [$801d2678]
-    801D2670	nop
+        A0 = S4 | 0200;
+        func25288();
 
-    L1d2674:	; 801D2674
-    S1 = 0001;
+        A0 = S4;
+        func25310();
 
-    L1d2678:	; 801D2678
-    S0 = S0 + 0001;
-    V0 = S0 < 0003;
-    801D2680	bne    v0, zero, loop1d2638 [$801d2638]
-    801D2684	nop
-    801D2688	beq    s1, zero, L1d2724 [$801d2724]
-    S0 = 0;
-    S2 = 00ff;
-    S1 = 0;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D1E4C	bne    v0, v1, L1d1e64 [$801d1e64]
+        801D1E50	addiu  v0, s4, $ffa9 (=-$57)
+        V0 = 0001;
+        [801d3e48] = w(V0);
+        801D1E60	addiu  v0, s4, $ffa9 (=-$57)
 
-    loop1d2698:	; 801D2698
-    801D2698	lui    at, $800a
-    801D269C	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + S1;
-    V0 = h[AT + 0000];
-    801D26A8	nop
-    801D26AC	beq    v0, zero, L1d26e4 [$801d26e4]
-    801D26B0	nop
-    801D26B4	lui    at, $800a
-    801D26B8	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + S0;
-    V0 = bu[AT + 0000];
-    801D26C4	nop
-    801D26C8	beq    v0, s2, L1d26e4 [$801d26e4]
-    A0 = S0;
-    801D26D0	jal    $func258bc
-    A1 = 2710;
-    A0 = S0;
-    801D26DC	jal    $func25a44
-    A1 = 2710;
+        L1d1e64:	; 801D1E64
+        A0 = V0 << 01;
+        A0 = A0 + V0;
+        V0 = A0 << 04;
+        A0 = A0 + V0;
+        A0 = A0 << 01;
+        V0 = 801d3260;
+        801D1E80	jal    func1d0e4c [$801d0e4c]
+        A0 = A0 + V0;
+        A0 = 801d3e60;
+        801D1E90	jal    $func1f6c0
+        A1 = 0007;
+        801D1E98	j      L1d293c [$801d293c]
+        801D1E9C	nop
 
-    L1d26e4:	; 801D26E4
-    S0 = S0 + 0001;
-    V0 = S0 < 0003;
-    801D26EC	bne    v0, zero, loop1d2698 [$801d2698]
-    S1 = S1 + 0440;
-    801D26F4	jal    func1d01e8 [$801d01e8]
-    A0 = 0107;
-    801D26FC	jal    $func25288
-    A0 = S4 | 0200;
-    801D2704	jal    $func25310
-    A0 = S4;
-    V0 = V0 & ffff;
-    V1 = ffff;
-    801D2714	bne    v0, v1, L1d293c [$801d293c]
-    801D2718	nop
-    801D271C	j      L1d2748 [$801d2748]
-    V0 = 0001;
+        L1d1ea0:	; 801D1EA0
+        A0 = V0 << 01;
+        A0 = A0 + V0;
+        V0 = A0 << 04;
+        A0 = A0 + V0;
+        A0 = A0 << 01;
+        V0 = 801d3282;
+        A0 = A0 + V0;
 
-    L1d2724:	; 801D2724
-    801D2724	jal    func1d01e8 [$801d01e8]
-    A0 = 0003;
-    801D272C	j      L1d293c [$801d293c]
-    801D2730	nop
+        L1d1ec0:	; 801D1EC0
+        801D1EC0	jal    func1d0e4c [$801d0e4c]
+        801D1EC4	nop
+        A0 = 801d3e60;
+        801D1ED0	jal    $func1f6c0
+        A1 = 0007;
+        801D1ED8	j      L1d2724 [$801d2724]
+        801D1EDC	nop
 
-    L1d2734:	; 801D2734
-    801D2734	beq    v0, zero, L1d293c [$801d293c]
-    801D2738	nop
-    801D273C	jal    func1d01e8 [$801d01e8]
-    A0 = 0004;
-    V0 = 0001;
+        L1d1ee0:	; 801D1EE0
+        801D1EE0	bne    a0, v0, L1d1ef8 [$801d1ef8]
+        V0 = A0 < 0006;
+        A0 = 801d3590;
+        801D1EF0	j      L1d1ec0 [$801d1ec0]
+        801D1EF4	nop
 
-    L1d2748:	; 801D2748
-    [801d3e48] = w(V0);
-    801D2750	j      L1d293c [$801d293c]
-    801D2754	nop
+        L1d1ef8:	; 801D1EF8
+        801D1EF8	bne    v0, zero, L1d1f0c [$801d1f0c]
+        801D1EFC	addiu  v1, a0, $ffff (=-$1)
+        V0 = V1 << 01;
+        801D1F04	j      L1d1f14 [$801d1f14]
+        V0 = V0 + V1;
 
-3 801D2758
+        L1d1f0c:	; 801D1F0C
+        V0 = A0 << 01;
+        V0 = V0 + A0;
 
-    V0 = hu[80062d7c];
-    801D2760	j      L1d2924 [$801d2924]
-    V0 = V0 & 0040;
+        L1d1f14:	; 801D1F14
+        V0 = V0 + 0002;
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 01;
+        V0 = 801d3260;
+        801D1F2C	j      L1d1ec0 [$801d1ec0]
+        A0 = V1 + V0;
 
-4 801D2768
+id47-4c 801D1F34
 
-    V1 = hu[80062d7c];
-    801D2770	nop
-    V0 = V1 & 0020;
-    801D2778	beq    v0, zero, L1d2924 [$801d2924]
-    V0 = V1 & 0040;
-    801D2780	jal    func1d01e8 [$801d01e8]
-    A0 = 0001;
-    V0 = 801d3e2f;
-    A0 = b[V0 + 0000];
-    801D2794	nop
-    801D2798	bne    a0, zero, L1d2810 [$801d2810]
-    A1 = 0;
-    A0 = V0 + 0007;
-    A2 = 0;
-    A3 = 0001;
-    V0 = 000a;
-    [SP + 0010] = w(V0);
-    V0 = 0001;
-    [SP + 001c] = w(V0);
-    V0 = 0140;
-    [SP + 0014] = w(0);
-    [SP + 0018] = w(0);
-    [SP + 0020] = w(V0);
-    [SP + 0024] = w(0);
-    [SP + 0028] = w(0);
-    [SP + 002c] = w(0);
-    [SP + 0030] = w(0);
-    801D27DC	jal    $func26448
-    [SP + 0034] = w(0);
-    V0 = 0005;
-    [801d3d84] = w(0);
-    [801d3d88] = w(0);
-    [801d3d8c] = w(0);
-    [801d3e48] = w(V0);
-    801D2808	j      L1d293c [$801d293c]
-    801D280C	nop
+        801D1F34	addiu  v1, s4, $ffb9 (=-$47)
+        V0 = V1 < 0006;
+        801D1F3C	beq    v0, zero, L1d20f0 [$801d20f0]
+        V0 = V1 << 02;
+        AT = 801d01d0;
+        AT = AT + V0;
+        V0 = w[AT + 0000];
+        801D1F54	nop
+        801D1F58	jr     v0 
+        801D1F5C	nop
 
-    L1d2810:	; 801D2810
-    801D2810	jal    func1d0aac [$801d0aac]
-    801D2814	nop
-    801D2818	j      L1d2934 [$801d2934]
-    801D281C	nop
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D1F6C	lui    at, $800a
+        801D1F70	addiu  at, at, $c740 (=-$38c0)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D1F7C	nop
+        V0 = V1 < 00ff;
+        801D1F84	beq    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 + 0001;
+        801D1F8C	lui    at, $800a
+        801D1F90	addiu  at, at, $c740 (=-$38c0)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
+        801D1F9C	j      L1d20f0 [$801d20f0]
+        801D1FA0	nop
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D1FB0	lui    at, $800a
+        801D1FB4	addiu  at, at, $c741 (=-$38bf)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D1FC0	nop
+        V0 = V1 < 00ff;
+        801D1FC8	beq    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 + 0001;
+        801D1FD0	lui    at, $800a
+        801D1FD4	addiu  at, at, $c741 (=-$38bf)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
+        801D1FE0	j      L1d20f0 [$801d20f0]
+        801D1FE4	nop
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D1FF4	lui    at, $800a
+        801D1FF8	addiu  at, at, $c742 (=-$38be)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D2004	nop
+        V0 = V1 < 00ff;
+        801D200C	beq    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 + 0001;
+        801D2014	lui    at, $800a
+        801D2018	addiu  at, at, $c742 (=-$38be)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
+        801D2024	j      L1d20f0 [$801d20f0]
+        801D2028	nop
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D2038	lui    at, $800a
+        801D203C	addiu  at, at, $c743 (=-$38bd)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D2048	nop
+        V0 = V1 < 00ff;
+        801D2050	beq    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 + 0001;
+        801D2058	lui    at, $800a
+        801D205C	addiu  at, at, $c743 (=-$38bd)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
+        801D2068	j      L1d20f0 [$801d20f0]
+        801D206C	nop
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D207C	lui    at, $800a
+        801D2080	addiu  at, at, $c744 (=-$38bc)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D208C	nop
+        V0 = V1 < 00ff;
+        801D2094	beq    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 + 0001;
+        801D209C	lui    at, $800a
+        801D20A0	addiu  at, at, $c744 (=-$38bc)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
+        801D20AC	j      L1d20f0 [$801d20f0]
+        801D20B0	nop
+        V0 = A0 << 05;
+        V0 = V0 + A0;
+        A0 = V0 << 02;
+        801D20C0	lui    at, $800a
+        801D20C4	addiu  at, at, $c745 (=-$38bb)
+        AT = AT + A0;
+        V1 = bu[AT + 0000];
+        801D20D0	nop
+        V0 = V1 < 00ff;
+        801D20D8	beq    v0, zero, L1d2724 [$801d2724]
+        V0 = V1 + 0001;
+        801D20E0	lui    at, $800a
+        801D20E4	addiu  at, at, $c745 (=-$38bb)
+        AT = AT + A0;
+        [AT + 0000] = b(V0);
 
-5 801D2820
+        L1d20f0:	; 801D20F0
+        A0 = 107;
+        func1d01e8(); // play sound
 
-V1 = hu[80062d7c];
-801D2828	nop
-V0 = V1 & 0020;
-801D2830	beq    v0, zero, L1d2920 [$801d2920]
-801D2834	nop
-V1 = w[801d3d84];
-801D2840	nop
-801D2844	beq    v1, zero, L1d285c [$801d285c]
-V0 = 0001;
-801D284C	beq    v1, v0, L1d28ac [$801d28ac]
-801D2850	nop
-801D2854	j      L1d293c [$801d293c]
-801D2858	nop
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D2104	jal    $80020058
+        801D2108	nop
+        A0 = bu[S0 + 0000];
+        801D2110	jal    $8001786c
+        801D2114	nop
+        801D2118	jal    $func25288
+        A0 = S4 | 0200;
+        801D2120	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D2130	bne    v0, v1, L1d293c [$801d293c]
+        801D2134	nop
+        801D2138	j      L1d2748 [$801d2748]
+        V0 = 0001;
 
-L1d285c:	; 801D285C
-801D285C	jal    func1d01e8 [$801d01e8]
-A0 = 0001;
-V0 = b[801d3e40];
-A0 = h[801d3e38];
-V1 = w[801d3d84];
-[801d3d88] = w(V0);
-V0 = b[801d3e41];
-V1 = V1 + 0001;
-[801d3d84] = w(V1);
-V0 = V0 + A0;
-[801d3d8c] = w(V0);
-801D28A4	j      L1d293c [$801d293c]
-801D28A8	nop
+id00 801D2140
 
-L1d28ac:	; 801D28AC
-801D28AC	jal    func1d01e8 [$801d01e8]
-A0 = 0001;
-A2 = 801d3e41;
-V1 = w[801d3d8c];
-V0 = b[A2 + 0000];
-A0 = h[801d3e38];
-V1 = V1 << 01;
-V1 = 8009c6e4 + 4fc + V1;
-V0 = V0 + A0;
-V0 = V0 << 01;
-V0 = 8009c6e4 + 4fc + V0;
-V0 = hu[V0 + 0000];
-A0 = hu[V1 + 0000];
-[V1 + 0000] = h(V0);
-V0 = b[A2 + 0000];
-V1 = h[801d3e38];
-[801d3d84] = w(0);
-V0 = V0 + V1;
-V0 = V0 << 01;
-V0 = 8009c6e4 + 4fc + V0;
-801D2918	j      L1d293c [$801d293c]
-[V0 + 0000] = h(A0);
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D214C	jal    func1d0cac [$801d0cac]
+        801D2150	nop
+        801D2154	bne    v0, zero, L1d2724 [$801d2724]
+        801D2158	nop
+        V0 = b[S0 + 0000];
+        801D2160	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D2170	lui    at, $800a
+        801D2174	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D2180	nop
+        801D2184	beq    v0, zero, L1d2724 [$801d2724]
 
-L1d2920:	; 801D2920
-V0 = V1 & 0040;
+        A0 = 107;
+        func1d01e8(); // play sound
 
-L1d2924:	; 801D2924
-801D2924	beq    v0, zero, L1d293c [$801d293c]
-801D2928	nop
-801D292C	jal    func1d01e8 [$801d01e8]
-A0 = 0004;
+        A0 = b[S0 + 0000];
+        801D2198	jal    $func258bc
+        A1 = 0064;
+        801D21A0	jal    $func25288
+        A0 = S4 | 0200;
+        801D21A8	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D21B8	bne    v0, v1, L1d293c [$801d293c]
+        801D21BC	nop
+        801D21C0	j      L1d2748 [$801d2748]
+        V0 = 0001;
 
-L1d2934:	; 801D2934
-[801d3e48] = w(0);
+id01 801D21C8
 
-L1d293c:	; 801D293C
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D21D4	jal    func1d0cac [$801d0cac]
+        801D21D8	nop
+        801D21DC	bne    v0, zero, L1d2724 [$801d2724]
+        801D21E0	nop
+        V0 = b[S0 + 0000];
+        801D21E8	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D21F8	lui    at, $800a
+        801D21FC	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D2208	nop
+        801D220C	beq    v0, zero, L1d2724 [$801d2724]
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        A0 = b[S0 + 0000];
+        801D2220	jal    $func258bc
+        A1 = 01f4;
+        801D2228	jal    $func25288
+        A0 = S4 | 0200;
+        801D2230	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D2240	bne    v0, v1, L1d293c [$801d293c]
+        801D2244	nop
+        801D2248	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id03 801D2250
+
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D225C	jal    func1d0ce8 [$801d0ce8]
+        801D2260	nop
+        801D2264	bne    v0, zero, L1d2724 [$801d2724]
+        801D2268	nop
+        V0 = b[S0 + 0000];
+        801D2270	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D2280	lui    at, $800a
+        801D2284	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D2290	nop
+        801D2294	beq    v0, zero, L1d2724 [$801d2724]
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        A0 = b[S0 + 0000];
+        801D22A8	jal    $func25a44
+        A1 = 0064;
+        801D22B0	jal    $func25288
+        A0 = S4 | 0200;
+        801D22B8	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D22C8	bne    v0, v1, L1d293c [$801d293c]
+        801D22CC	nop
+        801D22D0	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id04 801D22D8
+
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D22E4	jal    func1d0ce8 [$801d0ce8]
+        801D22E8	nop
+        801D22EC	bne    v0, zero, L1d2724 [$801d2724]
+        801D22F0	nop
+        V0 = b[S0 + 0000];
+        801D22F8	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D2308	lui    at, $800a
+        801D230C	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D2318	nop
+        801D231C	beq    v0, zero, L1d2724 [$801d2724]
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        A0 = b[S0 + 0000];
+        801D2330	jal    $func25a44
+        A1 = 2710;
+        801D2338	jal    $func25288
+        A0 = S4 | 0200;
+        801D2340	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D2350	bne    v0, v1, L1d293c [$801d293c]
+        801D2354	nop
+        801D2358	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id07 801D2360
+
+        S0 = 801d3e0b;
+        V0 = b[S0 + 0000];
+        801D236C	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D237C	lui    at, $800a
+        801D2380	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D238C	nop
+        801D2390	bne    v0, zero, L1d2724 [$801d2724]
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        A0 = b[S0 + 0000];
+        801D23A4	nop
+        V0 = A0 << 04;
+        V0 = V0 + A0;
+        V0 = V0 << 06;
+        801D23B4	lui    at, $800a
+        801D23B8	addiu  at, at, $d85e (=-$27a2)
+        AT = AT + V0;
+        A1 = h[AT + 0000];
+        801D23C4	nop
+        801D23C8	bgez   a1, L1d23d4 [$801d23d4]
+        801D23CC	nop
+        A1 = A1 + 0003;
+
+        L1d23d4:	; 801D23D4
+        801D23D4	jal    $func258bc
+        A1 = A1 >> 02;
+        801D23DC	jal    $func25288
+        A0 = S4 | 0200;
+        801D23E4	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D23F4	bne    v0, v1, L1d293c [$801d293c]
+        801D23F8	nop
+        801D23FC	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id46 801D2404
+
+        S0 = 0;
+        S1 = 0;
+        S2 = 00ff;
+
+        loop1d2410:	; 801D2410
+        801D2410	lui    at, $800a
+        801D2414	addiu  at, at, $cbdc (=-$3424)
+        AT = AT + S0;
+        V0 = bu[AT + 0000];
+        801D2420	nop
+        801D2424	beq    v0, s2, L1d2450 [$801d2450]
+        801D2428	nop
+        801D242C	jal    func1d0cac [$801d0cac]
+        A0 = S0;
+        801D2434	beq    v0, zero, L1d244c [$801d244c]
+        801D2438	nop
+        801D243C	jal    func1d0ce8 [$801d0ce8]
+        A0 = S0;
+        801D2444	bne    v0, zero, L1d2450 [$801d2450]
+        801D2448	nop
+
+        L1d244c:	; 801D244C
+        S1 = 0001;
+
+        L1d2450:	; 801D2450
+        S0 = S0 + 0001;
+        V0 = S0 < 0003;
+        801D2458	bne    v0, zero, loop1d2410 [$801d2410]
+        801D245C	nop
+        801D2460	beq    s1, zero, L1d2724 [$801d2724]
+        S0 = 0;
+        S2 = 00ff;
+        S1 = 0;
+
+        loop1d2470:	; 801D2470
+        801D2470	lui    at, $800a
+        801D2474	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + S1;
+        V0 = h[AT + 0000];
+        801D2480	nop
+        801D2484	beq    v0, zero, L1d24bc [$801d24bc]
+        801D2488	nop
+        801D248C	lui    at, $800a
+        801D2490	addiu  at, at, $cbdc (=-$3424)
+        AT = AT + S0;
+        V0 = bu[AT + 0000];
+        801D249C	nop
+        801D24A0	beq    v0, s2, L1d24bc [$801d24bc]
+        A0 = S0;
+        801D24A8	jal    $func258bc
+        A1 = 2710;
+        A0 = S0;
+        801D24B4	jal    $func25a44
+        A1 = 2710;
+
+        L1d24bc:	; 801D24BC
+        S0 = S0 + 0001;
+        V0 = S0 < 0003;
+        801D24C4	bne    v0, zero, loop1d2470 [$801d2470]
+        S1 = S1 + 0440;
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        801D24D4	jal    $func25288
+        A0 = S4 | 0200;
+        801D24DC	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D24EC	bne    v0, v1, L1d293c [$801d293c]
+        801D24F0	nop
+        801D24F4	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id02 801D24FC
+
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D2508	jal    func1d0cac [$801d0cac]
+        801D250C	nop
+        801D2510	bne    v0, zero, L1d2724 [$801d2724]
+        801D2514	nop
+        V0 = b[S0 + 0000];
+        801D251C	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D252C	lui    at, $800a
+        801D2530	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D253C	nop
+        801D2540	beq    v0, zero, L1d2724 [$801d2724]
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        A0 = b[S0 + 0000];
+        801D2554	jal    $func258bc
+        A1 = 2710;
+        801D255C	jal    $func25288
+        A0 = S4 | 0200;
+        801D2564	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D2574	bne    v0, v1, L1d293c [$801d293c]
+        801D2578	nop
+        801D257C	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id05 801D2584
+
+        S0 = 801d3e0b;
+        A0 = b[S0 + 0000];
+        801D2590	jal    func1d0cac [$801d0cac]
+        801D2594	nop
+        801D2598	beq    v0, zero, L1d25b4 [$801d25b4]
+        801D259C	nop
+        A0 = b[S0 + 0000];
+        801D25A4	jal    func1d0ce8 [$801d0ce8]
+        801D25A8	nop
+        801D25AC	bne    v0, zero, L1d2724 [$801d2724]
+        801D25B0	nop
+
+        L1d25b4:	; 801D25B4
+        V0 = b[S0 + 0000];
+        801D25B8	nop
+        V1 = V0 << 04;
+        V1 = V1 + V0;
+        V1 = V1 << 06;
+        801D25C8	lui    at, $800a
+        801D25CC	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + V1;
+        V0 = h[AT + 0000];
+        801D25D8	nop
+        801D25DC	beq    v0, zero, L1d2724 [$801d2724]
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        A0 = b[S0 + 0000];
+        801D25F0	jal    $func258bc
+        A1 = 2710;
+        A0 = b[S0 + 0000];
+        801D25FC	jal    $func25a44
+        A1 = 2710;
+        801D2604	jal    $func25288
+        A0 = S4 | 0200;
+        801D260C	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D261C	bne    v0, v1, L1d293c [$801d293c]
+        801D2620	nop
+        801D2624	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+id06 801D262C
+
+        S0 = 0;
+        S1 = 0;
+        S2 = 00ff;
+
+        loop1d2638:	; 801D2638
+        801D2638	lui    at, $800a
+        801D263C	addiu  at, at, $cbdc (=-$3424)
+        AT = AT + S0;
+        V0 = bu[AT + 0000];
+        801D2648	nop
+        801D264C	beq    v0, s2, L1d2678 [$801d2678]
+        801D2650	nop
+        801D2654	jal    func1d0cac [$801d0cac]
+        A0 = S0;
+        801D265C	beq    v0, zero, L1d2674 [$801d2674]
+        801D2660	nop
+        801D2664	jal    func1d0ce8 [$801d0ce8]
+        A0 = S0;
+        801D266C	bne    v0, zero, L1d2678 [$801d2678]
+        801D2670	nop
+
+        L1d2674:	; 801D2674
+        S1 = 0001;
+
+        L1d2678:	; 801D2678
+        S0 = S0 + 0001;
+        V0 = S0 < 0003;
+        801D2680	bne    v0, zero, loop1d2638 [$801d2638]
+        801D2684	nop
+        801D2688	beq    s1, zero, L1d2724 [$801d2724]
+        S0 = 0;
+        S2 = 00ff;
+        S1 = 0;
+
+        loop1d2698:	; 801D2698
+        801D2698	lui    at, $800a
+        801D269C	addiu  at, at, $d85c (=-$27a4)
+        AT = AT + S1;
+        V0 = h[AT + 0000];
+        801D26A8	nop
+        801D26AC	beq    v0, zero, L1d26e4 [$801d26e4]
+        801D26B0	nop
+        801D26B4	lui    at, $800a
+        801D26B8	addiu  at, at, $cbdc (=-$3424)
+        AT = AT + S0;
+        V0 = bu[AT + 0000];
+        801D26C4	nop
+        801D26C8	beq    v0, s2, L1d26e4 [$801d26e4]
+        A0 = S0;
+        801D26D0	jal    $func258bc
+        A1 = 2710;
+        A0 = S0;
+        801D26DC	jal    $func25a44
+        A1 = 2710;
+
+        L1d26e4:	; 801D26E4
+        S0 = S0 + 0001;
+        V0 = S0 < 0003;
+        801D26EC	bne    v0, zero, loop1d2698 [$801d2698]
+        S1 = S1 + 0440;
+
+        A0 = 107;
+        func1d01e8(); // play sound
+
+        801D26FC	jal    $func25288
+        A0 = S4 | 0200;
+        801D2704	jal    $func25310
+        A0 = S4;
+        V0 = V0 & ffff;
+        V1 = ffff;
+        801D2714	bne    v0, v1, L1d293c [$801d293c]
+        801D2718	nop
+        801D271C	j      L1d2748 [$801d2748]
+        V0 = 0001;
+
+        L1d2724:	; 801D2724
+        A0 = 3;
+        func1d01e8(); // play sound
+
+        801D272C	j      L1d293c [$801d293c]
+        801D2730	nop
+
+        L1d2734:	; 801D2734
+        801D2734	beq    v0, zero, L1d293c [$801d293c]
+
+        A0 = 4;
+        func1d01e8(); // play sound
+
+        V0 = 0001;
+
+        L1d2748:	; 801D2748
+        [801d3e48] = w(V0);
+        801D2750	j      L1d293c [$801d293c]
+        801D2754	nop
+    }
+    break;
+
+    case 3: // key item list
+    {
+        if( hu[80062d7c] & 0040 ) // cross pressed
+        {
+            A0 = 4;
+            func1d01e8(); // play sound
+
+            [801d3e48] = w(0); // upper selection (use arrange keyitems)
+        }
+
+        return;
+    }
+    break;
+
+    case 4: // arrange type list
+    {
+        if( hu[80062d7c] & 0020 )
+        {
+            A0 = 1;
+            func1d01e8(); // play sound
+
+            cur_y = b[801d3ddc + 4 * 12 + b];
+
+            if( cur_y == 0 ) // "Customize"
+            {
+                A0 = 801d3ddc + 5 * 12;
+                A1 = 0; // x cursor pos
+                A2 = 0; // y cursor pos
+                A3 = 1; // x pos items
+                A4 = a; // y pos items
+                A5 = 1;
+                A6 = 0; // scroll pos
+                A7 = 0;
+                A8 = 140; // total y items
+                A9 = 0;
+                A10 = 0;
+                A11 = 0; // x warp
+                A12 = 0; // y warp
+                A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
+                system_menu_set_cursor_movement();
+
+                [801d3d84] = w(0);
+                [801d3d88] = w(0);
+                [801d3d8c] = w(0);
+                [801d3e48] = w(5);
+            }
+            else // "Field" "Battle" "Throw" "Type" "Name" "Most" "Least"
+            {
+                A0 = cur_y;
+                func1d0aac(); // sort items
+
+                [801d3e48] = w(0);
+            }
+        }
+        else if( hu[80062d7c] & 0040 )
+        {
+            A0 = 4;
+            func1d01e8(); // play sound
+
+            [801d3e48] = w(0);
+        }
+        return;
+    }
+    break;
+
+    case 5:
+    {
+        V1 = ;
+        if( hu[80062d7c] & 0020 )
+        {
+            V1 = w[801d3d84];
+            801D2840	nop
+            801D2844	beq    v1, zero, L1d285c [$801d285c]
+            V0 = 0001;
+            801D284C	beq    v1, v0, L1d28ac [$801d28ac]
+            801D2850	nop
+            801D2854	j      L1d293c [$801d293c]
+            801D2858	nop
+
+            L1d285c:	; 801D285C
+            A0 = 1;
+            func1d01e8(); // play sound
+
+            V0 = b[801d3e40];
+            A0 = h[801d3e38];
+            V1 = w[801d3d84];
+            [801d3d88] = w(V0);
+            V0 = b[801d3e41];
+            V1 = V1 + 0001;
+            [801d3d84] = w(V1);
+            V0 = V0 + A0;
+            [801d3d8c] = w(V0);
+            801D28A4	j      L1d293c [$801d293c]
+            801D28A8	nop
+
+            L1d28ac:	; 801D28AC
+            A0 = 1;
+            func1d01e8(); // play sound
+
+            A2 = 801d3e41;
+            V1 = w[801d3d8c];
+            V0 = b[A2 + 0000];
+            A0 = h[801d3e38];
+            V1 = V1 << 01;
+            V1 = 8009c6e4 + 4fc + V1;
+            V0 = V0 + A0;
+            V0 = V0 << 01;
+            V0 = 8009c6e4 + 4fc + V0;
+            V0 = hu[V0 + 0000];
+            A0 = hu[V1 + 0000];
+            [V1 + 0000] = h(V0);
+            V0 = b[A2 + 0000];
+            V1 = h[801d3e38];
+            [801d3d84] = w(0);
+            V0 = V0 + V1;
+            V0 = V0 << 01;
+            [8009c6e4 + 4fc + V0] = h(A0);
+        }
+        else if( hu[80062d7c] & 0040 )
+        {
+            A0 = 4;
+            func1d01e8(); // play sound
+
+            [801d3e48] = w(0);
+        }
+        L1d293c:	; 801D293C
+        return;
+    }
+    break;
+}
 ////////////////////////////////
 
 

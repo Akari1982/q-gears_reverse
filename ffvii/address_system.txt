@@ -843,6 +843,7 @@
     + ea4 savemap memory bank d/e start
     + eaa (+06) []       some value that increments each battle check.
     + eab (+07) []       some value that increments each battle check.
+    + f04       []       ??? Northern Cave - Progress (TODO: more info) 
     + f0c field map name for menu (0x17 size).
     + f24 
     + f2a (+86) []       flags

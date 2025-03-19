@@ -15,7 +15,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 A0 = 801d0860 + 12;
 A1 = 0; // x cursor pos
@@ -31,7 +31,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 0; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 [801d07f0] = w(0);
 ////////////////////////////////

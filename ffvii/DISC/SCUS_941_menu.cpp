@@ -1796,12 +1796,16 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// func1faf8()
+// system_menu_get_inventory_restriction_mask()
+// 01 can be sold
+// 02 can be used in battle
+// 04 can be used in out of battle
+// 08 can be thrown in battle
 
-if( A0 <  80 ) return hu[800722d6 + A0 * 1c];
-if( A0 < 100 ) return hu[800738ca + (A0 - 80) * 2c];
-if( A0 < 120 ) return hu[80071e64 + (A0 - 100) * 24];
-else           return hu[80071c32 + (A0 - 120) * 10];
+if( A0 <  80 ) return hu[800722cc + A0 * 1c + a]; // item
+if( A0 < 100 ) return hu[800738a0 + (A0 - 80) * 2c + 2a]; // weapon
+if( A0 < 120 ) return hu[80071e44 + (A0 - 100) * 24 + 20]; // armor
+else           return hu[80071c24 + (A0 - 120) * 10 + e]; // accessory
 ////////////////////////////////
 
 
@@ -4752,7 +4756,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 A0 = 8009a0c8 + 1 * 12; // char selection 1
 A1 = 0; // x cursor pos
@@ -4768,7 +4772,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 
 A0 = 8009a0c8 + 2 * 12; // char selection 2
 A1 = 0; // x cursor pos
@@ -4784,7 +4788,7 @@ A10 = 0;
 A11 = 0; // x warp
 A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
-func26448();
+system_menu_set_cursor_movement();
 ////////////////////////////////
 
 
@@ -7048,21 +7052,21 @@ system_execute_AKAO();
 
 
 ////////////////////////////////
-// func26448()
+// system_menu_set_cursor_movement()
 
 [A0 + 0] = h(A5);
-[A0 + 2] = h(A6); // cur page
+[A0 + 2] = h(A6); // scroll pos
 [A0 + 4] = h(A7);
-[A0 + 6] = h(A8); // max page
-[A0 + 8] = h(A13); // page scroll dir (0 - not scroll, 1 - down, 2 - up)
+[A0 + 6] = h(A8); // total y items
+[A0 + 8] = h(A13); // scroll dir (0 - not scroll, 1 - up, 2 - down)
 [A0 + a] = b(A1); // x cursor pos
 [A0 + b] = b(A2); // y cursor pos
-[A0 + c] = b(A3); // max x pos
-[A0 + d] = b(A4); // max y pos
+[A0 + c] = b(A3); // x pos items
+[A0 + d] = b(A4); // y pos items
 [A0 + e] = b(A9);
-[A0 + f] = b(A10);
-[A0 + 10] = b(A11); // x warp
-[A0 + 11] = b(A12); // y warp
+[A0 + f] = b(A10); // scroll animation frame
+[A0 + 10] = b(A11); // x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move)
+[A0 + 11] = b(A12); // y warp around (0 - not warp)
 ////////////////////////////////
 
 
@@ -8025,7 +8029,7 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// func27b84()
+// system_menu_draw_scrollbar_track()
 
 x = hu[A0 + 0];
 y = hu[A0 + 2];
@@ -8038,16 +8042,15 @@ prim = w[80062f24];
 [prim + 4] = b(10);
 [prim + 5] = b(10);
 [prim + 6] = b(10);
-[prim + 7] = b(40);
-
-A0 = prim;
-A1 = 1;
-system_psyq_set_semi_trans();
-
+[prim + 7] = b(40); // Monochrome line, opaque
 [prim + 8] = h(x);
 [prim + a] = h(y);
 [prim + c] = h(x + w - 1);
 [prim + e] = h(y);
+
+A0 = prim;
+A1 = 1;
+system_psyq_set_semi_trans();
 
 A0 = w[GP + 280];
 A1 = prim;
@@ -8059,16 +8062,15 @@ prim += 10;
 [prim + 4] = b(70);
 [prim + 5] = b(70);
 [prim + 6] = b(70);
-[prim + 7] = b(40);
-
-A0 = prim;
-A1 = 1;
-system_psyq_set_semi_trans();
-
+[prim + 7] = b(40); // Monochrome line, opaque
 [prim + 8] = h(x);
 [prim + a] = h(y + h - 1);
 [prim + c] = h(x + w - 1);
 [prim + e] = h(y + h - 1);
+
+A0 = prim;
+A1 = 1;
+system_psyq_set_semi_trans();
 
 A0 = w[GP + 280];
 A1 = prim;
@@ -8080,16 +8082,15 @@ prim += 10;
 [prim + 4] = b(20);
 [prim + 5] = b(20);
 [prim + 6] = b(20);
-[prim + 7] = b(40);
-
-A0 = prim;
-A1 = 1;
-system_psyq_set_semi_trans();
-
+[prim + 7] = b(40); // Monochrome line, opaque
 [prim + 8] = h(x);
 [prim + a] = h(y);
 [prim + c] = h(x);
 [prim + e] = h(y + h - 1);
+
+A0 = prim;
+A1 = 1;
+system_psyq_set_semi_trans();
 
 A0 = w[GP + 280];
 A1 = prim;
@@ -8101,16 +8102,15 @@ prim += 10;
 [prim + 4] = b(70);
 [prim + 5] = b(70);
 [prim + 6] = b(70);
-[prim + 7] = b(40);
-
-A0 = prim;
-A1 = 1;
-system_psyq_set_semi_trans();
-
+[prim + 7] = b(40); // Monochrome line, opaque
 [prim + 8] = h(x + w - 1);
 [prim + a] = h(y);
 [prim + c] = h(x + w - 1);
 [prim + e] = h(y + h - 1);
+
+A0 = prim;
+A1 = 1;
+system_psyq_set_semi_trans();
 
 A0 = w[GP + 280];
 A1 = prim;
@@ -8122,16 +8122,15 @@ prim += 10;
 [prim + 4] = b(50);
 [prim + 5] = b(50);
 [prim + 6] = b(50);
-[prim + 7] = b(60);
-
-A0 = prim;
-A1 = 1;
-system_psyq_set_semi_trans();
-
+[prim + 7] = b(60); // Monochrome Rectangle (variable size) (opaque)
 [prim + 8] = h(x);
 [prim + a] = h(y);
 [prim + c] = h(w);
 [prim + e] = h(h);
+
+A0 = prim;
+A1 = 1;
+system_psyq_set_semi_trans();
 
 A0 = w[GP + 280];
 A1 = prim;
@@ -8143,22 +8142,20 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// func28030()
+// system_menu_draw_scrollbar_slider()
+
+x = hu[A0 + 0]
+y = hu[A0 + 2]
+w = hu[A0 + 4]
+h = hu[A0 + 6]
 
 poly = w[80062f24];
-
-S0 = A0;
-
-x = hu[S0 + 0]
-y = hu[S0 + 2]
-w = hu[S0 + 4]
-h = hu[S0 + 6]
 
 [poly + 3] = b(3);
 [poly + 4] = b(f0);
 [poly + 5] = b(f0);
 [poly + 6] = b(f0);
-[poly + 7] = b(40);
+[poly + 7] = b(40); // Monochrome line, opaque
 [poly + 8] = h(x);
 [poly + a] = h(y);
 [poly + c] = h(x + w - 1);
@@ -8174,7 +8171,7 @@ poly += 10;
 [poly + 4] = b(40);
 [poly + 5] = b(40);
 [poly + 6] = b(40);
-[poly + 7] = b(40);
+[poly + 7] = b(40); // Monochrome line, opaque
 [poly + 8] = h(x);
 [poly + a] = h(y + h - 1);
 [poly + c] = h(x + w - 1);
@@ -8190,7 +8187,7 @@ poly += 10;
 [poly + 4] = b(c8);
 [poly + 5] = b(c8);
 [poly + 6] = b(c8);
-[poly + 7] = b(40);
+[poly + 7] = b(40); // Monochrome line, opaque
 [poly + 8] = h(x);
 [poly + a] = h(y);
 [poly + c] = h(x);
@@ -8206,7 +8203,7 @@ poly += 10;
 [poly + 4] = b(70);
 [poly + 5] = b(70);
 [poly + 6] = b(70);
-[poly + 7] = b(40);
+[poly + 7] = b(40); // Monochrome line, opaque
 [poly + 8] = h(x + w - 1);
 [poly + a] = h(y);
 [poly + c] = h(x + w - 1);
@@ -8222,7 +8219,7 @@ poly += 10;
 [poly + 4] = b(a0);
 [poly + 5] = b(a0);
 [poly + 6] = b(a0);
-[poly + 7] = b(60);
+[poly + 7] = b(60); // Monochrome Rectangle (variable size) (opaque)
 [poly + 8] = h(x);
 [poly + a] = h(y);
 [poly + c] = h(w);
@@ -8238,51 +8235,29 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// func28484()
+// system_menu_draw_scrollbar()
 
-S0 = A0;
-A0 = h[S0 + 000c];
-V0 = h[S0 + 0004];
-8002849C	nop
-800284A0	mult   a0, v0
-800284A4	mflo   v0
-V1 = h[S0 + 0002];
-800284AC	nop
-800284B0	div    v0, v1
-800284D8	mflo   a1
-V0 = h[S0 + 0000];
-800284E0	nop
-800284E4	mult   a0, v0
-800284E8	mflo   v0
-800284EC	div    v0, v1
-80028514	mflo   v1
-V0 = hu[S0 + 0006];
-8002851C	nop
-[SP + 0010] = h(V0);
-V0 = hu[S0 + 0008];
-80028528	nop
-V0 = V0 + A1;
-[SP + 0012] = h(V0);
-V0 = hu[S0 + 000a];
-A0 = SP + 0010;
-8002853C	addiu  v0, v0, $ffff (=-$1)
-[SP + 0014] = h(V0);
-V1 = V1 + 0001;
-80028548	jal    func28030 [$80028030]
-[SP + 0016] = h(V1);
-V0 = hu[S0 + 0006];
-80028554	nop
-[SP + 0010] = h(V0);
-V0 = hu[S0 + 0008];
-80028560	nop
-[SP + 0012] = h(V0);
-V0 = hu[S0 + 000a];
-8002856C	nop
-[SP + 0014] = h(V0);
-V0 = hu[S0 + 000c];
-A0 = SP + 0010;
-[SP + 0016] = h(V0);
-func27b84();
+scroll = hu[A0 + 4];
+x = hu[A0 + 6];
+y = hu[A0 + 8];
+w = hu[A0 + a];
+h = hu[A0 + c];
+
+[SP + 10] = h(x);
+[SP + 12] = h(y + ((h * scroll) / h[A0 + 2])); // y
+[SP + 14] = h(w - 1);
+[SP + 16] = h((h * h[A0 + 0]) / h[A0 + 2] + 1); // h
+
+A0 = SP + 10;
+system_menu_draw_scrollbar_slider();
+
+[SP + 10] = h(x);
+[SP + 12] = h(y);
+[SP + 14] = h(w);
+[SP + 16] = h(h);
+
+A0 = SP + 10;
+system_menu_draw_scrollbar_track();
 
 A0 = 0;
 A1 = 1;
@@ -8298,8 +8273,8 @@ system_add_draw_mode();
 
 x = A0;
 y = A1;
-width = A2;
-height = A3;
+w = A2;
+h = A3;
 r = A4;
 g = A5;
 b = A6;
@@ -8322,18 +8297,18 @@ poly = w[80062f24];
     [poly + c] = b(r);
     [poly + d] = b(g);
     [poly + e] = b(b);
-    [poly + 10] = h(x + width);
+    [poly + 10] = h(x + w);
     [poly + 12] = h(y);
     [poly + 14] = b(80);
     [poly + 15] = b(80);
     [poly + 16] = b(80);
     [poly + 18] = h(x);
-    [poly + 1a] = h(y + height / 2);
+    [poly + 1a] = h(y + h / 2);
     [poly + 1c] = b(80);
     [poly + 1d] = b(80);
     [poly + 1e] = b(80);
-    [poly + 20] = h(x + width);
-    [poly + 22] = h(y + height / 2);
+    [poly + 20] = h(x + w);
+    [poly + 22] = h(y + h / 2);
 
     A0 = w[80062fc4];
     A1 = poly;
@@ -8354,22 +8329,22 @@ poly = w[80062f24];
     [poly + 5] = b(g);
     [poly + 6] = b(b);
     [poly + 8] = h(x);
-    [poly + a] = h(y + height / 2);
+    [poly + a] = h(y + h / 2);
     [poly + c] = b(r);
     [poly + d] = b(g);
     [poly + e] = b(b);
-    [poly + 10] = h(x + width);
-    [poly + 12] = h(y + height / 2);
+    [poly + 10] = h(x + w);
+    [poly + 12] = h(y + h / 2);
     [poly + 14] = b(0);
     [poly + 15] = b(0);
     [poly + 16] = b(0);
     [poly + 18] = h(x);
-    [poly + 1a] = h(y + height);
+    [poly + 1a] = h(y + h);
     [poly + 1c] = b(0);
     [poly + 1d] = b(0);
     [poly + 1e] = b(0);
-    [poly + 20] = h(x + width);
-    [poly + 22] = h(y + height);
+    [poly + 20] = h(x + w);
+    [poly + 22] = h(y + h);
 
     A0 = w[80062fc4];
     A1 = poly;
@@ -8385,11 +8360,19 @@ poly = w[80062f24];
 
 ////////////////////////////////
 // func28930()
+// draw two gourad quads
+// ---- ff
+// |  |
+// ---- 0
+//
+// ---- 0
+// |  |
+// ---- ff
 
-x = S3 = A0;
-y = S1 = A1;
-w = S0 = A2;
-h = S5 = A3;
+x = A0;
+y = A1;
+w = A2;
+h = A3;
 
 poly = w[80062f24];
 
@@ -8400,46 +8383,32 @@ A0 = poly;
 A1 = 1;
 system_psyq_set_semi_trans();
 
-A1 = 55555556;
-S4 = S3;
-A0 = S1;
-S2 = S5 << 10;
-[poly + 0008] = h(S4);
-V0 = S2 >> 10;
-800289A8	mult   v0, a1
-[poly + 000a] = h(A0);
-S3 = S3 + S0;
-[poly + 0010] = h(S3);
-[poly + 0012] = h(A0);
-S2 = S2 >> 1f;
-[poly + 0018] = h(S4);
-800289E8	mfhi   t0
-S2 = T0 - S2;
-V1 = S1 + S2;
-[poly + 001a] = h(V1);
-[poly + 0020] = h(S3);
-[poly + 0022] = h(V1);
-[poly + 0004] = b(ff);
-[poly + 0005] = b(ff);
-[poly + 0006] = b(ff);
-[poly + 000c] = b(ff);
-[poly + 000d] = b(ff);
-[poly + 000e] = b(ff);
-[poly + 0014] = b(0);
-[poly + 0015] = b(0);
-[poly + 0016] = b(0);
-[poly + 001c] = b(0);
-[poly + 001d] = b(0);
-[poly + 001e] = b(0);
-
-S1 = S1 + S5;
+[poly + 4] = b(ff);
+[poly + 5] = b(ff);
+[poly + 6] = b(ff);
+[poly + 8] = h(x);
+[poly + a] = h(y);
+[poly + c] = b(ff);
+[poly + d] = b(ff);
+[poly + e] = b(ff);
+[poly + 10] = h(x + w);
+[poly + 12] = h(y);
+[poly + 14] = b(0);
+[poly + 15] = b(0);
+[poly + 16] = b(0);
+[poly + 18] = h(x);
+[poly + 1a] = h(y + h / 3);
+[poly + 1c] = b(0);
+[poly + 1d] = b(0);
+[poly + 1e] = b(0);
+[poly + 20] = h(x + w);
+[poly + 22] = h(y + h / 3);
 
 A0 = w[GP + 280];
 A1 = poly;
 system_psyq_add_prim();
 
 poly += 24;
-S1 = S1 - S2;
 
 A0 = poly;
 system_psyq_set_poly_g4();
@@ -8448,27 +8417,26 @@ A0 = poly;
 A1 = 1;
 system_psyq_set_semi_trans();
 
-[poly + 0008] = h(S4);
-[poly + 000a] = h(S1);
-[poly + 0010] = h(S3);
-[poly + 0012] = h(S1);
-[poly + 0018] = h(S4);
-S1 = S1 + S2;
-[poly + 001a] = h(S1);
-[poly + 0020] = h(S3);
-[poly + 0022] = h(S1);
-[poly + 0004] = b(0);
-[poly + 0005] = b(0);
-[poly + 0006] = b(0);
-[poly + 000c] = b(0);
-[poly + 000d] = b(0);
-[poly + 000e] = b(0);
-[poly + 0014] = b(ff);
-[poly + 0015] = b(ff);
-[poly + 0016] = b(ff);
-[poly + 001c] = b(ff);
-[poly + 001d] = b(ff);
-[poly + 001e] = b(ff);
+[poly + 4] = b(0);
+[poly + 5] = b(0);
+[poly + 6] = b(0);
+[poly + 8] = h(x);
+[poly + a] = h(y + h - h / 3);
+[poly + c] = b(0);
+[poly + d] = b(0);
+[poly + e] = b(0);
+[poly + 10] = h(x + w);
+[poly + 12] = h(y + h - h / 3);
+[poly + 14] = b(ff);
+[poly + 15] = b(ff);
+[poly + 16] = b(ff);
+[poly + 18] = h(x);
+[poly + 1a] = h(y + h);
+[poly + 1c] = b(ff);
+[poly + 1d] = b(ff);
+[poly + 1e] = b(ff);
+[poly + 20] = h(x + w);
+[poly + 22] = h(y + h);
 
 A0 = w[GP + 280];
 A1 = poly;
