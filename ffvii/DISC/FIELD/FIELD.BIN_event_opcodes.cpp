@@ -10005,7 +10005,7 @@ A1 = S0 & ffff;
 A2 = 0004;
 
 Ld2054:	; 800D2054
-800D2054	jal    func25288 [$80025288]
+800D2054	jal    system_menu_inventory_remove_item [$80025288]
 A0 = S0 & ffff;
 V1 = bu[800722c4];
 800D2064	lui    v0, $8008
@@ -10042,7 +10042,7 @@ Ld20c4:	; 800D20C4
 A0 = 0001;
 800D20C8	jal    read_memory_block_two_bytes [$800bf908]
 A1 = 0002;
-800D20D0	jal    func25310 [$80025310]
+800D20D0	jal    system_menu_inventory_search_item [$80025310]
 A0 = V0 & ffff;
 V1 = bu[8009d820];
 800D20E0	nop
@@ -10127,7 +10127,7 @@ ff a 800D21F8
     A0 = S0 | c600;
 
     loopd2224:	; 800D2224
-    800D2224	jal    func25288 [$80025288]
+    800D2224	jal    system_menu_inventory_remove_item [$80025288]
     A0 = A0 & ffff;
     S0 = S0 + 0001;
     V0 = S0 < 0200;
@@ -11191,10 +11191,10 @@ S0 = 0;
 A0 = S0;
 
 loopd36c4:	; 800D36C4
-800D36C4	jal    func258bc [$800258bc]
+800D36C4	jal    system_menu_restore_hp_by_party_id [$800258bc]
 A1 = 2710;
 A0 = S0;
-800D36D0	jal    func25a44 [$80025a44]
+800D36D0	jal    system_menu_restore_mp_by_party_id [$80025a44]
 A1 = 2710;
 S0 = S0 + 0001;
 V0 = S0 < 0003;
@@ -11270,7 +11270,7 @@ A0 = 0002;
 A1 = 0003;
 A0 = S0;
 V0 = V0 << 10;
-800D37E8	jal    func25a44 [$80025a44]
+800D37E8	jal    system_menu_restore_mp_by_party_id [$80025a44]
 A1 = V0 >> 10;
 
 Ld37f0:	; 800D37F0
@@ -11430,7 +11430,7 @@ A0 = 0002;
 A1 = 0003;
 A0 = S0;
 V0 = V0 << 10;
-800D3A18	jal    func258bc [$800258bc]
+800D3A18	jal    system_menu_restore_hp_by_party_id [$800258bc]
 A1 = V0 >> 10;
 
 Ld3a20:	; 800D3A20

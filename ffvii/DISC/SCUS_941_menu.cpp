@@ -1534,11 +1534,14 @@ return bu[GP + 97];
 ////////////////////////////////
 // func1f6c0()
 
-[GP + 97] = b(1);
-[GP + 98] = b(A1);
+string = A0;
+color = A1;
+
+[GP + 97] = b(1); // show
+[GP + 98] = b(color);
 [GP + 9c] = w(28);
 [GP + a1] = b(1);
-[GP + 174] = w(A0);
+[GP + 174] = w(string);
 ////////////////////////////////
 
 
@@ -5551,7 +5554,7 @@ do
         }
     }
 
-    func1f710(); // draw tutorial text
+    func1f710(); // draw additional text
 
     // if collapse, switch or expands
     // we need to update as old menu
@@ -5952,75 +5955,59 @@ else
 
 
 ////////////////////////////////
-// func25288
-T2 = A0 & 01ff;
-A3 = ffff;
-T0 = 0;
-T3 = ffff;
-V0 = A0 & ffff;
-T1 = V0 >> 09;
-V0 = T1 << 09;
-A0 = A0 | V0;
-A2 = 8009c6e4 + 4fc;
+// system_menu_inventory_remove_item()
 
-loop252b0:	; 800252B0
-V1 = hu[A2 + 0000];
-800252B4	nop
-A1 = V1 & ffff;
-800252BC	beq    a1, t3, L252f8 [$800252f8]
-V0 = V1 & 01ff;
-800252C4	bne    t2, v0, L252f8 [$800252f8]
-A1 = A1 >> 09;
-V0 = T1 < A1;
-800252D0	beq    v0, zero, L252ec [$800252ec]
-A3 = A0;
-V0 = A1 - T1;
-V0 = V0 << 09;
-V0 = V0 | T2;
-800252E4	j      L25308 [$80025308]
-[A2 + 0000] = h(V0);
+remove_item = A0;
+item_id = remove_item & 1ff;
+remove = remove_item >> 9;
 
-L252ec:	; 800252EC
-A3 = V1;
-800252F0	j      L25308 [$80025308]
-[A2 + 0000] = h(T3);
+for( int i = 0; i < 140; ++i )
+{
+    item = hu[8009c6e4 + 4fc + i * 2];
 
-L252f8:	; 800252F8
-T0 = T0 + 0001;
-V0 = T0 < 0140;
-80025300	bne    v0, zero, loop252b0 [$800252b0]
-A2 = A2 + 0002;
+    if( item != ffff )
+    {
+        if( item_id == ( item & 1ff ) )
+        {
+            amount = item >> 9;
+            if( remove < amount )
+            {
+                [8009c6e4 + 4fc + i * 2] = h(((amount - remove) << 9) | item_id);
+                return (remove << 9) | remove_item;
+            }
+            else
+            {
+                [8009c6e4 + 4fc + i * 2] = h(ffff);
+                return item;
+            }
+        }
+    }
+}
 
-L25308:	; 80025308
-80025308	jr     ra 
-V0 = A3 & ffff;
+return ffff;
 ////////////////////////////////
-// func25310
-A0 = A0 & 01ff;
-T0 = ffff;
-A2 = 0;
-A3 = ffff;
-A1 = 8009c6e4 + 4fc;
 
-loop25328:	; 80025328
-V0 = hu[A1 + 0000];
-8002532C	nop
-V1 = V0 & ffff;
-80025334	beq    v1, a3, L25344 [$80025344]
-V0 = V0 & 01ff;
-8002533C	beq    a0, v0, L25358 [$80025358]
-V0 = V1;
 
-L25344:	; 80025344
-A2 = A2 + 0001;
-V0 = A2 < 0140;
-8002534C	bne    v0, zero, loop25328 [$80025328]
-A1 = A1 + 0002;
-V0 = T0;
 
-L25358:	; 80025358
-80025358	jr     ra 
-8002535C	nop
+////////////////////////////////
+// system_menu_inventory_search_item()
+
+item_id = A0 & 1ff;
+
+for( int i = 0; i < 140; ++i )
+{
+    item = hu[8009c6e4 + 4fc + i * 2];
+    if( item != ffff )
+    {
+        if( item_id == ( item & 1ff ) ) return item;
+    }
+}
+
+return ffff;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25360
 80025360	addiu  sp, sp, $ffe8 (=-$18)
@@ -6388,23 +6375,24 @@ L258b4:	; 800258B4
 
 
 ////////////////////////////////
-// func258bc()
+// system_menu_restore_hp_by_party_id()
 
-char_id = bu[8009cbdc + A0];
+party_id = A0;
+char_id = bu[8009cbdc + party_id];
 restore = A1;
 
 if( char_id != ff )
 {
     save_char_id = w[800491d0 + char_id * 4];
 
-    [8009d84c + A0 * 440 + 10] = h(h[8009d84c + A0 * 440 + 10] + restore);
+    [8009d84c + party_id * 440 + 10] = h(h[8009d84c + party_id * 440 + 10] + restore);
 
-    if( h[8009d84c + A0 * 440 + 12] < h[8009d84c + A0 * 440 + 10] ) // clamp
+    if( h[8009d84c + party_id * 440 + 12] < h[8009d84c + party_id * 440 + 10] ) // clamp
     {
-        [8009d84c + A0 * 440 + 10] = h(h[8009d84c + A0 * 440 + 12]);
+        [8009d84c + party_id * 440 + 10] = h(h[8009d84c + party_id * 440 + 12]);
     }
 
-    [8009c6e4 + 54 + save_char_id * 84 + 2c] = h(hu[8009d84c + A0 * 440 + 10]);
+    [8009c6e4 + 54 + save_char_id * 84 + 2c] = h(hu[8009d84c + party_id * 440 + 10]);
 }
 ////////////////////////////////
 
@@ -6459,54 +6447,33 @@ L25a3c:	; 80025A3C
 80025A3C	jr     ra 
 80025A40	nop
 ////////////////////////////////
-// func25a44
-AT = 8009cbdc;
-AT = AT + A0;
-V1 = bu[AT + 0000];
-V0 = 00ff;
-80025A58	beq    v1, v0, L25b04 [$80025b04]
-80025A5C	addiu  sp, sp, $fff8 (=-$8)
-V1 = V1 << 02;
-V0 = A0 << 04;
-V0 = V0 + A0;
-A0 = V0 << 06;
-AT = 8009d860;
-AT = AT + A0;
-V0 = hu[AT + 0000];
-AT = 800491d0;
-AT = AT + V1;
-A2 = w[AT + 0000];
-AT = 8009d862;
-AT = AT + A0;
-V1 = h[AT + 0000];
-V0 = V0 + A1;
-AT = 8009d860;
-AT = AT + A0;
-[AT + 0000] = h(V0);
-V0 = V0 << 10;
-V0 = V0 >> 10;
-A1 = V1;
-V1 = V1 < V0;
-80025AC4	beq    v1, zero, L25adc [$80025adc]
-V0 = A2 << 05;
-AT = 8009d860;
-AT = AT + A0;
-[AT + 0000] = h(A1);
 
-L25adc:	; 80025ADC
-V0 = V0 + A2;
-AT = 8009d860;
-AT = AT + A0;
-V1 = hu[AT + 0000];
-V0 = V0 << 02;
-AT = 8009c768;
-AT = AT + V0;
-[AT + 0000] = h(V1);
 
-L25b04:	; 80025B04
-SP = SP + 0008;
-80025B08	jr     ra 
-80025B0C	nop
+
+////////////////////////////////
+// system_menu_restore_mp_by_party_id()
+
+party_id = A0;
+char_id = bu[8009cbdc + party_id];
+restore = A1;
+
+if( char_id != ff )
+{
+    save_char_id = w[800491d0 + char_id * 4];
+
+    [8009d84c + party_id * 440 + 14] = h(hu[8009d84c + party_id * 440 + 14] + restore);
+
+    if( h[8009d84c + party_id * 440 + 16] < h[8009d84c + party_id * 440 + 14] )
+    {
+        [8009d84c + party_id * 440 + 14] = h(h[8009d84c + party_id * 440 + 16]);
+    }
+
+    [8009c768 + save_char_id * 84] = h(hu[8009d84c + party_id * 440 + 14]);
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func25b10
 A1 = 8009d260;
@@ -7022,7 +6989,7 @@ for( int i = 0; i < 3; ++i ) // go through all party members
         {
             A0 = i;
             A1 = 3; // restore amount
-            func258bc();
+            system_menu_restore_hp_by_party_id();
 
             current_hp = h[8009d84c + i * 440 + 10];
             max_hp = h[8009d84c + i * 440 + 12]

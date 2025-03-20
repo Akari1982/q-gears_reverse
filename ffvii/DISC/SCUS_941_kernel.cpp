@@ -1065,12 +1065,12 @@ SP = SP + 0008;
 ////////////////////////////////
 // system_get_limit_command_id()
 
-character_id = A0;
+char_id = A0;
 limit_id = A1;
 
-if( character_id < 9 )
+if( char_id < 9 )
 {
-    return bu[80082268 + character_id * 38 + c + limit_id] - 80;
+    return bu[80082268 + char_id * 38 + c + limit_id] - 80;
 }
 return 7f;
 ////////////////////////////////
