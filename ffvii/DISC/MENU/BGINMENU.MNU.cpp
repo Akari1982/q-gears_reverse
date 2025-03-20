@@ -1,15 +1,15 @@
 ////////////////////////////////
 // func1d0000()
 
-A0 = 801d0860;
+A0 = 801d0860 + 0 * 12;
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
-A3 = 1; // max x pos
-A4 = 3; // max y pos
+A3 = 1; // x pos items
+A4 = 3; // y pos items
 A5 = 0;
-A6 = 0; // cur page
+A6 = 0; // scroll pos
 A7 = 1;
-A8 = 3; // max page
+A8 = 3; // total y items
 A9 = 0;
 A10 = 0;
 A11 = 0; // x warp
@@ -17,15 +17,15 @@ A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
 system_menu_set_cursor_movement();
 
-A0 = 801d0860 + 12;
+A0 = 801d0860 + 1 * 12;
 A1 = 0; // x cursor pos
 A2 = 0; // y cursor pos
-A3 = 1; // max x pos
-A4 = 3; // max y pos
+A3 = 1; // x pos items
+A4 = 3; // y pos items
 A5 = 0;
-A6 = 0; // cur page
+A6 = 0; // scroll pos
 A7 = 1;
-A8 = 9; // max page
+A8 = 9; // total y items
 A9 = 0;
 A10 = 0;
 A11 = 0; // x warp
@@ -47,7 +47,7 @@ system_menu_draw_menu_list();
 if( w[801d07f0] == 0 )
 {
     A0 = 0; // x
-    A1 = h[801d07f4 + 1 * 8 + 2] + b[801d0860 + b] * 40 + 20; // y
+    A1 = h[801d07f4 + 1 * 8 + 2] + b[801d0860 + 0 * 12 + b] * 40 + 20; // y
     system_menu_draw_cursor();
 }
 
