@@ -60,10 +60,6 @@ A3 = 000b;
 A3 = 000a;
 
 L1d02c8:	; 801D02C8
-V0 = 0010;
-[SP + 0010] = w(V0);
-[SP + 0014] = w(V0);
-V0 = 0001;
 A2 = A3 & 0001;
 A2 = A2 << 04;
 A3 = A3 >> 01;
@@ -74,7 +70,9 @@ A0 = A0 >> 10;
 A1 = A1 >> 10;
 A2 = A2 | 0060;
 A3 = A3 + 0070;
-[SP + 0018] = w(V0);
+[SP + 0010] = w(10);
+[SP + 0014] = w(10);
+[SP + 0018] = w(1);
 [SP + 001c] = w(0);
 system_menu_draw_textured_rect();
 ////////////////////////////////
@@ -108,519 +106,382 @@ if( A1 < 40 )
 
 
 ////////////////////////////////
-// func1d03b4
+// func1d03b4()
+// swap
 
-V0 = w[A1 + 0000];
-V1 = w[A0 + 0000];
-[A0 + 0000] = w(V0);
-[A1 + 0000] = w(V1);
+val0 = w[A0 + 0];
+val1 = w[A1 + 0];
+[A0 + 0] = w(val1);
+[A1 + 0] = w(val0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d03c8
+// func1d03c8()
 
-S2 = A2;
-S3 = A3;
-V0 = A1 < 0002;
-[SP + 0238] = w(A0);
-[SP + 023c] = w(A1);
-801D03F0	beq    v0, zero, L1d0408 [$801d0408]
+items = A0;
+num = A1;
+func_comp = A2;
+func_swap = A3;
 
-801D03F8	j      L1d05f8 [$801d05f8]
-V0 = 0001;
+[SP + 238] = w(items);
+[SP + 23c] = w(num);
 
-L1d0400:	; 801D0400
-801D0400	j      L1d05f8 [$801d05f8]
-V0 = 0;
+if( num < 2 ) return 1;
 
-L1d0408:	; 801D0408
-S1 = 0;
-S0 = SP + 0010;
-801D0410	addiu  v0, a1, $ffff (=-$1)
-[SP + 0010] = w(0);
-[SP + 0110] = w(V0);
+depth = 0;
+[SP + 10] = w(0);
+[SP + 110] = w(num - 1);
 
-L1d041c:	; 801D041C
-V0 = w[S0 + 0000];
-801D0420	nop
-[SP + 0214] = w(V0);
-V1 = w[S0 + 0100];
-V0 = V0 + 0001;
-[SP + 0218] = w(V0);
-V0 = V0 < V1;
-[SP + 0210] = w(V1);
-801D043C	beq    v0, zero, L1d0504 [$801d0504]
-[SP + 023c] = w(V1);
+while( depth != -1 )
+{
+    [SP + 214] = w(w[SP + 10 + depth * 4]); // pivot (опорный элемент)
+    [SP + 218] = w(w[SP + 10 + depth * 4] + 1);
+    [SP + 210] = w(w[SP + 110 + depth * 4]);
+    [SP + 23c] = w(w[SP + 110 + depth * 4]);
 
-loop1d0444:	; 801D0444
-A0 = w[SP + 0218];
-A1 = w[SP + 0214];
-801D044C	jalr   s2 ra
-A2 = SP + 0238;
-801D0454	bgtz   v0, L1d0478 [$801d0478]
-801D0458	nop
-V0 = w[SP + 0218];
-V1 = w[SP + 0210];
-V0 = V0 + 0001;
-[SP + 0218] = w(V0);
-V0 = V0 < V1;
-801D0470	bne    v0, zero, loop1d0444 [$801d0444]
-801D0474	nop
+    while( w[SP + 218] < w[SP + 210] )
+    {
+        while( w[SP + 218] < w[SP + 210] )
+        {
+            A0 = w[SP + 218];
+            A1 = w[SP + 214];
+            A2 = SP + 238; // items
+            801D044C	jalr   func_comp ra
 
-L1d0478:	; 801D0478
-A1 = w[SP + 0210];
-V0 = w[SP + 0218];
-801D0480	nop
-V0 = A1 < V0;
-801D0488	bne    v0, zero, L1d04c4 [$801d04c4]
-801D048C	nop
+            // if second item higher
+            if( V0 > 0 ) break;
 
-loop1d0490:	; 801D0490
-A0 = w[SP + 0214];
-801D0494	jalr   s2 ra
-A2 = SP + 0238;
-801D049C	bgtz   v0, L1d04c0 [$801d04c0]
-801D04A0	nop
-V0 = w[SP + 0210];
-V1 = w[SP + 0218];
-801D04AC	addiu  v0, v0, $ffff (=-$1)
-A1 = V0;
-V1 = V0 < V1;
-801D04B8	beq    v1, zero, loop1d0490 [$801d0490]
-[SP + 0210] = w(A1);
+            [SP + 218] = w(w[SP + 218] + 1);
+        }
 
-L1d04c0:	; 801D04C0
-A1 = w[SP + 0210];
+        while( w[SP + 210] >= w[SP + 218] )
+        {
+            A0 = w[SP + 214];
+            A1 = w[SP + 210];
+            A2 = SP + 238; // items
+            801D0494	jalr   func_comp ra
 
-L1d04c4:	; 801D04C4
-A0 = w[SP + 0218];
-801D04C8	nop
-V0 = A0 < A1;
-801D04D0	beq    v0, zero, L1d0504 [$801d0504]
-A2 = SP + 0238;
-V0 = A0 + 0001;
-[SP + 0218] = w(V0);
-801D04E0	addiu  v0, a1, $ffff (=-$1)
-801D04E4	jalr   s3 ra
-[SP + 0210] = w(V0);
-V1 = w[SP + 0210];
-V0 = w[SP + 0218];
-801D04F4	nop
-V0 = V0 < V1;
-801D04FC	bne    v0, zero, loop1d0444 [$801d0444]
-801D0500	nop
+            // if second item higher
+            if( V0 > 0 ) break;
 
-L1d0504:	; 801D0504
-A0 = w[SP + 0214];
-A1 = w[SP + 0210];
-801D050C	jalr   s2 ra
-A2 = SP + 0238;
-801D0514	blez   v0, L1d052c [$801d052c]
-801D0518	nop
-A0 = w[SP + 0214];
-A1 = w[SP + 0210];
-801D0524	jalr   s3 ra
-A2 = SP + 0238;
+            [SP + 210] = w(w[SP + 210] - 1);
+        }
 
-L1d052c:	; 801D052C
-V1 = w[SP + 0210];
-A2 = w[SP + 0214];
-801D0534	nop
-V0 = A2 < V1;
-801D053C	beq    v0, zero, L1d05b4 [$801d05b4]
-801D0540	addiu  a0, v1, $ffff (=-$1)
-V0 = A2 < A0;
-801D0548	beq    v0, zero, L1d05b4 [$801d05b4]
-[SP + 0210] = w(A0);
-V1 = w[SP + 023c];
-A1 = w[SP + 0218];
-801D0558	nop
-V0 = A1 < V1;
-801D0560	beq    v0, zero, L1d058c [$801d058c]
-V0 = A0 - A2;
-V1 = V1 - A1;
-V0 = V0 < V1;
-801D0570	beq    v0, zero, L1d058c [$801d058c]
-A0 = SP + 0210;
-801D0578	jal    func1d03b4 [$801d03b4]
-A1 = SP + 023c;
-A0 = SP + 0214;
-801D0584	jal    func1d03b4 [$801d03b4]
-A1 = SP + 0218;
+        if( w[SP + 218] >= w[SP + 210] ) break;
 
-L1d058c:	; 801D058C
-A0 = w[SP + 0210];
-V1 = w[SP + 0214];
-801D0594	nop
-V0 = V1 < A0;
-801D059C	beq    v0, zero, L1d05b4 [$801d05b4]
-801D05A0	nop
-[S0 + 0000] = w(V1);
-[S0 + 0100] = w(A0);
-S0 = S0 + 0004;
-S1 = S1 + 0001;
+        A0 = w[SP + 218];
+        A1 = w[SP + 210];
+        A2 = SP + 238; // items
+        801D04E4	jalr   func_swap ra
 
-L1d05b4:	; 801D05B4
-A0 = w[SP + 023c];
-V1 = w[SP + 0218];
-801D05BC	nop
-V0 = V1 < A0;
-801D05C4	beq    v0, zero, L1d05e0 [$801d05e0]
-V0 = S1 < 0040;
-[S0 + 0000] = w(V1);
-[S0 + 0100] = w(A0);
-S0 = S0 + 0004;
-S1 = S1 + 0001;
-V0 = S1 < 0040;
+        [SP + 218] = w(w[SP + 218] + 1);
+        [SP + 210] = w(w[SP + 210] - 1);
+    }
 
-L1d05e0:	; 801D05E0
-801D05E0	beq    v0, zero, L1d0400 [$801d0400]
-801D05E4	addiu  s1, s1, $ffff (=-$1)
-801D05E8	addiu  v0, zero, $ffff (=-$1)
-801D05EC	bne    s1, v0, L1d041c [$801d041c]
-801D05F0	addiu  s0, s0, $fffc (=-$4)
-V0 = 0001;
+    A0 = w[SP + 214];
+    A1 = w[SP + 210];
+    A2 = SP + 238; // items
+    801D050C	jalr   func_comp ra
 
-L1d05f8:	; 801D05F8
+    // if second item higher
+    if( V0 > 0 )
+    {
+        A0 = w[SP + 214];
+        A1 = w[SP + 210];
+        A2 = SP + 238; // items
+        801D0524	jalr   func_swap ra
+    }
+
+    if( w[SP + 214] < w[SP + 210] )
+    {
+        [SP + 210] = w(w[SP + 210] - 1);
+
+        if( w[SP + 214] < w[SP + 210] )
+        {
+            if( w[SP + 218] < w[SP + 23c] )
+            {
+                if( ( w[SP + 210] - w[SP + 214] ) < ( w[SP + 23c] - w[SP + 218] ) )
+                {
+                    A0 = SP + 210;
+                    A1 = SP + 23c;
+                    func1d03b4(); // swap
+
+                    A0 = SP + 214;
+                    A1 = SP + 218;
+                    func1d03b4(); // swap
+                }
+            }
+
+            if( w[SP + 214] < w[SP + 210] )
+            {
+                [SP + 10 + depth * 4] = w(w[SP + 214]);
+                [SP + 110 + depth * 4] = w(w[SP + 210]);
+                depth += 1;
+            }
+        }
+    }
+
+    if( w[SP + 218] < w[SP + 23c] )
+    {
+        [SP + 10 + depth * 4] = w(w[SP + 218]);
+        [SP + 110 + depth * 4] = w(w[SP + 23c]);
+        depth += 1;
+    }
+
+    if( depth >= 40 ) return 0;
+
+    depth -= 1;
+}
+
+return 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d0618
+// func1d0618()
+// swap
 
-V0 = hu[A1 + 0000];
-V1 = hu[A0 + 0000];
-[A0 + 0000] = h(V0);
-[A1 + 0000] = h(V1);
+val0 = hu[A0];
+val1 = hu[A1];
+[A0] = h(val1);
+[A1] = h(val0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d062c
-801D062C
-801D062C	beq    a0, zero, L1d0644 [$801d0644]
-801D0630	nop
-801D0634	bgez   a0, L1d0648 [$801d0648]
-V0 = 0001;
-801D063C	j      L1d0648 [$801d0648]
-801D0640	addiu  v0, zero, $ffff (=-$1)
+// func1d062c()
 
-L1d0644:	; 801D0644
-V0 = 0;
+if( A0 == 0 ) return 0;
 
-L1d0648:	; 801D0648
-801D0648	jr     ra 
-801D064C	nop
+if( A0 < 0 ) return -1;
+
+return 1;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d0650
+// func1d0650()
+// sort items by type
 
-A0 = A0 << 10;
-A0 = A0 >> 0f;
-A1 = A1 << 10;
-V0 = w[A2 + 0000];
-A1 = A1 >> 0f;
-A0 = A0 + V0;
-A1 = A1 + V0;
-V0 = hu[A0 + 0000];
-A0 = hu[A1 + 0000];
-V0 = V0 & 01ff;
-A0 = A0 & 01ff;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
+
+V0 = hu[items + item_id1 * 2] & 1ff;
+A0 = hu[items + item_id2 * 2] & 1ff;
+
 A0 = V0 - A0;
-801D0684	jal    func1d062c [$801d062c]
+func1d062c();
+
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d069c
+// func1d069c()
+// sort by max number of items
 
-A0 = A0 << 10;
-V0 = w[A2 + 0000];
-A0 = A0 >> 0f;
-A0 = A0 + V0;
-A0 = hu[A0 + 0000];
-V0 = ffff;
-801D06BC	bne    a0, v0, L1d06c8 [$801d06c8]
-A3 = A0 >> 09;
-A3 = 0;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
 
-L1d06c8:	; 801D06C8
-V0 = A1 << 10;
-V1 = w[A2 + 0000];
-V0 = V0 >> 0f;
-V0 = V0 + V1;
-V1 = hu[V0 + 0000];
-V0 = ffff;
-801D06E0	bne    v1, v0, L1d06ec [$801d06ec]
-A0 = V1 >> 09;
-A0 = 0;
+item1 = hu[items + item_id1 * 2];
+num1 = (item1 != ffff) ? item1 >> 9 : 0;
 
-L1d06ec:	; 801D06EC
-801D06EC	jal    func1d062c [$801d062c]
-A0 = A0 - A3;
+item2 = hu[items + item_id2 * 2];
+num2 = (item2 != ffff) ? item2 >> 9 : 0;
+
+A0 = num2 - num1;
+func1d062c();
+
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d0704
+// func1d0704()
+// sort by min number of items
 
-A0 = A0 << 10;
-V0 = w[A2 + 0000];
-A0 = A0 >> 0f;
-A0 = A0 + V0;
-A0 = hu[A0 + 0000];
-V0 = ffff;
-801D0724	bne    a0, v0, L1d0730 [$801d0730]
-A0 = A0 >> 09;
-A0 = 4e20;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
 
-L1d0730:	; 801D0730
-V0 = A1 << 10;
-V1 = w[A2 + 0000];
-V0 = V0 >> 0f;
-V0 = V0 + V1;
-V1 = hu[V0 + 0000];
-V0 = ffff;
-801D0748	bne    v1, v0, L1d0754 [$801d0754]
-V0 = V1 >> 09;
-V0 = 4e20;
+item1 = hu[items + item_id1 * 2];
+num1 = (item1 != ffff) ? item1 >> 9 : 4e20;
 
-L1d0754:	; 801D0754
-801D0754	jal    func1d062c [$801d062c]
-A0 = A0 - V0;
+item2 = hu[items + item_id2 * 2];
+num2 = (item2 != ffff) ? item2 >> 9 : 4e20;
+
+A0 = num1 - num2;
+func1d062c();
+
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d076c
+// func1d076c()
+// sort by name
 
-A0 = A0 << 10;
-V0 = w[A2 + 0000];
-A0 = A0 >> 0f;
-A0 = A0 + V0;
-A0 = hu[A0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D0790	bne    v1, v0, L1d07a0 [$801d07a0]
-V0 = A0 & 01ff;
-801D0798	j      L1d07b4 [$801d07b4]
-A3 = 4e20;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
 
-L1d07a0:	; 801D07A0
-V0 = V0 << 01;
-AT = 801d35b4;
-AT = AT + V0;
-A3 = hu[AT + 0000];
+item1 = hu[items + item_id1 * 2];
+val1 = (item1 != ffff) ? h[801d35b4 + (item1 & 1ff) * 2] : 4e20;
 
-L1d07b4:	; 801D07B4
-V0 = A1 << 10;
-V1 = w[A2 + 0000];
-V0 = V0 >> 0f;
-V0 = V0 + V1;
-A0 = hu[V0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D07D0	bne    v1, v0, L1d07e0 [$801d07e0]
-V0 = A0 & 01ff;
-801D07D8	j      L1d07f4 [$801d07f4]
-A0 = 4e20;
+item2 = hu[items + item_id2 * 2];
+val2 = (item2 != ffff) ? h[801d35b4 + (item2 & 1ff) * 2] : 4e20;
 
-L1d07e0:	; 801D07E0
-V0 = V0 << 01;
-AT = 801d35b4;
-AT = AT + V0;
-A0 = hu[AT + 0000];
+A0 = val1 - val2;
+func1d062c();
 
-L1d07f4:	; 801D07F4
-V0 = A3 << 10;
-V0 = V0 >> 10;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-801D0804	jal    func1d062c [$801d062c]
-A0 = V0 - A0;
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d081c
+// func1d081c()
+// sort items that can be used out of battle first
+// res
+// 0 - same
+// 1 - second item higher
+// -1 - first item higher
 
-S1 = A2;
-A0 = A0 << 10;
-A0 = A0 >> 0f;
-V0 = w[S1 + 0000];
-801D0840	nop
-A0 = A0 + V0;
-A0 = hu[A0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D0854	bne    v1, v0, L1d0864 [$801d0864]
-S2 = A1;
-801D085C	j      L1d087c [$801d087c]
-S0 = 0;
 
-L1d0864:	; 801D0864
-801D0864	jal    $system_menu_get_inventory_restriction_mask
-A0 = A0 & 01ff;
-V0 = V0 & 0004;
-801D0870	beq    v0, zero, L1d087c [$801d087c]
-S0 = 0002;
-S0 = 0001;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
 
-L1d087c:	; 801D087C
-V0 = S2 << 10;
-V1 = w[S1 + 0000];
-V0 = V0 >> 0f;
-V0 = V0 + V1;
-A0 = hu[V0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D0898	bne    v1, v0, L1d08a8 [$801d08a8]
-801D089C	nop
-801D08A0	j      L1d08c0 [$801d08c0]
-A0 = 0;
+item1 = hu[items + item_id1 * 2];
+if( item1 == ffff )
+{
+    S0 = 0;
+}
+else
+{
+    A0 = item1 & 1ff;
+    system_menu_get_inventory_restriction_mask();
+    S0 = ( V0 & 04 ) ? 1 : 2;
+}
 
-L1d08a8:	; 801D08A8
-801D08A8	jal    $system_menu_get_inventory_restriction_mask
-A0 = A0 & 01ff;
-V0 = V0 & 0004;
-801D08B4	beq    v0, zero, L1d08c0 [$801d08c0]
-A0 = 0002;
-A0 = 0001;
+item2 = hu[items + item_id2 * 2];
+if( item2 == ffff )
+{
+    A0 = 0;
+}
+else
+{
+    A0 = item2 & 1ff;
+    system_menu_get_inventory_restriction_mask();
+    A0 = ( V0 & 04 ) ? 1 : 2;
+}
 
-L1d08c0:	; 801D08C0
-801D08C0	jal    func1d062c [$801d062c]
 A0 = A0 - S0;
+func1d062c();
+
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func1d08e4()
+// sort items that can be used in battle first
 
-S1 = A2;
-A0 = A0 << 10;
-A0 = A0 >> 0f;
-V0 = w[S1 + 0000];
-801D0908	nop
-A0 = A0 + V0;
-A0 = hu[A0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D091C	bne    v1, v0, L1d092c [$801d092c]
-S2 = A1;
-801D0924	j      L1d0944 [$801d0944]
-S0 = 0;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
 
-L1d092c:	; 801D092C
-801D092C	jal    $system_menu_get_inventory_restriction_mask
-A0 = A0 & 01ff;
-V0 = V0 & 0002;
-801D0938	beq    v0, zero, L1d0944 [$801d0944]
-S0 = 0002;
-S0 = 0001;
+item1 = hu[items + item_id1 * 2];
+if( item1 == ffff )
+{
+    S0 = 0;
+}
+else
+{
+    A0 = item1 & 1ff;
+    system_menu_get_inventory_restriction_mask();
+    S0 = ( V0 & 02 ) ? 1 : 2;
+}
 
-L1d0944:	; 801D0944
-V0 = S2 << 10;
-V1 = w[S1 + 0000];
-V0 = V0 >> 0f;
-V0 = V0 + V1;
-A0 = hu[V0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D0960	bne    v1, v0, L1d0970 [$801d0970]
-801D0964	nop
-801D0968	j      L1d0988 [$801d0988]
-A0 = 0;
+item2 = hu[items + item_id2 * 2];
+if( item2 == ffff )
+{
+    A0 = 0;
+}
+else
+{
+    A0 = item2 & 1ff;
+    system_menu_get_inventory_restriction_mask();
+    A0 = ( V0 & 02 ) ? 1 : 2;
+}
 
-L1d0970:	; 801D0970
-801D0970	jal    $system_menu_get_inventory_restriction_mask
-A0 = A0 & 01ff;
-V0 = V0 & 0002;
-801D097C	beq    v0, zero, L1d0988 [$801d0988]
-A0 = 0002;
-A0 = 0001;
-
-L1d0988:	; 801D0988
 A0 = A0 - S0;
-801D0988	jal    func1d062c [$801d062c]
+func1d062c();
+
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1d09ac
+// func1d09ac()
+// sort items that can be thrown in battle first
 
-S1 = A2;
-A0 = A0 << 10;
-A0 = A0 >> 0f;
-V0 = w[S1 + 0000];
-A0 = A0 + V0;
-A0 = hu[A0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D09E4	bne    v1, v0, L1d09f4 [$801d09f4]
-S2 = A1;
-801D09EC	j      L1d0a0c [$801d0a0c]
-S0 = 0;
+item_id1 = A0;
+item_id2 = A1;
+items = w[A2];
 
-L1d09f4:	; 801D09F4
-801D09F4	jal    $system_menu_get_inventory_restriction_mask
-A0 = A0 & 01ff;
-V0 = V0 & 0008;
-801D0A00	beq    v0, zero, L1d0a0c [$801d0a0c]
-S0 = 0002;
-S0 = 0001;
+item1 = hu[items + item_id1 * 2];
+if( item1 == ffff )
+{
+    S0 = 0;
+}
+else
+{
+    A0 = item1 & 1ff;
+    system_menu_get_inventory_restriction_mask();
+    S0 = ( V0 & 08 ) ? 1 : 2;
+}
 
-L1d0a0c:	; 801D0A0C
-V0 = S2 << 10;
-V1 = w[S1 + 0000];
-V0 = V0 >> 0f;
-V0 = V0 + V1;
-A0 = hu[V0 + 0000];
-V0 = ffff;
-V1 = A0 & ffff;
-801D0A28	bne    v1, v0, L1d0a38 [$801d0a38]
-801D0A2C	nop
-801D0A30	j      L1d0a50 [$801d0a50]
-A0 = 0;
+item2 = hu[items + item_id2 * 2];
+if( item2 == ffff )
+{
+    A0 = 0;
+}
+else
+{
+    A0 = item2 & 1ff;
+    system_menu_get_inventory_restriction_mask();
+    A0 = ( V0 & 08 ) ? 1 : 2;
+}
 
-L1d0a38:	; 801D0A38
-801D0A38	jal    $system_menu_get_inventory_restriction_mask
-A0 = A0 & 01ff;
-V0 = V0 & 0008;
-801D0A44	beq    v0, zero, L1d0a50 [$801d0a50]
-A0 = 0002;
-A0 = 0001;
-
-L1d0a50:	; 801D0A50
 A0 = A0 - S0;
-801D0A50	jal    func1d062c [$801d062c]
+func1d062c();
+
+return V0;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func1d0a74()
+// swap two items
 
-A0 = A0 << 10;
-A0 = A0 >> 0f;
-A1 = A1 << 10;
-V0 = w[A2 + 0000];
-A1 = A1 >> 0f;
-A0 = V0 + A0;
-A1 = V0 + A1;
-func1d0618();
+items = w[A2];
+A0 = items + A0 * 2;
+A1 = items + A1 * 2;
+func1d0618(); // swap
 ////////////////////////////////
 
 
@@ -634,8 +495,8 @@ switch( A0 )
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
-        A2 = 801d081c;
-        A3 = 801d0a74;
+        A2 = 801d081c; // func1d081c()
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
@@ -644,8 +505,8 @@ switch( A0 )
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
-        A2 = 801d08e4;
-        A3 = 801d0a74;
+        A2 = 801d08e4; // func1d08e4()
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
@@ -654,8 +515,8 @@ switch( A0 )
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
-        A2 = 801d09ac;
-        A3 = 801d0a74;
+        A2 = 801d09ac; // func1d09ac()
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
@@ -664,8 +525,8 @@ switch( A0 )
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
-        A2 = 801d0650;
-        A3 = 801d0a74;
+        A2 = 801d0650; // func1d0650()
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
@@ -675,7 +536,7 @@ switch( A0 )
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
         A2 = 801d076c;
-        A3 = 801d0a74;
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
@@ -684,8 +545,8 @@ switch( A0 )
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
-        A2 = 801d069c;
-        A3 = 801d0a74;
+        A2 = 801d069c; // func1d069c()
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
@@ -694,8 +555,8 @@ switch( A0 )
     {
         A0 = 8009c6e4 + 4fc;
         A1 = 140;
-        A2 = 801d0704;
-        A3 = 801d0a74;
+        A2 = 801d0704; // func1d0704()
+        A3 = 801d0a74; // func1d0a74()
         func1d03c8();
     }
     break;
