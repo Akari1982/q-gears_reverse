@@ -12,68 +12,86 @@ system_execute_AKAO();
 
 ////////////////////////////////
 // func1d0228()
+// draw item icon
 
-V0 = A2 < 0080;
-801D0230	beq    v0, zero, L1d0240 [$801d0240]
+x = A0;
+y = A1;
+item_id = A2;
+default_icon = A3;
 
-801D0238	j      L1d02c8 [$801d02c8]
-A3 = 0;
+icon = default_icon;
 
-L1d0240:	; 801D0240
-V0 = A2 < 0100;
-801D0244	beq    v0, zero, L1d02bc [$801d02bc]
-V0 = A2 < 0120;
-801D024C	addiu  a2, a2, $ff80 (=-$80)
-V0 = A2 < 0010;
-801D0254	bne    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0001;
-V0 = A2 < 0020;
-801D0260	bne    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0003;
-V0 = A2 < 0030;
-801D026C	bne    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0002;
-V0 = A2 < 003e;
-801D0278	bne    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0005;
-V0 = A2 < 0049;
-801D0284	bne    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0004;
-V0 = A2 < 0057;
-801D0290	bne    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0009;
-V0 = A2 < 0065;
-801D029C	beq    v0, zero, L1d02ac [$801d02ac]
-V0 = A2 < 0072;
-801D02A4	j      L1d02c8 [$801d02c8]
-A3 = 0006;
+if( item_id < 80 )
+{
+    icon = 0;
+}
+else
+{
+    if( item_id >= 100 )
+    {
+        if( item_id < 120 )
+        {
+            icon = a;
+        }
+        else
+        {
+            icon = b;
+        }
+    }
+    else
+    {
+        item_id -= 80;
 
-L1d02ac:	; 801D02AC
-801D02AC	beq    v0, zero, L1d02c8 [$801d02c8]
-A3 = 0008;
-801D02B4	j      L1d02c8 [$801d02c8]
-A3 = 0007;
+        icon = 1;
+        if( item_id >= 10 )
+        {
+            icon = 3;
+            if( item_id >= 20 )
+            {
+                icon = 2;
+                if( item_id >= 30 )
+                {
+                    icon = 5;
+                    if( item_id >= 3e )
+                    {
+                        icon = 4;
+                        if( item_id >= 49 )
+                        {
+                            icon = 9;
+                            if( item_id >= 57 )
+                            {
+                                if( item_id < 65 )
+                                {
+                                    icon = 6;
+                                }
+                                else
+                                {
+                                    if( item_id < 72 )
+                                    {
+                                        icon = 7;
+                                    }
+                                    else
+                                    {
+                                        icon = 8;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
-L1d02bc:	; 801D02BC
-801D02BC	beq    v0, zero, L1d02c8 [$801d02c8]
-A3 = 000b;
-A3 = 000a;
-
-L1d02c8:	; 801D02C8
-A2 = A3 & 0001;
-A2 = A2 << 04;
-A3 = A3 >> 01;
-A3 = A3 << 04;
-A0 = A0 << 10;
-A1 = A1 << 10;
-A0 = A0 >> 10;
-A1 = A1 >> 10;
-A2 = A2 | 0060;
-A3 = A3 + 0070;
-[SP + 0010] = w(10);
-[SP + 0014] = w(10);
-[SP + 0018] = w(1);
-[SP + 001c] = w(0);
+A0 = x;
+A1 = y;
+A2 = 60 | ((icon & 1) << 4); // u
+A3 = 70 + (icon >> 1) * 10; // v
+A4 = 10; // width
+A5 = 10; // height
+A6 = 1; // col
+A7 = 0; // transparent
 system_menu_draw_textured_rect();
 ////////////////////////////////
 
@@ -119,6 +137,7 @@ val1 = w[A1 + 0];
 
 ////////////////////////////////
 // func1d03c8()
+// sort function
 
 items = A0;
 num = A1;
@@ -356,7 +375,6 @@ return V0;
 // 0 - same
 // 1 - second item higher
 // -1 - first item higher
-
 
 item_id1 = A0;
 item_id2 = A1;
@@ -691,6 +709,7 @@ return mask;
 
 ////////////////////////////////
 // func1d0e4c()
+// copy text to temp
 
 for( int i = 0; i < 50; ++i )
 {
@@ -1101,9 +1120,9 @@ if( b[801d3de6] != 2 )
 
         if( S1 != ffff )
         {
-            S4 = V1 & 1ff;
+            item_id = V1 & 1ff;
 
-            A0 = S4;
+            A0 = item_id;
             S1 = S1 >> 09;
             func1d0dcc(); // get restriction mask
 
@@ -1114,9 +1133,9 @@ if( b[801d3de6] != 2 )
 
             A0 = c4;
             A1 = 38 + i * 10 + b[801d3deb + S5] * 4;
-            A2 = S4;
+            A2 = item_id;
             A3 = 0;
-            func1d0228();
+            func1d0228(); // draw item icon
 
             A0 = 13f;
             A1 = 3c + i * 10 + b[801d3deb + S5] * 4;
