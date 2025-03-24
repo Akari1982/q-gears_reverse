@@ -550,7 +550,7 @@
 
 
 
-// SCUS_941_buttons.cpp
+// SCUS_941_menu.cpp
 ////////////////////////////////
 // func1c434
 8001C434-8001C480
@@ -561,7 +561,7 @@
 // func1c498
 8001C498-8001C4E4
 ////////////////////////////////
-// func1c4e8
+// system_menu_tutorial_set_text_to_show
 8001C4E8-8001C588
 ////////////////////////////////
 // func1c58c
@@ -584,11 +584,6 @@
 ////////////////////////////////
 // func1cb48
 8001CB48-8001CDA0
-////////////////////////////////
-
-
-
-// SCUS_941_menu.cpp
 ////////////////////////////////
 // func1cda4
 8001CDA4-8001CF38
@@ -620,13 +615,13 @@
 // system_menu_copy_window_rect
 8001DE40-8001DE6C
 ////////////////////////////////
-// func1de70
+// system_menu_store_window_color
 8001DE70-8001DEAC
 ////////////////////////////////
-// func1deb0
+// system_menu_restore_window_color
 8001DEB0-8001DEEC
 ////////////////////////////////
-// func1def0
+// system_menu_set_window_color
 8001DEF0-8001DF20
 ////////////////////////////////
 // system_menu_draw_colored_rect
@@ -653,13 +648,13 @@
 // func1f6b4
 8001F6B4-8001F6BC
 ////////////////////////////////
-// func1f6c0
+// system_menu_request_add_window
 8001F6C0-8001F6E0
 ////////////////////////////////
 // func1f6e4
 8001F6E4-8001F70C
 ////////////////////////////////
-// func1f710
+// system_menu_draw_add_window
 8001F710-8001FA24
 ////////////////////////////////
 // system_menu_sound
@@ -752,7 +747,7 @@
 // func22fe0
 80022FE0-8002304C
 ////////////////////////////////
-// func23050
+// system_menu_get_menu_list_state
 80023050-80023058
 ////////////////////////////////
 // system_menu_set_menu_list_animation
@@ -761,7 +756,7 @@
 // system_menu_draw_menu_list
 800230C4-80023688
 ////////////////////////////////
-// func2368c
+// system_menu_init_input
 8002368C-80023784
 ////////////////////////////////
 // system_get_hours_from_seconds
@@ -773,7 +768,7 @@
 // system_get_seconds_from_seconds
 80023940-80023AC0
 ////////////////////////////////
-// func23ac4
+// system_menu_close
 80023AC4-80023AD0
 ////////////////////////////////
 // system_menu_draw_main_menu
@@ -980,10 +975,10 @@
 // func26a20
 80026A20-80026A30
 ////////////////////////////////
-// system_add_draw_mode
+// system_menu_set_draw_mode
 80026A34-80026A90
 ////////////////////////////////
-// func26a94
+// system_menu_set_drawenv
 80026A94-80026B58
 ////////////////////////////////
 // func26b5c

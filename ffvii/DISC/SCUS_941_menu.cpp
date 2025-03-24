@@ -1,4 +1,471 @@
 ﻿////////////////////////////////
+// func1c434()
+
+if( bu[GP + 2c] == 0 )
+{
+    [GP + 2c] = b(1);
+
+    system_bios_start_pad();
+
+    A0 = 800696ac;
+    A1 = 4;
+    A2 = 800696ac + 22;
+    A3 = 4;
+    system_bios_init_pad();
+}
+[80062fa0] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c484()
+
+[GP + 150] = w(14);
+[GP + 158] = w(A0);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c498()
+
+if( bu[800696ac + 0] == ff ) return 0; // FFh=timeout/wrong ID2
+
+if( bu[800696ac + 1] != 41 ) return 0; // 41h=digital_pad
+
+return (bu[800696ac + 3] NOR (bu[800696ac + 2] << 8)) & ffff; // get buttons state
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_menu_tutorial_set_text_to_show()
+
+ptr = A0;
+
+[GP + 2d] = b(1);
+
+A0 = 1;
+A1 = h[GP + 2e];
+A2 = h[GP + 30];
+func1f6e4();
+
+[GP + 97] = b(1);
+[GP + 98] = b(7);
+[GP + 9c] = w(28);
+[GP + a1] = b(1);
+[GP + 174] = w(ptr);
+
+for( int i = 0; i < 100; ++i )
+{
+    if( ( bu[ptr] < ff ) || ( bu[ptr] >= fa ) )
+    {
+        ptr += 2;
+    }
+    else
+    {
+        ptr += 1;
+    }
+
+    if( bu[ptr] == ff )
+    {
+        ptr += 1;
+        break;
+    }
+}
+
+return ptr;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c58c()
+
+if( bu[GP + 97] == 0 )
+{
+    [GP + 2d] = b(0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c5bc()
+
+if( bu[GP + 2d] != 0 )
+{
+    if( bu[GP + 97] == 0 ) [GP + 2d] = b(0);
+
+    return 0000;
+}
+
+tutorial_data = w[GP + 158]; // pointer to tutorial data
+V1 = bu[tutorial_data];
+[GP + 158] = w(tutorial_data + 1);
+
+switch( V1 )
+{
+    case 0:
+    {
+        V0 = w[GP + 158];
+        [GP + 150] = w(hu[V0]);
+        [GP + 158] = w(V0 + 2);
+        return 0000;
+    }
+
+    case 2: [GP + 150] = w(14); return 1000; // up
+    case 3: [GP + 150] = w(14); return 4000; // down
+    case 4: [GP + 150] = w(14); return 8000; // left
+    case 5: [GP + 150] = w(14); return 2000; // right
+    case 6: [GP + 150] = w(14); return 0010; // triangle
+    case 7: [GP + 150] = w(14); return 0040; // cross
+    case 8: [GP + 150] = w(14); return 0080; // square
+    case 9: [GP + 150] = w(14); return 0020; // circle
+    case a: [GP + 150] = w(14); return 0008; // r1
+    case b: [GP + 150] = w(14); return 0002; // r2
+    case c: [GP + 150] = w(14); return 0004; // l1
+    case d: [GP + 150] = w(14); return 0001; // l2
+
+    case 10:
+    {
+        A0 = w[GP + 158];
+        system_menu_tutorial_set_text_to_show();
+
+        [GP + 150] = w(50);
+        [GP + 158] = w(V0);
+        return 0000;
+    }
+
+    case 11:
+    {
+        A0 = 0;
+        A1 = 0;
+        A2 = 0;
+        func1f6e4();
+
+        [80062fa0] = w(0);
+        [GP + 150] = w(0);
+        return 0000;
+    }
+
+    case 12:
+    {
+        V0 = w[GP + 158];
+        [GP + 2e] = h(hu[V0 + 0]);
+        [GP + 30] = h(hu[V0 + 2]);
+        [GP + 150] = w(3c);
+        [GP + 158] = w(V0 + 4);
+        return 0000;
+    }
+}
+
+return 0000;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c788()
+
+if( w[GP + 150] != 0 )
+{
+    [GP + 150] = w(w[GP + 150] - 1);
+}
+else
+{
+    if( w[GP + b4] != 1 )
+    {
+        system_cdrom_read_chain();
+        if( V0 == 0 )
+        {
+            func1c5bc(); // rerurn pressed button
+
+            return V0;
+        }
+    }
+}
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_current_pad_buttons()
+
+if( w[80062fa0] == 0 ) // input enabled
+{
+    if( bu[800696ac] != ff ) // if data ok
+    {
+        if( bu[800696ac + 1] == 41 ) // digital_pad
+        {
+            A0 = (bu[800696ac + 2] << 8) NOR bu[800696ac + 3]; // get buttons state
+        }
+        else
+        {
+            A0 = 0;
+        }
+    }
+    else
+    {
+        A0 = 0;
+    }
+}
+else // for tutorial
+{
+    func1c788();
+    A0 = V0;
+}
+
+// second controller
+if( bu[800696ac + 22] != ff )
+{
+    if( bu[800696ac + 22 + 1] == 41 )
+    {
+        V0 = (bu[800696ac + 22 + 2] << 8) NOR bu[800696ac + 22 + 3];
+    }
+    else
+    {
+        V0 = 0;
+    }
+}
+else
+{
+    V0 = 0;
+}
+
+return (V0 << 10) | (A0 & ffff);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_get_buttons_with_config_remap()
+
+system_get_current_pad_buttons();
+cb1 = V0 & 0000ffff; // first controller
+cb2 = V0 & ffff0000; // second controller
+
+// if controller config set to normal or input not enabled
+if( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 || w[80062fa0] != 0 )
+{
+    return cb2 | cb1;
+}
+
+// remap buttons according to config options
+A0 = 0;
+V1 = 0;
+L1c92c:	; 8001C92C
+    if( cb1 & ( 1 << V1 ) )
+    {
+        A0 = A0 | (1 << bu[8009c6e4 + 10dc + V1]);
+    }
+
+    V1 = V1 + 1;
+    if( V1 >= 10 )
+    {
+        return cb2 | A0;
+    }
+8001C964	j      L1c92c [$8001c92c]
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c980()
+
+[80062d88] = h(hu[80062d78]);
+[80062d8c] = h((hu[80062d78] ^ hu[80062d8a]) & hu[80062d78]);
+[80062d8e] = h(0);
+
+if( hu[80062d78] == hu[80062d8a] )
+{
+    if( h[GP + 24] == 0 )
+    {
+        if( h[GP + 28] != 7 )
+        {
+            [GP + 28] = h(h[GP + 28] + 1);
+        }
+        else
+        {
+            [GP + 24] = h(1);
+            [GP + 28] = h(0);
+        }
+    }
+    else
+    {
+        if( h[GP + 28] != 1 )
+        {
+            [GP + 28] = h(h[GP + 28] + 1);
+        }
+        else
+        {
+            [GP + 28] = h(0);
+            [80062d8e] = h(hu[80062d78]);
+        }
+    }
+}
+else
+{
+    [GP + 24] = h(0);
+    [GP + 28] = h(0);
+}
+
+[80062d8a] = h(hu[80062d88]);
+[80062d8e] = h(hu[80062d8e] | hu[80062d8c]);
+
+[80062d90] = h(hu[80062d80]);
+[80062d94] = h((hu[80062d90] ^ hu[80062d92]) & hu[80062d90]);
+[80062d96] = h(0);
+
+if( hu[80062d90] == hu[80062d92] )
+{
+    if( h[GP + 26] == 0 )
+    {
+        if( h[GP + 2a] != 7 )
+        {
+            [GP + 2a] = h(h[GP + 2a] + 1);
+        }
+        else
+        {
+            [GP + 26] = h(1);
+            [GP + 2a] = h(0);
+        }
+    }
+    else
+    {
+        if( h[GP + 2a] != 1 )
+        {
+            [GP + 2a] = h(h[GP + 2a] + 1);
+
+        }
+        else
+        {
+            [GP + 2a] = h(0);
+            [80062d96] = h(hu[80062d90]);
+        }
+    }
+}
+else
+{
+    [GP + 26] = h(0);
+    [GP + 2a] = h(0);
+}
+
+[80062d92] = h(hu[80062d90]);
+[80062d96] = h(hu[80062d96] | hu[80062d94]);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1cb48()
+
+system_get_current_pad_buttons();
+buttons = V0;
+
+// not custom or input not enabled
+if( ( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 ) || ( w[80062fa0] != 0 ) )
+{
+    [80062d78] = h(buttons);
+}
+else // remap
+{
+    [80062d78] = h(0);
+
+    for( int i = 0; i < 10; ++i )
+    {
+        if( buttons & ( 1 << i ) )
+        {
+            [80062d78] = h(hu[80062d78] | (1 << bu[8009c6e4 + 10dc + i]));
+        }
+    }
+}
+
+[80062d7c] = h((hu[80062d78] ^ hu[80062d7a]) & hu[80062d78]); // pressed
+[80062d7e] = h(0); // repeated
+
+if( hu[80062d78] == hu[80062d7a] )
+{
+    if( h[GP + 1c] == 0 )
+    {
+        if( h[GP + 20] != f )
+        {
+            [GP + 20] = h(h[GP + 20] + 1);
+        }
+        else
+        {
+            [GP + 1c] = h(1);
+            [GP + 20] = h(0);
+        }
+    }
+    else
+    {
+        if( h[GP + 20] != 3 )
+        {
+            [GP + 20] = h(h[GP + 20] + 1);
+        }
+        else
+        {
+            [GP + 20] = h(0);
+            [80062d7e] = h(hu[80062d78]);
+        }
+    }
+}
+else
+{
+    [GP + 20] = h(0);
+    [GP + 1c] = h(0);
+}
+
+[80062d7a] = h(hu[80062d78]); // previous
+[80062d7e] = h(hu[80062d7e] | hu[80062d7c]);
+
+[80062d80] = h(buttons >> 10); // second pad buttons mask
+[80062d84] = h((hu[80062d80] ^ hu[80062d82]) & hu[80062d80]); // pressed
+[80062d86] = h(0); // repeated
+
+if( hu[80062d80] == hu[80062d82] )
+{
+    if( h[GP + 1e] == 0 )
+    {
+        if( h[GP + 22] != f )
+        {
+            [GP + 22] = h(h[GP + 22] + 1);
+        }
+        else
+        {
+            [GP + 1e] = h(1);
+            [GP + 22] = h(0);
+        }
+    }
+    else
+    {
+        if( h[GP + 22] != 3 )
+        {
+            [GP + 22] = h(h[GP + 22] + 1);
+        }
+        else
+        {
+            [GP + 22] = h(0);
+            [80062d86] = h(hu[80062d80]);
+        }
+    }
+}
+else
+{
+    [GP + 1e] = h(0);
+    [GP + 22] = h(0);
+}
+
+[80062d82] = h(hu[80062d80]);
+[80062d86] = h(hu[80062d86] | hu[80062d84]);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // func1cda4()
 
 A0 = w[80062f24];
@@ -343,7 +810,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         A1 = 1;
         A2 = V0 & ffff;
         A3 = SP + 10;
-        system_add_draw_mode();
+        system_menu_set_draw_mode();
 
         V1 = w[80062f24];
         [V1 + 3] = b(4);
@@ -421,7 +888,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         A1 = 1;
         A2 = V0 & ffff;
         A3 = SP + 10;
-        system_add_draw_mode();
+        system_menu_set_draw_mode();
 
         [GP + 2ac] = w(w[GP + 2ac] + 1);
         pos_x = pos_x + 10;
@@ -632,7 +1099,7 @@ A0 = 0;
 A1 = 01;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 return pos_y;
 ////////////////////////////////
@@ -671,7 +1138,7 @@ return pos_y;
 
 
 ////////////////////////////////
-// func1de70()
+// system_menu_store_window_color()
 
 for( int i = 0; i < c; ++i )
 {
@@ -682,7 +1149,7 @@ for( int i = 0; i < c; ++i )
 
 
 ////////////////////////////////
-// func1deb0()
+// system_menu_restore_window_color()
 
 for( int i = 0; i < c; ++i )
 {
@@ -693,7 +1160,7 @@ for( int i = 0; i < c; ++i )
 
 
 ////////////////////////////////
-// func1def0()
+// system_menu_set_window_color()
 
 for( int i = 0; i < c; ++i )
 {
@@ -790,7 +1257,7 @@ if( rect_w >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_add_draw_mode();
+    system_menu_set_draw_mode();
 
     [packet + 3] = b(4);
     [packet + 7] = b(64);
@@ -832,7 +1299,7 @@ if( rect_w >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_add_draw_mode();
+    system_menu_set_draw_mode();
 }
 
 if( rect_h >= 9 )
@@ -877,7 +1344,7 @@ if( rect_h >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_add_draw_mode();
+    system_menu_set_draw_mode();
 
     [packet + 3] = b(4);
     [packet + 7] = b(64);
@@ -919,7 +1386,7 @@ if( rect_h >= 9 )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_add_draw_mode();
+    system_menu_set_draw_mode();
 }
 
 [packet + 3] = b(4);
@@ -1037,7 +1504,7 @@ A0 = 0;
 A1 = 1;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
 {
@@ -1051,28 +1518,28 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
         system_psyq_set_semi_trans();
     }
 
-    [packet + 4] = b(bu[80049208]);
-    [packet + 5] = b(bu[80049209]);
-    [packet + 6] = b(bu[8004920a]);
+    [packet + 4] = b(bu[80049208 + 0]);
+    [packet + 5] = b(bu[80049208 + 1]);
+    [packet + 6] = b(bu[80049208 + 2]);
     [packet + 8] = h(rect_x + 3);
     [packet + a] = h(rect_y + 3);
-    [packet + c] = b(bu[8004920b]);
-    [packet + d] = b(bu[8004920c]);
-    [packet + e] = b(bu[8004920d]);
+    [packet + c] = b(bu[80049208 + 3]);
+    [packet + d] = b(bu[80049208 + 4]);
+    [packet + e] = b(bu[80049208 + 5]);
     [packet + 10] = h(rect_x + rect_w - 3);
     [packet + 12] = h(rect_y + 3);
-    [packet + 14] = b(bu[8004920e]);
-    [packet + 15] = b(bu[8004920f]);
-    [packet + 16] = b(bu[80049210]);
+    [packet + 14] = b(bu[80049208 + 6]);
+    [packet + 15] = b(bu[80049208 + 7]);
+    [packet + 16] = b(bu[80049208 + 8]);
     [packet + 18] = h(rect_x + 3);
     [packet + 1a] = h(rect_y + rect_h - 3);
-    [packet + 1c] = b(bu[80049211]);
-    [packet + 1d] = b(bu[80049212]);
-    [packet + 1e] = b(bu[80049213]);
+    [packet + 1c] = b(bu[80049208 + 9]);
+    [packet + 1d] = b(bu[80049208 + a]);
+    [packet + 1e] = b(bu[80049208 + b]);
     [packet + 20] = h(rect_x + rect_w - 3);
     [packet + 22] = h(rect_y + rect_h - 3);
 
-    A0 = w[80062fc4]; // linked prim list
+    A0 = w[80062fc4]; // ot
     A1 = packet;
     system_psyq_add_prim();
 
@@ -1093,7 +1560,7 @@ if( ( rect_w >= 7 ) && ( rect_h >= 7 ) )
     A1 = 1;
     A2 = V0 & ffff;
     A3 = SP + 10;
-    system_add_draw_mode();
+    system_menu_set_draw_mode();
 }
 
 [80062f24] = w(packet);
@@ -1131,7 +1598,7 @@ A1 = 1e1;
 system_create_clut_for_packet();
 [poly + e] = h(V0);
 
-A0 = w[80062fc4]; // linked prim list
+A0 = w[80062fc4]; // ot
 A1 = poly;
 system_psyq_add_prim();
 
@@ -1152,7 +1619,7 @@ A0 = 0; // drawing to display area is blocked
 A1 = 1; // dithering on
 A2 = V0 & ffff; // init value
 A3 = SP + 10; // window rect
-system_add_draw_mode();
+system_menu_set_draw_mode();
 ////////////////////////////////
 
 
@@ -1197,7 +1664,7 @@ system_create_clut_for_packet();
 V1 = w[80062f24];
 [V1 + e] = h(V0);
 
-A0 = w[80062fc4]; // linked prim list
+A0 = w[80062fc4]; // ot
 A1 = w[80062f24];
 [80062f24] = w(A1 + 14);
 system_psyq_add_prim();
@@ -1244,7 +1711,7 @@ for( int i = 0; i < 4; ++i )
     V1 = w[80062f24];
     [V1 + 000e] = h(V0);
 
-    A0 = w[80062fc4]; // linked prim list
+    A0 = w[80062fc4]; // ot
     A1 = w[80062f24];
     [80062f24] = w(A1 + 14);
     system_psyq_add_prim();
@@ -1272,7 +1739,7 @@ A0 = 0;
 A1 = 1;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 ////////////////////////////////
 
 
@@ -1323,7 +1790,7 @@ for( int i = 0 i < 8; +i )
 
     if( num >= ( 8 - i ) )
     {
-        A0 = w[80062fc4]; // linked prim list
+        A0 = w[80062fc4]; // ot
         A1 = w[80062f24];
         [80062f24] = w(A1 + 14);
         system_psyq_add_prim();
@@ -1349,7 +1816,7 @@ A0 = 0;
 A1 = 1;
 A2 = V0 & ffff;
 A3 = SP + 10;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 ////////////////////////////////
 
 
@@ -1532,16 +1999,15 @@ return bu[GP + 97];
 
 
 ////////////////////////////////
-// func1f6c0()
-// request add window
+// system_menu_request_add_window()
 
 string = A0;
-color = A1;
+color = A1; // for text
 
 [GP + 97] = b(1); // show
 [GP + 98] = b(color);
 [GP + 9c] = w(28);
-[GP + a1] = b(1);
+[GP + a1] = b(1); // open frame
 [GP + 174] = w(string);
 ////////////////////////////////
 
@@ -1550,12 +2016,16 @@ color = A1;
 ////////////////////////////////
 // func1f6e4()
 
-[GP + a0] = b(A0);
+type = A0;
+x = A1;
+y = A2;
 
-if( (A0 << 10) != 0 )
+[GP + a0] = b(type);
+
+if( ( type << 10 ) != 0 )
 {
-    [GP + a2] = h(A1);
-    [GP + a4] = h(A2);
+    [GP + a2] = h(x);
+    [GP + a4] = h(y);
 }
 else
 {
@@ -1566,196 +2036,127 @@ else
 
 
 ////////////////////////////////
-// func1f710()
+// system_menu_draw_add_window()
 
 if( bu[GP + 97] == 0 ) return 0;
 
 A0 = w[GP + 174];
 system_get_single_string_width();
+str_w = V0;
 
-S2 = V0;
-V1 = bu[GP + 97];
-if( V1 == 1 ) // open window
+state = bu[GP + 97];
+if( state == 1 ) // open window
 {
-    V0 = 55555556;
-    8001F77C	mult   s2, v0
-    V0 = S2 >> 1f;
-    8001F784	mfhi   t0
-    A0 = bu[GP + a1];
-    V0 = T0 - V0;
-    8001F790	mult   v0, a0
-    8001F798	mflo   a3
+    w = (str_w / 3) * bu[GP + a1];
 
     if( bu[GP + a0] != 0 )
     {
-        A2 = A0 << 03;
-        A0 = SP + 18;
-        A1 = S2 + 10;
-        V0 = A1 >> 1f;
-        A1 = A1 + V0;
-        A1 = A1 >> 1;
-        V0 = A3 >> 1f;
-        V0 = A3 + V0;
-        V0 = V0 >> 01;
-        [SP + 10] = w(A2);
-
-        A2 = A2 >> 01;
-        A2 = A2 - c;
-        S1 = h[GP + a2];
-        S0 = h[GP + a4];
-        A1 = S1 + A1 - V0;
+        x = h[GP + a2] + ((str_w + 10) / 2) - (w / 2);
+        y = h[GP + a4] - ((bu[GP + a1] * 8) / 2) - c;
+        h = bu[GP + a1] * 8;
     }
     else
     {
-        A2 = A0 * 8;
-        S1 = b4;
-        S0 = 68;
-        [SP + 0010] = w(A2);
-        A0 = SP + 18;
-        A1 = A3 >> 1f;
-        A1 = A3 + A1;
-        A1 = A1 >> 01;
-        A1 = S1 - A1;
-        A2 = A2 >> 01;
+        x = b4 - (w / 2);
+        y = 68 - ((bu[GP + a1] * 8) / 2);
+        h = bu[GP + a1] * 8;
     }
 
-    A2 = S0 - A2;
-    [A0 + 0] = h(A1); // x
-    [A0 + 2] = h(A2); // y
-    [A0 + 4] = h(A3); // w
-    [A0 + 6] = h(A4); // h
+    [SP + 18] = h(x);
+    [SP + 1a] = h(y);
+    [SP + 1c] = h(w);
+    [SP + 1e] = h(h);
 
     [GP + a1] = b(bu[GP + a1] + 1);
-
     if( bu[GP + a1] == 3 )
     {
-        [GP + 97] = b(2);
-        [GP + a1] = b(2);
+        [GP + 97] = b(2); // state opened
+        [GP + a1] = b(2); // close frame
     }
 }
-else if( V1 == 2 )
+else if( state == 2 )
 {
     if( bu[GP + a0] != 0 )
     {
-        A0 = h[GP + a2] + 8; // x
-        A1 = h[GP + a4] + 6; // y
+        A0 = 8 + h[GP + a2]; // x
+        A1 = 6 + h[GP + a4]; // y
         A2 = w[GP + 174]; // text pointer
-        A3 = bu[GP + 98]; // colour
+        A3 = bu[GP + 98]; // color
         system_menu_draw_string();
 
-        [SP + 18] = h(h[GP + a2]);
-        [SP + 1a] = h(h[GP + a4]);
+        [SP + 18] = h(h[GP + a2]); // x
+        [SP + 1a] = h(h[GP + a4]); // y
+        [SP + 1c] = h(str_w + 10); // w
+        [SP + 1e] = h(18); // h
     }
     else
     {
-        S0 = b4 - S2 / 2;
-        A0 = S0;
-        A1 = 5c + 6;
+        A0 = b4 - str_w / 2;
+        A1 = 6 + 5c;
         A2 = w[GP + 174]; // text pointer
-        A3 = bu[GP + 98]; // colour
+        A3 = bu[GP + 98]; // color
         system_menu_draw_string();
 
-        [SP + 18] = h(S0 - 8);
-        [SP + 1a] = h(5c);
+        [SP + 18] = h(b4 - str_w / 2 - 8); // x
+        [SP + 1a] = h(5c); // y
+        [SP + 1c] = h(str_w + 10); // w
+        [SP + 1e] = h(18); // h
     }
 
-    [SP + 1c] = h(S2 + 10);
-    [SP + 1e] = h(18);
-
-    if( w[GP + 9c] != 0 )
-    {
-        [GP + 9c] = w(w[GP + 9c] - 1);
-    }
+    if( w[GP + 9c] != 0 ) [GP + 9c] = w(w[GP + 9c] - 1);
 
     if( w[GP + 9c] < 14 )
     {
         system_cdrom_read_chain();
-
         if( V0 == 0 )
         {
-            if( bu[GP + a0] == 0 && w[GP + 9c] == 0 )
+            if( ( bu[GP + a0] == 0 ) && ( w[GP + 9c] == 0 ) )
             {
-                [GP + 97] = b(3);
+                [GP + 97] = b(3); // state close
             }
             else
             {
-                8001F910	jal    func1c498 [$8001c498]
-
-                if( V0 != 0)
-                {
-                    [GP + 97] = b(3);
-                }
+                func1c498(); // get buttons state
+                if( V0 != 0 ) [GP + 97] = b(3); // state close
             }
         }
     }
 }
-else if( V1 == 3 )
+else if( state == 3 )
 {
-    V0 = 55555556;
-    8001F930	mult   s2, v0
-    V0 = S2 >> 1f;
-    8001F938	mfhi   t0
-    A0 = bu[GP + 00a1];
-    V0 = T0 - V0;
-    8001F944	mult   v0, a0
-    V1 = bu[GP + 00a0];
-    8001F94C	mflo   a3
-    if( V1 == 0 )
+    w = (str_w / 3) * bu[GP + a1];
+
+    if( bu[GP + a0] != 0 )
     {
-        A2 = A0 << 03;
-        S1 = 00b4;
-        S0 = 0068;
-        [SP + 0010] = w(A2);
-        A0 = SP + 0018;
-        A1 = A3 >> 1f;
-        A1 = A3 + A1;
-        A1 = A1 >> 01;
-        A1 = S1 - A1;
-        A2 = A2 >> 01;
+        x = h[GP + a2] + (str_w + 10) / 2 - w / 2;
+        y = h[GP + a4] - (bu[GP + a1] * 8) / 2 - c;
+        h = bu[GP + a1] * 8;
     }
     else
     {
-        A2 = A0 << 03;
-        A0 = SP + 18;
-        A1 = S2 + 0010;
-        V0 = A1 >> 1f;
-        A1 = A1 + V0;
-        A1 = A1 >> 01;
-        V0 = A3 >> 1f;
-        V0 = A3 + V0;
-        V0 = V0 >> 01;
-        [SP + 0010] = w(A2);
-        A2 = A2 >> 01;
-        A2 = A2 - c;
-        S1 = h[GP + a2];
-        S0 = h[GP + a4];
-        A1 = S1 + A1;
-        A1 = A1 - V0;
+        x = b4 - w / 2;
+        y = 68 - (bu[GP + a1] * 8) / 2;
+        h = bu[GP + a1] * 8;
     }
 
-    A2 = S0 - A2;
-    [A0 + 0] = h(A1);
-    [A0 + 2] = h(A2);
-    [A0 + 4] = h(A3);
-    [A0 + 6] = h(A4);
+    [SP + 18] = h(x);
+    [SP + 1a] = h(y);
+    [SP + 1c] = h(w);
+    [SP + 1e] = h(h);
 
     [GP + a1] = b(bu[GP + a1] - 1);
-
-    if( bu[GP + a1] == 0 )
-    {
-        [GP + 97] = b(0);
-    }
+    if( bu[GP + a1] == 0 ) [GP + 97] = b(0); // state closed
 }
 
-func1de70();
+system_menu_store_window_color();
 
 A0 = 80049384;
-func1def0();
+system_menu_set_window_color();
 
 A0 = SP + 18;
 system_menu_draw_window();
 
-func1deb0();
+system_menu_restore_window_color();
 ////////////////////////////////
 
 
@@ -1803,7 +2204,7 @@ system_execute_AKAO();
 // system_menu_get_inventory_restriction_mask()
 // 01 can be sold
 // 02 can be used in battle
-// 04 can be used in out of battle
+// 04 can be used on field
 // 08 can be thrown in battle
 
 if( A0 <  80 ) return hu[800722cc + A0 * 1c + a]; // item
@@ -2268,7 +2669,7 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 20;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 ////////////////////////////////
 
 
@@ -2430,7 +2831,7 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 20;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 ////////////////////////////////
 
 
@@ -2816,7 +3217,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 V0 = h[GP + 0168];
 80021640	nop
@@ -2960,7 +3361,7 @@ A0 = 0;
 A1 = 1;
 A2 = 5f;
 A3 = SP + 20;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 A0 = 8;
 A1 = 18;
@@ -3186,7 +3587,7 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 18;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 A0 = x + 8;
 A1 = y + 6;
@@ -3243,7 +3644,7 @@ V0 = 0100;
 [SP + 0022] = h(0);
 [SP + 0024] = h(V0);
 [SP + 0026] = h(V0);
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 80021CE0	jal    func21258 [$80021258]
 A0 = S3;
@@ -3303,7 +3704,7 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 20;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 A0 = 8;
 A1 = 25;
@@ -3535,7 +3936,7 @@ A0 = 0;
 A1 = 0001;
 A2 = V0 & ffff;
 A3 = SP + 0028;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 A0 = 8;
 A1 = 10;
@@ -4001,7 +4402,7 @@ A0 = 0;
 A1 = 1;
 A2 = 3f;
 A3 = SP + 28;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 A0 = 16;
 A1 = S4 + 4;
@@ -4027,7 +4428,7 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 28;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 L22998:	; 80022998
 S0 = SP + 0030;
@@ -4291,7 +4692,7 @@ A0 = 0;
 A1 = 1;
 A2 = 5f;
 A3 = SP + 10;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 [GP + 94] = h(5);
 
@@ -4424,7 +4825,7 @@ system_psyq_put_drawenv();
 
 
 ////////////////////////////////
-// func23050()
+// system_menu_get_menu_list_state()
 
 return w[GP + b4];
 ////////////////////////////////
@@ -4476,7 +4877,7 @@ S0 = V0;
 
 A0 = 800706a4 + rb * 5c; // settings
 A1 = SP + 18; // additional offset
-func26a94(); // add draw env
+system_menu_set_drawenv();
 
 y = 0;
 
@@ -4530,7 +4931,7 @@ switch( w[GP + b4] )
                 menu_id = w[GP + 90];
 
                 // init functions
-                // 0 8002368C main func2368c()
+                // 0 8002368C main system_menu_init_input()
                 // 1 801D0BA0 item func1d0ba0()
                 // 2 801D0164 magic
                 // 3 801D3CB0 materia
@@ -4678,7 +5079,7 @@ if( w[GP + 27c] == 1 )
 
     A0 = 800706a4 + rb * 5c;
     A1 = SP + 18;
-    func26a94(); // add draw env
+    system_menu_set_drawenv();
 }
 
 A0 = SP + 20;
@@ -4726,7 +5127,7 @@ A0 = 0;
 A1 = 1;
 A2 = 5f;
 A3 = SP + 18;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
 [SP + 18] = h(0);
 [SP + 1a] = h(5);
@@ -4735,13 +5136,13 @@ system_add_draw_mode();
 
 A0 = 800706a4 + w[GP + 214] * 5c;
 A1 = SP + 18;
-func26a94(); // add draw env
+system_menu_set_drawenv();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func2368c()
+// system_menu_init_input()
 
 [GP + 220] = w(0); // menu list selection
 
@@ -4835,7 +5236,7 @@ return (A0 / w[80049484]) * a + (A0 % w[80049484]) / w[80049488];
 
 
 ////////////////////////////////
-// func23ac4()
+// system_menu_close()
 
 [GP + 27c] = w(2);
 ////////////////////////////////
@@ -5159,7 +5560,7 @@ S2 = SP + 30;
 
 A0 = 800706a4 + w[GP + 214] * 5c;
 A1 = S2;
-func26a94(); // add draw env
+system_menu_set_drawenv();
 
 A0 = w[GP + 214];
 system_menu_draw_menu_list();
@@ -5257,7 +5658,7 @@ system_menu_draw_menu_list();
     A1 = 1;
     A2 = 7f;
     A3 = SP + 30;
-    system_add_draw_mode();
+    system_menu_set_draw_mode();
 
     A0 = SP + 28;
     A1 = x;
@@ -5382,7 +5783,7 @@ for( int i = 0; i < 3; ++i )
         A1 = 1;
         A2 = 3f;
         A3 = SP + 30;
-        system_add_draw_mode();
+        system_menu_set_draw_mode();
 
         A0 = x + ba;
         A1 = 11 + i * 3c + 11;
@@ -5448,14 +5849,12 @@ system_psyq_put_drawenv();
 
 tutorial_data = A0;
 
+[GP + 8c] = w(0); // some prev menu (stack)
+[GP + 90] = w(0); // some request menu (stack).
 [GP + b4] = w(1); // normal menu list
-
 [GP + 27c] = w(0); // menu appearing
-[GP + 1c8] = w(0);
-[GP + 250] = w(0);
-
-[GP + 8c] = w(0);
-[GP + 90] = w(0);
+[GP + 1c8] = w(0); // previous menu for animation to play
+[GP + 250] = w(0); // selected menu
 
 [80062dfd] = b(0);
 
@@ -5507,10 +5906,10 @@ system_menu_load_character_clut_from_ram();
 
 [GP + 27c] = w(0); // menu appearing
 
-func2368c();
+system_menu_init_input();
 
 frame = 0;
-[GP + 214] = w(0);
+[GP + 214] = w(0); // frame buffer id
 
 do
 {
@@ -5518,15 +5917,16 @@ do
 
     [80062f24] = w(80077f64 + w[GP + 214] * 3400);
 
-    A0 = 80069844 + w[GP + 214] * 50;
-    [GP + 160] = w(A0);
+    ot = 80069844 + w[GP + 214] * 50;
+    [GP + 160] = w(ot);
 
+    A0 = ot;
     A1 = 14;
     system_psyq_clear_otag();
 
-    [80062fc4] = w(w[GP + 160]);
+    [80062fc4] = w(w[GP + 160]); // ot
 
-    if( w[80062fa0] != 0 )
+    if( w[80062fa0] != 0 ) // tutorial on
     {
         if( w[GP + 27c] != -1 ) // if not closed
         {
@@ -5554,14 +5954,11 @@ do
         }
     }
 
-    func1f710(); // draw additional text
+    system_menu_draw_add_window();
 
     // if collapse, switch or expands
     // we need to update as old menu
     menu_id = ( ( w[GP + b4] == 2 ) || ( w[GP + b4] == 4 ) || ( w[GP + b4] == 5 ) ) ? w[GP + 8c] : w[GP + 90];
-
-    A0 = frame;
-    80024CB4	jalr   w[800493fc + menu_id * 4] ra // call menu draw function
 
     //  0 80023AD4 // main - system_menu_draw_main_menu()
     //  1 801D0E80 // item func1d0e80()
@@ -5584,6 +5981,9 @@ do
     // 12 801D0E80
     // 13 801D0E80
     // 14 801D0E80
+
+    A0 = frame;
+    80024CB4	jalr   w[800493fc + menu_id * 4] ra // call menu draw function
 
     A0 = 0;
     system_psyq_draw_sync();
@@ -7340,7 +7740,7 @@ V0 = w[GP + 2c8];
 
 
 ////////////////////////////////
-// system_add_draw_mode()
+// system_menu_set_draw_mode()
 
 display_area = A0;
 dithering = A1
@@ -7363,7 +7763,7 @@ system_psyq_add_prim();
 
 
 ////////////////////////////////
-// func26a94()
+// system_menu_set_drawenv()
 
 settings = A0;
 add = A1;
@@ -8204,6 +8604,8 @@ system_psyq_add_prim();
 ////////////////////////////////
 // system_menu_draw_scrollbar()
 
+items_screen = h[A0 + 0];
+items_total = h[A0 + 2];
 scroll = hu[A0 + 4];
 x = hu[A0 + 6];
 y = hu[A0 + 8];
@@ -8211,9 +8613,9 @@ w = hu[A0 + a];
 h = hu[A0 + c];
 
 [SP + 10] = h(x);
-[SP + 12] = h(y + ((h * scroll) / h[A0 + 2])); // y
+[SP + 12] = h(y + ((h * scroll) / items_total)); // y
 [SP + 14] = h(w - 1);
-[SP + 16] = h((h * h[A0 + 0]) / h[A0 + 2] + 1); // h
+[SP + 16] = h((h * items_screen) / items_total + 1); // h
 
 A0 = SP + 10;
 system_menu_draw_scrollbar_slider();
@@ -8230,7 +8632,7 @@ A0 = 0;
 A1 = 1;
 A2 = 1f;
 A3 = 0;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 ////////////////////////////////
 
 

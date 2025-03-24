@@ -58,6 +58,20 @@
 
 800491d0 character id -> savemap block assosiation id. (0-0, 1-1, 2-2, 3-3, 4-4, 5-5, 6-6, 7-7, 8-8, 9-6, A-7)
 
+80049208 colors for windows.
+    + 0 []       color R1.
+    + 1 []       color G1.
+    + 2 []       color B1.
+    + 3 []       color R2.
+    + 4 []       color G2.
+    + 5 []       color B2.
+    + 6 []       color R3.
+    + 7 []       color G3.
+    + 8 []       color B3.
+    + 9 []       color R4.
+    + a []       color G4.
+    + b []       color B4.
+
 80049214 array of mm:ss timer divider (0x4 items 0x4 size).
     00000258 600 X0:00
     0000003C  60 0X:00
@@ -155,11 +169,13 @@
     + 80            [][][][] monowidth text
     + 8c            [][][][] some prev menu (stack)
     + 90            [][][][] some request menu (stack).
-    + 97            []       ??? some type of text.
-    + 98            []       colour of tutorial text window.
-    + a0            []       ??? some type of text.
-    + a2            [][]     x position of tutorial text window.
-    + a4            [][]     y position of tutorial text window.
+    + 97            []       menu add window state.
+    + 98            []       menu add window color.
+    + 9c            [][][][] menu add window autoclose timer.
+    + a0            []       menu add window type of text (static or dynamic position).
+    + a1            []       menu add window open frame.
+    + a2            [][]     menu add window x dynamic position.
+    + a4            [][]     menu add window y dynamic position.
     + a8 (80062dec) [][][][] pointer to menu load address.
     + ac            [][][][] menu window height.
     + b4            [][][][] type of menu show.
@@ -190,9 +206,10 @@
     +148            []       store 1 here if we has magic or master magic materia in battle, 2 in case of w-magic.
     +14c            []       store 1 here if we has summon or master summon materia in battle, 2 in case of w-summon.
     +150            [][][][] wait tutorial opcode value.
-    +158 (80062e9c) [][][][]
+    +158 (80062e9c) [][][][] tutorial data.
+    +160            [][][][] ot for menu.
     +164            [][]     menu appear/disappear frame.
-    +174            [][][][] store here pointer to text of tutorial menu.
+    +174            [][][][] store here pointer to text for menu add window.
     +188            [][][][] expand menu animation step.
     +1c8            [][][][] previous menu for animation to play.
     +1cc            [][][][] store AP to next star here (in case of menu).

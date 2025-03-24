@@ -99,7 +99,7 @@ system_menu_draw_textured_rect();
 
 ////////////////////////////////
 // func1d031c()
-// copy owned key items to temp
+// unpack owned key items to temp
 
 A1 = 0;
 
@@ -585,8 +585,9 @@ switch( A0 )
 
 ////////////////////////////////
 // func1d0ba0()
+// init
 
-[801d3e48] = w(1);
+[801d3e48] = w(1); // item list
 
 // upper selection (use arrange keyitems)
 A0 = 801d3ddc + 0 * 12;
@@ -639,7 +640,7 @@ A12 = 1; // y warp
 A13 = 0; // page scroll dir (0 - not scroll, 1 - down, 2 - up)
 system_menu_set_cursor_movement();
 
-func1d031c();
+func1d031c(); // unpack key items to temp
 ////////////////////////////////
 
 
@@ -728,24 +729,19 @@ frame = A0;
 A0 = w[80062f58];
 system_menu_draw_menu_list();
 
-if( w[801d3e48] == 2 )
+if( w[801d3e48] == 2 ) // character selection for item use
 {
     if( w[801d3e5c] == 0 )
     {
-        V0 = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
-        V0 = hu[8009c6e4 + 4fc + V0 * 2];
-        V1 = V0 & 1ff;
+        selection = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
+        item_id = hu[8009c6e4 + 4fc + selection * 2] & 1ff;
 
-        if( ( V1 == 6 ) || ( V1 == 46 ) )
+        // Megalixir (Fully restores all members’ HP/MP)
+        // Tent (Restores ally’s max HP/MP.  Use at save Point.)
+        if( ( item_id == 6 ) || ( item_id == 46 ) )
         {
-            V0 = 55555556;
-            801D0F34	mult   frame, v0
-            V1 = frame >> 1f;
-            801D0F40	mfhi   t0
-            V1 = T0 - V1;
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = frame - V0;
+            // run through all characters
+            V0 = frame - (frame / 3) * 3; // % 3
         }
         else
         {
@@ -771,23 +767,23 @@ if( w[801d3e48] == 2 )
 }
 
 A0 = 80;
-func26b5c();
+func26b5c(); // empty func
 
 switch( w[801d3e48] )
 {
-    case 0:
+    case 0: // upper selection (use arrange keyitems)
     {
-        A0 = 8 + b[801d3de6] * 38;
+        A0 = 8 + b[801d3ddc + 0 * 12 + a] * 38;
         A1 = c;
         system_menu_draw_cursor();
     }
     break;
 
-    case 1:
+    case 1: // item list
     {
         if( frame & 2 )
         {
-            A0 = 8 + b[801d3de6] * 38;
+            A0 = 8 + b[801d3ddc + 0 * 12 + a] * 38;
             A1 = c;
             system_menu_draw_cursor();
         }
@@ -796,13 +792,14 @@ switch( w[801d3e48] )
         A1 = b[801d3ddc + 1 * 12 + b] * 10 + 3c;
         system_menu_draw_cursor();
 
-        S4 = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
+        cur_y = b[801d3ddc + 1 * 12 + b];
+        cur_scroll = h[801d3ddc + 1 * 12 + 2];
+        item = hu[8009c6e4 + 4fc + (cur_y + cur_scroll) * 2];
 
-        A1 = hu[8009c6e4 + 4fc + S4 * 2];
-        if( ( A1 & ffff ) != ffff )
+        if( item != ffff )
         {
             A0 = 4; // items
-            A1 = A1 & 1ff; // id
+            A1 = item & 1ff; // id
             A2 = 0; // description
             system_kernel_get_string();
 
@@ -815,21 +812,23 @@ switch( w[801d3e48] )
     }
     break;
 
-    case 2:
+    case 2: // character selection for item use
     {
         if( frame & 2 )
         {
-            A0 = 8 + b[801d3de6] * 38;
+            A0 = 8 + b[801d3ddc + 0 * 12 + a] * 38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
-        S4 = h[801d3ddc + 1 * 12 + 2] + b[801d3ddc + 1 * 12 + b];
-        A1 = hu[8009c6e4 + 4fc + S4 * 2];
-        if( ( A1 & ffff ) != ffff )
+        cur_y = b[801d3ddc + 1 * 12 + b];
+        cur_scroll = h[801d3ddc + 1 * 12 + 2];
+        item = hu[8009c6e4 + 4fc + (cur_y + cur_scroll) * 2];
+
+        if( item != ffff )
         {
             A0 = 4; // items
-            A1 = A1 & 1ff; // id
+            A1 = item & 1ff; // id
             A2 = 0; // description
             system_kernel_get_string();
 
@@ -842,31 +841,29 @@ switch( w[801d3e48] )
     }
     break;
 
-    case 3:
+    case 3: // key item list
     {
         if( frame & 2 )
         {
-            A0 = 8 + b[801d3de6] * 38;
+            A0 = 8 + b[801d3ddc + 0 * 12 + a] * 38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
-        V1 = b[801d3e1c];
-        A0 = V1 << 02; // *4
-        A0 = A0 + V1; // *5
-        V0 = A0 << 05; // *a0
-        A0 = A0 + V0; // *a5
-        A0 = A0 + V1; // *a6
-        A0 = 3 + A0;
-        A1 = 3c + b[801d3e1d] * 10;
+        cur_x = b[801d3ddc + 3 * 13 + a];
+        cur_y = b[801d3ddc + 3 * 13 + b];
+        cur_scroll = h[801d3ddc + 3 * 13 + 2];
+
+        A0 = 3 + cur_x * a6;
+        A1 = 3c + cur_y * 10;
         system_menu_draw_cursor();
 
-        S4 = (h[801d3e14] + b[801d3e1d]) * 2 + b[801d3e1c];
-        A1 = bu[801d3d90 + S4]; // temp array of owned key items
+        key_item_id = bu[801d3d90 + (cur_scroll + cur_y) * 2 + cur_x]; // temp array of owned key items
 
-        if( A1 != ff )
+        if( key_item_id != ff )
         {
             A0 = e; // key item
+            A1 = key_item_id;
             A2 = 0; // description
             system_kernel_get_string();
 
@@ -879,27 +876,23 @@ switch( w[801d3e48] )
     }
     break;
 
-    case 4:
+    case 4: // arrange type list
     {
         if( frame & 2 )
         {
-            A0 = 8 + b[801d3de6] * 38;
+            A0 = 8 + b[801d3ddc + 0 * 12 + a] * 38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
-        A0 = h[801d3d74] - 12;
-        V0 = b[801d3e2f];
-        A1 = V0 << 01;
-        A1 = A1 + V0;
-        A1 = A1 << 02;
-        A1 = 8 + h[801d3d76] + A1;
+        A0 = h[801d3d74 + 0] - 12;
+        A1 = 8 + h[801d3d74 + 2] + b[801d3ddc + 4 * 12 + b] * c;
         system_menu_draw_cursor();
 
         for( int i = 0; i < 8; ++i )
         {
-            A0 = 8 + h[801d3d74];
-            A1 = 6 + h[801d3d76] + i * c;
+            A0 = 8 + h[801d3d74 + 0];
+            A1 = 6 + h[801d3d74 + 2] + i * c;
             A2 = 801d3cf8 + i * c; // "Customize" "Field" "Battle" "Throw" "Type" "Name" "Most" "Least"
             A3 = 7;
             system_menu_draw_string();
@@ -914,29 +907,30 @@ switch( w[801d3e48] )
         A1 = 1;
         A2 = 7f;
         A3 = SP + 40;
-        system_add_draw_mode();
+        system_menu_set_draw_mode();
 
+        // 8400 1100 5700 6A00 sort list window
         A0 = 801d3d74;
         system_menu_draw_window();
     }
 
-    case 5:
+    case 5: // custom items arrangement
     {
         if( frame & 2 )
         {
-            A0 = 8 + b[801d3de6] * 38;
+            A0 = 8 + b[801d3ddc + 0 * 12 + a] * 38;
             A1 = c;
             system_menu_draw_cursor();
         }
 
-        V1 = b[801d3e41];
-        V0 = h[801d3e38];
-        S4 = V1 + V0;
-        A1 = hu[8009c6e4 + 4fc + S4 * 2];
-        if( ( A1 & ffff ) != ffff )
+        cur_y = b[801d3ddc + 5 * 12 + b];
+        cur_scroll = h[801d3ddc + 5 * 12 + 2];
+        item = hu[8009c6e4 + 4fc + (cur_y + cur_scroll) * 2];
+
+        if( item != ffff )
         {
             A0 = 4; // item
-            A1 = A1 & 1ff; // id
+            A1 = item & 1ff; // id
             A2 = 0; // description
             system_kernel_get_string();
 
@@ -951,7 +945,7 @@ switch( w[801d3e48] )
 }
 
 A0 = 8;
-func26b5c();
+func26b5c(); // empty func
 
 [SP + 40] = h(0);
 [SP + 42] = h(0);
@@ -962,9 +956,10 @@ A0 = 0;
 A1 = 1;
 A2 = 7f;
 A3 = SP + 40;
-system_add_draw_mode();
+system_menu_set_draw_mode();
 
-if( b[801d3de6] == 2 )
+// do not draw character window if key items selected
+if( b[801d3ddc + 0 * 12 + a] != 2 )
 {
     for( int i = 0; i < 3; ++i )
     {
@@ -996,7 +991,7 @@ if( b[801d3de6] == 2 )
             A1 = 1;
             A2 = 7f;
             A3 = SP + 40;
-            system_add_draw_mode();
+            system_menu_set_draw_mode();
         }
     }
 
@@ -1007,7 +1002,7 @@ if( b[801d3de6] == 2 )
     A4 = ab;
     system_menu_set_window_rect();
 
-    A0 = SP + 38;
+    A0 = SP + 38; // character window
     system_menu_draw_window();
 }
 
@@ -1027,19 +1022,20 @@ for( int i = 0; i < 3; ++i )
 
 A0 = 800706a4 + w[80062f58] * 5c;
 A1 = SP + 40;
-func26a94(); // add draw env
+system_menu_set_drawenv();
 
-if( b[801d3de6] != 2 )
+if( b[801d3ddc + 0 * 12 + a] != 2 ) // not key items
 {
-    if( w[801d3e48] == 5 )
+    if( w[801d3e48] == 5 ) // custom items arrangement
     {
-        if( w[801d3d84] != 0 )
+        if( w[801d3d84] != 0 ) // if swap items state
         {
             if( frame & 2 )
             {
-                V1 = (w[801d3d8c] - h[801d3e38]) * 10 + (b[801d3e45] * 4);
+                selected = w[801d3d8c];
+                V1 = (selected - h[801d3ddc + 5 * 12 + 2]) * 10 + (b[801d3ddc + 5 * 12 + f] * 4);
 
-                if( ( b + V1 ) < 10f )
+                if( ( b + V1 ) < 10f ) // if selected onscreen
                 {
                     A0 = a5;
                     A1 = 38 + V1;
@@ -1049,53 +1045,45 @@ if( b[801d3de6] != 2 )
         }
 
         A0 = a9;
-        A1 = 3c + b[801d3e41] * 10;
+        A1 = 3c + b[801d3ddc + 5 * 12 + b] * 10;
         system_menu_draw_cursor();
 
-        S5 = 5;
+        S5 = 5; // arrange items
     }
     else
     {
-        S5 = 1;
+        S5 = 1; // items list
     }
 
-    A0 = 801d3e4c;
-    [A0 + 0000] = h(a);
-    [801d3e4e] = h(140);
-    V0 = S5 << 03;
-    V0 = V0 + S5;
-    S0 = V0 << 01;
-    A1 = hu[801d3dde + S0];
-    [801d3e52] = h(160);
-    [801d3e54] = h(35);
-    [801d3e56] = h(a);
-    [801d3e58] = h(a5);
-    [801d3e50] = h(A1);
+    [801d3e4c + 0] = h(a); // items per screen
+    [801d3e4c + 2] = h(140); // items total
+    [801d3e4c + 4] = h(hu[801d3ddc + S5 * 12 + 2]); // scroll
+    [801d3e4c + 6] = h(160); // x
+    [801d3e4c + 8] = h(35); // y
+    [801d3e4c + a] = h(a); // w
+    [801d3e4c + c] = h(a5); // h
 
+    A0 = 801d3e4c;
     system_menu_draw_scrollbar();
 
-    S6 = ( h[801d3de4 + S0] != 0 ) ? b : a;
+    // if we scrolling then additional item is on screen
+    S6 = ( h[801d3ddc + S5 * 12 + 8] != 0 ) ? b : a;
 
     A0 = 9;
-    func26b5c();
+    func26b5c(); // empty func
 
     for( int i = 0; i < S6; ++i )
     {
-        S1 = h[801d3dde + S0] + i;
-        A0 = hu[8009c6e4 + 4fc + S1 * 2];
+        S1 = h[801d3ddc + S5 * 12 + 2] + i;
+        item = hu[8009c6e4 + 4fc + S1 * 2];
 
-        V1 = A0 & ffff;
-        if( V1 != ffff )
+        if( item != ffff )
         {
-            item_id = A0 & 1ff;
+            item_id = item & 1ff;
 
             A0 = item_id;
             func1d0dcc(); // get restriction mask
-
-            V0 = V0 & 0004;
-            V0 = V0 < 0001;
-            V0 = 0 - V0;
-            S3 = V0 & 0007;
+            color = (V0 & 4) ? 0 : 7; // grey or white
 
             A0 = 4; // item
             A1 = item_id;
@@ -1103,58 +1091,51 @@ if( b[801d3de6] != 2 )
             system_kernel_get_string();
 
             A0 = d6;
-            A1 = 3a + i * 10 + b[801d3deb + S0] * 4;
+            A1 = 3a + i * 10 + b[801d3ddc + S5 * 12 + f] * 4;
             A2 = V0;
-            A3 = S3;
+            A3 = color;
             system_menu_draw_string();
         }
     }
 
-    S5 = S5 * 12;
-
-    for( int i = 0; i < S6; i++ )
+    for( int i = 0; i < S6; ++i )
     {
-        S1 = h[801d3dde + S5] + i;
-        V1 = hu[8009c6e4 + 4fc + S1 * 2];
-        S1 = V1 & ffff;
+        S1 = h[801d3ddc + S5 * 12 + 2] + i;
+        item = hu[8009c6e4 + 4fc + S1 * 2];
 
-        if( S1 != ffff )
+        if( item != ffff )
         {
-            item_id = V1 & 1ff;
+            item_id = item & 1ff;
+            item_num = item >> 9;
 
             A0 = item_id;
-            S1 = S1 >> 09;
             func1d0dcc(); // get restriction mask
-
-            V0 = V0 & 4;
-            V0 = V0 < 1;
-            V0 = 0 - V0;
-            S3 = V0 & 7;
+            color = (V0 & 4) ? 0 : 7; // grey or white
 
             A0 = c4;
-            A1 = 38 + i * 10 + b[801d3deb + S5] * 4;
+            A1 = 38 + i * 10 + b[801d3ddc + S5 * 12 + f] * 4;
             A2 = item_id;
             A3 = 0;
             func1d0228(); // draw item icon
 
             A0 = 13f;
-            A1 = 3c + i * 10 + b[801d3deb + S5] * 4;
-            A2 = d5;
-            A3 = S3;
+            A1 = 3c + i * 10 + b[801d3ddc + S5 * 12 + f] * 4;
+            A2 = d5; // ":"
+            A3 = color;
             system_menu_draw_single_font_letter();
 
             A0 = 140;
-            A1 = 3b + i * 10 + b[801d3deb + S5] * 4;
-            A2 = S1;
+            A1 = 3b + i * 10 + b[801d3ddc + S5 * 12 + f] * 4;
+            A2 = item_num;
             A3 = 3;
-            A4 = S3;
+            A4 = color;
             system_menu_draw_digits_without_leading_zeroes();
         }
     }
 }
-else
+else // key items
 {
-    scroll = h[801d3e14];
+    scroll = h[801d3ddc + 3 * 12 + 2];
 
     [801d3e4c + 0] = h(a);
     [801d3e4c + 2] = h(20);
@@ -1168,22 +1149,23 @@ else
     system_menu_draw_scrollbar();
 
     A0 = 9;
-    func26b5c();
+    func26b5c(); // empty func
 
     for( int i = 0; i < c; ++i )
     {
         for( int j = 0; j < 2; ++j )
         {
-            A1 = bu[801d3d90 + (scroll + i) * 2 + j]; // temp array of owned key items
+            key_item_id = bu[801d3d90 + (scroll + i) * 2 + j]; // temp array of owned key items
 
-            if( A1 != ff )
+            if( key_item_id != ff )
             {
                 A0 = e; // key item
+                A1 = key_item_id;
                 A2 = 8; // name
                 system_kernel_get_string();
 
                 A0 = 20 + j * a6;
-                A1 = 3a + i * 10 + b[801d3e21] * 4;
+                A1 = 3a + i * 10 + b[801d3ddc + 3 * 12 + f] * 4;
                 A2 = V0;
                 A3 = 7;
                 system_menu_draw_string();
@@ -1199,16 +1181,21 @@ else
 
 A0 = 800706a4 + w[80062f58] * 5c;
 A1 = SP + 40;
-func26a94(); // add draw env
+system_menu_set_drawenv();
 
 for( int i = 0; i < 3; ++i )
 {
+    //    x    y    w    h
+    // 0000 0500 6C01 1800 // use arrange key items selection window
+    // 0000 1D00 6C01 1800 // tooltip window
+    // 0000 3100 6C01 AC00 // main items list window
+
     A0 = 801d3d5c + i * 8;
     system_menu_draw_window();
 }
 
-func23050(); // get menu list type
-
+// handle buttons only if items menu fully opened
+system_menu_get_menu_list_state();
 if( V0 != 0 ) return;
 
 A0 = 801d3ddc + w[801d3e48] * 12;
@@ -1248,7 +1235,7 @@ switch( w[801d3e48] )
                 A13 = 0; // page scroll dir
                 system_menu_set_cursor_movement();
 
-                [801d3e48] = w(4);
+                [801d3e48] = w(4); // arrange type list
             }
             else if( cur_x == 2 )
             {
@@ -1269,7 +1256,7 @@ switch( w[801d3e48] )
                 A13 = 0; // page scroll dir
                 system_menu_set_cursor_movement();
 
-                [801d3e48] = w(3);
+                [801d3e48] = w(3); // key item list
             }
         }
         else if( hu[80062d7e] & 0040 ) // cross repeated
@@ -1288,7 +1275,7 @@ switch( w[801d3e48] )
     }
     break;
 
-    case 1:
+    case 1: // item selection and use without character selection
     {
         if( h[801d3df6] != 0 ) return;
 
@@ -1332,7 +1319,7 @@ switch( w[801d3e48] )
                         A0 = 0; // close menu
                         system_menu_load_menu_file_by_id();
 
-                        func23ac4();
+                        system_menu_close();
                     }
                     else if( item_id == 67 ) // Earth Harp (Calms the hearts of all who hear it)
                     {
@@ -1369,13 +1356,13 @@ switch( w[801d3e48] )
             A0 = 4;
             func1d01e8(); // play sound
 
-            [801d3e48] = w(0);
+            [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }
         return;
     }
     break;
 
-    case 2:
+    case 2: // use item (after character selection)
     {
         if( w[801d3e5c] != 0 ) return;
 
@@ -1386,7 +1373,7 @@ switch( w[801d3e48] )
                 A0 = 4;
                 func1d01e8(); // play sound
 
-                [801d3e48] = w(1);
+                [801d3e48] = w(1); // item selection and use without character selection
             }
             return;
         }
@@ -1440,7 +1427,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1); // return to item list
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1476,7 +1463,7 @@ switch( w[801d3e48] )
 
                 A0 = item_id;
                 system_menu_inventory_search_item();
-                if( V0 == ffff ) [801d3e48] = w(1); // return to item list
+                if( V0 == ffff ) [801d3e48] = w(1); // item list
             }
             break;
 
@@ -1508,7 +1495,7 @@ switch( w[801d3e48] )
 
                         A0 = item_id;
                         system_menu_inventory_search_item();
-                        if( V0 == ffff ) [801d3e48] = w(1);
+                        if( V0 == ffff ) [801d3e48] = w(1); // item list
 
                         char_id = item_id - 57;
                         A0 = 801d3260 + char_id * 66 + 0; // string after learn limit
@@ -1516,7 +1503,7 @@ switch( w[801d3e48] )
 
                         A0 = 801d3e60;
                         A1 = 7;
-                        func1f6c0();
+                        system_menu_request_add_window();
                     }
                     else
                     {
@@ -1526,7 +1513,7 @@ switch( w[801d3e48] )
 
                         A0 = 801d3e60;
                         A1 = 7;
-                        func1f6c0();
+                        system_menu_request_add_window();
 
                         A0 = 3;
                         func1d01e8(); // play sound
@@ -1549,7 +1536,7 @@ switch( w[801d3e48] )
 
                     A0 = 801d3e60;
                     A1 = 7;
-                    func1f6c0();
+                    system_menu_request_add_window();
 
                     A0 = 3;
                     func1d01e8(); // play sound
@@ -1660,7 +1647,7 @@ switch( w[801d3e48] )
                 A0 = item_id;
                 system_menu_inventory_search_item();
 
-                if( V0 == ffff ) [801d3e48] = w(1);
+                if( V0 == ffff ) [801d3e48] = w(1); // item list
             }
             break;
 
@@ -1689,7 +1676,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1719,7 +1706,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1749,7 +1736,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1779,7 +1766,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1806,7 +1793,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1862,7 +1849,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1892,7 +1879,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1931,7 +1918,7 @@ switch( w[801d3e48] )
                     A0 = item_id;
                     system_menu_inventory_search_item();
 
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -1986,7 +1973,7 @@ switch( w[801d3e48] )
 
                     A0 = item_id;
                     system_menu_inventory_search_item();
-                    if( V0 == ffff ) [801d3e48] = w(1);
+                    if( V0 == ffff ) [801d3e48] = w(1); // item list
                 }
             }
             break;
@@ -2046,7 +2033,7 @@ switch( w[801d3e48] )
                 A0 = cur_y;
                 func1d0aac(); // sort items
 
-                [801d3e48] = w(0);
+                [801d3e48] = w(0); // upper selection (use arrange keyitems)
             }
         }
         else if( hu[80062d7c] & 0040 )
@@ -2054,68 +2041,47 @@ switch( w[801d3e48] )
             A0 = 4;
             func1d01e8(); // play sound
 
-            [801d3e48] = w(0);
+            [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }
         return;
     }
     break;
 
-    case 5:
+    case 5: // custom items arrangement
     {
         if( hu[80062d7c] & 0020 )
         {
-            V1 = w[801d3d84];
-            801D2840	nop
-            801D2844	beq    v1, zero, L1d285c [$801d285c]
-            V0 = 0001;
-            801D284C	beq    v1, v0, L1d28ac [$801d28ac]
-            801D2850	nop
-            return;
+            if( w[801d3d84] == 0 ) // select item
+            {
+                A0 = 1;
+                func1d01e8(); // play sound
 
-            L1d285c:	; 801D285C
-            A0 = 1;
-            func1d01e8(); // play sound
+                [801d3d84] = w(w[801d3d84] + 1); // go to swap
+                [801d3d88] = w(b[801d3ddc + 5 * 12 + a]); // cur_x
+                [801d3d8c] = w(h[801d3ddc + 5 * 12 + 2] + b[801d3ddc + 5 * 12 + b]); // store selected item
+            }
+            else if( w[801d3d84] == 1 ) // swap item
+            {
+                A0 = 1;
+                func1d01e8(); // play sound
 
-            V0 = b[801d3e40];
-            A0 = h[801d3e38];
-            V1 = w[801d3d84];
-            [801d3d88] = w(V0);
-            V0 = b[801d3e41];
-            V1 = V1 + 0001;
-            [801d3d84] = w(V1);
-            V0 = V0 + A0;
-            [801d3d8c] = w(V0);
-            return;
+                selected = w[801d3d8c];
+                cur_y = b[801d3ddc + 5 * 12 + b];
+                cur_scroll = h[801d3ddc + 5 * 12 + 2];
+                item1 = hu[8009c6e4 + 4fc + (cur_y + cur_scroll) * 2];
+                item2 = hu[8009c6e4 + 4fc + selected * 2];
+                [8009c6e4 + 4fc + selected * 2] = h(item1);
+                [8009c6e4 + 4fc + (cur_y + cur_scroll) * 2] = h(item2);
 
-            L1d28ac:	; 801D28AC
-            A0 = 1;
-            func1d01e8(); // play sound
-
-            A2 = 801d3e41;
-            V1 = w[801d3d8c];
-            V0 = b[A2 + 0000];
-            A0 = h[801d3e38];
-            V1 = V1 << 01;
-            V1 = 8009c6e4 + 4fc + V1;
-            V0 = V0 + A0;
-            V0 = V0 << 01;
-            V0 = 8009c6e4 + 4fc + V0;
-            V0 = hu[V0 + 0000];
-            A0 = hu[V1 + 0000];
-            [V1 + 0000] = h(V0);
-            V0 = b[A2 + 0000];
-            V1 = h[801d3e38];
-            [801d3d84] = w(0);
-            V0 = V0 + V1;
-            V0 = V0 << 01;
-            [8009c6e4 + 4fc + V0] = h(A0);
+                [801d3d84] = w(0); // return to selection
+            }
         }
         else if( hu[80062d7c] & 0040 )
         {
             A0 = 4;
             func1d01e8(); // play sound
 
-            [801d3e48] = w(0);
+            [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }
     }
     break;
