@@ -133,7 +133,7 @@ V1 = w[800a15e0];
 [800a16c4] = w(dispenv + V1 * 14);
 [800a16c8] = w(drawenv + V1 * 5c);
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 A2 = V0 >> 10;
 A1 = w[800a16cc];
 A0 = w[800a16d0];
@@ -167,7 +167,7 @@ V1 = w[800a15e0];
 [800a16c4] = w(dispenv + V1 * 14);
 [800a16c8] = w(drawenv + V1 * 5c);
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 A3 = V0 >> 10;
 A2 = w[800a16cc];
 A1 = w[800a16d0];
@@ -203,7 +203,7 @@ La0480:	; 800A0480
     [800a16c4] = w(dispenv + V1 * 13);
     [800a16c8] = w(drawenv + V1 * 5c);
 
-    system_get_current_pad_buttons();
+    system_menu_get_current_pad_buttons();
     A2 = V0 >> 10;
     A1 = w[800a16cc];
     A0 = w[800a16d0];
@@ -343,7 +343,7 @@ loopa0784:	; 800A0784
     [800a16c4] = w(dispenv + V1 * 14);
     [800a16c8] = w(drawenv + V1 * 5c);
 
-    system_get_current_pad_buttons();
+    system_menu_get_current_pad_buttons();
     A1 = V0 >> 10;
     A2 = w[800a16cc];
     A0 = w[800a16d0];
@@ -387,7 +387,7 @@ loopa08c0:	; 800A08C0
     [800a16c4] = w(dispenv + V1 * 14);
     [800a16c8] = w(drawenv + V1 * 5c);
 
-    system_get_current_pad_buttons();
+    system_menu_get_current_pad_buttons();
     A1 = V0 >> 10;
     A2 = w[800a16cc];
     A0 = w[800a16d0];
@@ -433,7 +433,7 @@ La09fc:	; 800A09FC
         [800a16c4] = w(dispenv + V1 * 14);
         [800a16c8] = w(drawenv + V1 * 5c);
 
-        system_get_current_pad_buttons();
+        system_menu_get_current_pad_buttons();
         T0 = V0 >> 10;
         A3 = w[800a16cc];
         A2 = w[800a16d0];
@@ -643,7 +643,7 @@ V1 = w[800a15e0];
 [800a16c4] = w(dispenv + V1 * 14);
 [800a16c8] = w(drawenv + V1 * 5c);
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 A2 = V0 >> 10;
 A1 = w[800a16cc];
 A0 = w[800a16d0];
@@ -683,7 +683,7 @@ La0f94:	; 800A0F94
     [800a16c4] = w(dispenv + V1 * 14);
     [800a16c8] = w(drawenv + V1 * 5c);
 
-    system_get_current_pad_buttons();
+    system_menu_get_current_pad_buttons();
     A2 = V0 >> 10;
     A1 = w[800a16cc];
     A0 = w[800a16d0];
@@ -796,7 +796,7 @@ loopa1220:	; 800A1220
     [800a16c4] = w(dispenv + V1 * 14);
     [800a16c8] = w(drawenv + V1 * 5c);
 
-    system_get_current_pad_buttons();
+    system_menu_get_current_pad_buttons();
     A2 = V0 >> 10;
     A1 = w[800a16cc];
     A0 = w[800a16d0];
@@ -839,7 +839,7 @@ La1368:	; 800A1368
     [800a16c4] = w(dispenv + V1 * 14);
     [800a16c8] = w(drawenv + V1 * 5c);
 
-    system_get_current_pad_buttons();
+    system_menu_get_current_pad_buttons();
     T0 = V0 >> 10;
     A3 = w[800a16cc];
     A2 = w[800a16d0];

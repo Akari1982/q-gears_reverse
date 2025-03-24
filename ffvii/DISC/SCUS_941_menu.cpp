@@ -13,7 +13,7 @@ if( bu[GP + 2c] == 0 )
     A3 = 4;
     system_bios_init_pad();
 }
-[80062fa0] = w(0);
+[80062fa0] = w(0); // tutorial off
 ////////////////////////////////
 
 
@@ -46,17 +46,18 @@ ptr = A0;
 
 [GP + 2d] = b(1);
 
-A0 = 1;
-A1 = h[GP + 2e];
-A2 = h[GP + 30];
-func1f6e4();
+A0 = 1; // set open
+A1 = h[GP + 2e]; // x
+A2 = h[GP + 30]; // y
+system_menu_set_pos_add_window();
 
-[GP + 97] = b(1);
-[GP + 98] = b(7);
-[GP + 9c] = w(28);
-[GP + a1] = b(1);
-[GP + 174] = w(ptr);
+[GP + 97] = b(1); // open
+[GP + 98] = b(7); // white color
+[GP + 9c] = w(28); // wait timer
+[GP + a1] = b(1); // open frame
+[GP + 174] = w(ptr); // text
 
+// move pointer to end of text
 for( int i = 0; i < 100; ++i )
 {
     if( ( bu[ptr] < ff ) || ( bu[ptr] >= fa ) )
@@ -85,16 +86,17 @@ return ptr;
 
 if( bu[GP + 97] == 0 )
 {
-    [GP + 2d] = b(0);
+    [GP + 2d] = b(0); // tutorial text closed
 }
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1c5bc()
+// system_menu_tutorial_update_script()
 
-if( bu[GP + 2d] != 0 )
+// do not update tutorial until text not closed
+if( bu[GP + 2d] != 0 ) // tutorial text opened
 {
     if( bu[GP + 97] == 0 ) [GP + 2d] = b(0);
 
@@ -110,7 +112,7 @@ switch( V1 )
     case 0:
     {
         V0 = w[GP + 158];
-        [GP + 150] = w(hu[V0]);
+        [GP + 150] = w(hu[V0]); // wait
         [GP + 158] = w(V0 + 2);
         return 0000;
     }
@@ -133,29 +135,29 @@ switch( V1 )
         A0 = w[GP + 158];
         system_menu_tutorial_set_text_to_show();
 
-        [GP + 150] = w(50);
+        [GP + 150] = w(50); // wait
         [GP + 158] = w(V0);
         return 0000;
     }
 
     case 11:
     {
-        A0 = 0;
+        A0 = 0; // close
         A1 = 0;
         A2 = 0;
-        func1f6e4();
+        system_menu_set_pos_add_window();
 
-        [80062fa0] = w(0);
-        [GP + 150] = w(0);
+        [GP + 150] = w(0); // wait
+        [80062fa0] = w(0); // tutorial off
         return 0000;
     }
 
     case 12:
     {
         V0 = w[GP + 158];
-        [GP + 2e] = h(hu[V0 + 0]);
-        [GP + 30] = h(hu[V0 + 2]);
-        [GP + 150] = w(3c);
+        [GP + 2e] = h(hu[V0 + 0]); // x
+        [GP + 30] = h(hu[V0 + 2]); // y
+        [GP + 150] = w(3c); // wait
         [GP + 158] = w(V0 + 4);
         return 0000;
     }
@@ -167,8 +169,9 @@ return 0000;
 
 
 ////////////////////////////////
-// func1c788()
+// system_menu_tutorial_update_get_buttons()
 
+// wait before next tutorial command
 if( w[GP + 150] != 0 )
 {
     [GP + 150] = w(w[GP + 150] - 1);
@@ -180,19 +183,19 @@ else
         system_cdrom_read_chain();
         if( V0 == 0 )
         {
-            func1c5bc(); // rerurn pressed button
+            system_menu_tutorial_update_script(); // return pressed button
 
             return V0;
         }
     }
 }
-return 0;
+return 0000;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_get_current_pad_buttons()
+// system_menu_get_current_pad_buttons()
 
 if( w[80062fa0] == 0 ) // input enabled
 {
@@ -214,7 +217,7 @@ if( w[80062fa0] == 0 ) // input enabled
 }
 else // for tutorial
 {
-    func1c788();
+    system_menu_tutorial_update_get_buttons();
     A0 = V0;
 }
 
@@ -243,12 +246,12 @@ return (V0 << 10) | (A0 & ffff);
 ////////////////////////////////
 // system_get_buttons_with_config_remap()
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 cb1 = V0 & 0000ffff; // first controller
 cb2 = V0 & ffff0000; // second controller
 
 // if controller config set to normal or input not enabled
-if( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 || w[80062fa0] != 0 )
+if( ( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 ) || ( w[80062fa0] != 0 ) )
 {
     return cb2 | cb1;
 }
@@ -360,9 +363,9 @@ else
 
 
 ////////////////////////////////
-// func1cb48()
+// system_menu_update_buttons()
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 buttons = V0;
 
 // not custom or input not enabled
@@ -2014,7 +2017,7 @@ color = A1; // for text
 
 
 ////////////////////////////////
-// func1f6e4()
+// system_menu_set_pos_add_window()
 
 type = A0;
 x = A1;
@@ -4597,8 +4600,8 @@ V0 = 00ff;
 [AT + 5dd4] = h(0);
 
 L22c38:	; 80022C38
-80022C38	jal    func1cb48 [$8001cb48]
-80022C3C	nop
+system_menu_update_buttons();
+
 V0 = w[GP + 0214];
 80022C44	nop
 A0 = V0 << 02;
@@ -5845,7 +5848,7 @@ system_psyq_put_drawenv();
 
 
 ////////////////////////////////
-// func24a3c()
+// system_menu_show()
 
 tutorial_data = A0;
 
@@ -5860,12 +5863,12 @@ tutorial_data = A0;
 
 if( tutorial_data == 0 )
 {
-    A0 = 0;
+    A0 = 0; // close
     A1 = 0;
     A2 = 0;
-    func1f6e4();
+    system_menu_set_pos_add_window();
 
-    [80062fa0] = w(0);
+    [80062fa0] = w(0); // tutorial off
 }
 else
 {
@@ -5913,7 +5916,7 @@ frame = 0;
 
 do
 {
-    func1cb48(); // update pressed repeated buttons mask
+    system_menu_update_buttons();
 
     [80062f24] = w(80077f64 + w[GP + 214] * 3400);
 
@@ -6010,7 +6013,7 @@ system_menu_load_character_clut_from_ram();
 
 func24a04();
 
-[80062fa0] = w(0);
+[80062fa0] = w(0); // tutorial off
 
 A0 = 4;
 system_psyq_wait_frames();
@@ -6299,7 +6302,7 @@ func1d0704();
 ////////////////////////////////
 // func25174()
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 buttons = V0;
 
 if( buttons & 0001 )
@@ -6348,7 +6351,7 @@ else
     [8009d2a5] = b(ff);
 
     A0 = 0;
-    func24a3c();
+    system_menu_show();
 }
 ////////////////////////////////
 

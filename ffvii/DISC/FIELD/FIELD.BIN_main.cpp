@@ -1028,7 +1028,7 @@ if( w[800e4dd8] != 0 )
 ////////////////////////////////
 // funca2f78()
 
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 
 prev = w[8009abf4 + 68];
 [80114454] = w(V0);

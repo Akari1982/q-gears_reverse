@@ -2574,7 +2574,7 @@ switch( w[800e566c] )
             800A3B24	jal    funca3908 [$800a3908]
 
             A0 = 0;
-            func24a3c(); // tutorial??
+            system_menu_show();
 
             A0 = 3;
             wm_remove_mutex_priority();
@@ -3567,7 +3567,7 @@ while( w[800e566c] < 9 )
         }
         wm_render_all();
 
-        system_get_current_pad_buttons();
+        system_menu_get_current_pad_buttons();
 
         if( ( V0 & 090f ) == 090f ) // reset game if all shifts and start + select pressed
         {

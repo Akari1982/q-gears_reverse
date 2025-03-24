@@ -150,6 +150,7 @@
 
 80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).
 
+80062fa0
 80062d44 GP
     + 1c            [][]     first pad start button delay (0 - delay, 1 - fast)
     + 1e            [][]     second pad start button delay (0 - delay, 1 - fast)
@@ -160,6 +161,8 @@
     + 28            [][]     first pad repeat button delay time (7/1).
     + 2a            [][]     second pad repeat button delay time (7/1).
     + 2c            []       if 1 then system pad started and inited.
+    + 2e            [][]     x for tutorial text window.
+    + 30            [][]     y for tutorial text window.
     + 44            [][]     10c?
     + 70            [][]     colour for dialog text
     + 72            [][]
@@ -234,6 +237,7 @@
     +244            [][][][] some flags. used in loading units.
     +250            [][][][] selected menu.
     +258            [][][][] text row count.
+    +25c (80062fa0) [][][][] ???
     +278            [][][][] total number of stars currently parsing materia has.
     +27c            [][][][] state of main menu.
                             -1 - dissapear complete (exit menu cycle).

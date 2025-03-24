@@ -2295,7 +2295,7 @@ V0 = V0 - V1;
 V0 = V0 << 02;
 V0 = 800af2e0 + V0;
 [8007ebd0] = w(V0);
-system_get_current_pad_buttons();
+system_menu_get_current_pad_buttons();
 
 A2 = V0;
 A3 = A2 >> 10;

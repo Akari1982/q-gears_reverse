@@ -336,17 +336,17 @@
                     02 - encounter.
                     03 - start play movie.
                     04 - continue play movie.
-                    05 - some menu
-                    06 - some menu
-                    07 - some menu
-                    08 - some menu
-                    09 - tutorial set from events
+                    05 - some menu.
+                    06 - name menu.
+                    07 - form menu.
+                    08 - shop menu.
+                    09 - main menu and tutorial.
                     0a - set when field reset game by all shifts and start + select.
                     0c - minigame start.
                     0d - disc change
-                    0e - some menu
-                    12 - some menu
-                    13 - some menu
+                    0e - save menu
+                    12 - store party and char equipment and materia
+                    13 - restore party and char equipment and materia
                     14 - we abort movie play if this.
                     19 -
                     1a - game over

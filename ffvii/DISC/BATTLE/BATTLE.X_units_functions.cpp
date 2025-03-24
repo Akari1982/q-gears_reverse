@@ -5039,7 +5039,7 @@ A0 = A0 + V0;
 
 
 Ld90b0:	; 800D90B0
-func1cb48(); // update pressed repeated buttons mask
+system_menu_update_buttons();
 
 if( w[800f1990] != w[800f8368] )
 {
@@ -5094,7 +5094,7 @@ background_r = A3;
 background_g = A4;
 background_b = A5;
 
-func1cb48(); // update pressed repeated buttons mask
+system_menu_update_buttons();
 
 func1c980(); // update pressed repeated buttons mask
 

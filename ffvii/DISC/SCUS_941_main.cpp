@@ -772,17 +772,17 @@ while( true )
                 }
                 break;
 
-                case 9: // tutorial
+                case 9: // menu
                 {
                     if( h[8009abf4 + 2] == 1 )
                     {
                         A0 = w[800e48e0]; // pointer to tutorial settings
-                        func24a3c();
+                        system_menu_show();
                     }
                     else
                     {
                         A0 = 0;
-                        func24a3c();
+                        system_menu_show();
 
                         [8009abf4 + 1] = b(0);
                     }

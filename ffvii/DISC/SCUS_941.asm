@@ -567,13 +567,13 @@
 // func1c58c
 8001C58C-8001C5B8
 ////////////////////////////////
-// func1c5bc
+// system_menu_tutorial_update_script
 8001C5BC-8001C784
 ////////////////////////////////
-// func1c788
+// system_menu_tutorial_update_get_buttons
 8001C788-8001C804
 ////////////////////////////////
-// system_get_current_pad_buttons
+// system_menu_get_current_pad_buttons
 8001C808-8001C8D0
 ////////////////////////////////
 // system_get_buttons_with_config_remap
@@ -582,7 +582,7 @@
 // func1c980
 8001C980-8001CB44
 ////////////////////////////////
-// func1cb48
+// system_menu_update_buttons
 8001CB48-8001CDA0
 ////////////////////////////////
 // func1cda4
@@ -651,7 +651,7 @@
 // system_menu_request_add_window
 8001F6C0-8001F6E0
 ////////////////////////////////
-// func1f6e4
+// system_menu_set_pos_add_window
 8001F6E4-8001F70C
 ////////////////////////////////
 // system_menu_draw_add_window
@@ -777,7 +777,7 @@
 // func24a04
 80024A04-80024A38
 ////////////////////////////////
-// func24a3c
+// system_menu_show
 80024A3C-80024D84
 ////////////////////////////////
 // func24d88
