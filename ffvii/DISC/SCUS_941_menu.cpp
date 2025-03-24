@@ -1533,6 +1533,7 @@ return bu[GP + 97];
 
 ////////////////////////////////
 // func1f6c0()
+// request add window
 
 string = A0;
 color = A1;
@@ -1574,7 +1575,7 @@ system_get_single_string_width();
 
 S2 = V0;
 V1 = bu[GP + 97];
-if( V1 == 1 )
+if( V1 == 1 ) // open window
 {
     V0 = 55555556;
     8001F77C	mult   s2, v0
@@ -1583,34 +1584,34 @@ if( V1 == 1 )
     A0 = bu[GP + a1];
     V0 = T0 - V0;
     8001F790	mult   v0, a0
-    V1 = bu[GP + a0];
     8001F798	mflo   a3
-    if( V1 != 0 )
+
+    if( bu[GP + a0] != 0 )
     {
         A2 = A0 << 03;
-        A0 = SP + 0018;
-        A1 = S2 + 0010;
+        A0 = SP + 18;
+        A1 = S2 + 10;
         V0 = A1 >> 1f;
         A1 = A1 + V0;
-        A1 = A1 >> 01;
+        A1 = A1 >> 1;
         V0 = A3 >> 1f;
         V0 = A3 + V0;
         V0 = V0 >> 01;
-        [SP + 0010] = w(A2);
+        [SP + 10] = w(A2);
+
         A2 = A2 >> 01;
-        8001F7F4	addiu  a2, a2, $fff4 (=-$c)
+        A2 = A2 - c;
         S1 = h[GP + a2];
         S0 = h[GP + a4];
-        A1 = S1 + A1;
-        A1 = A1 - V0;
+        A1 = S1 + A1 - V0;
     }
     else
     {
-        A2 = A0 << 03;
-        S1 = 00b4;
-        S0 = 0068;
+        A2 = A0 * 8;
+        S1 = b4;
+        S0 = 68;
         [SP + 0010] = w(A2);
-        A0 = SP + 0018;
+        A0 = SP + 18;
         A1 = A3 >> 1f;
         A1 = A3 + A1;
         A1 = A1 >> 01;
@@ -1619,10 +1620,10 @@ if( V1 == 1 )
     }
 
     A2 = S0 - A2;
-    [A0 + 0] = h(A1);
-    [A0 + 2] = h(A2);
-    [A0 + 4] = h(A3);
-    [A0 + 6] = h(A4);
+    [A0 + 0] = h(A1); // x
+    [A0 + 2] = h(A2); // y
+    [A0 + 4] = h(A3); // w
+    [A0 + 6] = h(A4); // h
 
     [GP + a1] = b(bu[GP + a1] + 1);
 
@@ -3099,7 +3100,7 @@ else
     system_menu_draw_string();
 }
 
-S1 = SP + 0028;
+S1 = SP + 28;
 A0 = S1;
 A1 = 0;
 A2 = 0;
@@ -4178,8 +4179,7 @@ system_menu_load_character_clut_from_ram();
 
 L22bfc:	; 80022BFC
 A0 = w[GP + 0160];
-80022C00	jal    system_psyq_draw_otag [$8004433c]
-80022C04	nop
+system_psyq_draw_otag();
 
 L22c08:	; 80022C08
 V0 = w[GP + 0214];
@@ -4206,10 +4206,10 @@ A0 = A0 << 04;
 V0 = 8006974c;
 A0 = A0 + V0;
 [GP + 0160] = w(A0);
-80022C64	jal    system_psyq_clear_otag [$8004418c]
 A1 = 0014;
+system_psyq_clear_otag();
+
 V0 = w[GP + 0214];
-80022C70	nop
 A0 = V0 << 01;
 A0 = A0 + V0;
 A0 = A0 << 02;
