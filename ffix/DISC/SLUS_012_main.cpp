@@ -1,5 +1,5 @@
 ////////////////////////////////
-// func127a0()
+// system_main()
 
 func12c10(); // call some debug init callbacks (removed)
 
@@ -290,10 +290,10 @@ A0 = 80083fb0;
 A0 = A0 + 4;
 
 [80070518] = w(RA);
-func12ce8(); // system_bios_init_heap();
+system_bios_init_heap();
 RA = w[80070518];
 
-func127a0();
+system_main();
 
 80011168	break   $00001
 ////////////////////////////////
@@ -344,7 +344,7 @@ if( w[800665e8] != 0 )
 
 
 ////////////////////////////////
-// func12ce8
+// system_bios_init_heap
 
 T2 = 00a0;
 T1 = 0039;
