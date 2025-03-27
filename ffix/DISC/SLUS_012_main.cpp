@@ -159,7 +159,7 @@ A0 = S0;
 V0 = S2 << 02;
 V0 = SP + V0;
 A1 = w[V0 + 0020];
-800129FC	jal    func133b0 [$800133b0]
+800129FC	jal    system_psyq_store_image [$800133b0]
 A0 = S0 + 0020;
 80012A04	j      L12a30 [$80012a30]
 80012A08	nop
@@ -180,7 +180,7 @@ V0 = w[S0 + 000c];
 A0 = S1;
 80012A38	jal    func22390 [$80022390]
 S0 = V0 >> 0b;
-80012A40	jal    func130a4 [$800130a4]
+80012A40	jal    system_psyq_draw_sync [$800130a4]
 A0 = 0;
 A0 = 0;
 
