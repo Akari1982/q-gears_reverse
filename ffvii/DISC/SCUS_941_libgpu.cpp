@@ -3303,7 +3303,7 @@ SP = SP + 0018;
 // func462b0()
 
 A0 = -1;
-system_psyq_wait_frames(); // wait
+system_psyq_vsync(); // wait
 
 [80062d18] = w(V0 + f0);
 [80062d1c] = w(0);
@@ -3323,7 +3323,7 @@ dma2_base_address = w[80062cd8]; // 1f8010a0
 dma2_channel_control = w[80062ce0]; // 1f8010a8
 
 A0 = -1;
-system_psyq_wait_frames(); // wait
+system_psyq_vsync(); // wait
 
 if( V0 <= w[80062d18] )
 {

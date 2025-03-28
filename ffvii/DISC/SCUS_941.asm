@@ -2446,7 +2446,7 @@
 // func3cebc
 8003CEBC-8003CED8
 ////////////////////////////////
-// system_psyq_wait_frames
+// system_psyq_vsync
 8003CEDC-8003D020
 ////////////////////////////////
 // func3d024

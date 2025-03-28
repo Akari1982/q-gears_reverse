@@ -11,7 +11,7 @@ funcb383c(); // we load camera and stage here.
 funcb430c(); // we read first block of stage and set stage scrolling.
 
 A0 = 0;
-system_psyq_wait_frames(); // wait
+system_psyq_vsync(); // wait
 
 A0 = 0; // not displayed on screen
 system_psyq_set_disp_mask();

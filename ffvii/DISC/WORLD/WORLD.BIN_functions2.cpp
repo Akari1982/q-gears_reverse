@@ -840,7 +840,7 @@ for( int i = 0; i < 6; ++i )
     [S0 + a] = h(S7 + ((w[80116500] * w[SP + 30]) / 8000) - 4); // y
 
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     V0 = V0 + i * 4;
     if( i != 0 )

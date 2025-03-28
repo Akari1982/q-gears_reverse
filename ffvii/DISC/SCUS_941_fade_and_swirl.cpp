@@ -672,7 +672,7 @@ if( ( w[8019daa0] & 1 ) == 0 )
 [80095dd4] = h(0); // set render func to 0
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 8019da80;
 system_psyq_get_dispenv();

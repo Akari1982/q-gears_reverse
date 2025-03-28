@@ -780,7 +780,7 @@ mode = A0; // If mode is 0, the wait for a data transfer to be completed. If mod
 result_ptr = A1;
 
 A0 = -1; // get current frame time
-system_psyq_wait_frames();
+system_psyq_vsync();
 [800598c4] = w(V0 + 3c0);
 [800598c8] = w(0);
 [800598cc] = w(80018f44); // "CD_sync"
@@ -788,7 +788,7 @@ system_psyq_wait_frames();
 do
 {
     A0 = -1; // get current frame time
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800598c8] = w(w[800598c8] + 1);
 
@@ -873,7 +873,7 @@ S7 = A0;
 S4 = A1;
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 S5 = 80055bf0;
 S2 = 80055e28;
@@ -887,7 +887,7 @@ V0 = 80018f4c; // "CD_ready"
 [800598cc] = w(V0);
 
 L41ca8:	; 80041CA8
-80041CA8	jal    system_psyq_wait_frames [$8004b3f4]
+80041CA8	jal    system_psyq_vsync [$8004b3f4]
 80041CAC	addiu  a0, zero, $ffff (=-$1)
 V1 = w[800598c4];
 80041CB8	nop
@@ -1101,7 +1101,7 @@ for( int i = 0; i < w[80055d90 + cdl_command * 4]; ++i )
 if( dont_wait == 0 )
 {
     A0 = -1; // get current frames number
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     [800598c4] = w(V0 + 3c0);
     [800598c8] = w(0);
     [800598cc] = w(80018f70); // "CD_cw"
@@ -1110,7 +1110,7 @@ if( dont_wait == 0 )
     {
         loop42118:	; 80042118
             A0 = -1; // get current frame
-            system_psyq_wait_frames();
+            system_psyq_vsync();
 
             [800598c8] = w(w[800598c8] + 1);
 
@@ -1389,7 +1389,7 @@ return -1;
 mode = A0;
 
 A0 = -1; // current number of frames
-system_psyq_wait_frames();
+system_psyq_vsync();
 [800598c4] = w(V0 + 3c0);
 [800598c8] = w(0);
 [800598cc] = w(80018fc4); // "CD_datasync"
@@ -1397,7 +1397,7 @@ system_psyq_wait_frames();
 do
 {
     A0 = -1; // current number of frames
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800598c8] = w(w[800598c8] + 1);
 
@@ -1739,7 +1739,7 @@ else
 }
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [80055f00] = w(V0);
 V0 = w[80055efc];
@@ -1750,7 +1750,7 @@ if( V0 < 0 )
 }
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 if( ( w[80055f04] + 4b0 ) < V0 )
 {
@@ -1760,7 +1760,7 @@ if( ( w[80055f04] + 4b0 ) < V0 )
 if( w[80055efc] != 0 )
 {
     A0 = -1
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     if( ( w[80055f04] + 4b0 ) >= V0 )
     {
@@ -1876,7 +1876,7 @@ system_cdrom_get_status_code();
 if( V0 & 10 )
 {
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     if( ( V0 & 3f ) == 0 )
     {
@@ -1889,7 +1889,7 @@ if( V0 & 10 )
     system_cdrom_cdl_command_exec_without_ret();
 
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [80055f04] = w(V0);
     [80055efc] = w(-1);
@@ -1968,7 +1968,7 @@ system_cdrom_cdl_command_exec_without_ret();
 [80055efc] = w(w[80055ee8]);
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [80055f00] = w(V0);
 
 L43328:	; 80043328
@@ -2059,7 +2059,7 @@ if( w[80055f18] & 1 )
 }
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [80055f04] = w(V0);
 
 system_cdrom_get_status_code();
@@ -2093,7 +2093,7 @@ S1 = S1 + 5f04;
 [SP + 0010] = w(S0);
 
 loop43510:	; 80043510
-80043510	jal    system_psyq_wait_frames [$8004b3f4]
+80043510	jal    system_psyq_vsync [$8004b3f4]
 80043514	addiu  a0, zero, $ffff (=-$1)
 V1 = w[S1 + 0000];
 8004351C	nop
@@ -2105,7 +2105,7 @@ V0 = w[S1 + fff8];
 80043534	nop
 80043538	bltz   v0, L43560 [$80043560]
 8004353C	nop
-80043540	jal    system_psyq_wait_frames [$8004b3f4]
+80043540	jal    system_psyq_vsync [$8004b3f4]
 80043544	addiu  a0, zero, $ffff (=-$1)
 V1 = w[S1 + fffc];
 8004354C	nop

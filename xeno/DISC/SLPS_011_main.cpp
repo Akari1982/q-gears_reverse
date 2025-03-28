@@ -439,7 +439,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 2;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = w[S1 + 8] + 800;
 system_memory_realloc_heap();
@@ -469,7 +469,7 @@ if( w[S1 + c] != 0 )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     system_enter_critical_section();
 
@@ -477,7 +477,7 @@ if( w[S1 + c] != 0 )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     system_bios_flush_cache();
 
@@ -748,7 +748,7 @@ L19f48:	; 80019F48
     }
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     S1 = S1 + 1;
 8001A050	j      L19f48 [$80019f48]
@@ -931,7 +931,7 @@ while( ( w[8005896c] != 0 ) || ( w[80058964] == 0 ) )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[80058968];
     system_psyq_put_drawenv();
@@ -2501,7 +2501,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = w[mem + 1d4];
 system_psyq_put_drawenv();
@@ -2867,7 +2867,7 @@ if( bu[80058818] != 0 )
 kernel_menu_init_data();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = mem + 6c;
 system_psyq_put_drawenv();

@@ -461,7 +461,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 800b1970;
 A1 = 0;
@@ -515,7 +515,7 @@ system_clear_image();
 field_credits_load_logos_to_vram();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 0;
 system_draw_sync();
@@ -535,7 +535,7 @@ while( w[800afb74] < 18e2 ) // current frame
     system_draw_sync();
 
     A0 = 2;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800c3740];
     A1 = 0;
@@ -565,7 +565,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 800b1970;
 A1 = 0;
@@ -731,7 +731,7 @@ field_movie_set_to_play();
 while( w[800af5b8] != 0 )
 {
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = 3;
     field_movie_mdec_update();
@@ -746,7 +746,7 @@ do
         system_draw_sync();
 
         A0 = 0;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
 
         A0 = w[800c3740] + b8;
         system_psyq_put_dispenv();
@@ -761,7 +761,7 @@ do
         system_draw_sync();
 
         A0 = 0;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
 
         A0 = w[800c3740];
         A0 = A0 + b8;
@@ -827,7 +827,7 @@ do
                 for( int i = 0; i < 5; ++i )
                 {
                     A0 = 0;
-                    system_psyq_wait_frames();
+                    system_psyq_vsync();
                 }
                 break;
             }
@@ -841,7 +841,7 @@ do
 } while( ( h[800c2f0e] != 0 ) || ( w[800afb74] < hu[800c2f02] ) )
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 0;
 system_draw_sync();
@@ -857,7 +857,7 @@ A0 = w[800c3740];
 system_psyq_put_drawenv();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 0;
 system_draw_sync();
@@ -886,7 +886,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 S0 = 800b9a64;
 S1 = S0 + b8;
@@ -905,7 +905,7 @@ if( w[800ad04c] != 2 )
 }
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800b1a39] = b(0);
 [800c3740] = w(800b1a39 - c9);
@@ -930,7 +930,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800b9b2d] = b(0);
 [800c3740] = w(S0);

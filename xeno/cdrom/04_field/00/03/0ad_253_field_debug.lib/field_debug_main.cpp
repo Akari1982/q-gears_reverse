@@ -348,7 +348,7 @@ string = A0;
 if( w[800c1b60] == 0 )
 {
     A0 = 1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     delta = V0;
 
     A1 = h[802859f8];
@@ -358,7 +358,7 @@ if( w[800c1b60] == 0 )
     [800ad074] = w(delta - w[800ad074]);
 
     A0 = 1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 ////////////////////////////////
 

@@ -194,7 +194,7 @@ if( V0 == 0 )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = 800b1970;
     A1 = 0;
@@ -2314,7 +2314,7 @@ while( true )
     }
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 ////////////////////////////////
 

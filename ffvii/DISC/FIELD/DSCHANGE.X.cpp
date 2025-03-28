@@ -13,7 +13,7 @@ A3 = 0;
 system_cdrom_load_lzs();
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 V1 = 38e38e39;
 800A0070	mult   v0, v1
@@ -44,7 +44,7 @@ while( true )
     if( V0 != -1 ) break;
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 
 while( V0 != 0 )
@@ -119,7 +119,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800a15e0] = w(w[800a15e0] < 1);
 
@@ -153,7 +153,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800a15e0] = w(w[800a15e0] < 1);
 
@@ -189,7 +189,7 @@ La0480:	; 800A0480
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800a15e0] = w(w[800a15e0] < 1);
 
@@ -329,7 +329,7 @@ loopa0784:	; 800A0784
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800a15e0] = w(w[800a15e0] < 1);
 
@@ -373,7 +373,7 @@ loopa08c0:	; 800A08C0
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800a15e0] = w(w[800a15e0] < 1);
 
@@ -419,7 +419,7 @@ La09fc:	; 800A09FC
         system_psyq_draw_sync();
 
         A0 = 0;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
 
         [800a15e0] = w(w[800a15e0] < 1);
 
@@ -536,7 +536,7 @@ while( true )
     if( V0 != -1 ) break;
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 
 while( V0 != 0 )
@@ -629,7 +629,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800a15e0] = w(w[800a15e0] < 1);
 
@@ -669,7 +669,7 @@ La0f94:	; 800A0F94
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800a15e0] = w(w[800a15e0] < 1);
 
@@ -782,7 +782,7 @@ loopa1220:	; 800A1220
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800a15e0] = w(w[800a15e0] < 1);
 
@@ -825,7 +825,7 @@ La1368:	; 800A1368
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [800a15e0] = w(w[800a15e0] < 1);
 

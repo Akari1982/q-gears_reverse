@@ -89,7 +89,7 @@ while( true )
             }
 
             A0 = 0;
-            system_psyq_wait_frames(); // wait
+            system_psyq_vsync(); // wait
         }
     }
 
@@ -451,12 +451,12 @@ if( w[800e55f4] != 0 )
 }
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 for( int i = 0; i < w[800d75ec]; ++i )
 {
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     V1 = bu[800d75f0 + i * 8 + 7];
     V0 = V0 / V1;
@@ -478,7 +478,7 @@ system_psyq_draw_sync();
 A0 = S4 ^ 1;
 A0 = A0 < 1;
 A0 = S4 - A0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 1;
 system_psyq_reset_graph();
@@ -2483,7 +2483,7 @@ La3918:	; 800A3918
 800A3920	bne    v0, s0, La3938 [$800a3938]
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 800A3930	j      La3918 [$800a3918]
 
@@ -3025,7 +3025,7 @@ if( V1 == 1 )
 else if( V1 == 2 )
 {
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     frame = V0;
 
     [800c6648 + buffer_id * 14 + d] = b(((frame / 4) & 10) - 80); // ty

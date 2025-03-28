@@ -4708,7 +4708,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = bu[800f19a4];
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 800faff4;
 if( w[801517c0] == A0 )
@@ -5121,7 +5121,7 @@ A0 = 800faff4;
 system_psyq_put_drawenv();
 
 A0 = 0;
-system_psyq_wait_frames(); // wait
+system_psyq_vsync(); // wait
 
 A0 = 800faff4;
 A1 = 0;

@@ -2846,7 +2846,7 @@ drawenv = A0;
 dispenv = A1;
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = drawenv;
 A1 = 0;
@@ -2861,7 +2861,7 @@ A0 = drawenv;
 system_psyq_put_drawenv();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = drawenv + 0 * 5c;
 A1 = 0;
@@ -2911,7 +2911,7 @@ V0 = ( ( V0 == 1 ) || ( V0 == 2 ) ) ? af : 3f;
 [drawenv + 0 * 5c + 14] = h(V0);
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = dispenv;
 system_psyq_put_dispenv();
@@ -4796,7 +4796,7 @@ A0 = 1;
 system_psyq_set_disp_mask();
 
 A0 = 28;
-system_psyq_wait_frames();
+system_psyq_vsync();
 ////////////////////////////////
 
 
@@ -5992,7 +5992,7 @@ do
     system_psyq_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = 8007075c + w[GP + 214] * 14;
     system_psyq_put_dispenv();
@@ -6016,7 +6016,7 @@ func24a04();
 [80062fa0] = w(0); // tutorial off
 
 A0 = 4;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 return 0;
 ////////////////////////////////
@@ -6037,7 +6037,7 @@ do
 } while( V0 != 0 )
 
 A0 = 1e;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = S0;
 func1d131c();
@@ -7331,7 +7331,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = 6;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 do
 {

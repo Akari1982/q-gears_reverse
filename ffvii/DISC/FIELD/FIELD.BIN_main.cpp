@@ -460,7 +460,7 @@ while( true )
     } while( V0 != 0 )
 
     A0 = 1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_vsync(); // wait
 
     [8007eb79] = b(0);
     [8007eb8d] = b(0);
@@ -478,7 +478,7 @@ while( true )
     if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
     {
         A0 = 0;
-        system_psyq_wait_frames(); // wait
+        system_psyq_vsync(); // wait
 
         return;
     }
@@ -506,7 +506,7 @@ while( true )
             [80095dd4] = h(1);
 
             A0 = 0;
-            system_psyq_wait_frames(); // wait
+            system_psyq_vsync(); // wait
 
             return;
         }
@@ -528,7 +528,7 @@ while( true )
             case 6: [8009c560] = h(e); break; // snowboard2
         }
         A0 = 0;
-        system_psyq_wait_frames(); // wait
+        system_psyq_vsync(); // wait
 
         return;
     }
@@ -537,7 +537,7 @@ while( true )
     if( ( bu[8009abf4 + 1] == 2 ) || ( bu[8009abf4 + 1] == d ) )
     {
         A0 = 0;
-        system_psyq_wait_frames(); // wait
+        system_psyq_vsync(); // wait
 
         return;
     }
@@ -553,7 +553,7 @@ while( true )
         [80095dd4] = h(1);
 
         A0 = 0;
-        system_psyq_wait_frames(); // wait
+        system_psyq_vsync(); // wait
 
         return;
     }
@@ -561,7 +561,7 @@ while( true )
     if( ( bu[8009c560] == d ) || ( bu[8009c560] == 10 ) )
     {
         A0 = 0;
-        system_psyq_wait_frames(); // wait
+        system_psyq_vsync(); // wait
 
         return;
     }
@@ -802,7 +802,7 @@ while( true )
     func138ec(); // fade update
 
     A0 = 1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     [80114478] = w(V0);
 
     do
@@ -812,18 +812,18 @@ while( true )
     } while( V0 != 0 )
 
     A0 = 1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     [8011447c] = w(V0);
 
     if( ( hu[80114488] != 0 ) && ( w[800965e4] != 1 ) )
     {
         A0 = 3;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
     }
     else
     {
         A0 = 2;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
     }
 
     if( ( S3 << 10 ) != 0 )

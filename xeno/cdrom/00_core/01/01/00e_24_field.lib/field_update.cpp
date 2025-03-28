@@ -611,12 +611,12 @@ if( h[800af586] != 0 )
 // field_update_and_render()
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800ad074] = w(0); // delta time from prev update
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 S1 = V0;
 
 func73050(); // move and update matrixes here here
@@ -680,7 +680,7 @@ if( w[800c1b60] == 0 ) // PC HDD MODE
 }
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [800ad078] = w(V0);
 
 A0 = 0;
@@ -693,7 +693,7 @@ A1 = w[800acfe0]; // rb
 field_message_update_add_to_render();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 80074D64	jal    func32adc [$80032adc]
 
@@ -738,7 +738,7 @@ system_psyq_put_drawenv();
 if( w[800c1b60] == 0 ) // PC HDD MODE
 {
     A0 = 1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     [800ad074] = w(V0);
 }
 
@@ -790,7 +790,7 @@ system_psyq_draw_otag();
 do
 {
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 } while( V0 < S1 + w[800b1650] + 2 );
 ////////////////////////////////
 
@@ -813,7 +813,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [SP + 10] = h(140);
 [SP + 14] = h(140);
@@ -1950,7 +1950,7 @@ A0 = 0; // wait for termination
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames(); // get time and sync
+system_psyq_vsync(); // get time and sync
 ////////////////////////////////
 
 
@@ -2048,7 +2048,7 @@ loop76e7c:	; 80076E7C
 // field_update_delta_time()
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [800ad07c] = w(V0);
 ////////////////////////////////
 

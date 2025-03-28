@@ -19,7 +19,7 @@ A2 = 0; // 0: Normal speed.
 system_psyq_cd_control_b();
 
 A0 = 3;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 // load "\MINT\DISKINFO.CNF;1" into 800698f0
 // and return bu[800698f7] - 30 (disk number)
@@ -227,7 +227,7 @@ while( true )
     if( V0 == 0 ) return 0;
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 ////////////////////////////////
 
@@ -259,7 +259,7 @@ while( true )
     }
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 ////////////////////////////////
 
@@ -292,7 +292,7 @@ while( true )
     }
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 ////////////////////////////////
 
@@ -367,7 +367,7 @@ A2 = 0;
 system_psyq_cd_control_b();
 
 A0 = 3;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 8; // CdlStop
 A1 = 0;
@@ -408,7 +408,7 @@ S0 = 258;
 do
 {
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     S0 -= 1;
 
@@ -468,7 +468,7 @@ A2 = SP + 10;
 system_psyq_cd_control_b();
 
 A0 = 3;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [80071a60] = w(0);
 
@@ -649,7 +649,7 @@ else if( V0 == 5 ) // CdlDiskError
 else // CdlNoIntr
 {
     A0 = -1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_vsync(); // wait
     time = V0;
 
     if( w[8006e0f0] != time )
@@ -720,7 +720,7 @@ else if( V0 == 5 ) // CdlDiskError
 else // CdlNoIntr
 {
     A0 = -1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_vsync(); // wait
     time = V0;
 
     if( w[8006e0f0] != time )
@@ -837,7 +837,7 @@ else if( V0 == 5 ) // CdlDiskError
 else // CdlNoIntr
 {
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     time = V0
 
     if( w[8006e0f0] != time )
@@ -966,7 +966,7 @@ else if( V0 == 5 ) // CdlDiskError
 else // CdlNoIntr
 {
     A0 = -1;
-    system_psyq_wait_frames(); // wait
+    system_psyq_vsync(); // wait
     time = V0;
 
     if( w[8006e0f0] != time )
@@ -1123,7 +1123,7 @@ L34ca4:	; 80034CA4
 system_execute_AKAO();
 
 A0 = 3c;
-system_psyq_wait_frames();
+system_psyq_vsync();
 ////////////////////////////////
 
 
@@ -1864,7 +1864,7 @@ do
     } while( V0 == 0 )
 
     A0 = 3;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = 1e0;
     system_psyq_cd_read2();

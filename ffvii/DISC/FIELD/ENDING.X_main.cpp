@@ -382,11 +382,11 @@ V0 = 0001;
 [AT + f410] = w(V0);
 
 loopa05a0:	; 800A05A0
-800A05A0	jal    $system_psyq_wait_frames
+800A05A0	jal    $system_psyq_vsync
 A0 = 0001;
 800A05A8	jal    $system_psyq_draw_sync
 A0 = 0;
-800A05B0	jal    $system_psyq_wait_frames
+800A05B0	jal    $system_psyq_vsync
 A0 = 0001;
 800A05B8	lui    a0, $800b
 A0 = w[A0 + f40c];
@@ -440,7 +440,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 
 system_cdrom_read_chain();
@@ -470,7 +470,7 @@ A0 = A0 + S1;
 system_psyq_draw_otag();
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 800A06F8	bne    s0, zero, La0718 [$800a0718]
 
@@ -637,7 +637,7 @@ La0778:	; 800A0778
 800A09A0	bne    v0, zero, La0778 [$800a0778]
 
 A0 = 4;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 1;
 system_psyq_reset_graph();
@@ -1202,7 +1202,7 @@ V0 = 0001;
 // funca17c0()
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = V0;
 system_bios_srand();
@@ -2113,7 +2113,7 @@ while( true )
     if( V0 != -1 ) break;
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 
 if( V0 != 0 )
@@ -2149,7 +2149,7 @@ while( true )
     if( V0 != -1 ) break;
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 
 800A2578	beq    v0, zero, La2590 [$800a2590]
@@ -2263,7 +2263,7 @@ A0 = 0;
 system_psyq_draw_sync();
 
 A0 = S0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 V0 = w[800af408];
 A0 = V0 << 02;

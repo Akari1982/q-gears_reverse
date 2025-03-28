@@ -19,13 +19,14 @@ V0 = w[V0 + 1c];
 if( V0 != 0 )
 {
     A0 = 0;
-    func15c58;
+    system_psyq_vsync();
 
     V1 = w[8006794c];
     V0 = w[V1 + 1c];
     frame_id = bu[V0 + 8]; // frame buffer index
+
     A0 = w[V1 + c] + frame_id * 14;
-    8001D00C	jal    func138d4 [$800138d4]
+    system_psyq_put_dispenv();
 
     S1 = 0;
     A0 = 80073c88;
@@ -74,7 +75,7 @@ if( V0 != 0 )
 
     L1d0d0:	; 8001D0D0
     A0 = 80073c88;
-    8001D0D4	jal    func13708 [$80013708]
+    system_psyq_put_drawenv();
 
     A0 = 0;
     system_psyq_draw_sync();
@@ -907,97 +908,4 @@ if (A0 < 8)
 {
     [8007bba8 + A0 * 4] = w(A1);
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func15c58
-V0 = w[800667b4];
-A1 = w[800667b8];
-S0 = w[V0];
-
-loop15c7c:	; 80015C7C
-    V0 = w[A1];
-    [SP + 10] = w(V0);
-    V1 = w[SP + 10];
-    V0 = w[A1];
-80015C94	bne    v1, v0, loop15c7c [$80015c7c]
-
-V0 = w[SP + 10];
-V1 = w[800667bc];
-V0 = V0 - V1;
-S1 = V0 & ffff;
-
-if( A0 < 0 )
-{
-    return w[800678ec];
-}
-
-if( A0 == 1 )
-{
-    return S1;
-}
-
-if( A0 <= 0 )
-{
-    80015CDC	lui    v0, $8006
-    80015CE0	lw     v0, $67c0(v0)
-    80015CE4	nop
-    80015CE8	addiu  v0, v0, $ffff (=-$1)
-    80015CF0	addu   v0, v0, a0
-}
-else
-{
-    80015CF4	lui    v0, $8006
-    80015CF8	lw     v0, $67c0(v0)
-}
-
-
-80015CFC	blez   a0, L15d08 [$80015d08]
-80015D00	addu   a1, zero, zero
-80015D04	addiu  a1, a0, $ffff (=-$1)
-
-L15d08:	; 80015D08
-80015D08	jal    func15dd0 [$80015dd0]
-80015D0C	addu   a0, v0, zero
-80015D10	lui    v0, $8006
-80015D14	lw     v0, $67b4(v0)
-80015D18	nop
-80015D1C	lw     s0, $0000(v0)
-80015D20	lui    a0, $8006
-80015D24	lw     a0, $78ec(a0)
-80015D28	addiu  a1, zero, $0001
-80015D2C	jal    func15dd0 [$80015dd0]
-80015D30	addiu  a0, a0, $0001
-80015D34	lui    v0, $0040
-80015D38	and    v0, s0, v0
-if (V0 != 0)
-{
-    V1 = w[800667b4];
-    V0 = w[V1];
-    V0 = S0 XOR V0;
-    A0 = 80000000;
-    if (V0 >= 0)
-    {
-        loop15d64:	; 80015D64
-            V0 = w[V1];
-            V0 = S0 XOR V0;
-            V0 = V0 & A0;
-        80015D74	beq    v0, zero, loop15d64 [$80015d64]
-    }
-}
-
-V0 = w[800678ec];
-A0 = w[800667b8];
-[800667c0] = w(V0);
-
-loop15d94:	; 80015D94
-    V0 = w[A0];
-    [800667bc] = w(V0);
-    V1 = w[800667bc];
-    V0 = w[A0];
-80015DB0	bne    v1, v0, loop15d94 [$80015d94]
-
-return S1;
 ////////////////////////////////

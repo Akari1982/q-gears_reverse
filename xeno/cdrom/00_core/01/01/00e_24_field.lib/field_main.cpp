@@ -60,7 +60,7 @@ system_memory_free();
 // func7743c()
 
 A0 = 1; // delta
-system_psyq_wait_frames();
+system_psyq_vsync();
 [800ad074] = w(V0);
 
 func73670(); // clear otagr
@@ -264,7 +264,7 @@ while( true )
                     system_draw_sync();
 
                     A0 = 2;
-                    system_psyq_wait_frames(); // get time
+                    system_psyq_vsync(); // get time
 
                     field_update_buttons();
 
@@ -639,7 +639,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames(); // get time
+system_psyq_vsync(); // get time
 
 func6f740();
 

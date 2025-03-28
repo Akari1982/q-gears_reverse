@@ -1667,7 +1667,7 @@ for( int i = 0 i < 3; ++i )
 // add syn and cos movement to snow texture
 // it always moving down the screen just shifting left and right
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 frame = V0;
 
 A0 = (frame << 4) & ff0;

@@ -3469,7 +3469,7 @@
 // system_bios_new_exception_handler
 8004B3BC-8004B3F0
 ////////////////////////////////
-// system_psyq_wait_frames
+// system_psyq_vsync
 8004B3F4-8004B538
 ////////////////////////////////
 // func4b53c

@@ -5967,7 +5967,7 @@ V0 = T2 + 0001;
 system_reset_check();
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A2 = 800c4140;
 S2 = 800cc220;
@@ -6068,7 +6068,7 @@ while( hu[80058b30] != -1 )
 }
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800d27fc] = w(V0);
 
@@ -6076,12 +6076,12 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 1;
-system_psyq_wait_frames()
+system_psyq_vsync()
 
 [800d2800] = w(V0);
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 V1 = hu[800d2804];
 A0 = hu[80058838];
@@ -6111,7 +6111,7 @@ else
     A0 = A0 + 1;
 }
 
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = w[800cc220] + 5c;
 system_psyq_put_dispenv();
@@ -6195,7 +6195,7 @@ if( bu[80058852] != S0 )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     system_enter_critical_section();
 
@@ -6217,7 +6217,7 @@ funcbe380();
 if( hu[800cc228] & 0100 )
 {
     A0 = 8;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     [80058b30] = h(0);
 }

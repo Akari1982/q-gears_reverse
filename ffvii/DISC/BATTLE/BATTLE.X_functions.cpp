@@ -482,7 +482,7 @@ if( hu[8016376a] & 0002 )
 }
 
 A0 = 1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [800fa9b8] = w(V0);
 
 funcd25e8(); // perform images operations (load store move clear)

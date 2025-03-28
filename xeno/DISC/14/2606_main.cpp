@@ -620,7 +620,7 @@ while( work != 0 )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800cc220];
     system_psyq_put_drawenv();

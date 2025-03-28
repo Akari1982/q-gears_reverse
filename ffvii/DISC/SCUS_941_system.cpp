@@ -70,8 +70,7 @@ system_bios_stop_pad();
 
 
 ////////////////////////////////
-// system_psyq_wait_frames()
-// VSync
+// system_psyq_vsync()
 // Wait for the next vertical blank, or return the vertical blank counter value.
 // libetc.h
 

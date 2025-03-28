@@ -318,7 +318,7 @@ while( true )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800767b0];
     system_psyq_put_drawenv();
@@ -1868,7 +1868,7 @@ L71b4c:	; 80071B4C
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800767b0];
     system_psyq_put_drawenv();
@@ -1905,7 +1905,7 @@ if( V0 == 0 )
     system_cdrom_action_sync();
 
     A0 = 3;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     do
     {
@@ -2149,7 +2149,7 @@ switch( V1 )
         system_cdrom_action_sync();
 
         A0 = 3;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
 
         A0 = 17;
         A1 = SP + 18;
@@ -2509,7 +2509,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 0;
 system_psyq_set_disp_mask();
@@ -2627,7 +2627,7 @@ system_psyq_put_dispenv();
 if( w[80076ae0] != 0 ) // CD-ROM MODE2 or PC HDD MODE
 {
     A0 = 2; // wait 2 frame
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = 0;
     system_controller_get_pressed_button_mask();
@@ -3175,7 +3175,7 @@ while( true )
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800767b0];
     system_psyq_put_drawenv();
@@ -4299,7 +4299,7 @@ L74ce8:	; 80074CE8
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800767b0];
     system_psyq_put_drawenv();
@@ -4595,7 +4595,7 @@ L75474:	; 80075474
     system_draw_sync();
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = w[800767b0];
     system_psyq_put_drawenv();
@@ -4668,7 +4668,7 @@ if( w[80076ae4] != 0 )
 func75b18(); // play movie
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = SP + 28;
 A1 = 0;
@@ -4680,7 +4680,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 V1 = w[80076ae4];
 
@@ -4790,7 +4790,7 @@ if( V0 == 18 )
 }
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [SP + c8] = h(h[8006fb70 + 0]); // 0 x
 [SP + ca] = h(h[8006fb70 + 2]); // 0 y
@@ -4807,7 +4807,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [800766a8] = w(0);
 [800766ac] = w(0);
@@ -4891,13 +4891,13 @@ while( true )
             for( int i = 0; i < S6; ++i )
             {
                 A0 = 1;
-                system_psyq_wait_frames();
+                system_psyq_vsync();
                 S3 = V0;
 
                 mdec_update();
 
                 A0 = 1;
-                system_psyq_wait_frames();
+                system_psyq_vsync();
                 V1 = V0;
 
                 if( ( 1 + i * 2 ) < 20 )
@@ -4926,7 +4926,7 @@ while( true )
     system_reset_check(); // check game reset (all buttons pressed)
 
     A0 = 0;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     V0 = w[800766ac];
     A0 = FP + V0 * 138;
@@ -4956,7 +4956,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [SP + 2d0] = h(0);
 [SP + 2d2] = h(f0);
@@ -4972,7 +4972,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = FP + 138;
 system_psyq_put_dispenv();

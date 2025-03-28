@@ -849,7 +849,7 @@ mode = S5 = A0; // If mode is 0, the wait for a data transfer to be completed. I
 result_ptr = S6 = A1;
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [8006e138] = w(V0 + 3c0);
 [8006e13c] = w(0);
 [8006e140] = w(80010834); // "CD_sync"
@@ -858,7 +858,7 @@ system_psyq_wait_frames();
 
 L3ea48:	; 8003EA48
     A0 = -1;
-    8003EA48	jal    system_psyq_wait_frames [$8003cedc]
+    8003EA48	jal    system_psyq_vsync [$8003cedc]
 
     V1 = w[8006e138] < V0;
     8003EA60	bne    v1, zero, L3ea90 [$8003ea90]
@@ -951,7 +951,7 @@ return 0;
 S7 = A0;
 S4 = A1;
 8003EC74	addiu  a0, zero, $ffff (=-$1)
-8003EC90	jal    system_psyq_wait_frames [$8003cedc]
+8003EC90	jal    system_psyq_vsync [$8003cedc]
 
 8003EC98	lui    s5, $8005
 S5 = S5 + 16cc;
@@ -969,7 +969,7 @@ V0 = 8001083c; // "CD_ready"
 [AT + e140] = w(V0);
 
 L3ecd4:	; 8003ECD4
-8003ECD4	jal    system_psyq_wait_frames [$8003cedc]
+8003ECD4	jal    system_psyq_vsync [$8003cedc]
 8003ECD8	addiu  a0, zero, $ffff (=-$1)
 8003ECDC	lui    v1, $8007
 V1 = w[V1 + e138];
@@ -1211,7 +1211,7 @@ cd_1801 = w[800518f0];
 if( S0 != 0 ) return 0;
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [8007e138] = w(V0 + 3c0);
 [8006e13c] = w(0);
 
@@ -1221,7 +1221,7 @@ if( bu[80051904] == 0 )
 {
     loop3f14c:	; 8003F14C
         A0 = -1;
-        system_psyq_wait_frames();
+        system_psyq_vsync();
 
         V1 = w[8006e138] < V0;
         8003F164	bne    v1, zero, L3f194 [$8003f194]
@@ -1548,7 +1548,7 @@ return -1;
 
 S2 = A0;
 8003F83C	addiu  a0, zero, $ffff (=-$1)
-8003F84C	jal    system_psyq_wait_frames [$8003cedc]
+8003F84C	jal    system_psyq_vsync [$8003cedc]
 
 8003F854	lui    s3, $8005
 S3 = S3 + 164c;
@@ -1564,7 +1564,7 @@ V0 = 800108b4; // CD_datasync
 [8006e140] = w(V0);
 
 loop3f890:	; 8003F890
-8003F890	jal    system_psyq_wait_frames [$8003cedc]
+8003F890	jal    system_psyq_vsync [$8003cedc]
 8003F894	addiu  a0, zero, $ffff (=-$1)
 8003F898	lui    v1, $8007
 V1 = w[V1 + e138];
@@ -2593,7 +2593,7 @@ for( int i = 0; i < a; ++i )
         do
         {
             A0 = 1e;
-            system_psyq_wait_frames();
+            system_psyq_vsync();
 
             A0 = 13; // CdlGetTN
             A1 = 0;
@@ -2606,7 +2606,7 @@ for( int i = 0; i < a; ++i )
     }
 
     A0 = 1e;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     A0 = 13; // CdlGetTN
     A1 = 0;
@@ -3748,7 +3748,7 @@ V1 = V1 + 1a34;
 [V1 + 0000] = w(V0);
 
 L419ec:	; 800419EC
-800419EC	jal    system_psyq_wait_frames [$8003cedc]
+800419EC	jal    system_psyq_vsync [$8003cedc]
 800419F0	addiu  a0, zero, $ffff (=-$1)
 800419F4	lui    v1, $8005
 V1 = V1 + 1a38;
@@ -3762,7 +3762,7 @@ A0 = 1;
 func41afc();
 
 L41a1c:	; 80041A1C
-80041A1C	jal    system_psyq_wait_frames [$8003cedc]
+80041A1C	jal    system_psyq_vsync [$8003cedc]
 80041A20	addiu  a0, zero, $ffff (=-$1)
 80041A24	lui    v1, $8005
 V1 = w[V1 + 1a3c];
@@ -3779,7 +3779,7 @@ V0 = w[80051a34];
 80041A50	nop
 80041A54	beq    v0, zero, L41a80 [$80041a80]
 80041A58	nop
-80041A5C	jal    system_psyq_wait_frames [$8003cedc]
+80041A5C	jal    system_psyq_vsync [$8003cedc]
 80041A60	addiu  a0, zero, $ffff (=-$1)
 80041A64	lui    v1, $8005
 V1 = w[V1 + 1a3c];
@@ -3839,7 +3839,7 @@ system_cdrom_get_status_code();
 if( V0 & 10 )
 {
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 
     if( ( V0 & 3f ) == 0 )
     {
@@ -3852,7 +3852,7 @@ if( V0 & 10 )
     system_psyq_cd_control_f();
 
     A0 = -1;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
     [80051a3c] = w(V0);
 
     [80051a34] = w(-1);
@@ -3921,7 +3921,7 @@ system_psyq_cd_control_f();
 [80051a34] = w(w[80051a20]);
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [80051a38] = w(V0);
 
 return w[80051a34];
@@ -4003,7 +4003,7 @@ system_psyq_cd_ready_callback();
 [80051a48] = w(V0);
 
 A0 = -1;
-system_psyq_wait_frames();
+system_psyq_vsync();
 [80051a3c] = w(V0);
 
 system_cdrom_get_status_code();
@@ -4037,7 +4037,7 @@ S3 = A1;
 S1 = 80051a3c;
 
 loop41e58:	; 80041E58
-80041E58	jal    system_psyq_wait_frames [$8003cedc]
+80041E58	jal    system_psyq_vsync [$8003cedc]
 80041E5C	addiu  a0, zero, $ffff (=-$1)
 V1 = w[S1 + 0000];
 80041E64	nop
@@ -4049,7 +4049,7 @@ V0 = w[S1 + fff8];
 80041E7C	nop
 80041E80	bltz   v0, L41ea8 [$80041ea8]
 80041E84	nop
-80041E88	jal    system_psyq_wait_frames [$8003cedc]
+80041E88	jal    system_psyq_vsync [$8003cedc]
 80041E8C	addiu  a0, zero, $ffff (=-$1)
 V1 = w[S1 + fffc];
 80041E94	nop

@@ -2970,7 +2970,7 @@ else
 // system_gpu_dma_timeout_init()
 
 A0 = -1; // return number of frames
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 [80056088] = w(V0 + f0);
 [8005608c] = w(0);
@@ -2987,7 +2987,7 @@ gpu10f0 = w[80056060]; // 1f8010f0 DPCR - DMA Control register
 gpu1814 = w[80056044]; // 1f801814 GPUSTAT Read GPU Status Register
 
 A0 = -1; // return number of frames
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 if( w[80056088] >= V0 )
 {

@@ -538,7 +538,7 @@ if( S0 == 0 || S0 == -1 )
     system_cdrom_action_sync();
 
     A0 = 3; // wait 3 frame
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 // init devkit
 else
@@ -633,7 +633,7 @@ if( w[8004f4ec] == 0 ) // CD-ROM MODE1
     system_cdrom_action_sync();
 
     A0 = 3;
-    system_psyq_wait_frames();
+    system_psyq_vsync();
 }
 
 A0 = 0;

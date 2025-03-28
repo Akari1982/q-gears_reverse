@@ -1,5 +1,5 @@
 ////////////////////////////////
-// system_psyq_wait_frames()
+// system_psyq_vsync()
 
 // if A0 == -1 - return value from 80058000
 // if A0 == 1 - return delta time from prev update

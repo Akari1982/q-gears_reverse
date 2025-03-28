@@ -1147,7 +1147,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 2;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = w[800c3740];
 A1 = 0;

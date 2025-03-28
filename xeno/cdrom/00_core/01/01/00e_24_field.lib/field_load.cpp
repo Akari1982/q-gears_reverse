@@ -1278,7 +1278,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 system_psyq_init_geom();
 
@@ -1347,7 +1347,7 @@ func86360();
 [800b9a7a] = b(1);
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = 800b9b1c;
 system_psyq_put_dispenv();

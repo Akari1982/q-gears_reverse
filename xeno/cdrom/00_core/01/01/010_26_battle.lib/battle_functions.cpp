@@ -65774,7 +65774,7 @@ SP = SP + 0004;
 SP = w[SP + 0000];
 800B6FEC	jal    $system_draw_sync
 A0 = 0;
-800B6FF4	jal    $system_psyq_wait_frames
+800B6FF4	jal    $system_psyq_vsync
 A0 = 0002;
 S0 = 800cc254;
 V1 = w[S0 + 0000];

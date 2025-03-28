@@ -2727,7 +2727,7 @@ A0 = 0;
 system_draw_sync();
 
 A0 = 0;
-system_psyq_wait_frames();
+system_psyq_vsync();
 
 A0 = w[rdata + 1d4];
 system_psyq_put_drawenv();
@@ -3868,7 +3868,7 @@ V1 = w[A0 + 4f74];
 S0 = 003b;
 
 loop1c8c98:	; 801C8C98
-801C8C98	jal    $system_psyq_wait_frames
+801C8C98	jal    $system_psyq_vsync
 A0 = 0;
 801C8CA0	addiu  s0, s0, $ffff (=-$1)
 801C8CA4	bne    s0, zero, loop1c8c98 [$801c8c98]
@@ -4357,7 +4357,7 @@ V0 = 00ff;
 S0 = 003b;
 
 loop1c93a4:	; 801C93A4
-801C93A4	jal    $system_psyq_wait_frames
+801C93A4	jal    $system_psyq_vsync
 A0 = 0;
 801C93AC	addiu  s0, s0, $ffff (=-$1)
 801C93B0	bne    s0, zero, loop1c93a4 [$801c93a4]
@@ -8048,7 +8048,7 @@ V0 = bu[V0 + 4fe4];
 S0 = 003b;
 
 loop1cc8b8:	; 801CC8B8
-801CC8B8	jal    $system_psyq_wait_frames
+801CC8B8	jal    $system_psyq_vsync
 A0 = 0;
 801CC8C0	addiu  s0, s0, $ffff (=-$1)
 801CC8C4	bne    s0, zero, loop1cc8b8 [$801cc8b8]
@@ -21614,7 +21614,7 @@ SP = SP + 0038;
 [SP + 0010] = w(RA);
 801D9BDC	jal    func1c88a8 [$801c88a8]
 801D9BE0	nop
-801D9BE4	jal    $system_psyq_wait_frames
+801D9BE4	jal    $system_psyq_vsync
 A0 = 0;
 801D9BEC	jal    $8004e63c
 A0 = 0001;
@@ -21624,7 +21624,7 @@ A0 = 0001;
 801D9C00	nop
 801D9C04	jal    $system_draw_sync
 A0 = 0;
-801D9C0C	jal    $system_psyq_wait_frames
+801D9C0C	jal    $system_psyq_vsync
 A0 = 0;
 801D9C14	jal    $8004034c
 801D9C18	nop
@@ -21729,7 +21729,7 @@ V0 = 0001;
 801D9DC4	nop
 801D9DC8	jal    $system_draw_sync
 A0 = 0;
-801D9DD0	jal    $system_psyq_wait_frames
+801D9DD0	jal    $system_psyq_vsync
 A0 = 0;
 801D9DD8	jal    $8004034c
 801D9DDC	nop
@@ -21839,7 +21839,7 @@ V0 = w[V0 + 032c];
 [801ea720] = w(0);
 801D9FA0	jal    $system_draw_sync
 A0 = 0;
-801D9FA8	jal    $system_psyq_wait_frames
+801D9FA8	jal    $system_psyq_vsync
 A0 = 0;
 801D9FB0	jal    $8004034c
 801D9FB4	nop
@@ -38069,11 +38069,11 @@ A0 = 0;
 A0 = 0;
 801E9144	jal    $system_cdrom_action_sync
 A0 = 0;
-801E914C	jal    $system_psyq_wait_frames
+801E914C	jal    $system_psyq_vsync
 A0 = 0003;
 
 loop1e9154:	; 801E9154
-801E9154	jal    $system_psyq_wait_frames
+801E9154	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0008;
 801E9160	lui    a2, $801f
@@ -38177,7 +38177,7 @@ A1 = SP + 0028;
 801E92E8	addiu  s0, s0, $a714 (=-$58ec)
 
 loop1e92ec:	; 801E92EC
-801E92EC	jal    $system_psyq_wait_frames
+801E92EC	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0001;
 A1 = 0;
@@ -38190,7 +38190,7 @@ V0 = V0 & 0010;
 801E9314	nop
 
 loop1e9318:	; 801E9318
-801E9318	jal    $system_psyq_wait_frames
+801E9318	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0001;
 A1 = 0;
@@ -38203,7 +38203,7 @@ V0 = V0 & 0010;
 801E9340	nop
 
 loop1e9344:	; 801E9344
-801E9344	jal    $system_psyq_wait_frames
+801E9344	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0001;
 A1 = 0;
@@ -38218,7 +38218,7 @@ A0 = V0;
 801E9374	nop
 
 loop1e9378:	; 801E9378
-801E9378	jal    $system_psyq_wait_frames
+801E9378	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0013;
 801E9384	lui    a2, $801f
@@ -38229,7 +38229,7 @@ A1 = 0;
 801E9398	nop
 
 loop1e939c:	; 801E939C
-801E939C	jal    $system_psyq_wait_frames
+801E939C	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0002;
 801E93A8	lui    a2, $801f
@@ -38267,9 +38267,9 @@ L1e9418:	; 801E9418
 A0 = 00a0;
 801E9420	jal    $system_cdrom_action_sync
 A0 = 0;
-801E9428	jal    $system_psyq_wait_frames
+801E9428	jal    $system_psyq_vsync
 A0 = 0003;
-801E9430	jal    $system_psyq_wait_frames
+801E9430	jal    $system_psyq_vsync
 A0 = 0003;
 A0 = 0017;
 A1 = SP + 0018;
