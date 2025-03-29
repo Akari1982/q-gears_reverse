@@ -33,7 +33,7 @@ A0 = S0;
 A1 = 0;
 80012DA0	jal    func15c00 [$80015c00]
 A2 = 0080;
-80012DA8	jal    func15ea8 [$80015ea8]
+80012DA8	jal    system_interrupts_timer_dma_initialize [$80015ea8]
 80012DAC	nop
 80012DB0	lui    v0, $00ff
 A0 = w[80066654];
@@ -145,7 +145,7 @@ V0 = w[V0 + 0034];
 A0 = 0001;
 A0 = 0002;
 A1 = 0;
-80012F78	jal    func15f08 [$80015f08]
+80012F78	jal    system_dma_additional_callback [$80015f08]
 [S1 + 0000] = b(S0);
 V0 = S2;
 
@@ -756,7 +756,7 @@ V0 = V0 >> 10;
 800139C8	nop
 
 L139cc:	; 800139CC
-800139CC	jal    func1699c [$8001699c]
+800139CC	jal    system_psyq_get_video_mode [$8001699c]
 800139D0	nop
 [S1 + 0012] = b(V0);
 V0 = V0 & 00ff;
@@ -866,7 +866,7 @@ V1 = bu[S1 + 0012];
 80013B2C	nop
 
 L13b30:	; 80013B30
-80013B30	jal    func1699c [$8001699c]
+80013B30	jal    system_psyq_get_video_mode [$8001699c]
 80013B34	nop
 [S1 + 0012] = b(V0);
 V0 = V0 & 00ff;
@@ -2250,7 +2250,7 @@ V0 = V0 + 0001;
 V0 = V0 & 003f;
 80014E84	beq    v0, v1, loop14e54 [$80014e54]
 80014E88	nop
-80014E8C	jal    func16024 [$80016024]
+80014E8C	jal    system_set_interrupt_mask_register [$80016024]
 A0 = 0;
 A0 = 8006665c;
 [8006678c] = w(V0);
@@ -2295,14 +2295,14 @@ A0 = S0;
 80014F24	jalr   s3 ra
 A1 = S2;
 A0 = w[8006678c];
-80014F34	jal    func16024 [$80016024]
+80014F34	jal    system_set_interrupt_mask_register [$80016024]
 80014F38	nop
 80014F3C	j      L150b4 [$800150b4]
 V0 = 0;
 
 L14f44:	; 80014F44
 A1 = 800150d0;
-80014F4C	jal    func15f08 [$80015f08]
+80014F4C	jal    system_dma_additional_callback [$80015f08]
 A0 = 0002;
 80014F54	beq    s1, zero, L15000 [$80015000]
 A2 = 0;
@@ -2381,7 +2381,7 @@ A0 = w[8006678c];
 V0 = V0 + 0001;
 V0 = V0 & 003f;
 80015084	lui    at, $8006
-80015088	jal    func16024 [$80016024]
+80015088	jal    system_set_interrupt_mask_register [$80016024]
 [AT + 6784] = w(V0);
 80015090	jal    func150d0 [$800150d0]
 80015094	nop
@@ -2415,7 +2415,7 @@ V0 = w[V0 + 0000];
 V0 = V0 & S0;
 800150F4	bne    v0, zero, L1531c [$8001531c]
 V0 = 0001;
-800150FC	jal    func16024 [$80016024]
+800150FC	jal    system_set_interrupt_mask_register [$80016024]
 A0 = 0;
 A0 = w[80066784];
 V1 = w[80066788];
@@ -2443,7 +2443,7 @@ V0 = w[80066668];
 80015170	nop
 80015174	bne    v0, zero, L15184 [$80015184]
 A0 = 0002;
-8001517C	jal    func15f08 [$80015f08]
+8001517C	jal    system_dma_additional_callback [$80015f08]
 A1 = 0;
 
 L15184:	; 80015184
@@ -2508,7 +2508,7 @@ V0 = V0 & S0;
 
 L15280:	; 80015280
 A0 = w[80066790];
-80015288	jal    func16024 [$80016024]
+80015288	jal    system_set_interrupt_mask_register [$80016024]
 8001528C	nop
 V1 = w[80066784];
 V0 = w[80066788];
@@ -2558,7 +2558,7 @@ SP = SP + 0020;
 [SP + 0010] = w(S0);
 S0 = A0;
 [SP + 0014] = w(RA);
-80015340	jal    func16024 [$80016024]
+80015340	jal    system_set_interrupt_mask_register [$80016024]
 A0 = 0;
 [80066788] = w(0);
 V1 = w[80066788];
@@ -2617,7 +2617,7 @@ V1 = w[80066764];
 
 L15438:	; 80015438
 A0 = w[80066794];
-80015440	jal    func16024 [$80016024]
+80015440	jal    system_set_interrupt_mask_register [$80016024]
 80015444	nop
 V0 = S0 & 0007;
 8001544C	bne    v0, zero, L1545c [$8001545c]
@@ -2788,7 +2788,7 @@ A2 = w[A2 + 0000];
 A3 = w[V0 + 0000];
 80015678	jal    system_bios_printf [$80015c38]
 A1 = A1 & 003f;
-80015680	jal    func16024 [$80016024]
+80015680	jal    system_set_interrupt_mask_register [$80016024]
 A0 = 0;
 [80066788] = w(0);
 V1 = w[80066788];
@@ -2810,7 +2810,7 @@ V1 = w[80066764];
 800156EC	lui    v0, $0100
 [V1 + 0000] = w(V0);
 A0 = w[80066794];
-800156FC	jal    func16024 [$80016024]
+800156FC	jal    system_set_interrupt_mask_register [$80016024]
 80015700	nop
 80015704	j      L15710 [$80015710]
 80015708	addiu  v0, zero, $ffff (=-$1)
@@ -2916,7 +2916,7 @@ V0 = V0 & V1;
 80015860	beq    v0, zero, loop15818 [$80015818]
 80015864	nop
 A1 = 80015bd8;
-80015870	jal    func15f08 [$80015f08]
+80015870	jal    system_dma_additional_callback [$80015f08]
 A0 = 0002;
 V0 = w[80066654];
 A0 = S0;
@@ -2979,7 +2979,7 @@ V0 = V0 & V1;
 8001594C	beq    v0, zero, loop15904 [$80015904]
 80015950	nop
 A1 = 80015bd8;
-8001595C	jal    func15f08 [$80015f08]
+8001595C	jal    system_dma_additional_callback [$80015f08]
 A0 = 0002;
 V0 = w[80066654];
 A0 = S0;
@@ -3044,7 +3044,7 @@ V0 = V0 & V1;
 80015A40	beq    v0, zero, loop159f8 [$800159f8]
 80015A44	nop
 A1 = 80015bd8;
-80015A50	jal    func15f08 [$80015f08]
+80015A50	jal    system_dma_additional_callback [$80015f08]
 A0 = 0002;
 V0 = h[S0 + 0004];
 80015A5C	nop
@@ -3133,7 +3133,7 @@ V0 = V0 & V1;
 80015B90	beq    v0, zero, loop15b48 [$80015b48]
 80015B94	nop
 A1 = 80015bd8;
-80015BA0	jal    func15f08 [$80015f08]
+80015BA0	jal    system_dma_additional_callback [$80015f08]
 A0 = 0002;
 V0 = w[80066654];
 80015BB0	nop
@@ -3157,7 +3157,7 @@ SP = SP + 0018;
 80015BD8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
 A1 = 800150d0;
-80015BE8	jal    func15f08 [$80015f08]
+80015BE8	jal    system_dma_additional_callback [$80015f08]
 A0 = 0002;
 RA = w[SP + 0010];
 SP = SP + 0018;

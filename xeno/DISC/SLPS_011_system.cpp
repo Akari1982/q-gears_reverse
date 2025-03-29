@@ -406,7 +406,7 @@ return S4;
 
 ////////////////////////////////
 // system_interrupts_timer_dma_store()
-system_interrupts_timer_dma_initialize_inter
+
 if( hu[80056f44] != 0 )
 {
     system_enter_critical_section();
