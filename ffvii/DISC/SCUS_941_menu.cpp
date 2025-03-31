@@ -3612,7 +3612,7 @@ system_menu_draw_window();
 
 
 ////////////////////////////////
-// func21c4c
+// func21c4c()
 
 S1 = A0;
 S2 = A1;
@@ -3621,46 +3621,43 @@ S3 = A2;
 A0 = S3;
 func2603c();
 
-A0 = S1 + 0008;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-S0 = S2 + 0005;
-A1 = S0 << 10;
-A1 = A1 >> 10;
-A2 = 0080;
-A3 = 0020;
-V1 = 0010;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-[SP + 0010] = w(V1);
-[SP + 0014] = w(V1);
-[SP + 0018] = w(V0);
-[SP + 001c] = w(0);
+S0 = S2 + 5;
+
+A0 = S1 + 8;
+A1 = S0;
+A2 = 80;
+A3 = 20;
+A4 = 10;
+A5 = 10;
+A6 = V0;
+A7 = 0;
 system_menu_draw_textured_rect();
 
+[SP + 20] = h(0);
+[SP + 22] = h(0);
+[SP + 24] = h(100);
+[SP + 26] = h(100);
+
 A0 = 0;
-A1 = 0001;
-A2 = 007f;
-A3 = SP + 0020;
-V0 = 0100;
-[SP + 0020] = h(0);
-[SP + 0022] = h(0);
-[SP + 0024] = h(V0);
-[SP + 0026] = h(V0);
+A1 = 1;
+A2 = 7f;
+A3 = SP + 20;
 system_menu_set_draw_mode();
 
-80021CE0	jal    func21258 [$80021258]
 A0 = S3;
+func21258();
+
 A0 = S1 + 0018;
 A1 = S0;
 A2 = V0;
-80021CF4	jal    system_menu_draw_string [$80026f44]
-A3 = 0007;
+A3 = 7;
+system_menu_draw_string();
+
 A0 = S1 + 0038;
 A1 = S2 + 0012;
 A2 = 80049338;
-80021D0C	jal    system_menu_draw_string [$80026f44]
-A3 = 0006;
+A3 = 6;
+system_menu_draw_string();
 
 S0 = SP + 28;
 
@@ -3879,70 +3876,63 @@ V0 = bu[GP + 0184];
 [GP + 0184] = b(V0);
 
 L220b4:	; 800220B4
-A0 = S3 + 009e;
-A0 = A0 << 10;
-A0 = A0 >> 10;
 S2 = S7 + 0008;
-A1 = S2;
-A2 = 00f8;
-A3 = 0008;
-S0 = 0008;
-S1 = 0007;
-[SP + 0010] = w(S0);
-[SP + 0014] = w(S0);
-[SP + 0018] = w(S1);
-[SP + 001c] = w(0);
-system_menu_draw_textured_rect();
 
-A0 = S3 + 5f;
+A0 = S3 + 9e;
 A1 = S2;
-A3 = 9; // digits number
-S6 = 0;
-A2 = w[8009d7d8];
-FP = 80069830;
-A4 = S1;
-system_menu_draw_digits_without_leading_zeroes();
-
-A0 = S4 + 009e;
-A0 = A0 << 10;
-A0 = A0 >> 10;
-T0 = 0020;
-S2 = T0 + 0008;
-A1 = S2;
-A2 = 00f8;
-A3 = 0008;
-A4 = S0;
-A5 = S0;
-A6 = S1;
+A2 = f8;
+A3 = 8;
+A4 = 8;
+A5 = 8;
+A6 = 7;
 A7 = 0;
 system_menu_draw_textured_rect();
 
-A0 = S4 + 005f;
+FP = 80069830;
+
+A0 = S3 + 5f;
 A1 = S2;
+A2 = w[8009d7d8];
+A3 = 9; // digits number
+A4 = 7;
+system_menu_draw_digits_without_leading_zeroes();
+
+A0 = S4 + 9e;
+A1 = 28;
+A2 = f8;
+A3 = 8;
+A4 = 8;
+A5 = 8;
+A6 = 7;
+A7 = 0;
+system_menu_draw_textured_rect();
+
+A0 = S4 + 5f;
+A1 = 28;
 A2 = w[8009d7dc];
 A3 = 9; // digits number
-A4 = S1;
+A4 = 7;
 system_menu_draw_digits_without_leading_zeroes();
 
 A0 = 0;
-A1 = 0001;
-A2 = 03c0;
-A3 = 0100;
-V0 = 0100;
-[SP + 0028] = h(0);
-[SP + 002a] = h(0);
-[SP + 002c] = h(V0);
-[SP + 002e] = h(V0);
+A1 = 1;
+A2 = 3c0;
+A3 = 100;
 system_psyq_get_tpage();
 
+[SP + 28] = h(0);
+[SP + 2a] = h(0);
+[SP + 2c] = h(100);
+[SP + 2e] = h(100);
+
 A0 = 0;
-A1 = 0001;
+A1 = 1;
 A2 = V0 & ffff;
-A3 = SP + 0028;
+A3 = SP + 28;
 system_menu_set_draw_mode();
 
-A0 = 8;
-A1 = 10;
+A0 = 8; // battle texts
+A1 = 10; // string_id
 A2 = 8;
 system_kernel_get_string();
 
@@ -4009,6 +3999,7 @@ system_menu_set_window_rect();
 A0 = S0;
 system_menu_draw_window();
 
+S6 = 0;
 V0 = S6 << 10;
 
 L22280:	; 80022280
