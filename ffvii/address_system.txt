@@ -791,6 +791,7 @@
         +32 [][]     max mp (before materia alterations).
         +38 [][]     max hp (after materia alterations).
         +3a [][]     max mp (after materia alterations).
+        +3c [][][][] current exp.
         +40 [][][][] weapon materia slot 1.
         +44 [][][][] weapon materia slot 2.
         +48 [][][][] weapon materia slot 3.
