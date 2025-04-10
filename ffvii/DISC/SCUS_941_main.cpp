@@ -196,7 +196,7 @@ switch( h[80095dd4] )
     case 1: func1146c(); break; // some field render
     case 2: funcd8d78(); break; // world map render
     case 3: system_battle_swirl_render(); break;
-    case 4: func22b5c(); break; // menu render
+    case 4: system_menu_draw_battle_result(); break;
 }
 
 if( ( bu[80062d98] == 0 ) && ( bu[80062d99] == 0 ) )

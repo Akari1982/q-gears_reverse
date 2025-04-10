@@ -3130,30 +3130,25 @@ V0 = V0 < 0004;
 800214C8	bne    v0, zero, loop21494 [$80021494]
 V1 = S2 << 10;
 V0 = 0005;
-800214D4	lui    at, $8007
-[AT + 97f7] = b(V0);
+[800697f7] = b(V0);
 800214DC	j      L21534 [$80021534]
 800214E0	nop
 
 L214e4:	; 800214E4
 800214E4	beq    v1, v0, L21534 [$80021534]
-800214E8	nop
-800214EC	jal    system_menu_sound [$8001fa28]
-A0 = 0001;
+
+A0 = 1;
+system_menu_sound();
+
 V0 = b[S0 + 0000];
 800214F8	nop
 800214FC	addiu  v0, v0, $ffff (=-$1)
 V1 = V0 << 01;
 V1 = V1 + V0;
 V1 = V1 << 01;
-AT = 8009d80c;
-AT = AT + V1;
-V0 = hu[AT + 0000];
-8002151C	nop
+V0 = hu[8009d80c + V1];
 V0 = V0 ^ 0001;
-AT = 8009d80c;
-AT = AT + V1;
-[AT + 0000] = h(V0);
+[8009d80c + V1] = h(V0);
 
 L21534:	; 80021534
 V1 = 8009d7e0;
@@ -3178,13 +3173,15 @@ L21580:	; 80021580
 A0 = w[GP + 0214];
 S0 = 800696fc;
 A0 = A0 << 04;
-80021590	jal    system_psyq_set_tile [$800469b0]
 A0 = A0 + S0;
+system_psyq_set_tile();
+
 A0 = w[GP + 0214];
-A1 = 0001;
 A0 = A0 << 04;
-800215A4	jal    system_psyq_set_semi_trans [$80046848]
 A0 = A0 + S0;
+A1 = 1;
+system_psyq_set_semi_trans();
+
 V1 = 0180;
 V0 = w[GP + 0214];
 A0 = hu[GP + 0168];
@@ -3367,7 +3364,7 @@ A3 = SP + 20;
 system_menu_set_draw_mode();
 
 A0 = 8;
-A1 = 18;
+A1 = 18; // "Gained gil"
 A2 = 8;
 system_kernel_get_string();
 
@@ -3378,7 +3375,7 @@ A3 = 7;
 system_menu_draw_string();
 
 A0 = 8;
-A1 = 19;
+A1 = 19; // "Gil"
 A2 = 8;
 system_kernel_get_string();
 
@@ -3391,7 +3388,7 @@ system_menu_draw_string();
 if( w[GP + 15c] != 0 )
 {
     A0 = 8;
-    A1 = 15;
+    A1 = 15; // "Gained gil and item(s)."
     A2 = 8;
     system_kernel_get_string();
 
@@ -3402,7 +3399,7 @@ if( w[GP + 15c] != 0 )
     system_menu_draw_string();
 
     A0 = 8;
-    A1 = 1a;
+    A1 = 1a; // "Take everything."
     A2 = 8;
     system_kernel_get_string();
 
@@ -3413,7 +3410,7 @@ if( w[GP + 15c] != 0 )
     system_menu_draw_string();
 
     A0 = 8;
-    A1 = 1c;
+    A1 = 1c; // "Item"
     A2 = 8;
     system_kernel_get_string();
 
@@ -3424,7 +3421,7 @@ if( w[GP + 15c] != 0 )
     system_menu_draw_string();
 
     A0 = 8;
-    A1 = 1b;
+    A1 = 1b; // "Exit"
     A2 = 8;
     system_kernel_get_string();
 
@@ -3482,7 +3479,7 @@ if( w[GP + 15c] != 0 )
 else
 {
     A0 = 8;
-    A1 = 16;
+    A1 = 16; // "Gained gil."
     A2 = 8;
     system_kernel_get_string();
 
@@ -3493,7 +3490,7 @@ else
     system_menu_draw_string();
 
     A0 = 8;
-    A1 = 1d;
+    A1 = 1d; // "No items"
     A2 = 8;
     system_kernel_get_string();
 
@@ -3614,22 +3611,20 @@ system_menu_draw_window();
 ////////////////////////////////
 // func21c4c()
 
-S1 = A0;
-S2 = A1;
+x = A0;
+y = A1;
 S3 = A2;
 
 A0 = S3;
-func2603c();
+system_menu_get_materia_color_by_type();
 
-S0 = S2 + 5;
-
-A0 = S1 + 8;
-A1 = S0;
+A0 = x + 8;
+A1 = y + 5;
 A2 = 80;
 A3 = 20;
 A4 = 10;
 A5 = 10;
-A6 = V0;
+A6 = V0; // col
 A7 = 0;
 system_menu_draw_textured_rect();
 
@@ -3647,52 +3642,48 @@ system_menu_set_draw_mode();
 A0 = S3;
 func21258();
 
-A0 = S1 + 0018;
-A1 = S0;
+A0 = x + 18;
+A1 = y + 5;
 A2 = V0;
 A3 = 7;
 system_menu_draw_string();
 
-A0 = S1 + 0038;
-A1 = S2 + 0012;
+A0 = x + 0038;
+A1 = y + 0012;
 A2 = 80049338;
 A3 = 6;
 system_menu_draw_string();
 
-S0 = SP + 28;
-
-A0 = S0;
-A1 = S1;
-A2 = S2;
+A0 = SP + 28;
+A1 = x;
+A2 = y;
 A3 = 82;
 A4 = 20;
 system_menu_set_window_rect();
 
-A0 = S0;
+A0 = SP + 28;
 system_menu_draw_window();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func21d5c
+// func21d5c()
 
-S1 = A0;
-S2 = A1;
+x = A0;
+y = A1;
 
 A0 = bu[GP + 17c];
-func2603c();
+system_menu_get_materia_color_by_type();
 
-S0 = S2 + 5;
-
-A0 = ((S1 + 8) << 10) >> 10;
-A1 = (S0 << 10) >> 10;
+A0 = x + 8;
+A1 = y + 5;
 A2 = 80;
 A3 = 20;
 A4 = 10;
 A5 = 10;
-A6 = (V0 << 10) >> 10;
-A7 = 0);
+A6 = V0; // col
+A7 = 0;
 system_menu_draw_textured_rect();
 
 [SP + 20] = h(0);
@@ -3707,12 +3698,12 @@ A3 = SP + 20;
 system_menu_set_draw_mode();
 
 A0 = 8;
-A1 = 25;
+A1 = 25; // " was born."
 A2 = 8;
 system_kernel_get_string();
 
-A0 = S1 + 20;
-A1 = S2 + 12;
+A0 = x + 20;
+A1 = y + 12;
 A2 = V0;
 A3 = 7;
 system_menu_draw_string();
@@ -3720,22 +3711,20 @@ system_menu_draw_string();
 A0 = bu[GP + 17c];
 func21258();
 
-A0 = S1 + 18;
-A1 = S0;
+A0 = x + 18;
+A1 = y + 5;
 A2 = V0;
 A3 = 7;
 system_menu_draw_string();
 
-S0 = SP + 28;
-
-A0 = S0;
-A1 = S1;
-A2 = S2;
+A0 = SP + 28;
+A1 = x;
+A2 = y;
 A3 = 82;
 A4 = 23;
 system_menu_set_window_rect();
 
-A0 = S0;
+A0 = SP + 28;
 system_menu_draw_window();
 ////////////////////////////////
 
@@ -3744,41 +3733,41 @@ system_menu_draw_window();
 ////////////////////////////////
 // func21e70()
 
-S1 = A0;
-S2 = A1;
-S0 = A2;
-S3 = A3;
+x = A0;
+y = A1;
+party_id = A2;
+limit_id = A3;
 
 A0 = 8;
-A1 = 24;
+A1 = 24; // " gained."
 A2 = 8;
 system_kernel_get_string();
 
-A0 = S1 + 2f;
-A1 = S2 + 12;
+A0 = x + 2f;
+A1 = y + 12;
 A2 = V0;
 A3 = 7;
 system_menu_draw_string();
 
-V0 = bu[8009cbdc + S0];
-A0 = w[800491d0 + V0 * 4];
-A1 = S3;
+char_id = bu[8009c6e4 + 4f8 + party_id];
+A0 = w[800491d0 + char_id * 4]; // save_char_id
+A1 = limit_id;
 system_get_limit_command_id();
 
 A0 = 3;
 A1 = V0;
-A2 = 8;
+A2 = 8; // name
 system_kernel_get_string();
 
-A0 = S1 + 8;
-A1 = S2 + 5;
-A2 = V0;
+A0 = x + 8;
+A1 = y + 5;
+A2 = V0; // limit name
 A3 = 6;
 system_menu_draw_string();
 
 A0 = SP + 20;
-A1 = S1;
-A2 = S2;
+A1 = x;
+A2 = y;
 A3 = 82;
 A4 = 23;
 system_menu_set_window_rect();
@@ -3922,8 +3911,8 @@ A2 = V0 & ffff;
 A3 = SP + 28;
 system_menu_set_draw_mode();
 
-A0 = 8; // battle texts
-A1 = 10; // string_id
+A0 = 8;
+A1 = 10; // "Gained EXP and AP."
 A2 = 8;
 system_kernel_get_string();
 
@@ -3934,7 +3923,7 @@ A3 = 7;
 system_menu_draw_string();
 
 A0 = 8;
-A1 = 13;
+A1 = 13; // "EXP"
 A2 = 8;
 system_kernel_get_string();
 
@@ -3945,7 +3934,7 @@ A3 = 7;
 system_menu_draw_string();
 
 A0 = 8;
-A1 = 14;
+A1 = 14; // "AP"
 A2 = 8;
 system_kernel_get_string();
 
@@ -4179,7 +4168,7 @@ for( int i = 0; i < 3; ++i )
             }
 
             A0 = 8;
-            A1 = 2b;
+            A1 = 2b; // "Level:"
             A2 = 8;
             system_kernel_get_string();
 
@@ -4193,7 +4182,7 @@ for( int i = 0; i < 3; ++i )
             system_menu_draw_string();
 
             A0 = 8;
-            A1 = 2c;
+            A1 = 2c; // "next level:"
             A2 = 8;
             system_kernel_get_string();
 
@@ -4204,7 +4193,7 @@ for( int i = 0; i < 3; ++i )
             system_menu_draw_string();
 
             A0 = 8;
-            A1 = 9;
+            A1 = 9; // "EXP:"
             A2 = 8;
             system_kernel_get_string();
 
@@ -4385,7 +4374,7 @@ if( bu[GP + 96] != 0 )
 
 
 ////////////////////////////////
-// func22b5c()
+// system_menu_draw_battle_result()
 
 A0 = 1;
 system_psyq_draw_sync();
@@ -4397,10 +4386,10 @@ V0 = w[GP + 0214];
 A0 = V0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 02;
-80022B8C	lui    v0, $8007
-V0 = V0 + 075c;
-80022B94	jal    system_psyq_put_dispenv [$800444ac]
+V0 = 8007075c;
 A0 = A0 + V0;
+system_psyq_put_dispenv();
+
 V0 = w[GP + 0214];
 80022BA0	nop
 A0 = V0 << 01;
@@ -4408,10 +4397,10 @@ A0 = A0 + V0;
 A0 = A0 << 03;
 A0 = A0 - V0;
 A0 = A0 << 02;
-80022BB8	lui    v0, $8007
-V0 = V0 + 06a4;
-80022BC0	jal    system_psyq_put_drawenv [$800443b0]
+V0 = 800706a4;
 A0 = A0 + V0;
+system_psyq_put_drawenv();
+
 V0 = h[GP + 016c];
 80022BCC	nop
 80022BD0	bne    v0, zero, L22bfc [$80022bfc]
@@ -4464,87 +4453,92 @@ A0 = A0 + V0;
 A0 = A0 << 02;
 A0 = A0 + V0;
 A0 = A0 << 0a;
-80022C88	lui    v0, $8007
-V0 = V0 + 7f64;
-80022C90	jal    func269c0 [$800269c0]
+V0 = 80077f64;
 A0 = A0 + V0;
+80022C90	jal    func269c0 [$800269c0]
+
 A0 = w[GP + 0160];
 80022C9C	jal    func26a00 [$80026a00]
-80022CA0	nop
-V1 = h[GP + 0094];
-80022CA8	nop
-V0 = V1 < 0005;
-80022CB0	beq    v0, zero, L22dc0 [$80022dc0]
-V0 = V1 << 02;
-80022CB8	lui    at, $8001
-AT = AT + 032c;
-AT = AT + V0;
-V0 = w[AT + 0000];
-80022CC8	nop
-80022CCC	jr     v0 
-80022CD0	nop
 
-80022CD4	jal    func21f58 [$80021f58]
-80022CD8	nop
-80022CDC	j      L22dc0 [$80022dc0]
-80022CE0	nop
-80022CE4	jal    func21f58 [$80021f58]
-80022CE8	nop
-80022CEC	jal    func212a8 [$800212a8]
-80022CF0	nop
-80022CF4	j      L22dc0 [$80022dc0]
-80022CF8	nop
-A0 = w[GP + 0214];
-S0 = 800696fc;
-A0 = A0 << 04;
-80022D0C	jal    system_psyq_set_tile [$800469b0]
-A0 = A0 + S0;
-A0 = w[GP + 0214];
-A1 = 0001;
-A0 = A0 << 04;
-80022D20	jal    system_psyq_set_semi_trans [$80046848]
-A0 = A0 + S0;
-V1 = 0180;
-V0 = w[GP + 0214];
-A0 = hu[GP + 0168];
-V0 = V0 << 04;
-V0 = V0 + S0;
-[V0 + 000c] = h(V1);
-[V0 + 0004] = b(A0);
-V1 = w[GP + 0214];
-A0 = 00e0;
-[V0 + 0008] = h(0);
-[V0 + 000a] = h(0);
-[V0 + 000e] = h(A0);
-V0 = hu[GP + 0168];
-V1 = V1 << 04;
-V1 = V1 + S0;
-[V1 + 0005] = b(V0);
-V0 = w[GP + 0214];
-V1 = hu[GP + 0168];
-V0 = V0 << 04;
-V0 = V0 + S0;
-[V0 + 0006] = b(V1);
-A1 = w[GP + 0214];
-A0 = w[GP + 0160];
-A1 = A1 << 04;
-A1 = A1 + S0;
-system_psyq_add_prim();
+switch( h[GP + 94] )
+{
+    case 0:
+    {
+        func21f58(); // battle result gain exp/ap
+    }
+    break;
 
-[SP + 10] = h(0);
-[SP + 12] = h(0);
-[SP + 14] = h(100);
-[SP + 16] = h(100);
+    case 1:
+    {
+        func21f58(); // battle result gain exp/ap
 
-A0 = 0;
-A1 = 1;
-A2 = 5f;
-A3 = SP + 10;
-system_menu_set_draw_mode();
+        func212a8(); // battle result take item
+    }
+    break;
 
-[GP + 94] = h(5);
+    case 2:
+    case 3:
+    {
+        func212a8(); // battle result take item
+    }
+    break;
 
-L22dc0:	; 80022DC0
+    case 4:
+    {
+        A0 = w[GP + 0214];
+        A0 = A0 << 04;
+        A0 = 800696fc + A0;
+        system_psyq_set_tile();
+
+        A0 = w[GP + 0214];
+        A1 = 0001;
+        A0 = A0 << 04;
+        A0 = 800696fc + A0;
+        system_psyq_set_semi_trans();
+
+        V1 = 0180;
+        V0 = w[GP + 0214];
+        A0 = hu[GP + 0168];
+        V0 = V0 << 04;
+        V0 = 800696fc + V0;
+        [V0 + 000c] = h(V1);
+        [V0 + 0004] = b(A0);
+        V1 = w[GP + 0214];
+        A0 = 00e0;
+        [V0 + 0008] = h(0);
+        [V0 + 000a] = h(0);
+        [V0 + 000e] = h(A0);
+        V0 = hu[GP + 0168];
+        V1 = V1 << 04;
+        V1 = 800696fc + V1;
+        [V1 + 0005] = b(V0);
+        V0 = w[GP + 0214];
+        V1 = hu[GP + 0168];
+        V0 = V0 << 04;
+        V0 = 800696fc + V0;
+        [V0 + 0006] = b(V1);
+        A1 = w[GP + 0214];
+        A0 = w[GP + 0160];
+        A1 = A1 << 04;
+        A1 = 800696fc + A1;
+        system_psyq_add_prim();
+
+        [SP + 10] = h(0);
+        [SP + 12] = h(0);
+        [SP + 14] = h(100);
+        [SP + 16] = h(100);
+
+        A0 = 0;
+        A1 = 1;
+        A2 = 5f;
+        A3 = SP + 10;
+        system_menu_set_draw_mode();
+
+        [GP + 94] = h(5);
+    }
+    break;
+}
+
 [GP + 2a8] = b(bu[GP + 2a8] + 1);
 ////////////////////////////////
 
@@ -6328,7 +6322,7 @@ for( int i = 0; i < c8; ++i )
         [8009c6e4 + 77c + i * 4] = w(materia_data);
 
         A0 = materia_id;
-        func2603c();
+        system_menu_get_materia_color_by_type();
 
         if( V0 == a ) [8009c6e4 + bef] = b(bu[8009c6e4 + bef] | 1); // summon
         if( materia_id == 2c ) [8009c6e4 + bef] = b(bu[8009c6e4 + bef] | 2); // "enemy skill" materia
@@ -6378,7 +6372,7 @@ V1 = w[A1 + 0000];
 80025540	bne    v1, v0, L2559c [$8002559c]
 A2 = A2 + 0001;
 [A1 + 0000] = w(A0);
-8002554C	jal    func2603c [$8002603c]
+8002554C	jal    system_menu_get_materia_color_by_type [$8002603c]
 A0 = S1;
 V1 = 000a;
 80025558	bne    v0, v1, L25574 [$80025574]
@@ -7074,7 +7068,7 @@ system_psyq_draw_sync();
 
 
 ////////////////////////////////
-// func2603c()
+// system_menu_get_materia_color_by_type()
 
 materia_id = A0 & ff;
 

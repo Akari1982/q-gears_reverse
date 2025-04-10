@@ -192,174 +192,206 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// func14e74
+// func14e74()
 
-S4 = A0;
-S0 = S4;
-S3 = SP + 0010;
-S1 = A1;
+result = A0;
+S0 = result;
+S3 = SP + 10;
+string = A1;
 
 L14ea0:	; 80014EA0
-S2 = bu[S1 + 0000];
-80014EA4	nop
-V0 = S2 + 0016;
-V0 = V0 & 00ff;
-V0 = V0 < 0008;
-80014EB4	beq    v0, zero, L1508c [$8001508c]
-S1 = S1 + 0001;
-V0 = bu[S1 + 0000];
-S1 = S1 + 0001;
-V1 = bu[S1 + 0000];
-80014EC8	addiu  a0, s2, $ff16 (=-$ea)
-V0 = V0 << 08;
-V1 = V1 | V0;
-V0 = A0 < 0008;
-80014ED8	beq    v0, zero, L150b0 [$800150b0]
-S1 = S1 + 0001;
-V0 = A0 << 02;
-80014EE4	lui    at, $8001
-AT = AT + V0;
-V0 = w[AT + 0138];
-80014EF0	nop
-80014EF4	jr     v0 
-80014EF8	nop
+    S2 = bu[string];
+    string += 1;
 
-80014EFC	j      L14fd4 [$80014fd4]
-A0 = V1 & ffff;
-A0 = 4;
-A1 = V1 & ffff;
-A2 = 8;
-system_kernel_get_string();
+    V0 = S2 + 0016;
+    V0 = V0 & 00ff;
+    V0 = V0 < 0008;
+    80014EB4	beq    v0, zero, L1508c [$8001508c]
 
-A0 = S0;
-A1 = V0;
-80014F1C	j      L15028 [$80015028]
-80014F20	addiu  a2, zero, $ffff (=-$1)
-A1 = 0;
-80014F28	lui    a3, $cccc
-A3 = A3 | cccd;
-A2 = S3;
+    V0 = bu[string];
+    string += 1;
+    V1 = bu[string];
+    string += 1;
+    80014EC8	addiu  a0, s2, $ff16 (=-$ea)
+    V0 = V0 << 08;
+    V1 = V1 | V0;
 
-loop14f34:	; 80014F34
-V1 = V1 & ffff;
-80014F38	multu  v1, a3
-A1 = A1 + 0001;
-80014F40	mfhi   t0
-A0 = T0 >> 03;
-V0 = A0 << 02;
-V0 = V0 + A0;
-V0 = V0 << 01;
-V1 = V1 - V0;
-V1 = V1 & ffff;
-[A2 + 0000] = w(V1);
-V1 = A0;
-V0 = V1 & ffff;
-80014F68	beq    v0, zero, L14f7c [$80014f7c]
-A2 = A2 + 0004;
-V0 = A1 < 0010;
-80014F74	bne    v0, zero, loop14f34 [$80014f34]
-80014F78	nop
+    switch( A0 )
+    {
+        case 0:
+        {
+            80014EFC	j      L14fd4 [$80014fd4]
+            A0 = V1 & ffff;
+        }
+        break;
 
-L14f7c:	; 80014F7C
-80014F7C	blez   a1, L150b4 [$800150b4]
-V1 = S2 & 00ff;
-V0 = A1 << 02;
-A0 = V0 + S3;
+        case 1:
+        {
+            A0 = 4;
+            A1 = V1 & ffff;
+            A2 = 8;
+            system_kernel_get_string();
 
-loop14f8c:	; 80014F8C
-V0 = w[A0 + fffc];
-80014F90	addiu  a0, a0, $fffc (=-$4)
-80014F94	lui    v1, $8010
-V1 = w[V1 + afd0];
-80014F9C	addiu  a1, a1, $ffff (=-$1)
-V0 = V0 + V1;
-[S0 + 0000] = b(V0);
-80014FA8	bgtz   a1, loop14f8c [$80014f8c]
-S0 = S0 + 0001;
-80014FB0	j      L150b4 [$800150b4]
-V1 = S2 & 00ff;
-V1 = V1 & ffff;
-V0 = V1 < 0003;
-80014FC0	beq    v0, zero, L14fe4 [$80014fe4]
-V0 = V1 << 04;
-80014FC8	lui    at, $8016
-AT = AT + V0;
-A0 = b[AT + 36b8];
+            A0 = S0;
+            A1 = V0;
+            80014F1C	j      L15028 [$80015028]
+            80014F20	addiu  a2, zero, $ffff (=-$1)
+        }
+        break;
 
-L14fd4:	; 80014FD4
-80014FD4	jal    func14e0c [$80014e0c]
-A1 = S0;
-80014FDC	j      L150b0 [$800150b0]
-S0 = V0;
+        case 2:
+        {
+            A1 = 0;
+            A3 = cccccccd;
+            A2 = S3;
 
-L14fe4:	; 80014FE4
-V0 = V1 < 0004;
-80014FE8	bne    v0, zero, L150b0 [$800150b0]
-A0 = S0;
-80014FF0	addiu  v0, v1, $fffc (=-$4)
-V0 = V0 << 04;
-80014FF8	lui    at, $8016
-AT = AT + V0;
-V0 = h[AT + 3658];
-A2 = 0020;
-A1 = V0 << 01;
-A1 = A1 + V0;
-A1 = A1 << 03;
-A1 = A1 - V0;
-A1 = A1 << 03;
-8001501C	lui    v0, $800f
-V0 = V0 + 5f44;
-A1 = A1 + V0;
+            loop14f34:	; 80014F34
+            V1 = V1 & ffff;
+            80014F38	multu  v1, a3
+            A1 = A1 + 0001;
+            80014F40	mfhi   t0
+            A0 = T0 >> 03;
+            V0 = A0 << 02;
+            V0 = V0 + A0;
+            V0 = V0 << 01;
+            V1 = V1 - V0;
+            V1 = V1 & ffff;
+            [A2 + 0000] = w(V1);
+            V1 = A0;
+            V0 = V1 & ffff;
+            80014F68	beq    v0, zero, L14f7c [$80014f7c]
+            A2 = A2 + 0004;
+            V0 = A1 < 0010;
+            80014F74	bne    v0, zero, loop14f34 [$80014f34]
+            80014F78	nop
 
-L15028:	; 80015028
-80015028	jal    func14d58 [$80014d58]
-8001502C	nop
-80015030	j      L150b0 [$800150b0]
-S0 = V0;
-A0 = 0009;
-8001503C	j      L1507c [$8001507c]
-A1 = V1 & ffff;
-V0 = V1 & ffff;
-V0 = V0 < 001a;
-8001504C	beq    v0, zero, L150b0 [$800150b0]
-80015050	nop
-80015054	lui    v0, $800f
-V0 = w[V0 + 7ed0];
-8001505C	j      L150a8 [$800150a8]
-V0 = V1 + V0;
-A0 = 0010;
-80015068	j      L1507c [$8001507c]
-A1 = V1 & ffff;
-A0 = V1 & ffff;
-A0 = A0 >> 08;
-A1 = V1 & 00ff;
+            L14f7c:	; 80014F7C
+            80014F7C	blez   a1, L150b4 [$800150b4]
+            V1 = S2 & 00ff;
+            V0 = A1 << 02;
+            A0 = V0 + S3;
 
-L1507c:	; 8001507C
-8001507C	jal    func14dd0 [$80014dd0]
-A2 = S0;
-80015084	j      L150b0 [$800150b0]
-S0 = V0;
+            loop14f8c:	; 80014F8C
+                V0 = w[A0 + fffc];
+                80014F90	addiu  a0, a0, $fffc (=-$4)
+                80014F94	lui    v1, $8010
+                V1 = w[V1 + afd0];
+                80014F9C	addiu  a1, a1, $ffff (=-$1)
+                V0 = V0 + V1;
+                [S0 + 0000] = b(V0);
+                S0 = S0 + 0001;
+            80014FA8	bgtz   a1, loop14f8c [$80014f8c]
 
-L1508c:	; 8001508C
-[S0 + 0000] = b(S2);
-V1 = S2 & 00ff;
-V0 = 00f9;
-80015098	bne    v1, v0, L150b4 [$800150b4]
-S0 = S0 + 0001;
-V0 = bu[S1 + 0000];
-S1 = S1 + 0001;
+            80014FB0	j      L150b4 [$800150b4]
+            V1 = S2 & 00ff;
+        }
+        break;
 
-L150a8:	; 800150A8
-[S0 + 0000] = b(V0);
-S0 = S0 + 0001;
+        case 3:
+        {
+            V1 = V1 & ffff;
+            V0 = V1 < 0003;
+            80014FC0	beq    v0, zero, L14fe4 [$80014fe4]
+            V0 = V1 << 04;
+            A0 = b[801636b8 + V0];
 
-L150b0:	; 800150B0
-V1 = S2 & 00ff;
+            L14fd4:	; 80014FD4
+            A1 = S0;
+            func14e0c();
 
-L150b4:	; 800150B4
-V0 = 00ff;
-800150B8	bne    v1, v0, L14ea0 [$80014ea0]
-V0 = S4;
+            S0 = V0;
+            80014FDC	j      L150b0 [$800150b0]
+
+            L14fe4:	; 80014FE4
+            V0 = V1 < 0004;
+            80014FE8	bne    v0, zero, L150b0 [$800150b0]
+            A0 = S0;
+            80014FF0	addiu  v0, v1, $fffc (=-$4)
+            V0 = V0 << 04;
+            V0 = h[80163658 + V0];
+            A2 = 0020;
+            A1 = V0 << 01;
+            A1 = A1 + V0;
+            A1 = A1 << 03;
+            A1 = A1 - V0;
+            A1 = A1 << 03;
+            V0 = 800f5f44;
+            A1 = A1 + V0;
+
+            L15028:	; 80015028
+            80015028	jal    func14d58 [$80014d58]
+            8001502C	nop
+            80015030	j      L150b0 [$800150b0]
+            S0 = V0;
+        }
+        break;
+
+        case 4:
+        {
+            A0 = 0009;
+            8001503C	j      L1507c [$8001507c]
+            A1 = V1 & ffff;
+        }
+        break;
+
+        case 5:
+        {
+            V0 = V1 & ffff;
+            V0 = V0 < 001a;
+            8001504C	beq    v0, zero, L150b0 [$800150b0]
+            80015050	nop
+            80015054	lui    v0, $800f
+            V0 = w[V0 + 7ed0];
+            8001505C	j      L150a8 [$800150a8]
+            V0 = V1 + V0;
+        }
+        break;
+
+        case 6:
+        {
+            A0 = 0010;
+            80015068	j      L1507c [$8001507c]
+            A1 = V1 & ffff;
+        }
+        break;
+
+        case 7:
+        {
+            A0 = V1 & ffff;
+            A0 = A0 >> 08;
+            A1 = V1 & 00ff;
+
+            L1507c:	; 8001507C
+            8001507C	jal    func14dd0 [$80014dd0]
+            A2 = S0;
+            80015084	j      L150b0 [$800150b0]
+            S0 = V0;
+
+            L1508c:	; 8001508C
+            [S0 + 0000] = b(S2);
+            V1 = S2 & 00ff;
+            V0 = 00f9;
+            S0 = S0 + 0001;
+            80015098	bne    v1, v0, L150b4 [$800150b4]
+
+            V0 = bu[string];
+            string += 1;
+
+            L150a8:	; 800150A8
+            [S0 + 0000] = b(V0);
+            S0 = S0 + 0001;
+        }
+        break;
+    }
+
+    L150b0:	; 800150B0
+    V1 = S2 & 00ff;
+
+    L150b4:	; 800150B4
+    V0 = 00ff;
+800150B8	bne    v1, ff, L14ea0 [$80014ea0]
+
+return result;
 ////////////////////////////////
 
 
@@ -378,8 +410,8 @@ write_size = 0;
 while( write_size < 100 )
 {
     letter = b[src];
-    src = src + 1;
-    read_size = read_size + 1;
+    src += 1;
+    read_size += 1;
 
     if( letter == -1 )
     {
@@ -388,35 +420,35 @@ while( write_size < 100 )
     else if( letter == f9 )
     {
         letter = bu[src];
-        src = src + 1;
-        read_size = read_size + 1;
+        src += 1;
+        read_size += 1;
 
         offset = (read_size - 3) - (letter & 3f);
         size = (letter >> 6) << 1 + 4;
         for( int i = 0; i < size; ++i )
         {
             [80063560 + write_size + i] = b(bu[src2 + offset + i]);
-            dst = dst + 1;
-            write_size = write_size + 1;
+            dst += 1;
+            write_size += 1;
         }
     }
     else if( ( ( letter + 16 ) & ff ) < 8 ) // EA EB EC ED EE EF F0 F1
     {
         [dst] = b(letter);
-        dst = dst + 1; // store address
+        dst += 1;
 
         [dst + 0] = b(bu[src + 0]);
         [dst + 1] = b(bu[src + 1]);
-        src = src + 2;
-        dst = dst + 2;
-        read_size = read_size + 2;
-        write_size = write_size + 3;
+        src += 2;
+        dst += 2;
+        read_size += 2;
+        write_size += 3;
     }
     else
     {
         [dst] = b(letter);
-        dst = dst + 1;
-        write_size = write_size + 1;
+        dst += 1;
+        write_size += 1;
     }
 }
 
@@ -611,7 +643,7 @@ else if( type == 7 )
         A2 = SP + 110;
         funca5e0c();
 
-        A0 = SP + 0010;
+        A0 = SP + 10;
         A1 = S0;
         func14e74();
 
@@ -641,7 +673,7 @@ else if( type == 8 )
         string = V0;
     }
 
-    A0 = SP + 10;
+    A0 = SP + 10; // result
     A1 = string;
     func14e74();
 
