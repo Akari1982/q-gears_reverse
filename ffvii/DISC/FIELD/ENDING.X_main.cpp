@@ -2096,7 +2096,7 @@ func3ce3c();
 
 system_psyq_init_geom();
 
-func36298();
+system_psyq_spu_init();
 
 system_cdrom_init()
 ////////////////////////////////

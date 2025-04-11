@@ -96,9 +96,9 @@ return V0;
 
 S0 = 80066824;
 V0 = hu[S0 + 0000];
-80016054	nop
-80016058	bne    v0, zero, L16104 [$80016104]
-V0 = 0;
+
+if( V0 != 0 ) return 0;
+
 V1 = w[800678b0];
 V0 = w[800678b4];
 [V0 + 0000] = h(0);
@@ -110,14 +110,15 @@ A0 = S0;
 [V0 + 0000] = w(A1);
 80016094	jal    system_int_memzero [$80016544]
 A1 = 041a;
-8001609C	jal    system_bios_save_state [$80016568]
-A0 = S0 + 0038;
-800160A4	beq    v0, zero, L160b4 [$800160b4]
-800160A8	nop
-800160AC	jal    system_int_handler [$80016114]
-800160B0	nop
 
-L160b4:	; 800160B4
+A0 = S0 + 38;
+system_bios_save_state();
+
+if( V0 != 0 )
+{
+    system_int_handler();
+}
+
 S0 = 80066860;
 800160BC	addiu  a0, s0, $fffc (=-$4)
 V0 = S0 + 0fdc;
@@ -135,8 +136,6 @@ A0 = w[800678ac];
 800160F8	jal    system_bios_exit_critical_section [$80012d18]
 800160FC	addiu  s0, s0, $ffc4 (=-$3c)
 V0 = S0;
-
-L16104:	; 80016104
 ////////////////////////////////
 
 
@@ -768,7 +767,7 @@ return w[8006792c];
 
 
 ////////////////////////////////
-// func169b8()
+// system_init()
 
 system_interrupts_timer_dma_initialize();
 
@@ -783,7 +782,7 @@ system_psyq_set_disp_mask();
 
 system_psyq_init_geom();
 
-800169E8	jal    func16d40 [$80016d40]
+system_psyq_spu_init();
 
 A0 = 0;
 800169F0	jal    func18760 [$80018760]
@@ -896,14 +895,4 @@ loop16b18:	; 80016B18
 80016B7C	jal    func1c718 [$8001c718]
 
 [80067950] = h(hu[80067950] + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_bios_bu_init()
-
-T2 = 00a0;
-80016BA4	jr     t2 
-T1 = 0070;
 ////////////////////////////////

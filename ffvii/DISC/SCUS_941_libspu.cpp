@@ -1,5 +1,5 @@
 ﻿////////////////////////////////
-// func36298()
+// system_psyq_spu_init()
 
 A0 = 0;
 func362b8();
@@ -67,7 +67,7 @@ if( w[8004aaf0] == 0 )
     system_bios_enter_critical_section();
 
     A0 = 8003688c; // func3688c()
-    func36fd8();
+    system_sound_spu_dma_callback();
 
     A0 = f0000009; // class (IRQ9 SPU)
     A1 = 20; // spec (command completed)
@@ -297,19 +297,15 @@ if( ( hu[spu + 1ae] & 07ff ) != S3 )
 // func3688c()
 
 V0 = w[8004ab44];
+if( V0 == 0 )
+{
+    system_sound_wait_sync();
+    system_sound_wait_sync();
+    system_sound_wait_sync();
+}
 
-80036898	bne    v0, zero, L368b8 [$800368b8]
-
-system_sound_wait_sync();
-system_sound_wait_sync();
-system_sound_wait_sync();
-
-L368b8:	; 800368B8
-800368B8	lui    a0, $8005
-A0 = w[A0 + aaf4];
-800368C0	nop
+A0 = w[8005aaf4];
 V0 = hu[A0 + 01aa];
-800368C8	nop
 V0 = V0 & ffcf;
 [A0 + 01aa] = h(V0);
 V0 = hu[A0 + 01aa];
@@ -841,7 +837,7 @@ while( w[SP + 0] < f0 )
 
 
 ////////////////////////////////
-// func36fd8()
+// system_sound_spu_dma_callback()
 
 A1 = A0;
 A0 = 4;

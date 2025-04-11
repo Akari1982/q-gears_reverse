@@ -3,7 +3,7 @@
 
 func12c10(); // call some debug init callbacks (removed)
 
-func169b8();
+system_init();
 
 while( true )
 {
