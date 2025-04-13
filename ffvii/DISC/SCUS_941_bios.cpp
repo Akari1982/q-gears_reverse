@@ -20,19 +20,20 @@ T1 = 39;
 // Flushes the Code Cache, so opcodes are ensured to be loaded from RAM. This is
 // required when loading program code via DMA (ie. from CDROM) (the cache
 // controller apparently doesn't realize changes to RAM that are caused by DMA).
-T2 = 00a0;
-T1 = 0044;
-800429A4	jr     t2 
+
+T2 = a0;
+T1 = 44;
+800429A4	jr     t2
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func429b0
-T2 = 00a0;
+
+T2 = a0;
+T1 = 70;
 800429B4	jr     t2 
-T1 = 0070;
-800429BC	nop
 ////////////////////////////////
 
 
@@ -40,9 +41,10 @@ T1 = 0070;
 ////////////////////////////////
 // system_bios_cd_remove()
 // A(56h) or A(72h) CdRemove()  ;does NOT work due to SysDeqIntRP bug
-T2 = 00a0;
-T1 = 0072;
-800429C4	jr     t2 
+
+T2 = a0;
+T1 = 72;
+800429C4	jr     t2
 ////////////////////////////////
 
 
@@ -110,9 +112,10 @@ T1 = 7;
 // 16 events, only 11 events are available to the game). A bigger amount of events
 // will slowdown the DeliverEvent function (which always scans all EvCBs, even if
 //all events are disabled).
-T2 = 00b0;
-T1 = 0008;
-80042A04	jr     t2 
+
+T2 = b0;
+T1 = 8;
+80042A04	jr     t2
 ////////////////////////////////
 
 
@@ -121,9 +124,10 @@ T1 = 0008;
 // system_bios_close_event()
 // B(09h) - CloseEvent(event) - releases event from the event table
 // Always returns 1 (even if the event handle is unused or invalid).
+
 T2 = b0;
 T1 = 9;
-80042A14	jr     t2 
+80042A14	jr     t2
 ////////////////////////////////
 
 
@@ -141,9 +145,10 @@ T1 = 9;
 // BUG: The return value is unstable (sometimes accidently returns 0=disabled if
 // the event status changes from not-ready to ready shortly after the function
 // call).
-T2 = 00b0;
-T1 = 000a;
-80042A24	jr     t2 
+
+T2 = b0;
+T1 = a;
+80042A24	jr     t2
 ////////////////////////////////
 
 
@@ -154,9 +159,10 @@ T1 = 000a;
 // Returns 0 if the event is busy or disabled. Otherwise, when it is ready,
 // returns 1 (and automatically switches the event back to busy status). Callback
 // events (mode=1000h) do never set the ready flag.
-T2 = 00b0;
-T1 = 000b;
-80042A34	jr     t2 
+
+T2 = b0;
+T1 = b;
+80042A34	jr     t2
 ////////////////////////////////
 
 
@@ -165,9 +171,10 @@ T1 = 000b;
 // system_bios_enable_event()
 // B(0Ch) - EnableEvent(event) - Turns on event handling for specified event
 // Always returns 1 (even if the event handle is unused or invalid).
-T2 = 00b0;
-T1 = 000c;
-80042A44	jr     t2 
+
+T2 = b0;
+T1 = c;
+80042A44	jr     t2
 ////////////////////////////////
 
 
@@ -176,9 +183,10 @@ T1 = 000c;
 // system_bios_disable_event()
 // B(0Dh) - DisableEvent(event) - Turns off event handling for specified event
 // Always returns 1 (even if the event handle is unused or invalid).
-T2 = 00b0;
-T1 = 000d;
-80042A54	jr     t2 
+
+T2 = b0;
+T1 = d;
+80042A54	jr     t2
 ////////////////////////////////
 
 
@@ -205,9 +213,10 @@ T1 = 000d;
 // stored in the buffers, the IRQ handler stores up to 22h bytes in the buffer
 // (regardless of the siz1/siz2 values) (eg. a Multitap adaptor uses all 22h
 // bytes).
-80042A60	addiu  t2, zero, $00b0
-80042A64	jr     t2 
-80042A68	addiu  t1, zero, $0012
+
+T2 = b0;
+T1 = 12;
+80042A64	jr     t2
 ////////////////////////////////
 
 
@@ -217,9 +226,10 @@ T1 = 000d;
 // B(13h) - StartPad()
 // Should be used after InitPad. Enqueues the PadCardIrq handler, and does
 // additionally initialize some flags.
-80042A70	addiu  t2, zero, $00b0
-80042A74	jr     t2 
-80042A78	addiu  t1, zero, $0013
+
+T2 = b0;
+T1 = 13;
+80042A74	jr     t2
 ////////////////////////////////
 
 
@@ -229,9 +239,10 @@ T1 = 000d;
 // B(14h) - StopPad()
 // Dequeues the PadCardIrq handler. Note that this handler is also used for memory
 // cards, so it'll "stop" cards, too.
-80042A80	addiu  t2, zero, $00b0
-80042A84	jr     t2 
-80042A88	addiu  t1, zero, $0014
+
+T2 = b0;
+T1 = 14;
+80042A84	jr     t2
 ////////////////////////////////
 
 
@@ -253,9 +264,10 @@ T1 = 000d;
 // locations reserved for parameter 2 and 3, ie. at [SP+08h] and [SP+0Ch] on the
 // caller's stack, so the function MUST be called with all four parameters
 // allocated on stack. Return value is 2 (or 0 if type was disliked).
-80042A90	addiu  t2, zero, $00b0
-80042A94	jr     t2 
-80042A98	addiu  t1, zero, $0015
+
+T2 = b0;
+T1 = 15;
+80042A94	jr     t2
 ////////////////////////////////
 
 
@@ -281,9 +293,10 @@ T1 = 000d;
 // other ID values, or disconnected joypads, cause the halfword to be set to FFFFh
 // (same as when no buttons are pressed), that includes newer analogue pads
 // (unless they are switched to "digital" mode).
-80042AA0	addiu  t2, zero, $00b0
-80042AA4	jr     t2 
-80042AA8	addiu  t1, zero, $0016
+
+T2 = b0;
+T1 = 16;
+80042AA4	jr     t2
 ////////////////////////////////
 
 
@@ -296,9 +309,10 @@ T1 = 000d;
 // ExceptionHandler, however, functions in the exception chain may call
 // ReturnFromException to to return immediately, without processing chain elements
 // of lower priority.
-T2 = 00b0;
-T1 = 0017;
-80042AB4	jr     t2 
+
+T2 = b0;
+T1 = 17;
+80042AB4	jr     t2
 ////////////////////////////////
 
 
@@ -311,9 +325,10 @@ T1 = 0017;
 // reason), and zeroes for the R16..R23,R28,R30 registers. Returns the address of
 // that structure.
 // See SetCustomExitFromException for details.
-T2 = 00b0;
-T1 = 0018;
-80042AC4	jr     t2 
+
+T2 = b0;
+T1 = 18;
+80042AC4	jr     t2
 ////////////////////////////////
 
 
@@ -334,9 +349,10 @@ T1 = 0018;
 // ReturnFromException. The hook function is called with r2=1 (that is important
 // if the hook address was recorded with SaveState, where it "returns" to the
 // SaveState caller, with r2 as "return value").
-T2 = 00b0;
-T1 = 0019;
-80042AD4	jr     t2 
+
+T2 = b0;
+T1 = 19;
+80042AD4	jr     t2
 ////////////////////////////////
 
 
@@ -347,9 +363,10 @@ T1 = 0019;
 // This function is usually called by the kernel, undelivers all events that are
 // enabled/ready, and that have mode=2000h, and that have the specified class and
 // spec values. Undeliver means that the events are marked as enabled/busy.
-T2 = 00b0;
-80042AE4	jr     t2 
-T1 = 0020;
+
+T2 = b0;
+T1 = 20;
+80042AE4	jr     t2
 ////////////////////////////////
 
 

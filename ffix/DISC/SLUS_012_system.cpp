@@ -784,16 +784,16 @@ system_psyq_init_geom();
 
 system_psyq_spu_init();
 
-A0 = 0;
-800169F0	jal    func18760 [$80018760]
+A0 = 0; // init_pad false
+system_psyq_init_card();
 
-800169F8	jal    func187f0 [$800187f0]
+system_psyq_start_card();
 
 system_bios_bu_init();
 
-80016A08	jal    func18f20 [$80018f20]
+func18f20();
 
-80016A10	jal    func22a28 [$80022a28]
+system_cdrom_init();
 ////////////////////////////////
 
 

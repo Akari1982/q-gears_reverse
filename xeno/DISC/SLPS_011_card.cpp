@@ -165,7 +165,6 @@ loop4e7d4:	; 8004E7D4
     V0 = V0 + 4;
 8004E7E0	bne    t2, 8004e73c, loop4e7d4 [$8004e7d4]
 
-
 [80058a84] = w(V0);
 
 system_bios_flush_cache();
