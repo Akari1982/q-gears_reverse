@@ -7,11 +7,11 @@ system_init();
 
 while( true )
 {
-    800127C4	jal    func16a28 [$80016a28]
+    func16a28();
 
-    800127CC	jal    func1cb08 [$8001cb08]
+    func1cb08(); // init struct
 
-    800127D4	jal    func1d268 [$8001d268]
+    func1d268();
 
     loop127dc:	; 800127DC
         V0 = w[8006794c];
@@ -22,61 +22,34 @@ while( true )
                 A0 = 0;
                 func12900();
 
-                80012814	jal    funca7088 [$800a7088]
+                funca7088();
             }
             break;
 
             case 1:
             {
-                A0 = 0001;
+                A0 = 1;
                 func12900();
 
-                8001282C	jal    funca7a48 [$800a7a48]
+                funca7a48();
             }
             break;
 
             case 2:
             {
-                A0 = 0002;
+                A0 = 2;
                 func12900();
 
-                80012844	jal    funca859c [$800a859c]
-            }
-            break;
-
-            case 8:
-            {
-                A0 = 0008;
-                func12900();
-
-                8001285C	jal    $801ef284
+                funca859c();
             }
             break;
 
             case 3:
             {
-                A0 = 0003;
+                A0 = 3;
                 func12900();
 
-                80012874	jal    funca8860 [$800a8860]
-            }
-            break;
-
-            case 9:
-            {
-                A0 = 0009;
-                func12900();
-
-                8001288C	jal    funca752c [$800a752c]
-            }
-            break;
-
-            case 7:
-            {
-                A0 = 0007;
-                func12900();
-
-                800128A4	jal    funca80a4 [$800a80a4]
+                funca8860();
             }
             break;
 
@@ -85,7 +58,34 @@ while( true )
                 A0 = 4;
                 func12900();
 
-                800128BC	jal    funca713c [$800a713c]
+                funca713c();
+            }
+            break;
+
+            case 7:
+            {
+                A0 = 7;
+                func12900();
+
+                funca80a4();
+            }
+            break;
+
+            case 8:
+            {
+                A0 = 8;
+                func12900();
+
+                func1ef284();
+            }
+            break;
+
+            case 9:
+            {
+                A0 = 9;
+                func12900();
+
+                funca752c();
             }
             break;
         }
@@ -105,122 +105,102 @@ while( true )
 
 
 ////////////////////////////////
-// func12900
+// func12900()
 
-S2 = A0;
+id = S2 = A0;
 S0 = 0;
-80012914	lui    v0, $8001
-V1 = SP + 0020;
-T4 = V0 + 0028;
-80012928	lwl    t1, $0003(t4)
-8001292C	lwr    t1, $0000(t4)
-80012930	lwl    t2, $0007(t4)
-80012934	lwr    t2, $0004(t4)
-T3 = b[T4 + 0008];
-8001293C	swl    t1, $0013(sp)
-80012940	swr    t1, $0010(sp)
-80012944	swl    t2, $0017(sp)
-80012948	swr    t2, $0014(sp)
-[SP + 0018] = b(T3);
-T1 = b[T4 + 0009];
-80012954	nop
-[SP + 0019] = b(T1);
-8001295C	lui    v0, $8001
-V0 = V0 + 0034;
+
+V1 = SP + 20;
+
+T4 = 80010028;
+
+[SP + 10] = w(w[T4 + 0]);
+[SP + 14] = w(w[T4 + 4]);
+[SP + 18] = b(b[T4 + 8]);
+[SP + 19] = b(b[T4 + 9]);
+
+V0 = 80010034;
 A0 = V0 + 0020;
 
 loop12968:	; 80012968
-T1 = w[V0 + 0000];
-T2 = w[V0 + 0004];
-T3 = w[V0 + 0008];
-T4 = w[V0 + 000c];
-[V1 + 0000] = w(T1);
-[V1 + 0004] = w(T2);
-[V1 + 0008] = w(T3);
-[V1 + 000c] = w(T4);
-V0 = V0 + 0010;
+    [V1 + 0] = w(w[V0 + 0]);
+    [V1 + 4] = w(w[V0 + 4]);
+    [V1 + 8] = w(w[V0 + 8]);
+    [V1 + c] = w(w[V0 + c]);
+    V0 = V0 + 0010;
+    V1 = V1 + 0010;
 8001298C	bne    v0, a0, loop12968 [$80012968]
-V1 = V1 + 0010;
-T1 = w[V0 + 0000];
-T2 = w[V0 + 0004];
-[V1 + 0000] = w(T1);
-800129A0	jal    func1cfb4 [$8001cfb4]
-[V1 + 0004] = w(T2);
-V0 = SP + S2;
-V1 = bu[V0 + 0010];
-800129B0	lui    v0, $0001
-S1 = V1 | V0;
+
+[V1 + 0] = w(w[V0 + 0]);
+[V1 + 4] = w(w[V0 + 4]);
+
+func1cfb4();
+
+S1 = 00010000 | bu[SP + 10 + S2];
 
 loop129b8:	; 800129B8
-800129B8	jal    func22b18 [$80022b18]
-800129BC	nop
+    func22b18();
 800129C0	bne    v0, zero, loop129b8 [$800129b8]
-800129C4	nop
-800129C8	jal    func220e8 [$800220e8]
+
 A0 = S1;
-800129D0	beq    v0, zero, L12a4c [$80012a4c]
+func220e8();
+
+if( V0 != 0 )
+{
+    A0 = S1;
+    func21e5c();
+    S0 = V0;
+
+    A0 = S0;
+    func21ae0();
+
+    if( V0 != 0 )
+    {
+        V0 = S2 << 02;
+        V0 = SP + V0;
+        A1 = w[V0 + 0020];
+        A0 = S0 + 0020;
+        system_psyq_store_image();
+    }
+    else
+    {
+        V0 = SP + V0;
+        A0 = w[V0 + 20];
+        A1 = w[S0 + 8];
+        if( A0 != A1 )
+        {
+            A2 = w[S0 + c];
+            A3 = 0;
+            func1daa4();
+        }
+    }
+
+    V0 = w[S0 + 000c];
+    A0 = S1;
+    80012A38	jal    func22390 [$80022390]
+    S0 = V0 >> 0b;
+
+    A0 = 0;
+    system_psyq_draw_sync();
+}
+
 A0 = 0;
-800129D8	jal    func21e5c [$80021e5c]
-A0 = S1;
-S0 = V0;
-800129E4	jal    func21ae0 [$80021ae0]
-
-L129e8:	; 800129E8
-A0 = S0;
-800129EC	beq    v0, zero, L12a0c [$80012a0c]
-V0 = S2 << 02;
-V0 = SP + V0;
-A1 = w[V0 + 0020];
-800129FC	jal    system_psyq_store_image [$800133b0]
-A0 = S0 + 0020;
-80012A04	j      L12a30 [$80012a30]
-80012A08	nop
-
-L12a0c:	; 80012A0C
-V0 = SP + V0;
-A0 = w[V0 + 0020];
-A1 = w[S0 + 0008];
-80012A18	nop
-80012A1C	beq    a0, a1, L12a30 [$80012a30]
-80012A20	nop
-A2 = w[S0 + 000c];
-80012A28	jal    func1daa4 [$8001daa4]
-A3 = 0;
-
-L12a30:	; 80012A30
-V0 = w[S0 + 000c];
-A0 = S1;
-80012A38	jal    func22390 [$80022390]
-S0 = V0 >> 0b;
-80012A40	jal    system_psyq_draw_sync [$800130a4]
-A0 = 0;
-A0 = 0;
-
-L12a4c:	; 80012A4C
-80012A4C	jal    func1e218 [$8001e218]
 A1 = S1;
-V1 = w[V0 + 000c];
-T0 = w[V0 + 0004];
-80012A5C	nop
-V0 = V1 - T0;
-V0 = S0 < V0;
-80012A68	beq    v0, zero, L12aa4 [$80012aa4]
-A1 = T0 + S0;
-A1 = V1 - A1;
-A1 = A1 << 0b;
-80012A78	lui    a0, $8006
-V0 = S2 << 02;
-V1 = SP + V0;
-A3 = S0 << 0b;
-V0 = w[A0 + 794c];
-A2 = w[V1 + 0020];
-A0 = w[V0 + 0020];
-A2 = A2 + A3;
-A0 = A0 + T0;
-80012A9C	jal    func22df0 [$80022df0]
-A0 = A0 + S0;
+func1e218();
 
-L12aa4:	; 80012AA4
+T0 = w[V0 + 4];
+V0 = w[V0 + c] - T0;
+if( S0 < V0 )
+{
+    A1 = V1 - T0 - S0;
+    A1 = A1 * 800;
+    A3 = S0 * 800;
+    V0 = w[8006794c];
+    A0 = w[V0 + 20] + T0 + S0;
+    A2 = w[SP + 20 + S2 * 4] + A3;
+    func22df0();
+}
+
 system_bios_enter_critical_section();
 
 system_bios_flush_cache();

@@ -27,6 +27,18 @@ A0 = 2;
 
 
 ////////////////////////////////
+// system_bios_bzero()
+// A(28h) - bzero(dst, len)
+// Same as memset, but uses 00h as fixed fillbyte value.
+
+T2 = a0;
+T1 = 28;
+8001A87C	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_memcpy()
 // A(2Ah) - memcpy(dst, src, len)
 // Copies len bytes from [src..src+len-1] to [dst..dst+len-1]. Refuses to copy any
@@ -38,6 +50,19 @@ T1 = 2a;
 80015C2C	jr     t2
 ////////////////////////////////
 
+
+
+////////////////////////////////
+// system_bios_memset()
+// A(2Bh) - memset(dst, fillbyte, len)
+// Fills len bytes at [dst..dst+len-1] with the fillbyte value. Refuses to fill
+// memory when dst=00000000h or when len>7FFFFFFFh. The return value is the
+// incoming "dst" value (or zero, when len=0 or len>7FFFFFFFh).
+
+T2 = a0;
+T1 = 2b;
+8001D89C	jr     t2
+////////////////////////////////
 
 
 ////////////////////////////////
@@ -620,4 +645,55 @@ system_bios_flush_cache();
 system_bios_exit_critical_section();
 
 RA = w[80073710];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_patch_bios_exception_handler()
+
+[800736a8] = w(RA);
+
+system_bios_enter_critical_section();
+
+T1 = 56;
+T2 = b0;
+80016C78	jalr   t2 ra
+
+T7 = w[V0 + 6 * 4] + 28;
+
+src = 80016d0c;
+dst = T7;
+end = 80016d24;
+while( src != end )
+{
+    if( w[src] != w[dst] )
+    {
+        system_bios_flush_cache();
+
+        system_bios_exit_critical_section();
+
+        RA = w[800736a8];
+
+        return;
+    }
+    src += 4;
+    dst += 4;
+}
+
+src = 80016d24;
+dst = T7;
+end = 80016d3c;
+while( src != end )
+{
+    [dst] = w(w[src]);
+    src += 4;
+    dst += 4;
+}
+
+system_bios_flush_cache();
+
+system_bios_exit_critical_section();
+
+RA = w[800736a8];
 ////////////////////////////////

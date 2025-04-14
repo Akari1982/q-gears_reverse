@@ -810,37 +810,34 @@ system_call_main_timer_additional_callback_4();
 A0 = 0;
 system_psyq_draw_sync_callback();
 
-A0 = 00a0;
-A1 = 0070;
-80016A54	jal    system_set_gte_ofx_ofy [$80016c40]
+A0 = a0;
+A1 = 70;
+system_psyq_set_geom_offset();
 
-A0 = SP + 0010;
+[SP + 10] = h(0);
+[SP + 12] = h(0);
+[SP + 14] = h(3ff);
+[SP + 16] = h(1ff);
+
+A0 = SP + 10;
 A1 = 0;
-V0 = 03ff;
-[SP + 0014] = h(V0);
-V0 = 01ff;
-A2 = A1;
-A3 = A1;
-[SP + 0010] = h(0);
-[SP + 0012] = h(0);
-[SP + 0016] = h(V0);
+A2 = 0;
+A3 = 0;
 system_psyq_clear_image();
 
 A0 = 0;
 system_psyq_draw_sync();
 
-80016A90	jal    func22a80 [$80022a80]
+func22a80();
 
-80016A98	jal    func1c6f8 [$8001c6f8]
+func1c6f8();
 
-80016AA0	jal    func18f50 [$80018f50]
+func18f50();
 
 S0 = 80073690;
 A0 = S0;
-V0 = 0019;
-[V1 + 3690] = w(V0);
-V0 = 0100;
-[S0 + 0004] = w(V0);
+[V1 + 3690] = w(19);
+[S0 + 0004] = w(100);
 [S0 + 0008] = h(0);
 [S0 + 000a] = h(0);
 [S0 + 000c] = w(0);
@@ -864,15 +861,12 @@ A0 = S1;
 
 A0 = w[S0 + 36a4];
 80016B10	jal    func185a0 [$800185a0]
-S0 = 0;
 
-loop16b18:	; 80016B18
+for( int i = 0; i < 5a; ++i )
+{
     A0 = 0;
     system_psyq_vsync();
-
-    S0 = S0 + 0001;
-    V0 = S0 < 005a;
-80016B28	bne    v0, zero, loop16b18 [$80016b18]
+}
 
 80016B30	jal    func4bbf0 [$8004bbf0]
 

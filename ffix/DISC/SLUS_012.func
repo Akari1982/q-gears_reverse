@@ -109,9 +109,11 @@
 80016A28 func16a28
 80016B6C func16b6c
 80016BA0 system_bios_bu_init
+
+// libgte
 80016BB8 system_psyq_init_geom
-80016C40 system_set_gte_ofx_ofy
-80016C60 func16c60
+80016C40 system_psyq_set_geom_offset
+80016C60 system_patch_bios_exception_handler
 
 // libspu
 80016D40 system_psyq_spu_init
@@ -208,7 +210,7 @@
 8001A4FC func1a4fc
 8001A768 func1a768
 8001A848 func1a848
-8001A878 func1a878
+8001A878 system_bios_bzero
 8001A888 func1a888
 8001A8F0 func1a8f0
 8001AA80 func1aa80
@@ -263,7 +265,7 @@
 8001D67C func1d67c
 8001D768 func1d768
 8001D848 func1d848
-8001D898 func1d898
+8001D898 system_bios_memset
 8001D8A8 func1d8a8
 8001D910 func1d910
 8001D960 func1d960
@@ -295,15 +297,15 @@
 8001ED50 func1ed50
 8001F2B4 func1f2b4
 8001F534 func1f534
-8001F7FC func1f7fc
+8001F7FC system_cdrom_cdl_command_exec
 8001FC08 func1fc08
 8001FC90 func1fc90
-8001FD64 func1fd64
-8001FE54 func1fe54
-8001FEA0 func1fea0
+8001FD64 system_cdrom_audio_init
+8001FE54 system_cdrom_reinit_inter
+8001FEA0 system_cdrom_init_inter
 80020080 func20080
 800201E8 func201e8
-800201F4 func201f4
+800201F4 system_cdrom_interrupt_handler
 800202D0 func202d0
 800203E0 func203e0
 8002051C func2051c
@@ -326,8 +328,8 @@
 80021330 func21330
 80021340 func21340
 80021360 func21360
-80021380 func21380
-800213A0 func213a0
+80021380 system_cdrom_set_sync_callback
+800213A0 system_cdrom_set_ready_callback
 800213C0 func213c0
 800213E0 func213e0
 800214E0 func214e0
@@ -377,8 +379,6 @@
 80022A28 system_cdrom_init
 80022A80 func22a80
 80022AC4 func22ac4
-
-// 
 80022B18 func22b18
 80022B28 func22b28
 80022B9C func22b9c
@@ -407,7 +407,9 @@
 8002350C func2350c
 80023580 func23580
 800235A0 func235a0
-80023634 func23634
+80023634 system_cdrom_and_audio_init
+
+// 
 800236A4 func236a4
 800236C4 func236c4
 80023784 func23784
