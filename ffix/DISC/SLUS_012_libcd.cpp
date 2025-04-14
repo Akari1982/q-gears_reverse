@@ -528,7 +528,7 @@ V0 = bu[S0 + 0000];
 8001EB20	swl    v0, $001b(sp)
 8001EB24	swr    v0, $0018(sp)
 A0 = w[SP + 0018];
-8001EB2C	jal    func202d0 [$800202d0]
+8001EB2C	jal    system_psyq_cd_int_to_pos [$800202d0]
 A1 = S4;
 V0 = S5 + 0004;
 V0 = S1 + V0;
@@ -647,7 +647,7 @@ A0 = A1;
 A1 = SP + 0010;
 [SP + 0018] = w(S0);
 [SP + 0020] = w(RA);
-8001ECD8	jal    func202d0 [$800202d0]
+8001ECD8	jal    system_psyq_cd_int_to_pos [$800202d0]
 S0 = A2;
 A0 = 0002;
 A1 = SP + 0010;
@@ -2150,7 +2150,9 @@ V0 = w[80068514];
 
 
 ////////////////////////////////
-// func202d0
+// system_psyq_cd_int_to_pos()
+// Translate an absolute sector number to a minute/seconds/sector time code.
+
 V1 = 1b4e81b5;
 A0 = A0 + 0096;
 800202DC	mult   a0, v1
@@ -2211,36 +2213,26 @@ V1 = V1 + A0;
 V1 = V1 << 01;
 T0 = T0 - V1;
 A1 = A1 + T0;
-800203CC	jr     ra 
 [V0 + 0000] = b(A1);
-800203D4	nop
-800203D8	nop
-800203DC	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func203e0
-800203E0	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0014] = w(S1);
+
 S1 = A1;
-[SP + 0018] = w(S2);
 S2 = A2;
-[SP + 0020] = w(S4);
 S4 = A0;
-[SP + 0010] = w(S0);
 S0 = 0003;
-[SP + 001c] = w(S3);
 S3 = S4 & 00ff;
 8002040C	lui    v1, $8007
 80020410	addiu  v1, v1, $8558 (=-$7aa8)
-[SP + 0024] = w(S5);
 S5 = w[80068250];
 V0 = S3 << 02;
-[SP + 0028] = w(S6);
 S6 = V0 + V1;
-[SP + 002c] = w(S7);
 S7 = 0;
-[SP + 0030] = w(FP);
 80020438	addiu  fp, zero, $ffff (=-$1)
-[SP + 0034] = w(RA);
 
 loop20440:	; 80020440
 [80068250] = w(0);
@@ -2290,84 +2282,66 @@ L204d0:	; 800204D0
 V0 = S7 + 0001;
 
 L204ec:	; 800204EC
-RA = w[SP + 0034];
-FP = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80020514	jr     ra 
-SP = SP + 0038;
 ////////////////////////////////
-// func2051c
-8002051C	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0014] = w(S1);
+
+
+
+////////////////////////////////
+// func2051c()
+
 S1 = A1;
-[SP + 001c] = w(S3);
 S3 = A0;
-[SP + 0010] = w(S0);
 S0 = 0003;
-[SP + 0030] = w(FP);
 FP = 0001;
-[SP + 0018] = w(S2);
 S2 = S3 & 00ff;
 80020548	lui    v1, $8007
 8002054C	addiu  v1, v1, $8558 (=-$7aa8)
-[SP + 0020] = w(S4);
 S4 = w[80068250];
 V0 = S2 << 02;
-[SP + 0024] = w(S5);
 S5 = V0 + V1;
-[SP + 0028] = w(S6);
 S6 = 0;
-[SP + 002c] = w(S7);
 80020574	addiu  s7, zero, $ffff (=-$1)
-[SP + 0034] = w(RA);
 
 loop2057c:	; 8002057C
-8002057C	lui    at, $8007
-80020580	beq    s2, fp, L205b0 [$800205b0]
-[AT + 8250] = w(0);
-V0 = bu[8006825c];
-80020590	nop
-V0 = V0 & 0010;
-80020598	beq    v0, zero, L205b0 [$800205b0]
-A0 = 0001;
-A1 = 0;
-A2 = 0;
-800205A8	jal    system_cdrom_cdl_command_exec [$8001f7fc]
-A3 = 0;
+    8002057C	lui    at, $8007
+    80020580	beq    s2, fp, L205b0 [$800205b0]
+    [AT + 8250] = w(0);
+    V0 = bu[8006825c];
+    80020590	nop
+    V0 = V0 & 0010;
+    80020598	beq    v0, zero, L205b0 [$800205b0]
+    A0 = 0001;
+    A1 = 0;
+    A2 = 0;
+    800205A8	jal    system_cdrom_cdl_command_exec [$8001f7fc]
+    A3 = 0;
 
-L205b0:	; 800205B0
-800205B0	beq    s1, zero, L205e0 [$800205e0]
-800205B4	nop
-V0 = w[S5 + 0000];
-800205BC	nop
-800205C0	beq    v0, zero, L205e0 [$800205e0]
-A0 = 0002;
-A1 = S1;
-A2 = 0;
-800205D0	jal    system_cdrom_cdl_command_exec [$8001f7fc]
-A3 = 0;
-800205D8	bne    v0, zero, L20604 [$80020604]
-800205DC	nop
+    L205b0:	; 800205B0
+    800205B0	beq    s1, zero, L205e0 [$800205e0]
+    800205B4	nop
+    V0 = w[S5 + 0000];
+    800205BC	nop
+    800205C0	beq    v0, zero, L205e0 [$800205e0]
+    A0 = 0002;
+    A1 = S1;
+    A2 = 0;
+    800205D0	jal    system_cdrom_cdl_command_exec [$8001f7fc]
+    A3 = 0;
+    800205D8	bne    v0, zero, L20604 [$80020604]
+    800205DC	nop
 
-L205e0:	; 800205E0
-[80068250] = w(S4);
-A0 = S3 & 00ff;
-A1 = S1;
-A2 = 0;
-800205F4	jal    system_cdrom_cdl_command_exec [$8001f7fc]
-A3 = 0001;
-800205FC	beq    v0, zero, L20620 [$80020620]
-V0 = S6 + 0001;
+    L205e0:	; 800205E0
+    [80068250] = w(S4);
+    A0 = S3 & 00ff;
+    A1 = S1;
+    A2 = 0;
+    800205F4	jal    system_cdrom_cdl_command_exec [$8001f7fc]
+    A3 = 0001;
+    800205FC	beq    v0, zero, L20620 [$80020620]
+    V0 = S6 + 0001;
 
-L20604:	; 80020604
-80020604	addiu  s0, s0, $ffff (=-$1)
+    L20604:	; 80020604
+    80020604	addiu  s0, s0, $ffff (=-$1)
 80020608	bne    s0, s7, loop2057c [$8002057c]
 8002060C	nop
 [80068250] = w(S4);
@@ -2375,18 +2349,6 @@ L20604:	; 80020604
 V0 = S6 + 0001;
 
 L20620:	; 80020620
-RA = w[SP + 0034];
-FP = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80020648	jr     ra 
-SP = SP + 0038;
 ////////////////////////////////
 
 
@@ -2476,7 +2438,7 @@ L2076c:	; 8002076C
 800207AC	addiu  s0, s0, $8600 (=-$7a00)
 [SP + 0014] = w(RA);
 A0 = w[S0 + 0000];
-800207B8	jal    system_cdrom_set_sync_callback [$80021380]
+800207B8	jal    system_psyq_cd_sync_callback [$80021380]
 800207BC	addiu  s0, s0, $ffd8 (=-$28)
 [S0 + 0024] = w(0);
 RA = w[SP + 0014];
@@ -2624,7 +2586,7 @@ V1 = V1 < V0;
 
 L209bc:	; 800209BC
 A0 = w[S0 + 002c];
-800209C0	jal    system_cdrom_set_ready_callback [$800213a0]
+800209C0	jal    system_psyq_cd_ready_callback [$800213a0]
 800209C4	nop
 V0 = w[8006861c];
 800209D0	nop
@@ -2637,7 +2599,7 @@ A0 = w[S0 + 0030];
 
 L209ec:	; 800209EC
 800209EC	lui    a0, $8002
-800209F0	jal    system_cdrom_set_sync_callback [$80021380]
+800209F0	jal    system_psyq_cd_sync_callback [$80021380]
 A0 = A0 + 07a0;
 A0 = 0009;
 800209FC	jal    func2051c [$8002051c]
@@ -2687,7 +2649,7 @@ V0 = w[S0 + 0014];
 80020A98	bne    v0, zero, L20b08 [$80020b08]
 80020A9C	nop
 A0 = w[S0 + 002c];
-80020AA4	jal    system_cdrom_set_ready_callback [$800213a0]
+80020AA4	jal    system_psyq_cd_ready_callback [$800213a0]
 80020AA8	nop
 V0 = w[8006861c];
 80020AB4	nop
@@ -2700,7 +2662,7 @@ A0 = w[S0 + 0030];
 
 L20ad0:	; 80020AD0
 80020AD0	lui    a0, $8002
-80020AD4	jal    system_cdrom_set_sync_callback [$80021380]
+80020AD4	jal    system_psyq_cd_sync_callback [$80021380]
 A0 = A0 + 07a0;
 A0 = 0009;
 80020AE0	jal    func2051c [$8002051c]
@@ -2726,9 +2688,9 @@ S2 = A0;
 A0 = 0;
 [SP + 0024] = w(RA);
 [SP + 001c] = w(S1);
-80020B30	jal    system_cdrom_set_sync_callback [$80021380]
+80020B30	jal    system_psyq_cd_sync_callback [$80021380]
 [SP + 0018] = w(S0);
-80020B38	jal    system_cdrom_set_ready_callback [$800213a0]
+80020B38	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
 V0 = w[8006861c];
 80020B48	nop
@@ -2827,7 +2789,7 @@ A0 = V0;
 A0 = 800207d4;
 80020C88	lui    s0, $8007
 80020C8C	addiu  s0, s0, $85d8 (=-$7a28)
-80020C90	jal    system_cdrom_set_ready_callback [$800213a0]
+80020C90	jal    system_psyq_cd_ready_callback [$800213a0]
 [S0 + 0020] = w(V0);
 V0 = w[8006861c];
 80020CA0	nop
@@ -2885,7 +2847,7 @@ loop20d4c:	; 80020D4C
 80020D4C	lui    s0, $8007
 80020D50	addiu  s0, s0, $8600 (=-$7a00)
 A0 = w[S0 + 0000];
-80020D58	jal    system_cdrom_set_sync_callback [$80021380]
+80020D58	jal    system_psyq_cd_sync_callback [$80021380]
 80020D5C	addiu  s0, s0, $ffd8 (=-$28)
 80020D60	addiu  v0, zero, $ffff (=-$1)
 80020D64	j      L20dd4 [$80020dd4]
@@ -2895,7 +2857,7 @@ loop20d6c:	; 80020D6C
 80020D6C	lui    s0, $8007
 80020D70	addiu  s0, s0, $8600 (=-$7a00)
 A0 = w[S0 + 0000];
-80020D78	jal    system_cdrom_set_sync_callback [$80021380]
+80020D78	jal    system_psyq_cd_sync_callback [$80021380]
 80020D7C	addiu  s0, s0, $ffd8 (=-$28)
 [S0 + 0024] = w(0);
 80020D84	j      L20e8c [$80020e8c]
@@ -2931,7 +2893,7 @@ L20dd4:	; 80020DD4
 80020DDC	lui    s1, $8007
 80020DE0	addiu  s1, s1, $8604 (=-$79fc)
 A0 = w[S1 + 0000];
-80020DE8	jal    system_cdrom_set_ready_callback [$800213a0]
+80020DE8	jal    system_psyq_cd_ready_callback [$800213a0]
 80020DEC	nop
 V0 = w[8006861c];
 80020DF8	nop
@@ -2944,7 +2906,7 @@ A0 = w[S1 + 0004];
 
 L20e14:	; 80020E14
 80020E14	lui    a0, $8002
-80020E18	jal    system_cdrom_set_sync_callback [$80021380]
+80020E18	jal    system_psyq_cd_sync_callback [$80021380]
 A0 = A0 + 07a0;
 A0 = 0009;
 80020E24	jal    func2051c [$8002051c]
@@ -3036,7 +2998,7 @@ L20f4c:	; 80020F4C
 80020F4C	lui    s0, $8007
 80020F50	addiu  s0, s0, $8600 (=-$7a00)
 A0 = w[S0 + 0000];
-80020F58	jal    system_cdrom_set_sync_callback [$80021380]
+80020F58	jal    system_psyq_cd_sync_callback [$80021380]
 80020F5C	addiu  s0, s0, $ffd8 (=-$28)
 [S0 + 0024] = w(0);
 80020F64	j      L20f1c [$80020f1c]
@@ -3065,10 +3027,10 @@ A0 = 0;
 V0 = V0 | 0020;
 [S0 + 000c] = w(V0);
 [S0 + 0004] = w(S3);
-80020FAC	jal    system_cdrom_set_sync_callback [$80021380]
+80020FAC	jal    system_psyq_cd_sync_callback [$80021380]
 [S0 + 0000] = w(S4);
 A0 = 0;
-80020FB8	jal    system_cdrom_set_ready_callback [$800213a0]
+80020FB8	jal    system_psyq_cd_ready_callback [$800213a0]
 [S0 + 0028] = w(V0);
 V1 = w[8006861c];
 [S0 + 002c] = w(V0);
@@ -3346,7 +3308,8 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// system_cdrom_set_sync_callback()
+// system_psyq_cd_sync_callback()
+// Define CdSync callback function.
 
 V0 = w[80068250];
 [80068250] = w(A0);
@@ -3356,11 +3319,8 @@ return V0;
 
 
 ////////////////////////////////
-// system_cdrom_set_ready_callback()
-// Defines a callback routine func to be executed when data is available
-// in the sector buffer following a CD-ROM read initiated using CdRead2(),
-// CdControl (CdlReadS) or CdControl (CdlReadN).
-// If func is NULL, anyprevious callback routine is disabled
+// system_psyq_cd_ready_callback()
+// Define CdReady callback function.
 
 V0 = w[80068254];
 [80068254] = w(A0);
@@ -3991,7 +3951,7 @@ if( hu[A0 + 0] & 0001 )
 {
     loop21c3c:	; 80021C3C
         A0 = 0;
-        func22d3c;
+        func22d3c();
         V0 = V0 & ff;
     80021C48	beq    v0, zero, loop21c3c [$80021c3c]
 
@@ -4337,11 +4297,11 @@ if( S0 != 0 )
 {
     if( ( hu[S0 + 0] & 0001 ) != 0 )
     {
-        func22020;
+        func22020();
     }
 
     A0 = S0;
-    func21ae0;
+    func21ae0();
 
     if( V0 != 0 )
     {
@@ -4350,7 +4310,7 @@ if( S0 != 0 )
     else
     {
         A0 = S0;
-        func21a8c;
+        func21a8c();
 
         if( V0 != 0 )
         {
@@ -4360,7 +4320,7 @@ if( S0 != 0 )
 }
 else
 {
-    func21e20; // get element 0x28 indexed by +3[]
+    func21e20(); // get element 0x28 indexed by +3[]
 
     if( V0 != 0 )
     {
@@ -4371,7 +4331,7 @@ else
                 if( ( w[V0 + 4] & ffff ) != ( S1 & ffff ) )
                 {
                     A0 = V0;
-                    func21c20;
+                    func21c20();
                 }
             }
         }
@@ -4742,35 +4702,35 @@ S0 = w[SP + 0010];
 80022674	jr     ra 
 SP = SP + 0020;
 ////////////////////////////////
-// func2267c
-8002267C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S2);
+
+
+
+////////////////////////////////
+// func2267c()
+
 S2 = A0;
 V1 = 800761d0;
 A2 = V1 + 0944;
 A1 = S2;
 V0 = bu[V0 + 61d0];
 A0 = S2 + 0020;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 [V1 + 0002] = b(0);
 [V1 + 0003] = b(0);
 [SP + 0010] = w(V0);
 
 loop226bc:	; 800226BC
-A3 = w[A1 + 0000];
-T0 = w[A1 + 0004];
-T1 = w[A1 + 0008];
-T2 = w[A1 + 000c];
-[A2 + 0000] = w(A3);
-[A2 + 0004] = w(T0);
-[A2 + 0008] = w(T1);
-[A2 + 000c] = w(T2);
-A1 = A1 + 0010;
+    A3 = w[A1 + 0000];
+    T0 = w[A1 + 0004];
+    T1 = w[A1 + 0008];
+    T2 = w[A1 + 000c];
+    [A2 + 0000] = w(A3);
+    [A2 + 0004] = w(T0);
+    [A2 + 0008] = w(T1);
+    [A2 + 000c] = w(T2);
+    A1 = A1 + 0010;
+    A2 = A2 + 0010;
 800226E0	bne    a1, a0, loop226bc [$800226bc]
-A2 = A2 + 0010;
+
 A0 = 0;
 800226EC	lui    s1, $8007
 S3 = 0001;
@@ -4785,11 +4745,12 @@ S0 = S1 + 61d0;
 [S0 + 000c] = w(0);
 V0 = V0 + 07ff;
 V0 = V0 >> 0b;
-80022720	jal    system_cdrom_set_ready_callback [$800213a0]
 [S0 + 0004] = w(V0);
+system_psyq_cd_ready_callback();
+
 A0 = w[S2 + 0010];
-8002272C	jal    system_cdrom_set_sync_callback [$80021380]
-80022730	nop
+system_psyq_cd_sync_callback();
+
 V0 = bu[S2 + 0000];
 80022738	nop
 V0 = V0 & 0001;
@@ -4797,12 +4758,15 @@ V0 = V0 & 0001;
 80022744	nop
 S0 = S0 + 0008;
 [S1 + 61d0] = b(S3);
-A0 = w[S2 + 0004];
-80022754	jal    func202d0 [$800202d0]
+
+A0 = w[S2 + 4]; // Absolute sector number
+A1 = S0; // Pointer to a CdlLOC structure that will be set to the position time code
+system_psyq_cd_int_to_pos();
+
+A0 = 2;
 A1 = S0;
-A0 = 0002;
 80022760	jal    func23580 [$80023580]
-A1 = S0;
+
 80022768	j      L227ac [$800227ac]
 8002276C	nop
 
@@ -4826,13 +4790,10 @@ V0 = w[S0 + 095c];
 A0 = S0;
 
 L227ac:	; 800227AC
-RA = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-800227C0	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func227c8
 800227C8	addiu  sp, sp, $ffd0 (=-$30)
@@ -4894,7 +4855,7 @@ V0 = bu[S0 + 0002];
 V0 = S1 & 00ff;
 
 L22898:	; 80022898
-80022898	jal    system_cdrom_set_ready_callback [$800213a0]
+80022898	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
 V0 = 0004;
 [S2 + 61d0] = b(V0);
@@ -4913,7 +4874,7 @@ L228c4:	; 800228C4
 800228C8	nop
 
 L228cc:	; 800228CC
-800228CC	jal    system_cdrom_set_ready_callback [$800213a0]
+800228CC	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
 A0 = 0009;
 A1 = 0;
@@ -5052,10 +5013,10 @@ A0 = 1;
 system_cdrom_and_audio_init();
 
 A0 = 0;
-system_cdrom_set_sync_callback();
+system_psyq_cd_sync_callback();
 
 A0 = 0;
-system_cdrom_set_ready_callback();
+system_psyq_cd_ready_callback();
 
 A0 = 800761d0;
 A1 = 0;
@@ -5105,20 +5066,19 @@ return bu[800761d0];
 
 
 ////////////////////////////////
-// func22b28
-80022B28	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S0);
+// func22b28()
+
 80022B30	lui    s0, $8007
-[SP + 001c] = w(S1);
 S1 = bu[S0 + 61d0];
-[SP + 0020] = w(S2);
 S2 = S0 + 61d0;
 80022B44	beq    s1, zero, L22b80 [$80022b80]
-[SP + 0024] = w(RA);
-80022B4C	jal    system_cdrom_set_ready_callback [$800213a0]
+
 A0 = 0;
-80022B54	jal    system_cdrom_set_sync_callback [$80021380]
+80022B4C	jal    system_psyq_cd_ready_callback [$800213a0]
+
 A0 = 0;
+80022B54	jal    system_psyq_cd_sync_callback [$80021380]
+
 [S2 + 0002] = b(0);
 [S2 + 0003] = b(0);
 [S0 + 61d0] = b(0);
@@ -5132,13 +5092,7 @@ A2 = SP + 0010;
 A0 = 0009;
 
 L22b80:	; 80022B80
-V0 = S1;
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-80022B94	jr     ra 
-SP = SP + 0028;
+return S1;
 ////////////////////////////////
 
 
@@ -5149,10 +5103,10 @@ SP = SP + 0028;
 func21340();
 
 A0 = 0;
-system_cdrom_set_sync_callback();
+system_psyq_cd_sync_callback();
 
 A0 = 0;
-system_cdrom_set_ready_callback();
+system_psyq_cd_ready_callback();
 
 [800761d0] = b(0);
 ////////////////////////////////
@@ -5261,7 +5215,8 @@ SP = SP + 0040;
 
 
 ////////////////////////////////
-// func22d3c
+// func22d3c()
+
 [SP + 10] = b(4);
 V0 = 800231a0;
 [SP + 28] = w(A0);
@@ -5271,8 +5226,9 @@ A0 = SP + 10;
 80022D60	sw     zero, $0018(sp)
 80022D64	sw     zero, $001c(sp)
 80022D68	sw     v0, $0020(sp)
-80022D6C	jal    func230b8 [$800230b8]
 80022D70	sw     zero, $0024(sp)
+
+func230b8();
 
 return V0 & ff;
 ////////////////////////////////
@@ -5428,7 +5384,7 @@ S2 = S0 + 61d0;
 S1 = 0005;
 80022F8C	beq    v0, s1, L22fb0 [$80022fb0]
 [SP + 0020] = w(RA);
-80022F94	jal    system_cdrom_set_ready_callback [$800213a0]
+80022F94	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
 A0 = 0009;
 A1 = 0;
@@ -5474,7 +5430,7 @@ V1 = S0 + 61d0;
 [SP + 0014] = w(RA);
 A0 = 0;
 [V1 + 0002] = b(0);
-8002303C	jal    system_cdrom_set_ready_callback [$800213a0]
+8002303C	jal    system_psyq_cd_ready_callback [$800213a0]
 [V1 + 0003] = b(0);
 A0 = 0009;
 V0 = 0004;
@@ -5511,16 +5467,21 @@ V0 = V0 >> 04;
 800230B0	jr     ra 
 V0 = V0 & 0001;
 ////////////////////////////////
-// func230b8
-800230B8	addiu  sp, sp, $ffe0 (=-$20)
+
+
+
+////////////////////////////////
+// func230b8()
+
 V1 = bu[800761d0];
 A1 = A0;
 [SP + 0010] = w(V1);
 V1 = w[SP + 0010];
 A0 = V0 + 61d0;
-[SP + 0018] = w(RA);
-800230D8	bne    v1, zero, L23114 [$80023114]
 [A0 + 0001] = b(0);
+
+800230D8	bne    v1, zero, L23114 [$80023114]
+
 V0 = bu[A1 + 0000];
 800230E4	nop
 V0 = V0 & 0004;
@@ -5544,19 +5505,19 @@ V1 = A1;
 A0 = A1 + 0020;
 
 loop2312c:	; 8002312C
-A2 = w[V1 + 0000];
-A3 = w[V1 + 0004];
-T0 = w[V1 + 0008];
-T1 = w[V1 + 000c];
-[V0 + 0000] = w(A2);
-[V0 + 0004] = w(A3);
-[V0 + 0008] = w(T0);
-[V0 + 000c] = w(T1);
-V1 = V1 + 0010;
+    A2 = w[V1 + 0000];
+    A3 = w[V1 + 0004];
+    T0 = w[V1 + 0008];
+    T1 = w[V1 + 000c];
+    [V0 + 0000] = w(A2);
+    [V0 + 0004] = w(A3);
+    [V0 + 0008] = w(T0);
+    [V0 + 000c] = w(T1);
+    V1 = V1 + 0010;
+    V0 = V0 + 0010;
 80023150	bne    v1, a0, loop2312c [$8002312c]
-V0 = V0 + 0010;
+
 A2 = w[V1 + 0000];
-8002315C	nop
 [V0 + 0000] = w(A2);
 V1 = 800761d0;
 A0 = bu[V0 + 61d0];
@@ -5576,10 +5537,10 @@ L2318c:	; 8002318C
 V0 = 0;
 
 L23190:	; 80023190
-RA = w[SP + 0018];
-80023194	nop
-80023198	jr     ra 
-SP = SP + 0020;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func231a0
 800231A0	addiu  sp, sp, $ffe8 (=-$18)
@@ -5672,7 +5633,7 @@ V0 = bu[S0 + 0944];
 V0 = V0 & 0008;
 800232CC	bne    v0, zero, L232f0 [$800232f0]
 800232D0	nop
-800232D4	jal    system_cdrom_set_ready_callback [$800213a0]
+800232D4	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
 V0 = 0004;
 [S1 + 61d0] = b(V0);
@@ -5706,7 +5667,7 @@ V0 = bu[A1 + 0001];
 V1 = 0001;
 [A1 + 0003] = b(V1);
 V0 = V0 + 0001;
-80023348	jal    system_cdrom_set_ready_callback [$800213a0]
+80023348	jal    system_psyq_cd_ready_callback [$800213a0]
 [A1 + 0001] = b(V0);
 A0 = 0009;
 80023354	jal    func23580 [$80023580]
@@ -5763,14 +5724,14 @@ V0 = V1 & 0008;
 800233FC	beq    v0, zero, L23418 [$80023418]
 80023400	nop
 80023404	lui    a0, $8002
-80023408	jal    system_cdrom_set_ready_callback [$800213a0]
+80023408	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = A0 + 35a0;
 80023410	j      L23444 [$80023444]
 A0 = 001b;
 
 L23418:	; 80023418
 A0 = w[A0 + 0958];
-8002341C	jal    system_cdrom_set_ready_callback [$800213a0]
+8002341C	jal    system_psyq_cd_ready_callback [$800213a0]
 80023420	nop
 80023424	j      L23444 [$80023444]
 A0 = 0006;
@@ -5794,9 +5755,9 @@ SP = SP + 0018;
 // func2345c
 8002345C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-80023464	jal    system_cdrom_set_ready_callback [$800213a0]
+80023464	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
-8002346C	jal    system_cdrom_set_sync_callback [$80021380]
+8002346C	jal    system_psyq_cd_sync_callback [$80021380]
 A0 = 0;
 A0 = 800761d0;
 V0 = bu[A0 + 0003];
@@ -5873,15 +5834,18 @@ RA = w[SP + 0010];
 80023578	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func23580
-80023580	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80023588	jal    func2051c [$8002051c]
-A0 = A0 & 00ff;
-RA = w[SP + 0010];
-80023594	nop
-80023598	jr     ra 
-SP = SP + 0018;
+
+A0 = A0 & ff;
+func2051c();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func235a0
 800235A0	addiu  sp, sp, $ffe8 (=-$18)
@@ -5904,7 +5868,7 @@ V0 = bu[V1 + 0002];
 800235E4	nop
 800235E8	beq    v0, zero, L23614 [$80023614]
 800235EC	nop
-800235F0	jal    system_cdrom_set_ready_callback [$800213a0]
+800235F0	jal    system_psyq_cd_ready_callback [$800213a0]
 A0 = 0;
 V0 = 0004;
 [S0 + 61d0] = b(V0);

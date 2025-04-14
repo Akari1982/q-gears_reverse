@@ -306,7 +306,7 @@
 80020080 func20080
 800201E8 func201e8
 800201F4 system_cdrom_interrupt_handler
-800202D0 func202d0
+800202D0 system_psyq_cd_int_to_pos
 800203E0 func203e0
 8002051C func2051c
 80020650 func20650
@@ -328,8 +328,8 @@
 80021330 func21330
 80021340 func21340
 80021360 func21360
-80021380 system_cdrom_set_sync_callback
-800213A0 system_cdrom_set_ready_callback
+80021380 system_psyq_cd_sync_callback
+800213A0 system_psyq_cd_ready_callback
 800213C0 func213c0
 800213E0 func213e0
 800214E0 func214e0

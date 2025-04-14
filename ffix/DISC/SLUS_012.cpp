@@ -5488,8 +5488,82 @@ S0 = w[SP + 0028];
 8001CFAC	jr     ra 
 SP = SP + 0040;
 ////////////////////////////////
-// func1cfb4
-8001CFB4-8001D0F4
+
+
+
+////////////////////////////////
+// func1cfb4()
+
+V0 = w[8006794c];
+V0 = w[V0 + 1c];
+if( V0 != 0 )
+{
+    A0 = 0;
+    system_psyq_vsync();
+
+    V1 = w[8006794c];
+    V0 = w[V1 + 1c];
+    frame_id = bu[V0 + 8]; // frame buffer index
+
+    A0 = w[V1 + c] + frame_id * 14;
+    system_psyq_put_dispenv();
+
+    S1 = 0;
+    A0 = 80073c88;
+    V1 = w[8006794c];
+    A1 = w[V1 + 10] + (frame_id ^ 1) * 5c;
+    A2 = 5c;
+    8001D04C	jal    func1d0f8 [$8001d0f8]
+
+    8001D054	jal    func2f800 [$8002f800]
+
+    8001D05C	andi   v0, v0, $00ff
+    8001D060	bne    v0, zero, L1d07c [$8001d07c]
+    8001D064	nop
+    8001D068	jal    func2f810 [$8002f810]
+    8001D06C	nop
+    8001D070	andi   v0, v0, $00ff
+    8001D074	beq    v0, zero, L1d080 [$8001d080]
+    8001D078	nop
+
+    L1d07c:	; 8001D07C
+    S1 = 1;
+
+    L1d080:	; 8001D080
+    8001D080	jal    func2f864 [$8002f864]
+    8001D084	nop
+    8001D088	addiu  a0, sp, $0010
+    8001D08C	jal    func2f9a8 [$8002f9a8]
+    8001D090	addu   s0, v0, zero
+    8001D094	beq    s1, zero, L1d0cc [$8001d0cc]
+    8001D098	lui    v0, $8007
+    8001D09C	bne    s0, zero, L1d0cc [$8001d0cc]
+    8001D0A0	lui    v1, $8007
+    8001D0A4	addiu  v1, v1, $3c88
+    8001D0A8	lbu    a0, $0010(sp)
+    8001D0AC	lbu    a1, $0011(sp)
+    8001D0B0	lbu    a2, $0012(sp)
+    8001D0B4	addiu  v0, zero, $0001
+    8001D0B8	sb     v0, $0018(v1)
+    8001D0BC	sb     a0, $0019(v1)
+    8001D0C0	sb     a1, $001a(v1)
+    8001D0C4	j      L1d0d0 [$8001d0d0]
+    8001D0C8	sb     a2, $001b(v1)
+
+    L1d0cc:	; 8001D0CC
+    8001D0CC	sb     zero, $3ca0(v0)
+
+    L1d0d0:	; 8001D0D0
+    A0 = 80073c88;
+    system_psyq_put_drawenv();
+
+    A0 = 0;
+    system_psyq_draw_sync();
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d0f8
 A3 = A0;
@@ -54683,7 +54757,7 @@ V0 = V0 & 0010;
 800653BC	bne    v0, zero, L654dc [$800654dc]
 V0 = 0010;
 A0 = 0010;
-800653C8	jal    func202d0 [$800202d0]
+800653C8	jal    system_psyq_cd_int_to_pos [$800202d0]
 A1 = SP + 0010;
 A0 = 000e;
 A1 = SP + 0820;
