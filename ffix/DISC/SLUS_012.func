@@ -286,7 +286,7 @@
 8001E3A4 func1e3a4
 
 // libcd
-8001E3C0 func1e3c0
+8001E3C0 system_psyq_cd_search_file
 8001E698 func1e698
 8001E6B8 func1e6b8
 8001E97C func1e97c
@@ -308,7 +308,7 @@
 800201F4 system_cdrom_interrupt_handler
 800202D0 system_psyq_cd_int_to_pos
 800203E0 func203e0
-8002051C func2051c
+8002051C system_psyq_cd_control_f
 80020650 func20650
 800207A0 func207a0
 800207D4 func207d4
@@ -322,7 +322,7 @@
 8002120C func2120c
 80021234 func21234
 8002125C func2125c
-80021290 func21290
+80021290 system_psyq_cd_pos_to_int
 80021310 func21310
 80021320 func21320
 80021330 func21330
@@ -378,7 +378,7 @@
 8002291C func2291c
 80022A28 system_cdrom_init
 80022A80 func22a80
-80022AC4 func22ac4
+80022AC4 system_cdrom_get_sector_by_filename
 80022B18 func22b18
 80022B28 func22b28
 80022B9C func22b9c
@@ -405,7 +405,7 @@
 800233CC func233cc
 8002345C func2345c
 8002350C func2350c
-80023580 func23580
+80023580 system_cdrom_cd_control_f
 800235A0 func235a0
 80023634 system_cdrom_and_audio_init
 

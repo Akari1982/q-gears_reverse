@@ -5123,11 +5123,199 @@ L1c7f4:	; 8001C7F4
 8001C7F4	jr     ra 
 8001C7F8	addiu  v0, zero, $ffff (=-$1)
 ////////////////////////////////
-// func1c7fc
-8001C7FC-8001C8AC
+
+
+
 ////////////////////////////////
-// func1c8b0
-8001C8B0-8001CA6C
+// func1c7fc()
+// A0 - type of return
+
+S2 = A0;
+S4 = A1;
+S5 = A2; // XXXXYYYY where XXXX - type of db file, YYYY - 
+
+V0 = h[80073c40 + 2];
+S0 = V0 - 1;
+
+if( S0 >= 0 )
+{
+    S1 = 80073c40 + S0 * 4;
+
+    loop1c84c:	; 8001C84C
+        A0 = w[S1 + 4];
+        A1 = S2;
+        A2 = S4;
+        A3 = S5;
+        func1c8b0;
+
+        if (V0 != -1)
+        {
+            return V0;
+        }
+
+        S0 = S0 - 1;
+        S1 = S1 - 4;
+    8001C86C	bgez   s0, loop1c84c [$8001c84c]
+}
+
+if (V0 == -1 && (S2 & 1) == 0)
+{
+    return 0;
+}
+
+return -1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1c8b0()
+// get info from db structure
+// A1 - type of return
+// 0 - return address of founded resource.
+// 1 - number of files of that type resource.
+// 2 - return address of file with index A2 & ffff in given resource.
+// 3 - return unique identificator of file???
+// 4 - return address of file with identificator A2 & ffff in given resource.
+// 5 - return size of file with identificator A2 & ffff in given resource.
+// 8 - 
+
+address = A0;
+return_type = A1;
+V1 = A2;
+file_index = V1 & ffff;
+resource_type = (V1 >> 10) & ff;
+
+A2 = A3;
+
+if (address == 0)
+{
+    return 0;
+}
+
+file_pointer_start = address + 4;
+number_of_files = bu[address + 1];
+
+if (number_of_files != 0)
+{
+    // loop through all files in database
+    T7 = 0;
+    loop1c94c:	; 8001C94C
+        T0 = w[file_pointer_start + 0]
+        T4 = (T0 >> 18) & 7f; // type of part
+        if (T4 == resource_type)
+        {
+            resource_address = file_pointer_start + T0 & 00ffffff; // address of part
+            number_of_resource = bu[resource_address + 1]; // number of files of that type
+
+            if (return_type == 0)
+            {
+                return resource_address;
+            }
+            if (return_type == 1)
+            {
+                return number_of_resource;
+            }
+
+            identifiers_address = resource_address + 4;
+            pointers_address = identifiers_address + number_of_resource * 2;
+            V0 = pointers_address & 3;
+            if (V0 != 0) // align address to 4 bytes
+            {
+                V0 = V0 - 4;
+                pointers_address = pointers_address - V0;
+            }
+
+            if (return_type == 2)
+            {
+                V0 = w[pointers_address + file_index * 4];
+                return pointers_address + file_index * 4 + V0 & 00ffffff;
+            }
+
+            if (return_type == 3)
+            {
+                return (T4 << 10) | hu[identifiers_address + file_index * 2];
+            }
+
+            if (number_of_resource != 0)
+            {
+                T0 = 0;
+                loop1c9b8:	; 8001C9B8
+                    if (hu[identifiers_address] == file_index)
+                    {
+                        switch (return_type)
+                        {
+                            case 4:
+                            {
+                                return pointers_address + w[pointers_address] & 00ffffff;
+                            }
+                            break;
+
+                            case 5:
+                            {
+                                return (w[pointers_address + 4] & 00ffffff) - w[pointers_address + 0] & 00ffffff + 4;
+                            }
+                            break;
+
+                            case 9:
+                            {
+                                A0 = address
+                                A1 = 3;
+                                A2 = A2;
+                                A3 = 0;
+                                func1c8b0;
+                                return V0;
+                            }
+                            break;
+
+                            case 8:
+                            {
+                                A0 = address
+                                A1 = 2;
+                                A2 = A2;
+                                A3 = 0;
+                                func1c8b0;
+                                return V0;
+                            }
+                            break;
+
+                            case b:
+                            {
+                                A0 = address
+                                A1 = 1;
+                                A2 = A2;
+                                A3 = 0;
+                                func1c8b0;
+                                return V0;
+                            }
+                            break;
+
+                            default:
+                            {
+                                return -1;
+                            }
+                        }
+                    }
+
+                    identifiers_address = identifiers_address + 2;
+                    T0 = T0 + 1;
+                    V0 = T0 < number_of_resource;
+                    pointers_address = pointers_address + 4;
+                8001CA40	bne    v0, zero, loop1c9b8 [$8001c9b8]
+            }
+        }
+
+        T7 = T7 + 1;
+        file_pointer_start = file_pointer_start + 4;
+        V0 = T7 < number_of_files;
+    8001CA50	bne    v0, zero, loop1c94c [$8001c94c]
+}
+
+return -1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1ca70
 8001CA70	beq    a0, zero, L1ca88 [$8001ca88]
@@ -6271,8 +6459,90 @@ L1da9c:	; 8001DA9C
 8001DA9C	jr     ra 
 8001DAA0	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func1daa4
-8001DAA4-8001DCB4
+S6 = A0; // offset to previous file
+S7 = A1; // offset to file
+S4 = A2;
+S2 = A3; // some address
+S1 = 0;
+if( S4 != 0 && S1 < S4 )
+{
+    loop1daf8:	; 8001DAF8
+        V0 = bu[80068234];
+        A1 = S4 - S1;
+        V1 = V0 + 1;
+        [80068234] = b(V1);
+        V1 = V0 * 8;
+        S0 = 80073ce8 + V1;
+        if (V0 >= 5)
+        {
+            [80068234] = b(0);
+        }
+
+        if (S2 != 0)
+        {
+            [S0 + 0] = h(hu[S2 + 0]);
+            [S0 + 2] = h(hu[S2 + 2]);
+            [S0 + 4] = h(hu[S2 + 4]);
+            [S0 + 6] = h(hu[S2 + 6]);
+        }
+        else
+        {
+            A0 = w[8006794c];
+            V0 = w[A0 + 1c];
+            V1 = w[A0 + 10] + bu[V0 + 8] * 5c;
+            [S0 + 0] = h(hu[V1 + 0]);
+            [S0 + 2] = h(hu[V1 + 2]);
+            [S0 + 4] = h(140);
+            [S0 + 6] = h(da);
+        }
+
+        V1 = A1 / 2;
+        A0 = V1 / h[S0 + 6];
+        if (A0 == 0 && A1 != 0)
+        {
+            V0 = V1 << 10;
+            A0 = 1;
+            [S0 + 6] = h(V1);
+            if (V0 == 0)
+            {
+                [S0 + 6] = h(V1 + A0);
+            }
+        }
+        else if (h[S0 + 4] < A0)
+        {
+            A0 = V1;
+        }
+
+        [S0 + 4] = h(A0);
+
+        A0 = S0;
+        A1 = S7 + S1;
+        system_psyq_load_image();
+
+        loop1dc48:	; 8001DC48
+            8001DC48	jal    func22b18 [$80022b18]
+        8001DC50	bne    v0, zero, loop1dc48 [$8001dc48]
+
+        A0 = S0;
+        A1 = S6 + S1;
+        system_psyq_store_image();
+
+        T0 = h[S0 + 4] + h[S0 + 6];
+        S1 = S1 + T0 * 2;
+        V0 = S1 < S4;
+    8001DC80	bne    v0, zero, loop1daf8 [$8001daf8]
+}
+
+return S1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1dcb8
 8001DCB8	addiu  sp, sp, $ffb0 (=-$50)
@@ -6286,12 +6556,13 @@ S3 = 0001;
 [SP + 003c] = w(S1);
 S1 = SP + 0028;
 V1 = w[S2 + 794c];
-8001DCE4	lui    v0, $8001
 [SP + 0048] = w(RA);
-T3 = V0 + 03f0;
+
+T3 = 800103f0;
 T0 = w[T3 + 0000];
 T1 = w[T3 + 0004];
 T2 = w[T3 + 0008];
+
 [SP + 0028] = w(T0);
 [SP + 002c] = w(T1);
 [SP + 0030] = w(T2);
@@ -6302,101 +6573,93 @@ V0 = 00ff;
 [V1 + 000b] = b(V0);
 
 loop1dd1c:	; 8001DD1C
-A1 = w[S1 + 0000];
-8001DD20	jal    func1e3c0 [$8001e3c0]
-A0 = SP + 0010;
-8001DD28	beq    v0, zero, L1dd58 [$8001dd58]
-8001DD2C	nop
-V1 = w[S2 + 794c];
-8001DD34	bgez   s0, L1dd40 [$8001dd40]
-V0 = S0;
-V0 = S0 + 0003;
+    A0 = SP + 0010;
+    A1 = w[S1 + 0000];
+    system_psyq_cd_search_file();
 
-L1dd40:	; 8001DD40
-V0 = V0 >> 02;
-V0 = V0 << 02;
-V0 = S0 - V0;
-V0 = S3 << V0;
-8001DD50	j      L1dd68 [$8001dd68]
-[V1 + 000b] = b(V0);
+    8001DD28	beq    v0, zero, L1dd58 [$8001dd58]
+    8001DD2C	nop
+    V1 = w[S2 + 794c];
+    8001DD34	bgez   s0, L1dd40 [$8001dd40]
+    V0 = S0;
+    V0 = S0 + 0003;
 
-L1dd58:	; 8001DD58
-S0 = S0 + 0001;
-V0 = S0 < 0004;
+    L1dd40:	; 8001DD40
+    V0 = V0 >> 02;
+    V0 = V0 << 02;
+    V0 = S0 - V0;
+    V0 = S3 << V0;
+    8001DD50	j      L1dd68 [$8001dd68]
+    [V1 + 000b] = b(V0);
+
+    L1dd58:	; 8001DD58
+    S0 = S0 + 0001;
+    S1 = S1 + 0004;
+    V0 = S0 < 0004;
 8001DD60	bne    v0, zero, loop1dd1c [$8001dd1c]
-S1 = S1 + 0004;
 
 L1dd68:	; 8001DD68
 V0 = w[8006794c];
-8001DD70	nop
-V1 = bu[V0 + 000b];
-V0 = 00ff;
-8001DD7C	beq    v1, v0, L1de34 [$8001de34]
-8001DD80	nop
+V1 = bu[V0 + b];
 
-loop1dd84:	; 8001DD84
-8001DD84	jal    func22b18 [$80022b18]
-8001DD88	nop
-8001DD8C	bne    v0, zero, loop1dd84 [$8001dd84]
-8001DD90	nop
-8001DD94	lui    s2, $8001
-8001DD98	lui    s1, $8006
-8001DD9C	addiu  s0, zero, $ffff (=-$1)
+if( V1 != ff )
+{
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
 
-L1dda0:	; 8001DDA0
-8001DDA0	jal    func22ac4 [$80022ac4]
-A0 = S2 + 0400;
-V1 = w[S1 + 794c];
-8001DDAC	bne    v0, s0, L1ddcc [$8001ddcc]
-[V1 + 0020] = w(V0);
+    while( true )
+    {
+        A0 = 80010400; // "\FF9.IMG;1"
+        system_cdrom_get_sector_by_filename();
 
-loop1ddb4:	; 8001DDB4
-8001DDB4	jal    func22b18 [$80022b18]
-8001DDB8	nop
-8001DDBC	bne    v0, zero, loop1ddb4 [$8001ddb4]
-8001DDC0	nop
-8001DDC4	j      L1dda0 [$8001dda0]
-8001DDC8	nop
+        V1 = w[8006794c];
+        [V1 + 20] = w(V0); // store sector
 
-L1ddcc:	; 8001DDCC
-8001DDCC	jal    func22b18 [$80022b18]
-8001DDD0	nop
-8001DDD4	bne    v0, zero, L1ddcc [$8001ddcc]
-8001DDD8	nop
+        if( V0 != -1 ) break;
 
-loop1dddc:	; 8001DDDC
-8001DDDC	jal    func22b18 [$80022b18]
-8001DDE0	nop
-8001DDE4	bne    v0, zero, loop1dddc [$8001dddc]
-8001DDE8	lui    v0, $8006
-A1 = 0800;
-V0 = w[V0 + 794c];
-A3 = 0;
-8001DDF8	addiu  s0, v0, $e800 (=-$1800)
-A0 = w[V0 + 0020];
-8001DE00	jal    func22c60 [$80022c60]
-A2 = S0;
+        do
+        {
+            func22b18();
+        } while( V0 != 0 )
+    }
 
-loop1de08:	; 8001DE08
-8001DE08	jal    func22b18 [$80022b18]
-8001DE0C	nop
-8001DE10	bne    v0, zero, loop1de08 [$8001de08]
-A1 = S0 + 0010;
-V1 = w[8006794c];
-V0 = w[S0 + 0008];
-A0 = w[V1 + 0014];
-A2 = V0 << 04;
-8001DE2C	jal    func1d0f8 [$8001d0f8]
-[V1 + 0030] = w(V0);
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
 
-L1de34:	; 8001DE34
-RA = w[SP + 0048];
-S3 = w[SP + 0044];
-S2 = w[SP + 0040];
-S1 = w[SP + 003c];
-S0 = w[SP + 0038];
-8001DE48	jr     ra 
-SP = SP + 0050;
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
+
+    A1 = 0800;
+    V0 = w[8006794c];
+    A3 = 0;
+    8001DDF8	addiu  s0, v0, $e800 (=-$1800)
+    A0 = w[V0 + 0020];
+    A2 = S0;
+    8001DE00	jal    func22c60 [$80022c60]
+
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
+
+    A1 = S0 + 0010;
+    V1 = w[8006794c];
+    V0 = w[S0 + 0008];
+    A0 = w[V1 + 0014];
+    A2 = V0 << 04;
+    [V1 + 0030] = w(V0);
+    8001DE2C	jal    func1d0f8 [$8001d0f8]
+}
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1de50
 8001DE50	addiu  sp, sp, $ffc0 (=-$40)
@@ -53876,10 +54139,9 @@ V0 = w[800704e4];
 8006481C	nop
 [V0 + 0000] = w(S0);
 V0 = w[800704e8];
-8006482C	lui    v1, $0100
 [V0 + 0000] = w(0);
 V0 = w[800704ec];
-V1 = V1 | 0401;
+V1 = 01000401;
 [V0 + 0000] = w(V1);
 
 L64844:	; 80064844

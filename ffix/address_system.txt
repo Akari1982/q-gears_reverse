@@ -511,4 +511,5 @@
                     0x00000001 - looks like side flag. 0-enemy, 1-player
                     0x0000001e - some data.
                 +b0 [][]     bit mask of this unit.
+    + 20 [][][][] sector of "\FF9.IMG;1" file.
     + 24 [][][][] some flags.

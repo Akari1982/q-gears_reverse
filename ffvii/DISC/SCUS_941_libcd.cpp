@@ -349,10 +349,7 @@ for( int i = 3; i != -1 ; --i )
             A3 = 0;
             system_cdrom_cdl_command_exec();
 
-            if( V0 != 0 )
-            {
-                continue;
-            }
+            if( V0 != 0 ) continue;
         }
     }
 
@@ -364,10 +361,7 @@ for( int i = 3; i != -1 ; --i )
     A3 = 1;
     system_cdrom_cdl_command_exec();
 
-    if( V0 == 0 )
-    {
-        return 1;
-    }
+    if( V0 == 0 ) return 1;
 }
 
 [80051628] = w(S4);
