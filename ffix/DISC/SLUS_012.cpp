@@ -6637,10 +6637,10 @@ if( V1 != ff )
 
     V0 = w[8006794c];
     8001DDF8	addiu  s0, v0, $e800 (=-$1800)
-    A0 = w[V0 + 20];
-    A1 = 800;
+    A0 = w[V0 + 20]; // file sector
+    A1 = 800; // file size
     A2 = S0;
-    A3 = 0;
+    A3 = 0; // end callback
     func22c60();
 
     do
@@ -6648,7 +6648,7 @@ if( V1 != ff )
         func22b18();
     } while( V0 != 0 )
 
-    A1 = S0 + 0010;
+    A1 = S0 + 10;
     V1 = w[8006794c];
     V0 = w[S0 + 0008];
     A0 = w[V1 + 0014];

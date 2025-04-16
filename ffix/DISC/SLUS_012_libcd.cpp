@@ -4728,10 +4728,10 @@ while( src != end )
 [800761d0 + 0] = b(1);
 
 S0 = 800761d0;
-[S0 + 4] = w(w[data + 8] / 800);
-[S0 + c] = w(0);
-[S0 + 10] = w(0);
-[S0 + 14] = w(0);
+[800761d0 + 4] = w(w[data + 8] / 800);
+[800761d0 + c] = w(0);
+[800761d0 + 10] = w(0);
+[800761d0 + 14] = w(0);
 
 A0 = 0;
 system_psyq_cd_ready_callback();
@@ -4741,15 +4741,14 @@ system_psyq_cd_sync_callback();
 
 if( bu[data + 0] & 01 )
 {
-    S0 += 8;
     [800761d0 + 0] = b(1);
 
     A0 = w[data + 4]; // Absolute sector number
-    A1 = S0 + 0; // Pointer to a CdlLOC structure that will be set to the position time code
+    A1 = 800761d0 + 8; // Pointer to a CdlLOC structure that will be set to the position time code
     system_psyq_cd_int_to_pos();
 
     A0 = 2; // CdlSetloc
-    A1 = S0; // CdlLOC
+    A1 = 800761d0 + 8; // CdlLOC
     system_cdrom_cd_control_f();
 }
 else
@@ -4767,10 +4766,10 @@ else
     {
         [800761d0 + 0] = b(0);
 
-        func = w[S0 + 95c];
+        func = w[800761d0 + 944 + 18];
         if( func != 0 )
         {
-            A0 = S0;
+            A0 = 800761d0;
             800227A4	jalr   func ra
         }
     }
@@ -5111,25 +5110,24 @@ RA = w[SP + 0010];
 80022C08	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func22c10
-80022C10	addiu  sp, sp, $ffc0 (=-$40)
-V0 = 0001;
-[SP + 0010] = b(V0);
-V0 = 800231a0;
-[SP + 0020] = w(V0);
-V0 = 800227c8;
-[SP + 0014] = w(A0);
-A0 = SP + 0010;
-[SP + 0038] = w(RA);
-[SP + 0018] = w(0);
-[SP + 001c] = w(0);
-[SP + 0024] = w(V0);
-80022C48	jal    func230b8 [$800230b8]
-[SP + 0028] = w(A1);
-RA = w[SP + 0038];
-V0 = V0 & 00ff;
-80022C58	jr     ra 
-SP = SP + 0040;
+
+
+
+////////////////////////////////
+// func22c10()
+
+[SP + 10] = b(1);
+[SP + 14] = w(A0);
+[SP + 18] = w(0);
+[SP + 1c] = w(0);
+[SP + 20] = w(800231a0); // cd_sync_callback - func231a0()
+[SP + 24] = w(800227c8);
+[SP + 28] = w(A1);
+
+A0 = SP + 10;
+func230b8();
+
+return V0;
 ////////////////////////////////
 
 
@@ -5143,10 +5141,10 @@ V1 = 80076148;
 [V1 + 4] = w(A0); // file sector
 [V1 + 8] = w(A1); // file size
 [V1 + c] = w(-1);
-[V1 + 10] = w(800231a0); // cd_sync_callback
+[V1 + 10] = w(800231a0); // cd_sync_callback - func231a0()
 [V1 + 14] = w(800227c8);
-[V1 + 18] = w(A3);
-[V1 + 1c] = w(A1);
+[V1 + 18] = w(A3); // end callback
+[V1 + 1c] = w(A1); // file size
 [V1 + 20] = w(A2);
 
 A0 = V1;
@@ -5158,39 +5156,36 @@ return V0;
 
 
 ////////////////////////////////
-// func22cc4
-80022CC4	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0038] = w(RA);
+// func22cc4()
+
 T0 = 0;
-80022CD0	blez   a2, L22cf4 [$80022cf4]
 T1 = T0;
+
+80022CD0	blez   a2, L22cf4 [$80022cf4]
+
 V1 = A1;
 
 loop22cdc:	; 80022CDC
-V0 = w[V1 + 0000];
-T0 = T0 + 0001;
-T1 = T1 + V0;
-V0 = T0 < A2;
+    V0 = w[V1 + 0000];
+    T0 = T0 + 0001;
+    T1 = T1 + V0;
+    V1 = V1 + 0008;
+    V0 = T0 < A2;
 80022CEC	bne    v0, zero, loop22cdc [$80022cdc]
-V1 = V1 + 0008;
 
 L22cf4:	; 80022CF4
-V0 = 0003;
-[SP + 0010] = b(V0);
-V0 = 800231a0;
-[SP + 0020] = w(V0);
-V0 = 800227c8;
-[SP + 0014] = w(A0);
-A0 = SP + 0010;
-[SP + 0018] = w(T1);
-[SP + 001c] = w(A1);
-[SP + 0024] = w(V0);
-80022D24	jal    func230b8 [$800230b8]
-[SP + 0028] = w(A3);
-RA = w[SP + 0038];
-V0 = V0 & 00ff;
-80022D34	jr     ra 
-SP = SP + 0040;
+[SP + 10] = b(3);
+[SP + 14] = w(A0);
+[SP + 18] = w(T1);
+[SP + 1c] = w(A1);
+[SP + 20] = w(800231a0); // cd_sync_callback - func231a0()
+[SP + 24] = w(800227c8);
+[SP + 28] = w(A3);
+
+A0 = SP + 10;
+func230b8();
+
+return V0;
 ////////////////////////////////
 
 
@@ -5204,7 +5199,7 @@ SP = SP + 0040;
 [SP + 1c] = w(0);
 [SP + 20] = w(800231a0); // cd_sync_callback - func231a0()
 [SP + 24] = w(0);
-[SP + 28] = w(A0);
+[SP + 28] = w(A0); // end callback
 
 A0 = SP + 10;
 func230b8();
@@ -5217,13 +5212,13 @@ return V0;
 ////////////////////////////////
 // func22d84()
 
-[SP + 0010] = b(1);
-[SP + 0020] = w(800231a0);
-[SP + 0014] = w(A0);
-[SP + 0018] = w(0);
-[SP + 001c] = w(0);
-[SP + 0024] = w(800227c8);
-[SP + 0028] = w(0);
+[SP + 10] = b(1);
+[SP + 14] = w(A0);
+[SP + 18] = w(0);
+[SP + 1c] = w(0);
+[SP + 20] = w(800231a0); // cd_sync_callback - func231a0()
+[SP + 24] = w(800227c8);
+[SP + 28] = w(0);
 
 A0 = SP + 10;
 func230b8();
@@ -5249,7 +5244,7 @@ V1 = 80076148;
 [V1 + 4] = w(A0);
 [V1 + 8] = w(A1);
 [V1 + c] = w(-1);
-[V1 + 10] = w(800231a0);
+[V1 + 10] = w(800231a0); // cd_sync_callback - func231a0()
 [V1 + 14] = w(800227c8);
 [V1 + 18] = w(0);
 [V1 + 1c] = w(A1);
@@ -5281,7 +5276,7 @@ A0 = SP + 0010;
 [SP + 0014] = w(0);
 [SP + 0018] = w(0);
 [SP + 001c] = w(0);
-[SP + 0020] = w(V0);
+[SP + 0020] = w(V0); // cd_sync_callback - func231a0()
 [SP + 0024] = w(0);
 80022EA0	jal    func230b8 [$800230b8]
 [SP + 0028] = w(0);
@@ -5301,6 +5296,10 @@ RA = w[SP + 0038];
 80022ECC	jr     ra 
 SP = SP + 0040;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func22ed4
 80022ED4	addiu  sp, sp, $ffc0 (=-$40)
 V0 = 0009;
@@ -5312,7 +5311,7 @@ A0 = SP + 0010;
 [SP + 0018] = w(0);
 [SP + 001c] = w(0);
 [SP + 0028] = w(0);
-[SP + 0020] = w(V0);
+[SP + 0020] = w(V0); // cd_sync_callback - func231a0()
 80022F04	jal    func230b8 [$800230b8]
 [SP + 0024] = w(0);
 RA = w[SP + 0038];
@@ -5330,7 +5329,7 @@ A0 = SP + 0010;
 [SP + 0038] = w(RA);
 [SP + 0018] = w(0);
 [SP + 001c] = w(0);
-[SP + 0020] = w(V0);
+[SP + 0020] = w(V0); // cd_sync_callback - func231a0()
 [SP + 0024] = w(A1);
 80022F4C	jal    func230b8 [$800230b8]
 [SP + 0028] = w(0);
@@ -5380,7 +5379,7 @@ A0 = SP + 0010;
 [SP + 0014] = w(0);
 [SP + 0018] = w(0);
 [SP + 001c] = w(0);
-[SP + 0020] = w(V0);
+[SP + 0020] = w(V0); // cd_sync_callback - func231a0()
 80023000	jal    func230b8 [$800230b8]
 [SP + 0024] = w(0);
 RA = w[SP + 0038];
@@ -5446,7 +5445,7 @@ data = A0;
 // +  4 [][][][] file absolute sector
 // +  8 [][][][] file size
 // + 10 [][][][] cd_sync_callback
-// + 18 [][][][] callback
+// + 18 [][][][] end operation callback
 
 [SP + 10] = w(bu[800761d0 + 0]);
 
@@ -5498,40 +5497,40 @@ return 1;
 
 ////////////////////////////////
 // func231a0()
+// cd_sync_callback
 
-if( A1 != 0 )
+status = A0; // Return code of CdSync (2 - CdlComplete: Command complete, 5 - CdlDiskError: Error detected, 0 - CdlNoIntr: Command is being executed)
+result = A1; // Pointer to an 8-byte array containing status and result information
+
+// store result
+if( result != 0 )
 {
-    T1 = 80076b0c;
-    [T1 + 0] = w(w[A1 + 0]);
-    [T1 + 4] = w(w[A1 + 4]);
+    [80076b0c + 0] = w(w[result + 0]);
+    [80076b0c + 4] = w(w[result + 4]);
 }
 
 if( bu[800761d0 + 2] != 0 )
 {
-    A0 = A0 & 00ff;
+    A0 = status;
     func2325c();
 }
 else
 {
-    A0 = A0 & 00ff;
-    if( A0 == 5 )
+    if( status == 2 ) // CdlComplete: Command complete
+    {
+        V0 = bu[800761d0 + 0];
+        func = w[80068668 + V0 * 4];
+
+        if( func != 0 )
+        {
+            A0 = 2;
+            80023244	jalr   func ra
+        }
+    }
+    else if( status == 5 ) // CdlDiskError: Error detected
     {
         A0 = 5;
         func23304();
-    }
-    else
-    {
-        if( A0 == 2 )
-        {
-            V0 = bu[800761d0];
-            func = w[80068668 + V0 * 4];
-
-            if( func != 0 )
-            {
-                A0 = 2;
-                80023244	jalr   func ra
-            }
-        }
     }
 }
 ////////////////////////////////
@@ -5539,87 +5538,62 @@ else
 
 
 ////////////////////////////////
-// func2325c
-8002325C	addiu  sp, sp, $ffe0 (=-$20)
-A0 = A0 & 00ff;
-V0 = 0005;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-80023270	beq    a0, v0, L23284 [$80023284]
-[SP + 0010] = w(S0);
-V0 = 0002;
-8002327C	bne    a0, v0, L232f0 [$800232f0]
-80023280	nop
+// func2325c()
 
-L23284:	; 80023284
-V1 = bu[800761d0 + 0];
-V0 = 0003;
-80023290	beq    v1, v0, L232c0 [$800232c0]
-S0 = S1 + 61d0;
-V0 = w[S0 + 095c];
-8002329C	nop
-800232A0	beq    v0, zero, L232b0 [$800232b0]
-800232A4	nop
-800232A8	jalr   v0 ra
-A0 = S0;
+if( ( A0 != 5 ) && ( A0 != 2 ) ) return;
 
-L232b0:	; 800232B0
-800232B0	jal    func2267c [$8002267c]
-A0 = S0 + 0968;
-800232B8	j      L232f0 [$800232f0]
-800232BC	nop
+if( bu[800761d0 + 0] != 3 )
+{
+    V0 = w[800761d0 + 944 + 18];
 
-L232c0:	; 800232C0
-V0 = bu[S0 + 0944];
-800232C4	nop
-V0 = V0 & 0008;
-800232CC	bne    v0, zero, L232f0 [$800232f0]
-800232D0	nop
-800232D4	jal    system_psyq_cd_ready_callback [$800213a0]
-A0 = 0;
-V0 = 0004;
-[S1 + 61d0] = b(V0);
-A0 = 0009;
-800232E8	jal    system_cdrom_cd_control_f [$80023580]
-A1 = 0;
+    if( V0 != 0 )
+    {
+        A0 = 800761d0;
+        800232A8	jalr   v0 ra
+    }
 
-L232f0:	; 800232F0
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800232FC	jr     ra 
-SP = SP + 0020;
+    A0 = 800761d0 + 968;
+    func2267c();
+}
+else
+{
+    if( ( bu[800761d0 + 944 + 0] & 08 ) == 0 )
+    {
+        A0 = 0;
+        system_psyq_cd_ready_callback();
+
+        [800761d0 + 0] = b(4);
+
+        A0 = 9; // CdlPause (Temporarily stop at current location)
+        A1 = 0;
+        system_cdrom_cd_control_f();
+    }
+}
 ////////////////////////////////
-// func23304
-80023304	addiu  sp, sp, $ffe8 (=-$18)
-A1 = 800761d0;
-V1 = bu[V0 + 61d0];
-V0 = 0003;
-80023318	bne    v1, v0, L23334 [$80023334]
-[SP + 0010] = w(RA);
-V0 = bu[A1 + 0944];
-80023324	nop
-V0 = V0 & 0008;
-8002332C	bne    v0, zero, L2335c [$8002335c]
-80023330	nop
 
-L23334:	; 80023334
+
+
+////////////////////////////////
+// func23304()
+
+if( bu[800761d0 + 0] == 3 )
+{
+    if( bu[800761d0 + 944 + 0] & 08 ) return;
+}
+
+[800761d0 + 3] = b(1);
+[800761d0 + 1] = b(bu[800761d0 + 1] + 1);
+
 A0 = 0;
-V0 = bu[A1 + 0001];
-V1 = 0001;
-[A1 + 0003] = b(V1);
-V0 = V0 + 0001;
-80023348	jal    system_psyq_cd_ready_callback [$800213a0]
-[A1 + 0001] = b(V0);
-A0 = 0009;
-80023354	jal    system_cdrom_cd_control_f [$80023580]
-A1 = 0;
+system_psyq_cd_ready_callback();
 
-L2335c:	; 8002335C
-RA = w[SP + 0010];
-80023360	nop
-80023364	jr     ra 
-SP = SP + 0018;
+A0 = 9; // CdlPause (Temporarily stop at current location)
+A1 = 0;
+system_cdrom_cd_control_f();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func2336c
 8002336C	addiu  sp, sp, $ffd8 (=-$28)

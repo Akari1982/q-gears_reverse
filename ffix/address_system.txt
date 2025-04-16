@@ -43,6 +43,14 @@
 +2 [][]     number of files in array
 +4 [][][][] pointer to first file.
 
+800761d0
+    +  0 []       game cd load state (0 - standby, 1 - start execute).
+    +  4 [][][][] number of sectors to load.
+    +  c [][][][] ???
+    + 10 [][][][] ???
+    + 14 [][][][] ???
+    +994 copy of cd load struct (0x24 size).
+
 80077c82 [][]     set in 0xec opcode.
 
 80077de0 []       store here 1 if we change party member.
@@ -319,6 +327,7 @@
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading.
     +  4 [][][][] pointer to 800bb250.
     +  8 []       looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
+    +  b []       ???
     +  c [][][][] pointer to 8008b044.
     + 10 [][][][] pointer to 8008b06c.
     + 14 [][][][] pointer to 8008b124.
