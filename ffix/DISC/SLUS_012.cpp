@@ -55085,7 +55085,7 @@ A1 = 0;
 800654A4	jal    func203e0 [$800203e0]
 A2 = 0;
 A0 = SP + 0018;
-800654B0	jal    func213c0 [$800213c0]
+800654B0	jal    system_psyq_cd_get_sector [$800213c0]
 A1 = 0200;
 A0 = SP + 0019;
 A1 = 8001267c;

@@ -324,13 +324,13 @@
 8002125C func2125c
 80021290 system_psyq_cd_pos_to_int
 80021310 func21310
-80021320 func21320
+80021320 system_psyq_cd_mode
 80021330 func21330
 80021340 func21340
 80021360 func21360
 80021380 system_psyq_cd_sync_callback
 800213A0 system_psyq_cd_ready_callback
-800213C0 func213c0
+800213C0 system_psyq_cd_get_sector
 800213E0 func213e0
 800214E0 func214e0
 80021500 func21500
