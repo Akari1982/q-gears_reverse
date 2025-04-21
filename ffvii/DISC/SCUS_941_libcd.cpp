@@ -1987,21 +1987,15 @@ return V0 < 1;
 
 
 ////////////////////////////////
-// func3fe98
-8003FE98	addiu  sp, sp, $ffc0 (=-$40)
+// func3fe98()
+
 A0 = 0001;
 A1 = 0010;
-[SP + 0020] = w(S0);
 8003FEA8	lui    s0, $8007
 8003FEAC	addiu  s0, s0, $fd44 (=-$2bc)
 A2 = S0;
-[SP + 0038] = w(RA);
-[SP + 0034] = w(S5);
-[SP + 0030] = w(S4);
-[SP + 002c] = w(S3);
-[SP + 0028] = w(S2);
 8003FEC8	jal    func404f4 [$800404f4]
-[SP + 0024] = w(S1);
+
 S1 = V0;
 V0 = 0001;
 8003FED8	beq    s1, v0, L3ff0c [$8003ff0c]

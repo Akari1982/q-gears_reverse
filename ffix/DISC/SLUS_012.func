@@ -292,10 +292,10 @@
 8001E97C func1e97c
 8001EA20 func1ea20
 8001ECBC func1ecbc
-8001ED30 func1ed30
-8001ED40 func1ed40
+8001ED30 system_bios_strcmp
+8001ED40 system_bios_strncmp
 8001ED50 func1ed50
-8001F2B4 func1f2b4
+8001F2B4 system_psyq_cd_sync
 8001F534 func1f534
 8001F7FC system_cdrom_cdl_command_exec
 8001FC08 func1fc08
@@ -309,7 +309,7 @@
 800202D0 system_psyq_cd_int_to_pos
 800203E0 func203e0
 8002051C system_psyq_cd_control_f
-80020650 func20650
+80020650 system_psyq_cd_control_b
 800207A0 func207a0
 800207D4 func207d4
 80020A48 func20a48
@@ -369,6 +369,7 @@
 8002208C func2208c
 800220E8 func220e8
 800221C0 func221c0
+80022280 func22280
 80022390 func22390
 800223CC func223cc
 8002246C func2246c
@@ -408,9 +409,9 @@
 80023580 system_cdrom_cd_control_f
 800235A0 func235a0
 80023634 system_cdrom_and_audio_init
+800236A4 system_psyq_cd_set_debug
 
 // 
-800236A4 func236a4
 800236C4 func236c4
 80023784 func23784
 80023918 func23918

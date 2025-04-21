@@ -44,7 +44,7 @@
 +4 [][][][] pointer to first file.
 
 800761d0
-    +  0 []       game cd load state (0 - standby, 1 - start execute, 4 - pause, 5 - pause).
+    +  0 []       game cd load state (0-standby, 1-start execute, 3-load data, 4-pause, 5-pause).
     +  4 [][][][] number of sectors to load.
     +  c [][][][] ???
     + 10 [][][][] ???
@@ -382,7 +382,7 @@
             +20 [][][][] end of loaded field file.
         +8c8 [][][][] maybe pointer to list of loading files.
             +  2 []       number of records.
-            +  3 []       sone index into next array.
+            +  3 []       some index into next array.
             +  4 start of some data (0x28 size).
                 + 0 [][]     some flags.
                                 0x0001 - ???

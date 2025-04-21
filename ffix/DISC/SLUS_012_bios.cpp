@@ -27,6 +27,36 @@ A0 = 2;
 
 
 ////////////////////////////////
+// system_bios_strcmp()
+// A(17h) - strcmp(str1, str2)
+// Compares the strings up to including ending 00h byte. Returns 0 if they are
+// identical, or otherwise [str1+N]-[str2+N], where N is the location of the first
+// mismatch, the two bytes are sign-expanded to 32bits before doing the
+// subtraction. The function rejects str1/str2 values of 00000000h (and returns
+// 0=both are zero, -1=only str1 is zero, and +1=only str2 is zero).
+
+T2 = a0;
+T1 = 17;
+8001ED34	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_strncmp()
+// A(18h) - strncmp(str1, str2, maxlen)
+// Same as "strcmp" but stops after comparing "maxlen" characters (and returns 0
+// if they did match). If the strings are shorter, then comparision stops at the
+// ending 00h byte (exactly as for strcmp).
+
+T2 = a0;
+T1 = 18;
+8001ED44	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_bzero()
 // A(28h) - bzero(dst, len)
 // Same as memset, but uses 00h as fixed fillbyte value.
