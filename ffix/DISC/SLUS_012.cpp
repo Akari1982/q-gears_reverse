@@ -5375,7 +5375,7 @@ V0 = V0 - A0;
 
 func1cb78();
 
-S0 = w[8006794c];
+struct = w[8006794c];
 
 func1cbd0();
 
@@ -5390,7 +5390,7 @@ A0 = e0;
 
 8001CB48	jal    func23a2c [$80023a2c]
 
-[S0 + 4] = w(w[80067940]);
+[struct + 4] = w(w[80067940]);
 ////////////////////////////////
 
 
@@ -5420,56 +5420,56 @@ struct = 8008b000;
 ////////////////////////////////
 // func1cbd0()
 
-S0 = w[8006794c];
+struct = w[8006794c];
 
-[S0 + 0] = w(00100000);
-[S0 + 4] = w(0);
-[S0 + 8] = b(0);
-[S0 + a] = b(0);
-[S0 + b] = b(ff);
-[S0 + 1c] = w(0);
-[S0 + 20] = w(-1);
+[struct + 0] = w(00100000);
+[struct + 4] = w(0);
+[struct + 8] = b(0);
+[struct + a] = b(0);
+[struct + b] = b(ff);
+[struct + 1c] = w(0);
+[struct + 20] = w(-1);
 
 A0 = 0;
 A1 = 0;
 A2 = 0;
 func1ccb4();
 
-A0 = 00e0;
-8001CC1C	jal    func1cd04 [$8001cd04]
+A0 = e0;
+func1cd04();
 
-A0 = 000e;
-[S0 + 0009] = b(0);
+A0 = e;
+[struct + 0009] = b(0);
 
 loop1cc2c:	; 8001CC2C
-    V0 = w[S0 + 0014];
+    V0 = w[struct + 0014];
     V1 = A0 << 04;
     V0 = V1 + V0;
     [V0 + 0000] = w(A0);
-    V0 = w[S0 + 0014];
+    V0 = w[struct + 0014];
     8001CC40	nop
     V0 = V1 + V0;
     [V0 + 0004] = w(0);
-    V0 = w[S0 + 0014];
+    V0 = w[struct + 0014];
     8001CC50	nop
     V0 = V1 + V0;
     [V0 + 0008] = w(0);
-    V0 = w[S0 + 0014];
+    V0 = w[struct + 0014];
     8001CC60	nop
     V1 = V1 + V0;
     V0 = A0 << 02;
     [V1 + 000c] = w(0);
-    V1 = w[S0 + 0018];
+    V1 = w[struct + 0018];
     8001CC74	addiu  a0, a0, $ffff (=-$1)
     V0 = V0 + V1;
     [V0 + 0000] = w(0);
 8001CC7C	bgez   a0, loop1cc2c [$8001cc2c]
 
-[S0 + 0030] = w(0);
+[struct + 0030] = w(0);
 A0 = 0;
 
 loop1cc8c:	; 8001CC8C
-    V0 = S0 + A0;
+    V0 = struct + A0;
     [V0 + 0034] = b(0);
     A0 = A0 + 0001;
     V0 = A0 < 000f;
@@ -5481,34 +5481,34 @@ loop1cc8c:	; 8001CC8C
 ////////////////////////////////
 // func1ccb4()
 
-V0 = w[8006794c];
-V0 = w[V0 + 10];
-[V0 + 75] = b(A0);
-[V0 + 76] = b(A1);
-[V0 + 77] = b(A2);
-[V0 + 19] = b(A0);
-[V0 + 1a] = b(A1);
-[V0 + 1b] = b(A2);
+struct = w[8006794c];
+struct6c = w[struct + 10];
+[struct6c + 19] = b(A0);
+[struct6c + 1a] = b(A1);
+[struct6c + 1b] = b(A2);
+[struct6c + 75] = b(A0);
+[struct6c + 76] = b(A1);
+[struct6c + 77] = b(A2);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1cd04
-8001CD04	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 002c] = w(S1);
+// func1cd04()
+
+struct = w[8006794c];
+dispenv = w[struct + c];
+drawenv = w[struct + 10];
+
 S1 = A0;
-[SP + 0030] = w(S2);
 S2 = 0;
-[SP + 0038] = w(RA);
-[SP + 0034] = w(S3);
-8001CD20	jal    func2f800 [$8002f800]
-[SP + 0028] = w(S0);
+func2f800();
+
 V0 = V0 & 00ff;
 8001CD2C	bne    v0, zero, L1cd48 [$8001cd48]
-8001CD30	nop
+
 8001CD34	jal    func2f810 [$8002f810]
-8001CD38	nop
+
 V0 = V0 & 00ff;
 8001CD40	beq    v0, zero, L1cd4c [$8001cd4c]
 8001CD44	nop
@@ -5517,164 +5517,103 @@ L1cd48:	; 8001CD48
 S2 = 0001;
 
 L1cd4c:	; 8001CD4C
-8001CD4C	jal    func2f864 [$8002f864]
-S3 = 0001;
-A0 = SP + 0018;
-8001CD58	jal    func2f9a8 [$8002f9a8]
+func2f864();
 S0 = V0;
-8001CD60	bne    s0, s3, L1cd90 [$8001cd90]
-V1 = 00ff;
-V0 = bu[SP + 0018];
-8001CD6C	nop
-V0 = V1 - V0;
-[SP + 0018] = b(V0);
-V0 = bu[SP + 0019];
-A0 = bu[SP + 001a];
-V0 = V1 - V0;
-V1 = V1 - A0;
-[SP + 0019] = b(V0);
-[SP + 001a] = b(V1);
 
-L1cd90:	; 8001CD90
-8001CD90	bne    s2, zero, L1cde0 [$8001cde0]
-8001CD94	lui    s0, $8006
-V1 = w[8006794c];
-V0 = w[V1 + 0010];
-V0 = bu[V0 + 0019];
-[SP + 0018] = b(V0);
-V0 = w[V1 + 0010];
-V0 = bu[V0 + 001a];
-[SP + 0019] = b(V0);
-V0 = w[V1 + 0010];
-V0 = bu[V0 + 001b];
-[SP + 001a] = b(V0);
+A0 = SP + 18;
+func2f9a8();
 
-L1cde0:	; 8001CDE0
-A2 = w[S0 + 794c];
-8001CDE4	nop
-V0 = w[A2 + 000c];
-8001CDEC	nop
-V0 = h[V0 + 0006];
-8001CDF4	nop
-V0 = V0 < S1;
-8001CDFC	beq    v0, zero, L1ce4c [$8001ce4c]
-A1 = 0140;
-A0 = SP + 0020;
-[SP + 0020] = h(0);
-V0 = w[A2 + 000c];
-A1 = bu[SP + 0018];
-V1 = hu[V0 + 0006];
-V0 = 0280;
-[SP + 0024] = h(V0);
-[SP + 0022] = h(V1);
-V0 = w[A2 + 000c];
-A3 = bu[SP + 001a];
-V0 = hu[V0 + 0006];
-A2 = bu[SP + 0019];
-V0 = S1 - V0;
-8001CE38	jal    system_psyq_clear_image [$80013228]
-[SP + 0026] = h(V0);
-8001CE40	jal    system_psyq_draw_sync [$800130a4]
-A0 = 0;
-A1 = 0140;
+if( S0 == 1 )
+{
+    [SP + 18] = b(ff - bu[SP + 18]);
+    [SP + 19] = b(ff - bu[SP + 19]);
+    [SP + 1a] = b(ff - bu[SP + 1a]);
+}
 
-L1ce4c:	; 8001CE4C
-V0 = w[S0 + 794c];
+if( S2 == 0 )
+{
+    [SP + 18] = b(bu[drawenv + 19]);
+    [SP + 19] = b(bu[drawenv + 1a]);
+    [SP + 1a] = b(bu[drawenv + 1b]);
+}
+
+if( h[dispenv + 6] < S1 )
+{
+    [SP + 20] = h(0);
+    [SP + 22] = h(hu[dispenv + 6]);
+    [SP + 24] = h(280);
+    [SP + 26] = h(S1 - hu[dispenv + 6]);
+
+    A0 = SP + 20;
+    A1 = bu[SP + 18];
+    A2 = bu[SP + 19];
+    A3 = bu[SP + 1a];
+    system_psyq_clear_image();
+
+    A0 = 0;
+    system_psyq_draw_sync();
+}
+
+
+A0 = dispenv;
+A1 = 140;
 A2 = 0;
-[SP + 0010] = w(S1);
-A0 = w[V0 + 000c];
-8001CE5C	jal    func1d228 [$8001d228]
-A3 = A1;
-A1 = 0;
-V0 = w[S0 + 794c];
-A2 = A1;
-A0 = w[V0 + 000c];
-A3 = 0140;
-[SP + 0010] = w(S1);
-8001CE7C	jal    func1d228 [$8001d228]
-A0 = A0 + 0014;
-V0 = w[S0 + 794c];
-8001CE88	nop
-V0 = w[V0 + 000c];
-8001CE90	nop
-[V0 + 0024] = b(0);
-[V0 + 0010] = b(0);
-A0 = w[S0 + 794c];
+A3 = 140;
+A4 = S1;
+system_psyq_set_def_dispenv();
 
-L1cea0:	; 8001CEA0
-8001CEA0	nop
-V0 = w[A0 + 000c];
+A0 = dispenv + 14;
 A1 = 0;
-[V0 + 001c] = h(0);
-[V0 + 0008] = h(0);
-V0 = 00f0;
-V0 = V0 - S1;
+A2 = 0;
+A3 = 140;
+A4 = S1;
+system_psyq_set_def_dispenv();
+
+[dispenv + 8] = h(0);
+[dispenv + 10] = b(0);
+[dispenv + 1c] = h(0);
+[dispenv + 24] = b(0);
+
+V0 = f0 - S1;
 V1 = V0 >> 1f;
 V0 = V0 + V1;
-V1 = w[A0 + 000c];
 V0 = V0 >> 01;
-[V1 + 001e] = h(V0);
-[V1 + 000a] = h(V0);
-V0 = w[A0 + 000c];
-A2 = A1;
-[V0 + 0022] = h(S1);
-[V0 + 000e] = h(S1);
-[SP + 0010] = w(S1);
-A0 = w[A0 + 0010];
-8001CEEC	jal    func1d168 [$8001d168]
-A3 = 0140;
-A1 = 0140;
-V0 = w[S0 + 794c];
+[dispenv + a] = h(V0);
+[dispenv + e] = h(S1);
+[dispenv + 1e] = h(V0);
+[dispenv + 22] = h(S1);
+
+
+A0 = drawenv;
+A1 = 0;
 A2 = 0;
-A0 = w[V0 + 0010];
-A3 = A1;
-[SP + 0010] = w(S1);
-8001CF0C	jal    func1d168 [$8001d168]
-A0 = A0 + 005c;
+A3 = 140;
+A4 = S1;
+system_psyq_set_def_drawenv();
 
-L1cf14:	; 8001CF14
-V0 = w[S0 + 794c];
-8001CF18	nop
-V0 = w[V0 + 0010];
-8001CF20	nop
-[V0 + 0073] = b(S3);
-[V0 + 0017] = b(S3);
-V0 = w[S0 + 794c];
-8001CF30	nop
-V0 = w[V0 + 0010];
-8001CF38	nop
-[V0 + 0072] = b(S3);
-[V0 + 0016] = b(S3);
-V0 = w[S0 + 794c];
-8001CF48	nop
-V0 = w[V0 + 0010];
+A0 = drawenv + 5c;
+A1 = 140;
+A2 = 0;
+A3 = 140;
+A4 = S1;
+system_psyq_set_def_drawenv();
+
+[drawenv + 16] = b(1);
+[drawenv + 17] = b(1);
+[drawenv + 18] = b(1);
+[drawenv + 72] = b(1);
+[drawenv + 73] = b(1);
+[drawenv + 74] = b(1);
+
 A0 = 0;
-[V0 + 0074] = b(S3);
-8001CF58	jal    system_psyq_vsync [$80015c58]
-[V0 + 0018] = b(S3);
-V1 = w[S0 + 794c];
-8001CF64	nop
-V0 = w[V1 + 001c];
-8001CF6C	nop
-8001CF70	beq    v0, zero, L1cf98 [$8001cf98]
-8001CF74	nop
-V0 = bu[V0 + 0008];
-8001CF7C	nop
-A0 = V0 << 02;
-A0 = A0 + V0;
-V0 = w[V1 + 000c];
-A0 = A0 << 02;
-8001CF90	jal    system_psyq_put_dispenv [$800138d4]
-A0 = V0 + A0;
+system_psyq_vsync();
 
-L1cf98:	; 8001CF98
-RA = w[SP + 0038];
-S3 = w[SP + 0034];
-S2 = w[SP + 0030];
-S1 = w[SP + 002c];
-S0 = w[SP + 0028];
-8001CFAC	jr     ra 
-SP = SP + 0040;
+V0 = w[struct + 1c];
+if( V0 != 0 )
+{
+    A0 = dispenv + bu[V0 + 8] * 14;
+    system_psyq_put_dispenv();
+}
 ////////////////////////////////
 
 
@@ -5796,77 +5735,66 @@ L1d15c:	; 8001D15C
 
 
 ////////////////////////////////
-// func1d168
-8001D168	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S2);
-S2 = w[SP + 0038];
-[SP + 0014] = w(S1);
-S1 = A0;
-[SP + 001c] = w(S3);
-S3 = A1;
-[SP + 0020] = w(S4);
-S4 = A2;
-[SP + 0010] = w(S0);
-[SP + 0024] = w(RA);
-8001D194	jal    system_psyq_get_video_mode [$8001699c]
-S0 = A3;
-V1 = 0001;
-[S1 + 0000] = h(S3);
-[S1 + 0002] = h(S4);
-[S1 + 0004] = h(S0);
-[S1 + 000c] = h(0);
-[S1 + 000e] = h(0);
-[S1 + 0010] = h(0);
-[S1 + 0012] = h(0);
-[S1 + 0019] = b(0);
-[S1 + 001a] = b(0);
-[S1 + 001b] = b(0);
-[S1 + 0016] = b(V1);
-8001D1CC	beq    v0, zero, L1d1dc [$8001d1dc]
-[S1 + 0006] = h(S2);
-8001D1D4	j      L1d1e0 [$8001d1e0]
-V0 = S2 < 0121;
+// system_psyq_set_def_drawenv()
 
-L1d1dc:	; 8001D1DC
-V0 = S2 < 0101;
+env = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
 
-L1d1e0:	; 8001D1E0
-[S1 + 0017] = b(V0);
-V0 = S1;
-V1 = 000a;
-[V0 + 0008] = h(S3);
-[V0 + 000a] = h(S4);
-[V0 + 0014] = h(V1);
-[V0 + 0018] = b(0);
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8001D214	jr     ra 
-SP = SP + 0028;
-8001D21C	nop
-8001D220	nop
-8001D224	nop
+[env + 0] = h(x); // clip rect x
+[env + 2] = h(y); // clip rect y
+[env + 4] = h(w); // clip rect width
+[env + 6] = h(h); // clip rect height
+[env + 8] = h(x); // offset to primitive x
+[env + a] = h(y); // offset to primitive y
+[env + c] = h(0); // texture window rect x
+[env + e] = h(0); // texture window rect y
+[env + 10] = h(0); // texture window rect width
+[env + 12] = h(0); // texture window rect height
+[env + 14] = h(a); // tpage
+[env + 16] = b(1); // dithering processing flag (on)
+[env + 17] = b(0); // drawing to display area is blocked
+[env + 18] = b(0); // not clear drawing area when drawing environment is set
+[env + 19] = b(0); // background color r
+[env + 1a] = b(0); // background color g
+[env + 1b] = b(0); // background color b
+
+system_psyq_get_video_mode();
+if( V0 != 0 )
+{
+    [env + 17] = b(h < 121); // 0: drawing to display area is blocked1: drawing to display area is permitted
+}
+else
+{
+    [env + 17] = b(h < 101); // 0: drawing to display area is blocked1: drawing to display area is permitted
+}
 ////////////////////////////////
-// func1d228
-V1 = w[SP + 0010];
-V0 = A0;
-[V0 + 0000] = h(A1);
-[V0 + 0002] = h(A2);
-[V0 + 0004] = h(A3);
-[V0 + 0008] = h(0);
-[V0 + 000a] = h(0);
-[V0 + 000c] = h(0);
-[V0 + 000e] = h(0);
-[V0 + 0011] = b(0);
-[V0 + 0010] = b(0);
-[V0 + 0013] = b(0);
-[V0 + 0012] = b(0);
-8001D25C	jr     ra 
-[V0 + 0006] = h(V1);
-8001D264	nop
+
+
+
+////////////////////////////////
+// system_psyq_set_def_dispenv()
+
+disp = A0;
+x = A1;
+y = A2;
+w = A3;
+h = A4;
+
+[disp + 0] = h(x);
+[disp + 2] = h(y);
+[disp + 4] = h(w);
+[disp + 6] = h(h);
+[disp + 8] = h(0); // output screen display area x.
+[disp + a] = h(0); // output screen display area y.
+[disp + c] = h(0); // output screen display area width.
+[disp + e] = h(0); // output screen display area height.
+[disp + 10] = b(0); // Interlace mode flag. 0: non-interlace; 1: interlace
+[disp + 11] = b(0); // 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
+[disp + 12] = b(0);
+[disp + 13] = b(0);
 ////////////////////////////////
 
 
@@ -6642,7 +6570,7 @@ if( V1 != ff )
     S0 = V0 - 1800;
 
     A0 = w[V0 + 20]; // file sector
-    A1 = 800; // file size
+    A1 = 800; // file size (load one sector)
     A2 = S0;
     A3 = 0; // end callback
     func22c60();
@@ -6652,13 +6580,13 @@ if( V1 != ff )
         func22b18();
     } while( V0 != 0 )
 
-    A1 = S0 + 10;
     V1 = w[8006794c];
     V0 = w[S0 + 8];
-    A0 = w[V1 + 14];
-    A2 = V0 * 10;
     [V1 + 30] = w(V0);
 
+    A0 = w[V1 + 14];
+    A1 = S0 + 10;
+    A2 = V0 * 10;
     func1d0f8();
 }
 ////////////////////////////////
@@ -20299,10 +20227,17 @@ V0 = bu[V1 + 0002];
 8002F7F8	jr     ra 
 V0 = V0 & 00ff;
 ////////////////////////////////
-// func2f800
-V0 = bu[80077c7a];
-8002F808	jr     ra 
-8002F80C	nop
+
+
+
+////////////////////////////////
+// func2f800()
+
+return bu[80077c7a];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func2f810
 V1 = 80077c78;

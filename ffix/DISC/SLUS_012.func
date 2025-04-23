@@ -255,8 +255,8 @@
 8001CD04 func1cd04
 8001CFB4 func1cfb4
 8001D0F8 func1d0f8
-8001D168 func1d168
-8001D228 func1d228
+8001D168 system_psyq_set_def_drawenv
+8001D228 system_psyq_set_def_dispenv
 8001D268 func1d268
 8001D30C func1d30c
 8001D32C func1d32c

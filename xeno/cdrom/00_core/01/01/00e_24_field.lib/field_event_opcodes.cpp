@@ -922,6 +922,13 @@ V1 = w[800af54c];
 
 V0 = w[800af54c];
 [V0 + cc] = h(hu[V0 + cc] + 1);
+////////////////////////////////////////////////////////////////
+// field_event_opFEBE_enable_credits()
+
+[8004e9a4] = w(1); // enables credits in movie
+
+V0 = w[800af54c];
+[V0 + cc] = h(hu[V0 + cc] + 1);
 ////////////////////////////////
 
 
@@ -5382,17 +5389,14 @@ if( w[800b1770] == 0 )
     return;
 }
 
-S0 = 1f;
-loop8dd3c:	; 8008DD3C
-    [800b1774 + S0 * 2] = h(-1);
-    S0 = S0 - 1;
-8008DD44	bgez   s0, loop8dd3c [$8008dd3c]
+for( int i = 1f; i >= 0; --i )
+{
+    [800b1774 + i * 2] = h(-1);
+}
 
 // generate unique random calue to array 800b1774
 for( int i = 0; i < w[800b1770]; ++i )
 {
-    loop8dd6c:	; 8008DD6C
-
     // gen random from 0 - w[800b176c]
     system_get_random_2_bytes();
     A1 = (((w[800b176c] + 1) * V0) >> f) & ffff;
@@ -5400,10 +5404,7 @@ for( int i = 0; i < w[800b1770]; ++i )
     for( int j = 0; j < 20; ++j )
     {
         // if this randim value already exist - generate other one
-        if( hu[800b1774 + j * 2] == A1 )
-        {
-            8008DDA4	j      loop8dd6c [$8008dd6c]
-        }
+        if( hu[800b1774 + j * 2] == A1 ) continue;
     }
 
     [800b1774 + i * 2] = h(A1);

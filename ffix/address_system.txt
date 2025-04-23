@@ -324,201 +324,208 @@
 
 
 8008b000 [][][][] 8006794c points here (some struct)
-    +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading.
-    +  4 [][][][] pointer to 800bb250.
-    +  8 []       looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
-    +  b []       ???
-    +  c [][][][] pointer to 8008b044.
-    + 10 [][][][] pointer to 8008b06c.
+    +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.
+    +  4 [][][][] init with 0. Pointer to 800bb250.
+    +  8 []       init with 0. looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
+    +  a []       init with 0.
+    +  b []       init with 0xff.
+    +  c [][][][] pointer to DISPENV two buffers (8008b044).
+    + 10 [][][][] pointer to DRAWENV two buffers (8008b06c).
     + 14 [][][][] pointer to 8008b124.
     + 18 [][][][] pointer to 8008b214.
-    + 1c [][][][] pointer to 8008b250.
-        +  0 [][][][] some flags.
-                        0x00000020 - add it at start of field loading.
-        +  8 []       frame buffer index. Index of pointer +10 or +14 to use.
-        +  a [][]     Projection plane distance for rasterisation.
-        +  c [][]     store loading field id here.
-        + 10 [][][][] 1st frame buffer depth stack. Referenced by +8.
-        + 14 [][][][] 2nd frame buffer depth stack. Referenced by +8.
-            depth queue: in each 4 bytes (depth) are pointer to first packet in stack. 1st 4 bytes in packet contain part of pointer (without leading 0x80) to next packet with this depth.
-        main transformation matrix. Camera matrix and translation vector.
-        + 18 [][][][] R11R12.
-        + 1c [][][][] R13R21.
-        + 20 [][][][] R22R23.
-        + 24 [][][][] R31R32.
-        + 28 [][][][] R33.
-        + 2c [][][][] TRX.
-        + 30 [][][][] TRY.
-        + 34 [][][][] TRZ.
-        + 3c start of character data (0x90 size). 0x9 items.
-            +00 [][][][][][][][][] character name 9 byte.
-            +09 []       end of string 0xff.
-            +0b []       level.
-            +10 [][]     current hp.
-            +34 [][][][] some character data (&0x0000000f). Maybe character id.
-            +38 []       status bits. Init with 0.
-            +39 []       weapon id.
-            +3a []       head gear id.
-            +3b []       arm gear id.
-            +3c []       armor id.
-            +3d []       accessories id.
-        +54c array of four party character data pointers (0x4 size 0x4 items).
-        +560 [][][][] some value. Increment in 0xce opcode.
-        +570 []       init with 0 when start overall scripts.
-        +571 []       set up in 0x2a opcode.
-        +574 some array of 0x100 values (0x2 size).
-            +00 []         ???
-            +01 []         ???
-        +774 some array of 0x40 items (0x1 size).
-        +7e4 [][][][] pointer to field file with identificator 0 in resource file type 14
-        +80c [][][][] store here script pointer + 2c.
-        +810 [][][][] store here script pointer + 4.
-        +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f. Looks like model init.
-        +848 []       set up in 0x2a opcode.
-        +851 []       (8008BAA1)
-        +854
-            + 4 [][][][] some pointer. ??
-            +10 [][][][] maybe size of loaded field file.
-            +20 [][][][] end of loaded field file.
-        +8c8 [][][][] maybe pointer to list of loading files.
-            +  2 []       number of records.
-            +  3 []       sone index into next array.
-            +  4 start of some data (0x28 size).
-                + 0 [][]     some flags.
-                                0x0001 - ???
-                                0x0002 - ???
-                                0x0080 - ???
-                + 4 [][][][] index of file. Fox example: 0x00050000 | field_id.
-                + 8 [][][][] address of loading file.
-                + c [][][][] size of loading file.
-                +1c [][][][] ???
-        +8d8 [][][][] ??? pointet to start of some on 0x14 sized array.
-        +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
-            // field
-            +  0 [][][][] some flags.
-                            0x00000002 - if set then this model X and Y rotation will be determinated by walkmesh.
-                            0x00100000 - if set then we use depth limit when convert 3d vertexes to screen space and insert them to packets.
-            +  4 [][][][] ???
-            +  8 [][][][] pointer to model data.
-                +  0 [][]     some flags.
-                                0x0001 - if not set then animation update uses fixed bones in animation. Not used otherwise. Fixed bones ignores parent rotation.
-                                0x0002 - enable scaling. If this is set then we downscale rotation matrix by +54[][] +56[][] and +58[][].
-                +  4 []       bone index which this model attached to.
-                +  8 [][][][] pointer to model file.
-                +  c [][][][] pointer to current animation file.
-                + 10 [][][][] pointer to start of all packets. There is bones * 0x20 + model parts * 0xc + unknown data from all model parts + 00 [][] * 2.
-                + 14 [][][][] model parts mask. If some part bit is seted then it won't be rendered.
-                + 18 [][][][] pointer to struct where we store clut and texpage info (size 0x4).
-                    +00 [][]     texpage info.
-                    +02 [][]     clut info.
-                + 1c [][][][] pointer to main data for attached model (the same struct for main model).
-                + 20 [][][][] pointer to bone rotation matrixes and translation data.
-                + 24 start of root model rotation matrix (0x14 size).
-                + 38 [][][][] x position of model.
-                + 3c [][][][] y position of model.
-                + 40 [][][][] z position of model.
-                + 44 [][][][] offset to array of model parts data (size 0xc).
-                    +  0 [][]     store 0 here during packets initialization.
-                    +  4 [][][][] pointer to part packets.
-                    +  8 [][][][] store 0 here during packets initialization.
-                + 48 [][]     static bone X offset.
-                + 4a [][]     static bone Y offset.
-                + 4c [][]     static bone Z offset.
-                + 54 [][]     x scale.
-                + 56 [][]     y scale.
-                + 58 [][]     z scale.
-                + 5a [][]     Y top limit for model. During vertex calculation we lower all vertexes to this point. And not render packet if all vertexes in poly exceed this value.
-                + 74 [][]     attached model X offset (this is attached model).
-                + 76 [][]     attached model Y offset (this is attached model).
-                + 78 [][]     attached model Z offset (this is attached model).
-            +  c [][][][] pointer to script data for model.
-        +8e4 [][][][] pointer to 800d1000.
-            // field
-            +  0 [][][][] some flags.
-                            0x00000004 - remove all flags except this at start of field loading.
-                            0x00000200 - ???
-            +  8 []       init with 0.
-            +  9 []       init with 0.
-            +  c [][][][] pointer
-                +  4 [][][][] unknown. Stored to 80067948 at start of fild loading.
-                + 14 [][][][] pointer. We store here pointer from previous 80067948. Then we increase it by 330 and store it back to 80067948.
-                    +  0 [][][][] init with 0.
-                    +  4 [][][][] init with 0.
-                    +  8 []       init with 0.
-                    +  0 []       init with 0.
-                    +  a [][]     field id. Inited with -1.
-                    +  c [][][][] init with 0. Maybe pointer to script.
-                    + 10 [][][][] init with 0.
-                    + 14 [][][][] pointer to tileset file 0xa.
-                    + 18 [][][][] init with 0.
-                    + 1c [][][][] init with 0.
-                    + 20 [][][][] init with 0. Some pointer.
-                    + 24 [][][][] pointer to field file with index 1 in resource file type 1b.
-                    + 28 [][][][] store here pointer to +6c.
-                    + 2c [][][][] init with 0.
-                    + 30 [][][][] init with 0.
-                    + 30 [][]     some depth for depth buffer (shifted by >>2). 2 bytes from tileset_file + camera_offset + camera_id * 34 + 30.
-                    + 34 [][][][] init with w[80067944] + 106700. Maybe pointer to some data loaded.
-                    + 38 [][]     init with 0x00a0.
-                    + 3a [][]     init with 0x0070.
-                    + 3c [][]     init with 0xffff.
-                    + 3e [][]     init with 0xffff.
-                    + 40 []       init with 0.
-                    + 41 []       init with 0.
-                    + 42 []       init with 0. If this != 0 then we don't update models that exceed data memory limit.
-                    + 43 []       init with 0.
-                    + 44 [][][][] init with 0.
-                    + 48 []       init with 0.
-                    + 49 []       init with 0.
-                    + 4a []       init with 1.
-                    + 4b []       init with 0. Some index.
-                    + 4c [][][][] init with 0. Pointer to field file with type 0x1e if exist.
-                    + 50 [][]     init with 0.
-                    + 52 [][]     init with 0.
-                    + 54 [][][][] store here pointer to +90.
-                    + 58 [][][][] store here pointer +270.
-                    + 5c []       init with 0x7f.
-                    + 5d []       init with 0x7f.
-                    + 5e []       init with 0.
-                    + 5f []       init with 0.
-                    + 60 []       init with 0.
-                    + 62 [][]     init with 0.
-                    + 64 [][][][] init with 0.
-                    + 68 []       init with 0.
-                    + 69 []       init with 0.
-                    + 6a []       init with 0.
-                    + 6b []       init with 0.
-                    + 6c start of some data (0x9 items 0x4 size).
-                        + 0 [][][][] init with 0.
-                    + 90 start of some data (0x17 items 0x14 size).
-                        + 0 [][][][] init with 0.
-                        + 4 []       init with -1.
-                        + 5 []       init with 0.
-                        + 6 []       init with 0.
-                        + 7 []       init with 0.
-                        + 8 []       init with 0.
-                        + 9 []       init with 0.
-                        + a []       init with 0.
-                        + b []       init with 0.
-                        + c []       init with 0.
-                        + d []       init with 0.
-                        + e []       init with 0.
-                        + f []       init with 0.
-                        +10 [][][][] init with 0.
-                    +270 array indexed by +4b index. (0xf items 0xc size)
-                        + 0 []       init with 0xff. Model id (stored in script +3b).
-                        + 1 []       init with 0. Maybe enable sound or disable
-                        + 2 [][]     init with 0xffff.
-                        + 4 [][]     init with 0xffff.
-                        + 6 [][]     init with -1.
-                        + 8 [][]     init with 0xffff. Maybe walk sound
-                        + a [][]     init with 0xffff. Maybe run sound
-            // battle
-            +6f8 [][][][] pointer to some battle struct list.
-                +00 [][][][] pointer to next struct in list.
-                +68 [][][][] some flags.
-                    0x00000001 - looks like side flag. 0-enemy, 1-player
-                    0x0000001e - some data.
-                +b0 [][]     bit mask of this unit.
-    + 20 [][][][] sector of "\FF9.IMG;1" file.
+    + 1c [][][][] init with 0. Pointer to 8008b250.
+    + 20 [][][][] init with -1. Sector of "\FF9.IMG;1" file.
     + 24 [][][][] some flags.
+
+8008b124
+
+8008b214
+
+8008b250
+    +  0 [][][][] some flags.
+                    0x00000020 - add it at start of field loading.
+    +  8 []       frame buffer index. Index of pointer +10 or +14 to use.
+    +  a [][]     Projection plane distance for rasterisation.
+    +  c [][]     store loading field id here.
+    + 10 [][][][] 1st frame buffer depth stack. Referenced by +8.
+    + 14 [][][][] 2nd frame buffer depth stack. Referenced by +8.
+        depth queue: in each 4 bytes (depth) are pointer to first packet in stack. 1st 4 bytes in packet contain part of pointer (without leading 0x80) to next packet with this depth.
+    main transformation matrix. Camera matrix and translation vector.
+    + 18 [][][][] R11R12.
+    + 1c [][][][] R13R21.
+    + 20 [][][][] R22R23.
+    + 24 [][][][] R31R32.
+    + 28 [][][][] R33.
+    + 2c [][][][] TRX.
+    + 30 [][][][] TRY.
+    + 34 [][][][] TRZ.
+    + 3c start of character data (0x90 size). 0x9 items.
+        +00 [][][][][][][][][] character name 9 byte.
+        +09 []       end of string 0xff.
+        +0b []       level.
+        +10 [][]     current hp.
+        +34 [][][][] some character data (&0x0000000f). Maybe character id.
+        +38 []       status bits. Init with 0.
+        +39 []       weapon id.
+        +3a []       head gear id.
+        +3b []       arm gear id.
+        +3c []       armor id.
+        +3d []       accessories id.
+    +54c array of four party character data pointers (0x4 size 0x4 items).
+    +560 [][][][] some value. Increment in 0xce opcode.
+    +570 []       init with 0 when start overall scripts.
+    +571 []       set up in 0x2a opcode.
+    +574 some array of 0x100 values (0x2 size).
+        +00 []         ???
+        +01 []         ???
+    +774 some array of 0x40 items (0x1 size).
+    +7e4 [][][][] pointer to field file with identificator 0 in resource file type 14
+    +80c [][][][] store here script pointer + 2c.
+    +810 [][][][] store here script pointer + 4.
+    +838 [][][][] pointer to some functions called in func21698 with +34 param from entity script memory in opcode 0x2f. Looks like model init.
+    +848 []       set up in 0x2a opcode.
+    +851 []       (8008BAA1)
+    +854
+        + 4 [][][][] some pointer. ??
+        +10 [][][][] maybe size of loaded field file.
+        +20 [][][][] end of loaded field file.
+    +8c8 [][][][] maybe pointer to list of loading files.
+        +  2 []       number of records.
+        +  3 []       sone index into next array.
+        +  4 start of some data (0x28 size).
+            + 0 [][]     some flags.
+                            0x0001 - ???
+                            0x0002 - ???
+                            0x0080 - ???
+            + 4 [][][][] index of file. Fox example: 0x00050000 | field_id.
+            + 8 [][][][] address of loading file.
+            + c [][][][] size of loading file.
+            +1c [][][][] ???
+    +8d8 [][][][] ??? pointet to start of some on 0x14 sized array.
+    +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
+        // field
+        +  0 [][][][] some flags.
+                        0x00000002 - if set then this model X and Y rotation will be determinated by walkmesh.
+                        0x00100000 - if set then we use depth limit when convert 3d vertexes to screen space and insert them to packets.
+        +  4 [][][][] ???
+        +  8 [][][][] pointer to model data.
+            +  0 [][]     some flags.
+                            0x0001 - if not set then animation update uses fixed bones in animation. Not used otherwise. Fixed bones ignores parent rotation.
+                            0x0002 - enable scaling. If this is set then we downscale rotation matrix by +54[][] +56[][] and +58[][].
+            +  4 []       bone index which this model attached to.
+            +  8 [][][][] pointer to model file.
+            +  c [][][][] pointer to current animation file.
+            + 10 [][][][] pointer to start of all packets. There is bones * 0x20 + model parts * 0xc + unknown data from all model parts + 00 [][] * 2.
+            + 14 [][][][] model parts mask. If some part bit is seted then it won't be rendered.
+            + 18 [][][][] pointer to struct where we store clut and texpage info (size 0x4).
+                +00 [][]     texpage info.
+                +02 [][]     clut info.
+            + 1c [][][][] pointer to main data for attached model (the same struct for main model).
+            + 20 [][][][] pointer to bone rotation matrixes and translation data.
+            + 24 start of root model rotation matrix (0x14 size).
+            + 38 [][][][] x position of model.
+            + 3c [][][][] y position of model.
+            + 40 [][][][] z position of model.
+            + 44 [][][][] offset to array of model parts data (size 0xc).
+                +  0 [][]     store 0 here during packets initialization.
+                +  4 [][][][] pointer to part packets.
+                +  8 [][][][] store 0 here during packets initialization.
+            + 48 [][]     static bone X offset.
+            + 4a [][]     static bone Y offset.
+            + 4c [][]     static bone Z offset.
+            + 54 [][]     x scale.
+            + 56 [][]     y scale.
+            + 58 [][]     z scale.
+            + 5a [][]     Y top limit for model. During vertex calculation we lower all vertexes to this point. And not render packet if all vertexes in poly exceed this value.
+            + 74 [][]     attached model X offset (this is attached model).
+            + 76 [][]     attached model Y offset (this is attached model).
+            + 78 [][]     attached model Z offset (this is attached model).
+        +  c [][][][] pointer to script data for model.
+    +8e4 [][][][] pointer to 800d1000.
+        // field
+        +  0 [][][][] some flags.
+                        0x00000004 - remove all flags except this at start of field loading.
+                        0x00000200 - ???
+        +  8 []       init with 0.
+        +  9 []       init with 0.
+        +  c [][][][] pointer
+            +  4 [][][][] unknown. Stored to 80067948 at start of fild loading.
+            + 14 [][][][] pointer. We store here pointer from previous 80067948. Then we increase it by 330 and store it back to 80067948.
+                +  0 [][][][] init with 0.
+                +  4 [][][][] init with 0.
+                +  8 []       init with 0.
+                +  0 []       init with 0.
+                +  a [][]     field id. Inited with -1.
+                +  c [][][][] init with 0. Maybe pointer to script.
+                + 10 [][][][] init with 0.
+                + 14 [][][][] pointer to tileset file 0xa.
+                + 18 [][][][] init with 0.
+                + 1c [][][][] init with 0.
+                + 20 [][][][] init with 0. Some pointer.
+                + 24 [][][][] pointer to field file with index 1 in resource file type 1b.
+                + 28 [][][][] store here pointer to +6c.
+                + 2c [][][][] init with 0.
+                + 30 [][][][] init with 0.
+                + 30 [][]     some depth for depth buffer (shifted by >>2). 2 bytes from tileset_file + camera_offset + camera_id * 34 + 30.
+                + 34 [][][][] init with w[80067944] + 106700. Maybe pointer to some data loaded.
+                + 38 [][]     init with 0x00a0.
+                + 3a [][]     init with 0x0070.
+                + 3c [][]     init with 0xffff.
+                + 3e [][]     init with 0xffff.
+                + 40 []       init with 0.
+                + 41 []       init with 0.
+                + 42 []       init with 0. If this != 0 then we don't update models that exceed data memory limit.
+                + 43 []       init with 0.
+                + 44 [][][][] init with 0.
+                + 48 []       init with 0.
+                + 49 []       init with 0.
+                + 4a []       init with 1.
+                + 4b []       init with 0. Some index.
+                + 4c [][][][] init with 0. Pointer to field file with type 0x1e if exist.
+                + 50 [][]     init with 0.
+                + 52 [][]     init with 0.
+                + 54 [][][][] store here pointer to +90.
+                + 58 [][][][] store here pointer +270.
+                + 5c []       init with 0x7f.
+                + 5d []       init with 0x7f.
+                + 5e []       init with 0.
+                + 5f []       init with 0.
+                + 60 []       init with 0.
+                + 62 [][]     init with 0.
+                + 64 [][][][] init with 0.
+                + 68 []       init with 0.
+                + 69 []       init with 0.
+                + 6a []       init with 0.
+                + 6b []       init with 0.
+                + 6c start of some data (0x9 items 0x4 size).
+                    + 0 [][][][] init with 0.
+                + 90 start of some data (0x17 items 0x14 size).
+                    + 0 [][][][] init with 0.
+                    + 4 []       init with -1.
+                    + 5 []       init with 0.
+                    + 6 []       init with 0.
+                    + 7 []       init with 0.
+                    + 8 []       init with 0.
+                    + 9 []       init with 0.
+                    + a []       init with 0.
+                    + b []       init with 0.
+                    + c []       init with 0.
+                    + d []       init with 0.
+                    + e []       init with 0.
+                    + f []       init with 0.
+                    +10 [][][][] init with 0.
+                +270 array indexed by +4b index. (0xf items 0xc size)
+                    + 0 []       init with 0xff. Model id (stored in script +3b).
+                    + 1 []       init with 0. Maybe enable sound or disable
+                    + 2 [][]     init with 0xffff.
+                    + 4 [][]     init with 0xffff.
+                    + 6 [][]     init with -1.
+                    + 8 [][]     init with 0xffff. Maybe walk sound
+                    + a [][]     init with 0xffff. Maybe run sound
+        // battle
+        +6f8 [][][][] pointer to some battle struct list.
+            +00 [][][][] pointer to next struct in list.
+            +68 [][][][] some flags.
+                0x00000001 - looks like side flag. 0-enemy, 1-player
+                0x0000001e - some data.
+            +b0 [][]     bit mask of this unit.
