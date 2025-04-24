@@ -5500,23 +5500,17 @@ struct = w[8006794c];
 dispenv = w[struct + c];
 drawenv = w[struct + 10];
 
-S1 = A0;
+h = A0;
+
 S2 = 0;
 func2f800();
+if( V0 != 0 ) S2 = 1;
 
-V0 = V0 & 00ff;
-8001CD2C	bne    v0, zero, L1cd48 [$8001cd48]
+func2f810();
 
-8001CD34	jal    func2f810 [$8002f810]
+V0 = V0 & ff;
+if( V0 != 0 ) S2 = 1;
 
-V0 = V0 & 00ff;
-8001CD40	beq    v0, zero, L1cd4c [$8001cd4c]
-8001CD44	nop
-
-L1cd48:	; 8001CD48
-S2 = 0001;
-
-L1cd4c:	; 8001CD4C
 func2f864();
 S0 = V0;
 
@@ -5525,85 +5519,79 @@ func2f9a8();
 
 if( S0 == 1 )
 {
-    [SP + 18] = b(ff - bu[SP + 18]);
-    [SP + 19] = b(ff - bu[SP + 19]);
-    [SP + 1a] = b(ff - bu[SP + 1a]);
+    [SP + 18] = b(ff - bu[SP + 18]); // r
+    [SP + 19] = b(ff - bu[SP + 19]); // g
+    [SP + 1a] = b(ff - bu[SP + 1a]); // b
 }
 
 if( S2 == 0 )
 {
-    [SP + 18] = b(bu[drawenv + 19]);
-    [SP + 19] = b(bu[drawenv + 1a]);
-    [SP + 1a] = b(bu[drawenv + 1b]);
+    [SP + 18] = b(bu[drawenv + 0 * 5c + 19]); // r
+    [SP + 19] = b(bu[drawenv + 0 * 5c + 1a]); // g
+    [SP + 1a] = b(bu[drawenv + 0 * 5c + 1b]); // b
 }
 
-if( h[dispenv + 6] < S1 )
+if( h[dispenv + 0 * 14 + 6] < h )
 {
     [SP + 20] = h(0);
-    [SP + 22] = h(hu[dispenv + 6]);
+    [SP + 22] = h(hu[dispenv + 0 * 14 + 6]);
     [SP + 24] = h(280);
-    [SP + 26] = h(S1 - hu[dispenv + 6]);
+    [SP + 26] = h(h - hu[dispenv + 0 * 14 + 6]);
 
     A0 = SP + 20;
-    A1 = bu[SP + 18];
-    A2 = bu[SP + 19];
-    A3 = bu[SP + 1a];
+    A1 = bu[SP + 18]; // r
+    A2 = bu[SP + 19]; // g
+    A3 = bu[SP + 1a]; // b
     system_psyq_clear_image();
 
     A0 = 0;
     system_psyq_draw_sync();
 }
 
-
-A0 = dispenv;
-A1 = 140;
-A2 = 0;
-A3 = 140;
-A4 = S1;
+A0 = dispenv + 0 * 14;
+A1 = 140; // x
+A2 = 0; // y
+A3 = 140; // w
+A4 = h;
 system_psyq_set_def_dispenv();
 
-A0 = dispenv + 14;
-A1 = 0;
-A2 = 0;
-A3 = 140;
-A4 = S1;
+A0 = dispenv + 1 * 14;
+A1 = 0; // x
+A2 = 0; // y
+A3 = 140; // w
+A4 = h;
 system_psyq_set_def_dispenv();
 
-[dispenv + 8] = h(0);
-[dispenv + 10] = b(0);
-[dispenv + 1c] = h(0);
-[dispenv + 24] = b(0);
+[dispenv + 0 * 14 + 8] = h(0); // screen x
+[dispenv + 0 * 14 + a] = h((f0 - h) / 2); // screen y
+[dispenv + 0 * 14 + e] = h(h); // screen h
+[dispenv + 0 * 14 + 10] = b(0); // Interlace mode flag. 0: non-interlace; 1: interlace
 
-V0 = f0 - S1;
-V1 = V0 >> 1f;
-V0 = V0 + V1;
-V0 = V0 >> 01;
-[dispenv + a] = h(V0);
-[dispenv + e] = h(S1);
-[dispenv + 1e] = h(V0);
-[dispenv + 22] = h(S1);
+[dispenv + 1 * 14 + 8] = h(0);
+[dispenv + 1 * 14 + a] = h((f0 - h) / 2);
+[dispenv + 1 * 14 + e] = h(h);
+[dispenv + 1 * 14 + 10] = b(0);
 
-
-A0 = drawenv;
-A1 = 0;
-A2 = 0;
-A3 = 140;
-A4 = S1;
+A0 = drawenv + 0 * 5c;
+A1 = 0; // x
+A2 = 0; // y
+A3 = 140; // w
+A4 = h;
 system_psyq_set_def_drawenv();
 
-A0 = drawenv + 5c;
-A1 = 140;
-A2 = 0;
-A3 = 140;
-A4 = S1;
+A0 = drawenv + 1 * 5c;
+A1 = 140; // x
+A2 = 0; // y
+A3 = 140; // w
+A4 = h;
 system_psyq_set_def_drawenv();
 
-[drawenv + 16] = b(1);
-[drawenv + 17] = b(1);
-[drawenv + 18] = b(1);
-[drawenv + 72] = b(1);
-[drawenv + 73] = b(1);
-[drawenv + 74] = b(1);
+[drawenv + 0 * 5c + 16] = b(1); // Dithering processing flag. 0: off; 1: on
+[drawenv + 0 * 5c + 17] = b(1); // 1: drawing to display area is permitted
+[drawenv + 0 * 5c + 18] = b(1); // 1: Paints entire clip area with brightness values (r0, g0, b0) when drawing
+[drawenv + 1 * 5c + 16] = b(1);
+[drawenv + 1 * 5c + 17] = b(1);
+[drawenv + 1 * 5c + 18] = b(1);
 
 A0 = 0;
 system_psyq_vsync();
@@ -6980,6 +6968,7 @@ V0 = w[80068258];
 [80068258] = w(A0);
 return V0;
 ////////////////////////////////
+
 
 
 ////////////////////////////////
@@ -20239,41 +20228,52 @@ return bu[80077c7a];
 
 
 ////////////////////////////////
-// func2f810
-V1 = 80077c78;
-V0 = bu[V1 + 0002];
-8002F81C	nop
-8002F820	bne    v0, zero, L2f834 [$8002f834]
-8002F824	nop
-V0 = bu[V1 + 0003];
-8002F82C	jr     ra 
-V0 = 0 < V0;
+// func2f810()
 
-L2f834:	; 8002F834
-8002F834	jr     ra 
-V0 = 0001;
+if( bu[80077c78 + 2] == 0 )
+{
+    return 0 < bu[80077c78 + 3];
+}
+return 1;
 ////////////////////////////////
-// func2f83c
+
+
+
+////////////////////////////////
+// func2f83c()
+
 V0 = 80077c78;
 [V0 + 0002] = b(0);
 [V0 + 0003] = b(0);
-8002F84C	jr     ra 
-[V1 + 7c78] = b(0);
+[80077c78] = b(0);
 ////////////////////////////////
-// func2f854
-V0 = bu[80077c78];
-8002F85C	jr     ra 
-8002F860	nop
+
+
+
 ////////////////////////////////
-// func2f864
-V0 = bu[80077c79];
-8002F86C	jr     ra 
-8002F870	nop
+// func2f854()
+
+return bu[80077c78];
 ////////////////////////////////
-// func2f874
-V0 = w[80077c84];
-8002F87C	jr     ra 
-8002F880	nop
+
+
+
+////////////////////////////////
+// func2f864()
+
+return bu[80077c79];
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func2f874()
+
+return w[80077c84];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func2f884
 V0 = 80077c78;
@@ -20282,8 +20282,11 @@ V0 = 80077c78;
 [V0 + 000c] = w(0);
 [V0 + 0008] = h(0);
 [V1 + 7c78] = b(0);
-8002F8A0	jr     ra 
 [V0 + 0010] = w(0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func2f8a8
 V1 = 80077c78;
