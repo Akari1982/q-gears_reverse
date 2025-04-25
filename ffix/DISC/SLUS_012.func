@@ -251,8 +251,8 @@
 8001CB70 func1cb70
 8001CB78 func1cb78
 8001CBD0 func1cbd0
-8001CCB4 func1ccb4
-8001CD04 func1cd04
+8001CCB4 system_drawenv_set_background_color
+8001CD04 system_init_enviroments
 8001CFB4 func1cfb4
 8001D0F8 func1d0f8
 8001D168 system_psyq_set_def_drawenv

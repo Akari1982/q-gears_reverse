@@ -9988,8 +9988,10 @@ V0 = w[T0 + b6f4];
 V1 = 0001;
 [A3 + b6f8] = w(V1);
 V0 = V0 >> V1;
-800400B8	jal    func1ccb4 [$8001ccb4]
 [T0 + b6f4] = w(V0);
+
+system_drawenv_set_background_color();
+
 800400C0	j      L475b4 [$800475b4]
 V0 = 0;
 V0 = w[8007b6f4];

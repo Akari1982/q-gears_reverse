@@ -44,7 +44,7 @@
 +4 [][][][] pointer to first file.
 
 800761d0
-    +  0 []       game cd load state (0 - standby, 1 - start execute, 4 - pause, 5 - pause).
+    +  0 []       game cd load state (0-standby, 1-start execute, 3-load data, 4-pause, 5-pause).
     +  4 [][][][] number of sectors to load.
     +  c [][][][] ???
     + 10 [][][][] ???
@@ -328,18 +328,21 @@
     +  4 [][][][] init with 0. Pointer to 800bb250.
     +  8 []       init with 0. looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
     +  a []       init with 0.
-    +  b []       init with 0xff.
+    +  b []       init with 0xff. Bitmask of inserted disc.
     +  c [][][][] pointer to DISPENV two buffers (8008b044).
     + 10 [][][][] pointer to DRAWENV two buffers (8008b06c).
-    + 14 [][][][] pointer to 8008b124.
-    + 18 [][][][] pointer to 8008b214.
+    + 14 [][][][] pointer to IMG directory data (0xe items, 0x10 size).
+        + 0 [][][][] init with id. The type of directory.
+        + 4 [][][][] init with 0. Number of files within the directory.
+        + 8 [][][][] init with 0. Sector that contains the directory information (IE file sector list).
+        + c [][][][] init with 0. This points to the sector of the first file (for fast reference?).
+    + 18 [][][][] pointer to 8008b214. Array of something (0xe items, 0x4 size).
+        + 0 [][][][] init with 0.
     + 1c [][][][] init with 0. Pointer to 8008b250.
     + 20 [][][][] init with -1. Sector of "\FF9.IMG;1" file.
     + 24 [][][][] some flags.
-
-8008b124
-
-8008b214
+    + 30 [][][][] init with 0. Number of directories in FF9.IMG.
+    + 34 array of something (0xf items 0x1 size).
 
 8008b250
     +  0 [][][][] some flags.
@@ -391,7 +394,7 @@
         +20 [][][][] end of loaded field file.
     +8c8 [][][][] maybe pointer to list of loading files.
         +  2 []       number of records.
-        +  3 []       sone index into next array.
+        +  3 []       some index into next array.
         +  4 start of some data (0x28 size).
             + 0 [][]     some flags.
                             0x0001 - ???

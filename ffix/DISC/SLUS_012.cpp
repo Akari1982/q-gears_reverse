@@ -5379,12 +5379,12 @@ struct = w[8006794c];
 
 func1cbd0();
 
-A0 = e0;
-8001CB28	jal    func1cd04 [$8001cd04]
+A0 = e0; // h
+system_init_enviroments();
 
-8001CB30	jal    func1dcb8 [$8001dcb8]
+func1dcb8();
 
-8001CB38	jal    func1de50 [$8001de50]
+func1de50();
 
 8001CB40	jal    func23918 [$80023918]
 
@@ -5430,71 +5430,60 @@ struct = w[8006794c];
 [struct + 1c] = w(0);
 [struct + 20] = w(-1);
 
-A0 = 0;
-A1 = 0;
-A2 = 0;
-func1ccb4();
+A0 = 0; // r
+A1 = 0; // g
+A2 = 0; // b
+system_drawenv_set_background_color();
 
-A0 = e0;
-func1cd04();
+A0 = e0; // h
+system_init_enviroments();
 
-A0 = e;
-[struct + 0009] = b(0);
+[struct + 9] = b(0);
 
-loop1cc2c:	; 8001CC2C
-    V0 = w[struct + 0014];
-    V1 = A0 << 04;
-    V0 = V1 + V0;
-    [V0 + 0000] = w(A0);
-    V0 = w[struct + 0014];
-    8001CC40	nop
-    V0 = V1 + V0;
-    [V0 + 0004] = w(0);
-    V0 = w[struct + 0014];
-    8001CC50	nop
-    V0 = V1 + V0;
-    [V0 + 0008] = w(0);
-    V0 = w[struct + 0014];
-    8001CC60	nop
-    V1 = V1 + V0;
-    V0 = A0 << 02;
-    [V1 + 000c] = w(0);
-    V1 = w[struct + 0018];
-    8001CC74	addiu  a0, a0, $ffff (=-$1)
-    V0 = V0 + V1;
-    [V0 + 0000] = w(0);
-8001CC7C	bgez   a0, loop1cc2c [$8001cc2c]
+for( int i = e; i >= 0; --i )
+{
+    struct14 = w[struct + 14];
+    [struct14 + i * 10 + 0] = w(i);
+    [struct14 + i * 10 + 4] = w(0);
+    [struct14 + i * 10 + 8] = w(0);
+    [struct14 + i * 10 + c] = w(0);
 
-[struct + 0030] = w(0);
-A0 = 0;
+    struct18 = w[struct + 18];
+    [struct18 + i * 4] = w(0);
+}
 
-loop1cc8c:	; 8001CC8C
-    V0 = struct + A0;
-    [V0 + 0034] = b(0);
-    A0 = A0 + 0001;
-    V0 = A0 < 000f;
-8001CC9C	bne    v0, zero, loop1cc8c [$8001cc8c]
+[struct + 30] = w(0);
+
+for( int i = 0; i < f; ++i )
+{
+    [struct + 34 + i] = b(0);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1ccb4()
+// system_drawenv_set_background_color()
+
+r = A0;
+g = A1;
+b = A2;
 
 struct = w[8006794c];
-struct6c = w[struct + 10];
-[struct6c + 19] = b(A0);
-[struct6c + 1a] = b(A1);
-[struct6c + 1b] = b(A2);
-[struct6c + 75] = b(A0);
-[struct6c + 76] = b(A1);
-[struct6c + 77] = b(A2);
+
+drawenv = w[struct + 10];
+[drawenv + 0 * 5c + 19] = b(r);
+[drawenv + 0 * 5c + 1a] = b(g);
+[drawenv + 0 * 5c + 1b] = b(b);
+[drawenv + 1 * 5c + 19] = b(r);
+[drawenv + 1 * 5c + 1a] = b(g);
+[drawenv + 1 * 5c + 1b] = b(b);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func1cd04()
+// system_init_enviroments()
 
 struct = w[8006794c];
 dispenv = w[struct + c];
@@ -5503,12 +5492,11 @@ drawenv = w[struct + 10];
 h = A0;
 
 S2 = 0;
+
 func2f800();
 if( V0 != 0 ) S2 = 1;
 
 func2f810();
-
-V0 = V0 & ff;
 if( V0 != 0 ) S2 = 1;
 
 func2f864();
@@ -5628,7 +5616,7 @@ if( V0 != 0 )
     V1 = w[8006794c];
     A1 = w[V1 + 10] + (frame_id ^ 1) * 5c;
     A2 = 5c;
-    8001D04C	jal    func1d0f8 [$8001d0f8]
+    func1d0f8();
 
     8001D054	jal    func2f800 [$8002f800]
 
@@ -5682,42 +5670,30 @@ if( V0 != 0 )
 ////////////////////////////////
 // func1d0f8()
 
-A3 = A0;
-V0 = A3 < A1;
-8001D100	bne    v0, zero, L1d134 [$8001d134]
-V0 = A2;
-8001D108	blez   v0, L1d158 [$8001d158]
-8001D10C	addiu  a2, a2, $ffff (=-$1)
+dst = A0;
+src = A1;
+size = A2;
 
-loop1d110:	; 8001D110
-A0 = A3 + A2;
-V0 = A1 + A2;
-V1 = A2;
-V0 = bu[V0 + 0000];
-8001D120	addiu  a2, a2, $ffff (=-$1)
-8001D124	bgtz   v1, loop1d110 [$8001d110]
-[A0 + 0000] = b(V0);
-8001D12C	j      L1d15c [$8001d15c]
-V0 = A3;
+if( dst >= src )
+{
+    while( size > 0 )
+    {
+        size =- 1;
+        [dst + size] = b(bu[src + size]);
+    }
+}
+else
+{
+    while( size > 0 )
+    {
+        size =- 1;
+        [dst] = b(bu[src]);
+        dst += 1;
+        src += 1;
+    }
+}
 
-L1d134:	; 8001D134
-8001D134	blez   v0, L1d158 [$8001d158]
-8001D138	addiu  a2, a2, $ffff (=-$1)
-
-loop1d13c:	; 8001D13C
-    V0 = bu[A1 + 0000];
-    A1 = A1 + 0001;
-    V1 = A2;
-    A2 = A2 - 1;
-    A3 = A3 + 1;
-    [A3 + 0000] = b(V0);
-8001D150	bgtz   v1, loop1d13c [$8001d13c]
-
-
-L1d158:	; 8001D158
-V0 = A3;
-
-L1d15c:	; 8001D15C
+return dst;
 ////////////////////////////////
 
 
@@ -6463,65 +6439,31 @@ return S1;
 
 
 ////////////////////////////////
-// func1dcb8
-8001DCB8	addiu  sp, sp, $ffb0 (=-$50)
-[SP + 0038] = w(S0);
-S0 = 0;
-8001DCC4	lui    v0, $8006
-[SP + 0040] = w(S2);
-S2 = V0;
-[SP + 0044] = w(S3);
-S3 = 0001;
-[SP + 003c] = w(S1);
-S1 = SP + 0028;
-V1 = w[S2 + 794c];
-[SP + 0048] = w(RA);
+// func1dcb8()
 
-T3 = 800103f0;
-T0 = w[T3 + 0000];
-T1 = w[T3 + 0004];
-T2 = w[T3 + 0008];
+struct = w[8006794c];
 
-[SP + 0028] = w(T0);
-[SP + 002c] = w(T1);
-[SP + 0030] = w(T2);
-T0 = w[T3 + 000c];
-8001DD0C	nop
-[SP + 0034] = w(T0);
-V0 = 00ff;
-[V1 + 000b] = b(V0);
+[SP + 28] = w(w[800103f0]); // "\SLUS_012.51;1" disc 1
+[SP + 2c] = w(w[800103f4]); // "\SLUS_012.95;1" disc 2
+[SP + 30] = w(w[800103f8]); // "\SLUS_012.96;1" disc 3
+[SP + 34] = w(w[800103fc]); // "\SLUS_012.97;1" disc 4
 
-loop1dd1c:	; 8001DD1C
-    A0 = SP + 0010;
-    A1 = w[S1 + 0000];
+[struct + b] = b(ff);
+
+for( int i = 0; i < 4; ++i )
+{
+    A0 = SP + 10; // CdlFILE *fp
+    A1 = w[SP + 28 + i * 4];
     system_psyq_cd_search_file();
 
-    8001DD28	beq    v0, zero, L1dd58 [$8001dd58]
-    8001DD2C	nop
-    V1 = w[S2 + 794c];
-    8001DD34	bgez   s0, L1dd40 [$8001dd40]
-    V0 = S0;
-    V0 = S0 + 0003;
+    if( V0 != 0 ) // file found
+    {
+        [struct + b] = b(1 << i);
+        break;
+    }
+}
 
-    L1dd40:	; 8001DD40
-    V0 = V0 >> 02;
-    V0 = V0 << 02;
-    V0 = S0 - V0;
-    V0 = S3 << V0;
-    8001DD50	j      L1dd68 [$8001dd68]
-    [V1 + 000b] = b(V0);
-
-    L1dd58:	; 8001DD58
-    S0 = S0 + 0001;
-    S1 = S1 + 0004;
-    V0 = S0 < 0004;
-8001DD60	bne    v0, zero, loop1dd1c [$8001dd1c]
-
-L1dd68:	; 8001DD68
-V0 = w[8006794c];
-V1 = bu[V0 + b];
-
-if( V1 != ff )
+if( bu[struct + b] != ff )
 {
     do
     {
@@ -6532,9 +6474,7 @@ if( V1 != ff )
     {
         A0 = 80010400; // "\FF9.IMG;1"
         system_cdrom_get_sector_by_filename();
-
-        V1 = w[8006794c];
-        [V1 + 20] = w(V0); // store sector
+        [struct + 20] = w(V0); // store sector
 
         if( V0 != -1 ) break;
 
@@ -6554,27 +6494,25 @@ if( V1 != ff )
         func22b18();
     } while( V0 != 0 )
 
-    V0 = w[8006794c];
-    S0 = V0 - 1800;
+    dst = struct - 1800;
 
-    A0 = w[V0 + 20]; // file sector
+    A0 = w[struct + 20]; // file sector
     A1 = 800; // file size (load one sector)
-    A2 = S0;
+    A2 = dst;
     A3 = 0; // end callback
-    func22c60();
+    func22c60(); // load sectors to memory
 
     do
     {
         func22b18();
     } while( V0 != 0 )
 
-    V1 = w[8006794c];
-    V0 = w[S0 + 8];
-    [V1 + 30] = w(V0);
+    dir_n = w[dst + 8];
+    [struct + 30] = w(dir_n);
 
-    A0 = w[V1 + 14];
-    A1 = S0 + 10;
-    A2 = V0 * 10;
+    A0 = w[struct + 14]; // dst
+    A1 = dst + 10; // src
+    A2 = dir_n * 10; // size
     func1d0f8();
 }
 ////////////////////////////////
@@ -6582,123 +6520,107 @@ if( V1 != ff )
 
 
 ////////////////////////////////
-// func1de50
-8001DE50	addiu  sp, sp, $ffc0 (=-$40)
-8001DE54	lui    v0, $8006
-[SP + 0030] = w(S6);
-S6 = w[V0 + 794c];
-[SP + 003c] = w(RA);
-[SP + 0038] = w(FP);
-[SP + 0034] = w(S7);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
-V0 = w[S6 + 0000];
-8001DE88	lui    v1, $0010
-V0 = V0 & V1;
-8001DE90	beq    v0, zero, L1e1e8 [$8001e1e8]
-8001DE94	lui    v1, $0014
+// func1de50()
+
+struct = w[8006794c];
+
+if( ( w[struct + 0] & 00100000 ) == 0 ) return;
+
+[SP + 14] = w(0);
+
+struct14 = w[struct + 14];
+struct18 = w[struct + 18];
+
 V0 = w[80067944];
-V1 = V1 | c700;
-[SP + 0014] = w(0);
-A0 = w[S6 + 0014];
-FP = V0 + V1;
-V1 = w[A0 + 00d8];
-V0 = w[A0 + 00d4];
-A0 = w[A0 + 0008];
-V1 = V1 << 0b;
+FP = V0 + 0014c700;
+V1 = w[struct14 + d8];
+V0 = w[struct14 + d4];
+A0 = w[struct14 + 8];
+V1 = V1 * 800;
 V0 = V0 << 01;
 A2 = V1 + V0;
 V1 = A2 & 0800;
-8001DECC	beq    v1, zero, L1dedc [$8001dedc]
 [SP + 0010] = w(A0);
-V0 = A2 + 0800;
-A2 = V0 - V1;
 
-L1dedc:	; 8001DEDC
-A0 = w[S6 + 0020];
+if( V1 != 0 )
+{
+    V0 = A2 + 800;
+    A2 = V0 - V1;
+}
+
+A0 = w[struct + 20];
 A1 = A2;
 A2 = FP;
-8001DEE8	jal    func22c60 [$80022c60]
 A3 = 0;
+func22c60();
 
 loop1def0:	; 8001DEF0
-8001DEF0	jal    func22b18 [$80022b18]
-8001DEF4	nop
+    func22b18();
 8001DEF8	bne    v0, zero, loop1def0 [$8001def0]
-S5 = FP + 0010;
-T0 = w[SP + 0010];
-8001DF04	nop
-V0 = T0 << 0b;
-FP = FP + V0;
+
+S5 = FP + 10;
+T0 = w[SP + 10];
+FP = FP + T0 * 800;
 V0 = w[S5 + 0004];
 8001DF14	nop
 V0 = V0 + 0001;
 A2 = V0 << 03;
 V0 = w[8006794c];
-V1 = w[S6 + 0018];
 S4 = V0 - A2;
-[V1 + 0000] = w(S4);
-V0 = w[S6 + 0018];
+[struct18 + 0] = w(S4);
 S0 = FP;
-A0 = w[V0 + 0000];
-8001DF40	jal    func1d0f8 [$8001d0f8]
+
+A0 = w[struct18 + 0];
 A1 = S0;
+func1d0f8();
+
 V0 = w[S5 + 0014];
 8001DF4C	nop
 V0 = V0 + 0001;
 A2 = V0 << 03;
-V0 = w[S6 + 0018];
 S4 = S4 - A2;
-[V0 + 0004] = w(S4);
+[struct18 + 0004] = w(S4);
 A1 = w[S5 + 0018];
 T0 = w[SP + 0010];
-V0 = w[S6 + 0018];
 A1 = A1 - T0;
 A1 = A1 << 0b;
-A0 = w[V0 + 0004];
-8001DF7C	jal    func1d0f8 [$8001d0f8]
+A0 = w[struct18 + 0004];
 A1 = S0 + A1;
-V0 = w[S5 + 00a4];
-8001DF88	nop
-V0 = V0 + 0001;
+func1d0f8();
+
+V0 = w[S5 + a4];
+V0 = V0 + 1;
 A2 = V0 << 03;
-V0 = w[S6 + 0018];
 S4 = S4 - A2;
-[V0 + 0028] = w(S4);
+[struct18 + 0028] = w(S4);
 A1 = w[S5 + 00a8];
-T0 = w[SP + 0010];
-V0 = w[S6 + 0018];
+T0 = w[SP + 10];
 A1 = A1 - T0;
 A1 = A1 << 0b;
-A0 = w[V0 + 0028];
-8001DFB8	jal    func1d0f8 [$8001d0f8]
+
+A0 = w[struct18 + 28];
 A1 = FP + A1;
+func1d0f8();
+
 V0 = w[S5 + 0084];
-8001DFC4	nop
 V0 = V0 + 0001;
 A2 = V0 << 03;
-V0 = w[S6 + 0018];
 S4 = S4 - A2;
-[V0 + 0020] = w(S4);
-V0 = w[S6 + 0014];
-V1 = w[S6 + 0018];
+[struct18 + 0020] = w(S4);
 T0 = w[SP + 0010];
-A1 = w[V0 + 0088];
-A0 = w[V1 + 0020];
+A1 = w[struct14 + 88];
+A0 = w[struct18 + 0020];
 A1 = A1 - T0;
 A1 = A1 << 0b;
-8001DFF8	jal    func1d0f8 [$8001d0f8]
 A1 = FP + A1;
-A2 = 0001;
-V0 = w[S5 + 0088];
+func1d0f8();
+
+A2 = 1;
+V0 = w[S5 + 88];
 T0 = w[SP + 0010];
 V1 = w[S5 + 0084];
 V0 = V0 - T0;
-V0 = V0 << 0b;
+V0 = V0 * 800;
 S7 = FP + V0;
 V1 = V1 << 03;
 V1 = S7 + V1;
@@ -6709,142 +6631,101 @@ V0 = V0 << 0b;
 S3 = FP + V0;
 
 loop1e038:	; 8001E038
-V0 = w[S5 + 00b4];
-A0 = hu[S2 + 0002];
-V0 = V0 << 03;
-V0 = S3 + V0;
-8001E048	addiu  a1, v0, $fff8 (=-$8)
-8001E04C	addiu  v1, v0, $fffa (=-$6)
+    V0 = w[S5 + 00b4];
+    A0 = hu[S2 + 0002];
+    V0 = V0 << 03;
+    V0 = S3 + V0;
+    8001E048	addiu  a1, v0, $fff8 (=-$8)
+    8001E04C	addiu  v1, v0, $fffa (=-$6)
 
-loop1e050:	; 8001E050
-V0 = hu[A1 + 0000];
-8001E054	nop
-8001E058	bne    v0, a0, L1e088 [$8001e088]
-8001E05C	nop
-V0 = hu[V1 + 0000];
-8001E064	nop
-8001E068	bne    v0, zero, L1e098 [$8001e098]
-8001E06C	nop
-[V1 + 0000] = h(A2);
-T0 = w[SP + 0014];
-8001E078	nop
-T0 = T0 + 0001;
-8001E080	j      L1e098 [$8001e098]
-[SP + 0014] = w(T0);
+    loop1e050:	; 8001E050
+        V0 = hu[A1 + 0000];
+        8001E054	nop
+        8001E058	bne    v0, a0, L1e088 [$8001e088]
+        8001E05C	nop
+        V0 = hu[V1 + 0000];
+        8001E064	nop
+        8001E068	bne    v0, zero, L1e098 [$8001e098]
+        8001E06C	nop
+        [V1 + 0000] = h(A2);
+        T0 = w[SP + 0014];
+        8001E078	nop
+        T0 = T0 + 0001;
+        8001E080	j      L1e098 [$8001e098]
+        [SP + 0014] = w(T0);
 
-L1e088:	; 8001E088
-8001E088	addiu  a1, a1, $fff8 (=-$8)
-V0 = A1 < S3;
-8001E090	beq    v0, zero, loop1e050 [$8001e050]
-8001E094	addiu  v1, v1, $fff8 (=-$8)
+        L1e088:	; 8001E088
+        8001E088	addiu  a1, a1, $fff8 (=-$8)
+        V0 = A1 < S3;
+        8001E094	addiu  v1, v1, $fff8 (=-$8)
+    8001E090	beq    v0, zero, loop1e050 [$8001e050]
 
-L1e098:	; 8001E098
-8001E098	addiu  s2, s2, $fff8 (=-$8)
-V0 = S2 < S7;
+
+    L1e098:	; 8001E098
+    8001E098	addiu  s2, s2, $fff8 (=-$8)
+    V0 = S2 < S7;
 8001E0A0	beq    v0, zero, loop1e038 [$8001e038]
-8001E0A4	nop
+
 T0 = w[SP + 0014];
-8001E0AC	nop
-A2 = T0 << 04;
-V0 = w[S6 + 0018];
+A2 = T0 * 10;
 S4 = S4 - A2;
-[V0 + 002c] = w(S4);
-V0 = w[S5 + 0084];
-V1 = w[S6 + 0018];
-V0 = V0 << 03;
-V0 = S7 + V0;
-8001E0D0	addiu  s2, v0, $fff8 (=-$8)
-S1 = w[V1 + 002c];
+[struct18 + 2c] = w(S4);
+V0 = w[S5 + 84];
+V0 = S7 + V0 * 8;
+S2 = V0 - 8;
+S1 = w[struct18 + 002c];
 
 loop1e0d8:	; 8001E0D8
-V0 = w[S5 + 00b4];
-V1 = hu[S2 + 0002];
-V0 = V0 << 03;
-V0 = S3 + V0;
-8001E0E8	addiu  a1, v0, $fff8 (=-$8)
-8001E0EC	addiu  s0, v0, $fffa (=-$6)
+    V0 = w[S5 + 00b4];
+    V1 = hu[S2 + 0002];
+    V0 = V0 << 03;
+    V0 = S3 + V0;
+    8001E0E8	addiu  a1, v0, $fff8 (=-$8)
+    8001E0EC	addiu  s0, v0, $fffa (=-$6)
 
-loop1e0f0:	; 8001E0F0
-V0 = hu[A1 + 0000];
-8001E0F4	nop
-8001E0F8	bne    v0, v1, L1e130 [$8001e130]
-T0 = 0001;
-V0 = hu[S0 + 0000];
-8001E104	nop
-8001E108	bne    v0, t0, L1e140 [$8001e140]
-A0 = S1;
-8001E110	jal    func1d0f8 [$8001d0f8]
-A2 = 0010;
-T0 = ffff;
-[S1 + 0008] = h(T0);
-S1 = S1 + 0010;
-T0 = 0002;
-8001E128	j      L1e140 [$8001e140]
-[S0 + 0000] = h(T0);
+    loop1e0f0:	; 8001E0F0
+        if( hu[A1 + 0000] == V1 )
+        {
+            if( hu[S0 + 0000] == 1 )
+            {
+                A0 = S1;
+                A2 = 10;
+                func1d0f8();
 
-L1e130:	; 8001E130
-8001E130	addiu  a1, a1, $fff8 (=-$8)
-V0 = A1 < S3;
-8001E138	beq    v0, zero, loop1e0f0 [$8001e0f0]
-8001E13C	addiu  s0, s0, $fff8 (=-$8)
+                [S1 + 0008] = h(ffff);
+                S1 = S1 + 0010;
+                [S0 + 0000] = h(2);
+            }
+            break;
+        }
 
-L1e140:	; 8001E140
-8001E140	addiu  s2, s2, $fff8 (=-$8)
-V0 = S2 < S7;
+        8001E130	addiu  a1, a1, $fff8 (=-$8)
+        V0 = A1 < S3;
+        8001E13C	addiu  s0, s0, $fff8 (=-$8)
+    8001E138	beq    v0, zero, loop1e0f0 [$8001e0f0]
+
+    L1e140:	; 8001E140
+    8001E140	addiu  s2, s2, $fff8 (=-$8)
+    V0 = S2 < S7;
 8001E148	beq    v0, zero, loop1e0d8 [$8001e0d8]
-8001E14C	nop
-T0 = w[SP + 0014];
-V1 = w[S6 + 0014];
-V0 = T0 << 01;
-[V1 + 00b4] = w(V0);
-V0 = w[S5 + 00c4];
-8001E164	nop
-V0 = V0 + 0001;
-A2 = V0 << 03;
-V0 = w[S6 + 0018];
-S4 = S4 - A2;
-[V0 + 0030] = w(S4);
-A1 = w[S5 + 00c8];
-T0 = w[SP + 0010];
-V0 = w[S6 + 0018];
-A1 = A1 - T0;
-A1 = A1 << 0b;
-A0 = w[V0 + 0030];
-8001E194	jal    func1d0f8 [$8001d0f8]
-A1 = FP + A1;
-V0 = w[S5 + 00d4];
-8001E1A0	nop
-A2 = V0 << 01;
-V0 = w[S6 + 0018];
-S4 = S4 - A2;
-[V0 + 0034] = w(S4);
-A1 = w[S5 + 00d8];
-T0 = w[SP + 0010];
-V0 = w[S6 + 0018];
-A1 = A1 - T0;
-A1 = A1 << 0b;
-A0 = w[V0 + 0034];
-8001E1CC	jal    func1d0f8 [$8001d0f8]
-A1 = FP + A1;
-8001E1D4	lui    v1, $ffef
-V0 = w[S6 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-[S6 + 0000] = w(V0);
 
-L1e1e8:	; 8001E1E8
-RA = w[SP + 003c];
-FP = w[SP + 0038];
-S7 = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-8001E210	jr     ra 
-SP = SP + 0040;
+[struct14 + b4] = w(w[SP + 14] * 2);
+
+A2 = (w[S5 + c4] + 1) * 8;
+[struct18 + 30] = w(S4 - A2);
+
+A0 = w[struct18 + 30];
+A1 = FP + (w[S5 + c8] - (w[SP + 10]) * 800);
+func1d0f8();
+
+[struct18 + 34] = w(S4 - (w[S5 + d4] * 2));
+
+A0 = w[struct18 + 34]; // dst
+A1 = FP + (w[S5 + d8] - (w[SP + 10]) * 800); // src
+A2 = w[S5 + d4] * 2; // size
+func1d0f8();
+
+[struct + 0] = w(w[struct + 0] & ffefffff);
 ////////////////////////////////
 
 
@@ -20352,16 +20233,17 @@ L2f9a0:	; 8002F9A0
 8002F9A0	jr     ra 
 [A3 + 0003] = b(V1);
 ////////////////////////////////
-// func2f9a8
-V0 = A0;
-V1 = 80077c78;
-8002F9B4	lwl    a1, $002b(v1)
-8002F9B8	lwr    a1, $0028(v1)
-8002F9BC	nop
-8002F9C0	swl    a1, $0003(v0)
-8002F9C4	swr    a1, $0000(v0)
-8002F9C8	jr     ra 
-8002F9CC	nop
+
+
+
+////////////////////////////////
+// func2f9a8()
+
+[A0] = w(w[80077c78 + 28]);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func2f9d0
 8002F9D0	addiu  sp, sp, $ffe8 (=-$18)
@@ -53817,8 +53699,9 @@ L64484:	; 80064484
 A1 = S1;
 
 L64488:	; 80064488
-80064488	jal    func1d0f8 [$8001d0f8]
 A2 = S0;
+func1d0f8();
+
 V0 = w[SP + 0214];
 80064494	nop
 V0 = S0 < V0;
@@ -54855,7 +54738,7 @@ A0 = 0001;
 A1 = 0;
 A2 = SP + 0010;
 [SP + 0020] = w(RA);
-80065264	jal    func20650 [$80020650]
+80065264	jal    system_psyq_cd_control_b [$80020650]
 [SP + 001c] = w(S1);
 V0 = bu[SP + 0010];
 80065270	nop
@@ -54869,7 +54752,7 @@ V0 = 0010;
 
 L65288:	; 80065288
 A1 = 0;
-8006528C	jal    func20650 [$80020650]
+8006528C	jal    system_psyq_cd_control_b [$80020650]
 A2 = SP + 0010;
 A0 = V0;
 V0 = 0001;
@@ -54903,7 +54786,7 @@ L652ec:	; 800652EC
 A0 = 001e;
 A0 = 0013;
 A1 = 0;
-800652FC	jal    func20650 [$80020650]
+800652FC	jal    system_psyq_cd_control_b [$80020650]
 A2 = SP + 0010;
 V1 = bu[SP + 0010];
 A0 = V0;
@@ -54922,7 +54805,7 @@ L65330:	; 80065330
 A0 = 001e;
 A0 = 0013;
 A1 = 0;
-80065340	jal    func20650 [$80020650]
+80065340	jal    system_psyq_cd_control_b [$80020650]
 A2 = SP + 0010;
 V1 = bu[SP + 0010];
 8006534C	nop
@@ -55032,7 +54915,7 @@ A0 = SP + 0018;
 A1 = 0200;
 A0 = SP + 0019;
 A1 = 8001267c;
-800654C4	jal    func1ed40 [$8001ed40]
+800654C4	jal    system_bios_strncmp [$8001ed40]
 A2 = 0005;
 V1 = V0;
 800654D0	bne    v1, zero, L654dc [$800654dc]
@@ -55834,7 +55717,7 @@ A0 = w[S0 + 0000];
 80065F60	beq    a0, zero, L65f7c [$80065f7c]
 80065F64	nop
 80065F68	lui    a1, $8008
-80065F6C	jal    func1ed30 [$8001ed30]
+80065F6C	jal    system_bios_strcmp [$8001ed30]
 A1 = A1 + 3cd8;
 80065F74	beq    v0, zero, L65fa0 [$80065fa0]
 80065F78	nop
@@ -55887,7 +55770,7 @@ A0 = w[S0 + 0000];
 80066008	beq    a0, zero, L66024 [$80066024]
 8006600C	nop
 80066010	lui    a1, $8008
-80066014	jal    func1ed30 [$8001ed30]
+80066014	jal    system_bios_strcmp [$8001ed30]
 A1 = A1 + 3cd8;
 8006601C	beq    v0, zero, loop65fb4 [$80065fb4]
 80066020	nop
@@ -55955,7 +55838,7 @@ A0 = w[S0 + 0000];
 800660E8	beq    a0, zero, L6610c [$8006610c]
 800660EC	nop
 800660F0	lui    a1, $8008
-800660F4	jal    func1ed30 [$8001ed30]
+800660F4	jal    system_bios_strcmp [$8001ed30]
 A1 = A1 + 3cd8;
 800660FC	bne    v0, zero, L6610c [$8006610c]
 80066100	nop
