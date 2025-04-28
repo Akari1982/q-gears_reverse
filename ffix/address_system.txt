@@ -334,7 +334,7 @@
     + 14 [][][][] pointer to IMG directory data (0xe items, 0x10 size).
         + 0 [][][][] init with id. The type of directory.
                         0x02 Normal subdirectory contains normal files.
-                        0x03 Heirarchical directory.
+                        0x03 hierarchical directory.
                         0x04 Not a directory but indicates the end of the directory list.
         + 4 [][][][] init with 0. Number of files within the directory.
         + 8 [][][][] init with 0. Sector that contains the directory information (IE file sector list).
@@ -398,9 +398,9 @@
         + 4 [][][][] some pointer. ??
         +10 [][][][] maybe size of loaded field file.
         +20 [][][][] end of loaded field file.
-    +8c8 [][][][] maybe pointer to list of loading files.
+    +8c8 [][][][] pointer to list of loading files.
         +  2 []       number of records.
-        +  3 []       some index into next array.
+        +  3 []       some index into load array.
         +  4 start of some data (0x28 size).
             +  0 [][]     some flags. Init with 9.
                              0x0001 - ???

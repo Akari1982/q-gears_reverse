@@ -140,28 +140,29 @@ do
 
 func1cfb4();
 
-S1 = 00010000 | bu[SP + 10 + id];
+file_id = 00010000 | bu[SP + 10 + id];
 
 do
 {
     func22b18();
 } while( V0 != 0 )
 
-A0 = S1;
+A0 = file_id;
 func220e8();
+loaded = V0;
 
-if( V0 != 0 )
+if( loaded != 0 )
 {
-    A0 = S1;
+    A0 = file_id;
     func21e5c();
-    S0 = V0;
+    load_data = V0;
 
-    A0 = S0;
+    A0 = load_data;
     func21ae0();
 
     if( V0 != 0 )
     {
-        A0 = S0 + 20;
+        A0 = load_data + 20;
         A1 = w[SP + 20 + id * 4];
         system_psyq_store_image();
     }
@@ -169,39 +170,40 @@ if( V0 != 0 )
     {
         V0 = SP + V0;
         A0 = w[V0 + 20];
-        A1 = w[S0 + 8];
+        A1 = w[load_data + 8];
         if( A0 != A1 )
         {
-            A2 = w[S0 + c];
+            A2 = w[load_data + c];
             A3 = 0;
             func1daa4();
         }
     }
 
-    V0 = w[S0 + 000c];
-    A0 = S1;
-    80012A38	jal    func22390 [$80022390]
-    S0 = V0 >> 0b;
+    S0 = w[load_data + c] / 800;
+
+    A0 = file_id;
+    func22390();
 
     A0 = 0;
     system_psyq_draw_sync();
 }
 
-A0 = 0;
-A1 = S1;
+A0 = 0; // dir_id
+A1 = file_id;
 func1e218();
+file_data = V0;
 
-T0 = w[V0 + 4];
-V0 = w[V0 + c] - T0;
+file_sector = w[file_data + 4];
+file_size = w[file_data + 8 + 4] - file_sector;
+
 if( S0 < V0 )
 {
-    A1 = V1 - T0 - S0;
-    A1 = A1 * 800;
-    A3 = S0 * 800;
-    V0 = w[8006794c];
-    A0 = w[V0 + 20] + T0 + S0;
-    A2 = w[SP + 20 + id * 4] + A3;
-    func22df0();
+    struct = w[8006794c];
+
+    A0 = w[struct + 20] + file_sector + S0; // sector
+    A1 = (file_size - S0) * 800; // size
+    A2 = w[SP + 20 + id * 4] + S0 * 800; // dst
+    func22df0(); // cd load sync
 }
 
 system_bios_enter_critical_section();

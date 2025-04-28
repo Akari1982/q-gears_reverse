@@ -17772,7 +17772,7 @@ loop49f94:	; 80049F94
                 {
                     A0 = S2;
                     A2 = V0;
-                    system_memcpy;
+                    system_memcpy();
 
                     V0 = S2 - hu[8007adf8];
                     [S0] = h(V0);

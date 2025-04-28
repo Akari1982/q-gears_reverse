@@ -278,14 +278,14 @@
 8001DA6C func1da6c
 8001DA78 func1da78
 8001DAA4 func1daa4
+
+// libcd
 8001DCB8 func1dcb8
 8001DE50 func1de50
 8001E218 func1e218
 8001E2AC func1e2ac
 8001E350 func1e350
 8001E3A4 func1e3a4
-
-// libcd
 8001E3C0 system_psyq_cd_search_file
 8001E698 func1e698
 8001E6B8 func1e6b8

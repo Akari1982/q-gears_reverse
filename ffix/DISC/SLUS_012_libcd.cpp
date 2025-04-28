@@ -1,4 +1,346 @@
 ////////////////////////////////
+// func1dcb8()
+
+struct = w[8006794c];
+
+[SP + 28] = w(w[800103f0]); // "\SLUS_012.51;1" disc 1
+[SP + 2c] = w(w[800103f4]); // "\SLUS_012.95;1" disc 2
+[SP + 30] = w(w[800103f8]); // "\SLUS_012.96;1" disc 3
+[SP + 34] = w(w[800103fc]); // "\SLUS_012.97;1" disc 4
+
+[struct + b] = b(ff);
+
+for( int i = 0; i < 4; ++i )
+{
+    A0 = SP + 10; // CdlFILE *fp
+    A1 = w[SP + 28 + i * 4];
+    system_psyq_cd_search_file();
+
+    if( V0 != 0 ) // file found
+    {
+        [struct + b] = b(1 << i);
+        break;
+    }
+}
+
+if( bu[struct + b] != ff )
+{
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
+
+    while( true )
+    {
+        A0 = 80010400; // "\FF9.IMG;1"
+        system_cdrom_get_sector_by_filename();
+        [struct + 20] = w(V0); // store sector
+
+        if( V0 != -1 ) break;
+
+        do
+        {
+            func22b18();
+        } while( V0 != 0 )
+    }
+
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
+
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
+
+    dst = struct - 1800;
+
+    A0 = w[struct + 20]; // file sector
+    A1 = 800; // file size (load one sector)
+    A2 = dst;
+    A3 = 0; // end callback
+    func22c60(); // load sectors to memory
+
+    do
+    {
+        func22b18();
+    } while( V0 != 0 )
+
+    dir_n = w[dst + 8];
+    [struct + 30] = w(dir_n);
+
+    A0 = w[struct + 14]; // dst
+    A1 = dst + 10; // src
+    A2 = dir_n * 10; // size
+    system_memcpy();
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1de50()
+
+struct = w[8006794c];
+
+if( ( w[struct + 0] & 00100000 ) == 0 ) return;
+
+[SP + 14] = w(0);
+
+struct14 = w[struct + 14];
+struct18 = w[struct + 18];
+
+FP = w[80067944] + 0014c700;
+
+A2 = w[struct14 + d * 10 + 8] * 800 + w[struct14 + d * 10 + 4] * 2;
+
+if( A2 & 800 )
+{
+    A2 += 800 - (A2 & 800);
+}
+
+A0 = w[struct + 20]; // file sector
+A1 = A2; // file size (load one sector)
+A2 = FP; // dst
+A3 = 0; // end callback
+func22c60(); // load sectors to memory
+
+do
+{
+    func22b18();
+} while( V0 != 0 )
+
+dir_data = FP + 10;
+dir_src = FP;
+dir_dst = struct;
+
+// load dir 0
+{
+    files_n = w[dir_data + 0 * 10 + 4] + 1;
+    dir_dst -= files_n * 8;
+    [struct18 + 0 * 4] = w(dir_dst);
+
+    A0 = w[struct18 + 0 * 4];
+    A1 = dir_src + w[struct14 + 0 * 10 + 8] * 800;
+    A2 = files_n * 8;
+    system_memcpy();
+}
+
+// load dir 1
+{
+    files_n = w[dir_data + 1 * 10 + 4] + 1;
+    dir_dst -= files_n * 8;
+    [struct18 + 1 * 4] = w(dir_dst);
+
+    A0 = w[struct18 + 1 * 4];
+    A1 = dir_src + w[dir_data + 1 * 10 + 8] * 800;
+    A2 = files_n * 8;
+    system_memcpy();
+}
+
+// load dir a
+{
+    files_n = w[dir_data + a * 10 + 4] + 1;
+    dir_dst -= files_n * 8;
+    [struct18 + a * 4] = w(dir_dst);
+
+    A0 = w[struct18 + a * 4];
+    A1 = dir_src + w[dir_data + a * 10 + 8] * 800;
+    A2 = files_n * 8;
+    system_memcpy();
+}
+
+// load dir 8
+{
+    files_n = w[dir_data + 8 * 10 + 4] + 1;
+    dir_dst -= files_n * 8;
+    [struct18 + 8 * 4] = w(dir_dst);
+
+    A0 = w[struct18 + 8 * 4];
+    A1 = dir_src + w[struct14 + 8 * 10 + 8] * 800;
+    A2 = files_n * 8;
+    system_memcpy();
+}
+
+{
+    files_n_8 = w[dir_data + 8 * 10 + 4];
+    files_n_b = w[dir_data + b * 10 + 4];
+    file_list_b = dir_src + w[dir_data + b * 10 + 8] * 800;
+    file_list_8 = dir_src + w[dir_data + 8 * 10 + 8] * 800;
+
+    file_list_8_cur = file_list_8 + (files_n_8 - 1) * 8;
+    while( file_list_8_cur >= file_list_8 )
+    {
+        file_list_b_cur = file_list_b + (files_n_b - 1) * 8;
+        while( file_list_b_cur >= file_list_b )
+        {
+            if( hu[file_list_b_cur + 0] == hu[file_list_8_cur + 2] )
+            {
+                if( hu[file_list_b_cur + 2] == 0 )
+                {
+                    [file_list_b_cur + 2] = h(1);
+                    [SP + 14] = w(w[SP + 14] + 1);
+                }
+                break;
+            }
+            file_list_b_cur -= 8;
+        }
+        file_list_8_cur -= 8;
+    }
+
+    dir_dst -= w[SP + 14] * 10;
+    [struct18 + b * 4] = w(dir_dst);
+
+    file_list_8_cur = file_list_8 + (files_n_8 - 1) * 8;
+    while( file_list_8_cur >= file_list_8 )
+    {
+        dst = w[struct18 + b * 4];
+        file_list_b_cur = file_list_b + (files_n_b - 1) * 8;
+        while( file_list_b_cur >= file_list_b )
+        {
+            if( hu[file_list_b_cur + 0] == hu[file_list_8_cur + 2] )
+            {
+                if( hu[file_list_b_cur + 2] == 1 )
+                {
+                    A0 = dst; // dst
+                    A1 = file_list_b_cur; // src
+                    A2 = 10; // size
+                    system_memcpy();
+
+                    [dst + 8] = h(ffff);
+                    [file_list_b_cur + 2] = h(2);
+                    dst += 10;
+                }
+                break;
+            }
+            file_list_b_cur -= 8;
+        }
+        file_list_8_cur -= 8;
+    }
+
+    [struct14 + b * 10 + 4] = w(w[SP + 14] * 2);
+}
+
+// load dir c
+{
+    files_n = w[dir_data + c * 10 + 4] + 1;
+    [struct18 + c * 4] = w(dir_dst - files_n * 8);
+
+    A0 = w[struct18 + c * 4];
+    A1 = dir_src + w[dir_data + c * 10 + 8] * 800;
+    A2 = files_n * 8;
+    system_memcpy();
+}
+
+// load dir d
+{
+    [struct18 + d * 4] = w(dir_dst - (w[dir_data + d * 10 + 4] * 2));
+
+    A0 = w[struct18 + d * 4]; // dst
+    A1 = dir_src + w[dir_data + d * 10 + 8] * 800; // src
+    A2 = w[dir_data + d * 10 + 4] * 2; // size
+    system_memcpy();
+}
+
+[struct + 0] = w(w[struct + 0] & ffefffff);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1e218()
+
+dir_id = A0;
+file_id = A1;
+
+struct = w[8006794c];
+dir_data = w[struct + 14] + dir_id * 10;
+struct18 = w[struct + 18];
+
+if( w[dir_data + 0] == 3 ) // hierarchical directory
+{
+    return w[struct18 + d * 4] + file_id * 2;
+}
+
+files_n = w[dir_data + 4];
+file_list = w[struct18 + dir_id * 4];
+file_list_cur = file_list + (files_n - 1) * 8;
+
+while( file_list_cur >= file_list )
+{
+    if( hu[file_list_cur + 0] == ( file_id & ffff ) ) return file_list_cur;
+
+    file_list_cur -= 8;
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1e2ac()
+
+struct = w[8006794c];
+
+if( bu[struct + 8] == 1 ) // field
+{
+    V0 = w[struct + 1c];
+    V0 = w[V0 + 8e4];
+    V0 = w[V0 + c];
+    V0 = w[V0 + 14];
+    [V0 + a] = h(A0);
+}
+else if( bu[struct + 8] == 2 ) // battle
+{
+    V0 = w[struct + 1c];
+    V0 = w[V0 + 8e4];
+    V0 = w[V0 + 11c0];
+    [V0 + 4] = h(A0);
+}
+else if( bu[struct + 8] == 3 )
+{
+    V0 = w[struct + 1c];
+    V0 = w[V0 + 8e4];
+    V0 = w[V0 + 8];
+    [V0 + 24] = h(A0);
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1e350()
+
+struct = w[8006794c];
+V1 = w[struct + 1c];
+
+if( A0 >= 9 )
+{
+    return w[V1 + 8e0] + A0 * 14 - b4;
+}
+else
+{
+    return w[V1 + 8d8] + A0 * 14;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func1e3a4()
+
+[A0 + 0] = w(0);
+[A0 + 4] = w(-1);
+[A0 + 8] = w(0);
+[A0 + c] = w(0);
+[A0 + 10] = w(0);
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_psyq_cd_search_file()
 // Get location and size from CD-ROM file name
 // Determines the position time code (minutes, seconds, sectors) and total length of the specified file on the
@@ -637,13 +979,10 @@ return V0 < 1;
 
 
 ////////////////////////////////
-// func1ed50
-8001ED50	addiu  sp, sp, $ffd0 (=-$30)
+// func1ed50()
+
 V1 = w[80068514];
 V0 = 0001;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S1);
-[SP + 0020] = w(S0);
 [V1 + 0000] = b(V0);
 A0 = w[80068518];
 8001ED78	nop
@@ -1015,11 +1354,6 @@ L1f29c:	; 8001F29C
 V0 = 0;
 
 L1f2a0:	; 8001F2A0
-RA = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-8001F2AC	jr     ra 
-SP = SP + 0030;
 ////////////////////////////////
 
 
@@ -1186,21 +1520,12 @@ L1f504:	; 8001F504
 
 ////////////////////////////////
 // func1f534
-8001F534	addiu  sp, sp, $ffc0 (=-$40)
-[SP + 0034] = w(S7);
+
 S7 = A0;
-[SP + 0024] = w(S3);
 S3 = A1;
 8001F548	addiu  a0, zero, $ffff (=-$1)
-[SP + 003c] = w(RA);
-[SP + 0038] = w(FP);
-[SP + 0030] = w(S6);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
 8001F568	jal    system_psyq_vsync [$80015c58]
-[SP + 0018] = w(S0);
+
 8001F570	lui    fp, $8007
 8001F574	addiu  fp, fp, $8274 (=-$7d8c)
 8001F578	lui    s5, $8007
@@ -1370,18 +1695,6 @@ L1f7c4:	; 8001F7C4
 V0 = 0;
 
 L1f7cc:	; 8001F7CC
-RA = w[SP + 003c];
-FP = w[SP + 0038];
-S7 = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-8001F7F4	jr     ra 
-SP = SP + 0040;
 ////////////////////////////////
 
 
@@ -3408,36 +3721,36 @@ func1e2ac();
 
 
 ////////////////////////////////
-// func21680
-V0 = w[8006794c];
-80021688	nop
-V0 = w[V0 + 001c];
-80021690	jr     ra 
-[V0 + 08b2] = h(A0);
+// func21680()
+
+struct = w[8006794c];
+V0 = w[struct + 1c];
+[V0 + 8b2] = h(A0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func21698
-V0 = w[8006794c];
-V0 = w[V0 + 1c];
-V0 = w[V0 + 838];
+// func21698()
+
+struct = w[8006794c];
+V0 = w[struct + 1c];
 
 A1 = A0;
 A0 = 00020000 | hu[A1 + 34];
-800216C0	jalr   v0 ra
+800216C0	jalr   w[V0 + 838] ra
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_get_number_of_frames_in_animation
+// system_get_number_of_frames_in_animation()
+
 animation_id = A1;
 A0 = 4; // return type - address
 A1 = 30000 | (animation_id & ffff);
 A2 = 0;
-func1c7fc;
+func1c7fc();
 
 return hu[V0 + 2];
 ////////////////////////////////
@@ -3445,33 +3758,20 @@ return hu[V0 + 2];
 
 
 ////////////////////////////////
-// func2170c
-V0 = w[8006794c];
-80021714	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V1 = bu[V0 + 0008];
-V0 = 0003;
-80021724	beq    v1, v0, L2174c [$8002174c]
-V0 = 0004;
-V1 = bu[A0 + 0005];
-80021730	nop
-80021734	bne    v1, v0, L21760 [$80021760]
-V0 = 0;
-V1 = hu[A0 + 0034];
-V0 = ffff;
-80021744	bne    v1, v0, L21754 [$80021754]
-80021748	nop
+// func2170c()
 
-L2174c:	; 8002174C
-8002174C	j      L21760 [$80021760]
-V0 = 0;
+struct = w[8006794c];
 
-L21754:	; 80021754
-A0 = bu[A0 + 003b];
-80021758	jal    funcc44f4 [$800c44f4]
-8002175C	nop
+if( bu[struct + 8] == 3 ) return 0;
 
-L21760:	; 80021760
+if( bu[A0 + 5] != 4 ) return 0;
+
+if( hu[A0 + 34] == ffff ) return 0;
+
+A0 = bu[A0 + 3b];
+funcc44f4();
+
+return V0;
 ////////////////////////////////
 
 
@@ -3506,106 +3806,82 @@ return A0;
 
 
 ////////////////////////////////
-// func217c4
-800217C4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+// func217c4()
+
 S0 = A0;
-[SP + 0018] = w(RA);
-800217D4	beq    s0, zero, L218f8 [$800218f8]
-[SP + 0014] = w(S1);
-V1 = w[S0 + 001c];
-S1 = 0002;
-800217E4	beq    v1, s1, L21830 [$80021830]
-V0 = V1 < 0003;
-800217EC	beq    v0, zero, L21804 [$80021804]
-V0 = 0001;
-800217F4	beq    v1, v0, L21818 [$80021818]
-V0 = 0;
-800217FC	j      L218fc [$800218fc]
-80021800	nop
 
-L21804:	; 80021804
-V0 = 0003;
-80021808	beq    v1, v0, L218c0 [$800218c0]
-V0 = 0;
-80021810	j      L218fc [$800218fc]
-80021814	nop
+if( S0 == 0 ) return 0;
 
-L21818:	; 80021818
-80021818	jal    func22b18 [$80022b18]
-8002181C	nop
-80021820	bne    v0, zero, L218ec [$800218ec]
-80021824	nop
-80021828	j      L218ec [$800218ec]
-[S0 + 001c] = w(S1);
+V1 = w[S0 + 1c];
 
-L21830:	; 80021830
-V0 = w[S0 + 0004];
-V1 = w[S0 + 000c];
-80021838	nop
-S1 = V0 - V1;
-V1 = w[S0 + 0010];
-80021844	addiu  v0, zero, $ffff (=-$1)
-80021848	beq    v1, v0, L2185c [$8002185c]
-V0 = V1 < S1;
-80021850	beq    v0, zero, L2185c [$8002185c]
-80021854	nop
-S1 = V1;
+if( V1 == 1 )
+{
+    func22b18();
 
-L2185c:	; 8002185C
-8002185C	beq    s1, zero, L218a0 [$800218a0]
-V0 = w[8006794c];
-80021868	nop
-V1 = w[V0 + 0020];
-V0 = w[S0 + 0000];
-A0 = w[S0 + 000c];
-80021878	nop
-8002187C	bgez   a0, L21888 [$80021888]
-V1 = V1 + V0;
-A0 = A0 + 07ff;
+    if( V0 == 0 )
+    {
+        [S0 + 1c] = w(2);
+    }
 
-L21888:	; 80021888
-A0 = A0 >> 0b;
-A0 = V1 + A0;
-A1 = S1;
-A2 = w[S0 + 0008];
-80021898	jal    func22c60 [$80022c60]
-A3 = 0;
+    return w[S0 + 1c];
 
-L218a0:	; 800218A0
-V0 = 0003;
-V1 = w[S0 + 0008];
-A0 = V0;
-[S0 + 0010] = w(S1);
-[S0 + 001c] = w(A0);
-V1 = V1 + S1;
-800218B8	j      L218fc [$800218fc]
-[S0 + 0020] = w(V1);
+}
+else if( V1 == 2 )
+{
+    V0 = w[S0 + 0004];
+    V1 = w[S0 + 000c];
+    S1 = V0 - V1;
+    V1 = w[S0 + 0010];
+    80021844	addiu  v0, zero, $ffff (=-$1)
+    80021848	beq    v1, v0, L2185c [$8002185c]
+    V0 = V1 < S1;
+    80021850	beq    v0, zero, L2185c [$8002185c]
+    80021854	nop
+    S1 = V1;
 
-L218c0:	; 800218C0
-800218C0	jal    func22b18 [$80022b18]
-800218C4	nop
-800218C8	bne    v0, zero, L218ec [$800218ec]
-800218CC	nop
-V0 = w[S0 + 0014];
-800218D4	nop
-800218D8	beq    v0, zero, L218e8 [$800218e8]
-800218DC	nop
-800218E0	jalr   v0 ra
-A0 = S0;
+    L2185c:	; 8002185C
+    if( S1 != 0 )
+    {
+        struct = w[8006794c];
+        V1 = w[struct + 20];
+        V0 = w[S0 + 0000];
+        A0 = w[S0 + 000c];
+        V1 = V1 + V0;
+        A0 = A0 / 800;
+        A0 = V1 + A0;
+        A1 = S1;
+        A2 = w[S0 + 8];
+        A3 = 0;
+        func22c60(); // load sectors to memory
+    }
 
-L218e8:	; 800218E8
-[S0 + 001c] = w(0);
+    [S0 + 10] = w(S1);
+    [S0 + 1c] = w(3);
+    [S0 + 20] = w(w[S0 + 8] + S1);
 
-L218ec:	; 800218EC
-V0 = w[S0 + 001c];
-800218F0	j      L218fc [$800218fc]
-800218F4	nop
+    return 3;
+}
+else if( V1 == 3 )
+{
+    func22b18();
 
-L218f8:	; 800218F8
-V0 = 0;
+    if( V0 == 0 )
+    {
+        V0 = w[S0 + 14];
+        if( V0 != 0 )
+        {
+            A0 = S0;
+            800218E0	jalr   v0 ra
 
-L218fc:	; 800218FC
+        }
+
+        [S0 + 1c] = w(0);
+    }
+
+    return w[S0 + 1c];
+}
+
+return 0;
 ////////////////////////////////
 
 
@@ -3676,9 +3952,7 @@ V0 = V0 | 0020;
 
 if( A0 == 0 ) return 0;
 
-V0 = w[A0 + 4];
-V0 = V0 NOR 0;
-V0 = 0 < V0;
+V0 = 0 < (w[A0 + 4] NOR 0);
 ////////////////////////////////
 
 
@@ -3904,37 +4178,32 @@ func21938();
 ////////////////////////////////
 // func21cdc()
 
-V0 = w[8006794c];
-V0 = w[V0 + 001c];
-V0 = w[V0 + 08c8];
-[V0 + 011c] = w(A0);
+struct = w[8006794c];
+V0 = w[struct + 1c];
+V0 = w[V0 + 8c8];
+[V0 + 4 + 7 * 28] = w(A0);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func21cfc
+// func21cfc()
 
-V0 = w[8006794c];
-V0 = w[V0 + 001c];
-S1 = w[V0 + 08c8];
-V1 = b[S1 + 0002];
-V0 = V1 < 0006;
-80021D30	beq    v0, zero, L21d64 [$80021d64]
-S0 = 0;
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + 0004;
-S0 = S1 + V0;
-80021D4C	jal    func21938 [$80021938]
+struct = w[8006794c];
+V0 = w[struct + 1c];
+S1 = w[V0 + 8c8];
+
+V1 = b[S1 + 2];
+
+if( V1 >= 6 ) return 0;
+
+S0 = S1 + 4 + V1 * 28;
+
 A0 = S0;
-V0 = bu[S1 + 0002];
-80021D58	nop
-V0 = V0 + 0001;
-[S1 + 0002] = b(V0);
+func21938();
 
-L21d64:	; 80021D64
+[S1 + 2] = b(bu[S1 + 2] + 1);
+
 return S0;
 ////////////////////////////////
 
@@ -3943,46 +4212,29 @@ return S0;
 ////////////////////////////////
 // func21d7c()
 
-V0 = w[8006794c];
-V0 = w[V0 + 001c];
-A1 = w[V0 + 08c8];
-V0 = b[A1 + 0002];
-V1 = b[A1 + 0003];
-80021DA0	addiu  v0, v0, $ffff (=-$1)
-V1 = V1 < V0;
-80021DA8	beq    v1, zero, L21e18 [$80021e18]
-80021DAC	addiu  a2, zero, $ffff (=-$1)
+struct = w[8006794c];
+V0 = w[struct + 1c];
+A1 = w[V0 + 8c8];
 
-loop21db0:	; 80021DB0
-    V0 = bu[A1 + 0003];
-    80021DB4	nop
-    V0 = V0 + 0001;
-    [A1 + 0003] = b(V0);
-    V0 = V0 << 18;
-    V1 = V0 >> 18;
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + 0004;
-    A0 = A1 + V0;
-    V0 = w[A0 + 0004];
-    80021DE0	nop
-    80021DE4	beq    v0, a2, L21e00 [$80021e00]
-    V0 = A0;
-    V1 = hu[A0 + 0000];
-    80021DF0	nop
-    V1 = V1 | 0040;
-    80021DF8	jr     ra 
-    [V0 + 0000] = h(V1);
+V0 = b[A1 + 2] - 1;
+V1 = b[A1 + 3];
 
-    L21e00:	; 80021E00
-    V0 = b[A1 + 0002];
-    80021E04	nop
-    80021E08	addiu  v0, v0, $ffff (=-$1)
-    V0 = V1 < V0;
-80021E10	bne    v0, zero, loop21db0 [$80021db0]
+while( V1 < V0 )
+{
+    V1 = b[A1 + 3] + 1;
+    [A1 + 3] = b(V1);
+    A0 = A1 + 4 + V1 * 28;
 
-L21e18:	; 80021E18
+    if( w[A0 + 4] != -1 )
+    {
+        [A0 + 0] = h(hu[A0 + 0] | 0040);
+
+        return A0;
+    }
+
+    V0 = b[A1 + 2] - 1;
+}
+
 return 0;
 ////////////////////////////////
 
@@ -4003,20 +4255,21 @@ return A0 + 4 + b[A0 + 3] * 28;
 ////////////////////////////////
 // func21e5c()
 
+file_id = A0;
+
 struct = w[8006794c];
 V0 = w[struct + 1c];
 
 A3 = w[V0 + 8c8];
 A1 = b[A3 + 2] - 1;
-if( A1 >= 0 )
+
+while( A1 >= 0 )
 {
-    loop21ea4:	; 80021EA4
-        if( ( w[A3 + 4 + A1 * 28 + 4] & 00ffffff ) == ( A0 & 00ffffff ) )
-        {
-            return A3 + A1 * 28 + 4;
-        }
-        A1 = A1 - 1;
-    80021EC4	bgez   a1, loop21ea4 [$80021ea4]
+    if( ( w[A3 + 4 + A1 * 28 + 4] & 00ffffff ) == ( file_id & 00ffffff ) )
+    {
+        return A3 + 4 + A1 * 28;
+    }
+    A1 -= 1;
 }
 
 return 0;
@@ -4160,21 +4413,22 @@ return S0;
 ////////////////////////////////
 // func220e8()
 
-S1 = A0;
+file_id = A0;
+
 S2 = 0;
 
-A0 = A0;
+A0 = file_id;
 func21e5c();
+load_data = V0;
 
-S0 = V0;
-if( S0 != 0 )
+if( load_data != 0 )
 {
-    if( ( hu[S0 + 0] & 0001 ) != 0 )
+    if( ( hu[load_data + 0] & 0001 ) != 0 )
     {
         func22020();
     }
 
-    A0 = S0;
+    A0 = load_data;
     func21ae0();
 
     if( V0 != 0 )
@@ -4183,7 +4437,7 @@ if( S0 != 0 )
     }
     else
     {
-        A0 = S0;
+        A0 = load_data;
         func21a8c();
 
         if( V0 != 0 )
@@ -4194,17 +4448,18 @@ if( S0 != 0 )
 }
 else
 {
-    func21e20(); // get element 0x28 indexed by +3[]
+    func21e20();
+    load_data = V0;
 
-    if( V0 != 0 )
+    if( load_data != 0 )
     {
-        if( ( w[V0 + 4] NOR 0 ) != 0 )
+        if( ( w[load_data + 4] NOR 0 ) != 0 )
         {
-            if( bu[V0 + 6] == ( ( S1 >> 10 ) & ff ) )
+            if( bu[load_data + 6] == ( ( file_id >> 10 ) & ff ) )
             {
-                if( ( w[V0 + 4] & ffff ) != ( S1 & ffff ) )
+                if( ( w[load_data + 4] & ffff ) != ( file_id & ffff ) )
                 {
-                    A0 = V0;
+                    A0 = load_data;
                     func21c20();
                 }
             }
@@ -4345,17 +4600,17 @@ V0 = S3;
 ////////////////////////////////
 // func22390()
 
-80022398	jal    func21e5c [$80021e5c]
+func21e5c();
+load_data = V0;
 
-S0 = V0;
-800223A4	beq    s0, zero, L223bc [$800223bc]
-800223A8	nop
-800223AC	jal    func21c20 [$80021c20]
-A0 = S0;
-800223B4	jal    func21938 [$80021938]
-A0 = S0;
+if( load_data != 0 )
+{
+    A0 = load_data;
+    func21c20();
 
-L223bc:	; 800223BC
+    A0 = load_data;
+    func21938();
+}
 ////////////////////////////////
 
 
@@ -5019,17 +5274,21 @@ return 1;
 ////////////////////////////////
 // func22df0()
 
+sector = A0;
+size = A1;
+dst = A2;
+
 V1 = 80076148;
 
-[V1 + 0] = b(3);
-[V1 + 4] = w(A0);
-[V1 + 8] = w(A1);
+[V1 + 0] = b(3); // flags
+[V1 + 4] = w(sector);
+[V1 + 8] = w(size);
 [V1 + c] = w(-1);
 [V1 + 10] = w(800231a0); // cd_sync_callback - func231a0()
 [V1 + 14] = w(800227c8); // cd_ready_callback - func227c8()
-[V1 + 18] = w(0);
-[V1 + 1c] = w(A1);
-[V1 + 20] = w(A2);
+[V1 + 18] = w(0); // end callback
+[V1 + 1c] = w(size);
+[V1 + 20] = w(dst);
 
 A0 = V1;
 func230b8();
