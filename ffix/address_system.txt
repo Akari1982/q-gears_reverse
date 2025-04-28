@@ -402,14 +402,22 @@
         +  2 []       number of records.
         +  3 []       some index into next array.
         +  4 start of some data (0x28 size).
-            + 0 [][]     some flags.
-                            0x0001 - ???
-                            0x0002 - ???
-                            0x0080 - ???
-            + 4 [][][][] index of file. Fox example: 0x00050000 | field_id.
-            + 8 [][][][] address of loading file.
-            + c [][][][] size of loading file.
-            +1c [][][][] ???
+            +  0 [][]     some flags. Init with 9.
+                             0x0001 - ???
+                             0x0002 - ???
+                             0x0080 - ???
+            +  2 [][]     init with 0.
+            +  4 [][][][] index of file. Fox example: 0x00050000 | field_id.
+            +  8 [][][][] address of loading file.
+            +  c [][][][] size of loading file.
+            + 10 [][][][] init with 0. some address aligned by 0x800.
+            + 14 [][][][] init with 0.
+            + 18 [][][][] init with -1.
+            + 1c [][][][] init with -1.
+            + 20 [][]     init with 0.
+            + 22 [][]     init with 0.
+            + 24 [][]     init with 0.
+            + 26 [][]     init with 0.
     +8d8 [][][][] ??? pointet to start of some on 0x14 sized array.
     +8e0 [][][][] ??? pointer to end of some on 0x14 sized array.
         // field
