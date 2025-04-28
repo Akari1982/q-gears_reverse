@@ -325,7 +325,7 @@
 
 8008b000 [][][][] 8006794c points here (some struct)
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.
-    +  4 [][][][] init with 0. Pointer to 800bb250.
+    +  4 [][][][] init with 0. Pointer to 8008b250.
     +  8 []       init with 0. looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
     +  a []       init with 0.
     +  b []       init with 0xff. Bitmask of inserted disc.
@@ -339,8 +339,11 @@
         + 4 [][][][] init with 0. Number of files within the directory.
         + 8 [][][][] init with 0. Sector that contains the directory information (IE file sector list).
         + c [][][][] init with 0. This points to the sector of the first file (for fast reference?).
-    + 18 [][][][] pointer to 8008b214. Array of something (0xe items, 0x4 size).
-        + 0 [][][][] init with 0.
+    + 18 [][][][] pointer to array dir files data (0xe items, 0x4 size).
+        + 0 [][][][] init with 0. Pointer to dir files data. This pointer is dynamic and stored before 8008b000 address.
+            + 0 [][]     ???
+            + 2 [][]     ???
+            + 4 [][][][] file sector.
     + 1c [][][][] init with 0. Pointer to 8008b250.
     + 20 [][][][] init with -1. Sector of "\FF9.IMG;1" file.
     + 24 [][][][] some flags.

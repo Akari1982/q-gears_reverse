@@ -12911,7 +12911,7 @@ func1cfb4:	; 8001CFB4
 8001D040	subu   a1, a1, v0
 8001D044	lw     v0, $0010(v1)
 8001D048	sll    a1, a1, $02
-8001D04C	jal    func1d0f8 [$8001d0f8]
+8001D04C	jal    system_memcpy [$8001d0f8]
 8001D050	addu   a1, v0, a1
 8001D054	jal    func2f800 [$8002f800]
 8001D058	nop
@@ -12966,7 +12966,7 @@ L1d0e4:	; 8001D0E4
 8001D0F4	addiu  sp, sp, $0028
 
 
-func1d0f8:	; 8001D0F8
+system_memcpy:	; 8001D0F8
 8001D0F8	addu   a3, a0, zero
 8001D0FC	sltu   v0, a3, a1
 8001D100	bne    v0, zero, L1d134 [$8001d134]
@@ -13956,7 +13956,7 @@ loop1de08:	; 8001DE08
 8001DE20	lw     v0, $0008(s0)
 8001DE24	lw     a0, $0014(v1)
 8001DE28	sll    a2, v0, $04
-8001DE2C	jal    func1d0f8 [$8001d0f8]
+8001DE2C	jal    system_memcpy [$8001d0f8]
 8001DE30	sw     v0, $0030(v1)
 
 L1de34:	; 8001DE34
@@ -14034,7 +14034,7 @@ loop1def0:	; 8001DEF0
 8001DF34	lw     v0, $0018(s6)
 8001DF38	addu   s0, fp, zero
 8001DF3C	lw     a0, $0000(v0)
-8001DF40	jal    func1d0f8 [$8001d0f8]
+8001DF40	jal    system_memcpy [$8001d0f8]
 8001DF44	addu   a1, s0, zero
 8001DF48	lw     v0, $0014(s5)
 8001DF4C	nop
@@ -14049,7 +14049,7 @@ loop1def0:	; 8001DEF0
 8001DF70	subu   a1, a1, t0
 8001DF74	sll    a1, a1, $0b
 8001DF78	lw     a0, $0004(v0)
-8001DF7C	jal    func1d0f8 [$8001d0f8]
+8001DF7C	jal    system_memcpy [$8001d0f8]
 8001DF80	addu   a1, s0, a1
 8001DF84	lw     v0, $00a4(s5)
 8001DF88	nop
@@ -14064,7 +14064,7 @@ loop1def0:	; 8001DEF0
 8001DFAC	subu   a1, a1, t0
 8001DFB0	sll    a1, a1, $0b
 8001DFB4	lw     a0, $0028(v0)
-8001DFB8	jal    func1d0f8 [$8001d0f8]
+8001DFB8	jal    system_memcpy [$8001d0f8]
 8001DFBC	addu   a1, fp, a1
 8001DFC0	lw     v0, $0084(s5)
 8001DFC4	nop
@@ -14080,7 +14080,7 @@ loop1def0:	; 8001DEF0
 8001DFEC	lw     a0, $0020(v1)
 8001DFF0	subu   a1, a1, t0
 8001DFF4	sll    a1, a1, $0b
-8001DFF8	jal    func1d0f8 [$8001d0f8]
+8001DFF8	jal    system_memcpy [$8001d0f8]
 8001DFFC	addu   a1, fp, a1
 8001E000	addiu  a2, zero, $0001
 8001E004	lw     v0, $0088(s5)
@@ -14162,7 +14162,7 @@ loop1e0f0:	; 8001E0F0
 8001E104	nop
 8001E108	bne    v0, t0, L1e140 [$8001e140]
 8001E10C	addu   a0, s1, zero
-8001E110	jal    func1d0f8 [$8001d0f8]
+8001E110	jal    system_memcpy [$8001d0f8]
 8001E114	addiu  a2, zero, $0010
 8001E118	ori    t0, zero, $ffff
 8001E11C	sh     t0, $0008(s1)
@@ -14199,7 +14199,7 @@ L1e140:	; 8001E140
 8001E188	subu   a1, a1, t0
 8001E18C	sll    a1, a1, $0b
 8001E190	lw     a0, $0030(v0)
-8001E194	jal    func1d0f8 [$8001d0f8]
+8001E194	jal    system_memcpy [$8001d0f8]
 8001E198	addu   a1, fp, a1
 8001E19C	lw     v0, $00d4(s5)
 8001E1A0	nop
@@ -14213,7 +14213,7 @@ L1e140:	; 8001E140
 8001E1C0	subu   a1, a1, t0
 8001E1C4	sll    a1, a1, $0b
 8001E1C8	lw     a0, $0034(v0)
-8001E1CC	jal    func1d0f8 [$8001d0f8]
+8001E1CC	jal    system_memcpy [$8001d0f8]
 8001E1D0	addu   a1, fp, a1
 8001E1D4	lui    v1, $ffef
 8001E1D8	lw     v0, $0000(s6)
@@ -66378,7 +66378,7 @@ L49fb0:	; 80049FB0
 80049FE0	nop
 80049FE4	beq    v0, zero, L4a008 [$8004a008]
 80049FE8	addu   a0, s2, zero
-80049FEC	jal    func1d0f8 [$8001d0f8]
+80049FEC	jal    system_memcpy [$8001d0f8]
 80049FF0	addu   a2, v0, zero
 80049FF4	lhu    v0, $adf8(s5)
 80049FF8	nop
@@ -98407,7 +98407,7 @@ L64484:	; 80064484
 80064484	addu   a1, s1, zero
 
 L64488:	; 80064488
-80064488	jal    func1d0f8 [$8001d0f8]
+80064488	jal    system_memcpy [$8001d0f8]
 8006448C	addu   a2, s0, zero
 80064490	lw     v0, $0214(sp)
 80064494	nop

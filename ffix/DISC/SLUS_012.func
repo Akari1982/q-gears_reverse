@@ -254,7 +254,7 @@
 8001CCB4 system_drawenv_set_background_color
 8001CD04 system_init_enviroments
 8001CFB4 func1cfb4
-8001D0F8 func1d0f8
+8001D0F8 system_memcpy
 8001D168 system_psyq_set_def_drawenv
 8001D228 system_psyq_set_def_dispenv
 8001D268 func1d268
