@@ -263,6 +263,8 @@
 8001D3C4 func1d3c4
 8001D610 func1d610
 8001D67C func1d67c
+
+// libcd
 8001D768 func1d768
 8001D848 func1d848
 8001D898 system_bios_memset
@@ -278,8 +280,6 @@
 8001DA6C func1da6c
 8001DA78 func1da78
 8001DAA4 func1daa4
-
-// libcd
 8001DCB8 func1dcb8
 8001DE50 func1de50
 8001E218 func1e218
