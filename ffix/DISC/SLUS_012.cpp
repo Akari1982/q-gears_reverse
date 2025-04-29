@@ -5072,19 +5072,18 @@ loop1c738:	; 8001C738
 
 
 ////////////////////////////////
-// func1c750
-V0 = 80073c40;
-V1 = h[V0 + 0002];
-8001C75C	nop
-V1 = V1 << 02;
-V1 = V1 + V0;
-[V1 + 0004] = w(A0);
-V1 = hu[V0 + 0002];
-8001C770	nop
-V1 = V1 + 0001;
-[V0 + 0002] = h(V1);
-8001C77C	jr     ra 
-V0 = 0;
+// func1c750()
+
+V1 = h[80073c40 + 2];
+[80073c40 + 4 + V1 * 4] = w(A0);
+
+[80073c40 + 2] = h(hu[80073c40 + 2] + 1);
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1c784
 A1 = 80073c40;
@@ -5130,12 +5129,11 @@ L1c7f4:	; 8001C7F4
 // func1c7fc()
 // A0 - type of return
 
-S2 = A0;
-S4 = A1;
-S5 = A2; // XXXXYYYY where XXXX - type of db file, YYYY - 
+type = A0;
+file_id = A1;
+inner_file = A2;
 
-V0 = h[80073c40 + 2];
-S0 = V0 - 1;
+S0 = h[80073c40 + 2] - 1;
 
 if( S0 >= 0 )
 {
@@ -5143,25 +5141,19 @@ if( S0 >= 0 )
 
     loop1c84c:	; 8001C84C
         A0 = w[S1 + 4];
-        A1 = S2;
-        A2 = S4;
-        A3 = S5;
-        func1c8b0;
+        A1 = type;
+        A2 = file_id;
+        A3 = inner_file;
+        func1c8b0();
 
-        if (V0 != -1)
-        {
-            return V0;
-        }
+        if( V0 != -1 ) return V0;
 
         S0 = S0 - 1;
         S1 = S1 - 4;
     8001C86C	bgez   s0, loop1c84c [$8001c84c]
 }
 
-if (V0 == -1 && (S2 & 1) == 0)
-{
-    return 0;
-}
+if( ( V0 == -1 ) && ( ( type & 1 ) == 0 ) ) return 0;
 
 return -1;
 ////////////////////////////////
@@ -5170,9 +5162,10 @@ return -1;
 
 ////////////////////////////////
 // func1c8b0()
+
 // get info from db structure
 // A1 - type of return
-// 0 - return address of founded resource.
+// 0 - return address of resource.
 // 1 - number of files of that type resource.
 // 2 - return address of file with index A2 & ffff in given resource.
 // 3 - return unique identificator of file???
@@ -5181,131 +5174,113 @@ return -1;
 // 8 - 
 
 address = A0;
-return_type = A1;
-V1 = A2;
-file_index = V1 & ffff;
-resource_type = (V1 >> 10) & ff;
-
-A2 = A3;
+type = A1;
+file_index = A2 & ffff;
+resource_type = (A2 >> 10) & ff;
+inner_file = A3;
 
 if( address == 0 ) return 0;
 
 file_pointer_start = address + 4;
-number_of_files = bu[address + 1];
+files_n = bu[address + 1];
 
-if (number_of_files != 0)
+for( int i = 0; i < files_n; ++i )
 {
-    // loop through all files in database
-    T7 = 0;
-    loop1c94c:	; 8001C94C
-        T0 = w[file_pointer_start + 0]
-        T4 = (T0 >> 18) & 7f; // type of part
-        if (T4 == resource_type)
+    T0 = w[file_pointer_start + 0]
+    T4 = (T0 >> 18) & 7f; // type of part
+    if( resource_type == T4 )
+    {
+        resource_address = file_pointer_start + T0 & 00ffffff; // address of part
+        resource_n = bu[resource_address + 1]; // number of files of that type
+
+        if( type == 0 ) return resource_address;
+
+        if( type == 1 ) return resource_n;
+
+        identifiers_address = resource_address + 4;
+        pointers_address = identifiers_address + resource_n * 2;
+        V0 = pointers_address & 3;
+        if( V0 != 0 ) // align address to 4 bytes
         {
-            resource_address = file_pointer_start + T0 & 00ffffff; // address of part
-            number_of_resource = bu[resource_address + 1]; // number of files of that type
-
-            if (return_type == 0)
-            {
-                return resource_address;
-            }
-            if (return_type == 1)
-            {
-                return number_of_resource;
-            }
-
-            identifiers_address = resource_address + 4;
-            pointers_address = identifiers_address + number_of_resource * 2;
-            V0 = pointers_address & 3;
-            if (V0 != 0) // align address to 4 bytes
-            {
-                V0 = V0 - 4;
-                pointers_address = pointers_address - V0;
-            }
-
-            if (return_type == 2)
-            {
-                V0 = w[pointers_address + file_index * 4];
-                return pointers_address + file_index * 4 + V0 & 00ffffff;
-            }
-
-            if (return_type == 3)
-            {
-                return (T4 << 10) | hu[identifiers_address + file_index * 2];
-            }
-
-            if (number_of_resource != 0)
-            {
-                T0 = 0;
-                loop1c9b8:	; 8001C9B8
-                    if (hu[identifiers_address] == file_index)
-                    {
-                        switch (return_type)
-                        {
-                            case 4:
-                            {
-                                return pointers_address + w[pointers_address] & 00ffffff;
-                            }
-                            break;
-
-                            case 5:
-                            {
-                                return (w[pointers_address + 4] & 00ffffff) - w[pointers_address + 0] & 00ffffff + 4;
-                            }
-                            break;
-
-                            case 9:
-                            {
-                                A0 = address
-                                A1 = 3;
-                                A2 = A2;
-                                A3 = 0;
-                                func1c8b0;
-                                return V0;
-                            }
-                            break;
-
-                            case 8:
-                            {
-                                A0 = address
-                                A1 = 2;
-                                A2 = A2;
-                                A3 = 0;
-                                func1c8b0;
-                                return V0;
-                            }
-                            break;
-
-                            case b:
-                            {
-                                A0 = address
-                                A1 = 1;
-                                A2 = A2;
-                                A3 = 0;
-                                func1c8b0;
-                                return V0;
-                            }
-                            break;
-
-                            default:
-                            {
-                                return -1;
-                            }
-                        }
-                    }
-
-                    identifiers_address = identifiers_address + 2;
-                    T0 = T0 + 1;
-                    V0 = T0 < number_of_resource;
-                    pointers_address = pointers_address + 4;
-                8001CA40	bne    v0, zero, loop1c9b8 [$8001c9b8]
-            }
+            V0 -= 4;
+            pointers_address -= V0;
         }
 
-        T7 = T7 + 1;
-        file_pointer_start = file_pointer_start + 4;
-        V0 = T7 < number_of_files;
-    8001CA50	bne    v0, zero, loop1c94c [$8001c94c]
+        if( type == 2 )
+        {
+            V0 = w[pointers_address + file_index * 4];
+            return pointers_address + file_index * 4 + V0 & 00ffffff;
+        }
+
+        if( type == 3 )
+        {
+            return (T4 << 10) | hu[identifiers_address + file_index * 2];
+        }
+
+        for( int j = 0; j < resource_n; ++j )
+        {
+            if( hu[identifiers_address] == file_index )
+            {
+                switch( type )
+                {
+                    case 4:
+                    {
+                        return pointers_address + w[pointers_address] & 00ffffff;
+                    }
+                    break;
+
+                    case 5:
+                    {
+                        return (w[pointers_address + 4] & 00ffffff) - w[pointers_address + 0] & 00ffffff + 4;
+                    }
+                    break;
+
+                    case 9:
+                    {
+                        A0 = address
+                        A1 = 3; // unique identificator of file
+                        A2 = inner_file;
+                        A3 = 0;
+                        func1c8b0();
+                        return V0;
+                    }
+                    break;
+
+                    case 8:
+                    {
+                        A0 = address
+                        A1 = 2; // address of file with index A2 & ffff in given resource
+                        A2 = inner_file;
+                        A3 = 0;
+                        func1c8b0();
+                        return V0;
+                    }
+                    break;
+
+                    case b:
+                    {
+                        A0 = address
+                        A1 = 1; // number of files of that type resource
+                        A2 = inner_file;
+                        A3 = 0;
+                        func1c8b0();
+                        return V0;
+                    }
+                    break;
+
+                    default:
+                    {
+                        return -1;
+                    }
+                }
+            }
+
+            identifiers_address += 2;
+            pointers_address += 4;
+        }
+    }
+
+    file_pointer_start += 4;
 }
 
 return -1;
@@ -5779,11 +5754,11 @@ A0 = A0 << 02;
 A0 = V0 + A0;
 system_psyq_put_dispenv();
 
-8001D2C8	jal    func21c60 [$80021c60]
+func21c60();
 
-8001D2D0	jal    func1d768 [$8001d768]
+func1d768(); // load AKAO audio
 
-8001D2D8	jal    func1d610 [$8001d610]
+func1d610(); // load some sound
 
 8001D2E0	jal    func1d67c [$8001d67c]
 
@@ -5834,91 +5809,75 @@ for( int i = 0; i < 2; ++i )
 ////////////////////////////////
 // func1d3c4()
 
-S1 = 0001;
-A0 = ffff;
-V0 = w[8006794c];
-A1 = 007f;
-S0 = w[V0 + 001c];
-V0 = 0200;
-V1 = S0 + 0002;
-[S0 + 000a] = h(V0);
-V0 = 1000;
-[S0 + 0028] = h(V0);
-[S0 + 0020] = h(V0);
-[S0 + 0018] = h(V0);
-V0 = S1;
-[S0 + 003a] = h(V0);
-V0 = 0235;
-[S0 + 000e] = h(V0);
-8001D420	addiu  v0, zero, $ffff (=-$1)
-[S0 + 0848] = b(V0);
-V0 = 2331;
-[S0 + 07dc] = h(V0);
-V0 = 0044;
-[S0 + 07de] = h(V0);
-V0 = A0;
-[S0 + 0000] = w(0);
-[S0 + 0004] = w(0);
-[S0 + 0008] = b(0);
-[S0 + 0009] = b(0);
-[S0 + 0038] = b(0);
-[S0 + 0039] = b(0);
-[S0 + 0034] = w(0);
-[S0 + 0030] = w(0);
-[S0 + 002c] = w(0);
-[S0 + 0026] = h(0);
-[S0 + 0024] = h(0);
-[S0 + 0022] = h(0);
-[S0 + 001e] = h(0);
-[S0 + 001c] = h(0);
-[S0 + 001a] = h(0);
-[S0 + 000c] = h(0);
-[S0 + 07d4] = w(0);
-[S0 + 084c] = w(0);
-[S0 + 080c] = w(0);
-[S0 + 0810] = w(0);
-[S0 + 0844] = w(0);
-[S0 + 0851] = b(0);
-[S0 + 08c4] = w(0);
-[S0 + 0852] = h(V0);
+struct = w[8006794c];
+S0 = w[struct + 1c];
 
+[S0 + 0] = w(0);
+[S0 + 4] = w(0);
+[S0 + 8] = b(0);
+[S0 + 9] = b(0);
+[S0 + a] = h(200);
+[S0 + c] = h(0);
+[S0 + e] = h(235);
+[S0 + 18] = h(1000);
+[S0 + 1a] = h(0);
+[S0 + 1c] = h(0);
+[S0 + 1e] = h(0);
+[S0 + 20] = h(1000);
+[S0 + 22] = h(0);
+[S0 + 24] = h(0);
+[S0 + 26] = h(0);
+[S0 + 28] = h(1000);
+[S0 + 2c] = w(0);
+[S0 + 30] = w(0);
+[S0 + 34] = w(0);
+[S0 + 38] = b(0);
+[S0 + 39] = b(0);
+[S0 + 3a] = h(1);
+
+[S0 + 7d4] = w(0);
+[S0 + 7dc] = h(2331);
+[S0 + 7de] = h(44);
+[S0 + 80c] = w(0);
+[S0 + 810] = w(0);
+[S0 + 844] = w(0);
+[S0 + 848] = b(-1);
+[S0 + 84c] = w(0);
+[S0 + 851] = b(0);
+[S0 + 852] = h(ffff);
+[S0 + 8c4] = w(0);
+
+V1 = S0 + 2;
+S1 = 1;
 loop1d49c:	; 8001D49C
-    [V1 + 081c] = h(A0);
-    [V1 + 0820] = h(A0);
+    [V1 + 081c] = h(ffff);
+    [V1 + 0820] = h(ffff);
     8001D4A4	addiu  v1, v1, $fffe (=-$2)
     V0 = S0 + S1;
     8001D4AC	addiu  s1, s1, $ffff (=-$1)
     [V0 + 0824] = b(0);
-    [V0 + 0826] = b(A1);
+    [V0 + 0826] = b(7f);
 8001D4B4	bgez   s1, loop1d49c [$8001d49c]
 
+[S0 + 842] = h(1e);
+[S0 + 7e8] = h(ffff);
+[S0 + 840] = h(ffff);
+[S0 + 7ea] = h(ffff);
+[S0 + 850] = b(0);
+[S0 + 8a8] = w(-1);
+[S0 + 84a] = h(ffff);
+[S0 + 8ac] = w(-1);
+[S0 + 8b0] = h(ffff);
+
 S1 = 0001;
-
-L1d4c0:	; 8001D4C0
-A1 = ffff;
-A3 = 007f;
-A2 = 0080;
 A0 = S0 + 0002;
-V0 = 001e;
-[S0 + 0842] = h(V0);
-V0 = A1;
-8001D4DC	addiu  v1, zero, $ffff (=-$1)
-[S0 + 07e8] = h(V0);
-[S0 + 0840] = h(V0);
-[S0 + 07ea] = h(V0);
-[S0 + 0850] = b(0);
-[S0 + 08a8] = w(V1);
-[S0 + 084a] = h(V0);
-[S0 + 08ac] = w(V1);
-[S0 + 08b0] = h(V0);
-
 loop1d500:	; 8001D500
     V0 = S0 + S1;
-    [A0 + 0830] = h(A1);
-    [A0 + 0834] = h(A1);
-    [V0 + 08b8] = b(A3);
-    [V0 + 08ba] = b(A2);
-    [A0 + 08b4] = h(A1);
+    [A0 + 0830] = h(ffff);
+    [A0 + 0834] = h(ffff);
+    [V0 + 08b8] = b(7f);
+    [V0 + 08ba] = b(80);
+    [A0 + 08b4] = h(ffff);
     8001D518	addiu  s1, s1, $ffff (=-$1)
     8001D520	addiu  a0, a0, $fffe (=-$2)
 8001D51C	bgez   s1, loop1d500 [$8001d500]
@@ -5930,9 +5889,9 @@ S2 = 00a0;
 [S0 + 083c] = w(0);
 
 loop1d538:	; 8001D538
-    A0 = w[S0 + 08d8];
-    8001D53C	jal    func1e3a4 [$8001e3a4]
-    A0 = A0 + S2;
+    A0 = w[S0 + 8d8] + S2;
+    func1e3a4();
+
     8001D544	addiu  s1, s1, $ffff (=-$1)
     V1 = w[S0 + 08d4];
     V0 = w[S0 + 08d8];
@@ -5992,46 +5951,43 @@ loop1d5e4:	; 8001D5E4
 
 
 ////////////////////////////////
-// func1d610
-8001D610	addiu  sp, sp, $ffe0 (=-$20)
-A0 = 0004;
-A1 = 90084;
+// func1d610()
+
+A0 = 4; // get address of file
+A1 = 00090084; // file id
 A2 = 0;
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-8001D62C	jal    func1c7fc [$8001c7fc]
-[SP + 0010] = w(S0);
-A0 = 0005;
-A1 = 90084;
+func1c7fc();
+file = V0;
+
+A0 = 5; // get size of file
+A1 = 00090084; // file id
 A2 = 0;
-8001D644	jal    func1c7fc [$8001c7fc]
-S1 = V0;
-8001D64C	jal    func55df4 [$80055df4]
-S0 = V0;
-A0 = S1;
-A1 = S0;
-8001D65C	jal    func55e14 [$80055e14]
-A2 = 0001;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-V0 = 0;
-8001D674	jr     ra 
-SP = SP + 0020;
+func1c7fc();
+size = V0;
+
+func55df4();
+
+A0 = file;
+A1 = size;
+A2 = 1;
+func55e14();
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func1d67c
-8001D67C	addiu  sp, sp, $ffc8 (=-$38)
+
 A0 = 0004;
-8001D684	lui    a1, $000d
 V0 = w[8006794c];
 A2 = 0;
-[SP + 0028] = w(S2);
+A1 = 800d0000;
 S2 = A2;
-[SP + 002c] = w(S3);
+
 8001D6A0	lui    s3, $0004
-[SP + 0024] = w(S1);
-[SP + 0030] = w(RA);
-[SP + 0020] = w(S0);
+
 S0 = w[V0 + 001c];
 T1 = 800103a0;
 8001D6BC	lwl    v1, $0003(t1)
@@ -6056,31 +6012,25 @@ S1 = SP + 0010;
 [S0 + 07d4] = w(V0);
 
 loop1d70c:	; 8001D70C
-A0 = 0004;
-A1 = hu[S1 + 0000];
-A2 = 0;
-8001D718	jal    func1c7fc [$8001c7fc]
-A1 = A1 | S3;
-8001D720	beq    v0, zero, L1d738 [$8001d738]
-8001D724	nop
-8001D728	jal    func1d8a8 [$8001d8a8]
-A0 = V0;
-8001D730	jal    system_psyq_draw_sync [$800130a4]
-A0 = 0;
+    A0 = 0004;
+    A1 = hu[S1 + 0000];
+    A2 = 0;
+    8001D718	jal    func1c7fc [$8001c7fc]
+    A1 = A1 | S3;
+    8001D720	beq    v0, zero, L1d738 [$8001d738]
+    8001D724	nop
+    8001D728	jal    func1d8a8 [$8001d8a8]
+    A0 = V0;
+    8001D730	jal    system_psyq_draw_sync [$800130a4]
+    A0 = 0;
 
-L1d738:	; 8001D738
-S2 = S2 + 0001;
-V0 = S2 < 0008;
+    L1d738:	; 8001D738
+    S1 = S1 + 0002;
+    S2 = S2 + 0001;
+    V0 = S2 < 0008;
 8001D740	bne    v0, zero, loop1d70c [$8001d70c]
-S1 = S1 + 0002;
-RA = w[SP + 0030];
-S3 = w[SP + 002c];
-S2 = w[SP + 0028];
-S1 = w[SP + 0024];
-S0 = w[SP + 0020];
-V0 = 0;
-8001D760	jr     ra 
-SP = SP + 0038;
+
+return 0;
 ////////////////////////////////
 
 
@@ -36510,29 +36460,30 @@ V0 = V1;
 80055DEC	jr     ra 
 SP = SP + 0008;
 ////////////////////////////////
-// func55df4
-V1 = w[80083158];
-[8008322c] = w(0);
-V1 = V1 | 0001;
-[V0 + 3158] = w(V1);
-80055E0C	jr     ra 
-V0 = 0;
+
+
+
 ////////////////////////////////
-// func55e14
+// func55df4()
+
+[8008322c] = w(0);
+[80083158] = w(w[80083158] | 1);
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func55e14()
+
 V0 = w[80083158];
-80055E1C	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0018] = w(S2);
 S2 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
-[SP + 0024] = w(S5);
 S5 = A2;
-[SP + 0028] = w(RA);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
 V0 = V0 & 0001;
 80055E48	beq    v0, zero, L55ffc [$80055ffc]
-[SP + 0010] = w(S0);
+
 S3 = 80083228;
 V0 = w[S3 + 0004];
 80055E5C	nop
@@ -36652,16 +36603,11 @@ L55ffc:	; 80055FFC
 80055FFC	lui    v0, $8008
 
 L56000:	; 80056000
-V0 = w[V0 + 3230];
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80056020	jr     ra 
-SP = SP + 0030;
+return w[V0 + 3230];
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func56028
 80056028	addiu  sp, sp, $ffe8 (=-$18)

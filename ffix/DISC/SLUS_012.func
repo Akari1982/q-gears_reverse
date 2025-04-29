@@ -264,7 +264,7 @@
 8001D610 func1d610
 8001D67C func1d67c
 
-// libcd
+// database
 8001D768 func1d768
 8001D848 func1d848
 8001D898 system_bios_memset
@@ -286,6 +286,8 @@
 8001E2AC func1e2ac
 8001E350 func1e350
 8001E3A4 func1e3a4
+
+// libcd
 8001E3C0 system_psyq_cd_search_file
 8001E698 func1e698
 8001E6B8 func1e6b8

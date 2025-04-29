@@ -11,7 +11,7 @@ while( true )
 
     func1cb08(); // init struct
 
-    func1d268();
+    func1d268(); // init struct and sound
 
     loop127dc:	; 800127DC
         V0 = w[8006794c];
