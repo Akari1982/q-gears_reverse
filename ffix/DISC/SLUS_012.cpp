@@ -5744,7 +5744,7 @@ func1d32c(); // otag init
 
 S1 = w[struct + 1c];
 
-8001D2A0	jal    func1d3c4 [$8001d3c4]
+func1d3c4();
 
 V0 = bu[S1 + 8];
 A0 = V0 << 02;
@@ -5847,17 +5847,13 @@ S0 = w[struct + 1c];
 [S0 + 852] = h(ffff);
 [S0 + 8c4] = w(0);
 
-V1 = S0 + 2;
-S1 = 1;
-loop1d49c:	; 8001D49C
-    [V1 + 081c] = h(ffff);
-    [V1 + 0820] = h(ffff);
-    8001D4A4	addiu  v1, v1, $fffe (=-$2)
-    V0 = S0 + S1;
-    8001D4AC	addiu  s1, s1, $ffff (=-$1)
-    [V0 + 0824] = b(0);
-    [V0 + 0826] = b(7f);
-8001D4B4	bgez   s1, loop1d49c [$8001d49c]
+for( int i = 1; i >= 0; --i )
+{
+    [S0 + 81c + i * 2] = h(ffff);
+    [S0 + 820 + i * 2] = h(ffff);
+    [S0 + 824 + i] = b(0);
+    [S0 + 826 + i] = b(7f);
+}
 
 [S0 + 842] = h(1e);
 [S0 + 7e8] = h(ffff);
@@ -5869,83 +5865,62 @@ loop1d49c:	; 8001D49C
 [S0 + 8ac] = w(-1);
 [S0 + 8b0] = h(ffff);
 
-S1 = 0001;
-A0 = S0 + 0002;
-loop1d500:	; 8001D500
-    V0 = S0 + S1;
-    [A0 + 0830] = h(ffff);
-    [A0 + 0834] = h(ffff);
-    [V0 + 08b8] = b(7f);
-    [V0 + 08ba] = b(80);
-    [A0 + 08b4] = h(ffff);
-    8001D518	addiu  s1, s1, $ffff (=-$1)
-    8001D520	addiu  a0, a0, $fffe (=-$2)
-8001D51C	bgez   s1, loop1d500 [$8001d500]
+for( int i = 1; i >= 0; --i )
+{
+    [S0 + 830 + i * 2] = h(ffff);
+    [S0 + 834 + i * 2] = h(ffff);
+    [S0 + 8b8 + i] = b(7f);
+    [S0 + 8ba + i] = b(80);
+    [S0 + 8b4 + i * 2] = h(ffff);
+}
 
-S1 = 0008;
-S3 = 04c0;
-S2 = 00a0;
-[S0 + 0838] = w(0);
-[S0 + 083c] = w(0);
+[S0 + 838] = w(0);
+[S0 + 83c] = w(0);
 
-loop1d538:	; 8001D538
-    A0 = w[S0 + 8d8] + S2;
+for( int i = 8; i >= 0; --i )
+{
+    A0 = w[S0 + 8d8] + i * 14;
     func1e3a4();
 
-    8001D544	addiu  s1, s1, $ffff (=-$1)
-    V1 = w[S0 + 08d4];
-    V0 = w[S0 + 08d8];
-    V1 = V1 + S3;
-    8001D554	addiu  s3, s3, $ff68 (=-$98)
-    V0 = S2 + V0;
-    8001D55C	addiu  s2, s2, $ffec (=-$14)
-    [V0 + 0008] = w(V1);
-8001D560	bgez   s1, loop1d538 [$8001d538]
+    V0 = w[S0 + 8d8] + i * 14;
+    [V0 + 8] = w(w[S0 + 8d4] + i * 98);
+}
 
-S1 = 0001;
-8001D56C	addiu  v1, zero, $ffff (=-$1)
-V0 = S0 + 0004;
-[S0 + 08dc] = w(0);
-[S0 + 08e0] = w(0);
-[S0 + 07d8] = w(0);
+[S0 + 7d8] = w(0);
+[S0 + 8dc] = w(0);
+[S0 + 8e0] = w(0);
 
-loop1d580:	; 8001D580
-    [V0 + 07ec] = w(V1);
-    [V0 + 07f4] = w(V1);
-    [V0 + 07fc] = w(V1);
-    [V0 + 0804] = w(V1);
-    8001D590	addiu  s1, s1, $ffff (=-$1)
-    8001D598	addiu  v0, v0, $fffc (=-$4)
-8001D594	bgez   s1, loop1d580 [$8001d580]
+for( int i = 1; i >= 0; --i )
+{
+    [S0 + 7ec + i * 4] = w(-1);
+    [S0 + 7f4 + i * 4] = w(-1);
+    [S0 + 7fc + i * 4] = w(-1);
+    [S0 + 804 + i * 4] = w(-1);
+}
 
-A0 = S0 + 0880;
-8001D5A0	addiu  v0, zero, $ffff (=-$1)
+[S0 + 7e4] = w(-1);
+[S0 + 878] = w(0);
+[S0 + 87c] = w(0);
+[S0 + 8c0] = w(0);
+
+A0 = S0 + 880;
 A1 = 0;
-A2 = 0028;
-[S0 + 07e4] = w(V0);
-[S0 + 08c0] = w(0);
-[S0 + 0878] = w(0);
-[S0 + 087c] = w(0);
+A2 = 28;
 system_bios_memset();
 
-S1 = 0;
-[S0 + 08b2] = h(0);
-[S0 + 08bc] = w(0);
-[S0 + 08e4] = w(0);
+[S0 + 8b2] = h(0);
+[S0 + 8bc] = w(0);
+[S0 + 8e4] = w(0);
 
-loop1d5d0:	; 8001D5D0
-    V0 = S0 + S1;
-    8001D5D4	addiu  s1, s1, $ffff (=-$1)
-    [V0 + 0849] = b(0);
-8001D5D8	bgez   s1, loop1d5d0 [$8001d5d0]
+for( int i = 0; i >= 0; --i )
+{
+    [S0 + 849 + i] = b(0);
+}
 
-S1 = 0007;
-
-loop1d5e4:	; 8001D5E4
-    V0 = S0 + S1;
-    8001D5E8	addiu  s1, s1, $ffff (=-$1)
-    [V0 + 08cc] = b(0);
-8001D5EC	bgez   s1, loop1d5e4 [$8001d5e4]
+for( int i = 7; i >= 0; --i )
+{
+    [S0 + 8cc + i] = b(0);
+}
 ////////////////////////////////
 
 
