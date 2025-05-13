@@ -346,10 +346,7 @@ V1 = w[800584b4];
 spu_dest = A1
 [SP + 0008] = w(A2);
 [SP + 000c] = w(A3);
-8004CB60	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
 S0 = SP + 001c;
-[SP + 0014] = w(RA);
 [SP + 0018] = w(A0);
 
 spu = w[800584a8];
@@ -474,26 +471,27 @@ return 0;
 
 S1 = A0;
 S0 = A1;
+
 if( w[800584c4] == 0 )
 {
     A0 = 2;
     A1 = hu[800584c0] << w[800584d0]; // always 3 because spu address always divided by 8
     func4cb50(); // set address in spu to write to 0x1f801da6
 
-    A0 = 1;
-    func4cb50(); // wait until spu address is set
+    A0 = 1; // set DMAwrite
+    func4cb50();
 
     A0 = 3;
     A1 = S1;
     A2 = S0;
     func4cb50();
-
-    return S0;
 }
-
-A0 = S1;
-A1 = S0;
-system_spu_ram_manual_write();
+else
+{
+    A0 = S1;
+    A1 = S0;
+    system_spu_ram_manual_write();
+}
 
 return S0;
 ////////////////////////////////
@@ -511,7 +509,7 @@ A0 = 2;
 A1 = hu[800584c0] << w[800584d0]; // always 3 because spu address always divided by 8
 func4cb50(); // set address in spu to write to 0x1f801da6
 
-A0 = 0;
+A0 = 0; // set DMAread
 func4cb50();
 
 A0 = 3;

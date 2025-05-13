@@ -13,9 +13,10 @@ while( true )
 
     func1d268(); // init struct and sound
 
-    loop127dc:	; 800127DC
-        V0 = w[8006794c];
-        switch( bu[V0 + 8] )
+    do
+    {
+        struct = w[8006794c];
+        switch( bu[struct + 8] )
         {
             case 0:
             {
@@ -90,15 +91,13 @@ while( true )
             break;
         }
 
-        V0 = w[8006794c];
-        V0 = w[V0 + 0] & 1;
-    800128D8	beq    v0, zero, loop127dc [$800127dc]
+    } while( ( w[struct + 0] & 1 ) == 0 )
 
-    800128E0	jal    func1d30c [$8001d30c]
+    func1d30c();
 
-    800128E8	jal    func1cb70 [$8001cb70]
+    func1cb70(); // removed func
 
-    800128F0	jal    func16b6c [$80016b6c]
+    func16b6c();
 }
 ////////////////////////////////
 
@@ -216,7 +215,8 @@ system_bios_exit_critical_section();
 
 
 ////////////////////////////////
-// func12ad4
+// func12ad4()
+
 if( b[80071e32] == 0 )
 {
     return 0;

@@ -828,39 +828,38 @@ system_psyq_clear_image();
 A0 = 0;
 system_psyq_draw_sync();
 
-func22a80();
+func22a80(); // init cdrom and audio
 
-func1c6f8();
+func1c6f8(); // init loaded files struct
 
-func18f50();
+func18f50(); // init remap buttons
 
-S0 = 80073690;
-A0 = S0;
-[V1 + 3690] = w(19);
-[S0 + 0004] = w(100);
-[S0 + 0008] = h(0);
-[S0 + 000a] = h(0);
-[S0 + 000c] = w(0);
-[S0 + 0010] = w(0);
-80016AD0	jal    func17a60 [$80017a60]
+[80073690 + 0] = w(19);
+[80073690 + 4] = w(100);
+[80073690 + 8] = h(0);
+[80073690 + a] = h(0);
+[80073690 + c] = w(0);
+[80073690 + 10] = w(0);
 
-A0 = S0;
-80016AD8	jal    func18520 [$80018520]
+A0 = 80073690;
+func17a60(); // sound related
 
-S1 = 800736a4;
-A0 = S1;
-80016AE8	jal    func18750 [$80018750]
+A0 = 80073690;
+func18520();
 
-A0 = w[S0 + 36a4];
-80016AF4	jal    func185a0 [$800185a0]
+A0 = 800736a4;
+func18750();
 
-80016AFC	jal    func551f0 [$800551f0]
+A0 = w[800736a4];
+func185a0();
 
-A0 = S1;
-80016B04	jal    func18750 [$80018750]
+func551f0(); // sound related
 
-A0 = w[S0 + 36a4];
-80016B10	jal    func185a0 [$800185a0]
+A0 = 800736a4;
+func18750();
+
+A0 = w[800736a4];
+func185a0();
 
 for( int i = 0; i < 5a; ++i )
 {
@@ -868,15 +867,15 @@ for( int i = 0; i < 5a; ++i )
     system_psyq_vsync();
 }
 
-80016B30	jal    func4bbf0 [$8004bbf0]
+func4bbf0();
 
-80016B38	jal    func53924 [$80053924]
+func53924(); // removed func
 
-80016B40	jal    func320d8 [$800320d8]
+func320d8(); // init some data
 
-80016B48	jal    func32078 [$80032078]
+func32078(); // init some struct
 
-80016B50	jal    func21770 [$80021770]
+func21770();
 ////////////////////////////////
 
 
@@ -884,9 +883,9 @@ for( int i = 0; i < 5a; ++i )
 ////////////////////////////////
 // func16b6c()
 
-80016B74	jal    func55210 [$80055210]
+func55210(); // deinit sound callbacks
 
-80016B7C	jal    func1c718 [$8001c718]
+func1c718(); // removed func
 
 [80067950] = h(hu[80067950] + 1);
 ////////////////////////////////

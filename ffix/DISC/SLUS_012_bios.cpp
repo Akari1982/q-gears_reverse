@@ -198,6 +198,18 @@ T1 = 8;
 
 
 ////////////////////////////////
+// system_bios_close_event()
+// B(09h) - CloseEvent(event) - releases event from the event table
+// Always returns 1 (even if the event handle is unused or invalid).
+
+T2 = b0;
+T1 = 9;
+80056CB0	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_wait_event()
 // B(0Ah) WaitEvent(event)
 // Returns 0 if the event is disabled. Otherwise hangs in a loop until the event
@@ -226,6 +238,18 @@ T1 = a;
 T2 = b0;
 T1 = c;
 80016ED4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_disable_event()
+// B(0Dh) - DisableEvent(event) - Turns off event handling for specified event
+// Always returns 1 (even if the event handle is unused or invalid).
+
+T2 = b0;
+T1 = d;
+80056CC0	jr     t2
 ////////////////////////////////
 
 
@@ -294,6 +318,20 @@ T1 = 13;
 T2 = b0;
 T1 = 15;
 80018B14	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_undeliver_event()
+// B(20h) UnDeliverEvent(class, spec)
+// This function is usually called by the kernel, undelivers all events that are
+// enabled/ready, and that have mode=2000h, and that have the specified class and
+// spec values. Undeliver means that the events are marked as enabled/busy.
+
+T2 = b0;
+T1 = 20;
+80056CD0	jr     t2
 ////////////////////////////////
 
 

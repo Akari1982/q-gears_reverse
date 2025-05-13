@@ -1,0 +1,103 @@
+- dir00 - Status/Menu/Battle/... -Text and random stuff.
+- dir01 - Misc Images (Logos, Fonts, World 'mini' Map images, etc).
+- dir02 - Dialog Text
+- dir03 - Map models (Mini-zidane, airships, save point moogle, tent...) and, IIRC, the map texture.
+- dir04 - Field models
+- dir05 - Monster Data (Part I, stats, names, etc).
+- dir06 - Location Data (Dungeon, Cities, etc).
+- dir07 - Monster Data (Part II, 3d models)
+- dir08 - Weapon Data (including models)
+- dir09 - Samplebanks and Sequencer Data (ie music).
+- dir10 - party members Data (including models)
+- dir11 - Sound effects
+- dir12 - World Map Data.
+- dir13 - Special effects (magic, summons...)
+
+
+
+
+Directory dir08 .ff9db weapons list for Noesis (made myself, may contain mistakes):
+- file0001.ff9db - Hammer
+- file0002.ff9db - Golem's Flute
+- file0003.ff9db - Hamelin
+- file0004.ff9db - Angel Flute
+- file0005.ff9db - Broadsword
+- file0006.ff9db - Ultima Sword
+- file0007.ff9db - Ragnarok
+- file0008.ff9db - Mythril Sword
+- file0009.ff9db - Iron Sword
+- file0010.ff9db - Diamond Sword
+- file0011.ff9db - Coral Sword
+- file0012.ff9db - Ice Brand
+- file0013.ff9db - Blood Sword
+- file0014.ff9db - Save the Queen
+- file0015.ff9db - Rune Blade
+- file0016.ff9db - Flame Saber
+- file0017.ff9db - Dragon's Hair
+- file0018.ff9db - Dragon's Claw
+- file0019.ff9db - Zorlin Shape
+- file0020.ff9db - Multina Racket
+- file0021.ff9db - Air Racket
+- file0022.ff9db - Rune Claws
+- file0023.ff9db - Duel Claws
+- file0024.ff9db - Tiger Racket
+- file0025.ff9db - Priest's Racket
+- file0026.ff9db - Mythril Racket
+- file0027.ff9db - Magic Racket
+- file0028.ff9db - Rod
+- file0029.ff9db - Wizard Rod
+- file0030.ff9db - Asura's Rod
+- file0031.ff9db - Whale Whisker
+- file0032.ff9db - Javelin
+- file0033.ff9db - Heavy Lance
+- file0034.ff9db - Trident
+- file0035.ff9db - Partisan
+- file0036.ff9db - Holy Lance
+- file0037.ff9db - Obelisk
+- file0038.ff9db - Cat's Claws
+- file0039.ff9db - Scissor Fangs
+- file0040.ff9db - Kaiser Knuckles
+- file0041.ff9db - Avenger
+- file0042.ff9db - Mage Masher
+- file0043.ff9db - Dagger
+- file0044.ff9db - Gladius
+- file0045.ff9db - Mage Staff
+- file0046.ff9db - Octagon Rod
+- file0047.ff9db - Cypress Pile
+- file0048.ff9db - Oak Staff
+- file0049.ff9db - Mace of Zeus
+- file0050.ff9db - High Mage Staff
+- file0051.ff9db - Fork
+- file0052.ff9db - Gastro Fork
+- file0053.ff9db - Bistro Fork
+- file0054.ff9db - Mythril Rod
+- file0055.ff9db - Healing Rod
+- file0056.ff9db - Stardust Rod
+- file0057.ff9db - Lamia's Flute
+- file0058.ff9db - Siren's Flute
+- file0059.ff9db - Mythril Spear
+- file0060.ff9db - Ice Lance
+- file0061.ff9db - Poison Knuckles
+- file0062.ff9db - Tiger Fangs
+- file0063.ff9db - Mythril Claws
+- >file0064.ff9db - Mythril Dagger
+- file0065.ff9db - Ice Staff
+- file0066.ff9db - Flame Staff
+- file0067.ff9db - Lightning Staff
+- file0068.ff9db - Sliver Fork
+- file0069.ff9db - Mythril Fork
+- file0070.ff9db - Needle Fork
+- file0071.ff9db - Sargatanas
+- file0072.ff9db - Angel Bless
+- >file0073.ff9db - Rune Tooth
+- file0074.ff9db - Exploda
+- file0075.ff9db - Ultima Weapon
+- file0076.ff9db - The Tower
+- file0077.ff9db - Masamune
+- file0078.ff9db - The Ogre
+- file0079.ff9db - Butterfly Sword
+- file0080.ff9db - Orichalcon
+- file0081.ff9db - Exalibur II
+- file0082.ff9db - Exalibur
+- file0083.ff9db - Kain's Lance
+- file0084.ff9db - Defender

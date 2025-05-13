@@ -11,7 +11,7 @@ file_data = V0;
 
 A0 = struct1c + 854;
 A1 = w[file_data + 4]; // file sector
-A2 = (w[file_data + c] - w[file_data + 4]) * 800; // size
+A2 = (w[file_data + 8 + 4] - w[file_data + 4]) * 800; // size
 A3 = w[80067940]; // dst
 A4 = 0;
 A5 = -1;
@@ -48,7 +48,7 @@ return 0;
 V0 = w[8006794c];
 V0 = w[V0 + 1c];
 A0 = w[V0 + 7d8];
-8001D868	jal    func1c784 [$8001c784]
+func1c784();
 
 V0 = w[8006794c];
 V1 = w[V0 + 1c];
@@ -60,35 +60,24 @@ return 0;
 
 
 ////////////////////////////////
-// func1d8a8
-8001D8A8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = A0;
-[SP + 0018] = w(RA);
-[SP + 0010] = w(S0);
-V0 = w[S1 + 0004];
-8001D8C0	nop
-V0 = V0 & 0008;
-8001D8C8	beq    v0, zero, L1d8f0 [$8001d8f0]
-S0 = S1 + 0008;
-A0 = S1 + 000c;
-8001D8D4	jal    system_psyq_load_image [$80013350]
-A1 = S1 + 0014;
-V0 = w[S1 + 0008];
-8001D8E0	nop
-V0 = V0 >> 02;
-V0 = V0 << 02;
-S0 = S0 + V0;
+// system_file_load_tim()
 
-L1d8f0:	; 8001D8F0
-A0 = S0 + 0004;
-8001D8F4	jal    system_psyq_load_image [$80013350]
-A1 = S0 + 000c;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8001D908	jr     ra 
-SP = SP + 0020;
+tim = A0;
+
+image = tim + 8;
+
+if( w[tim + 4] & 8 ) // has clut
+{
+    A0 = tim + c;
+    A1 = tim + 14;
+    system_psyq_load_image(); // load clut
+
+    image += (w[tim + 8] / 4) *4;
+}
+
+A0 = image + 4;
+A1 = image + c;
+system_psyq_load_image(); // load image
 ////////////////////////////////
 
 
@@ -427,8 +416,9 @@ if( A2 & 800 )
     A2 += 800 - (A2 & 800);
 }
 
-A0 = w[struct + 20]; // file sector
-A1 = A2; // file size (load one sector)
+// read data for array of files
+A0 = w[struct + 20]; // FF9.IMG file sector
+A1 = A2; // file size
 A2 = FP; // dst
 A3 = 0; // end callback
 func22c60(); // load sectors to memory
@@ -496,6 +486,7 @@ dir_dst = struct;
     file_list_b = dir_src + w[dir_data + b * 10 + 8] * 800;
     file_list_8 = dir_src + w[dir_data + 8 * 10 + 8] * 800;
 
+    // calculate size for files in dir b
     file_list_8_cur = file_list_8 + (files_n_8 - 1) * 8;
     while( file_list_8_cur >= file_list_8 )
     {
@@ -552,7 +543,8 @@ dir_dst = struct;
 // load dir c
 {
     files_n = w[dir_data + c * 10 + 4] + 1;
-    [struct18 + c * 4] = w(dir_dst - files_n * 8);
+    dir_dst -= files_n * 8;
+    [struct18 + c * 4] = w(dir_dst);
 
     A0 = w[struct18 + c * 4];
     A1 = dir_src + w[dir_data + c * 10 + 8] * 800;
@@ -562,11 +554,13 @@ dir_dst = struct;
 
 // load dir d
 {
-    [struct18 + d * 4] = w(dir_dst - (w[dir_data + d * 10 + 4] * 2));
+    array_n = w[dir_data + d * 10 + 4];
+    dir_dst -= array_n * 2;
+    [struct18 + d * 4] = w(dir_dst);
 
     A0 = w[struct18 + d * 4]; // dst
     A1 = dir_src + w[dir_data + d * 10 + 8] * 800; // src
-    A2 = w[dir_data + d * 10 + 4] * 2; // size
+    A2 = array_n * 2; // size
     system_memcpy();
 }
 

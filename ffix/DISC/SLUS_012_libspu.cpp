@@ -421,18 +421,17 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func17484
+// func17484()
+
 [SP + 0000] = w(A0);
 [SP + 0004] = w(A1);
 [SP + 0008] = w(A2);
 [SP + 000c] = w(A3);
-80017494	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
 S0 = SP + 001c;
 A2 = 0001;
-[SP + 0014] = w(RA);
-800174A8	beq    a0, a2, L17510 [$80017510]
 [SP + 0018] = w(A0);
+800174A8	beq    a0, a2, L17510 [$80017510]
+
 V0 = A0 < 0002;
 800174B4	beq    v0, zero, L174cc [$800174cc]
 V0 = 0002;
@@ -587,79 +586,63 @@ V0 = w[800679f4];
 V0 = 0;
 
 L176f4:	; 800176F4
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-800176FC	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func17704
-V0 = w[80067a04];
-8001770C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+// func17704()
+// write to spu
+
+src = A0;
+size = A1;
+
+if( w[80067a04] == 0 )
+{
+    A0 = 2; // set address in spu to write to 0x1f801da6
+    A1 = hu[80067a00] << w[80067a10]; // always 3 because spu address always divided by 8
+    func17484();
+
+    A0 = 1;
+    func17484(); // wait until spu address is set
+
+    A0 = 3;
+    A1 = src;
+    A2 = size;
+    func17484();
+}
+else
+{
+    A0 = src;
+    A1 = size;
+    system_spu_ram_manual_write();
+}
+
+return S0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func17788()
+// read from spu
+
 S1 = A0;
-[SP + 0010] = w(S0);
 S0 = A1;
-80017720	bne    v0, zero, L17764 [$80017764]
-[SP + 0018] = w(RA);
-V0 = hu[80067a00];
-A1 = w[80067a10];
-A0 = 0002;
-8001773C	jal    func17484 [$80017484]
-A1 = V0 << A1;
-80017744	jal    func17484 [$80017484]
-A0 = 0001;
-A0 = 0003;
-A1 = S1;
-80017754	jal    func17484 [$80017484]
-A2 = S0;
-8001775C	j      L17774 [$80017774]
-V0 = S0;
 
-L17764:	; 80017764
-A0 = S1;
-80017768	jal    system_spu_ram_manual_write [$80017160]
-A1 = S0;
-V0 = S0;
+A0 = 2; // set address in spu to write to 0x1f801da6
+A1 = hu[80067a00] << w[80067a10]; // always 3 because spu address always divided by 8
+func17484();
 
-L17774:	; 80017774
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80017780	jr     ra 
-SP = SP + 0020;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func17788
-80017788	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = A0;
-[SP + 0010] = w(S0);
-S0 = A1;
-V0 = hu[80067a00];
-A1 = w[80067a10];
-A0 = 0002;
-[SP + 0018] = w(RA);
-800177B4	jal    func17484 [$80017484]
-A1 = V0 << A1;
-800177BC	jal    func17484 [$80017484]
 A0 = 0;
-A0 = 0003;
+func17484();
+
+A0 = 3;
 A1 = S1;
-800177CC	jal    func17484 [$80017484]
 A2 = S0;
-V0 = S0;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800177E4	jr     ra 
-SP = SP + 0020;
+func17484();
+
+return S0;
 ////////////////////////////////
 
 

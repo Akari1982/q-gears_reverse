@@ -268,7 +268,7 @@
 8001D768 func1d768
 8001D848 func1d848
 8001D898 system_bios_memset
-8001D8A8 func1d8a8
+8001D8A8 system_file_load_tim
 8001D910 func1d910
 8001D960 func1d960
 8001D9CC func1d9cc
@@ -1156,9 +1156,9 @@
 8005681C func5681c
 80056B18 func56b18
 80056C08 func56c08
-80056CAC func56cac
-80056CBC func56cbc
-80056CCC func56ccc
+80056CAC system_bios_close_event
+80056CBC system_bios_disable_event
+80056CCC system_bios_undeliver_event
 80056CDC func56cdc
 80056D5C func56d5c
 80056DBC func56dbc
