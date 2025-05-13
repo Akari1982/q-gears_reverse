@@ -721,19 +721,19 @@ if (V0 != 0)
         8004E0BC	jal    func2cf20 [$8002cf20]
     }
 
-    if (flags & 40)
+    if( flags & 40 )
     {
         A0 = w[S0 + 14];
         [A0 + 20] = h(6);
         [A0 + 22] = b(-3);
-        [A0 + 24] = w(80011efc);
+        [A0 + 24] = w(80011efc); // "ACTIVE TIME EVENT"
     }
-    else if (flags & 08)
+    else if( flags & 08 )
     {
         A0 = w[S0 + 14];
         [A0 + 20] = h(6);
         [A0 + 22] = b(-3);
-        [A0 + 24] = w(80011f10);
+        [A0 + 24] = w(80011f10); // "MOGNET"
     }
 }
 
