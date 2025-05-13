@@ -27,6 +27,21 @@ A0 = 2;
 
 
 ////////////////////////////////
+// system_bios_strcat()
+// A(15h) - strcat(dst, src)
+// Appends src to the end of dst. Searches the ending 00h byte in dst, and copies
+// src to that address, up to including the ending 00h byte in src. Returns the
+// incoming dst value. Refuses to do anything if src or dst is 00000000h (and
+// returns 0 in that case).
+
+T2 = a0;
+T1 = 15;
+8006310C	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_strcmp()
 // A(17h) - strcmp(str1, str2)
 // Compares the strings up to including ending 00h byte. Returns 0 if they are
@@ -52,6 +67,47 @@ T1 = 17;
 T2 = a0;
 T1 = 18;
 8001ED44	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_strcpy()
+// A(19h) - strcpy(dst, src)
+// Copies data from src to dst, up to including the ending 00h byte. Refuses to
+// copy anything if src or dst is 00000000h. Returns the incoming dst address (or
+// 0 if copy was refused).
+
+T2 = a0;
+T1 = 19;
+8006523C	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_strlen()
+// A(1Bh) - strlen(src)
+// Returns the length of the string up to excluding the ending 00h byte (or 0 when
+// src is 00000000h).
+
+T2 = a0;
+T1 = 1b;
+80064528	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_bcopy()
+// A(27h) - bcopy(src, dst, len)
+// Same as "memcpy", but with "src" and "dst" exchanged. That is, the first
+// parameter is "src", the refuse occurs when "src" is 00000000h, and, returns the
+// incoming "src" value (whilst "memcpy" uses "dst" in that places).
+
+T2 = a0;
+T1 = 27;
+80063868	jr     t2
 ////////////////////////////////
 
 
@@ -93,6 +149,31 @@ T2 = a0;
 T1 = 2b;
 8001D89C	jr     t2
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_memchr()
+// A(2Eh) - memchr(src, scanbyte, len)
+// Scans [src..src+len-1] for the first occurence of scanbyte. Refuses to scan any
+// data when src=00000000h or when len>7FFFFFFFh. Returns the address of that
+// first occurence, or 0 if the scanbyte wasn't found.
+
+T2 = a0;
+T1 = 2e;
+80064538	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_rand()
+
+T2 = a0;
+T1 = 2f;
+80062B40	jr     t2
+////////////////////////////////
+
 
 
 ////////////////////////////////
@@ -156,6 +237,51 @@ T1 = 70;
 
 
 ////////////////////////////////
+// system_bios_system_error_boot_or_disk_failure()
+// A(A1h) - SystemErrorBootOrDiskFailure(type,errorcode) ;type "B"=Boot,"D"=Disk
+// These are used "SystemError" functions. The functions are repeatedly jumping to
+// themselves, causing the system to hang. Possibly useful for debugging software
+// which may hook that functions.
+
+T2 = a0;
+T1 = a1;
+8002EB68	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_card_info()
+// A(ABh) - _card_info(port)
+// B(4Dh) - _card_info_subfunc(port)  ;subfunction for "_card_info"
+// Can be used to check if the most recent call to write_card_sector has completed
+// okay. Issues an incomplete dummy read command (similar to B(4Fh) -
+// read_card_sector). The read command is aborted once when receiving the status
+// byte from the memory card (the actual data transfer is skipped).
+
+T2 = a0;
+T1 = ab;
+8006521C	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_card_async_load_directory()
+// A(ACh) - _card_async_load_directory(port)
+// Invokes asynchronous reading of the memory card directory. The function isn't
+// too useful because the BIOS tends to read the directory automatically in
+// various places in synchronous mode, so there isn't too much chance to replace
+// the automatic synchronous reading by asynchronous reading.
+
+T2 = a0;
+T1 = ac;
+80066174	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_deliver_event()
 // B(07h) DeliverEvent(class, spec)
 // This function is usually called by the kernel, it triggers all events that are
@@ -167,7 +293,6 @@ T2 = b0;
 T1 = 7;
 80017A24	jr     t2
 ////////////////////////////////
-
 
 
 
@@ -198,6 +323,18 @@ T1 = 8;
 
 
 ////////////////////////////////
+// system_bios_close_event()
+// B(09h) - CloseEvent(event) - releases event from the event table
+// Always returns 1 (even if the event handle is unused or invalid).
+
+T2 = b0;
+T1 = 9;
+80056CB0	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_wait_event()
 // B(0Ah) WaitEvent(event)
 // Returns 0 if the event is disabled. Otherwise hangs in a loop until the event
@@ -217,6 +354,19 @@ T1 = a;
 ////////////////////////////////
 
 
+////////////////////////////////
+// system_bios_test_event()
+// B(0Bh) TestEvent(event)
+// Returns 0 if the event is busy or disabled. Otherwise, when it is ready,
+// returns 1 (and automatically switches the event back to busy status). Callback
+// events (mode=1000h) do never set the ready flag.
+
+T2 = b0;
+T1 = b;
+8006520C	jr     t2
+////////////////////////////////
+
+
 
 ////////////////////////////////
 // system_bios_enable_event()
@@ -226,6 +376,18 @@ T1 = a;
 T2 = b0;
 T1 = c;
 80016ED4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_disable_event()
+// B(0Dh) - DisableEvent(event) - Turns off event handling for specified event
+// Always returns 1 (even if the event handle is unused or invalid).
+
+T2 = b0;
+T1 = d;
+80056CC0	jr     t2
 ////////////////////////////////
 
 
@@ -299,11 +461,176 @@ T1 = 15;
 
 
 ////////////////////////////////
+// system_bios_undeliver_event()
+// B(20h) UnDeliverEvent(class, spec)
+// This function is usually called by the kernel, undelivers all events that are
+// enabled/ready, and that have mode=2000h, and that have the specified class and
+// spec values. Undeliver means that the events are marked as enabled/busy.
+
+T2 = b0;
+T1 = 20;
+80056CD0	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_file_open()
+// A(00h) or B(32h) - FileOpen(filename, accessmode) - Opens a file for IO
+//   out: V0  File handle (00h..0Fh), or -1 if error.
+// Opens a file on the target device for io. Accessmode is set like this:
+//   bit0     1=Read  ;\These bits aren't actually used by the BIOS, however, at
+//   bit1     1=Write ;/least 1 should be set; won't work when all 32bits are zero
+//   bit2     1=Exit without waiting for incoming data (when TTY buffer empty)
+//   bit9     0=Open Existing File, 1=Create New file (memory card only)
+//   bit15    1=Asynchronous mode (memory card only; don't wait for completion)
+//   bit16-31 Number of memory card blocks for a new file on the memory card
+// The PSX can have a maximum of 16 files open at any time, of which, 2 handles
+// are always reserved for std_io, so only 14 handles are available for actual
+// files. Some functions (chdir, testdevice, FileDelete, FileUndelete,
+// FormatDevice, firstfile, FileRename) are temporarily allocating 1 filehandle
+// (FileRename tries to use 2 filehandles, but, it does accidently use only 1
+// handle, too). So, for example, FileDelete would fail if more than 13 file
+// handles are opened by the game.
+
+T2 = b0;
+T1 = 32;
+80065E64	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_file_seek()
+// A(01h) or B(33h) - FileSeek(fd, offset, seektype) - Move the file pointer
+//    seektype 0 = from start of file        (with positive offset)
+//             1 = from current file pointer (with positive/negative offset)
+//             2 = Bugs. Should be from end of file.
+// Moves the file pointer the number of bytes in A1, relative to the location
+// specified by A2. Movement from the eof is incorrect. Also, movement beyond the
+// end of the file is not checked.
+
+T2 = b0;
+T1 = 33;
+80065E74	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_file_read()
+// A(02h) or B(34h) - FileRead(fd, dst, length) - Read data from an open file
+//   out: V0  Number of bytes actually read, -1 if failed.
+// Reads the number of bytes from the specified open file. If length is not
+// specified an error is returned. Read per $0080 bytes from memory card (bu:) and
+// per $0800 from cdrom (cdrom:).
+
+T2 = b0;
+T1 = 34;
+80065E84	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_file_write()
+// A(03h) or B(35h) - FileWrite(fd, src, length) - Write data to an open file
+//   out: V0  Number of bytes written.
+// Writes the number of bytes to the specified open file. Write to the memory card
+// per $0080 bytes. Writing to the cdrom returns 0.
+
+T2 = b0;
+T1 = 35;
+80065E94	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_file_close()
+// A(04h) or B(36h) - FileClose(fd) - Close an open file
+// Returns r2=fd (or r2=-1 if failed).
+
+T2 = b0;
+T1 = 36;
+80065EA4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_exit()
+
+T2 = b0;
+T1 = 38;
+800637C4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_std_out_puts()
 
 T2 = b0;
 T1 = 3f;
 80015E74	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_first_file()
+// B(42h) - firstfile(filename,direntry) - Find first file to match the name
+// Returns r2=direntry (or r2=0 if no matching files).
+// Searches for the first file to match the specified filename; the filename may
+// contain "?" and "*" wildcards. "*" means to ignore ALL following characters;
+// accordingly one cannot specify any further characters after the "*" (eg.
+// "DATA*" would work, but "*.DAT" won't work). "?" is meant to ignore a single
+// character cell. Note: The "?" wildcards (but not "*") can be used also in all
+// other file functions; causing the function to use the first matching name (eg.
+// FileDelete "????" would erase the first matching file, not all matching files).
+// Start the name with the device you want to address. (ie. pcdrv:) Different
+// drives can be accessed as normally by their drive names (a:, c:, huh?) if path
+// is omitted after the device, the current directory will be used.
+// A direntry structure looks like this:
+//   00h 14h Filename, terminated with 00h
+//   14h 4   File attribute (always 0 for cdrom) (50h=norm or A0h=del for card)
+//   18h 4   File size
+//   1Ch 4   Pointer to next direntry? (not used?)
+//   20h 4   First Sector Number
+//   24h 4   Reserved (not used)
+// BUG: If "?" matches the ending 00h byte of a name, then any further characters
+// in the search expression are ignored (eg. "FILE?.DAT" would match to
+// "FILE2.DAT", but accidently also to "FILE").
+// BUG: For CDROM, the BIOS includes some code that is intended to realize disk
+// changes during firstfile/nextfile operations, however, that code is so bugged
+// that it does rather ensure that the BIOS does NOT realize new disks being
+// inserted during firstfile/nextfile.
+// BUG: firstfile/nextfile is internally using a FCB. On the first call to
+// firstfile, the BIOS is searching a free FCB, and does apply that as "search
+// fcb", but it doesn't mark that FCB as allocated, so other file functions may
+// accidently use the same FCB. Moreover, the BIOS does memorize that "search
+// fcb", and, even when starting a new search via another call to firstfile, it
+// keeps using that FCB for search (without checking if the FCB is still free). A
+// possible workaround is not to have any files opened during firstfile/nextfile
+// operations.
+
+T2 = b0;
+T1 = 42;
+80066164	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_next_file()
+// B(43h) - nextfile(direntry) - Searches for the next file to match the name
+// Returns r2=direntry (or r2=0 if no more matching files).
+// Uses the settings of a previous firstfile/nextfile command.
+
+T2 = b0;
+T1 = 43;
+80065EB4	jr     t2
 ////////////////////////////////
 
 
@@ -342,11 +669,115 @@ T1 = 4c;
 
 
 ////////////////////////////////
+// system_bios_write_card_sector()
+// B(4Eh) - write_card_sector(port,sector,src)
+// Invokes asynchronous reading/writing of a single sector. The function returns
+// 1=okay, or 0=failed (on invalid sector numbers). The actual I/O is done on IRQ
+// level, completion of the I/O command transmission can be checked, among others,
+// via get/wait_card_status(slot) functions (with slot=port/10h).
+// In case of the write function, completion of the <transmission> does NOT mean
+// that the actual <writing> has completed, instead, write errors are indicated
+// upon completion of the <next sector> read/write transmission (or, if there are
+// no further sectors to be accessed; one can use _card_info to verify completion
+// of the last written sector).
+// The sector number should be in range of 0..3FFh, for some strange reason,
+// probably a BUG, the function also accepts sector 400h. The specified sector
+// number is directly accessed (it is NOT parsed through the broken sector
+// replacement list).
+
+T2 = b0;
+T1 = 4e;
+800661C4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_read_card_sector()
+// B(4Fh) - read_card_sector(port,sector,dst)
+// Invokes asynchronous reading/writing of a single sector. The function returns
+// 1=okay, or 0=failed (on invalid sector numbers). The actual I/O is done on IRQ
+// level, completion of the I/O command transmission can be checked, among others,
+// via get/wait_card_status(slot) functions (with slot=port/10h).
+// In case of the write function, completion of the <transmission> does NOT mean
+// that the actual <writing> has completed, instead, write errors are indicated
+// upon completion of the <next sector> read/write transmission (or, if there are
+// no further sectors to be accessed; one can use _card_info to verify completion
+// of the last written sector).
+// The sector number should be in range of 0..3FFh, for some strange reason,
+// probably a BUG, the function also accepts sector 400h. The specified sector
+// number is directly accessed (it is NOT parsed through the broken sector
+// replacement list).
+
+T2 = b0;
+T1 = 4f;
+800665A4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_allow_new_card()
+// B(50h) - allow_new_card()
+// Normally any memory card read/write functions fail if the BIOS senses the card
+// change flag to be set. Calling this function tells the BIOS to ignore the card
+// change flag on the next read/write operation (the function is internally used
+// when loading the "MC" ID from sector 0, and when calling the card_write_test
+// function to acknowledge the card change flag).
+
+T2 = b0;
+T1 = 50;
+800661D4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_change_clear_pad()
 
 T2 = b0;
 T1 = 5b;
 80015E8C	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_get_card_status()
+// B(5Ch) - get_card_status(slot)
+// Returns the status of the most recent I/O command, possible values are:
+//   01h=ready
+//   02h=busy/read
+//   04h=busy/write
+//   08h=busy/info
+//   11h=failed/timeout (eg. when no cartridge inserted)
+//   21h=failed/general error
+// get_card_status returns immediately, wait_card_status waits until a non-busy
+// state occurs.
+
+T2 = b0;
+T1 = 5c;
+800665B4	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_bios_wait_card_status()
+// B(5Dh) - wait_card_status(slot)
+// Returns the status of the most recent I/O command, possible values are:
+//   01h=ready
+//   02h=busy/read
+//   04h=busy/write
+//   08h=busy/info
+//   11h=failed/timeout (eg. when no cartridge inserted)
+//   21h=failed/general error
+// get_card_status returns immediately, wait_card_status waits until a non-busy
+// state occurs.
+
+T2 = b0;
+T1 = 5d;
+8006522C	jr     t2
 ////////////////////////////////
 
 
