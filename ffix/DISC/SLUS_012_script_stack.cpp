@@ -1,5 +1,6 @@
 ////////////////////////////////
-// system_script_parse_stack
+// system_script_parse_stack()
+
 S7 = 8007bcb8;
 S4 = 8007b6f0;
 

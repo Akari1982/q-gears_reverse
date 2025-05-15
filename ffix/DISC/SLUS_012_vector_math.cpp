@@ -79,38 +79,6 @@ return T1 >> 2;
 
 
 ////////////////////////////////
-// system_square_root
-LZCS = A0;
-V0 = LZCR;
-
-if (V0 == 20)
-{
-    return 0;
-}
-
-T0 = V0 & 1;
-
-T2 = V0 & fffffffe;
-
-T1 = 1f - T2;
-
-T1 = T1 >> 1;
-T3 = T2 - 18;
-
-if (T3 < 0)
-{
-    T3 = 18 - T2
-}
-
-T4 = A0 << T3;
-T4 = T4 & ffc0;
-
-return (h[8006bd34 + T4 * 2] << T1) >> c
-////////////////////////////////
-
-
-
-////////////////////////////////
 // system_get_rotation_by_vector_x_y
 if (A0 | A1)
 {
