@@ -29,8 +29,6 @@ if( S0 == 0 )
 
 func16e48();
 
-A0 = d1; // 1a2 Sound RAM Reverb Work Area Start Address
-A1 = w[80067e58];
 [8006797c] = w(0);
 [80067980] = w(0);
 [8006798c + 0] = w(0);
@@ -38,8 +36,10 @@ A1 = w[80067e58];
 [8006798c + 6] = h(0);
 [8006798c + 8] = w(0);
 [8006798c + c] = w(0);
-[80067984] = w(A1);
+[80067984] = w(w[80067e58 + 0 * 4]);
 
+A0 = d1; // 1a2 Sound RAM Reverb Work Area Start Address
+A1 = w[80067984];
 A2 = 0;
 func177ec();
 
@@ -65,13 +65,13 @@ if( w[800679d8] == 0 )
 
     system_bios_enter_critical_section();
 
-    A0 = 80017320;
+    A0 = 80017320; // func17320()
     system_sound_spu_dma_callback()
 
-    A0 = f0000009;
-    A1 = 0020;
-    A2 = 2000;
-    A3 = 0;
+    A0 = f0000009; // class (IRQ9  SPU)
+    A1 = 20; // spec
+    A2 = 2000; // mode (2000h=no func/mark ready)
+    A3 = 0; // func
     system_bios_open_event();
     A0 = V0;
 
@@ -131,7 +131,7 @@ if( hu[spu + 1ae] & 07ff )
 A0 = 0;
 A1 = 800736b8;
 [80067a0c] = w(2);
-[80067a10] = w(3);
+[80067a10] = w(3); // always 3 because spu address always divided by 8
 [80067a14] = w(8);
 [80067a18] = w(7);
 [spu + 1ac] = h(4);
@@ -354,52 +354,38 @@ V0 = V0 & 0030;
 V1 = V1 + 0001;
 
 L17390:	; 80017390
-V0 = w[80067a20];
-80017398	nop
-8001739C	beq    v0, zero, L173c0 [$800173c0]
-800173A0	lui    a0, $f000
-V0 = w[80067a20];
-800173AC	nop
-800173B0	jalr   v0 ra
-800173B4	nop
-800173B8	j      L173cc [$800173cc]
-800173BC	nop
-
-L173c0:	; 800173C0
-A0 = A0 | 0009;
-800173C4	jal    system_bios_deliver_event [$80017a20]
-A1 = 0020;
-
-L173cc:	; 800173CC
-RA = w[SP + 0010];
-SP = SP + 0018;
-800173D4	jr     ra 
-800173D8	nop
+if( w[80067a20] != 0 )
+{
+    800173B0	jalr   w[80067a20] ra
+}
+else
+{
+    A0 = f0000009;
+    A1 = 20;
+    system_bios_deliver_event();
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func173dc
-V0 = w[800679e8];
-800173E4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+// func173dc()
+
+spu = w[800679e8];
+
 S1 = A0;
-[SP + 0010] = w(S0);
-[SP + 0018] = w(RA);
-[V0 + 01a6] = h(A1);
-800173FC	jal    system_sound_wait_sync [$800179b8]
+[spu + 1a6] = h(A1);
 S0 = A2;
-V1 = w[800679e8];
-8001740C	nop
-V0 = hu[V1 + 01aa];
-80017414	nop
-V0 = V0 | 0030;
-[V1 + 01aa] = h(V0);
-80017420	jal    system_sound_wait_sync [$800179b8]
 S0 = S0 << 10;
-80017428	jal    func17990 [$80017990]
-8001742C	nop
+
+system_sound_wait_sync();
+
+[spu + 1aa] = h(hu[spu + 1aa] | 0030);
+
+system_sound_wait_sync();
+
+func17990();
+
 A0 = 1000200;
 V0 = w[800679ec];
 80017440	nop
@@ -411,11 +397,6 @@ V1 = w[800679f4];
 V0 = 0001;
 [80067a38] = w(V0);
 [V1 + 0000] = w(A0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8001747C	jr     ra 
-SP = SP + 0020;
 ////////////////////////////////
 
 
@@ -450,7 +431,7 @@ V0 = 0;
 
 L174e4:	; 800174E4
 A0 = w[SP + 001c];
-V0 = w[80067a10];
+V0 = w[80067a10]; // always 3 because spu address always divided by 8
 V1 = w[800679e8];
 V0 = A0 >> V0;
 [80067a00] = h(V0);
@@ -648,100 +629,68 @@ return S0;
 
 
 ////////////////////////////////
-// func177ec
-800177EC	bne    a2, zero, L1780c [$8001780c]
-V0 = A0 << 01;
-V1 = w[800679e8];
-800177FC	nop
-V0 = V0 + V1;
-80017804	j      L17828 [$80017828]
-[V0 + 0000] = h(A1);
+// func177ec()
 
-L1780c:	; 8001780C
-A0 = w[800679e8];
-V1 = w[80067a10];
-V0 = V0 + A0;
-V1 = A1 >> V1;
-[V0 + 0000] = h(V1);
+reg = A0;
 
-L17828:	; 80017828
-80017828	jr     ra 
-8001782C	nop
+spu = w[800679e8]; // 1f801c00 start of spu registers
+
+if( A2 == 0 )
+{
+    [spu + reg * 2] = h(A1);
+}
+else
+{
+    [spu + reg * 2] = h(A1 >> w[80067a10]); // always 3 because spu address always divided by 8
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func17830
-V0 = w[80067a0c];
-80017838	nop
-8001783C	beq    v0, zero, L17880 [$80017880]
-A2 = A0;
-A0 = w[80067a14];
-8001784C	nop
-80017850	divu   a1, a0
-80017854	bne    a0, zero, L17860 [$80017860]
-80017858	nop
-8001785C	break   $01c00
+// func17830()
 
-L17860:	; 80017860
-80017860	mfhi   v0
-80017864	beq    v0, zero, L17880 [$80017880]
-80017868	nop
-V0 = w[80067a18];
-A1 = A1 + A0;
-V0 = 0 NOR V0;
-A1 = A1 & V0;
+reg = A0;
+addr = A1;
 
-L17880:	; 80017880
-V0 = w[80067a10];
-80017888	nop
-A3 = A1 >> V0;
-80017890	addiu  v0, zero, $fffe (=-$2)
-80017894	beq    a2, v0, L178b0 [$800178b0]
-V1 = A3;
-8001789C	addiu  v0, zero, $ffff (=-$1)
-800178A0	bne    a2, v0, L178b8 [$800178b8]
-V0 = A1;
-800178A8	j      L178cc [$800178cc]
-V0 = V1 & ffff;
+if( w[80067a0c] != 0 )
+{
+    if( ( addr % w[80067a14] ) != 0 )
+    {
+        addr += w[80067a14];
+        addr &= (0 NOR w[80067a18]);
+    }
+}
 
-L178b0:	; 800178B0
-800178B0	j      L178cc [$800178cc]
-V0 = A1;
+A3 = addr >> w[80067a10]; // always 3 because spu address always divided by 8
 
-L178b8:	; 800178B8
-A0 = w[800679e8];
-V1 = A2 << 01;
-V1 = V1 + A0;
-[V1 + 0000] = h(A3);
+if( reg == -2 ) return addr;
 
-L178cc:	; 800178CC
-800178CC	jr     ra 
-800178D0	nop
+if( reg == -1 ) return A3 & ffff;
+
+spu = w[800679e8]; // 1f801c00 start of spu registers
+[spu + reg * 2] = h(A3);
+
+return addr;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func178d4
-V0 = w[800679e8];
-A0 = A0 << 01;
-A0 = A0 + V0;
-800178E4	addiu  v0, zero, $ffff (=-$1)
-A0 = hu[A0 + 0000];
-800178EC	beq    a1, v0, L17904 [$80017904]
-800178F0	nop
-V0 = w[80067a10];
-800178FC	j      L17908 [$80017908]
-V0 = A0 << V0;
+// func178d4()
 
-L17904:	; 80017904
-V0 = A0;
+reg = A0;
 
-L17908:	; 80017908
-80017908	jr     ra 
-8001790C	nop
+spu = w[800679e8];
+
+A0 = hu[spu + reg * 2];
+
+if( A1 != -1 )
+{
+    return A0 << w[80067a10]; // always 3 because spu address always divided by 8
+}
+
+return A0;
 ////////////////////////////////
 
 
@@ -776,71 +725,615 @@ V1 = V1 | A0;
 
 
 ////////////////////////////////
-// func17968
+// func17968()
+
 A0 = w[800679fc];
-80017970	lui    v1, $f0ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-80017980	lui    v1, $2000
-V0 = V0 | V1;
-80017988	jr     ra 
-[A0 + 0000] = w(V0);
+[A0] = w((w[A0] & f0ffffff) | 20000000);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func17990
+// func17990()
+
 A0 = w[800679fc];
-80017998	lui    v1, $f0ff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-800179A8	lui    v1, $2200
-V0 = V0 | V1;
-800179B0	jr     ra 
-[A0 + 0000] = w(V0);
+[A0] = w((w[A0] & f0ffffff) | 22000000);
 ////////////////////////////////
-// system_sound_wait_sync
-800179B8	addiu  sp, sp, $fff8 (=-$8)
-V0 = 000d;
-[SP + 0004] = w(V0);
+
+
+
+////////////////////////////////
+// system_sound_wait_sync()
+
+[SP + 4] = w(d);
+[SP + 0] = w(0);
 800179C4	j      L179f8 [$800179f8]
-[SP + 0000] = w(0);
 
-loop179cc:	; 800179CC
-V1 = w[SP + 0004];
-800179D0	nop
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + V1;
-[SP + 0004] = w(V0);
-V0 = w[SP + 0000];
-800179EC	nop
-V0 = V0 + 0001;
-[SP + 0000] = w(V0);
-
-L179f8:	; 800179F8
-V0 = w[SP + 0000];
-800179FC	nop
-V0 = V0 < 003c;
-80017A04	bne    v0, zero, loop179cc [$800179cc]
-80017A08	nop
-80017A0C	jr     ra 
-SP = SP + 0008;
-80017A14	nop
-80017A18	nop
-80017A1C	nop
+while( w[SP + 0] < 3c )
+{
+    [SP + 4] = w(w[SP + 4] * d);
+    [SP + 0] = w(w[SP + 0] + 1);
+}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// system_sound_spu_dma_callback
+// system_sound_spu_dma_callback()
 
 A1 = A0;
 A0 = 4;
 system_dma_additional_callback();
+////////////////////////////////
+
+
+
+
+////////////////////////////////
+// system_psyq_spu_set_reverb_mode_param()
+
+S2 = A0;
+S7 = 0;
+S4 = 0;
+S6 = 0;
+[SP + 58] = w(0);
+S3 = w[S2 + 0000];
+FP = 0;
+S5 = S3 < 0001;
+80017AAC	bne    s5, zero, L17ac0 [$80017ac0]
+[SP + 0010] = w(0);
+V0 = S3 & 0001;
+80017AB8	beq    v0, zero, L17bc8 [$80017bc8]
+80017ABC	nop
+
+L17ac0:	; 80017AC0
+S0 = w[S2 + 0004];
+80017AC4	nop
+V0 = S0 & 0100;
+80017ACC	beq    v0, zero, L17ae0 [$80017ae0]
+80017AD0	addiu  v0, zero, $feff (=-$101)
+S0 = S0 & V0;
+T0 = 0001;
+[SP + 0058] = w(T0);
+
+L17ae0:	; 80017AE0
+V0 = S0 < 000a;
+80017AE4	beq    v0, zero, L17b0c [$80017b0c]
+
+A0 = w[80067e58 + S0 * 4];
+S1 = 80067e58;
+80017AFC	jal    func17fc0 [$80017fc0]
+
+80017B04	beq    v0, zero, L17b14 [$80017b14]
+S4 = 0001;
+
+L17b0c:	; 80017B0C
+return -1;
+
+L17b14:	; 80017B14
+A2 = SP + 0010;
+A1 = 0043;
+[8006798c] = w(S0);
+V1 = w[8006798c];
+80017B2C	addiu  a3, zero, $ffff (=-$1)
+A0 = V1 << 02;
+A0 = A0 + S1;
+V0 = V1 << 04;
+V0 = V0 + V1;
+V0 = V0 << 02;
+V1 = 80067e88;
+A0 = w[A0 + 0000];
+V1 = V0 + V1;
+[80067984] = w(A0);
+
+loop17b5c:	; 80017B5C
+    V0 = bu[V1 + 0000];
+    V1 = V1 + 0001;
+    80017B64	addiu  a1, a1, $ffff (=-$1)
+    [A2 + 0000] = b(V0);
+    A2 = A2 + 0001;
+80017B6C	bne    a1, a3, loop17b5c [$80017b5c]
+
+A0 = 8006798c;
+V1 = w[A0 + 0000];
+V0 = 0007;
+80017B84	beq    v1, v0, L17b9c [$80017b9c]
+V0 = 0008;
+80017B8C	beq    v1, v0, L17bac [$80017bac]
+V0 = 007f;
+80017B94	j      L17bb8 [$80017bb8]
+80017B98	nop
+
+L17b9c:	; 80017B9C
+V0 = 007f;
+[A0 + 000c] = w(V0);
+80017BA4	j      L17bc8 [$80017bc8]
+[A0 + 0008] = w(V0);
+
+L17bac:	; 80017BAC
+[A0 + 000c] = w(0);
+80017BB0	j      L17bc8 [$80017bc8]
+[A0 + 0008] = w(V0);
+
+L17bb8:	; 80017BB8
+V0 = 80067998;
+[V0 + 0000] = w(0);
+[V0 + fffc] = w(0);
+
+L17bc8:	; 80017BC8
+80017BC8	bne    s5, zero, L17bd8 [$80017bd8]
+V0 = S3 & 0008;
+80017BD0	beq    v0, zero, L17ce8 [$80017ce8]
+80017BD4	nop
+
+L17bd8:	; 80017BD8
+V1 = w[8006798c];
+80017BE0	nop
+V0 = V1 < 0009;
+80017BE8	beq    v0, zero, L17ce8 [$80017ce8]
+V0 = V1 < 0007;
+80017BF0	bne    v0, zero, L17ce8 [$80017ce8]
+80017BF4	nop
+80017BF8	bne    s4, zero, L17c50 [$80017c50]
+S6 = 0001;
+A1 = SP + 0010;
+A0 = 0043;
+V0 = w[8006798c];
+80017C10	addiu  a2, zero, $ffff (=-$1)
+V1 = V0 << 04;
+V1 = V1 + V0;
+V1 = V1 << 02;
+V0 = 80067e88;
+V1 = V1 + V0;
+
+loop17c2c:	; 80017C2C
+V0 = bu[V1 + 0000];
+V1 = V1 + 0001;
+80017C34	addiu  a0, a0, $ffff (=-$1)
+[A1 + 0000] = b(V0);
+80017C3C	bne    a0, a2, loop17c2c [$80017c2c]
+A1 = A1 + 0001;
+V0 = c011c00;
+[SP + 0010] = w(V0);
+
+L17c50:	; 80017C50
+80017C50	lui    a0, $8102
+V0 = w[S2 + 000c];
+A0 = A0 | 0409;
+V1 = V0 << 0d;
+80017C60	mult   v1, a0
+80017C64	mfhi   a3
+A1 = V0 << 0c;
+80017C6C	nop
+80017C70	mult   a1, a0
+[80067994] = w(V0);
+V0 = A3 + V1;
+V0 = V0 >> 06;
+V1 = V1 >> 1f;
+V0 = V0 - V1;
+A0 = hu[SP + 0014];
+V1 = hu[SP + 0036];
+V0 = V0 - A0;
+[SP + 0028] = h(V0);
+V0 = hu[SP + 0016];
+80017CA0	mfhi   a2
+A0 = A2 + A1;
+A0 = A0 >> 06;
+A1 = A1 >> 1f;
+A0 = A0 - A1;
+V0 = A0 - V0;
+[SP + 002a] = h(V0);
+V0 = hu[SP + 002e];
+V1 = V1 + A0;
+[SP + 0034] = h(V1);
+V1 = hu[SP + 004e];
+V0 = V0 + A0;
+[SP + 002c] = h(V0);
+V0 = hu[SP + 004c];
+V1 = V1 + A0;
+[SP + 004a] = h(V1);
+V0 = V0 + A0;
+[SP + 0048] = h(V0);
+
+L17ce8:	; 80017CE8
+80017CE8	bne    s5, zero, L17cf8 [$80017cf8]
+V0 = S3 & 0010;
+80017CF0	beq    v0, zero, L17dbc [$80017dbc]
+80017CF4	nop
+
+L17cf8:	; 80017CF8
+V1 = w[8006798c];
+80017D00	nop
+V0 = V1 < 0009;
+80017D08	beq    v0, zero, L17dbc [$80017dbc]
+V0 = V1 < 0007;
+80017D10	bne    v0, zero, L17dbc [$80017dbc]
+80017D14	nop
+80017D18	bne    s4, zero, L17d80 [$80017d80]
+FP = 0001;
+80017D20	bne    s6, zero, L17d70 [$80017d70]
+A1 = SP + 0010;
+A0 = 0043;
+V0 = w[8006798c];
+80017D34	addiu  a2, zero, $ffff (=-$1)
+V1 = V0 << 04;
+V1 = V1 + V0;
+V1 = V1 << 02;
+V0 = 80067e88;
+V1 = V1 + V0;
+
+loop17d50:	; 80017D50
+V0 = bu[V1 + 0000];
+V1 = V1 + 0001;
+80017D58	addiu  a0, a0, $ffff (=-$1)
+[A1 + 0000] = b(V0);
+80017D60	bne    a0, a2, loop17d50 [$80017d50]
+A1 = A1 + 0001;
+80017D68	j      L17d7c [$80017d7c]
+V0 = 0080;
+
+L17d70:	; 80017D70
+V0 = w[SP + 0010];
+80017D74	nop
+V0 = V0 | 0080;
+
+L17d7c:	; 80017D7C
+[SP + 0010] = w(V0);
+
+L17d80:	; 80017D80
+80017D80	lui    a0, $8102
+V1 = w[S2 + 0010];
+A0 = A0 | 0409;
+V0 = V1 << 07;
+V0 = V0 + V1;
+V0 = V0 << 08;
+80017D98	mult   v0, a0
+[80067998] = w(V1);
+80017DA4	mfhi   t0
+V1 = T0 + V0;
+V1 = V1 >> 06;
+V0 = V0 >> 1f;
+V1 = V1 - V0;
+[SP + 0022] = h(V1);
+
+L17dbc:	; 80017DBC
+80017DBC	beq    s4, zero, L17dfc [$80017dfc]
+80017DC0	nop
+V1 = w[800679e8];
+80017DCC	nop
+V0 = hu[V1 + 01aa];
+80017DD4	nop
+V0 = V0 >> 07;
+S7 = V0 & 0001;
+80017DE0	beq    s7, zero, L17e60 [$80017e60]
+80017DE4	nop
+V0 = hu[V1 + 01aa];
+80017DEC	nop
+V0 = V0 & ff7f;
+80017DF4	j      L17e60 [$80017e60]
+[V1 + 01aa] = h(V0);
+
+L17dfc:	; 80017DFC
+80017DFC	bne    s5, zero, L17e0c [$80017e0c]
+V0 = S3 & 0002;
+80017E04	beq    v0, zero, L17e2c [$80017e2c]
+80017E08	nop
+
+L17e0c:	; 80017E0C
+V0 = w[800679e8];
+V1 = hu[S2 + 0008];
+80017E18	nop
+[V0 + 0184] = h(V1);
+V0 = hu[S2 + 0008];
+[80067990] = h(V0);
+
+L17e2c:	; 80017E2C
+80017E2C	bne    s5, zero, L17e3c [$80017e3c]
+V0 = S3 & 0004;
+80017E34	beq    v0, zero, L17e84 [$80017e84]
+80017E38	nop
+
+L17e3c:	; 80017E3C
+V0 = w[800679e8];
+V1 = hu[S2 + 000a];
+80017E48	nop
+[V0 + 0186] = h(V1);
+V0 = hu[S2 + 000a];
+80017E54	lui    at, $8006
+80017E58	j      L17e84 [$80017e84]
+[AT + 7992] = h(V0);
+
+L17e60:	; 80017E60
+V0 = w[800679e8];
+80017E68	nop
+[V0 + 0184] = h(0);
+[V0 + 0186] = h(0);
+V0 = 80067990;
+[V0 + 0000] = h(0);
+[V0 + 0002] = h(0);
+
+L17e84:	; 80017E84
+80017E84	bne    s4, zero, L17e9c [$80017e9c]
+80017E88	nop
+80017E8C	bne    s6, zero, L17e9c [$80017e9c]
+80017E90	nop
+80017E94	beq    fp, zero, L17ea4 [$80017ea4]
+80017E98	nop
+
+L17e9c:	; 80017E9C
+A0 = SP + 10;
+system_sound_spu_update_reverb_registers();
+
+L17ea4:	; 80017EA4
+T0 = w[SP + 58];
+if( T0 != 0 )
+{
+    A0 = w[8006798c]; // rev_mode
+    system_psyq_spu_clear_reverb_work_area();
+}
+
+if( S4 != 0 )
+{
+    A0 = d1; // 1a2 sound ram reverb work area start address
+    A1 = w[80067984];
+    A2 = 0; // dont use shifter
+    func177ec();
+
+    if( S7 != 0 )
+    {
+        V1 = w[800679e8];
+        [V1 + 1aa] = h(hu[V1 + 1aa] | 0080);
+    }
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func17f40
+V0 = w[80067a50];
+80017F48	nop
+80017F4C	bne    v0, zero, L17f5c [$80017f5c]
+80017F50	lui    t0, $8000
+80017F54	j      L17fb8 [$80017fb8]
+V0 = 0;
+
+L17f5c:	; 80017F5C
+80017F5C	lui    a3, $4000
+A2 = fffffff;
+A1 = V0;
+
+L17f6c:	; 80017F6C
+V1 = w[A1 + 0000];
+80017F70	nop
+V0 = V1 & T0;
+80017F78	bne    v0, zero, L17fac [$80017fac]
+V0 = V1 & A3;
+80017F80	bne    v0, zero, L17fb4 [$80017fb4]
+V1 = V1 & A2;
+V0 = V1 < A0;
+80017F8C	beq    v0, zero, L17fb8 [$80017fb8]
+V0 = 0001;
+V0 = w[A1 + 0004];
+80017F98	nop
+V0 = V1 + V0;
+V0 = A0 < V0;
+80017FA4	bne    v0, zero, L17fb8 [$80017fb8]
+V0 = 0001;
+
+L17fac:	; 80017FAC
+80017FAC	j      L17f6c [$80017f6c]
+A1 = A1 + 0008;
+
+L17fb4:	; 80017FB4
+V0 = 0;
+
+L17fb8:	; 80017FB8
+80017FB8	jr     ra 
+80017FBC	nop
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func17fc0()
+
+A0 <<= w[80067a10]; // always 3 because spu address always divided by 8
+
+if( w[80067a50] == 0 ) return 0;
+
+A1 = w[80067a50];
+
+while( true )
+{
+    V1 = w[A1 + 0000];
+
+    if( ( V1 & 80000000 ) == 0 )
+    {
+        if( V1 & 40000000 ) return 0;
+
+        V1 = V1 & 0fffffff;
+
+        if( V1 >= A0 ) return 1;
+
+        V0 = w[A1 + 0004];
+        V0 = V1 + V0;
+        if( A0 < V0 ) return 1;
+    }
+
+    A1 += 8;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_sound_spu_update_reverb_registers()
+
+spu = w[800679e8];
+
+A1 = w[A0 + 0];
+
+if( ( A1 < 1 ) || ( A1 & 00000001 ) ) [spu + 1c0] = h(hu[A0 + 4]); // rev00 dAPF1   disp    Reverb APF Offset 1
+if( ( A1 < 1 ) || ( A1 & 00000002 ) ) [spu + 1c2] = h(hu[A0 + 6]); // rev01 dAPF2   disp    Reverb APF Offset 2
+if( ( A1 < 1 ) || ( A1 & 00000004 ) ) [spu + 1c4] = h(hu[A0 + 8]); // rev02 vIIR    volume  Reverb Reflection Volume 1
+if( ( A1 < 1 ) || ( A1 & 00000008 ) ) [spu + 1c6] = h(hu[A0 + a]); // rev03 vCOMB1  volume  Reverb Comb Volume 1
+if( ( A1 < 1 ) || ( A1 & 00000010 ) ) [spu + 1c8] = h(hu[A0 + c]); // rev04 vCOMB2  volume  Reverb Comb Volume 2
+if( ( A1 < 1 ) || ( A1 & 00000020 ) ) [spu + 1ca] = h(hu[A0 + e]); // rev05 vCOMB3  volume  Reverb Comb Volume 3
+if( ( A1 < 1 ) || ( A1 & 00000040 ) ) [spu + 1cc] = h(hu[A0 + 10]); // rev06 vCOMB4  volume  Reverb Comb Volume 4
+if( ( A1 < 1 ) || ( A1 & 00000080 ) ) [spu + 1ce] = h(hu[A0 + 12]); // rev07 vWALL   volume  Reverb Reflection Volume 2
+if( ( A1 < 1 ) || ( A1 & 00000100 ) ) [spu + 1d0] = h(hu[A0 + 14]); // rev08 vAPF1   volume  Reverb APF Volume 1
+if( ( A1 < 1 ) || ( A1 & 00000200 ) ) [spu + 1d2] = h(hu[A0 + 16]); // rev09 vAPF2   volume  Reverb APF Volume 2
+if( ( A1 < 1 ) || ( A1 & 00000400 ) ) [spu + 1d4] = h(hu[A0 + 18]); // rev0A mLSAME  src/dst Reverb Same Side Reflection Address 1 Left
+if( ( A1 < 1 ) || ( A1 & 00000800 ) ) [spu + 1d6] = h(hu[A0 + 1a]); // rev0B mRSAME  src/dst Reverb Same Side Reflection Address 1 Right
+if( ( A1 < 1 ) || ( A1 & 00001000 ) ) [spu + 1d8] = h(hu[A0 + 1c]); // rev0C mLCOMB1 src     Reverb Comb Address 1 Left
+if( ( A1 < 1 ) || ( A1 & 00002000 ) ) [spu + 1da] = h(hu[A0 + 1e]); // rev0D mRCOMB1 src     Reverb Comb Address 1 Right
+if( ( A1 < 1 ) || ( A1 & 00004000 ) ) [spu + 1dc] = h(hu[A0 + 20]); // rev0E mLCOMB2 src     Reverb Comb Address 2 Left
+if( ( A1 < 1 ) || ( A1 & 00008000 ) ) [spu + 1de] = h(hu[A0 + 22]); // rev0F mRCOMB2 src     Reverb Comb Address 2 Right
+if( ( A1 < 1 ) || ( A1 & 00010000 ) ) [spu + 1e0] = h(hu[A0 + 24]); // rev10 dLSAME  src     Reverb Same Side Reflection Address 2 Left
+if( ( A1 < 1 ) || ( A1 & 00020000 ) ) [spu + 1e2] = h(hu[A0 + 26]); // rev11 dRSAME  src     Reverb Same Side Reflection Address 2 Right
+if( ( A1 < 1 ) || ( A1 & 00040000 ) ) [spu + 1e4] = h(hu[A0 + 28]); // rev12 mLDIFF  src/dst Reverb Different Side Reflect Address 1 Left
+if( ( A1 < 1 ) || ( A1 & 00080000 ) ) [spu + 1e6] = h(hu[A0 + 2a]); // rev13 mRDIFF  src/dst Reverb Different Side Reflect Address 1 Right
+if( ( A1 < 1 ) || ( A1 & 00100000 ) ) [spu + 1e8] = h(hu[A0 + 2c]); // rev14 mLCOMB3 src     Reverb Comb Address 3 Left
+if( ( A1 < 1 ) || ( A1 & 00200000 ) ) [spu + 1ea] = h(hu[A0 + 2e]); // rev15 mRCOMB3 src     Reverb Comb Address 3 Righ
+if( ( A1 < 1 ) || ( A1 & 00400000 ) ) [spu + 1ec] = h(hu[A0 + 30]); // rev16 mLCOMB4 src     Reverb Comb Address 4 Left
+if( ( A1 < 1 ) || ( A1 & 00800000 ) ) [spu + 1ee] = h(hu[A0 + 32]); // rev17 mRCOMB4 src     Reverb Comb Address 4 Right
+if( ( A1 < 1 ) || ( A1 & 01000000 ) ) [spu + 1f0] = h(hu[A0 + 34]); // rev18 dLDIFF  src     Reverb Different Side Reflect Address 2 Left
+if( ( A1 < 1 ) || ( A1 & 02000000 ) ) [spu + 1f2] = h(hu[A0 + 36]); // rev19 dRDIFF  src     Reverb Different Side Reflect Address 2 Right
+if( ( A1 < 1 ) || ( A1 & 04000000 ) ) [spu + 1f4] = h(hu[A0 + 38]); // rev1A mLAPF1  src/dst Reverb APF Address 1 Left
+if( ( A1 < 1 ) || ( A1 & 08000000 ) ) [spu + 1f6] = h(hu[A0 + 3a]); // rev1B mRAPF1  src/dst Reverb APF Address 1 Right
+if( ( A1 < 1 ) || ( A1 & 10000000 ) ) [spu + 1f8] = h(hu[A0 + 3c]); // rev1C mLAPF2  src/dst Reverb APF Address 2 Left
+if( ( A1 < 1 ) || ( A1 & 20000000 ) ) [spu + 1fa] = h(hu[A0 + 3e]); // rev1D mRAPF2  src/dst Reverb APF Address 2 Right
+if( ( A1 < 1 ) || ( A1 & 40000000 ) ) [spu + 1fc] = h(hu[A0 + 40]); // rev1E vLIN    volume  Reverb Input Volume Left
+if( ( A1 < 1 ) || ( A1 & 80000000 ) ) [spu + 1fe] = h(hu[A0 + 42]); // rev1F vRIN    volume  Reverb Input Volume Right
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_spu_set_reverb_depth()
+
+spu = w[800679e8];
+
+attr = A0; // SpuReverbAttr struct ptr
+attr_mask = w[attr + 0]; // attr->mask
+
+SPU_REV_DEPTHL = 2;
+SPU_REV_DEPTHR = 4;
+
+if( ( attr_mask < 1 ) || ( attr_mask & SPU_REV_DEPTHL ) )
+{
+    [spu + 184] = h(hu[attr + 8]); // attr->depth.left
+    [80067990] = h(hu[attr + 8]);
+}
+
+if( ( attr_mask < 1 ) || ( attr_mask & SPU_REV_DEPTHR ) )
+{
+    [spu + 186] = h(hu[attr + a]); // attr->depth.right
+    [80067992] = h(hu[attr + a]);
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_spu_clear_reverb_work_area()
+
+rev_mode = A0;
+
+[SP + 10] = w(0);
+
+if( rev_mode >= a ) return -1; // SPU_ERROR
+
+S5 = 0;
+
+A0 = w[80067e58 + rev_mode * 4];
+func17fc0();
+
+if( V0 != 0 ) return -1; // SPU_ERROR
+
+if( rev_mode == 0 ) // SPU_REV_MODE_OFF
+{
+    S1 = 10 << w[80067a10]; // always 3 because spu address always divided by 8
+    S2 = fff0 << w[80067a10]; // always 3 because spu address always divided by 8
+}
+else
+{
+    A0 = w[80067e58 + rev_mode * 4];
+    S1 = (10000 - A0) << w[80067a10]; // always 3 because spu address always divided by 8
+    S2 = A0 << w[80067a10]; // always 3 because spu address always divided by 8
+}
+
+S4 = w[80067a04];
+
+if( S4 == 1 )
+{
+    [80067a04] = w(0);
+    S5 = 1;
+}
+
+if( w[80067a20] != 0 )
+{
+    [SP + 10] = w(w[80067a20]);
+    [80067a20] = w(0);
+}
+
+S3 = 1;
+
+while( S3 != 0 )
+{
+    if( S1 < 401 )
+    {
+        S0 = S1;
+        S3 = 0;
+    }
+    else
+    {
+        S0 = 400;
+    }
+
+    A0 = 2; // set address in spu to write to 0x1f801da6
+    A1 = S2;
+    func17484();
+
+    A0 = 1; // set DMAwrite
+    func17484();
+
+    A0 = 3; // perform dma transfer
+    A1 = 80067a58;
+    A2 = S0;
+    func17484();
+
+    S1 = S1 - 400;
+    S2 = S2 + 400;
+
+    A0 = w[80067970];
+    system_bios_wait_event();
+}
+
+if( S5 != 0 )
+{
+    [80067a04] = w(S4);
+}
+
+if( w[SP + 10] != 0 )
+{
+    [80067a20] = w(w[SP + 10]);
+}
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_spu_get_reverb_mode_type()
+
+type_p = A0;
+
+[type_p] = w(w[8006798c]);
 ////////////////////////////////

@@ -2212,7 +2212,7 @@ L382f8:	; 800382F8
 
 ////////////////////////////////
 // func3832c
-8003832C
+
 A1 = w[A0 + 0000];
 80038330	nop
 A2 = A1 < 0001;
@@ -2666,7 +2666,7 @@ L387f4:	; 800387F4
 
 
 ////////////////////////////////
-// system_sound_spu_set_reverb_depth_left_right()
+// system_psyq_spu_set_reverb_depth()
 
 spu = w[8004aaf4]; // 1f801c00
 

@@ -834,32 +834,34 @@ func1c6f8(); // init loaded files struct
 
 func18f50(); // init remap buttons
 
-[80073690 + 0] = w(19);
-[80073690 + 4] = w(100);
-[80073690 + 8] = h(0);
-[80073690 + a] = h(0);
-[80073690 + c] = w(0);
-[80073690 + 10] = w(0);
+// SpuReverbAttr struct
+reverb_attr = 80073690;
+[reverb_attr + 0] = w(19); // mask
+[reverb_attr + 4] = w(100); // mode
+[reverb_attr + 8] = h(0); // SpuVolume depth.left
+[reverb_attr + a] = h(0); // SpuVolume depth.right
+[reverb_attr + c] = w(0); // delay
+[reverb_attr + 10] = w(0); // feedback
 
-A0 = 80073690;
-func17a60(); // sound related
+A0 = reverb_attr;
+system_psyq_spu_set_reverb_mode_param();
 
-A0 = 80073690;
-func18520();
-
-A0 = 800736a4;
-func18750();
-
-A0 = w[800736a4];
-func185a0();
-
-func551f0(); // sound related
+A0 = reverb_attr;
+system_psyq_spu_set_reverb_depth();
 
 A0 = 800736a4;
-func18750();
+system_psyq_spu_get_reverb_mode_type();
 
 A0 = w[800736a4];
-func185a0();
+system_psyq_spu_clear_reverb_work_area();
+
+func551f0(); // init game sound system and system_sound_main()
+
+A0 = 800736a4;
+system_psyq_spu_get_reverb_mode_type();
+
+A0 = w[800736a4];
+system_psyq_spu_clear_reverb_work_area();
 
 for( int i = 0; i < 5a; ++i )
 {

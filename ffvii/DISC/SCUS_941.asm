@@ -2021,7 +2021,7 @@
 // func387fc
 800387FC-80038848
 ////////////////////////////////
-// system_sound_spu_set_reverb_depth_left_right
+// system_psyq_spu_set_reverb_depth
 8003884C-800388C0
 ////////////////////////////////
 // func388c4

@@ -342,19 +342,18 @@ A1 = 0020;
 func294a4();
 
 80029910	jal    func294bc [$800294bc]
-80029914	nop
-80029918	lui    a0, $f200
+
 
 loop2991c:	; 8002991C
-A0 = A0 | 0002;
-A1 = 0002;
-80029924	lui    a3, $8003
-A3 = A3 + 0234;
-8002992C	jal    system_bios_open_event [$80042a00]
-A2 = 1000;
-[GP + 00bc] = w(V0);
+    A0 = f2000002;
+    A1 = 2;
+    A2 = 1000;
+    A3 = 80030234;
+    system_bios_open_event();
+
+    [GP + 00bc] = w(V0);
 80029938	beq    v0, s0, loop2991c [$8002991c]
-8002993C	lui    a0, $f200
+
 
 loop29940:	; 80029940
 A0 = w[GP + 00bc];
@@ -6289,7 +6288,7 @@ if( w[8009a104 + 38] & 00000080 ) // update reverb
     }
 
     A0 = 8009c564;
-    system_sound_spu_set_reverb_depth_left_right();
+    system_psyq_spu_set_reverb_depth();
 
     [8009a104 + 38] = w(w[8009a104 + 38] ^ 00000080);
 }
@@ -6790,7 +6789,7 @@ A1 = A1 ^ V0;
 
 
 ////////////////////////////////
-// func30234
+// func30234()
 
 A0 = f2000002;
 80030250	jal    func42c60 [$80042c60]

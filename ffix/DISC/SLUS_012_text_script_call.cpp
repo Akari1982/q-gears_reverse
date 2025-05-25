@@ -264,7 +264,7 @@ else if (A1 == 3)
 if (A3 < a)
 {
     A3 = 80077530 + A3 * 54;
-    func2ea7c;
+    func2ea7c();
 
     return V0;
 }
