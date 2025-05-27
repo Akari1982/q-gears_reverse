@@ -25545,7 +25545,6 @@ Lb8c9c:	; 800B8C9C
 // field_debug_render_string()
 800B8CC4-800B8F48
 
-800B8CC4	addiu  sp, sp, $fff8 (=-$8)
 T2 = A1;
 T3 = A2;
 V0 = bu[T2 + 0000];

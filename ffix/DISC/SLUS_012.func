@@ -1161,7 +1161,7 @@
 80056CCC system_bios_undeliver_event
 80056CDC func56cdc
 80056D5C func56d5c
-80056DBC func56dbc
+80056DBC system_psyq_spu_set_reverb
 80056E8C func56e8c
 80056FCC func56fcc
 8005700C func5700c
@@ -1283,7 +1283,7 @@
 8005C864 func5c864
 8005C86C func5c86c
 8005C8BC func5c8bc
-8005CC14 func5cc14
+8005CC14 system_psyq_spu_set_reverb_mode_type
 8005CDE4 func5cde4
 8005CE04 func5ce04
 8005CE8C func5ce8c

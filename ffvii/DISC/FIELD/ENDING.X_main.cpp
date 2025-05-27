@@ -2255,9 +2255,8 @@ funca273c();
 // funca273c()
 
 S0 = A0;
-V0 = w[800af408];
-V0 = V0 ^ 0001;
-[800af408] = w(V0);
+
+[800af408] = w(w[800af408] ^ 1);
 
 A0 = 0;
 system_psyq_draw_sync();
@@ -2265,11 +2264,7 @@ system_psyq_draw_sync();
 A0 = S0;
 system_psyq_vsync();
 
-V0 = w[800af408];
-A0 = V0 << 02;
-A0 = A0 + V0;
-A0 = A0 << 02;
-A0 = 800af398 + A0;
+A0 = 800af398 + w[800af408] * 14;
 system_psyq_put_dispenv();
 
 V0 = w[800af408];

@@ -1,0 +1,456 @@
+// FIELD.BIN_main.cpp
+800A1368 field_load_mim_dat_files
+800A1498 field_stop_load_next_map_in_advance
+800A14D8 field_load_next_map_in_advance
+800A16CC field_main
+800A2314 field_main_loop
+800A2D5C field_load_mim_to_vram
+800A2F78 funca2f78
+800A3020 field_background_init_packets
+800A364C field_background_add_to_render
+800A4094 field_calculate_current_value_by_steps
+800A4134 field_calculate_smooth_current_value_by_steps
+800A41CC field_calculate_world_to_screen_pos
+800A424C field_background_shaking_update
+800A4430 field_background_scrolling_init
+800A45D4 funca45d4
+800A47f8 field_background_clamp_pos
+800A48B8 field_background_get_entity_screen_pos
+800A496C field_background_scrolling_update
+800A4BEC field_background_update_drawenv
+800A5FB4 funca5fb4
+800A635C move_add_shift_rotate
+800A6418 handle_animation_update
+800A65A4 field_entity_movement_update
+800A82A0 set_gateway_to_map_load
+800A8304 field_entity_check_talk
+800A8600 get_direction_vector_x
+800A8620 get_direction_vector_y
+800A8640 field_entity_calculate_direction_by_vectors
+800A8858 funca8858
+800A8968 walkmesh_border_cross
+800A8DF4 field_walkmesh_vector_sub
+800A8E34 field_walkmesh_calculate_z
+800A8F88 field_entity_move_by_walkmesh
+800A9B64 entity_collision_check
+800A9CE8 move_distance_to_line
+800A9EEC move_line_check
+800AA180 field_entity_check_line_interact
+800AA32C field_line_clear_all_actors
+800AA348 move_gateway_check
+800AA514 field_trigger_background_manipulate
+800AA5E4 move_trigger_check
+800AA870 field_init_triggered_background_state
+
+// FIELD.BIN_model.cpp
+800AA930 field_model_load_and_init
+800AAB24 funcaab24
+800AB2AC funcab2ac
+800AB2B4 funcab2b4
+800AB310 funcab310
+
+// FIELD.BIN_rain.cpp
+800AB4AC field_rain_init
+800AB5E8 field_rain_add_to_render
+800AB728 field_rain_update
+
+// FIELD.BIN_model_render.cpp
+800AB9C8 funcab9c8
+800ABA34 funcaba34
+800ABA70 funcaba70
+800ABF0C field_arrows_init
+800ABFE8 field_arrows_add_to_render
+800AC35C field_model_load_local_model_and_init_all
+800ACBA0 field_model_create_packets_and_scale
+800ACC5C field_model_create_packets_for_part
+800AD7B8 field_model_bsx_texture_load_to_vram
+800AD858 field_model_bsx_tdb_modify
+800ADAA4 field_model_struct_init
+800ADC90 field_model_load_global_models
+800ADD70 field_model_load_bcx
+800AE23C funcae23c
+800AE4DC field_model_add_to_render
+800AEE24 field_model_animation_calculate_matrixes
+800AF6EC field_model_scale_model
+800AF96C field_model_scale_part_vertexes
+800AFAC4 field_model_scale_animation_translations
+800AFDE4 funcafde4
+800AFE1C field_model_kawai_execute
+800B0618 field_model_kawai_set_custom_lighting_to_model_packets
+800B0A48 funcb0a48
+800B0EDC field_model_kawai_set_color_to_model_packets
+800B0FB0 field_model_set_color_to_part_packets
+800B1C7C field_model_kawai_load_eyes_mouth_tex_to_vram
+800B1E40 field_model_lighting_apply_to_model
+800B2598 field_model_lighting_apply_to_poly_color
+800B2A00 field_model_kawai_set_model_transparency
+800B2DD4 field_model_kawai_set_color_to_packets_below_level
+800B2F40 field_model_set_color_to_part_packets_below_level
+800B480C kawai_action_6
+800B4B04 kawai_action_7
+800B4EAC kawai_action_8
+800B5260 field_model_kawai_set_lighting_to_model_packets
+800B5504 field_model_set_lighting_to_part_packets
+800B62C4 field_model_kawai_set_splash_to_packets_below_level
+800B69C0 field_model_kawai_init_splash_packets
+800B6AE4 kawai_action_a
+800B6B4C kawai_action_c
+800B79B8 funcb79b8
+800B86D8 kawai_action_b
+800B8CF0 funcb8cf0
+800B9B0C kawai_action_d
+
+// FIELD.BIN_event.cpp
+800BA534 field_init_structs_events_actors
+800BA65C field_event_update
+800BA7C4 field_init_default_values
+800BAF54 field_event_run_init
+800BB1B4 funcbb1b4
+800BB3A8 field_event_opcode_cycle
+800BBBCC field_script_update_animation_state
+800BBF74 field_script_request_run
+800BC338 funcbc338
+800BC438 funcbc438
+800BC4D4 funcbc4d4
+800BC9FC field_event_update_actor_debug
+800BEAD4 field_debug_event_opcode
+800BECA4 field_debug_add_parse_value_to_page2
+800BEE10 read_memory_block_one_byte
+800BF3AC store_memory_block_one_byte
+800BF908 read_memory_block_two_bytes
+800C0248 store_memory_block_two_bytes
+800C0B54 funcc0b54
+
+// FIELD.BIN_script_opcodes.cpp
+800C0BE8 0x5F NOP
+800C0C18 0x24 WAIT
+800C0DE0 0x80 SETBYTE
+800C0E5C 0x81 SETWORD
+800C0EDC 0x9A LBYTE
+800C0F58 0x9B HBYTE
+800C0FD8 0x9C 2BYTE
+800C107C 0x9D SETX
+800C1214 0x9E GETX
+800C13B0 0x9F SEARCHX
+800C1674 0x82 BITON
+800C1714 0x83 BITOFF
+800C17B8 0x84 BITXOR
+800C1858 field_event_opcode_d0_line
+800C1AE4 0xD3 SLINE
+800C1BF4 0xD1 LINON
+800C1D24 0x2B SLIP
+800C1DE4 0x14 IFUB
+800C1EEC 0x15 IFUBL
+800C2000 funcc2000
+800C228C 0x16 IFSW
+800C2394 0x17 IFSWL
+800C24A8 funcc24a8
+800C2754 0x18 IFUW
+800C285C 0x19 IFUWL
+800C2970 funcc2970
+800C2BFC 0x30 IFKEY
+800C2CA8 0x31 IFKEYON
+800C2D54 0x32 IFKEYOFF
+800C2E00 funcc2e00
+800C2F7C 0x01 REQ
+800C2FFC 0x02 REQSW
+800C307C 0x03 REQEW
+800C30FC 0x04 PREQ
+800C31E4 0x05 PRQSW
+800C32CC 0x06 PRQEW
+800C33B4 funcc33b4
+800C3A20 0x00 RET
+800C3C34 0x07 RETTO
+800C3EA0 0x12 JMPB
+800C3F1C 0x13 JMPBL
+800C3FA0 0x10 JMPF
+800C401C 0x11 JMPFL
+800C40A4 0x60 MAPJUMP
+800C42B0 0xD8 PMJMP
+800C4350 0xD9 PMJMP2
+800C43C4 0x20 MINIGAME
+800C45AC field_event_opcode_70_batle
+800C46A4 clear_akao
+800C46D0 0xF2 AKAO
+800C4804 0xDA AKAO2
+800C493C 0xF1 SOUND
+800C49EC 0xF0 MUSIC
+800C4A40 0xF3 MUSVT
+800C4A94 0xF4 MUSVM
+800C4AE8 0xFD CMUSC
+800C4BCC set_and_apply_field_music_params
+800C4C9C get_akao_offset_in_field
+800C4CE8 0xF6 BMUSC
+800C4DE8 0xFC FMUSC
+800C4EE8 field_event_opcode_21_tutor
+800C506C 0xF5 MULCK
+800C50EC 0x27 BGMOVIE
+800C5194 field_event_opcode_61_scrlo
+800C523C field_event_opcode_0e_dskcg
+800C532C 0x33 UC
+800C5414 field_event_opcode_71_btlon
+800C54BC 0x69 MPDSP
+800C5564 0xFB MVCAM
+800C560C 0xFF GAMEOVER
+800C5668 0xBF CC
+800C5740 0xA1 CHAR
+800C5898 0xA2 DFANM
+800C5A2C 0xDC CCANM
+800C5B38 funcc5b38
+800C5CE8 0xA3 ANIME1
+800C5CE8 0xAE ANIME2
+800C5E80 0xAF ANIM!1
+800C5E80 0xBA ANIM!2
+800C5FF4 0xB0 CANIM1
+800C5FF4 0xBB CANIM2
+800C63CC 0xB1 CANM!1
+800C63CC 0xBC CANM!2
+800C6748 0xAC ANIMW
+800C684C 0xDD ANIMB
+800C6924 0xA8 MOVE
+800C6D64 0xAD FMOVE
+800C6FD8 0xA9 CMOVE
+800C728C 0xDB FCFIX
+800C7354 0xC0 JUMP
+800C75F0 0xC2 LADER
+800C7C3C 0x2A PMOVA
+800C7CE8 0xAA MOVA
+800C7D5C funcc7d5c
+800C814C 0xB6 DIRA
+800C81C0 0x34 PDIRA
+800C826C set_direction_to_current_entity_by_entity_id
+800C8514 0xAB TURA
+800C8588 0x35 PTURA
+800C8634 funcc8634
+800C8B98 0xC3 OFST
+800C8F64 0xC4 OFSTW
+800C9080 0xDE TURNW
+800C91D8 0xB5 TURN
+800C955C 0xB4 TURNGEN
+800C9A20 0xB3 DIR
+800C9B88 0xC6 SLIDR
+800C9C84 0xD7 SLDR2
+800C9D80 0xC5 TALKR
+800C9E7C 0xD6 TLKR2
+800C9F78 0xB2 MSPED
+800CA074 0xBD ASPED
+800CA158 0xB7 GETDIR
+800CA254 0x73 PGTDR
+800CA394 0xB9 GETAI
+800CA490 0xB8 GETAXY
+800CA5D4 0xC1 AXYZI
+800CA77C 0x75 PXYZI
+800CA95C 0xA4 VISI
+800CAA24 0x7E TLKON
+800CAAEC 0xA5 XYZI
+800CAC98 0xA7 XYZ
+800CADFC 0xA6 XYI
+800CAF60 0x40 MESSAGE
+800CB01C 0x43 MPNAM
+800CB0B8 0x48 ASK
+800CB1CC 0x2E WCLS
+800CB28C 0x2F WSIZE
+800CB354 0x50 WINDOW funccb354
+800CB450 0x55 WROW
+800CB4F8 0x51 WMOVE
+800CB5C0 0x53 WREST
+800CB660 0x54 WCLSE
+800CB718 0x52 WMODE
+800CB7C0 0x8F AND
+800CB858 0x90 AND2
+800CB8F4 0x91 OR
+800CB98C 0x92 OR2
+800CBA28 0x93 XOR
+800CBAC0 0x94 XOR2
+800CBB5C 0x85 PLUS
+800CBBF4 0x76 PLUS!
+800CBCA4 0x86 PLUS2
+800CBD40 0x77 PLUS2!
+800CBDFC 0x87 MINUS
+800CBE94 0x78 MINUS!
+800CBF40 0x88 MINUS2
+800CBFDC 0x79 MINUS2!
+800CC098 0x89 MUL
+800CC134 0x8A MUL2
+800CC1D4 0x8B DIV
+800CC284 0x8C DIV2
+800CC358 0x8D MOD
+800CC404 0x8E MOD2
+800CC4D8 0x95 INC
+800CC558 0x7A INC!
+800CC5EC 0x96 INC2
+800CC670 0x7B INC2!
+800CC70C 0x97 DEC
+800CC78C 0x7C DEC!
+800CC824 0x98 DEC2
+800CC8A8 0x7D DEC2!
+800CC944 0x99 RANDOM
+800CC9EC 0x7F RDMSD
+800CCA68 0xE0 BGON
+800CCB10 0xE1 BGOFF
+800CCBBC 0xE4 BGCLR
+800CCC3C 0xE2 BGROL
+800CCCC8 0xE3 BGROL2
+800CCD54 field_event_opcode_f8_pmvie
+800CCE94 field_event_opcode_f9_movie
+800CCFE8 field_event_opcode_fa_mvief
+800CD0C4 0xD2 MPJPO
+800CD16C field_event_opcode_64_scr2d
+800CD214 field_event_opcode_62_scrlc
+800CD2E8 field_event_opcode_63_scrla
+800CD3F0 field_event_opcode_6f_scrlp
+800CD554 field_event_opcode_65_scrcc
+800CD5F0 field_event_opcode_66_scr2dc
+800CD6B0 field_event_opcode_68_scr2dl
+800CD770 field_event_opcode_67_scrlw
+800CD834 0xE5 STPAL
+800CD91C 0xEB STPLS
+800CDA24 0xE6 LDPAL
+800CDB0C 0xEC LDPLS
+800CDC14 funccdc14
+800CDC28 0xE7 CPPAL
+800CDD40 0xED CPPAL2
+800CDE8C 0xE8 RTPAL
+800CE054 0xEE RTPAL2
+800CE214 0xE9 ADPAL
+800CE480 0xEF ADPAL2
+800CE6F4 0xEA MPPAL2
+800CE904 0xDF MPPAL
+800CEB20 field_set_1st_party_character_as_manual_model
+800CEB94 0xA0 PC
+800CEE44 0xC8 PRTYP
+800CF028 0xC9 PRTYM
+800CF140 0xCA PRTYE
+800CF200 0x0A SPTYE
+800CF2BC 0x0B GTPYE
+800CF368 funccf368
+800CF4CC funccf4cc
+800CF5A0 field_copy_party_to_battle_party
+800CF60C field_copy_battle_party_to_party
+800CF66C funccf66c
+800CF6C0 funccf6c0
+800CF718 0xCB IFPRTYQ
+800CF874 0xCC IFMEMBQ
+800CF9B8 0xCD MMBud
+800CFAF0 0xCE MMBLK
+800CFB84 0xCF MMBUK
+800CFC1C 0xC7 SOLID
+800CFCE4 field_event_opcode_6a_vwoft
+800CFE78 field_event_opcode_08_join
+800D0180 field_event_opcode_09_split
+800D0518 field_event_join_set
+800D0938 field_event_split_set
+800D0B4C field_event_split_join_set_move
+800D1200 field_event_split_join_end_move
+800D1350 field_event_split_join_set_turn
+800D152C field_event_split_join_end_turn
+800D1654 0x6B FADE
+800D184C 0x25 NFADE
+800D195C 0x6C FADEW
+800D1A80 0x6D IDLCK
+800D1B94 0x56 GWCOL
+800D1C68 0x57 SWCOL
+800D1D3C 0x6E LSTMP
+800D1DB8 field_event_opcode_5e_shake
+800D1F20 0x58 STITM
+800D1FDC 0x59 DLITM
+800D2098 0x5A CKITM
+800D2164 0x0F SPECIAL
+800D2794 field_event_opcode_2d_bgscr
+800D28A8 field_event_opcode_2c_bgdph
+800D298C 0x5B SMTRA
+800D2A70 0x5C DMTRA
+800D2B60 0x5D CMTRA
+800D2C60 0x49 MENU
+800D2E94 0x4A MENU2
+800D2F3C 0x74 GETPC
+800D3004 0x41 MPARA
+800D3124 0x42 MPRA2
+800D3264 0xD4 SIN
+800D3330 0xD5 COS
+800D33FC funcd33fc
+800D348C funcd348c
+800D3548 0x3E MHMMX
+800D368C 0x3C HMPMAX1
+800D368C 0x3D HMPMAX2
+800D368C 0x3F HMPMAX3
+800D3728 0x45 MPu
+800D3840 0x47 MPd
+800D3958 0x4D HPu
+800D3A70 0x4F HPd
+800D3B88 0x39 GOLDu
+800D3C18 0x3A GOLDd
+800D3CA8 0x3B CHGLD
+800D3D40 0xF7 CHMPH
+800D3DCC 0xFE CHMST
+800D3E64 field_event_opcode_38_sttim
+800D3F30 0x36 WSPCL
+800D4038 0x37 WNUMB
+800D4160 field_event_opcode_72_btlmd
+800D4214 field_event_opcode_22_btmd2
+800D4300 field_event_opcode_23_btrlt
+800D4378 field_event_opcode_4b_btltb
+800D4420 0x26 BLINK
+800D44E8 0x28 KAWAI
+800D4780 0x29 KAWIW
+800D4838 funcd4838
+800D4840 funcd4840
+800D4848 funcd4848
+
+// FIELD.BIN_dialog.cpp
+800D48C0 field_window_reset_all
+800D493C field_window_reset
+800D4B28 field_window_set_state_to_close
+800D4BC0 set_window_style_cbc
+800D4BFC funcd4bfc
+800D4C68 field_dialog_set_size
+800D4E24 add_x_y_to_window_position
+800D4E88 set_window_height
+800D4EB4 field_dialog_manage_states
+800D5228 manage_ask_window_states
+800D5750 play_window_pointer_click_sound
+800D579C field_dialog_window_init
+800D5A60 field_dialog_window_growth
+800D5C9C field_dialog_copy_text_from_field
+800D6D44 dialog_scroll_text
+800D6E0C dialog_scroll_text_during_ok
+800D6F6C field_dialog_window_init_next
+800D707C field_dialog_window_discrease
+800D726C field_dialog_get_variable_from_bank
+800D775C field_dialog_convert_digit_to_string
+800D785C field_dialog_convert_digit_to_string_with_space
+800D7970 field_dialog_convert_hex_to_string
+800D7A58 copy_dialog_to_map_name
+800D7C98 funcd7c98
+
+// FIELD.BIN_debug.cpp
+800D7D6C field_debug_init_buffers
+800D7F9C field_debug_init_pages
+800D8194 funcd8194
+800D828C field_debug_init_page
+800D8334 field_debug_set_pos_size
+800D83A8 funcd83a8
+800D8420 funcd8420
+800D8498 funcd8498
+800D84CC field_debug_reset_strings
+800D85C0 funcd85c0
+800D85FC field_debug_render
+800D8710 field_debug_render_page
+800D9C04 field_debug_render_string
+800D9F00 field_debug_add_string_to_page_next_row
+800D9FFC funcd9ffc
+800DA124 field_debug_copy_string_into_page
+800DA194 field_debug_set_row_color
+800DA1D4 funcda1d4
+800DA214 field_debug_set_page_color
+800DA28C funcda28c
+800DA2CC funcda2cc
+800DA310 funcda310
+800DA334 field_debug_copy_string
+800DA368 field_debug_concat_string
+800DA3C4 funcda3c4
+800DA3F0 funcda3f0
+800DA424 field_int_to_string
+800DA444 field_int2_to_string
+800DA480 field_int4_to_string
+800DA4F funcda4fc

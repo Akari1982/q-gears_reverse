@@ -15,6 +15,11 @@
 80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
 8006794c [][][][] pointer to 8008b000.
 
+8006797c [][][][] reverb enabled.
+80067980 [][][][] ??? reverb related.
+80067984 [][][][] reverb work area start address.
+800679e8 [][][][] 1f801c00 start of spu registers.
+
 80067a50 [][][][] poinyer to something.
 
 80068158 [][][][] store here pointer from 80011a44.

@@ -802,7 +802,7 @@ V0 = S0 < 000a;
 
 A0 = w[80067e58 + S0 * 4];
 S1 = 80067e58;
-80017AFC	jal    func17fc0 [$80017fc0]
+func17fc0();
 
 80017B04	beq    v0, zero, L17b14 [$80017b14]
 S4 = 0001;
@@ -1092,55 +1092,7 @@ return 0;
 
 
 ////////////////////////////////
-// func17f40
-V0 = w[80067a50];
-80017F48	nop
-80017F4C	bne    v0, zero, L17f5c [$80017f5c]
-80017F50	lui    t0, $8000
-80017F54	j      L17fb8 [$80017fb8]
-V0 = 0;
-
-L17f5c:	; 80017F5C
-80017F5C	lui    a3, $4000
-A2 = fffffff;
-A1 = V0;
-
-L17f6c:	; 80017F6C
-V1 = w[A1 + 0000];
-80017F70	nop
-V0 = V1 & T0;
-80017F78	bne    v0, zero, L17fac [$80017fac]
-V0 = V1 & A3;
-80017F80	bne    v0, zero, L17fb4 [$80017fb4]
-V1 = V1 & A2;
-V0 = V1 < A0;
-80017F8C	beq    v0, zero, L17fb8 [$80017fb8]
-V0 = 0001;
-V0 = w[A1 + 0004];
-80017F98	nop
-V0 = V1 + V0;
-V0 = A0 < V0;
-80017FA4	bne    v0, zero, L17fb8 [$80017fb8]
-V0 = 0001;
-
-L17fac:	; 80017FAC
-80017FAC	j      L17f6c [$80017f6c]
-A1 = A1 + 0008;
-
-L17fb4:	; 80017FB4
-V0 = 0;
-
-L17fb8:	; 80017FB8
-80017FB8	jr     ra 
-80017FBC	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func17fc0()
-
-A0 <<= w[80067a10]; // always 3 because spu address always divided by 8
+// func17f40()
 
 if( w[80067a50] == 0 ) return 0;
 
@@ -1158,9 +1110,40 @@ while( true )
 
         if( V1 >= A0 ) return 1;
 
-        V0 = w[A1 + 0004];
+        V0 = w[A1 + 4];
         V0 = V1 + V0;
         if( A0 < V0 ) return 1;
+    }
+
+    A1 += 8;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func17fc0()
+// checks if reverb work area was not reserved
+
+addr <<= w[80067a10]; // always 3 because spu address always divided by 8
+
+if( w[80067a50] == 0 ) return 0;
+
+A1 = w[80067a50];
+
+while( true )
+{
+    V1 = w[A1 + 0];
+
+    if( ( V1 & 80000000 ) == 0 )
+    {
+        if( V1 & 40000000 ) return 0;
+
+        V1 = V1 & 0fffffff;
+
+        if( V1 >= addr ) return 1;
+
+        if( addr < ( V1 + w[A1 + 4] ) ) return 1;
     }
 
     A1 += 8;
