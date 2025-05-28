@@ -1162,7 +1162,7 @@
 80056CDC func56cdc
 80056D5C func56d5c
 80056DBC system_psyq_spu_set_reverb
-80056E8C func56e8c
+80056E8C system_psyq_spu_set_irq
 80056FCC func56fcc
 8005700C func5700c
 8005703C func5703c

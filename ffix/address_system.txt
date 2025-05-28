@@ -18,9 +18,16 @@
 8006797c [][][][] reverb enabled.
 80067980 [][][][] ??? reverb related.
 80067984 [][][][] reverb work area start address.
+8006798c [][][][] reverb mode type.
+80067990 [][]     reverb depth left.
+80067992 [][]     reverb depth right.
+80067994 [][][][] ???
+80067998 [][][][] ???
 800679e8 [][][][] 1f801c00 start of spu registers.
+80067a10 [][][][] divisor for spu address (always 0x8).
+80067a50 [][][][] pointer to something.
 
-80067a50 [][][][] poinyer to something.
+80067e58 array of pointers to reverb work area (0xa items, 0x4 size).
 
 80068158 [][][][] store here pointer from 80011a44.
 

@@ -36497,8 +36497,12 @@ S0 = w[SP + 0010];
 80056814	jr     ra 
 SP = SP + 0028;
 ////////////////////////////////
-// func5681c
-8005681C	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func5681c()
+
 A2 = 1f801daa;
 T0 = 0018;
 8005682C	lui    v0, $8008
@@ -36615,21 +36619,22 @@ A0 = 7f00;
 V1 = V0 + 00ba;
 
 loop56a20:	; 80056A20
-V0 = S0 & ffff;
-S0 = S0 + 0001;
-[V1 + ff7a] = w(0);
-[V1 + 005e] = w(V0);
-[V1 + ffda] = h(A1);
-[V1 + ffce] = w(0);
-[V1 + 0046] = h(A0);
-[V1 + 0002] = h(0);
-[V1 + fffc] = h(0);
-[V1 + ffb6] = w(0);
-[V1 + 0000] = h(0);
-V0 = S0 & ffff;
-V0 = V0 < 0018;
+    V0 = S0 & ffff;
+    S0 = S0 + 0001;
+    [V1 + ff7a] = w(0);
+    [V1 + 005e] = w(V0);
+    [V1 + ffda] = h(A1);
+    [V1 + ffce] = w(0);
+    [V1 + 0046] = h(A0);
+    [V1 + 0002] = h(0);
+    [V1 + fffc] = h(0);
+    [V1 + ffb6] = w(0);
+    [V1 + 0000] = h(0);
+    V0 = S0 & ffff;
+    V0 = V0 < 0018;
+    V1 = V1 + 0134;
 80056A54	bne    v0, zero, loop56a20 [$80056a20]
-V1 = V1 + 0134;
+
 A2 = 3fff000;
 80056A64	lui    v0, $8008
 A0 = 0004;
@@ -36652,29 +36657,27 @@ V1 = 80083158;
 V0 = w[V1 + 0008];
 S0 = 0;
 V0 = V0 | 0080;
-80056AC0	jal    func5c86c [$8005c86c]
 [V1 + 0008] = w(V0);
-80056AC8	jal    system_psyq_spu_set_reverb [$80056dbc]
-A0 = 0001;
-A0 = S0 & ffff;
+func5c86c();
+
+A0 = 1;
+system_psyq_spu_set_reverb();
 
 loop56ad4:	; 80056AD4
-80056AD4	jal    func576bc [$800576bc]
-A1 = 1030;
-S0 = S0 + 0001;
-V0 = S0 & ffff;
-V0 = V0 < 0018;
+    A0 = S0 & ffff;
+    A1 = 1030;
+    80056AD4	jal    func576bc [$800576bc]
+
+    S0 = S0 + 0001;
+    V0 = S0 & ffff;
+    V0 = V0 < 0018;
 80056AE8	bne    v0, zero, loop56ad4 [$80056ad4]
-A0 = S0 & ffff;
+
 80056AF0	lui    v0, $8008
 80056AF4	addiu  v1, v0, $e3c8 (=-$1c38)
 [V1 + 0004] = w(0);
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
 [V0 + e3c8] = w(0);
 [8007e3d0] = w(0);
-80056B10	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
 
 
@@ -36700,10 +36703,10 @@ func56644();
 
 80056B60	jal    func566d0 [$800566d0]
 
-80056B68	jal    func5681c [$8005681c]
+func5681c();
 
 A0 = 0;
-80056B70	jal    func56e8c [$80056e8c]
+80056B70	jal    system_psyq_spu_set_irq [$80056e8c]
 
 A0 = 0;
 80056B78	jal    func56fcc [$80056fcc]
@@ -36874,98 +36877,57 @@ return w[8006797c];
 
 
 ////////////////////////////////
-// func56e8c()
+// system_psyq_spu_set_irq()
+// Turns interrupt request ON/OFF.
+// Values of on_off can be:
+// SPU_ON Set interrupt request
+// SPU_OFF Cancel interrupt request
+// SPU_RESET Reset interrupt request (cancel current
+// interrupt request and reset
+
+on_off = A0;
 
 spu = w[800679e8];
 
-80056E90	beq    a0, zero, L56ea4 [$80056ea4]
+if( ( on_off == 0 ) || ( on_off == 3 ) ) // SPU_OFF or SPU_RESET
+{
+    [spu + 1aa] = h(hu[spu + 1aa] & ffbf); // disable IRQ9
 
-V0 = 0003;
-80056E9C	bne    a0, v0, L56f20 [$80056f20]
-V0 = 0001;
+    V1 = 1;
+    while( hu[spu + 1aa] & 0040 ) //   6     IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+    {
+        if( V1 >= f01 )
+        {
+            A0 = 80012090; // "SPU:T/O [%s]\n"
+            A1 = 800120a0; // "wait (IRQ/ON)"
+            system_bios_printf();
 
-L56ea4:	; 80056EA4
-V0 = w[800679e8];
-80056EAC	nop
-V1 = hu[V0 + 01aa];
-80056EB4	nop
-V1 = V1 & ffbf;
-[V0 + 01aa] = h(V1);
-V0 = hu[V0 + 01aa];
-80056EC4	nop
-V0 = V0 & 0040;
-80056ECC	beq    v0, zero, L56f1c [$80056f1c]
-V1 = 0;
-V1 = V1 + 0001;
+            return -1; // SPU_ERROR
+        }
+        V1 += 1;
+    }
+}
 
-loop56ed8:	; 80056ED8
-V0 = V1 < 0f01;
-80056EDC	bne    v0, zero, L56ef8 [$80056ef8]
+if( ( on_off == 1 ) || ( on_off == 3 ) ) // SPU_ON or SPU_RESET
+{
+    [spu + 1aa] = h(hu[spu + 1aa] | 0040); // enable IRQ9
 
-A0 = 80012090; // "SPU:T/O [%s]\n"
-A1 = 800120a0; // "wait (IRQ/ON)"
-80056EF0	j      L56f80 [$80056f80]
+    V1 = 1;
+    while( ( hu[spu + 1aa] & 0040 ) == 0 ) //   6     IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+    {
+        if( V1 >= f01 )
+        {
+            A0 = 80012090; // "SPU:T/O [%s]\n"
+            A1 = 800120b0; // "wait (IRQ/OFF)"
+            system_bios_printf();
 
-L56ef8:	; 80056EF8
-V0 = w[800679e8];
-80056F00	nop
-V0 = hu[V0 + 01aa];
-80056F08	nop
-V0 = V0 & 0040;
-80056F10	bne    v0, zero, loop56ed8 [$80056ed8]
-V1 = V1 + 0001;
-80056F18	addiu  v1, v1, $ffff (=-$1)
+            return -1; // SPU_ERROR
+        }
+        V1 += 1;
+    }
+}
 
-L56f1c:	; 80056F1C
-V0 = 0001;
-
-L56f20:	; 80056F20
-80056F20	beq    a0, v0, L56f30 [$80056f30]
-V0 = 0003;
-80056F28	bne    a0, v0, L56fb8 [$80056fb8]
-V0 = A0;
-
-L56f30:	; 80056F30
-V0 = w[800679e8];
-80056F38	nop
-V1 = hu[V0 + 01aa];
-80056F40	nop
-V1 = V1 | 0040;
-[V0 + 01aa] = h(V1);
-V0 = hu[V0 + 01aa];
-80056F50	nop
-V0 = V0 & 0040;
-80056F58	bne    v0, zero, L56fb4 [$80056fb4]
-V1 = 0;
-V1 = V1 + 0001;
-
-loop56f64:	; 80056F64
-V0 = V1 < 0f01;
-80056F68	bne    v0, zero, L56f90 [$80056f90]
-80056F6C	nop
-A0 = 80012090; // "SPU:T/O [%s]\n"
-A1 = 800120b0; // "wait (IRQ/OFF)"
-
-L56f80:	; 80056F80
-80056F80	jal    system_bios_printf [$80015c38]
-80056F84	nop
-80056F88	j      L56fb8 [$80056fb8]
-80056F8C	addiu  v0, zero, $ffff (=-$1)
-
-L56f90:	; 80056F90
-V0 = w[800679e8];
-80056F98	nop
-V0 = hu[V0 + 01aa];
-80056FA0	nop
-V0 = V0 & 0040;
-80056FA8	beq    v0, zero, loop56f64 [$80056f64]
-V1 = V1 + 0001;
-80056FB0	addiu  v1, v1, $ffff (=-$1)
-
-L56fb4:	; 80056FB4
-V0 = A0;
-
-L56fb8:	; 80056FB8
+return on_off;
 ////////////////////////////////
 
 
@@ -43729,8 +43691,7 @@ L5c9e0:	; 8005C9E0
 8005C9E0	beq    s0, s4, L5c9f4 [$8005c9f4]
 8005C9E4	nop
 A0 = hu[S1 + 0008];
-8005C9EC	jal    func5c86c [$8005c86c]
-8005C9F0	nop
+func5c86c();
 
 L5c9f4:	; 8005C9F4
 [S2 + 0000] = w(S1);
@@ -43901,72 +43862,55 @@ return S1;
 
 spu = w[800679e8];
 
-type = S0 = A0;
+type = A0;
 clear_wa = 0;
 
 if( type & 0100 ) // SPU_REV_MODE_CLEAR_WA
 {
+    type &= feff;
+
     // If SPU_REV_MODE_CLEAR_WA is set in attr.mode, the reverb work area is cleared, as a measure
     // against noise when changing modes. Since the sound buffer is cleared by synchronous DMA transfer,
     // other processing (drawing, sound generation) is blocked during this process
-
-    type &= fffffeff;
     clear_wa = 1;
 }
 
-if( S0 >= a ) return -1;
+if( type >= a ) return -1; // SPU_ERROR
 
-V0 = S0 << 02;
-V1 = 80067e58;
-S1 = V0 + V1;
-A0 = w[S1 + 0000];
-8005CC60	jal    func17fc0 [$80017fc0]
+A0 = w[80067e58 + type * 4];
+func17fc0(); // checks if reverb work area was not reserved
 
-if( V0 != 0 ) return -1;
+if( V0 != 0 ) return -1; // SPU_ERROR
 
-A1 = SP + 0010;
-V0 = S0 << 04;
-V0 = V0 + S0;
-V0 = V0 << 02;
-V1 = 80067e88;
-A0 = V0 + V1;
-V1 = 0043;
-[8006798c] = w(S0);
-V0 = w[S1 + 0000];
-8005CCA0	addiu  a2, zero, $ffff (=-$1)
-[80067984] = w(V0);
+[8006798c] = w(type);
+[80067984] = w(w[80067e58 + type * 4]);
 
-loop5ccac:	; 8005CCAC
-V0 = bu[A0 + 0000];
-A0 = A0 + 0001;
-8005CCB4	addiu  v1, v1, $ffff (=-$1)
-[A1 + 0000] = b(V0);
-8005CCBC	bne    v1, a2, loop5ccac [$8005ccac]
-A1 = A1 + 0001;
-V0 = 0007;
-8005CCC8	beq    s0, v0, L5cce4 [$8005cce4]
-[SP + 0010] = w(0);
-V0 = 0008;
-8005CCD4	beq    s0, v0, L5ccfc [$8005ccfc]
-V0 = 007f;
-8005CCDC	j      L5cd10 [$8005cd10]
-8005CCE0	nop
+src = 80067e88 + type * 44;
+dst = SP + 10;
+for( int i = 43; i != -1; --i )
+{
+    [dst] = b(bu[src]);
+    src += 1;
+    dst += 1;
+}
+[SP + 10] = w(0);
 
-L5cce4:	; 8005CCE4
-[80067998 + 0000] = w(7f);
-[80067998 + fffc] = w(7f);
-8005CCF4	j      L5cd20 [$8005cd20]
+if( type == 7 ) // SPU_REV_MODE_ECHO
+{
+    [80067994] = w(7f);
+    [80067998] = w(7f);
+}
+else if( type == 8 ) // SPU_REV_MODE_DELAY
+{
+    [80067994] = w(7f);
+    [80067998] = w(0);
+}
+else
+{
+    [80067994] = w(0);
+    [80067998] = w(0);
+}
 
-L5ccfc:	; 8005CCFC
-[80067998 + 0000] = w(0);
-[80067998 + fffc] = w(V0);
-8005CD08	j      L5cd20 [$8005cd20]
-
-L5cd10:	; 8005CD10
-[80067998 + 0000] = w(0);
-[80067998 + fffc] = w(0);
-
-L5cd20:	; 8005CD20
 is_reverb_on = (hu[spu + 1aa] >> 7) & 1; // Reverb Master Enable
 
 if( is_reverb_on != 0 )
@@ -43975,17 +43919,18 @@ if( is_reverb_on != 0 )
     [spu + 1aa] = h(hu[spu + 1aa] & ff7f);
 }
 
-[spu + 184] = h(0);
-[spu + 186] = h(0);
-[80067990 + 0] = h(0);
-[80067990 + 2] = h(0);
+[spu + 184] = h(0); // attr->depth.left
+[80067990] = h(0);
+
+[spu + 186] = h(0); // attr->depth.right
+[80067992] = h(0);
 
 A0 = SP + 10;
 system_sound_spu_update_reverb_registers();
 
 if( clear_wa != 0 )
 {
-    A0 = S0;
+    A0 = type;
     system_psyq_spu_clear_reverb_work_area();
 }
 
@@ -48398,7 +48343,7 @@ V0 = w[S0 + 000c];
 80060950	nop
 80060954	beq    v0, zero, L609f8 [$800609f8]
 80060958	nop
-8006095C	jal    func56e8c [$80056e8c]
+8006095C	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
 80060964	jal    func56fcc [$80056fcc]
 A0 = 0;
@@ -48533,7 +48478,7 @@ S4 = V0;
 80060B1C	beq    s4, v0, L60cf4 [$80060cf4]
 A0 = 0;
 S0 = 80083168;
-80060B2C	jal    func56e8c [$80056e8c]
+80060B2C	jal    system_psyq_spu_set_irq [$80056e8c]
 [S0 + 004c] = w(S1);
 80060B34	jal    func56fcc [$80056fcc]
 A0 = 0;
@@ -48835,7 +48780,7 @@ A0 = S2 + 0008;
 A0 = w[80083174];
 80060F78	jal    func575b4 [$800575b4]
 80060F7C	nop
-80060F80	jal    func56e8c [$80056e8c]
+80060F80	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0001;
 
 L60f88:	; 80060F88
@@ -48929,7 +48874,7 @@ V0 = w[S0 + 0014];
 A0 = w[S2 + 3168];
 800610D8	jal    func5709c [$8005709c]
 A1 = S5;
-800610E0	jal    func56e8c [$80056e8c]
+800610E0	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
 V0 = w[S0 + 0014];
 800610EC	nop
@@ -48978,7 +48923,7 @@ A1 = S4;
 A0 = A0 + 0001;
 80061188	jal    func62304 [$80062304]
 A0 = S1 + 0008;
-80061190	jal    func56e8c [$80056e8c]
+80061190	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0001;
 
 L61198:	; 80061198
@@ -49364,7 +49309,7 @@ A0 = A0 + 15f8;
 A0 = w[S0 + 000c];
 800616D4	jal    func575b4 [$800575b4]
 800616D8	nop
-800616DC	jal    func56e8c [$80056e8c]
+800616DC	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0001;
 RA = w[SP + 0018];
 S1 = w[SP + 0014];
@@ -49392,7 +49337,7 @@ S2 = V0;
 80061738	addiu  v0, zero, $ffff (=-$1)
 8006173C	beq    s2, v0, L61894 [$80061894]
 80061740	nop
-80061744	jal    func56e8c [$80056e8c]
+80061744	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
 8006174C	jal    func56fcc [$80056fcc]
 A0 = 0;
@@ -49510,7 +49455,7 @@ S0 = V0;
 800618FC	addiu  v0, zero, $ffff (=-$1)
 80061900	beq    s0, v0, L61b04 [$80061b04]
 80061904	nop
-80061908	jal    func56e8c [$80056e8c]
+80061908	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
 80061910	jal    func56fcc [$80056fcc]
 A0 = 0;
@@ -49640,7 +49585,7 @@ L61ae4:	; 80061AE4
 A0 = w[80083174];
 80061AF4	jal    func575b4 [$800575b4]
 80061AF8	nop
-80061AFC	jal    func56e8c [$80056e8c]
+80061AFC	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0001;
 
 L61b04:	; 80061B04
@@ -49733,7 +49678,7 @@ S2 = V0;
 80061C40	addiu  v0, zero, $ffff (=-$1)
 80061C44	beq    s2, v0, L61dfc [$80061dfc]
 80061C48	nop
-80061C4C	jal    func56e8c [$80056e8c]
+80061C4C	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
 80061C54	jal    func56fcc [$80056fcc]
 A0 = 0;
@@ -49899,7 +49844,7 @@ A0 = S2 + 0008;
 A0 = w[80083174];
 80061EB4	jal    func575b4 [$800575b4]
 80061EB8	nop
-80061EBC	jal    func56e8c [$80056e8c]
+80061EBC	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0001;
 
 L61ec4:	; 80061EC4
@@ -49998,7 +49943,7 @@ A0 = w[V1 + 0080];
 80062014	nop
 80062018	bne    a0, v0, L620ec [$800620ec]
 S0 = V1 + 0080;
-80062020	jal    func56e8c [$80056e8c]
+80062020	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
 80062028	jal    func5652c [$8005652c]
 A0 = S1;
@@ -50050,7 +49995,7 @@ A1 = S4;
 A0 = A0 + 0001;
 800620DC	jal    func62304 [$80062304]
 A0 = S1 + 0008;
-800620E4	jal    func56e8c [$80056e8c]
+800620E4	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0001;
 
 L620ec:	; 800620EC
