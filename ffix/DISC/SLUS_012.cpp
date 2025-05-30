@@ -34928,16 +34928,20 @@ V0 = A0;
 80055288	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func55290
-80055290	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func55290()
+
 [80080aa0] = w(A0);
-[SP + 0010] = w(RA);
-800552A0	jal    func5c8bc [$8005c8bc]
-A0 = 0010;
-RA = w[SP + 0010];
-800552AC	nop
-800552B0	jr     ra 
-SP = SP + 0018;
+
+A0 = 10;
+func5c8bc();
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func552b8
 800552B8	addiu  sp, sp, $ffe8 (=-$18)
@@ -35867,12 +35871,15 @@ V0 = V1 < S1;
 V1 = S1;
 
 L55f98:	; 80055F98
+S1 = V1;
+
 A0 = w[S0 + 0004];
 80055F9C	jal    func5652c [$8005652c]
-S1 = V1;
-A0 = S2;
-80055FA8	jal    func56644 [$80056644]
-A1 = S1;
+
+A0 = S2; // src
+A1 = S1; // size
+func56644();
+
 V0 = w[S0 + 0004];
 V1 = w[S0 + 0008];
 V0 = V0 + S1;
@@ -36092,30 +36099,29 @@ RA = w[SP + 0010];
 800562A8	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func562b0
-800562B0	addiu  sp, sp, $ffe8 (=-$18)
-800562B4	lui    v0, $8008
+
+
+
+////////////////////////////////
+// func562b0()
+
 A0 = A0 & 00ff;
 A0 = A0 << 08;
-[V0 + 0aa0] = w(A0);
-[SP + 0010] = w(RA);
-800562C8	jal    func5c8bc [$8005c8bc]
-A0 = 00e6;
-RA = w[SP + 0010];
-800562D4	nop
-800562D8	jr     ra 
-SP = SP + 0018;
+[80080aa0] = w(A0);
+
+A0 = e6;
+func5c8bc();
 ////////////////////////////////
-// func562e0
-800562E0	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0014] = w(S1);
+
+
+
+////////////////////////////////
+// func562e0()
+
 S1 = A0;
-[SP + 0010] = w(S0);
 S0 = A1;
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S3);
 800562FC	jal    func565dc [$800565dc]
-[SP + 0018] = w(S2);
+
 S3 = V0;
 80056308	bne    s3, zero, L56364 [$80056364]
 8005630C	lui    v0, $8008
@@ -36130,9 +36136,11 @@ S0 = S1;
 S1 = S1 + 0040;
 80056330	jal    func5652c [$8005652c]
 A0 = S2;
-A1 = w[S0 + 0010];
-8005633C	jal    func56644 [$80056644]
-A0 = S1;
+
+A0 = S1; // src
+A1 = w[S0 + 10]; // size
+func56644();
+
 A0 = S0;
 80056348	lui    a1, $8008
 8005634C	addiu  a1, a1, $f720 (=-$8e0)
@@ -36147,13 +36155,10 @@ L56364:	; 80056364
 V0 = S3;
 
 L5636c:	; 8005636C
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80056380	jr     ra 
-SP = SP + 0028;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func56388
 80056388	addiu  sp, sp, $ffe8 (=-$18)
@@ -36322,21 +36327,23 @@ T0 = T0 + 0010;
 800565D4	jr     ra 
 800565D8	nop
 ////////////////////////////////
-// func565dc
-800565DC	lui    v1, $b0be
-V0 = w[A0 + 0000];
-V1 = V1 | b4bf;
-800565E8	jr     ra 
-V0 = V0 + V1;
+
+
+
+////////////////////////////////
+// func565dc()
+
+return w[A0] + b0beb4bf;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func565f0()
+// spu dma transfer callback
 
 A0 = 0;
-func5712c();
+system_psyq_spu_set_transfer_callback();
 
 [800809e0] = w(0);
 ////////////////////////////////
@@ -36344,19 +36351,12 @@ func5712c();
 
 
 ////////////////////////////////
-// func56614
-80056614	addiu  sp, sp, $ffe8 (=-$18)
-80056618	lui    v0, $8008
-V1 = 0001;
-80056620	lui    a0, $8005
-[SP + 0010] = w(RA);
-[V0 + 09e0] = w(V1);
-8005662C	jal    func5712c [$8005712c]
-A0 = A0 + 65f0;
-RA = w[SP + 0010];
-80056638	nop
-8005663C	jr     ra 
-SP = SP + 0018;
+// func56614()
+
+[800809e0] = w(1);
+
+A0 = 800565f0; // func565f0()
+system_psyq_spu_set_transfer_callback();
 ////////////////////////////////
 
 
@@ -36370,32 +36370,26 @@ size = A1;
 [800809e0] = w(1);
 
 A0 = 800565f0; // func565f0()
-func5712c();
+system_psyq_spu_set_transfer_callback();
 
 A0 = src;
 A1 = size;
-func5709c(); // write to spu here
+system_psyq_spu_write();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func56694
-80056694	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(S1);
-[SP + 0018] = w(RA);
-800566A8	jal    func56614 [$80056614]
-S1 = A1;
-A0 = S0;
-800566B4	jal    func5703c [$8005703c]
-A1 = S1;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800566C8	jr     ra 
-SP = SP + 0020;
+// func56694()
+
+addr = A0;
+size = A1;
+
+func56614();
+
+A0 = addr;
+A1 = size;
+system_psyq_spu_read();
 ////////////////////////////////
 
 
@@ -36406,10 +36400,8 @@ SP = SP + 0020;
 do
 {
     loop566dc:	; 800566DC
-        V1 = w[800809e0];
-        V0 = w[800809e0];
-        [SP + 0] = w(V1);
-        [SP + 4] = w(V0);
+        [SP + 0] = w(w[800809e0]);
+        [SP + 4] = w(w[800809e0]);
     800566E8	bne    v1, v0, loop566dc [$800566dc]
 } while( V1 == 1 )
 ////////////////////////////////
@@ -36417,43 +36409,36 @@ do
 
 
 ////////////////////////////////
-// func56700
-80056700	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(S1);
-[SP + 0018] = w(RA);
-80056714	jal    func565dc [$800565dc]
-S1 = A1;
-8005671C	bne    v0, zero, L5673c [$8005673c]
-80056720	addiu  v0, zero, $ffff (=-$1)
-A0 = S0;
-A2 = w[A0 + 0018];
-A3 = w[A0 + 0010];
-80056730	jal    func56750 [$80056750]
-A1 = S1;
-V0 = 0;
+// func56700()
 
-L5673c:	; 8005673C
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80056748	jr     ra 
-SP = SP + 0020;
-////////////////////////////////
-// func56750
-80056750	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0010] = w(S0);
 S0 = A0;
-[SP + 0020] = w(S4);
+S1 = A1;
+
+func565dc();
+
+if( V0 != 0 ) return -1;
+
+A0 = S0;
+A1 = S1;
+A2 = w[A0 + 18];
+A3 = w[A0 + 10];
+func56750();
+
+return 0;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func56750()
+
+S0 = A0;
 S4 = A1;
-[SP + 001c] = w(S3);
 S3 = A2;
-[SP + 0018] = w(S2);
 S2 = A3;
-[SP + 0024] = w(RA);
-80056778	jal    func566d0 [$800566d0]
-[SP + 0014] = w(S1);
+
+func566d0();
+
 V1 = 4f414b41;
 V0 = w[S0 + 0000];
 8005678C	nop
@@ -36463,10 +36448,12 @@ S1 = S0;
 A0 = S2;
 S0 = S0 + 0040;
 A0 = w[S1 + 001c];
-A1 = w[S1 + 0014];
+A1 = w[S1 + 0014]; // size
 A0 = A0 << 04;
-800567B0	jal    func56644 [$80056644]
-A0 = S0 + A0;
+A0 = S0 + A0; // src
+
+func56644();
+
 A0 = S0;
 V0 = S3 << 04;
 800567C0	lui    a1, $8008
@@ -36488,14 +36475,6 @@ L567f0:	; 800567F0
 [V1 + 09e0] = w(V0);
 
 L567fc:	; 800567FC
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80056814	jr     ra 
-SP = SP + 0028;
 ////////////////////////////////
 
 
@@ -36505,23 +36484,15 @@ SP = SP + 0028;
 
 A2 = 1f801daa;
 T0 = 0018;
-8005682C	lui    v0, $8008
-80056830	lui    v1, $8008
-80056834	addiu  v1, v1, $f858 (=-$7a8)
-[V0 + 0a10] = w(V1);
+V1 = 8007f858;
+[80080a10] = w(V1);
 [8007f790] = w(0);
-80056844	lui    v0, $8008
-80056848	lui    a3, $8008
-8005684C	addiu  a3, a3, $bd48 (=-$42b8)
-[V0 + 09ec] = w(A3);
-80056854	lui    v0, $8008
-80056858	lui    a0, $8008
-[V0 + f71c] = w(0);
-80056860	addiu  v0, a0, $f8d8 (=-$728)
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
+A3 = 8007bd48;
+[800809ec] = w(A3);
+[8007f71c] = w(0);
+V0 = 8008f8d8;
 [V0 + 0004] = w(0);
-[A0 + f8d8] = w(0);
+[8007f8d8] = w(0);
 V0 = 800809c0;
 [V0 + 0014] = w(0);
 [V0 + 0010] = w(0);
@@ -36529,18 +36500,15 @@ V0 = 800809c0;
 [V0 + 0008] = w(0);
 [V0 + 0004] = w(0);
 [8008314c] = w(0);
-80056898	lui    v0, $8008
-[A0 + 09c0] = w(0);
+[800809c0] = w(0);
 A0 = 0001;
-[V0 + f8e0] = w(A0);
+[8007f8e0] = w(A0);
 [80083158] = w(0);
-V0 = V0 + 3158;
-800568B4	lui    a1, $8008
+V0 = 80083158;
 [V0 + 0004] = w(A0);
-[A1 + 0a70] = w(0);
-A1 = A1 + 0a70;
-800568C4	lui    v0, $8008
-800568C8	addiu  v0, v0, $f8f0 (=-$710)
+[80080a70] = w(0);
+A1 = 80080a70;
+V0 = 8007f8f0;
 [V1 + 0004] = w(0);
 [V1 + 0008] = w(0);
 [V1 + 006a] = h(0);
@@ -36691,25 +36659,25 @@ A0 = 4;
 A1 = 80080990;
 func56d5c();
 
-A0 = 0;
-func570fc();
+A0 = 0; // SPU_TRANSFER_BY_DMA
+system_psyq_spu_set_transfer_mode();
 
 A0 = 1010;
 func5652c();
 
-A0 = 8006f334;
-A1 = 40;
-func56644();
+A0 = 8006f334; // src
+A1 = 40; // size
+func56644(); // write to spu here
 
 80056B60	jal    func566d0 [$800566d0]
 
 func5681c();
 
 A0 = 0;
-80056B70	jal    system_psyq_spu_set_irq [$80056e8c]
+system_psyq_spu_set_irq();
 
 A0 = 0;
-80056B78	jal    func56fcc [$80056fcc]
+system_psyq_spu_set_irq_callback();
 
 loop56b84:	; 80056B84
     A0 = f2000002;
@@ -36728,7 +36696,7 @@ do
     A0 = f2000002;
     A1 = 2;
     A2 = 1000;
-    A3 = 8005d6bc; // func5d6bc() system_sound_main()
+    A3 = 8005d6bc; // system_sound_main()
     system_bios_open_event();
     [8006f318] = w(V0);
 } while( V0 == -1 )
@@ -36933,77 +36901,83 @@ return on_off;
 
 
 ////////////////////////////////
-// func56fcc
-80056FCC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = w[80067a24];
-80056FDC	nop
-80056FE0	beq    a0, s0, L56ff4 [$80056ff4]
-[SP + 0014] = w(RA);
-80056FE8	lui    at, $8006
-80056FEC	jal    func5700c [$8005700c]
-[AT + 7a24] = w(A0);
+// system_psyq_spu_set_irq_callback()
 
-L56ff4:	; 80056FF4
-V0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80057000	jr     ra 
-SP = SP + 0018;
-80057008	nop
+func = A0;
+prev = w[80067a24];
+
+if( func != prev )
+{
+    [80067a24] = w(func);
+
+    A0 = func;
+    func5700c();
+}
+
+return prev;
 ////////////////////////////////
-// func5700c
-8005700C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
+
+
+////////////////////////////////
+// func5700c()
+
 A1 = A0;
-80057018	jal    system_int_set_interrupt_callback [$80015ed8]
-A0 = 0009;
-RA = w[SP + 0010];
-SP = SP + 0018;
-80057028	jr     ra 
-8005702C	nop
-80057030	nop
-80057034	nop
-80057038	nop
-////////////////////////////////
-// func5703c
-8005703C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A1;
-V0 = 7eff0;
-V0 = V0 < S0;
-80057054	beq    v0, zero, L57064 [$80057064]
-[SP + 0014] = w(RA);
-S0 = 7eff0;
-
-L57064:	; 80057064
-80057064	jal    func17788 [$80017788]
-A1 = S0;
-V0 = w[80067a20];
-80057074	nop
-80057078	bne    v0, zero, L57088 [$80057088]
-V0 = S0;
-[80067a1c] = w(0);
-
-L57088:	; 80057088
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80057090	jr     ra 
-SP = SP + 0018;
-80057098	nop
+A0 = 9;
+system_int_set_interrupt_callback();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func5709c()
+// system_psyq_spu_read()
+// Transfers size bytes of data from the sound buffer to main memory address addr. addr must be a global
+// variable or a variable in a heap area that was allocated by a function such as malloc(). It can’t be the
+// address of a variable declared on the stack in a function.
+// To confirm transfer completion, either call SpuIsTransferCompleted() or set the DMA transfer completion
+// callback function in advance using SpuSetTransferCallback().
+// Due to the limitations of the DMA transfer hardware, transfers are always performed in 64 byte units.
+// Therefore, if the arguments aren’t multiples of 64, it’s possible to damage the data in the SPU memory
 
-src = A0;
+addr = A0;
 size = A1;
 
 if( size > 7eff0 ) size = 7eff0;
 
-A0 = src;
+A0 = addr;
+A1 = size;
+func17788(); // read from spu
+
+if( w[80067a20] == 0 ) [80067a1c] = w(0);
+
+return size;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// system_psyq_spu_write()
+// Transfers size bytes of data from main memory addr to the sound buffer
+// The main memory address addr storing the transfer data must be a global variable or an address in a heap
+// area that was allocated by a function such as malloc(). It can’t address a variable on the stack declared in
+// a function.
+// SpuWrite() does not perform sound buffer memory management, so real waveform data cannot be used if
+// the user does not transfer to addresses which avoid the following areas.
+// • SPU decoded data transfer area: 0x0000-0xfff
+// • System reserved area: 0x1000-0x100f
+// • Addresses after the reverb work area offset (start) address
+// After calling, either call SpuIsTransferCompleted() to confirm transfer completion or set the DMA transfer
+// completion Callback function in advance using SpuSetTransferCallback().
+// Due to the limitations of the DMA transfer hardware, transfers are always performed in 64 byte units. When
+// specifying values which are not multiples of 64 as secondary arguments, since the portion of the value
+// which is a multiple of 64 is transferred, it’s possible to damage the data in the SPU memory
+
+addr = A0;
+size = A1;
+
+if( size > 7eff0 ) size = 7eff0;
+
+A0 = addr;
 A1 = size;
 func17704(); // write to spu
 
@@ -37015,19 +36989,18 @@ return size;
 
 
 ////////////////////////////////
-// func570fc()
+// system_psyq_spu_set_transfer_mode()
+// Sets the mode for transferring data from main memory to the sound buffer. The mode values can be:
+// • SPU_TRANSFER_BY_DMA: DMA transfer; can do other processing during transfer (default value).
+// • SPU_TRANSFER_BY_IO: I/O transfer. Uses CPU; cannot do other processing during transfer.
+// Note: These specifications are valid only when transferring data from main memory to the sound buffer.
+// DMA transfer is always used when transferring data from the sound buffer to main memory.
+// When a transfer is done without first calling this function, the transfer mode is the previously set value
 
-800570FC	beq    a0, zero, L57114 [$80057114]
-V0 = 0001;
-80057104	bne    a0, v0, L57118 [$80057118]
-V0 = 0;
-8005710C	j      L57118 [$80057118]
-V0 = 0001;
+if( A0 == 0 ) V0 = 0; // SPU_TRANSFER_BY_DMA
+else if( A0 == 1 ) V0 = 1; // SPU_TRANSFER_BY_IO
+else V0 = 0;
 
-L57114:	; 80057114
-V0 = 0;
-
-L57118:	; 80057118
 [80067978] = w(A0);
 [80067a04] = w(V0);
 ////////////////////////////////
@@ -37035,14 +37008,19 @@ L57118:	; 80057118
 
 
 ////////////////////////////////
-// func5712c()
+// system_psyq_spu_set_transfer_callback()
+// Sets function to be called when DMA transfer is completed. If func is NULL, the callback is cleared.
+// When a callback set by this function executes at DMA transfer completion, SpuIsTransferCompleted() does
+// not function.
 
-V0 = w[80067a20];
-if( A0 != V0 )
+func = A0;
+prev = w[80067a20];
+
+if( func != prev )
 {
-    [80067a20] = w(A0);
+    [80067a20] = w(func);
 }
-return V0;
+return prev;
 ////////////////////////////////
 
 
@@ -40728,33 +40706,32 @@ L5a27c:	; 8005A27C
 8005A27C	jr     ra 
 [A1 + 0000] = w(V0);
 ////////////////////////////////
-// func5a284
-V0 = w[A0 + 0004];
-8005A288	nop
-8005A28C	beq    v0, zero, L5a2c4 [$8005a2c4]
-A0 = V0;
-V1 = 0001;
-A1 = A1 + 011c;
 
-loop5a29c:	; 8005A29C
-V0 = A0 & V1;
-8005A2A0	beq    v0, zero, L5a2b8 [$8005a2b8]
-8005A2A4	nop
-V0 = w[A1 + 0000];
-A0 = A0 ^ V1;
-V0 = V0 | 0003;
-[A1 + 0000] = w(V0);
 
-L5a2b8:	; 8005A2B8
-A1 = A1 + 0134;
-8005A2BC	bne    a0, zero, loop5a29c [$8005a29c]
-V1 = V1 << 01;
 
-L5a2c4:	; 8005A2C4
-8005A2C4	jr     ra 
-8005A2C8	nop
 ////////////////////////////////
-// func5a2cc
+// func5a284()
+
+V1 = 1;
+mask = w[A0 + 4];
+while( mask != 0 )
+{
+    if( mask & V1 )
+    {
+        mask ^= V1;
+        [A1 + 11c] = w(w[A1 + 11c] | 00000003);
+    }
+
+    V1 <<= 1;
+    A1 += 134;
+}
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func5a2cc()
+
 V0 = w[80080a70];
 8005A2D4	nop
 8005A2D8	beq    v0, zero, L5a318 [$8005a318]
@@ -40779,8 +40756,10 @@ V1 = V1 + 0134;
 A0 = A0 << 01;
 
 L5a318:	; 8005A318
-8005A318	jr     ra 
-8005A31C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5a320
 8005A320	addiu  sp, sp, $ffd0 (=-$30)
@@ -41615,8 +41594,7 @@ V0 = V0 << 10;
 [A0 + 0050] = w(V0);
 
 L5aeb0:	; 8005AEB0
-8005AEB0	jal    func5a284 [$8005a284]
-8005AEB4	nop
+func5a284();
 
 L5aeb8:	; 8005AEB8
 RA = w[SP + 0010];
@@ -44037,6 +44015,10 @@ L5cefc:	; 8005CEFC
 8005CEFC	jr     ra 
 8005CF00	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5cf04
 8005CF04	lui    v0, $8008
 8005CF08	lui    a3, $8008
@@ -44222,11 +44204,11 @@ L5d18c:	; 8005D18C
 A2 = w[8007f790];
 8005D194	nop
 8005D198	beq    a2, zero, L5d260 [$8005d260]
-8005D19C	lui    v0, $8008
+
 V0 = w[A2 + 0004];
 8005D1A4	nop
 8005D1A8	beq    v0, zero, L5d260 [$8005d260]
-8005D1AC	lui    v0, $8008
+
 V0 = h[A2 + 0058];
 A1 = hu[A2 + 0058];
 8005D1B8	beq    v0, zero, L5d204 [$8005d204]
@@ -44254,7 +44236,7 @@ L5d204:	; 8005D204
 V0 = h[A2 + 0064];
 8005D20C	nop
 8005D210	beq    v0, zero, L5d260 [$8005d260]
-8005D214	lui    v0, $8008
+
 V1 = w[A2 + 005c];
 A0 = w[A2 + 0060];
 V0 = hu[A2 + 0058];
@@ -44264,19 +44246,19 @@ S1 = V1 + A0;
 8005D230	lui    v0, $007f
 A0 = S1 & V0;
 V1 = V1 & V0;
-8005D23C	beq    a0, v1, L5d250 [$8005d250]
-A1 = w[8007f71c];
-8005D248	jal    func5a284 [$8005a284]
-A0 = A2;
+if( A0 != V1 )
+{
+    A0 = A2;
+    A1 = w[8007f71c];
+    func5a284();
+}
 
-L5d250:	; 8005D250
 V0 = w[S0 + f790];
 8005D254	nop
 [V0 + 005c] = w(S1);
-8005D25C	lui    v0, $8008
 
 L5d260:	; 8005D260
-V0 = w[V0 + 0a70];
+V0 = w[80080a70];
 8005D264	nop
 8005D268	beq    v0, zero, L5d36c [$8005d36c]
 8005D26C	nop
@@ -44287,86 +44269,80 @@ A2 = 0100;
 A1 = V0 + 0070;
 
 loop5d284:	; 8005D284
-V0 = A3 & A2;
-8005D288	beq    v0, zero, L5d360 [$8005d360]
-8005D28C	nop
-V0 = hu[A1 + 004c];
-8005D294	nop
-8005D298	beq    v0, zero, L5d2d4 [$8005d2d4]
-8005D29C	addiu  v0, v0, $ffff (=-$1)
-V1 = h[A1 + 0090];
-A0 = h[A1 + 0092];
-[A1 + 004c] = h(V0);
-S1 = V1 + A0;
-V0 = S1 & ff00;
-V1 = V1 & ff00;
-8005D2B8	beq    v0, v1, L5d2d0 [$8005d2d0]
-8005D2BC	nop
-V0 = w[A1 + 00ac];
-8005D2C4	nop
-V0 = V0 | 0003;
-[A1 + 00ac] = w(V0);
+    V0 = A3 & A2;
+    8005D288	beq    v0, zero, L5d360 [$8005d360]
+    8005D28C	nop
+    V0 = hu[A1 + 004c];
+    8005D294	nop
+    8005D298	beq    v0, zero, L5d2d4 [$8005d2d4]
+    8005D29C	addiu  v0, v0, $ffff (=-$1)
+    V1 = h[A1 + 0090];
+    A0 = h[A1 + 0092];
+    [A1 + 004c] = h(V0);
+    S1 = V1 + A0;
+    V0 = S1 & ff00;
+    V1 = V1 & ff00;
+    8005D2B8	beq    v0, v1, L5d2d0 [$8005d2d0]
+    8005D2BC	nop
+    V0 = w[A1 + 00ac];
+    8005D2C4	nop
+    V0 = V0 | 0003;
+    [A1 + 00ac] = w(V0);
 
-L5d2d0:	; 8005D2D0
-[A1 + 0090] = h(S1);
+    L5d2d0:	; 8005D2D0
+    [A1 + 0090] = h(S1);
 
-L5d2d4:	; 8005D2D4
-V0 = hu[A1 + 002e];
-8005D2D8	nop
-8005D2DC	beq    v0, zero, L5d318 [$8005d318]
-8005D2E0	addiu  v0, v0, $ffff (=-$1)
-V1 = hu[A1 + 002c];
-A0 = h[A1 + 008e];
-[A1 + 002e] = h(V0);
-S1 = V1 + A0;
-V0 = S1 & ff00;
-V1 = V1 & ff00;
-8005D2FC	beq    v0, v1, L5d314 [$8005d314]
-8005D300	nop
-V0 = w[A1 + 00ac];
-8005D308	nop
-V0 = V0 | 0003;
-[A1 + 00ac] = w(V0);
+    L5d2d4:	; 8005D2D4
+    V0 = hu[A1 + 002e];
+    8005D2D8	nop
+    8005D2DC	beq    v0, zero, L5d318 [$8005d318]
+    8005D2E0	addiu  v0, v0, $ffff (=-$1)
+    V1 = hu[A1 + 002c];
+    A0 = h[A1 + 008e];
+    [A1 + 002e] = h(V0);
+    S1 = V1 + A0;
+    V0 = S1 & ff00;
+    V1 = V1 & ff00;
+    8005D2FC	beq    v0, v1, L5d314 [$8005d314]
+    8005D300	nop
+    V0 = w[A1 + 00ac];
+    8005D308	nop
+    V0 = V0 | 0003;
+    [A1 + 00ac] = w(V0);
 
-L5d314:	; 8005D314
-[A1 + 002c] = h(S1);
+    L5d314:	; 8005D314
+    [A1 + 002c] = h(S1);
 
-L5d318:	; 8005D318
-V0 = hu[A1 + 0046];
-8005D31C	nop
-8005D320	beq    v0, zero, L5d35c [$8005d35c]
-8005D324	addiu  v0, v0, $ffff (=-$1)
-V1 = w[A1 + 0000];
-A0 = w[A1 + 0004];
-[A1 + 0046] = h(V0);
-S1 = V1 + A0;
-V0 = S1 & ff00;
-V1 = V1 & ff00;
-8005D340	beq    v0, v1, L5d358 [$8005d358]
-8005D344	nop
-V0 = w[A1 + 00ac];
-8005D34C	nop
-V0 = V0 | 0010;
-[A1 + 00ac] = w(V0);
+    L5d318:	; 8005D318
+    V0 = hu[A1 + 0046];
+    8005D31C	nop
+    8005D320	beq    v0, zero, L5d35c [$8005d35c]
+    8005D324	addiu  v0, v0, $ffff (=-$1)
+    V1 = w[A1 + 0000];
+    A0 = w[A1 + 0004];
+    [A1 + 0046] = h(V0);
+    S1 = V1 + A0;
+    V0 = S1 & ff00;
+    V1 = V1 & ff00;
+    8005D340	beq    v0, v1, L5d358 [$8005d358]
+    8005D344	nop
+    V0 = w[A1 + 00ac];
+    8005D34C	nop
+    V0 = V0 | 0010;
+    [A1 + 00ac] = w(V0);
 
-L5d358:	; 8005D358
-[A1 + 0000] = w(S1);
+    L5d358:	; 8005D358
+    [A1 + 0000] = w(S1);
 
-L5d35c:	; 8005D35C
-A3 = A3 ^ A2;
+    L5d35c:	; 8005D35C
+    A3 = A3 ^ A2;
 
-L5d360:	; 8005D360
-A2 = A2 << 01;
+    L5d360:	; 8005D360
+    A1 = A1 + 0134;
+    A2 = A2 << 01;
 8005D364	bne    a3, zero, loop5d284 [$8005d284]
-A1 = A1 + 0134;
 
 L5d36c:	; 8005D36C
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8005D37C	jr     ra 
-SP = SP + 0020;
 ////////////////////////////////
 
 
@@ -44599,7 +44575,7 @@ SP = SP + 0020;
 
 
 ////////////////////////////////
-// func5d6bc()
+// system_sound_main()
 
 A0 = f2000002;
 func4bd2c();
@@ -48333,20 +48309,25 @@ RA = w[SP + 0010];
 80060930	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func60938
-80060938	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func60938()
+// spu irq callback
+
 8006093C	lui    v0, $8008
-[SP + 0010] = w(S0);
 S0 = V0 + 3168;
-[SP + 0014] = w(RA);
 V0 = w[S0 + 000c];
 80060950	nop
 80060954	beq    v0, zero, L609f8 [$800609f8]
-80060958	nop
-8006095C	jal    system_psyq_spu_set_irq [$80056e8c]
+
 A0 = 0;
-80060964	jal    func56fcc [$80056fcc]
+system_psyq_spu_set_irq();
+
 A0 = 0;
+system_psyq_spu_set_irq_callback();
+
 A0 = w[S0 + 000c];
 80060970	jal    func575d0 [$800575d0]
 80060974	nop
@@ -48385,10 +48366,10 @@ V1 = V1 | 0100;
 [A0 + 0008] = w(V1);
 
 L609f8:	; 800609F8
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80060A00	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func60a08
 80060A08	addiu  sp, sp, $ffe0 (=-$20)
@@ -48441,6 +48422,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // func60a98()
+// spu dma transfer callback
 
 S0 = w[80083168];
 S0 = S0 + 800;
@@ -48448,40 +48430,37 @@ S0 = S0 + 800;
 A0 = 2100;
 func5652c();
 
-A0 = 80060fa8;
-80060ABC	jal    func5712c [$8005712c]
+A0 = 80060fa8; // func60fa8()
+system_psyq_spu_set_transfer_callback();
 
 A0 = S0;
 A1 = 800;
-80060AC8	jal    func5709c [$8005709c]
+system_psyq_spu_write();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func60ae0
-80060AE0	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0018] = w(S2);
+// func60ae0()
+
 S2 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
-[SP + 0028] = w(S6);
 S6 = A2;
-[SP + 002c] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
 80060B0C	jal    func60a08 [$80060a08]
-[SP + 0010] = w(S0);
+
 S4 = V0;
 80060B18	addiu  v0, zero, $ffff (=-$1)
 80060B1C	beq    s4, v0, L60cf4 [$80060cf4]
-A0 = 0;
+
 S0 = 80083168;
-80060B2C	jal    system_psyq_spu_set_irq [$80056e8c]
 [S0 + 004c] = w(S1);
-80060B34	jal    func56fcc [$80056fcc]
+
 A0 = 0;
+system_psyq_spu_set_irq();
+
+A0 = 0;
+system_psyq_spu_set_irq_callback();
+
 S3 = S2;
 V0 = S3 + 0040;
 S2 = 0001;
@@ -48507,8 +48486,10 @@ A0 = S1;
 [S0 + 000c] = w(A0);
 80060B98	jal    func575d0 [$800575d0]
 [S0 + 0058] = w(V0);
-80060BA0	jal    func570fc [$800570fc]
-A0 = 0;
+
+A0 = 0; // SPU_TRANSFER_BY_DMA
+system_psyq_spu_set_transfer_mode();
+
 80060BA8	jal    func5652c [$8005652c]
 A0 = 1100;
 V0 = w[S0 + 0008];
@@ -48529,51 +48510,58 @@ A1 = 80083168;
 A0 = w[A1 + 0008];
 80060BE8	nop
 V0 = A0 & 0001;
-80060BF0	beq    v0, zero, L60c34 [$80060c34]
 [S0 + 0004] = w(V1);
-V0 = A0 & 0002;
-80060BFC	beq    v0, zero, L60c18 [$80060c18]
-A2 = A1;
-V0 = w[S3 + 0014];
-V1 = w[A1 + 0014];
-V0 = V0 >> 01;
-80060C10	j      L60c1c [$80060c1c]
-V1 = V1 - V0;
 
-L60c18:	; 80060C18
-V1 = 0;
+if( V0 != 0 )
+{
+    V0 = A0 & 0002;
+    A2 = A1;
+    if( V0 != 0 )
+    {
+        V0 = w[S3 + 0014];
+        V1 = w[A1 + 0014];
+        V0 = V0 >> 01;
+        V1 = V1 - V0;
+    }
+    else
+    {
+        V1 = 0;
+    }
 
-L60c1c:	; 80060C1C
-[A2 + 001c] = w(V1);
-80060C20	lui    a0, $8006
-80060C24	jal    func5712c [$8005712c]
-A0 = A0 + 100c;
-80060C2C	j      L60c68 [$80060c68]
-A1 = 2000;
+    [A2 + 001c] = w(V1);
 
-L60c34:	; 80060C34
-V0 = A0 & 0002;
-80060C38	beq    v0, zero, L60c50 [$80060c50]
-80060C3C	nop
-V1 = w[A1 + 0014];
-V0 = w[S3 + 0014];
-80060C48	j      L60c54 [$80060c54]
-V1 = V1 - V0;
+    A0 = 8006100c; // func6100c()
+    system_psyq_spu_set_transfer_callback();
 
-L60c50:	; 80060C50
-V1 = 0;
+    A1 = 2000;
+}
+else
+{
+    V0 = A0 & 0002;
+    if( V0 != 0 )
+    {
+        V1 = w[A1 + 0014];
+        V0 = w[S3 + 0014];
+        V1 = V1 - V0;
+    }
+    else
+    {
+        V1 = 0;
+    }
 
-L60c54:	; 80060C54
-[A1 + 001c] = w(V1);
-80060C58	lui    a0, $8006
-80060C5C	jal    func5712c [$8005712c]
-A0 = A0 + 0a98;
-A1 = 0800;
+    [A1 + 001c] = w(V1);
 
-L60c68:	; 80060C68
+    A0 = 80060a98; // func60a98()
+    system_psyq_spu_set_transfer_callback();
+
+    A1 = 800;
+}
+
+S0 = 80083168;
+
 A0 = w[80083168];
-80060C70	jal    func5709c [$8005709c]
-S0 = V0 + 3168;
+system_psyq_spu_write();
+
 80060C78	beq    s6, zero, L60c9c [$80060c9c]
 V0 = 80080a70;
 V1 = w[V0 + 0020];
@@ -48608,16 +48596,10 @@ V1 = V1 | 0100;
 [A0 + 0008] = w(V1);
 
 L60cf4:	; 80060CF4
-RA = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80060D14	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func60d1c
 V0 = w[8008315c];
@@ -48735,24 +48717,24 @@ S0 = w[SP + 0010];
 80060ED0	jr     ra 
 SP = SP + 0020;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func60ed8
-80060ED8	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S4);
+
 S4 = A0;
-[SP + 0018] = w(S2);
 S2 = A1;
-[SP + 0014] = w(S1);
 80060EF0	lui    s1, $8008
-[SP + 0010] = w(S0);
 S0 = S1 + 3168;
-[SP + 0024] = w(RA);
-[SP + 001c] = w(S3);
 V0 = w[S0 + 000c];
 80060F08	nop
 80060F0C	beq    v0, zero, L60f88 [$80060f88]
 S3 = A2;
-80060F14	jal    func5712c [$8005712c]
+
 A0 = 0;
+system_psyq_spu_set_transfer_callback();
+
 V1 = w[S0 + 0014];
 [800809e0] = w(0);
 V0 = V1 < 1001;
@@ -48762,15 +48744,17 @@ A0 = S3;
 V0 = w[S1 + 3168];
 [S0 + 0014] = w(V1);
 V0 = V0 + S4;
-80060F44	jal    func56fcc [$80056fcc]
 [S1 + 3168] = w(V0);
+
+system_psyq_spu_set_irq_callback();
+
 80060F4C	j      L60f68 [$80060f68]
 80060F50	nop
 
 L60f54:	; 80060F54
-80060F54	lui    a0, $8006
-80060F58	jal    func56fcc [$80056fcc]
-A0 = A0 + 0938;
+A0 = 80060938; // func60938()
+system_psyq_spu_set_irq_callback();
+
 S2 = 1030;
 [S0 + 0014] = w(0);
 
@@ -48779,27 +48763,22 @@ L60f68:	; 80060F68
 A0 = S2 + 0008;
 A0 = w[80083174];
 80060F78	jal    func575b4 [$800575b4]
-80060F7C	nop
-80060F80	jal    system_psyq_spu_set_irq [$80056e8c]
-A0 = 0001;
+
+A0 = 1;
+system_psyq_spu_set_irq();
 
 L60f88:	; 80060F88
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80060FA0	jr     ra 
-SP = SP + 0028;
 ////////////////////////////////
-// func60fa8
-80060FA8	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func60fa8()
+// spu transfer callback
+
 A1 = 0;
 A2 = 1100;
-[SP + 0010] = w(S0);
 S0 = 80083168;
-[SP + 0014] = w(RA);
 A0 = w[S0 + 0010];
 80060FC8	jal    func60d1c [$80060d1c]
 A3 = 2100;
@@ -48814,18 +48793,17 @@ A1 = 2100;
 80060FF0	lui    a2, $8006
 80060FF4	jal    func60ed8 [$80060ed8]
 A2 = A2 + 11bc;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80061004	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
-// func6100c
-8006100C	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func6100c()
+// spu dma transfer callback
+
 A1 = 0001;
 A2 = 1100;
-[SP + 0010] = w(S0);
 S0 = 80083168;
-[SP + 0014] = w(RA);
 A0 = w[S0 + 0010];
 8006102C	jal    func60d1c [$80060d1c]
 A3 = 2100;
@@ -48837,28 +48815,20 @@ A3 = 2900;
 A0 = A0 + 0001;
 A0 = 2000;
 A1 = 2100;
-80061054	lui    a2, $8006
+A2 = 8006121c;
 80061058	jal    func60ed8 [$80060ed8]
-A2 = A2 + 121c;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80061068	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func61070
-80061070	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0020] = w(S4);
 S4 = A1;
-[SP + 0024] = w(S5);
 S5 = A2;
-[SP + 0018] = w(S2);
 80061090	lui    s2, $8008
-[SP + 0010] = w(S0);
 S0 = S2 + 3168;
-[SP + 0028] = w(RA);
-[SP + 001c] = w(S3);
 V0 = w[S0 + 000c];
 800610A8	nop
 800610AC	beq    v0, zero, L61198 [$80061198]
@@ -48872,17 +48842,20 @@ V0 = w[S0 + 0014];
 800610CC	jal    func56614 [$80056614]
 800610D0	nop
 A0 = w[S2 + 3168];
-800610D8	jal    func5709c [$8005709c]
 A1 = S5;
-800610E0	jal    system_psyq_spu_set_irq [$80056e8c]
+system_psyq_spu_write();
+
 A0 = 0;
+system_psyq_spu_set_irq();
+
 V0 = w[S0 + 0014];
 800610EC	nop
 V0 = V0 < 0801;
 800610F4	bne    v0, zero, L61120 [$80061120]
-800610F8	nop
-800610FC	jal    func56fcc [$80056fcc]
+
 A0 = S3;
+system_psyq_spu_set_irq_callback();
+
 V0 = w[S0 + 0014];
 V1 = w[S2 + 3168];
 8006110C	addiu  v0, v0, $f800 (=-$800)
@@ -48895,9 +48868,10 @@ L61120:	; 80061120
 V0 = w[S0 + 0004];
 80061124	nop
 80061128	beq    v0, zero, L6114c [$8006114c]
-8006112C	nop
-80061130	jal    func56fcc [$80056fcc]
+
 A0 = S3;
+system_psyq_spu_set_irq_callback();
+
 V0 = w[S0 + 0004];
 V1 = w[S0 + 001c];
 [S2 + 3168] = w(V0);
@@ -48905,9 +48879,9 @@ V1 = w[S0 + 001c];
 [S0 + 0014] = w(V1);
 
 L6114c:	; 8006114C
-8006114C	lui    a0, $8006
-80061150	jal    func56fcc [$80056fcc]
-A0 = A0 + 0938;
+A0 = 80060938; // func60938()
+system_psyq_spu_set_irq_callback();
+
 S4 = 1030;
 S1 = S4;
 [S0 + 0014] = w(0);
@@ -48923,19 +48897,15 @@ A1 = S4;
 A0 = A0 + 0001;
 80061188	jal    func62304 [$80062304]
 A0 = S1 + 0008;
-80061190	jal    system_psyq_spu_set_irq [$80056e8c]
-A0 = 0001;
+
+A0 = 1;
+system_psyq_spu_set_irq();
 
 L61198:	; 80061198
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800611B4	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func611bc
 800611BC	addiu  sp, sp, $ffe8 (=-$18)
@@ -49246,20 +49216,25 @@ S0 = w[SP + 0010];
 800615F0	jr     ra 
 SP = SP + 0020;
 ////////////////////////////////
-// func615f8
-800615F8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-80061600	jal    func62304 [$80062304]
-A0 = 1038;
-80061608	lui    a0, $8006
-8006160C	jal    func56fcc [$80056fcc]
-A0 = A0 + 0938;
-RA = w[SP + 0010];
-80061618	nop
-8006161C	jr     ra 
-SP = SP + 0018;
+
+
+
 ////////////////////////////////
-// func61624
+// func615f8()
+
+A0 = 1038;
+80061600	jal    func62304 [$80062304]
+
+A0 = 80060938; // func60938()
+system_psyq_spu_set_irq_callback();
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func61624()
+// spu dma transfer callback
+
 80061624	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0014] = w(S1);
 8006162C	lui    s1, $8008
@@ -49272,12 +49247,14 @@ V0 = V1 < 2001;
 80061648	bne    v0, zero, L61678 [$80061678]
 V1 = V1 >> 01;
 A0 = w[S0 + 002c];
-80061654	jal    func5652c [$8005652c]
 A0 = A0 + 2000;
-A1 = w[S0 + 0014];
-A0 = w[S1 + 3168];
-80061664	jal    func56644 [$80056644]
-80061668	addiu  a1, a1, $e000 (=-$2000)
+80061654	jal    func5652c [$8005652c]
+
+
+A0 = w[80083168]; // src
+A1 = w[S0 + 0014] - 2000; // size
+func56644();
+
 V0 = w[S0 + 002c];
 80061670	j      L61688 [$80061688]
 S1 = V0 + 1ff8;
@@ -49303,44 +49280,38 @@ A2 = w[S0 + 002c];
 A0 = A0 + 0001;
 800616BC	jal    func62304 [$80062304]
 A0 = S1;
-800616C4	lui    a0, $8006
-800616C8	jal    func56fcc [$80056fcc]
-A0 = A0 + 15f8;
+
+A0 = 800615f8;
+system_psyq_spu_set_irq_callback();
+
 A0 = w[S0 + 000c];
 800616D4	jal    func575b4 [$800575b4]
-800616D8	nop
-800616DC	jal    system_psyq_spu_set_irq [$80056e8c]
-A0 = 0001;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800616F0	jr     ra 
-SP = SP + 0020;
+
+A0 = 1;
+system_psyq_spu_set_irq();
 ////////////////////////////////
-// func616f8
-800616F8	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0020] = w(S4);
+
+
+
+////////////////////////////////
+// func616f8()
+
 S4 = A0;
-[SP + 0010] = w(S0);
 S0 = A1;
-[SP + 0028] = w(S6);
 S6 = A2;
-[SP + 002c] = w(S7);
 S7 = A3;
-[SP + 0030] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
 8006172C	jal    func60a08 [$80060a08]
-[SP + 0014] = w(S1);
+
 S2 = V0;
 80061738	addiu  v0, zero, $ffff (=-$1)
 8006173C	beq    s2, v0, L61894 [$80061894]
-80061740	nop
-80061744	jal    system_psyq_spu_set_irq [$80056e8c]
+
 A0 = 0;
-8006174C	jal    func56fcc [$80056fcc]
+system_psyq_spu_set_irq();
+
 A0 = 0;
+system_psyq_spu_set_irq_callback();
+
 S3 = 80083168;
 S1 = w[S3 + 000c];
 V0 = S4 + 0040;
@@ -49363,16 +49334,19 @@ V0 = w[S4 + 0018];
 800617A4	nop
 [S3 + 0008] = w(V0);
 V0 = hu[S4 + 001c];
-A0 = 0;
 [S3 + 002c] = w(S6);
-800617B8	jal    func570fc [$800570fc]
 [S3 + 0058] = w(V0);
+
+A0 = 0; // SPU_TRANSFER_BY_DMA
+system_psyq_spu_set_transfer_mode();
+
 800617C0	jal    func5652c [$8005652c]
 A0 = S6;
-A0 = 80061624;
 [800809e0] = w(S0);
-800617D8	jal    func5712c [$8005712c]
-800617DC	nop
+
+A0 = 80061624; // func61624()
+system_psyq_spu_set_transfer_callback();
+
 S1 = w[S3 + 0014];
 800617E4	nop
 V0 = S1 < 2001;
@@ -49384,8 +49358,9 @@ L617f8:	; 800617F8
 A0 = w[S5 + 3168];
 
 L617fc:	; 800617FC
-800617FC	jal    func5709c [$8005709c]
 A1 = S1;
+system_psyq_spu_write();
+
 V0 = w[S5 + 3168];
 80061808	nop
 V0 = V0 + S1;
@@ -49424,27 +49399,15 @@ V1 = V1 | 0100;
 [A0 + 0008] = w(V1);
 
 L61894:	; 80061894
-RA = w[SP + 0030];
-S7 = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800618B8	jr     ra 
-SP = SP + 0038;
 ////////////////////////////////
-// func618c0
-800618C0	addiu  sp, sp, $ffd8 (=-$28)
+
+
+
+////////////////////////////////
+// func618c0()
+
 800618C4	lui    v0, $8008
-[SP + 0018] = w(S2);
 800618CC	addiu  s2, v0, $f720 (=-$8e0)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S3);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V0 = w[S2 + 0020];
 800618E4	nop
 800618E8	beq    v0, zero, L61b04 [$80061b04]
@@ -49454,11 +49417,13 @@ S3 = A1;
 S0 = V0;
 800618FC	addiu  v0, zero, $ffff (=-$1)
 80061900	beq    s0, v0, L61b04 [$80061b04]
-80061904	nop
-80061908	jal    system_psyq_spu_set_irq [$80056e8c]
+
 A0 = 0;
-80061910	jal    func56fcc [$80056fcc]
+system_psyq_spu_set_irq();
+
 A0 = 0;
+system_psyq_spu_set_irq_callback();
+
 S1 = 80083168;
 V0 = 0001;
 A0 = V0 << S0;
@@ -49513,9 +49478,10 @@ V1 = V1 | 0100;
 [A3 + 001c] = w(V0);
 800619F0	jal    func62304 [$80062304]
 [A1 + 0008] = w(V1);
-800619F8	lui    a0, $8006
-800619FC	jal    func56fcc [$80056fcc]
-A0 = A0 + 15f8;
+
+A0 = 800615f8;
+system_psyq_spu_set_irq_callback();
+
 V1 = w[S0 + 0018];
 80061A08	nop
 V0 = V1 & 0001;
@@ -49584,18 +49550,15 @@ L61ae4:	; 80061AE4
 80061AE8	nop
 A0 = w[80083174];
 80061AF4	jal    func575b4 [$800575b4]
-80061AF8	nop
-80061AFC	jal    system_psyq_spu_set_irq [$80056e8c]
-A0 = 0001;
+
+A0 = 1;
+system_psyq_spu_set_irq();
 
 L61b04:	; 80061B04
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80061B18	jr     ra 
-SP = SP + 0028;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func61b20
 80061B20	addiu  sp, sp, $ffe8 (=-$18)
@@ -49665,23 +49628,24 @@ V0 = w[A1 + 0000];
 80061C14	jr     ra 
 80061C18	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func61c1c
-80061C1C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0024] = w(RA);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
+
 80061C34	jal    func60a08 [$80060a08]
-[SP + 0010] = w(S0);
+
 S2 = V0;
 80061C40	addiu  v0, zero, $ffff (=-$1)
 80061C44	beq    s2, v0, L61dfc [$80061dfc]
-80061C48	nop
-80061C4C	jal    system_psyq_spu_set_irq [$80056e8c]
+
 A0 = 0;
-80061C54	jal    func56fcc [$80056fcc]
+system_psyq_spu_set_irq();
+
 A0 = 0;
+system_psyq_spu_set_irq_callback();
+
 V1 = 80083168;
 V0 = w[V1 + 002c];
 80061C68	nop
@@ -49724,23 +49688,27 @@ V0 = w[S0 + 0018];
 80061CEC	nop
 [S1 + 0008] = w(V0);
 V0 = hu[S0 + 001c];
-A0 = 0;
-80061CFC	jal    func570fc [$800570fc]
 [S1 + 0058] = w(V0);
+
+A0 = 0; // SPU_TRANSFER_BY_DMA
+system_psyq_spu_set_transfer_mode();
+
 80061D04	jal    func5652c [$8005652c]
 A0 = 1100;
-A0 = 80061ee4;
 [800809e0] = w(S4);
-80061D1C	jal    func5712c [$8005712c]
-80061D20	nop
+
+A0 = 80061ee4; // func61ee4()
+system_psyq_spu_set_transfer_callback();
+
 V0 = w[S1 + 0008];
 80061D28	nop
 V0 = V0 & 0400;
 80061D30	beq    v0, zero, L61d8c [$80061d8c]
+
+A0 = w[80083168] + d0;
 A1 = 4000;
-A0 = w[S3 + 3168];
-80061D3C	jal    func5709c [$8005709c]
-A0 = A0 + 00d0;
+system_psyq_spu_write();
+
 S0 = S1 + 0034;
 80061D48	jal    func61bc8 [$80061bc8]
 A0 = S0;
@@ -49761,10 +49729,10 @@ V1 = V1 | A0;
 [S1 + 000c] = w(V1);
 
 L61d8c:	; 80061D8C
-A0 = w[S3 + 3168];
+A0 = w[80083168] + d0;
 A1 = 2000;
-80061D94	jal    func5709c [$8005709c]
-A0 = A0 + 00d0;
+system_psyq_spu_write();
+
 S0 = S1 + 0034;
 80061DA0	jal    func61bc8 [$80061bc8]
 A0 = S0;
@@ -49792,50 +49760,44 @@ V1 = V1 | 0100;
 [A1 + 0008] = w(V1);
 
 L61dfc:	; 80061DFC
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80061E14	jr     ra 
-SP = SP + 0028;
 ////////////////////////////////
-// func61e1c
-80061E1C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S4);
+
+
+
+////////////////////////////////
+// func61e1c()
+
 S4 = A0;
-[SP + 0018] = w(S2);
 S2 = A1;
-[SP + 0010] = w(S0);
 80061E34	lui    s0, $8008
-[SP + 0014] = w(S1);
 S1 = S0 + 3168;
-[SP + 0024] = w(RA);
-[SP + 001c] = w(S3);
 V0 = w[S1 + 000c];
 80061E4C	nop
 80061E50	beq    v0, zero, L61ec4 [$80061ec4]
 S3 = A2;
-80061E58	jal    func5712c [$8005712c]
+
 A0 = 0;
+system_psyq_spu_set_transfer_callback();
+
 V0 = w[S1 + 0014];
 [800809e0] = w(0);
 V0 = V0 < 0e61;
 80061E70	bne    v0, zero, L61e94 [$80061e94]
 80061E74	nop
 V0 = w[S0 + 3168];
-A0 = S3;
 V0 = V0 + S4;
-80061E84	jal    func56fcc [$80056fcc]
 [S0 + 3168] = w(V0);
+
+A0 = S3;
+system_psyq_spu_set_irq_callback();
+
 80061E8C	j      L61ea4 [$80061ea4]
 80061E90	nop
 
 L61e94:	; 80061E94
-80061E94	lui    a0, $8006
-80061E98	jal    func56fcc [$80056fcc]
-A0 = A0 + 0938;
+A0 = 80060938; // func60938()
+system_psyq_spu_set_irq_callback();
+
 S2 = 1030;
 
 L61ea4:	; 80061EA4
@@ -49843,26 +49805,21 @@ L61ea4:	; 80061EA4
 A0 = S2 + 0008;
 A0 = w[80083174];
 80061EB4	jal    func575b4 [$800575b4]
-80061EB8	nop
-80061EBC	jal    system_psyq_spu_set_irq [$80056e8c]
-A0 = 0001;
+
+A0 = 1;
+system_psyq_spu_set_irq();
 
 L61ec4:	; 80061EC4
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80061EDC	jr     ra 
-SP = SP + 0028;
 ////////////////////////////////
-// func61ee4
-80061EE4	addiu  sp, sp, $ffe8 (=-$18)
+
+
+
+////////////////////////////////
+// func61ee4()
+// spu dma transfer callback
+
 80061EE8	lui    v0, $8008
-[SP + 0010] = w(S0);
 S0 = V0 + 3168;
-[SP + 0014] = w(RA);
 V0 = w[S0 + 0008];
 80061EFC	nop
 V0 = V0 & 0400;
@@ -49912,26 +49869,18 @@ L61fa0:	; 80061FA0
 80061FA0	lui    a2, $8006
 80061FA4	jal    func61e1c [$80061e1c]
 A2 = A2 + 2118;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80061FB4	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
-// func61fbc
-80061FBC	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
+
+
+
+////////////////////////////////
+// func61fbc()
+
 S1 = A0;
-[SP + 0020] = w(S4);
 S4 = A1;
-[SP + 0024] = w(S5);
 S5 = A2;
-[SP + 001c] = w(S3);
 80061FDC	lui    s3, $8008
-[SP + 0018] = w(S2);
 S2 = S3 + 3168;
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S6);
-[SP + 0010] = w(S0);
 V0 = w[S2 + 000c];
 80061FF8	nop
 80061FFC	beq    v0, zero, L620ec [$800620ec]
@@ -49943,8 +49892,9 @@ A0 = w[V1 + 0080];
 80062014	nop
 80062018	bne    a0, v0, L620ec [$800620ec]
 S0 = V1 + 0080;
-80062020	jal    system_psyq_spu_set_irq [$80056e8c]
 A0 = 0;
+system_psyq_spu_set_irq();
+
 80062028	jal    func5652c [$8005652c]
 A0 = S1;
 80062030	jal    func56614 [$80056614]
@@ -49953,8 +49903,9 @@ A0 = S1;
 A0 = S2 + 0034;
 A0 = w[S3 + 3168];
 80062044	addiu  a1, s5, $ff30 (=-$d0)
-80062048	jal    func5709c [$8005709c]
 A0 = A0 + 00d0;
+system_psyq_spu_write();
+
 V0 = w[S0 + 0004];
 80062054	nop
 [S2 + 0020] = w(V0);
@@ -49966,9 +49917,10 @@ V0 = w[S0 + 0020];
 80062070	nop
 V0 = V0 < V1;
 80062078	beq    v0, zero, L620a8 [$800620a8]
-8006207C	lui    a0, $8006
-80062080	jal    func56fcc [$80056fcc]
+
 A0 = S6;
+system_psyq_spu_set_irq_callback();
+
 V0 = w[S3 + 3168];
 V1 = w[S2 + 0034];
 V0 = V0 + S5;
@@ -49979,8 +49931,9 @@ V0 = w[S2 + 002c];
 [S3 + 3168] = w(V0);
 
 L620a8:	; 800620A8
-800620A8	jal    func56fcc [$80056fcc]
-A0 = A0 + 0938;
+A0 = 80060938; // func60938()
+system_psyq_spu_set_irq_callback();
+
 S4 = 1030;
 S1 = S4;
 
@@ -49995,21 +49948,16 @@ A1 = S4;
 A0 = A0 + 0001;
 800620DC	jal    func62304 [$80062304]
 A0 = S1 + 0008;
-800620E4	jal    system_psyq_spu_set_irq [$80056e8c]
-A0 = 0001;
+
+A0 = 1;
+system_psyq_spu_set_irq();
 
 L620ec:	; 800620EC
 V0 = S1;
-RA = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80062110	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func62118
 80062118	addiu  sp, sp, $ffe0 (=-$20)

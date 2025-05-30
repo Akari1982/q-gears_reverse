@@ -1163,12 +1163,12 @@
 80056D5C func56d5c
 80056DBC system_psyq_spu_set_reverb
 80056E8C system_psyq_spu_set_irq
-80056FCC func56fcc
+80056FCC system_psyq_spu_set_irq_callback
 8005700C func5700c
-8005703C func5703c
-8005709C func5709c
-800570FC func570fc
-8005712C func5712c
+8005703C system_psyq_spu_read
+8005709C system_psyq_spu_write
+800570FC system_psyq_spu_set_transfer_mode
+8005712C system_psyq_spu_set_transfer_callback
 8005715C func5715c
 80057234 func57234
 8005729C func5729c
@@ -1290,7 +1290,7 @@
 8005CF04 func5cf04
 8005D384 func5d384
 8005D628 func5d628
-8005D6BC func5d6bc
+8005D6BC system_sound_main
 8005DB40 func5db40
 8005DBE8 func5dbe8
 8005DBF0 func5dbf0

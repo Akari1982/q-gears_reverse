@@ -47,7 +47,7 @@ func177ec();
 [80067a4c] = w(0);
 [80067a50] = w(0);
 [80067978] = w(0);
-[80067a04] = w(0);
+[80067a04] = w(0); // SPU_TRANSFER_BY_DMA
 [80067974] = w(0);
 [800679a0] = w(0);
 [8006799c] = w(0);
@@ -97,7 +97,7 @@ spu = w[800679e8];
 [spu + 182] = h(0);
 [spu + 1aa] = h(0);
 
-[80067a04] = w(0);
+[80067a04] = w(0); // SPU_TRANSFER_BY_DMA
 [80067a08] = w(0);
 [80067a00] = h(0);
 
@@ -578,7 +578,7 @@ L176f4:	; 800176F4
 src = A0;
 size = A1;
 
-if( w[80067a04] == 0 )
+if( w[80067a04] == 0 ) // SPU_TRANSFER_BY_DMA
 {
     A0 = 2; // set address in spu to write to 0x1f801da6
     A1 = hu[80067a00] << w[80067a10]; // always 3 because spu address always divided by 8
@@ -592,7 +592,7 @@ if( w[80067a04] == 0 )
     A2 = size;
     func17484();
 }
-else
+else // SPU_TRANSFER_BY_IO
 {
     A0 = src;
     A1 = size;
@@ -1198,11 +1198,7 @@ return 0;
 
 rev_mode = A0;
 
-[SP + 10] = w(0);
-
 if( rev_mode >= a ) return -1; // SPU_ERROR
-
-S5 = 0;
 
 A0 = w[80067e58 + rev_mode * 4];
 func17fc0();
@@ -1221,17 +1217,18 @@ else
     S2 = A0 << w[80067a10]; // always 3 because spu address always divided by 8
 }
 
-S4 = w[80067a04];
-
-if( S4 == 1 )
+type_changed = 0;
+transfer_type = w[80067a04]; // spu dma transfer type
+if( transfer_type == 1 ) // SPU_TRANSFER_BY_IO
 {
-    [80067a04] = w(0);
-    S5 = 1;
+    [80067a04] = w(0); // spu dma transfer type
+    type_changed = 1;
 }
 
-if( w[80067a20] != 0 )
+callback = 0;
+if( w[80067a20] != 0 ) // remove callback for a while
 {
-    [SP + 10] = w(w[80067a20]);
+    callback = w(w[80067a20]);
     [80067a20] = w(0);
 }
 
@@ -1268,15 +1265,9 @@ while( S3 != 0 )
     system_bios_wait_event();
 }
 
-if( S5 != 0 )
-{
-    [80067a04] = w(S4);
-}
+if( type_changed != 0 ) [80067a04] = w(transfer_type); // spu dma transfer type
 
-if( w[SP + 10] != 0 )
-{
-    [80067a20] = w(w[SP + 10]);
-}
+if( callback != 0 ) [80067a20] = w(callback);
 
 return 0;
 ////////////////////////////////

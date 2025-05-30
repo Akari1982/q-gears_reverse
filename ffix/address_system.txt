@@ -15,6 +15,7 @@
 80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
 8006794c [][][][] pointer to 8008b000.
 
+80067978 [][][][] spu dma transfer mode.
 8006797c [][][][] reverb enabled.
 80067980 [][][][] ??? reverb related.
 80067984 [][][][] reverb work area start address.
@@ -24,7 +25,11 @@
 80067994 [][][][] ???
 80067998 [][][][] ???
 800679e8 [][][][] 1f801c00 start of spu registers.
+80067a04 [][][][] spu dma transfer type 0 - SPU_TRANSFER_BY_DMA, 1 - SPU_TRANSFER_BY_IO.
 80067a10 [][][][] divisor for spu address (always 0x8).
+80067a1c [][][][] 
+80067a20 [][][][] spu dma transfer callback.
+80067a24 [][][][] spu irq callback.
 80067a50 [][][][] pointer to something.
 
 80067e58 array of pointers to reverb work area (0xa items, 0x4 size).
