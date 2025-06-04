@@ -1,3 +1,67 @@
+typedef struct {
+    short left;	       /* Lch */
+    short right;       /* Rch */
+} SpuVolume;
+
+typedef struct {
+    unsigned long   voice;          //       set voice:
+                                    //        SpuSetVoiceAttr: each voice is a bit array
+                                    //        SpuGetVoiceAttr: voice is a bit value
+    unsigned long   mask;           // +0x04 settings attribute bit (invalid with Get)
+    SpuVolume       volume;         // +0x18 volume
+    SpuVolume       volmode;        // +0x16 volume mode
+    SpuVolume       volumex;        //       current volume (invalid with Set)
+    unsigned short  pitch;          // +0x10 tone (pitch setting)
+    unsigned short  note;           //       tone (note setting)
+    unsigned short  sample_note;    //       tone (note setting)
+    short           envx;           //       current envelope value (invalid with Set)
+    unsigned long   addr;           // +0x08 waveform data start address
+    unsigned long   loop_addr;      // +0x0c loop start address
+    long            a_mode;         //       Attack rate mode
+    long            s_mode;         //       Sustain rate mode
+    long            r_mode;         //       Release rate mode
+    unsigned short  ar;             //       Attack rate
+    unsigned short  dr;             //       Decay rate
+    unsigned short  sr;             //       Sustain rate
+    unsigned short  rr;             //       Release rate
+    unsigned short  sl;             //       Sustain level
+    unsigned short  adsr1;          // +0x12 adsr1 for `VagAtr'
+    unsigned short  adsr2;          // +0x14 adsr2 for `VagAtr'
+} SpuVoiceAttr;
+
+#define	SPU_VOICE_DIRECT        0
+#define	SPU_VOICE_LINEARIncN    1
+#define	SPU_VOICE_LINEARIncR    2
+#define	SPU_VOICE_LINEARDecN    3
+#define	SPU_VOICE_LINEARDecR    4
+#define	SPU_VOICE_EXPIncN       5
+#define	SPU_VOICE_EXPIncR       6
+#define	SPU_VOICE_EXPDec        7
+#define	SPU_VOICE_EXPDecN       SPU_VOICE_EXPDec
+#define	SPU_VOICE_EXPDecR       SPU_VOICE_EXPDec
+
+#define	SPU_VOICE_VOLL          (0x01 <<  0) /* volume (left) */
+#define	SPU_VOICE_VOLR          (0x01 <<  1) /* volume (right) */
+#define	SPU_VOICE_VOLMODEL      (0x01 <<  2) /* volume mode (left) */
+#define	SPU_VOICE_VOLMODER      (0x01 <<  3) /* volume mode (right) */
+#define	SPU_VOICE_PITCH         (0x01 <<  4) /* tone (pitch setting) */
+#define	SPU_VOICE_NOTE          (0x01 <<  5) /* tone (note setting)  */
+#define	SPU_VOICE_SAMPLE_NOTE   (0x01 <<  6) /* waveform data sample note */
+#define	SPU_VOICE_WDSA          (0x01 <<  7) /* waveform data start address */
+#define	SPU_VOICE_ADSR_AMODE    (0x01 <<  8) /* ADSR Attack rate mode */
+#define	SPU_VOICE_ADSR_SMODE    (0x01 <<  9) /* ADSR Sustain rate mode */
+#define	SPU_VOICE_ADSR_RMODE    (0x01 << 10) /* ADSR Release rate mode */
+#define	SPU_VOICE_ADSR_AR       (0x01 << 11) /* ADSR Attack rate         */
+#define	SPU_VOICE_ADSR_DR       (0x01 << 12) /* ADSR Decay rate          */
+#define	SPU_VOICE_ADSR_SR       (0x01 << 13) /* ADSR Sustain rate        */
+#define	SPU_VOICE_ADSR_RR       (0x01 << 14) /* ADSR Release rate        */
+#define	SPU_VOICE_ADSR_SL       (0x01 << 15) /* ADSR Sustain level       */
+#define	SPU_VOICE_LSAX          (0x01 << 16) /* start address for loop */
+#define	SPU_VOICE_ADSR_ADSR1    (0x01 << 17) /* ADSR adsr1 for `VagAtr'  */
+#define	SPU_VOICE_ADSR_ADSR2    (0x01 << 18) /* ADSR adsr2 for `VagAtr'  */
+
+
+
 ////////////////////////////////
 // system_psyq_spu_init()
 
@@ -1281,3 +1345,218 @@ type_p = A0;
 
 [type_p] = w(w[8006798c]);
 ////////////////////////////////
+
+
+
+// Set attributes for a voice
+// SpuNSetVoiceAttr
+void func57898( int voiceNum, SpuVoiceAttr* attr )
+{
+    unsigned long mask = attr->mask;
+    attr->mask = 0x0;
+
+    if( mask & SPU_VOICE_PITCH )
+    {
+        system_psyq_spu_set_voice_pitch( voiceNum, hu[attr + 0x10] );
+    }
+
+    if( mask & ( SPU_VOICE_VOLL | SPU_VOICE_VOLR ) )
+    {
+        func57640( voiceNum, h[attr + 0x18], h[attr + 0x1a], hu[attr + 0x16] );
+    }
+
+    if( mask & SPU_VOICE_WDSA )
+    {
+        system_psyq_spu_set_voice_start_addr( voiceNum, w[attr + 0x8] );
+    }
+
+    if( mask & SPU_VOICE_LSAX )
+    {
+        system_psyq_spu_set_voice_loop_start_addr( voiceNum, w[attr + 0xc] );
+    }
+
+    if( mask & ( SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_SR | SPU_VOICE_ADSR_RR ) )
+    {
+        func576f0( voiceNum, hu[attr + 0x14] );
+    }
+
+    if( mask & ( SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_AR | SPU_VOICE_ADSR_DR | SPU_VOICE_ADSR_SL ) )
+    {
+        func576d8( voiceNum, hu[attr + 0x12] );
+    }
+}
+
+
+
+////////////////////////////////
+// func575b4()
+// 1F801D88h - Voice 0..23 Key ON (Start Attack/Decay/Sustain) (KON) (W)
+//   0-23  Voice 0..23 On  (0=No change, 1=Start Attack/Decay/Sustain)
+//   24-31 Not used
+// Starts the ADSR Envelope, and automatically initializes ADSR Volume to zero,
+// and copies Voice Start Address to Voice Repeat Address.
+
+[1f801d88] = h(A0);
+[1f801d8a] = h(A0 >> 10);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func575d0()
+// 1F801D8Ch - Voice 0..23 Key OFF (Start Release) (KOFF) (W)
+//   0-23  Voice 0..23 Off (0=No change, 1=Start Release)
+//   24-31 Not used
+// For a full ADSR pattern, OFF would be usually issued in the Sustain period,
+// however, it can be issued at any time (eg. to abort Attack, skip the Decay and
+// Sustain periods, and switch immediately to Release).
+
+[1f801d8c] = h(A0);
+[1f801d8e] = h(A0 >> 10);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func575ec()
+// 1F801D98h - Voice 0..23 Reverb mode aka Echo On (EON) (R/W)
+//   0-23  Voice 0..23 Destination (0=To Mixer, 1=To Mixer and to Reverb)
+//   24-31 Not used
+// Sets reverb for the channel. As soon as the sample ends, the reverb for that
+// channel is turned off... that's fine, but WHEN does it end?
+// In Reverb mode, the voice seems to output BOTH normal (immediately) AND via
+// Reverb (delayed).
+
+[1f801d98] = h(A0);
+[1f801d9a] = h(A0 >> 10);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func57608()
+// 1F801D94h - Voice 0..23 Noise mode enable (NON)
+//   0-23  Voice 0..23 Noise (0=ADPCM, 1=Noise)
+//   24-31 Not used
+
+[1f801d94] = h(A0);
+[1f801d96] = h(A0 >> 10);
+////////////////////////////////
+
+
+
+////////////////////////////////
+// func57624()
+// 1F801D90h - Voice 0..23 Pitch Modulation Enable Flags (PMON)
+// Pitch modulation allows to generate "Frequency Sweep" effects by mis-using the
+// amplitude from channel (x-1) as pitch factor for channel (x).
+//   0     Unknown... Unused?
+//   1-23  Flags for Voice 1..23 (0=Normal, 1=Modulate by Voice 0..22)
+//   24-31 Not used
+// For example, output a very loud 1Hz sine-wave on channel 4 (with ADSR volume
+// 4000h, and with Left/Right volume=0; unless you actually want to output it to
+// the speaker). Then additionally output a 2kHz sine wave on channel 5 with
+// PMON.Bit5 set. The "2kHz" sound should then repeatedly sweep within 1kHz..3kHz
+// range (or, for a more decent sweep in 1.8kHz..2.2kHz range, drop the ADSR
+// volume of channel 4).
+
+[1f801d90] = h(A0);
+[1f801d92] = h(A0 >> 10);
+////////////////////////////////
+
+
+
+// Set voice volume/volume mode
+// SpuSetVoiceVolumeAttr
+void func57640( int voiceNum, short volumeL, short volumeR, short volModeL, short volModeR )
+{
+    volumeL = A1;
+    volumeR = A2;
+
+    if( A3 != 0 )
+    {
+        volumeL = (volumeL * A3) >> 0x7;
+        volumeR = (volumeR * A3) >> 0x7;
+    }
+
+    [0x1f801c00 + voiceNum * 0x10 + 0x0] = h(volumeL & 0x7fff);
+    [0x1f801c00 + voiceNum * 0x10 + 0x2] = h(volumeR & 0x7fff);
+}
+
+
+
+// Set interval (pitch specification)
+void system_psyq_spu_set_voice_pitch( int voiceNum, u_short pitch )
+{
+    [0x1f801c04 + voiceNum * 0x10] = h(pitch);
+}
+
+
+
+// Set start address of waveform data in sound buffer
+void system_psyq_spu_set_voice_start_addr( int voiceNum, u_long startAddr )
+{
+    [0x1f801c06 + voiceNum * 0x10] = h(startAddr >> 0x3);
+}
+
+
+
+// Set loop start address of waveform data in sound buffer
+void system_psyq_spu_set_voice_loop_start_addr( int voiceNum, u_long loopStartAddr )
+{
+    [0x1f801c0e + voiceNum * 0x10] = h(loopStartAddr >> 0x3);
+}
+
+
+
+void func576d8( int voiceNum, u_short val )
+{
+    [0x1f801c08 + voiceNum * 0x10] = h(val);
+}
+
+
+
+void func576f0( int voiceNum, u_short val )
+{
+    [0x1f801c0a + voiceNum * 0x10] = h(val);
+}
+
+
+
+// Set ADSR attack rate / attack rate mode
+void system_psyq_spu_set_voice_ar_attr( int voiceNum, u_short ar, long armode )
+{
+    [0x1f801c08 + voiceNum * 0x10] = h(bu[0x1f801c08 + voiceNum * 0x10] | ((armode >> 0x2) << 0xf) | (ar << 0x8));
+}
+
+
+
+// Set ADSR decay rate
+void system_psyq_spu_set_voice_dr( int voiceNum, u_short dr )
+{
+    [0x1f801c08 + voiceNum * 0x10] = h((hu[0x1f801c08 + voiceNum * 0x10] & 0xff0f) | (dr << 0x4));
+}
+
+
+
+// Set ADSR sustain rate
+void system_psyq_spu_set_voice_sl( int voiceNum, u_short sl )
+{
+    [0x1f801c08 + voiceNum * 0x10] = h((hu[0x1f801c08 + voiceNum * 0x10] & 0xfff0) | sl);
+}
+
+
+
+// Set ADSR sustain rate / sustain rate mode
+void system_psyq_spu_set_voice_sr_attr( int voiceNum, u_short sr, long srmode )
+{
+    [0x1f801c0a + voiceNum * 0x10] = h((hu[0x1f801c0a + voiceNum * 0x10] & 0x003f) | ((srmode >> 0x1) << 0xe) | (sr << 0x6));
+}
+
+
+
+// Set ADSR release rate / release rate mode
+void system_psyq_spu_set_voice_rr_attr( int voiceNum, u_short rr, long rrmode)
+{
+    [0x1f801c0a + voiceNum * 0x10] = h((hu[0x1f801c0a + voiceNum * 0x10] & 0xffc0) | ((rrmode >> 0x2) << 0x5) | rr);
+}
