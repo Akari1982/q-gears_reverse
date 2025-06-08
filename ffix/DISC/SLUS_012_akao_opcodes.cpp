@@ -3,32 +3,30 @@ typedef void (*AkaoOpcode) ( VoiceData* data, A1 );
 AkaoOpcode akao_opcodes[] =
 {
     // a0
-    system_akao_a0_finish_channel,         system_akao_a1_load_instrument,         system_akao_a2_next_note_length,        system_akao_a3_master_volume,
-    system_akao_a4_pitch_bend_slide,       system_akao_a5_set_octave,              system_akao_a6_increase_octave,         system_akao_a7_discrease_octave,
-    system_akao_a8_set_volume,             system_akao_a9_set_volume_slide,        system_akao_aa_set_pan,                 system_akao_ab_set_pan_slide,
-    system_akao_ac_noise_clock_freq,       system_akao_ad_set_ar,                  system_akao_ae_set_dr,                  system_akao_af_set_sl,
-    system_akao_b0_set_voice_dr_sl,        system_akao_b1_set_sr,                  system_akao_b2_set_rr,                  system_akao_b3_reset_adsr,
-    func5f718,                             system_akao_b5_vibrato_depth,           system_akao_b6_vibrato_off,             func60174,
-    func5f984,                             system_akao_b9_tremolo_depth,           system_akao_ba_tremolo_off,             func601b8,
-    func5fb6c,                             system_akao_bd_pan_lfo_depth,           system_akao_be_pan_lfo_off,             func60230,
-    system_akao_c0_transpose_absolute,     system_akao_c1_transpose_relative,      func5feb4,                              func5ff14,
-    system_akao_c4_noise_on,               func5fd70,                              func5fdd8,                              func5fe4c,
-    func602a4,                             func602f4,                              func60470,                              func6071c,
-    system_akao_cc_legato_on,              system_akao_cd_legato_off,              system_akao_ce_noise_switcher,          func60678,
-    system_akao_d0_full_length_on,         system_akao_d1_full_length_off,         func606a8,                              func606ec,
-    system_akao_d4_side_chain_playback_on, system_akao_d5_side_chain_playback_off, system_akao_d6_side_chain_pitch_vol_on, system_akao_d7_side_chain_pitch_vol_off,
-    func5f654,                             func5f6b4,                              system_akao_da_portamento_on,           system_akao_db_portamento_off,
-    func604ec,                             func5f894,                              func5fa78,                              func5fc20,
-    // e0
-    func6088c,                             func608f4,                              func60910,                              system_akao_null,
-    func5f900,                             func5fae8,                              func5fc8c,                              system_akao_null,
-    system_akao_null,                      system_akao_null,                       system_akao_null,                       system_akao_null,
-    system_akao_null,                      system_akao_null,                       system_akao_null,                       system_akao_null,
-    // f0
-    system_akao_null,                      system_akao_null,                       system_akao_null,                       system_akao_null,
-    system_akao_null,                      system_akao_null,                       system_akao_null,                       system_akao_null,
-    system_akao_null,                      system_akao_null,                       system_akao_null,                       system_akao_null,
-    system_akao_null,                      system_akao_null,                       system_akao_null,                       system_akao_null
+    system_akao_a0_finish_channel,         system_akao_a1_load_instrument,         system_akao_a2_next_note_length,            system_akao_a3_master_volume,
+    system_akao_a4_pitch_bend_slide,       system_akao_a5_set_octave,              system_akao_a6_increase_octave,             system_akao_a7_discrease_octave,
+    system_akao_a8_set_volume,             system_akao_a9_set_volume_slide,        system_akao_aa_set_pan,                     system_akao_ab_set_pan_slide,
+    system_akao_ac_noise_clock_freq,       system_akao_ad_set_ar,                  system_akao_ae_set_dr,                      system_akao_af_set_sl,
+    system_akao_b0_set_voice_dr_sl,        system_akao_b1_set_sr,                  system_akao_b2_set_rr,                      system_akao_b3_reset_adsr,
+    func5f718,                             system_akao_b5_vibrato_depth,           system_akao_b6_vibrato_off,                 system_akao_b7_attack_mode,
+    func5f984,                             system_akao_b9_tremolo_depth,           system_akao_ba_tremolo_off,                 system_akao_bb_sustain_mode,
+    func5fb6c,                             system_akao_bd_pan_lfo_depth,           system_akao_be_pan_lfo_off,                 system_akao_bf_release_mode,
+    system_akao_c0_transpose_absolute,     system_akao_c1_transpose_relative,      func5feb4,                                  func5ff14,
+    system_akao_c4_noise_on,               func5fd70,                              system_akao_c6_frequency_modulation_on,     func5fe4c,
+    func602a4,                             func602f4,                              func60470,                                  func6071c,
+    system_akao_cc_legato_on,              system_akao_cd_legato_off,              system_akao_ce_noise_switcher,              func60678,
+    system_akao_d0_full_length_on,         system_akao_d1_full_length_off,         system_akao_d2_frequency_modulation_switch, func606ec,
+    system_akao_d4_side_chain_playback_on, system_akao_d5_side_chain_playback_off, system_akao_d6_side_chain_pitch_vol_on,     system_akao_d7_side_chain_pitch_vol_off,
+    system_akao_d8_fine_tuning_absolute,   system_akao_d9_fine_tuning_relative,    system_akao_da_portamento_on,               system_akao_db_portamento_off,
+    system_akao_dc_fix_note_length,        system_akao_dd_vibrato_depth_slide,     system_akao_de_tremolo_depth_slide,         system_akao_df_pan_lfo_depth_slide,
+    system_akao_e0,                        system_akao_e1,                         system_akao_e2,                             system_akao_null,
+    system_akao_e4_vibrato_rate_slide,     system_akao_e5_tremolo_rate_slide,      system_akao_e6_pan_lfo_rate_slide,          system_akao_null,
+    system_akao_null,                      system_akao_null,                       system_akao_null,                           system_akao_null,
+    system_akao_null,                      system_akao_null,                       system_akao_null,                           system_akao_null,
+    system_akao_null,                      system_akao_null,                       system_akao_null,                           system_akao_null,
+    system_akao_null,                      system_akao_null,                       system_akao_null,                           system_akao_null,
+    system_akao_null,                      system_akao_null,                       system_akao_null,                           system_akao_null,
+    system_akao_null,                      system_akao_null,                       system_akao_null,                           system_akao_null
 };
 
 
@@ -453,28 +451,14 @@ void system_akao_b6_vibrato_off( VoiceData* data, A1 )
 }
 
 
-
-void func60174( VoiceData* data, A1 )
+void system_akao_b7_attack_mode( VoiceData* data, A1 )
 {
-    A1 = A0;
-    V0 = w[A1 + 0000];
-    V1 = hu[A1 + 012a];
-    A0 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    V1 = V1 & 7fff;
-    [A1 + 0000] = w(V0);
-    V0 = 0005;
-    80060194	bne    a0, v0, L601a4 [$800601a4]
-    [A1 + 012a] = h(V1);
-    V0 = V1 | 8000;
-    [A1 + 012a] = h(V0);
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
-    L601a4:	; 800601A4
-    V0 = w[A1 + 011c];
-    800601A8	nop
-    V0 = V0 | 0100;
-    800601B0	jr     ra 
-    [A1 + 011c] = w(V0);
+    [data + 0x12a] = h(hu[data + 0x12a] & 0x7fff);
+    if( bu[akao] == 0x5 ) [data + 0x12a] = h(hu[data + 0x12a] | 0x8000);
+    [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_ADSR_AMODE);
 }
 
 
@@ -556,46 +540,18 @@ void system_akao_ba_tremolo_off( VoiceData* data, A1 )
 
 
 
-void func601b8( VoiceData* data, A1 )
+void system_akao_bb_sustain_mode( VoiceData* data, A1 )
 {
-    A1 = A0;
-    V0 = w[A1 + 0000];
-    V1 = hu[A1 + 012c];
-    A0 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    V1 = V1 & 3fff;
-    [A1 + 0000] = w(V0);
-    V0 = 0005;
-    A0 = A0 & ffff;
-    800601DC	beq    a0, v0, L60214 [$80060214]
-    [A1 + 012c] = h(V1);
-    V0 = A0 < 0006;
-    800601E8	beq    v0, zero, L60200 [$80060200]
-    V0 = 0003;
-    800601F0	beq    a0, v0, L60218 [$80060218]
-    V0 = V1 | 4000;
-    800601F8	j      L6021c [$8006021c]
-    800601FC	nop
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
-    L60200:	; 80060200
-    V0 = 0007;
-    80060204	beq    a0, v0, L60218 [$80060218]
-    V0 = V1 | c000;
-    8006020C	j      L6021c [$8006021c]
-    80060210	nop
+    A0 = bu[akao];
 
-    L60214:	; 80060214
-    V0 = V1 | 8000;
-
-    L60218:	; 80060218
-    [A1 + 012c] = h(V0);
-
-    L6021c:	; 8006021C
-    V0 = w[A1 + 011c];
-    80060220	nop
-    V0 = V0 | 0200;
-    80060228	jr     ra 
-    [A1 + 011c] = w(V0);
+    [data + 0x12c] = h(hu[data + 0x12c] & 0x3fff);
+    if( A0 == 0x3 ) [data + 0x12c] = h(hu[data + 0x12c] | 0x4000);
+    else if( A0 == 0x5 ) [data + 0x12c] = h(hu[data + 0x12c] | 0x8000);
+    else if( A0 == 0x7 ) [data + 0x12c] = h(hu[data + 0x12c] | 0xc000);
+    [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_ADSR_SMODE);
 }
 
 
@@ -660,27 +616,14 @@ void system_akao_be_pan_lfo_off( VoiceData* data, A1 )
 
 
 
-void func60230( VoiceData* data, A1 )
+void system_akao_bf_release_mode( VoiceData* data, A1 )
 {
-    A1 = A0;
-    V0 = w[A1 + 0000];
-    V1 = hu[A1 + 012c];
-    A0 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    V1 = V1 & ffdf;
-    [A1 + 0000] = w(V0);
-    V0 = 0007;
-    80060250	bne    a0, v0, L60260 [$80060260]
-    [A1 + 012c] = h(V1);
-    V0 = V1 | 0020;
-    [A1 + 012c] = h(V0);
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
-    L60260:	; 80060260
-    V0 = w[A1 + 011c];
-    80060264	nop
-    V0 = V0 | 0400;
-    8006026C	jr     ra 
-    [A1 + 011c] = w(V0);
+    [data + 0x12c] = h(hu[data + 0x12c] & 0xffdf);
+    if( bu[akao] == 0x7 ) [data + 0x12c] = h(hu[data + 0x12c] | 0x0020);
+    [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_ADSR_RMODE);
 }
 
 
@@ -812,37 +755,22 @@ void func5fd70( VoiceData* data, A1 )
 
 
 
-void func5fdd8( VoiceData* data, A1 )
+void system_akao_c6_frequency_modulation_on( VoiceData* data, A1 )
 {
-    V0 = hu[A0 + 0094];
-    8005FDDC	nop
-    8005FDE0	bne    v0, zero, L5fe08 [$8005fe08]
-    8005FDE4	lui    v1, $0001
-    V1 = w[80080a10];
-    8005FDF0	nop
-    V0 = w[V1 + 0044];
-    8005FDF8	nop
-    V0 = V0 | A1;
-    8005FE00	j      L5fe30 [$8005fe30]
-    [V1 + 0044] = w(V0);
+    if( hu[data + 0x94] == 0 )
+    {
+        V1 = w[0x80080a10];
+        [V1 + 0x44] = w(w[V1 + 0x44] | A1);
+    }
+    else
+    {
+        if( w[data + 0x34] & 0x00010000 )
+        {
+            [0x80080a70 + 0x24] = w(w[0x80080a70 + 0x24] | A1);
+        }
+    }
 
-    L5fe08:	; 8005FE08
-    V0 = w[A0 + 0034];
-    8005FE0C	nop
-    V0 = V0 & V1;
-    8005FE14	beq    v0, zero, L5fe30 [$8005fe30]
-    V1 = 80080a70;
-    V0 = w[V1 + 0024];
-    8005FE24	nop
-    V0 = V0 | A1;
-    [V1 + 0024] = w(V0);
-
-    L5fe30:	; 8005FE30
-    V1 = 80083158;
-    V0 = w[V1 + 0008];
-    8005FE3C	nop
-    V0 = V0 | 0100;
-    [V1 + 0008] = w(V0);
+    [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100);
 }
 
 
@@ -1061,22 +989,23 @@ void system_akao_d1_full_length_off( VoiceData* data, A1 )
 
 
 
-void func606a8( VoiceData* data, A1 )
+void system_akao_d2_frequency_modulation_switch( VoiceData* data, A1 )
 {
-    V0 = w[A0 + 0000];
-    V1 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    800606C0	beq    v1, zero, L606d0 [$800606d0]
-    [A0 + 0000] = w(V0);
-    800606C8	j      L606d4 [$800606d4]
-    V0 = V1 + 0001;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
-    L606d0:	; 800606D0
-    V0 = 0101;
+    u8 delay = bu[akao];
 
-    L606d4:	; 800606D4
-    [A0 + 00f2] = h(V0);
-    800606D4	jal    func5fdd8 [$8005fdd8]
+    if( delay != 0 )
+    {
+        [data + 0xf2] = h(delay + 0x1);
+    }
+    else
+    {
+        [data + 0xf2] = h(0x101);
+    }
+
+    system_akao_c6_frequency_modulation_on( data, A1 );
 }
 
 
@@ -1128,85 +1057,75 @@ void system_akao_d7_side_chain_pitch_vol_off( VoiceData* data, A1 )
 
 
 
-void func5f654( VoiceData* data, A1 )
+void system_akao_d8_fine_tuning_absolute( VoiceData* data, A1 )
 {
-    V0 = w[A0 + 0000];
-    8005F658	nop
-    V1 = bu[V0 + 0000];
-    A1 = w[A0 + 002c];
-    V1 = V1 << 18;
-    V1 = V1 >> 18;
-    [A0 + 0108] = h(V1);
-    V1 = bu[A0 + 0108];
-    8005F674	nop
-    8005F678	mult   a1, v1
-    V0 = V0 + 0001;
-    [A0 + 0000] = w(V0);
-    V0 = h[A0 + 0108];
-    8005F688	mflo   v1
-    8005F68C	bgez   v0, L5f69c [$8005f69c]
-    V0 = V1 >> 08;
-    8005F694	j      L5f6a0 [$8005f6a0]
-    V1 = V0 - A1;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
-    L5f69c:	; 8005F69C
-    V1 = V1 >> 07;
+    V1 = b[akao];
+    A1 = w[data + 0x2c];
+    [data + 0x108] = h(V1);
+    V1 = bu[data + 0x108];
+    V0 = h[data + 0x108];
+    V1 = A1 * V1;
+    if( V0 < 0 )
+    {
+        V0 = V1 >> 0x8;
+        V1 = V0 - A1;
+    }
+    else
+    {
+        V1 = V1 >> 0x7;
+    }
 
-    L5f6a0:	; 8005F6A0
-    V0 = w[A0 + 011c];
-    [A0 + 0084] = w(V1);
-    V0 = V0 | 0010;
-    [A0 + 011c] = w(V0);
+    [data + 0x84] = w(V1);
+    [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_PITCH);
 }
 
 
 
-void func5f6b4( VoiceData* data, A1 )
+void system_akao_d9_fine_tuning_relative( VoiceData* data, A1 )
 {
-    V0 = w[A0 + 0000];
-    A1 = w[A0 + 002c];
-    V1 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    [A0 + 0000] = w(V0);
-    V0 = hu[A0 + 0108];
-    V1 = V1 << 18;
-    V1 = V1 >> 18;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
+
+    A1 = w[data + 0x2c];
+    V1 = b[akao];
+    V0 = hu[data + 0x108];
     V0 = V0 + V1;
-    [A0 + 0108] = h(V0);
-    V1 = bu[A0 + 0108];
-    8005F6E0	nop
-    8005F6E4	mult   a1, v1
-    V0 = h[A0 + 0108];
-    8005F6EC	mflo   v1
-    8005F6F0	bgez   v0, L5f700 [$8005f700]
-    V0 = V1 >> 08;
-    8005F6F8	j      L5f704 [$8005f704]
-    V1 = V0 - A1;
+    [data + 0x108] = h(V0);
+    V1 = bu[data + 0x108];
+    V0 = h[data + 0x108];
+    V1 = A1 * V1;
 
-    L5f700:	; 8005F700
-    V1 = V1 >> 07;
+    if( V0 < 0 )
+    {
+        V0 = V1 >> 0x8;
+        V1 = V0 - A1;
+    }
+    else
+    {
+        V1 = V1 >> 0x7;
+    }
 
-    L5f704:	; 8005F704
-    V0 = w[A0 + 011c];
-    [A0 + 0084] = w(V1);
-    V0 = V0 | 0010;
-    [A0 + 011c] = w(V0);
+    [data + 0x84] = w(V1);
+    [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_PITCH);
 }
 
 
 
 void system_akao_da_portamento_on( VoiceData* data, A1 )
 {
-    akao = w[A0 + 0x0];
-    [A0 + 0x0] = w(akao + 0x1);
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
     speed = bu[akao];
     if( speed == 0 ) u16 speed = 0x100;
-    [A0 + 0xca] = h(speed);
+    [data + 0xca] = h(speed);
 
-    [A0 + 0xc8] = h(0);
-    [A0 + 0xcc] = h(1);
-    [A0 + 0x10e] = h(0);
+    [data + 0xc8] = h(0);
+    [data + 0xcc] = h(1);
+    [data + 0x10e] = h(0);
 }
 
 
@@ -1218,117 +1137,82 @@ void system_akao_db_portamento_off( VoiceData* data, A1 )
 
 
 
-void func604ec( VoiceData* data, A1 )
+void system_akao_dc_fix_note_length( VoiceData* data, A1 )
 {
-    V0 = w[A0 + 0000];
-    800604F0	nop
-    V1 = b[V0 + 0000];
-    V0 = V0 + 0001;
-    800604FC	beq    v1, zero, L6052c [$8006052c]
-    [A0 + 0000] = w(V0);
-    V0 = h[A0 + 00f8];
-    80060508	nop
-    V1 = V1 + V0;
-    80060510	bgtz   v1, L60520 [$80060520]
-    V0 = V1 < 0100;
-    80060518	j      L6052c [$8006052c]
-    V1 = 0001;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x1);
 
-    L60520:	; 80060520
-    80060520	bne    v0, zero, L6052c [$8006052c]
-    80060524	nop
-    V1 = 00ff;
-
-    L6052c:	; 8006052C
-    [A0 + 00fa] = h(V1);
+    length_to_add = b[akao];
+    if( length_to_add != 0 )
+    {
+        length_to_add += h[data + 0xf8];
+        if( length_to_add <= 0 )
+        {
+            length_to_add = 0x1;
+        }
+        else if( length_to_add >= 0x100 )
+        {
+            length_to_add = 0xff;
+        }
+    }
+    [data + 0xfa] = h(length_to_add);
 }
 
 
 
-void func5f894( VoiceData* data, A1 )
+void system_akao_dd_vibrato_depth_slide( VoiceData* data, A1 )
 {
-    A1 = w[A0 + 0000];
-    A2 = bu[A1 + 0000];
-    A1 = A1 + 0001;
-    8005F8A4	bne    a2, zero, L5f8b0 [$8005f8b0]
-    [A0 + 0000] = w(A1);
-    A2 = 0100;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
 
-    L5f8b0:	; 8005F8B0
-    V0 = bu[A1 + 0000];
-    V1 = hu[A0 + 00d6];
-    V0 = V0 << 08;
-    V0 = V0 - V1;
-    8005F8C0	div    v0, a2
-    8005F8E8	mflo   v0
-    [A0 + 00d8] = h(A2);
-    V1 = A1 + 0001;
-    [A0 + 0000] = w(V1);
-    8005F8F8	jr     ra 
-    [A0 + 00da] = h(V0);
+    length = bu[akao + 0x0];
+    if( length == 0 ) length = 0x100;
+    depth = bu[akao + 0x1];
+
+    [data + 0xd8] = h(length);
+    [data + 0xda] = h(((depth << 0x8) - hu[data + 0xd6]) / length);
 }
 
 
 
-void func5fa78( VoiceData* data, A1 )
+void system_akao_de_tremolo_depth_slide( VoiceData* data, A1 )
 {
-    A1 = w[A0 + 0000];
-    8005FA7C	nop
-    A2 = bu[A1 + 0000];
-    A1 = A1 + 0001;
-    8005FA88	bne    a2, zero, L5fa94 [$8005fa94]
-    [A0 + 0000] = w(A1);
-    A2 = 0100;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
 
-    L5fa94:	; 8005FA94
-    V0 = bu[A1 + 0000];
-    V1 = hu[A0 + 00e2];
-    V0 = V0 & 007f;
-    V0 = V0 << 08;
-    V0 = V0 - V1;
-    8005FAA8	div    v0, a2
-    8005FAD0	mflo   v0
-    [A0 + 00e4] = h(A2);
-    V1 = A1 + 0001;
-    [A0 + 0000] = w(V1);
-    [A0 + 00e6] = h(V0);
+    length = bu[akao + 0x0];
+    if( length == 0 ) length = 0x100;
+    depth = bu[akao + 0x1];
+
+    [data + 0xe4] = h(length);
+    [data + 0xe6] = h((((depth & 0x7f) << 0x8) - hu[A0 + 0xe2]) / length);
 }
 
 
 
-void func5fc20( VoiceData* data, A1 )
+void system_akao_df_pan_lfo_depth_slide( VoiceData* data, A1 )
 {
-    A1 = w[A0 + 0000];
-    8005FC24	nop
-    A2 = bu[A1 + 0000];
-    A1 = A1 + 0001;
-    8005FC30	bne    a2, zero, L5fc3c [$8005fc3c]
-    [A0 + 0000] = w(A1);
-    A2 = 0100;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
 
-    L5fc3c:	; 8005FC3C
-    V0 = bu[A1 + 0000];
-    V1 = hu[A0 + 00ea];
-    V0 = V0 << 07;
-    V0 = V0 - V1;
-    8005FC4C	div    v0, a2
-    8005FC74	mflo   v0
-    [A0 + 00ec] = h(A2);
-    V1 = A1 + 0001;
-    [A0 + 0000] = w(V1);
-    [A0 + 00ee] = h(V0);
+    length = bu[akao + 0x0];
+    if( length == 0 ) length = 0x100;
+    depth = bu[akao + 0x1];
+
+    [A0 + 0xec] = h(length);
+    [A0 + 0xee] = h(((depth << 0x7) - hu[A0 + 0xea]) / length);
 }
 
 
 
-void func6088c( VoiceData* data, A1 )
+void system_akao_e0( VoiceData* data, A1 )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00100000);
 }
 
 
 
-void func608f4( VoiceData* data, A1 )
+void system_akao_e1( VoiceData* data, A1 )
 {
     akao = w[A0 + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -1337,82 +1221,83 @@ void func608f4( VoiceData* data, A1 )
 
 
 
-void func60910( VoiceData* data, A1 )
+void system_akao_e2( VoiceData* data, A1 )
 {
     [data + 0xf6] = h(0);
 }
 
 
 
-void func5f900( VoiceData* data, A1 )
+void system_akao_e4_vibrato_rate_slide( VoiceData* data, A1 )
 {
-    S0 = A0;
-    V0 = w[S0 + 0000];
-    A2 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    8005F920	bne    a2, zero, L5f92c [$8005f92c]
-    [S0 + 0000] = w(V0);
-    A2 = 0100;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
 
-    L5f92c:	; 8005F92C
-    A0 = S0 + 003c;
-    V0 = w[S0 + 0000];
-    A3 = 000c;
-    [S0 + 00d2] = h(A2);
-    A1 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    [S0 + 0000] = w(V0);
-    8005F944	jal    func5eb40 [$8005eb40]
+    u8 length = bu[akao + 0x0];
+    if( length == 0 ) length = 0x100;
+    [data + 0xd2] = h(length);
 
-    [S0 + 0040] = w(V0);
+    u8 rate = bu[akao + 0x1];
+
+    V0 = func5eb40( data + 0x3c, rate, length, 0xc );
+    [data + 0x40] = w(V0);
 }
 
 
 
-void func5fae8( VoiceData* data, A1 )
+void system_akao_e5_tremolo_rate_slide( VoiceData* data, A1 )
 {
-    S0 = A0;
-    V0 = w[S0 + 0000];
-    8005FAFC	nop
-    A2 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    8005FB08	bne    a2, zero, L5fb14 [$8005fb14]
-    [S0 + 0000] = w(V0);
-    A2 = 0100;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
 
-    L5fb14:	; 8005FB14
-    A0 = S0 + 004c;
-    V0 = w[S0 + 0000];
-    A3 = 000c;
-    [S0 + 00e0] = h(A2);
-    A1 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    8005FB2C	jal    func5eb40 [$8005eb40]
-    [S0 + 0000] = w(V0);
-    [S0 + 0050] = w(V0);
+    u8 length = bu[akao + 0x0];
+    if( length == 0 ) length = 0x100;
+    [data + 0xe0] = h(length);
+
+    u8 rate = bu[akao + 0x1];
+
+    V0 = func5eb40( data + 0x4c, rate, length, 0xc );
+    [data + 0x50] = w(V0);
 }
 
 
 
-void func5fc8c( VoiceData* data, A1 )
+void system_akao_e6_pan_lfo_rate_slide( VoiceData* data, A1 )
 {
-    S0 = A0;
-    V0 = w[S0 + 0000];
-    8005FCA0	nop
-    A2 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    8005FCAC	bne    a2, zero, L5fcb8 [$8005fcb8]
-    [S0 + 0000] = w(V0);
-    A2 = 0100;
+    akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
 
-    L5fcb8:	; 8005FCB8
-    A0 = S0 + 005c;
-    V0 = w[S0 + 0000];
-    A3 = 000c;
-    [S0 + 00e8] = h(A2);
-    A1 = bu[V0 + 0000];
-    V0 = V0 + 0001;
-    8005FCD0	jal    func5eb40 [$8005eb40]
-    [S0 + 0000] = w(V0);
-    [S0 + 0060] = w(V0);
+    u8 length = bu[akao + 0x0];
+    if( length == 0 ) length = 0x100;
+    [data + 0xe8] = h(length);
+
+    u8 rate = bu[akao + 0x1];
+
+    V0 = func5eb40( data + 0x5c, rate, length, 0xc);
+    [data + 0x60] = w(V0);
+}
+
+
+
+int func5eb40( A0, A1, A2, A3 )
+{
+    V0 = 0x1 << A3;
+    T0 = V0 - x1;
+    V0 = ~T0;
+    V1 = w[A0 + 0x0];
+    A1 = A1 << A3;
+    V1 = V1 & V0;
+    A3 = (A1 - V1) / A2;
+    [A0 + 0x0] = w(V1);
+    if( A1 < V1 )
+    {
+        [A0 + 0x0] = w(V1 | T0);
+        A3 -= 0x1;
+    }
+    else
+    {
+        A3 += 0x1;
+    }
+
+    return A3;
 }

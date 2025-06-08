@@ -45596,49 +45596,6 @@ if( V0 != 0 )
 
 
 
-////////////////////////////////
-// func5eb40
-V0 = 0001;
-V0 = V0 << A3;
-8005EB48	addiu  t0, v0, $ffff (=-$1)
-V0 = 0 NOR T0;
-V1 = w[A0 + 0000];
-A1 = A1 << A3;
-V1 = V1 & V0;
-A3 = A1 - V1;
-A1 = A1 < V1;
-8005EB64	div    a3, a2
-8005EB68	bne    a2, zero, L5eb74 [$8005eb74]
-8005EB6C	nop
-8005EB70	break   $01c00
-
-L5eb74:	; 8005EB74
-8005EB74	addiu  at, zero, $ffff (=-$1)
-8005EB78	bne    a2, at, L5eb8c [$8005eb8c]
-8005EB7C	lui    at, $8000
-8005EB80	bne    a3, at, L5eb8c [$8005eb8c]
-8005EB84	nop
-8005EB88	break   $01800
-
-L5eb8c:	; 8005EB8C
-8005EB8C	mflo   a3
-8005EB90	beq    a1, zero, L5eba8 [$8005eba8]
-[A0 + 0000] = w(V1);
-V0 = V1 | T0;
-[A0 + 0000] = w(V0);
-8005EBA0	j      L5ebac [$8005ebac]
-8005EBA4	addiu  a3, a3, $ffff (=-$1)
-
-L5eba8:	; 8005EBA8
-A3 = A3 + 0001;
-
-L5ebac:	; 8005EBAC
-8005EBAC	jr     ra 
-V0 = A3;
-////////////////////////////////
-
-
-
 void func5ebb4( VoiceData* data, A1, A2 )
 {
     [data + 0x11c] = w(w[data + 0x11c] |
