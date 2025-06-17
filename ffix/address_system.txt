@@ -363,6 +363,68 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 8007bcf8 [][][][] pointer to second part in allocated memory for currently executed script.
 8007bd2c []       set to 0 during script initialization. Set up in 0x2a opcode.
 
+8007e3d8 array of voice structs (0x134 size)
+    +   0 [][][][] akao pointer.
+    +  14 [][][][] stored akao pattern return pointer.
+    +  18 [][][][] ???
+    +  28 [][][][] some mask. Update akao if flag 0x02000000 set.
+    +  2c [][][][] ???
+    +  34 [][][][] some mask.
+                    0x00000008 drum mode on.
+                    0x00000010 side chain playback on.
+                    0x00000020 side chain pitch volume on.
+                    0x00000040 set in 0xfe1a opcode. Removed in 0xfe1b opcode.
+                    0x00001000 removed or set when load custom instrument.
+                    0x00100000 ???
+    +  3c [][][][] vibrato rate slide related.
+    +  40 [][][][] vibrato rate slide change.
+    +  4c [][][][] tremolo rate slide related.
+    +  50 [][][][] tremolo rate slide change.
+    +  5c [][][][] pan lfo rate slide related.
+    +  60 [][][][] pan lfo rate slide change.
+    +  78 [][][][] ???
+    +  84 [][][][] ???
+    +  88 [][][][] increment each akao update cycle.
+    +  8c [][][][] volume slide start.
+    +  90 [][][][] volume slide change.
+    +  94 [][]     check if this == 0.
+    +  96 [][]     decrement each akao update cycle. If == 0 then update akao.
+    +  98 [][]     decrement each akao update cycle. If == 0 set some masks.
+    +  9a [][]     instrument id.
+    +  a0 [][]     current something from +aa
+    +  a2 array of loop times for nested loops (0x2 size 0x4 items).
+    +  aa array of something nested loops (0x2 size 0x4 items).
+    +  b2 [][]     master volume value.
+    +  b4 [][]     master volume slide length.
+    +  ba [][]     volume slide length.
+    +  be [][]     ???
+    +  c8 [][]     portamento related.
+    +  ca [][]     portamento speed.
+    +  cc [][]     portamento related. In 0xd0 opcode (full_length_on) set to 0x4. In 0xcc opcode (legato_on) set to 0x1.
+    +  d2 [][]     vibrato rate slide length.
+    +  d6 [][]     vibrato depth slide start.
+    +  d8 [][]     vibrato depth slide length.
+    +  da [][]     vibrato depth slide change.
+    +  e0 [][]     tremolo rate slide length.
+    +  e2 [][]     tremolo depth slide start.
+    +  e4 [][]     tremolo depth slide length.
+    +  e6 [][]     tremolo depth slide change.
+    +  e8 [][]     pan lfo rate slide length.
+    +  ea [][]     pan lfo depth slide start.
+    +  ec [][]     pan lfo depth slide length.
+    +  ee [][]     pan lfo depth slide change.
+    +  f0 [][]     noise switch.
+    +  f2 [][]     frequency modulation switch.
+    +  f4 [][]     loop nest value.
+    +  f6 [][]     ???
+    +  fa [][]     fix note length add.
+    + 106 [][]     transpose value.
+    + 108 [][]     ???
+    + 10a [][]     init with 0x00ff when load custom instrument.
+    + 10e [][]     portamento related.
+    + 11c [][][][] spu update flags.
+    + 12e [][]     set to 0 when load instrument. Drum mode on.
+
 
 8008b000 [][][][] 8006794c points here (some struct)
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.
