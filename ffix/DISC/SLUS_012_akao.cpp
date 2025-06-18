@@ -66,11 +66,11 @@ L5d780:	; 8005D780
         V0 = w[A0 + 0004];
         if( V0 == 0 )
         {
-            [8007f790] = w(0);
+            [0x8007f790] = w(0);
         }
         else
         {
-            A1 = w[80080a10];
+            A1 = w[0x80080a10];
             V0 = w[A1 + 0004];
             V1 = w[A1 + 001c];
             V0 = V0 | V1;
@@ -111,8 +111,7 @@ L5d780:	; 8005D780
     8005D890	nop
 
     L5d894:	; 8005D894
-    8005D894	jal    func589f0 [$800589f0]
-    8005D898	nop
+    func589f0(); // update voices
 
     L5d89c:	; 8005D89C
     V0 = w[80080a10];
@@ -196,7 +195,7 @@ L5d780:	; 8005D780
                     }
                     else
                     {
-                        func5e3fc( data_p, S1 );
+                        func5e3fc( data_p, S1 ); // update akao
                     }
 
                     func579b4( data_p, S1, 1 );

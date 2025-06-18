@@ -368,8 +368,8 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     +  14 [][][][] stored akao pattern return pointer.
     +  18 [][][][] ???
     +  1c [][][][] vibrato update callback.
-    +  20 [][][][] tremolo related.
-    +  24 [][][][] pan lfo related.
+    +  20 [][][][] tremolo update callback.
+    +  24 [][][][] pan lfo update callback.
     +  28 [][][][] some mask. Update akao if flag 0x02000000 set.
     +  2c [][][][] ???
     +  32 [][]     ???
@@ -388,10 +388,11 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     +  38 [][][][] some instrument.
     +  3c [][][][] vibrato rate.
     +  40 [][][][] vibrato rate slide change.
-    +  44 [][][][] ???
+    +  44 [][][][] vibrato related.
     +  48 [][][][] vibrato related.
     +  4c [][][][] tremolo rate.
     +  50 [][][][] tremolo rate slide change.
+    +  54 [][][][] tremolo related.
     +  58 [][][][] tremolo related.
     +  5c [][][][] pan lfo rate.
     +  60 [][][][] pan lfo rate slide change.
