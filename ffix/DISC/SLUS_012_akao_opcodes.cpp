@@ -73,8 +73,7 @@ void system_akao_opcode_a0_finish_channel( VoiceData* data, A1 )
     }
     else
     {
-        A0 = data;
-        func5ec20();
+        func5ec20( data, A1 );
     }
 
     [data + 0x34] = w(0);
@@ -135,14 +134,15 @@ void system_akao_opcode_a3_master_volume( VoiceData* data, A1 )
 void system_akao_opcode_a4_pitch_bend_slide( VoiceData* data, A1 )
 {
     akao = w[data + 0x0];
-    length = bu[akao + 0x0];
-    semitones = bu[akao + 0x1];
+    [data + 0x0] = w(akao + 0x2);
 
+    length = bu[akao + 0x0];
+    semitones = b[akao + 0x1];
     if( length == 0 ) length = 0x0100;
     [data + 0xc6] = h(length);
 
-    [data + 0x0] = w(akao + 0x2);
-    [data + 0x10c] = h((semitones << 0x18) >> 0x18);
+
+    [data + 0x10c] = h(semitones);
 }
 
 
@@ -185,13 +185,14 @@ void system_akao_opcode_a8_set_volume( VoiceData* data, A1 )
 void system_akao_opcode_a9_set_volume_slide( VoiceData* data, A1 )
 {
     akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
+
     length = bu[akao + 0x0];
     volume = b[akao + 0x1];
-
     if( length == 0 ) length = 0x100;
     [data + 0xb8] = h(length);
 
-    [data + 0x0] = w(akao + 0x2);
+
     [data + 0x78] = w(w[data + 0x78] & ffff0000);
     [data + 0x7c] = w(((volume << 0x17) - w[data + 0x78]) / hu[data + 0xb8]);
     [data + 0xba] = h(0);
@@ -213,13 +214,14 @@ void system_akao_opcode_aa_set_pan( VoiceData* data, A1 )
 void system_akao_opcode_ab_set_pan_slide( VoiceData* data, A1 )
 {
     akao = w[data + 0x0];
+    [data + 0x0] = w(akao + 0x2);
+
     length = bu[akao + 0x0];
     pan = bu[akao + 0x1];
 
     if( length == 0 ) length = 0x0100;
     [data + 0xc0] = h(length);
 
-    [data + 0x0] = w(akao + 0x2);
     [data + 0xbe] = h(hu[data + 0xbe] & 0xff00);
     [data + 0x104] = h(((((pan + 0x40) & 0xff) << 0x8) - hu[data + 0xbe]) / hu[data + 0xc0]);
 }
@@ -324,7 +326,7 @@ void system_akao_opcode_b2_set_rr( VoiceData* data, A1 )
 
 void system_akao_opcode_b3_reset_adsr( VoiceData* data, A1 )
 {
-    V1 = hu[data + 0x9a];
+    intsr_id = hu[data + 0x9a];
     [data + 0x34] = w(w[data + 0x34] & (0xe6ffffff));
     [data + 0x11c] = w(w[data + 0x11c] |
         SPU_VOICE_ADSR_AMODE |
@@ -335,8 +337,8 @@ void system_akao_opcode_b3_reset_adsr( VoiceData* data, A1 )
         SPU_VOICE_ADSR_SR |
         SPU_VOICE_ADSR_RR |
         SPU_VOICE_ADSR_SL);
-    [data + 0x12a] = h(hu[0x8007f970 + V1 * 0x10 + 0xc]);
-    [data + 0x12c] = h(hu[0x8007f970 + V1 * 0x10 + 0xe]);
+    [data + 0x12a] = h(hu[0x8007f970 + intsr_id * 0x10 + 0xc]);
+    [data + 0x12c] = h(hu[0x8007f970 + intsr_id * 0x10 + 0xe]);
 }
 
 

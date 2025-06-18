@@ -3,30 +3,17 @@ typedef struct {
     short right;       /* Rch */
 } SpuVolume;
 
+// Differs from standart psyq
 typedef struct {
-    unsigned long   voice;          //       set voice:
-                                    //        SpuSetVoiceAttr: each voice is a bit array
-                                    //        SpuGetVoiceAttr: voice is a bit value
+    unsigned long   voice_id;       // +0x00 id of voice
     unsigned long   mask;           // +0x04 settings attribute bit (invalid with Get)
-    SpuVolume       volume;         // +0x18 volume
-    SpuVolume       volmode;        // +0x16 volume mode
-    SpuVolume       volumex;        //       current volume (invalid with Set)
-    unsigned short  pitch;          // +0x10 tone (pitch setting)
-    unsigned short  note;           //       tone (note setting)
-    unsigned short  sample_note;    //       tone (note setting)
-    short           envx;           //       current envelope value (invalid with Set)
     unsigned long   addr;           // +0x08 waveform data start address
     unsigned long   loop_addr;      // +0x0c loop start address
-    long            a_mode;         //       Attack rate mode
-    long            s_mode;         //       Sustain rate mode
-    long            r_mode;         //       Release rate mode
-    unsigned short  ar;             //       Attack rate
-    unsigned short  dr;             //       Decay rate
-    unsigned short  sr;             //       Sustain rate
-    unsigned short  rr;             //       Release rate
-    unsigned short  sl;             //       Sustain level
+    unsigned short  pitch;          // +0x10 tone (pitch setting)
     unsigned short  adsr1;          // +0x12 adsr1 for `VagAtr'
     unsigned short  adsr2;          // +0x14 adsr2 for `VagAtr'
+    unsigned short  volmode;        // +0x16 volume mode
+    SpuVolume       volume;         // +0x18 volume
 } SpuVoiceAttr;
 
 #define	SPU_VOICE_DIRECT        0

@@ -367,64 +367,112 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     +   0 [][][][] akao pointer.
     +  14 [][][][] stored akao pattern return pointer.
     +  18 [][][][] ???
+    +  1c [][][][] vibrato update callback.
+    +  20 [][][][] tremolo related.
+    +  24 [][][][] pan lfo related.
     +  28 [][][][] some mask. Update akao if flag 0x02000000 set.
     +  2c [][][][] ???
+    +  32 [][]     ???
     +  34 [][][][] some mask.
+                    0x00000002 tremolo inited.
+                    0x00000004 pan lfo inited.
                     0x00000008 drum mode on.
                     0x00000010 side chain playback on.
                     0x00000020 side chain pitch volume on.
                     0x00000040 set in 0xfe1a opcode. Removed in 0xfe1b opcode.
                     0x00001000 removed or set when load custom instrument.
                     0x00100000 ???
-    +  3c [][][][] vibrato rate slide related.
+                    0x01000000 set when set adsr attack rate.
+                    0x08000000 set when set adsr sustane rate
+                    0x10000000 set when set adsr release rate.
+    +  38 [][][][] some instrument.
+    +  3c [][][][] vibrato rate.
     +  40 [][][][] vibrato rate slide change.
-    +  4c [][][][] tremolo rate slide related.
+    +  44 [][][][] ???
+    +  48 [][][][] vibrato related.
+    +  4c [][][][] tremolo rate.
     +  50 [][][][] tremolo rate slide change.
-    +  5c [][][][] pan lfo rate slide related.
+    +  58 [][][][] tremolo related.
+    +  5c [][][][] pan lfo rate.
     +  60 [][][][] pan lfo rate slide change.
-    +  78 [][][][] ???
+    +  64 [][][][] set to 0 when init pan lfo.
+    +  68 [][][][] pan lfo related.
+    +  6c [][][][] set to 0 when finish this voice.
+    +  70 [][][][] ???
+    +  74 [][][][] ???
+    +  78 [][][][] 0xffff0000 volume.
+    +  7c [][][][] volume slide length.
     +  84 [][][][] ???
     +  88 [][][][] increment each akao update cycle.
     +  8c [][][][] volume slide start.
     +  90 [][][][] volume slide change.
     +  94 [][]     check if this == 0.
-    +  96 [][]     decrement each akao update cycle. If == 0 then update akao.
-    +  98 [][]     decrement each akao update cycle. If == 0 set some masks.
+    +  96 [][]     note length. Decrement each akao update cycle. If == 0 then update akao.
+    +  98 [][]     note length. Decrement each akao update cycle. If == 0 set some masks.
     +  9a [][]     instrument id.
+    +  9e [][]     ???
     +  a0 [][]     current something from +aa
     +  a2 array of loop times for nested loops (0x2 size 0x4 items).
     +  aa array of something nested loops (0x2 size 0x4 items).
-    +  b2 [][]     master volume value.
+    +  b2 [][]     master volume.
     +  b4 [][]     master volume slide length.
+    +  b6 [][]     ???
+    +  b8 [][]     volume slide length.
     +  ba [][]     volume slide length.
-    +  be [][]     ???
+    +  bc [][]     ???
+    +  be [][]     0xff00 - pan value.
+    +  c0 [][]     pan length.
+    +  c4 [][]     octave.
+    +  c6 [][]     pitch bend slide length.
     +  c8 [][]     portamento related.
     +  ca [][]     portamento speed.
     +  cc [][]     portamento related. In 0xd0 opcode (full_length_on) set to 0x4. In 0xcc opcode (legato_on) set to 0x1.
+    +  ce [][]     vibrato delay.
+    +  d0 [][]     vibrato delay current? Copy from +ce when inited.
     +  d2 [][]     vibrato rate slide length.
-    +  d6 [][]     vibrato depth slide start.
+    +  d4 [][]     vibrato related.
+    +  d6 [][]     vibrato depth.
     +  d8 [][]     vibrato depth slide length.
     +  da [][]     vibrato depth slide change.
+    +  dc [][]     tremolo delay.
+    +  de [][]     tremolo delay current? Copy from +dc when inited.
     +  e0 [][]     tremolo rate slide length.
-    +  e2 [][]     tremolo depth slide start.
+    +  e2 [][]     tremolo depth.
     +  e4 [][]     tremolo depth slide length.
     +  e6 [][]     tremolo depth slide change.
     +  e8 [][]     pan lfo rate slide length.
-    +  ea [][]     pan lfo depth slide start.
+    +  ea [][]     pan lfo depth.
     +  ec [][]     pan lfo depth slide length.
     +  ee [][]     pan lfo depth slide change.
     +  f0 [][]     noise switch.
     +  f2 [][]     frequency modulation switch.
     +  f4 [][]     loop nest value.
     +  f6 [][]     ???
+    +  f8 [][]     note length.
     +  fa [][]     fix note length add.
+    +  fe [][]     ???
+    + 100 [][]     ???
+    + 102 [][]     ???
+    + 104 [][]     pan change.
     + 106 [][]     transpose value.
     + 108 [][]     ???
     + 10a [][]     init with 0x00ff when load custom instrument.
+    + 10c [][]     semitones.
     + 10e [][]     portamento related.
-    + 11c [][][][] spu update flags.
-    + 12e [][]     set to 0 when load instrument. Drum mode on.
-
+    + 110 [][]     set to 0 when vibrato_off.
+    + 112 [][]     set to 0 when tremolo_off.
+    + 114 [][]     set to 0 when pan_lfo_off.
+    + 118 SpuVoiceAttr struct.
+    + 118 [][][][] voice id.
+    + 11c [][][][] mask (spu update flags).
+    + 120 [][][][] addr (waveform data start address).
+    + 124 [][][][] loop_addr (loop start address).
+    + 128 [][]     pitch.
+    + 12a [][]     adsr1.
+    + 12c [][]     adsr2.
+    + 12e [][]     volmode (set to 0 when load instrument. Drum mode on).
+    + 130 [][]     volume left.
+    + 132 [][]     volume right.
 
 8008b000 [][][][] 8006794c points here (some struct)
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.

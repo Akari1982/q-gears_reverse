@@ -399,11 +399,8 @@ A1 = w[V0 + 0004];
 8005DD3C	nop
 
 L5dd40:	; 8005DD40
-V1 = hu[A0 + 00cc];
-V0 = 00a0;
-V1 = V1 & fffa;
-8005DD4C	jr     ra 
-[A0 + 00cc] = h(V1);
+[A0 + 0xcc] = h(hu[A0 + 0xcc] & 0xfffa);
+return 0xa0;
 ////////////////////////////////
 
 
@@ -1001,7 +998,7 @@ void func5e3fc( VoiceData* data, A1 )
         [data + 96] = h(V1);
     }
 
-    V0 = hu[data + 0096];
+    V0 = hu[data + 0x96];
     8005E584	nop
     8005E588	beq    v0, zero, L5e5c8 [$8005e5c8]
     V0 = A2 < 008f;
@@ -1055,20 +1052,16 @@ void func5e3fc( VoiceData* data, A1 )
     L5e638:	; 8005E638
     if( hu[data + 0x94] == 0 )
     {
-        if( w[data + 0x34] & 0040 )
+        if( w[data + 0x34] & 0x00000040 )
         {
             [data + 0x98] = h(hu[data + 0x96]);
         }
     }
 
-    V1 = w[data + 011c];
-    V0 = hu[data + 0096];
-    V1 = V1 | 4000;
-    [data + 00f8] = h(V0);
-    V0 = S1 < 0x8f;
-    [data + 011c] = w(V1);
+    [data + 0xf8] = h(hu[data + 0x96]);
+    [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_ADSR_RR);
 
-    if( V0 == 0 )
+    if( S1 >= 0x8f )
     {
         if( hu[data + 0x94] == 0 )
         {
@@ -1397,32 +1390,19 @@ void func5ebe8( VoiceData* data, A1, A2 )
 
 
 
-void func5ec20()
+void func5ec20( VoiceData* data, A1 )
 {
-    V1 = w[0x80080a70];
     A1 = ~A1;
-    V1 = V1 & A1;
-    [V0 + 0a70] = w(V1);
-    V0 = V0 + 0a70;
-    V1 = w[V0 + 0010];
-    A2 = w[V0 + 001c];
-    V1 = V1 & A1;
-    [V0 + 0010] = w(V1);
-    V1 = w[V0 + 0020];
-    A2 = A2 & A1;
-    [V0 + 0x1c] = w(A2);
-    A2 = w[V0 + 0024];
-    V1 = V1 & A1;
-    [V0 + 0x20] = w(V1);
-    V1 = w[V0 + 0004];
-    A2 = A2 & A1;
-    [V0 + 0x24] = w(A2);
-    V1 = V1 & A1;
-    A2 = w[V0 + 0x8] & A1;
-    [V0 + 0x4] = w(V1);
-    [V0 + 0x8] = w(A2);
-    [A0 + 0x28] = w(0);
-    [A0 + 0x6c] = w(0);
+
+    [0x80080a70 + 0x0] = w(w[0x80080a70 + 0x0] & A1);
+    [0x80080a70 + 0x4] = w(w[0x80080a70 + 0x4] & A1);
+    [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] & A1);
+    [0x80080a70 + 0x10] = w(w[0x80080a70 + 0x10] & A1);
+    [0x80080a70 + 0x1c] = w(w[0x80080a70 + 0x1c] & A1);
+    [0x80080a70 + 0x20] = w(w[0x80080a70 + 0x20] & A1);
+    [0x80080a70 + 0x24] = w(w[0x80080a70 + 0x24] & A1);
+    [data + 0x28] = w(0);
+    [data + 0x6c] = w(0);
 }
 
 
