@@ -50,6 +50,45 @@ V0 = V0 >> 03;
 
 
 
+// Set attributes for a voice
+void system_spu_n_set_voice_attr( int voiceNum, SpuVoiceAttr* attr )
+{
+    unsigned long mask = attr->mask;
+    attr->mask = 0x0;
+
+    if( mask & SPU_VOICE_PITCH )
+    {
+        system_psyq_spu_set_voice_pitch( voiceNum, attr->pitch );
+    }
+
+    if( mask & ( SPU_VOICE_VOLL | SPU_VOICE_VOLR ) )
+    {
+        system_psyq_spu_set_voice_volume_attr( voiceNum, attr->volume.left, attr->volume.right, attr->volmode.left );
+    }
+
+    if( mask & SPU_VOICE_WDSA )
+    {
+        system_psyq_spu_set_voice_start_addr( voiceNum, attr->addr );
+    }
+
+    if( mask & SPU_VOICE_LSAX )
+    {
+        system_psyq_spu_set_voice_loop_start_addr( voiceNum, attr->loop_addr );
+    }
+
+    if( mask & ( SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_SR | SPU_VOICE_ADSR_RR ) )
+    {
+        system_spu_set_voice_adsr2( voiceNum, attr->adsr2 );
+    }
+
+    if( mask & ( SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_AR | SPU_VOICE_ADSR_DR | SPU_VOICE_ADSR_SL ) )
+    {
+        system_spu_set_voice_adsr1( voiceNum, attr->adsr1 );
+    }
+}
+
+
+
 ////////////////////////////////
 // func579b4()
 
@@ -2198,70 +2237,50 @@ SP = SP + 0038;
 
 
 
-////////////////////////////////
-// func599d4
-800599D4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S2);
-S2 = A0;
-[SP + 001c] = w(RA);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-V0 = w[S2 + 0004];
-800599F0	nop
-800599F4	beq    v0, zero, L59a90 [$80059a90]
-800599F8	nop
-800599FC	beq    a2, zero, L59a14 [$80059a14]
-80059A00	addiu  v0, zero, $ffff (=-$1)
-V0 = hu[S2 + 006a];
-80059A08	nop
-80059A0C	bne    a2, v0, L59a90 [$80059a90]
-80059A10	addiu  v0, zero, $ffff (=-$1)
+void func599d4( A0, A1, A2 )
+{
+    S2 = A0;
 
-L59a14:	; 80059A14
-[S2 + 0018] = w(V0);
-S0 = 0020;
-A2 = 0003;
-A0 = 0001;
-80059A24	lui    v0, $8007
-80059A28	addiu  v0, v0, $f40c (=-$bf4)
-V1 = A1 + 0098;
+    if( w[S2 + 0x4] == 0 ) return;
 
-loop59a30:	; 80059A30
-[V1 + fffe] = h(A2);
-[V1 + 0000] = h(A0);
-V1 = V1 + 0134;
-[A1 + 0000] = w(V0);
-80059A40	addiu  s0, s0, $ffff (=-$1)
-80059A44	bne    s0, zero, loop59a30 [$80059a30]
-A1 = A1 + 0134;
-S1 = 800831c8;
-[S2 + 006a] = h(0);
-[S2 + 0014] = w(0);
-[S2 + 0010] = w(0);
+    if( A2 != 0 )
+    {
+        if( A2 != hu[S2 + 0x6a] ) return;
+    }
 
-loop59a60:	; 80059A60
-V0 = w[S1 + 0000];
-80059A64	nop
-80059A68	bne    v0, s2, L59a80 [$80059a80]
+    [S2 + 0x18] = w(-1);
+    S0 = 0x20;
+    A2 = 0x3;
+    A0 = 0x1;
+    V0 = 0x8006f40c;
+    V1 = A1 + 0x98;
 
-[S1 + 0000] = w(0);
+    loop59a30:	; 80059A30
+        [V1 + fffe] = h(A2);
+        [V1 + 0000] = h(A0);
+        V1 = V1 + 0x134;
+        [A1 + 0000] = w(V0);
+        S0 = S0 - 1;
+        A1 = A1 + 0x134;
+    80059A44	bne    s0, zero, loop59a30 [$80059a30]
 
-system_psyq_spu_set_voice_rr_attr( S0, 0x5, SPU_VOICE_LINEARDecN );
+    S1 = 0x800831c8;
+    [S2 + 0x6a] = h(0);
+    [S2 + 0x14] = w(0);
+    [S2 + 0x10] = w(0);
 
-L59a80:	; 80059A80
-S0 = S0 + 0001;
-V0 = S0 < 0018;
-80059A88	bne    v0, zero, loop59a60 [$80059a60]
-S1 = S1 + 0004;
+    for( int i = S0; i < 0x18; ++i )
+    {
+        if( w[S1 + 0x0] == S2 )
+        {
+            [S1 + 0x0] = w(0);
 
-L59a90:	; 80059A90
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80059AA0	jr     ra 
-SP = SP + 0020;
-////////////////////////////////
+            system_psyq_spu_set_voice_rr_attr( i, 0x5, SPU_VOICE_LINEARDecN );
+        }
+
+        S1 = S1 + 0x4;
+    }
+}
 
 
 
@@ -5108,26 +5127,31 @@ L5c088:	; 8005C088
 8005C098	jr     ra 
 [V1 + f8e4] = w(V0);
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5c0a0
-8005C0A0	addiu  sp, sp, $ffe8 (=-$18)
+
 8005C0A4	lui    a1, $8008
 8005C0A8	addiu  a1, a1, $bd48 (=-$42b8)
 A0 = w[80080a10];
-[SP + 0010] = w(RA);
-8005C0B8	jal    func599d4 [$800599d4]
 A2 = 0;
+8005C0B8	jal    func599d4 [$800599d4]
+
 A0 = w[8007f790];
 8005C0C8	nop
 8005C0CC	beq    a0, zero, L5c0e0 [$8005c0e0]
 A1 = w[8007f71c];
-8005C0D8	jal    func599d4 [$800599d4]
 A2 = 0;
+8005C0D8	jal    func599d4 [$800599d4]
+
 
 L5c0e0:	; 8005C0E0
-RA = w[SP + 0010];
-8005C0E4	nop
-8005C0E8	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5c0f0
 8005C0F0	addiu  sp, sp, $ffe8 (=-$18)

@@ -1194,6 +1194,8 @@
 80057760 system_psyq_spu_set_voice_sl
 80057788 system_psyq_spu_set_voice_sr_attr
 800577BC system_psyq_spu_set_voice_rr_attr
+
+// akao
 800577EC func577ec
 80057898 system_spu_n_set_voice_attr
 800579B4 func579b4

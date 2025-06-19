@@ -1335,45 +1335,6 @@ type_p = A0;
 
 
 
-// Set attributes for a voice
-void system_spu_n_set_voice_attr( int voiceNum, SpuVoiceAttr* attr )
-{
-    unsigned long mask = attr->mask;
-    attr->mask = 0x0;
-
-    if( mask & SPU_VOICE_PITCH )
-    {
-        system_psyq_spu_set_voice_pitch( voiceNum, attr->pitch );
-    }
-
-    if( mask & ( SPU_VOICE_VOLL | SPU_VOICE_VOLR ) )
-    {
-        system_psyq_spu_set_voice_volume_attr( voiceNum, attr->volume.left, attr->volume.right, attr->volmode.left );
-    }
-
-    if( mask & SPU_VOICE_WDSA )
-    {
-        system_psyq_spu_set_voice_start_addr( voiceNum, attr->addr );
-    }
-
-    if( mask & SPU_VOICE_LSAX )
-    {
-        system_psyq_spu_set_voice_loop_start_addr( voiceNum, attr->loop_addr );
-    }
-
-    if( mask & ( SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_SR | SPU_VOICE_ADSR_RR ) )
-    {
-        system_spu_set_voice_adsr2( voiceNum, attr->adsr2 );
-    }
-
-    if( mask & ( SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_AR | SPU_VOICE_ADSR_DR | SPU_VOICE_ADSR_SL ) )
-    {
-        system_spu_set_voice_adsr1( voiceNum, attr->adsr1 );
-    }
-}
-
-
-
 ////////////////////////////////
 // func575b4()
 // 1F801D88h - Voice 0..23 Key ON (Start Attack/Decay/Sustain) (KON) (W)
