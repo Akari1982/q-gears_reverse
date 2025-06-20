@@ -82,7 +82,7 @@ main()
 
         FieldPackFile* field_pack = new FieldPackFile( path );
 
-        // EXPORT  SCRIPT
+        // EXPORT EVENTS
         {
             File* temp;
             temp = field_pack->Extract( 5 ); // events
@@ -91,7 +91,7 @@ main()
             std::string save;
             save += "fields_raw/";
             save += std::format( "{:03d}", i );
-            save += ".scr";
+            save += ".ev";
             temp->WriteFile( save );
             delete temp;
 

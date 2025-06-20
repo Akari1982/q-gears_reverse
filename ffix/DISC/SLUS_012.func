@@ -1304,8 +1304,8 @@
 8005E170 func5e170
 8005E3FC func5e3fc
 8005EB40 func5eb40
-8005EBB4 func5ebb4
-8005EBE8 func5ebe8
+8005EBB4 system_akao_init_voice_instrument
+8005EBE8 system_akao_load_instrument
 8005EC20 func5ec20
 8005EC8C func5ec8c
 8005ECCC system_akao_opcode_a0_finish_channel

@@ -97,7 +97,7 @@ void system_akao_opcode_a1_load_instrument( VoiceData* data, A1 )
         u16 instr_id = func5ec8c( w[data + 0x38], bu[akao] );
     }
 
-    func5ebb4( data, 0x8007f970 + instr_id * 0x10, w[0x8007f970 + instr_id * 0x10 + 0x0] );
+    system_akao_init_voice_instrument( data, 0x8007f970 + instr_id * 0x10, w[0x8007f970 + instr_id * 0x10 + 0x0] );
 
     [data + 0x34] = w(w[data + 0x34] & 0xe6ffeff7);
     [data + 0x9a] = h(instr_id);
@@ -1276,7 +1276,7 @@ void system_akao_opcode_fe_0a_load_instrument( VoiceData* data, A1 )
     V1 = w[0x80080a10];
     instr_id = func5dd54( bu[akao], w[V1 + 0x0] );
 
-    func5ebb4( data, 0x8007f970 + instr_id * 0x10, 0x1010 );
+    system_akao_init_voice_instrument( data, 0x8007f970 + instr_id * 0x10, 0x1010 );
 
     [data + 0x9a] = h(instr_id);
     [data + 0x12e] = h(0);

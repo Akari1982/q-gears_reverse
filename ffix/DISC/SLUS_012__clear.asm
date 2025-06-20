@@ -85140,7 +85140,7 @@ func59548:	; 80059548
 800595CC	sh     zero, $00e0(a0)
 800595D0	sh     zero, $00d2(a0)
 800595D4	sh     zero, $00f2(a0)
-800595D8	jal    func5ebe8 [$8005ebe8]
+800595D8	jal    system_akao_load_instrument [$8005ebe8]
 800595DC	sh     zero, $00f0(a0)
 800595E0	lw     ra, $0010(sp)
 800595E4	nop
@@ -85352,7 +85352,7 @@ loop597e0:	; 800597E0
 800598B4	sh     zero, $ffc8(s0)
 800598B8	sh     zero, $ffba(s0)
 800598BC	sh     zero, $ffda(s0)
-800598C0	jal    func5ebe8 [$8005ebe8]
+800598C0	jal    system_akao_load_instrument [$8005ebe8]
 800598C4	sh     zero, $ffd8(s0)
 800598C8	j      L59918 [$80059918]
 800598CC	addiu  v0, zero, $0018
@@ -91760,7 +91760,7 @@ func5ebb4:	; 8005EBB4
 8005EBE4	sh     v1, $012c(a0)
 
 
-func5ebe8:	; 8005EBE8
+system_akao_load_instrument:	; 8005EBE8
 8005EBE8	addiu  sp, sp, $ffe8 (=-$18)
 8005EBEC	sw     ra, $0010(sp)
 8005EBF0	sh     a1, $009a(a0)

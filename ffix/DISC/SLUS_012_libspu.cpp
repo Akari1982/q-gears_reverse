@@ -1414,12 +1414,12 @@ type_p = A0;
 
 
 // Set voice volume/volume mode
-void system_psyq_spu_set_voice_volume_attr( int voiceNum, short volumeL, short volumeR, short volModeL, short volModeR )
+void system_psyq_spu_set_voice_volume_attr( int voiceNum, short volumeL, short volumeR, short volMode )
 {
-    if( volModeL != 0 )
+    if( volMode != 0 )
     {
-        volumeL = (volumeL * volModeL) >> 0x7;
-        volumeR = (volumeR * volModeL) >> 0x7;
+        volumeL = (volumeL * volMode) >> 0x7;
+        volumeR = (volumeR * volMode) >> 0x7;
     }
 
     [0x1f801c00 + voiceNum * 0x10 + 0x0] = h(volumeL & 0x7fff);

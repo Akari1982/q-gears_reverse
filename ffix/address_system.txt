@@ -364,6 +364,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 8007bd2c []       set to 0 during script initialization. Set up in 0x2a opcode.
 
 8007e3d8 array of voice structs (0x134 size)
+8007e3d8 + 120c = 8007f5e4
     +   0 [][][][] akao pointer.
     +  14 [][][][] stored akao pattern return pointer.
     +  18 [][][][] ???
@@ -474,6 +475,20 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     + 12e [][]     volmode (set to 0 when load instrument. Drum mode on).
     + 130 [][]     volume left.
     + 132 [][]     volume right.
+
+0x8007f970 array with instruments data
+    + 0 [][][][] addr (waveform data start address).
+    + 4 [][][][] loop_addr (loop start address).
+    + c [][]     adsr1.
+    + e [][]     adsr2.
+
+80083168 some sound struct
+    +  8 [][][][] flags.
+                    0x00000001 - separate voice for left and right.
+    +  c [][][][] ???
+    + 10 [][][][] start id of voice.
+    + 40 [][][][] volume.
+    + 58 [][][][] pitch value.
 
 8008b000 [][][][] 8006794c points here (some struct)
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.
