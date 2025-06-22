@@ -363,8 +363,15 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 8007bcf8 [][][][] pointer to second part in allocated memory for currently executed script.
 8007bd2c []       set to 0 during script initialization. Set up in 0x2a opcode.
 
-8007e3d8 array of voice structs (0x134 size)
-8007e3d8 + 120c = 8007f5e4
+8007bd48 array of channel structs (0x134 size)
+8007e3c8 end
+
+8007e3c8 [][][][] current frames number from boot.
+8007e3cc [][][][] prev frames number from boot.
+8007e3d0 [][][][] additional spu update left (because of low FPS)
+
+8007e3d8 array of channel structs (0x134 size)
+8007e3d8 + f * 134 = 8007f5e4
     +   0 [][][][] akao pointer.
     +  14 [][][][] stored akao pattern return pointer.
     +  18 [][][][] ???
@@ -476,16 +483,47 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     + 130 [][]     volume left.
     + 132 [][]     volume right.
 
-0x8007f970 array with instruments data
+8007f71c pointer to some voices array.
+
+0x8007f790 pointer to some data.. Size 0x7c.
+    + 3c [][][][] reverb related.
+    + 40 [][][][] noise related.
+    + 44 [][][][] pitch modulation related.
+
+8007f970 array with instruments data
     + 0 [][][][] addr (waveform data start address).
     + 4 [][][][] loop_addr (loop start address).
     + c [][]     adsr1.
     + e [][]     adsr2.
 
+0x80080a10 pointer to some sound struct (copy of 0x8007f790). Size 0x7c.
+    +  4 [][][][] some channels mask.
+    +  8 [][][][] some channels mask.
+    + 18 [][][][] some channels mask.
+
+0x80080a70 some sound struct
+    +  0 [][][][] some voices mask.
+    +  4 [][][][] ???
+    +  8 [][][][] ???
+    +  c [][][][] voices off mask.
+    + 10 [][][][] some voices mask.
+    + 16 [][]     ???
+    + 18 [][][][] ???
+    + 1c [][][][] noise on mask.
+    + 20 [][][][] reverb on mask.
+    + 24 [][][][] potch modulation on mask.
+    + 28 [][]     ???
+
+80083158 some sound struct
+    +  8 [][][][] update flags.
+                    0x00000010 - update noise.
+                    0x00000080 - update reverb volume.
+                    0x00000100 - update reverb, noise and pitch modulation on.
+
 80083168 some sound struct
     +  8 [][][][] flags.
                     0x00000001 - separate voice for left and right.
-    +  c [][][][] ???
+    +  c [][][][] some voices mask.
     + 10 [][][][] start id of voice.
     + 40 [][][][] volume.
     + 58 [][][][] pitch value.

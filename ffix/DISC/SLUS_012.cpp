@@ -35794,7 +35794,7 @@ V1 = V1 | 4b41;
 80055E70	bne    v0, v1, L55ecc [$80055ecc]
 S0 = 80080a30;
 A1 = S0;
-80055E80	jal    func5ce04 [$8005ce04]
+80055E80	jal    system_akao_copy [$8005ce04]
 A2 = 0040;
 S2 = S2 + 0040;
 V0 = w[S0 + 0010];
@@ -35834,7 +35834,7 @@ S0 = S1;
 
 L55f08:	; 80055F08
 A1 = w[S3 + 3228];
-80055F0C	jal    func5ce04 [$8005ce04]
+80055F0C	jal    system_akao_copy [$8005ce04]
 A2 = S0;
 V0 = S0 >> 02;
 V0 = V0 << 02;
@@ -36145,7 +36145,7 @@ A0 = S0;
 80056348	lui    a1, $8008
 8005634C	addiu  a1, a1, $f720 (=-$8e0)
 A2 = 0070;
-80056354	jal    func5ce04 [$8005ce04]
+80056354	jal    system_akao_copy [$8005ce04]
 [A0 + 0020] = w(S2);
 8005635C	j      L5636c [$8005636c]
 V0 = S3;
@@ -36737,8 +36737,7 @@ do
     system_bios_close_event();
 } while( V0 == 0 )
 
-A0 = 00ffffff;
-func575d0();
+system_spu_key_off( 0x00ffffff );
 
 func56cdc();
 ////////////////////////////////
@@ -37412,8 +37411,8 @@ V0 = V1;
 // func60938()
 // spu irq callback
 
-S0 = 80083168;
-V0 = w[S0 + 000c];
+S0 = 0x80083168;
+V0 = w[S0 + 0xc];
 
 80060954	beq    v0, zero, L609f8 [$800609f8]
 
@@ -37423,8 +37422,7 @@ system_psyq_spu_set_irq();
 A0 = 0;
 system_psyq_spu_set_irq_callback();
 
-A0 = w[S0 + c];
-80060970	jal    func575d0 [$800575d0]
+system_spu_key_off( w[S0 + 0xc] );
 
 if( w[S0 + 0x8] & 0x0400 )
 {
@@ -37554,20 +37552,20 @@ V0 = S4 + S2;
 V0 = S2 << V0;
 S1 = S1 | V0;
 V0 = w[S3 + 0020];
-A0 = S1;
 [S0 + 0010] = w(S4);
 [S0 + 000c] = w(S1);
-80060B74	jal    func575d0 [$800575d0]
 [S0 + 0018] = w(V0);
+
+system_spu_key_off( S1 );
+
 V0 = w[S3 + 0018];
-80060B80	nop
 [S0 + 0008] = w(V0);
 V0 = hu[S3 + 001c];
-A0 = S1;
 [S0 + 0010] = w(S4);
-[S0 + 000c] = w(A0);
-80060B98	jal    func575d0 [$800575d0]
+[S0 + 000c] = w(S1);
 [S0 + 0058] = w(V0);
+
+system_spu_key_off( S1 );
 
 A0 = 0; // SPU_TRANSFER_BY_DMA
 system_psyq_spu_set_transfer_mode();
@@ -37809,8 +37807,8 @@ S2 = 1030;
 L60f68:	; 80060F68
 80060F68	jal    func62304 [$80062304]
 A0 = S2 + 0008;
-A0 = w[80083174];
-func575b4();
+A0 = ;
+system_spu_key_on( w[0x80083174] );
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -38307,8 +38305,7 @@ A0 = S1;
 A0 = 800615f8;
 system_psyq_spu_set_irq_callback();
 
-A0 = w[S0 + c];
-func575b4();
+system_spu_key_on( w[S0 + 0xc] );
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -38351,8 +38348,10 @@ V0 = w[S4 + 0020];
 A0 = V1 | S1;
 [S3 + 0010] = w(S2);
 [S3 + 000c] = w(V1);
-80061798	jal    func575d0 [$800575d0]
 [S3 + 0018] = w(V0);
+
+system_spu_key_off( A0 );
+
 V0 = w[S4 + 0018];
 800617A4	nop
 [S3 + 0008] = w(V0);
@@ -38456,8 +38455,9 @@ V1 = w[S1 + 000c];
 A0 = A0 | V0;
 [S1 + 0010] = w(S0);
 [S1 + 000c] = w(A0);
-80061940	jal    func575d0 [$800575d0]
-A0 = A0 | V1;
+
+system_spu_key_off( A0 | V1 );
+
 S0 = S2;
 V0 = w[S0 + 0018];
 V1 = hu[S0 + 001c];
@@ -38571,8 +38571,7 @@ A0 = A0 + 0001;
 L61ae4:	; 80061AE4
 80061AE4	jal    func60d1c [$80060d1c]
 
-A0 = w[80083174];
-func575b4();
+system_spu_key_on( w[0x80083174] );
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -38705,8 +38704,10 @@ V0 = w[S0 + 0020];
 [S1 + 0010] = w(S2);
 [S1 + 000c] = w(A0);
 [S1 + 0034] = w(0);
-80061CE0	jal    func575d0 [$800575d0]
 [S1 + 0018] = w(V0);
+
+system_spu_key_off( A0 );
+
 V0 = w[S0 + 0018];
 80061CEC	nop
 [S1 + 0008] = w(V0);
@@ -38827,8 +38828,7 @@ L61ea4:	; 80061EA4
 80061EA4	jal    func62304 [$80062304]
 A0 = S2 + 0008;
 
-A0 = w[80083174];
-func575b4();
+system_spu_key_on( w[0x80083174] );
 
 A0 = 1;
 system_psyq_spu_set_irq();

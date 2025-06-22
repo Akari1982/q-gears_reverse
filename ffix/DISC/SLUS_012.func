@@ -1178,11 +1178,11 @@
 800574A0 func574a0
 80057518 func57518
 80057534 func57534
-800575B4 func575b4
-800575D0 func575d0
-800575EC func575ec
-80057608 func57608
-80057624 func57624
+800575B4 system_spu_key_on
+800575D0 system_spu_key_off
+800575EC system_spu_reverb_on
+80057608 system_spu_noise_on
+80057624 system_spu_pitch_mod_on
 80057640 system_psyq_spu_set_voice_volume_attr
 80057688 system_psyq_spu_set_voice_pitch
 800576A0 system_psyq_spu_set_voice_start_addr
@@ -1212,9 +1212,9 @@
 80058F34 func58f34
 80058F94 func58f94
 80059140 func59140
-800592CC func592cc
+800592CC system_spu_set_noise
 8005931C func5931c
-8005933C func5933c
+8005933C system_spu_set_reverb_volume
 8005936C func5936c
 800593C0 func593c0
 80059414 func59414
@@ -1287,7 +1287,7 @@
 8005C8BC func5c8bc
 8005CC14 system_psyq_spu_set_reverb_mode_type
 8005CDE4 func5cde4
-8005CE04 func5ce04
+8005CE04 system_akao_copy
 8005CE8C func5ce8c
 8005CF04 func5cf04
 8005D384 func5d384

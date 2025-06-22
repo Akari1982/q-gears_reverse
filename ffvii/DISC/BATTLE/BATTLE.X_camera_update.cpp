@@ -580,36 +580,30 @@ return V0;
 
 
 
-////////////////////////////////
-// funcbc11c
-A3 = 0;
-loopbc13c:	; 800BC13C
-    if (w[800fa978 + A3 * 4] == 0)
+int funcbc11c( int A0 )
+{
+    for( int i = 0; i < 0x10; ++i )
     {
-        [800fa978 + A3 * 4] = w(A0);
+        if (w[800fa978 + i * 4] == 0)
+        {
+            [800fa978 + i * 4] = w(A0);
 
-        [800f7ed8 + A3 * 28 + 0] = h(hu[800f8360]);
+            [800f7ed8 + i * 28 + 0] = h(hu[800f8360]);
 
-        [800fa9bc] = h(hu[800fa9bc] + 1);
-        return A3;
+            [800fa9bc] = h(hu[800fa9bc] + 1);
+            return i;
+        }
     }
 
-    A3 = A3 + 1;
-    V0 = A3 < 10;
-800BC1A4	bne    v0, zero, loopbc13c [$800bc13c]
+    // generate error
+    func3cebc();
 
-// generate error
-800BC1AC	jal    func3cebc [$8003cebc]
+    system_psyq_reset_graph( 1 );
 
-A0 = 1;
-800BC1B4	jal    system_psyq_reset_graph [$80043938]
+    func3d1b4();
 
-800BC1BC	jal    func3d1b4 [$8003d1b4]
-
-A0 = 61;
-A1 = 3;
-800BC1C8	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
-////////////////////////////////
+    system_bios_system_error_boot_or_disk_failure( 0x61, 0x3 );
+}
 
 
 
@@ -1265,9 +1259,9 @@ if (V0 != 0)
             [80163b3c] = b(V0);
             800BCFBC	j      Lbe458 [$800be458]
             800BCFC0	nop
-            A0 = 800c0410;
-            800BCFCC	jal    funcbc11c [$800bc11c]
-            800BCFD0	nop
+
+            funcbc11c( 0x800c0410 );
+
             V1 = V0 << 02;
             V1 = V1 + V0;
             V1 = V1 << 03;
@@ -1354,9 +1348,9 @@ if (V0 != 0)
             [AT + 0000] = h(V0);
             800BD160	j      Lbe458 [$800be458]
             800BD164	nop
-            A0 = 800be49c;
-            800BD170	jal    funcbc11c [$800bc11c]
-            800BD174	nop
+
+            funcbc11c( 0x800be49c );
+
             A1 = S4;
             A0 = w[S2 + 0004];
             800BD180	jal    funcbfa98 [$800bfa98]
@@ -1858,9 +1852,9 @@ if (V0 != 0)
             A0 = bu[801590cc];
             800BDA24	j      Lbd87c [$800bd87c]
             V0 = V0 << 10;
-            A0 = 800bfb88;
-            800BDA34	jal    funcbc11c [$800bc11c]
-            800BDA38	nop
+
+            funcbc11c( 0x800bfb88 );
+
             [S2 + 0008] = h(V0);
             V0 = V0 << 10;
             AT = 8015184c;
@@ -1887,9 +1881,9 @@ if (V0 != 0)
             [1f80000c] = w(A0);
             800BDAB0	j      Lbdd54 [$800bdd54]
             V0 = A2 + 0001;
-            A0 = 800bfb88;
-            800BDAC0	jal    funcbc11c [$800bc11c]
-            800BDAC4	nop
+
+            funcbc11c( 0x800bfb88 );
+
             [S2 + 0008] = h(V0);
             V0 = V0 << 10;
             V0 = V0 >> 10;
@@ -2014,9 +2008,9 @@ if (V0 != 0)
             [AT + 0000] = b(V0);
             800BDCEC	j      Lbe458 [$800be458]
             800BDCF0	nop
-            A0 = 800bfb88;
-            800BDCFC	jal    funcbc11c [$800bc11c]
-            800BDD00	nop
+
+            funcbc11c( 0x800bfb88 );
+
             [S2 + 0008] = h(V0);
             V0 = V0 << 10;
             V0 = V0 >> 10;
@@ -2142,9 +2136,9 @@ if (V0 != 0)
             [AT + 0000] = b(0);
             800BDF24	j      Lbe458 [$800be458]
             800BDF28	nop
-            A0 = 800c0410;
-            800BDF34	jal    funcbc11c [$800bc11c]
-            800BDF38	nop
+
+            funcbc11c( 0x800c0410 );
+
             V1 = V0 << 02;
             V1 = V1 + V0;
             V1 = V1 << 03;
@@ -2253,9 +2247,9 @@ if (V0 != 0)
 
             Lbe124:	; 800BE124
             [1f800004] = w(V0);
-            A0 = 800c0410;
-            800BE134	jal    funcbc11c [$800bc11c]
-            800BE138	nop
+
+            funcbc11c( 0x800c0410 );
+
             V1 = V0 << 02;
             V1 = V1 + V0;
             V1 = V1 << 03;
@@ -2600,8 +2594,7 @@ A2 = camera_struct_id;
 A3 = FP;
 funcc018c;
 
-A0 = 800c0410;
-funcbc11c;
+funcbc11c( 0x800c0410 );
 
 V1 = 800f7ed8 + V0 * 28;
 [V1 + 4] = h(hu[1f80000c]);
@@ -2618,6 +2611,7 @@ V1 = 800f7ed8 + V0 * 28;
 
 ////////////////////////////////
 // funcbe86c
+
 attacker_id = A0;
 camera_struct_id = A1;
 script = A2;
@@ -2645,8 +2639,7 @@ A0 = attacker_id;
 A1 = w[1f800014];
 funcc0254;
 
-A0 = 800c0900;
-funcbc11c;
+funcbc11c( 0x800c0900 );
 
 [800f7ed8 + V0 * 28 + 4] = h(hu[1f80000c]);
 [800f7ed8 + V0 * 28 + 6] = h(hu[1f800000]); // final X
@@ -3000,9 +2993,9 @@ e 80F50B8058FA0B80
         A0 = bu[801590cc];
         800BF0B0	j      Lbeea8 [$800beea8]
         V0 = V0 << 10;
-        A0 = 800bfda0;
-        800BF0C0	jal    funcbc11c [$800bc11c]
-        800BF0C4	nop
+
+        funcbc11c( 0x800bfda0 );
+
         [S1 + 0008] = h(V0);
         V0 = V0 << 10;
         AT = 801518ac;
@@ -3068,9 +3061,8 @@ e 80F50B8058FA0B80
             800BF384	j      Lbfa5c [$800bfa5c]
 
 
-        A0 = 800bfda0;
-        800BF14C	jal    funcbc11c [$800bc11c]
-        800BF150	nop
+        funcbc11c( 0x800bfda0 );
+
         [S1 + 0008] = h(V0);
         V0 = V0 << 10;
         V0 = V0 >> 10;
@@ -3125,9 +3117,7 @@ e 80F50B8058FA0B80
 
         case e8: // 10
         {
-            A0 = 800bfda0;
-            funcbc11c;
-            struct_index = V0; // index of where we add this info
+            struct_index = funcbc11c( 0x800bfda0 ); // index of where we add this info
 
             attacker_id = bu[801590cc];
             [800f7ed8 + struct_index * 28 + 8] = h(attacker_id);
@@ -3217,8 +3207,7 @@ e 80F50B8058FA0B80
 
         case e2: // a
         {
-            A0 = 800c0900;
-            funcbc11c;
+            funcbc11c( 0x800c0900 );
 
             A0 = bu[80163b3c]; // idle camera id in battle setup
             [800f7ed8 + V0 * 28 + 6] = h(hu[8016360c + 8 + 14 + A0 * c + 6]); // direction camera X from battle setup
@@ -3238,10 +3227,8 @@ e 80F50B8058FA0B80
         break;
 
 
+        funcbc11c( 0x800c0900 );
 
-        A0 = 800c0900;
-        800BF588	jal    funcbc11c [$800bc11c]
-        800BF58C	nop
         V1 = V0 << 02;
         V1 = V1 + V0;
         V1 = V1 << 03;
@@ -3350,9 +3337,9 @@ e 80F50B8058FA0B80
 
         Lbf778:	; 800BF778
         [1f800004] = w(V0);
-        A0 = 800c0900;
-        800BF788	jal    funcbc11c [$800bc11c]
-        800BF78C	nop
+
+        funcbc11c( 0x800c0900 );
+
         V1 = V0 << 02;
         V1 = V1 + V0;
         V1 = V1 << 03;

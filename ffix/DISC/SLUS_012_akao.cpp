@@ -1,52 +1,26 @@
-////////////////////////////////
-// func577ec()
-
-[A1 + 4] = w(0);
-
-A0 = 1f801c00 + A0 * 10;
-if( A1 == 0)
+void func577ec( u32 voice_id, SpuVoiceAttr* attr, A2 )
 {
-    V1 = h[A1 + 18];
-    A2 = h[A1 + 1a];
-    V0 = V1 & 7fff;
-}
-else
-{
-    V0 = h[A1 + 0018];
-    80057818	nop
-    8005781C	mult   v0, a2
-    80057820	mflo   v1
-    V0 = h[A1 + 001a];
-    80057828	nop
-    8005782C	mult   v0, a2
-    V1 = V1 >> 07;
-    80057834	mflo   a2
-    A2 = A2 >> 07;
-    V0 = V1 & 7fff;
-}
+    [A1 + 4] = w(0);
 
-[A0 + 0000] = h(V0);
-A0 = A0 + 0002;
-V0 = A2 & 7fff;
-[A0 + 0000] = h(V0);
-V0 = hu[A1 + 0010];
-A0 = A0 + 0002;
-[A0 + 0000] = h(V0);
-V0 = w[A1 + 0008];
-A0 = A0 + 0002;
-V0 = V0 >> 03;
-[A0 + 0000] = h(V0);
-V0 = hu[A1 + 0012];
-A0 = A0 + 0002;
-[A0 + 0000] = h(V0);
-V0 = hu[A1 + 0014];
-A0 = A0 + 0002;
-[A0 + 0000] = h(V0);
-V0 = w[A1 + 000c];
-80057888	nop
-V0 = V0 >> 03;
-[A0 + 0004] = h(V0);
-////////////////////////////////
+    if( A2 == 0 )
+    {
+        volume_r = attr->volume.right;
+        volume_l = attr->volume.left;
+    }
+    else
+    {
+        volume_r = (attr->volume.right * A2) >> 0x7;
+        volume_l = (attr->volume.left * A2) >> 0x7;
+    }
+
+    [0x1f801c00 + voice_id * 0x10 + 0x0] = h(volume_l & 0x7fff);
+    [0x1f801c00 + voice_id * 0x10 + 0x2] = h(volume_r & 0x7fff);
+    [0x1f801c00 + voice_id * 0x10 + 0x4] = h(attr->pitch);
+    [0x1f801c00 + voice_id * 0x10 + 0x6] = h(attr->addr >> 0x3);
+    [0x1f801c00 + voice_id * 0x10 + 0x8] = h(attr->adsr1);
+    [0x1f801c00 + voice_id * 0x10 + 0xa] = h(attr->adsr2);
+    [0x1f801c00 + voice_id * 0x10 + 0xe] = h(attr->loop_addr >> 0x3);
+}
 
 
 
@@ -369,265 +343,125 @@ L57d78:	; 80057D78
 
 
 
-////////////////////////////////
-// func57d80
-80057D80	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-V0 = hu[S0 + 00b2];
-V1 = h[S0 + 007a];
-V0 = V0 >> 08;
-80057DA4	mult   v1, v0
-S2 = w[S0 + 0034];
-80057DAC	nop
-V0 = S2 & 0001;
-80057DB4	mflo   a2
-80057DB8	beq    v0, zero, L57e28 [$80057e28]
-S1 = A2 >> 07;
-V0 = hu[S0 + 00d0];
-80057DC4	nop
-80057DC8	bne    v0, zero, L57e2c [$80057e2c]
-V0 = S2 & 0002;
-V1 = w[S0 + 0044];
-V0 = w[S0 + 0048];
-80057DD8	nop
-V1 = V1 + V0;
-V0 = w[S0 + 001c];
-A0 = V1 >> 10;
-80057DE8	jalr   v0 ra
-[S0 + 0044] = w(V1);
-V1 = hu[S0 + 00d4];
-80057DF4	nop
-80057DF8	mult   v1, v0
-80057DFC	mflo   a2
-V0 = A2 >> 10;
-V0 = V0 << 10;
-A0 = V0 >> 10;
-80057E0C	bgez   a0, L57e18 [$80057e18]
-V1 = A0;
-V1 = V0 >> 11;
+void func57d80( VoiceData* data )
+{
+    A2 = h[data + 0x7a] * (hu[data + 0xb2] >> 0x8);
+    S2 = w[data + 0x34];
+    S1 = A2 >> 0x7;
 
-L57e18:	; 80057E18
-V0 = w[S0 + 011c];
-[S0 + 0110] = h(V1);
-V0 = V0 | 0010;
-[S0 + 011c] = w(V0);
+    if( S2 & 0x00000001 )
+    {
+        if( hu[data + 0xd0] == 0 )
+        {
+            [data + 0x44] = w(w[data + 0x44] + w[data + 0x48]);
 
-L57e28:	; 80057E28
-V0 = S2 & 0002;
+            A0 = w[data + 0x44] >> 0x10;
+            80057DE8	jalr   w[data + 0x1c] ra
 
-L57e2c:	; 80057E2C
-80057E2C	beq    v0, zero, L57ea4 [$80057ea4]
-V0 = S2 & 0004;
-V0 = hu[S0 + 00de];
-80057E38	nop
-80057E3C	bne    v0, zero, L57ea4 [$80057ea4]
-V0 = S2 & 0004;
-V1 = w[S0 + 0054];
-V0 = w[S0 + 0058];
-80057E4C	nop
-V1 = V1 + V0;
-V0 = w[S0 + 0020];
-A0 = V1 >> 10;
-80057E5C	jalr   v0 ra
-[S0 + 0054] = w(V1);
-V1 = hu[S0 + 00e2];
-80057E68	nop
-V1 = V1 >> 08;
-80057E70	mult   s1, v1
-80057E74	mflo   a2
+            V0 = ((hu[data + 0xd4] * V0) >> 0x10) << 0x10;
+            V1 = V0 >> 0x10;
+            if( V1 < 0 ) V1 = V0 >> 0x11;
 
-L57e78:	; 80057E78
-V1 = A2 << 09;
-A0 = V1 >> 10;
-80057E80	mult   a0, v0
-V0 = w[S0 + 011c];
-80057E88	nop
-V0 = V0 | 0003;
-[S0 + 011c] = w(V0);
-80057E94	mflo   a2
-V0 = A2 >> 10;
-[S0 + 0112] = h(V0);
-V0 = S2 & 0004;
+            [data + 0x110] = h(V1);
+            [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_PITCH);
+        }
+    }
 
-L57ea4:	; 80057EA4
-80057EA4	beq    v0, zero, L57efc [$80057efc]
-V0 = S2 & 0020;
-V1 = w[S0 + 0064];
-V0 = w[S0 + 0068];
-80057EB4	nop
-V1 = V1 + V0;
-V0 = w[S0 + 0024];
-A0 = V1 >> 10;
-80057EC4	jalr   v0 ra
-[S0 + 0064] = w(V1);
-V1 = hu[S0 + 00ea];
-80057ED0	nop
-V1 = V1 >> 08;
-80057ED8	mult   v1, v0
-V0 = w[S0 + 011c];
-80057EE0	nop
-V0 = V0 | 0003;
-[S0 + 011c] = w(V0);
-80057EEC	mflo   a2
-V0 = A2 >> 10;
-[S0 + 0114] = h(V0);
-V0 = S2 & 0020;
+    if( S2 & 0x00000002 )
+    {
+        if( hu[data + 0xde] == 0 )
+        {
+            [data + 0x54] = w(w[data + 0x54] + w[data + 0x58]);
 
-L57efc:	; 80057EFC
-80057EFC	beq    v0, zero, L57f34 [$80057f34]
-80057F00	nop
-V1 = hu[S0 + fff4];
-V0 = hu[S0 + 00b2];
-V1 = V1 << 11;
-V1 = V1 >> 10;
-V0 = V0 >> 08;
-80057F18	mult   v1, v0
-V0 = w[S0 + 011c];
-80057F20	nop
-V0 = V0 | 0003;
-[S0 + 011c] = w(V0);
-80057F2C	mflo   a2
-S1 = A2 >> 07;
+            A0 = w[data + 0x54] >> 0x10;
+            80057E5C	jalr   w[data + 0x20] ra
 
-L57f34:	; 80057F34
-V0 = w[S0 + 011c];
-80057F38	nop
-V0 = V0 & 0003;
-80057F40	beq    v0, zero, L5800c [$8005800c]
-80057F44	lui    v0, $8008
-V1 = h[S0 + 0112];
-A1 = w[V0 + 0a10];
-S1 = S1 + V1;
-V0 = hu[A1 + 0052];
-V1 = hu[S0 + 00be];
-V0 = V0 & 007f;
-80057F60	mult   s1, v0
-A0 = h[S0 + 0114];
-V1 = V1 >> 08;
-V0 = h[A1 + 005e];
-A0 = V1 + A0;
-V0 = A0 + V0;
-80057F78	addiu  v0, v0, $ffc0 (=-$40)
-A0 = V0 & 00ff;
-V0 = w[8008315c];
-80057F88	nop
-V0 = V0 & 0002;
-80057F90	mflo   a2
-80057F94	beq    v0, zero, L57fc0 [$80057fc0]
-S1 = A2 >> 07;
-V0 = h[8006f640];
-80057FA4	nop
-80057FA8	mult   s1, v0
-80057FAC	mflo   a2
-V0 = A2 >> 0f;
-[S0 + 0132] = h(V0);
-80057FB8	j      L5800c [$8005800c]
-[S0 + 0130] = h(V0);
+            [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+            [data + 0x112] = h(((((S1 * (hu[data + 0xe2] >> 0x8)) << 0x9) >> 10) * V0) >> 0x10);
+        }
+    }
 
-L57fc0:	; 80057FC0
-80057FC0	lui    v1, $8007
-80057FC4	addiu  v1, v1, $f540 (=-$ac0)
-V0 = A0 << 01;
-V0 = V0 + V1;
-V0 = h[V0 + 0000];
-80057FD4	nop
-80057FD8	mult   s1, v0
-80057FDC	mflo   a2
-V0 = A2 >> 0f;
-[S0 + 0130] = h(V0);
-V0 = A0 ^ 00ff;
-V0 = V0 << 01;
-V0 = V0 + V1;
-V0 = h[V0 + 0000];
-80057FF8	nop
-80057FFC	mult   s1, v0
-80058000	mflo   a2
-V0 = A2 >> 0f;
-[S0 + 0132] = h(V0);
+    if( S2 & 0x00000004 )
+    {
+        [data + 0x64] = w(w[data + 0x64] + w[data + 0x68]);
 
-L5800c:	; 8005800C
-V0 = S2 & 0010;
-80058010	beq    v0, zero, L58088 [$80058088]
-80058014	nop
-V0 = hu[S0 + fff4];
-V1 = h[S0 + 0110];
-A0 = h[S0 + 0032];
-V0 = V0 + V1;
-A1 = V0 + A0;
-V1 = w[80083150];
-80058034	lui    v0, $00ff
-A0 = V1 & V0;
-8005803C	beq    a0, zero, L58068 [$80058068]
-A0 = A0 >> 10;
-V0 = A0 < 0080;
-80058048	beq    v0, zero, L58060 [$80058060]
-8005804C	mult   a1, a0
-80058050	mflo   a2
-V0 = A2 >> 07;
-80058058	j      L58068 [$80058068]
-A1 = A1 + V0;
+        A0 = w[data + 0x64] >> 0x10;
+        80057EC4	jalr   w[data + 0x24] ra
 
-L58060:	; 80058060
-80058060	mflo   a2
-A1 = A2 >> 08;
+        [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+        [data + 0x114] = h(((hu[data + 0xea] >> 0x8) * V0) >> 0x10);
+    }
 
-L58068:	; 80058068
-V0 = hu[S0 + 0084];
-V1 = w[S0 + 011c];
-V0 = V0 + A1;
-V0 = V0 & 3fff;
-V1 = V1 | 0010;
-[S0 + 0128] = h(V0);
-80058080	j      L58100 [$80058100]
-[S0 + 011c] = w(V1);
+    if( S2 & 0x00000020 )
+    {
+        [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+        S1 = (((hu[data - 0xc] << 0x11) >> 0x10) * (hu[data + 0xb2] >> 0x8)) >> 0x7;
+    }
 
-L58088:	; 80058088
-V0 = w[S0 + 011c];
-8005808C	nop
-V0 = V0 & 0010;
-80058094	beq    v0, zero, L58100 [$80058100]
-80058098	nop
-A0 = h[S0 + 0110];
-V0 = w[S0 + 002c];
-V1 = h[S0 + 0032];
-V0 = V0 + A0;
-A1 = V0 + V1;
-V1 = w[80083150];
-800580B8	lui    v0, $00ff
-A0 = V1 & V0;
-800580C0	beq    a0, zero, L580ec [$800580ec]
-A0 = A0 >> 10;
-V0 = A0 < 0080;
-800580CC	beq    v0, zero, L580e4 [$800580e4]
-800580D0	mult   a1, a0
-800580D4	mflo   a2
-V0 = A2 >> 07;
-800580DC	j      L580ec [$800580ec]
-A1 = A1 + V0;
+    if( w[data + 0x11c] & ( SPU_VOICE_VOLL | SPU_VOICE_VOLR ) )
+    {
+        A1 = w[0x80080a10];
+        A0 = ((hu[data + 0xbe] >> 0x8) + h[data + 0x114] + h[A1 + 0x5e] - 0x40) & 0xff;
+        S1 = ((S1 + h[data + 0x112]) * (hu[A1 + 0x52] & 0x7f)) >> 0x7;
 
-L580e4:	; 800580E4
-800580E4	mflo   a2
-A1 = A2 >> 08;
+        if( w[0x8008315c] & 0x00000002 )
+        {
+            V0 = (S1 * h[0x8006f640]) >> 0xf;
+            [data + 0x132] = h(V0);
+            [data + 0x130] = h(V0);
+        }
+        else
+        {
+            [data + 0x130] = h((S1 * h[0x8006f540 + A0 * 2]) >> 0xf);
+            V0 = A0 ^ 0xff;
+            [data + 0x132] = h((S1 * h[0x8006f540 + V0 * 2]) >> 0xf);
+        }
+    }
 
-L580ec:	; 800580EC
-V0 = hu[S0 + 0084];
-800580F0	nop
-V0 = V0 + A1;
-V0 = V0 & 3fff;
-[S0 + 0128] = h(V0);
+    if( S2 & 0x00000010 )
+    {
+        A1 = hu[data - 0xc] + h[data + 0x110] + h[data + 0x32];
+        A0 = w[0x80083150] & 0x00ff0000;
+        if( A0 != 0 )
+        {
+            A0 = A0 >> 10;
+            if( A0 < 0x80 )
+            {
+                A1 += (A1 * A0) >> 0x7;
+            }
+            else
+            {
+                A1 = (A1 * A0) >> 0x8;
+            }
+        }
 
-L58100:	; 80058100
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80058110	jr     ra 
-SP = SP + 0020;
-////////////////////////////////
+        V0 = hu[data + 0x84] + A1;
+        [data + 0x128] = h(V0 & 0x3fff);
+        [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_PITCH);
+    }
+    else
+    {
+        if( w[data + 0x11c] & SPU_VOICE_PITCH )
+        {
+            A1 = w[data + 0x2c] + h[data + 0x110] + h[data + 0x32];
+            A0 = w[0x80083150] & 0x00ff0000;
+            if( A0 != 0 )
+            {
+                A0 = A0 >> 0x10;
+                if( A0 < 0x80 )
+                {
+                    A1 += (A1 * A0) >> 0x7;
+                }
+                else
+                {
+                    A1 = (A1 * A0) >> 0x8;
+                }
+            }
+
+            [data + 0x128] = h((hu[data + 0x84] + A1) & 0x3fff);
+        }
+    }
+}
 
 
 
@@ -767,311 +601,196 @@ void func58118(  VoiceData* data )
 
 
 
-////////////////////////////////
-// func584c8
-
-800584D0	beq    a0, zero, L584e0 [$800584e0]
-
-800584D8	j      L584f0 [$800584f0]
-A0 = 0;
-
-L584e0:	; 800584E0
-V0 = w[80080a10];
-800584E8	nop
-A0 = w[V0 + 0038];
-
-L584f0:	; 800584F0
-A2 = 7fff;
-S0 = 0018;
-V1 = A0 << 03;
-800584FC	lui    v0, $8008
-80058500	addiu  v0, v0, $f798 (=-$868)
-A1 = V1 + V0;
-
-loop58508:	; 80058508
-V0 = A2 << 10;
-V1 = h[A1 + 0004];
-V0 = V0 >> 10;
-V1 = V1 < V0;
-V0 = hu[A1 + 0004];
-8005851C	beq    v1, zero, L5852c [$8005852c]
-80058520	nop
-A2 = V0;
-S0 = A0;
-
-L5852c:	; 8005852C
-A0 = A0 + 0001;
-V0 = A0 < 0018;
-80058534	bne    v0, zero, loop58508 [$80058508]
-A1 = A1 + 0008;
-V0 = A2 << 10;
-V0 = V0 >> 10;
-V1 = 7fff;
-80058548	beq    v0, v1, L58564 [$80058564]
-8005854C	lui    a0, $8008
-80058550	addiu  a0, a0, $bd48 (=-$42b8)
-80058554	jal    func58830 [$80058830]
-A1 = S0;
-8005855C	j      L58568 [$80058568]
-V0 = S0;
-
-L58564:	; 80058564
-V0 = 0018;
-
-L58568:	; 80058568
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80058570	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
-// func58578
-80058578	bne    a0, zero, L58590 [$80058590]
-A0 = 0;
-V0 = w[80080a10];
-80058588	nop
-A0 = w[V0 + 0038];
-
-L58590:	; 80058590
-80058590	nop
-V0 = A0 << 03;
-80058598	lui    v1, $8008
-8005859C	addiu  v1, v1, $f798 (=-$868)
-V1 = V0 + V1;
-V0 = h[V1 + 0004];
-800585A8	nop
-800585AC	beq    v0, zero, L585d8 [$800585d8]
-800585B0	nop
-A0 = A0 + 0001;
-
-loop585b8:	; 800585B8
-V0 = A0 < 0018;
-800585BC	beq    v0, zero, L585d8 [$800585d8]
-V1 = V1 + 0008;
-V0 = h[V1 + 0004];
-800585C8	nop
-800585CC	bne    v0, zero, loop585b8 [$800585b8]
-A0 = A0 + 0001;
-800585D4	addiu  a0, a0, $ffff (=-$1)
-
-L585d8:	; 800585D8
-800585D8	jr     ra 
-V0 = A0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func585e0()
-
-V0 = w[0x80080a10];
-S6 = A0;
-S4 = A1;
-S7 = A3;
-S2 = 0001;
-S5 = 0;
-S1 = S6 + 0034;
-[SP + 0048] = w(A2);
-V0 = w[V0 + 0010];
-S3 = S6 + 0x118;
-V0 = S4 & V0;
-[SP + 0010] = w(V0);
-
-L58644:	; 80058644
-    V0 = S4 & S2;
-    if( V0 != 0 )
+u32 func584c8( A0 )
+{
+    if( A0 != 0 )
     {
-        A0 = S6;
-        A1 = S2;
-        80058650	jal    func57d80 [$80057d80]
-
-        V0 = w[S1 + 00e8];
-        8005865C	nop
-        if( V0 != 0 )
-        {
-            V0 = w[80080ac4];
-            V0 = V0 & S2;
-            if( V0 != 0 )
-            {
-                [S1 + 00fe] = h(0);
-                [S1 + 00fc] = h(0);
-            }
-
-            T0 = w[SP + 0010];
-            80058688	nop
-            V0 = T0 & S2;
-            if( V0 != 0 )
-            {
-                A0 = w[S1 + 0xe4];
-                if( A0 < 0x18 )
-                {
-                    system_spu_n_set_voice_attr( A0, S3, w[S1 + 0x0] );
-                }
-            }
-            else
-            {
-                T0 = w[SP + 0048];
-                8005869C	nop
-                V0 = T0 & S2;
-                800586A4	beq    v0, zero, L586c4 [$800586c4]
-                T0 = 0001;
-                V0 = w[S7 + 0000];
-                V1 = T0 << S5;
-                V0 = V0 | V1;
-                [S7 + 0000] = w(V0);
-                800586BC	j      L58768 [$80058768]
-                [S1 + 00e4] = w(S5);
-
-                L586c4:	; 800586C4
-                V0 = w[0x80080a10];
-                800586C8	nop
-                V0 = w[V0 + 0008];
-                800586D0	nop
-                V0 = V0 & S2;
-                S0 = 0 < V0;
-                A0 = S0;
-                800586DC	jal    func58578 [$80058578]
-
-                A0 = V0;
-                T0 = 0018;
-                800586EC	bne    a0, t0, L5873c [$8005873c]
-                T0 = 0001;
-                V1 = w[0x80080a10];
-                800586F8	nop
-                V0 = w[V1 + 0000];
-                A0 = S0;
-                V0 = V0 | 0002;
-                80058708	jal    func584c8 [$800584c8]
-                [V1 + 0000] = w(V0);
-                A0 = V0;
-                T0 = 0018;
-                80058718	bne    a0, t0, L5873c [$8005873c]
-                T0 = 0001;
-                V1 = w[0x80080a10];
-                [S1 + 00e4] = w(A0);
-                V0 = w[V1 + 0000];
-                8005872C	nop
-                V0 = V0 | 0001;
-                80058734	j      L58768 [$80058768]
-                [V1 + 0000] = w(V0);
-
-                L5873c:	; 8005873C
-                V1 = T0 << A0;
-                80058740	lui    t0, $8008
-                V0 = w[S7 + 0000];
-                80058748	addiu  t0, t0, $f798 (=-$868)
-                V0 = V0 | V1;
-                [S7 + 0000] = w(V0);
-                V0 = A0 << 03;
-                V0 = V0 + T0;
-                V1 = 7fff;
-                [S1 + 00e4] = w(A0);
-                [V0 + 0004] = h(V1);
-
-                L58768:	; 80058768
-                A0 = w[S1 + 00e4];
-                8005876C	nop
-                V0 = A0 < 0018;
-                if( V0 != 0 )
-                {
-                    A2 = hu[S1 + 00fa];
-                    A1 = S3;
-                    80058780	jal    func577ec [$800577ec]
-
-                    T0 = 800831c8;
-                    V0 = w[S1 + 00e4];
-                    V1 = w[0x80080a10];
-                    V0 = V0 << 02;
-                    V0 = V0 + T0;
-                    [V0 + 0000] = w(V1);
-                    V1 = 80083158;
-                    V0 = w[V1 + 0008];
-                    800587B0	nop
-                    V0 = V0 | 0100;
-                    [V1 + 0008] = w(V0);
-                }
-            }
-        }
-
-        S4 = S4 & ~S2;
+        A0 = 0;
+    }
+    else
+    {
+        V0 = w[0x80080a10];
+        A0 = w[V0 + 0x38];
     }
 
-    S2 = S2 << 01;
-    S1 = S1 + 0134;
-    S3 = S3 + 0134;
-    S6 = S6 + 0134;
-    S5 = S5 + 0001;
-800587F8	bne    s4, zero, L58644 [$80058644]
-////////////////////////////////
+    s16 priority = 0x7fff;
+    u32 voice_id = 0x18;
+
+    // find lowest priority voice id that can be set free
+    for( int i = A0; i < 0x18; ++i )
+    {
+        if( h[0x8007f798 + i * 8 + 0x4] < priority )
+        {
+            priority = h[0x8007f798 + i * 8 + 0x4];
+            voice_id = i;
+        }
+    }
+
+    if( priority != 0x7fff )
+    {
+        func58830( 0x8007bd48, voice_id ); // free given voice id from all channels
+        return voice_id;
+    }
+    return 0x18;
+}
 
 
 
-////////////////////////////////
-// func58830
-A2 = 0;
-V1 = 0018;
-A0 = A0 + 0118;
+u32 func58578( A0 )
+{
+    u32 voice_id = 0x0;
 
-loop5883c:	; 8005883C
-V0 = w[A0 + 0000];
-80058840	nop
-80058844	bne    a1, v0, L58850 [$80058850]
-80058848	nop
-[A0 + 0000] = w(V1);
+    if( A0 == 0 )
+    {
+        V0 = w[0x80080a10];
+        voice_id = w[V0 + 0x38];
+    }
 
-L58850:	; 80058850
-A2 = A2 + 0001;
-V0 = A2 < 0020;
-80058858	bne    v0, zero, loop5883c [$8005883c]
-A0 = A0 + 0134;
-V0 = w[8007f790];
-80058868	nop
-8005886C	beq    v0, zero, L588a8 [$800588a8]
-A2 = 0;
-V0 = w[8007f71c];
-A0 = 0018;
-V1 = V0 + 0118;
+    while( h[0x8007f798 + voice_id * 8 + 0x4] != 0 )
+    {
+        voice_id += 0x1;
+        if( voice_id >= 0x18 ) return voice_id;
+    }
+    return voice_id;
+}
 
-loop58884:	; 80058884
-V0 = w[V1 + 0000];
-80058888	nop
-8005888C	bne    a1, v0, L58898 [$80058898]
-80058890	nop
-[V1 + 0000] = w(A0);
 
-L58898:	; 80058898
-A2 = A2 + 0001;
-V0 = A2 < 0020;
-800588A0	bne    v0, zero, loop58884 [$80058884]
-V1 = V1 + 0134;
 
-L588a8:	; 800588A8
-800588A8	jr     ra 
-800588AC	nop
+void func585e0( VoiceData* data, u32 channels_mask, A2, u32& voices_mask )
+{
+    V0 = w[0x80080a10];
+    u32 channel_mask = 0x1;
+    S5 = 0; // voice_id
+    [SP + 0x48] = w(A2);
+    [SP + 0x10] = w(channels_mask & w[V0 + 0x10]);
+
+    while( channels_mask != 0 )
+    {
+        if( channels_mask & channel_mask )
+        {
+            func57d80( data ); // update channel data
+
+            if( w[data + 0x11c] != 0 )
+            {
+                if( w[0x80080ac4] & channel_mask )
+                {
+                    [data + 0x130] = h(0); // volume left
+                    [data + 0x132] = h(0); // volume right
+                }
+
+                if( w[SP + 0x10] & channel_mask )
+                {
+                    u32 voice_id = w[data + 0x118];
+                    if( voice_id < 0x18 )
+                    {
+                        system_spu_n_set_voice_attr( voice_id, data + 0x118, w[data + 0x34] );
+                    }
+                }
+                else
+                {
+                    if( w[SP + 0x48] & channel_mask )
+                    {
+                        voices_mask |= 0x1 << S5;
+                        [data + 0x118] = w(S5);
+                    }
+                    else
+                    {
+                        V0 = w[0x80080a10];
+                        S0 = 0 < (w[V0 + 0x8] & channel_mask);
+
+                        u32 voice_id = func58578( S0 ); // find free voice id
+
+                        if( voice_id == 0x18 ) // not found
+                        {
+                            V1 = w[0x80080a10];
+                            [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000002);
+
+                            voice_id = func584c8( S0 ); // find voice id with lowest priority
+
+                            if( voice_id == 0x18 ) // not found
+                            {
+                                [data + 0x118] = w(voice_id);
+
+                                V1 = w[0x80080a10];
+                                [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000001);
+                            }
+                            else
+                            {
+                                voices_mask |= 1 << voice_id;
+                                [data + 0x118] = w(voice_id);
+                                [0x8007f798 + voice_id * 8 + 0x4] = h(0x7fff);
+                            }
+                        }
+                        else
+                        {
+                            voices_mask |= 1 << voice_id;
+                            [data + 0x118] = w(voice_id);
+                            [0x8007f798 + voice_id * 8 + 0x4] = h(0x7fff);
+                        }
+                    }
+
+                    u32 voice_id = w[data + 0x118];
+                    if( voice_id < 0x18 )
+                    {
+                        func577ec( voice_id, data + 0x118, hu[data + 0x12e] );
+
+                        [0x800831c8 + voice_id * 4] = w(w[0x80080a10]);
+                        [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100);
+                    }
+                }
+            }
+
+            channels_mask &= ~channel_mask;
+        }
+
+        channel_mask <<= 1;
+        data += 0x134;
+        S5 += 1;
+    }
+}
+
+
+
+void func58830( VoiceData* data, u32 voice_id )
+{
+    for( int i = 0; i < 0x20; ++i )
+    {
+        if( voice_id == w[data + i * 0x134 + 0x118] )
+        {
+            [data + i * 0x134 + 0x118] = w(0x18);
+        }
+    }
+
+    if( w[0x8007f790] != 0 )
+    {
+        data = w[0x8007f71c];
+        for( int i = 0; i < 0x20; ++i )
+        {
+            if( voice_id == w[data + i * 0x134 + 0x118] )
+            {
+                [data + i * 0x134 + 0x118] = w(0x18);
+            }
+        }
+    }
+}
+
+
+
 ////////////////////////////////
 // func588b0
+
 V0 = w[80080a10];
-800588B8	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0024] = w(RA);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 V1 = w[V0 + 0004];
 V0 = w[V0 + 000c];
-800588DC	nop
 V1 = V1 & V0;
 A1 = w[8007f790];
-800588EC	nop
-800588F0	beq    a1, zero, L5890c [$8005890c]
 S2 = V1 | A0;
-V0 = w[A1 + 0004];
-V1 = w[A1 + 000c];
-80058900	nop
-V0 = V0 & V1;
-S2 = S2 | V0;
 
-L5890c:	; 8005890C
+if( A1 != 0 )
+{
+    S2 = S2 | (w[A1 + 0x4] & w[A1 + 0xc]);
+}
+
 S1 = 0;
 S4 = 0001;
 S3 = 7fff;
@@ -1080,43 +799,34 @@ S3 = 7fff;
 S0 = V0 + 0004;
 
 loop58924:	; 80058924
-V0 = S4 << S1;
-V0 = S2 & V0;
-8005892C	beq    v0, zero, L5893c [$8005893c]
-A0 = S1;
-80058934	j      L58960 [$80058960]
-[S0 + 0000] = h(S3);
+    V0 = S4 << S1;
+    V0 = S2 & V0;
+    8005892C	beq    v0, zero, L5893c [$8005893c]
+    A0 = S1;
+    80058934	j      L58960 [$80058960]
+    [S0 + 0000] = h(S3);
 
-L5893c:	; 8005893C
-8005893C	jal    func5931c [$8005931c]
-A1 = S0;
-V0 = h[S0 + 0000];
-80058948	nop
-8005894C	bne    v0, zero, L58960 [$80058960]
-80058950	lui    a0, $8008
-80058954	addiu  a0, a0, $bd48 (=-$42b8)
-80058958	jal    func58830 [$80058830]
-A1 = S1;
+    L5893c:	; 8005893C
+    A1 = S0;
+    8005893C	jal    func5931c [$8005931c]
 
-L58960:	; 80058960
-S1 = S1 + 0001;
-V0 = S1 < 0018;
+    if( h[S0 + 0x0] == 0 )
+    {
+        func58830( 0x8007bd48, S1 ); // remove given voice id from all channels
+    }
+
+    L58960:	; 80058960
+    S1 = S1 + 0001;
+    S0 = S0 + 0008;
+    V0 = S1 < 0018;
 80058968	bne    v0, zero, loop58924 [$80058924]
-S0 = S0 + 0008;
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80058988	jr     ra 
-SP = SP + 0028;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func58990
+
 80058990	lui    v1, $8008
 A1 = w[A0 + 0050];
 V0 = V1 + 0a18;
@@ -1134,618 +844,384 @@ V0 = V0 + A1;
 V0 = V0 >> 06;
 V0 = V0 - V1;
 A1 = V0 << 08;
-800589D8	jr     ra 
 [A0 + 0050] = w(A1);
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func589e0
-V0 = w[80080a24];
-800589E8	jr     ra 
-[A0 + 0050] = w(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func589f0()
-
-V1 = 80080a70;
-A0 = w[80080a70];
-V0 = w[V1 + 0010];
-A1 = w[80083174];
-A0 = A0 | V0;
-V1 = w[80080a10];
-[SP + 0010] = w(0);
-V0 = w[V1 + 0004];
-V1 = w[V1 + 0010];
-80058A48	nop
-V0 = V0 & V1;
-80058A50	bne    v0, zero, L58a84 [$80058a84]
-S2 = A0 | A1;
-V1 = w[8007f790];
-80058A60	nop
-80058A64	beq    v1, zero, L58c60 [$80058c60]
-
-V0 = w[V1 + 0004];
-V1 = w[V1 + 0010];
-80058A74	nop
-V0 = V0 & V1;
-80058A7C	beq    v0, zero, L58a90 [$80058a90]
-80058A80	lui    s6, $8008
-
-L58a84:	; 80058A84
-80058A84	jal    func588b0 [$800588b0]
-A0 = S2;
-80058A8C	lui    s6, $8008
-
-L58a90:	; 80058A90
-A0 = w[S6 + f790];
-80058A94	nop
-80058A98	beq    a0, zero, L58c5c [$80058c5c]
-S7 = 80083158;
-V0 = w[S7 + 0004];
-80058AA8	nop
-V0 = V0 & 0100;
-if( V0 != 0 )
+void func589e0( A0, A1 )
 {
-    A1 = w[8007f71c];
-    func58990();
+    V0 = w[0x80080a24];
+    [A0 + 0x50] = w(V0);
 }
 
-A1 = w[S6 + f790];
-80058AC8	nop
-V1 = w[A1 + 0004];
-V0 = w[A1 + 0014];
-A0 = w[A1 + 000c];
-[80080a10] = w(A1);
-V1 = V1 & V0;
-V0 = A0 & S2;
-V0 = 0 NOR V0;
-S0 = V1 & V0;
-A0 = S0 & A0;
-V0 = 0 NOR S2;
-V1 = w[A1 + 0008];
-80058AFC	nop
-A1 = S0 & V1;
-80058B04	beq    a1, zero, L58b4c [$80058b4c]
-S1 = A0 & V0;
-A2 = S1;
-A0 = w[8007f71c];
-A3 = SP + 0010;
-func585e0();
 
-A0 = w[S5 + 0a10];
-80058B24	nop
-V0 = w[A0 + 0008];
-80058B2C	nop
-V0 = 0 NOR V0;
-S0 = S0 & V0;
-V0 = w[A0 + 0008];
-V1 = w[A0 + 0010];
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[A0 + 0010] = w(V1);
 
-L58b4c:	; 80058B4C
-80058B4C	lui    v0, $8008
-80058B50	addiu  s4, v0, $f858 (=-$7a8)
-A1 = w[S4 + 0004];
-V0 = w[S4 + 0014];
-A0 = w[S4 + 000c];
-V1 = S1 | S2;
-[S5 + 0a10] = w(S4);
-A1 = A1 & V0;
-V0 = A0 & V1;
-V0 = 0 NOR V0;
-S3 = A1 & V0;
-A0 = S3 & A0;
-V1 = 0 NOR V1;
-V0 = w[S4 + 0008];
-80058B84	nop
-A1 = S3 & V0;
-80058B8C	beq    a1, zero, L58bd4 [$80058bd4]
-S2 = A0 & V1;
-A0 = 0x8007bd48;
-A2 = S2;
-A3 = SP + 0x10;
-func585e0();
-
-A0 = w[S5 + 0a10];
-80058BAC	nop
-V0 = w[A0 + 0008];
-80058BB4	nop
-V0 = 0 NOR V0;
-S3 = S3 & V0;
-V0 = w[A0 + 0008];
-V1 = w[A0 + 0010];
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[A0 + 0010] = w(V1);
-
-L58bd4:	; 80058BD4
-80058BD4	beq    s0, zero, L58c08 [$80058c08]
-A1 = S0;
-A2 = 0 NOR S2;
-A2 = S1 & A2;
-A0 = w[8007f71c];
-V0 = w[S6 + f790];
-A3 = SP + 0010;
-[S5 + 0a10] = w(V0);
-func585e0();
-
-V0 = w[S5 + 0a10];
-[S5 + 0a10] = w(S4);
-[V0 + 0010] = w(0);
-
-L58c08:	; 80058C08
-80058C08	beq    s3, zero, L58c30 [$80058c30]
-80058C0C	lui    a0, $8008
-80058C10	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = S3;
-A2 = S2;
-A3 = SP + 0010;
-func585e0();
-
-V0 = w[S5 + 0a10];
-80058C28	nop
-[V0 + 0010] = w(0);
-
-L58c30:	; 80058C30
-V0 = w[S7 + 0004];
-80058C34	nop
-V0 = V0 & 0100;
-80058C3C	beq    v0, zero, L58d08 [$80058d08]
-80058C40	lui    v0, $8008
-A0 = w[S6 + f790];
-A1 = w[V0 + f71c];
-80058C4C	jal    func589e0 [$800589e0]
-80058C50	nop
-80058C54	j      L58d0c [$80058d0c]
-
-L58c5c:	; 80058C5C
-L58c60:	; 80058C60
-A1 = w[80080a10];
-80058C64	nop
-V1 = w[A1 + 0004];
-V0 = w[A1 + 0014];
-A0 = w[A1 + 000c];
-V1 = V1 & V0;
-V0 = A0 & S2;
-V0 = 0 NOR V0;
-S3 = V1 & V0;
-A0 = S3 & A0;
-V0 = 0 NOR S2;
-V1 = w[A1 + 0008];
-80058C90	nop
-A1 = S3 & V1;
-80058C98	beq    a1, zero, L58ce0 [$80058ce0]
-S2 = A0 & V0;
-A0 = 8007bd48;
-A2 = S2;
-A3 = SP + 10;
-func585e0();
-
-A0 = w[0x80080a10];
-80058CB8	nop
-V0 = w[A0 + 0008];
-80058CC0	nop
-V0 = 0 NOR V0;
-S3 = S3 & V0;
-V0 = w[A0 + 0008];
-V1 = w[A0 + 0010];
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[A0 + 0010] = w(V1);
-
-L58ce0:	; 80058CE0
-if( S3 != 0 )
+void func589f0()
 {
-    func585e0( 0x8007bd48, S3, S2, SP + 0x10 );
+    A0 = w[80080a70];
+    V0 = w[0x80080a70 + 0x10];
+    A1 = w[0x80083174];
+    A0 = A0 | V0;
+    V1 = w[0x80080a10];
+    u32 voices_on = 0x0;
+    V0 = w[V1 + 0x4];
+    V1 = w[V1 + 0x10];
+    V0 = V0 & V1;
+    80058A50	bne    v0, zero, L58a84 [$80058a84]
+    S2 = A0 | A1;
+    V1 = w[8007f790];
+    80058A64	beq    v1, zero, L58c60 [$80058c60]
 
-    V0 = w[0x80080a10];
-    [V0 + 0x10] = w(0);
-}
+    V0 = w[V1 + 0x4] & w[V1 + 0x10];
+    80058A7C	beq    v0, zero, L58a90 [$80058a90]
 
-L58d08:	; 80058D08
-L58d0c:	; 80058D0C
-A0 = 0x80080a70;
-V1 = w[0x80080a70];
-V0 = w[A0 + 0x8];
+    L58a84:	; 80058A84
+    A0 = S2;
+    func588b0();
 
-S3 = V1 & V0;
-if( S3 != 0 )
-{
-    [SP + 0x10] = w(w[SP + 0x10] | w[A0 + 0x4]);
+    L58a90:	; 80058A90
 
-    S2 = 0x100;
-    data_p = 0x8007e3d8;
+    A0 = w[0x8007f790];
+    80058A98	beq    a0, zero, L58c5c [$80058c5c]
 
-    loop58d44:	; 80058D44
-        if( S3 & S2 )
-        {
-            func58118( data_p );
+    if( w[0x80083158 + 0x4] & 0x00000100 )
+    {
+        A1 = w[8007f71c];
+        func58990();
+    }
 
-            if( w[data_p + 0x11c] != 0 )
+    A1 = w[0x8007f790];
+    V1 = w[A1 + 0x4];
+    V0 = w[A1 + 0x14];
+    A0 = w[A1 + 0xc];
+    [0x80080a10] = w(A1);
+    V1 = V1 & V0;
+    V0 = A0 & S2;
+    S0 = V1 & ~V0;
+    A0 = S0 & A0;
+    V1 = w[A1 + 0008];
+    A1 = S0 & V1;
+    S1 = A0 & ~S2;
+    if( A1 != 0 )
+    {
+        func585e0( w[0x8007f71c], A1, S1, voices_on );
+
+        A0 = w[0x80080a10];
+        S0 = S0 & ~w[A0 + 0x8];
+        [A0 + 0x10] = w(w[A0 + 0x10] & ~w[A0 + 0x8]);
+    }
+
+    S4 = 0x8007f858;
+    A1 = w[S4 + 0x4];
+    V0 = w[S4 + 0x14];
+    A0 = w[S4 + 0xc];
+    V1 = S1 | S2;
+    [0x80080a10] = w(S4);
+    A1 = A1 & V0;
+    V0 = A0 & V1;
+    S3 = A1 & ~V0;
+    A0 = S3 & A0;
+    V0 = w[S4 + 0x8];
+    A1 = S3 & V0;
+    S2 = A0 & ~V1;
+    if( A1 != 0 )
+    {
+        func585e0( 0x8007bd48, A1, S2, voices_on );
+
+        A0 = w[0x80080a10];
+        S3 = S3 & ~w[A0 + 0x8];
+        [A0 + 0x10] = w(w[A0 + 0x10] & ~w[A0 + 0x8]);
+    }
+
+    if( S0 != 0 )
+    {
+        [0x80080a10] = w(w[0x8007f790]);
+
+        func585e0( w[0x8007f71c], S0, S1 & ~S2, voices_on );
+
+        V0 = w[0x80080a10];
+        [0x80080a10] = w(S4);
+        [V0 + 0x10] = w(0);
+    }
+
+    if( S3 != 0 )
+    {
+        func585e0( 0x8007bd48, S3, S2, voices_on );
+
+        V0 = w[0x80080a10];
+        [V0 + 0x10] = w(0);
+    }
+
+    if( w[0x80083158 + 0x4] & 0x00000100 )
+    {
+        func589e0( w[0x8007f790], w[0x8007f71c] );
+    }
+    80058C54	j      L58d0c [$80058d0c]
+
+    L58c5c:	; 80058C5C
+    L58c60:	; 80058C60
+    A1 = w[0x80080a10];
+    V1 = w[A1 + 0x4];
+    V0 = w[A1 + 0x14];
+    A0 = w[A1 + 0xc];
+    V1 = V1 & V0;
+    V0 = A0 & S2;
+    S3 = V1 & ~V0;
+    A0 = S3 & A0;
+    V1 = w[A1 + 0x8];
+    A1 = S3 & V1;
+    S2 = A0 & ~S2;
+    if( A1 != 0 )
+    {
+        func585e0( 0x8007bd48, A1, S2, voices_on );
+
+        A0 = w[0x80080a10];
+        S3 = S3 & ~w[A0 + 0x8];
+        [A0 + 0x10] = w(w[A0 + 0x10] & ~w[A0 + 0x8]);
+    }
+
+    if( S3 != 0 )
+    {
+        func585e0( 0x8007bd48, S3, S2, voices_on );
+
+        V0 = w[0x80080a10];
+        [V0 + 0x10] = w(0);
+    }
+
+    L58d08:	; 80058D08
+    L58d0c:	; 80058D0C
+
+    S3 = w[0x80080a70 + 0x0] & w[0x80080a70 + 0x8];
+    if( S3 != 0 )
+    {
+        voices_on |= w[0x80080a70 + 0x4];
+
+        S2 = 0x100;
+        data_p = 0x8007e3d8;
+
+        loop58d44:	; 80058D44
+            if( S3 & S2 )
             {
-                system_spu_n_set_voice_attr( w[data_p + 0x118], data_p + 0x118, w[data_p + 0x34] );
+                func58118( data_p );
+
+                if( w[data_p + 0x11c] != 0 )
+                {
+                    system_spu_n_set_voice_attr( w[data_p + 0x118], data_p + 0x118, w[data_p + 0x34] );
+                }
+
+                S3 &= ~S2;
             }
 
-            S3 &= ~S2;
+            S2 <<= 0x1;
+            data_p += 0x134;
+        80058D88	bne    s3, zero, loop58d44 [$80058d44]
+
+        [0x80080a74] = w(0);
+    }
+
+    S3 = w[0x80083158 + 0x8];
+
+    if( S3 & 0x00000080 )
+    {
+        V0 = w[0x80080a10];
+        u16 vol = (w[V0 + 0x48] << 0x4) >> 0x10;
+        system_spu_set_reverb_volume( vol, vol );
+
+        [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] & 0xffffff7f);
+    }
+
+    if( S3 & 0x00000010 )
+    {
+        if( w[0x80080a70] != 0 )
+        {
+            system_spu_set_noise( hu[0x80080a70 + 0x28] );
+        }
+        else
+        {
+            V0 = w[0x80080a10];
+            system_spu_set_noise( hu[V0 + 0x6e] );
         }
 
-        S2 <<= 0x1;
-        data_p += 0x134;
-    80058D88	bne    s3, zero, loop58d44 [$80058d44]
+        [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] & 0xffffffef);
+    }
 
-    [80080a74] = w(0);
+    if( S3 & 0x00000100 )
+    {
+        V0 = w[0x8007f790];
+        V1 = w[0x80080a10];
+
+        func59140( 0x8008323c, w[V0 + 0x3c], w[V1 + 0x3c], w[0x80080a70 + 0x1c] );
+        func59140( 0x80083238, w[V0 + 0x40], w[V1 + 0x40], w[0x80080a70 + 0x20] );
+        func59140( 0x80083240, w[V0 + 0x44], w[V1 + 0x44], w[0x80080a70 + 0x24] );
+
+        system_spu_reverb_on( w[0x80083238] );
+        system_spu_noise_on( w[0x8008323c] );
+        system_spu_pitch_mod_on( w[0x80083240] );
+
+        [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] & 0xfffffeff);
+    }
+
+    if( voices_on != 0 )
+    {
+        system_spu_key_on( voices_on );
+    }
 }
 
-S0 = 80083158;
-S3 = w[S0 + 0008];
-80058DA4	nop
-V0 = S3 & 0080;
-80058DAC	beq    v0, zero, L58de4 [$80058de4]
-V0 = w[80080a10];
-80058DB8	nop
-A0 = w[V0 + 0048];
-80058DC0	nop
-A0 = A0 << 04;
-A0 = A0 >> 10;
-80058DCC	jal    func5933c [$8005933c]
-A1 = A0;
-V0 = w[S0 + 0008];
-80058DD8	addiu  v1, zero, $ff7f (=-$81)
-V0 = V0 & V1;
-[S0 + 0008] = w(V0);
 
-L58de4:	; 80058DE4
-V0 = S3 & 0010;
-80058DE8	beq    v0, zero, L58e3c [$80058e3c]
-V1 = w[80080a70];
-80058DF4	nop
-80058DF8	beq    v1, zero, L58e0c [$80058e0c]
-V0 = V0 + 0a70;
-A0 = hu[V0 + 0028];
-80058E04	j      L58e1c [$80058e1c]
-80058E08	nop
 
-L58e0c:	; 80058E0C
-V0 = w[80080a10];
-80058E14	nop
-A0 = hu[V0 + 006e];
-
-L58e1c:	; 80058E1C
-80058E1C	jal    func592cc [$800592cc]
-80058E20	nop
-V0 = 80083158;
-V1 = w[V0 + 0008];
-80058E30	addiu  a0, zero, $ffef (=-$11)
-V1 = V1 & A0;
-[V0 + 0008] = w(V1);
-
-L58e3c:	; 80058E3C
-V0 = S3 & 0100;
-80058E40	beq    v0, zero, L58ef0 [$80058ef0]
-S1 = 80080a70;
-80058E4C	lui    s3, $8008
-80058E50	lui    s4, $8008
-S0 = 8008323c;
-A3 = w[S1 + 001c];
-V0 = w[S3 + f790];
-V1 = w[S4 + 0a10];
-A1 = w[V0 + 003c];
-A2 = w[V1 + 003c];
-80058E70	jal    func59140 [$80059140]
-A0 = S0;
-80058E78	addiu  s2, s0, $fffc (=-$4)
-A3 = w[S1 + 0020];
-V0 = w[S3 + f790];
-V1 = w[S4 + 0a10];
-A1 = w[V0 + 0040];
-A2 = w[V1 + 0040];
-80058E90	jal    func59140 [$80059140]
-A0 = S2;
-A3 = w[S1 + 0024];
-V0 = w[S3 + f790];
-V1 = w[S4 + 0a10];
-A1 = w[V0 + 0044];
-A2 = w[V1 + 0044];
-80058EAC	jal    func59140 [$80059140]
-A0 = S0 + 0004;
-A0 = w[S0 + fffc];
-80058EB8	jal    func575ec [$800575ec]
-80058EBC	nop
-A0 = w[S2 + 0004];
-80058EC4	jal    func57608 [$80057608]
-80058EC8	nop
-A0 = w[S2 + 0008];
-func57624();
-
-V1 = 80083158;
-V0 = w[V1 + 0008];
-80058EE4	addiu  a0, zero, $feff (=-$101)
-V0 = V0 & A0;
-[V1 + 0008] = w(V0);
-
-L58ef0:	; 80058EF0
-A0 = w[SP + 10];
-if( A0 != 0 )
+void func58f34( VoiceData* data, u32& res_mask, u32 channels_mask, u32 voices_mask )
 {
-    func575b4();
+    channel_mask = 0x1;
+    while( channels_mask != 0 )
+    {
+        if( channels_mask & channel_mask )
+        {
+            u32 voice_id = w[data + 0x118];
+            if( voice_id < 0x18 )
+            {
+                res_mask |= 0x1 << voice_id;
+            }
+        }
+
+        data += 0x134;
+        channels_mask &= ~channel_mask;
+        channel_mask <<= 0x1;
+    }
+
+    res_mask &= voices_mask;
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// func58f34
-T0 = 0001;
-T1 = T0;
-
-loop58f3c:	; 80058F3C
-V0 = A2 & T0;
-80058F40	beq    v0, zero, L58f70 [$80058f70]
-V0 = 0 NOR T0;
-V1 = w[A0 + 0118];
-80058F4C	nop
-V0 = V1 < 0018;
-80058F54	beq    v0, zero, L58f6c [$80058f6c]
-V1 = T1 << V1;
-V0 = w[A1 + 0000];
-80058F60	nop
-V0 = V0 | V1;
-[A1 + 0000] = w(V0);
-
-L58f6c:	; 80058F6C
-V0 = 0 NOR T0;
-
-L58f70:	; 80058F70
-A2 = A2 & V0;
-A0 = A0 + 0134;
-80058F78	bne    a2, zero, loop58f3c [$80058f3c]
-T0 = T0 << 01;
-V0 = w[A1 + 0000];
-80058F84	nop
-V0 = V0 & A3;
-80058F8C	jr     ra 
-[A1 + 0000] = w(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func58f94()
-
-A0 = w[80080a70];
-V1 = 80080a70;
-V0 = w[V1 + 10];
-V1 = w[8007f790];
-A0 = A0 | V0;
-V0 = w[80083174];
-S1 = 0;
-[SP + 10] = w(0);
-S2 = V0 NOR A0;
-80058FD8	beq    v1, zero, L59034 [$80059034]
-
-S1 = w[V1 + 18];
-V0 = w[V1 + 8];
-A2 = S1 & V0;
-80058FF0	beq    a2, zero, L59034 [$80059034]
-A1 = SP + 0010;
-A0 = w[8007f71c];
-80059000	jal    func58f34 [$80058f34]
-A3 = S2;
-A0 = w[8007f790];
-8005900C	nop
-V0 = w[A0 + 0008];
-80059014	nop
-V0 = 0 NOR V0;
-S1 = S1 & V0;
-V0 = w[A0 + 0008];
-V1 = w[A0 + 0018];
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[A0 + 0018] = w(V1);
-
-L59034:	; 80059034
-V0 = w[80080a10];
-8005903C	nop
-S0 = w[V0 + 0018];
-V0 = w[V0 + 0008];
-80059048	nop
-A2 = S0 & V0;
-80059050	beq    a2, zero, L59094 [$80059094]
-80059054	lui    a0, $8008
-80059058	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = SP + 0010;
-80059060	jal    func58f34 [$80058f34]
-A3 = S2;
-A0 = w[S3 + 0a10];
-8005906C	nop
-V0 = w[A0 + 0008];
-80059074	nop
-V0 = 0 NOR V0;
-S0 = S0 & V0;
-V0 = w[A0 + 0008];
-V1 = w[A0 + 0018];
-V0 = 0 NOR V0;
-V1 = V1 & V0;
-[A0 + 0018] = w(V1);
-
-L59094:	; 80059094
-V0 = w[8007f790];
-8005909C	nop
-800590A0	beq    v0, zero, L590d0 [$800590d0]
-800590A4	nop
-800590A8	beq    s1, zero, L590d0 [$800590d0]
-A1 = SP + 0010;
-A2 = S1;
-A0 = w[8007f71c];
-800590BC	jal    func58f34 [$80058f34]
-A3 = S2;
-V0 = w[S3 + f790];
-800590C8	nop
-[V0 + 0018] = w(0);
-
-L590d0:	; 800590D0
-800590D0	beq    s0, zero, L590fc [$800590fc]
-800590D4	lui    a0, $8008
-800590D8	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = SP + 10;
-A2 = S0;
-A3 = S2;
-800590E4	jal    func58f34 [$80058f34]
-
-V0 = w[80080a10];
-[V0 + 0018] = w(0);
-
-L590fc:	; 800590FC
-V0 = 80080a70;
-A0 = w[SP + 0010];
-V1 = w[V0 + 000c];
-[V0 + 000c] = w(0);
-A0 = A0 | V1;
-[SP + 0010] = w(A0);
-if( A0 != 0 )
+void func58f94()
 {
-    func575d0();
+    S1 = 0;
+    u32 voices_off = 0;
+    voices_mask = w[0x80083174] NOR (w[0x80080a70 + 0x0] | w[0x80080a70 + 0x10]);
+
+    V1 = w[0x8007f790];
+    if( V1 != 0 )
+    {
+        S1 = w[V1 + 0x18];
+        channels_mask = S1 & w[V1 + 0x8];
+        if( channels_mask != 0 )
+        {
+            func58f34( w[0x8007f71c], voices_off, channels_mask, voices_mask );
+
+            A0 = w[0x8007f790];
+            S1 = S1 & ~w[A0 + 0x8];
+            [A0 + 0x18] = w(w[A0 + 0x18] & ~w[A0 + 0x8]);
+        }
+    }
+
+    V0 = w[0x80080a10];
+    S0 = w[V0 + 0x18];
+    channels_mask = S0 & w[V0 + 0x8];
+    if( channels_mask != 0 )
+    {
+        func58f34( 0x8007bd48, voices_off, channels_mask, voices_mask );
+
+        A0 = w[80080a10];
+        S0 = S0 & ~w[A0 + 0x8];
+        [A0 + 0x18] = w(w[A0 + 0x18] & ~w[A0 + 0x8]);
+    }
+
+    if( w[0x8007f790] != 0 )
+    {
+        if( S1 != 0 )
+        {
+            func58f34( w[8007f71c], voices_off, S1, voices_mask );
+
+            V0 = w[0x8007f790];
+            [V0 + 0x18] = w(0);
+        }
+    }
+
+    if( S0 != 0 )
+    {
+        func58f34( 0x8007bd48, voices_off, S0, voices_mask );
+
+        V0 = w[0x80080a10];
+        [V0 + 0x18] = w(0);
+    }
+
+    voices_off |= w[0x80080a70 + 0xc];
+    [0x80080a70 + 0xc] = w(0);
+
+    if( voices_off != 0 )
+    {
+        system_spu_key_off( voices_off );
+    }
+}
+
+
+
+void func59140( u32& mask_on, A1, A2, A3 )
+{
+    S4 = A2;
+    S5 = A3;
+
+    S1 = 0;
+    u32 get_voices_mask = 0;
+    voices_mask = w[0x80083168 + 0xc] NOR (w[0x80080a70 + 0x0] | w[0x80080a70 + 0x10]);
+
+    V1 = w[0x8007f790];
+    if( V1 != 0 )
+    {
+        S1 = w[V1 + 0x4] & A1;
+        channels_mask = S1 & w[V1 + 0x8];
+        if( channels_mask != 0 )
+        {
+            func58f34( w[0x8007f71c], get_voices_mask, channels_mask, voices_mask );
+
+            V0 = w[0x8007f790];
+            S1 = S1 & ~w[V0 + 0x8];
+        }
+    }
+
+    V0 = w[0x80080a10];
+    S0 = w[V0 + 0x4] & S4;
+    channels_mask = S0 & w[V0 + 0x8];
+    if( channels_mask != 0 )
+    {
+        func58f34( 0x8007bd48, get_voices_mask, channels_mask, voices_mask );
+
+        V0 = w[0x80080a10];
+        S0 &= ~w[V0 + 0x8];
+    }
+
+    if( w[8007f790] != 0 )
+    {
+        if( S1 != 0 )
+        {
+            func58f34( w[0x8007f71c], get_voices_mask, S1, voices_mask );
+        }
+    }
+
+    if( S0 != 0 )
+    {
+        func58f34( 0x8007bd48, get_voices_mask, S0, voices_mask );
+    }
+
+    mask_on = w[SP + 0x10] | S5;
+    [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100); // update reverb, noise and pitch modulation on
 }
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func59140
-80059140	addiu  sp, sp, $ffc8 (=-$38)
-[SP + 0030] = w(S6);
-S6 = A0;
-[SP + 0028] = w(S4);
-S4 = A2;
-[SP + 002c] = w(S5);
-S5 = A3;
-A0 = w[80080a70];
-V1 = V0 + 0a70;
-[SP + 0018] = w(S0);
-8005916C	lui    s0, $8008
-[SP + 0034] = w(RA);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-V0 = w[V1 + 0010];
-V1 = w[S0 + f790];
-A0 = A0 | V0;
-V0 = w[80083174];
-S1 = 0;
-[SP + 0010] = w(0);
-8005919C	beq    v1, zero, L591e4 [$800591e4]
-S2 = V0 NOR A0;
-V0 = w[V1 + 0004];
-V1 = w[V1 + 0008];
-S1 = V0 & A1;
-A2 = S1 & V1;
-800591B4	beq    a2, zero, L591e4 [$800591e4]
-A1 = SP + 0010;
-A0 = w[8007f71c];
-800591C4	jal    func58f34 [$80058f34]
-A3 = S2;
-V0 = w[S0 + f790];
-800591D0	nop
-V0 = w[V0 + 0008];
-800591D8	nop
-V0 = 0 NOR V0;
-S1 = S1 & V0;
+u16 system_spu_set_noise( u16 noise )
+{
+    if( noise >= 0x40 ) noise = 0x3f;
 
-L591e4:	; 800591E4
-V0 = w[80080a10];
-800591EC	nop
-V1 = w[V0 + 0004];
-V0 = w[V0 + 0008];
-S0 = V1 & S4;
-A2 = S0 & V0;
-80059200	beq    a2, zero, L59230 [$80059230]
-80059204	lui    a0, $8008
-80059208	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = SP + 0010;
-80059210	jal    func58f34 [$80058f34]
-A3 = S2;
-V0 = w[S3 + 0a10];
-8005921C	nop
-V0 = w[V0 + 0008];
-80059224	nop
-V0 = 0 NOR V0;
-S0 = S0 & V0;
+    spu = w[0x800679e8];
 
-L59230:	; 80059230
-V0 = w[8007f790];
-80059238	nop
-8005923C	beq    v0, zero, L59260 [$80059260]
-80059240	nop
-80059244	beq    s1, zero, L59260 [$80059260]
-A0 = w[8007f71c];
-A1 = SP + 0010;
-A2 = S1;
-80059258	jal    func58f34 [$80058f34]
-A3 = S2;
-
-L59260:	; 80059260
-80059260	beq    s0, zero, L5927c [$8005927c]
-80059264	lui    a0, $8008
-80059268	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = SP + 0010;
-A2 = S0;
-80059274	jal    func58f34 [$80058f34]
-A3 = S2;
-
-L5927c:	; 8005927C
-8005927C	lui    v1, $8008
-V0 = w[SP + 0010];
-V1 = V1 + 3158;
-V0 = V0 | S5;
-[SP + 0010] = w(V0);
-[S6 + 0000] = w(V0);
-V0 = w[V1 + 0008];
-80059298	nop
-V0 = V0 | 0100;
-[V1 + 0008] = w(V0);
-RA = w[SP + 0034];
-S6 = w[SP + 0030];
-S5 = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-800592C4	jr     ra 
-SP = SP + 0038;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func592cc()
-
-V0 = A0;
-800592D0	bltz   v0, L592ec [$800592ec]
-A1 = 0;
-A1 = V0;
-V0 = A1 < 0040;
-800592E0	bne    v0, zero, L592ec [$800592ec]
-800592E4	nop
-A1 = 003f;
-
-L592ec:	; 800592EC
-A0 = w[800679e8];
-V0 = A1 & 003f;
-V1 = hu[A0 + 01aa];
-V0 = V0 << 08;
-V1 = V1 & c0ff;
-V1 = V1 | V0;
-V0 = A1;
-[A0 + 01aa] = h(V1);
-////////////////////////////////
+    // 13-10 Noise Frequency Shift   (0..0Fh = Low .. High Frequency)
+    // 9-8   Noise Frequency Step    (0..03h = Step "4,5,6,7")
+    [spu + 0x1aa] = h((hu[spu + 0x1aa] & 0xc0ff) | ((noise & 0x3f) << 0x8));
+    return noise;
+}
 
 
 
@@ -1758,16 +1234,15 @@ spu = w[800679e8];
 
 
 
-////////////////////////////////
-// func5933c()
+void system_spu_set_reverb_volume( u16 rev_vol_l, u16 rev_vol_r )
+{
+    spu = w[0x800679e8];
+    [spu + 0x184] = h(rev_vol_l); // Reverb Output Volume Left
+    [0x80067990] = h(rev_vol_l);
 
-spu = w[800679e8];
-[spu + 184] = h(A0);
-[80067990] = h(A0);
-
-[spu + 186] = h(A1);
-[80067992] = h(A1);
-////////////////////////////////
+    [spu + 0x186] = h(rev_vol_r); // Reverb Output Volume Right
+    [0x80067992] = h(rev_vol_r);
+}
 
 
 
@@ -2253,241 +1728,188 @@ void func599d4( A0, VoiceData* data, A2 )
 
 
 
-////////////////////////////////
-// func59aa8()
-
-S6 = A0;
-S7 = A1;
-S1 = 0100;
-S3 = 8007e3d8;
-80059AD0	lui    v1, $0fff
-A1 = 80080a70;
-A0 = w[80080a70];
-V1 = V1 | ffff;
-V0 = w[A1 + 0010];
-V1 = S7 & V1;
-80059B04	beq    v1, zero, L59b98 [$80059b98]
-S5 = A0 | V0;
-S2 = 0;
-S6 = 00100000;
-S4 = A1;
-S0 = S3 + 0x34;
-
-loop59b1c:	; 80059B1C
-    V0 = S5 & S1;
-    80059B20	beq    v0, zero, L59b78 [$80059b78]
-    80059B24	nop
-    V0 = w[S0 + fff4];
-    80059B2C	nop
-    V0 = V0 & S7;
-    80059B34	beq    v0, zero, L59b78 [$80059b78]
-    80059B38	nop
-    V1 = w[S0 + 0000];
-    80059B40	nop
-    V0 = V1 & S6;
-    80059B48	beq    v0, zero, L59b5c [$80059b5c]
-    80059B4C	lui    v0, $0020
-    V0 = V1 | V0;
-    80059B54	j      L59b78 [$80059b78]
-    [S0 + 0000] = w(V0);
-
-    L59b5c:	; 80059B5C
-    [S4 + 0xc] = w(w[S4 + 0xc] | S1);
-
-    A0 = S3;
-    A1 = S1;
-    func5ec20();
-
-    [S0 + 0000] = w(0);
-
-    L59b78:	; 80059B78
-    S2 = S2 + 0001;
-    S0 = S0 + 0134;
-    S3 = S3 + 0134;
-    V0 = S2 < 0010;
-    S1 = S1 << 01;
-80059B88	bne    v0, zero, loop59b1c [$80059b1c]
-
-80059B90	j      L59dcc [$80059dcc]
-
-L59b98:	; 80059B98
-80059B98	bgez   s7, L59c00 [$80059c00]
-80059B9C	lui    v0, $4000
-V0 = S6 << 02;
-V0 = V0 + S6;
-V0 = V0 << 02;
-V0 = V0 - S6;
-V0 = V0 << 02;
-V0 = V0 + S6;
-V0 = V0 << 02;
-S3 = V0 + S3;
-S1 = S1 << S6;
-V0 = S5 & S1;
-80059BC8	beq    v0, zero, L59bdc [$80059bdc]
-80059BCC	nop
-A0 = w[S3 + 006c];
-80059BD4	jal    func59aa8 [$80059aa8]
-A1 = 0;
-
-L59bdc:	; 80059BDC
-S1 = S1 << 01;
-S3 = S3 + 0134;
-
-if( S5 & S1 )
+void func59aa8()
 {
-    A0 = w[S3 + 0x6c];
-    A1 = 0;
-    func59aa8();
+    S6 = A0;
+    S7 = A1;
 
+    S5 = w[0x80080a70 + 0x0] | w[0x80080a70 + 0x10];
+
+    if( S7 & 0x0fffffff )
+    {
+        S1 = 0x100;
+
+        for( int i = 0; i < 0x10; ++i )
+        {
+            if( S5 & S1 )
+            {
+                if( w[0x8007e3d8 + i * 0x134 + 0x28] & S7 )
+                {
+                    if( w[0x8007e3d8 + i * 0x134 + 0x34] & 0x00100000 )
+                    {
+                        [0x8007e3d8 + i * 0x134 + 0x34] = w(w[0x8007e3d8 + i * 0x134 + 0x34] | 0x00200000);
+                    }
+                    else
+                    {
+                        [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S1);
+
+                        func5ec20( 0x8007e3d8 + i * 0x134, S1 );
+
+                        [0x8007e3d8 + i * 0x134 + 0x34] = w(0);
+                    }
+                }
+            }
+
+            S0 = S0 + 0x134;
+            S1 = S1 << 0x1;
+        }
+    }
+    else
+    {
+        S1 = 0x100;
+        S3 = 0x8007e3d8;
+
+        if( S7 < 0 )
+        {
+            S3 = S3 + S6 * 134;
+            S1 = S1 << S6;
+
+            if( S5 & S1 )
+            {
+                A0 = w[S3 + 0x6c];
+                A1 = 0;
+                func59aa8();
+            }
+
+            S1 = S1 << 01;
+            S3 = S3 + 0134;
+
+            if( S5 & S1 )
+            {
+                A0 = w[S3 + 0x6c];
+                A1 = 0;
+                func59aa8();
+
+            }
+            return;
+        }
+
+        if( S7 & 0x40000000 )
+        {
+            for( int i = 0; i < 0x10; ++i )
+            {
+                if( w[S3 + i * 0x134 + 0x28] != 0 ) S5 &= ~S1;
+
+                S1 <<= 0x1;
+            }
+
+            S3 = 0x8007e3d8;
+            S1 = 0x100;
+            S4 = 0;
+
+            for( int i = 0; i < 0x10; ++i )
+            {
+                if( S5 & S1 )
+                {
+                    if( S4 < w[S3 + 0x88] ) S4 = w[S3 + 0x88];
+                }
+
+                S3 = S3 + 0x134;
+                S1 = S1 << 0x1;
+            }
+
+            S3 = 0x8007e3d8;
+            S1 = 0x100;
+            S0 = S3 + 0x34;
+
+            for( int i = 0; i < 0x10; ++i )
+            {
+                if( S5 & S1 )
+                {
+                    V0 = w[S0 + 0x54];
+                    if( S4 == V0 )
+                    {
+                        V0 = w[S0 + 0x0] & 0x00100000;
+                        if( V0 != 0 )
+                        {
+                            [S0 + 0x0] = w(w[S0 + 0x0] | 0x00200000);
+                        }
+                        else
+                        {
+                            [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S1);
+
+                            A0 = S3;
+                            A1 = S1;
+                            func5ec20();
+
+                            [S0 + 0x0] = w(0);
+                        }
+                    }
+                }
+
+                S0 = S0 + 0x134;
+                S3 = S3 + 0x134;
+                S1 = S1 << 0x1;
+            }
+        }
+        else
+        {
+            S0 = S3 + 0x34;
+
+            for( int i = 0; i < 0x10; ++i )
+            {
+                if( S5 & S1 )
+                {
+                    80059D30	addiu  v0, zero, $ffff (=-$1)
+                    80059D34	bne    s6, v0, L59d68 [$80059d68]
+                    80059D38	nop
+                    V0 = w[S0 + 0x38];
+                    80059D40	nop
+                    80059D44	bgez   v0, L59db0 [$80059db0]
+                    80059D48	nop
+                    V1 = w[S0 + 0x0];
+                    80059D50	nop
+                    V0 = V1 & 0x00100000;
+                    80059D58	bne    v0, zero, L59d8c [$80059d8c]
+                    V0 = V1 | 0x00200000;
+                    80059D60	j      L59d98 [$80059d98]
+
+                    L59d68:	; 80059D68
+                    V0 = w[S0 + 0038];
+                    80059D6C	nop
+                    80059D70	bne    v0, s6, L59db0 [$80059db0]
+                    80059D74	nop
+                    V1 = w[S0 + 0000];
+                    80059D7C	nop
+                    V0 = V1 & 0x00100000;
+                    80059D84	beq    v0, zero, L59d94 [$80059d94]
+                    V0 = V1 | 0x00200000;
+
+                    L59d8c:	; 80059D8C
+                    [S0 + 0000] = w(V0);
+                    80059D8C	j      L59db0 [$80059db0]
+
+                    L59d94:	; 80059D94
+                    L59d98:	; 80059D98
+                    [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S1);
+
+                    A0 = S3;
+                    A1 = S1;
+                    func5ec20();
+
+                    [S0 + 0x0] = w(0);
+                }
+
+                L59db0:	; 80059DB0
+                S0 = S0 + 0x134;
+                S1 = S1 << 0x1;
+                S3 = S3 + 0x134;
+            }
+        }
+    }
+
+    [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000110);
 }
-return;
-
-L59c00:	; 80059C00
-V0 = S7 & V0;
-80059C04	beq    v0, zero, L59d18 [$80059d18]
-S2 = 0;
-
-loop59c0c:	; 80059C0C
-    V0 = w[S3 + 0028];
-    80059C10	nop
-    80059C14	beq    v0, zero, L59c20 [$80059c20]
-    V0 = 0 NOR S1;
-    S5 = S5 & V0;
-
-    L59c20:	; 80059C20
-    S2 = S2 + 0001;
-    S3 = S3 + 0134;
-    V0 = S2 < 0010;
-    S1 = S1 << 01;
-80059C2C	bne    v0, zero, loop59c0c [$80059c0c]
-
-S3 = 8007e3d8;
-S1 = 0100;
-S4 = 0;
-S2 = S4;
-
-loop59c48:	; 80059C48
-    V0 = S5 & S1;
-    80059C4C	beq    v0, zero, L59c6c [$80059c6c]
-    80059C50	nop
-    V1 = w[S3 + 0088];
-    80059C58	nop
-    V0 = S4 < V1;
-    80059C60	beq    v0, zero, L59c6c [$80059c6c]
-    80059C64	nop
-    S4 = V1;
-
-    L59c6c:	; 80059C6C
-    S2 = S2 + 0001;
-    S3 = S3 + 0134;
-    V0 = S2 < 0010;
-    S1 = S1 << 01;
-80059C78	bne    v0, zero, loop59c48 [$80059c48]
-
-S3 = 8007e3d8;
-S1 = 0100;
-S2 = 0;
-80059C90	lui    fp, $0010
-80059C94	lui    s7, $0020
-S6 = 80080a70;
-S0 = S3 + 0034;
-
-loop59ca4:	; 80059CA4
-    V0 = S5 & S1;
-    80059CA8	beq    v0, zero, L59cf8 [$80059cf8]
-    80059CAC	nop
-    V0 = w[S0 + 0054];
-    80059CB4	nop
-    80059CB8	bne    s4, v0, L59cf8 [$80059cf8]
-    80059CBC	nop
-    V1 = w[S0 + 0000];
-    80059CC4	nop
-    V0 = V1 & FP;
-    80059CCC	beq    v0, zero, L59cdc [$80059cdc]
-    V0 = V1 | S7;
-    80059CD4	j      L59cf8 [$80059cf8]
-    [S0 + 0000] = w(V0);
-
-    L59cdc:	; 80059CDC
-    A0 = S3;
-    V0 = w[S6 + 000c];
-    A1 = S1;
-    V0 = V0 | S1;
-    80059CEC	jal    func5ec20 [$8005ec20]
-    [S6 + 000c] = w(V0);
-    [S0 + 0000] = w(0);
-
-    L59cf8:	; 80059CF8
-    S2 = S2 + 0001;
-    S0 = S0 + 0134;
-    S3 = S3 + 0134;
-    V0 = S2 < 0010;
-    S1 = S1 << 01;
-80059D08	bne    v0, zero, loop59ca4 [$80059ca4]
-
-80059D10	j      L59dcc [$80059dcc]
-
-L59d18:	; 80059D18
-80059D18	lui    fp, $0010
-80059D1C	lui    s7, $0020
-S4 = A1;
-S0 = S3 + 0034;
-
-loop59d28:	; 80059D28
-    V0 = S5 & S1;
-    80059D2C	beq    v0, zero, L59db0 [$80059db0]
-    80059D30	addiu  v0, zero, $ffff (=-$1)
-    80059D34	bne    s6, v0, L59d68 [$80059d68]
-    80059D38	nop
-    V0 = w[S0 + 0038];
-    80059D40	nop
-    80059D44	bgez   v0, L59db0 [$80059db0]
-    80059D48	nop
-    V1 = w[S0 + 0000];
-    80059D50	nop
-    V0 = V1 & FP;
-    80059D58	bne    v0, zero, L59d8c [$80059d8c]
-    V0 = V1 | S7;
-    80059D60	j      L59d98 [$80059d98]
-    A0 = S3;
-
-    L59d68:	; 80059D68
-    V0 = w[S0 + 0038];
-    80059D6C	nop
-    80059D70	bne    v0, s6, L59db0 [$80059db0]
-    80059D74	nop
-    V1 = w[S0 + 0000];
-    80059D7C	nop
-    V0 = V1 & FP;
-    80059D84	beq    v0, zero, L59d94 [$80059d94]
-    V0 = V1 | S7;
-
-    L59d8c:	; 80059D8C
-    80059D8C	j      L59db0 [$80059db0]
-    [S0 + 0000] = w(V0);
-
-    L59d94:	; 80059D94
-    A0 = S3;
-
-    L59d98:	; 80059D98
-    V0 = w[S4 + 000c];
-    A1 = S1;
-    V0 = V0 | S1;
-    80059DA4	jal    func5ec20 [$8005ec20]
-    [S4 + 000c] = w(V0);
-    [S0 + 0000] = w(0);
-
-    L59db0:	; 80059DB0
-    S2 = S2 + 0001;
-    S0 = S0 + 0134;
-    S1 = S1 << 01;
-    S3 = S3 + 0134;
-    V0 = S2 < 0010;
-80059DC0	bne    v0, zero, loop59d28 [$80059d28]
-
-L59dcc:	; 80059DCC
-[0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000110);
-////////////////////////////////
 
 
 
@@ -2615,56 +2037,54 @@ loop5a094:	; 8005A094
     V1 = w[0x80080a70 + 0x10];
     A0 = w[S6 + 000c];
     V0 = V0 | V1;
-    8005A0AC	beq    s4, zero, L5a0f0 [$8005a0f0]
     S3 = V0 | A0;
-    8005A0B4	beq    fp, zero, L5a0f0 [$8005a0f0]
-    S0 = 000f;
-    S2 = S2 - 0x134;
-    8005A0C0	lui    s1, $0040
-    V0 = S1 << 01;
 
-    L5a0c8:	; 8005A0C8
-    V0 = S1 | V0;
-    V0 = S3 & V0;
-    8005A0D0	beq    v0, zero, L5a110 [$8005a110]
-    8005A0D4	nop
-    8005A0D8	addiu  s0, s0, $ffff (=-$1)
-    S2 = S2 - 0x134;
-    8005A0E0	beq    s0, zero, L5a118 [$8005a118]
-    S1 = S1 >> 01;
-    8005A0E8	j      L5a0c8 [$8005a0c8]
-    V0 = S1 << 01;
+    if( S4 != 0 )
+    {
 
-    L5a0f0:	; 8005A0F0
+        if( FP != 0 )
+        {
+            S0 = 0xf;
+            S2 = S2 - 0x134;
+            S1 = 0x00400000;
+            V0 = S1 << 0x1;
+
+            L5a0c8:	; 8005A0C8
+                V0 = S1 | V0;
+                V0 = S3 & V0;
+                8005A0D0	beq    v0, zero, L5a110 [$8005a110]
+                8005A0D4	nop
+                8005A0D8	addiu  s0, s0, $ffff (=-$1)
+                S2 = S2 - 0x134;
+                8005A0E0	beq    s0, zero, L5a118 [$8005a118]
+                S1 = S1 >> 01;
+                V0 = S1 << 01;
+            8005A0E8	j      L5a0c8 [$8005a0c8]
+        }
+    }
+
     S0 = 0010;
 
     loop5a0f4:	; 8005A0F4
-    V0 = S3 & S1;
-    8005A0F8	beq    v0, zero, L5a110 [$8005a110]
-    8005A0FC	nop
-    8005A100	addiu  s0, s0, $ffff (=-$1)
-    S2 = S2 - 0x134;
+        if( ( S3 & S1 ) == 0 ) break;
+
+        S0 = S0 - 1;
+        S2 = S2 - 0x134;
+        S1 = S1 >> 01;
     8005A108	bne    s0, zero, loop5a0f4 [$8005a0f4]
-    S1 = S1 >> 01;
 
     L5a110:	; 8005A110
-    8005A110	bne    s0, zero, L5a148 [$8005a148]
-    8005A114	nop
+    if( S0 != 0 ) break;
 
     L5a118:	; 8005A118
     A0 = 0;
-    8005A11C	jal    func59aa8 [$80059aa8]
-    8005A120	lui    a1, $4000
-    V0 = w[0x80080a70];
-    V1 = w[0x80080a70 + 0x10];
-    A0 = w[S6 + 000c];
-    V0 = V0 | V1;
-    V0 = V0 | A0;
-    if( S3 == V0 ) return;
+    A1 = 0x40000000;
+    func59aa8();
+
+    if( S3 == ( w[0x80080a70] | w[0x80080a70 + 0x10] | w[S6 + 0xc] ) ) return;
 
 8005A140	beq    s0, zero, loop5a094 [$8005a094]
 
-L5a148:	; 8005A148
 if( S4 != 0 )
 {
     func59e10( S2, w[SP + 0x38], S1, S4 );
@@ -2688,8 +2108,7 @@ if( FP != 0 )
     }
 }
 
-V1 = 0x80083158;
-[V1 + 0x8] = w(w[V1 + 0x8] | 0x00000110);
+[0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000110);
 ////////////////////////////////
 
 
@@ -2792,12 +2211,12 @@ S1 = A0;
 8005A34C	lui    a0, $8008
 8005A350	addiu  a0, a0, $f8f0 (=-$710)
 A1 = w[80080a10];
-8005A35C	jal    func5ce04 [$8005ce04]
+8005A35C	jal    system_akao_copy [$8005ce04]
 A2 = 007c;
 A0 = 80080ac8;
 8005A36C	lui    a1, $8008
 8005A370	addiu  a1, a1, $bd48 (=-$42b8)
-8005A374	jal    func5ce04 [$8005ce04]
+8005A374	jal    system_akao_copy [$8005ce04]
 A2 = 2680;
 8005A37C	j      L5a3b8 [$8005a3b8]
 8005A380	lui    v0, $8008
@@ -3087,13 +2506,13 @@ V0 = w[A0 + 0004];
 8005A778	beq    v0, zero, L5a7cc [$8005a7cc]
 8005A77C	lui    s0, $8008
 8005A780	addiu  a1, s0, $f8f0 (=-$710)
-8005A784	jal    func5ce04 [$8005ce04]
+8005A784	jal    system_akao_copy [$8005ce04]
 A2 = 007c;
 8005A78C	lui    a0, $8008
 8005A790	addiu  a0, a0, $bd48 (=-$42b8)
 S1 = 80080ac8;
 A1 = S1;
-8005A7A0	jal    func5ce04 [$8005ce04]
+8005A7A0	jal    system_akao_copy [$8005ce04]
 A2 = 2680;
 S2 = 0;
 
@@ -3140,12 +2559,12 @@ A2 = 007c;
 8005A838	lui    s0, $8008
 V0 = 80080ac8;
 [V1 + f790] = w(A1);
-8005A848	jal    func5ce04 [$8005ce04]
+8005A848	jal    system_akao_copy [$8005ce04]
 [S0 + f71c] = w(V0);
 8005A850	lui    a0, $8008
 8005A854	addiu  a0, a0, $bd48 (=-$42b8)
 A1 = w[S0 + f71c];
-8005A85C	jal    func5ce04 [$8005ce04]
+8005A85C	jal    system_akao_copy [$8005ce04]
 A2 = 2680;
 
 L5a864:	; 8005A864
@@ -3218,12 +2637,12 @@ A2 = 007c;
 8005A954	lui    s0, $8008
 V0 = 80080ac8;
 [V1 + f790] = w(A1);
-8005A964	jal    func5ce04 [$8005ce04]
+8005A964	jal    system_akao_copy [$8005ce04]
 [S0 + f71c] = w(V0);
 8005A96C	lui    a0, $8008
 8005A970	addiu  a0, a0, $bd48 (=-$42b8)
 A1 = w[S0 + f71c];
-8005A978	jal    func5ce04 [$8005ce04]
+8005A978	jal    system_akao_copy [$8005ce04]
 A2 = 2680;
 
 L5a980:	; 8005A980
@@ -3314,35 +2733,30 @@ S0 = w[SP + 0010];
 8005AAB0	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func5aab8
-8005AAB8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A1 = w[A0 + 0000];
-A2 = w[A0 + 0004];
-V0 = 0400;
-[A0 + 0000] = w(V0);
-8005AAD0	lui    v0, $0100
-[A0 + 0004] = w(V0);
-V0 = 0080;
-[A0 + 0008] = w(V0);
-V0 = 007f;
-A3 = 0;
-[A0 + 000c] = w(V0);
-8005AAEC	jal    func5a014 [$8005a014]
-[A0 + 0010] = w(0);
-RA = w[SP + 0010];
-8005AAF8	nop
-8005AAFC	jr     ra 
-SP = SP + 0018;
+
+
+
+void func5aab8( A0 )
+{
+    A1 = w[A0 + 0x0];
+    A2 = w[A0 + 0x4];
+    [A0 + 0x0] = w(0x400);
+    [A0 + 0x4] = w(0x01000000);
+    [A0 + 0x8] = w(0x80);
+    [A0 + 0xc] = w(0x7f);
+    [A0 + 0x10] = w(0);
+
+    A3 = 0;
+    func5a014();
+}
+
+
+
 ////////////////////////////////
 // func5ab04
-8005AB04	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S2);
+
 S2 = A0;
 8005AB10	lui    v1, $8008
-[SP + 0024] = w(RA);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 V0 = w[S2 + 0000];
 V1 = w[V1 + 3148];
 V0 = V0 << 01;
@@ -3392,22 +2806,16 @@ S0 = S0 + A3;
 A0 = SP + 0010;
 
 L5abd4:	; 8005ABD4
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-8005ABE4	jr     ra 
-SP = SP + 0028;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5abec
-8005ABEC	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(S2);
+
 S2 = A0;
 8005ABF8	lui    a0, $8008
 8005ABFC	lui    v1, $8008
-[SP + 0024] = w(RA);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 V0 = w[S2 + 0000];
 V1 = w[V1 + 09e4];
 A1 = w[A0 + 3148];
@@ -3448,23 +2856,14 @@ S0 = S0 + A3;
 A0 = SP + 0010;
 
 L5ac9c:	; 8005AC9C
-RA = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-8005ACAC	jr     ra 
-SP = SP + 0028;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5acb4
-8005ACB4	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S4);
+
 S4 = A0;
-[SP + 0028] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
 S0 = w[S4 + 0000];
 8005ACDC	nop
 A0 = w[S0 + 0008];
@@ -3544,33 +2943,25 @@ A3 = 0001;
 S0 = S0 + 0004;
 
 L5adc4:	; 8005ADC4
-RA = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8005ADE0	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5ade8
-8005ADE8	addiu  sp, sp, $ffe8 (=-$18)
+
 V0 = A0;
-[SP + 0010] = w(RA);
 A0 = w[V0 + 0000];
 A1 = w[V0 + 0004];
 8005ADFC	jal    func59aa8 [$80059aa8]
-8005AE00	nop
-RA = w[SP + 0010];
-8005AE08	nop
-8005AE0C	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5ae14
-8005AE14	addiu  sp, sp, $ffe8 (=-$18)
+
 A2 = A0;
-[SP + 0010] = w(RA);
 V1 = w[A2 + 0000];
 8005AE24	nop
 8005AE28	beq    v1, zero, L5ae48 [$8005ae48]
@@ -3613,14 +3004,13 @@ L5aeb0:	; 8005AEB0
 func5a284();
 
 L5aeb8:	; 8005AEB8
-RA = w[SP + 0010];
-8005AEBC	nop
-8005AEC0	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5aec8
-8005AEC8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 V0 = w[A0 + 0004];
 8005AED4	nop
 8005AED8	beq    v0, zero, L5aee4 [$8005aee4]
@@ -3709,15 +3099,14 @@ L5afe4:	; 8005AFE4
 [A0 + 0054] = w(A2);
 
 L5aff4:	; 8005AFF4
-RA = w[SP + 0010];
-8005AFF8	nop
-8005AFFC	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b004
-8005B004	addiu  sp, sp, $ffe8 (=-$18)
+
 A3 = A0;
-[SP + 0010] = w(RA);
 V0 = w[A3 + 0004];
 8005B014	nop
 8005B018	beq    v0, zero, L5b024 [$8005b024]
@@ -3767,34 +3156,20 @@ V0 = V0 << 10;
 V0 = V0 | 8000;
 V0 = V0 - V1;
 8005B0BC	div    v0, a2
-8005B0C0	bne    a2, zero, L5b0cc [$8005b0cc]
-8005B0C4	nop
-8005B0C8	break   $01c00
-
-L5b0cc:	; 8005B0CC
-8005B0CC	addiu  at, zero, $ffff (=-$1)
-8005B0D0	bne    a2, at, L5b0e4 [$8005b0e4]
-8005B0D4	lui    at, $8000
-8005B0D8	bne    v0, at, L5b0e4 [$8005b0e4]
-8005B0DC	nop
-8005B0E0	break   $01800
-
-L5b0e4:	; 8005B0E4
 8005B0E4	mflo   v0
 [A0 + 0058] = h(A2);
 8005B0EC	jal    func5a284 [$8005a284]
 [A0 + 0054] = w(V0);
 
 L5b0f4:	; 8005B0F4
-RA = w[SP + 0010];
-8005B0F8	nop
-8005B0FC	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b104
-8005B104	addiu  sp, sp, $ffe8 (=-$18)
+
 A2 = A0;
-[SP + 0010] = w(RA);
 V1 = w[A2 + 0000];
 8005B114	nop
 8005B118	beq    v1, zero, L5b138 [$8005b138]
@@ -3838,14 +3213,13 @@ L5b1a0:	; 8005B1A0
 8005B1A4	nop
 
 L5b1a8:	; 8005B1A8
-RA = w[SP + 0010];
-8005B1AC	nop
-8005B1B0	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b1b8
-8005B1B8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
+
 V0 = w[A0 + 0004];
 8005B1C4	nop
 8005B1C8	beq    v0, zero, L5b1d4 [$8005b1d4]
@@ -3872,19 +3246,6 @@ V0 = w[A0 + 005c];
 8005B214	nop
 V1 = V1 - V0;
 8005B21C	div    v1, a2
-8005B220	bne    a2, zero, L5b22c [$8005b22c]
-8005B224	nop
-8005B228	break   $01c00
-
-L5b22c:	; 8005B22C
-8005B22C	addiu  at, zero, $ffff (=-$1)
-8005B230	bne    a2, at, L5b244 [$8005b244]
-8005B234	lui    at, $8000
-8005B238	bne    v1, at, L5b244 [$8005b244]
-8005B23C	nop
-8005B240	break   $01800
-
-L5b244:	; 8005B244
 8005B244	mflo   v1
 8005B248	lui    a1, $8008
 8005B24C	j      L5b2bc [$8005b2bc]
@@ -3905,19 +3266,6 @@ V0 = w[A0 + 005c];
 8005B280	nop
 V1 = V1 - V0;
 8005B288	div    v1, a2
-8005B28C	bne    a2, zero, L5b298 [$8005b298]
-8005B290	nop
-8005B294	break   $01c00
-
-L5b298:	; 8005B298
-8005B298	addiu  at, zero, $ffff (=-$1)
-8005B29C	bne    a2, at, L5b2b0 [$8005b2b0]
-8005B2A0	lui    at, $8000
-8005B2A4	bne    v1, at, L5b2b0 [$8005b2b0]
-8005B2A8	nop
-8005B2AC	break   $01800
-
-L5b2b0:	; 8005B2B0
 8005B2B0	mflo   v1
 A1 = w[8007f71c];
 
@@ -3932,22 +3280,26 @@ RA = w[SP + 0010];
 8005B2D0	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5b2d8
-8005B2D8	addiu  sp, sp, $ffe8 (=-$18)
+
 8005B2DC	lui    v0, $8008
-[SP + 0010] = w(RA);
 [V0 + 0a2c] = h(0);
 V0 = hu[A0 + 0000];
 8005B2EC	lui    v1, $8008
 V0 = V0 << 10;
 8005B2F4	jal    func5cde4 [$8005cde4]
 [V1 + 0ac0] = w(V0);
-RA = w[SP + 0010];
-8005B300	nop
-8005B304	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b30c
+
 V0 = w[A0 + 0000];
 8005B310	nop
 8005B314	beq    v0, zero, L5b320 [$8005b320]
@@ -3961,26 +3313,17 @@ V1 = w[V1 + 0ac0];
 V0 = V0 << 10;
 V0 = V0 - V1;
 8005B334	div    v0, a1
-8005B338	bne    a1, zero, L5b344 [$8005b344]
-8005B33C	nop
-8005B340	break   $01c00
-
-L5b344:	; 8005B344
-8005B344	addiu  at, zero, $ffff (=-$1)
-8005B348	bne    a1, at, L5b35c [$8005b35c]
-8005B34C	lui    at, $8000
-8005B350	bne    v0, at, L5b35c [$8005b35c]
-8005B354	nop
-8005B358	break   $01800
-
-L5b35c:	; 8005B35C
 8005B35C	mflo   v0
 [80080a2c] = h(A1);
 8005B368	lui    v1, $8008
-8005B36C	jr     ra 
 [V1 + 0a28] = w(V0);
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5b374
+
 V0 = w[A0 + 0000];
 8005B378	nop
 8005B37C	beq    v0, zero, L5b388 [$8005b388]
@@ -3994,25 +3337,15 @@ V0 = V0 << 10;
 A0 = A0 << 10;
 V0 = V0 - A0;
 8005B39C	div    v0, a1
-8005B3A0	bne    a1, zero, L5b3ac [$8005b3ac]
-8005B3A4	nop
-8005B3A8	break   $01c00
-
-L5b3ac:	; 8005B3AC
-8005B3AC	addiu  at, zero, $ffff (=-$1)
-8005B3B0	bne    a1, at, L5b3c4 [$8005b3c4]
-8005B3B4	lui    at, $8000
-8005B3B8	bne    v0, at, L5b3c4 [$8005b3c4]
-8005B3BC	nop
-8005B3C0	break   $01800
-
-L5b3c4:	; 8005B3C4
 8005B3C4	mflo   v0
 [80080a2c] = h(A1);
 [80080ac0] = w(A0);
 8005B3D8	lui    v1, $8008
-8005B3DC	jr     ra 
 [V1 + 0a28] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b3e4
 8005B3E4	lui    v0, $8008
@@ -4122,19 +3455,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005B54C	div    v1, v0
-8005B550	bne    v0, zero, L5b55c [$8005b55c]
-8005B554	nop
-8005B558	break   $01c00
-
-L5b55c:	; 8005B55C
-8005B55C	addiu  at, zero, $ffff (=-$1)
-8005B560	bne    v0, at, L5b574 [$8005b574]
-8005B564	lui    at, $8000
-8005B568	bne    v1, at, L5b574 [$8005b574]
-8005B56C	nop
-8005B570	break   $01800
-
-L5b574:	; 8005B574
 8005B574	mflo   v1
 [A2 + 0000] = h(A1);
 [A2 + 0046] = h(V1);
@@ -4178,19 +3498,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005B5FC	div    v1, v0
-8005B600	bne    v0, zero, L5b60c [$8005b60c]
-8005B604	nop
-8005B608	break   $01c00
-
-L5b60c:	; 8005B60C
-8005B60C	addiu  at, zero, $ffff (=-$1)
-8005B610	bne    v0, at, L5b624 [$8005b624]
-8005B614	lui    at, $8000
-8005B618	bne    v1, at, L5b624 [$8005b624]
-8005B61C	nop
-8005B620	break   $01800
-
-L5b624:	; 8005B624
 8005B624	mflo   v1
 [A2 + 0000] = h(A1);
 [A2 + 0046] = h(V1);
@@ -4203,6 +3510,10 @@ V0 = A3 < 0010;
 T0 = T0 << 01;
 8005B644	jr     ra 
 8005B648	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b64c
 A3 = 0100;
@@ -4240,6 +3551,10 @@ A3 = A3 << 01;
 8005B6C0	jr     ra 
 8005B6C4	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5b6c8
 T0 = 0100;
 T1 = w[80080a70];
@@ -4275,19 +3590,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005B740	div    v1, v0
-8005B744	bne    v0, zero, L5b750 [$8005b750]
-8005B748	nop
-8005B74C	break   $01c00
-
-L5b750:	; 8005B750
-8005B750	addiu  at, zero, $ffff (=-$1)
-8005B754	bne    v0, at, L5b768 [$8005b768]
-8005B758	lui    at, $8000
-8005B75C	bne    v1, at, L5b768 [$8005b768]
-8005B760	nop
-8005B764	break   $01800
-
-L5b768:	; 8005B768
 8005B768	mflo   v1
 [A2 + 0000] = h(A1);
 [A2 + 0046] = h(V1);
@@ -4300,6 +3602,10 @@ V0 = A3 < 0010;
 T0 = T0 << 01;
 8005B788	jr     ra 
 8005B78C	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b790
 8005B790	lui    v0, $8008
@@ -4369,6 +3675,10 @@ A3 = A3 << 01;
 8005B868	jr     ra 
 8005B86C	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5b870
 8005B870	lui    v0, $8008
 8005B874	addiu  a1, v0, $e3d8 (=-$1c28)
@@ -4406,19 +3716,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005B8EC	div    v1, v0
-8005B8F0	bne    v0, zero, L5b8fc [$8005b8fc]
-8005B8F4	nop
-8005B8F8	break   $01c00
-
-L5b8fc:	; 8005B8FC
-8005B8FC	addiu  at, zero, $ffff (=-$1)
-8005B900	bne    v0, at, L5b914 [$8005b914]
-8005B904	lui    at, $8000
-8005B908	bne    v1, at, L5b914 [$8005b914]
-8005B90C	nop
-8005B910	break   $01800
-
-L5b914:	; 8005B914
 8005B914	mflo   v1
 [A2 + 0000] = h(A1);
 [A2 + 0060] = h(V1);
@@ -4461,19 +3758,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005B998	div    v1, v0
-8005B99C	bne    v0, zero, L5b9a8 [$8005b9a8]
-8005B9A0	nop
-8005B9A4	break   $01c00
-
-L5b9a8:	; 8005B9A8
-8005B9A8	addiu  at, zero, $ffff (=-$1)
-8005B9AC	bne    v0, at, L5b9c0 [$8005b9c0]
-8005B9B0	lui    at, $8000
-8005B9B4	bne    v1, at, L5b9c0 [$8005b9c0]
-8005B9B8	nop
-8005B9BC	break   $01800
-
-L5b9c0:	; 8005B9C0
 8005B9C0	mflo   v1
 [A2 + 0000] = h(A1);
 [A2 + 0060] = h(V1);
@@ -4485,7 +3769,10 @@ V0 = A3 < 0010;
 8005B9D8	bne    v0, zero, loop5b944 [$8005b944]
 T0 = T0 << 01;
 8005B9E0	jr     ra 
-8005B9E4	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5b9e8
 A3 = 0100;
@@ -4522,6 +3809,10 @@ A3 = A3 << 01;
 8005BA58	jr     ra 
 8005BA5C	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5ba60
 T0 = 0100;
 T1 = w[80080a70];
@@ -4556,21 +3847,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005BAD4	div    v1, v0
-8005BAD8	bne    v0, zero, L5bae4 [$8005bae4]
-8005BADC	nop
-
-L5bae0:	; 8005BAE0
-8005BAE0	break   $01c00
-
-L5bae4:	; 8005BAE4
-8005BAE4	addiu  at, zero, $ffff (=-$1)
-8005BAE8	bne    v0, at, L5bafc [$8005bafc]
-8005BAEC	lui    at, $8000
-8005BAF0	bne    v1, at, L5bafc [$8005bafc]
-8005BAF4	nop
-8005BAF8	break   $01800
-
-L5bafc:	; 8005BAFC
 8005BAFC	mflo   v1
 [A2 + 0000] = h(A1);
 [A2 + 0060] = h(V1);
@@ -4583,6 +3859,10 @@ V0 = A3 < 0010;
 T0 = T0 << 01;
 8005BB1C	jr     ra 
 8005BB20	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5bb24
 8005BB24	lui    v0, $8008
@@ -4654,6 +3934,10 @@ L5bbfc:	; 8005BBFC
 8005BBFC	jr     ra 
 8005BC00	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5bc04
 8005BC04	lui    v0, $8008
 8005BC08	addiu  a1, v0, $e3d8 (=-$1c28)
@@ -4691,19 +3975,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005BC80	div    v1, v0
-8005BC84	bne    v0, zero, L5bc90 [$8005bc90]
-8005BC88	nop
-8005BC8C	break   $01c00
-
-L5bc90:	; 8005BC90
-8005BC90	addiu  at, zero, $ffff (=-$1)
-8005BC94	bne    v0, at, L5bca8 [$8005bca8]
-8005BC98	lui    at, $8000
-8005BC9C	bne    v1, at, L5bca8 [$8005bca8]
-8005BCA0	nop
-8005BCA4	break   $01800
-
-L5bca8:	; 8005BCA8
 8005BCA8	mflo   v1
 [A2 + 0000] = h(A1);
 V1 = V1 << 10;
@@ -4748,19 +4019,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005BD34	div    v1, v0
-8005BD38	bne    v0, zero, L5bd44 [$8005bd44]
-8005BD3C	nop
-8005BD40	break   $01c00
-
-L5bd44:	; 8005BD44
-8005BD44	addiu  at, zero, $ffff (=-$1)
-8005BD48	bne    v0, at, L5bd5c [$8005bd5c]
-8005BD4C	lui    at, $8000
-8005BD50	bne    v1, at, L5bd5c [$8005bd5c]
-8005BD54	nop
-8005BD58	break   $01800
-
-L5bd5c:	; 8005BD5C
 8005BD5C	mflo   v1
 [A2 + 0000] = h(A1);
 V1 = V1 << 10;
@@ -4775,6 +4033,10 @@ V0 = A3 < 0010;
 T0 = T0 << 01;
 8005BD84	jr     ra 
 8005BD88	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5bd8c
 A2 = 0010;
@@ -4803,6 +4065,10 @@ L5bdd0:	; 8005BDD0
 A1 = A1 + 0134;
 8005BDDC	jr     ra 
 8005BDE0	nop
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5bde4
 T0 = 0100;
@@ -4838,19 +4104,6 @@ V1 = V1 >> 10;
 V0 = A1 << 10;
 V0 = V0 >> 10;
 8005BE58	div    v1, v0
-8005BE5C	bne    v0, zero, L5be68 [$8005be68]
-8005BE60	nop
-8005BE64	break   $01c00
-
-L5be68:	; 8005BE68
-8005BE68	addiu  at, zero, $ffff (=-$1)
-8005BE6C	bne    v0, at, L5be80 [$8005be80]
-8005BE70	lui    at, $8000
-8005BE74	bne    v1, at, L5be80 [$8005be80]
-8005BE78	nop
-8005BE7C	break   $01800
-
-L5be80:	; 8005BE80
 8005BE80	mflo   v1
 [A2 + 0000] = h(A1);
 V1 = V1 << 10;
@@ -4866,6 +4119,10 @@ T0 = T0 << 01;
 8005BEA8	jr     ra 
 8005BEAC	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5beb0
 V0 = b[A0 + 0000];
 [8007f96e] = h(0);
@@ -4873,6 +4130,10 @@ V0 = b[A0 + 0000];
 V0 = V0 << 10;
 8005BEC4	jr     ra 
 [V1 + 3154] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5becc
 V0 = w[A0 + 0000];
@@ -4888,24 +4149,15 @@ V1 = w[V1 + 3154];
 V0 = V0 << 10;
 V0 = V0 - V1;
 8005BEF4	div    v0, a1
-8005BEF8	bne    a1, zero, L5bf04 [$8005bf04]
-8005BEFC	nop
-8005BF00	break   $01c00
-
-L5bf04:	; 8005BF04
-8005BF04	addiu  at, zero, $ffff (=-$1)
-8005BF08	bne    a1, at, L5bf1c [$8005bf1c]
-8005BF0C	lui    at, $8000
-8005BF10	bne    v0, at, L5bf1c [$8005bf1c]
-8005BF14	nop
-8005BF18	break   $01800
-
-L5bf1c:	; 8005BF1C
 8005BF1C	mflo   v0
 [8007f96e] = h(A1);
 8005BF28	lui    v1, $8008
 8005BF2C	jr     ra 
 [V1 + f8e8] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5bf34
 V0 = w[A0 + 0004];
@@ -4924,24 +4176,15 @@ V0 = b[A0 + 0008];
 V0 = V0 << 10;
 V0 = V0 - V1;
 8005BF68	div    v0, a1
-8005BF6C	bne    a1, zero, L5bf78 [$8005bf78]
-8005BF70	nop
-8005BF74	break   $01c00
-
-L5bf78:	; 8005BF78
-8005BF78	addiu  at, zero, $ffff (=-$1)
-8005BF7C	bne    a1, at, L5bf90 [$8005bf90]
-8005BF80	lui    at, $8000
-8005BF84	bne    v0, at, L5bf90 [$8005bf90]
-8005BF88	nop
-8005BF8C	break   $01800
-
-L5bf90:	; 8005BF90
 8005BF90	mflo   v0
 [8007f96e] = h(A1);
 8005BF9C	lui    v1, $8008
 8005BFA0	jr     ra 
 [V1 + f8e8] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5bfa8
 V0 = b[A0 + 0000];
@@ -4950,6 +4193,10 @@ V0 = b[A0 + 0000];
 V0 = V0 << 10;
 8005BFBC	jr     ra 
 [V1 + 3150] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5bfc4
 V0 = w[A0 + 0000];
@@ -4965,24 +4212,15 @@ V1 = w[V1 + 3150];
 V0 = V0 << 10;
 V0 = V0 - V1;
 8005BFEC	div    v0, a1
-8005BFF0	bne    a1, zero, L5bffc [$8005bffc]
-8005BFF4	nop
-8005BFF8	break   $01c00
-
-L5bffc:	; 8005BFFC
-8005BFFC	addiu  at, zero, $ffff (=-$1)
-8005C000	bne    a1, at, L5c014 [$8005c014]
-8005C004	lui    at, $8000
-8005C008	bne    v0, at, L5c014 [$8005c014]
-8005C00C	nop
-8005C010	break   $01800
-
-L5c014:	; 8005C014
 8005C014	mflo   v0
 [8007f96c] = h(A1);
 8005C020	lui    v1, $8008
 8005C024	jr     ra 
 [V1 + f8e4] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5c02c
 V0 = w[A0 + 0004];
@@ -5001,19 +4239,6 @@ V0 = b[A0 + 0008];
 V0 = V0 << 10;
 V0 = V0 - V1;
 8005C060	div    v0, a1
-8005C064	bne    a1, zero, L5c070 [$8005c070]
-8005C068	nop
-8005C06C	break   $01c00
-
-L5c070:	; 8005C070
-8005C070	addiu  at, zero, $ffff (=-$1)
-8005C074	bne    a1, at, L5c088 [$8005c088]
-8005C078	lui    at, $8000
-8005C07C	bne    v0, at, L5c088 [$8005c088]
-8005C080	nop
-8005C084	break   $01800
-
-L5c088:	; 8005C088
 8005C088	mflo   v0
 [8007f96c] = h(A1);
 8005C094	lui    v1, $8008
@@ -5057,23 +4282,15 @@ void func5c0f0( A0 )
 
 ////////////////////////////////
 // func5c158
-8005C158	addiu  sp, sp, $ffd0 (=-$30)
+
 8005C15C	lui    v0, $8008
-[SP + 0018] = w(S2);
 8005C164	addiu  s2, v0, $e3d8 (=-$1c28)
-[SP + 0014] = w(S1);
 S1 = 0100;
-[SP + 001c] = w(S3);
 S3 = 0;
-[SP + 0024] = w(S5);
 8005C17C	lui    s5, $8008
-[SP + 0020] = w(S4);
 S4 = S5 + 0a70;
-[SP + 0028] = w(S6);
 8005C18C	lui    s6, $0200
-[SP + 0010] = w(S0);
 S0 = S2 + 0034;
-[SP + 002c] = w(RA);
 
 loop5c19c:	; 8005C19C
 V0 = w[S5 + 0a70];
@@ -5105,26 +4322,19 @@ V0 = w[V1 + 0008];
 8005C200	nop
 V0 = V0 | 0110;
 [V1 + 0008] = w(V0);
-RA = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8005C22C	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5c234
-8005C234	addiu  sp, sp, $ffe8 (=-$18)
+
 8005C238	lui    a1, $8008
 8005C23C	addiu  a1, a1, $bd48 (=-$42b8)
 8005C240	lui    v0, $8008
 8005C244	lui    v1, $8008
 A0 = w[V0 + 0a10];
 V0 = 0001;
-[SP + 0010] = w(RA);
 8005C254	jal    func5a284 [$8005a284]
 [V1 + 315c] = w(V0);
 A0 = w[8007f790];
@@ -5136,21 +4346,19 @@ A1 = w[8007f71c];
 
 L5c27c:	; 8005C27C
 8005C27C	jal    func5a2cc [$8005a2cc]
-8005C280	nop
-RA = w[SP + 0010];
-8005C288	nop
-8005C28C	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5c294
-8005C294	addiu  sp, sp, $ffe8 (=-$18)
+
 8005C298	lui    a1, $8008
 8005C29C	addiu  a1, a1, $bd48 (=-$42b8)
 8005C2A0	lui    v0, $8008
 8005C2A4	lui    v1, $8008
 A0 = w[V0 + 0a10];
 V0 = 0002;
-[SP + 0010] = w(RA);
 8005C2B4	jal    func5a284 [$8005a284]
 [V1 + 315c] = w(V0);
 A0 = w[8007f790];
@@ -5162,11 +4370,10 @@ A1 = w[8007f71c];
 
 L5c2dc:	; 8005C2DC
 8005C2DC	jal    func5a2cc [$8005a2cc]
-8005C2E0	nop
-RA = w[SP + 0010];
-8005C2E8	nop
-8005C2EC	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5c2f4
 A2 = 0;
@@ -5184,8 +4391,6 @@ V0 = V0 | 0003;
 V0 = A2 < 0020;
 8005C324	bne    v0, zero, loop5c310 [$8005c310]
 A1 = A1 + 0134;
-8005C32C	jr     ra 
-8005C330	nop
 ////////////////////////////////
 
 
@@ -5278,6 +4483,10 @@ V1 = V1 & A0;
 8005C4CC	jr     ra 
 [V0 + 31c4] = w(V1);
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func5c4d4
 V0 = w[80080a70];
 8005C4DC	addiu  sp, sp, $ffe0 (=-$20)
@@ -5339,14 +4548,12 @@ S2 = S2 + 0001;
 
 L5c5c8:	; 8005C5C8
 V0 = w[800831c4];
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
 V0 = V0 | 0002;
-[V1 + 31c4] = w(V0);
-8005C5E8	jr     ra 
-SP = SP + 0020;
+[800831c4] = w(V0);
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5c5f0
 V0 = w[80080a80];
@@ -5777,12 +4984,12 @@ else
     [80067998] = w(0);
 }
 
-is_reverb_on = (hu[spu + 1aa] >> 7) & 1; // Reverb Master Enable
+is_reverb_on = (hu[spu + 0x1aa] >> 7) & 1; // Reverb Master Enable
 
 if( is_reverb_on != 0 )
 {
     // disable reverb
-    [spu + 1aa] = h(hu[spu + 1aa] & ff7f);
+    [spu + 0x1aa] = h(hu[spu + 0x1aa] & ff7f);
 }
 
 [spu + 184] = h(0); // attr->depth.left
@@ -5808,7 +5015,7 @@ func177ec();
 if( is_reverb_on != 0 )
 {
     // enable reverb
-    [spu + 1aa] = h(hu[spu + 1aa] | 0080);
+    [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0080);
 }
 
 return 0;
@@ -5826,41 +5033,18 @@ V0 = h[80080ac2];
 
 
 
-////////////////////////////////
-// func5ce04()
-
-T1 = A0;
-A2 = A2 >> 02;
-T2 = A1;
-T0 = A1 + 000c;
-A3 = A0 + 000c;
-
-while( A2 & fffffffc )
+void system_akao_copy( u32 src, u32 dst, u32 size )
 {
-    V1 = w[A3 + fff8];
-    A0 = w[A3 + fffc];
-    A1 = w[A3 + 0000];
-    A3 = A3 + 0010;
-    V0 = w[T1 + 0000];
-    T1 = T1 + 0010;
-    A2 = A2 - 4;
-    [T2 + 0000] = w(V0);
-    [T0 + fff8] = w(V1);
-    [T0 + fffc] = w(A0);
-    [T0 + 0000] = w(A1);
-    T0 = T0 + 0010;
-    T2 = T2 + 0010;
-}
+    size /= 0x4;
 
-while( A2 != 0 )
-{
-    V0 = w[T1 + 0000];
-    T1 = T1 + 0004;
-    8005CE74	addiu  a2, a2, $ffff (=-$1)
-    [T2 + 0000] = w(V0);
-    T2 = T2 + 0004;
+    while( size != 0 )
+    {
+        [dst] = w(w[src]);
+        dst += 0x4;
+        src += 0x4;
+        size -= 1;
+    }
 }
-////////////////////////////////
 
 
 
@@ -6190,175 +5374,133 @@ while( A3 != 0 )
 
 
 
-////////////////////////////////
-// func5d384()
-
-V0 = w[0x80080a10];
-V1 = bu[0x80083156];
-
-FP = A0;
-A0 = hu[V0 + 0x22];
-S7 = A1;
-8005D3C8	beq    v1, zero, L5d3f4 [$8005d3f4]
-
-V0 = V1 < 0080;
-
-if( V0 != 0 )
+u32 func5d384( VoiceData* data, A1 )
 {
-    8005D3D8	mult   a0, v1
-    8005D3DC	mflo   a3
-    V0 = A3 >> 07;
-    A0 = A0 + V0;
+    V0 = w[0x80080a10];
+    V1 = bu[0x80083156];
+
+    A0 = hu[V0 + 0x22];
+    S7 = A1;
+
+    if( V1 != 0 )
+    {
+        if( V1 < 0x80 )
+        {
+            A0 = A0 + (A0 * V1) >> 0x7;
+        }
+        else
+        {
+            A0 = (A0 * V1) >> 0x8;
+        }
+    }
+
+    A1 = w[0x80080a10];
+    [A1 + 0x28] = w(w[A1 + 0x28] + A0);
+
+    if( ( V1 & 0xffff0000 ) || ( w[0x800831c4] & 0x4 ) )
+    {
+        V0 = V1 & ffff;
+        [A1 + 0028] = w(V0);
+
+        L5d450:	; 8005D450
+            S2 = data;
+            S1 = 0x1;
+            V0 = w[0x80080a10];
+            S0 = S2 + 0096;
+            S3 = w[V0 + 0004];
+
+            loop5d460:	; 8005D460
+                if( S3 & S1 )
+                {
+                    [S0 + 0x0] = h(hu[S0 + 0x0] - 1);
+                    [S0 + 0x2] = h(hu[S0 + 0x2] - 1);
+
+                    if( hu[S0 + 0x0] == 0 )
+                    {
+                        func5e3fc( S2, S1 ); // update akao
+                    }
+                    else
+                    {
+                        if( hu[S0 + 0x2] == 0 )
+                        {
+                            V1 = w[0x80080a10];
+                            [V1 + 0x18] = w(w[V1 + 0x18] | S1);
+                        }
+                    }
+
+                    A0 = S2;
+                    A1 = S1;
+                    A2 = 0;
+                    8005D4D0	jal    func579b4 [$800579b4]
+
+                    S3 = S3 & ~S1;
+                }
+
+                S0 = S0 + 0x134;
+                S2 = S2 + 0x134;
+                S1 = S1 << 0x1;
+            8005D4E8	bne    s3, zero, loop5d460 [$8005d460]
+
+            A1 = w[0x80080a10];
+
+            if( hu[A1 + 0x68] != 0 )
+            {
+                [A1 + 0x68] = h(hu[A1 + 0x68] - 1);
+                [A1 + 0x20] = w(w[A1 + 0x20] + w[A1 + 0024]);
+            }
+
+            if( h[A1 + 0x66] != 0 )
+            {
+                [A1 + 0x66] = h(hu[A1 + 0x66] - 1);
+                [A1 + 0x48] = w(w[A1 + 0x48] + w[A1 + 0x4c]);
+
+                if( S7 == 0 ) [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000080);
+            }
+
+            A0 = w[0x80080a10];
+            8005D55C	nop
+            V0 = hu[A0 + 0074];
+            8005D564	nop
+            8005D568	beq    v0, zero, L5d5d4 [$8005d5d4]
+            8005D56C	nop
+            V0 = hu[A0 + 0076];
+            V1 = hu[A0 + 0074];
+            V0 = V0 + 0001;
+            [A0 + 0076] = h(V0);
+            V0 = V0 & ffff;
+            8005D584	bne    v0, v1, L5d5d4 [$8005d5d4]
+            8005D588	nop
+            V0 = hu[A0 + 0072];
+            V1 = hu[A0 + 0070];
+            [A0 + 0076] = h(0);
+            V0 = V0 + 0001;
+            [A0 + 0072] = h(V0);
+            V0 = V0 & ffff;
+            8005D5A4	bne    v0, v1, L5d5d4 [$8005d5d4]
+            8005D5A8	nop
+            V0 = hu[A0 + 0078];
+            [A0 + 0072] = h(0);
+            V0 = V0 + 0001;
+            8005D5B8	bne    s7, zero, L5d5ec [$8005d5ec]
+            [A0 + 0078] = h(V0);
+            V0 = w[0x800809b8];
+            if( V0 != 0 )
+            {
+                [0x800809b8] = w(V0 - 1);
+            }
+
+            L5d5d4:	; 8005D5D4
+            8005D5D4	bne    s7, zero, L5d5f0 [$8005d5f0]
+
+            V0 = w[0x800809b8];
+        8005D5E4	bne    v0, zero, L5d450 [$8005d450]
+    }
+
+    L5d5ec:	; 8005D5EC
+    L5d5f0:	; 8005D5F0
+    V0 = w[80080a10];
+    return w[V0 + 4];
 }
-else
-{
-    8005D3D8	mult   a0, v1
-    8005D3EC	mflo   a3
-    A0 = A3 >> 08;
-}
-
-A1 = w[80080a10];
-V0 = w[A1 + 0028];
-8005D404	nop
-V1 = V0 + A0;
-8005D40C	lui    v0, $ffff
-V0 = V1 & V0;
-8005D414	bne    v0, zero, L5d434 [$8005d434]
-[A1 + 0028] = w(V1);
-V0 = w[800831c4];
-8005D424	nop
-V0 = V0 & 0004;
-8005D42C	beq    v0, zero, L5d5f0 [$8005d5f0]
-
-L5d434:	; 8005D434
-V0 = V1 & ffff;
-[A1 + 0028] = w(V0);
-S6 = 80083158;
-8005D448	lui    s5, $8008
-S2 = FP;
-
-L5d450:	; 8005D450
-S1 = 0001;
-V0 = w[0x80080a10];
-S0 = S2 + 0096;
-S3 = w[V0 + 0004];
-
-loop5d460:	; 8005D460
-8005D460	nop
-V0 = S3 & S1;
-8005D468	beq    v0, zero, L5d4e0 [$8005d4e0]
-
-[S0 + 0000] = h(hu[S0 + 0000] - 1);
-[S0 + 0002] = h(hu[S0 + 0002] - 1);
-
-V1 = hu[S0 + 0000];
-
-8005D48C	bne    v1, zero, L5d4a8 [$8005d4a8]
-
-A0 = S2;
-A1 = S1;
-func5e3fc();
-
-A0 = S2;
-8005D4A0	j      L5d4cc [$8005d4cc]
-
-L5d4a8:	; 8005D4A8
-V0 = V0 & ffff;
-8005D4AC	bne    v0, zero, L5d4cc [$8005d4cc]
-A0 = S2;
-V1 = w[0x80080a10];
-
-[V1 + 0x18] = w(w[V1 + 0x18] | S1);
-
-L5d4cc:	; 8005D4CC
-A1 = S1;
-8005D4D0	jal    func579b4 [$800579b4]
-A2 = 0;
-V0 = 0 NOR S1;
-S3 = S3 & V0;
-
-L5d4e0:	; 8005D4E0
-S0 = S0 + 0134;
-S2 = S2 + 0134;
-8005D4E8	bne    s3, zero, loop5d460 [$8005d460]
-S1 = S1 << 01;
-A1 = w[0x80080a10];
-8005D4F4	nop
-V1 = hu[A1 + 0068];
-8005D4FC	nop
-8005D500	beq    v1, zero, L5d520 [$8005d520]
-8005D504	addiu  v1, v1, $ffff (=-$1)
-V0 = w[A1 + 0020];
-A0 = w[A1 + 0024];
-[A1 + 0068] = h(V1);
-V0 = V0 + A0;
-[A1 + 0020] = w(V0);
-A1 = w[0x80080a10];
-
-L5d520:	; 8005D520
-8005D520	nop
-V0 = h[A1 + 0066];
-V1 = hu[A1 + 0066];
-8005D52C	beq    v0, zero, L5d558 [$8005d558]
-8005D530	addiu  v1, v1, $ffff (=-$1)
-V0 = w[A1 + 0048];
-A0 = w[A1 + 004c];
-[A1 + 0066] = h(V1);
-V0 = V0 + A0;
-[A1 + 0048] = w(V0);
-V0 = w[S6 + 0008];
-V0 = V0 | 0080;
-if( S7 == 0 )
-{
-    [S6 + 0008] = w(V0);
-}
-
-L5d558:	; 8005D558
-A0 = w[0x80080a10];
-8005D55C	nop
-V0 = hu[A0 + 0074];
-8005D564	nop
-8005D568	beq    v0, zero, L5d5d4 [$8005d5d4]
-8005D56C	nop
-V0 = hu[A0 + 0076];
-V1 = hu[A0 + 0074];
-V0 = V0 + 0001;
-[A0 + 0076] = h(V0);
-V0 = V0 & ffff;
-8005D584	bne    v0, v1, L5d5d4 [$8005d5d4]
-8005D588	nop
-V0 = hu[A0 + 0072];
-V1 = hu[A0 + 0070];
-[A0 + 0076] = h(0);
-V0 = V0 + 0001;
-[A0 + 0072] = h(V0);
-V0 = V0 & ffff;
-8005D5A4	bne    v0, v1, L5d5d4 [$8005d5d4]
-8005D5A8	nop
-V0 = hu[A0 + 0078];
-[A0 + 0072] = h(0);
-V0 = V0 + 0001;
-8005D5B8	bne    s7, zero, L5d5ec [$8005d5ec]
-[A0 + 0078] = h(V0);
-V0 = w[S5 + 09b8];
-8005D5C4	nop
-8005D5C8	beq    v0, zero, L5d5d4 [$8005d5d4]
-8005D5CC	addiu  v0, v0, $ffff (=-$1)
-[S5 + 09b8] = w(V0);
-
-L5d5d4:	; 8005D5D4
-8005D5D4	bne    s7, zero, L5d5f0 [$8005d5f0]
-
-V0 = w[S5 + 09b8];
-8005D5E0	nop
-8005D5E4	bne    v0, zero, L5d450 [$8005d450]
-S2 = FP;
-
-L5d5ec:	; 8005D5EC
-L5d5f0:	; 8005D5F0
-V0 = w[80080a10];
-return w[V0 + 4];
-////////////////////////////////
 
 
 
@@ -6405,154 +5547,102 @@ if( V0 != 0 )
 ////////////////////////////////
 // system_sound_main()
 
-A0 = f2000002;
-func4bd2c();
+V0 = func4bd2c( 0xf2000002 );
 [SP + 10] = w(V0);
 
-[8007e3c8 + 4] = w(w[8007e3c8]);
+[0x8007e3cc] = w(w[0x8007e3c8]);
 
-A0 = -1;
-system_psyq_vsync();
+u32 frame_n = system_psyq_vsync( -1 ); // returns absolute time after program boot in vertical sync interval units
+[0x8007e3c8] = w(frame_n);
+u32 delta = frame_n - w[0x8007e3cc];
 
-V1 = w[8007e3c8 + 4];
-S6 = 1;
-S3 = V0 - V1;
-[8007e3c8] = w(V0);
-
-if( S3 != 0 )
+u32 update_n = 1;
+if( delta != 0 )
 {
-    if( S3 < 9 )
+    if( delta < 0x9 )
     {
-        V1 = w[8007e3d0];
-        S1 = S3 * 4;
-        V0 = S1 - V1;
-
-        if( V1 < S1 )
+        if( w[0x8007e3d0] < ( delta * 4 ) )
         {
-            S6 = V0 + S6;
+            update_n += delta * 4 - w[0x8007e3d0];
         }
-        V0 = V1 % S1;
-        [8007e3d0] = w(V0);
+        [0x8007e3d0] = w(w[0x8007e3d0] % (delta * 4));
     }
 }
 
-S4 = 80080a70;
-FP = 80083158;
+for( int i = update_n; i != 0; --i )
+{
+    [0x8007e3d0] = w(w[0x8007e3d0] + 0x1);
 
-L5d780:	; 8005D780
-    S6 = S6 - 1;
-    V0 = w[8007e3d0];
-    A0 = w[S4 + 000c];
-    V0 = V0 + 0001;
-    [8007e3d0] = w(V0);
-    V1 = w[80080a10];
-    V0 = hu[8006f320];
-    V1 = w[V1 + 0018];
-    V0 = V0 + 0001;
-    V1 = V1 | A0;
-    [8006f320] = h(V0);
-    8005D7AC	bne    v1, zero, L5d7d4 [$8005d7d4]
+    [0x8006f320] = h(hu[0x8006f320] + 0x1);
 
-    V0 = w[8007f790];
-    8005D7BC	beq    v0, zero, L5d854 [$8005d854]
+    V1 = w[0x80080a10];
+    V1 = w[V1 + 0x18] | w[0x80080a70 + 0xc];
 
-    V0 = w[V0 + 0018];
-    8005D7CC	beq    v0, zero, L5d7dc [$8005d7dc]
-
-
-    L5d7d4:	; 8005D7D4
-    func58f94();
-
-    L5d7dc:	; 8005D7DC
-    A0 = w[8007f790];
-    if( A0 != 0 )
+    if( ( V1 != 0 ) || ( ( w[0x8007f790] != 0 ) && ( w[V0 + 0x18] != 0 ) ) )
     {
-        V0 = w[A0 + 0004];
-        if( V0 == 0 )
+        func58f94(); // turn off needed key
+
+        A0 = w[0x8007f790];
+        if( A0 != 0 )
         {
-            [0x8007f790] = w(0);
-        }
-        else
-        {
-            A1 = w[0x80080a10];
-            V0 = w[A1 + 0004];
-            V1 = w[A1 + 001c];
-            V0 = V0 | V1;
-            if( V0 == 0 )
+            if( w[A0 + 0x4] == 0 )
             {
-                A2 = 7c;
-                func5ce04();
-
-                A0 = w[8007f71c];
-                A1 = 8007bd48;
-                A2 = 2680;
-                func5ce04();
-
-                V0 = w[0x8007f790];
                 [0x8007f790] = w(0);
-                [V0 + 0x6a] = h(0);
-                [V0 + 0x4] = w(0);
+            }
+            else
+            {
+                A1 = w[0x80080a10];
+                if( ( w[A1 + 0x4] | w[A1 + 0x1c] ) == 0 )
+                {
+                    system_akao_copy( w[0x8007f790], w[0x80080a10], 0x7c );
+                    system_akao_copy( w[0x8007f71c], 0x8007bd48, 0x2680 );
+
+                    V0 = w[0x8007f790];
+                    [0x8007f790] = w(0);
+                    [V0 + 0x6a] = h(0);
+                    [V0 + 0x4] = w(0);
+                }
             }
         }
     }
 
-    L5d854:	; 8005D854
-    V1 = w[80080a10];
-    V0 = w[FP + 0008];
-    V1 = w[V1 + 0014];
-    A0 = w[S4 + 0008];
-    V0 = V0 | V1;
-    V0 = V0 | A0;
-    8005D86C	bne    v0, zero, L5d894 [$8005d894]
-    8005D870	nop
-    V0 = w[8007f790];
-    8005D878	nop
-    8005D87C	beq    v0, zero, L5d89c [$8005d89c]
-    8005D880	nop
-    V0 = w[V0 + 0014];
-    8005D888	nop
-    8005D88C	beq    v0, zero, L5d89c [$8005d89c]
-    8005D890	nop
-
-    L5d894:	; 8005D894
-    func589f0(); // update voices
-
-    L5d89c:	; 8005D89C
-    V0 = w[80080a10];
-    if( w[V0 + 0004] != 0 )
+    V1 = w[0x80080a10];
+    V0 = w[0x8007f790];
+    if( ( w[0x80083158 + 0x8] | w[V1 + 0x14] | w[0x80080a70 + 0x8] ) || ( ( V0 != 0 ) && ( w[V0 + 0x14] != 0 ) ) )
     {
-        A0 = 8007bd48;
-        A1 = 0;
-        func5d384();
+        func589f0(); // update voices
     }
 
-    V1 = w[8007f790];
+    V0 = w[80080a10];
+    if( w[V0 + 0x4] != 0 )
+    {
+        func5d384( 0x8007bd48, 0 );
+    }
+
+    V1 = w[0x8007f790];
     if( V1 != 0 )
     {
-        V0 = w[V1 + 0004];
-        if( V0 != 0 )
+        if( w[V1 + 0x4] != 0 )
         {
-            A0 = w[8007f71c];
-            A1 = 0001;
-            [80080a10] = w(V1);
-            8005D8E8	jal    func5d384 [$8005d384]
+            [0x80080a10] = w(V1);
 
-            V0 = 8007f858;
-            [80080a10] = w(V0);
+            func5d384( w[0x8007f71c], 1 );
+
+            [80080a10] = w(0x8007f858);
         }
 
-        if( w[FP + 0004] & 0100 )
+        if( w[0x80083158 + 0x4] & 0x00000100 )
         {
-            if( ( hu[8006f320] &  3) == 0 )
+            if( ( hu[0x8006f320] & 0x0003 ) == 0 )
             {
-                A0 = w[8007f790];
-                A1 = w[8007f71c];
+                A0 = w[0x8007f790];
+                A1 = w[0x8007f71c];
                 func5d628();
 
-                V0 = w[8007f790];
-                if( w[V0 + 4] == 0 )
+                V0 = w[0x8007f790];
+                if( w[V0 + 0x4] == 0 )
                 {
-                    [FP + 4] = w(w[FP + 4] & fffffeff);
+                    [0x80083158 + 0x4] = w(w[0x80083158 + 0x4] & 0xfffffeff);
                 }
             }
         }
@@ -6561,13 +5651,12 @@ L5d780:	; 8005D780
     A0 = w[0x80080a70];
     if( A0 != 0 )
     {
-        V1 = hu[S4 + 0016];
-        V0 = w[S4 + 0018];
+        V1 = hu[0x80080a70 + 0x16];
+        V0 = w[0x80080a70 + 0x18];
         S3 = A0;
         V1 = V0 + V1;
-        8005D984	lui    v0, $ffff
-        V0 = V1 & V0;
-        [S4 + 0018] = w(V1);
+        V0 = V1 & 0xffff0000;
+        [0x80080a70 + 0x18] = w(V1);
 
         8005D98C	bne    v0, zero, L5d9ac [$8005d9ac]
 
@@ -6575,7 +5664,7 @@ L5d780:	; 8005D780
         8005D9A4	beq    v0, zero, L5da88 [$8005da88]
 
         L5d9ac:	; 8005D9AC
-        [S4 + 0018] = w(V1 & ffff);
+        [0x80080a70 + 0x18] = w(V1 & ffff);
 
         S1 = 0x0100;
         data_p = 0x8007e3d8;
@@ -6593,8 +5682,8 @@ L5d780:	; 8005D780
                     {
                         if( hu[data_p + 0x98] == 0 )
                         {
-                            [S4 + c] = w(w[S4 + c] | S1);
-                            [S4 + 8] = w(w[S4 + 8] & ~S1);
+                            [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S1);
+                            [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] & ~S1);
                         }
                     }
                     else
@@ -6618,29 +5707,25 @@ L5d780:	; 8005D780
     {
         func5cf04();
     }
+}
 
-8005DAA4	bne    s6, zero, L5d780 [$8005d780]
+func4bd2c( 0xf2000002 );
 
-A0 = f2000002;
-func4bd2c();
-
-T0 = w[SP + 0010];
+T0 = w[SP + 0x10];
 T0 = V0 - T0;
-if( T0 <= 0 ) T0 = T0 + 44e8;
+if( T0 <= 0 ) T0 = T0 + 0x44e8;
+[SP + 0x10] = w(T0);
 
-[SP + 0010] = w(T0);
-A0 = 8006f324;
-V0 = w[SP + 10];
-V1 = w[A0 + 4];
-A2 = w[A0 + 8];
-A3 = w[A0 + c];
+V1 = w[0x8006f324 + 0x4];
+A2 = w[0x8006f324 + 0x8];
+A3 = w[0x8006f324 + 0xc];
 
-[8006f31c] = w(V1 + A2 + A3 + V0);
+[8006f31c] = w(w[A0 + 0x4] + w[A0 + 0x8] + w[A0 + 0xc] + w[SP + 0x10]);
 
-[A0 + c] = w(V0);
-[8006f324] = w(V1);
-[A0 + 4] = w(A2);
-[A0 + 8] = w(A3);
+[0x8006f324 + 0xc] = w(w[SP + 0x10]);
+[0x8006f324 + 0x0] = w(V1);
+[0x8006f324 + 0x4] = w(A2);
+[0x8006f324 + 0x8] = w(A3);
 ////////////////////////////////
 
 
@@ -7329,44 +6414,44 @@ void func5e3fc( VoiceData* data, A1 )
     S2 = A1;
 
     loop5e43c:	; 8005E43C
-        A1 = w[data + 0];
-        S1 = bu[A1 + 0];
-        A1 = A1 + 1;
-        [data + 0] = w(A1);
+        A1 = w[data + 0x0];
+        S1 = bu[A1 + 0x0];
+        A1 = A1 + 0x1;
+        [data + 0x0] = w(A1);
 
         if( S1 >= 0xa0 )
         {
-            if( S1 == fe )
+            if( S1 == 0xfe )
             {
-                A2 = bu[A1 + 0];
-                [data + 0] = w(A1 + 1);
+                A2 = bu[A1 + 0x0];
+                [data + 0x0] = w(A1 + 0x1);
 
                 akao_fe_opcodes[ A2 ]( data, S2 );
             }
             else
             {
-                V1 = S1 - f0;
-                if( V1 < e )
+                V1 = S1 - 0xf0;
+                if( V1 < 0xe )
                 {
-                    S1 = V1 * b;
-                    V1 = bu[A1 + 0];
-                    [data + 0] = w(A1 + 1);
-                    [data + 96] = h(V1);
+                    S1 = V1 * 0xb;
+                    V1 = bu[A1 + 0x0];
+                    [data + 0x0] = w(A1 + 0x1);
+                    [data + 0x96] = h(V1);
                 }
                 else
                 {
-                    if( S1 == ff )
+                    if( S1 == 0xff )
                     {
-                        S1 = a0;
+                        S1 = 0xa0;
                     }
                     else
                     {
-                        if( S1 == ca )
+                        if( S1 == 0xca )
                         {
-                            if( w[data + 34] & 00200000 )
+                            if( w[data + 0x34] & 0x00200000 )
                             {
                                 S1 = a0;
-                                [80080a70 + c] = w(w[80080a70 + c] | S2);
+                                [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S2);
                             }
                         }
                     }
@@ -7376,13 +6461,13 @@ void func5e3fc( VoiceData* data, A1 )
             }
         }
 
-        [data + a0] = h(hu[data + a0] + 1);
-        V0 = S1 < a1;
+        [data + 0xa0] = h(hu[data + 0xa0] + 0x1);
+        V0 = S1 < 0xa1;
     8005E520	beq    v0, zero, loop5e43c [$8005e43c]
 
-    if( S1 == a0 )
+    if( S1 == 0xa0 )
     {
-        if( hu[data + 94] != 0 ) return;
+        if( hu[data + 0x94] != 0 ) return;
 
         V1 = w[0x80080a10];
         [V1 + 0x18] = w(w[V1 + 0x18] | S2);
@@ -7391,14 +6476,12 @@ void func5e3fc( VoiceData* data, A1 )
 
     A0 = data;
     func5db40();
+    A2 = V0 & 0xff;
 
-    A2 = V0 & 00ff;
-    V0 = h[data + fa];
-    V1 = hu[data + fa];
-    if( V0 != 0 )
+    if( h[data + 0xfa] != 0 )
     {
-        [data + 98] = h(V1);
-        [data + 96] = h(V1);
+        [data + 98] = h(hu[data + 0xfa]);
+        [data + 96] = h(hu[data + 0xfa]);
     }
 
     V0 = hu[data + 0x96];

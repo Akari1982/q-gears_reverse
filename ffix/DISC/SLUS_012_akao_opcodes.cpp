@@ -254,7 +254,7 @@ void system_akao_opcode_ac_noise_clock_freq( VoiceData* data, A1 )
         }
         else
         {
-            [0x80080a98] = h(bu[akao]);
+            [0x80080a70 + 0x28] = h(bu[akao]);
         }
     }
 

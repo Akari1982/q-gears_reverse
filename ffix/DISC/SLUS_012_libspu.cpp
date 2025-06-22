@@ -1335,53 +1335,53 @@ type_p = A0;
 
 
 
+void system_spu_key_on( u32 mask )
+{
+    // 1F801D88h - Voice 0..23 Key ON (Start Attack/Decay/Sustain) (KON) (W)
+    //   0-23  Voice 0..23 On  (0=No change, 1=Start Attack/Decay/Sustain)
+    //   24-31 Not used
+    // Starts the ADSR Envelope, and automatically initializes ADSR Volume to zero,
+    // and copies Voice Start Address to Voice Repeat Address.
+
+    [0x1f801d88] = h(mask);
+    [0x1f801d8a] = h(mask >> 0x10);
+}
+
+
+
+void system_spu_key_off( u32 mask )
+{
+    // 1F801D8Ch - Voice 0..23 Key OFF (Start Release) (KOFF) (W)
+    //   0-23  Voice 0..23 Off (0=No change, 1=Start Release)
+    //   24-31 Not used
+    // For a full ADSR pattern, OFF would be usually issued in the Sustain period,
+    // however, it can be issued at any time (eg. to abort Attack, skip the Decay and
+    // Sustain periods, and switch immediately to Release).
+
+    [0x1f801d8c] = h(mask);
+    [0x1f801d8e] = h(mask >> 0x10);
+}
+
+
+
+void system_spu_reverb_on( u32 mask )
+{
+    // 1F801D98h - Voice 0..23 Reverb mode aka Echo On (EON) (R/W)
+    //   0-23  Voice 0..23 Destination (0=To Mixer, 1=To Mixer and to Reverb)
+    //   24-31 Not used
+    // Sets reverb for the channel. As soon as the sample ends, the reverb for that
+    // channel is turned off... that's fine, but WHEN does it end?
+    // In Reverb mode, the voice seems to output BOTH normal (immediately) AND via
+    // Reverb (delayed).
+
+    [0x1f801d98] = h(mask);
+    [0x1f801d9a] = h(mask >> 0x10);
+}
+
+
+
 ////////////////////////////////
-// func575b4()
-// 1F801D88h - Voice 0..23 Key ON (Start Attack/Decay/Sustain) (KON) (W)
-//   0-23  Voice 0..23 On  (0=No change, 1=Start Attack/Decay/Sustain)
-//   24-31 Not used
-// Starts the ADSR Envelope, and automatically initializes ADSR Volume to zero,
-// and copies Voice Start Address to Voice Repeat Address.
-
-[1f801d88] = h(A0);
-[1f801d8a] = h(A0 >> 10);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func575d0()
-// 1F801D8Ch - Voice 0..23 Key OFF (Start Release) (KOFF) (W)
-//   0-23  Voice 0..23 Off (0=No change, 1=Start Release)
-//   24-31 Not used
-// For a full ADSR pattern, OFF would be usually issued in the Sustain period,
-// however, it can be issued at any time (eg. to abort Attack, skip the Decay and
-// Sustain periods, and switch immediately to Release).
-
-[1f801d8c] = h(A0);
-[1f801d8e] = h(A0 >> 10);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func575ec()
-// 1F801D98h - Voice 0..23 Reverb mode aka Echo On (EON) (R/W)
-//   0-23  Voice 0..23 Destination (0=To Mixer, 1=To Mixer and to Reverb)
-//   24-31 Not used
-// Sets reverb for the channel. As soon as the sample ends, the reverb for that
-// channel is turned off... that's fine, but WHEN does it end?
-// In Reverb mode, the voice seems to output BOTH normal (immediately) AND via
-// Reverb (delayed).
-
-[1f801d98] = h(A0);
-[1f801d9a] = h(A0 >> 10);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func57608()
+// system_spu_noise_on()
 // 1F801D94h - Voice 0..23 Noise mode enable (NON)
 //   0-23  Voice 0..23 Noise (0=ADPCM, 1=Noise)
 //   24-31 Not used
@@ -1393,7 +1393,7 @@ type_p = A0;
 
 
 ////////////////////////////////
-// func57624()
+// system_spu_pitch_mod_on()
 // 1F801D90h - Voice 0..23 Pitch Modulation Enable Flags (PMON)
 // Pitch modulation allows to generate "Frequency Sweep" effects by mis-using the
 // amplitude from channel (x-1) as pitch factor for channel (x).
