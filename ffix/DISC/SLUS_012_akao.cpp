@@ -5730,166 +5730,211 @@ A3 = w[0x8006f324 + 0xc];
 
 
 
-////////////////////////////////
-// func5db40()
+u8 func5db40( VoiceData* data )
+{
+    A1 = w[data + 0x0];
+    A2 = hu[data + 0xf4];
 
-8005DB40	lui    v0, $8007
-8005DB44	addiu  t2, v0, $f374 (=-$c8c)
-T1 = 800120c0;
-8005DB50	lui    v0, $8007
-8005DB54	addiu  t0, v0, $f3d4 (=-$c2c)
-A3 = 80012198;
-A1 = w[A0 + 0000];
-A2 = hu[A0 + 00f4];
+    loop5db68:	; 8005DB68
+        V1 = bu[A1 + 0x0];
+        if( V1 < 0x9a )
+        {
+            if( V1 >= 0x8f )
+            {
+                [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+            }
+            return bu[A1 + 0x0];
+        }
 
-loop5db68:	; 8005DB68
-V1 = bu[A1 + 0000];
-8005DB6C	nop
-V0 = V1 < 009a;
-8005DB74	beq    v0, zero, L5dba0 [$8005dba0]
-V0 = V1 < 008f;
-8005DB7C	bne    v0, zero, L5db94 [$8005db94]
-8005DB80	nop
-V0 = hu[A0 + 00cc];
-8005DB88	nop
-V0 = V0 & fffa;
-[A0 + 00cc] = h(V0);
+        if( V1 < 0xa0 ) return 0xa0;
 
-L5db94:	; 8005DB94
-V0 = bu[A1 + 0000];
+        V1 = bu[A1 + 0x0];
+        V0 = bu[0x8006f374 + V1 + 0xff60]; // 0x8007F2D4 or 0x8006F2D4
+        V1 = V1 - 0xc9
+        8005DBC0	bne    v0, zero, L5dcbc [$8005dcbc]
 
-loop5db98:	; 8005DB98
-8005DB98	jr     ra 
-8005DB9C	nop
+        V0 = V1 < 0036;
+        8005DBCC	beq    v0, zero, L5dd40 [$8005dd40]
 
-L5dba0:	; 8005DBA0
-V0 = V1 < 00a0;
-8005DBA4	bne    v0, zero, loop5db98 [$8005db98]
-V0 = 00a0;
-V1 = bu[A1 + 0000];
-8005DBB0	nop
-V0 = V1 + T2;
-V0 = bu[V0 + ff60];
-8005DBBC	nop
-8005DBC0	bne    v0, zero, L5dcbc [$8005dcbc]
-8005DBC4	addiu  v1, v1, $ff37 (=-$c9)
-V0 = V1 < 0036;
-8005DBCC	beq    v0, zero, L5dd40 [$8005dd40]
-V0 = V1 << 02;
-V0 = V0 + T1;
-V0 = w[V0 + 0000];
-8005DBDC	nop
-8005DBE0	jr     v0 
-8005DBE4	nop
-////////////////////////////////
-// func5dbe8
-8005DBE8	jr     ra 
-V0 = 0083;
-////////////////////////////////
-// func5dbf0
-8005DBF0	jr     ra 
-V0 = 0084;
-////////////////////////////////
-// func5dbf8
-8005DBF8	jr     ra 
-V0 = 008f;
-////////////////////////////////
-// func5dc00
-A1 = A1 + 0001;
-V1 = bu[A1 + 0000];
-8005DC08	nop
-V0 = V1 + T0;
-V0 = bu[V0 + 0000];
-8005DC14	nop
-8005DC18	bne    v0, zero, L5dcbc [$8005dcbc]
-8005DC1C	addiu  v1, v1, $fffa (=-$6)
-V0 = V1 < 000a;
-8005DC24	beq    v0, zero, loop5db68 [$8005db68]
-V0 = V1 << 02;
-V0 = V0 + A3;
-V0 = w[V0 + 0000];
-8005DC34	nop
-8005DC38	jr     v0 
-8005DC3C	nop
+        V0 = w[0x800120c0 + V1 * 4];
 
-A1 = A1 + 0001;
-V0 = A2 << 01;
-V0 = A0 + V0;
-V0 = hu[V0 + 00a2];
-V1 = bu[A1 + 0000];
-V0 = V0 + 0001;
-8005DC58	bne    v1, v0, L5dc70 [$8005dc70]
-8005DC5C	nop
-A1 = A1 + 0001;
-8005DC64	addiu  a2, a2, $ffff (=-$1)
-8005DC68	j      L5dca4 [$8005dca4]
-A2 = A2 & 0003;
+        8005DBE0	jr     v0 
+        8005DBE4	nop
 
-L5dc70:	; 8005DC70
-8005DC70	j      loop5db68 [$8005db68]
-A1 = A1 + 0003;
-8005DC78	j      L5dca4 [$8005dca4]
-A1 = A1 + 0001;
-A1 = A1 + 0001;
-V0 = w[80080a10];
-V1 = bu[A1 + 0000];
-V0 = hu[V0 + 006c];
-8005DC94	nop
-V0 = V0 < V1;
-8005DC9C	bne    v0, zero, L5dcc4 [$8005dcc4]
-A1 = A1 + 0001;
+        case 0x03:
+        case 0x05:
+        case 0x06:
+        case 0x07:
+        case 0x09:
+        case 0x0a:
+        case 0x0b:
+        case 0x0c:
+        case 0x0d:
+        case 0x0e:
+        case 0x0f:
+        case 0x10:
+        case 0x11:
+        case 0x12:
+        case 0x13:
+        case 0x14:
+        case 0x15:
+        case 0x16:
+        case 0x17:
+        case 0x18:
+        case 0x19:
+        case 0x1a:
+        case 0x1b:
+        case 0x1c:
+        case 0x1d:
+        case 0x1e:
+        case 0x1f:
+        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        {
+            [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+            return 0xa0;
+        }
 
-L5dca4:	; 8005DCA4
-V0 = bu[A1 + 0001];
-V1 = bu[A1 + 0000];
-V0 = V0 << 08;
-V1 = V1 + V0;
-V0 = V1 << 10;
-V0 = V0 >> 10;
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2a:
+        case 0x2b:
+        case 0x2c:
+        case 0x2d:
+        case 0x2e:
+        case 0x2f:
+        case 0x30:
+        case 0x31:
+        case 0x32: V0 = 0x83; return;
+        case 0x33: V0 = 0x84; return;
+        case 0x34: V0 = 0x8f; return;
 
-L5dcbc:	; 8005DCBC
-8005DCBC	j      loop5db68 [$8005db68]
-A1 = A1 + V0;
+        case 0x35:
+        {
+            A1 = A1 + 0001;
+            V1 = bu[A1 + 0000];
+            V0 = 0x8006f3d4 + V1;
+            V0 = bu[V0 + 0000];
+            8005DC14	nop
+            8005DC18	bne    v0, zero, L5dcbc [$8005dcbc]
+            8005DC1C	addiu  v1, v1, $fffa (=-$6)
+            V0 = V1 < 000a;
+            8005DC24	beq    v0, zero, loop5db68 [$8005db68]
 
-L5dcc4:	; 8005DCC4
-8005DCC4	j      loop5db68 [$8005db68]
-A1 = A1 + 0002;
-A1 = w[A0 + 0014];
-8005DCD0	j      loop5db68 [$8005db68]
-8005DCD4	nop
-A1 = A1 + 0001;
-V0 = A2 << 01;
-V0 = A0 + V0;
-V0 = hu[V0 + 00a2];
-V1 = bu[A1 + 0000];
-V0 = V0 + 0001;
-8005DCF0	bne    v1, v0, L5dd30 [$8005dd30]
-V0 = A2 << 02;
-A1 = A1 + 0001;
-8005DCFC	addiu  a2, a2, $ffff (=-$1)
-8005DD00	j      loop5db68 [$8005db68]
-A2 = A2 & 0003;
-V0 = hu[A0 + 00cc];
-A1 = A1 + 0001;
-V0 = V0 & fffa;
-8005DD14	j      loop5db68 [$8005db68]
-[A0 + 00cc] = h(V0);
-V0 = w[A0 + 0034];
-8005DD20	lui    v1, $0020
-V0 = V0 & V1;
-8005DD28	bne    v0, zero, L5dd40 [$8005dd40]
-V0 = A2 << 02;
+            V0 = w[0x80012198 + V1 * 4];
 
-L5dd30:	; 8005DD30
-V0 = A0 + V0;
-A1 = w[V0 + 0004];
-8005DD38	j      loop5db68 [$8005db68]
-8005DD3C	nop
+            8005DC38	jr     v0 
+            8005DC3C	nop
 
-L5dd40:	; 8005DD40
-[A0 + 0xcc] = h(hu[A0 + 0xcc] & 0xfffa);
-return 0xa0;
-////////////////////////////////
+            4 8005DB68
+            5 8005DB68
+            6 8005DB68
+            7 8005DB68
+            8005DC70	j      loop5db68 [$8005db68]
+
+            2 8005DC40
+            3 8005DC40
+            A1 = A1 + 0001;
+            V0 = A2 << 01;
+            V0 = data + V0;
+            V0 = hu[V0 + 00a2];
+            V1 = bu[A1 + 0000];
+            V0 = V0 + 0001;
+            8005DC58	bne    v1, v0, L5dc70 [$8005dc70]
+            8005DC5C	nop
+            A1 = A1 + 0001;
+            8005DC64	addiu  a2, a2, $ffff (=-$1)
+            8005DC68	j      L5dca4 [$8005dca4]
+            A2 = A2 & 0003;
+
+            L5dc70:	; 8005DC70
+            8005DC70	j      loop5db68 [$8005db68]
+            A1 = A1 + 0003;
+
+            0 8005DC78
+            8 8005DC78
+            A1 = A1 + 0001;
+            8005DC78	j      L5dca4 [$8005dca4]
+
+            1 8005DC80
+            A1 = A1 + 0001;
+            V0 = w[80080a10];
+            V1 = bu[A1 + 0000];
+            V0 = hu[V0 + 006c];
+            8005DC94	nop
+            V0 = V0 < V1;
+            A1 = A1 + 0001;
+            8005DC9C	bne    v0, zero, L5dcc4 [$8005dcc4]
+
+            L5dca4:	; 8005DCA4
+            V0 = h[A1 + 0];
+
+            L5dcbc:	; 8005DCBC
+            A1 = A1 + V0;
+            8005DCBC	j      loop5db68 [$8005db68]
+
+            L5dcc4:	; 8005DCC4
+            A1 = A1 + 0x2;
+            8005DCC4	j      loop5db68 [$8005db68]
+
+            9 8005DCCC
+            A1 = w[data + 0x14];
+            8005DCD0	j      loop5db68 [$8005db68]
+        }
+        break;
+
+        case 0x00:
+        {
+            A1 = A1 + 0001;
+            V0 = A2 << 01;
+            V0 = data + V0;
+            V0 = hu[V0 + 00a2];
+            V1 = bu[A1 + 0000];
+            V0 = V0 + 0001;
+            8005DCF0	bne    v1, v0, L5dd30 [$8005dd30]
+
+            A1 = A1 + 0001;
+            8005DCFC	addiu  a2, a2, $ffff (=-$1)
+            A2 = A2 & 0003;
+            8005DD00	j      loop5db68 [$8005db68]
+        }
+        break;
+
+        case 0x02:
+        case 0x04:
+        case 0x08:
+        {
+            A1 = A1 + 0x1;
+            [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+            8005DD14	j      loop5db68 [$8005db68]
+        }
+        break;
+
+        case 0x01:
+        {
+            if( w[data + 0x34] & 0x00200000 )
+            {
+                [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+                return 0xa0;
+            }
+
+            L5dd30:	; 8005DD30
+            A1 = w[data + A2 * 4 + 0x4];
+            8005DD38	j      loop5db68 [$8005db68]
+        }
+        break;
+    8005DD38	j      loop5db68 [$8005db68]
+
+    L5dd40:	; 8005DD40
+    [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+    return 0xa0;
+}
 
 
 
@@ -6257,13 +6302,13 @@ void func5e3fc( VoiceData* data, A1 )
 
     loop5e43c:	; 8005E43C
         A1 = w[data + 0x0];
-        S1 = bu[A1 + 0x0];
+        u8 opcode = bu[A1 + 0x0];
         A1 = A1 + 0x1;
         [data + 0x0] = w(A1);
 
-        if( S1 >= 0xa0 )
+        if( opcode >= 0xa0 )
         {
-            if( S1 == 0xfe )
+            if( opcode == 0xfe )
             {
                 A2 = bu[A1 + 0x0];
                 [data + 0x0] = w(A1 + 0x1);
@@ -6272,42 +6317,42 @@ void func5e3fc( VoiceData* data, A1 )
             }
             else
             {
-                V1 = S1 - 0xf0;
+                V1 = opcode - 0xf0;
                 if( V1 < 0xe )
                 {
-                    S1 = V1 * 0xb;
+                    opcode = V1 * 0xb;
                     V1 = bu[A1 + 0x0];
                     [data + 0x0] = w(A1 + 0x1);
                     [data + 0x96] = h(V1);
                 }
                 else
                 {
-                    if( S1 == 0xff )
+                    if( opcode == 0xff )
                     {
-                        S1 = 0xa0;
+                        opcode = 0xa0;
                     }
                     else
                     {
-                        if( S1 == 0xca )
+                        if( opcode == 0xca )
                         {
                             if( w[data + 0x34] & 0x00200000 )
                             {
-                                S1 = a0;
+                                opcode = 0xa0;
                                 [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S2);
                             }
                         }
                     }
 
-                    akao_opcodes[S1 - 0xa0]( data,  S2 );
+                    akao_opcodes[opcode - 0xa0]( data,  S2 );
                 }
             }
         }
 
         [data + 0xa0] = h(hu[data + 0xa0] + 0x1);
-        V0 = S1 < 0xa1;
+        V0 = opcode < 0xa1;
     8005E520	beq    v0, zero, loop5e43c [$8005e43c]
 
-    if( S1 == 0xa0 )
+    if( opcode == 0xa0 )
     {
         if( hu[data + 0x94] != 0 ) return;
 
@@ -6316,8 +6361,7 @@ void func5e3fc( VoiceData* data, A1 )
         return;
     }
 
-    A0 = data;
-    func5db40();
+    func5db40( data );
     A2 = V0 & 0xff;
 
     if( h[data + 0xfa] != 0 )
@@ -6329,7 +6373,7 @@ void func5e3fc( VoiceData* data, A1 )
     V0 = hu[data + 0x96];
     if( V0 == 0 )
     {
-        V0 = S1 - ((S1 / 0xb) / 8) * 0xb;
+        V0 = opcode - ((opcode / 0xb) / 8) * 0xb;
         V1 = hu[0x8006f3f4 + V0 * 2];
         [data + 0x96] = h(V1);
 
@@ -6362,7 +6406,7 @@ void func5e3fc( VoiceData* data, A1 )
     [data + 0xf8] = h(hu[data + 0x96]);
     [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_ADSR_RR);
 
-    if( S1 >= 0x8f )
+    if( opcode >= 0x8f )
     {
         if( hu[data + 0x94] == 0 )
         {
@@ -6383,9 +6427,9 @@ void func5e3fc( VoiceData* data, A1 )
         return;
     }
 
-    if( S1 < 0x84 )
+    if( opcode < 0x84 )
     {
-        S1 = ((S1 / 0xb) / 8) + (hu[data + 0xc4] * c);
+        S1 = ((opcode / 0xb) / 8) + (hu[data + 0xc4] * c);
 
         if( w[data + 0x34] & 0x00000008 )
         {
