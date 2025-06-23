@@ -485,14 +485,16 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 
 8007f71c pointer to some voices array.
 
-0x8007f790 pointer to some data.. Size 0x7c.
+0x8007f790 pointer to some data. Size 0x7c.
     + 3c [][][][] reverb related.
     + 40 [][][][] noise related.
     + 44 [][][][] pitch modulation related.
 
-8007f970 array with instruments data
+0x8007f970 array with instruments data
     + 0 [][][][] addr (waveform data start address).
     + 4 [][][][] loop_addr (loop start address).
+    + 8 [][]     lowest key???.
+    + a [][]     highest key???.
     + c [][]     adsr1.
     + e [][]     adsr2.
 
