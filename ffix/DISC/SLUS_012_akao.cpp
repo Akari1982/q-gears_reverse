@@ -5730,16 +5730,17 @@ A3 = w[0x8006f324 + 0xc];
 
 
 
-u8 func5db40( VoiceData* data )
+u8 system_akao_get_next_note( VoiceData* data )
 {
     akao = w[data + 0x0];
-    A2 = hu[data + 0xf4];
+    u16 loop_nest = hu[data + 0xf4];
 
-    loop5db68:	; 8005DB68
-        V1 = bu[akao];
-        if( V1 < 0x9a ) // usual note
+    while( true )
+    {
+        opcode = bu[akao];
+        if( opcode < 0x9a ) // usual note
         {
-            if( V1 >= 0x8f )
+            if( opcode >= 0x8f )
             {
                 [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
             }
@@ -5747,205 +5748,188 @@ u8 func5db40( VoiceData* data )
         }
 
         // unimplemented
-        if( V1 < 0xa0 ) return 0xa0;
+        if( opcode < 0xa0 ) return 0xa0;
 
-        V1 = bu[akao];
-        V0 = bu[0x8006f374 + V1 + 0xff60]; // 0x8007F2D4 or 0x8006F2D4
-        V1 = V1 - 0xc9
-        8005DBC0	bne    v0, zero, L5dcbc [$8005dcbc]
+        u8 op_size[] = { 0x00, 0x02, 0x02, 0x02, 0x03, 0x02, 0x01, 0x01, 0x02, 0x03, 0x02, 0x03, 0x02, 0x02, 0x02, 0x02,
+                         0x03, 0x02, 0x02, 0x01, 0x04, 0x02, 0x01, 0x02, 0x04, 0x02, 0x01, 0x02, 0x03, 0x02, 0x01, 0x02,
+                         0x02, 0x02, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x02,
+                         0x01, 0x00, 0x02, 0x02, 0x01, 0x01, 0x01, 0x01, 0x02, 0x02, 0x02, 0x00, 0x02, 0x03, 0x03, 0x03,
+                         0x01, 0x02, 0x01, 0x00, 0x03, 0x03, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+        u8 size = op_size[opcode - 0xa0];
 
-        V0 = V1 < 0036;
-        if( V0 == 0 )
+        if( size != 0 )
         {
-            [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
-            return 0xa0;
+            akao += size;
         }
-
-        V0 = w[0x800120c0 + V1 * 4];
-
-        8005DBE0	jr     v0 
-        8005DBE4	nop
-
-        case 0x03:
-        case 0x05:
-        case 0x06:
-        case 0x07:
-        case 0x09:
-        case 0x0a:
-        case 0x0b:
-        case 0x0c:
-        case 0x0d:
-        case 0x0e:
-        case 0x0f:
-        case 0x10:
-        case 0x11:
-        case 0x12:
-        case 0x13:
-        case 0x14:
-        case 0x15:
-        case 0x16:
-        case 0x17:
-        case 0x18:
-        case 0x19:
-        case 0x1a:
-        case 0x1b:
-        case 0x1c:
-        case 0x1d:
-        case 0x1e:
-        case 0x1f:
-        case 0x20:
-        case 0x21:
-        case 0x22:
-        case 0x23:
-        case 0x24:
-        case 0x25:
-        case 0x26:
+        else
         {
-            [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
-            return 0xa0;
-        }
-
-        case 0x27:
-        case 0x28:
-        case 0x29:
-        case 0x2a:
-        case 0x2b:
-        case 0x2c:
-        case 0x2d:
-        case 0x2e:
-        case 0x2f:
-        case 0x30:
-        case 0x31:
-        case 0x32: V0 = 0x83; return;
-        case 0x33: V0 = 0x84; return;
-        case 0x34: V0 = 0x8f; return;
-
-        case 0x35:
-        {
-            akao += 0x1;
-            V1 = bu[akao + 0000];
-            V0 = 0x8006f3d4 + V1;
-            V0 = bu[V0 + 0000];
-            V1 = V1 - 1;
-            8005DC18	bne    v0, zero, L5dcbc [$8005dcbc]
-
-            V0 = V1 < 000a;
-            8005DC24	beq    v0, zero, loop5db68 [$8005db68]
-
-            V0 = w[0x80012198 + V1 * 4];
-
-            8005DC38	jr     v0 
-            8005DC3C	nop
-
-            case 0x4:
-            case 0x5:
-            case 0x6:
-            case 0x7:
+            switch( opcode )
             {
-                8005DC70	j      loop5db68 [$8005db68]
-            }
-            break;
 
-            case 0x2:
-            case 0x3:
-            {
-                akao += 0x1;
-                V0 = A2 << 0x1;
-                V0 = data + V0;
-                V0 = hu[V0 + 0xa2];
-                V1 = bu[akao];
-                V0 = V0 + 0001;
-                if( V1 == V0 )
+                case 0xc9: // loop_return_times
                 {
                     akao += 0x1;
-                    A2 -= 0x1;
-                    A2 = A2 & 0x3;
-                    8005DC68	j      L5dca4 [$8005dca4]
+                    V0 = hu[data + 0xa2 + A2 * 2] + 1;
+                    if( bu[akao] != V0 )
+                    {
+                        akao = w[data + 0x4 + A2 * 4];
+                    }
+                    else
+                    {
+                        akao += 0x1;
+                        A2 = (A2 - 1) & 0x3;
+                    }
                 }
+                break;
 
-                akao += 0x3;
-                8005DC70	j      loop5db68 [$8005db68]
-            }
-            break;
-
-            case 0x0:
-            case 0x8:
-            {
-                akao += 0x1;
-                8005DC78	j      L5dca4 [$8005dca4]
-            }
-            break;
-
-            case 0x1:
-            {
-                akao += 0x1;
-                V0 = w[0x80080a10];
-                V1 = bu[akao];
-                akao += 0x1;
-                if( hu[V0 + 0x6c] >= V1 )
+                case 0xca: // loop_return
                 {
-                    L5dca4:	; 8005DCA4
-                    V0 = h[akao];
+                    if( w[data + 0x34] & 0x00200000 )
+                    {
+                        [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+                        return 0xa0;
+                    }
 
-                    L5dcbc:	; 8005DCBC
-                    akao += V0;
-                    8005DCBC	j      loop5db68 [$8005db68]
+                    akao = w[data + 0x4 + A2 * 4];
+                }
+                break;
+
+                case 0xcb: // sfx_reset
+                case 0xcd: // legato_off
+                case 0xd1: // full_length_off
+                {
+                    akao += 0x1;
+                    [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+                }
+                break;
+
+                case 0xa0:
+                case 0xcc:
+                case 0xce:
+                case 0xcf:
+                case 0xd0:
+                case 0xd2:
+                case 0xd3:
+                case 0xd4:
+                case 0xd5:
+                case 0xd6:
+                case 0xd7:
+                case 0xd8:
+                case 0xd9:
+                case 0xda:
+                case 0xdb:
+                case 0xdc:
+                case 0xdd:
+                case 0xde:
+                case 0xdf:
+                case 0xe0:
+                case 0xe1:
+                case 0xe2:
+                case 0xe3:
+                case 0xe4:
+                case 0xe5:
+                case 0xe6:
+                case 0xe7:
+                case 0xe8:
+                case 0xe9:
+                case 0xea:
+                case 0xeb:
+                case 0xec:
+                case 0xed:
+                case 0xee:
+                case 0xef:
+                case 0xff:
+                {
+                    [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+                    return 0xa0;
                 }
 
-                akao += 0x2;
-                8005DCC4	j      loop5db68 [$8005db68]
+                case 0xf0:
+                case 0xf1:
+                case 0xf2:
+                case 0xf3:
+                case 0xf4:
+                case 0xf5:
+                case 0xf6:
+                case 0xf7:
+                case 0xf8:
+                case 0xf9:
+                case 0xfa:
+                case 0xfb: return 0x83;
+                case 0xfc: return 0x84;
+                case 0xfd: return 0x8f;
+
+                case 0xfe:
+                {
+                    akao += 0x1;
+                    fe_op = bu[akao];
+
+                    u8 fe_op_size[] = { 0x03, 0x04, 0x03, 0x04, 0x01, 0x01, 0x00, 0x00, 0x00, 0x00, 0x02, 0x05, 0x00, 0x00, 0x00, 0x00,
+                                        0x02, 0x01, 0x03, 0x00, 0x02, 0x03, 0x03, 0x00, 0x00, 0x04, 0x01, 0x01, 0x02, 0x01, 0x01, 0x00 };
+                    size = fe_op_size[fe_op];
+
+                    if( size != 0 )
+                    {
+                        akao += size;
+                    }
+                    else
+                    {
+                        switch( fe_op )
+                        {
+                            case 0x8:
+                            case 0x9:
+                            {
+                                akao += 0x1;
+                                if( bu[akao] == ( hu[data + 0xa2 + loop_nest * 2] + 1 ) )
+                                {
+                                    loop_nest = (loop_nest - 1) & 0x3;
+                                    akao += 0x1;
+                                    akao += h[akao];
+                                }
+                                else
+                                {
+                                    akao += 0x3;
+                                }
+                            }
+                            break;
+
+                            case 0x6:
+                            case 0xe:
+                            {
+                                akao += 0x1;
+                                akao += h[akao];
+                            }
+                            break;
+
+                            case 0x7:
+                            {
+                                akao += 0x1;
+                                V0 = w[0x80080a10];
+                                if( hu[V0 + 0x6c] >= bu[akao] )
+                                {
+                                    akao += 0x1;
+                                    akao += h[akao];
+                                }
+                                else
+                                {
+                                    akao += 0x3;
+                                }
+                            }
+                            break;
+
+                            case 0xf:
+                            {
+                                akao = w[data + 0x14];
+                            }
+                            break;
+                        }
+                    }
+                }
+                break;
             }
-            break;
-
-            case 0x9:
-            {
-                akao = w[data + 0x14];
-                8005DCD0	j      loop5db68 [$8005db68]
-            }
-            break;
         }
-        break;
-
-        case 0x00:
-        {
-            akao += 0x1;
-            V0 = hu[data + 0xa2 + A2 * 2] + 1;
-            if( bu[akao] != V0 )
-            {
-                akao = w[data + A2 * 4 + 0x4];
-                8005DD38	j      loop5db68 [$8005db68]
-            }
-
-            akao += 0x1;
-            A2 -= 0x1;
-            A2 = A2 & 0x3;
-            8005DD00	j      loop5db68 [$8005db68]
-        }
-        break;
-
-        case 0x02:
-        case 0x04:
-        case 0x08:
-        {
-            akao += 0x1;
-            [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
-            8005DD14	j      loop5db68 [$8005db68]
-        }
-        break;
-
-        case 0x01:
-        {
-            if( w[data + 0x34] & 0x00200000 )
-            {
-                [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
-                return 0xa0;
-            }
-
-            akao = w[data + A2 * 4 + 0x4];
-            8005DD38	j      loop5db68 [$8005db68]
-        }
-        break;
-    8005DD38	j      loop5db68 [$8005db68]
+    }
 }
 
 
@@ -6373,8 +6357,7 @@ void func5e3fc( VoiceData* data, A1 )
         return;
     }
 
-    func5db40( data );
-    A2 = V0 & 0xff;
+    u8 next_note = system_akao_get_next_note( data );
 
     if( h[data + 0xfa] != 0 )
     {
@@ -6382,14 +6365,13 @@ void func5e3fc( VoiceData* data, A1 )
         [data + 96] = h(hu[data + 0xfa]);
     }
 
-    V0 = hu[data + 0x96];
-    if( V0 == 0 )
+    if( hu[data + 0x96] == 0 )
     {
         V0 = opcode - ((opcode / 0xb) / 8) * 0xb;
         V1 = hu[0x8006f3f4 + V0 * 2];
         [data + 0x96] = h(V1);
 
-        if( ( A2 - 0x84 ) >= 0xb )
+        if( ( next_note - 0x84 ) >= 0xb )
         {
             if( ( hu[data + 0xcc] & 0x5 ) == 0 )
             {
@@ -6398,11 +6380,11 @@ void func5e3fc( VoiceData* data, A1 )
         }
         [data + 0x98] = h(V1);
     }
-    else if( A2 >= 0x8f )
+    else if( next_note >= 0x8f )
     {
         [data + 0x98] = h(hu[data + 0x98] - 2);
     }
-    else if( ( A2 < 0x84 ) && ( ( hu[data + 0xcc] & 0x5 ) == 0 ) )
+    else if( ( next_note < 0x84 ) && ( ( hu[data + 0xcc] & 0x5 ) == 0 ) )
     {
         [data + 0x98] = h(hu[data + 0x98] - 2);
     }
@@ -6435,203 +6417,203 @@ void func5e3fc( VoiceData* data, A1 )
         [data + 0xca] = h(0);
         [data + 0x110] = h(0);
         [data + 0x112] = h(0);
-
-        return;
     }
-
-    if( opcode < 0x84 )
+    else
     {
-        S1 = ((opcode / 0xb) / 8) + (hu[data + 0xc4] * c);
+        if( opcode < 0x84 )
+        {
+            S1 = ((opcode / 0xb) / 8) + (hu[data + 0xc4] * c);
 
-        if( w[data + 0x34] & 0x00000008 )
-        {
-            A2 = func5e170( data, S2, S1 );
-        }
-        else
-        {
-            if( ( hu[data + 0xcc] & 0x2 ) == 0 )
+            if( w[data + 0x34] & 0x00000008 )
             {
-                if( hu[data + 0x94] == 0 )
+                A2 = func5e170( data, S2, S1 );
+            }
+            else
+            {
+                if( ( hu[data + 0xcc] & 0x2 ) == 0 )
                 {
-                    if( V1 & 0x1000 )
+                    if( hu[data + 0x94] == 0 )
                     {
-                        func5dd7c( data, S1 );
-                    }
-
-                    A0 = w[0x80080a10];
-                    [A0 + 0x10] = w(w[A0 + 0x10] | S2);
-
-                    if( w[A0 + 0x14] & S2 )
-                    {
-                        if( w[data + 0x118] < 0x18 )
+                        if( V1 & 0x1000 )
                         {
-                            [A0 + 0x18] = w(w[A0 + 0x18] | S2);
+                            func5dd7c( data, S1 );
+                        }
+
+                        A0 = w[0x80080a10];
+                        [A0 + 0x10] = w(w[A0 + 0x10] | S2);
+
+                        if( w[A0 + 0x14] & S2 )
+                        {
+                            if( w[data + 0x118] < 0x18 )
+                            {
+                                [A0 + 0x18] = w(w[A0 + 0x18] | S2);
+                            }
+                        }
+
+                        if( hu[data + 0xba] != 0 )
+                        {
+                            [data + 0xb8] = h(hu[data + 0xba]);
+                            [data + 0x78] = w(w[data + 0x8c]);
+                            [data + 0x7c] = w(w[data + 0x90]);
                         }
                     }
-
-                    if( hu[data + 0xba] != 0 )
+                    else
                     {
-                        [data + 0xb8] = h(hu[data + 0xba]);
-                        [data + 0x78] = w(w[data + 0x8c]);
-                        [data + 0x7c] = w(w[data + 0x90]);
+                        [0x80080a70 + 0x4] = w(w[0x80080a70 + 0x4] | S2);
+                    }
+
+                    [data + 0xc2] = h(0);
+                }
+
+                if( ( hu[data + 0xca] != 0 ) && ( hu[data + 0xc8] != 0 ) )
+                {
+                    [data + 0xc6] = h(V1);
+                    [data + 0x10a] = h(hu[data + 0xc8] - hu[data + 0x106] + hu[data + 0x10e]);
+                    [data + 0x10c] = h(hu[data + 0x106] + S1 - hu[data + 0xc8] - hu[data + 0x10e]);
+                    S1 = hu[data + 0xc8] + h[data + 0x10e];
+                }
+                else
+                {
+                    [data + 0x10a] = h(S1);
+                    S1 += h[data + 0x106];
+                }
+
+                A0 = 0x8007f970 + hu[data + 0x9a] * 10; // instrument data
+                A1 = S1;
+                A2 = h[data + 0x108];
+                A3 = data + 0x84;
+                func5dfe0();
+
+                V1 = hu[data + 0xf6];
+                A2 = V0;
+                if( V1 != 0 )
+                {
+                    V0 = V1;
+                    V1 = A2 * V0;
+                    A0 = V1 >> 0x8;
+                    V1 = w[0x8008314c];
+                    [SP + 0x10] = w(A0);
+                    A0 = A0 * bu[0x8006f440 + V1];
+                    [SP + 0x10] = w(A0);
+                    V0 = bu[0x8006f440 + V1];
+                    if( V0 & 0x80 )
+                    {
+                        V0 = A0 >> 0x9;
+                        [SP + 0x10] = w(V0);
+                        A2 = A2 - V0;
+                    }
+                    else
+                    {
+                        V0 = A0 >> 07;
+                        [SP + 0x10] = w(V0);
+                        A2 = A2 + V0;
                     }
                 }
-                else
-                {
-                    [0x80080a70 + 0x4] = w(w[0x80080a70 + 0x4] | S2);
-                }
-
-                [data + 0xc2] = h(0);
             }
 
-            if( ( hu[data + 0xca] != 0 ) && ( hu[data + 0xc8] != 0 ) )
+            [data + 0x2c] = w(A2);
+
+            if( hu[data + 0x94] == 0 )
             {
-                [data + 0xc6] = h(V1);
-                [data + 0x10a] = h(hu[data + 0xc8] - hu[data + 0x106] + hu[data + 0x10e]);
-                [data + 0x10c] = h(hu[data + 0x106] + S1 - hu[data + 0xc8] - hu[data + 0x10e]);
-                S1 = hu[data + 0xc8] + h[data + 0x10e];
+                V1 = w[0x80080a10];
+                [V1 + 0x14] = w(w[V1 + 0x14] | S2);
             }
             else
             {
-                [data + 0x10a] = h(S1);
-                S1 += h[data + 0x106];
+                [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] | S2);
             }
 
-            A0 = 0x8007f970 + hu[data + 0x9a] * 10; // instrument data
-            A1 = S1;
+            [data + 0x11c] = w(w[data + 0x11c] | 0x00000013);
+
+            S1 = w[data + 0x34];
+            if( S1 & 0x00000001 )
+            {
+                V0 = hu[data + 0xd6];
+                V1 = V0 & 0x7f00;
+                V0 = V0 & 0x8000;
+                V1 = V1 >> 0x8;
+                if( V0 == 0 )
+                {
+                    V0 = A2 << 0x4;
+                    V0 = V0 - A2;
+                    V0 = V0 >> 0x8;
+                    T0 = V1 * V0;
+                }
+                else
+                {
+                    T0 = V1 * A2;
+                }
+
+                V1 = T0 >> 0x7;
+                V0 = hu[data + 0xcc];
+                V0 = V0 & 0x2;
+                [data + 0xd4] = h(V1);
+                if( V0 == 0 )
+                {
+                    V0 = w[data + 0x3c] >> 0xc;
+                    V1 = 0x1000000 / V0;
+                    V0 = hu[data + 0xce];
+                    [data + 0x44] = w(0);
+                    [data + 0xd0] = h(V0);
+                    [data + 0x48] = w(V1);
+                }
+            }
+
+            if( S1 & 2 )
+            {
+                V0 = hu[data + 0xcc];
+                V0 = V0 & 0x2;
+                if( V0 == 0 )
+                {
+                    V0 = w[data + 0x4c];
+                    V0 = V0 >> 0xc;
+                    V1 = 0x1000000 / V0;
+                    V0 = hu[data + 0xdc];
+                    [data + 0x54] = w(0);
+                    [data + 0xde] = h(V0);
+                    [data + 0x58] = w(V1);
+                }
+            }
+
+            [data + 0x110] = h(0);
+            [data + 0x112] = h(0);
+            [data + 0x30] = w(0);
+        }
+
+        V0 = hu[data + 0xcc];
+        A1 = hu[data + 0x10c];
+        V1 = V0 & 0xfffd;
+        V0 = V0 & 0x1;
+        V0 = V0 << 0x1;
+        V1 = V1 | V0;
+        [data + 0xcc] = h(V1);
+
+        if( h[data + 010c] != 0 )
+        {
+            [data + 0x10a] = h(hu[data + 0x10a] + A1);
+
+            A0 = 0x8007f970 + hu[data + 0x9a] * 0x10;
+            A1 = ((hu[data + 0x10a] << 0x10) >> 0x10) + h[data + 0x106];
             A2 = h[data + 0x108];
-            A3 = data + 0x84;
+            A3 = SP + 0x10;
             func5dfe0();
 
-            V1 = hu[data + 0xf6];
-            A2 = V0;
-            if( V1 != 0 )
-            {
-                V0 = V1;
-                V1 = A2 * V0;
-                A0 = V1 >> 0x8;
-                V1 = w[0x8008314c];
-                [SP + 0x10] = w(A0);
-                A0 = A0 * bu[0x8006f440 + V1];
-                [SP + 0x10] = w(A0);
-                V0 = bu[0x8006f440 + V1];
-                if( V0 & 0x80 )
-                {
-                    V0 = A0 >> 0x9;
-                    [SP + 0x10] = w(V0);
-                    A2 = A2 - V0;
-                }
-                else
-                {
-                    V0 = A0 >> 07;
-                    [SP + 0x10] = w(V0);
-                    A2 = A2 + V0;
-                }
-            }
+            A2 = V0 << 10;
+            V1 = hu[data + 0xc6];
+            V0 = w[data + 0x2c];
+            [data + 0xc2] = h(V1);
+            V1 = w[data + 0x30];
+            V0 = V0 << 0x10;
+            V0 = V0 + V1;
+            V1 = hu[data + 0xc2];
+            V0 = A2 - V0;
+            [data + 0x10c] = h(0);
+            [data + 0x80] = w(V0 / V1);
         }
 
-        [data + 0x2c] = w(A2);
-
-        if( hu[data + 0x94] == 0 )
-        {
-            V1 = w[0x80080a10];
-            [V1 + 0x14] = w(w[V1 + 0x14] | S2);
-        }
-        else
-        {
-            [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] | S2);
-        }
-
-        [data + 0x11c] = w(w[data + 0x11c] | 0x00000013);
-
-        S1 = w[data + 0x34];
-        if( S1 & 0x00000001 )
-        {
-            V0 = hu[data + 0xd6];
-            V1 = V0 & 0x7f00;
-            V0 = V0 & 0x8000;
-            V1 = V1 >> 0x8;
-            if( V0 == 0 )
-            {
-                V0 = A2 << 0x4;
-                V0 = V0 - A2;
-                V0 = V0 >> 0x8;
-                T0 = V1 * V0;
-            }
-            else
-            {
-                T0 = V1 * A2;
-            }
-
-            V1 = T0 >> 0x7;
-            V0 = hu[data + 0xcc];
-            V0 = V0 & 0x2;
-            [data + 0xd4] = h(V1);
-            if( V0 == 0 )
-            {
-                V0 = w[data + 0x3c] >> 0xc;
-                V1 = 0x1000000 / V0;
-                V0 = hu[data + 0xce];
-                [data + 0x44] = w(0);
-                [data + 0xd0] = h(V0);
-                [data + 0x48] = w(V1);
-            }
-        }
-
-        if( S1 & 2 )
-        {
-            V0 = hu[data + 0xcc];
-            V0 = V0 & 0x2;
-            if( V0 == 0 )
-            {
-                V0 = w[data + 0x4c];
-                V0 = V0 >> 0xc;
-                V1 = 0x1000000 / V0;
-                V0 = hu[data + 0xdc];
-                [data + 0x54] = w(0);
-                [data + 0xde] = h(V0);
-                [data + 0x58] = w(V1);
-            }
-        }
-
-        [data + 0x110] = h(0);
-        [data + 0x112] = h(0);
-        [data + 0x30] = w(0);
+        [data + 0xc8] = h(hu[data + 0x10a]);
+        [data + 0x10e] = h(hu[data + 0x106]);
     }
-
-    V0 = hu[data + 0xcc];
-    A1 = hu[data + 0x10c];
-    V1 = V0 & 0xfffd;
-    V0 = V0 & 0x1;
-    V0 = V0 << 0x1;
-    V1 = V1 | V0;
-    [data + 0xcc] = h(V1);
-
-    if( h[data + 010c] != 0 )
-    {
-        [data + 0x10a] = h(hu[data + 0x10a] + A1);
-
-        A0 = 0x8007f970 + hu[data + 0x9a] * 0x10;
-        A1 = ((hu[data + 0x10a] << 0x10) >> 0x10) + h[data + 0x106];
-        A2 = h[data + 0x108];
-        A3 = SP + 0x10;
-        func5dfe0();
-
-        A2 = V0 << 10;
-        V1 = hu[data + 0xc6];
-        V0 = w[data + 0x2c];
-        [data + 0xc2] = h(V1);
-        V1 = w[data + 0x30];
-        V0 = V0 << 0x10;
-        V0 = V0 + V1;
-        V1 = hu[data + 0xc2];
-        V0 = A2 - V0;
-        [data + 0x10c] = h(0);
-        [data + 0x80] = w(V0 / V1);
-    }
-
-    [data + 0xc8] = h(hu[data + 0x10a]);
-    [data + 0x10e] = h(hu[data + 0x106]);
 }
 
 

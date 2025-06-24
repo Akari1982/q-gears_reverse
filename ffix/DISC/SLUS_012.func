@@ -1293,7 +1293,7 @@
 8005D384 func5d384
 8005D628 func5d628
 8005D6BC system_sound_main
-8005DB40 func5db40
+8005DB40 system_akao_get_next_note
 8005DBE8 func5dbe8
 8005DBF0 func5dbf0
 8005DBF8 func5dbf8

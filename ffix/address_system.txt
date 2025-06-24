@@ -373,6 +373,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 8007e3d8 array of channel structs (0x134 size)
 8007e3d8 + f * 134 = 8007f5e4
     +   0 [][][][] akao pointer.
+    +   4 array of akao pointers for loop times for nested loops (0x4 size 0x4 items).
     +  14 [][][][] stored akao pattern return pointer.
     +  18 [][][][] ???
     +  1c [][][][] vibrato update callback.
