@@ -855,7 +855,7 @@ system_psyq_spu_get_reverb_mode_type();
 A0 = w[800736a4];
 system_psyq_spu_clear_reverb_work_area();
 
-func551f0(); // init game sound system and system_sound_main()
+func551f0(); // init game sound system and system_akao_main()
 
 A0 = 800736a4;
 system_psyq_spu_get_reverb_mode_type();

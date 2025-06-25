@@ -1,4 +1,4 @@
-typedef void (*AkaoOpcode) ( VoiceData* data, A1 );
+typedef void (*AkaoOpcode) ( VoiceData* data, u32 channel_mask );
 
 AkaoOpcode akao_opcodes[] =
 {
@@ -41,14 +41,14 @@ AkaoOpcode akao_fe_opcodes[] =
     system_akao_opcode_fe_1c,                        system_akao_opcode_fe_1d_reserved_voice_on,    system_akao_opcode_fe_1e_reserved_voice_off,       system_akao_opcode_null
 };
 
-void system_akao_opcode_null( VoiceData* data, A1 )
+void system_akao_opcode_null( VoiceData* data, u32 channel_mask )
 {
-    system_akao_opcode_a0_finish_channel( data, A1 );
+    system_akao_opcode_a0_finish_channel( data, channel_mask );
 }
 
 
 
-void system_akao_opcode_a0_finish_channel( VoiceData* data, A1 )
+void system_akao_opcode_a0_finish_channel( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
@@ -73,7 +73,7 @@ void system_akao_opcode_a0_finish_channel( VoiceData* data, A1 )
     }
     else
     {
-        func5ec20( data, A1 );
+        func5ec20( data, channel_mask );
     }
 
     [data + 0x34] = w(0);
@@ -82,7 +82,7 @@ void system_akao_opcode_a0_finish_channel( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a1_load_instrument( VoiceData* data, A1 )
+void system_akao_opcode_a1_load_instrument( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -106,7 +106,7 @@ void system_akao_opcode_a1_load_instrument( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a2_next_note_length( VoiceData* data, A1 )
+void system_akao_opcode_a2_next_note_length( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -120,7 +120,7 @@ void system_akao_opcode_a2_next_note_length( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a3_master_volume( VoiceData* data, A1 )
+void system_akao_opcode_a3_master_volume( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -131,7 +131,7 @@ void system_akao_opcode_a3_master_volume( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a4_pitch_bend_slide( VoiceData* data, A1 )
+void system_akao_opcode_a4_pitch_bend_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -147,7 +147,7 @@ void system_akao_opcode_a4_pitch_bend_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a5_set_octave( VoiceData* data, A1 )
+void system_akao_opcode_a5_set_octave( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -156,21 +156,21 @@ void system_akao_opcode_a5_set_octave( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a6_increase_octave( VoiceData* data, A1 )
+void system_akao_opcode_a6_increase_octave( VoiceData* data, u32 channel_mask )
 {
     [data + 0xc4] = h((hu[data + 0xc4] + 0x1) & 0xf);
 }
 
 
 
-void system_akao_opcode_a7_discrease_octave( VoiceData* data, A1 )
+void system_akao_opcode_a7_discrease_octave( VoiceData* data, u32 channel_mask )
 {
     [data + 0xc4] = h((hu[data + 0xc4] - 0x1) & 0xf);
 }
 
 
 
-void system_akao_opcode_a8_set_volume( VoiceData* data, A1 )
+void system_akao_opcode_a8_set_volume( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -182,7 +182,7 @@ void system_akao_opcode_a8_set_volume( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_a9_set_volume_slide( VoiceData* data, A1 )
+void system_akao_opcode_a9_set_volume_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -200,7 +200,7 @@ void system_akao_opcode_a9_set_volume_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_aa_set_pan( VoiceData* data, A1 )
+void system_akao_opcode_aa_set_pan( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -211,7 +211,7 @@ void system_akao_opcode_aa_set_pan( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_ab_set_pan_slide( VoiceData* data, A1 )
+void system_akao_opcode_ab_set_pan_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -228,7 +228,7 @@ void system_akao_opcode_ab_set_pan_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_ac_noise_clock_freq( VoiceData* data, A1 )
+void system_akao_opcode_ac_noise_clock_freq( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -263,7 +263,7 @@ void system_akao_opcode_ac_noise_clock_freq( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_ad_set_ar( VoiceData* data, A1 )
+void system_akao_opcode_ad_set_ar( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -274,7 +274,7 @@ void system_akao_opcode_ad_set_ar( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_ae_set_dr( VoiceData* data, A1 )
+void system_akao_opcode_ae_set_dr( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -284,7 +284,7 @@ void system_akao_opcode_ae_set_dr( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_af_set_sl( VoiceData* data, A1 )
+void system_akao_opcode_af_set_sl( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -302,7 +302,7 @@ void system_akao_opcode_b0_set_voice_dr_sl( VoiceData* data, S1 )
 
 
 
-void system_akao_opcode_b1_set_sr( VoiceData* data, A1 )
+void system_akao_opcode_b1_set_sr( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -313,7 +313,7 @@ void system_akao_opcode_b1_set_sr( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b2_set_rr( VoiceData* data, A1 )
+void system_akao_opcode_b2_set_rr( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -324,7 +324,7 @@ void system_akao_opcode_b2_set_rr( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b3_reset_adsr( VoiceData* data, A1 )
+void system_akao_opcode_b3_reset_adsr( VoiceData* data, u32 channel_mask )
 {
     intsr_id = hu[data + 0x9a];
     [data + 0x34] = w(w[data + 0x34] & (0xe6ffffff));
@@ -343,7 +343,7 @@ void system_akao_opcode_b3_reset_adsr( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b4_vibrato( VoiceData* data, A1 )
+void system_akao_opcode_b4_vibrato( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00000001);
 
@@ -394,7 +394,7 @@ void system_akao_opcode_b4_vibrato( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b5_vibrato_depth( VoiceData* data, A1 )
+void system_akao_opcode_b5_vibrato_depth( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -423,7 +423,7 @@ void system_akao_opcode_b5_vibrato_depth( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b6_vibrato_off( VoiceData* data, A1 )
+void system_akao_opcode_b6_vibrato_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0x110] = h(0);
     [data + 0x34] = w(w[data + 0x34] & 0xfffffffe);
@@ -432,7 +432,7 @@ void system_akao_opcode_b6_vibrato_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b7_attack_mode( VoiceData* data, A1 )
+void system_akao_opcode_b7_attack_mode( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -445,7 +445,7 @@ void system_akao_opcode_b7_attack_mode( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_b8_tremolo( VoiceData* data, A1 )
+void system_akao_opcode_b8_tremolo( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00000002);
 
@@ -477,7 +477,7 @@ void system_akao_opcode_b8_tremolo( VoiceData* data, A1 )
 }
 
 
-void system_akao_opcode_b9_tremolo_depth( VoiceData* data, A1 )
+void system_akao_opcode_b9_tremolo_depth( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -485,7 +485,7 @@ void system_akao_opcode_b9_tremolo_depth( VoiceData* data, A1 )
 }
 
 
-void system_akao_opcode_ba_tremolo_off( VoiceData* data, A1 )
+void system_akao_opcode_ba_tremolo_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] & 0xfffffffd);
     [data + 0x112] = h(0);
@@ -494,7 +494,7 @@ void system_akao_opcode_ba_tremolo_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_bb_sustain_mode( VoiceData* data, A1 )
+void system_akao_opcode_bb_sustain_mode( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -510,7 +510,7 @@ void system_akao_opcode_bb_sustain_mode( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_bc_pan_lfo( VoiceData* data, A1 )
+void system_akao_opcode_bc_pan_lfo( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00000004);
 
@@ -529,7 +529,7 @@ void system_akao_opcode_bc_pan_lfo( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_bd_pan_lfo_depth( VoiceData* data, A1 )
+void system_akao_opcode_bd_pan_lfo_depth( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -538,7 +538,7 @@ void system_akao_opcode_bd_pan_lfo_depth( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_be_pan_lfo_off( VoiceData* data, A1 )
+void system_akao_opcode_be_pan_lfo_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] & fffffffb);
     [data + 0x114] = h(0);
@@ -547,7 +547,7 @@ void system_akao_opcode_be_pan_lfo_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_bf_release_mode( VoiceData* data, A1 )
+void system_akao_opcode_bf_release_mode( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -559,7 +559,7 @@ void system_akao_opcode_bf_release_mode( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c0_transpose_absolute( VoiceData* data, A1 )
+void system_akao_opcode_c0_transpose_absolute( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -568,7 +568,7 @@ void system_akao_opcode_c0_transpose_absolute( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c1_transpose_relative( VoiceData* data, A1 )
+void system_akao_opcode_c1_transpose_relative( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -577,17 +577,17 @@ void system_akao_opcode_c1_transpose_relative( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c2_reverb_on( VoiceData* data, A1 )
+void system_akao_opcode_c2_reverb_on( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
         V1 = w[0x80080a10];
-        [V1 + 0x40] = w(w[V1 + 0x40] | A1);
+        [V1 + 0x40] = w(w[V1 + 0x40] | channel_mask);
     }
     else
     {
         V1 = ;
-        [0x80080a70 + 0x20] = w(w[0x80080a70 + 0x20] | A1);
+        [0x80080a70 + 0x20] = w(w[0x80080a70 + 0x20] | channel_mask);
     }
 
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100);
@@ -595,16 +595,16 @@ void system_akao_opcode_c2_reverb_on( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c3_reverb_off( VoiceData* data, A1 )
+void system_akao_opcode_c3_reverb_off( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
         A0 = w[0x80080a10];
-        [A0 + 0x40] = w(w[A0 + 0x40] & ~A1);
+        [A0 + 0x40] = w(w[A0 + 0x40] & ~channel_mask);
     }
     else
     {
-        [0x80080a70 + 0x20] = w(w[0x80080a70 + 0x20] & ~A1);
+        [0x80080a70 + 0x20] = w(w[0x80080a70 + 0x20] & ~channel_mask);
     }
 
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100);
@@ -612,16 +612,16 @@ void system_akao_opcode_c3_reverb_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c4_noise_on( VoiceData* data, A1 )
+void system_akao_opcode_c4_noise_on( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
         V1 = w[0x80080a10];
-        [V1 + 0x3c] = w(w[V1 + 0x3c] | A1);
+        [V1 + 0x3c] = w(w[V1 + 0x3c] | channel_mask);
     }
     else
     {
-        [0x80080a70 + 0x1c] = w(w[0x80080a70 + 0x1c] | A1);
+        [0x80080a70 + 0x1c] = w(w[0x80080a70 + 0x1c] | channel_mask);
     }
 
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000110);
@@ -629,16 +629,16 @@ void system_akao_opcode_c4_noise_on( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c5_noise_off( VoiceData* data, A1 )
+void system_akao_opcode_c5_noise_off( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
         A0 = w[0x80080a10];
-        [A0 + 0x3c] = w(w[A0 + 0x3c] & ~A1);
+        [A0 + 0x3c] = w(w[A0 + 0x3c] & ~channel_mask);
     }
     else
     {
-        [0x80080a70 + 0x1c] = w(w[0x80080a70 + 0x1c] & ~A1);
+        [0x80080a70 + 0x1c] = w(w[0x80080a70 + 0x1c] & ~channel_mask);
     }
 
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000110);
@@ -647,18 +647,18 @@ void system_akao_opcode_c5_noise_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c6_frequency_modulation_on( VoiceData* data, A1 )
+void system_akao_opcode_c6_frequency_modulation_on( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
         V1 = w[0x80080a10];
-        [V1 + 0x44] = w(w[V1 + 0x44] | A1);
+        [V1 + 0x44] = w(w[V1 + 0x44] | channel_mask);
     }
     else
     {
         if( w[data + 0x34] & 0x00010000 )
         {
-            [0x80080a70 + 0x24] = w(w[0x80080a70 + 0x24] | A1);
+            [0x80080a70 + 0x24] = w(w[0x80080a70 + 0x24] | channel_mask);
         }
     }
 
@@ -667,16 +667,16 @@ void system_akao_opcode_c6_frequency_modulation_on( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c7_frequency_modulation_off( VoiceData* data, A1 )
+void system_akao_opcode_c7_frequency_modulation_off( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] == 0 )
     {
         A0 = w[0x80080a10];
-        [A0 + 0x44] = w(w[A0 + 0x44] & ~A1);
+        [A0 + 0x44] = w(w[A0 + 0x44] & ~channel_mask);
     }
     else
     {
-        [0x80080a70 + 0x24] = w(w[0x80080a70 + 0x24] & ~A1);
+        [0x80080a70 + 0x24] = w(w[0x80080a70 + 0x24] & ~channel_mask);
     }
 
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100);
@@ -685,7 +685,7 @@ void system_akao_opcode_c7_frequency_modulation_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c8_loop_point( VoiceData* data, A1 )
+void system_akao_opcode_c8_loop_point( VoiceData* data, u32 channel_mask )
 {
     [data + 0xf4] = h((hu[data + 0xf4] + 0x1) & 0x3);
 
@@ -697,7 +697,7 @@ void system_akao_opcode_c8_loop_point( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_c9_loop_return_times( VoiceData* data, A1 )
+void system_akao_opcode_c9_loop_return_times( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -722,7 +722,7 @@ void system_akao_opcode_c9_loop_return_times( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_ca_loop_return( VoiceData* data, A1 )
+void system_akao_opcode_ca_loop_return( VoiceData* data, u32 channel_mask )
 {
     V1 = hu[data + 0xf4];
 
@@ -733,33 +733,33 @@ void system_akao_opcode_ca_loop_return( VoiceData* data, A1 )
 }
 
 
-void system_akao_opcode_cb_sfx_reset( VoiceData* data, A1 )
+void system_akao_opcode_cb_sfx_reset( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] & 0xffffffc8);
 
-    system_akao_opcode_c5_noise_off( data, A1 );
-    system_akao_opcode_c7_frequency_modulation_off( data, A1 );
-    system_akao_opcode_c3_reverb_off( data, A1 );
+    system_akao_opcode_c5_noise_off( data, channel_mask );
+    system_akao_opcode_c7_frequency_modulation_off( data, channel_mask );
+    system_akao_opcode_c3_reverb_off( data, channel_mask );
 
     [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
 }
 
 
 
-void system_akao_opcode_cc_legato_on( VoiceData* data, A1 )
+void system_akao_opcode_cc_legato_on( VoiceData* data, u32 channel_mask )
 {
     [data + 0xcc] = h(0x1);
 }
 
 
 
-void system_akao_opcode_cd_legato_off( VoiceData* data, A1 )
+void system_akao_opcode_cd_legato_off( VoiceData* data, u32 channel_mask )
 {
 }
 
 
 
-void system_akao_opcode_ce_noise_switch( VoiceData* data, A1 )
+void system_akao_opcode_ce_noise_switch( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -775,12 +775,12 @@ void system_akao_opcode_ce_noise_switch( VoiceData* data, A1 )
         [data + 0xf0] = h(0x101);
     }
 
-    system_akao_opcode_c4_noise_on( data, A1 );
+    system_akao_opcode_c4_noise_on( data, channel_mask );
 }
 
 
 
-void system_akao_opcode_cf_noise_switch( VoiceData* data, A1 )
+void system_akao_opcode_cf_noise_switch( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(V0 + 0x1);
@@ -799,20 +799,20 @@ void system_akao_opcode_cf_noise_switch( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_d0_full_length_on( VoiceData* data, A1 )
+void system_akao_opcode_d0_full_length_on( VoiceData* data, u32 channel_mask )
 {
     if( hu[data + 0x94] != 0 ) [data + 0xcc] = h(0x4);
 }
 
 
 
-void system_akao_opcode_d1_full_length_off( VoiceData* data, A1 )
+void system_akao_opcode_d1_full_length_off( VoiceData* data, u32 channel_mask )
 {
 }
 
 
 
-void system_akao_opcode_d2_frequency_modulation_switch( VoiceData* data, A1 )
+void system_akao_opcode_d2_frequency_modulation_switch( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -828,11 +828,11 @@ void system_akao_opcode_d2_frequency_modulation_switch( VoiceData* data, A1 )
         [data + 0xf2] = h(0x101);
     }
 
-    system_akao_opcode_c6_frequency_modulation_on( data, A1 );
+    system_akao_opcode_c6_frequency_modulation_on( data, channel_mask );
 }
 
 
-void system_akao_opcode_d3_frequency_modulation_switch( VoiceData* data, A1 )
+void system_akao_opcode_d3_frequency_modulation_switch( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -851,35 +851,35 @@ void system_akao_opcode_d3_frequency_modulation_switch( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_d4_side_chain_playback_on( VoiceData* data, A1 )
+void system_akao_opcode_d4_side_chain_playback_on( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00000010);
 }
 
 
 
-void system_akao_opcode_d5_side_chain_playback_off( VoiceData* data, A1 )
+void system_akao_opcode_d5_side_chain_playback_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] & 0xffffffef);
 }
 
 
 
-void system_akao_opcode_d6_side_chain_pitch_vol_on( VoiceData* data, A1 )
+void system_akao_opcode_d6_side_chain_pitch_vol_on( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00000020);
 }
 
 
 
-void system_akao_opcode_d7_side_chain_pitch_vol_off( VoiceData* data, A1 )
+void system_akao_opcode_d7_side_chain_pitch_vol_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] & 0xffffffdf);
 }
 
 
 
-void system_akao_opcode_d8_fine_tuning_absolute( VoiceData* data, A1 )
+void system_akao_opcode_d8_fine_tuning_absolute( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -906,7 +906,7 @@ void system_akao_opcode_d8_fine_tuning_absolute( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_d9_fine_tuning_relative( VoiceData* data, A1 )
+void system_akao_opcode_d9_fine_tuning_relative( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -936,7 +936,7 @@ void system_akao_opcode_d9_fine_tuning_relative( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_da_portamento_on( VoiceData* data, A1 )
+void system_akao_opcode_da_portamento_on( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -952,14 +952,14 @@ void system_akao_opcode_da_portamento_on( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_db_portamento_off( VoiceData* data, A1 )
+void system_akao_opcode_db_portamento_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0xca] = h(0);
 }
 
 
 
-void system_akao_opcode_dc_fix_note_length( VoiceData* data, A1 )
+void system_akao_opcode_dc_fix_note_length( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -982,7 +982,7 @@ void system_akao_opcode_dc_fix_note_length( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_dd_vibrato_depth_slide( VoiceData* data, A1 )
+void system_akao_opcode_dd_vibrato_depth_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -997,7 +997,7 @@ void system_akao_opcode_dd_vibrato_depth_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_de_tremolo_depth_slide( VoiceData* data, A1 )
+void system_akao_opcode_de_tremolo_depth_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1012,7 +1012,7 @@ void system_akao_opcode_de_tremolo_depth_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_df_pan_lfo_depth_slide( VoiceData* data, A1 )
+void system_akao_opcode_df_pan_lfo_depth_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1027,14 +1027,14 @@ void system_akao_opcode_df_pan_lfo_depth_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_e0( VoiceData* data, A1 )
+void system_akao_opcode_e0( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00100000);
 }
 
 
 
-void system_akao_opcode_e1( VoiceData* data, A1 )
+void system_akao_opcode_e1( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -1043,14 +1043,14 @@ void system_akao_opcode_e1( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_e2( VoiceData* data, A1 )
+void system_akao_opcode_e2( VoiceData* data, u32 channel_mask )
 {
     [data + 0xf6] = h(0);
 }
 
 
 
-void system_akao_opcode_e4_vibrato_rate_slide( VoiceData* data, A1 )
+void system_akao_opcode_e4_vibrato_rate_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1067,7 +1067,7 @@ void system_akao_opcode_e4_vibrato_rate_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_e5_tremolo_rate_slide( VoiceData* data, A1 )
+void system_akao_opcode_e5_tremolo_rate_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1084,7 +1084,7 @@ void system_akao_opcode_e5_tremolo_rate_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_e6_pan_lfo_rate_slide( VoiceData* data, A1 )
+void system_akao_opcode_e6_pan_lfo_rate_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1126,7 +1126,7 @@ int func5eb40( A0, A1, A2, A3 )
 
 
 
-void system_akao_opcode_fe_00_tempo( VoiceData* data, A1 )
+void system_akao_opcode_fe_00_tempo( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1138,7 +1138,7 @@ void system_akao_opcode_fe_00_tempo( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_01_tempo_slide( VoiceData* data, A1 )
+void system_akao_opcode_fe_01_tempo_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x3);
@@ -1155,7 +1155,7 @@ void system_akao_opcode_fe_01_tempo_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_02_reverb_depth( VoiceData* data, A1 )
+void system_akao_opcode_fe_02_reverb_depth( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1168,7 +1168,7 @@ void system_akao_opcode_fe_02_reverb_depth( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_03_reverb_depth_slide( VoiceData* data, A1 )
+void system_akao_opcode_fe_03_reverb_depth_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x3);
@@ -1185,7 +1185,7 @@ void system_akao_opcode_fe_03_reverb_depth_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_04_drum_mode_on( VoiceData* data, A1 )
+void system_akao_opcode_fe_04_drum_mode_on( VoiceData* data, u32 channel_mask )
 {
     V0 = w[0x80080a10];
     if( w[V0 + 0x34] != 0 )
@@ -1196,7 +1196,7 @@ void system_akao_opcode_fe_04_drum_mode_on( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_05_drum_mode_off( VoiceData* data, A1 )
+void system_akao_opcode_fe_05_drum_mode_off( VoiceData* data, u32 channel_mask )
 {
     [data + 0x12e] = h(0);
     [data + 0x34] = w(w[data + 0x34] & 0xfffffff7);
@@ -1204,7 +1204,7 @@ void system_akao_opcode_fe_05_drum_mode_off( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_06_jump( VoiceData* data, A1 )
+void system_akao_opcode_fe_06_jump( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + h[akao]);
@@ -1212,7 +1212,7 @@ void system_akao_opcode_fe_06_jump( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_07_jump_conditional( VoiceData* data, A1 )
+void system_akao_opcode_fe_07_jump_conditional( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
 
@@ -1229,7 +1229,7 @@ void system_akao_opcode_fe_07_jump_conditional( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_08_loop_jump_times( VoiceData* data, A1 )
+void system_akao_opcode_fe_08_loop_jump_times( VoiceData* data, u32 channel_mask )
 {
     akao = w[A0 + 0x0];
     times = bu[akao + 0x0];
@@ -1248,7 +1248,7 @@ void system_akao_opcode_fe_08_loop_jump_times( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_09_loop_break_times( VoiceData* data, A1 )
+void system_akao_opcode_fe_09_loop_break_times( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     times = bu[akao + 0x0];
@@ -1268,7 +1268,7 @@ void system_akao_opcode_fe_09_loop_break_times( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_0a_load_instrument( VoiceData* data, A1 )
+void system_akao_opcode_fe_0a_load_instrument( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -1285,7 +1285,7 @@ void system_akao_opcode_fe_0a_load_instrument( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_0b( VoiceData* data, A1 )
+void system_akao_opcode_fe_0b( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     V0 = hu[akao + 0x0];
@@ -1322,7 +1322,7 @@ void system_akao_opcode_fe_0b( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_0e_pattern_jump( VoiceData* data, A1 )
+void system_akao_opcode_fe_0e_pattern_jump( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x14] = w(akao + 0x2);
@@ -1332,14 +1332,14 @@ void system_akao_opcode_fe_0e_pattern_jump( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_0f_pattern_return( VoiceData* data, A1 )
+void system_akao_opcode_fe_0f_pattern_return( VoiceData* data, u32 channel_mask )
 {
     [data + 0x0] = w(w[data + 0x14]);
 }
 
 
 
-void system_akao_opcode_fe_10_reserved_voice_alloc( VoiceData* data, A1 )
+void system_akao_opcode_fe_10_reserved_voice_alloc( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0];
     [data + 0x0] = w(akao + 0x1);
@@ -1350,7 +1350,7 @@ void system_akao_opcode_fe_10_reserved_voice_alloc( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_11_reserved_voice_free( VoiceData* data, A1 )
+void system_akao_opcode_fe_11_reserved_voice_free( VoiceData* data, u32 channel_mask )
 {
     V0 = w[80080a10];
     [V0 + 0x38] = w(0x0);
@@ -1358,7 +1358,7 @@ void system_akao_opcode_fe_11_reserved_voice_free( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_12_master_volume_slide( VoiceData* data, A1 )
+void system_akao_opcode_fe_12_master_volume_slide( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1373,7 +1373,7 @@ void system_akao_opcode_fe_12_master_volume_slide( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_14_load_custom_instrument( VoiceData* data, A1 )
+void system_akao_opcode_fe_14_load_custom_instrument( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
@@ -1400,7 +1400,7 @@ void system_akao_opcode_fe_14_load_custom_instrument( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_15_time_signature( VoiceData* data, A1 )
+void system_akao_opcode_fe_15_time_signature( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1414,7 +1414,7 @@ void system_akao_opcode_fe_15_time_signature( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_16_measure_number( VoiceData* data, A1 )
+void system_akao_opcode_fe_16_measure_number( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x2);
@@ -1425,7 +1425,7 @@ void system_akao_opcode_fe_16_measure_number( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_19_volume_slide_on( VoiceData* data, A1 )
+void system_akao_opcode_fe_19_volume_slide_on( VoiceData* data, u32 channel_mask )
 {
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x3);
@@ -1441,37 +1441,37 @@ void system_akao_opcode_fe_19_volume_slide_on( VoiceData* data, A1 )
 
 
 
-void system_akao_opcode_fe_1a( VoiceData* data, A1 )
+void system_akao_opcode_fe_1a( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] | 0x00000040);
 }
 
 
 
-void system_akao_opcode_fe_1b( VoiceData* data, A1 )
+void system_akao_opcode_fe_1b( VoiceData* data, u32 channel_mask )
 {
     [data + 0x34] = w(w[data + 0x34] & 0xffffffbf);
 }
 
 
 
-void system_akao_opcode_fe_1c( VoiceData* data, A1 )
+void system_akao_opcode_fe_1c( VoiceData* data, u32 channel_mask )
 {
     [data + 0x0] = w(w[data + 0x0] + 0x1);
 }
 
 
 
-void system_akao_opcode_fe_1d_reserved_voice_on( VoiceData* data, A1 )
+void system_akao_opcode_fe_1d_reserved_voice_on( VoiceData* data, u32 channel_mask )
 {
     V1 = w[80080a10];
-    [V1 + 0x8] = w(w[V1 + 0x8] | A1);
+    [V1 + 0x8] = w(w[V1 + 0x8] | channel_mask);
 }
 
 
 
-void system_akao_opcode_fe_1e_reserved_voice_off( VoiceData* data, A1 )
+void system_akao_opcode_fe_1e_reserved_voice_off( VoiceData* data, u32 channel_mask )
 {
     V1 = w[0x80080a10];
-    [V1 + 0x8] = w(w[V1 + 0x8] & ~A1);
+    [V1 + 0x8] = w(w[V1 + 0x8] & ~channel_mask);
 }

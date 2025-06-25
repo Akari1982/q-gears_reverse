@@ -1292,7 +1292,7 @@
 8005CF04 func5cf04
 8005D384 func5d384
 8005D628 func5d628
-8005D6BC system_sound_main
+8005D6BC system_akao_main
 8005DB40 system_akao_get_next_note
 8005DBE8 func5dbe8
 8005DBF0 func5dbf0
@@ -1302,7 +1302,7 @@
 8005DD7C func5dd7c
 8005DFE0 func5dfe0
 8005E170 func5e170
-8005E3FC func5e3fc
+8005E3FC system_akao_execute_sequence
 8005EB40 func5eb40
 8005EBB4 system_akao_init_voice_instrument
 8005EBE8 system_akao_load_instrument

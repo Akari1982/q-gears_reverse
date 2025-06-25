@@ -5404,41 +5404,38 @@ u32 func5d384( VoiceData* data, A1 )
 
         L5d450:	; 8005D450
             S2 = data;
-            S1 = 0x1;
+            u32 channel_mask = 0x1;
             V0 = w[0x80080a10];
             S0 = S2 + 0096;
             S3 = w[V0 + 0004];
 
             loop5d460:	; 8005D460
-                if( S3 & S1 )
+                if( S3 & channel_mask )
                 {
                     [S0 + 0x0] = h(hu[S0 + 0x0] - 1);
                     [S0 + 0x2] = h(hu[S0 + 0x2] - 1);
 
                     if( hu[S0 + 0x0] == 0 )
                     {
-                        func5e3fc( S2, S1 ); // update akao
+                        system_akao_execute_sequence( S2, channel_mask );
                     }
                     else
                     {
                         if( hu[S0 + 0x2] == 0 )
                         {
                             V1 = w[0x80080a10];
-                            [V1 + 0x18] = w(w[V1 + 0x18] | S1);
+                            [V1 + 0x18] = w(w[V1 + 0x18] | channel_mask);
                         }
                     }
 
-                    A0 = S2;
-                    A1 = S1;
-                    A2 = 0;
-                    8005D4D0	jal    func579b4 [$800579b4]
+                    func579b4( S2, channel_mask, 0 );
 
-                    S3 = S3 & ~S1;
+                    S3 &= ~channel_mask;
                 }
 
                 S0 = S0 + 0x134;
                 S2 = S2 + 0x134;
-                S1 = S1 << 0x1;
+                channel_mask <<= 0x1;
             8005D4E8	bne    s3, zero, loop5d460 [$8005d460]
 
             A1 = w[0x80080a10];
@@ -5544,189 +5541,179 @@ if( V0 != 0 )
 
 
 
-////////////////////////////////
-// system_sound_main()
-
-V0 = func4bd2c( 0xf2000002 );
-[SP + 10] = w(V0);
-
-[0x8007e3cc] = w(w[0x8007e3c8]);
-
-u32 frame_n = system_psyq_vsync( -1 ); // returns absolute time after program boot in vertical sync interval units
-[0x8007e3c8] = w(frame_n);
-u32 delta = frame_n - w[0x8007e3cc];
-
-u32 update_n = 1;
-if( delta != 0 )
+void system_akao_main()
 {
-    if( delta < 0x9 )
+    V0 = func4bd2c( 0xf2000002 );
+    [SP + 10] = w(V0);
+
+    [0x8007e3cc] = w(w[0x8007e3c8]);
+
+    u32 frame_n = system_psyq_vsync( -1 ); // returns absolute time after program boot in vertical sync interval units
+    [0x8007e3c8] = w(frame_n);
+    u32 delta = frame_n - w[0x8007e3cc];
+
+    u32 update_n = 1;
+    if( delta != 0 )
     {
-        if( w[0x8007e3d0] < ( delta * 4 ) )
+        if( delta < 0x9 )
         {
-            update_n += delta * 4 - w[0x8007e3d0];
-        }
-        [0x8007e3d0] = w(w[0x8007e3d0] % (delta * 4));
-    }
-}
-
-for( int i = update_n; i != 0; --i )
-{
-    [0x8007e3d0] = w(w[0x8007e3d0] + 0x1);
-
-    [0x8006f320] = h(hu[0x8006f320] + 0x1);
-
-    V1 = w[0x80080a10];
-    V1 = w[V1 + 0x18] | w[0x80080a70 + 0xc];
-
-    if( ( V1 != 0 ) || ( ( w[0x8007f790] != 0 ) && ( w[V0 + 0x18] != 0 ) ) )
-    {
-        func58f94(); // turn off needed key
-
-        A0 = w[0x8007f790];
-        if( A0 != 0 )
-        {
-            if( w[A0 + 0x4] == 0 )
+            if( w[0x8007e3d0] < ( delta * 4 ) )
             {
-                [0x8007f790] = w(0);
+                update_n += delta * 4 - w[0x8007e3d0];
             }
-            else
+            [0x8007e3d0] = w(w[0x8007e3d0] % (delta * 4));
+        }
+    }
+
+    for( int i = update_n; i != 0; --i )
+    {
+        [0x8007e3d0] = w(w[0x8007e3d0] + 0x1);
+
+        [0x8006f320] = h(hu[0x8006f320] + 0x1);
+
+        V1 = w[0x80080a10];
+        V1 = w[V1 + 0x18] | w[0x80080a70 + 0xc];
+
+        if( ( V1 != 0 ) || ( ( w[0x8007f790] != 0 ) && ( w[V0 + 0x18] != 0 ) ) )
+        {
+            func58f94(); // turn off needed key
+
+            A0 = w[0x8007f790];
+            if( A0 != 0 )
             {
-                A1 = w[0x80080a10];
-                if( ( w[A1 + 0x4] | w[A1 + 0x1c] ) == 0 )
+                if( w[A0 + 0x4] == 0 )
                 {
-                    system_akao_copy( w[0x8007f790], w[0x80080a10], 0x7c );
-                    system_akao_copy( w[0x8007f71c], 0x8007bd48, 0x2680 );
+                    [0x8007f790] = w(0);
+                }
+                else
+                {
+                    A1 = w[0x80080a10];
+                    if( ( w[A1 + 0x4] | w[A1 + 0x1c] ) == 0 )
+                    {
+                        system_akao_copy( w[0x8007f790], w[0x80080a10], 0x7c );
+                        system_akao_copy( w[0x8007f71c], 0x8007bd48, 0x2680 );
+
+                        V0 = w[0x8007f790];
+                        [0x8007f790] = w(0);
+                        [V0 + 0x6a] = h(0);
+                        [V0 + 0x4] = w(0);
+                    }
+                }
+            }
+        }
+
+        V1 = w[0x80080a10];
+        V0 = w[0x8007f790];
+        if( ( w[0x80083158 + 0x8] | w[V1 + 0x14] | w[0x80080a70 + 0x8] ) || ( ( V0 != 0 ) && ( w[V0 + 0x14] != 0 ) ) )
+        {
+            func589f0(); // update voices
+        }
+
+        V0 = w[80080a10];
+        if( w[V0 + 0x4] != 0 )
+        {
+            func5d384( 0x8007bd48, 0 );
+        }
+
+        V1 = w[0x8007f790];
+        if( V1 != 0 )
+        {
+            if( w[V1 + 0x4] != 0 )
+            {
+                [0x80080a10] = w(V1);
+
+                func5d384( w[0x8007f71c], 1 );
+
+                [80080a10] = w(0x8007f858);
+            }
+
+            if( w[0x80083158 + 0x4] & 0x00000100 )
+            {
+                if( ( hu[0x8006f320] & 0x0003 ) == 0 )
+                {
+                    A0 = w[0x8007f790];
+                    A1 = w[0x8007f71c];
+                    func5d628();
 
                     V0 = w[0x8007f790];
-                    [0x8007f790] = w(0);
-                    [V0 + 0x6a] = h(0);
-                    [V0 + 0x4] = w(0);
-                }
-            }
-        }
-    }
-
-    V1 = w[0x80080a10];
-    V0 = w[0x8007f790];
-    if( ( w[0x80083158 + 0x8] | w[V1 + 0x14] | w[0x80080a70 + 0x8] ) || ( ( V0 != 0 ) && ( w[V0 + 0x14] != 0 ) ) )
-    {
-        func589f0(); // update voices
-    }
-
-    V0 = w[80080a10];
-    if( w[V0 + 0x4] != 0 )
-    {
-        func5d384( 0x8007bd48, 0 );
-    }
-
-    V1 = w[0x8007f790];
-    if( V1 != 0 )
-    {
-        if( w[V1 + 0x4] != 0 )
-        {
-            [0x80080a10] = w(V1);
-
-            func5d384( w[0x8007f71c], 1 );
-
-            [80080a10] = w(0x8007f858);
-        }
-
-        if( w[0x80083158 + 0x4] & 0x00000100 )
-        {
-            if( ( hu[0x8006f320] & 0x0003 ) == 0 )
-            {
-                A0 = w[0x8007f790];
-                A1 = w[0x8007f71c];
-                func5d628();
-
-                V0 = w[0x8007f790];
-                if( w[V0 + 0x4] == 0 )
-                {
-                    [0x80083158 + 0x4] = w(w[0x80083158 + 0x4] & 0xfffffeff);
-                }
-            }
-        }
-    }
-
-    A0 = w[0x80080a70];
-    if( A0 != 0 )
-    {
-        V1 = hu[0x80080a70 + 0x16];
-        V0 = w[0x80080a70 + 0x18];
-        S3 = A0;
-        V1 = V0 + V1;
-        V0 = V1 & 0xffff0000;
-        [0x80080a70 + 0x18] = w(V1);
-
-        8005D98C	bne    v0, zero, L5d9ac [$8005d9ac]
-
-        V0 = w[0x800831c4] & 0x4;
-        8005D9A4	beq    v0, zero, L5da88 [$8005da88]
-
-        L5d9ac:	; 8005D9AC
-        [0x80080a70 + 0x18] = w(V1 & ffff);
-
-        S1 = 0x0100;
-        data_p = 0x8007e3d8;
-
-        loop5d9c4:	; 8005D9C4
-            if( S3 & S1 )
-            {
-                if( ( ( w[0x800831c4] & 0x2 ) == 0 ) || ( w[data_p + 0x28] & 0x02000000 ) )
-                {
-                    [data_p + 0x88] = w(w[data_p + 0x88] + 1);
-                    [data_p + 0x96] = h(hu[data_p + 0x96] - 1);
-                    [data_p + 0x98] = h(hu[data_p + 0x98] - 1);
-
-                    if( hu[data_p + 0x96] != 0 )
+                    if( w[V0 + 0x4] == 0 )
                     {
-                        if( hu[data_p + 0x98] == 0 )
+                        [0x80083158 + 0x4] = w(w[0x80083158 + 0x4] & 0xfffffeff);
+                    }
+                }
+            }
+        }
+
+        A0 = w[0x80080a70 + 0x0];
+        if( A0 != 0 )
+        {
+            S3 = A0;
+            [0x80080a70 + 0x18] = w(w[0x80080a70 + 0x18] + hu[0x80080a70 + 0x16]);
+
+            if( ( w[0x80080a70 + 0x18] & 0xffff0000 ) || ( w[0x800831c4] & 0x4 ) )
+            {
+                [0x80080a70 + 0x18] = w(w[0x80080a70 + 0x18] & 0x0000ffff);
+
+                u32 channel_mask = 0x0100;
+                data_p = 0x8007e3d8;
+
+                loop5d9c4:	; 8005D9C4
+                    if( S3 & channel_mask )
+                    {
+                        if( ( ( w[0x800831c4] & 0x2 ) == 0 ) || ( w[data_p + 0x28] & 0x02000000 ) )
                         {
-                            [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S1);
-                            [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] & ~S1);
+                            [data_p + 0x88] = w(w[data_p + 0x88] + 1);
+                            [data_p + 0x96] = h(hu[data_p + 0x96] - 1);
+                            [data_p + 0x98] = h(hu[data_p + 0x98] - 1);
+
+                            if( hu[data_p + 0x96] != 0 )
+                            {
+                                if( hu[data_p + 0x98] == 0 )
+                                {
+                                    [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | channel_mask);
+                                    [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] & ~channel_mask);
+                                }
+                            }
+                            else
+                            {
+                                system_akao_execute_sequence( data_p, channel_mask );
+                            }
+
+                            func579b4( data_p, channel_mask, 1 );
                         }
-                    }
-                    else
-                    {
-                        func5e3fc( data_p, S1 ); // update akao
+
+                        S3 ^= channel_mask;
                     }
 
-                    func579b4( data_p, S1, 1 );
-                }
-
-                S3 = S3 ^ S1;
+                    data_p += 0x134;
+                    channel_mask <<= 0x1;
+                8005DA7C	bne    s3, zero, loop5d9c4 [$8005d9c4]
             }
+        }
 
-            data_p += 0x134;
-            S1 <<= 0x1;
-        8005DA7C	bne    s3, zero, loop5d9c4 [$8005d9c4]
+        if( ( hu[0x8006f320] & 0x0003 ) == 0 )
+        {
+            func5cf04();
+        }
     }
 
-    L5da88:	; 8005DA88
-    if( ( hu[8006f320] & 0003 ) == 0 )
-    {
-        func5cf04();
-    }
+    func4bd2c( 0xf2000002 );
+
+    T0 = V0 - w[SP + 0x10];
+    if( T0 <= 0 ) T0 += 0x44e8;
+    [SP + 0x10] = w(T0);
+
+    V1 = w[0x8006f324 + 0x4];
+    A2 = w[0x8006f324 + 0x8];
+    A3 = w[0x8006f324 + 0xc];
+
+    [0x8006f31c] = w(V1 + A2 + A3 + w[SP + 0x10]);
+
+    [0x8006f324 + 0xc] = w(w[SP + 0x10]);
+    [0x8006f324 + 0x0] = w(V1);
+    [0x8006f324 + 0x4] = w(A2);
+    [0x8006f324 + 0x8] = w(A3);
 }
-
-func4bd2c( 0xf2000002 );
-
-T0 = w[SP + 0x10];
-T0 = V0 - T0;
-if( T0 <= 0 ) T0 = T0 + 0x44e8;
-[SP + 0x10] = w(T0);
-
-V1 = w[0x8006f324 + 0x4];
-A2 = w[0x8006f324 + 0x8];
-A3 = w[0x8006f324 + 0xc];
-
-[8006f31c] = w(w[A0 + 0x4] + w[A0 + 0x8] + w[A0 + 0xc] + w[SP + 0x10]);
-
-[0x8006f324 + 0xc] = w(w[SP + 0x10]);
-[0x8006f324 + 0x0] = w(V1);
-[0x8006f324 + 0x4] = w(A2);
-[0x8006f324 + 0x8] = w(A3);
-////////////////////////////////
 
 
 
@@ -5949,52 +5936,45 @@ u32 func5dd54( int flag, u8 instr_id )
 void func5dd7c( VoiceData* data, A1 )
 {
     S1 = A0;
-    V1 = h[data + 010a];
-    8005DD98	nop
-    V0 = V1 < A1;
-    8005DDA0	bne    v0, zero, L5ddb0 [$8005ddb0]
-    V0 = 00ff;
-    8005DDA8	bne    v1, v0, L5ddf4 [$8005ddf4]
-    8005DDAC	nop
+    V1 = h[data + 0x10a];
 
-    L5ddb0:	; 8005DDB0
-    S0 = w[data + 0018];
-    V0 = bu[S0 + 000d];
-    8005DDC0	beq    v0, zero, L5de44 [$8005de44]
-    V1 = S0 + 000d;
+    if( ( V1 < A1 ) || ( V1 = 0xff) )
+    {
+        S0 = w[data + 0x18];
+        V0 = bu[S0 + 0xd];
+        V1 = S0 + 0xd;
+        8005DDC0	beq    v0, zero, L5de44 [$8005de44]
 
-    L5ddc8:	; 8005DDC8
-        V0 = bu[V1 + fff5];
-        8005DDCC	nop
-        V0 = V0 < A1;
-        8005DDD4	beq    v0, zero, L5de44 [$8005de44]
-        V1 = V1 + 0008;
-        V0 = bu[V1 + 0000];
-        8005DDE4	beq    v0, zero, L5de44 [$8005de44]
-        S0 = S0 + 0008;
-    8005DDEC	j      L5ddc8 [$8005ddc8]
-    8005DDF0	nop
+        L5ddc8:	; 8005DDC8
+            V0 = bu[V1 + fff5];
+            V1 = V1 + 0x8;
+            V0 = V0 < A1;
+            8005DDD4	beq    v0, zero, L5de44 [$8005de44]
 
-    L5ddf4:	; 8005DDF4
-    V0 = h[data + 0x10a];
-    V0 = A1 < V0;
-    if( V0 == 0 ) return;
+            S0 = S0 + 0x8;
+            V0 = bu[V1 + 0000];
+            8005DDE4	beq    v0, zero, L5de44 [$8005de44]
+
+        8005DDEC	j      L5ddc8 [$8005ddc8]
+    }
+
+    if( A1 >= h[data + 0x10a] ) return;
 
     S0 = w[data + 0x18];
-    V0 = bu[S0 + 0xd];
-    8005DE14	nop
-    8005DE18	beq    v0, zero, L5de44 [$8005de44]
     V1 = S0 + 0xd;
 
-    loop5de20:	; 8005DE20
-        V0 = bu[V1 + fffc];
-        8005DE24	nop
-        V0 = A1 < V0;
-        8005DE2C	bne    v0, zero, L5de44 [$8005de44]
-        V1 = V1 + 0008;
-        V0 = bu[V1 + 0000];
-        S0 = S0 + 0008;
-    8005DE3C	bne    v0, zero, loop5de20 [$8005de20]
+    if( bu[S0 + 0xd] != 0 )
+    {
+        loop5de20:	; 8005DE20
+            V0 = bu[V1 - 0x4];
+            V0 = A1 < V0;
+            V1 = V1 + 0x8;
+            8005DE2C	bne    v0, zero, L5de44 [$8005de44]
+
+            V0 = bu[V1 + 0x0];
+            S0 = S0 + 0x8;
+        8005DE3C	bne    v0, zero, loop5de20 [$8005de20]
+    }
 
     L5de44:	; 8005DE44
     V0 = w[0x80080a10];
@@ -6122,167 +6102,82 @@ u16 func5dfe0( InstrData* instr, A1, A2, u32& A3 )
 
 
 
-u16 func5e170( A0, A1, A2 )
+u16 func5e170( VoiceData* data, u32 channel_mask, A2 )
 {
-    S0 = A0;
-    S3 = A1;
-    A0 = w[80080a10];
-    A2 = A2 << 03;
-    S1 = w[A0 + 0034];
-    V0 = w[A0 + 0010];
-    V1 = w[A0 + 0014];
-    S1 = S1 + A2;
-    V0 = V0 | S3;
-    V1 = V1 & S3;
-    8005E1B4	beq    v1, zero, L5e1cc [$8005e1cc]
-    [A0 + 0010] = w(V0);
-    V0 = w[A0 + 0018];
-    8005E1C0	nop
-    V0 = V0 | S3;
-    [A0 + 0018] = w(V0);
+    A0 = w[0x80080a10];
+    S1 = w[A0 + 0x34] + A2 * 8;
+    [A0 + 0x10] = w(w[A0 + 0x10] | channel_mask);
 
-    L5e1cc:	; 8005E1CC
-    V0 = w[A1 + 0a10];
-    A1 = bu[S1 + 0000];
-    A0 = w[V0 + 0000];
-    S2 = w[S0 + 0034];
-    8005E1DC	jal    func5dd54 [$8005dd54]
-    8005E1E0	nop
-    [S0 + 009a] = h(V0);
-    V0 = V0 << 04;
-    8005E1EC	lui    v1, $8008
-    8005E1F0	addiu  v1, v1, $f970 (=-$690)
-    A0 = V0 + V1;
-    V0 = w[A0 + 0000];
-    8005E1FC	nop
-    [S0 + 0120] = w(V0);
-    V0 = w[A0 + 0004];
-    8005E208	nop
-    [S0 + 0124] = w(V0);
-    8005E210	lui    v0, $0100
-    V0 = S2 & V0;
-    8005E218	bne    v0, zero, L5e22c [$8005e22c]
-    8005E21C	nop
-    V0 = bu[S1 + 0002];
-    8005E224	j      L5e238 [$8005e238]
-    V0 = V0 << 08;
+    if( w[A0 + 0x14] & channel_mask )
+    {
+        [A0 + 0x18] = w(w[A0 + 0x18] | channel_mask);
+    }
 
-    L5e22c:	; 8005E22C
-    V0 = hu[S0 + 012a];
-    8005E230	nop
-    V0 = V0 & 7f00;
+    V0 = w[0x80080a10];
 
-    L5e238:	; 8005E238
-    [S0 + 012a] = h(V0);
-    V0 = hu[A0 + 000c];
-    V1 = hu[S0 + 012a];
-    V0 = V0 & 80ff;
-    V1 = V1 | V0;
-    8005E24C	lui    v0, $0800
-    V0 = S2 & V0;
-    8005E254	bne    v0, zero, L5e284 [$8005e284]
-    [S0 + 012a] = h(V1);
-    V1 = hu[S0 + 012c];
-    8005E260	nop
-    V1 = V1 & 201f;
-    [S0 + 012c] = h(V1);
-    V0 = bu[S1 + 0003];
-    8005E270	nop
-    V0 = V0 << 06;
-    V1 = V1 | V0;
-    8005E27C	j      L5e294 [$8005e294]
-    [S0 + 012c] = h(V1);
+    u32 instr_id = func5dd54( w[V0 + 0x0], bu[S1 + 0x0] );
 
-    L5e284:	; 8005E284
-    V0 = hu[S0 + 012c];
-    8005E288	nop
-    V0 = V0 & 3fdf;
-    [S0 + 012c] = h(V0);
+    [data + 0x9a] = h(instr_id);
+    [data + 0x120] = w(w[0x8007f970 + instr_id * 0x10 + 0x0]);
+    [data + 0x124] = w(w[0x8007f970 + instr_id * 0x10 + 0x4]);
 
-    L5e294:	; 8005E294
-    V1 = bu[S1 + 0004];
-    V0 = 0005;
-    8005E29C	beq    v1, v0, L5e2e0 [$8005e2e0]
-    8005E2A0	nop
-    V0 = V1 < 0006;
-    8005E2A8	beq    v0, zero, L5e2c0 [$8005e2c0]
-    V0 = 0003;
-    8005E2B0	beq    v1, v0, L5e2d4 [$8005e2d4]
-    8005E2B4	nop
-    8005E2B8	j      L5e300 [$8005e300]
-    8005E2BC	lui    v0, $1000
+    S2 = w[data + 0x34];
 
-    L5e2c0:	; 8005E2C0
-    V0 = 0007;
-    8005E2C4	beq    v1, v0, L5e2ec [$8005e2ec]
-    8005E2C8	lui    v0, $1000
-    8005E2CC	j      L5e304 [$8005e304]
-    V0 = S2 & V0;
+    if( S2 & 0x01000000 )
+    {
+        [data + 0x12a] = h(hu[data + 0x12a] & 0x7f00);
+    }
+    else
+    {
+        [data + 0x12a] = h(bu[S1 + 0x2] << 0x8);
+    }
 
-    L5e2d4:	; 8005E2D4
-    V0 = hu[S0 + 012c];
-    8005E2D8	j      L5e2f8 [$8005e2f8]
-    V0 = V0 | 4000;
+    [data + 0x12a] = h(hu[data + 0x12a] | (hu[0x8007f970 + instr_id * 0x10 + 0xc] & 0x80ff));
 
-    L5e2e0:	; 8005E2E0
-    V0 = hu[S0 + 012c];
-    8005E2E4	j      L5e2f8 [$8005e2f8]
-    V0 = V0 | 8000;
+    if( S2 & 0x08000000 )
+    {
+        [data + 0x12c] = h(hu[data + 0x12c] & 0x3fdf);
+    }
+    else
+    {
+        [data + 0x12c] = h((hu[data + 0x12c] & 0x201f) | (bu[S1 + 0x3] << 0x6));
+    }
 
-    L5e2ec:	; 8005E2EC
-    V0 = hu[S0 + 012c];
-    8005E2F0	nop
-    V0 = V0 | c000;
+    V1 = bu[S1 + 0x4];
+    if( V1 == 0x3 )
+    {
+        [data + 0x12c] = h(hu[data + 0x12c] | 0x4000);
+    }
+    else if( V1 == 0x5 )
+    {
+        [data + 0x12c] = h(hu[data + 0x12c] | 0x8000);
+    }
+    else if( V1 == 0x7 )
+    {
+        [data + 0x12c] = h(hu[data + 0x12c] | 0xc000);
+    }
 
-    L5e2f8:	; 8005E2F8
-    [S0 + 012c] = h(V0);
-    8005E2FC	lui    v0, $1000
+    if( ( S2 & 0x10000000 ) == 0 )
+    {
+        [data + 0x12c] = h((hu[data + 0x12c] & 0xffe0) | bu[S1 + 0x5]);
+    }
 
-    L5e300:	; 8005E300
-    V0 = S2 & V0;
+    [data + 0x12c] = h(hu[data + 0x12c] | (hu[0x8007f970 + instr_id * 0x10 + 0xe] & 0x20));
 
-    L5e304:	; 8005E304
-    8005E304	bne    v0, zero, L5e32c [$8005e32c]
-    8005E308	nop
-    V0 = hu[S0 + 012c];
-    8005E310	nop
-    V0 = V0 & ffe0;
-    [S0 + 012c] = h(V0);
-    V1 = bu[S1 + 0005];
-    8005E320	nop
-    V0 = V0 | V1;
-    [S0 + 012c] = h(V0);
+    A1 = func5dfe0( 0x8007f970 + instr_id * 0x10, bu[S1 + 0x1], h[data + 0x108], data + 0x84 );
 
-    L5e32c:	; 8005E32C
-    V0 = hu[A0 + 000e];
-    V1 = hu[S0 + 012c];
-    A2 = h[S0 + 0108];
-    V0 = V0 & 0020;
-    V1 = V1 | V0;
-    [S0 + 012c] = h(V1);
-    A1 = bu[S1 + 0001];
-    A3 = S0 + 0084;
-    func5dfe0();
-
-    V1 = bu[S1 + 0006];
-    [S0 + 012e] = h(V1);
-    V1 = bu[S1 + 0007];
-    V1 = V1 & 007f;
-    V1 = V1 + 0040;
-    V1 = V1 << 08;
-    [S0 + 0xbe] = h(V1);
-
-    A1 = V0;
+    [data + 0x12e] = h(bu[S1 + 0x6]);
+    [data + 0xbe] = h(((bu[S1 + 0x7] & 0x7f) + 0x40) << 0x8);
 
     if( bu[S1 + 0x7] & 0x80 )
     {
         V1 = w[0x80080a10];
-        [V1 + 0x40] = w(w[V1 + 0x40] | S3);
+        [V1 + 0x40] = w(w[V1 + 0x40] | channel_mask);
     }
     else
     {
         A0 = w[0x80080a10];
-        [A0 + 0x40] = w(w[A0 + 0x40] & ~S3);
+        [A0 + 0x40] = w(w[A0 + 0x40] & ~channel_mask);
     }
 
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x00000100);
@@ -6292,11 +6187,10 @@ u16 func5e170( A0, A1, A2 )
 
 
 
-void func5e3fc( VoiceData* data, A1 )
+void system_akao_execute_sequence( VoiceData* data, u32 channel_mask )
 {
-    S2 = A1;
-
-    loop5e43c:	; 8005E43C
+    do
+    {
         A1 = w[data + 0x0];
         u8 opcode = bu[A1 + 0x0];
         A1 = A1 + 0x1;
@@ -6309,7 +6203,7 @@ void func5e3fc( VoiceData* data, A1 )
                 A2 = bu[A1 + 0x0];
                 [data + 0x0] = w(A1 + 0x1);
 
-                akao_fe_opcodes[ A2 ]( data, S2 );
+                akao_fe_opcodes[ A2 ]( data, channel_mask );
             }
             else
             {
@@ -6334,26 +6228,27 @@ void func5e3fc( VoiceData* data, A1 )
                             if( w[data + 0x34] & 0x00200000 )
                             {
                                 opcode = 0xa0;
-                                [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S2);
+                                [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | channel_mask);
                             }
                         }
                     }
 
-                    akao_opcodes[opcode - 0xa0]( data,  S2 );
+                    akao_opcodes[opcode - 0xa0]( data,  channel_mask );
                 }
             }
         }
 
         [data + 0xa0] = h(hu[data + 0xa0] + 0x1);
-        V0 = opcode < 0xa1;
-    8005E520	beq    v0, zero, loop5e43c [$8005e43c]
+
+    } while( opcode >= 0xa1 )
 
     if( opcode == 0xa0 )
     {
-        if( hu[data + 0x94] != 0 ) return;
-
-        V1 = w[0x80080a10];
-        [V1 + 0x18] = w(w[V1 + 0x18] | S2);
+        if( hu[data + 0x94] == 0 )
+        {
+            V1 = w[0x80080a10];
+            [V1 + 0x18] = w(w[V1 + 0x18] | channel_mask);
+        }
         return;
     }
 
@@ -6405,11 +6300,11 @@ void func5e3fc( VoiceData* data, A1 )
         if( hu[data + 0x94] == 0 )
         {
             A0 = w[0x80080a10];
-            [A0 + 0x14] = w(w[A0 + 0x14] & ~S2);
+            [A0 + 0x14] = w(w[A0 + 0x14] & ~channel_mask);
 
             if( w[data + 0x118] < 0x18 )
             {
-                [A0 + 0x18] = w(w[A0 + 0x18] | S2);
+                [A0 + 0x18] = w(w[A0 + 0x18] | channel_mask);
             }
         }
 
@@ -6426,7 +6321,7 @@ void func5e3fc( VoiceData* data, A1 )
 
             if( w[data + 0x34] & 0x00000008 )
             {
-                A2 = func5e170( data, S2, S1 );
+                A2 = func5e170( data, channel_mask, S1 );
             }
             else
             {
@@ -6440,13 +6335,13 @@ void func5e3fc( VoiceData* data, A1 )
                         }
 
                         A0 = w[0x80080a10];
-                        [A0 + 0x10] = w(w[A0 + 0x10] | S2);
+                        [A0 + 0x10] = w(w[A0 + 0x10] | channel_mask);
 
-                        if( w[A0 + 0x14] & S2 )
+                        if( w[A0 + 0x14] & channel_mask )
                         {
                             if( w[data + 0x118] < 0x18 )
                             {
-                                [A0 + 0x18] = w(w[A0 + 0x18] | S2);
+                                [A0 + 0x18] = w(w[A0 + 0x18] | channel_mask);
                             }
                         }
 
@@ -6459,7 +6354,7 @@ void func5e3fc( VoiceData* data, A1 )
                     }
                     else
                     {
-                        [0x80080a70 + 0x4] = w(w[0x80080a70 + 0x4] | S2);
+                        [0x80080a70 + 0x4] = w(w[0x80080a70 + 0x4] | channel_mask);
                     }
 
                     [data + 0xc2] = h(0);
@@ -6478,25 +6373,20 @@ void func5e3fc( VoiceData* data, A1 )
                     S1 += h[data + 0x106];
                 }
 
-                A0 = 0x8007f970 + hu[data + 0x9a] * 10; // instrument data
-                A1 = S1;
-                A2 = h[data + 0x108];
-                A3 = data + 0x84;
-                func5dfe0();
+                A2 = func5dfe0( 0x8007f970 + hu[data + 0x9a] * 10, S1, h[data + 0x108], data + 0x84 );
 
                 V1 = hu[data + 0xf6];
-                A2 = V0;
                 if( V1 != 0 )
                 {
-                    V0 = V1;
-                    V1 = A2 * V0;
-                    A0 = V1 >> 0x8;
-                    V1 = w[0x8008314c];
+                    A0 = (A2 * V1) >> 0x8;
                     [SP + 0x10] = w(A0);
+
+                    V1 = w[0x8008314c];
+
                     A0 = A0 * bu[0x8006f440 + V1];
                     [SP + 0x10] = w(A0);
-                    V0 = bu[0x8006f440 + V1];
-                    if( V0 & 0x80 )
+
+                    if( bu[0x8006f440 + V1] & 0x80 )
                     {
                         V0 = A0 >> 0x9;
                         [SP + 0x10] = w(V0);
@@ -6516,11 +6406,11 @@ void func5e3fc( VoiceData* data, A1 )
             if( hu[data + 0x94] == 0 )
             {
                 V1 = w[0x80080a10];
-                [V1 + 0x14] = w(w[V1 + 0x14] | S2);
+                [V1 + 0x14] = w(w[V1 + 0x14] | channel_mask);
             }
             else
             {
-                [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] | S2);
+                [0x80080a70 + 0x8] = w(w[0x80080a70 + 0x8] | channel_mask);
             }
 
             [data + 0x11c] = w(w[data + 0x11c] | 0x00000013);
@@ -6528,50 +6418,31 @@ void func5e3fc( VoiceData* data, A1 )
             S1 = w[data + 0x34];
             if( S1 & 0x00000001 )
             {
-                V0 = hu[data + 0xd6];
-                V1 = V0 & 0x7f00;
-                V0 = V0 & 0x8000;
-                V1 = V1 >> 0x8;
-                if( V0 == 0 )
+                V1 = (hu[data + 0xd6] & 0x7f00) >> 0x8;
+                if( hu[data + 0xd6] & 0x8000 )
                 {
-                    V0 = A2 << 0x4;
-                    V0 = V0 - A2;
-                    V0 = V0 >> 0x8;
-                    T0 = V1 * V0;
+                    [data + 0xd4] = h((V1 * A2) >> 0x7);
                 }
                 else
                 {
-                    T0 = V1 * A2;
+                    [data + 0xd4] = h((V1 * ((A2 * 0xf) >> 0x8)) >> 0x7);
                 }
 
-                V1 = T0 >> 0x7;
-                V0 = hu[data + 0xcc];
-                V0 = V0 & 0x2;
-                [data + 0xd4] = h(V1);
-                if( V0 == 0 )
+                if( ( hu[data + 0xcc] & 0x2 ) == 0 )
                 {
-                    V0 = w[data + 0x3c] >> 0xc;
-                    V1 = 0x1000000 / V0;
-                    V0 = hu[data + 0xce];
                     [data + 0x44] = w(0);
-                    [data + 0xd0] = h(V0);
-                    [data + 0x48] = w(V1);
+                    [data + 0xd0] = h(hu[data + 0xce]);
+                    [data + 0x48] = w(0x1000000 / (w[data + 0x3c] >> 0xc));
                 }
             }
 
-            if( S1 & 2 )
+            if( S1 & 0x00000002 )
             {
-                V0 = hu[data + 0xcc];
-                V0 = V0 & 0x2;
-                if( V0 == 0 )
+                if( ( hu[data + 0xcc] & 0x2 ) == 0 )
                 {
-                    V0 = w[data + 0x4c];
-                    V0 = V0 >> 0xc;
-                    V1 = 0x1000000 / V0;
-                    V0 = hu[data + 0xdc];
                     [data + 0x54] = w(0);
-                    [data + 0xde] = h(V0);
-                    [data + 0x58] = w(V1);
+                    [data + 0xde] = h(hu[data + 0xdc]);
+                    [data + 0x58] = w(0x1000000 / (w[data + 0x4c] >> 0xc));
                 }
             }
 
@@ -6580,35 +6451,17 @@ void func5e3fc( VoiceData* data, A1 )
             [data + 0x30] = w(0);
         }
 
-        V0 = hu[data + 0xcc];
-        A1 = hu[data + 0x10c];
-        V1 = V0 & 0xfffd;
-        V0 = V0 & 0x1;
-        V0 = V0 << 0x1;
-        V1 = V1 | V0;
-        [data + 0xcc] = h(V1);
+        [data + 0xcc] = h((hu[data + 0xcc] & 0xfffd) | ((hu[data + 0xcc] & 0x1) << 0x1));
 
         if( h[data + 010c] != 0 )
         {
-            [data + 0x10a] = h(hu[data + 0x10a] + A1);
+            [data + 0x10a] = h(hu[data + 0x10a] + hu[data + 0x10c]);
 
-            A0 = 0x8007f970 + hu[data + 0x9a] * 0x10;
-            A1 = ((hu[data + 0x10a] << 0x10) >> 0x10) + h[data + 0x106];
-            A2 = h[data + 0x108];
-            A3 = SP + 0x10;
-            func5dfe0();
+            V0 = func5dfe0( 0x8007f970 + hu[data + 0x9a] * 0x10, ((hu[data + 0x10a] << 0x10) >> 0x10) + h[data + 0x106], h[data + 0x108], SP + 0x10 );
 
-            A2 = V0 << 10;
-            V1 = hu[data + 0xc6];
-            V0 = w[data + 0x2c];
-            [data + 0xc2] = h(V1);
-            V1 = w[data + 0x30];
-            V0 = V0 << 0x10;
-            V0 = V0 + V1;
-            V1 = hu[data + 0xc2];
-            V0 = A2 - V0;
+            [data + 0xc2] = h(hu[data + 0xc6]);
             [data + 0x10c] = h(0);
-            [data + 0x80] = w(V0 / V1);
+            [data + 0x80] = w(((V0 << 0x10) - (w[data + 0x2c] << 0x10) - w[data + 0x30]) / hu[data + 0xc2]);
         }
 
         [data + 0xc8] = h(hu[data + 0x10a]);

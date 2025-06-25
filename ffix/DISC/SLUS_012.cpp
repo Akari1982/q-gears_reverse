@@ -36686,10 +36686,10 @@ loop56b9c:	; 80056B9C
 
 do
 {
-    A0 = f2000002;
-    A1 = 2;
-    A2 = 1000;
-    A3 = 8005d6bc; // system_sound_main()
+    A0 = 0xf2000002;
+    A1 = 0x2;
+    A2 = 0x1000;
+    A3 = 0x8005d6bc; // system_akao_main()
     system_bios_open_event();
     [8006f318] = w(V0);
 } while( V0 == -1 )
