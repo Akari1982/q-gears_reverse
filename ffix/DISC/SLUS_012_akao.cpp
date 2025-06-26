@@ -2176,45 +2176,29 @@ while( A1 != 0 )
 
 
 ////////////////////////////////
-// func5a320
-8005A320	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
+// func5a320()
+
 S1 = A0;
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S6);
-[SP + 0024] = w(S5);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-8005A344	bne    a1, zero, L5a384 [$8005a384]
-[SP + 0010] = w(S0);
-8005A34C	lui    a0, $8008
-8005A350	addiu  a0, a0, $f8f0 (=-$710)
-A1 = w[80080a10];
-8005A35C	jal    system_akao_copy [$8005ce04]
-A2 = 007c;
-A0 = 80080ac8;
-8005A36C	lui    a1, $8008
-8005A370	addiu  a1, a1, $bd48 (=-$42b8)
-8005A374	jal    system_akao_copy [$8005ce04]
-A2 = 2680;
-8005A37C	j      L5a3b8 [$8005a3b8]
-8005A380	lui    v0, $8008
 
-L5a384:	; 8005A384
-8005A384	lui    a0, $8008
-8005A388	addiu  a0, a0, $f8f0 (=-$710)
-A1 = w[80080a10];
-8005A394	jal    func5ce8c [$8005ce8c]
-A2 = 007c;
-A0 = 80080ac8;
-8005A3A4	lui    a1, $8008
-8005A3A8	addiu  a1, a1, $bd48 (=-$42b8)
-8005A3AC	jal    func5ce8c [$8005ce8c]
-A2 = 2680;
+if( A1 == 0 )
+{
+    system_akao_copy( 0x8007f8f0, w[0x80080a10], 0x7c );
+    system_akao_copy( 0x80080ac8, 0x8007bd48, 0x2680 );
+}
+else
+{
+    A0 = 0x8007f8f0;
+    A1 = w[0x80080a10];
+    A2 = 0x7c;
+    func5ce8c();
+
+    A0 = 0x80080ac8;
+    A1 = 0x8007bd48;
+    A2 = 0x2680;
+    func5ce8c();
+}
+
 8005A3B4	lui    v0, $8008
-
-L5a3b8:	; 8005A3B8
 V1 = w[V0 + 0a10];
 8005A3BC	nop
 A0 = w[V1 + 0000];
@@ -2361,16 +2345,10 @@ V0 = w[A3 + 0004];
 [A3 + 001c] = w(V0);
 
 L5a5d4:	; 8005A5D4
-RA = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8005A5F4	jr     ra 
-SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func5a5fc
 8005A5FC	beq    a0, zero, L5a650 [$8005a650]
@@ -2401,41 +2379,36 @@ L5a650:	; 8005A650
 8005A650	jr     ra 
 V0 = A1;
 ////////////////////////////////
-// func5a658
-8005A658	addiu  sp, sp, $ffe8 (=-$18)
-8005A65C	lui    v0, $8008
-8005A660	addiu  v1, v0, $f8f0 (=-$710)
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
-V0 = hu[V1 + 006a];
-8005A670	nop
-8005A674	beq    v0, zero, L5a6a4 [$8005a6a4]
-S0 = A0;
-V1 = V0;
-V0 = w[S0 + 0008];
-8005A684	nop
-8005A688	bne    v1, v0, L5a6a4 [$8005a6a4]
-8005A68C	nop
-A0 = w[S0 + 0000];
-8005A694	jal    func5a320 [$8005a320]
-A1 = 0;
-8005A69C	j      L5a6c4 [$8005a6c4]
-8005A6A0	nop
 
-L5a6a4:	; 8005A6A4
-A0 = w[S0 + 0000];
-8005A6A8	jal    func5963c [$8005963c]
-8005A6AC	addiu  a1, zero, $ffff (=-$1)
-V1 = w[80080a10];
-V0 = hu[S0 + 0008];
-8005A6BC	nop
-[V1 + 006a] = h(V0);
 
-L5a6c4:	; 8005A6C4
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-8005A6CC	jr     ra 
-SP = SP + 0018;
+
+void func5a658( A0 )
+{
+    S0 = A0;
+
+    V0 = hu[0x8007f8f0 + 0x6a];
+    if( V0 != 0 )
+    {
+        if( V0 == w[S0 + 0x8] )
+        {
+            A0 = w[S0 + 0x0];
+            A1 = 0;
+            func5a320();
+
+            return;
+        }
+    }
+
+    A0 = w[S0 + 0x0];
+    A1 = -1;
+    func5963c();
+
+    V1 = w[0x80080a10];
+    [V1 + 0x6a] = h(hu[S0 + 0x8]);
+}
+
+
+
 ////////////////////////////////
 // func5a6d4
 8005A6D4	addiu  sp, sp, $ffe8 (=-$18)
@@ -2694,25 +2667,24 @@ S0 = w[SP + 0010];
 8005AA70	jr     ra 
 SP = SP + 0020;
 ////////////////////////////////
-// func5aa78
-8005AA78	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-[SP + 0014] = w(RA);
-8005AA84	jal    func5a658 [$8005a658]
-S0 = A0;
-V0 = w[S0 + 000c];
-8005AA90	nop
-8005AA94	beq    v0, zero, L5aaa0 [$8005aaa0]
-V1 = 0;
-8005AA9C	addiu  v1, v0, $ffff (=-$1)
 
-L5aaa0:	; 8005AAA0
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-[800809b8] = w(V1);
-8005AAB0	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
+
+
+void func5aa78( A0 )
+{
+    S0 = A0;
+
+    func5a658( A0 );
+
+    if( w[S0 + 0c] != 0 )
+    {
+        [0x800809b8] = w(w[S0 + 0c] - 1);
+    }
+    else
+    {
+        [0x800809b8] = w(0);
+    }
+}
 
 
 
@@ -4975,7 +4947,8 @@ void system_akao_copy( u32 src, u32 dst, u32 size )
 
 
 ////////////////////////////////
-// func5ce8c
+// func5ce8c()
+
 T1 = A0;
 A2 = A2 >> 02;
 V0 = A2 >> 01;
