@@ -1,1 +1,1 @@
-adisasm ITEMMENU.MNU ITEMMENU.MNU.asm -v -b 801d0000 801d0000 -u -a
+adisasm d00_07_32 d00_07_32.asm -v -b 801edf00 801edf00 -u -a

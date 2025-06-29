@@ -1,216 +1,176 @@
-////////////////////////////////
-// system_main()
-
-func12c10(); // call some debug init callbacks (removed)
-
-system_init();
-
-while( true )
+void system_main()
 {
-    func16a28();
+    func12c10(); // call some debug init callbacks (removed)
 
-    func1cb08(); // init struct
+    system_init();
 
-    func1d268(); // init struct and sound
+    while( true )
+    {
+        func16a28();
 
+        func1cb08(); // init struct
+
+        func1d268(); // init struct and sound
+
+        do
+        {
+            struct = w[0x8006794c];
+            switch( bu[struct + 0x8] )
+            {
+                case 0x0:
+                {
+                    func12900( 0x0 );
+                    funca7088();
+                }
+                break;
+
+                case 0x1: // field
+                {
+                    func12900( 0x1 );
+                    funca7a48();
+                }
+                break;
+
+                case 0x2: // battle
+                {
+                    func12900( 0x2 );
+                    funca859c();
+                }
+                break;
+
+                case 0x3: // worldmap
+                {
+                    func12900( 0x3 );
+                    funca8860();
+                }
+                break;
+
+                case 0x4: // tetra master
+                {
+                    func12900( 0x4 );
+                    funca713c();
+                }
+                break;
+
+                case 0x7:
+                {
+                    func12900( 0x7 );
+                    funca80a4();
+                }
+                break;
+
+                case 0x8:
+                {
+                    func12900( 0x8 );
+                    func1ef284();
+                }
+                break;
+
+                case 0x9:
+                {
+                    func12900( 0x9 );
+                    funca752c();
+                }
+                break;
+            }
+
+        } while( ( w[struct + 0x0] & 0x1 ) == 0x0 )
+
+        func1d30c();
+        func1cb70(); // removed func
+        func16b6c();
+    }
+}
+
+
+
+void func12900( u8 id )
+{
+    S0 = 0;
+
+    T4 = 0x80010028; // 140A0B0C15FFFF65650D
+
+    [SP + 0x10] = w(w[T4 + 0x0]);
+    [SP + 0x14] = w(w[T4 + 0x4]);
+    [SP + 0x18] = b(b[T4 + 0x8]);
+    [SP + 0x19] = b(b[T4 + 0x9]);
+
+    // 0 0x800A7000
+    // 1 0x800A7000
+    // 2 0x800A7000
+    // 3 0x800A7000
+    // 4 0x800A7000
+    // 5 0x00000000
+    // 6 0x00000000
+    // 7 0x801EDF00
+    // 8 0x801EDF00
+    // 9 0x800A7000
+
+    src = 0x80010034;
+    dst = SP + 0x20;
+    end = src + 0x28;
     do
     {
-        struct = w[8006794c];
-        switch( bu[struct + 8] )
+        [dst] = w(w[src]);
+        src += 0x4;
+        dst += 0x4;
+    } while( src != end )
+
+    func1cfb4();
+
+    file_id = 0x00010000 | bu[SP + 0x10 + id];
+
+    while( func22b18() != 0 ) {}
+
+    loaded = func220e8( file_id );
+
+    if( loaded != 0 )
+    {
+        load_data = func21e5c( file_id );
+
+        V0 = func21ae0( load_data );
+
+        if( V0 != 0 )
         {
-            case 0:
+            system_psyq_store_image( load_data + 0x20, w[SP + 0x20 + id * 0x4] );
+        }
+        else
+        {
+            V0 = SP + V0;
+            A0 = w[V0 + 0x20];
+            A1 = w[load_data + 0x8];
+            if( A0 != A1 )
             {
-                A0 = 0;
-                func12900();
-
-                funca7088();
+                func1daa4( A0, A1, w[load_data + 0xc], 0 );
             }
-            break;
-
-            case 1:
-            {
-                A0 = 1;
-                func12900();
-
-                funca7a48();
-            }
-            break;
-
-            case 2:
-            {
-                A0 = 2;
-                func12900();
-
-                funca859c();
-            }
-            break;
-
-            case 3:
-            {
-                A0 = 3;
-                func12900();
-
-                funca8860();
-            }
-            break;
-
-            case 4:
-            {
-                A0 = 4;
-                func12900();
-
-                funca713c();
-            }
-            break;
-
-            case 7:
-            {
-                A0 = 7;
-                func12900();
-
-                funca80a4();
-            }
-            break;
-
-            case 8:
-            {
-                A0 = 8;
-                func12900();
-
-                func1ef284();
-            }
-            break;
-
-            case 9:
-            {
-                A0 = 9;
-                func12900();
-
-                funca752c();
-            }
-            break;
         }
 
-    } while( ( w[struct + 0] & 1 ) == 0 )
+        S0 = w[load_data + 0xc] / 0x800;
 
-    func1d30c();
+        func22390( file_id );
 
-    func1cb70(); // removed func
-
-    func16b6c();
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func12900()
-
-id = A0;
-S0 = 0;
-
-T4 = 80010028; // 140A0B0C15FFFF65650D
-
-[SP + 10] = w(w[T4 + 0]);
-[SP + 14] = w(w[T4 + 4]);
-[SP + 18] = b(b[T4 + 8]);
-[SP + 19] = b(b[T4 + 9]);
-
-// 0 800A7000
-// 1 800A7000
-// 2 800A7000
-// 3 800A7000
-// 4 000A7000
-// 5 00000000
-// 6 80000000
-// 7 801EDF00
-// 8 801EDF00
-// 9 800A7000
-
-src = 80010034;
-dst = SP + 20;
-end = src + 28;
-do
-{
-    [dst] = w(w[src]);
-    src += 4;
-    dst += 4;
-} while( src != end )
-
-func1cfb4();
-
-file_id = 00010000 | bu[SP + 10 + id];
-
-do
-{
-    func22b18();
-} while( V0 != 0 )
-
-A0 = file_id;
-func220e8();
-loaded = V0;
-
-if( loaded != 0 )
-{
-    A0 = file_id;
-    func21e5c();
-    load_data = V0;
-
-    A0 = load_data;
-    func21ae0();
-
-    if( V0 != 0 )
-    {
-        A0 = load_data + 20;
-        A1 = w[SP + 20 + id * 4];
-        system_psyq_store_image();
-    }
-    else
-    {
-        V0 = SP + V0;
-        A0 = w[V0 + 20];
-        A1 = w[load_data + 8];
-        if( A0 != A1 )
-        {
-            A2 = w[load_data + c];
-            A3 = 0;
-            func1daa4();
-        }
+        system_psyq_draw_sync( 0 );
     }
 
-    S0 = w[load_data + c] / 800;
+    file_data = func1e218( 0, file_id ); // dir and file
 
-    A0 = file_id;
-    func22390();
+    file_sector = w[file_data + 0x4];
+    file_size = w[file_data + 0xc] - file_sector;
 
-    A0 = 0;
-    system_psyq_draw_sync();
+    if( S0 < V0 )
+    {
+        struct = w[0x8006794c];
+
+        A0 = w[struct + 0x20] + file_sector + S0; // sector
+        A1 = (file_size - S0) * 0x800; // size
+        A2 = w[SP + 0x20 + id * 0x4] + S0 * 0x800; // dst
+        func22df0( A0, A1, A2 ); // cd load sync
+    }
+
+    system_bios_enter_critical_section();
+    system_bios_flush_cache();
+    system_bios_exit_critical_section();
 }
-
-A0 = 0; // dir_id
-A1 = file_id;
-func1e218();
-file_data = V0;
-
-file_sector = w[file_data + 4];
-file_size = w[file_data + 8 + 4] - file_sector;
-
-if( S0 < V0 )
-{
-    struct = w[8006794c];
-
-    A0 = w[struct + 20] + file_sector + S0; // sector
-    A1 = (file_size - S0) * 800; // size
-    A2 = w[SP + 20 + id * 4] + S0 * 800; // dst
-    func22df0(); // cd load sync
-}
-
-system_bios_enter_critical_section();
-
-system_bios_flush_cache();
-
-system_bios_exit_critical_section();
-////////////////////////////////
 
 
 

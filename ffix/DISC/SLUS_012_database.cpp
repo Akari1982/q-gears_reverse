@@ -569,34 +569,30 @@ dir_dst = struct;
 
 
 
-////////////////////////////////
-// func1e218()
-
-dir_id = A0;
-file_id = A1;
-
-struct = w[8006794c];
-dir_data = w[struct + 14] + dir_id * 10;
-struct18 = w[struct + 18];
-
-if( w[dir_data + 0] == 3 ) // hierarchical directory
+u32 func1e218( dir_id, file_id )
 {
-    return w[struct18 + d * 4] + file_id * 2;
+    struct = w[0x8006794c];
+    dir_data = w[struct + 0x14] + dir_id * 0x10;
+    struct18 = w[struct + 0x18];
+
+    if( w[dir_data + 0x0] == 0x3 ) // hierarchical directory
+    {
+        return w[struct18 + 0xd * 0x4] + file_id * 0x2;
+    }
+
+    files_n = w[dir_data + 0x4];
+    file_list = w[struct18 + dir_id * 0x4];
+    file_list_cur = file_list + (files_n - 0x1) * 0x8;
+
+    while( file_list_cur >= file_list )
+    {
+        if( hu[file_list_cur + 0] == ( file_id & 0xffff ) ) return file_list_cur;
+
+        file_list_cur -= 0x8;
+    }
+
+    return 0;
 }
-
-files_n = w[dir_data + 4];
-file_list = w[struct18 + dir_id * 4];
-file_list_cur = file_list + (files_n - 1) * 8;
-
-while( file_list_cur >= file_list )
-{
-    if( hu[file_list_cur + 0] == ( file_id & ffff ) ) return file_list_cur;
-
-    file_list_cur -= 8;
-}
-
-return 0;
-////////////////////////////////
 
 
 

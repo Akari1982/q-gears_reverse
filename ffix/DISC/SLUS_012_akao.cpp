@@ -1458,192 +1458,166 @@ V0 = A3;
 
 
 
-////////////////////////////////
-// func5963c()
-
-REVERSE
-
-V0 = w[0x80080a10];
-S2 = A0;
-S6 = A1;
-[V0 + 0x2c] = w(S2);
-S4 = w[S2 + 0x20];
-S0 = S2;
-
-V1 = w[0x8007f790];
-if( V1 != 0 )
+void func5963c( file, A1 )
 {
-    S1 = func595f0( w[0x8007f71c], w[V1 + 0x4] );
-}
-else
-{
-    S1 = 0;
-}
+    S6 = A1;
 
-[0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | (~S1 & ((w[0x80083174] NOR w[0x80080a70]) & 0x00ffffff)));
+    V0 = w[0x80080a10];
+    [V0 + 0x2c] = w(file);
+    u32 channels_mask = w[file + 0x20];
 
-A2 = w[0x80080a10];
-[A2 + 0x18] = w(0);
-
-if( w[0x800831c4] & 0x1 )
-{
-    [A2 + 0x4] = w(0);
-    [A2 + 0x1c] = w(w[A2 + 0x1c] | (S4 & S6));
-}
-else
-{
-    [A2 + 0x1c] = w(0);
-    [A2 + 0x4] = w(w[A2 + 0x4] | (S4 & S6));
-}
-
-V1 = w[0x80080a10];
-[V1 + 0x8] = w(w[S0 + 0x24]);
-[V1 + 0xc] = w(w[S0 + 0x28]);
-
-[V1 + 0x0] = w(w[V1 + 0x0] & 0xffffffcc);
-
-if( w[S0 + 0x14] == w[0x8007f8dc] )
-{
-    [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000020);
-}
-else
-{
-    [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000010);
-}
-
-
-V0 = w[S0 + 0x30];
-V1 = V0 + 0x30;
-A0 = S0 + V1;
-A1 = w[80080a10];
-A2 = 0;
-if( V0 != 0 )
-{
-    A2 = A0;
-}
-
-[A1 + 0030] = w(A2);
-V1 = w[S0 + 0034];
-A2 = 0;
-V0 = V1 + 0034;
-A0 = S0 + V0;
-if( V1 != 0 )
-{
-    A2 = A0;
-}
-
-S1 = 0x1;
-S5 = 0;
-data_p = 0x8007bd48;
-S2 = S2 + 0x40;
-S7 = 0x8006f40c;
-[A1 + 0034] = w(A2);
-[A1 + 0038] = w(0);
-
-loop597e0:	; 800597E0
-    V1 = S4 & S1;
-
-    if( V1 & S6 )
+    V1 = w[0x8007f790];
+    if( V1 != 0 )
     {
-        V1 = w[0x80080a10];
-
-        [data_p + 0x0] = w(S2 + hu[S2 + 0x0]);
-        [data_p + 0x118 + ff7e] = h(4);
-        [data_p + 0x118 + ff80] = h(2);
-        [data_p + 0x118 + ff9a] = h(7f00);
-        [data_p + 0x118 + ff60] = w(3fff0000);
-        [data_p + 0x118 + ffe8] = h(4000);
-        [data_p + 0x118 + fff0] = h(0);
-        [data_p + 0x118 + ffee] = h(0);
-        [data_p + 0x118 + ffb2] = h(0);
-        [data_p + 0x118 + ff18] = w(0);
-        [data_p + 0x118 + fff4] = h(0);
-        [data_p + 0x118 + ffaa] = h(0);
-        [data_p + 0x118 + ffe2] = h(0);
-        [data_p + 0x118 + ffe0] = h(0);
-        [data_p + 0x118 + ffa6] = h(8000);
-        [data_p + 0x118 + ffa8] = h(0);
-        [data_p + 0x118 + ffb2] = h(0);
-        [data_p + 0x118 + ffa4] = h(0);
-        [data_p + 0x118 + ffa0] = h(0);
-        [data_p + 0x118 + ff6c] = w(0);
-        [data_p + 0x118 + ffa2] = h(0);
-        [data_p + 0x118 + ffde] = h(0);
-        [data_p + 0x118 + ffb4] = h(0);
-        [data_p + 0x118 + fffc] = h(0);
-        [data_p + 0x118 + ffdc] = h(0);
-        [data_p + 0x118 + ffd2] = h(0);
-        [data_p + 0x118 + ffca] = h(0);
-        [data_p + 0x118 + ffbe] = h(0);
-        [data_p + 0x118 + ffd4] = h(0);
-        [data_p + 0x118 + ff1c] = w(((w[V1 + 0xc] & S1) < 0x1) << 0x6);
-        [data_p + 0x118 + ffcc] = h(0);
-        [data_p + 0x118 + ffc0] = h(0);
-        [data_p + 0x118 + ffd0] = h(0);
-        [data_p + 0x118 + ffc8] = h(0);
-        [data_p + 0x118 + ffba] = h(0);
-        [data_p + 0x118 + ffda] = h(0);
-        [data_p + 0x118 + ffd8] = h(0);
-
-        system_akao_load_instrument( data_p, 0x0 );
-
-        S2 += 0x2;
+        S1 = func595f0( w[0x8007f71c], w[V1 + 0x4] );
     }
     else
     {
-        if( V1 != 0 )
-        {
-            if( ( S1 & S6 ) == 0 )
-            {
-                S2 += 0x2;
-            }
-        }
-
-        V0 = 0003;
-        [S0 + ff7e] = h(V0);
-        V0 = 0001;
-        [S0 + ff80] = h(V0);
-        [data_p + 0000] = w(S7);
-        V0 = w[S0 + 0004];
-        V1 = hu[S0 + 0014];
-        V0 = V0 | 4400;
-        V1 = V1 & ffe0;
-        V1 = V1 | 0005;
-        [S0 + 0004] = w(V0);
-        [S0 + 0014] = h(V1);
-        V0 = 0018;
+        S1 = 0;
     }
 
-    [S0 + 0x0] = w(0x18);
-    V0 = ~S1;
-    S4 = S4 & V0;
-    S0 = S0 + 0134;
-    data_p += 0x134;
-    S5 = S5 + 0001;
-    V0 = S5 < 0020;
-    S1 = S1 << 01;
-80059934	bne    v0, zero, loop597e0 [$800597e0]
+    [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | (~S1 & ((w[0x80083174] NOR w[0x80080a70]) & 0x00ffffff)));
 
-V0 = w[0x80080a10];
-[V0 + 0x20] = w(0xffff0000);
-[V0 + 0x28] = w(0x1);
-[V0 + 0x68] = h(0);
-[V0 + 0x48] = w(0);
-[V0 + 0x66] = h(0);
-[V0 + 0x4c] = w(0);
-[V1 + 0x08] = w(0);
-[V0 + 0x76] = h(0);
-[V0 + 0x74] = h(0);
-[V0 + 0x72] = h(0);
-[V0 + 0x78] = h(0);
-[V0 + 0x3c] = w(0);
-[V0 + 0x40] = w(0);
-[V0 + 0x44] = w(0);
-[V0 + 0x6c] = h(0);
-[V0 + 0x14] = w(0);
-[V0 + 0x10] = w(0);
-[0x80083158 + 0x8] = w(w[0x80083158 + 0008] | 0100);
-////////////////////////////////
+    A2 = w[0x80080a10];
+    [A2 + 0x18] = w(0);
+
+    if( w[0x800831c4] & 0x1 )
+    {
+        [A2 + 0x4] = w(0);
+        [A2 + 0x1c] = w(w[A2 + 0x1c] | (channels_mask & S6));
+    }
+    else
+    {
+        [A2 + 0x1c] = w(0);
+        [A2 + 0x4] = w(w[A2 + 0x4] | (channels_mask & S6));
+    }
+
+    V1 = w[0x80080a10];
+    [V1 + 0x8] = w(w[file + 0x24]);
+    [V1 + 0xc] = w(w[file + 0x28]);
+
+    [V1 + 0x0] = w(w[V1 + 0x0] & 0xffffffcc);
+
+    if( w[file + 0x14] == w[0x8007f8dc] )
+    {
+        [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000020);
+    }
+    else
+    {
+        [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000010);
+    }
+
+    A2 = 0;
+    if( w[file + 0x30] != 0 )
+    {
+        A2 = file + w[file + 0x30] + 0x30;
+    }
+
+    A1 = w[0x80080a10];
+    [A1 + 0x30] = w(A2);
+    A2 = 0;
+    if( w[file + 0x34] != 0 )
+    {
+        A2 = file + w[file + 0x34] + 0x34;
+    }
+    [A1 + 0x34] = w(A2);
+
+    [A1 + 0x38] = w(0);
+
+    u32 channel_mask = 0x1;
+    data_p = 0x8007bd48;
+    file += 0x40;
+
+    for( int i = 0; i < 0x20; ++i )
+    {
+        if( channels_mask & channel_mask & S6 )
+        {
+            V1 = w[0x80080a10];
+
+            [data_p + 0x0] = w(file + hu[file + 0x0]);
+            [data_p + 0x30] = w(0);
+            [data_p + 0x34] = w(((w[V1 + 0xc] & channel_mask) < 0x1) << 0x6);
+            [data_p + 0x78] = w(0x3fff0000);
+            [data_p + 0x84] = w(0);
+            [data_p + 0x96] = h(0x4);
+            [data_p + 0x98] = h(0x2);
+            [data_p + 0xb2] = h(0x7f00);
+            [data_p + 0xb8] = h(0);
+            [data_p + 0xba] = h(0);
+            [data_p + 0xbc] = h(0);
+            [data_p + 0xbe] = h(0x8000);
+            [data_p + 0xc0] = h(0);
+            [data_p + 0xc2] = h(0);
+            [data_p + 0xca] = h(0);
+            [data_p + 0xcc] = h(0);
+            [data_p + 0xd2] = h(0);
+            [data_p + 0xd6] = h(0);
+            [data_p + 0xd8] = h(0);
+            [data_p + 0xe0] = h(0);
+            [data_p + 0xe2] = h(0);
+            [data_p + 0xe4] = h(0);
+            [data_p + 0xe8] = h(0);
+            [data_p + 0xea] = h(0);
+            [data_p + 0xec] = h(0);
+            [data_p + 0xf0] = h(0);
+            [data_p + 0xf2] = h(0);
+            [data_p + 0xf4] = h(0);
+            [data_p + 0xf6] = h(0);
+            [data_p + 0xf8] = h(0);
+            [data_p + 0xfa] = h(0);
+            [data_p + 0x100] = h(0x4000);
+            [data_p + 0x106] = h(0);
+            [data_p + 0x108] = h(0);
+            [data_p + 0x10c] = h(0);
+            [data_p + 0x114] = h(0);
+
+            system_akao_load_instrument( data_p, 0x0 );
+
+            file += 0x2;
+        }
+        else
+        {
+            if( V1 != 0 )
+            {
+                if( ( channel_mask & S6 ) == 0 )
+                {
+                    file += 0x2;
+                }
+            }
+
+            [data_p + 0x0] = w(0x8006f40c);
+            [data_p + 0x96] = h(0x3);
+            [data_p + 0x98] = h(0x1);
+            [data_p + 0x11c] = w(w[data_p + 0x11c] | 0x00004400);
+            [data_p + 0x12c] = h((hu[data_p + 0x12c] & 0xffe0) | 0x0005);
+        }
+
+        [data_p + 0x118] = w(0x18);
+        channels_mask &= ~channel_mask;
+        data_p += 0x134;
+        channel_mask <<= 0x1;
+    }
+
+    V0 = w[0x80080a10];
+    [V0 + 0x10] = w(0);
+    [V0 + 0x14] = w(0);
+    [V0 + 0x20] = w(0xffff0000);
+    [V0 + 0x28] = w(0x1);
+    [V0 + 0x3c] = w(0);
+    [V0 + 0x40] = w(0);
+    [V0 + 0x44] = w(0);
+    [V0 + 0x48] = w(0);
+    [V0 + 0x4c] = w(0);
+    [V0 + 0x66] = h(0);
+    [V0 + 0x68] = h(0);
+    [V0 + 0x6c] = h(0);
+    [V0 + 0x72] = h(0);
+    [V0 + 0x74] = h(0);
+    [V0 + 0x76] = h(0);
+    [V0 + 0x78] = h(0);
+
+    [0x80083158 + 0x8] = w(0x00000100);
+}
 
 
 
@@ -2090,52 +2064,49 @@ L5a27c:	; 8005A27C
 
 
 
-////////////////////////////////
-// func5a284()
-
-V1 = 1;
-mask = w[A0 + 4];
-while( mask != 0 )
+void system_akao_set_voices_volume_dirty1( A0, VoiceData* data_p )
 {
-    if( mask & V1 )
+    u32 channels_mask = w[A0 + 4];
+    u32 channel_mask = 0x1;
+
+    while( channels_mask != 0 )
     {
-        mask ^= V1;
-        [A1 + 11c] = w(w[A1 + 11c] | 00000003);
+        if( channels_mask & channel_mask )
+        {
+            channels_mask ^= channel_mask;
+            [data_p + 0x11c] = w(w[data_p + 0x11c] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+        }
+
+        channel_mask <<= 0x1;
+        data_p += 0x134;
     }
-
-    V1 <<= 1;
-    A1 += 134;
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// func5a2cc()
-
-A1 = w[0x80080a70];
-A0 = 0x100;
-data_p = 0x8007e3d8;
-
-while( A1 != 0 )
+void system_akao_set_voices_volume_dirty2()
 {
-    if( A1 & A0 )
+    u32 channels_mask = w[0x80080a70];
+    u32 channel_mask = 0x100;
+    data_p = 0x8007e3d8;
+
+    while( channels_mask != 0 )
     {
-        A1 = A1 ^ A0;
-        [data_p + 0x11c] = w(w[data_p + 0x11c] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+        if( channels_mask & channel_mask )
+        {
+            [data_p + 0x11c] = w(w[data_p + 0x11c] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+            channels_mask ^= channel_mask;
+        }
+
+        data_p += 0x134;
+        channel_mask <<= 0x1;
     }
-
-    data_p += 0x134;
-    A0 <<= 0x1;
 }
-////////////////////////////////
 
 
 
-void func5a320( A0, A1 )
+void func5a320( file, A1 )
 {
-    S1 = A0;
-
     if( A1 == 0 )
     {
         system_akao_copy( 0x8007f8f0, w[0x80080a10], 0x7c );
@@ -2157,7 +2128,7 @@ void func5a320( A0, A1 )
     V1 = w[0x80080a10];
     [V1 + 0x0] = w(w[V1 + 0x0] & 0xffffffcf);
 
-    if( w[S1 + 0x14] == w[0x8007f8dc] )
+    if( w[file + 0x14] == w[0x8007f8dc] )
     {
         [V1 + 0x0] = w(w[V1 + 0x0] | 0x00000020);
     }
@@ -2169,13 +2140,13 @@ void func5a320( A0, A1 )
     data_p = 0x8007bd48;
     A0 = w[0x80080a10];
     A1 = w[A0 + 0x2c];
-    [A0 + 0x2c] = w(S1);
+    [A0 + 0x2c] = w(file);
     [A0 + 0x10] = w(0);
-    S1 = S1 - A1;
+    file -= A1;
     [0x80083158 + 0x8] = w(w[0x80083158 + 0x8] | 0x90);
-    [A0 + 0x30] = w(w[A0 + 0x30] + S1);
+    [A0 + 0x30] = w(w[A0 + 0x30] + file);
     [A0 + 0x10] = w(w[A0 + 0x14]);
-    [A0 + 0x34] = w(w[A0 + 0x34] + S1);
+    [A0 + 0x34] = w(w[A0 + 0x34] + file);
 
     u32 channel_mask = 0x1;
     u32 channels_mask = w[A0 + 0x4];
@@ -2183,12 +2154,12 @@ void func5a320( A0, A1 )
     {
         if( channels_mask & channel_mask )
         {
-            [data_p + 0x0] = w(w[data_p + 0x0] + S1);
-            [data_p + 0x4] = w(w[data_p + 0x4] + S1);
-            [data_p + 0x8] = w(w[data_p + 0x8] + S1);
-            [data_p + 0xc] = w(w[data_p + 0xc] + S1);
-            [data_p + 0x10] = w(w[data_p + 0x10] + S1);
-            [data_p + 0x18] = w(w[data_p + 0x18] + S1);
+            [data_p + 0x0] = w(w[data_p + 0x0] + file);
+            [data_p + 0x4] = w(w[data_p + 0x4] + file);
+            [data_p + 0x8] = w(w[data_p + 0x8] + file);
+            [data_p + 0xc] = w(w[data_p + 0xc] + file);
+            [data_p + 0x10] = w(w[data_p + 0x10] + file);
+            [data_p + 0x18] = w(w[data_p + 0x18] + file);
             [data_p + 0x96] = h(hu[data_p + 0x96] + 0x2);
             [data_p + 0x98] = h(hu[data_p + 0x98] + 0x2);
             [data_p + 0x11c] = w(w[data_p + 0x11c] | 0x0001ff93);
@@ -2271,68 +2242,40 @@ V0 = A1;
 
 
 
-void func5a658( A0 )
+void system_akao_command_10( u32 akao_data )
 {
-    S0 = A0;
-
-    V0 = hu[0x8007f8f0 + 0x6a];
-    if( V0 != 0 )
+    if( ( hu[0x8007f8f0 + 0x6a] != 0 ) && ( hu[0x8007f8f0 + 0x6a] == w[akao_data + 0x8] ) )
     {
-        if( V0 == w[S0 + 0x8] )
-        {
-            func5a320( w[S0 + 0x0], 0 );
-
-            return;
-        }
+        func5a320( w[akao_data + 0x0], 0 );
     }
+    else
+    {
+        func5963c( w[akao_data + 0x0], 0xffffffff);
 
-    A0 = w[S0 + 0x0];
-    A1 = -1;
-    func5963c();
-
-    V1 = w[0x80080a10];
-    [V1 + 0x6a] = h(hu[S0 + 0x8]);
+        V1 = w[0x80080a10];
+        [V1 + 0x6a] = h(hu[akao_data + 0x8]);
+    }
 }
 
 
 
-////////////////////////////////
-// func5a6d4
-8005A6D4	addiu  sp, sp, $ffe8 (=-$18)
-8005A6D8	lui    v0, $8008
-8005A6DC	addiu  v1, v0, $f8f0 (=-$710)
-[SP + 0014] = w(RA);
-[SP + 0010] = w(S0);
-V0 = hu[V1 + 006a];
-8005A6EC	nop
-8005A6F0	beq    v0, zero, L5a720 [$8005a720]
-S0 = A0;
-V1 = V0;
-V0 = w[S0 + 0008];
-8005A700	nop
-8005A704	bne    v1, v0, L5a720 [$8005a720]
-8005A708	nop
-A0 = w[S0 + 0000];
-8005A710	jal    func5a320 [$8005a320]
-A1 = 0;
-8005A718	j      L5a744 [$8005a744]
-8005A71C	nop
+void system_akao_command_14( u32 akao_data )
+{
+    if( ( hu[0x8007f8f0 + 0x6a] != 0 ) && ( hu[0x8007f8f0 + 0x6a] == w[akao_data + 0x8] ) )
+    {
+        func5a320( w[akao_data + 0x0], 0 );
+    }
+    else
+    {
+        func5963c( w[akao_data + 0x0], w[akao_data + 0xc] );
 
-L5a720:	; 8005A720
-A0 = w[S0 + 0000];
-A1 = w[S0 + 000c];
-8005A728	jal    func5963c [$8005963c]
-8005A72C	nop
-V1 = w[80080a10];
-V0 = hu[S0 + 0008];
-8005A73C	nop
-[V1 + 006a] = h(V0);
+        V1 = w[0x80080a10];
+        [V1 + 0x6a] = h(hu[akao_data + 0x8]);
+    }
+}
 
-L5a744:	; 8005A744
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-8005A74C	jr     ra 
-SP = SP + 0018;
+
+
 ////////////////////////////////
 // func5a754
 A0 = w[80080a10];
@@ -2374,198 +2317,91 @@ S0 = w[SP + 0010];
 8005A7DC	jr     ra 
 SP = SP + 0020;
 ////////////////////////////////
-// func5a7e4
-8005A7E4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-S1 = A0;
-A0 = w[80080a10];
-[SP + 0018] = w(RA);
-[SP + 0010] = w(S0);
-V0 = w[A0 + 0004];
-8005A804	nop
-8005A808	beq    v0, zero, L5a864 [$8005a864]
-V0 = w[8007f790];
-8005A814	nop
-8005A818	beq    v0, zero, L5a830 [$8005a830]
-8005A81C	lui    a1, $8008
-V0 = hu[V0 + 006a];
-8005A824	nop
-8005A828	bne    v0, zero, L5a864 [$8005a864]
-8005A82C	nop
-
-L5a830:	; 8005A830
-8005A830	addiu  a1, a1, $f8f0 (=-$710)
-A2 = 007c;
-8005A838	lui    s0, $8008
-V0 = 80080ac8;
-[V1 + f790] = w(A1);
-8005A848	jal    system_akao_copy [$8005ce04]
-[S0 + f71c] = w(V0);
-8005A850	lui    a0, $8008
-8005A854	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = w[S0 + f71c];
-8005A85C	jal    system_akao_copy [$8005ce04]
-A2 = 2680;
-
-L5a864:	; 8005A864
-A0 = w[S1 + 0000];
-8005A868	jal    func5963c [$8005963c]
-8005A86C	addiu  a1, zero, $ffff (=-$1)
-8005A870	lui    v1, $8008
-V0 = w[S1 + 0010];
-V1 = w[V1 + 0a10];
-V0 = V0 & 007f;
-V0 = V0 << 10;
-[V1 + 0050] = w(V0);
-[V1 + 0058] = h(0);
-V0 = hu[S1 + 0008];
-8005A890	jal    func59414 [$80059414]
-[V1 + 006a] = h(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8005A8A4	jr     ra 
-SP = SP + 0020;
-////////////////////////////////
-// func5a8ac
-8005A8AC	addiu  sp, sp, $ffe0 (=-$20)
-8005A8B0	lui    v0, $8008
-[SP + 0010] = w(S0);
-8005A8B8	addiu  s0, v0, $f8f0 (=-$710)
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-V0 = hu[S0 + 006a];
-8005A8C8	nop
-8005A8CC	beq    v0, zero, L5a910 [$8005a910]
-S1 = A0;
-V1 = V0;
-V0 = w[S1 + 0008];
-8005A8DC	nop
-8005A8E0	bne    v1, v0, L5a914 [$8005a914]
-8005A8E4	lui    v0, $8008
-A0 = w[S1 + 0000];
-8005A8EC	jal    func5a320 [$8005a320]
-A1 = 0001;
-8005A8F4	lui    v0, $8008
-8005A8F8	lui    v1, $8008
-[V0 + f790] = w(S0);
-V0 = 80080ac8;
-8005A908	j      L5a9a0 [$8005a9a0]
-[V1 + f71c] = w(V0);
-
-L5a910:	; 8005A910
-8005A910	lui    v0, $8008
-
-L5a914:	; 8005A914
-A0 = w[V0 + 0a10];
-8005A918	nop
-V0 = w[A0 + 0004];
-8005A920	nop
-8005A924	beq    v0, zero, L5a980 [$8005a980]
-V0 = w[8007f790];
-8005A930	nop
-8005A934	beq    v0, zero, L5a94c [$8005a94c]
-8005A938	lui    a1, $8008
-V0 = hu[V0 + 006a];
-8005A940	nop
-8005A944	bne    v0, zero, L5a980 [$8005a980]
-8005A948	nop
-
-L5a94c:	; 8005A94C
-8005A94C	addiu  a1, a1, $f8f0 (=-$710)
-A2 = 007c;
-8005A954	lui    s0, $8008
-V0 = 80080ac8;
-[V1 + f790] = w(A1);
-8005A964	jal    system_akao_copy [$8005ce04]
-[S0 + f71c] = w(V0);
-8005A96C	lui    a0, $8008
-8005A970	addiu  a0, a0, $bd48 (=-$42b8)
-A1 = w[S0 + f71c];
-8005A978	jal    system_akao_copy [$8005ce04]
-A2 = 2680;
-
-L5a980:	; 8005A980
-A0 = w[S1 + 0000];
-8005A984	jal    func5963c [$8005963c]
-8005A988	addiu  a1, zero, $ffff (=-$1)
-V1 = w[80080a10];
-V0 = hu[S1 + 0008];
-8005A998	nop
-[V1 + 006a] = h(V0);
-
-L5a9a0:	; 8005A9A0
-V0 = w[8007f790];
-8005A9A8	nop
-8005A9AC	beq    v0, zero, L5aa18 [$8005aa18]
-8005A9B0	lui    a2, $ff80
-A1 = w[S1 + 0010];
-A2 = A2 | 8000;
-8005A9BC	div    a2, a1
-8005A9C0	bne    a1, zero, L5a9cc [$8005a9cc]
-8005A9C4	nop
-8005A9C8	break   $01c00
-
-L5a9cc:	; 8005A9CC
-8005A9CC	addiu  at, zero, $ffff (=-$1)
-8005A9D0	bne    a1, at, L5a9e4 [$8005a9e4]
-8005A9D4	lui    at, $8000
-8005A9D8	bne    a2, at, L5a9e4 [$8005a9e4]
-8005A9DC	nop
-8005A9E0	break   $01800
-
-L5a9e4:	; 8005A9E4
-8005A9E4	mflo   a2
-8005A9E8	lui    a0, $8008
-V1 = 80083158;
-V0 = 7f8000;
-[A0 + 0a18] = w(V0);
-V0 = w[V1 + 0004];
-A0 = A0 + 0a18;
-[A0 + 0008] = w(A1);
-V0 = V0 | 0100;
-[V1 + 0004] = w(V0);
-[A0 + 0004] = w(A2);
-
-L5aa18:	; 8005AA18
-A0 = w[80080a10];
-8005AA20	nop
-[A0 + 0050] = w(0);
-V0 = hu[S1 + 0010];
-8005AA2C	nop
-[A0 + 0058] = h(V0);
-V0 = w[S1 + 0014];
-V1 = w[S1 + 0010];
-V0 = V0 & 007f;
-V0 = V0 << 10;
-V0 = V0 | 8000;
-8005AA48	divu   v0, v1
-8005AA4C	bne    v1, zero, L5aa58 [$8005aa58]
-8005AA50	nop
-8005AA54	break   $01c00
-
-L5aa58:	; 8005AA58
-8005AA58	mflo   v0
-8005AA5C	jal    func59414 [$80059414]
-[A0 + 0054] = w(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8005AA70	jr     ra 
-SP = SP + 0020;
-////////////////////////////////
 
 
 
-void func5aa78( A0 )
+void system_akao_command_19( u32 akao_data )
 {
-    S0 = A0;
+    A0 = w[0x80080a10];
+    V1 = w[0x8007f790];
 
-    func5a658( A0 );
-
-    if( w[S0 + 0c] != 0 )
+    if( ( w[A0 + 0x4] != 0 ) && ( ( V1 == 0 ) || ( hu[V1 + 0x6a] == 0 ) ) )
     {
-        [0x800809b8] = w(w[S0 + 0c] - 1);
+        [0x8007f790] = w(0x8007f8f0);
+        [0x8007f71c] = w(0x80080ac8);
+
+        system_akao_copy( A0, 0x8007f8f0, 0x7c );
+        system_akao_copy( 0x8007bd48, w[0x8007f71c], 0x2680 );
+    }
+
+    func5963c( w[akao_data + 0x0], 0xffffffff );
+
+    V1 = w[0x80080a10];
+    [V1 + 0x50] = w((w[akao_data + 0x10] & 0x7f) << 0x10);
+    [V1 + 0x58] = h(0);
+    [V1 + 0x6a] = h(hu[akao_data + 0x8]);
+
+    func59414();
+}
+
+
+
+void system_akao_command_1a( u32 akao_data )
+{
+    if( ( hu[0x8007f8f0 + 0x6a] != 0 ) && ( hu[0x8007f8f0 + 0x6a] == w[akao_data + 0x8] ) )
+    {
+        func5a320( w[akao_data + 0x0], 1 );
+
+        [0x8007f790] = w(0x8007f8f0);
+        [0x8007f71c] = w(0x80080ac8);
+    }
+    else
+    {
+        A0 = w[0x80080a10];
+        V1 = w[0x8007f790];
+
+        if( ( w[A0 + 0x4] != 0 ) && ( ( V1 == 0 ) || ( hu[V1 + 0x6a] == 0 ) ) )
+        {
+            [0x8007f790] = w(0x8007f8f0);
+            [0x8007f71c] = w(0x80080ac8);
+
+            system_akao_copy( A0, 0x8007f8f0, 0x7c );
+            system_akao_copy( 0x8007bd48, w[0x8007f71c], 0x2680 );
+        }
+
+        func5963c( w[akao_data + 0x0], 0xffffffff);
+
+        V1 = w[0x80080a10];
+        [V1 + 0x6a] = h(hu[akao_data + 0x8]);
+    }
+
+    if( w[0x8007f790] != 0 )
+    {
+        A1 = w[akao_data + 0x10];
+        [0x80080a18 + 0x0] = w(0x7f8000);
+        [0x80080a18 + 0x4] = w(0xff808000 / A1);
+        [0x80080a18 + 0x8] = w(A1);
+
+        [0x80083158 + 0x4] = w(w[0x80083158 + 0x4] | 0x00000100);
+    }
+
+    A0 = w[0x80080a10];
+    [A0 + 0x50] = w(0);
+    [A0 + 0x54] = w((((w[akao_data + 0x14] & 0x7f) << 0x10) | 0x8000) / w[akao_data + 0x10]);
+    [A0 + 0x58] = h(hu[akao_data + 0x10]);
+
+    func59414();
+}
+
+
+
+void system_akao_command_12( u32 akao_data )
+{
+    system_akao_command_10( akao_data );
+
+    if( w[akao_data + 0xc] != 0 )
+    {
+        [0x800809b8] = w(w[akao_data + 0xc] - 1);
     }
     else
     {
@@ -2575,15 +2411,15 @@ void func5aa78( A0 )
 
 
 
-void func5aab8( A0 )
+void system_akao_command_34( u32 akao_data )
 {
-    A1 = w[A0 + 0x0];
-    A2 = w[A0 + 0x4];
-    [A0 + 0x0] = w(0x400);
-    [A0 + 0x4] = w(0x01000000);
-    [A0 + 0x8] = w(0x80);
-    [A0 + 0xc] = w(0x7f);
-    [A0 + 0x10] = w(0);
+    A1 = w[akao_data + 0x0];
+    A2 = w[akao_data + 0x4];
+    [akao_data + 0x0] = w(0x400);
+    [akao_data + 0x4] = w(0x01000000);
+    [akao_data + 0x8] = w(0x80);
+    [akao_data + 0xc] = w(0x7f);
+    [akao_data + 0x10] = w(0);
 
     A3 = 0;
     func5a014();
@@ -2846,7 +2682,7 @@ V0 = V0 << 10;
 [A0 + 0050] = w(V0);
 
 L5aeb0:	; 8005AEB0
-func5a284();
+system_akao_set_voices_volume_dirty1();
 
 L5aeb8:	; 8005AEB8
 ////////////////////////////////
@@ -2920,19 +2756,6 @@ V1 = V1 & V0;
 V1 = V1 | 8000;
 A2 = A2 - V1;
 8005AFAC	div    a2, t0
-8005AFB0	bne    t0, zero, L5afbc [$8005afbc]
-8005AFB4	nop
-8005AFB8	break   $01c00
-
-L5afbc:	; 8005AFBC
-8005AFBC	addiu  at, zero, $ffff (=-$1)
-8005AFC0	bne    t0, at, L5afd4 [$8005afd4]
-8005AFC4	lui    at, $8000
-8005AFC8	bne    a2, at, L5afd4 [$8005afd4]
-8005AFCC	nop
-8005AFD0	break   $01800
-
-L5afd4:	; 8005AFD4
 8005AFD4	mflo   a2
 A1 = w[8007f71c];
 A0 = A3;
@@ -2940,8 +2763,9 @@ A0 = A3;
 L5afe4:	; 8005AFE4
 [A0 + 0058] = h(T0);
 [A0 + 0050] = w(V1);
-8005AFEC	jal    func5a284 [$8005a284]
 [A0 + 0054] = w(A2);
+system_akao_set_voices_volume_dirty1();
+
 
 L5aff4:	; 8005AFF4
 ////////////////////////////////
@@ -3003,8 +2827,8 @@ V0 = V0 - V1;
 8005B0BC	div    v0, a2
 8005B0E4	mflo   v0
 [A0 + 0058] = h(A2);
-8005B0EC	jal    func5a284 [$8005a284]
 [A0 + 0054] = w(V0);
+system_akao_set_voices_volume_dirty1();
 
 L5b0f4:	; 8005B0F4
 ////////////////////////////////
@@ -3054,8 +2878,7 @@ V0 = V0 << 10;
 [A0 + 005c] = w(V0);
 
 L5b1a0:	; 8005B1A0
-8005B1A0	jal    func5a284 [$8005a284]
-8005B1A4	nop
+system_akao_set_voices_volume_dirty1();
 
 L5b1a8:	; 8005B1A8
 ////////////////////////////////
@@ -3116,14 +2939,11 @@ A1 = w[8007f71c];
 
 L5b2bc:	; 8005B2BC
 [A0 + 0064] = h(A2);
-8005B2C0	jal    func5a284 [$8005a284]
 [A0 + 0060] = w(V1);
+system_akao_set_voices_volume_dirty1();
+
 
 L5b2c8:	; 8005B2C8
-RA = w[SP + 0010];
-8005B2CC	nop
-8005B2D0	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
 
 
@@ -4003,13 +3823,13 @@ V0 = V0 - V1;
 
 
 
-void func5bf34( A0 )
+void system_akao_command_d2( u32 akao_data )
 {
-    A1 = ( w[A0 + 0x4] != 0 ) ? w[A0 + 0x0] : 1;
-    V1 = b[A0 + 0x4] << 0x10;
+    A1 = ( w[akao_data + 0x4] != 0 ) ? w[akao_data + 0x0] : 1;
+    V1 = b[akao_data + 0x4] << 0x10;
     [0x80083154] = w(V1);
     [0x8007f96e] = h(A1);
-    [0x8008f8e8] = w(((b[A0 + 0x8] << 0x10) - V1) / A1);
+    [0x8008f8e8] = w(((b[akao_data + 0x8] << 0x10) - V1) / A1);
 }
 
 
@@ -4077,7 +3897,7 @@ V0 = V0 - V1;
 
 
 
-void func5c0a0()
+void system_akao_command_f0( u32 akao_data )
 {
     func599d4( w[0x80080a10], 0x8007bd48, 0 );
 
@@ -4090,16 +3910,14 @@ void func5c0a0()
 
 
 
-void func5c0f0( A0 )
+void system_akao_command_11( u32 akao_data )
 {
-    S0 = A0;
-
-    func599d4( w[0x80080a10], 0x8007bd48, w[S0 + 0x0] );
+    func599d4( w[0x80080a10], 0x8007bd48, w[akao_data + 0x0] );
 
     A0 = w[0x8007f790];
     if( A0 != 0 )
     {
-        A2 = w[S0 + 0x0];
+        A2 = w[akao_data + 0x0];
         if( A2 != 0 )
         {
             func599d4( A0, w[0x8007f71c], A2 );
@@ -4155,51 +3973,37 @@ V0 = V0 | 0110;
 
 
 
-////////////////////////////////
-// func5c234
+void system_akao_command_80( u32 akao_data )
+{
+    [0x8008315c] = w(1);
 
-8005C238	lui    a1, $8008
-8005C23C	addiu  a1, a1, $bd48 (=-$42b8)
-8005C240	lui    v0, $8008
-8005C244	lui    v1, $8008
-A0 = w[V0 + 0a10];
-V0 = 0001;
-8005C254	jal    func5a284 [$8005a284]
-[V1 + 315c] = w(V0);
-A0 = w[8007f790];
-8005C264	nop
-8005C268	beq    a0, zero, L5c27c [$8005c27c]
-A1 = w[8007f71c];
-8005C274	jal    func5a284 [$8005a284]
-8005C278	nop
+    system_akao_set_voices_volume_dirty1( w[0x80080a10], 0x8007bd48 );
 
-L5c27c:	; 8005C27C
-8005C27C	jal    func5a2cc [$8005a2cc]
-////////////////////////////////
+    A0 = w[0x8007f790];
+    if( A0 != 0 )
+    {
+        system_akao_set_voices_volume_dirty1( A0, w[0x8007f71c] );
+    }
+
+    system_akao_set_voices_volume_dirty2();
+}
 
 
 
-////////////////////////////////
-// func5c294
+void system_akao_command_81( u32 akao_data )
+{
+    [0x8008315c] = w(2);
 
-8005C298	lui    a1, $8008
-8005C29C	addiu  a1, a1, $bd48 (=-$42b8)
-8005C2A0	lui    v0, $8008
-8005C2A4	lui    v1, $8008
-A0 = w[V0 + 0a10];
-V0 = 0002;
-8005C2B4	jal    func5a284 [$8005a284]
-[V1 + 315c] = w(V0);
-A0 = w[8007f790];
-8005C2C4	nop
-8005C2C8	beq    a0, zero, L5c2dc [$8005c2dc]
-A1 = w[8007f71c];
-8005C2D4	jal    func5a284 [$8005a284]
-8005C2D8	nop
+    system_akao_set_voices_volume_dirty1( w[0x80080a10], 0x8007bd48 );
 
-L5c2dc:	; 8005C2DC
-8005C2DC	jal    func5a2cc [$8005a2cc]
-////////////////////////////////
+    A0 = w[0x8007f790];
+    if( A0 != 0 )
+    {
+        system_akao_set_voices_volume_dirty1( A0, w[0x8007f71c] );
+    }
+
+    system_akao_set_voices_volume_dirty2();
+}
 
 
 
@@ -4482,9 +4286,9 @@ void func5c700()
 
 
 
-////////////////////////////////
-// func5c864
-////////////////////////////////
+void system_akao_command_null( u32 akao_data )
+{
+}
 
 
 
@@ -4514,51 +4318,50 @@ if( w[SP + 10] != S0 )
 
 
 
-u16 func5c8bc( A0 )
+u16 system_akao_command_execute( A0 )
 {
-    S0 = A0;
+    u8 command = A0;
 
     A0 = w[8006f318];
     S1 = 0;
     system_bios_disable_event();
 
-    S0 = S0 & 00ff;
-    V0 = S0 < 0x1b;
+    V0 = command < 0x1b;
     8005C8F8	beq    v0, zero, L5c940 [$8005c940]
 
-    V0 = S0 < 0019;
+    V0 = command < 0019;
     8005C904	beq    v0, zero, L5c988 [$8005c988]
     V0 = 0012;
-    8005C90C	beq    s0, v0, L5c988 [$8005c988]
-    V0 = S0 < 0013;
+    8005C90C	beq    command, v0, L5c988 [$8005c988]
+    V0 = command < 0013;
     8005C914	beq    v0, zero, L5c92c [$8005c92c]
     V0 = 0010;
-    8005C91C	beq    s0, v0, L5c988 [$8005c988]
+    8005C91C	beq    command, v0, L5c988 [$8005c988]
 
     8005C924	j      L5cb90 [$8005cb90]
 
     L5c92c:	; 8005C92C
     V0 = 0014;
-    8005C930	beq    s0, v0, L5c988 [$8005c988]
+    8005C930	beq    command, v0, L5c988 [$8005c988]
 
     8005C938	j      L5cb90 [$8005cb90]
 
     L5c940:	; 8005C940
-    if( S0 == 0xd8 )
+    if( command == 0xd8 )
     {
-        [0x80080970] = w(w[0x80080aa0]);
+        [0x80080970] = w(w[0x80080aa0 + 0x0]);
 
         A0 = 0x80080970;
         8005CAB8	jalr   w[0x8006fa80] ra
 
-        S0 = 0xd4;
+        command = 0xd4;
         8005CAC0	j      L5cbc0 [$8005cbc0]
     }
 
-    V0 = S0 < 0xd9;
+    V0 = command < 0xd9;
     8005C94C	beq    v0, zero, L5c96c [$8005c96c]
 
-    if( S0 == 0x98 )
+    if( command == 0x98 )
     {
         A0 = 0x80080970;
         8005CB70	jalr   w[0x8006f740 + 0x268] ra
@@ -4566,11 +4369,11 @@ u16 func5c8bc( A0 )
         A0 = 0x80080970;
         8005CB80	jalr   w[0x8006f740 + 0x270] ra
 
-        S0 = 0x9e;
+        command = 0x9e;
         8005CB88	j      L5cbc0 [$8005cbc0]
     }
 
-    if( S0 == 0x99 )
+    if( command == 0x99 )
     {
         A0 = 0x80080970;
         8005CB40	jalr   w[0x8006f740 + 0x26c] ra
@@ -4578,14 +4381,14 @@ u16 func5c8bc( A0 )
         A0 = 0x80080970;
         8005CB50	jalr   w[0x8006f740 + 0x274] ra
 
-        S0 = 0x9f;
+        command = 0x9f;
         8005CB58	j      L5cbc0 [$8005cbc0]
     }
 
     8005C964	j      L5cb90 [$8005cb90]
 
     L5c96c:	; 8005C96C
-    if( S0 == 0xd9 )
+    if( command == 0xd9 )
     {
         [0x80080970 + 0x0] = w(w[0x80080aa0 + 0x0]);
         [0x80080970 + 0x4] = w(w[0x80080aa0 + 0x4]);
@@ -4593,11 +4396,11 @@ u16 func5c8bc( A0 )
         A0 = 0x80080970;
         8005CAE8	jalr   w[0x8006fa84] ra
 
-        S0 = 00d5;
+        command = 0xd5;
         8005CAF0	j      L5cbc0 [$8005cbc0]
     }
 
-    if( S0 == 0xda )
+    if( command == 0xda )
     {
         V0 = w[0x80080aa0 + 0x0];
         A1 = w[0x80080aa0 + 0x4];
@@ -4609,72 +4412,71 @@ u16 func5c8bc( A0 )
         A0 = 0x80080970;
         8005CB20	jalr   w[0x8006fa88] ra
 
-        S0 = 0xd6;
+        command = 0xd6;
         8005CB28	j      L5cbc0 [$8005cbc0]
     }
 
     8005C980	j      L5cb90 [$8005cb90]
 
     L5c988:	; 8005C988
-    S3 = 0x80080aa0;
-    A0 = w[0x80080aa0];
+    A0 = w[0x80080aa0 + 0x0];
     func565dc();
 
     if( V0 != 0 )
     {
-        S0 = 0;
+        command = 0;
         S1 = -1;
         8005CA9C	j      L5cbc0 [$8005cbc0]
     }
 
     V0 = w[0x80080a10];
-    S1 = w[0x80080aa0];
+    S1 = w[0x80080aa0 + 0x0];
     if( hu[V0 + 0x6a] == hu[S1 + 0x4] )
     {
         V0 = w[0x8007f790];
         if( ( V0 == 0 ) || ( hu[V0 + 0x6a] == 0 ) )
         {
-            S0 = 0;
+            command = 0;
             S1 = 0;
-            8005CA84	j      L5cbc4 [$8005cbc4]
+            8005CA84	j      L5cbc0 [$8005cbc4]
         }
     }
 
-    if( S0 != 0x19 )
+    if( command != 0x19 )
     {
-        A0 = hu[S1 + 0008];
+        A0 = hu[S1 + 0x8];
         func5c86c();
     }
 
     [0x80080970 + 0x0] = w(S1);
     [0x80080970 + 0x8] = w(hu[S1 + 0x4]);
 
-    if( S0 == 0x14 )
+    if( command == 0x14 )
     {
-        if( w[S3 + 0x4] != 0 )
+        if( w[0x80080aa0 + 0x4] != 0 )
         {
-            [0x80080970 + 0xc] = w(w[S3 + 0x4] | 0x00000001);
+            [0x80080970 + 0xc] = w(w[0x80080aa0 + 0x4] | 0x00000001);
         }
         else
         {
             [0x80080970 + 0xc] = w(-1);
         }
     }
-    if( S0 == 0x19 )
+    if( command == 0x19 )
     {
-        [0x80080970 + 0x10] = w(w[S3 + 0x4]);
+        [0x80080970 + 0x10] = w(w[0x80080aa0 + 0x4]);
     }
-    else if( S0 == 0x1a )
+    else if( command == 0x1a )
     {
-        [0x80080970 + 0x10] = w(w[S3 + 0x4]);
-        [0x80080970 + 0x14] = w(w[S3 + 0x8]);
+        [0x80080970 + 0x10] = w(w[0x80080aa0 + 0x4]);
+        [0x80080970 + 0x14] = w(w[0x80080aa0 + 0x8]);
     }
-    if( S0 == 0x12 )
+    if( command == 0x12 )
     {
-        [0x80080970 + 0xc] = w(w[S3 + 0x4]);
+        [0x80080970 + 0xc] = w(w[0x80080aa0 + 0x4]);
     }
     S1 = hu[S1 + 0x4];
-    8005CA84	j      L5cbc4 [$8005cbc4]
+    8005CA84	j      L5cbc0 [$8005cbc4]
 
     L5cb90:	; 8005CB90
     [0x80080970 + 0x0] = w(w[0x80080aa0 + 0x0]);
@@ -4685,27 +4487,42 @@ u16 func5c8bc( A0 )
     [0x80080970 + 0x14] = w(w[0x80080aa0 + 0x14]);
 
     L5cbc0:	; 8005CBC0
-    L5cbc4:	; 8005CBC4
 
-func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 00
-func5a658, func5c0f0, func5aa78, func5c864, func5a6d4, func5c864, func5c864, func5c864, func5c864, func5a7e4, func5a8ac, func5c864, func5c864, func5c864, func5c864, func5c864, // 10
-func5abec, func5ade8, func5c864, func5c864, func5acb4, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 20
-func5ab04, func5c864, func5c864, func5c864, func5aab8, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 30
-func5a754, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 40
-func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 50
-func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 60
-func5b2d8, func5b30c, func5b374, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 70
-func5c234, func5c294, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // 80
-func5c2f4, func5c864, func5c334, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c438, func5c348, func5c5f0, func5c4d4, func5c700, func5c684, // 90
-func5b3e4, func5b4cc, func5b790, func5b870, func5bb24, func5bc04, func5c864, func5c864, func5b64c, func5b6c8, func5b9e8, func5ba60, func5bd8c, func5bde4, func5c864, func5c864, // a0
-func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // b0
-func5ae14, func5aec8, func5b004, func5c864, func5b104, func5b1b8, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // c0
-func5beb0, func5becc, func5bf34, func5c864, func5bfa8, func5bfc4, func5c02c, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, // d0
-func6127c, func5c864, func612d0, func5c864, func612f0, func6142c, func614ac, func5c864, func62290, func5c864, func5c864, func5c864, func61b20, func61b78, func5c864, func5c864, // e0
-func5c0a0, func5c158, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864, func5c864 // f0
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 00
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 08
+system_akao_command_10,   system_akao_command_11,   system_akao_command_12,   system_akao_command_null, system_akao_command_14,   system_akao_command_null, system_akao_command_null, system_akao_command_null, // 10
+system_akao_command_null, system_akao_command_19,   system_akao_command_1a,   system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 18
+func5abec,                func5ade8,                system_akao_command_null, system_akao_command_null, func5acb4,                system_akao_command_null, system_akao_command_null, system_akao_command_null, // 20
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 28
+func5ab04,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_34,   system_akao_command_null, system_akao_command_null, system_akao_command_null, // 30
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 38
+func5a754,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 40
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 48
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 50
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 58
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 60
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 68
+func5b2d8,                func5b30c,                func5b374,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 70
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 78
+system_akao_command_80,   system_akao_command_81,   system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 80
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 88
+func5c2f4,                system_akao_command_null, func5c334,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // 90
+system_akao_command_null, system_akao_command_null, func5c438,                func5c348,                func5c5f0,                func5c4d4,                func5c700,                func5c684,                // 98
+func5b3e4,                func5b4cc,                func5b790,                func5b870,                func5bb24,                func5bc04,                system_akao_command_null, system_akao_command_null, // a0
+func5b64c,                func5b6c8,                func5b9e8,                func5ba60,                func5bd8c,                func5bde4,                system_akao_command_null, system_akao_command_null, // a8
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // b0
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // b8
+func5ae14,                func5aec8,                func5b004,                system_akao_command_null, func5b104,                func5b1b8,                system_akao_command_null, system_akao_command_null, // c0
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // c8
+func5beb0,                func5becc,                system_akao_command_d2,   system_akao_command_null, func5bfa8,                func5bfc4,                func5c02c,                system_akao_command_null, // d0
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // d8
+func6127c,                system_akao_command_null, func612d0,                system_akao_command_null, func612f0,                func6142c,                func614ac,                system_akao_command_null, // e0
+func62290,                system_akao_command_null, system_akao_command_null, system_akao_command_null, func61b20,                func61b78,                system_akao_command_null, system_akao_command_null, // e8
+system_akao_command_f0,   func5c158,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // f0
+system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null  // f8
 
     A0 = 0x80080970;
-    8005CBD8	jalr   w[0x8006f740 + S0 * 4] ra
+    8005CBD8	jalr   w[0x8006f740 + command * 4] ra
 
     A0 = w[8006f318];
     system_bios_enable_event();
@@ -5014,7 +4831,7 @@ V1 = V1 & V0;
 8005D114	beq    a0, v1, L5d128 [$8005d128]
 A0 = A1;
 8005D11C	lui    a1, $8008
-8005D120	jal    func5a284 [$8005a284]
+8005D120	jal    system_akao_set_voices_volume_dirty1 [$8005a284]
 8005D124	addiu  a1, a1, $bd48 (=-$42b8)
 
 L5d128:	; 8005D128
@@ -5039,7 +4856,7 @@ V1 = V1 & V0;
 8005D16C	beq    a0, v1, L5d180 [$8005d180]
 A0 = A1;
 8005D174	lui    a1, $8008
-8005D178	jal    func5a284 [$8005a284]
+8005D178	jal    system_akao_set_voices_volume_dirty1 [$8005a284]
 8005D17C	addiu  a1, a1, $bd48 (=-$42b8)
 
 L5d180:	; 8005D180
@@ -5069,7 +4886,7 @@ A0 = S1 & V0;
 V1 = V1 & V0;
 8005D1DC	beq    a0, v1, L5d1f0 [$8005d1f0]
 A1 = w[8007f71c];
-8005D1E8	jal    func5a284 [$8005a284]
+8005D1E8	jal    system_akao_set_voices_volume_dirty1 [$8005a284]
 A0 = A2;
 
 L5d1f0:	; 8005D1F0
@@ -5097,7 +4914,7 @@ if( A0 != V1 )
 {
     A0 = A2;
     A1 = w[8007f71c];
-    func5a284();
+    system_akao_set_voices_volume_dirty1();
 }
 
 V0 = w[S0 + f790];
@@ -5317,7 +5134,7 @@ if( V0 != 0 )
         if( A0 != V1 )
         {
             A0 = A2;
-            func5a284();
+            system_akao_set_voices_volume_dirty1();
         }
 
         [0x80080a18] = w(S0);

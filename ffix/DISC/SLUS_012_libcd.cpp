@@ -3605,13 +3605,12 @@ V0 = V0 | 0020;
 
 
 
-////////////////////////////////
-// func219fc()
+bool func219fc( u32 load_data )
+{
+    if( load_data == 0 ) return 0;
 
-if( A0 == 0 ) return 0;
-
-V0 = 0 < (w[A0 + 4] NOR 0);
-////////////////////////////////
+    return 0 < ~w[load_data + 4];
+}
 
 
 
@@ -3655,67 +3654,33 @@ L21a7c:	; 80021A7C
 
 
 
-////////////////////////////////
-// func21a8c
+bool func21a8c( u32  load_data )
+{
+    V1 = hu[load_data + 0x0];
 
-80021A8C	lhu    v1, $0000(a0)
-80021A90	nop
-80021A94	andi   v0, v1, $0082
-80021A98	beq    v0, zero, L21ad4 [$80021ad4]
-80021A9C	andi   v0, v1, $0001
-80021AA0	bne    v0, zero, L21ad8 [$80021ad8]
-80021AA4	addu   v0, zero, zero
-80021AA8	lhu    v0, $0002(a0)
-80021AAC	nop
-80021AB0	bne    v0, zero, L21ad8 [$80021ad8]
-80021AB4	addu   v0, zero, zero
-80021AB8	andi   v0, v1, $0020
-80021ABC	bne    v0, zero, L21ad8 [$80021ad8]
-80021AC0	addu   v0, zero, zero
-80021AC4	lw     v1, $0008(a0)
-80021AC8	nop
-80021ACC	bne    v1, zero, L21ad8 [$80021ad8]
-80021AD0	addiu  v0, zero, $0001
+    if( ( V1 & 0x0082 ) == 0 ) return 0;
+    if( V1 & 0x0001 ) return 0;
+    if( hu[load_data + 0x2] != 0 ) return 0;
+    if( V1 & 0x0020 ) return 0;
+    if( w[load_data + 0x8] == 0 ) return 0;
 
-L21ad4:	; 80021AD4
-80021AD4	addu   v0, zero, zero
-
-L21ad8:	; 80021AD8
-80021AD8	jr     ra 
-80021ADC	nop
-////////////////////////////////
+    return 1;
+}
 
 
 
-////////////////////////////////
-// func21ae0
+bool func21ae0( u32  load_data )
+{
+    V1 = hu[ load_data + 0x0 ]
 
-80021AE0	lhu    v1, $0000(a0)
-80021AE4	nop
-80021AE8	andi   v0, v1, $0082
-80021AEC	beq    v0, zero, L21b28 [$80021b28]
-80021AF0	andi   v0, v1, $0001
-80021AF4	bne    v0, zero, L21b2c [$80021b2c]
-80021AF8	addu   v0, zero, zero
-80021AFC	andi   v0, v1, $0020
-80021B00	beq    v0, zero, L21b2c [$80021b2c]
-80021B04	addu   v0, zero, zero
-80021B08	lh     v0, $0024(a0)
-80021B0C	nop
-80021B10	beq    v0, zero, L21b2c [$80021b2c]
-80021B14	addu   v0, zero, zero
-80021B18	lh     v1, $0026(a0)
-80021B1C	nop
-80021B20	bne    v1, zero, L21b2c [$80021b2c]
-80021B24	addiu  v0, zero, $0001
+    if( ( V1 & 0x0082 ) == 0 ) return 0;
+    if( V1 & 0x0001 ) return 0;
+    if( ( V1 & 0x0020 ) == 0 ) return 0;
+    if( h[load_data + 0x24] == 0 ) return 0;
+    if( h[load_data + 0x26] == 0 ) return 0;
 
-L21b28:	; 80021B28
-80021B28	addu   v0, zero, zero
-
-L21b2c:	; 80021B2C
-80021B2C	jr     ra 
-80021B30	nop
-////////////////////////////////
+    return 1;
+}
 
 
 
@@ -3725,8 +3690,7 @@ L21b2c:	; 80021B2C
 S1 = A0;
 S0 = A1;
 
-A0 = S0;
-80021B4C	jal    func21a8c [$80021a8c]
+V0 = func21a8c( S0 );
 
 80021B54	beq    v0, zero, L21b6c [$80021b6c]
 80021B58	nop
@@ -3899,40 +3863,35 @@ return 0;
 
 
 
-
-////////////////////////////////
-// func21e20()
-
-struct = w[8006794c];
-V0 = w[struct + 1c];
-A0 = w[V0 + 8c8];
-return A0 + 4 + b[A0 + 3] * 28;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func21e5c()
-
-file_id = A0;
-
-struct = w[8006794c];
-V0 = w[struct + 1c];
-
-A3 = w[V0 + 8c8];
-A1 = b[A3 + 2] - 1;
-
-while( A1 >= 0 )
+u32 func21e20()
 {
-    if( ( w[A3 + 4 + A1 * 28 + 4] & 00ffffff ) == ( file_id & 00ffffff ) )
-    {
-        return A3 + 4 + A1 * 28;
-    }
-    A1 -= 1;
+    struct = w[0x8006794c];
+    V0 = w[struct + 0x1c];
+    A0 = w[V0 + 0x8c8];
+    return A0 + 0x4 + b[A0 + 0x3] * 0x28;
 }
 
-return 0;
-////////////////////////////////
+
+
+u32 func21e5c( u32 file_id )
+{
+    struct = w[0x8006794c];
+    V0 = w[struct + 0x1c];
+
+    A3 = w[V0 + 0x8c8];
+    A1 = b[A3 + 0x2] - 1;
+
+    while( A1 >= 0 )
+    {
+        if( ( w[A3 + 0x4 + A1 * 0x28 + 0x4] & 0x00ffffff ) == ( file_id & 0x00ffffff ) )
+        {
+            return A3 + 0x4 + A1 * 0x28;
+        }
+        A1 -= 1;
+    }
+
+    return 0;
+}
 
 
 
@@ -3993,141 +3952,101 @@ L21f9c:	; 80021F9C
 
 
 
-////////////////////////////////
-// func21fb4()
-
-func21e20();
-S0 = V0;
-
-if( S0 == 0 ) return 0;
-
-A0 = S0;
-func219fc();
-
-if( V0 == 0 ) return -1;
-
-if( ( hu[S0 + 0] & 0001 ) == 0 ) return 0;
-
-if( ( hu[S0 + 0] & 0080 ) == 0 ) return ( hu[S0 + 0] & 0002 ) < 1;
-
-return -1;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func22020()
-
-do
+int func21fb4()
 {
-    func21fb4();
-} while( V0 > 0 )
+    u32 load_data = func21e20();
 
-func22050();
-////////////////////////////////
+    if( load_data == 0 ) return 0;
 
+    if( func219fc( load_data ) != 0 )
+    {
+        if( ( hu[load_data + 0x0] & 0x0001 ) == 0 ) return 0;
+        if( ( hu[load_data + 0x0] & 0x0080 ) == 0 ) return ( hu[load_data + 0x0] & 0x0002 ) < 1;
+    }
 
-
-////////////////////////////////
-// func22050()
-
-func21e20();
-
-if( V0 != 0 ) [V0 + 0] = h(hu[V0 + 0] & ff7e);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2208c()
-
-func21e20();
-
-S0 = V0;
-
-A0 = S0;
-func219fc();
-
-if( V0 == 0 ) return 0;
-
-A0 = S0;
-func21a1c();
-
-if( V0 != 0 )
-{
-    A0 = S0;
-    func21c20();
+    return -1;
 }
 
-do
+
+
+void func22020()
 {
-    800220C8	jal    func21fb4 [$80021fb4]
-} while( V0 > 0 )
+    while( func21fb4() > 0 ) {}
 
-return S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func220e8()
-
-file_id = A0;
-
-S2 = 0;
-
-A0 = file_id;
-func21e5c();
-load_data = V0;
-
-if( load_data != 0 )
-{
-    if( ( hu[load_data + 0] & 0001 ) != 0 )
-    {
-        func22020();
-    }
-
-    A0 = load_data;
-    func21ae0();
-
-    if( V0 != 0 )
-    {
-        S2 = 1;
-    }
-    else
-    {
-        A0 = load_data;
-        func21a8c();
-
-        if( V0 != 0 )
-        {
-            S2 = 1;
-        }
-    }
+    func22050();
 }
-else
+
+
+
+void func22050()
 {
-    func21e20();
-    load_data = V0;
+    u32 load_data = func21e20();
 
     if( load_data != 0 )
     {
-        if( ( w[load_data + 4] NOR 0 ) != 0 )
+        [load_data + 0] = h(hu[load_data + 0] & 0xff7e);
+    }
+}
+
+
+
+u32 func2208c()
+{
+    u32 load_data = func21e20();
+
+    if( func219fc( load_data ) == 0 ) return 0;
+
+    if( func21a1c( load_data ) != 0 )
+    {
+        func21c20( load_data );
+    }
+
+    while( func21fb4() > 0 ) {}
+
+    return load_data;
+}
+
+
+
+bool func220e8( u32 file_id )
+{
+    bool loaded = 0;
+
+    load_data = func21e5c( file_id );
+
+    if( load_data != 0 )
+    {
+        if( ( hu[load_data + 0] & 0x0001 ) != 0 )
         {
-            if( bu[load_data + 6] == ( ( file_id >> 10 ) & ff ) )
+            func22020();
+        }
+
+        if( ( func21ae0( load_data ) != 0 ) || ( func21a8c( load_data ) != 0 ) )
+        {
+            loaded = 1;
+        }
+    }
+    else
+    {
+        load_data = func21e20();
+
+        if( load_data != 0 )
+        {
+            if( ~w[load_data + 4] != 0 )
             {
-                if( ( w[load_data + 4] & ffff ) != ( file_id & ffff ) )
+                if( bu[load_data + 0x6] == ( ( file_id >> 0x10 ) & 0xff ) )
                 {
-                    A0 = load_data;
-                    func21c20();
+                    if( ( w[load_data + 0x4] & 0xffff ) != ( file_id & 0xffff ) )
+                    {
+                        func21c20( load_data );
+                    }
                 }
             }
         }
     }
-}
 
-return S2;
-////////////////////////////////
+    return loaded;
+}
 
 
 
@@ -4256,21 +4175,16 @@ V0 = S3;
 
 
 
-////////////////////////////////
-// func22390()
-
-func21e5c();
-load_data = V0;
-
-if( load_data != 0 )
+void func22390( u32 file_id )
 {
-    A0 = load_data;
-    func21c20();
+    load_data = func21e5c( file_id );
 
-    A0 = load_data;
-    func21938();
+    if( load_data != 0 )
+    {
+        func21c20( load_data );
+        func21938( load_data );
+    }
 }
-////////////////////////////////
 
 
 
@@ -4742,11 +4656,10 @@ return -1;
 
 
 
-////////////////////////////////
-// func22b18()
-
-return bu[800761d0 + 0];
-////////////////////////////////
+u8 func22b18()
+{
+    return bu[0x800761d0 + 0x0];
+}
 
 
 

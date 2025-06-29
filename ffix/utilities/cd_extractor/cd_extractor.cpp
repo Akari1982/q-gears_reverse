@@ -72,11 +72,27 @@ if( i == 0 )
             int file_sector = buffer[ 0 ] | ( buffer[ 1 ] << 8 ) | ( buffer[ 2 ] << 0x10 ) | ( buffer[ 3 ] << 0x18 );
             text = std::format( "Sector of file: 0x{:02x}\n", file_sector );
             pos = fwrite( text.c_str(), 1, text.size(), file );
-            pos = fread( buffer, 1, 4, g_cd_image ); // skip for nxt file data
+            pos = fread( buffer, 1, 4, g_cd_image ); // skip for next file data
             pos = fread( buffer, 1, 4, g_cd_image );
             int next_file_sector = buffer[ 0 ] | ( buffer[ 1 ] << 8 ) | ( buffer[ 2 ] << 0x10 ) | ( buffer[ 3 ] << 0x18 );
-            text = std::format( "Size of file: 0x{:02x}\n", next_file_sector - file_sector );
+            int file_size = (next_file_sector - file_sector) * 0x800;
+            text = std::format( "Size of file: 0x{:02x}\n", file_size );
             pos = fwrite( text.c_str(), 1, text.size(), file );
+
+            unsigned char sector[0x800];
+
+            pos = fseek( g_cd_image, file_sector * 0x800, 0); // find file start sector
+
+            text = std::format( "d{:02x}_{:02x}_{:02x}", i, j, file_id );
+
+            FILE* file = fopen( text.c_str(), "wb" );
+            while( file_size > 0 )
+            {
+                pos = fread( sector, 1, 0x800, g_cd_image );
+                pos = fwrite( sector, 1, 0x800, file );
+                file_size -= 0x800;
+            }
+            fclose( file );
         }
 }
     }

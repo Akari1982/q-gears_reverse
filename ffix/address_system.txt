@@ -12,8 +12,8 @@
 
 80067940 [][][][] store here dst for file loading.
 80067944 [][][][] looks like start pointer to all models data. Total size of that block 0xf1700.
-80067948 [][][][] store here pointer to w[w[w[w[w[8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
-8006794c [][][][] pointer to 8008b000.
+80067948 [][][][] store here pointer to w[w[w[w[w[0x8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
+0x8006794c [][][][] pointer to 8008b000.
 
 80067978 [][][][] spu dma transfer mode.
 8006797c [][][][] reverb enabled.
@@ -336,7 +336,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 +26 []       init with 0.
 +27 []       height of dialog.
 +28 []       init with 10.
-+29 []       init with bu[8006e688 + ((w[w[8006794c] + 24] >> e) & 7)] (04 07 0A 10 18 28 40 40)
++29 []       init with bu[8006e688 + ((w[w[0x8006794c] + 24] >> e) & 7)] (04 07 0A 10 18 28 40 40)
 +2a []       init with 0.
 +2b []       position flags.
                 0x01 - target on the left.
@@ -522,6 +522,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
                     0x00000010 - update noise.
                     0x00000080 - update reverb volume.
                     0x00000100 - update reverb, noise and pitch modulation on.
+8008315c [][][][] set to 1 or 2.
 
 80083168 some sound struct
     +  8 [][][][] flags.
@@ -531,7 +532,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     + 40 [][][][] volume.
     + 58 [][][][] pitch value.
 
-8008b000 [][][][] 8006794c points here (some struct)
+0x8008b000 [][][][] 0x8006794c points here (some struct)
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.
     +  4 [][][][] init with 0. Pointer to 8008b250.
     +  8 []       init with 0. looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
@@ -590,13 +591,14 @@ array of pointers to loaded files (0x10 items, 0x4 size)
             + 0 [][]     ???
             + 2 [][]     ???
             + 4 [][][][] file sector.
-    + 1c [][][][] init with 0. Pointer to 8008b250.
+    + 1c [][][][] init with 0. Pointer to 0x8008b250.
     + 20 [][][][] init with -1. Sector of "\FF9.IMG;1" file.
     + 24 [][][][] some flags.
+                    0x00000001 - execute akao command: 0-0x80, 1-0x81.
     + 30 [][][][] init with 0. Number of directories in FF9.IMG.
     + 34 array of something (0xf items 0x1 size).
 
-8008b250
+0x8008b250
     +   0 [][][][] some flags. Init with 0.
                      0x00000020 - add it at start of field loading.
     +   4 [][][][] init with 0.
