@@ -1,11 +1,4 @@
 ////////////////////////////////
-// funca7a48
-800A7A48-800A7AA8
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funca7aac
 800A7AAC-800A7B0C
 ////////////////////////////////
@@ -86,96 +79,6 @@ La8178:	; 800A8178
 800A8190	jr     ra 
 800A8194	addiu  sp, sp, $0020
 
-
-funca8198:	; 800A8198
-800A8198	addiu  sp, sp, $ffd8 (=-$28)
-800A819C	sw     ra, $0020(sp)
-800A81A0	sw     s1, $001c(sp)
-800A81A4	jal    funca8344 [$800a8344]
-800A81A8	sw     s0, $0018(sp)
-800A81AC	lui    s0, $8006
-800A81B0	lw     v0, $794c(s0)
-800A81B4	nop
-800A81B8	lw     v0, $001c(v0)
-800A81BC	nop
-800A81C0	lw     s1, $08e4(v0)
-800A81C4	jal    funca8380 [$800a8380]
-800A81C8	nop
-800A81CC	addiu  a0, zero, $00e0
-800A81D0	lw     v1, $794c(s0)
-800A81D4	addiu  v0, zero, $0002
-800A81D8	jal    func1cd04 [$8001cd04]
-800A81DC	sb     v0, $0009(v1)
-800A81E0	jal    func1cfb4 [$8001cfb4]
-800A81E4	nop
-800A81E8	jal    func1300c [$8001300c]
-800A81EC	addiu  a0, zero, $0001
-800A81F0	addu   a0, zero, zero
-800A81F4	lw     a1, $794c(s0)
-800A81FC	lw     v1, $001c(a1)
-[V1 + 838] = w(800aab30);
-800A8208	lui    v0, $800b
-800A820C	lw     v1, $001c(a1)
-800A8210	addiu  v0, v0, $0124
-800A8214	sw     v0, $083c(v1)
-800A8218	lui    v0, $800b
-800A821C	lw     v1, $001c(a1)
-800A8220	addiu  v0, v0, $36e0
-800A8224	jal    func21cdc [$80021cdc]
-800A8228	sw     v0, $08bc(v1)
-800A822C	lw     v1, $794c(s0)
-800A8230	addiu  a0, zero, $fff8 (=-$8)
-800A8234	lw     v0, $0000(v1)
-800A8238	lw     a1, $001c(v1)
-800A823C	and    v0, v0, a0
-800A8240	sw     v0, $0000(v1)
-800A8244	sw     zero, $084c(a1)
-800A8248	lw     v0, $001c(v1)
-800A824C	nop
-800A8250	sb     zero, $0039(v0)
-800A8254	sb     zero, $0038(v0)
-800A8258	lw     v0, $794c(s0)
-800A825C	nop
-800A8260	lw     v1, $001c(v0)
-800A8264	ori    v0, zero, $ffff
-800A8268	sh     v0, $0836(v1)
-800A826C	jal    funcb1d60 [$800b1d60]
-800A8270	sh     v0, $0834(v1)
-800A8274	jal    funcac5f0 [$800ac5f0]
-800A8278	nop
-800A827C	jal    funca847c [$800a847c]
-800A8280	nop
-800A8284	jal    funca83e0 [$800a83e0]
-800A8288	nop
-800A828C	jal    func239d0 [$800239d0]
-800A8290	nop
-800A8294	lw     v0, $794c(s0)
-800A8298	nop
-800A829C	lw     v0, $001c(v0)
-800A82A0	nop
-800A82A4	lw     v0, $0000(v0)
-800A82A8	lui    v1, $0040
-800A82AC	and    v0, v0, v1
-800A82B0	beq    v0, zero, La82cc [$800a82cc]
-800A82B4	ori    a0, zero, $8601
-800A82B8	sw     zero, $0010(sp)
-800A82BC	addu   a1, zero, zero
-800A82C0	addiu  a2, zero, $0078
-800A82C4	jal    funcb0124 [$800b0124]
-800A82C8	addu   a3, a1, zero
-
-La82cc:	; 800A82CC
-800A82CC	jal    func2fc30 [$8002fc30]
-800A82D0	nop
-800A82D4	lui    v0, $8006
-800A82D8	lw     v0, $7948(v0)
-800A82DC	nop
-800A82E0	sw     v0, $0004(s1)
-800A82E4	lw     ra, $0020(sp)
-800A82E8	lw     s1, $001c(sp)
-800A82EC	lw     s0, $0018(sp)
-800A82F0	jr     ra 
-800A82F4	addiu  sp, sp, $0028
 
 
 funca82f8:	; 800A82F8

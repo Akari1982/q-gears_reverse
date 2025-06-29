@@ -13,7 +13,7 @@
 80067940 [][][][] store here dst for file loading.
 80067944 [][][][] looks like start pointer to all models data. Total size of that block 0xf1700.
 80067948 [][][][] store here pointer to w[w[w[w[w[0x8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
-0x8006794c [][][][] pointer to 8008b000.
+0x8006794c [][][][] pointer to 0x8008b000.
 
 80067978 [][][][] spu dma transfer mode.
 8006797c [][][][] reverb enabled.

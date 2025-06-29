@@ -27,7 +27,7 @@ void system_main()
                 case 0x1: // field
                 {
                     func12900( 0x1 );
-                    funca7a48();
+                    field_main();
                 }
                 break;
 

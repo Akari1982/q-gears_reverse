@@ -54,26 +54,6 @@ loopa7ac0:	; 800A7AC0
 
 
 ////////////////////////////////
-// funca7a48
-800A7A50	jal    funca8198 [$800a8198]
-
-loopa7a5c:	; 800A7A5C
-    V0 = w[8006794c];
-    V0 = w[V0 + 1c];
-    A0 = h[V0 + 3a]; // start of character data
-    funca7aac;
-
-
-    V0 = w[8006794c];
-    V0 = w[V0] & 3;
-800A7A8C	beq    v0, zero, loopa7a5c [$800a7a5c]
-
-800A7A94	jal    funca82f8 [$800a82f8]
-////////////////////////////////
-
-
-
-////////////////////////////////
 // funca7b10
 800A7B1C	jal    funca89c4 [$800a89c4]
 
