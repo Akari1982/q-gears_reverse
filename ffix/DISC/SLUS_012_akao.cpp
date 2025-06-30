@@ -1769,9 +1769,7 @@ void func59aa8()
                         {
                             [0x80080a70 + 0xc] = w(w[0x80080a70 + 0xc] | S1);
 
-                            A0 = S3;
-                            A1 = S1;
-                            func5ec20();
+                            func5ec20( S3, S1 );
 
                             [S0 + 0x0] = w(0);
                         }
@@ -3927,49 +3925,50 @@ void system_akao_command_11( u32 akao_data )
 
 
 
-////////////////////////////////
-// func5c158
+void system_akao_command_f1( u32 akao_data )
+{
+    8005C15C	lui    v0, $8008
+    8005C164	addiu  s2, v0, $e3d8 (=-$1c28)
+    S1 = 0100;
+    S3 = 0;
+    8005C17C	lui    s5, $8008
+    S4 = S5 + 0a70;
+    8005C18C	lui    s6, $0200
+    S0 = S2 + 0034;
 
-8005C15C	lui    v0, $8008
-8005C164	addiu  s2, v0, $e3d8 (=-$1c28)
-S1 = 0100;
-S3 = 0;
-8005C17C	lui    s5, $8008
-S4 = S5 + 0a70;
-8005C18C	lui    s6, $0200
-S0 = S2 + 0034;
+    loop5c19c:	; 8005C19C
+    V0 = w[S5 + 0a70];
+    8005C1A0	nop
+    V0 = V0 & S1;
+    8005C1A8	beq    v0, zero, L5c1dc [$8005c1dc]
+    8005C1AC	nop
+    V0 = w[S0 + fff4];
+    8005C1B4	nop
+    V0 = V0 & S6;
+    8005C1BC	bne    v0, zero, L5c1dc [$8005c1dc]
+    A0 = S2;
+    V0 = w[S4 + 000c];
+    A1 = S1;
+    V0 = V0 | S1;
+    [S4 + 000c] = w(V0);
 
-loop5c19c:	; 8005C19C
-V0 = w[S5 + 0a70];
-8005C1A0	nop
-V0 = V0 & S1;
-8005C1A8	beq    v0, zero, L5c1dc [$8005c1dc]
-8005C1AC	nop
-V0 = w[S0 + fff4];
-8005C1B4	nop
-V0 = V0 & S6;
-8005C1BC	bne    v0, zero, L5c1dc [$8005c1dc]
-A0 = S2;
-V0 = w[S4 + 000c];
-A1 = S1;
-V0 = V0 | S1;
-8005C1D0	jal    func5ec20 [$8005ec20]
-[S4 + 000c] = w(V0);
-[S0 + 0000] = w(0);
+    func5ec20( A0, A1 );
 
-L5c1dc:	; 8005C1DC
-S3 = S3 + 0001;
-S0 = S0 + 0134;
-S2 = S2 + 0134;
-V0 = S3 < 0010;
-8005C1EC	bne    v0, zero, loop5c19c [$8005c19c]
-S1 = S1 << 01;
-V1 = 80083158;
-V0 = w[V1 + 0008];
-8005C200	nop
-V0 = V0 | 0110;
-[V1 + 0008] = w(V0);
-////////////////////////////////
+    [S0 + 0000] = w(0);
+
+    L5c1dc:	; 8005C1DC
+    S3 = S3 + 0001;
+    S0 = S0 + 0134;
+    S2 = S2 + 0134;
+    V0 = S3 < 0010;
+    8005C1EC	bne    v0, zero, loop5c19c [$8005c19c]
+    S1 = S1 << 01;
+    V1 = 80083158;
+    V0 = w[V1 + 0008];
+    8005C200	nop
+    V0 = V0 | 0110;
+    [V1 + 0008] = w(V0);
+}
 
 
 
@@ -4518,7 +4517,7 @@ func5beb0,                func5becc,                system_akao_command_d2,   sy
 system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // d8
 func6127c,                system_akao_command_null, func612d0,                system_akao_command_null, func612f0,                func6142c,                func614ac,                system_akao_command_null, // e0
 func62290,                system_akao_command_null, system_akao_command_null, system_akao_command_null, func61b20,                func61b78,                system_akao_command_null, system_akao_command_null, // e8
-system_akao_command_f0,   func5c158,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // f0
+system_akao_command_f0,   system_akao_command_f1,                system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, // f0
 system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null  // f8
 
     A0 = 0x80080970;

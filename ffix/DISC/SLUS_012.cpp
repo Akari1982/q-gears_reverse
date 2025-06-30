@@ -4066,28 +4066,26 @@ return 0;
 
 
 
-////////////////////////////////
-// func1c784()
-// remove item from array
-
-file_p = A0;
-
-files_n = h[80073c40 + 2] - 1;
-
-for( int i = files_n; i >= 0; --i )
+int func1c784( u32 file_p )
 {
-    if( w[80073c40 + 4 + i * 4] == file_p )
+    // remove item from array
+
+    files_n = h[0x80073c40 + 0x2] - 1;
+
+    for( int i = files_n; i >= 0; --i )
     {
-        [80073c40 + 2] = h(files_n); // discrease num of files
-        [80073c40 + 4 + i * 4] = w(w[80073c40 + 4 + files_n * 4]);
-        return 0;
+        if( w[0x80073c40 + 0x4 + i * 0x4] == file_p )
+        {
+            [0x80073c40 + 0x2] = h(files_n); // discrease num of files
+            [0x80073c40 + 0x4 + i * 0x4] = w(w[0x80073c40 + 0x4 + files_n * 0x4]);
+            return 0;
+        }
+
+        A1 -= 0x4;
     }
 
-    A1 -= 4;
+    return -1;
 }
-
-return -1;
-////////////////////////////////
 
 
 
@@ -4842,30 +4840,17 @@ for( int i = 7; i >= 0; --i )
 
 
 
-////////////////////////////////
-// func1d610()
+int func1d610()
+{
+    u32 file = func1c7fc( 0x4, 0x90084, 0 ); // get address of file
+    u32 size = func1c7fc( 0x5, 0x90084, 0 ); // get size of file
 
-A0 = 4; // get address of file
-A1 = 00090084; // file id
-A2 = 0;
-func1c7fc();
-file = V0;
+    func55df4();
 
-A0 = 5; // get size of file
-A1 = 00090084; // file id
-A2 = 0;
-func1c7fc();
-size = V0;
+    func55e14( file, size, 1 );
 
-func55df4();
-
-A0 = file;
-A1 = size;
-A2 = 1;
-func55e14();
-
-return 0;
-////////////////////////////////
+    return 0;
+}
 
 
 
@@ -5111,21 +5096,19 @@ void func239a4()
 
 
 ////////////////////////////////
-// func239d0
-V0 = w[8006794c];
-800239D8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = w[V0 + 001c];
-800239E4	nop
-A2 = w[V0 + 07e0];
-A0 = w[V0 + 0010];
-A1 = w[V0 + 0014];
-800239F4	jal    func2beec [$8002beec]
-A3 = A2 + 4000;
-RA = w[SP + 0010];
-80023A00	nop
-80023A04	jr     ra 
-SP = SP + 0018;
+// func239d0()
+
+V0 = w[0x8006794c];
+V0 = w[V0 + 0x1c];
+A2 = w[V0 + 0x7e0];
+A0 = w[V0 + 0x10];
+A1 = w[V0 + 0x14];
+A3 = A2 + 0x4000;
+func2beec( A0, A1, A2, A3 );
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // func23a0c
 80023A0C	addiu  sp, sp, $ffe8 (=-$18)
@@ -34845,13 +34828,12 @@ V0 = 0;
 
 
 
-////////////////////////////////
-// func551f0()
+int func551f0()
+{
+    func56b18();
 
-func56b18();
-
-return 0;
-////////////////////////////////
+    return 0;
+}
 
 
 
@@ -35458,152 +35440,104 @@ SP = SP + 0008;
 
 
 
-////////////////////////////////
-// func55df4()
+int func55df4()
+{
+    [0x8008322c] = w(0);
+    [0x80083158] = w(w[0x80083158] | 0x00000001);
 
-[8008322c] = w(0);
-[80083158] = w(w[80083158] | 1);
-
-return 0;
-////////////////////////////////
-
+    return 0;
+}
 
 
-////////////////////////////////
-// func55e14()
 
-V0 = w[80083158];
-S2 = A0;
-S1 = A1;
-S5 = A2;
-V0 = V0 & 0001;
-80055E48	beq    v0, zero, L55ffc [$80055ffc]
+u32 func55e14( file, size, sync )
+{
+    if( w[0x80083158] & 0x00000001 )
+    {
+        if( w[0x80083228 + 0x4] == 0 )
+        {
+            if( w[file + 0x0] == 0x4f414b41 )
+            {
+                system_akao_copy( file, 0x80080a30, 0x40 );
 
-S3 = 80083228;
-V0 = w[S3 + 0004];
-80055E5C	nop
-80055E60	bne    v0, zero, L55ed8 [$80055ed8]
-80055E64	lui    v1, $4f41
-V0 = w[S2 + 0000];
-V1 = V1 | 4b41;
-80055E70	bne    v0, v1, L55ecc [$80055ecc]
-S0 = 80080a30;
-A1 = S0;
-A2 = 0040;
-system_akao_copy();
+                file += 0x40;
+                size -= 0x40;
 
-S2 = S2 + 0040;
-V0 = w[S0 + 0010];
-A0 = w[S0 + 0018];
-V1 = w[S0 + 0014];
-80055E98	addiu  s1, s1, $ffc0 (=-$40)
-[S3 + 0004] = w(V0);
-[S0 + 0018] = w(A0);
-A0 = A0 << 04;
-80055EA8	lui    v0, $8008
-80055EAC	addiu  v0, v0, $f970 (=-$690)
-[S3 + 0008] = w(V1);
-V1 = w[S0 + 001c];
-A0 = A0 + V0;
-[S4 + 3228] = w(A0);
-V1 = V1 << 04;
-80055EC4	j      L55ed8 [$80055ed8]
-[S3 + 000c] = w(V1);
+                [0x80083228 + 0x0] = w(0x8007f970 + w[0x80080a30 + 0x18] * 0x10);
+                [0x80083228 + 0x4] = w(w[0x80080a30 + 0x10]);
+                [0x80083228 + 0x8] = w(w[0x80080a30 + 0x14]);
+                [0x80083228 + 0xc] = w(w[0x80080a30 + 0x1c] * 0x10);
+            }
+            else
+            {
+                size = 0;
+                [0x80083228 + 0x8] = w(0);
+                [0x80083228 + 0xc] = w(0);
+            }
+        }
 
-L55ecc:	; 80055ECC
-S1 = 0;
-[S3 + 0008] = w(0);
-[S3 + 000c] = w(0);
+        if( w[0x80083228 + 0xc] != 0 )
+        {
+            if( size == 0 )
+            {
+                if( w[0x80083230] == 0 )
+                {
+                    [0x80083158] = w(w[80083158] & 0xfffffffe);
+                }
+                return w[0x80083230];
+            }
 
-L55ed8:	; 80055ED8
-S4 = 80083228;
-A2 = w[S4 + 000c];
-80055EE4	nop
-80055EE8	beq    a2, zero, L55f6c [$80055f6c]
-80055EEC	nop
-80055EF0	beq    s1, zero, L55fd4 [$80055fd4]
-S0 = A2;
-V0 = S0 < S1;
-80055EFC	bne    v0, zero, L55f08 [$80055f08]
-A0 = S2;
-S0 = S1;
+            S0 = ( w[0x80083228 + 0xc] >= size ) ? size : w[0x80083228 + 0xc];
 
-L55f08:	; 80055F08
-A1 = w[S3 + 3228];
-A2 = S0;
-system_akao_copy();
+            system_akao_copy( file, w[0x80083228 + 0x0], S0 );
 
-V0 = S0 >> 02;
-V0 = V0 << 02;
-S2 = S2 + V0;
-S1 = S1 - S0;
-V1 = w[S3 + 3228];
-A0 = w[S4 + 000c];
-V1 = V1 + V0;
-A0 = A0 - S0;
-[S3 + 3228] = w(V1);
-80055F38	bne    a0, zero, L55f6c [$80055f6c]
-[S4 + 000c] = w(A0);
-V1 = 80080a30;
-80055F48	lui    v0, $8008
-80055F4C	addiu  v0, v0, $f970 (=-$690)
-A0 = w[V1 + 0018];
-A2 = w[V1 + 0010];
-A3 = w[V1 + 001c];
-A0 = A0 << 04;
-A0 = A0 + V0;
-80055F64	jal    func5658c [$8005658c]
-A1 = A0;
+            V0 = (S0 / 4) * 4;
+            file += V0;
+            size -= S0;
+            [0x80083228 + 0x0] = w(w[0x80083228 + 0x0] + V0);
+            [0x80083228 + 0xc] = w(w[0x80083228 + 0xc] - S0);
 
-L55f6c:	; 80055F6C
-80055F6C	beq    s1, zero, L55fd4 [$80055fd4]
-S0 = 80083228;
-V0 = w[S0 + 0008];
-80055F7C	nop
-80055F80	beq    v0, zero, L55fe8 [$80055fe8]
-V1 = V0;
-V0 = V1 < S1;
-80055F8C	bne    v0, zero, L55f98 [$80055f98]
-80055F90	nop
-V1 = S1;
+            if( w[0x80083228 + 0xc] == 0 )
+            {
+                A0 = 0x8007f970 + w[0x80080a30 + 0x18] * 0x10;
+                A1 = A0;
+                A2 = w[0x80080a30 + 0x10];
+                A3 = w[0x80080a30 + 0x1c];
+                func5658c();
+            }
+        }
 
-L55f98:	; 80055F98
-S1 = V1;
+        if( size != 0 )
+        {
+            if( w[0x80083228 + 0x8] == 0 )
+            {
+                [0x80083158] = w(w[80083158] & 0xfffffffe);
+                return w[0x80083230];
+            }
 
-func5652c( w[S0 + 0x4] );
+            size = ( w[0x80083228 + 0x8] >= size ) ? size : w[0x80083228 + 0x8];
 
-A0 = S2; // src
-A1 = S1; // size
-func56644();
+            func5652c( w[0x80083228 + 0x4] );
 
-V0 = w[S0 + 0004];
-V1 = w[S0 + 0008];
-V0 = V0 + S1;
-V1 = V1 - S1;
-[S0 + 0004] = w(V0);
-80055FC4	beq    s5, zero, L55fd4 [$80055fd4]
-[S0 + 0008] = w(V1);
+            func56644( file, size ); // write to spu here
 
-func566d0();
+            [0x80083228 + 0x4] = w(w[0x80083228 + 0x4] + size);
+            [0x80083228 + 0x8] = w(w[0x80083228 + 0x8] - size);
 
-L55fd4:	; 80055FD4
-V0 = w[80083230];
-80055FDC	nop
-80055FE0	bne    v0, zero, L56000 [$80056000]
-80055FE4	lui    v0, $8008
+            if( sync != 0 )
+            {
+                func566d0(); // some wait?
+            }
+        }
 
-L55fe8:	; 80055FE8
-V1 = w[80083158];
-80055FF0	addiu  a0, zero, $fffe (=-$2)
-V1 = V1 & A0;
-[V0 + 3158] = w(V1);
+        if( w[0x80083230] == 0 )
+        {
+            [0x80083158] = w(w[80083158] & 0xfffffffe);
+        }
+    }
 
-L55ffc:	; 80055FFC
-80055FFC	lui    v0, $8008
-
-L56000:	; 80056000
-return w[V0 + 3230];
-////////////////////////////////
+    return w[0x80083230];
+}
 
 
 
@@ -35911,24 +35845,21 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// func5652c()
+u32 func5652c( addr )
+{
+    if( ( addr - 0x1010 ) > 0x7efe8 ) return 0;
 
-addr = A0;
+    V0 = func17830( -1 );
+    [0x80067a00] = h(V0);
 
-if( ( addr - 1010 ) > 7efe8 ) return 0;
-
-A0 = -1;
-func17830();
-[80067a00] = h(V0);
-
-return hu[80067a00] << w[80067a10];
-////////////////////////////////
+    return hu[0x80067a00] << w[0x80067a10];
+}
 
 
 
 ////////////////////////////////
-// func5658c
+// func5658c()
+
 T0 = A1 + 000c;
 V1 = A0 + 000c;
 
@@ -36060,16 +35991,20 @@ S0 = A0;
 S4 = A1;
 S3 = A2;
 S2 = A3;
+S1 = S0;
 
 func566d0();
 
-V1 = 0x4f414b41;
-V0 = w[S0 + 0000];
-8005678C	nop
-80056790	bne    v0, v1, L567f0 [$800567f0]
-S1 = S0;
-80056798	jal    func5652c [$8005652c]
+if( w[S0 + 0x0] != 0x4f414b41 )
+{
+    [0x800809e0] = w(-1);
+
+    return -1;
+}
+
 A0 = S2;
+func5652c();
+
 S0 = S0 + 0040;
 A0 = w[S1 + 001c];
 A1 = w[S1 + 0014]; // size
@@ -36079,26 +36014,17 @@ A0 = S0 + A0; // src
 func56644();
 
 A0 = S0;
-V0 = S3 << 04;
-800567C0	lui    a1, $8008
-800567C4	addiu  a1, a1, $f970 (=-$690)
-A1 = V0 + A1;
-A3 = w[S1 + 001c];
-800567D0	jal    func5658c [$8005658c]
+V0 = S3 << 0x4;
+A1 = 0x8007f970 + A1;
 A2 = S2;
-800567D8	beq    s4, zero, L567fc [$800567fc]
-V0 = 0;
-800567E0	jal    func566d0 [$800566d0]
-800567E4	nop
-800567E8	j      L567fc [$800567fc]
-V0 = 0;
+A3 = w[S1 + 0x1c];
+func5658c();
 
-L567f0:	; 800567F0
-800567F0	lui    v1, $8008
-800567F4	addiu  v0, zero, $ffff (=-$1)
-[V1 + 09e0] = w(V0);
-
-L567fc:	; 800567FC
+if( S4 != 0 )
+{
+    func566d0();
+}
+return 0;
 ////////////////////////////////
 
 
@@ -36267,62 +36193,38 @@ for( int i = 0; i < 0x18; ++i )
 
 
 
-////////////////////////////////
-// func56b18()
-
-func16e48();
-
-A0 = 4;
-A1 = 80080990;
-func56d5c();
-
-A0 = 0; // SPU_TRANSFER_BY_DMA
-system_psyq_spu_set_transfer_mode();
-
-func5652c( 0x1010 );
-
-A0 = 8006f334; // src
-A1 = 40; // size
-func56644(); // write to spu here
-
-func566d0();
-
-func5681c();
-
-A0 = 0;
-system_psyq_spu_set_irq();
-
-A0 = 0;
-system_psyq_spu_set_irq_callback();
-
-loop56b84:	; 80056B84
-    A0 = f2000002;
-    A1 = 44e8;
-    A2 = 1000;
-    func4bc90();
-80056B94	beq    v0, zero, loop56b84 [$80056b84]
-
-loop56b9c:	; 80056B9C
-    A0 = f2000002;
-    func4bd64();
-80056BA4	beq    v0, zero, loop56b9c [$80056b9c]
-
-do
+void func56b18()
 {
-    A0 = 0xf2000002;
-    A1 = 0x2;
-    A2 = 0x1000;
-    A3 = 0x8005d6bc; // system_akao_main()
-    system_bios_open_event();
-    [8006f318] = w(V0);
-} while( V0 == -1 )
+    func16e48();
 
-do
-{
-    A0 = w[8006f318];
-    system_bios_enable_event();
-} while( V0 == 0 )
-////////////////////////////////
+    func56d5c( 0x4, 0x80080990 );
+
+    system_psyq_spu_set_transfer_mode( 0 ); // SPU_TRANSFER_BY_DMA
+
+    func5652c( 0x1010 );
+
+    func56644( 0x8006f334, 0x40 ); // write to spu here
+
+    func566d0();
+
+    func5681c();
+
+    system_psyq_spu_set_irq( 0 );
+
+    system_psyq_spu_set_irq_callback( 0 );
+
+    while( func4bc90( 0xf2000002, 0x44e8, 0x1000 ) == 0 ) {}
+
+    while( func4bd64( 0xf2000002 ) == 0 ) {}
+
+    do
+    {
+        V0 = system_bios_open_event( 0xf2000002, 0x2, 0x1000, 0x8005d6bc ); // system_akao_main()
+        [0x8006f318] = w(V0);
+    } while( V0 == -1 )
+
+    while( system_bios_enable_event( w[0x8006f318] ) == 0 ) {}
+}
 
 
 

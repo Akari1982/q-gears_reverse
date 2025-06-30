@@ -504,6 +504,8 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     +  8 [][][][] some channels mask.
     + 18 [][][][] some channels mask.
 
+0x80080a30 copy 0x40 bytes of sound file here.
+
 0x80080a70 some sound struct
     +  0 [][][][] some voices mask.
     +  4 [][][][] ???
@@ -601,6 +603,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
 0x8008b250
     +   0 [][][][] some flags. Init with 0.
                      0x00000020 - add it at start of field loading.
+                     0x00100000 - maybe sound not inited.
     +   4 [][][][] init with 0.
     +   8 []       frame buffer index. Index of pointer +10 or +14 to use.
     +   9 []       init with 0.
@@ -655,6 +658,7 @@ array of pointers to loaded files (0x10 items, 0x4 size)
     + 804 array (0x2 items 0x4 size). Inits with -1.
     + 80c [][][][] store here script pointer + 2c. Init with 0.
     + 810 [][][][] store here script pointer + 4. Init with 0.
+    + 814 [][][][] pointer to some file.
     + 81c array (0x2 items 0x2 size). Inits with 0xffff.
     + 820 array (0x2 items 0x2 size). Inits with 0xffff.
     + 824 array (0x2 items 0x1 size). Inits with 0.

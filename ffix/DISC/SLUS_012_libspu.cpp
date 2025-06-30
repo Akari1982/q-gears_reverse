@@ -704,16 +704,16 @@ else
 reg = A0;
 addr = A1;
 
-if( w[80067a0c] != 0 )
+if( w[0x80067a0c] != 0 )
 {
-    if( ( addr % w[80067a14] ) != 0 )
+    if( ( addr % w[0x80067a14] ) != 0 )
     {
-        addr += w[80067a14];
-        addr &= (0 NOR w[80067a18]);
+        addr += w[0x80067a14];
+        addr &= (~w[0x80067a18]);
     }
 }
 
-A3 = addr >> w[80067a10]; // always 3 because spu address always divided by 8
+A3 = addr >> w[0x80067a10]; // always 3 because spu address always divided by 8
 
 if( reg == -2 ) return addr;
 

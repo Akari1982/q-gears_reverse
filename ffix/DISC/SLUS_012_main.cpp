@@ -20,7 +20,7 @@ void system_main()
                 case 0x0: // begin
                 {
                     func12900( 0x0 );
-                    funca7088();
+                    begin_main();
                 }
                 break;
 

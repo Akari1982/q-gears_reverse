@@ -1,41 +1,28 @@
 ////////////////////////////////
 // func1d768()
 
-struct = w[8006794c];
-struct1c = w[struct + 1c];
+struct = w[0x8006794c];
+struct1c = w[struct + 0x1c];
 
-A0 = 1; // dir id
-A1 = 271a; // file id
-func1e218();
-file_data = V0;
+file_data = func1e218( 0x1, 0x271a ); // dir 0x1 file_id 0x271a
 
-A0 = struct1c + 854;
-A1 = w[file_data + 4]; // file sector
-A2 = (w[file_data + 8 + 4] - w[file_data + 4]) * 800; // size
-A3 = w[80067940]; // dst
-A4 = 0;
-A5 = -1;
-A6 = 0; // callback
-func2177c();
+sector = w[file_data + 0x4]; // file sector
+size = (w[file_data + 0xc] - w[file_data + 0x4]) * 0x800; // size
+func2177c( struct1c + 0x854, sector, size, w[0x80067940], 0, -1, 0 );
 
-do
-{
-    A0 = struct1c + 854;
-    func217c4();
-} while( V0 != 0 )
+while( func217c4( struct1c + 0x854 ) != 0 ) {}
 
-[struct1c + 7d8] = w(w[80067940]);
+[struct1c + 0x7d8] = w(w[0x80067940]);
 
-A0 = w[struct1c + 7d8];
-func1c750(); // add loaded file
+func1c750( w[struct1c + 0x7d8] ); // add loaded file
 
-A0 = w[struct1c + 7d8];
-A1 = 0; // type "address of resource"
-A2 = 00090000; // AKAO Audio file 0
-A3 = 0;
-func1c8b0();
+A0 = w[struct1c + 0x7d8];
+A1 = 0x0; // type "address of resource"
+A2 = 0x00090000; // AKAO Audio file 0
+A3 = 0x0;
+V0 = func1c8b0();
 
-[80067940] = w(V0);
+[0x80067940] = w(V0);
 
 return 0;
 ////////////////////////////////
