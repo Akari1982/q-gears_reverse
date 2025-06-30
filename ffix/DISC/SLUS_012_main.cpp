@@ -17,7 +17,7 @@ void system_main()
             struct = w[0x8006794c];
             switch( bu[struct + 0x8] )
             {
-                case 0x0:
+                case 0x0: // begin
                 {
                     func12900( 0x0 );
                     funca7088();

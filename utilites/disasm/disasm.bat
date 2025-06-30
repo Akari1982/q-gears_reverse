@@ -1,1 +1,1 @@
-adisasm d00_07_32 d00_07_32.asm -v -b 801edf00 801edf00 -u -a
+adisasm d00_04_0d d00_04_0d.asm -v -b 800A7000 800a752c -u -a

@@ -78,8 +78,6 @@
 800A7130	0A324547	GE2.
 800A7134	nop
 800A7138	gte_func10t7,l13l21
-
-Entry:	; 800A713C
 800A713C	sra    t0, t2, $15
 800A7140	454D4147	GAME
 800A7144	gte_func10s5,l22l23
@@ -334,6 +332,8 @@ Entry:	; 800A713C
 800A7520	add    zero, zero, zero
 800A7524	000000B0	....
 800A7528	00000028	(...
+
+Entry:	; 800A752C
 800A752C	addiu  sp, sp, $ffe8 (=-$18)
 800A7530	sw     ra, $0010(sp)
 800A7534	jal    funca755c [$800a755c]

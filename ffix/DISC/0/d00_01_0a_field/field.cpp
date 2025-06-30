@@ -18,10 +18,9 @@ void field_main()
 
 ////////////////////////////////
 // funca7aac
-800A7AAC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
+
 800A7AB4	jal    funca85f4 [$800a85f4]
-[SP + 0010] = w(S0);
+
 800A7ABC	lui    s0, $8006
 
 loopa7ac0:	; 800a7ac0
@@ -40,11 +39,10 @@ V0 = V0 & 0007;
 800A7AF0	beq    v0, zero, loopa7ac0 [$800a7ac0]
 800A7AF4	nop
 800A7AF8	jal    funca8698 [$800a8698]
-800A7AFC	nop
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-800A7B08	jr     ra 
-SP = SP + 0018;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca7b10
 800A7B10	addiu  sp, sp, $ffe0 (=-$20)
@@ -498,7 +496,7 @@ S0 = 001d;
 [SP + 0010] = w(0);
 
 loopa8144:	; 800a8144
-800A8144	jal    $80015c58
+800A8144	jal    $system_psyq_vsync
 A0 = 0;
 800A814C	addiu  s0, s0, $ffff (=-$1)
 800A8150	bgez   s0, loopa8144 [$800a8144]
@@ -697,7 +695,7 @@ A0 = w[V0 + 7944];
 A3 = 0;
 800A8438	jal    $8001daa4
 A0 = A0 + V1;
-800A8440	jal    $800130a4
+800A8440	jal    $system_psyq_draw_sync
 A0 = 0;
 V0 = w[8006794c];
 800A8450	nop
@@ -712,16 +710,20 @@ V0 = 0;
 800A8474	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// funca847c
-800A847C	addiu  sp, sp, $ffd8 (=-$28)
-A0 = 2714;
-[SP + 0024] = w(RA);
-800A8488	jal    $800220e8
-[SP + 0020] = w(S0);
+
+
+
+////////////////////////////////
+// funca847c()
+
+A0 = 0x2714;
+func220e8();
+
 800A8490	beq    v0, zero, la84d0 [$800a84d0]
-A0 = 0001;
-800A8498	jal    $80021e5c
-A0 = 2714;
+
+A0 = 0x2714;
+func21e5c();
+
 A0 = w[80067948];
 A1 = w[V0 + 0008];
 A2 = w[V0 + 000c];
@@ -729,14 +731,14 @@ A2 = w[V0 + 000c];
 A3 = 0;
 800A84B8	jal    $80022390
 A0 = 2714;
-800A84C0	jal    $800130a4
+800A84C0	jal    $system_psyq_draw_sync
 A0 = 0;
 800A84C8	j      la8538 [$800a8538]
 800A84CC	lui    v0, $8006
 
 la84d0:	; 800a84d0
-800A84D0	jal    $8001e218
-A1 = 2714;
+func1e218( 0x1, 0x2714 );
+
 800A84D8	lui    v1, $8006
 S0 = V1;
 A3 = w[80067948];
@@ -777,13 +779,14 @@ V0 = w[A1 + 001c];
 V0 = w[V0 + 08e4];
 800A8564	nop
 A0 = w[V0 + 0010];
-800A856C	jal    $8001c750
 A1 = 0;
-RA = w[SP + 0024];
-S0 = w[SP + 0020];
-V0 = 0;
-800A8580	jr     ra 
-SP = SP + 0028;
+func1c750();
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca8588
 800A8588	addiu  sp, sp, $ffe8 (=-$18)
@@ -815,21 +818,23 @@ V0 = 0;
 800A85EC	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca85f4
-800A85F4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+
 V0 = w[8006794c];
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
 V0 = w[V0 + 001c];
 800A8614	nop
 V0 = w[V0 + 08e4];
 S2 = A0;
 V0 = w[V0 + 0004];
 800A8624	lui    s1, $8006
-800A8628	jal    funca86fc [$800a86fc]
 [S1 + 7948] = w(V0);
+
+800A8628	jal    funca86fc [$800a86fc]
+
 V0 = w[S0 + 794c];
 800A8634	nop
 V0 = w[V0 + 001c];
@@ -850,12 +855,10 @@ A1 = S2;
 V0 = w[S1 + 7948];
 800A8678	nop
 [S0 + 0004] = w(V0);
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800A8690	jr     ra 
-SP = SP + 0020;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca8698
 800A8698	addiu  sp, sp, $ffe0 (=-$20)
@@ -963,11 +966,11 @@ S2 = A1 | V0;
 [SP + 0020] = w(S0);
 S0 = w[V1 + 001c];
 A0 = S2;
-800A8818	jal    $800220e8
+800A8818	jal    $func220e8
 S1 = S0 + 0854;
 800A8820	beq    v0, zero, la8908 [$800a8908]
 800A8824	addiu  v0, zero, $ffff (=-$1)
-800A8828	jal    $80021e5c
+800A8828	jal    $func21e5c
 A0 = S2;
 A0 = w[80067948];
 A3 = w[S3 + 794c];
@@ -990,7 +993,7 @@ A2 = w[V0 + 000c];
 A3 = 0;
 800A8880	jal    $80022390
 A0 = S2;
-800A8888	jal    $800130a4
+800A8888	jal    $system_psyq_draw_sync
 A0 = 0;
 V0 = w[S3 + 794c];
 800A8894	nop
@@ -1049,7 +1052,7 @@ la8940:	; 800a8940
 la8944:	; 800a8944
 A0 = w[S0 + 7948];
 A1 = 0;
-800A894C	jal    $8001c750
+800A894C	jal    $func1c750
 [S4 + 000c] = w(A0);
 A0 = w[S4 + 000c];
 800A8958	jal    $8001ca70
@@ -1397,7 +1400,7 @@ V0 = w[V0 + 08e4];
 V0 = w[V0 + 000c];
 800A8E84	nop
 S1 = w[V0 + 0014];
-800A8E8C	jal    $800130a4
+800A8E8C	jal    $system_psyq_draw_sync
 A0 = 0;
 V0 = w[S0 + 794c];
 800A8E98	nop
@@ -2289,9 +2292,9 @@ loopa9b54:	; 800a9b54
 A1 = w[S1 + 0000];
 800A9B58	nop
 800A9B5C	beq    a1, s4, la9b88 [$800a9b88]
-800A9B60	nop
-800A9B64	jal    $8001e218
-A0 = 000a;
+
+func1e218( 0xa, A1 ); // dir 0xa - party members Data (including models)
+
 V1 = w[V0 + 0004];
 800A9B70	nop
 V0 = V1 < S2;
@@ -2365,11 +2368,11 @@ la9c60:	; 800a9c60
 V1 = A2 & ffff;
 800A9C64	lui    v0, $0005
 S1 = V1 | V0;
-800A9C6C	jal    $800220e8
+800A9C6C	jal    $func220e8
 A0 = S1;
 800A9C74	beq    v0, zero, la9cf0 [$800a9cf0]
 800A9C78	lui    v0, $8006
-800A9C7C	jal    $80021e5c
+800A9C7C	jal    $func21e5c
 A0 = S1;
 A0 = w[80067948];
 A3 = w[8006794c];
@@ -2392,7 +2395,7 @@ A2 = w[V0 + 000c];
 A3 = 0;
 800A9CD8	jal    $80022390
 A0 = S1;
-800A9CE0	jal    $800130a4
+800A9CE0	jal    $system_psyq_draw_sync
 A0 = 0;
 800A9CE8	j      la9d40 [$800a9d40]
 800A9CEC	lui    s3, $8006
@@ -2514,7 +2517,7 @@ A2 = A2 | S3;
 A3 = 0;
 800A9E94	beq    v0, s2, la9ea4 [$800a9ea4]
 800A9E98	nop
-800A9E9C	jal    $8001d8a8
+800A9E9C	jal    $system_file_load_tim
 A0 = V0;
 
 la9ea4:	; 800a9ea4
@@ -2551,7 +2554,7 @@ la9efc:	; 800a9efc
 800A9F04	nop
 
 la9f08:	; 800a9f08
-800A9F08	jal    $800130a4
+800A9F08	jal    $system_psyq_draw_sync
 A0 = 0;
 
 la9f10:	; 800a9f10
@@ -2571,7 +2574,7 @@ V0 = A1 - S4;
 S0 = V1 - V0;
 800A9F50	jal    $8001daa4
 A2 = S0;
-800A9F58	jal    $800130a4
+800A9F58	jal    $system_psyq_draw_sync
 A0 = 0;
 V0 = w[S2 + 794c];
 [S5 + 0024] = w(S1);
@@ -2605,7 +2608,7 @@ A0 = A0 + 0854;
 
 la9fcc:	; 800a9fcc
 A0 = w[S5 + 0024];
-800A9FD0	jal    $8001c750
+800A9FD0	jal    $func1c750
 A1 = 0;
 A0 = w[S5 + 0024];
 800A9FDC	jal    $8001ca70
@@ -2999,23 +3002,16 @@ loopaa4d0:	; 800aa4d0
 800AA4E0	jr     ra 
 800AA4E4	nop
 ////////////////////////////////
-// funcaa4e8
-800AA4E8	addiu  sp, sp, $ffa8 (=-$58)
-[SP + 0030] = w(S0);
+
+
+
+////////////////////////////////
+// funcaa4e8()
+
 S0 = A0;
-A0 = 000a;
-A1 = S0;
-[SP + 0054] = w(RA);
-[SP + 0050] = w(FP);
-[SP + 004c] = w(S7);
-[SP + 0048] = w(S6);
-[SP + 0044] = w(S5);
-[SP + 0040] = w(S4);
-[SP + 003c] = w(S3);
-[SP + 0038] = w(S2);
-800AA51C	jal    $8001e218
-[SP + 0034] = w(S1);
-S1 = V0;
+
+S1 = func1e218( 0xa, S0 );
+
 V0 = w[S1 + 000c];
 V1 = w[S1 + 0004];
 A0 = S0;
@@ -3071,7 +3067,7 @@ A1 = w[S2 + 0004];
 800AA5E0	jal    $8001daa4
 A3 = 0;
 A0 = 0;
-800AA5EC	jal    $800130a4
+800AA5EC	jal    $system_psyq_draw_sync
 S0 = V0;
 A0 = w[S1 + 7948];
 800AA5F8	jal    funcac67c [$800ac67c]
@@ -3193,7 +3189,7 @@ V0 = T0 - V0;
 [S0 + 0006] = h(T0);
 800AA7A0	jal    $8001d9cc
 [SP + 0010] = w(T0);
-800AA7A8	jal    $8001d8a8
+800AA7A8	jal    $system_file_load_tim
 A0 = S5;
 
 laa7b0:	; 800aa7b0
@@ -3326,7 +3322,7 @@ laa958:	; 800aa958
 [SP + 0010] = w(T1);
 800AA95C	jal    $8001d9cc
 A0 = S5;
-800AA964	jal    $8001d8a8
+800AA964	jal    $system_file_load_tim
 A0 = S5;
 
 laa96c:	; 800aa96c
@@ -3339,7 +3335,7 @@ V0 = S2 < V0;
 S3 = S3 + 0004;
 
 laa988:	; 800aa988
-800AA988	jal    $800130a4
+800AA988	jal    $system_psyq_draw_sync
 A0 = 0;
 A0 = w[8006794c];
 800AA998	nop
@@ -3367,7 +3363,7 @@ A1 = 0;
 V0 = bu[V1 + 0040];
 A0 = w[SP + 0024];
 V0 = V0 + 0001;
-800AA9FC	jal    $8001c750
+800AA9FC	jal    $func1c750
 [V1 + 0040] = b(V0);
 A0 = w[SP + 0024];
 800AAA08	jal    $8001ca70
@@ -5444,7 +5440,7 @@ lac5c8:	; 800ac5c8
 A0 = S0;
 
 lac5d0:	; 800ac5d0
-800AC5D0	jal    $800130a4
+800AC5D0	jal    $system_psyq_draw_sync
 A0 = 0;
 RA = w[SP + 001c];
 S2 = w[SP + 0018];
@@ -6949,9 +6945,9 @@ A0 = w[V0 + 001c];
 800ADC08	jal    $800217c4
 A0 = A0 + 0854;
 800ADC10	bne    v0, zero, ladc6c [$800adc6c]
-A0 = 0;
-800ADC18	jal    $8001e218
-A1 = 0064;
+
+func1e218( 0x0, 0x64 );
+
 T0 = f1700;
 A1 = 15000;
 A2 = w[V0 + 000c];
@@ -7163,7 +7159,7 @@ V0 = 0004;
 [V1 + 0009] = b(V0);
 800ADF68	jal    $80056228
 800ADF6C	nop
-800ADF70	jal    $800130a4
+800ADF70	jal    $system_psyq_draw_sync
 A0 = 0;
 V0 = w[S0 + 794c];
 800ADF7C	nop
@@ -7425,7 +7421,7 @@ V0 = bu[V1 + 0008];
 V0 = V0 << 02;
 V1 = V1 + V0;
 A0 = w[V1 + 0010];
-800AE384	jal    $80013590
+800AE384	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 A1 = w[S0 + 794c];
 800AE390	nop
@@ -7805,11 +7801,11 @@ V0 = bu[V1 + 0008];
 V0 = V0 << 02;
 V0 = V1 + V0;
 A0 = w[V0 + 0010];
-800AE910	jal    $80013590
+800AE910	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 
 lae918:	; 800ae918
-800AE918	jal    $8004c204
+800AE918	jal    $func4c204
 800AE91C	nop
 RA = w[SP + 0014];
 S0 = w[SP + 0010];
@@ -7841,7 +7837,7 @@ V0 = V0 | 0001;
 [V1 + 0000] = w(V0);
 
 lae988:	; 800ae988
-800AE988	jal    $800130a4
+800AE988	jal    $system_psyq_draw_sync
 A0 = 0;
 800AE990	jal    $80012ad4
 800AE994	nop
@@ -7877,9 +7873,9 @@ laea00:	; 800aea00
 V0 = w[S1 + 794c];
 800AEA04	nop
 A0 = bu[V0 + 0009];
-800AEA0C	jal    $80015c58
+800AEA0C	jal    $system_psyq_vsync
 800AEA10	lui    s0, $800d
-800AEA14	jal    $80012d28
+800AEA14	jal    $system_psyq_reset_graph
 A0 = 0001;
 V0 = hu[S0 + 9d44];
 800AEA20	nop
@@ -7915,7 +7911,7 @@ A0 = V0 << 02;
 A0 = A0 + V0;
 V0 = w[A1 + 000c];
 A0 = A0 << 02;
-800AEA9C	jal    $800138d4
+800AEA9C	jal    $system_psyq_put_dispenv
 A0 = V0 + A0;
 
 laeaa4:	; 800aeaa4
@@ -7965,7 +7961,7 @@ A1 = A1 << 02;
 A0 = w[V0 + 0010];
 V0 = w[A2 + 0010];
 A0 = A0 + 3ffc;
-800AEB54	jal    $800137c8
+800AEB54	jal    $system_psyq_draw_otag_env
 A1 = V0 + A1;
 800AEB5C	j      laeb80 [$800aeb80]
 800AEB60	lui    s0, $8006
@@ -8358,11 +8354,11 @@ V0 = V0 & 0002;
 800AF110	bne    v0, zero, laf3c4 [$800af3c4]
 800AF114	lui    s0, $8006
 800AF118	lui    a0, $0001
-800AF11C	jal    $800220e8
+800AF11C	jal    $func220e8
 A0 = A0 | 000b;
 800AF124	beq    v0, zero, laf310 [$800af310]
 800AF128	lui    a0, $0001
-800AF12C	jal    $80021e5c
+800AF12C	jal    $func21e5c
 A0 = A0 | 000b;
 800AF134	lui    s0, $800d
 800AF138	addiu  s1, s0, $9f98 (=-$6068)
@@ -8482,7 +8478,7 @@ laf2d8:	; 800af2d8
 A1 = w[S2 + 0008];
 800AF2DC	jal    $80013350
 A0 = SP + 0020;
-800AF2E4	jal    $800130a4
+800AF2E4	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = h[SP + 0020];
 A2 = h[SP + 0022];
@@ -12612,7 +12608,7 @@ S0 = w[V0 + 001c];
 800B2C58	bne    a0, zero, lb2c70 [$800b2c70]
 [S0 + 0826] = b(A0);
 800B2C60	addiu  a0, zero, $ffff (=-$1)
-800B2C64	jal    $80015c58
+800B2C64	jal    $system_psyq_vsync
 [S0 + 0842] = h(A1);
 [S0 + 08c4] = w(V0);
 
@@ -12628,7 +12624,7 @@ V0 = w[8006794c];
 [SP + 0014] = w(RA);
 [SP + 0010] = w(S0);
 S0 = w[V0 + 001c];
-800B2C98	jal    $80015c58
+800B2C98	jal    $system_psyq_vsync
 800B2C9C	addiu  a0, zero, $ffff (=-$1)
 RA = w[SP + 0014];
 V1 = w[S0 + 08c4];
@@ -13430,7 +13426,7 @@ A0 = A0 | 000b;
 800B3750	bne    v0, zero, lb3a68 [$800b3a68]
 800B3754	addiu  v0, zero, $ffff (=-$1)
 800B3758	lui    a0, $0001
-800B375C	jal    $80021e5c
+800B375C	jal    $func21e5c
 A0 = A0 | 000b;
 800B3764	bne    v0, zero, lb3a68 [$800b3a68]
 800B3768	addiu  v0, zero, $ffff (=-$1)
@@ -13477,7 +13473,7 @@ V0 = w[A0 + 0004];
 lb37f8:	; 800b37f8
 800B37F8	bne    s2, zero, lb39f4 [$800b39f4]
 800B37FC	lui    v0, $8006
-800B3800	jal    $80021e5c
+800B3800	jal    $func21e5c
 A0 = S0;
 800B3808	bne    v0, zero, lb39f4 [$800b39f4]
 800B380C	lui    v0, $8006
@@ -13522,7 +13518,7 @@ lb3884:	; 800b3884
 A0 = S1;
 800B388C	bne    v0, zero, lb3a68 [$800b3a68]
 800B3890	addiu  v0, zero, $ffff (=-$1)
-800B3894	jal    $80021e5c
+800B3894	jal    $func21e5c
 A0 = S1;
 S0 = V0;
 800B38A0	beq    s0, zero, lb38f0 [$800b38f0]
@@ -13588,7 +13584,7 @@ A0 = S0;
 A0 = S0;
 
 lb398c:	; 800b398c
-800B398C	jal    $80021e5c
+800B398C	jal    $func21e5c
 A0 = S1;
 800B3994	bne    s2, zero, lb39f0 [$800b39f0]
 800B3998	nop
@@ -14121,17 +14117,17 @@ V0 = bu[V1 + 0002];
 
 lb4044:	; 800b4044
 800B4044	beq    s1, zero, lb4090 [$800b4090]
-A0 = 0;
-800B404C	lui    a1, $0001
-800B4050	jal    $8001e218
-A1 = A1 | 000b;
-A0 = 1000b;
-A2 = w[V0 + 0004];
-A3 = w[V0 + 000c];
+
+func1e218( 0x0, 0x1000b );
+
+A0 = 0x1000b;
+A2 = w[V0 + 0x4];
+A3 = w[V0 + 0xc];
 A1 = 0;
 A3 = A3 - A2;
+A3 = A3 << 0xb;
 800B4070	jal    funcb3e48 [$800b3e48]
-A3 = A3 << 0b;
+
 800B4078	jal    funcb3b40 [$800b3b40]
 800B407C	nop
 800B4080	beq    v0, zero, lb4090 [$800b4090]
@@ -14874,9 +14870,9 @@ A1 = 0100;
 A1 = hu[V1 + 0004];
 A2 = hu[V1 + 0006];
 V0 = 00e0;
-800B4AE0	jal    $8001d8a8
+800B4AE0	jal    $system_file_load_tim
 [V1 + 0002] = h(V0);
-800B4AE8	jal    $800130a4
+800B4AE8	jal    $system_psyq_draw_sync
 A0 = 0;
 V0 = w[8006794c];
 800B4AF8	nop
@@ -14998,7 +14994,7 @@ V0 = bu[V1 + 0008];
 V0 = V0 << 02;
 V1 = V1 + V0;
 A0 = w[V1 + 0010];
-800B4CC8	jal    $80013590
+800B4CC8	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 V0 = 0001;
 800B4CD4	beq    s1, v0, lb4d38 [$800b4d38]
@@ -15127,7 +15123,7 @@ V1 = V1 & S6;
 V1 = V1 | V0;
 800B4E94	jal    $80032098
 [A1 + 0000] = w(V1);
-800B4E9C	jal    $800130a4
+800B4E9C	jal    $system_psyq_draw_sync
 A0 = 0;
 V1 = w[S5 + 794c];
 V0 = 0002;
@@ -15135,9 +15131,9 @@ V0 = 0002;
 V0 = w[S5 + 794c];
 800B4EB4	nop
 A0 = bu[V0 + 0009];
-800B4EBC	jal    $80015c58
+800B4EBC	jal    $system_psyq_vsync
 800B4EC0	nop
-800B4EC4	jal    $80012d28
+800B4EC4	jal    $system_psyq_reset_graph
 A0 = 0001;
 V1 = w[S5 + 794c];
 800B4ED0	nop
@@ -15149,7 +15145,7 @@ A0 = V0 << 02;
 A0 = A0 + V0;
 V0 = w[V1 + 000c];
 A0 = A0 << 02;
-800B4EF4	jal    $800138d4
+800B4EF4	jal    $system_psyq_put_dispenv
 A0 = V0 + A0;
 A2 = w[S5 + 794c];
 800B4F00	nop
@@ -15167,7 +15163,7 @@ A1 = A1 << 02;
 V0 = w[A2 + 0010];
 A0 = w[A0 + 0010];
 A1 = V0 + A1;
-800B4F3C	jal    $800137c8
+800B4F3C	jal    $system_psyq_draw_otag_env
 A0 = A0 + 3ffc;
 V0 = w[S5 + 794c];
 800B4F48	nop
@@ -15304,7 +15300,7 @@ SP = SP + 0020;
 800B5114	addiu  sp, sp, $ffe8 (=-$18)
 A0 = 0;
 [SP + 0014] = w(RA);
-800B5120	jal    $800130a4
+800B5120	jal    $system_psyq_draw_sync
 [SP + 0010] = w(S0);
 A1 = 0;
 A2 = 4000300;
@@ -15367,7 +15363,7 @@ V0 = w[V1 + 0008];
 800B5210	nop
 
 lb5214:	; 800b5214
-800B5214	jal    $800130a4
+800B5214	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = 0;
 A0 = 80073998;
@@ -15410,7 +15406,7 @@ V0 = bu[V1 + 0008];
 V0 = V0 << 02;
 V1 = V1 + V0;
 A0 = w[V1 + 0010];
-800B52BC	jal    $80013590
+800B52BC	jal    $system_psyq_clear_otag_r
 A1 = 1000;
 800B52C4	jal    $80019194
 800B52C8	nop
@@ -15453,11 +15449,11 @@ SP = SP + 0018;
 800B5348	nop
 800B534C	jal    $80023a4c
 800B5350	nop
-800B5354	jal    $800130a4
+800B5354	jal    $system_psyq_draw_sync
 A0 = 0;
-800B535C	jal    $80015c58
+800B535C	jal    $system_psyq_vsync
 A0 = 0;
-800B5364	jal    $80012d28
+800B5364	jal    $system_psyq_reset_graph
 A0 = 0001;
 V1 = w[S0 + 794c];
 800B5370	nop
@@ -15469,7 +15465,7 @@ A0 = V0 << 02;
 A0 = A0 + V0;
 V0 = w[V1 + 000c];
 A0 = A0 << 02;
-800B5394	jal    $800138d4
+800B5394	jal    $system_psyq_put_dispenv
 A0 = V0 + A0;
 A3 = w[S0 + 794c];
 800B53A0	nop
@@ -15487,7 +15483,7 @@ A1 = A1 << 02;
 A0 = w[V0 + 0010];
 V0 = w[A3 + 0010];
 A0 = A0 + 3ffc;
-800B53DC	jal    $800137c8
+800B53DC	jal    $system_psyq_draw_otag_env
 A1 = V0 + A1;
 V0 = w[S0 + 794c];
 800B53E8	nop
@@ -37546,37 +37542,37 @@ A0 = SP + 0010;
 S0 = 80076f80;
 800C8730	jal    $800133b0
 A1 = S0;
-800C8738	jal    $800130a4
+800C8738	jal    $system_psyq_draw_sync
 A0 = 0;
 A0 = S2;
 A1 = 03c0;
 800C8748	jal    $80013410
 A2 = 01b0;
-800C8750	jal    $800130a4
+800C8750	jal    $system_psyq_draw_sync
 A0 = 0;
 A0 = S3;
 A1 = 03d0;
 800C8760	jal    $80013410
 A2 = 01b0;
-800C8768	jal    $800130a4
+800C8768	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = h[SP + 0010];
 A2 = h[SP + 0012];
 800C8778	jal    $80013410
 A0 = S1;
-800C8780	jal    $800130a4
+800C8780	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = h[SP + 0018];
 A2 = h[SP + 001a];
 800C8790	jal    $80013410
 A0 = S4;
-800C8798	jal    $800130a4
+800C8798	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = h[SP + 0020];
 A2 = h[SP + 0022];
 800C87A8	jal    $80013410
 A0 = S5;
-800C87B0	jal    $800130a4
+800C87B0	jal    $system_psyq_draw_sync
 A0 = 0;
 A0 = S1;
 A1 = S0;
@@ -37588,19 +37584,19 @@ V0 = 03d0;
 [SP + 0020] = h(V0);
 800C87D8	jal    $80013350
 [SP + 0022] = h(V1);
-800C87E0	jal    $800130a4
+800C87E0	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = h[SP + 0030];
 A2 = h[SP + 0032];
 800C87F0	jal    $80013410
 A0 = S2;
-800C87F8	jal    $800130a4
+800C87F8	jal    $system_psyq_draw_sync
 A0 = 0;
 A1 = h[SP + 0038];
 A2 = h[SP + 003a];
 800C8808	jal    $80013410
 A0 = S3;
-800C8810	jal    $800130a4
+800C8810	jal    $system_psyq_draw_sync
 A0 = 0;
 RA = w[SP + 0058];
 S5 = w[SP + 0054];
