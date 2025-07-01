@@ -2,6 +2,8 @@ void begin_main()
 {
     S1 = 0;
 
+    u32 struct = w[0x8006794c];
+
     funca767c();
 
     funca7ff0();
@@ -45,8 +47,7 @@ void begin_main()
                 }
                 else
                 {
-                    V0 = w[0x8006794c];
-                    V1 = bu[V0 + 0xb];
+                    V1 = bu[struct + 0xb];
                     if( ( V1 == 0xff ) || ( ( V1 & 0x1 ) == 0 ) )
                     {
                         [0x800ab300] = w(0x4);
@@ -98,8 +99,7 @@ void begin_main()
                 }
                 else
                 {
-                    V0 = w[0x8006794c];
-                    V1 = bu[V0 + 0xb];
+                    V1 = bu[struct + 0xb];
                     if( ( V1 == 0xff ) || ( ( V1 & 0x1 ) == 0 ) )
                     {
                         [0x800ab300] = w(0x1);
@@ -135,8 +135,7 @@ void begin_main()
         }
     }
 
-    A0 = w[0x8006794c];
-    [A0 + 0x0] = w(w[A0 + 0x0] | 0x00100000);
+    [struct + 0x0] = w(w[struct + 0x0] | 0x00100000);
 
     func1de50();
 
@@ -149,114 +148,57 @@ void begin_main()
 
 
 
-////////////////////////////////
-// funca727c
-V0 = w[8006794c];
-800A7284	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V1 = w[V0 + 001c];
-800A7290	nop
-V0 = bu[V1 + 0008];
-800A7298	nop
-V0 = V0 << 02;
-V1 = V1 + V0;
-A0 = w[V1 + 0010];
-800A72A8	jal    $system_psyq_clear_otag_r
-A1 = 1000;
-RA = w[SP + 0010];
-800A72B4	nop
-800A72B8	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
-// funca72c0
-800A72C0	addiu  sp, sp, $ffe8 (=-$18)
-A0 = 0;
-[SP + 0014] = w(RA);
-800A72CC	jal    $system_psyq_draw_sync
-[SP + 0010] = w(S0);
-V0 = w[8006794c];
-800A72DC	nop
-A0 = bu[V0 + 0009];
-800A72E4	jal    $system_psyq_vsync
-800A72E8	nop
-800A72EC	jal    $system_psyq_reset_graph
-A0 = 0001;
-V1 = w[S0 + 794c];
-800A72F8	nop
-V0 = w[V1 + 001c];
-800A7300	nop
-V0 = bu[V0 + 0008];
-800A7308	nop
-A0 = V0 << 02;
-A0 = A0 + V0;
-V0 = w[V1 + 000c];
-A0 = A0 << 02;
-800A731C	jal    $system_psyq_put_dispenv
-A0 = V0 + A0;
-A3 = w[S0 + 794c];
-800A7328	nop
-V0 = w[A3 + 001c];
-800A7330	nop
-A2 = bu[V0 + 0008];
-800A7338	nop
-V1 = A2 << 02;
-V0 = V0 + V1;
-A1 = A2 << 01;
-A1 = A1 + A2;
-A1 = A1 << 03;
-A1 = A1 - A2;
-A1 = A1 << 02;
-A0 = w[V0 + 0010];
-V0 = w[A3 + 0010];
-A0 = A0 + 3ffc;
-800A7364	jal    $system_psyq_draw_otag_env
-A1 = V0 + A1;
-V0 = w[S0 + 794c];
-800A7370	nop
-V1 = w[V0 + 001c];
-800A7378	nop
-V0 = bu[V1 + 0008];
-800A7380	nop
-V0 = V0 ^ 0001;
-[V1 + 0008] = b(V0);
-V0 = w[S0 + 794c];
-800A7390	nop
-V0 = w[V0 + 001c];
-800A7398	nop
-A0 = bu[V0 + 0008];
-800A73A0	jal    $func2c0dc
-800A73A4	nop
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-800A73B0	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
-// funca73b8
-800A73B8	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-800A73C0	lui    s0, $8006
-A0 = 0;
-A1 = A0;
-V0 = w[S0 + 794c];
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-S1 = w[V0 + 001c];
-800A73DC	jal    $8001ccb4
-A2 = A0;
-V1 = w[S0 + 794c];
-V0 = 0001;
-[V1 + 0008] = b(V0);
-V1 = w[S0 + 794c];
-V0 = 0002;
-[V1 + 0009] = b(V0);
-V0 = 0001;
-[S1 + 000c] = h(0);
-[S1 + 003a] = h(V0);
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800A7414	jr     ra 
-SP = SP + 0020;
+void funca727c()
+{
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
+    V0 = bu[struct1c + 0x8];
+    system_psyq_clear_otag_r( w[struct1c + 0x10 + V0 * 0x4], 0x1000 )
+}
+
+
+
+void funca72c0()
+{
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
+
+    system_psyq_draw_sync( 0 );
+
+    system_psyq_vsync( bu[struct + 0x9] );
+
+    system_psyq_reset_graph( 1 );
+
+    V0 = bu[struct1c + 0x8];
+    system_psyq_put_dispenv( w[struct + 0xc] + V0 * 0x14 );
+
+    A2 = bu[struct1c + 0x8];
+    u32* ot = w[struct1c + 0x10 + A2 * 4] + 0x3ffc;
+    DRAWENV* env = w[struct + 0x10] + A2 * 0x5c;
+    system_psyq_draw_otag_env( ot, env );
+
+    [struct1c + 0x8] = b(bu[struct1c + 0x8] ^ 0x1);
+
+    func2c0dc( bu[struct1c + 0x8] );
+}
+
+
+
+void funca73b8()
+{
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
+
+    system_drawenv_set_background_color( 0, 0, 0 );
+
+    [struct + 0x8] = b(1);
+    [struct + 0x9] = b(2);
+    [struct1c + 0xc] = h(0);
+    [struct1c + 0x3a] = h(1);
+}
+
+
+
 ////////////////////////////////
 // funca741c
 T2 = w[8006794c];
@@ -368,27 +310,23 @@ La7570:	; 800A7570
 800A7570	jr     ra 
 800A7574	nop
 ////////////////////////////////
-// funca7578
-800A7578	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A7580	jal    $800651d8
-800A7584	nop
-800A7588	jal    $80050a84
-800A758C	nop
-800A7590	jal    $8005392c
-800A7594	nop
-800A7598	jal    $8003253c
-800A759C	nop
-800A75A0	jal    funcab1e4 [$800ab1e4]
-800A75A4	nop
-800A75A8	jal    $80062344
-800A75AC	nop
-800A75B0	jal    funca75c8 [$800a75c8]
-800A75B4	nop
-RA = w[SP + 0010];
-800A75BC	nop
-800A75C0	jr     ra 
-SP = SP + 0018;
+
+
+
+////////////////////////////////
+void funca7578()
+{
+    func651d8();
+    func50a84();
+    func5392c();
+    func3253c();
+    funcab1e4();
+    func62344();
+    funca75c8();
+}
+
+
+
 ////////////////////////////////
 // funca75c8
 800A75C8	addiu  sp, sp, $ffe8 (=-$18)
@@ -448,6 +386,9 @@ loopa7660:	; 800A7660
 
 void funca767c()
 {
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
+
     for( int i = 1; i >= 0; --i )
     {
         [0x800739b0 + i * 0x2 + 0x0] = b(0);
@@ -457,24 +398,19 @@ void funca767c()
     func55d40(); // akao command 0xf0
     func55d60(); // akao command 0xf1
 
-    struct = w[0x8006794c];
-
-    V0 = w[struct + 0x1c];
-    if( w[V0 + 0x0] & 0x00100000 )
+    if( w[struct1c + 0x0] & 0x00100000 )
     {
         func551f0();
 
         funca7768();
 
-        A0 = w[struct + 0x1c];
-        [A0 + 0x0] = w(w[A0 + 0x0] & 0xffefffff);
+        [struct1c + 0x0] = w(w[struct1c + 0x0] & 0xffefffff);
     }
 
     func2306c();
 
-    V1 = w[struct + 0x1c];
-    [V1 + 0x83c] = w(0x800a799c);
-    [V1 + 0x84c] = w(0);
+    [struct1c + 0x83c] = w(0x800a799c);
+    [struct1c + 0x84c] = w(0);
 
     funca78c0();
 
@@ -489,53 +425,36 @@ void funca767c()
 
 
 
-////////////////////////////////
-// funca7768
+void funca7768()
+{
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
 
-A0 = 0x1;
-struct = w[0x8006794c];
-A1 = w[struct + 0x1c];
-V1 = A1 + 0x2;
+    for( int i = 1; i >=0; --i )
+    {
+        [struct1c + 0x81c + i * 2] = h(0xffff);
+        [struct1c + 0x820 + i * 2] = h(0xffff);
+        [struct1c + 0x824 + i] = b(0);
+        [struct1c + 0x826 + i] = b(0x7f);
+    }
 
-loopa7784:	; 800A7784
-    [V1 + 081c] = h(0xffff);
-    [V1 + 0820] = h(0xffff);
-    800A778C	addiu  v1, v1, $fffe (=-$2)
-    V0 = A1 + A0;
-    800A7794	addiu  a0, a0, $ffff (=-$1)
-    [V0 + 0824] = b(0);
-    [V0 + 0826] = b(0x7f);
-800A779C	bgez   a0, loopa7784 [$800a7784]
-
-[A1 + 0x0] = w(w[A1 + 0x0] & 0x00bfffff);
-////////////////////////////////
+    [struct1c + 0x0] = w(w[struct1c + 0x0] & 0x00bfffff);
+}
 
 
 
-////////////////////////////////
-// funca77bc
-800A77BC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A77C4	jal    $system_psyq_set_disp_mask
-A0 = 0;
-V0 = w[8006794c];
-800A77D4	nop
-A0 = w[V0 + 001c];
-800A77DC	nop
-V1 = w[A0 + 0000];
-800A77E4	lui    v0, $2000
-V0 = V1 & V0;
-800A77EC	beq    v0, zero, La77fc [$800a77fc]
-800A77F0	lui    v0, $0040
-V0 = V1 | V0;
-[A0 + 0000] = w(V0);
+voif funca77bc()
+{
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
 
-La77fc:	; 800A77FC
-RA = w[SP + 0010];
-800A7800	nop
-800A7804	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
+    system_psyq_set_disp_mask( 0 );
+
+    if( w[struct1c + 0x0] & 0x20000000 )
+    {
+        [struct1c + 0x0] = w(w[struct1c + 0x0] | 0x00400000);
+    }
+}
 
 
 
@@ -563,6 +482,7 @@ void funca78c0()
 {
     struct = w[0x8006794c];
     struct1c = w[struct + 0x1c]
+
     S0 = w[0x80067944] + 0x10000;
 
     func1e218( 0x1, 0x2717 ); // dir 0x1 file_id 0x2717
@@ -649,17 +569,14 @@ A0 = w[A0 + 001c];
 V0 = hu[A0 + 081c];
 800A7A74	nop
 800A7A78	beq    v0, s5, La7ae4 [$800a7ae4]
-800A7A7C	lui    v1, $2000
-V0 = w[A0 + 0000];
-800A7A84	nop
-V0 = V0 & V1;
-800A7A8C	beq    v0, zero, La7aa0 [$800a7aa0]
-800A7A90	nop
-A0 = bu[A0 + 0824];
-800A7A98	jal    $800552b8
-800A7A9C	nop
 
-La7aa0:	; 800A7AA0
+V0 = w[A0 + 0000];
+
+if( V0 & 0x20000000 )
+{
+    func552b8( bu[A0 + 0x824] ); // execute akao command 0x11
+}
+
 A0 = w[S0 + 794c];
 800A7AA4	nop
 A1 = w[A0 + 001c];
@@ -727,7 +644,7 @@ V0 = A1 & ffff;
 800A7B98	bne    v1, v0, La7f4c [$800a7f4c]
 V0 = 0;
 A0 = bu[A0 + 0824];
-800A7BA4	jal    $800552b8
+800A7BA4	jal    $func552b8
 800A7BA8	nop
 V0 = w[S0 + 794c];
 800A7BB0	nop
@@ -1059,6 +976,13 @@ SP = SP + 0018;
 [0x800ab308 + 0x0] = b(0);
 [0x800ab308 + 0x2] = b(0);
 [0x800ab308 + 0x3] = b(0);
+
+00000000000000000000000000000000
+74850A809C850A8038860A8094860A80
+48840A8050840A807C840A80A8840A80
+3C830A8044830A8068830A8070830A80
+98830A80A0830A80AC830A80E8830A80
+00000000000000000000000000000000
 
 for( int i = 0; i < 6; ++i )
 {
@@ -3127,7 +3051,7 @@ A0 = A0 << 03;
 A0 = A0 - V0;
 V0 = w[V1 + 0010];
 A0 = A0 << 02;
-800A9C90	jal    $80013708
+800A9C90	jal    $system_psyq_put_drawenv
 A0 = V0 + A0;
 800A9C98	j      La9cec [$800a9cec]
 800A9C9C	lui    a0, $8006

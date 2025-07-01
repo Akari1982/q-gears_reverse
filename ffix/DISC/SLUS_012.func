@@ -62,7 +62,7 @@
 800157C0 func157c0
 800158AC func158ac
 80015998 func15998
-80015ADC func15adc
+80015ADC system_psyq_draw_otag_2
 80015BD8 func15bd8
 80015C00 func15c00
 80015C28 system_bios_memcpy

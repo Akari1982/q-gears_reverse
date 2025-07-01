@@ -298,7 +298,7 @@ A0 = 80010150; // "%s:bad RECT"
 800131CC	j      L131dc [$800131dc]
 
 L131d4:	; 800131D4
-A0 = 80010170;
+A0 = 80010170; // "%s:"
 
 L131dc:	; 800131DC
 V0 = w[80066658];
@@ -310,7 +310,7 @@ A2 = h[S0 + 0002];
 A3 = h[S0 + 0004];
 V1 = h[S0 + 0006];
 V0 = w[80066658];
-A0 = 8001015c;
+A0 = 8001015c; // "(%d,%d)-(%d,%d)\n"
 80013210	jalr   v0 ra
 [SP + 0010] = w(V1);
 
@@ -564,30 +564,22 @@ A1 = S1;
 
 
 
-////////////////////////////////
-// system_psyq_draw_otag()
+void system_psyq_draw_otag( u32* ot )
+{
+    if( bu[0x8006665e] >= 0x2 )
+    {
+        A0 = 0x800101e0; // "DrawOTag(%08x)...\n"
+        A1 = ot;
+        800136CC	jalr   w[0x80066658] ra
+    }
 
-V0 = bu[8006665e];
-S0 = A0;
-V0 = V0 < 0002;
-800136B0	bne    v0, zero, L136d4 [$800136d4]
-
-A0 = 800101e0; // "DrawOTag(%08x)...\n"
-V0 = w[80066658];
-800136C8	nop
-800136CC	jalr   v0 ra
-A1 = S0;
-
-L136d4:	; 800136D4
-A1 = S0;
-V0 = w[80066654];
-A2 = 0;
-A0 = w[V0 + 0018];
-V0 = w[V0 + 0008];
-800136EC	nop
-800136F0	jalr   v0 ra
-A3 = 0;
-////////////////////////////////
+    V0 = w[80066654];
+    A0 = w[V0 + 0x18];
+    A1 = ot;
+    A2 = 0;
+    A3 = 0;
+    800136F0	jalr   w[V0 + 0x8] ra
+}
 
 
 
@@ -3085,70 +3077,60 @@ SP = SP + 0020;
 
 
 
-////////////////////////////////
-// func15adc
-V0 = bu[8006665e];
-80015AE4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-V0 = V0 < 0002;
-80015AF4	bne    v0, zero, L15b18 [$80015b18]
-[SP + 0014] = w(RA);
-A0 = 800101e0;
-V0 = w[80066658];
-80015B0C	nop
-80015B10	jalr   v0 ra
-A1 = S0;
+int system_psyq_draw_otag_2( u32* p )
+{
+    if( bu[0x8006665e] >= 0x2 )
+    {
+        A0 = 0x800101e0; // "DrawOTag(%08x)...\n"
+        A1 = p;
+        800136CC	jalr   w[0x80066658] ra
+    }
 
-L15b18:	; 80015B18
-80015B18	jal    system_psyq_vsync [$80015c58]
-80015B1C	addiu  a0, zero, $ffff (=-$1)
-V1 = w[80066770];
-V0 = V0 + 00f0;
-[80066798] = w(V0);
-[8006679c] = w(0);
-V0 = w[V1 + 0000];
-80015B40	j      L15b6c [$80015b6c]
-80015B44	lui    v1, $0100
+    S0 = A0;
 
-loop15b48:	; 80015B48
-80015B48	jal    func155dc [$800155dc]
-80015B4C	nop
-80015B50	bne    v0, zero, L15bc8 [$80015bc8]
-80015B54	addiu  v0, zero, $ffff (=-$1)
-V0 = w[80066770];
-80015B60	nop
-V0 = w[V0 + 0000];
-80015B68	lui    v1, $0100
+    system_psyq_vsync( -1 );
 
-L15b6c:	; 80015B6C
-V0 = V0 & V1;
-80015B70	bne    v0, zero, loop15b48 [$80015b48]
-80015B74	nop
-V0 = w[80066764];
-80015B80	nop
-V0 = w[V0 + 0000];
-80015B88	lui    v1, $0400
-V0 = V0 & V1;
-80015B90	beq    v0, zero, loop15b48 [$80015b48]
-80015B94	nop
-A1 = 80015bd8;
-80015BA0	jal    system_dma_additional_callback [$80015f08]
-A0 = 0002;
-V0 = w[80066654];
-80015BB0	nop
-V0 = w[V0 + 0018];
-80015BB8	nop
-80015BBC	jalr   v0 ra
-A0 = S0;
-V0 = 0;
+    V1 = w[0x80066770];
+    V0 = V0 + 00f0;
+    [80066798] = w(V0);
+    [8006679c] = w(0);
+    V0 = w[V1 + 0000];
+    80015B40	j      L15b6c [$80015b6c]
+    80015B44	lui    v1, $0100
 
-L15bc8:	; 80015BC8
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-80015BD0	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
+    loop15b48:	; 80015B48
+    80015B48	jal    func155dc [$800155dc]
+
+    if( V0 != 0 ) return -1; // Abnormal completion
+
+    V0 = w[80066770];
+    80015B60	nop
+    V0 = w[V0 + 0000];
+    80015B68	lui    v1, $0100
+
+    L15b6c:	; 80015B6C
+    V0 = V0 & V1;
+    80015B70	bne    v0, zero, loop15b48 [$80015b48]
+    80015B74	nop
+    V0 = w[80066764];
+    80015B80	nop
+    V0 = w[V0 + 0000];
+    80015B88	lui    v1, $0400
+    V0 = V0 & V1;
+    80015B90	beq    v0, zero, loop15b48 [$80015b48]
+    80015B94	nop
+    A1 = 80015bd8;
+    A0 = 0002;
+    80015BA0	jal    system_dma_additional_callback [$80015f08]
+
+    V0 = w[80066654];
+    80015BB0	nop
+    V0 = w[V0 + 0018];
+    80015BB8	nop
+    80015BBC	jalr   v0 ra
+    A0 = S0;
+    return 0; // Normal completion
+}
 
 
 
