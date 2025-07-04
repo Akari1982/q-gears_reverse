@@ -882,12 +882,10 @@ func21770();
 
 
 
-////////////////////////////////
-// func16b6c()
+void func16b6c()
+{
+    func55210(); // deinit sound callbacks
+    func1c718(); // removed func
 
-func55210(); // deinit sound callbacks
-
-func1c718(); // removed func
-
-[80067950] = h(hu[80067950] + 1);
-////////////////////////////////
+    [0x80067950] = h(hu[0x80067950] + 0x1);
+}
