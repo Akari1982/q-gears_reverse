@@ -1605,16 +1605,15 @@ return A0;
 
 
 
-////////////////////////////////
-// system_psyq_set_rot_matrix()
-// Set a constant rotation matrix.
-
-R11R12 = w[A0 + 0];
-R13R21 = w[A0 + 4];
-R22R23 = w[A0 + 8];
-R31R32 = w[A0 + c];
-R33 = w[A0 + 10];
-////////////////////////////////
+void system_psyq_set_rot_matrix( MATRIX* m )
+{
+    // Set a constant rotation matrix.
+    R11R12 = w[m + 0x0];
+    R13R21 = w[m + 0x4];
+    R22R23 = w[m + 0x8];
+    R31R32 = w[m + 0xc];
+    R33 = w[m + 0x10];
+}
 
 
 
@@ -1644,14 +1643,13 @@ LB3 = w[A0 + 10];
 
 
 
-////////////////////////////////
-// system_psyq_set_trans_matrix()
-// Set a constant parallel transfer vector.
-
-TRX = w[A0 + 14];
-TRY = w[A0 + 18];
-TRZ = w[A0 + 1c];
-////////////////////////////////
+void system_psyq_set_trans_matrix( MATRIX* m )
+{
+    // Set a constant parallel transfer vector.
+    TRX = w[m + 0x14];
+    TRY = w[m + 0x18];
+    TRZ = w[m + 0x1c];
+}
 
 
 

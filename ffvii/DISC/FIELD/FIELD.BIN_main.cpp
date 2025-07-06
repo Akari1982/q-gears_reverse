@@ -1,3 +1,7 @@
+FieldRenderData g_field_render_data[2]; // 0x800e4df0
+
+
+
 ////////////////////////////////
 // field_load_mim_dat_files()
 
@@ -152,10 +156,8 @@ system_cdrom_start_load_file(); // set data to load in background
     A1 = 8007eaac + 1 * 5c; // DRAWENV struct
     system_psyq_set_drawenv();
 
-    [drenv_prim1] = w((w[drenv_prim1] & ff000000) | (w[ot1] & 00ffffff));
-    [ot1] = w((w[ot1] & ff000000) | (drenv_prim1 & 00ffffff));
-    [drenv_prim2] = w((w[drenv_prim2] & ff000000) | ( w[ot2] & 00ffffff));
-    [ot2] = w(( w[ot2] & ff000000) | (drenv_prim2 & 00ffffff));
+    addPrim( ot1, drenv_prim1 ); // macross addPrim( ot, p )
+    addPrim( ot2, drenv_prim2 ); // macross addPrim( ot, p )
 }
 
 {
@@ -281,10 +283,8 @@ system_cdrom_start_load_file(); // set data to load in background
     A1 = 1;
     system_psyq_clear_otag_r();
 
-    [drenv_prim1] = w((w[drenv_prim1] & ff000000) | (w[ot1] & 00ffffff));
-    [ot1] = w((w[ot1] & ff000000) | (drenv_prim1 & 00ffffff));
-    [drenv_prim2] = w((w[drenv_prim2] & ff000000) | (w[ot2] & 00ffffff));
-    [ot2] = w((w[ot2] & ff000000) | (drenv_prim2 & 00ffffff));
+    addPrim( ot1, drenv_prim1 ); // macross addPrim( ot, p )
+    addPrim( ot2, drenv_prim2 ); // macross addPrim( ot, p )
 }
 
 func128b8(); // fade
@@ -425,12 +425,12 @@ while( true )
 
     [800716d0] = b(0); // random encounter related
 
-    A0 = 800e4df0 + 0 * 1789c + 4000; // arrows poly
-    A1 = 800e4df0 + 0 * 1789c + 4180; // draw mode
+    A0 = 0x800e4df0 + 0 * 0x1789c + 0x4000; // arrows poly
+    A1 = 0x800e4df0 + 0 * 0x1789c + 0x4180; // draw mode
     field_arrows_init();
 
-    A0 = 800e4df0 + 1 * 1789c + 4000; // arrows poly
-    A1 = 800e4df0 + 1 * 1789c + 4180; // draw mode
+    A0 = 0x800e4df0 + 1 * 0x1789c + 0x4000; // arrows poly
+    A1 = 0x800e4df0 + 1 * 0x1789c + 0x4180; // draw mode
     field_arrows_init();
 
     if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
@@ -570,319 +570,268 @@ while( true )
 
 
 
-////////////////////////////////
-// field_main_loop()
-// contain move and button update, animation handler and many others
-// model new structure inited here
-
-[SP + 10] = w(800a0024);
-[SP + 14] = w(800a0028);
-[SP + 18] = w(800a002c);
-[SP + 1c] = w(800a0030);
-[SP + 20] = w(800a0034);
-[SP + 24] = w(800a0038);
-[SP + 28] = w(800a003c);
-[SP + 2c] = w(800a0040);
-[SP + 30] = w(800a0044);
-[SP + 34] = w(800a0048);
-[SP + 38] = w(800a004c);
-[SP + 3c] = w(800a0050);
-
-[8007eb90] = w(a0); // base offset x for DRAWENV
-[8007eb94] = w(78); // base offset y for DRAWENV
-
-if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
+void field_main_loop()
 {
-    field_model_load_and_init();
-}
+    // contain move and button update, animation handler and many others
+    // model new structure inited here
 
-V0 = w[8009a044];
-A0 = w[V0] + 4;
-[800e4274] = w(A0); // offset to walkmesh block
-V0 = w[V0];
-[80114458] = w(A0 + hu[V0] * 18); // walkmesh triangle access block
+    [SP + 10] = w(800a0024);
+    [SP + 14] = w(800a0028);
+    [SP + 18] = w(800a002c);
+    [SP + 1c] = w(800a0030);
+    [SP + 20] = w(800a0034);
+    [SP + 24] = w(800a0038);
+    [SP + 28] = w(800a003c);
+    [SP + 2c] = w(800a0040);
+    [SP + 30] = w(800a0044);
+    [SP + 34] = w(800a0048);
+    [SP + 38] = w(800a004c);
+    [SP + 3c] = w(800a0050);
 
-if( ( h[800965ec] != 5 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != d ) )
-{
-    funca5fb4(); // move PC model position init by walkmesh
-}
+    [8007eb90] = w(a0); // base offset x for DRAWENV
+    [8007eb94] = w(78); // base offset y for DRAWENV
 
-A0 = 800e4df0 + 0 * 1789c + 4914; // draft 1st and 2nd layer
-A1 = 800e4df0 + 0 * 1789c + e554; // draft 3rd and 4th layer
-A2 = 800e4df0 + 0 * 1789c + 10d54; // animation packets data
-A3 = 800e4df0 + 0 * 1789c + 124dc;
-field_background_init_packets(); // we read dat background data here
-
-A0 = 800e4df0 + 1 * 1789c + 4914; // draft 1st and 2nd layer
-A1 = 800e4df0 + 1 * 1789c + e554; // draft 3rd and 4th layer
-A2 = 800e4df0 + 1 * 1789c + 10d54; // animation packets data
-A3 = 800e4df0 + 1 * 1789c + 124dc;
-field_background_init_packets(); // we read dat background data here
-
-render_data = 800e4df0;
-
-A0 = render_data; // buffer 1
-field_rain_init();
-
-A0 = render_data + 1789c; // buffer 2
-field_rain_init();
-
-S3 = 1;
-[80114488] = h(0);
-[801142c8] = h(0);
-[800e4d44] = h(0);
-[80071c0c] = b(0);
-[800965e8] = h(0);
-
-while( true )
-{
-    if( ( S3 << 10 ) == 0 ) [80075dec] = h(hu[80075dec] + 1);
-
-    [80075dec] = h(hu[80075dec] + 1);
-    buf_id = h[80075dec];
-    [8009abf4 + 0] = b(buf_id);
-
-    render_data += buf_id * 1789c;
-
-    A0 = render_data; // scene OT
-    A1 = 1000;
-    system_psyq_clear_otag_r();
-
-    A0 = render_data + 1748c; // ui OT (top level)
-    A1 = 1;
-    system_psyq_clear_otag_r();
-
-    funcab2b4();
-
-    A0 = 80071e38; // screen scroll X
-    A1 = 80071e3c; // screen scroll Y
-    funca2f78(); // update buttons
-    [80114454] = w(V0);
-
-    V1 = w[80075d00];
-    [8009abf4 + 88] = h(hu[V1 + 8]); // movie frame
-
-    A0 = render_data + 1748c; // ui OT (top level)
-    field_event_update(); //(add dialogs and pointer to render)
-
-    [800965e0] = h(hu[8009abf4 + 2a]);
-
-    field_background_scrolling_init();
-    field_background_scrolling_update();
-
-    A0 = 8009abf4 + 8a;
-    field_background_shaking_update();
-
-    A0 = 8009abf4 + 98;
-    field_background_shaking_update();
-
-    A0 = render_data; // scene OT
-    field_background_update_drawenv();
-
-    A0 = 80074ea4 + h[800965e0] * 84; // PC data
-    A1 = w[800716c4] + 38; // gateways
-    field_load_next_map_in_advance();
-
-    if( ( w[8009abf4 + 68] & 0000090f ) == 0000090f ) // reset game if all shifts and start + select pressed
+    if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
     {
-        [8009abf4 + 1] = b(a);
-        system_movie_abort_play();
-
-        field_stop_load_next_map_in_advance();
-        return;
+        field_model_load_and_init();
     }
 
-    if( bu[8009abf4 + 1] == 1 )
+    V0 = w[8009a044];
+    A0 = w[V0] + 4;
+    [800e4274] = w(A0); // offset to walkmesh block
+    V0 = w[V0];
+    [80114458] = w(A0 + hu[V0] * 18); // walkmesh triangle access block
+
+    if( ( h[800965ec] != 5 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != d ) )
     {
-        return;
+        funca5fb4(); // move PC model position init by walkmesh
     }
 
-    if( bu[8009abf4 + 1] == c )
+    render_data = 0x800e4df0;
+
+    A0 = render_data + 0 * 0x1789c + 0x4914; // draft 1st and 2nd layer
+    A1 = render_data + 0 * 0x1789c + 0xe554; // draft 3rd and 4th layer
+    A2 = render_data + 0 * 0x1789c + 0x10d54; // animation packets data
+    A3 = render_data + 0 * 0x1789c + 0x124dc; // draw modes
+    field_background_init_packets(); // we read dat background data here
+
+    A0 = render_data + 1 * 0x1789c + 0x4914; // draft 1st and 2nd layer
+    A1 = render_data + 1 * 0x1789c + 0xe554; // draft 3rd and 4th layer
+    A2 = render_data + 1 * 0x1789c + 0x10d54; // animation packets data
+    A3 = render_data + 1 * 0x1789c + 0x124dc; // draw modes
+    field_background_init_packets(); // we read dat background data here
+
+    A0 = render_data + 0 * 0x1789c; // buffer 1
+    field_rain_init();
+
+    A0 = render_data + 1 * 0x1789c; // buffer 2
+    field_rain_init();
+
+    S3 = 1;
+    [0x80114488] = h(0);
+    [0x801142c8] = h(0);
+    [0x800e4d44] = h(0);
+    [0x80071c0c] = b(0);
+    [0x800965e8] = h(0);
+
+    while( true )
     {
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        if( ( S3 << 0x10 ) == 0 ) [0x80075dec] = h(hu[0x80075dec] + 1);
 
-    if( bu[8009abf4 + 1] == d ) // disc change
-    {
-        [8009c560] = h(c); // disc change
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        [0x80075dec] = h(hu[0x80075dec] + 1);
+        buf_id = h[0x80075dec];
+        [0x8009abf4 + 0] = b(buf_id);
 
-    if( bu[8009abf4 + 1] == 19 )
-    {
-        [8009c560] = h(10);
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        render_data += buf_id * 1789c;
 
-    V1 = bu[8009abf4 + 1];
+        system_psyq_clear_otag_r( render_data, 0x1000 ); // scene OT
+        system_psyq_clear_otag_r( render_data + 0x1748c, 1 ); // ui OT (top level)
 
-    if( ( V1 == f ) || ( V1 == 10 ) || ( V1 == 11 ) || ( V1 == 15 ) || ( V1 == 16 ) || ( V1 == 17 ) || ( V1 == 18 ) )
-    {
-        [8009c560] = h(d);
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        funcab2b4();
 
-    if( ( V1 == 6 ) || ( V1 == 7 ) || ( V1 == 8 ) || ( V1 == 9 ) || ( V1 == e ) || ( V1 == 12 ) || ( V1 == 13 ) )
-    {
-        [8009c560] = h(5);
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        A0 = 0x80071e38; // screen scroll X
+        A1 = 0x80071e3c; // screen scroll Y
+        V0 = funca2f78(); // update buttons
+        [0x80114454] = w(V0);
 
-    // triangle pressed, menu not called, movie not requested or played
-    if( ( w[80114454] & 0010 ) && ( bu[8009abf4 + 34] == 0 ) && ( hu[800e4d44] == 0 ) && ( hu[80114488] == 0 ) )
-    {
-        [8009c560] = h(5); // load menu
-        [8009abf4 + 1] = b(9); // load menu
-        [8009abf4 + 2] = h(0); // menu id
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        V1 = w[80075d00];
+        [8009abf4 + 88] = h(hu[V1 + 8]); // movie frame
 
-    if( ( bu[8009abf4 + 1] == 5 ) || ( bu[8009abf4 + 1] == 1a ) )
-    {
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+        field_event_update( render_data + 0x1748c ); //(add dialogs and pointer to render)
 
-    if( bu[8009abf4 + 1] == 2 )
-    {
-        V1 = h[800965e0]; // manual move entity
+        [0x800965e0] = h(hu[0x8009abf4 + 0x2a]);
 
-        V0 = w[80074ea4 + V1 * 84 + c];
-        if( V0 < 0 ) V0 = V0 & fff;
-        [8009abf4 + 4] = h(V0 >> c);
+        field_background_scrolling_init();
+        field_background_scrolling_update();
+        field_background_shaking_update( 0x8009abf4 + 0x8a );
+        field_background_shaking_update( 0x8009abf4 + 0x98 );
+        field_background_update_drawenv( render_data );
 
-        V0 = w[80074ea4 + V1 * 84 + 10];
-        if( V0 < 0 ) V0 = V0 & fff;
-        [8009abf4 + 6] = h(V0 >> c);
+        A0 = 80074ea4 + h[800965e0] * 84; // PC data
+        A1 = w[800716c4] + 38; // gateways
+        field_load_next_map_in_advance();
 
-        [8009c560] = h(2); // battle
-        [8009abf4 + 22] = h(hu[80074ea4 + V1 * 84 + 72]);
+        if( ( w[8009abf4 + 68] & 0000090f ) == 0000090f ) // reset game if all shifts and start + select pressed
+        {
+            [8009abf4 + 1] = b(a);
+            system_movie_abort_play();
 
-        field_stop_load_next_map_in_advance();
-        return;
-    }
+            field_stop_load_next_map_in_advance();
+            return;
+        }
 
-    A0 = w[80114454];
-    field_entity_movement_update(); // update move/turns/scroll
+        if( bu[8009abf4 + 1] == 1 )
+        {
+            return;
+        }
 
-    A0 = 80074ea4 + h[800965e0] * 84; // manual move entity
-    A1 = 8007e7ac;
-    field_entity_check_line_interact();
+        if( bu[8009abf4 + 1] == c )
+        {
+            field_stop_load_next_map_in_advance();
+            return;
+        }
 
-    field_entity_check_talk();
+        if( bu[8009abf4 + 1] == d ) // disc change
+        {
+            [8009c560] = h(c); // disc change
+            field_stop_load_next_map_in_advance();
+            return;
+        }
 
-    if( ( hu[80114488] == 0 ) || ( w[8009a060] == 1 ) )
-    {
+        if( bu[8009abf4 + 1] == 19 )
+        {
+            [8009c560] = h(10);
+            field_stop_load_next_map_in_advance();
+            return;
+        }
+
+        V1 = bu[8009abf4 + 1];
+
+        if( ( V1 == f ) || ( V1 == 10 ) || ( V1 == 11 ) || ( V1 == 15 ) || ( V1 == 16 ) || ( V1 == 17 ) || ( V1 == 18 ) )
+        {
+            [8009c560] = h(d);
+            field_stop_load_next_map_in_advance();
+            return;
+        }
+
+        if( ( V1 == 6 ) || ( V1 == 7 ) || ( V1 == 8 ) || ( V1 == 9 ) || ( V1 == e ) || ( V1 == 12 ) || ( V1 == 13 ) )
+        {
+            [8009c560] = h(5);
+            field_stop_load_next_map_in_advance();
+            return;
+        }
+
+        // triangle pressed, menu not called, movie not requested or played
+        if( ( w[80114454] & 0010 ) && ( bu[8009abf4 + 34] == 0 ) && ( hu[800e4d44] == 0 ) && ( hu[80114488] == 0 ) )
+        {
+            [8009c560] = h(5); // load menu
+            [8009abf4 + 1] = b(9); // load menu
+            [8009abf4 + 2] = h(0); // menu id
+            field_stop_load_next_map_in_advance();
+            return;
+        }
+
+        if( ( bu[8009abf4 + 1] == 5 ) || ( bu[8009abf4 + 1] == 1a ) )
+        {
+            field_stop_load_next_map_in_advance();
+            return;
+        }
+
+        if( bu[8009abf4 + 1] == 2 )
+        {
+            V1 = h[800965e0]; // manual move entity
+
+            V0 = w[80074ea4 + V1 * 84 + c];
+            if( V0 < 0 ) V0 = V0 & fff;
+            [8009abf4 + 4] = h(V0 >> c);
+
+            V0 = w[80074ea4 + V1 * 84 + 10];
+            if( V0 < 0 ) V0 = V0 & fff;
+            [8009abf4 + 6] = h(V0 >> c);
+
+            [8009c560] = h(2); // battle
+            [8009abf4 + 22] = h(hu[80074ea4 + V1 * 84 + 72]);
+
+            field_stop_load_next_map_in_advance();
+            return;
+        }
+
+        A0 = w[80114454];
+        field_entity_movement_update(); // update move/turns/scroll
+
+        A0 = 80074ea4 + h[800965e0] * 84; // manual move entity
+        A1 = 8007e7ac;
+        field_entity_check_line_interact();
+
+        field_entity_check_talk();
+
+        if( ( hu[0x80114488] == 0 ) || ( w[0x8009a060] == 1 ) )
+        {
+            field_background_add_to_render( render_data );
+        }
+
+        funcaab24( render_data ); // update models (animations drafts and kawai)
+
+        field_rain_update();
+
         A0 = render_data; // scene OT
-        field_background_add_to_render();
-    }
+        A1 = render_data + 1749c; // rain packets
+        A2 = w[80071e40]; // matrix
+        A3 = render_data + 17490; // draw_mode_packet
+        field_rain_add_to_render();
 
-    A0 = render_data; // scene OT
-    funcaab24(); // update models (animations drafts and kawai)
+        field_arrows_add_to_render( render_data, w[0x80071e40], w[0x800716c4] + 0x38 );
 
-    field_rain_update();
+        func138ec(); // fade update
 
-    A0 = render_data; // scene OT
-    A1 = render_data + 1749c; // rain packets
-    A2 = w[80071e40]; // matrix
-    A3 = render_data + 17490; // draw_mode_packet
-    field_rain_add_to_render();
+        V0 = system_psyq_vsync( 1 );
+        [0x80114478] = w(V0);
 
-    A0 = render_data; // scene OT
-    A1 = w[80071e40];
-    A2 = w[800716c4] + 38;
-    field_arrows_add_to_render();
+        while( system_psyq_draw_sync( 1 ) != 0 ) {}
 
-    func138ec(); // fade update
+        V0 = system_psyq_vsync( 1 );
+        [0x8011447c] = w(V0);
 
-    A0 = 1;
-    system_psyq_vsync();
-    [80114478] = w(V0);
-
-    do
-    {
-        A0 = 1;
-        system_psyq_draw_sync();
-    } while( V0 != 0 )
-
-    A0 = 1;
-    system_psyq_vsync();
-    [8011447c] = w(V0);
-
-    if( ( hu[80114488] != 0 ) && ( w[800965e4] != 1 ) )
-    {
-        A0 = 3;
-        system_psyq_vsync();
-    }
-    else
-    {
-        A0 = 2;
-        system_psyq_vsync();
-    }
-
-    if( ( S3 << 10 ) != 0 )
-    {
-        S3 -= 1;
-
-        if( ( S3 << 10 ) == 0 )
+        if( ( hu[0x80114488] != 0 ) && ( w[0x800965e4] != 1 ) )
         {
-            A0 = 1;
-            system_psyq_set_disp_mask();
-        }
-    }
-
-    A0 = 1;
-    system_psyq_reset_graph();
-
-    if( hu[80114488] == 0 )
-    {
-        if( h[801142c8] == 0 )
-        {
-            [8007eb79 + buf_id * 14] = b(0);
+            system_psyq_vsync( 3 );
         }
         else
         {
-            [801142c8] = h(0);
+            system_psyq_vsync( 2 );
         }
-    }
 
-    A0 = 8007eb68 + buf_id * 14;
-    system_psyq_put_dispenv();
-
-    A0 = 8007eaac + buf_id * 5c;
-    system_psyq_put_drawenv();
-
-    if( hu[80114488] == 0 )
-    {
-        A0 = 8007eaac + buf_id * 5c;
-        A1 = 0;
-        A2 = 0;
-        A3 = 0;
-        system_psyq_clear_image();
-    }
-    else
-    {
-        if( bu[8007eb79 + buf_id * 14] == 0 )
+        if( ( S3 << 10 ) != 0 )
         {
-            A0 = SP + 28;
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            system_psyq_clear_image();
+            S3 -= 1;
 
-            A0 = SP + 30;
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            system_psyq_clear_image();
+            if( ( S3 << 10 ) == 0 )
+            {
+                A0 = 1;
+                system_psyq_set_disp_mask();
+            }
+        }
 
-            A0 = SP + 38;
+        system_psyq_reset_graph( 1 );
+
+        if( hu[80114488] == 0 )
+        {
+            if( h[801142c8] == 0 )
+            {
+                [8007eb79 + buf_id * 14] = b(0);
+            }
+            else
+            {
+                [801142c8] = h(0);
+            }
+        }
+
+        system_psyq_put_dispenv( 0x8007eb68 + buf_id * 0x14 );
+        system_psyq_put_drawenv( 0x8007eaac + buf_id * 0x5c );
+
+        if( hu[0x80114488] == 0 )
+        {
+            A0 = 0x8007eaac + buf_id * 0x5c;
             A1 = 0;
             A2 = 0;
             A3 = 0;
@@ -890,53 +839,68 @@ while( true )
         }
         else
         {
-            A0 = SP + 10;
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            system_psyq_clear_image();
+            if( bu[8007eb79 + buf_id * 14] == 0 )
+            {
+                A0 = SP + 28;
+                A1 = 0;
+                A2 = 0;
+                A3 = 0;
+                system_psyq_clear_image();
 
-            A0 = SP + 18;
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            system_psyq_clear_image();
+                A0 = SP + 30;
+                A1 = 0;
+                A2 = 0;
+                A3 = 0;
+                system_psyq_clear_image();
 
-            A0 = SP + 20;
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            system_psyq_clear_image();
+                A0 = SP + 38;
+                A1 = 0;
+                A2 = 0;
+                A3 = 0;
+                system_psyq_clear_image();
+            }
+            else
+            {
+                A0 = SP + 10;
+                A1 = 0;
+                A2 = 0;
+                A3 = 0;
+                system_psyq_clear_image();
+
+                A0 = SP + 18;
+                A1 = 0;
+                A2 = 0;
+                A3 = 0;
+                system_psyq_clear_image();
+
+                A0 = SP + 20;
+                A1 = 0;
+                A2 = 0;
+                A3 = 0;
+                system_psyq_clear_image();
+            }
         }
-    }
 
-    // store env for movie
-    [8007ebd8] = w(8007eb68 + buf_id * 14); // DISPENV
-    [8007ebd0] = w(80113f2c + buf_id * 5c); // DRAWENV
-    funcab310(); // play movie?
+        // store env for movie
+        [0x8007ebd8] = w(0x8007eb68 + buf_id * 0x14); // DISPENV
+        [0x8007ebd0] = w(0x80113f2c + buf_id * 0x5c); // DRAWENV
+        funcab310(); // play movie?
 
-    if( bu[8009abf4 + 38] == 0 )
-    {
-        A0 = render_data + 4190; // OT for 41d4 DR_ENV prim 1
-        system_psyq_draw_otag();
-
-        A0 = render_data + 3ffc; // scene OT (rendered reversed)
-        system_psyq_draw_otag();
-
-        A0 = render_data + 418c; // OT for 4194 DR_ENV global
-        system_psyq_draw_otag();
-
-        if( hu[8009abf4 + 4c] != 0 ) // fade type
+        if( bu[0x8009abf4 + 0x38] == 0 )
         {
-            A0 = 8007e7a0 + buf_id * 4;
-            system_psyq_draw_otag();
-        }
-    }
+            system_psyq_draw_otag( render_data + 0x4190 ); // OT for 41d4 DR_ENV prim 1
+            system_psyq_draw_otag( render_data + 0x3ffc ); // scene OT (rendered reversed)
+            system_psyq_draw_otag( render_data + 0x418c ); // OT for 4194 DR_ENV global
 
-    A0 = render_data + 1748c; // menu OT (top level)
-    system_psyq_draw_otag();
+            if( hu[0x8009abf4 + 0x4c] != 0 ) // fade type
+            {
+                system_psyq_draw_otag( 0x8007e7a0 + buf_id * 4 );
+            }
+        }
+
+        system_psyq_draw_otag( render_data + 0x1748c ); // menu OT (top level)
+    }
 }
-////////////////////////////////
 
 
 

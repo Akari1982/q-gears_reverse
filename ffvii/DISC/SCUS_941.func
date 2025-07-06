@@ -1058,7 +1058,7 @@
 80046530 func46530
 8004655C system_bios_gpu_cw
 8004656C system_psyq_get_tpage
-80046634 system_create_clut_for_packet
+80046634 system_psyq_get_clut
 8004664C system_psyq_dump_tpage
 8004671C system_psyq_dump_clut
 8004675C func4675c

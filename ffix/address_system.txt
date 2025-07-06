@@ -11,7 +11,7 @@
     +1c [][][][] 80066824
 
 80067940 [][][][] store here dst for file loading.
-80067944 [][][][] looks like start pointer to all models data. Total size of that block 0xf1700.
+0x80067944 [][][][] 0x800a7000. Pointer to start of field, battle and so on. used as offset to load additional files.
 80067948 [][][][] store here pointer to w[w[w[w[w[0x8006794c] + 1c] + 8e4] + c] + 4]. Pointer to field database file.
 0x8006794c [][][][] pointer to 0x8008b000.
 
@@ -79,10 +79,10 @@
 
 80073998 [][][][] some flags. [80073998] = w(w[80073998] & ffff0006) at start of field loading.
 
-80073c40 looks like array of all loaded files. We can search in this.
-+0 [][]     init with 0.
-+2 [][]     number of files in array.
-array of pointers to loaded files (0x10 items, 0x4 size)
+0x80073c40 looks like array of all loaded files. We can search in this.
+    +0 [][]     init with 0.
+    +2 [][]     number of files in array.
+    array of pointers to loaded files (0x10 items, 0x4 size)
 
 800761d0
     +  0 []       game cd load state (0-standby, 1-start execute, 3-load data, 4-pause, 5-pause).

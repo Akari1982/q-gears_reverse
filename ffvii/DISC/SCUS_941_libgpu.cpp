@@ -763,7 +763,7 @@ V0 = 0001;
 
 A0 = S0;
 A1 = S1;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 
 return V0 & ffff;
 ////////////////////////////////
@@ -1721,16 +1721,14 @@ return V0 >> 1f;
 
 
 
-////////////////////////////////
-// func4493c()
+void func4493c( S0, RECT* tw )
+{
+    V0 = system_gpu_get_texture_window_setting_command( tw );
 
-S0 = A0;
-A0 = A1;
-[S0 + 3] = b(2);
-system_gpu_get_texture_window_setting_command();
-[S0 + 4] = w(V0);
-[S0 + 8] = w(0);
-////////////////////////////////
+    [S0 + 3] = b(0x2);
+    [S0 + 4] = w(V0);
+    [S0 + 8] = w(0);
+}
 
 
 
@@ -1802,28 +1800,15 @@ V0 = 0 < A2;
 
 
 
-////////////////////////////////
-// system_psyq_set_draw_mode()
-// Initialize content of a drawing mode primitive.
+void system_psyq_set_draw_mode( DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw )
+{
+    // Initialize content of a drawing mode primitive.
 
-prim = A0;
-display_area = A1;
-dithering = A2;
-init_value = A3;
-window_rect = A4;
+    [p + 3] = b(2);
 
-[prim + 3] = b(2);
-
-A0 = display_area; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
-A1 = dithering; // dithering processing flag. 0: off; 1: on
-A2 = init_value; // initial values of texture page
-system_gpu_get_draw_mode_setting_command(); // prepare tex page settings packet
-[prim + 4] = w(V0);
-
-A0 = window_rect; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
-system_gpu_get_texture_window_setting_command(); // prepare texture window rect packet
-[prim + 8] = w(V0);
-////////////////////////////////
+    p->code[0] = system_gpu_get_draw_mode_setting_command( dfe, dtd, tpage ); // prepare tex page settings packet
+    p->code[1] = system_gpu_get_texture_window_setting_command( tw ); // prepare texture window rect packet
+}
 
 
 
@@ -1849,14 +1834,10 @@ A1 = h[env + a]; // offset y
 system_gpu_set_drawing_offset(); // create packet for offset
 [dr_env + c] = w(V0);
 
-A0 = bu[env + 17]; // 0: drawing to display area is blocked, 1: drawing to display area is permitted
-A1 = bu[env + 16]; // dithering processing flag. 0: off; 1: on
-A2 = hu[env + 14]; // initial values of texture page
-system_gpu_get_draw_mode_setting_command(); // create packet
+system_gpu_get_draw_mode_setting_command( bu[env + 0x17], bu[env + 0x16], hu[env + 0x14]);
 [dr_env + 10] = w(V0);
 
-A0 = env + c; // texture window rect
-system_gpu_get_texture_window_setting_command(); // create packet
+V0 = system_gpu_get_texture_window_setting_command( env + c );
 [dr_env + 14] = w(V0);
 
 [dr_env + 18] = w(e6000000);
@@ -1897,46 +1878,34 @@ if( bu[env + 18] != 0 )
 
 
 
-////////////////////////////////
-// system_gpu_get_draw_mode_setting_command()
-
-if( ( bu[80062c00] - 1 ) < 2 ) // old gpu
+u32 system_gpu_get_draw_mode_setting_command( int dfe, int dtd, int tpage )
 {
-    if( A1 != 0 )
+    if( ( bu[0x80062c00] - 1 ) < 2 ) // old gpu
     {
-        V1 = 00000800;
+        if( dtd != 0 ) V1 = 0x00000800;
+
+        V0 = tpage & 0x27ff;
+
+        if( dfe != 0 ) V0 |= 0x00001000;
+        }
+    }
+    else
+    {
+        if( dtd != 0 ) V1 = 0x00000200; // Dither 24bit to 15bit Dither Enabled
+
+        //  0-3   Texture page X Base   (N*64) (ie. in 64-halfword steps)    ;GPUSTAT.0-3
+        //  4     Texture page Y Base   (N*256) (ie. 0 or 256)               ;GPUSTAT.4
+        //  5-6   Semi Transparency     (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)   ;GPUSTAT.5-6
+        //  7-8   Texture page colors   (0=4bit, 1=8bit, 2=15bit, 3=Reserved);GPUSTAT.7-8
+        //  11    Texture Disable (0=Normal, 1=Disable if GP1(09h).Bit0=1)   ;GPUSTAT.15
+        V0 = tpage & 0x09ff;
+
+        if( dfe != 0 ) V0 |= 0x00000400; // Drawing to display area Allowed
     }
 
-    V0 = A2 & 27ff;
-
-    if( A0 != 0 )
-    {
-        V0 = V0 | 00001000;
-    }
+    // GP0(E1h) - Draw Mode setting (aka "Texpage")
+    return 0xe1000000 | V1 | V0;
 }
-else
-{
-    if( A1 != 0 )
-    {
-        V1 = 00000200; // Dither 24bit to 15bit Dither Enabled
-    }
-
-    //  0-3   Texture page X Base   (N*64) (ie. in 64-halfword steps)    ;GPUSTAT.0-3
-    //  4     Texture page Y Base   (N*256) (ie. 0 or 256)               ;GPUSTAT.4
-    //  5-6   Semi Transparency     (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)   ;GPUSTAT.5-6
-    //  7-8   Texture page colors   (0=4bit, 1=8bit, 2=15bit, 3=Reserved);GPUSTAT.7-8
-    //  11    Texture Disable (0=Normal, 1=Disable if GP1(09h).Bit0=1)   ;GPUSTAT.15
-    V0 = A2 & 09ff;
-
-    if( A0 != 0 )
-    {
-        V0 = V0 | 00000400; // Drawing to display area Allowed
-    }
-}
-
-// GP0(E1h) - Draw Mode setting (aka "Texpage")
-return e1000000 | V1 | V0;
-////////////////////////////////
 
 
 
@@ -2003,22 +1972,16 @@ else
 
 
 
-////////////////////////////////
-// system_gpu_get_texture_window_setting_command()
-
-A0 = A0; // texture window rect. Specifies a rectangle inside the texture page, to be used for drawing textures.
-
-if( A0 == 0 )
+u32 system_gpu_get_texture_window_setting_command( RECT* tw )
 {
-    return 0;
-}
+    if( tw == 0 ) return 0;
 
-off_x = bu[A0 + 0] >> 3;
-off_y = bu[A0 + 2] >> 3;
-mask_x = ((0 - h[A0 + 4]) & ff) >> 3;
-mask_y = ((0 - h[A0 + 6]) & ff) >> 3;
-return e2000000 | (off_y << f) | (off_x << a) | (mask_y << 5) | mask_x;
-////////////////////////////////
+    off_x = tw->x >> 0x3;
+    off_y = tw->y >> 0x3;
+    mask_x = ((0 - tw->w) & 0xff) >> 0x3;
+    mask_y = ((0 - tw->h) & 0xff) >> 0x3;
+    return 0xe2000000 | (off_y << 0xf) | (off_x << 0xa) | (mask_y << 0x5) | mask_x;
+}
 
 
 
@@ -3455,29 +3418,27 @@ T1 = 0049;
 
 
 
-////////////////////////////////
-// system_psyq_get_tpage()
-// Calculate value of member tpage in a primitive.
-
-tp = A0 & 3;
-abr = A1 & 3; // Semi transparent state
-vram_x = A2 & 3ff;
-vram_y = A3;
-
-if( ( bu[80062c00] == 1 ) || ( bu[80062c00] == 2 ) )
+u16 system_psyq_get_tpage( int tp, int abr, int x, int y )
 {
-    return (tp << 9) | (abr << 7) | ((vram_y & 300) >> 3) | (vram_x >> 6);
+    // Calculate value of member tpage in a primitive.
+
+    tp &= 0x3;
+    abr &= 0x3; // Semi transparent state
+    x &= 0x3ff;
+
+    if( ( bu[0x80062c00] == 1 ) || ( bu[0x80062c00] == 2 ) )
+    {
+        return (tp << 0x9) | (abr << 0x7) | ((vram_y & 0x300) >> 0x3) | (vram_x >> 0x6);
+    }
+    else
+    {
+        return ((vram_y & 0x200) << 0x2) | (tp << 0x7) | (abr << 0x5) | ((vram_y & 0x100) >> 0x4) | (vram_x >> 0x6);
+    }
 }
-else
-{
-    return ((vram_y & 200) << 2) | (tp << 7) | (abr << 5) | ((vram_y & 100) >> 4) | (vram_x >> 6);
-}
-////////////////////////////////
 
 
 
-////////////////////////////////
-// system_create_clut_for_packet()
+u16 system_psyq_get_clut()
 
 x = A0;
 y = A1;
@@ -3608,32 +3569,30 @@ p1 = A1;
 
 
 
-////////////////////////////////
-// system_psyq_set_semi_trans()
-
-if( A1 != 0 )
+void system_psyq_set_semi_trans( void *p, int abe )
 {
-    [A0 + 7] = b(bu[A0 + 7] | 02);
+    if( abe != 0 )
+    {
+        p->code |= 0x02;
+    }
+    else
+    {
+        p->code &= 0xfd;
+    }
 }
-else
+
+
+
+void system_psyq_set_shade_tex( void* p, int tge )
 {
-    [A0 + 7] = b(bu[A0 + 7] & fd);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_set_shade_tex()
-// Sets the shading attribute of the primitive pointed to by p to the value specified by tge.
-
-if( A1 != 0 )
-{
-    [A0 + 7] = b(bu[A0 + 7] | 01);
-}
-else
-{
-    [A0 + 7] = b(bu[A0 + 7] & fe);
+    if( tge != 0 )
+    {
+        p->code |= 0x01;
+    }
+    else
+    {
+        p->code &= 0xfe;
+    }
 }
 ////////////////////////////////
 
@@ -3729,13 +3688,12 @@ else
 
 
 
-////////////////////////////////
-// system_psyq_set_sprt16()
-// Initialize a SPRT16 primitive.
-
-[A0 + 3] = b(3);
-[A0 + 7] = b(7c);
-////////////////////////////////
+void system_psyq_set_sprt16( SPRT_16* p )
+{
+    // Initialize a SPRT16 primitive.
+    [p + 0x3] = b(0x3);
+    p->code = 0x7c;
+}
 
 
 

@@ -498,7 +498,7 @@ V0 = w[80062f24];
 
 A0 = 0;
 A1 = 1fe;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 
 V1 = w[80062f24];
 [V1 + e] = h(V0);
@@ -570,7 +570,7 @@ if( transparency != 0 )
 
 A0 = 100;
 A1 = 1e0 + color;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [poly + e] = h(V0);
 
 A0 = 1;
@@ -640,7 +640,7 @@ V0 = w[80062f24];
 
 A0 = 180;
 A1 = clut;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 
 V1 = w[80062f24];
 [V1 + e] = h(V0);
@@ -861,7 +861,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         A0 = 100;
         A1 = 1ea;
-        system_create_clut_for_packet();
+        system_psyq_get_clut();
 
         V1 = w[80062f24];
         [V1 + e] = h(V0);
@@ -1061,7 +1061,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         A0 = clut_x | 100;
         A1 = clut_y;
-        system_create_clut_for_packet();
+        system_psyq_get_clut();
 
         V1 = w[80062f24];
         [V1 + e] = h(V0);
@@ -1236,7 +1236,7 @@ if( rect_w >= 9 )
 
     A0 = 100;
     A1 = 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [packet + e] = h(V0);
 
     A0 = w[80062fc4]; // linked prim list
@@ -1278,7 +1278,7 @@ if( rect_w >= 9 )
 
     A0 = 100;
     A1 = 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [packet + e] = h(V0);
 
     A0 = w[80062fc4]; // linked prim list
@@ -1323,7 +1323,7 @@ if( rect_h >= 9 )
 
     A0 = 100;
     A1 = 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [packet + e] = h(V0);
 
     A0 = w[80062fc4]; // linked prim list
@@ -1365,7 +1365,7 @@ if( rect_h >= 9 )
 
     A0 = 100;
     A1 = 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [packet + e] = h(V0);
 
     A0 = w[80062fc4]; // linked prim list
@@ -1408,7 +1408,7 @@ system_psyq_set_shade_tex();
 
 A0 = 100;
 A1 = 1e0;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [packet + e] = h(V0);
 
 A0 = w[80062fc4]; // linked prim list
@@ -1433,7 +1433,7 @@ system_psyq_set_shade_tex();
 
 A0 = 100;
 A1 = 1e0;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [packet + e] = h(V0);
 
 A0 = w[80062fc4]; // linked prim list
@@ -1458,7 +1458,7 @@ system_psyq_set_shade_tex();
 
 A0 = 100;
 A1 = 1e0;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [packet + e] = h(V0);
 
 A0 = w[80062fc4]; // linked prim list
@@ -1483,7 +1483,7 @@ system_psyq_set_shade_tex();
 
 A0 = 100;
 A1 = 1e0;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [packet + e] = h(V0);
 
 A0 = w[80062fc4]; // linked prim list
@@ -1598,7 +1598,7 @@ system_psyq_set_shade_tex();
 
 A0 = 100;
 A1 = 1e1;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [poly + e] = h(V0);
 
 A0 = w[80062fc4]; // ot
@@ -1662,7 +1662,7 @@ else
 
 A0 = 100;
 A1 = 1ec;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 
 V1 = w[80062f24];
 [V1 + e] = h(V0);
@@ -1709,7 +1709,7 @@ for( int i = 0; i < 4; ++i )
 
     A0 = 100;
     A1 = 1ec;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
 
     V1 = w[80062f24];
     [V1 + 000e] = h(V0);
@@ -1786,7 +1786,7 @@ for( int i = 0 i < 8; +i )
 
     A0 = 100;
     A1 = 1ec;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
 
     V1 = w[80062f24];
     [V1 + e] = h(V0);
@@ -7820,7 +7820,7 @@ tex_y += (letter / 15) * c;
 
 A0 = clut_x | 100; // x
 A1 = color + 1f0; // y
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [prim + e] = h(V0);
 
 A0 = w[80062fc4]; // ot
@@ -7943,7 +7943,7 @@ if( character < 29 ) // dakuten characters
 
     A0 = 100;
     A1 = (color & ff) + 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
 
     [packet + e] = h(V0);
 
@@ -7972,7 +7972,7 @@ else if( ( ( ( character + 4c ) & ff ) >= 1a ) && ( ( ( character - 29 ) & ff ) 
 
     A0 = 100;
     A1 = (color & ff) + 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
 
     [packet + e] = h(V0);
 
@@ -8003,7 +8003,7 @@ system_psyq_set_shade_tex();
 
 A0 = 100;
 A1 = (color & ff) + 1e0;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [packet + e] = h(V0);
 
 [80062f24] = w(packet + 10);
@@ -8694,7 +8694,7 @@ if( semi_trans != 0 )
 
 A0 = 100;
 A1 = 1e0 + color;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [poly + e] = h(V0);
 
 A0 = w[GP + 280];
@@ -8749,7 +8749,7 @@ for( int i = 1; i < digits_n; ++i )
 
     A0 = 100;
     A1 = color + 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [poly + e] = h(V0);
 
     if( ( skip_leading_zero == 0 ) || ( digit != 0 ) )
@@ -8785,7 +8785,7 @@ for( int i = 1; i < digits_n; ++i )
 
     A0 = 100;
     A1 = color + 1e0;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [poly + e] = h(V0);
 
     A0 = w[GP + 280];
@@ -8837,7 +8837,7 @@ for( int i = 1; i < digits_n; ++i )
 
     A0 = 100;
     A1 = 1e0 + color;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [poly + e] = h(V0);
 
     A0 = w[GP + 280];
@@ -8866,7 +8866,7 @@ for( int i = 1; i < digits_n; ++i )
 
     A0 = 100;
     A1 = 1e0 + color;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
     [poly + e] = h(V0);
 
     A0 = w[GP + 280];

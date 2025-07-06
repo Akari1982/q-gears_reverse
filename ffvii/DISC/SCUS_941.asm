@@ -3148,7 +3148,7 @@
 // system_psyq_get_tpage
 8004656C-80046630
 ////////////////////////////////
-// system_create_clut_for_packet
+// system_psyq_get_clut
 80046634-80046648
 ////////////////////////////////
 // system_psyq_dump_tpage

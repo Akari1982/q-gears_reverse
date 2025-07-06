@@ -2346,7 +2346,7 @@ V0 = w[SP + 0014];
 800A2904	nop
 A0 = h[V0 + 0000];
 A1 = h[V0 + 0002];
-system_create_clut_for_packet();
+system_psyq_get_clut();
 
 [S1 + 0000] = h(V0);
 

@@ -5549,7 +5549,7 @@ V0 = 00e0;
 [V1 + 000c] = b(V0);
 V1 = w[80062f24];
 V0 = 0008;
-800D9B04	jal    $system_create_clut_for_packet
+800D9B04	jal    $system_psyq_get_clut
 [V1 + 000d] = b(V0);
 V1 = w[80062f24];
 S2 = S3 + 008c;
@@ -5930,7 +5930,7 @@ Lda12c:	; 800DA12C
 AT = 800f5179;
 AT = AT + V0;
 [AT + 0000] = b(V1);
-800DA13C	jal    $system_create_clut_for_packet
+800DA13C	jal    $system_psyq_get_clut
 800DA140	lui    s1, $00ff
 A0 = w[800f1994];
 800DA14C	nop
@@ -8013,7 +8013,7 @@ V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800DC454	jal    $system_create_clut_for_packet
+800DC454	jal    $system_psyq_get_clut
 S4 = V0 + 0084;
 V1 = bu[S0 + 0000];
 A0 = w[800707c0];
@@ -8047,7 +8047,7 @@ S5 = V0 << 02;
 V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
-800DC4DC	jal    $system_create_clut_for_packet
+800DC4DC	jal    $system_psyq_get_clut
 S4 = V0 << 02;
 V1 = bu[S0 + 0000];
 A0 = w[800707c0];
@@ -8081,7 +8081,7 @@ V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
-800DC564	jal    $system_create_clut_for_packet
+800DC564	jal    $system_psyq_get_clut
 S4 = V0 + 0084;
 V1 = bu[S0 + 0000];
 A0 = w[800707c0];
@@ -8118,7 +8118,7 @@ S5 = V0 << 02;
 V1 = V1 & 00ff;
 V0 = V1 << 01;
 V0 = V0 + V1;
-800DC5F0	jal    $system_create_clut_for_packet
+800DC5F0	jal    $system_psyq_get_clut
 S4 = V0 << 02;
 A0 = bu[S0 + 0000];
 V1 = w[800707c0];
@@ -8245,7 +8245,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC804	jal    $system_create_clut_for_packet
+800DC804	jal    $system_psyq_get_clut
 A1 = A1 + 01e0;
 A0 = w[80163c74];
 800DC814	nop
@@ -8298,7 +8298,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC8E8	jal    $system_create_clut_for_packet
+800DC8E8	jal    $system_psyq_get_clut
 A1 = A1 + 01e0;
 A0 = w[80163c74];
 800DC8F8	nop
@@ -8351,7 +8351,7 @@ V0 = V1 + 0001;
 [S0 + 0000] = w(V0);
 A1 = bu[V1 + 0000];
 A0 = 0100;
-800DC9CC	jal    $system_create_clut_for_packet
+800DC9CC	jal    $system_psyq_get_clut
 A1 = A1 + 01e0;
 A0 = w[80163c74];
 800DC9DC	nop
@@ -13047,7 +13047,7 @@ V0 = 0050;
 V0 = 0008;
 [S2 + 0010] = h(V0);
 V0 = 0015;
-800E1758	jal    $system_create_clut_for_packet
+800E1758	jal    $system_psyq_get_clut
 [S2 + 0012] = h(V0);
 A1 = S2;
 [S2 + 000e] = h(V0);
@@ -13104,7 +13104,7 @@ A1 = 01ec;
 V0 = 0010;
 [S1 + 0010] = h(V0);
 V0 = 0015;
-800E1848	jal    $system_create_clut_for_packet
+800E1848	jal    $system_psyq_get_clut
 [S1 + 0012] = h(V0);
 A1 = S1;
 [S1 + 000e] = h(V0);
@@ -15967,7 +15967,7 @@ V0 = 009e;
 [V1 + 0010] = h(V0);
 V1 = w[80062f24];
 V0 = 0034;
-800E431C	jal    $system_create_clut_for_packet
+800E431C	jal    $system_psyq_get_clut
 [V1 + 0012] = h(V0);
 V1 = w[80062f24];
 800E432C	nop
@@ -16855,7 +16855,7 @@ A1 = 01e2;
 A1 = 01e1;
 
 Le5054:	; 800E5054
-800E5054	jal    $system_create_clut_for_packet
+800E5054	jal    $system_psyq_get_clut
 A0 = 0010;
 A0 = 0;
 A2 = w[SP + 0010];
@@ -17631,7 +17631,7 @@ AT = 800f3450;
 AT = AT + S2;
 A1 = bu[AT + 0000];
 A0 = 0120;
-800E5C38	jal    $system_create_clut_for_packet
+800E5C38	jal    $system_psyq_get_clut
 A1 = A1 + 01e0;
 V1 = w[80062f24];
 S4 = S4 + 0001;

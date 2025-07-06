@@ -5080,7 +5080,7 @@ system_psyq_set_poly_ft4();
 
 A0 = 100;
 A1 = 1e1;
-system_create_clut_for_packet();
+system_psyq_get_clut();
 [packet + e] = h(V0); // clut
 [packet + 16] = h(003f); // texpage
 
@@ -5267,7 +5267,7 @@ for( int i = 0; i < 2; ++i )
 
     A0 = 100;
     A1 = 1e7;
-    system_create_clut_for_packet();
+    system_psyq_get_clut();
 
     V1 = w[SP + 28 + i * 4];
     [V1 + e] = h(V0);
@@ -5566,7 +5566,7 @@ Lc2790:	; 800C2790
 A1 = 01e4;
 
 Lc2794:	; 800C2794
-system_create_clut_for_packet();
+system_psyq_get_clut();
 
 [S2 + 00fe] = h(V0);
 A0 = ffffff;

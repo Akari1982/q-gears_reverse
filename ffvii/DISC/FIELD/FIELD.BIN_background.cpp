@@ -1,232 +1,223 @@
-////////////////////////////////
-// field_background_init_packets()
-
-poly1 = A0;
-poly2 = A1;
-anim = A2;
-dr_mode_p = A3;
-
-V0 = w[8009d848];
-background = w[V0];
-
-count1 = 0;
-count2 = 0;
-[8011448c] = h(0);
-[801144d0] = h(0);
-
-block1 = background + 10;
-coords = background + w[background + 0];
-tpage = background + w[background + 4];
-coords2 = background + w[background + 8];
-coords3 = background + w[background + c];
-
-// static low level bg
-while( true )
+void field_background_init_packets( poly1, poly2, anim, dr_mode_p )
 {
-    if( h[block1 + 0] == 7fff )
-    {
-        block1 += 2;
-        break;
-    }
-    else if( h[block1 + 0] == 7ffe )
-    {
-        A0 = dr_mode_p; // DR_MODE *p Pointer to drawing mode primitive
-        A1 = 0; // dfe, 0: drawing not allowed in display area
-        A2 = 1; // int dtd, 1: dithering on
-        A3 = hu[tpage]; // tpage
-        A4 = 0; // RECT *tw Pointer to texture window
-        system_psyq_set_draw_mode();
+    V0 = w[0x8009d848];
+    background = w[V0];
 
-        tpage += 2;
-        dr_mode_p += c;
+    count1 = 0;
+    count2 = 0;
+    [0x8011448c] = h(0);
+    [0x801144d0] = h(0);
 
-        [8011448c] = h(hu[8011448c] + 1);
-    }
-    else
+    block1 = background + 10;
+    coords = background + w[background + 0];
+    tpage = background + w[background + 4];
+    coords2 = background + w[background + 8];
+    coords3 = background + w[background + c];
+
+    // static low level bg
+    while( true )
     {
+        if( h[block1 + 0] == 0x7fff )
+        {
+            block1 += 2;
+            break;
+        }
+        else if( h[block1 + 0] == 0x7ffe )
+        {
+            // dfe, 0: drawing not allowed in display area
+            // dtd, 1: dithering on
+            system_psyq_set_draw_mode( dr_mode_p, 0, 1, hu[tpage], 0 );
+
+            tpage += 0x2;
+            dr_mode_p += 0xc;
+
+            [0x8011448c] = h(hu[0x8011448c] + 1);
+        }
+        else
+        {
+            for( int i = h[block1 + 4]; i != 0; --i )
+            {
+                [poly1 + 3] = b(3);
+                [poly1 + 4] = b(80);
+                [poly1 + 5] = b(80);
+                [poly1 + 6] = b(80);
+                [poly1 + 7] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
+                [poly1 + 8] = h(hu[coords + 0]); // x
+                [poly1 + a] = h(hu[coords + 2]); // y
+                [poly1 + c] = b(bu[coords + 4]); // u
+                [poly1 + d] = b(bu[coords + 5]); // v
+                [poly1 + e] = h(hu[coords + 6]); // clut
+
+                count1 += 1;
+                poly1 += 0x10;
+                coords += 0x8;
+                anim += 0x2;
+            }
+        }
+
+        block1 += 6;
+    }
+
+    [8011448c] = h(count1 - hu[8011448c]);
+
+    // static depth sorted bg
+    while( true )
+    {
+        if( h[block1 + 0] == 7fff )
+        {
+            block1 += 2;
+            break;
+        }
+
         for( int i = h[block1 + 4]; i != 0; --i )
         {
+            A0 = dr_mode_p;
+            A1 = 0;
+            A2 = 1;
+            A3 = hu[coords2 + 8]; // texture page settings
+            A4 = 0;
+            system_psyq_set_draw_mode();
+
+            [801144d0] = h(hu[801144d0] + 1);
+
             [poly1 + 3] = b(3);
-            [poly1 + 4] = b(80);
-            [poly1 + 5] = b(80);
-            [poly1 + 6] = b(80);
             [poly1 + 7] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
-            [poly1 + 8] = h(hu[coords + 0]); // x
-            [poly1 + a] = h(hu[coords + 2]); // y
-            [poly1 + c] = b(bu[coords + 4]); // u
-            [poly1 + d] = b(bu[coords + 5]); // v
-            [poly1 + e] = h(hu[coords + 6]); // clut
+
+            if( hu[coords2 + c] & 80 ) [poly1 + 7] = b(7f); // Textured Rectangle, 16x16, semi-transparent, raw-texture
+
+            [poly1 + 4] = h(hu[coords2 + a]); // distance
+            [poly1 + 6] = b(80);
+            [poly1 + 8] = h(hu[coords2 + 0]); // x
+            [poly1 + a] = h(hu[coords2 + 2]); // y
+            [poly1 + c] = b(bu[coords2 + 4]); // u
+            [poly1 + d] = b(bu[coords2 + 5]); // x
+            [poly1 + e] = h(hu[coords2 + 6]); // clut
+
+            [anim + 0] = b(bu[coords2 + c]); // animation
+            [anim + 1] = b(bu[coords2 + d]); // index
 
             count1 += 1;
-            poly1 += 10;
-            coords += 8;
-            anim += 2;
+            poly1 += 0x10;
+            coords2 += 0xe;
+            dr_mode_p += 0xc;
+            anim += 0x2;
         }
+
+        block1 += 0x6;
     }
 
-    block1 += 6;
-}
+    [801144c8] = h(count1);
 
-[8011448c] = h(count1 - hu[8011448c]);
-
-// static depth sorted bg
-while( true )
-{
-    if( h[block1 + 0] == 7fff )
+    // dynamic layer 1
+    while( true )
     {
-        block1 += 2;
-        break;
-    }
-
-    for( int i = h[block1 + 4]; i != 0; --i )
-    {
-        A0 = dr_mode_p;
-        A1 = 0;
-        A2 = 1;
-        A3 = hu[coords2 + 8]; // texture page settings
-        A4 = 0;
-        system_psyq_set_draw_mode();
-
-        [801144d0] = h(hu[801144d0] + 1);
-
-        [poly1 + 3] = b(3);
-        [poly1 + 7] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
-
-        if( hu[coords2 + c] & 80 ) [poly1 + 7] = b(7f); // Textured Rectangle, 16x16, semi-transparent, raw-texture
-
-        [poly1 + 4] = h(hu[coords2 + a]); // distance
-        [poly1 + 6] = b(80);
-        [poly1 + 8] = h(hu[coords2 + 0]); // x
-        [poly1 + a] = h(hu[coords2 + 2]); // y
-        [poly1 + c] = b(bu[coords2 + 4]); // u
-        [poly1 + d] = b(bu[coords2 + 5]); // x
-        [poly1 + e] = h(hu[coords2 + 6]); // clut
-
-        [anim + 0] = b(bu[coords2 + c]); // animation
-        [anim + 1] = b(bu[coords2 + d]); // index
-
-        count1 += 1;
-        poly1 += 10;
-        coords2 += e;
-        dr_mode_p += c;
-        anim += 2;
-    }
-
-    block1 += 6;
-}
-
-[801144c8] = h(count1);
-
-// dynamic layer 1
-while( true )
-{
-    if( h[block1 + 0] == 7fff )
-    {
-        block1 += 2;
-        break;
-    }
-    else if( h[block1 + 0] == 7ffe )
-    {
-        A0 = dr_mode_p;
-        A1 = 0;
-        A2 = 1;
-        A3 = hu[tpage];
-        A4 = 0;
-        system_psyq_set_draw_mode();
-
-        dr_mode_p += c;
-        tpage += 2;
-    }
-    else
-    {
-        [block1 + 2] = h(count2);
-
-        for( int i = h[block1 + 4]; i != 0; --i )
+        if( h[block1 + 0] == 7fff )
         {
-            [poly2 + 3] = b(4);
-            [poly2 + 7] = b(65); // Textured Rectangle, variable size, opaque, raw-texture
-
-            if( bu[coords3 + 8] & 80 ) [poly2 + 7] = b(67); // Textured Rectangle, variable size, semi-transp, raw-texture
-
-            [poly2 + 4] = b(80); // r
-            [poly2 + 5] = b(80); // g
-            [poly2 + 6] = b(80); // b
-            [poly2 + 8] = h(hu[coords3 + 0]); // x
-            [poly2 + a] = h(hu[coords3 + 2]); // y
-            [poly2 + c] = b(bu[coords3 + 4]); // u
-            [poly2 + d] = b(bu[coords3 + 5]); // x
-            [poly2 + e] = h(hu[coords3 + 6]); // clut
-            [poly2 + 10] = h(20); // w
-            [poly2 + 12] = h(20); // h
-
-            [anim + 0] = b(bu[coords3 + 8]); // animation
-            [anim + 1] = b(bu[coords3 + 9]); // index
-
-            count2 += 1;
-            poly2 += 14;
-            coords3 += a;
-            anim += 2;
+            block1 += 2;
+            break;
         }
-    }
-
-    block1 += 6;
-}
-
-// dynamic layer 2
-while( true )
-{
-    if( h[block1 + 0] == 7fff )
-    {
-        break;
-    }
-    else if( h[block1 + 0] == 7ffe )
-    {
-        A0 = dr_mode_p;
-        A1 = 0;
-        A2 = 1;
-        A3 = hu[tpage];
-        A4 = 0;
-        system_psyq_set_draw_mode();
-
-        dr_mode_p += c;
-        tpage += 2;
-    }
-    else
-    {
-        [block1 + 2] = h(count2);
-
-        for( int i = h[block1 + 4]; i != 0; --i )
+        else if( h[block1 + 0] == 7ffe )
         {
-            [poly2 + 3] = b(4);
-            [poly2 + 7] = b(65); // Textured Rectangle, variable size, opaque, raw-texture
+            A0 = dr_mode_p;
+            A1 = 0;
+            A2 = 1;
+            A3 = hu[tpage];
+            A4 = 0;
+            system_psyq_set_draw_mode();
 
-            V1 = w[8007ebd4];
-            if( bu[V1 + 8] & 80 ) [poly2 + 7] = b(67); // Textured Rectangle, variable size, semi-transp, raw-texture
-
-            [poly2 + 4] = b(80); // r
-            [poly2 + 5] = b(80); // g
-            [poly2 + 6] = b(80); // b
-            [poly2 + 8] = h(hu[V1 + 0]); // x
-            [poly2 + a] = h(hu[V1 + 2]); // y
-            [poly2 + c] = b(bu[V1 + 4]); // u
-            [poly2 + d] = b(bu[V1 + 5]); // v
-            [poly2 + e] = h(hu[V1 + 6]); // clut
-            [poly2 + 10] = h(20); // w
-            [poly2 + 12] = h(20); // h
-
-            [anim + 0] = b(bu[V1 + 8]); // animation
-            [anim + 1] = b(bu[V1 + 9]); // index
-
-            count2 += 1;
-            [8007ebd4] = w(w[8007ebd4] + a);
-            poly2 += 14;
-            anim += 2;
+            dr_mode_p += c;
+            tpage += 2;
         }
+        else
+        {
+            [block1 + 2] = h(count2);
+
+            for( int i = h[block1 + 4]; i != 0; --i )
+            {
+                [poly2 + 3] = b(4);
+                [poly2 + 7] = b(65); // Textured Rectangle, variable size, opaque, raw-texture
+
+                if( bu[coords3 + 8] & 80 ) [poly2 + 7] = b(67); // Textured Rectangle, variable size, semi-transp, raw-texture
+
+                [poly2 + 4] = b(80); // r
+                [poly2 + 5] = b(80); // g
+                [poly2 + 6] = b(80); // b
+                [poly2 + 8] = h(hu[coords3 + 0]); // x
+                [poly2 + a] = h(hu[coords3 + 2]); // y
+                [poly2 + c] = b(bu[coords3 + 4]); // u
+                [poly2 + d] = b(bu[coords3 + 5]); // x
+                [poly2 + e] = h(hu[coords3 + 6]); // clut
+                [poly2 + 10] = h(20); // w
+                [poly2 + 12] = h(20); // h
+
+                [anim + 0] = b(bu[coords3 + 8]); // animation
+                [anim + 1] = b(bu[coords3 + 9]); // index
+
+                count2 += 1;
+                poly2 += 0x14;
+                coords3 += 0xa;
+                anim += 0x2;
+            }
+        }
+
+        block1 += 0x6;
     }
 
-    block1 += 6;
+    // dynamic layer 2
+    while( true )
+    {
+        if( h[block1 + 0] == 0x7fff )
+        {
+            break;
+        }
+        else if( h[block1 + 0] == 0x7ffe )
+        {
+            A0 = dr_mode_p;
+            A1 = 0;
+            A2 = 1;
+            A3 = hu[tpage];
+            A4 = 0;
+            system_psyq_set_draw_mode();
+
+            dr_mode_p += c;
+            tpage += 2;
+        }
+        else
+        {
+            [block1 + 2] = h(count2);
+
+            for( int i = h[block1 + 4]; i != 0; --i )
+            {
+                [poly2 + 3] = b(4);
+                [poly2 + 7] = b(65); // Textured Rectangle, variable size, opaque, raw-texture
+
+                V1 = w[0x8007ebd4];
+                if( bu[V1 + 8] & 80 ) [poly2 + 7] = b(67); // Textured Rectangle, variable size, semi-transp, raw-texture
+
+                [poly2 + 4] = b(80); // r
+                [poly2 + 5] = b(80); // g
+                [poly2 + 6] = b(80); // b
+                [poly2 + 8] = h(hu[V1 + 0]); // x
+                [poly2 + a] = h(hu[V1 + 2]); // y
+                [poly2 + c] = b(bu[V1 + 4]); // u
+                [poly2 + d] = b(bu[V1 + 5]); // v
+                [poly2 + e] = h(hu[V1 + 6]); // clut
+                [poly2 + 10] = h(20); // w
+                [poly2 + 12] = h(20); // h
+
+                [anim + 0] = b(bu[V1 + 8]); // animation
+                [anim + 1] = b(bu[V1 + 9]); // index
+
+                count2 += 1;
+                [0x8007ebd4] = w(w[0x8007ebd4] + 0xa);
+                poly2 += 0x14;
+                anim += 0x2;
+            }
+        }
+
+        block1 += 0x6;
+    }
 }
-////////////////////////////////
 
 
 
@@ -254,8 +245,7 @@ while( true )
     {
         // add draw mode
         V1 = h[block1 + 2];
-        [render_data + 124dc + V1 * c] = w((w[render_data + 124dc + V1 * c] & ff000000) | (w[render_data + 3ffc] & 00ffffff));
-        [render_data + 3ffc] = w((w[render_data + 3ffc] & ff000000) | ((render_data + 124dc + V1 * c) & 00ffffff));
+        addPrim( render_data + 0x3ffc, render_data + 0x124dc + V1 * 0xc ); // macross addPrim( ot, p )
     }
     else
     {
@@ -270,8 +260,7 @@ while( true )
                 if( ( ( h[80071a48] - 150 ) < x ) && ( x < h[80071a48] ) )
                 {
                     // add to the bottom bepth
-                    [render_data + 4914 + T3 * 10] = w((w[render_data + 4914 + T3 * 10] & ff000000) | (w[render_data + 3ffc] & 00ffffff));
-                    [render_data + 3ffc] = w(((w[render_data + 3ffc]) & ff000000) | ((render_data + 4914 + T3 * 10) & 00ffffff));
+                    addPrim( render_data + 0x3ffc, render_data + 0x4914 + T3 * 0x10 ); // macross addPrim( ot, p )
                 }
 
                 T3 += 1;
@@ -297,19 +286,15 @@ while( true )
 
         for( int i = h[block1 + 4]; i != 0; --i )
         {
-            x = h[render_data + 4914 + T3 * 10 + 8];
-            V0 = bu[render_data + 10d54 + T3 * 2 ] & 3f;
+            x = h[render_data + 0x4914 + T3 * 10 + 8];
+            V0 = bu[render_data + 0x10d54 + T3 * 2 ] & 3f;
 
-            if( ( h[80071a48] - 150 < x ) && ( x < h[80071a48] ) && ( ( V0 == 0 ) || ( ( bu[8009ace6 + V0] & bu[render_data + 10d55 + T3 * 2] ) != 0 ) ) )
+            if( ( h[80071a48] - 150 < x ) && ( x < h[80071a48] ) && ( ( V0 == 0 ) || ( ( bu[8009ace6 + V0] & bu[render_data + 10d54 + T3 * 2 + 1] ) != 0 ) ) )
             {
                 depth = (bu[render_data + 4914 + T3 * 10 + 5] << 8) + (bu[render_data + 4914 + T3 * 10 + 4]);
-
-                [render_data + 4914 + T3 * 10] = w((w[render_data + 4914 + T3 * 10] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-                [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4914 + T3 * 10) & 00ffffff));
-
-                V0 = T3 - h[8011448c];
-                [render_data + 124dc + V0 * c] = w((w[render_data + 124dc + V0 * c] & ff000000) | ((render_data + depth * 4) & 00ffffff));
-                [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 124dc + V0 * c) & 00ffffff));
+                addPrim( render_data + depth * 4, render_data + 0x4914 + T3 * 0x10 ); // macross addPrim( ot, p )
+                V0 = T3 - h[0x8011448c];
+                addPrim( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc ); // macross addPrim( ot, p )
             }
 
             T3 += 1;
@@ -320,26 +305,22 @@ while( true )
 }
 
 // background dynamic 3rd layer
-depth = hu[8009abf4 + b0];
-[render_data + 4294] = w((w[render_data + 4294] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-[render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4294) & 00ffffff));
+depth = hu[0x8009abf4 + 0xb0];
+addPrim( render_data + depth * 4, render_data + 4294 ); // macross addPrim( ot, p )
 
 while( true )
 {
     V1 = h[block1 + 0];
     if( V1 == 7fff )
     {
-        [render_data + 4214] = w((w[render_data + 4214] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4214) & 00ffffff));
-
+        addPrim( render_data + depth * 4, render_data + 0x4214 ); // macross addPrim( ot, p )
         block1 += 2;
         break;
     }
     else if( V1 == 7ffe )
     {
         V0 = h[block1 + 2] + h[801144d0];
-        [render_data + 124dc + V0 * c] = w((w[render_data + 124dc + V0 * c] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 124dc + V0 * c) & 00ffffff));
+        addPrim( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc ); // macross addPrim( ot, p )
     }
     else
     {
@@ -378,12 +359,11 @@ while( true )
             }
 
             V0 = T3 + h[801144c8];
-            V0 = bu[render_data + 10d54 + V0 * 2] & 3f;
+            V0 = bu[render_data + 0x10d54 + V0 * 2 + 0] & 3f;
 
-            if( ( V0 == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 10d55 + V0 * 2] ) )
+            if( ( V0 == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 0x10d54 + V0 * 2 + 1] ) )
             {
-                [render_data + e554 + T3 * 14] = w((w[render_data + e554 + T3 * 14] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-                [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + e554 + T3 * 14) & 00ffffff));
+                addPrim( render_data + depth * 4, render_data + 0xe554 + T3 * 0x14 ); // macross addPrim( ot, p )
             }
 
             T3 += 1;
@@ -395,22 +375,19 @@ while( true )
 
 // background dynamic 4th layer
 depth = hu[8009abf4 + ae];
-[render_data + 42d4] = w((w[render_data + 42d4] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-[render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 42d4) & 00ffffff));
+addPrim( render_data + depth * 4, render_data + 0x42d4 ); // macross addPrim( ot, p )
 
 while( true )
 {
     if( h[block1] == 7fff )
     {
-        [render_data + 4254] = w((w[render_data + 4254] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 4254) & 00ffffff));
+        addPrim( render_data + depth * 4, render_data + 0x4254 ); // macross addPrim( ot, p )
         break;
     }
     else if( V1 == 7ffe )
     {
         V0 = h[block1 + 2] + h[801144d0];
-        [render_data + 124dc + V0 * c] = w((w[render_data + 124dc + V0 * c] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-        [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + 124dc + V0 * c) & 00ffffff));
+        addPrim( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc ); // macross addPrim( ot, p )
     }
     else
     {
@@ -421,26 +398,25 @@ while( true )
             x = h[render_data + e554 + T3 * 14 + 8];
             if( ( (h[80071a50] - 160) >= x ) || ( x >= h[80071a50] ) )
             {
-                if( x < (h[80071a50] - a0) ) [render_data + e554 + T3 * 14 + 8] = h(x + hu[offset_to_triggers + 1c]);
-                else                         [render_data + e554 + T3 * 14 + 8] = h(x - hu[offset_to_triggers + 1c]);
+                if( x < (h[80071a50] - a0) ) [render_data + 0xe554 + T3 * 0x14 + 0x8] = h(x + hu[offset_to_triggers + 0x1c]);
+                else                         [render_data + 0xe554 + T3 * 0x14 + 0x8] = h(x - hu[offset_to_triggers + 0x1c]);
             }
 
             y = h[render_data + e554 + T3 * 14 + a];
             if( ( ( h[80071a52] - 100 ) >= y ) || ( y < h[80071a52] ) )
             {
-                if( y < ( h[80071a52] - 70 ) ) [render_data + e554 + T3 * 14 + a] = h(y + hu[offset_to_triggers + 1e]);
-                else                           [render_data + e554 + T3 * 14 + a] = h(y - hu[offset_to_triggers + 1e]);
+                if( y < ( h[80071a52] - 70 ) ) [render_data + 0xe554 + T3 * 0x14 + 0xa] = h(y + hu[offset_to_triggers + 0x1e]);
+                else                           [render_data + 0xe554 + T3 * 0x14 + 0xa] = h(y - hu[offset_to_triggers + 0x1e]);
             }
 
             if( ( ( h[80071a50] - 160 ) < x ) && ( x < h[80071a50] ) )
             {
                 V1 = T3 + h[801144c8];
-                V0 = bu[render_data + 10d54 + V1 * 2];
+                V0 = bu[render_data + 0x10d54 + V1 * 2 + 0];
 
-                if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 10d55 + V1 * 2] ) )
+                if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 0x10d54 + V1 * 2 + 1] ) )
                 {
-                    [render_data + e554 + T3 * 14] = w((w[render_data + e554 + T3 * 14] & ff000000) | (w[render_data + depth * 4] & 00ffffff));
-                    [render_data + depth * 4] = w((w[render_data + depth * 4] & ff000000) | ((render_data + e554 + T3 * 14) & 00ffffff));
+                    addPrim( render_data + depth * 4, render_data + 0xe554 + T3 * 0x14 ); // macross addPrim( ot, p )
                 }
             }
 
@@ -797,7 +773,7 @@ else
 
 current_rd = A0;
 
-render_data = 800e4df0;
+render_data = 0x800e4df0;
 offset_to_triggers = w[800716c4];
 camera_data = w[80071e40];
 drawenv1 = 80113f2c + 0 * 5c;
