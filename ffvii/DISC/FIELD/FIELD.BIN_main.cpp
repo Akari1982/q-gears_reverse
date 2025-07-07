@@ -1,4 +1,6 @@
-FieldRenderData g_field_render_data[2]; // 0x800e4df0
+FieldRenderData g_field_render_data[0x2]; // 0x800e4df0
+DRAWENV g_draw_env[0x2]; // 0x8007eaac
+DRAWENV g_bg_draw_env[0xa]; // 0x80113f2c
 
 
 
@@ -128,379 +130,308 @@ system_cdrom_start_load_file(); // set data to load in background
 
 
 
-////////////////////////////////
-// field_main()
-
-[SP + 18] = w(w[800a0000]);
-[SP + 1c] = w(w[800a0004]);
-
+void field_main()
 {
-    ot1 = 800e4df0 + 0 * 1789c + 418c;
-    ot2 = 800e4df0 + 1 * 1789c + 418c;
-    drenv_prim1 = 800e4df0 + 0 * 1789c + 4194;
-    drenv_prim2 = 800e4df0 + 1 * 1789c + 4194;
+    [SP + 18] = w(w[800a0000]);
+    [SP + 1c] = w(w[800a0004]);
 
-    A0 = ot1;
-    A1 = 1;
-    system_psyq_clear_otag_r();
+    system_psyq_clear_otag_r( &(g_field_render_data[0].ot_drenv), 0x1 );
+    system_psyq_clear_otag_r( &(g_field_render_data[1].ot_drenv), 0x1 );
+    system_psyq_set_drawenv( &(g_field_render_data[0].drenv), &(g_draw_env[0]) );
+    system_psyq_set_drawenv( &(g_field_render_data[1].drenv), &(g_draw_env[1]) );
+    ADDPRIM( &(g_field_render_data[0].ot_drenv), drenv_prim1 );
+    ADDPRIM( &(g_field_render_data[1].ot_drenv), drenv_prim2 );
 
-    A0 = ot2;
-    A1 = 1;
-    system_psyq_clear_otag_r();
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[0]), 0x0, 0x8, 0x140, 0xe0 );
+    g_bg_draw_env[0]->dtd = 1;
+    g_bg_draw_env[0]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[1]), 0x0, 0xf0, 0x140, 0xe0 );
+    g_bg_draw_env[1]->dtd = 1;
+    g_bg_draw_env[1]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[2]), 0x0, 0x8, 0x140, 0xe0 );
+    g_bg_draw_env[2]->dtd = 1;
+    g_bg_draw_env[2]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[3]), 0x0, 0xf0, 0x140, 0xe0 );
+    g_bg_draw_env[3]->dtd = 1;
+    g_bg_draw_env[3]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[4]), 0x0, 0x8, 0x140, 0xe0 );
+    g_bg_draw_env[4]->dtd = 1;
+    g_bg_draw_env[4]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[5]), 0x0, 0xf0, 0x140, 0xe0 );
+    g_bg_draw_env[5]->dtd = 1;
+    g_bg_draw_env[5]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[6]), 0x0, 0x8, 0x140, 0xe0 );
+    g_bg_draw_env[6]->dtd = 1;
+    g_bg_draw_env[6]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[7]), 0x0, 0xf0, 0x140, 0xe0 );
+    g_bg_draw_env[7]->dtd = 1;
+    g_bg_draw_env[7]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[8]), 0x0, 0x8, 0x140, 0xe0 );
+    g_bg_draw_env[8]->dtd = 1;
+    g_bg_draw_env[8]->isbg = 0;
+    system_psyq_set_def_drawenv( &(g_bg_draw_env[9]), 0x0, 0xf0, 0x140, 0xe0 );
+    g_bg_draw_env[9]->dtd = 1;
+    g_bg_draw_env[9]->isbg = 0;
 
-    A0 = drenv_prim1; // DR_ENV prim
-    A1 = 8007eaac + 0 * 5c; // DRAWENV struct
-    system_psyq_set_drawenv();
+    system_psyq_clear_otag_r( &(g_field_render_data[0].ot_bg_drenv), 0x1 );
+    system_psyq_clear_otag_r( &(g_field_render_data[1].ot_bg_drenv), 0x1 );
+    system_psyq_set_drawenv( &(g_field_render_data[0].bg_drenv), &(g_bg_draw_env[0]) );
+    system_psyq_set_drawenv( &(g_field_render_data[1].bg_drenv), &(g_bg_draw_env[1]) );
+    ADDPRIM( &(g_field_render_data[0].ot_bg_drenv), drenv_prim1 );
+    ADDPRIM( &(g_field_render_data[1].ot_bg_drenv), drenv_prim2 );
 
-    A0 = drenv_prim2; // DR_ENV prim
-    A1 = 8007eaac + 1 * 5c; // DRAWENV struct
-    system_psyq_set_drawenv();
+    func128b8(); // fade
 
-    addPrim( ot1, drenv_prim1 ); // macross addPrim( ot, p )
-    addPrim( ot2, drenv_prim2 ); // macross addPrim( ot, p )
-}
+    S0 = SP + 18;
+    [8009ac40] = h(0);
 
-{
-    drawenv1 = 80113f2c + 0 * 5c;
-    drawenv2 = 80113f2c + 1 * 5c;
-    drawenv3 = 80113f2c + 2 * 5c;
-    drawenv4 = 80113f2c + 3 * 5c;
-    drawenv5 = 80113f2c + 4 * 5c;
-    drawenv6 = 80113f2c + 5 * 5c;
-    drawenv7 = 80113f2c + 6 * 5c;
-    drawenv8 = 80113f2c + 7 * 5c;
-    drawenv9 = 80113f2c + 8 * 5c;
-    drawenva = 80113f2c + 9 * 5c;
-
-    ot1 = 800e4df0 + 0 * 1789c + 4190;
-    ot2 = 800e4df0 + 1 * 1789c + 4190;
-    drenv_prim1 = 800e4df0 + 0 * 1789c + 41d4;
-    drenv_prim2 = 800e4df0 + 1 * 1789c + 41d4;
-
-    A0 = drawenv1;
-    A1 = 0; // x
-    A2 = 8; // y
-    A3 = 140; // width
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv1 + 16] = b(1); // dithering processing flag (on)
-    [drawenv1 + 18] = b(0); // not clear drawing area when drawing environment is set
-
-    A0 = drawenv2;
-    A1 = 0; // x
-    A2 = f0; // y
-    A3 = 140; // width
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv2 + 16] = b(1);
-    [drawenv2 + 18] = b(0);
-
-    A0 = drawenv3;
-    A1 = 0;
-    A2 = 8;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv3 + 16] = b(1);
-    [drawenv3 + 18] = b(0);
-
-    A0 = drawenv4;
-    A1 = 0;
-    A2 = f0;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv4 + 16] = b(1);
-    [drawenv4 + 18] = b(0);
-
-    A0 = drawenv5;
-    A1 = 0;
-    A2 = 8;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv5 + 16] = b(1);
-    [drawenv5 + 18] = b(0);
-
-    A0 = drawenv6;
-    A1 = 0;
-    A2 = f0;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv6 + 16] = b(1);
-    [drawenv4 + 18] = b(0);
-
-    A0 = drawenv7;
-    A1 = 0;
-    A2 = 8;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv7 + 16] = b(1);
-    [drawenv7 + 18] = b(0);
-
-    A0 = drawenv8;
-    A1 = 0;
-    A2 = f0;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv8 + 16] = b(1);
-    [drawenv8 + 18] = b(0);
-
-    A0 = drawenv9;
-    A1 = 0;
-    A2 = 8;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenv9 + 16] = b(1);
-    [drawenv9 + 18] = b(0);
-
-    A0 = drawenva;
-    A1 = 0;
-    A2 = f0;
-    A3 = 140;
-    A4 = e0; // height
-    system_psyq_set_def_drawenv();
-    [drawenva + 16] = b(1);
-    [drawenva + 18] = b(0);
-
-    A0 = drenv_prim1;
-    A1 = drawenv1;
-    system_psyq_set_drawenv();
-
-    A0 = drenv_prim2; // DR_ENV prim
-    A1 = drawenv2;
-    system_psyq_set_drawenv();
-
-    A0 = ot1;
-    A1 = 1;
-    system_psyq_clear_otag_r();
-
-    A0 = ot2;
-    A1 = 1;
-    system_psyq_clear_otag_r();
-
-    addPrim( ot1, drenv_prim1 ); // macross addPrim( ot, p )
-    addPrim( ot2, drenv_prim2 ); // macross addPrim( ot, p )
-}
-
-func128b8(); // fade
-
-S0 = SP + 18;
-[8009ac40] = h(0);
-
-// not clear if game state is field, battle, worldmap, 5 or d
-if( ( h[800965ec] != 1 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != 3 ) && ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
-{
-    A0 = S0;
-    A1 = 0;
-    A2 = 0;
-    A3 = 0;
-    system_psyq_clear_image();
-}
-
-while( true )
-{
-    funcab2ac(); // do nothing, maybe removed debug
-
-    [80071a5c] = h(0); // map id loading in advance
-    [80095dd0] = h(0); // map id to load in advance
-
-    if( ( h[800965ec] == 1 ) || ( h[800965ec] == 3 ) )
+    // not clear if game state is field, battle, worldmap, 5 or d
+    if( ( h[800965ec] != 1 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != 3 ) && ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
     {
-        if( hu[8009abf4 + 4c] == 0 )
+        A0 = S0;
+        A1 = 0;
+        A2 = 0;
+        A3 = 0;
+        system_psyq_clear_image();
+    }
+
+    while( true )
+    {
+        funcab2ac(); // do nothing, maybe removed debug
+
+        [80071a5c] = h(0); // map id loading in advance
+        [80095dd0] = h(0); // map id to load in advance
+
+        if( ( h[800965ec] == 1 ) || ( h[800965ec] == 3 ) )
         {
-            func129d0(); // fade?
+            if( hu[8009abf4 + 4c] == 0 )
+            {
+                func129d0(); // fade?
 
-            [8009abf4 + 4c] = h(3);
-            [80071a58] = b(3);
-            [8009abf4 + 4e] = h(0);
-            [8007e768] = h(0);
-            [80095dd4] = h(1);
+                [8009abf4 + 4c] = h(3);
+                [80071a58] = b(3);
+                [8009abf4 + 4e] = h(0);
+                [8007e768] = h(0);
+                [80095dd4] = h(1);
+            }
         }
-    }
 
-    if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
-    {
-        [8007eb64] = w(80114fe4); // events
-        [8009a044] = w(80114fe8); // walkmesh
-        [8009d848] = w(80114fec); // tilemap
-        [80083578] = w(80114ff0); // camera
-        [8009ad28] = w(80114ff4); // triggers
-        [8009c55c] = w(80114ff8); // encounter
-        [80070784] = w(80114ffc); // models
-
-        field_load_mim_dat_files();
-    }
-
-    if( h[800965ec] == 2 ) // battle
-    {
-        [8007ebe0] = b(1);
-
-        if( bu[8007ebc8] == 1 )
+        if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
         {
-            [8007ebc8] = b(0);
-            [8009c6d8] = b(0);
-            [8007173c] = h(0);
-            [8009abf4 + 1] = b(0);
+            [8007eb64] = w(80114fe4); // events
+            [8009a044] = w(80114fe8); // walkmesh
+            [8009d848] = w(80114fec); // tilemap
+            [80083578] = w(80114ff0); // camera
+            [8009ad28] = w(80114ff4); // triggers
+            [8009c55c] = w(80114ff8); // encounter
+            [80070784] = w(80114ffc); // models
+
+            field_load_mim_dat_files();
         }
-    }
 
-    // wait until render sets to base 0
-    while( hu[80095dd4] != 0 ) {}
+        if( h[800965ec] == 2 ) // battle
+        {
+            [8007ebe0] = b(1);
 
-    do
-    {
+            if( bu[8007ebc8] == 1 )
+            {
+                [8007ebc8] = b(0);
+                [8009c6d8] = b(0);
+                [8007173c] = h(0);
+                [8009abf4 + 1] = b(0);
+            }
+        }
+
+        // wait until render sets to base 0
+        while( hu[0x80095dd4] != 0 ) {}
+
+        while( system_psyq_draw_sync( 1 ) != 0 ) {}
+
+        if( h[0x800965ec] != 0xd )
+        {
+            [0x8009abf4 + 0x4c] = h(0x1);
+            [0x8009abf4 + 0x4e] = h(0x100);
+            [0x8009abf4 + 0x50] = h(0x10);
+            [0x8009abf4 + 0x52] = h(0x0);
+            [0x8009abf4 + 0x54] = h(0x0);
+            [0x8009abf4 + 0x56] = h(0x0);
+        }
+
+        if( ( h[0x800965ec] == 0x0 ) ||
+            ( h[0x800965ec] == 0x1 ) ||
+            ( h[0x800965ec] == 0x3 ) ||
+            ( h[0x800965ec] == 0x6 ) ||
+            ( h[0x800965ec] == 0x7 ) ||
+            ( h[0x800965ec] == 0x8 ) ||
+            ( h[0x800965ec] == 0x9 ) ||
+            ( h[0x800965ec] == 0xa ) ||
+            ( h[0x800965ec] == 0xb ) )
+        {
+            [0x8009abf4 + 0xa6] = h(0x0); // x scroll for 2nd background
+            [0x8009abf4 + 0xa8] = h(0x0); // y scroll for 2nd background
+            [0x8009abf4 + 0xaa] = h(0x0); // x scroll for 3rd background.
+            [0x8009abf4 + 0xac] = h(0x0); // y scroll for 3rd background
+            [0x8009abf4 + 0xae] = h(0x1); // depth for background 3rd layer
+            [0x8009abf4 + 0xb0] = h(0xfff); // depth for background 2nd layer
+
+            [0x8009a100] = h(0x0); // script or auto scroll. If 1 then this is script scroll. 0 - we auto scroll to PC.
+            [0x80071e38] = h(0x0); // current screen scroll X
+            [0x80071e3c] = h(0x0); // current screen scroll Y
+
+            V1 = w[800716c4];
+            [8009abf4 + 16] = h(hu[V1 + a]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
+
+            A0 = 8009abf4; // start of game data
+            A1 = 80074ea4;
+            V1 = w[8007eb64]; // events pointer to pointer
+            A2 = w[V1]; // events pointer
+            field_init_structs_events_actors();
+
+            V0 = h[8009abf4 + 2a]; // manual entity id
+            [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
+
+            // init rain force
+            if( bu[0x8009c6e4 + 0xfa4 + 0x83] & 0x80 ) [0x800e48d8] = b(0xff);
+            else                                       [0x800e48d8] = b(0);
+
+            for( int i = 0; i < 0x10; ++i )
+            {
+                [0x8009a048 + i] = b(-1) // init array of states for KAWAI
+            }
+
+            A0 = w[0x800716c4] + 0x158; // offset to sector 5 background triggers
+            field_init_triggered_background_state();
+        }
+        else
+        {
+            [8009abf4 + 26] = h(2); // battle state?
+        }
+
+        funcbb1b4(); // enable party models and unlink unused models
+
+        A0 = 8007e7ac;
+        field_line_clear_all_actors();
+
+        [800716d0] = b(0); // random encounter related
+
+        field_arrows_init( g_field_render_data[0].arrows, &(g_field_render_data[0].arrows_dm) );
+        field_arrows_init( g_field_render_data[1].arrows, &(g_field_render_data[1].arrows_dm) );
+
+        if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
+        {
+            A0 = 0;
+            A1 = 0x80128000;
+            field_load_mim_to_vram();
+        }
+
+        if( h[800965ec] == 2 )
+        {
+            [8009a000] = h(f5);
+            system_execute_AKAO();
+
+            [8009a000] = h(18);
+            [8009a004] = w(w[8009ac3c]);
+            [8009a008] = w(4);
+            system_execute_AKAO();
+        }
+
+        field_main_loop();
+
+        do
+        {
+            A0 = 1;
+            system_psyq_draw_sync();
+        } while( V0 != 0 )
+
         A0 = 1;
-        system_psyq_draw_sync();
-    } while( V0 != 0 )
-
-    if( h[800965ec] != d )
-    {
-        [8009abf4 + 4c] = h(1);
-        [8009abf4 + 4e] = h(100);
-        [8009abf4 + 50] = h(10);
-        [8009abf4 + 52] = h(0);
-        [8009abf4 + 54] = h(0);
-        [8009abf4 + 56] = h(0);
-    }
-
-    if( ( h[800965ec] == 0 ) ||
-        ( h[800965ec] == 1 ) ||
-        ( h[800965ec] == 3 ) ||
-        ( h[800965ec] == 6 ) ||
-        ( h[800965ec] == 7 ) ||
-        ( h[800965ec] == 8 ) ||
-        ( h[800965ec] == 9 ) ||
-        ( h[800965ec] == a ) ||
-        ( hu[800965ec] == b ) )
-    {
-        [8009abf4 + a6] = h(0); // x scroll for 2nd background
-        [8009abf4 + a8] = h(0); // y scroll for 2nd background
-        [8009abf4 + aa] = h(0); // x scroll for 3rd background.
-        [8009abf4 + ac] = h(0); // y scroll for 3rd background
-        [8009abf4 + ae] = h(1); // depth for background 3rd layer
-        [8009abf4 + b0] = h(fff); // depth for background 2nd layer
-
-        [8009a100] = h(0); // script or auto scroll. If 1 then this is script scroll. 0 - we auto scroll to PC.
-        [80071e38] = h(0); // current screen scroll X
-        [80071e3c] = h(0); // current screen scroll Y
-
-        V1 = w[800716c4];
-        [8009abf4 + 16] = h(hu[V1 + a]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
-
-        A0 = 8009abf4; // start of game data
-        A1 = 80074ea4;
-        V1 = w[8007eb64]; // events pointer to pointer
-        A2 = w[V1]; // events pointer
-        field_init_structs_events_actors();
-
-        V0 = h[8009abf4 + 2a]; // manual entity id
-        [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
-
-        // init rain force
-        if( bu[8009c6e4 + fa4 + 83] & 80 ) [800e48d8] = b(ff);
-        else                               [800e48d8] = b(0);
-
-        for( int i = 0; i < 10; ++i )
-        {
-            [8009a048 + i] = b(-1) // init array of states for KAWAI
-        }
-
-        A0 = w[800716c4] + 158; // offset to sector 5 background triggers
-        field_init_triggered_background_state();
-    }
-    else
-    {
-        [8009abf4 + 26] = h(2); // battle state?
-    }
-
-    funcbb1b4(); // enable party models and unlink unused models
-
-    A0 = 8007e7ac;
-    field_line_clear_all_actors();
-
-    [800716d0] = b(0); // random encounter related
-
-    A0 = 0x800e4df0 + 0 * 0x1789c + 0x4000; // arrows poly
-    A1 = 0x800e4df0 + 0 * 0x1789c + 0x4180; // draw mode
-    field_arrows_init();
-
-    A0 = 0x800e4df0 + 1 * 0x1789c + 0x4000; // arrows poly
-    A1 = 0x800e4df0 + 1 * 0x1789c + 0x4180; // draw mode
-    field_arrows_init();
-
-    if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
-    {
-        A0 = 0;
-        A1 = 80128000;
-        field_load_mim_to_vram();
-    }
-
-    if( h[800965ec] == 2 )
-    {
-        [8009a000] = h(f5);
-        system_execute_AKAO();
-
-        [8009a000] = h(18);
-        [8009a004] = w(w[8009ac3c]);
-        [8009a008] = w(4);
-        system_execute_AKAO();
-    }
-
-    field_main_loop();
-
-    do
-    {
-        A0 = 1;
-        system_psyq_draw_sync();
-    } while( V0 != 0 )
-
-    A0 = 1;
-    system_psyq_vsync(); // wait
-
-    [8007eb79] = b(0);
-    [8007eb8d] = b(0);
-
-    V0 = h[80075dec];
-    A0 = 8007eb68 + V0 * 14;
-    system_psyq_put_dispenv();
-
-    V0 = h[80075dec];
-    A0 = 8007eaac + V0 * 5c;
-    system_psyq_put_drawenv();
-
-    [800965ec] = h(1); // set current game state as field
-
-    if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
-    {
-        A0 = 0;
         system_psyq_vsync(); // wait
 
-        return;
-    }
+        [8007eb79] = b(0);
+        [8007eb8d] = b(0);
 
-    if( bu[8009abf4 + 1] == 1 )
-    {
-        [8009abf4 + 64] = h(hu[8009a05c]);
+        V0 = h[80075dec];
+        A0 = 8007eb68 + V0 * 14;
+        system_psyq_put_dispenv();
 
-        [8009a05c] = h(h[8009abf4 + 2]);
+        V0 = h[80075dec];
+        A0 = 8007eaac + V0 * 5c;
+        system_psyq_put_drawenv();
 
-        if( h[8009abf4 + 2] != h[80071a5c] )
+        [800965ec] = h(1); // set current game state as field
+
+        if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
         {
-            field_stop_load_next_map_in_advance();
+            A0 = 0;
+            system_psyq_vsync(); // wait
+
+            return;
         }
 
-        if( ( hu[8009a05c] - 1 ) < 40 )
+        if( bu[8009abf4 + 1] == 1 )
         {
-            [8009c560] = h(3); // world map
+            [8009abf4 + 64] = h(hu[8009a05c]);
+
+            [8009a05c] = h(h[8009abf4 + 2]);
+
+            if( h[8009abf4 + 2] != h[80071a5c] )
+            {
+                field_stop_load_next_map_in_advance();
+            }
+
+            if( ( hu[8009a05c] - 1 ) < 40 )
+            {
+                [8009c560] = h(3); // world map
+                func129d0();
+
+                [8009abf4 + 4c] = h(3);
+                [80071a58] = b(3);
+                [8009abf4 + 4e] = h(0);
+                [8007e768] = h(0);
+                [80095dd4] = h(1);
+
+                A0 = 0;
+                system_psyq_vsync(); // wait
+
+                return;
+            }
+        }
+
+        if( bu[8009abf4 + 1] == c )
+        {
+            [8009abf4 + 64] = h(hu[8009a05c]);
+            [8009a05c] = h(hu[8009abf4 + 2]);
+
+            switch( bu[8009abf4 + f2] )
+            {
+                case 0: [8009c560] = h(6); break; // highway
+                case 1: [8009c560] = h(7); break; // chocobo
+                case 2: [8009c560] = h(8); break; // snowboard
+                case 3: [8009c560] = h(9); break; // condor
+                case 4: [8009c560] = h(a); break; // submarine
+                case 5: [8009c560] = h(b); break; // jet
+                case 6: [8009c560] = h(e); break; // snowboard2
+            }
+            A0 = 0;
+            system_psyq_vsync(); // wait
+
+            return;
+        }
+
+        // encounter or disc change
+        if( ( bu[8009abf4 + 1] == 2 ) || ( bu[8009abf4 + 1] == d ) )
+        {
+            A0 = 0;
+            system_psyq_vsync(); // wait
+
+            return;
+        }
+
+        if( h[8009c560] == 5 )
+        {
             func129d0();
 
-            [8009abf4 + 4c] = h(3);
-            [80071a58] = b(3);
+            [8009abf4 + 4c] = h(d);
+            [80071a58] = b(d);
             [8009abf4 + 4e] = h(0);
             [8007e768] = h(0);
             [80095dd4] = h(1);
@@ -510,63 +441,16 @@ while( true )
 
             return;
         }
-    }
 
-    if( bu[8009abf4 + 1] == c )
-    {
-        [8009abf4 + 64] = h(hu[8009a05c]);
-        [8009a05c] = h(hu[8009abf4 + 2]);
-
-        switch( bu[8009abf4 + f2] )
+        if( ( bu[8009c560] == d ) || ( bu[8009c560] == 10 ) )
         {
-            case 0: [8009c560] = h(6); break; // highway
-            case 1: [8009c560] = h(7); break; // chocobo
-            case 2: [8009c560] = h(8); break; // snowboard
-            case 3: [8009c560] = h(9); break; // condor
-            case 4: [8009c560] = h(a); break; // submarine
-            case 5: [8009c560] = h(b); break; // jet
-            case 6: [8009c560] = h(e); break; // snowboard2
+            A0 = 0;
+            system_psyq_vsync(); // wait
+
+            return;
         }
-        A0 = 0;
-        system_psyq_vsync(); // wait
-
-        return;
-    }
-
-    // encounter or disc change
-    if( ( bu[8009abf4 + 1] == 2 ) || ( bu[8009abf4 + 1] == d ) )
-    {
-        A0 = 0;
-        system_psyq_vsync(); // wait
-
-        return;
-    }
-
-    if( h[8009c560] == 5 )
-    {
-        func129d0();
-
-        [8009abf4 + 4c] = h(d);
-        [80071a58] = b(d);
-        [8009abf4 + 4e] = h(0);
-        [8007e768] = h(0);
-        [80095dd4] = h(1);
-
-        A0 = 0;
-        system_psyq_vsync(); // wait
-
-        return;
-    }
-
-    if( ( bu[8009c560] == d ) || ( bu[8009c560] == 10 ) )
-    {
-        A0 = 0;
-        system_psyq_vsync(); // wait
-
-        return;
     }
 }
-////////////////////////////////
 
 
 

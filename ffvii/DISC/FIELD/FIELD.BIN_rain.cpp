@@ -78,7 +78,7 @@ for( int i = 0; i < 40; ++i )
 
 system_psyq_pop_matrix();
 
-addPrim( ot, draw_mode_packet ); // macross addPrim( ot, p )
+ADDPRIM( ot, draw_mode_packet );
 ////////////////////////////////
 
 

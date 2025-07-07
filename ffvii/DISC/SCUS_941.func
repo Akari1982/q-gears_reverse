@@ -1025,7 +1025,7 @@
 800444AC system_psyq_put_dispenv
 800448D0 system_psyq_get_dispenv
 80044908 func44908
-8004493C func4493c
+8004493C system_psyq_set_tex_window
 80044978 system_psyq_set_draw_area
 800449FC system_psyq_set_draw_offset
 80044A40 func44a40

@@ -54,7 +54,7 @@ void field_arrows_add_to_render( void* render_data, MATRIX* m, A2 )
                 [render_data + 0x4000 + i * 0x10 + 0xc] = b((hu[0x8011446c] * 0x4) & 0x30 + 0x30);
                 [render_data + 0x4000 + i * 0x10 + 0xd] = b(0xd0);
 
-                addPrim( render_data + 0x0, render_data + 0x4000 + i * 0x10 ); // macross addPrim( ot, p )
+                ADDPRIM( render_data + 0x0, render_data + 0x4000 + i * 0x10 );
             }
         }
     }
@@ -85,13 +85,13 @@ void field_arrows_add_to_render( void* render_data, MATRIX* m, A2 )
                 [render_data + 0x40c0 + i * 0x10 + e] = h(clut);
             }
 
-            addPrim( render_data + 0x0, render_data + 0x40c0 + i * 0x10 ); // macross addPrim( ot, p )
+            ADDPRIM( render_data + 0x0, render_data + 0x40c0 + i * 0x10 );
         }
     }
 
     system_psyq_pop_matrix();
 
-    addPrim( render_data + 0x0, render_data + 0x4180 ); // macross addPrim( ot, p )
+    ADDPRIM( render_data + 0x0, render_data + 0x4180 );
 
     [0x8011446c] = h(hu[0x8011446c] + 1);
 }

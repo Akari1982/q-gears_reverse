@@ -770,35 +770,27 @@ return V0 & ffff;
 
 
 
-////////////////////////////////
-// system_psyq_set_def_drawenv()
-
-env = A0;
-x = A1;
-y = A2;
-w = A3;
-h = A4;
-
-[env + 0] = h(x); // clip rect x
-[env + 2] = h(y); // clip rect y
-[env + 4] = h(w); // clip rect width
-[env + 6] = h(h); // clip rect height
-[env + 8] = h(x); // offset to primitive x
-[env + a] = h(y); // offset to primitive y
-[env + c] = h(0); // texture window rect x
-[env + e] = h(0); // texture window rect y
-[env + 10] = h(0); // texture window rect width
-[env + 12] = h(0); // texture window rect height
-[env + 14] = h(a); // tpage
-[env + 16] = b(1); // dithering processing flag (on)
-[env + 17] = b(0); // drawing to display area is blocked
-[env + 18] = b(0); // not clear drawing area when drawing environment is set
-[env + 19] = b(0); // background color r
-[env + 1a] = b(0); // background color g
-[env + 1b] = b(0); // background color b
-
-return env;
-////////////////////////////////
+DRAWENV* system_psyq_set_def_drawenv( DRAWENV* env, int x, int y, int w, int h )
+{
+    env->clip.x = x;
+    env->clip.y = y;
+    env->clip.w = w;
+    env->clip.h = h;
+    env->ofs[0] = x;
+    env->ofs[1] = y;
+    env->tw.x = 0;
+    env->tw.y = 0;
+    env->tw.w = 0;
+    env->tw.h = 0;
+    env->tpage = 0x000a;
+    env->dtd = 1; // dithering processing flag (on)
+    env->dfe = 0; // drawing to display area is blocked
+    env->isbg = 0; // not clear drawing area when drawing environment is set
+    env->r0 = 0;
+    env->g0 = 0;
+    env->b0 = 0;
+    return env;
+}
 
 
 
@@ -1357,32 +1349,29 @@ return S0;
 
 
 
-////////////////////////////////
-// system_psyq_clear_otag_r()
-// Initialize an array to a linked list for use as an ordering table.
-// Walks the array specified by ot and sets each element to be a pointer to the previous element, except the
-// first, which is set to a pointer to a special terminator value which the PlayStation uses to recognize the end
-// of a primitive list. n specifies how many entries are present in the array.
-// To execute the OT initialized by ClearOTagR(), execute DrawOTag(ot+n-1).
-
-head = A0; // head pointer of OT
-number = A1; // number of entries in OT
-
-if( bu[80062c02] >= 2 )
+void system_psyq_clear_otag_r( u32* ot, int n )
 {
-    A0 = 80010e08; // "ClearOTagR(%08x,%d)..."
-    A1 = head;
-    A2 = number;
-    80044284	jalr   w[80062bfc] ra
+    // Initialize an array to a linked list for use as an ordering table.
+    // Walks the array specified by ot and sets each element to be a pointer to the previous element, except the
+    // first, which is set to a pointer to a special terminator value which the PlayStation uses to recognize the end
+    // of a primitive list. n specifies how many entries are present in the array.
+    // To execute the OT initialized by ClearOTagR(), execute DrawOTag(ot+n-1).
+
+    if( bu[0x80062c02] >= 2 )
+    {
+        A0 = 0x80010e08; // "ClearOTagR(%08x,%d)..."
+        A1 = ot;
+        A2 = n;
+        80044284	jalr   w[0x80062bfc] ra
+    }
+
+    V0 = w[0x80062bf8]; // 80062bb8
+    A0 = ot;
+    A1 = n;
+    800442A0	jalr   w[V0 + 0x2c] ra // func450f8
+
+    [ot] = w(0x80062cbc & 0x00ffffff);
 }
-
-V0 = w[80062bf8]; // 80062bb8
-A0 = head;
-A1 = number;
-800442A0	jalr   w[V0 + 2c] ra // func450f8
-
-[head] = w(80062cbc & 00ffffff);
-////////////////////////////////
 
 
 
@@ -1721,52 +1710,32 @@ return V0 >> 1f;
 
 
 
-void func4493c( S0, RECT* tw )
+// Initializes a DR_TWIN primitive using the specified values. By using AddPrim() to insert a DR_TWIN primitive
+// into your primitive list, it is possible to change the current texture window in the middle of drawing
+void system_psyq_set_tex_window( DR_TWIN* p, RECT* tw )
 {
-    V0 = system_gpu_get_texture_window_setting_command( tw );
-
-    [S0 + 3] = b(0x2);
-    [S0 + 4] = w(V0);
-    [S0 + 8] = w(0);
+    SETLEN( p, 0x2 );
+    p->code[0] = system_gpu_get_texture_window_setting_command( tw );
+    p->code[1] = 0;
 }
 
 
 
-////////////////////////////////
-// system_psyq_set_draw_area()
-
-prim = A0; // DR_AREA
-rect = A1;
-
-[prim + 3] = b(2);
-
-A0 = h[rect + 0];
-A1 = h[rect + 2];
-system_gpu_set_drawing_area_top_left();
-[prim + 4] = w(V0);
-
-A0 = h[rect + 0] + h[rect + 4] - 1;
-A1 = h[rect + 2] + h[rect + 6] - 1;
-system_gpu_set_drawing_area_bottom_right();
-[prim + 8] = w(V0);
-////////////////////////////////
+void system_psyq_set_draw_area( DR_AREA* p, RECT* r )
+{
+    SETLEN( p, 0x2 );
+    p->code[0] = system_gpu_set_drawing_area_top_left( rect->x, rect->y );
+    p->code[1] = system_gpu_set_drawing_area_bottom_right( rect->x + rect->w - 1, rect->y + rect->h - 1 );
+}
 
 
 
-////////////////////////////////
-// system_psyq_set_draw_offset()
-
-prim = A0;
-ofs = A1;
-
-[prim + 3] = b(2);
-
-A0 = h[ofs + 0];
-A1 = h[ofs + 2];
-system_gpu_set_drawing_offset();
-[prim + 4] = w(V0);
-[prim + 8] = w(0);
-////////////////////////////////
+void system_psyq_set_draw_offset( DR_OFFSET* p, u16* ofs )
+{
+    SETLEN( p, 0x2 );
+    p->code[0] = system_gpu_set_drawing_offset( ofs[0], ofs[1] );
+    p->code[1] = 0;
+}
 
 
 
@@ -1800,81 +1769,59 @@ V0 = 0 < A2;
 
 
 
+// Initialize content of a drawing mode primitive.
 void system_psyq_set_draw_mode( DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw )
 {
-    // Initialize content of a drawing mode primitive.
-
-    [p + 3] = b(2);
-
+    SETLEN( dr_env, 0x2 );
     p->code[0] = system_gpu_get_draw_mode_setting_command( dfe, dtd, tpage ); // prepare tex page settings packet
     p->code[1] = system_gpu_get_texture_window_setting_command( tw ); // prepare texture window rect packet
 }
 
 
 
-////////////////////////////////
-// system_psyq_set_drawenv()
 // Initialize content of drawing environment change primitive.
-
-dr_env = A0; // draw env packets
-env = A1; // draw env
-
-A0 = h[env + 0]; // x top clip
-A1 = h[env + 2]; // y top clip
-system_gpu_set_drawing_area_top_left(); // create packet for clip
-[dr_env + 4] = w(V0);
-
-A0 = h[env + 0] + h[env + 4] - 1;
-A1 = h[env + 2] + h[env + 6] - 1;
-system_gpu_set_drawing_area_bottom_right(); // create packet for сlip
-[dr_env + 8] = w(V0);
-
-A0 = h[env + 8]; // offset x
-A1 = h[env + a]; // offset y
-system_gpu_set_drawing_offset(); // create packet for offset
-[dr_env + c] = w(V0);
-
-system_gpu_get_draw_mode_setting_command( bu[env + 0x17], bu[env + 0x16], hu[env + 0x14]);
-[dr_env + 10] = w(V0);
-
-V0 = system_gpu_get_texture_window_setting_command( env + c );
-[dr_env + 14] = w(V0);
-
-[dr_env + 18] = w(e6000000);
-
-[dr_env + 3] = b(6); // number of 0x4 packets to gpu
-
-if( bu[env + 18] != 0 )
+void system_psyq_set_drawenv( DR_ENV* dr_env, DRAWENV* env )
 {
-    rect_x = hu[env + 0];
-    rect_y = hu[env + 2];
-    rect_w = hu[env + 4];
-    rect_h = hu[env + 6];
+    SETLEN( dr_env, 0x6 );
+    dr_env->code[0] = system_gpu_set_drawing_area_top_left( env->clip.x, env->clip.y ); // create packet for clip
+    dr_env->code[1] = system_gpu_set_drawing_area_bottom_right( env->clip.x + env->clip.w - 1, env->clip.y + env->clip.h - 1 ); // create packet for сlip
+    dr_env->code[2] = system_gpu_set_drawing_offset( env->ofs[0], env->ofs[1] ); // create packet for offset
+    dr_env->code[3] = system_gpu_get_draw_mode_setting_command( env->dfe, env->dtd, env->tpage );
+    dr_env->code[4] = system_gpu_get_texture_window_setting_command( &(env->tw) );
+    dr_env->code[5] = 0xe6000000;
 
-    m_width = h[80062с04] - 1;
-    m_height = h[80062c06] - 1;
-
-    rect_w = ( rect_w >= 0 ) ? ( ( m_width < rect_w ) ? m_width : rect_w ) : 0;
-    rect_h = ( rect_h >= 0 ) ? ( ( m_height < rect_h ) ? m_height : rect_h ) : 0;
-
-    if( ( rect_x & 3f ) || ( rect_w & 3f ) )
+    if( env->isbg != 0 )
     {
-        rect_x = rect_x - hu[env + 8];
-        rect_y = rect_y - hu[env + a];
+        s16 clip_x = env->clip.x;
+        s16 clip_y = env->clip.y;
+        s16 clip_w = env->clip.w;
+        s16 clip_h = env->clip.h;
 
-        [dr_env + 7 * 4] = w(60000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 8) | bu[env + 19]);
-        [dr_env + 8 * 4] = w((rect_y << 10) | rect_x);
-        [dr_env + 9 * 4] = w((rect_h << 10) | rect_w);
+        s16 width = h[0x80062с04] - 1;
+        s16 height = h[0x80062c06] - 1;
+
+        clip_w = ( clip_w >= 0 ) ? ( ( width < clip_w ) ? width : clip_w ) : 0;
+        clip_h = ( clip_h >= 0 ) ? ( ( height < clip_h ) ? height : clip_h ) : 0;
+
+        if( ( clip_x & 0x3f ) || ( clip_w & 0x3f ) )
+        {
+            clip_x -= env->ofs[0];
+            clip_y -= env->ofs[1];
+
+            dr_env->code[6] = 0x60000000 | (env->b0 << 0x10) | (env->g0 << 0x8) | env->r0;
+            dr_env->code[7] = (clip_y << 0x10) | clip_x);
+            dr_env->code[8] = (clip_h << 0x10) | clip_w);
+        }
+        else
+        {
+            dr_env->code[8] = 0x02000000 | (env->b0 << 0x10) | (env->g0 << 0x8); | env->r0;
+            dr_env->code[7] = (clip_y << 0x10) | clip_x);
+            dr_env->code[6] = (clip_h << 0x10) | clip_w);
+        }
+
+        SETLEN( dr_env, 0x9 );
     }
-    else
-    {
-        [dr_env + 7 * 4] = w(02000000 | (bu[env + 1b] << 10) | (bu[env + 1a] << 08); | bu[env + 19]);
-        [dr_env + 8 * 4] = w((rect_y << 10) | rect_x);
-        [dr_env + 9 * 4] = w((rect_h << 10) | rect_w);
-    }
-    [dr_env + 3] = b(9);
 }
-////////////////////////////////
 
 
 
@@ -1909,66 +1856,57 @@ u32 system_gpu_get_draw_mode_setting_command( int dfe, int dtd, int tpage )
 
 
 
-////////////////////////////////
-// system_gpu_set_drawing_area_top_left()
-
-x = (A0 << 10) >> 10;
-y = (A1 << 10) >> 10;
-
-width = h[80062c04] - 1;
-height = h[80062c06] - 1;
-
-x = ( x >= 0 ) ? ( ( width < x ) ? width : x ) : 0;
-y = ( y >= 0 ) ? ( ( height < y ) ? height : y ) : 0;
-
-if( ( bu[80062c00] - 1 ) >= 2 )
+u32 system_gpu_set_drawing_area_top_left( s16 x, s16 y )
 {
-    return e3000000 | ((y & 03ff) << a) | (x & 03ff);
+    width = h[0x80062c04] - 1;
+    height = h[0x80062c06] - 1;
+
+    x = ( x >= 0 ) ? ( ( width < x ) ? width : x ) : 0;
+    y = ( y >= 0 ) ? ( ( height < y ) ? height : y ) : 0;
+
+    if( ( bu[0x80062c00] - 1 ) >= 2 )
+    {
+        return 0xe3000000 | ((y & 0x03ff) << a) | (x & 0x03ff);
+    }
+    else
+    {
+        return 0xe3000000 | ((y & 0x0fff) << c) | (x & 0x0fff);
+    }
 }
-else
+
+
+
+void system_gpu_set_drawing_area_bottom_right( s16 x, s16 y )
 {
-    return e3000000 | ((y & 0fff) << c) | (x & 0fff);
+    width = h[0x80062c04] - 1;
+    height = h[0x80062c06] - 1;
+
+    x = ( x >= 0 ) > ( ( width < x ) ? width : x ) : 0;
+    y = ( y >= 0 ) > ( ( height < y ) ? height : y ) : 0;
+
+    if( ( bu[0x80062c00] - 1 ) >= 2 )
+    {
+        return 0xe4000000 | ((y & 0x03ff) << 0xa) | (x & 0x03ff);
+    }
+    else
+    {
+        return 0xe4000000 | ((y & 0x0fff) << 0xc) | (x & 0x0fff);
+    }
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// system_gpu_set_drawing_area_bottom_right()
-
-x = (A0 << 10) >> 10;
-y = (A1 << 10) >> 10;
-
-width = h[80062c04] - 1;
-height = h[80062c06] - 1;
-
-x = ( x >= 0 ) > ( ( width < x ) ? width : x ) : 0;
-y = ( y >= 0 ) > ( ( height < y ) ? height : y ) : 0;
-
-if( bu[80062c00] - 1 >= 2 )
+void system_gpu_set_drawing_offset( s16 x, s16 y )
 {
-    return e4000000 | ((A1 & 03ff) << a) | (x & 03ff);
+    if( ( bu[0x80062c00] - 1 ) >= 2 )
+    {
+        return 0xe5000000 | ((y & 0x07ff) << 0xb) | (x & 0x07ff);
+    }
+    else
+    {
+        return 0xe5000000 | ((y & 0x0fff) << 0xc) | (x & 0x0fff);
+    }
 }
-else
-{
-    return e4000000 | ((A1 & 0fff) << c) | (x & 0fff);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_gpu_set_drawing_offset()
-
-if( ( bu[80062c00] - 1 ) >= 2 )
-{
-    return e5000000 | ((A1 & 07ff) << 0b) | (A0 & 07ff);
-}
-else
-{
-    return e5000000 | ((A1 & 0fff) << 0c) | (A0 & 0fff);
-}
-////////////////////////////////
 
 
 

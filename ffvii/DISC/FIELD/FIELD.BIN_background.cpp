@@ -245,7 +245,7 @@ while( true )
     {
         // add draw mode
         V1 = h[block1 + 2];
-        addPrim( render_data + 0x3ffc, render_data + 0x124dc + V1 * 0xc ); // macross addPrim( ot, p )
+        ADDPRIM( render_data + 0x3ffc, render_data + 0x124dc + V1 * 0xc );
     }
     else
     {
@@ -260,7 +260,7 @@ while( true )
                 if( ( ( h[80071a48] - 150 ) < x ) && ( x < h[80071a48] ) )
                 {
                     // add to the bottom bepth
-                    addPrim( render_data + 0x3ffc, render_data + 0x4914 + T3 * 0x10 ); // macross addPrim( ot, p )
+                    ADDPRIM( render_data + 0x3ffc, render_data + 0x4914 + T3 * 0x10 );
                 }
 
                 T3 += 1;
@@ -292,9 +292,9 @@ while( true )
             if( ( h[80071a48] - 150 < x ) && ( x < h[80071a48] ) && ( ( V0 == 0 ) || ( ( bu[8009ace6 + V0] & bu[render_data + 10d54 + T3 * 2 + 1] ) != 0 ) ) )
             {
                 depth = (bu[render_data + 4914 + T3 * 10 + 5] << 8) + (bu[render_data + 4914 + T3 * 10 + 4]);
-                addPrim( render_data + depth * 4, render_data + 0x4914 + T3 * 0x10 ); // macross addPrim( ot, p )
+                ADDPRIM( render_data + depth * 4, render_data + 0x4914 + T3 * 0x10 );
                 V0 = T3 - h[0x8011448c];
-                addPrim( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc ); // macross addPrim( ot, p )
+                ADDPRIM( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc );
             }
 
             T3 += 1;
@@ -306,88 +306,88 @@ while( true )
 
 // background dynamic 3rd layer
 depth = hu[0x8009abf4 + 0xb0];
-addPrim( render_data + depth * 4, render_data + 4294 ); // macross addPrim( ot, p )
+ADDPRIM( render_data + depth * 4, render_data + 4294 );
 
 while( true )
 {
     V1 = h[block1 + 0];
-    if( V1 == 7fff )
+    if( V1 == 0x7fff )
     {
-        addPrim( render_data + depth * 4, render_data + 0x4214 ); // macross addPrim( ot, p )
+        ADDPRIM( render_data + depth * 4, render_data + 0x4214 );
         block1 += 2;
         break;
     }
-    else if( V1 == 7ffe )
+    else if( V1 == 0x7ffe )
     {
-        V0 = h[block1 + 2] + h[801144d0];
-        addPrim( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc ); // macross addPrim( ot, p )
+        V0 = h[block1 + 0x2] + h[0x801144d0];
+        ADDPRIM( render_data + depth * 0x4, render_data + 0x124dc + V0 * 0xc );
     }
     else
     {
         T3 = h[block1 + 2];
 
-        for( int i = h[block1 + 4]; i != 0; --i )
+        for( int i = h[block1 + 0x4]; i != 0; --i )
         {
-            A0 = h[render_data + 1e55c + T3 * 14];
-            A1 = h[render_data + 1e55c + T3 * 14];
+            A0 = h[render_data + 0x1e55c + T3 * 0x14];
+            A1 = h[render_data + 0x1e55c + T3 * 0x14];
 
-            if( ( (h[80071a4c] - 160) >= A0 ) || ( A0 >= h[80071a4c] ) )
+            if( ( (h[0x80071a4c] - 0x160) >= A0 ) || ( A0 >= h[0x80071a4c] ) )
             {
-                if( A0 < (h[80071a4c] - a0) )
+                if( A0 < (h[0x80071a4c] - a0) )
                 {
-                    [render_data + 1e55c + T3 * 14] = h(A1 + hu[offset_to_triggers + 18]);
+                    [render_data + 0x1e55c + T3 * 0x14] = h(A1 + hu[offset_to_triggers + 0x18]);
                 }
                 else
                 {
-                    [render_data + 1e55c + T3 * 14] = h(A1 - hu[offset_to_triggers + 18]);
+                    [render_data + 0x1e55c + T3 * 0x14] = h(A1 - hu[offset_to_triggers + 0x18]);
                 }
             }
 
-            A0 = h[render_data + e55e + T3 * 14];
-            A1 = h[render_data + e55e + T3 * 14];
+            A0 = h[render_data + 0xe55e + T3 * 0x14];
+            A1 = h[render_data + 0xe55e + T3 * 0x14];
 
-            if( ( (h[80071a4e] - 100) >= A0 ) || ( A0 >= h[80071a4e] ) )
+            if( ( (h[0x80071a4e] - 0x100) >= A0 ) || ( A0 >= h[0x80071a4e] ) )
             {
-                if( A0 < (h[80071a4e] - 70) )
+                if( A0 < (h[0x80071a4e] - 0x70) )
                 {
-                    [render_data + e55e + T3 * 14] = h(A1 + hu[offset_to_triggers + 1a]);
+                    [render_data + 0xe55e + T3 * 0x14] = h(A1 + hu[offset_to_triggers + 0x1a]);
                 }
                 else
                 {
-                    [render_data + e55e + T3 * 14] = h(A1 - hu[offset_to_triggers + 1a]);
+                    [render_data + 0xe55e + T3 * 0x14] = h(A1 - hu[offset_to_triggers + 0x1a]);
                 }
             }
 
-            V0 = T3 + h[801144c8];
-            V0 = bu[render_data + 0x10d54 + V0 * 2 + 0] & 3f;
+            V0 = T3 + h[0x801144c8];
+            V0 = bu[render_data + 0x10d54 + V0 * 0x2 + 0x0] & 0x3f;
 
-            if( ( V0 == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 0x10d54 + V0 * 2 + 1] ) )
+            if( ( V0 == 0 ) || ( bu[0x8009ace6 + V0] & bu[render_data + 0x10d54 + V0 * 0x2 + 0x1] ) )
             {
-                addPrim( render_data + depth * 4, render_data + 0xe554 + T3 * 0x14 ); // macross addPrim( ot, p )
+                ADDPRIM( render_data + depth * 0x4, render_data + 0xe554 + T3 * 0x14 );
             }
 
             T3 += 1;
         }
     }
 
-    block1 += 6;
+    block1 += 0x6;
 }
 
 // background dynamic 4th layer
 depth = hu[8009abf4 + ae];
-addPrim( render_data + depth * 4, render_data + 0x42d4 ); // macross addPrim( ot, p )
+ADDPRIM( render_data + depth * 4, render_data + 0x42d4 );
 
 while( true )
 {
     if( h[block1] == 7fff )
     {
-        addPrim( render_data + depth * 4, render_data + 0x4254 ); // macross addPrim( ot, p )
+        ADDPRIM( render_data + depth * 4, render_data + 0x4254 );
         break;
     }
     else if( V1 == 7ffe )
     {
         V0 = h[block1 + 2] + h[801144d0];
-        addPrim( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc ); // macross addPrim( ot, p )
+        ADDPRIM( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc );
     }
     else
     {
@@ -416,7 +416,7 @@ while( true )
 
                 if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 0x10d54 + V1 * 2 + 1] ) )
                 {
-                    addPrim( render_data + depth * 4, render_data + 0xe554 + T3 * 0x14 ); // macross addPrim( ot, p )
+                    ADDPRIM( render_data + depth * 4, render_data + 0xe554 + T3 * 0x14 );
                 }
             }
 
