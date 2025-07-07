@@ -167,7 +167,6 @@ void funca72c0()
     system_psyq_draw_otag_env( ot, env );
 
     [struct1c + 0x8] = b(bu[struct1c + 0x8] ^ 0x1);
-
     func2c0dc( bu[struct1c + 0x8] );
 }
 
@@ -1080,28 +1079,17 @@ V0 = V0 ^ A0;
 800A82A8	jr     ra 
 V0 = 0 < V0;
 ////////////////////////////////
-// funca82b0
-800A82B0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A82B8	jal    $func2f810
-800A82BC	nop
-V0 = V0 & 00ff;
-800A82C4	bne    v0, zero, La82e0 [$800a82e0]
-V0 = bu[800ab308];
-800A82D0	nop
-V0 = V0 ^ 0001;
-800A82D8	j      La82e4 [$800a82e4]
-V0 = V0 < 0001;
 
-La82e0:	; 800A82E0
-V0 = 0;
 
-La82e4:	; 800A82E4
-RA = w[SP + 0010];
-800A82E8	nop
-800A82EC	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
+
+bool funca82b0()
+{
+    if( func2f810() == 0 )
+    {
+        return (bu[0x800ab308] ^ 0x1) < 0x1;
+    }
+    return 0;
+}
 
 
 
@@ -2044,8 +2032,6 @@ bool funca9220()
 
     funca9968();
 
-    S7 = 0x800ab3b8;
-
     La9288:	; 800A9288
         funca9b14();
 
@@ -2085,30 +2071,16 @@ bool funca9220()
 
             case 0x1:
             {
-                V0 = bu[struct1c + 0x8];
-
-                800A93A8	beq    v0, zero, La93b4 [$800a93b4]
-                A1 = 0001;
-                A1 = 0002;
-
-                La93b4:	; 800A93B4
-                A0 = 0;
-                800A93B8	addiu  v0, a1, $ffff (=-$1)
-                V0 = V0 << 01;
-                V0 = V0 + S7;
-                [V0 + 0000] = h(0x7);
-                V0 = A1 << 01;
-                V0 = V0 + S7;
-                [V0 + 0000] = h(0x10);
+                A1 = ( bu[struct1c + 0x8] != 0 ) ? 2: 1;
+                V0 = A1 - 1;
+                [0x800ab3b8 + V0 * 2] = h(0x7);
+                [0x800ab3b8 + A1 * 2] = h(0x10);
                 [struct + 0x9] = b(0x4);
-                system_psyq_draw_sync();
 
-                A0 = 1;
-                A1 = SP + 0x18;
-                func1999b4();
+                system_psyq_draw_sync( 0 );
 
+                func1999b4( 1, SP + 0x18 );
                 func19a5b0( 1 );
-
                 func19ac3c( 0x800a9dd4 ); // funca9dd4()
 
                 [0x800ab2ce] = h(hu[0x80071e34]);
@@ -2121,262 +2093,177 @@ bool funca9220()
 
             case 0x2:
             {
-                V0 = hu[0x800ab2c4] & 0x0010;
-                800A9438	beq    v0, zero, La98b0 [$800a98b0]
-
-                func12ad4();
-
-                V0 = V0 & 0002;
-                800A944C	beq    v0, zero, La98b0 [$800a98b0]
-                800A9450	nop
-                800A9454	jal    $80199f30
-                A0 = 0;
-                800A945C	jal    $8019ad0c
-                S0 = V0;
-                800A9464	beq    s0, zero, La94a4 [$800a94a4]
-                S5 = V0;
-                V0 = bu[struct1c + 0008];
-                V0 = V0 ^ 0001;
-                V0 = V0 << 02;
-                V1 = struct1c + V0;
-                A0 = w[V1 + 0x10] + 0x3ffc;
-                system_psyq_draw_otag();
-
-                800A949C	j      La950c [$800a950c]
-                800A94A0	lui    v0, $8007
-
-                La94a4:	; 800A94A4
-                800A94A4	addiu  v0, zero, $ffff (=-$1)
-                800A94A8	bne    s2, v0, La950c [$800a950c]
-                800A94AC	lui    v0, $8007
-                V0 = bu[struct1c + 0008];
-                800A94C8	bne    v0, zero, La950c [$800a950c]
-                800A94CC	lui    v0, $8007
-
-                V0 = hu[0x800ab2c4] & 0x0020;
-                800A94DC	bne    v0, zero, La950c [$800a950c]
-                800A94E0	lui    v0, $8007
-                V1 = bu[struct1c + 0008];
-                800A94E8	nop
-                V0 = V1 << 02;
-                V0 = V0 + V1;
-                V1 = w[struct + 0xc];
-                V0 = V0 << 02;
-                V0 = V0 + V1;
-                V1 = 01e0;
-                [V0 + 0000] = h(V1);
-                800A9508	lui    v0, $8007
-
-                La950c:	; 800A950C
-                V1 = w[V0 + 1e34];
-                800A9510	nop
-                V0 = V1 < S5;
-                800A9518	beq    v0, zero, La953c [$800a953c]
-                800A951C	nop
-                V0 = hu[0x800ab2ce];
-                800A9524	nop
-                V0 = V0 < V1;
-                800A952C	beq    v0, zero, La953c [$800a953c]
-                800A9530	nop
-                800A9534	bne    s2, zero, La9650 [$800a9650]
-                800A9538	nop
-
-                La953c:	; 800A953C
-                V0 = hu[0x800ab2c4] & 0x0040;
-                800A9548	bne    v0, zero, La9650 [$800a9650]
-
-                800A9550	bne    s2, zero, La95cc [$800a95cc]
-                800A9554	lui    v0, $8007
-                800A9558	jal    $8019aaf8
-
-                func23018();
-
-                V0 = w[struct1c + 0x0];
-                800A957C	lui    v1, $2000
-                V0 = V0 & V1;
-                800A9584	bne    v0, zero, La95cc [$800a95cc]
-                800A9588	lui    v0, $8007
-                A0 = 0;
-                A1 = 7003a;
-                A2 = A0;
-                A3 = A0;
-                800A95A0	jal    funca799c [$800a799c]
-                [SP + 0010] = w(0);
-                A0 = c401;
-                A1 = 7003a;
-                A2 = 005a;
-                A3 = 0;
-                V0 = 007f;
-                800A95C0	jal    funca799c [$800a799c]
-                [SP + 0010] = w(V0);
-                800A95C8	lui    v0, $8007
-
-                La95cc:	; 800A95CC
-                V1 = hu[0x800ab2ce];
-                V0 = w[V0 + 1e34];
-                800A95D4	nop
-                V1 = V1 < V0;
-                800A95DC	bne    v1, zero, La963c [$800a963c]
-                V0 = 0007;
-                [0x800ab2c4] = h(hu[0x800ab2c4] & 0xfff8);
-                V0 = bu[struct1c + 0x8];
-                800A9600	bne    v0, zero, La9624 [$800a9624]
-                V1 = V0;
-                V0 = V1 << 02;
-                V0 = V0 + V1;
-                V1 = w[struct + 0xc];
-                V0 = V0 << 02;
-                V0 = V0 + V1;
-                V1 = 01e0;
-                [V0 + 0000] = h(V1);
-
-                La9624:	; 800A9624
-                A0 = 0x800a706c; // "Fr: %d\n"
-                A1 = hu[0x800ab2ce];
-                system_bios_printf();
-
-                800A9634	j      La9640 [$800a9640]
-                800A9638	nop
-
-                La963c:	; 800A963C
-                [S7 + 0008] = h(V0);
-
-                La9640:	; 800A9640
-                [0x800ab2c4] = h(hu[0x800ab2c4] | 0x0040);
-
-                La9650:	; 800A9650
-                if( ( hu[0x800ab2c4] & 0x0100 ) == 0 )
+                if( hu[0x800ab2c4] & 0x0010 )
                 {
-                    if( w[0x80071e34] > 0 )
+                    if( func12ad4() & 0x02 )
                     {
+                        S0 = func199f30( 0 );
+                        S5 = func19ad0c();
 
-                        funca799c( 0, 0x7003a, 0, 0, 0 );
+                        if( S0 != 0 )
+                        {
+                            V0 = bu[struct1c + 0x8] ^ 0x1;
+                            system_psyq_draw_otag( w[struct1c + 0x10 + V0 * 0x4] + 0x3ffc );
+                        }
+                        else
+                        {
+                            if( S2 == -1 )
+                            {
+                                if( bu[struct1c + 0x8] == 0 )
+                                {
+                                    if( ( hu[0x800ab2c4] & 0x0020 ) == 0 )
+                                    {
+                                        V0 = w[struct + 0xc] + bu[struct1c + 0x8] * 0x14;
+                                        [V0 + 0x0] = h(0x1e0);
+                                    }
+                                }
+                            }
+                        }
 
-                        [0x800ab2c4] = h(hu[0x800ab2c4] | 0x0100);
+                        if( ( w[0x80071e34] >= S5 ) || ( hu[0x800ab2ce] >= w[0x80071e34] ) || ( S2 == 0 ) )
+                        {
+                            if( ( hu[0x800ab2c4] & 0x0040 ) == 0 )
+                            {
+                                if( S2 == 0 )
+                                {
+                                    func19aaf8();
+
+                                    func23018();
+
+                                    if( ( w[struct1c + 0x0] & 0x20000000 ) == 0 )
+                                    {
+                                        funca799c( 0, 0x7003a, 0, 0, 0 );
+                                        funca799c( 0xc401, 0x7003a, 0x5a, 0, 0x7f );
+                                    }
+                                }
+
+                                if( hu[0x800ab2ce] >= w[0x80071e34] )
+                                {
+                                    [0x800ab2c4] = h(hu[0x800ab2c4] & 0xfff8);
+
+                                    V0 = bu[struct1c + 0x8];
+                                    if( V0 == 0 )
+                                    {
+                                        V0 = w[struct + 0xc] + V0 * 0x14;
+                                        [V0 + 0x0] = h(0x1e0);
+                                    }
+
+                                    A0 = 0x800a706c; // "Fr: %d\n"
+                                    A1 = hu[0x800ab2ce];
+                                    system_bios_printf();
+                                }
+                                else
+                                {
+                                    [0x800ab3b8 + 0x8] = h(0x7);
+                                }
+
+                                [0x800ab2c4] = h(hu[0x800ab2c4] | 0x0040);
+                            }
+                        }
+
+                        if( ( hu[0x800ab2c4] & 0x0100 ) == 0 )
+                        {
+                            if( w[0x80071e34] > 0 )
+                            {
+                                funca799c( 0, 0x7003a, 0, 0, 0 );
+
+                                [0x800ab2c4] = h(hu[0x800ab2c4] | 0x0100);
+                            }
+                        }
+
+                        if( ( hu[0x800ab2c4] & 0x0020 ) == 0 )
+                        {
+                            if( w[0x80073990] & 0x4008 )
+                            {
+                                if( w[0x80071e34] < S5 )
+                                {
+                                    [0x800ab2cc] = b(1);
+
+                                    func19a5b0( 0 );
+
+                                    V1 = ( bu[struct1c + 0x8] != 0 ) ? 0x2: 0x4;
+
+                                    S2 = 0x6;
+                                    [0x800ab3b8 + V1 + 0x8] = h(0x2);
+
+                                    func320b8( 1, 1, 0, 0 );
+                                    func320b8( 1, 1, S2, 0xffffff );
+
+                                    [0x80073998] = w(-1);
+                                    [0x800ab2c4] = h(hu[0x800ab2c4] | 0x0020);
+                                }
+                            }
+                        }
+
+                        [0x800ab2ce] = h(hu[0x80071e34]);
+
+                        if( ( hu[0x800ab2c4] & 0x0002 ) == 0 )
+                        {
+                            if( S2 != -1 )
+                            {
+                                S2 = S2 + V0;
+                            }
+                        }
                     }
                 }
-
-                V0 = hu[0x800ab2c4] & 0x0020;
-                800A96A8	bne    v0, zero, La9764 [$800a9764]
-                800A96AC	lui    v0, $8007
-                V0 = w[80073990];
-                800A96B8	nop
-                V0 = V0 & 4008;
-                800A96C0	beq    v0, zero, La9760 [$800a9760]
-                V0 = w[80071e34];
-                800A96CC	nop
-                V0 = V0 < S5;
-                800A96D4	beq    v0, zero, La9760 [$800a9760]
-                A0 = 0;
-                V0 = 0001;
-                800A96E0	jal    $8019a5b0
-                [0x800ab2cc] = b(V0);
-                V0 = bu[struct1c + 0x8];
-                800A96FC	nop
-                800A9700	beq    v0, zero, La970c [$800a970c]
-                V1 = 0004;
-                V1 = 0002;
-
-                La970c:	; 800A970C
-                S2 = 0006;
-                V1 = V1 + S7;
-                [V1 + 0008] = h(2);
-
-                func320b8( 1, 1, 0, 0 );
-                func320b8( 1, 1, S2, 0xffffff );
-
-                800A9748	lui    a0, $8007
-
-                [A0 + 3998] = w(-1);
-                [0x800ab2c4] = h(hu[0x800ab2c4] | 0x0020);
-
-                La9760:	; 800A9760
-                800A9760	lui    v0, $8007
-
-                La9764:	; 800A9764
-                V1 = hu[V0 + 1e34];
-                V0 = hu[0x800ab2c4] & 0x0002;
-                800A9774	bne    v0, zero, La98b0 [$800a98b0]
-                [0x800ab2ce] = h(V1);
-                800A977C	addiu  v0, zero, $ffff (=-$1)
-                800A9780	beq    s2, v0, La98b0 [$800a98b0]
-                800A9784	nop
-                800A9788	j      La98b0 [$800a98b0]
-                S2 = S2 + V0;
             }
             break;
 
             case 0x3:
             {
-                V0 = hu[0x800ab2c4] & 0x0080;
-                800A979C	beq    v0, zero, La98b0 [$800a98b0]
+                if( hu[0x800ab2c4] & 0x0080 )
+                {
+                    if( func22b18() == 0 )
+                    {
+                        [struct + 0x9] = b(0);
 
-                func22b18();
+                        S2 = 0x4ec;
+                        V1 = w[struct + 0xc];
+                        [V1 + 0x0] = h(0x140);
+                        [V1 + 0x14] = h(0);
+                        [0x80073998] = w(0);
 
-                800A97AC	bne    v0, zero, La98b0 [$800a98b0]
+                        funca82f4( bu[0x800ab2cc] );
+                        funca812c( 1 );
 
-                [struct + 0x9] = b(0);
-                A0 = bu[0x800ab2cc];
-                V1 = w[struct + 0xc];
-                V0 = 0140;
-                [V1 + 0000] = h(V0);
-                V0 = w[struct + 0xc];
-                S2 = 04ec;
-                [V0 + 0014] = h(0);
-                800A97E0	lui    v0, $8007
-                800A97E4	jal    funca82f4 [$800a82f4]
-                [V0 + 3998] = w(0);
-                A0 = 0001;
-                800A97EC	jal    funca812c [$800a812c]
-
-                [0x800ab3c8] = w(0x4);
-                800A97F8	j      La98b0 [$800a98b0]
+                        [0x800ab3c8] = w(0x4);
+                    }
+                }
             }
             break;
 
             case 0x4:
             {
-                V0 = hu[0x800ab2c4] & 0x1000;
-                800A980C	bne    v0, zero, La9868 [$800a9868]
+                if( ( hu[0x800ab2c4] & 0x1000 ) == 0 )
+                {
+                    if( funca82b0() != 0 )
+                    {
+                        if( S2 < 0x5b )
+                        {
+                            func320b8( 1, 1, 0, 0 );
+                            func320b8( 1, 1, 0x5a, 0xffffff );
 
-                funca82b0();
+                            [0x800ab2c4] = h(hu[0x800ab2c4] | 0x1000);
+                        }
+                    }
+                }
 
-                V0 = V0 & 00ff;
-                800A9820	beq    v0, zero, La9868 [$800a9868]
-                V0 = S2 < 005b;
-                800A9828	beq    v0, zero, La9868 [$800a9868]
+                if( S2 == 0 )
+                {
+                    if( w[0x800ab3c8] != 0x6 )
+                    {
+                        [0x800ab3c8] = w(0x5);
+                    }
+                }
 
-                func320b8( 1, 1, 0, 0 );
-                func320b8( 1, 1, 0x5a, 0xffffff );
-
-                [0x800ab2c4] = h(hu[0x800ab2c4] | 0x1000);
-
-                La9868:	; 800A9868
-                800A9868	bne    s2, zero, La9884 [$800a9884]
-                V0 = 0006;
-                V1 = w[0x800ab3c8];
-                800A9874	nop
-                800A9878	beq    v1, v0, La9884 [$800a9884]
-                V0 = 0005;
-                [0x800ab3c8] = w(V0);
-
-                La9884:	; 800A9884
-                V0 = hu[0x800ab2c4] & 0x1000;
-                800A9890	bne    v0, zero, La98ac [$800a98ac]
-                800A9894	nop
-                800A9898	jal    funca82b0 [$800a82b0]
-                800A989C	nop
-                V0 = V0 & 00ff;
-                800A98A4	beq    v0, zero, La98b0 [$800a98b0]
-                800A98A8	nop
-
-                La98ac:	; 800A98AC
-                800A98AC	addiu  s2, s2, $ffff (=-$1)
+                if( ( hu[0x800ab2c4] & 0x1000 ) || ( funca82b0() != 0 )
+                {
+                    S2 -= 1;
+                }
             }
             break;
         }
 
-        La98b0:	; 800A98B0
         if( ( hu[0x800ab2c4] & 0x0001 ) == 0 )
         {
             funca808c();
@@ -2398,7 +2285,7 @@ bool funca9220()
         V0 = w[0x800ab3c8] < 0x5;
     800A9924	bne    v0, zero, La9288 [$800a9288]
 
-    V0 = (w[0x800ab3c8] ^ 0x6) < 0x1;
+    return (w[0x800ab3c8] ^ 0x6) < 0x1;
 }
 
 
@@ -2480,123 +2367,58 @@ void funca9b14()
 
 void funca9b58()
 {
+    u32 struct = w[0x8006794c];
+    u32 struct1c = w[struct + 0x1c];
+    u8 fb = bu[struct1c + 0x8];
+
     system_psyq_draw_sync( 0 );
 
-    func12ad4();
+    if( func12ad4() & 0x02 )
+    {
+        if( w[0x80071e34] == 0 )
+        {
+            [struct + 0x9] = b(0x4);
+        }
+        else
+        {
+            A0 = w[0x80071e34];
+            V0 = 51eb851f;
+            800A9B94	mult   a0, v0
+            V0 = A0 >> 1f;
+            800A9B9C	mfhi   t2
+            V1 = T2 >> 04;
+            V1 = V1 - V0;
 
-    V0 = V0 & 0002;
-    800A9B78	beq    v0, zero, La9be8 [$800a9be8]
-    A0 = w[80071e34];
-    800A9B84	nop
-    800A9B88	beq    a0, zero, La9bd4 [$800a9bd4]
-    V0 = 51eb851f;
-    800A9B94	mult   a0, v0
-    V0 = A0 >> 1f;
-    800A9B9C	mfhi   t2
-    V1 = T2 >> 04;
-    V1 = V1 - V0;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V0 = V0 << 01;
-    800A9BBC	bne    a0, v0, La9bd8 [$800a9bd8]
-    V1 = w[8006794c];
-    V0 = 0003;
-    800A9BCC	j      La9bf8 [$800a9bf8]
-    [V1 + 0009] = b(V0);
+            if( A0 != ( V1 * 0x32 ) )
+            {
+                [struct + 0x9] = b(0x4);
+            }
+            else
+            {
+                [struct + 0x9] = b(0x3);
+            }
+        }
+    }
+    else
+    {
+        [struct + 0x9] = b(0);
+    }
 
-    La9bd4:	; 800A9BD4
-    800A9BD4	lui    v0, $8006
-
-    La9bd8:	; 800A9BD8
-    V1 = w[V0 + 794c];
-    V0 = 0004;
-    800A9BE0	j      La9bf8 [$800a9bf8]
-    [V1 + 0009] = b(V0);
-
-    La9be8:	; 800A9BE8
-    V0 = w[8006794c];
-    800A9BF0	nop
-    [V0 + 0009] = b(0);
-
-    La9bf8:	; 800A9BF8
-    V0 = w[8006794c];
-    800A9C00	nop
-    A0 = bu[V0 + 0009];
-    system_psyq_vsync();
-
+    system_psyq_vsync( bu[struct + 0x9] );
     system_psyq_reset_graph( 1 );
+    system_psyq_put_dispenv( w[struct + 0xc] + fb * 0x14 );
 
-    V1 = w[S0 + 794c];
-    800A9C1C	nop
-    V0 = w[V1 + 001c];
-    800A9C24	nop
-    V0 = bu[V0 + 0008];
-    800A9C2C	nop
-    A0 = V0 << 02;
-    A0 = A0 + V0;
-    V0 = w[V1 + 000c];
-    A0 = A0 << 02;
-    A0 = V0 + A0;
-    system_psyq_put_dispenv();
+    if( hu[0x800ab2c4] & 0x0004 )
+    {
+        system_psyq_put_drawenv( w[struct + 0x10] + fb * 0x5c );
+    }
+    else
+    {
+        system_psyq_draw_otag_env( w[struct1c + 0x10 + fb * 4] + 0x3ffc, w[struct + 0x10] + fb * 0x5c );
+    }
 
-    V0 = hu[0x800ab2c4] & 0x0004;
-    800A9C58	beq    v0, zero, La9ca0 [$800a9ca0]
-
-    V1 = w[S0 + 794c];
-    800A9C64	nop
-    V0 = w[V1 + 001c];
-    800A9C6C	nop
-    V0 = bu[V0 + 0008];
-    800A9C74	nop
-    A0 = V0 << 01;
-    A0 = A0 + V0;
-    A0 = A0 << 03;
-    A0 = A0 - V0;
-    V0 = w[V1 + 0010];
-    A0 = A0 << 02;
-    800A9C90	jal    $system_psyq_put_drawenv
-    A0 = V0 + A0;
-    800A9C98	j      La9cec [$800a9cec]
-    800A9C9C	lui    a0, $8006
-
-    La9ca0:	; 800A9CA0
-    A3 = w[S0 + 794c];
-    800A9CA4	nop
-    V0 = w[A3 + 001c];
-    800A9CAC	nop
-    A2 = bu[V0 + 0008];
-    800A9CB4	nop
-    V1 = A2 << 02;
-    V0 = V0 + V1;
-    A1 = A2 << 01;
-    A1 = A1 + A2;
-    A1 = A1 << 03;
-    A1 = A1 - A2;
-    A1 = A1 << 02;
-    A0 = w[V0 + 0010];
-    V0 = w[A3 + 0010];
-    A0 = A0 + 3ffc;
-    800A9CE0	jal    $system_psyq_draw_otag_env
-    A1 = V0 + A1;
-    800A9CE8	lui    a0, $8006
-
-    La9cec:	; 800A9CEC
-    V0 = w[A0 + 794c];
-    800A9CF0	nop
-    V1 = w[V0 + 001c];
-    800A9CF8	nop
-    V0 = bu[V1 + 0008];
-    800A9D00	nop
-    V0 = V0 ^ 0001;
-    [V1 + 0008] = b(V0);
-    V0 = w[A0 + 794c];
-    800A9D10	nop
-    V0 = w[V0 + 001c];
-    800A9D18	nop
-    A0 = bu[V0 + 0008];
-    func2c0dc();
+    [struct1c + 0x8] = b(bu[struct1c + 0x8] ^ 0x1);
+    func2c0dc( bu[struct1c + 0x8] );
 
     [0x800ab2c4] = h((hu[0x800ab2c4] | hu[0x800ab3b8 + 0x0]) & ~hu[0x800ab3b8 + 0x8]);
 
@@ -3270,7 +3092,6 @@ void funcab0e0()
     system_psyq_draw_otag_env( ot, env );
 
     [struct1c + 0x8] = b(bu[struct1c + 0x8] ^ 0x1);
-
     func2c0dc( bu[struct1c + 0x8] );
 }
 

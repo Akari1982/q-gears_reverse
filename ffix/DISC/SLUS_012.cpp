@@ -18150,7 +18150,7 @@ u8 func2f800()
 
 
 
-u8 func2f810()
+bool func2f810()
 {
     if( bu[0x80077c78 + 0x2] == 0 )
     {
