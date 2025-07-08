@@ -302,9 +302,9 @@ void field_main()
             V1 = w[800716c4];
             [8009abf4 + 16] = h(hu[V1 + a]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
 
-            A0 = 8009abf4; // start of game data
-            A1 = 80074ea4;
-            V1 = w[8007eb64]; // events pointer to pointer
+            A0 = 0x8009abf4; // start of game data
+            A1 = 0x80074ea4;
+            V1 = w[0x8007eb64]; // events pointer to pointer
             A2 = w[V1]; // events pointer
             field_init_structs_events_actors();
 
@@ -510,19 +510,8 @@ void field_main_loop()
         funca5fb4(); // move PC model position init by walkmesh
     }
 
-    render_data = 0x800e4df0;
-
-    A0 = render_data + 0 * 0x1789c + 0x4914; // draft 1st and 2nd layer
-    A1 = render_data + 0 * 0x1789c + 0xe554; // draft 3rd and 4th layer
-    A2 = render_data + 0 * 0x1789c + 0x10d54; // animation packets data
-    A3 = render_data + 0 * 0x1789c + 0x124dc; // draw modes
-    field_background_init_packets(); // we read dat background data here
-
-    A0 = render_data + 1 * 0x1789c + 0x4914; // draft 1st and 2nd layer
-    A1 = render_data + 1 * 0x1789c + 0xe554; // draft 3rd and 4th layer
-    A2 = render_data + 1 * 0x1789c + 0x10d54; // animation packets data
-    A3 = render_data + 1 * 0x1789c + 0x124dc; // draw modes
-    field_background_init_packets(); // we read dat background data here
+    field_background_init_packets( &g_field_render_data[0].bg_1, &g_field_render_data[0].bg_1, &g_field_render_data[0].bg_anim, &g_field_render_data[0].bg_dm );
+    field_background_init_packets( &g_field_render_data[1].bg_1, &g_field_render_data[1].bg_2, &g_field_render_data[1].bg_anim, &g_field_render_data[1].bg_dm );
 
     field_rain_init( &g_field_render_data[0] );
     field_rain_init( &g_field_render_data[1] );

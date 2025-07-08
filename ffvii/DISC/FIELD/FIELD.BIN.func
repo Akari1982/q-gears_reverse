@@ -286,11 +286,11 @@
 800CC8A8 0x7D DEC2!
 800CC944 0x99 RANDOM
 800CC9EC 0x7F RDMSD
-800CCA68 0xE0 BGON
-800CCB10 0xE1 BGOFF
-800CCBBC 0xE4 BGCLR
-800CCC3C 0xE2 BGROL
-800CCCC8 0xE3 BGROL2
+800CCA68 field_event_opcode_e0_bgon
+800CCB10 field_event_opcode_e1_bgoff
+800CCBBC field_event_opcode_e4_bgclr
+800CCC3C field_event_opcode_e2_bgrol
+800CCCC8 field_event_opcode_e3_bgrol
 800CCD54 field_event_opcode_f8_pmvie
 800CCE94 field_event_opcode_f9_movie
 800CCFE8 field_event_opcode_fa_mvief

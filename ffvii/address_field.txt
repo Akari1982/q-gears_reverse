@@ -328,7 +328,7 @@
     + 10 [][]     some z.
     + 12 [][]     some type (0, 1, 2, 3)
 
-8009abf4 field_struct. 8009c6e0 points here.
+0x8009abf4 field_struct. 8009c6e0 points here.
     + 00 []       render buffer id (there are 2 render buffers)
     + 01 []       some state
                     00 - normal field.

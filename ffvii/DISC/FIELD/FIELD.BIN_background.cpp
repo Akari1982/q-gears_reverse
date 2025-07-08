@@ -1,12 +1,18 @@
-void field_background_init_packets( poly1, poly2, anim, dr_mode_p )
+u16 g_bg2_dm_start; // 0x8011448c
+u16 g_bg3_dm_start; // 0x801144d0
+u16 g_bg3_anim_start;// 0x801144c8
+
+
+
+void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgId* bg_anim, DR_MODE* dm )
 {
     V0 = w[0x8009d848];
     background = w[V0];
 
     count1 = 0;
     count2 = 0;
-    [0x8011448c] = h(0);
-    [0x801144d0] = h(0);
+    g_bg2_dm_start = 0;
+    g_bg3_dm_start = 0;
 
     block1 = background + 10;
     coords = background + w[background + 0];
@@ -14,419 +20,375 @@ void field_background_init_packets( poly1, poly2, anim, dr_mode_p )
     coords2 = background + w[background + 8];
     coords3 = background + w[background + c];
 
-    // static low level bg
+    // background static 1st layer
     while( true )
     {
-        if( h[block1 + 0] == 0x7fff )
+        if( h[block1] == 0x7fff )
         {
-            block1 += 2;
+            block1 += 0x2;
             break;
         }
-        else if( h[block1 + 0] == 0x7ffe )
+        else if( h[block1] == 0x7ffe )
         {
-            // dfe, 0: drawing not allowed in display area
-            // dtd, 1: dithering on
-            system_psyq_set_draw_mode( dr_mode_p, 0, 1, hu[tpage], 0 );
-
+            system_psyq_set_draw_mode( dm, 0, 1, hu[tpage], 0 );
+            dm += 1;
             tpage += 0x2;
-            dr_mode_p += 0xc;
-
-            [0x8011448c] = h(hu[0x8011448c] + 1);
+            g_bg2_dm_start += 1;
         }
         else
         {
-            for( int i = h[block1 + 4]; i != 0; --i )
+            for( int i = h[block1 + 0x4]; i != 0; --i )
             {
-                [poly1 + 3] = b(3);
-                [poly1 + 4] = b(80);
-                [poly1 + 5] = b(80);
-                [poly1 + 6] = b(80);
-                [poly1 + 7] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
-                [poly1 + 8] = h(hu[coords + 0]); // x
-                [poly1 + a] = h(hu[coords + 2]); // y
-                [poly1 + c] = b(bu[coords + 4]); // u
-                [poly1 + d] = b(bu[coords + 5]); // v
-                [poly1 + e] = h(hu[coords + 6]); // clut
+                SETLEN( p1, 0x3 );
+                p1->r0 = 0x80;
+                p1->g0 = 0x80;
+                p1->b0 = 0x80;
+                p1->code = 0x7d; // Textured Rectangle, 16x16, opaque, raw-texture
+                p1->x0 = hu[coords + 0];
+                p1->y0 = hu[coords + 2];
+                p1->u0 = bu[coords + 4];
+                p1->v0 = bu[coords + 5];
+                p1->clut = hu[coords + 6];
+                p1 += 1;
+                coords += 0x8;
+
+                bg_anim += 1;
 
                 count1 += 1;
-                poly1 += 0x10;
-                coords += 0x8;
-                anim += 0x2;
-            }
-        }
-
-        block1 += 6;
-    }
-
-    [8011448c] = h(count1 - hu[8011448c]);
-
-    // static depth sorted bg
-    while( true )
-    {
-        if( h[block1 + 0] == 7fff )
-        {
-            block1 += 2;
-            break;
-        }
-
-        for( int i = h[block1 + 4]; i != 0; --i )
-        {
-            A0 = dr_mode_p;
-            A1 = 0;
-            A2 = 1;
-            A3 = hu[coords2 + 8]; // texture page settings
-            A4 = 0;
-            system_psyq_set_draw_mode();
-
-            [801144d0] = h(hu[801144d0] + 1);
-
-            [poly1 + 3] = b(3);
-            [poly1 + 7] = b(7d); // Textured Rectangle, 16x16, opaque, raw-texture
-
-            if( hu[coords2 + c] & 80 ) [poly1 + 7] = b(7f); // Textured Rectangle, 16x16, semi-transparent, raw-texture
-
-            [poly1 + 4] = h(hu[coords2 + a]); // distance
-            [poly1 + 6] = b(80);
-            [poly1 + 8] = h(hu[coords2 + 0]); // x
-            [poly1 + a] = h(hu[coords2 + 2]); // y
-            [poly1 + c] = b(bu[coords2 + 4]); // u
-            [poly1 + d] = b(bu[coords2 + 5]); // x
-            [poly1 + e] = h(hu[coords2 + 6]); // clut
-
-            [anim + 0] = b(bu[coords2 + c]); // animation
-            [anim + 1] = b(bu[coords2 + d]); // index
-
-            count1 += 1;
-            poly1 += 0x10;
-            coords2 += 0xe;
-            dr_mode_p += 0xc;
-            anim += 0x2;
-        }
-
-        block1 += 0x6;
-    }
-
-    [801144c8] = h(count1);
-
-    // dynamic layer 1
-    while( true )
-    {
-        if( h[block1 + 0] == 7fff )
-        {
-            block1 += 2;
-            break;
-        }
-        else if( h[block1 + 0] == 7ffe )
-        {
-            A0 = dr_mode_p;
-            A1 = 0;
-            A2 = 1;
-            A3 = hu[tpage];
-            A4 = 0;
-            system_psyq_set_draw_mode();
-
-            dr_mode_p += c;
-            tpage += 2;
-        }
-        else
-        {
-            [block1 + 2] = h(count2);
-
-            for( int i = h[block1 + 4]; i != 0; --i )
-            {
-                [poly2 + 3] = b(4);
-                [poly2 + 7] = b(65); // Textured Rectangle, variable size, opaque, raw-texture
-
-                if( bu[coords3 + 8] & 80 ) [poly2 + 7] = b(67); // Textured Rectangle, variable size, semi-transp, raw-texture
-
-                [poly2 + 4] = b(80); // r
-                [poly2 + 5] = b(80); // g
-                [poly2 + 6] = b(80); // b
-                [poly2 + 8] = h(hu[coords3 + 0]); // x
-                [poly2 + a] = h(hu[coords3 + 2]); // y
-                [poly2 + c] = b(bu[coords3 + 4]); // u
-                [poly2 + d] = b(bu[coords3 + 5]); // x
-                [poly2 + e] = h(hu[coords3 + 6]); // clut
-                [poly2 + 10] = h(20); // w
-                [poly2 + 12] = h(20); // h
-
-                [anim + 0] = b(bu[coords3 + 8]); // animation
-                [anim + 1] = b(bu[coords3 + 9]); // index
-
-                count2 += 1;
-                poly2 += 0x14;
-                coords3 += 0xa;
-                anim += 0x2;
             }
         }
 
         block1 += 0x6;
     }
 
-    // dynamic layer 2
+    g_bg2_dm_start = count1 - g_bg2_dm_start;
+
+    // background 2nd layer with depth
     while( true )
     {
-        if( h[block1 + 0] == 0x7fff )
+        if( h[block1] == 0x7fff )
         {
+            block1 += 0x2;
             break;
         }
-        else if( h[block1 + 0] == 0x7ffe )
-        {
-            A0 = dr_mode_p;
-            A1 = 0;
-            A2 = 1;
-            A3 = hu[tpage];
-            A4 = 0;
-            system_psyq_set_draw_mode();
-
-            dr_mode_p += c;
-            tpage += 2;
-        }
-        else
-        {
-            [block1 + 2] = h(count2);
-
-            for( int i = h[block1 + 4]; i != 0; --i )
-            {
-                [poly2 + 3] = b(4);
-                [poly2 + 7] = b(65); // Textured Rectangle, variable size, opaque, raw-texture
-
-                V1 = w[0x8007ebd4];
-                if( bu[V1 + 8] & 80 ) [poly2 + 7] = b(67); // Textured Rectangle, variable size, semi-transp, raw-texture
-
-                [poly2 + 4] = b(80); // r
-                [poly2 + 5] = b(80); // g
-                [poly2 + 6] = b(80); // b
-                [poly2 + 8] = h(hu[V1 + 0]); // x
-                [poly2 + a] = h(hu[V1 + 2]); // y
-                [poly2 + c] = b(bu[V1 + 4]); // u
-                [poly2 + d] = b(bu[V1 + 5]); // v
-                [poly2 + e] = h(hu[V1 + 6]); // clut
-                [poly2 + 10] = h(20); // w
-                [poly2 + 12] = h(20); // h
-
-                [anim + 0] = b(bu[V1 + 8]); // animation
-                [anim + 1] = b(bu[V1 + 9]); // index
-
-                count2 += 1;
-                [0x8007ebd4] = w(w[0x8007ebd4] + 0xa);
-                poly2 += 0x14;
-                anim += 0x2;
-            }
-        }
-
-        block1 += 0x6;
-    }
-}
-
-
-
-////////////////////////////////
-// field_background_add_to_render()
-
-render_data = A0;
-
-V0 = w[8009d848];
-background = w[V0];
-
-offset_to_triggers = w[800716c4];
-
-block1 = background + 10;
-
-// background static 1st layer
-while( true )
-{
-    if( h[block1 + 0] == 7fff )
-    {
-        block1 += 2;
-        break;
-    }
-    else if( h[block1 + 0] == 7ffe )
-    {
-        // add draw mode
-        V1 = h[block1 + 2];
-        ADDPRIM( render_data + 0x3ffc, render_data + 0x124dc + V1 * 0xc );
-    }
-    else
-    {
-        if( ( ( h[80071a4a] - 100 ) < h[block1 + 0] ) && ( h[block1 + 0] < h[80071a4a] ) )
-        {
-            // 1st layer draft clip by x screen
-            T3 = hu[block1 + 2];
-            for( int i = h[block1 + 4]; i != 0; --i )
-            {
-                x = h[render_data + 4914 + T3 * 10 + 8];
-
-                if( ( ( h[80071a48] - 150 ) < x ) && ( x < h[80071a48] ) )
-                {
-                    // add to the bottom bepth
-                    ADDPRIM( render_data + 0x3ffc, render_data + 0x4914 + T3 * 0x10 );
-                }
-
-                T3 += 1;
-            }
-        }
-    }
-
-    block1 += 6;
-}
-
-// background 2nd layer
-while( true )
-{
-    if( h[block1 + 0] == 7fff )
-    {
-        block1 += 2;
-        break;
-    }
-
-    if( ( ( h[80071a4a] - 100 ) < h[block1 + 0] ) && ( h[block1 + 0] < h[80071a4a] ) )
-    {
-        T3 = h[block1 + 2];
-
-        for( int i = h[block1 + 4]; i != 0; --i )
-        {
-            x = h[render_data + 0x4914 + T3 * 10 + 8];
-            V0 = bu[render_data + 0x10d54 + T3 * 2 ] & 3f;
-
-            if( ( h[80071a48] - 150 < x ) && ( x < h[80071a48] ) && ( ( V0 == 0 ) || ( ( bu[8009ace6 + V0] & bu[render_data + 10d54 + T3 * 2 + 1] ) != 0 ) ) )
-            {
-                depth = (bu[render_data + 4914 + T3 * 10 + 5] << 8) + (bu[render_data + 4914 + T3 * 10 + 4]);
-                ADDPRIM( render_data + depth * 4, render_data + 0x4914 + T3 * 0x10 );
-                V0 = T3 - h[0x8011448c];
-                ADDPRIM( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc );
-            }
-
-            T3 += 1;
-        }
-    }
-
-    block1 += 6;
-}
-
-// background dynamic 3rd layer
-depth = hu[0x8009abf4 + 0xb0];
-ADDPRIM( render_data + depth * 4, render_data + 4294 );
-
-while( true )
-{
-    V1 = h[block1 + 0];
-    if( V1 == 0x7fff )
-    {
-        ADDPRIM( render_data + depth * 4, render_data + 0x4214 );
-        block1 += 2;
-        break;
-    }
-    else if( V1 == 0x7ffe )
-    {
-        V0 = h[block1 + 0x2] + h[0x801144d0];
-        ADDPRIM( render_data + depth * 0x4, render_data + 0x124dc + V0 * 0xc );
-    }
-    else
-    {
-        T3 = h[block1 + 2];
 
         for( int i = h[block1 + 0x4]; i != 0; --i )
         {
-            A0 = h[render_data + 0x1e55c + T3 * 0x14];
-            A1 = h[render_data + 0x1e55c + T3 * 0x14];
+            u16 tpage = hu[coords2 + 8];
+            system_psyq_set_draw_mode( dm, 0, 1, tpage, 0 );
+            dm += 1;
+            g_bg3_dm_start += 1;
 
-            if( ( (h[0x80071a4c] - 0x160) >= A0 ) || ( A0 >= h[0x80071a4c] ) )
-            {
-                if( A0 < (h[0x80071a4c] - a0) )
-                {
-                    [render_data + 0x1e55c + T3 * 0x14] = h(A1 + hu[offset_to_triggers + 0x18]);
-                }
-                else
-                {
-                    [render_data + 0x1e55c + T3 * 0x14] = h(A1 - hu[offset_to_triggers + 0x18]);
-                }
-            }
+            SETLEN( p1, 0x3 );
+            [p1 + 4] = h(hu[coords2 + a]); // distance
+            p1->b0 = 0x80;
+            p1->code = ( hu[coords2 + c] & 0x80 ) ? 0x7f : 0x7d; // add transparency
+            p1->x0 = hu[coords2 + 0];
+            p1->y0 = hu[coords2 + 2];
+            p1->u0 = bu[coords2 + 4];
+            p1->v0 = bu[coords2 + 5];
+            p1->clut = hu[coords2 + 6];
+            p1 += 1;
+            coords2 += 0xe;
 
-            A0 = h[render_data + 0xe55e + T3 * 0x14];
-            A1 = h[render_data + 0xe55e + T3 * 0x14];
+            bg_anim->anim_id = bu[coords2 + c];
+            bg_anim->frame_id = bu[coords2 + d];
+            bg_anim += 1;
 
-            if( ( (h[0x80071a4e] - 0x100) >= A0 ) || ( A0 >= h[0x80071a4e] ) )
-            {
-                if( A0 < (h[0x80071a4e] - 0x70) )
-                {
-                    [render_data + 0xe55e + T3 * 0x14] = h(A1 + hu[offset_to_triggers + 0x1a]);
-                }
-                else
-                {
-                    [render_data + 0xe55e + T3 * 0x14] = h(A1 - hu[offset_to_triggers + 0x1a]);
-                }
-            }
-
-            V0 = T3 + h[0x801144c8];
-            V0 = bu[render_data + 0x10d54 + V0 * 0x2 + 0x0] & 0x3f;
-
-            if( ( V0 == 0 ) || ( bu[0x8009ace6 + V0] & bu[render_data + 0x10d54 + V0 * 0x2 + 0x1] ) )
-            {
-                ADDPRIM( render_data + depth * 0x4, render_data + 0xe554 + T3 * 0x14 );
-            }
-
-            T3 += 1;
+            count1 += 1;
         }
+
+        block1 += 0x6;
     }
 
-    block1 += 0x6;
-}
+    g_bg3_anim_start = count1;
 
-// background dynamic 4th layer
-depth = hu[8009abf4 + ae];
-ADDPRIM( render_data + depth * 4, render_data + 0x42d4 );
-
-while( true )
-{
-    if( h[block1] == 7fff )
+    // background dynamic 3rd layer
+    while( true )
     {
-        ADDPRIM( render_data + depth * 4, render_data + 0x4254 );
-        break;
-    }
-    else if( V1 == 7ffe )
-    {
-        V0 = h[block1 + 2] + h[801144d0];
-        ADDPRIM( render_data + depth * 4, render_data + 0x124dc + V0 * 0xc );
-    }
-    else
-    {
-        T3 = h[block1 + 2];
-
-        for( int i = h[block1 + 4]; i != 0; --i )
+        if( h[block1] == 0x7fff )
         {
-            x = h[render_data + e554 + T3 * 14 + 8];
-            if( ( (h[80071a50] - 160) >= x ) || ( x >= h[80071a50] ) )
-            {
-                if( x < (h[80071a50] - a0) ) [render_data + 0xe554 + T3 * 0x14 + 0x8] = h(x + hu[offset_to_triggers + 0x1c]);
-                else                         [render_data + 0xe554 + T3 * 0x14 + 0x8] = h(x - hu[offset_to_triggers + 0x1c]);
-            }
-
-            y = h[render_data + e554 + T3 * 14 + a];
-            if( ( ( h[80071a52] - 100 ) >= y ) || ( y < h[80071a52] ) )
-            {
-                if( y < ( h[80071a52] - 70 ) ) [render_data + 0xe554 + T3 * 0x14 + 0xa] = h(y + hu[offset_to_triggers + 0x1e]);
-                else                           [render_data + 0xe554 + T3 * 0x14 + 0xa] = h(y - hu[offset_to_triggers + 0x1e]);
-            }
-
-            if( ( ( h[80071a50] - 160 ) < x ) && ( x < h[80071a50] ) )
-            {
-                V1 = T3 + h[801144c8];
-                V0 = bu[render_data + 0x10d54 + V1 * 2 + 0];
-
-                if( ( ( V0 & 3f ) == 0 ) || ( bu[8009ace6 + V0] & bu[render_data + 0x10d54 + V1 * 2 + 1] ) )
-                {
-                    ADDPRIM( render_data + depth * 4, render_data + 0xe554 + T3 * 0x14 );
-                }
-            }
-
-            T3 += 1;
+            block1 += 0x2;
+            break;
         }
+        else if( h[block1] == 0x7ffe )
+        {
+            system_psyq_set_draw_mode( dm, 0, 1, hu[tpage], 0 );
+            dm += 1;
+            tpage += 2;
+        }
+        else
+        {
+            [block1 + 0x2] = h(count2);
+
+            for( int i = h[block1 + 0x4]; i != 0; --i )
+            {
+                SETLEN( p2, 0x4 );
+                p2->r0 = 0x80;
+                p2->g0 = 0x80;
+                p2->b0 = 0x80;
+                p2->code = ( bu[coords3 + 8] & 0x80 ) ? 0x67 : 0x65;
+                p2->x0 = hu[coords3 + 0];
+                p2->y0 = hu[coords3 + 2];
+                p2->u0 = bu[coords3 + 4];
+                p2->v0 = bu[coords3 + 5];
+                p2->clut = hu[coords3 + 6];
+                p2->w = 0x20;
+                p2->h = 0x20;
+                p2 += 1;
+                coords3 += 0xa;
+
+                bg_anim->anim_id = bu[coords3 + 8];
+                bg_anim->frame_id = bu[coords3 + 9];
+                bg_anim += 1;
+
+                count2 += 1;
+            }
+        }
+
+        block1 += 0x6;
     }
 
-    block1 += 6;
+    // background dynamic 4th layer
+    while( true )
+    {
+        if( h[block1] == 0x7fff )
+        {
+            break;
+        }
+        else if( h[block1] == 0x7ffe )
+        {
+            system_psyq_set_draw_mode( dm, 0, 1, hu[tpage], 0 );
+            dm += 1;
+            tpage += 2;
+        }
+        else
+        {
+            [block1 + 0x2] = h(count2);
+
+            for( int i = h[block1 + 0x4]; i != 0; --i )
+            {
+                SETLEN( p2, 0x4 );
+                p2->r0 = 0x80;
+                p2->g0 = 0x80;
+                p2->b0 = 0x80;
+                p2->code = ( bu[coords3 + 0x8] & 0x80 ) ? 0x67 : 0x65;
+                p2->x0 = hu[coords3 + 0];
+                p2->y0 = hu[coords3 + 2];
+                p2->u0 = bu[coords3 + 4];
+                p2->v0 = bu[coords3 + 5];
+                p2->clut = hu[coords3 + 6];
+                p2->w = 0x20;
+                p2->h = 0x20;
+                p2 += 1;
+                coords3 += 0xa;
+
+                bg_anim->anim_id = bu[coords3 + 8]; // animation
+                bg_anim->frame_id = bu[coords3 + 9]; // index
+                bg_anim += 1;
+
+                count2 += 1;
+            }
+        }
+
+        block1 += 0x6;
+    }
 }
-////////////////////////////////
+
+
+
+void field_background_add_to_render( FieldRenderData& render_data )
+{
+    V0 = w[0x8009d848];
+    background = w[V0];
+
+    offset_to_triggers = w[0x800716c4];
+
+    block1 = background + 0x10;
+
+    // background static 1st layer
+    while( true )
+    {
+        if( h[block1] == 0x7fff )
+        {
+            block1 += 0x2;
+            break;
+        }
+
+        if( h[block1] == 0x7ffe )
+        {
+            u16 dm_id = h[block1 + 0x2];
+            ADDPRIM( &render_data.ot_scene[0x1000 - 1], &render_data.bg_dm[dm_id] );
+        }
+        else
+        {
+            if( ( ( h[0x80071a4a] - 0x100 ) < h[block1] ) && ( h[block1] < h[0x80071a4a] ) )
+            {
+                u16 bg_id = hu[block1 + 0x2];
+
+                for( int i = h[block1 + 0x4]; i != 0; --i )
+                {
+                    s16 x = render_data.bg_1[bg_id].x0;
+
+                    if( ( ( h[0x80071a48] - 0x150 ) < x ) && ( x < h[0x80071a48] ) ) // clip
+                    {
+                        ADDPRIM( &render_data.ot_scene[0x1000 - 1], &render_data.bg_1[bg_id] );
+                    }
+
+                    bg_id += 1;
+                }
+            }
+        }
+
+        block1 += 0x6;
+    }
+
+    // background 2nd layer with depth
+    while( true )
+    {
+        if( h[block1] == 0x7fff )
+        {
+            block1 += 0x2;
+            break;
+        }
+
+        if( ( ( h[0x80071a4a] - 0x100 ) < h[block1] ) && ( h[block1] < h[0x80071a4a] ) )
+        {
+            u16 bg_id = h[block1 + 0x2];
+
+            for( int i = h[block1 + 0x4]; i != 0; --i )
+            {
+                s16 x = render_data.bg_1[bg_id].x0;
+                u8 anim_id = render_data->bg_anim[bg_id].anim_id & 0x3f;
+                u8 frame_id = render_data->bg_anim[bg_id].frame_id;
+
+                if( ( h[0x80071a48] - 0x150 < x ) && ( x < h[0x80071a48] ) ) // clip
+                {
+                    if( ( anim_id == 0 ) || ( bu[0x8009abf4 + 0xf2 + anim_id] & frame_id ) )
+                    {
+                        u16 depth = (bu[render_data + 0x4914 + bg_id * 0x10 + 0x5] << 8) + (bu[render_data + 0x4914 + bg_id * 0x10 + 0x4]);
+                        ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_1[bg_id] );
+
+                        u16 dm_id = bg_id - g_bg2_dm_start;
+                        ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_dm[dm_id] );
+                    }
+                }
+
+                bg_id += 1;
+            }
+        }
+
+        block1 += 0x6;
+    }
+
+    // background dynamic 3rd layer
+    u16 depth = hu[0x8009abf4 + 0xb0];
+    ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_drenv3_e );
+
+    while( true )
+    {
+        if( h[block1] == 0x7fff )
+        {
+            ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_drenv3_s );
+            block1 += 0x2;
+            break;
+        }
+
+        if( h[block1] == 0x7ffe )
+        {
+            u16 dm_id = h[block1 + 0x2] + g_bg3_dm_start;
+            ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_dm[dm_id] );
+        }
+        else
+        {
+            u16 bg_id = h[block1 + 0x2];
+
+            for( int i = h[block1 + 0x4]; i != 0; --i )
+            {
+                s16 x = render_data.bg_2[bg_id].x0;
+                s16 y = render_data.bg_2[bg_id].y0;
+
+                if( ( (h[0x80071a4c] - 0x160) >= x ) || ( x >= h[0x80071a4c] ) )
+                {
+                    render_data.bg_2[bg_id].x0 += ( x < (h[0x80071a4c] - 0xa0) ) ? hu[offset_to_triggers + 0x18] : -hu[offset_to_triggers + 0x18];
+                }
+
+                if( ( (h[0x80071a4e] - 0x100) >= y ) || ( y >= h[0x80071a4e] ) )
+                {
+                    render_data.bg_2[bg_id].y0 += ( y < (h[0x80071a4e] - 0x70) ) ? hu[offset_to_triggers + 0x1a] : -hu[offset_to_triggers + 0x1a];
+                }
+
+                u16 bg_anim_id = bg_id + g_bg3_anim_start;
+                u8 anim_id = render_data.bg_anim[bg_anim_id].anim_id & 0x3f;
+                u8 frame_id = render_data.bg_anim[bg_anim_id].frame_id;
+
+                if( ( anim_id == 0 ) || ( bu[0x8009abf4 + 0xf2 + anim_id] & frame_id ) )
+                {
+                    ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_2[bg_id] );
+                }
+
+                bg_id += 1;
+            }
+        }
+
+        block1 += 0x6;
+    }
+
+    // background dynamic 4th layer
+    depth = hu[0x8009abf4 + 0xae];
+    ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_drenv4_e );
+
+    while( true )
+    {
+        if( h[block1] == 0x7fff )
+        {
+            ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_drenv4_s );
+            break;
+        }
+
+        if( V1 == 0x7ffe )
+        {
+            u16 dm_id = h[block1 + 0x2] + g_bg3_dm_start;
+            ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_dm[dm_id] );
+        }
+        else
+        {
+            u16 bg_id = h[block1 + 0x2];
+
+            for( int i = h[block1 + 0x4]; i != 0; --i )
+            {
+                s16 x = render_data.bg_2[bg_id].x0;
+                s16 y = render_data.bg_2[bg_id].y0;
+
+                if( ( (h[0x80071a50] - 0x160) >= x ) || ( x >= h[0x80071a50] ) )
+                {
+                    render_data.bg_2[bg_id].x0 += ( x < (h[0x80071a50] - 0xa0) ) ? hu[offset_to_triggers + 0x1c] : -hu[offset_to_triggers + 0x1c];
+                }
+
+                if( ( (h[0x80071a52] - 0x100) >= y ) || ( y >= h[0x80071a52] ) )
+                {
+                    render_data.bg_2[bg_id].y0 += ( y < (h[0x80071a52] - 0x70) ) ? hu[offset_to_triggers + 0x1e] : -hu[offset_to_triggers + 0x1e];
+                }
+
+                if( ( ( h[0x80071a50] - 0x160 ) < x ) && ( x < h[0x80071a50] ) )
+                {
+                    u16 bg_anim_id = bg_id + g_bg3_anim_start;
+                    u8 anim_id = render_data.bg_anim[bg_anim_id].anim_id & 0x3f;
+                    u8 frame_id = render_data.bg_anim[bg_anim_id].frame_id;
+
+                    if( ( anim_id == 0 ) || ( bu[0x8009abf4 + 0xf2 + anim_id] & frame_id ) )
+                    {
+                        ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_2[bg_id] );
+                    }
+                }
+
+                bg_id += 1;
+            }
+        }
+
+        block1 += 0x6;
+    }
+}
 
 
 

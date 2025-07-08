@@ -5,7 +5,7 @@ field_struct = A0;
 entities_data = A1;
 events_data = A2;
 
-[8009c6e0] = w(field_struct);
+[0x8009c6e0] = w(field_struct);
 [8009c544] = w(entities_data); // pointer to model data
 [8009c6dc] = w(events_data); // field events pointer
 
