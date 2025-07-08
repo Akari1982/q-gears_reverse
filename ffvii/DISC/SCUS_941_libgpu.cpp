@@ -1394,26 +1394,23 @@ A1 = S1;
 
 
 
-////////////////////////////////
-// system_psyq_draw_otag()
-
-ot = A0;
-
-if( bu[80062c02] >= 2 )
+void system_psyq_draw_otag( u32* ot )
 {
-    A0 = 80010e20; // "DrawOTag(%08x)..."
+    if( bu[0x80062c02] >= 2 )
+    {
+        A0 = 0x80010e20; // "DrawOTag(%08x)..."
+        A1 = ot;
+        80044370	jalr   w[80062bfc] ra
+    }
+
+    V0 = w[0x80062bf8]; // 80062bb8
+
+    A0 = w[V0 + 0x18];
     A1 = ot;
-    80044370	jalr   w[80062bfc] ra
+    A2 = 0;
+    A3 = 0;
+    80044394	jalr   w[V0 + 0x8] ra // func45a24
 }
-
-V0 = w[80062bf8]; // 80062bb8
-
-A0 = w[V0 + 18];
-A1 = ot;
-A2 = 0;
-A3 = 0;
-80044394	jalr   w[V0 + 8] ra // func45a24
-////////////////////////////////
 
 
 
@@ -3450,20 +3447,15 @@ return 0;
 
 
 
-////////////////////////////////
-// system_psyq_add_prim()
 // Register a primitive to the OT.
 // Registers a primitive beginning with the address *p to the OT entry *ot in OT table. ot is an ordering table or
 // pointer to another primitive.
 // A primitive may be added to a primitive list only once in the same frame. Attempting to add it multiple times
 // in the same frame results in a corrupted list.
-
-ot = A0;
-p = A1;
-
-[p] = w((w[p] & ff000000) | (w[ot] & 00ffffff));
-[ot] = w((w[ot] & ff000000) | (p & 00ffffff));
-////////////////////////////////
+void system_psyq_add_prim( void* ot, void* p )
+{
+    ADDPRIM( ot, p );
+}
 
 
 
@@ -3507,7 +3499,7 @@ p1 = A1;
 
 
 
-void system_psyq_set_semi_trans( void *p, int abe )
+void system_psyq_set_semi_trans( void* p, int abe )
 {
     if( abe != 0 )
     {
@@ -3685,13 +3677,12 @@ void system_psyq_set_sprt16( SPRT_16* p )
 
 
 
-////////////////////////////////
-// system_psyq_set_line_f2()
 // Flat unconnected straight line drawing primitive.
-
-[A0 + 3] = b(3);
-[A0 + 7] = b(40);
-////////////////////////////////
+void system_psyq_set_line_f2( LINE_F2* p )
+{
+    SETLEN( p, 0x3 );
+    SETCODE( p, 0x40 );
+}
 
 
 

@@ -1287,57 +1287,55 @@ T1 = T1 >> 0c;
 
 
 
-////////////////////////////////
-// system_psyq_push_matrix()
 // Save a constant rotation matrix in a stack.
-
-T6 = w[8004b994];
-if( T6 >= 280 )
+void system_psyq_push_matrix()
 {
-    A0 = 8004bc18; // "Error: Can't push matrix,stack(max 20) is full!\n"
-    system_bios_printf();
+    T6 = w[0x8004b994];
+    if( T6 >= 0x280 )
+    {
+        A0 = 0x8004bc18; // "Error: Can't push matrix,stack(max 20) is full!\n"
+        system_bios_printf();
+    }
+    else
+    {
+
+        [0x8004b998 + T6 + 0x0] = w(R11R12);
+        [0x8004b998 + T6 + 0x4] = w(R13R21);
+        [0x8004b998 + T6 + 0x8] = w(R22R23);
+        [0x8004b998 + T6 + 0xc] = w(R31R32);
+        [0x8004b998 + T6 + 0x10] = w(R33);
+        [0x8004b998 + T6 + 0x14] = w(TRX);
+        [0x8004b998 + T6 + 0x18] = w(TRY);
+        [0x8004b998 + T6 + 0x1c] = w(TRZ);
+        [0x8004b994] = w(T6 + 0x20);
+    }
 }
-else
-{
-
-    [8004b998 + T6 + 0] = w(R11R12);
-    [8004b998 + T6 + 4] = w(R13R21);
-    [8004b998 + T6 + 8] = w(R22R23);
-    [8004b998 + T6 + c] = w(R31R32);
-    [8004b998 + T6 + 10] = w(R33);
-    [8004b998 + T6 + 14] = w(TRX);
-    [8004b998 + T6 + 18] = w(TRY);
-    [8004b998 + T6 + 1c] = w(TRZ);
-    [8004b994] = w(T6 + 20);
-}
-////////////////////////////////
 
 
 
-////////////////////////////////
-// system_psyq_pop_matrix()
 // Reset a constant rotation matrix from a stack.
-
-T6 = w[8004b994];
-if( T6 <= 0 )
+void system_psyq_pop_matrix()
 {
-    A0 = 8004bc49; // "Error: Can't pop matrix,stack is empty!\n"
-    system_bios_printf();
+    T6 = w[0x8004b994];
+    if( T6 <= 0 )
+    {
+        A0 = 0x8004bc49; // "Error: Can't pop matrix,stack is empty!\n"
+        system_bios_printf();
+    }
+    else
+    {
+        T6 -= 0x20;
+        [0x8004b994] = w(T6);
+        R11R12 = w[0x8004b998 + T6 + 0x0];
+        R13R21 = w[0x8004b998 + T6 + 0x4];
+        R22R23 = w[0x8004b998 + T6 + 0x8];
+        R31R32 = w[0x8004b998 + T6 + 0xc];
+        R33 = w[0x8004b998 + T6 + 0x10];
+        TRX = w[0x8004b998 + T6 + 0x14];
+        TRY = w[0x8004b998 + T6 + 0x18];
+        TRZ = w[0x8004b998 + T6 + 0x1c];
+    }
 }
-else
-{
-    T6 = T6 - 20;
-    [8004b994] = w(T6);
-    R11R12 = w[8004b998 + T6 + 0];
-    R13R21 = w[8004b998 + T6 + 4];
-    R22R23 = w[8004b998 + T6 + 8];
-    R31R32 = w[8004b998 + T6 + c];
-    R33 = w[8004b998 + T6 + 10];
-    TRX = w[8004b998 + T6 + 14];
-    TRY = w[8004b998 + T6 + 18];
-    TRZ = w[8004b998 + T6 + 1c];
-}
-////////////////////////////////
 
 
 
@@ -2234,18 +2232,17 @@ V0 = A1;
 
 
 
-////////////////////////////////
-// system_psyq_rot_trans_pers()
 // Perform coordinate and perspective transformation for one vertex.
-
-VXY0 = w[A0 + 0];
-VZ0 = w[A0 + 4];
-gte_RTPS(); // Perspective transform
-[A1] = w(SXY2);
-[A2] = w(IR0);
-[A3] = w(FLAG);
-return SZ3 / 4;
-////////////////////////////////
+s32 system_psyq_rot_trans_pers( SVECTOR* v0, long* sxy, long* p, long* flag )
+{
+    VXY0 = w[v0 + 0];
+    VZ0 = w[v0 + 4];
+    gte_RTPS(); // Perspective transform
+    *sxy = SXY2;
+    *p = IR0;
+    *flag = FLAG;
+    return SZ3 / 4;
+}
 
 
 

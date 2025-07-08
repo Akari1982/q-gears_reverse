@@ -2,6 +2,27 @@ FieldRenderData g_field_render_data[0x2]; // 0x800e4df0
 DRAWENV g_draw_env[0x2]; // 0x8007eaac
 DRAWENV g_bg_draw_env[0xa]; // 0x80113f2c
 
+u8 g_field_random[] =
+{
+    0xb1, 0xca, 0xee, 0x6c, 0x5a, 0x71, 0x2e, 0x55, 0xd6, 0x00, 0xcc, 0x99, 0x90, 0x6b, 0x7d, 0xeb,
+    0x4f, 0xa0, 0x07, 0xac, 0xdf, 0x8a, 0x56, 0x9e, 0xf1, 0x9a, 0x63, 0x75, 0x11, 0x91, 0xa3, 0xb8,
+    0x94, 0x73, 0xf7, 0x54, 0xd9, 0x6e, 0x72, 0xc0, 0xf4, 0x80, 0xde, 0xb9, 0xbb, 0x8d, 0x66, 0x26,
+    0xd0, 0x36, 0xe1, 0xe9, 0x70, 0xdc, 0xcd, 0x2f, 0x4a, 0x67, 0x5d, 0xd2, 0x60, 0xb5, 0x9d, 0x7f,
+    0x45, 0x37, 0x50, 0x44, 0x78, 0x04, 0x19, 0x2c, 0xef, 0xfd, 0x64, 0x81, 0x03, 0xda, 0x95, 0x4c,
+    0x7a, 0x0b, 0xad, 0x1f, 0xba, 0xdd, 0x3e, 0xf9, 0xd7, 0x1a, 0x29, 0xf8, 0x18, 0xb3, 0x20, 0xf6,
+    0xd1, 0x5e, 0x34, 0x92, 0x7b, 0x24, 0x43, 0x88, 0x97, 0xd4, 0x0f, 0x35, 0xaa, 0x83, 0x68, 0x27,
+    0xa8, 0xd5, 0xbe, 0xfa, 0x14, 0x31, 0xaf, 0x10, 0x0d, 0xd8, 0x6a, 0xce, 0x23, 0x61, 0xf3, 0x3d,
+    0xa4, 0x08, 0x33, 0xe3, 0xa9, 0x38, 0xe6, 0x93, 0x1d, 0x1c, 0xf0, 0x0e, 0x87, 0x59, 0x65, 0x82,
+    0xbc, 0xff, 0xfe, 0x7e, 0x8f, 0xc1, 0x1e, 0xf5, 0xcb, 0x49, 0x02, 0x32, 0x09, 0xc4, 0x8e, 0xc6,
+    0x2b, 0x40, 0xa7, 0x17, 0x76, 0x3b, 0x16, 0x2a, 0xc8, 0xfb, 0xb2, 0x58, 0xa5, 0x15, 0xae, 0x25,
+    0xcf, 0x46, 0xc7, 0x48, 0xb4, 0x0a, 0x3f, 0xc9, 0x06, 0x85, 0x51, 0x89, 0x62, 0x4d, 0x12, 0x8c,
+    0xea, 0xa2, 0x98, 0x4b, 0x79, 0x6f, 0x5c, 0x47, 0x30, 0x1b, 0xe7, 0xc5, 0x22, 0x9c, 0xe8, 0x96,
+    0x3a, 0xe4, 0x7c, 0xe0, 0x69, 0xa1, 0xb7, 0x05, 0x39, 0x74, 0x01, 0x9f, 0xbd, 0xc3, 0x84, 0xfc,
+    0x77, 0x86, 0x13, 0x4e, 0xbf, 0xf2, 0x53, 0x5b, 0xed, 0x21, 0x8b, 0x6d, 0xc2, 0x41, 0xb6, 0xdb,
+    0x3c, 0xd3, 0x28, 0xec, 0x2d, 0xe2, 0x9b, 0xa6, 0x42, 0x52, 0x57, 0x5f, 0xe5, 0xab, 0xb0, 0x0c
+}; // 0x800e0638
+
+
 
 
 ////////////////////////////////
@@ -135,50 +156,50 @@ void field_main()
     [SP + 18] = w(w[800a0000]);
     [SP + 1c] = w(w[800a0004]);
 
-    system_psyq_clear_otag_r( &(g_field_render_data[0].ot_drenv), 0x1 );
-    system_psyq_clear_otag_r( &(g_field_render_data[1].ot_drenv), 0x1 );
-    system_psyq_set_drawenv( &(g_field_render_data[0].drenv), &(g_draw_env[0]) );
-    system_psyq_set_drawenv( &(g_field_render_data[1].drenv), &(g_draw_env[1]) );
-    ADDPRIM( &(g_field_render_data[0].ot_drenv), drenv_prim1 );
-    ADDPRIM( &(g_field_render_data[1].ot_drenv), drenv_prim2 );
+    system_psyq_clear_otag_r( &g_field_render_data[0].ot_drenv, 0x1 );
+    system_psyq_clear_otag_r( &g_field_render_data[1].ot_drenv, 0x1 );
+    system_psyq_set_drawenv( &g_field_render_data[0].drenv, &g_draw_env[0] );
+    system_psyq_set_drawenv( &g_field_render_data[1].drenv, &g_draw_env[1] );
+    ADDPRIM( &g_field_render_data[0].ot_drenv, &g_field_render_data[0].drenv );
+    ADDPRIM( &g_field_render_data[1].ot_drenv, &g_field_render_data[1].drenv );
 
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[0]), 0x0, 0x8, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[0], 0x0, 0x8, 0x140, 0xe0 );
     g_bg_draw_env[0]->dtd = 1;
     g_bg_draw_env[0]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[1]), 0x0, 0xf0, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[1], 0x0, 0xf0, 0x140, 0xe0 );
     g_bg_draw_env[1]->dtd = 1;
     g_bg_draw_env[1]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[2]), 0x0, 0x8, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[2], 0x0, 0x8, 0x140, 0xe0 );
     g_bg_draw_env[2]->dtd = 1;
     g_bg_draw_env[2]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[3]), 0x0, 0xf0, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[3], 0x0, 0xf0, 0x140, 0xe0 );
     g_bg_draw_env[3]->dtd = 1;
     g_bg_draw_env[3]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[4]), 0x0, 0x8, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[4], 0x0, 0x8, 0x140, 0xe0 );
     g_bg_draw_env[4]->dtd = 1;
     g_bg_draw_env[4]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[5]), 0x0, 0xf0, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[5], 0x0, 0xf0, 0x140, 0xe0 );
     g_bg_draw_env[5]->dtd = 1;
     g_bg_draw_env[5]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[6]), 0x0, 0x8, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[6], 0x0, 0x8, 0x140, 0xe0 );
     g_bg_draw_env[6]->dtd = 1;
     g_bg_draw_env[6]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[7]), 0x0, 0xf0, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[7], 0x0, 0xf0, 0x140, 0xe0 );
     g_bg_draw_env[7]->dtd = 1;
     g_bg_draw_env[7]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[8]), 0x0, 0x8, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[8], 0x0, 0x8, 0x140, 0xe0 );
     g_bg_draw_env[8]->dtd = 1;
     g_bg_draw_env[8]->isbg = 0;
-    system_psyq_set_def_drawenv( &(g_bg_draw_env[9]), 0x0, 0xf0, 0x140, 0xe0 );
+    system_psyq_set_def_drawenv( &g_bg_draw_env[9], 0x0, 0xf0, 0x140, 0xe0 );
     g_bg_draw_env[9]->dtd = 1;
     g_bg_draw_env[9]->isbg = 0;
 
-    system_psyq_clear_otag_r( &(g_field_render_data[0].ot_bg_drenv), 0x1 );
-    system_psyq_clear_otag_r( &(g_field_render_data[1].ot_bg_drenv), 0x1 );
-    system_psyq_set_drawenv( &(g_field_render_data[0].bg_drenv), &(g_bg_draw_env[0]) );
-    system_psyq_set_drawenv( &(g_field_render_data[1].bg_drenv), &(g_bg_draw_env[1]) );
-    ADDPRIM( &(g_field_render_data[0].ot_bg_drenv), drenv_prim1 );
-    ADDPRIM( &(g_field_render_data[1].ot_bg_drenv), drenv_prim2 );
+    system_psyq_clear_otag_r( &g_field_render_data[0].ot_bg_drenv, 0x1 );
+    system_psyq_clear_otag_r( &g_field_render_data[1].ot_bg_drenv, 0x1 );
+    system_psyq_set_drawenv( &g_field_render_data[0].bg_drenv, &g_bg_draw_env[0] );
+    system_psyq_set_drawenv( &g_field_render_data[1].bg_drenv, &g_bg_draw_env[1] );
+    ADDPRIM( &g_field_render_data[0].ot_bg_drenv, drenv_prim1 );
+    ADDPRIM( &g_field_render_data[1].ot_bg_drenv, drenv_prim2 );
 
     func128b8(); // fade
 
@@ -290,9 +311,7 @@ void field_main()
             V0 = h[8009abf4 + 2a]; // manual entity id
             [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
 
-            // init rain force
-            if( bu[0x8009c6e4 + 0xfa4 + 0x83] & 0x80 ) [0x800e48d8] = b(0xff);
-            else                                       [0x800e48d8] = b(0);
+            g_rain_force = ( bu[0x8009c6e4 + 0xfa4 + 0x83] & 0x80 ) ? 0xff : 0;
 
             for( int i = 0; i < 0x10; ++i )
             {
@@ -314,8 +333,8 @@ void field_main()
 
         [800716d0] = b(0); // random encounter related
 
-        field_arrows_init( g_field_render_data[0].arrows, &(g_field_render_data[0].arrows_dm) );
-        field_arrows_init( g_field_render_data[1].arrows, &(g_field_render_data[1].arrows_dm) );
+        field_arrows_init( g_field_render_data[0].arrows, &g_field_render_data[0].arrows_dm );
+        field_arrows_init( g_field_render_data[1].arrows, &g_field_render_data[1].arrows_dm );
 
         if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
         {
@@ -505,11 +524,8 @@ void field_main_loop()
     A3 = render_data + 1 * 0x1789c + 0x124dc; // draw modes
     field_background_init_packets(); // we read dat background data here
 
-    A0 = render_data + 0 * 0x1789c; // buffer 1
-    field_rain_init();
-
-    A0 = render_data + 1 * 0x1789c; // buffer 2
-    field_rain_init();
+    field_rain_init( &g_field_render_data[0] );
+    field_rain_init( &g_field_render_data[1] );
 
     S3 = 1;
     [0x80114488] = h(0);
@@ -526,10 +542,10 @@ void field_main_loop()
         buf_id = h[0x80075dec];
         [0x8009abf4 + 0] = b(buf_id);
 
-        render_data += buf_id * 1789c;
+        FieldRenderData& render_data = g_field_render_data[buf_id];
 
-        system_psyq_clear_otag_r( render_data, 0x1000 ); // scene OT
-        system_psyq_clear_otag_r( render_data + 0x1748c, 1 ); // ui OT (top level)
+        system_psyq_clear_otag_r( render_data.ot_scene, 0x1000 );
+        system_psyq_clear_otag_r( &render_data.ot_ui, 0x1 );
 
         funcab2b4();
 
@@ -657,14 +673,9 @@ void field_main_loop()
         funcaab24( render_data ); // update models (animations drafts and kawai)
 
         field_rain_update();
+        field_rain_add_to_render( render_data.ot_scene, render_data.rain, w[80071e40], &render_data.rain_dm );
 
-        A0 = render_data; // scene OT
-        A1 = render_data + 1749c; // rain packets
-        A2 = w[80071e40]; // matrix
-        A3 = render_data + 17490; // draw_mode_packet
-        field_rain_add_to_render();
-
-        field_arrows_add_to_render( render_data, w[0x80071e40], w[0x800716c4] + 0x38 );
+        field_arrows_add_to_render( render_data.ot_scene, w[0x80071e40], w[0x800716c4] + 0x38 );
 
         func138ec(); // fade update
 
@@ -772,9 +783,9 @@ void field_main_loop()
 
         if( bu[0x8009abf4 + 0x38] == 0 )
         {
-            system_psyq_draw_otag( render_data + 0x4190 ); // OT for 41d4 DR_ENV prim 1
-            system_psyq_draw_otag( render_data + 0x3ffc ); // scene OT (rendered reversed)
-            system_psyq_draw_otag( render_data + 0x418c ); // OT for 4194 DR_ENV global
+            system_psyq_draw_otag( &render_data.ot_bg_drenv );
+            system_psyq_draw_otag( render_data.ot_scene + 0x1000 - 1 ); // scene OT (rendered reversed)
+            system_psyq_draw_otag( &render_data.ot_drenv );
 
             if( hu[0x8009abf4 + 0x4c] != 0 ) // fade type
             {
@@ -782,7 +793,7 @@ void field_main_loop()
             }
         }
 
-        system_psyq_draw_otag( render_data + 0x1748c ); // menu OT (top level)
+        system_psyq_draw_otag( &render_data.ot_ui ); // menu OT (top level)
     }
 }
 

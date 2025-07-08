@@ -629,7 +629,7 @@
 
 800e42a8 array of stored entities move speed (0x2 size).
 
-800e42d8 some array (size 0x18)
+800e42d8 field rain array (size 0x18 items 0x40)
 
 800e48d8 []       rain force (greater value more rain lines rendered).
 
