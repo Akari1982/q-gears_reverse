@@ -2506,25 +2506,18 @@ bool funca9e14( bool A0 )
         800A9EF0	bne    s1, t5, La9f48 [$800a9f48]
         A1 = V1 | V0;
         A0 = 0004;
-        800A9EFC	jal    $func1c7fc
         A2 = 0;
-        [SP + 0010] = w(0);
-        S0 = V0;
-        A0 = S0;
-        A1 = 0;
-        A2 = 00e0;
-        800A9F18	jal    $func1d9cc
-        A3 = 0280;
-        800A9F20	jal    $system_file_load_tim
-        A0 = S0;
-        S1 = 03a2;
-        A0 = 0001;
-        A1 = A0;
-        A2 = 00f0;
-        800A9F38	jal    $func320b8
-        A3 = 0;
+        S0 = func1c7fc();
+
+        func1d9cc( S0, 0, 0xe0, 0x280, 0 );
+
+        system_file_load_tim( S0 );
+
+        S1 = 0x3a2;
+
+        func320b8( 1, 1, 0xf0, 0 );
+
         800A9F40	j      Laa7d8 [$800aa7d8]
-        800A9F44	nop
 
         La9f48:	; 800A9F48
         800A9F48	beq    s1, zero, Laa638 [$800aa638]
@@ -2541,193 +2534,81 @@ bool funca9e14( bool A0 )
         [S3 + fb * 0x28 + 0xa] = h(0);
         [S3 + fb * 0x28 + 0xc] = b(0);
         [S3 + fb * 0x28 + 0xd] = b(0);
-        V1 = bu[struct1c + 0008];
-        V0 = S3 + V1 * 0x28;
-        [V0 + 0010] = h(0x00c0);
-        V1 = bu[struct1c + 0008];
-        T2 = 00e0;
-        V0 = S3 + V1 * 0x28;
-        [V0 + 0012] = h(T2);
-        T1 = 3800;
-        V1 = bu[struct1c + 0008];
-        V0 = S3 + V1 * 0x28;
-        [V0 + 000e] = h(T1);
-        A3 = ;
-        A0 = bu[struct1c + 0008];
-        T0 = 0xff000000;
-        V1 = A0 << 02;
-        A0 = V1 + A0;
-        A0 = A0 << 03;
-        A0 = A0 + S3;
-        V0 = struct1c + V1;
-        V0 = w[V0 + 0010];
-        V1 = w[A0 + 0000];
-        V0 = w[V0 + 0020];
-        V1 = V1 & T0;
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 | V0;
-        [A0 + 0000] = w(V1);
-        A0 = bu[struct1c + 0008];
-        800AA198	nop
-        V0 = A0 << 02;
-        V1 = struct1c + V0;
-        V0 = V0 + A0;
-        V0 = V0 << 03;
-        A1 = w[V1 + 0010];
-        V0 = V0 + S3;
-        V1 = w[A1 + 0020];
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 & T0;
-        V1 = V1 | V0;
-        [A1 + 0020] = w(V1);
-        V0 = bu[struct1c + 0008];
-        800AA1D4	nop
-        V0 = V0 << 04;
-        V0 = V0 + FP;
-        [V0 + 0003] = b(T4);
-        800AA1F0	lui    v1, $e100
-        V0 = bu[struct1c + 0008];
-        V1 = V1 | 070a;
-        V0 = V0 << 04;
-        V0 = FP + V0;
-        [V0 + 0004] = w(V1);
-        V0 = bu[struct1c + 0008];
-        A0 = V0 << 04;
-        A0 = A0 + FP;
-        V0 = V0 << 02;
-        V1 = struct1c + V0;
-        V0 = w[V1 + 0010];
-        V1 = w[A0 + 0000];
-        V0 = w[V0 + 0020];
-        V1 = V1 & T0;
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 | V0;
-        [A0 + 0000] = w(V1);
-        V0 = bu[struct1c + 0008];
-        800AA250	nop
-        V1 = V0 << 02;
-        A0 = struct1c + V1;
-        V0 = V0 << 04;
-        A0 = w[A0 + 0010];
-        V0 = V0 + FP;
-        V1 = w[A0 + 0020];
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 & T0;
-        V1 = V1 | V0;
-        [A0 + 0020] = w(V1);
-        V1 = bu[struct1c + 0008];
-        800AA288	nop
-        V0 = V1 << 02;
-        V0 = V0 + V1;
+        [S3 + fb * 0x28 + 0xe] = h(0x3800);
+        [S3 + fb * 0x28 + 0x10] = h(0x00c0);
+        [S3 + fb * 0x28 + 0x12] = h(0x00e0);
+
+        [FP + fb * 0x10 + 0x3] = b(T4);
+        [FP + fb * 0x10 + 0x4] = w(0xe100070a);
+
+        V0 = w[struct1c + 0x10 + fb * 0x4];
+        ADDPRIM( V0 + 0x20, S3 + fb * 0x28 );
+        ADDPRIM( V0 + 0x20, FP + fb * 0x10 );
+
+        V0 = fb << 02;
+        V0 = V0 + fb;
         V0 = V0 << 03;
         V0 = V0 + S4;
         T5 = 0004;
         [V0 + 0003] = b(T5);
-        V1 = bu[struct1c + 0008];
-        800AA2B8	nop
-        V0 = V1 << 02;
-        V0 = V0 + V1;
+        V0 = fb << 02;
+        V0 = V0 + fb;
         V0 = V0 << 03;
         V0 = V0 + S4;
         T5 = 0064;
         [V0 + 0007] = b(T5);
-        V1 = bu[struct1c + 0008];
-        800AA2E8	nop
-        V0 = V1 << 02;
-        V0 = V0 + V1;
+        V0 = fb << 02;
+        V0 = V0 + fb;
         V0 = V0 << 03;
         V0 = V0 + S4;
         [V0 + 0004] = b(S7);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 0005] = b(S7);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 0006] = b(S7);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 0008] = h(0x00c0);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 000a] = h(0);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 000c] = b(0);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 000d] = b(0);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 0010] = h(0x0080);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 0012] = h(T2);
-        V1 = bu[struct1c + 0008];
-        V0 = S4 + V1 * 0x28;
-        [V0 + 000e] = h(T1);
-        A0 = bu[struct1c + 0x8];
-        V1 = A0 << 02;
-        A0 = V1 + A0;
+        [S4 + fb * 0x28 + 0005] = b(S7);
+        [S4 + fb * 0x28 + 0006] = b(S7);
+        [S4 + fb * 0x28 + 0008] = h(0x00c0);
+        [S4 + fb * 0x28 + 000a] = h(0);
+        [S4 + fb * 0x28 + 000c] = b(0);
+        [S4 + fb * 0x28 + 000d] = b(0);
+        [S4 + fb * 0x28 + 0010] = h(0x0080);
+        [S4 + fb * 0x28 + 0012] = h(0x00e0);
+        [S4 + fb * 0x28 + 000e] = h(0x3800);
+        V1 = fb << 02;
+        A0 = V1 + fb;
         A0 = A0 << 03;
         A0 = A0 + S4;
         V0 = struct1c + V1;
         V0 = w[V0 + 0010];
-        V1 = w[A0 + 0000];
-        V0 = w[V0 + 0020];
-        V1 = V1 & T0;
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 | V0;
-        [A0 + 0000] = w(V1);
-        A0 = bu[struct1c + 0008];
-        800AA4C0	nop
-        V0 = A0 << 02;
+        [A0 + 0x0] = w((w[A0 + 0x0] & 0xff000000) | (w[V0 + 0x20] & 0x00ffffff));
+
+        V0 = fb << 02;
         V1 = struct1c + V0;
-        V0 = V0 + A0;
+        V0 = V0 + fb;
         V0 = V0 << 03;
-        A1 = w[V1 + 0010];
+        A1 = w[V1 + 0x10];
         V0 = V0 + S4;
-        V1 = w[A1 + 0x20];
-        [A1 + 0x20] = w((V1 & T0) | (V0 & 0x00ffffff));
-        800AA4F4	lui    t5, $800b
-        V0 = bu[struct1c + 0008];
+        [A1 + 0x20] = w((w[A1 + 0x20] & 0xff000000) | (V0 & 0x00ffffff));
+
         A2 = FP + 0008;
-        V0 = V0 << 04;
+        V0 = fb << 04;
         V0 = V0 + A2;
         [V0 + 0003] = b(T4);
-        800AA510	addiu  t5, t5, $b42c (=-$4bd4)
-        800AA518	lui    v1, $e100
-        V0 = bu[struct1c + 0008];
-        V1 = V1 | 070d;
-        V0 = V0 << 04;
+        T5 = 0x800ab42c;
+
+        V1 = 0xe100070d;
+        V0 = fb << 04;
         V0 = V0 + T5;
         [V0 + 0000] = w(V1);
-        V0 = bu[struct1c + 0008];
-        800AA53C	nop
-        A0 = V0 << 04;
+
+        A0 = fb << 04;
         A0 = A0 + A2;
-        V0 = V0 << 02;
+        V0 = fb << 02;
         V1 = struct1c + V0;
-        V0 = w[V1 + 0010];
-        V1 = w[A0 + 0000];
-        V0 = w[V0 + 0020];
-        V1 = V1 & T0;
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 | V0;
-        [A0 + 0000] = w(V1);
-        V0 = bu[struct1c + 0008];
-        800AA578	nop
-        V1 = V0 << 02;
-        A0 = struct1c + V1;
-        V0 = V0 << 04;
-        A0 = w[A0 + 0010];
-        V0 = V0 + A2;
-        V1 = w[A0 + 0020];
-        V0 = V0 & 0x00ffffff;
-        V1 = V1 & T0;
-        V1 = V1 | V0;
-        [A0 + 0020] = w(V1);
+        V0 = w[V1 + 0x10];
+        [A0 + 0000] = w((w[A0 + 0000] & 0xff000000) | (w[V0 + 0020] & 0x00ffffff));
+
+        A0 = w[struct1c + 0x10 + fb * 0x4];
+        [A0 + 0x20] = w((w[A0 + 0x20] & 0xff000000) | ((A2 + fb * 0x10) & 0x00ffffff));
+
         V1 = hu[0x800ab2d0];
-        800AA5AC	nop
         V0 = V1 & 0001;
         800AA5B4	beq    v0, zero, Laa5c4 [$800aa5c4]
         T3 = T3 & 4008;
