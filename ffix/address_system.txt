@@ -96,8 +96,6 @@
 
 80077de0 []       store here 1 if we change party member.
 
-
-
 80077e60 Script state. 8007aecc points here. We store values here from script. 0x17c8 size.
 +0011 []       store 0xff here from script at start of map 0x20 and 0x00.
 +0013 []       fome flags. remove bit 0x80 here from script at start of map 0x20 and 0x00.

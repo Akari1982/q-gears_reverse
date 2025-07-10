@@ -194,84 +194,82 @@ return 0000;
 
 
 
-////////////////////////////////
-// system_menu_get_current_pad_buttons()
-
-if( w[80062fa0] == 0 ) // input enabled
+u32 system_menu_get_current_pad_buttons()
 {
-    if( bu[800696ac] != ff ) // if data ok
+    if( w[0x80062fa0] == 0 ) // input enabled
     {
-        if( bu[800696ac + 1] == 41 ) // digital_pad
+        if( bu[0x800696ac] != 0xff ) // if data ok
         {
-            A0 = (bu[800696ac + 2] << 8) NOR bu[800696ac + 3]; // get buttons state
+            if( bu[0x800696ac + 0x1] == 0x41 ) // digital_pad
+            {
+                A0 = (bu[0x800696ac + 0x2] << 8) NOR bu[0x800696ac + 0x3]; // get buttons state
+            }
+            else
+            {
+                A0 = 0;
+            }
         }
         else
         {
             A0 = 0;
         }
     }
-    else
+    else // for tutorial
     {
-        A0 = 0;
+        A0 = system_menu_tutorial_update_get_buttons();
     }
-}
-else // for tutorial
-{
-    system_menu_tutorial_update_get_buttons();
-    A0 = V0;
-}
 
-// second controller
-if( bu[800696ac + 22] != ff )
-{
-    if( bu[800696ac + 22 + 1] == 41 )
+    // second controller
+    if( bu[0x800696ac + 0x22] != 0xff )
     {
-        V0 = (bu[800696ac + 22 + 2] << 8) NOR bu[800696ac + 22 + 3];
+        if( bu[0x800696ac + 0x22 + 0x1] == 0x41 )
+        {
+            V0 = (bu[0x800696ac + 0x22 + 0x2] << 0x8) NOR bu[0x800696ac + 0x22 + 0x3];
+        }
+        else
+        {
+            V0 = 0;
+        }
     }
     else
     {
         V0 = 0;
     }
+
+    return (V0 << 0x10) | (A0 & 0xffff);
 }
-else
+
+
+
+void system_get_buttons_with_config_remap()
 {
-    V0 = 0;
-}
+    u32 buttons = system_menu_get_current_pad_buttons();
+    cb1 = buttons & 0x0000ffff; // first controller
+    cb2 = buttons & 0xffff0000; // second controller
 
-return (V0 << 10) | (A0 & ffff);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_get_buttons_with_config_remap()
-
-system_menu_get_current_pad_buttons();
-cb1 = V0 & 0000ffff; // first controller
-cb2 = V0 & ffff0000; // second controller
-
-// if controller config set to normal or input not enabled
-if( ( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 ) || ( w[80062fa0] != 0 ) )
-{
-    return cb2 | cb1;
-}
-
-// remap buttons according to config options
-A0 = 0;
-V1 = 0;
-L1c92c:	; 8001C92C
-    if( cb1 & ( 1 << V1 ) )
+    // if controller config set to normal or input not enabled
+    if( ( ( ( hu[0x8009c6e4 + 0x10da] >> 0x2 ) & 0x3 ) == 0 ) || ( w[0x80062fa0] != 0 ) )
     {
-        A0 = A0 | (1 << bu[8009c6e4 + 10dc + V1]);
+        return cb2 | cb1;
     }
 
-    V1 = V1 + 1;
-    if( V1 >= 10 )
+    // remap buttons according to config options
+    A0 = 0;
+    V1 = 0;
+    while( true )
     {
-        return cb2 | A0;
+        if( cb1 & ( 1 << V1 ) )
+        {
+            A0 = A0 | (1 << bu[0x8009c6e4 + 0x10dc + V1]);
+        }
+
+        V1 = V1 + 1;
+        if( V1 >= 0x10 )
+        {
+            return cb2 | A0;
+        }
     }
-8001C964	j      L1c92c [$8001c92c]
-////////////////////////////////
+}
 
 
 
@@ -362,109 +360,107 @@ else
 
 
 
-////////////////////////////////
-// system_menu_update_buttons()
-
-system_menu_get_current_pad_buttons();
-buttons = V0;
-
-// not custom or input not enabled
-if( ( ( ( hu[8009c6e4 + 10da] >> 2 ) & 3 ) == 0 ) || ( w[80062fa0] != 0 ) )
+void system_menu_update_buttons()
 {
-    [80062d78] = h(buttons);
-}
-else // remap
-{
-    [80062d78] = h(0);
+    u32 buttons = system_menu_get_current_pad_buttons();
 
-    for( int i = 0; i < 10; ++i )
+    // not custom or input not enabled
+    if( ( ( ( hu[0x8009c6e4 + 0x10da] >> 0x2 ) & 0x3 ) == 0 ) || ( w[0x80062fa0] != 0 ) )
     {
-        if( buttons & ( 1 << i ) )
+        [0x80062d78] = h(buttons);
+    }
+    else // remap
+    {
+        [0x80062d78] = h(0);
+
+        for( int i = 0; i < 0x10; ++i )
         {
-            [80062d78] = h(hu[80062d78] | (1 << bu[8009c6e4 + 10dc + i]));
+            if( buttons & ( 1 << i ) )
+            {
+                [0x80062d78] = h(hu[0x80062d78] | (1 << bu[0x8009c6e4 + 0x10dc + i]));
+            }
         }
     }
-}
 
-[80062d7c] = h((hu[80062d78] ^ hu[80062d7a]) & hu[80062d78]); // pressed
-[80062d7e] = h(0); // repeated
+    [0x80062d7c] = h((hu[0x80062d78] ^ hu[0x80062d7a]) & hu[0x80062d78]); // pressed
+    [0x80062d7e] = h(0); // repeated
 
-if( hu[80062d78] == hu[80062d7a] )
-{
-    if( h[GP + 1c] == 0 )
+    if( hu[0x80062d78] == hu[0x80062d7a] )
     {
-        if( h[GP + 20] != f )
+        if( h[GP + 0x1c] == 0 )
         {
-            [GP + 20] = h(h[GP + 20] + 1);
+            if( h[GP + 0x20] != 0xf )
+            {
+                [GP + 0x20] = h(h[GP + 0x20] + 1);
+            }
+            else
+            {
+                [GP + 0x1c] = h(1);
+                [GP + 0x20] = h(0);
+            }
         }
         else
         {
-            [GP + 1c] = h(1);
-            [GP + 20] = h(0);
+            if( h[GP + 0x20] != 3 )
+            {
+                [GP + 0x20] = h(h[GP + 0x20] + 1);
+            }
+            else
+            {
+                [GP + 0x20] = h(0);
+                [0x80062d7e] = h(hu[0x80062d78]);
+            }
         }
     }
     else
     {
-        if( h[GP + 20] != 3 )
-        {
-            [GP + 20] = h(h[GP + 20] + 1);
-        }
-        else
-        {
-            [GP + 20] = h(0);
-            [80062d7e] = h(hu[80062d78]);
-        }
+        [GP + 0x20] = h(0);
+        [GP + 0x1c] = h(0);
     }
-}
-else
-{
-    [GP + 20] = h(0);
-    [GP + 1c] = h(0);
-}
 
-[80062d7a] = h(hu[80062d78]); // previous
-[80062d7e] = h(hu[80062d7e] | hu[80062d7c]);
+    [0x80062d7a] = h(hu[0x80062d78]); // previous
+    [0x80062d7e] = h(hu[0x80062d7e] | hu[0x80062d7c]);
 
-[80062d80] = h(buttons >> 10); // second pad buttons mask
-[80062d84] = h((hu[80062d80] ^ hu[80062d82]) & hu[80062d80]); // pressed
-[80062d86] = h(0); // repeated
+    [0x80062d80] = h(buttons >> 0x10); // second pad buttons mask
+    [0x80062d84] = h((hu[0x80062d80] ^ hu[0x80062d82]) & hu[0x80062d80]); // pressed
+    [0x80062d86] = h(0); // repeated
 
-if( hu[80062d80] == hu[80062d82] )
-{
-    if( h[GP + 1e] == 0 )
+    if( hu[0x80062d80] == hu[0x80062d82] )
     {
-        if( h[GP + 22] != f )
+        if( h[GP + 0x1e] == 0 )
         {
-            [GP + 22] = h(h[GP + 22] + 1);
+            if( h[GP + 0x22] != 0xf )
+            {
+                [GP + 0x22] = h(h[GP + 0x22] + 1);
+            }
+            else
+            {
+                [GP + 0x1e] = h(1);
+                [GP + 0x22] = h(0);
+            }
         }
         else
         {
-            [GP + 1e] = h(1);
-            [GP + 22] = h(0);
+            if( h[GP + 0x22] != 3 )
+            {
+                [GP + 0x22] = h(h[GP + 0x22] + 1);
+            }
+            else
+            {
+                [GP + 0x22] = h(0);
+                [0x80062d86] = h(hu[0x80062d80]);
+            }
         }
     }
     else
     {
-        if( h[GP + 22] != 3 )
-        {
-            [GP + 22] = h(h[GP + 22] + 1);
-        }
-        else
-        {
-            [GP + 22] = h(0);
-            [80062d86] = h(hu[80062d80]);
-        }
+        [GP + 0x1e] = h(0);
+        [GP + 0x22] = h(0);
     }
-}
-else
-{
-    [GP + 1e] = h(0);
-    [GP + 22] = h(0);
-}
 
-[80062d82] = h(hu[80062d80]);
-[80062d86] = h(hu[80062d86] | hu[80062d84]);
-////////////////////////////////
+    [0x80062d82] = h(hu[0x80062d80]);
+    [0x80062d86] = h(hu[0x80062d86] | hu[0x80062d84]);
+}
 
 
 
@@ -6138,61 +6134,50 @@ func1d0704();
 
 
 
-////////////////////////////////
-// func25174()
-
-system_menu_get_current_pad_buttons();
-buttons = V0;
-
-if( buttons & 0001 )
+void func25174()
 {
-    A0 = 0;
-    func24dd4();
-}
-else if( buttons & 0002 )
-{
-    for( int i = 0; i < 9; ++i )
+    u32 buttons = system_menu_get_current_pad_buttons();
+
+    if( buttons & 0x0001 )
     {
-        A0 = i;
-        func24d88();
+        func24dd4( 0 );
     }
-
-    A0 = 64;
-    func24d88();
-}
-else if( buttons & 0004 )
-{
-    A0 = 0;
-    func24e18();
-
-    return;
-}
-else if( buttons & 0008 )
-{
-    func24e5c();
-
-    A1 = 13f;
-
-    for( int i = 0; i < 5; ++i )
+    else if( buttons & 0x0002 )
     {
-        for( int j = 0; j < 6; ++j )
+        for( int i = 0; i < 0x9; ++i )
         {
-            [8009c6e4 + 4fc + (A1 - j) * 2] = h((j + 47) | ffffc600);
+            func24d88( i );
         }
-        A1 -= 1;
+        func24d88( 0x64 );
     }
+    else if( buttons & 0x0004 )
+    {
+        func24e18( 0 );
+    }
+    else if( buttons & 0x0008 )
+    {
+        func24e5c();
 
-    func24e94();
-}
-else
-{
-    [8009d2a4] = b(ff);
-    [8009d2a5] = b(ff);
+        A1 = 0x13f;
+        for( int i = 0; i < 0x5; ++i )
+        {
+            for( int j = 0; j < 0x6; ++j )
+            {
+                [0x8009c6e4 + 0x4fc + (A1 - j) * 2] = h((j + 0x47) | 0xffffc600);
+            }
+            A1 -= 1;
+        }
 
-    A0 = 0;
-    system_menu_show();
+        func24e94();
+    }
+    else
+    {
+        [0x8009d2a4] = b(0xff);
+        [0x8009d2a5] = b(0xff);
+
+        system_menu_show( 0 );
+    }
 }
-////////////////////////////////
 
 
 
