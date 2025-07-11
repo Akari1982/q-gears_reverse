@@ -1,0 +1,111 @@
+Walkmesh Surface Flags
+Here are the walkmesh flags and their likely meanings based on the source code:
+
+Simple Property Flags
+These flags generally represent a single, binary (on/off) property.
+Flag values can be combined to combine properties on a walkmesh surface.
+
+0x00000100 (SLOW): This flag reduces the character's movement speed by halve.
+
+0x00020000 (AUTOSLIDE): Player slides down a slope while still having control, not as steep.
+
+0x00080000 (LADDER): Allows the character to climb up or down.
+
+0x00100000 (NO_SHADOW): The character's sprite shadow is not rendered when on a triangle with this flag.
+
+0x00200000 (SWIM): Sets player to swim animation (used for Bart)
+
+0x00800000 (OOB): All characters cannot enter a triangle with this flag set. Out of bounds areas.
+
+0x04000000 (CAM_RAMP): This flag is used by the camera logic to smoothly adjust its height as the player moves up or down in certain areas.
+
+0x40000000 (NO_JUMP): Prevents the player from initiating a jump while on this surface.
+
+Multi-bit and Combined Flags
+These flags are read as multi-bit values or are used in combination to define more nuanced behaviors.
+
+Environmental Movement (Conveyor Belts / Wind)
+These flags work together to push the character in a specific direction at a specific speed. This is handled in the updateEntityEventCode2 function.
+
+0x00000600 (SPEED): Bits 9 and 10 are read as a 2-bit value (0 to 3) that sets the speed of the environmental push.
+
+0x00003800 (DIRECTION): Bits 11, 12, and 13 are read as a 3-bit value (0 to 7) that sets the direction of the push.
+
+0x00400000 (WALL_SLOPE): Bit 22 must be set for the environmental movement to be active at all. Disables player control and forces them to slide off, usually set on steep slopes where player would fall/slide down until they touch the ground.
+
+Combined Flags
+Flags can be combined to set multiple properties at once like:
+0x40400000: This would make it so the player couldn't jump from this surface
+
+Entity Permissions
+These flags are used to define which types of entities are allowed to be on a surface. This is checked in the updateEntityEventCode3Sub0 function.
+
+0x00000020 (Bit 5): (NPC_STOP): Permission flag for entity type 1.
+
+0x00000040 (Bit 6): (FOLLOWER_STOP): Permission flag for entity type 2.
+
+0x00000080 (Bit 7): (PC_STOP): Permission flag for entity type 3.
+
+-----------------------------------------------------------------------------------
+	
+Materials (4 bytes) - Akari
+0x00000000 (NONE) - Standard Material, no restrictions
+0x00000004 (WM_INCR) - Looks like we move one walkmesh ID down if we move on this material
+0x00000018 (NO_AIR) - Unpassable for PC and Follower while in the air
+0x00000020 (NPC_STOP) - Unpassable for NPC
+0x00000040 (FOLLOWER_STOP) - Unpassable for PC Follower
+0x00000080 (PC_STOP) - Unpassable for PC
+0x000000D8 - Unpassable for all types of PC character. + 0x00000018
+0x000000E0 - Entity type unpassability flags (every entity can be set to specific type and will be ckecked with this)
+0x00000600 - Speed ID (Value 0-0400 1-0800 2-1000 3-2000)
+0x00003800 - Direction ID (Value: 0-000C 1-000E 2-0000 3-0002 4-0004 5-0006 6-0008 7-000A)
+0x00004000 - Auto move by normal movement vector?
+0x00008000 - Add normal movement vector
+0x00020000 (AUTOSLIDE) - Autoslide down. Player can still control.
+0x00200000 (ANIM_LOCK) - Animation ID set to 6, swimming animation for Bart
+0x00400000 (WALL_SLOPE) - Autoslide down. Player can't control and passes thru entities.
+0x00800000 (OOB) - Player and NPCs can't pass this material on any Walkmesh
+0x10000000 (OOB2) - Unpassable for Walkmesh 0
+
+Materials (4 bytes) - Noah
+0x00000020 (NPC_STOP): Permission flag for entity type 1.
+0x00000040 (FOLLOWER_STOP): Permission flag for entity type 2.
+0x00000080 (PC_STOP): Permission flag for entity type 3.
+0x00000100 (SLOW): This flag reduces the character's movement speed by halve.
+0x00020000 (AUTOSLIDE): Player slides down a slope while still having control, not as steep.
+0x00080000 (LADDER): Allows the character to climb up or down.
+0x00100000 (NO_SHADOW): The character's sprite shadow is not rendered when on a triangle with this flag.
+0x00200000 (SWIM): Sets player to swim animation (used for Bart)
+0x00800000 (OOB): All characters cannot enter a triangle with this flag set. Out of bounds areas.
+0x04000000 (CAM_RAMP): This flag is used by the camera logic to smoothly adjust its height as the player moves up or down in certain areas.
+0x40000000 (Disable Jumping): Prevents the player from initiating a jump while on this surface.
+0x00000600 (SPEED): Bits 9 and 10 are read as a 2-bit value (0 to 3) that sets the speed of the environmental push.
+0x00003800 (DIRECTION): Bits 11, 12, and 13 are read as a 3-bit value (0 to 7) that sets the direction of the push.
+0x00400000 (WALL_SLOPE): Bit 22 must be set for the environmental movement to be active at all. Disables player control and forces them to slide off, usually set on steep slopes where player would fall/slide down until they touch the ground.
+
+MISSING:
+    WM_INCR           = 0x00000004 = Flag to increment or decrement player on Walkmesh ID
+    ???               = 0x00000018 = Flag checked for PC and Follower
+    OOB2              = 0x10000000 = Unpassable on walkmesh 0
+
+
+---------------
+COLORS
+---------------
+
+0x00000000 (GROUND): Light Green
+0x00000100 (SLOW): Dark Red
+0x00020000 (AUTOSLIDE): Orange
+0x00080000 (LADDER): Dark Orange
+0x00100000 (NO_SHADOW): White
+0x00200000 (SWIM): Light Blue
+0x00800000 (OOB): Black
+0x04000000 (CAM_RAMP): 
+0x40000000 (NO_JUMP): Light Red
+0x00000600 (SPEED): Green
+0x00003800 (DIRECTION): Dark Green
+0x00400000 (WALL_SLOPE): Red
+0x00000020 (NPC_STOP): Light Gray
+0x00000040 (FOLLOWER_STOP): Medium Gray
+0x00000080 (PC_STOP): Dark Gray
+

@@ -181,7 +181,7 @@ void funca73b8()
 
     [struct + 0x8] = b(0x1); // field
     [struct + 0x9] = b(0x2);
-    [struct1c + 0xc] = h(0x0);
+    [struct1c + 0xc] = h(0x0); // loading field id
     [struct1c + 0x3a] = h(0x1);
 }
 
@@ -937,12 +937,12 @@ void funca7ff0()
     [0x800ab308 + 0x2] = b(0);
     [0x800ab308 + 0x3] = b(0);
 
-    // 00000000 00000000 00000000 00000000
-    // 800A8574 800A859C 800A8638 800A8694
-    // 800A8448 800A8450 800A847C 800A84A8
-    // 800A833C 800A8344 800A8368 800A8370
-    // 800A8398 800A83A0 800A83AC 800A83E8
-    // 00000000 00000000 00000000 00000000
+    // 00000000            00000000            00000000            00000000
+    // 800A8574(funca8574) 800A859C(funca859c) 800A8638(funca8638) 800A8694(funca8694)
+    // 800A8448(funca8448) 800A8450(funca8450) 800A847C(funca847c) 800A84A8(funca84a8)
+    // 800A833C(funca833c) 800A8344(funca8344) 800A8368(funca8368) 800A8370(funca8370)
+    // 800A8398(funca8398) 800A83A0(funca83a0) 800A83AC(funca83ac) 800A83E8(funca83e8)
+    // 00000000            00000000            00000000            00000000
 
     for( int i = 0; i < 6; ++i )
     {
@@ -1108,12 +1108,14 @@ u8 funca832c()
 
 
 
+// 0x3 (0x0 callback)
 void funca833c()
 {
 }
 
 
 
+// 0x3 (0x4 callback)
 void funca8344()
 {
     func32628( 0x800a8378 ); // funca8378()
@@ -1121,12 +1123,14 @@ void funca8344()
 
 
 
+// 0x3 (0x8 callback)
 void funca8368()
 {
 }
 
 
 
+// 0x3 (0xc callback)
 void funca8370()
 {
 }
@@ -1140,12 +1144,14 @@ void funca8378()
 
 
 
+// 0x4 (0x0 callback)
 void funca8398()
 {
 }
 
 
 
+// 0x4 (0x4 callback)
 void funca83a0()
 {
     [0x800ab310] = w(0);
@@ -1153,6 +1159,7 @@ void funca83a0()
 
 
 
+// 0x4 (0x8 callback)
 void funca83ac()
 {
     [0x800ab310] = w(w[0x800ab310] + 0x1);
@@ -1165,6 +1172,7 @@ void funca83ac()
 
 
 
+// 0x4 (0xc callback)
 void funca83e8()
 {
     if( funca8fcc() == 0 )
@@ -1175,28 +1183,31 @@ void funca83e8()
         u32 struct1c = w[struct + 0x1c];
 
         [struct + 0x8] = b(0x1); // field
-        [struct1c + 0xc] = h(0x46);
+        [struct1c + 0xc] = h(0x46); // loading field id
         [struct1c + 0x3a] = h(2);
     }
 }
 
 
 
+// 0x2 (0x0 callback())
 void funca8448()
 {
 }
 
 
 
+// 0x2 (0x4 callback())
 void funca8450()
 {
     [0x800ab318] = b(0);
 
-    func32628( 0x800a84b0 );
+    func32628( 0x800a84b0 ); // funca84b0()
 }
 
 
 
+// 0x2 (0x8 callback())
 void funca847c()
 {
     if( bu[0x800ab318] != 0 )
@@ -1207,6 +1218,7 @@ void funca847c()
 
 
 
+// 0x2 (0xc callback())
 void funca84a8()
 {
 }
@@ -1252,6 +1264,7 @@ void funca84ec()
 
 
 
+// 0x1 (0x0 callback())
 void funca8574()
 {
     [0x800ab323] = b(1);
@@ -1261,30 +1274,29 @@ void funca8574()
 
 
 
+// 0x1 (0x4 callback())
 void funca859c()
 {
     func32574();
 
     func2c4b0( 1 );
 
-    A2 = 0001;
-    800A85B8	lui    v0, $800b
-    800A85BC	addiu  v1, v0, $b320 (=-$4ce0)
-    A1 = V1 + A2;
-    A0 = A2;
-    [V1 + 0008] = b(0);
-    [V0 + b320] = b(A0);
-    [V1 + 0007] = b(0);
-    [V1 + 0006] = b(0);
-    [V1 + 0001] = b(0);
-    [V1 + 0002] = b(0);
-    [V1 + 000c] = w(0);
-    [V1 + 0010] = w(0);
+    A2 = 0x1;
+    A1 = 0x800ab320 + A2;
+
+    [0x800ab320 + 0x0] = b(1);
+    [0x800ab320 + 0x1] = b(0);
+    [0x800ab320 + 0x2] = b(0);
+    [0x800ab320 + 0x6] = b(0); // memory card port
+    [0x800ab320 + 0x7] = b(0);
+    [0x800ab320 + 0x8] = b(0);
+    [0x800ab320 + 0xc] = w(0);
+    [0x800ab320 + 0x10] = w(0);
 
     loopa85e8:	; 800A85E8
-        [A1 + 0004] = b(0);
-        800A85EC	addiu  a2, a2, $ffff (=-$1)
-        800A85F4	addiu  a1, a1, $ffff (=-$1)
+        [A1 + 0x4] = b(0);
+        A2 -= 1;
+        A1 -= 1;
     800A85F0	bgez   a2, loopa85e8 [$800a85e8]
 
     funca8d2c(); // open events
@@ -1301,6 +1313,7 @@ void funca8618()
 
 
 
+// 0x1 (0x8 callback())
 void funca8638()
 {
     func2c308( 0 );
@@ -1319,6 +1332,7 @@ void funca8638()
 
 
 
+// 0x1 (0xc callback())
 void funca8694()
 {
     func2c4b0( 0 );
@@ -1336,7 +1350,7 @@ void funca8694()
 ////////////////////////////////
 // funca86d8
 
-800A86E0	jal    $func2f810
+func2f810();
 
 V0 = V0 & 00ff;
 800A86EC	bne    v0, zero, La879c [$800a879c]
@@ -1354,7 +1368,7 @@ V1 = w[80077528];
 V0 = V1 & 0010;
 800A8724	beq    v0, zero, La8754 [$800a8754]
 V0 = V1 & 0040;
-800A872C	jal    $8002f488
+800A872C	jal    $func2f488
 A0 = 0067;
 V1 = bu[S0 + 0003];
 800A8738	nop
@@ -1370,7 +1384,7 @@ V1 = 0001;
 La8754:	; 800A8754
 800A8754	beq    v0, zero, La8784 [$800a8784]
 800A8758	lui    v0, $0002
-800A875C	jal    $8002f488
+800A875C	jal    $func2f488
 A0 = 0067;
 V0 = S0;
 V1 = bu[V0 + 0003];
@@ -1398,7 +1412,7 @@ La879c:	; 800A879C
 
 void funca87ac()
 {
-    funca8a8c();
+    funca8a8c(); // empty
     funca8a94();
     funca8b7c();
     funca8c60();
@@ -1521,7 +1535,7 @@ V0 = 0001;
 V0 = V0 & 00ff;
 800A8A30	bne    v0, zero, La8a4c [$800a8a4c]
 800A8A34	lui    v0, $800b
-800A8A38	jal    $8002f488
+800A8A38	jal    $func2f488
 A0 = 0066;
 800A8A40	j      La8a7c [$800a8a7c]
 800A8A44	nop
@@ -1537,7 +1551,7 @@ A0 = 0067;
 A0 = 0c18;
 
 La8a60:	; 800A8A60
-800A8A60	jal    $8002f488
+800A8A60	jal    $func2f488
 800A8A64	nop
 800A8A68	jal    $func2faac
 A0 = 0010;
@@ -1557,23 +1571,26 @@ void funca8a8c()
 
 
 ////////////////////////////////
-// funca8a94
+// funca8a94()
 
 S0 = 0;
 800A8AA0	lui    v0, $800b
 800A8AA8	addiu  s1, v0, $b344 (=-$4cbc)
 
 loopa8ab0:	; 800A8AB0
-[SP + 0010] = w(0);
-A0 = S0 << 05;
-A1 = 0;
-A2 = 000a;
-800A8AC0	jal    $80027710
-A3 = S1;
-S0 = S0 + 0001;
-V0 = S0 < 000a;
+    A0 = S0 << 05;
+
+    A1 = 0;
+    A2 = 0xa;
+    A3 = S1;
+    A4 = 0;
+    func27710();
+
+    S1 = S1 + 0008;
+    S0 = S0 + 0001;
+    V0 = S0 < 000a;
 800A8AD0	bne    v0, zero, loopa8ab0 [$800a8ab0]
-S1 = S1 + 0008;
+
 A2 = 0005;
 800A8ADC	lui    v0, $800b
 800A8AE0	addiu  s0, v0, $b394 (=-$4c6c)
@@ -1583,7 +1600,7 @@ V0 = 0001;
 800A8AF0	addiu  v1, v0, $b298 (=-$4d68)
 A0 = h[V0 + b298];
 A1 = h[V1 + 0002];
-800A8AFC	jal    $80027710
+800A8AFC	jal    $func27710
 A3 = S0;
 800A8B04	addiu  v1, s0, $ff8c (=-$74)
 V0 = bu[V1 + 0001];
@@ -1598,7 +1615,7 @@ A0 = h[800ab29c];
 800A8B30	addiu  v1, v0, $b29c (=-$4d64)
 [SP + 0010] = w(0);
 A1 = h[V1 + 0002];
-800A8B3C	jal    $80027710
+800A8B3C	jal    $func27710
 A3 = S0 + 0018;
 800A8B44	j      La8b68 [$800a8b68]
 800A8B48	nop
@@ -1631,7 +1648,7 @@ A0 = h[800ab2a0];
 800A8BB8	addiu  v1, v0, $b2a0 (=-$4d60)
 [SP + 0010] = w(0);
 A1 = h[V1 + 0002];
-800A8BC4	jal    $80027710
+800A8BC4	jal    $func27710
 A3 = S0 + 007c;
 800A8BCC	jal    funca8ea4 [$800a8ea4]
 800A8BD0	nop
@@ -1643,7 +1660,7 @@ V0 = V0 < 0001;
 800A8BE8	addiu  v1, v0, $b2a4 (=-$4d5c)
 A0 = h[V0 + b2a4];
 A1 = h[V1 + 0002];
-800A8BF4	jal    $80027710
+800A8BF4	jal    $func27710
 A3 = S0 + 0084;
 800A8BFC	j      La8c50 [$800a8c50]
 800A8C00	nop
@@ -1706,8 +1723,8 @@ V0 = hu[V0 + 0002];
 V1 = 0003;
 [A0 + 0004] = w(V1);
 V0 = V0 + V1;
-800A8CE0	jal    $func355e4
 [A0 + 0002] = h(V0);
+func355e4();
 
 La8ce8:	; 800A8CE8
 ////////////////////////////////
@@ -1720,8 +1737,8 @@ void funca8cf8()
 
     if( w[0x800ab320 + 0xc] >= 0x31 )
     {
-        [0x800ab320 + 0xc] = w(0);
         [0x800ab320 + 0x2] = b(0);
+        [0x800ab320 + 0xc] = w(0);
     }
 }
 ////////////////////////////////
@@ -1734,10 +1751,13 @@ void funca8d2c()
 
     for( int i = 0; i < 4; ++i )
     {
+        // hardcoded 0x800ab2b4
+        // 0x00000004 EvSpIOE memory card connected
+        // 0x00008000 EvSpERROR generates an error
+        // 0x00000100 EvSpTIMOUT memory card not connected
+        // 0x00002000 EvSpNEW no writing after connection
         V0 = system_bios_open_event( SwCARD, w[0x800ab2b4 + i * 0x4], EvMdNOINTR, 0 );
-
         [0x800ab320 + 0x14 + i * 0x4] = w(V0);
-
         system_bios_enable_event( V0 );
     }
 
@@ -1768,29 +1788,28 @@ void funca8e10()
 {
     if( bu[0x800ab320 + 0x7] == 0 )
     {
-        funca8ed8();
+        funca8ed8(); // clear memory card events
 
         [0x800ab320 + 0x7] = b(1);
     }
 
-    V1 = funca8f44(); // test memory cards events
+    u8 event_id = funca8f44(); // return index of memory card event occured
 
-    if( V1 == -1 ) return;
+    if( event_id == -1 ) return;
 
-    V0 = bu[0x800ab320 + 0x6];
+    u8 port = bu[0x800ab320 + 0x6];
 
-    if( ( V1 == 0x0 ) || ( V1 == 0x3 ) )
+    if( ( event_id == 0x0 ) || ( event_id == 0x3 ) )
     {
-        [0x800ab320 + 0x4 + V0] = b(1);
+        [0x800ab320 + 0x4 + port] = b(1); // memory card connected
     }
     else
     {
-        [0x800ab320 + 0x4 + V0] = b(0);
+        [0x800ab320 + 0x4 + port] = b(0); // memory card not connected
     }
 
-
-    [0x800ab320 + 0x7] = b(0);
     [0x800ab320 + 0x6] = b(bu[0x800ab320 + 0x6] ^ 0x1);
+    [0x800ab320 + 0x7] = b(0);
 }
 
 
@@ -1809,6 +1828,7 @@ u8 funca8ea4()
 
 void funca8ed8()
 {
+    // clear events
     for( int i = 0; i < 4; ++i )
     {
         system_bios_test_event( w[0x800ab320 + 0x14 + i * 0x4] );
@@ -1817,6 +1837,12 @@ void funca8ed8()
     system_bios_wait_card_status( 0 );
     system_bios_wait_card_status( 1 );
 
+    // Tests the connection of the Memory Card specified in chan.
+    // When calculating chan, “port number” is 0 for Port 1 and 1 for Port 2. “Card number” is zero when a
+    // standard controller is connected, and may be in the range 0-3 if a Multi Tap is connected.
+    // This function executes asynchronously, so it returns immediately. Processing completion is communicated
+    // by an event. (See table below.) In order to use this command with multiple slots in a Multi Tap, you must
+    // wait until processing has completed before sending another _card_info() call
     system_bios_card_info( bu[0x800ab320 + 0x6] << 0x4 );
 }
 
@@ -1836,19 +1862,16 @@ int funca8f44()
 
 
 
-////////////////////////////////
-// funca8fbc
-800A8FBC	lui    v1, $800b
-V0 = 0001;
-800A8FC4	jr     ra 
-[V1 + b328] = b(V0);
-////////////////////////////////
+void funca8fbc()
+{
+    [0x800ab328] = b(1);
+}
 
 
 
 u8 funca8fcc()
 {
-    return bu[800ab323];
+    return bu[0x800ab320 + 0x3];
 }
 
 

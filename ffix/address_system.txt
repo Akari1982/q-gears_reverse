@@ -536,6 +536,7 @@
     +  0 [][][][] some flags. We remove some flags with ( value & 0xfffffcf0 ) mask at start of field loading. Init with 00100000.
     +  4 [][][][] init with 0. Pointer to 8008b250.
     +  8 []       init with 0. looks like id of running module (0x01 - field, 0x02 - battle, 0x08 - end battle menu).
+    +  9 []       ???
     +  a []       init with 0.
     +  b []       init with 0xff. Bitmask of inserted disc.
     +  c [][][][] pointer to DISPENV two buffers (8008b044).

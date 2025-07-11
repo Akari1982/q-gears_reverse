@@ -1,0 +1,9 @@
+0x800ab320
+    +  2 []       ???
+    +  4 array of memory cards ports connected/not connected state (0x1 size 0x2 items).
+    +  6 []       current memory card port (0 or 1).
+    +  7 []       0-need to clear events, 1-events cleared.
+    +  8 []       ???
+    +  c [][][][] some value. Increment sometimes. 0x30 max.
+    + 10 [][][][] ???
+    + 14 array of 4 memory cards events (0x4 size 0x4 items). 0-EvSpIOE(end of i/o), 1-EvSpERROR(error happned), 2-EvSpTIMOUT(time out), 3-EvSpNEW(new device)
