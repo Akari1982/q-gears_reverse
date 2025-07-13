@@ -110,7 +110,7 @@ void begin_main()
                 S1 -= 1;
                 if( S1 == 0 )
                 {
-                    [0x800ab300] = w(0);
+                    [0x800ab300] = w(0x0);
                 }
             }
             break;
@@ -119,7 +119,7 @@ void begin_main()
             {
                 funcaaadc();
 
-                [0x800ab300] = w(0);
+                [0x800ab300] = w(0x0);
             }
             break;
         }

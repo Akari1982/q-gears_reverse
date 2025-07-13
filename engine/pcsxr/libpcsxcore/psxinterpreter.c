@@ -710,18 +710,33 @@ void psxJAL()
     //psxMemWrite32(0x800af51c, 0); // transition type
 
     // FFVII DEBUG
-    psxMemWrite8( 0x8009c6e4 + 0xfa4 + 0x83, 0x80 );
+    //psxMemWrite8( 0x8009c6e4 + 0xfa4 + 0x83, 0x80 );
     //psxMemWrite8(0x8009d820, 0xff);
 
 
     if( 0 ) {}
 
 
-    //else if (_JumpTarget_ == 0x8007d058)
-    //{
-    //    execI();
-    //    GPU_displayText("CALL XENO FUNC");
-    //}
+    else if( _JumpTarget_ == 0x800ab0e0 )
+    {
+        GPU_displayText("CALL funcab0e0");
+        execI();
+    }
+    else if( _JumpTarget_ == 0x800a72c0 )
+    {
+        GPU_displayText("CALL funca72c0");
+        execI();
+    }
+    else if( _JumpTarget_ == 0x800a9b58 )
+    {
+        GPU_displayText("CALL funca9b58");
+        execI();
+    }
+    else if( _JumpTarget_ == 0x800aa9d8 )
+    {
+        GPU_displayText("CALL funcaa9d8");
+        execI();
+    }
 
     //else if (_JumpTarget_ == 0x800ab1f0)
     //{
