@@ -484,7 +484,7 @@ void funca78c0()
 
 void funca796c()
 {
-    func1c784( w[0x800ab230] );
+    func1c784( w[0x800ab230] ); // remove item from array
 
     [0x800ab230] = w(0);
 }
@@ -2464,8 +2464,8 @@ bool funca9e14( bool A0 )
         {
             S5 = 0;
             S1 = -1;
-            [0x800ab440] = w(1);
-            [0x800ab2ec] = b(1);
+            [0x800ab440] = w(0x1);
+            [0x800ab2ec] = b(0x1);
         }
         else if( T4 == 1 )
         {
@@ -2674,6 +2674,7 @@ int funcaa848( S1 )
 
     while( func217c4( struct1c + 0x854 ) != 0 ) {}
 
+    // 0-0x2EE0, 1-0x2EE1
     u32 file_data = func1e218( 0x1, hu[0x800ab2d8 + S1 * 2] );
 
     u32 sector = w[file_data + 0x4];
@@ -2689,7 +2690,7 @@ int funcaa848( S1 )
 
     func320b8( 1, 1, 0, 0xffffff );
 
-    [0x800ab440] = w(0);
+    [0x800ab440] = w(0x0);
     [0x800ab2d0] = h(0);
     [0x80073998] = w(0);
 
@@ -2849,7 +2850,7 @@ void funcaaf40()
 
 void funcab06c()
 {
-    func1c784( w[0x800ab2f0] );
+    func1c784( w[0x800ab2f0] ); // remove item from array
 
     [0x800ab2f0] = w(0);
 }
