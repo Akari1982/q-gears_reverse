@@ -716,26 +716,48 @@ void psxJAL()
 
     if( 0 ) {}
 
-
-    else if( _JumpTarget_ == 0x800ab0e0 )
+    else if( _JumpTarget_ == 0x800ab0e0 ) // first call
     {
+        char Text[ 256 ];
+        sprintf( Text, _( "Top=(%x)\n" ), psxMemRead32( 0x800ab300 ) );
+        GPU_displayText( Text );
+
         GPU_displayText("CALL funcab0e0");
-        execI();
+        _SetLink(31);
+        doBranch(_JumpTarget_);
     }
     else if( _JumpTarget_ == 0x800a72c0 )
     {
+        char Text[ 256 ];
+        sprintf( Text, _( "Top=(%x)\n" ), psxMemRead32( 0x800ab300 ) );
+        GPU_displayText( Text );
+
         GPU_displayText("CALL funca72c0");
-        execI();
+        _SetLink(31);
+        doBranch(_JumpTarget_);
     }
-    else if( _JumpTarget_ == 0x800a9b58 )
+    else if( _JumpTarget_ == 0x800a9b58 ) // plays video
     {
+        char Text[ 256 ];
+        sprintf( Text, _( "Top=(%x)\n" ), psxMemRead32( 0x800ab300 ) );
+        GPU_displayText( Text );
+
+        sprintf( Text, _( "Val=(%x)\n" ), psxMemRead32( 0x800ab3c8 ) );
+        GPU_displayText( Text );
+
         GPU_displayText("CALL funca9b58");
-        execI();
+        _SetLink(31);
+        doBranch(_JumpTarget_);
     }
     else if( _JumpTarget_ == 0x800aa9d8 )
     {
+        char Text[ 256 ];
+        sprintf( Text, _( "Top=(%x)\n" ), psxMemRead32( 0x800ab300 ) );
+        GPU_displayText( Text );
+
         GPU_displayText("CALL funcaa9d8");
-        execI();
+        _SetLink(31);
+        doBranch(_JumpTarget_);
     }
 
     //else if (_JumpTarget_ == 0x800ab1f0)

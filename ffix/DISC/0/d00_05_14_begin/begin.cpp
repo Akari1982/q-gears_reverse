@@ -21,7 +21,7 @@ void begin_main()
     {
         switch( w[0x800ab300] )
         {
-            case 0x0:
+            case 0x0: // main
             {
                 if( funca9220() != 0 )
                 {
@@ -34,7 +34,7 @@ void begin_main()
             }
             break;
 
-            case 0x1:
+            case 0x1: // shows bio and menu after that
             {
                 if( funca9e14( 0 ) != false )
                 {
@@ -68,7 +68,7 @@ void begin_main()
             }
             break;
 
-            case 0x3:
+            case 0x3: // video plays and menu but after one cycle
             {
                 if( funca9220() != 0 )
                 {
@@ -81,7 +81,7 @@ void begin_main()
             }
             break;
 
-            case 0x4:
+            case 0x4: // next part of characters bios
             {
                 if( funca9e14( 1 ) != false )
                 {
@@ -115,7 +115,7 @@ void begin_main()
             }
             break;
 
-            case 0x6:
+            case 0x6: // shows first logo
             {
                 funcaaadc();
 
@@ -2065,7 +2065,7 @@ bool funca9220()
             }
             break;
 
-            case 0x1:
+            case 0x1: // init video?
             {
                 A1 = ( bu[struct1c + 0x8] != 0 ) ? 2: 1;
                 V0 = A1 - 1;
@@ -2087,7 +2087,7 @@ bool funca9220()
             }
             break;
 
-            case 0x2:
+            case 0x2: // plays video
             {
                 if( hu[0x800ab2c4] & 0x0010 )
                 {
@@ -2205,7 +2205,7 @@ bool funca9220()
             }
             break;
 
-            case 0x3:
+            case 0x3: // finish movie
             {
                 if( hu[0x800ab2c4] & 0x0080 )
                 {
@@ -2228,7 +2228,7 @@ bool funca9220()
             }
             break;
 
-            case 0x4:
+            case 0x4: // menu start continue
             {
                 if( ( hu[0x800ab2c4] & 0x1000 ) == 0 )
                 {
@@ -2276,7 +2276,7 @@ bool funca9220()
             func32098();
         }
 
-        funca9b58();
+        funca9b58(); // main render (during video and menu)
 
         V0 = w[0x800ab3c8] < 0x5;
     800A9924	bne    v0, zero, La9288 [$800a9288]
@@ -2719,7 +2719,7 @@ void funcaa994()
 
 
 
-void funcaa9d8()
+void funcaa9d8() // renders characters bios and menu
 {
     u32 struct = w[0x8006794c];
     u32 struct1c = w[struct + 0x1c];
