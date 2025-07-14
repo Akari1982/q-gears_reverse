@@ -9113,6 +9113,7 @@ SP = SP + 0020;
 
 
 
+// add cursor to render
 u8 func275dc( s16 x, s16 y, s16 depth, id, A4 )
 {
     u32* p = w[0x80077170];
@@ -13445,6 +13446,7 @@ SP = SP + 0028;
 
 
 
+// dont called in start menu
 void func2b524( s16 x, s16 y, s16 depth, A3, A4 )
 {
     u32* ot = w[0x8007716c] + depth * 4;
@@ -14234,6 +14236,7 @@ SP = SP + 0018;
 
 
 
+// called but didnt affects start menu
 void func2bfd0()
 {
     S2 = system_psyq_vsync( -1 );
@@ -14909,6 +14912,7 @@ V0 = V0 + A3;
 
 
 
+// called in main menu
 void func2c9b0()
 {
     for( int i = 0; i < 0xa; ++i )
@@ -14919,6 +14923,7 @@ void func2c9b0()
             {
                 if( w[0x80077530 + i * 0x54 + 0x24] != 0 )
                 {
+                    // dont called in start menu
                     func2e588( 0x80077530 + i * 0x54 );
                 }
 
@@ -14936,14 +14941,14 @@ void func2c9b0()
                         A0 = 0x80077530 + i * 0x54 + 0x8;
                         A1 = h[0x80077530 + i * 0x54 + 0x18]; // depth
                         A2 = 0x80077530 + i * 0x54 + 0x30;
-                        func2e718();
+                        func2e718(); // add cursor?
                     }
                 }
 
                 A0 = 0;
                 A1 = h[0x80077530 + i * 0x54 + 0x18]; // depth
                 A2 = bu[0x80077530 + i * 0x54 + 0x1a];
-                func2d9b4();
+                func2d9b4(); // dont called
 
                 V1 = w[0x80077530 + i * 0x54 + 0x40];
                 if( V1 != 0 )
@@ -19908,6 +19913,7 @@ void func32098()
 
 
 
+// fade in/out
 void func320b8()
 {
     func2fc8c();

@@ -716,6 +716,11 @@ void psxJAL()
 
     if( 0 ) {}
 
+    else if( _JumpTarget_ == 0x800320b )
+    {
+        execI();
+        GPU_displayText("CALL DISABLED");
+    }
     else if( _JumpTarget_ == 0x800ab0e0 ) // first call
     {
         char Text[ 256 ];
@@ -744,6 +749,8 @@ void psxJAL()
 
         sprintf( Text, _( "Val=(%x)\n" ), psxMemRead32( 0x800ab3c8 ) );
         GPU_displayText( Text );
+
+        //psxMemWrite16( 0x800ab2c4, psxMemRead16( 0x800ab2c4 ) | 0xffff );
 
         GPU_displayText("CALL funca9b58");
         _SetLink(31);

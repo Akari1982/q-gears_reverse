@@ -2236,8 +2236,8 @@ bool funca9220()
                     {
                         if( S2 < 0x5b )
                         {
-                            func320b8( 1, 1, 0, 0 );
-                            func320b8( 1, 1, 0x5a, 0xffffff );
+                            func320b8( 1, 1, 0, 0 ); // dont called
+                            func320b8( 1, 1, 0x5a, 0xffffff ); // dont called
 
                             [0x800ab2c4] = h(hu[0x800ab2c4] | 0x1000);
                         }
@@ -2273,7 +2273,7 @@ bool funca9220()
 
         if( ( hu[0x800ab2c4] & 0x0002 ) == 0 )
         {
-            func32098();
+            func32098(); // disables cursor rendering
         }
 
         funca9b58(); // main render (during video and menu)
@@ -2771,7 +2771,7 @@ void funcaaadc();
 
         if( i == 0xd2 )
         {
-            func320b8( 1, 1, 0x3c, 0 );
+            func320b8( 1, 1, 0x3c, 0 ); // fade in/out
         }
         else if( i == 0x3c )
         {
