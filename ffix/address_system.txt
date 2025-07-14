@@ -92,6 +92,25 @@
     + 14 [][][][] ???
     +994 copy of cd load struct (0x24 size).
 
+0x80077530 some ui struct (0xa items 0x54 size)
+    +  0 [][]     x?
+    +  8 some rect.
+        + 0 [][]     x.
+        + 2 [][]     y.
+        + 4 [][]     w.
+        + 6 [][]     h.
+    + 18 [][]     s16 depth.
+    + 1a []       ???
+    + 1c []       ???
+    + 1e []       transparency?
+    + 20 [][]     width?
+    + 22 [][]     height?
+    + 24 [][][][] pointer to some index with widget data.
+    + 32 []       ???
+    + 33 []       ???
+    + 40 [][][][] some callback.
+    + 44 [][][][] some callback.
+
 80077c82 [][]     set in 0xec opcode.
 
 80077de0 []       store here 1 if we change party member.
