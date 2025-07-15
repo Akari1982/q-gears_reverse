@@ -24,51 +24,43 @@ u8 g_field_random[] =
 
 
 
-
-////////////////////////////////
-// field_load_mim_dat_files()
-
-if( h[800965e8] == 0 ) // if background not loading yet
+void field_load_mim_dat_files()
 {
-    // load field mim
-    V1 = h[8009a05c]; // field id to load
-    A1 = w[800da5b8 + V1 * 18 + 8];
-    A0 = w[800da5b8 + V1 * 18 + c]; 
-    A2 = 80128000;
-    A3 = 0;
-    system_cdrom_start_load_lzs();
+    if( h[0x800965e8] == 0 ) // if background not loading yet
+    {
+        // load field mim
+        V1 = h[0x8009a05c]; // field id to load
+        A0 = w[0x800da5b8 + V1 * 0x18 + 0xc];
+        A1 = w[0x800da5b8 + V1 * 0x18 + 0x8];
+        system_cdrom_start_load_lzs( A0, A1, 0x80128000, 0 );
 
-    do system_cdrom_read_chain(); while( V0 != 0 )
+        while( system_cdrom_read_chain() != 0 ) {}
+    }
+    else
+    {
+        while( system_cdrom_read_chain() != 0 ) {}
+
+        func34bb0( 0x801b0000, 0x80128000 ); // copy loaded mim
+    }
+
+    // load field dat
+    V1 = h[0x8009a05c]; // field id to load
+    A0 = w[0x800da5b8 + V1 * 0x18 + 0x4];
+    A1 = w[0x800da5b8 + V1 * 0x18 + 0x0];
+    system_cdrom_start_load_lzs( A0, A1, 0x80114fe4, 0 );
+
+    while( system_cdrom_read_chain() != 0 ) {}
+
+    V0 = w[0x8009ad28]; // triggers address
+    [0x800716c4] = w(w[V0]); // offset to field triggers
+
+    V1 = w[0x8009c55c];
+    [0x80071a54] = w(w[V1]); // pointer to field encounters
+
+    V1 = w[0x80070784];
+    [0x8007e770] = w(w[V1] + 0x0); // pointer to field models header
+    [0x8008357c] = w(w[V1] + 0x4); // pointer to field models loading data
 }
-else
-{
-    do system_cdrom_read_chain(); while( V0 != 0 )
-
-    A0 = 801b0000;
-    A1 = 80128000;
-    func34bb0(); // copy loaded mim
-}
-
-// load field dat
-V1 = h[8009a05c]; // field id to load
-A1 = w[800da5b8 + V1 * 18 + 0];
-A0 = w[800da5b8 + V1 * 18 + 4];
-A2 = 80114fe4;
-A3 = 0;
-system_cdrom_start_load_lzs();
-
-do system_cdrom_read_chain(); while( V0 != 0 )
-
-V0 = w[8009ad28]; // triggers address
-[800716c4] = w(w[V0]); // offset to field triggers
-
-V1 = w[8009c55c];
-[80071a54] = w(w[V1]); // pointer to field encounters
-
-V1 = w[80070784];
-[8007e770] = w(w[V1] + 0); // pointer to field models header
-[8008357c] = w(w[V1] + 4); // pointer to field models loading data
-////////////////////////////////
 
 
 
@@ -153,9 +145,6 @@ system_cdrom_start_load_file(); // set data to load in background
 
 void field_main()
 {
-    [SP + 18] = w(w[800a0000]);
-    [SP + 1c] = w(w[800a0004]);
-
     system_psyq_clear_otag_r( &g_field_render_data[0].ot_drenv, 0x1 );
     system_psyq_clear_otag_r( &g_field_render_data[1].ot_drenv, 0x1 );
     system_psyq_set_drawenv( &g_field_render_data[0].drenv, &g_draw_env[0] );
@@ -203,49 +192,47 @@ void field_main()
 
     func128b8(); // fade
 
-    S0 = SP + 18;
     [8009ac40] = h(0);
 
-    // not clear if game state is field, battle, worldmap, 5 or d
-    if( ( h[800965ec] != 1 ) && ( h[800965ec] != 2 ) && ( h[800965ec] != 3 ) && ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
+    // clear if prev game state was not field, battle, worldmap or menu
+    if( ( h[0x800965ec] != 0x1 ) && ( h[0x800965ec] != 0x2 ) && ( h[0x800965ec] != 0x3 ) && ( h[0x800965ec] != 0x5 ) && ( h[0x800965ec] != 0xd ) )
     {
-        A0 = S0;
-        A1 = 0;
-        A2 = 0;
-        A3 = 0;
-        system_psyq_clear_image();
+        [SP + 0x18] = w(w[0x800a0000]);
+        [SP + 0x1c] = w(w[0x800a0004]);
+
+        system_psyq_clear_image( SP + 0x18, 0, 0, 0 );
     }
 
     while( true )
     {
         funcab2ac(); // do nothing, maybe removed debug
 
-        [80071a5c] = h(0); // map id loading in advance
-        [80095dd0] = h(0); // map id to load in advance
+        [0x80071a5c] = h(0x0); // map id loading in advance
+        [0x80095dd0] = h(0x0); // map id to load in advance
 
-        if( ( h[800965ec] == 1 ) || ( h[800965ec] == 3 ) )
+        if( ( h[0x800965ec] == 0x1 ) || ( h[0x800965ec] == 0x3 ) )
         {
-            if( hu[8009abf4 + 4c] == 0 )
+            if( hu[0x8009abf4 + 0x4c] == 0x0 )
             {
                 func129d0(); // fade?
 
-                [8009abf4 + 4c] = h(3);
-                [80071a58] = b(3);
-                [8009abf4 + 4e] = h(0);
-                [8007e768] = h(0);
-                [80095dd4] = h(1);
+                [0x8009abf4 + 0x4c] = h(0x3);
+                [0x80071a58] = b(0x3);
+                [0x8009abf4 + 0x4e] = h(0x0);
+                [0x8007e768] = h(0x0);
+                [0x80095dd4] = h(0x1);
             }
         }
 
-        if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
+        if( ( h[0x800965ec] != 0x5 ) && ( h[0x800965ec] != 0xd ) ) // if was not menu
         {
-            [8007eb64] = w(80114fe4); // events
-            [8009a044] = w(80114fe8); // walkmesh
-            [8009d848] = w(80114fec); // tilemap
-            [80083578] = w(80114ff0); // camera
-            [8009ad28] = w(80114ff4); // triggers
-            [8009c55c] = w(80114ff8); // encounter
-            [80070784] = w(80114ffc); // models
+            [0x8007eb64] = w(0x80114fe4); // events
+            [0x8009a044] = w(0x80114fe8); // walkmesh
+            [0x8009d848] = w(0x80114fec); // tilemap
+            [0x80083578] = w(0x80114ff0); // camera
+            [0x8009ad28] = w(0x80114ff4); // triggers
+            [0x8009c55c] = w(0x80114ff8); // encounter
+            [0x80070784] = w(0x80114ffc); // models
 
             field_load_mim_dat_files();
         }
@@ -268,7 +255,7 @@ void field_main()
 
         while( system_psyq_draw_sync( 1 ) != 0 ) {}
 
-        if( h[0x800965ec] != 0xd )
+        if( h[0x800965ec] != 0xd ) // if not 0xd menu
         {
             [0x8009abf4 + 0x4c] = h(0x1);
             [0x8009abf4 + 0x4e] = h(0x100);
@@ -336,21 +323,21 @@ void field_main()
         field_arrows_init( g_field_render_data[0].arrows, &g_field_render_data[0].arrows_dm );
         field_arrows_init( g_field_render_data[1].arrows, &g_field_render_data[1].arrows_dm );
 
-        if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
+        if( ( h[0x800965ec] != 0x5 ) && ( h[0x800965ec] != 0xd ) ) // if was not nemu
         {
             A0 = 0;
             A1 = 0x80128000;
             field_load_mim_to_vram();
         }
 
-        if( h[800965ec] == 2 )
+        if( h[0x800965ec] == 0x2 )
         {
-            [8009a000] = h(f5);
+            [0x8009a000] = h(0xf5);
             system_execute_AKAO();
 
-            [8009a000] = h(18);
-            [8009a004] = w(w[8009ac3c]);
-            [8009a008] = w(4);
+            [0x8009a000] = h(0x18);
+            [0x8009a004] = w(w[0x8009ac3c]);
+            [0x8009a008] = w(0x4);
             system_execute_AKAO();
         }
 
@@ -376,7 +363,7 @@ void field_main()
         A0 = 8007eaac + V0 * 5c;
         system_psyq_put_drawenv();
 
-        [800965ec] = h(1); // set current game state as field
+        [0x800965ec] = h(0x1); // set prev game state as field
 
         if( ( bu[8009abf4 + 1] == a ) || ( bu[8009abf4 + 1] == 1a ) || ( bu[8009abf4 + 1] == 5 ) )
         {
@@ -494,7 +481,7 @@ void field_main_loop()
     [8007eb90] = w(a0); // base offset x for DRAWENV
     [8007eb94] = w(78); // base offset y for DRAWENV
 
-    if( ( h[800965ec] != 5 ) && ( h[800965ec] != d ) )
+    if( ( h[0x800965ec] != 5 ) && ( h[0x800965ec] != d ) ) // if prev state was not menu
     {
         field_model_load_and_init();
     }

@@ -99,69 +99,57 @@ func29818();
 
 
 
-////////////////////////////////
-// func112e8()
-
-if( h[800965ec] == 2 )
+void func112e8()
 {
-    do system_cdrom_read_chain(); while( V0 != 0 )
-
-    A0 = 801c0000;
-}
-else
-{
-    do system_cdrom_read_chain(); while( V0 != 0 )
-
-    A0 = w[80048d2c]; // 360B0000 "WORLD\WORLD.BIN"
-    A1 = w[80048d30]; // 9B040100
-    A2 = 80180000;
-    A3 = 0;
-    system_cdrom_start_load_file();
-
-    do system_cdrom_read_chain(); while( V0 != 0 )
-
-    A0 = 80180000;
-}
-
-A1 = 800a0000;
-func15ca0(); // gzip decode and copy
-
-if( w[80071e28] != 2 )
-{
-    if( h[800965ec] == 2 )
+    if( h[0x800965ec] == 0x2 )
     {
-        [80071e28] = w(1);
+        while( system_cdrom_read_chain() != 0 ) {}
+
+        A0 = 0x801c0000;
     }
     else
     {
-        [80071e28] = w(0);
+        while( system_cdrom_read_chain() != 0 ) {}
+
+        A0 = w[0x80048d2c]; // 360B0000 "WORLD\WORLD.BIN"
+        A1 = w[0x80048d30]; // 9B040100
+        system_cdrom_start_load_file( A0, A1, 0x80180000, 0 );
+
+        while( system_cdrom_read_chain() != 0 ) {}
+
+        A0 = 0x80180000;
     }
-    [800730cc] = w(h[8009a05c]);
-}
 
-if( h[8009a05c] != h[80071a5c] || h[8009a05c] == 0 )
-{
-    A0 = 70071e28;
-    A1 = 800730cc;
-    A2 = 80095ddc;
-    A3 = 0;
-    wm_main();
-    [80075dec] = h(V0);
-}
-else
-{
-    A0 = 80071e28;
-    A1 = 800730cc;
-    A2 = 80095ddc;
-    A3 = 801b0000;
-    wm_main();
-    [80075dec] = h(V0);
-    [80071a5c] = h(0);
-    [800965e8] = h(0);
-}
+    func15ca0( A0, 0x800a0000 ); // gzip decode and copy
 
-[8009a05c] = h(hu[8009abf4 + 2]);
-////////////////////////////////
+    if( w[0x80071e28] != 0x2 )
+    {
+        if( h[0x800965ec] == 0x2 )
+        {
+            [0x80071e28] = w(0x1);
+        }
+        else
+        {
+            [0x80071e28] = w(0x0);
+        }
+        [0x800730cc] = w(h[0x8009a05c]);
+    }
+
+    if( h[0x8009a05c] != h[0x80071a5c] || h[0x8009a05c] == 0 )
+    {
+        V0 = wm_main( 0x80071e28, 0x800730cc, 0x80095ddc, 0 );
+        [0x80075dec] = h(V0);
+    }
+    else
+    {
+        V0 = wm_main( 0x80071e28, 0x800730cc, 0x80095ddc, 0x801b0000 );
+        [0x80075dec] = h(V0);
+        [0x80071a5c] = h(0);
+        [0x800965e8] = h(0);
+    }
+
+    [0x8009a05c] = h(hu[0x8009abf4 + 0x2]);
+}
 
 
 
@@ -308,41 +296,37 @@ system_psyq_put_drawenv();
 
 
 
-////////////////////////////////
-// system_field_run()
-
-if( h[800965ec] != 5 )
+void system_field_run()
 {
-    if( h[800965ec] != d )
+    if( h[0x800965ec] != 0x5 )
     {
-        if( h[800965ec] != 2 ) // not battle
+        if( h[0x800965ec] != 0xd )
         {
-            A0 = w[80048d24]; // "FIELD/FIELD.BIN"
-            A1 = w[80048d28];
-            A2 = 80180000;
-            A3 = 0;
-            system_cdrom_start_load_file();
+            if( h[0x800965ec] != 0x2 ) // not battle
+            {
+                A0 = w[0x80048d24]; // "FIELD/FIELD.BIN"
+                A1 = w[0x80048d28];
+                system_cdrom_start_load_file( A0, A1, 0x80180000, 0 );
 
-            do system_cdrom_read_chain(); while( V0 != 0 )
+                while( system_cdrom_read_chain() != 0 ) {}
 
-            A0 = 80180000;
+                A0 = 0x80180000;
+            }
+            else
+            {
+                while( system_cdrom_read_chain() != 0 ) {}
+
+                A0 = 0x801c0000;
+            }
+
+            func15ca0( A0, 0x800a0000 ); // gzip decode and copy
         }
-        else
-        {
-            do system_cdrom_read_chain(); while( V0 != 0 )
-
-            A0 = 801c0000;
-        }
-
-        A1 = 800a0000;
-        func15ca0(); // gzip decode and copy
     }
+
+    field_copy_battle_party_to_party();
+
+    field_main();
 }
-
-field_copy_battle_party_to_party();
-
-field_main();
-////////////////////////////////
 
 
 
@@ -572,19 +556,19 @@ while( true )
 
     func11aec(); // init vars
 
-    [800965ec] = h(0);
+    [0x800965ec] = h(0x0);
 
     L11e3c:	; 80011E3C
-    switch( h[8009c560] )
+    switch( h[0x8009c560] )
     {
-        case 1: // field
+        case 0x1: // field
         {
             system_field_run();
         }
         break;
 
-        case 2: // battle
-        case 4: // battle
+        case 0x2: // battle
+        case 0x4: // battle
         {
             [8009d2a0 + 0] = b(bu[8009d2a0 + 0] + 1);
             if( bu[8009d2a0 + 0] == 0 )
@@ -601,44 +585,44 @@ while( true )
                 [80071e34] = b(0);
             }
 
-            if( h[800965ec] == 1 )
+            if( h[0x800965ec] == 0x1 )
             {
-                if( bu[80071e30] == 0 )
+                if( bu[0x80071e30] == 0 )
                 {
-                    if( w[8009ac38] != 0 )
+                    if( w[0x8009ac38] != 0 )
                     {
-                        [8009a000] = h(14);
-                        [8009a004] = w(w[8009ac38]);
+                        [0x8009a000] = h(0x14);
+                        [0x8009a004] = w(w[0x8009ac38]);
                         system_execute_AKAO();
                     }
 
-                    [800722c8] = w(801c0000);
-                    [80071744] = w(w[80048d24]);
-                    [80095dd8] = w(w[80048d28]);
+                    [0x800722c8] = w(0x801c0000);
+                    [0x80071744] = w(w[0x80048d24]);
+                    [0x80095dd8] = w(w[0x80048d28]);
 
                     func111e4(); // we load battle here
 
-                    if( hu[800707be] & 8 )
+                    if( hu[0x800707be] & 0x8 )
                     {
-                        [8009d2a0 + 2] = b(bu[8009d2a0 + 2] + 1);
-                        if( bu[8009d2a0 + 2] == 0 )
+                        [0x8009d2a0 + 0x2] = b(bu[0x8009d2a0 + 0x2] + 1);
+                        if( bu[0x8009d2a0 + 0x2] == 0 )
                         {
-                            [8009d2a0 + 3] = b(bu[8009d2a0 + 3] + 1);
+                            [0x8009d2a0 + 0x3] = b(bu[0x8009d2a0 + 0x3] + 1);
                         }
                     }
                 }
 
-                if( hu[800707be] & 1 )
+                if( hu[0x800707be] & 1 )
                 {
-                    if( bu[8009ac31] == 0 )
+                    if( bu[0x8009ac31] == 0 )
                     {
-                        [8009abf4 + 1] = b(1a);
-                        [800707be] = h(0);
+                        [0x8009abf4 + 0x1] = b(0x1a);
+                        [0x800707be] = h(0);
                     }
                 }
 
-                [800965ec] = h(2);
-                [8009c560] = h(1); // set gamestate to field
+                [0x800965ec] = h(0x2);
+                [0x8009c560] = h(0x1); // set gamestate to field
             }
             else
             {
@@ -688,20 +672,20 @@ while( true )
                                 V0 = hu[80095dd4];
                             8001215C	bne    v0, zero, loop12150 [$80012150]
 
-                            [800965ec] = h(1);
-                            [8009c560] = h(1); // set gamestate to field
+                            [0x800965ec] = h(0x1);
+                            [0x8009c560] = h(0x1); // set gamestate to field
                             break;
                         }
                     }
                 }
 
-                [800965ec] = h(2);
-                [8009c560] = h(3); // set gamestate to worldmap
+                [0x800965ec] = h(0x2);
+                [0x8009c560] = h(0x3); // set gamestate to worldmap
             }
         }
         break;
 
-        case 3: // world map
+        case 0x3: // world map
         {
             func119e4();
 
@@ -709,13 +693,13 @@ while( true )
 
             if( w[80071e28] == 0 )
             {
-                [800965ec] = h(3);
-                [8009c560] = h(1); // set gamestate to field
+                [0x800965ec] = h(0x3);
+                [0x8009c560] = h(0x1); // set gamestate to field
             }
             else if( w[80071e28] == 1 )
             {
-                [800965ec] = h(3);
-                [8009c560] = h(2); // set gamestate to battle
+                [0x800965ec] = h(0x3);
+                [0x8009c560] = h(0x2); // set gamestate to battle
             }
             else if( w[80071e28] == 2 )
             {
@@ -724,7 +708,7 @@ while( true )
         }
         break;
 
-        case 5:
+        case 0x5: // menu
         {
             while( hu[80095dd4] != 0 ) {}
 
@@ -812,13 +796,13 @@ while( true )
 
             field_copy_battle_party_to_party();
 
-            [8009ac1a] = h(2);
-            [800965ec] = h(5);
-            [8009c560] = h(1); // set gamestate to field
+            [0x8009ac1a] = h(0x2);
+            [0x800965ec] = h(0x5);
+            [0x8009c560] = h(0x1); // set gamestate to field
         }
         break;
 
-        case 6:
+        case 0x6:
         {
             A0 = w[80048d74]; // AD070000 "MINI\HIGHWAY.BIN"
             A1 = w[80048d78]; // 5A850000
@@ -834,13 +818,13 @@ while( true )
 
             funca00d0();
 
-            [800965ec] = h(6);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x800965ec] = h(0x6);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case 7:
+        case 0x7:
         {
             A0 = w[80048d5c]; // 7F020000 "MINI\CHOCOBO.BIN"
             A1 = w[80048d60]; // A98E0000
@@ -856,13 +840,13 @@ while( true )
 
             funca02d0();
 
-            [800965ec] = h(7);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x800965ec] = h(0x7);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case 8:
+        case 0x8:
         {
             A0 = w[80048d3c]; // D3040000 "MINI\SNOBO.BIN"
             A1 = w[80048d40]; // BB110100
@@ -878,13 +862,13 @@ while( true )
 
             funca0390();
 
-            [800965ec] = h(8);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x800965ec] = h(0x8);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case 9:
+        case 0x9:
         {
             A0 = w[80048d34]; // 31060000 "MINI\CONDOR.BIN"
             A1 = w[80048d38]; // B09A0000
@@ -900,13 +884,13 @@ while( true )
 
             funcb6b58();
 
-            [800965ec] = h(9);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x800965ec] = h(0x9);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case a:
+        case 0xa:
         {
             A0 = w[80048d6c]; // 6C070000 "MINI\SUBMAR.BIN"
             A1 = w[80048d70]; // 6D7A0000
@@ -914,24 +898,21 @@ while( true )
             A3 = 0;
             system_cdrom_start_load_file();
 
-            do system_cdrom_read_chain(); while( V0 != 0 )
+            while( system_cdrom_read_chain() != 0 ) {}
 
-            A0 = 80180000;
-            A1 = 800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
-            A0 = bu[8009d5e5];
-            funca00bc();
+            funca00bc( bu[0x8009d5e5] );
 
-            [8009d5e6] = b(V0);
-            [8009d5e7] = b(V0 >> 8);
-            [800965ec] = h(a);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x8009d5e6] = b(V0);
+            [0x8009d5e7] = b(V0 >> 0x8);
+            [0x800965ec] = h(0xa);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case b:
+        case 0xb:
         {
             A0 = w[80048d64]; // C4090000 "MINI\JET.BIN"
             A1 = w[80048d68]; // F3360000
@@ -947,15 +928,15 @@ while( true )
 
             funca0450();
 
-            [8009d3ea] = b(V0);
-            [8009d3eb] = b(V0 >> 8);
-            [800965ec] = h(b);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x8009d3ea] = b(V0);
+            [0x8009d3eb] = b(V0 >> 0x8);
+            [0x800965ec] = h(0xb);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case c: // disc change
+        case 0xc: // disc change
         {
             S0 = bu[8009d588];
             func343f0();
@@ -980,13 +961,13 @@ while( true )
 
             system_init_dispenv_drawenv();
 
-            [8009ac1a] = h(2);
-            [800965ec] = h(c);
-            [8009c560] = h(1); // set gamestate to field
+            [0x8009ac1a] = h(0x2);
+            [0x800965ec] = h(0xc);
+            [0x8009c560] = h(0x1); // set gamestate to field
         }
         break;
 
-        case d:
+        case 0xd:
         {
             func119e4();
 
@@ -1024,13 +1005,13 @@ while( true )
                 field_copy_battle_party_to_party();
             }
 
-            [8009abf4 + 26] = h(2);
-            [800965ec] = h(d);
-            [8009c560] = h(1); // set gamestate to field
+            [0x8009abf4 + 0x26] = h(0x2);
+            [0x800965ec] = h(0xd);
+            [0x8009c560] = h(0x1); // set gamestate to field
         }
         break;
 
-        case e:
+        case 0xe:
         {
             A0 = w[80048d44]; // 73050000 "MINI\SNOBO2.BIN"
             A1 = w[80048d48]; // 213E0100
@@ -1046,19 +1027,19 @@ while( true )
 
             funca0448();
 
-            [800965ec] = h(e);
-            [8009c560] = h(1); // set gamestate to field
-            [8009abf4 + 1] = b(1);
+            [0x800965ec] = h(0xe);
+            [0x8009c560] = h(0x1); // set gamestate to field
+            [0x8009abf4 + 0x1] = b(0x1);
         }
         break;
 
-        case 10:
+        case 0x10:
         {
             func11274(); // load instr2.dat instr2.all
 
-            [8009ac1a] = h(2);
-            [800965ec] = h(10);
-            [8009c560] = h(1); // set gamestate to field
+            [0x8009ac1a] = h(0x2);
+            [0x800965ec] = h(0x10);
+            [0x8009c560] = h(0x1); // set gamestate to field
         }
         break;
     }

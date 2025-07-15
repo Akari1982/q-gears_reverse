@@ -181,29 +181,16 @@ return 0;
 
 
 
-////////////////////////////////
-// system_cdrom_start_load_lzs()
+int system_cdrom_start_load_lzs( sector, size, buffer, callback )
+{
+    system_cdrom_set_chain_param( 0xb, sector, size, buffer, callback );
 
-sector = A0;
-size = A1;
-buffer = A2;
-callback = A3;
+    [0x800698e8] = w(sector);
 
-A0 = b; // chain type
-A1 = sector;
-A2 = size;
-A3 = buffer;
-A4 = callback;
-system_cdrom_set_chain_param();
+    system_cdrom_set_lzs_extract( 0x800698f0, buffer );
 
-[800698e8] = w(sector);
-
-A0 = 800698f0; // temp buffer
-A1 = buffer;
-system_cdrom_set_lzs_extract();
-
-return 0;
-////////////////////////////////
+    return 0;
+}
 
 
 

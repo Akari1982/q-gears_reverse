@@ -502,7 +502,7 @@
                   0 - normal render.
                   3 - battle swirl effect.
 
-800965ec [][]     current game state. Id same as 8009c560
+0x800965ec [][]     previous game state. Id same as 8009c560
                     1 - field.
                     2 - battle.
                     3 - world map.
@@ -726,12 +726,12 @@
 
 8009c540 []       seed for battle random in field.
 
-8009c560 [][][][] requested state of game:
+0x8009c560 [][][][] current state of game:
                     1 - field.
                     2 - battle.
                     3 - world map.
                     4 - battle.
-                    5 - ???
+                    5 - menu.
                     6 - highway.
                     7 - chocobo.
                     8 - snowboard.
@@ -739,7 +739,7 @@
                     a - submarine.
                     b - jet.
                     c - disc change.
-                    d - ???
+                    d - menu.
                     e - snowboard2.
                    10 - ???
 8009c564 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
