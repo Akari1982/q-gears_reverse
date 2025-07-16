@@ -54,7 +54,7 @@ if( bu[800716d4] == 0 )
     clear_akao();
 
     [8009a000] = h(f2);
-    system_execute_AKAO();
+    system_akao_execute();
 }
 ////////////////////////////////
 

@@ -2,7 +2,6 @@ typedef void (*AkaoOpcode) ( VoiceData* data, u32 channel_mask );
 
 AkaoOpcode akao_opcodes[] =
 {
-    // a0
     system_akao_opcode_a0_finish_channel,            system_akao_opcode_a1_load_instrument,         system_akao_opcode_a2_next_note_length,            system_akao_opcode_a3_master_volume,
     system_akao_opcode_a4_pitch_bend_slide,          system_akao_opcode_a5_set_octave,              system_akao_opcode_a6_increase_octave,             system_akao_opcode_a7_discrease_octave,
     system_akao_opcode_a8_set_volume,                system_akao_opcode_a9_set_volume_slide,        system_akao_opcode_aa_set_pan,                     system_akao_opcode_ab_set_pan_slide,
@@ -190,11 +189,10 @@ void system_akao_opcode_a9_set_volume_slide( VoiceData* data, u32 channel_mask )
     length = bu[akao + 0x0];
     volume = b[akao + 0x1];
     if( length == 0 ) length = 0x100;
-    [data + 0xb8] = h(length);
 
-
-    [data + 0x78] = w(w[data + 0x78] & ffff0000);
+    [data + 0x78] = w(w[data + 0x78] & 0xffff0000);
     [data + 0x7c] = w(((volume << 0x17) - w[data + 0x78]) / hu[data + 0xb8]);
+    [data + 0xb8] = h(length);
     [data + 0xba] = h(0);
 }
 
@@ -218,11 +216,10 @@ void system_akao_opcode_ab_set_pan_slide( VoiceData* data, u32 channel_mask )
 
     length = bu[akao + 0x0];
     pan = bu[akao + 0x1];
-
     if( length == 0 ) length = 0x0100;
-    [data + 0xc0] = h(length);
 
     [data + 0xbe] = h(hu[data + 0xbe] & 0xff00);
+    [data + 0xc0] = h(length);
     [data + 0x104] = h(((((pan + 0x40) & 0xff) << 0x8) - hu[data + 0xbe]) / hu[data + 0xc0]);
 }
 
@@ -233,28 +230,30 @@ void system_akao_opcode_ac_noise_clock_freq( VoiceData* data, u32 channel_mask )
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
 
+    clock = bu[akao + 0x0];
+
     if( hu[data + 0x94] == 0 )
     {
-        if( bu[akao] & 0xc0 )
+        if( clock & 0xc0 )
         {
             A0 = w[0x80080a10];
-            [A0 + 0x6e] = h((hu[A0 + 0x6e] + (bu[akao] & 0x3f)) & 0x3f);
+            [A0 + 0x6e] = h((hu[A0 + 0x6e] + (clock & 0x3f)) & 0x3f);
         }
         else
         {
             V0 = w[0x80080a10];
-            [V0 + 0x6e] = h(bu[akao]);
+            [V0 + 0x6e] = h(clock);
         }
     }
     else
     {
         if( bu[akao] & 0xc0 )
         {
-            [0x80080a70 + 0x28] = h((hu[0x80080a70 + 0x28] + (bu[akao] & 0x3f)) & 0x3f);
+            [0x80080a70 + 0x28] = h((hu[0x80080a70 + 0x28] + (clock & 0x3f)) & 0x3f);
         }
         else
         {
-            [0x80080a70 + 0x28] = h(bu[akao]);
+            [0x80080a70 + 0x28] = h(clock);
         }
     }
 

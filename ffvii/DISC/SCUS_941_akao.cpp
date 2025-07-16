@@ -4765,194 +4765,193 @@ L2da20:	; 8002DA20
 
 
 
-////////////////////////////////
-// system_execute_AKAO()
-
-S3 = 0;
-V1 = hu[8009a000];
-
-[80062f8c] = w(1);
-
-if( V1 == 10 || V1 == 14 || V1 == 15 || V1 == 18 || V1 = 19 )
+void system_akao_execute()
 {
-    akao_offset = w[8009a004];
-    // check AKAO magic at start of file
-    if( bu[akao_offset + 0] != 41 && bu[akao_offset + 1] != 4b && bu[akao_offset + 2] != 41 && bu[akao_offset + 3] != 4f )
-    {
-        S3 = -1;
-    }
-    else
-    {
-        S1 = hu[akao_offset + 4]; // id
-        S2 = hu[akao_offset + 6]; // length
+    S3 = 0;
+    V1 = hu[0x8009a000];
 
-        if( hu[8009a104 + 4a] == S1 ) // if this song is playing already
+    [0x80062f8c] = w(1);
+
+    if( ( V1 == 0x10 ) || ( V1 == 0x14 ) || ( V1 == 0x15 ) || ( V1 == 0x18 ) || ( V1 = 0x19 ) )
+    {
+        akao_offset = w[0x8009a004];
+        // check AKAO magic at start of file
+        if( ( bu[akao_offset + 0x0] != 0x41 ) && ( bu[akao_offset + 0x1] != 0x4b ) && ( bu[akao_offset + 0x2] != 0x41 ) && ( bu[akao_offset + 0x3] != 0x4f ) )
         {
-            S3 = 1;
+            S3 = -1;
         }
         else
         {
-            A0 = hu[akao_offset + 8]; // reverb_mode
-            func29af0();
+            S1 = hu[akao_offset + 0x4]; // id
+            S2 = hu[akao_offset + 0x6]; // length
 
-            A0 = SP + 10;
-            func2da30(); // next play structure
+            if( hu[0x8009a104 + 0x4a] == S1 ) // if this song is playing already
+            {
+                S3 = 1;
+            }
+            else
+            {
+                A0 = hu[akao_offset + 0x8]; // reverb_mode
+                func29af0();
 
-            V0 = w[SP + 10];
-            [V0 + 0] = w(w[8009a000]);
-            [V0 + 4] = w(akao_offset + 10);
-            [V0 + 8] = w(S2);
-            [V0 + c] = w(S1);
-            [V0 + 10] = w(w[8009a008]);
+                A0 = SP + 0x10;
+                func2da30(); // next play structure
+
+                V0 = w[SP + 0x10];
+                [V0 + 0x0] = w(w[0x8009a000]);
+                [V0 + 0x4] = w(akao_offset + 0x10);
+                [V0 + 0x8] = w(S2);
+                [V0 + 0xc] = w(S1);
+                [V0 + 0x10] = w(w[0x8009a008]);
+            }
         }
     }
+    else if( V1 == 24 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(20);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+    }
+    else if( V1 == 25 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(21);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+        [V1 + c] = w(w[8009a008] + 1);
+    }
+    else if( V1 == 26 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(22);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+        [V1 + c] = w(w[8009a008] + 1);
+        [V1 + 10] = w(w[8009a008] + 2);
+    }
+    else if( V1 == 27 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(23);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+        [V1 + c] = w(w[8009a008] + 1);
+        [V1 + 10] = w(w[8009a008] + 2);
+        [V1 + 14] = w(w[8009a008] + 3);
+    }
+    else if( V1 == 98 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(9a);
+
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(9c);
+    }
+    else if( V1 == 99 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(9b);
+
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(9d);
+    }
+    else if( V1 == d8 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(d0);
+        [V1 + 4] = w(w[8009a004]);
+
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(d4);
+        [V1 + 4] = w(w[8009a004]);
+    }
+    else if( V1 == d9 )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(d1);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(d5);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+    }
+    else if( V1 == da )
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(d2);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+        [V1 + c] = w(w[8009a00c]);
+
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = h(d6);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+        [V1 + c] = w(w[8009a00c]);
+    }
+    else
+    {
+        A0 = SP + 10;
+        func2da30();
+
+        V1 = w[SP + 10];
+        [V1 + 0] = w(w[8009a000]);
+        [V1 + 4] = w(w[8009a004]);
+        [V1 + 8] = w(w[8009a008]);
+        [V1 + c] = w(w[8009a00c]);
+        [V1 + 10] = w(w[8009a010]);
+        [V1 + 14] = w(w[8009a014]);
+    }
+
+    [80062f8c] = w(0);
+
+    return S3;
 }
-else if( V1 == 24 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(20);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-}
-else if( V1 == 25 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(21);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-    [V1 + c] = w(w[8009a008] + 1);
-}
-else if( V1 == 26 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(22);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-    [V1 + c] = w(w[8009a008] + 1);
-    [V1 + 10] = w(w[8009a008] + 2);
-}
-else if( V1 == 27 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(23);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-    [V1 + c] = w(w[8009a008] + 1);
-    [V1 + 10] = w(w[8009a008] + 2);
-    [V1 + 14] = w(w[8009a008] + 3);
-}
-else if( V1 == 98 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(9a);
-
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(9c);
-}
-else if( V1 == 99 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(9b);
-
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(9d);
-}
-else if( V1 == d8 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(d0);
-    [V1 + 4] = w(w[8009a004]);
-
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(d4);
-    [V1 + 4] = w(w[8009a004]);
-}
-else if( V1 == d9 )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(d1);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(d5);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-}
-else if( V1 == da )
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(d2);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-    [V1 + c] = w(w[8009a00c]);
-
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = h(d6);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-    [V1 + c] = w(w[8009a00c]);
-}
-else
-{
-    A0 = SP + 10;
-    func2da30();
-
-    V1 = w[SP + 10];
-    [V1 + 0] = w(w[8009a000]);
-    [V1 + 4] = w(w[8009a004]);
-    [V1 + 8] = w(w[8009a008]);
-    [V1 + c] = w(w[8009a00c]);
-    [V1 + 10] = w(w[8009a010]);
-    [V1 + 14] = w(w[8009a014]);
-}
-
-[80062f8c] = w(0);
-
-return S3;
-////////////////////////////////
 
 
 
@@ -7184,7 +7183,7 @@ V1 = S1 & V1;
 A0 = S4;
 800307CC	addiu  a1, s2, $fffc (=-$4)
 A2 = S1;
-AKAO_opcode_a0();
+system_akao_opcode_a0_finish_channel();
 
 V1 = 0 NOR S1;
 V0 = w[S2 + 0004];
@@ -7580,16 +7579,6 @@ loop30eb8:	; 80030EB8
     {
         break;
     }
-
-b3 CC230380
-bc 8C290380
-de F8280380
-eb E41B0380
-f5 981E0380
-f6 EC1E0380
-f7 301F0380
-f8 28310380
-f9 CC310380
 
     A0 = A0; // pointer to channel struct 0x108
     A1 = channels_config;
@@ -8129,51 +8118,6 @@ V1 = V1 | V0;
 
 
 ////////////////////////////////
-// AKAO_opcode_a3()
-
-V1 = w[A0 + 0];
-[A0 + 0] = w(V0 + 1);
-
-[A0 + e0] = w(w[A0 + e0] | 00000003);
-[A0 + 2c] = w(bu[V1 + 0]);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a8()
-
-V0 = w[A0 + 0];
-[A0 + 0] = w(V0 + 1);
-
-[A0 + e0] = w(w[A0 + e0] | 00000003);
-[A0 + 5c] = h(0);
-[A0 + 44] = w(bu[V1 + 0] << 17);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a9()
-
-V0 = w[A0 + 0];
-[A0 + 0] = w(V0 + 2);
-
-[A0 + 5c] = h(bu[V0 + 0]);
-
-V0 = bu[V0 + 0];
-if (V0 == 0)
-{
-    V0 = 100;
-}
-[A0 + 5c] = h(V0);
-[A0 + 44] = w(w[A0 + 44] & ffff0000);
-[A0 + 48] = w(((b[V1 + 1] << 17) - w[A0 + 44]) / hu[A0 + 5c]);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_f4()
 
 channel_data = A0;
@@ -8310,129 +8254,6 @@ V0 = V0 - V1;
 80031FB0	mflo   v0
 [A2 + 00c6] = h(A1);
 [A2 + 00c8] = h(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_aa()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00000003);
-[channel_data + 60] = h(bu[script + 0] << 8);
-[channel_data + 62] = h(0);
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_ab()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-V0 = bu[script + 0];
-if( V0 == 0 )
-{
-    V0 = 100;
-}
-[channel_data + 62] = h(V0);
-
-[channel_data + 60] = h(hu[channel_data + 60] & ff00);
-[channel_data + ca] = h(((bu[script + 1] << 8) - hu[channel_data + 60]) / hu[channel_data + 62]);
-
-[channel_data + 0] = w(script + 2);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a5()
-// Set the current octave (2 is the default). Octave affects the note frequency
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + 66] = h(bu[script + 0]); // pitch corrention
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a6()
-
-[A0 + 66] = h((hu[A0 + 66] + 1) & f);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a7
-
-[A0 + 66] = h((hu[A0 + 66] - 1) & f);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a1()
-// Set the waveform to use. If notes are played without calling this command before, the waveform #05 is used.
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-script = w[channel_data + 0];
-T0 = bu[script + 0];
-[channel_data + 0] = w(script + 1);
-
-A0 = hu[channel_data + 24];
-if( w[80062f04] != 0 )
-{
-    A0 = A0 - 18;
-}
-
-if( w[channel_data + 38] & 00000100 )
-{
-    [channels_config + 24] = w(w[channels_config + 24] & (0 NOR (1 << A0)))
-    [channel_data + 38] = w(w[channel_data + 38] & fffffeff)
-}
-
-if( ( hu[channel_data + 54] != 0 ) || ( ( mask & w[channels_config + c] & w[80099fcc] ) == 0 ) )
-{
-    [channel_data + e0] = w(w[channel_data + e0] | 00000010);
-    [channel_data + 30] = w((w[channel_data + 30] * w[80075f28 + T0 * 40 + 10]) / w[80075f28 + hu[channel_data + 58] * 40 + 10]);
-}
-
-if( w[channel_data + 38] & 00000200 ) // if loaded adsr release rate, load rest
-{
-    [channel_data + 58] = h(T0); // set instrument id
-
-    // init pitch attack and other values from instrument data
-    [channel_data + e4] = w(w[80075f28 + T0 * 40 + 0]);
-    [channel_data + e8] = w(w[80075f28 + T0 * 40 + 4]);
-    [channel_data + fa] = h(bu[80075f28 + T0 * 40 + 8]);
-    [channel_data + fc] = h(bu[80075f28 + T0 * 40 + 9]);
-    [channel_data + fe] = h(bu[80075f28 + T0 * 40 + a]);
-    [channel_data + 100] = h(bu[80075f28 + T0 * 40 + b]);
-    [channel_data + ec] = h(bu[80075f28 + T0 * 40 + d]);
-    [channel_data + f0] = h(bu[80075f28 + T0 * 40 + e]);
-
-    // set update this values to spu
-    [channel_data + e0] = w(w[channel_data + e0] | 0001bb80);
-}
-else // init all data
-{
-    A0 = channel_data;
-    A1 = T0;
-    func31820;
-}
 ////////////////////////////////
 
 
@@ -8578,26 +8399,6 @@ script = w[channel_data + 0];
 [channel_data + cc] = h(hu[channel_data + cc] + b[script + 0]);
 
 [channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_a4()
-// Pitch slide for the next note. First parameter is the slide speed (0-127), second is the destination pitch. 
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-V0 = bu[script + 0];
-if( V0 == 0 )
-{
-    V0 = 100;
-}
-[channel_data + 68] = h(V0); // pitch slide speed
-[channel_data + d2] = h(b[script + 1]); // pitch slide destination
-
-[channel_data + 0] = w(script + 2);
 ////////////////////////////////
 
 
@@ -9105,141 +8906,6 @@ else
 
 
 ////////////////////////////////
-// AKAO_opcode_ac()
-// Sets the frequency for the noise generator.
-// Values less than 0x40 sets the frequency as an absolute value, from high (0x00) to low (0x3F).
-// Values greater than 0x3F adds to the current frequency, making it lower. 
-
-channel_data = A0;
-channels_config = A1;
-script = w[channel_data + 0];
-V1 = bu[script + 0];
-
-if( hu[channel_data + 54] == 0 )
-{
-    if( V1 & c0 )
-    {
-        [channels_config + 52] = h((hu[channels_config + 52] + (V1 & 003f)) & 003f);
-    }
-    else
-    {
-        [channels_config + 52] = h(V1);
-    }
-}
-else
-{
-    if( V1 & c0 )
-    {
-        [80099ffa] = h((hu[80099ffa] + (V1 & 003f)) & 003f);
-    }
-    else
-    {
-        [80099ffa] = h(V1);
-    }
-}
-[8009a13c] = w(w[8009a13c] | 00000010);
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_ad()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[A1 + e0] = w(w[A1 + e0] | 00000900); // set attack mode + set attack rate
-[A1 + fa] = h(bu[script + 0]); // attack rate
-if( w[A1 + 38] & 00000100 )
-{
-    V0 = w[A1 + 24];
-    [80096608 + V0 * 108 + fa] = h(hu[A1 + fa]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_ae()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00001000); // set decay rate
-[channel_data + fc] = h(bu[script + 0]); // decay rate
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + fc] = h(hu[channel_data + fc]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_af()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00008000); // set sustain level
-[channel_data + fe] = h(bu[script + 0]); // sustain level
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + fe] = h(hu[channel_data + fe]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b1()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00002200); // set sustain mode + set sustain rate
-[channel_data + 100] = h(bu[script + 0]); // sustain rate
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + 100] = h(hu[channel_data + 100]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b2()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00004400); // set release mode + set release rate
-[channel_data + 102] = h(bu[script + 0]); // release rate
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + 102] = h(hu[channel_data + 102]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_b7()
 
 channel_data = A0;
@@ -9476,20 +9142,6 @@ index = hu[A0 + b8];
 
 
 ////////////////////////////////
-// AKAO_opcode_a2()
-
-V1 = w[A0 + 0];
-[A0 + 0] = w(V0 + 1);
-
-V1 = bu[V1];
-[A0 + c4] = h(0);
-[A0 + 56] = h(V1 << 8 | V1);
-[A0 + c2] = h(V1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_dc()
 // Set the duration for all the upcoming notes (same as A2 except it doesn't apply only to the next note)
 
@@ -9577,20 +9229,6 @@ script = w[channel_data + 0];
 channels_config = A1;
 
 [channels_config + 54] = h(0001);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b0()
-
-channel_data = A0;
-
-A0 = channel_data;
-AKAO_opcode_ae();
-
-A0 = channel_data;
-AKAO_opcode_af();
 ////////////////////////////////
 
 
@@ -9772,68 +9410,6 @@ else
 
 
 ////////////////////////////////
-// AKAO_opcode_a0()
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-if( hu[channel_data + 54] == 0 )
-{
-    [channels_config + 4] = w(w[channels_config + 4] & (mask ^ 00ffffff));
-
-    if( w[channels_config + 4] == 0 )
-    {
-        [channels_config + 4a] = h(0);
-    }
-
-    [channels_config + 2c] = w(w[channels_config + 2c] & (mask ^ 00ffffff));
-    [channels_config + 30] = w(w[channels_config + 30] & (mask ^ 00ffffff));
-    [channels_config + 34] = w(w[channels_config + 34] & (mask ^ 00ffffff));
-
-    if( w[channel_data + 38] & 00000100 )
-    {
-        V1 = hu[channel_data + 24];
-        if( w[80062f04] != 0 )
-        {
-            V1 = V1 - 18;
-        }
-        [channels_config + 24] = w(w[channels_config + 24] & (0 NOR (1 << V1)));
-    }
-
-    if( w[channel_data + 38] & 00000200 )
-    {
-        [channels_config + 28] = w(w[channels_config + 28] & (0 NOR (1 << w[channel_data + 28])));
-    }
-}
-else
-{
-    [80099fcc] = w(w[80099fcc] & (mask ^ 00ff0000));
-    [80099fec] = w(w[80099fec] & (mask ^ 00ff0000));
-    [80099ff0] = w(w[80099ff0] & (mask ^ 00ff0000));
-    [80099ff4] = w(w[80099ff4] & (mask ^ 00ff0000));
-    [8009a10c] = w(w[8009a10c] & (0 NOR mask));
-    [8009a110] = w(w[8009a110] & (0 NOR mask));
-    [8009a114] = w(w[8009a114] & (0 NOR mask));
-
-    V1 = w[channel_data + 28];
-    [80096608 + V1 * 108 + e0] = w(w[80096608 + V1 * 108 + e0] | 0001ff80);
-}
-
-[channel_data + 38] = w(0);
-
-[8009a13c] = w(w[8009a13c] | 00000010);
-
-80033A48	jal    func2ff4c [$8002ff4c]
-
-80033A50	jal    func30038 [$80030038]
-
-80033A58	jal    func30148 [$80030148]
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_e0()
 // AKAO_opcode_e1()
 // AKAO_opcode_e2()
@@ -9847,7 +9423,7 @@ else
 // AKAO_opcode_fc()
 // AKAO_opcode_ff()
 
-AKAO_opcode_a0();
+system_akao_opcode_a0_finish_channel();
 ////////////////////////////////
 
 

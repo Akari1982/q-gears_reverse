@@ -1107,7 +1107,7 @@ L34ca4:	; 80034CA4
 [8009a000] = h(30);
 [8009a004] = w(A0);
 [8009a008] = w(A0);
-system_execute_AKAO();
+system_akao_execute();
 
 A0 = 3c;
 system_psyq_vsync();
@@ -1335,7 +1335,7 @@ if( w[80071a64] == 1 ) // disc number
     else if( movie_id == 31 ) [8009a008] = w(00001800);
 }
 
-system_execute_AKAO();
+system_akao_execute();
 
 A0 = 1;
 system_psyq_dec_dct_reset();
@@ -1719,7 +1719,7 @@ if( V1 == 0 )
             [8009a000] = h(c9);
             [8009a004] = w(1e);
             [8009a008] = w(0);
-            system_execute_AKAO();
+            system_akao_execute();
 
             [8006e10c] = w(1);
         }

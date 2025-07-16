@@ -8093,7 +8093,7 @@ if( w[801159dc] != 0 )
 
     [8009a004] = w(w[801159bc + A0 * 4]);
     [8009a008] = w(4);
-    system_execute_AKAO();
+    system_akao_execute();
 }
 
 V0 = w[801159e0];
@@ -8126,7 +8126,7 @@ return w[801159e0];
 
 [8009a000] = h(30);
 [8009a004] = w(A0);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -8136,15 +8136,15 @@ system_execute_AKAO();
 // play some AKAO commands
 
 [8009a000] = h(f1);
-system_execute_AKAO();
+system_akao_execute();
 
 [8009a000] = h(e4);
 [8009a004] = w(0);
-system_execute_AKAO();
+system_akao_execute();
 
 [8009a000] = h(bc);
 [8009a004] = w(0);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -8154,7 +8154,7 @@ system_execute_AKAO();
 
 [8009a000] = h(c0);
 [8009a004] = w(A0);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -8165,7 +8165,7 @@ system_execute_AKAO();
 [8009a000] = h(bd);
 [8009a004] = w(A0);
 [8009a008] = w(A1);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -8182,18 +8182,18 @@ if( V1 < A0 )
     [8009a000] = h(20);
     [8009a004] = w(40);
     [8009a008] = w(A0);
-    system_execute_AKAO();
+    system_akao_execute();
 }
 else if( A0 == -V1 )
 {
     [8010cb20] = w(0);
 
     [8009a000] = h(f1);
-    system_execute_AKAO();
+    system_akao_execute();
 
     [8009a000] = h(bc);
     [8009a004] = w(0);
-    system_execute_AKAO();
+    system_akao_execute();
 }
 ////////////////////////////////
 

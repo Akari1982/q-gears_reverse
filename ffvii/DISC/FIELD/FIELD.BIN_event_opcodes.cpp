@@ -3032,7 +3032,7 @@ A1 = c;
 read_memory_block_two_bytes;
 [8009a014] = w(V0);
 
-system_execute_AKAO;
+system_akao_execute();
 
 // move pointer by E
 A0 = bu[800722c4];
@@ -3078,7 +3078,7 @@ A1 = d;
 read_memory_block_two_bytes;
 [8009a014] = w(V0);
 
-system_execute_AKAO;
+system_akao_execute();
 
 // move pointer by F
 A0 = bu[800722c4];
@@ -3105,7 +3105,7 @@ A1 = 2;
 read_memory_block_two_bytes;
 [8009a008] = w(V0);
 
-system_execute_AKAO;
+system_akao_execute;
 
 // move pointer by 5
 A0 = bu[800722C4];
@@ -3208,7 +3208,7 @@ if (b[800716d4] == 0) // if music not locked
     [8009a004] = w(V0);
     [struct + 48] = w(V0);
 
-    system_execute_AKAO();
+    system_akao_execute();
 }
 
 // move pointer by 2

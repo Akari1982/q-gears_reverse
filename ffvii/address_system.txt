@@ -298,7 +298,7 @@
 80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
 80062f84 [][][][] pointer to 8008a580. AKAO scripts. EFFECT.ALL data.
 
-80062f8c [][][][] store 1 here at start of system_execute_AKAO. We will not add AKAO commands until this is 0.
+80062f8c [][][][] store 1 here at start of system_akao_execute. We will not add AKAO commands until this is 0.
 
 80062fa0 [][][][] set to 0 in pad start and init sequence. Input enabled.
 
@@ -694,7 +694,7 @@
     +10 []       x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move).
     +11 []       y warp around (0 - not warp).
 
-8009a104 start of music channels config
+8009a104 start of akao channels config
     +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
     +04 [][][][] active music channel mask.
     +08 [][][][] channels to be played mask.

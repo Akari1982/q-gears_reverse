@@ -190,7 +190,7 @@ Lbb8e0:	; 800BB8E0
 [8009a000] = h(V0);
 800BB8E8	lui    v0, $801d
 [8009a004] = w(V0);
-800BB8F4	jal    $system_execute_AKAO
+800BB8F4	jal    $system_akao_execute
 800BB8F8	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -204,7 +204,7 @@ V0 = 00a0;
 V0 = 007f;
 [SP + 0010] = w(RA);
 [8009a004] = w(V0);
-800BB92C	jal    $system_execute_AKAO
+800BB92C	jal    $system_akao_execute
 800BB930	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -218,7 +218,7 @@ SP = SP + 0018;
 800BB950	nop
 V0 = 00f1;
 [8009a000] = h(V0);
-800BB960	jal    $system_execute_AKAO
+800BB960	jal    $system_akao_execute
 800BB964	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -233,7 +233,7 @@ V0 = 012c;
 [SP + 0010] = w(RA);
 [8009a004] = w(V0);
 [8009a008] = w(0);
-800BB9A0	jal    $system_execute_AKAO
+800BB9A0	jal    $system_akao_execute
 800BB9A4	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -265,7 +265,7 @@ A0 = A0 & ffff;
 [SP + 0010] = w(RA);
 [8009a004] = w(V0);
 [8009a008] = w(A0);
-800BBA28	jal    $system_execute_AKAO
+800BBA28	jal    $system_akao_execute
 800BBA2C	nop
 RA = w[SP + 0010];
 SP = SP + 0018;
@@ -281,7 +281,7 @@ SP = SP + 0018;
 [8009a000] = h(20);
 [8009a004] = w(40);
 [8009a008] = w(A0 & ffff);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -304,7 +304,7 @@ else
 [8009a000] = h(0020);
 [8009a004] = h(V0);
 [8009a008] = h(A3);
-system_execute_AKAO;
+system_akao_execute;
 ////////////////////////////////
 
 
@@ -6044,7 +6044,7 @@ if( A2 != 0 )
     V0 = V0 << 01;
     V0 = V0 & 007e;
     [8009a004] = w(V0);
-    system_execute_AKAO();
+    system_akao_execute();
 }
 ////////////////////////////////
 

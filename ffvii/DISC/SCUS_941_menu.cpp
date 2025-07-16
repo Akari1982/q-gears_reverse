@@ -2166,7 +2166,7 @@ system_menu_restore_window_color();
 [8009a000] = w(30);
 [8009a004] = w(A0 & ffff);
 [8009a008] = w(A0 & ffff);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -2177,7 +2177,7 @@ system_execute_AKAO();
 [8009a000] = h(28);
 [8009a004] = w(40);
 [8009a008] = w(A0 & ffff);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -2188,7 +2188,7 @@ system_execute_AKAO();
 [8009a000] = h(29);
 [8009a004] = w(40);
 [8009a008] = w(A0 & ffff);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -7240,7 +7240,7 @@ for( int i = 0; i < 3; ++i ) // go through all party members
 [8009a004] = w(A0 & ffff);
 [8009a008] = w(A0 & ffff);
 
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 

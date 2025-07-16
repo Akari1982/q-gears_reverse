@@ -606,7 +606,7 @@ system_cdrom_load_file();
 
 [8009a000] = h(10);
 [8009a004] = w(800b0000);
-system_execute_AKAO();
+system_akao_execute();
 
 A0 = 1f400;
 A1 = 40000;
@@ -816,7 +816,7 @@ La1330:	; 800A1330
 [8009a000] = h(c1);
 [8009a004] = w(3c);
 [8009a008] = w(0);
-system_execute_AKAO();
+system_akao_execute();
 
 S3 = 40;
 

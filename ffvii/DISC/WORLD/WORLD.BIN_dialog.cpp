@@ -751,7 +751,7 @@ switch( h[80083274 + window_id * 30 + 2c] ) // state
 [8009a000] = h(30);
 [8009a004] = w(1);
 [8009a008] = w(40);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 

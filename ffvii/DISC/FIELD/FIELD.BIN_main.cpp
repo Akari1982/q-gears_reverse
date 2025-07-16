@@ -255,7 +255,7 @@ void field_main()
 
         while( system_psyq_draw_sync( 1 ) != 0 ) {}
 
-        if( h[0x800965ec] != 0xd ) // if not 0xd menu
+        if( h[0x800965ec] != 0xd ) // if prev state not 0xd menu
         {
             [0x8009abf4 + 0x4c] = h(0x1);
             [0x8009abf4 + 0x4e] = h(0x100);
@@ -265,15 +265,15 @@ void field_main()
             [0x8009abf4 + 0x56] = h(0x0);
         }
 
-        if( ( h[0x800965ec] == 0x0 ) ||
-            ( h[0x800965ec] == 0x1 ) ||
-            ( h[0x800965ec] == 0x3 ) ||
-            ( h[0x800965ec] == 0x6 ) ||
-            ( h[0x800965ec] == 0x7 ) ||
-            ( h[0x800965ec] == 0x8 ) ||
-            ( h[0x800965ec] == 0x9 ) ||
-            ( h[0x800965ec] == 0xa ) ||
-            ( h[0x800965ec] == 0xb ) )
+        if( ( h[0x800965ec] == 0x0 ) || // 
+            ( h[0x800965ec] == 0x1 ) || // field
+            ( h[0x800965ec] == 0x3 ) || // world map
+            ( h[0x800965ec] == 0x6 ) || // highway
+            ( h[0x800965ec] == 0x7 ) || // chocobo
+            ( h[0x800965ec] == 0x8 ) || // snowboard
+            ( h[0x800965ec] == 0x9 ) || // condor
+            ( h[0x800965ec] == 0xa ) || // submarine
+            ( h[0x800965ec] == 0xb ) )  // jet
         {
             [0x8009abf4 + 0xa6] = h(0x0); // x scroll for 2nd background
             [0x8009abf4 + 0xa8] = h(0x0); // y scroll for 2nd background
@@ -295,8 +295,8 @@ void field_main()
             A2 = w[V1]; // events pointer
             field_init_structs_events_actors();
 
-            V0 = h[8009abf4 + 2a]; // manual entity id
-            [80074ea4 + V0 * 84 + 38] = b(hu[8009abf4 + 24]); // model direction
+            V0 = h[0x8009abf4 + 0x2a]; // manual entity id
+            [0x80074ea4 + V0 * 0x84 + 0x38] = b(hu[0x8009abf4 + 0x24]); // model direction
 
             g_rain_force = ( bu[0x8009c6e4 + 0xfa4 + 0x83] & 0x80 ) ? 0xff : 0;
 
@@ -305,12 +305,11 @@ void field_main()
                 [0x8009a048 + i] = b(-1) // init array of states for KAWAI
             }
 
-            A0 = w[0x800716c4] + 0x158; // offset to sector 5 background triggers
-            field_init_triggered_background_state();
+            field_init_triggered_background_state( w[0x800716c4] + 0x158 ); // offset to sector 5 background triggers
         }
         else
         {
-            [8009abf4 + 26] = h(2); // battle state?
+            [0x8009abf4 + 0x26] = h(0x2); // battle state?
         }
 
         funcbb1b4(); // enable party models and unlink unused models
@@ -330,15 +329,15 @@ void field_main()
             field_load_mim_to_vram();
         }
 
-        if( h[0x800965ec] == 0x2 )
+        if( h[0x800965ec] == 0x2 ) // if it was battle
         {
             [0x8009a000] = h(0xf5);
-            system_execute_AKAO();
+            system_akao_execute();
 
             [0x8009a000] = h(0x18);
             [0x8009a004] = w(w[0x8009ac3c]);
             [0x8009a008] = w(0x4);
-            system_execute_AKAO();
+            system_akao_execute();
         }
 
         field_main_loop();

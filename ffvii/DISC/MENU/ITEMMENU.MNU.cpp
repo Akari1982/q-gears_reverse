@@ -5,7 +5,7 @@ A0 = A0 & ffff;
 [8009a000] = h(30);
 [8009a004] = w(A0);
 [8009a008] = w(A0);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 

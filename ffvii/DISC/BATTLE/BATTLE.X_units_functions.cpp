@@ -1589,7 +1589,7 @@ if (A2 != 0)
     800D5688	beq    v0, zero, loopd5674 [$800d5674]
 }
 
-system_execute_AKAO;
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -4728,7 +4728,7 @@ if( w[801517c0] == A0 )
 [8009a000] = h(A0);
 [8009a004] = w(A0 & ffff);
 [8009a008] = w(A0 & ffff);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 

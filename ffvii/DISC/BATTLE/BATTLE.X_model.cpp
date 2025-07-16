@@ -1694,7 +1694,7 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             [8009a000] = h(V0);
             [8009a008] = w(0);
             [8009a004] = w(V1);
-            800CA2E4	jal    system_execute_AKAO [$8002da7c]
+            800CA2E4	jal    system_akao_execute [$8002da7c]
             800CA2E8	nop
             800CA2EC	j      Lcd208 [$800cd208]
             800CA2F0	nop

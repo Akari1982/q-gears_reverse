@@ -628,7 +628,7 @@ clear_akao();
 [8009a004] = h(0001);
 [8009a008] = h(0040);
 
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 

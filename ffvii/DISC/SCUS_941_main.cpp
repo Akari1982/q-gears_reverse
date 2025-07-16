@@ -41,12 +41,12 @@ system_main();
 S0 = A0;
 
 [8009a000] = h(f1);
-system_execute_AKAO();
+system_akao_execute();
 
 [8009a000] = h(20);
 [8009a004] = w(40);
 [8009a008] = w(S0);
-system_execute_AKAO();
+system_akao_execute();
 ////////////////////////////////
 
 
@@ -55,7 +55,7 @@ system_execute_AKAO();
 // func111e4()
 
 [8009a000] = h(f4);
-system_execute_AKAO();
+system_akao_execute();
 
 if( ( bu[8009d5e9] & 30 ) == 0 )
 {
@@ -379,7 +379,7 @@ func29998();
 ////////////////////////////////
 // func119e4()
 
-if( h[8009c560] == 3 ) // current gamestate worlkmap
+if( h[0x8009c560] == 0x3 ) // current gamestate worlkmap
 {
     [8009c6e4 + b90] = w(2);
     [8009c6e4 + b94] = h(3); // store worldmap gamestate
@@ -406,19 +406,19 @@ pc_entity = h[800965e0];
 ////////////////////////////////
 // func11aec()
 
-[80071e28] = w(w[8009c6e4 + b90]);
-[8009c560] = h(hu[8009c6e4 + b94]); // restore gamestate
+[0x80071e28] = w(w[0x8009c6e4 + 0xb90]);
+[0x8009c560] = h(hu[0x8009c6e4 + 0xb94]); // restore gamestate
 
-if( hu[8009c560] == 0 ) [8009c560] = h(1); // initial gamestate
+if( hu[0x8009c560] == 0x0 ) [0x8009c560] = h(0x1); // initial gamestate
 
-[8009a05c] = h(hu[8009c6e4 + b96]); // current field id
-[8009ac58] = h(hu[8009c6e4 + b96]); // current field id
-[8009abf8] = h(hu[8009c6e4 + b9a]); // x location on field map
-[8009abfa] = h(hu[8009c6e4 + b9c]); // y location on field map
-[8009ac16] = h(hu[8009c6e4 + b9e]); // triangle id on field map
-[8009ac18] = h(bu[8009c6e4 + ba0]); // direction on field map
-[8009c540] = b(bu[8009c6e4 + ba1]); // seed for battle random in field
-[8009ad2c] = b(bu[8009c6e4 + ba2]); // field encounter timer: offset
+[0x8009a05c] = h(hu[0x8009c6e4 + 0xb96]); // current field id
+[0x8009ac58] = h(hu[0x8009c6e4 + 0xb96]); // current field id
+[0x8009abf8] = h(hu[0x8009c6e4 + 0xb9a]); // x location on field map
+[0x8009abfa] = h(hu[0x8009c6e4 + 0xb9c]); // y location on field map
+[0x8009ac16] = h(hu[0x8009c6e4 + 0xb9e]); // triangle id on field map
+[0x8009ac18] = h(bu[0x8009c6e4 + 0xba0]); // direction on field map
+[0x8009c540] = b(bu[0x8009c6e4 + 0xba1]); // seed for battle random in field
+[0x8009ad2c] = b(bu[0x8009c6e4 + 0xba2]); // field encounter timer: offset
 ////////////////////////////////
 
 
@@ -426,16 +426,16 @@ if( hu[8009c560] == 0 ) [8009c560] = h(1); // initial gamestate
 ////////////////////////////////
 // func11bb4()
 
-[8009c6e4 + ea4] = b(1); // current disc
-[8009c6e4 + b90] = w(0);
-[8009c6e4 + b94] = h(1); // field gamestate
-[8009c6e4 + b96] = h(74); // current map
-[8009c6e4 + b9a] = h(0); // x location on field map
-[8009c6e4 + b9c] = h(0); // y location on field map
-[8009c6e4 + b9e] = h(0); // triangle id on field map
-[8009c6e4 + ba0] = b(0); // direction on field map
-[8009c6e4 + ba1] = b(0); // seed for battle random in field
-[8009c6e4 + ba2] = b(0); // field encounter timer: offset
+[0x8009c6e4 + 0xea4] = b(0x1); // current disc
+[0x8009c6e4 + 0xb90] = w(0x0);
+[0x8009c6e4 + 0xb94] = h(0x1); // field gamestate
+[0x8009c6e4 + 0xb96] = h(0x74); // current map
+[0x8009c6e4 + 0xb9a] = h(0x0); // x location on field map
+[0x8009c6e4 + 0xb9c] = h(0x0); // y location on field map
+[0x8009c6e4 + 0xb9e] = h(0x0); // triangle id on field map
+[0x8009c6e4 + 0xba0] = b(0x0); // direction on field map
+[0x8009c6e4 + 0xba1] = b(0x0); // seed for battle random in field
+[0x8009c6e4 + 0xba2] = b(0x0); // field encounter timer: offset
 ////////////////////////////////
 
 
@@ -443,27 +443,21 @@ if( hu[8009c560] == 0 ) [8009c560] = h(1); // initial gamestate
 ////////////////////////////////
 // system_main()
 
-[SP + 10] = w(w[80010014]); // "batt"
-[SP + 14] = w(w[80010018]); // "le.x"
-[SP + 18] = b(b[8001001c]); // ""
-[SP + 20] = w(w[80010020]); // 00000000
-[SP + 24] = w(w[80010024]); // 01d801e0
+[SP + 0x10] = w(w[0x80010014]); // "batt"
+[SP + 0x14] = w(w[0x80010018]); // "le.x"
+[SP + 0x18] = b(b[0x8001001c]); // ""
 
-// set memsize to 8mb
-A0 = 8;
-system_bios_set_mem_size();
+system_bios_set_mem_size( 0x8 ); // set memsize to 8mb
 
 system_init_base(); // init intr, graph, spu, gte and so on
 
-S7 = 20000000;
+S7 = 0x20000000;
 
 system_cdrom_init();
 
-A0 = w[80048d54]; // sector 1efa9 "FIELD\ENDING.X"
-A1 = w[80048d58]; // size f414
-A2 = 800a0000; // dst
-A3 = 0;
-system_cdrom_load_file();
+A0 = w[0x80048d54]; // sector 1efa9 "FIELD\ENDING.X"
+A1 = w[0x80048d58]; // size f414
+system_cdrom_load_file( A0, A1, 0x800a0000, 0 );
 
 // from FIELD\ENDING.X
 ending_main(); // looks like play squareenix logo
@@ -472,8 +466,8 @@ func148b4(); // load INIT\WINDOW.BIN and INIT\KERNEL.BIN
 
 while( true )
 {
-    [8009ac32] = h(0);
-    [8009ac2f] = b(0);
+    [0x8009ac32] = h(0x0);
+    [0x8009ac2f] = b(0x0);
 
     func148a0();
 
@@ -483,22 +477,18 @@ while( true )
 
     A0 = w[80048d54]; // 1efa9 "FIELD\ENDING.X"
     A1 = w[80048d58]; // f414
-    A2 = 800a0000
-    A3 = 0;
-    system_cdrom_load_file();
+    system_cdrom_load_file( A0, A1, 0x800a0000, 0 );
 
-    A0 = 0;
-    funca04c4();
+    funca04c4( 0 );
 
-    [8009a000] = h(c0);
-    [8009a004] = w(7f);
-    system_execute_AKAO()
+    [0x8009a000] = h(0xc0);
+    [0x8009a004] = w(0x7f);
+    system_akao_execute()
 
-    A0 = SP + 20;
-    A1 = 0;
-    A2 = 0;
-    A3 = 0;
-    system_psyq_clear_image();
+    [SP + 0x20] = w(w[0x80010020]); // 00000000
+    [SP + 0x24] = w(w[0x80010024]); // 01d801e0
+
+    system_psyq_clear_image( SP + 0x20, 0, 0, 0 );
 
     func26258();
 
@@ -593,7 +583,7 @@ while( true )
                     {
                         [0x8009a000] = h(0x14);
                         [0x8009a004] = w(w[0x8009ac38]);
-                        system_execute_AKAO();
+                        system_akao_execute();
                     }
 
                     [0x800722c8] = w(0x801c0000);
@@ -1082,7 +1072,7 @@ while( true )
 
     L12774:	; 80012774
     [8009abf4 + 1] = b(0);
-    system_execute_AKAO();
+    system_akao_execute();
 
     A0 = w[80048d4c]; // 1efa6 FIELD\DSCHANGE.X
     A1 = w[80048d50]; // 1774 size
@@ -1094,7 +1084,7 @@ while( true )
 
     [8009a000] = h(c0);
     [8009a004] = w(7f);
-    system_execute_AKAO();
+    system_akao_execute();
 
     func33be0();
 
