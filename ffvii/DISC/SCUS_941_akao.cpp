@@ -8297,38 +8297,6 @@ else
 
 
 ////////////////////////////////
-// AKAO_opcode_c0()
-// Absolute transposition.
-// Parameter <= 0x7F is for positive transposition,
-// value >= 0x80 is for negative transposition starting from 0xFF to 0x80(reversed).
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + cc] = h(b[script + 0]);
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c1()
-// Relative transposition (adds to the previous transposition), each step is a semitone.
-// Value <= 0x7F is for positive transposition,
-// while value >= 0x80 is for negative transposition starting from 0xFF to 0x80 (reversed).
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + cc] = h(hu[channel_data + cc] + b[script + 0]);
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_da()
 
 channel_data = A0;
@@ -8455,156 +8423,6 @@ if( A1 == 0 )
 
 
 
-////////////////////////////////
-// AKAO_opcode_c4()
-// Tells the engine to use the noise generator instead of sampled waveforms. Stays active until the C5 command is found.
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-if( hu[channel_data + 54] == 0 )
-{
-    [channels_config + 2c] = w(w[channels_config + 2c] | mask);
-}
-else
-{
-    [80099fec] = w(w[80099fec] | mask);
-}
-[8009a13c] = w(w[8009a13c] | 00000010);
-
-80032B18	jal    func2ff4c [$8002ff4c]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c5()
-// Stops the noise generator to use the waveforms instead. Waveform number is restored as it was before C4 command occured.
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-if( hu[channel_data + 54] == 0 )
-{
-    [channels_config + 2c] = w(w[channels_config + 2c] & (0 NOR mask));
-}
-else
-{
-    [80099fec] = w(w[80099fec] & (0 NOR mask));
-}
-
-[8009a13c] = w(w[8009a13c] | 00000010);
-
-80032B94	jal    func2ff4c [$8002ff4c]
-
-[channel_data + a4] = h(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c6()
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-V0 = hu[channel_data + 54];
-if( V0 == 0 )
-{
-    [channels_config + 34] = w(w[channels_config + 34] | mask);
-}
-else
-{
-    if( ( mask & 00555555 ) == 0 )
-    {
-        [80099ff4] = w(w[80099ff4] | mask);
-    }
-}
-
-80032C08	jal    func30148 [$80030148]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c7()
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-if( hu[channel_data + 54] == 0 )
-{
-    [channels_config + 34] = w(w[channels_config + 34] & (0 NOR mask));
-}
-else
-{
-    [80099ff4] = w(w[80099ff4] & (0 NOR mask));
-}
-
-80032C6C	jal    func30148 [$80030148]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c2()
-// Play the following notes on a reverbered channel, if reverb enabled
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-if( hu[channel_data + 54] == 0 )
-{
-    [channels_config + 30] = w(w[channels_config + 30] | mask);
-}
-else
-{
-    [80099ff0] = w(w[80099ff0] | mask);
-}
-
-func30038();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c3()
-// Play the following notes on a non-reverbered channel (default)
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-if( hu[channel_data + 54] == 0 )
-{
-    [channels_config + 30] = w(w[channels_config + 30] & (0 NOR mask));
-}
-else
-{
-    [80099ff0] = w(w[80099ff0] & (0 NOR mask));
-}
-
-80032D2C	jal    func30038 [$80030038]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_cc()
-
-[A0 + 6e] = h(1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_cd
-////////////////////////////////
 
 
 
@@ -8705,44 +8523,6 @@ V0 = V0 | 4400;
 
 
 ////////////////////////////////
-// AKAO_opcode_c8
-[A0 + b8] = h((hu[A0 + b8] + 1) & 3);
-
-index = hu[A0 + b8];
-[A0 + 4 + index * 4] = w(w[A0 + 0]);
-[A0 + ba + index * 2] = h(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_c9
-V1 = w[A0];
-[A0] = w(V1 + 1);
-A1 = bu[V1];
-if (A1 == 0)
-{
-    A1 = 100;
-}
-
-index = hu[A0 + b8];
-
-V0 = hu[A0 + ba + index * 2] + 1;
-[A0 + ba + index * 2] = h(V0);
-
-if (V0 != A1)
-{
-    [A0] = w(w[A0 + 4 + index * 4]);
-}
-else
-{
-    [A0 + b8] = h((index - 1) & 3);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_f0
 A1 = w[A0];
 V1 = bu[A1];
@@ -8786,17 +8566,6 @@ else
     [A0] = w(A1 + 3 + h[A1 + 1]);
     [A0 + b8] = h((index - 1) & 3)
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_ca()
-
-index = hu[A0 + b8];
-
-[A0 + ba + index * 2] = h(hu[A0 + ba + index * 2] + 1);
-[A0 + 0] = w(w[A0 + 4 + index * 4]);
 ////////////////////////////////
 
 
@@ -8894,44 +8663,6 @@ channels_config = A1;
 
 
 ////////////////////////////////
-// AKAO_opcode_ce()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-V0 = bu[script + 0];
-if( V0 == 0 )
-{
-    V0 = 100;
-}
-[channel_data + a6] = h(V0 + 1);
-
-AKAO_opcode_c4();
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_cf()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-V0 = bu[script + 0];
-if( V0 == 0 )
-{
-    V0 = 100;
-}
-[channel_data + a4] = h(V0 + 1);
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_d2()
 
 channel_data = A0;
@@ -8965,35 +8696,6 @@ if( V0 == 0 )
 [channel_data + a6] = h(V0 + 1);
 
 [channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_cb()
-
-channel_data = A0;
-channels_config = A1;
-mask = A2; // current channel mask
-
-[channel_data + 38] = w(w[channel_data + 38] & ffffffc8); // stop 0x00000020 + stop update pitch + stop all update wave
-
-A0 = channel_data;
-A1 = channels_config;
-A2 = mask;
-AKAO_opcode_c5();
-
-A0 = channel_data;
-A1 = channels_config;
-A2 = mask;
-AKAO_opcode_c7();
-
-A0 = channel_data;
-A1 = channels_config;
-A2 = mask;
-AKAO_opcode_c3();
-
-[channel_data + 6e] = h(hu[channel_data + 6e] & fffa);
 ////////////////////////////////
 
 

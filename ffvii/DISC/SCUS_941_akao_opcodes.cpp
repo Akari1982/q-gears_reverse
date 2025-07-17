@@ -639,3 +639,291 @@ void system_akao_opcode_bf_release_mode( ChannelData* data, AkaoConfig* config, 
         [0x80096608 + V0 * 0x108 + 0xf4] = w(w[data + 0xf4]);
     }
 }
+
+
+
+// Absolute transposition.
+// Parameter <= 0x7F is for positive transposition,
+// value >= 0x80 is for negative transposition starting from 0xFF to 0x80(reversed).
+void system_akao_opcode_c0_transpose_absolute( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    script = w[channel_data + 0];
+
+    [channel_data + cc] = h(b[script + 0]);
+
+    [channel_data + 0] = w(script + 1);
+}
+
+
+
+// Relative transposition (adds to the previous transposition), each step is a semitone.
+// Value <= 0x7F is for positive transposition,
+// while value >= 0x80 is for negative transposition starting from 0xFF to 0x80 (reversed).
+void system_akao_opcode_c1_transpose_relative( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    script = w[channel_data + 0];
+
+    [channel_data + cc] = h(hu[channel_data + cc] + b[script + 0]);
+
+    [channel_data + 0] = w(script + 1);
+}
+
+
+
+// Play the following notes on a reverbered channel, if reverb enabled
+void system_akao_opcode_c2_reverb_on( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    if( hu[channel_data + 54] == 0 )
+    {
+        [channels_config + 30] = w(w[channels_config + 30] | mask);
+    }
+    else
+    {
+        [80099ff0] = w(w[80099ff0] | mask);
+    }
+
+    func30038();
+}
+
+
+
+// Play the following notes on a non-reverbered channel (default)
+void system_akao_opcode_c3_reverb_off( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    if( hu[channel_data + 54] == 0 )
+    {
+        [channels_config + 30] = w(w[channels_config + 30] & (0 NOR mask));
+    }
+    else
+    {
+        [80099ff0] = w(w[80099ff0] & (0 NOR mask));
+    }
+
+    80032D2C	jal    func30038 [$80030038]
+}
+
+
+
+// Tells the engine to use the noise generator instead of sampled waveforms. Stays active until the C5 command is found.
+void system_akao_opcode_c4_noise_on( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    if( hu[channel_data + 54] == 0 )
+    {
+        [channels_config + 2c] = w(w[channels_config + 2c] | mask);
+    }
+    else
+    {
+        [80099fec] = w(w[80099fec] | mask);
+    }
+    [8009a13c] = w(w[8009a13c] | 00000010);
+
+    80032B18	jal    func2ff4c [$8002ff4c]
+}
+
+
+
+// Stops the noise generator to use the waveforms instead. Waveform number is restored as it was before C4 command occured.
+void system_akao_opcode_c5_noise_off( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    if( hu[channel_data + 54] == 0 )
+    {
+        [channels_config + 2c] = w(w[channels_config + 2c] & (0 NOR mask));
+    }
+    else
+    {
+        [80099fec] = w(w[80099fec] & (0 NOR mask));
+    }
+
+    [8009a13c] = w(w[8009a13c] | 00000010);
+
+    80032B94	jal    func2ff4c [$8002ff4c]
+
+    [channel_data + a4] = h(0);
+}
+
+
+
+void system_akao_opcode_c6_frequency_modulation_on( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    V0 = hu[channel_data + 54];
+    if( V0 == 0 )
+    {
+        [channels_config + 34] = w(w[channels_config + 34] | mask);
+    }
+    else
+    {
+        if( ( mask & 00555555 ) == 0 )
+        {
+            [80099ff4] = w(w[80099ff4] | mask);
+        }
+    }
+
+    80032C08	jal    func30148 [$80030148]
+}
+
+
+
+void system_akao_opcode_c7_frequency_modulation_off( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    if( hu[channel_data + 54] == 0 )
+    {
+        [channels_config + 34] = w(w[channels_config + 34] & (0 NOR mask));
+    }
+    else
+    {
+        [80099ff4] = w(w[80099ff4] & (0 NOR mask));
+    }
+
+    80032C6C	jal    func30148 [$80030148]
+}
+
+
+
+void system_akao_opcode_c8_loop_point( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    [A0 + b8] = h((hu[A0 + b8] + 1) & 3);
+
+    index = hu[A0 + b8];
+    [A0 + 4 + index * 4] = w(w[A0 + 0]);
+    [A0 + ba + index * 2] = h(0);
+}
+
+
+
+void system_akao_opcode_c9_loop_return_times( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    V1 = w[A0];
+    [A0] = w(V1 + 1);
+    A1 = bu[V1];
+    if (A1 == 0)
+    {
+        A1 = 100;
+    }
+
+    index = hu[A0 + b8];
+
+    V0 = hu[A0 + ba + index * 2] + 1;
+    [A0 + ba + index * 2] = h(V0);
+
+    if (V0 != A1)
+    {
+        [A0] = w(w[A0 + 4 + index * 4]);
+    }
+    else
+    {
+        [A0 + b8] = h((index - 1) & 3);
+    }
+}
+
+
+
+void system_akao_opcode_ca_loop_return( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    index = hu[A0 + b8];
+
+    [A0 + ba + index * 2] = h(hu[A0 + ba + index * 2] + 1);
+    [A0 + 0] = w(w[A0 + 4 + index * 4]);
+}
+
+
+
+void system_akao_opcode_cb_sfx_reset( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    channels_config = A1;
+    mask = A2; // current channel mask
+
+    [channel_data + 38] = w(w[channel_data + 38] & ffffffc8); // stop 0x00000020 + stop update pitch + stop all update wave
+
+    A0 = channel_data;
+    A1 = channels_config;
+    A2 = mask;
+    system_akao_opcode_c5_noise_off();
+
+    A0 = channel_data;
+    A1 = channels_config;
+    A2 = mask;
+    system_akao_opcode_c7_frequency_modulation_off();
+
+    A0 = channel_data;
+    A1 = channels_config;
+    A2 = mask;
+    system_akao_opcode_c3_reverb_off();
+
+    [channel_data + 6e] = h(hu[channel_data + 6e] & fffa);
+}
+
+
+
+void system_akao_opcode_cc_legato_on( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    [A0 + 6e] = h(1);
+}
+
+
+
+void system_akao_opcode_cd_legato_off( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+}
+
+
+
+void system_akao_opcode_ce_noise_switch( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    script = w[channel_data + 0];
+
+    V0 = bu[script + 0];
+    if( V0 == 0 )
+    {
+        V0 = 100;
+    }
+    [channel_data + a6] = h(V0 + 1);
+
+    system_akao_opcode_c4_noise_on();
+
+    [channel_data + 0] = w(script + 1);
+}
+
+
+
+void system_akao_opcode_cf_noise_switch( ChannelData* data, AkaoConfig* config, u32 mask )
+{
+    channel_data = A0;
+    script = w[channel_data + 0];
+
+    V0 = bu[script + 0];
+    if( V0 == 0 )
+    {
+        V0 = 100;
+    }
+    [channel_data + a4] = h(V0 + 1);
+
+    [channel_data + 0] = w(script + 1);
+}
