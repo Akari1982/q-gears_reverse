@@ -8297,81 +8297,6 @@ else
 
 
 ////////////////////////////////
-// func323cc
-A1 = A0;
-V0 = hu[A1 + 0058];
-800323D4	lui    v1, $8007
-V1 = V1 + 5f28;
-V0 = V0 << 06;
-V0 = V0 + V1;
-V1 = bu[V0 + 0008];
-800323E8	nop
-[A1 + 00fa] = h(V1);
-V1 = bu[V0 + 0009];
-800323F4	nop
-[A1 + 00fc] = h(V1);
-V1 = bu[V0 + 000a];
-80032400	nop
-[A1 + 00fe] = h(V1);
-V1 = bu[V0 + 000b];
-8003240C	nop
-[A1 + 0100] = h(V1);
-V1 = bu[V0 + 000c];
-80032418	nop
-[A1 + 0102] = h(V1);
-V1 = bu[V0 + 000d];
-80032424	nop
-[A1 + 00ec] = w(V1);
-V1 = bu[V0 + 000e];
-80032430	nop
-[A1 + 00f0] = w(V1);
-A0 = bu[V0 + 000f];
-V0 = w[A1 + 00e0];
-V1 = w[A1 + 0038];
-V0 = V0 | ff00;
-V1 = V1 & 0100;
-[A1 + 00e0] = w(V0);
-80032450	beq    v1, zero, L324d0 [$800324d0]
-[A1 + 00f4] = w(A0);
-V1 = w[A1 + 0024];
-A0 = hu[A1 + 00fa];
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 03;
-8003246C	lui    v1, $8009
-V1 = V1 + 6608;
-V0 = V0 + V1;
-[V0 + 00fa] = h(A0);
-V1 = hu[A1 + 00fc];
-80032480	nop
-[V0 + 00fc] = h(V1);
-V1 = hu[A1 + 00fe];
-8003248C	nop
-[V0 + 00fe] = h(V1);
-V1 = hu[A1 + 0100];
-80032498	nop
-[V0 + 0100] = h(V1);
-V1 = hu[A1 + 0102];
-800324A4	nop
-[V0 + 0102] = h(V1);
-V1 = w[A1 + 00ec];
-800324B0	nop
-[V0 + 00ec] = w(V1);
-V1 = w[A1 + 00f0];
-800324BC	nop
-[V0 + 00f0] = w(V1);
-V1 = w[A1 + 00f4];
-800324C8	nop
-[V0 + 00f4] = w(V1);
-
-L324d0:	; 800324D0
-800324D0	jr     ra 
-800324D4	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_c0()
 // Absolute transposition.
 // Parameter <= 0x7F is for positive transposition,
@@ -8465,77 +8390,6 @@ script = w[channel_data + 0];
 
 
 ////////////////////////////////
-// AKAO_opcode_b4()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + 38] = w(w[channel_data + 38] | 00000001); // update frequency lfo
-
-if( hu[channel_data + 54] != 0 )
-{
-    [channel_data + 72] = h(0); // remove frequency lfo delay
-    if( bu[script + 0] != 0 )
-    (
-        [channel_data + 7e] = h(bu[script + 0] << 8); // frequency lfo multiplier.
-    }
-}
-else
-{
-    [channel_data + 72] = h(bu[script + 0]); // add frequency lfo delay
-}
-
-[channel_data + 76] = h(bu[script + 1]); // frequency lfo refresh interval
-if( bu[script + 1] == 0 )
-{
-    [channel_data + 76] = h(100);
-}
-
-[channel_data + 7a] = h(bu[script + 2]); // frequency lfo table key node index
-[channel_data + 74] = h(hu[channel_data + 72]); // frequency lfo delay current
-
-if( hu[channel_data + 7e] & 8000 ) // frequency lfo multiplier
-{
-    V0 = hu[channel_data + 30]; // base pitch
-}
-else
-{
-    V0 = ((hu[channel_data + 30] << 4) - hu[channel_data + 30]) >> 8;
-}
-
-[channel_data + 7c] = h((((hu[channel_data + 7e] & 7f00) >> 8) * V0) >> 7); // frequency lfo multiplier.
-[channel_data + 78] = h(1); // frequency lfo refresh interval counter.
-V0 = hu[channel_data + 7a];
-[channel_data + 18] = w(w[8004a5cc + V0 * 4]); // address into wave table for frequency lfo
-
-[channel_data + 0] = w(script + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b5()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-V0 = bu[script + 0] << 8;
-[channel_data + 7e] = h(V0); // frequency lfo multiplier
-
-A1 = w[channel_data + 30]; // base pitch
-if( ( V0 & 8000 ) == 0 )
-{
-    A1 = ((A1 << 4) - A1) >> 8;
-}
-
-[channel_data + 7c] = h((((V0 & 7f00) >> 8) * A1) >> 7); // frequency lfo multiplier
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_dd()
 // Creates a depth fade for the frequency lfo. First parameter is the fade speed, second parameter is the destination depth.
 
@@ -8551,69 +8405,6 @@ if( A1 == 0 )
 [A0 + 82] = h(((bu[script + 1] << 8) - hu[A0 + 7e]) / A1); // depth fade destination
 
 [channel_data + 0] = w(script + 2);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b6()
-
-channel_data = A0;
-
-[channel_data + d6] = h(0); // pitch wave shift.
-[channel_data + 38] = w(w[channel_data + 38] & fffffffe); // remove update frequency lfo
-[channel_data + e0] = w(w[channel_data + e0] | 00000010); // set pitch
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b8()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + 38] = w(w[channel_data + 38] | 00000002); // update volume lfo
-
-if( hu[channel_data + 54] != 0 )
-{
-    [channel_data + 86] = h(0); // remove volume lfo delay
-    if( bu[script + 0] != 0 )
-    (
-        [channel_data + 90] = h(bu[script + 0] << 8); // volume lfo multiplier.
-    }
-}
-else
-{
-    [channel_data + 86] = h(bu[script + 0]); // add volume lfo delay
-}
-
-[channel_data + 8a] = h(bu[script + 1]); // volume lfo refresh interval
-if( bu[script + 1] == 0 )
-{
-    [channel_data + 8a] = h(100);
-}
-
-[channel_data + 8e] = h(bu[script + 2]); // volume lfo table key node index
-[channel_data + 88] = h(hu[channel_data + 86]); // volume lfo delay current
-[channel_data + 8c] = h(1); // volume lfo refresh interval counter
-V0 = hu[channel_data + 8e];
-[channel_data + 1c] = w(w[8004a5cc + V0 * 4]); // address into wave table for volume lfo
-
-[channel_data + 0] = w(script + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b9()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + 90] = h(bu[script + 0] << 8); // volume lfo multiplier
-
-[channel_data + 0] = w(script + 1);
 ////////////////////////////////
 
 
@@ -8645,70 +8436,6 @@ V0 = V0 - V1;
 
 
 ////////////////////////////////
-// AKAO_opcode_ba()
-// Stop volume LFO
-
-channel_data = A0;
-
-[channel_data + d8] = h(0);
-[channel_data + 38] = w(w[channel_data + 38] & fffffffd);
-[channel_data + e0] = w(w[channel_data + e0] | 00000003);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3298c
-V0 = w[A0 + 0038];
-V1 = w[A0 + 0000];
-V0 = V0 | 0004;
-[A0 + 0038] = w(V0);
-V0 = V1 + 0001;
-[A0 + 0000] = w(V0);
-V0 = bu[V1 + 0000];
-800329A8	nop
-800329AC	bne    v0, zero, L329bc [$800329bc]
-[A0 + 0098] = h(V0);
-V0 = 0100;
-[A0 + 0098] = h(V0);
-
-L329bc:	; 800329BC
-V1 = w[A0 + 0000];
-800329C0	nop
-V0 = V1 + 0001;
-[A0 + 0000] = w(V0);
-V0 = bu[V1 + 0000];
-800329D0	nop
-[A0 + 009c] = h(V0);
-V0 = hu[A0 + 009c];
-800329DC	nop
-V0 = V0 << 02;
-800329E4	lui    at, $8005
-800329E8	addiu  at, at, $a5cc (=-$5a34)
-AT = AT + V0;
-V1 = w[AT + 0000];
-V0 = 0001;
-[A0 + 009a] = h(V0);
-800329FC	jr     ra 
-[A0 + 0020] = w(V1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_bd()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + 9e] = h(bu[script + 0] << 07);
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_opcode_df()
 
 channel_data = A0;
@@ -8724,16 +8451,6 @@ if( A1 == 0 )
 [channel_data + a2] = h(((bu[script + 1] << 7) - hu[channel_data + 9e]) / A1);
 
 [channel_data + 0] = w(script + 2);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_be()
-
-[A0 + 38] = w(w[A0 + 38] & fffffffb); // remove update wave 3
-[A0 + da] = h(0);
-[A0 + e0] = w(w[A0 + e0] | 00000003); // set left volume + set right volume
 ////////////////////////////////
 
 
@@ -8901,63 +8618,6 @@ else
 
 ////////////////////////////////
 // AKAO_opcode_d1()
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_b7()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00000100); // set attack rate
-[channel_data + ec] = w(bu[script + 0]); // attack mode
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + ec] = w(w[channel_data + ec]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_bb()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00000200); // set sustain rate
-[channel_data + f0] = w(bu[script + 0]); // sustain mode
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + f0] = w(w[channel_data + f0]);
-}
-
-[channel_data + 0] = w(script + 1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_opcode_bf()
-
-channel_data = A0;
-script = w[channel_data + 0];
-
-[channel_data + e0] = w(w[channel_data + e0] | 00000400); // set release rate
-[channel_data + f4] = w(bu[script + 0]); // release mode
-if( w[channel_data + 38] & 00000100 )
-{
-    V0 = w[channel_data + 24];
-    [80096608 + V0 * 108 + f4] = w(w[channel_data + f4]);
-}
-
-[channel_data + 0] = w(script + 1);
 ////////////////////////////////
 
 

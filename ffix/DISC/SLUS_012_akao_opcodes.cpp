@@ -399,33 +399,23 @@ void system_akao_opcode_b5_vibrato_depth( VoiceData* data, u32 channel_mask )
     [data + 0x0] = w(akao + 0x1);
 
     depth = bu[akao];
-    V1 = w[data + 0x2c];
-    V0 = depth << 0x8;
-    [data + 0xd6] = h(V0);
+    [data + 0xd6] = h(depth << 0x8);
 
-    A0 = V0;
-    V0 = A0 & 0x7f00;
-    A0 = A0 & 0x8000;
-    A2 = V0 >> 0x8;
-    if( A0 == 0 )
+    V1 = w[data + 0x2c];
+    if( ( depth & 0x80 ) == 0  )
     {
-        V0 = V1 << 0x4;
-        V0 = V0 - V1;
-        V0 = V0 >> 0x8;
-        [data + 0xd4] = h((A2 * V0) >> 0x7);
+        V1 = ((V1 << 0x4) - V1) >> 0x8;
     }
-    else
-    {
-        [data + 0xd4] = h((A2 * V1) >> 0x7);
-    }
+
+    [data + 0xd4] = h(((depth & 0x7f) * V1) >> 0x7);
 }
 
 
 
 void system_akao_opcode_b6_vibrato_off( VoiceData* data, u32 channel_mask )
 {
-    [data + 0x110] = h(0);
     [data + 0x34] = w(w[data + 0x34] & 0xfffffffe);
+    [data + 0x110] = h(0);
     [data + 0x11c] = w(w[data + 0x11c] | SPU_VOICE_PITCH);
 }
 
@@ -446,10 +436,10 @@ void system_akao_opcode_b7_attack_mode( VoiceData* data, u32 channel_mask )
 
 void system_akao_opcode_b8_tremolo( VoiceData* data, u32 channel_mask )
 {
-    [data + 0x34] = w(w[data + 0x34] | 0x00000002);
-
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x3);
+
+    [data + 0x34] = w(w[data + 0x34] | 0x00000002);
 
     delay = bu[akao + 0x0];
     if( hu[data + 0x94] != 0 )
