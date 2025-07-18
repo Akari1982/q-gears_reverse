@@ -541,7 +541,7 @@
                     0x00000001 - update frequency lfo.
                     0x00000002 - update volume lfo.
                     0x00000004 - update volume pan lfo.
-                    0x00000008 - add when we save script pointer using AKAO_opcode_ec().
+                    0x00000008 - add when we save script pointer using system_akao_opcode_ec_drum_mode_on().
                     0x00000010 - update pitch. We update from +0xf8 from previous channel.
                     0x00000020 - use prev channel pitch for volume mod.
                     0x00000100 - ???
@@ -694,7 +694,7 @@
     +10 []       x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move).
     +11 []       y warp around (0 - not warp).
 
-8009a104 start of akao channels config
+0x8009a104 start of akao channels config
     +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
     +04 [][][][] active music channel mask.
     +08 [][][][] channels to be played mask.

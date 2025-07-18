@@ -575,7 +575,6 @@ void system_akao_opcode_c2_reverb_on( VoiceData* data, u32 channel_mask )
     }
     else
     {
-        V1 = ;
         [0x80080a70 + 0x20] = w(w[0x80080a70 + 0x20] | channel_mask);
     }
 
@@ -694,18 +693,18 @@ void system_akao_opcode_c9_loop_return_times( VoiceData* data, u32 channel_mask 
     times = bu[akao];
     if( times == 0 ) times = 0x100;
 
-    V1 = hu[data + 0xf4];
+    index = hu[data + 0xf4];
     [data + 0xa2 + V1 * 0x2] = h(hu[data + 0xa2 + V1 * 0x2] + 0x1);
 
     if( hu[data + 0xa2 + V1 * 0x2] != times )
     {
-        V0 = hu[data + 0xf4];
-        [data + 0x0] = w(w[data + 0x4 + V0 * 0x4]);
-        [data + 0xa0] = h(hu[data + 0xaa + V0 * 2]);
-        return;
+        [data + 0x0] = w(w[data + 0x4 + index * 0x4]);
+        [data + 0xa0] = h(hu[data + 0xaa + index * 0x2]);
     }
-
-    [data + 0xf4] = h((hu[data + 0xf4] - 1) & 0x3);
+    else
+    {
+        [data + 0xf4] = h((index - 1) & 0x3);
+    }
 }
 
 
@@ -713,11 +712,10 @@ void system_akao_opcode_c9_loop_return_times( VoiceData* data, u32 channel_mask 
 
 void system_akao_opcode_ca_loop_return( VoiceData* data, u32 channel_mask )
 {
-    V1 = hu[data + 0xf4];
-
-    [data + 0x0] = w(w[data + 0x4 + V1 * 0x4]);
-    [data + 0xa0] = h(hu[data + 0xaa + V1 * 0x2]);
-    [data + 0xa2 + V1 * 0x2] = h(hu[data + 0xa2 + V1 * 0x2] + 0x1);
+    index = hu[data + 0xf4];
+    [data + 0x0] = w(w[data + 0x4 + index * 0x4]);
+    [data + 0xa0] = h(hu[data + 0xaa + index * 0x2]);
+    [data + 0xa2 + index * 0x2] = h(hu[data + 0xa2 + index * 0x2] + 0x1);
 
 }
 
@@ -754,15 +752,8 @@ void system_akao_opcode_ce_noise_switch( VoiceData* data, u32 channel_mask )
     [data + 0x0] = w(akao + 0x1);
 
     u8 delay = bu[akao];
-
-    if( delay != 0 )
-    {
-        [data + 0xf0] = h(delay + 0x1);
-    }
-    else
-    {
-        [data + 0xf0] = h(0x101);
-    }
+    if( delay == 0 ) delay = 0x100;
+    [data + 0xf0] = h(delay + 0x1);
 
     system_akao_opcode_c4_noise_on( data, channel_mask );
 }
@@ -775,15 +766,8 @@ void system_akao_opcode_cf_noise_switch( VoiceData* data, u32 channel_mask )
     [data + 0x0] = w(V0 + 0x1);
 
     delay = bu[akao];
-
-    if( delay != 0 )
-    {
-        [data + 0xf0] = h(delay + 0x1);
-    }
-    else
-    {
-        [data + 0xf0] = h(0x101);
-    }
+    if( delay == 0 ) delay = 0x100;
+    [data + 0xf0] = h(delay + 0x1);
 }
 
 
@@ -807,15 +791,8 @@ void system_akao_opcode_d2_frequency_modulation_switch( VoiceData* data, u32 cha
     [data + 0x0] = w(akao + 0x1);
 
     u8 delay = bu[akao];
-
-    if( delay != 0 )
-    {
-        [data + 0xf2] = h(delay + 0x1);
-    }
-    else
-    {
-        [data + 0xf2] = h(0x101);
-    }
+    if( delay == 0 ) delay = 0x100;
+    [data + 0xf2] = h(delay + 0x1);
 
     system_akao_opcode_c6_frequency_modulation_on( data, channel_mask );
 }
@@ -826,16 +803,9 @@ void system_akao_opcode_d3_frequency_modulation_switch( VoiceData* data, u32 cha
     akao = w[data + 0x0];
     [data + 0x0] = w(akao + 0x1);
 
-    V1 = bu[akao];
-
-    if( V1 != 0 )
-    {
-        [data + 0xf2] = h(V1 + 0x1);
-    }
-    else
-    {
-        [data + 0xf2] = h(0x101);
-    }
+    u8 delay = bu[akao];
+    if( delay == 0 ) delay = 0x100;
+    [data + 0xf2] = h(delay + 0x1);
 }
 
 
