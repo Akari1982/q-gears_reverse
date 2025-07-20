@@ -1,4 +1,37 @@
-﻿////////////////////////////////
+﻿#define	SPU_VOICE_DIRECT        0
+#define	SPU_VOICE_LINEARIncN    1
+#define	SPU_VOICE_LINEARIncR    2
+#define	SPU_VOICE_LINEARDecN    3
+#define	SPU_VOICE_LINEARDecR    4
+#define	SPU_VOICE_EXPIncN       5
+#define	SPU_VOICE_EXPIncR       6
+#define	SPU_VOICE_EXPDec        7
+#define	SPU_VOICE_EXPDecN       SPU_VOICE_EXPDec
+#define	SPU_VOICE_EXPDecR       SPU_VOICE_EXPDec
+
+#define	SPU_VOICE_VOLL          (0x01 <<  0) /* volume (left) */
+#define	SPU_VOICE_VOLR          (0x01 <<  1) /* volume (right) */
+#define	SPU_VOICE_VOLMODEL      (0x01 <<  2) /* volume mode (left) */
+#define	SPU_VOICE_VOLMODER      (0x01 <<  3) /* volume mode (right) */
+#define	SPU_VOICE_PITCH         (0x01 <<  4) /* tone (pitch setting) */
+#define	SPU_VOICE_NOTE          (0x01 <<  5) /* tone (note setting)  */
+#define	SPU_VOICE_SAMPLE_NOTE   (0x01 <<  6) /* waveform data sample note */
+#define	SPU_VOICE_WDSA          (0x01 <<  7) /* waveform data start address */
+#define	SPU_VOICE_ADSR_AMODE    (0x01 <<  8) /* ADSR Attack rate mode */
+#define	SPU_VOICE_ADSR_SMODE    (0x01 <<  9) /* ADSR Sustain rate mode */
+#define	SPU_VOICE_ADSR_RMODE    (0x01 << 10) /* ADSR Release rate mode */
+#define	SPU_VOICE_ADSR_AR       (0x01 << 11) /* ADSR Attack rate         */
+#define	SPU_VOICE_ADSR_DR       (0x01 << 12) /* ADSR Decay rate          */
+#define	SPU_VOICE_ADSR_SR       (0x01 << 13) /* ADSR Sustain rate        */
+#define	SPU_VOICE_ADSR_RR       (0x01 << 14) /* ADSR Release rate        */
+#define	SPU_VOICE_ADSR_SL       (0x01 << 15) /* ADSR Sustain level       */
+#define	SPU_VOICE_LSAX          (0x01 << 16) /* start address for loop */
+#define	SPU_VOICE_ADSR_ADSR1    (0x01 << 17) /* ADSR adsr1 for `VagAtr'  */
+#define	SPU_VOICE_ADSR_ADSR2    (0x01 << 18) /* ADSR adsr2 for `VagAtr'  */
+
+
+
+////////////////////////////////
 // system_psyq_spu_init()
 
 A0 = 0;
@@ -703,18 +736,17 @@ if( w[8004ab18] != 0 )
     {
         V0 = w[8004ab24];
         A1 = A1 + w[8004ab20];
-        V0 = 0 NOR V0;
-        A1 = A1 & V0;
+        A1 = A1 & ~V0;
     }
 }
 
 A3 = A1 >> w[8004ab1c]; // divide by 8
 
-if( A2 == -1 ) 
+if( A2 == -1 )
 {
     return A3 & ffff;
 }
-if( A2 == -2 ) 
+if( A2 == -2 )
 {
     return A1;
 }
@@ -3063,7 +3095,7 @@ V0 = V0 < V1;
 80038F7C	bne    v0, zero, L38fa4 [$80038fa4]
 
 A0 = -1;
-80038F84	jal    func36de0 [$80036de0]
+func36de0();
 
 80038F8C	lui    at, $8005
 [AT + ab0c] = h(V0);
@@ -3427,22 +3459,23 @@ SP = SP + 0010;
 
 
 
-////////////////////////////////
-// system_sound_spu_set_fixed_volume_left_right_sync()
 
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + 0] = h(A1 & 7fff); // volume left
-[spu + A0 * 10 + 2] = h(A2 & 7fff); // volume right
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
+// Sets the voice volume
+void system_psyq_spu_set_voice_volume( int voiceNum, short volumeL, short volumeR )
 {
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + voiceNum * 0x10 + 0x0] = h(volumeL & 0x7fff);
+    [spu + voiceNum * 0x10 + 0x2] = h(volumeR & 0x7fff);
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
 }
-////////////////////////////////
 
 
 
@@ -3489,163 +3522,160 @@ while( w[SP + 0] < 2 )
 
 
 
-////////////////////////////////
-// system_sound_spu_set_pitch_sync()
 
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + 4] = h(A1);
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
+// Sets the voice interval by pitch
+void system_psyq_spu_set_voice_pitch( int voiceNum, u_short pitch )
 {
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + voiceNum * 0x10 + 0x4] = h(pitch);
 
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
 
-
-////////////////////////////////
-// system_sound_spu_set_start_address_sync()
-
-A0 = (A0 << 8) | 3; // add attack address
-A1 = A1;
-func36de0();
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
-{
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_sound_spu_set_loop_address_sync()
-
-A0 = (A0 << 3) | 7; // add loop address
-A1 = A1;
-func36de0();
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
-{
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_sound_spu_set_decay_shift_sync()
-
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + 8] = h((hu[spu + A0 * 10 + 8] & ff0f) | (A1 << 4)); // decay shift
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
-{
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_sound_spu_set_sustain_level_sync()
-
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + 8] = h((hu[spu + A0 * 10 + 8] & fff0) | A1); // sustain level
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
-{
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_sound_spu_set_attack_rate_mode_sync()
-
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + 8] = h((hu[spu + A0 * 10 + 8] & 00ff) | ((A1 | ((A2 == 5) << 7)) << 8));
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
-{
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_sound_spu_set_sustain_rate_mode_sync()
-
-if( A2 == 1 )
-{
-    A3 = 0; // sustain linear increase
-}
-else if( A2 == 5 )
-{
-    A3 = 200; // sustain exponential increase
-}
-else if( A2 == 7 )
-{
-    A3 = 300; // sustain exponential discrease
-}
-else
-{
-    A3 = 100; // sustain linear discrease
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
 }
 
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + a] = h((hu[spu + A0 * 10 + a] & 003f) | ((A1 | A3) << 6));
 
-[SP + 4] = w(1);
-[SP + 0] = w(0);
 
-while( w[SP + 0] < 2 )
+// Sets start address of waveform data in the sound buffer
+void system_psyq_spu_set_voice_start_addr( int voiceNum, u_long startAddr )
 {
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
+    func36de0( (voiceNum << 0x8) | 0x3, startAddr );
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// system_sound_spu_set_release_rate_mode_sync()
-
-spu = w[8004aaf4]; // 1f801c00
-[spu + A0 * 10 + a] = h((hu[spu + A0 * 10 + a] & ffc0) | ((A2 == 7) << 5) | A1);
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
+// Sets start address of waveform data in the sound buffer
+void system_psyq_spu_set_voice_loop_start_addr( int voiceNum, u_long loopStartAddr )
 {
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
+    func36de0( (voiceNum << 0x3) | 0x7, loopStartAddr );
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
 }
-////////////////////////////////
+
+
+
+// Sets ADSR decay rate used in voice voicenum
+void system_psyq_spu_set_voice_dr( int voiceNum, u_short DR )
+{
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + voiceNum * 0x10 + 0x8] = h((hu[spu + voiceNum * 0x10 + 0x8] & 0xff0f) | (DR << 0x4));
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
+}
+
+
+
+// Sets ADSR sustain level used for voice voiceNum
+void system_psyq_spu_set_voice_sl( int voiceNum, u_short SL )
+{
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + voiceNum * 0x10 + 0x8] = h((hu[spu + voiceNum * 0x10 + 0x8] & 0xfff0) | SL); // sustain level
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
+}
+
+
+
+// Sets ADSR attack rate / ADSR attack rate mode for a voice
+void system_psyq_spu_set_voice_ar_attr( int voiceNum, u_short AR, long Armode )
+{
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + A0 * 0x10 + 0x8] = h((hu[spu + A0 * 0x10 + 0x8] & 0x00ff) | ((A1 | ((A2 == 0x5) << 0x7)) << 0x8));
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
+}
+
+
+
+// Sets ADSR sustain rate / ADSR sustain rate mode used for voice voiceNum
+void system_psyq_spu_set_voice_sr_attr( int voiceNum, u_short SR, long SRmode )
+{
+    if( SRmode == 0x1 )
+    {
+        A3 = 0x0; // sustain linear increase
+    }
+    else if( SRmode == 0x5 )
+    {
+        A3 = 0x200; // sustain exponential increase
+    }
+    else if( SRmode == 0x7 )
+    {
+        A3 = 0x300; // sustain exponential discrease
+    }
+    else
+    {
+        A3 = 0x100; // sustain linear discrease
+    }
+
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + voiceNum * 0x10 + 0xa] = h((hu[spu + voiceNum * 0x10 + 0xa] & 0x003f) | ((SR | A3) << 0x6));
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
+}
+
+
+
+// Sets ADSR release rate / ADSR release rate mode for voice voiceNum
+void system_psyq_spu_set_voice_rr_attr( int voiceNum, u_short RR, long RRmode )
+{
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + A0 * 0x10 + 0xa] = h((hu[spu + A0 * 0x10 + 0xa] & 0xffc0) | ((A2 == 0x7) << 0x5) | A1);
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
+}

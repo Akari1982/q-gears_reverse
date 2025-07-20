@@ -423,7 +423,7 @@
 800730d0 materia data in kernel file (0x14 size).
 800738a0 weapon data in kernel (0x2c size).
 
-80075f28 INSTR.DAT number of struct with size 0x40
+0x80075f28 INSTR.DAT number of struct with size 0x40
     +00 [][][][] start offset.
     +04 [][][][] loop offset.
     +08 []       attack rate.
@@ -519,9 +519,9 @@
                     e - snowboard2.
                    10 - ???
 
-80096608 struct for AKAO channel (0x108 size).
+80096608 struct for alt and overlay voice AKAO channel (0x108 size). 18c0
 80097ec8 some other same 0x18 structs for akao channels.
-80099890 some other same 0x18 structs for akao channels.
+80099788 some other same 0x18 structs for akao channels.
     +000 [][][][] AKAO sequence pointer.
     +004 [][][][] loop point 0.
     +008 [][][][] loop point 1.
@@ -531,8 +531,8 @@
     +018 [][][][] address into wave table for frequency lfo.
     +01c [][][][] address into wave table for volume lfo.
     +020 [][][][] address into wave table for volume pan lfo.
-    +024 [][][][] id of some other channel.
-    +028 [][][][] ???
+    +024 [][][][] id of overlay channel.
+    +028 [][][][] id of alternative channel.
     +02c [][][][] volume multiplier. Store 0x78 here during init.
     +030 [][][][] base pitch. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
     +034 [][][][] init with 0. pitch related.

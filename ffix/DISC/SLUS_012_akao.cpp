@@ -5326,7 +5326,8 @@ u8 system_akao_get_next_note( VoiceData* data )
 
     while( true )
     {
-        opcode = bu[akao];
+        u8 opcode = bu[akao];
+
         if( opcode < 0x9a ) // usual note
         {
             if( opcode >= 0x8f )
@@ -5359,15 +5360,14 @@ u8 system_akao_get_next_note( VoiceData* data )
                 case 0xc9: // loop_return_times
                 {
                     akao += 0x1;
-                    V0 = hu[data + 0xa2 + A2 * 2] + 1;
-                    if( bu[akao] != V0 )
+                    if( bu[akao] != ( hu[data + 0xa2 + loop_nest * 0x2] + 1 ) )
                     {
-                        akao = w[data + 0x4 + A2 * 4];
+                        akao = w[data + 0x4 + loop_nest * 0x4];
                     }
                     else
                     {
                         akao += 0x1;
-                        A2 = (A2 - 1) & 0x3;
+                        loop_nest = (loop_nest - 1) & 0x3;
                     }
                 }
                 break;
@@ -5380,7 +5380,7 @@ u8 system_akao_get_next_note( VoiceData* data )
                         return 0xa0;
                     }
 
-                    akao = w[data + 0x4 + A2 * 4];
+                    akao = w[data + 0x4 + loop_nest * 4];
                 }
                 break;
 
@@ -5392,47 +5392,6 @@ u8 system_akao_get_next_note( VoiceData* data )
                     [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
                 }
                 break;
-
-                case 0xa0:
-                case 0xcc:
-                case 0xce:
-                case 0xcf:
-                case 0xd0:
-                case 0xd2:
-                case 0xd3:
-                case 0xd4:
-                case 0xd5:
-                case 0xd6:
-                case 0xd7:
-                case 0xd8:
-                case 0xd9:
-                case 0xda:
-                case 0xdb:
-                case 0xdc:
-                case 0xdd:
-                case 0xde:
-                case 0xdf:
-                case 0xe0:
-                case 0xe1:
-                case 0xe2:
-                case 0xe3:
-                case 0xe4:
-                case 0xe5:
-                case 0xe6:
-                case 0xe7:
-                case 0xe8:
-                case 0xe9:
-                case 0xea:
-                case 0xeb:
-                case 0xec:
-                case 0xed:
-                case 0xee:
-                case 0xef:
-                case 0xff:
-                {
-                    [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
-                    return 0xa0;
-                }
 
                 case 0xf0:
                 case 0xf1:
@@ -5470,11 +5429,11 @@ u8 system_akao_get_next_note( VoiceData* data )
                             case 0x9:
                             {
                                 akao += 0x1;
-                                if( bu[akao] == ( hu[data + 0xa2 + loop_nest * 2] + 1 ) )
+                                if( bu[akao] == ( hu[data + 0xa2 + loop_nest * 0x2] + 1 ) )
                                 {
-                                    loop_nest = (loop_nest - 1) & 0x3;
                                     akao += 0x1;
                                     akao += h[akao];
+                                    loop_nest = (loop_nest - 1) & 0x3;
                                 }
                                 else
                                 {
@@ -5516,6 +5475,12 @@ u8 system_akao_get_next_note( VoiceData* data )
                     }
                 }
                 break;
+
+                default
+                {
+                    [data + 0xcc] = h(hu[data + 0xcc] & 0xfffa);
+                    return 0xa0;
+                }
             }
         }
     }
