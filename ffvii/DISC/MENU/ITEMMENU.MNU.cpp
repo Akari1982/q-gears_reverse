@@ -1,12 +1,10 @@
-////////////////////////////////
-// func1d01e8()
-
-A0 = A0 & ffff;
-[8009a000] = h(30);
-[8009a004] = w(A0);
-[8009a008] = w(A0);
-system_akao_execute();
-////////////////////////////////
+void itemmenu_play_sound( u16 sound_id )
+{
+    [0x8009a000] = h(0x30);
+    [0x8009a004] = w(sound_id);
+    [0x8009a008] = w(sound_id);
+    system_akao_execute();
+}
 
 
 
@@ -1207,8 +1205,7 @@ switch( w[801d3e48] )
     {
         if( hu[80062d7c] & 0020 ) // circle pressed
         {
-            A0 = 1;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x1 );
 
             cur_x = b[801d3ddc + 0 * 12 + a];
 
@@ -1261,8 +1258,7 @@ switch( w[801d3e48] )
         }
         else if( hu[80062d7e] & 0040 ) // cross repeated
         {
-            A0 = 4;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x4 );
 
             A0 = 5;
             A1 = 0;
@@ -1288,8 +1284,7 @@ switch( w[801d3e48] )
 
             if( item == ffff ) // if there is no item in this slot
             {
-                A0 = 3;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x3 );
             }
             else
             {
@@ -1300,15 +1295,13 @@ switch( w[801d3e48] )
 
                 if( V0 & 04 ) // can't be used
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
                     if( item_id == 62 ) // Save Crystal (Used to create a SAVE Point in the ‘North Cave’)
                     {
-                        A0 = 107;
-                        func1d01e8(); // play sound
+                        itemmenu_play_sound( 0x107 );
 
                         [8009d5e8] = b(bu[8009d5e8] | 01);
 
@@ -1323,8 +1316,7 @@ switch( w[801d3e48] )
                     }
                     else if( item_id == 67 ) // Earth Harp (Calms the hearts of all who hear it)
                     {
-                        A0 = 107;
-                        func1d01e8(); // play sound
+                        itemmenu_play_sound( 0x107 );
 
                         // Cait Sith (or Young Cloud)
                         [8009c6e4 + 54 + 6 * 84 + 0] = b(6); // character id (Cait Sith)
@@ -1342,8 +1334,7 @@ switch( w[801d3e48] )
                     }
                     else
                     {
-                        A0 = 1;
-                        func1d01e8(); // play sound
+                        itemmenu_play_sound( 0x1 );
 
                         [801d3e5c] = w(0);
                         [801d3e48] = w(2);
@@ -1353,8 +1344,7 @@ switch( w[801d3e48] )
         }
         else if( hu[80062d7c] & 0040 )
         {
-            A0 = 4;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x4 );
 
             [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }
@@ -1370,8 +1360,7 @@ switch( w[801d3e48] )
         {
             if( hu[80062d7c] & 0040 )
             {
-                A0 = 4;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x4 );
 
                 [801d3e48] = w(1); // item selection and use without character selection
             }
@@ -1390,8 +1379,7 @@ switch( w[801d3e48] )
             // if not Megalixir or Tent
             if( ( item_id != 6 ) && ( item_id != 46 ) )
             {
-                A0 = 3;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x3 );
 
                 return;
             }
@@ -1405,8 +1393,7 @@ switch( w[801d3e48] )
 
                 if( V1 & 0020 ) // if already in fury
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
@@ -1419,8 +1406,7 @@ switch( w[801d3e48] )
                         [8009c6e4 + 54 + save_char_id * 84 + 1f] = b(V1 | 20); // add fury
                     }
 
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = item_id | 0200; // remove 1 item
                     system_menu_inventory_remove_item();
@@ -1444,8 +1430,7 @@ switch( w[801d3e48] )
                 {
                     if( V1 & 0010 ) // if already in sadness
                     {
-                        A0 = 3;
-                        func1d01e8(); // play sound
+                        itemmenu_play_sound( 0x3 );
 
                         return;
                     }
@@ -1455,8 +1440,7 @@ switch( w[801d3e48] )
                     }
                 }
 
-                A0 = 107;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x107 );
 
                 A0 = item_id | 0200;
                 system_menu_inventory_remove_item();
@@ -1485,8 +1469,7 @@ switch( w[801d3e48] )
 
                     if( V0 != 0 ) // can be learned
                     {
-                        A0 = 180;
-                        func1d01e8(); // play sound
+                        itemmenu_play_sound( 0x180 );
 
                         [8009c6e4 + 54 + limit_char_id * 84 + 22] = h(hu[8009c6e4 + 54 + limit_char_id * 84 + 22] | 0200); // learn Limit Lv. 4
 
@@ -1515,8 +1498,7 @@ switch( w[801d3e48] )
                         A1 = 7;
                         system_menu_request_add_window();
 
-                        A0 = 3;
-                        func1d01e8(); // play sound
+                        itemmenu_play_sound( 0x3 );
                     }
                 }
                 else // if we select inappropriate character
@@ -1538,8 +1520,7 @@ switch( w[801d3e48] )
                     A1 = 7;
                     system_menu_request_add_window();
 
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
             }
             break;
@@ -1558,8 +1539,7 @@ switch( w[801d3e48] )
                         strength = bu[8009c740 + save_char_id * 84];
                         if( strength >= ff )
                         {
-                            A0 = 3;
-                            func1d01e8(); // play sound
+                            itemmenu_play_sound( 0x3 ); // play sound
                             return;
                         }
                         [8009c740 + save_char_id * 84] = b(strength + 1);
@@ -1571,8 +1551,7 @@ switch( w[801d3e48] )
                         vitality = bu[8009c741 + save_char_id * 84];
                         if( vitality >= ff )
                         {
-                            A0 = 3;
-                            func1d01e8(); // play sound
+                            itemmenu_play_sound( 0x3 );
                             return;
                         }
                         [8009c741 + save_char_id * 84] = b(vitality + 1);
@@ -1584,8 +1563,7 @@ switch( w[801d3e48] )
                         magic = bu[8009c742 + save_char_id * 84];
                         if( magic >= ff )
                         {
-                            A0 = 3;
-                            func1d01e8(); // play sound
+                            itemmenu_play_sound( 0x3 );
                             return;
                         }
                         [8009c742 + save_char_id * 84] = b(magic + 1);
@@ -1597,8 +1575,7 @@ switch( w[801d3e48] )
                         spirit = bu[8009c743 + save_char_id * 84];
                         if( spirit >= ff )
                         {
-                            A0 = 3;
-                            func1d01e8(); // play sound
+                            itemmenu_play_sound( 0x3 );
                             return;
                         }
                         [8009c743 + save_char_id * 84] = b(spirit + 1);
@@ -1610,8 +1587,7 @@ switch( w[801d3e48] )
                         dexterity = bu[8009c744 + save_char_id * 84];
                         if( dexterity >= ff )
                         {
-                            A0 = 3;
-                            func1d01e8(); // play sound
+                            itemmenu_play_sound( 0x3 );
                             return;
                         }
                         [8009c744 + save_char_id * 84] = b(dexterity + 1);
@@ -1623,8 +1599,7 @@ switch( w[801d3e48] )
                         luck = bu[8009c745 + save_char_id * 84];
                         if( luck >= ff )
                         {
-                            A0 = 3;
-                            func1d01e8(); // play sound
+                            itemmenu_play_sound( 0x3);
                             return;
                         }
                         [8009c745 + save_char_id * 84] = b(luck + 1);
@@ -1632,8 +1607,7 @@ switch( w[801d3e48] )
                     break;
                 }
 
-                A0 = 107;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x107 );
 
                 A0 = party_id;
                 system_init_player_stat_from_equip();
@@ -1659,13 +1633,11 @@ switch( w[801d3e48] )
                 // if max hp or cur hp == 0
                 if( ( V0 != 0 ) || ( h[8009d84c + V0 * 440 + 10] == 0 ) )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = 64;
@@ -1689,13 +1661,11 @@ switch( w[801d3e48] )
                 // if max hp or cur hp == 0
                 if( ( V0 != 0 ) || ( h[8009d84c + V0 * 440 + 10] == 0 ) )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = 1f4;
@@ -1719,13 +1689,11 @@ switch( w[801d3e48] )
                 // if max mp or cur hp == 0
                 if( ( V0 != 0 ) || ( h[8009d84c + V0 * 440 + 10] == 0 ) )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = 64;
@@ -1749,13 +1717,11 @@ switch( w[801d3e48] )
                 // if max mp or cur hp == 0
                 if( ( V0 != 0 ) || ( h[8009d84c + V0 * 440 + 10] == 0 ) )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = 2710;
@@ -1776,13 +1742,11 @@ switch( w[801d3e48] )
                 V0 = party_id;
                 if( h[8009d84c + V0 * 440 + 10] != 0 )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = h[8009d85e + A0 * 440] / 4;
@@ -1819,8 +1783,7 @@ switch( w[801d3e48] )
 
                 if( S1 == 0 )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
@@ -1841,8 +1804,7 @@ switch( w[801d3e48] )
                         }
                     }
 
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = item_id | 0200;
                     system_menu_inventory_remove_item();
@@ -1862,13 +1824,11 @@ switch( w[801d3e48] )
                 // if max hp or cur hp == 0
                 if( ( V0 != 0 ) || ( h[8009d84c + V0 * 440 + 10] == 0 ) )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = 2710;
@@ -1896,13 +1856,11 @@ switch( w[801d3e48] )
 
                 if( ( ( is_max_hp != 0 ) && ( is_max_mp != 0 ) ) || ( h[8009d84c + i * 440 + 10] == 0 ) )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = party_id;
                     A1 = 2710;
@@ -1943,8 +1901,7 @@ switch( w[801d3e48] )
 
                 if( S1 == 0 )
                 {
-                    A0 = 3;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x3 );
                 }
                 else
                 {
@@ -1965,8 +1922,7 @@ switch( w[801d3e48] )
                         }
                     }
 
-                    A0 = 107;
-                    func1d01e8(); // play sound
+                    itemmenu_play_sound( 0x107 );
 
                     A0 = item_id | 0200;
                     system_menu_inventory_remove_item();
@@ -1986,8 +1942,7 @@ switch( w[801d3e48] )
     {
         if( hu[80062d7c] & 0040 ) // cross pressed
         {
-            A0 = 4;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x4 );
 
             [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }
@@ -2000,8 +1955,7 @@ switch( w[801d3e48] )
     {
         if( hu[80062d7c] & 0020 )
         {
-            A0 = 1;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x1 );
 
             cur_y = b[801d3ddc + 4 * 12 + b];
 
@@ -2038,8 +1992,7 @@ switch( w[801d3e48] )
         }
         else if( hu[80062d7c] & 0040 )
         {
-            A0 = 4;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x4 );
 
             [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }
@@ -2053,8 +2006,7 @@ switch( w[801d3e48] )
         {
             if( w[801d3d84] == 0 ) // select item
             {
-                A0 = 1;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x1 );
 
                 [801d3d84] = w(w[801d3d84] + 1); // go to swap
                 [801d3d88] = w(b[801d3ddc + 5 * 12 + a]); // cur_x
@@ -2062,8 +2014,7 @@ switch( w[801d3e48] )
             }
             else if( w[801d3d84] == 1 ) // swap item
             {
-                A0 = 1;
-                func1d01e8(); // play sound
+                itemmenu_play_sound( 0x1 );
 
                 selected = w[801d3d8c];
                 cur_y = b[801d3ddc + 5 * 12 + b];
@@ -2078,8 +2029,7 @@ switch( w[801d3e48] )
         }
         else if( hu[80062d7c] & 0040 )
         {
-            A0 = 4;
-            func1d01e8(); // play sound
+            itemmenu_play_sound( 0x4 );
 
             [801d3e48] = w(0); // upper selection (use arrange keyitems)
         }

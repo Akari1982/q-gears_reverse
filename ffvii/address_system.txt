@@ -294,9 +294,9 @@
 
 80062f5e [][]     global volume?
 
-80062f70 [][]     global left right reverberation pan.
-80062f74 [][][][] pointer to 80089580. AKAO scripts. EFFECT.ALL offsets.
-80062f84 [][][][] pointer to 8008a580. AKAO scripts. EFFECT.ALL data.
+0x80062f70 [][]     global left right reverberation pan.
+0x80062f74 [][][][] pointer to 0x80089580. AKAO scripts. EFFECT.ALL offsets.
+0x80062f84 [][][][] pointer to 0x8008a580. AKAO scripts. EFFECT.ALL data.
 
 80062f8c [][][][] store 1 here at start of system_akao_execute. We will not add AKAO commands until this is 0.
 
@@ -308,7 +308,7 @@
 
 80062fea [][][][] used as some tempo modificator for AKAO sequenser.
 
-80063010 [][][][] index in 80081dc8 array.
+0x80063010 [][][][] index in 0x80081dc8 array.
 80063014 [][][][] pointer to temp array for action calculation.
 
 80063560 we copy kernel string here to display.
@@ -454,7 +454,7 @@
 8007eb68 array of two global DISPENV (0x2 items, 0x14 size)
 
 
-80081dc8 struct with size 0x24 where we store data for AKAO parser. Store here data from 8009a000.
+0x80081dc8 struct with size 0x24 where we store data for AKAO parser. Store here data from 8009a000.
     // for 0x10, 0x14, 0x15, 0x18, 0x19
     +00 [][][][] command 0x10, 0x14, 0x15, 0x18, 0x19
     +04 [][][][] offset to akao sequence.
@@ -644,14 +644,14 @@
     +104 [][]     left volume.
     +106 [][]     right volume.
 
-80099fcc [][][][] some channel mask. Add here channels with scripts to run. We update only this channels starting from 0x00010000
-80099fd0 [][][][] some channel mask. Remove from here channels we want to start sound.
-80099fd4 [][][][] some channel mask. Remove from here channels we want to start sound.
-80099fd8 [][][][] some channel mask. Add here channels we want to start sound.
-80099fdc [][][][] some channel mask. Remove from here channels we want to start sound.
-80099fec [][][][] some channel mask. Remove from here channels we want to start sound.
-80099ff0 [][][][] some channel mask. Remove from here channels we want to start sound.
-80099ff4 [][][][] some channel mask. Remove from here channels we want to start sound.
+0x80099fcc [][][][] some channel mask. Add here channels with scripts to run. We update only this channels starting from 0x00010000
+0x80099fd0 [][][][] some channel mask. Remove from here channels we want to start sound.
+0x80099fd4 [][][][] some channel mask. Remove from here channels we want to start sound.
+0x80099fd8 [][][][] some channel mask. Add here channels we want to start sound.
+0x80099fdc [][][][] some channel mask. Remove from here channels we want to start sound.
+0x80099fec [][][][] some channel mask. Remove from here channels we want to start sound.
+0x80099ff0 [][][][] some channel mask. Remove from here channels we want to start sound.
+0x80099ff4 [][][][] some channel mask. Remove from here channels we want to start sound.
 
 
 

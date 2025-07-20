@@ -1599,16 +1599,18 @@ L3795c:	; 8003795C
 
 
 ////////////////////////////////
-// func37964
+// func37964()
+
 A2 = ca; // pitch for chanel 0x19
 A3 = cb; // start address for chanel 0x19
-func37988;
+func37988();
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// func37988
+// func37988()
+
 T1 = A0;
 T0 = A1;
 
@@ -1627,7 +1629,7 @@ if (T1 != 0)
 {
     if (T1 != 1)
     {
-        return T2 & 00ffffff;
+        return T2 & 0x00ffffff;
     }
 
     if (w[8004aaec] & 1)
@@ -1656,14 +1658,14 @@ else
     else
     {
         A1 = w[8004aaf4]; // spu address
-        [A1 + A2 * 2] = h(hu[A1 + A2 * 2] & (0 NOR T0));
-        [A1 + A3 / 2] = h(hu[A1 + A3 / 2] & (0 NOR ((T0 >> 10) & ff)));
+        [A1 + A2 * 2] = h(hu[A1 + A2 * 2] & ~T0);
+        [A1 + A3 / 2] = h(hu[A1 + A3 / 2] & (~((T0 >> 10) & ff)));
     }
 
-    T2 = T2 & (0 NOR (T0 & 00ffffff));
+    T2 = T2 & (~(T0 & 00ffffff));
 }
 
-return T2 & 00ffffff;
+return T2 & 0x00ffffff;
 ////////////////////////////////
 
 
@@ -2719,10 +2721,11 @@ if( ( A1 < 1 ) || ( A1 & 4 ))
 
 
 ////////////////////////////////
-// func388c4
+// func388c4()
+
 A2 = cc; // attack/decay/sustain level for chanel 0x19
 A3 = cd; // sustain rate, release rate for chanel 0x19
-func37988;
+func37988();
 ////////////////////////////////
 
 
@@ -3152,9 +3155,10 @@ if( A0 != w[8004ab2c] )
 
 ////////////////////////////////
 // func39010
+
 A2 = c8; // volume left for channel 0x19
 A3 = c9; // volume right for channel 0x19
-func37988;
+func37988();
 ////////////////////////////////
 
 

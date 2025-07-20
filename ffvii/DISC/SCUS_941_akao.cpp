@@ -533,42 +533,37 @@ if (A1 != 0)
 
 
 
-////////////////////////////////
-// func29bac
 // initialize script sequence
+void func29bac( ChannelData* channel, u32 offset )
+{
+    func31820( channel, 0x5 );
 
-S0 = A0; // pointer to struct
-offset = A1;
-
-A1 = 5;
-func31820;
-
-[S0 + 0] = w(offset);
-[S0 + 2c] = w(78);
-[S0 + 34] = w(0);
-[S0 + 38] = w(0);
-[S0 + 44] = h(32000000);
-[S0 + 5c] = h(0);
-[S0 + 64] = h(0);
-[S0 + 66] = h(2);
-[S0 + 6c] = h(0);
-[S0 + 6e] = h(0);
-[S0 + 7e] = h(0);
-[S0 + 80] = h(0);
-[S0 + 90] = h(0);
-[S0 + 92] = h(0);
-[S0 + 9e] = h(0);
-[S0 + a0] = h(0);
-[S0 + a4] = h(0);
-[S0 + a6] = h(0);
-[S0 + b8] = h(0);
-[S0 + c2] = h(0);
-[S0 + c4] = h(0);
-[S0 + cc] = h(0);
-[S0 + ce] = h(0);
-[S0 + d2] = h(0);
-[S0 + da] = h(0);
-////////////////////////////////
+    channel->seq = offset;
+    channel->vol_master = 0x78;
+    [channel + 0x34] = w(0x0);
+    [channel + 0x38] = w(0x0);
+    [channel + 0x44] = h(0x32000000);
+    [channel + 0x5c] = h(0x0);
+    [channel + 0x64] = h(0x0);
+    [channel + 0x66] = h(0x2);
+    [channel + 0x6c] = h(0x0);
+    [channel + 0x6e] = h(0x0);
+    [channel + 0x7e] = h(0x0);
+    [channel + 0x80] = h(0x0);
+    [channel + 0x90] = h(0x0);
+    [channel + 0x92] = h(0x0);
+    [channel + 0x9e] = h(0x0);
+    [channel + 0xa0] = h(0x0);
+    [channel + 0xa4] = h(0x0);
+    [channel + 0xa6] = h(0x0);
+    [channel + 0xb8] = h(0x0);
+    [channel + 0xc2] = h(0x0);
+    [channel + 0xc4] = h(0x0);
+    [channel + 0xcc] = h(0x0);
+    [channel + 0xce] = h(0x0);
+    [channel + 0xd2] = h(0x0);
+    [channel + 0xda] = h(0x0);
+}
 
 
 
@@ -802,9 +797,7 @@ if (A2 != 0)
 {
     S1 = 1;
 
-    A0 = S0;
-    A1 = A2; // pointer to AKAO sequence
-    func29bac;
+    func29bac( S0, A2 );
 
     [S0 + 60] = h(S3);
     [S0 + 62] = h(0);
@@ -814,9 +807,7 @@ if (S4 != 0)
 {
     S1 = S1 | 2;
 
-    A0 = S0 + 108;
-    A1 = S4; // pointer to AKAO sequence
-    func29bac;
+    func29bac( S0 + 0x108, S4 );
 
     [S0 + 108 + 60] = h(S3);
     [S0 + 108 + 62] = h(0);
@@ -861,62 +852,57 @@ func30148();
 
 
 
-////////////////////////////////
-// func2a28c
-offset1 = A0;
-offset2 = A1;
-
-[80099e0e] = h(1);
-[80099f16] = h(1);
-
-[80099db8 + 0] = w(80049c40);
-[80099ec0 + 0] = w(80049c40);
-
-[80099db8 + 50] = w(-1);
-[80099ec0 + 50] = w(-1);
-
-[80099db8 + 54] = h(2);
-[80099ec0 + 54] = h(2);
-
-S0 = 0;
-
-if offset1 != 0)
+void func2a28c( u16 offset1, u32 offset2 )
 {
-    S0 = 1;
-    A0 = 80099db8;
-    A1 = offset1;
-    func29bac;
+    channel1 = 0x80099788 + 0x6 * 0x108;
+    channel2 = 0x80099788 + 0x7 * 0x108;
 
-    [80099db8 + 60] = h(4000);
-    [80099db8 + 62] = h(0);
+    [channel1 + 0x0] = w(0x80049c40);
+    [channel2 + 0x0] = w(0x80049c40);
+
+    [channel1 + 0x50] = w(-1);
+    [channel2 + 0x50] = w(-1);
+    [channel1 + 0x54] = h(2);
+    [channel2 + 0x54] = h(2);
+    [channel1 + 0x56] = h(0x1);
+    [channel2 + 0x56] = h(0x1);
+
+    mask = 0;
+
+    if( offset1 != 0 )
+    {
+        mask |= 0x1;
+
+        func29bac( channel1, offset1 );
+
+        [channel1 + 0x60] = h(0x4000); // base volume pan
+        [channel1 + 0x62] = h(0x0);
+    }
+
+    if( offset2 != 0 )
+    {
+        mask |= 0x2;
+
+        func29bac( channel2, offset2 );
+
+        [channel2 + 60] = h(0x4000); // base volume pan
+        [channel2 + 62] = h(0x0);
+    }
+
+    [0x80099fcc] = w(w[0x80099fcc] | (mask << 0x16));
+    [0x80099fd0] = w(w[0x80099fd0] & 0xff3fffff);
+    [0x80099fd4] = w(w[0x80099fd4] & 0xff3fffff);
+    [0x80099fd8] = w(w[0x80099fd8] | 0x00c00000);
+    [0x80099fec] = w(w[0x80099fec] & 0xff3fffff);
+    [0x80099ff0] = w(w[0x80099ff0] & 0xff3fffff);
+    [0x80099ff4] = w(w[0x80099ff4] & 0xff3fffff);
+
+    func2ff4c();
+    func30038();
+    func30148();
+
+    [0x80099fdc] = w(w[0x80099fdc] & 0xff3fffff);
 }
-
-
-if (offset2 != 0)
-{
-    S0 = S0 | 2;
-    A0 = 80099ec0;
-    A1 = offset2;
-    func29bac;
-
-    [80099ec0 + 60] = h(4000);
-    [80099ec0 + 62] = h(0);
-}
-
-[80099fcc] = w(w[80099fcc] | (S0 << 16));
-[80099fd0] = w(w[80099fd0] & ff3fffff);
-[80099fd4] = w(w[80099fd4] & ff3fffff);
-[80099fd8] = w(w[80099fd8] | 00c00000);
-[80099fec] = w(w[80099fec] & ff3fffff);
-[80099ff0] = w(w[80099ff0] & ff3fffff);
-[80099ff4] = w(w[80099ff4] & ff3fffff);
-
-func2ff4c();
-func30038();
-func30148();
-
-[80099fdc] = w(w[80099fdc] & ff3fffff);
-////////////////////////////////
 
 
 
@@ -1031,32 +1017,19 @@ void func2a510( u16 A0, u16 pair_id )
 
 
 
-////////////////////////////////
-// func2a6c4
-A2 = A2 & 3ff; // sound id
-A2 = A2 * 2;
-V1 = w[80062f74];
+void system_akao_get_sound_sequence( u32& offset1, u32& offset2, u16 sound_id )
+{
+    u16 A2 = (sound_id & 0x3ff) * 0x2;
+    u32 akao_seq = w[0x80062f74];
 
-if (hu[V1 + A2 * 2] != ffff)
-{
-    [A0] = w(w[80062f84] + hu[V1 + A2 * 2]);
-}
-else
-{
-    [A0] = w(0);
-}
+    u16 offset = hu[akao_seq + A2 * 2];
+    offset1 = ( offset != 0xffff ) ? w[0x80062f84] + offset : 0;
 
-A2 = A2 + 1;
+    A2 += 0x1;
 
-if (hu[V1 + A2 * 2] != ffff)
-{
-    [A1] = w(w[80062f84] + hu[V1 + A2 * 2]);
+    offset = hu[akao_seq + A2 * 2];
+    offset2 = ( offset != 0xffff ) ? w[0x80062f84] + offset : 0;
 }
-else
-{
-    [A1] = w(0);
-}
-////////////////////////////////
 
 
 
@@ -2134,7 +2107,7 @@ A1 = 0002;
 A0 = SP + 0010;
 S1 = SP + 0014;
 A2 = hu[S0 + 0008];
-8002B6D8	jal    func2a6c4 [$8002a6c4]
+8002B6D8	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2143,7 +2116,7 @@ A3 = w[SP + 0014];
 A1 = 0032;
 A0 = SP + 0010;
 A2 = hu[S0 + 000c];
-8002B6FC	jal    func2a6c4 [$8002a6c4]
+8002B6FC	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2175,7 +2148,7 @@ A1 = 0003;
 A0 = SP + 0010;
 S1 = SP + 0014;
 A2 = hu[S0 + 0008];
-8002B764	jal    func2a6c4 [$8002a6c4]
+8002B764	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2184,7 +2157,7 @@ A3 = w[SP + 0014];
 A1 = 0030;
 A0 = SP + 0010;
 A2 = hu[S0 + 000c];
-8002B788	jal    func2a6c4 [$8002a6c4]
+8002B788	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2193,7 +2166,7 @@ A3 = w[SP + 0014];
 A1 = 0032;
 A0 = SP + 0010;
 A2 = hu[S0 + 0010];
-8002B7AC	jal    func2a6c4 [$8002a6c4]
+8002B7AC	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2225,7 +2198,7 @@ A1 = 0004;
 A0 = SP + 0010;
 S1 = SP + 0014;
 A2 = hu[S0 + 0008];
-8002B814	jal    func2a6c4 [$8002a6c4]
+8002B814	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2234,7 +2207,7 @@ A3 = w[SP + 0014];
 A1 = 0030;
 A0 = SP + 0010;
 A2 = hu[S0 + 000c];
-8002B838	jal    func2a6c4 [$8002a6c4]
+8002B838	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2243,7 +2216,7 @@ A3 = w[SP + 0014];
 A1 = 0032;
 A0 = SP + 0010;
 A2 = hu[S0 + 0010];
-8002B85C	jal    func2a6c4 [$8002a6c4]
+8002B85C	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2252,7 +2225,7 @@ A3 = w[SP + 0014];
 A1 = 0034;
 A0 = SP + 0010;
 A2 = hu[S0 + 0014];
-8002B880	jal    func2a6c4 [$8002a6c4]
+8002B880	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = S1;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2269,24 +2242,14 @@ SP = SP + 0028;
 
 
 
-////////////////////////////////
-// AKAO_set_30()
-
-S0 = A0;
-
-A0 = 6;
-A1 = 1;
-func2a510;
-
-A0 = SP + 10;
-A1 = SP + 14;
-A2 = w[S0 + 4];
-func2a6c4;
-
-A0 = w[SP + 10];
-A1 = w[SP + 14];
-func2a28c;
-////////////////////////////////
+void AKAO_set_30( S0 )
+{
+    func2a510( 0x6, 0x1 );
+    u32 offset1;
+    u32 offset2;
+    system_akao_get_sound_sequence( offset1, offset2, w[S0 + 0x4] );
+    func2a28c( offset1, offset2 );
+}
 
 
 
@@ -2302,7 +2265,7 @@ func2a510;
 A0 = SP + 10;
 A1 = SP + 14;
 A2 = hu[S0 + 8];
-func2a6c4;
+system_akao_get_sound_sequence;
 
 A0 = hu[S0 + 4];
 A1 = 34;
@@ -2324,7 +2287,7 @@ A0 = 0002;
 A1 = 0001;
 A0 = SP + 0010;
 A2 = hu[S0 + 0008];
-8002B97C	jal    func2a6c4 [$8002a6c4]
+8002B97C	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = SP + 0014;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2353,7 +2316,7 @@ A1 = 0001;
 8002B9CC	nop
 A0 = SP + 0010;
 A2 = hu[S0 + 0008];
-8002B9D8	jal    func2a6c4 [$8002a6c4]
+8002B9D8	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = SP + 0014;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -2380,7 +2343,7 @@ A0 = 0006;
 A1 = 0001;
 A0 = SP + 0010;
 A2 = hu[S0 + 0008];
-8002BA2C	jal    func2a6c4 [$8002a6c4]
+8002BA2C	jal    system_akao_get_sound_sequence [$8002a6c4]
 A1 = SP + 0014;
 A0 = hu[S0 + 0004];
 A2 = w[SP + 0010];
@@ -4677,12 +4640,11 @@ L2da20:	; 8002DA20
 
 
 
-////////////////////////////////
-// func2da30()
-
-[A0] = w(80081dc8 + w[80063010] * 24);
-[80063010] = w(w[80063010] + 1);
-////////////////////////////////
+void func2da30( u32 A0 )
+{
+    [A0] = w(0x80081dc8 + w[0x80063010] * 0x24);
+    [0x80063010] = w(w[0x80063010] + 1);
+}
 
 
 
@@ -4857,8 +4819,7 @@ void system_akao_execute()
     }
     else
     {
-        A0 = SP + 10;
-        func2da30();
+        func2da30( SP + 0x10 );
 
         V1 = w[SP + 10];
         [V1 + 0] = w(w[8009a000]);
@@ -5060,82 +5021,81 @@ if (w[80062f8c] == 0 && w[80063010] != 0)
         V0 = w[80049548 + V0 * 4];
 
 00-0f 11-13 16-17 1a-1f 24-27 2c-2f 31-33 35-7f 83-8f 91 93-99 9e 9f be bf c3-c7 cb-cf d3 d7-df e1-e3 e5-ef f6 f7 fb-ff 8002cf98
-18 func2B5A8
-19 func2B608
-21 func2B6AC
-22 func2B730
-23 func2B7E0
-28 func2B904
-29 func2B958
-2a func2B9AC
-2b func2BA08
-30 func2B8B4
-34 func2B668
-80 func2C7E8
-81 func2C850
-82 func2C81C
-90 func2C884
-92 func2C8C4
-9a func2C9E4
-9b func2C8DC
-9c func2CB78
-9d func2CA84
-a0 func2BE8C
-a1 func2BEDC
-a2 func2BF2C
-a3 func2BF7C
-a4 func2BEB4
-a5 func2BF04
-a6 func2BF54
-a7 func2BFA4
-a8 func2C18C
-a9 func2C1DC
-aa func2C22C
-ab func2C27C
-ac func2C1B4
-ad func2C204
-ae func2C254
-af func2C2A4
-b0 func2C468
-b1 func2C4B8
-b2 func2C508
-b3 func2C558
-b4 func2C490
-b5 func2C4E0
-b6 func2C530
-b7 func2C580
-b8 func2BDCC
-b9 func2BE2C
-ba func2C0CC
-bb func2C12C
-bc func2C3A8
-c1 func2BA98
-c2 func2BB20
-c8 func2BBB4
-c9 func2BBEC
-ca func2BC58
-d0 func2C5A8
-d1 func2C5C8
-d2 func2C634
-d4 func2C6A8
-d5 func2C6C8
-d6 func2C734
-e0 func2CC18
-e4 func2CC44
-f1 func2C7C8
-f2 func2CCBC
-f3 func2CCCC
-f4 func2CCDC
-f5 func2CDD0
-f8 func2CEC0
-f9 func2CF1C
-fa func2CF78
+18 func2b5a8
+19 func2b608
+21 func2b6ac
+22 func2b730
+23 func2b7e0
+28 func2b904
+29 func2b958
+2a func2b9ac
+2b func2ba08
+34 func2b668
+80 func2c7e8
+81 func2c850
+82 func2c81c
+90 func2c884
+92 func2c8c4
+9a func2c9e4
+9b func2c8dc
+9c func2cb78
+9d func2ca84
+a0 func2be8c
+a1 func2bedc
+a2 func2bf2c
+a3 func2bf7c
+a4 func2beb4
+a5 func2bf04
+a6 func2bf54
+a7 func2bfa4
+a8 func2c18c
+a9 func2c1dc
+aa func2c22c
+ab func2c27c
+ac func2c1b4
+ad func2c204
+ae func2c254
+af func2c2a4
+b0 func2c468
+b1 func2c4b8
+b2 func2c508
+b3 func2c558
+b4 func2c490
+b5 func2c4e0
+b6 func2c530
+b7 func2c580
+b8 func2bdcc
+b9 func2be2c
+ba func2c0cc
+bb func2c12c
+bc func2c3a8
+c1 func2ba98
+c2 func2bb20
+c8 func2bbb4
+c9 func2bbec
+ca func2bc58
+d0 func2c5a8
+d1 func2c5c8
+d2 func2c634
+d4 func2c6a8
+d5 func2c6c8
+d6 func2c734
+e0 func2cc18
+e4 func2cc44
+f1 func2c7c8
+f2 func2ccbc
+f3 func2cccc
+f4 func2ccdc
+f5 func2cdd0
+f8 func2cec0
+f9 func2cf1c
+fa func2cf78
 
         // execute AKAO_set_XX
         A0 = S0;
         8002E1FC	jalr   v0 ra
 
-        [80063010] = w(w[80063010] - 1);
+        [0x80063010] = w(w[0x80063010] - 1);
 
         S0 = S0 + 24;
     8002E21C	bne    v0, zero, loop2e1e4 [$8002e1e4]
@@ -6520,28 +6480,27 @@ void func2ff4c()
         func2fda0;
     }
 
-
-    A3 = 0 NOR (w[80062f68] | w[80099fcc] | w[80062f00]);
+    A3 = ~(w[80062f68] | w[80099fcc] | w[80062f00]);
     A2 = A3 & w[8009a130];
 
-    if (A2 != 0)
+    if( A2 != 0 )
     {
         A0 = 80096608;
         A1 = SP + 10;
         A2 = A2;
         A3 = A3;
-        func2fda0;
+        func2fda0();
     }
 
     A0 = 1;
     A1 = w[SP + 10] | w[80099fec];
     [SP + 10] = w(A1);
-    func37964;
+    func37964();
 
     A0 = 0;
-    A1 = w[SP + 10] XOR 00ffffff;
+    A1 = w[SP + 10] XOR 0x00ffffff;
     [SP + 10] = w(A1);
-    func37964;
+    func37964();
 }
 
 
@@ -7709,26 +7668,25 @@ void system_akao_execute_sequence( ChannelData* data, AkaoConfig* config, u32 ma
 
 
 
-////////////////////////////////
-// func31820()
 // init instrument
-[A0 + 58] = h(A1); // set current instrument
-A1 = A1 & ffff;
+void func31820( ChannelData* channel, u16 instr_id )
+{
+    [channel + 58] = h(instr_id); // set current instrument
 
-A1 = 80075f28 + A1 * 40; // INSTR.DAT
+    A1 = 80075f28 + instr_id * 40; // INSTR.DAT
 
-[A0 + e0] = w(w[A0 + e0] | 0001ff80); // set update SPU flags
-[A0 + e4] = w(w[A1 + 0]);
-[A0 + e8] = w(w[A1 + 4]);
-[A0 + ec] = w(bu[A1 + d]);
-[A0 + f0] = w(bu[A1 + e]);
-[A0 + f4] = w(bu[A1 + f]);
-[A0 + fa] = h(bu[A1 + 8]);
-[A0 + fc] = h(bu[A1 + 9]);
-[A0 + fe] = h(bu[A1 + a]);
-[A0 + 100] = h(bu[A1 + b]);
-[A0 + 102] = h(bu[A1 + c]);
-////////////////////////////////
+    [channel + e0] = w(w[channel + e0] | 0x0001ff80); // set update SPU flags
+    [channel + e4] = w(w[A1 + 0]);
+    [channel + e8] = w(w[A1 + 4]);
+    [channel + ec] = w(bu[A1 + d]);
+    [channel + f0] = w(bu[A1 + e]);
+    [channel + f4] = w(bu[A1 + f]);
+    [channel + fa] = h(bu[A1 + 8]);
+    [channel + fc] = h(bu[A1 + 9]);
+    [channel + fe] = h(bu[A1 + a]);
+    [channel + 100] = h(bu[A1 + b]);
+    [channel + 102] = h(bu[A1 + c]);
+}
 
 
 

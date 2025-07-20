@@ -369,7 +369,7 @@
 8002A28C func2a28c
 8002A43C func2a43c
 8002A510 func2a510
-8002A6C4 func2a6c4
+8002A6C4 system_akao_get_sound_sequence
 8002A748 system_sound_reset_music_volume
 8002A798 func2a798
 8002A7E8 func2a7e8
