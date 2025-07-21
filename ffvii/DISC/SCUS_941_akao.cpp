@@ -1806,560 +1806,6 @@ A3 = A3 + 0004;
 
 
 ////////////////////////////////
-// AKAO_set_10
-// func2b1f8
-S0 = A0;
-
-A0 = w[S0 + 4]; // offset to sequence data (after header)
-A1 = w[S0 + 8]; // length
-func29b78; // copy music data
-
-if (hu[8009a14e] == e) // if currently playing "ffvii_main_theme"
-{
-    func2a7e8();
-
-    A0 = 80096608;
-    A1 = 800804d0;
-    A2 = 8009a104;
-    A3 = 80083394;
-    func2b1a8();
-}
-
-func29e98;
-
-A0 == 0;
-if (hu[8008337e] != 0 && hu[8008337e] == hu[S0 + c]) // music id
-{
-    func2aabc();
-}
-else if (hu[800833de] != 0 && hu[800833de] == hu[S0 + c])
-{
-    func2aabc();
-}
-else
-{
-    func29c48();
-}
-
-[8009a14e] = h(hu[S0 + c]); // set current music id
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_set_14
-// func2b2f8
-S0 = A0;
-
-A0 = w[S0 + 4]; // offset to sequence data (after header)
-A1 = w[S0 + 8]; // length
-func29b78; // copy music data
-
-8002B22C	jal    func2a7e8 [$8002a7e8]
-
-V1 = hu[8009a14e];
-if (V1 != 0)
-{
-    if (V1 == e)
-    {
-        A0 = 80096608;
-        A1 = 800804d0;
-        A2 = 8009a104;
-        A3 = 80083394;
-    }
-    else
-    {
-        A0 = 80095508;
-        A1 = 8007ec10;
-        A2 = 8009a104;
-        A3 = 80083334;
-    }
-
-    func2b1a8();
-}
-
-func29e98();
-
-func29c48();
-
-[8009a14e] = h(hu[S0 + c]); // set current music id
-////////////////////////////////
-
-
-
-////////////////////////////////
-// AKAO_set_15()
-
-S3 = A0;
-
-[80062ff8] = w(w[80062ff8] & fffffeff);
-
-A0 = w[S3 + 4]; // offset to sequence data (after header)
-A1 = w[S3 + 8]; // length
-func29b78; // copy music data
-
-8002B3F8	jal    func2a7e8 [$8002a7e8]
-
-
-
-
-8002B400	lui    s2, $8008
-S2 = S2 + 337e;
-V0 = hu[S2 + 0000];
-V1 = hu[S3 + 000c];
-8002B410	nop
-8002B414	bne    v0, v1, L2b46c [$8002b46c]
-8002B418	nop
-8002B41C	lui    a0, $8009
-A0 = A0 + 6608;
-S0 = A0 + 18c0;
-A1 = S0;
-8002B42C	lui    a2, $800a
-8002B430	addiu  a2, a2, $a104 (=-$5efc)
-S1 = A2 + 0060;
-8002B438	jal    func2b1a8 [$8002b1a8]
-A3 = S1;
-8002B440	jal    func29e98 [$80029e98]
-8002B444	nop
-8002B448	jal    func2aabc [$8002aabc]
-A0 = 0;
-V1 = hu[8009a1ae];
-V0 = 000e;
-8002B45C	beq    v1, v0, L2b4c8 [$8002b4c8]
-A0 = S0;
-8002B464	j      L2b4e4 [$8002b4e4]
-8002B468	nop
-
-L2b46c:	; 8002B46C
-V0 = hu[800833de];
-8002B474	nop
-8002B478	bne    v0, v1, L2b500 [$8002b500]
-8002B47C	nop
-8002B480	lui    a0, $8009
-A0 = A0 + 6608;
-S0 = A0 + 18c0;
-A1 = S0;
-8002B490	lui    a2, $800a
-8002B494	addiu  a2, a2, $a104 (=-$5efc)
-S1 = A2 + 0060;
-8002B49C	jal    func2b1a8 [$8002b1a8]
-A3 = S1;
-8002B4A4	jal    func29e98 [$80029e98]
-8002B4A8	nop
-8002B4AC	jal    func2aabc [$8002aabc]
-A0 = 0001;
-V1 = hu[8009a1ae];
-V0 = 000e;
-8002B4C0	bne    v1, v0, L2b4e4 [$8002b4e4]
-A0 = S0;
-
-L2b4c8:	; 8002B4C8
-8002B4C8	lui    a1, $8008
-A1 = A1 + 04d0;
-A2 = S1;
-8002B4D4	jal    func2b1a8 [$8002b1a8]
-A3 = S2 + 0016;
-8002B4DC	j      L2b560 [$8002b560]
-8002B4E0	nop
-
-L2b4e4:	; 8002B4E4
-8002B4E4	lui    a1, $8008
-8002B4E8	addiu  a1, a1, $ec10 (=-$13f0)
-A2 = S1;
-8002B4F0	jal    func2b1a8 [$8002b1a8]
-8002B4F4	addiu  a3, s2, $ffb6 (=-$4a)
-8002B4F8	j      L2b560 [$8002b560]
-8002B4FC	nop
-
-L2b500:	; 8002B500
-V1 = hu[8009a14e];
-8002B508	lui    a2, $800a
-8002B50C	addiu  a2, a2, $a104 (=-$5efc)
-8002B510	beq    v1, zero, L2b550 [$8002b550]
-V0 = 000e;
-8002B518	bne    v1, v0, L2b538 [$8002b538]
-8002B51C	addiu  a3, s2, $ffb6 (=-$4a)
-8002B520	lui    a0, $8009
-A0 = A0 + 6608;
-8002B528	lui    a1, $8008
-A1 = A1 + 04d0;
-8002B530	j      L2b548 [$8002b548]
-A3 = S2 + 0016;
-
-L2b538:	; 8002B538
-8002B538	lui    a0, $8009
-A0 = A0 + 6608;
-8002B540	lui    a1, $8008
-8002B544	addiu  a1, a1, $ec10 (=-$13f0)
-
-L2b548:	; 8002B548
-8002B548	jal    func2b1a8 [$8002b1a8]
-8002B54C	nop
-
-L2b550:	; 8002B550
-8002B550	jal    func29e98 [$80029e98]
-8002B554	nop
-8002B558	jal    func29c48 [$80029c48]
-8002B55C	nop
-
-L2b560:	; 8002B560
-[8009a18c] = w(0);
-[8009a188] = w(0);
-[8009a168] = w(0);
-V0 = hu[S3 + 000c];
-8002B57C	nop
-[8009a14e] = h(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b5a8
-8002B5A8	lui    v0, $800a
-V0 = hu[V0 + a14e];
-8002B5B0	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-8002B5BC	beq    v0, zero, L2b5ec [$8002b5ec]
-[SP + 0014] = w(RA);
-V0 = w[S0 + 0010];
-8002B5C8	nop
-8002B5CC	beq    v0, zero, L2b5d8 [$8002b5d8]
-V1 = 0010;
-V1 = hu[S0 + 0010];
-
-L2b5d8:	; 8002B5D8
-8002B5D8	nop
-8002B5DC	lui    at, $8006
-[AT + 2fc8] = h(V1);
-8002B5E4	jal    func2afb8 [$8002afb8]
-8002B5E8	nop
-
-L2b5ec:	; 8002B5EC
-A0 = S0;
-8002B5EC	jal    func2b1f8 [$8002b1f8]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b608
-8002B608	lui    v0, $800a
-V0 = hu[V0 + a14e];
-8002B610	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-S0 = A0;
-8002B61C	beq    v0, zero, L2b64c [$8002b64c]
-[SP + 0014] = w(RA);
-V0 = w[S0 + 0010];
-8002B628	nop
-8002B62C	beq    v0, zero, L2b638 [$8002b638]
-V1 = 0010;
-V1 = hu[S0 + 0010];
-
-L2b638:	; 8002B638
-8002B638	nop
-8002B63C	lui    at, $8006
-[AT + 2fc8] = h(V1);
-8002B644	jal    func2afb8 [$8002afb8]
-8002B648	nop
-
-L2b64c:	; 8002B64C
-8002B64C	jal    func2b2f8 [$8002b2f8]
-A0 = S0;
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002B660	jr     ra 
-8002B664	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b668
-
-S0 = A0;
-
-A0 = 4;
-A1 = 1;
-8002B67C	jal    func2a510 [$8002a510]
-
-A0 = 40;
-A1 = 34;
-A2 = w[S0 + 4];
-A3 = w[S0 + 8];
-func2a094()
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b6ac
-8002B6AC	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S0);
-S0 = A0;
-A0 = 0004;
-A1 = 0002;
-[SP + 0020] = w(RA);
-8002B6C4	jal    func2a510 [$8002a510]
-[SP + 001c] = w(S1);
-A0 = SP + 0010;
-S1 = SP + 0014;
-A2 = hu[S0 + 0008];
-8002B6D8	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B6EC	jal    func2a094 [$8002a094]
-A1 = 0032;
-A0 = SP + 0010;
-A2 = hu[S0 + 000c];
-8002B6FC	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B710	jal    func2a094 [$8002a094]
-A1 = 0034;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8002B728	jr     ra 
-8002B72C	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b730
-8002B730	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S0);
-S0 = A0;
-A0 = 0004;
-A1 = 0003;
-[SP + 0020] = w(RA);
-8002B748	jal    func2a510 [$8002a510]
-[SP + 001c] = w(S1);
-8002B750	jal    func29a50 [$80029a50]
-8002B754	nop
-A0 = SP + 0010;
-S1 = SP + 0014;
-A2 = hu[S0 + 0008];
-8002B764	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B778	jal    func2a094 [$8002a094]
-A1 = 0030;
-A0 = SP + 0010;
-A2 = hu[S0 + 000c];
-8002B788	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B79C	jal    func2a094 [$8002a094]
-A1 = 0032;
-A0 = SP + 0010;
-A2 = hu[S0 + 0010];
-8002B7AC	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B7C0	jal    func2a094 [$8002a094]
-A1 = 0034;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8002B7D8	jr     ra 
-8002B7DC	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b7e0
-8002B7E0	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S0);
-S0 = A0;
-A0 = 0006;
-A1 = 0004;
-[SP + 0020] = w(RA);
-8002B7F8	jal    func2a510 [$8002a510]
-[SP + 001c] = w(S1);
-8002B800	jal    func29a50 [$80029a50]
-8002B804	nop
-A0 = SP + 0010;
-S1 = SP + 0014;
-A2 = hu[S0 + 0008];
-8002B814	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B828	jal    func2a094 [$8002a094]
-A1 = 0030;
-A0 = SP + 0010;
-A2 = hu[S0 + 000c];
-8002B838	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B84C	jal    func2a094 [$8002a094]
-A1 = 0032;
-A0 = SP + 0010;
-A2 = hu[S0 + 0010];
-8002B85C	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B870	jal    func2a094 [$8002a094]
-A1 = 0034;
-A0 = SP + 0010;
-A2 = hu[S0 + 0014];
-8002B880	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = S1;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B894	jal    func2a094 [$8002a094]
-A1 = 0036;
-RA = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0028;
-8002B8AC	jr     ra 
-8002B8B0	nop
-////////////////////////////////
-
-
-
-void AKAO_set_30( S0 )
-{
-    func2a510( 0x6, 0x1 );
-    u32 offset1;
-    u32 offset2;
-    system_akao_get_sound_sequence( offset1, offset2, w[S0 + 0x4] );
-    func2a28c( offset1, offset2 );
-}
-
-
-
-////////////////////////////////
-// AKAO_set_20()
-
-S0 = A0;
-
-A0 = 4;
-A1 = 1;
-func2a510;
-
-A0 = SP + 10;
-A1 = SP + 14;
-A2 = hu[S0 + 8];
-system_akao_get_sound_sequence;
-
-A0 = hu[S0 + 4];
-A1 = 34;
-A2 = w[SP + 10];
-A3 = w[SP + 14];
-func2a094;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b958
-8002B958	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-S0 = A0;
-A0 = 0002;
-[SP + 001c] = w(RA);
-8002B96C	jal    func2a510 [$8002a510]
-A1 = 0001;
-A0 = SP + 0010;
-A2 = hu[S0 + 0008];
-8002B97C	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = SP + 0014;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B990	jal    func2a094 [$8002a094]
-A1 = 0032;
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-8002B9A4	jr     ra 
-8002B9A8	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2b9ac
-8002B9AC	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-S0 = A0;
-A0 = 0;
-[SP + 001c] = w(RA);
-8002B9C0	jal    func2a510 [$8002a510]
-A1 = 0001;
-8002B9C8	jal    func29a50 [$80029a50]
-8002B9CC	nop
-A0 = SP + 0010;
-A2 = hu[S0 + 0008];
-8002B9D8	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = SP + 0014;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002B9EC	jal    func2a094 [$8002a094]
-A1 = 0030;
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-8002BA00	jr     ra 
-8002BA04	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2ba08
-8002BA08	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S0);
-S0 = A0;
-A0 = 0006;
-[SP + 001c] = w(RA);
-8002BA1C	jal    func2a510 [$8002a510]
-A1 = 0001;
-A0 = SP + 0010;
-A2 = hu[S0 + 0008];
-8002BA2C	jal    system_akao_get_sound_sequence [$8002a6c4]
-A1 = SP + 0014;
-A0 = hu[S0 + 0004];
-A2 = w[SP + 0010];
-A3 = w[SP + 0014];
-8002BA40	jal    func2a094 [$8002a094]
-A1 = 0036;
-RA = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0020;
-8002BA54	jr     ra 
-8002BA58	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
 // AKAO_set_c0()
 
 [80062f5c] = w((w[A0 + 4] & 7f) << 10);
@@ -2671,121 +2117,6 @@ S0 = w[SP + 0010];
 SP = SP + 0020;
 8002BE84	jr     ra 
 8002BE88	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2be8c
-8002BE8C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8002BE94	lui    a1, $800a
-8002BE98	addiu  a1, a1, $9ba8 (=-$6458)
-8002BE9C	jal    func2bccc [$8002bccc]
-8002BEA0	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002BEAC	jr     ra 
-8002BEB0	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2beb4
-8002BEB4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8002BEBC	lui    a1, $800a
-8002BEC0	addiu  a1, a1, $9ba8 (=-$6458)
-8002BEC4	jal    func2bd04 [$8002bd04]
-8002BEC8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002BED4	jr     ra 
-8002BED8	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2bedc
-
-A1 = 80099998;
-8002BEEC	jal    func2bccc [$8002bccc]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2bf04
-8002BF04	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8002BF0C	lui    a1, $800a
-8002BF10	addiu  a1, a1, $9998 (=-$6668)
-8002BF14	jal    func2bd04 [$8002bd04]
-8002BF18	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002BF24	jr     ra 
-8002BF28	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2bf2c
-8002BF2C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8002BF34	lui    a1, $800a
-8002BF38	addiu  a1, a1, $9788 (=-$6878)
-8002BF3C	jal    func2bccc [$8002bccc]
-8002BF40	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002BF4C	jr     ra 
-8002BF50	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2bf54
-8002BF54	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8002BF5C	lui    a1, $800a
-8002BF60	addiu  a1, a1, $9788 (=-$6878)
-8002BF64	jal    func2bd04 [$8002bd04]
-8002BF68	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002BF74	jr     ra 
-8002BF78	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2bf7c
-8002BF7C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-8002BF84	lui    a1, $800a
-8002BF88	addiu  a1, a1, $9db8 (=-$6248)
-8002BF8C	jal    func2bccc [$8002bccc]
-8002BF90	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002BF9C	jr     ra 
-8002BFA0	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2bfa4
-
-8002BFAC	lui    a1, $800a
-8002BFB0	addiu  a1, a1, $9db8 (=-$6248)
-8002BFB4	jal    func2bd04 [$8002bd04]
 ////////////////////////////////
 
 
@@ -3303,296 +2634,6 @@ func29f44;
 
 
 ////////////////////////////////
-// func2c7e8
-
-[8009a104] = w(1);
-
-system_sound_reset_music_volume();
-
-8002C804	jal    func2a798 [$8002a798]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2c81c
-
-[8009a104] = w(4);
-
-system_sound_reset_music_volume();
-
-8002C838	jal    func2a798 [$8002a798]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2c850
-
-[8009a104] = w(2);
-
-system_sound_reset_music_volume();
-
-8002C86C	jal    func2a798 [$8002a798]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2c884
-A1 = 0;
-V0 = w[A0 + 0004];
-8002C88C	lui    v1, $8009
-V1 = V1 + 66e8;
-8002C894	lui    at, $8006
-[AT + 2fd8] = w(V0);
-
-loop2c89c:	; 8002C89C
-V0 = w[V1 + 0000];
-A1 = A1 + 0001;
-V0 = V0 | 0003;
-[V1 + 0000] = w(V0);
-V0 = A1 & ffff;
-V0 = V0 < 0018;
-8002C8B4	bne    v0, zero, loop2c89c [$8002c89c]
-V1 = V1 + 0108;
-8002C8BC	jr     ra 
-8002C8C0	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2c8c4
-V0 = hu[A0 + 0004];
-8002C8C8	nop
-8002C8CC	lui    at, $800a
-[AT + a152] = h(V0);
-8002C8D4	jr     ra 
-8002C8D8	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2c8dc()
-
-if( w[8009a108] != 0 )
-{
-    S1 = (w[8009a108] | w[8009a128] | w[8009a12c]) & (~(w[80099fcc] | w[80062f00]));
-
-    if( S1 != 0 )
-    {
-        [8007ec0e] = h(0);
-        [8007ec0c] = h(0);
-        [8007ec08] = h(7f);
-
-        S0 = 1;
-        S2 = 0;
-        loop2c960:	; 8002C960
-            if( S1 & S0 )
-            {
-                [8007ebe8] = w(00002203);
-
-                A0 = S2 & ffff;
-                A1 = 8007ebe4;
-                system_akao_update_params_to_spu();
-
-                S1 = S1 ^ S0;
-            }
-
-            S0 = S0 << 1;
-            S2 = S2 + 1;
-        8002C98C	bne    s1, zero, loop2c960 [$8002c960]
-    }
-
-    V0 = w[8009a108];
-    [8009a108] = w(0);
-    [8009a118] = w(V0);
-}
-
-[80062ff8] = w(w[80062ff8] | 00000001);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2c9e4
-8002C9E4	lui    a1, $800a
-A1 = w[A1 + a118];
-8002C9EC	addiu  sp, sp, $ffe8 (=-$18)
-8002C9F0	beq    a1, zero, L2ca5c [$8002ca5c]
-[SP + 0010] = w(RA);
-A0 = 0001;
-8002C9FC	lui    v1, $8009
-V1 = V1 + 66e8;
-
-loop2ca04:	; 8002CA04
-V0 = A1 & A0;
-8002CA08	beq    v0, zero, L2ca20 [$8002ca20]
-8002CA0C	nop
-V0 = w[V1 + 0000];
-A1 = A1 ^ A0;
-V0 = V0 | 2203;
-[V1 + 0000] = w(V0);
-
-L2ca20:	; 8002CA20
-A0 = A0 << 01;
-8002CA24	bne    a1, zero, loop2ca04 [$8002ca04]
-V1 = V1 + 0108;
-8002CA2C	lui    v0, $800a
-V0 = w[V0 + a118];
-8002CA34	lui    at, $800a
-[AT + a118] = w(0);
-8002CA3C	lui    at, $800a
-[AT + a108] = w(V0);
-
-func2ff4c();
-func30038();
-func30148();
-
-L2ca5c:	; 8002CA5C
-8002CA5C	lui    v0, $8006
-V0 = w[V0 + 2ff8];
-8002CA64	addiu  v1, zero, $fffe (=-$2)
-V0 = V0 & V1;
-8002CA6C	lui    at, $8006
-[AT + 2ff8] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002CA7C	jr     ra 
-8002CA80	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2ca84
-8002CA84	addiu  sp, sp, $ffd8 (=-$28)
-8002CA88	lui    a1, $800a
-8002CA8C	addiu  a1, a1, $9fcc (=-$6034)
-[SP + 0020] = w(RA);
-[SP + 001c] = w(S3);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
-[SP + 0010] = w(S0);
-S0 = w[A1 + 0000];
-8002CAA8	nop
-8002CAAC	beq    s0, zero, L2cb40 [$8002cb40]
-A0 = S0;
-8002CAB4	lui    v1, $800a
-V1 = hu[V1 + 9e0c];
-V0 = 0002;
-8002CAC0	bne    v1, v0, L2cad4 [$8002cad4]
-8002CAC4	lui    s1, $0001
-8002CAC8	lui    v0, $ff3f
-V0 = V0 | ffff;
-S0 = S0 & V0;
-
-L2cad4:	; 8002CAD4
-V0 = S0 ^ A0;
-8002CAD8	lui    at, $800a
-[AT + 9fdc] = w(S0);
-[A1 + 0000] = w(V0);
-V0 = 007f;
-8002CAE8	lui    at, $8008
-[AT + ec0e] = h(0);
-8002CAF0	lui    at, $8008
-[AT + ec0c] = h(0);
-8002CAF8	lui    at, $8008
-[AT + ec08] = h(V0);
-8002CB00	beq    s0, zero, L2cb40 [$8002cb40]
-S2 = 0010;
-S3 = 2203;
-
-loop2cb0c:	; 8002CB0C
-V0 = S0 & S1;
-8002CB10	beq    v0, zero, L2cb34 [$8002cb34]
-8002CB14	nop
-8002CB18	lui    at, $8008
-[AT + ebe8] = w(S3);
-8002CB20	lui    a1, $8008
-8002CB24	addiu  a1, a1, $ebe4 (=-$141c)
-A0 = S2 & ffff;
-system_akao_update_params_to_spu();
-
-S0 = S0 ^ S1;
-
-L2cb34:	; 8002CB34
-S1 = S1 << 01;
-8002CB38	bne    s0, zero, loop2cb0c [$8002cb0c]
-S2 = S2 + 0001;
-
-L2cb40:	; 8002CB40
-8002CB40	lui    v0, $8006
-V0 = w[V0 + 2ff8];
-8002CB48	nop
-V0 = V0 | 0002;
-8002CB50	lui    at, $8006
-[AT + 2ff8] = w(V0);
-RA = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0028;
-8002CB70	jr     ra 
-8002CB74	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2cb78
-8002CB78	lui    a1, $800a
-A1 = w[A1 + 9fdc];
-8002CB80	addiu  sp, sp, $ffe8 (=-$18)
-8002CB84	beq    a1, zero, L2cbf0 [$8002cbf0]
-[SP + 0010] = w(RA);
-8002CB8C	lui    a0, $0001
-8002CB90	lui    v1, $800a
-8002CB94	addiu  v1, v1, $9868 (=-$6798)
-
-loop2cb98:	; 8002CB98
-V0 = A1 & A0;
-8002CB9C	beq    v0, zero, L2cbb4 [$8002cbb4]
-8002CBA0	nop
-V0 = w[V1 + 0000];
-A1 = A1 ^ A0;
-V0 = V0 | 2203;
-[V1 + 0000] = w(V0);
-
-L2cbb4:	; 8002CBB4
-A0 = A0 << 01;
-8002CBB8	bne    a1, zero, loop2cb98 [$8002cb98]
-V1 = V1 + 0108;
-8002CBC0	lui    v0, $800a
-V0 = w[V0 + 9fdc];
-8002CBC8	lui    at, $800a
-[AT + 9fdc] = w(0);
-8002CBD0	lui    at, $800a
-[AT + 9fcc] = w(V0);
-
-func2ff4c();
-func30038();
-func30148();
-
-L2cbf0:	; 8002CBF0
-8002CBF0	lui    v0, $8006
-V0 = w[V0 + 2ff8];
-8002CBF8	addiu  v1, zero, $fffd (=-$3)
-V0 = V0 & V1;
-8002CC00	lui    at, $8006
-[AT + 2ff8] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002CC10	jr     ra 
-8002CC14	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
 // func2cc18
 V0 = hu[A0 + 0004];
 8002CC1C	lui    v1, $800a
@@ -3871,12 +2912,6 @@ RA = w[SP + 0010];
 SP = SP + 0018;
 8002CF90	jr     ra 
 8002CF94	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2cf98
 ////////////////////////////////
 
 
@@ -5009,98 +4044,23 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// func2e1a8()
-
-if (w[80062f8c] == 0 && w[80063010] != 0)
+void system_akao_execute_commands_queue()
 {
-    S0 = 80081dc8;
+    if( w[0x80062f8c] == 0 )
+    {
+        S0 = 0x80081dc8;
 
-    loop2e1e4:	; 8002E1E4
-        V0 = bu[S0];
-        V0 = w[80049548 + V0 * 4];
+        while( w[0x80063010] != 0 )
+        {
+            u8 command = bu[S0];
+            akao_commands[command]( S0 );
 
-00-0f 11-13 16-17 1a-1f 24-27 2c-2f 31-33 35-7f 83-8f 91 93-99 9e 9f be bf c3-c7 cb-cf d3 d7-df e1-e3 e5-ef f6 f7 fb-ff 8002cf98
-18 func2b5a8
-19 func2b608
-21 func2b6ac
-22 func2b730
-23 func2b7e0
-28 func2b904
-29 func2b958
-2a func2b9ac
-2b func2ba08
-34 func2b668
-80 func2c7e8
-81 func2c850
-82 func2c81c
-90 func2c884
-92 func2c8c4
-9a func2c9e4
-9b func2c8dc
-9c func2cb78
-9d func2ca84
-a0 func2be8c
-a1 func2bedc
-a2 func2bf2c
-a3 func2bf7c
-a4 func2beb4
-a5 func2bf04
-a6 func2bf54
-a7 func2bfa4
-a8 func2c18c
-a9 func2c1dc
-aa func2c22c
-ab func2c27c
-ac func2c1b4
-ad func2c204
-ae func2c254
-af func2c2a4
-b0 func2c468
-b1 func2c4b8
-b2 func2c508
-b3 func2c558
-b4 func2c490
-b5 func2c4e0
-b6 func2c530
-b7 func2c580
-b8 func2bdcc
-b9 func2be2c
-ba func2c0cc
-bb func2c12c
-bc func2c3a8
-c1 func2ba98
-c2 func2bb20
-c8 func2bbb4
-c9 func2bbec
-ca func2bc58
-d0 func2c5a8
-d1 func2c5c8
-d2 func2c634
-d4 func2c6a8
-d5 func2c6c8
-d6 func2c734
-e0 func2cc18
-e4 func2cc44
-f1 func2c7c8
-f2 func2ccbc
-f3 func2cccc
-f4 func2ccdc
-f5 func2cdd0
-f8 func2cec0
-f9 func2cf1c
-fa func2cf78
+            [0x80063010] = w(w[0x80063010] - 1);
 
-        // execute AKAO_set_XX
-        A0 = S0;
-        8002E1FC	jalr   v0 ra
-
-        [0x80063010] = w(w[0x80063010] - 1);
-
-        S0 = S0 + 24;
-    8002E21C	bne    v0, zero, loop2e1e4 [$8002e1e4]
+            S0 += 0x24;
+        }
+    }
 }
-////////////////////////////////
 
 
 
@@ -7300,79 +6260,76 @@ void func308d4()
         S1 = S2 + 0056;
 
         loop30d44:	; 80030D44
-        V0 = S3 & S0;
-        80030D48	beq    v0, zero, L30e04 [$80030e04]
-        80030D4C	nop
-        V0 = w[80062ff8];
-        80030D58	nop
-        V0 = V0 & 0002;
-        80030D60	beq    v0, zero, L30d78 [$80030d78]
-        V0 = 0002;
-        V1 = hu[S1 + fffe];
-        80030D6C	nop
-        80030D70	bne    v1, v0, L30e00 [$80030e00]
-        80030D74	nop
+            V0 = S3 & S0;
+            80030D48	beq    v0, zero, L30e04 [$80030e04]
+            80030D4C	nop
+            V0 = w[80062ff8];
+            80030D58	nop
+            V0 = V0 & 0002;
+            80030D60	beq    v0, zero, L30d78 [$80030d78]
+            V0 = 0002;
+            V1 = hu[S1 + fffe];
+            80030D6C	nop
+            80030D70	bne    v1, v0, L30e00 [$80030e00]
+            80030D74	nop
 
-        L30d78:	; 80030D78
-        V0 = w[S1 + fffa];
-        V1 = hu[S1 + 0000];
-        V0 = V0 + 0001;
-        [S1 + fffa] = w(V0);
-        V0 = feff;
-        V1 = V1 + V0;
-        V0 = V1 & 00ff;
-        80030D94	bne    v0, zero, L30db8 [$80030db8]
-        [S1 + 0000] = h(V1);
+            L30d78:	; 80030D78
+            V0 = w[S1 + fffa];
+            V1 = hu[S1 + 0000];
+            V0 = V0 + 0001;
+            [S1 + fffa] = w(V0);
+            V0 = feff;
+            V1 = V1 + V0;
+            V0 = V1 & 00ff;
+            80030D94	bne    v0, zero, L30db8 [$80030db8]
+            [S1 + 0000] = h(V1);
 
-        system_akao_execute_sequence( S2, 0x8009a104, S0 );
+            system_akao_execute_sequence( S2, 0x8009a104, S0 );
 
-        80030DB0	j      L30df8 [$80030df8]
-        A0 = S2;
+            80030DB0	j      L30df8 [$80030df8]
+            A0 = S2;
 
-        L30db8:	; 80030DB8
-        V0 = V1 & ff00;
-        80030DBC	bne    v0, zero, L30df8 [$80030df8]
-        A0 = S2;
-        V0 = V1 | 0100;
-        [S1 + 0000] = h(V0);
-        V0 = w[80099fd8];
-        V1 = w[80099fd4];
-        V0 = S0 | V0;
-        [80099fd8] = w(V0);
-        V0 = 0 NOR S0;
-        V0 = V0 & V1;
-        [80099fd4] = w(V0);
+            L30db8:	; 80030DB8
+            V0 = V1 & ff00;
+            80030DBC	bne    v0, zero, L30df8 [$80030df8]
+            A0 = S2;
+            V0 = V1 | 0100;
+            [S1 + 0000] = h(V0);
+            V0 = w[80099fd8];
+            V1 = w[80099fd4];
+            V0 = S0 | V0;
+            [80099fd8] = w(V0);
+            V0 = 0 NOR S0;
+            V0 = V0 & V1;
+            [80099fd4] = w(V0);
 
-        L30df8:	; 80030DF8
-        80030DF8	jal    func2e954 [$8002e954]
-        A1 = S0;
+            L30df8:	; 80030DF8
+            A1 = S0;
+            func2e954();
 
-        L30e00:	; 80030E00
-        S3 = S3 ^ S0;
+            L30e00:	; 80030E00
+            S3 = S3 ^ S0;
 
-        L30e04:	; 80030E04
-        S1 = S1 + 0108;
-        S2 = S2 + 0108;
+            L30e04:	; 80030E04
+            S1 = S1 + 0108;
+            S2 = S2 + 0108;
+            S0 = S0 << 01;
         80030E0C	bne    s3, zero, loop30d44 [$80030d44]
-        S0 = S0 << 01;
     }
+
     L30e14:	; 80030E14
 
-
-    V0 = hu[8009a158];
-    if (V0 != 0)
+    if( hu[0x8009a158] != 0 )
     {
-        A0 = 8009a000;
-        80030E30	jal    func2c8dc [$8002c8dc]
-
-        [8009a158] = h(0);
+        system_akao_command_9b( 0x8009a000 )
+        [0x8009a158] = h(0);
     }
 
-    func2e1a8(); // read akao commands from other parts of game
+    system_akao_execute_commands_queue();
 
-    80030E48	jal    func30380 [$80030380]
+    func30380();
 
-    80030E50	jal    func2fe48 [$8002fe48]
+    func2fe48();
 }
 
 

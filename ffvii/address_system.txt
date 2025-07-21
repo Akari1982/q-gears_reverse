@@ -519,9 +519,9 @@
                     e - snowboard2.
                    10 - ???
 
-80096608 struct for alt and overlay voice AKAO channel (0x108 size). 18c0
-80097ec8 some other same 0x18 structs for akao channels.
-80099788 some other same 0x18 structs for akao channels.
+0x80096608 struct for alt and overlay voice AKAO channel (0x108 size).
+0x80097ec8 some other same 0x18 structs for akao channels.
+0x80099788 some other same 0x18 structs for akao channels.
     +000 [][][][] AKAO sequence pointer.
     +004 [][][][] loop point 0.
     +008 [][][][] loop point 1.
