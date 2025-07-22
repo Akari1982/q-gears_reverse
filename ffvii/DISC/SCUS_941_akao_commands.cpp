@@ -328,6 +328,7 @@ void system_akao_command_2b( CommandData* data )
 
 
 
+// sound from menu
 void system_akao_command_30( CommandData* data )
 {
     func2a510( 0x6, 0x1 );
@@ -872,6 +873,7 @@ void system_akao_command_c8( CommandData* data )
 
 
 
+// before movie play
 void system_akao_command_c9( CommandData* data )
 {
     A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
@@ -997,6 +999,7 @@ void system_akao_command_f1( CommandData* data )
 
 
 
+// when init field script
 void system_akao_command_f2( CommandData* data )
 {
     [0x8008337e] = h(0);

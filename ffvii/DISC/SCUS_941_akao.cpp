@@ -309,44 +309,35 @@ func294a4();
 
 
 
-void func2988c()
+void func2988c( S0, S1 )
 {
-    S0 = A0;
-    S1 = A1;
-    800298A0	lui    a1, $8008
-    800298A4	addiu  a1, a1, $e778 (=-$1888)
-    800298A8	lui    v0, $8009
-    800298AC	addiu  v0, v0, $9580 (=-$6a80)
-    [GP + 0230] = w(V0);
-    V0 = V0 + 1000;
-    [GP + 0240] = w(V0);
+    V0 = 0x80089580;
+    [GP + 0x230] = w(V0);
+    V0 = V0 + 0x1000;
+    [GP + 0x240] = w(V0);
 
-    A0 = 0004;
-    800298C0	jal    func36ffc [$80036ffc]
+    system_psyq_spu_init_malloc( 0x4, 0x8007e778 );
 
-
-    A0 = 0x00077000;
-    A1 = 2000;
-    800298D0	jal    func373ac [$800373ac]
+    system_psyq_spu_malloc_with_start_addr( 0x00077000, 0x2000 );
 
     A0 = 0;
-    800298D8	jal    func38fb8 [$80038fb8]
+    func38fb8();
 
     A0 = S0;
     A1 = S1;
-    800298E4	jal    func297a4 [$800297a4]
+    func297a4();
 
     A0 = 0x00076fe0;
-    800298F0	jal    func38f64 [$80038f64]
+    func38f64();
 
     A0 = 0x8004a60c;
-    A1 = 0020;
-    80029900	jal    func29424 [$80029424]
+    A1 = 0x20;
+    func29424();
 
     8002990C	addiu  s0, zero, $ffff (=-$1)
     func294a4();
 
-    80029910	jal    func294bc [$800294bc]
+    func294bc();
 
 
     loop2991c:	; 8002991C

@@ -78,14 +78,18 @@ A2 = 0;
 func36d98();
 
 [8004ab50] = w(0);
-[8004a68c] = w(0);
-[8004a690] = w(0);
-[8004a6b4] = w(0);
-[8004a6b8] = w(0);
-[8004aaec] = w(0);
-[8004ab10] = w(0);
 [8004ab54] = w(0);
 [8004ab58] = w(0);
+
+[8004a68c] = w(0);
+[8004a690] = w(0);
+
+[8004a6b4] = w(0);
+[8004a6b8] = w(0);
+
+[8004aaec] = w(0);
+
+[8004ab10] = w(0);
 ////////////////////////////////
 
 
@@ -160,18 +164,18 @@ if( hu[spu + 1ae] & 07ff ) // SPU Status Register
     800364FC	bne    v0, zero, loop364b8 [$800364b8]
 }
 
-[8004ab18] = w(2);
-[8004ab1c] = w(3);
-[8004ab20] = w(8);
-[8004ab24] = w(7);
+[0x8004ab18] = w(0x2);
+[0x8004ab1c] = w(0x3);
+[0x8004ab20] = w(0x8);
+[0x8004ab24] = w(0x7);
 
-[spu + 1ac] = h(0004); // Sound RAM Data Transfer Control (should be 0004h)
-[spu + 184] = h(0); // Reverb Output Volume Left
-[spu + 186] = h(0); // Reverb Output Volume Right
-[spu + 18c] = h(ffff); // Key OFF lower
-[spu + 18e] = h(ffff); // Key OFF upper
-[spu + 198] = h(0); // Reverb mode aka Echo On lower
-[spu + 19a] = h(0); // Reverb mode aka Echo On upper
+[spu + 0x1ac] = h(0x0004); // Sound RAM Data Transfer Control (should be 0004h)
+[spu + 0x184] = h(0x0); // Reverb Output Volume Left
+[spu + 0x186] = h(0x0); // Reverb Output Volume Right
+[spu + 0x18c] = h(0xffff); // Key OFF lower
+[spu + 0x18e] = h(0xffff); // Key OFF upper
+[spu + 0x198] = h(0x0); // Reverb mode aka Echo On lower
+[spu + 0x19a] = h(0x0); // Reverb mode aka Echo On upper
 
 A0 = 0;
 loop3656c:	; 8003656C
@@ -730,17 +734,17 @@ else
 
 A2 = A0;
 
-if( w[8004ab18] != 0 )
+if( w[0x8004ab18] != 0 )
 {
-    if( A1 % w[8004ab20] )
+    if( A1 % w[0x8004ab20] )
     {
-        V0 = w[8004ab24];
-        A1 = A1 + w[8004ab20];
+        V0 = w[0x8004ab24];
+        A1 = A1 + w[0x8004ab20];
         A1 = A1 & ~V0;
     }
 }
 
-A3 = A1 >> w[8004ab1c]; // divide by 8
+A3 = A1 >> w[0x8004ab1c]; // divide by 8
 
 if( A2 == -1 )
 {
@@ -752,7 +756,7 @@ if( A2 == -2 )
 }
 else
 {
-    A0 = w[8004aaf4];
+    A0 = w[0x8004aaf4];
     [A0 + A2 * 2] = h(A3); // set loop and attack address
     V0 = A1;
 }
@@ -878,24 +882,21 @@ system_dma_additional_callback();
 
 
 
-////////////////////////////////
-// func36ffc()
-
-V0 = A0;
-
-if( V0 <= 0 )
+// Initializes memory management for the sound buffer. You specify n as the maximum number of memory
+// blocks that will be allocated, and an area pointed to by top to hold a memory management table, which
+// stores information about each block
+void system_psyq_spu_init_malloc( long num, char* top )
 {
-    return 0;
+    if( num <= 0 ) return 0;
+
+    shifter = w[0x8004ab1c];
+    [top + 0x0] = w(0x40001010);
+    [top + 0x4] = w((0x10000 << shifter) - 0x1010);
+
+    [0x8004ab50] = w(num);
+    [0x8004ab54] = w(0);
+    [0x8004ab58] = w(top);
 }
-
-shifter = w[8004ab1c];
-[A1 + 0] = w(40001010);
-[A1 + 4] = w((10000 << shifter) - 1010);
-
-[8004ab58] = w(A1);
-[8004ab54] = w(0);
-[8004ab50] = w(V0);
-////////////////////////////////
 
 
 
@@ -1148,217 +1149,145 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// func373ac
-800373AC	addiu  sp, sp, $ffe0 (=-$20)
-800373B0	lui    v0, $8005
-V0 = w[V0 + a698];
-T0 = A0;
-[SP + 0014] = w(S1);
-S1 = A1;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-800373CC	bne    v0, zero, L373dc [$800373dc]
-[SP + 0010] = w(S0);
-800373D4	j      L373f8 [$800373f8]
-S2 = 0;
+// Allocates an area in the sound buffer of size bytes starting from the address addr. (The allocatable area is
+// 0x01010 - 0x7ffff.) If addr is in an area already allocated, an area of size bytes is allocated starting from the
+// nearest empty area after addr.
+// Failure occurs if:
+// - The requested size cannot be continuously allocated.
+// - The only area that satisfies the requested size is part or all of a reverb work area already allocated by
+// SpuReserveReverbWorkArea()
+long system_psyq_spu_malloc_with_start_addr( u_long addr, long size )
+{
+    shifter = w[0x8004ab1c];
+    top = w[0x8004ab58];
 
-L373dc:	; 800373DC
-800373DC	lui    v0, $0001
-800373E0	lui    v1, $8005
-V1 = w[V1 + a69c];
-800373E8	lui    a0, $8005
-A0 = w[A0 + ab1c];
-V0 = V0 - V1;
-S2 = V0 << A0;
+    if( w[0x8004a698] == 0 )
+    {
+        S2 = 0;
+    }
+    else
+    {
+        S2 = (0x10000 - w[0x8004a69c]) << shifter;
+    }
 
-L373f8:	; 800373F8
-800373F8	lui    a0, $8005
-A0 = w[A0 + ab24];
-80037400	nop
-A3 = 0 NOR A0;
-V0 = S1 & A3;
-8003740C	beq    v0, zero, L37418 [$80037418]
-A2 = S1;
-A2 = S1 + A0;
+    A0 = w[0x8004ab24];
+    A3 = ~A0;
+    A2 = size;
 
-L37418:	; 80037418
-S0 = T0;
-8003741C	lui    v1, $8005
-V1 = w[V1 + ab1c];
-A1 = S0;
-V0 = S0 & A3;
-S1 = A2 >> V1;
-80037430	beq    v0, zero, L3743c [$8003743c]
-S1 = S1 << V1;
-A1 = S0 + A0;
+    if( size & A3 )
+    {
+        A2 = size + A0;
+    }
 
-L3743c:	; 8003743C
-S0 = A1 >> V1;
-S0 = S0 << V1;
-V0 = S0 < 1010;
-80037448	bne    v0, zero, L37648 [$80037648]
-8003744C	addiu  v0, zero, $ffff (=-$1)
-A3 = S0 + S1;
-80037454	lui    v0, $0001
-V0 = V0 << V1;
-V0 = V0 - S2;
-V0 = V0 < A3;
-80037464	bne    v0, zero, L37648 [$80037648]
-80037468	addiu  v0, zero, $ffff (=-$1)
-8003746C	lui    a0, $8005
-A0 = w[A0 + ab58];
-80037474	nop
-V0 = w[A0 + 0000];
-8003747C	lui    t0, $4000
-V0 = V0 & T0;
-80037484	beq    v0, zero, L37540 [$80037540]
-80037488	addiu  a1, s0, $eff0 (=-$1010)
-V0 = w[A0 + 0004];
-80037490	nop
-V0 = V0 + 1010;
-V0 = V0 - S0;
-8003749C	blez   a1, L374f0 [$800374f0]
-A2 = V0 - S1;
-800374A4	lui    v0, $8005
-V0 = w[V0 + ab50];
-800374AC	lui    v1, $8005
-V1 = w[V1 + ab54];
-800374B4	addiu  v0, v0, $fffe (=-$2)
-V0 = V0 < V1;
-800374BC	bne    v0, zero, L37648 [$80037648]
-800374C0	addiu  v0, zero, $ffff (=-$1)
-800374C4	lui    v0, $8000
-V0 = V0 | 1010;
-[A0 + 0000] = w(V0);
-V0 = A3 | T0;
-[A0 + 0010] = w(V0);
-V0 = 0002;
-[A0 + 0004] = w(A1);
-[A0 + 0008] = w(S0);
-[A0 + 000c] = w(S1);
-800374E8	j      L37528 [$80037528]
-[A0 + 0014] = w(A2);
+    S0 = addr;
+    A1 = S0;
+    size = (A2 >> shifter) << shifter;
 
-L374f0:	; 800374F0
-800374F0	lui    v0, $8005
-V0 = w[V0 + ab50];
-800374F8	lui    v1, $8005
-V1 = w[V1 + ab54];
-80037500	addiu  v0, v0, $ffff (=-$1)
-V0 = V0 < V1;
-80037508	bne    v0, zero, L37648 [$80037648]
-8003750C	addiu  v0, zero, $ffff (=-$1)
-V0 = A3 | T0;
-[A0 + 0008] = w(V0);
-V0 = 0001;
-[A0 + 0000] = w(S0);
-[A0 + 0004] = w(S1);
-[A0 + 000c] = w(A2);
+    if( S0 & A3 )
+    {
+        A1 = S0 + A0;
+    }
 
-L37528:	; 80037528
-80037528	lui    at, $8005
-[AT + ab54] = w(V0);
-80037530	j      L3763c [$8003763c]
-80037534	nop
+    S0 = (A1 >> shifter) << shifter;
 
-loop37538:	; 80037538
-80037538	j      L37648 [$80037648]
-8003753C	addiu  v0, zero, $ffff (=-$1)
+    if( S0 < 0x1010 ) return -1;
 
-L37540:	; 80037540
-80037540	jal    func37664 [$80037664]
-80037544	nop
-A0 = 0;
-8003754C	lui    a3, $0fff
-A3 = A3 | ffff;
-80037554	lui    t0, $4000
+    A3 = S0 + size;
+    if( ((0x10000 << shifter) - S2) < A3 ) return -1;
 
-L37558:	; 80037558
-80037558	lui    v1, $8005
-V1 = w[V1 + ab58];
-V0 = A0 << 03;
-V1 = V0 + V1;
-A1 = w[V1 + 0000];
-8003756C	nop
-80037570	bgez   a1, L37608 [$80037608]
-V0 = A1 & T0;
-A1 = A1 & A3;
-V0 = S0 < A1;
-80037580	bne    v0, zero, L375ec [$800375ec]
-80037584	nop
-V0 = w[V1 + 0004];
-8003758C	nop
-V0 = A1 + V0;
-V0 = S0 < V0;
-80037598	bne    v0, zero, L375b4 [$800375b4]
-8003759C	nop
-V0 = w[V1 + 0008];
-800375A4	nop
-V0 = V0 & T0;
-800375AC	beq    v0, zero, L37610 [$80037610]
-800375B0	nop
+    A1 = S0 - 0x1010;
 
-L375b4:	; 800375B4
-800375B4	lui    v0, $8005
-V0 = w[V0 + ab58];
-V1 = A0 << 03;
-V1 = V1 + V0;
-V0 = w[V1 + 0000];
-V1 = w[V1 + 0004];
-V0 = V0 & A3;
-V0 = S0 - V0;
-A2 = V1 - V0;
-V0 = A2 < S1;
-800375DC	bne    v0, zero, L37610 [$80037610]
-A1 = S0;
-800375E4	j      L37630 [$80037630]
-800375E8	nop
+    if( w[top + 0x0] & 0x40000000 )
+    {
+        V0 = w[top + 0x4] + 0x1010 - S0;
+        A2 = V0 - size;
 
-L375ec:	; 800375EC
-A2 = w[V1 + 0004];
-800375F0	nop
-V0 = A2 < S1;
-800375F8	beq    v0, zero, L37630 [$80037630]
-800375FC	nop
-80037600	j      L37558 [$80037558]
-A0 = A0 + 0001;
+        if( A1 > 0 )
+        {
+            // max num of allocation exceed
+            if( (w[0x8004ab50] - 1) < w[0x8004ab54] ) return -1;
 
-L37608:	; 80037608
-80037608	bne    v0, zero, L37618 [$80037618]
-8003760C	nop
+            [top + 0x0] = w(0x80001010);
+            [top + 0x4] = w(A1);
+            [top + 0x8] = w(S0);
+            [top + 0xc] = w(size);
+            [top + 0x10] = w(A3 | 0x40000000);
+            [top + 0x14] = w(A2);
 
-L37610:	; 80037610
-80037610	j      L37558 [$80037558]
-A0 = A0 + 0001;
+            [0x8004ab54] = w(2); // double allocation
+        }
+        else
+        {
+            // max num of allocation exceed
+            if( (w[0x8004ab50] - 1) < w[0x8004ab54] ) return -1;
 
-L37618:	; 80037618
-V0 = w[V1 + 0004];
-8003761C	nop
-A2 = V0 - S2;
-V0 = A2 < S1;
-80037628	bne    v0, zero, loop37538 [$80037538]
-A1 = A1 & A3;
+            [top + 0x0] = w(S0);
+            [top + 0x4] = w(size);
+            [top + 0x8] = w(A3 | 0x40000000);
+            [top + 0xc] = w(A2);
 
-L37630:	; 80037630
-80037630	jal    func37050 [$80037050]
-A2 = S1;
-S0 = V0;
+            [0x8004ab54] = w(1); // single allocation
+        }
+    }
+    else
+    {
+        func37664();
 
-L3763c:	; 8003763C
-8003763C	jal    func37664 [$80037664]
-80037640	nop
-V0 = S0;
+        A0 = 0;
 
-L37648:	; 80037648
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8003765C	jr     ra 
-80037660	nop
-////////////////////////////////
+        L37558:	; 80037558
+        V1 = top + A0 * 8;
+        A1 = w[V1 + 0000];
+
+        80037570	bgez   a1, L37608 [$80037608]
+        V0 = A1 & 0x40000000;
+        A1 = A1 & 0x0fffffff;
+        V0 = S0 < A1;
+        80037580	bne    v0, zero, L375ec [$800375ec]
+
+        V0 = S0 < (A1 + w[V1 + 0x4]);
+        80037598	bne    v0, zero, L375b4 [$800375b4]
+
+        V0 = w[V1 + 0x8] & 0x40000000;
+        800375AC	beq    v0, zero, L37610 [$80037610]
+
+        L375b4:	; 800375B4
+        A2 = w[top + A0 * 8 + 0x4] - S0 + (w[top + A0 * 8 + 0x0] & 0x0fffffff);
+        V0 = A2 < size;
+        800375DC	bne    v0, zero, L37610 [$80037610]
+        A1 = S0;
+        800375E4	j      L37630 [$80037630]
+
+        L375ec:	; 800375EC
+        A2 = w[V1 + 0x4];
+        V0 = A2 < size;
+        800375F8	beq    v0, zero, L37630 [$80037630]
+
+        A0 += 0x1;
+        80037600	j      L37558 [$80037558]
+
+        L37608:	; 80037608
+        80037608	bne    v0, zero, L37618 [$80037618]
+
+        L37610:	; 80037610
+        A0 += 0x1;
+        80037610	j      L37558 [$80037558]
+
+        L37618:	; 80037618
+        A2 = w[V1 + 0x4] - S2;
+        if( A2 < size ) return -1;
+
+        A1 = A1 & 0x0fffffff;
+
+        L37630:	; 80037630
+        A2 = size;
+        S0 = func37050();
+    }
+
+    func37664();
+
+    return S0;
+}
 
 
 

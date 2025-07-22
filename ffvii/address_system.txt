@@ -5,7 +5,7 @@
 80034cfc lzs extracted buffer.
 80034d14 lzs extract function.
 
-80048dd4 destination array for kernel data by types.
+0x80048dd4 destination array for kernel data by types.
     0 800707C4 command data.
     1 800708C4 attack data.
     2 80082268 battle and growth data.
@@ -109,14 +109,20 @@
 
 8004a630 []       random seed for field.
 
-8004a68c [][][][] mask of channels with voice on (manual spu).
-8004a6a8 [][]     store reverberation depth left here.
-8004a6aa [][]     store reverberation depth right here.
-8004a6b4 [][][][] mask of channels with voice on (auto spu).
-8004a6b8 [][][][] add flag 0x00000001 if we turn voices on or off in auto spu.
-8004aaec [][][][] some flags SPU related. if this &1 == 0 then we write data to SPU directly
-8004aaf4 [][][][] pointer to SPU addreses (0x1f801c00)
-8004ab2c [][][][] store 0 here when setting new reverb mode.
+0x8004a68c [][][][] mask of channels with voice on (manual spu).
+0x8004a6a8 [][]     store reverberation depth left here.
+0x8004a6aa [][]     store reverberation depth right here.
+0x8004a6b4 [][][][] mask of channels with voice on (auto spu).
+0x8004a6b8 [][][][] add flag 0x00000001 if we turn voices on or off in auto spu.
+0x8004aaec [][][][] some flags SPU related. if this &1 == 0 then we write data to SPU directly
+0x8004aaf4 [][][][] pointer to SPU addreses (0x1f801c00)
+0x8004ab2c [][][][] store 0 here when setting new reverb mode.
+0x8004ab50 [][][][] maximum number of times spu memory is allocated.
+0x8004ab54 [][][][] number of times spu memory is allocated.
+0x8004ab58 [][][][] pointer to spu memory management table, which stores information about each block.
+    + 0 [][][][] flags.
+    + 4 [][][][] address.
+
 
 8004bc98 Sin and Cos table. Sin +00 [][], Cos +02 [][]
 

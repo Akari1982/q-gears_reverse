@@ -49,11 +49,11 @@ field_init_default_values();
 
 field_event_run_init();
 
-if( bu[800716d4] == 0 )
+if( bu[0x800716d4] == 0 )
 {
     clear_akao();
 
-    [8009a000] = h(f2);
+    [0x8009a000] = h(0xf2);
     system_akao_execute();
 }
 ////////////////////////////////
