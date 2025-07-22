@@ -44,27 +44,27 @@ AkaoCommand akao_commands[] =
     system_akao_command_9c,   system_akao_command_9d,   system_akao_command_null, system_akao_command_null,
     system_akao_command_a0,   system_akao_command_a1,   system_akao_command_a2,   system_akao_command_a3,
     system_akao_command_a4,   system_akao_command_a5,   system_akao_command_a6,   system_akao_command_a7,
-    func2c18c,                func2c1dc,                func2c22c,                func2c27c,
-    func2c1b4,                func2c204,                func2c254,                func2c2a4,
-    func2c468,                func2c4b8,                func2c508,                func2c558,
-    func2c490,                func2c4e0,                func2c530,                func2c580,
-    func2bdcc,                func2be2c,                func2c0cc,                func2c12c,
-    func2c3a8,                func2c408,                system_akao_command_null, system_akao_command_null,
-    func2ba5c,                func2ba98,                func2bb20,                system_akao_command_null,
+    system_akao_command_a8,   system_akao_command_a9,   system_akao_command_aa,   system_akao_command_ab,
+    system_akao_command_ac,   system_akao_command_ad,   system_akao_command_ae,   system_akao_command_af,
+    system_akao_command_b0,   system_akao_command_b1,   system_akao_command_b2,   system_akao_command_b3,
+    system_akao_command_b4,   system_akao_command_b5,   system_akao_command_b6,   system_akao_command_b7,
+    system_akao_command_b8,   system_akao_command_b9,   system_akao_command_ba,   system_akao_command_bb,
+    system_akao_command_bc,   system_akao_command_bd,   system_akao_command_null, system_akao_command_null,
+    system_akao_command_c0,   system_akao_command_c1,   system_akao_command_c2,   system_akao_command_null,
     system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
-    func2bbb4,                func2bbec,                func2bc58,                system_akao_command_null,
+    system_akao_command_c8,   system_akao_command_c9,   system_akao_command_ca,   system_akao_command_null,
     system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
-    func2c5a8,                func2c5c8,                func2c634,                system_akao_command_null,
-    func2c6a8,                func2c6c8,                func2c734,                system_akao_command_null,
-    system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
-    system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
-    func2cc18,                system_akao_command_null, system_akao_command_null, system_akao_command_null,
-    func2cc44,                system_akao_command_null, system_akao_command_null, system_akao_command_null,
+    system_akao_command_d0,   system_akao_command_d1,   system_akao_command_d2,   system_akao_command_null,
+    system_akao_command_d4,   system_akao_command_d5,   system_akao_command_d6,   system_akao_command_null,
     system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
     system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
-    func2c7a8,                func2c7c8,                func2ccbc,                func2cccc,
-    func2ccdc,                func2cdd0,                system_akao_command_null, system_akao_command_null,
-    func2cec0,                func2cf1c,                func2cf78,                system_akao_command_null,
+    system_akao_command_e0,   system_akao_command_null, system_akao_command_null, system_akao_command_null,
+    system_akao_command_e4,   system_akao_command_null, system_akao_command_null, system_akao_command_null,
+    system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
+    system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
+    system_akao_command_f0,   system_akao_command_f1,   system_akao_command_f2,   system_akao_command_f3,
+    system_akao_command_f4,   system_akao_command_f5,   system_akao_command_null, system_akao_command_null,
+    system_akao_command_f8,   system_akao_command_f9,   system_akao_command_fa,   system_akao_command_null,
     system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null
 };
 
@@ -556,6 +556,17 @@ void system_akao_command_a3( CommandData* data )
 
 
 
+void func2bccc( CommandData* data, ChannelData* channel )
+{
+    [channel + 0x0 * 0x108 + 0x5e] = h(0);
+    [channel + 0x1 * 0x108 + 0x5e] = h(0);
+    [channel + 0x1 * 0x108 + 0xc6] = h((hu[data + 0x4] & 0x7f) << 0x8);
+    [channel + 0x0 * 0x108 + 0xc6] = h((hu[data + 0x4] & 0x7f) << 0x8);
+    (channel + 0)->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+    (channel + 1)->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+}
+
+
 
 void system_akao_command_a4( CommandData* data )
 {
@@ -580,4 +591,529 @@ void system_akao_command_a6( CommandData* data )
 void system_akao_command_a7( CommandData* data )
 {
     func2bd04( data, 0x80099db8 );
+}
+
+
+
+void func2bd04( CommandData* data, ChannelData* channel )
+{
+    A3 = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
+    [channel + 0x0 * 0x108 + 0x5e] = h(A3);
+    [channel + 0x1 * 0x108 + 0x5e] = h(A3);
+
+    [channel + 0x0 * 0x108 + 0xc8] = h((((((hu[data + 0x8] & 0x7f) << 0x8) - hu[channel + 0x0 * 0x108 + 0xc6]) << 0x10) >> 0x10) / h[channel + 0x0 * 0x108 + 0x5e]);
+    [channel + 0x1 * 0x108 + 0xc8] = h((((((hu[data + 0x8] & 0x7f) << 0x8) - hu[channel + 0x1 * 0x108 + 0xc6]) << 0x10) >> 0x10) / h[channel + 0x0 * 0x108 + 0x5e]);
+}
+
+
+
+void system_akao_command_a8( CommandData* data )
+{
+    func2bfcc( data, 0x80099ba8 );
+}
+
+
+
+void system_akao_command_a9( CommandData* data )
+{
+    func2bfcc( data, 0x80099998 );
+}
+
+
+
+void system_akao_command_aa( CommandData* data )
+{
+    func2bfcc( data, 0x80099788 );
+}
+
+
+
+void system_akao_command_ab( CommandData* data )
+{
+    func2bfcc( data, 0x80099db8 );
+}
+
+
+
+void func2bfcc( CommandData* data, ChannelData* channel )
+{
+    [channel + 0x0 * 0x108 + 0x60] = h((hu[data + 0x4] & 0x7f) << 0x8);
+    [channel + 0x1 * 0x108 + 0x60] = h((hu[data + 0x4] & 0x7f) << 0x8);
+    [channel + 0x0 * 0x108 + 0x62] = h(0);
+    [channel + 0x1 * 0x108 + 0x62] = h(0);
+    (channel + 0)->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+    (channel + 1)->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+}
+
+
+
+void system_akao_command_ac( CommandData* data )
+{
+    func2c004( data, 0x80099ba8 );
+}
+
+
+
+void system_akao_command_ad( CommandData* data )
+{
+    func2c004( data, 0x80099998 );
+}
+
+
+
+void system_akao_command_ae( CommandData* data )
+{
+    func2c004( data, 0x80099788 );
+}
+
+
+
+void system_akao_command_af( CommandData* data )
+{
+    func2c004( data, 0x80099db8 );
+}
+
+
+
+void func2c004( CommandData* data, ChannelData* channel )
+{
+    A3 = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
+    [channel + 0x0 * 0x108 + 0x62] = h(A3);
+    [channel + 0x1 * 0x108 + 0x62] = h(A3);
+
+    [channel + 0x0 * 0x108 + 0xca] = h((((((hu[data + 0x8] & 0x7f) << 0x8) - hu[channel + 0x0 * 0x108 + 0x60]) << 0x10) >> 0x10) / h[channel + 0x0 * 0x108 + 0x62]);
+    [channel + 0x1 * 0x108 + 0xca] = h((((((hu[data + 0x8] & 0x7f) << 0x8) - hu[channel + 0x1 * 0x108 + 0x60]) << 0x10) >> 0x10) / h[channel + 0x1 * 0x108 + 0x62]);
+}
+
+
+
+void system_akao_command_b0( CommandData* data )
+{
+    func2c2cc( data, 0x80099ba8 );
+}
+
+
+
+void system_akao_command_b1( CommandData* data )
+{
+    func2c2cc( data, 0x80099998 );
+}
+
+
+
+void system_akao_command_b2( CommandData* data )
+{
+    func2c2cc( data, 0x80099788 );
+}
+
+
+
+void system_akao_command_b3( CommandData* data )
+{
+    func2c2cc( data, 0x80099db8 );
+}
+
+
+
+void func2c2cc( CommandData* data, ChannelData* channel )
+{
+    [channel + 0x0 * 0x108 + 0x3c] = w(b[data + 0x4] << 0x8);
+    [channel + 0x1 * 0x108 + 3c] = w(b[data + 0x4] << 0x8);
+    [channel + 0x0 * 0x108 + 0x5a] = h(0);
+    [channel + 0x1 * 0x108 + 0x5a] = h(0);
+    (channel + 0)->attr.mask |= SPU_VOICE_PITCH;
+    (channel + 1)->attr.mask |= SPU_VOICE_PITCH;
+}
+
+
+
+void system_akao_command_b4( CommandData* data )
+{
+    func2c300( data, 0x80099ba8 );
+}
+
+
+
+void system_akao_command_b5( CommandData* data )
+{
+    func2c300( data, 0x80099998 );
+}
+
+
+
+void system_akao_command_b6( CommandData* data )
+{
+    func2c300( data, 0x80099788 );
+}
+
+
+
+void system_akao_command_b7( CommandData* data )
+{
+    func2c300( data, 0x80099db8 );
+}
+
+
+
+void func2c300( CommandData* data, ChannelData* channel )
+{
+    A2 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [channel + 0x0 * 0x108 + 0x40] = w(((b[data + 0x8] << 0x8) - w[channel + 0x0 * 0x108 + 0x3c]) / A2);
+    [channel + 0x1 * 0x108 + 0x40] = w(((b[data + 0x8] << 0x8) - w[channel + 0x1 * 0x108 + 0x3c]) / A2);
+    [channel + 0x0 * 0x108 + 0x5a] = h(A2);
+    [channel + 0x1 * 0x108 + 0x5a] = h(A2);
+}
+
+
+
+void system_akao_command_b8( CommandData* data )
+{
+    func2bccc( data, 0x80099db8 - (0 * 0x108) );
+    func2bccc( data, 0x80099db8 - (2 * 0x108) );
+    func2bccc( data, 0x80099db8 - (4 * 0x108) );
+    func2bccc( data, 0x80099db8 - (6 * 0x108) );
+}
+
+
+
+void system_akao_command_b9( CommandData* data )
+{
+    func2bd04( data, 0x80099db8 - (0 * 0x108) );
+    func2bd04( data, 0x80099db8 - (2 * 0x108) );
+    func2bd04( data, 0x80099db8 - (4 * 0x108) );
+    func2bd04( data, 0x80099db8 - (6 * 0x108) );
+}
+
+
+
+void system_akao_command_ba( CommandData* data )
+{
+    func2bfcc( data, 0x80099db8 - (0 * 0x108) );
+    func2bfcc( data, 0x80099db8 - (2 * 0x108) );
+    func2bfcc( data, 0x80099db8 - (4 * 0x108) );
+    func2bfcc( data, 0x80099db8 - (6 * 0x108) );
+}
+
+
+
+void system_akao_command_bb( CommandData* data )
+{
+    func2c004( data, 0x80099db8 - (0 * 0x108) );
+    func2c004( data, 0x80099db8 - (2 * 0x108) );
+    func2c004( data, 0x80099db8 - (4 * 0x108) );
+    func2c004( data, 0x80099db8 - (6 * 0x108) );
+}
+
+
+
+void system_akao_command_bc( CommandData* data )
+{
+    func2c2cc( data, 0x80099db8 - (0 * 0x108) );
+    func2c2cc( data, 0x80099db8 - (2 * 0x108) );
+    func2c2cc( data, 0x80099db8 - (4 * 0x108) );
+    func2c2cc( data, 0x80099db8 - (6 * 0x108) );
+}
+
+
+
+void system_akao_command_bd( CommandData* data )
+{
+    func2c300( data, 0x80099db8 - (0 * 0x108) );
+    func2c300( data, 0x80099db8 - (2 * 0x108) );
+    func2c300( data, 0x80099db8 - (4 * 0x108) );
+    func2c300( data, 0x80099db8 - (6 * 0x108) );
+}
+
+
+
+void system_akao_command_c0( CommandData* data )
+{
+    [0x80062f44] = h(0);
+    [0x80062f5c] = w((w[data + 0x4] & 0x7f) << 0x10);
+
+    system_sound_reset_music_volume();
+}
+
+
+
+void system_akao_command_c1( CommandData* data )
+{
+    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [0x80062f44] = h(A1);
+    [0x80062f2c] = w((((w[data + 0x8] & 0x7f) << 0x10) - w[0x80062f5c]) / A1);
+
+    system_sound_reset_music_volume();
+}
+
+
+
+void system_akao_command_c2( CommandData* data )
+{
+    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [0x80062f44] = h(A1);
+    [0x80062f5c] = w((w[data + 0x8] & 0x7f) << 0x10);
+    [0x80062f2c] = w((((w[data + 0xc] & 0x7f) << 0x10) - ((w[data + 0x8] & 0x7f) << 0x10)) / A1);
+
+    system_sound_reset_music_volume();
+}
+
+
+
+void system_akao_command_c8( CommandData* data )
+{
+    [0x80062fd4] = w(hu[data + 0x4] << 0x10);
+    [0x80062fcc] = h(0);
+
+    func2e428();
+}
+
+
+
+void system_akao_command_c9( CommandData* data )
+{
+    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [0x80062fcc] = h(A1);
+    [0x80062fb4] = w((hu[data + 0x8] << 0x10) - w[0x80062fd4] / A1);
+}
+
+
+
+void system_akao_command_ca( CommandData* data )
+{
+    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [0x80062fcc] = h(A1);
+    [0x80062fd4] = w(hu[data + 0x8] << 0x10);
+    [0x80062fb4] = w(((hu[data + 0xc] << 0x10) - (hu[data + 0x8] << 0x10)) / A1);
+}
+
+
+
+void system_akao_command_d0( CommandData* data )
+{
+    [0x80062f48] = h(0);
+    [0x80062fe8] = w(b[data + 0x4] << 0x10);
+}
+
+
+
+void system_akao_command_d1( CommandData* data )
+{
+    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [0x80062f48] = h(A1);
+    [0x80062f30] = w(((b[data + 0x8] << 0x10) - w[0x80062fe8]) / A1);
+}
+
+
+
+void system_akao_command_d2( CommandData* data )
+{
+    A2 = b[data + 0x4] << 0x10;
+    [0x80062fe8] = w(A2);
+
+    A1 = ( w[data + 0x8] != 0 ) ? w[data + 0x8] : 1;
+
+    [0x80062f48] = h(A1);
+    [0x80062f30] = w(((b[data + 0xc] << 0x10) - A2) / A1);
+}
+
+
+
+void system_akao_command_d4( CommandData* data )
+{
+    [0x80062f40] = h(0);
+    [0x80062fe4] = w(b[data + 0x4] << 0x10);
+}
+
+
+
+void system_akao_command_d5( CommandData* data )
+{
+    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+
+    [0x80062f40] = h(A1);
+    [0x80062f28] = w(((b[data + 0x8] << 0x10) - w[0x80062fe4]) / A1);
+}
+
+
+
+void system_akao_command_d6( CommandData* data )
+{
+    A2 = b[data + 0x4] << 0x10;
+    [0x80062fe4] = w(A2);
+
+    A1 = ( w[data + 0x8] != 0 ) ? w[data + 0x8] : 1;
+
+    [0x80062f40] = h(A1);
+    [0x80062f28] = w(((b[data + 0xc] << 0x10) - A2) / A1);
+}
+
+
+
+void system_akao_command_e0( CommandData* data )
+{
+    [0x80062f70] = h(hu[data + 0x4] & 0x7f);
+    [0x8009a13c] = w(w[0x8009a13c] | 0x80);
+}
+
+
+
+void system_akao_command_e4( CommandData* data )
+{
+    [0x80062fb8] = h(bu[data + 0x4]);
+
+    if( bu[data + 0x4] != 0 )
+    {
+        [0x80062ff8] = w(w[0x80062ff8] | 0x10);
+    }
+    else
+    {
+        [0x80062ff8] = w(w[0x80062ff8] & 0xffffffef);
+    }
+
+    func30038();
+
+    [0x8009a13c] = w(w[0x8009a13c] | 0x80);
+}
+
+
+
+void system_akao_command_f0( CommandData* data )
+{
+    func29f44();
+}
+
+
+
+void system_akao_command_f1( CommandData* data )
+{
+    func2a43c();
+}
+
+
+
+void system_akao_command_f2( CommandData* data )
+{
+    [0x8008337e] = h(0);
+}
+
+
+
+void system_akao_command_f3( CommandData* data )
+{
+    [0x800833de] = h(0);
+}
+
+
+
+void system_akao_command_f4( CommandData* data )
+{
+    func2a958();
+
+    src = 0x80099788;
+    dst = 0x80097ec8;
+    for( int i = 0x210; i != 0; --i )
+    {
+        [dst] = w(w[src]);
+        src += 0x4;
+        dst += 0x4;
+    }
+
+    src = 0x80099fcc;
+    A2 = dst;
+
+    for( int i = 0xc; i != 0; --i )
+    {
+        [dst] = w(w[src]);
+        src += 0x4;
+        dst += 0x4;
+    }
+
+    if( hu[0x80099e0c] == 2 )
+    {
+        [A2 + 0x0] = w(w[A2 + 0x0] & 0xff3fffff);
+        [A2 + 0x4] = w(w[A2 + 0x4] & 0xff3fffff);
+    }
+
+    [0x80062ff8] = w(w[0x80062ff8] | 0x00000100);
+
+    func2a43c();
+
+    [data + 0x4] = w(0x7f);
+    system_akao_command_b8( data );
+
+    [data + 0x4] = w(0);
+    system_akao_command_bc( data );
+}
+
+
+
+void system_akao_command_f5( CommandData* data )
+{
+    if( w[0x80062ff8] & 0x00000100 )
+    {
+        src = 0x80097ec8;
+        dst = 0x80099788;
+        for( int i = 0x210; i != 0; --i )
+        {
+            [dst] = w(w[src]);
+            src += 0x4;
+            dst += 0x4;
+        }
+
+        A3 = w[0x80099fcc];
+
+        dst = 0x80099fcc;
+        for( int i = 0xc; i != 0; --i )
+        {
+            [dst] = w(w[src]);
+            src += 0x4;
+            dst += 0x4;
+        }
+
+        [0x80099fd8] = w(A3 & ~w[0x80099fcc]);
+        [0x80062ff8] = w(w[0x80062ff8] & 0xfffffeff);
+
+        func2ff4c();
+        func30038();
+        func30148();
+
+        [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
+    }
+}
+
+
+
+void system_akao_command_f8( CommandData* data )
+{
+    func2cfc0();
+
+    [0x80099fcc] = w(w[0x80099fcc] & ~w[0x80062f00]);
+    [0x80099ff0] = w(w[0x80099ff0] & ~w[0x80062f00]);
+
+    func30038();
+}
+
+
+
+void system_akao_command_f9( CommandData* data )
+{
+    func2cfc0();
+
+    [0x80099fcc] = w(w[0x80099fcc] & ~w[0x80062f00]);
+    [0x80099ff0] = w(w[0x80099ff0] | w[0x80062f00]);
+
+    func30038();
+}
+
+
+
+void system_akao_command_fa( CommandData* data )
+{
+    func29a50();
 }

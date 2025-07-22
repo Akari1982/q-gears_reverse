@@ -3489,3 +3489,44 @@ if( size != 0 )
     8001C424	bne    size, zero, loop1c410 [$8001c410]
 }
 ////////////////////////////////
+
+
+
+////////////////////////////////
+// func33a90()
+
+for( int i = 4ff; V1 >=0; --i )
+{
+    [8009c6e4 + ba4 + i] = b(0);// clear memorybanks
+}
+
+for( int i = 0; i < 3; ++i )
+{
+    [8009c6e4 + 4f8 + i] = b(ff); // clear party member slot
+    [8009c6e4 + cad + i] = b(ff); // clear party member slot copy in savemap
+}
+
+[8009c6e4 + 4f8] = b(0); // set first party member to cloud
+[8009c6e4 + cad] = b(0); // set first party member copy in memorybank to cloud
+
+[8009c6e4 + 10a6] = h(0001); // character availability mask (cloud only)
+
+[8009c6e4 + f0c] = b(ff); // field map name for menu
+
+[8009c6e4 + bc0] = b(ff); // menu visibility mask
+[8009c6e4 + bc1] = b(ff); // menu visibility mask??
+
+[8009c6e4 + b80] = w(0); // total seconds played
+[8009c6e4 + b84] = w(0); // countdown seconds for timer
+
+[8009ac4c] = h(0);
+[8009ac4e] = h(0);
+[8009ac50] = h(0);
+
+[8009ac2d] = b(0);
+
+[800716d4] = b(0); // music lock
+[800716cc] = b(0); // movie lock
+[80071e30] = b(0); // battle lock
+[80071e34] = b(0);
+////////////////////////////////
