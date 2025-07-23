@@ -110,19 +110,27 @@
 8004a630 []       random seed for field.
 
 0x8004a68c [][][][] mask of channels with voice on (manual spu).
-0x8004a6a8 [][]     store reverberation depth left here.
-0x8004a6aa [][]     store reverberation depth right here.
+0x8004a694 [][][][] reverb status.
+0x8004a698 [][][][] ???
+0x8004a69c [][][][] stored reverb work area start address.
+0x8004a6a4 [][][][] reverb mode.
+0x8004a6a8 [][]     reverb depth left.
+0x8004a6aa [][]     reverb depth right.
 0x8004a6b4 [][][][] mask of channels with voice on (auto spu).
 0x8004a6b8 [][][][] add flag 0x00000001 if we turn voices on or off in auto spu.
 0x8004aaec [][][][] some flags SPU related. if this &1 == 0 then we write data to SPU directly
 0x8004aaf4 [][][][] pointer to SPU addreses (0x1f801c00)
 0x8004ab2c [][][][] store 0 here when setting new reverb mode.
-0x8004ab50 [][][][] maximum number of times spu memory is allocated.
+0x8004ab50 [][][][] max number of times spu memory is allocated.
 0x8004ab54 [][][][] number of times spu memory is allocated.
 0x8004ab58 [][][][] pointer to spu memory management table, which stores information about each block.
-    + 0 [][][][] flags.
-    + 4 [][][][] address.
-
+    + 0 [][][][] 0x80000000 free block.
+                 0x40000000 end block.
+                 0x2fffffff empty block.
+                 0x0fffffff address.
+    + 4 [][][][] size.
+0x8004ab5c array of default reverb work area start address (0x4 size).
+0x8004abac array of default reverb settings (0x44 size).
 
 8004bc98 Sin and Cos table. Sin +00 [][], Cos +02 [][]
 

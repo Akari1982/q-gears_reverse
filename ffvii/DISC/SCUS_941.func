@@ -669,7 +669,7 @@
 80037988 func37988
 80037B90 system_sound_spu_set_noise_frequency
 80037BE0 func37be0
-80037C40 func37c40
+80037C40 system_psyq_spu_set_reverb
 80037D10 func37d10
 80037D90 func37d90
 80037E1C func37e1c

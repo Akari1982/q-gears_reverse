@@ -473,27 +473,24 @@ func2ff4c();
 
 reverb_mode = A0;
 
-
 func29a50();
 
-A0 = 8009c564;
+A0 = 0x8009c564;
 func387fc; // copy loop points
 
-if( w[8009c568] != reverb_mode )
+if( w[0x8009c568] != reverb_mode )
 {
-    [8009a104 + 3c] = w(reverb_mode);
+    [0x8009a104 + 0x3c] = w(reverb_mode);
 
-    A0 = 0;
-    80029B34	jal    func37c40 [$80037c40]
+    system_psyq_spu_set_reverb( SPU_OFF );
 
-    A0 = 8009c564;
-    [8009c568] = w(reverb_mode & 00000100);
+    A0 = 0x8009c564;
+    [0x8009c568] = w(reverb_mode & 0x00000100);
     [A0] = w(1);
 
-    80029B50	jal    func37e1c [$80037e1c]
+    func37e1c();
 
-    A0 = 1;
-    80029B58	jal    func37c40 [$80037c40]
+    system_psyq_spu_set_reverb( SPU_ON );
 }
 ////////////////////////////////
 
