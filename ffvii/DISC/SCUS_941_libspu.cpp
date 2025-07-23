@@ -130,9 +130,9 @@ A0 = w[8004ab04]; // DMA Control register
 // set SPU dma priority to 3 and enable dma.
 [A0] = w(w[A0] | 000b0000);
 
-[8004ab10] = w(0);
-[8004ab14] = w(0);
-[8004ab0c] = h(0);
+[0x8004ab10] = w(0);
+[0x8004ab14] = w(0);
+[0x8004ab0c] = h(0);
 
 spu = w[8004aaf4]; // 1f801c00
 
@@ -644,17 +644,14 @@ SP = SP + 0018;
 ////////////////////////////////
 // func36ca8
 
-80036CA8	lui    v0, $8005
-V0 = w[V0 + ab10];
+V0 = w[0x8004ab10];
 
 S1 = A0;
 S0 = A1;
 80036CC4	bne    v0, zero, L36d08 [$80036d08]
 
-80036CCC	lui    v0, $8005
-V0 = hu[V0 + ab0c];
-80036CD4	lui    a1, $8005
-A1 = w[A1 + ab1c];
+V0 = hu[0x8004ab0c];
+A1 = w[0x8004ab1c];
 A0 = 0002;
 80036CE0	jal    func36a18 [$80036a18]
 A1 = V0 << A1;
@@ -891,153 +888,118 @@ void system_psyq_spu_init_malloc( long num, char* top )
 
 
 
-long func37050( u32 mmb_id, A1, long size )
+long system_spu_malloc_to_block( u32 block, u_long addr, long size )
 {
     shifter = w[0x8004ab1c];
     top = w[0x8004ab58];
 
-    S0 = A1;
-    T3 = w[top + mmb_id * 8 + 0x0];
-    T4 = w[top + mmb_id * 8 + 0x4];
+    flag_b = w[top + block * 0x8 + 0x0];
+    addr_b = flag_b & 0x0fffffff;
+    size_b = w[top + block * 0x8 + 0x4];
 
-    A0 = T3 & 0x0fffffff;
-    T1 = S0 - A0;
+    addr_ofs = addr - addr_b;
 
-    if( w[0x8004a698] == 0 )
-    {
-        V1 = 0;
-    }
-    else
-    {
-        V1 = (0x10000 - w[0x8004a69c]) << shifter;
-    }
+    V1 = ( w[0x8004a698] == 0 ) ? 0 : (0x10000 - w[0x8004a69c]) << shifter;
+    size_left = ( flag_b & 0x40000000 ) ? size_b - addr_ofs - V1 : size_b - addr_ofs;
 
-    if( T3 & 0x40000000 )
-    {
-        A3 = T4 - T1 - V1;
-    }
-    else
-    {
-        A3 = T4 - T1;
-    }
+    if( size_left < size ) return -1;
 
-    if( A3 < size ) return -1;
-
-    if( T3 & 0x40000000 )
+    if( flag_b & 0x40000000 )
     {
-        if( T1 > 0 )
+        if( addr_ofs > 0 )
         {
-            A3 = w[0x8004ab54];
-            if( (w[0x8004ab50] - 2) < A3 ) return -1;
+            id1 = w[0x8004ab54];
+            id2 = id1 + 1;
 
-            V0 = A3 + 1;
-            [0x8004ab54] = w(V0);
+            if( (w[0x8004ab50] - 2) < id1 ) return -1;
+            [0x8004ab54] = w(id2);
 
-            [top + A3 * 0x8 + 0x0] = w((w[top + A3 * 0x8 + 0x0] & 0x0fffffff) | 0x80000000); // set as start block
-            [top + A3 * 0x8 + 0x4] = w(T1);
-            [top + V0 * 0x8 + 0x0] = w(S0);
-            [top + V0 * 0x8 + 0x4] = w(size);
+            [top + id1 * 0x8 + 0x0] = w((w[top + id1 * 0x8 + 0x0] & 0x0fffffff) | 0x80000000); // set as start block
+            [top + id1 * 0x8 + 0x4] = w(addr_ofs);
+            [top + id2 * 0x8 + 0x0] = w(addr);
+            [top + id2 * 0x8 + 0x4] = w(size);
         }
         else
         {
-            A1 = w[0x8004ab54];
+            id1 = w[0x8004ab54];
 
-            if( (w[0x8004ab50] - 1) < A1 ) return -1;
+            if( (w[0x8004ab50] - 1) < id1 ) return -1;
 
-            [top + A1 * 8 + 0x0] = w(w[top + A1 * 8 + 0x0] & 0x0fffffff);
-            [top + A1 * 8 + 0x4] = w(size);
+            [top + id1 * 0x8 + 0x0] = w(w[top + id1 * 8 + 0x0] & 0x0fffffff);
+            [top + id1 * 0x8 + 0x4] = w(size);
         }
 
-        V1 = w[0x8004ab54] + 1;
-        [0x8004ab54] = w(V1);
+        id = w[0x8004ab54] + 1;
+        [0x8004ab54] = w(id);
 
-        [top + V1 * 8 + 0x0] = w(((T3 & 0x0fffffff) + T1 + size) | 0x40000000); // set as end block
-        [top + V1 * 8 + 0x4] = w(T4 - T1 - size);
-
-        func37664(); // sort memory
-
-        return S0;
+        [top + id * 0x8 + 0x0] = w((addr_b + addr_ofs + size) | 0x40000000); // set as end block
+        [top + id * 0x8 + 0x4] = w(size_b - addr_ofs - size);
     }
-
-    if( T1 > 0 )
+    else
     {
-        if( A3 == size )
+        if( addr_ofs > 0 )
         {
-            V0 = w[0x8004ab50] - 2;
-            V1 = w[0x8004ab54];
+            V0 = ( size_left == size ) ? w[0x8004ab50] - 2 : w[0x8004ab50] - 1;
+            if( V0 < w[0x8004ab54] ) return -1;
+
+            id1 = w[0x8004ab54];
+            id2 = id1 + 1;
+            [0x8004ab54] = w(id1 + 1);
+
+            [top + block * 0x8 + 0x4] = w(addr_ofs);
+
+            addr_1 = w[top + id1 * 0x8 + 0x0];
+            size_1 = w[top + id1 * 0x8 + 0x4];
+
+            [top + id1 * 0x8 + 0x0] = w(addr);
+            [top + id1 * 0x8 + 0x4] = w(size);
+            [top + id2 * 0x8 + 0x0] = w(addr_1);
+            [top + id2 * 0x8 + 0x4] = w(size_1);
+
+            if( size_left >= size )
+            {
+                id3 = id1 + 2;
+                [0x8004ab54] = w(id1 + 0x2);
+
+                addr_2 = w[top + id2 * 0x8 + 0x0];
+                size_2 = w[top + id2 * 0x8 + 0x4];
+
+                [top + id2 * 0x8 + 0x0] = w((addr_b + addr_ofs + size) | 0x80000000); // set as start block
+                [top + id2 * 0x8 + 0x4] = w(size_left - size);
+                [top + id3 * 0x8 + 0x0] = w(addr_2);
+                [top + id3 * 0x8 + 0x4] = w(size_2);
+            }
         }
         else
         {
-            V0 = w[0x8004ab50] - 1;
-            V1 = w[0x8004ab54];
+            if( size < size_left )
+            {
+                if( (w[0x8004ab50] - 1) < w[0x8004ab54] ) return -1;
+            }
+
+            [top + block * 0x8 + 0x0] = w(w[top + block * 0x8 + 0x0] & 0x0fffffff);
+            [top + block * 0x8 + 0x4] = w(size);
+
+            if( size < size_left )
+            {
+                id1 = w[0x8004ab54];
+                id2 = id1 + 1;
+                [0x8004ab54] = w(id1 + 1);
+
+                addr_1 = w[top + id1 * 0x8 + 0x0];
+                size_1 = w[top + id1 * 0x8 + 0x4];
+
+                [top + id1 * 0x8 + 0x0] = w((addr_b + size) | 0x80000000); // set as start block
+                [top + id1 * 0x8 + 0x4] = w(size_left - size);
+                [top + id2 * 0x8 + 0x0] = w(addr_1);
+                [top + id2 * 0x8 + 0x4] = w(size_1);
+            }
         }
-
-        if( V0 < V1 ) return -1;
-
-        T2 = w[0x8004ab54];
-        [top + mmb_id * 8 + 0x4] = w(T1);
-        V0 = T2 * 8;
-        V0 = top + V0;
-        V1 = w[V0 + 0x0];
-        A0 = w[V0 + 0x4];
-        A2 = T2 + 1;
-        [V0 + 0x0] = w(S0);
-        [V0 + 0x4] = w(size);
-        [0x8004ab54] = w(A2);
-        [V0 + 0x8] = w(V1);
-        [V0 + 0xc] = w(A0);
-
-        if( A3 >= size )
-        {
-            V1 = A2 * 8;
-            V1 = top + V1;
-            V0 = (T3 & 0x0fffffff) + T1 + size;
-            V0 = V0 | 0x80000000; // set as start block
-            A1 = w[V1 + 0x0];
-            A0 = w[V1 + 0x4];
-            [V1 + 0000] = w(V0);
-            V0 = A3 - size;
-            [V1 + 0004] = w(V0);
-            V0 = T2 + 0002;
-            [0x8004ab54] = w(V0);
-            [V1 + 0x8] = w(A1);
-            [V1 + 0xc] = w(A0);
-        }
-
-        func37664(); // sort memory
-
-        return S0;
     }
 
-    if( size < A3 )
-    {
-        if( (w[0x8004ab50] - 1) < w[0x8004ab54] ) return -1;
-    }
+    system_spu_malloc_sort();
 
-    [top + mmb_id * 8 + 0x0] = w(w[top + mmb_id * 8 + 0x0] & 0x0fffffff);
-    [top + mmb_id * 8 + 0x4] = w(size);
-
-    if( size < A3 )
-    {
-        V0 = T3 & 0x0fffffff;
-        A1 = w[0x8004ab54];
-        V0 = V0 + size;
-        V1 = A1 * 8;
-        V1 = top + V1;
-        A2 = w[V1 + 0x0];
-        [V1 + 0x0] = w(V0 | 0x80000000); // set as start block
-        V0 = A3 - size;
-        A0 = w[V1 + 0x4];
-        A1 = A1 + 1;
-        [V1 + 0x4] = w(V0);
-        [0x8004ab54] = w(A1);
-        [V1 + 0x8] = w(A2);
-        [V1 + 0xc] = w(A0);
-    }
-
-    func37664(); // sort memory
-
-    return S0;
+    return addr;
 }
 
 
@@ -1097,67 +1059,67 @@ long system_psyq_spu_malloc_with_start_addr( u_long addr, long size )
     }
     else
     {
-        func37664(); // sort memory
+        system_spu_malloc_sort();
 
-        A0 = 0;
+        int i = 0;
 
-        L37558:	; 80037558
-        V1 = top + A0 * 8;
-        A1 = w[V1 + 0000];
+        while( true )
+        {
+            A1 = w[top + i * 8 + 0x0];
+            addr_i = A1 & 0x0fffffff;
+            size_i = w[top + i * 8 + 0x4];
 
-        80037570	bgez   a1, L37608 [$80037608]
-        V0 = A1 & 0x40000000;
-        A1 = A1 & 0x0fffffff;
-        V0 = addr < A1;
-        80037580	bne    v0, zero, L375ec [$800375ec]
+            if( A1 & 0x80000000 )
+            {
+                if( addr < addr_i )
+                {
+                    if( size <= size_i )
+                    {
+                        addr = system_spu_malloc_to_block( i, addr_i, size );
 
-        V0 = addr < (A1 + w[V1 + 0x4]);
-        80037598	bne    v0, zero, L375b4 [$800375b4]
+                        system_spu_malloc_sort();
 
-        V0 = w[V1 + 0x8] & 0x40000000;
-        800375AC	beq    v0, zero, L37610 [$80037610]
+                        return addr;
+                    }
+                }
+                else
+                {
+                    if( (addr < (addr_i + size_i)) || (w[top + (i + 1) * 8 + 0x0] & 0x40000000) )
+                    {
+                        if( size <= (addr_i + size_i - addr) )
+                        {
+                            addr = system_spu_malloc_to_block( i, addr, size );
 
-        L375b4:	; 800375B4
-        A2 = w[top + A0 * 8 + 0x4] - addr + (w[top + A0 * 8 + 0x0] & 0x0fffffff);
-        V0 = A2 < size;
-        800375DC	bne    v0, zero, L37610 [$80037610]
-        A1 = addr;
-        800375E4	j      L37630 [$80037630]
+                            system_spu_malloc_sort();
 
-        L375ec:	; 800375EC
-        A2 = w[V1 + 0x4];
-        V0 = A2 < size;
-        800375F8	beq    v0, zero, L37630 [$80037630]
+                            return addr;
+                        }
+                    }
+                }
+            }
+            else if( A1 & 0x40000000 )
+            {
+                if( size > (size_i - S2) ) return -1;
 
-        A0 += 0x1;
-        80037600	j      L37558 [$80037558]
+                addr = system_spu_malloc_to_block( i, addr_i, size );
 
-        L37608:	; 80037608
-        80037608	bne    v0, zero, L37618 [$80037618]
+                system_spu_malloc_sort();
 
-        L37610:	; 80037610
-        A0 += 0x1;
-        80037610	j      L37558 [$80037558]
+                return addr;
+            }
 
-        L37618:	; 80037618
-        A2 = w[V1 + 0x4] - S2;
-        if( A2 < size ) return -1;
-
-        A1 = A1 & 0x0fffffff;
-
-        L37630:	; 80037630
-        A2 = size;
-        addr = func37050();
+            i += 0x1;
+        }
     }
 
-    func37664(); // sort memory
+    system_spu_malloc_sort();
 
     return addr;
 }
 
 
 
-void func37664()
+void system_spu_malloc_sort()
 {
     top = w[0x8004ab58];
 
@@ -2250,13 +2212,11 @@ S1 = V0 << V1;
 S2 = A0 << V1;
 
 L38984:	; 80038984
-80038984	lui    s4, $8005
-S4 = w[S4 + ab10];
+S4 = w[0x8004ab10];
 V0 = 0001;
 80038990	bne    s4, v0, L389a4 [$800389a4]
 80038994	nop
-80038998	lui    at, $8005
-[AT + ab10] = w(0);
+[0x8004ab10] = w(0);
 S5 = 0001;
 
 L389a4:	; 800389A4
@@ -2305,8 +2265,7 @@ system_bios_wait_event();
 V0 = S1 < 0401;
 80038A2C	beq    s5, zero, L38a3c [$80038a3c]
 80038A30	nop
-80038A34	lui    at, $8005
-[AT + ab10] = w(S4);
+[0x8004ab10] = w(S4);
 
 L38a3c:	; 80038A3C
 V0 = w[SP + 0010];
@@ -2326,20 +2285,20 @@ L38a5c:	; 80038A5C
 ////////////////////////////////
 // system_sound_spu_irq9()
 
-spu = w[8004aaf4]; // 1f801c00
+spu = w[0x8004aaf4]; // 1f801c00
 
 if( ( A0 == 0 ) || ( A0 == 3 ) )
 {
-    [spu + 1aa] = h(hu[spu + 1aa] & ffbf); // remove IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+    [spu + 0x1aa] = h(hu[spu + 0x1aa] & ffbf); // remove IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
 
     V1 = 0;
-    while( hu[spu + 1aa] & 0040 )
+    while( hu[spu + 0x1aa] & 0040 )
     {
         V1 = V1 + 1;
-        if( V1 >= f01 )
+        if( V1 >= 0xf01 )
         {
-            A0 = 800104fc; // "SPU:T/O [%s]"
-            A1 = 8001050c; // "wait (IRQ/ON)"
+            A0 = 0x800104fc; // "SPU:T/O [%s]"
+            A1 = 0x8001050c; // "wait (IRQ/ON)"
             system_bios_printf();
 
             return -1;
@@ -2527,7 +2486,7 @@ L38efc:	; 80038EFC
 // func38f04()
 
 S0 = A1;
-V0 = 0007eff0;
+V0 = 0x0007eff0;
 V0 = V0 < S0;
 80038F1C	beq    v0, zero, L38f2c [$80038f2c]
 
@@ -2552,65 +2511,53 @@ L38f50:	; 80038F50
 // func38f64
 
 A1 = A0;
-80038F6C	lui    v0, $0007
-V0 = V0 | efe8;
-80038F74	addiu  v1, a1, $eff0 (=-$1010)
+V0 = 0x0007efe8;
+V1 = A1 - 0x1010;
+
 V0 = V0 < V1;
 80038F7C	bne    v0, zero, L38fa4 [$80038fa4]
 
 A0 = -1;
 func36de0();
 
-80038F8C	lui    at, $8005
-[AT + ab0c] = h(V0);
-80038F94	lui    v0, $8005
-V0 = hu[V0 + ab0c];
+[0x8004ab0c] = h(V0);
+V0 = hu[0x8004ab0c];
 80038F9C	j      L38fa8 [$80038fa8]
-80038FA0	nop
 
 L38fa4:	; 80038FA4
 V0 = 0;
 
 L38fa8:	; 80038FA8
-RA = w[SP + 0010];
-SP = SP + 0018;
-80038FB0	jr     ra 
-80038FB4	nop
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func38fb8
-80038FB8	beq    a0, zero, L38fd0 [$80038fd0]
-V0 = 0001;
-80038FC0	bne    a0, v0, L38fd4 [$80038fd4]
-V0 = 0;
-80038FC8	j      L38fd4 [$80038fd4]
-V0 = 0001;
-
-L38fd0:	; 80038FD0
-V0 = 0;
-
-L38fd4:	; 80038FD4
-80038FD4	lui    at, $8005
-[AT + a690] = w(A0);
-80038FDC	lui    at, $8005
-[AT + ab10] = w(V0);
-80038FE4	jr     ra 
-80038FE8	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func38fec()
-
-if( A0 != w[8004ab2c] )
+void func38fb8( A0 )
 {
-    [8004ab2c] = w(A0);
+
+    if( A0 == 0 )
+    {
+        V0 = 0;
+    }
+    else if( A0 == 1 )
+    {
+        V0 = 1;
+    }
+    else
+    {
+        V0 = 0;
+    }
+
+    [0x8004a690] = w(A0);
+    [0x8004ab10] = w(V0);
 }
-////////////////////////////////
+
+
+
+void func38fec( A0 )
+{
+    if( A0 != w[0x8004ab2c] ) [0x8004ab2c] = w(A0);
+}
 
 
 

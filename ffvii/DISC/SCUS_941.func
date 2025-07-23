@@ -662,9 +662,9 @@
 80036F78 system_sound_wait_sync
 80036FD8 system_sound_spu_dma_callback
 80036FFC system_psyq_spu_init_malloc
-80037050 func37050
+80037050 system_spu_malloc_to_block
 800373AC system_psyq_spu_malloc_with_start_addr
-80037664 func37664
+80037664 system_spu_malloc_sort
 80037964 func37964
 80037988 func37988
 80037B90 system_sound_spu_set_noise_frequency

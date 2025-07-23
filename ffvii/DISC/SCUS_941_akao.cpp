@@ -318,7 +318,7 @@ void func2988c( S0, S1 )
 
     system_psyq_spu_init_malloc( 0x4, 0x8007e778 );
 
-    system_psyq_spu_malloc_with_start_addr( 0x00077000, 0x2000 );
+    system_psyq_spu_malloc_with_start_addr( 0x77000, 0x2000 );
 
     A0 = 0;
     func38fb8();
@@ -334,11 +334,11 @@ void func2988c( S0, S1 )
     A1 = 0x20;
     func29424();
 
-    8002990C	addiu  s0, zero, $ffff (=-$1)
+    S0 = -1;
+
     func294a4();
 
     func294bc();
-
 
     loop2991c:	; 8002991C
         A0 = 0xf2000002;
@@ -351,26 +351,11 @@ void func2988c( S0, S1 )
     80029938	beq    v0, s0, loop2991c [$8002991c]
 
 
-    loop29940:	; 80029940
-    A0 = w[GP + 00bc];
-    80029944	jal    system_bios_enable_event [$80042a40]
+    while( system_bios_enable_event( w[GP + 0xbc] ) == 0 ) {}
 
-    8002994C	beq    v0, zero, loop29940 [$80029940]
+    while( func42bc0( 0xf2000002, 0x43d1, 0x1000 ) == 0 ) {}
 
-
-    loop29958:	; 80029958
-        A0 = 0xf2000002;
-        A1 = 0x43d1;
-        A2 = 0x1000;
-        80029960	jal    func42bc0 [$80042bc0]
-
-    80029968	beq    v0, zero, loop29958 [$80029958]
-
-    loop29970:	; 80029970
-    80029970	jal    func42c98 [$80042c98]
-    A0 = A0 | 0002;
-    80029978	beq    v0, zero, loop29970 [$80029970]
-    8002997C	lui    a0, $f200
+    while( func42c98( 0xf2000002 ) == 0 ) {}
 }
 
 
