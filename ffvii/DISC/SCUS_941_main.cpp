@@ -342,36 +342,18 @@ void system_field_run()
 ////////////////////////////////
 // func11938()
 
-A0 = w[80048cfc]; // DB000000 "SOUND\INSTR.ALL"
-A1 = w[80048d00]; // A05F0700
-A2 = 800f0000;
-A3 = 0;
-system_cdrom_start_load_file();
+system_cdrom_start_load_file( w[0x80048cfc], w[0x80048d00], 0x800f0000, 0 ); // "SOUND\INSTR.ALL"
+while( system_cdrom_read_chain() != 0 ) {}
 
-do system_cdrom_read_chain(); while( V0 != 0 )
+system_cdrom_start_load_file( w[0x80048d04], w[0x80048d08], 0x801b0000, 0 ); // "SOUND\EFFECT.ALL"
+while( system_cdrom_read_chain() != 0 ) {}
 
-A0 = w[80048d04]; // C7010000 "SOUND\EFFECT.ALL"
-A1 = w[80048d08]; // 00C80000
-A2 = 801b0000;
-A3 = 0;
-system_cdrom_start_load_file();
+system_cdrom_start_load_file( w[0x80048d0c], w[0x80048d10], 0x801bc800, 0 ); // "SOUND\INSTR.DAT"
+while( system_cdrom_read_chain() != 0 ) {}
 
-do system_cdrom_read_chain(); while( V0 != 0 )
+system_akao_init( 0x800f0000, 0x801bc800 );
 
-A0 = w[80048d0c]; // E0010000 "SOUND\INSTR.DAT"
-A1 = w[80048d10]; // 00200000
-A2 = 801bc800;
-A3 = 0;
-system_cdrom_start_load_file();
-
-do system_cdrom_read_chain(); while( V0 != 0 )
-
-A0 = 800f0000;
-A1 = 801bc800;
-func2988c();
-
-A0 = 801b0000;
-func29998();
+func29998( 0x801b0000 );
 ////////////////////////////////
 
 

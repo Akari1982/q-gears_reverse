@@ -185,7 +185,7 @@ loop3656c:	; 8003656C
 
 if( without_data == 0 )
 {
-    [8004ab0c] = h(0200); // set data transfer address
+    [0x8004ab0c] = h(0200); // set data transfer address
 
     [spu + 190] = h(0); // Pitch Modulation Enable Flags lower
     [spu + 192] = h(0); // Pitch Modulation Enable Flags upper
@@ -477,19 +477,16 @@ V0 = w[V0 + ab1c];
 V1 = w[V1 + aaf4];
 V0 = A0 >> V0;
 80036A94	lui    at, $8005
-[AT + ab0c] = h(V0);
+[0x8004ab0c] = h(V0);
 [V1 + 01a6] = h(V0);
 80036AA0	j      L36c94 [$80036c94]
 V0 = 0;
 
 L36aa8:	; 80036AA8
-80036AA8	lui    a1, $8005
-A1 = w[A1 + aaf4];
-80036AB0	lui    a0, $8005
-A0 = hu[A0 + ab0c];
+A1 = w[0x8004aaf4];
+A0 = hu[0x8004ab0c];
 V0 = hu[A1 + 01a6];
-80036ABC	lui    at, $8005
-[AT + ab44] = w(0);
+[0x8004ab44] = w(0);
 V0 = V0 & ffff;
 80036AC8	beq    v0, a0, L36af0 [$80036af0]
 V1 = 0;
@@ -519,8 +516,7 @@ V0 = 0;
 L36b18:	; 80036B18
 80036B18	lui    a1, $8005
 A1 = w[A1 + aaf4];
-80036B20	lui    a0, $8005
-A0 = hu[A0 + ab0c];
+A0 = hu[0x8004ab0c];
 V0 = hu[A1 + 01a6];
 80036B2C	lui    at, $8005
 [AT + ab44] = w(A2);
@@ -641,69 +637,43 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// func36ca8
-
-V0 = w[0x8004ab10];
-
-S1 = A0;
-S0 = A1;
-80036CC4	bne    v0, zero, L36d08 [$80036d08]
-
-V0 = hu[0x8004ab0c];
-A1 = w[0x8004ab1c];
-A0 = 0002;
-80036CE0	jal    func36a18 [$80036a18]
-A1 = V0 << A1;
-80036CE8	jal    func36a18 [$80036a18]
-A0 = 0001;
-A0 = 0003;
-A1 = S1;
-80036CF8	jal    func36a18 [$80036a18]
-A2 = S0;
-80036D00	j      L36d18 [$80036d18]
-V0 = S0;
-
-L36d08:	; 80036D08
-A0 = S1;
-A1 = S0;
-system_spu_ram_manual_write();
-
-V0 = S0;
-
-L36d18:	; 80036D18
-////////////////////////////////
+void func36ca8( src, size )
+{
+    if( w[0x8004ab10] == SPU_TRANSFER_BY_DMA )
+    {
+        func36a18( 0x2, hu[0x8004ab0c] << w[0x8004ab1c] ); // set address in spu to write to 0x1f801da6
+        func36a18( 0x1 ); // wait until spu address is set
+        func36a18( 0x3, src, size );
+    }
+    else // SPU_TRANSFER_BY_IO
+    {
+        system_spu_ram_manual_write( src, size );
+    }
+    return size;
+}
 
 
 
 ////////////////////////////////
 // func36d30
-80036D30	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
+
 S1 = A0;
-[SP + 0010] = w(S0);
 S0 = A1;
-80036D44	lui    v0, $8005
-V0 = hu[V0 + ab0c];
-80036D4C	lui    a1, $8005
-A1 = w[A1 + ab1c];
+V0 = hu[0x8004ab0c];
+A1 = w[0x8004ab1c];
 A0 = 0002;
-[SP + 0018] = w(RA);
-80036D5C	jal    func36a18 [$80036a18]
 A1 = V0 << A1;
-80036D64	jal    func36a18 [$80036a18]
+80036D5C	jal    func36a18 [$80036a18]
+
 A0 = 0;
+80036D64	jal    func36a18 [$80036a18]
+
 A0 = 0003;
 A1 = S1;
-80036D74	jal    func36a18 [$80036a18]
 A2 = S0;
-V0 = S0;
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-80036D90	jr     ra 
-80036D94	nop
+80036D74	jal    func36a18 [$80036a18]
+
+return S0;
 ////////////////////////////////
 
 
@@ -2482,81 +2452,89 @@ L38efc:	; 80038EFC
 
 
 
-////////////////////////////////
-// func38f04()
-
-S0 = A1;
-V0 = 0x0007eff0;
-V0 = V0 < S0;
-80038F1C	beq    v0, zero, L38f2c [$80038f2c]
-
-S0 = 0007eff0;
-
-L38f2c:	; 80038F2C
-80038F2C	jal    func36ca8 [$80036ca8]
-A1 = S0;
-
-V0 = w[8004ab2c];
-
-80038F40	bne    v0, zero, L38f50 [$80038f50]
-V0 = S0;
-[8004ab28] = w(0);
-
-L38f50:	; 80038F50
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func38f64
-
-A1 = A0;
-V0 = 0x0007efe8;
-V1 = A1 - 0x1010;
-
-V0 = V0 < V1;
-80038F7C	bne    v0, zero, L38fa4 [$80038fa4]
-
-A0 = -1;
-func36de0();
-
-[0x8004ab0c] = h(V0);
-V0 = hu[0x8004ab0c];
-80038F9C	j      L38fa8 [$80038fa8]
-
-L38fa4:	; 80038FA4
-V0 = 0;
-
-L38fa8:	; 80038FA8
-////////////////////////////////
-
-
-
-void func38fb8( A0 )
+// Transfers size bytes of data from main memory addr to the sound buffer
+// The main memory address addr storing the transfer data must be a global variable or an address in a heap
+// area that was allocated by a function such as malloc(). It can’t address a variable on the stack declared in
+// a function.
+// SpuWrite() does not perform sound buffer memory management, so real waveform data cannot be used if
+// the user does not transfer to addresses which avoid the following areas.
+// - SPU decoded data transfer area: 0x0000-0xfff
+// - System reserved area: 0x1000-0x100f
+// - Addresses after the reverb work area offset (start) address
+// After calling, either call SpuIsTransferCompleted() to confirm transfer completion or set the DMA transfer
+// completion Callback function in advance using SpuSetTransferCallback().
+// Due to the limitations of the DMA transfer hardware, transfers are always performed in 64 byte units. When
+// specifying values which are not multiples of 64 as secondary arguments, since the portion of the value
+// which is a multiple of 64 is transferred, it’s possible to damage the data in the SPU memory
+u_long system_psyq_spu_write( u_char* addr, u_long size )
 {
+    if( size > 0x0007eff0 ) size = 0x7eff0;
 
-    if( A0 == 0 )
-    {
-        V0 = 0;
-    }
-    else if( A0 == 1 )
-    {
-        V0 = 1;
-    }
-    else
-    {
-        V0 = 0;
-    }
+    func36ca8( addr, size );
 
-    [0x8004a690] = w(A0);
-    [0x8004ab10] = w(V0);
+    if( w[0x8004ab2c] == 0 )
+    {
+        [0x8004ab28] = w(0);
+    }
+    return size;
 }
 
 
 
-void func38fec( A0 )
+// Sets a starting address in the sound buffer, specified in addr, for transferring data to and from main
+// memory. addr must be a byte value that is
+// - Divisible by 8. If it is not divisible by 8, it is increased to the next value divisible by 8.
+// - Between 0x1010 - 0x7ffff for transfers to the sound buffer.
+// - Between 0 - 0x0fff for transfers from the sound buffer. See SpuReadDecodedData().
+// Return value
+// Start address value. If the address specified is smaller than 0x1010 or greater than 512 KB, 0 is returned
+u_long system_psyq_spu_set_transfer_start_addr( u_long addr )
 {
-    if( A0 != w[0x8004ab2c] ) [0x8004ab2c] = w(A0);
+    if( (addr - 0x1010) <= 0x0007efe8 )
+    {
+        V0 = func36de0( -1, addr );
+        [0x8004ab0c] = h(V0);
+        return hu[0x8004ab0c];
+    }
+    return 0;
+}
+
+
+
+// Sets the mode for transferring data from main memory to the sound buffer. The mode values can be:
+// - SPU_TRANSFER_BY_DMA: DMA transfer; can do other processing during transfer (default value).
+// - SPU_TRANSFER_BY_IO: I/O transfer. Uses CPU; cannot do other processing during transfer.
+// Note: These specifications are valid only when transferring data from main memory to the sound buffer.
+// DMA transfer is always used when transferring data from the sound buffer to main memory.
+// When a transfer is done without first calling this function, the transfer mode is the previously set value
+long system_psyq_spu_set_transfer_mode( long mode )
+{
+
+    if( mode == SPU_TRANSFER_BY_DMA )
+    {
+        V0 = SPU_TRANSFER_BY_DMA;
+    }
+    else if( mode == SPU_TRANSFER_BY_IO )
+    {
+        V0 = SPU_TRANSFER_BY_IO;
+    }
+    else
+    {
+        V0 = SPU_TRANSFER_BY_DMA;
+    }
+    [0x8004a690] = w(mode);
+    [0x8004ab10] = w(V0);
+    return V0;
+}
+
+
+
+
+SpuTransferCallbackProc system_psyq_spu_set_transfer_callback( SpuTransferCallbackProc func )
+{
+    V0 = w[0x8004ab2c];
+    if( func != V0 ) [0x8004ab2c] = w(func);
+    return V0;
 }
 
 

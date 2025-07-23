@@ -2,29 +2,30 @@
 
 
 
-////////////////////////////////
-// func293f4()
+void func293d0()
+{
+    system_psyq_spu_set_transfer_callback( 0 );
 
-[GP + 00c4] = h(1);
-
-A0 = 800293d0;
-func38fec();
-////////////////////////////////
+    [GP + 0xc4] = h(0);
+}
 
 
 
-////////////////////////////////
-// func29424()
+void func293f4()
+{
+    [GP + 0xc4] = h(1);
 
-S0 = A0;
-S1 = A1;
+    system_psyq_spu_set_transfer_callback( 0x800293d0 ); // func293d0
+}
 
-func293f4();
 
-A0 = S0;
-A1 = S1;
-80029444	jal    func38f04 [$80038f04]
-////////////////////////////////
+
+void func29424( u8* addr, u32 size )
+{
+    func293f4();
+
+    system_psyq_spu_write( addr, size );
+}
 
 
 
@@ -45,16 +46,14 @@ A1 = S1;
 ////////////////////////////////
 // func294a4()
 
-loop294a4:	; 800294A4
-    V0 = hu[GP + c4];
-800294AC	bne    v0, zero, loop294a4 [$800294a4]
+while( hu[GP + c4] != 0 ) {}
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func294bc
-800294BC	addiu  sp, sp, $ffd0 (=-$30)
+
 800294C0	lui    a0, $800a
 800294C4	addiu  a0, a0, $c578 (=-$3a88)
 V1 = 0001;
@@ -63,12 +62,6 @@ V1 = 0001;
 800294D4	lui    v0, $7fff
 [GP + 0290] = w(V0);
 V0 = 3fcf;
-[SP + 002c] = w(RA);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-[SP + 0018] = w(S0);
 [8009a104] = w(V1);
 80029500	lui    at, $8008
 [AT + 33de] = h(0);
@@ -236,46 +229,29 @@ V0 = 0001;
 [AT + a10c] = w(0);
 80029778	lui    at, $800a
 [AT + 9fe0] = w(V0);
-RA = w[SP + 002c];
-S4 = w[SP + 0028];
-S3 = w[SP + 0024];
-S2 = w[SP + 0020];
-S1 = w[SP + 001c];
-S0 = w[SP + 0018];
-SP = SP + 0030;
-8002979C	jr     ra 
-800297A0	nop
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func297a4
-800297A4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-S0 = A0;
-[SP + 0014] = w(S1);
-S1 = A1;
-[SP + 0018] = w(RA);
-A0 = w[S0 + 0000];
-800297C0	jal    func38f64 [$80038f64]
-S0 = S0 + 0004;
-A1 = w[S0 + 0000];
-800297CC	jal    func29424 [$80029424]
-A0 = S0 + 000c;
-800297D4	lui    v1, $8007
-V1 = V1 + 5f28;
-A1 = 0800;
+void func297a4( u32 instr_all, u32 instr_dat )
+{
+    system_psyq_spu_set_transfer_start_addr( w[instr_all + 0x0] );
 
-loop297e0:	; 800297E0
-800297E0	addiu  a1, a1, $ffff (=-$1)
-V0 = w[S1 + 0000];
-S1 = S1 + 0004;
-[V1 + 0000] = w(V0);
-800297F0	bne    a1, zero, loop297e0 [$800297e0]
-V1 = V1 + 0004;
-func294a4();
-////////////////////////////////
+    func29424( instr_all + 0x10, w[instr_all + 0x4] );
+
+    V1 = 0x80075f28;
+    A1 = 0x800;
+
+    loop297e0:	; 800297E0
+        A1 -= 1;
+        [V1] = w(w[instr_dat]);
+
+        instr_dat += 0x4;
+        V1 += 0x4;
+    800297F0	bne    a1, zero, loop297e0 [$800297e0]
+
+    func294a4(); // spu transfer sync
+}
 
 
 
@@ -284,13 +260,10 @@ func294a4();
 
 S0 = A0;
 S1 = A1;
-A0 = w[S0 + 0000];
-S0 = S0 + 0004;
-80029834	jal    func38f64 [$80038f64]
 
-A0 = S0 + c;
-A1 = w[S0 + 0];
-func29424();
+system_psyq_spu_set_transfer_start_addr( w[S0] );
+
+func29424( S0 + 0x10, w[S0 + 0x4] );
 
 
 V1 = 80076c68;
@@ -304,12 +277,12 @@ loop29854:	; 80029854
     V1 = V1 + 0004;
 80029864	bne    a1, zero, loop29854 [$80029854]
 
-func294a4();
+func294a4(); // spu transfer sync
 ////////////////////////////////
 
 
 
-void func2988c( S0, S1 )
+void system_akao_init( u32 instr_all, u32 instr_dat )
 {
     V0 = 0x80089580;
     [GP + 0x230] = w(V0);
@@ -320,25 +293,19 @@ void func2988c( S0, S1 )
 
     system_psyq_spu_malloc_with_start_addr( 0x77000, 0x2000 );
 
-    A0 = 0;
-    func38fb8();
+    system_psyq_spu_set_transfer_mode( SPU_TRANSFER_BY_DMA );
 
-    A0 = S0;
-    A1 = S1;
-    func297a4();
+    func297a4( instr_all, instr_dat );
 
-    A0 = 0x00076fe0;
-    func38f64();
+    system_psyq_spu_set_transfer_start_addr( 0x76fe0 );
 
-    A0 = 0x8004a60c;
-    A1 = 0x20;
-    func29424();
+    func29424( 0x8004a60c, 0x20 );
 
-    S0 = -1;
-
-    func294a4();
+    func294a4(); // spu transfer sync
 
     func294bc();
+
+    S0 = -1;
 
     loop2991c:	; 8002991C
         A0 = 0xf2000002;
@@ -360,24 +327,20 @@ void func2988c( S0, S1 )
 
 
 
-////////////////////////////////
-// func29998
-80029998
-A1 = w[GP + 0230];
-V1 = 3200;
-A2 = ffff;
+void func29998()
+{
+    A1 = w[GP + 0x230];
+    V1 = 0x3200;
+    A2 = 0xffff;
 
-loop299a4:	; 800299A4
-V1 = V1 + A2;
-V0 = w[A0 + 0000];
-A0 = A0 + 0004;
-[A1 + 0000] = w(V0);
-V0 = V1 & ffff;
-800299B8	bne    v0, zero, loop299a4 [$800299a4]
-A1 = A1 + 0004;
-800299C0	jr     ra 
-800299C4	nop
-////////////////////////////////
+    loop299a4:	; 800299A4
+        V1 = V1 + A2;
+        [A1] = w(w[A0]);
+        V0 = V1 & ffff;
+        A0 = A0 + 0004;
+        A1 = A1 + 0004;
+    800299B8	bne    v0, zero, loop299a4 [$800299a4]
+}
 
 
 
@@ -403,8 +366,7 @@ loop29a04:	; 80029A04
     system_bios_close_event();
 80029A10	beq    v0, zero, loop29a04 [$80029a04]
 
-A0 = 0;
-func38fec(); // unset  some callback
+system_psyq_spu_set_transfer_callback( 0 );
 
 A0 = 0; // on
 system_sound_spu_irq9();
@@ -1753,8 +1715,7 @@ A3 = A3 + 0004;
 ////////////////////////////////
 // func2cfa0
 
-A0 = 0;
-func38fec();
+system_psyq_spu_set_transfer_callback( 0 );
 ////////////////////////////////
 
 
@@ -1769,8 +1730,8 @@ V0 = w[V0 + 9fd8];
 V1 = w[V1 + 2f00];
 V0 = V0 | V1;
 [80099fd8] = w(V0);
-A0 = 0;
-8002CFEC	jal    func38fec [$80038fec]
+
+system_psyq_spu_set_transfer_callback( 0 );
 
 A0 = 0; // on
 system_sound_spu_irq9();
@@ -1839,35 +1800,29 @@ L2d0cc:	; 8002D0CC
 8002D0CC	beq    v0, zero, L2d0f4 [$8002d0f4]
 8002D0D0	nop
 8002D0D4	jal    func2d2d4 [$8002d2d4]
-8002D0D8	nop
-8002D0DC	lui    a0, $8003
-8002D0E0	addiu  a0, a0, $d4a0 (=-$2b60)
-func38fec();
+
+system_psyq_spu_set_transfer_callback( 0x8002d4a0 );
 
 8002D0EC	j      L2d110 [$8002d110]
 8002D0F0	lui    v0, $0003
 
 L2d0f4:	; 8002D0F4
 8002D0F4	jal    func2d1e4 [$8002d1e4]
-8002D0F8	nop
-8002D0FC	lui    a0, $8003
-8002D100	addiu  a0, a0, $d410 (=-$2bf0)
-func38fec();
+
+system_psyq_spu_set_transfer_callback( 0x8002d410 );
 
 8002D10C	lui    v0, $0001
 
 L2d110:	; 8002D110
 8002D110	lui    at, $8006
 [AT + 2f00] = w(V0);
-8002D118	jal    func38fb8 [$80038fb8]
-A0 = 0;
-8002D120	lui    a0, $0007
-8002D124	jal    func38f64 [$80038f64]
-A0 = A0 | 7000;
-8002D12C	lui    a0, $8006
-A0 = w[A0 + 2fe0];
-8002D134	jal    func38f04 [$80038f04]
-A1 = 2000;
+
+system_psyq_spu_set_transfer_mode( SPU_TRANSFER_BY_DMA );
+
+system_psyq_spu_set_transfer_start_addr( 0x77000 );
+
+system_psyq_spu_write( w[0x80062fe0], 0x2000 );
+
 8002D13C	lui    v1, $8006
 V1 = w[V1 + 3004];
 8002D144	nop
@@ -2057,8 +2012,7 @@ system_akao_update_params_to_spu();
 ////////////////////////////////
 // finc2d410
 
-A0 = 0;
-func38fec();
+system_psyq_spu_set_transfer_callback( 0 );
 
 8002D420	lui    v0, $8006
 V0 = w[V0 + 3004];
@@ -2104,8 +2058,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // func2d4a0
 
-A0 = 0;
-func38fec();
+system_psyq_spu_set_transfer_callback( 0 );
 
 8002D4B0	lui    v0, $8006
 V0 = w[V0 + 3004];
@@ -2149,18 +2102,14 @@ SP = SP + 0018;
 ////////////////////////////////
 // func2d530
 
-8002D530	lui    v0, $8006
-V0 = w[V0 + 3004];
+V0 = w[0x80063004];
 
 8002D53C	beq    v0, zero, L2d658 [$8002d658]
 
-8002D544	lui    a0, $0007
-8002D548	jal    func38f64 [$80038f64]
-A0 = A0 | 7000;
-8002D550	lui    a0, $8006
-A0 = w[A0 + 2fe0];
-8002D558	jal    func38f04 [$80038f04]
-A1 = 1000;
+system_psyq_spu_set_transfer_start_addr( 0x77000 );
+
+system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+
 A0 = 0; // on
 system_sound_spu_irq9();
 
@@ -2243,13 +2192,10 @@ L2d658:	; 8002D658
 V0 = w[V0 + 3004];
 8002D674	beq    v0, zero, L2d790 [$8002d790]
 
-8002D67C	lui    a0, $0007
-8002D680	jal    func38f64 [$80038f64]
-A0 = A0 | 8000;
-8002D688	lui    a0, $8006
-A0 = w[A0 + 2fe0];
-8002D690	jal    func38f04 [$80038f04]
-A1 = 1000;
+system_psyq_spu_set_transfer_start_addr( 0x78000 );
+
+system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+
 A0 = 0; // on
 system_sound_spu_irq9();
 
@@ -2331,13 +2277,10 @@ L2d790:	; 8002D790
 V0 = w[V0 + 3004];
 8002D7AC	beq    v0, zero, L2d8d8 [$8002d8d8]
 
-8002D7B4	lui    a0, $0007
-8002D7B8	jal    func38f64 [$80038f64]
-A0 = A0 | 7000;
-8002D7C0	lui    a0, $8006
-A0 = w[A0 + 2fe0];
-8002D7C8	jal    func38f04 [$80038f04]
-A1 = 1000;
+system_psyq_spu_set_transfer_start_addr( 0x77000 );
+
+system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+
 A0 = 0; // on
 system_sound_spu_irq9();
 
@@ -2423,13 +2366,10 @@ L2d8d8:	; 8002D8D8
 V0 = w[V0 + 3004];
 8002D8F4	beq    v0, zero, L2da20 [$8002da20]
 
-8002D8FC	lui    a0, $0007
-8002D900	jal    func38f64 [$80038f64]
-A0 = A0 | 8000;
-8002D908	lui    a0, $8006
-A0 = w[A0 + 2fe0];
-8002D910	jal    func38f04 [$80038f04]
-A1 = 1000;
+system_psyq_spu_set_transfer_start_addr( 0x78000 );
+
+system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+
 A0 = 0; // on
 system_sound_spu_irq9();
 

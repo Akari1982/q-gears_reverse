@@ -345,9 +345,9 @@
 80028CA0 system_menu_draw_textured_rect
 80028E00 system_menu_draw_digits_without_leading_zeroes
 80029114 system_menu_draw_digits_with_leading_zeroes
-800293D0 func293d0
 
-// SCUS_941_sound.cpp
+// SCUS_941_akao.cpp
+800293D0 func293d0
 800293F4 func293f4
 80029424 func29424
 80029464 func29464
@@ -355,7 +355,7 @@
 800294BC func294bc
 800297A4 func297a4
 80029818 func29818
-8002988C func2988c
+8002988C system_akao_init
 80029998 func29998
 800299C8 func299c8
 80029A50 func29a50
@@ -684,10 +684,10 @@
 80038C48 func38c48
 80038C6C system_sound_spu_turn_voice_on_channels
 80038E70 func38e70
-80038F04 func38f04
-80038F64 func38f64
-80038FB8 func38fb8
-80038FEC func38fec
+80038F04 system_psyq_spu_write
+80038F64 system_psyq_spu_set_transfer_start_addr
+80038FB8 system_psyq_spu_set_transfer_mode
+80038FEC system_psyq_spu_set_transfer_callback
 80039010 func39010
 80039034 func39034
 800393C8 system_psyq_spu_set_voice_volume
