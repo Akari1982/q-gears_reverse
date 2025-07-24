@@ -2549,304 +2549,214 @@ func37988();
 
 
 
-////////////////////////////////
-// func39034
-80039034	addiu  sp, sp, $fff0 (=-$10)
-A2 = 0;
-T1 = w[A0 + 0000];
-80039040	nop
-T2 = T1 < 0001;
-80039048	bne    t2, zero, L39064 [$80039064]
-T0 = 0;
-V0 = T1 & 0001;
-80039054	beq    v0, zero, L39114 [$80039114]
-V0 = T1 & 0004;
-8003905C	beq    v0, zero, L390c8 [$800390c8]
-80039060	nop
+void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
+{
+    spu = w[0x8004aaf4]; // 1f801c00
 
-L39064:	; 80039064
-V1 = h[A0 + 0008];
-80039068	nop
-V0 = V1 < 0008;
-80039070	beq    v0, zero, L390c8 [$800390c8]
-V0 = V1 << 02;
-80039078	lui    at, $8001
-AT = AT + V0;
-V0 = w[AT + 052c];
-80039084	nop
-80039088	jr     v0 
-8003908C	nop
+    A2 = 0;
+    T0 = 0;
+    T1 = w[attr + 0x0];
+    T2 = T1 < 0x1;
+/*
+    if( (T2 != 0) || (T1 & 0x1) )
+    {
+        if( (T2 != 0) || ((T1 & 0x1) && (T1 & 0x4)) )
+        {
+            switch( h[attr + 0x8] )
+            {
+                case 0x1: A1 = 0x8000; break;
+                case 0x2: A1 = 0x9000; break;
+                case 0x3: A1 = 0xa000; break;
+                case 0x4: A1 = 0xb000; break;
+                case 0x5: A1 = 0xc000; break;
+                case 0x6: A1 = 0xd000; break;
+                case 0x7: A1 = 0xe000; break;
+                default:
+                {
+                    A2 = hu[attr + 0x4];
+                    A1 = 0;
+                }
+            }
+        }
+        else if( (T2 == 0) && (T1 & 0x1) && ((T1 & 0x4) == 0) )
+        {
+            A2 = hu[attr + 0x4];
+            A1 = 0;
+        }
 
-80039090	j      L390d0 [$800390d0]
-A1 = 8000;
-80039098	j      L390d0 [$800390d0]
-A1 = 9000;
-800390A0	j      L390d0 [$800390d0]
-A1 = a000;
-800390A8	j      L390d0 [$800390d0]
-A1 = b000;
-800390B0	j      L390d0 [$800390d0]
-A1 = c000;
-800390B8	j      L390d0 [$800390d0]
-A1 = d000;
-800390C0	j      L390d0 [$800390d0]
-A1 = e000;
+        if( A1 != 0 )
+        {
+            if( h[attr + 0x4] >= 0x80 )
+            {
+                A2 = 0x7f;
+            }
+            else
+            {
+                A2 = ( h[attr + 0x4] < 0 ) ? 0 : h[attr + 0x4];
+            }
+        }
 
-L390c8:	; 800390C8
-A2 = hu[A0 + 0004];
-A1 = 0;
+        [spu + 0x180] = h((A2 & 0x7fff) | A1);
+    }
+*/
+    80039048	bne    t2, zero, L39064 [$80039064]
 
-L390d0:	; 800390D0
-800390D0	beq    a1, zero, L39104 [$80039104]
-V0 = A2 & 7fff;
-A3 = h[A0 + 0004];
-800390DC	nop
-V0 = A3 < 0080;
-800390E4	bne    v0, zero, L390f4 [$800390f4]
-V1 = A3;
-800390EC	j      L39100 [$80039100]
-A2 = 007f;
+    V0 = T1 & 0x1;
+    80039054	beq    v0, zero, L39114 [$80039114]
 
-L390f4:	; 800390F4
-800390F4	bgez   a3, L39100 [$80039100]
-A2 = V1;
-A2 = 0;
+    if( (T1 & 0x4) == 0 )
+    {
+        A2 = hu[attr + 0x4];
+        A1 = 0;
+        800390EC	j      L390d0 [$80039100]
+    }
 
-L39100:	; 80039100
-V0 = A2 & 7fff;
+    L39064:	; 80039064
+    switch( h[attr + 0x8] )
+    {
+        case 0x1: A1 = 0x8000; break;
+        case 0x2: A1 = 0x9000; break;
+        case 0x3: A1 = 0xa000; break;
+        case 0x4: A1 = 0xb000; break;
+        case 0x5: A1 = 0xc000; break;
+        case 0x6: A1 = 0xd000; break;
+        case 0x7: A1 = 0xe000; break;
+        default:
+        {
+            A2 = hu[attr + 0x4];
+            A1 = 0;
+        }
+    }
 
-L39104:	; 80039104
-V1 = w[8004aaf4];
-V0 = V0 | A1;
-[V1 + 0180] = h(V0);
+    L390d0:	; 800390D0
+    if( A1 != 0 )
+    {
+        if( h[attr + 0x4] >= 0x80 )
+        {
+            A2 = 0x7f;
+        }
+        else
+        {
+            A2 = ( h[attr + 0x4] < 0 ) ? 0 : h[attr + 0x4];
+        }
+    }
 
-L39114:	; 80039114
-80039114	bne    t2, zero, L3912c [$8003912c]
-V0 = T1 & 0002;
-8003911C	beq    v0, zero, L391dc [$800391dc]
-V0 = T1 & 0008;
-80039124	beq    v0, zero, L39190 [$80039190]
-80039128	nop
+    [spu + 0x180] = h((A2 & 0x7fff) | A1); // Main Volume Left
 
-L3912c:	; 8003912C
-V1 = h[A0 + 000a];
-80039130	nop
-V0 = V1 < 0008;
-80039138	beq    v0, zero, L39190 [$80039190]
-V0 = V1 << 02;
-80039140	lui    at, $8001
-AT = AT + V0;
-V0 = w[AT + 054c];
-8003914C	nop
-80039150	jr     v0 
-80039154	nop
+    L39114:	; 80039114
+    80039114	bne    t2, zero, L3912c [$8003912c]
 
-80039158	j      L39198 [$80039198]
-A1 = 8000;
-80039160	j      L39198 [$80039198]
-A1 = 9000;
-80039168	j      L39198 [$80039198]
-A1 = a000;
-80039170	j      L39198 [$80039198]
-A1 = b000;
-80039178	j      L39198 [$80039198]
-A1 = c000;
-80039180	j      L39198 [$80039198]
-A1 = d000;
-80039188	j      L39198 [$80039198]
-A1 = e000;
+    V0 = T1 & 0x2;
+    8003911C	beq    v0, zero, L391dc [$800391dc]
 
-L39190:	; 80039190
-T0 = hu[A0 + 0006];
-A1 = 0;
+    if( (T1 & 0x8) == 0 )
+    {
+        T0 = hu[attr + 0x6];
+        A1 = 0;
+        800390EC	j      L39198 [$80039100]
+    }
 
-L39198:	; 80039198
-80039198	beq    a1, zero, L391cc [$800391cc]
-V0 = T0 & 7fff;
-A2 = h[A0 + 0006];
-800391A4	nop
-V0 = A2 < 0080;
-800391AC	bne    v0, zero, L391bc [$800391bc]
-V1 = A2;
-800391B4	j      L391c8 [$800391c8]
-T0 = 007f;
+    L3912c:	; 8003912C
+    switch( h[attr + 0xa] )
+    {
+        case 0x1: A1 = 0x8000; break;
+        case 0x2: A1 = 0x9000; break;
+        case 0x3: A1 = 0xa000; break;
+        case 0x4: A1 = 0xb000; break;
+        case 0x5: A1 = 0xc000; break;
+        case 0x6: A1 = 0xd000; break;
+        case 0x7: A1 = 0xe000; break;
+        default:
+        {
+            T0 = hu[attr + 0x6];
+            A1 = 0;
+        }
+    }
 
-L391bc:	; 800391BC
-800391BC	bgez   a2, L391c8 [$800391c8]
-T0 = V1;
-T0 = 0;
+    L39198:	; 80039198
+    if( A1 != 0 )
+    {
+        A2 = h[attr + 0x6];
+        if( A2 >= 0x80 )
+        {
+            T0 = 0x7f;
+        }
+        else
+        {
+            T0 = (A2 < 0 ) ? 0 : A2;
+        }
+    }
+    [spu + 0x182] = h((T0 & 0x7fff) | A1); // Main Volume Right
 
-L391c8:	; 800391C8
-V0 = T0 & 7fff;
+    L391dc:	; 800391DC
+    if( (T2 != 0) || (T1 & 0x0040) )
+    {
+        [spu + 0x1b0] = h(hu[attr + 0x10]); // CD Volume Left
+    }
 
-L391cc:	; 800391CC
-V1 = w[8004aaf4];
-V0 = V0 | A1;
-[V1 + 0182] = h(V0);
+    if( (T2 != 0) || (T1 & 0x0080) )
+    {
+        [spu + 0x1b2] = h(hu[attr + 0x12]); // CD Volume Right
+    }
 
-L391dc:	; 800391DC
-800391DC	bne    t2, zero, L391ec [$800391ec]
-V0 = T1 & 0040;
-800391E4	beq    v0, zero, L39200 [$80039200]
-800391E8	nop
+    if( (T2 != 0) || (T1 & 0x0400) )
+    {
+        [spu + 0x1b4] = h(hu[attr + 0x1c]); // Extern Volume Left
+    }
 
-L391ec:	; 800391EC
-V1 = w[8004aaf4];
-V0 = hu[A0 + 0010];
-800391F8	nop
-[V1 + 01b0] = h(V0);
+    if( (T2 != 0) || (T1 & 0x0800) )
+    {
+        [spu + 0x1b6] = h(hu[attr + 0x1e]); // Extern Volume Right
+    }
 
-L39200:	; 80039200
-80039200	bne    t2, zero, L39210 [$80039210]
-V0 = T1 & 0080;
-80039208	beq    v0, zero, L39224 [$80039224]
-8003920C	nop
+    if( (T2 != 0) || (T1 & 0x0100) )
+    {
+        if( w[attr + 0x14] == 0 )
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfffb);
+        }
+        else
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0x0004); // CD Audio Reverb
+        }
+    }
 
-L39210:	; 80039210
-V1 = w[8004aaf4];
-V0 = hu[A0 + 0012];
-8003921C	nop
-[V1 + 01b2] = h(V0);
+    if( (T2 != 0) || (T1 & 0x0200) )
+    {
+        if( w[attr + 0x18] == 0 )
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfffe);
+        }
+        else
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0x0001); // CD Audio Enable
+        }
+    }
 
-L39224:	; 80039224
-80039224	bne    t2, zero, L39234 [$80039234]
-V0 = T1 & 0400;
-8003922C	beq    v0, zero, L39248 [$80039248]
-80039230	nop
+    if( (T2 != 0) || (T1 & 0x1000) )
+    {
+        if( w[attr + 0x20] == 0 )
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfff7);
+        }
+        else
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0x0008); // External Audio Reverb
+        }
+    }
 
-L39234:	; 80039234
-V1 = w[8004aaf4];
-V0 = hu[A0 + 001c];
-80039240	nop
-[V1 + 01b4] = h(V0);
-
-L39248:	; 80039248
-80039248	bne    t2, zero, L39258 [$80039258]
-V0 = T1 & 0800;
-80039250	beq    v0, zero, L3926c [$8003926c]
-80039254	nop
-
-L39258:	; 80039258
-V1 = w[8004aaf4];
-V0 = hu[A0 + 001e];
-80039264	nop
-[V1 + 01b6] = h(V0);
-
-L3926c:	; 8003926C
-8003926C	bne    t2, zero, L3927c [$8003927c]
-V0 = T1 & 0100;
-80039274	beq    v0, zero, L392c0 [$800392c0]
-80039278	nop
-
-L3927c:	; 8003927C
-V0 = w[A0 + 0014];
-80039280	nop
-80039284	bne    v0, zero, L392a4 [$800392a4]
-80039288	nop
-V0 = w[8004aaf4];
-80039294	nop
-V1 = hu[V0 + 01aa];
-8003929C	j      L392bc [$800392bc]
-V1 = V1 & fffb;
-
-L392a4:	; 800392A4
-V0 = w[8004aaf4];
-800392AC	nop
-V1 = hu[V0 + 01aa];
-800392B4	nop
-V1 = V1 | 0004;
-
-L392bc:	; 800392BC
-[V0 + 01aa] = h(V1);
-
-L392c0:	; 800392C0
-800392C0	bne    t2, zero, L392d0 [$800392d0]
-V0 = T1 & 0200;
-800392C8	beq    v0, zero, L39314 [$80039314]
-800392CC	nop
-
-L392d0:	; 800392D0
-V0 = w[A0 + 0018];
-800392D4	nop
-800392D8	bne    v0, zero, L392f8 [$800392f8]
-800392DC	nop
-V0 = w[8004aaf4];
-800392E8	nop
-V1 = hu[V0 + 01aa];
-800392F0	j      L39310 [$80039310]
-V1 = V1 & fffe;
-
-L392f8:	; 800392F8
-V0 = w[8004aaf4];
-80039300	nop
-V1 = hu[V0 + 01aa];
-80039308	nop
-V1 = V1 | 0001;
-
-L39310:	; 80039310
-[V0 + 01aa] = h(V1);
-
-L39314:	; 80039314
-80039314	bne    t2, zero, L39324 [$80039324]
-V0 = T1 & 1000;
-8003931C	beq    v0, zero, L39368 [$80039368]
-80039320	nop
-
-L39324:	; 80039324
-V0 = w[A0 + 0020];
-80039328	nop
-8003932C	bne    v0, zero, L3934c [$8003934c]
-80039330	nop
-V0 = w[8004aaf4];
-8003933C	nop
-V1 = hu[V0 + 01aa];
-80039344	j      L39364 [$80039364]
-V1 = V1 & fff7;
-
-L3934c:	; 8003934C
-V0 = w[8004aaf4];
-80039354	nop
-V1 = hu[V0 + 01aa];
-8003935C	nop
-V1 = V1 | 0008;
-
-L39364:	; 80039364
-[V0 + 01aa] = h(V1);
-
-L39368:	; 80039368
-80039368	bne    t2, zero, L39378 [$80039378]
-V0 = T1 & 2000;
-80039370	beq    v0, zero, L393bc [$800393bc]
-80039374	nop
-
-L39378:	; 80039378
-V0 = w[A0 + 0024];
-8003937C	nop
-80039380	bne    v0, zero, L393a0 [$800393a0]
-80039384	nop
-V0 = w[8004aaf4];
-80039390	nop
-V1 = hu[V0 + 01aa];
-80039398	j      L393b8 [$800393b8]
-V1 = V1 & fffd;
-
-L393a0:	; 800393A0
-V0 = w[8004aaf4];
-800393A8	nop
-V1 = hu[V0 + 01aa];
-800393B0	nop
-V1 = V1 | 0002;
-
-L393b8:	; 800393B8
-[V0 + 01aa] = h(V1);
-
-L393bc:	; 800393BC
-SP = SP + 0010;
-800393C0	jr     ra 
-800393C4	nop
-////////////////////////////////
-
-
+    if( (T2 != 0) || (T1 & 0x2000) )
+    {
+        if( w[attr + 0x24] == 0 )
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfffd);
+        }
+        else
+        {
+            [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0x0002); // External Audio Enable
+        }
+    }
+}
 
 
 

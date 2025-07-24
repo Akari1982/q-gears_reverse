@@ -689,7 +689,7 @@
 80038FB8 system_psyq_spu_set_transfer_mode
 80038FEC system_psyq_spu_set_transfer_callback
 80039010 func39010
-80039034 func39034
+80039034 system_psyq_spu_set_common_attr
 800393C8 system_psyq_spu_set_voice_volume
 80039450 system_sound_spu_set_sweep_volume_left_right_sync
 800395C8 system_psyq_spu_set_voice_pitch
