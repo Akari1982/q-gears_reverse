@@ -1,5 +1,5 @@
 ﻿ChannelData g_channels_2[0x18]; // 0x80096608
-
+SpuCommonAttr g_spu_common_attr; // 0x8009c578
 
 
 void func293d0()
@@ -90,21 +90,21 @@ void func294bc()
     [0x8009a144] = w(0);
     [0x8009a140] = w(0);
 
-    [0x8009c578] = w(0x3fcf);
-    [0x8009c57c] = h(0x3fff);
-    [0x8009c57e] = h(0x3fff);
-    [0x8009c580] = h(0);
-    [0x8009c582] = h(0);
-    [0x8009c588] = h(0x7fff);
-    [0x8009c58a] = h(0x7fff);
-    [0x8009c58c] = w(0);
-    [0x8009c590] = w(1);
-    [0x8009c594] = h(0);
-    [0x8009c596] = h(0);
-    [0x8009c598] = w(0);
-    [0x8009c59c] = w(0);
+    g_spu_common_attr.mask = 0x00003fcf;
+    g_spu_common_attr.mvol.left = 0x3fff;
+    g_spu_common_attr.mvol.right = 0x3fff;
+    g_spu_common_attr.mvolmode.left = 0;
+    g_spu_common_attr.mvolmode.right = 0;
+    g_spu_common_attr.cd.volume.left = 0x7fff;
+    g_spu_common_attr.cd.volume.right = 0x7fff;
+    g_spu_common_attr.cd.reverb = 0;
+    g_spu_common_attr.cd.mix = 1;
+    g_spu_common_attr.ext.volume.left = 0;
+    g_spu_common_attr.ext.volume.right = 0;
+    g_spu_common_attr.ext.reverb = 0;
+    g_spu_common_attr.ext.mix = 0;
 
-    system_psyq_spu_set_common_attr( 0x8009c578 );
+    system_psyq_spu_set_common_attr( g_spu_common_attr );
 
     S3 = 0x8009c5a0;
     S4 = 0x7f0000;
@@ -2812,12 +2812,12 @@ void system_akao_update_params_to_spu( u32 voice_id, AkaoVoiceAttr& attr )
 
 void func2e428()
 {
-    [0x8009c578] = w(0x1c0);
-    [0x8009c58c] = w(0x0);
-    [0x8009c58a] = h(hu[0x80062fd6]);
-    [0x8009c588] = h(hu[0x80062fd6]);
+    g_spu_common_attr.mask = 0x000001c0;
+    g_spu_common_attr.cd.volume.left = hu[0x80062fd6];
+    g_spu_common_attr.cd.volume.right = hu[0x80062fd6];
+    g_spu_common_attr.cd.reverb = 0;
 
-    system_psyq_spu_set_common_attr( 0x8009c578 );
+    system_psyq_spu_set_common_attr( g_spu_common_attr );
 }
 
 
