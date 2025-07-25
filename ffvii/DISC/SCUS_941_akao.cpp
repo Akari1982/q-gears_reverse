@@ -231,33 +231,24 @@ void system_akao_load_effect_file( u32 effect_all )
 
 
 
-////////////////////////////////
-// system_akao_deinit()
+void system_akao_deinit()
+{
+    while( system_psyq_stop_r_cnt(  ) == 0 ) {}
 
-while( system_psyq_stop_r_cnt( RCntCNT2 ) == 0 ) {}
+    system_bios_undeliver_event( RCntCNT2, EvSpINT );
 
-A0 = f2000002;
-A1 = 2;
-system_bios_undeliver_event();
+    while( system_bios_disable_event( w[GP + 0xbc] ) == 0 ) {}
 
-loop299f0:	; 800299F0
-    A0 = w[GP + 0xbc];
-    system_bios_disable_event();
-800299FC	beq    v0, zero, loop299f0 [$800299f0]
+    while( system_bios_close_event( w[GP + 0xbc] ) == 0 ) {}
 
-loop29a04:	; 80029A04
-    A0 = w[GP + 0xbc];
-    system_bios_close_event();
-80029A10	beq    v0, zero, loop29a04 [$80029a04]
+    system_psyq_spu_set_transfer_callback( 0 );
 
-system_psyq_spu_set_transfer_callback( 0 );
+    system_psyq_spu_set_irq( SPU_OFF );
 
-system_psyq_spu_set_irq( SPU_OFF );
+    system_psyq_spu_set_irq_callback( 0 );
 
-system_psyq_spu_set_irq_callback( 0 );
-
-system_psyq_spu_set_key( SPU_OFF, 0x00ffffff );
-////////////////////////////////
+    system_psyq_spu_set_key( SPU_OFF, 0x00ffffff );
+}
 
 
 
@@ -291,31 +282,26 @@ void func29a50()
 
 
 
-////////////////////////////////
-// func29af0()
-
-reverb_mode = A0;
-
-func29a50();
-
-A0 = 0x8009c564;
-func387fc; // copy loop points
-
-if( w[0x8009c568] != reverb_mode )
+void func29af0( s32 mode )
 {
-    [0x8009a104 + 0x3c] = w(reverb_mode);
+    func29a50();
 
-    system_psyq_spu_set_reverb( SPU_OFF );
+    system_psyq_spu_get_reverb_mode_param( 0x8009c564 );
 
-    A0 = 0x8009c564;
-    [0x8009c568] = w(reverb_mode & 0x00000100);
-    [A0] = w(1);
+    if( w[0x8009c568] != mode )
+    {
+        [0x8009a104 + 0x3c] = w(mode);
 
-    func37e1c();
+        system_psyq_spu_set_reverb( SPU_OFF );
 
-    system_psyq_spu_set_reverb( SPU_ON );
+        [0x8009c564 + 0x0] = w(1);
+        [0x8009c564 + 0x4] = w(mode & 0x00000100);
+
+        func37e1c( 0x8009c564 );
+
+        system_psyq_spu_set_reverb( SPU_ON );
+    }
 }
-////////////////////////////////
 
 
 
@@ -3232,7 +3218,7 @@ if( w[8009a104 + 38] & 00000080 ) // update reverb
     reverb_depth = h[8009a104 + 42];
     reverb_multiplier = hu[80062fb8];
 
-    [8009c564] = w(6);
+    [0x8009c564] = w(6);
 
     if( reverb_multiplier < 80 )
     {
@@ -3246,17 +3232,16 @@ if( w[8009a104 + 38] & 00000080 ) // update reverb
     reverb_pan = hu[80062f70];
     if( reverb_pan < 40 )
     {
-        [8009c564 + 8] = h(reverb_depth);
-        [8009c564 + a] = h(reverb_depth - ((reverb_depth * (reverb_pan ^ 3f)) >> 6));
+        [0x8009c564 + 0x8] = h(reverb_depth);
+        [0x8009c564 + 0xa] = h(reverb_depth - ((reverb_depth * (reverb_pan ^ 3f)) >> 6));
     }
     else
     {
-        [8009c564 + 8] = h(reverb_depth - ((reverb_depth * (reverb_pan & 3f)) >> 6));
-        [8009c564 + a] = h(reverb_depth);
+        [0x8009c564 + 0x8] = h(reverb_depth - ((reverb_depth * (reverb_pan & 3f)) >> 6));
+        [0x8009c564 + 0xa] = h(reverb_depth);
     }
 
-    A0 = 8009c564;
-    system_psyq_spu_set_reverb_depth();
+    system_psyq_spu_set_reverb_depth( 0x8009c564 );
 
     [8009a104 + 38] = w(w[8009a104 + 38] ^ 00000080);
 }

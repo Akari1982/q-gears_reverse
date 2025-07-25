@@ -761,9 +761,10 @@
                     d - menu.
                     e - snowboard2.
                    10 - ???
-8009c564 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
-8009c56c [][]     store here reverb depth left in spu update.
-8009c56e [][]     store here reverb depth right in spu update.
+0x8009c564 stored SpuReverbAttr.
+    +  0 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
+    +  8 [][]     store here reverb depth left in spu update.
+    +  a [][]     store here reverb depth right in spu update.
 
 0x8009c5a0 array of some volume mod for channels. (0xc size 0x18 items)
 

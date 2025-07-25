@@ -674,7 +674,7 @@
 80037D90 func37d90
 80037E1C func37e1c
 8003832C func3832c
-800387FC func387fc
+800387FC system_psyq_spu_get_reverb_mode_param
 8003884C system_sound_spu_set_reverb_depth_left_right
 800388C4 func388c4
 800388E8 func388e8

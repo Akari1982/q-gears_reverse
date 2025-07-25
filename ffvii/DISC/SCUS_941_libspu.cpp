@@ -1353,6 +1353,7 @@ bool func37d90( u32 addr )
 
 
 
+long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
 ////////////////////////////////
 // func37e1c()
 
@@ -1387,7 +1388,6 @@ if( V0 == 0 ) return -1;
 S4 = 0x1;
 
 func37d90( w[0x8004ab5c + mode * 4] );
-
 
 if( V0 != 0 ) return -1;
 
@@ -2069,15 +2069,13 @@ L387f4:	; 800387F4
 
 
 
-////////////////////////////////
-// func387fc
-// copy reverb
-
-[A0 + 0x4] = w(w[0x8004a6a4]);
-[A0 + 0x8] = w(w[0x8004a6a8]); // reverb depth left and right
-[A0 + 0xc] = w(w[0x8004a6ac]);
-[A0 + 0x10] = w(w[0x8004a6b0]);
-////////////////////////////////
+void system_psyq_spu_get_reverb_mode_param( SpuReverbAttr* attr )
+{
+    [A0 + 0x4] = w(w[0x8004a6a4]);
+    [A0 + 0x8] = w(w[0x8004a6a8]); // reverb depth left and right
+    [A0 + 0xc] = w(w[0x8004a6ac]);
+    [A0 + 0x10] = w(w[0x8004a6b0]);
+}
 
 
 
