@@ -1099,167 +1099,165 @@ return V0;
 
 
 
-////////////////////////////////
-// system_sound_spu_main_and_cd_volume()
-
-spu = w[800584a8]; // 1f801c00 start of spu registers
-
-update_flags = w[A0 + 0];
-
-if( ( update_flags < 1 ) || ( update_flags & 0001 ) )
+void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
 {
-    A1 = 0;
-    A2 = 0;
-    if( ( update_flags < 1 ) || ( update_flags & 0004 ) )
-    {
-        switch( h[A0 + 8] )
-        {
-            case 1: A1 = 8000; break;
-            case 2: A1 = 9000; break;
-            case 3: A1 = a000; break;
-            case 4: A1 = b000; break;
-            case 5: A1 = c000; break;
-            case 6: A1 = d000; break;
-            case 7: A1 = e000; break;
-        }
-    }
+    spu = w[800584a8]; // 1f801c00 start of spu registers
 
-    if( A1 != 0 )
-    {
-        A3 = h[A0 + 4];
-        if( A3 >= 80 )
-        {
-            A2 = 7f;
-        }
-        else if( A3 < 3 )
-        {
-            A2 = 0;
-        }
-        else
-        {
-            A2 = A3;
-        }
-    }
-    else
-    {
-        A2 = hu[A0 + 4];
-    }
+    update_flags = w[attr + 0];
 
-    [spu + 180] = h((A2 & 7fff) | A1); // main volume left
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 0002 ) )
-{
-    A1 = 0;
-    T0 = 0;
-    if( ( update_flags != 0 ) || ( update_flags & 0008 ) )
+    if( ( update_flags < 1 ) || ( update_flags & 0001 ) )
     {
-        switch( h[A0 + a] )
+        A1 = 0;
+        A2 = 0;
+        if( ( update_flags < 1 ) || ( update_flags & 0004 ) )
         {
-            case 1: A1 = 8000; break;
-            case 2: A1 = 9000; break;
-            case 3: A1 = a000; break;
-            case 4: A1 = b000; break;
-            case 5: A1 = c000; break;
-            case 6: A1 = d000; break;
-            case 7: A1 = e000; break;
+            switch( h[attr + 8] )
+            {
+                case 1: A1 = 8000; break;
+                case 2: A1 = 9000; break;
+                case 3: A1 = a000; break;
+                case 4: A1 = b000; break;
+                case 5: A1 = c000; break;
+                case 6: A1 = d000; break;
+                case 7: A1 = e000; break;
+            }
         }
-    }
 
-    if( A1 != 0 )
-    {
-        A2 = h[A0 + 6];
-
-        if( A2 >= 80 )
+        if( A1 != 0 )
         {
-            T0 = 7f;
-        }
-        else if( A2 < 0 )
-        {
-            T0 = 0;
+            A3 = h[attr + 4];
+            if( A3 >= 80 )
+            {
+                A2 = 7f;
+            }
+            else if( A3 < 3 )
+            {
+                A2 = 0;
+            }
+            else
+            {
+                A2 = A3;
+            }
         }
         else
         {
-            T0 = A2;
+            A2 = hu[attr + 4];
+        }
+
+        [spu + 180] = h((A2 & 7fff) | A1); // main volume left
+    }
+
+    if( ( update_flags < 1 ) || ( update_flags & 0002 ) )
+    {
+        A1 = 0;
+        T0 = 0;
+        if( ( update_flags != 0 ) || ( update_flags & 0008 ) )
+        {
+            switch( h[attr + a] )
+            {
+                case 1: A1 = 8000; break;
+                case 2: A1 = 9000; break;
+                case 3: A1 = a000; break;
+                case 4: A1 = b000; break;
+                case 5: A1 = c000; break;
+                case 6: A1 = d000; break;
+                case 7: A1 = e000; break;
+            }
+        }
+
+        if( A1 != 0 )
+        {
+            A2 = h[attr + 6];
+
+            if( A2 >= 80 )
+            {
+                T0 = 7f;
+            }
+            else if( A2 < 0 )
+            {
+                T0 = 0;
+            }
+            else
+            {
+                T0 = A2;
+            }
+        }
+        else
+        {
+            T0 = hu[attr + 6];
+        }
+
+        [spu + 182] = h((T0 & 7fff) | A1); // main volume right
+    }
+
+    if( ( update_flags < 1 ) || ( update_flags & 0040 ) )
+    {
+        [spu + 1b0] = h(hu[attr + 10]); // cd volume left
+    }
+
+    if( ( update_flags < 1 ) || ( update_flags & 0080 ) )
+    {
+        [spu + 1b2] = h(hu[attr + 12]); // cd volume right
+    }
+
+    if( ( update_flags < 1 ) || ( update_flags & 0400 ) )
+    {
+        [spu + 1b4] = h(hu[attr + 1c]); // extern volume left
+    }
+
+    if( ( update_flags < 1 ) || ( update_flags & 0800 ) )
+    {
+        [spu + 1b6] = h(hu[attr + 1e]); // extern volume right
+    }
+
+    if( ( update_flags < 1 ) || ( update_flags & 0100 ) )
+    {
+        if( w[attr + 14] == 0 )
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] & fffb); // cd audio reverb (0=off)
+        }
+        else
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] | 0004); // cd audio reverb (1=on)
         }
     }
-    else
+
+    if( ( update_flags < 1 ) || ( update_flags & 0200 ) )
     {
-        T0 = hu[A0 + 6];
+        if( w[attr + 18] == 0 )
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] & fffe); // cd audio enable (0=off)
+        }
+        else
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] | 0001); // cd audio enable (1=on)
+        }
     }
 
-    [spu + 182] = h((T0 & 7fff) | A1); // main volume right
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 0040 ) )
-{
-    [spu + 1b0] = h(hu[A0 + 10]); // cd volume left
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 0080 ) )
-{
-    [spu + 1b2] = h(hu[A0 + 12]); // cd volume right
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 0400 ) )
-{
-    [spu + 1b4] = h(hu[A0 + 1c]); // extern volume left
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 0800 ) )
-{
-    [spu + 1b6] = h(hu[A0 + 1e]); // extern volume right
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 0100 ) )
-{
-    if( w[A0 + 14] == 0 )
+    if( ( update_flags < 1 ) || ( update_flags & 1000 ) )
     {
-        [spu + 1aa] = h(hu[V0 + 1aa] & fffb); // cd audio reverb (0=off)
+        if( w[attr + 20] == 0 )
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] & fff7); // external audio reverb (0=off)
+        }
+        else
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] | 0008); // external audio reverb (1=on)
+        }
     }
-    else
+
+    if( ( update_flags < 1 ) || ( update_flags & 2000 ) )
     {
-        [spu + 1aa] = h(hu[V0 + 1aa] | 0004); // cd audio reverb (1=on)
+        if( w[attr + 24] == 0 )
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] & fffd); // cd audio reverb (0=off)
+        }
+        else
+        {
+            [spu + 1aa] = h(hu[V0 + 1aa] | 0002); // cd audio reverb (1=on)
+        }
     }
 }
-
-if( ( update_flags < 1 ) || ( update_flags & 0200 ) )
-{
-    if( w[A0 + 18] == 0 )
-    {
-        [spu + 1aa] = h(hu[V0 + 1aa] & fffe); // cd audio enable (0=off)
-    }
-    else
-    {
-        [spu + 1aa] = h(hu[V0 + 1aa] | 0001); // cd audio enable (1=on)
-    }
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 1000 ) )
-{
-    if( w[A0 + 20] == 0 )
-    {
-        [spu + 1aa] = h(hu[V0 + 1aa] & fff7); // external audio reverb (0=off)
-    }
-    else
-    {
-        [spu + 1aa] = h(hu[V0 + 1aa] | 0008); // external audio reverb (1=on)
-    }
-}
-
-if( ( update_flags < 1 ) || ( update_flags & 2000 ) )
-{
-    if( w[A0 + 24] == 0 )
-    {
-        [spu + 1aa] = h(hu[V0 + 1aa] & fffd); // cd audio reverb (0=off)
-    }
-    else
-    {
-        [spu + 1aa] = h(hu[V0 + 1aa] | 0002); // cd audio reverb (1=on)
-    }
-}
-////////////////////////////////
-
 
 
 

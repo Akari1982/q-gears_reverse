@@ -76,25 +76,13 @@ func146a4(); // load BATTLE.X or BROM.X and run it
 ////////////////////////////////
 // func11274()
 
-A0 = w[80048d1c]; // 5F020000 "SOUND\INSTR2.DAT"
-A1 = w[80048d20]; // 00200000
-A2 = 800e0000;
-A3 = 0;
-system_cdrom_start_load_file();
+system_cdrom_start_load_file( w[0x80048d1c], w[0x80048d20], 0x800e0000, 0 ); // SOUND\INSTR2.DAT
+while( system_cdrom_read_chain() != 0 ) {}
 
-do system_cdrom_read_chain(); while( V0 != 0 )
+system_cdrom_start_load_file( w[0x80048d14], w[0x80048d18], 0x800a0000, 0 ); // SOUND\INSTR2.ALL
+while( system_cdrom_read_chain() != 0 ) {}
 
-A0 = w[80048d14]; // E4010000 "SOUND\INSTR2.ALL"
-A1 = w[80048d18]; // F0D40300
-A2 = 800a0000;
-A3 = 0;
-system_cdrom_start_load_file();
-
-do system_cdrom_read_chain(); while( V0 != 0 )
-
-A0 = 800a0000;
-A1 = 800e0000;
-func29818();
+system_akao_load_instr2_files( 0x800a0000, 0x800e0000 );
 ////////////////////////////////
 
 
@@ -353,7 +341,7 @@ while( system_cdrom_read_chain() != 0 ) {}
 
 system_akao_init( 0x800f0000, 0x801bc800 );
 
-func29998( 0x801b0000 );
+system_akao_load_effect_file( 0x801b0000 );
 ////////////////////////////////
 
 
@@ -514,7 +502,7 @@ while( true )
             [8009abf4 + 1] = b(0);
             func33be0();
 
-            func299c8();
+            system_akao_deinit();
 
             return;
         }
@@ -1029,7 +1017,7 @@ while( true )
 
         func33be0();
 
-        func299c8();
+        system_akao_deinit();
 
         return;
     }
@@ -1048,7 +1036,7 @@ while( true )
 
     func33be0();
 
-    func299c8();
+    system_akao_deinit();
 
     return;
 
@@ -1070,6 +1058,6 @@ while( true )
 
     func33be0();
 
-    func299c8();
+    system_akao_deinit();
 }
 ////////////////////////////////

@@ -107,9 +107,11 @@
 80049c44 AKAO left volume table (0x100 items 0x2 bytes each)
 80049e44 AKAO right volume table (0x100 items 0x2 bytes each)
 
-8004a630 []       random seed for field.
+0x8004a60c
 
-0x8004a68c [][][][] mask of channels with voice on (manual spu).
+0x8004a630 []       random seed for field.
+
+0x8004a68c [][][][] key status (mask of channels with on voices).
 0x8004a694 [][][][] reverb status.
 0x8004a698 [][][][] ???
 0x8004a69c [][][][] stored reverb work area start address.
@@ -438,6 +440,7 @@
 800738a0 weapon data in kernel (0x2c size).
 
 0x80075f28 INSTR.DAT number of struct with size 0x40
+0x80076c68 add instrstruct with size 0x40
     +00 [][][][] start offset.
     +04 [][][][] loop offset.
     +08 []       attack rate.
@@ -461,8 +464,8 @@
     +38 [][][][] pitch a.
     +3c [][][][] pitch b.
 
-80077f28 [][][][] mask of channels we put voice on (auto spu).
-80077f2c [][][][] mask of channels we put voice off (auto spu).
+0x80077f28 [][][][] mask of channels we put voice on (auto spu).
+0x80077f2c [][][][] mask of channels we put voice off (auto spu).
 
 8007eaac array of two global DRAWENV (0x2 items 0x5c size).
 8007eb68 array of two global DISPENV (0x2 items, 0x14 size)
@@ -511,6 +514,8 @@
 +2f []
 
 80083580 we copy here akao sequence data when init music 0x10.
+
+0x80089580 load effect.all file here
 
 80095dd4 [][]     render type func. Render called in separate thread so we set type of render func to call from main thread.
                   0 - normal render.
@@ -621,7 +626,7 @@
     +0d6 [][]     pitch lfo value.
     +0d8 [][]     volume lfo value.
     +0da [][]     volume pan lfo value.
-    +0dc [][][][] 
+    +0dc [][][][] voice_id.
     +0e0 [][][][] set flags. We remove flag as soon as we set params to SPU.
                     0x00000001 - set left volume.
                     0x00000002 - set right volume.
@@ -760,7 +765,7 @@
 8009c56c [][]     store here reverb depth left in spu update.
 8009c56e [][]     store here reverb depth right in spu update.
 
-8009c5a2 array of some volume mod for channels. (0x2 size)
+0x8009c5a0 array of some volume mod for channels. (0xc size 0x18 items)
 
 8009c6e4 savemap start
     +  54          savemap character data (0x84 size).

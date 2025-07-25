@@ -1,3790 +1,1295 @@
 // SLPS_011_main.cpp
-////////////////////////////////
-// XENO entry point
-800195B8-800195F0
-////////////////////////////////
-// func195f4
-800195F4-80019608
-////////////////////////////////
-// func1960c
-8001960C-800199E4
-////////////////////////////////
-// system_bios_printf
-800199E8-800199EC
-////////////////////////////////
-// func199f0
-800199F0-80019A4C
-////////////////////////////////
-// func19a50
-80019A50-80019B4C
-////////////////////////////////
-// func19b50
-80019B50-80019CAC
-////////////////////////////////
-// system_dump_memory_to_devkit
-80019CB0-80019CFC
-////////////////////////////////
-// func19d00
-80019D00-80019D20
-////////////////////////////////
-// system_reset_check
-80019D24-80019D50
-////////////////////////////////
-// func19d54
-80019D54-80019DC8
-////////////////////////////////
-// func19dcc
-80019DCC-8001A074
-////////////////////////////////
-// kernel_create_cursor
-8001A078-8001A0E0
-////////////////////////////////
-// kernel_init_graphic
-8001A0E4-8001A1D4
-////////////////////////////////
-// kernel_update
-8001A1D8-8001A344
-////////////////////////////////
-// kernel_main
-8001A348-8001A45C
-////////////////////////////////
-// func1a460
-8001A460-8001A514
-////////////////////////////////
-// func1a518
-8001A518-8001A578
-////////////////////////////////
-// func1a57c
-8001A57C-8001A96C
-////////////////////////////////
-// func1a970
-8001A970-8001AB24
-////////////////////////////////
-// func1ab28
-8001AB28-8001AB34
-////////////////////////////////
-// func1ab38
-8001AB38-8001AB80
-////////////////////////////////
-// func1ab84
-8001AB84-8001ABAC
-////////////////////////////////
-// system_cdrom_data_action_sync
-8001ABB0-8001ABDC
-////////////////////////////////
-// func1abe0
-8001ABE0-8001AD48
-////////////////////////////////
-// func1ad4c
-8001AD4C-8001AED4
-////////////////////////////////
-// func1aed8
-8001AED8-8001AFE8
-////////////////////////////////
-// func1afec
-8001AFEC-8001B238
-////////////////////////////////
-// func1b23c
-8001B23C-8001B314
-////////////////////////////////
-// func1b318
-8001B318-8001B3CC
-////////////////////////////////
-// func1b3d0
-8001B3D0-8001B438
-////////////////////////////////
-// func1b43c
-8001B43C-8001B478
-////////////////////////////////
-// func1b47c
-8001B47C-8001B4FC
-////////////////////////////////
-// func1b500
-8001B500-8001B54C
-////////////////////////////////
-// func1b550
-8001B550-8001B6CC
-////////////////////////////////
-// system_battle_draw_settings
-8001B6D0-8001B7D4
-////////////////////////////////
-// func1b7d8
-8001B7D8-8001B7F8
-////////////////////////////////
-// func1b7fc
-8001B7FC-8001B994
-////////////////////////////////
-// func1b998
-8001B998-8001B9D8
-////////////////////////////////
-// func1b9dc
-8001B9DC-8001BA34
-////////////////////////////////
-// func1ba38
-8001BA38-8001BBC8
-////////////////////////////////
-// system_get_random_value_from_to
-8001BBCC-8001BC64
-////////////////////////////////
-// kernel_menu_draw_env_settings
-8001BC68-8001BC9C
-////////////////////////////////
-// kernel_menu_draw_settings
-8001BCA0-8001BD74
-////////////////////////////////
-// kernel_menu_init_data
-8001BD78-8001BDC0
-////////////////////////////////
-// kernel_menu_buttons_update
-8001BDC4-8001BEFC
-////////////////////////////////
-// kernel_menu_render
-8001BF00-8001C030
-////////////////////////////////
-// kernel_menu_loop
-8001C034-8001C4BC
-////////////////////////////////
-// kernel_menu_main
-8001C4C0-8001C5F4
-////////////////////////////////
+800195B8 XENO entry point
+800195F4 func195f4
+8001960C func1960c
+800199E8 system_bios_printf
+800199F0 func199f0
+80019A50 func19a50
+80019B50 func19b50
+80019CB0 system_dump_memory_to_devkit
+80019D00 func19d00
+80019D24 system_reset_check
+80019D54 func19d54
+80019DCC func19dcc
+8001A078 kernel_create_cursor
+8001A0E4 kernel_init_graphic
+8001A1D8 kernel_update
+8001A348 kernel_main
+8001A460 func1a460
+8001A518 func1a518
+8001A57C func1a57c
+8001A970 func1a970
+8001AB28 func1ab28
+8001AB38 func1ab38
+8001AB84 func1ab84
+8001ABB0 system_cdrom_data_action_sync
+8001ABE0 func1abe0
+8001AD4C func1ad4c
+8001AED8 func1aed8
+8001AFEC func1afec
+8001B23C func1b23c
+8001B318 func1b318
+8001B3D0 func1b3d0
+8001B43C func1b43c
+8001B47C func1b47c
+8001B500 func1b500
+8001B550 func1b550
+8001B6D0 system_battle_draw_settings
+8001B7D8 func1b7d8
+8001B7FC func1b7fc
+8001B998 func1b998
+8001B9DC func1b9dc
+8001BA38 func1ba38
+8001BBCC system_get_random_value_from_to
+8001BC68 kernel_menu_draw_env_settings
+8001BCA0 kernel_menu_draw_settings
+8001BD78 kernel_menu_init_data
+8001BDC4 kernel_menu_buttons_update
+8001BF00 kernel_menu_render
+8001C034 kernel_menu_loop
+8001C4C0 kernel_menu_main
 
 
 
 // SLPS_011_sprite.cpp
-////////////////////////////////
-// func1c768
-8001C768-8001C7CC
-////////////////////////////////
-// system_sprite_init_list
-8001C7D0-8001C7EC
-////////////////////////////////
-// func1c7f0
-8001C7F0-8001C880
-////////////////////////////////
-// func1c884
-8001C884-8001C8E0
-////////////////////////////////
-// func1c8e4
-8001C8E4-8001C978
-////////////////////////////////
-// func1c97c
-8001C97C-8001C9D0
-////////////////////////////////
-// func1c9d4
-8001C9D4-8001CA70
-////////////////////////////////
-// func1ca74
-8001CA74-8001CAA0
-////////////////////////////////
-// func1caa4
-8001CAA4-8001CB90
-////////////////////////////////
-// func1cb94
-8001CB94-8001CBEC
-////////////////////////////////
-// func1cbf0
-8001CBF0-8001CBF4
-////////////////////////////////
-// func1cbf8
-8001CBF8-8001CBFC
-////////////////////////////////
-// func1cc00
-8001CC00-8001CC04
-////////////////////////////////
-// func1cc08
-8001CC08-8001CC10
-////////////////////////////////
-// func1cc14
-8001CC14-8001CC1C
-////////////////////////////////
-// func1cc20
-8001CC20-8001CCCC
-////////////////////////////////
-// func1ccd0
-8001CCD0-8001CCFC
-////////////////////////////////
-// func1cd00
-8001CD00-8001CEB4
-////////////////////////////////
-// func1ceb8
-8001CEB8-8001CF24
-////////////////////////////////
-// func1cf28
-8001CF28-8001CF8C
-////////////////////////////////
-// func1cf90
-8001CF90-8001CFE4
-////////////////////////////////
-// func1cfe8
-8001CFE8-8001D01C
-////////////////////////////////
-// func1d020
-8001D020-8001D058
-////////////////////////////////
-// func1d05c
-8001D05C-8001D118
-////////////////////////////////
-// func1d11c
-8001D11C-8001D124
-////////////////////////////////
-// func1d128
-8001D128-8001D130
-////////////////////////////////
-// system_set_sprite_frame
-8001D134-8001D26C
-////////////////////////////////
-// func1d270
-8001D270-8001D2E0
-////////////////////////////////
-// func1d2e4
-8001D2E4-8001D360
-////////////////////////////////
-// func1d364
-8001D364-8001D3B4
-////////////////////////////////
-// func1d3b8
-8001D3B8-8001D964
-////////////////////////////////
-// func1d968
-8001D968-8001DFE4
-////////////////////////////////
-// func1dfe8
-8001DFE8-8001E12C
-////////////////////////////////
-// func1e130
-8001E130-8001E188
-////////////////////////////////
-// func1e18c
-8001E18C-8001E1F4
-////////////////////////////////
-// func1e18
-8001E1F8-8001E260
-////////////////////////////////
-// system_sprite_prepare_packet_1
-8001E264-8001E830
-////////////////////////////////
-// system_sprite_prepare_packet_2
-8001E834-8001ECD4
-////////////////////////////////
-// func1ecd8
-8001ECD8-8001ECE0
-////////////////////////////////
-// func1ece4
-8001ECE4-8001ECF4
-////////////////////////////////
-// system_sprite_prepare_packet_3
-8001ECF8-8001F044
-////////////////////////////////
-// system_sprite_prepare_packet_4
-8001F048-8001F3A4
-////////////////////////////////
-// func1f3a8
-8001F3A8-8001F430
-////////////////////////////////
-// func1f434
-8001F434-8001F520
-////////////////////////////////
-// func1f524
-8001F524-8001F5CC
-////////////////////////////////
-// func1f5d0
-8001F5D0-8001F760
-////////////////////////////////
-// func1f764
-8001F764-8001F928
-////////////////////////////////
-// func1f92c
-8001F92C-8001F9A4
-////////////////////////////////
-// func1f9a8
-8001F9A8-8001FA18
-////////////////////////////////
-// func1fa1c
-8001FA1C-8001FA58
-////////////////////////////////
-// func1fa5c
-8001FA5C-8002191C
-////////////////////////////////
-// func21920
-80021920-80021948
-////////////////////////////////
-// func2194c
-8002194C-80021958
-////////////////////////////////
-// func2195c
-8002195C-80021968
-////////////////////////////////
-// func2196c
-8002196C-8002198C
-////////////////////////////////
-// func21990
-80021990-800219B0
-////////////////////////////////
-// func219b4
-800219B4-800219DC
-////////////////////////////////
-// func219e0
-800219E0-80021A10
-////////////////////////////////
-// func21a14
-80021A14-80021A34
-////////////////////////////////
-// func21a38
-80021A38-80021A3C
-////////////////////////////////
-// func21a40
-80021A40-80021A44
-////////////////////////////////
-// func21a48
-80021A48-80021A64
-////////////////////////////////
-// func21a68
-80021A68-80021A88
-////////////////////////////////
-// func21a8c
-80021A8C-80021AC0
-////////////////////////////////
-// func21ac4
-80021AC4-80021AFC
-////////////////////////////////
-// func21b00
-80021B00-80021B20
-////////////////////////////////
-// func21b24
-80021B24-80021B54
-////////////////////////////////
-// func21b58
-80021B58-80021B98
-////////////////////////////////
-// func21b9c
-80021B9C-80021BAC
-////////////////////////////////
-// func21bb0
-80021BB0-80021D18
-////////////////////////////////
-// func21d1c
-80021D1C-80021E14
-////////////////////////////////
-// func21e18
-80021E18-80021E1C
-////////////////////////////////
-// func21e20
-80021E20-80021E3C
-////////////////////////////////
-// func21e40
-80021E40-80021E5C
-////////////////////////////////
-// func21e60
-80021E60-80021E94
-////////////////////////////////
-// func21e98
-80021E98-80021EE8
-////////////////////////////////
-// func21eec
-80021EEC-80022080
-////////////////////////////////
-// func22084
-80022084-80022120
-////////////////////////////////
-// func22124
-80022124-80022214
-////////////////////////////////
-// func22218
-80022218-800224EC
-////////////////////////////////
-// func224f0
-800224F0-800227FC
-////////////////////////////////
-// func22800
-80022800-80022888
-////////////////////////////////
-// func2288c
-8002288C-80022894
-////////////////////////////////
-// func22898
-80022898-800228F8
-////////////////////////////////
-// func228fc
-800228FC-800229B4
-////////////////////////////////
-// func229b8
-800229B8-80022B30
-////////////////////////////////
-// func22b34
-80022B34-80022B60
-////////////////////////////////
-// func22b64
-80022B64-80022BC8
-////////////////////////////////
-// system_set_rotated_sprite_frame
-80022BCC-80022C78
-////////////////////////////////
-// func22c7c
-80022C7C-80022D0C
-////////////////////////////////
-// func22d10
-80022D10-80022D38
-////////////////////////////////
-// func22d3c
-80022D3C-80022E3C
-////////////////////////////////
-// func22e40
-80022E40-80022EB4
-////////////////////////////////
-// func22eb8
-80022EB8-80022F20
-////////////////////////////////
-// system_field_sprite_memory_free
-80022F24-80022F9C
-////////////////////////////////
-// func22fa0
-80022FA0-80022FEC
-////////////////////////////////
-// func22ff0
-80022FF0-8002305C
-////////////////////////////////
-// func23060
-80023060-80023074
-////////////////////////////////
-// fucn23078
-80023078-8002308C
-////////////////////////////////
-// func23090
-80023090-80023110
-////////////////////////////////
-// func23114
-80023114-800231C8
-////////////////////////////////
-// func231cc
-800231CC-8002322C
-////////////////////////////////
-// func23230
-80023230-800232BC
-////////////////////////////////
-// func232c0
-800232C0-800232E4
-////////////////////////////////
-// func232e8
-800232E8-80023328
-////////////////////////////////
-// func2332c
-8002332C-800233B4
-////////////////////////////////
-// func233b8
-800233B8-8002367C
-////////////////////////////////
-// func23680
-80023680-800237AC
-////////////////////////////////
-// func237b0
-800237B0-800237C0
-////////////////////////////////
-// func237c4
-800237C4-800237C8
-////////////////////////////////
-// func237cc
-800237CC-80023810
-////////////////////////////////
-// func23814
-80023814-80023864
-////////////////////////////////
-// func23868
-80023868-800238B8
-////////////////////////////////
-// func238bc
-800238BC-800239F0
-////////////////////////////////
-// func239f4
-800239F4-80023E08
-////////////////////////////////
-// func23e0c
-80023E0C-8002409C
-////////////////////////////////
-// func240a0
-800240A0-800240FC
-////////////////////////////////
-// func24100
-80024100-80024164
-////////////////////////////////
-// func24168
-80024168-8002432C
-////////////////////////////////
-// func24330
-80024330-800243E0
-////////////////////////////////
-// func243e4
-800243e4-80024538
-////////////////////////////////
-// func2453c
-8002453C-800246A8
-////////////////////////////////
-// func246ac
-800246AC-80024D14
-////////////////////////////////
-// func24d18
-80024D18-80024D58
-////////////////////////////////
-// system_sprite_init_mem
-80024D5C-80024DAC
-////////////////////////////////
-// func24db0
-80024DB0-80024DD8
-////////////////////////////////
-// func24ddc
-80024DDC-80024DE8
-////////////////////////////////
-// func24dec
-80024DEC-80024E38
-////////////////////////////////
-// func24e3c
-80024E3C-80024ED0
-////////////////////////////////
-// system_sprite_reset_buffers
-80024ED4-80024F60
-////////////////////////////////
-// func24f64
-80024F64-80024FA8
-////////////////////////////////
-// func24fac
-80024FAC-80025004
-////////////////////////////////
-// func25008
-80025008-80025034
-////////////////////////////////
-// func25038
-80025038-800251F0
-////////////////////////////////
-// func251f4
-800251F4-8002531C
-////////////////////////////////
-// func25320
-80025320-800254F0
-////////////////////////////////
-// func254f4
-800254F4-800254F8
-////////////////////////////////
-// func254fc
-800254FC-800255D0
-////////////////////////////////
-// func255d4
-800255D4-80025870
-////////////////////////////////
-// func25874
-80025874-800259FC
-////////////////////////////////
-// func25a00
-80025A00-80025B44
-////////////////////////////////
-// func25b48
-80025B48-80025D98
-////////////////////////////////
-// func25d9c
-80025D9C-80026134
-////////////////////////////////
-// func26138
-80026138-800261E0
-////////////////////////////////
-// func261e4
-800261E4-8002655C
-////////////////////////////////
-// func26560
-80026560-80026818
-////////////////////////////////
-// func2681c
-8002681C-800269A8
-////////////////////////////////
-// func269ac
-800269AC-800269B0
-////////////////////////////////
-// func269b0
-800269B4-80026BD8
-////////////////////////////////
-// func26bdc
-80026BDC-80026D50
-////////////////////////////////
-// func26d54
-80026D54-80026DF4
-////////////////////////////////
-// func26df8
-80026DF8-80026EA8
-////////////////////////////////
-// func26eac
-80026EAC-800271D0
-////////////////////////////////
-// func271d4
-800271D4-80027704
-////////////////////////////////
+8001C768 func1c768
+8001C7D0 system_sprite_init_list
+8001C7F0 func1c7f0
+8001C884 func1c884
+8001C8E4 func1c8e4
+8001C97C func1c97c
+8001C9D4 func1c9d4
+8001CA74 func1ca74
+8001CAA4 func1caa4
+8001CB94 func1cb94
+8001CBF0 func1cbf0
+8001CBF8 func1cbf8
+8001CC00 func1cc00
+8001CC08 func1cc08
+8001CC14 func1cc14
+8001CC20 func1cc20
+8001CCD0 func1ccd0
+8001CD00 func1cd00
+8001CEB8 func1ceb8
+8001CF28 func1cf28
+8001CF90 func1cf90
+8001CFE8 func1cfe8
+8001D020 func1d020
+8001D05C func1d05c
+8001D11C func1d11c
+8001D128 func1d128
+8001D134 system_set_sprite_frame
+8001D270 func1d270
+8001D2E4 func1d2e4
+8001D364 func1d364
+8001D3B8 func1d3b8
+8001D968 func1d968
+8001DFE8 func1dfe8
+8001E130 func1e130
+8001E18C func1e18c
+8001E1F8 func1e18
+8001E264 system_sprite_prepare_packet_1
+8001E834 system_sprite_prepare_packet_2
+8001ECD8 func1ecd8
+8001ECE4 func1ece4
+8001ECF8 system_sprite_prepare_packet_3
+8001F048 system_sprite_prepare_packet_4
+8001F3A8 func1f3a8
+8001F434 func1f434
+8001F524 func1f524
+8001F5D0 func1f5d0
+8001F764 func1f764
+8001F92C func1f92c
+8001F9A8 func1f9a8
+8001FA1C func1fa1c
+8001FA5C func1fa5c
+80021920 func21920
+8002194C func2194c
+8002195C func2195c
+8002196C func2196c
+80021990 func21990
+800219B4 func219b4
+800219E0 func219e0
+80021A14 func21a14
+80021A38 func21a38
+80021A40 func21a40
+80021A48 func21a48
+80021A68 func21a68
+80021A8C func21a8c
+80021AC4 func21ac4
+80021B00 func21b00
+80021B24 func21b24
+80021B58 func21b58
+80021B9C func21b9c
+80021BB0 func21bb0
+80021D1C func21d1c
+80021E18 func21e18
+80021E20 func21e20
+80021E40 func21e40
+80021E60 func21e60
+80021E98 func21e98
+80021EEC func21eec
+80022084 func22084
+80022124 func22124
+80022218 func22218
+800224F0 func224f0
+80022800 func22800
+8002288C func2288c
+80022898 func22898
+800228FC func228fc
+800229B8 func229b8
+80022B34 func22b34
+80022B64 func22b64
+80022BCC system_set_rotated_sprite_frame
+80022C7C func22c7c
+80022D10 func22d10
+80022D3C func22d3c
+80022E40 func22e40
+80022EB8 func22eb8
+80022F24 system_field_sprite_memory_free
+80022FA0 func22fa0
+80022FF0 func22ff0
+80023060 func23060
+80023078 fucn23078
+80023090 func23090
+80023114 func23114
+800231CC func231cc
+80023230 func23230
+800232C0 func232c0
+800232E8 func232e8
+8002332C func2332c
+800233B8 func233b8
+80023680 func23680
+800237B0 func237b0
+800237C4 func237c4
+800237CC func237cc
+80023814 func23814
+80023868 func23868
+800238BC func238bc
+800239F4 func239f4
+80023E0C func23e0c
+800240A0 func240a0
+80024100 func24100
+80024168 func24168
+80024330 func24330
+800243e4 func243e4
+8002453C func2453c
+800246AC func246ac
+80024D18 func24d18
+80024D5C system_sprite_init_mem
+80024DB0 func24db0
+80024DDC func24ddc
+80024DEC func24dec
+80024E3C func24e3c
+80024ED4 system_sprite_reset_buffers
+80024F64 func24f64
+80024FAC func24fac
+80025008 func25008
+80025038 func25038
+800251F4 func251f4
+80025320 func25320
+800254F4 func254f4
+800254FC func254fc
+800255D4 func255d4
+80025874 func25874
+80025A00 func25a00
+80025B48 func25b48
+80025D9C func25d9c
+80026138 func26138
+800261E4 func261e4
+80026560 func26560
+8002681C func2681c
+800269AC func269ac
+800269B4 func269b0
+80026BDC func26bdc
+80026D54 func26d54
+80026DF8 func26df8
+80026EAC func26eac
+800271D4 func271d4
 
 
 
 // SLPS_011_cdrom2.cpp
-////////////////////////////////
-// func27708
-80027708-80027B4C
-////////////////////////////////
-// system_cdrom2_memory_mark_removed_alloc
-80027B50-80027B70
-////////////////////////////////
-// func27b54
-80027B74-80027CB8
-////////////////////////////////
-// func27cbc
-80027CBC-80027E18
-////////////////////////////////
-// func27e1c
-80027E1C-80027E58
-////////////////////////////////
-// system_cdrom2_pc_draw_file_operation
-80027E5C-8002803C
-////////////////////////////////
-// system_cdrom2_init
-80028040-800281E0
-////////////////////////////////
-// system_cdrom2_reset
-800281E4-8002827C
-////////////////////////////////
-// system_cdrom2_set_dir
-80028280-800282C0
-////////////////////////////////
-// system_cdrom2_get_dir
-800282C4-8002833C
-////////////////////////////////
-// system_cdrom2_get_disc_number
-80028340-80028354
-////////////////////////////////
-// func28358
-80028358-8002837C
-////////////////////////////////
-// system_debug_read_filename_to_memory
-80028380-800284C8
-////////////////////////////////
-// system_cdrom2_get_loaded_filesize
-800284CC-800284D8
-////////////////////////////////
-// system_cdrom2_data_sync
-800284DC-80028544
-////////////////////////////////
-// system_cdrom2_get_filesize_by_dir_file_id
-80028548-80028614
-////////////////////////////////
-// system_get_aligned_filesize_by_dir_file_id_async
-80028618-800286F8
-////////////////////////////////
-// system_get_aligned_filesize_by_dir_file_id
-800286FC-80028734
-////////////////////////////////
-// system_cdrom2_get_number_of_files_in_dir
-80028738-800287A4
-////////////////////////////////
-// system_cdrom2_get_debug_filename
-800287A8-800287DC
-////////////////////////////////
-// system_cdrom2_get_sector_by_dir_file_id
-800287E0-80028824
-////////////////////////////////
-// system_cdrom2_get_sector_by_dir_file_id_async
-80028828-8002886C
-////////////////////////////////
-// system_cdrom_action_sync
-80028870-800288A0
-////////////////////////////////
-// func288a4
-800288A4-800288B8
-////////////////////////////////
-// func288bc
-800288BC-80028920
-////////////////////////////////
-// func28924
-80028924-80028C6C
-////////////////////////////////
-// func28c70
-80028C70-80028CD8
-////////////////////////////////
-// func28cdc
-80028CDC-80028D3C
-////////////////////////////////
-// func28d40
-80028D40-80029268
-////////////////////////////////
-// func2926c
-8002926C-800292C0
-////////////////////////////////
-// func292c4
-800292C4-80029358
-////////////////////////////////
-// system_cdrom2_load_file_by_file_sector
-8002935C-800293E4
-////////////////////////////////
-// system_cdrom2_load_file_by_dir_file_id
-800293E8-8002949C
-////////////////////////////////
-// system_cdrom2_load_file_inner
-800294A0-80029908
-////////////////////////////////
-// system_load_files_by_array
-8002990C-80029CBC
-////////////////////////////////
-// system_cdrom2_load_texture
-80029CC0-8002A06C
-////////////////////////////////
-// func2a070
-8002A070-8002A0DC
-////////////////////////////////
-// func2a0e0
-8002A0E0-8002A1A0
-////////////////////////////////
-// system_cdrom2_command_cdl_set_loc
-8002A1A4-8002A234
-////////////////////////////////
-// system_cdrom2_command_cdl_set_mode
-8002A238-8002A2A4
-////////////////////////////////
-// system_cdrom2_abort_fileload
-8002A2A8-8002A330
-////////////////////////////////
-// func2a334
-8002A334-8002A388
-////////////////////////////////
-// func2a38c
-8002A38C-8002A498
-////////////////////////////////
-// system_cdrom_sync_callback
-8002A49C-8002AA30
-////////////////////////////////
-// system_cdrom_ready_callback_1
-8002AA34-8002AE90
-////////////////////////////////
-// system_cdrom_ready_callback_2
-8002AE94-8002B0FC
-////////////////////////////////
-// system_cdrom_ready_callback_3
-8002B100-8002B3DC
-////////////////////////////////
-// system_cdrom_ready_callback_4
-8002B3E0-8002B6BC
-////////////////////////////////
-// system_cdrom2_pc_stream_texture_into_ram
-8002B6C0-8002B84C
-////////////////////////////////
-// func2b850
-8002B850-8002B864
-////////////////////////////////
-// system_cdrom2_dma_callback
-8002B868-8002B95C
-////////////////////////////////
-// system_cdrom2_dma_stream_texture_into_vram
-8002B960-8002BD44
-////////////////////////////////
-// system_cdrom2_pc_stream_texture_into_vram
-8002BD48-8002C11C
-////////////////////////////////
-// func2c120
-8002C120-8002C1E4
-////////////////////////////////
-// system_cdrom2_get_cdrom_hdd_mode
-8002C1E8-8002C1F4
-////////////////////////////////
+80027708 func27708
+80027B50 system_cdrom2_memory_mark_removed_alloc
+80027B74 func27b54
+80027CBC func27cbc
+80027E1C func27e1c
+80027E5C system_cdrom2_pc_draw_file_operation
+80028040 system_cdrom2_init
+800281E4 system_cdrom2_reset
+80028280 system_cdrom2_set_dir
+800282C4 system_cdrom2_get_dir
+80028340 system_cdrom2_get_disc_number
+80028358 func28358
+80028380 system_debug_read_filename_to_memory
+800284CC system_cdrom2_get_loaded_filesize
+800284DC system_cdrom2_data_sync
+80028548 system_cdrom2_get_filesize_by_dir_file_id
+80028618 system_get_aligned_filesize_by_dir_file_id_async
+800286FC system_get_aligned_filesize_by_dir_file_id
+80028738 system_cdrom2_get_number_of_files_in_dir
+800287A8 system_cdrom2_get_debug_filename
+800287E0 system_cdrom2_get_sector_by_dir_file_id
+80028828 system_cdrom2_get_sector_by_dir_file_id_async
+80028870 system_cdrom_action_sync
+800288A4 func288a4
+800288BC func288bc
+80028924 func28924
+80028C70 func28c70
+80028CDC func28cdc
+80028D40 func28d40
+8002926C func2926c
+800292C4 func292c4
+8002935C system_cdrom2_load_file_by_file_sector
+800293E8 system_cdrom2_load_file_by_dir_file_id
+800294A0 system_cdrom2_load_file_inner
+8002990C system_load_files_by_array
+80029CC0 system_cdrom2_load_texture
+8002A070 func2a070
+8002A0E0 func2a0e0
+8002A1A4 system_cdrom2_command_cdl_set_loc
+8002A238 system_cdrom2_command_cdl_set_mode
+8002A2A8 system_cdrom2_abort_fileload
+8002A334 func2a334
+8002A38C func2a38c
+8002A49C system_cdrom_sync_callback
+8002AA34 system_cdrom_ready_callback_1
+8002AE94 system_cdrom_ready_callback_2
+8002B100 system_cdrom_ready_callback_3
+8002B3E0 system_cdrom_ready_callback_4
+8002B6C0 system_cdrom2_pc_stream_texture_into_ram
+8002B850 func2b850
+8002B868 system_cdrom2_dma_callback
+8002B960 system_cdrom2_dma_stream_texture_into_vram
+8002BD48 system_cdrom2_pc_stream_texture_into_vram
+8002C120 func2c120
+8002C1E8 system_cdrom2_get_cdrom_hdd_mode
 
 
 
 // SLPS_011_model.cpp
-////////////////////////////////
-// func2c1f8
-8002C1F8-8002C2C8
-////////////////////////////////
-// func2c2cc
-8002C2CC8002C3A8
-////////////////////////////////
-// func2c3ac
-8002C3AC-8002C450
-////////////////////////////////
-// func2c454
-8002C454-8002C498
-////////////////////////////////
-// func2c49c
-8002C49C-8002C4EC
-////////////////////////////////
-// func2c4f0
-8002C4F0-8002C50C
-////////////////////////////////
-// system_model_render_packets_for_part
-8002C510-8002C6D8
-////////////////////////////////
-// system_model_create_packets_for_part
-8002C6DC-8002C960
-////////////////////////////////
-// system_model_allocate_memory_for_packets
-8002C964-8002C9C8
-////////////////////////////////
-// func2c9cc
-8002C9CC-8002CA1C
-////////////////////////////////
-// system_set_default_tex_page_settings
-8002CA20-8002CA60
-////////////////////////////////
-// func2ca64
-8002CA64-8002CA80
-////////////////////////////////
-// system_set_default_clut_settings
-8002CA84-8002CAB8
-////////////////////////////////
-// system_reset_tex_page_and_clut_default_usage
-8002CABC-8002CAD4
-////////////////////////////////
-// system_model_poly_set_texture_page_settings
-8002CAD8-8002CB30
-////////////////////////////////
-// system_model_poly_set_clut_settings
-8002CB34-8002CB70
-////////////////////////////////
-// system_model_poly_parse_tex_and_clut_settings
-8002CB74-8002CBD8
-////////////////////////////////
-// system_model_poly_create_packet_0
-8002CBDC-8002CD40
-////////////////////////////////
-// system_model_poly_create_packet_4
-8002CD44-8002CD64
-////////////////////////////////
-// system_model_poly_create_packet_8
-8002CD68-8002CECC
-////////////////////////////////
-// system_model_poly_create_packet_c
-8002CED0-8002CEF0
-////////////////////////////////
-// system_model_poly_create_packet_d
-8002CEF4-8002CF8C
-////////////////////////////////
-// system_model_poly_create_packet_a
-// system_model_poly_create_packet_e
-8002CF90-8002D050
-////////////////////////////////
-// system_model_poly_create_packet_b
-// system_model_poly_create_packet_f
-8002D054-8002D160
-////////////////////////////////
-// func2d164
-8002D164-8002D22C
-////////////////////////////////
-// func2d230
-8002D230-8002D33C
-////////////////////////////////
-// system_model_poly_create_packet_9
-8002D340-8002D4B8
-////////////////////////////////
-// system_model_poly_create_packet_2
-8002D4BC-8002D588
-////////////////////////////////
-// system_model_poly_create_packet_6
-8002D58C-8002D620
-////////////////////////////////
-// system_model_poly_create_packet_1
-8002D624-8002D790
-////////////////////////////////
-// system_model_poly_create_packet_5
-8002D794-8002D820
-////////////////////////////////
-// system_model_poly_create_packet_3
-// system_model_poly_create_packet_7
-8002D824-8002D908
-////////////////////////////////
-// func2d90c
-8002D90C-8002D990
-////////////////////////////////
-// system_model_poly_calculate_normal
-8002D994-8002DAA8
-////////////////////////////////
-// system_model_poly_normal_check
-8002DAAC-8002DB2C
-////////////////////////////////
-// func2db30
-8002DB30-8002DBF0
-////////////////////////////////
-// func2dbf4
-8002DBF4-8002DDEC
-////////////////////////////////
-// func2ddf0
-8002DDF0-8002DDFC
-////////////////////////////////
-// func2de00
-8002DE00-8002DE1C
-////////////////////////////////
-// system_model_poly_render_packet_3_00
-8002DE20-8002DE30
-////////////////////////////////
-// system_model_poly_render_packet_2_00
-8002DE34-8002DE44
-////////////////////////////////
-// system_model_poly_render_packet_0_00
-8002DE48-8002DE58
-////////////////////////////////
-// system_model_poly_render_packet_1_00
-8002DE5C-8002DE64
-////////////////////////////////
-// func2de68
-8002DE68-8002E038
-////////////////////////////////
-// system_model_poly_render_packet_b_00
-8002E03C-8002E04C
-////////////////////////////////
-// system_model_poly_render_packet_a_00
-8002E050-8002E060
-////////////////////////////////
-// system_model_poly_render_packet_8_00
-8002E064-8002E074
-////////////////////////////////
-// system_model_poly_render_packet_9_00
-8002E078-8002E080
-////////////////////////////////
-// func2e084
-8002E084-8002EB2C
-////////////////////////////////
-// system_model_poly_render_packet_3_08
-8002E258
-////////////////////////////////
-// system_model_poly_render_packet_2_08
-8002E26C
-////////////////////////////////
-// system_model_poly_render_packet_0_08
-8002E280
-////////////////////////////////
-// system_model_poly_render_packet_1_08
-8002E294
-////////////////////////////////
-// func2e2a0
-8002E2A0
-////////////////////////////////
-// system_model_poly_render_packet_b_08
-8002E45C
-////////////////////////////////
-// system_model_poly_render_packet_a_08
-8002E470
-////////////////////////////////
-// system_model_poly_render_packet_8_08
-8002E484
-////////////////////////////////
-// system_model_poly_render_packet_9_08
-8002E498
-////////////////////////////////
-// func2e4a4
-8002E4A4
-////////////////////////////////
-// system_model_poly_render_packet_b_0c
-8002E8C8
-////////////////////////////////
-// system_model_poly_render_packet_a_0c
-8002E48DC
-////////////////////////////////
-// system_model_poly_render_packet_8_0c
-8002E8F0
-////////////////////////////////
-// system_model_poly_render_packet_9_0c
-8002E904
-////////////////////////////////
-// func2e910
-8002E910
-////////////////////////////////
-// system_model_poly_render_packet_0_04
-8002EB30-8002ED04
-////////////////////////////////
-// func2ed08
-8002ED08-8002EEEC
-////////////////////////////////
-// system_model_poly_render_packet_1_10
-// system_model_poly_render_packet_5_10
-8002ED1C-8002EEEC
-////////////////////////////////
-// system_model_poly_render_packet_1_14
-// system_model_poly_render_packet_5_14
-8002EEF4-8002F0EC
-////////////////////////////////
-// system_model_poly_render_packet_1_04
-8002F0F0-8002FFD4
-////////////////////////////////
-// system_model_poly_render_packet_3_04
-8002F2C4
-////////////////////////////////
-// system_model_poly_render_packet_2_04
-8002F4C4
-////////////////////////////////
-// system_model_poly_render_packet_9_04
-8002F8F8
-////////////////////////////////
-// system_model_poly_render_packet_9_10
-8002FB0C
-////////////////////////////////
-// system_model_poly_render_packet_9_14
-8002FD1C
-////////////////////////////////
-// func2ffd8
-8002FFD8-80030034
-////////////////////////////////
-// func30038
-80030038-800300E0
-////////////////////////////////
-// func300e4
-800300E4-800301D4
-////////////////////////////////
-// func301d8
-800301D8-800303E4
-////////////////////////////////
-// func303e8
-800303E8-800304DC
-////////////////////////////////
-// func304e0
-800304E0-8003055C
-////////////////////////////////
-// func30560
-80030560-8003083C
-////////////////////////////////
-// func30840
-80030840-80030920
-////////////////////////////////
-// system_gte_calculate_and_set_lighting_matrix
-80030924-80030A4C
-////////////////////////////////
-// system_gte_set_back_color
-80030A50-80030A84
-////////////////////////////////
-// func30a88
-80030A88-80030AA4
-////////////////////////////////
-// func30aa8
-80030AA8-80030CF4
-////////////////////////////////
-// func30cf8
-80030CF8-80030E28
-////////////////////////////////
-// func30e2c
-80030E2C-800313AC
-////////////////////////////////
-// func313b0
-800313B0-800313D0
-////////////////////////////////
-// func313d4
-800313D4-800313F4
-////////////////////////////////
-// func313f8
-800313F8-80031418
-////////////////////////////////
-// func3141c
-8003141C-8003143C
-////////////////////////////////
-// func31440
-80031440-80031460
-////////////////////////////////
-// func31464
-80031464-80031484
-////////////////////////////////
-// func31488
-80031488-800314A8
-////////////////////////////////
-// func314ac
-800314AC-800314CC
-////////////////////////////////
-// func314d0
-800314D0-800314F0
-////////////////////////////////
-// func314f4
-800314F4-80031514
-////////////////////////////////
-// func31518
-80031518-80031538
-////////////////////////////////
-// func3153c
-8003153C-8003155C
-////////////////////////////////
-// func3155c
-80031560-80031580
-////////////////////////////////
-// func31584
-80031584-800315A4
-////////////////////////////////
-// func315a8
-800315A8-800315C8
-////////////////////////////////
-// func315cc
-800315CC-800315EC
-////////////////////////////////
-// func315f0
-800315F0-80031610
-////////////////////////////////
-// func31614
-80031614-80031634
-////////////////////////////////
-// func31638
-80031638-80031658
-////////////////////////////////
-// func3165—Å
-8003165C-8003167C
-////////////////////////////////
-// func31680
-80031680-800316A0
-////////////////////////////////
-// func316a4
-800316A4-800316B4
-////////////////////////////////
-// func316b8
-800316B8-800316C8
-////////////////////////////////
-// func316cc
-800316CC-800316E8
-////////////////////////////////
-// func316ec
-800316EC-800316FC
-////////////////////////////////
-// func31700
-80031700-80031704
-////////////////////////////////
-// func31708
-80031708-8003183C
-////////////////////////////////
+8002C1F8 func2c1f8
+8002C2CC func2c2cc
+8002C3AC func2c3ac
+8002C454 func2c454
+8002C49C func2c49c
+8002C4F0 func2c4f0
+8002C510 system_model_render_packets_for_part
+8002C6DC system_model_create_packets_for_part
+8002C964 system_model_allocate_memory_for_packets
+8002C9CC func2c9cc
+8002CA20 system_set_default_tex_page_settings
+8002CA64 func2ca64
+8002CA84 system_set_default_clut_settings
+8002CABC system_reset_tex_page_and_clut_default_usage
+8002CAD8 system_model_poly_set_texture_page_settings
+8002CB34 system_model_poly_set_clut_settings
+8002CB74 system_model_poly_parse_tex_and_clut_settings
+8002CBDC system_model_poly_create_packet_0
+8002CD44 system_model_poly_create_packet_4
+8002CD68 system_model_poly_create_packet_8
+8002CED0 system_model_poly_create_packet_c
+8002CEF4 system_model_poly_create_packet_d
+8002CF90 system_model_poly_create_packet_a system_model_poly_create_packet_e
+8002D054 system_model_poly_create_packet_b system_model_poly_create_packet_f
+8002D164 func2d164
+8002D230 func2d230
+8002D340 system_model_poly_create_packet_9
+8002D4BC system_model_poly_create_packet_2
+8002D58C system_model_poly_create_packet_6
+8002D624 system_model_poly_create_packet_1
+8002D794 system_model_poly_create_packet_5
+8002D824 system_model_poly_create_packet_3 system_model_poly_create_packet_7
+8002D90C func2d90c
+8002D994 system_model_poly_calculate_normal
+8002DAAC system_model_poly_normal_check
+8002DB30 func2db30
+8002DBF4 func2dbf4
+8002DDF0 func2ddf0
+8002DE00 func2de00
+8002DE20 system_model_poly_render_packet_3_00
+8002DE34 system_model_poly_render_packet_2_00
+8002DE48 system_model_poly_render_packet_0_00
+8002DE5C system_model_poly_render_packet_1_00
+8002DE68 func2de68
+8002E03C system_model_poly_render_packet_b_00
+8002E050 system_model_poly_render_packet_a_00
+8002E064 system_model_poly_render_packet_8_00
+8002E078 system_model_poly_render_packet_9_00
+8002E084 func2e084
+8002E258 system_model_poly_render_packet_3_08
+8002E26C system_model_poly_render_packet_2_08
+8002E280 system_model_poly_render_packet_0_08
+8002E294 system_model_poly_render_packet_1_08
+8002E2A0 func2e2a0
+8002E45C system_model_poly_render_packet_b_08
+8002E470 system_model_poly_render_packet_a_08
+8002E484 system_model_poly_render_packet_8_08
+8002E498 system_model_poly_render_packet_9_08
+8002E4A4 func2e4a4
+8002E8C8 system_model_poly_render_packet_b_0c
+8002E48DC system_model_poly_render_packet_a_0c
+8002E8F0 system_model_poly_render_packet_8_0c
+8002E904 system_model_poly_render_packet_9_0c
+8002E910 func2e910
+8002EB30 system_model_poly_render_packet_0_04
+8002ED08 func2ed08
+8002ED1C system_model_poly_render_packet_1_10 system_model_poly_render_packet_5_10
+8002EEF4 system_model_poly_render_packet_1_14 system_model_poly_render_packet_5_14
+8002F0F0 system_model_poly_render_packet_1_04
+8002F2C4 system_model_poly_render_packet_3_04
+8002F4C4 system_model_poly_render_packet_2_04
+8002F8F8 system_model_poly_render_packet_9_04
+8002FB0C system_model_poly_render_packet_9_10
+8002FD1C system_model_poly_render_packet_9_14
+8002FFD8 func2ffd8
+80030038 func30038
+800300E4 func300e4
+800301D8 func301d8
+800303E8 func303e8
+800304E0 func304e0
+80030560 func30560
+80030840 func30840
+80030924 system_gte_calculate_and_set_lighting_matrix
+80030A50 system_gte_set_back_color
+80030A88 func30a88
+80030AA8 func30aa8
+80030CF8 func30cf8
+80030E2C func30e2c
+800313B0 func313b0
+800313D4 func313d4
+800313F8 func313f8
+8003141C func3141c
+80031440 func31440
+80031464 func31464
+80031488 func31488
+800314AC func314ac
+800314D0 func314d0
+800314F4 func314f4
+80031518 func31518
+8003153C func3153c
+80031560 func3155c
+80031584 func31584
+800315A8 func315a8
+800315CC func315cc
+800315F0 func315f0
+80031614 func31614
+80031638 func31638
+8003165C func3165—Å
+80031680 func31680
+800316A4 func316a4
+800316B8 func316b8
+800316CC func316cc
+800316EC func316ec
+80031700 func31700
+80031708 func31708
 
 
 
 // SLPS_011_memory.cpp
-////////////////////////////////
-// func31840
-80031840-80031874
-////////////////////////////////
-// system_memory_alloc_heap
-80031878-8003191C
-////////////////////////////////
-// system_memory_realloc_heap
-80031920-800319A8
-////////////////////////////////
-// func319ac
-800319AC-800319B4
-////////////////////////////////
-// func319b8
-800319B8-800319C0
-////////////////////////////////
-// func319c4
-800319C4-800319D0
-////////////////////////////////
-// func319d4
-800319D4-800319E8
-////////////////////////////////
-// system_memory_allocate
-800319EC-80031D90
-////////////////////////////////
-// system_memory_insert_alloc
-80031D94-80031E18
-////////////////////////////////
-// system_memory_clean_removed_alloc
-80031E1C-80031EC4
-////////////////////////////////
-// system_memory_mark_not_removable
-80031EC8-80031ED8
-////////////////////////////////
-// system_memory_mark_removable
-80031EDC-80031EF0
-////////////////////////////////
-// system_memory_mark_removable_2
-80031EF4-80031F08
-////////////////////////////////
-// system_memory_free
-80031F0C-80031FAC
-////////////////////////////////
-// system_memory_free_by_type
-80031FB0-8003205C
-////////////////////////////////
-// system_memory_free_all
-80032060-800320D4
-////////////////////////////////
-// system_memory_mark_forced_removed_alloc_all
-800320D8-80032160
-////////////////////////////////
-// system_memory_get_uncleared_allocated_size
-80032164-800321D4
-////////////////////////////////
-// func321d8
-800321D8-80032224
-////////////////////////////////
-// func32228
-80032228-800322B8
-////////////////////////////////
-// system_memory_set_alloc_user
-800322BC-800322D8
-////////////////////////////////
-// system_memory_set_alloc_contents
-800322DC-800322E4
-////////////////////////////////
-// system_memory_get_function_name_as_string
-800322E8-800323A4
-////////////////////////////////
-// system_memory_dump_alloc
-800323A8-800325AC
-////////////////////////////////
-// system_memory_full_dump
-800325B0-8003292C
-////////////////////////////////
-// func32930
-80032930-80032984
-////////////////////////////////
-// func32988
-80032988-800329CC
-////////////////////////////////
-// func329d0
-800329D0-800329FC
-////////////////////////////////
-// func32a00
-80032A00-80032A38
-////////////////////////////////
-// func32a3c
-80032A3C-80032AD8
-////////////////////////////////
-// func32adc
-80032ADC-80032B80
-////////////////////////////////
-// func32b84
-80032B84-80032BEC
-////////////////////////////////
-// func32bf0
-80032BF0-80032C24
-////////////////////////////////
-// system_memory_full_dump_to_file
-80032C28-80032C9C
-////////////////////////////////
-// func32ca0
-80032CA0-80032CA8
-////////////////////////////////
-// func32cac()
-80032CAC-80032CD4
-////////////////////////////////
-// system_extract_archive
-80032CD8-80032D74
-////////////////////////////////
+80031840 func31840
+80031878 system_memory_alloc_heap
+80031920 system_memory_realloc_heap
+800319AC func319ac
+800319B8 func319b8
+800319C4 func319c4
+800319D4 func319d4
+800319EC system_memory_allocate
+80031D94 system_memory_insert_alloc
+80031E1C system_memory_clean_removed_alloc
+80031EC8 system_memory_mark_not_removable
+80031EDC system_memory_mark_removable
+80031EF4 system_memory_mark_removable_2
+80031F0C system_memory_free
+80031FB0 system_memory_free_by_type
+80032060 system_memory_free_all
+800320D8 system_memory_mark_forced_removed_alloc_all
+80032164 system_memory_get_uncleared_allocated_size
+800321D8 func321d8
+80032228 func32228
+800322BC system_memory_set_alloc_user
+800322DC system_memory_set_alloc_contents
+800322E8 system_memory_get_function_name_as_string
+800323A8 system_memory_dump_alloc
+800325B0 system_memory_full_dump
+80032930 func32930
+80032988 func32988
+800329D0 func329d0
+80032A00 func32a00
+80032A3C func32a3c
+80032ADC func32adc
+80032B84 func32b84
+80032BF0 func32bf0
+80032C28 system_memory_full_dump_to_file
+80032CA0 func32ca0
+80032CAC func32cac
+80032CD8 system_extract_archive
 
 
 
 // SLPS_011_message.cpp
-////////////////////////////////
-// system_message_init_text
-80032D78-8003324C
-////////////////////////////////
-// system_set_pack_global_pointers
-80033250-80033294
-////////////////////////////////
-// func33298
-80033298-800332D8
-////////////////////////////////
-// system_message_get_font
-800332DC-800332E8
-////////////////////////////////
-// system_message_get_sysdata
-800332EC-800332F8
-////////////////////////////////
-// system_message_deinit_font
-800332FC-80033338
-////////////////////////////////
-// system_message_deinit_sysdata
-8003333C-80033378
-////////////////////////////////
-// system_message_init_font
-8003337C-80033414
-////////////////////////////////
-// system_message_init_sysdata
-80033418-80033488
-////////////////////////////////
-// func3348c
-8003348C-800334B8
-////////////////////////////////
-// system_message_load_font_clut_to_vram
-800334BC-80033548
-////////////////////////////////
-// system_message_get_text_pointer
-8003354C-8003355C
-////////////////////////////////
-// system_message_get_width
-80033560-80033580
-////////////////////////////////
-// system_message_get_rows
-80033584-800335A4
-////////////////////////////////
-// func335a8
-800335A8-800335D8
-////////////////////////////////
-// func335dc
-800335DC-80033608
-////////////////////////////////
-// func3360c
-8003360C-80033638
-////////////////////////////////
-// func3363c
-8003363C-80033668
-////////////////////////////////
-// func3366c
-8003366C-80033698
-////////////////////////////////
-// func3369c
-8003369C-800336C8
-////////////////////////////////
-// func336cc
-800336CC-800336F8
-////////////////////////////////
-// func336fc
-800336FC-80033728
-////////////////////////////////
-// func3372c
-8003372C-80033758
-////////////////////////////////
-// func3375c
-8003375C-80033788
-////////////////////////////////
-// func3378c
-8003378C-800337B8
-////////////////////////////////
-// func337bc
-800337BC-800337E8
-////////////////////////////////
-// func337ec
-800337EC-8003381C
-////////////////////////////////
-// func33820
-80033820-8003384C
-////////////////////////////////
-// func33850
-80033850-8003387C
-////////////////////////////////
-// func33880
-80033880-800338AC
-////////////////////////////////
-// func338b0
-800338B0-800338DC
-////////////////////////////////
-// system_message_generate_text_from_array
-800338E0-80033954
-////////////////////////////////
-// func33958
-80033958-800339CC
-////////////////////////////////
-// func339d0
-800339D0-80033A40
-////////////////////////////////
-// func33a44
-80033A44-80033AF0
-////////////////////////////////
-// func33af4
-80033AF4-80033B10
-////////////////////////////////
-// system_message_generate_text_from_number
-80033B14-80033BF4
-////////////////////////////////
-// system_message_text_insert_text
-80033BF8-80033C10
-////////////////////////////////
-// system_message_parse_text
-80033C14-80034400
-////////////////////////////////
-// func34404
-80034404-80034434
-////////////////////////////////
-// func34438
-80034438-8003445C
-////////////////////////////////
-// func34460
-80034460-800344C4
-////////////////////////////////
-// func344c8
-800344C8-800344F4
-////////////////////////////////
-// system_message_deinit_text
-800344F8-80034534
-////////////////////////////////
-// system_message_push_new_pointer_to_text
-80034538-800345CC
-////////////////////////////////
-// func345d0
-800345D0-800345E0
-////////////////////////////////
-// func345e4
-800345E4-80034620
-////////////////////////////////
-// func34624
-80034624-80034694
-////////////////////////////////
-// system_message_store_cursor_position
-80034698-8003469C
-////////////////////////////////
-// system_message_store_null_cursor_position
-800346A0-800346A8
-////////////////////////////////
-// system_message_text_update_add_to_render
-800346AC-80034CCC
-////////////////////////////////
-// func34cd0
-80034CD0-80034DB8
-////////////////////////////////
-// system_message_get_char_width
-80034DBC-80034E1C
-////////////////////////////////
-// system_message_generate_char_into_row_tex
-80034E20-800354BC
-////////////////////////////////
-// system_controller_get_pressed_button_mask
-800354C0-80035554
-////////////////////////////////
-// func35558
-80035558-800355E0
-////////////////////////////////
-// func355e4
-800355E4-8003564C
-////////////////////////////////
-// func35650
-80035650-800356F4
-////////////////////////////////
-// func356f8
-800356F8-8003574C
-////////////////////////////////
-// func35750
-80035750-80035768
-////////////////////////////////
-// func3576c
-8003576C-80035784
-////////////////////////////////
-// func35788
-80035788-80035AB4
-////////////////////////////////
-// func35ab8
-80035AB8-80035B84
-////////////////////////////////
-// func35b88
-80035B88-80035C70
-////////////////////////////////
-// func35c74
-80035C74-80035C80
-////////////////////////////////
-// func35c84
-80035C84-80035D14
-////////////////////////////////
-// func35d18
-80035D18-80035DEC
-////////////////////////////////
-// func35df0
-80035DF0-80035EC8
-////////////////////////////////
-// func35ecc
-80035ECC-80035FEC
-////////////////////////////////
-// func35ff0
-80035FF0-80036058
-////////////////////////////////
-// func3605c
-8003605C-800360F0
-////////////////////////////////
-// func360f4
-800360F4-80036128
-////////////////////////////////
-// func3612c
-8003612C-80036140
-////////////////////////////////
-// func36144
-80036144-80036158
-////////////////////////////////
-// func3615c
-8003615C-800361E0
-////////////////////////////////
-// func361e4
-800361E4-800361F0
-////////////////////////////////
-// system_game_controllers_update()
-800361F4-80036284
-////////////////////////////////
-// func36288
-80036288-80036294
-////////////////////////////////
-// func36298
-80036298-800362A4
-////////////////////////////////
+80032D78 system_message_init_text
+80033250 system_set_pack_global_pointers
+80033298 func33298
+800332DC system_message_get_font
+800332EC system_message_get_sysdata
+800332FC system_message_deinit_font
+8003333C system_message_deinit_sysdata
+8003337C system_message_init_font
+80033418 system_message_init_sysdata
+8003348C func3348c
+800334BC system_message_load_font_clut_to_vram
+8003354C system_message_get_text_pointer
+80033560 system_message_get_width
+80033584 system_message_get_rows
+800335A8 func335a8
+800335DC func335dc
+8003360C func3360c
+8003363C func3363c
+8003366C func3366c
+8003369C func3369c
+800336CC func336cc
+800336FC func336fc
+8003372C func3372c
+8003375C func3375c
+8003378C func3378c
+800337BC func337bc
+800337EC func337ec
+80033820 func33820
+80033850 func33850
+80033880 func33880
+800338B0 func338b0
+800338E0 system_message_generate_text_from_array
+80033958 func33958
+800339D0 func339d0
+80033A44 func33a44
+80033AF4 func33af4
+80033B14 system_message_generate_text_from_number
+80033BF8 system_message_text_insert_text
+80033C14 system_message_parse_text
+80034404 func34404
+80034438 func34438
+80034460 func34460
+800344C8 func344c8
+800344F8 system_message_deinit_text
+80034538 system_message_push_new_pointer_to_text
+800345D0 func345d0
+800345E4 func345e4
+80034624 func34624
+80034698 system_message_store_cursor_position
+800346A0 system_message_store_null_cursor_position
+800346AC system_message_text_update_add_to_render
+80034CD0 func34cd0
+80034DBC system_message_get_char_width
+80034E20 system_message_generate_char_into_row_tex
+800354C0 system_controller_get_pressed_button_mask
+80035558 func35558
+800355E4 func355e4
+80035650 func35650
+800356F8 func356f8
+80035750 func35750
+8003576C func3576c
+80035788 func35788
+80035AB8 func35ab8
+80035B88 func35b88
+80035C74 func35c74
+80035C84 func35c84
+80035D18 func35d18
+80035DF0 func35df0
+80035ECC func35ecc
+80035FF0 func35ff0
+8003605C func3605c
+800360F4 func360f4
+8003612C func3612c
+80036144 func36144
+8003615C func3615c
+800361E4 func361e4
+800361F4 system_game_controllers_update()
+80036288 func36288
+80036298 func36298
 
 
 
 // SLPS_011_print.cpp
-////////////////////////////////
-// func362a8
-800362A8-800362B4
-////////////////////////////////
-// func362b8
-800362B8-800362C4
-////////////////////////////////
-// func362c8
-800362C8-800363CC
-////////////////////////////////
-// func363d0
-800363D0-800364A0
-////////////////////////////////
-// func364a4
-800364A4-80036594
-////////////////////////////////
-// system_print_add_letter_to_render
-80036598-800365BC
-////////////////////////////////
-// system_print_inner
-800365C0-80036B7C
-////////////////////////////////
-// func36b80
-80036B80-80036B9C
-////////////////////////////////
-// func36ba0
-80036BA0-80036BBC
-////////////////////////////////
-// func36bc0
-80036BC0-80036BD4
-////////////////////////////////
-// func36bd8
-80036BD8-80036BF4
-////////////////////////////////
-// func36bf8
-80036BF8-80036C14
-////////////////////////////////
-// func36c18
-80036C18-80036C2C
-////////////////////////////////
-// system_print_set_default_letter_width
-80036C30-80036C3C
-////////////////////////////////
-// system_print_set_default_letter_height
-80036C40-80036C4C
-////////////////////////////////
-// system_print_set_current_letter_x
-80036C50-80036C5C
-////////////////////////////////
-// system_print_set_current_letter_y
-80036C60-80036C6C
-////////////////////////////////
-// func36c70
-80036C70-80036CF0
-////////////////////////////////
-// system_print_create_clut
-80036CF4-80036DE8
-////////////////////////////////
-// system_print_get_default_letter_width
-80036DEC-80036E00
-////////////////////////////////
-// system_print_get_default_letter_height
-80036E04-80036E18
-////////////////////////////////
-// system_print_get_current_letter_x
-80036E1C-80036E30
-////////////////////////////////
-// system_print_get_current_letter_y
-80036E34-80036E48
-////////////////////////////////
-// func36e4c
-80036E4C-80036E60
-////////////////////////////////
-// func36e64
-80036E64-80036E88
-////////////////////////////////
-// func36e8c
-80036E8C-80036EB0
-////////////////////////////////
-// system_print
-80036EB4-80036EFC
-////////////////////////////////
-// func36f00
-80036F00-80036F30
-////////////////////////////////
-// func36f34
-80036F34-80036F80
-////////////////////////////////
-// system_print_add_letter_to_render_inner
-80036F84-80037170
-////////////////////////////////
-// system_print_reset_string_buffer
-80037174-800371C8
-////////////////////////////////
-// system_print_render_strings
-800371CC-80037320
-////////////////////////////////
-// system_print_set_memory
-80037324-80037330
-////////////////////////////////
-// system_print_clear_memory
-80037334-8003738C
-////////////////////////////////
-// system_print_init
-80037390-8003771C
-////////////////////////////////
-// func37720
-80037720-80037858
-////////////////////////////////
-// func3785c
-8003785C-8003786C
-////////////////////////////////
-// system_print_alias
-80037870-80037874
-////////////////////////////////
-// func37878
-80037878-8003787C
-////////////////////////////////
+800362A8 func362a8
+800362B8 func362b8
+800362C8 func362c8
+800363D0 func363d0
+800364A4 func364a4
+80036598 system_print_add_letter_to_render
+800365C0 system_print_inner
+80036B80 func36b80
+80036BA0 func36ba0
+80036BC0 func36bc0
+80036BD8 func36bd8
+80036BF8 func36bf8
+80036C18 func36c18
+80036C30 system_print_set_default_letter_width
+80036C40 system_print_set_default_letter_height
+80036C50 system_print_set_current_letter_x
+80036C60 system_print_set_current_letter_y
+80036C70 func36c70
+80036CF4 system_print_create_clut
+80036DEC system_print_get_default_letter_width
+80036E04 system_print_get_default_letter_height
+80036E1C system_print_get_current_letter_x
+80036E34 system_print_get_current_letter_y
+80036E4C func36e4c
+80036E64 func36e64
+80036E8C func36e8c
+80036EB4 system_print
+80036F00 func36f00
+80036F34 func36f34
+80036F84 system_print_add_letter_to_render_inner
+80037174 system_print_reset_string_buffer
+800371CC system_print_render_strings
+80037324 system_print_set_memory
+80037334 system_print_clear_memory
+80037390 system_print_init
+80037720 func37720
+8003785C func3785c
+80037870 system_print_alias
+80037878 func37878
 
 
 
 // SLPS_011_sound.cpp
-////////////////////////////////
-// func37880
-80037880-80037A2C
-////////////////////////////////
-// system_sound_initialize
-80037A30-80037C64
-////////////////////////////////
-// system_sound_deinitialize
-80037C68-80037D30
-////////////////////////////////
-// func37d34
-80037D34-80037D88
-////////////////////////////////
-// func37d8c
-80037D8C-80037DE8
-////////////////////////////////
-// func37dec
-80037DEC-80037E2C
-////////////////////////////////
-// func37e30
-80037E30-80037E7C
-////////////////////////////////
-// system_sound_load_snd_file
-80037E80-80037F74
-////////////////////////////////
-// system_sound_load_snd_file_2
-80037F78-80038098
-////////////////////////////////
-// system_sound_spu_snd_file_malloc
-8003809C-80038108
-////////////////////////////////
-// func3810c
-8003810C-80038120
-////////////////////////////////
-// func38124
-80038124-800381B4
-////////////////////////////////
-// func381b8
-800381B8-80038290
-////////////////////////////////
-// system_sound_get_snd_file_by_snd_id
-80038294-800382CC
-////////////////////////////////
-// system_sound_insert_sed_to_linked_array
-800382D0-800383D0
-////////////////////////////////
-// system_sound_remove_sed_from_linked_array
-800383D4-800384C8
-////////////////////////////////
-// func384cc
-800384CC-800384F0
-////////////////////////////////
-// func384f4
-800384F4-80038540
-////////////////////////////////
-// system_sound_stop_all_sounds
-80038544-80038568
-////////////////////////////////
-// func3856c
-8003856C-800386C8
-////////////////////////////////
-// func386cc
-800386CC-80038700
-////////////////////////////////
-// system_sound_cdout_to_spu
-80038704-80038778
-////////////////////////////////
-// func387cc
-8003877C-800387B0
-////////////////////////////////
-// func387b4
-800387B4-800387D8
-////////////////////////////////
-// system_sound_set_reverb_settings
-800387DC-80038978
-////////////////////////////////
-// func3897c
-8003897C-800389F0
-////////////////////////////////
-// func389f4
-800389F4-80038B0C
-////////////////////////////////
-// system_sound_set_main_volume_increase
-80038B10-80038BBC
-////////////////////////////////
-// system_sound_set_cd_volume_increase
-80038BC0-80038C58
-////////////////////////////////
-// system_sound_cd_audio_enable
-80038C5C-80038C98
-////////////////////////////////
-// system_sound_restore_main_and_cd_volume
-80038C9C-80038D10
-////////////////////////////////
-// func38d14
-80038D14-80038D64
-////////////////////////////////
-// system_sound_structs_meminit
-80038D68-80038DBC
-////////////////////////////////
-// system_sound_malloc
-80038DC0-80038EC8
-////////////////////////////////
-// func38ecc
-80038ECC-80038FE8
-////////////////////////////////
-// func38fec
-80038FEC-80039070
-////////////////////////////////
-// func39074
-80039074-800390EC
-////////////////////////////////
-// system_sound_memcpy
-800390F0-80039190
-////////////////////////////////
-// system_sound_memzero
-80039194-80039204
-////////////////////////////////
-// system_sound_spu_meminit
-80039208-8003925C
-////////////////////////////////
-// system_sound_spu_malloc_any
-80039260-8003935C
-////////////////////////////////
-// system_sound_spu_malloc_end
-80039360-8003945C
-////////////////////////////////
-// system_sound_spu_malloc_place
-80039460-80039584
-////////////////////////////////
-// system_sound_spu_memfree
-80039588-800395EC
-////////////////////////////////
-// func395f0
-800395F0-80039628
-////////////////////////////////
-// func39624
-80039624-80039628
-////////////////////////////////
-// system_sound_spu_memory_find_empty
-8003962C-80039664
-////////////////////////////////
-// func39668
-80039668-800396A0
-////////////////////////////////
-// func396a4
-800396A4-800396F4
-////////////////////////////////
-// system_sound_create_main_for_smd
-800396F8-800397B4
-////////////////////////////////
-// func397b8
-800397B8-80039878
-////////////////////////////////
-// func3987c
-8003987C-80039924
-////////////////////////////////
-// func39928
-80039928-80039A0C
-////////////////////////////////
-// func39a10
-80039A10-80039AF0
-////////////////////////////////
-// system_sound_stop_main
-80039AF4-80039B30
-////////////////////////////////
-// func39b34
-80039B34-80039B68
-////////////////////////////////
-// system_sound_stop_all_channels_in_all_main
-80039B6C-80039BC8
-////////////////////////////////
-// func39bcc
-80039BCC-80039BD0
-////////////////////////////////
-// func39bd4
-80039BD4-80039C1C
-////////////////////////////////
-// func39c20
-80039C20-80039C5C
-////////////////////////////////
-// system_sound_play_sed_1
-80039C60-80039CBC
-////////////////////////////////
-// system_sound_play_sed_2
-80039CC0-80039D04
-////////////////////////////////
-// system_sound_play_sed_3
-80039D08-80039D68
-////////////////////////////////
-// system_sound_play_sed_4
-80039D6C-80039DBC
-////////////////////////////////
-// system_sound_play_sound_from_opcode_9c
-80039DC0-80039E40
-////////////////////////////////
-// system_sound_play_sound_from_field
-80039E44-80039E9C
-////////////////////////////////
-// system_sound_stop_all_channels_in_current_main
-80039EA0-80039F38
-////////////////////////////////
-// system_sound_stop_all_channels_by_sed_file
-80039F3C-80039FF0
-////////////////////////////////
-// system_sound_stop_all_channels_by_sed_id
-80039FF4-8003A0B0
-////////////////////////////////
-// system_sound_stop_two_channels_by_channel_id
-8003A0B4-8003A178
-////////////////////////////////
-// func3a17c
-8003A17C-8003A180
-////////////////////////////////
-// func3a184
-8003A184-8003A188
-////////////////////////////////
-// func3a18c
-8003A18C-8003A1E8
-////////////////////////////////
-// func3a1ec
-8003A1EC-8003A25C
-////////////////////////////////
-// func3a260
-8003A260-8003A2F4
-////////////////////////////////
-// func3a2f8
-8003A2F8-8003A3A0
-////////////////////////////////
-// func3a3a4
-8003A3A4-8003A400
-////////////////////////////////
-// func3a404
-8003A404-8003A474
-////////////////////////////////
-// system_sound_get_channels_mask_by_sed_id
-8003A478-8003A500
-////////////////////////////////
-// system_sound_stop_sound_in_channels
-8003A504-8003A6D0
-////////////////////////////////
-// func3a6d4
-8003A6D4-8003A6DC
-////////////////////////////////
-// func3a6e0
-8003A6E0-8003A740
-////////////////////////////////
-// func3a744
-8003A744-8003A7EC
-////////////////////////////////
-// func3a7f0
-8003A7F0-8003A860
-////////////////////////////////
-// func3a864
-8003A864-8003A8D4
-////////////////////////////////
-// func3a8d8
-8003A8D8-8003A968
-////////////////////////////////
-// func3a96c
-8003A96C-8003AA8C
-////////////////////////////////
-// func3aa90
-8003AA90-8003AA94
-////////////////////////////////
-// func3aa98
-8003AA98-8003AAFC
-////////////////////////////////
-// func3ab00
-8003AB00-8003AB6C
-////////////////////////////////
-// func3ab70
-8003AB70-8003ABC4
-////////////////////////////////
-// func3abc8
-8003ABC8-8003AC3C
-////////////////////////////////
-// func3ac40
-8003AC40-8003AC70
-////////////////////////////////
-// func3ac74
-8003AC74-8003AD28
-////////////////////////////////
-// func3ad2c
-8003AD2C-8003ADC8
-////////////////////////////////
-// func3adcc
-8003ADCC-8003AE44
-////////////////////////////////
-// system_sound_enable_update_to_all_channels_in_main
-8003AE48-8003AEA0
-////////////////////////////////
-// func3aea4
-8003AEA4-8003AF04
-////////////////////////////////
-// system_sound_stop_all_channels_in_main
-8003AF08-8003AF50
-////////////////////////////////
-// system_sound_copy_add_data_from_smd_to_main
-8003AF54-8003AFEC
-////////////////////////////////
-// system_sound_add_new_main_with_number_of_channels
-8003AFF0-8003B0A0
-////////////////////////////////
-// func3b0a4
-8003B0A4-8003B0D0
-////////////////////////////////
-// system_sound_init_main_for_smd
-8003B0D4-8003B1D0
-////////////////////////////////
-// func3b1d4
-8003B1D4-8003B214
-////////////////////////////////
-// func3b218
-8003B218-8003B2C8
-////////////////////////////////
-// system_sound_init_channels_for_smd
-8003B2CC-8003B4E8
-////////////////////////////////
-// system_sound_init_channels_by_sed_id
-8003B4EC-8003B7D4
-////////////////////////////////
-// func3b7d8
-8003B7D8-8003B820
-////////////////////////////////
-// func3b824
-8003B824-8003B888
-////////////////////////////////
-// system_sound_insert_main_struct_into_main_list
-8003B88C-8003B8DC
-////////////////////////////////
-// system_sound_remove_main_struct_from_main_list
-8003B8E0-8003B9AC
-////////////////////////////////
-// func3b9b0
-8003B9B0-8003B9E4
-////////////////////////////////
-// system_sound_get_sizeof_channel_and_main_struct
-8003B9E8-8003BA08
-////////////////////////////////
-// system_sound_spu_dma_stop_callback
-8003BA0C-8003BAB4
-////////////////////////////////
-// func3bab8
-8003BAB8-8003BAD8
-////////////////////////////////
-// func3badc
-8003BADC-8003BAFC
-////////////////////////////////
-// func3bb00
-8003BB00-8003BB20
-////////////////////////////////
-// func3bb24
-8003BB24-8003BB44
-////////////////////////////////
-// func3bb48
-8003BB48-8003BC60
-////////////////////////////////
-// func3bc64
-8003BC64-8003BC98
-////////////////////////////////
-// func3bc9c
-8003BC9C-8003BCA0
-////////////////////////////////
-// system_sound_spu_sync
-8003BCA4-8003BD0C
-////////////////////////////////
-// func3bd10
-8003BD10-8003BE44
-////////////////////////////////
-// system_sound_spu_interrupt_callback
-8003BE48-8003BEB4
-////////////////////////////////
-// func3beb8
-8003BEB8-8003BEC4
-////////////////////////////////
-// system_sound_main
-8003BEC8-8003C328
-////////////////////////////////
-// system_sound_update_incremented_values
-8003C32C-8003C368
-////////////////////////////////
-// system_sound_update_timers
-8003C36C-8003C58C
-////////////////////////////////
-// system_sound_update_sequence
-8003C590-8003CB28
-////////////////////////////////
-// system_sound_update_base_pitch
-8003CB2C-8003CBA4
-////////////////////////////////
-// func3cba8
-8003CBA8-8003CBAC
-////////////////////////////////
-// spu_opcode_80
-8003CBB0-8003CBD4
-////////////////////////////////
-// spu_opcode_81
-8003CBD8-8003CBF0
-////////////////////////////////
-// spu_opcode_8a
-8003CBF4-8003CBF8
-////////////////////////////////
-// spu_opcode_8d
-8003CBFC-8003CC20
-////////////////////////////////
-// spu_opcode_8e
-8003CC24-8003CC28
-////////////////////////////////
-// spu_opcode_8f
-8003CC2C-8003CC30
-////////////////////////////////
-// spu_opcode_90
-8003CC34-8003CCA8
-////////////////////////////////
-// spu_opcode_91
-8003CCAC-8003CCBC
-////////////////////////////////
-// spu_opcode_94
-8003CCC0-8003CCDC
-////////////////////////////////
-// spu_opcode_95
-8003CCE0-8003CCF4
-////////////////////////////////
-// spu_opcode_96
-8003CCF8-8003CD0C
-////////////////////////////////
-// spu_opcode_97
-8003CD10-8003CD40
-////////////////////////////////
-// spu_opcode_f9
-8003CD44-8003CD64
-////////////////////////////////
-// spu_opcode_a4
-8003CD68-8003CD78
-////////////////////////////////
-// spu_opcode_a5
-8003CD7C-8003CD94
-////////////////////////////////
-// spu_opcode_98
-8003CD98-8003CDDC
-////////////////////////////////
-// spu_opcode_99
-8003CDE0-8003CE48
-////////////////////////////////
-// spu_opcode_9a
-8003CE4C-8003CE94
-////////////////////////////////
-// spu_opcode_9c
-8003CE98-8003CED8
-////////////////////////////////
-// spu_opcode_9d
-8003CEDC-8003CF14
-////////////////////////////////
-// spu_opcode_9e
-8003CF18-8003CF8C
-////////////////////////////////
-// spu_opcode_a0
-8003CF90-8003CFB4
-////////////////////////////////
-// spu_opcode_a1
-8003CFB8-8003CFE0
-////////////////////////////////
-// spu_opcode_a2
-8003CFE4-8003D020
-////////////////////////////////
-// spu_opcode_a6
-8003D024-8003D060
-////////////////////////////////
-// spu_opcode_a7
-8003D064-8003D0AC
-////////////////////////////////
-// spu_opcode_a9
-8003D0B0-8003D0C0
-////////////////////////////////
-// spu_opcode_aa
-8003D0C4-8003D13C
-////////////////////////////////
-// spu_opcode_ac
-8003D140-8003D174
-////////////////////////////////
-// spu_opcode_ad
-8003D178-8003D1A4
-////////////////////////////////
-// spu_opcode_ae
-8003D1A8-8003D1CC
-////////////////////////////////
-// spu_opcode_af
-8003D1D0-8003D1E4
-////////////////////////////////
-// spu_opcode_b0
-8003D1E8-8003D1FC
-////////////////////////////////
-// spu_opcode_b1
-8003D200-8003D214
-////////////////////////////////
-// spu_opcode_b2
-8003D218-8003D248
-////////////////////////////////
-// spu_opcode_b3
-8003D24C-8003D27C
-////////////////////////////////
-// spu_opcode_b4
-8003D280-8003D2DC
-////////////////////////////////
-// spu_opcode_b5
-8003D2E0-8003D348
-////////////////////////////////
-// spu_opcode_b6
-8003D34C-8003D368
-////////////////////////////////
-// spu_opcode_b7
-8003D36C-8003D388
-////////////////////////////////
-// spu_opcode_b8
-8003D38C-8003D3E0
-////////////////////////////////
-// spu_opcode_ba
-8003D3E4-8003D440
-////////////////////////////////
-// spu_opcode_bb
-8003D444-8003D460
-////////////////////////////////
-// spu_opcode_bc
-8003D464-8003D468
-////////////////////////////////
-// spu_opcode_bd
-8003D46C-8003D470
-////////////////////////////////
-// spu_opcode_be
-8003D474-8003D478
-////////////////////////////////
-// spu_opcode_c0
-8003D47C-8003D4B0
-////////////////////////////////
-// spu_opcode_c1
-8003D4B4-8003D4E4
-////////////////////////////////
-// spu_opcode_c2
-8003D4E8-8003D500
-////////////////////////////////
-// spu_opcode_c3
-8003D504-8003D51C
-////////////////////////////////
-// spu_opcode_c4
-8003D520-8003D538
-////////////////////////////////
-// spu_opcode_c5
-8003D53C-8003D558
-////////////////////////////////
-// spu_opcode_c6
-8003D55C-8003D574
-////////////////////////////////
-// spu_opcode_c7
-8003D578-8003D59C
-////////////////////////////////
-// spu_opcode_c8
-8003D5A0-8003D5B8
-////////////////////////////////
-// spu_opcode_c9
-8003D5BC-8003D5D4
-////////////////////////////////
-// spu_opcode_ca
-8003D5D8-8003D5F0
-////////////////////////////////
-// spu_opcode_d0
-8003D5F4-8003D614
-////////////////////////////////
-// spu_opcode_d1
-8003D618-8003D640
-////////////////////////////////
-// spu_opcode_d2
-8003D644-8003D66C
-////////////////////////////////
-// spu_opcode_d3
-8003D670-8003D6A0
-////////////////////////////////
-// spu_opcode_d4
-8003D6A4-8003D6F8
-////////////////////////////////
-// spu_opcode_d5
-8003D6FC-8003D710
-////////////////////////////////
-// spu_opcode_dc
-8003D714-8003D728
-////////////////////////////////
-// spu_opcode_d6
-8003D72C-8003D75C
-////////////////////////////////
-// spu_opcode_d8
-8003D760-8003D848
-////////////////////////////////
-// spu_opcode_d9
-8003D84C-8003D954
-////////////////////////////////
-// spu_opcode_d7
-8003D958-8003D990
-////////////////////////////////
-// spu_opcode_da
-8003D994-8003D9B0
-////////////////////////////////
-// spu_opcode_db
-8003D9B4-8003D9D0
-////////////////////////////////
-// spu_opcode_e0
-8003D9D4-8003D9FC
-////////////////////////////////
-// spu_opcode_e1
-8003DA00-8003DA3C
-////////////////////////////////
-// spu_opcode_e2
-8003DA40-8003DA88
-////////////////////////////////
-// spu_opcode_f8
-8003DA8C-8003DAF4
-////////////////////////////////
-// spu_opcode_e4
-8003DAF8-8003DBC8
-////////////////////////////////
-// spu_opcode_e5
-8003DBCC-8003DCBC
-////////////////////////////////
-// spu_opcode_e3
-8003DCC0-8003DCF8
-////////////////////////////////
-// spu_opcode_e6
-8003DCFC-8003DD18
-////////////////////////////////
-// spu_opcode_e7
-8003DD1C-8003DD38
-////////////////////////////////
-// spu_opcode_e8
-8003DD3C-8003DD58
-////////////////////////////////
-// spu_opcode_e9
-8003DD5C-8003DD88
-////////////////////////////////
-// spu_opcode_ea
-8003DD8C-8003DDE0
-////////////////////////////////
-// spu_opcode_eb
-8003DDE4-8003DE1C
-////////////////////////////////
-// spu_opcode_ec
-8003DE20-8003DEF0
-////////////////////////////////
-// spu_opcode_ed
-8003DEF4-8003DFE4
-////////////////////////////////
-// spu_opcode_ee
-8003DFE8-8003E004
-////////////////////////////////
-// spu_opcode_ef
-8003E008-8003E024
-////////////////////////////////
-// spu_opcode_f0
-8003E028-8003E09C
-////////////////////////////////
-// spu_opcode_f1
-8003E0A0-8003E134
-////////////////////////////////
-// func3e138
-8003E138-8003E1AC
-////////////////////////////////
-// spu_opcode_f2
-8003E1B0-8003E1FC
-////////////////////////////////
-// spu_opcode_f5
-8003E200-8003E204
-////////////////////////////////
-// spu_opcode_f6
-8003E208-8003E284
-////////////////////////////////
-// func3e288
-8003E288-8003E2B0
-////////////////////////////////
-// spu_opcode_f7
-8003E2B4-8003E2F0
-////////////////////////////////
-// spu_opcode_fc
-8003E2F4-8003E360
-////////////////////////////////
-// spu_opcode_fd
-8003E364-8003E394
-////////////////////////////////
-// spu_opcode_fe
-8003E398-8003E3F0
-////////////////////////////////
-// spu_opcode_ff
-8003E3F4-8003E460
-////////////////////////////////
-// system_sound_init_channel_instrument
-8003E464-8003E524
-////////////////////////////////
-// system_sound_set_calculate_flags_to_all_channels_in_main
-8003E528-8003E564
-////////////////////////////////
-// system_sound_set_update_flags_to_all_channels_in_main
-8003E568-8003E5A4
-////////////////////////////////
-// system_sound_channel_structures_offset_init
-8003E5A8-8003E5C8
-////////////////////////////////
-// system_sound_channel_voice_off_reset
-8003E5CC-8003E684
-////////////////////////////////
-// func3e688
-8003E688-8003E6E0
-////////////////////////////////
-// system_sound_channel_voice_off_clear_pointer
-8003E6E4-8003E748
-////////////////////////////////
-// system_sound_channel_voice_off_keep_pointer
-8003E74C-8003E7A4
-////////////////////////////////
-// system_sound_update_spu
-8003E7A8-8003EA00
-////////////////////////////////
-// system_sound_set_key_off_by_masks
-8003EA04-8003EA94
-////////////////////////////////
-// func3ea98
-8003EA98-8003ED44
-////////////////////////////////
-// func3ed48
-8003ED48-8003EDA8
-////////////////////////////////
-// func3edac
-8003EDAC-8003EE44
-////////////////////////////////
-// func3ee48
-8003EE48-8003EE88
-////////////////////////////////
-// func3ee8c
-8003EE8C-8003F034
-////////////////////////////////
-// func3f038
-8003F038-8003F048
-////////////////////////////////
-// func3f04c
-8003F04C-8003F090
-////////////////////////////////
-// func3f094
-8003F094-8003F0E4
-////////////////////////////////
-// func3f0e8
-8003F0E8-8003F144
-////////////////////////////////
-// func3f148
-8003F148-8003F1AC
-////////////////////////////////
-// func3f1b0
-8003F1B0-8003F1F8
-////////////////////////////////
-// func3f1fc
-8003F1FC-8003F264
-////////////////////////////////
-// func3f268
-8003F268-8003F2D0
-////////////////////////////////
-// func3f2d4
-8003F2D4-8003F2E0
-////////////////////////////////
-// func3f2e4
-8003F2E4-8003F30C
-////////////////////////////////
-// system_sound_set_key_on
-8003F310-8003F328
-////////////////////////////////
-// system_sound_set_key_off
-8003F32C-8003F344
-////////////////////////////////
-// system_sound_set_channel_reverb
-8003F348-8003F360
-////////////////////////////////
-// func3f364
-8003F364-8003F368
-////////////////////////////////
-// func3f36c
-8003F36C-8003F384
-////////////////////////////////
-// func3f388
-8003F388-8003F3A0
-////////////////////////////////
-// func3f3a4
-8003F3A4-8003F3BC
-////////////////////////////////
-// func3f3c0
-8003F3C0-8003F3D4
-////////////////////////////////
-// func3f3d8
-8003F3D8-8003F404
-////////////////////////////////
-// func3f408
-8003F408-8003F42C
-////////////////////////////////
-// system_sound_set_adsr_sustain
-8003F430-8003F460
-////////////////////////////////
-// system_sound_set_adsr_release
-8003F464-8003F490
-////////////////////////////////
-// func3f494
-8003F494-8003F4B8
-////////////////////////////////
-// func3f4bc
-8003F4BC-8003F520
-////////////////////////////////
-// func3f524
-8003F524-8003F528
-////////////////////////////////
-// func3f52c
-8003F52C-8003F554
-////////////////////////////////
-// system_sound_error
-8003F558-8003F5DC
-////////////////////////////////
+80037880 func37880
+80037A30 system_sound_initialize
+80037C68 system_sound_deinitialize
+80037D34 func37d34
+80037D8C func37d8c
+80037DEC func37dec
+80037E30 func37e30
+80037E80 system_sound_load_snd_file
+80037F78 system_sound_load_snd_file_2
+8003809C system_sound_spu_snd_file_malloc
+8003810C func3810c
+80038124 func38124
+800381B8 func381b8
+80038294 system_sound_get_snd_file_by_snd_id
+800382D0 system_sound_insert_sed_to_linked_array
+800383D4 system_sound_remove_sed_from_linked_array
+800384CC func384cc
+800384F4 func384f4
+80038544 system_sound_stop_all_sounds
+8003856C func3856c
+800386CC func386cc
+80038704 system_sound_cdout_to_spu
+8003877C func387cc
+800387B4 func387b4
+800387DC system_sound_set_reverb_settings
+8003897C func3897c
+800389F4 func389f4
+80038B10 system_sound_set_main_volume_increase
+80038BC0 system_sound_set_cd_volume_increase
+80038C5C system_sound_cd_audio_enable
+80038C9C system_sound_restore_main_and_cd_volume
+80038D14 func38d14
+80038D68 system_sound_structs_meminit
+80038DC0 system_sound_malloc
+80038ECC func38ecc
+80038FEC func38fec
+80039074 func39074
+800390F0 system_sound_memcpy
+80039194 system_sound_memzero
+80039208 system_sound_spu_meminit
+80039260 system_sound_spu_malloc_any
+80039360 system_sound_spu_malloc_end
+80039460 system_sound_spu_malloc_place
+80039588 system_sound_spu_memfree
+800395F0 func395f0
+80039624 func39624
+8003962C system_sound_spu_memory_find_empty
+80039668 func39668
+800396A4 func396a4
+800396F8 system_sound_create_main_for_smd
+800397B8 func397b8
+8003987C func3987c
+80039928 func39928
+80039A10 func39a10
+80039AF4 system_sound_stop_main
+80039B34 func39b34
+80039B6C system_sound_stop_all_channels_in_all_main
+80039BCC func39bcc
+80039BD4 func39bd4
+80039C20 func39c20
+80039C60 system_sound_play_sed_1
+80039CC0 system_sound_play_sed_2
+80039D08 system_sound_play_sed_3
+80039D6C system_sound_play_sed_4
+80039DC0 system_sound_play_sound_from_opcode_9c
+80039E44 system_sound_play_sound_from_field
+80039EA0 system_sound_stop_all_channels_in_current_main
+80039F3C system_sound_stop_all_channels_by_sed_file
+80039FF4 system_sound_stop_all_channels_by_sed_id
+8003A0B4 system_sound_stop_two_channels_by_channel_id
+8003A17C func3a17c
+8003A184 func3a184
+8003A18C func3a18c
+8003A1EC func3a1ec
+8003A260 func3a260
+8003A2F8 func3a2f8
+8003A3A4 func3a3a4
+8003A404 func3a404
+8003A478 system_sound_get_channels_mask_by_sed_id
+8003A504 system_sound_stop_sound_in_channels
+8003A6D4 func3a6d4
+8003A6E0 func3a6e0
+8003A744 func3a744
+8003A7F0 func3a7f0
+8003A864 func3a864
+8003A8D8 func3a8d8
+8003A96C func3a96c
+8003AA90 func3aa90
+8003AA98 func3aa98
+8003AB00 func3ab00
+8003AB70 func3ab70
+8003ABC8 func3abc8
+8003AC40 func3ac40
+8003AC74 func3ac74
+8003AD2C func3ad2c
+8003ADCC func3adcc
+8003AE48 system_sound_enable_update_to_all_channels_in_main
+8003AEA4 func3aea4
+8003AF08 system_sound_stop_all_channels_in_main
+8003AF54 system_sound_copy_add_data_from_smd_to_main
+8003AFF0 system_sound_add_new_main_with_number_of_channels
+8003B0A4 func3b0a4
+8003B0D4 system_sound_init_main_for_smd
+8003B1D4 func3b1d4
+8003B218 func3b218
+8003B2CC system_sound_init_channels_for_smd
+8003B4EC system_sound_init_channels_by_sed_id
+8003B7D8 func3b7d8
+8003B824 func3b824
+8003B88C system_sound_insert_main_struct_into_main_list
+8003B8E0 system_sound_remove_main_struct_from_main_list
+8003B9B0 func3b9b0
+8003B9E8 system_sound_get_sizeof_channel_and_main_struct
+8003BA0C system_sound_spu_dma_stop_callback
+8003BAB8 func3bab8
+8003BADC func3badc
+8003BB00 func3bb00
+8003BB24 func3bb24
+8003BB48 func3bb48
+8003BC64 func3bc64
+8003BC9C func3bc9c
+8003BCA4 system_sound_spu_sync
+8003BD10 func3bd10
+8003BE48 system_sound_spu_interrupt_callback
+8003BEB8 func3beb8
+8003BEC8 system_sound_main
+8003C32C system_sound_update_incremented_values
+8003C36C system_sound_update_timers
+8003C590 system_sound_update_sequence
+8003CB2C system_sound_update_base_pitch
+8003CBA8 func3cba8
+8003CBB0 spu_opcode_80
+8003CBD8 spu_opcode_81
+8003CBF4 spu_opcode_8a
+8003CBFC spu_opcode_8d
+8003CC24 spu_opcode_8e
+8003CC2C spu_opcode_8f
+8003CC34 spu_opcode_90
+8003CCAC spu_opcode_91
+8003CCC0 spu_opcode_94
+8003CCE0 spu_opcode_95
+8003CCF8 spu_opcode_96
+8003CD10 spu_opcode_97
+8003CD44 spu_opcode_f9
+8003CD68 spu_opcode_a4
+8003CD7C spu_opcode_a5
+8003CD98 spu_opcode_98
+8003CDE0 spu_opcode_99
+8003CE4C spu_opcode_9a
+8003CE98 spu_opcode_9c
+8003CEDC spu_opcode_9d
+8003CF18 spu_opcode_9e
+8003CF90 spu_opcode_a0
+8003CFB8 spu_opcode_a1
+8003CFE4 spu_opcode_a2
+8003D024 spu_opcode_a6
+8003D064 spu_opcode_a7
+8003D0B0 spu_opcode_a9
+8003D0C4 spu_opcode_aa
+8003D140 spu_opcode_ac
+8003D178 spu_opcode_ad
+8003D1A8 spu_opcode_ae
+8003D1D0 spu_opcode_af
+8003D1E8 spu_opcode_b0
+8003D200 spu_opcode_b1
+8003D218 spu_opcode_b2
+8003D24C spu_opcode_b3
+8003D280 spu_opcode_b4
+8003D2E0 spu_opcode_b5
+8003D34C spu_opcode_b6
+8003D36C spu_opcode_b7
+8003D38C spu_opcode_b8
+8003D3E4 spu_opcode_ba
+8003D444 spu_opcode_bb
+8003D464 spu_opcode_bc
+8003D46C spu_opcode_bd
+8003D474 spu_opcode_be
+8003D47C spu_opcode_c0
+8003D4B4 spu_opcode_c1
+8003D4E8 spu_opcode_c2
+8003D504 spu_opcode_c3
+8003D520 spu_opcode_c4
+8003D53C spu_opcode_c5
+8003D55C spu_opcode_c6
+8003D578 spu_opcode_c7
+8003D5A0 spu_opcode_c8
+8003D5BC spu_opcode_c9
+8003D5D8 spu_opcode_ca
+8003D5F4 spu_opcode_d0
+8003D618 spu_opcode_d1
+8003D644 spu_opcode_d2
+8003D670 spu_opcode_d3
+8003D6A4 spu_opcode_d4
+8003D6FC spu_opcode_d5
+8003D714 spu_opcode_dc
+8003D72C spu_opcode_d6
+8003D760 spu_opcode_d8
+8003D84C spu_opcode_d9
+8003D958 spu_opcode_d7
+8003D994 spu_opcode_da
+8003D9B4 spu_opcode_db
+8003D9D4 spu_opcode_e0
+8003DA00 spu_opcode_e1
+8003DA40 spu_opcode_e2
+8003DA8C spu_opcode_f8
+8003DAF8 spu_opcode_e4
+8003DBCC spu_opcode_e5
+8003DCC0 spu_opcode_e3
+8003DCFC spu_opcode_e6
+8003DD1C spu_opcode_e7
+8003DD3C spu_opcode_e8
+8003DD5C spu_opcode_e9
+8003DD8C spu_opcode_ea
+8003DDE4 spu_opcode_eb
+8003DE20 spu_opcode_ec
+8003DEF4 spu_opcode_ed
+8003DFE8 spu_opcode_ee
+8003E008 spu_opcode_ef
+8003E028 spu_opcode_f0
+8003E0A0 spu_opcode_f1
+8003E138 func3e138
+8003E1B0 spu_opcode_f2
+8003E200 spu_opcode_f5
+8003E208 spu_opcode_f6
+8003E288 func3e288
+8003E2B4 spu_opcode_f7
+8003E2F4 spu_opcode_fc
+8003E364 spu_opcode_fd
+8003E398 spu_opcode_fe
+8003E3F4 spu_opcode_ff
+8003E464 system_sound_init_channel_instrument
+8003E528 system_sound_set_calculate_flags_to_all_channels_in_main
+8003E568 system_sound_set_update_flags_to_all_channels_in_main
+8003E5A8 system_sound_channel_structures_offset_init
+8003E5CC system_sound_channel_voice_off_reset
+8003E688 func3e688
+8003E6E4 system_sound_channel_voice_off_clear_pointer
+8003E74C system_sound_channel_voice_off_keep_pointer
+8003E7A8 system_sound_update_spu
+8003EA04 system_sound_set_key_off_by_masks
+8003EA98 func3ea98
+8003ED48 func3ed48
+8003EDAC func3edac
+8003EE48 func3ee48
+8003EE8C func3ee8c
+8003F038 func3f038
+8003F04C func3f04c
+8003F094 func3f094
+8003F0E8 func3f0e8
+8003F148 func3f148
+8003F1B0 func3f1b0
+8003F1FC func3f1fc
+8003F268 func3f268
+8003F2D4 func3f2d4
+8003F2E4 func3f2e4
+8003F310 system_sound_set_key_on
+8003F32C system_sound_set_key_off
+8003F348 system_sound_set_channel_reverb
+8003F364 func3f364
+8003F36C func3f36c
+8003F388 func3f388
+8003F3A4 func3f3a4
+8003F3C0 func3f3c0
+8003F3D8 func3f3d8
+8003F408 func3f408
+8003F430 system_sound_set_adsr_sustain
+8003F464 system_sound_set_adsr_release
+8003F494 func3f494
+8003F4BC func3f4bc
+8003F524 func3f524
+8003F52C func3f52c
+8003F558 system_sound_error
 
 
 
 // SLPS_011_math.cpp
-////////////////////////////////
-// system_calculate_rotation_matrix
-8003F5E0-8003F754
-////////////////////////////////
-// system_sin
-8003F758-8003F770
-////////////////////////////////
-// system_cos
-8003F774-8003F78C
-////////////////////////////////
-// system_memzero
-8003F790-8003F7BC
-////////////////////////////////
-// func3f7c0
-8003F7C0-8003F80C
-////////////////////////////////
-// system_memcpy
-8003F810-8003F840
-////////////////////////////////
-// system_memmove
-8003F844-8003F8AC
-////////////////////////////////
-// system_get_random_2_bytes
-8003F8B0-8003F8DC
-////////////////////////////////
-// func3f8e0
-8003F8E0-8003F8EC
-////////////////////////////////
-// func3f8f0
-8003F8F0-8003F994
-////////////////////////////////
-// func3f998
-8003F998-8003F9F8
-////////////////////////////////
-// func3f9fc
-8003F9FC-8003FA3C
-////////////////////////////////
-// func3fa40
-8003FA40-8003FA6C
-////////////////////////////////
-// func3fa70
-8003FA70-800402C8
-////////////////////////////////
+8003F5E0 system_calculate_rotation_matrix
+8003F758 system_sin
+8003F774 system_cos
+8003F790 system_memzero
+8003F7C0 func3f7c0
+8003F810 system_memcpy
+8003F844 system_memmove
+8003F8B0 system_get_random_2_bytes
+8003F8E0 func3f8e0
+8003F8F0 func3f8f0
+8003F998 func3f998
+8003F9FC func3f9fc
+8003FA40 func3fa40
+8003FA70 func3fa70
 
 
 
 // SLPS_011_bios.cpp
-////////////////////////////////
-// system_bios_flush_cache
-800402CC-800402D8
-////////////////////////////////
-// system_bios_bu_init
-800402DC-800402E8
-////////////////////////////////
-// system_bios_open_event
-800402EC-800402F8
-////////////////////////////////
-// system_bios_close_event
-800402FC-80040308
-////////////////////////////////
-// system_bios_test_event
-8004030C-80040318
-////////////////////////////////
-// system_bios_enable_event
-8004031C-80040328
-////////////////////////////////
-// system_bios_disable_event
-8004032C-80040338
-////////////////////////////////
-// system_bios_undeliver_event
-8004033C-80040348
-////////////////////////////////
-// system_enter_critical_section
-8004034C-80040358
-////////////////////////////////
-// system_exit_critical_section
-8004035C-80040368
-////////////////////////////////
-// system_bios_disable_cdrom_int
-8004036C-80040388
-////////////////////////////////
-// system_bios_enable_cdrom_int
-8004038C-800403A8
-////////////////////////////////
-// func403a8
-800403AC-800403B8
-////////////////////////////////
-// func403bc
-800403BC-800403C8
-////////////////////////////////
-// system_bios_file_write
-800403CC-800403D8
-////////////////////////////////
-// func403dc
-800403DC-800403E8
-////////////////////////////////
-// func403ec
-800403EC-800403F8
-////////////////////////////////
-// func403fc
-800403FC-80040408
-////////////////////////////////
-// func4040c
-8004040C-80040418
-////////////////////////////////
-// func4041c
-8004041C-80040428
-////////////////////////////////
-// func4042c
-8004042C-80040438
-////////////////////////////////
-// system_bios_krom_2_raw_add
-8004043C-80040448
-////////////////////////////////
-// system_bios_change_clear_pad
-8004044C-80040458
-////////////////////////////////
-// func4045c
-8004045C-80040468
-////////////////////////////////
-// system_root_counter_setup
-8004046C-80040504
-////////////////////////////////
-// system_get_root_counter_value
-80040508-8004053C
-////////////////////////////////
-// system_root_counter_enable
-80040540-80040570
-////////////////////////////////
-// system_root_counter_disable
-80040574-800405A8
-////////////////////////////////
-// func405ac
-800405AC-800405E0
-////////////////////////////////
-// func405e4
-800405E4-800405F0
-////////////////////////////////
-// func405f4
-800405F4-80040600
-////////////////////////////////
+800402CC system_bios_flush_cache
+800402DC system_bios_bu_init
+800402EC system_bios_open_event
+800402FC system_bios_close_event
+8004030C system_bios_test_event
+8004031C system_bios_enable_event
+8004032C system_bios_disable_event
+8004033C system_bios_undeliver_event
+8004034C system_enter_critical_section
+8004035C system_exit_critical_section
+8004036C system_bios_disable_cdrom_int
+8004038C system_bios_enable_cdrom_int
+800403AC func403a8
+800403BC func403bc
+800403CC system_bios_file_write
+800403DC func403dc
+800403EC func403ec
+800403FC func403fc
+8004040C func4040c
+8004041C func4041c
+8004042C func4042c
+8004043C system_bios_krom_2_raw_add
+8004044C system_bios_change_clear_pad
+8004045C func4045c
+8004046C system_psyq_set_r_cnt
+80040508 system_psyq_get_r_cnt
+80040540 system_psyq_start_r_cnt
+80040574 system_psyq_stop_r_cnt
+800405AC func405ac
+800405E4 func405e4
+800405F4 func405f4
 
 
 
 // SLPS_011_buttons.cpp
-////////////////////////////////
-// func40604
-80040604-8004069C
-////////////////////////////////
-// func406a0
-800406A0-80040738
-////////////////////////////////
-// func4073c
-8004073C-80040768
-////////////////////////////////
-// func4076c
-8004076C-800407A0
-////////////////////////////////
-// system_add_interrupt_priority1_handler
-800407A4-80040820
-////////////////////////////////
-// func40824
-80040824-80040858
-////////////////////////////////
-// func4085c
-8004085C-800408C0
-////////////////////////////////
-// func408c4
-800408C4-80040900
-////////////////////////////////
-// system_bios_init_pad
-80040904-80040910
-////////////////////////////////
-// system_bios_start_pad
-80040914-80040920
-////////////////////////////////
-// system_bios_stop_pad
-80040924-80040930
-////////////////////////////////
-// system_bios_outdated_pad_init_and_start
-80040934-80040940
-////////////////////////////////
-// system_bios_sys_enq_int_rp
-80040944-80040950
-////////////////////////////////
-// system_bios_sys_deq_int_rp
-80040954-80040960
-////////////////////////////////
-// system_set_pad_enable_flag
-80040964-80040974
-////////////////////////////////
-// system_clear_pad_enable_flag
-80040978-80040988
-////////////////////////////////
-// system_patch_pad_error_handling_and_get_pad_enable_functions
-8004098C-800409F0
-////////////////////////////////
-// system_set_pad_output
-800409F4-80040A18
-////////////////////////////////
-// system_patch_optional_pad_output
-80040A1C-80040A94
-////////////////////////////////
-// system_bios_change_clear_pad_patch
-80040A98-80040AB0
-////////////////////////////////
-// func40ab4
-80040AB4-80040AD0
-////////////////////////////////
-// system_patch_no_pad_card_auto_ack
-80040AD4-80040B30
-////////////////////////////////
-// func40b34
-80040B34-80040B44
-////////////////////////////////
-// func40b48
-80040B48-80040B58
-////////////////////////////////
+80040604 func40604
+800406A0 func406a0
+8004073C func4073c
+8004076C func4076c
+800407A4 system_add_interrupt_priority1_handler
+80040824 func40824
+8004085C func4085c
+800408C4 func408c4
+80040904 system_bios_init_pad
+80040914 system_bios_start_pad
+80040924 system_bios_stop_pad
+80040934 system_bios_outdated_pad_init_and_start
+80040944 system_bios_sys_enq_int_rp
+80040954 system_bios_sys_deq_int_rp
+80040964 system_set_pad_enable_flag
+80040978 system_clear_pad_enable_flag
+8004098C system_patch_pad_error_handling_and_get_pad_enable_functions
+800409F4 system_set_pad_output
+80040A1C system_patch_optional_pad_output
+80040A98 system_bios_change_clear_pad_patch
+80040AB4 func40ab4
+80040AD4 system_patch_no_pad_card_auto_ack
+80040B34 func40b34
+80040B48 func40b48
 
 
 
 // SLPS_011_cdrom.cpp
-////////////////////////////////
-// system_cdrom_dma_callback_2
-80040B5C-80040B7C
-////////////////////////////////
-// system_cdrom_init
-80040B80-80040C14
-////////////////////////////////
-// func40c18
-80040C18-80040C3C
-////////////////////////////////
-// func40c40
-80040C40-80040C64
-////////////////////////////////
-// func40c68
-80040C68-80040C8C
-////////////////////////////////
-// system_bios_deliver_event
-80040C90-80040C9C
-////////////////////////////////
-// system_cdrom_get_status_code
-80040CA0-80040CAC
-////////////////////////////////
-// func40cb0
-80040CB0-80040CBC
-////////////////////////////////
-// func40cc0
-80040CC0-80040CCC
-////////////////////////////////
-// func40cd0
-80040CD0-80040CDC
-////////////////////////////////
-// system_cdrom_and_audio_init
-80040CE0-80040D48
-////////////////////////////////
-// func40d4c
-80040D4C-80040D68
-////////////////////////////////
-// system_psyq_cd_set_debug
-80040D6C-80040D80
-////////////////////////////////
-// func40d84
-80040D84-80040DB4
-////////////////////////////////
-// func40db8
-80040DB8-80040DE8
-////////////////////////////////
-// func40dec
-80040DEC-80040E08
-////////////////////////////////
-// func40e0c
-80040E0C-80040E28
-////////////////////////////////
-// system_cdrom_set_sync_callback
-80040E2C-80040E40
-////////////////////////////////
-// system_cdrom_set_ready_callback
-80040E44-80040E58
-////////////////////////////////
-// system_cdrom_cdl_command_exec_with_ret
-80040E5C-80040F90
-////////////////////////////////
-// system_cdrom_cdl_command_exec_without_ret
-80040F94-800410BC
-////////////////////////////////
-// system_cdrom_cdl_command_exec_with_ret_sync
-800410C0-80041200
-////////////////////////////////
-// system_cdrom_cdout_to_spu_ret_1
-80041204-80041220
-////////////////////////////////
-// system_cdrom_dma_to_main_memory_wrapper
-80041224-80041240
-////////////////////////////////
-// func41244
-80041244-80041260
-////////////////////////////////
-// system_cdrom_dma_callback
-80041264-80041284
-////////////////////////////////
-// system_psyq_cd_data_sync
-80041288-800412A4
-////////////////////////////////
-// system_psyq_cd_int_to_pos
-800412A8-800413A8
-////////////////////////////////
-// system_psyq_cd_pos_to_int
-800413AC-80041428
-////////////////////////////////
-// system_cdrom_get_response_from_interrupt
-8004142C-800419B0
-////////////////////////////////
-// system_psyq_cd_sync
-800419B4-80041C30
-////////////////////////////////
-// func41c34
-80041C34-80041EFC
-////////////////////////////////
-// system_cdrom_cdl_command_exec
-80041F00-80042318
-////////////////////////////////
-// system_cdrom_cdout_to_spu_ret_0
-8004231C-800423A0
-////////////////////////////////
-// func423a4
-800423A4-80042480
-////////////////////////////////
-// system_cdrom_audio_init
-80042484-80042574
-////////////////////////////////
-// system_cdrom_reinit_inter
-80042578-800425C4
-////////////////////////////////
-// system_cdrom_init_inter
-800425C8-800427B0
-////////////////////////////////
-// system_psyq_cd_data_sync_inter
-800427B4-8004291C
-////////////////////////////////
-// system_cdrom_dma_to_main_memory
-80042920-80042A1C
-////////////////////////////////
-// func42a20
-80042A20-80042B1C
-////////////////////////////////
-// system_cdrom_interrupt_handler
-80042B20-80042C00
-////////////////////////////////
-// system_cdrom_write_stringl_to_file_1
-80042C04-80042C50
-////////////////////////////////
-// system_cdrom_write_symbol_to_file_1
-80042C54-80042D04
-////////////////////////////////
-// func42d08
-80042D08-80042D34
-////////////////////////////////
-// func42d38
-80042D38-80042D64
-////////////////////////////////
-// system_cdrom_ready_callback_5
-80042D68-80043034
-////////////////////////////////
-// func43038
-80043038-80043130
-////////////////////////////////
-// func43134
-80043134-80043344
-////////////////////////////////
-// func43348
-80043348-800433E0
-////////////////////////////////
-// func433e4
-800433E4-800434E4
-////////////////////////////////
-// func434e8
-800434E8-800435B0
-////////////////////////////////
-// func435b4
-800435B4-800435C8
-////////////////////////////////
-// func435cc
-800435CC-800435E0
-////////////////////////////////
+80040B5C system_cdrom_dma_callback_2
+80040B80 system_cdrom_init
+80040C18 func40c18
+80040C40 func40c40
+80040C68 func40c68
+80040C90 system_bios_deliver_event
+80040CA0 system_cdrom_get_status_code
+80040CB0 func40cb0
+80040CC0 func40cc0
+80040CD0 func40cd0
+80040CE0 system_cdrom_and_audio_init
+80040D4C func40d4c
+80040D6C system_psyq_cd_set_debug
+80040D84 func40d84
+80040DB8 func40db8
+80040DEC func40dec
+80040E0C func40e0c
+80040E2C system_cdrom_set_sync_callback
+80040E44 system_cdrom_set_ready_callback
+80040E5C system_cdrom_cdl_command_exec_with_ret
+80040F94 system_cdrom_cdl_command_exec_without_ret
+800410C0 system_cdrom_cdl_command_exec_with_ret_sync
+80041204 system_cdrom_cdout_to_spu_ret_1
+80041224 system_cdrom_dma_to_main_memory_wrapper
+80041244 func41244
+80041264 system_cdrom_dma_callback
+80041288 system_psyq_cd_data_sync
+800412A8 system_psyq_cd_int_to_pos
+800413AC system_psyq_cd_pos_to_int
+8004142C system_cdrom_get_response_from_interrupt
+800419B4 system_psyq_cd_sync
+80041C34 func41c34
+80041F00 system_cdrom_cdl_command_exec
+8004231C system_cdrom_cdout_to_spu_ret_0
+800423A4 func423a4
+80042484 system_cdrom_audio_init
+80042578 system_cdrom_reinit_inter
+800425C8 system_cdrom_init_inter
+800427B4 system_psyq_cd_data_sync_inter
+80042920 system_cdrom_dma_to_main_memory
+80042A20 func42a20
+80042B20 system_cdrom_interrupt_handler
+80042C04 system_cdrom_write_stringl_to_file_1
+80042C54 system_cdrom_write_symbol_to_file_1
+80042D08 func42d08
+80042D38 func42d38
+80042D68 system_cdrom_ready_callback_5
+80043038 func43038
+80043134 func43134
+80043348 func43348
+800433E4 func433e4
+800434E8 func434e8
+800435B4 func435b4
+800435CC func435cc
 
 
 
 // SLPS_011_graphic_library_basic.cpp
-////////////////////////////////
-// func435e4
-800435E4-800436CC
-////////////////////////////////
-// func436d0
-800436D0-80043734
-////////////////////////////////
-// func43738
-80043738-8004379C
-////////////////////////////////
-// system_psyq_set_def_drawenv
-800437A0-80043854
-////////////////////////////////
-// system_psyq_set_def_dispenv
-80043858-80043890
-////////////////////////////////
-// system_psyq_get_tpage
-80043894-800438CC
-////////////////////////////////
-// system_graphic_get_clut_by_param
-800438D0-800438E4
-////////////////////////////////
-// system_psyq_dump_tpage
-800438E8-80043944
-////////////////////////////////
-// system_psyq_dump_clut
-80043948-80043984
-////////////////////////////////
-// func43988
-80043988-800439A0
-////////////////////////////////
-// system_psyq_is_end_prim
-800439A4-800439BC
-////////////////////////////////
-// system_psyq_add_prim
-800439C0-800439F8
-////////////////////////////////
-// system_psyq_add_prims
-800439FC-80043A34
-////////////////////////////////
-// system_psyq_cat_prim
-80043A38-80043A58
-////////////////////////////////
-// system_psyq_term_prim
-80043A5C-80043A70
-////////////////////////////////
-// system_psyq_set_semi_trans
-80043A74-80043A98
-////////////////////////////////
-// system_psyq_set_shade_tex
-80043A9C-80043AC0
-////////////////////////////////
-// system_psyq_set_poly_f3
-80043AC4-80043AD4
-////////////////////////////////
-// system_psyq_set_poly_ft3
-80043AD8-80043AE8
-////////////////////////////////
-// system_psyq_set_poly_g3
-80043AEC-80043AFC
-////////////////////////////////
-// system_psyq_set_poly_gt3
-80043B00-80043B10
-////////////////////////////////
-// system_psyq_set_poly_f4
-80043B14-80043B24
-////////////////////////////////
-// system_psyq_set_poly_ft4
-80043B28-80043B38
-////////////////////////////////
-// system_psyq_set_poly_g4
-80043B3C-80043B4C
-////////////////////////////////
-// system_psyq_set_poly_gt4
-80043B50-80043B60
-////////////////////////////////
-// system_psyq_set_sprt8
-80043B64-80043B74
-////////////////////////////////
-// system_psyq_set_sprt16
-80043B78-80043B88
-////////////////////////////////
-// system_psyq_set_sprt
-80043B8C-80043B9C
-////////////////////////////////
-// system_psyq_set_tile1
-80043BA0-80043BB0
-////////////////////////////////
-// system_psyq_set_tile8
-80043BB4-80043BC4
-////////////////////////////////
-// system_psyq_set_tile16
-80043BC8-80043BD8
-////////////////////////////////
-// system_psyq_set_tile
-80043BDC-80043BEC
-////////////////////////////////
-// system_psyq_set_line_f2
-80043BF0-80043C00
-////////////////////////////////
-// system_psyq_set_line_g2
-80043C04-80043C14
-////////////////////////////////
-// system_psyq_set_line_f3
-80043C18-80043C34
-////////////////////////////////
-// system_psyq_set_line_g3
-80043C38-80043C54
-////////////////////////////////
-// system_psyq_set_line_f4
-80043C58-80043C74
-////////////////////////////////
-// system_psyq_set_line_g4
-80043C78-80043C94
-////////////////////////////////
-// system_graphic_create_texpage_settings_packet
-80043C98-80043CC0
-////////////////////////////////
-// system_graphic_create_copy_rectangle_packet
-80043CC4-80043D20
-////////////////////////////////
-// func43d24
-80043D24-80043D8C
-////////////////////////////////
-// func43d90
-80043D90-80043DC4
-////////////////////////////////
-// system_psyq_dump_draw_env
-80043DC8-80043ED8
-////////////////////////////////
-// system_psyq_dump_disp_env
-80043EDC-80043F84
-////////////////////////////////
-// system_psyq_reset_graph
-80043F88-80044108
-////////////////////////////////
-// system_psyq_set_graph_reverse
-8004410C-8004421C
-////////////////////////////////
-// system_psyq_set_graph_debug
-80044220-80044280
-////////////////////////////////
-// system_psyq_set_grap_que
-80044284-8004432C
-////////////////////////////////
-// system_gpu_get_type
-80044330-8004433C
-////////////////////////////////
-// system_psyq_get_graph_debug
-80044340-8004434C
-////////////////////////////////
-// system_psyq_draw_sync_callback
-80044350-800443A8
-////////////////////////////////
-// system_psyq_set_disp_mask
-800443AC-80044444
-////////////////////////////////
-// system_draw_sync
-80044448-800444B0
-////////////////////////////////
-// system_graphic_debug_print_rect
-800444B4-800445D8
-////////////////////////////////
-// system_clear_image
-800445DC-8004466C
-////////////////////////////////
-// system_clear_image_with_alpha
-80044670-0044708
-////////////////////////////////
-// system_load_image
-8004470C-8004476C
-////////////////////////////////
-// system_store_image
-80044770-800447D0
-////////////////////////////////
-// system_move_image
-800447D4-80044894
-////////////////////////////////
-// system_psyq_clear_otag
-80044898-8004494C
-////////////////////////////////
-// system_psyq_clear_otag_r
-80044950-800449E4
-////////////////////////////////
-// func449e8
-800449E8-80044A44
-////////////////////////////////
-// system_psyq_draw_otag
-80044A48-80044AB8
-////////////////////////////////
-// system_psyq_put_drawenv
-80044ABC-80044BBC
-////////////////////////////////
-// system_psyq_draw_otag_env
-80044BC0-80044CD8
-////////////////////////////////
-// system_psyq_get_drawenv
-80044CDC-80044D10
-////////////////////////////////
-// system_psyq_put_dispenv
-80044D14-800451B8
-////////////////////////////////
-// system_psyq_get_dispenv
-800451BC-800451F0
-////////////////////////////////
-// system_gpu_get_odd_even_line
-800451F4-80045220
-////////////////////////////////
-// system_gpu_create_texture_window_setting_packet
-80045224-8004525C
-////////////////////////////////
-// system_gpu_create_set_drawing_area_packet
-80045260-800452E0
-////////////////////////////////
-// system_gpu_create_set_drawing_offset_packet
-800452E4-80045324
-////////////////////////////////
-// system_gpu_create_mask_bit_setting_packet
-80045328-80045350
-////////////////////////////////
-// system_psyq_set_draw_mode
-80045354-800453A8
-////////////////////////////////
-// system_psyq_set_drawenv
-800453AC-800455C0
-////////////////////////////////
-// system_gpu_create_set_draw_env_packet
-800455C4-80045850
-////////////////////////////////
-// system_gpu_get_draw_mode_setting_command
-80045854-800458A8
-////////////////////////////////
-// system_gpu_get_set_drawing_area_tl_command
-800458AC-80045974
-////////////////////////////////
-// system_gpu_get_set_drawing_area_br_command
-80045978-80045A40
-////////////////////////////////
-// system_gpu_get_set_drawing_offset_command
-80045A44-80045A84
-////////////////////////////////
-// system_gpu_get_texture_window_setting_command
-80045A88-80045B08
-////////////////////////////////
-// func45b0c
-80045B0C-80045BB8
-////////////////////////////////
-// system_gpu_get_gpu_stat
-80045BBC-80045BD0
-////////////////////////////////
-// func45bd4
-80045BD4-80045CB8
-////////////////////////////////
-// system_gpu_clear_image_transfer_func
-80045CBC-80045F14
-////////////////////////////////
-// system_gpu_load_image_transfer_func
-80045F18-80046150
-////////////////////////////////
-// system_gpu_store_image_transfer_func
-80046154-800463D4
-////////////////////////////////
-// func463d8
-800463D8-800463FC
-////////////////////////////////
-// func46400
-80046400-80046410
-////////////////////////////////
-// func46414
-80046414-80046460
-////////////////////////////////
-// system_gpu_start_dma_to_gpu
-80046464-800464AC
-////////////////////////////////
-// system_get_gpu_info
-800464B0-800464DC
-////////////////////////////////
-// func464e0
-800464E0-80046500
-////////////////////////////////
-// system_gpu_render_queue_item_add_and_exec
-80046504-800467E0
-////////////////////////////////
-// system_gpu_render_queue_item_exec
-800467E4-80046ACC
-////////////////////////////////
-// func46ad0
-80046AD0-80046C28
-////////////////////////////////
-// system_gpu_draw_sync_internal
-80046C2C-80046D70
-////////////////////////////////
-// system_gpu_dma_timeout_init
-80046D74-80046DA4
-////////////////////////////////
-// system_gpu_dma_timeout_check
-80046DA8-80046F10
-////////////////////////////////
-// func46f14
-80046F14-80046FEC
-////////////////////////////////
-// system_graphic_set_mem
-80046FF0-80047018
-////////////////////////////////
-// system_bios_gpu_cw
-8004701C-80047028
-////////////////////////////////
-// system_set_texture_address
-8004702C-80047038
-////////////////////////////////
-// system_read_tim
-8004703C-800470A0
-////////////////////////////////
-// func470a4
-800470A4-800470E0
-////////////////////////////////
-// func470e4
-800470E4-8004738C
-////////////////////////////////
-// func47390
-80047390-800474AC
-////////////////////////////////
-// func474b0
-800474B0-80047644
-////////////////////////////////
-// func47648
-80047648-80048924
-////////////////////////////////
-// system_graphic_fill_buffer
-80048928-80048954
-////////////////////////////////
-// func48958
-80048958-80048A60
-////////////////////////////////
-80048A64	bne    t0, t1, $800657a8
-80048A68	00409F9C	úü@.
-////////////////////////////////
-// system_psyq_init_geom
-80048A6C-80048AF0
-////////////////////////////////
-// system_square_root
-80048AF4-80048B7C
-////////////////////////////////
-// func48b80
-80048B80-80048C0C
-////////////////////////////////
-// system_gte_normalize_word_vector_T0_T1_T2_to_half
-80048C10
-// system_gte_normalize_word_vector_T0_T1_T2_to_word
-80048C24
-// system_gte_normalize_half_vector_T0_T1_T2_to_half
-80048C50
-// there are few entry points to this function
-80048C10-80048C7C
-////////////////////////////////
-// system_gte_normalize_vector_T0_T1_T2
-80048C80-80048D38
-////////////////////////////////
-// func48d3c
-80048D3C-80048E1C
-////////////////////////////////
-// func48e20
-80048E20-80048E70
-////////////////////////////////
-// func48e74
-80048E74-80048EC0
-////////////////////////////////
-// func48ec4
-80048EC4-80048F48
-////////////////////////////////
-// func48f4c
-80048F4C-80048FD0
-////////////////////////////////
-// func48fd4
-80048FD4-80049030
-////////////////////////////////
-// func49034
-80049034-800490B0
-////////////////////////////////
-// system_gte_matrix_multiplication_to_A2
-800490B4-800491C0
-////////////////////////////////
-// system_gte_matrix_mult_and_trans
-800491C4-80049320
-////////////////////////////////
-// system_gte_apply_matrix_lv
-80049324-80049480
-////////////////////////////////
-// system_gte_rotate_vector
-80049484-800494B0
-////////////////////////////////
-// system_psyq_push_matrix
-800494B4-80049550
-////////////////////////////////
-// system_psyq_pop_matrix
-80049554-800495F0
-////////////////////////////////
-// func495f4
-800495F4-80049720
-////////////////////////////////
-// func49724
-80049724-80049830
-////////////////////////////////
-// func49834
-80049834-80049970
-////////////////////////////////
-// func49974
-80049974-80049A80
-////////////////////////////////
-// system_gte_matrix_multiplication_to_A1
-80049A84-80049B90
-////////////////////////////////
-// system_gte_apply_matrix
-80049B94-80049BE0
-////////////////////////////////
-// func49be4
-80049BE4-80049C40
-////////////////////////////////
-// func49c44
-80049C44-80049C70
-////////////////////////////////
-// system_gte_multiply_matrix_by_vector
-80049C74-80049DA0
-////////////////////////////////
-// system_psyq_set_rot_matrix
-80049DA4-80049DD0
-////////////////////////////////
-// system_psyq_set_light_matrix
-80049DD4-80049E00
-////////////////////////////////
-// system_psyq_set_color_matrix
-80049E04-80049E30
-////////////////////////////////
-// system_psyq_set_trans_matrix
-80049E34-80049E50
-////////////////////////////////
-// func49e54
-80049E54-80049E60
-////////////////////////////////
-// func49e64
-80049E64-80049E70
-////////////////////////////////
-// func49e74
-80049E74-80049E80
-////////////////////////////////
-// func49e84
-80049E84-80049EA0
-////////////////////////////////
-// func49ea4
-80049EA4-80049EB4
-////////////////////////////////
-// func49eb8
-80049EB8-80049EC8
-////////////////////////////////
-// func49ecc
-80049ECC-80049ED4
-////////////////////////////////
-// func49ed8
-80049ED8-80049EE8
-////////////////////////////////
-// func49eec
-80049EEC-80049F00
-////////////////////////////////
-// func49f04
-80049F04-80049F14
-////////////////////////////////
-// func49f18
-80049F18-80049F28
-////////////////////////////////
-// func49f2c
-80049F2C-80049F3C
-////////////////////////////////
-// func49f40
-80049F40-80049F48
-////////////////////////////////
-// func49f4c
-80049F4C-80049F54
-////////////////////////////////
-// func49f58
-80049F58-80049F60
-////////////////////////////////
-// func49f64
-80049F64-80049F80
-////////////////////////////////
-// func49f84
-80049F84-80049F90
-////////////////////////////////
-// func49f94
-80049F94-80049FB0
-////////////////////////////////
-// func49fb4
-80049FB4-80049FD0
-////////////////////////////////
-// system_psyq_set_geom_offset
-80049FD4-80049FF0
-////////////////////////////////
-// system_psyq_set_geom_screen
-80049FF4-8004A000
-////////////////////////////////
-// func4a004
-8004A004-8004A024
-////////////////////////////////
-// func4a028
-8004A028-8004A040
-////////////////////////////////
-// system_psyq_normal_color
-8004A044-8004A05C
-////////////////////////////////
-// system_psyq_normal_color_3
-8004A060-8004A098
-////////////////////////////////
-// func4a09c
-8004A09C-8004A0BC
-////////////////////////////////
-// func4a0c0
-8004A0C0-8004A104
-////////////////////////////////
-// system_psyq_normal_color_col
-8004A108-8004A124
-////////////////////////////////
-// system_psyq_normal_color_col_3
-8004A128-8004A168
-////////////////////////////////
-// func4a16c
-8004A16C-8004A190
-////////////////////////////////
-// func4a194
-8004A194-8004A1B4
-////////////////////////////////
-// func4a1b8
-8004A1B8-8004A1C4
-////////////////////////////////
-// func4a1c8
-8004A1C8-8004A1E0
-////////////////////////////////
-// func4a1e4
-8004A1E4-8004A208
-////////////////////////////////
-// func4a20c
-8004A20C-8004A230
-////////////////////////////////
-// func4a234
-8004A234-8004A26C
-////////////////////////////////
-// func4a270
-8004A270-8004A290
-////////////////////////////////
-// func4a294
-8004A294-8004A2B8
-////////////////////////////////
-// system_gte_square_of_vector
-8004A2BC-8004A2E0
-////////////////////////////////
-// func4a2e4
-8004A2E4-8004A300
-////////////////////////////////
-// func4a304
-8004A304-8004A324
-////////////////////////////////
-// system_gte_outer_product2_A0_A1_to_A2
-8004A328-8004A37C
-////////////////////////////////
-// system_gte_outer_product_A0_A1_to_A2
-8004A380-8004A3D4
-////////////////////////////////
-// func4a3d8
-8004A3D8-8004A3F0
-////////////////////////////////
-// func4a3f4
-8004A3F4-8004A420
-////////////////////////////////
-// func4a424
-8004A424-8004A458
-////////////////////////////////
-// func4a45c
-8004A45C-8004A490
-////////////////////////////////
-// func4a494
-8004A494-8004A4C0
-////////////////////////////////
-// func4a4c4
-8004A4C4-8004A4F0
-////////////////////////////////
-// system_psyq_rot_trans_pers
-8004A4F4-8004A520
-////////////////////////////////
-// func4a524
-8004A524-8004A580
-////////////////////////////////
-// system_gte_rotate_translate_vector
-8004A584-8004A5B0
-////////////////////////////////
-// system_side_of_vector
-8004A5B4-8004A5E0
-////////////////////////////////
-// system_psyq_rot_trans_pers_4
-8004A5E4-8004A660
-////////////////////////////////
-// system_psyq_rot_average_4
-8004A664-8004A6E0
-////////////////////////////////
-// system_psyq_rot_nclip_4
-8004A6E4-8004A790
-////////////////////////////////
-// func4a794
-8004A794-8004A7D0
-////////////////////////////////
-// func4a7d4
-8004A7D4-8004AA60
-////////////////////////////////
-// func4aa64
-8004AA64-8004ACF0
-////////////////////////////////
-// func4acf4
-8004ACF4-8004AE90
-////////////////////////////////
-// func4ae94
-8004AE94-8004B030
-////////////////////////////////
-// func4b034
-8004B034-8004B1D0
-////////////////////////////////
-// system_get_rotation_based_on_vector_x_y
-8004B1D4-8004B350
-////////////////////////////////
+800435E4 func435e4
+800436D0 func436d0
+80043738 func43738
+800437A0 system_psyq_set_def_drawenv
+80043858 system_psyq_set_def_dispenv
+80043894 system_psyq_get_tpage
+800438D0 system_graphic_get_clut_by_param
+800438E8 system_psyq_dump_tpage
+80043948 system_psyq_dump_clut
+80043988 func43988
+800439A4 system_psyq_is_end_prim
+800439C0 system_psyq_add_prim
+800439FC system_psyq_add_prims
+80043A38 system_psyq_cat_prim
+80043A5C system_psyq_term_prim
+80043A74 system_psyq_set_semi_trans
+80043A9C system_psyq_set_shade_tex
+80043AC4 system_psyq_set_poly_f3
+80043AD8 system_psyq_set_poly_ft3
+80043AEC system_psyq_set_poly_g3
+80043B00 system_psyq_set_poly_gt3
+80043B14 system_psyq_set_poly_f4
+80043B28 system_psyq_set_poly_ft4
+80043B3C system_psyq_set_poly_g4
+80043B50 system_psyq_set_poly_gt4
+80043B64 system_psyq_set_sprt8
+80043B78 system_psyq_set_sprt16
+80043B8C system_psyq_set_sprt
+80043BA0 system_psyq_set_tile1
+80043BB4 system_psyq_set_tile8
+80043BC8 system_psyq_set_tile16
+80043BDC system_psyq_set_tile
+80043BF0 system_psyq_set_line_f2
+80043C04 system_psyq_set_line_g2
+80043C18 system_psyq_set_line_f3
+80043C38 system_psyq_set_line_g3
+80043C58 system_psyq_set_line_f4
+80043C78 system_psyq_set_line_g4
+80043C98 system_graphic_create_texpage_settings_packet
+80043CC4 system_graphic_create_copy_rectangle_packet
+80043D24 func43d24
+80043D90 func43d90
+80043DC8 system_psyq_dump_draw_env
+80043EDC system_psyq_dump_disp_env
+80043F88 system_psyq_reset_graph
+8004410C system_psyq_set_graph_reverse
+80044220 system_psyq_set_graph_debug
+80044284 system_psyq_set_grap_que
+80044330 system_gpu_get_type
+80044340 system_psyq_get_graph_debug
+80044350 system_psyq_draw_sync_callback
+800443AC system_psyq_set_disp_mask
+80044448 system_draw_sync
+800444B4 system_graphic_debug_print_rect
+800445DC system_clear_image
+80044670 system_clear_image_with_alpha
+8004470C system_load_image
+80044770 system_store_image
+800447D4 system_move_image
+80044898 system_psyq_clear_otag
+80044950 system_psyq_clear_otag_r
+800449E8 func449e8
+80044A48 system_psyq_draw_otag
+80044ABC system_psyq_put_drawenv
+80044BC0 system_psyq_draw_otag_env
+80044CDC system_psyq_get_drawenv
+80044D14 system_psyq_put_dispenv
+800451BC system_psyq_get_dispenv
+800451F4 system_gpu_get_odd_even_line
+80045224 system_gpu_create_texture_window_setting_packet
+80045260 system_gpu_create_set_drawing_area_packet
+800452E4 system_gpu_create_set_drawing_offset_packet
+80045328 system_gpu_create_mask_bit_setting_packet
+80045354 system_psyq_set_draw_mode
+800453AC system_psyq_set_drawenv
+800455C4 system_gpu_create_set_draw_env_packet
+80045854 system_gpu_get_draw_mode_setting_command
+800458AC system_gpu_get_set_drawing_area_tl_command
+80045978 system_gpu_get_set_drawing_area_br_command
+80045A44 system_gpu_get_set_drawing_offset_command
+80045A88 system_gpu_get_texture_window_setting_command
+80045B0C func45b0c
+80045BBC system_gpu_get_gpu_stat
+80045BD4 func45bd4
+80045CBC system_gpu_clear_image_transfer_func
+80045F18 system_gpu_load_image_transfer_func
+80046154 system_gpu_store_image_transfer_func
+800463D8 func463d8
+80046400 func46400
+80046414 func46414
+80046464 system_gpu_start_dma_to_gpu
+800464B0 system_get_gpu_info
+800464E0 func464e0
+80046504 system_gpu_render_queue_item_add_and_exec
+800467E4 system_gpu_render_queue_item_exec
+80046AD0 func46ad0
+80046C2C system_gpu_draw_sync_internal
+80046D74 system_gpu_dma_timeout_init
+80046DA8 system_gpu_dma_timeout_check
+80046F14 func46f14
+80046FF0 system_graphic_set_mem
+8004701C system_bios_gpu_cw
+8004702C system_set_texture_address
+8004703C system_read_tim
+800470A4 func470a4
+800470E4 func470e4
+80047390 func47390
+800474B0 func474b0
+80047648 func47648
+80048928 system_graphic_fill_buffer
+80048958 func48958
+80048A6C system_psyq_init_geom
+80048AF4 system_square_root
+80048B80 func48b80
+80048C10 system_gte_normalize_word_vector_T0_T1_T2_to_half
+80048C24 system_gte_normalize_word_vector_T0_T1_T2_to_word
+80048C50 system_gte_normalize_half_vector_T0_T1_T2_to_half
+80048C80 system_gte_normalize_vector_T0_T1_T2
+80048D3C func48d3c
+80048E20 func48e20
+80048E74 func48e74
+80048EC4 func48ec4
+80048F4C func48f4c
+80048FD4 func48fd4
+80049034 func49034
+800490B4 system_gte_matrix_multiplication_to_A2
+800491C4 system_gte_matrix_mult_and_trans
+80049324 system_gte_apply_matrix_lv
+80049484 system_gte_rotate_vector
+800494B4 system_psyq_push_matrix
+80049554 system_psyq_pop_matrix
+800495F4 func495f4
+80049724 func49724
+80049834 func49834
+80049974 func49974
+80049A84 system_gte_matrix_multiplication_to_A1
+80049B94 system_gte_apply_matrix
+80049BE4 func49be4
+80049C44 func49c44
+80049C74 system_gte_multiply_matrix_by_vector
+80049DA4 system_psyq_set_rot_matrix
+80049DD4 system_psyq_set_light_matrix
+80049E04 system_psyq_set_color_matrix
+80049E34 system_psyq_set_trans_matrix
+80049E54 func49e54
+80049E64 func49e64
+80049E74 func49e74
+80049E84 func49e84
+80049EA4 func49ea4
+80049EB8 func49eb8
+80049ECC func49ecc
+80049ED8 func49ed8
+80049EEC func49eec
+80049F04 func49f04
+80049F18 func49f18
+80049F2C func49f2c
+80049F40 func49f40
+80049F4C func49f4c
+80049F58 func49f58
+80049F64 func49f64
+80049F84 func49f84
+80049F94 func49f94
+80049FB4 func49fb4
+80049FD4 system_psyq_set_geom_offset
+80049FF4 system_psyq_set_geom_screen
+8004A004 func4a004
+8004A028 func4a028
+8004A044 system_psyq_normal_color
+8004A060 system_psyq_normal_color_3
+8004A09C func4a09c
+8004A0C0 func4a0c0
+8004A108 system_psyq_normal_color_col
+8004A128 system_psyq_normal_color_col_3
+8004A16C func4a16c
+8004A194 func4a194
+8004A1B8 func4a1b8
+8004A1C8 func4a1c8
+8004A1E4 func4a1e4
+8004A20C func4a20c
+8004A234 func4a234
+8004A270 func4a270
+8004A294 func4a294
+8004A2BC system_gte_square_of_vector
+8004A2E4 func4a2e4
+8004A304 func4a304
+8004A328 system_gte_outer_product2_A0_A1_to_A2
+8004A380 system_gte_outer_product_A0_A1_to_A2
+8004A3D8 func4a3d8
+8004A3F4 func4a3f4
+8004A424 func4a424
+8004A45C func4a45c
+8004A494 func4a494
+8004A4C4 func4a4c4
+8004A4F4 system_psyq_rot_trans_pers
+8004A524 func4a524
+8004A584 system_gte_rotate_translate_vector
+8004A5B4 system_side_of_vector
+8004A5E4 system_psyq_rot_trans_pers_4
+8004A664 system_psyq_rot_average_4
+8004A6E4 system_psyq_rot_nclip_4
+8004A794 func4a794
+8004A7D4 func4a7d4
+8004AA64 func4aa64
+8004ACF4 func4acf4
+8004AE94 func4ae94
+8004B034 func4b034
+8004B1D4 system_get_rotation_based_on_vector_x_y
 
 
 
 // SLPS_011_system.cpp
-////////////////////////////////
-// system_patch_bios_exception_handler
-8004B354-8004B3B8
-////////////////////////////////
-// system_bios_new_exception_handler
-8004B3BC-8004B3F0
-////////////////////////////////
-// system_psyq_vsync
-8004B3F4-8004B538
-////////////////////////////////
-// func4b53c
-8004B53C-8004B5D4
-////////////////////////////////
-// system_bios_change_clear_rcnt
-8004B5D8-8004B5E4
-////////////////////////////////
-// system_interrupts_timer_dma_initialize
-8004B5E8-8004B614
-////////////////////////////////
-// system_int_set_interrupt_callback
-8004B618-8004B644
-////////////////////////////////
-// system_dma_additional_callback
-8004B648-8004B674
-////////////////////////////////
-// system_call_main_timer_additional_callback_4
-8004B678-8004B6A8
-////////////////////////////////
-// system_call_main_timer_additional_callback_any
-8004B6AC-8004B6D8
-////////////////////////////////
-// func4b6dc
-8004B6DC-8004B708
-////////////////////////////////
-// func4b70c
-8004B70C-8004B738
-////////////////////////////////
-// func4b73c
-8004B73C-8004B748
-////////////////////////////////
-// system_get_interrupt_mask_register
-8004B74C-8004B760
-////////////////////////////////
-// system_set_interrupt_mask_register
-8004B764-8004B77C
-////////////////////////////////
-// system_interrupts_timer_dma_initialize_inter
-8004B780-8004B858
-////////////////////////////////
-// system_int_handler
-8004B85C-8004BA40
-////////////////////////////////
-// system_int_set_interrupt_callback_inter
-8004BA44-8004BB94
-////////////////////////////////
-// system_interrupts_timer_dma_store
-8004BB98-8004BC40
-////////////////////////////////
-// system_interrupts_timer_dma_restore
-8004BC44-8004BCC8
-////////////////////////////////
-// system_int_memzero
-8004BCCC-8004BCF4
-////////////////////////////////
-// system_int_store_registers_to_mem
-8004BCF8-8004BD30
-////////////////////////////////
-// system_int_restore_mem_to_registers
-8004BD34-8004BD74
-////////////////////////////////
-8004BD78	bne    t0, zero, $80068abc
-8004BD7C	0040809C	úÄ@.
-////////////////////////////////
-// system_bios_cd_remove
-8004BD80-8004BD94
-////////////////////////////////
-// system_bios_return_from_exception
-8004BD98-8004BDA4
-////////////////////////////////
-// system_bios_set_default_exit_from_exception
-8004BDA8-8004BDB4
-////////////////////////////////
-// system_bios_set_custom_exit_from_exception
-8004BDB8-8004BDC4
-////////////////////////////////
-// system_main_timer_initialize
-8004BDC8-8004BE1C
-////////////////////////////////
-// system_main_timer_callback
-8004BE20-8004BE94
-////////////////////////////////
-// system_main_timer_additional_callback_inter
-8004BE98-8004BEC0
-////////////////////////////////
-// func4bec4
-8004BEC4-8004BEEC
-////////////////////////////////
-// system_dma_callback_initialize
-8004BEF0-8004BF3C
-////////////////////////////////
-// system_int_dma_handler
-8004BF40-8004C0C0
-////////////////////////////////
-// system_dma_additional_callback_inter
-8004C0C4-8004C168
-////////////////////////////////
-// func4c16c
-8004C16C-8004C194
-////////////////////////////////
-// system_psyq_set_video_mode
-8004C198-8004C1AC
-////////////////////////////////
-// system_psyq_get_video_mode
-8004C1B0-8004C1BC
-////////////////////////////////
-// system_devkit_pc_open
-8004C1C0-8004C1DC
-////////////////////////////////
-// system_devkit_pc_close
-8004C1E0-8004C1EC
-////////////////////////////////
-// system_devkit_pc_seek
-8004C1F0-8004C210
-////////////////////////////////
-// system_devkit_pc_create
-8004C214-8004C230
-////////////////////////////////
-// system_devkit_pc_init
-8004C234-8004C23C
-////////////////////////////////
-// system_devkit_pc_read_all
-8004C240-8004C2FC
-////////////////////////////////
-// system_devkit_pc_read
-8004C300-8004C314
-////////////////////////////////
-// system_devkit_pc_write_all
-8004C318-8004C3D4
-////////////////////////////////
-// system_devkit_pc_write
-8004C3D8-8004C3EC
-////////////////////////////////
+8004B354 system_patch_bios_exception_handler
+8004B3BC system_bios_new_exception_handler
+8004B3F4 system_psyq_vsync
+8004B53C func4b53c
+8004B5D8 system_bios_change_clear_rcnt
+8004B5E8 system_interrupts_timer_dma_initialize
+8004B618 system_int_set_interrupt_callback
+8004B648 system_dma_additional_callback
+8004B678 system_call_main_timer_additional_callback_4
+8004B6AC system_call_main_timer_additional_callback_any
+8004B6DC func4b6dc
+8004B70C func4b70c
+8004B73C func4b73c
+8004B74C system_get_interrupt_mask_register
+8004B764 system_set_interrupt_mask_register
+8004B780 system_interrupts_timer_dma_initialize_inter
+8004B85C system_int_handler
+8004BA44 system_int_set_interrupt_callback_inter
+8004BB98 system_interrupts_timer_dma_store
+8004BC44 system_interrupts_timer_dma_restore
+8004BCCC system_int_memzero
+8004BCF8 system_int_store_registers_to_mem
+8004BD34 system_int_restore_mem_to_registers
+8004BD80 system_bios_cd_remove
+8004BD98 system_bios_return_from_exception
+8004BDA8 system_bios_set_default_exit_from_exception
+8004BDB8 system_bios_set_custom_exit_from_exception
+8004BDC8 system_main_timer_initialize
+8004BE20 system_main_timer_callback
+8004BE98 system_main_timer_additional_callback_inter
+8004BEC4 func4bec4
+8004BEF0 system_dma_callback_initialize
+8004BF40 system_int_dma_handler
+8004C0C4 system_dma_additional_callback_inter
+8004C16C func4c16c
+8004C198 system_psyq_set_video_mode
+8004C1B0 system_psyq_get_video_mode
+8004C1C0 system_devkit_pc_open
+8004C1E0 system_devkit_pc_close
+8004C1F0 system_devkit_pc_seek
+8004C214 system_devkit_pc_create
+8004C234 system_devkit_pc_init
+8004C240 system_devkit_pc_read_all
+8004C300 system_devkit_pc_read
+8004C318 system_devkit_pc_write_all
+8004C3D8 system_devkit_pc_write
 
 
 
 // SLPS_011_sound_spu.cpp
-////////////////////////////////
-// system_psyq_spu_init
-8004C3F0-8004C40C
-////////////////////////////////
-// func4c410
-8004C410-8004C504
-////////////////////////////////
-// func4c508
-8004C508-8004C580
-////////////////////////////////
-// func4c584
-8004C584-8004C814
-////////////////////////////////
-// system_spu_ram_manual_write
-8004C818-8004C9E0
-////////////////////////////////
-// func4c9e4
-8004C9E4-8004CAA0
-////////////////////////////////
-// func4caa4
-8004CAA4-8004CB4C
-////////////////////////////////
-// func4cb50
-8004CB50-8004CDDC
-////////////////////////////////
-// func4cde0
-8004CDE0-8004CE64
-////////////////////////////////
-// func4ce68
-8004CE68-8004CECC
-////////////////////////////////
-// func4ced0
-8004CED0-8004CF14
-////////////////////////////////
-// func4cf18
-8004CF18-8004CFB8
-////////////////////////////////
-// func4cfbc
-8004CFBC-8004CFF4
-////////////////////////////////
-// func4cff8
-8004CFF8-8004D054
-////////////////////////////////
-// func4d058
-8004D058-8004D080
-////////////////////////////////
-// func4d084
-8004D084-8004D0AC
-////////////////////////////////
-// system_sound_wait_sync
-8004D0B0-8004D114
-////////////////////////////////
-// system_sound_spu_dma_callback
-8004D118-8004D138
-////////////////////////////////
-// func4d13c
-8004D13C-8004D1B4
-////////////////////////////////
-// func4d1b8
-8004D1B8-8004D208
-////////////////////////////////
-// system_psyq_spu_set_noise
-8004D20C-8004D258
-////////////////////////////////
-// system_psyq_spu_set_reverb
-8004D25C-8004D328
-////////////////////////////////
-// func4d32c
-8004D32C-8004D3A8
-////////////////////////////////
-// func4d3ac
-8004D3AC-8004D434
-////////////////////////////////
-// func4d438
-8004D438-8004D4A4
-////////////////////////////////
-// system_sound_spu_irq9
-8004D4A8-8004D5E4
-////////////////////////////////
-// system_sound_spu_set_irq9_callback
-8004D5E8-8004D628
-////////////////////////////////
-// system_sound_set_spu_interrupt_callback
-8004D62C-8004D64C
-////////////////////////////////
-// func4d650
-8004D650-8004D6BC
-////////////////////////////////
-// func4d6c0
-8004D6C0-8004D71C
-////////////////////////////////
-// func4d720
-8004D720-8004D77C
-////////////////////////////////
-// func4d780
-8004D780-8004D7D4
-////////////////////////////////
-// func4d7d8
-8004D7D8-8004D808
-////////////////////////////////
-// system_sound_set_spu_dma_stop_callback
-8004D80C-8004D82C
-////////////////////////////////
-// system_sound_spu_main_and_cd_volume
-8004D830-8004DBC0
-////////////////////////////////
-// system_psyq_set_reverb_type
-8004DBC4-8004DD9C
-////////////////////////////////
-// system_sound_spu_update_reverb_registers
-8004DDA0-8004E26C
-////////////////////////////////
-// func4e270
-8004E270-8004E408
-////////////////////////////////
-// system_bios_wait_event
-8004E40C-8004E418
-////////////////////////////////
-// system_psyq_set_reverb_volume
-8004E41C-8004E444
-////////////////////////////////
-// system_psyq_set_reverb_delay
-8004E448-8004E55C
-////////////////////////////////
-// system_psyq_set_reverb_feedback
-8004E560-8004E618
-////////////////////////////////
-// func4e61c
-8004E61C-8004E628
-////////////////////////////////
+8004C3F0 system_psyq_spu_init
+8004C410 func4c410
+8004C508 func4c508
+8004C584 func4c584
+8004C818 system_spu_ram_manual_write
+8004C9E4 func4c9e4
+8004CAA4 func4caa4
+8004CB50 func4cb50
+8004CDE0 func4cde0
+8004CE68 func4ce68
+8004CED0 func4ced0
+8004CF18 func4cf18
+8004CFBC func4cfbc
+8004CFF8 func4cff8
+8004D058 func4d058
+8004D084 func4d084
+8004D0B0 system_sound_wait_sync
+8004D118 system_sound_spu_dma_callback
+8004D13C func4d13c
+8004D1B8 func4d1b8
+8004D20C system_psyq_spu_set_noise
+8004D25C system_psyq_spu_set_reverb
+8004D32C func4d32c
+8004D3AC func4d3ac
+8004D438 func4d438
+8004D4A8 system_sound_spu_irq9
+8004D5E8 system_sound_spu_set_irq9_callback
+8004D62C system_sound_set_spu_interrupt_callback
+8004D650 func4d650
+8004D6C0 func4d6c0
+8004D720 func4d720
+8004D780 func4d780
+8004D7D8 func4d7d8
+8004D80C system_sound_set_spu_dma_stop_callback
+8004D830 system_psyq_spu_set_common_attr
+8004DBC4 system_psyq_set_reverb_type
+8004DDA0 system_sound_spu_update_reverb_registers
+8004E270 func4e270
+8004E40C system_bios_wait_event
+8004E41C system_psyq_set_reverb_volume
+8004E448 system_psyq_set_reverb_delay
+8004E560 system_psyq_set_reverb_feedback
+8004E61C func4e61c
 
 
 
 // SLPS_011_card.cpp
-////////////////////////////////
-// func4e62c
-8004E62C-8004E638
-////////////////////////////////
-// func4e63c
-8004E63C-8004E68C
-////////////////////////////////
-// func4e690
-8004E690-8004E6C4
-////////////////////////////////
-// func4e6c8
-8004E6C8-8004E6F4
-////////////////////////////////
-// system_bios_init_card
-8004E6F8-8004E704
-////////////////////////////////
-// system_bios_start_card
-8004E708-8004E714
-////////////////////////////////
-// system_bios_stop_card
-8004E718-8004E724
-////////////////////////////////
-// func4e728
-8004E728-8004E738
-////////////////////////////////
-// func4e73c
-8004E73C-8004E77C
-////////////////////////////////
-// system_patch_early_card_irq
-8004E780-8004E804
-////////////////////////////////
-// func4e808
-8004E808-8004E818
-////////////////////////////////
-// func4e81c
-8004E81C-8004E834
-////////////////////////////////
-// system_patch_card_specific_delay
-8004E838-8004E8A0
-////////////////////////////////
-// func4e8a4
-8004E8A4-8004E8C4
-////////////////////////////////
-// func4e8c8
-8004E8C8-8004E92C
-////////////////////////////////
+8004E62C func4e62c
+8004E63C func4e63c
+8004E690 func4e690
+8004E6C8 func4e6c8
+8004E6F8 system_bios_init_card
+8004E708 system_bios_start_card
+8004E718 system_bios_stop_card
+8004E728 func4e728
+8004E73C func4e73c
+8004E780 system_patch_early_card_irq
+8004E808 func4e808
+8004E81C func4e81c
+8004E838 system_patch_card_specific_delay
+8004E8A4 func4e8a4
+8004E8C8 func4e8c8

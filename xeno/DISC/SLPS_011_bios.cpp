@@ -259,7 +259,7 @@ T1 = 5b;
 
 
 ////////////////////////////////
-// system_root_counter_setup()
+// system_psyq_set_r_cnt()
 
 T0 = A0 & ffff;
 
@@ -312,7 +312,7 @@ return 1;
 
 
 ////////////////////////////////
-// system_get_root_counter_value()
+// system_psyq_get_r_cnt()
 
 A0 = A0 & ffff;
 
@@ -328,7 +328,7 @@ return 0;
 
 
 ////////////////////////////////
-// system_root_counter_enable()
+// system_psyq_start_r_cnt()
 
 A0 = A0 & ffff;
 A1 = w[80055a9c]; // 1f801070
@@ -339,7 +339,7 @@ return A0 < 3;
 
 
 ////////////////////////////////
-// system_root_counter_disable()
+// system_psyq_stop_r_cnt()
 
 A0 = A0 & ffff;
 A1 = w[80055a9c];

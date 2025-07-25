@@ -145,10 +145,10 @@ system_bios_open_event();
 A0 = f2000002;
 A1 = 44e8; // target value (we call system_sound_main() each two cycle)
 A2 = 1000; // set irq bit
-system_root_counter_setup()
+system_psyq_set_r_cnt()
 
 A0 = f2000002;
-system_root_counter_enable();
+system_psyq_start_r_cnt();
 
 A0 = 8003ba0c; // system_sound_spu_dma_stop_callback()
 system_sound_set_spu_dma_stop_callback();
@@ -237,7 +237,7 @@ A0 = 0;
 system_sound_spu_set_irq9_callback();
 
 A0 = f2000002;
-system_root_counter_disable();
+system_psyq_stop_r_cnt();
 
 A0 = w[80058c58];
 system_bios_close_event();
@@ -1201,7 +1201,7 @@ else
 [80059a5c + 18] = w(A1); // cd audio enable
 
 A0 = 80059a5c;
-system_sound_spu_main_and_cd_volume();
+system_psyq_spu_set_common_attr();
 ////////////////////////////////
 
 
@@ -4011,7 +4011,7 @@ if( V1 != 0 )
     if( w[80059a5c + 0] != 0 )
     {
         A0 = 80059a5c;
-        system_sound_spu_main_and_cd_volume();
+        system_psyq_spu_set_common_attr();
 
         [80059a5c + 0] = w(0);
     }

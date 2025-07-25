@@ -1094,7 +1094,7 @@ void system_akao_command_f5( CommandData* data )
 
 void system_akao_command_f8( CommandData* data )
 {
-    func2cfc0();
+    func2cfc0( data );
 
     [0x80099fcc] = w(w[0x80099fcc] & ~w[0x80062f00]);
     [0x80099ff0] = w(w[0x80099ff0] & ~w[0x80062f00]);
@@ -1106,7 +1106,7 @@ void system_akao_command_f8( CommandData* data )
 
 void system_akao_command_f9( CommandData* data )
 {
-    func2cfc0();
+    func2cfc0( data );
 
     [0x80099fcc] = w(w[0x80099fcc] & ~w[0x80062f00]);
     [0x80099ff0] = w(w[0x80099ff0] | w[0x80062f00]);

@@ -2,93 +2,106 @@
 SpuCommonAttr g_spu_common_attr; // 0x8009c578
 
 
-void func293d0()
+void system_akao_spu_transfer_complete()
 {
     system_psyq_spu_set_transfer_callback( 0 );
-
     [GP + 0xc4] = h(0);
 }
 
 
 
-void func293f4()
+void system_akao_spu_transfer_prepare()
 {
     [GP + 0xc4] = h(1);
-
-    system_psyq_spu_set_transfer_callback( 0x800293d0 ); // func293d0
+    system_psyq_spu_set_transfer_callback( 0x800293d0 ); // system_akao_spu_transfer_complete()
 }
 
 
 
-void func29424( u8* addr, u32 size )
+u32 system_akao_spu_write( u8* addr, u32 size )
 {
-    func293f4();
-
-    system_psyq_spu_write( addr, size );
+    system_akao_spu_transfer_prepare();
+    return system_psyq_spu_write( addr, size );
 }
 
 
 
-////////////////////////////////
-// func29464()
-
-S0 = A0;
-S1 = A1;
-func293f4();
-
-A0 = S0;
-A1 = S1;
-80029484	jal    func37be0 [$80037be0]
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func294a4()
-
-while( hu[GP + c4] != 0 ) {}
-////////////////////////////////
-
-
-
-void func294bc()
+void system_akao_spu_read( u8* addr, u32 size )
 {
+    system_akao_spu_transfer_prepare();
+    return system_psyq_spu_read( addr, size );
+}
+
+
+
+void system_akao_spu_transfer_sync()
+{
+    while( hu[GP + 0xc4] != 0 ) {}
+}
+
+
+
+void system_akao_init_data()
+{
+
+    [GP + 0x1bc] = w(0);
+    [GP + 0x1fc] = h(0);
+    [GP + 0x200] = h(0);
+    [GP + 0x204] = h(0);
     [GP + 0x218] = w(0x7f0000);
+    [GP + 0x224] = w(0);
+    [GP + 0x22c] = h(0x40);
+    [GP + 0x234] = h(0);
+    [GP + 0x248] = w(0);
+    [GP + 0x274] = h(0);
+    [GP + 0x288] = h(0);
     [GP + 0x290] = w(0x7fff0000);
-    [0x8009a104] = w(1);
-    [0x800833de] = h(0);
-    [0x8008337e] = h(0);
-    [0x8009a1ae] = h(0);
-    [0x8009a14e] = h(0);
-    [0x80083398] = w(0);
+    [GP + 0x294] = w(0);
+    [GP + 0x2a0] = w(0);
+    [GP + 0x2a4] = w(0);
+    [GP + 0x2b4] = w(0);
+    [GP + 0x2cc] = w(0);
+
     [0x80083338] = w(0);
-    [0x80099fcc] = w(0);
-    [0x8009a168] = w(0);
-    [0x8009a108] = w(0);
-    [GP + 0224] = w(0);
-    [GP + 01bc] = w(0);
-    [0x80099fdc] = w(0);
-    [0x8009a118] = w(0);
-    [GP + 0288] = h(0);
-    [GP + 0200] = h(0);
-    [GP + 01fc] = h(0);
-    [GP + 02a0] = w(0);
-    [GP + 0204] = h(0);
-    [GP + 02a4] = w(0);
-    [0x80099ff4] = w(0);
-    [0x8009a138] = w(0);
-    [0x80099ff0] = w(0);
-    [0x8009a134] = w(0);
-    [0x80099fec] = w(0);
-    [0x8009a130] = w(0);
+    [0x8008337e] = h(0);
+    [0x80083398] = w(0);
+    [0x800833de] = h(0);
+
     [0x80091dc8] = h(0);
-    [0x8009a15e] = h(0);
-    [0x8009a15c] = h(0);
-    [0x8009a15a] = h(0);
-    [0x8009a162] = h(0);
-    [0x8009a154] = h(0);
-    [0x8009a144] = w(0);
-    [0x8009a140] = w(0);
+
+    // masks
+    [0x80099fcc] = w(0);
+    [0x80099fd0] = w(0);
+    [0x80099fd4] = w(0);
+    [0x80099fd8] = w(0);
+    [0x80099fdc] = w(0);
+    [0x80099fe0] = w(0x66a80000);
+    [0x80099fe8] = w(1);
+    [0x80099fec] = w(0);
+    [0x80099ff0] = w(0);
+    [0x80099ff4] = w(0);
+
+    // akao channels config
+    [0x8009a104 + 0x0] = w(1); // 0x01- stereo
+    [0x8009a104 + 0x4] = w(0);
+    [0x8009a104 + 0x8] = w(0);
+    [0x8009a104 + 0xc] = w(0);
+    [0x8009a104 + 0x10] = w(0);
+    [0x8009a104 + 0x14] = w(0);
+    [0x8009a104 + 0x2c] = w(0);
+    [0x8009a104 + 0x30] = w(0);
+    [0x8009a104 + 0x34] = w(0);
+    [0x8009a104 + 0x3c] = w(0);
+    [0x8009a104 + 0x40] = w(0);
+    [0x8009a104 + 0x4a] = h(0);
+    [0x8009a104 + 0x50] = h(0);
+    [0x8009a104 + 0x56] = h(0);
+    [0x8009a104 + 0x58] = h(0);
+    [0x8009a104 + 0x5a] = h(0);
+    [0x8009a104 + 0x5e] = h(0);
+    [0x8009a104 + 0x64] = w(0);
+
+    [0x8009a1ae] = h(0);
 
     g_spu_common_attr.mask = 0x00003fcf;
     g_spu_common_attr.mvol.left = 0x3fff;
@@ -106,258 +119,175 @@ void func294bc()
 
     system_psyq_spu_set_common_attr( g_spu_common_attr );
 
-    S3 = 0x8009c5a0;
-    S4 = 0x7f0000;
-    S2 = S3 + 0004;
-    S1 = 0x8009665c;
-    [GP + 0274] = h(0);
-    [GP + 0234] = h(0);
-    [GP + 0248] = w(0);
-    [GP + 02cc] = w(0);
-    [GP + 0294] = w(0);
-    [GP + 0224] = w(0);
-    [GP + 02b4] = w(0);
-    [GP + 022c] = h(0x40);
+    for( int i = 0; i < 0x18; ++i )
+    {
+        [0x8009c5a0 + i * 0xc + 0x0] = w(0x7f0000);
+        [0x8009c5a0 + i * 0xc + 0x4] = w(0);
+        [0x8009c5a0 + i * 0xc + 0x8] = h(0);
 
-    S0 = 0;
+        [0x80096608 + i * 0x108 + 0x38] = w(0);
+        [0x80096608 + i * 0x108 + 0x50] = w(0);
+        [0x80096608 + i * 0x108 + 0x54] = h(0);
+        [0x80096608 + i * 0x108 + 0xdc] = w(i);
 
-    loop29698:	; 80029698
-        A0 = S0 & ffff;
-        A1 = 0;
-        A2 = 0;
-        A3 = 0;
-        [S2 + 0004] = h(0);
-        [S2 + 0000] = w(0);
-        [S1 + fffc] = w(0);
-        [S1 + ffe4] = w(0);
-        [S1 + 0088] = w(A0);
-        [S1 + 0000] = h(0);
+        system_psyq_spu_set_voice_volume_attr( i, 0, 0, 0, 0 );
+    }
 
-        A4 = 0;
-        system_sound_spu_set_sweep_volume_left_right_sync();
-
-        S0 = S0 + 0001;
-        S1 = S1 + 0108;
-        S2 = S2 + 000c;
-        [S3 + 0000] = w(S4);
-        V0 = S0 & ffff;
-        S3 = S3 + 000c;
-        V0 = V0 < 0018;
-    800296E0	bne    v0, zero, loop29698 [$80029698]
-
-    S0 = 0010;
-    A1 = 0001;
-    A0 = 7f00;
-    V1 = 0x8009984e;
-
-    loop296fc:	; 800296FC
-        V0 = S0 & ffff;
-        S0 = S0 + 0001;
-        [V1 + ff94] = h(0);
-        [V1 + ff76] = w(0);
-        [V1 + ff98] = h(0);
-        [V1 + ff8a] = w(0);
-        [V1 + ff72] = w(0);
-        [V1 + ff62] = w(V0);
-        [V1 + 0016] = w(V0);
-        [V1 + ff8e] = h(A1);
-        [V1 + 0000] = h(A0);
-        V0 = S0 & ffff;
-        V0 = V0 < 0018;
-        V1 = V1 + 0108;
-    80029730	bne    v0, zero, loop296fc [$800296fc]
-
-    [0x80099fe8] = w(1);
-    [0x80099fd8] = w(0);
-    [0x80099fd4] = w(0);
-    [0x80099fd0] = w(0);
-    [0x8009a114] = w(0);
-    [0x8009a110] = w(0);
-    [0x8009a10c] = w(0);
-    [0x80099fe0] = w(0x66a80000);
+    for( int i = 0x10; i < 0x18; ++i )
+    {
+        [0x80099788 + i * 0x108 + 0x28] = w(i);
+        [0x80099788 + i * 0x108 + 0x38] = w(0);
+        [0x80099788 + i * 0x108 + 0x3c] = w(0);
+        [0x80099788 + i * 0x108 + 0x50] = w(0);
+        [0x80099788 + i * 0x108 + 0x54] = h(1);
+        [0x80099788 + i * 0x108 + 0x5a] = h(0);
+        [0x80099788 + i * 0x108 + 0x5e] = h(0);
+        [0x80099788 + i * 0x108 + 0xc6] = h(0x7f00);
+        [0x80099788 + i * 0x108 + 0xdc] = w(i);
+    }
 }
 
 
 
-void func297a4( u32 instr_all, u32 instr_dat )
+void system_akao_load_instr_files( u32 instr_all, u32 instr_dat )
 {
     system_psyq_spu_set_transfer_start_addr( w[instr_all + 0x0] );
+    system_akao_spu_write( instr_all + 0x10, w[instr_all + 0x4] );
 
-    func29424( instr_all + 0x10, w[instr_all + 0x4] );
-
-    V1 = 0x80075f28;
-    A1 = 0x800;
-
-    loop297e0:	; 800297E0
-        A1 -= 1;
-        [V1] = w(w[instr_dat]);
-
+    dst = 0x80075f28;
+    for( int i = 0x800; i != 0; --i )
+    {
+        [dst] = w(w[instr_dat]);
         instr_dat += 0x4;
-        V1 += 0x4;
-    800297F0	bne    a1, zero, loop297e0 [$800297e0]
+        dst += 0x4;
+    }
 
-    func294a4(); // spu transfer sync
+    system_akao_spu_transfer_sync();
 }
 
 
 
-////////////////////////////////
-// func29818()
+void system_akao_load_instr2_files( u32 instr2_all, u32 instr2_dat )
+{
+    system_psyq_spu_set_transfer_start_addr( w[instr2_all + 0x0] );
+    system_akao_spu_write( instr2_all + 0x10, w[instr2_all + 0x4] );
 
-S0 = A0;
-S1 = A1;
+    dst = 0x80076c68;
+    for( int i = 0x4b0; i != 0; --i )
+    {
+        [dst] = w(w[instr2_dat]);
+        instr2_dat += 0x4;
+        dst += 0x4;
+    }
 
-system_psyq_spu_set_transfer_start_addr( w[S0] );
-
-func29424( S0 + 0x10, w[S0 + 0x4] );
-
-
-V1 = 80076c68;
-A1 = 04b0;
-
-loop29854:	; 80029854
-    80029854	addiu  a1, a1, $ffff (=-$1)
-    V0 = w[S1 + 0000];
-    S1 = S1 + 0004;
-    [V1 + 0000] = w(V0);
-    V1 = V1 + 0004;
-80029864	bne    a1, zero, loop29854 [$80029854]
-
-func294a4(); // spu transfer sync
-////////////////////////////////
+    system_akao_spu_transfer_sync();
+}
 
 
 
 void system_akao_init( u32 instr_all, u32 instr_dat )
 {
-    V0 = 0x80089580;
-    [GP + 0x230] = w(V0);
-    V0 = V0 + 0x1000;
-    [GP + 0x240] = w(V0);
+    [GP + 0x230] = w(0x80089580);
+    [GP + 0x240] = w(0x80089580 + 0x1000);
 
     system_psyq_spu_init_malloc( 0x4, 0x8007e778 );
-
     system_psyq_spu_malloc_with_start_addr( 0x77000, 0x2000 );
 
     system_psyq_spu_set_transfer_mode( SPU_TRANSFER_BY_DMA );
 
-    func297a4( instr_all, instr_dat );
+    system_akao_load_instr_files( instr_all, instr_dat );
 
     system_psyq_spu_set_transfer_start_addr( 0x76fe0 );
+    system_akao_spu_write( 0x8004a60c, 0x20 );
+    system_akao_spu_transfer_sync();
 
-    func29424( 0x8004a60c, 0x20 );
+    system_akao_init_data();
 
-    func294a4(); // spu transfer sync
-
-    func294bc();
-
-    S0 = -1;
-
-    loop2991c:	; 8002991C
-        A0 = 0xf2000002;
-        A1 = 0x2;
-        A2 = 0x1000;
-        A3 = 0x80030234; // func30234()
-        system_bios_open_event();
-
-        [GP + 00bc] = w(V0);
-    80029938	beq    v0, s0, loop2991c [$8002991c]
-
+    do
+    {
+        V0 = system_bios_open_event( RCntCNT2, EvSpINT, EvMdINTR, 0x80030234 ); // func30234() execute function/stay busy
+        [GP + 0xbc] = w(V0);
+    } while( V0 == -1 )
 
     while( system_bios_enable_event( w[GP + 0xbc] ) == 0 ) {}
 
-    while( func42bc0( 0xf2000002, 0x43d1, 0x1000 ) == 0 ) {}
+    while( system_psyq_set_r_cnt( RCntCNT2, 0x43d1, EvMdINTR ) == 0 ) {}
 
-    while( func42c98( 0xf2000002 ) == 0 ) {}
+    while( system_psyq_start_r_cnt( RCntCNT2 ) == 0 ) {}
 }
 
 
 
-void func29998()
+void system_akao_load_effect_file( u32 effect_all )
 {
-    A1 = w[GP + 0x230];
-    V1 = 0x3200;
-    A2 = 0xffff;
-
-    loop299a4:	; 800299A4
-        V1 = V1 + A2;
-        [A1] = w(w[A0]);
-        V0 = V1 & ffff;
-        A0 = A0 + 0004;
-        A1 = A1 + 0004;
-    800299B8	bne    v0, zero, loop299a4 [$800299a4]
+    dst = w[GP + 0x230];
+    for( int i = 0x3200; i != 0; --i )
+    {
+        [dst] = w(w[effect_all]);
+        effect_all += 0x4;
+        dst += 0x4;
+    }
 }
 
 
 
 ////////////////////////////////
-// func299c8()
+// system_akao_deinit()
 
-loop299d4:	; 800299D4
-    A0 = f2000002;
-    func42ccc(); // remove something
-800299DC	beq    v0, zero, loop299d4 [$800299d4]
+while( system_psyq_stop_r_cnt( RCntCNT2 ) == 0 ) {}
 
 A0 = f2000002;
 A1 = 2;
 system_bios_undeliver_event();
 
 loop299f0:	; 800299F0
-    A0 = w[GP + bc];
+    A0 = w[GP + 0xbc];
     system_bios_disable_event();
 800299FC	beq    v0, zero, loop299f0 [$800299f0]
 
 loop29a04:	; 80029A04
-    A0 = w[GP + bc];
+    A0 = w[GP + 0xbc];
     system_bios_close_event();
 80029A10	beq    v0, zero, loop29a04 [$80029a04]
 
 system_psyq_spu_set_transfer_callback( 0 );
 
-A0 = 0; // on
-system_sound_spu_irq9();
+system_psyq_spu_set_irq( SPU_OFF );
 
-A0 = 0;
-func38c04(); // unset some callback
+system_psyq_spu_set_irq_callback( 0 );
 
-A0 = 0; // off
-A1 = 00ffffff; // channel mask
-system_sound_spu_turn_voice_on_channels();
+system_psyq_spu_set_key( SPU_OFF, 0x00ffffff );
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func29a50()
-
-[8004ab2c] = w(0);
-
-A0 = 0; // on
-system_sound_spu_irq9();
-
-A0 = 0;
-func38c04(); // unset some callback
-
-A0 = 0; // off
-A1 = w[80062f00]; // channel mask
-system_sound_spu_turn_voice_on_channels();
-
-if( w[80062f00] & 00010000 )
+// irq callback
+void func29a50()
 {
-    [80097768] = w(0001ff93);
+    [0x8004ab2c] = w(0);
+
+    system_psyq_spu_set_irq( SPU_OFF );
+
+    system_psyq_spu_set_irq_callback( 0 );
+
+    system_psyq_spu_set_key( SPU_OFF, w[0x80062f00] );
+
+    if( w[0x80062f00] & 0x00010000 )
+    {
+        [0x80097768] = w(0x0001ff93);
+    }
+
+    if( w[0x80062f00] & 0x00020000 )
+    {
+        [0x80097870] = w(0x0001ff93);
+    }
+
+    [0x80062f00] = w(0);
+
+    func30038();
+    func30148();
+    func2ff4c();
 }
-
-if( w[80062f00] & 00020000 )
-{
-    [80097870] = w(0001ff93);
-}
-
-[80062f00] = w(0);
-
-func30038();
-func30148();
-func2ff4c();
-////////////////////////////////
 
 
 
@@ -1115,182 +1045,132 @@ L2aa98:	; 8002AA98
 
 ////////////////////////////////
 // func2aabc
-8002AABC	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
+
 S0 = A0;
 A1 = S0 & ffff;
 V1 = A1 << 01;
 V1 = V1 + A1;
 V1 = V1 << 05;
-[SP + 0014] = w(RA);
 8002AADC	lui    at, $8008
 AT = AT + 3338;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AAEC	nop
-8002AAF0	lui    at, $800a
-[AT + a108] = w(V0);
+[0x8009a108] = w(V0);
 8002AAF8	lui    at, $8008
 AT = AT + 333c;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AB08	nop
-8002AB0C	lui    at, $800a
-[AT + a10c] = w(V0);
+[0x8009a10c] = w(V0);
 8002AB14	lui    at, $8008
 AT = AT + 3340;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AB24	nop
-8002AB28	lui    at, $800a
-[AT + a110] = w(V0);
+[0x8009a110] = w(V0);
 8002AB30	lui    at, $8008
 AT = AT + 334c;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AB40	nop
-8002AB44	lui    at, $800a
-[AT + a11c] = w(V0);
+[0x8009a11c] = w(V0);
 8002AB4C	lui    at, $8008
 AT = AT + 3350;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AB5C	nop
-8002AB60	lui    at, $800a
-[AT + a120] = w(V0);
+[0x8009a120] = w(V0);
 8002AB68	lui    at, $8008
 AT = AT + 337c;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AB78	nop
-8002AB7C	lui    at, $800a
-[AT + a14c] = h(V0);
+[0x8009a14c] = h(V0);
 8002AB84	lui    at, $8008
 AT = AT + 3354;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AB94	nop
-8002AB98	lui    at, $800a
-[AT + a124] = w(V0);
+[0x8009a124] = w(V0);
 8002ABA0	lui    at, $8008
 AT = AT + 3358;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002ABB0	nop
-8002ABB4	lui    at, $800a
-[AT + a128] = w(V0);
+[0x8009a128] = w(V0);
 8002ABBC	lui    at, $8008
 AT = AT + 335c;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002ABCC	nop
-8002ABD0	lui    at, $800a
-[AT + a12c] = w(V0);
+[0x8009a12c] = w(V0);
 8002ABD8	lui    at, $8008
 AT = AT + 337e;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002ABE8	nop
-8002ABEC	lui    at, $800a
-[AT + a14e] = h(V0);
+[0x8009a14e] = h(V0);
 8002ABF4	lui    at, $8008
 AT = AT + 3380;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AC04	nop
-8002AC08	lui    at, $800a
-[AT + a150] = h(V0);
+[0x8009a150] = h(V0);
 8002AC10	lui    at, $8008
 AT = AT + 3382;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AC20	nop
-8002AC24	lui    at, $800a
-[AT + a152] = h(V0);
+[0x8009a152] = h(V0);
 8002AC2C	lui    at, $8008
 AT = AT + 3374;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AC3C	nop
-8002AC40	lui    at, $800a
-[AT + a144] = w(V0);
+[0x8009a144] = w(V0);
 8002AC48	lui    at, $8008
 AT = AT + 3378;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002AC58	nop
-8002AC5C	lui    at, $800a
-[AT + a148] = w(V0);
+[0x8009a148] = w(V0);
 8002AC64	lui    at, $8008
 AT = AT + 3384;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AC74	nop
-8002AC78	lui    at, $800a
-[AT + a154] = h(V0);
+[0x8009a154] = h(V0);
 8002AC80	lui    at, $8008
 AT = AT + 3386;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AC90	nop
-8002AC94	lui    at, $800a
-[AT + a156] = h(V0);
+[0x8009a156] = h(V0);
 8002AC9C	lui    at, $8008
 AT = AT + 3360;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002ACAC	nop
-8002ACB0	lui    at, $800a
-[AT + a130] = w(V0);
+[0x8009a130] = w(V0);
 8002ACB8	lui    at, $8008
 AT = AT + 3364;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002ACC8	nop
-8002ACCC	lui    at, $800a
-[AT + a134] = w(V0);
+[0x8009a134] = w(V0);
 8002ACD4	lui    at, $8008
 AT = AT + 3368;
 AT = AT + V1;
 V0 = w[AT + 0000];
-8002ACE4	nop
-8002ACE8	lui    at, $800a
-[AT + a138] = w(V0);
+[0x8009a138] = w(V0);
 8002ACF0	lui    at, $8008
 AT = AT + 3388;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AD00	nop
-8002AD04	lui    at, $800a
-[AT + a158] = h(V0);
+[0x8009a158] = h(V0);
 8002AD0C	lui    at, $8008
 AT = AT + 336c;
 AT = AT + V1;
 A0 = w[AT + 0000];
-8002AD1C	nop
-8002AD20	lui    at, $800a
-[AT + a13c] = w(A0);
+[0x8009a13c] = w(A0);
 8002AD28	lui    at, $8008
 AT = AT + 338a;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AD38	nop
-8002AD3C	lui    at, $800a
-[AT + a15a] = h(V0);
+[0x8009a15a] = h(V0);
 8002AD44	lui    at, $8008
 AT = AT + 338c;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AD54	nop
-8002AD58	lui    at, $800a
-[AT + a15c] = h(V0);
+[0x8009a15c] = h(V0);
 8002AD60	lui    at, $8008
 AT = AT + 338e;
 AT = AT + V1;
 V0 = hu[AT + 0000];
-8002AD70	nop
-8002AD74	lui    at, $800a
-[AT + a15e] = h(V0);
+[0x8009a15e] = h(V0);
 8002AD7C	lui    at, $8008
 AT = AT + 3390;
 AT = AT + V1;
@@ -1298,17 +1178,14 @@ V0 = hu[AT + 0000];
 8002AD8C	lui    a2, $8008
 A2 = A2 + 04d0;
 8002AD94	addiu  v0, v0, $fffe (=-$2)
-8002AD98	lui    at, $800a
-[AT + a160] = h(V0);
+[0x8009a160] = h(V0);
 8002ADA0	lui    at, $8008
 AT = AT + 3392;
 AT = AT + V1;
 V0 = hu[AT + 0000];
 A0 = A0 | 0080;
-8002ADB4	lui    at, $800a
-[AT + a13c] = w(A0);
-8002ADBC	lui    at, $800a
-[AT + a162] = h(V0);
+[0x8009a13c] = w(A0);
+[0x8009a162] = h(V0);
 8002ADC4	bne    a1, zero, L2add0 [$8002add0]
 V1 = 0630;
 8002ADCC	addiu  a2, a2, $e740 (=-$18c0)
@@ -1326,8 +1203,7 @@ A2 = A2 + 0004;
 V0 = V1 & ffff;
 8002ADF0	bne    v0, zero, loop2addc [$8002addc]
 A0 = A0 + 0004;
-8002ADF8	lui    a3, $800a
-A3 = w[A3 + a108];
+A3 = w[0x8009a108];
 8002AE00	nop
 8002AE04	beq    a3, zero, L2ae4c [$8002ae4c]
 V1 = 0018;
@@ -1357,15 +1233,12 @@ L2ae4c:	; 8002AE4C
 A0 = A0 | ffff;
 8002AE54	lui    a2, $8009
 A2 = A2 + 6608;
-8002AE5C	lui    v1, $800a
-V1 = w[V1 + a128];
-8002AE64	lui    v0, $800a
-V0 = w[V0 + a10c];
+V1 = w[0x8009a128];
+V0 = w[0x8009a10c];
 A3 = A3 | V1;
 V0 = 0 NOR V0;
 V0 = V0 & A0;
-8002AE78	lui    at, $800a
-[AT + a114] = w(V0);
+[0x8009a114] = w(V0);
 8002AE80	beq    a3, zero, L2aec8 [$8002aec8]
 A1 = 0001;
 8002AE88	lui    t0, $0001
@@ -1399,8 +1272,7 @@ V0 = h[V0 + 2f44];
 8002AEE8	nop
 8002AEEC	bne    v0, zero, L2af5c [$8002af5c]
 V0 = S0 & ffff;
-8002AEF4	lui    v0, $800a
-V0 = hu[V0 + c5a8];
+V0 = hu[0x8009c5a8];
 8002AEFC	nop
 8002AF00	bne    v0, zero, L2af5c [$8002af5c]
 V0 = S0 & ffff;
@@ -1438,20 +1310,12 @@ AT = AT + V1;
 [AT + 0000] = h(0);
 V0 = V0 & 0001;
 8002AF84	beq    v0, zero, L2afa4 [$8002afa4]
-8002AF88	nop
-8002AF8C	lui    v0, $800a
-V0 = w[V0 + a108];
-8002AF94	lui    at, $800a
-[AT + a108] = w(0);
-8002AF9C	lui    at, $800a
-[AT + a118] = w(V0);
+
+V0 = w[0x8009a108];
+[0x8009a108] = w(0);
+[0x8009a118] = w(V0);
 
 L2afa4:	; 8002AFA4
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0018;
-8002AFB0	jr     ra 
-8002AFB4	nop
 ////////////////////////////////
 
 
@@ -1638,732 +1502,355 @@ system_psyq_spu_set_transfer_callback( 0 );
 
 
 
-////////////////////////////////
-// func2cfc0
+void func2cfc0( CommandData* data )
+{
+    [0x80099fd8] = w(w[0x80099fd8] | w[0x80062f00]);
 
-S0 = A0;
-8002CFCC	lui    v0, $800a
-V0 = w[V0 + 9fd8];
-8002CFD4	lui    v1, $8006
-V1 = w[V1 + 2f00];
-V0 = V0 | V1;
-[80099fd8] = w(V0);
+    system_psyq_spu_set_transfer_callback( 0 );
+    system_psyq_spu_set_irq( SPU_OFF );
+    system_psyq_spu_set_irq_callback( 0 );
 
-system_psyq_spu_set_transfer_callback( 0 );
+    A0 = w[data + 0x4];
+    V0 = w[data + 0xc] << 0x7;
+    V1 = w[data + 0x8];
 
-A0 = 0; // on
-system_sound_spu_irq9();
+    [0x80062fe0] = w(A0);
+    [0x80062fb0] = w(V1);
+    [0x80062fac] = w(V0);
 
-A0 = 0;
-8002CFFC	jal    func38c04 [$80038c04]
+    V0 = w[A0 + 0x0];
+    [0x80063004] = w(V0);
 
-A0 = w[S0 + 0004];
-V0 = w[S0 + 000c];
-V1 = w[S0 + 0008];
-V0 = V0 << 07;
-8002D014	lui    at, $8006
-[AT + 2fe0] = w(A0);
-8002D01C	lui    at, $8006
-[AT + 2fb0] = w(V1);
-8002D024	lui    at, $8006
-[AT + 2fac] = w(V0);
-V0 = w[A0 + 0000];
-8002D030	nop
-8002D034	lui    at, $8006
-[AT + 3004] = w(V0);
-8002D03C	beq    v0, zero, L2d180 [$8002d180]
-V0 = A0 + 0004;
-8002D044	lui    at, $8006
-[AT + 2fe0] = w(V0);
-V0 = A0 + 0008;
-A1 = w[A0 + 0004];
-V1 = A0 + 0010;
-8002D058	lui    at, $8006
-[AT + 2fe0] = w(V0);
-8002D060	lui    at, $8006
-[AT + 2f1c] = w(A1);
-A2 = w[A0 + 0008];
-V0 = A1 & 0002;
-8002D070	lui    at, $8006
-[AT + 2fe0] = w(V1);
-8002D078	beq    v0, zero, L2d090 [$8002d090]
-V0 = A2 + V1;
-8002D080	lui    at, $8006
-[AT + 3000] = w(V0);
-8002D088	j      L2d09c [$8002d09c]
-V0 = A1 & 0002;
+    if( V0 != 0 )
+    {
+        [0x80062fe0] = w(A0 + 0x4);
+        A1 = w[A0 + 0x4];
+        V1 = A0 + 0x10;
+        [0x80062fe0] = w(A0 + 0x8);
+        [0x80062f1c] = w(A1);
+        [0x80062fe0] = w(V1);
 
-L2d090:	; 8002D090
-8002D090	lui    at, $8006
-[AT + 3000] = w(0);
-V0 = A1 & 0002;
+        if( A1 & 0x2 )
+        {
+            [0x80063000] = w(w[A0 + 0x8] + V1);
+        }
+        else
+        {
+            [0x80063000] = w(0);
+        }
 
-L2d09c:	; 8002D09C
-8002D09C	beq    v0, zero, L2d0c4 [$8002d0c4]
-V0 = A1 & 0001;
-8002D0A4	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D0AC	nop
-V0 = V0 - A2;
-8002D0B4	lui    at, $8006
-[AT + 2f08] = w(V0);
-8002D0BC	j      L2d0cc [$8002d0cc]
-V0 = A1 & 0001;
+        if( A1 & 0x2 )
+        {
+            [0x80062f08] = w(w[0x80063004] - w[A0 + 0x8]);
+        }
+        else
+        {
+            [0x80062f08] = w(0);
+        }
 
-L2d0c4:	; 8002D0C4
-8002D0C4	lui    at, $8006
-[AT + 2f08] = w(0);
+        if( A1 & 0x1 )
+        {
+            func2d2d4();
+            system_psyq_spu_set_transfer_callback( 0x8002d4a0 ); // func2d4a0()
 
-L2d0cc:	; 8002D0CC
-8002D0CC	beq    v0, zero, L2d0f4 [$8002d0f4]
-8002D0D0	nop
-8002D0D4	jal    func2d2d4 [$8002d2d4]
+            [0x80062f00] = w(0x30000);
+        }
+        else
+        {
+            func2d1e4();
+            system_psyq_spu_set_transfer_callback( 0x8002d410 ); // func2d410()
 
-system_psyq_spu_set_transfer_callback( 0x8002d4a0 );
+            [0x80062f00] = w(0x10000);
+        }
 
-8002D0EC	j      L2d110 [$8002d110]
-8002D0F0	lui    v0, $0003
+        system_psyq_spu_set_transfer_mode( SPU_TRANSFER_BY_DMA );
+        system_psyq_spu_set_transfer_start_addr( 0x77000 );
+        system_psyq_spu_write( w[0x80062fe0], 0x2000 );
 
-L2d0f4:	; 8002D0F4
-8002D0F4	jal    func2d1e4 [$8002d1e4]
+        V1 = w[0x80063004];
+        if( V1 >= 0x2001 )
+        {
+            [0x80063004] = w(V1 - 0x2000);
+            [0x80062fe0] = w(w[0x80062fe0] + 0x2000);
+        }
+        else
+        {
+            [0x80063004] = w(0);
+        }
+    }
 
-system_psyq_spu_set_transfer_callback( 0x8002d410 );
+    [0x80099ff4] = w(w[0x80099ff4] & ~w[0x80062f00]);
+    [0x80099fec] = w(w[0x80099fec] & ~w[0x80062f00]);
 
-8002D10C	lui    v0, $0001
-
-L2d110:	; 8002D110
-8002D110	lui    at, $8006
-[AT + 2f00] = w(V0);
-
-system_psyq_spu_set_transfer_mode( SPU_TRANSFER_BY_DMA );
-
-system_psyq_spu_set_transfer_start_addr( 0x77000 );
-
-system_psyq_spu_write( w[0x80062fe0], 0x2000 );
-
-8002D13C	lui    v1, $8006
-V1 = w[V1 + 3004];
-8002D144	nop
-V0 = V1 < 2001;
-8002D14C	bne    v0, zero, L2d178 [$8002d178]
-8002D150	addiu  v1, v1, $e000 (=-$2000)
-8002D154	lui    v0, $8006
-V0 = w[V0 + 2fe0];
-8002D15C	lui    at, $8006
-[AT + 3004] = w(V1);
-V0 = V0 + 2000;
-8002D168	lui    at, $8006
-[AT + 2fe0] = w(V0);
-8002D170	j      L2d180 [$8002d180]
-8002D174	nop
-
-L2d178:	; 8002D178
-8002D178	lui    at, $8006
-[AT + 3004] = w(0);
-
-L2d180:	; 8002D180
-8002D180	lui    v0, $8006
-V0 = w[V0 + 2f00];
-8002D188	lui    v1, $800a
-V1 = w[V1 + 9ff4];
-8002D190	lui    a0, $800a
-A0 = w[A0 + 9fec];
-V0 = 0 NOR V0;
-V1 = V0 & V1;
-V0 = V0 & A0;
-8002D1A4	lui    at, $800a
-[AT + 9ff4] = w(V1);
-8002D1AC	lui    at, $800a
-[AT + 9fec] = w(V0);
-
-func30148();
-func2ff4c():
-
-A0 = 0;
-A1 = 0001;
-8002D1C8	jal    func2a510 [$8002a510]
-////////////////////////////////
+    func30148();
+    func2ff4c():
+    func2a510( 0, 1 );
+}
 
 
 
-////////////////////////////////
-// func2d1e4
-8002D1E4	addiu  sp, sp, $ffe8 (=-$18)
-8002D1E8	lui    v1, $0001
-8002D1EC	lui    a1, $8006
-A1 = w[A1 + 2fb0];
-8002D1F4	lui    a0, $8006
-A0 = w[A0 + 2fac];
-V1 = V1 | ff93;
-[SP + 0010] = w(RA);
-V0 = A1 ^ 007f;
-8002D208	mult   v0, a0
-8002D20C	lui    at, $8008
-[AT + ebe8] = w(V1);
-8002D214	lui    at, $8008
-[AT + ec02] = h(0);
-8002D21C	lui    v0, $0007
-V0 = V0 | 7000;
-8002D224	lui    at, $8008
-[AT + ebec] = w(V0);
-8002D22C	lui    at, $8008
-[AT + ebf0] = w(V0);
-V0 = 000f;
-8002D238	lui    at, $8008
-[AT + ec04] = h(V0);
-8002D240	lui    at, $8008
-[AT + ec06] = h(V0);
-V0 = 007f;
-8002D24C	lui    at, $8008
-[AT + ec08] = h(V0);
-8002D254	mflo   v1
-V0 = 0006;
-8002D25C	lui    at, $8008
-[AT + ec0a] = h(V0);
-8002D264	mult   a0, a1
-V0 = 0001;
-8002D26C	lui    at, $8008
-[AT + ebf4] = w(V0);
-V0 = 0003;
-8002D278	lui    at, $8008
-[AT + ebf8] = w(V0);
-8002D280	lui    at, $8008
-[AT + ebfc] = w(V0);
-V1 = V1 >> 07;
-8002D28C	lui    a0, $8006
-A0 = hu[A0 + 2f1e];
-8002D294	lui    a1, $8008
-8002D298	addiu  a1, a1, $ebe4 (=-$141c)
-8002D29C	lui    at, $8008
-[AT + ec0c] = h(V1);
-8002D2A4	lui    at, $8008
-[AT + ec00] = h(A0);
-8002D2AC	mflo   v0
-V0 = V0 >> 07;
-8002D2B4	lui    at, $8008
-[AT + ec0e] = h(V0);
-A0 = 0010;
-system_akao_update_params_to_spu();
-////////////////////////////////
+void func2d1e4()
+{
+    [0x8007ebe8] = w(0x1ff93);
+    [0x8007ebec] = w(0x77000);
+    [0x8007ebf0] = w(0x77000);
+    [0x8007ebf4] = w(1);
+    [0x8007ebf8] = w(3);
+    [0x8007ebfc] = w(3);
+    [0x8007ec00] = h(hu[0x80062f1e]);
+    [0x8007ec02] = h(0);
+    [0x8007ec04] = h(0xf);
+    [0x8007ec06] = h(0xf);
+    [0x8007ec08] = h(0x7f);
+    [0x8007ec0a] = h(6);
+    [0x8007ec0c] = h(((w[0x80062fb0] ^ 0x7f) * w[0x80062fac]) >> 0x7);
+    [0x8007ec0e] = h((w[0x80062fb0] * w[0x80062fac]) >> 0x7);
+
+    system_akao_update_params_to_spu( 0x10, 0x8007ebe4 );
+}
 
 
 
-////////////////////////////////
-// func2d2d4
-8002D2D4	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0014] = w(S1);
-8002D2DC	lui    s1, $0001
-S1 = S1 | ff93;
-8002D2E4	lui    v1, $0007
-V1 = V1 | 7000;
-8002D2EC	lui    v0, $0007
-V0 = V0 | 8000;
-8002D2F4	lui    at, $8008
-[AT + ebf0] = w(V0);
-V0 = 000f;
-8002D300	lui    at, $8008
-[AT + ec04] = h(V0);
-8002D308	lui    at, $8008
-[AT + ec06] = h(V0);
-V0 = 007f;
-8002D314	lui    at, $8008
-[AT + ec08] = h(V0);
-V0 = 0006;
-8002D320	lui    at, $8008
-[AT + ec0a] = h(V0);
-V0 = 0001;
-8002D32C	lui    at, $8008
-[AT + ebf4] = w(V0);
-V0 = 0003;
-8002D338	lui    at, $8008
-[AT + ebf8] = w(V0);
-8002D340	lui    at, $8008
-[AT + ebfc] = w(V0);
-8002D348	lui    v0, $8006
-V0 = w[V0 + 2fac];
-A0 = 0010;
-[SP + 0010] = w(S0);
-8002D358	lui    s0, $8008
-8002D35C	addiu  s0, s0, $ebe4 (=-$141c)
-8002D360	lui    at, $8008
-[AT + ebec] = w(V1);
-8002D368	lui    v1, $8006
-V1 = hu[V1 + 2f1e];
-[SP + 0018] = w(RA);
-8002D374	lui    at, $8008
-[AT + ebe8] = w(S1);
-8002D37C	lui    at, $8008
-[AT + ec0e] = h(0);
-8002D384	lui    at, $8008
-[AT + ec02] = h(0);
-V0 = V0 >> 01;
-8002D390	lui    at, $8008
-[AT + ec0c] = h(V0);
-8002D398	lui    at, $8008
-[AT + ec00] = h(V1);
-A1 = S0;
-system_akao_update_params_to_spu();
+void func2d2d4()
+{
+    [0x8007ebe8] = w(0x1ff93);
+    [0x8007ebec] = w(0x77000);
+    [0x8007ebf0] = w(0x78000);
+    [0x8007ebf4] = w(1);
+    [0x8007ebf8] = w(3);
+    [0x8007ebfc] = w(3);
+    [0x8007ec00] = h(hu[0x80062f1e]);
+    [0x8007ec02] = h(0);
+    [0x8007ec04] = h(0xf);
+    [0x8007ec06] = h(0xf);
+    [0x8007ec08] = h(0x7f);
+    [0x8007ec0a] = h(6);
+    [0x8007ec0c] = h(w[0x80062fac] / 2);
+    [0x8007ec0e] = h(0);
 
-8002D3A8	lui    a2, $0007
-A2 = A2 | 7800;
-8002D3B0	lui    v1, $0007
-V1 = V1 | 8800;
-A0 = 0011;
-8002D3BC	lui    v0, $8006
-V0 = w[V0 + 2fac];
-8002D3C4	lui    at, $8008
-[AT + ebe8] = w(S1);
-8002D3CC	lui    at, $8008
-[AT + ec0c] = h(0);
-8002D3D4	lui    at, $8008
-[AT + ebec] = w(A2);
-8002D3DC	lui    at, $8008
-[AT + ebf0] = w(V1);
-V0 = V0 >> 01;
-[8007ec0e] = h(V0);
-A1 = S0;
-system_akao_update_params_to_spu();
-////////////////////////////////
+    system_akao_update_params_to_spu( 0x10, 0x8007ebe4 );
+
+    [0x8007ebe8] = w(0x1ff93);
+    [0x8007ec0c] = h(0);
+    [0x8007ebec] = w(0x77800);
+    [0x8007ebf0] = w(0x78800);
+    [0x8007ec0e] = h(w[0x80062fac] / 2);
+
+    system_akao_update_params_to_spu( 0x11, 0x8007ebe4 );
+}
 
 
 
-////////////////////////////////
-// finc2d410
+// transfer callback
+void func2d410()
+{
+    system_psyq_spu_set_transfer_callback( 0 );
 
-system_psyq_spu_set_transfer_callback( 0 );
+    if( w[0x80063004] != 0 )
+    {
+        system_psyq_spu_set_irq( SPU_OFF );
+        system_psyq_spu_set_irq_addr( 0x78000 );
+        system_psyq_spu_set_irq_callback( 0x8002d530 ); // func2d530()
+        system_psyq_spu_set_irq( SPU_ON );
+    }
 
-8002D420	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D428	nop
+    system_psyq_spu_set_key( SPU_ON, w[0x80062f00] );
 
-L2d42c:	; 8002D42C
-8002D42C	beq    v0, zero, L2d460 [$8002d460]
-8002D430	nop
-A0 = 0; // on
-system_sound_spu_irq9();
+    [0x80099fd8] = w(w[0x80099fd8] & ~w[0x80062f00]);
+}
 
-8002D43C	lui    a0, $0007
-8002D440	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D448	lui    a0, $8003
-8002D44C	addiu  a0, a0, $d530 (=-$2ad0)
-8002D450	jal    func38c04 [$80038c04]
-8002D454	nop
-A0 = 1; // off
-system_sound_spu_irq9();
 
-L2d460:	; 8002D460
-A0 = 1; // on
-A1 = w[80062f00]; // channel mask
-system_sound_spu_turn_voice_on_channels();
 
-8002D470	lui    v0, $8006
-V0 = w[V0 + 2f00];
-8002D478	lui    v1, $800a
-V1 = w[V1 + 9fd8];
-V0 = 0 NOR V0;
-V0 = V0 & V1;
-8002D488	lui    at, $800a
-[AT + 9fd8] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002D498	jr     ra 
-8002D49C	nop
+// transfer callback
+void func2d4a0()
+{
+    system_psyq_spu_set_transfer_callback( 0 );
+
+    if( w[0x80063004] != 0 )
+    {
+        system_psyq_spu_set_irq( SPU_OFF );
+        system_psyq_spu_set_irq_addr( 0x78000 );
+        system_psyq_spu_set_irq_callback( 0x8002d7a0 ); // func2d7a0()
+        system_psyq_spu_set_irq( SPU_ON );
+    }
+
+    system_psyq_spu_set_key( SPU_ON, w[0x80062f00] );
+    [0x80099fd8] = w(w[0x80099fd8] & ~w[0x80062f00]);
+}
+
+
+
+// irq callback
+void func2d530()
+{
+    if( w[0x80063004] == 0 ) return;
+
+    system_psyq_spu_set_transfer_start_addr( 0x77000 );
+    system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+    system_psyq_spu_set_irq( SPU_OFF );
+
+    if( w[0x80063004] >= 1001 )
+    {
+
+        system_psyq_spu_set_irq_addr( 0x77000 );
+        system_psyq_spu_set_irq_callback( 0x8002d668 ); // func2d668()
+        system_psyq_spu_set_irq( SPU_ON );
+
+        [0x80063004] = w(w[0x80063004] - 0x1000);
+        [0x80062fe0] = w(w[0x80062fe0] + 0x1000);
+    }
+    else
+    {
+        if( w[0x80063000] != 0 )
+        {
+            system_psyq_spu_set_irq_addr( 0x77000 );
+            system_psyq_spu_set_irq_callback( 0x8002d668 ); // func2d668()
+            system_psyq_spu_set_irq( SPU_ON );
+
+            [0x80062fe0] = w(w[0x80063000]);
+            [0x80063004] = w(w[0x80062f08]);
+        }
+        else
+        {
+            [0x80063004] = w(0);
+
+            system_psyq_spu_set_irq_addr( 0x77000 );
+            system_psyq_spu_set_irq_callback( 0x80029a50 ); // func29a50()
+            system_psyq_spu_set_irq( SPU_ON );
+        }
+    }
+}
+
+
+
+// irq callback
+void func2d668()
+{
+    if( w[0x80063004] == 0 ) return;
+
+    system_psyq_spu_set_transfer_start_addr( 0x78000 );
+    system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+    system_psyq_spu_set_irq( SPU_OFF );
+
+    if( w[0x80063004] >= 0x1001 )
+    {
+        system_psyq_spu_set_irq_addr( 0x78000 );
+        system_psyq_spu_set_irq_callback( 0x8002d530 ); // func2d530()
+        system_psyq_spu_set_irq( SPU_ON );
+
+        [0x80063004] = w(w[0x80063004] - 0x1000);
+        [0x80062fe0] = w(w[0x80062fe0] + 0x1000);
+    }
+    else
+    {
+        if( w[0x80063000] != 0 )
+        {
+            system_psyq_spu_set_irq_addr( 0x78000 );
+            system_psyq_spu_set_irq_callback( 0x8002d530 ); // func2d530()
+            system_psyq_spu_set_irq( SPU_ON );
+
+            [0x80062fe0] = w(w[0x80063000]);
+            [0x80063004] = w(w[0x80062f08]);
+        }
+        else
+        {
+            [0x80063004] = w(0);
+
+            system_psyq_spu_set_irq_addr( 0x78000 );
+            system_psyq_spu_set_irq_callback( 0x80029a50 ); // func29a50()
+            system_psyq_spu_set_irq( SPU_ON );
+        }
+    }
+}
+
+
+
+// irq callback
+void func2d7a0()
+{
+    if( w[0x80063004] == 0 ) return;
+
+    system_psyq_spu_set_transfer_start_addr( 0x77000 );
+    system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+    system_psyq_spu_set_irq( SPU_OFF );
+
+    system_psyq_spu_set_voice_loop_start_addr( 0x10, 0x77000 );
+    system_psyq_spu_set_voice_loop_start_addr( 0x11, 0x77800 );
+
+    if( w[0x80063004] >= 0x1001 )
+    {
+        system_psyq_spu_set_irq_addr( 0x77000 );
+        system_psyq_spu_set_irq_callback( 0x8002d8e8 ); // func2d8e8()
+
+        [0x80063004] = w(w[0x80063004] - 0x1000);
+        [0x80062fe0] = w(w[0x80062fe0] + 0x1000);
+    }
+    else
+    {
+        if( w[0x80063000] != 0 )
+        {
+            system_psyq_spu_set_irq_addr( 0x77000 )
+            system_psyq_spu_set_irq_callback( 0x8002d8e8 ); // func2d8e8()
+
+            [0x80062fe0] = w(w[0x80063000]);
+            [0x80063004] = w(w[0x80062f08]);
+        }
+        else
+        {
+            [0x80063004] = w(0);
+
+            system_psyq_spu_set_irq_addr( 0x77000 );
+            system_psyq_spu_set_irq_callback( 0x80029a50 ); // func29a50()
+        }
+    }
+
+    system_psyq_spu_set_irq( SPU_ON );
+}
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func2d4a0
+// irq callback
+void func2d8e8()
+{
+    if( w[0x80063004] == 0 ) return;
 
-system_psyq_spu_set_transfer_callback( 0 );
+    system_psyq_spu_set_transfer_start_addr( 0x78000 );
+    system_psyq_spu_write( w[0x80062fe0], 0x1000 );
+    system_psyq_spu_set_irq( SPU_OFF );
 
-8002D4B0	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D4B8	nop
-8002D4BC	beq    v0, zero, L2d4f0 [$8002d4f0]
-8002D4C0	nop
-A0 = 0; // on
-system_sound_spu_irq9();
+    system_psyq_spu_set_voice_loop_start_addr( 0x10, 0x78000 );
+    system_psyq_spu_set_voice_loop_start_addr( 0x11, 0x78800 );
 
-8002D4CC	lui    a0, $0007
-8002D4D0	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D4D8	lui    a0, $8003
-8002D4DC	addiu  a0, a0, $d7a0 (=-$2860)
-8002D4E0	jal    func38c04 [$80038c04]
-8002D4E4	nop
-A0 = 1; // off
-system_sound_spu_irq9();
+    if( w[0x80063004] >= 0x1001 )
+    {
+        system_psyq_spu_set_irq_addr( 0x78000 );
+        system_psyq_spu_set_irq_callback( 0x8002d7a0 ); // func2d7a0()
 
-L2d4f0:	; 8002D4F0
-A0 = 1; // on
-A1 = w[80062f00]; // channel mask
-system_sound_spu_turn_voice_on_channels();
+        [0x80063004] = w(w[0x80063004] - 0x1000);
+        [0x80062fe0] = w(w[0x80062fe0] + 0x1000);
+    }
+    else
+    {
+        if( w[0x80063000] != 0 )
+        {
+            system_psyq_spu_set_irq_addr( 0x78000 )
+            system_psyq_spu_set_irq_callback( 0x8002d7a0 ); // func2d7a0()
 
-8002D500	lui    v0, $8006
-V0 = w[V0 + 2f00];
-8002D508	lui    v1, $800a
-V1 = w[V1 + 9fd8];
-V0 = 0 NOR V0;
-V0 = V0 & V1;
-8002D518	lui    at, $800a
-[AT + 9fd8] = w(V0);
-RA = w[SP + 0010];
-SP = SP + 0018;
-8002D528	jr     ra 
-8002D52C	nop
-////////////////////////////////
+            [0x80062fe0] = w(w[0x80063000]);
+            [0x80063004] = w(w[0x80062f08]);
+        }
+        else
+        {
+            [0x80063004] = w(0);
 
+            system_psyq_spu_set_irq_addr( 0x78000 );
+            system_psyq_spu_set_irq_callback( 0x80029a50 ); // func29a50()
+        }
+    }
 
-
-////////////////////////////////
-// func2d530
-
-V0 = w[0x80063004];
-
-8002D53C	beq    v0, zero, L2d658 [$8002d658]
-
-system_psyq_spu_set_transfer_start_addr( 0x77000 );
-
-system_psyq_spu_write( w[0x80062fe0], 0x1000 );
-
-A0 = 0; // on
-system_sound_spu_irq9();
-
-8002D568	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D570	nop
-V0 = V0 < 1001;
-8002D578	bne    v0, zero, L2d5d0 [$8002d5d0]
-8002D57C	lui    a0, $0007
-8002D580	jal    func38bc4 [$80038bc4]
-A0 = A0 | 7000;
-8002D588	lui    a0, $8003
-8002D58C	addiu  a0, a0, $d668 (=-$2998)
-8002D590	jal    func38c04 [$80038c04]
-8002D594	nop
-A0 = 1; // off
-system_sound_spu_irq9();
-
-8002D5A0	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D5A8	lui    v1, $8006
-V1 = w[V1 + 2fe0];
-8002D5B0	addiu  v0, v0, $f000 (=-$1000)
-V1 = V1 + 1000;
-8002D5B8	lui    at, $8006
-[AT + 3004] = w(V0);
-8002D5C0	lui    at, $8006
-[AT + 2fe0] = w(V1);
-8002D5C8	j      L2d658 [$8002d658]
-8002D5CC	nop
-
-L2d5d0:	; 8002D5D0
-8002D5D0	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D5D8	nop
-8002D5DC	beq    v0, zero, L2d630 [$8002d630]
-8002D5E0	nop
-8002D5E4	lui    a0, $0007
-8002D5E8	jal    func38bc4 [$80038bc4]
-A0 = A0 | 7000;
-8002D5F0	lui    a0, $8003
-8002D5F4	addiu  a0, a0, $d668 (=-$2998)
-8002D5F8	jal    func38c04 [$80038c04]
-8002D5FC	nop
-A0 = 1; // off
-system_sound_spu_irq9();
-
-8002D608	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D610	lui    v1, $8006
-V1 = w[V1 + 2f08];
-8002D618	lui    at, $8006
-[AT + 2fe0] = w(V0);
-8002D620	lui    at, $8006
-[AT + 3004] = w(V1);
-8002D628	j      L2d658 [$8002d658]
-8002D62C	nop
-
-L2d630:	; 8002D630
-8002D630	lui    at, $8006
-[AT + 3004] = w(0);
-8002D638	jal    func38bc4 [$80038bc4]
-A0 = A0 | 7000;
-8002D640	lui    a0, $8003
-8002D644	addiu  a0, a0, $9a50 (=-$65b0)
-8002D648	jal    func38c04 [$80038c04]
-8002D64C	nop
-A0 = 1; // off
-system_sound_spu_irq9();
-
-L2d658:	; 8002D658
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2d668
-
-8002D668	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D674	beq    v0, zero, L2d790 [$8002d790]
-
-system_psyq_spu_set_transfer_start_addr( 0x78000 );
-
-system_psyq_spu_write( w[0x80062fe0], 0x1000 );
-
-A0 = 0; // on
-system_sound_spu_irq9();
-
-8002D6A0	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D6A8	nop
-V0 = V0 < 1001;
-8002D6B0	bne    v0, zero, L2d708 [$8002d708]
-8002D6B4	lui    a0, $0007
-8002D6B8	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D6C0	lui    a0, $8003
-8002D6C4	addiu  a0, a0, $d530 (=-$2ad0)
-8002D6C8	jal    func38c04 [$80038c04]
-8002D6CC	nop
-A0 = 1; // off
-system_sound_spu_irq9();
-
-8002D6D8	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D6E0	lui    v1, $8006
-V1 = w[V1 + 2fe0];
-8002D6E8	addiu  v0, v0, $f000 (=-$1000)
-V1 = V1 + 1000;
-8002D6F0	lui    at, $8006
-[AT + 3004] = w(V0);
-8002D6F8	lui    at, $8006
-[AT + 2fe0] = w(V1);
-8002D700	j      L2d790 [$8002d790]
-8002D704	nop
-
-L2d708:	; 8002D708
-8002D708	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D710	nop
-8002D714	beq    v0, zero, L2d768 [$8002d768]
-8002D718	nop
-8002D71C	lui    a0, $0007
-8002D720	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D728	lui    a0, $8003
-8002D72C	addiu  a0, a0, $d530 (=-$2ad0)
-8002D730	jal    func38c04 [$80038c04]
-8002D734	nop
-A0 = 1; // off
-system_sound_spu_irq9();
-
-8002D740	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D748	lui    v1, $8006
-V1 = w[V1 + 2f08];
-8002D750	lui    at, $8006
-[AT + 2fe0] = w(V0);
-8002D758	lui    at, $8006
-[AT + 3004] = w(V1);
-8002D760	j      L2d790 [$8002d790]
-8002D764	nop
-
-L2d768:	; 8002D768
-8002D768	lui    at, $8006
-[AT + 3004] = w(0);
-8002D770	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D778	lui    a0, $8003
-8002D77C	addiu  a0, a0, $9a50 (=-$65b0)
-8002D780	jal    func38c04 [$80038c04]
-8002D784	nop
-A0 = 1; // off
-system_sound_spu_irq9();
-
-L2d790:	; 8002D790
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2d7a0
-8002D7A0	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D7AC	beq    v0, zero, L2d8d8 [$8002d8d8]
-
-system_psyq_spu_set_transfer_start_addr( 0x77000 );
-
-system_psyq_spu_write( w[0x80062fe0], 0x1000 );
-
-A0 = 0; // on
-system_sound_spu_irq9();
-
-A0 = 10; // channel id
-A1 = 00077000; // loop offset
-system_psyq_spu_set_voice_loop_start_addr();
-
-A0 = 11; // channel id
-A1 = 00077800; // loop offset
-system_psyq_spu_set_voice_loop_start_addr();
-
-8002D7F8	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D800	nop
-V0 = V0 < 1001;
-8002D808	bne    v0, zero, L2d858 [$8002d858]
-8002D80C	lui    a0, $0007
-8002D810	jal    func38bc4 [$80038bc4]
-A0 = A0 | 7000;
-8002D818	lui    a0, $8003
-8002D81C	addiu  a0, a0, $d8e8 (=-$2718)
-8002D820	jal    func38c04 [$80038c04]
-8002D824	nop
-8002D828	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D830	lui    v1, $8006
-V1 = w[V1 + 2fe0];
-8002D838	addiu  v0, v0, $f000 (=-$1000)
-V1 = V1 + 1000;
-8002D840	lui    at, $8006
-[AT + 3004] = w(V0);
-8002D848	lui    at, $8006
-[AT + 2fe0] = w(V1);
-8002D850	j      L2d8d0 [$8002d8d0]
-8002D854	nop
-
-L2d858:	; 8002D858
-8002D858	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D860	nop
-8002D864	beq    v0, zero, L2d8b0 [$8002d8b0]
-8002D868	nop
-8002D86C	lui    a0, $0007
-8002D870	jal    func38bc4 [$80038bc4]
-A0 = A0 | 7000;
-8002D878	lui    a0, $8003
-8002D87C	addiu  a0, a0, $d8e8 (=-$2718)
-8002D880	jal    func38c04 [$80038c04]
-8002D884	nop
-8002D888	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D890	lui    v1, $8006
-V1 = w[V1 + 2f08];
-8002D898	lui    at, $8006
-[AT + 2fe0] = w(V0);
-8002D8A0	lui    at, $8006
-[AT + 3004] = w(V1);
-8002D8A8	j      L2d8d0 [$8002d8d0]
-8002D8AC	nop
-
-L2d8b0:	; 8002D8B0
-8002D8B0	lui    at, $8006
-[AT + 3004] = w(0);
-8002D8B8	jal    func38bc4 [$80038bc4]
-A0 = A0 | 7000;
-8002D8C0	lui    a0, $8003
-8002D8C4	addiu  a0, a0, $9a50 (=-$65b0)
-8002D8C8	jal    func38c04 [$80038c04]
-8002D8CC	nop
-
-L2d8d0:	; 8002D8D0
-A0 = 1; // off
-system_sound_spu_irq9();
-
-L2d8d8:	; 8002D8D8
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func2d8e8
-8002D8E8	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D8F4	beq    v0, zero, L2da20 [$8002da20]
-
-system_psyq_spu_set_transfer_start_addr( 0x78000 );
-
-system_psyq_spu_write( w[0x80062fe0], 0x1000 );
-
-A0 = 0; // on
-system_sound_spu_irq9();
-
-A0 = 10; // channel id
-A1 = 00078000; // loop offset
-system_psyq_spu_set_voice_loop_start_addr();
-
-A0 = 11; // channel id
-A1 = 00078800; // loop offset
-system_psyq_spu_set_voice_loop_start_addr();
-
-8002D940	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D948	nop
-V0 = V0 < 1001;
-8002D950	bne    v0, zero, L2d9a0 [$8002d9a0]
-8002D954	lui    a0, $0007
-8002D958	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D960	lui    a0, $8003
-8002D964	addiu  a0, a0, $d7a0 (=-$2860)
-8002D968	jal    func38c04 [$80038c04]
-8002D96C	nop
-8002D970	lui    v0, $8006
-V0 = w[V0 + 3004];
-8002D978	lui    v1, $8006
-V1 = w[V1 + 2fe0];
-8002D980	addiu  v0, v0, $f000 (=-$1000)
-V1 = V1 + 1000;
-8002D988	lui    at, $8006
-[AT + 3004] = w(V0);
-8002D990	lui    at, $8006
-[AT + 2fe0] = w(V1);
-8002D998	j      L2da18 [$8002da18]
-8002D99C	nop
-
-L2d9a0:	; 8002D9A0
-8002D9A0	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D9A8	nop
-8002D9AC	beq    v0, zero, L2d9f8 [$8002d9f8]
-8002D9B0	nop
-8002D9B4	lui    a0, $0007
-8002D9B8	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002D9C0	lui    a0, $8003
-8002D9C4	addiu  a0, a0, $d7a0 (=-$2860)
-8002D9C8	jal    func38c04 [$80038c04]
-8002D9CC	nop
-8002D9D0	lui    v0, $8006
-V0 = w[V0 + 3000];
-8002D9D8	lui    v1, $8006
-V1 = w[V1 + 2f08];
-8002D9E0	lui    at, $8006
-[AT + 2fe0] = w(V0);
-8002D9E8	lui    at, $8006
-[AT + 3004] = w(V1);
-8002D9F0	j      L2da18 [$8002da18]
-8002D9F4	nop
-
-L2d9f8:	; 8002D9F8
-8002D9F8	lui    at, $8006
-[AT + 3004] = w(0);
-8002DA00	jal    func38bc4 [$80038bc4]
-A0 = A0 | 8000;
-8002DA08	lui    a0, $8003
-8002DA0C	addiu  a0, a0, $9a50 (=-$65b0)
-8002DA10	jal    func38c04 [$80038c04]
-8002DA14	nop
-
-L2da18:	; 8002DA18
-A0 = 1; // off
-system_sound_spu_irq9();
-
-L2da20:	; 8002DA20
-////////////////////////////////
+    system_psyq_spu_set_irq( SPU_ON );
+}
 
 
 
@@ -3986,9 +3473,7 @@ if( w[80099fcc] != 0 )
 
 if( updated_mask != 0 )
 {
-    A0 = 1; // on
-    A1 = updated_mask;
-    system_sound_spu_turn_voice_on_channels();
+    system_psyq_spu_set_key( SPU_ON, updated_mask );
 }
 ////////////////////////////////
 
@@ -4041,78 +3526,59 @@ while( mask1 != 0 )
 
 
 
-////////////////////////////////
-// func2fe48
-8002FE48	lui    v0, $800a
-V0 = w[V0 + a168];
+void func2fe48()()
+{
+    [SP + 0010] = w(0);
+    V0 = w[0x8009a168];
 
-8002FE58	beq    v0, zero, L2feb0 [$8002feb0]
-[SP + 0010] = w(0);
-8002FE60	lui    v1, $800a
-V1 = w[V1 + a174];
-8002FE68	lui    a1, $8006
-A1 = w[A1 + 2f68];
-8002FE70	lui    v0, $800a
-V0 = w[V0 + 9fcc];
-8002FE78	lui    a0, $8006
-A0 = w[A0 + 2f00];
-V1 = V1 & A1;
-V0 = V0 | A0;
-A3 = 0 NOR V0;
-A2 = V1 & A3;
-8002FE90	beq    a2, zero, L2fea8 [$8002fea8]
-8002FE94	nop
-8002FE98	lui    a0, $8009
-A0 = A0 + 7ec8;
-8002FEA0	jal    func2fda0 [$8002fda0]
-A1 = SP + 0010;
+    if( V0 != 0 )
+    {
+        V1 = w[0x8009a174];
+        A1 = w[0x80062f68];
+        V0 = w[0x80099fcc];
+        A0 = w[0x80062f00];
+        V1 = V1 & A1;
+        V0 = V0 | A0;
+        A3 = ~V0;
+        A2 = V1 & A3;
+        if( A2 != 0 )
+        {
+            func2fda0( 0x80097ec8, SP + 0x10, A2, A3 );
+        }
 
-L2fea8:	; 8002FEA8
-8002FEA8	lui    at, $800a
-[AT + a174] = w(0);
+        [0x8009a174] = w(0);
+    }
 
-L2feb0:	; 8002FEB0
-8002FEB0	lui    v0, $800a
-V0 = w[V0 + a108];
-8002FEB8	nop
-8002FEBC	beq    v0, zero, L2ff14 [$8002ff14]
-8002FEC0	nop
-8002FEC4	lui    v0, $8006
-V0 = w[V0 + 2f68];
-8002FECC	lui    v1, $800a
-V1 = w[V1 + 9fcc];
-8002FED4	lui    a0, $8006
-A0 = w[A0 + 2f00];
-V0 = V0 | V1;
-V0 = V0 | A0;
-8002FEE4	lui    v1, $800a
-V1 = w[V1 + a114];
-A3 = 0 NOR V0;
-A2 = A3 & V1;
-8002FEF4	beq    a2, zero, L2ff0c [$8002ff0c]
-8002FEF8	nop
-8002FEFC	lui    a0, $8009
-A0 = A0 + 6608;
-8002FF04	jal    func2fda0 [$8002fda0]
-A1 = SP + 0010;
+    V0 = w[0x8009a108];
+    if( V0 != 0 )
+    {
+        V0 = w[0x80062f68];
+        V1 = w[0x80099fcc];
+        A0 = w[0x80062f00];
+        V0 = V0 | V1;
+        V0 = V0 | A0;
+        V1 = w[0x8009a114];
+        A3 = ~V0;
+        A2 = A3 & V1;
+        if( A2 != 0 )
+        {
+            func2fda0( 0x80096608, SP + 0x10, A2, A3 );
+        }
 
-L2ff0c:	; 8002FF0C
-8002FF0C	lui    at, $800a
-[AT + a114] = w(0);
+        [0x8009a114] = w(0);
+    }
 
-L2ff14:	; 8002FF14
-V1 = w[SP + 0010];
-V0 = w[80099fd8];
-[80099fd8] = w(0);
-A1 = V1 | V0; // channel mask
-[SP + 0010] = w(A1);
-8002FF2C	beq    a1, zero, L2ff3c [$8002ff3c]
+    V1 = w[SP + 0010];
+    V0 = w[80099fd8];
+    [80099fd8] = w(0);
+    A1 = V1 | V0; // channel mask
+    [SP + 0x10] = w(A1);
 
-A0 = 0; // off
-system_sound_spu_turn_voice_on_channels();
-
-L2ff3c:	; 8002FF3C
-////////////////////////////////
+    if( A1 != 0 )
+    {
+        system_psyq_spu_set_key( SPU_OFF, A1 );
+    }
+}
 
 
 
@@ -4171,7 +3637,7 @@ void func30038()
         A1 = SP + 10;
         A2 = A2;
         A3 = A3;
-        func2fda0;
+        func2fda0();
     }
 
     if (w[80062ff8] & 00000010)
@@ -4188,7 +3654,7 @@ void func30038()
             A1 = SP + 10;
             A2 = A2;
             A3 = A3;
-            func2fda0;
+            func2fda0();
         }
     }
 
@@ -4223,7 +3689,7 @@ void func30148()
         A1 = SP + 10;
         A2 = A2;
         A3 = A3;
-        func2fda0;
+        func2fda0();
     }
 
     V0 = w[80062f68];
@@ -4240,7 +3706,7 @@ void func30148()
         A1 = SP + 10;
         A2 = A2;
         A3 = A3;
-        func2fda0;
+        func2fda0();
     }
 
     A1 = w[SP + 0010];
@@ -4262,21 +3728,14 @@ void func30148()
 ////////////////////////////////
 // func30234()
 
-A0 = f2000002;
-func42c60();
+S1 = system_psyq_get_r_cnt( RCntCNT2 );
+S2 = system_psyq_vsync( 1 );
 
-S1 = V0;
-
-A0 = 0001;
-8003025C	jal    system_psyq_vsync [$8003cedc]
-
-80030264	lui    v1, $8006
-V1 = hu[V1 + 2f78];
-S2 = V0;
+V1 = hu[0x80062f78];
 V1 = S2 < V1;
 80030274	beq    v1, zero, L30284 [$80030284]
 80030278	lui    v0, $3e0f
-[80062f78] = h(0);
+[0x80062f78] = h(0);
 
 L30284:	; 80030284
 V1 = hu[80062f78];
@@ -4295,10 +3754,8 @@ L302b4:	; 800302B4
 S0 = 0001;
 
 L302b8:	; 800302B8
-800302B8	lui    v0, $8006
-V0 = w[V0 + 2ff8];
-800302C0	lui    at, $8006
-[AT + 2f78] = h(S2);
+V0 = w[0x80062ff8];
+[0x80062f78] = h(S2);
 V0 = V0 & 0004;
 800302CC	beq    v0, zero, L302d8 [$800302d8]
 S2 = S0 & ffff;
@@ -4318,8 +3775,8 @@ loop302e8:	; 800302E8
 800302F4	bne    v0, zero, loop302e8 [$800302e8]
 
 L302fc:	; 800302FC
-800302FC	jal    func42c60 [$80042c60]
-A0 = A0 | 0002;
+system_psyq_get_r_cnt( RCntCNT2 );
+
 S1 = V0 - S1;
 80030308	bgtz   s1, L30314 [$80030314]
 V0 = S2;
@@ -4343,51 +3800,37 @@ V1 = V1 + S1;
 
 ////////////////////////////////
 // func30380
-80030380	lui    v0, $8006
-V0 = hu[V0 + 2e0a];
+
+V0 = hu[0x80062e0a];
 V0 = V0 + 0001;
-800303B0	lui    at, $8006
-[AT + 2e0a] = h(V0);
+[0x80062e0a] = h(V0);
 V0 = V0 & 0003;
 800303BC	bne    v0, zero, L308a8 [$800308a8]
 800303C0	nop
-800303C4	lui    v0, $8006
-V0 = h[V0 + 2fcc];
+V0 = h[0x80062fcc];
 800303CC	nop
 800303D0	beq    v0, zero, L30408 [$80030408]
 V1 = V0;
-800303D8	lui    v0, $8006
-V0 = w[V0 + 2fd4];
-800303E0	lui    a0, $8006
-A0 = w[A0 + 2fb4];
+V0 = w[0x80062fd4];
+A0 = w[0x80062fb4];
 800303E8	addiu  v1, v1, $ffff (=-$1)
-800303EC	lui    at, $8006
-[AT + 2fcc] = h(V1);
+[0x80062fcc] = h(V1);
 V0 = V0 + A0;
-800303F8	lui    at, $8006
-[AT + 2fd4] = w(V0);
-80030400	jal    func2e428 [$8002e428]
-80030404	nop
+[0x80062fd4] = w(V0);
+func2e428();
 
 L30408:	; 80030408
-80030408	lui    v0, $8006
-V0 = w[V0 + 2ff8];
-80030410	nop
+V0 = w[0x80062ff8];
 V0 = V0 & 0001;
 80030418	bne    v0, zero, L30560 [$80030560]
-8003041C	nop
-80030420	lui    v0, $8006
-V0 = h[V0 + 2f44];
-80030428	nop
+
+V0 = h[0x80062f44];
 8003042C	beq    v0, zero, L304b0 [$800304b0]
 A0 = V0;
-80030434	lui    v1, $8006
-V1 = w[V1 + 2f5c];
-8003043C	lui    a1, $8006
-A1 = w[A1 + 2f2c];
+V1 = w[0x80062f5c];
+A1 = w[0x80062f2c];
 80030444	addiu  v0, a0, $ffff (=-$1)
-80030448	lui    at, $8006
-[AT + 2f44] = h(V0);
+[0x80062f44] = h(V0);
 V0 = V0 << 10;
 80030454	bne    v0, zero, L30484 [$80030484]
 S0 = V1 + A1;
@@ -4406,8 +3849,7 @@ L30484:	; 80030484
 80030484	lui    v0, $007f
 
 L30488:	; 80030488
-80030488	lui    v1, $8006
-V1 = w[V1 + 2f5c];
+V1 = w[0x80062f5c];
 A0 = S0 & V0;
 V1 = V1 & V0;
 80030498	beq    a0, v1, L304a8 [$800304a8]
@@ -4415,39 +3857,29 @@ V1 = V1 & V0;
 system_sound_reset_music_volume();
 
 L304a8:	; 800304A8
-800304A8	lui    at, $8006
-[AT + 2f5c] = w(S0);
+[0x80062f5c] = w(S0);
 
 L304b0:	; 800304B0
-800304B0	lui    v0, $8006
-V0 = h[V0 + 2f48];
+V0 = h[0x80062f48];
 800304B8	nop
 800304BC	beq    v0, zero, L304ec [$800304ec]
 V1 = V0;
-800304C4	lui    v0, $8006
-V0 = w[V0 + 2fe8];
-800304CC	lui    a0, $8006
-A0 = w[A0 + 2f30];
+V0 = w[0x80062fe8];
+A0 = w[0x80062f30];
 800304D4	addiu  v1, v1, $ffff (=-$1)
-800304D8	lui    at, $8006
-[AT + 2f48] = h(V1);
+[0x80062f48] = h(V1);
 V0 = V0 + A0;
-800304E4	lui    at, $8006
-[AT + 2fe8] = w(V0);
+[0x80062fe8] = w(V0);
 
 L304ec:	; 800304EC
-800304EC	lui    v0, $8006
-V0 = h[V0 + 2f40];
+V0 = h[0x80062f40];
 800304F4	nop
 800304F8	beq    v0, zero, L30560 [$80030560]
 A1 = V0;
-80030500	lui    v1, $8006
-V1 = w[V1 + 2fe4];
-80030508	lui    a0, $8006
-A0 = w[A0 + 2f28];
+V1 = w[0x80062fe4];
+A0 = w[0x80062f28];
 80030510	addiu  v0, a1, $ffff (=-$1)
-80030514	lui    at, $8006
-[AT + 2f40] = h(V0);
+[0x80062f40] = h(V0);
 8003051C	lui    v0, $00ff
 S0 = V1 + A0;
 A0 = S0 & V0;
@@ -4467,8 +3899,7 @@ V0 = V0 | 0010;
 V1 = V1 + 0108;
 
 L30558:	; 80030558
-80030558	lui    at, $8006
-[AT + 2fe4] = w(S0);
+[0x80062fe4] = w(S0);
 
 L30560:	; 80030560
 80030560	lui    a2, $800a
@@ -4611,108 +4042,93 @@ S3 = S4 - 17e0;
 S5 = S4 + 00e0;
 
 loop3073c:	; 8003073C
-V0 = hu[S0 + 0000];
-80030740	nop
-80030744	beq    v0, zero, L308a8 [$800308a8]
-80030748	nop
-V0 = hu[S0 + 0000];
-V1 = w[S0 + fffc];
-80030754	addiu  v0, v0, $ffff (=-$1)
-[S0 + 0000] = h(V0);
-V0 = w[S6 + 0000];
-80030760	nop
-V0 = V0 + V1;
-[S6 + 0000] = w(V0);
-V0 = w[S5 + 0000];
-80030770	nop
-V0 = V0 | 0003;
-[S5 + 0000] = w(V0);
-V0 = w[S3 + 0000];
-80030780	nop
-V0 = V0 | 0003;
-[S3 + 0000] = w(V0);
-V0 = hu[S0 + 0000];
-80030790	nop
-80030794	bne    v0, zero, L30880 [$80030880]
-80030798	nop
-8003079C	lui    a0, $8006
-A0 = w[A0 + 2f68];
-800307A4	nop
-V0 = S1 & A0;
-800307AC	beq    v0, zero, L30880 [$80030880]
-V0 = S1 ^ A0;
-V1 = w[S2 + 0000];
-800307B8	lui    at, $8006
-[AT + 2f68] = w(V0);
-V1 = S1 & V1;
-800307C4	beq    v1, zero, L30800 [$80030800]
-A0 = S4;
-800307CC	addiu  a1, s2, $fffc (=-$4)
-A2 = S1;
-system_akao_opcode_a0_finish_channel();
+    V0 = hu[S0 + 0000];
+    80030740	nop
+    80030744	beq    v0, zero, L308a8 [$800308a8]
+    80030748	nop
+    V0 = hu[S0 + 0000];
+    V1 = w[S0 + fffc];
+    80030754	addiu  v0, v0, $ffff (=-$1)
+    [S0 + 0000] = h(V0);
+    V0 = w[S6 + 0000];
+    80030760	nop
+    V0 = V0 + V1;
+    [S6 + 0000] = w(V0);
+    V0 = w[S5 + 0000];
+    80030770	nop
+    V0 = V0 | 0003;
+    [S5 + 0000] = w(V0);
+    V0 = w[S3 + 0000];
+    80030780	nop
+    V0 = V0 | 0003;
+    [S3 + 0000] = w(V0);
+    V0 = hu[S0 + 0000];
+    80030790	nop
+    80030794	bne    v0, zero, L30880 [$80030880]
 
-V1 = 0 NOR S1;
-V0 = w[S2 + 0004];
-A0 = w[S2 + 0008];
-V0 = V1 & V0;
-[S2 + 0004] = w(V0);
-V0 = w[S2 + 000c];
-V1 = V1 & A0;
-[S2 + 0008] = w(V1);
-V0 = S1 | V0;
-[S2 + 000c] = w(V0);
+    A0 = w[0x80062f68];
+    800307A4	nop
+    V0 = S1 & A0;
+    800307AC	beq    v0, zero, L30880 [$80030880]
+    V0 = S1 ^ A0;
+    V1 = w[S2 + 0000];
+    [0x80062f68] = w(V0);
+    V1 = S1 & V1;
+    800307C4	beq    v1, zero, L30800 [$80030800]
+    A0 = S4;
+    800307CC	addiu  a1, s2, $fffc (=-$4)
+    A2 = S1;
+    system_akao_opcode_a0_finish_channel();
 
-L30800:	; 80030800
-80030800	lui    v0, $800a
-V0 = w[V0 + a108];
-80030808	nop
-V0 = S1 & V0;
-80030810	beq    v0, zero, L3083c [$8003083c]
-80030814	lui    v1, $0001
-V0 = w[S3 + 0000];
-V1 = V1 | ff90;
-V0 = V0 | V1;
-[S3 + 0000] = w(V0);
-V0 = w[S2 + ffa8];
-V1 = w[S2 + ffa4];
-V0 = S1 & V0;
-V0 = V0 | V1;
-[S2 + ffa4] = w(V0);
+    V1 = 0 NOR S1;
+    V0 = w[S2 + 0004];
+    A0 = w[S2 + 0008];
+    V0 = V1 & V0;
+    [S2 + 0004] = w(V0);
+    V0 = w[S2 + 000c];
+    V1 = V1 & A0;
+    [S2 + 0008] = w(V1);
+    V0 = S1 | V0;
+    [S2 + 000c] = w(V0);
 
-L3083c:	; 8003083C
-8003083C	lui    v0, $007f
-80030840	lui    v1, $8006
-V1 = hu[V1 + 2fc8];
-V0 = V0 | 8000;
-8003084C	div    v0, v1
-80030850	bne    v1, zero, L3085c [$8003085c]
-80030854	nop
-80030858	break   $01c00
+    L30800:	; 80030800
+    80030800	lui    v0, $800a
+    V0 = w[V0 + a108];
+    80030808	nop
+    V0 = S1 & V0;
+    80030810	beq    v0, zero, L3083c [$8003083c]
+    80030814	lui    v1, $0001
+    V0 = w[S3 + 0000];
+    V1 = V1 | ff90;
+    V0 = V0 | V1;
+    [S3 + 0000] = w(V0);
+    V0 = w[S2 + ffa8];
+    V1 = w[S2 + ffa4];
+    V0 = S1 & V0;
+    V0 = V0 | V1;
+    [S2 + ffa4] = w(V0);
 
-L3085c:	; 8003085C
-8003085C	addiu  at, zero, $ffff (=-$1)
-80030860	bne    v1, at, L30874 [$80030874]
-80030864	lui    at, $8000
-80030868	bne    v0, at, L30874 [$80030874]
-8003086C	nop
-80030870	break   $01800
+    L3083c:	; 8003083C
+    8003083C	lui    v0, $007f
+    80030840	lui    v1, $8006
+    V1 = hu[V1 + 2fc8];
+    V0 = V0 | 8000;
+    8003084C	div    v0, v1
+    80030874	mflo   v0
+    [S0 + 0000] = h(V1);
+    [S0 + fffc] = w(V0);
 
-L30874:	; 80030874
-80030874	mflo   v0
-[S0 + 0000] = h(V1);
-[S0 + fffc] = w(V0);
-
-L30880:	; 80030880
-S1 = S1 << 01;
-S5 = S5 + 0108;
-S4 = S4 + 0108;
-S3 = S3 + 0108;
-S0 = S0 + 000c;
-80030894	lui    v0, $00ff
-V0 = V0 | ffff;
-V0 = S1 & V0;
+    L30880:	; 80030880
+    S1 = S1 << 01;
+    S5 = S5 + 0108;
+    S4 = S4 + 0108;
+    S3 = S3 + 0108;
+    S0 = S0 + 000c;
+    80030894	lui    v0, $00ff
+    V0 = V0 | ffff;
+    V0 = S1 & V0;
+    S6 = S6 + 000c;
 800308A0	bne    v0, zero, loop3073c [$8003073c]
-S6 = S6 + 000c;
 
 L308a8:	; 800308A8
 ////////////////////////////////

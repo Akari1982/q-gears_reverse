@@ -86,7 +86,7 @@ func36d98( 0xd1, w[0x8004ab5c], 0 ); // 1a2 Sound RAM Reverb Work Area Start Add
 [0x8004a6b4] = w(0);
 [0x8004a6b8] = w(0);
 
-[0x8004aaec] = w(0);
+[0x8004aaec] = w(0x0);
 
 [0x8004ab10] = w(0);
 ////////////////////////////////
@@ -642,7 +642,7 @@ void func36ca8( src, size )
     if( w[0x8004ab10] == SPU_TRANSFER_BY_DMA )
     {
         func36a18( 0x2, hu[0x8004ab0c] << w[0x8004ab1c] ); // set address in spu to write to 0x1f801da6
-        func36a18( 0x1 ); // wait until spu address is set
+        func36a18( 0x1 ); // set DMAwrite
         func36a18( 0x3, src, size );
     }
     else // SPU_TRANSFER_BY_IO
@@ -654,27 +654,14 @@ void func36ca8( src, size )
 
 
 
-////////////////////////////////
-// func36d30
+u_long func36d30( u_char* addr, u_long size )
+{
+    func36a18( 2, hu[0x8004ab0c] << w[0x8004ab1c] );
+    func36a18( 0 ); // set DMAread
+    func36a18( 3, addr, size );
 
-S1 = A0;
-S0 = A1;
-V0 = hu[0x8004ab0c];
-A1 = w[0x8004ab1c];
-A0 = 0002;
-A1 = V0 << A1;
-80036D5C	jal    func36a18 [$80036a18]
-
-A0 = 0;
-80036D64	jal    func36a18 [$80036a18]
-
-A0 = 0003;
-A1 = S1;
-A2 = S0;
-80036D74	jal    func36a18 [$80036a18]
-
-return S0;
-////////////////////////////////
+    return size;
+}
 
 
 
@@ -1194,13 +1181,13 @@ func37988();
 T1 = A0;
 T0 = A1;
 
-if (w[8004aaec] & 1)
+if( w[8004aaec] & 0x1 )
 {
-    A0 = 80077da0;
+    A0 = 0x80077da0;
 }
 else
 {
-    A0 = w[8004aaf4]; // spu address
+    A0 = w[0x8004aaf4]; // spu address
 }
 
 T2 = hu[A0 + A2 * 2] | (hu[A0 + A3 * 2] & ff) << 10;
@@ -1212,7 +1199,7 @@ if (T1 != 0)
         return T2 & 0x00ffffff;
     }
 
-    if (w[8004aaec] & 1)
+    if( w[0x8004aaec] & 0x1 )
     {
         [80077da0 + A2 * 2] = h(hu[80077da0 + A2 * 2] | T0);
         [80077da0 + A3 * 2] = h(hu[80077da0 + A3 * 2] | ((T0 >> 10) & ff));
@@ -1229,10 +1216,10 @@ if (T1 != 0)
 }
 else
 {
-    if (w[8004aaec] & 1)
+    if( w[0x8004aaec] & 0x1 )
     {
-        [80077da0 + A2 * 2] = h(hu[80077da0 + A2 * 2] & (0 NOR T0));
-        [80077da0 + A3 / 2] = h(hu[80077da0 + A3 / 2] & (0 NOR ((T0 >> 10) & ff)));
+        [80077da0 + A2 * 2] = h(hu[80077da0 + A2 * 2] & ~T0);
+        [80077da0 + A3 / 2] = h(hu[80077da0 + A3 / 2] & ~((T0 >> 10) & ff));
         [8004a6b8] = w(w[8004a6b8] | (1 << ((A2 - c6) / 2)));
     }
     else
@@ -1271,30 +1258,16 @@ return A1;
 
 
 
-////////////////////////////////
-// func37be0()
+u_long system_psyq_spu_read( u_char* addr, u_long size )
+{
+    if( size > 0x7eff0 ) size = 00x7eff0;
 
-S0 = A1;
+    func36d30( addr, size );
 
-V0 = 0007eff0 < S0;
-80037BF8	beq    v0, zero, L37c08 [$80037c08]
+    if( w[0x8004ab2c] == 0 ) [0x8004ab28] = w(0);
 
-S0 = 0007eff0;
-
-L37c08:	; 80037C08
-80037C08	jal    func36d30 [$80036d30]
-A1 = S0;
-V0 = w[8004ab2c];
-
-80037C1C	bne    v0, zero, L37c2c [$80037c2c]
-
-[8004ab28] = w(0);
-
-L37c2c:	; 80037C2C
-return S0;
-////////////////////////////////
-
-
+    return size;
+}
 
 
 
@@ -2252,148 +2225,139 @@ L38a5c:	; 80038A5C
 
 
 
-////////////////////////////////
-// system_sound_spu_irq9()
 
-spu = w[0x8004aaf4]; // 1f801c00
-
-if( ( A0 == 0 ) || ( A0 == 3 ) )
+// Turns interrupt request ON/OFF.
+// Values of on_off can be:
+//  - SPU_ON Set interrupt request
+//  - SPU_OFF Cancel interrupt request
+//  - SPU_RESET Reset interrupt request (cancel current interrupt request and reset)
+long system_psyq_spu_set_irq( long on_off )
 {
-    [spu + 0x1aa] = h(hu[spu + 0x1aa] & ffbf); // remove IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+    spu = w[0x8004aaf4]; // 1f801c00
 
-    V1 = 0;
-    while( hu[spu + 0x1aa] & 0040 )
+    if( ( on_off == SPU_OFF ) || ( on_off == SPU_RESET ) )
     {
-        V1 = V1 + 1;
-        if( V1 >= 0xf01 )
-        {
-            A0 = 0x800104fc; // "SPU:T/O [%s]"
-            A1 = 0x8001050c; // "wait (IRQ/ON)"
-            system_bios_printf();
+        [spu + 0x1aa] = h(hu[spu + 0x1aa] & ffbf); // remove IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
 
-            return -1;
+        V1 = 0;
+        while( hu[spu + 0x1aa] & 0x0040 )
+        {
+            V1 += 1;
+            if( V1 >= 0xf01 )
+            {
+                A0 = 0x800104fc; // "SPU:T/O [%s]"
+                A1 = 0x8001050c; // "wait (IRQ/ON)"
+                system_bios_printf();
+
+                return SPU_ERROR;
+            }
+        }
+    }
+
+    if( ( on_off == SPU_ON ) || ( on_off == SPU_RESET )
+    {
+        [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0x0040); // add IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+
+        V1 = 0;
+        while( ( hu[spu + 0x1aa] & 0x0040 ) == 0 )
+        {
+            V1 += 1;
+            if( V1 >= 0xf01 )
+            {
+                A0 = 0x800104fc; // "SPU:T/O [%s]"
+                A1 = 0x8001051c; // "wait (IRQ/OFF)"
+                system_bios_printf();
+
+                return SPU_ERROR;
+            }
+        }
+    }
+
+    return on_off;
+}
+
+
+
+
+// Sets interrupt request address value. addr is in bytes, and must be divisible by 8 and less than 512KB.
+// The interrupt request occurs when a read/write to the address takes place.
+u_long system_psyq_spu_set_irq_addr( u_long addr )
+{
+    if( addr <= 0x7fff8 )
+    {
+        return func36de0( 0xd2, addr );
+    }
+    return 0;
+}
+
+
+
+// Sets a callback function to be activated when an interrupt request occurs. If func is set to NULL, the
+// callback is cleared
+SpuIRQCallbackProc system_psyq_spu_set_irq_callback( SpuIRQCallbackProc func )
+{
+    S0 = w[0x8004ab30];
+    if( func != S0 )
+    {
+        [0x8004ab30] = w(func);
+        func38c48( func );
+    }
+    return S0;
+}
+
+
+
+
+void func38c48( SpuIRQCallbackProc func )
+{
+    system_int_set_interrupt_callback( 0x9, func );
+}
+
+
+
+void system_psyq_spu_set_key( long on_off, u_long voice_bit )
+{
+    spu = w[0x8004aaf4]; // 1f801c00
+
+    if( on_off == SPU_OFF )
+    {
+        if( w[0x8004aaec] & 0x1 )
+        {
+            [0x80077f2c] = w(voice_bit);
+            [0x8004a6b8] = w(w[0x8004a6b8] | 0x00000001);
+            [0x8004a6b4] = w(w[0x8004a6b4] & ~voice_bit);
+
+            if( w[0x80077f28] & voice_bit )
+            {
+                [0x80077f28] = w(w[0x80077f28] & ~voice_bit);
+            }
+        }
+        else
+        {
+            [spu + 0x18c] = w(voice_bit); // Voice 0..23 Key OFF (Start Release) (W)
+            [0x8004a68c] = w(w[0x8004a68c] & ~voice_bit);
+        }
+    }
+    else if( on_off == SPU_ON )
+    {
+        if( w[0x8004aaec] & 0x1 )
+        {
+            [0x80077f28] = w(voice_bit);
+            [0x8004a6b8] = w(w[0x8004a6b8] | 0x00000001);
+            [0x8004a6b4] = w(w[0x8004a6b4] | voice_bit);
+
+            if( w[0x80077f2c] & voice_bit )
+            {
+                [0x80077f2c] = w(w[0x80077f2c] & ~voice_bit);
+            }
+        }
+        else
+        {
+            [spu + 0x188] = w(voice_bit); // Voice 0..23 Key ON (Start Attack/Decay/Sustain) (W)
+            [0x8004a68c] = w(w[0x8004a68c] | voice_bit);
         }
     }
 }
-
-if( ( A0 == 1 ) || ( A0 == 3 )
-{
-    [spu + 1aa] = h(hu[spu + 1aa] | 0040); // add IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
-
-    V1 = 0;
-    while( ( hu[spu + 1aa] & 0040 ) == 0 )
-    {
-        V1 = V1 + 1;
-        if( V1 >= f01 )
-        {
-            A0 = 800104fc; // "SPU:T/O [%s]"
-            A1 = 8001051c; // "wait (IRQ/OFF)"
-            system_bios_printf();
-
-            return -1;
-        }
-    }
-}
-
-return A0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func38bc4
-
-A1 = A0;
-80038BCC	lui    v0, $0007
-V0 = V0 | fff8;
-V0 = V0 < A1;
-80038BD8	bne    v0, zero, L38bf0 [$80038bf0]
-
-A0 = 0xd2;
-func36de0();
-
-80038BE8	j      L38bf4 [$80038bf4]
-80038BEC	nop
-
-L38bf0:	; 80038BF0
-V0 = 0;
-
-L38bf4:	; 80038BF4
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func38c04()
-
-S0 = w[8004ab30];
-if( A0 != S0 )
-{
-    [8004ab30] = w(A0);
-    func38c48();
-}
-return S0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func38c48()
-
-A1 = A0;
-A0 = 9;
-system_int_set_interrupt_callback();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_sound_spu_turn_voice_on_channels()
-
-type = A0;
-channel_mask = A1;
-
-spu = w[8004aaf4]; // 1f801c00
-
-if( type == 0 )
-{
-    if( w[8004aaec] & 00000001 )
-    {
-        [80077f2c] = w(channel_mask);
-        [8004a6b8] = w(w[8004a6b8] | 00000001);
-        [8004a6b4] = w(w[8004a6b4] & (0 NOR channel_mask));
-
-        if( w[80077f28] & channel_mask )
-        {
-            [80077f28] = w(w[80077f28] & (0 NOR channel_mask));
-        }
-    }
-    else
-    {
-        [spu + 18c] = w(channel_mask); // Voice 0..23 Key OFF (Start Release) (W)
-        [8004a68c] = w(w[8004a68c] & (0 NOR channel_mask));
-    }
-}
-else if( type == 1 )
-{
-    if( w[8004aaec] & 00000001 )
-    {
-        [80077f28] = w(channel_mask);
-        [8004a6b8] = w(w[8004a6b8] | 00000001);
-        [8004a6b4] = w(w[8004a6b4] | channel_mask);
-
-        if( w[80077f2c] & channel_mask )
-        {
-            [80077f2c] = w(w[80077f2c] & (0 NOR channel_mask));
-        }
-    }
-    else
-    {
-        [spu + 188] = w(channel_mask); // Voice 0..23 Key ON (Start Attack/Decay/Sustain) (W)
-        [8004a68c] = w(w[8004a68c] | channel_mask);
-    }
-}
-////////////////////////////////
 
 
 
@@ -2472,10 +2436,8 @@ u_long system_psyq_spu_write( u_char* addr, u_long size )
 
     func36ca8( addr, size );
 
-    if( w[0x8004ab2c] == 0 )
-    {
-        [0x8004ab28] = w(0);
-    }
+    if( w[0x8004ab2c] == 0 ) [0x8004ab28] = w(0);
+
     return size;
 }
 
@@ -2779,47 +2741,44 @@ void system_psyq_spu_set_voice_volume( int voiceNum, short volumeL, short volume
 
 
 
-////////////////////////////////
-// system_sound_spu_set_sweep_volume_left_right_sync()
-
-spu = w[8004aaf4]; // 1f801c00
-
-T0 = 0;
-switch( A3 )
+void system_psyq_spu_set_voice_volume_attr( int voiceNum, short volumeL, short volumeR, short volModeL, short volModeR )
 {
-    case 1: T0 = 8000; break;
-    case 2: T0 = 9000; break;
-    case 3: T0 = a000; break;
-    case 4: T0 = b000; break;
-    case 5: T0 = c000; break;
-    case 6: T0 = d000; break;
-    case 7: T0 = e000; break;
+    spu = w[0x8004aaf4]; // 1f801c00
+
+    T0 = 0;
+    switch( volModeL )
+    {
+        case 0x1: T0 = 0x8000; break;
+        case 0x2: T0 = 0x9000; break;
+        case 0x3: T0 = 0xa000; break;
+        case 0x4: T0 = 0xb000; break;
+        case 0x5: T0 = 0xc000; break;
+        case 0x6: T0 = 0xd000; break;
+        case 0x7: T0 = 0xe000; break;
+    }
+    [spu + voiceNum * 0x10 + 0x0] = h(T0 | (volumeL & 0x7fff));
+
+    T1 = 0;
+    switch( volModeR )
+    {
+        case 0x1: T1 = 0x8000; break;
+        case 0x2: T1 = 0x9000; break;
+        case 0x3: T1 = 0xa000; break;
+        case 0x4: T1 = 0xb000; break;
+        case 0x5: T1 = 0xc000; break;
+        case 0x6: T1 = 0xd000; break;
+        case 0x7: T1 = 0xe000; break;
+    }
+    [spu + voiceNum * 0x10 + 0x2] = h(T1 | (volumeR & 0x7fff));
+
+    [SP + 0x4] = w(0x1);
+    [SP + 0x0] = w(0x0);
+    while( w[SP + 0x0] < 0x2 )
+    {
+        [SP + 0x4] = w(w[SP + 0x4] * 0xd);
+        [SP + 0x0] = w(w[SP + 0x0] + 0x1);
+    }
 }
-[spu + A0 * 10 + 0] = h(T0 | (A1 & 7fff));
-
-T1 = 0;
-switch( A4 )
-{
-    case 1: T1 = 8000; break;
-    case 2: T1 = 9000; break;
-    case 3: T1 = a000; break;
-    case 4: T1 = b000; break;
-    case 5: T1 = c000; break;
-    case 6: T1 = d000; break;
-    case 7: T1 = e000; break;
-}
-[spu + A0 * 10 + 2] = h(T1 | (A2 & 7fff));
-
-[SP + 4] = w(1);
-[SP + 0] = w(0);
-
-while( w[SP + 0] < 2 )
-{
-    [SP + 4] = w(w[SP + 4] * d);
-    [SP + 0] = w(w[SP + 0] + 1);
-}
-////////////////////////////////
-
 
 
 
@@ -2831,7 +2790,6 @@ void system_psyq_spu_set_voice_pitch( int voiceNum, u_short pitch )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2848,7 +2806,6 @@ void system_psyq_spu_set_voice_start_addr( int voiceNum, u_long startAddr )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2865,7 +2822,6 @@ void system_psyq_spu_set_voice_loop_start_addr( int voiceNum, u_long loopStartAd
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2883,7 +2839,6 @@ void system_psyq_spu_set_voice_dr( int voiceNum, u_short DR )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2901,7 +2856,6 @@ void system_psyq_spu_set_voice_sl( int voiceNum, u_short SL )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2919,7 +2873,6 @@ void system_psyq_spu_set_voice_ar_attr( int voiceNum, u_short AR, long Armode )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2954,7 +2907,6 @@ void system_psyq_spu_set_voice_sr_attr( int voiceNum, u_short SR, long SRmode )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
@@ -2972,7 +2924,6 @@ void system_psyq_spu_set_voice_rr_attr( int voiceNum, u_short RR, long RRmode )
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
-
     while( w[SP + 0x0] < 0x2 )
     {
         [SP + 0x4] = w(w[SP + 0x4] * 0xd);
