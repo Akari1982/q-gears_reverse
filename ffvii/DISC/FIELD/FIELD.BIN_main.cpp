@@ -1989,8 +1989,8 @@ if( A3 < 0 )
         S3 = -8;
     }
 
-    [0x801144CC] = h(0);
-    [0x80113F28] = h(triangle_id);
+    [0x801144cc] = h(0);
+    [0x80113f28] = h(triangle_id);
 }
 // if we cross BC
 else if (T1 < 0)
@@ -2038,8 +2038,8 @@ else if (T1 < 0)
         S3 = -8;
     }
 
-    [0x801144CC] = h(1);
-    [0x80113F28] = h(triangle_id);
+    [0x801144cc] = h(1);
+    [0x80113f28] = h(triangle_id);
 }
 // if we cross CA
 else if (A0 < 0)
@@ -2086,8 +2086,8 @@ else if (A0 < 0)
         S3 = -8;
     }
 
-    [0x801144CC] = h(2);
-    [0x80113F28] = h(triangle_id);
+    [0x801144cc] = h(2);
+    [0x80113f28] = h(triangle_id);
 }
 
 A0 = 1f800000;

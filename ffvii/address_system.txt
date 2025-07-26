@@ -743,7 +743,7 @@
     +5e [][]     top timer. Stored in CHMPH opcode.
     +64 [][]     ???
 
-8009c540 []       seed for battle random in field.
+0x8009c540 []       seed for battle random in field.
 
 0x8009c560 [][][][] current state of game:
                     1 - field.

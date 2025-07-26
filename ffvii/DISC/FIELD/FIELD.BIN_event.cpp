@@ -6,17 +6,17 @@ entities_data = A1;
 events_data = A2;
 
 [0x8009c6e0] = w(field_struct);
-[8009c544] = w(entities_data); // pointer to model data
-[8009c6dc] = w(events_data); // field events pointer
+[0x8009c544] = w(entities_data); // pointer to model data
+[0x8009c6dc] = w(events_data); // field events pointer
 
-[8007ebe0] = b(1);
-[8009fe8c] = b(0);
-[80095dcc] = b(0);
+[0x8007ebe0] = b(1);
+[0x8009fe8c] = b(0);
+[0x80095dcc] = b(0);
 
 if( h[field_struct + 6a] & 0100 ) // if select key
 {
-    [80095dcc] = b(1);
-    [80099ffc] = b(4); // script related
+    [0x80095dcc] = b(1);
+    [0x80099ffc] = b(4); // script related
 }
 
 // file version check
@@ -65,7 +65,7 @@ if( bu[0x800716d4] == 0 )
 
 ot = A0;
 
-if( bu[8007ebe0] != 0 )
+if( bu[0x8007ebe0] != 0 )
 {
     funcd4bfc(); // init window
 
@@ -75,11 +75,11 @@ if( bu[8007ebe0] != 0 )
 
     field_debug_init_pages();
 
-    events_data = w[8009c6dc];
+    events_data = w[0x8009c6dc];
 
-    [80095dcc] = b(0);
-    [8009fe8c] = b(0);
-    [8007ebe0] = b(0);
+    [0x80095dcc] = b(0);
+    [0x8009fe8c] = b(0);
+    [0x8007ebe0] = b(0);
 
     // file check version
     {
@@ -106,17 +106,17 @@ if( bu[8007ebe0] != 0 )
     }
 }
 
-if( ( bu[80099ffc] != 4 ) && ( ( bu[80099ffc] != 5 ) || ( bu[80070788] != 0 ) ) )
+if( ( bu[0x80099ffc] != 4 ) && ( ( bu[0x80099ffc] != 5 ) || ( bu[0x80070788] != 0 ) ) )
 {
     field_event_opcode_cycle();
 }
 
-if( bu[80071e2c] ) // if at least 1 window is opened
+if( bu[0x80071e2c] ) // if at least 1 window is opened
 {
     A0 = 80083274;
     A1 = 4; // render max 4 dialogs
     A2 = ot;
-    field_struct = w[8009c6e0];
+    field_struct = w[0x8009c6e0];
     A3 = bu[field_struct + 0] ^ 1;
     system_menu_draw_dialog();
 }
@@ -130,9 +130,9 @@ funcbc438(); // add pointer and triangles to render
 ////////////////////////////////
 // field_init_default_values()
 
-field_struct = w[8009c6e0];
-events_data = w[8009c6dc];
-entities_data = w[8009c544];
+field_struct = w[0x8009c6e0];
+events_data = w[0x8009c6dc];
+entities_data = w[0x8009c544];
 
 [field_struct + 1] = b(0); // state normal field
 [field_struct + 2] = h(0); // map to load
@@ -174,11 +174,11 @@ entities_data = w[8009c544];
 [field_struct + a2] = h(0); // number of steps for shake single Y movement
 [field_struct + a4] = h(0); // current step for shake single Y movement
 
-[80081dc4] = b(0); // current UC opcode state.
+[0x80081dc4] = b(0); // current UC opcode state.
 
 for( int i = 0; i < 100; ++i )
 {
-    [80075e24 + i] = b(0); // clear temp memory in script 5/6
+    [0x80075e24 + i] = b(0); // clear temp memory in script 5/6
 }
 
 // reset events scripts
@@ -186,21 +186,21 @@ for( int i = 0; i < 8; ++i )
 {
     for( int j = 0; j < bu[events_data + 2]; ++j ) // go through all actors
     {
-        [80071748 + j * 10 + i * 2] = h(0); // priority script offsets
-        [800833f8 + j * 8 + i] = b(0); // array of script running state
-        [80071a88 + j * 8 + i] = b(ff); // array if priority data
-        [801142d4 + j * 8 + i] = b(0); // priority queue script id
+        [0x80071748 + j * 10 + i * 2] = h(0); // priority script offsets
+        [0x800833f8 + j * 8 + i] = b(0); // array of script running state
+        [0x80071a88 + j * 8 + i] = b(ff); // array if priority data
+        [0x801142d4 + j * 8 + i] = b(0); // priority queue script id
     }
 }
 
 for( int i = 0; i < bu[events_data + 2]; ++i ) // go through all actors
 {
-    [8009a1c4 + i] = b(7); // array of current priority slot used by actor
-    [8007eb98 + i] = b(ff); // array of actors model id data. -1 - no model.
-    [800716dc + i * 2] = h(0); // ???
-    [80081d90 + i] = b(0); // array of some actors data. Store 1 to pc actor here during SPLIT
-    [8007078c + i] = b(ff); // array of actors lines data
-    [80114498 + i] = b(0); // not debug script output
+    [0x8009a1c4 + i] = b(7); // array of current priority slot used by actor
+    [0x8007eb98 + i] = b(ff); // array of actors model id data. -1 - no model.
+    [0x800716dc + i * 2] = h(0); // ???
+    [0x80081d90 + i] = b(0); // array of some actors data. Store 1 to pc actor here during SPLIT
+    [0x8007078c + i] = b(ff); // array of actors lines data
+    [0x80114498 + i] = b(0); // not debug script output
 }
 
 for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all entities
@@ -255,10 +255,10 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all entities
     [entities_data + i * 84 + 7c] = w(0); // move to y
     [entities_data + i * 84 + 80] = w(0); // move to z
 
-    [8008325c + i] = b(0); // model default animation
-    [800756e8 + i] = b(0); // model animation state
-    [8009d828 + i * 2] = h(10); // animation speed
-    [80082248 + i * 2] = h(10); // model default animation speed
+    [0x8008325c + i] = b(0); // model default animation
+    [0x800756e8 + i] = b(0); // model animation state
+    [0x8009d828 + i * 2] = h(10); // animation speed
+    [0x80082248 + i * 2] = h(10); // model default animation speed
 }
 
 for( int i = 0; i < 40; ++i )
@@ -275,39 +275,39 @@ for( int i = 0; i < 40; ++i )
 {
     for( int j = 0; j < 10; ++j )
     {
-        [80095de0 + i * 20 + j * 2] = h(0); // array of stored background palletes
+        [0x80095de0 + i * 20 + j * 2] = h(0); // array of stored background palletes
     }
 }
 
 // init lines
 for( int i = 0; i < 20; ++i )
 {
-    [8007e7ac + i * 18 + 0] = h(0); // x1
-    [8007e7ac + i * 18 + 2] = h(0); // y1
-    [8007e7ac + i * 18 + 4] = h(0); // z1
-    [8007e7ac + i * 18 + 6] = h(0); // x2
-    [8007e7ac + i * 18 + 8] = h(0); // y2
-    [8007e7ac + i * 18 + a] = h(0); // z2
-    [8007e7ac + i * 18 + c] = b(0); // line on/off. (1 - true/0 - false)
-    [8007e7ac + i * 18 + d] = b(0); // parent actor
-    [8007e7ac + i * 18 + e] = b(0); // actor currently in LINE (with solid).  Script call
-    [8007e7ac + i * 18 + f] = b(0); // actor cross LINE. Script call (removed after script call)
-    [8007e7ac + i * 18 + 10] = b(0); // actor move to line. Script call (removed after script call)
-    [8007e7ac + i * 18 + 11] = b(0); // actor talk to LINE. (1 - true/0 - false)
-    [8007e7ac + i * 18 + 12] = b(0); // actor enter LINE. Script call (removed after script call)
-    [8007e7ac + i * 18 + 13] = b(0); // actor leave LINE. Script call (removed after script call)
-    [8007e7ac + i * 18 + 16] = b(0); // store SLIP byte here
+    [0x8007e7ac + i * 18 + 0] = h(0); // x1
+    [0x8007e7ac + i * 18 + 2] = h(0); // y1
+    [0x8007e7ac + i * 18 + 4] = h(0); // z1
+    [0x8007e7ac + i * 18 + 6] = h(0); // x2
+    [0x8007e7ac + i * 18 + 8] = h(0); // y2
+    [0x8007e7ac + i * 18 + a] = h(0); // z2
+    [0x8007e7ac + i * 18 + c] = b(0); // line on/off. (1 - true/0 - false)
+    [0x8007e7ac + i * 18 + d] = b(0); // parent actor
+    [0x8007e7ac + i * 18 + e] = b(0); // actor currently in LINE (with solid).  Script call
+    [0x8007e7ac + i * 18 + f] = b(0); // actor cross LINE. Script call (removed after script call)
+    [0x8007e7ac + i * 18 + 10] = b(0); // actor move to line. Script call (removed after script call)
+    [0x8007e7ac + i * 18 + 11] = b(0); // actor talk to LINE. (1 - true/0 - false)
+    [0x8007e7ac + i * 18 + 12] = b(0); // actor enter LINE. Script call (removed after script call)
+    [0x8007e7ac + i * 18 + 13] = b(0); // actor leave LINE. Script call (removed after script call)
+    [0x8007e7ac + i * 18 + 16] = b(0); // store SLIP byte here
 }
-[80095d84] = h(0); // number of inited lines
+[0x80095d84] = h(0); // number of inited lines
 
 for( int i = 0; i < 8; ++i )
 {
-    [8009ad30 + i] = b(ff); // player character array of assigned actor_id
+    [0x8009ad30 + i] = b(ff); // player character array of assigned actor_id
 }
 
-[800e48f0] = b(ff); // entity that perform split/join
-[80071c1c] = b(0);
-[8009c6e4 + bc2 + 1] = b(bu[8009c6e4 + bc2 + 1] | 03); // lock PHS and SAVE menu
+[0x800e48f0] = b(ff); // entity that perform split/join
+[0x80071c1c] = b(0);
+[0x8009c6e4 + bc2 + 1] = b(bu[0x8009c6e4 + bc2 + 1] | 03); // lock PHS and SAVE menu
 ////////////////////////////////
 
 
@@ -315,19 +315,19 @@ for( int i = 0; i < 8; ++i )
 ////////////////////////////////
 // field_event_run_init()
 
-events_data = w[8009c6dc];
+events_data = w[0x8009c6dc];
 actors_n = bu[events_data + 2];
 akao_n = h[events_data + 6];
 
-[8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
+[0x8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
 
 string = 800e4254;
 
 for( int i = 0; i < actors_n; ++i )
 {
-    [800722c4] = b(i); // save current actor for use inside opcodes
+    [0x800722c4] = b(i); // save current actor for use inside opcodes
 
-    if( bu[80071e24] & 3 )
+    if( bu[0x80071e24] & 3 )
     {
         A0 = string;
         A1 = 800e0628; // "Actor:"
@@ -337,7 +337,7 @@ for( int i = 0; i < actors_n; ++i )
         A1 = events_data + 20 + i * 8; // field actors names
         field_debug_concat_string();
 
-        if( bu[80071e24] & 1 )
+        if( bu[0x80071e24] & 1 )
         {
             A0 = 4;
             A1 = 0;
@@ -345,7 +345,7 @@ for( int i = 0; i < actors_n; ++i )
             field_debug_copy_string_into_page();
         }
 
-        if( bu[80071e24] & 2 )
+        if( bu[0x80071e24] & 2 )
         {
             A0 = string;
             funcd4840(); // empty
@@ -353,25 +353,25 @@ for( int i = 0; i < actors_n; ++i )
     }
 
     script = hu[events_data + 20 + actors_n * 8 + akao_n * 4 + i * 40]; // get offset to init script (1st)
-    [800831fc + i * 2] = h(script);
+    [0x800831fc + i * 2] = h(script);
 
     opcode = bu[events_data + script];
 
     while( opcode != 0 ) // do until RET opcode
     {
-        [8009a058] = b(opcode);
-        800BB0F4	jalr   w[800e0228 + opcode * 4] ra
+        [0x8009a058] = b(opcode);
+        800BB0F4	jalr   w[0x800e0228 + opcode * 4] ra
 
         // read next opcode
-        V1 = hu[800831fc + i * 2];
+        V1 = hu[0x800831fc + i * 2];
         opcode = bu[events_data + V1];
     }
 
     // skip ret opcode for next run
-    [800831fc + i * 2] = h(hu[800831fc + i * 2] + 1);
+    [0x800831fc + i * 2] = h(hu[0x800831fc + i * 2] + 1);
 }
 
-[800722c4] = b(0); // clear current actor
+[0x800722c4] = b(0); // clear current actor
 ////////////////////////////////
 
 
@@ -379,26 +379,26 @@ for( int i = 0; i < actors_n; ++i )
 ////////////////////////////////
 // funcbb1b4()
 
-events_data = w[8009c6dc];
-entities_data = w[8009c544];
-block7_header = w[8007e770];
+events_data = w[0x8009c6dc];
+entities_data = w[0x8009c544];
+block7_header = w[0x8007e770];
 actors_n = bu[events_data + 2];
 models_n = hu[block7_header + 2];
 
 for( int i = 0; i < 3; ++i )
 {
-    char_id = bu[8009c6e4 + cad + i];
+    char_id = bu[0x8009c6e4 + cad + i];
     if( char_id != ff )
     {
-        actor_id = bu[8009ad30 + char_id];
+        actor_id = bu[0x8009ad30 + char_id];
         if( actor_id != ff )
         {
-            model_id = bu[8007eb98 + actor_id];
+            model_id = bu[0x8007eb98 + actor_id];
             if( model_id != ff )
             {
                 if( model_id < models_n )
                 {
-                    V1 = w[8008357c];
+                    V1 = w[0x8008357c];
                     [V1 + model_id * 8 + 5] = b(1); // set as used model
                 }
             }
@@ -408,18 +408,18 @@ for( int i = 0; i < 3; ++i )
 
 for( int i = 0; i < models_n; ++i )
 {
-    V1 = w[8008357c];
+    V1 = w[0x8008357c];
     if( bu[V1 + i * 8 + 5] == 0 ) // if this model not used
     {
         for( int j = 0; j < actors_n; ++j )
         {
-            model_id = bu[8007eb98 + j];
+            model_id = bu[0x8007eb98 + j];
             if( model_id == i )
             {
                 [entities_data + model_id * 84 + 59] = b(1); // model solidity (1 - off, 0 - on)
                 [entities_data + model_id * 84 + 5b] = b(1); // model talkability (1 - off, 0 - on)
                 [entities_data + model_id * 84 + 5c] = b(0); // model visibility (1 - on, 0 - off)
-                [8007eb98 + j] = b(ff); // unlink model from actor
+                [0x8007eb98 + j] = b(ff); // unlink model from actor
             }
         }
     }
@@ -431,56 +431,56 @@ for( int i = 0; i < models_n; ++i )
 ////////////////////////////////
 // field_event_opcode_cycle()
 
-entities_data = w[8009c544];
-events_data = w[8009c6dc];
+entities_data = w[0x8009c544];
+events_data = w[0x8009c6dc];
 
 // update played time in memory bank
 {
-    hms = w[8009c6e4 + b80];
+    hms = w[0x8009c6e4 + b80];
 
     h = hms / e10; // hours played
     if( h >= 100 ) h = ff;
-    [8009c6e4 + bb4] = b(h); // hour
+    [0x8009c6e4 + bb4] = b(h); // hour
 
     ms = hms - ((hms / e10) * e10);
     m = ms / 3c;
-    [8009c6e4 + bb5] = b(m); // minutes
+    [0x8009c6e4 + bb5] = b(m); // minutes
 
     s = ms - (m * 3c);
 
-    if( bu[8009c6e4 + bb6] != s )
+    if( bu[0x8009c6e4 + bb6] != s )
     {
-        [8009c6e4 + bb6] = b(s);
-        [8009c6e4 + bb7] = b(0);
+        [0x8009c6e4 + bb6] = b(s);
+        [0x8009c6e4 + bb7] = b(0);
     }
     else
     {
-        [8009c6e4 + bb7] = b(bu[8009c6e4 + bb7] + 1);
+        [0x8009c6e4 + bb7] = b(bu[0x8009c6e4 + bb7] + 1);
     }
 }
 
 // update countdown timer in memory bank
 {
-    hms = w[8009c6e4 + b84];
+    hms = w[0x8009c6e4 + b84];
 
     h = hms / e10;
     if( h >= 100 ) h = ff;
-    [8009c6e4 + bb8] = b(h);
+    [0x8009c6e4 + bb8] = b(h);
 
     ms = hms - ((hms / e10) * e10);
     m = ms / 3c;
-    [8009c6e4 + bb9] = b(m);
+    [0x8009c6e4 + bb9] = b(m);
 
     s = ms - (m * 3c);
 
-    if( bu[8009c6e4 + bba] != s )
+    if( bu[0x8009c6e4 + bba] != s )
     {
-        [8009c6e4 + bba] = b(s);
-        [8009c6e4 + bbb] = b(1e); // 30
+        [0x8009c6e4 + bba] = b(s);
+        [0x8009c6e4 + bbb] = b(1e); // 30
     }
-    else if( bu[8009c6e4 + bbb] != 0 )
+    else if( bu[0x8009c6e4 + bbb] != 0 )
     {
-        [8009c6e4 + bbb] = b(bu[8009c6e4 + bbb] - 1);
+        [0x8009c6e4 + bbb] = b(bu[0x8009c6e4 + bbb] - 1);
     }
 }
 
@@ -490,7 +490,7 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
 {
     if( bu[entities_data + i * 84 + 5a] != 0 ) // if model talks with somthing
     {
-        field_struct = w[8009c6e0];
+        field_struct = w[0x8009c6e0];
         if( bu[field_struct + 32] == 0 ) // player has control
         {
             if( talked == 0 )
@@ -519,73 +519,73 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
 }
 
 // update lines and call according scripts
-for( int i = 0; i < h[80095d84]; ++i )
+for( int i = 0; i < h[0x80095d84]; ++i )
 {
     // talk to line
-    if( bu[8007e7ac + i * 18 + 11] != 0 )
+    if( bu[0x8007e7ac + i * 18 + 11] != 0 )
     {
-        field_struct = w[8009c6e0];
+        field_struct = w[0x8009c6e0];
         if( bu[field_struct + 32] == 0 ) // player has control
         {
-            A0 = bu[8007e7ac + i * 18 + d]; // actor id
+            A0 = bu[0x8007e7ac + i * 18 + d]; // actor id
             A1 = 1;
             A2 = 1;
             field_script_request_run();
         }
-        [8007e7ac + i * 18 + 11] = b(0);
+        [0x8007e7ac + i * 18 + 11] = b(0);
     }
 
     // entity move to line
-    if( bu[8007e7ac + i * 18 + 10] != 0 )
+    if( bu[0x8007e7ac + i * 18 + 10] != 0 )
     {
-        A0 = bu[8007e7ac + i * 18 + d];
+        A0 = bu[0x8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 2;
         field_script_request_run();
 
-        [8007e7ac + i * 18 + 10] = b(0);
+        [0x8007e7ac + i * 18 + 10] = b(0);
     }
 
     // entity cross line
-    if( bu[8007e7ac + i * 18 + f] != 0 )
+    if( bu[0x8007e7ac + i * 18 + f] != 0 )
     {
-        A0 = bu[8007e7ac + i * 18 + d];
+        A0 = bu[0x8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 3;
         field_script_request_run();
 
-        [8007e7ac + i * 18 + f] = b(0);
+        [0x8007e7ac + i * 18 + f] = b(0);
     }
 
     // entity move inside line
-    if( bu[8007e7ac + i * 18 + e] != 0 )
+    if( bu[0x8007e7ac + i * 18 + e] != 0 )
     {
-        A0 = bu[8007e7ac + i * 18 + d];
+        A0 = bu[0x8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 4;
         field_script_request_run();
     }
 
     // entity enter line
-    if( bu[8007e7ac + i * 18 + 12] != 0 )
+    if( bu[0x8007e7ac + i * 18 + 12] != 0 )
     {
-        A0 = bu[8007e7ac + i * 18 + d];
+        A0 = bu[0x8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 5;
         field_script_request_run();
 
-        [8007e7ac + i * 18 + 12] = b(0);
+        [0x8007e7ac + i * 18 + 12] = b(0);
     }
 
     // entity leave line
-    if( bu[8007e7ac + i * 18 + 13] != 0 )
+    if( bu[0x8007e7ac + i * 18 + 13] != 0 )
     {
-        A0 = bu[8007e7ac + i * 18 + d];
+        A0 = bu[0x8007e7ac + i * 18 + d];
         A1 = 1;
         A2 = 6;
         field_script_request_run();
 
-        [8007e7ac + i * 18 + 13] = b(0);
+        [0x8007e7ac + i * 18 + 13] = b(0);
     }
 }
 
@@ -593,30 +593,30 @@ for( int i = 0; i < h[80095d84]; ++i )
 for( int left_a = bu[events_data + 2]; left_a != 0; --left_a )// number of actors
 {
     // if current actor id greater than number of actors - then use 0 as id
-    if( bu[800722c4] >= bu[events_data + 2] ) [800722c4] = b(0);
+    if( bu[0x800722c4] >= bu[events_data + 2] ) [0x800722c4] = b(0);
 
-    if( bu[80071e24] & 3 )
+    if( bu[0x80071e24] & 3 )
     {
         A0 = 4; // page id
-        A1 = bu[800722c4];
+        A1 = bu[0x800722c4];
         field_event_update_actor_debug();
     }
 
-    actor_id_cur = bu[800722c4];
+    actor_id_cur = bu[0x800722c4];
 
     // update actor that called split/join and actors that not perform split/join
     // events of actors that perform split/join are paused
-    if( ( bu[80081d90 + actor_id_cur] == 0 ) || ( bu[800e48f0] == actor_id_cur ) )
+    if( ( bu[0x80081d90 + actor_id_cur] == 0 ) || ( bu[0x800e48f0] == actor_id_cur ) )
     {
         for( int left_o = 8; left_o != 0; --left_o )
         {
             // clean page 3 for opcode debug
-            if( bu[80099ffc] == 5 )
+            if( bu[0x80099ffc] == 5 )
             {
-                if( bu[8009d820] & 1 ) // debug
+                if( bu[0x8009d820] & 1 ) // debug
                 {
-                    actor_id_cur = bu[800722c4];
-                    if( ( ( bu[80071e24] & 4 ) == 0 ) || ( bu[80114498 + actor_id_cur] != 0 ) ) // if we want to debug actor data
+                    actor_id_cur = bu[0x800722c4];
+                    if( ( ( bu[0x80071e24] & 4 ) == 0 ) || ( bu[0x80114498 + actor_id_cur] != 0 ) ) // if we want to debug actor data
                     {
                         for( int i = 1; i < 9; ++i )
                         {
@@ -629,52 +629,52 @@ for( int left_a = bu[events_data + 2]; left_a != 0; --left_a )// number of actor
                 }
             }
 
-            actor_id_cur = bu[800722c4];
-            script_cur = hu[800831fc + actor_id_cur * 2];
+            actor_id_cur = bu[0x800722c4];
+            script_cur = hu[0x800831fc + actor_id_cur * 2];
             opcode = bu[events_data + script_cur];
-            [8009a058] = b(opcode);
+            [0x8009a058] = b(opcode);
 
-            opcode = bu[8009a058];
-            800BB9C8	jalr   w[800e0228 + opcode * 4] ra
+            opcode = bu[0x8009a058];
+            800BB9C8	jalr   w[0x800e0228 + opcode * 4] ra
 
             if( V0 == 0 ) // opcode finished
             {
-                if( bu[80099ffc] != 5 ) continue;
+                if( bu[0x80099ffc] != 5 ) continue;
 
                 // not debug
-                if( ( bu[8009d820] & 1 ) == 0 ) continue;
+                if( ( bu[0x8009d820] & 1 ) == 0 ) continue;
 
-                if( bu[80071e24] & 4 )
+                if( bu[0x80071e24] & 4 )
                 {
-                    actor_id_cur = bu[800722c4];
-                    if( bu[80114498 + actor_id_cur] == 0 ) continue;
+                    actor_id_cur = bu[0x800722c4];
+                    if( bu[0x80114498 + actor_id_cur] == 0 ) continue;
                 }
 
-                [8009a064] = w(w[8009a064] + 1);
+                [0x8009a064] = w(w[0x8009a064] + 1);
 
-                if( w[8009a064] >= 8 )
+                if( w[0x8009a064] >= 8 )
                 {
-                    [8009a064] = w(0);
-                    [800722c4] = b(bu[800722c4] + 1);
+                    [0x8009a064] = w(0);
+                    [0x800722c4] = b(bu[0x800722c4] + 1);
                 }
             }
             else // wait
             {
-                if( bu[80099ffc] != 5 ) break;
+                if( bu[0x80099ffc] != 5 ) break;
 
                 // not debug
-                if( ( bu[8009d820] & 1 ) == 0 ) break;
+                if( ( bu[0x8009d820] & 1 ) == 0 ) break;
 
-                if( bu[80071e24] & 4 )
+                if( bu[0x80071e24] & 4 )
                 {
-                    actor_id_cur = bu[800722c4];
-                    if( bu[80114498 + actor_id_cur] == 0 ) break;
+                    actor_id_cur = bu[0x800722c4];
+                    if( bu[0x80114498 + actor_id_cur] == 0 ) break;
                 }
 
-                [800722c4] = b(bu[800722c4] + 1);
+                [0x800722c4] = b(bu[0x800722c4] + 1);
             }
 
-            if( bu[80099ffc] == 5 ) [80070788] = b(0); // stop script update
+            if( bu[0x80099ffc] == 5 ) [0x80070788] = b(0); // stop script update
 
             field_script_update_animation_state();
 
@@ -682,21 +682,21 @@ for( int left_a = bu[events_data + 2]; left_a != 0; --left_a )// number of actor
         }
     }
 
-    [800722c4] = b(bu[800722c4] + 1);
+    [0x800722c4] = b(bu[0x800722c4] + 1);
 
-    if( bu[80099ffc] == 5 )
+    if( bu[0x80099ffc] == 5 )
     {
-        if( bu[80071e24] & 1 )
+        if( bu[0x80071e24] & 1 )
         {
-            if( ( bu[80071e24] & 4 ) == 0 ) break;
+            if( ( bu[0x80071e24] & 4 ) == 0 ) break;
 
-            actor_id_cur = bu[800722c4];
-            if( bu[80114498 + actor_id_cur] != 0 ) break;
+            actor_id_cur = bu[0x800722c4];
+            if( bu[0x80114498 + actor_id_cur] != 0 ) break;
         }
     }
 }
 
-if( bu[80099ffc] == 5 ) [80070788] = b(0); // stop script update
+if( bu[0x80099ffc] == 5 ) [0x80070788] = b(0); // stop script update
 
 field_script_update_animation_state();
 ////////////////////////////////
@@ -706,9 +706,9 @@ field_script_update_animation_state();
 ////////////////////////////////
 // field_script_update_animation_state()
 
-events_data = w[8009c6dc];
-entities_data = w[8009c544];
-field_struct = w[8009c6e0];
+events_data = w[0x8009c6dc];
+entities_data = w[0x8009c544];
+field_struct = w[0x8009c6e0];
 manual_model = h[field_struct + 2a];
 pc = bu[field_struct + 32];
 
@@ -718,27 +718,27 @@ if( number_of_entity > 0 )
 {
     T2 = 0;
     Lbbbf0:	; 800BBBF0
-        model = bu[8007eb98 + T2];
+        model = bu[0x8007eb98 + T2];
         if( model != ff )
         {
             if( model != manual_model || pc != 0 )
             {
-                switch( bu[800756e8 + model] )
+                switch( bu[0x800756e8 + model] )
                 {
                     case 0:
                     {
                         animation_id = bu[entities_data + model * 84 + 5e];
-                        default_animation = bu[8008325c + model];
+                        default_animation = bu[0x8008325c + model];
                         if( animation_id != default_animation )
                         {
                             [entities_data + model * 84 + 5e] = b(default_animation);
-                            default_animation_speed = hu[80082248 + model * 2];
+                            default_animation_speed = hu[0x80082248 + model * 2];
                             [entities_data + model * 84 + 60] = h(default_animation_speed);
                             [entities_data + model * 84 + 62] = h(0);
 
-                            V1 = w[8008357c];
+                            V1 = w[0x8008357c];
                             A1 = bu[V1 + model * 8 + 4];
-                            V1 = w[8004a62c];
+                            V1 = w[0x8004a62c];
                             V1 = w[V1 + 4];
                             A1 = hu[V1 + A1 * 24 + 1a];
                             A0 = w[V1 + A1 * 24 + 1c];
@@ -747,9 +747,9 @@ if( number_of_entity > 0 )
                         }
                         else
                         {
-                            V1 = w[8008357c];
+                            V1 = w[0x8008357c];
                             A1 = bu[V1 + model * 8 + 4];
-                            V1 = w[8004a62c];
+                            V1 = w[0x8004a62c];
                             V1 = w[V1 + 4];
                             A0 = hu[V1 + model * 24 + 1a];
                             V1 = w[V1 + model * 24 + 1c];
@@ -787,7 +787,7 @@ if( number_of_entity > 0 )
 
                         if (current_frame_value / 10 >= number_of_frames)
                         {
-                            [800756e8 + model] = b(4);
+                            [0x800756e8 + model] = b(4);
                             [entities_data + model * 84 + 62] = h(number_of_frames * 10);
                         }
                     }
@@ -808,7 +808,7 @@ if( number_of_entity > 0 )
 
                         if( current_frame_value / 10 >= number_of_frames )
                         {
-                            [800756e8 + model] = b(0);
+                            [0x800756e8 + model] = b(0);
                         }
                     }
                     break;
@@ -819,7 +819,7 @@ if( number_of_entity > 0 )
                         V0 = V0 / 10;
                         V1 = h[entities_data + model * 84 + 64];
 
-                        if( V0 >= V1 ) [800756e8 + model] = b(3);
+                        if( V0 >= V1 ) [0x800756e8 + model] = b(3);
                     }
                     break;
                 }
@@ -841,9 +841,9 @@ entity_id = A0;
 priority_id = A1;
 script_id = A2;
 
-entities_data = w[8009c544];
-current_priority_slot = bu[8009a1c4 + entity_id];
-script_state = bu[800833f8 + entity_id * 8 + priority_id];
+entities_data = w[0x8009c544];
+current_priority_slot = bu[0x8009a1c4 + entity_id];
+script_state = bu[0x800833f8 + entity_id * 8 + priority_id];
 field_file_offset = 8009c6dc;
 extra_offset_number = hu[field_file_offset + 6]
 entity_number = bu[field_file_offset + 2];
@@ -862,19 +862,19 @@ V0 = bu[field_file_offset + script_offset];
 if( V0 != 0 )
 {
     // add script to priority queue
-    [801142d4 + T0 * 8 + priority_id] = b(script_id);
+    [0x801142d4 + T0 * 8 + priority_id] = b(script_id);
 
     // store curently active script pointer
-    active_slot = bu[8009a1c4 + entity_id];
-    current_pointer = hu[800831fc + entity_id * 2];
-    [80071748 + entity_id * 10 + active_slot * 2] = h(current_pointer);
+    active_slot = bu[0x8009a1c4 + entity_id];
+    current_pointer = hu[0x800831fc + entity_id * 2];
+    [0x80071748 + entity_id * 10 + active_slot * 2] = h(current_pointer);
 
     // set new active script pointer and new priority slot
-    [800831fc + entity_id * 2] = h(script_offset);
-    [8009a1c4 + entity_id] = b(priority_id);
+    [0x800831fc + entity_id * 2] = h(script_offset);
+    [0x8009a1c4 + entity_id] = b(priority_id);
 
     // get model data
-    V1 = bu[8007eb98 + entity_id];
+    V1 = bu[0x8007eb98 + entity_id];
     if( V1 != ff )
     {
         V0 = bu[entities_data + V1 * 84 + 5d];
@@ -889,7 +889,7 @@ if( V0 != 0 )
         [entities_data + V1 * 84 + 5d] = b(0);
     }
 
-    [800716dc + entity_id * 2] = h(0);
+    [0x800716dc + entity_id * 2] = h(0);
 }
 
 return 1;
@@ -900,41 +900,41 @@ return 1;
 ////////////////////////////////
 // funcbc338()
 
-[80114464] = h(7fff);
-[80114468] = h(7fff);
+[0x80114464] = h(7fff);
+[0x80114468] = h(7fff);
 
-[800e48fb] = b(2c);
-[800e4923] = b(2c);
-[800e48fb] = b(2c);
-[800e4923] = b(2c);
-[80114490] = b(0);
-[800e48f7] = b(9);
-[800e491f] = b(9);
-[800e48fb] = b(2d);
-[800e4923] = b(2d);
+[0x800e48fb] = b(2c);
+[0x800e4923] = b(2c);
+[0x800e48fb] = b(2c);
+[0x800e4923] = b(2c);
+[0x80114490] = b(0);
+[0x800e48f7] = b(9);
+[0x800e491f] = b(9);
+[0x800e48fb] = b(2d);
+[0x800e4923] = b(2d);
 
 system_gpu_get_type();
 type = V0;
 
 if( ( type == 1 ) || ( type == 2 ) )
 {
-    [800e4932] = h(2f);
-    [800e490a] = h(2f);
+    [0x800e4932] = h(2f);
+    [0x800e490a] = h(2f);
 }
 else
 {
-    [800e4932] = h(1f);
-    [800e490a] = h(1f);
+    [0x800e4932] = h(1f);
+    [0x800e490a] = h(1f);
 }
 
-[800e492a] = h(7850);
-[800e4902] = h(7850);
-[800e48f8] = b(0);
-[800e4920] = b(0);
-[800e48f9] = b(0);
-[800e4921] = b(0);
-[800e48fa] = b(0);
-[800e4922] = b(0);
+[0x800e492a] = h(7850);
+[0x800e4902] = h(7850);
+[0x800e48f8] = b(0);
+[0x800e4920] = b(0);
+[0x800e48f9] = b(0);
+[0x800e4921] = b(0);
+[0x800e48fa] = b(0);
+[0x800e4922] = b(0);
 ////////////////////////////////
 
 
@@ -945,13 +945,13 @@ else
 
 ot = A0;
 
-field_struct = w[8009c6e0];
+field_struct = w[0x8009c6e0];
 if( w[field_struct + 80] & 0100 ) // select pressed
 {
-    [8009d5a6] = b(bu[8009d5a6] ^ 1);
+    [0x8009d5a6] = b(bu[0x8009d5a6] ^ 1);
 }
 
-if( ( ( bu[8009d5a6] == 1 ) && ( bu[field_struct + 32] == 0 ) ) || ( bu[8009d5a6] & 2 ) )
+if( ( ( bu[0x8009d5a6] == 1 ) && ( bu[field_struct + 32] == 0 ) ) || ( bu[0x8009d5a6] & 2 ) )
 {
     A0 = ot;
     funcbc4d4();
@@ -965,10 +965,10 @@ if( ( ( bu[8009d5a6] == 1 ) && ( bu[field_struct + 32] == 0 ) ) || ( bu[8009d5a6
 
 ot = A0;
 
-if( bu[80071c1c] != 0 ) return;
+if( bu[0x80071c1c] != 0 ) return;
 
-A2 = h[80114464];
-A3 = h[80114468];
+A2 = h[0x80114464];
+A3 = h[0x80114468];
 
 if( ( A2 == 7fff ) && ( A3 == 7fff ) ) return;
 
@@ -977,57 +977,57 @@ if( A2 < 0 ) A2 = 0;
 if( A3 >= e1 ) A3 = e0;
 if( A3 < 0 ) A3 = 0;
 
-[80114490] = b(bu[80114490] ^ 1);
+[0x80114490] = b(bu[0x80114490] ^ 1);
 
-rb = bu[80114490];
+rb = bu[0x80114490];
 
 if( A2 >= 123 )
 {
-    [800e48f4 + rb * 28 +  8] = h(A2 - 10);
-    [800e48f4 + rb * 28 +  c] = b(8f);
-    [800e48f4 + rb * 28 + 10] = h(A2);
-    [800e48f4 + rb * 28 + 14] = b(7f);
-    [800e48f4 + rb * 28 + 18] = h(A2 - 10);
-    [800e48f4 + rb * 28 + 1c] = b(8f);
-    [800e48f4 + rb * 28 + 20] = h(A2);
-    [800e48f4 + rb * 28 + 24] = b(7f);
+    [0x800e48f4 + rb * 28 +  8] = h(A2 - 10);
+    [0x800e48f4 + rb * 28 +  c] = b(8f);
+    [0x800e48f4 + rb * 28 + 10] = h(A2);
+    [0x800e48f4 + rb * 28 + 14] = b(7f);
+    [0x800e48f4 + rb * 28 + 18] = h(A2 - 10);
+    [0x800e48f4 + rb * 28 + 1c] = b(8f);
+    [0x800e48f4 + rb * 28 + 20] = h(A2);
+    [0x800e48f4 + rb * 28 + 24] = b(7f);
 }
 else
 {
-    [800e48f4 + rb * 28 +  8] = h(A2);
-    [800e48f4 + rb * 28 +  c] = b(80);
-    [800e48f4 + rb * 28 + 10] = h(A2 + 10);
-    [800e48f4 + rb * 28 + 14] = b(90);
-    [800e48f4 + rb * 28 + 18] = h(A2);
-    [800e48f4 + rb * 28 + 1c] = b(80);
-    [800e48f4 + rb * 28 + 20] = h(A2 + 10);
-    [800e48f4 + rb * 28 + 24] = b(90);
+    [0x800e48f4 + rb * 28 +  8] = h(A2);
+    [0x800e48f4 + rb * 28 +  c] = b(80);
+    [0x800e48f4 + rb * 28 + 10] = h(A2 + 10);
+    [0x800e48f4 + rb * 28 + 14] = b(90);
+    [0x800e48f4 + rb * 28 + 18] = h(A2);
+    [0x800e48f4 + rb * 28 + 1c] = b(80);
+    [0x800e48f4 + rb * 28 + 20] = h(A2 + 10);
+    [0x800e48f4 + rb * 28 + 24] = b(90);
 }
 
 if( A3 < 11 )
 {
-    [800e4901 + rb * 28] = b(6f);
-    [800e4909 + rb * 28] = b(6f);
-    [800e4911 + rb * 28] = b(5f);
-    [800e4919 + rb * 28] = b(5f);
-    [800e48fe + rb * 28] = h(A3);
-    [800e4906 + rb * 28] = h(A3);
-    [800e490e + rb * 28] = h(A3 + 10);
-    [800e4916 + rb * 28] = h(A3 + 10);
+    [0x800e4901 + rb * 28] = b(6f);
+    [0x800e4909 + rb * 28] = b(6f);
+    [0x800e4911 + rb * 28] = b(5f);
+    [0x800e4919 + rb * 28] = b(5f);
+    [0x800e48fe + rb * 28] = h(A3);
+    [0x800e4906 + rb * 28] = h(A3);
+    [0x800e490e + rb * 28] = h(A3 + 10);
+    [0x800e4916 + rb * 28] = h(A3 + 10);
 }
 else
 {
-    [800e4901 + rb * 28] = b(60);
-    [800e4909 + rb * 28] = b(60);
-    [800e4911 + rb * 28] = b(70);
-    [800e4919 + rb * 28] = b(70);
-    [800e48fe + rb * 28] = h(A3 - 10);
-    [800e4906 + rb * 28] = h(A3 - 10);
-    [800e490e + rb * 28] = h(A3);
-    [800e4916 + rb * 28] = h(A3);
+    [0x800e4901 + rb * 28] = b(60);
+    [0x800e4909 + rb * 28] = b(60);
+    [0x800e4911 + rb * 28] = b(70);
+    [0x800e4919 + rb * 28] = b(70);
+    [0x800e48fe + rb * 28] = h(A3 - 10);
+    [0x800e4906 + rb * 28] = h(A3 - 10);
+    [0x800e490e + rb * 28] = h(A3);
+    [0x800e4916 + rb * 28] = h(A3);
 }
 
-[800e48f4 + rb * 28] = w((w[800e48f4 + rb * 28] & ff000000) | (w[ot] & 00ffffff));
+[0x800e48f4 + rb * 28] = w((w[0x800e48f4 + rb * 28] & ff000000) | (w[ot] & 00ffffff));
 [ot] = w((w[ot] & ff000000) | ((800e48f4 + rb * 28) & 00ffffff));
 ////////////////////////////////
 
@@ -1045,15 +1045,15 @@ temp = 800e4288;
 {
     if( page_id == 4 )
     {
-        if( bu[80071e24] & 4 )
+        if( bu[0x80071e24] & 4 )
         {
             // debug output for this actor not set
-            if( bu[80114498 + actor_id] == 0 ) return;
+            if( bu[0x80114498 + actor_id] == 0 ) return;
         }
 
-        [800716c8] = b(actor_id);
+        [0x800716c8] = b(actor_id);
 
-        if( bu[80114498 + actor_id] != 0 )
+        if( bu[0x80114498 + actor_id] != 0 )
         {
             A0 = 4;
             A1 = 7f;
@@ -1082,10 +1082,10 @@ temp = 800e4288;
     }
 
     A0 = string;
-    A1 = w[8009c6dc] + 20 + actor_id * 8; // name of entity
+    A1 = w[0x8009c6dc] + 20 + actor_id * 8; // name of entity
     field_debug_concat_string();
 
-    if( ( bu[8009fe8c] | ( bu[80071e24] & 1 ) ) != 0 )
+    if( ( bu[0x8009fe8c] | ( bu[0x80071e24] & 1 ) ) != 0 )
     {
         A0 = page_id;
         A1 = 0;
@@ -1099,7 +1099,7 @@ temp = 800e4288;
     A1 = 800a01dc; // "RqLv=" (request level)
     field_debug_copy_string();
 
-    priority = bu[8009a1c4 + actor_id]; // currently used priority slot
+    priority = bu[0x8009a1c4 + actor_id]; // currently used priority slot
 
     A0 = priority;
     A1 = temp;
@@ -1113,7 +1113,7 @@ temp = 800e4288;
     A1 = 800a01e4; // " Tg="
     field_debug_concat_string();
 
-    script_id = bu[801142d4 + actor_id * 8 + priority]; // priority queue script id
+    script_id = bu[0x801142d4 + actor_id * 8 + priority]; // priority queue script id
 
     if( script_id == 0 )
     {
@@ -1144,7 +1144,7 @@ temp = 800e4288;
         field_debug_concat_string();
     }
 
-    if( ( bu[8009fe8c] | (bu[80071e24] & 1) ) != 0 )
+    if( ( bu[0x8009fe8c] | (bu[0x80071e24] & 1) ) != 0 )
     {
         A0 = page_id;
         A1 = 1;
@@ -1153,9 +1153,9 @@ temp = 800e4288;
     }
 }
 
-entity_id = bu[8007eb98 + actor_id];
-line_id = bu[8007078c + actor_id];
-entities_data = w[8009c544];
+entity_id = bu[0x8007eb98 + actor_id];
+line_id = bu[0x8007078c + actor_id];
+entities_data = w[0x8009c544];
 
 if( entity_id != ff )
 {
@@ -1183,7 +1183,7 @@ if( entity_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 2;
@@ -1210,7 +1210,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( bu[8007e7ac + line_id * 18 + c] != 0 ) // line on
+    if( bu[0x8007e7ac + line_id * 18 + c] != 0 ) // line on
     {
         A0 = string;
         A1 = 800a0208; // " on"
@@ -1223,7 +1223,7 @@ else if( line_id != ff )
         field_debug_concat_string();
     }
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 2;
@@ -1242,7 +1242,7 @@ else
     A1 = 800a01f8; // "Abst"
     field_debug_copy_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 2;
@@ -1282,7 +1282,7 @@ if( entity_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 3;
@@ -1319,7 +1319,7 @@ if( entity_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 4;
@@ -1327,7 +1327,7 @@ if( entity_id != ff )
         field_debug_copy_string_into_page();
     }
 
-    A0 = bu[800756e8 + entity_id];
+    A0 = bu[0x800756e8 + entity_id];
     A1 = string;
     field_int_to_string();
 
@@ -1367,7 +1367,7 @@ if( entity_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 5;
@@ -1443,7 +1443,7 @@ if( entity_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 6;
@@ -1475,7 +1475,7 @@ if( entity_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 7;
@@ -1494,7 +1494,7 @@ else if( line_id != ff )
     A1 = 800a0258; // "AX"
     field_debug_copy_string();
 
-    A0 = h[8007e7ac + line_id * 18 + 0];
+    A0 = h[0x8007e7ac + line_id * 18 + 0];
     A1 = temp;
     field_int4_to_string();
 
@@ -1506,7 +1506,7 @@ else if( line_id != ff )
     A1 = 800a025c; // " AY"
     field_debug_concat_string();
 
-    A0 = h[8007e7ac + line_id * 18 + 2];
+    A0 = h[0x8007e7ac + line_id * 18 + 2];
     A1 = temp;
     field_int4_to_string();
 
@@ -1514,7 +1514,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 3;
@@ -1526,7 +1526,7 @@ else if( line_id != ff )
     A1 = 800a0260; // "AZ"
     field_debug_copy_string();
 
-    A0 = h[8007e7ac + line_id * 18 + 4];
+    A0 = h[0x8007e7ac + line_id * 18 + 4];
     A1 = temp;
     field_int4_to_string();
 
@@ -1534,7 +1534,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 4;
@@ -1546,7 +1546,7 @@ else if( line_id != ff )
     A1 = 800a0264; // "BX"
     field_debug_copy_string();
 
-    A0 = h[8007e7ac + line_id * 18 + 6];
+    A0 = h[0x8007e7ac + line_id * 18 + 6];
     A1 = temp;
     field_int4_to_string();
 
@@ -1558,7 +1558,7 @@ else if( line_id != ff )
     A1 = 800a0268; // " BY"
     field_debug_concat_string();
 
-    A0 = h[8007e7ac + line_id * 18 + 8];
+    A0 = h[0x8007e7ac + line_id * 18 + 8];
     A1 = temp;
     field_int4_to_string();
 
@@ -1566,7 +1566,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 5;
@@ -1578,7 +1578,7 @@ else if( line_id != ff )
     A1 = 800a026c; // "BZ"
     field_debug_copy_string();
 
-    A0 = h[8007e7ac + line_id * 18 + a];
+    A0 = h[0x8007e7ac + line_id * 18 + a];
     A1 = temp;
     field_int4_to_string();
 
@@ -1586,7 +1586,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 6;
@@ -1601,7 +1601,7 @@ else if( line_id != ff )
 }
 else
 {
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 3;
@@ -1637,7 +1637,7 @@ if( page_id == 4 ) return;
     A1 = 800a0274; // "SX"
     field_debug_copy_string();
 
-    A0 = h[80071e38]; // current screen scroll X
+    A0 = h[0x80071e38]; // current screen scroll X
     A1 = temp;
     field_int4_to_string();
 
@@ -1649,7 +1649,7 @@ if( page_id == 4 ) return;
     A0 = string;
     field_debug_concat_string();
 
-    A0 = h[80071e3c]; // current screen scroll Y
+    A0 = h[0x80071e3c]; // current screen scroll Y
     A1 = temp;
     field_int4_to_string();
 
@@ -1657,7 +1657,7 @@ if( page_id == 4 ) return;
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 01)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 01)) != 0 )
     {
         A0 = page_id;
         A1 = 8;
@@ -1671,9 +1671,9 @@ if( page_id == 4 ) return;
     }
 }
 
-manual_entity_id = h[8009abf4 + 2a];
-triangle_id = hu[80074ea4 + manual_entity_id * 84 + 72];
-walkmesh_data = w[800e4274];
+manual_entity_id = h[0x8009abf4 + 2a];
+triangle_id = hu[0x80074ea4 + manual_entity_id * 84 + 72];
+walkmesh_data = w[0x800e4274];
 
 {
     A0 = string;
@@ -1688,7 +1688,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 9;
@@ -1727,7 +1727,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = a;
@@ -1749,7 +1749,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = b;
@@ -1788,7 +1788,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = c;
@@ -1810,7 +1810,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = d;
@@ -1849,7 +1849,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = e;
@@ -1863,8 +1863,8 @@ walkmesh_data = w[800e4274];
     A0 = string;
     field_debug_copy_string();
 
-    entity_id = bu[8007eb98 + actor_id];
-    entities_data = w[8009c544];
+    entity_id = bu[0x8007eb98 + actor_id];
+    entities_data = w[0x8009c544];
 
     A0 = h[entities_data + entity_id * 84 + 40];
     A1 = temp;
@@ -1874,7 +1874,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = f;
@@ -1913,7 +1913,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 10;
@@ -1928,7 +1928,7 @@ walkmesh_data = w[800e4274];
     A0 = string;
     field_debug_copy_string();
 
-    A0 = hu[8009c6e4 + ba4]; // game progress
+    A0 = hu[0x8009c6e4 + ba4]; // game progress
     A1 = temp;
     field_int4_to_string();
 
@@ -1936,11 +1936,11 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    field_struct = w[8009c6e0];
+    field_struct = w[0x8009c6e0];
 
     if( bu[field_struct + 32] != 0 ) // PC cant move
     {
-        if( bu[80081dc4] != 0 ) // UC move state
+        if( bu[0x80081dc4] != 0 ) // UC move state
         {
             A0 = string;
             A1 = 800a0238; // "."
@@ -1955,7 +1955,7 @@ walkmesh_data = w[800e4274];
     }
     else // PC can move
     {
-        if( bu[80081dc4] != 0 ) // UC move state
+        if( bu[0x80081dc4] != 0 ) // UC move state
         {
             A0 = string;
             A1 = 800a02bc; // "+"
@@ -1973,7 +1973,7 @@ walkmesh_data = w[800e4274];
     A1 = 800a02c4; // "B"
     field_debug_concat_string();
 
-    A0 = bu[8009c6e4 + 4f8]; // party member in slot1 (used in battle)
+    A0 = bu[0x8009c6e4 + 4f8]; // party member in slot1 (used in battle)
     A1 = temp;
     field_int_to_string();
 
@@ -1981,7 +1981,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    A0 = bu[8009c6e4 + 4f9]; // party member in slot2 (used in battle)
+    A0 = bu[0x8009c6e4 + 4f9]; // party member in slot2 (used in battle)
     A1 = temp;
     field_int_to_string();
 
@@ -1989,7 +1989,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    A0 = bu[8009c6e4 + 4fa]; // party member in slot3 (used in battle)
+    A0 = bu[0x8009c6e4 + 4fa]; // party member in slot3 (used in battle)
     A1 = temp;
     field_int_to_string();
 
@@ -2010,7 +2010,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A2 = string;
@@ -2030,7 +2030,7 @@ walkmesh_data = w[800e4274];
     A1 = 800a02cc; // "DP "
     field_debug_copy_string();
 
-    A0 = hu[80075e12];
+    A0 = hu[0x80075e12];
     A1 = temp;
     field_int4_to_string();
 
@@ -2042,7 +2042,7 @@ walkmesh_data = w[800e4274];
     A1 = 800a02d0; // " "
     field_debug_concat_string();
 
-    A0 = hu[80075e10];
+    A0 = hu[0x80075e10];
     A1 = temp;
     field_int4_to_string();
 
@@ -2050,23 +2050,23 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( bu[800716d4] != 0 ) // music locked
+    if( bu[0x800716d4] != 0 ) // music locked
     {
         A0 = string;
         A1 = 800a02d4; // "M"
         field_debug_concat_string();
     }
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 12;
         A2 = string;
         field_debug_copy_string_into_page();
 
-        if( 801affff < w[80075e10] )
+        if( 801affff < w[0x80075e10] )
         {
-            if( bu[8009d29b] & 10 )
+            if( bu[0x8009d29b] & 10 )
             {
                 A0 = page_id;
                 A1 = 12;
@@ -2082,12 +2082,12 @@ walkmesh_data = w[800e4274];
             }
         }
 
-        if( 801adfff < w[80075e10] )      A2 = 5;
-        else if( 801aafff < w[80075e10] ) A2 = 4;
-        else if( 801a7fff < w[80075e10] ) A2 = 1;
-        else if( 801a3fff < w[80075e10] ) A2 = 3;
-        else if( 8019ffff < w[80075e10] ) A2 = 2;
-        else if( 80197fff < w[80075e10] ) A2 = 0;
+        if( 801adfff < w[0x80075e10] )      A2 = 5;
+        else if( 801aafff < w[0x80075e10] ) A2 = 4;
+        else if( 801a7fff < w[0x80075e10] ) A2 = 1;
+        else if( 801a3fff < w[0x80075e10] ) A2 = 3;
+        else if( 8019ffff < w[0x80075e10] ) A2 = 2;
+        else if( 80197fff < w[0x80075e10] ) A2 = 0;
         else                              A2 = 7;
 
         A0 = page_id;
@@ -2098,7 +2098,7 @@ walkmesh_data = w[800e4274];
 
 // print party members and character availability mask
 {
-    A0 = bu[8009c6e4 + cad]; // party member in slot 1
+    A0 = bu[0x8009c6e4 + cad]; // party member in slot 1
     A1 = temp;
     field_int_to_string();
 
@@ -2106,7 +2106,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_copy_string();
 
-    A0 = bu[8009c6e4 + cae]; // party member in slot 2
+    A0 = bu[0x8009c6e4 + cae]; // party member in slot 2
     A1 = temp;
     field_int_to_string();
 
@@ -2114,7 +2114,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    A0 = bu[8009c6e4 + caf]; // party member in slot 3
+    A0 = bu[0x8009c6e4 + caf]; // party member in slot 3
     A1 = temp;
     field_int_to_string();
 
@@ -2122,7 +2122,7 @@ walkmesh_data = w[800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( hu[8009c6e4 + 10a6] & 1 )
+    if( hu[0x8009c6e4 + 10a6] & 1 )
     {
         A0 = string;
         A1 = 800a02d8; // "C"
@@ -2135,7 +2135,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 2 )
+    if( hu[0x8009c6e4 + 10a6] & 2 )
     {
         A0 = string;
         A1 = 800a02c4; // "B"
@@ -2148,7 +2148,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 4 )
+    if( hu[0x8009c6e4 + 10a6] & 4 )
     {
         A0 = string;
         A1 = 800a0240; // "T"
@@ -2161,7 +2161,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 8 )
+    if( hu[0x8009c6e4 + 10a6] & 8 )
     {
         A0 = string;
         A1 = 800a02dc; // "E"
@@ -2174,7 +2174,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 10 )
+    if( hu[0x8009c6e4 + 10a6] & 10 )
     {
         A0 = string;
         A1 = 800a02e0; // "R"
@@ -2187,7 +2187,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 20 )
+    if( hu[0x8009c6e4 + 10a6] & 20 )
     {
         A0 = string;
         A1 = 800a02e4; // "Y"
@@ -2200,7 +2200,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 40 )
+    if( hu[0x8009c6e4 + 10a6] & 40 )
     {
         A0 = string;
         A1 = 800a02e8; // "K"
@@ -2213,7 +2213,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 80 )
+    if( hu[0x8009c6e4 + 10a6] & 80 )
     {
         A0 = string;
         A1 = 800a023c; // "V"
@@ -2226,7 +2226,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 100 )
+    if( hu[0x8009c6e4 + 10a6] & 100 )
     {
         A0 = string;
         A1 = 800a02ec; // "D"
@@ -2239,7 +2239,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 200 )
+    if( hu[0x8009c6e4 + 10a6] & 200 )
     {
         A0 = string;
         A1 = 800a02f0; // "U"
@@ -2252,7 +2252,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[8009c6e4 + 10a6] & 400 )
+    if( hu[0x8009c6e4 + 10a6] & 400 )
     {
         A0 = string;
         A1 = 800a02f4; // "F"
@@ -2265,7 +2265,7 @@ walkmesh_data = w[800e4274];
         field_debug_concat_string();
     }
 
-    if( (bu[8009fe8c] | (bu[80071e24] & 1)) != 0 )
+    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
     {
         A0 = page_id;
         A1 = 13; // row
@@ -2288,11 +2288,11 @@ walkmesh_data = w[800e4274];
 opcode_name = A0; // opcode name text
 args_n = A1; // number of arg
 
-actor_id_cur = bu[800722c4];
+actor_id_cur = bu[0x800722c4];
 
-if( bu[80071e24] & 04 )
+if( bu[0x80071e24] & 04 )
 {
-    if( bu[80114498 + actor_id_cur] == 0 ) return;
+    if( bu[0x80114498 + actor_id_cur] == 0 ) return;
 }
 
 string = 800e4254;
@@ -2307,7 +2307,7 @@ A0 = string;
 A1 = opcode_name;
 field_debug_concat_string();
 
-if( bu[8009d820] & 1 ) // debug
+if( bu[0x8009d820] & 1 ) // debug
 {
     A0 = 3;
     A1 = 0; // row
@@ -2336,7 +2336,7 @@ while( args_n != 0 )
     A1 = 800a02fc; // "="
     field_debug_concat_string();
 
-    V0 = w[8009c6dc] + hu[800831fc + actor_id_cur * 2] + S4 - args_n;
+    V0 = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2] + S4 - args_n;
     A0 = bu[V0]; // argument value
     A1 = temp;
     field_int2_to_string();
@@ -2345,7 +2345,7 @@ while( args_n != 0 )
     A1 = temp;
     field_debug_concat_string();
 
-    if( bu[8009d820] & 1 ) // debug
+    if( bu[0x8009d820] & 1 ) // debug
     {
         A0 = 3; // page
         A1 = S4 - args_n; // row
@@ -2366,10 +2366,10 @@ param = A0;
 value = A1;
 val_size = A2;
 
-if( bu[80071e24] & 4 )
+if( bu[0x80071e24] & 4 )
 {
-    V0 = bu[800722c4];
-    if( bu[80114498 + V0] == 0 )
+    V0 = bu[0x800722c4];
+    if( bu[0x80114498 + V0] == 0 )
     {
         return;
     }
@@ -2411,14 +2411,14 @@ A0 = string;
 A1 = temp;
 field_debug_concat_string();
 
-if( bu[8009d820] & 1 ) // debug
+if( bu[0x8009d820] & 1 ) // debug
 {
     A0 = 2; // page
     A1 = string;
     field_debug_add_string_to_page_next_row();
 }
 
-if( bu[8009d820] & 2 ) // debug
+if( bu[0x8009d820] & 2 ) // debug
 {
     A0 = string;
     funcd4840(); // empty. Was used for debug
@@ -2433,8 +2433,8 @@ if( bu[8009d820] & 2 ) // debug
 //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
 off = A1; // offset to byte offset in opcode
 
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 switch( A0 )
 {
@@ -2452,7 +2452,7 @@ switch( V1 )
     {
         val = bu[script + off];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0300; // "G cons="
             A1 = val;
@@ -2466,9 +2466,9 @@ switch( V1 )
     case 2: // memory bank 2
     {
         indx = bu[script + off];
-        val = bu[8009d288 + indx];
+        val = bu[0x8009d288 + indx];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2487,9 +2487,9 @@ switch( V1 )
     case 4: // memory bank 4
     {
         indx = bu[script + off];
-        val = bu[8009d288 + 100 + indx];
+        val = bu[0x8009d288 + 100 + indx];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2508,9 +2508,9 @@ switch( V1 )
     case c: // memory bank C
     {
         indx = bu[script + off];
-        val = bu[8009d288 + 200 + indx];
+        val = bu[0x8009d288 + 200 + indx];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2529,9 +2529,9 @@ switch( V1 )
     case e: // memory bank E
     {
         indx = bu[script + off];
-        val = bu[8009d288 + 300 + indx];
+        val = bu[0x8009d288 + 300 + indx];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2550,9 +2550,9 @@ switch( V1 )
     case f: // memory bank F
     {
         indx = bu[script + off];
-        val = bu[8009d288 + 400 + indx];
+        val = bu[0x8009d288 + 400 + indx];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2571,9 +2571,9 @@ switch( V1 )
     case 6: // memory bank 6
     {
         indx = bu[script + off];
-        val = bu[80075e24 + indx];
+        val = bu[0x80075e24 + indx];
 
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0308; // "G indx="
             A1 = indx;
@@ -2590,7 +2590,7 @@ switch( V1 )
 
     default:
     {
-        if( bu[8009d820] & 3 ) // debug
+        if( bu[0x8009d820] & 3 ) // debug
         {
             A0 = 800a0320; // "G data err="
             A1 = V1 & 00ff;
@@ -2627,73 +2627,73 @@ V0 = w[AT + 0000];
 800BF3E8	jr     v0 
 800BF3EC	nop
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF3F8	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF418	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
 800BF424	j      Lbf558 [$800bf558]
 V1 = V0 >> 04;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF434	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF454	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
 800BF460	j      Lbf558 [$800bf558]
 V1 = V0 & 000f;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF470	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF490	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0002];
 800BF49C	j      Lbf558 [$800bf558]
 V1 = V0 >> 04;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF4AC	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF4CC	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0002];
 800BF4D8	j      Lbf558 [$800bf558]
 V1 = V0 & 000f;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF4E8	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF508	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0003];
 800BF514	j      Lbf558 [$800bf558]
 V1 = V0 >> 04;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF524	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF544	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0003];
@@ -2714,13 +2714,13 @@ V0 = w[AT + 0000];
 800BF580	jr     v0 
 800BF584	nop
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -2729,7 +2729,7 @@ A1 = bu[V0 + 0000];
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF5DC	nop
 V0 = V0 & 0003;
 800BF5E4	beq    v0, zero, Lbf8f4 [$800bf8f4]
@@ -2741,13 +2741,13 @@ field_debug_add_parse_value_to_page2();
 A0 = 800a039c; // "S glov="
 800BF604	j      Lbf8ac [$800bf8ac]
 A1 = S0 & 00ff;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -2757,7 +2757,7 @@ A1 = V0 | 0100;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF664	nop
 V0 = V0 & 0003;
 800BF66C	beq    v0, zero, Lbf8f4 [$800bf8f4]
@@ -2769,13 +2769,13 @@ field_debug_add_parse_value_to_page2();
 A0 = 800a039c; // "S glov="
 800BF68C	j      Lbf8ac [$800bf8ac]
 A1 = S0 & 00ff;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -2785,7 +2785,7 @@ A1 = V0 | 0200;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF6EC	nop
 V0 = V0 & 0003;
 800BF6F4	beq    v0, zero, Lbf8f4 [$800bf8f4]
@@ -2797,13 +2797,13 @@ field_debug_add_parse_value_to_page2();
 A0 = 800a039c; // "S glov="
 800BF714	j      Lbf8ac [$800bf8ac]
 A1 = S0 & 00ff;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -2813,7 +2813,7 @@ A1 = V0 | 0300;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF774	nop
 V0 = V0 & 0003;
 800BF77C	beq    v0, zero, Lbf8f4 [$800bf8f4]
@@ -2825,7 +2825,7 @@ field_debug_add_parse_value_to_page2();
 A0 = 800a039c; // "S glov="
 800BF79C	j      Lbf8ac [$800bf8ac]
 A1 = S0 & 00ff;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
@@ -2833,7 +2833,7 @@ AT = AT + V0;
 A0 = hu[AT + 0000];
 
 Lbf7c4:	; 800BF7C4
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -2843,7 +2843,7 @@ A1 = V0 | 0400;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF7FC	nop
 V0 = V0 & 0003;
 800BF804	beq    v0, zero, Lbf8f4 [$800bf8f4]
@@ -2855,13 +2855,13 @@ field_debug_add_parse_value_to_page2();
 A0 = 800a039c; // "S glov="
 800BF824	j      Lbf8ac [$800bf8ac]
 A1 = S0 & 00ff;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -2871,7 +2871,7 @@ A1 = bu[V0 + 0000];
 AT = AT + 5e24;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF880	nop
 V0 = V0 & 0003;
 800BF888	beq    v0, zero, Lbf8f4 [$800bf8f4]
@@ -2891,7 +2891,7 @@ field_debug_add_parse_value_to_page2();
 800BF8B8	nop
 
 Lbf8bc:	; 800BF8BC
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BF8C4	nop
 V0 = V0 & 0003;
 800BF8CC	beq    v0, zero, Lbf8e4 [$800bf8e4]
@@ -2932,13 +2932,13 @@ V0 = w[AT + 0000];
 800BF944	nop
 
 // halfbyte 1
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF950	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF970	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
@@ -2946,13 +2946,13 @@ V0 = bu[V0 + 0001];
 V1 = V0 >> 04;
 
 // halfbyte 2
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF98C	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF9AC	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
@@ -2960,13 +2960,13 @@ V0 = bu[V0 + 0001];
 V1 = V0 & 000f;
 
 // halfbyte 3
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BF9C8	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BF9E8	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0002];
@@ -2974,13 +2974,13 @@ V0 = bu[V0 + 0002];
 V1 = V0 >> 04;
 
 // halfbyte 4
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BFA04	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BFA24	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0002];
@@ -2988,13 +2988,13 @@ V0 = bu[V0 + 0002];
 V1 = V0 & 000f;
 
 // halfbyte 5
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BFA40	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BFA60	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0003];
@@ -3002,13 +3002,13 @@ V0 = bu[V0 + 0003];
 V1 = V0 >> 04;
 
 // halfbyte 6
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800BFA7C	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800BFA9C	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0003];
@@ -3030,19 +3030,19 @@ V0 = w[AT + 0000];
 800BFAD8	nop
 
 // memory bank 0
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 V1 = bu[V0 + 0001];
 S0 = bu[V0 + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 V1 = V1 << 08;
 V0 = V0 & 0003;
 800BFB28	beq    v0, zero, Lc01ec [$800c01ec]
@@ -3052,18 +3052,18 @@ A0 = 800a0300;
 A1 = S0 << 10;
 
 // memory bank 1
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BFB80	nop
 V0 = V0 & 0003;
 AT = 8009d288;
@@ -3080,18 +3080,18 @@ A0 = 800a0310; // "G glov="
 A1 = S0;
 
 // memory bank 2
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800BFC00	nop
 V0 = V0 & 0003;
 AT = 8009d289;
@@ -3112,20 +3112,20 @@ A0 = 800a0310; // "G glov="
 A1 = S0 << 10;
 
 // memory bank 3
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFC8C	nop
 A1 = V0 | 0100;
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
@@ -3141,13 +3141,13 @@ A0 = 800a0310; // "G glov="
 A1 = S0;
 
 // memory bank 4
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3160,7 +3160,7 @@ V1 = bu[AT + 0000];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 V1 = V1 << 08;
 V0 = V0 & 0003;
 800BFD48	beq    v0, zero, Lc01ec [$800c01ec]
@@ -3174,20 +3174,20 @@ A0 = 800a0310; // "G glov="
 A1 = S0 << 10;
 
 // memory bank B
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFDA8	nop
 A1 = V0 | 0200;
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
@@ -3203,13 +3203,13 @@ A0 = 800a0310; // "G glov="
 A1 = S0;
 
 // memory bank C
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3222,7 +3222,7 @@ V1 = bu[AT + 0000];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 V1 = V1 << 08;
 V0 = V0 & 0003;
 800BFE64	beq    v0, zero, Lc01ec [$800c01ec]
@@ -3236,20 +3236,20 @@ A0 = 800a0310; // "G glov="
 A1 = S0 << 10;
 
 // memory bank D
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFEC4	nop
 A1 = V0 | 0300;
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
@@ -3265,13 +3265,13 @@ A0 = 800a0310; // "G glov="
 A1 = S0;
 
 // memory bank E
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3284,7 +3284,7 @@ V1 = bu[AT + 0000];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 V1 = V1 << 08;
 V0 = V0 & 0003;
 800BFF80	beq    v0, zero, Lc01ec [$800c01ec]
@@ -3298,20 +3298,20 @@ A0 = 800a0310; // "G glov="
 A1 = S0 << 10;
 
 // memory bank F
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 V0 = bu[V0 + 0000];
 800BFFE0	nop
 A1 = V0 | 0400;
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
@@ -3330,7 +3330,7 @@ A1 = S0;
 
 // memory bank 7
 Lc002c:	; 800C002C
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 
 funcc0034:	; 800C0034
 V1 = A1 << 10;
@@ -3339,7 +3339,7 @@ AT = 800831fc;
 
 Lc0048:	; 800C0048
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3352,7 +3352,7 @@ V1 = bu[AT + 0000];
 AT = 8009d288;
 AT = AT + A1;
 S0 = bu[AT + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 V1 = V1 << 08;
 V0 = V0 & 0003;
 800C009C	beq    v0, zero, Lc01ec [$800c01ec]
@@ -3366,18 +3366,18 @@ A0 = 800a0310; // "G glov="
 A1 = S0 << 10;
 
 // memory bank 5
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C0104	nop
 V0 = V0 & 0003;
 800C010C	lui    at, $8007
@@ -3401,7 +3401,7 @@ field_debug_add_parse_value_to_page2();
 V0 = S0;
 
 // memory bank 6
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
@@ -3409,12 +3409,12 @@ AT = AT + V0;
 
 Lc016c:	; 800C016C
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C0190	nop
 V0 = V0 & 0003;
 800C0198	lui    at, $8007
@@ -3447,7 +3447,7 @@ V0 = V0 >> 10;
 
 // memory bank 8, 9, A, >F
 Lc01f8:	; 800C01F8
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C0200	nop
 V0 = V0 & 0003;
 800C0208	beq    v0, zero, Lc0220 [$800c0220]
@@ -3478,78 +3478,78 @@ V0 = A0 < 0006;
 800C0264	beq    v0, zero, Lc03f4 [$800c03f4]
 
 V0 = A0 << 02;
-V0 = w[800a046c + V0];
+V0 = w[0x800a046c + V0];
 800C0280	nop
 800C0284	jr     v0 
 800C0288	nop
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C0294	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C02B4	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
 800C02C0	j      Lc03f4 [$800c03f4]
 V1 = V0 >> 04;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C02D0	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C02F0	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
 800C02FC	j      Lc03f4 [$800c03f4]
 V1 = V0 & 000f;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C030C	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C032C	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0002];
 800C0338	j      Lc03f4 [$800c03f4]
 V1 = V0 >> 04;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C0348	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C0368	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0002];
 800C0374	j      Lc03f4 [$800c03f4]
 V1 = V0 & 000f;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C0384	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C03A4	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0003];
 800C03B0	j      Lc03f4 [$800c03f4]
 V1 = V0 >> 04;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C03C0	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C03E0	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0003];
@@ -3572,13 +3572,13 @@ V0 = w[AT + 0000];
 800C041C	jr     v0 
 800C0420	nop
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3587,7 +3587,7 @@ A1 = bu[V0 + 0000];
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3601,13 +3601,13 @@ if( bu[8009d820] & 3 )
 }
 800C0A5C	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3620,7 +3620,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V0);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     S0 = V1 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3634,13 +3634,13 @@ if( bu[8009d820] & 3 )
 }
 800C0B00	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3650,7 +3650,7 @@ A1 = V0 | 0100;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3664,13 +3664,13 @@ if( bu[8009d820] & 3 )
 }
 800C0A5C	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3684,7 +3684,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3698,13 +3698,13 @@ if( bu[8009d820] & 3 )
 }
 800C0B00	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3714,7 +3714,7 @@ A1 = V0 | 0200;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3728,13 +3728,13 @@ if( bu[8009d820] & 3 )
 }
 800C0A5C	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3748,7 +3748,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3762,13 +3762,13 @@ if( bu[8009d820] & 3 )
 }
 800C0B00	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3778,7 +3778,7 @@ A1 = V0 | 0300;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3792,13 +3792,13 @@ if( bu[8009d820] & 3 )
 }
 800C0A5C	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3814,7 +3814,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3828,13 +3828,13 @@ if( bu[8009d820] & 3 )
 }
 800C0B00	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3844,7 +3844,7 @@ A1 = V0 | 0400;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3858,13 +3858,13 @@ if( bu[8009d820] & 3 )
 }
 800C0A5C	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3879,7 +3879,7 @@ AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3893,18 +3893,18 @@ if( bu[8009d820] & 3 )
 }
 800C0B00	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
-A0 = hu[800731fc + V0];
-V0 = w[8009c6dc];
+A0 = hu[0x800731fc + V0];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
 A1 = bu[V0 + 0000];
-[80075e24 + A1] = b(S0);
+[0x80075e24 + A1] = b(S0);
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3918,12 +3918,12 @@ if( bu[8009d820] & 3 )
 }
 800C0A5C	j      Lc0b40 [$800c0b40]
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 V1 = A1 << 10;
 V0 = V0 << 01;
 AT = 800831fc;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 >> 10;
 V0 = V0 + A0;
 V0 = V0 + V1;
@@ -3940,7 +3940,7 @@ AT = AT + A1;
 [AT + 0000] = b(V0);
 S0 = V1 >> 10;
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0394; // "S indx="
     A1 = A1;
@@ -3955,7 +3955,7 @@ if( bu[8009d820] & 3 )
 800C0B00	j      Lc0b40 [$800c0b40]
 
 Lc0b08:	; 800C0B08
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a03ac; // "S data err="
     A1 = V1 & ff;
@@ -3975,11 +3975,11 @@ Lc0b40:	; 800C0B40
 // funcc0b54()
 // called as opcodes 0c 0d 1a 1b 1c 1d 1e 1f 44 46 4c 4e be
 
-if( bu[8009d820] & 3 ) // debug
+if( bu[0x8009d820] & 3 ) // debug
 {
     string = 800e4288;
 
-    A0 = bu[8009a058]; // saved current opcode
+    A0 = bu[0x8009a058]; // saved current opcode
     A1 = string;
     field_int2_to_string();
 
