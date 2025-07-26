@@ -3273,8 +3273,8 @@ for( int i = 0; i < 8; ++i )
 [80069552] = h(hu[unit_structure + 16]);
 
 // unknown
-[90069538] = h(bu[unit_structure + 0]);
-[8006953a] = h(bu[unit_structure + 1]);
+[0x90069538] = h(bu[unit_structure + 0]);
+[0x8006953a] = h(bu[unit_structure + 1]);
 
 // special materia flags
 [unit_structure + 23] = b(0);

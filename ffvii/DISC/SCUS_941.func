@@ -487,9 +487,9 @@
 8002FF4C func2ff4c
 80030038 func30038
 80030148 func30148
-80030234 func30234
+80030234 system_akao_main
 80030380 func30380
-800308D4 func308d4
+800308D4 system_akao_update
 80030E7C system_akao_execute_sequence
 80031820 func31820
 800318BC system_akao_get_next_note
