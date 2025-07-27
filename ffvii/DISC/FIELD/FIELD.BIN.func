@@ -179,9 +179,9 @@
 800C4A94 0xF4 MUSVM
 800C4AE8 0xFD CMUSC
 800C4BCC set_and_apply_field_music_params
-800C4C9C get_akao_offset_in_field
+800C4C9C field_event_get_akao_offset_in_field
 800C4CE8 0xF6 BMUSC
-800C4DE8 0xFC FMUSC
+800C4DE8 field_event_opcode_fc_fmusc
 800C4EE8 field_event_opcode_21_tutor
 800C506C 0xF5 MULCK
 800C50EC 0x27 BGMOVIE

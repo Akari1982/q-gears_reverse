@@ -1,62 +1,49 @@
-////////////////////////////////
-// field_init_structs_events_actors()
-
-field_struct = A0;
-entities_data = A1;
-events_data = A2;
-
-[0x8009c6e0] = w(field_struct);
-[0x8009c544] = w(entities_data); // pointer to model data
-[0x8009c6dc] = w(events_data); // field events pointer
-
-[0x8007ebe0] = b(1);
-[0x8009fe8c] = b(0);
-[0x80095dcc] = b(0);
-
-if( h[field_struct + 6a] & 0100 ) // if select key
+void field_init_structs_events_actors( field_struct, entities_data, events_data )
 {
-    [0x80095dcc] = b(1);
-    [0x80099ffc] = b(4); // script related
-}
+    [0x8009c6e0] = w(field_struct);
+    [0x8009c544] = w(entities_data); // pointer to model data
+    [0x8009c6dc] = w(events_data); // field events pointer
 
-// file version check
-{
-    if( bu[events_data + 0] < 2 )
+    [0x8007ebe0] = b(1);
+    [0x8009fe8c] = b(0);
+    [0x80095dcc] = b(0);
+
+    if( h[field_struct + 0x6a] & 0x0100 ) // if select key
     {
-        A0 = 4b; // "K" (old Event data!)
-        A1 = a;
-        system_bios_system_error_boot_or_disk_failure();
+        [0x80095dcc] = b(1);
+        [0x80099ffc] = b(4); // script related
     }
 
-    if( bu[events_data + 1] < 5 )
+    // file version check
     {
-        A0 = 4b; // "K" (old Event version!)
-        A1 = b;
-        system_bios_system_error_boot_or_disk_failure();
+        if( bu[events_data + 0x0] < 2 )
+        {
+            system_bios_system_error_boot_or_disk_failure( 0x4b, 0xa ); // "K" (old Event data!)
+        }
+
+        if( bu[events_data + 0x1] < 5 )
+        {
+            system_bios_system_error_boot_or_disk_failure( 0x4b, 0xb ); // "K" (old Event version!)
+        }
+
+        if( ( bu[events_data + 0x0] >= 3 ) || ( bu[events_data + 0x1] >= 6 ) )
+        {
+            system_bios_system_error_boot_or_disk_failure( 0x4b, 0xc ); // "K" (old Event program!)
+        }
     }
 
-    if( ( bu[events_data + 0] >= 3 ) || ( bu[events_data + 1] >= 6 ) )
+    field_window_reset_all();
+    field_init_default_values();
+    field_event_run_init();
+
+    if( bu[0x800716d4] == 0 ) // music not locked
     {
-        A0 = 4b; // "K" (old Event program!)
-        A1 = c;
-        system_bios_system_error_boot_or_disk_failure();
+        clear_akao();
+
+        [0x8009a000] = h(0xf2);
+        system_akao_execute();
     }
 }
-
-field_window_reset_all();
-
-field_init_default_values();
-
-field_event_run_init();
-
-if( bu[0x800716d4] == 0 )
-{
-    clear_akao();
-
-    [0x8009a000] = h(0xf2);
-    system_akao_execute();
-}
-////////////////////////////////
 
 
 
@@ -117,7 +104,7 @@ if( bu[0x80071e2c] ) // if at least 1 window is opened
     A1 = 4; // render max 4 dialogs
     A2 = ot;
     field_struct = w[0x8009c6e0];
-    A3 = bu[field_struct + 0] ^ 1;
+    A3 = bu[field_struct + 0x0] ^ 1;
     system_menu_draw_dialog();
 }
 
@@ -134,126 +121,126 @@ field_struct = w[0x8009c6e0];
 events_data = w[0x8009c6dc];
 entities_data = w[0x8009c544];
 
-[field_struct + 1] = b(0); // state normal field
-[field_struct + 2] = h(0); // map to load
-[field_struct + 10] = h(hu[events_data + 8]); // field scale (9 bit fixed point)
-[field_struct + 12] = b(0); // set to 0 in 0x6A VWOFT opcode
-[field_struct + 13] = b(0); // set to 0 in 0x6A VWOFT opcode
-[field_struct + 14] = b(0); // set to 0 in 0x6A VWOFT opcode
-[field_struct + 18] = h(0); // set to 0 in 0x6A VWOFT opcode
-[field_struct + 1a] = h(0); // set to 0 in 0x6A VWOFT opcode
-[field_struct + 1d] = b(0); // set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
-[field_struct + 26] = h(0); // battle state?
-[field_struct + 28] = h(bu[events_data + 3]); // number of models
-[field_struct + 2a] = h(0); // manual model id
-[field_struct + 2c] = h(0); // animation for stand
-[field_struct + 2e] = h(1); // animation for walk
-[field_struct + 30] = h(2); // animation for run
-[field_struct + 32] = b(0); // 0 if PC can move. 1 - otherwise
-[field_struct + 33] = b(0); // if 1 here model will not automove. And animation will not play
-[field_struct + 34] = b(0); // MENU byte
-[field_struct + 35] = b(0);
-[field_struct + 36] = b(0); // check gateways (0 - check)
-[field_struct + 37] = b(0); // scroll lock
-[field_struct + 3a] = b(0); // we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode
-[field_struct + 3b] = b(0); // battle field check on/off (0/1)
-[field_struct + 3c] = b(0); // battle table to use (0 or 1)
-[field_struct + 3d] = b(0);
-[field_struct + 3e] = h(0);
-[field_struct + 40] = h(0);
-[field_struct + 44] = w(0); // offset to battle music (global, with field file offset)
-[field_struct + 48] = w(0); // offset to field music (global, with field file offset)
-[field_struct + 8a] = b(0); // if 1 we activate X shaking. 0 - deactivate
-[field_struct + 8b] = b(0); // state of shaking single X movement (0 - init, 1 - action)
-[field_struct + 8e] = h(0); // shake single X movement strength
-[field_struct + 94] = h(0); // number of steps for shake single X movement
-[field_struct + 96] = h(0); // current step for shake single X movement
-[field_struct + 98] = b(0); // if 1 we activate Y shaking. 0 - deactivate
-[field_struct + 99] = b(0); // state of shaking single Y movement (0 - init, 1 - action)
-[field_struct + 9c] = h(0); // shake single Y movement strength
-[field_struct + a2] = h(0); // number of steps for shake single Y movement
-[field_struct + a4] = h(0); // current step for shake single Y movement
+[field_struct + 0x1] = b(0); // state normal field
+[field_struct + 0x2] = h(0); // map to load
+[field_struct + 0x10] = h(hu[events_data + 0x8]); // field scale (9 bit fixed point)
+[field_struct + 0x12] = b(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 0x13] = b(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 0x14] = b(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 0x18] = h(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 0x1a] = h(0); // set to 0 in 0x6A VWOFT opcode
+[field_struct + 0x1d] = b(0); // set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
+[field_struct + 0x26] = h(0); // battle state?
+[field_struct + 0x28] = h(bu[events_data + 0x3]); // number of models
+[field_struct + 0x2a] = h(0); // manual model id
+[field_struct + 0x2c] = h(0); // animation for stand
+[field_struct + 0x2e] = h(1); // animation for walk
+[field_struct + 0x30] = h(2); // animation for run
+[field_struct + 0x32] = b(0); // 0 if PC can move. 1 - otherwise
+[field_struct + 0x33] = b(0); // if 1 here model will not automove. And animation will not play
+[field_struct + 0x34] = b(0); // MENU byte
+[field_struct + 0x35] = b(0);
+[field_struct + 0x36] = b(0); // check gateways (0 - check)
+[field_struct + 0x37] = b(0); // scroll lock
+[field_struct + 0x3a] = b(0); // we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode
+[field_struct + 0x3b] = b(0); // battle field check on/off (0/1)
+[field_struct + 0x3c] = b(0); // battle table to use (0 or 1)
+[field_struct + 0x3d] = b(0);
+[field_struct + 0x3e] = h(0);
+[field_struct + 0x40] = h(0);
+[field_struct + 0x44] = w(0); // offset to battle music (global, with field file offset)
+[field_struct + 0x48] = w(0); // offset to field music (global, with field file offset)
+[field_struct + 0x8a] = b(0); // if 1 we activate X shaking. 0 - deactivate
+[field_struct + 0x8b] = b(0); // state of shaking single X movement (0 - init, 1 - action)
+[field_struct + 0x8e] = h(0); // shake single X movement strength
+[field_struct + 0x94] = h(0); // number of steps for shake single X movement
+[field_struct + 0x96] = h(0); // current step for shake single X movement
+[field_struct + 0x98] = b(0); // if 1 we activate Y shaking. 0 - deactivate
+[field_struct + 0x99] = b(0); // state of shaking single Y movement (0 - init, 1 - action)
+[field_struct + 0x9c] = h(0); // shake single Y movement strength
+[field_struct + 0xa2] = h(0); // number of steps for shake single Y movement
+[field_struct + 0xa4] = h(0); // current step for shake single Y movement
 
 [0x80081dc4] = b(0); // current UC opcode state.
 
-for( int i = 0; i < 100; ++i )
+for( int i = 0; i < 0x100; ++i )
 {
     [0x80075e24 + i] = b(0); // clear temp memory in script 5/6
 }
 
 // reset events scripts
-for( int i = 0; i < 8; ++i )
+for( int i = 0; i < 0x8; ++i )
 {
-    for( int j = 0; j < bu[events_data + 2]; ++j ) // go through all actors
+    for( int j = 0; j < bu[events_data + 0x2]; ++j ) // go through all actors
     {
-        [0x80071748 + j * 10 + i * 2] = h(0); // priority script offsets
-        [0x800833f8 + j * 8 + i] = b(0); // array of script running state
-        [0x80071a88 + j * 8 + i] = b(ff); // array if priority data
-        [0x801142d4 + j * 8 + i] = b(0); // priority queue script id
+        [0x80071748 + j * 0x10 + i * 2] = h(0); // priority script offsets
+        [0x800833f8 + j * 0x8 + i] = b(0); // array of script running state
+        [0x80071a88 + j * 0x8 + i] = b(0xff); // array if priority data
+        [0x801142d4 + j * 0x8 + i] = b(0); // priority queue script id
     }
 }
 
-for( int i = 0; i < bu[events_data + 2]; ++i ) // go through all actors
+for( int i = 0; i < bu[events_data + 0x2]; ++i ) // go through all actors
 {
-    [0x8009a1c4 + i] = b(7); // array of current priority slot used by actor
-    [0x8007eb98 + i] = b(ff); // array of actors model id data. -1 - no model.
-    [0x800716dc + i * 2] = h(0); // ???
+    [0x8009a1c4 + i] = b(0x7); // array of current priority slot used by actor
+    [0x8007eb98 + i] = b(0xff); // array of actors model id data. -1 - no model.
+    [0x800716dc + i * 0x2] = h(0); // ???
     [0x80081d90 + i] = b(0); // array of some actors data. Store 1 to pc actor here during SPLIT
-    [0x8007078c + i] = b(ff); // array of actors lines data
+    [0x8007078c + i] = b(0xff); // array of actors lines data
     [0x80114498 + i] = b(0); // not debug script output
 }
 
-for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all entities
+for( int i = 0; i < bu[events_data + 0x3]; ++i ) // go through all entities
 {
-    [entities_data + i * 84 + 0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir field_model_kawai_execute function returns 1
-    [entities_data + i * 84 + 2] = h(0); // store 0 here in KAWAI opcode.
-    [entities_data + i * 84 + 4] = w(0); // offset to KAWAI opcode data in script
-    [entities_data + i * 84 + 8] = b(0); // blinking. 0 - on, 1 - off.
-    [entities_data + i * 84 + 9] = b(0); // store 0 here in KAWAI opcode under some curcumstances.
-    [entities_data + i * 84 + c] = w(0); // x
-    [entities_data + i * 84 + 10] = w(0); // y
-    [entities_data + i * 84 + 14] = w(0); // z
-    [entities_data + i * 84 + 36] = b(0); // move direction
-    [entities_data + i * 84 + 37] = b(0); // lock rotation
-    [entities_data + i * 84 + 38] = b(0); // model direction
-    [entities_data + i * 84 + 39] = b(0); // number of steps for turn
-    [entities_data + i * 84 + 3a] = b(0); // current step for turn
-    [entities_data + i * 84 + 3b] = b(0); // used during TURN
-    [entities_data + i * 84 + 3c] = h(0); // start direction
-    [entities_data + i * 84 + 3e] = h(0); // end direction
-    [entities_data + i * 84 + 40] = h(0); // real X offset value
-    [entities_data + i * 84 + 42] = h(0); // start X offset value
-    [entities_data + i * 84 + 44] = h(0); // end X offset value
-    [entities_data + i * 84 + 46] = h(0); // real Y offset value.
-    [entities_data + i * 84 + 48] = h(0); // start Y offset value.
-    [entities_data + i * 84 + 4a] = h(0); // end Y offset value.
-    [entities_data + i * 84 + 4c] = h(0); // real Z offset value.
-    [entities_data + i * 84 + 4e] = h(0); // start Z offset value.
-    [entities_data + i * 84 + 50] = h(0); // end Z offset value.
-    [entities_data + i * 84 + 52] = h(0); // steps in offseting
-    [entities_data + i * 84 + 54] = h(0); // current step in offsetting
-    [entities_data + i * 84 + 56] = b(0); // type of offsetting (LINEAR SMOOTH INSTANT)
-    [entities_data + i * 84 + 58] = b(0); // pc entity collide with this entity. (1 - true/0 - false)
-    [entities_data + i * 84 + 59] = b(0); // model solidity (0x01 - off/0x00 - on)
-    [entities_data + i * 84 + 5a] = b(0); // pc entity talk with this entity. (1 - true/0 - false)
-    [entities_data + i * 84 + 5b] = b(0); // model talkability (0x01 - off/0x00 - on)
-    [entities_data + i * 84 + 5c] = b(0); // model visibility (0x01 - on/0x00 - off)
-    [entities_data + i * 84 + 5d] = b(0); // model state
-    [entities_data + i * 84 + 5e] = b(0); // animation id
-    [entities_data + i * 84 + 60] = h(10); // animation speed
-    [entities_data + i * 84 + 62] = h(0); // current frame
-    [entities_data + i * 84 + 64] = h(0); // number of frames
-    [entities_data + i * 84 + 66] = h(0); // store CHAR byte here
-    [entities_data + i * 84 + 68] = h(0); // 0 or 1 during LADER (forward or reverse)
-    [entities_data + i * 84 + 6a] = h(0); // stage of state
-    [entities_data + i * 84 + 6c] = h((h[field_struct + 10] * 1e) / 200); // solid range value
-    [entities_data + i * 84 + 6e] = h((h[field_struct + 10] * 50) / 200); // talk range value
-    [entities_data + i * 84 + 70] = h(h[field_struct + 10] * 2); // movement speed
-    [entities_data + i * 84 + 72] = h(0); // triangle
-    [entities_data + i * 84 + 74] = h(0); // move to triangle
-    [entities_data + i * 84 + 78] = w(0); // move to x
-    [entities_data + i * 84 + 7c] = w(0); // move to y
-    [entities_data + i * 84 + 80] = w(0); // move to z
+    [entities_data + i * 0x84 + 0x0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir field_model_kawai_execute function returns 1
+    [entities_data + i * 0x84 + 0x2] = h(0); // store 0 here in KAWAI opcode.
+    [entities_data + i * 0x84 + 0x4] = w(0); // offset to KAWAI opcode data in script
+    [entities_data + i * 0x84 + 0x8] = b(0); // blinking. 0 - on, 1 - off.
+    [entities_data + i * 0x84 + 0x9] = b(0); // store 0 here in KAWAI opcode under some curcumstances.
+    [entities_data + i * 0x84 + 0xc] = w(0); // x
+    [entities_data + i * 0x84 + 0x10] = w(0); // y
+    [entities_data + i * 0x84 + 0x14] = w(0); // z
+    [entities_data + i * 0x84 + 0x36] = b(0); // move direction
+    [entities_data + i * 0x84 + 0x37] = b(0); // lock rotation
+    [entities_data + i * 0x84 + 0x38] = b(0); // model direction
+    [entities_data + i * 0x84 + 0x39] = b(0); // number of steps for turn
+    [entities_data + i * 0x84 + 0x3a] = b(0); // current step for turn
+    [entities_data + i * 0x84 + 0x3b] = b(0); // used during TURN
+    [entities_data + i * 0x84 + 0x3c] = h(0); // start direction
+    [entities_data + i * 0x84 + 0x3e] = h(0); // end direction
+    [entities_data + i * 0x84 + 0x40] = h(0); // real X offset value
+    [entities_data + i * 0x84 + 0x42] = h(0); // start X offset value
+    [entities_data + i * 0x84 + 0x44] = h(0); // end X offset value
+    [entities_data + i * 0x84 + 0x46] = h(0); // real Y offset value.
+    [entities_data + i * 0x84 + 0x48] = h(0); // start Y offset value.
+    [entities_data + i * 0x84 + 0x4a] = h(0); // end Y offset value.
+    [entities_data + i * 0x84 + 0x4c] = h(0); // real Z offset value.
+    [entities_data + i * 0x84 + 0x4e] = h(0); // start Z offset value.
+    [entities_data + i * 0x84 + 0x50] = h(0); // end Z offset value.
+    [entities_data + i * 0x84 + 0x52] = h(0); // steps in offseting
+    [entities_data + i * 0x84 + 0x54] = h(0); // current step in offsetting
+    [entities_data + i * 0x84 + 0x56] = b(0); // type of offsetting (LINEAR SMOOTH INSTANT)
+    [entities_data + i * 0x84 + 0x58] = b(0); // pc entity collide with this entity. (1 - true/0 - false)
+    [entities_data + i * 0x84 + 0x59] = b(0); // model solidity (0x01 - off/0x00 - on)
+    [entities_data + i * 0x84 + 0x5a] = b(0); // pc entity talk with this entity. (1 - true/0 - false)
+    [entities_data + i * 0x84 + 0x5b] = b(0); // model talkability (0x01 - off/0x00 - on)
+    [entities_data + i * 0x84 + 0x5c] = b(0); // model visibility (0x01 - on/0x00 - off)
+    [entities_data + i * 0x84 + 0x5d] = b(0); // model state
+    [entities_data + i * 0x84 + 0x5e] = b(0); // animation id
+    [entities_data + i * 0x84 + 0x60] = h(0x10); // animation speed
+    [entities_data + i * 0x84 + 0x62] = h(0); // current frame
+    [entities_data + i * 0x84 + 0x64] = h(0); // number of frames
+    [entities_data + i * 0x84 + 0x66] = h(0); // store CHAR byte here
+    [entities_data + i * 0x84 + 0x68] = h(0); // 0 or 1 during LADER (forward or reverse)
+    [entities_data + i * 0x84 + 0x6a] = h(0); // stage of state
+    [entities_data + i * 0x84 + 0x6c] = h((h[field_struct + 0x10] * 0x1e) / 0x200); // solid range value
+    [entities_data + i * 0x84 + 0x6e] = h((h[field_struct + 0x10] * 0x50) / 0x200); // talk range value
+    [entities_data + i * 0x84 + 0x70] = h(h[field_struct + 0x10] * 0x2); // movement speed
+    [entities_data + i * 0x84 + 0x72] = h(0); // triangle
+    [entities_data + i * 0x84 + 0x74] = h(0); // move to triangle
+    [entities_data + i * 0x84 + 0x78] = w(0); // move to x
+    [entities_data + i * 0x84 + 0x7c] = w(0); // move to y
+    [entities_data + i * 0x84 + 0x80] = w(0); // move to z
 
     [0x8008325c + i] = b(0); // model default animation
     [0x800756e8 + i] = b(0); // model animation state
@@ -261,53 +248,53 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // go through all entities
     [0x80082248 + i * 2] = h(10); // model default animation speed
 }
 
-for( int i = 0; i < 40; ++i )
+for( int i = 0; i < 0x40; ++i )
 {
-    [field_struct + f2 + i] = b(0); // background state
+    [field_struct + 0xf2 + i] = b(0); // background state
 }
 
-for( int i = 0; i < 40; ++i )
+for( int i = 0; i < 0x40; ++i )
 {
-    [field_struct + b2 + i] = b(0); // triangle lock array (bit per triangle)
+    [field_struct + 0xb2 + i] = b(0); // triangle lock array (bit per triangle)
 }
 
-for( int i = 0; i < 40; ++i )
+for( int i = 0; i < 0x40; ++i )
 {
-    for( int j = 0; j < 10; ++j )
+    for( int j = 0; j < 0x10; ++j )
     {
-        [0x80095de0 + i * 20 + j * 2] = h(0); // array of stored background palletes
+        [0x80095de0 + i * 0x20 + j * 0x2] = h(0); // array of stored background palletes
     }
 }
 
 // init lines
-for( int i = 0; i < 20; ++i )
+for( int i = 0; i < 0x20; ++i )
 {
-    [0x8007e7ac + i * 18 + 0] = h(0); // x1
-    [0x8007e7ac + i * 18 + 2] = h(0); // y1
-    [0x8007e7ac + i * 18 + 4] = h(0); // z1
-    [0x8007e7ac + i * 18 + 6] = h(0); // x2
-    [0x8007e7ac + i * 18 + 8] = h(0); // y2
-    [0x8007e7ac + i * 18 + a] = h(0); // z2
-    [0x8007e7ac + i * 18 + c] = b(0); // line on/off. (1 - true/0 - false)
-    [0x8007e7ac + i * 18 + d] = b(0); // parent actor
-    [0x8007e7ac + i * 18 + e] = b(0); // actor currently in LINE (with solid).  Script call
-    [0x8007e7ac + i * 18 + f] = b(0); // actor cross LINE. Script call (removed after script call)
-    [0x8007e7ac + i * 18 + 10] = b(0); // actor move to line. Script call (removed after script call)
-    [0x8007e7ac + i * 18 + 11] = b(0); // actor talk to LINE. (1 - true/0 - false)
-    [0x8007e7ac + i * 18 + 12] = b(0); // actor enter LINE. Script call (removed after script call)
-    [0x8007e7ac + i * 18 + 13] = b(0); // actor leave LINE. Script call (removed after script call)
-    [0x8007e7ac + i * 18 + 16] = b(0); // store SLIP byte here
+    [0x8007e7ac + i * 0x18 + 0x0] = h(0); // x1
+    [0x8007e7ac + i * 0x18 + 0x2] = h(0); // y1
+    [0x8007e7ac + i * 0x18 + 0x4] = h(0); // z1
+    [0x8007e7ac + i * 0x18 + 0x6] = h(0); // x2
+    [0x8007e7ac + i * 0x18 + 0x8] = h(0); // y2
+    [0x8007e7ac + i * 0x18 + 0xa] = h(0); // z2
+    [0x8007e7ac + i * 0x18 + 0xc] = b(0); // line on/off. (1 - true/0 - false)
+    [0x8007e7ac + i * 0x18 + 0xd] = b(0); // parent actor
+    [0x8007e7ac + i * 0x18 + 0xe] = b(0); // actor currently in LINE (with solid).  Script call
+    [0x8007e7ac + i * 0x18 + 0xf] = b(0); // actor cross LINE. Script call (removed after script call)
+    [0x8007e7ac + i * 0x18 + 0x10] = b(0); // actor move to line. Script call (removed after script call)
+    [0x8007e7ac + i * 0x18 + 0x11] = b(0); // actor talk to LINE. (1 - true/0 - false)
+    [0x8007e7ac + i * 0x18 + 0x12] = b(0); // actor enter LINE. Script call (removed after script call)
+    [0x8007e7ac + i * 0x18 + 0x13] = b(0); // actor leave LINE. Script call (removed after script call)
+    [0x8007e7ac + i * 0x18 + 0x16] = b(0); // store SLIP byte here
 }
 [0x80095d84] = h(0); // number of inited lines
 
 for( int i = 0; i < 8; ++i )
 {
-    [0x8009ad30 + i] = b(ff); // player character array of assigned actor_id
+    [0x8009ad30 + i] = b(0xff); // player character array of assigned actor_id
 }
 
-[0x800e48f0] = b(ff); // entity that perform split/join
+[0x800e48f0] = b(0xff); // entity that perform split/join
 [0x80071c1c] = b(0);
-[0x8009c6e4 + bc2 + 1] = b(bu[0x8009c6e4 + bc2 + 1] | 03); // lock PHS and SAVE menu
+[0x8009c6e4 + 0xbc2 + 0x1] = b(bu[0x8009c6e4 + 0xbc2 + 0x1] | 0x03); // lock PHS and SAVE menu
 ////////////////////////////////
 
 
@@ -382,19 +369,19 @@ for( int i = 0; i < actors_n; ++i )
 events_data = w[0x8009c6dc];
 entities_data = w[0x8009c544];
 block7_header = w[0x8007e770];
-actors_n = bu[events_data + 2];
-models_n = hu[block7_header + 2];
+actors_n = bu[events_data + 0x2];
+models_n = hu[block7_header + 0x2];
 
 for( int i = 0; i < 3; ++i )
 {
     char_id = bu[0x8009c6e4 + cad + i];
-    if( char_id != ff )
+    if( char_id != 0xff )
     {
         actor_id = bu[0x8009ad30 + char_id];
-        if( actor_id != ff )
+        if( actor_id != 0xff )
         {
             model_id = bu[0x8007eb98 + actor_id];
-            if( model_id != ff )
+            if( model_id != 0xff )
             {
                 if( model_id < models_n )
                 {
@@ -409,16 +396,16 @@ for( int i = 0; i < 3; ++i )
 for( int i = 0; i < models_n; ++i )
 {
     V1 = w[0x8008357c];
-    if( bu[V1 + i * 8 + 5] == 0 ) // if this model not used
+    if( bu[V1 + i * 0x8 + 0x5] == 0 ) // if this model not used
     {
         for( int j = 0; j < actors_n; ++j )
         {
             model_id = bu[0x8007eb98 + j];
             if( model_id == i )
             {
-                [entities_data + model_id * 84 + 59] = b(1); // model solidity (1 - off, 0 - on)
-                [entities_data + model_id * 84 + 5b] = b(1); // model talkability (1 - off, 0 - on)
-                [entities_data + model_id * 84 + 5c] = b(0); // model visibility (1 - on, 0 - off)
+                [entities_data + model_id * 0x84 + 0x59] = b(1); // model solidity (1 - off, 0 - on)
+                [entities_data + model_id * 0x84 + 0x5b] = b(1); // model talkability (1 - off, 0 - on)
+                [entities_data + model_id * 0x84 + 0x5c] = b(0); // model visibility (1 - on, 0 - off)
                 [0x8007eb98 + j] = b(ff); // unlink model from actor
             }
         }
@@ -436,26 +423,26 @@ events_data = w[0x8009c6dc];
 
 // update played time in memory bank
 {
-    hms = w[0x8009c6e4 + b80];
+    hms = w[0x8009c6e4 + 0xb80];
 
-    h = hms / e10; // hours played
-    if( h >= 100 ) h = ff;
-    [0x8009c6e4 + bb4] = b(h); // hour
+    h = hms / 0xe10; // hours played
+    if( h >= 0x100 ) h = 0xff;
+    [0x8009c6e4 + 0xbb4] = b(h); // hour
 
-    ms = hms - ((hms / e10) * e10);
-    m = ms / 3c;
-    [0x8009c6e4 + bb5] = b(m); // minutes
+    ms = hms - ((hms / 0xe10) * 0xe10);
+    m = ms / 0x3c;
+    [0x8009c6e4 + 0xbb5] = b(m); // minutes
 
-    s = ms - (m * 3c);
+    s = ms - (m * 0x3c);
 
-    if( bu[0x8009c6e4 + bb6] != s )
+    if( bu[0x8009c6e4 + 0xbb6] != s )
     {
-        [0x8009c6e4 + bb6] = b(s);
-        [0x8009c6e4 + bb7] = b(0);
+        [0x8009c6e4 + 0xbb6] = b(s);
+        [0x8009c6e4 + 0xbb7] = b(0);
     }
     else
     {
-        [0x8009c6e4 + bb7] = b(bu[0x8009c6e4 + bb7] + 1);
+        [0x8009c6e4 + 0xbb7] = b(bu[0x8009c6e4 + 0xbb7] + 1);
     }
 }
 
@@ -491,7 +478,7 @@ for( int i = 0; i < bu[events_data + 3]; ++i ) // visible entity
     if( bu[entities_data + i * 84 + 5a] != 0 ) // if model talks with somthing
     {
         field_struct = w[0x8009c6e0];
-        if( bu[field_struct + 32] == 0 ) // player has control
+        if( bu[field_struct + 0x32] == 0 ) // player has control
         {
             if( talked == 0 )
             {
@@ -525,7 +512,7 @@ for( int i = 0; i < h[0x80095d84]; ++i )
     if( bu[0x8007e7ac + i * 18 + 11] != 0 )
     {
         field_struct = w[0x8009c6e0];
-        if( bu[field_struct + 32] == 0 ) // player has control
+        if( bu[field_struct + 0x32] == 0 ) // player has control
         {
             A0 = bu[0x8007e7ac + i * 18 + d]; // actor id
             A1 = 1;
@@ -709,8 +696,8 @@ field_script_update_animation_state();
 events_data = w[0x8009c6dc];
 entities_data = w[0x8009c544];
 field_struct = w[0x8009c6e0];
-manual_model = h[field_struct + 2a];
-pc = bu[field_struct + 32];
+manual_model = h[field_struct + 0x2a];
+pc = bu[field_struct + 0x32];
 
 number_of_entity = bu[events_data + 2];
 
@@ -946,12 +933,12 @@ else
 ot = A0;
 
 field_struct = w[0x8009c6e0];
-if( w[field_struct + 80] & 0100 ) // select pressed
+if( w[field_struct + 0x80] & 0100 ) // select pressed
 {
     [0x8009d5a6] = b(bu[0x8009d5a6] ^ 1);
 }
 
-if( ( ( bu[0x8009d5a6] == 1 ) && ( bu[field_struct + 32] == 0 ) ) || ( bu[0x8009d5a6] & 2 ) )
+if( ( ( bu[0x8009d5a6] == 1 ) && ( bu[field_struct + 0x32] == 0 ) ) || ( bu[0x8009d5a6] & 2 ) )
 {
     A0 = ot;
     funcbc4d4();
@@ -1938,7 +1925,7 @@ walkmesh_data = w[0x800e4274];
 
     field_struct = w[0x8009c6e0];
 
-    if( bu[field_struct + 32] != 0 ) // PC cant move
+    if( bu[field_struct + 0x32] != 0 ) // PC cant move
     {
         if( bu[0x80081dc4] != 0 ) // UC move state
         {
