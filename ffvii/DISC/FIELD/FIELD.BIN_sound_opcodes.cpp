@@ -1,8 +1,8 @@
 ////////////////////////////////
-// clear_akao()
+// field_event_clear_akao_struct()
 
 V0 = 0x8009a000;
-[V0 + 0000] = h(0);
+[V0 + 0x0] = h(0);
 V1 = 0005;
 V0 = V0 + 0x14;
 
@@ -27,7 +27,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a086c, 0x3 ); // "akao"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(bu[events_data + script_cur + 0x4]);
 [0x8009a004] = w(read_memory_block_one_byte( 0x1, 0x5 ));
@@ -56,7 +56,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a0874, 0x3 ); // "akao2"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(bu[events_data + script_cur + 0x4]);
 [0x8009a004] = w(read_memory_block_two_bytes( 0x1, 0x5 ));
@@ -85,7 +85,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a087c, 0x3 ); // "se"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(0x20);
 [0x8009a004] = w(read_memory_block_one_byte( 0x2, 0x4 ));
@@ -108,7 +108,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a0880, 0x1 ); // "music"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(0x10);
 
@@ -125,7 +125,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a0888, 0x1 ); // "musvt"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(0x14);
 
@@ -142,7 +142,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a0890, 0x1 ); // "musvm"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(0x15);
 
@@ -163,7 +163,7 @@ if( bu[0x8009d820] & 0x3 )
     field_debug_event_opcode( 0x800a0898, 0x5 ); // "cmusc"
 }
 
-clear_akao();
+field_event_clear_akao_struct();
 
 [0x8009a000] = h(bu[events_data + script_cur + 0x3]);
 [0x8009a008] = w(read_memory_block_two_bytes( 0x3, 0x4 ));

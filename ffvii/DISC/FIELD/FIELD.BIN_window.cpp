@@ -622,11 +622,11 @@ return 0;
 ////////////////////////////////
 //play_window_pointer_click_sound()
 
-clear_akao();
+field_event_clear_akao_struct();
 
-[8009a000] = h(0x30);
-[8009a004] = h(0x1);
-[8009a008] = h(0x40);
+[0x8009a000] = h(0x30);
+[0x8009a004] = h(0x1);
+[0x8009a008] = h(0x40);
 
 system_akao_execute();
 ////////////////////////////////
