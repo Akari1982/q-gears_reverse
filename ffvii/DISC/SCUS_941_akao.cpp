@@ -357,59 +357,58 @@ void func29bac( ChannelData* channel, u32 offset )
 
 void func29c48()
 {
-    S3 = 0x80096608;
-    channels_mask = w[0x80083580] & 00ffffff;
-    S2 = 0x80083580 + 0x4;
+    channel = 0x80096608;
+    channels_mask = w[0x80083580] & 0x00ffffff;
+    akao = 0x80083580 + 0x4;
 
-    [0x8009a114] = w(w[0x8009a114] | 00ffffff);
+    [0x8009a114] = w(w[0x8009a114] | 0x00ffffff);
     [0x8009a108] = w(channels_mask);
 
-    channel_mask = 1;
+    channel_mask = 0x1;
     while( channels_mask != 0 )
     {
         if( channels_mask & channel_mask )
         {
-            V0 = hu[S2];
-            S2 += 0x2;
-            [S3 + 0x0] = w(S2 + V0);
-            [S3 + 0x2c] = w(0x7f);
-            [S3 + 0x56] = h(0x103);
+            [channel + 0x0] = w(akao + 0x2 + hu[akao]);
+            [channel + 0x2c] = w(0x7f);
+            [channel + 0x56] = h(0x103);
 
-            system_akao_instr_init( S3, 0x14 );
+            system_akao_instr_init( channel, 0x14 );
 
-            [S3 + 0x14] = w(0x80083580);
-            [S3 + 0x34] = w(0);
-            [S3 + 0x38] = w(0);
-            [S3 + 0x44] = h(0);
-            [S3 + 0x46] = h(0x3fff);
-            [S3 + 0x5c] = h(0);
-            [S3 + 0x5e] = h(0);
-            [S3 + 0x60] = h(0x4000);
-            [S3 + 0x62] = h(0);
-            [S3 + 0x64] = h(0);
-            [S3 + 0x6c] = h(0);
-            [S3 + 0x6e] = h(0);
-            [S3 + 0x7e] = h(0);
-            [S3 + 0x80] = h(0);
-            [S3 + 0x90] = h(0);
-            [S3 + 0x92] = h(0);
-            [S3 + 0x9e] = h(0);
-            [S3 + 0xa0] = h(0);
-            [S3 + 0xa4] = h(0);
-            [S3 + 0xa6] = h(0);
-            [S3 + 0xb8] = h(0);
-            [S3 + 0xc2] = h(0);
-            [S3 + 0xc4] = h(0);
-            [S3 + 0xc6] = h(0x4000);
-            [S3 + 0xcc] = h(0);
-            [S3 + 0xce] = h(0);
-            [S3 + 0xd2] = h(0);
-            [S3 + 0xda] = h(0);
+            [channel + 0x14] = w(0x80083580);
+            [channel + 0x34] = w(0);
+            [channel + 0x38] = w(0);
+            [channel + 0x44] = h(0);
+            [channel + 0x46] = h(0x3fff);
+            [channel + 0x5c] = h(0);
+            [channel + 0x5e] = h(0);
+            [channel + 0x60] = h(0x4000);
+            [channel + 0x62] = h(0);
+            [channel + 0x64] = h(0);
+            [channel + 0x6c] = h(0);
+            [channel + 0x6e] = h(0);
+            [channel + 0x7e] = h(0);
+            [channel + 0x80] = h(0);
+            [channel + 0x90] = h(0);
+            [channel + 0x92] = h(0);
+            [channel + 0x9e] = h(0);
+            [channel + 0xa0] = h(0);
+            [channel + 0xa4] = h(0);
+            [channel + 0xa6] = h(0);
+            [channel + 0xb8] = h(0);
+            [channel + 0xc2] = h(0);
+            [channel + 0xc4] = h(0);
+            [channel + 0xc6] = h(0x4000);
+            [channel + 0xcc] = h(0);
+            [channel + 0xce] = h(0);
+            [channel + 0xd2] = h(0);
+            [channel + 0xda] = h(0);
 
+            akao += 0x2;
             channels_mask ^= channel_mask;
         }
 
-        S3 += 0x108;
+        channel += 0x108;
         channel_mask <<= 1;
     }
 
@@ -3441,17 +3440,17 @@ void system_akao_main()
     80030294	multu  v1, v0
     80030298	mfhi   v0
 
-    S0 = V0 >> 04;
-    V0 = S0 & ffff;
+    S0 = V0 >> 0x4;
+    V0 = S0 & 0xffff;
 
-    if( ( V0 == 0 ) || ( V0 >= 0x9 ) )
+    if( (V0 == 0) || (V0 >= 0x9) )
     {
         S0 = 0x1;
     }
 
     V0 = w[0x80062ff8];
     [0x80062f78] = h(S2);
-    S2 = S0 & ffff;
+    S2 = S0 & 0xffff;
     if( V0 & 0x4 ) S0 *= 2;
 
     while( S0 != 0 )

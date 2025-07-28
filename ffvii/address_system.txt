@@ -539,7 +539,7 @@
                    10 - ???
 
 0x80095508
-0x80096608 struct for alt and overlay voice AKAO channel (0x108 size).
+0x80096608 struct for AKAO music channel (0x108 size).
 0x80097ec8 some other same 0x18 structs for akao channels.
 0x80099788 some other same 0x18 structs for akao channels.
     +000 [][][][] AKAO sequence pointer.
