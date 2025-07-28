@@ -513,7 +513,7 @@
                 0x02 show all text immediately.
 +2f []
 
-80083580 we copy here akao sequence data when init music 0x10.
+0x80083580 we copy here akao sequence data when init music 0x10, 0x14 or 0x15.
 
 0x80089580 load effect.all file here
 
@@ -538,6 +538,7 @@
                     e - snowboard2.
                    10 - ???
 
+0x80095508
 0x80096608 struct for alt and overlay voice AKAO channel (0x108 size).
 0x80097ec8 some other same 0x18 structs for akao channels.
 0x80099788 some other same 0x18 structs for akao channels.
@@ -546,7 +547,7 @@
     +008 [][][][] loop point 1.
     +00c [][][][] loop point 2.
     +010 [][][][] loop point 3.
-    +014 [][][][] pointer to mask for AKAO channels in 80083580.
+    +014 [][][][] pointer to mask for AKAO channels in 0x80083580.
     +018 [][][][] address into wave table for frequency lfo.
     +01c [][][][] address into wave table for volume lfo.
     +020 [][][][] address into wave table for volume pan lfo.

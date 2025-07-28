@@ -134,7 +134,7 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
     }
     else // init all channel
     {
-        func31820( channel, instr_id );
+        system_akao_instr_init( channel, instr_id );
     }
 }
 
@@ -1274,8 +1274,8 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
         [channel + 0x24] = w(S0 & 0xffff);
         [channel + 0x38] = w(w[channel + 0x38] | 0x00000100);
 
-        func31820( A0, bu[akao + 0x0] ); // init instrument
-        func31820( 0x80096608 + w[channel + 0x24] * 0x108, bu[akao + 0x1]); // init instrument
+        system_akao_instr_init( A0, bu[akao + 0x0] );
+        system_akao_instr_init( 0x80096608 + w[channel + 0x24] * 0x108, bu[akao + 0x1]);
     }
 }
 

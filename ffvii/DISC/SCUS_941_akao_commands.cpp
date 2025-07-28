@@ -76,12 +76,14 @@ void system_akao_command_null( CommandData* data )
 
 
 
-// field 0xF0 MUSIC
+// field_event_opcode_f0_music
 void system_akao_command_10( CommandData* data )
 {
-    A0 = w[data + 0x4]; // offset to sequence data (after header)
-    A1 = w[data + 0x8]; // length
-    func29b78(); // copy music data
+    offset = w[data + 0x4];
+    size = w[data + 0x8];
+    music_id = hu[data + 0xc];
+
+    system_akao_copy_music( offset, size );
 
     if( hu[0x8009a14e] == 0xe ) // if currently playing "ffvii_main_theme"
     {
@@ -91,11 +93,11 @@ void system_akao_command_10( CommandData* data )
 
     func29e98();
 
-    if( ( hu[0x8008337e] != 0 ) && ( hu[0x8008337e] == hu[data + 0xc] ) ) // music id
+    if( ( hu[0x8008337e] != 0 ) && ( hu[0x8008337e] == music_id ) )
     {
         func2aabc( 0x0 );
     }
-    else if( ( hu[0x800833de] != 0 ) && ( hu[0x800833de] == hu[data + 0xc] ) )
+    else if( ( hu[0x800833de] != 0 ) && ( hu[0x800833de] == music_id ) )
     {
         func2aabc( 0x0 );
     }
@@ -104,17 +106,19 @@ void system_akao_command_10( CommandData* data )
         func29c48();
     }
 
-    [0x8009a14e] = h(hu[data + 0xc]); // set current music id
+    [0x8009a14e] = h(music_id);
 }
 
 
 
-// field 0xF3 MUSVT
+// field_event_opcode_f3_musvt
 void system_akao_command_14( CommandData* data )
 {
-    A0 = w[data + 0x4]; // offset to sequence data (after header)
-    A1 = w[data + 0x8]; // length
-    func29b78(); // copy music data
+    offset = w[data + 0x4];
+    size = w[data + 0x8];
+    music_id = hu[data + 0xc];
+
+    system_akao_copy_music( offset, size );
 
     func2a7e8();
 
@@ -134,23 +138,25 @@ void system_akao_command_14( CommandData* data )
     func29e98();
     func29c48();
 
-    [0x8009a14e] = h(hu[data + 0xc]); // set current music id
+    [0x8009a14e] = h(music_id);
 }
 
 
 
-// field 0xF4 MUSVM
+// field_event_opcode_f4_musvm
 void system_akao_command_15( CommandData* data )
 {
-    [0x80062ff8] = w(w[0x80062ff8] & 0xfffffeff);
+    offset = w[data + 0x4];
+    size = w[data + 0x8];
+    music_id = hu[data + 0xc];
 
-    A0 = w[data + 0x4]; // offset to sequence data (after header)
-    A1 = w[data + 0x8]; // length
-    func29b78(); // copy music data
+    system_akao_copy_music( offset, size );
+
+    [0x80062ff8] = w(w[0x80062ff8] & 0xfffffeff);
 
     func2a7e8();
 
-    if( hu[0x8008337e] == hu[data + 0xc] )
+    if( hu[0x8008337e] == music_id )
     {
         func2b1a8( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
         func29e98();
@@ -167,7 +173,7 @@ void system_akao_command_15( CommandData* data )
     }
     else
     {
-        if( hu[0x800833de] == hu[data + 0xc] )
+        if( hu[0x800833de] == music_id )
         {
             func2b1a8( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
             func29e98();
@@ -205,11 +211,13 @@ void system_akao_command_15( CommandData* data )
     [0x8009a18c] = w(0x0);
     [0x8009a188] = w(0x0);
     [0x8009a168] = w(0x0);
-    [0x8009a14e] = h(hu[data + 0xc]);
+    [0x8009a14e] = h(music_id);
 }
 
 
 
+// called when field starts from battle
+// continue music?
 void system_akao_command_18( CommandData* data )
 {
     if( hu[0x8009a14e] != 0 )
@@ -236,6 +244,7 @@ void system_akao_command_19( CommandData* data )
 
 
 
+// field_event_opcode_f1_se
 void system_akao_command_20( CommandData* data )
 {
     func2a510( 0x4, 0x1 );

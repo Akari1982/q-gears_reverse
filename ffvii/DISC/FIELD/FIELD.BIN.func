@@ -171,16 +171,16 @@
 800C43C4 0x20 MINIGAME
 800C45AC field_event_opcode_70_batle
 800C46A4 field_event_clear_akao_struct
-800C46D0 0xF2 AKAO
-800C4804 0xDA AKAO2
-800C493C 0xF1 SOUND
-800C49EC 0xF0 MUSIC
-800C4A40 0xF3 MUSVT
-800C4A94 0xF4 MUSVM
-800C4AE8 0xFD CMUSC
-800C4BCC set_and_apply_field_music_params
+800C46D0 field_event_opcode_f2_akao
+800C4804 field_event_opcode_da_akao2
+800C493C field_event_opcode_f1_se
+800C49EC field_event_opcode_f0_music
+800C4A40 field_event_opcode_f3_musvt
+800C4A94 field_event_opcode_f4_musvm
+800C4AE8 field_event_opcode_fd_cmusc
+800C4BCC field_event_set_and_apply_akao
 800C4C9C field_event_get_akao_offset_in_field
-800C4CE8 0xF6 BMUSC
+800C4CE8 field_event_opcode_f6_bmusc
 800C4DE8 field_event_opcode_fc_fmusc
 800C4EE8 field_event_opcode_21_tutor
 800C506C 0xF5 MULCK

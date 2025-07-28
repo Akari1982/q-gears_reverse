@@ -6,22 +6,20 @@ int field_event_opcode_2c_bgdph()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0f18, 0x8 ); // "bgdph"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgdph", 0x8 );
 
-    layer = bu[events_data + script_cur + 2];
+    layer = bu[events_data + script_cur + 0x2];
 
-    if( layer == 2 )
+    if( layer == 0x2 )
     {
-        V0 = read_memory_block_two_bytes( 1, 3 );
-        [field_struct + b0] = h(V0);
+        [field_struct + 0xb0] = h(read_memory_block_two_bytes( 0x1, 0x3 ));
     }
-    else if( layer == 3 )
+    else if( layer == 0x3 )
     {
-        V0 = read_memory_block_two_bytes( 1, 3 );
-        [field_struct + ae] = h(V0);
+        [field_struct + 0xae] = h(read_memory_block_two_bytes( 0x1, 0x3 ));
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x5);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
 
     return 0;
 }
@@ -36,26 +34,23 @@ int field_event_opcode_2d_bgscr()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0f10, 0x8 ); // "bgscr"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgscr", 0x8 );
 
-    layer = bu[events_data + script_cur + 2];
+    layer = bu[events_data + script_cur + 0x2];
 
-    if( layer == 2 )
+    if( layer == 0x2 )
     {
-        V0 = read_memory_block_two_bytes( 1, 3 );
-        [field_struct + a6] = h(V0); // x
-        V0 = read_memory_block_two_bytes( 2, 5 );
-        [field_struct + a8] = h(V0); // y
+        [field_struct + 0xa6] = h(read_memory_block_two_bytes( 0x1, 0x3 )); // x
+        [field_struct + 0xa8] = h(read_memory_block_two_bytes( 0x2, 0x5 )); // y
     }
-    else if( layer == 3 )
+    else if( layer == 0x3 )
     {
-        V0 = read_memory_block_two_bytes( 1, 3 );
-        [field_struct + aa] = h(V0); // x
-        V0 = read_memory_block_two_bytes( 2, 5 );
-        [field_struct + ac] = h(V0); // y
+        V0 = ;
+        [field_struct + 0xaa] = h(read_memory_block_two_bytes( 0x1, 0x3 )); // x
+        [field_struct + 0xac] = h(read_memory_block_two_bytes( 0x2, 0x5 )); // y
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x7);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x7);
 
     return 0;
 }
@@ -69,36 +64,30 @@ int field_event_opcode_5e_shake()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0e40, 0x7 ); // "shake"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "shake", 0x7 );
 
-    S0 = bu[events_data + script_cur + 3];
+    S0 = bu[events_data + script_cur + 0x3];
 
-    if( S0 & 1 )
+    if( S0 & 0x1 )
     {
-        [field_struct + 8a] = b(1);
-
-        V0 = read_memory_block_one_byte( 1, 4 );
-        [field_struct + 8e] = h(V0); // power
-        V0 = read_memory_block_one_byte( 2, 5 );
-        [field_struct + 94] = h(V0); // steps
+        [field_struct + 0x8a] = b(1);
+        [field_struct + 0x8e] = h(read_memory_block_one_byte( 0x1, 0x4 )); // power
+        [field_struct + 0x94] = h(read_memory_block_one_byte( 0x2, 0x5 )); // steps
     }
     else
     {
-        [field_struct + 8a] = b(0);
+        [field_struct + 0x8a] = b(0);
     }
 
-    if( S0 & 2 )
+    if( S0 & 0x2 )
     {
-        [field_struct + 98] = b(1);
-
-        V0 = read_memory_block_one_byte( 3, 6 );
-        [field_struct + 9c] = h(V0); // power
-        V0 = read_memory_block_one_byte( 4, 7 );
-        [field_struct + a2] = h(V0); // steps
+        [field_struct + 0x98] = b(1);
+        [field_struct + 0x9c] = h(read_memory_block_one_byte( 0x3, 0x6 )); // power
+        [field_struct + 0xa2] = h(read_memory_block_one_byte( 0x4, 0x7 )); // steps
     }
     else
     {
-        [field_struct + 98] = b(0);
+        [field_struct + 0x98] = b(0);
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x8);
@@ -116,11 +105,11 @@ int field_event_opcode_61_scrlo()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a08ec, 0x1 ); // "scrlo"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scrlo", 0x1 );
 
-    [field_struct + 37] = b(bu[events_data + script_cur + 1]);
+    [field_struct + 0x37] = b(bu[events_data + script_cur + 0x1]);
 
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x2);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
 
     return 0;
 }
@@ -135,16 +124,14 @@ int field_event_opcode_62_scrlc()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c10, 0x0 ); // "scrlc"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scrlc", 0x0 );
 
-    [field_struct + 1d] = b(bu[events_data + script_cur + 4]); // set type from script
-    [field_struct + 1e] = b(bu[field_struct + 2a]); // set manual entity id
-    [field_struct + 1f] = b(0);
+    [field_struct + 0x1d] = b(bu[events_data + script_cur + 0x4]); // set type from script
+    [field_struct + 0x1e] = b(bu[field_struct + 0x2a]); // set manual entity id
+    [field_struct + 0x1f] = b(0);
+    [field_struct + 0x20] = h(read_memory_block_two_bytes( 0x2, 0x2 )); // set steps of scroll
 
-    V0 = read_memory_block_two_bytes( 2, 2 );
-    [field_struct + 20] = h(V0); // set steps of scroll
-
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x5);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
 
     return 0;
 }
@@ -159,22 +146,20 @@ int field_event_opcode_63_scrla()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c18, 0x0 ); // "scrla"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scrla", 0x0 );
 
-    actor_id = bu[events_data + script_cur + 4];
-    entity_id = b[8007eb98 + actor_id];
+    actor_id = bu[events_data + script_cur + 0x4];
+    entity_id = b[0x8007eb98 + actor_id];
 
     if( entity_id != -1 )
     {
-        [field_struct + 1d] = b(bu[events_data + script_cur + 5]); // set type from script
-        [field_struct + 1e] = b(entity_id);
-        [field_struct + 1f] = b(0);
-
-        V0 = read_memory_block_two_bytes( 2, 2 );
-        [field_struct + 20] = h(V0); // set steps of scroll
+        [field_struct + 0x1d] = b(bu[events_data + script_cur + 0x5]); // set type from script
+        [field_struct + 0x1e] = b(entity_id);
+        [field_struct + 0x1f] = b(0);
+        [field_struct + 0x20] = h(read_memory_block_two_bytes( 0x2, 0x2 )); // set steps of scroll
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x6);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x6);
 
     return 0;
 }
@@ -187,15 +172,12 @@ int field_event_opcode_64_scr2d()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c08, 0x5 ); // "scr2d"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scr2d", 0x5 );
 
-    [field_struct + 1d] = b(4); // set scroll type
-    [field_struct + 1f] = b(0); // set init state
-
-    V0 = read_memory_block_two_bytes( 1, 2 );
-    [field_struct + a] = h(V0);
-    V0 = read_memory_block_two_bytes( 2, 4 );
-    [field_struct + c] = h(V0);
+    [field_struct + 0xa] = h(read_memory_block_two_bytes( 0x1, 0x2 ));
+    [field_struct + 0xc] = h(read_memory_block_two_bytes( 0x2, 0x4 ));
+    [field_struct + 0x1d] = b(0x4); // set scroll type
+    [field_struct + 0x1f] = b(0x0); // set init state
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x6);
 
@@ -210,11 +192,11 @@ int field_event_opcode_65_scrcc()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c28, 0x0 ); // "scrcc"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scrcc", 0x0 );
 
-    [field_struct + 1d] = b(0);
-    [field_struct + 1e] = b(bu[field_struct + 2a]);
-    [field_struct + 1f] = b(0);
+    [field_struct + 0x1d] = b(0);
+    [field_struct + 0x1e] = b(bu[field_struct + 0x2a]);
+    [field_struct + 0x1f] = b(0);
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x1);
 
@@ -229,17 +211,13 @@ int field_event_opcode_66_scr2dc()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c30, 0x8 ); // "scr2dc"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scr2dc", 0x8 );
 
-    [field_struct + 1d] = b(6);
-    [field_struct + 1f] = b(0);
-
-    V0 = read_memory_block_two_bytes( 1, 3 );
-    [field_struct + a] = h(V0);
-    V0 = read_memory_block_two_bytes( 2, 5 );
-    [field_struct + c] = h(V0);
-    V0 = read_memory_block_two_bytes( 4, 7 );
-    [field_struct + 20] = h(V0);
+    [field_struct + 0xa] = h(read_memory_block_two_bytes( 0x1, 0x3 ));
+    [field_struct + 0xc] = h(read_memory_block_two_bytes( 0x2, 0x5 ));
+    [field_struct + 0x1d] = b(0x6);
+    [field_struct + 0x1f] = b(0);
+    [field_struct + 0x20] = h(read_memory_block_two_bytes( 0x4, 0x7 ));
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x9);
 
@@ -254,21 +232,21 @@ int field_event_opcode_67_scrlw()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c40, 0x0 ); // "scrlw"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scrlw", 0x0 );
 
-    if( bu[field_struct + 1f] != 2 ) return 1;
+    if( bu[field_struct + 0x1f] != 2 ) return 1;
 
-    V1 = bu[field_struct + 1d];
-    if( ( V1 == 1 ) || ( V1 == 2 ) || ( V1 == 3 ) )
+    V1 = bu[field_struct + 0x1d];
+    if( (V1 == 0x1) || (V1 == 0x2) || (V1 == 0x3) )
     {
-        [field_struct + 1d] = b(1);
+        [field_struct + 0x1d] = b(0x1);
     }
-    else if( ( V1 == 5 ) || ( V1 == 6 ) )
+    else if( (V1 == 0x5) || (V1 == 0x6) )
     {
-        [field_struct + 1d] = b(4);
+        [field_struct + 0x1d] = b(0x4);
     }
 
-    [field_struct + 1f] = b(0);
+    [field_struct + 0x1f] = b(0x0);
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x1);
 
@@ -283,17 +261,13 @@ int field_event_opcode_68_scr2dl()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c38, 0x8 ); // "scr2dl"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scr2dl", 0x8 );
 
-    [field_struct + 1d] = b(5);
-    [field_struct + 1f] = b(0);
-
-    V0 = read_memory_block_two_bytes( 1, 3 );
-    [field_struct + a] = h(V0);
-    V0 = read_memory_block_two_bytes( 2, 5 );
-    [field_struct + c] = h(V0);
-    V0 = read_memory_block_two_bytes( 4, 7 );
-    [field_struct + 20] = h(V0);
+    [field_struct + 0xa] = h(read_memory_block_two_bytes( 0x1, 0x3 ));
+    [field_struct + 0xc] = h(read_memory_block_two_bytes( 0x2, 0x5 ));
+    [field_struct + 0x1d] = b(0x5);
+    [field_struct + 0x1f] = b(0);
+    [field_struct + 0x20] = h(read_memory_block_two_bytes( 0x4, 0x7 ));
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x9);
 
@@ -309,32 +283,27 @@ int field_event_opcode_6a_vwoft()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0d24, 0x6 ); // "vwoft"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "vwoft", 0x6 );
 
     if( bu[events_data + script_cur + 6] != 0 )
     {
-        [field_struct + 13] = b(0);
-        [field_struct + 14] = b(bu[events_data + script_cur + 6]);
-        [field_struct + 18] = h(hu[field_struct + 16]);
-
-        V0 = read_memory_block_two_bytes( 1, 2 );
-        [field_struct + 1a] = h(V0);
-        V0 = read_memory_block_two_bytes( 2, 4 );
-        [field_struct + 12] = b(V0);
+        [field_struct + 0x12] = b(read_memory_block_two_bytes( 0x2, 0x4 ));
+        [field_struct + 0x13] = b(0);
+        [field_struct + 0x14] = b(bu[events_data + script_cur + 0x6]);
+        [field_struct + 0x18] = h(hu[field_struct + 0x16]);
+        [field_struct + 0x1a] = h(read_memory_block_two_bytes( 0x1, 0x2 ));
     }
     else
     {
-        [field_struct + 12] = b(0);
-        [field_struct + 13] = b(0);
-        [field_struct + 14] = b(0);
-        [field_struct + 18] = h(0);
-        [field_struct + 1a] = h(0);
-
-        V0 = read_memory_block_two_bytes( 1, 2 );
-        [field_struct + 16] = h(V0);
+        [field_struct + 0x12] = b(0);
+        [field_struct + 0x13] = b(0);
+        [field_struct + 0x14] = b(0);
+        [field_struct + 0x16] = h(read_memory_block_two_bytes( 1, 2 ));
+        [field_struct + 0x18] = h(0);
+        [field_struct + 0x1a] = h(0);
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x7);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x7);
 
     return 0;
 }
@@ -349,29 +318,25 @@ int field_event_opcode_6f_scrlp()
     actor_id_cur = bu[0x800722c4];
     script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0c20, 0x6 ); // "scrlp"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "scrlp", 0x6 );
 
-    party_id = bu[events_data + script_cur + 4];
-    char_id = b[8009c6e4 + cad + party_id];
+    party_id = bu[events_data + script_cur + 0x4];
+    char_id = b[0x8009c6e4 + cad + party_id];
 
-    if( char_id != -1 ) actor_id = bu[8009ad30 + char_id];
+    if( char_id != -1 ) actor_id = bu[0x8009ad30 + char_id];
     else                actor_id = -1;
 
-    entity_id = b[8007eb98 + actor_id];
+    entity_id = b[0x8007eb98 + actor_id];
 
     if( entity_id != -1 )
     {
-        [field_struct + 1d] = b(bu[events_data + script_cur + 5]);
-        [field_struct + 1e] = b(entity_id);
-        [field_struct + 1f] = b(0);
-
-        A0 = 2;
-        A1 = 2;
-        read_memory_block_two_bytes();
-        [field_struct + 20] = h(V0);
+        [field_struct + 0x1d] = b(bu[events_data + script_cur + 0x5]);
+        [field_struct + 0x1e] = b(entity_id);
+        [field_struct + 0x1f] = b(0);
+        [field_struct + 0x20] = h(read_memory_block_two_bytes( 0x2, 0x2 ));
     }
 
-    [0x800831fc + actor_id_cur * 2] = h(script_cur + 0x6);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x6);
 
     return 0;
 }
@@ -383,10 +348,10 @@ int field_event_opcode_e0_bgon()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0bc8, 0x3 ); // "bgon"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgon", 0x3 );
 
-    u8 group_id = read_memory_block_one_byte( 1, 2 );
-    u8 index_id = read_memory_block_one_byte( 2, 3 );
+    u8 group_id = read_memory_block_one_byte( 0x1, 0x2 );
+    u8 index_id = read_memory_block_one_byte( 0x2, 0x3 );
 
     [field_struct + 0xf2 + group_id] = b(bu[field_struct + 0xf2 + group_id] | (1 << index_id));
 
@@ -402,10 +367,10 @@ int field_event_opcode_e1_bgoff()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0bd0, 0x3 ); // "bgoff"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgoff", 0x3 );
 
-    u8 group_id = read_memory_block_one_byte( 1, 2 );
-    u8 index_id = read_memory_block_one_byte( 2, 3 );
+    u8 group_id = read_memory_block_one_byte( 0x1, 0x2 );
+    u8 index_id = read_memory_block_one_byte( 0x2, 0x3 );
 
     [field_struct + 0xf2 + group_id] = b(bu[field_struct + 0xf2 + group_id] & ~(1 << index_id));
 
@@ -421,9 +386,9 @@ int field_event_opcode_e4_bgclr()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0bd8, 0x3 ); // "bgclr"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgclr", 0x3 );
 
-    u8 group_id = read_memory_block_one_byte( 2, 2 );
+    u8 group_id = read_memory_block_one_byte( 0x2, 0x2 );
 
     [field_struct + 0xf2 + group_id] = b(0);
 
@@ -439,13 +404,15 @@ int field_event_opcode_e2_bgrol()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0be0, 0x3 ); // "bgrol"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgrol", 0x3 );
 
-    u8 group_id = read_memory_block_one_byte( 2, 2 );
+    u8 group_id = read_memory_block_one_byte( 0x2, 0x2 );
 
     [field_struct + 0xf2 + group_id] = b(bu[field_struct + 0xf2 + group_id] << 1);
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x3);
+
+    return 0;
 }
 
 
@@ -455,11 +422,13 @@ int field_event_opcode_e3_bgrol()
     field_struct = w[0x8009c6e0];
     actor_id_cur = bu[0x800722c4];
 
-    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( 0x800a0be0, 0x3 ); // "bgrol"
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "bgrol", 0x3 );
 
-    u8 group_id = read_memory_block_one_byte( 2, 2 );
+    u8 group_id = read_memory_block_one_byte( 0x2, 0x2 );
 
     [field_struct + 0xf2 + group_id] = b(bu[field_struct + 0xf2 + group_id] >> 1);
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0x3);
+
+    return 0;
 }
