@@ -557,82 +557,81 @@ if (A0 != 0)
 
 
 
-////////////////////////////////
-// func2a094
-S4 = A3;
-S1 = 0;
-A0 = A0 & 7f;
-S3 = A0 << 8;
-
-S2 = A1 & ffff;
-S0 = 80096608 + S2 * 108;
-
-[S0 + 0] = w(80049c40);
-[S0 + 50] = w(-1);
-[S0 + 54] = h(1);
-[S0 + 56] = h(101);
-
-[S0 + 108 + 0] = w(80049c40);
-[S0 + 108 + 50] = w(-1);
-[S0 + 108 + 54] = h(1);
-[S0 + 108 + 56] = h(101);
-
-if (A2 != 0)
+void func2a094( A0, A1, A2, A3 )
 {
-    S1 = 1;
+    S4 = A3;
+    S1 = 0;
+    A0 = A0 & 0x7f;
+    S3 = A0 << 0x8;
 
-    func29bac( S0, A2 );
+    S2 = A1 & 0xffff;
+    S0 = 0x80096608 + S2 * 0x108;
 
-    [S0 + 60] = h(S3);
-    [S0 + 62] = h(0);
-}
+    [S0 + 0x0] = w(0x80049c40);
+    [S0 + 0x50] = w(-1);
+    [S0 + 0x54] = h(0x1);
+    [S0 + 0x56] = h(0x101);
 
-if (S4 != 0)
-{
-    S1 = S1 | 2;
+    [S0 + 0x108 + 0x0] = w(0x80049c40);
+    [S0 + 0x108 + 0x50] = w(-1);
+    [S0 + 0x108 + 0x54] = h(0x1);
+    [S0 + 0x108 + 0x56] = h(0x101);
 
-    func29bac( S0 + 0x108, S4 );
-
-    [S0 + 108 + 60] = h(S3);
-    [S0 + 108 + 62] = h(0);
-}
-
-V1 = S2 - 20;
-
-S1 = S1 << V1;
-
-[0x80099fcc] = w(w[0x80099fcc] | S1);
-[0x80099fd8] = w(w[0x80099fd8] | S1);
-
-S1 = (3 << V1) & w[0x80099fcc];
-S1 = 0 NOR S1;
-
-[0x80099fd0] = w(w[0x80099fd0] & S1);
-[0x80099fd4] = w(w[0x80099fd4] & S1);
-[0x80099fec] = w(w[0x80099fec] & S1);
-[0x80099ff0] = w(w[0x80099ff0] & S1);
-[0x80099ff4] = w(w[0x80099ff4] & S1);
-
-if (w[0x80062ff8] & 2)
-{
-    S1 = A0;
-    if (hu[0x80099e0c] == 2)
+    if( A2 != 0 )
     {
-        [0x80099fcc] = w(S1 & 00c00000);
-        S1 = S1 & ff3fffff;
-    }
-    else
-    {
-        [0x80099fcc] = w(0);
+        S1 = 1;
+
+        func29bac( S0, A2 );
+
+        [S0 + 60] = h(S3);
+        [S0 + 62] = h(0);
     }
 
-    [0x80099fdc] = w(w[0x80099fdc] | S1);
-}
+    if( S4 != 0 )
+    {
+        S1 |= 0x2;
 
-func2ff4c();
-func30038();
-func30148();
-////////////////////////////////
+        func29bac( S0 + 0x108, S4 );
+
+        [S0 + 0x108 + 0x60] = h(S3);
+        [S0 + 0x108 + 0x62] = h(0);
+    }
+
+    V1 = S2 - 0x20;
+
+    S1 <<= V1;
+
+    [0x80099fcc] = w(w[0x80099fcc] | S1);
+    [0x80099fd8] = w(w[0x80099fd8] | S1);
+
+    S1 = (0x3 << V1) & w[0x80099fcc];
+
+    [0x80099fd0] = w(w[0x80099fd0] & ~S1);
+    [0x80099fd4] = w(w[0x80099fd4] & ~S1);
+    [0x80099fec] = w(w[0x80099fec] & ~S1);
+    [0x80099ff0] = w(w[0x80099ff0] & ~S1);
+    [0x80099ff4] = w(w[0x80099ff4] & ~S1);
+
+    if( w[0x80062ff8] & 0x2 )
+    {
+        S1 = A0;
+        if( hu[0x80099e0c] == 0x2 )
+        {
+            [0x80099fcc] = w(S1 & 0x00c00000);
+            S1 &= 0xff3fffff;
+        }
+        else
+        {
+            [0x80099fcc] = w(0);
+        }
+
+        [0x80099fdc] = w(w[0x80099fdc] | S1);
+    }
+
+    func2ff4c();
+    func30038();
+    func30148();
+}
 
 
 
@@ -3250,7 +3249,7 @@ if( updated_mask != 0 )
 
 
 
-void func2fda0( channel, ret, channels_mask, mask2 )
+void func2fda0( channel, ret, u32 channels_mask, u32 collect_mask )
 {
     [ret] = w(w[ret] | channels_mask);
 
@@ -3262,25 +3261,13 @@ void func2fda0( channel, ret, channels_mask, mask2 )
             if( w[channel + 38] & 0x00000100 )
             {
                 V1 = hu[channel + 0x24];
-
-                if( w[channel + 0x24] >= 0x18 )
-                {
-                    V1 -= 0x18;
-                }
-
-                V1 = 1 << V1;
-                if( mask2 & V1 )
-                {
-                    [ret] = w(w[ret] | V1);
-                }
+                if( V1 >= 0x18 ) V1 -= 0x18;
+                if( collect_mask & (1 << V1) ) [ret] = w(w[ret] | (1 << V1));
             }
             else if( w[channel + 0x38] & 0x00000200 )
             {
                 V1 = 1 << w[channel + 0x28];
-                if( mask2 & V1 )
-                {
-                    [ret] = w(w[ret] | V1);
-                }
+                if( collect_mask & V1 ) [ret] = w(w[ret] | V1);
             }
 
             channels_mask ^= channel_mask;
@@ -3300,11 +3287,11 @@ void func2fe48()()
     if( w[0x8009a168] != 0 )
     {
         A3 = ~(w[0x80099fcc] | w[0x80062f00]);
-        A2 = w[0x8009a174] & w[0x80062f68] & A3;
+        channels_mask = w[0x8009a174] & w[0x80062f68] & A3;
 
-        if( A2 != 0 )
+        if( channels_mask != 0 )
         {
-            func2fda0( 0x80097ec8, SP + 0x10, A2, A3 );
+            func2fda0( 0x80097ec8, SP + 0x10, channels_mask, A3 );
         }
 
         [0x8009a174] = w(0);
@@ -3313,11 +3300,11 @@ void func2fe48()()
     if( w[0x8009a108] != 0 )
     {
         A3 = ~(w[0x80062f68] | w[0x80099fcc] | w[0x80062f00]);
-        A2 = A3 & w[0x8009a114];
+        channels_mask = A3 & w[0x8009a114];
 
-        if( A2 != 0 )
+        if( channels_mask != 0 )
         {
-            func2fda0( 0x80096608, SP + 0x10, A2, A3 );
+            func2fda0( 0x80096608, SP + 0x10, channels_mask, A3 );
         }
 
         [0x8009a114] = w(0);
@@ -3339,19 +3326,19 @@ void func2ff4c()
     [SP + 10] = w(0);
 
     A3 = ~(w[0x80099fcc] | w[0x80062f00]);
-    A2 = A3 & (w[0x8009a190] & w[0x80062f68]);
+    channels_mask = A3 & (w[0x8009a190] & w[0x80062f68]);
 
-    if( A2 != 0 )
+    if( channels_mask != 0 )
     {
-        func2fda0( 0x80097ec8, SP + 0x10, A2, A3 );
+        func2fda0( 0x80097ec8, SP + 0x10, channels_mask, A3 );
     }
 
     A3 = ~(w[0x80062f68] | w[0x80099fcc] | w[0x80062f00]);
-    A2 = A3 & w[0x8009a130];
+    channels_mask = A3 & w[0x8009a130];
 
-    if( A2 != 0 )
+    if( channels_mask != 0 )
     {
-        func2fda0( 0x80096608, SP + 0x10, A2, A3 );
+        func2fda0( 0x80096608, SP + 0x10, channels_mask, A3 );
     }
 
     [SP + 0x10] = w(w[SP + 0x10] | w[0x80099fec]);
@@ -3368,11 +3355,11 @@ void func30038()
     [SP + 0x10] = w(0);
 
     A3 = ~(w[0x80099fcc] | w[0x80062f00]);
-    A2 = w[0x8009a194] & w[0x80062f68] & A3;
+    channels_mask = w[0x8009a194] & w[0x80062f68] & A3;
 
-    if( A2 != 0 )
+    if( channels_mask != 0 )
     {
-        func2fda0( 0x80097ec8, SP + 0x10, A2, A3 );
+        func2fda0( 0x80097ec8, SP + 0x10, channels_mask, A3 );
     }
 
     if( w[0x80062ff8] & 0x00000010 )
@@ -3382,10 +3369,11 @@ void func30038()
     else
     {
         A3 = ~(w[0x80062f68] | w[0x80099fcc] | w[0x80062f00]);
-        A2 = A3 & w[0x8009a134];
-        if( A2 != 0 )
+        channels_mask = A3 & w[0x8009a134];
+
+        if( channels_mask != 0 )
         {
-            func2fda0( 0x80096608, SP + 0x10, A2, A3 );
+            func2fda0( 0x80096608, SP + 0x10, channels_mask, A3 );
         }
     }
 
@@ -3403,19 +3391,19 @@ void func30148()
     [SP + 0x10] = w(0);
 
     A3 = ~(w[0x80099fcc] | w[0x80062f00]);
-    A2 = (w[0x8009a198] & w[0x80062f68]) & A3;
+    channels_mask = (w[0x8009a198] & w[0x80062f68]) & A3;
 
-    if( A2 != 0 )
+    if( channels_mask != 0 )
     {
-        func2fda0( 0x80097ec8, SP + 0x10, A2, A3 );
+        func2fda0( 0x80097ec8, SP + 0x10, channels_mask, A3 );
     }
 
     A3 = ~(w[0x80062f68] | w[0x80099fcc] | w[0x80062f00]);
-    A2 = A3 & w[0x8009a138];
+    channels_mask = A3 & w[0x8009a138];
 
-    if( A2 != 0 )
+    if( channels_mask != 0 )
     {
-        func2fda0( 0x80096608, SP + 0x10, A2, A3 );
+        func2fda0( 0x80096608, SP + 0x10, channels_mask, A3 );
     }
 
     [SP + 0x10] = w(w[SP + 0x10] | w[0x80099ff4]);
