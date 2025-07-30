@@ -479,7 +479,7 @@
 8002E478 func2e478
 8002E954 func2e954
 8002ED34 system_akao_update_pitch_and_volume_lfo
-8002F24C func2f24c
+8002F24C system_akao_update_pitch_and_volume
 8002F738 system_akao_update_volume_to_self_and_mirror
 8002F848 system_akao_update_dynamic
 8002FDA0 func2fda0

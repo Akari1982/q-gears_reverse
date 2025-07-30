@@ -51,7 +51,8 @@ struct ChannelData
                         // 0x4c [][][][] pitch growth. We increment pitch addition by this every frame.
                         // 0x50 [][][][] set to -1.
                         // 0x54 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
-    u16 note_length;    // 0x56
+    u8 length_1;       // 0x56
+    u8 length_2;       // 0x57
     u16 instr_id;       // 0x58
                         // 0x5a [][]     ???
                         // 0x5c [][]     init with 0.

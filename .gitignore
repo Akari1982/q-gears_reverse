@@ -20,3 +20,12 @@ build
 /xeno/utilites/field exporter/*.user
 /xeno/utilites/field exporter/output/fields_raw
 /xeno/utilites/Field Exporter/output/fields_raw
+/ffix/utilities/cd_extractor/compile/debug
+/ffix/utilities/cd_extractor/output/FF9.IMG
+/ffix/utilities/cd_extractor/.vs/cd_extractor/v17
+/ffix/utilities/cd_extractor/output
+/ffix/utilities/cd_extractor/.vs/Cd Extractor/FileContentIndex
+/ffix/utilities/cd_extractor/.vs/Cd Extractor/v17
+/ffix/utilities/cd_extractor/.vs/cd_extractor/FileContentIndex
+/ffix/utilities/cd_extractor/cd_extractor.vcxproj
+/ffix/utilities/cd_extractor/cd_extractor.vcxproj.user

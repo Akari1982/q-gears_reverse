@@ -155,7 +155,8 @@ void system_akao_opcode_a2_next_note_length( ChannelData* channel, AkaoConfig* c
     channel->seq = akao + 0x1;
 
     length = bu[akao];
-    channel->note_length = (length << 0x8) | length;
+    channel->length_1 = length;
+    channel->length_2 = length;
     [channel + 0xc2] = h(length);
     [channel + 0xc4] = h(0);
 }
