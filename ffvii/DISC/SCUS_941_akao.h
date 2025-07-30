@@ -1,20 +1,20 @@
 ﻿struct VoiceAttr
 {
-    u32 voice_id;       // 0x00 id of voice
-    u32 mask;           // 0x04 attribute bit
-    u32 addr;           // 0x08 waveform data start address
-    u32 loop_addr;      // 0x0c loop start address
-    s32 a_mode;         // 0x10 attack rate mode
-    s32 s_mode;         // 0x14 sustain rate mode
-    s32 r_mode;         // 0x18 release rate mode
-    u16 pitch;          // 0x1c interval (set pitch)
-    u16 ar;             // 0x1e attack rate
-    u16 dr;             // 0x20 decay rate
-    u16 sl;             // 0x22 sustain level
-    s16 sr;             // 0x24 sustain rate
-    u16 rr;             // 0x26 release rate
-    s16 vol_l;          // 0x28 left volume
-    s16 vol_r;          // 0x2a right volume
+    u32 voice_id;       // 0x00  0xdc id of voice
+    u32 mask;           // 0x04  0xe0 attribute bit
+    u32 addr;           // 0x08  0xe4 waveform data start address
+    u32 loop_addr;      // 0x0c  0xe8 loop start address
+    s32 a_mode;         // 0x10  0xec attack rate mode
+    s32 s_mode;         // 0x14  0xf0 sustain rate mode
+    s32 r_mode;         // 0x18  0xf4 release rate mode
+    u16 pitch;          // 0x1c  0xf8 interval (set pitch)
+    u16 ar;             // 0x1e  0xfa attack rate
+    u16 dr;             // 0x20  0xfc decay rate
+    u16 sl;             // 0x22  0xfe sustain level
+    s16 sr;             // 0x24 0x100 sustain rate
+    u16 rr;             // 0x26 0x102 release rate
+    s16 vol_l;          // 0x28 0x104 left volume
+    s16 vol_r;          // 0x2a 0x106 right volume
 } ;
 
 struct ChannelData
@@ -51,8 +51,8 @@ struct ChannelData
                         // 0x4c [][][][] pitch growth. We increment pitch addition by this every frame.
                         // 0x50 [][][][] set to -1.
                         // 0x54 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
-                        // 0x56 [][]     pause. Set to 0x204 in case of 0x30 command. Set to 0x101.
-                        // 0x58 [][]     current instrument.
+    u16 note_length;    // 0x56
+    u16 instr_id;       // 0x58
                         // 0x5a [][]     ???
                         // 0x5c [][]     init with 0.
                         // 0x5e [][]     ???

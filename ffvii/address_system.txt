@@ -715,13 +715,16 @@
     +11 []       y warp around (0 - not warp).
 
 0x8009a104 start of akao channels config
-    +00 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
-    +04 [][][][] active music channel mask.
-    +08 [][][][] channels to be played mask.
-    +0c [][][][] some channels mask.
+    + 0 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
+    + 4 [][][][] active music channel mask.
+    + 8 [][][][] channels to be played mask.
+    + c [][][][] some channels mask.
+    +10 [][][][] some channels mask.
     +18 [][][][] tempo of music. Used as >> 0x10.
     +1c [][][][] tempo music increment.
     +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
+    +24 [][][][] some channels mask.
+    +28 [][][][] some channels mask.
     +2c [][][][] some channels mask.
     +38 [][][][] spu config update flags.
                     0x00000010 - update noise clock frequency.
