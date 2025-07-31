@@ -745,7 +745,8 @@
     +5a [][]     lower timer equal value.
     +5c [][]     lower timer value. When this equal to +5a then we reset this to 0 and increment +58.
     +5e [][]     top timer. Stored in CHMPH opcode.
-    +64 [][]     ???
+0x8009a164 start of second config.
+
 
 0x8009c540 []       seed for battle random in field.
 
