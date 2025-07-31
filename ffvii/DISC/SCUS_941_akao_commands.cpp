@@ -1,5 +1,6 @@
 ﻿typedef void (*AkaoCommand) ( CommandData* data );
 
+// 0x80049548
 AkaoCommand akao_commands[] =
 {
     system_akao_command_null, system_akao_command_null, system_akao_command_null, system_akao_command_null,
