@@ -89,7 +89,7 @@ void system_akao_command_10( CommandData* data )
     if( hu[0x8009a14e] == 0xe ) // if currently playing "ffvii_main_theme"
     {
         func2a7e8();
-        func2b1a8( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
+        system_akao_copy_music_channels_and_config( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
     }
 
     func29e98();
@@ -128,11 +128,11 @@ void system_akao_command_14( CommandData* data )
     {
         if( V1 == 0xe )
         {
-            func2b1a8( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
+            system_akao_copy_music_channels_and_config( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
         }
         else
         {
-            func2b1a8( 0x80095508, 0x8007ec10, 0x8009a104, 0x80083334 );
+            system_akao_copy_music_channels_and_config( 0x80095508, 0x8007ec10, 0x8009a104, 0x80083334 );
         }
     }
 
@@ -159,34 +159,34 @@ void system_akao_command_15( CommandData* data )
 
     if( hu[0x8008337e] == music_id )
     {
-        func2b1a8( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
+        system_akao_copy_music_channels_and_config( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
         func29e98();
         func2aabc( 0x0 );
 
         if( hu[0x8009a1ae] == 0xe )
         {
-            func2b1a8( 0x80097ec8, 0x800804d0, 0x8009a164, 0x80083394 );
+            system_akao_copy_music_channels_and_config( 0x80097ec8, 0x800804d0, 0x8009a164, 0x80083394 );
         }
         else
         {
-            func2b1a8( 0x80097ec8, 0x8007ec10, 0x8009a164, 0x80083334 );
+            system_akao_copy_music_channels_and_config( 0x80097ec8, 0x8007ec10, 0x8009a164, 0x80083334 );
         }
     }
     else
     {
         if( hu[0x800833de] == music_id )
         {
-            func2b1a8( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
+            system_akao_copy_music_channels_and_config( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
             func29e98();
             func2aabc( 0x1 );
 
             if( hu[0x8009a1ae] == 0xe )
             {
-                func2b1a8( 0x80097ec8, 0x800804d0, 0x8009a164, 0x80083394 );
+                system_akao_copy_music_channels_and_config( 0x80097ec8, 0x800804d0, 0x8009a164, 0x80083394 );
             }
             else
             {
-                func2b1a8( 0x80097ec8, 0x8007ec10, 0x8009a164, 0x80083334 );
+                system_akao_copy_music_channels_and_config( 0x80097ec8, 0x8007ec10, 0x8009a164, 0x80083334 );
             }
         }
         else
@@ -196,11 +196,11 @@ void system_akao_command_15( CommandData* data )
             {
                 if( V1 == 0xe )
                 {
-                    func2b1a8( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
+                    system_akao_copy_music_channels_and_config( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
                 }
                 else
                 {
-                    func2b1a8( 0x80096608, 0x8007ec10, 0x8009a104, 0x80083334 );
+                    system_akao_copy_music_channels_and_config( 0x80096608, 0x8007ec10, 0x8009a104, 0x80083334 );
                 }
             }
 

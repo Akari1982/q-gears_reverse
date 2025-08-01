@@ -539,9 +539,9 @@
                    10 - ???
 
 0x80095508
-0x80096608 struct for AKAO music channel (0x108 size).
-0x80097ec8 some other same 0x18 structs for akao channels.
-0x80099788 some other same 0x18 structs for akao channels.
+0x80096608 structs for akao channels (0x108 size 0x18 items).
+0x80097ec8 structs for akao channels (0x108 size 0x18 items).
+0x80099788 structs for akao channels (0x108 size 0x8 items). For voices with mask 0x10000 and up.
     +000 [][][][] AKAO sequence pointer.
     +004 [][][][] loop point 0.
     +008 [][][][] loop point 1.
@@ -565,7 +565,8 @@
                     0x00000010 - update pitch. We update from +0xf8 from previous channel.
                     0x00000020 - use prev channel pitch for volume mod.
                     0x00000100 - ???
-                    0x00000200 - ???
+                    0x00000200 - alt voice used.
+                    0x00000400 - ???.
     +03c [][]     ???
     +03d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
     +040 [][][][] ???
@@ -573,7 +574,7 @@
     +048 [][][][] volume_level_new.
     +04c [][][][] pitch growth. We increment pitch addition by this every frame.
     +050 [][][][] set to -1.
-    +054 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
+    +054 [][]     0 - ???, 1 - ???, 2 - playing system sound (0x30).
     +056 [][]     pause. Set to 0x204 in case of 0x30 command. Set to 0x101.
     +058 [][]     current instrument.
     +05a [][]     ???
@@ -724,7 +725,7 @@
     +1c [][][][] tempo music increment.
     +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
     +24 [][][][] some channels mask.
-    +28 [][][][] some channels mask.
+    +28 [][][][] alt voice mask.
     +2c [][][][] some channels mask.
     +38 [][][][] spu config update flags.
                     0x00000010 - update noise clock frequency.

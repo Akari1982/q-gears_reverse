@@ -29,7 +29,7 @@ struct ChannelData
                         // 0x1c [][][][] address into wave table for volume lfo.
                         // 0x20 [][][][] address into wave table for volume pan lfo.
     u32 overlay_id;     // 0x24
-    u32 alt_id;         // 0x28
+    u32 alt_voice_id;   // 0x28
     u32 vol_master;     // 0x2c
                         // 0x30 [][][][] base pitch. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
                         // 0x34 [][][][] init with 0. pitch related.
@@ -49,10 +49,10 @@ struct ChannelData
                         // 0x44 [][][][] volume level. Often used as 2 top bytes.
                         // 0x48 [][][][] volume_level_new.
                         // 0x4c [][][][] pitch growth. We increment pitch addition by this every frame.
-                        // 0x50 [][][][] set to -1.
+                        // 0x50 [][][][] ???.
                         // 0x54 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
-    u8 length_1;       // 0x56
-    u8 length_2;       // 0x57
+    u8 length_1;        // 0x56
+    u8 length_2;        // 0x57
     u16 instr_id;       // 0x58
                         // 0x5a [][]     ???
                         // 0x5c [][]     init with 0.
@@ -60,7 +60,7 @@ struct ChannelData
                         // 0x60 [][]     base volume pan. Store 0x4000 here in case of playing system sound 0x30.
                         // 0x62 [][]     set to 0.
                         // 0x64 [][]     init with 0. Number of steps for pitch changes?.
-                        // 0x66 [][]     pitch corrention. Set in 0xa5 opcode.
+    u16 octave;         // 0x66 [][]
                         // 0x68 [][]     pitch slide speed.
                         // 0x6a [][]     ???
                         // 0x6c [][]     init with 0.

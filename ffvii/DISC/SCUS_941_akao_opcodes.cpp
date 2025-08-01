@@ -62,9 +62,9 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
             [config + 0x24] = w(w[config + 0x24] & ~(1 << V1));
         }
 
-        if( w[channel + 0x38] & 0x00000200 )
+        if( w[channel + 0x38] & 0x00000200 ) // alt voice used
         {
-            [config + 0x28] = w(w[config + 0x28] & ~(1 << w[channel + 0x28]));
+            [config + 0x28] = w(w[config + 0x28] & ~(1 << channel->alt_voice_id));
         }
     }
     else
@@ -77,11 +77,11 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
         [0x8009a104 + 0xc] = w(w[0x8009a104 + 0xc] & (~mask));
         [0x8009a104 + 0x10] = w(w[0x8009a104 + 0x10] & (~mask));
 
-        V1 = w[channel + 0x28];
+        V1 = channel->alt_voice_id;
         [0x80096608 + V1 * 0x108 + 0xe0] = w(w[0x80096608 + V1 * 0x108 + 0xe0] | 0x0001ff80);
     }
 
-    [channel + 0x38] = w(0);
+    [channel + 0x38] = w(0x00000000);
 
     [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
 
@@ -116,11 +116,10 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
         [channel + 0x30] = w((w[channel + 0x30] * w[0x80075f28 + instr_id * 0x40 + 0x10]) / w[0x80075f28 + instr_id * 0x40 + 0x10]);
     }
 
-    if( w[channel + 0x38] & 0x00000200 ) // do not load release data
+    if( w[channel + 0x38] & 0x00000200 ) // alt voice
     {
         channel->instr_id = instr_id;
 
-        // init pitch attack and other values from instrument channel
         channel->attr.addr      = w[0x80075f28 + instr_id * 0x40 + 0x0];
         channel->attr.loop_addr = w[0x80075f28 + instr_id * 0x40 + 0x4];
         channel->attr.a_mode    = bu[0x80075f28 + instr_id * 0x40 + 0xd];
@@ -130,7 +129,6 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
         channel->attr.sl        = bu[0x80075f28 + instr_id * 0x40 + 0xa];
         channel->attr.sr        = bu[0x80075f28 + instr_id * 0x40 + 0xb];
 
-        // set update this values to spu
         channel->attr.mask |= SPU_VOICE_WDSA |
                               SPU_VOICE_ADSR_AMODE |
                               SPU_VOICE_ADSR_SMODE |
@@ -194,32 +192,34 @@ void system_akao_opcode_a5_set_octave( ChannelData* channel, AkaoConfig* config,
 {
     akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0x66] = h(bu[akao]); // pitch corrention
+    channel->octave = bu[akao];
 }
 
 
 
 void system_akao_opcode_a6_increase_octave( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0x66] = h((hu[channel + 0x66] + 1) & 0xf);
+    channel->octave += 0x1;
+    channel->octave &= 0xf;
 }
 
 
 
 void system_akao_opcode_a7_discrease_octave( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0x66] = h((hu[channel + 0x66] - 1) & 0xf);
+    channel->octave -= 0x1;
+    channel->octave &= 0xf;
 }
 
 
 
 void system_akao_opcode_a8_set_volume( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    akao = w[channel + 0];
-    [channel + 0] = w(akao + 1);
+    akao = channel->seq;
+    channel->seq = akao + 0x1;
     [channel + 0x44] = w(bu[akao] << 0x17);
     [channel + 0x5c] = h(0);
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+    channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
 
 
@@ -247,9 +247,8 @@ void system_akao_opcode_aa_set_pan( ChannelData* channel, AkaoConfig* config, u3
 
     [channel + 0x60] = h(bu[akao] << 0x8);
     [channel + 0x62] = h(0);
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+    channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
-
 
 
 
@@ -310,9 +309,9 @@ void system_akao_opcode_ac_noise_clock_freq( ChannelData* channel, AkaoConfig* c
 void system_akao_opcode_ad_set_ar( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
     akao = channel->seq;
-    channel->seq = w(akao + 1);
+    channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_AR);
+    channel->attr.mask |= SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_AR;
     [channel + 0xfa] = h(bu[akao]); // attack rate
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -329,7 +328,7 @@ void system_akao_opcode_ae_set_dr( ChannelData* channel, AkaoConfig* config, u32
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_DR);
+    channel->attr.mask |= SPU_VOICE_ADSR_DR;
     [channel + 0xfc] = h(bu[akao]); // decay rate
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -346,7 +345,7 @@ void system_akao_opcode_af_set_sl( ChannelData* channel, AkaoConfig* config, u32
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_SL);
+    channel->attr.mask |= SPU_VOICE_ADSR_SL;
     [channel + 0xfe] = h(bu[akao]); // sustain level
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -371,7 +370,7 @@ void system_akao_opcode_b1_set_sr( ChannelData* channel, AkaoConfig* config, u32
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR);
+    channel->attr.mode |= SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR;
     [channel + 0x100] = h(bu[akao]); // sustain rate
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -389,7 +388,7 @@ void system_akao_opcode_b2_set_rr( ChannelData* channel, AkaoConfig* config, u32
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR);
+    channel->attr.mode |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
     [channel + 0x102] = h(bu[akao]); // release rate
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -403,24 +402,25 @@ void system_akao_opcode_b2_set_rr( ChannelData* channel, AkaoConfig* config, u32
 
 void system_akao_opcode_b3_reset_adsr( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    intsr_id = hu[channel + 0x58];
-    [channel + 0xe0] = w(w[channel + 0xe0] |
-        SPU_VOICE_ADSR_AMODE |
-        SPU_VOICE_ADSR_SMODE |
-        SPU_VOICE_ADSR_RMODE |
-        SPU_VOICE_ADSR_AR |
-        SPU_VOICE_ADSR_DR |
-        SPU_VOICE_ADSR_SR |
-        SPU_VOICE_ADSR_RR |
-        SPU_VOICE_ADSR_SL);
-    [channel + 0xec] = w(bu[0x80075f28 + intsr_id * 0x40 + 0xd]);
-    [channel + 0xf0] = w(bu[0x80075f28 + intsr_id * 0x40 + 0xe]);
-    [channel + 0xf4] = w(bu[0x80075f28 + intsr_id * 0x40 + 0xf]);
-    [channel + 0xfa] = h(bu[0x80075f28 + intsr_id * 0x40 + 0x8]);
-    [channel + 0xfc] = h(bu[0x80075f28 + intsr_id * 0x40 + 0x9]);
-    [channel + 0xfe] = h(bu[0x80075f28 + intsr_id * 0x40 + 0xa]);
-    [channel + 0x100] = h(bu[0x80075f28 + intsr_id * 0x40 + 0xb]);
-    [channel + 0x102] = h(bu[0x80075f28 + intsr_id * 0x40 + 0xc]);
+    intsr_id = channel->instr_id;
+
+    channel->attr.a_mode= bu[0x80075f28 + intsr_id * 0x40 + 0xd];
+    channel->attr.s_mode= bu[0x80075f28 + intsr_id * 0x40 + 0xe];
+    channel->attr.r_mode= bu[0x80075f28 + intsr_id * 0x40 + 0xf];
+    channel->attr.ar = bu[0x80075f28 + intsr_id * 0x40 + 0x8];
+    channel->attr.dr = bu[0x80075f28 + intsr_id * 0x40 + 0x9];
+    channel->attr.sl = bu[0x80075f28 + intsr_id * 0x40 + 0xa];
+    channel->attr.sr = bu[0x80075f28 + intsr_id * 0x40 + 0xb];
+    channel->attr.rr = bu[0x80075f28 + intsr_id * 0x40 + 0xc];
+
+    channel->attr.mode |= SPU_VOICE_ADSR_AMODE |
+                          SPU_VOICE_ADSR_SMODE |
+                          SPU_VOICE_ADSR_RMODE |
+                          SPU_VOICE_ADSR_AR |
+                          SPU_VOICE_ADSR_DR |
+                          SPU_VOICE_ADSR_SR |
+                          SPU_VOICE_ADSR_RR |
+                          SPU_VOICE_ADSR_SL;
 
     if( w[channel + 0x38] & 0x00000100 )
     {
@@ -445,17 +445,17 @@ void system_akao_opcode_b4_vibrato( ChannelData* channel, AkaoConfig* config, u3
 
     [channel + 0x38] = w(w[channel + 0x38] | 0x00000001); // update frequency lfo
 
-    if( hu[channel + 0x54] != 0 )
+    if( hu[channel + 0x54] == 0 )
+    {
+        [channel + 0x72] = h(bu[akao + 0x0]); // add frequency lfo delay
+    }
+    else
     {
         [channel + 0x72] = h(0); // remove frequency lfo delay
         if( bu[akao + 0x0] != 0 )
         (
             [channel + 0x7e] = h(bu[akao + 0x0] << 0x8); // frequency lfo multiplier.
         }
-    }
-    else
-    {
-        [channel + 0x72] = h(bu[akao + 0x0]); // add frequency lfo delay
     }
 
     rate = bu[akao + 1]; // frequency lfo refresh interval
@@ -505,7 +505,7 @@ void system_akao_opcode_b6_vibrato_off( ChannelData* channel, AkaoConfig* config
 {
     [channel + 0x38] = w(w[channel + 0x38] & 0xfffffffe); // remove update frequency lfo
     [channel + 0xd6] = h(0x0); // pitch wave shift.
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_PITCH);
+    channel->attr.mask |= SPU_VOICE_PITCH;
 }
 
 
@@ -515,7 +515,7 @@ void system_akao_opcode_b7_attack_mode( ChannelData* channel, AkaoConfig* config
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_AMODE); // set attack rate
+    channel->attr.mask |= SPU_VOICE_ADSR_AMODE;
     [channel + 0xec] = w(bu[akao]); // attack mode
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -535,17 +535,17 @@ void system_akao_opcode_b8_tremolo( ChannelData* channel, AkaoConfig* config, u3
 
     [channel + 0x38] = w(w[channel + 0x38] | 0x00000002); // update volume lfo
 
-    if( hu[channel + 0x54] != 0 )
+    if( hu[channel + 0x54] == 0 )
+    {
+        [channel + 0x86] = h(bu[akao + 0x0]); // set volume lfo delay
+    }
+    else
     {
         [channel + 0x86] = h(0); // remove volume lfo delay
         if( bu[akao + 0x0] != 0 )
         (
             [channel + 0x90] = h(bu[akao + 0x0] << 0x8); // volume lfo multiplier.
         }
-    }
-    else
-    {
-        [channel + 0x86] = h(bu[akao + 0x0]); // add volume lfo delay
     }
 
     rate = bu[akao + 1];
@@ -574,7 +574,7 @@ void system_akao_opcode_ba_tremolo_off( ChannelData* channel, AkaoConfig* config
 {
     [channel + 0x38] = w(w[channel + 0x38] & 0xfffffffd);
     [channel + 0xd8] = h(0);
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+    channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
 
 
@@ -584,7 +584,7 @@ void system_akao_opcode_bb_sustain_mode( ChannelData* channel, AkaoConfig* confi
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_SMODE);
+    channel->attr.mask |= SPU_VOICE_ADSR_SMODE;
     [channel + 0xf0] = w(bu[akao]); // sustain mode
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -626,9 +626,9 @@ void system_akao_opcode_bd_pan_lfo_depth( ChannelData* channel, AkaoConfig* conf
 
 void system_akao_opcode_be_pan_lfo_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [A0 + 0x38] = w(w[A0 + 0x38] & 0xfffffffb); // remove update wave 3
-    [A0 + 0xda] = h(0);
-    [A0 + 0xe0] = w(w[A0 + 0xe0] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+    [channel + 0x38] = w(w[channel + 0x38] & 0xfffffffb); // remove update wave 3
+    [channel + 0xda] = h(0);
+    channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
 
 
@@ -638,7 +638,7 @@ void system_akao_opcode_bf_release_mode( ChannelData* channel, AkaoConfig* confi
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_ADSR_RMODE);
+    channel->attr.mask |= SPU_VOICE_ADSR_RMODE;
     [channel + 0xf4] = w(bu[akao]); // release mode
 
     if( w[channel + 0x38] & 0x00000100 )
@@ -1202,34 +1202,41 @@ void system_akao_opcode_f2_load_instrument( ChannelData* channel, AkaoConfig* co
     u32 akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    instr_id = bu[akao];
+    u16 instr_id = bu[akao];
 
-    if ( ( hu[channel + 0x54] != 0 ) || ( ( A2 & w[A1 + 0xc] & w[0x80099fcc] ) == 0 ) )
+    if ( (hu[channel + 0x54] != 0) || ((A2 & w[A1 + 0xc] & w[0x80099fcc]) == 0) )
     {
-        [channel + 0xe0] = w(w[channel + 0xe0] | 0x00000010);
-        prev = hu[channel + 0x58];
+        u16 prev = channel->instr_id;
         [channel + 0x30] = w((w[channel + 0x30] * w[0x80075f28 + instr_id * 0x40 + 0x10]) / w[0x80075f28 + prev * 0x40 + 0x10]);
+
+        channel->attr.mask |= SPU_VOICE_PITCH;
     }
 
-    [channel + 0x58] = h(instr_id);
-    [channel + 0xe4] = w(0x00076fe0);
-    [channel + 0xe8] = w(w[0x80075f28 + instr_id * 0x40 + 0x4]);
-    [channel + 0xfa] = h(bu[0x80075f28 + instr_id * 0x40 + 0x8]);
-    [channel + 0xfc] = h(bu[0x80075f28 + instr_id * 0x40 + 0x9]);
-    [channel + 0xfe] = h(bu[0x80075f28 + instr_id * 0x40 + 0xa]);
-    [channel + 0x100] = h(bu[0x80075f28 + instr_id * 0x40 + 0xb]);
-    [channel + 0xec] = w(bu[0x80075f28 + instr_id * 0x40 + 0xd]);
-    [channel + 0xf0] = w[bu[0x80075f28 + instr_id * 0x40 + 0xe]];
+    channel->instr_id = instr_id;
 
-    if( w[channel + 0x38] & 0x00000200 )
+    channel->attr.addr = 0x76fe0;
+    channel->attr.loop_addr = w[0x80075f28 + instr_id * 0x40 + 0x4];
+    channel->attr.a_mode = bu[0x80075f28 + instr_id * 0x40 + 0xd];
+    channel->attr.s_mode = bu[0x80075f28 + instr_id * 0x40 + 0xe];
+    channel->attr.ar = bu[0x80075f28 + instr_id * 0x40 + 0x8];
+    channel->attr.dr = bu[0x80075f28 + instr_id * 0x40 + 0x9];
+    channel->attr.sl = bu[0x80075f28 + instr_id * 0x40 + 0xa];
+    channel->attr.sr = bu[0x80075f28 + instr_id * 0x40 + 0xb];
+
+    channel->attr.mask |= SPU_VOICE_WDSA |
+                          SPU_VOICE_ADSR_AMODE |
+                          SPU_VOICE_ADSR_SMODE |
+                          SPU_VOICE_ADSR_AR |
+                          SPU_VOICE_ADSR_DR |
+                          SPU_VOICE_ADSR_SR |
+                          SPU_VOICE_ADSR_SL |
+                          SPU_VOICE_LSAX;
+
+    if( (w[channel + 0x38] & 0x00000200) == 0 ) // alt voice not used
     {
-        [channel + 0xe0] = w(w[channel + 0xe0] | 0x0001bb80);
-    }
-    else
-    {
-        [channel + 0xe0] = w(w[channel + 0xe0] | 0x0001ff80);
-        [channel + 0x102] = h(bu[0x80075f28 + instr_id * 0x40 + 0xc]);
-        [channel + 0xf4] = w(bu[0x80075f28 + instr_id * 0x40 + 0xf]);
+        channel->attr.r_mode = bu[0x80075f28 + instr_id * 0x40 + 0xf];
+        channel->attr.rr = bu[0x80075f28 + instr_id * 0x40 + 0xc];
+        channel->attr.mask |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
     }
 }
 
@@ -1282,7 +1289,7 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
         [channel + 0x24] = w(S0 & 0xffff);
         [channel + 0x38] = w(w[channel + 0x38] | 0x00000100);
 
-        system_akao_instr_init( A0, bu[akao + 0x0] );
+        system_akao_instr_init( channel, bu[akao + 0x0] );
         system_akao_instr_init( 0x80096608 + w[channel + 0x24] * 0x108, bu[akao + 0x1]);
     }
 }
@@ -1314,7 +1321,7 @@ void system_akao_opcode_f6_overlay_volume_balance( ChannelData* channel, AkaoCon
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        [channel + 0xe0] = w(w[channel + 0xe0] | SPU_VOICE_VOLL | SPU_VOICE_VOLR);
+        channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
     }
 }
 
@@ -1343,26 +1350,26 @@ void system_akao_opcode_f8_alt_voice_on( ChannelData* channel, AkaoConfig* confi
     u32 akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0x102] = h(bu[akao]);
+    channel->attr.rr = bu[akao];
 
-    if( ( w[channel + 0x38] & 0x00000200 ) == 0 )
+    if( (w[channel + 0x38] & 0x00000200) == 0 ) // alt voice not used
     {
-        T0 = 0;
-        A2 = 0x1;
-        V1 = w[config + 0x4] | w[config + 0x24] | w[config + 0x28];
+        u8 channel_id = 0;
+        u32 channel_mask = 0x1;
+        u32 channels_mask = w[config + 0x4] | w[config + 0x24] | w[config + 0x28];
 
-        do
+        while( channel_mask & 0x00ffffff )
         {
-            if( ( V1 & A2 ) == 0 ) break;
+            if( ( channels_mask & channel_mask ) == 0 ) break;
 
-            A2 <<= 0x1;
-            T0 += 0x1;
-        } while( A2 & 0x00ffffff )
+            channel_mask <<= 0x1;
+            channel_id += 0x1;
+        }
 
-        if( A2 & 0x00ffffff )
+        if( channel_mask & 0x00ffffff )
         {
-            [config + 0x28] = w(w[config + 0x28] | A2);
-            [channel + 0x28] = w(T0 & 0xffff);
+            [config + 0x28] = w(w[config + 0x28] | channel_mask);
+            channel->alt_voice_id = channel_id;
             [channel + 0x38] = w(w[channel + 0x38] | 0x00000200);
         }
     }
@@ -1372,12 +1379,11 @@ void system_akao_opcode_f8_alt_voice_on( ChannelData* channel, AkaoConfig* confi
 
 void system_akao_opcode_f9_alt_voice_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [config + 0x28] = w(w[config + 0x28] & ~(1 << w[channel + 0x28]));
+    [config + 0x28] = w(w[config + 0x28] & ~(1 << channel->alt_voice_id));
     [channel + 0x38] = w(w[channel + 0x38] & 0xfffffdff);
-    [channel + 0xe0] = w(w[channel + 0xe0] | 0x00004400);
 
-    intsr_id = hu[channel + 0x58];
-    [channel + 0x102] = h(bu[0x80075f34 + intsr_id * 0x40]);
+    channel->attr.rr = bu[0x80075f28 + channel->intsr_id * 0x40 + 0xc];
+    channel->attr.mask |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
 }
 
 
