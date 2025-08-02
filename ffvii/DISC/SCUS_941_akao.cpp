@@ -341,7 +341,7 @@ void func29bac( ChannelData* channel, u32 offset )
     channel->vol_master = 0x78;
     [channel + 0x34] = w(0x0);
     [channel + 0x38] = w(0x0);
-    [channel + 0x44] = h(0x32000000);
+    [channel + 0x44] = w(0x32000000);
     [channel + 0x5c] = h(0x0);
     [channel + 0x64] = h(0x0);
     channel->octave = 0x2;
@@ -1812,7 +1812,7 @@ void func2e478( ChannelData* channel, AkaoConfig* config, u32 mask )
 
         A1 = w[channel + 0x44] + w[channel + 0x48];
 
-        if( (A1 & 0xffe0) != (w[channel + 0x44] & 0xffe0) )
+        if( (A1 & 0xffe00000) != (w[channel + 0x44] & 0xffe00000) )
         {
             channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
         }
@@ -3517,7 +3517,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                     A0 = A0 >> V0;
                 }
 
-                [channel + 0x44] = w((bu[A2 + 0x2] + (bu[A2 + 0x3] << 0x8)) << 0x10);
+                channel->volume = (bu[A2 + 0x2] + (bu[A2 + 0x3] << 0x8)) << 0x10;
                 [channel + 0x60] = h(bu[A2 + 0x4] << 0x8);
             }
             else

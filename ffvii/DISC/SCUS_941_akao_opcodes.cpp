@@ -217,7 +217,7 @@ void system_akao_opcode_a8_set_volume( ChannelData* channel, AkaoConfig* config,
 {
     akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0x44] = w(bu[akao] << 0x17);
+    channel->volume = bu[akao] << 0x17;
     [channel + 0x5c] = h(0);
     channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
@@ -233,8 +233,8 @@ void system_akao_opcode_a9_set_volume_slide( ChannelData* channel, AkaoConfig* c
     volume = b[akao + 0x1];
     if( length == 0 ) length = 0x100;
 
-    [channel + 0x44] = w(w[channel + 0x44] & 0xffff0000);
-    [channel + 0x48] = w(((volume << 0x17) - w[channel + 0x44]) / hu[channel + 0x5c]);
+    channel->volume &= 0xffff0000;
+    [channel + 0x48] = w(((volume << 0x17) - channel->volume) / hu[channel + 0x5c]);
     [channel + 0x5c] = h(length);
 }
 
@@ -784,33 +784,33 @@ void system_akao_opcode_c7_frequency_modulation_off( ChannelData* channel, AkaoC
 
 void system_akao_opcode_c8_loop_point( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0xb8] = h((hu[channel + 0xb8] + 1) & 3);
+    channel->loop_id += 0x1;
+    channel->loop_id &= 0x3;
 
-    index = hu[channel + 0xb8];
-    [channel + 0x4 + index * 0x4] = w(channel->seq);
-    [channel + 0xba + index * 0x2] = h(0);
+    channel->loop_point[channel->loop_id] = channel->seq;
+    channel->loop_times[channel->loop_id] = 0;
 }
 
 
 
 void system_akao_opcode_c9_loop_return_times( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    u32 channel->seq;
+    u32 akao = channel->seq;
     channel->seq = w(akao + 1);
 
-    times = bu[akao];
+    u16 times = bu[akao];
     if( times == 0 ) times = 0x100;
 
-    index = hu[channel + 0xb8];
-    [channel + 0xba + index * 0x2] = h(hu[channel + 0xba + index * 0x2] + 1);
+    channel->loop_times[channel->loop_id] += 0x1;
 
-    if( hu[channel + 0xba + index * 0x2] != times )
+    if( channel->loop_times[channel->loop_id] != times )
     {
-        channel->seq = w(w[channel + 0x4 + index * 0x4]);
+        channel->seq = channel->loop_point[channel->loop_id];
     }
     else
     {
-        [channel + 0xb8] = h((index - 1) & 0x3);
+        channel->loop_id -= 0x1;
+        channel->loop_id &= 0x3;
     }
 }
 
@@ -818,9 +818,8 @@ void system_akao_opcode_c9_loop_return_times( ChannelData* channel, AkaoConfig* 
 
 void system_akao_opcode_ca_loop_return( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    index = hu[channel + 0xb8];
-    channel->seq = w(w[channel + 0x4 + index * 0x4]);
-    [channel + 0xba + index * 0x2] = h(hu[channel + 0xba + index * 0x2] + 1);
+    channel->seq = channel->loop_point[channel->loop_id];
+    channel->loop_times[ channel->loop_id] += 0x1;
 }
 
 
@@ -1160,17 +1159,16 @@ void system_akao_opcode_ef_jump_conditional( ChannelData* channel, AkaoConfig* c
 void system_akao_opcode_f0_loop_jump_times( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
     u32 akao = channel->seq;
-    times = bu[akao + 0x0];
+    u16 times = bu[akao + 0x0];
     if( times == 0 ) times = 0x100;
 
-    index = hu[channel + 0xb8];
-    if( ( hu[channel + 0xba + index * 0x2] + 0x1 ) != times )
+    if( (channel->loop_times[channel->loop_id] + 0x1) != times )
     {
         channel->seq = akao + 0x3;
     }
     else
     {
-        channel->seq = w(akao + 0x3 + h[akao + 0x1]);
+        channel->seq = akao + 0x3 + h[akao + 0x1];
     }
 }
 
@@ -1179,18 +1177,18 @@ void system_akao_opcode_f0_loop_jump_times( ChannelData* channel, AkaoConfig* co
 void system_akao_opcode_f1_loop_break_times( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
     u32 akao = channel->seq;
-    times = bu[akao + 0x0];
+    u16 times = bu[akao + 0x0];
     if( times == 0 ) times = 0x100;
 
-    index = hu[channel + 0xb8];
-    if( ( hu[channel + 0xba + index * 0x2] + 1 ) != times )
+    if( (channel->loop_times[channel->loop_id] + 0x1) != times )
     {
         channel->seq = akao + 0x3;
     }
     else
     {
         channel->seq = akao + 0x3 + h[akao + 0x1];
-        [channel + 0xb8] = h((index - 1) & 0x3)
+        channel->loop_id -= 0x1;
+        channel->loop_id &= 0x3;
     }
 }
 
@@ -1204,7 +1202,7 @@ void system_akao_opcode_f2_load_instrument( ChannelData* channel, AkaoConfig* co
 
     u16 instr_id = bu[akao];
 
-    if ( (hu[channel + 0x54] != 0) || ((A2 & w[A1 + 0xc] & w[0x80099fcc]) == 0) )
+    if( (hu[channel + 0x54] != 0) || ((A2 & w[A1 + 0xc] & w[0x80099fcc]) == 0) )
     {
         u16 prev = channel->instr_id;
         [channel + 0x30] = w((w[channel + 0x30] * w[0x80075f28 + instr_id * 0x40 + 0x10]) / w[0x80075f28 + prev * 0x40 + 0x10]);
