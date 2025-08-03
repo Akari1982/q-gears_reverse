@@ -1226,24 +1226,16 @@ u_long func37988( long on_off, u_long voice_bit, A2, A3 )
 
 
 
-////////////////////////////////
-// system_sound_spu_set_noise_frequency()
-
-A1 = A0;
-if( A1 < 0 )
+long system_psyq_spu_set_noise_clock( long n_clock )
 {
-    A1 = 0;
-}
-else if( A1 >= 40 )
-{
-    A1 = 3f;
-}
+    n_clock = ( n_clock < 0 ) ? 0 : n_clock;
+    n_clock = ( n_clock >= 0x40 ) ? 0x3f : n_clock;
 
-spu = w[0x8004aaf4]; // 1f801c00
-[spu + 1aa] = h((hu[spu + 1aa] & c0ff) | ((A1 & 3f) << 8));
+    spu = w[0x8004aaf4]; // 1f801c00
+    [spu + 0x1aa] = h((hu[spu + 0x1aa] & 0xc0ff) | ((n_clock & 0x3f) << 0x8));
 
-return A1;
-////////////////////////////////
+    return n_clock;
+}
 
 
 

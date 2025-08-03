@@ -170,75 +170,56 @@ battle_cdrom_read_chain();
 
 
 
-////////////////////////////////
-// funcbb89c
-V0 = hu[8016376a];
-800BB8A4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-[80163b80] = h(0);
-[800fa6b8] = h(0);
-V0 = V0 & 0010;
-800BB8C0	bne    v0, zero, Lbb8e0 [$800bb8e0]
-V0 = 0010;
-V0 = w[80083338];
-800BB8D0	nop
-800BB8D4	bne    v0, zero, Lbb8e0 [$800bb8e0]
-V0 = 0010;
-V0 = 0014;
+void funcbb89c()
+{
+    [0x80163b80] = h(0);
+    [0x800fa6b8] = h(0);
 
-Lbb8e0:	; 800BB8E0
-[8009a000] = h(V0);
-800BB8E8	lui    v0, $801d
-[8009a004] = w(V0);
-800BB8F4	jal    $system_akao_execute
-800BB8F8	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BB904	jr     ra 
-800BB908	nop
-////////////////////////////////
-// funcbb90c
-800BB90C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 00a0;
-[8009a000] = h(V0);
-V0 = 007f;
-[SP + 0010] = w(RA);
-[8009a004] = w(V0);
-800BB92C	jal    $system_akao_execute
-800BB930	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BB93C	jr     ra 
-800BB940	nop
-////////////////////////////////
-// funcbb944
-800BB944	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800BB94C	jal    funcbb90c [$800bb90c]
-800BB950	nop
-V0 = 00f1;
-[8009a000] = h(V0);
-800BB960	jal    $system_akao_execute
-800BB964	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BB970	jr     ra 
-800BB974	nop
-////////////////////////////////
-// funcbb978
-800BB978	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 00c1;
-[8009a000] = h(V0);
-V0 = 012c;
-[SP + 0010] = w(RA);
-[8009a004] = w(V0);
-[8009a008] = w(0);
-800BB9A0	jal    $system_akao_execute
-800BB9A4	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BB9B0	jr     ra 
-800BB9B4	nop
+    if( hu[0x8016376a] & 0x10 )
+    {
+        V0 = 0x10;
+    }
+    else
+    {
+        V0 = (w[0x80083338] == 0) ? 0x14 : 0x10;
+    }
+
+    [0x8009a000] = h(V0);
+    [0x8009a004] = w(0x801d0000);
+    system_akao_execute();
+}
+
+
+
+void funcbb90c()
+{
+    [0x8009a000] = h(0xa0);
+    [0x8009a004] = w(0x7f);
+    system_akao_execute();
+}
+
+
+
+void funcbb944()
+{
+    funcbb90c();
+
+    [0x8009a000] = h(0xf1);
+    system_akao_execute();
+}
+
+
+
+void funcbb978()
+{
+    [0x8009a000] = h(0xc1);
+    [0x8009a004] = w(0x12c);
+    [0x8009a008] = w(0);
+    system_akao_execute();
+}
+
+
+
 ////////////////////////////////
 // funcbb9b8
 800BB9B8	addiu  sp, sp, $ffe8 (=-$18)
@@ -256,56 +237,48 @@ SP = SP + 0018;
 800BB9F4	jr     ra 
 800BB9F8	nop
 ////////////////////////////////
-// funcbb9fc
-800BB9FC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = 002b;
-[8009a000] = h(V0);
-V0 = 0040;
-A0 = A0 & ffff;
-[SP + 0010] = w(RA);
-[8009a004] = w(V0);
-[8009a008] = w(A0);
-800BBA28	jal    $system_akao_execute
-800BBA2C	nop
-RA = w[SP + 0010];
-SP = SP + 0018;
-800BBA38	jr     ra 
-800BBA3C	nop
-////////////////////////////////
 
 
 
-////////////////////////////////
-// funcbba40()
-
-[8009a000] = h(20);
-[8009a004] = w(40);
-[8009a008] = w(A0 & ffff);
-system_akao_execute();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbba84()
-
-A3 = A0;
-if( A1 == -1 )
+void funcbb9fc( A0 )
 {
-    V0 = A2 & ff;
-}
-else
-{
-    V0 = h[801516fc + A1 * 8 + 0] / 5;
-    V0 = V0 * 2;
-    V0 = V0 & 7e;
+    [0x8009a000] = h(0x2b);
+    [0x8009a004] = w(0x40);
+    [0x8009a008] = w(A0 & 0xffff);
+    system_akao_execute();
 }
 
-[8009a000] = h(0020);
-[8009a004] = h(V0);
-[8009a008] = h(A3);
-system_akao_execute;
-////////////////////////////////
+
+
+void funcbba40( A0 )
+{
+    [0x8009a000] = h(0x20);
+    [0x8009a004] = w(0x40);
+    [0x8009a008] = w(A0 & ffff);
+    system_akao_execute();
+}
+
+
+
+void funcbba84()
+{
+    A3 = A0;
+    if( A1 == -1 )
+    {
+        V0 = A2 & 0xff;
+    }
+    else
+    {
+        V0 = h[0x801516fc + A1 * 0x8 + 0x0] / 0x5;
+        V0 = V0 * 0x2;
+        V0 = V0 & 0x7e;
+    }
+
+    [0x8009a000] = h(0x20);
+    [0x8009a004] = h(V0);
+    [0x8009a008] = h(A3);
+    system_akao_execute();
+}
 
 
 

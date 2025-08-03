@@ -85,9 +85,9 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
 
     [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
 
-    func2ff4c();
-    func30038();
-    func30148();
+    system_akao_update_noise_voices();
+    system_akao_update_reverb_voices();
+    system_akao_update_pitch_lfo_voices();
 }
 
 
@@ -218,7 +218,7 @@ void system_akao_opcode_a8_set_volume( ChannelData* channel, AkaoConfig* config,
     akao = channel->seq;
     channel->seq = akao + 0x1;
     channel->volume = bu[akao] << 0x17;
-    [channel + 0x5c] = h(0);
+    channel->vol_slide_steps = 0;
     channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
 
@@ -229,13 +229,13 @@ void system_akao_opcode_a9_set_volume_slide( ChannelData* channel, AkaoConfig* c
     akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    length = bu[akao + 0x0];
-    volume = b[akao + 0x1];
-    if( length == 0 ) length = 0x100;
+    u16 steps = bu[akao + 0x0];
+    if( steps == 0 ) steps = 0x100;
+    s32 vol_new = b[akao + 0x1] << 0x17;
 
     channel->volume &= 0xffff0000;
-    [channel + 0x48] = w(((volume << 0x17) - channel->volume) / hu[channel + 0x5c]);
-    [channel + 0x5c] = h(length);
+    channel->vol_slide_step = (vol_new - channel->volume) / steps;
+    channel->vol_slide_steps = steps;
 }
 
 
@@ -245,8 +245,8 @@ void system_akao_opcode_aa_set_pan( ChannelData* channel, AkaoConfig* config, u3
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    [channel + 0x60] = h(bu[akao] << 0x8);
-    [channel + 0x62] = h(0);
+    channel->vol_pan = bu[akao] << 0x8;
+    channel->vol_pan_slide_steps = 0;
     channel->attr.mask |= SPU_VOICE_VOLL | SPU_VOICE_VOLR;
 }
 
@@ -257,13 +257,13 @@ void system_akao_opcode_ab_set_pan_slide( ChannelData* channel, AkaoConfig* conf
     akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    length = bu[akao + 0x0];
-    pan = bu[akao + 0x1];
-    if( length == 0 ) length = 0x0100;
+    u16 steps = bu[akao + 0x0];
+    if( steps == 0 ) steps = 0x100;
+    u16 vol_pan_new = bu[akao + 0x1] << 0x8;
 
-    [channel + 0x60] = h(hu[channel + 0x60] & 0xff00);
-    [channel + 0x62] = h(length);
-    [channel + 0xca] = h(((pan << 0x8) - hu[channel + 0x60]) / hu[channel + 0x62]);
+    channel->vol_pan &= 0xff00;
+    channel->vol_pan_slide_steps = steps;
+    channel->vol_pan_slide_step = (vol_pan_new - channel->vol_pan) / steps;
 }
 
 
@@ -301,7 +301,7 @@ void system_akao_opcode_ac_noise_clock_freq( ChannelData* channel, AkaoConfig* c
         }
     }
 
-    [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
+    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
 }
 
 
@@ -686,7 +686,7 @@ void system_akao_opcode_c2_reverb_on( ChannelData* channel, AkaoConfig* config, 
         [0x80099ff0] = w(w[0x80099ff0] | mask);
     }
 
-    func30038();
+    system_akao_update_reverb_voices();
 }
 
 
@@ -703,7 +703,7 @@ void system_akao_opcode_c3_reverb_off( ChannelData* channel, AkaoConfig* config,
         [0x80099ff0] = w(w[0x80099ff0] & ~mask);
     }
 
-    func30038();
+    system_akao_update_reverb_voices();
 }
 
 
@@ -719,9 +719,9 @@ void system_akao_opcode_c4_noise_on( ChannelData* channel, AkaoConfig* config, u
     {
         [0x80099fec] = w(w[0x80099fec] | mask);
     }
-    [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
+    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
 
-    func2ff4c();
+    system_akao_update_noise_voices();
 }
 
 
@@ -738,9 +738,9 @@ void system_akao_opcode_c5_noise_off( ChannelData* channel, AkaoConfig* config, 
         [0x80099fec] = w(w[0x80099fec] & ~mask);
     }
 
-    [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
+    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
 
-    func2ff4c();
+    system_akao_update_noise_voices();
 
     [channel + 0xa4] = h(0);
 }
@@ -761,7 +761,7 @@ void system_akao_opcode_c6_frequency_modulation_on( ChannelData* channel, AkaoCo
         }
     }
 
-    func30148();
+    system_akao_update_pitch_lfo_voices();
 }
 
 
@@ -777,7 +777,7 @@ void system_akao_opcode_c7_frequency_modulation_off( ChannelData* channel, AkaoC
         [0x80099ff4] = w(w[0x80099ff4] & ~mask);
     }
 
-    func30148();
+    system_akao_update_pitch_lfo_voices();
 }
 
 

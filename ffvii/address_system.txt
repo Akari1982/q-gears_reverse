@@ -574,7 +574,7 @@
     +048 [][][][] volume_level_new.
     +04c [][][][] pitch growth. We increment pitch addition by this every frame.
     +050 [][][][] set to -1.
-    +054 [][]     0 - ???, 1 - ???, 2 - playing system sound (0x30).
+    +054 [][]     0 - ???, 1 - set for normal sound effects, 2 - playing menu sound (0x30).
     +056 [][]     pause. Set to 0x204 in case of 0x30 command. Set to 0x101.
     +058 [][]     current instrument.
     +05a [][]     ???
@@ -670,10 +670,10 @@
 0x80099fd4 [][][][] some channel mask. Remove from here channels we want to start sound.
 0x80099fd8 [][][][] some channel mask. Add here channels we want to start sound.
 0x80099fdc [][][][] some channel mask. Remove from here channels we want to start sound.
-0x80099fec [][][][] some channel mask. Remove from here channels we want to start sound.
-0x80099ff0 [][][][] some channel mask. Remove from here channels we want to start sound.
-0x80099ff4 [][][][] some channel mask. Remove from here channels we want to start sound.
-
+0x80099fec [][][][] noise voices mask.
+0x80099ff0 [][][][] reverb voices mask.
+0x80099ff4 [][][][] pitch lfo voices mask.
+0x80099ffa [][]     noise clock.
 
 
 8009a000 AKAO data
@@ -734,12 +734,11 @@
     +40 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
     +44 [][][][] increment for +40.
     +48 [][]     number of steps for tempo music increase.
-    +4a [][]     this is number of times we need to increment tempo (8009a11c) each update by 8009a120.
     +4a [][]     AKAO music id for currently playing sequence.
     +4c [][]     store here +4e after jump has occured.
     +4e [][]     storage for 0xef conditional jump.
     +50 [][]     this is number of times we need to increment +40 each update by +44.
-    +52 [][]     noise clock frequency.
+    +52 [][]     noise clock.
     +54 [][]     ???
     +56 [][]     upper timer equal value.
     +58 [][]     upper timer value. When this reach +56 then we reset this to 0 and increment +5e. Stored in CHMPH opcode.

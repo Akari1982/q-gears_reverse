@@ -1687,15 +1687,13 @@ if( bu[801518e4 + unit_id * b9c + 3b] != 0 )
             AT = AT + V0;
             [AT + 0000] = b(V1);
             V0 = w[1f800024];
-            800CA2BC	nop
             A0 = A0 + V0;
             V1 = bu[A0 + 0000];
-            V0 = 00a4;
-            [8009a000] = h(V0);
+            [8009a000] = h(0xa4);
             [8009a008] = w(0);
             [8009a004] = w(V1);
-            800CA2E4	jal    system_akao_execute [$8002da7c]
-            800CA2E8	nop
+            system_akao_execute();
+
             800CA2EC	j      Lcd208 [$800cd208]
             800CA2F0	nop
 
