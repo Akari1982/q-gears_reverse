@@ -482,7 +482,7 @@
 8002F24C system_akao_update_pitch_and_volume
 8002F738 system_akao_update_volume_to_self_and_mirror
 8002F848 system_akao_update_dynamic
-8002FDA0 func2fda0
+8002FDA0 system_akao_collect_channels_voices_mask
 8002FE48 func2fe48
 8002FF4C system_akao_update_noise_voices
 80030038 system_akao_update_reverb_voices

@@ -991,7 +991,7 @@ void system_akao_command_e4( CommandData* data )
 
     if( bu[data + 0x4] != 0 )
     {
-        [0x80062ff8] = w(w[0x80062ff8] | 0x10);
+        [0x80062ff8] = w(w[0x80062ff8] | 0x00000010);
     }
     else
     {

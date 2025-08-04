@@ -25,7 +25,7 @@ struct ChannelData
                                 // 0x18 [][][][] address into wave table for frequency lfo.
                                 // 0x1c [][][][] address into wave table for volume lfo.
                                 // 0x20 [][][][] address into wave table for volume pan lfo.
-    u32 overlay_id;             // 0x24
+    u32 over_voice_id;          // 0x24
     u32 alt_voice_id;           // 0x28
     u32 vol_master;             // 0x2c
                                 // 0x30 [][][][] base pitch. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
@@ -87,8 +87,8 @@ struct ChannelData
                                 // 0xa6 [][]     init with 0.
     u16 loop_id;                // 0xb8 [][]
     u16 loop_times[0x4];        // 0xba [][]
-                                // 0xc2 [][]     we store here pause after setting it.
-                                // 0xc4 [][]     init with 0. pause_multiplier.
+    s16 length_stored;          // 0xc2 [][]
+    s16 length_fixed;           // 0xc4 [][]
                                 // 0xc6 [][]     volume multiplier.
     s16 vol_pan_slide_step;     // 0xca [][]
                                 // 0xcc [][]     absolute transposition.

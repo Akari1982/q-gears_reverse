@@ -54,7 +54,7 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
 
         if( w[channel + 0x38] & 0x00000100 )
         {
-            V1 = hu[channel + 0x24];
+            V1 = channel->over_voice_id;
             if( w[0x80062f04] != 0 )
             {
                 V1 -= 0x18;
@@ -100,12 +100,12 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
 
     u8 instr_id = bu[akao];
 
-    A0 = hu[channel + 0x24];
-    if( w[0x80062f04] != 0 ) A0 -= 0x18;
+    u32 over_voice_id = channel->over_voice_id;
+    if( w[0x80062f04] != 0 ) over_voice_id -= 0x18;
 
-    if( w[channel + 0x38] & 0x00000100 )
+    if( w[channel + 0x38] & 0x00000100 ) // if overlay voice used
     {
-        [config + 0x24] = w(w[config + 0x24] & ~(1 << A0))
+        [config + 0x24] = w(w[config + 0x24] & ~(0x1 << over_voice_id))
         [channel + 0x38] = w(w[channel + 0x38] & 0xfffffeff)
     }
 
@@ -155,8 +155,8 @@ void system_akao_opcode_a2_next_note_length( ChannelData* channel, AkaoConfig* c
     length = bu[akao];
     channel->length_1 = length;
     channel->length_2 = length;
-    [channel + 0xc2] = h(length);
-    [channel + 0xc4] = h(0);
+    channel->length_stored = length;
+    channel->length_fixed = 0;
 }
 
 
@@ -316,8 +316,7 @@ void system_akao_opcode_ad_set_ar( ChannelData* channel, AkaoConfig* config, u32
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0xfa] = h(hu[channel + 0xfa]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xfa] = h(hu[channel + 0xfa]);
     }
 }
 
@@ -333,8 +332,7 @@ void system_akao_opcode_ae_set_dr( ChannelData* channel, AkaoConfig* config, u32
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0xfc] = h(hu[channel + 0xfc]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xfc] = h(hu[channel + 0xfc]);
     }
 }
 
@@ -350,8 +348,7 @@ void system_akao_opcode_af_set_sl( ChannelData* channel, AkaoConfig* config, u32
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0xfe] = h(hu[channel + 0xfe]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xfe] = h(hu[channel + 0xfe]);
     }
 }
 
@@ -375,8 +372,7 @@ void system_akao_opcode_b1_set_sr( ChannelData* channel, AkaoConfig* config, u32
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0x100] = h(hu[channel + 0x100]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0x100] = h(hu[channel + 0x100]);
     }
 }
 
@@ -393,8 +389,7 @@ void system_akao_opcode_b2_set_rr( ChannelData* channel, AkaoConfig* config, u32
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0x102] = h(hu[channel + 0x102]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0x102] = h(hu[channel + 0x102]);
     }
 }
 
@@ -424,15 +419,14 @@ void system_akao_opcode_b3_reset_adsr( ChannelData* channel, AkaoConfig* config,
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V1 = w[channel + 0x24];
-        [0x80096608 + V1 * 0x108 + 0xec] = w(w[channel + 0xec]);
-        [0x80096608 + V1 * 0x108 + 0xf0] = w(w[channel + 0xf0]);
-        [0x80096608 + V1 * 0x108 + 0xf4] = w(w[channel + 0xf4]);
-        [0x80096608 + V1 * 0x108 + 0xfa] = h(hu[channel + 0xfa]);
-        [0x80096608 + V1 * 0x108 + 0xfc] = h(hu[channel + 0xfc]);
-        [0x80096608 + V1 * 0x108 + 0xfe] = h(hu[channel + 0xfe]);
-        [0x80096608 + V1 * 0x108 + 0x100] = h(hu[channel + 0x100]);
-        [0x80096608 + V1 * 0x108 + 0x102] = h(hu[channel + 0x102]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xec] = w(w[channel + 0xec]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xf0] = w(w[channel + 0xf0]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xf4] = w(w[channel + 0xf4]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xfa] = h(hu[channel + 0xfa]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xfc] = h(hu[channel + 0xfc]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xfe] = h(hu[channel + 0xfe]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0x100] = h(hu[channel + 0x100]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0x102] = h(hu[channel + 0x102]);
     }
 }
 
@@ -520,8 +514,7 @@ void system_akao_opcode_b7_attack_mode( ChannelData* channel, AkaoConfig* config
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0xec] = w(w[channel + 0xec]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xec] = w(w[channel + 0xec]);
     }
 }
 
@@ -589,8 +582,7 @@ void system_akao_opcode_bb_sustain_mode( ChannelData* channel, AkaoConfig* confi
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0xf0] = w(w[channel + 0xf0]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xf0] = w(w[channel + 0xf0]);
     }
 }
 
@@ -643,8 +635,7 @@ void system_akao_opcode_bf_release_mode( ChannelData* channel, AkaoConfig* confi
 
     if( w[channel + 0x38] & 0x00000100 )
     {
-        V0 = w[channel + 0x24];
-        [0x80096608 + V0 * 0x108 + 0xf4] = w(w[channel + 0xf4]);
+        [0x80096608 + channel->over_voice_id * 0x108 + 0xf4] = w(w[channel + 0xf4]);
     }
 }
 
@@ -994,20 +985,14 @@ void system_akao_opcode_dc_fix_note_length( ChannelData* channel, AkaoConfig* co
     u32 akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    length_to_add = b[akao];
-    if( length_to_add != 0 )
+    s16 length = b[akao];
+    if( length != 0 )
     {
-        length_to_add += h[channel + 0xc2];
-        if( length_to_add <= 0 )
-        {
-            length_to_add = 0x1;
-        }
-        else if( length_to_add >= 0x100 )
-        {
-            length_to_add = 0xff;
-        }
+        length += channel->length_stored;
+        length = (length <= 0) ? 0x1 : length;
+        length = (length >= 0x100) ? 0xff : length;
     }
-    [channel + 0xc4] = h(length_to_add); // pause multiplier
+    channel->length_fixed = length;
 }
 
 
@@ -1063,7 +1048,7 @@ void system_akao_opcode_e8_tempo( ChannelData* channel, AkaoConfig* config, u32 
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    [config + 0x18] = w((bu[akao + 0x1] << 0x18) | (bu[akao + 0x0] << 0x10));
+    [config + 0x18] = w(hu[akao] << 0x10);
     [config + 0x48] = h(0);
 }
 
@@ -1090,7 +1075,7 @@ void system_akao_opcode_ea_reverb_depth( ChannelData* channel, AkaoConfig* confi
     channel->seq = akao + 0x2;
 
     [config + 0x38] = w(w[config + 0x38] | 0x00000080);
-    [config + 0x40] = w((bu[akao + 0x1] << 0x18) | (bu[akao + 0x0] << 0x10));
+    [config + 0x40] = w(hu[akao] << 0x10);
     [config + 0x50] = h(0);
 }
 
@@ -1253,42 +1238,43 @@ void system_akao_opcode_f3( ChannelData* channel, AkaoConfig* config, u32 mask )
 // Used in the song "Anxious Heart".
 void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    if( w[channel + 0x38] & 0x00000100 )
+    u32 over_voice_id;
+    u32 over_mask = 0x1;;
+
+    if( w[channel + 0x38] & 0x00000100 ) // if overlay already used
     {
-        S0 = hu[channel + 0x24];
+        over_voice_id = channel->over_voice_id;
 
-        V1 = w[channel + 0x24];
+        V1 = channel->over_voice_id;
         if( V1 >= 0x18 ) V1 -= 0x18;
-
-        A2 = 1 << V1;
+        over_mask <<= V1;
     }
     else
     {
-        S0 = (0 - (0 < w[0x80062f04])) & 0x18;
+        over_voice_id = ( w[0x80062f04] > 0 ) ? 0x18 : 0;
 
-        A2 = 0x1;
-        while( ( w[config + 0x4] | w[config + 0x24] | w[config + 0x28] ) & A2 )
+        while( ( w[config + 0x4] | w[config + 0x24] | w[config + 0x28] ) & over_mask )
         {
-            A2 <<= 0x1;
+            over_mask <<= 0x1;
 
-            if( ( A2 & 0x00ffffff ) == 0 ) return;
+            if( ( over_mask & 0x00ffffff ) == 0 ) return;
 
-            S0 += 0x1;
+            over_voice_id += 0x1;
         }
     }
 
-    if( A2 & 0x00ffffff )
+    if( over_mask & 0x00ffffff )
     {
         u32 akao = channel->seq;
         channel->seq = akao + 0x2;
 
-        [config + 0x24] = w(w[config + 0x24] | A2);
+        [config + 0x24] = w(w[config + 0x24] | over_mask);
 
-        [channel + 0x24] = w(S0 & 0xffff);
+        channel->over_voice_id = over_voice_id;
         [channel + 0x38] = w(w[channel + 0x38] | 0x00000100);
 
         system_akao_instr_init( channel, bu[akao + 0x0] );
-        system_akao_instr_init( 0x80096608 + w[channel + 0x24] * 0x108, bu[akao + 0x1]);
+        system_akao_instr_init( 0x80096608 + channel->over_voice_id * 0x108, bu[akao + 0x1]);
     }
 }
 
@@ -1296,7 +1282,7 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
 
 void system_akao_opcode_f5_overlay_voice_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    V1 = hu[channel + 0x24];
+    V1 = channel->over_voice_id;
     if( w[0x80062f04] != 0 ) V1 -= 0x18;
 
     if( w[channel + 0x38] & 0x00000100 )

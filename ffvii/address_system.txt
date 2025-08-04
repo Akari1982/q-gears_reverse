@@ -162,12 +162,14 @@
     +34 [][][][] 8004602C function.
     +38 [][][][] 800450E0 function.
     +3c [][][][] 80046168 function.
-80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
+0x80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
-80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).
+0x80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).
 
-80062fa0
-80062d44 GP
+0x80062f04 [][][][] ???
+
+0x80062fa0
+0x80062d44 GP
     + 1c            [][]     first pad start button delay (0 - delay, 1 - fast)
     + 1e            [][]     second pad start button delay (0 - delay, 1 - fast)
     + 20            [][]     first pad repeat button delay time (f/3).
@@ -571,7 +573,7 @@
                     0x00000008 - add when we save script pointer using system_akao_opcode_ec_drum_mode_on().
                     0x00000010 - update pitch. We update from +0xf8 from previous channel.
                     0x00000020 - use prev channel pitch for volume mod.
-                    0x00000100 - ???
+                    0x00000100 - overlay used.
                     0x00000200 - alt voice used.
                     0x00000400 - ???.
     +03c [][]     ???
@@ -731,8 +733,8 @@
     +18 [][][][] tempo of music. Used as >> 0x10.
     +1c [][][][] tempo music increment.
     +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
-    +24 [][][][] some channels mask.
-    +28 [][][][] alt voice mask.
+    +24 [][][][] overlay voices mask.
+    +28 [][][][] alt voices mask.
     +2c [][][][] some channels mask.
     +38 [][][][] spu config update flags.
                     0x00000010 - update noise clock frequency.
