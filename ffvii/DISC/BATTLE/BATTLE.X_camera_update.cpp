@@ -129,44 +129,32 @@ system_gte_rot_trans();
 
 A0 = S0; // matrix to scale
 A1 = 800e7d20; // scale vector
-battle_update_matrix_with_scale_and_set_to_gte; // scale matrix and set it to gte
+battle_update_matrix_with_scale_and_set_to_gte(); // scale matrix and set it to gte
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// funcbb804()
-
-if( ( hu[8016376a] & 0020 ) == 0 )
+void funcbb804()
 {
-    A0 = 77e7;
-    A1 = 1000;
-    A2 = 801d0000;
-    A3 = 800bb89c;
-    800BB82C	jal    $80033e34
+    if( (hu[0x8016376a] & 0x0020) == 0 )
+    {
+        system_cdrom_start_load_file( 0x77e7, 0x1000, 0x801d0000, 0x800bb89c ); // funcbb89c()
+        battle_cdrom_read_chain();
+    }
+    else
+    {
+        [0x80163b80] = h(0);
+        [0x800fa6b8] = h(0);
+    }
+}
 
+
+
+void funcbb864()
+{
+    system_cdrom_start_load_file( 0x77e6, 0x800, 0x801d0000, 0x800bb89c ); // funcbb89c()
     battle_cdrom_read_chain();
 }
-else
-{
-    [80163b80] = h(0);
-    [800fa6b8] = h(0);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funcbb864()
-
-A0 = 77e6;
-A1 = 0800;
-A2 = 801d0000;
-A3 = 800bb89c;
-800BB87C	jal    $80033e34
-
-battle_cdrom_read_chain();
-////////////////////////////////
 
 
 
@@ -254,7 +242,7 @@ void funcbba40( A0 )
 {
     [0x8009a000] = h(0x20);
     [0x8009a004] = w(0x40);
-    [0x8009a008] = w(A0 & ffff);
+    [0x8009a008] = w(A0 & 0xffff);
     system_akao_execute();
 }
 
@@ -5993,33 +5981,32 @@ Lc2fcc:	; 800C2FCC
 
 
 
-////////////////////////////////
-// funcc2fd4()
-
-A2 = A2 & 00ff;
-if( A2 != 0 )
+void funcc2fd4()
 {
-    V1 = A0;
-    [8009a000] = h(2a);
-    V0 = V1 & 00ff;
-    V1 = hu[801516fc + V0 * 8 + 0];
-    A0 = 66666667;
-    V1 = V1 << 10;
-    V0 = V1 >> 10;
-    800C301C	mult   v0, a0
-    V0 = A1 << 10;
-    V0 = V0 >> 10;
-    V1 = V1 >> 1f;
-    [8009a008] = w(V0);
-    800C3034	mfhi   v0
-    V0 = V0 >> 01;
-    V0 = V0 - V1;
-    V0 = V0 << 01;
-    V0 = V0 & 007e;
-    [8009a004] = w(V0);
-    system_akao_execute();
+    A2 = A2 & 00ff;
+    if( A2 != 0 )
+    {
+        V1 = A0;
+        [0x8009a000] = h(0x2a);
+        V0 = V1 & 00ff;
+        V1 = hu[801516fc + V0 * 8 + 0];
+        A0 = 66666667;
+        V1 = V1 << 10;
+        V0 = V1 >> 10;
+        800C301C	mult   v0, a0
+        V0 = A1 << 10;
+        V0 = V0 >> 10;
+        V1 = V1 >> 1f;
+        [8009a008] = w(V0);
+        800C3034	mfhi   v0
+        V0 = V0 >> 01;
+        V0 = V0 - V1;
+        V0 = V0 << 01;
+        V0 = V0 & 007e;
+        [8009a004] = w(V0);
+        system_akao_execute();
+    }
 }
-////////////////////////////////
 
 
 

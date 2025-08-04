@@ -9658,6 +9658,10 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x0F SPECIAL
 
+events_data = w[0x8009c6dc];
+actor_id_cur = bu[0x800722c4];
+script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
 if( bu[8009d820] & 3 )
 {
     A0 = 800a0e78; // "spcal"
@@ -9788,27 +9792,12 @@ fd 8 800D227C
     }
     break;
 
-    case fb:
+    case 0xfb: // btlck
     {
-        if( bu[8009d820] & 3 )
-        {
-            A0 = 800a0ea0; // "btlck"
-            A1 = 2;
-            field_debug_event_opcode();
-        }
+        if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "btlck", 0x2 );
 
-        V0 = 800831fc;
-        A0 = bu[800722c4];
-        A1 = w[8009c6dc];
-        A0 = A0 << 01;
-        A0 = A0 + V0;
-        V1 = hu[A0 + 0000];
-        800D23CC	nop
-        A1 = A1 + V1;
-        V1 = hu[A0 + 0000];
-        A1 = bu[A1 + 0002];
-        [A0 + 0000] = h(V1 + 3);
-        [80071e30] = b(A1);
+        [0x80071e30] = b(bu[events_data + script_cur + 0x2]);
+        [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
         return 0;
     }
     break;

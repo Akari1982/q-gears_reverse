@@ -697,7 +697,7 @@ funcb91cc();
 
 [80151694] = h(hu[8016375a]);
 
-800B851C	jal    funcb85e0 [$800b85e0]
+funcb85e0();
 
 A0 = h[800f8370]; // camera id to use
 A1 = bu[801590cc]; // attacker id
@@ -737,11 +737,11 @@ V0 = 0064;
 800B85F0	beq    v1, v0, Lb86bc [$800b86bc]
 
 V0 = hu[800fa6b8];
-800B8600	nop
+
 800B8604	beq    v0, zero, Lb86bc [$800b86bc]
-800B8608	nop
-800B860C	jal    funcbb804 [$800bb804]
-800B8610	nop
+
+funcbb804();
+
 V0 = 0005;
 [80163c7c] = b(V0);
 800B8620	jal    funcd8b2c [$800d8b2c]
@@ -807,26 +807,21 @@ battle_queue1_camera_init();
 
 
 Lb8734:	; 800B8734
-V0 = bu[801590d8];
-800B873C	nop
-800B8740	bne    v0, zero, Lb8770 [$800b8770]
-800B8744	nop
-V0 = hu[80163b80];
-800B8750	nop
-800B8754	beq    v0, zero, Lb8770 [$800b8770]
-800B8758	nop
-800B875C	jal    funcbb864 [$800bb864]
-800B8760	nop
-V0 = 0001;
-[801590d8] = b(V0);
+if( bu[0x801590d8] == 0 )
+{
+    if( hu[0x80163b80] != 0 )
+    {
+        funcbb864();
 
-Lb8770:	; 800B8770
+        [0x801590d8] = b(0x1);
+    }
+}
+
 V1 = bu[800f9d9c];
-V0 = 0064;
+V0 = 0x64;
 800B877C	beq    v1, v0, Lb887c [$800b887c]
-800B8780	nop
+
 V0 = hu[800707be];
-800B878C	nop
 V0 = V0 & 0008;
 800B8794	beq    v0, zero, Lb887c [$800b887c]
 A1 = 0;
