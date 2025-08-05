@@ -49,33 +49,30 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
         }
 
         config->noise_mask &= mask ^ 0x00ffffff;
-        [config + 0x30] = w(w[config + 0x30] & (mask ^ 0x00ffffff));
-        [config + 0x34] = w(w[config + 0x34] & (mask ^ 0x00ffffff));
+        config->reverb_mask &= mask ^ 0x00ffffff;
+        config->pitch_lfo_mask &= mask ^ 0x00ffffff;
 
         if( w[channel + 0x38] & 0x00000100 )
         {
             V1 = channel->over_voice_id;
-            if( w[0x80062f04] != 0 )
-            {
-                V1 -= 0x18;
-            }
-            [config + 0x24] = w(w[config + 0x24] & ~(1 << V1));
+            if( w[0x80062f04] != 0 ) V1 -= 0x18;
+            config->over_mask &= ~(1 << V1);
         }
 
         if( w[channel + 0x38] & 0x00000200 ) // alt voice used
         {
-            [config + 0x28] = w(w[config + 0x28] & ~(1 << channel->alt_voice_id));
+            config->alt_mask &= ~(1 << channel->alt_voice_id);
         }
     }
     else
     {
         g_channels_3_active_mask &= mask ^ 0x00ff0000;
         g_channels_3_noise_mask &= mask ^ 0x00ff0000;
-        [0x80099ff0] = w(w[0x80099ff0] & (mask ^ 0x00ff0000));
-        [0x80099ff4] = w(w[0x80099ff4] & (mask ^ 0x00ff0000));
+        g_channels_3_reverb_mask &= mask ^ 0x00ff0000;
+        g_channels_3_pitch_lfo_mask &= mask ^ 0x00ff0000;
         [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] & (~mask));
         [0x8009a104 + 0xc] = w(w[0x8009a104 + 0xc] & (~mask));
-        [0x8009a104 + 0x10] = w(w[0x8009a104 + 0x10] & (~mask));
+        g_channels_1_config.off_mask &= ~mask;
 
         V1 = channel->alt_voice_id;
         [0x80096608 + V1 * 0x108 + 0xe0] = w(w[0x80096608 + V1 * 0x108 + 0xe0] | 0x0001ff80);
@@ -105,7 +102,7 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
 
     if( w[channel + 0x38] & 0x00000100 ) // if overlay voice used
     {
-        [config + 0x24] = w(w[config + 0x24] & ~(0x1 << over_voice_id))
+        config->over_mask &= ~(0x1 << over_voice_id);
         [channel + 0x38] = w(w[channel + 0x38] & 0xfffffeff)
     }
 
@@ -670,11 +667,11 @@ void system_akao_opcode_c2_reverb_on( ChannelData* channel, AkaoConfig* config, 
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x30] = w(w[config + 0x30] | mask);
+        config->reverb_mask |= mask;
     }
     else
     {
-        [0x80099ff0] = w(w[0x80099ff0] | mask);
+        g_channels_3_reverb_mask |= mask;
     }
 
     system_akao_update_reverb_voices();
@@ -687,11 +684,11 @@ void system_akao_opcode_c3_reverb_off( ChannelData* channel, AkaoConfig* config,
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x30] = w(w[config + 0x30] & ~mask);
+        config->reverb_mask &= ~mask;
     }
     else
     {
-        [0x80099ff0] = w(w[0x80099ff0] & ~mask);
+        g_channels_3_reverb_mask &= ~mask;
     }
 
     system_akao_update_reverb_voices();
@@ -742,13 +739,13 @@ void system_akao_opcode_c6_frequency_modulation_on( ChannelData* channel, AkaoCo
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x34] = w(w[config + 0x34] | mask);
+        config->pitch_lfo_mask |= mask;
     }
     else
     {
         if( ( mask & 0x00555555 ) == 0 )
         {
-            [0x80099ff4] = w(w[0x80099ff4] | mask);
+            g_channels_3_pitch_lfo_mask |= mask;
         }
     }
 
@@ -761,11 +758,11 @@ void system_akao_opcode_c7_frequency_modulation_off( ChannelData* channel, AkaoC
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x34] = w(w[config + 0x34] & ~mask);
+        config->pitch_lfo_mask &= ~mask;
     }
     else
     {
-        [0x80099ff4] = w(w[0x80099ff4] & ~mask);
+        g_channels_3_pitch_lfo_mask &= ~mask;
     }
 
     system_akao_update_pitch_lfo_voices();
@@ -1048,8 +1045,8 @@ void system_akao_opcode_e8_tempo( ChannelData* channel, AkaoConfig* config, u32 
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    [config + 0x18] = w(hu[akao] << 0x10);
-    [config + 0x48] = h(0);
+    config->tempo = hu[akao] << 0x10;
+    config->tempo_slide_steps = 0;
 }
 
 
@@ -1059,12 +1056,12 @@ void system_akao_opcode_e9_tempo_slide( ChannelData* channel, AkaoConfig* config
     u32 akao = channel->seq;
     channel->seq = akao + 0x3;
 
-    length = bu[akao + 0x0];
-    if( length == 0 ) length = 0x100;
-    [config + 0x48] = h(length);
+    u16 steps = bu[akao + 0x0];
+    if( steps == 0 ) steps = 0x100;
+    config->tempo_slide_steps = steps;
 
-    [config + 0x18] = w(w[config + 0x18] & 0xffff0000);
-    [config + 0x1c] = w(((hu[akao + 0x1] << 0x10) - w[config + 0x18]) / hu[config + 0x48]);
+    config->tempo &= 0xffff0000;
+    config->tempo_slide_step = ((hu[akao + 0x1] << 0x10) - config->tempo) / steps;
 }
 
 
@@ -1075,8 +1072,8 @@ void system_akao_opcode_ea_reverb_depth( ChannelData* channel, AkaoConfig* confi
     channel->seq = akao + 0x2;
 
     [config + 0x38] = w(w[config + 0x38] | 0x00000080);
-    [config + 0x40] = w(hu[akao] << 0x10);
-    [config + 0x50] = h(0);
+    config->reverb_depth = hu[akao] << 0x10;
+    config->reverb_depth_slide_steps = 0;
 }
 
 
@@ -1086,12 +1083,12 @@ void system_akao_opcode_eb_reverb_depth_slide( ChannelData* channel, AkaoConfig*
     u32 akao = channel->seq;
     channel->seq = akao + 0x3;
 
-    length = bu[akao + 0x0];
-    if( length == 0 ) length = 0x100;
-    [config + 0x50] = h(length);
+    u16 steps = bu[akao + 0x0];
+    if( steps == 0 ) steps = 0x100;
+    config->reverb_depth_slide_steps = steps;
 
-    [config + 0x40] = w(w[config + 0x40] & 0xffff0000);
-    [config + 0x44] = w(((bu[akao + 0x2] << 18) | (bu[akao + 0x1] << 0x10) - w[config + 0x40]) / hu[config + 0x50]);
+    config->reverb_depth &= 0xffff0000;
+    config->reverb_depth_slide_step = ((hu[akao + 0x1] << 0x10) - config->reverb_depth) / steps;
 
 }
 
@@ -1251,9 +1248,9 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
     }
     else
     {
-        over_voice_id = ( w[0x80062f04] > 0 ) ? 0x18 : 0;
+        over_voice_id = (w[0x80062f04] > 0) ? 0x18 : 0;
 
-        while( ( config->active_mask | w[config + 0x24] | w[config + 0x28] ) & over_mask )
+        while( ( config->active_mask | config->over_mask | config->alt_mask ) & over_mask )
         {
             over_mask <<= 0x1;
 
@@ -1268,7 +1265,7 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
         u32 akao = channel->seq;
         channel->seq = akao + 0x2;
 
-        [config + 0x24] = w(w[config + 0x24] | over_mask);
+        config->over_mask |= over_mask;
 
         channel->over_voice_id = over_voice_id;
         [channel + 0x38] = w(w[channel + 0x38] | 0x00000100);
@@ -1282,13 +1279,13 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
 
 void system_akao_opcode_f5_overlay_voice_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    V1 = channel->over_voice_id;
-    if( w[0x80062f04] != 0 ) V1 -= 0x18;
+    u32 over_voice_id = channel->over_voice_id;
+    if( w[0x80062f04] != 0 ) over_voice_id -= 0x18;
 
     if( w[channel + 0x38] & 0x00000100 )
     {
         [channel + 0x38] = w(w[channel + 0x38] & 0xfffffeff);
-        [config + 0x24] = w(w[config + 0x24] & ~(1 << V1));
+        config->over_mask &= ~(1 << over_voice_id);
     }
 }
 
@@ -1340,7 +1337,7 @@ void system_akao_opcode_f8_alt_voice_on( ChannelData* channel, AkaoConfig* confi
     {
         u8 channel_id = 0;
         u32 channel_mask = 0x1;
-        u32 channels_mask = config->active_mask | w[config + 0x24] | w[config + 0x28];
+        u32 channels_mask = config->active_mask | config->over_mask | config->alt_mask;
 
         while( channel_mask & 0x00ffffff )
         {
@@ -1352,7 +1349,7 @@ void system_akao_opcode_f8_alt_voice_on( ChannelData* channel, AkaoConfig* confi
 
         if( channel_mask & 0x00ffffff )
         {
-            [config + 0x28] = w(w[config + 0x28] | channel_mask);
+            config->alt_mask |= channel_mask;
             channel->alt_voice_id = channel_id;
             [channel + 0x38] = w(w[channel + 0x38] | 0x00000200);
         }
@@ -1363,7 +1360,7 @@ void system_akao_opcode_f8_alt_voice_on( ChannelData* channel, AkaoConfig* confi
 
 void system_akao_opcode_f9_alt_voice_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [config + 0x28] = w(w[config + 0x28] & ~(1 << channel->alt_voice_id));
+    config->alt_mask &= ~(1 << channel->alt_voice_id);
     [channel + 0x38] = w(w[channel + 0x38] & 0xfffffdff);
 
     channel->attr.rr = bu[0x80075f28 + channel->intsr_id * 0x40 + 0xc];
