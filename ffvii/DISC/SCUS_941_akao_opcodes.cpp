@@ -41,14 +41,14 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x4] = w(w[config + 0x4] & (mask ^ 0x00ffffff));
+        config->active_mask &= mask ^ 0x00ffffff;
 
-        if( w[config + 0x4] == 0 )
+        if( config->active_mask == 0 )
         {
             [config + 0x4a] = h(0);
         }
 
-        [config + 0x2c] = w(w[config + 0x2c] & (mask ^ 0x00ffffff));
+        config->noise_mask &= mask ^ 0x00ffffff;
         [config + 0x30] = w(w[config + 0x30] & (mask ^ 0x00ffffff));
         [config + 0x34] = w(w[config + 0x34] & (mask ^ 0x00ffffff));
 
@@ -70,7 +70,7 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
     else
     {
         g_channels_3_active_mask &= mask ^ 0x00ff0000;
-        [0x80099fec] = w(w[0x80099fec] & (mask ^ 0x00ff0000));
+        g_channels_3_noise_mask &= mask ^ 0x00ff0000;
         [0x80099ff0] = w(w[0x80099ff0] & (mask ^ 0x00ff0000));
         [0x80099ff4] = w(w[0x80099ff4] & (mask ^ 0x00ff0000));
         [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] & (~mask));
@@ -83,7 +83,7 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
 
     [channel + 0x38] = w(0x00000000);
 
-    [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
+    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
 
     system_akao_update_noise_voices();
     system_akao_update_reverb_voices();
@@ -704,11 +704,11 @@ void system_akao_opcode_c4_noise_on( ChannelData* channel, AkaoConfig* config, u
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x2c] = w(w[config + 0x2c] | mask);
+        config->noise_mask |= mask;
     }
     else
     {
-        [0x80099fec] = w(w[0x80099fec] | mask);
+        g_channels_3_noise_mask |= mask;
     }
     [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
 
@@ -722,11 +722,11 @@ void system_akao_opcode_c5_noise_off( ChannelData* channel, AkaoConfig* config, 
 {
     if( channel->type == AKAO_MUSIC )
     {
-        [config + 0x2c] = w(w[config + 0x2c] & ~mask);
+        config->noise_mask &= ~mask;
     }
     else
     {
-        [0x80099fec] = w(w[0x80099fec] & ~mask);
+        g_channels_3_noise_mask &= ~mask;
     }
 
     [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
@@ -1253,7 +1253,7 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
     {
         over_voice_id = ( w[0x80062f04] > 0 ) ? 0x18 : 0;
 
-        while( ( w[config + 0x4] | w[config + 0x24] | w[config + 0x28] ) & over_mask )
+        while( ( config->active_mask | w[config + 0x24] | w[config + 0x28] ) & over_mask )
         {
             over_mask <<= 0x1;
 
@@ -1340,7 +1340,7 @@ void system_akao_opcode_f8_alt_voice_on( ChannelData* channel, AkaoConfig* confi
     {
         u8 channel_id = 0;
         u32 channel_mask = 0x1;
-        u32 channels_mask = w[config + 0x4] | w[config + 0x24] | w[config + 0x28];
+        u32 channels_mask = config->active_mask | w[config + 0x24] | w[config + 0x28];
 
         while( channel_mask & 0x00ffffff )
         {

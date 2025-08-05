@@ -207,7 +207,7 @@ void system_akao_command_15( CommandData* data )
 
     [0x8009a104 + 0x4a] = h(music_id);
 
-    [0x8009a164 + 0x4] = w(0x0);
+    g_channels_2_config.active_mask = 0;
     [0x8009a164 + 0x24] = w(0x0);
     [0x8009a164 + 0x28] = w(0x0);
 }
@@ -372,7 +372,7 @@ void system_akao_command_34( CommandData* data )
 
 void system_akao_command_80( CommandData* data )
 {
-    [0x8009a104] = w(0x1);
+    [0x8009a104 + 0x0] = w(0x1);
 
     system_akao_music_volume_reset();
     system_akao_sound_volume_reset();
@@ -382,7 +382,7 @@ void system_akao_command_80( CommandData* data )
 
 void system_akao_command_81( CommandData* data )
 {
-    [0x8009a104] = w(0x2);
+    [0x8009a104 + 0x0] = w(0x2);
 
     system_akao_music_volume_reset();
     system_akao_sound_volume_reset();
@@ -392,7 +392,7 @@ void system_akao_command_81( CommandData* data )
 
 void system_akao_command_82( CommandData* data )
 {
-    [0x8009a104] = w(0x4);
+    [0x8009a104 + 0x0] = w(0x4);
 
     system_akao_music_volume_reset();
     system_akao_sound_volume_reset();
@@ -414,14 +414,14 @@ void system_akao_command_90( CommandData* data )
 
 void system_akao_command_92( CommandData* data )
 {
-    [0x8009a152] = h(hu[data + 0x4]);
+    [0x8009a104 + 0x4e] = h(hu[data + 0x4]);
 }
 
 
 
 void system_akao_command_9a( CommandData* data )
 {
-    mask = w[0x8009a118];
+    mask = w[0x8009a104 + 0x14];
     if( mask != 0 )
     {
         id = 0;
@@ -435,9 +435,9 @@ void system_akao_command_9a( CommandData* data )
             id += 1;
         }
 
-        V0 = w[0x8009a118];
-        [0x8009a118] = w(0);
-        [0x8009a108] = w(V0);
+        V0 = w[0x8009a104 + 0x14];
+        [0x8009a104 + 0x14] = w(0);
+        g_channels_1_config.active_mask = V0;
 
         system_akao_update_noise_voices();
         system_akao_update_reverb_voices();
@@ -451,9 +451,9 @@ void system_akao_command_9a( CommandData* data )
 
 void system_akao_command_9b( CommandData* data )
 {
-    if( w[0x8009a108] != 0 )
+    if( g_channels_1_config.active_mask != 0 )
     {
-        mask = (w[0x8009a108] | w[0x8009a128] | w[0x8009a12c]) & (~(g_channels_3_active_mask | w[0x80062f00]));
+        mask = (g_channels_1_config.active_mask | w[0x8009a104 + 0x24] | w[0x8009a104 + 0x28]) & (~(g_channels_3_active_mask | w[0x80062f00]));
 
         if( mask != 0 )
         {
@@ -476,9 +476,9 @@ void system_akao_command_9b( CommandData* data )
             }
         }
 
-        V0 = w[0x8009a108];
-        [0x8009a108] = w(0);
-        [0x8009a118] = w(V0);
+        u32 active_mask = g_channels_1_config.active_mask;
+        g_channels_1_config.active_mask = 0;
+        [0x8009a104 + 0x14] = w(active_mask);
     }
 
     [0x80062ff8] = w(w[0x80062ff8] | 0x00000001);
@@ -980,7 +980,7 @@ void system_akao_command_d6( CommandData* data )
 void system_akao_command_e0( CommandData* data )
 {
     [0x80062f70] = h(hu[data + 0x4] & 0x7f);
-    [0x8009a13c] = w(w[0x8009a13c] | 0x80);
+    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000080);
 }
 
 
@@ -1000,7 +1000,7 @@ void system_akao_command_e4( CommandData* data )
 
     system_akao_update_reverb_voices();
 
-    [0x8009a13c] = w(w[0x8009a13c] | 0x80);
+    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000080);
 }
 
 
@@ -1106,7 +1106,7 @@ void system_akao_command_f5( CommandData* data )
         system_akao_update_reverb_voices();
         system_akao_update_pitch_lfo_voices();
 
-        [0x8009a13c] = w(w[0x8009a13c] | 0x00000010);
+        [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
     }
 }
 

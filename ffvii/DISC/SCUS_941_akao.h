@@ -109,7 +109,7 @@ struct ChannelData
 struct ChannelConfig
 {
                                 // 0x0 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
-                                // 0x4 [][][][] used music channel mask.
+    u32 active_mask;            // 0x4
                                 // 0x8 [][][][] channels to be played mask.
                                 // 0xc [][][][] some channels mask.
                                 // 0x10 [][][][] some channels mask.
@@ -118,7 +118,7 @@ struct ChannelConfig
                                 // 0x20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
                                 // 0x24 [][][][] overlay voices mask.
                                 // 0x28 [][][][] alt voices mask.
-                                // 0x2c [][][][] noise music voices mask.
+    u32 noise_mask;             // 0x2c
                                 // 0x30 [][][][] reverb music voices mask.
                                 // 0x34 [][][][] pitch lfo music voices mask.
                                 // 0x38 [][][][] spu config update flags.
