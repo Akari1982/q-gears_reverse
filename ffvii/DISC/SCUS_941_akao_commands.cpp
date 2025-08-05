@@ -374,8 +374,8 @@ void system_akao_command_80( CommandData* data )
 {
     [0x8009a104] = w(0x1);
 
-    system_sound_reset_music_volume();
-    func2a798();
+    system_akao_music_volume_reset();
+    system_akao_sound_volume_reset();
 }
 
 
@@ -384,8 +384,8 @@ void system_akao_command_81( CommandData* data )
 {
     [0x8009a104] = w(0x2);
 
-    system_sound_reset_music_volume();
-    func2a798();
+    system_akao_music_volume_reset();
+    system_akao_sound_volume_reset();
 }
 
 
@@ -394,8 +394,8 @@ void system_akao_command_82( CommandData* data )
 {
     [0x8009a104] = w(0x4);
 
-    system_sound_reset_music_volume();
-    func2a798();
+    system_akao_music_volume_reset();
+    system_akao_sound_volume_reset();
 }
 
 
@@ -453,7 +453,7 @@ void system_akao_command_9b( CommandData* data )
 {
     if( w[0x8009a108] != 0 )
     {
-        mask = (w[0x8009a108] | w[0x8009a128] | w[0x8009a12c]) & (~(w[0x80099fcc] | w[0x80062f00]));
+        mask = (w[0x8009a108] | w[0x8009a128] | w[0x8009a12c]) & (~(g_channels_3_active_mask | w[0x80062f00]));
 
         if( mask != 0 )
         {
@@ -503,7 +503,7 @@ void system_akao_command_9c( CommandData* data )
 
         V0 = w[0x80099fdc];
         [0x80099fdc] = w(0);
-        [0x80099fcc] = w(V0);
+        g_channels_3_active_mask = V0;
 
         system_akao_update_noise_voices();
         system_akao_update_reverb_voices();
@@ -517,14 +517,14 @@ void system_akao_command_9c( CommandData* data )
 
 void system_akao_command_9d( CommandData* data )
 {
-    mask = w[0x80099fcc];
+    u32 mask = g_channels_3_active_mask;
     if( mask != 0 )
     {
         old_mask = mask;
         if( hu[0x80099e0c] == 2 ) mask &= 0xff3fffff;
 
         [0x80099fdc] = w(mask);
-        [0x80099fcc] = w(mask ^ old_mask);
+        g_channels_3_active_mask = mask ^ old_mask;
         [0x8007ec0e] = h(0);
         [0x8007ec0c] = h(0);
         [0x8007ec08] = h(0x7f);
@@ -853,7 +853,7 @@ void system_akao_command_c0( CommandData* data )
     [0x80062f44] = h(0);
     [0x80062f5c] = w((w[data + 0x4] & 0x7f) << 0x10);
 
-    system_sound_reset_music_volume();
+    system_akao_music_volume_reset();
 }
 
 
@@ -865,7 +865,7 @@ void system_akao_command_c1( CommandData* data )
     [0x80062f44] = h(A1);
     [0x80062f2c] = w((((w[data + 0x8] & 0x7f) << 0x10) - w[0x80062f5c]) / A1);
 
-    system_sound_reset_music_volume();
+    system_akao_music_volume_reset();
 }
 
 
@@ -878,7 +878,7 @@ void system_akao_command_c2( CommandData* data )
     [0x80062f5c] = w((w[data + 0x8] & 0x7f) << 0x10);
     [0x80062f2c] = w((((w[data + 0xc] & 0x7f) << 0x10) - ((w[data + 0x8] & 0x7f) << 0x10)) / A1);
 
-    system_sound_reset_music_volume();
+    system_akao_music_volume_reset();
 }
 
 
@@ -1089,7 +1089,7 @@ void system_akao_command_f5( CommandData* data )
             dst += 0x4;
         }
 
-        A3 = w[0x80099fcc];
+        A3 = g_channels_3_active_mask;
 
         dst = 0x80099fcc;
         for( int i = 0xc; i != 0; --i )
@@ -1116,7 +1116,7 @@ void system_akao_command_f8( CommandData* data )
 {
     func2cfc0( data );
 
-    [0x80099fcc] = w(w[0x80099fcc] & ~w[0x80062f00]);
+    g_channels_3_active_mask &= ~w[0x80062f00];
     [0x80099ff0] = w(w[0x80099ff0] & ~w[0x80062f00]);
 
     system_akao_update_reverb_voices();
@@ -1128,7 +1128,7 @@ void system_akao_command_f9( CommandData* data )
 {
     func2cfc0( data );
 
-    [0x80099fcc] = w(w[0x80099fcc] & ~w[0x80062f00]);
+    g_channels_3_active_mask = ~w[0x80062f00];
     [0x80099ff0] = w(w[0x80099ff0] | w[0x80062f00]);
 
     system_akao_update_reverb_voices();

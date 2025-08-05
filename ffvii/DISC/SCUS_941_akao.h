@@ -1,9 +1,9 @@
 ﻿struct VoiceAttr
 {
-    u32 voice_id;               // 0x00  0xdc id of voice
-    u32 mask;                   // 0x04  0xe0 attribute bit
-    u32 addr;                   // 0x08  0xe4 waveform data start address
-    u32 loop_addr;              // 0x0c  0xe8 loop start address
+    u32 voice_id;               // 0x0   0xdc id of voice
+    u32 mask;                   // 0x4   0xe0 attribute bit
+    u32 addr;                   // 0x8   0xe4 waveform data start address
+    u32 loop_addr;              // 0xc   0xe8 loop start address
     s32 a_mode;                 // 0x10  0xec attack rate mode
     s32 s_mode;                 // 0x14  0xf0 sustain rate mode
     s32 r_mode;                 // 0x18  0xf4 release rate mode
@@ -16,6 +16,10 @@
     s16 vol_l;                  // 0x28 0x104 left volume
     s16 vol_r;                  // 0x2a 0x106 right volume
 } ;
+
+#define AKAO_MUSIC 0
+#define AKAO_SOUND 1
+#define AKAO_MENU 2
 
 struct ChannelData
 {
@@ -44,20 +48,20 @@ struct ChannelData
                                 // 0x3d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
                                 // 0x40 [][][][] ???
     s32 volume;                 // 0x44
-    s32 vol_slide_step;         // 0x48 [][][][]
+    s32 vol_slide_step;         // 0x48
                                 // 0x4c [][][][] pitch growth. We increment pitch addition by this every frame.
                                 // 0x50 [][][][] ???.
-                                // 0x54 [][]     set to 1. Set to 2 in case of playing system sound (0x30). If this != 2 then we modify pitch by +0x3d. maybe pitch type?
+    u16 type;                   // 0x54
     u8 length_1;                // 0x56
     u8 length_2;                // 0x57
     u16 instr_id;               // 0x58
                                 // 0x5a [][]     ???
-    u16 vol_slide_steps;        // 0x5c [][]
+    u16 vol_slide_steps;        // 0x5c
                                 // 0x5e [][]     ???
-    u16 vol_pan;                // 0x60 [][]
-    u16 vol_pan_slide_steps;    // 0x62 [][]
+    u16 vol_pan;                // 0x60
+    u16 vol_pan_slide_steps;    // 0x62
                                 // 0x64 [][]     init with 0. Number of steps for pitch changes?.
-    u16 octave;                 // 0x66 [][]
+    u16 octave;                 // 0x66
                                 // 0x68 [][]     pitch slide speed.
                                 // 0x6a [][]     ???
                                 // 0x6c [][]     init with 0.
@@ -83,14 +87,14 @@ struct ChannelData
                                 // 0x9c [][]     volume pan lfo table key node index.
                                 // 0x9e [][]     init with 0.
                                 // 0xa0 [][]     init with 0.
-                                // 0xa4 [][]     init with 0.
-                                // 0xa6 [][]     init with 0.
-    u16 loop_id;                // 0xb8 [][]
-    u16 loop_times[0x4];        // 0xba [][]
-    s16 length_stored;          // 0xc2 [][]
-    s16 length_fixed;           // 0xc4 [][]
+    u16 noise_switch_delay;     // 0xa4
+    u16 pitch_lfo_switch_delay; // 0xa6
+    u16 loop_id;                // 0xb8
+    u16 loop_times[0x4];        // 0xba
+    s16 length_stored;          // 0xc2
+    s16 length_fixed;           // 0xc4
                                 // 0xc6 [][]     volume multiplier.
-    s16 vol_pan_slide_step;     // 0xca [][]
+    s16 vol_pan_slide_step;     // 0xca
                                 // 0xcc [][]     absolute transposition.
                                 // 0xce [][]     frequency multiplier.
                                 // 0xd0 [][]     pitch saved parameters.
@@ -100,4 +104,39 @@ struct ChannelData
                                 // 0xd8 [][]     volume lfo value.
                                 // 0xda [][]     volume pan lfo value.
     AkaoVoiceAttr attr;         // 0xdc
+};
+
+struct ChannelConfig
+{
+                                // 0x0 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
+                                // 0x4 [][][][] used music channel mask.
+                                // 0x8 [][][][] channels to be played mask.
+                                // 0xc [][][][] some channels mask.
+                                // 0x10 [][][][] some channels mask.
+                                // 0x18 [][][][] tempo of music. Used as >> 0x10.
+                                // 0x1c [][][][] tempo music increment.
+                                // 0x20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
+                                // 0x24 [][][][] overlay voices mask.
+                                // 0x28 [][][][] alt voices mask.
+                                // 0x2c [][][][] noise music voices mask.
+                                // 0x30 [][][][] reverb music voices mask.
+                                // 0x34 [][][][] pitch lfo music voices mask.
+                                // 0x38 [][][][] spu config update flags.
+                                //            0x00000010 - update noise clock frequency.
+                                //            0x00000080 - update reverb.
+                                // 0x3c [][][][] reverb mode.
+                                // 0x40 [][][][] reverb depth. some value we can increment this by 8009a148 if 8009a154 not 0.
+                                // 0x44 [][][][] increment for +40.
+                                // 0x48 [][]     number of steps for tempo music increase.
+                                // 0x4a [][]     AKAO music id for currently playing sequence.
+                                // 0x4c [][]     store here +4e after jump has occured.
+                                // 0x4e [][]     storage for 0xef conditional jump.
+                                // 0x50 [][]     this is number of times we need to increment +40 each update by +44.
+                                // 0x52 [][]     noise clock.
+                                // 0x54 [][]     ???
+                                // 0x56 [][]     upper timer equal value.
+                                // 0x58 [][]     upper timer value. When this reach +56 then we reset this to 0 and increment +5e. Stored in CHMPH opcode.
+                                // 0x5a [][]     lower timer equal value.
+                                // 0x5c [][]     lower timer value. When this equal to +5a then we reset this to 0 and increment +58.
+                                // 0x5e [][]     top timer. Stored in CHMPH opcode.
 };

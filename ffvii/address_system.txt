@@ -618,8 +618,8 @@
     +09c [][]     volume pan lfo table key node index.
     +09e [][]     init with 0.
     +0a0 [][]     init with 0.
-    +0a4 [][]     init with 0.
-    +0a6 [][]     init with 0.
+    +0a4 [][]     noise switch delay.
+    +0a6 [][]     pitch lfo switch delay.
     +0b8 [][]     index of last saved loop point (0-3). init with 0.
     +0ba [][]     something for loop point 0. Set to 0 when save loop point.
     +0bc [][]     something for loop point 1. Set to 0 when save loop point.
@@ -674,14 +674,14 @@
     +104 [][]     left volume.
     +106 [][]     right volume.
 
-0x80099fcc [][][][] some channel mask. Add here channels with scripts to run. We update only this channels starting from 0x00010000
+0x80099fcc [][][][] mask of used sound channels.
 0x80099fd0 [][][][] some channel mask. Remove from here channels we want to start sound.
 0x80099fd4 [][][][] some channel mask. Remove from here channels we want to start sound.
 0x80099fd8 [][][][] some channel mask. Add here channels we want to start sound.
 0x80099fdc [][][][] some channel mask. Remove from here channels we want to start sound.
-0x80099fec [][][][] noise voices mask.
-0x80099ff0 [][][][] reverb voices mask.
-0x80099ff4 [][][][] pitch lfo voices mask.
+0x80099fec [][][][] noise soind voices mask.
+0x80099ff0 [][][][] reverb sound voices mask.
+0x80099ff4 [][][][] pitch lfo sound voices mask.
 0x80099ffa [][]     noise clock.
 
 
@@ -726,7 +726,7 @@
 
 0x8009a104 start of akao channels config
     + 0 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
-    + 4 [][][][] active music channel mask.
+    + 4 [][][][] used music channel mask.
     + 8 [][][][] channels to be played mask.
     + c [][][][] some channels mask.
     +10 [][][][] some channels mask.
@@ -735,7 +735,9 @@
     +20 [][][][] tempo music counter. If this & 0xffff0000 then we update akao sequence.
     +24 [][][][] overlay voices mask.
     +28 [][][][] alt voices mask.
-    +2c [][][][] some channels mask.
+    +2c [][][][] noise music voices mask.
+    +30 [][][][] reverb music voices mask.
+    +34 [][][][] pitch lfo music voices mask.
     +38 [][][][] spu config update flags.
                     0x00000010 - update noise clock frequency.
                     0x00000080 - update reverb.
@@ -779,7 +781,7 @@
     +  0 [][][][] store here which reverb channel to update (6 - left and right) in spu update.
     +  8 [][]     store here reverb depth left in spu update.
     +  a [][]     store here reverb depth right in spu update.
-
+0x8009c578 stored SpuCommonAttr.
 0x8009c5a0 array of some volume mod for channels. (0xc size 0x18 items)
     + 0 [][][][] value.
     + 4 [][][][] step.
