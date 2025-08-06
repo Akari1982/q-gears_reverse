@@ -469,6 +469,8 @@
 0x80077f28 [][][][] mask of channels we put voice on (auto spu).
 0x80077f2c [][][][] mask of channels we put voice off (auto spu).
 
+0x8007ebe4 default AkaoVoiceAttr.
+
 0x8007ec10 copy of 0x80096608 or 0x80097ec8 music channels.
 
 8007eaac array of two global DRAWENV (0x2 items 0x5c size).
@@ -556,7 +558,7 @@
     +008 [][][][] loop point 1.
     +00c [][][][] loop point 2.
     +010 [][][][] loop point 3.
-    +014 [][][][] pointer to mask for AKAO channels in 0x80083580.
+    +014 [][][][] drum offset.
     +018 [][][][] address into wave table for frequency lfo.
     +01c [][][][] address into wave table for volume lfo.
     +020 [][][][] address into wave table for volume pan lfo.

@@ -1,14 +1,18 @@
-﻿ChannelData g_channels_1[0x18];     // 0x80096608
-ChannelConfig g_channels_1_config;  // 0x8009a104
-ChannelData g_channels_2[0x18];     // 0x80097ec8
-ChannelConfig g_channels_2_config;  // 0x8009a164
-ChannelData g_channels_3[0x8];      // 0x80099788
-u32 g_channels_3_active_mask;       // 0x80099fcc
-u32 g_channels_3_noise_mask;        // 0x80099fec
-u32 g_channels_3_reverb_mask;       // 0x80099ff0
-u32 g_channels_3_pitch_lfo_mask;    // 0x80099ff4
-SpuCommonAttr g_spu_common_attr;    // 0x8009c578
-SpuReverbAttr g_spu_reverb_attr;    // 0x8009c564
+﻿ChannelData g_channels_1[0x18];         // 0x80096608
+ChannelConfig g_channels_1_config;      // 0x8009a104
+ChannelData g_channels_2[0x18];         // 0x80097ec8
+ChannelConfig g_channels_2_config;      // 0x8009a164
+ChannelData g_channels_3[0x8];          // 0x80099788
+u32 g_channels_3_on_mask;               // 0x80099fd0
+u32 g_channels_3_off_mask;              // 0x80099fd8
+u32 g_channels_3_active_mask;           // 0x80099fcc
+u32 g_channels_3_active_mask_stored;    // 0x80099fdc
+u32 g_channels_3_noise_mask;            // 0x80099fec
+u32 g_channels_3_reverb_mask;           // 0x80099ff0
+u32 g_channels_3_pitch_lfo_mask;        // 0x80099ff4
+SpuCommonAttr g_spu_common_attr;        // 0x8009c578
+SpuReverbAttr g_spu_reverb_attr;        // 0x8009c564
+AkaoVoiceAttr g_akao_voice_attr;        // 0x8007ebe4
 
 // 0x80049c28
 const u16 g_akao_length_table[ 0xb ] =
@@ -89,10 +93,10 @@ void system_akao_init_data()
 
     // masks
     g_channels_3_active_mask = 0;
-    [0x80099fd0] = w(0);
+    g_channels_3_on_mask = 0;
     [0x80099fd4] = w(0);
-    [0x80099fd8] = w(0);
-    [0x80099fdc] = w(0);
+    g_channels_3_off_mask = 0;
+    g_channels_3_active_mask_stored = 0;
     [0x80099fe0] = w(0x66a80000);
     [0x80099fe8] = w(1);
     g_channels_3_noise_mask = 0;
@@ -102,16 +106,16 @@ void system_akao_init_data()
     // akao channels config
     [0x8009a104 + 0x0] = w(1); // 0x01- stereo
     g_channels_1_config.active_mask = 0;
-    [0x8009a104 + 0x8] = w(0);
+    g_channels_1_config.on_mask = 0;
     [0x8009a104 + 0xc] = w(0);
     g_channels_1_config.off_mask = 0;
     [0x8009a104 + 0x14] = w(0);
     g_channels_1_config.noise_mask = 0;
     g_channels_1_config.reverb_mask = 0;
     g_channels_1_config.pitch_lfo_mask = 0;
-    [0x8009a104 + 0x3c] = w(0);
+    g_channels_1_config.reverb_mode = 0;
     g_channels_1_config.reverb_depth = 0;
-    [0x8009a104 + 0x4a] = h(0);
+    g_channels_1_config.music_id = 0;
     g_channels_1_config.reverb_depth_slide_steps = 0;
     [0x8009a104 + 0x56] = h(0);
     [0x8009a104 + 0x58] = h(0);
@@ -119,7 +123,7 @@ void system_akao_init_data()
     [0x8009a104 + 0x5e] = h(0);
 
     g_channels_2_config.active_mask = 0;
-    [0x8009a164 + 0x4a] = h(0);
+    g_channels_2_config.music_id = 0;
 
     g_spu_common_attr.mask = 0x00003fcf;
     g_spu_common_attr.mvol.left = 0x3fff;
@@ -284,12 +288,36 @@ void func29a50()
 
     if( w[0x80062f00] & 0x00010000 )
     {
-        [0x80096608 + 0x10 * 0x108 + 0xe0] = w(0x0001ff93);
+        g_channels_1[0x10].attr.mask = SPU_VOICE_VOLL |
+                                       SPU_VOICE_VOLR |
+                                       SPU_VOICE_PITCH |
+                                       SPU_VOICE_WDSA |
+                                       SPU_VOICE_ADSR_AMODE |
+                                       SPU_VOICE_ADSR_SMODE |
+                                       SPU_VOICE_ADSR_RMODE |
+                                       SPU_VOICE_ADSR_AR |
+                                       SPU_VOICE_ADSR_DR |
+                                       SPU_VOICE_ADSR_SR |
+                                       SPU_VOICE_ADSR_RR |
+                                       SPU_VOICE_ADSR_SL |
+                                       SPU_VOICE_LSAX;
     }
 
     if( w[0x80062f00] & 0x00020000 )
     {
-        [0x80096608 + 0x11 * 0x108 + 0xe0] = w(0x0001ff93);
+        g_channels_1[0x11].attr.mask = SPU_VOICE_VOLL |
+                                       SPU_VOICE_VOLR |
+                                       SPU_VOICE_PITCH |
+                                       SPU_VOICE_WDSA |
+                                       SPU_VOICE_ADSR_AMODE |
+                                       SPU_VOICE_ADSR_SMODE |
+                                       SPU_VOICE_ADSR_RMODE |
+                                       SPU_VOICE_ADSR_AR |
+                                       SPU_VOICE_ADSR_DR |
+                                       SPU_VOICE_ADSR_SR |
+                                       SPU_VOICE_ADSR_RR |
+                                       SPU_VOICE_ADSR_SL |
+                                       SPU_VOICE_LSAX;
     }
 
     [0x80062f00] = w(0);
@@ -309,7 +337,7 @@ void system_akao_set_reverb_mode( s32 mode )
 
     if( g_spu_reverb_attr.mode != mode )
     {
-        [0x8009a104 + 0x3c] = w(mode);
+        g_channels_1_config.reverb_mode = mode;
 
         system_psyq_spu_set_reverb( SPU_OFF );
 
@@ -380,7 +408,7 @@ void system_akao_music_channels_init()
     u32 akao = 0x80083580 + 0x4;
 
     g_channels_1_config.active_mask = channels_mask;
-    [0x8009a104 + 0x8] = w(0);
+    g_channels_1_config.on_mask = 0;
     [0x8009a104 + 0xc] = w(0);
     g_channels_1_config.off_mask |= 0x00ffffff;
     g_channels_1_config.tempo = 0xffff0000;
@@ -415,7 +443,7 @@ void system_akao_music_channels_init()
 
             system_akao_instr_init( channel, 0x14 );
 
-            [channel + 0x14] = w(0x80083580);
+            channel->drum_offset = 0x80083580;
             [channel + 0x34] = w(0);
             [channel + 0x38] = w(0);
             channel->volume = 0x3fff0000;
@@ -470,7 +498,7 @@ void system_akao_music_stop_channels_1()
     if( g_channels_1_config.active_mask != 0 )
     {
         g_channels_1_config.active_mask |= g_channels_1_config.over_mask | g_channels_1_config.alt_mask;
-        [0x8009a104 + 0x8] = w(0);
+        g_channels_1_config.on_mask = 0;
         [0x8009a104 + 0xc] = w(0);
         g_channels_1_config.over_mask = 0;
         g_channels_1_config.alt_mask = 0;
@@ -502,7 +530,7 @@ void system_akao_music_stop_channels_1_2()
     if( g_channels_1_config.active_mask != 0 )
     {
         g_channels_1_config.active_mask |= g_channels_1_config.over_mask | g_channels_1_config.alt_mask;
-        [0x8009a104 + 0x8] = w(0);
+        g_channels_1_config.on_mask = 0;
         [0x8009a104 + 0xc] = w(0);
         g_channels_1_config.over_mask = 0;
         g_channels_1_config.alt_mask = 0;
@@ -528,7 +556,7 @@ void system_akao_music_stop_channels_1_2()
     if( g_channels_2_config.active_mask != 0 )
     {
         g_channels_2_config.active_mask |= g_channels_2_config.over_mask | g_channels_2_config.alt_mask;
-        [0x8009a164 + 0x8] = w(0);
+        g_channels_2_config.on_mask = 0;
         [0x8009a164 + 0xc] = w(0);
         g_channels_2_config.over_mask = 0;
         g_channels_2_config.alt_mask = 0;
@@ -590,11 +618,11 @@ void system_akao_sound_channels_init( u8 vol_pan, u16 channel_id, u32 seq_1, u32
     }
 
     g_channels_3_active_mask |= seq_mask;
-    [0x80099fd8] = w(w[0x80099fd8] | seq_mask);
+    g_channels_3_off_mask |= seq_mask;
 
     S1 = (0x3 << (channel_id + 0x10)) & g_channels_3_active_mask;
 
-    [0x80099fd0] = w(w[0x80099fd0] & ~S1);
+    g_channels_3_on_mask &= ~S1;
     [0x80099fd4] = w(w[0x80099fd4] & ~S1);
     g_channels_3_noise_mask &= ~S1;
     g_channels_3_reverb_mask &= ~S1;
@@ -602,7 +630,7 @@ void system_akao_sound_channels_init( u8 vol_pan, u16 channel_id, u32 seq_1, u32
 
     if( w[0x80062ff8] & 0x00000002 )
     {
-        if( hu[0x80099e0c] == 0x2 )
+        if( g_channels_3[0x6].type == AKAO_MENU )
         {
             g_channels_3_active_mask = seq_mask & 0x00c00000;
             seq_mask &= 0xff3fffff;
@@ -612,7 +640,7 @@ void system_akao_sound_channels_init( u8 vol_pan, u16 channel_id, u32 seq_1, u32
             g_channels_3_active_mask = 0;
         }
 
-        [0x80099fdc] = w(w[0x80099fdc] | seq_mask);
+        g_channels_3_active_mask_stored |= seq_mask;
     }
 
     system_akao_update_noise_voices();
@@ -658,18 +686,17 @@ void system_akao_sound_menu_channels_init( u32 seq_1, u32 seq_2 )
     }
 
     g_channels_3_active_mask |= seq_mask << 0x16;
-    [0x80099fd0] = w(w[0x80099fd0] & 0xff3fffff);
+    g_channels_3_on_mask &= 0xff3fffff;
     [0x80099fd4] = w(w[0x80099fd4] & 0xff3fffff);
-    [0x80099fd8] = w(w[0x80099fd8] | 0x00c00000);
+    g_channels_3_off_mask |= 0x00c00000;
     g_channels_3_noise_mask &= 0xff3fffff;
     g_channels_3_reverb_mask &= 0xff3fffff;
     g_channels_3_pitch_lfo_mask &= 0xff3fffff;
+    g_channels_3_active_mask_stored &= 0xff3fffff;
 
     system_akao_update_noise_voices();
     system_akao_update_reverb_voices();
     system_akao_update_pitch_lfo_voices();
-
-    [0x80099fdc] = w(w[0x80099fdc] & 0xff3fffff);
 }
 
 
@@ -691,15 +718,15 @@ void system_akao_sound_stop_channels_3()
 
     if( hu[0x80099e0c] == 0x2 )
     {
-        [0x80099fd0] = w(w[0x80099fd0] & 0x00c00000);
+        g_channels_3_on_mask &= 0x00c00000;
         [0x80099fd4] = w(w[0x80099fd4] & 0x00c00000);
-        [0x80099fd8] = w(w[0x80099fd8] & g_channels_3_active_mask & 0xff3fffff);
+        g_channels_3_off_mask &= g_channels_3_active_mask & 0xff3fffff;
     }
     else
     {
-        [0x80099fd0] = w(0);
+        g_channels_3_on_mask = 0;
         [0x80099fd4] = w(0);
-        [0x80099fd8] = w(g_channels_3_active_mask);
+        g_channels_3_off_mask = g_channels_3_active_mask;
     }
 }
 
@@ -712,27 +739,27 @@ void system_akao_sound_channels_clear( u16 channel_id, u16 pair_id )
     if( pair_id == 1 )
     {
         A0 = 0x3 << (channel_id + 0x10);
-        [0x80099fd0] = w(w[0x80099fd0] & ~A0);
+        g_channels_3_on_mask &= ~A0;
         [0x80099fd4] = w(w[0x80099fd4] & ~A0);
-        [0x80099fd8] = w(w[0x80099fd8] | A0);
+        g_channels_3_off_mask |= A0;
     }
     else if( pair_id == 2 )
     {
-        [0x80099fd0] = w(w[0x80099fd0] & 0xffc3ffff);
+        g_channels_3_on_mask &= 0xffc3ffff;
         [0x80099fd4] = w(w[0x80099fd4] & 0xffc3ffff);
-        [0x80099fd8] = w(w[0x80099fd8] | 0x003c0000);
+        g_channels_3_off_mask |= 0x003c0000;
     }
     else if( pair_id == 3 )
     {
-        [0x80099fd0] = w(w[0x80099fd0] & 0xffc0ffff);
+        g_channels_3_on_mask &= 0xffc0ffff;
         [0x80099fd4] = w(w[0x80099fd4] & 0xffc0ffff);
-        [0x80099fd8] = w(w[0x80099fd8] | 0x003f0000);
+        g_channels_3_off_mask |= 0x003f0000;
     }
     else if( pair_id == 4 )
     {
-        [0x80099fd0] = w(w[0x80099fd0] & 0xff00ffff);
+        g_channels_3_on_mask &= 0xff00ffff;
         [0x80099fd4] = w(w[0x80099fd4] & 0xff00ffff);
-        [0x80099fd8] = w(w[0x80099fd8] | 0x00ff0000);
+        g_channels_3_off_mask |= 0x00ff0000;
     }
 
     for( int i = pair_id * 2; i != 0; --i )
@@ -803,7 +830,7 @@ void func2a7e8()
 
     if( channels_mask != 0 )
     {
-        [0x8009a104 + 0x8] = w(w[0x8009a104 + 0xc]);
+        g_channels_1_config.on_mask = w[0x8009a104 + 0xc];
 
         u32 channel_mask = 0x1;
         ChannelData* channel = &g_channels_1;
@@ -819,7 +846,7 @@ void func2a7e8()
                         [channel + 0x38] = w(w[channel + 0x38] | 0x00000400);
                     }
 
-                    [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] | channel_mask);
+                    g_channels_1_config.on_mask |= channel_mask;
                 }
                 else
                 {
@@ -827,11 +854,11 @@ void func2a7e8()
                         (~(g_channels_3_active_mask | w[0x80062f00]) & (0x1 << channel->alt_voice_id)) &&
                         (system_psyq_spu_get_key_status( 0x1 << channel->alt_voice_id ) == SPU_ON) )
                     {
-                        [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] | channel_mask);
+                        g_channels_1_config.on_mask |= channel_mask;
                     }
                     else
                     {
-                        [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] & ~channel_mask);
+                        g_channels_1_config.on_mask &= ~channel_mask;
                         [0x8009a104 + 0xc] = w(w[0x8009a104 + 0xc] & ~channel_mask);
                     }
                 }
@@ -853,7 +880,7 @@ void func2a958()
 
     if( channels_mask != 0 )
     {
-        [0x80099fd0] = w(w[0x80099fd4]);
+        g_channels_3_on_mask = w[0x80099fd4];
 
         channel_mask = 0x10000;
         ChannelData* channel = &g_channels_3;
@@ -866,11 +893,11 @@ void func2a958()
                 {
                     if( system_psyq_spu_get_key_status( channel_mask ) == 0x1 )
                     {
-                        [0x80099fd0] = w(w[0x80099fd0] | channel_mask);
+                        g_channels_3_on_mask |= channel_mask;
                     }
                     else
                     {
-                        [0x80099fd0] = w(w[0x80099fd0] & ~channel_mask);
+                        g_channels_3_on_mask &= ~channel_mask;
                         [0x80099fd4] = w(w[0x80099fd4] & ~channel_mask);
                     }
 
@@ -893,7 +920,7 @@ void func2a958()
                     if( channel->type != AKAO_MENU )
                     {
                         g_channels_3_active_mask &= ~channel_mask;
-                        [0x80099fd0] = w(w[0x80099fd0] & ~channel_mask);
+                        g_channels_3_on_mask &= ~channel_mask;
                         [0x80099fd4] = w(w[0x80099fd4] & ~channel_mask);
                     }
                 }
@@ -914,7 +941,7 @@ void func2aabc( u8 save_id )
     V1 = save_id * 0x60;
 
     g_channels_1_config.active_mask = w[0x80083338 + V1 + 0000];
-    [0x8009a104 + 0x8] = w(w[0x8008333c + V1 + 0000]);
+    g_channels_1_config.on_mask = w[0x8008333c + V1 + 0000];
     [0x8009a104 + 0xc] = w(w[0x80083340 + V1 + 0000]);
     g_channels_1_config.tempo = w[0x8008334c + V1 + 0000];
     g_channels_1_config.tempo_slide_step = w[0x80083350 + V1 + 0000];
@@ -928,7 +955,7 @@ void func2aabc( u8 save_id )
     g_channels_1_config.reverb_depth = w[0x80083374 + V1 + 0000];
     g_channels_1_config.reverb_depth_slide_step = w[0x80083378 + V1 + 0000];
     g_channels_1_config.tempo_slide_steps = hu[0x8008337c + V1 + 0000];
-    [0x8009a104 + 0x4a] = h(hu[0x80083334 + V1 + 0x4a]);
+    g_channels_1_config.music_id = hu[0x80083334 + V1 + 0x4a];
     [0x8009a104 + 0x4c] = h(hu[0x80083380 + V1 + 0000]);
     [0x8009a104 + 0x4e] = h(hu[0x80083382 + V1 + 0000]);
     g_channels_1_config.reverb_depth_slide_steps = hu[0x80083384 + V1 + 0000];
@@ -972,7 +999,7 @@ void func2aabc( u8 save_id )
         }
     }
 
-    g_channels_1_config.off_mask = ~w[0x8009a104 + 0x8] & 0x00ffffff;
+    g_channels_1_config.off_mask = ~g_channels_1_config.on_mask & 0x00ffffff;
 
     channel = &g_channels_1;
     channel_mask = 0x1;
@@ -1065,14 +1092,14 @@ void func2afb8()
     ChannelData* channel = &g_channels_2;
     for( int i = 0x18; i != 0; --i )
     {
-        [channel + 0x0] = w(w[channel + 0x0] + 0x3000);
-        [channel + 0x4] = w(w[channel + 0x4] + 0x3000);
-        [channel + 0x8] = w(w[channel + 0x8] + 0x3000);
-        [channel + 0xc] = w(w[channel + 0xc] + 0x3000);
-        [channel + 0x10] = w(w[channel + 0x10] + 0x3000);
-        [channel + 0x14] = w(w[channel + 0x14] + 0x3000);
+        channel->seq += 0x3000;
+        channel->loop_point[0x0] += 0x3000;
+        channel->loop_point[0x1] += 0x3000;
+        channel->loop_point[0x2] += 0x3000;
+        channel->loop_point[0x3] += 0x3000;
+        channel->drum_offset += 0x3000;
         channel->over_voice_id += 0x18;
-        channel += 0x108;
+        channel += 1;
     }
 
     A2 = 0x18;
@@ -1119,7 +1146,7 @@ void func2cfa0()
 
 void func2cfc0( CommandData* data )
 {
-    [0x80099fd8] = w(w[0x80099fd8] | w[0x80062f00]);
+    g_channels_3_off_mask |= w[0x80062f00];
 
     system_psyq_spu_set_transfer_callback( 0 );
     system_psyq_spu_set_irq( SPU_OFF );
@@ -1205,52 +1232,49 @@ void func2cfc0( CommandData* data )
 
 void func2d1e4()
 {
-    [0x8007ebe8] = w(0x1ff93);
-    [0x8007ebec] = w(0x77000);
-    [0x8007ebf0] = w(0x77000);
-    [0x8007ebf4] = w(1);
-    [0x8007ebf8] = w(3);
-    [0x8007ebfc] = w(3);
-    [0x8007ec00] = h(hu[0x80062f1e]);
-    [0x8007ec02] = h(0);
-    [0x8007ec04] = h(0xf);
-    [0x8007ec06] = h(0xf);
-    [0x8007ec08] = h(0x7f);
-    [0x8007ec0a] = h(6);
-    [0x8007ec0c] = h(((w[0x80062fb0] ^ 0x7f) * w[0x80062fac]) >> 0x7);
-    [0x8007ec0e] = h((w[0x80062fb0] * w[0x80062fac]) >> 0x7);
-
-    system_akao_update_params_to_spu( 0x10, 0x8007ebe4 );
+    g_akao_voice_attr.mask = 0x1ff93;
+    g_akao_voice_attr.addr = 0x77000;
+    g_akao_voice_attr.loop_addr = 0x77000;
+    g_akao_voice_attr.a_mode = 0x1;
+    g_akao_voice_attr.s_mode = 0x3;
+    g_akao_voice_attr.r_mode = 0x3;
+    g_akao_voice_attr.pitch = hu[0x80062f1e];
+    g_akao_voice_attr.ar = 0;
+    g_akao_voice_attr.dr = 0xf;
+    g_akao_voice_attr.sl = 0xf;
+    g_akao_voice_attr.sr = 0x7f;
+    g_akao_voice_attr.rr = 0x6;
+    g_akao_voice_attr.vol_l = ((w[0x80062fb0] ^ 0x7f) * w[0x80062fac]) >> 0x7;
+    g_akao_voice_attr.vol_r = (w[0x80062fb0] * w[0x80062fac]) >> 0x7;
+    system_akao_update_channel_params_to_spu( 0x10, g_akao_voice_attr );
 }
 
 
 
 void func2d2d4()
 {
-    [0x8007ebe8] = w(0x1ff93);
-    [0x8007ebec] = w(0x77000);
-    [0x8007ebf0] = w(0x78000);
-    [0x8007ebf4] = w(1);
-    [0x8007ebf8] = w(3);
-    [0x8007ebfc] = w(3);
-    [0x8007ec00] = h(hu[0x80062f1e]);
-    [0x8007ec02] = h(0);
-    [0x8007ec04] = h(0xf);
-    [0x8007ec06] = h(0xf);
-    [0x8007ec08] = h(0x7f);
-    [0x8007ec0a] = h(6);
-    [0x8007ec0c] = h(w[0x80062fac] / 2);
-    [0x8007ec0e] = h(0);
+    g_akao_voice_attr.mask = 0x1ff93;
+    g_akao_voice_attr.addr = 0x77000;
+    g_akao_voice_attr.loop_addr = 0x78000;
+    g_akao_voice_attr.a_mode = 0x1;
+    g_akao_voice_attr.s_mode = 0x3;
+    g_akao_voice_attr.r_mode = 0x3;
+    g_akao_voice_attr.pitch = hu[0x80062f1e];
+    g_akao_voice_attr.ar = 0;
+    g_akao_voice_attr.dr = 0xf;
+    g_akao_voice_attr.sl = 0xf;
+    g_akao_voice_attr.sr = 0x7f;
+    g_akao_voice_attr.rr = 0x6;
+    g_akao_voice_attr.vol_l = w[0x80062fac] / 0x2;
+    g_akao_voice_attr.vol_r = 0;
+    system_akao_update_channel_params_to_spu( 0x10, g_akao_voice_attr );
 
-    system_akao_update_params_to_spu( 0x10, 0x8007ebe4 );
-
-    [0x8007ebe8] = w(0x1ff93);
-    [0x8007ec0c] = h(0);
-    [0x8007ebec] = w(0x77800);
-    [0x8007ebf0] = w(0x78800);
-    [0x8007ec0e] = h(w[0x80062fac] / 2);
-
-    system_akao_update_params_to_spu( 0x11, 0x8007ebe4 );
+    g_akao_voice_attr.mask = 0x1ff93;
+    g_akao_voice_attr.addr = 0x77800;
+    g_akao_voice_attr.loop_addr = 0x78800;
+    g_akao_voice_attr.vol_l = 0;
+    g_akao_voice_attr.vol_r = w[0x80062fac] / 0x2;
+    system_akao_update_channel_params_to_spu( 0x11, g_akao_voice_attr );
 }
 
 
@@ -1270,7 +1294,7 @@ void func2d410()
 
     system_psyq_spu_set_key( SPU_ON, w[0x80062f00] );
 
-    [0x80099fd8] = w(w[0x80099fd8] & ~w[0x80062f00]);
+    g_channels_3_off_mask &= ~w[0x80062f00];
 }
 
 
@@ -1289,7 +1313,7 @@ void func2d4a0()
     }
 
     system_psyq_spu_set_key( SPU_ON, w[0x80062f00] );
-    [0x80099fd8] = w(w[0x80099fd8] & ~w[0x80062f00]);
+    g_channels_3_off_mask &= ~w[0x80062f00];
 }
 
 
@@ -1493,7 +1517,7 @@ int system_akao_execute()
             music_id = hu[akao_offset + 0x4];
             size = hu[akao_offset + 0x6];
 
-            if( hu[0x8009a104 + 0x4a] != S1 ) // if this song not playing already
+            if( g_channels_1_config.music_id != music_id )
             {
                 system_akao_set_reverb_mode( hu[akao_offset + 0x8] );
 
@@ -1723,7 +1747,7 @@ void system_akao_execute_commands_queue()
 
 
 
-void system_akao_update_params_to_spu( u32 voice_id, AkaoVoiceAttr& attr )
+void system_akao_update_channel_params_to_spu( u32 voice_id, AkaoVoiceAttr& attr )
 {
     if( attr.mask & SPU_VOICE_PITCH )
     {
@@ -2447,7 +2471,7 @@ void system_akao_update_pitch_and_volume( ChannelData* channel, u32 channel_mask
 
 
 
-void system_akao_update_volume_to_self_and_mirror( ChannelData* channel, mask, u32 voice_id )
+void system_akao_update_channel_and_overlay_params_to_spu( ChannelData* channel, mask, u32 over_voice_id )
 {
     ChannelData* channel_2 = &g_channels_1[channel->over_voice_id];
 
@@ -2465,19 +2489,19 @@ void system_akao_update_volume_to_self_and_mirror( ChannelData* channel, mask, u
 
     channel_2->attr.mask | = channel->attr.mask;
 
-    system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+    system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
 
-    if( mask & ( 0x1 << voice_id ) )
+    if( mask & ( 0x1 << over_voice_id ) )
     {
-        system_akao_update_params_to_spu( voice_id, channel_2->attr );
+        system_akao_update_channel_params_to_spu( over_voice_id, channel_2->attr );
     }
 }
 
 
 
-void system_akao_update_dynamic()
+void system_akao_update_keys()
 {
-    updated_mask = 0;
+    u32 updated_mask = 0;
 
     if( w[0x8009a104 + 0x38] & 0x00000080 ) // update reverb
     {
@@ -2529,13 +2553,13 @@ void system_akao_update_dynamic()
 
     if( g_channels_2_config.active_mask != 0 )
     {
-        channel = &g_channels_2;
+        ChannelData* channel = &g_channels_2;
         channel_mask = 0x1;
         channel_id = 0;
 
         S5 = ~(g_channels_3_active_mask | w[0x80062f00]) & w[0x80062f68];
         channels_mask = g_channels_2_config.active_mask & S5 & w[0x8009a164 + 0xc];
-        updated_mask = S5 & w[0x8009a164 + 0x8];
+        updated_mask = S5 & g_channels_2_config.on_mask;
 
         while( channels_mask != 0 )
         {
@@ -2546,17 +2570,17 @@ void system_akao_update_dynamic()
                 if( channel->attr.mask != 0 )
                 {
 
-                    if( w[channel + 0x38] & 0x00000100 )
+                    if( w[channel + 0x38] & 0x00000100 ) // overlay used
                     {
-                        system_akao_update_volume_to_self_and_mirror( channel, S5, channel->over_voice_id - 0x18 );
+                        system_akao_update_channel_and_overlay_params_to_spu( channel, S5, channel->over_voice_id - 0x18 );
                     }
                     else if( (w[channel + 0x38] & 0x00000200) == 0 ) // alt voice not used
                     {
-                        system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+                        system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
                     }
                     else
                     {
-                        if( channel_mask & w[0x8009a164 + 0x8] )
+                        if( channel_mask & g_channels_2_config.on_mask )
                         {
                             [channel + 0x38] = w(w[channel + 0x38] ^ 0x00000400);
                             channel->attr.mask |= SPU_VOICE_VOLL |
@@ -2578,17 +2602,18 @@ void system_akao_update_dynamic()
                         {
                             if( S5 & (0x1 << channel->alt_voice_id) )
                             {
-                                system_akao_update_params_to_spu( channel->alt_voice_id, channel->attr );
+                                system_akao_update_channel_params_to_spu( channel->alt_voice_id, channel->attr );
 
                                 if( updated_mask & channel_mask )
                                 {
-                                    updated_mask = (updated_mask | (1 << w[channel + 28])) & ~channel_mask;
+                                    updated_mask |= 0x1 << channel->alt_voice_id;
+                                    updated_mask &= ~channel_mask;
                                 }
                             }
                         }
                         else
                         {
-                            system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+                            system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
                         }
                     }
                 }
@@ -2597,11 +2622,11 @@ void system_akao_update_dynamic()
             }
 
             channel_mask <<= 0x1;
-            channel += 0x108;
+            channel += 1;
             channel_id += 0x1;
         }
 
-        [0x8009a164 + 0x8] = w(0);
+        g_channels_2_config.on_mask = 0;
     }
 
     if( g_channels_1_config.active_mask != 0 )
@@ -2611,8 +2636,8 @@ void system_akao_update_dynamic()
         channel_id = 0;
 
         S5 = ~(w[0x80062f68] | g_channels_3_active_mask | w[0x80062f00]);
-        channels_mask = w[0x8009a104 + 04] & (S5 & w[0x8009a104 + 0xc]);
-        updated_mask |= S5 & w[0x8009a104 + 0x8];
+        channels_mask = g_channels_1_config.active_mask & (S5 & w[0x8009a104 + 0xc]);
+        updated_mask |= S5 & g_channels_1_config.on_mask;
 
         while( channels_mask != 0 )
         {
@@ -2628,13 +2653,13 @@ void system_akao_update_dynamic()
                         channel->attr.vol_r = 0;
                     }
 
-                    if( w[channel + 0x38] & 0x00000100 )
+                    if( w[channel + 0x38] & 0x00000100 ) // overlay used
                     {
-                        system_akao_update_volume_to_self_and_mirror( channel, S5, w[channel + 24] );
+                        system_akao_update_channel_and_overlay_params_to_spu( channel, S5, channel->over_voice_id );
                     }
-                    else if( w[channel + 0x38] & 0x00000200 )
+                    else if( w[channel + 0x38] & 0x00000200 ) // alt voice used
                     {
-                        if( w[0x8009a104 + 0x8] & channel_mask )
+                        if( g_channels_1_config.on_mask & channel_mask )
                         {
                             [channel + 0x38] = w(w[channel + 0x38] ^ 0x00000400);
                             channel->attr.mask |= SPU_VOICE_VOLL |
@@ -2656,7 +2681,7 @@ void system_akao_update_dynamic()
                         {
                             if( S5 & ( 1 << channel->alt_voice_id ) )
                             {
-                                system_akao_update_params_to_spu( channel->alt_voice_id, channel->attr );
+                                system_akao_update_channel_params_to_spu( channel->alt_voice_id, channel->attr );
 
                                 if( updated_mask & channel_mask )
                                 {
@@ -2665,17 +2690,17 @@ void system_akao_update_dynamic()
                             }
                             else
                             {
-                                system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+                                system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
                             }
                         }
                         else
                         {
-                            system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+                            system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
                         }
                     }
                     else
                     {
-                        system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+                        system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
                     }
                 }
 
@@ -2687,14 +2712,14 @@ void system_akao_update_dynamic()
             channel_id += 1;
         }
 
-        [0x8009a104 + 0x8] = w(0);
+        g_channels_1_config.on_mask = 0;
     }
 
     if( g_channels_3_active_mask != 0 )
     {
         u32 channel_mask = 0x00010000;
         ChannelData* channel = &g_channels_3;
-        updated_mask |= w[0x80099fd0];
+        updated_mask |= g_channels_3_on_mask;
         u32 channels_mask = g_channels_3_active_mask & w[0x80099fd4];
 
         while( channels_mask != 0 )
@@ -2705,7 +2730,7 @@ void system_akao_update_dynamic()
 
                 if( channel->attr.mask != 0 )
                 {
-                    system_akao_update_params_to_spu( channel->attr.voice_id, channel->attr );
+                    system_akao_update_channel_params_to_spu( channel->attr.voice_id, channel->attr );
                 }
 
                 channels_mask ^= channel_mask;
@@ -2715,7 +2740,7 @@ void system_akao_update_dynamic()
             channel += 1;
         }
 
-        [0x80099fd0] = w(0);
+        g_channels_3_on_mask = 0;
     }
 
     if( updated_mask != 0 )
@@ -2762,7 +2787,7 @@ void system_akao_collect_channels_voices_mask( ChannelData* channel, u32& ret_ma
 
 
 
-void func2fe48()()
+void func2fe48()
 {
     u32 updated_mask = 0x0;
 
@@ -2788,8 +2813,8 @@ void func2fe48()()
         g_channels_1_config.off_mask = 0;
     }
 
-    updated_mask |= w[0x80099fd8];
-    [0x80099fd8] = w(0);
+    updated_mask |= g_channels_3_off_mask;
+    g_channels_3_off_mask = 0;
 
     if( updated_mask != 0 )
     {
@@ -3026,8 +3051,8 @@ void func30380()
 
                 if( (hu[channel + 0x5e] == 0) && ((S0 & 0xff00) == 0) && (h[channel + 0xc8] < 0) )
                 {
-                    [0x80099fd8] = w(w[0x80099fd8] | channel_mask);
-                    [0x80099fd0] = w(w[0x80099fd0] & ~channel_mask);
+                    g_channels_3_off_mask |= channel_mask;
+                    g_channels_3_on_mask &= ~channel_mask;
                     [0x80099fd4] = w(w[0x80099fd4] & ~channel_mask);
 
                     [channel + 0x0] = w(0x80049c40);
@@ -3106,7 +3131,7 @@ void func30380()
                     {
                         system_akao_opcode_a0_finish_channel( channel_2, 0x8009a164, channel_mask );
 
-                        [0x8009a164 + 0x8] = w(w[0x8009a164 + 0x8] & ~channel_mask);
+                        g_channels_2_config.on_mask &= ~channel_mask;
                         [0x8009a164 + 0xc] = w(w[0x8009a164 + 0xc] & ~channel_mask);
                         g_channels_2_config.off_mask |= channel_mask;
                     }
@@ -3123,7 +3148,7 @@ void func30380()
                                               SPU_VOICE_ADSR_RR |
                                               SPU_VOICE_ADSR_SL |
                                               SPU_VOICE_LSAX;
-                        [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] | (channel_mask & w[0x8009a104 + 0xc]));
+                        g_channels_1_config.on_mask |= channel_mask & w[0x8009a104 + 0xc];
                     }
 
                     [S6 + 0x4] = w(0x007f8000 / hu[0x80062fc8]);
@@ -3143,11 +3168,9 @@ void func30380()
 
 void system_akao_update()
 {
-    system_akao_update_dynamic();
+    system_akao_update_keys();
 
-    u32 channels_mask = g_channels_1_config.active_mask;
-
-    if( channels_mask != 0 )
+    if( g_channels_1_config.active_mask != 0 )
     {
         A0 = g_channels_1_config.tempo >> 0x10;
         if( w[0x80062fea] != 0 )
@@ -3169,8 +3192,8 @@ void system_akao_update()
             [0x80062f04] = w(0);
 
             channel_mask = 0x1;
+            u32 channels_mask = g_channels_1_config.active_mask;
             ChannelData* channel = &g_channels_1;
-
             while( channels_mask != 0 )
             {
                 if( channels_mask & channel_mask )
@@ -3230,9 +3253,7 @@ void system_akao_update()
         }
     }
 
-    u32 channels_mask = g_channels_2_config.active_mask;
-
-    if( channels_mask != 0 )
+    if( g_channels_2_config.active_mask != 0 )
     {
         A0 = g_channels_1_config.tempo >> 0x10;
         if( bu[0x80062fea] != 0 )
@@ -3254,8 +3275,8 @@ void system_akao_update()
             [0x80062f04] = w(1);
 
             channel_mask = 0x1;
+            u32 channels_mask = g_channels_2_config.active_mask;
             ChannelData* channel = &g_channels_2;
-
             while( channels_mask != 0 )
             {
                 if( channels_mask & channel_mask )
@@ -3294,8 +3315,7 @@ void system_akao_update()
         }
     }
 
-    u32 channels_mask = g_channels_3_active_mask;
-    if( channels_mask != 0 )
+    if( g_channels_3_active_mask != 0 )
     {
         [0x80099fe8] = w(w[0x80099fe8] + hu[0x80099fe2]);
 
@@ -3304,8 +3324,8 @@ void system_akao_update()
             [0x80099fe8] = w(w[0x80099fe8] & 0x0000ffff);
 
             channel_mask = 0x10000;
+            u32 channels_mask = g_channels_3_active_mask;
             ChannelData* channel = &g_channels_3;
-
             while( channels_mask != 0 )
             {
                 if( channels_mask & channel_mask )
@@ -3319,13 +3339,13 @@ void system_akao_update()
 
                         if( channel->length_1 == 0 )
                         {
-                            system_akao_execute_sequence( channel, 0x8009a104, channel_mask );
+                            system_akao_execute_sequence( channel, &g_channels_2_config, channel_mask );
                         }
                         else if( channel->length_2 == 0 )
                         {
                             channel->length_2 |= 0x1;
                             [0x80099fd4] = w(w[0x80099fd4] & ~channel_mask);
-                            [0x80099fd8] = w(w[0x80099fd8] | channel_mask);
+                            g_channels_3_off_mask |= channel_mask;
                         }
 
                         func2e954( channel, channel_mask );
@@ -3405,24 +3425,22 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
             A0 = opcode / 0xb;
             S2 = A0;
 
-            if( w[channel + 0x38] & 0x00000008 )
+            if( w[channel + 0x38] & 0x00000008 ) // drum mode on
             {
                 if( channel->type == AKAO_MUSIC )
                 {
-                    [config + 0x8] = w(w[config + 0x8] | mask);
+                    config->on_mask |= mask;
                 }
                 else
                 {
-                    [0x80099fd0] = w(w[0x80099fd0] | mask);
+                    g_channels_3_on_mask |= mask;
                 }
 
                 V1 = (S2 & 0xff) / 0xc;
                 A0 = (S2 & 0xff) % 0xc
-                A2 = w[channel + 0x14];
                 A0 = A0 & 0xff;
 
-                V0 = A0 * 0x5;
-                A2 = A2 + V0;
+                A2 = channel->drum_offset + A0 * 0x5;
                 u8 instr_id = bu[A2 + 0x0];
 
                 if( instr_id != channel->instr_id )
@@ -3462,7 +3480,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                 V1 = (S2 & 0xff) % 0xc;
 
                 A1 = A1 & 0xff;
-                A0 = w[0x80075f28 + instr_id * 0x40 + V1 * 0x4 + 0x10];
+                A0 = w[0x80075f28 + instr_id * 0x40 + 0x10 + V1 * 0x4];
 
                 if( A1 >= 0x7 )
                 {
@@ -3497,22 +3515,18 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                 {
                     if( channel->type == AKAO_MUSIC )
                     {
-                        [config + 0x8] = w(w[config + 0x8] | mask);
+                        config->on_mask |= mask;
 
                         if( w[channel + 0x38] & 0x00000100 )
                         {
                             V1 = channel->over_voice_id;
-                            if( channel->over_voice_id >= 0x18 )
-                            {
-                                V1 -= 0x18;
-                            }
-
-                            [config + 0x8] = w(w[[config + 0x8]] | (1 << V1));
+                            if( channel->over_voice_id >= 0x18 ) V1 -= 0x18;
+                            config->on_mask |= 0x1 << V1;
                         }
                     }
                     else
                     {
-                        [0x80099fd0] = w(w[0x80099fd0] | mask);
+                        g_channels_3_on_mask |= mask;
                     }
                     [channel + 0x64] = h(0);
                 }

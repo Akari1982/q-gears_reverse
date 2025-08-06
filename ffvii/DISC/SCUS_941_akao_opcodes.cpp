@@ -43,10 +43,7 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
     {
         config->active_mask &= mask ^ 0x00ffffff;
 
-        if( config->active_mask == 0 )
-        {
-            [config + 0x4a] = h(0);
-        }
+        if( config->active_mask == 0 ) config->music_id = 0;
 
         config->noise_mask &= mask ^ 0x00ffffff;
         config->reverb_mask &= mask ^ 0x00ffffff;
@@ -70,12 +67,20 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
         g_channels_3_noise_mask &= mask ^ 0x00ff0000;
         g_channels_3_reverb_mask &= mask ^ 0x00ff0000;
         g_channels_3_pitch_lfo_mask &= mask ^ 0x00ff0000;
-        [0x8009a104 + 0x8] = w(w[0x8009a104 + 0x8] & (~mask));
+        g_channels_1_config.on_mask &= ~mask;
         [0x8009a104 + 0xc] = w(w[0x8009a104 + 0xc] & (~mask));
         g_channels_1_config.off_mask &= ~mask;
 
-        V1 = channel->alt_voice_id;
-        [0x80096608 + V1 * 0x108 + 0xe0] = w(w[0x80096608 + V1 * 0x108 + 0xe0] | 0x0001ff80);
+        g_channels_1[channel->alt_voice_id].attr.mask |= SPU_VOICE_WDSA |
+                                                         SPU_VOICE_ADSR_AMODE |
+                                                         SPU_VOICE_ADSR_SMODE |
+                                                         SPU_VOICE_ADSR_RMODE |
+                                                         SPU_VOICE_ADSR_AR |
+                                                         SPU_VOICE_ADSR_DR |
+                                                         SPU_VOICE_ADSR_SR |
+                                                         SPU_VOICE_ADSR_RR |
+                                                         SPU_VOICE_ADSR_SL |
+                                                         SPU_VOICE_LSAX;
     }
 
     [channel + 0x38] = w(0x00000000);
@@ -1094,6 +1099,7 @@ void system_akao_opcode_eb_reverb_depth_slide( ChannelData* channel, AkaoConfig*
 
 
 
+// The drum_map_offset is a relative offset pointing to the drum instrument map table, which determines the instrument for each keys. 
 void system_akao_opcode_ec_drum_mode_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
     u32 akao = channel->seq;
@@ -1101,7 +1107,7 @@ void system_akao_opcode_ec_drum_mode_on( ChannelData* channel, AkaoConfig* confi
 
     [channel + 0x38] = w(w[channel + 0x38] | 0x00000008);
 
-    [channel + 0x14] = w(akao + 0x2 + h[akao + 0x0]);
+    channel->drum_offset = akao + 0x2 + h[akao];
 }
 
 
@@ -1271,7 +1277,7 @@ void system_akao_opcode_f4_overlay_voice_on( ChannelData* channel, AkaoConfig* c
         [channel + 0x38] = w(w[channel + 0x38] | 0x00000100);
 
         system_akao_instr_init( channel, bu[akao + 0x0] );
-        system_akao_instr_init( 0x80096608 + channel->over_voice_id * 0x108, bu[akao + 0x1]);
+        system_akao_instr_init( &g_channels_1[channel->over_voice_id], bu[akao + 0x1]);
     }
 }
 

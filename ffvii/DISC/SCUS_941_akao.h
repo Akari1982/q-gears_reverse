@@ -25,7 +25,7 @@ struct ChannelData
 {
     u32 seq;                        // 0x0
     u32 loop_point[0x4];            // 0x4
-                                    // 0x14 [][][][] pointer to mask for AKAO channels in 80083580.
+    u32 drum_offset;                // 0x14
                                     // 0x18 [][][][] address into wave table for frequency lfo.
                                     // 0x1c [][][][] address into wave table for volume lfo.
                                     // 0x20 [][][][] address into wave table for volume pan lfo.
@@ -110,9 +110,10 @@ struct ChannelConfig
 {
                                     // 0x0 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
     u32 active_mask;                // 0x4
-                                    // 0x8 [][][][] channels to be played mask.
+    u32 on_mask;                    // 0x8
                                     // 0xc [][][][] some channels mask.
     u32 off_mask;                   // 0x10
+    u32 active_mask_stored;         // 0x14
     u32 tempo;                      // 0x18
     s32 tempo_slide_step;           // 0x1c
     u32 tempo_update;               // 0x20
@@ -124,11 +125,11 @@ struct ChannelConfig
                                     // 0x38 [][][][] spu config update flags.
                                     //            0x00000010 - update noise clock frequency.
                                     //            0x00000080 - update reverb.
-                                    // 0x3c [][][][] reverb mode.
+    s32 reverb_mode;                // 0x3c
     s32 reverb_depth;               // 0x40
     s32 reverb_depth_slide_step;    // 0x44
     u16 tempo_slide_steps;          // 0x48
-                                    // 0x4a [][]     AKAO music id for currently playing sequence.
+    u16 music_id;                   // 0x4a
                                     // 0x4c [][]     store here +4e after jump has occured.
                                     // 0x4e [][]     storage for 0xef conditional jump.
     u16 reverb_depth_slide_steps;   // 0x50
