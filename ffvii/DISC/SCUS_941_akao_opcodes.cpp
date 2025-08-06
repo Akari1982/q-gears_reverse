@@ -114,8 +114,8 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
     if( ( channel->type != AKAO_MUSIC ) || ( ( mask & w[config + 0xc] & g_channels_3_active_mask ) == 0 ) )
     {
         channel->attr.mask |= SPU_VOICE_PITCH;
-        instr_id = channel->instr_id;
-        [channel + 0x30] = w((w[channel + 0x30] * w[0x80075f28 + instr_id * 0x40 + 0x10]) / w[0x80075f28 + instr_id * 0x40 + 0x10]);
+        u16 prev = channel->instr_id;
+        channel->pitch_base *= w[0x80075f28 + instr_id * 0x40 + 0x10] / w[0x80075f28 + prev * 0x40 + 0x10];
     }
 
     if( w[channel + 0x38] & 0x00000200 ) // alt voice
@@ -443,37 +443,30 @@ void system_akao_opcode_b4_vibrato( ChannelData* channel, AkaoConfig* config, u3
 
     if( channel->type == AKAO_MUSIC )
     {
-        [channel + 0x72] = h(bu[akao + 0x0]); // add frequency lfo delay
+        channel->vibrato_delay = bu[akao + 0x0];
     }
     else
     {
-        [channel + 0x72] = h(0); // remove frequency lfo delay
+        channel->vibrato_delay = 0;
         if( bu[akao + 0x0] != 0 )
         (
-            [channel + 0x7e] = h(bu[akao + 0x0] << 0x8); // frequency lfo multiplier.
+            channel->vibrato_depth = bu[akao + 0x0] << 0x8;
         }
     }
 
-    rate = bu[akao + 1]; // frequency lfo refresh interval
+    u16 rate = bu[akao + 1];
     if( rate == 0 ) rate = 0x100;
-    [channel + 0x76] = h(rate);
+    channel->vibrato_rate = rate;
+    channel->vibrato_rate_cur = 1;
 
-    [channel + 0x74] = h(hu[channel + 0x72]); // frequency lfo delay current
-    [channel + 0x7a] = h(bu[akao + 0x2]); // frequency lfo table key node index
+    channel->vibrato_delay_cur = channel->vibrato_delay;
+    channel->vibrato_type = bu[akao + 0x2];
 
-    if( hu[channel + 0x7e] & 0x8000 ) // frequency lfo multiplier
-    {
-        V0 = hu[channel + 0x30]; // base pitch
-    }
-    else
-    {
-        V0 = ((hu[channel + 0x30] << 0x4) - hu[channel + 0x30]) >> 0x8;
-    }
+    V0 = channel->pitch_base & 0xffff;
+    if( (channel->vibrato_depth & 0x8000) == 0 ) V0 *= 0xf / 0x100;
 
-    [channel + 0x7c] = h((((hu[channel + 0x7e] & 0x7f00) >> 0x8) * V0) >> 0x7); // frequency lfo multiplier.
-    [channel + 0x78] = h(0x1); // frequency lfo refresh interval counter.
-    V0 = hu[channel + 0x7a];
-    [channel + 0x18] = w(w[0x8004a5cc + V0 * 0x4]); // address into wave table for frequency lfo
+    channel->vibrato_base = (((channel->vibrato_depth & 0x7f00) >> 0x8) * V0) >> 0x7;
+    channel->vibrato_wave = w[0x8004a5cc + channel->vibrato_type * 0x4];
 }
 
 
@@ -483,16 +476,13 @@ void system_akao_opcode_b5_vibrato_depth( ChannelData* channel, AkaoConfig* conf
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    depth = bu[akao];
-    [channel + 0x7e] = h(depth << 0x8); // frequency lfo multiplier
+    u8 depth = bu[akao];
+    channel->vibrato_depth = depth << 0x8;
 
-    A1 = w[channel + 0x30]; // base pitch
-    if( ( depth & 0x80 ) == 0 )
-    {
-        A1 = ((A1 << 0x4) - A1) >> 0x8;
-    }
+    A1 = channel->pitch_base;
+    if( ( depth & 0x80 ) == 0 ) A1 *= 0xf / 0x100;
 
-    [channel + 0x7c] = h(((depth & 0x7f) * A1) >> 0x7); // frequency lfo multiplier
+    channel->vibrato_base = ((depth & 0x7f) * A1) >> 0x7;
 }
 
 
@@ -500,7 +490,7 @@ void system_akao_opcode_b5_vibrato_depth( ChannelData* channel, AkaoConfig* conf
 void system_akao_opcode_b6_vibrato_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
     [channel + 0x38] = w(w[channel + 0x38] & 0xfffffffe); // remove update frequency lfo
-    [channel + 0xd6] = h(0x0); // pitch wave shift.
+    channel->vibrato_pitch = 0;
     channel->attr.mask |= SPU_VOICE_PITCH;
 }
 
@@ -1005,12 +995,12 @@ void system_akao_opcode_dd_vibrato_depth_slide( ChannelData* channel, AkaoConfig
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    length = bu[akao + 0x0];
-    if( length == 0 ) length = 0x100;
-    [A0 + 0x80] = h(length); // depth fade speed
+    u16 steps = bu[akao + 0x0];
+    if( steps == 0 ) steps = 0x100;
+    channel->vibrato_depth_slide_steps = steps;
 
     depth = bu[akao + 0x1];
-    [A0 + 0x82] = h(((depth << 0x8) - hu[A0 + 0x7e]) / length); // depth fade destination
+    channel->vibrato_depth_slide_step = ((depth << 0x8) - channel->vibrato_depth) / steps;
 }
 
 
@@ -1193,7 +1183,7 @@ void system_akao_opcode_f2_load_instrument( ChannelData* channel, AkaoConfig* co
     if( (channel->type != AKAO_MUSIC) || ((mask & w[config + 0xc] & g_channels_3_active_mask) == 0) )
     {
         u16 prev = channel->instr_id;
-        [channel + 0x30] = w((w[channel + 0x30] * w[0x80075f28 + instr_id * 0x40 + 0x10]) / w[0x80075f28 + prev * 0x40 + 0x10]);
+        channel->pitch_base *= w[0x80075f28 + instr_id * 0x40 + 0x10] / w[0x80075f28 + prev * 0x40 + 0x10];
 
         channel->attr.mask |= SPU_VOICE_PITCH;
     }

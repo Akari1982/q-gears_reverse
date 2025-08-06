@@ -26,13 +26,13 @@ struct ChannelData
     u32 seq;                        // 0x0
     u32 loop_point[0x4];            // 0x4
     u32 drum_offset;                // 0x14
-                                    // 0x18 [][][][] address into wave table for frequency lfo.
+    u32 vibrato_wave;               // 0x18
                                     // 0x1c [][][][] address into wave table for volume lfo.
                                     // 0x20 [][][][] address into wave table for volume pan lfo.
     u32 over_voice_id;              // 0x24
     u32 alt_voice_id;               // 0x28
     u32 vol_master;                 // 0x2c
-                                    // 0x30 [][][][] base pitch. Summarize 0x30, 0x36 and 0xd6 it to get real pitch.
+    u32 pitch_base;                 // 0x30
                                     // 0x34 [][][][] init with 0. pitch related.
                                     // 0x36 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
                                     // 0x38 [][][][] init with 0. Update mirror. If flag is set we update main params from mirror channel (previous 0x108 channel data).
@@ -66,15 +66,15 @@ struct ChannelData
                                     // 0x6a [][]     ???
                                     // 0x6c [][]     init with 0.
                                     // 0x6e [][]     init with 0.
-                                    // 0x72 [][]     frequency lfo wait.
-                                    // 0x74 [][]     frequency lfo wait current;
-                                    // 0x76 [][]     frequency lfo refresh interval.
-                                    // 0x78 [][]     frequency lfo refresh interval counter.
-                                    // 0x7a [][]     frequency lfo table key node index.
-                                    // 0x7c [][]     frequency lfo multiplier.
-                                    // 0x7e [][]     frequency lfo multiplier. Init with 0.
-                                    // 0x80 [][]     depth fade speed.
-                                    // 0x82 [][]     depth fade destination.
+    u16 vibrato_delay;              // 0x72 [][]
+    u16 vibrato_delay_cur;          // 0x74
+    u16 vibrato_rate;               // 0x76
+    u16 vibrato_rate_cur;           // 0x78
+    u16 vibrato_type;               // 0x7a
+    u16 vibrato_base;               // 0x7c
+    u16 vibrato_depth;              // 0x7e
+    u16 vibrato_depth_slide_steps;  // 0x80
+    s16 vibrato_depth_slide_step;   // 0x82
                                     // 0x86 [][]     volume lfo wait.
                                     // 0x88 [][]     volume lfo wait current.
                                     // 0x8a [][]     volume lfo refresh interval.
@@ -100,7 +100,7 @@ struct ChannelData
                                     // 0xd0 [][]     pitch saved parameters.
                                     // 0xd2 [][]     pitch slide destination.
                                     // 0xd4 [][]     ???
-                                    // 0xd6 [][]     pitch lfo value.
+    s16 vibrato_pitch;              // 0xd6
                                     // 0xd8 [][]     volume lfo value.
                                     // 0xda [][]     volume pan lfo value.
     AkaoVoiceAttr attr;             // 0xdc
