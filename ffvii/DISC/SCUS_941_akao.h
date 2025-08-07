@@ -21,12 +21,17 @@
 #define AKAO_SOUND 1
 #define AKAO_MENU 2
 
-#define AKAO_UPDATE_VOICE    (SPU_VOICE_VOLL       | SPU_VOICE_VOLR)
-#define AKAO_UPDATE_BASE_WOR (SPU_VOICE_WDSA       | SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_SMODE | \
-                              SPU_VOICE_ADSR_AR    | SPU_VOICE_ADSR_DR    | SPU_VOICE_ADSR_SR | \
-                              SPU_VOICE_ADSR_SL    | SPU_VOICE_LSAX)
-#define AKAO_UPDATE_BASE     (AKAO_UPDATE_BASE_WOR | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR)
-#define AKAO_UPDATE_ALL      (AKAO_UPDATE_BASE     | AKAO_UPDATE_VOICE    | SPU_VOICE_PITCH)
+#define AKAO_UPDATE_SPU_VOICE    (SPU_VOICE_VOLL       | SPU_VOICE_VOLR)
+#define AKAO_UPDATE_SPU_BASE_WOR (SPU_VOICE_WDSA       | SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_SMODE | \
+                                  SPU_VOICE_ADSR_AR    | SPU_VOICE_ADSR_DR    | SPU_VOICE_ADSR_SR | \
+                                  SPU_VOICE_ADSR_SL    | SPU_VOICE_LSAX)
+#define AKAO_UPDATE_SPU_BASE     (AKAO_UPDATE_SPU_BASE_WOR | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR)
+#define AKAO_UPDATE_SPU_ALL      (AKAO_UPDATE_SPU_BASE     | AKAO_UPDATE_SPU_VOICE    | SPU_VOICE_PITCH)
+
+#define AKAO_UPDATE_PAN_LFO 0x4
+#define AKAO_UPDATE_OVERLAY 0x100
+#define AKAO_UPDATE_ALTERNATIVE 0x200
+
 
 
 struct ChannelData
@@ -43,7 +48,7 @@ struct ChannelData
     u32 pitch_base;                     // 0x30
                                         // 0x34 [][][][] init with 0. pitch related.
                                         // 0x36 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
-                                        // 0x38 [][][][] init with 0. Update mirror. If flag is set we update main params from mirror channel (previous 0x108 channel data).
+    s32 update_flags;                   // 0x38
                                         //                  0x00000001 - update frequency lfo.
                                         //                  0x00000002 - update volume lfo.
                                         //                  0x00000004 - update volume pan lfo.
@@ -58,7 +63,7 @@ struct ChannelData
                                         // 0x40 [][][][] ???
     s32 volume;                         // 0x44
     s32 vol_slide_step;                 // 0x48
-                                        // 0x4c [][][][] pitch growth. We increment pitch addition by this every frame.
+    s32 pitch_slide_step;               // 0x4c
                                         // 0x50 [][][][] ???.
     u16 type;                           // 0x54
     u8 length_1;                        // 0x56
@@ -69,11 +74,11 @@ struct ChannelData
     u16 vol_balance_slide_steps;        // 0x5e
     u16 vol_pan;                        // 0x60
     u16 vol_pan_slide_steps;            // 0x62
-                                        // 0x64 [][]     init with 0. Number of steps for pitch changes?.
+    u16 pitch_slide_steps_cur;          // 0x64
     u16 octave;                         // 0x66
-                                        // 0x68 [][]     pitch slide speed.
+    u16 pitch_slide_steps;              // 0x68
                                         // 0x6a [][]     ???
-                                        // 0x6c [][]     init with 0.
+    u16 portamento_steps;               // 0x6c
                                         // 0x6e [][]     init with 0.
                                         // 0x70
     u16 vibrato_delay;                  // 0x72 [][]
@@ -97,9 +102,9 @@ struct ChannelData
                                         // 0x98 [][]     volume pan lfo refresh interval.
                                         // 0x9a [][]     volume pan lfo refresh interval counter.
                                         // 0x9c [][]     volume pan lfo table key node index.
-                                        // 0x9e [][]     init with 0.
-                                        // 0xa0 [][]     init with 0.
-                                        // 0xa2
+    u16 pan_lfo_depth;                  // 0x9e
+    u16 pan_lfo_depth_slide_steps;      // 0xa0
+    s16 pan_lfo_depth_slide_step;       // 0xa2
     u16 noise_switch_delay;             // 0xa4
     u16 pitch_lfo_switch_delay;         // 0xa6
     u16 loop_id;                        // 0xb8
@@ -112,11 +117,11 @@ struct ChannelData
                                         // 0xcc [][]     absolute transposition.
                                         // 0xce [][]     frequency multiplier.
                                         // 0xd0 [][]     pitch saved parameters.
-                                        // 0xd2 [][]     pitch slide destination.
+    s16 pitch_slide_dst;                // 0xd2
                                         // 0xd4 [][]     ???
     s16 vibrato_pitch;                  // 0xd6
                                         // 0xd8 [][]     volume lfo value.
-                                        // 0xda [][]     volume pan lfo value.
+    s16 pan_lfo_vol                     // 0xda
     AkaoVoiceAttr attr;                 // 0xdc
 };
 

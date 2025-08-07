@@ -406,7 +406,7 @@ void system_akao_command_90( CommandData* data )
 
     for( int i = 0; i < 0x18; ++i )
     {
-        g_channels_1[i].attr.mask |= AKAO_UPDATE_VOICE;
+        g_channels_1[i].attr.mask |= AKAO_UPDATE_SPU_VOICE;
     }
 }
 
@@ -430,7 +430,7 @@ void system_akao_command_9a( CommandData* data )
         {
             if( mask & (1 << id) )
             {
-                g_channels_1[id].attr.mask |= AKAO_UPDATE_VOICE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR);
+                g_channels_1[id].attr.mask |= AKAO_UPDATE_SPU_VOICE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR);
                 mask ^= (1 << id);
             }
             id += 1;
@@ -495,7 +495,7 @@ void system_akao_command_9c( CommandData* data )
         {
             if( mask & (1 << (id + 0x10)) )
             {
-                [0x80099788 + id * 0x108 + 0xe0] = w(w[0x80099788 + id * 0x108 + 0xe0] | AKAO_UPDATE_VOICE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR);
+                [0x80099788 + id * 0x108 + 0xe0] = w(w[0x80099788 + id * 0x108 + 0xe0] | AKAO_UPDATE_SPU_VOICE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR);
                 mask ^= (1 << (id + 0x10));
             }
         }
@@ -581,8 +581,8 @@ void func2bccc( CommandData* data, ChannelData* channel )
     (channel + 1)->vol_balance_slide_steps = 0;
     (channel + 0)->vol_balance = (hu[data + 0x4] & 0x7f) << 0x8;
     (channel + 1)->vol_balance = (hu[data + 0x4] & 0x7f) << 0x8;
-    (channel + 0)->attr.mask |= AKAO_UPDATE_VOICE;
-    (channel + 1)->attr.mask |= AKAO_UPDATE_VOICE;
+    (channel + 0)->attr.mask |= AKAO_UPDATE_SPU_VOICE;
+    (channel + 1)->attr.mask |= AKAO_UPDATE_SPU_VOICE;
 }
 
 
@@ -659,8 +659,8 @@ void func2bfcc( CommandData* data, ChannelData* channel )
     [channel + 0x1 * 0x108 + 0x60] = h((hu[data + 0x4] & 0x7f) << 0x8);
     [channel + 0x0 * 0x108 + 0x62] = h(0);
     [channel + 0x1 * 0x108 + 0x62] = h(0);
-    (channel + 0)->attr.mask |= AKAO_UPDATE_VOICE;
-    (channel + 1)->attr.mask |= AKAO_UPDATE_VOICE;
+    (channel + 0)->attr.mask |= AKAO_UPDATE_SPU_VOICE;
+    (channel + 1)->attr.mask |= AKAO_UPDATE_SPU_VOICE;
 }
 
 
