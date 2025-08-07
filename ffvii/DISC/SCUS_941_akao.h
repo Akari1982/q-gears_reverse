@@ -28,7 +28,9 @@
 #define AKAO_UPDATE_SPU_BASE     (AKAO_UPDATE_SPU_BASE_WOR | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR)
 #define AKAO_UPDATE_SPU_ALL      (AKAO_UPDATE_SPU_BASE     | AKAO_UPDATE_SPU_VOICE    | SPU_VOICE_PITCH)
 
+#define AKAO_UPDATE_VIBRATO 0x1
 #define AKAO_UPDATE_PAN_LFO 0x4
+#define AKAO_UPDATE_DRUM_MODE 0x8
 #define AKAO_UPDATE_OVERLAY 0x100
 #define AKAO_UPDATE_ALTERNATIVE 0x200
 
@@ -41,7 +43,7 @@ struct ChannelData
     u32 drum_offset;                    // 0x14
     u32 vibrato_wave;                   // 0x18
                                         // 0x1c [][][][] address into wave table for volume lfo.
-                                        // 0x20 [][][][] address into wave table for volume pan lfo.
+    u32 pan_lfo_wave;                   // 0x20
     u32 over_voice_id;                  // 0x24
     u32 alt_voice_id;                   // 0x28
     u32 vol_master;                     // 0x2c
@@ -49,14 +51,6 @@ struct ChannelData
                                         // 0x34 [][][][] init with 0. pitch related.
                                         // 0x36 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
     s32 update_flags;                   // 0x38
-                                        //                  0x00000001 - update frequency lfo.
-                                        //                  0x00000002 - update volume lfo.
-                                        //                  0x00000004 - update volume pan lfo.
-                                        //                  0x00000008 - add when we save script pointer using system_akao_opcode_ec_drum_mode_on().
-                                        //                  0x00000010 - update pitch. We update from +0xf8 from previous channel.
-                                        //                  0x00000020 - use prev channel pitch for volume mod.
-                                        //                  0x00000100 - ???
-                                        //                  0x00000200 - ???
                                         // 0x3c [][]     ???
                                         // 0x3d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
                                         // 0x3e
@@ -99,9 +93,9 @@ struct ChannelData
                                         // 0x90 [][]     volume lfo multiplier.
                                         // 0x92 [][]     init with 0.
                                         // 0x94
-                                        // 0x98 [][]     volume pan lfo refresh interval.
-                                        // 0x9a [][]     volume pan lfo refresh interval counter.
-                                        // 0x9c [][]     volume pan lfo table key node index.
+    u16 pan_lfo_rate;                   // 0x98
+    u16 pan_lfo_rate_cur;               // 0x9a
+    u16 pan_lfo_type;                   // 0x9c
     u16 pan_lfo_depth;                  // 0x9e
     u16 pan_lfo_depth_slide_steps;      // 0xa0
     s16 pan_lfo_depth_slide_step;       // 0xa2
