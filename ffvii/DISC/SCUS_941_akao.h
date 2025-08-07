@@ -28,11 +28,14 @@
 #define AKAO_UPDATE_SPU_BASE     (AKAO_UPDATE_SPU_BASE_WOR | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR)
 #define AKAO_UPDATE_SPU_ALL      (AKAO_UPDATE_SPU_BASE     | AKAO_UPDATE_SPU_VOICE    | SPU_VOICE_PITCH)
 
-#define AKAO_UPDATE_VIBRATO 0x1
-#define AKAO_UPDATE_PAN_LFO 0x4
-#define AKAO_UPDATE_DRUM_MODE 0x8
-#define AKAO_UPDATE_OVERLAY 0x100
+#define AKAO_UPDATE_VIBRATO     0x1
+#define AKAO_UPDATE_TREMOLO     0x2
+#define AKAO_UPDATE_PAN_LFO     0x4
+#define AKAO_UPDATE_DRUM_MODE   0x8
+#define AKAO_UPDATE_OVERLAY     0x100
 #define AKAO_UPDATE_ALTERNATIVE 0x200
+
+#define AKAO_UPDATE_NOISE_CLOCK 0x10
 
 
 
@@ -42,7 +45,7 @@ struct ChannelData
     u32 loop_point[0x4];                // 0x4
     u32 drum_offset;                    // 0x14
     u32 vibrato_wave;                   // 0x18
-                                        // 0x1c [][][][] address into wave table for volume lfo.
+    u32 tremolo_wave;                   // 0x1c
     u32 pan_lfo_wave;                   // 0x20
     u32 over_voice_id;                  // 0x24
     u32 alt_voice_id;                   // 0x28
@@ -85,14 +88,14 @@ struct ChannelData
     u16 vibrato_depth_slide_steps;      // 0x80
     s16 vibrato_depth_slide_step;       // 0x82
                                         // 0x84
-                                        // 0x86 [][]     volume lfo wait.
-                                        // 0x88 [][]     volume lfo wait current.
-                                        // 0x8a [][]     volume lfo refresh interval.
-                                        // 0x8c [][]     volume lfo refresh interval counter.
-                                        // 0x8e [][]     volume lfo table key node index.
-                                        // 0x90 [][]     volume lfo multiplier.
-                                        // 0x92 [][]     init with 0.
-                                        // 0x94
+    u16 tremolo_delay;                  // 0x86
+    u16 tremolo_delay_cur;              // 0x88
+    u16 tremolo_rate;                   // 0x8a
+    u16 tremolo_rate_cur;               // 0x8c
+    u16 tremolo_type;                   // 0x8e
+    u16 tremolo_depth;                  // 0x90
+    u16 tremolo_depth_slide_steps;      // 0x92
+    s16 tremolo_depth_slide_step;       // 0x94
     u16 pan_lfo_rate;                   // 0x98
     u16 pan_lfo_rate_cur;               // 0x9a
     u16 pan_lfo_type;                   // 0x9c
@@ -108,13 +111,13 @@ struct ChannelData
     s16 vol_balance;                    // 0xc6
     s16 vol_balance_slide_step;         // 0xc8
     s16 vol_pan_slide_step;             // 0xca
-                                        // 0xcc [][]     absolute transposition.
+    u16 transpose;                      // 0xcc
                                         // 0xce [][]     frequency multiplier.
                                         // 0xd0 [][]     pitch saved parameters.
     s16 pitch_slide_dst;                // 0xd2
                                         // 0xd4 [][]     ???
     s16 vibrato_pitch;                  // 0xd6
-                                        // 0xd8 [][]     volume lfo value.
+    s16 tremolo_vol;                    // 0xd8
     s16 pan_lfo_vol                     // 0xda
     AkaoVoiceAttr attr;                 // 0xdc
 };
@@ -135,9 +138,7 @@ struct ChannelConfig
     u32 noise_mask;                 // 0x2c
     u32 reverb_mask;                // 0x30
     u32 pitch_lfo_mask;             // 0x34
-                                    // 0x38 [][][][] spu config update flags.
-                                    //            0x00000010 - update noise clock frequency.
-                                    //            0x00000080 - update reverb.
+    u32 update_flags;               // 0x38
     s32 reverb_mode;                // 0x3c
     s32 reverb_depth;               // 0x40
     s32 reverb_depth_slide_step;    // 0x44
@@ -146,11 +147,11 @@ struct ChannelConfig
                                     // 0x4c [][]     store here +4e after jump has occured.
                                     // 0x4e [][]     storage for 0xef conditional jump.
     u16 reverb_depth_slide_steps;   // 0x50
-                                    // 0x52 [][]     noise clock.
+    u16 noise_clock;                // 0x52
                                     // 0x54 [][]     ???
-                                    // 0x56 [][]     upper timer equal value.
-                                    // 0x58 [][]     upper timer value. When this reach +56 then we reset this to 0 and increment +5e. Stored in CHMPH opcode.
-                                    // 0x5a [][]     lower timer equal value.
-                                    // 0x5c [][]     lower timer value. When this equal to +5a then we reset this to 0 and increment +58.
-                                    // 0x5e [][]     top timer. Stored in CHMPH opcode.
+    u16 timer_upper;                // 0x56
+    u16 timer_upper_cur;            // 0x58
+    u16 timer_lower;                // 0x5a
+    u16 timer_lower_cur;            // 0x5c
+    u16 timer_top_cur;              // 0x5e
 };

@@ -11175,58 +11175,6 @@ store_memory_block_two_bytes;
 
 
 ////////////////////////////////
-// 0xF7 CHMPH
-A0 = 1;
-A1 = 2;
-A2 = h[8009a104 + 5e];
-store_memory_block_two_bytes;
-
-A0 = 2;
-A1 = 3;
-A2 = bu[8009a104 + 58];
-store_memory_block_one_byte;
-
-// move pointer by 4
-A0 = bu[800722C4];
-V1 = hu[800831FC + A0 * 2];
-V1 = V1 + 4;
-[800831FC + A0 * 2] = h(V1);
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xFE CHMST
-V0 = ;
-V1 = w[8009a108] > 0;
-
-if (w[80099fcc] != 0)
-{
-    A2 = V1 | 2;
-}
-else
-{
-    A2 = V1;
-}
-
-A0 = 2;
-A1 = 2;
-store_memory_block_one_byte;
-
-// move pointer by 3
-A0 = bu[800722C4];
-V1 = hu[800831FC + A0 * 2];
-V1 = V1 + 3;
-[800831FC + A0 * 2] = h(V1);
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // field_event_opcode_38_sttim()
 
 actor_id_cur = bu[800722c4];

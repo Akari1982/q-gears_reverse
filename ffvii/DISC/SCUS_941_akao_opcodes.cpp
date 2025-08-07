@@ -75,7 +75,7 @@ void system_akao_opcode_a0_finish_channel( ChannelData* channel, AkaoConfig* con
 
     channel->update_flags = 0;
 
-    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
+    g_channels_1_config.update_flags |= AKAO_UPDATE_NOISE_CLOCK;
 
     system_akao_update_noise_voices();
     system_akao_update_reverb_voices();
@@ -260,32 +260,32 @@ void system_akao_opcode_ac_noise_clock_freq( ChannelData* channel, AkaoConfig* c
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    clock = bu[akao + 0x0];
+    u8 clock = bu[akao];
 
     if( channel->type == AKAO_MUSIC )
     {
         if( clock & 0xc0 )
         {
-            [config + 0x52] = h((hu[config + 0x52] + (clock & 0x3f)) & 0x3f);
+            config->noise_clock = (config->noise_clock + (clock & 0x3f)) & 0x3f;
         }
         else
         {
-            [config + 0x52] = h(clock);
+            config->noise_clock = clock;
         }
     }
     else
     {
         if( clock & 0xc0 )
         {
-            [0x80099ffa] = h((hu[0x80099ffa] + (clock & 0x3f)) & 0x3f);
+            g_channels_3_noise_clock = (g_channels_3_noise_clock + (clock & 0x3f)) & 0x3f;
         }
         else
         {
-            [0x80099ffa] = h(clock);
+            g_channels_3_noise_clock = clock;
         }
     }
 
-    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
+    g_channels_1_config.update_flags |= AKAO_UPDATE_NOISE_CLOCK;
 }
 
 
@@ -497,33 +497,33 @@ void system_akao_opcode_b7_attack_mode( ChannelData* channel, AkaoConfig* config
 
 void system_akao_opcode_b8_tremolo( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    akao = w[channel + 0];
-    [channel + 0] = w(akao + 3);
+    u32 akao = channel->seq;
+    channel->seq = akao + 0x3;
 
-    channel->update_flags |= 0x00000002; // update volume lfo
+    channel->update_flags |= AKAO_UPDATE_TREMOLO;
 
     if( channel->type == AKAO_MUSIC )
     {
-        [channel + 0x86] = h(bu[akao + 0x0]); // set volume lfo delay
+        channel->tremolo_delay = bu[akao + 0x0];
     }
     else
     {
-        [channel + 0x86] = h(0); // remove volume lfo delay
+        channel->tremolo_delay = 0;
         if( bu[akao + 0x0] != 0 )
         (
-            [channel + 0x90] = h(bu[akao + 0x0] << 0x8); // volume lfo multiplier.
+            channel->tremolo_depth = bu[akao + 0x0] << 0x8;
         }
     }
 
-    rate = bu[akao + 1];
+    u16 rate = bu[akao + 1];
     if( rate == 0 ) rate = 0x100;
-    [channel + 0x8a] = h(rate); // volume lfo refresh interval
+    channel->tremolo_rate = rate;
+    channel->tremolo_rate_cur = 1;
 
-    [channel + 0x8e] = h(bu[akao + 0x2]); // volume lfo table key node index
-    [channel + 0x88] = h(hu[channel + 0x86]); // volume lfo delay current
-    [channel + 0x8c] = h(0x1); // volume lfo refresh interval counter
-    V0 = hu[channel + 0x8e];
-    [channel + 0x1c] = w(w[0x8004a5cc + V0 * 0x4]); // address into wave table for volume lfo
+    u8 type = bu[akao + 0x2];
+    channel->tremolo_type = type;
+    channel->tremolo_delay_cur = channel->tremolo_delay;
+    channel->tremolo_wave = w[0x8004a5cc + type * 0x4];
 }
 
 
@@ -532,15 +532,15 @@ void system_akao_opcode_b9_tremolo_depth( ChannelData* channel, AkaoConfig* conf
 {
     akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0x90] = h(bu[akao] << 0x8); // volume lfo multiplier
+    channel->tremolo_depth = bu[akao] << 0x8;
 }
 
 
 
 void system_akao_opcode_ba_tremolo_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags &= ~0x00000002);
-    [channel + 0xd8] = h(0);
+    channel->update_flags &= ~AKAO_UPDATE_TREMOLO);
+    channel->tremolo_vol = 0;
     channel->attr.mask |= AKAO_UPDATE_SPU_VOICE;
 }
 
@@ -622,7 +622,7 @@ void system_akao_opcode_c0_transpose_absolute( ChannelData* channel, AkaoConfig*
 {
     akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0xcc] = h(b[akao]);
+    channel->transpose = b[akao];
 }
 
 
@@ -634,7 +634,7 @@ void system_akao_opcode_c1_transpose_relative( ChannelData* channel, AkaoConfig*
 {
     akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0xcc] = h(hu[channel + 0xcc] + b[akao]);
+    channel->transpose += b[akao];
 }
 
 
@@ -684,7 +684,8 @@ void system_akao_opcode_c4_noise_on( ChannelData* channel, AkaoConfig* config, u
     {
         g_channels_3_noise_mask |= mask;
     }
-    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
+
+    g_channels_1_config.update_flags |= AKAO_UPDATE_NOISE_CLOCK;
 
     system_akao_update_noise_voices();
 }
@@ -703,7 +704,7 @@ void system_akao_opcode_c5_noise_off( ChannelData* channel, AkaoConfig* config, 
         g_channels_3_noise_mask &= ~mask;
     }
 
-    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
+    g_channels_1_config.update_flags |= AKAO_UPDATE_NOISE_CLOCK
 
     system_akao_update_noise_voices();
 
@@ -791,7 +792,7 @@ void system_akao_opcode_ca_loop_return( ChannelData* channel, AkaoConfig* config
 
 void system_akao_opcode_cb_sfx_reset( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags &= ~(0x00000020 | 0x00000010 | AKAO_UPDATE_PAN_LFO | 0x00000002 | AKAO_UPDATE_VIBRATO);
+    channel->update_flags &= ~(0x00000020 | 0x00000010 | AKAO_UPDATE_PAN_LFO | AKAO_UPDATE_TREMOLO | AKAO_UPDATE_VIBRATO);
 
     system_akao_opcode_c5_noise_off( channel, config, mask );
     system_akao_opcode_c7_frequency_modulation_off( channel, config, mask );
@@ -804,7 +805,7 @@ void system_akao_opcode_cb_sfx_reset( ChannelData* channel, AkaoConfig* config, 
 
 void system_akao_opcode_cc_legato_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0x6e] = h(0x1);
+    [channel + 0x6e] = h(0x0001);
 }
 
 
@@ -843,7 +844,7 @@ void system_akao_opcode_cf_noise_switch( ChannelData* channel, AkaoConfig* confi
 
 void system_akao_opcode_d0_full_length_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0x6e] = h(0x4);
+    [channel + 0x6e] = h(0x0004);
 }
 
 
@@ -940,7 +941,7 @@ void system_akao_opcode_da_portamento_on( ChannelData* channel, AkaoConfig* conf
     channel->portamento_steps = steps;
 
     [channel + 0x6a] = h(0x0);
-    [channel + 0x6e] = h(0x1);
+    [channel + 0x6e] = h(0x0001);
     [channel + 0xd4] = h(0x0);
 }
 
@@ -991,12 +992,12 @@ void system_akao_opcode_de_tremolo_depth_slide( ChannelData* channel, AkaoConfig
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    length = bu[akao + 0x0];
-    if( length == 0 ) length = 0x100;
-    [channel + 0x92] = h(length);
+    u16 steps = bu[akao + 0x0];
+    if( steps == 0 ) steps = 0x100;
+    channel->tremolo_depth_slide_steps = steps;
 
-    depth = bu[akao + 0x1];
-    [channel + 0x94] = h(((depth << 0x8) - hu[channel + 0x90]) / length);
+    u8 depth = bu[akao + 0x1];
+    channel->tremolo_depth_slide_step = ((depth << 0x8) - channel->tremolo_depth) / steps;
 }
 
 
@@ -1046,7 +1047,7 @@ void system_akao_opcode_ea_reverb_depth( ChannelData* channel, AkaoConfig* confi
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    [config + 0x38] = w(w[config + 0x38] | 0x00000080);
+    config->update_flags |= 0x00000080;
     config->reverb_depth = hu[akao] << 0x10;
     config->reverb_depth_slide_steps = 0;
 }
@@ -1343,10 +1344,10 @@ void system_akao_opcode_fd_time_signature( ChannelData* channel, AkaoConfig* con
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    [config + 0x56] = h(bu[akao + 0x1]); // upper timer equal value
-    [config + 0x58] = h(0); // upper timer value
-    [config + 0x5a] = h(bu[akao + 0x0]); // lower timer equal value
-    [config + 0x5c] = h(0); // lower timer value
+    config->timer_upper = bu[akao + 0x1];
+    config->timer_upper_cur = 0;
+    config->timer_lower = bu[akao + 0x0];
+    config->timer_lower_cur = 0;
 }
 
 
@@ -1355,5 +1356,5 @@ void system_akao_opcode_fe_measure_number( ChannelData* channel, AkaoConfig* con
 {
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
-    [config + 0x5e] = h((bu[akao + 0x1] << 0x8) | bu[akao + 0x0]); // top timer. Stored in CHMPH opcode
+    config->timer_top_cur = hu[akao];
 }

@@ -977,7 +977,7 @@ void system_akao_command_d6( CommandData* data )
 void system_akao_command_e0( CommandData* data )
 {
     [0x80062f70] = h(hu[data + 0x4] & 0x7f);
-    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000080);
+    g_channels_1_config.update_flags |= 0x00000080;
 }
 
 
@@ -997,7 +997,7 @@ void system_akao_command_e4( CommandData* data )
 
     system_akao_update_reverb_voices();
 
-    [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000080);
+    g_channels_1_config.update_flags |= 0x00000080;
 }
 
 
@@ -1103,7 +1103,7 @@ void system_akao_command_f5( CommandData* data )
         system_akao_update_reverb_voices();
         system_akao_update_pitch_lfo_voices();
 
-        [0x8009a104 + 0x38] = w(w[0x8009a104 + 0x38] | 0x00000010);
+        g_channels_1_config.update_flags |= AKAO_UPDATE_NOISE_CLOCK;
     }
 }
 

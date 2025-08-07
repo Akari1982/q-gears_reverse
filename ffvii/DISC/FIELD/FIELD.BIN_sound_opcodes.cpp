@@ -202,6 +202,24 @@ int field_event_opcode_f6_bmusc()
 
 
 
+int field_event_opcode_f7_chmph()
+{
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "chmph", 0x3 );
+
+    store_memory_block_two_bytes( 0x1, 0x2, h[0x8009a104 + 0x5e] );
+
+    store_memory_block_one_byte( 0x2, 0x3, bu[0x8009a104 + 0x58] );
+
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x4);
+
+    return 0;
+}
+
+
+
 int field_event_opcode_fc_fmusc()
 {
     field_struct = w[0x8009c6e0];
@@ -225,6 +243,25 @@ int field_event_opcode_fc_fmusc()
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
+
+    return 0;
+}
+
+
+
+int field_event_opcode_fe_chmst()
+{
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "chmst", 0x2 );
+
+    A2 = (w[0x8009a104 + 0x4] > 0) ? 1 : 0;
+    if( w[0x80099fcc] != 0 ) A2 |= 0x2;
+
+    store_memory_block_one_byte( 0x2, 0x2, A2 );
+
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
 
     return 0;
 }
