@@ -21,21 +21,30 @@
 #define AKAO_SOUND 1
 #define AKAO_MENU 2
 
+#define AKAO_STEREO 1
+#define AKAO_MONO 2
+#define AKAO_STEREO_CHANNELS 4
+
 #define AKAO_UPDATE_SPU_VOICE    (SPU_VOICE_VOLL       | SPU_VOICE_VOLR)
+#define AKAO_UPDATE_SPU_ADSR     (SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_RMODE | \
+                                  SPU_VOICE_ADSR_AR    | SPU_VOICE_ADSR_DR    | SPU_VOICE_ADSR_SR | SPU_VOICE_ADSR_RR | SPU_VOICE_ADSR_SL)
 #define AKAO_UPDATE_SPU_BASE_WOR (SPU_VOICE_WDSA       | SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_SMODE | \
                                   SPU_VOICE_ADSR_AR    | SPU_VOICE_ADSR_DR    | SPU_VOICE_ADSR_SR | \
                                   SPU_VOICE_ADSR_SL    | SPU_VOICE_LSAX)
 #define AKAO_UPDATE_SPU_BASE     (AKAO_UPDATE_SPU_BASE_WOR | SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR)
 #define AKAO_UPDATE_SPU_ALL      (AKAO_UPDATE_SPU_BASE     | AKAO_UPDATE_SPU_VOICE    | SPU_VOICE_PITCH)
 
-#define AKAO_UPDATE_VIBRATO     0x1
-#define AKAO_UPDATE_TREMOLO     0x2
-#define AKAO_UPDATE_PAN_LFO     0x4
-#define AKAO_UPDATE_DRUM_MODE   0x8
-#define AKAO_UPDATE_OVERLAY     0x100
-#define AKAO_UPDATE_ALTERNATIVE 0x200
+#define AKAO_UPDATE_VIBRATO          0x1
+#define AKAO_UPDATE_TREMOLO          0x2
+#define AKAO_UPDATE_PAN_LFO          0x4
+#define AKAO_UPDATE_DRUM_MODE        0x8
+#define AKAO_UPDATE_SIDE_CHAIN_PITCH 0x10
+#define AKAO_UPDATE_SIDE_CHAIN_VOL   0x20
+#define AKAO_UPDATE_OVERLAY          0x100
+#define AKAO_UPDATE_ALTERNATIVE      0x200
 
 #define AKAO_UPDATE_NOISE_CLOCK 0x10
+#define AKAO_UPDATE_REVERB      0x80
 
 
 
@@ -112,7 +121,7 @@ struct ChannelData
     s16 vol_balance_slide_step;         // 0xc8
     s16 vol_pan_slide_step;             // 0xca
     u16 transpose;                      // 0xcc
-                                        // 0xce [][]     frequency multiplier.
+    s16 fine_tuning;                    // 0xce
                                         // 0xd0 [][]     pitch saved parameters.
     s16 pitch_slide_dst;                // 0xd2
                                         // 0xd4 [][]     ???
@@ -124,7 +133,7 @@ struct ChannelData
 
 struct ChannelConfig
 {
-                                    // 0x0 [][][][] some settings for music (0x01- stereo, 0x02 - mono, 0x04 stereo with some channel volume spreading)
+    u32 stereo_mono;                // 0x0
     u32 active_mask;                // 0x4
     u32 on_mask;                    // 0x8
                                     // 0xc [][][][] some channels mask.
@@ -144,8 +153,8 @@ struct ChannelConfig
     s32 reverb_depth_slide_step;    // 0x44
     u16 tempo_slide_steps;          // 0x48
     u16 music_id;                   // 0x4a
-                                    // 0x4c [][]     store here +4e after jump has occured.
-                                    // 0x4e [][]     storage for 0xef conditional jump.
+    u16 condition_stored;           // 0x4c
+    u16 condition;                  // 0x4e
     u16 reverb_depth_slide_steps;   // 0x50
     u16 noise_clock;                // 0x52
                                     // 0x54 [][]     ???
@@ -154,4 +163,19 @@ struct ChannelConfig
     u16 timer_lower;                // 0x5a
     u16 timer_lower_cur;            // 0x5c
     u16 timer_top_cur;              // 0x5e
+};
+
+struct AkaoInstrument
+{
+    u32 addr                        // 0x00
+    u32 loop_addr;                  // 0x04
+    u8 ar;                          // 0x08
+    u8 dr;                          // 0x09
+    u8 sl;                          // 0x0a
+    s8 sr;                          // 0x0b
+    u8 rr;                          // 0x0c
+    s32 a_mode;                     // 0x0d
+    s32 s_mode;                     // 0x0e
+    s32 r_mode;                     // 0x0f
+    s32 pitch[0xc];                 // 0x10
 };

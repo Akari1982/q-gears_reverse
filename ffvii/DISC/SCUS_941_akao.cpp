@@ -1,7 +1,9 @@
 ﻿ChannelData g_channels_1[0x18];         // 0x80096608
 ChannelConfig g_channels_1_config;      // 0x8009a104
+
 ChannelData g_channels_2[0x18];         // 0x80097ec8
 ChannelConfig g_channels_2_config;      // 0x8009a164
+
 ChannelData g_channels_3[0x8];          // 0x80099788
 u32 g_channels_3_on_mask;               // 0x80099fd0
 u32 g_channels_3_off_mask;              // 0x80099fd8
@@ -11,9 +13,12 @@ u32 g_channels_3_noise_mask;            // 0x80099fec
 u32 g_channels_3_reverb_mask;           // 0x80099ff0
 u32 g_channels_3_pitch_lfo_mask;        // 0x80099ff4
 u16 g_channels_3_noise_clock;           // 0x80099ffa
+
 SpuCommonAttr g_spu_common_attr;        // 0x8009c578
 SpuReverbAttr g_spu_reverb_attr;        // 0x8009c564
 AkaoVoiceAttr g_akao_voice_attr;        // 0x8007ebe4
+
+AkaoInstrument g_akao_instrument[0x80]; // 0x80075f28
 
 // 0x80049c28
 const u16 g_akao_length_table[ 0xb ] =
@@ -105,7 +110,7 @@ void system_akao_init_data()
     g_channels_3_pitch_lfo_mask = 0;
 
     // akao channels config
-    [0x8009a104 + 0x0] = w(1); // 0x01- stereo
+    g_channels_1_config.stereo_mono = AKAO_STEREO;
     g_channels_1_config.active_mask = 0;
     g_channels_1_config.on_mask = 0;
     [0x8009a104 + 0xc] = w(0);
@@ -371,7 +376,7 @@ void system_akao_sound_channel_init( ChannelData* channel, u32 seq )
     channel->length_stored = 0;
     channel->length_fixed = 0;
     channel->transpose = 0;
-    [channel + 0xce] = h(0x0);
+    channel->fine_tuning = 0;
     channel->pitch_slide_dst = 0;
     channel->pan_lfo_vol = 0;
 }
@@ -399,8 +404,8 @@ void system_akao_music_channels_init()
     g_channels_1_config.reverb_depth = 0;
     g_channels_1_config.reverb_depth_slide_step = 0;
     g_channels_1_config.tempo_slide_steps = 0;
-    [0x8009a104 + 0x4c] = h(0);
-    [0x8009a104 + 0x4e] = h(0);
+    g_channels_1_config.condition_stored = 0;
+    g_channels_1_config.condition = 0;
     g_channels_1_config.reverb_depth_slide_steps = 0;
     [0x8009a104 + 0x54] = h(0);
     g_channels_1_config.timer_upper_cur = 0;
@@ -413,7 +418,7 @@ void system_akao_music_channels_init()
     {
         if( channels_mask & channel_mask )
         {
-            [channel + 0x0] = w(akao + 0x2 + hu[akao]);
+            channel->seq = akao + 0x2 + hu[akao];
             channel->vol_master = 0x7f;
             channel->length_1 = 0x3;
             channel->length_2 = 0x1;
@@ -444,7 +449,7 @@ void system_akao_music_channels_init()
             channel->length_fixed = 0;
             channel->vol_balance = 0x4000;
             channel->transpose = 0;
-            [channel + 0xce] = h(0);
+            channel->fine_tuning = 0;
             channel->pitch_slide_dst = 0;
             channel->pan_lfo_vol = 0;
 
@@ -692,8 +697,7 @@ void system_akao_sound_stop_channels_3()
         }
         channel += 1;
     }
-
-    if( hu[0x80099e0c] == 0x2 )
+    if( g_channels_3[0x6].type == AKAO_MENU )
     {
         g_channels_3_on_mask &= 0x00c00000;
         [0x80099fd4] = w(w[0x80099fd4] & 0x00c00000);
@@ -920,8 +924,8 @@ void func2aabc( u8 save_id )
     g_channels_1_config.reverb_depth_slide_step = w[0x80083378 + V1 + 0000];
     g_channels_1_config.tempo_slide_steps = hu[0x8008337c + V1 + 0000];
     g_channels_1_config.music_id = hu[0x80083334 + V1 + 0x4a];
-    [0x8009a104 + 0x4c] = h(hu[0x80083380 + V1 + 0000]);
-    [0x8009a104 + 0x4e] = h(hu[0x80083382 + V1 + 0000]);
+    g_channels_1_config.condition_stored = hu[0x80083380 + V1 + 0000];
+    g_channels_1_config.condition = hu[0x80083382 + V1 + 0000];
     g_channels_1_config.reverb_depth_slide_steps = hu[0x80083384 + V1 + 0000];
     g_channels_1_config.noise_clock = hu[0x80083386 + V1 + 0000];
     [0x8009a104 + 0x54] = h(hu[0x80083388 + V1 + 0000]);
@@ -931,7 +935,7 @@ void func2aabc( u8 save_id )
     g_channels_1_config.timer_lower_cur = hu[0x80083390 + V1 + 0000] - 2;
     g_channels_1_config.timer_top_cur = hu[0x80083392 + V1 + 0000];
 
-    g_channels_1_config.update_flags |= 0x00000080;
+    g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
 
     src = 0x800804d0;
     if( save_id == 0 ) src -= 0x18c0;
@@ -944,10 +948,9 @@ void func2aabc( u8 save_id )
         dst += 0x4;
     }
 
-    ChannelData* channel = &g_channels_1;
     channel_mask = 0x1;
     u32 channels_mask = g_channels_1_config.active_mask;
-
+    ChannelData* channel = &g_channels_1;
     if( channels_mask != 0 )
     {
         for( int i = 0x18; i != 0; --i )
@@ -965,10 +968,9 @@ void func2aabc( u8 save_id )
 
     g_channels_1_config.off_mask = ~g_channels_1_config.on_mask & 0x00ffffff;
 
-    channel = &g_channels_1;
     channel_mask = 0x1;
     channels_mask |= g_channels_1_config.over_mask;
-
+    channel = &g_channels_1;
     while( channels_mask != 0 )
     {
         if( channels_mask & channel_mask )
@@ -2153,12 +2155,10 @@ void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_ma
         }
     }
 
-    if( channel->update_flags & 0x00000020 )
+    if( channel->update_flags & AKAO_UPDATE_SIDE_CHAIN_VOL )
     {
         channel->attr.mask |= AKAO_UPDATE_SPU_VOICE;
-
-        // prev pitch * volume mod
-        volume_level = (((hu[channel - 0x108 + 0xf8] << 0x11) >> 0x10) * channel->vol_master) >> 0x7;
+        volume_level = ((((channel - 1)->attr.pitch << 0x11) >> 0x10) * channel->vol_master) >> 0x7;
     }
 
     if( channel->attr.mask & AKAO_UPDATE_SPU_VOICE )
@@ -2172,23 +2172,23 @@ void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_ma
 
         u8 vol_pan = ((channel->vol_pan >> 0x8) + channel->pan_lfo_vol) & 0xff;
 
-        if( w[0x8009a104 + 0x0] == 1 ) // stereo
+        if( g_channels_1_config.stereo_mono == AKAO_STEREO )
         {
             channel->attr.vol_l = (volume_level * h[0x80049c44 + vol_pan * 0x2]) >> 0xf;
             channel->attr.vol_r = (volume_level * h[0x80049e44 + vol_pan * 0x2]) >> 0xf;
         }
-        else if( w[0x8009a104 + 0x0] == 4 )
+        else if( g_channels_1_config.stereo_mono == AKAO_STEREO_CHANNELS )
         {
             channel->attr.vol_l = (volume_level * h[0x80049c44 + vol_pan * 0x2]) >> 0xf;
             channel->attr.vol_r = (volume_level * h[0x80049e44 + vol_pan * 0x2]) >> 0xf;
 
-            if( ( channel_mask & 0x00aaaaaa ) == 0 )
+            if( channel_mask & 0x00aaaaaa )
             {
-                channel->attr.vol_l = ~channel->attr.vol_l;
+                channel->attr.vol_r = ~channel->attr.vol_r;
             }
             else
             {
-                channel->attr.vol_r = ~channel->attr.vol_r;
+                channel->attr.vol_l = ~channel->attr.vol_l;
             }
         }
         else // mono
@@ -2198,10 +2198,9 @@ void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_ma
         }
     }
 
-    // update pitch
-    if( channel->update_flags & 0x00000010 )
+    if( channel->update_flags & AKAO_UPDATE_SIDE_CHAIN_PITCH )
     {
-        V1 = channel->vibrato_pitch + h[channel + 0x36] + w[channel - 0x108 + 0xf8]; // uses pitch from previous channel
+        V1 = channel->vibrato_pitch + h[channel + 0x36] + (channel - 1)->attr.pitch;
         if( bu[0x80062fe6] != 0 )
         {
             if( bu[0x80062fe6] < 0x80 )
@@ -2217,7 +2216,6 @@ void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_ma
         channel->attr.pitch = V1 & 0x3fff;
     }
 
-    // update spu pitch
     else if( channel->attr.mask & SPU_VOICE_PITCH )
     {
         V1 = channel->vibrato_pitch + h[channel + 0x36] + channel->pitch_base;
@@ -2240,7 +2238,7 @@ void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_ma
 
 void system_akao_sound_update_pitch_and_volume( ChannelData* channel, u32 channel_mask )
 {
-    T0 = ((channel->volume >> 0x10) * channel->vol_master) >> 0x7;
+    volume_level = ((channel->volume >> 0x10) * channel->vol_master) >> 0x7;
 
     if( channel->update_flags & AKAO_UPDATE_VIBRATO )
     {
@@ -2287,7 +2285,7 @@ void system_akao_sound_update_pitch_and_volume( ChannelData* channel, u32 channe
             V1 = channel->tremolo_wave;
             channel->tremolo_wave = V1 + 0x2;
 
-            A0 = ((((T0 * (channel->tremolo_depth >> 0x8)) << 0x9) >> 0x10) * h[V1 + 0x0]) >> 0xf;
+            A0 = ((((volume_level * (channel->tremolo_depth >> 0x8)) << 0x9) >> 0x10) * h[V1 + 0x0]) >> 0xf;
             if( A0 != channel->tremolo_vol )
             {
                 channel->attr.mask |= AKAO_UPDATE_SPU_VOICE;
@@ -2316,38 +2314,39 @@ void system_akao_sound_update_pitch_and_volume( ChannelData* channel, u32 channe
             A0 = ((channel->pan_lfo_depth >> 0x8) * h[V1 + 0x0]) >> 0xf;
             if( A0 != channel->pan_lfo_vol )
             {
-                channel->attr.mask |= AKAO_UPDATE_SPU_VOICE;
                 channel->pan_lfo_vol = A0;
+                channel->attr.mask |= AKAO_UPDATE_SPU_VOICE;
             }
         }
     }
 
-    if( channel->update_flags & 0x00000020 )
+    if( channel->update_flags & AKAO_UPDATE_SIDE_CHAIN_VOL )
     {
         channel->attr.mask |= AKAO_UPDATE_SPU_VOICE;
-        T0 = (((hu[channel - 0x10] << 0x11) >> 0x10) * channel->vol_master) >> 0x7;
+        volume_level = ((((channel - 1)->attr.pitch << 0x11) >> 0x10) * channel->vol_master) >> 0x7;
     }
 
     if( channel->attr.mask & AKAO_UPDATE_SPU_VOICE )
     {
-        T0 += channel->tremolo_vol;
+        volume_level += channel->tremolo_vol;
 
-        A0 = 0x40;
+        u8 vol_pan = 0x40;
+
         if( channel->type != AKAO_MENU )
         {
-            A0 = ((channel->vol_pan >> 0x8) + channel->pan_lfo_vol) & 0xff;
-            T0 = (T0 * (channel->vol_balance >> 0x8)) >> 0x7;
+            vol_pan = ((channel->vol_pan >> 0x8) + channel->pan_lfo_vol) & 0xff;
+            volume_level = (volume_level * (channel->vol_balance >> 0x8)) >> 0x7;
         }
 
-        if( w[0x8009a104 + 0x0] == 0x1 )
+        if( g_channels_1_config.stereo_mono == AKAO_STEREO )
         {
-            channel->attr.vol_l = (T0 * h[0x80049c44 + A0 * 0x2]) >> 0xf;
-            channel->attr.vol_r = (T0 * h[0x80049e44 + A0 * 0x2]) >> 0xf;
+            channel->attr.vol_l = (volume_level * h[0x80049c44 + vol_pan * 0x2]) >> 0xf;
+            channel->attr.vol_r = (volume_level * h[0x80049e44 + vol_pan * 0x2]) >> 0xf;
         }
-        else if( w[0x8009a104 + 0x0] == 0x4 )
+        else if( g_channels_1_config.stereo_mono == AKAO_STEREO_CHANNELS )
         {
-            channel->attr.vol_l = (T0 * h[0x80049c44 + A0 * 0x2]) >> 0xf;
-            channel->attr.vol_r = (T0 * h[0x80049e44 + A0 * 0x2]) >> 0xf;
+            channel->attr.vol_l = (volume_level * h[0x80049c44 + vol_pan * 0x2]) >> 0xf;
+            channel->attr.vol_r = (volume_level * h[0x80049e44 + vol_pan * 0x2]) >> 0xf;
 
             if( channel_mask & 0x00aaaaaa )
             {
@@ -2358,24 +2357,23 @@ void system_akao_sound_update_pitch_and_volume( ChannelData* channel, u32 channe
                 channel->attr.vol_l = ~channel->attr.vol_l;
             }
         }
-        else
+        else // mono
         {
-            channel->attr.vol_l = (T0 * h[0x80049cc4]) >> 0xf;
-            channel->attr.vol_r = (T0 * h[0x80049cc4]) >> 0xf;
+            channel->attr.vol_l = (volume_level * h[0x80049cc4]) >> 0xf;
+            channel->attr.vol_r = (volume_level * h[0x80049cc4]) >> 0xf;
         }
     }
 
-    // update pitch
-    if( channel->update_flags & 0x00000010 )
+    if( channel->update_flags & AKAO_UPDATE_SIDE_CHAIN_PITCH )
     {
-        A3 = channel->vibrato_pitch + h[channel + 0x36] + w[channel - 0x10]; // uses pitch from previous channel
+        A3 = channel->vibrato_pitch + h[channel + 0x36] + (channel - 1)->attr.pitch;
     }
     else if( channel->attr.mask & SPU_VOICE_PITCH )
     {
         A3 = channel->vibrato_pitch + h[channel + 0x36] + channel->pitch_base;
     }
 
-    if( (channel->update_flags & 0x00000010) || (channel->attr.mask & SPU_VOICE_PITCH) )
+    if( (channel->update_flags & AKAO_UPDATE_SIDE_CHAIN_PITCH) || (channel->attr.mask & SPU_VOICE_PITCH) )
     {
         if( (channel->type != AKAO_MENU) && (bu[channel + 0x3d] != 0) )
         {
@@ -2428,7 +2426,7 @@ void system_akao_update_keys()
 {
     u32 updated_mask = 0;
 
-    if( g_channels_1_config.update_flags & 0x00000080 ) // update reverb
+    if( g_channels_1_config.update_flags & AKAO_UPDATE_REVERB )
     {
         s16 reverb_depth = g_channels_1_config.reverb_depth >> 0x10;
         u16 reverb_multiplier = hu[0x80062fb8];
@@ -2458,7 +2456,7 @@ void system_akao_update_keys()
 
         system_psyq_spu_set_reverb_depth( g_spu_reverb_attr );
 
-        g_channels_1_config.update_flags ^= 0x00000080;
+        g_channels_1_config.update_flags ^= AKAO_UPDATE_REVERB;
     }
 
     // update noise clock frequency
@@ -2837,7 +2835,7 @@ void system_akao_main()
 
     while( S0 != 0 )
     {
-        system_akao_update();
+        system_akao_main_update();
         S0 -= 1;
     }
 
@@ -3055,7 +3053,7 @@ void func30380()
 
 
 
-void system_akao_update()
+void system_akao_main_update()
 {
     system_akao_update_keys();
 
@@ -3120,7 +3118,7 @@ void system_akao_update()
             {
                 g_channels_1_config.reverb_depth_slide_steps -= 1;
                 g_channels_1_config.reverb_depth += g_channels_1_config.reverb_depth_slide_step;
-                g_channels_1_config.update_flags |= 0x00000080;
+                g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
             }
 
             if( g_channels_1_config.timer_lower != 0 )
@@ -3206,7 +3204,7 @@ void system_akao_update()
 
     if( g_channels_3_active_mask != 0 )
     {
-        [0x80099fe8] = w(w[0x80099fe8] + hu[0x80099fe2]);
+        [0x80099fe8] = w(w[0x80099fe8] + (hu[0x80099fe0] >> 0x10));
 
         if( (w[0x80099fe8] & 0xffff0000) || (w[0x80062ff8] & 0x00000004) )
         {
@@ -3251,7 +3249,7 @@ void system_akao_update()
 
     if( hu[0x8009a104 + 0x54] != 0 )
     {
-        system_akao_command_9b( 0x8009a000 )
+        system_akao_command_9b( 0x8009a000 ); // mute music
         [0x8009a104 + 0x54] = h(0);
     }
 
@@ -3268,8 +3266,8 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 {
     do
     {
-        akao = w[channel + 0x0];
-        [channel + 0x0] = w(akao + 1);
+        u32 akao = channel->seq;
+        channel->seq = akao + 0x1;
 
         opcode = bu[akao];
 
@@ -3334,23 +3332,20 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                 if( instr_id != channel->instr_id )
                 {
                     channel->instr_id = instr_id;
-
-                    channel->attr.addr      = w[0x80075f28 + instr_id * 0x40 + 0x0];
-                    channel->attr.loop_addr = w[0x80075f28 + instr_id * 0x40 + 0x4];
-                    channel->attr.a_mode    = bu[0x80075f28 + instr_id * 0x40 + 0xd];
-                    channel->attr.s_mode    = bu[0x80075f28 + instr_id * 0x40 + 0xe];
-                    channel->attr.ar        = bu[0x80075f28 + instr_id * 0x40 + 0x8];
-                    channel->attr.dr        = bu[0x80075f28 + instr_id * 0x40 + 0x9];
-                    channel->attr.sl        = bu[0x80075f28 + instr_id * 0x40 + 0xa];
-                    channel->attr.sr        = bu[0x80075f28 + instr_id * 0x40 + 0xb];
-
+                    channel->attr.addr = g_akao_instrument[instr_id].addr;
+                    channel->attr.loop_addr = g_akao_instrument[instr_id].loop_addr;
+                    channel->attr.a_mode = g_akao_instrument[instr_id].a_mode;
+                    channel->attr.s_mode = g_akao_instrument[instr_id].s_mode;
+                    channel->attr.ar = g_akao_instrument[instr_id].ar;
+                    channel->attr.dr = g_akao_instrument[instr_id].dr;
+                    channel->attr.sl = g_akao_instrument[instr_id].sl;
+                    channel->attr.sr = g_akao_instrument[instr_id].sr;
                     channel->attr.mask |= AKAO_UPDATE_SPU_BASE_WOR;
 
                     if( (channel->update_flags & AKAO_UPDATE_ALTERNATIVE) == 0 )
                     {
-                        channel->attr.r_mode = bu[0x80075f28 + instr_id * 0x40 + 0xf];
-                        channel->attr.rr     = bu[0x80075f28 + instr_id * 0x40 + 0xc];
-
+                        channel->attr.r_mode = g_akao_instrument[instr_id].r_mode;
+                        channel->attr.rr = g_akao_instrument[instr_id].rr;
                         channel->attr.mask |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
                     }
                 }
@@ -3360,7 +3355,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                 A1 = S2 / 0xc;
                 V1 = S2 % 0xc;
 
-                A0 = w[0x80075f28 + instr_id * 0x40 + 0x10 + V1 * 0x4];
+                A0 = g_akao_instrument[instr_id].pitch[V1];
 
                 if( A1 >= 0x7 )
                 {
@@ -3413,7 +3408,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 
                 V1 = S2 / 0xc;
 
-                A0 = w[0x80075f28 + hu[channel + 0x58] * 0x40 + 0x10 + ((S2 & 0xff) % 0xc) * 0x4 ];
+                A0 = g_akao_instrument[channel->instr_id].pitch[(S2 & 0xff) % 0xc];
                 if( V1 >= 0x7 )
                 {
                     A0 = A0 << (V1 - 0x6);
@@ -3435,7 +3430,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 
             channel->attr.mask |= AKAO_UPDATE_SPU_VOICE | SPU_VOICE_PITCH;
 
-            V1 = h[channel + 0xce];
+            V1 = channel->fine_tuning;
             if( V1 != 0 )
             {
                 if( V1 > 0 )
@@ -3489,9 +3484,9 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 
             if( channel->type == AKAO_MUSIC )
             {
-                A0 = w[0x80075f38 + hu[channel + 0x58] * 0x40 + ((S2 & 0xff) % 0xc) * 4];
+                A0 = w[0x80075f38 + channel->instr_id * 0x40 + ((S2 & 0xff) % 0xc) * 4];
 
-                V0 = h[channel + 0xce];
+                s16 V0 = channel->fine_tuning;
                 if( V0 != 0 )
                 {
                     if( V0 > 0 )
@@ -3509,7 +3504,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
             }
             else
             {
-                A0 = (w[0x80075f38 + hu[channel + 0x58] * 0x40 + ((S2 & 0xff) % 0xc) * 0x4]) << 0x10; // get pitch
+                A0 = (w[0x80075f38 + channel->instr_id * 0x40 + ((S2 & 0xff) % 0xc) * 0x4]) << 0x10; // get pitch
             }
 
             S2 = (S2 & 0xff) / 0xc;
@@ -3539,19 +3534,16 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 void system_akao_instr_init( ChannelData* channel, u16 instr_id )
 {
     channel->instr_id = instr_id;
-
-    A1 = 0x80075f28 + instr_id * 0x40; // INSTR.DAT
-
-    channel->attr.addr      = w[A1 + 0x0];
-    channel->attr.loop_addr = w[A1 + 0x4];
-    channel->attr.a_mode    = bu[A1 + 0xd];
-    channel->attr.s_mode    = bu[A1 + 0xe];
-    channel->attr.r_mode    = bu[A1 + 0xf];
-    channel->attr.ar        = bu[A1 + 0x8];
-    channel->attr.dr        = bu[A1 + 0x9];
-    channel->attr.sl        = bu[A1 + 0xa];
-    channel->attr.sr        = bu[A1 + 0xb];
-    channel->attr.rr        = bu[A1 + 0xc];
+    channel->attr.addr = g_akao_instrument[instr_id].addr;
+    channel->attr.loop_addr = g_akao_instrument[instr_id].loop_addr;
+    channel->attr.a_mode = g_akao_instrument[instr_id].a_mode;
+    channel->attr.s_mode = g_akao_instrument[instr_id].s_mode;
+    channel->attr.r_mode = g_akao_instrument[instr_id].r_mode;
+    channel->attr.ar = g_akao_instrument[instr_id].ar;
+    channel->attr.dr = g_akao_instrument[instr_id].dr;
+    channel->attr.sl = g_akao_instrument[instr_id].sl;
+    channel->attr.sr = g_akao_instrument[instr_id].sr;
+    channel->attr.rr = g_akao_instrument[instr_id].rr;
     channel->attr.mask |= AKAO_UPDATE_SPU_BASE;
 }
 
@@ -3640,7 +3632,7 @@ u8 system_akao_get_next_note( ChannelData* channel )
                     akao += 0x1;
                     A2 = bu[akao];
                     akao += 0x1;
-                    if( hu[0x8009a104 + 0x4e] >= A2 )
+                    if( g_channels_1_config.condition >= A2 )
                     {
                         akao += h[akao] + 0x2;
                     }
@@ -3683,7 +3675,7 @@ u8 system_akao_get_next_note( ChannelData* channel )
 
 u8 func31a70( ChannelData* channel )
 {
-    u32 akao = w[channel + 0x0];
+    u32 akao = channel->seq;
     do
     {
         u8 opcode = bu[akao];

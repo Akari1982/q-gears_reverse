@@ -105,21 +105,21 @@ void system_akao_opcode_a1_load_instrument( ChannelData* channel, AkaoConfig* co
     {
         channel->attr.mask |= SPU_VOICE_PITCH;
         u16 prev = channel->instr_id;
-        channel->pitch_base *= w[0x80075f28 + instr_id * 0x40 + 0x10] / w[0x80075f28 + prev * 0x40 + 0x10];
+        channel->pitch_base *= g_akao_instrument[instr_id].pitch[0] / g_akao_instrument[prev].pitch[0];
     }
 
     if( channel->update_flags & AKAO_UPDATE_ALTERNATIVE )
     {
         channel->instr_id = instr_id;
 
-        channel->attr.addr      = w[0x80075f28 + instr_id * 0x40 + 0x0];
-        channel->attr.loop_addr = w[0x80075f28 + instr_id * 0x40 + 0x4];
-        channel->attr.a_mode    = bu[0x80075f28 + instr_id * 0x40 + 0xd];
-        channel->attr.s_mode    = bu[0x80075f28 + instr_id * 0x40 + 0xe];
-        channel->attr.ar        = bu[0x80075f28 + instr_id * 0x40 + 0x8];
-        channel->attr.dr        = bu[0x80075f28 + instr_id * 0x40 + 0x9];
-        channel->attr.sl        = bu[0x80075f28 + instr_id * 0x40 + 0xa];
-        channel->attr.sr        = bu[0x80075f28 + instr_id * 0x40 + 0xb];
+        channel->attr.addr = g_akao_instrument[instr_id].addr;
+        channel->attr.loop_addr = g_akao_instrument[instr_id].loop_addr;
+        channel->attr.a_mode = g_akao_instrument[instr_id].a_mode;
+        channel->attr.s_mode = g_akao_instrument[instr_id].s_mode;
+        channel->attr.ar = g_akao_instrument[instr_id].ar;
+        channel->attr.dr = g_akao_instrument[instr_id].dr;
+        channel->attr.sl = g_akao_instrument[instr_id].sl;
+        channel->attr.sr = g_akao_instrument[instr_id].sr;
 
         channel->attr.mask |= AKAO_UPDATE_SPU_BASE_WOR;
     }
@@ -383,23 +383,16 @@ void system_akao_opcode_b3_reset_adsr( ChannelData* channel, AkaoConfig* config,
 {
     intsr_id = channel->instr_id;
 
-    channel->attr.a_mode= bu[0x80075f28 + intsr_id * 0x40 + 0xd];
-    channel->attr.s_mode= bu[0x80075f28 + intsr_id * 0x40 + 0xe];
-    channel->attr.r_mode= bu[0x80075f28 + intsr_id * 0x40 + 0xf];
-    channel->attr.ar = bu[0x80075f28 + intsr_id * 0x40 + 0x8];
-    channel->attr.dr = bu[0x80075f28 + intsr_id * 0x40 + 0x9];
-    channel->attr.sl = bu[0x80075f28 + intsr_id * 0x40 + 0xa];
-    channel->attr.sr = bu[0x80075f28 + intsr_id * 0x40 + 0xb];
-    channel->attr.rr = bu[0x80075f28 + intsr_id * 0x40 + 0xc];
+    channel->attr.a_mode = g_akao_instrument[intsr_id].a_mode;
+    channel->attr.s_mode = g_akao_instrument[intsr_id].s_mode;
+    channel->attr.r_mode = g_akao_instrument[intsr_id].r_mode;
+    channel->attr.ar = g_akao_instrument[intsr_id].ar;
+    channel->attr.dr = g_akao_instrument[intsr_id].dr;
+    channel->attr.sl = g_akao_instrument[intsr_id].sl;
+    channel->attr.sr = g_akao_instrument[intsr_id].sr;
+    channel->attr.rr = g_akao_instrument[intsr_id].rr;
 
-    channel->attr.mode |= SPU_VOICE_ADSR_AMODE |
-                          SPU_VOICE_ADSR_SMODE |
-                          SPU_VOICE_ADSR_RMODE |
-                          SPU_VOICE_ADSR_AR |
-                          SPU_VOICE_ADSR_DR |
-                          SPU_VOICE_ADSR_SR |
-                          SPU_VOICE_ADSR_RR |
-                          SPU_VOICE_ADSR_SL;
+    channel->attr.mode |= AKAO_UPDATE_SPU_ADSR;
 
     if( channel->update_flags & AKAO_UPDATE_OVERLAY )
     {
@@ -792,7 +785,7 @@ void system_akao_opcode_ca_loop_return( ChannelData* channel, AkaoConfig* config
 
 void system_akao_opcode_cb_sfx_reset( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags &= ~(0x00000020 | 0x00000010 | AKAO_UPDATE_PAN_LFO | AKAO_UPDATE_TREMOLO | AKAO_UPDATE_VIBRATO);
+    channel->update_flags &= ~(AKAO_UPDATE_SIDE_CHAIN_VOL | AKAO_UPDATE_SIDE_CHAIN_PITCH | AKAO_UPDATE_PAN_LFO | AKAO_UPDATE_TREMOLO | AKAO_UPDATE_VIBRATO);
 
     system_akao_opcode_c5_noise_off( channel, config, mask );
     system_akao_opcode_c7_frequency_modulation_off( channel, config, mask );
@@ -883,28 +876,28 @@ void system_akao_opcode_d3_frequency_modulation_switch( ChannelData* channel, Ak
 
 void system_akao_opcode_d4_side_chain_playback_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags |= 0x00000010; // update noise clock frequency
+    channel->update_flags |= AKAO_UPDATE_SIDE_CHAIN_PITCH;
 }
 
 
 
 void system_akao_opcode_d5_side_chain_playback_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags &= ~0x00000010;
+    channel->update_flags &= ~AKAO_UPDATE_SIDE_CHAIN_PITCH;
 }
 
 
 
 void system_akao_opcode_d6_side_chain_pitch_vol_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags |= 0x00000020;
+    channel->update_flags |= AKAO_UPDATE_SIDE_CHAIN_VOL;
 }
 
 
 
 void system_akao_opcode_d7_side_chain_pitch_vol_off( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    channel->update_flags &= ~0x00000020;
+    channel->update_flags &= ~AKAO_UPDATE_SIDE_CHAIN_VOL;
 }
 
 
@@ -916,7 +909,7 @@ void system_akao_opcode_d8_fine_tuning_absolute( ChannelData* channel, AkaoConfi
 {
     u32 akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0xce] = h(b[akao]);
+    channel->fine_tuning = b[akao];
 }
 
 
@@ -926,7 +919,7 @@ void system_akao_opcode_d9_fine_tuning_relative( ChannelData* channel, AkaoConfi
 {
     u32 akao = channel->seq;
     channel->seq = akao + 0x1;
-    [channel + 0xce] = h(hu[channel + 0xce] + b[akao]);
+    channel->fine_tuning += b[akao];
 }
 
 
@@ -1047,7 +1040,7 @@ void system_akao_opcode_ea_reverb_depth( ChannelData* channel, AkaoConfig* confi
     u32 akao = channel->seq;
     channel->seq = akao + 0x2;
 
-    config->update_flags |= 0x00000080;
+    config->update_flags |= AKAO_UPDATE_REVERB;
     config->reverb_depth = hu[akao] << 0x10;
     config->reverb_depth_slide_steps = 0;
 }
@@ -1102,10 +1095,10 @@ void system_akao_opcode_ef_jump_conditional( ChannelData* channel, AkaoConfig* c
 {
     u32 akao = channel->seq;
 
-    if( ( hu[config + 4e] != 0 ) && ( hu[config + 0x4e] >= bu[akao + 0x1] ) )
+    if( (config->condition != 0) && (config->condition >= bu[akao + 0x1]) )
     {
         channel->seq = w(akao + 0x3 + h[akao + 0x2]);
-        [config + 0x4c] = h(hu[config + 0x4e]);
+        config->condition_stored = config->condition;
     }
     else
     {
@@ -1164,28 +1157,27 @@ void system_akao_opcode_f2_load_instrument( ChannelData* channel, AkaoConfig* co
     if( (channel->type != AKAO_MUSIC) || ((mask & w[config + 0xc] & g_channels_3_active_mask) == 0) )
     {
         u16 prev = channel->instr_id;
-        channel->pitch_base *= w[0x80075f28 + instr_id * 0x40 + 0x10] / w[0x80075f28 + prev * 0x40 + 0x10];
+        channel->pitch_base *= g_akao_instrument[instr_id].pitch[0] / g_akao_instrument[prev].pitch[0];
 
         channel->attr.mask |= SPU_VOICE_PITCH;
     }
 
     channel->instr_id = instr_id;
-
     channel->attr.addr = 0x76fe0;
-    channel->attr.loop_addr = w[0x80075f28 + instr_id * 0x40 + 0x4];
-    channel->attr.a_mode = bu[0x80075f28 + instr_id * 0x40 + 0xd];
-    channel->attr.s_mode = bu[0x80075f28 + instr_id * 0x40 + 0xe];
-    channel->attr.ar = bu[0x80075f28 + instr_id * 0x40 + 0x8];
-    channel->attr.dr = bu[0x80075f28 + instr_id * 0x40 + 0x9];
-    channel->attr.sl = bu[0x80075f28 + instr_id * 0x40 + 0xa];
-    channel->attr.sr = bu[0x80075f28 + instr_id * 0x40 + 0xb];
+    channel->attr.loop_addr = g_akao_instrument[instr_id].loop_addr;
+    channel->attr.a_mode = g_akao_instrument[instr_id].a_mode;
+    channel->attr.s_mode = g_akao_instrument[instr_id].s_mode;
+    channel->attr.ar = g_akao_instrument[instr_id].ar;
+    channel->attr.dr = g_akao_instrument[instr_id].dr;
+    channel->attr.sl = g_akao_instrument[instr_id].sl;
+    channel->attr.sr = g_akao_instrument[instr_id].sr;
 
     channel->attr.mask |= AKAO_UPDATE_SPU_BASE_WOR;
 
     if( (channel->update_flags & AKAO_UPDATE_ALTERNATIVE) == 0 )
     {
-        channel->attr.r_mode = bu[0x80075f28 + instr_id * 0x40 + 0xf];
-        channel->attr.rr = bu[0x80075f28 + instr_id * 0x40 + 0xc];
+        channel->attr.r_mode = g_akao_instrument[instr_id].r_mode;
+        channel->attr.rr = g_akao_instrument[instr_id].rr;
         channel->attr.mask |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
     }
 }
@@ -1333,7 +1325,7 @@ void system_akao_opcode_f9_alt_voice_off( ChannelData* channel, AkaoConfig* conf
     config->alt_mask &= ~(1 << channel->alt_voice_id);
     channel->update_flags &= ~AKAO_UPDATE_ALTERNATIVE;
 
-    channel->attr.rr = bu[0x80075f28 + channel->intsr_id * 0x40 + 0xc];
+    channel->attr.rr = g_akao_instrument[channel->intsr_id].rr;
     channel->attr.mask |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
 }
 

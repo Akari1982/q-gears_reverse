@@ -414,7 +414,7 @@ void system_akao_command_90( CommandData* data )
 
 void system_akao_command_92( CommandData* data )
 {
-    [0x8009a104 + 0x4e] = h(hu[data + 0x4]);
+    g_channels_1_config.condition = hu[data + 0x4];
 }
 
 
@@ -977,7 +977,7 @@ void system_akao_command_d6( CommandData* data )
 void system_akao_command_e0( CommandData* data )
 {
     [0x80062f70] = h(hu[data + 0x4] & 0x7f);
-    g_channels_1_config.update_flags |= 0x00000080;
+    g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
 }
 
 
@@ -997,7 +997,7 @@ void system_akao_command_e4( CommandData* data )
 
     system_akao_update_reverb_voices();
 
-    g_channels_1_config.update_flags |= 0x00000080;
+    g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
 }
 
 
@@ -1054,7 +1054,7 @@ void system_akao_command_f4( CommandData* data )
         dst += 0x4;
     }
 
-    if( hu[0x80099e0c] == 2 )
+    if( g_channels_3[0x6].type == AKAO_MENU )
     {
         [A2 + 0x0] = w(w[A2 + 0x0] & 0xff3fffff);
         [A2 + 0x4] = w(w[A2 + 0x4] & 0xff3fffff);

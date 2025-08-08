@@ -489,7 +489,7 @@
 80030148 system_akao_update_pitch_lfo_voices
 80030234 system_akao_main
 80030380 func30380
-800308D4 system_akao_update
+800308D4 system_akao_main_update
 80030E7C system_akao_execute_sequence
 80031820 system_akao_instr_init
 800318BC system_akao_get_next_note
