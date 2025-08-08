@@ -115,7 +115,7 @@ void system_akao_init_data()
     g_channels_1_config.on_mask = 0;
     [0x8009a104 + 0xc] = w(0);
     g_channels_1_config.off_mask = 0;
-    [0x8009a104 + 0x14] = w(0);
+    g_channels_1_config.active_mask_stored = 0;
     g_channels_1_config.noise_mask = 0;
     g_channels_1_config.reverb_mask = 0;
     g_channels_1_config.pitch_lfo_mask = 0;
@@ -407,7 +407,7 @@ void system_akao_music_channels_init()
     g_channels_1_config.condition_stored = 0;
     g_channels_1_config.condition = 0;
     g_channels_1_config.reverb_depth_slide_steps = 0;
-    [0x8009a104 + 0x54] = h(0);
+    g_channels_1_config.mute_music = 0;
     g_channels_1_config.timer_upper_cur = 0;
     g_channels_1_config.timer_lower = 0;
     g_channels_1_config.timer_lower_cur = 0;
@@ -928,7 +928,7 @@ void func2aabc( u8 save_id )
     g_channels_1_config.condition = hu[0x80083382 + V1 + 0000];
     g_channels_1_config.reverb_depth_slide_steps = hu[0x80083384 + V1 + 0000];
     g_channels_1_config.noise_clock = hu[0x80083386 + V1 + 0000];
-    [0x8009a104 + 0x54] = h(hu[0x80083388 + V1 + 0000]);
+    g_channels_1_config.mute_music = hu[0x80083388 + V1 + 0000];
     g_channels_1_config.timer_upper = hu[0x8008338a + V1 + 0000];
     g_channels_1_config.timer_upper_cur = hu[0x8008338c + V1 + 0000];
     g_channels_1_config.timer_lower = hu[0x8008338e + V1 + 0000];
@@ -1107,8 +1107,8 @@ void func2cfc0( CommandData* data )
     system_psyq_spu_set_irq_callback( 0 );
 
     A0 = w[data + 0x4];
-    V0 = w[data + 0xc] << 0x7;
     V1 = w[data + 0x8];
+    V0 = w[data + 0xc] << 0x7;
 
     [0x80062fe0] = w(A0);
     [0x80062fb0] = w(V1);
@@ -3247,10 +3247,10 @@ void system_akao_main_update()
         }
     }
 
-    if( hu[0x8009a104 + 0x54] != 0 )
+    if( g_channels_1_config.mute_music != 0 )
     {
         system_akao_command_9b( 0x8009a000 ); // mute music
-        [0x8009a104 + 0x54] = h(0);
+        g_channels_1_config.mute_music = 0;
     }
 
     system_akao_execute_commands_queue();

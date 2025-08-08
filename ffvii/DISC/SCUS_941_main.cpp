@@ -208,33 +208,20 @@ if( ( bu[0x80062d98] == 0 ) && ( bu[0x80062d99] == 0 ) )
 
 
 
-////////////////////////////////
-// system_init_base()
+void system_init_base()
+{
+    func3d1b4(); // disable dma, set default exit from exception
+    system_interrupts_timer_dma_initialize();
+    system_psyq_reset_graph( 0 );
+    system_psyq_spu_init();
 
-func3d1b4(); // disable dma, set default exit from exception
+    [0x80095dd4] = h(0);
 
-system_interrupts_timer_dma_initialize();
-
-A0 = 0;
-system_psyq_reset_graph();
-
-A0 = 0;
-func362b8(); // init spu
-
-[0x80095dd4] = h(0);
-
-// set render func
-A0 = 8001155c; // func1155c()
-system_call_main_timer_additional_callback_0();
-
-A0 = 0;
-system_psyq_set_graph_debug();
-
-A0 = 0;
-system_psyq_set_disp_mask();
-
-system_psyq_init_geom();
-////////////////////////////////
+    system_call_main_timer_additional_callback_0( 0x8001155c ); // set render func func1155c()
+    system_psyq_set_graph_debug( 0 );
+    system_psyq_set_disp_mask( 0 );
+    system_psyq_init_geom();
+}
 
 
 
@@ -323,7 +310,7 @@ void system_field_run()
 
 
 
-void func11938()
+void system_init_akao_engine()
 {
     system_cdrom_start_load_file( w[0x80048cfc], w[0x80048d00], 0x800f0000, 0 ); // "SOUND\INSTR.ALL"
     while( system_cdrom_read_chain() != 0 ) {}
@@ -436,7 +423,7 @@ while( true )
 
     func148a0();
 
-    func11938(); // load sounds instr.dat instr.all effect.all
+    system_init_akao_engine(); // load sounds instr.dat instr.all effect.all
 
     func1c434();
 

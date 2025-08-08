@@ -11,7 +11,7 @@
 80011784 system_init_dispenv_drawenv
 80011860 system_field_run
 80011920 func11920
-80011938 func11938
+80011938 system_init_akao_engine
 800119E4 func119e4
 80011AEC func11aec
 80011BB4 func11bb4

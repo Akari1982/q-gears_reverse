@@ -157,7 +157,7 @@ struct ChannelConfig
     u16 condition;                  // 0x4e
     u16 reverb_depth_slide_steps;   // 0x50
     u16 noise_clock;                // 0x52
-                                    // 0x54 [][]     ???
+    u15 mute_music;                 // 0x54
     u16 timer_upper;                // 0x56
     u16 timer_upper_cur;            // 0x58
     u16 timer_lower;                // 0x5a
@@ -167,15 +167,15 @@ struct ChannelConfig
 
 struct AkaoInstrument
 {
-    u32 addr                        // 0x00
+    u32 addr;                       // 0x00
     u32 loop_addr;                  // 0x04
     u8 ar;                          // 0x08
     u8 dr;                          // 0x09
     u8 sl;                          // 0x0a
     s8 sr;                          // 0x0b
     u8 rr;                          // 0x0c
-    s32 a_mode;                     // 0x0d
-    s32 s_mode;                     // 0x0e
-    s32 r_mode;                     // 0x0f
+    s8 a_mode;                     // 0x0d
+    s8 s_mode;                     // 0x0e
+    s8 r_mode;                     // 0x0f
     s32 pitch[0xc];                 // 0x10
 };
