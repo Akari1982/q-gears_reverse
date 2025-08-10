@@ -616,11 +616,11 @@ void system_akao_command_a7( CommandData* data )
 
 void func2bd04( CommandData* data, ChannelData* channel )
 {
-    A3 = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
-    (channel + 0)->vol_balance_slide_steps = A3;
-    (channel + 1)->vol_balance_slide_steps = A3
-    (channel + 0)->vol_balance_slide_step = (((((hu[data + 0x8] & 0x7f) << 0x8) - (channel + 0)->vol_balance) << 0x10) >> 0x10) / (channel + 0)->vol_balance_slide_steps;
-    (channel + 1)->vol_balance_slide_step = (((((hu[data + 0x8] & 0x7f) << 0x8) - (channel + 1)->vol_balance) << 0x10) >> 0x10) / (channel + 1)->vol_balance_slide_steps;
+    s16 steps = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
+    (channel + 0)->vol_balance_slide_steps = steps;
+    (channel + 1)->vol_balance_slide_steps = steps
+    (channel + 0)->vol_balance_slide_step = (((((hu[data + 0x8] & 0x7f) << 0x8) - (channel + 0)->vol_balance) << 0x10) >> 0x10) / steps;
+    (channel + 1)->vol_balance_slide_step = (((((hu[data + 0x8] & 0x7f) << 0x8) - (channel + 1)->vol_balance) << 0x10) >> 0x10) / steps;
 }
 
 
@@ -655,10 +655,10 @@ void system_akao_command_ab( CommandData* data )
 
 void func2bfcc( CommandData* data, ChannelData* channel )
 {
-    [channel + 0x0 * 0x108 + 0x60] = h((hu[data + 0x4] & 0x7f) << 0x8);
-    [channel + 0x1 * 0x108 + 0x60] = h((hu[data + 0x4] & 0x7f) << 0x8);
-    [channel + 0x0 * 0x108 + 0x62] = h(0);
-    [channel + 0x1 * 0x108 + 0x62] = h(0);
+    (channel + 0)->vol_pan = (hu[data + 0x4] & 0x7f) << 0x8;
+    (channel + 1)->vol_pan = (hu[data + 0x4] & 0x7f) << 0x8;
+    (channel + 0)->vol_pan_slide_steps = 0;
+    (channel + 1)->vol_pan_slide_steps = 0;
     (channel + 0)->attr.mask |= AKAO_UPDATE_SPU_VOICE;
     (channel + 1)->attr.mask |= AKAO_UPDATE_SPU_VOICE;
 }
@@ -695,12 +695,11 @@ void system_akao_command_af( CommandData* data )
 
 void func2c004( CommandData* data, ChannelData* channel )
 {
-    A3 = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
-    [channel + 0x0 * 0x108 + 0x62] = h(A3);
-    [channel + 0x1 * 0x108 + 0x62] = h(A3);
-
-    [channel + 0x0 * 0x108 + 0xca] = h((((((hu[data + 0x8] & 0x7f) << 0x8) - hu[channel + 0x0 * 0x108 + 0x60]) << 0x10) >> 0x10) / h[channel + 0x0 * 0x108 + 0x62]);
-    [channel + 0x1 * 0x108 + 0xca] = h((((((hu[data + 0x8] & 0x7f) << 0x8) - hu[channel + 0x1 * 0x108 + 0x60]) << 0x10) >> 0x10) / h[channel + 0x1 * 0x108 + 0x62]);
+    s16 steps = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
+    (channel + 0)->vol_pan_slide_steps = steps;
+    (channel + 1)->vol_pan_slide_steps = steps;
+    (channel + 0)->vol_pan_slide_step = (((((hu[data + 0x8] & 0x7f) << 0x8) - (channel + 0)->vol_pan) << 0x10) >> 0x10) / steps;
+    (channel + 1)->vol_pan_slide_step = (((((hu[data + 0x8] & 0x7f) << 0x8) - (channel + 1)->vol_pan) << 0x10) >> 0x10) / steps;
 }
 
 

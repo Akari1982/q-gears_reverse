@@ -934,32 +934,32 @@ void func2aabc( u8 save_id )
 {
     V1 = save_id * 0x60;
 
-    g_channels_1_config.active_mask = w[0x80083338 + V1 + 0000];
-    g_channels_1_config.on_mask = w[0x8008333c + V1 + 0000];
-    [0x8009a104 + 0xc] = w(w[0x80083340 + V1 + 0000]);
-    g_channels_1_config.tempo = w[0x8008334c + V1 + 0000];
-    g_channels_1_config.tempo_slide_step = w[0x80083350 + V1 + 0000];
-    g_channels_1_config.tempo_update = w[0x80083354 + V1 + 0000];
-    g_channels_1_config.over_mask = w[0x80083358 + V1 + 0000];
-    g_channels_1_config.alt_mask = w[0x8008335c + V1 + 0000];
-    g_channels_1_config.noise_mask = w[0x80083360 + V1 + 0000];
-    g_channels_1_config.reverb_mask = w[0x80083364 + V1 + 0000];
-    g_channels_1_config.pitch_lfo_mask = w[0x80083368 + V1 + 0000];
-    g_channels_1_config.update_flags = w[0x8008336c + V1 + 0000];
-    g_channels_1_config.reverb_depth = w[0x80083374 + V1 + 0000];
-    g_channels_1_config.reverb_depth_slide_step = w[0x80083378 + V1 + 0000];
-    g_channels_1_config.tempo_slide_steps = hu[0x8008337c + V1 + 0000];
-    g_channels_1_config.music_id = hu[0x80083334 + V1 + 0x4a];
-    g_channels_1_config.condition_stored = hu[0x80083380 + V1 + 0000];
-    g_channels_1_config.condition = hu[0x80083382 + V1 + 0000];
+    g_channels_1_config.active_mask               = w[0x80083338 + V1 + 0000];
+    g_channels_1_config.on_mask                   = w[0x8008333c + V1 + 0000];
+    [0x8009a104 + 0xc]                          = w(w[0x80083340 + V1 + 0000]);
+    g_channels_1_config.tempo                     = w[0x8008334c + V1 + 0000];
+    g_channels_1_config.tempo_slide_step          = w[0x80083350 + V1 + 0000];
+    g_channels_1_config.tempo_update              = w[0x80083354 + V1 + 0000];
+    g_channels_1_config.over_mask                 = w[0x80083358 + V1 + 0000];
+    g_channels_1_config.alt_mask                  = w[0x8008335c + V1 + 0000];
+    g_channels_1_config.noise_mask                = w[0x80083360 + V1 + 0000];
+    g_channels_1_config.reverb_mask               = w[0x80083364 + V1 + 0000];
+    g_channels_1_config.pitch_lfo_mask            = w[0x80083368 + V1 + 0000];
+    g_channels_1_config.update_flags              = w[0x8008336c + V1 + 0000];
+    g_channels_1_config.reverb_depth              = w[0x80083374 + V1 + 0000];
+    g_channels_1_config.reverb_depth_slide_step   = w[0x80083378 + V1 + 0000];
+    g_channels_1_config.tempo_slide_steps        = hu[0x8008337c + V1 + 0000];
+    g_channels_1_config.music_id                 = hu[0x80083334 + V1 + 0x4a];
+    g_channels_1_config.condition_stored         = hu[0x80083380 + V1 + 0000];
+    g_channels_1_config.condition                = hu[0x80083382 + V1 + 0000];
     g_channels_1_config.reverb_depth_slide_steps = hu[0x80083384 + V1 + 0000];
-    g_channels_1_config.noise_clock = hu[0x80083386 + V1 + 0000];
-    g_channels_1_config.mute_music = hu[0x80083388 + V1 + 0000];
-    g_channels_1_config.timer_upper = hu[0x8008338a + V1 + 0000];
-    g_channels_1_config.timer_upper_cur = hu[0x8008338c + V1 + 0000];
-    g_channels_1_config.timer_lower = hu[0x8008338e + V1 + 0000];
-    g_channels_1_config.timer_lower_cur = hu[0x80083390 + V1 + 0000] - 2;
-    g_channels_1_config.timer_top_cur = hu[0x80083392 + V1 + 0000];
+    g_channels_1_config.noise_clock              = hu[0x80083386 + V1 + 0000];
+    g_channels_1_config.mute_music               = hu[0x80083388 + V1 + 0000];
+    g_channels_1_config.timer_upper              = hu[0x8008338a + V1 + 0000];
+    g_channels_1_config.timer_upper_cur          = hu[0x8008338c + V1 + 0000];
+    g_channels_1_config.timer_lower              = hu[0x8008338e + V1 + 0000];
+    g_channels_1_config.timer_lower_cur          = hu[0x80083390 + V1 + 0000] - 2;
+    g_channels_1_config.timer_top_cur            = hu[0x80083392 + V1 + 0000];
 
     g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
 
@@ -1014,7 +1014,7 @@ void func2aabc( u8 save_id )
     system_akao_update_reverb_voices();
     system_akao_update_pitch_lfo_voices();
 
-    if( (g_akao_vol_mul_music_slide_steps == 0) && (hu[0x8009c5a0 + 0x8] == 0) )
+    if( (g_akao_vol_mul_music_slide_steps == 0) && (hu[0x8009c5a0 + 0x0 * 0xc + 0x8] == 0) )
     {
         V1 = g_akao_vol_mul_music - 0xa0000;
         g_akao_vol_mul_music_slide_steps = 0x3c;
@@ -1031,9 +1031,8 @@ void func2aabc( u8 save_id )
 
     if( g_akao_control_flags & 0x00000001 )
     {
-        u32 active_mask = g_channels_1_config.active_mask;
+        g_channels_1_config.active_mask_stored = g_channels_1_config.active_mask;
         g_channels_1_config.active_mask = 0;
-        [0x8009a104 + 0x14] = w(active_mask);
     }
 }
 
@@ -2188,7 +2187,7 @@ void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_ma
     {
         volume_level = ((volume_level + channel->tremolo_vol) * ((g_akao_vol_mul_music >> 0x10) & 0x7f)) >> 0x7;
 
-        if( hu[0x8009c5a0 + 0x8] != 0 )
+        if( hu[0x8009c5a0 + 0x0 * 0xc + 0x8] != 0 )
         {
             volume_level = (volume_level * h[0x8009c5a0 + channel_id * 0xc + 0x2]) >> 0x7;
         }
@@ -2999,7 +2998,7 @@ void func30380()
         channel += 1;
     }
 
-    if( hu[0x8009c5a0 + 0x8] != 0 )
+    if( hu[0x8009c5a0 + 0x0 * 0xc + 0x8] != 0 )
     {
         S6 = 0x8009c5a0;
         channel_1 = &g_channels_1;
@@ -3313,9 +3312,6 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
         }
         else if( opcode < 0x84 )
         {
-            A0 = opcode / 0xb;
-            S2 = A0;
-
             if( channel->update_flags & AKAO_UPDATE_DRUM_MODE )
             {
                 if( channel->type == AKAO_MUSIC )
@@ -3327,6 +3323,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                     g_channels_3_on_mask |= mask;
                 }
 
+                S2 = opcode / 0xb;
                 V1 = S2 / 0xc;
                 A0 = S2 % 0xc
 
@@ -3357,9 +3354,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                 V1 = bu[A2 + 0x1];
 
                 A1 = S2 / 0xc;
-                V1 = S2 % 0xc;
-
-                A0 = g_akao_instrument[instr_id].pitch[V1];
+                A0 = g_akao_instrument[instr_id].pitch[S2 % 0xc];
 
                 if( A1 >= 0x7 )
                 {
@@ -3375,7 +3370,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
             }
             else
             {
-                S2 = A0 + channel->octave * 0xc;
+                S2 = channel->octave * 0xc + opcode / 0xb;
 
                 if( ( channel->portamento_steps != 0 ) && ( hu[channel + 0x6a] != 0 ) )
                 {
@@ -3412,7 +3407,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 
                 V1 = S2 / 0xc;
 
-                A0 = g_akao_instrument[channel->instr_id].pitch[(S2 & 0xff) % 0xc];
+                A0 = g_akao_instrument[channel->instr_id].pitch[S2 % 0xc];
                 if( V1 >= 0x7 )
                 {
                     A0 = A0 << (V1 - 0x6);
@@ -3489,7 +3484,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
 
             if( channel->type == AKAO_MUSIC )
             {
-                A0 = w[0x80075f38 + channel->instr_id * 0x40 + ((S2 & 0xff) % 0xc) * 4];
+                A0 = g_akao_instrument[channel->instr_id].pitch[S2 % 0xc];
 
                 s16 V0 = channel->fine_tuning;
                 if( V0 != 0 )
@@ -3509,7 +3504,7 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
             }
             else
             {
-                A0 = (w[0x80075f38 + channel->instr_id * 0x40 + ((S2 & 0xff) % 0xc) * 0x4]) << 0x10; // get pitch
+                A0 = (g_akao_instrument[channel->instr_id].pitch[S2 % 0xc]) << 0x10;
             }
 
             S2 = (S2 & 0xff) / 0xc;
