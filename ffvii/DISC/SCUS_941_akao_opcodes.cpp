@@ -791,14 +791,14 @@ void system_akao_opcode_cb_sfx_reset( ChannelData* channel, AkaoConfig* config, 
     system_akao_opcode_c7_frequency_modulation_off( channel, config, mask );
     system_akao_opcode_c3_reverb_off( channel, config, mask );
 
-    [channel + 0x6e] = h(hu[channel + 0x6e] & 0xfffa);
+    channel->sfx_mask &= ~(AKAO_SFX_FULL_LENGTH | AKAO_SFX_LEGATO);
 }
 
 
 
 void system_akao_opcode_cc_legato_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0x6e] = h(0x0001);
+    channel->sfx_mask = AKAO_SFX_LEGATO;
 }
 
 
@@ -837,7 +837,7 @@ void system_akao_opcode_cf_noise_switch( ChannelData* channel, AkaoConfig* confi
 
 void system_akao_opcode_d0_full_length_on( ChannelData* channel, AkaoConfig* config, u32 mask )
 {
-    [channel + 0x6e] = h(0x0004);
+    channel->sfx_mask = AKAO_SFX_FULL_LENGTH;
 }
 
 
@@ -934,7 +934,7 @@ void system_akao_opcode_da_portamento_on( ChannelData* channel, AkaoConfig* conf
     channel->portamento_steps = steps;
 
     [channel + 0x6a] = h(0x0);
-    [channel + 0x6e] = h(0x0001);
+    channel->sfx_mask = AKAO_SFX_LEGATO;
     [channel + 0xd4] = h(0x0);
 }
 

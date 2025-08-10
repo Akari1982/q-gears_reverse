@@ -17,13 +17,16 @@
     s16 vol_r;                      // 0x2a 0x106 right volume
 } ;
 
-#define AKAO_MUSIC 0
-#define AKAO_SOUND 1
-#define AKAO_MENU 2
+#define AKAO_MUSIC 0x0
+#define AKAO_SOUND 0x1
+#define AKAO_MENU  0x2
 
-#define AKAO_STEREO 1
-#define AKAO_MONO 2
-#define AKAO_STEREO_CHANNELS 4
+#define AKAO_STEREO          0x1
+#define AKAO_MONO            0x2
+#define AKAO_STEREO_CHANNELS 0x4
+
+#define AKAO_SFX_LEGATO      0x1
+#define AKAO_SFX_FULL_LENGTH 0x4
 
 #define AKAO_UPDATE_SPU_VOICE    (SPU_VOICE_VOLL       | SPU_VOICE_VOLR)
 #define AKAO_UPDATE_SPU_ADSR     (SPU_VOICE_ADSR_AMODE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_RMODE | \
@@ -60,13 +63,11 @@ struct ChannelData
     u32 alt_voice_id;                   // 0x28
     u32 vol_master;                     // 0x2c
     u32 pitch_base;                     // 0x30
-                                        // 0x34 [][][][] init with 0. pitch related.
+    s32 pitch_slide;                    // 0x34
                                         // 0x36 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
     s32 update_flags;                   // 0x38
-                                        // 0x3c [][]     ???
-                                        // 0x3d [][]     pitch modifier. We multiply this with real calculated pitch if +0x54 != 2.
-                                        // 0x3e
-                                        // 0x40 [][][][] ???
+    u32 pitch_mul_sound;                // 0x3c
+    s32 pitch_mul_sound_slide_step;     // 0x40
     s32 volume;                         // 0x44
     s32 vol_slide_step;                 // 0x48
     s32 pitch_slide_step;               // 0x4c
@@ -75,7 +76,7 @@ struct ChannelData
     u8 length_1;                        // 0x56
     u8 length_2;                        // 0x57
     u16 instr_id;                       // 0x58
-                                        // 0x5a [][]     ???
+    u16 pitch_mul_sound_slide_steps;    // 0x5a
     u16 vol_slide_steps;                // 0x5c
     u16 vol_balance_slide_steps;        // 0x5e
     u16 vol_pan;                        // 0x60
@@ -85,7 +86,7 @@ struct ChannelData
     u16 pitch_slide_steps;              // 0x68
                                         // 0x6a [][]     ???
     u16 portamento_steps;               // 0x6c
-                                        // 0x6e [][]     init with 0.
+    u16 sfx_mask;                       // 0x6e
                                         // 0x70
     u16 vibrato_delay;                  // 0x72 [][]
     u16 vibrato_delay_cur;              // 0x74

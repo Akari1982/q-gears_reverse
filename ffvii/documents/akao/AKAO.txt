@@ -1,20 +1,29 @@
-﻿AKAO description
+﻿================
+DATA
+================
+0x8004a60c       0x20 bytes hardcoded default sample loaded to SPU memory.
+SOUND/EFFECT.ALL contain sequences for all game sounds.
+SOUND/INSTR.ALL  92 main samples from game.
+SOUND/INSTR.DAT  instriments for samples.
+SOUND/INSTR2.ALL 6 voice samples from One Winged Angel;
+SOUND/INSTR2.DAT instriments for samples.
+================
+
+
+
+
+
+
+
+
+
+
+AKAO description
 
 header
 +00 [][][][] AKAO string 0x41 0x4b 0x41 0x4f.
 +04 [][]     music id.
 +06 [][]     length.
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -39,12 +48,8 @@ after header there is <frame_length> bytes of music data.
 
 
 All sound samples is in SOUND directory on cd's. For all 3 cd's contents all the same.
-INSTR.ALL  - 92 main samples from game
-INSTR2.ALL - 6 voice samples from One Winged Angel
 
 INSTR*.ALL format is known to me (32-byte header with offset of first sample, maybe. after this there are 16-byte ADPCM encoded frames 22100Hz, mono, between sample frame groups there are 16 bytes of zero's (but there are exceptions))
-
-EFFECT.ALL - for now totally unknown
 
 INSTR*.DAT - some data for INSTR*.ALL
 INSTR*.DAT contains <INSTR*.ALL sample count> 64-byte frames with some offsets for every sample and 60 bytes of other data, mostly 16-bit numbers.

@@ -89,7 +89,7 @@ void system_akao_command_10( CommandData* data )
     if( g_channels_1_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
     {
         func2a7e8();
-        system_akao_music_copy_channels_and_config( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
+        system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, 0x8009a104, 0x80083394 );
     }
 
     system_akao_music_stop_channels_1();
@@ -128,11 +128,11 @@ void system_akao_command_14( CommandData* data )
     {
         if( g_channels_1_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
         {
-            system_akao_music_copy_channels_and_config( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
+            system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 );
         }
         else
         {
-            system_akao_music_copy_channels_and_config( 0x80096608, 0x8007ec10, 0x8009a104, 0x80083334 );
+            system_akao_music_copy_channels_and_config( g_channels_1, 0x8007ec10, g_channels_1_config, 0x80083334 );
         }
     }
 
@@ -153,13 +153,13 @@ void system_akao_command_15( CommandData* data )
 
     system_akao_copy_music( offset, size );
 
-    [0x80062ff8] = w(w[0x80062ff8] & 0xfffffeff);
+    g_akao_control_flags &= 0x00000100;
 
     func2a7e8();
 
     if( hu[0x80083334 + 0x4a] == music_id )
     {
-        system_akao_music_copy_channels_and_config( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
+        system_akao_music_copy_channels_and_config( g_channels_1, 0x80097ec8, g_channels_1_config, 0x8009a164 );
         system_akao_music_stop_channels_1();
         func2aabc( 0x0 );
 
@@ -174,7 +174,7 @@ void system_akao_command_15( CommandData* data )
     }
     else if( hu[0x800833de] == music_id )
     {
-        system_akao_music_copy_channels_and_config( 0x80096608, 0x80097ec8, 0x8009a104, 0x8009a164 );
+        system_akao_music_copy_channels_and_config( g_channels_1, 0x80097ec8, g_channels_1_config, 0x8009a164 );
         system_akao_music_stop_channels_1();
         func2aabc( 0x1 );
 
@@ -193,11 +193,11 @@ void system_akao_command_15( CommandData* data )
         {
             if( g_channels_1_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
             {
-                system_akao_music_copy_channels_and_config( 0x80096608, 0x800804d0, 0x8009a104, 0x80083394 );
+                system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 );
             }
             else
             {
-                system_akao_music_copy_channels_and_config( 0x80096608, 0x8007ec10, 0x8009a104, 0x80083334 );
+                system_akao_music_copy_channels_and_config( g_channels_1, 0x8007ec10, g_channels_1_config, 0x80083334 );
             }
         }
 
@@ -221,7 +221,7 @@ void system_akao_command_18( CommandData* data )
     if( g_channels_1_config.music_id != 0 )
     {
         [0x80062fc8] = h(( w[data + 0x10] != 0 ) ? hu[data + 0x10] : 0x10);
-        func2afb8(); // save
+        system_akao_music_copy_channels_1_into_2();
     }
 
     system_akao_command_10( data );
@@ -234,7 +234,7 @@ void system_akao_command_19( CommandData* data )
     if( g_channels_1_config.music_id != 0 )
     {
         [0x80062fc8] = h(( w[data + 0x10] != 0 ) ? hu[data + 0x10] : 0x10);
-        func2afb8(); // save
+        system_akao_music_copy_channels_1_into_2();
     }
 
     system_akao_command_14( data );
@@ -372,7 +372,7 @@ void system_akao_command_34( CommandData* data )
 
 void system_akao_command_80( CommandData* data )
 {
-    [0x8009a104 + 0x0] = w(0x1);
+    g_channels_1_config.stereo_mono = AKAO_STEREO;
 
     system_akao_music_volume_reset();
     system_akao_sound_volume_reset();
@@ -382,7 +382,7 @@ void system_akao_command_80( CommandData* data )
 
 void system_akao_command_81( CommandData* data )
 {
-    [0x8009a104 + 0x0] = w(0x2);
+    g_channels_1_config.stereo_mono = AKAO_MONO;
 
     system_akao_music_volume_reset();
     system_akao_sound_volume_reset();
@@ -392,7 +392,7 @@ void system_akao_command_81( CommandData* data )
 
 void system_akao_command_82( CommandData* data )
 {
-    [0x8009a104 + 0x0] = w(0x4);
+    g_channels_1_config.stereo_mono = AKAO_STEREO_CHANNELS;
 
     system_akao_music_volume_reset();
     system_akao_sound_volume_reset();
@@ -402,7 +402,7 @@ void system_akao_command_82( CommandData* data )
 
 void system_akao_command_90( CommandData* data )
 {
-    [0x80062fd8] = w(w[data + 0x4]);
+    g_akao_mute_music_mask = w[data + 0x4];
 
     for( int i = 0; i < 0x18; ++i )
     {
@@ -444,7 +444,7 @@ void system_akao_command_9a( CommandData* data )
         system_akao_update_pitch_lfo_voices();
     }
 
-    [0x80062ff8] = w(w[0x80062ff8] & 0xfffffffe);
+    g_akao_control_flags &= ~0x00000001;
 }
 
 
@@ -454,7 +454,7 @@ void system_akao_command_9b( CommandData* data )
 {
     if( g_channels_1_config.active_mask != 0 )
     {
-        mask = (g_channels_1_config.active_mask | g_channels_1_config.over_mask | g_channels_1_config.alt_mask & (~(g_channels_3_active_mask | w[0x80062f00]));
+        mask = (g_channels_1_config.active_mask | g_channels_1_config.over_mask | g_channels_1_config.alt_mask & (~(g_channels_3_active_mask | g_akao_stream_mask));
 
         if( mask != 0 )
         {
@@ -479,7 +479,7 @@ void system_akao_command_9b( CommandData* data )
         g_channels_1_config.active_mask = 0;
     }
 
-    [0x80062ff8] = w(w[0x80062ff8] | 0x00000001);
+    g_akao_control_flags |= 0x00000001;
 }
 
 
@@ -495,7 +495,7 @@ void system_akao_command_9c( CommandData* data )
         {
             if( mask & (1 << (id + 0x10)) )
             {
-                [0x80099788 + id * 0x108 + 0xe0] = w(w[0x80099788 + id * 0x108 + 0xe0] | AKAO_UPDATE_SPU_VOICE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR);
+                g_channels_3[id].attr.mask |= AKAO_UPDATE_SPU_VOICE | SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR;
                 mask ^= (1 << (id + 0x10));
             }
         }
@@ -508,7 +508,7 @@ void system_akao_command_9c( CommandData* data )
         system_akao_update_pitch_lfo_voices();
     }
 
-    [0x80062ff8] = w(w[0x80062ff8] & 0xfffffffd);
+    g_akao_control_flags &= ~0x00000002;
 }
 
 
@@ -542,7 +542,7 @@ void system_akao_command_9d( CommandData* data )
         }
     }
 
-    [0x80062ff8] = w(w[0x80062ff8] | 0x00000002);
+    g_akao_control_flags |= 0x00000002;
 }
 
 
@@ -735,10 +735,10 @@ void system_akao_command_b3( CommandData* data )
 
 void func2c2cc( CommandData* data, ChannelData* channel )
 {
-    [channel + 0x0 * 0x108 + 0x3c] = w(b[data + 0x4] << 0x8);
-    [channel + 0x1 * 0x108 + 0x3c] = w(b[data + 0x4] << 0x8);
-    [channel + 0x0 * 0x108 + 0x5a] = h(0);
-    [channel + 0x1 * 0x108 + 0x5a] = h(0);
+    (channel + 0)->pitch_mul_sound = b[data + 0x4] << 0x8;
+    (channel + 1)->pitch_mul_sound = b[data + 0x4] << 0x8;
+    (channel + 0)->pitch_mul_sound_slide_steps = 0;
+    (channel + 1)->pitch_mul_sound_slide_steps = 0;
     (channel + 0)->attr.mask |= SPU_VOICE_PITCH;
     (channel + 1)->attr.mask |= SPU_VOICE_PITCH;
 }
@@ -775,80 +775,80 @@ void system_akao_command_b7( CommandData* data )
 
 void func2c300( CommandData* data, ChannelData* channel )
 {
-    A2 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [channel + 0x0 * 0x108 + 0x40] = w(((b[data + 0x8] << 0x8) - w[channel + 0x0 * 0x108 + 0x3c]) / A2);
-    [channel + 0x1 * 0x108 + 0x40] = w(((b[data + 0x8] << 0x8) - w[channel + 0x1 * 0x108 + 0x3c]) / A2);
-    [channel + 0x0 * 0x108 + 0x5a] = h(A2);
-    [channel + 0x1 * 0x108 + 0x5a] = h(A2);
+    (channel + 0)->pitch_mul_sound_slide_step = ((b[data + 0x8] << 0x8) - (channel + 0)->pitch_mul_sound) / steps;
+    (channel + 1)->pitch_mul_sound_slide_step = ((b[data + 0x8] << 0x8) - (channel + 1)->pitch_mul_sound) / steps;
+    (channel + 0)->pitch_mul_sound_slide_steps = steps;
+    (channel + 1)->pitch_mul_sound_slide_steps = steps;
 }
 
 
 
 void system_akao_command_b8( CommandData* data )
 {
-    func2bccc( data, 0x80099db8 - (0 * 0x108) );
-    func2bccc( data, 0x80099db8 - (2 * 0x108) );
-    func2bccc( data, 0x80099db8 - (4 * 0x108) );
-    func2bccc( data, 0x80099db8 - (6 * 0x108) );
+    func2bccc( data, &g_channels_3[0x0] );
+    func2bccc( data, &g_channels_3[0x2] );
+    func2bccc( data, &g_channels_3[0x4] );
+    func2bccc( data, &g_channels_3[0x6] );
 }
 
 
 
 void system_akao_command_b9( CommandData* data )
 {
-    func2bd04( data, 0x80099db8 - (0 * 0x108) );
-    func2bd04( data, 0x80099db8 - (2 * 0x108) );
-    func2bd04( data, 0x80099db8 - (4 * 0x108) );
-    func2bd04( data, 0x80099db8 - (6 * 0x108) );
+    func2bd04( data, &g_channels_3[0x0] );
+    func2bd04( data, &g_channels_3[0x2] );
+    func2bd04( data, &g_channels_3[0x4] );
+    func2bd04( data, &g_channels_3[0x6] );
 }
 
 
 
 void system_akao_command_ba( CommandData* data )
 {
-    func2bfcc( data, 0x80099db8 - (0 * 0x108) );
-    func2bfcc( data, 0x80099db8 - (2 * 0x108) );
-    func2bfcc( data, 0x80099db8 - (4 * 0x108) );
-    func2bfcc( data, 0x80099db8 - (6 * 0x108) );
+    func2bfcc( data, &g_channels_3[0x0] );
+    func2bfcc( data, &g_channels_3[0x2] );
+    func2bfcc( data, &g_channels_3[0x4] );
+    func2bfcc( data, &g_channels_3[0x6] );
 }
 
 
 
 void system_akao_command_bb( CommandData* data )
 {
-    func2c004( data, 0x80099db8 - (0 * 0x108) );
-    func2c004( data, 0x80099db8 - (2 * 0x108) );
-    func2c004( data, 0x80099db8 - (4 * 0x108) );
-    func2c004( data, 0x80099db8 - (6 * 0x108) );
+    func2c004( data, &g_channels_3[0x0] );
+    func2c004( data, &g_channels_3[0x2] );
+    func2c004( data, &g_channels_3[0x4] );
+    func2c004( data, &g_channels_3[0x6] );
 }
 
 
 
 void system_akao_command_bc( CommandData* data )
 {
-    func2c2cc( data, 0x80099db8 - (0 * 0x108) );
-    func2c2cc( data, 0x80099db8 - (2 * 0x108) );
-    func2c2cc( data, 0x80099db8 - (4 * 0x108) );
-    func2c2cc( data, 0x80099db8 - (6 * 0x108) );
+    func2c2cc( data, &g_channels_3[0x0] );
+    func2c2cc( data, &g_channels_3[0x2] );
+    func2c2cc( data, &g_channels_3[0x4] );
+    func2c2cc( data, &g_channels_3[0x6] );
 }
 
 
 
 void system_akao_command_bd( CommandData* data )
 {
-    func2c300( data, 0x80099db8 - (0 * 0x108) );
-    func2c300( data, 0x80099db8 - (2 * 0x108) );
-    func2c300( data, 0x80099db8 - (4 * 0x108) );
-    func2c300( data, 0x80099db8 - (6 * 0x108) );
+    func2c300( data, &g_channels_3[0x0] );
+    func2c300( data, &g_channels_3[0x2] );
+    func2c300( data, &g_channels_3[0x4] );
+    func2c300( data, &g_channels_3[0x6] );
 }
 
 
 
 void system_akao_command_c0( CommandData* data )
 {
-    [0x80062f44] = h(0);
-    [0x80062f5c] = w((w[data + 0x4] & 0x7f) << 0x10);
+    g_akao_vol_mul_music_slide_steps = 0;
+    g_akao_vol_mul_music = (w[data + 0x4] & 0x7f) << 0x10;
 
     system_akao_music_volume_reset();
 }
@@ -857,10 +857,10 @@ void system_akao_command_c0( CommandData* data )
 
 void system_akao_command_c1( CommandData* data )
 {
-    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [0x80062f44] = h(A1);
-    [0x80062f2c] = w((((w[data + 0x8] & 0x7f) << 0x10) - w[0x80062f5c]) / A1);
+    g_akao_vol_mul_music_slide_steps = steps;
+    g_akao_vol_mul_music_slide_step = (((w[data + 0x8] & 0x7f) << 0x10) - g_akao_vol_mul_music) / steps;
 
     system_akao_music_volume_reset();
 }
@@ -869,11 +869,11 @@ void system_akao_command_c1( CommandData* data )
 
 void system_akao_command_c2( CommandData* data )
 {
-    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [0x80062f44] = h(A1);
-    [0x80062f5c] = w((w[data + 0x8] & 0x7f) << 0x10);
-    [0x80062f2c] = w((((w[data + 0xc] & 0x7f) << 0x10) - ((w[data + 0x8] & 0x7f) << 0x10)) / A1);
+    g_akao_vol_mul_music_slide_steps = steps;
+    g_akao_vol_mul_music = (w[data + 0x8] & 0x7f) << 0x10;
+    g_akao_vol_mul_music_slide_step = (((w[data + 0xc] & 0x7f) << 0x10) - ((w[data + 0x8] & 0x7f) << 0x10)) / steps;
 
     system_akao_music_volume_reset();
 }
@@ -882,8 +882,8 @@ void system_akao_command_c2( CommandData* data )
 
 void system_akao_command_c8( CommandData* data )
 {
-    [0x80062fd4] = w(hu[data + 0x4] << 0x10);
-    [0x80062fcc] = h(0);
+    g_akao_cd_vol = hu[data + 0x4] << 0x10;
+    g_akao_cd_vol_slide_steps = 0;
 
     func2e428();
 }
@@ -893,90 +893,89 @@ void system_akao_command_c8( CommandData* data )
 // before movie play
 void system_akao_command_c9( CommandData* data )
 {
-    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [0x80062fcc] = h(A1);
-    [0x80062fb4] = w((hu[data + 0x8] << 0x10) - w[0x80062fd4] / A1);
+    g_akao_cd_vol_slide_steps = steps;
+    g_akao_cd_vol_slide_step = (hu[data + 0x8] << 0x10) - g_akao_cd_vol / steps;
 }
 
 
 
 void system_akao_command_ca( CommandData* data )
 {
-    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [0x80062fcc] = h(A1);
-    [0x80062fd4] = w(hu[data + 0x8] << 0x10);
-    [0x80062fb4] = w(((hu[data + 0xc] << 0x10) - (hu[data + 0x8] << 0x10)) / A1);
+    g_akao_cd_vol_slide_steps = steps;
+    g_akao_cd_vol = hu[data + 0x8] << 0x10;
+    g_akao_cd_vol_slide_step = ((hu[data + 0xc] << 0x10) - (hu[data + 0x8] << 0x10)) / steps;
 }
 
 
 
 void system_akao_command_d0( CommandData* data )
 {
-    [0x80062f48] = h(0);
-    [0x80062fe8] = w(b[data + 0x4] << 0x10);
+    g_akao_tempo_mul_music_slide_steps = 0;
+    g_akao_tempo_mul_music = b[data + 0x4] << 0x10;
 }
 
 
 
 void system_akao_command_d1( CommandData* data )
 {
-    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [0x80062f48] = h(A1);
-    [0x80062f30] = w(((b[data + 0x8] << 0x10) - w[0x80062fe8]) / A1);
+    g_akao_tempo_mul_music_slide_steps = steps;
+    g_akao_tempo_mul_music_slide_step = ((b[data + 0x8] << 0x10) - g_akao_tempo_mul_music) / steps;
 }
 
 
 
 void system_akao_command_d2( CommandData* data )
 {
-    A2 = b[data + 0x4] << 0x10;
-    [0x80062fe8] = w(A2);
+    g_akao_tempo_mul_music = b[data + 0x4] << 0x10;
 
-    A1 = ( w[data + 0x8] != 0 ) ? w[data + 0x8] : 1;
+    s16 steps = ( w[data + 0x8] != 0 ) ? w[data + 0x8] : 1;
 
-    [0x80062f48] = h(A1);
-    [0x80062f30] = w(((b[data + 0xc] << 0x10) - A2) / A1);
+    g_akao_tempo_mul_music_slide_steps = steps;
+    g_akao_tempo_mul_music_slide_step = ((b[data + 0xc] << 0x10) - g_akao_tempo_mul_music) / steps;
 }
 
 
 
 void system_akao_command_d4( CommandData* data )
 {
-    [0x80062f40] = h(0);
-    [0x80062fe4] = w(b[data + 0x4] << 0x10);
+    g_akao_pitch_mul_music_slide_steps = 0;
+    g_akao_pitch_mul_music = b[data + 0x4] << 0x10;
 }
 
 
 
 void system_akao_command_d5( CommandData* data )
 {
-    A1 = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
+    s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
-    [0x80062f40] = h(A1);
-    [0x80062f28] = w(((b[data + 0x8] << 0x10) - w[0x80062fe4]) / A1);
+    g_akao_pitch_mul_music_slide_steps = steps;
+    g_akao_pitch_mul_music_slide_step = ((b[data + 0x8] << 0x10) - g_akao_pitch_mul_music) / steps;
 }
 
 
 
 void system_akao_command_d6( CommandData* data )
 {
-    A2 = b[data + 0x4] << 0x10;
-    [0x80062fe4] = w(A2);
+    g_akao_pitch_mul_music = b[data + 0x4] << 0x10;
 
-    A1 = ( w[data + 0x8] != 0 ) ? w[data + 0x8] : 1;
+    s16 steps = ( w[data + 0x8] != 0 ) ? w[data + 0x8] : 1;
 
-    [0x80062f40] = h(A1);
-    [0x80062f28] = w(((b[data + 0xc] << 0x10) - A2) / A1);
+    g_akao_pitch_mul_music_slide_steps = steps;
+    g_akao_pitch_mul_music_slide_step = ((b[data + 0xc] << 0x10) - g_akao_pitch_mul_music) / steps;
 }
 
 
 
+// set reverb pan
 void system_akao_command_e0( CommandData* data )
 {
-    [0x80062f70] = h(hu[data + 0x4] & 0x7f);
+    g_akao_reverb_pan = hu[data + 0x4] & 0x7f;
     g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
 }
 
@@ -984,15 +983,15 @@ void system_akao_command_e0( CommandData* data )
 
 void system_akao_command_e4( CommandData* data )
 {
-    [0x80062fb8] = h(bu[data + 0x4]);
+    g_akao_reverb_mul = bu[data + 0x4];
 
     if( bu[data + 0x4] != 0 )
     {
-        [0x80062ff8] = w(w[0x80062ff8] | 0x00000010);
+        g_akao_control_flags |= 0x00000010;
     }
     else
     {
-        [0x80062ff8] = w(w[0x80062ff8] & 0xffffffef);
+        g_akao_control_flags &= 0x00000010;
     }
 
     system_akao_update_reverb_voices();
@@ -1060,7 +1059,7 @@ void system_akao_command_f4( CommandData* data )
         [A2 + 0x4] = w(w[A2 + 0x4] & 0xff3fffff);
     }
 
-    [0x80062ff8] = w(w[0x80062ff8] | 0x00000100);
+    g_akao_control_flags |= 0x00000100;
 
     system_akao_sound_stop_channels_3();
 
@@ -1075,7 +1074,7 @@ void system_akao_command_f4( CommandData* data )
 
 void system_akao_command_f5( CommandData* data )
 {
-    if( w[0x80062ff8] & 0x00000100 )
+    if( g_akao_control_flags & 0x00000100 )
     {
         src = 0x80097ec8;
         dst = 0x80099788;
@@ -1097,7 +1096,7 @@ void system_akao_command_f5( CommandData* data )
         }
 
         g_channels_3_off_mask = A3 & ~g_channels_3_active_mask;
-        [0x80062ff8] = w(w[0x80062ff8] & 0xfffffeff);
+        g_akao_control_flags &= ~0x00000100;
 
         system_akao_update_noise_voices();
         system_akao_update_reverb_voices();
@@ -1113,8 +1112,8 @@ void system_akao_command_f8( CommandData* data )
 {
     func2cfc0( data );
 
-    g_channels_3_active_mask &= ~w[0x80062f00];
-    g_channels_3_reverb_mask &= ~w[0x80062f00];
+    g_channels_3_active_mask &= ~g_akao_stream_mask;
+    g_channels_3_reverb_mask &= ~g_akao_stream_mask;
 
     system_akao_update_reverb_voices();
 }
@@ -1125,8 +1124,8 @@ void system_akao_command_f9( CommandData* data )
 {
     func2cfc0( data );
 
-    g_channels_3_active_mask &= ~w[0x80062f00];
-    g_channels_3_reverb_mask |= w[0x80062f00];
+    g_channels_3_active_mask &= ~g_akao_stream_mask;
+    g_channels_3_reverb_mask |= g_akao_stream_mask;
 
     system_akao_update_reverb_voices();
 }
