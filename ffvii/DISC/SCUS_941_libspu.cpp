@@ -2725,7 +2725,7 @@ void system_psyq_spu_set_voice_pitch( int voiceNum, u_short pitch )
 // Sets start address of waveform data in the sound buffer
 void system_psyq_spu_set_voice_start_addr( int voiceNum, u_long startAddr )
 {
-    func36de0( (voiceNum << 0x8) | 0x3, startAddr );
+    func36de0( (voiceNum << 0x3) | 0x3, startAddr );
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);

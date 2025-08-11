@@ -272,6 +272,5 @@ u32 field_event_get_akao_offset_in_field( u32 id )
 {
     events_data = w[0x8009c6dc];
     number_of_entity = bu[events_data + 0x2];
-    music_offset = events_data + 0x20 + number_of_entity * 0x8;
-    return w[music_offset + id * 0x4];
+    return w[events_data + 0x20 + number_of_entity * 0x8 + id * 0x4];
 }
