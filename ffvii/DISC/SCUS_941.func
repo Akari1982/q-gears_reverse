@@ -374,7 +374,7 @@
 8002A798 system_akao_sound_volume_reset
 8002A7E8 func2a7e8
 8002A958 func2a958
-8002AABC func2aabc
+8002AABC system_akao_music_restore_channels_and_config
 8002AFB8 system_akao_music_copy_channels_1_into_2
 8002B1A4 system_akao_music_copy_channels_and_config
 8002B1F8 system_akao_command_10

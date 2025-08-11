@@ -470,14 +470,13 @@
 0x80077f28 [][][][] mask of channels we put voice on (auto spu).
 0x80077f2c [][][][] mask of channels we put voice off (auto spu).
 
+0x8007eaac array of two global DRAWENV (0x2 items 0x5c size).
+0x8007eb68 array of two global DISPENV (0x2 items, 0x14 size)
+
 0x8007ebe4 default AkaoVoiceAttr.
 
-0x8007ec10 copy of 0x80096608 or 0x80097ec8 music channels.
-
-8007eaac array of two global DRAWENV (0x2 items 0x5c size).
-8007eb68 array of two global DISPENV (0x2 items, 0x14 size)
-
-0x800804d0 copy of 0x80096608 or 0x80097ec8 music channels.
+0x8007ec10 copy of channels struct for usual music.
+0x800804d0 copy of channels struct for "ffvii_main_theme".
 
 0x80081dc8 struct with size 0x24 where we store data for AKAO parser. Store here data from 8009a000.
     // for 0x10, 0x14, 0x15, 0x18, 0x19
@@ -521,8 +520,8 @@
                 0x02 show all text immediately.
 +2f []
 
-0x80083334 copy of 0x8009a104 or 0x8009a164 music config.
-0x80083394 copy of 0x8009a104 or 0x8009a164 music config.
+0x80083334 copy of channels config for usual music.
+0x80083394 copy of channels config for "ffvii_main_theme".
 
 0x80083580 we copy here akao sequence data when init music 0x10, 0x14 or 0x15.
 0x80086580 we copy copy of sequence 0x80083580 here.

@@ -78,6 +78,7 @@ void system_akao_command_null( CommandData* data )
 
 
 // field_event_opcode_f0_music
+// start field music
 void system_akao_command_10( CommandData* data )
 {
     offset = w[data + 0x4];
@@ -89,18 +90,18 @@ void system_akao_command_10( CommandData* data )
     if( g_channels_1_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
     {
         func2a7e8();
-        system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, 0x8009a104, 0x80083394 );
+        system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 ); // save to 0x1
     }
 
     system_akao_music_stop_channels_1();
 
     if( ( hu[0x80083334 + 0x4a] != 0 ) && ( hu[0x80083334 + 0x4a] == music_id ) )
     {
-        func2aabc( 0x0 );
+        system_akao_music_restore_channels_and_config( 0x0 );
     }
-    else if( ( hu[0x800833de] != 0 ) && ( hu[0x800833de] == music_id ) )
+    else if( ( hu[0x80083334 + 0x60 + 0x4a] != 0 ) && ( hu[0x80083334 + 0x60 + 0x4a] == music_id ) )
     {
-        func2aabc( 0x0 );
+        system_akao_music_restore_channels_and_config( 0x1 );
     }
     else
     {
@@ -114,6 +115,7 @@ void system_akao_command_10( CommandData* data )
 
 // field_event_opcode_f3_musvt
 // load battle music when load battle lib
+// start battle music
 void system_akao_command_14( CommandData* data )
 {
     offset = w[data + 0x4];
@@ -128,11 +130,11 @@ void system_akao_command_14( CommandData* data )
     {
         if( g_channels_1_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
         {
-            system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 );
+            system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 ); // save to 0x1
         }
         else
         {
-            system_akao_music_copy_channels_and_config( g_channels_1, 0x8007ec10, g_channels_1_config, 0x80083334 );
+            system_akao_music_copy_channels_and_config( g_channels_1, 0x8007ec10, g_channels_1_config, 0x80083334 ); // save to 0x0
         }
     }
 
@@ -159,45 +161,45 @@ void system_akao_command_15( CommandData* data )
 
     if( hu[0x80083334 + 0x4a] == music_id )
     {
-        system_akao_music_copy_channels_and_config( g_channels_1, 0x80097ec8, g_channels_1_config, 0x8009a164 );
+        system_akao_music_copy_channels_and_config( g_channels_1, g_channels_2, g_channels_1_config, g_channels_2_config );
         system_akao_music_stop_channels_1();
-        func2aabc( 0x0 );
+        system_akao_music_restore_channels_and_config( 0x0 );
 
         if( g_channels_2_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
         {
-            system_akao_music_copy_channels_and_config( 0x80097ec8, 0x800804d0, 0x8009a164, 0x80083394 );
+            system_akao_music_copy_channels_and_config( g_channels_2, 0x800804d0, g_channels_2_config, 0x80083394 ); // save to 0x1
         }
         else
         {
-            system_akao_music_copy_channels_and_config( 0x80097ec8, 0x8007ec10, 0x8009a164, 0x80083334 );
+            system_akao_music_copy_channels_and_config( g_channels_2, 0x8007ec10, g_channels_2_config, 0x80083334 ); // save to 0x0
         }
     }
-    else if( hu[0x800833de] == music_id )
+    else if( hu[0x80083334 + 0x60 + 0x4a] == music_id )
     {
-        system_akao_music_copy_channels_and_config( g_channels_1, 0x80097ec8, g_channels_1_config, 0x8009a164 );
+        system_akao_music_copy_channels_and_config( g_channels_1, g_channels_2, g_channels_1_config, g_channels_2_config );
         system_akao_music_stop_channels_1();
-        func2aabc( 0x1 );
+        system_akao_music_restore_channels_and_config( 0x1 );
 
         if( g_channels_2_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
         {
-            system_akao_music_copy_channels_and_config( 0x80097ec8, 0x800804d0, 0x8009a164, 0x80083394 );
+            system_akao_music_copy_channels_and_config( g_channels_2, 0x800804d0, g_channels_2_config, 0x80083394 ); // save to 0x1
         }
         else
         {
-            system_akao_music_copy_channels_and_config( 0x80097ec8, 0x8007ec10, 0x8009a164, 0x80083334 );
+            system_akao_music_copy_channels_and_config( g_channels_2, 0x8007ec10, g_channels_2_config, 0x80083334 ); // save to 0x0
         }
     }
     else
     {
-        if( hg_channels_1_config.music_id != 0 )
+        if( g_channels_1_config.music_id != 0 )
         {
             if( g_channels_1_config.music_id == 0xe ) // if currently playing "ffvii_main_theme"
             {
-                system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 );
+                system_akao_music_copy_channels_and_config( g_channels_1, 0x800804d0, g_channels_1_config, 0x80083394 ); // save to 0x1
             }
             else
             {
-                system_akao_music_copy_channels_and_config( g_channels_1, 0x8007ec10, g_channels_1_config, 0x80083334 );
+                system_akao_music_copy_channels_and_config( g_channels_1, 0x8007ec10, g_channels_1_config, 0x80083334 ); // save to 0x0
             }
         }
 
@@ -1033,9 +1035,9 @@ void system_akao_command_f4( CommandData* data )
 {
     func2a958();
 
-    src = 0x80099788;
-    dst = 0x80097ec8;
-    for( int i = 0x210; i != 0; --i )
+    src = g_channels_3;
+    dst = g_channels_2;
+    for( int i = 0x210; i != 0; --i ) // copy 8 channels
     {
         [dst] = w(w[src]);
         src += 0x4;
@@ -1075,9 +1077,9 @@ void system_akao_command_f5( CommandData* data )
 {
     if( g_akao_control_flags & 0x00000100 )
     {
-        src = 0x80097ec8;
-        dst = 0x80099788;
-        for( int i = 0x210; i != 0; --i )
+        src = g_channels_2;
+        dst = g_channels_3;
+        for( int i = 0x210; i != 0; --i ) // copy 0x8 channels
         {
             [dst] = w(w[src]);
             src += 0x4;

@@ -833,7 +833,7 @@ void system_akao_sound_volume_reset()
 
 void func2a7e8()
 {
-    u32 channels_mask = g_channels_1_config.active_mask | g_channels_1_config.over_mask & ~(g_channels_3_active_mask | g_akao_stream_mask);
+    u32 channels_mask = (g_channels_1_config.active_mask | g_channels_1_config.over_mask) & ~(g_channels_3_active_mask | g_akao_stream_mask);
 
     if( channels_mask != 0 )
     {
@@ -930,44 +930,42 @@ void func2a958()
 
 
 
-void func2aabc( u8 save_id )
+void system_akao_music_restore_channels_and_config( u8 save_id )
 {
     V1 = save_id * 0x60;
 
-    g_channels_1_config.active_mask               = w[0x80083338 + V1 + 0000];
-    g_channels_1_config.on_mask                   = w[0x8008333c + V1 + 0000];
-    [0x8009a104 + 0xc]                          = w(w[0x80083340 + V1 + 0000]);
-    g_channels_1_config.tempo                     = w[0x8008334c + V1 + 0000];
-    g_channels_1_config.tempo_slide_step          = w[0x80083350 + V1 + 0000];
-    g_channels_1_config.tempo_update              = w[0x80083354 + V1 + 0000];
-    g_channels_1_config.over_mask                 = w[0x80083358 + V1 + 0000];
-    g_channels_1_config.alt_mask                  = w[0x8008335c + V1 + 0000];
-    g_channels_1_config.noise_mask                = w[0x80083360 + V1 + 0000];
-    g_channels_1_config.reverb_mask               = w[0x80083364 + V1 + 0000];
-    g_channels_1_config.pitch_lfo_mask            = w[0x80083368 + V1 + 0000];
-    g_channels_1_config.update_flags              = w[0x8008336c + V1 + 0000];
-    g_channels_1_config.reverb_depth              = w[0x80083374 + V1 + 0000];
-    g_channels_1_config.reverb_depth_slide_step   = w[0x80083378 + V1 + 0000];
-    g_channels_1_config.tempo_slide_steps        = hu[0x8008337c + V1 + 0000];
+    g_channels_1_config.active_mask               = w[0x80083334 + V1 + 0x4];
+    g_channels_1_config.on_mask                   = w[0x80083334 + V1 + 0x8];
+    [0x8009a104 + 0xc]                          = w(w[0x80083334 + V1 + 0xc]);
+    g_channels_1_config.tempo                     = w[0x80083334 + V1 + 0x18];
+    g_channels_1_config.tempo_slide_step          = w[0x80083334 + V1 + 0x1c];
+    g_channels_1_config.tempo_update              = w[0x80083334 + V1 + 0x20];
+    g_channels_1_config.over_mask                 = w[0x80083334 + V1 + 0x24];
+    g_channels_1_config.alt_mask                  = w[0x80083334 + V1 + 0x28];
+    g_channels_1_config.noise_mask                = w[0x80083334 + V1 + 0x2c];
+    g_channels_1_config.reverb_mask               = w[0x80083334 + V1 + 0x30];
+    g_channels_1_config.pitch_lfo_mask            = w[0x80083334 + V1 + 0x34];
+    g_channels_1_config.update_flags              = w[0x80083334 + V1 + 0x38];
+    g_channels_1_config.reverb_depth              = w[0x80083334 + V1 + 0x40];
+    g_channels_1_config.reverb_depth_slide_step   = w[0x80083334 + V1 + 0x44];
+    g_channels_1_config.tempo_slide_steps        = hu[0x80083334 + V1 + 0x48];
     g_channels_1_config.music_id                 = hu[0x80083334 + V1 + 0x4a];
-    g_channels_1_config.condition_stored         = hu[0x80083380 + V1 + 0000];
-    g_channels_1_config.condition                = hu[0x80083382 + V1 + 0000];
-    g_channels_1_config.reverb_depth_slide_steps = hu[0x80083384 + V1 + 0000];
-    g_channels_1_config.noise_clock              = hu[0x80083386 + V1 + 0000];
-    g_channels_1_config.mute_music               = hu[0x80083388 + V1 + 0000];
-    g_channels_1_config.timer_upper              = hu[0x8008338a + V1 + 0000];
-    g_channels_1_config.timer_upper_cur          = hu[0x8008338c + V1 + 0000];
-    g_channels_1_config.timer_lower              = hu[0x8008338e + V1 + 0000];
-    g_channels_1_config.timer_lower_cur          = hu[0x80083390 + V1 + 0000] - 2;
-    g_channels_1_config.timer_top_cur            = hu[0x80083392 + V1 + 0000];
+    g_channels_1_config.condition_stored         = hu[0x80083334 + V1 + 0x4c];
+    g_channels_1_config.condition                = hu[0x80083334 + V1 + 0x4e];
+    g_channels_1_config.reverb_depth_slide_steps = hu[0x80083334 + V1 + 0x50];
+    g_channels_1_config.noise_clock              = hu[0x80083334 + V1 + 0x52];
+    g_channels_1_config.mute_music               = hu[0x80083334 + V1 + 0x54];
+    g_channels_1_config.timer_upper              = hu[0x80083334 + V1 + 0x56];
+    g_channels_1_config.timer_upper_cur          = hu[0x80083334 + V1 + 0x58];
+    g_channels_1_config.timer_lower              = hu[0x80083334 + V1 + 0x5a];
+    g_channels_1_config.timer_lower_cur          = hu[0x80083334 + V1 + 0x5c] - 2;
+    g_channels_1_config.timer_top_cur            = hu[0x80083334 + V1 + 0x5e];
 
     g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
 
-    src = 0x800804d0;
-    if( save_id == 0 ) src -= 0x18c0;
-
-    dst = 0x80096608;
-    for( int i = 0x630; i != 0; --i )
+    src = 0x8007ec10 + save_id * 0x18 * 0x108;
+    dst = g_channels_1;
+    for( int i = 0x630; i != 0; --i ) // copy 0x18 channels
     {
         [dst] = w(w[src]);
         src += 0x4;
@@ -1042,7 +1040,7 @@ void system_akao_music_copy_channels_1_into_2()
 {
     src = &g_channels_1;
     dst = &g_channels_2;
-    for( int i = 0x630; i != 0; --i )
+    for( int i = 0x630; i != 0; --i ) // copy 0x18 channels
     {
         [dst] = w(w[src]);
         src += 0x4;
@@ -3092,7 +3090,7 @@ void system_akao_main_update()
 
                     if( channel->length_1 == 0 )
                     {
-                        system_akao_execute_sequence( channel, 0x8009a104, channel_mask );
+                        system_akao_execute_sequence( channel, g_channels_1_config, channel_mask );
                     }
                     else if( channel->length_2 == 0 )
                     {
@@ -3101,7 +3099,7 @@ void system_akao_main_update()
                         g_channels_1_config.off_mask |= channel_mask;
                     }
 
-                    func2e478( channel, 0x8009a104, channel_mask );
+                    func2e478( channel, g_channels_1_config, channel_mask );
 
                     channels_mask ^= channel_mask;
                 }
@@ -3188,7 +3186,7 @@ void system_akao_main_update()
                         }
                     }
 
-                    func2e478( channel, 0x8009a164, channel_mask );
+                    func2e478( channel, g_channels_2_config, channel_mask );
 
                     channels_mask ^= channel_mask;
                 }
