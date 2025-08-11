@@ -1,4 +1,4 @@
-﻿typedef void (*AkaoCommand) ( CommandData* data );
+﻿typedef void (*AkaoCommand) ( AkaoCommandData* data );
 
 // 0x80049548
 AkaoCommand akao_commands[] =
@@ -71,7 +71,7 @@ AkaoCommand akao_commands[] =
 
 
 
-void system_akao_command_null( CommandData* data )
+void system_akao_command_null( AkaoCommandData* data )
 {
 }
 
@@ -79,7 +79,7 @@ void system_akao_command_null( CommandData* data )
 
 // field_event_opcode_f0_music
 // start field music
-void system_akao_command_10( CommandData* data )
+void system_akao_command_10( AkaoCommandData* data )
 {
     offset = w[data + 0x4];
     size = w[data + 0x8];
@@ -116,7 +116,7 @@ void system_akao_command_10( CommandData* data )
 // field_event_opcode_f3_musvt
 // load battle music when load battle lib
 // start battle music
-void system_akao_command_14( CommandData* data )
+void system_akao_command_14( AkaoCommandData* data )
 {
     offset = w[data + 0x4];
     size = w[data + 0x8];
@@ -147,7 +147,7 @@ void system_akao_command_14( CommandData* data )
 
 
 // field_event_opcode_f4_musvm
-void system_akao_command_15( CommandData* data )
+void system_akao_command_15( AkaoCommandData* data )
 {
     offset = w[data + 0x4];
     size = w[data + 0x8];
@@ -218,7 +218,7 @@ void system_akao_command_15( CommandData* data )
 
 // called when field starts from battle
 // continue music?
-void system_akao_command_18( CommandData* data )
+void system_akao_command_18( AkaoCommandData* data )
 {
     if( g_channels_1_config.music_id != 0 )
     {
@@ -231,7 +231,7 @@ void system_akao_command_18( CommandData* data )
 
 
 
-void system_akao_command_19( CommandData* data )
+void system_akao_command_19( AkaoCommandData* data )
 {
     if( g_channels_1_config.music_id != 0 )
     {
@@ -245,7 +245,7 @@ void system_akao_command_19( CommandData* data )
 
 
 // field_event_opcode_f1_se
-void system_akao_command_20( CommandData* data )
+void system_akao_command_20( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -257,7 +257,7 @@ void system_akao_command_20( CommandData* data )
 
 
 
-void system_akao_command_21( CommandData* data )
+void system_akao_command_21( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -272,7 +272,7 @@ void system_akao_command_21( CommandData* data )
 
 
 
-void system_akao_command_22( CommandData* data )
+void system_akao_command_22( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -291,7 +291,7 @@ void system_akao_command_22( CommandData* data )
 
 
 
-void system_akao_command_23( CommandData* data )
+void system_akao_command_23( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -313,7 +313,7 @@ void system_akao_command_23( CommandData* data )
 
 
 
-void system_akao_command_29( CommandData* data )
+void system_akao_command_29( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -325,7 +325,7 @@ void system_akao_command_29( CommandData* data )
 
 
 
-void system_akao_command_2a( CommandData* data )
+void system_akao_command_2a( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -338,7 +338,7 @@ void system_akao_command_2a( CommandData* data )
 
 
 
-void system_akao_command_2b( CommandData* data )
+void system_akao_command_2b( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -351,7 +351,7 @@ void system_akao_command_2b( CommandData* data )
 
 
 // sound from menu
-void system_akao_command_30( CommandData* data )
+void system_akao_command_30( AkaoCommandData* data )
 {
     u32 seq_1, seq_2;
 
@@ -363,7 +363,7 @@ void system_akao_command_30( CommandData* data )
 
 
 
-void system_akao_command_34( CommandData* data )
+void system_akao_command_34( AkaoCommandData* data )
 {
     system_akao_sound_channels_clear( 0x4, 0x1 );
 
@@ -372,7 +372,7 @@ void system_akao_command_34( CommandData* data )
 
 
 
-void system_akao_command_80( CommandData* data )
+void system_akao_command_80( AkaoCommandData* data )
 {
     g_channels_1_config.stereo_mono = AKAO_STEREO;
 
@@ -382,7 +382,7 @@ void system_akao_command_80( CommandData* data )
 
 
 
-void system_akao_command_81( CommandData* data )
+void system_akao_command_81( AkaoCommandData* data )
 {
     g_channels_1_config.stereo_mono = AKAO_MONO;
 
@@ -392,7 +392,7 @@ void system_akao_command_81( CommandData* data )
 
 
 
-void system_akao_command_82( CommandData* data )
+void system_akao_command_82( AkaoCommandData* data )
 {
     g_channels_1_config.stereo_mono = AKAO_STEREO_CHANNELS;
 
@@ -402,7 +402,7 @@ void system_akao_command_82( CommandData* data )
 
 
 
-void system_akao_command_90( CommandData* data )
+void system_akao_command_90( AkaoCommandData* data )
 {
     g_akao_mute_music_mask = w[data + 0x4];
 
@@ -414,7 +414,7 @@ void system_akao_command_90( CommandData* data )
 
 
 
-void system_akao_command_92( CommandData* data )
+void system_akao_command_92( AkaoCommandData* data )
 {
     g_channels_1_config.condition = hu[data + 0x4];
 }
@@ -422,7 +422,7 @@ void system_akao_command_92( CommandData* data )
 
 
 // unmute music
-void system_akao_command_9a( CommandData* data )
+void system_akao_command_9a( AkaoCommandData* data )
 {
     mask = g_channels_1_config.active_mask_stored;
     if( mask != 0 )
@@ -452,7 +452,7 @@ void system_akao_command_9a( CommandData* data )
 
 
 // mute music
-void system_akao_command_9b( CommandData* data )
+void system_akao_command_9b( AkaoCommandData* data )
 {
     if( g_channels_1_config.active_mask != 0 )
     {
@@ -487,7 +487,7 @@ void system_akao_command_9b( CommandData* data )
 
 
 // unmute sound
-void system_akao_command_9c( CommandData* data )
+void system_akao_command_9c( AkaoCommandData* data )
 {
     u32 mask = g_channels_3_active_mask_stored;
     if( mask != 0 )
@@ -516,7 +516,7 @@ void system_akao_command_9c( CommandData* data )
 
 
 // mute sound except menu
-void system_akao_command_9d( CommandData* data )
+void system_akao_command_9d( AkaoCommandData* data )
 {
     u32 mask = g_channels_3_active_mask;
     if( mask != 0 )
@@ -549,35 +549,35 @@ void system_akao_command_9d( CommandData* data )
 
 
 
-void system_akao_command_a0( CommandData* data )
+void system_akao_command_a0( AkaoCommandData* data )
 {
     func2bccc( data, &g_channels_3[0x4] );
 }
 
 
 
-void system_akao_command_a1( CommandData* data )
+void system_akao_command_a1( AkaoCommandData* data )
 {
     func2bccc( data, &g_channels_3[0x2] );
 }
 
 
 
-void system_akao_command_a2( CommandData* data )
+void system_akao_command_a2( AkaoCommandData* data )
 {
     func2bccc( data, &g_channels_3[0x0] );
 }
 
 
 
-void system_akao_command_a3( CommandData* data )
+void system_akao_command_a3( AkaoCommandData* data )
 {
     func2bccc( data, &g_channels_3[0x6] );
 }
 
 
 
-void func2bccc( CommandData* data, ChannelData* channel )
+void func2bccc( AkaoCommandData* data, ChannelData* channel )
 {
     (channel + 0)->vol_balance_slide_steps = 0;
     (channel + 1)->vol_balance_slide_steps = 0;
@@ -589,34 +589,34 @@ void func2bccc( CommandData* data, ChannelData* channel )
 
 
 
-void system_akao_command_a4( CommandData* data )
+void system_akao_command_a4( AkaoCommandData* data )
 {
     func2bd04( data, &g_channels_3[0x4] );
 }
 
 
-void system_akao_command_a5( CommandData* data )
+void system_akao_command_a5( AkaoCommandData* data )
 {
     func2bd04( data, &g_channels_3[0x2] );
 }
 
 
 
-void system_akao_command_a6( CommandData* data )
+void system_akao_command_a6( AkaoCommandData* data )
 {
     func2bd04( data, &g_channels_3[0x0] );
 }
 
 
 
-void system_akao_command_a7( CommandData* data )
+void system_akao_command_a7( AkaoCommandData* data )
 {
     func2bd04( data, &g_channels_3[0x6] );
 }
 
 
 
-void func2bd04( CommandData* data, ChannelData* channel )
+void func2bd04( AkaoCommandData* data, ChannelData* channel )
 {
     s16 steps = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
     (channel + 0)->vol_balance_slide_steps = steps;
@@ -627,35 +627,35 @@ void func2bd04( CommandData* data, ChannelData* channel )
 
 
 
-void system_akao_command_a8( CommandData* data )
+void system_akao_command_a8( AkaoCommandData* data )
 {
     func2bfcc( data, &g_channels_3[0x4] );
 }
 
 
 
-void system_akao_command_a9( CommandData* data )
+void system_akao_command_a9( AkaoCommandData* data )
 {
     func2bfcc( data, &g_channels_3[0x2] );
 }
 
 
 
-void system_akao_command_aa( CommandData* data )
+void system_akao_command_aa( AkaoCommandData* data )
 {
     func2bfcc( data, &g_channels_3[0x0] );
 }
 
 
 
-void system_akao_command_ab( CommandData* data )
+void system_akao_command_ab( AkaoCommandData* data )
 {
     func2bfcc( data, &g_channels_3[0x6] );
 }
 
 
 
-void func2bfcc( CommandData* data, ChannelData* channel )
+void func2bfcc( AkaoCommandData* data, ChannelData* channel )
 {
     (channel + 0)->vol_pan = (hu[data + 0x4] & 0x7f) << 0x8;
     (channel + 1)->vol_pan = (hu[data + 0x4] & 0x7f) << 0x8;
@@ -667,35 +667,35 @@ void func2bfcc( CommandData* data, ChannelData* channel )
 
 
 
-void system_akao_command_ac( CommandData* data )
+void system_akao_command_ac( AkaoCommandData* data )
 {
     func2c004( data, &g_channels_3[0x4] );
 }
 
 
 
-void system_akao_command_ad( CommandData* data )
+void system_akao_command_ad( AkaoCommandData* data )
 {
     func2c004( data, &g_channels_3[0x2] );
 }
 
 
 
-void system_akao_command_ae( CommandData* data )
+void system_akao_command_ae( AkaoCommandData* data )
 {
     func2c004( data, &g_channels_3[0x0] );
 }
 
 
 
-void system_akao_command_af( CommandData* data )
+void system_akao_command_af( AkaoCommandData* data )
 {
     func2c004( data, &g_channels_3[0x6] );
 }
 
 
 
-void func2c004( CommandData* data, ChannelData* channel )
+void func2c004( AkaoCommandData* data, ChannelData* channel )
 {
     s16 steps = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
     (channel + 0)->vol_pan_slide_steps = steps;
@@ -706,35 +706,35 @@ void func2c004( CommandData* data, ChannelData* channel )
 
 
 
-void system_akao_command_b0( CommandData* data )
+void system_akao_command_b0( AkaoCommandData* data )
 {
     func2c2cc( data, &g_channels_3[0x4] );
 }
 
 
 
-void system_akao_command_b1( CommandData* data )
+void system_akao_command_b1( AkaoCommandData* data )
 {
     func2c2cc( data, &g_channels_3[0x2] );
 }
 
 
 
-void system_akao_command_b2( CommandData* data )
+void system_akao_command_b2( AkaoCommandData* data )
 {
     func2c2cc( data, &g_channels_3[0x0] );
 }
 
 
 
-void system_akao_command_b3( CommandData* data )
+void system_akao_command_b3( AkaoCommandData* data )
 {
     func2c2cc( data, &g_channels_3[0x6] );
 }
 
 
 
-void func2c2cc( CommandData* data, ChannelData* channel )
+void func2c2cc( AkaoCommandData* data, ChannelData* channel )
 {
     (channel + 0)->pitch_mul_sound = b[data + 0x4] << 0x8;
     (channel + 1)->pitch_mul_sound = b[data + 0x4] << 0x8;
@@ -746,35 +746,35 @@ void func2c2cc( CommandData* data, ChannelData* channel )
 
 
 
-void system_akao_command_b4( CommandData* data )
+void system_akao_command_b4( AkaoCommandData* data )
 {
     func2c300( data, &g_channels_3[0x4] );
 }
 
 
 
-void system_akao_command_b5( CommandData* data )
+void system_akao_command_b5( AkaoCommandData* data )
 {
     func2c300( data, &g_channels_3[0x2] );
 }
 
 
 
-void system_akao_command_b6( CommandData* data )
+void system_akao_command_b6( AkaoCommandData* data )
 {
     func2c300( data, &g_channels_3[0x0] );
 }
 
 
 
-void system_akao_command_b7( CommandData* data )
+void system_akao_command_b7( AkaoCommandData* data )
 {
     func2c300( data, &g_channels_3[0x6] );
 }
 
 
 
-void func2c300( CommandData* data, ChannelData* channel )
+void func2c300( AkaoCommandData* data, ChannelData* channel )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -786,7 +786,7 @@ void func2c300( CommandData* data, ChannelData* channel )
 
 
 
-void system_akao_command_b8( CommandData* data )
+void system_akao_command_b8( AkaoCommandData* data )
 {
     func2bccc( data, &g_channels_3[0x0] );
     func2bccc( data, &g_channels_3[0x2] );
@@ -796,7 +796,7 @@ void system_akao_command_b8( CommandData* data )
 
 
 
-void system_akao_command_b9( CommandData* data )
+void system_akao_command_b9( AkaoCommandData* data )
 {
     func2bd04( data, &g_channels_3[0x0] );
     func2bd04( data, &g_channels_3[0x2] );
@@ -806,7 +806,7 @@ void system_akao_command_b9( CommandData* data )
 
 
 
-void system_akao_command_ba( CommandData* data )
+void system_akao_command_ba( AkaoCommandData* data )
 {
     func2bfcc( data, &g_channels_3[0x0] );
     func2bfcc( data, &g_channels_3[0x2] );
@@ -816,7 +816,7 @@ void system_akao_command_ba( CommandData* data )
 
 
 
-void system_akao_command_bb( CommandData* data )
+void system_akao_command_bb( AkaoCommandData* data )
 {
     func2c004( data, &g_channels_3[0x0] );
     func2c004( data, &g_channels_3[0x2] );
@@ -826,7 +826,7 @@ void system_akao_command_bb( CommandData* data )
 
 
 
-void system_akao_command_bc( CommandData* data )
+void system_akao_command_bc( AkaoCommandData* data )
 {
     func2c2cc( data, &g_channels_3[0x0] );
     func2c2cc( data, &g_channels_3[0x2] );
@@ -836,7 +836,7 @@ void system_akao_command_bc( CommandData* data )
 
 
 
-void system_akao_command_bd( CommandData* data )
+void system_akao_command_bd( AkaoCommandData* data )
 {
     func2c300( data, &g_channels_3[0x0] );
     func2c300( data, &g_channels_3[0x2] );
@@ -846,7 +846,7 @@ void system_akao_command_bd( CommandData* data )
 
 
 
-void system_akao_command_c0( CommandData* data )
+void system_akao_command_c0( AkaoCommandData* data )
 {
     g_akao_vol_mul_music_slide_steps = 0;
     g_akao_vol_mul_music = (w[data + 0x4] & 0x7f) << 0x10;
@@ -856,7 +856,7 @@ void system_akao_command_c0( CommandData* data )
 
 
 
-void system_akao_command_c1( CommandData* data )
+void system_akao_command_c1( AkaoCommandData* data )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -868,7 +868,7 @@ void system_akao_command_c1( CommandData* data )
 
 
 
-void system_akao_command_c2( CommandData* data )
+void system_akao_command_c2( AkaoCommandData* data )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -881,7 +881,7 @@ void system_akao_command_c2( CommandData* data )
 
 
 
-void system_akao_command_c8( CommandData* data )
+void system_akao_command_c8( AkaoCommandData* data )
 {
     g_akao_cd_vol = hu[data + 0x4] << 0x10;
     g_akao_cd_vol_slide_steps = 0;
@@ -892,7 +892,7 @@ void system_akao_command_c8( CommandData* data )
 
 
 // before movie play
-void system_akao_command_c9( CommandData* data )
+void system_akao_command_c9( AkaoCommandData* data )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -902,7 +902,7 @@ void system_akao_command_c9( CommandData* data )
 
 
 
-void system_akao_command_ca( CommandData* data )
+void system_akao_command_ca( AkaoCommandData* data )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -913,7 +913,7 @@ void system_akao_command_ca( CommandData* data )
 
 
 
-void system_akao_command_d0( CommandData* data )
+void system_akao_command_d0( AkaoCommandData* data )
 {
     g_akao_tempo_mul_music_slide_steps = 0;
     g_akao_tempo_mul_music = b[data + 0x4] << 0x10;
@@ -921,7 +921,7 @@ void system_akao_command_d0( CommandData* data )
 
 
 
-void system_akao_command_d1( CommandData* data )
+void system_akao_command_d1( AkaoCommandData* data )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -931,7 +931,7 @@ void system_akao_command_d1( CommandData* data )
 
 
 
-void system_akao_command_d2( CommandData* data )
+void system_akao_command_d2( AkaoCommandData* data )
 {
     g_akao_tempo_mul_music = b[data + 0x4] << 0x10;
 
@@ -943,7 +943,7 @@ void system_akao_command_d2( CommandData* data )
 
 
 
-void system_akao_command_d4( CommandData* data )
+void system_akao_command_d4( AkaoCommandData* data )
 {
     g_akao_pitch_mul_music_slide_steps = 0;
     g_akao_pitch_mul_music = b[data + 0x4] << 0x10;
@@ -951,7 +951,7 @@ void system_akao_command_d4( CommandData* data )
 
 
 
-void system_akao_command_d5( CommandData* data )
+void system_akao_command_d5( AkaoCommandData* data )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 
@@ -961,7 +961,7 @@ void system_akao_command_d5( CommandData* data )
 
 
 
-void system_akao_command_d6( CommandData* data )
+void system_akao_command_d6( AkaoCommandData* data )
 {
     g_akao_pitch_mul_music = b[data + 0x4] << 0x10;
 
@@ -974,7 +974,7 @@ void system_akao_command_d6( CommandData* data )
 
 
 // set reverb pan
-void system_akao_command_e0( CommandData* data )
+void system_akao_command_e0( AkaoCommandData* data )
 {
     g_akao_reverb_pan = hu[data + 0x4] & 0x7f;
     g_channels_1_config.update_flags |= AKAO_UPDATE_REVERB;
@@ -982,7 +982,7 @@ void system_akao_command_e0( CommandData* data )
 
 
 
-void system_akao_command_e4( CommandData* data )
+void system_akao_command_e4( AkaoCommandData* data )
 {
     g_akao_reverb_mul = bu[data + 0x4];
 
@@ -1002,14 +1002,14 @@ void system_akao_command_e4( CommandData* data )
 
 
 
-void system_akao_command_f0( CommandData* data )
+void system_akao_command_f0( AkaoCommandData* data )
 {
     system_akao_music_stop_channels_1_2();
 }
 
 
 
-void system_akao_command_f1( CommandData* data )
+void system_akao_command_f1( AkaoCommandData* data )
 {
     system_akao_sound_stop_channels_3();
 }
@@ -1017,21 +1017,21 @@ void system_akao_command_f1( CommandData* data )
 
 
 // when init field script
-void system_akao_command_f2( CommandData* data )
+void system_akao_command_f2( AkaoCommandData* data )
 {
     [0x80083334 + 0x4a] = h(0);
 }
 
 
 
-void system_akao_command_f3( CommandData* data )
+void system_akao_command_f3( AkaoCommandData* data )
 {
     [0x800833de] = h(0);
 }
 
 
 
-void system_akao_command_f4( CommandData* data )
+void system_akao_command_f4( AkaoCommandData* data )
 {
     func2a958();
 
@@ -1073,7 +1073,7 @@ void system_akao_command_f4( CommandData* data )
 
 
 
-void system_akao_command_f5( CommandData* data )
+void system_akao_command_f5( AkaoCommandData* data )
 {
     if( g_akao_control_flags & 0x00000100 )
     {
@@ -1109,7 +1109,7 @@ void system_akao_command_f5( CommandData* data )
 
 
 
-void system_akao_command_f8( CommandData* data )
+void system_akao_command_f8( AkaoCommandData* data )
 {
     func2cfc0( data );
 
@@ -1121,7 +1121,7 @@ void system_akao_command_f8( CommandData* data )
 
 
 
-void system_akao_command_f9( CommandData* data )
+void system_akao_command_f9( AkaoCommandData* data )
 {
     func2cfc0( data );
 
@@ -1133,7 +1133,7 @@ void system_akao_command_f9( CommandData* data )
 
 
 
-void system_akao_command_fa( CommandData* data )
+void system_akao_command_fa( AkaoCommandData* data )
 {
     func29a50();
 }

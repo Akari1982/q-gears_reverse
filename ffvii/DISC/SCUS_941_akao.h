@@ -1,4 +1,4 @@
-﻿struct VoiceAttr
+﻿struct AkaoVoiceAttr
 {
     u32 voice_id;                   // 0x0   0xdc id of voice
     u32 mask;                       // 0x4   0xe0 attribute bit

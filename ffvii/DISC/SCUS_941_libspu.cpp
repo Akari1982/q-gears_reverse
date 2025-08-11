@@ -2792,7 +2792,7 @@ void system_psyq_spu_set_voice_sl( int voiceNum, u_short SL )
 void system_psyq_spu_set_voice_ar_attr( int voiceNum, u_short AR, long Armode )
 {
     spu = w[0x8004aaf4]; // 1f801c00
-    [spu + A0 * 0x10 + 0x8] = h((hu[spu + A0 * 0x10 + 0x8] & 0x00ff) | ((A1 | ((A2 == 0x5) << 0x7)) << 0x8));
+    [spu + voiceNum * 0x10 + 0x8] = h((hu[spu + voiceNum * 0x10 + 0x8] & 0x00ff) | ((AR | ((Armode == 0x5) << 0x7)) << 0x8));
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
@@ -2843,7 +2843,7 @@ void system_psyq_spu_set_voice_sr_attr( int voiceNum, u_short SR, long SRmode )
 void system_psyq_spu_set_voice_rr_attr( int voiceNum, u_short RR, long RRmode )
 {
     spu = w[0x8004aaf4]; // 1f801c00
-    [spu + A0 * 0x10 + 0xa] = h((hu[spu + A0 * 0x10 + 0xa] & 0xffc0) | ((A2 == 0x7) << 0x5) | A1);
+    [spu + voiceNum * 0x10 + 0xa] = h((hu[spu + voiceNum * 0x10 + 0xa] & 0xffc0) | ((RRmode == 0x7) << 0x5) | A1);
 
     [SP + 0x4] = w(0x1);
     [SP + 0x0] = w(0x0);
