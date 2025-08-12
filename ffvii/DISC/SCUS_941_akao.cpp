@@ -2114,7 +2114,7 @@ void func2e954( ChannelData* channel, S1 )
 
 void system_akao_music_update_pitch_and_volume( ChannelData* channel, channel_mask, channel_id )
 {
-    volume_level = ((channel->volume >> 0x10) * channel->vol_master) >> 0x7;
+    s32 volume_level = ((channel->volume >> 0x10) * channel->vol_master) >> 0x7;
 
     if( (channel->update_flags & AKAO_UPDATE_VIBRATO) && (channel->vibrato_delay_cur == 0) )
     {
@@ -2494,7 +2494,7 @@ void system_akao_update_keys_on()
             g_spu_reverb_attr.depth.right = reverb_depth;
         }
 
-        system_psyq_spu_set_reverb_depth( g_spu_reverb_attr );
+        system_psyq_spu_set_reverb_depth( &g_spu_reverb_attr );
 
         g_channels_1_config.update_flags ^= AKAO_UPDATE_REVERB;
     }

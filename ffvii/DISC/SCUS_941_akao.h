@@ -175,8 +175,8 @@ struct AkaoInstrument
     u8 sl;                          // 0x0a
     s8 sr;                          // 0x0b
     u8 rr;                          // 0x0c
-    s8 a_mode;                     // 0x0d
-    s8 s_mode;                     // 0x0e
-    s8 r_mode;                     // 0x0f
+    u8 a_mode;                      // 0x0d
+    u8 s_mode;                      // 0x0e
+    u8 r_mode;                      // 0x0f
     s32 pitch[0xc];                 // 0x10
 };
