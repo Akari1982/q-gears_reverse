@@ -25,7 +25,7 @@ AkaoOpcode akao_opcodes[] =
     system_akao_opcode_f0_loop_jump_times,        system_akao_opcode_f1_loop_break_times,        system_akao_opcode_f2_load_instrument,             system_akao_opcode_f3,
     system_akao_opcode_f4_overlay_voice_on,       system_akao_opcode_f5_overlay_voice_off,       system_akao_opcode_f6_overlay_volume_balance,      system_akao_opcode_f7_overlay_volume_balance_slide,
     system_akao_opcode_f8_alt_voice_on,           system_akao_opcode_f9_alt_voice_off,           system_akao_opcode_null,                           system_akao_opcode_null,
-    system_akao_opcode_null,                      system_akao_opcode_null,                       system_akao_opcode_fe_measure_number,              system_akao_opcode_null
+    system_akao_opcode_null,                      system_akao_opcode_fd_time_signature,          system_akao_opcode_fe_measure_number,              system_akao_opcode_null
 };
 
 
