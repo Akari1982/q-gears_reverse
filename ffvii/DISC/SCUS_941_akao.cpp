@@ -3342,12 +3342,9 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                     g_channels_3_on_mask |= mask;
                 }
 
-                S2 = opcode / 0xb;
-                V1 = S2 / 0xc;
-                A0 = S2 % 0xc
+                u8 drum_id = (opcode / 0xb) % 0xc;
 
-                A2 = channel->drum_offset + A0 * 0x5;
-                u8 instr_id = bu[A2 + 0x0];
+                u8 instr_id = bu[channel->drum_offset + drum_id * 0x5 + 0x0];
 
                 if( instr_id != channel->instr_id )
                 {
@@ -3370,38 +3367,38 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                     }
                 }
 
-                V1 = bu[A2 + 0x1];
+                u8 key = bu[channel->drum_offset + drum_id * 0x5 + 0x1];
 
-                A1 = S2 / 0xc;
-                A0 = g_akao_instrument[instr_id].pitch[S2 % 0xc];
+                pitch_base = g_akao_instrument[instr_id].pitch[key % 0xc];
 
-                if( A1 >= 0x7 )
+                octave = key / 0xc;
+                if( octave >= 0x7 )
                 {
-                    A0 <<= A1 - 0x6;
+                    pitch_base <<= octave - 0x6;
                 }
-                else if( A1 < 0x6 )
+                else if( octave < 0x6 )
                 {
-                    A0 >>= 0x6 - A1;
+                    pitch_base >>= 0x6 - octave;
                 }
 
-                channel->volume = hu[A2 + 0x2] << 0x10;
-                channel->vol_pan = bu[A2 + 0x4] << 0x8;
+                channel->volume = hu[channel->drum_offset + drum_id * 0x5 + 0x2] << 0x10;
+                channel->vol_pan = bu[channel->drum_offset + drum_id * 0x5 + 0x4] << 0x8;
             }
             else
             {
-                S2 = channel->octave * 0xc + opcode / 0xb;
+                u8 key = channel->octave * 0xc + opcode / 0xb;
 
                 if( ( channel->portamento_steps != 0 ) && ( hu[channel + 0x6a] != 0 ) )
                 {
                     channel->pitch_slide_steps = channel->portamento_steps;
-                    channel->pitch_slide_dst = (S2 & 0xff) + channel->transpose - hu[channel + 0x6a] - hu[channel + 0xd4];
+                    channel->pitch_slide_dst = (key & 0xff) + channel->transpose - hu[channel + 0x6a] - hu[channel + 0xd4];
                     [channel + 0xd0] = h(hu[channel + 0x6a] - channel->transpose - hu[channel + 0xd4]);
-                    S2 = bu[channel + 0x6a] + bu[channel + 0xd4];
+                    key = bu[channel + 0x6a] + bu[channel + 0xd4];
                 }
                 else
                 {
-                    [channel + 0xd0] = h(S2 & 0xff);
-                    S2 += channel->transpose & 0xff;
+                    [channel + 0xd0] = h(key & 0xff);
+                    key += channel->transpose & 0xff;
                 }
 
                 if( ( channel->sfx_mask & 0x0002 ) == 0 )
@@ -3424,16 +3421,16 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
                     channel->pitch_slide_steps_cur = 0;
                 }
 
-                V1 = S2 / 0xc;
+                pitch_base = g_akao_instrument[channel->instr_id].pitch[key % 0xc];
 
-                A0 = g_akao_instrument[channel->instr_id].pitch[S2 % 0xc];
-                if( V1 >= 0x7 )
+                u8 octave = key / 0xc;
+                if( octave >= 0x7 )
                 {
-                    A0 <<= V1 - 0x6;
+                    pitch_base <<= octave - 0x6;
                 }
-                else if( V1 < 0x6 )
+                else if( octave < 0x6 )
                 {
-                    A0 >>= 0x6 - V1;
+                    pitch_base >>= 0x6 - octave;
                 }
             }
 
@@ -3453,20 +3450,20 @@ void system_akao_execute_sequence( ChannelData* channel, AkaoConfig* config, u32
             {
                 if( V1 > 0 )
                 {
-                    V0 = (A0 * V1) >> 0x7;
+                    V0 = (pitch_base * V1) >> 0x7;
                 }
                 else
                 {
-                    V0 = (A0 * V1) >> 0x8;
+                    V0 = (pitch_base * V1) >> 0x8;
                 }
 
-                A0 = (A0 + V0) & 0xffff;
+                pitch_base = (pitch_base + V0) & 0xffff;
             }
-            channel->pitch_base = A0;
+            channel->pitch_base = pitch_base;
 
             if( channel->update_flags & AKAO_UPDATE_VIBRATO )
             {
-                V1 = ((channel->vibrato_depth & 0x7f00) >> 0x8) * A0;
+                V1 = ((channel->vibrato_depth & 0x7f00) >> 0x8) * pitch_base;
                 if( (channel->vibrato_depth & 0x8000) == 0 ) V1 *= 0xf / 0x100;
                 channel->vibrato_base = h(V1 >> 0x7);
                 channel->vibrato_wave = w[0x8004a5cc + channel->vibrato_type * 0x4];
