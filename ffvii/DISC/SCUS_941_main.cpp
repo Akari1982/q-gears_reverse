@@ -82,7 +82,7 @@ while( system_cdrom_read_chain() != 0 ) {}
 system_cdrom_start_load_file( w[0x80048d14], w[0x80048d18], 0x800a0000, 0 ); // SOUND\INSTR2.ALL
 while( system_cdrom_read_chain() != 0 ) {}
 
-system_akao_load_instr2_files( 0x800a0000, 0x800e0000 );
+system_akao_load_instr_2( 0x800a0000, 0x800e0000 );
 ////////////////////////////////
 
 
@@ -323,7 +323,7 @@ void system_init_akao_engine()
 
     system_akao_init( 0x800f0000, 0x801bc800 );
 
-    system_akao_load_effect_file( 0x801b0000 );
+    system_akao_load_effect( 0x801b0000 );
 }
 
 

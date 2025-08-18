@@ -51,7 +51,7 @@
 
 
 
-struct ChannelData
+struct AkaoChannel
 {
     u32 seq;                            // 0x0
     u32 loop_point[0x4];                // 0x4
