@@ -65,7 +65,7 @@ struct AkaoChannel
     u32 pitch_base;                     // 0x30
     s32 pitch_slide;                    // 0x34
                                         // 0x36 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
-    s32 update_flags;                   // 0x38
+    u32 update_flags;                   // 0x38
     u32 pitch_mul_sound;                // 0x3c
     s32 pitch_mul_sound_slide_step;     // 0x40
     s32 volume;                         // 0x44
