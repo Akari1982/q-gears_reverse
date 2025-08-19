@@ -68,7 +68,7 @@ void system_akao_opcode_a0_finish_channel( AkaoChannel* channel, AkaoConfig* con
         g_channels_3_reverb_mask &= mask ^ 0x00ff0000;
         g_channels_3_pitch_lfo_mask &= mask ^ 0x00ff0000;
         g_channels_1_config.on_mask &= ~mask;
-        [0x8009a104 + 0xc] = w(w[0x8009a104 + 0xc] & (~mask));
+        g_channels_1_config.keyed_mask &= ~mask;
         g_channels_1_config.off_mask &= ~mask;
         g_channels_1[channel->alt_voice_id].attr.mask |= AKAO_UPDATE_SPU_BASE;
     }
@@ -101,7 +101,7 @@ void system_akao_opcode_a1_load_instrument( AkaoChannel* channel, AkaoConfig* co
         channel->update_flags &= ~AKAO_UPDATE_OVERLAY;
     }
 
-    if( ( channel->type != AKAO_MUSIC ) || ( ( mask & w[config + 0xc] & g_channels_3_active_mask ) == 0 ) )
+    if( ( channel->type != AKAO_MUSIC ) || ( ( mask & config->keyed_mask & g_channels_3_active_mask ) == 0 ) )
     {
         channel->attr.mask |= SPU_VOICE_PITCH;
         u16 prev = channel->instr_id;
@@ -166,7 +166,7 @@ void system_akao_opcode_a4_pitch_bend_slide( AkaoChannel* channel, AkaoConfig* c
     if( steps == 0 ) steps = 0x100;
     channel->pitch_slide_steps = steps;
 
-    channel->pitch_slide_dst = b[akao + 0x1];
+    channel->key_add = b[akao + 0x1];
 }
 
 
@@ -351,7 +351,7 @@ void system_akao_opcode_b1_set_sr( AkaoChannel* channel, AkaoConfig* config, u32
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    channel->attr.mode |= SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR;
+    channel->attr.mask |= SPU_VOICE_ADSR_SMODE | SPU_VOICE_ADSR_SR;
     channel->attr.sr = bu[akao];
 
     if( channel->update_flags & AKAO_UPDATE_OVERLAY )
@@ -368,7 +368,7 @@ void system_akao_opcode_b2_set_rr( AkaoChannel* channel, AkaoConfig* config, u32
     akao = channel->seq;
     channel->seq = akao + 0x1;
 
-    channel->attr.mode |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
+    channel->attr.mask |= SPU_VOICE_ADSR_RMODE | SPU_VOICE_ADSR_RR;
     channel->attr.rr = bu[akao];
 
     if( channel->update_flags & AKAO_UPDATE_OVERLAY )
@@ -392,7 +392,7 @@ void system_akao_opcode_b3_reset_adsr( AkaoChannel* channel, AkaoConfig* config,
     channel->attr.sr = g_akao_instrument[intsr_id].sr;
     channel->attr.rr = g_akao_instrument[intsr_id].rr;
 
-    channel->attr.mode |= AKAO_UPDATE_SPU_ADSR;
+    channel->attr.mask |= AKAO_UPDATE_SPU_ADSR;
 
     if( channel->update_flags & AKAO_UPDATE_OVERLAY )
     {
@@ -933,9 +933,9 @@ void system_akao_opcode_da_portamento_on( AkaoChannel* channel, AkaoConfig* conf
     if( steps == 0 ) steps = 0x100;
     channel->portamento_steps = steps;
 
-    [channel + 0x6a] = h(0x0);
     channel->sfx_mask = AKAO_SFX_LEGATO;
-    [channel + 0xd4] = h(0x0);
+    channel->key_stored = 0;
+    channel->transpose_stored = 0;
 }
 
 
@@ -1154,7 +1154,7 @@ void system_akao_opcode_f2_load_instrument( AkaoChannel* channel, AkaoConfig* co
 
     u16 instr_id = bu[akao];
 
-    if( (channel->type != AKAO_MUSIC) || ((mask & w[config + 0xc] & g_channels_3_active_mask) == 0) )
+    if( (channel->type != AKAO_MUSIC) || ((mask & config->keyed_mask & g_channels_3_active_mask) == 0) )
     {
         u16 prev = channel->instr_id;
         channel->pitch_base *= g_akao_instrument[instr_id].pitch[0] / g_akao_instrument[prev].pitch[0];
