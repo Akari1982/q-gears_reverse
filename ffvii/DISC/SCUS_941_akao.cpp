@@ -2436,7 +2436,7 @@ void system_akao_sound_update_pitch_and_volume( ChannelData* channel, u32 channe
 
 
 
-void system_akao_update_channel_and_overlay_params_to_spu( ChannelData* channel, mask, u32 over_voice_id )
+void system_akao_update_channel_and_overlay_params_to_spu( ChannelData* channel, u32 mask, u32 over_voice_id )
 {
     ChannelData* channel_2 = &g_channels_1[channel->over_voice_id];
 
