@@ -137,7 +137,7 @@ struct ChannelConfig
     u32 stereo_mono;                // 0x0
     u32 active_mask;                // 0x4
     u32 on_mask;                    // 0x8
-    u32 keyed_mask                  // 0xc
+    u32 keyed_mask;                 // 0xc
     u32 off_mask;                   // 0x10
     u32 active_mask_stored;         // 0x14
     u32 tempo;                      // 0x18
