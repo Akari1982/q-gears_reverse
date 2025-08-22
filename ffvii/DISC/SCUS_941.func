@@ -353,10 +353,10 @@
 80029464 system_akao_spu_read
 800294A4 system_akao_spu_transfer_sync
 800294BC system_akao_init_data
-800297A4 system_akao_load_instr_files
-80029818 system_akao_load_instr2_files
+800297A4 system_akao_load_instr
+80029818 system_akao_load_instr_2
 8002988C system_akao_init
-80029998 system_akao_load_effect_file
+80029998 system_akao_load_effect
 800299C8 system_akao_deinit
 80029A50 func29a50
 80029AF0 system_akao_set_reverb_mode
@@ -476,8 +476,8 @@
 8002E1A8 system_akao_execute_commands_queue
 8002E23C system_akao_update_channel_params_to_spu
 8002E428 func2e428
-8002E478 func2e478
-8002E954 func2e954
+8002E478 system_akao_music_update_slide_and_delay
+8002E954 system_akao_sound_update_slide_and_delay
 8002ED34 system_akao_music_update_pitch_and_volume
 8002F24C system_akao_sound_update_pitch_and_volume
 8002F738 system_akao_update_channel_and_overlay_params_to_spu

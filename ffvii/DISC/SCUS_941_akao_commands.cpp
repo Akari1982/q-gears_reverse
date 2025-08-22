@@ -577,7 +577,7 @@ void system_akao_command_a3( AkaoCommandData* data )
 
 
 
-void func2bccc( AkaoCommandData* data, ChannelData* channel )
+void func2bccc( AkaoCommandData* data, AkaoChannel* channel )
 {
     (channel + 0)->vol_balance_slide_steps = 0;
     (channel + 1)->vol_balance_slide_steps = 0;
@@ -616,7 +616,7 @@ void system_akao_command_a7( AkaoCommandData* data )
 
 
 
-void func2bd04( AkaoCommandData* data, ChannelData* channel )
+void func2bd04( AkaoCommandData* data, AkaoChannel* channel )
 {
     s16 steps = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
     (channel + 0)->vol_balance_slide_steps = steps;
@@ -655,7 +655,7 @@ void system_akao_command_ab( AkaoCommandData* data )
 
 
 
-void func2bfcc( AkaoCommandData* data, ChannelData* channel )
+void func2bfcc( AkaoCommandData* data, AkaoChannel* channel )
 {
     (channel + 0)->vol_pan = (hu[data + 0x4] & 0x7f) << 0x8;
     (channel + 1)->vol_pan = (hu[data + 0x4] & 0x7f) << 0x8;
@@ -695,7 +695,7 @@ void system_akao_command_af( AkaoCommandData* data )
 
 
 
-void func2c004( AkaoCommandData* data, ChannelData* channel )
+void func2c004( AkaoCommandData* data, AkaoChannel* channel )
 {
     s16 steps = (w[data + 0x4] != 0) ? w[data + 0x4] : 1;
     (channel + 0)->vol_pan_slide_steps = steps;
@@ -734,7 +734,7 @@ void system_akao_command_b3( AkaoCommandData* data )
 
 
 
-void func2c2cc( AkaoCommandData* data, ChannelData* channel )
+void func2c2cc( AkaoCommandData* data, AkaoChannel* channel )
 {
     (channel + 0)->pitch_mul_sound = b[data + 0x4] << 0x8;
     (channel + 1)->pitch_mul_sound = b[data + 0x4] << 0x8;
@@ -774,7 +774,7 @@ void system_akao_command_b7( AkaoCommandData* data )
 
 
 
-void func2c300( AkaoCommandData* data, ChannelData* channel )
+void func2c300( AkaoCommandData* data, AkaoChannel* channel )
 {
     s16 steps = ( w[data + 0x4] != 0 ) ? w[data + 0x4] : 1;
 

@@ -51,7 +51,7 @@
 
 
 
-struct ChannelData
+struct AkaoChannel
 {
     u32 seq;                            // 0x0
     u32 loop_point[0x4];                // 0x4
@@ -64,7 +64,6 @@ struct ChannelData
     u32 vol_master;                     // 0x2c
     u32 pitch_base;                     // 0x30
     s32 pitch_slide;                    // 0x34
-                                        // 0x36 [][]     pitch addition. summarize 0x30, 0x36 and 0xd6 it to get real pitch.
     u32 update_flags;                   // 0x38
     u32 pitch_mul_sound;                // 0x3c
     s32 pitch_mul_sound_slide_step;     // 0x40
@@ -84,11 +83,11 @@ struct ChannelData
     u16 pitch_slide_steps_cur;          // 0x64
     u16 octave;                         // 0x66
     u16 pitch_slide_steps;              // 0x68
-                                        // 0x6a [][]     ???
+    u16 key_stored;                     // 0x6a
     u16 portamento_steps;               // 0x6c
     u16 sfx_mask;                       // 0x6e
                                         // 0x70
-    u16 vibrato_delay;                  // 0x72 [][]
+    u16 vibrato_delay;                  // 0x72
     u16 vibrato_delay_cur;              // 0x74
     u16 vibrato_rate;                   // 0x76
     u16 vibrato_rate_cur;               // 0x78
@@ -106,6 +105,7 @@ struct ChannelData
     u16 tremolo_depth;                  // 0x90
     u16 tremolo_depth_slide_steps;      // 0x92
     s16 tremolo_depth_slide_step;       // 0x94
+                                        // 0x96
     u16 pan_lfo_rate;                   // 0x98
     u16 pan_lfo_rate_cur;               // 0x9a
     u16 pan_lfo_type;                   // 0x9c
@@ -123,9 +123,9 @@ struct ChannelData
     s16 vol_pan_slide_step;             // 0xca
     u16 transpose;                      // 0xcc
     s16 fine_tuning;                    // 0xce
-                                        // 0xd0 [][]     pitch saved parameters.
-    s16 pitch_slide_dst;                // 0xd2
-                                        // 0xd4 [][]     ???
+    u16 key;                            // 0xd0
+    s16 key_add;                        // 0xd2
+    u16 transpose_stored;               // 0xd4
     s16 vibrato_pitch;                  // 0xd6
     s16 tremolo_vol;                    // 0xd8
     s16 pan_lfo_vol                     // 0xda
@@ -137,7 +137,7 @@ struct ChannelConfig
     u32 stereo_mono;                // 0x0
     u32 active_mask;                // 0x4
     u32 on_mask;                    // 0x8
-                                    // 0xc [][][][] some channels mask.
+    u32 keyed_mask                  // 0xc
     u32 off_mask;                   // 0x10
     u32 active_mask_stored;         // 0x14
     u32 tempo;                      // 0x18
