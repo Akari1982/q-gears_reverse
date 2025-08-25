@@ -7087,87 +7087,72 @@ func1d11a8();
 
 
 
-////////////////////////////////
-// func260dc()
-
-do
+void func260dc()
 {
-    system_cdrom_read_chain();
-} while( V0 != 0 )
+    while( system_cdrom_read_chain() != 0 ) {}
 
-A0 = 0;
-system_psyq_draw_sync();
+    system_psyq_draw_sync( 0 );
 
-A0 = SP + 20;
-func25c14(); // store clut?
+    A0 = SP + 20;
+    func25c14(); // store clut?
 
-A0 = 0;
-system_psyq_draw_sync();
+    A0 = 0;
+    system_psyq_draw_sync();
 
-for( int i = 0; i < 3; ++i ) // go through all party slots
-{
-    char_id = bu[8009c6e4 + 4f8 + i];
-    if( char_id != ff )
+    for( int i = 0; i < 3; ++i ) // go through all party slots
     {
-        A0 = i;
-        system_init_player_stat_from_equip();
+        char_id = bu[8009c6e4 + 4f8 + i];
+        if( char_id != ff )
+        {
+            A0 = i;
+            system_init_player_stat_from_equip();
 
-        A0 = i;
-        system_init_player_stat_from_materia();
+            A0 = i;
+            system_init_player_stat_from_materia();
 
-        system_calculate_total_lure_gil_preemptive_value();
+            system_calculate_total_lure_gil_preemptive_value();
 
-        // load avatars
-        A0 = w[80048fe8 + char_id * 8 + 0];
-        A1 = w[80048fe8 + char_id * 8 + 4];
-        A2 = SP + 1220;
-        A3 = 0;
-        system_cdrom_load_file();
+            // load avatars
+            A0 = w[80048fe8 + char_id * 8 + 0];
+            A1 = w[80048fe8 + char_id * 8 + 4];
+            A2 = SP + 1220;
+            A3 = 0;
+            system_cdrom_load_file();
 
-        A0 = SP + 1220;
-        A1 = 3c0; // img x
-        A2 = 138 + i * 30; // img y
-        A3 = 180; // clut x
-        A4 = i; // clut y
-        system_menu_load_image();
+            A0 = SP + 1220;
+            A1 = 3c0; // img x
+            A2 = 138 + i * 30; // img y
+            A3 = 180; // clut x
+            A4 = i; // clut y
+            system_menu_load_image();
 
-        A0 = 0;
-        system_psyq_draw_sync();
+            A0 = 0;
+            system_psyq_draw_sync();
+        }
     }
+
+    [SP + 18] = h(180);
+    [SP + 1c] = h(100);
+    [SP + 1a] = h(0);
+    [SP + 1e] = h(3);
+
+    A0 = SP + 0x18;
+    A1 = 0x800756f8;
+    system_psyq_store_image();
+
+    system_psyq_draw_sync( 0 );
+
+    A0 = SP + 20;
+    func25c54(); // restore clut?
+
+    system_psyq_draw_sync( 0 );
+
+    system_psyq_vsync( 0x6 );
+
+    while( system_psyq_break_draw() == -1 ) {}
+
+    while( system_psyq_is_idle_gpu( 0x1 ) != 0 ) {}
 }
-
-[SP + 18] = h(180);
-[SP + 1c] = h(100);
-[SP + 1a] = h(0);
-[SP + 1e] = h(3);
-
-A0 = SP + 18;
-A1 = 800756f8;
-system_psyq_store_image();
-
-A0 = 0;
-system_psyq_draw_sync();
-
-A0 = SP + 20;
-func25c54(); // restore clut?
-
-A0 = 0;
-system_psyq_draw_sync();
-
-A0 = 6;
-system_psyq_vsync();
-
-do
-{
-    func484a8();
-} while( V0 == -1 )
-
-do
-{
-    A0 = 1;
-    func48540();
-} while( V0 != 0 )
-////////////////////////////////
 
 
 

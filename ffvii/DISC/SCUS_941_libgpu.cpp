@@ -1697,13 +1697,16 @@ return env;
 
 
 
-////////////////////////////////
-// func44908()
-
-V0 = w[80062bf8];
-80044920	jalr   w[V0 + 38] ra
-return V0 >> 1f;
-////////////////////////////////
+// Gets field currently being drawn.
+// Current drawing field:
+// 0: VRAM even address being drawn
+// 1: VRAM odd address being drawn
+int system_psyq_get_ode()
+{
+    V0 = w[0x80062bf8];
+    80044920	jalr   w[V0 + 0x38] ra // GPUSTAT
+    return V0 >> 0x1f; // Drawing even/odd lines in interlace mode (0=Even or Vblank, 1=Odd)
+}
 
 
 
@@ -1986,7 +1989,7 @@ L450d8:	; 800450D8
 ////////////////////////////////
 // func450e0()
 
-V0 = w[80062cd4];
+V0 = w[0x80062cd4];
 return w[V0 + 0];
 ////////////////////////////////
 
@@ -4151,97 +4154,65 @@ return A0 + (w[texture + 0] / 4) + 2; // tim size in int
 ////////////////////////////////
 // func47180()
 
-S6 = w[SP + 0048];
 S0 = A0;
 S1 = A1;
 S5 = A2;
 S4 = A3;
-
-800471B4	jal    system_psyq_get_graph_debug [$80043cd0]
+S6 = A4;
 
 S3 = 0002;
-800471C0	bne    v0, s3, L471d8 [$800471d8]
 S2 = S0 + 000c;
-800471C8	lui    a0, $8001
-A0 = A0 + 0fa8;
-800471D0	jal    system_bios_printf [$80042dc8]
-800471D4	nop
 
-L471d8:	; 800471D8
-800471D8	jal    system_psyq_get_graph_debug [$80043cd0]
-800471DC	nop
-800471E0	bne    v0, s3, L47208 [$80047208]
-800471E4	nop
-[SP + 0010] = w(S1);
-A1 = w[S0 + 0000];
-A2 = w[S0 + 0004];
-A3 = w[S0 + 0008];
-800471F8	lui    a0, $8001
-A0 = A0 + 0fbc;
-80047200	jal    system_bios_printf [$80042dc8]
-80047204	nop
+if( system_psyq_get_graph_debug() == 0x2 )
+{
+    system_bios_printf( "analizing TMD...\n");
+}
 
-L47208:	; 80047208
-80047208	jal    system_psyq_get_graph_debug [$80043cd0]
-8004720C	nop
-80047210	bne    v0, s3, L4723c [$8004723c]
-V0 = S1 << 03;
-V0 = V0 - S1;
-V0 = V0 << 02;
-V0 = V0 + S2;
-A1 = w[V0 + 0000];
-A2 = w[V0 + 0004];
-8004722C	lui    a0, $8001
-A0 = A0 + 0fe4;
-80047234	jal    system_bios_printf [$80042dc8]
-80047238	nop
+if( system_psyq_get_graph_debug() == 0x2 )
+{
+    system_bios_printf( "\tid=%08X, flags=%d, nobj=%d, objid=%d", w[S0 + 0x0], w[S0 + 0x4], w[S0 + 0x8], S1 );
+}
 
-L4723c:	; 8004723C
-8004723C	jal    system_psyq_get_graph_debug [$80043cd0]
-80047240	nop
-80047244	bne    v0, s3, L47270 [$80047270]
-V0 = S1 << 03;
-V0 = V0 - S1;
-V0 = V0 << 02;
-V0 = V0 + S2;
-A1 = w[V0 + 0008];
-A2 = w[V0 + 000c];
-80047260	lui    a0, $8001
-A0 = A0 + 0ffc;
-80047268	jal    system_bios_printf [$80042dc8]
-8004726C	nop
+if( system_psyq_get_graph_debug() == 0x2 )
+{
+    V0 = S1 << 03;
+    V0 = V0 - S1;
+    V0 = V0 << 02;
+    V0 = V0 + S2;
+    system_bios_printf( "\tvert=%08X, nvert=%d\n", w[V0 + 0x0], w[V0 + 0x4] );
+}
 
-L47270:	; 80047270
-80047270	jal    system_psyq_get_graph_debug [$80043cd0]
-80047274	nop
-80047278	bne    v0, s3, L472ac [$800472ac]
+if( system_psyq_get_graph_debug() == 0x2 )
+{
+    V0 = S1 << 03;
+    V0 = V0 - S1;
+    V0 = V0 << 02;
+    V0 = V0 + S2;
+    system_bios_printf( "\tnorm=%08X, nnorm=%d\n", w[V0 + 0x8], w[V0 + 0xc] );
+}
+
+if( system_psyq_get_graph_debug() == 0x2 )
+{
+    V0 = S1 << 03;
+    V0 = V0 - S1;
+    V0 = V0 << 02;
+    V0 = V0 + S2;
+    system_bios_printf( "\tprim=%08X, nprim=%d\n", w[V0 + 0x10], w[V0 + 0x14] );
+
+
+}
+
 V1 = S1 << 03;
-V0 = S1 << 03;
-V0 = V0 - S1;
-V0 = V0 << 02;
-V0 = V0 + S2;
-A1 = w[V0 + 0010];
-A2 = w[V0 + 0014];
-80047298	lui    a0, $8001
-A0 = A0 + 1014;
-800472A0	jal    system_bios_printf [$80042dc8]
-800472A4	nop
-V1 = S1 << 03;
-
-L472ac:	; 800472AC
 V1 = V1 - S1;
 V1 = V1 << 02;
 V1 = V1 + S2;
 V0 = w[V1 + 0000];
-800472BC	nop
 V0 = S2 + V0;
 [S4 + 0000] = w(V0);
 V0 = w[V1 + 0008];
-800472CC	nop
 V0 = S2 + V0;
 [S6 + 0000] = w(V0);
 V0 = w[V1 + 0010];
-800472DC	nop
 V0 = S2 + V0;
 [S5 + 0000] = w(V0);
 V0 = w[V1 + 0014];
@@ -4257,7 +4228,7 @@ S1 = A1;
 A0 = S1;
 A1 = 0;
 A2 = 4;
-80047338	jal    func48498 [$80048498]
+80047338	jal    system_bios_memset [$80048498]
 
 80047340	lui    v1, $fdff
 V1 = V1 | ffff;
@@ -5451,85 +5422,59 @@ SP = SP + 0020;
 80048490	jr     ra 
 80048494	nop
 ////////////////////////////////
-// func48498:	; 80048498
-T2 = 00a0;
-8004849C	jr     t2 
-T1 = 002b;
-800484A4	nop
-////////////////////////////////
-// func484a8:	; 800484A8
-800484A8	lui    a0, $8006
-A0 = w[A0 + 2d28];
-800484B0	addiu  sp, sp, $fff8 (=-$8)
-V0 = w[A0 + 0000];
-800484B8	lui    v1, $0100
-V0 = V0 & V1;
-800484C0	beq    v0, zero, L48534 [$80048534]
-V0 = 0;
-V0 = w[A0 + 0000];
-V1 = 0004;
-V0 = V0 & 0700;
-V0 = V0 >> 08;
-800484D8	bne    v0, v1, L48534 [$80048534]
-800484DC	addiu  v0, zero, $ffff (=-$1)
-800484E0	lui    v1, $feff
-V0 = w[A0 + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-[A0 + 0000] = w(V0);
-800484F4	lui    v0, $8006
-V0 = w[V0 + 2d28];
-800484FC	lui    v1, $8006
-V1 = w[V1 + 2d20];
-V0 = w[V0 + 0000];
-80048508	nop
-[SP + 0000] = w(V0);
-V0 = w[V1 + 0000];
-80048514	lui    v1, $00ff
-[SP + 0000] = w(V0);
-V0 = w[SP + 0000];
-V1 = V1 | ffff;
-V0 = V0 & V1;
-80048528	beq    v0, v1, L48534 [$80048534]
-V0 = 0;
-V0 = w[SP + 0000];
 
-L48534:	; 80048534
-SP = SP + 0008;
-80048538	jr     ra 
-8004853C	nop
-////////////////////////////////
-// func48540:	; 80048540
-80048540	lui    a2, $8006
-A2 = w[A2 + 2d30];
-A1 = 0;
-V0 = w[A2 + 0000];
-80048550	lui    v1, $0400
-V0 = V0 & V1;
-80048558	bne    v0, zero, L48598 [$80048598]
-V0 = 0;
-V1 = A2;
-80048564	lui    a2, $0400
-V0 = A1;
 
-loop4856c:	; 8004856C
-8004856C	slt    v0, a0, v0
-80048570	beq    v0, zero, L48580 [$80048580]
-A1 = A1 + 0001;
-80048578	j      L48598 [$80048598]
-8004857C	addiu  v0, zero, $ffff (=-$1)
 
-L48580:	; 80048580
-V0 = w[V1 + 0000];
-80048584	nop
-V0 = V0 & A2;
-8004858C	beq    v0, zero, loop4856c [$8004856c]
-V0 = A1;
-V0 = 0;
+// Interrupts drawing after the current polygon is drawn. The return value is the next drawing entry; to resume
+// drawing, pass this value to DrawOTag().
+// Return value
+// Next polygon drawing entry.
+// However, during a DMA transfer outside the OT (such as LoadImage(), etc.) 0xffffffff is returned
+u_long* system_psyq_break_draw()
+{
+    gpu_dma_ctrl = w[0x80062d28]; // GPU DMA Channel Control 0x1f8010a8
+    gpu_dma_addr = w[0x80062d20]; // GPU DMA base address 0x1f8010a0
 
-L48598:	; 80048598
-80048598	jr     ra 
-8004859C	nop
+    // if Start/Busy (0=Stopped/Completed, 1=Start/Enable/Busy)
+    if( (w[gpu_dma_ctrl] & 0x01000000) == 0 ) return 0;
+
+    // if not Linked-List mode (used for GPU-command-lists)
+    if( ((w[gpu_dma_ctrl] & 0x00000700) >> 0x8) != 0x4 ) return -1;
+
+    // remove busy flag
+    [gpu_dma_ctrl] = w(w[gpu_dma_ctrl] & 0xfeffffff);
+
+    V0 = w[gpu_dma_ctrl];
+    [SP + 0x0] = w(V0);
+    V0 = w[gpu_dma_addr];
+    [SP + 0x0] = w(V0);
+    V0 = w[SP + 0x0];
+
+    if( (V0 & 0x00ffffff) != 0x00ffffff )
+    {
+        return w[SP + 0x0];
+    }
+    return 0;
+}
+
+
+
+int system_psyq_is_idle_gpu( int maxcount )
+{
+    gpu_status = w[0x80062d30]; // 0x1f801814 Read GPU Status Register
+
+    A1 = 0;
+    while( (w[gpu_status] & 0x04000000) == 0 ) // Ready to receive Cmd Word   (0=No, 1=Ready)  ;GP0(...) ;via GP0
+    {
+        if( maxcount < A1 ) return -1;
+
+        A1 += 0x1;
+    }
+    return 0;
+}
+
+
+
 ////////////////////////////////
 // func485a0
 T0 = A0;

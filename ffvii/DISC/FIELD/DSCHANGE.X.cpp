@@ -35,26 +35,18 @@ A2 = 800c8000;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
-A0 = 0;
-system_psyq_set_disp_mask();
+system_psyq_set_disp_mask( 0 );
 
 while( true )
 {
-    func484a8();
-    if( V0 != -1 ) break;
+    if( system_psyq_break_draw() != -1 ) break;
 
-    A0 = 0;
-    system_psyq_vsync();
+    system_psyq_vsync( 0 );
 }
 
-while( V0 != 0 )
-{
-    A0 = 1;
-    func48540();
-}
+while( system_psyq_is_idle_gpu( 0x1 ) != 0 ) {}
 
-A0 = 1;
-system_psyq_reset_graph();
+system_psyq_reset_graph( 0x1 );
 
 A0 = drawenv + 0 * 5c;
 A1 = 0;
@@ -214,7 +206,7 @@ La0480:	; 800A0480
     [800a16dc] = w(A1 & V0);
     [800a16e0] = w(A0 & A2);
 
-    func44908();
+    system_psyq_get_ode();
 
     S2 = w[800a15e0];
 
@@ -527,26 +519,18 @@ La09fc:	; 800A09FC
 drawenv = 800a15e4;
 dispenv = 800a169c;
 
-A0 = 0;
-system_psyq_set_disp_mask();
+system_psyq_set_disp_mask( 0 );
 
 while( true )
 {
-    func484a8();
-    if( V0 != -1 ) break;
+    if( system_psyq_break_draw() != -1 ) break;
 
-    A0 = 0;
-    system_psyq_vsync();
+    system_psyq_vsync( 0 );
 }
 
-while( V0 != 0 )
-{
-    A0 = 1;
-    func48540();
-}
+while( system_psyq_is_idle_gpu( 0x1 ) != 0 ) {}
 
-A0 = 1;
-system_psyq_reset_graph();
+system_psyq_reset_graph( 0x1 );
 
 A0 = drawenv + 0 * 5c;
 A1 = 0;
@@ -696,7 +680,7 @@ La0f94:	; 800A0F94
 
     S2 = w[800a15e0];
 
-    func44908();
+    system_psyq_get_ode();
 
     V0 = V0 ^ 1;
     S0 = 800b0000 + V0 * 480;

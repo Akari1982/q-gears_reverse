@@ -1018,7 +1018,7 @@
 80044474 system_psyq_get_drawenv
 800444AC system_psyq_put_dispenv
 800448D0 system_psyq_get_dispenv
-80044908 func44908
+80044908 system_psyq_get_ode
 8004493C system_psyq_set_tex_window
 80044978 system_psyq_set_draw_area
 800449FC system_psyq_set_draw_offset
@@ -1096,9 +1096,9 @@
 80047060 system_read_tim_get_sizes
 80047180 func47180
 80047318 func47318
-80048498 func48498
-800484A8 func484a8
-80048540 func48540
+80048498 system_bios_memset
+800484A8 system_psyq_break_draw
+80048540 system_psyq_is_idle_gpu
 800485A0 func485a0
 800487F0 func487f0
 80048964 func48968

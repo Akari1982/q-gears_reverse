@@ -145,7 +145,7 @@
 800617b8 [][][][] store 0 here at the start of total battle circle.
 
 
-80062bb8 array of some function pointers (0x4 size).
+0x80062bb8 array of some function pointers (0x4 size).
     +00 [][][][] 80010C98 function.
     +04 [][][][] 80045A00 function.
     +08 [][][][] 80045A24 function. inner func that handles dma work.
@@ -165,6 +165,8 @@
 0x80062bf8 [][][][] pointer to 80062bb8. Where pointers to some function stored.
 
 0x80062c00 []       render mode (0 old normal, 1 old normal?, 2 old texture disable, 3 normal render, 4 texture disable).
+
+0x80062d28 [][][][] GPU DMA Channel Control 0x1f8010a8.
 
 0x80062f04 [][][][] ???
 
@@ -269,13 +271,13 @@
     +2d8              [][][][] selected char in order menu.
     +2dc              []       0 - we load battle, 1 - we load menu.
 
-80062cd0 [][][][] 1f801810. GP0 Send GP0 Commands/Packets (Rendering and VRAM Access). GPUREAD Read responses to GP0(C0h) and GP1(10h) commands.
-80062cd4 [][][][] 1f801814. GP1 Send GP1 Commands (Display Control). GPUSTAT Read GPU Status Register.
-80062ce0 [][][][] 1f8010a8.
-80062ce4 [][][][] 1f8010e0.
-80062ce8 [][][][] 1f8010e4.
-80062cec [][][][] 1f8010e8.
-80062cf0 [][][][] 1f8010f0.
+0x80062cd0 [][][][] 0x1f801810. GP0 Send GP0 Commands/Packets (Rendering and VRAM Access). GPUREAD Read responses to GP0(C0h) and GP1(10h) commands.
+0x80062cd4 [][][][] 0x1f801814. GP1 Send GP1 Commands (Display Control). GPUSTAT Read GPU Status Register.
+0x80062ce0 [][][][] 0x1f8010a8.
+0x80062ce4 [][][][] 0x1f8010e0.
+0x80062ce8 [][][][] 0x1f8010e4.
+0x80062cec [][][][] 0x1f8010e8.
+0x80062cf0 [][][][] 0x1f8010f0.
 
 
 80062d78 [][]     first pad button mask (remaped if needed)

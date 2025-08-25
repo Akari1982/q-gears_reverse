@@ -1,4 +1,18 @@
 ////////////////////////////////
+// system_bios_memset()
+// A(2Bh) - memset(dst, fillbyte, len)
+// Fills len bytes at [dst..dst+len-1] with the fillbyte value. Refuses to fill
+// memory when dst=00000000h or when len>7FFFFFFFh. The return value is the
+// incoming "dst" value (or zero, when len=0 or len>7FFFFFFFh).
+
+T2 = a0;
+T1 = 2b;
+8004849C	jr     t2
+////////////////////////////////
+
+
+
+////////////////////////////////
 // system_bios_init_heap()
 // A(39h) - InitHeap(addr, size)
 // Initializes the address and size of the heap - the BIOS does not automatically do this,
