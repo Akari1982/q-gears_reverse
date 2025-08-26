@@ -1,1 +1,1 @@
-adisasm d00_13_64 d00_13_64.asm -v -b 80198700 80198700 -u -a
+adisasm ENDING.X ENDING.X.asm -v -b 800a0000 800a0030 -u -a

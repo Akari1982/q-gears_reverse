@@ -18,17 +18,20 @@ void ending_main()
             }
         }
 
-        A0 = 2; // Setloc
-        A1 = SP + 20;
+        A0 = 0x2; // Setloc
+        A1 = SP + 0x20;
         A2 = 0;
         system_psyq_cd_control_b(); // execute command
 
-        A0 = (w[SP + 24] + 07ff) >> 0b;
-        A1 = 80180000;
-        A2 = 0080;
+        A0 = (w[SP + 0x24] + 0x7ff) >> 0xb;
+        A1 = 0x80180000;
+        A2 = 0x80;
         system_psyq_cd_read();
 
-        while( system_psyq_cd_read_sync( 1, 0 ) > 0 ) {}
+        do
+        {
+            V0 = system_psyq_cd_read_sync( 0x1, 0 );
+        } while( V0 > 0 );
 
     800A00E0	bne    v0, zero, loopa006c [$800a006c]
 
@@ -36,31 +39,25 @@ void ending_main()
 
     system_psyq_set_disp_mask( 1 );
 
-    S5 = 0xfe;
-    S4 = 0xfe;
-
     for( int i = 0xfe; i <= 0; i -= 2 )
     {
-        S2 = S2 < 0x1;
+        rb = rb < 0x1;
 
         funca273c( 0 );
 
         system_psyq_get_ode();
 
         A0 = V0 ^ 0001;
-        V0 = A0 << 02;
-        V0 = V0 + A0;
-        V0 = V0 << 08;
-        800A0128	lui    v1, $8010
-        S0 = V0 + V1;
-        [SP + 001c] = h(0x280);
-        [SP + 001e] = h(1);
+        S0 = 0x80100000 + A0 * 0x500;
+        [SP + 0x1c] = h(0x280);
+        [SP + 0x1e] = h(1);
+
         V0 = A0 << 10;
         V0 = V0 >> 10;
-        V0 = V0 < 01e0;
-        [SP + 0018] = h(0);
-        [SP + 001a] = h(0);
-        [SP + 001a] = h(A0);
+        V0 = V0 < 0x1e0;
+        [SP + 0x18] = h(0);
+        [SP + 0x1a] = h(0);
+        [SP + 0x1a] = h(A0);
 
         if( V0 != 0 )
         {
@@ -79,71 +76,56 @@ void ending_main()
             800A018C	bne    v0, zero, loopa015c [$800a015c]
         }
 
-        S1 = 0x800a64e4 + S2 * 0x4;
+        u32* ot = 0x800a64e4 + rb * 0x4;
 
-        system_psyq_clear_otag_r( S1, 0x1 );
+        system_psyq_clear_otag_r( ot, 0x1 );
 
-        S0 = 0x800a6504 * S2 * 10;
+        TILE* tile = 0x800a6504 * rb * 10;
+        system_psyq_set_tile( tile );
+        system_psyq_set_semi_trans( tile , 0x1 );
+        tile->r0 = i;
+        tile->g0 = i;
+        tile->b0 = i;
+        tile->x0 = 0x1e;
+        tile->y0 = 0xc8;
+        tile->w = 0x244;
+        tile->h = 0x4a;
+        system_psyq_add_prim( ot, tile );
 
-        system_psyq_set_tile( S0 );
+        DR_MODE* dm = 0x800a64ec + rb * 0xc;
+        system_psyq_set_draw_mode( dm, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
+        system_psyq_add_prim( ot, dm );
 
-        system_psyq_set_semi_trans( S0 , 0x1 );
-
-        [A1 + 4] = b(i);
-        [A1 + 5] = b(S4);
-        [A1 + 6] = b(S5);
-        [A1 + 8] = h(1e);
-        [A1 + a] = h(c8);
-        [A1 + c] = h(244);
-        [A1 + e] = h(4a);
-
-        A0 = S1;
-        A1 = S0;
-        system_psyq_add_prim();
-
-        S0 = 0x800a64ec + S2 * 0xc;
-
-        system_psyq_set_draw_mode( S0, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
-
-        system_psyq_add_prim( S1, S0 );
-
-        system_psyq_draw_otag( S1 );
-
-        S4 -= 0x2;
-        S5 -= 0x2;
+        system_psyq_draw_otag( ot );
     }
 
-    for( int i = 0; i < 12c; ++i )
+    for( int i = 0; i < 0x12c; ++i )
     {
-        S2 = S2 < 0001;
+        rb = rb < 0x1;
 
         funca273c( 0 );
 
-        system_psyq_get_ode();
+        V0 = system_psyq_get_ode();
 
-        A0 = V0 ^ 0001;
+        A0 = V0 ^ 0x1;
+
         V0 = A0 << 02;
         V0 = V0 + A0;
         V0 = V0 << 08;
-        800A029C	lui    v1, $8010
-        S0 = V0 + V1;
-        V0 = 0280;
-        [SP + 001c] = h(V0);
-        V0 = 0001;
-        [SP + 001e] = h(V0);
+        S0 = 0x80100000 + V0;
+        [SP + 001c] = h(0x280);
+        [SP + 001e] = h(0x1);
         V0 = A0 << 10;
         V0 = V0 >> 10;
         V0 = V0 < 01e0;
-        [SP + 0018] = h(0);
-        [SP + 001a] = h(0);
-        [SP + 001a] = h(A0);
+        [SP + 0x18] = h(0);
+        [SP + 0x1a] = h(0);
+        [SP + 0x1a] = h(A0);
 
         if( V0 != 0 )
         {
             loopa02d0:	; 800A02D0
-                A0 = SP + 0018;
-                A1 = S0;
-                system_psyq_load_image();
+                system_psyq_load_image( SP + 0x18, S0 );
 
                 A0 = 0;
                 system_psyq_draw_sync();
@@ -161,7 +143,7 @@ void ending_main()
 
     for( int i = 0; i < fe; i += 2 )
     {
-        S2 = S2 < 0001;
+        rb = rb < 0x1;
 
         funca273c( 0 );
 
@@ -171,69 +153,52 @@ void ending_main()
         V0 = A0 << 02;
         V0 = V0 + A0;
         V0 = V0 << 08;
-        800A0344	lui    v1, $8010
-        S0 = V0 + V1;
-        V0 = 0280;
-        [SP + 001c] = h(V0);
-        V0 = 0001;
-        [SP + 001e] = h(V0);
+        S0 = 0x80100000 + V0;
+        [SP + 001c] = h(0x280);
+        [SP + 001e] = h(0x1);
         V0 = A0 << 10;
         V0 = V0 >> 10;
         V0 = V0 < 01e0;
         [SP + 0018] = h(0);
         [SP + 001a] = h(0);
-        800A0370	beq    v0, zero, La03b0 [$800a03b0]
         [SP + 001a] = h(A0);
 
-        loopa0378:	; 800A0378
-            system_psyq_load_image( SP + 0x18, S0 );
+        if( V0 != 0 )
+        {
+            loopa0378:	; 800A0378
+                system_psyq_load_image( SP + 0x18, S0 );
 
-            system_psyq_draw_sync();
+                system_psyq_draw_sync();
 
-            V0 = hu[SP + 001a] + 0002;
-            [SP + 001a] = h(V0);
-            V0 = V0 << 10;
-            V0 = V0 >> 10;
-            V0 = V0 < 01e0;
-            S0 = S0 + 0a00;
-        800A03A8	bne    v0, zero, loopa0378 [$800a0378]
+                V0 = hu[SP + 001a] + 0002;
+                [SP + 001a] = h(V0);
+                V0 = V0 << 10;
+                V0 = V0 >> 10;
+                V0 = V0 < 0x1e0;
+                S0 = S0 + 0xa00;
+            800A03A8	bne    v0, zero, loopa0378 [$800a0378]
+        }
 
-        La03b0:	; 800A03B0
-        S1 = S2 << 02;
-        V0 = 800a64e4;
-        S1 = S1 + V0;
-        A0 = S1;
-        A1 = 1;
-        system_psyq_clear_otag_r();
+        u32* ot = 0x800a64e4 + rb * 0x4;
+        system_psyq_clear_otag_r( ot, 0x1 );
 
-        S0 = S2 << 04;
-        V0 = 800a6504;
-        S0 = S0 + V0;
+        TILE* tile = 0x800a6504 + rb * 0x10;
+        system_psyq_set_tile( tile );
+        system_psyq_set_semi_trans( tile, 0x1 );
+        tile->r0 = i;
+        tile->g0 = i;
+        tile->b0 = i;
+        tile->x0 = 0x1e;
+        tile->y0 = 0xc8;
+        tile->w = 0x244;
+        tile->h = 0x4a;
+        system_psyq_add_prim( ot, tile );
 
-        system_psyq_set_tile( S0 );
+        DR_MODE* dm = 0x800a64ec + rb * 0xc;
+        system_psyq_set_draw_mode( dm, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
+        system_psyq_add_prim( ot, dm );
 
-        system_psyq_set_semi_trans( S0, 0x1 );
-
-        [S0 + 0x8] = h(0x1e);
-        [S0 + 0xa] = h(0xc8);
-        [S0 + 0xc] = h(0x244);
-        [S0 + 0xe] = h(0x4a);
-        [S0 + 0x4] = b(i);
-        [S0 + 0x5] = b(S4);
-        [S0 + 0x6] = b(S5);
-
-        system_psyq_add_prim( S1, S0 );
-
-        S0 = 0x800a64ec + S2 * 0xc;
-
-        system_psyq_set_draw_mode( S0, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
-
-        system_psyq_add_prim( S1, S0 );
-
-        system_psyq_draw_otag( S1 );
-
-        S4 += 0x2;
-        S5 += 0x2;
+        system_psyq_draw_otag( ot );
     }
 
     system_psyq_set_disp_mask( 0 );
@@ -1534,10 +1499,10 @@ A1 = A1 << 0a;
 A1 = A1 + V1;
 V0 = S1 < 1400;
 800A1DDC	bne    v0, zero, La1b60 [$800a1b60]
-800A1DE0	nop
-800A1DE4	jal    $system_psyq_draw_otag
-A0 = S4;
-V0 = 0;
+
+system_psyq_draw_otag( S4 );
+
+return 0;
 ////////////////////////////////
 
 
@@ -1596,15 +1561,27 @@ SP = SP + 0020;
 800A1ECC	jr     ra 
 800A1ED0	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca1ed4
 800A1ED4	lui    at, $800a
 [AT + 6528] = w(A0);
 800A1EDC	jr     ra 
 800A1EE0	nop
 ////////////////////////////////
-// funca1ee4
-800A1EE4	jr     ra 
-V0 = 0;
+
+
+
+////////////////////////////////
+// funca1ee4()
+
+return 0;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca1eec
 800A1EEC	addiu  sp, sp, $ffe8 (=-$18)
@@ -1656,39 +1633,32 @@ SP = SP + 0018;
 800A1F9C	jr     ra 
 800A1FA0	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca1fa4
-800A1FA4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A1FAC	jal    $80034410
-800A1FB0	nop
+
+800A1FAC	jal    $func34410
+
 V0 = V0 < 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A1FC0	jr     ra 
-800A1FC4	nop
 ////////////////////////////////
 
 
 
 ////////////////////////////////
-// funca1fc8
+// funca1fc8()
 
-800A1FC8	lui    v1, $800a
-V1 = w[V1 + 6528];
-800A1FD0	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
-V0 = V1 + 0002;
-800A1FDC	lui    at, $800a
-[AT + 6528] = w(V0);
-A1 = h[V1 + 0000];
-800A1FE8	jal    $func34d18
-800A1FEC	lui    a0, $800d
-A0 = V0;
-A1 = SP + 0010;
-A2 = SP + 0012;
-800A1FF8	jal    funca2888 [$800a2888]
+V1 = w[0x800a6528];
+V0 = V1 + 0x2;
+[0x800a6528] = w(V0);
+A1 = h[V1 + 0x0];
 
-return1;
+func34d18( 0x800d0000, A1 );
+
+funca2888( V0, SP + 0x10, SP + 0x12 );
+
+return 1;
 ////////////////////////////////
 
 
@@ -1754,7 +1724,7 @@ SP = SP + 0018;
 // funca20d4
 800A20D4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800A20DC	jal    $80034410
+800A20DC	jal    $func34410
 800A20E0	nop
 V0 = V0 < 0001;
 RA = w[SP + 0010];
@@ -1983,7 +1953,7 @@ SP = SP + 0018;
 // funca23f8
 800A23F8	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0010] = w(RA);
-800A2400	jal    $80034410
+800A2400	jal    $func34410
 800A2404	nop
 V0 = V0 ^ 0008;
 V0 = V0 < 0001;
@@ -2142,7 +2112,6 @@ A0 = 800af2e0 + A0;
 system_psyq_put_drawenv();
 
 V1 = w[800af408];
-800A27CC	nop
 V0 = V1 << 02;
 V0 = V0 + V1;
 V0 = V0 << 02;
@@ -2153,8 +2122,9 @@ V0 = V0 + V1;
 V0 = V0 << 03;
 V0 = V0 - V1;
 V0 = V0 << 02;
-V0 = 800af2e0 + V0;
-[8007ebd0] = w(V0);
+V0 = 0x800af2e0 + V0;
+[0x8007ebd0] = w(V0);
+
 system_menu_get_current_pad_buttons();
 
 A2 = V0;
@@ -2173,40 +2143,29 @@ A0 = w[0x800af3c4];
 
 
 
-void funca2888( S0, S1 )
+void funca2888( u_long* addr, S0, S1 )
 {
-    system_psyq_open_tim();
+    system_psyq_open_tim( addr );
 
-    A0 = SP + 0x10;
-    system_psyq_read_tim();
+    TIM_IMAGE image; // SP + 0x10
+    system_psyq_read_tim( &image );
 
-    A1 = w[SP + 0x20];
-    if( A1 != 0 )
+    if( image.paddr != 0 )
     {
-        A0 = w[SP + 0x1c];
-        system_psyq_load_image();
+        system_psyq_load_image( image.prect, image.paddr );
 
-        V0 = w[SP + 0x1c];
+        system_psyq_get_tpage( image.mode, 0, image.prect->x, image.prect->y );
 
-        A0 = w[SP + 0x10];
-        A1 = 0;
-        A2 = h[V0 + 0x0];
-        A3 = h[V0 + 0x2];
-        system_psyq_get_tpage();
-
-        [S0 + 0x0] = h(V0);
+        [S0] = h(V0);
     }
 
-    A1 = w[SP + 0x18];
-    if( A1 != 0 )
+    if( image.caddr != 0 )
     {
-        A0 = w[SP + 0x14];
-        system_psyq_load_image();
+        system_psyq_load_image( image.crect, image.caddr );
 
-        V0 = w[SP + 0x14];
-        system_psyq_get_clut( h[V0 + 0x0], h[V0 + 0x2] );
+        system_psyq_get_clut( image.crect->x, image.crect->y );
 
-        [S1 + 0x0] = h(V0);
+        [S1] = h(V0);
     }
 }
 
