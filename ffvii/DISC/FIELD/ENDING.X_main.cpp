@@ -45,39 +45,25 @@ void ending_main()
 
         funca273c( 0 );
 
-        system_psyq_get_ode();
+        s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
-        A0 = V0 ^ 0001;
-        S0 = 0x80100000 + A0 * 0x500;
-        [SP + 0x1c] = h(0x280);
-        [SP + 0x1e] = h(1);
+        u32* image = 0x80100000 + even_odd * 0x500;
 
-        V0 = A0 << 10;
-        V0 = V0 >> 10;
-        V0 = V0 < 0x1e0;
-        [SP + 0x18] = h(0);
-        [SP + 0x1a] = h(0);
-        [SP + 0x1a] = h(A0);
+        RECT recp;
+        recp.x = 0;
+        recp.y = even_odd;
+        recp.w = 0x280;
+        recp.h = 1;
 
-        if( V0 != 0 )
+        while( recp.y < 0x1e0 )
         {
-            loopa015c:	; 800A015C
-                system_psyq_load_image( SP + 0x18, S0 );
-
-                system_psyq_draw_sync( 0 );
-
-                V0 = hu[SP + 0x1a];
-                V0 = V0 + 0x2;
-                [SP + 0x1a] = h(V0);
-                S0 = S0 + 0xa00;
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                V0 = V0 < 01e0;
-            800A018C	bne    v0, zero, loopa015c [$800a015c]
+            system_psyq_load_image( &recp, image );
+            system_psyq_draw_sync( 0 );
+            recp.y += 0x2;
+            image += 0xa00;
         }
 
         u32* ot = 0x800a64e4 + rb * 0x4;
-
         system_psyq_clear_otag_r( ot, 0x1 );
 
         TILE* tile = 0x800a6504 * rb * 10;
@@ -105,39 +91,22 @@ void ending_main()
 
         funca273c( 0 );
 
-        V0 = system_psyq_get_ode();
+        s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
-        A0 = V0 ^ 0x1;
+        u32* image = 0x80100000 + even_odd * 0x500;
 
-        V0 = A0 << 02;
-        V0 = V0 + A0;
-        V0 = V0 << 08;
-        S0 = 0x80100000 + V0;
-        [SP + 001c] = h(0x280);
-        [SP + 001e] = h(0x1);
-        V0 = A0 << 10;
-        V0 = V0 >> 10;
-        V0 = V0 < 01e0;
-        [SP + 0x18] = h(0);
-        [SP + 0x1a] = h(0);
-        [SP + 0x1a] = h(A0);
+        RECT recp;
+        recp.x = 0;
+        recp.y = even_odd;
+        recp.w = 0x280;
+        recp.h = 1;
 
-        if( V0 != 0 )
+        while( recp.y < 0x1e0 )
         {
-            loopa02d0:	; 800A02D0
-                system_psyq_load_image( SP + 0x18, S0 );
-
-                A0 = 0;
-                system_psyq_draw_sync();
-
-                V0 = hu[SP + 001a];
-                V0 = V0 + 0002;
-                [SP + 001a] = h(V0);
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                V0 = V0 < 01e0;
-                S0 = S0 + 0a00;
-            800A0300	bne    v0, zero, loopa02d0 [$800a02d0]
+            system_psyq_load_image( &recp, image );
+            system_psyq_draw_sync( 0 );
+            image += 0xa00;
+            recp.y += 0x2;
         }
     }
 
@@ -147,36 +116,22 @@ void ending_main()
 
         funca273c( 0 );
 
-        system_psyq_get_ode();
+        s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
-        A0 = V0 ^ 0001;
-        V0 = A0 << 02;
-        V0 = V0 + A0;
-        V0 = V0 << 08;
-        S0 = 0x80100000 + V0;
-        [SP + 001c] = h(0x280);
-        [SP + 001e] = h(0x1);
-        V0 = A0 << 10;
-        V0 = V0 >> 10;
-        V0 = V0 < 01e0;
-        [SP + 0018] = h(0);
-        [SP + 001a] = h(0);
-        [SP + 001a] = h(A0);
+        u32* image = 0x80100000 + even_odd * 0x500;
 
-        if( V0 != 0 )
+        RECT recp;
+        recp.x = 0;
+        recp.y = even_odd;
+        recp.w = 0x280;
+        recp.h = 1;
+
+        while( recp.y < 0x1e0 )
         {
-            loopa0378:	; 800A0378
-                system_psyq_load_image( SP + 0x18, S0 );
-
-                system_psyq_draw_sync();
-
-                V0 = hu[SP + 001a] + 0002;
-                [SP + 001a] = h(V0);
-                V0 = V0 << 10;
-                V0 = V0 >> 10;
-                V0 = V0 < 0x1e0;
-                S0 = S0 + 0xa00;
-            800A03A8	bne    v0, zero, loopa0378 [$800a0378]
+            system_psyq_load_image( &recp, image );
+            system_psyq_draw_sync();
+            image += 0xa00;
+            recp.y += 0x2;
         }
 
         u32* ot = 0x800a64e4 + rb * 0x4;
@@ -206,330 +161,158 @@ void ending_main()
 
 
 
-////////////////////////////////
-// funca04c4()
-
-S0 = A0;
-S2 = 01e0;
-800A04DC	lui    s1, $800b
-800A04E0	addiu  s1, s1, $f400 (=-$c00)
-A0 = 0140;
-
-La04f4:	; 800A04F4
-A1 = 00f0;
-A2 = 0200;
-A3 = 0;
-[SP + 0010] = w(0);
-[SP + 0014] = w(0);
-
-funca2504();
-
-800A050C	beq    s0, zero, La0524 [$800a0524]
-V0 = 03c0;
-[SP + 0118] = h(0);
-[SP + 011a] = h(0);
-800A051C	j      La0530 [$800a0530]
-[SP + 011c] = h(V0);
-
-La0524:	; 800A0524
-[SP + 0118] = h(0);
-[SP + 011a] = h(0);
-[SP + 011c] = h(S2);
-
-La0530:	; 800A0530
-[SP + 011e] = h(S2);
-A0 = SP + 0118;
-A1 = 0;
-A2 = 0;
-800A0540	jal    $system_psyq_clear_image
-A3 = 0;
-
-loopa0548:	; 800A0548
-800A0548	jal    $system_psyq_draw_sync
-A0 = 0001;
-800A0550	bne    v0, zero, loopa0548 [$800a0548]
-800A0554	nop
-800A0558	jal    funca310c [$800a310c]
-800A055C	nop
-800A0560	lui    v0, $801f
-800A0564	lui    at, $800b
-[AT + f40c] = w(0);
-800A056C	lui    at, $800b
-[AT + f3fc] = w(V0);
-800A0574	lui    a0, $800a
-A0 = A0 + 3934;
-800A057C	beq    s0, zero, La058c [$800a058c]
-800A0580	nop
-800A0584	lui    a0, $800a
-A0 = A0 + 5048;
-
-La058c:	; 800A058C
-800A058C	jal    funca1ed4 [$800a1ed4]
-800A0590	nop
-V0 = 0001;
-800A0598	lui    at, $800b
-[AT + f410] = w(V0);
-
-loopa05a0:	; 800A05A0
-system_psyq_vsync( 0x1 );
-
-system_psyq_draw_sync( 0 );
-
-system_psyq_vsync( 0x1 );
-
-
-funca273c( w[0x800af40c] );
-
-[0x800af408] = w(V0);
-
-800A05D0	beq    v0, zero, La05e0 [$800a05e0]
-800A05D4	lui    v0, $801f
-800A05D8	lui    at, $800b
-[AT + f3fc] = w(V0);
-
-La05e0:	; 800A05E0
-A0 = w[8007ebd0];
-V1 = w[8007ebd8];
-V0 = hu[A0 + 0000];
-[SP + 0118] = h(V0);
-V0 = hu[A0 + 0002];
-800A0600	nop
-[SP + 011a] = h(V0);
-V0 = bu[V1 + 0011];
-800A060C	nop
-800A0610	bne    v0, zero, La0624 [$800a0624]
-800A0614	nop
-V0 = hu[A0 + 0004];
-800A061C	j      La0644 [$800a0644]
-[SP + 011c] = h(V0);
-
-La0624:	; 800A0624
-V0 = h[A0 + 0004];
-800A0628	nop
-V1 = V0 << 01;
-V1 = V1 + V0;
-V0 = V1 >> 1f;
-V1 = V1 + V0;
-V1 = V1 >> 01;
-[SP + 011c] = h(V1);
-
-La0644:	; 800A0644
-A0 = SP + 0118;
-A1 = 0;
-800A064C	lui    v0, $8008
-V0 = w[V0 + ebd0];
-A2 = 0;
-V0 = hu[V0 + 0006];
-A3 = 0;
-[SP + 011e] = h(V0);
-system_psyq_clear_image();
-
-A0 = 0;
-system_psyq_draw_sync();
-
-A0 = 1;
-system_psyq_vsync();
-
-
-system_cdrom_read_chain();
-
-if( V0 == a )
+void ending_main_2( S0 )
 {
-    func354cc();
-}
+    u32* ot = 0x800af400;
 
-A0 = w[800af408];
-A1 = 0001;
-A0 = A0 << 02;
-A0 = A0 + S1;
-system_psyq_clear_otag_r();
+    La04f4:	; 800A04F4
+        funca2504( 0x140, 0xf0, 0x200, 0, 0, 0 );
 
-V0 = w[800af408];
-V0 = V0 << 02;
-V0 = V0 + S1;
-[800af3e8] = w(V0);
-800A06C8	jal    funca1e20 [$800a1e20]
+        RECT recp;
+        recp.x = 0;
+        recp.y = 0;
+        recp.w = ( S0 != 0 ) ? 0x3c0 : 0x1e0;
+        recp.h = 0x1e0;
 
-800A06D0	jal    funca3210 [$800a3210]
+        system_psyq_clear_image( &recp, 0, 0, 0 );
+        while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
 
-A0 = w[800af408];
-A0 = A0 << 02;
-A0 = A0 + S1;
-system_psyq_draw_otag();
+        funca310c(); // init something
 
-A0 = 1;
-system_psyq_vsync();
+        [0x800af40c] = w(0);
+        [0x800af3fc] = w(0x801f0000);
 
-800A06F8	bne    s0, zero, La0718 [$800a0718]
+        funca1ed4( ( S0 != 0 ) ? 0x800a5048 : 0x800a3934 );
 
-V0 = w[800af3ec];
-V0 = V0 & 09f0;
-800A0710	bne    v0, zero, La0734 [$800a0734]
-V0 = 00c1;
+        [0x800af410] = w(0x1);
 
-La0718:	; 800A0718
-800A0718	lui    v0, $800b
-V0 = w[V0 + f410];
-800A0720	nop
-800A0724	bne    v0, zero, loopa05a0 [$800a05a0]
-A0 = 0140;
-800A072C	j      La04f4 [$800a04f4]
-800A0730	nop
+        loopa05a0:	; 800A05A0
+            system_psyq_vsync( 0x1 );
+            system_psyq_draw_sync( 0 );
+            system_psyq_vsync( 0x1 );
 
-La0734:	; 800A0734
-800A0734	lui    at, $800a
-[AT + a000] = h(V0);
-V0 = 003c;
-800A0740	lui    at, $800a
-[AT + a004] = w(V0);
-800A0748	lui    at, $800a
-[AT + a008] = w(0);
-800A0750	jal    $8002da7c
-S0 = 0;
-800A0758	lui    s3, $800b
-800A075C	addiu  s3, s3, $f400 (=-$c00)
-800A0760	lui    s2, $800a
-S2 = S2 + 6454;
-800A0768	lui    s1, $800a
-S1 = S1 + 645c;
-800A0770	lui    s4, $800a
-S4 = S4 + 647c;
+            V0 = funca273c( w[0x800af40c] );
 
-La0778:	; 800A0778
-    funca273c( w[0x800af40c] );
+            [0x800af408] = w(V0);
 
-    [0x800af408] = w(V0);
+            if( V0 != 0 ) [0x800af3fc] = w(0x801f0000);
 
-    A3 = w[8007ebd0];
-    [SP + 118] = h(hu[A3 + 0]);
-    [SP + 11a] = h(hu[A3 + 2]);
-    [SP + 11c] = h(hu[A3 + 4]);
-    [SP + 11e] = h(hu[A3 + 6]);
+            A0 = w[0x8007ebd0];
+            recp.x = hu[A0 + 0x0];
+            recp.y = hu[A0 + 0x2];
 
-    A0 = SP + 118;
-    A1 = 0;
-    A2 = 0;
-    A3 = 0;
-    system_psyq_clear_image();
+            V1 = w[0x8007ebd8];
+            if( bu[V1 + 0x11] == 0 )
+            {
+                recp.w = hu[A0 + 0x4];
+            }
+            else
+            {
+                recp.w = (h[A0 + 0x4] * 0x3) / 2;
+            }
 
-    A0 = 0;
-    system_psyq_draw_sync();
+            V0 = w[0x8007ebd0];
+            recp.h = hu[V0 + 0x6];
 
-    system_cdrom_read_chain();
+            system_psyq_clear_image( &recp, 0, 0, 0 );
 
-    if( V0 == a )
+            system_psyq_draw_sync( 0 );
+            system_psyq_vsync( 0x1 );
+
+            if( system_cdrom_read_chain() == 0xa )
+            {
+                func354cc();
+            }
+
+            A0 = w[0x800af408];
+            system_psyq_clear_otag_r( ot + A0 * 0x4, 0x1 );
+
+            V0 = w[0x800af408];
+            [0x800af3e8] = w(ot + V0 * 0x4);
+
+            funca1e20();
+
+            funca3210();
+
+            A0 = w[0x800af408];
+            system_psyq_draw_otag( ot + A0 * 0x4 );
+
+            system_psyq_vsync( 0x1 );
+
+            if( S0 == 0 )
+            {
+                V0 = w[0x800af3ec] & 0x09f0;
+                800A0710	bne    v0, zero, La0734 [$800a0734]
+            }
+
+            V0 = w[0x800af410];
+        800A0724	bne    v0, zero, loopa05a0 [$800a05a0]
+
+    800A072C	j      La04f4 [$800a04f4]
+
+    La0734:	; 800A0734
+    [0x8009a000] = h(0xc1);
+    [0x8009a004] = w(0x3c);
+    [0x8009a008] = w(0);
+
+    system_akao_execute();
+
+    for( int i = 0; i >= 0xff; i += 0x4 )
     {
-        func354cc();
+        V0 = funca273c( w[0x800af40c] );
+
+        [0x800af408] = w(V0);
+
+        A3 = w[0x8007ebd0];
+
+        RECT recp;
+        recp.x = hu[A3 + 0];
+        recp.y = hu[A3 + 2];
+        recp.w = hu[A3 + 4];
+        recp.h = hu[A3 + 6];
+
+        system_psyq_clear_image( &recp, 0, 0, 0 );
+
+        system_psyq_draw_sync( 0 );
+
+        if( system_cdrom_read_chain() == 0xa )
+        {
+            func354cc();
+        }
+
+        s32 rb = w[0x800af408];
+
+        u32* ot1 = 0x800af400 + rb * 0x4;
+        system_psyq_clear_otag_r( ot1 , 0x1 );
+        [0x800af3e8] = w(ot1);
+        funca3210();
+        system_psyq_draw_otag( ot1 );
+
+        u32* ot2 = 0x800a6454 + rb * 0x4;
+        system_psyq_clear_otag_r( ot2, 0x1 );
+
+        TILE* tile = 0x800a645c + rb * 0x10;
+        system_psyq_set_tile( tile );
+        system_psyq_set_semi_trans( tile, 0x1 );
+        tile->r0 = i;
+        tile->g0 = i;
+        tile->b0 = i;
+        tile->x0 = 0;
+        tile->y0 = 0;
+        tile->w = 0x140;
+        tile->h = 0xf0;
+        system_psyq_add_prim( ot2, tile );
+
+        DR_MODE* dm = 0x800a647c + rb * 0xc;
+        system_psyq_set_draw_mode( dm, 0, 0, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
+        system_psyq_add_prim( ot2, dm );
+
+        system_psyq_draw_otag( ot2 );
     }
 
-    A0 = w[800af408];
-    A1 = 1;
-    A0 = A0 << 02;
-    A0 = A0 + S3;
-    system_psyq_clear_otag_r();
-
-    V0 = w[800af408];
-    V0 = V0 << 02;
-    V0 = V0 + S3;
-    [800af3e8] = w(V0);
-
-    funca3210();
-
-    A0 = w[800af408];
-    A0 = A0 << 02;
-    A0 = A0 + S3;
-    system_psyq_draw_otag();
-
-    A0 = w[800af408];
-    A1 = 1;
-    A0 = A0 << 02;
-    A0 = A0 + S2;
-    system_psyq_clear_otag_r();
-
-    A0 = w[800af408];
-    A0 = A0 << 04;
-    A0 = A0 + S1;
-    system_psyq_set_tile();
-
-    A0 = w[800af408];
-    A1 = 0001;
-    A0 = A0 << 04;
-    800A0888	jal    $80046848
-    A0 = A0 + S1;
-    800A0890	lui    v0, $800b
-    V0 = w[V0 + f408];
-    800A0898	nop
-    V0 = V0 << 04;
-    V0 = V0 + S1;
-    [V0 + 0004] = b(S0);
-    V0 = w[800af408];
-    V0 = V0 << 04;
-    V0 = V0 + S1;
-    [V0 + 0005] = b(S0);
-    V0 = w[800af408];
-    V0 = V0 << 04;
-    V0 = V0 + S1;
-    [V0 + 0006] = b(S0);
-    A1 = w[800af408];
-    A0 = A1 << 02;
-    A0 = A0 + S2;
-    A1 = A1 << 04;
-    A1 = A1 + S1;
-
-    [A1 + 8] = h(0);
-    [A1 + a] = h(0);
-    [A1 + c] = h(140);
-    [A1 + e] = h(f0);
-    system_psyq_add_prim();
-
-    A0 = 2;
-    A1 = 2;
-    A2 = 0;
-    A3 = 0;
-    800A0918	jal    $system_psyq_get_tpage
-
-    A1 = 0;
-    A2 = 0;
-    800A0928	lui    v1, $800b
-    V1 = w[V1 + f408];
-    A3 = V0 & ffff;
-    [SP + 0010] = w(0);
-    A0 = V1 << 01;
-    A0 = A0 + V1;
-    A0 = A0 << 02;
-    A0 = A0 + S4;
-
-    800A0944	jal    $system_psyq_set_draw_mode
-
-    800A094C	lui    v0, $800b
-    V0 = w[V0 + f408];
-    800A0954	nop
-    A0 = V0 << 02;
-    A0 = A0 + S2;
-    A1 = V0 << 01;
-    A1 = A1 + V0;
-    A1 = A1 << 02;
-    A1 = A1 + S4;
-    system_psyq_add_prim();
-
-    A0 = w[800af408];
-    A0 = A0 << 02;
-    A0 = A0 + S2;
-    system_psyq_draw_otag();
-
-    V0 = S0 + 0004;
-    S0 = V0;
-    V0 = V0 << 10;
-    V0 = V0 >> 10;
-    V0 = V0 < 00ff;
-800A09A0	bne    v0, zero, La0778 [$800a0778]
-
-A0 = 4;
-system_psyq_vsync();
-
-A0 = 1;
-system_psyq_reset_graph();
-////////////////////////////////
+    system_psyq_vsync( 0x4 );
+    system_psyq_reset_graph( 0x1 );
+}
 
 
 
@@ -1508,69 +1291,42 @@ return 0;
 
 
 ////////////////////////////////
-// funca1e20
-800A1E20	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(S2);
-800A1E28	lui    s2, $800a
-S2 = S2 + 63dc;
-[SP + 0014] = w(S1);
-S1 = 0001;
-[SP + 001c] = w(RA);
-[SP + 0010] = w(S0);
+// funca1e20()
+
+S2 = 0x800a63dc;
+S1 = 0x1;
 
 loopa1e40:	; 800A1E40
-800A1E40	lui    s0, $800a
-S0 = w[S0 + 6528];
-800A1E48	lui    at, $800a
-[AT + 6394] = w(0);
-V0 = S0 + 0002;
-800A1E54	lui    at, $800a
-[AT + 6528] = w(V0);
-V0 = h[S0 + 0000];
-800A1E60	nop
-V0 = V0 << 02;
-V0 = V0 + S2;
-V0 = w[V0 + 0000];
-800A1E70	nop
-800A1E74	jalr   v0 ra
-800A1E78	nop
-800A1E7C	bne    v0, zero, La1e9c [$800a1e9c]
-800A1E80	nop
-800A1E84	lui    at, $800a
-[AT + 6528] = w(S0);
-800A1E8C	lui    at, $800a
-[AT + 6390] = w(0);
-800A1E94	j      La1ea4 [$800a1ea4]
-800A1E98	nop
+    S0 = w[0x800a6528];
+    [0x800a6394] = w(0);
+    V0 = S0 + 0x2;
+    [0x800a6528] = w(V0);
+    V0 = h[S0 + 0x0];
 
-La1e9c:	; 800A1E9C
-800A1E9C	lui    at, $800a
-[AT + 6390] = w(S1);
+    V0 = S2 + V0 * 4;
 
-La1ea4:	; 800A1EA4
-800A1EA4	lui    v0, $800a
-V0 = w[V0 + 6394];
-800A1EAC	nop
+    800A1E74	jalr   w[V0 + 0x0] ra
+
+    if( V0 == 0 )
+    {
+        [0x800a6528] = w(S0);
+        [0x800a6390] = w(0);
+    }
+    else
+    {
+        [0x800a6390] = w(S1);
+    }
+
+    V0 = w[0x800a6394];
 800A1EB0	bne    v0, zero, loopa1e40 [$800a1e40]
-800A1EB4	nop
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-800A1ECC	jr     ra 
-800A1ED0	nop
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// funca1ed4
-800A1ED4	lui    at, $800a
-[AT + 6528] = w(A0);
-800A1EDC	jr     ra 
-800A1EE0	nop
-////////////////////////////////
+void funca1ed4( A0 )
+{
+    [0x800a6528] = w(A0);
+}
 
 
 
@@ -1894,61 +1650,43 @@ AT = AT + V0;
 800A2320	jr     ra 
 V0 = 0001;
 ////////////////////////////////
-// funca2328
-800A2328	addiu  sp, sp, $ffe8 (=-$18)
-800A232C	lui    v0, $800a
-V0 = w[V0 + 6528];
-V1 = 0010;
-[SP + 0010] = w(RA);
-800A233C	lui    at, $800a
-[AT + a000] = h(V1);
-V1 = V0 + 0002;
-800A2348	lui    at, $800a
-[AT + 6528] = w(V1);
-A1 = h[V0 + 0000];
-800A2354	jal    $func34d18
-800A2358	lui    a0, $800d
-800A235C	lui    at, $800a
-[AT + a004] = w(V0);
-800A2364	jal    $8002da7c
-800A2368	nop
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A2378	jr     ra 
-800A237C	nop
+
+
+
 ////////////////////////////////
-// funca2380
-800A2380	lui    v1, $800a
-V1 = w[V1 + 6528];
-800A2388	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = V1 + 0002;
-800A2394	lui    at, $800a
-[AT + 6528] = w(V0);
-A0 = hu[V1 + 0000];
-V0 = V1 + 0004;
-800A23A4	lui    at, $800a
-[AT + 6528] = w(V0);
-800A23AC	lui    at, $800a
-[AT + a000] = h(A0);
-A0 = h[V1 + 0002];
-V0 = V1 + 0006;
-800A23BC	lui    at, $800a
-[AT + 6528] = w(V0);
-800A23C4	lui    at, $800a
-[AT + a004] = w(A0);
-V0 = h[V1 + 0004];
-800A23D0	nop
-800A23D4	lui    at, $800a
-[AT + a008] = w(V0);
-800A23DC	jal    $8002da7c
-800A23E0	nop
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A23F0	jr     ra 
-800A23F4	nop
+// funca2328()
+
+V0 = w[0x800a6528];
+[0x800a6528] = w(V0 + 0x2);
+
+func34d18( 0x800d0000, h[V0 + 0x0] );
+
+[0x8009a000] = h(0x10);
+[0x8009a004] = w(V0);
+
+system_akao_execute();
+
+return 1;
+////////////////////////////////
+
+
+
+////////////////////////////////
+// funca2380()
+
+V1 = w[0x800a6528];
+[0x800a6528] = w(V1 + 0x6);
+
+[0x8009a000] = h(hu[V1 + 0x0]);
+[0x8009a004] = w(h[V1 + 0x2]);
+[0x8009a008] = w(h[V1 + 0x4]);
+system_akao_execute();
+
+return 1;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca23f8
 800A23F8	addiu  sp, sp, $ffe8 (=-$18)
@@ -2129,7 +1867,6 @@ system_menu_get_current_pad_buttons();
 
 A2 = V0;
 A3 = A2 >> 0x10;
-V0 = w[0x800af408];
 A1 = w[0x800af3c0];
 A0 = w[0x800af3c4];
 
@@ -2139,6 +1876,8 @@ A0 = w[0x800af3c4];
 [0x800af3c4] = w(~A3);
 [0x800af3ec] = w(A1 & A2);
 [0x800af3f0] = w(A0 & A3);
+
+return w[0x800af408];
 ////////////////////////////////
 
 
@@ -2671,25 +2410,18 @@ La30f4:	; 800A30F4
 
 
 ////////////////////////////////
-// funca310c
+// funca310c()
 
-V1 = 800af3d4;
-A1 = 0001;
-V0 = 00ff;
-800A311C	lui    a0, $800b
-800A3120	addiu  a0, a0, $f3d8 (=-$c28)
-[V1 + 0000] = h(0);
-[800af3d7] = b(V0);
-V0 = 0001;
-[800af3d6] = b(A1);
-[V1 + fff4] = w(0);
-800A3140	addiu  v1, v1, $fff4 (=-$c)
-[800af3cc] = w(A0);
-[800af3e4] = h(V0);
-[800af3e6] = b(A1);
-[800af3e7] = b(0);
-[A0 + 0000] = w(V1);
-[800af3dc] = w(0);
+[0x800af3c8] = w(0);
+[0x800af3cc] = w(0x800af3d8);
+[0x800af3d4] = h(0);
+[0x800af3d6] = b(0x1);
+[0x800af3d7] = b(0xff);
+[0x800af3d8] = w(0x800af3c8);
+[0x800af3dc] = w(0);
+[0x800af3e4] = h(0x1);
+[0x800af3e6] = b(0x1);
+[0x800af3e7] = b(0);
 ////////////////////////////////
 
 
@@ -2734,65 +2466,39 @@ La3208:	; 800A3208
 
 
 
-////////////////////////////////
-// funca3210
-800A3210	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
-800A3218	lui    s0, $800b
-S0 = w[S0 + f3cc];
-[SP + 0018] = w(RA);
-[SP + 0014] = w(S1);
-V0 = w[S0 + 0004];
-800A322C	nop
-800A3230	beq    v0, zero, La3274 [$800a3274]
-800A3234	nop
-S1 = 0004;
+void funca3210()
+{
+    S0 = w[0x800af3cc];
 
-loopa323c:	; 800A323C
-V0 = bu[S0 + 000e];
-800A3240	nop
-800A3244	bne    v0, s1, La325c [$800a325c]
-800A3248	nop
-V0 = w[S0 + 0008];
-800A3250	nop
-800A3254	jalr   v0 ra
-A0 = S0;
+    if( w[S0 + 0x4] != 0 )
+    {
+        loopa323c:	; 800A323C
+            if( bu[S0 + 0xe] == 0x4 )
+            {
+                A0 = S0;
+                800A3254	jalr   w[S0 + 0x8] ra
+            }
 
-La325c:	; 800A325C
-S0 = w[S0 + 0004];
-800A3260	nop
-V0 = w[S0 + 0004];
-800A3268	nop
-800A326C	bne    v0, zero, loopa323c [$800a323c]
-800A3270	nop
+            S0 = w[S0 + 0004];
+            V0 = w[S0 + 0004];
+        800A326C	bne    v0, zero, loopa323c [$800a323c]
+    }
 
-La3274:	; 800A3274
-800A3274	lui    s0, $800b
-S0 = w[S0 + f3cc];
-800A327C	nop
-V0 = w[S0 + 0004];
-800A3284	nop
-800A3288	beq    v0, zero, La32c0 [$800a32c0]
-A0 = 0002;
-V1 = 0004;
+    S0 = w[0x800af3cc];
+    if( w[S0 + 0x4] != 0 )
+    {
+        loopa3294:	; 800A3294
+            V0 = bu[S0 + 0xe];
+            if( V0 == 0x2 )
+            {
+                [S0 + 0xe] = b(0x4);
+            }
 
-loopa3294:	; 800A3294
-V0 = bu[S0 + 000e];
-800A3298	nop
-800A329C	bne    v0, a0, La32a8 [$800a32a8]
-800A32A0	nop
-[S0 + 000e] = b(V1);
-
-La32a8:	; 800A32A8
-S0 = w[S0 + 0004];
-800A32AC	nop
-V0 = w[S0 + 0004];
-800A32B4	nop
-800A32B8	bne    v0, zero, loopa3294 [$800a3294]
-800A32BC	nop
-
-La32c0:	; 800A32C0
-////////////////////////////////
+            S0 = w[S0 + 0x4];
+            V0 = w[S0 + 0x4];
+        800A32B8	bne    v0, zero, loopa3294 [$800a3294]
+    }
+}
 
 
 
@@ -3116,7 +2822,7 @@ V0 = V0 & 8000;
 800A3714	beq    v0, zero, La3740 [$800a3740]
 S1 = S1 + 000c;
 A0 = S3;
-800A3720	jal    $80046848
+800A3720	jal    $system_psyq_set_semi_trans
 A1 = 0001;
 V0 = hu[S2 + 0000];
 V1 = hu[S0 + 0000];

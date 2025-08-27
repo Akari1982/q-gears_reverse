@@ -431,7 +431,7 @@ while( true )
     A1 = w[0x80048d58]; // f414
     system_cdrom_load_file( A0, A1, 0x800a0000, 0 );
 
-    funca04c4( 0 );
+    ending_main_2( 0 );
 
     [0x8009a000] = h(0xc0);
     [0x8009a004] = w(0x7f);
@@ -960,14 +960,9 @@ while( true )
 
     if( bu[0x8009abf4 + 1] == 5 )
     {
-        A0 = w[0x80048d54]; // 1efa9 FIELD\ENDING.X
-        A1 = w[0x80048d58]; // f414 size
-        A2 = 800a0000;
-        A3 = 0;
-        system_cdrom_load_file();
+        system_cdrom_load_file( w[0x80048d54], w[0x80048d58], 0x800a0000, 0 ); // "FIELD\ENDING.X"
 
-        A0 = 1;
-        funca04c4();
+        ending_main_2( 0x1 );
 
         func33be0();
 
