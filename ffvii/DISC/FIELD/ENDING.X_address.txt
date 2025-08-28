@@ -1,14 +1,24 @@
 0x800a6454 OT2 (0x2 items, 0x4 size).
+0x800a645c TILE (0x2 items, 0x10 size).
+0x800a647c DR_MODE (0x2 items, 0xc size).
 
 0x800af2e0 array of two global DRAWENV (0x2 items, 0x5c size).
 0x800af398 array of two global DISPENV (0x2 items, 0x14 size).
 0x800af3c0 [][][][] controller 1 not pressed buttons.
 0x800af3c4 [][][][] controller 2 not pressed buttons.
+
+0x800af3cc some linked list.
+    + 0x0 [][][][] pointer to prev element.
+    + 0x4 [][][][] pointer to next element.
+    + 0x8 [][][][] callback.
+    + 0xc [][]     ???
+    + 0xe []       ???
+    + 0xf []       ???
+
 0x800af3e8 stored current 0x800af400 OT1 pointer.
 0x800af3ec [][][][] controller 1 first pressed buttons.
 0x800af3f0 [][][][] controller 2 first pressed buttons.
 0x800af3f4 [][][][] controller 1 buttons state.
 0x800af3f8 [][][][] controller 2 buttons state.
-
 0x800af400 OT1 (0x2 items, 0x4 size).
 0x800af408 [][][][] current render buffer id.
