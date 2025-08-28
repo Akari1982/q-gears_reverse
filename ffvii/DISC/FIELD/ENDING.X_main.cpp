@@ -49,17 +49,17 @@ void ending_main()
 
         u32* image = 0x80100000 + even_odd * 0x500;
 
-        RECT recp;
-        recp.x = 0;
-        recp.y = even_odd;
-        recp.w = 0x280;
-        recp.h = 1;
+        RECT rect;
+        rect.x = 0;
+        rect.y = even_odd;
+        rect.w = 0x280;
+        rect.h = 1;
 
-        while( recp.y < 0x1e0 )
+        while( rect.y < 0x1e0 )
         {
-            system_psyq_load_image( &recp, image );
+            system_psyq_load_image( &rect, image );
             system_psyq_draw_sync( 0 );
-            recp.y += 0x2;
+            rect.y += 0x2;
             image += 0xa00;
         }
 
@@ -95,18 +95,18 @@ void ending_main()
 
         u32* image = 0x80100000 + even_odd * 0x500;
 
-        RECT recp;
-        recp.x = 0;
-        recp.y = even_odd;
-        recp.w = 0x280;
-        recp.h = 1;
+        RECT rect;
+        rect.x = 0;
+        rect.y = even_odd;
+        rect.w = 0x280;
+        rect.h = 1;
 
-        while( recp.y < 0x1e0 )
+        while( rect.y < 0x1e0 )
         {
-            system_psyq_load_image( &recp, image );
+            system_psyq_load_image( &rect, image );
             system_psyq_draw_sync( 0 );
             image += 0xa00;
-            recp.y += 0x2;
+            rect.y += 0x2;
         }
     }
 
@@ -120,18 +120,18 @@ void ending_main()
 
         u32* image = 0x80100000 + even_odd * 0x500;
 
-        RECT recp;
-        recp.x = 0;
-        recp.y = even_odd;
-        recp.w = 0x280;
-        recp.h = 1;
+        RECT rect;
+        rect.x = 0;
+        rect.y = even_odd;
+        rect.w = 0x280;
+        rect.h = 1;
 
-        while( recp.y < 0x1e0 )
+        while( rect.y < 0x1e0 )
         {
-            system_psyq_load_image( &recp, image );
+            system_psyq_load_image( &rect, image );
             system_psyq_draw_sync();
             image += 0xa00;
-            recp.y += 0x2;
+            rect.y += 0x2;
         }
 
         u32* ot = 0x800a64e4 + rb * 0x4;
@@ -168,13 +168,13 @@ void ending_main_2( S0 )
     La04f4:	; 800A04F4
         funca2504( 0x140, 0xf0, 0x200, 0, 0, 0 );
 
-        RECT recp;
-        recp.x = 0;
-        recp.y = 0;
-        recp.w = ( S0 != 0 ) ? 0x3c0 : 0x1e0;
-        recp.h = 0x1e0;
+        RECT rect;
+        rect.x = 0;
+        rect.y = 0;
+        rect.w = ( S0 != 0 ) ? 0x3c0 : 0x1e0;
+        rect.h = 0x1e0;
 
-        system_psyq_clear_image( &recp, 0, 0, 0 );
+        system_psyq_clear_image( &rect, 0, 0, 0 );
         while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
 
         funca310c(); // init something
@@ -198,23 +198,23 @@ void ending_main_2( S0 )
             if( V0 != 0 ) [0x800af3fc] = w(0x801f0000);
 
             A0 = w[0x8007ebd0];
-            recp.x = hu[A0 + 0x0];
-            recp.y = hu[A0 + 0x2];
+            rect.x = hu[A0 + 0x0];
+            rect.y = hu[A0 + 0x2];
 
             V1 = w[0x8007ebd8];
             if( bu[V1 + 0x11] == 0 )
             {
-                recp.w = hu[A0 + 0x4];
+                rect.w = hu[A0 + 0x4];
             }
             else
             {
-                recp.w = (h[A0 + 0x4] * 0x3) / 2;
+                rect.w = (h[A0 + 0x4] * 0x3) / 2;
             }
 
             V0 = w[0x8007ebd0];
-            recp.h = hu[V0 + 0x6];
+            rect.h = hu[V0 + 0x6];
 
-            system_psyq_clear_image( &recp, 0, 0, 0 );
+            system_psyq_clear_image( &rect, 0, 0, 0 );
 
             system_psyq_draw_sync( 0 );
             system_psyq_vsync( 0x1 );
@@ -241,7 +241,7 @@ void ending_main_2( S0 )
 
             if( S0 == 0 )
             {
-                V0 = w[0x800af3ec] & 0x09f0;
+                V0 = w[0x800af3ec] & 0x09f0; // pressed triangle circle cross square start select
                 800A0710	bne    v0, zero, La0734 [$800a0734]
             }
 
@@ -265,13 +265,13 @@ void ending_main_2( S0 )
 
         A3 = w[0x8007ebd0];
 
-        RECT recp;
-        recp.x = hu[A3 + 0];
-        recp.y = hu[A3 + 2];
-        recp.w = hu[A3 + 4];
-        recp.h = hu[A3 + 6];
+        RECT rect;
+        rect.x = hu[A3 + 0];
+        rect.y = hu[A3 + 2];
+        rect.w = hu[A3 + 4];
+        rect.h = hu[A3 + 6];
 
-        system_psyq_clear_image( &recp, 0, 0, 0 );
+        system_psyq_clear_image( &rect, 0, 0, 0 );
 
         system_psyq_draw_sync( 0 );
 
@@ -491,10 +491,10 @@ for( int i = 0; i < 20; ++i )
     [800a653e + i * 88] = b(0);
 }
 
-A0 = 800a762c;
-A1 = 4;
-A2 = 80;
-A3 = 800a0e68;
+A0 = 0x800a762c;
+A1 = 0x4;
+A2 = 0x80;
+A3 = 0x800a0e68;
 funca3178();
 
 for( int i = 0; i < 2; ++i )
@@ -989,108 +989,86 @@ V0 = 0001;
 ////////////////////////////////
 // funca19a4()
 
-V0 = w[800a63cc];
-V1 = w[800af3f4];
+V0 = w[0x800a63cc];
+V1 = w[0x800af3f4];
 V0 = V0 ^ 0001;
-800A19E0	lui    at, $800a
-[AT + 63cc] = w(V0);
+[0x800a63cc] = w(V0);
 V0 = V1 & 1000;
 800A19EC	beq    v0, zero, La1a14 [$800a1a14]
 V0 = V1 & 4000;
-800A19F4	lui    v0, $800a
-V0 = w[V0 + 63d8];
+V0 = w[0x800a63d8];
 800A19FC	nop
 800A1A00	addiu  v0, v0, $fff8 (=-$8)
-800A1A04	lui    at, $800a
-[AT + 63d8] = w(V0);
+[0x800a63d8] = w(V0);
 800A1A0C	j      La1ac8 [$800a1ac8]
 800A1A10	nop
 
 La1a14:	; 800A1A14
 800A1A14	beq    v0, zero, La1a3c [$800a1a3c]
 V0 = V1 & 2000;
-800A1A1C	lui    v0, $800a
-V0 = w[V0 + 63d8];
-800A1A24	nop
+V0 = w[0x800a63d8];
 V0 = V0 + 0008;
-800A1A2C	lui    at, $800a
-[AT + 63d8] = w(V0);
+[0x800a63d8] = w(V0);
 800A1A34	j      La1ac8 [$800a1ac8]
 800A1A38	nop
 
 La1a3c:	; 800A1A3C
 800A1A3C	beq    v0, zero, La1a64 [$800a1a64]
 V0 = V1 & 8000;
-800A1A44	lui    v0, $800a
-V0 = w[V0 + 63d4];
-800A1A4C	nop
+V0 = w[0x800a63d4];
 V0 = V0 + 0008;
-800A1A54	lui    at, $800a
-[AT + 63d4] = w(V0);
+[0x800a63d4] = w(V0);
 800A1A5C	j      La1ac8 [$800a1ac8]
 800A1A60	nop
 
 La1a64:	; 800A1A64
 800A1A64	beq    v0, zero, La1a8c [$800a1a8c]
 V0 = V1 & 0004;
-800A1A6C	lui    v0, $800a
-V0 = w[V0 + 63d4];
+V0 = w[0x800a63d4];
 800A1A74	nop
 800A1A78	addiu  v0, v0, $fff8 (=-$8)
-800A1A7C	lui    at, $800a
-[AT + 63d4] = w(V0);
+[0x800a63d4] = w(V0);
 800A1A84	j      La1ac8 [$800a1ac8]
 800A1A88	nop
 
 La1a8c:	; 800A1A8C
 800A1A8C	beq    v0, zero, La1aa4 [$800a1aa4]
-800A1A90	nop
-800A1A94	lui    v0, $800a
-V0 = w[V0 + 63d0];
+
+V0 = w[0x800a63d0];
 800A1A9C	j      La1ac0 [$800a1ac0]
 800A1AA0	addiu  v0, v0, $fff0 (=-$10)
 
 La1aa4:	; 800A1AA4
 V0 = V1 & 0008;
 800A1AA8	beq    v0, zero, La1ac8 [$800a1ac8]
-800A1AAC	nop
-800A1AB0	lui    v0, $800a
-V0 = w[V0 + 63d0];
-800A1AB8	nop
+
+V0 = w[0x800a63d0];
 V0 = V0 + 0010;
 
 La1ac0:	; 800A1AC0
-800A1AC0	lui    at, $800a
-[AT + 63d0] = w(V0);
+[0x800a63d0] = w(V0);
 
 La1ac8:	; 800A1AC8
-800A1AC8	lui    a0, $800a
-A0 = A0 + 7684;
+A0 = 0x800a7684;
 800A1AD0	lui    a2, $800b
 800A1AD4	addiu  a2, a2, $ead8 (=-$1528)
 800A1AD8	lui    a3, $800b
 800A1ADC	addiu  a3, a3, $eac8 (=-$1538)
 800A1AE0	addiu  v0, zero, $f000 (=-$1000)
-800A1AE4	lui    at, $800b
-[AT + eadc] = h(0);
+
+[0x800aeadc] = h(0);
 [A2 + 0000] = h(0);
-800A1AF0	lui    at, $800b
-[AT + eada] = h(0);
-800A1AF8	lui    at, $800b
-[AT + eadc] = h(0);
+[0x800aeada] = h(0);
+[0x800aeadc] = h(0);
 [A3 + 0000] = w(0);
-800A1B04	lui    at, $800b
-[AT + eacc] = w(V0);
-800A1B0C	lui    at, $800b
-[AT + ead0] = w(0);
+[0x800aeacc] = w(V0);
+[0x800aead0] = w(0);
 800A1B14	jal    funca2a2c [$800a2a2c]
 A1 = A0 + 0038;
 A1 = 0100;
-800A1B20	lui    s6, $800a
-S6 = S6 + 76c8;
+S6 = 0x800a76c8;
 S7 = S6 + 0008;
-800A1B2C	lui    s5, $800a
-S5 = S5 + 63b4;
+S5 = 0x800a63b4;
 S1 = 0;
 S2 = S6 + 0044;
 S3 = 0;
@@ -1812,73 +1790,49 @@ void funca2504( int x, int y, S1, S7, S5, S6 );
     [0x800af356] = b(S5);
     [0x800af357] = b(S6);
 
-    [SP + 0x18] = h(0);
-    [SP + 0x1a] = h(0);
-    [SP + 0x1c] = h((x * 3) / 2);
-    [SP + 0x1e] = h(0x1e0);
+    RECT rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = (x * 0x3) / 0x2;
+    rect.h = 0x1e0;
 
-    system_psyq_clear_image( SP + 0x18, 0, 0, 0 );
+    system_psyq_clear_image( &rect, 0, 0, 0 );
 
     funca273c( 0 );
 }
 
 
 
-////////////////////////////////
-// funca273c()
+s32 funca273c( S0 )
+{
+    [0x800af408] = w(w[0x800af408] ^ 1);
+    rb = w[0x800af408];
 
-S0 = A0;
+    system_psyq_draw_sync( 0 );
 
-[800af408] = w(w[800af408] ^ 1);
+    system_psyq_vsync( S0 );
 
-A0 = 0;
-system_psyq_draw_sync();
+    system_psyq_put_dispenv( 0x800af398 + rb * 0x14 );
+    system_psyq_put_drawenv( 0x800af2e0 + rb * 0x5c );
 
-A0 = S0;
-system_psyq_vsync();
+    [0x8007ebd8] = w(0x800af398 + rb * 0x14);
+    [0x8007ebd0] = w(0x800af2e0 + rb * 0x5c);
 
-A0 = 800af398 + w[800af408] * 14;
-system_psyq_put_dispenv();
+    u32 buttons1 = system_menu_get_current_pad_buttons();
 
-V0 = w[800af408];
-A0 = V0 << 01;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 - V0;
-A0 = A0 << 02;
-A0 = 800af2e0 + A0;
-system_psyq_put_drawenv();
+    u32 buttons2 = buttons1 >> 0x10; // second controller
+    u32 not_pressed1 = w[0x800af3c0];
+    u32 not_pressed2 = w[0x800af3c4];
 
-V1 = w[800af408];
-V0 = V1 << 02;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = 800af398 + V0;
-[8007ebd8] = w(V0);
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 - V1;
-V0 = V0 << 02;
-V0 = 0x800af2e0 + V0;
-[0x8007ebd0] = w(V0);
+    [0x800af3f4] = w(buttons1);                // controller 1 buttons state
+    [0x800af3f8] = w(buttons2);                // controller 2 buttons state
+    [0x800af3c0] = w(~buttons1);               // controller 1 not pressed buttons
+    [0x800af3c4] = w(~buttons2);               // controller 2 not pressed buttons
+    [0x800af3ec] = w(not_pressed1 & buttons1); // controller 1 pressed buttons
+    [0x800af3f0] = w(not_pressed2 & buttons2); // controller 2 pressed buttons
 
-system_menu_get_current_pad_buttons();
-
-A2 = V0;
-A3 = A2 >> 0x10;
-A1 = w[0x800af3c0];
-A0 = w[0x800af3c4];
-
-[0x800af3c0] = w(~A2);
-[0x800af3f4] = w(A2);
-[0x800af3f8] = w(A3);
-[0x800af3c4] = w(~A3);
-[0x800af3ec] = w(A1 & A2);
-[0x800af3f0] = w(A0 & A3);
-
-return w[0x800af408];
-////////////////////////////////
+    return rb;
+}
 
 
 
@@ -2413,15 +2367,16 @@ La30f4:	; 800A30F4
 // funca310c()
 
 [0x800af3c8] = w(0);
-[0x800af3cc] = w(0x800af3d8);
+[0x800af3cc] = w(0x800af3d8); // pointer to some list
 [0x800af3d4] = h(0);
 [0x800af3d6] = b(0x1);
 [0x800af3d7] = b(0xff);
-[0x800af3d8] = w(0x800af3c8);
-[0x800af3dc] = w(0);
-[0x800af3e4] = h(0x1);
-[0x800af3e6] = b(0x1);
-[0x800af3e7] = b(0);
+
+[0x800af3d8 + 0x0] = w(0x800af3c8);
+[0x800af3d8 + 0x4] = w(0);
+[0x800af3d8 + 0xc] = h(0x1);
+[0x800af3d8 + 0xe] = b(0x1);
+[0x800af3d8 + 0xf] = b(0);
 ////////////////////////////////
 
 
@@ -2469,46 +2424,36 @@ La3208:	; 800A3208
 void funca3210()
 {
     S0 = w[0x800af3cc];
-
-    if( w[S0 + 0x4] != 0 )
+    while( w[S0 + 0x4] != 0 )
     {
-        loopa323c:	; 800A323C
-            if( bu[S0 + 0xe] == 0x4 )
-            {
-                A0 = S0;
-                800A3254	jalr   w[S0 + 0x8] ra
-            }
-
-            S0 = w[S0 + 0004];
-            V0 = w[S0 + 0004];
-        800A326C	bne    v0, zero, loopa323c [$800a323c]
+        if( bu[S0 + 0xe] == 0x4 )
+        {
+            A0 = S0;
+            800A3254	jalr   w[S0 + 0x8] ra
+        }
+        S0 = w[S0 + 0x4];
     }
 
     S0 = w[0x800af3cc];
-    if( w[S0 + 0x4] != 0 )
+    while( w[S0 + 0x4] != 0 )
     {
-        loopa3294:	; 800A3294
-            V0 = bu[S0 + 0xe];
-            if( V0 == 0x2 )
-            {
-                [S0 + 0xe] = b(0x4);
-            }
-
-            S0 = w[S0 + 0x4];
-            V0 = w[S0 + 0x4];
-        800A32B8	bne    v0, zero, loopa3294 [$800a3294]
+        if( bu[S0 + 0xe] == 0x2 )
+        {
+            [S0 + 0xe] = b(0x4);
+        }
+        S0 = w[S0 + 0x4];
     }
 }
 
 
 
 ////////////////////////////////
-// funca32d8();
+// funca32d8()
 
-V1 = w[A0 + 0000];
-V0 = w[A0 + 0004];
-[V1 + 0004] = w(V0);
-[V0 + 0000] = w(V1);
+V1 = w[A0 + 0x0];
+V0 = w[A0 + 0x4];
+[V1 + 0x4] = w(V0);
+[V0 + 0x0] = w(V1);
 ////////////////////////////////
 
 

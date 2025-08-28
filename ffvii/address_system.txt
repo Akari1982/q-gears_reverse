@@ -472,8 +472,8 @@
 0x80077f28 [][][][] mask of channels we put voice on (auto spu).
 0x80077f2c [][][][] mask of channels we put voice off (auto spu).
 
-0x8007eaac array of two global DRAWENV (0x2 items 0x5c size).
-0x8007eb68 array of two global DISPENV (0x2 items, 0x14 size)
+0x8007eaac array of two global DRAWENV (0x2 items, 0x5c size).
+0x8007eb68 array of two global DISPENV (0x2 items, 0x14 size).
 
 0x8007ebe4 default AkaoVoiceAttr.
 
