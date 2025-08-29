@@ -1,6 +1,18 @@
+0x800a6398 file data for loading (0x8 size).
+    // 0001F739 0006906C MOVIE/STAFF.BIN
+    // 0001F80C 000470DC MOVIE/STAFF2.BIN
+    // 0001F89B 0002477C MOVIE/OPENING.BIN
+    + 0x0 [][][][] sector.
+    + 0x4 [][][][] size.
+
+0x800a63dc array of credits events functions (0x1e items 0x4 size).
+           all arguments and opcodes are ox2 size.
+
 0x800a6454 OT2 (0x2 items, 0x4 size).
 0x800a645c TILE (0x2 items, 0x10 size).
 0x800a647c DR_MODE (0x2 items, 0xc size).
+
+0x800a6528 [][][][] pointer to credits events data (0x800a5048 or 0x800a3934).
 
 0x800af2e0 array of two global DRAWENV (0x2 items, 0x5c size).
 0x800af398 array of two global DISPENV (0x2 items, 0x14 size).
@@ -20,5 +32,10 @@
 0x800af3f0 [][][][] controller 2 first pressed buttons.
 0x800af3f4 [][][][] controller 1 buttons state.
 0x800af3f8 [][][][] controller 2 buttons state.
+0x800af3fc [][][][] init with 0x801f0000.
 0x800af400 OT1 (0x2 items, 0x4 size).
 0x800af408 [][][][] current render buffer id.
+0x800af40c [][][][] vsync wait value. Init with 0.
+0x800af410 [][][][] init with 0x1.
+
+0x800d0000 credits data from files STAFF.BIN STAFF2.BIN OPENING.BIN loaded here.

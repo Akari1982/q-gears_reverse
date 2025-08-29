@@ -191,11 +191,11 @@ void ending_main_2( S0 )
             system_psyq_draw_sync( 0 );
             system_psyq_vsync( 0x1 );
 
-            V0 = funca273c( w[0x800af40c] );
+            u32 rb = funca273c( w[0x800af40c] );
 
-            [0x800af408] = w(V0);
+            [0x800af408] = w(rb);
 
-            if( V0 != 0 ) [0x800af3fc] = w(0x801f0000);
+            if( rb != 0 ) [0x800af3fc] = w(0x801f0000);
 
             A0 = w[0x8007ebd0];
             rect.x = hu[A0 + 0x0];
@@ -231,7 +231,6 @@ void ending_main_2( S0 )
             [0x800af3e8] = w(ot + V0 * 0x4);
 
             funca1e20();
-
             funca3210();
 
             A0 = w[0x800af408];
@@ -259,17 +258,17 @@ void ending_main_2( S0 )
 
     for( int i = 0; i >= 0xff; i += 0x4 )
     {
-        V0 = funca273c( w[0x800af40c] );
+        u32 rb = funca273c( w[0x800af40c] );
 
-        [0x800af408] = w(V0);
+        [0x800af408] = w(rb);
 
-        A3 = w[0x8007ebd0];
+        RECT* draw_area = w[0x8007ebd0];
 
         RECT rect;
-        rect.x = hu[A3 + 0];
-        rect.y = hu[A3 + 2];
-        rect.w = hu[A3 + 4];
-        rect.h = hu[A3 + 6];
+        rect.x = draw_area->x;
+        rect.y = draw_area->y;
+        rect.w = draw_area->w;
+        rect.h = draw_area->h;
 
         system_psyq_clear_image( &rect, 0, 0, 0 );
 
@@ -316,60 +315,49 @@ void ending_main_2( S0 )
 
 
 
-////////////////////////////////
-// funca09dc()
-
-for( int i = 0; i < 20; ++i )
+// callback
+void funca09dc()
 {
-    if( hu[800a652c + i * 88] & 1 )
+    for( int i = 0; i < 0x20; ++i )
     {
-        [800a6588 + i * 88] = h(28);
-        [800a658a + i * 88] = h(20);
-        [800a658c + i * 88] = h(0);
+        if( hu[0x800a652c + i * 0x88] & 1 )
+        {
+            [0x800a6588 + i * 0x88] = h(0x28);
+            [0x800a658a + i * 0x88] = h(0x20);
+            [0x800a658c + i * 0x88] = h(0);
 
-        A0 = 800a652c + i * 88;
-        funca34c4();
+            funca34c4( 0x800a652c + i * 0x88 );
+            funca343c( 0x800a652c + i * 0x88 );
 
-        A0 = 800a652c + i * 88;
-        funca343c();
+            V0 = funca358c( w[0x800af3e8], 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
 
-        A0 = w[800af3e8];
-        A1 = 0;
-        A2 = w[800af3fc];
-        A3 = 800a652c + i * 88;
-        funca358c();
-        [800af3fc] = w(V0);
+            [0x800af3fc] = w(V0);
+        }
     }
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// funca0ab8()
-
-for( int i = 0; i < 20; ++i )
+int funca0ab8()
 {
-    [800a652c + i * 88] = h(0);
-    [800a6532 + i * 88] = h(0);
-    [800a6534 + i * 88] = h(0);
-    [800a6538 + i * 88] = w(0);
-    [800a6588 + i * 88] = h(0);
-    [800a658a + i * 88] = h(0);
-    [800a658c + i * 88] = h(0);
-    [800a653c + i * 88] = b(0);
-    [800a653d + i * 88] = b(0);
-    [800a653e + i * 88] = b(0);
+    for( int i = 0; i < 20; ++i )
+    {
+        [800a652c + i * 0x88] = h(0);
+        [800a6532 + i * 0x88] = h(0);
+        [800a6534 + i * 0x88] = h(0);
+        [800a6538 + i * 0x88] = w(0);
+        [800a6588 + i * 0x88] = h(0);
+        [800a658a + i * 0x88] = h(0);
+        [800a658c + i * 0x88] = h(0);
+        [800a653c + i * 0x88] = b(0);
+        [800a653d + i * 0x88] = b(0);
+        [800a653e + i * 0x88] = b(0);
+    }
+
+    funca3178( 0x800a762c, 0x4, 0x80, 0x800a09dc ); // funca09dc()
+
+    return 1;
 }
-
-A0 = 800a762c;
-A1 = 4;
-A3 = 800a09dc;
-A2 = 80;
-funca3178();
-
-return 1;
-////////////////////////////////
 
 
 
@@ -391,7 +379,7 @@ S0 = S0 << 03;
 [800a6532 + S0] = h(0);
 [800a6534 + S0] = h(0);
 
-A0 = 800d0000;
+A0 = 0x800d0000;
 func34d18();
 
 [800a6538 + S0] = w(V0);
@@ -407,122 +395,106 @@ return 1;
 
 
 
-////////////////////////////////
-// funca0cac()
-
-A0 = w[800a6528];
-[800a6528] = w(A0 + 2);
-A1 = h[A0 + 0];
-[800a6528] = w(A0 + 4);
-V1 = h[A0 + 2];
-[800a6528] = w(A0 + 6);
-A2 = h[A0 + 4];
-V0 = A1 << 04;
-V0 = V0 + A1;
-V0 = V0 << 03;
-T0 = (A2 - bu[800a653c + V0]) / V1;
-A3 = (A2 - bu[800a653d + V0]) / V1;
-A1 = (A2 - bu[800a653e + V0]) / V1;
-[800a652e + V0] = h(V1);
-[800a6544 + V0] = b(A2);
-[800a6545 + V0] = b(A2);
-[800a6546 + V0] = b(A2);
-[800a652c + V0] = h(hu[800a652c + V0] | 8);
-[800a6540 + V0] = b(T0);
-[800a6541 + V0] = b(A3);
-[800a6542 + V0] = b(A1);
-[800a6394] = w(1);
-
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca0e68()
-
-A0 = w[800af3e8];
-A1 = 800a763c + w[800af408] * 10;
-system_psyq_add_prim();
-
-A0 = w[800af3e8];
-A1 = 800a765c + w[800af408] * 10;
-system_psyq_add_prim();
-
-for( int i = 0; i < 20; ++i )
+void funca0cac()
 {
-    if( hu[800a652c + i * 88 + 0] & 1 )
+    A0 = w[0x800a6528];
+    [0x800a6528] = w(A0 + 0x2);
+    A1 = h[A0 + 0x0];
+    [0x800a6528] = w(A0 + 0x4);
+    V1 = h[A0 + 0x2];
+    [0x800a6528] = w(A0 + 0x6);
+    A2 = h[A0 + 0x4];
+    V0 = A1 << 0x4;
+    V0 = V0 + A1;
+    V0 = V0 << 0x3;
+    T0 = (A2 - bu[0x800a653c + V0]) / V1;
+    A3 = (A2 - bu[0x800a653d + V0]) / V1;
+    A1 = (A2 - bu[0x800a653e + V0]) / V1;
+    [0x800a652e + V0] = h(V1);
+    [0x800a6544 + V0] = b(A2);
+    [0x800a6545 + V0] = b(A2);
+    [0x800a6546 + V0] = b(A2);
+    [0x800a652c + V0] = h(hu[0x800a652c + V0] | 0x8);
+    [0x800a6540 + V0] = b(T0);
+    [0x800a6541 + V0] = b(A3);
+    [0x800a6542 + V0] = b(A1);
+    [0x800a6394] = w(0x1);
+}
+
+
+
+// callback
+void funca0e68()
+{
+    A0 = w[0x800af3e8];
+    A1 = 0x800a763c + w[0x800af408] * 0x10;
+    system_psyq_add_prim();
+
+    A0 = w[0x800af3e8];
+    A1 = 0x800a765c + w[0x800af408] * 0x10;
+    system_psyq_add_prim();
+
+    for( int i = 0; i < 0x20; ++i )
     {
-        [800a652c + i * 88 + 5e] = h(hu[800a652c + i * 88 + 5e] - 1);
+        if( hu[0x800a652c + i * 0x88 + 0] & 0x1 )
+        {
+            [0x800a652c + i * 0x88 + 0x5e] = h(hu[0x800a652c + i * 0x88 + 0x5e] - 1);
 
-        if( h[800a652c + i * 88 + 5e] == -10 ) [800a652c + i * 88 + 0] = h(0);
+            if( h[0x800a652c + i * 0x88 + 0x5e] == -0x10 ) [0x800a652c + i * 0x88 + 0] = h(0);
 
-        A0 = 800a652c + i * 88;
-        funca34c4();
+            funca34c4( 0x800a652c + i * 0x88 );
+            funca343c( 0x800a652c + i * 0x88 );
 
-        A0 = 800a652c + i * 88;
-        funca343c();
+            V0 = funca358c( w[0x800af3e8], 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
 
-        A0 = w[800af3e8];
-        A1 = 0;
-        A2 = w[800af3fc];
-        A3 = 800a652c + i * 88;
-        funca358c();
-        [800af3fc] = w(V0);
+            [0x800af3fc] = w(V0);
+        }
     }
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// funca0f90()
-
-for( int i = 0; i < 20; ++i )
+int funca0f90()
 {
-    [800a652c + i * 88] = h(0);
-    [800a6532 + i * 88] = h(0);
-    [800a6534 + i * 88] = h(0);
-    [800a6538 + i * 88] = w(0);
-    [800a6588 + i * 88] = h(0);
-    [800a658a + i * 88] = h(0);
-    [800a658c + i * 88] = h(0);
-    [800a653c + i * 88] = b(0);
-    [800a653d + i * 88] = b(0);
-    [800a653e + i * 88] = b(0);
+    for( int i = 0; i < 0x20; ++i )
+    {
+        [0x800a652c + i * 0x88] = h(0);
+        [0x800a6532 + i * 0x88] = h(0);
+        [0x800a6534 + i * 0x88] = h(0);
+        [0x800a6538 + i * 0x88] = w(0);
+        [0x800a6588 + i * 0x88] = h(0);
+        [0x800a658a + i * 0x88] = h(0);
+        [0x800a658c + i * 0x88] = h(0);
+        [0x800a653c + i * 0x88] = b(0);
+        [0x800a653d + i * 0x88] = b(0);
+        [0x800a653e + i * 0x88] = b(0);
+    }
+
+    funca3178( 0x800a762c, 0x4, 0x80, 0x800a0e68 ); // funca0e68()
+
+    for( int i = 0; i < 0x2; ++i )
+    {
+        system_psyq_set_tile( 0x800a763c + i * 0x10 );
+        system_psyq_set_tile( 0x800a765c + i * 0x10 );
+
+        [0x800a7644 + i * 0x10] = h(0);
+        [0x800a7646 + i * 0x10] = h(0);
+        [0x800a7648 + i * 0x10] = h(0x140);
+        [0x800a764a + i * 0x10] = h(0x28);
+        [0x800a7664 + i * 0x10] = h(0);
+        [0x800a7666 + i * 0x10] = h(0xc8);
+        [0x800a7668 + i * 0x10] = h(0x140);
+        [0x800a766a + i * 0x10] = h(0x28);
+        [0x800a7640 + i * 0x10] = b(0);
+        [0x800a7641 + i * 0x10] = b(0);
+        [0x800a7642 + i * 0x10] = b(0);
+        [0x800a7660 + i * 0x10] = b(0);
+        [0x800a7661 + i * 0x10] = b(0);
+        [0x800a7662 + i * 0x10] = b(0);
+    }
+
+    return 1;
 }
-
-A0 = 0x800a762c;
-A1 = 0x4;
-A2 = 0x80;
-A3 = 0x800a0e68;
-funca3178();
-
-for( int i = 0; i < 2; ++i )
-{
-    A0 = 800a763c + i * 10;
-    system_psyq_set_tile();
-
-    A0 = 800a765c + i * 10;
-    system_psyq_set_tile();
-
-    [800a7644 + i * 10] = h(0);
-    [800a7646 + i * 10] = h(0);
-    [800a7648 + i * 10] = h(140);
-    [800a764a + i * 10] = h(28);
-    [800a7664 + i * 10] = h(0);
-    [800a7666 + i * 10] = h(c8);
-    [800a7668 + i * 10] = h(140);
-    [800a766a + i * 10] = h(28);
-    [800a7640 + i * 10] = b(0);
-    [800a7641 + i * 10] = b(0);
-    [800a7642 + i * 10] = b(0);
-    [800a7660 + i * 10] = b(0);
-    [800a7661 + i * 10] = b(0);
-    [800a7662 + i * 10] = b(0);
-}
-
-return 1;
-////////////////////////////////
 
 
 
@@ -539,22 +511,22 @@ V1 = h[V0 + 2];
 
 for( int i = 0; i < 20; ++i )
 {
-    if( ( hu[800a652c + i * 88 + 0] & 1 ) == 0 )
+    if( ( hu[800a652c + i * 0x88 + 0] & 1 ) == 0 )
     {
-        [800a652c + i * 88 + 0] = h(1);
-        [800a6532 + i * 88 + 0] = h(0);
-        [800a6534 + i * 88 + 0] = h(V1);
+        [800a652c + i * 0x88 + 0] = h(1);
+        [800a6532 + i * 0x88 + 0] = h(0);
+        [800a6534 + i * 0x88 + 0] = h(V1);
 
-        A0 = 800d0000;
+        A0 = 0x800d0000;
         func34d18();
 
-        [800a6538 + i * 88 + 0] = w(V0);
-        [800a6588 + i * 88 + 0] = h(18);
-        [800a658a + i * 88 + 0] = h(c8);
-        [800a658c + i * 88 + 0] = h(0);
-        [800a653c + i * 88 + 0] = b(80);
-        [800a653d + i * 88 + 0] = b(80);
-        [800a653e + i * 88 + 0] = b(80);
+        [800a6538 + i * 0x88 + 0] = w(V0);
+        [800a6588 + i * 0x88 + 0] = h(18);
+        [800a658a + i * 0x88 + 0] = h(c8);
+        [800a658c + i * 0x88 + 0] = h(0);
+        [800a653c + i * 0x88 + 0] = b(80);
+        [800a653d + i * 0x88 + 0] = b(80);
+        [800a653e + i * 0x88 + 0] = b(80);
         return 1;
     }
 }
@@ -564,110 +536,52 @@ return 0;
 
 
 
-////////////////////////////////
-// funca12f0()
-
-for( int i = 0; i < 20; ++i )
+// callback
+void funca12f0()
 {
-    if( hu[800a652c + i * 88] & 1 )
+    for( int i = 0; i < 0x20; ++i )
     {
-        A0 = 800a652c + i * 88;
-        funca3368();
+        if( hu[800a652c + i * 0x88] & 1 )
+        {
+            funca3368( 0x800a652c + i * 0x88 );
+            funca34c4( 0x800a652c + i * 0x88 );
+            funca343c( 0x800a652c + i * 0x88 );
 
-        A0 = 800a652c + i * 88;
-        funca34c4();
+            V0 = funca358c( w[0x800af3e8], 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
 
-        A0 = 800a652c + i * 88;
-        funca343c();
-
-        A0 = w[800af3e8];
-        A1 = 0;
-        A2 = w[800af3fc];
-        A3 = 800a652c + i * 88;
-        funca358c();
-        [800af3fc] = w(V0);
+            [0x800af3fc] = w(V0);
+        }
     }
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// funca139c
-800A139C	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-A0 = 0;
-V1 = 0;
+int funca139c()
+{
+    for( int i = 0; i < 0x20; ++i )
+    {
+        [0x800a652c + i * 0x88] = h(0);
+        [0x800a6532 + i * 0x88] = h(0);
+        [0x800a6534 + i * 0x88] = h(0);
+        [0x800a6538 + i * 0x88] = w(0);
+        [0x800a6588 + i * 0x88] = h(0);
+        [0x800a658a + i * 0x88] = h(0);
+        [0x800a658c + i * 0x88] = h(0);
+        [0x800a6594 + i * 0x88] = w(0);
+        [0x800a6598 + i * 0x88] = w(0);
+        [0x800a659c + i * 0x88] = w(0);
+        [0x800a653c + i * 0x88] = b(0);
+        [0x800a653d + i * 0x88] = b(0);
+        [0x800a653e + i * 0x88] = b(0);
+    }
 
-loopa13ac:	; 800A13AC
-800A13AC	lui    at, $800a
-AT = AT + 652c;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800A13BC	lui    at, $800a
-AT = AT + 6532;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800A13CC	lui    at, $800a
-AT = AT + 6534;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800A13DC	lui    at, $800a
-AT = AT + 6538;
-AT = AT + V1;
-[AT + 0000] = w(0);
-800A13EC	lui    at, $800a
-AT = AT + 6588;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800A13FC	lui    at, $800a
-AT = AT + 658a;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800A140C	lui    at, $800a
-AT = AT + 658c;
-AT = AT + V1;
-[AT + 0000] = h(0);
-800A141C	lui    at, $800a
-AT = AT + 6594;
-AT = AT + V1;
-[AT + 0000] = w(0);
-800A142C	lui    at, $800a
-AT = AT + 6598;
-AT = AT + V1;
-[AT + 0000] = w(0);
-800A143C	lui    at, $800a
-AT = AT + 659c;
-AT = AT + V1;
-[AT + 0000] = w(0);
-800A144C	lui    at, $800a
-AT = AT + 653c;
-AT = AT + V1;
-[AT + 0000] = b(0);
-800A145C	lui    at, $800a
-AT = AT + 653d;
-AT = AT + V1;
-[AT + 0000] = b(0);
-800A146C	lui    at, $800a
-AT = AT + 653e;
-AT = AT + V1;
-[AT + 0000] = b(0);
-A0 = A0 + 0001;
-V0 = A0 < 0020;
-800A1484	bne    v0, zero, loopa13ac [$800a13ac]
-V1 = V1 + 0088;
-800A148C	lui    a0, $800a
-A0 = A0 + 762c;
-A1 = 0004;
-800A1498	lui    a3, $800a
-A3 = A3 + 12f0;
-800A14A0	jal    funca3178 [$800a3178]
-A2 = 0080;
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A14B4	jr     ra 
-800A14B8	nop
+    funca3178( 0x800a762c, 0x4, 0x80, 0x800a12f0 ); // funca12f0()
+
+    return 1;
+}
+
+
+
 ////////////////////////////////
 // funca14bc
 800A14BC	lui    v1, $800a
@@ -1268,36 +1182,62 @@ return 0;
 
 
 
-////////////////////////////////
-// funca1e20()
-
-S2 = 0x800a63dc;
-S1 = 0x1;
-
-loopa1e40:	; 800A1E40
-    S0 = w[0x800a6528];
-    [0x800a6394] = w(0);
-    V0 = S0 + 0x2;
-    [0x800a6528] = w(V0);
-    V0 = h[S0 + 0x0];
-
-    V0 = S2 + V0 * 4;
-
-    800A1E74	jalr   w[V0 + 0x0] ra
-
-    if( V0 == 0 )
+void funca1e20()
+{
+    do
     {
-        [0x800a6528] = w(S0);
-        [0x800a6390] = w(0);
-    }
-    else
-    {
-        [0x800a6390] = w(S1);
-    }
+        S0 = w[0x800a6528];
+        [0x800a6528] = w(S0 + 0x2);
 
-    V0 = w[0x800a6394];
-800A1EB0	bne    v0, zero, loopa1e40 [$800a1e40]
-////////////////////////////////
+        [0x800a6394] = w(0);
+
+        // 00 funca1ee4() // end opcode (infinite repeat)
+        // 01 funca1eec() // load file info to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
+        // 02 funca1f48() // load lzs file to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
+        // 03 funca1fa4() // load finished sync
+        // 04 funca1fc8() // load tim from loaded file (arg1: id of tim inside file)
+        // 05 funca2014()
+        // 06 funca208c()
+        // 07 funca20d4()
+        // 08 funca20f8()
+        // 09 funca2190()
+        // 0a funca21cc()
+        // 0b funca0ab8()
+        // 0c funca2248()
+        // 0d funca0ba8()
+        // 0e funca2274()
+        // 0f funca0cac()
+        // 10 funca22a4()
+        // 11 funca0f90()
+        // 12 funca11b4()
+        // 13 funca22d4()
+        // 14 funca139c()
+        // 15 funca14bc()
+        // 16 funca22e4()
+        // 17 funca16e4()
+        // 18 funca2328()
+        // 19 funca23f8()
+        // 1a funca2380()
+        // 1b funca2420()
+        // 1c funca17c0()
+        // 1d funca19a4()
+
+        V0 = h[S0];
+        800A1E74	jalr   w[0x800a63dc + V0 * 4] ra
+
+        if( V0 == 0 )
+        {
+            [0x800a6528] = w(S0); // execute same opcode again
+
+            [0x800a6390] = w(0);
+        }
+        else
+        {
+            [0x800a6390] = w(0x1);
+        }
+    }
+    while( w[0x800a6394] != 0 );
+}
 
 
 
@@ -1308,129 +1248,88 @@ void funca1ed4( A0 )
 
 
 
-////////////////////////////////
-// funca1ee4()
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca1eec
-800A1EEC	addiu  sp, sp, $ffe8 (=-$18)
-800A1EF0	lui    v1, $800a
-V1 = w[V1 + 6528];
-800A1EF8	lui    a2, $800d
-[SP + 0010] = w(RA);
-V0 = V1 + 0002;
-800A1F04	lui    at, $800a
-[AT + 6528] = w(V0);
-V0 = h[V1 + 0000];
-800A1F10	lui    v1, $800a
-V1 = V1 + 6398;
-V0 = V0 << 03;
-A0 = V0 + V1;
-V1 = V1 + V0;
-A0 = w[A0 + 0000];
-A1 = w[V1 + 0004];
-800A1F2C	jal    $80033e34
-A3 = 0;
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A1F40	jr     ra 
-800A1F44	nop
-////////////////////////////////
-// funca1f48
-800A1F48	addiu  sp, sp, $ffe8 (=-$18)
-800A1F4C	lui    v1, $800a
-V1 = w[V1 + 6528];
-800A1F54	lui    a2, $800d
-[SP + 0010] = w(RA);
-V0 = V1 + 0002;
-800A1F60	lui    at, $800a
-[AT + 6528] = w(V0);
-V0 = h[V1 + 0000];
-800A1F6C	lui    v1, $800a
-V1 = V1 + 6398;
-V0 = V0 << 03;
-A0 = V0 + V1;
-V1 = V1 + V0;
-A0 = w[A0 + 0000];
-A1 = w[V1 + 0004];
-800A1F88	jal    $80033e74
-A3 = 0;
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A1F9C	jr     ra 
-800A1FA0	nop
-////////////////////////////////
+int funca1ee4()
+{
+    return 0;
+}
 
 
 
-////////////////////////////////
-// funca1fa4
+int funca1eec()
+{
+    V1 = w[0x800a6528];
+    [0x800a6528] = w(V1 + 0x2);
 
-800A1FAC	jal    $func34410
+    V0 = h[V1];
+    A0 = w[0x800a6398 + V0 * 0x8 + 0x0];
+    A1 = w[0x800a6398 + V0 * 0x8 + 0x4];
+    A2 = 0x800d0000;
+    A3 = 0;
+    system_cdrom_start_load_file();
 
-V0 = V0 < 0001;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca1fc8()
-
-V1 = w[0x800a6528];
-V0 = V1 + 0x2;
-[0x800a6528] = w(V0);
-A1 = h[V1 + 0x0];
-
-func34d18( 0x800d0000, A1 );
-
-funca2888( V0, SP + 0x10, SP + 0x12 );
-
-return 1;
-////////////////////////////////
+    return 1;
+}
 
 
 
-////////////////////////////////
-// funca2014
-800A2014	lui    v0, $800a
-V0 = w[V0 + 6528];
-800A201C	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0018] = w(RA);
-V1 = V0 + 0002;
-800A2028	lui    at, $800a
-[AT + 6528] = w(V1);
-800A2030	lui    v1, $800a
-V1 = w[V1 + 6390];
-A1 = h[V0 + 0000];
-800A203C	beq    v1, zero, La2058 [$800a2058]
-800A2040	nop
-800A2044	jal    $func34d18
-800A2048	lui    a0, $800d
-A0 = V0;
-800A2050	jal    $80034d2c
-800A2054	lui    a1, $8012
+int funca1f48()
+{
+    V1 = w[0x800a6528];
+    [0x800a6528] = w(V1 + 0x2);
 
-La2058:	; 800A2058
-800A2058	jal    $80034d5c
-800A205C	nop
-800A2060	bne    v0, zero, La207c [$800a207c]
-V0 = 0;
-800A2068	lui    a0, $8012
-A1 = SP + 0010;
-A2 = SP + 0012;
-800A2070	jal    funca2888 [$800a2888]
+    V0 = h[V1];
+    A0 = w[0x800a6398 + V0 * 0x8 + 0x0];
+    A1 = w[0x800a6398 + V0 * 0x8 + 0x4];
+    A2 = 0x800d0000;
+    A3 = 0;
+    system_cdrom_start_load_lzs();
 
-V0 = 0001;
+    return 1;
+}
 
-La207c:	; 800A207C
-////////////////////////////////
+
+
+int funca1fa4()
+{
+    return func34410() < 0x1;
+}
+
+
+
+int funca1fc8()
+{
+    V1 = w[0x800a6528];
+    [0x800a6528] = w(V1 + 0x2);
+
+    u32 item_p = func34d18( 0x800d0000, h[V1 + 0x0] );
+
+    ending_load_tim( item_p, SP + 0x10, SP + 0x12 );
+
+    return 1;
+}
+
+
+
+int funca2014()
+{
+    V0 = w[0x800a6528];
+    [0x800a6528] = w(V0 + 0x2);
+
+    if( w[0x800a6390] != 0 )
+    {
+        A0 = func34d18( 0x800d0000, h[V0] );
+        A1 = 0x80120000;
+        system_cdrom_set_lzs_extract();
+    }
+
+    func34d5c();
+
+    if( V0 != 0 ) return 0;
+
+    ending_load_tim( 0x80120000, SP + 0x10, SP + 0x12 );
+
+    return 1;
+}
 
 
 
@@ -1562,18 +1461,19 @@ V0 = w[V0 + 63b0];
 800A2240	jr     ra 
 V0 = V0 < 0001;
 ////////////////////////////////
-// funca2248
-800A2248	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A2250	jal    funca3314 [$800a3314]
-A0 = 0004;
-800A2258	jal    funca32d8 [$800a32d8]
-A0 = V0;
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A226C	jr     ra 
-800A2270	nop
+
+
+
+int funca2248()
+{
+    V0 = funca3314( 0x4 );
+    funca32d8( V0 );
+
+    return 1;
+}
+
+
+
 ////////////////////////////////
 // funca2274
 800A2274	lui    v1, $800a
@@ -1803,14 +1703,14 @@ void funca2504( int x, int y, S1, S7, S5, S6 );
 
 
 
-s32 funca273c( S0 )
+u32 funca273c( int mode )
 {
     [0x800af408] = w(w[0x800af408] ^ 1);
     rb = w[0x800af408];
 
     system_psyq_draw_sync( 0 );
 
-    system_psyq_vsync( S0 );
+    system_psyq_vsync( mode );
 
     system_psyq_put_dispenv( 0x800af398 + rb * 0x14 );
     system_psyq_put_drawenv( 0x800af2e0 + rb * 0x5c );
@@ -1836,7 +1736,7 @@ s32 funca273c( S0 )
 
 
 
-void funca2888( u_long* addr, S0, S1 )
+void ending_load_tim( u_long* addr, S0, S1 )
 {
     system_psyq_open_tim( addr );
 
@@ -2367,12 +2267,12 @@ La30f4:	; 800A30F4
 // funca310c()
 
 [0x800af3c8 + 0x0] = w(0);
-[0x800af3c8 + 0x4] = w(0x800af3d8); // pointer to some list
+[0x800af3c8 + 0x4] = w(0x800af3d8); // pointer to next element
 [0x800af3c8 + 0xc] = h(0);
 [0x800af3c8 + 0xe] = b(0x1);
 [0x800af3c8 + 0xf] = b(0xff);
 
-[0x800af3d8 + 0x0] = w(0x800af3c8);
+[0x800af3d8 + 0x0] = w(0x800af3c8); // pointer to prev element
 [0x800af3d8 + 0x4] = w(0);
 [0x800af3d8 + 0xc] = h(0x1);
 [0x800af3d8 + 0xe] = b(0x1);
@@ -2448,57 +2348,53 @@ void funca3210()
 
 
 
-////////////////////////////////
-// funca32d8()
-
-V1 = w[A0 + 0x0];
-V0 = w[A0 + 0x4];
-[V1 + 0x4] = w(V0);
-[V0 + 0x0] = w(V1);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca32f0()
-
-[A0 + e] = b(8);
-////////////////////////////////
+void funca32d8( A0 )
+{
+    V1 = w[A0 + 0x0];
+    V0 = w[A0 + 0x4];
+    [V1 + 0x4] = w(V0);
+    [V0 + 0x0] = w(V1);
+}
 
 
 
-////////////////////////////////
-// funca32fc()
-
-[A0 + e] = b(4);
-////////////////////////////////
-
+void funca32f0( A0 )
+{
+    [A0 + 0xe] = b(0x8);
+}
 
 
-////////////////////////////////
-// funca3308()
 
-[A0 + e] = b(10);
-////////////////////////////////
+void funca32fc( A0 )
+{
+    [A0 + 0xe] = b(0x4);
+}
+
+
+
+void funca3308( A0 )
+{
+    [A0 + 0xe] = b(0x10);
+}
 
 
 
 u32 funca3314()
 {
-    V1 = w[0x800af3cc];
-    V0 = w[V1 + 0004];
+    V1 = w[0x800af3c8 + 0x4];
+    V0 = w[V1 + 0x4];
 
     if( V0 != 0 )
     {
-        V0 = A0 << 10;
-        A0 = V0 >> 10;
+        V0 = A0 << 0x10;
+        A0 = V0 >> 0x10;
 
         loopa3334:	; 800A3334
-            V0 = hu[V1 + 000c];
+            V0 = hu[V1 + 0xc];
             if( V0 == A0 ) return V1;
 
-            V1 = w[V1 + 0004];
-            V0 = w[V1 + 0004];
+            V1 = w[V1 + 0x4];
+            V0 = w[V1 + 0x4];
         800A3354	bne    v0, zero, loopa3334 [$800a3334]
     }
 
@@ -2651,9 +2547,8 @@ A0 = w[S0 + 000c];
 A1 = hu[S0 + 0008];
 func36244();
 
-800A3550	lui    v0, $8003
-V0 = w[V0 + 623c];
-V0 = bu[V0 + 0001];
+V0 = w[0x8003623c];
+V0 = bu[V0 + 0x1];
 [S0 + 0006] = h(V0);
 
 La3568:	; 800A3568

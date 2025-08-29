@@ -544,7 +544,7 @@ func34350();
 ////////////////////////////////
 // func34410()
 
-return w[80071a60];
+return w[0x80071a60];
 ////////////////////////////////
 
 
@@ -1587,8 +1587,8 @@ if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
     [800965e4] = w(0);
     [8009a060] = w(0);
 
-    disp_env = w[8007ebd8];
-    draw_env = w[8007ebd0];
+    disp_env = w[0x8007ebd8];
+    draw_env = w[0x8007ebd0];
 
     if( bu[disp_env + 11] != 0 ) // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
     {
@@ -1614,8 +1614,8 @@ if( ( w[80071a60] < b ) && ( w[80071a60] >= 8 ) )
 ////////////////////////////////
 // func35744()
 
-disp_env = w[8007ebd8];
-draw_env = w[8007ebd0];
+disp_env = w[0x8007ebd8];
+draw_env = w[0x8007ebd0];
 
 [disp_env + 11] = b(bu[8006e104]); // isrgb24; 24-bit mode flag. 0: 16-bit mode; 1: 24-bit mode
 
