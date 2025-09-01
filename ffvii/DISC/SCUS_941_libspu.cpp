@@ -2438,16 +2438,15 @@ void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
 {
     spu = w[0x8004aaf4]; // 1f801c00
 
-    A2 = 0;
-    T0 = 0;
-    T1 = w[attr + 0x0];
-    T2 = T1 < 0x1;
-/*
-    if( (T2 != 0) || (T1 & 0x1) )
+    u32 mask = attr->mask;
+
+    if( (mask == 0) || (mask & SPU_COMMON_MVOLL) )
     {
-        if( (T2 != 0) || ((T1 & 0x1) && (T1 & 0x4)) )
+        A2 = 0;
+
+        if( (mask == 0) || ((mask & SPU_COMMON_MVOLL) && (mask & SPU_COMMON_MVOLMODEL)) )
         {
-            switch( h[attr + 0x8] )
+            switch( attr->mvolmode.left )
             {
                 case 0x1: A1 = 0x8000; break;
                 case 0x2: A1 = 0x9000; break;
@@ -2458,145 +2457,82 @@ void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
                 case 0x7: A1 = 0xe000; break;
                 default:
                 {
-                    A2 = hu[attr + 0x4];
+                    A2 = attr->mvol.left;
                     A1 = 0;
                 }
             }
         }
-        else if( (T2 == 0) && (T1 & 0x1) && ((T1 & 0x4) == 0) )
+        else if( (mask != 0) && (mask & SPU_COMMON_MVOLL) && ((mask & SPU_COMMON_MVOLMODEL) == 0) )
         {
-            A2 = hu[attr + 0x4];
+            A2 = attr->mvol.left;
             A1 = 0;
         }
 
         if( A1 != 0 )
         {
-            if( h[attr + 0x4] >= 0x80 )
+            if( attr->mvol.left >= 0x80 )
             {
                 A2 = 0x7f;
             }
             else
             {
-                A2 = ( h[attr + 0x4] < 0 ) ? 0 : h[attr + 0x4];
+                A2 = ( attr->mvol.left < 0 ) ? 0 : attr->mvol.left;
             }
         }
 
-        [spu + 0x180] = h((A2 & 0x7fff) | A1);
-    }
-*/
-    80039048	bne    t2, zero, L39064 [$80039064]
-
-    V0 = T1 & 0x1;
-    80039054	beq    v0, zero, L39114 [$80039114]
-
-    if( (T1 & 0x4) == 0 )
-    {
-        A2 = hu[attr + 0x4];
-        A1 = 0;
-        800390EC	j      L390d0 [$80039100]
+        [spu + 0x180] = h((A2 & 0x7fff) | A1); // Main Volume Left
     }
 
-    L39064:	; 80039064
-    switch( h[attr + 0x8] )
+    if( (mask == 0) || (mask & SPU_COMMON_MVOLR) )
     {
-        case 0x1: A1 = 0x8000; break;
-        case 0x2: A1 = 0x9000; break;
-        case 0x3: A1 = 0xa000; break;
-        case 0x4: A1 = 0xb000; break;
-        case 0x5: A1 = 0xc000; break;
-        case 0x6: A1 = 0xd000; break;
-        case 0x7: A1 = 0xe000; break;
-        default:
+        T0 = 0;
+
+        if( (mask == 0) || ((mask & SPU_COMMON_MVOLR) && (mask & SPU_COMMON_MVOLMODER)) )
         {
-            A2 = hu[attr + 0x4];
+            switch( attr->mvolmode.right )
+            {
+                case 0x1: A1 = 0x8000; break;
+                case 0x2: A1 = 0x9000; break;
+                case 0x3: A1 = 0xa000; break;
+                case 0x4: A1 = 0xb000; break;
+                case 0x5: A1 = 0xc000; break;
+                case 0x6: A1 = 0xd000; break;
+                case 0x7: A1 = 0xe000; break;
+                default:
+                {
+                    T0 = attr->mvol.right;
+                    A1 = 0;
+                }
+            }
+        }
+        else if( (mask != 0) && (mask & SPU_COMMON_MVOLR) && ((mask & SPU_COMMON_MVOLMODER) == 0) )
+        {
+            T0 = attr->mvol.right;
             A1 = 0;
         }
-    }
 
-    L390d0:	; 800390D0
-    if( A1 != 0 )
-    {
-        if( h[attr + 0x4] >= 0x80 )
+        if( A1 != 0 )
         {
-            A2 = 0x7f;
+            if( attr->mvol.right >= 0x80 )
+            {
+                T0 = 0x7f;
+            }
+            else
+            {
+                T0 = (attr->mvol.right < 0 ) ? 0 : attr->mvol.right;
+            }
         }
-        else
-        {
-            A2 = ( h[attr + 0x4] < 0 ) ? 0 : h[attr + 0x4];
-        }
+        [spu + 0x182] = h((T0 & 0x7fff) | A1); // Main Volume Right
     }
 
-    [spu + 0x180] = h((A2 & 0x7fff) | A1); // Main Volume Left
+    if( (mask == 0) || (mask & SPU_COMMON_CDVOLL) ) [spu + 0x1b0] = h(attr->cd.volume.left); // CD Volume Left
+    if( (mask == 0) || (mask & SPU_COMMON_CDVOLR) ) [spu + 0x1b2] = h(attr->cd.volume.right); // CD Volume Right
+    if( (mask == 0) || (mask & SPU_COMMON_EXTVOLL) ) [spu + 0x1b4] = h(attr->ext.volume.left); // Extern Volume Left
+    if( (mask == 0) || (mask & SPU_COMMON_EXTVOLR) ) [spu + 0x1b6] = h(attr->ext.volume.right); // Extern Volume Right
 
-    L39114:	; 80039114
-    80039114	bne    t2, zero, L3912c [$8003912c]
-
-    V0 = T1 & 0x2;
-    8003911C	beq    v0, zero, L391dc [$800391dc]
-
-    if( (T1 & 0x8) == 0 )
+    if( (mask == 0) || (mask & SPU_COMMON_CDREV) )
     {
-        T0 = hu[attr + 0x6];
-        A1 = 0;
-        800390EC	j      L39198 [$80039100]
-    }
-
-    L3912c:	; 8003912C
-    switch( h[attr + 0xa] )
-    {
-        case 0x1: A1 = 0x8000; break;
-        case 0x2: A1 = 0x9000; break;
-        case 0x3: A1 = 0xa000; break;
-        case 0x4: A1 = 0xb000; break;
-        case 0x5: A1 = 0xc000; break;
-        case 0x6: A1 = 0xd000; break;
-        case 0x7: A1 = 0xe000; break;
-        default:
-        {
-            T0 = hu[attr + 0x6];
-            A1 = 0;
-        }
-    }
-
-    L39198:	; 80039198
-    if( A1 != 0 )
-    {
-        A2 = h[attr + 0x6];
-        if( A2 >= 0x80 )
-        {
-            T0 = 0x7f;
-        }
-        else
-        {
-            T0 = (A2 < 0 ) ? 0 : A2;
-        }
-    }
-    [spu + 0x182] = h((T0 & 0x7fff) | A1); // Main Volume Right
-
-    L391dc:	; 800391DC
-    if( (T2 != 0) || (T1 & 0x0040) )
-    {
-        [spu + 0x1b0] = h(hu[attr + 0x10]); // CD Volume Left
-    }
-
-    if( (T2 != 0) || (T1 & 0x0080) )
-    {
-        [spu + 0x1b2] = h(hu[attr + 0x12]); // CD Volume Right
-    }
-
-    if( (T2 != 0) || (T1 & 0x0400) )
-    {
-        [spu + 0x1b4] = h(hu[attr + 0x1c]); // Extern Volume Left
-    }
-
-    if( (T2 != 0) || (T1 & 0x0800) )
-    {
-        [spu + 0x1b6] = h(hu[attr + 0x1e]); // Extern Volume Right
-    }
-
-    if( (T2 != 0) || (T1 & 0x0100) )
-    {
-        if( w[attr + 0x14] == 0 )
+        if( attr->cd.reverb == 0 )
         {
             [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfffb);
         }
@@ -2606,9 +2542,9 @@ void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
         }
     }
 
-    if( (T2 != 0) || (T1 & 0x0200) )
+    if( (mask == 0) || (mask & SPU_COMMON_CDMIX) )
     {
-        if( w[attr + 0x18] == 0 )
+        if( attr->cd.mix == 0 )
         {
             [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfffe);
         }
@@ -2618,9 +2554,9 @@ void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
         }
     }
 
-    if( (T2 != 0) || (T1 & 0x1000) )
+    if( (mask == 0) || (mask & SPU_COMMON_EXTREV) )
     {
-        if( w[attr + 0x20] == 0 )
+        if( attr->ext.reverb == 0 )
         {
             [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfff7);
         }
@@ -2630,9 +2566,9 @@ void system_psyq_spu_set_common_attr( SpuCommonAttr* attr )
         }
     }
 
-    if( (T2 != 0) || (T1 & 0x2000) )
+    if( (mask == 0) || (mask & SPU_COMMON_EXTMIX) )
     {
-        if( w[attr + 0x24] == 0 )
+        if( attr->ext.mix == 0 )
         {
             [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xfffd);
         }
