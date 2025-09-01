@@ -9,9 +9,48 @@ SOUND/INSTR2.ALL 6 voice samples from One Winged Angel;
 SOUND/INSTR2.DAT instriments for samples.
 ================
 
+SOUND/INSTR.ALL
+Loaded into spu memory directly.
++ 0x0 [][][][] spu memory (0x1010).
++ 0x4 [][][][] size (0x75f90).
+ + 0x10 start of samples data to load.
 
+sample 0x53
+    start: 0x65010
+    loop:  0x66120
+attack rate 127
+decay rate 4
+sustain rate0
+release rate 6
+sl 0
+s inc 0
 
+10500600
+20610600
+00 ar
+0F dr
+0F sl
+7F sr
+05 rr
+01 am linear
+03 sm linear
+03 rm linear
+02170000
+5F180000
+D2190000
+5B1B0000
+FC1C0000
+B51E0000
+88200000
+78220000
+85240000
+B0260000
+FE280000
+6E2B0000
 
+sample 0x54
+    start: 0x680e0
+    loop:  0x691f0
 
 
 
@@ -53,21 +92,3 @@ INSTR*.ALL format is known to me (32-byte header with offset of first sample, ma
 
 INSTR*.DAT - some data for INSTR*.ALL
 INSTR*.DAT contains <INSTR*.ALL sample count> 64-byte frames with some offsets for every sample and 60 bytes of other data, mostly 16-bit numbers.
-
-
-
-assembler notes:
-0x8002db80-0x8002dbb8   checking AKAO magic
-
-80038A9C: load channel address 0x1F801C00 to v0
-
-80038AA8-80038AB4: loading of address 0x1F801DAA to v1 (SPU Control Register sp0)
-next IRQ bit is set to 0 (disable interrupts SPU), and write back
-
-80038E50,80038E54: some initialization of SPU (1F801D8C, 1F801D8E)
-
-80037A80: - another SPU init 1F801D90
-
-80029B78 - copy function for AKAO frame to another memory region
-
-80030EC8: akao sequence parser

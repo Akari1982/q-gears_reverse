@@ -24,6 +24,8 @@
 #include "regs.h"
 #include "reverb.h"
 
+#include "stdio.h"
+
 /*
 // adsr time values (in ms) by James Higgs ... see the end of
 // the adsr.c source for details
@@ -114,6 +116,18 @@ void CALLBACK SPUwriteRegister(unsigned long reg, unsigned short val)
         s_chan[ch].ADSRX.AttackRate=(lval>>8) & 0x007f;
         s_chan[ch].ADSRX.DecayRate=(lval>>4) & 0x000f;
         s_chan[ch].ADSRX.SustainLevel=lval & 0x000f;
+/*
+        if( ch == 0 )
+        {
+            FILE *log = fopen("debug.log", "wb");
+            fwrite( spuMemC, 0x80000, 1, log );
+            //fprintf(log, "AttackRate %02x\n", s_chan[ch].ADSRX.AttackRate);
+            //fprintf(log, "AttackModeExp %02x\n", s_chan[ch].ADSRX.AttackModeExp);
+            //fprintf(log, "DecayRate %02x\n", s_chan[ch].ADSRX.DecayRate);
+            //fprintf(log, "SustainLevel %02x\n", s_chan[ch].ADSRX.SustainLevel);
+            fclose(log); // всегда закрывать после записи
+        }
+*/
         //---------------------------------------------//
         if(!iDebugMode) break;
         //---------------------------------------------// stuff below is only for debug mode
