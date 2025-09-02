@@ -40,204 +40,183 @@ func362b8();
 
 
 
-////////////////////////////////
-// func362b8()
-
-S0 = A0;
-
-system_interrupts_timer_dma_initialize();
-
-A0 = S0;
-func3642c();
-
-if( S0 == 0 )
+void func362b8( S0 )
 {
-    V1 = 17;
-    V0 = 8004a6ea;
-    loop362e8:	; 800362E8
-        [V0] = h(0xc000);
-        V1 = V1 - 1;
-        V0 = V0 - 2;
-    800362F0	bgez   v1, loop362e8 [$800362e8]
-}
+    system_interrupts_timer_dma_initialize();
 
-func363b0();
+    func3642c( S0 );
 
-[0x8004a694] = w(SPU_OFF); // reverb status
-[0x8004a698] = w(0);
-[0x8004a69c] = w(w[0x8004ab5c + 0x0 * 0x4]); // set default work area start address for reverb mode 0.
-
-[0x8004a6a4] = w(0); // reverb mode
-[0x8004a6a8] = h(0); // reverb depth left
-[0x8004a6aa] = h(0); // reverb depth right
-[0x8004a6ac] = w(0);
-
-[0x8004a6b0] = w(0);
-
-func36d98( 0xd1, w[0x8004ab5c], 0 ); // 1a2 Sound RAM Reverb Work Area Start Address
-
-[0x8004ab50] = w(0); // max number of times spu memory is allocated
-[0x8004ab54] = w(0); // number of times spu memory is allocated
-[0x8004ab58] = w(0); // pointer to spu memory management table, which stores information about each block
-
-[0x8004a68c] = w(0);
-[0x8004a690] = w(0);
-
-[0x8004a6b4] = w(0);
-[0x8004a6b8] = w(0);
-
-[0x8004aaec] = w(0x0);
-
-[0x8004ab10] = w(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func363b0()
-
-if( w[0x8004aaf0] == 0 )
-{
-    [0x8004aaf0] = w(1);
-
-    system_bios_enter_critical_section();
-
-    A0 = 8003688c; // func3688c()
-    system_sound_spu_dma_callback();
-
-    A0 = f0000009; // class (IRQ9 SPU)
-    A1 = 20; // spec (command completed)
-    A2 = 2000; // mode (Do NOT execute callback function, and mark event as ready)
-    A3 = 0; // func
-    system_bios_open_event();
-    [0x8004a688] = w(V0);
-
-    A0 = V0;
-    system_bios_enable_event();
-
-    system_bios_exit_critical_section();
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func3642c()
-
-without_data = A0;
-
-A0 = w[0x8004ab04]; // DMA Control register
-// set SPU dma priority to 3 and enable dma.
-[A0] = w(w[A0] | 000b0000);
-
-[0x8004ab10] = w(0);
-[0x8004ab14] = w(0);
-[0x8004ab0c] = h(0);
-
-spu = w[0x8004aaf4]; // 1f801c00
-
-[spu + 180] = h(0); // Mainvolume left
-[spu + 182] = h(0); // Mainvolume right
-[spu + 1aa] = h(0); // SPU Control Register
-
-system_sound_wait_sync();
-
-[spu + 180] = h(0);// Mainvolume left
-[spu + 182] = h(0); // Mainvolume right
-
-if( hu[spu + 1ae] & 07ff ) // SPU Status Register
-{
-    V1 = 1;
-    loop364b8:	; 800364B8
-        if( V1 >= f01 )
+    if( S0 == 0 )
+    {
+        V0 = 0x8004a6ea;
+        for( int i = 0x17; i >= 0; --i )
         {
-            A0 = 800104b4; // "SPU:T/O [%s]"
-            A1 = 800104c4; // "wait (reset)"
-            system_bios_printf();
+            [V0] = h(0xc000);
+            V0 += 0x2;
+        }
+    }
 
-            break;
+    func363b0();
+
+    [0x8004a694] = w(SPU_OFF); // reverb status
+    [0x8004a698] = w(0);
+    [0x8004a69c] = w(w[0x8004ab5c + 0x0 * 0x4]); // set default work area start address for reverb mode 0.
+
+    [0x8004a6a4] = w(0); // reverb mode
+    [0x8004a6a8] = h(0); // reverb depth left
+    [0x8004a6aa] = h(0); // reverb depth right
+    [0x8004a6ac] = w(0);
+
+    [0x8004a6b0] = w(0);
+
+    func36d98( 0xd1, w[0x8004ab5c], 0 ); // 1a2 Sound RAM Reverb Work Area Start Address
+
+    [0x8004ab50] = w(0); // max number of times spu memory is allocated
+    [0x8004ab54] = w(0); // number of times spu memory is allocated
+    [0x8004ab58] = w(0); // pointer to spu memory management table, which stores information about each block
+
+    [0x8004a68c] = w(0);
+    [0x8004a690] = w(0);
+
+    [0x8004a6b4] = w(0);
+    [0x8004a6b8] = w(0);
+
+    [0x8004aaec] = w(0);
+
+    [0x8004ab10] = w(0);
+}
+
+
+
+void func363b0()
+{
+    if( w[0x8004aaf0] == 0 )
+    {
+        [0x8004aaf0] = w(1);
+
+        system_bios_enter_critical_section();
+
+        system_sound_spu_dma_callback( 0x8003688c ); // func3688c()
+
+        V0 = system_bios_open_event( 0xf0000009, 0x20, 0x2000, 0 ); // IRQ9 SPU, mode (Do NOT execute callback function, and mark event as ready)
+        [0x8004a688] = w(V0);
+
+        system_bios_enable_event( V0 );
+
+        system_bios_exit_critical_section();
+    }
+}
+
+
+
+void func3642c( without_data )
+{
+    A0 = w[0x8004ab04]; // DMA Control register
+    // set SPU dma priority to 3 and enable dma.
+    [A0] = w(w[A0] | 0x000b0000);
+
+    [0x8004ab10] = w(0);
+    [0x8004ab14] = w(0);
+    [0x8004ab0c] = h(0);
+
+    spu = w[0x8004aaf4]; // 1f801c00
+
+    [spu + 0x180] = h(0); // Mainvolume left
+    [spu + 0x182] = h(0); // Mainvolume right
+    [spu + 0x1aa] = h(0); // SPU Control Register
+
+    system_sound_wait_sync();
+
+    [spu + 0x180] = h(0);// Mainvolume left
+    [spu + 0x182] = h(0); // Mainvolume right
+
+    if( hu[spu + 0x1ae] & 0x07ff ) // SPU Status Register
+    {
+        V1 = 1;
+        loop364b8:	; 800364B8
+            if( V1 >= 0xf01 )
+            {
+                system_bios_printf( "SPU:T/O [%s]", "wait (reset)" );
+
+                break;
+            }
+
+            V0 = hu[spu + 0x1ae] & 0x07ff;
+            V1 += 0x1;
+        800364FC	bne    v0, zero, loop364b8 [$800364b8]
+    }
+
+    [0x8004ab18] = w(0x2);
+    [0x8004ab1c] = w(0x3);
+    [0x8004ab20] = w(0x8);
+    [0x8004ab24] = w(0x7);
+
+    [spu + 0x1ac] = h(0x0004); // Sound RAM Data Transfer Control (should be 0004h)
+    [spu + 0x184] = h(0x0); // Reverb Output Volume Left
+    [spu + 0x186] = h(0x0); // Reverb Output Volume Right
+    [spu + 0x18c] = h(0xffff); // Key OFF lower
+    [spu + 0x18e] = h(0xffff); // Key OFF upper
+    [spu + 0x198] = h(0x0); // Reverb mode aka Echo On lower
+    [spu + 0x19a] = h(0x0); // Reverb mode aka Echo On upper
+
+    for( int i = 0; i < 0xa; ++i )
+    {
+        [0x80077f28 + i * 0x2] = h(0);
+    }
+
+    if( without_data == 0 )
+    {
+        [0x8004ab0c] = h(0x0200); // set data transfer address
+
+        [spu + 0x190] = h(0); // Pitch Modulation Enable Flags lower
+        [spu + 0x192] = h(0); // Pitch Modulation Enable Flags upper
+        [spu + 0x194] = h(0); // Noise mode enable lower
+        [spu + 0x196] = h(0); // Noise mode enable upper
+        [spu + 0x1b0] = h(0); // CD Audio Input Volume Left
+        [spu + 0x1b2] = h(0); // CD Audio Input Volume Right
+        [spu + 0x1b4] = h(0); // External Audio Input Volume Left
+        [spu + 0x1b6] = h(0); // External Audio Input Volume Right
+
+        A0 = 8004ab34; // 0707 0707 0707 0707 0707 0707 0707 0707 data
+        A1 = 10; // size
+        system_spu_ram_manual_write(); // manual transfer to spu ram
+
+        for( int i = 0; i < 0x18; ++i )
+        {
+            [spu + i * 0x10 + 0x0] = h(0); // Volume Left
+            [spu + i * 0x10 + 0x2] = h(0); // Volume Right
+            [spu + i * 0x10 + 0x4] = h(0x3fff); // Reverb Output Volume Left
+            [spu + i * 0x10 + 0x6] = h(0x0200); // Reverb Output Volume Right
+            [spu + i * 0x10 + 0x8] = h(0); // Key ON lower
+            [spu + i * 0x10 + 0xa] = h(0); // Key ON upper
         }
 
-        V0 = hu[spu + 1ae] & 7ff;
-        V1 = V1 + 1;
-    800364FC	bne    v0, zero, loop364b8 [$800364b8]
+        [spu + 0x188] = h(0xffff); // Key ON lower
+        [spu + 0x18a] = h(0x00ff); // Key ON upper
+
+        system_sound_wait_sync();
+        system_sound_wait_sync();
+        system_sound_wait_sync();
+        system_sound_wait_sync();
+
+        [spu + 0x18c] = h(0xffff); // Key OFF upper
+        [spu + 0x18e] = h(0x00ff); // Key OFF lower
+
+        system_sound_wait_sync();
+        system_sound_wait_sync();
+        system_sound_wait_sync();
+        system_sound_wait_sync();
+    }
+
+    // enable and unmute SPU
+    [spu + 0x1aa] = h(0xc000); // SPU Control Register
+
+    [0x8004ab28] = w(1);
+    [0x8004ab2c] = w(0);
+    [0x8004ab30] = w(0);
+
+    return 0;
 }
-
-[0x8004ab18] = w(0x2);
-[0x8004ab1c] = w(0x3);
-[0x8004ab20] = w(0x8);
-[0x8004ab24] = w(0x7);
-
-[spu + 0x1ac] = h(0x0004); // Sound RAM Data Transfer Control (should be 0004h)
-[spu + 0x184] = h(0x0); // Reverb Output Volume Left
-[spu + 0x186] = h(0x0); // Reverb Output Volume Right
-[spu + 0x18c] = h(0xffff); // Key OFF lower
-[spu + 0x18e] = h(0xffff); // Key OFF upper
-[spu + 0x198] = h(0x0); // Reverb mode aka Echo On lower
-[spu + 0x19a] = h(0x0); // Reverb mode aka Echo On upper
-
-A0 = 0;
-loop3656c:	; 8003656C
-    [0x80077f28 + A0 * 2] = h(0);
-    A0 = A0 + 1;
-    V0 = A0 < a;
-80036578	bne    v0, zero, loop3656c [$8003656c]
-
-if( without_data == 0 )
-{
-    [0x8004ab0c] = h(0200); // set data transfer address
-
-    [spu + 190] = h(0); // Pitch Modulation Enable Flags lower
-    [spu + 192] = h(0); // Pitch Modulation Enable Flags upper
-    [spu + 194] = h(0); // Noise mode enable lower
-    [spu + 196] = h(0); // Noise mode enable upper
-    [spu + 1b0] = h(0); // CD Audio Input Volume Left
-    [spu + 1b2] = h(0); // CD Audio Input Volume Right
-    [spu + 1b4] = h(0); // External Audio Input Volume Left
-    [spu + 1b6] = h(0); // External Audio Input Volume Right
-
-    A0 = 8004ab34; // 0707 0707 0707 0707 0707 0707 0707 0707 data
-    A1 = 10; // size
-    system_spu_ram_manual_write(); // manual transfer to spu ram
-
-    A0 = 0;
-    loop365e0:	; 800365E0
-        [spu + A0 * 10 + 0] = h(0); // Volume Left
-        [spu + A0 * 10 + 2] = h(0); // Volume Right
-        [spu + A0 * 10 + 4] = h(3fff); // Reverb Output Volume Left
-        [spu + A0 * 10 + 6] = h(0200); // Reverb Output Volume Right
-        [spu + A0 * 10 + 8] = h(0); // Key ON lower
-        [spu + A0 * 10 + a] = h(0); // Key ON upper
-        A0 = A0 + 1;
-        V0 = A0 < 18;
-    80036604	bne    v0, zero, loop365e0 [$800365e0]
-
-    [spu + 188] = h(ffff); // Key ON lower
-    [spu + 18a] = h(00ff); // Key ON upper
-
-    system_sound_wait_sync();
-    system_sound_wait_sync();
-    system_sound_wait_sync();
-    system_sound_wait_sync();
-
-    [spu + 18c] = h(ffff); // Key OFF upper
-    [spu + 18e] = h(00ff); // Key OFF lower
-
-    system_sound_wait_sync();
-    system_sound_wait_sync();
-    system_sound_wait_sync();
-    system_sound_wait_sync();
-}
-
-// enable and unmute SPU
-[spu + 1aa] = h(c000); // SPU Control Register
-
-[0x8004ab28] = w(1);
-[0x8004ab2c] = w(0);
-[0x8004ab30] = w(0);
-
-return 0;
-////////////////////////////////
 
 
 
@@ -1462,14 +1441,15 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
             s32 feedback = attr->feedback;
             [0x8004a6b0] = w(feedback);
 
-            A0 = 0x81020409;
-            V1 = feedback * 0x8100;
-            80038178	mult   v1, a0
-            80038184	mfhi   v0
-            V0 = V0 + V1;
-            V0 = V0 >> 0x6;
-            V1 = V1 >> 1f;
-            V0 = V0 - V1;
+            // division by by 1.985
+            const int64_t A0 = 0x81020409LL;
+            int64_t V1 = (int64_t)feedback * 0x8100;
+            int64_t mul = V1 * A0;
+            int64_t V0 = mul >> 32;
+            V0 += V1;
+            V0 >>= 0x6;
+            int64_t signCorr = V1 >> 31;
+            V0 -= signCorr;
             [SP + 0x22] = h(V0);
         }
         else
@@ -1575,10 +1555,11 @@ void func3832c()
 
 void system_psyq_spu_get_reverb_mode_param( SpuReverbAttr* attr )
 {
-    [A0 + 0x4] = w(w[0x8004a6a4]);
-    [A0 + 0x8] = w(w[0x8004a6a8]); // reverb depth left and right
-    [A0 + 0xc] = w(w[0x8004a6ac]);
-    [A0 + 0x10] = w(w[0x8004a6b0]);
+    attr->mode = w[0x8004a6a4];
+    attr->depth.left = hu[0x8004a6a8];
+    attr->depth.right = hu[0x8004a6aa];
+    attr->delay = w[0x8004a6ac];
+    attr->feedback = w[0x8004a6b0];
 }
 
 
