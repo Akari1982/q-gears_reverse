@@ -31,12 +31,20 @@
 
 
 
-////////////////////////////////
-// system_psyq_spu_init()
+u32 g_reverb_on;                // 0x8004a694
+u8* g_reverb_workarea;          // 0x8004a69c
+s32 g_reverb_mode;              // 0x8004a6a4
+s16 g_reverb_depth_left;        // 0x8004a6a8
+s16 g_reverb_depth_right;       // 0x8004a6aa
+s32 g_reverb_delay;             // 0x8004a6ac
+s32 g_reverb_feedback;          // 0x8004a6b0
 
-A0 = 0;
-func362b8();
-////////////////////////////////
+
+
+void system_psyq_spu_init()
+{
+    func362b8( 0 );
+}
 
 
 
@@ -58,16 +66,15 @@ void func362b8( S0 )
 
     func363b0();
 
-    [0x8004a694] = w(SPU_OFF); // reverb status
+    g_reverb_on = SPU_OFF;
     [0x8004a698] = w(0);
-    [0x8004a69c] = w(w[0x8004ab5c + 0x0 * 0x4]); // set default work area start address for reverb mode 0.
+    g_reverb_workarea = w[0x8004ab5c + 0x0 * 0x4]; // set default work area start address for reverb mode 0.
 
-    [0x8004a6a4] = w(0); // reverb mode
-    [0x8004a6a8] = h(0); // reverb depth left
-    [0x8004a6aa] = h(0); // reverb depth right
-    [0x8004a6ac] = w(0);
-
-    [0x8004a6b0] = w(0);
+    g_reverb_mode = 0;
+    g_reverb_depth_left = 0;
+    g_reverb_depth_right = 0;
+    g_reverb_delay = 0;
+    g_reverb_feedback = 0;
 
     func36d98( 0xd1, w[0x8004ab5c], 0 ); // 1a2 Sound RAM Reverb Work Area Start Address
 
@@ -823,7 +830,7 @@ long system_spu_malloc_to_block( u32 block, u_long addr, long size )
 
     addr_ofs = addr - addr_b;
 
-    V1 = ( w[0x8004a698] == 0 ) ? 0 : (0x10000 - w[0x8004a69c]) << shifter;
+    V1 = ( w[0x8004a698] == 0 ) ? 0 : (0x10000 - g_reverb_workarea) << shifter;
     size_left = ( flag_b & 0x40000000 ) ? size_b - addr_ofs - V1 : size_b - addr_ofs;
 
     if( size_left < size ) return -1;
@@ -940,7 +947,7 @@ long system_psyq_spu_malloc_with_start_addr( u_long addr, long size )
     shifter = w[0x8004ab1c];
     top = w[0x8004ab58];
 
-    S2 = ( w[0x8004a698] == 0 ) ? 0 : (0x10000 - w[0x8004a69c]) << shifter;
+    S2 = ( w[0x8004a698] == 0 ) ? 0 : (0x10000 - g_reverb_workarea) << shifter;
 
     // align size and addr
     if( size & ~w[0x8004ab24] ) size += w[0x8004ab24];
@@ -1229,27 +1236,27 @@ long system_psyq_spu_set_reverb( long on_off )
 
     if( on_off == 0 )
     {
-        [0x8004a694] = w(0);
+        g_reverb_on = 0;
         [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xff7f); // Reverb Master Disable
     }
     else if( on_off == 1 )
     {
-        if( w[0x8004a698] != on_off )
+        if( w[0x8004a698] != 1 )
         {
-            if( func37d90( w[0x8004a69c] ) != 0 ) // reverb work area already reserved
+            if( func37d90( g_reverb_workarea ) != 0 ) // reverb work area already reserved
             {
-                [0x8004a694] = w(0);
+                g_reverb_on = 0;
                 [spu + 0x1aa] = h(hu[spu + 0x1aa] & 0xff7f); // Reverb Master Disable
 
-                return w[0x8004a694];
+                return g_reverb_on;
             }
         }
 
-        [0x8004a694] = w(on_off);
+        g_reverb_on = on_off;
         [spu + 0x1aa] = h(hu[spu + 0x1aa] | 0x0080); // Reverb Master Enable
     }
 
-    return w[0x8004a694];
+    return g_reverb_on;
 }
 
 
@@ -1330,9 +1337,9 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
 
         if( func37d90( w[0x8004ab5c + mode * 4] ) != 0 ) return -1; // reverb work area already reserved
 
-        [0x8004a6a4] = w(mode); // reverb mode
+        g_reverb_mode = mode;
 
-        [0x8004a69c] = w(w[0x8004ab5c + mode * 4]);
+        g_reverb_workarea = w[0x8004ab5c + mode * 4];
 
         u32 src = 0x8004abac + mode * 0x44;
         dst = SP + 0x10;
@@ -1345,31 +1352,30 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
 
         if( mode == SPU_REV_MODE_ECHO )
         {
-            [0x8004a6b0] = w(0x7f);
-            [0x8004a6ac] = w(0x7f);
+            g_reverb_feedback = 0x7f;
+            g_reverb_delay = 0x7f;
         }
         else if( mode == SPU_REV_MODE_DELAY )
         {
-            [0x8004a6b0] = w(0);
-            [0x8004a6ac] = w(0x7f);
+            g_reverb_feedback = 0;
+            g_reverb_delay = 0x7f;
         }
         else
         {
-            [0x8004a6b0] = w(0);
-            [0x8004a6ac] = w(0);
+            g_reverb_feedback = 0;
+            g_reverb_delay = 0;
         }
     }
 
     if( (mask == 0) || (mask & SPU_REV_DELAYTIME) )
     {
-        s32 mode = w[0x8004a6a4];
-        if( (mode == SPU_REV_MODE_ECHO) || (mode == SPU_REV_MODE_DELAY) )
+        if( (g_reverb_mode == SPU_REV_MODE_ECHO) || (g_reverb_mode == SPU_REV_MODE_DELAY) )
         {
             loaded_delay = 0x1;
 
             if( loaded_mode == 0 )
             {
-                src = 0x8004abac + mode * 0x44;
+                src = 0x8004abac + g_reverb_mode * 0x44;
                 dst = SP + 0x10;
                 for( int i = 0x43; i != -1; --i )
                 {
@@ -1380,14 +1386,13 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
                 [SP + 0x10] = w(0x0c011c00);
             }
 
-            s32 delay = attr->delay;
-            [0x8004a6ac] = w(delay);
+            g_reverb_delay = attr->delay;
 
             A2 = 0x81020409;
-            V1 = delay << 0xd;
+            V1 = g_reverb_delay << 0xd;
             80038034	mult   v1, a2
             80038038	mfhi   v0
-            A1 = delay << 0xc;
+            A1 = g_reverb_delay << 0xc;
             80038044	mult   a1, a2
             V0 = V0 + V1;
             V0 = V0 >> 0x6;
@@ -1407,14 +1412,13 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
         }
         else
         {
-            [0x8004a6ac] = w(0);
+            g_reverb_delay = 0;
         }
     }
 
     if( (mask == 0) || (mask & SPU_REV_FEEDBACK) )
     {
-        s32 mode = w[0x8004a6a4];
-        if( (mode == SPU_REV_MODE_ECHO) || (mode == SPU_REV_MODE_DELAY) )
+        if( (g_reverb_mode == SPU_REV_MODE_ECHO) || (g_reverb_mode == SPU_REV_MODE_DELAY) )
         {
             loaded_feedback = 0x1;
 
@@ -1422,7 +1426,7 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
             {
                 if( loaded_delay == 0 )
                 {
-                    src = 0x8004abac + mode * 0x44;
+                    src = 0x8004abac + g_reverb_mode * 0x44;
                     dst = SP + 0x10;
                     for( int i = 0x43; i != -1; --i )
                     {
@@ -1438,12 +1442,11 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
                 }
             }
 
-            s32 feedback = attr->feedback;
-            [0x8004a6b0] = w(feedback);
+            g_reverb_feedback = attr->feedback;
 
             // division by by 1.985
             const int64_t A0 = 0x81020409LL;
-            int64_t V1 = (int64_t)feedback * 0x8100;
+            int64_t V1 = (int64_t)g_reverb_feedback * 0x8100;
             int64_t mul = V1 * A0;
             int64_t V0 = mul >> 32;
             V0 += V1;
@@ -1454,7 +1457,7 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
         }
         else
         {
-            [0x8004a6b0] = w(0);
+            g_reverb_feedback = 0;
         }
     }
 
@@ -1468,21 +1471,21 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
         }
         [spu + 0x184] = h(0);
         [spu + 0x186] = h(0);
-        [0x8004a6a8] = h(0);
-        [0x8004a6aa] = h(0);
+        g_reverb_depth_left = 0;
+        g_reverb_depth_right = 0;
     }
     else
     {
         if( (mask == 0) || (mask & SPU_REV_DEPTHL) )
         {
             [spu + 0x184] = h(attr->depth.left);
-            [0x8004a6a8] = h(attr->depth.left);
+            g_reverb_depth_left = attr->depth.left;
         }
 
         if( (mask == 0) || (mask & SPU_REV_DEPTHR) )
         {
             [spu + 0x186] = h(attr->depth.right);
-            [0x8004a6aa] = h(attr->depth.right);
+            g_reverb_depth_right = attr->depth.right;
         }
     }
 
@@ -1493,12 +1496,12 @@ long system_psyq_spu_set_reverb_mode_param( SpuReverbAttr* attr )
 
     if( clear_wa == true )
     {
-        func388e8( w[0x8004a6a4] ); // transfer reverb data to spu ram
+        func388e8( g_reverb_mode ); // transfer reverb data to spu ram
     }
 
     if( loaded_mode != 0 )
     {
-        func36d98( 0xd1, w[0x8004a69c], 0 ); // 1a2 Sound RAM Reverb Work Area Start Address
+        func36d98( 0xd1, g_reverb_workarea, 0 ); // 1a2 Sound RAM Reverb Work Area Start Address
 
         if( rev_enabled != 0 )
         {
@@ -1555,11 +1558,11 @@ void func3832c()
 
 void system_psyq_spu_get_reverb_mode_param( SpuReverbAttr* attr )
 {
-    attr->mode = w[0x8004a6a4];
-    attr->depth.left = hu[0x8004a6a8];
-    attr->depth.right = hu[0x8004a6aa];
-    attr->delay = w[0x8004a6ac];
-    attr->feedback = w[0x8004a6b0];
+    attr->mode = g_reverb_mode;
+    attr->depth.left = g_reverb_depth_left;
+    attr->depth.right = g_reverb_depth_right;
+    attr->delay = g_reverb_delay;
+    attr->feedback = g_reverb_feedback;
 }
 
 
@@ -1576,13 +1579,13 @@ long system_psyq_spu_set_reverb_depth( SpuReverbAttr* attr )
     if( (attr->mask < 1) || (attr->mask & 0x2) )
     {
         [spu + 0x184] = h(attr->depth.left);
-        [0x8004a6a8] = h(attr->depth.left);
+        g_reverb_depth_left = attr->depth.left;
     }
 
     if( (attr->mask < 1) || (attr->mask & 0x4) )
     {
         [spu + 0x186] = h(attr->depth.right);
-        [0x8004a6aa] = h(attr->depth.right);
+        g_reverb_depth_right = attr->depth.right;
     }
 }
 
