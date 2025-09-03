@@ -673,11 +673,11 @@
 80037D10 func37d10
 80037D90 func37d90
 80037E1C system_psyq_spu_set_reverb_mode_param
-8003832C func3832c
+8003832C system_spu_set_reverb_reg
 800387FC system_psyq_spu_get_reverb_mode_param
 8003884C system_sound_spu_set_reverb_depth_left_right
 800388C4 system_psyq_spu_set_reverb_voice
-800388E8 func388e8
+800388E8 system_spu_reverb_clear_workarea
 80038A84 system_psyq_spu_set_irq
 80038BC4 system_psyq_spu_set_irq_addr
 80038C04 system_psyq_spu_set_irq_callback
