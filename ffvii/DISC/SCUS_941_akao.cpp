@@ -348,7 +348,7 @@ void system_akao_load_instr_2( u32 instr2_all, u32 instr2_dat )
     system_psyq_spu_set_transfer_start_addr( w[instr2_all + 0x0] );
     system_akao_spu_write( instr2_all + 0x10, w[instr2_all + 0x4] );
 
-    dst = 0x80076c68;
+    dst = 0x80075f28 + 0x35 * 0x40;
     for( int i = 0x4b0; i != 0; --i )
     {
         [dst] = w(w[instr2_dat]);

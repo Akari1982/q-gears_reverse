@@ -445,7 +445,6 @@
 800738a0 weapon data in kernel (0x2c size).
 
 0x80075f28 INSTR.DAT number of struct with size 0x40
-0x80076c68 add instrstruct with size 0x40
     +00 [][][][] start offset.
     +04 [][][][] loop offset.
     +08 []       attack rate.
