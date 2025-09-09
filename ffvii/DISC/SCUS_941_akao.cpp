@@ -238,7 +238,7 @@ void system_akao_init_data()
     g_akao_command_queue_id = 0;
 
     [0x80083338] = w(0);
-    [0x80083334 + 0x4a] = h(0);
+    [0x80083334 + 0 * 0x60 + 0x4a] = h(0);
     [0x80083398] = w(0);
     [0x800833de] = h(0);
 

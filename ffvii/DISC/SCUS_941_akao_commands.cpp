@@ -1019,14 +1019,14 @@ void system_akao_command_f1( AkaoCommandData* data )
 // when init field script
 void system_akao_command_f2( AkaoCommandData* data )
 {
-    [0x80083334 + 0x4a] = h(0);
+    [0x80083334 + 0 * 0x60 + 0x4a] = h(0); // reset saved music id
 }
 
 
 
 void system_akao_command_f3( AkaoCommandData* data )
 {
-    [0x800833de] = h(0);
+    [0x800833de + 1 * 0x60 + 0x4a] = h(0); // reset saved music id
 }
 
 
