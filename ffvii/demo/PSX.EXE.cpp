@@ -159,55 +159,29 @@ A0 = 0;
 
 func115f0();
 
-A1 = 80010014;
-[SP + 10] = w(w[80010014]); // 0
-[SP + 14] = w(w[80010018]); // 01d801e0
+A1 = 0x80010014;
+[SP + 0x10] = w(w[0x80010014]); // 0
+[SP + 0x14] = w(w[0x80010018]); // 0x01d801e0
 
-A0 = a0;
-A1 = 78;
-A2 = 80;
-A3 = 0;
-func117c4();
+func117c4( 0xa0, 0x78, 0x80, 0 );
 
 func14ba0();
 
-A0 = 7d1; // SOUND\INSTR.ALL sector
-A1 = 75580;
-A2 = 800f0000;
-A3 = 0;
-func14c74();
+func14c74( 0x7d1, 0x75580, 0x800f0000, 0 ); // SOUND\INSTR.ALL
+while( func150dc() != 0 ) {}
 
-loop118a4:	; 800118A4
-    func150dc();
-800118AC	bne    v0, zero, loop118a4 [$800118a4]
+func14c74( 0x8bc, 0x8000, 0x801b0000, 0 ); // SOUND\EFFECT.ALL
+while( func150dc() != 0 ) {}
 
-A0 = 8bc; // SOUND\EFFECT.ALL sector
-A1 = 8000;
-A2 = 801b0000;
-A3 = 0;
-func14c74();
+func14c74( 0x8cc, 0x2000, 0x801b8000, 0 ); // SOUND\INSTR.DAT
+while( func150dc() != 0 ) {}
 
-loop118c4:	; 800118C4
-    func150dc();
-800118CC	bne    v0, zero, loop118c4 [$800118c4]
+system_akao_init( 0x800f0000, 0x801b8000 );
 
-A0 = 8cc; // SOUND\INSTR.DAT sector
-A1 = 2000;
-A2 = 801b8000;
-A3 = 0;
-func14c74();
+system_akao_load_effect( 0x801b0000 );
 
-loop118e8:	; 800118E8
-    func150dc();
-800118F0	bne    v0, zero, loop118e8 [$800118e8]
+func14620();
 
-800118F4	lui    a0, $800f
-800118F8	lui    a1, $801b
-800118FC	jal    func1c970 [$8001c970]
-A1 = A1 | 8000;
-80011904	jal    func1caf0 [$8001caf0]
-80011908	lui    a0, $801b
-8001190C	jal    func14620 [$80014620]
 S1 = 0002;
 S0 = 0001;
 A0 = SP + 0010;
@@ -217,9 +191,9 @@ A3 = 0;
 system_psyq_clear_image();
 
 8001192C	jal    func24224 [$80024224]
-80011930	nop
+
 80011934	jal    func14698 [$80014698]
-80011938	nop
+
 [8006a850] = h(0);
 [80096dc0] = h(S0);
 
@@ -12464,12 +12438,13 @@ SP = SP + 0048;
 8001C96C	nop
 
 
-func1c970:	; 8001C970
-8001C970	addiu  sp, sp, $ffe0 (=-$20)
-[SP + 0010] = w(S0);
+
+////////////////////////////////
+// system_akao_init
+
 S0 = A0;
-[SP + 0014] = w(S1);
 S1 = A1;
+
 8001C984	lui    a1, $8007
 8001C988	addiu  a1, a1, $a728 (=-$58d8)
 8001C98C	lui    v0, $8007
@@ -12563,29 +12538,27 @@ loop1cac8:	; 8001CAC8
 A0 = A0 | 0002;
 8001CAD0	beq    v0, zero, loop1cac8 [$8001cac8]
 8001CAD4	lui    a0, $f200
-RA = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-SP = SP + 0020;
-8001CAE8	jr     ra 
-8001CAEC	nop
+////////////////////////////////
 
 
-func1caf0:	; 8001CAF0
+
+////////////////////////////////
+// system_akao_load_effect()
+
 A1 = w[GP + 022c];
 V1 = 2000;
 A2 = ffff;
 
 loop1cafc:	; 8001CAFC
-V1 = V1 + A2;
-V0 = w[A0 + 0000];
-A0 = A0 + 0004;
-[A1 + 0000] = w(V0);
-V0 = V1 & ffff;
+    V1 = V1 + A2;
+    V0 = w[A0 + 0000];
+    A0 = A0 + 0004;
+    [A1 + 0000] = w(V0);
+    V0 = V1 & ffff;
+    A1 = A1 + 0004;
 8001CB10	bne    v0, zero, loop1cafc [$8001cafc]
-A1 = A1 + 0004;
-8001CB18	jr     ra 
-8001CB1C	nop
+////////////////////////////////
+
 
 
 func1cb20:	; 8001CB20

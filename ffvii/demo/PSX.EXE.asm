@@ -224,9 +224,9 @@ loop118e8:	; 800118E8
 800118F0	bne    v0, zero, loop118e8 [$800118e8]
 800118F4	lui    a0, $800f
 800118F8	lui    a1, $801b
-800118FC	jal    func1c970 [$8001c970]
+800118FC	jal    system_akao_init [$8001c970]
 80011900	ori    a1, a1, $8000
-80011904	jal    func1caf0 [$8001caf0]
+80011904	jal    system_akao_load_effect [$8001caf0]
 80011908	lui    a0, $801b
 8001190C	jal    func14620 [$80014620]
 80011910	ori    s1, zero, $0002
@@ -12969,7 +12969,7 @@ L1c960:	; 8001C960
 8001C96C	nop
 
 
-func1c970:	; 8001C970
+system_akao_init:	; 8001C970
 8001C970	addiu  sp, sp, $ffe0 (=-$20)
 8001C974	sw     s0, $0010(sp)
 8001C978	addu   s0, a0, zero
@@ -13078,7 +13078,7 @@ loop1cac8:	; 8001CAC8
 8001CAEC	nop
 
 
-func1caf0:	; 8001CAF0
+system_akao_load_effect:	; 8001CAF0
 8001CAF0	lw     a1, $022c(gp)
 8001CAF4	ori    v1, zero, $2000
 8001CAF8	ori    a2, zero, $ffff

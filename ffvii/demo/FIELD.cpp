@@ -139,9 +139,7 @@ do
     A3 = 0;
     func14d08(); // load file
 
-    loopa0618:	; 800A0618
-        func150dc();
-    800A0620	bne    v0, zero, loopa0618 [$800a0618]
+    while( func150dc() != 0 ) {}
 
     V1 = h[8006527c];
     A0 = w[800b9430 + V1 * 30 + 10]; // MAP sector
@@ -165,9 +163,7 @@ do
         [8008be26] = h(2);
     }
 
-    La06dc:	; 800A06DC
-        func150dc();
-    800A06E4	bne    v0, zero, La06dc [$800a06dc]
+    while( func150dc() != 0 ) {}
 
     V1 = h[8006527c];
     A0 = w[800b9430 + V1 * 30 + 18]; // CA sector
@@ -176,9 +172,7 @@ do
     A3 = 0;
     func14d08(); // load file
 
-    loopa0724:	; 800A0724
-        func150dc();
-    800A072C	bne    v0, zero, loopa0724 [$800a0724]
+    while( func150dc() != 0 ) {}
 
     V1 = h[8006527c];
     A0 = w[800b9430 + V1 * 30 + 20]; // ID sector
@@ -187,9 +181,7 @@ do
     A3 = 0;
     func14d08(); // load file
 
-    loopa0768:	; 800A0768
-        func150dc();
-    800A0770	bne    v0, zero, loopa0768 [$800a0768]
+    while( func150dc() != 0 ) {}
 
     V1 = h[8006527c];
     A0 = w[800b9430 + V1 * 30 + 28]; // BSC sector
@@ -198,9 +190,7 @@ do
     A3 = 0;
     func14d08(); // load file
 
-    loopa07ac:	; 800A07AC
-        func150dc();
-    800A07B4	bne    v0, zero, loopa07ac [$800a07ac]
+    while( func150dc() != 0 ) {}
 
     A0 = e49; // NARITA\TDB.LZS sector
     A1 = 1925;
@@ -208,9 +198,7 @@ do
     A3 = 0;
     func14d08(); // load file
 
-    loopa07d0:	; 800A07D0
-        func150dc();
-    800A07D8	bne    v0, zero, loopa07d0 [$800a07d0]
+    while( func150dc() != 0 ) {}
 
     if( h[8006a850] == 2 )
     {
@@ -223,9 +211,7 @@ do
         [8006aef0] = h(0);
     }
 
-    A0 = 0;
-    A1 = 80120000;
-    funca5394();
+    funca5394( 0, 0x80120000 );
 
     field_main_loop();
 
@@ -4367,13 +4353,8 @@ while( true )
     800A4A38	addiu  v1, v1, $ecfc (=-$1304)
     render_data = V0 + V1;
 
-    A0 = render_data;
-    A1 = 1000;
-    system_psyq_clear_otag_r();
-
-    A0 = render_data + 10644;
-    A1 = 1;
-    system_psyq_clear_otag_r();
+    system_psyq_clear_otag_r( render_data, 0x1000 );
+    system_psyq_clear_otag_r( render_data + 0x10644, 0x1 );
 
     800A4A64	jal    funca5250 [$800a5250]
 
@@ -4448,7 +4429,7 @@ while( true )
     A0 = render_data;
     funca0df4(); // field_background_add_to_render???
 
-    V0 = w[800b9688];
+    V0 = w[0x800b9688];
     V0 = hu[V0 + 0];
 
     for( int i = 0; i < V0; ++i )
@@ -4461,9 +4442,9 @@ while( true )
     if( hu[800df99c] == 0 )
     {
         A0 = render_data;
-        A1 = render_data + 5844;
-        A2 = render_data + c844;
-        A3 = render_data + d644;
+        A1 = render_data + 0x5844;
+        A2 = render_data + 0xc844;
+        A3 = render_data + 0xd644;
         funca14e0(); // field_rain_add_to_render??
     }
 
@@ -4472,8 +4453,7 @@ while( true )
 
     funca20d8(); // fade update ????
 
-    A0 = 1;
-    system_psyq_wait_frames();
+    system_psyq_wait_frames( 1 );
     [800df994] = w(V0);
 
     do
@@ -4571,8 +4551,7 @@ while( true )
         }
     }
 
-    A0 = render_data + 10644; // menu OT (top level)
-    system_psyq_draw_otag();
+    system_psyq_draw_otag( render_data + 0x10644 ); // menu OT (top level)
 }
 ////////////////////////////////
 
@@ -10899,9 +10878,9 @@ ot = A0;
 
 if( bu[80053620] != 0 )
 {
-    800AA7F4	jal    funcb74f0 [$800b74f0]
+    funcb74f0();
 
-    800AA7FC	jal    funcb76bc [$800b76bc]
+    funcb76bc();
 
     [80053680] = b(0);
     [800536dc] = b(0);
@@ -11228,7 +11207,6 @@ Laadf4:	; 800AADF4
 
     Laaeb4:	; 800AAEB4
 
-    loopaaeb8:	; 800AAEB8
     for( int i = 1; i < 9; ++i )
     {
         A0 = 3; // page
