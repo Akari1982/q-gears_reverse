@@ -1198,7 +1198,7 @@ void system_akao_opcode_f3( AkaoChannel* channel, AkaoConfig* config, u32 mask )
 void system_akao_opcode_f4_overlay_voice_on( AkaoChannel* channel, AkaoConfig* config, u32 mask )
 {
     u32 over_voice_id;
-    u32 over_mask = 0x1;;
+    u32 over_mask = 0x1;
 
     if( channel->update_flags & AKAO_UPDATE_OVERLAY )
     {

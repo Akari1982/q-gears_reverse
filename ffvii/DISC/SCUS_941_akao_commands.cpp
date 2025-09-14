@@ -1011,7 +1011,7 @@ void system_akao_command_f0( AkaoCommandData* data )
 
 void system_akao_command_f1( AkaoCommandData* data )
 {
-    system_akao_sound_stop_channels_3();
+    system_akao_sound_channels_stop();
 }
 
 
@@ -1062,7 +1062,7 @@ void system_akao_command_f4( AkaoCommandData* data )
 
     g_akao_control_flags |= 0x00000100;
 
-    system_akao_sound_stop_channels_3();
+    system_akao_sound_channels_stop();
 
     [data + 0x4] = w(0x7f);
     system_akao_command_b8( data );
