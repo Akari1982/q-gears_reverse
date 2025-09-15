@@ -250,10 +250,10 @@ void ending_main_2( S0 )
     800A072C	j      La04f4 [$800a04f4]
 
     La0734:	; 800A0734
+    // set vol music slide (fade out music)
     [0x8009a000] = h(0xc1);
-    [0x8009a004] = w(0x3c);
-    [0x8009a008] = w(0);
-
+    [0x8009a004] = w(0x3c); // steps
+    [0x8009a008] = w(0); // dest volume
     system_akao_execute();
 
     for( int i = 0; i >= 0xff; i += 0x4 )
@@ -365,12 +365,12 @@ int funca0ab8()
 // funca0ba8()
 
 V1 = w[800a6528];
-V0 = V1 + 0002;
+V0 = V1 + 0x2;
 [800a6528] = w(V0);
-A0 = h[V1 + 0000];
-V0 = V1 + 0004;
+A0 = h[V1 + 0x0];
+V0 = V1 + 0x4;
 [800a6528] = w(V0);
-A1 = h[V1 + 0002];
+A1 = h[V1 + 0x2];
 S0 = A0 << 04;
 S0 = S0 + A0;
 S0 = S0 << 03;
@@ -379,8 +379,7 @@ S0 = S0 << 03;
 [800a6532 + S0] = h(0);
 [800a6534 + S0] = h(0);
 
-A0 = 0x800d0000;
-func34d18();
+func34d18( 0x800d0000, A1 );
 
 [800a6538 + S0] = w(V0);
 [800a6588 + S0] = h(0);
@@ -501,15 +500,15 @@ int funca0f90()
 ////////////////////////////////
 // funca11b4()
 
-V0 = w[800a6528];
-V1 = V0 + 2;
-[800a6528] = w(V1);
-A1 = h[V0 + 0];
-V1 = V0 + 4;
-[800a6528] = w(V1);
-V1 = h[V0 + 2];
+V0 = w[0x800a6528];
+V1 = V0 + 0x2;
+[0x800a6528] = w(V1);
+A1 = h[V0 + 0x0];
+V1 = V0 + 0x4;
+[0x800a6528] = w(V1);
+V1 = h[V0 + 0x2];
 
-for( int i = 0; i < 20; ++i )
+for( int i = 0; i < 0x20; ++i )
 {
     if( ( hu[800a652c + i * 0x88 + 0] & 1 ) == 0 )
     {
@@ -517,8 +516,7 @@ for( int i = 0; i < 20; ++i )
         [800a6532 + i * 0x88 + 0] = h(0);
         [800a6534 + i * 0x88 + 0] = h(V1);
 
-        A0 = 0x800d0000;
-        func34d18();
+        V0 = func34d18( 0x800d0000, A1 );
 
         [800a6538 + i * 0x88 + 0] = w(V0);
         [800a6588 + i * 0x88 + 0] = h(18);
@@ -618,8 +616,9 @@ AT = AT + S0;
 AT = AT + 6534;
 AT = AT + S0;
 [AT + 0000] = h(V0);
-800A154C	jal    $func34d18
-800A1550	lui    a0, $800d
+
+func34d18( 0x800d0000, A1 );
+
 800A1554	lui    a0, $800a
 A0 = A0 + 652c;
 800A155C	lui    v1, $800a
@@ -1196,9 +1195,9 @@ void funca1e20()
         // 02 funca1f48() // load lzs file to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
         // 03 funca1fa4() // load finished sync
         // 04 funca1fc8() // load tim from loaded file (arg1: id of tim inside file)
-        // 05 funca2014()
-        // 06 funca208c()
-        // 07 funca20d4()
+        // 05 funca2014() // extract tim from lzs (arg1: id of lzs tim inside file)
+        // 06 funca208c() // start play movie with given id (arg1: movie id)
+        // 07 funca20d4() // wait while movie finished
         // 08 funca20f8()
         // 09 funca2190()
         // 0a funca21cc()
@@ -1215,9 +1214,9 @@ void funca1e20()
         // 15 funca14bc()
         // 16 funca22e4()
         // 17 funca16e4()
-        // 18 funca2328()
+        // 18 funca2328() // plays akao music (arg1: id of akao inside file)
         // 19 funca23f8()
-        // 1a funca2380()
+        // 1a funca2380() // execute AKAO command (arg1: command id, arg2: arg1, arg3: arg2)
         // 1b funca2420()
         // 1c funca17c0()
         // 1d funca19a4()
@@ -1322,9 +1321,7 @@ int funca2014()
         system_cdrom_set_lzs_extract();
     }
 
-    func34d5c();
-
-    if( V0 != 0 ) return 0;
+    if( func34d5c() != 0 ) return 0; // wail while lzs extraction finished
 
     ending_load_tim( 0x80120000, SP + 0x10, SP + 0x12 );
 
@@ -1333,76 +1330,43 @@ int funca2014()
 
 
 
-////////////////////////////////
-// funca208c
-800A208C	addiu  sp, sp, $ffe8 (=-$18)
-800A2090	lui    v0, $800a
-V0 = w[V0 + 6528];
-800A2098	lui    v1, $801a
-[SP + 0010] = w(RA);
-800A20A0	lui    at, $800a
-[AT + 6524] = w(V1);
-V1 = V0 + 0002;
-800A20AC	lui    at, $800a
-[AT + 6528] = w(V1);
-A1 = h[V0 + 0000];
-800A20B8	jal    $80034fc8
-800A20BC	lui    a0, $801a
-V0 = 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A20CC	jr     ra 
-800A20D0	nop
-////////////////////////////////
-// funca20d4
-800A20D4	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A20DC	jal    $func34410
-800A20E0	nop
-V0 = V0 < 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A20F0	jr     ra 
-800A20F4	nop
-////////////////////////////////
-// funca20f8
-800A20F8	lui    v0, $800a
-V0 = w[V0 + 6528];
-800A2100	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0020] = w(RA);
-V1 = V0 + 0002;
-800A210C	lui    at, $800a
-[AT + 6528] = w(V1);
-A0 = h[V0 + 0000];
-V1 = V0 + 0004;
-800A211C	lui    at, $800a
-[AT + 6528] = w(V1);
-A1 = h[V0 + 0002];
-V1 = V0 + 0006;
-800A212C	lui    at, $800a
-[AT + 6528] = w(V1);
-A2 = h[V0 + 0004];
-V1 = V0 + 0008;
-800A213C	lui    at, $800a
-[AT + 6528] = w(V1);
-A3 = bu[V0 + 0006];
-V1 = V0 + 000a;
-800A214C	lui    at, $800a
-[AT + 6528] = w(V1);
-T0 = bu[V0 + 0008];
-V1 = V0 + 000c;
-800A215C	lui    at, $800a
-[AT + 6528] = w(V1);
-[SP + 0010] = w(T0);
-V0 = bu[V0 + 000a];
-[SP + 0014] = w(V0);
+int funca208c()
+{
+    V0 = w[0x800a6528];
+    [0x800a6524] = w(0x801a0000);
+    [0x800a6528] = w(V0 + 0x2);
 
-funca2504();
+    system_movie_play( 0x801a0000, h[V0 + 0x0] );
 
-funca273c( 0 );
+    return 1;
+}
 
-return 1;
-////////////////////////////////
+
+
+int funca20d4()
+{
+    return func34410() < 0x1;
+}
+
+
+
+int funca20f8()
+{
+    V0 = w[0x800a6528];
+    [0x800a6528] = w(V0 + 0xc);
+
+    A0 = h[V0 + 0x0];
+    A1 = h[V0 + 0x2];
+    A2 = h[V0 + 0x4];
+    A3 = bu[V0 + 0x6];
+    A4 = bu[V0 + 0x8];
+    A5 = bu[V0 + 0xa];
+    funca2504();
+
+    funca273c( 0 );
+
+    return 1;
+}
 
 
 
@@ -1531,37 +1495,35 @@ V0 = 0001;
 
 
 
-////////////////////////////////
-// funca2328()
+int funca2328()
+{
+    V0 = w[0x800a6528];
+    [0x800a6528] = w(V0 + 0x2);
 
-V0 = w[0x800a6528];
-[0x800a6528] = w(V0 + 0x2);
+    func34d18( 0x800d0000, h[V0 + 0x0] );
 
-func34d18( 0x800d0000, h[V0 + 0x0] );
+    [0x8009a000] = h(0x10);
+    [0x8009a004] = w(V0);
 
-[0x8009a000] = h(0x10);
-[0x8009a004] = w(V0);
+    system_akao_execute();
 
-system_akao_execute();
-
-return 1;
-////////////////////////////////
-
+    return 1;
+}
 
 
-////////////////////////////////
-// funca2380()
 
-V1 = w[0x800a6528];
-[0x800a6528] = w(V1 + 0x6);
+int funca2380()
+{
+    V1 = w[0x800a6528];
+    [0x800a6528] = w(V1 + 0x6);
 
-[0x8009a000] = h(hu[V1 + 0x0]);
-[0x8009a004] = w(h[V1 + 0x2]);
-[0x8009a008] = w(h[V1 + 0x4]);
-system_akao_execute();
+    [0x8009a000] = h(hu[V1 + 0x0]);
+    [0x8009a004] = w(h[V1 + 0x2]);
+    [0x8009a008] = w(h[V1 + 0x4]);
+    system_akao_execute();
 
-return 1;
-////////////////////////////////
+    return 1;
+}
 
 
 
@@ -1788,15 +1750,13 @@ void ending_load_tim( u_long* addr, S0, S1 )
 
 ////////////////////////////////
 // funca2974
-800A2974	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0020] = w(S0);
+
 S0 = A0;
-[SP + 0024] = w(S1);
 S1 = A1;
 A0 = A2;
-[SP + 0028] = w(RA);
-800A2990	jal    $system_gte_rotation_matrix_from_xyz
 A1 = S0;
+system_gte_rotation_matrix_from_xyz();
+
 T4 = S0;
 T5 = w[T4 + 0000];
 T6 = w[T4 + 0004];
@@ -2187,7 +2147,7 @@ V0 = w[A1 + 0008];
 A1 = S0;
 V0 = V0 - V1;
 [SP + 0018] = w(V0);
-system_psyq_vector_normal()ж
+system_psyq_vector_normal();
 
 V1 = w[SP + 0010];
 800A3010	nop
