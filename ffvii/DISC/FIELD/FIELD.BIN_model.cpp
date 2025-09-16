@@ -302,9 +302,9 @@ if( V0 == 0 ) // do nothing
 {
     if( ( bu[8009abf4 + 1] == 3 ) && ( h[8009abf4 + 26] == 0 ) )
     {
-        A0 = w[80075e10];
-        if( A0 >= 801affff ) A0 = 801b0000;
-        A1 = h[8009abf4 + 2]; // movie id
+        A0 = w[0x80075e10];
+        if( A0 >= 0x801affff ) A0 = 0x801b0000;
+        A1 = h[0x8009abf4 + 0x2]; // movie id
         system_movie_play();
 
         [8009abf4 + 26] = h(1);
