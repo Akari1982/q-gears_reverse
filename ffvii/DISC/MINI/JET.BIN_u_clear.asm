@@ -1,281 +1,5 @@
-
-Entry:	; 800A0000
-800A0000	nop
-800A0004	sll    zero, t0, $05
-800A0008	nop
-800A000C	nop
-800A0010	lb     t2, $4b00(zero)
-800A0014	lb     t2, $4c9c(zero)
-800A0018	lb     t2, $5378(zero)
-800A001C	lb     t2, $5fd0(zero)
-800A0020	lb     t2, $502c(zero)
-800A0024	lb     t2, $513c(zero)
-800A0028	lb     t2, $6a00(zero)
-800A002C	lb     t2, $5590(zero)
-800A0030	lb     t2, $58b4(zero)
-800A0034	lb     t2, $5a58(zero)
-800A0038	lb     t2, $4ec0(zero)
-800A003C	lb     t2, $568c(zero)
-800A0040	lb     t2, $574c(zero)
-800A0044	lb     t2, $5590(zero)
-800A0048	lb     t2, $5b40(zero)
-800A004C	lb     t2, $5e14(zero)
-800A0050	lb     t2, $5f58(zero)
-800A0054	lb     t2, $49a8(zero)
-800A0058	lb     t2, $6a00(zero)
-800A005C	lb     t2, $6a00(zero)
-800A0060	lb     t2, $6a00(zero)
-800A0064	lb     t2, $6a00(zero)
-800A0068	lb     t2, $6a00(zero)
-800A006C	lb     t2, $6a00(zero)
-800A0070	lb     t2, $6a00(zero)
-800A0074	lb     t2, $6a00(zero)
-800A0078	lb     t2, $6a00(zero)
-800A007C	lb     t2, $6a00(zero)
-800A0080	lb     t2, $6a00(zero)
-800A0084	lb     t2, $6a00(zero)
-800A0088	lb     t2, $6a00(zero)
-800A008C	lb     t2, $6a00(zero)
-800A0090	lb     t2, $6a00(zero)
-800A0094	lb     t2, $6a00(zero)
-800A0098	lb     t2, $6a00(zero)
-800A009C	lb     t2, $6a00(zero)
-800A00A0	lb     t2, $6a00(zero)
-800A00A4	lb     t2, $6a00(zero)
-800A00A8	lb     t2, $6a00(zero)
-800A00AC	lb     t2, $6a00(zero)
-800A00B0	lb     t2, $6a00(zero)
-800A00B4	lb     t2, $6a00(zero)
-800A00B8	lb     t2, $6a00(zero)
-800A00BC	lb     t2, $6a00(zero)
-800A00C0	lb     t2, $6a00(zero)
-800A00C4	lb     t2, $6a00(zero)
-800A00C8	lb     t2, $6a00(zero)
-800A00CC	lb     t2, $6a00(zero)
-800A00D0	lb     t2, $6a00(zero)
-800A00D4	lb     t2, $6a00(zero)
-800A00D8	lb     t2, $6a00(zero)
-800A00DC	lb     t2, $6a00(zero)
-800A00E0	lb     t2, $6a00(zero)
-800A00E4	lb     t2, $6a00(zero)
-800A00E8	lb     t2, $6a00(zero)
-800A00EC	lb     t2, $6a00(zero)
-800A00F0	lb     t2, $6a00(zero)
-800A00F4	lb     t2, $6a00(zero)
-800A00F8	lb     t2, $6a00(zero)
-800A00FC	lb     t2, $6a00(zero)
-800A0100	lb     t2, $6a00(zero)
-800A0104	lb     t2, $6a00(zero)
-800A0108	lb     t2, $6a00(zero)
-800A010C	lb     t2, $6a00(zero)
-800A0110	lb     t2, $6a00(zero)
-800A0114	lb     t2, $6a00(zero)
-800A0118	lb     t2, $6a00(zero)
-800A011C	lb     t2, $6a00(zero)
-800A0120	lb     t2, $6a00(zero)
-800A0124	lb     t2, $6a00(zero)
-800A0128	lb     t2, $6a00(zero)
-800A012C	lb     t2, $6a00(zero)
-800A0130	lb     t2, $6a00(zero)
-800A0134	lb     t2, $6a00(zero)
-800A0138	lb     t2, $6a00(zero)
-800A013C	lb     t2, $6a00(zero)
-800A0140	lb     t2, $6a00(zero)
-800A0144	lb     t2, $6a00(zero)
-800A0148	lb     t2, $6a00(zero)
-800A014C	lb     t2, $6a00(zero)
-800A0150	lb     t2, $6a00(zero)
-800A0154	lb     t2, $6a00(zero)
-800A0158	lb     t2, $6a00(zero)
-800A015C	lb     t2, $6a00(zero)
-800A0160	lb     t2, $6a00(zero)
-800A0164	lb     t2, $6a00(zero)
-800A0168	lb     t2, $6a00(zero)
-800A016C	lb     t2, $6a00(zero)
-800A0170	lb     t2, $6a00(zero)
-800A0174	lb     t2, $6a00(zero)
-800A0178	lb     t2, $6a00(zero)
-800A017C	lb     t2, $6a00(zero)
-800A0180	lb     t2, $6a00(zero)
-800A0184	lb     t2, $6a00(zero)
-800A0188	lb     t2, $6a00(zero)
-800A018C	lb     t2, $6a00(zero)
-800A0190	lb     t2, $6a00(zero)
-800A0194	lb     t2, $6a00(zero)
-800A0198	lb     t2, $6a00(zero)
-800A019C	lb     t2, $6a00(zero)
-800A01A0	lb     t2, $47a0(zero)
-800A01A4	lb     t2, $6a00(zero)
-800A01A8	lb     t2, $6a00(zero)
-800A01AC	lb     t2, $6a00(zero)
-800A01B0	lb     t2, $6a00(zero)
-800A01B4	lb     t2, $6a00(zero)
-800A01B8	lb     t2, $6a00(zero)
-800A01BC	lb     t2, $6a00(zero)
-800A01C0	lb     t2, $6a00(zero)
-800A01C4	lb     t2, $6a00(zero)
-800A01C8	lb     t2, $6a00(zero)
-800A01CC	lb     t2, $6a00(zero)
-800A01D0	lb     t2, $6a00(zero)
-800A01D4	lb     t2, $6a00(zero)
-800A01D8	lb     t2, $6a00(zero)
-800A01DC	lb     t2, $6a00(zero)
-800A01E0	lb     t2, $6a00(zero)
-800A01E4	lb     t2, $6a00(zero)
-800A01E8	lb     t2, $6a00(zero)
-800A01EC	lb     t2, $6a00(zero)
-800A01F0	lb     t2, $6a00(zero)
-800A01F4	lb     t2, $6a00(zero)
-800A01F8	lb     t2, $6a00(zero)
-800A01FC	lb     t2, $6a00(zero)
-800A0200	lb     t2, $6a00(zero)
-800A0204	lb     t2, $6a00(zero)
-800A0208	lb     t2, $6a00(zero)
-800A020C	lb     t2, $6a00(zero)
-800A0210	lb     t2, $6a00(zero)
-800A0214	lb     t2, $6a00(zero)
-800A0218	lb     t2, $6a00(zero)
-800A021C	lb     t2, $6a00(zero)
-800A0220	lb     t2, $6a00(zero)
-800A0224	lb     t2, $6a00(zero)
-800A0228	lb     t2, $6a00(zero)
-800A022C	lb     t2, $6a00(zero)
-800A0230	lb     t2, $6a00(zero)
-800A0234	lb     t2, $6a00(zero)
-800A0238	lb     t2, $6a00(zero)
-800A023C	lb     t2, $6a00(zero)
-800A0240	lb     t2, $6a00(zero)
-800A0244	lb     t2, $6a00(zero)
-800A0248	lb     t2, $6a00(zero)
-800A024C	lb     t2, $6a00(zero)
-800A0250	lb     t2, $6a00(zero)
-800A0254	lb     t2, $6a00(zero)
-800A0258	lb     t2, $6a00(zero)
-800A025C	lb     t2, $6a00(zero)
-800A0260	lb     t2, $6a00(zero)
-800A0264	lb     t2, $6a00(zero)
-800A0268	lb     t2, $6a00(zero)
-800A026C	lb     t2, $6a00(zero)
-800A0270	lb     t2, $6a00(zero)
-800A0274	lb     t2, $6a00(zero)
-800A0278	lb     t2, $6a00(zero)
-800A027C	lb     t2, $6a00(zero)
-800A0280	lb     t2, $6a00(zero)
-800A0284	lb     t2, $6a00(zero)
-800A0288	lb     t2, $6a00(zero)
-800A028C	lb     t2, $6a00(zero)
-800A0290	lb     t2, $6a00(zero)
-800A0294	lb     t2, $6a00(zero)
-800A0298	lb     t2, $6a00(zero)
-800A029C	lb     t2, $6a00(zero)
-800A02A0	lb     t2, $6a00(zero)
-800A02A4	lb     t2, $6a00(zero)
-800A02A8	lb     t2, $6a00(zero)
-800A02AC	lb     t2, $6a00(zero)
-800A02B0	lb     t2, $6a00(zero)
-800A02B4	lb     t2, $6a00(zero)
-800A02B8	lb     t2, $6a00(zero)
-800A02BC	lb     t2, $6a00(zero)
-800A02C0	lb     t2, $6a00(zero)
-800A02C4	lb     t2, $6a00(zero)
-800A02C8	lb     t2, $6a00(zero)
-800A02CC	lb     t2, $6a00(zero)
-800A02D0	lb     t2, $6a00(zero)
-800A02D4	lb     t2, $6a00(zero)
-800A02D8	lb     t2, $6a00(zero)
-800A02DC	lb     t2, $6a00(zero)
-800A02E0	lb     t2, $6a00(zero)
-800A02E4	lb     t2, $6a00(zero)
-800A02E8	lb     t2, $6a00(zero)
-800A02EC	lb     t2, $6a00(zero)
-800A02F0	lb     t2, $6a00(zero)
-800A02F4	lb     t2, $6a00(zero)
-800A02F8	lb     t2, $6a00(zero)
-800A02FC	lb     t2, $6a00(zero)
-800A0300	lb     t2, $6a00(zero)
-800A0304	lb     t2, $6a00(zero)
-800A0308	lb     t2, $6a00(zero)
-800A030C	lb     t2, $6a00(zero)
-800A0310	lb     t2, $6a00(zero)
-800A0314	lb     t2, $6a00(zero)
-800A0318	lb     t2, $6a00(zero)
-800A031C	lb     t2, $6a00(zero)
-800A0320	lb     t2, $6a00(zero)
-800A0324	lb     t2, $6a00(zero)
-800A0328	lb     t2, $6a00(zero)
-800A032C	lb     t2, $6a00(zero)
-800A0330	lb     t2, $6a00(zero)
-800A0334	lb     t2, $6018(zero)
-800A0338	lb     t2, $60c8(zero)
-800A033C	lb     t2, $61ec(zero)
-800A0340	lb     t2, $6a00(zero)
-800A0344	lb     t2, $6a00(zero)
-800A0348	lb     t2, $6a00(zero)
-800A034C	lb     t2, $6a00(zero)
-800A0350	lb     t2, $6a00(zero)
-800A0354	lb     t2, $6a00(zero)
-800A0358	lb     t2, $6a00(zero)
-800A035C	lb     t2, $6a00(zero)
-800A0360	lb     t2, $6a00(zero)
-800A0364	lb     t2, $6a00(zero)
-800A0368	lb     t2, $6a00(zero)
-800A036C	lb     t2, $6a00(zero)
-800A0370	lb     t2, $6a00(zero)
-800A0374	lb     t2, $6a00(zero)
-800A0378	lb     t2, $6a00(zero)
-800A037C	lb     t2, $6a00(zero)
-800A0380	lb     t2, $6a00(zero)
-800A0384	lb     t2, $6a00(zero)
-800A0388	lb     t2, $6a00(zero)
-800A038C	lb     t2, $6a00(zero)
-800A0390	lb     t2, $6a00(zero)
-800A0394	lb     t2, $6a00(zero)
-800A0398	lb     t2, $6a00(zero)
-800A039C	lb     t2, $6a00(zero)
-800A03A0	lb     t2, $6a00(zero)
-800A03A4	lb     t2, $6a00(zero)
-800A03A8	lb     t2, $553c(zero)
-800A03AC	lb     t2, $6a00(zero)
-800A03B0	lb     t2, $6a00(zero)
-800A03B4	lb     t2, $6a00(zero)
-800A03B8	lb     t2, $6a00(zero)
-800A03BC	lb     t2, $6a00(zero)
-800A03C0	lb     t2, $6a00(zero)
-800A03C4	lb     t2, $6a00(zero)
-800A03C8	lb     t2, $6a00(zero)
-800A03CC	lb     t2, $6a00(zero)
-800A03D0	lb     t2, $6a00(zero)
-800A03D4	lb     t2, $6a00(zero)
-800A03D8	lb     t2, $6a00(zero)
-800A03DC	lb     t2, $6a00(zero)
-800A03E0	lb     t2, $6a00(zero)
-800A03E4	lb     t2, $6a00(zero)
-800A03E8	lb     t2, $6a00(zero)
-800A03EC	lb     t2, $6a00(zero)
-800A03F0	lb     t2, $6a00(zero)
-800A03F4	lb     t2, $6a00(zero)
-800A03F8	lb     t2, $6910(zero)
-800A03FC	lb     t2, $6a00(zero)
-800A0400	lb     t2, $64cc(zero)
-800A0404	lb     t2, $6714(zero)
-800A0408	lb     t2, $6408(zero)
-800A040C	lb     t2, $6324(zero)
-800A0410	FFFFFF60	`...
-800A0414	00000078	x...
-800A0418	sll    zero, zero, $04
-800A041C	nop
-800A0420	add    zero, zero, zero
-800A0424	00000078	x...
-800A0428	sll    zero, zero, $04
-800A042C	nop
-800A0430	FFFFFF60	`...
-800A0434	FFFFFF88	ˆ...
-800A0438	sll    zero, zero, $04
-800A043C	nop
-800A0440	add    zero, zero, zero
-800A0444	FFFFFF88	ˆ...
-800A0448	sll    zero, zero, $04
-800A044C	nop
+////////////////////////////////
+// funca0450
 800A0450	addiu  sp, sp, $ffb8 (=-$48)
 800A0454	sw     ra, $0044(sp)
 800A0458	sw     s2, $0040(sp)
@@ -557,9 +281,8 @@ La0838:	; 800A0838
 800A0868	addiu  sp, sp, $0048
 800A086C	jr     ra 
 800A0870	nop
-
-
-funca0874:	; 800A0874
+////////////////////////////////
+// funca0874
 800A0874	addiu  sp, sp, $ffa0 (=-$60)
 800A0878	sw     s0, $0048(sp)
 800A087C	addu   s0, a1, zero
@@ -895,9 +618,8 @@ La0d54:	; 800A0D54
 800A0D6C	addiu  sp, sp, $0060
 800A0D70	jr     ra 
 800A0D74	nop
-
-
-funca0d78:	; 800A0D78
+////////////////////////////////
+// funca0d78:	; 800A0D78
 800A0D78	addiu  sp, sp, $ff78 (=-$88)
 800A0D7C	sw     s0, $0070(sp)
 800A0D80	addu   s0, a1, zero
@@ -1164,9 +886,8 @@ La0e50:	; 800A0E50
 800A118C	addiu  sp, sp, $0088
 800A1190	jr     ra 
 800A1194	nop
-
-
-funca1198:	; 800A1198
+////////////////////////////////
+// funca1198:	; 800A1198
 800A1198	addiu  sp, sp, $ffd8 (=-$28)
 800A119C	sw     s0, $0020(sp)
 800A11A0	addu   s0, a0, zero
@@ -1252,9 +973,8 @@ funca1198:	; 800A1198
 800A12E0	addiu  sp, sp, $0028
 800A12E4	jr     ra 
 800A12E8	nop
-
-
-funca12ec:	; 800A12EC
+////////////////////////////////
+// funca12ec:	; 800A12EC
 800A12EC	lui    v0, $800d
 800A12F0	lw     v0, $1964(v0)
 800A12F4	addiu  sp, sp, $ffd8 (=-$28)
@@ -1307,9 +1027,8 @@ La137c:	; 800A137C
 800A13A0	addiu  sp, sp, $0028
 800A13A4	jr     ra 
 800A13A8	nop
-
-
-funca13ac:	; 800A13AC
+////////////////////////////////
+// funca13ac:	; 800A13AC
 800A13AC	lui    v0, $800d
 800A13B0	lw     v0, $1964(v0)
 800A13B4	addiu  sp, sp, $ffe0 (=-$20)
@@ -1353,9 +1072,8 @@ loopa13d8:	; 800A13D8
 800A1444	addiu  sp, sp, $0020
 800A1448	jr     ra 
 800A144C	nop
-
-
-funca1450:	; 800A1450
+////////////////////////////////
+// funca1450:	; 800A1450
 800A1450	lui    a0, $800d
 800A1454	addiu  a0, a0, $1728
 800A1458	lui    v0, $800b
@@ -1505,9 +1223,8 @@ funca1450:	; 800A1450
 800A1698	ctc2   t7,otz
 800A169C	jr     ra 
 800A16A0	nop
-
-
-funca16a4:	; 800A16A4
+////////////////////////////////
+// funca16a4:	; 800A16A4
 800A16A4	addiu  sp, sp, $ff10 (=-$f0)
 800A16A8	sw     s7, $00e4(sp)
 800A16AC	addu   s7, a1, zero
@@ -1760,9 +1477,8 @@ La1770:	; 800A1770
 800A1A58	addiu  sp, sp, $00f0
 800A1A5C	jr     ra 
 800A1A60	nop
-
-
-funca1a64:	; 800A1A64
+////////////////////////////////
+// funca1a64:	; 800A1A64
 800A1A64	addiu  sp, sp, $ffd8 (=-$28)
 800A1A68	sw     s1, $001c(sp)
 800A1A6C	lui    s1, $800d
@@ -1827,9 +1543,8 @@ funca1a64:	; 800A1A64
 800A1B58	addiu  sp, sp, $0028
 800A1B5C	jr     ra 
 800A1B60	nop
-
-
-funca1b64:	; 800A1B64
+////////////////////////////////
+// funca1b64:	; 800A1B64
 800A1B64	addiu  sp, sp, $ffd0 (=-$30)
 800A1B68	sw     s2, $0020(sp)
 800A1B6C	addu   s2, a0, zero
@@ -1931,9 +1646,8 @@ La1cb8:	; 800A1CB8
 800A1CCC	addiu  sp, sp, $0030
 800A1CD0	jr     ra 
 800A1CD4	nop
-
-
-funca1cd8:	; 800A1CD8
+////////////////////////////////
+// funca1cd8:	; 800A1CD8
 800A1CD8	addiu  sp, sp, $ffa0 (=-$60)
 800A1CDC	sw     s1, $003c(sp)
 800A1CE0	ori    s1, zero, $03e8
@@ -2092,9 +1806,8 @@ La1ea8:	; 800A1EA8
 800A1F0C	addiu  sp, sp, $0060
 800A1F10	jr     ra 
 800A1F14	nop
-
-
-funca1f18:	; 800A1F18
+////////////////////////////////
+// funca1f18:	; 800A1F18
 800A1F18	addiu  sp, sp, $ffe0 (=-$20)
 800A1F1C	sw     s1, $0014(sp)
 800A1F20	lui    s1, $800d
@@ -2175,9 +1888,8 @@ funca1f18:	; 800A1F18
 800A204C	addiu  sp, sp, $0020
 800A2050	jr     ra 
 800A2054	nop
-
-
-funca2058:	; 800A2058
+////////////////////////////////
+// funca2058:	; 800A2058
 800A2058	addiu  sp, sp, $ffd0 (=-$30)
 800A205C	sw     s4, $0020(sp)
 800A2060	lui    s4, $800d
@@ -2289,9 +2001,8 @@ funca2058:	; 800A2058
 800A2208	addiu  sp, sp, $0030
 800A220C	jr     ra 
 800A2210	nop
-
-
-funca2214:	; 800A2214
+////////////////////////////////
+// funca2214:	; 800A2214
 800A2214	addiu  sp, sp, $ffe0 (=-$20)
 800A2218	lui    t0, $1f80
 800A221C	ori    t0, t0, $0010
@@ -2425,9 +2136,8 @@ loopa2344:	; 800A2344
 800A2414	addiu  sp, sp, $0020
 800A2418	jr     ra 
 800A241C	nop
-
-
-funca2420:	; 800A2420
+////////////////////////////////
+// funca2420:	; 800A2420
 800A2420	addiu  sp, sp, $ffe0 (=-$20)
 800A2424	sw     ra, $0018(sp)
 800A2428	lui    a1, $800a
@@ -2498,9 +2208,8 @@ loopa24f8:	; 800A24F8
 800A250C	addiu  sp, sp, $0020
 800A2510	jr     ra 
 800A2514	nop
-
-
-funca2518:	; 800A2518
+////////////////////////////////
+// funca2518:	; 800A2518
 800A2518	addiu  sp, sp, $ffc8 (=-$38)
 800A251C	sw     s2, $0030(sp)
 800A2520	addu   s2, zero, zero
@@ -2685,9 +2394,8 @@ loopa2538:	; 800A2538
 800A27E4	addiu  sp, sp, $0038
 800A27E8	jr     ra 
 800A27EC	nop
-
-
-funca27f0:	; 800A27F0
+////////////////////////////////
+// funca27f0:	; 800A27F0
 800A27F0	addiu  sp, sp, $ffd0 (=-$30)
 800A27F4	sw     ra, $0028(sp)
 800A27F8	jal    $80046cfc
@@ -2722,9 +2430,8 @@ La2850:	; 800A2850
 800A2854	addiu  sp, sp, $0030
 800A2858	jr     ra 
 800A285C	nop
-
-
-funca2860:	; 800A2860
+////////////////////////////////
+// funca2860:	; 800A2860
 800A2860	addiu  sp, sp, $ffe0 (=-$20)
 800A2864	sw     s1, $0014(sp)
 800A2868	lui    s1, $800a
@@ -2779,9 +2486,8 @@ funca2860:	; 800A2860
 800A292C	addiu  sp, sp, $0020
 800A2930	jr     ra 
 800A2934	nop
-
-
-funca2938:	; 800A2938
+////////////////////////////////
+// funca2938:	; 800A2938
 800A2938	addiu  sp, sp, $ffe0 (=-$20)
 800A293C	sw     s1, $0014(sp)
 800A2940	lui    s1, $800a
@@ -2811,9 +2517,8 @@ funca2938:	; 800A2938
 800A29A0	addiu  sp, sp, $0020
 800A29A4	jr     ra 
 800A29A8	nop
-
-
-funca29ac:	; 800A29AC
+////////////////////////////////
+// funca29ac:	; 800A29AC
 800A29AC	addiu  sp, sp, $ffe0 (=-$20)
 800A29B0	sw     s1, $0014(sp)
 800A29B4	lui    s1, $800b
@@ -2879,9 +2584,8 @@ La2a84:	; 800A2A84
 800A2A94	addiu  sp, sp, $0020
 800A2A98	jr     ra 
 800A2A9C	nop
-
-
-funca2aa0:	; 800A2AA0
+////////////////////////////////
+// funca2aa0:	; 800A2AA0
 800A2AA0	addiu  sp, sp, $ffe0 (=-$20)
 800A2AA4	sw     s1, $0014(sp)
 800A2AA8	lui    s1, $800b
@@ -2942,9 +2646,8 @@ La2b60:	; 800A2B60
 800A2B6C	addiu  sp, sp, $0020
 800A2B70	jr     ra 
 800A2B74	nop
-
-
-funca2b78:	; 800A2B78
+////////////////////////////////
+// funca2b78:	; 800A2B78
 800A2B78	addiu  sp, sp, $ffe8 (=-$18)
 800A2B7C	sw     s0, $0010(sp)
 800A2B80	lui    s0, $800a
@@ -2971,9 +2674,8 @@ funca2b78:	; 800A2B78
 800A2BD4	addiu  sp, sp, $0018
 800A2BD8	jr     ra 
 800A2BDC	nop
-
-
-funca2be0:	; 800A2BE0
+////////////////////////////////
+// funca2be0:	; 800A2BE0
 800A2BE0	addiu  sp, sp, $ffe8 (=-$18)
 800A2BE4	addiu  v0, zero, $e48a (=-$1b76)
 800A2BE8	lui    at, $800b
@@ -3002,9 +2704,8 @@ funca2be0:	; 800A2BE0
 800A2C44	addiu  sp, sp, $0018
 800A2C48	jr     ra 
 800A2C4C	nop
-
-
-funca2c50:	; 800A2C50
+////////////////////////////////
+// funca2c50:	; 800A2C50
 800A2C50	addiu  sp, sp, $ffb8 (=-$48)
 800A2C54	addiu  a1, zero, $ff9c (=-$64)
 800A2C58	addiu  a2, sp, $0010
@@ -3112,9 +2813,8 @@ La2d50:	; 800A2D50
 800A2DD8	addiu  sp, sp, $0048
 800A2DDC	jr     ra 
 800A2DE0	nop
-
-
-funca2de4:	; 800A2DE4
+////////////////////////////////
+// funca2de4:	; 800A2DE4
 800A2DE4	andi   a0, a0, $00ff
 800A2DE8	lui    v0, $800b
 800A2DEC	lw     v0, $8cc0(v0)
@@ -3134,12 +2834,12 @@ funca2de4:	; 800A2DE4
 800A2E24	sw     v0, $1724(at)
 800A2E28	jr     ra 
 800A2E2C	nop
-
+////////////////////////////////
+// funca2e30
 800A2E30	jr     ra 
 800A2E34	nop
-
-
-funca2e38:	; 800A2E38
+////////////////////////////////
+// funca2e38:	; 800A2E38
 800A2E38	addiu  sp, sp, $ffd0 (=-$30)
 800A2E3C	ori    a0, zero, $0001
 800A2E40	sw     ra, $002c(sp)
@@ -3539,9 +3239,8 @@ La3330:	; 800A3330
 800A3340	addiu  sp, sp, $0030
 800A3344	jr     ra 
 800A3348	nop
-
-
-funca334c:	; 800A334C
+////////////////////////////////
+// funca334c:	; 800A334C
 800A334C	addu   t0, zero, zero
 800A3350	ori    t1, zero, $ffff
 800A3354	lui    a3, $800e
@@ -3596,7 +3295,8 @@ loopa33e0:	; 800A33E0
 800A3408	sb     v0, $25f8(at)
 800A340C	jr     ra 
 800A3410	nop
-
+////////////////////////////////
+// funca3414
 800A3414	addiu  sp, sp, $ffc8 (=-$38)
 800A3418	lui    v1, $800d
 800A341C	addiu  v1, v1, $172c
@@ -3729,9 +3429,8 @@ La35b8:	; 800A35B8
 800A35D0	addiu  sp, sp, $0038
 800A35D4	jr     ra 
 800A35D8	nop
-
-
-funca35dc:	; 800A35DC
+////////////////////////////////
+// funca35dc:	; 800A35DC
 800A35DC	addiu  sp, sp, $ffd0 (=-$30)
 800A35E0	lui    v1, $800d
 800A35E4	addiu  v1, v1, $172c
@@ -3828,9 +3527,8 @@ La3710:	; 800A3710
 800A3720	addiu  sp, sp, $0030
 800A3724	jr     ra 
 800A3728	nop
-
-
-funca372c:	; 800A372C
+////////////////////////////////
+// funca372c:	; 800A372C
 800A372C	lui    v1, $800e
 800A3730	lbu    v1, $25f8(v1)
 800A3734	lui    v0, $800b
@@ -3921,9 +3619,8 @@ La3840:	; 800A3840
 800A3850	addiu  sp, sp, $0030
 800A3854	jr     ra 
 800A3858	nop
-
-
-funca385c:	; 800A385C
+////////////////////////////////
+// funca385c:	; 800A385C
 800A385C	addu   a1, a0, zero
 800A3860	andi   v0, a1, $ffff
 800A3864	sll    v0, v0, $02
@@ -3958,9 +3655,8 @@ La38a4:	; 800A38A4
 La38cc:	; 800A38CC
 800A38CC	jr     ra 
 800A38D0	nop
-
-
-funca38d4:	; 800A38D4
+////////////////////////////////
+// funca38d4:	; 800A38D4
 800A38D4	andi   v0, a0, $ffff
 800A38D8	sll    v0, v0, $02
 800A38DC	lui    t0, $800e
@@ -4012,9 +3708,8 @@ La3944:	; 800A3944
 800A3974	addiu  v0, v0, $ffff (=-$1)
 800A3978	jr     ra 
 800A397C	sh     v0, $0000(v1)
-
-
-funca3980:	; 800A3980
+////////////////////////////////
+// funca3980:	; 800A3980
 800A3980	lui    t1, $800d
 800A3984	addiu  t1, t1, $1c50
 800A3988	lhu    a3, $0000(t1)
@@ -4059,9 +3754,8 @@ La39d4:	; 800A39D4
 La3a18:	; 800A3A18
 800A3A18	jr     ra 
 800A3A1C	nop
-
-
-funca3a20:	; 800A3A20
+////////////////////////////////
+// funca3a20:	; 800A3A20
 800A3A20	andi   a0, a0, $ffff
 800A3A24	sll    a0, a0, $02
 800A3A28	lui    a3, $800e
@@ -4105,9 +3799,8 @@ La3a90:	; 800A3A90
 800A3AA0	addiu  v0, v0, $ffff (=-$1)
 800A3AA4	jr     ra 
 800A3AA8	sh     v0, $0000(v1)
-
-
-funca3aac:	; 800A3AAC
+////////////////////////////////
+// funca3aac:	; 800A3AAC
 800A3AAC	addu   v1, zero, zero
 800A3AB0	addiu  a1, zero, $ffff (=-$1)
 800A3AB4	lui    a0, $800d
@@ -4155,7 +3848,8 @@ loopa3aec:	; 800A3AEC
 800A3B4C	sh     zero, $e42c(at)
 800A3B50	jr     ra 
 800A3B54	nop
-
+////////////////////////////////
+// funca3b58
 800A3B58	andi   a1, a1, $00ff
 800A3B5C	bne    a1, zero, La3bb0 [$800a3bb0]
 800A3B60	ori    v0, zero, $0001
@@ -4203,9 +3897,8 @@ La3bb0:	; 800A3BB0
 La3bfc:	; 800A3BFC
 800A3BFC	jr     ra 
 800A3C00	nop
-
-
-funca3c04:	; 800A3C04
+////////////////////////////////
+// funca3c04:	; 800A3C04
 800A3C04	srl    v0, a0, $10
 800A3C08	sll    v0, v0, $03
 800A3C0C	addu   t4, v0, a1
@@ -4293,9 +3986,8 @@ La3d40:	; 800A3D40
 800A3D44	addiu  sp, sp, $0020
 800A3D48	jr     ra 
 800A3D4C	nop
-
-
-funca3d50:	; 800A3D50
+////////////////////////////////
+// funca3d50:	; 800A3D50
 800A3D50	addiu  sp, sp, $ffe0 (=-$20)
 800A3D54	sw     s1, $0014(sp)
 800A3D58	addu   s1, a0, zero
@@ -4362,9 +4054,8 @@ funca3d50:	; 800A3D50
 800A3E4C	addiu  sp, sp, $0020
 800A3E50	jr     ra 
 800A3E54	nop
-
-
-funca3e58:	; 800A3E58
+////////////////////////////////
+// funca3e58:	; 800A3E58
 800A3E58	addiu  sp, sp, $ffc0 (=-$40)
 800A3E5C	lui    v1, $800d
 800A3E60	lbu    v1, $1c4c(v1)
@@ -4534,9 +4225,8 @@ La40c0:	; 800A40C0
 800A40E8	addiu  sp, sp, $0040
 800A40EC	jr     ra 
 800A40F0	nop
-
-
-funca40f4:	; 800A40F4
+////////////////////////////////
+// funca40f4:	; 800A40F4
 800A40F4	addiu  sp, sp, $ffa0 (=-$60)
 800A40F8	sw     s0, $0048(sp)
 800A40FC	addu   s0, a0, zero
@@ -4712,7 +4402,8 @@ La4364:	; 800A4364
 800A4384	addiu  sp, sp, $0060
 800A4388	jr     ra 
 800A438C	nop
-
+////////////////////////////////
+// funca4390
 800A4390	addiu  sp, sp, $ffe8 (=-$18)
 800A4394	sw     s0, $0010(sp)
 800A4398	addu   s0, a0, zero
@@ -4743,9 +4434,8 @@ La43ec:	; 800A43EC
 800A43F4	addiu  sp, sp, $0018
 800A43F8	jr     ra 
 800A43FC	nop
-
-
-funca4400:	; 800A4400
+////////////////////////////////
+// funca4400:	; 800A4400
 800A4400	lui    a0, $800e
 800A4404	addiu  a0, a0, $9940 (=-$66c0)
 800A4408	lh     v0, $0000(a0)
@@ -4757,9 +4447,8 @@ funca4400:	; 800A4400
 800A4420	lhu    v1, $0000(at)
 800A4424	jr     ra 
 800A4428	sh     v1, $0000(a0)
-
-
-funca442c:	; 800A442C
+////////////////////////////////
+// funca442c:	; 800A442C
 800A442C	sll    v0, a0, $10
 800A4430	lui    a1, $800e
 800A4434	addiu  a1, a1, $9940 (=-$66c0)
@@ -4771,9 +4460,8 @@ funca442c:	; 800A442C
 800A444C	sh     v1, $0000(at)
 800A4450	jr     ra 
 800A4454	sh     a0, $0000(a1)
-
-
-funca4458:	; 800A4458
+////////////////////////////////
+// funca4458:	; 800A4458
 800A4458	addiu  sp, sp, $ffc8 (=-$38)
 800A445C	sw     s1, $0024(sp)
 800A4460	lui    s1, $800b
@@ -4874,9 +4562,8 @@ La4588:	; 800A4588
 800A45B4	addiu  sp, sp, $0038
 800A45B8	jr     ra 
 800A45BC	nop
-
-
-funca45c0:	; 800A45C0
+////////////////////////////////
+// funca45c0:	; 800A45C0
 800A45C0	addiu  sp, sp, $ffe8 (=-$18)
 800A45C4	lui    t0, $800d
 800A45C8	addiu  t0, t0, $1c84
@@ -4913,7 +4600,8 @@ funca45c0:	; 800A45C0
 800A4644	addiu  sp, sp, $0018
 800A4648	jr     ra 
 800A464C	nop
-
+////////////////////////////////
+// funca4650
 800A4650	addiu  sp, sp, $ffe8 (=-$18)
 800A4654	lui    t0, $800d
 800A4658	addiu  t0, t0, $1c84
@@ -4952,9 +4640,8 @@ funca45c0:	; 800A45C0
 800A46DC	addiu  sp, sp, $0018
 800A46E0	jr     ra 
 800A46E4	nop
-
-
-funca46e8:	; 800A46E8
+////////////////////////////////
+// funca46e8:	; 800A46E8
 800A46E8	addiu  sp, sp, $ff48 (=-$b8)
 800A46EC	sw     ra, $00b4(sp)
 800A46F0	sw     fp, $00b0(sp)
@@ -7506,9 +7193,8 @@ La6abc:	; 800A6ABC
 800A6AFC	addiu  sp, sp, $00b8
 800A6B00	jr     ra 
 800A6B04	nop
-
-
-funca6b08:	; 800A6B08
+////////////////////////////////
+// funca6b08:	; 800A6B08
 800A6B08	addiu  sp, sp, $ffe8 (=-$18)
 800A6B0C	lui    v0, $800d
 800A6B10	lhu    v0, $1c5c(v0)
@@ -7567,9 +7253,8 @@ La6bc8:	; 800A6BC8
 800A6BCC	addiu  sp, sp, $0018
 800A6BD0	jr     ra 
 800A6BD4	nop
-
-
-funca6bd8:	; 800A6BD8
+////////////////////////////////
+// funca6bd8:	; 800A6BD8
 800A6BD8	addiu  sp, sp, $ffd0 (=-$30)
 800A6BDC	sw     s4, $0020(sp)
 800A6BE0	addu   s4, a0, zero
@@ -7907,9 +7592,8 @@ La70a8:	; 800A70A8
 800A70C8	addiu  sp, sp, $0030
 800A70CC	jr     ra 
 800A70D0	nop
-
-
-funca70d4:	; 800A70D4
+////////////////////////////////
+// funca70d4:	; 800A70D4
 800A70D4	addiu  sp, sp, $ff50 (=-$b0)
 800A70D8	sw     ra, $00ac(sp)
 800A70DC	sw     s6, $00a8(sp)
@@ -8118,9 +7802,8 @@ funca70d4:	; 800A70D4
 800A7408	addiu  sp, sp, $00b0
 800A740C	jr     ra 
 800A7410	nop
-
-
-funca7414:	; 800A7414
+////////////////////////////////
+// funca7414:	; 800A7414
 800A7414	lw     a2, $0000(a0)
 800A7418	lui    v0, $800b
 800A741C	lw     v0, $892c(v0)
@@ -8205,7 +7888,8 @@ La751c:	; 800A751C
 La753c:	; 800A753C
 800A753C	jr     ra 
 800A7540	and    v0, t2, a2
-
+////////////////////////////////
+// funca7544
 800A7544	lhu    a2, $0000(a0)
 800A7548	lui    v0, $800b
 800A754C	lw     v0, $892c(v0)
@@ -8295,7 +7979,8 @@ La7660:	; 800A7660
 La7680:	; 800A7680
 800A7680	jr     ra 
 800A7684	and    v0, t2, a2
-
+////////////////////////////////
+// funca7688
 800A7688	lui    v0, $800b
 800A768C	lw     v0, $892c(v0)
 800A7690	sra    a0, a0, $02
@@ -8317,7 +8002,8 @@ La7680:	; 800A7680
 800A76D0	addu   v0, v0, v1
 800A76D4	jr     ra 
 800A76D8	addu   v0, v0, a0
-
+////////////////////////////////
+// funca76dc
 800A76DC	lui    v0, $800b
 800A76E0	lw     v0, $893c(v0)
 800A76E4	sra    a0, a0, $02
@@ -8339,7 +8025,8 @@ La7680:	; 800A7680
 800A7724	addu   v0, v0, v1
 800A7728	jr     ra 
 800A772C	addu   v0, v0, a0
-
+////////////////////////////////
+// funca7730
 800A7730	addu   a3, a0, zero
 800A7734	lw     v0, $0000(a3)
 800A7738	lui    v1, $800b
@@ -8490,7 +8177,8 @@ La7904:	; 800A7904
 La7920:	; 800A7920
 800A7920	jr     ra 
 800A7924	and    v0, t0, t1
-
+////////////////////////////////
+// funca7928
 800A7928	lui    v0, $800b
 800A792C	lw     v0, $892c(v0)
 800A7930	sra    a0, a0, $02
@@ -8561,7 +8249,8 @@ La79ec:	; 800A79EC
 La7a08:	; 800A7A08
 800A7A08	jr     ra 
 800A7A0C	addu   v0, a1, zero
-
+////////////////////////////////
+// funca7a10
 800A7A10	lui    v0, $800b
 800A7A14	lw     v0, $893c(v0)
 800A7A18	sra    a0, a0, $02
@@ -8632,9 +8321,8 @@ La7ad4:	; 800A7AD4
 La7af0:	; 800A7AF0
 800A7AF0	jr     ra 
 800A7AF4	addu   v0, a1, zero
-
-
-funca7af8:	; 800A7AF8
+////////////////////////////////
+// funca7af8:	; 800A7AF8
 800A7AF8	lui    v0, $800d
 800A7AFC	lw     v0, $1bfc(v0)
 800A7B00	lui    v1, $800d
@@ -8655,9 +8343,8 @@ funca7af8:	; 800A7AF8
 800A7B3C	sw     a0, $89d8(at)
 800A7B40	jr     ra 
 800A7B44	nop
-
-
-funca7b48:	; 800A7B48
+////////////////////////////////
+// funca7b48:	; 800A7B48
 800A7B48	addiu  sp, sp, $ffe0 (=-$20)
 800A7B4C	sw     s0, $0010(sp)
 800A7B50	addu   s0, a0, zero
@@ -8701,9 +8388,8 @@ funca7b48:	; 800A7B48
 800A7BE8	addiu  sp, sp, $0020
 800A7BEC	jr     ra 
 800A7BF0	nop
-
-
-funca7bf4:	; 800A7BF4
+////////////////////////////////
+// funca7bf4:	; 800A7BF4
 800A7BF4	lui    a0, $800b
 800A7BF8	addiu  a0, a0, $8a8c (=-$7574)
 800A7BFC	lw     v0, $0000(a0)
@@ -8715,9 +8401,8 @@ funca7bf4:	; 800A7BF4
 800A7C14	sll    v0, v0, $05
 800A7C18	jr     ra 
 800A7C1C	addu   v0, v0, v1
-
-
-funca7c20:	; 800A7C20
+////////////////////////////////
+// funca7c20:	; 800A7C20
 800A7C20	lui    v0, $800b
 800A7C24	addiu  v0, v0, $8a70 (=-$7590)
 800A7C28	lw     v1, $0000(v0)
@@ -8731,9 +8416,8 @@ funca7c20:	; 800A7C20
 800A7C48	sll    v0, v0, $02
 800A7C4C	jr     ra 
 800A7C50	addu   v0, v1, v0
-
-
-funca7c54:	; 800A7C54
+////////////////////////////////
+// funca7c54:	; 800A7C54
 800A7C54	lui    v0, $800d
 800A7C58	addiu  v0, v0, $171c
 800A7C5C	lw     v1, $0000(v0)
@@ -8747,9 +8431,8 @@ funca7c54:	; 800A7C54
 800A7C7C	sll    v0, v0, $03
 800A7C80	jr     ra 
 800A7C84	addu   v0, v1, v0
-
-
-funca7c88:	; 800A7C88
+////////////////////////////////
+// funca7c88:	; 800A7C88
 800A7C88	addiu  sp, sp, $ffd8 (=-$28)
 800A7C8C	sw     s2, $0020(sp)
 800A7C90	lui    s2, $800b
@@ -8851,7 +8534,8 @@ funca7c88:	; 800A7C88
 800A7E10	addiu  sp, sp, $0028
 800A7E14	jr     ra 
 800A7E18	nop
-
+////////////////////////////////
+// funca7e1c
 800A7E1C	addiu  sp, sp, $ffe8 (=-$18)
 800A7E20	sw     s0, $0010(sp)
 800A7E24	lui    s0, $800d
@@ -8873,9 +8557,8 @@ funca7c88:	; 800A7C88
 800A7E64	addiu  sp, sp, $0018
 800A7E68	jr     ra 
 800A7E6C	nop
-
-
-funca7e70:	; 800A7E70
+////////////////////////////////
+// funca7e70:	; 800A7E70
 800A7E70	addiu  sp, sp, $ffe0 (=-$20)
 800A7E74	sw     s2, $0018(sp)
 800A7E78	addu   s2, a0, zero
@@ -8973,9 +8656,8 @@ loopa7f7c:	; 800A7F7C
 800A7FA0	addiu  sp, sp, $0020
 800A7FA4	jr     ra 
 800A7FA8	nop
-
-
-funca7fac:	; 800A7FAC
+////////////////////////////////
+// funca7fac:	; 800A7FAC
 800A7FAC	addiu  v0, a0, $0024
 800A7FB0	sw     v0, $0000(a0)
 800A7FB4	addiu  v0, a0, $0038
@@ -9001,9 +8683,8 @@ funca7fac:	; 800A7FAC
 800A8004	addu   v0, a0, v0
 800A8008	jr     ra 
 800A800C	sw     v0, $0020(a0)
-
-
-funca8010:	; 800A8010
+////////////////////////////////
+// funca8010:	; 800A8010
 800A8010	addiu  sp, sp, $ffe8 (=-$18)
 800A8014	lui    a0, $800d
 800A8018	addiu  a0, a0, $16e4
@@ -9046,9 +8727,8 @@ loopa8074:	; 800A8074
 800A809C	addiu  sp, sp, $0018
 800A80A0	jr     ra 
 800A80A4	nop
-
-
-funca80a8:	; 800A80A8
+////////////////////////////////
+// funca80a8:	; 800A80A8
 800A80A8	ori    v0, zero, $1000
 800A80AC	sh     v0, $0004(a0)
 800A80B0	sh     v0, $000c(a0)
@@ -9069,9 +8749,8 @@ funca80a8:	; 800A80A8
 800A80EC	sw     zero, $0030(a0)
 800A80F0	jr     ra 
 800A80F4	sw     zero, $0034(a0)
-
-
-funca80f8:	; 800A80F8
+////////////////////////////////
+// funca80f8:	; 800A80F8
 800A80F8	addiu  sp, sp, $ffb8 (=-$48)
 800A80FC	sw     s3, $002c(sp)
 800A8100	lw     s3, $0058(sp)
@@ -9139,9 +8818,8 @@ funca80f8:	; 800A80F8
 800A81F8	addiu  sp, sp, $0048
 800A81FC	jr     ra 
 800A8200	nop
-
-
-funca8204:	; 800A8204
+////////////////////////////////
+// funca8204:	; 800A8204
 800A8204	addiu  sp, sp, $ffe8 (=-$18)
 800A8208	sw     s0, $0010(sp)
 800A820C	sw     ra, $0014(sp)
@@ -9155,9 +8833,8 @@ funca8204:	; 800A8204
 800A822C	addiu  sp, sp, $0018
 800A8230	jr     ra 
 800A8234	nop
-
-
-funca8238:	; 800A8238
+////////////////////////////////
+// funca8238:	; 800A8238
 800A8238	lui    a0, $800e
 800A823C	addiu  a0, a0, $9944 (=-$66bc)
 800A8240	lh     v0, $0000(a0)
@@ -9169,9 +8846,8 @@ funca8238:	; 800A8238
 800A8258	lhu    v1, $0000(at)
 800A825C	jr     ra 
 800A8260	sh     v1, $0000(a0)
-
-
-funca8264:	; 800A8264
+////////////////////////////////
+// funca8264:	; 800A8264
 800A8264	sll    v0, a0, $10
 800A8268	lui    a1, $800e
 800A826C	addiu  a1, a1, $9944 (=-$66bc)
@@ -9183,9 +8859,8 @@ funca8264:	; 800A8264
 800A8284	sh     v1, $0000(at)
 800A8288	jr     ra 
 800A828C	sh     a0, $0000(a1)
-
-
-funca8290:	; 800A8290
+////////////////////////////////
+// funca8290:	; 800A8290
 800A8290	sw     a1, $0024(a0)
 800A8294	lhu    v0, $002c(a1)
 800A8298	nop
@@ -9210,9 +8885,8 @@ funca8290:	; 800A8290
 800A82E4	sw     a0, $0034(v0)
 800A82E8	jr     ra 
 800A82EC	sw     a0, $0030(v1)
-
-
-funca82f0:	; 800A82F0
+////////////////////////////////
+// funca82f0:	; 800A82F0
 800A82F0	lw     v1, $0030(a0)
 800A82F4	lw     v0, $0034(a0)
 800A82F8	nop
@@ -9221,65 +8895,8 @@ funca82f0:	; 800A82F0
 800A8304	lw     v0, $0030(a0)
 800A8308	jr     ra 
 800A830C	sw     v0, $0030(v1)
-
-800A8310	mult   zero, zero
-800A8314	00000028	(...
-800A8318	multu  zero, zero
-800A831C	00004DE8	.M..
-800A8320	subu   at, zero, zero
-800A8324	sllv   zero, zero, zero
-800A8328	and    at, zero, zero
-800A832C	mult   zero, t2
-800A8330	0000007F	....
-800A8334	0000007F	....
-800A8338	nop
-800A833C	nop
-800A8340	sll    v0, zero, $00
-800A8344	nop
-800A8348	sll    v0, zero, $00
-800A834C	nop
-800A8350	sll    v0, zero, $00
-800A8354	nop
-800A8358	nop
-800A835C	nop
-800A8360	sll    v0, zero, $00
-800A8364	nop
-800A8368	sll    v0, zero, $00
-800A836C	nop
-800A8370	sll    v0, zero, $00
-800A8374	nop
-800A8378	nop
-800A837C	nop
-800A8380	sll    v0, zero, $00
-800A8384	nop
-800A8388	sll    v0, zero, $00
-800A838C	nop
-800A8390	sll    v0, zero, $00
-800A8394	nop
-800A8398	nop
-800A839C	nop
-800A83A0	nop
-800A83A4	nop
-800A83A8	nop
-800A83AC	nop
-800A83B0	nop
-800A83B4	nop
-800A83B8	nop
-800A83BC	nop
-800A83C0	nop
-800A83C4	nop
-800A83C8	nop
-800A83CC	nop
-800A83D0	nop
-800A83D4	nop
-800A83D8	nop
-800A83DC	nop
-800A83E0	nop
-800A83E4	nop
-800A83E8	nop
-800A83EC	nop
-
-funca83f0:	; 800A83F0
+////////////////////////////////
+// funca83f0:	; 800A83F0
 800A83F0	lwc2   zero, $0000(a0)
 800A83F4	lwc2   at, $0004(a0)
 800A83F8	lwc2   v0, $0008(a0)
@@ -9325,9 +8942,8 @@ funca83f0:	; 800A83F0
 800A8498	swc2   t5, $0004(a1)
 800A849C	jr     ra 
 800A84A0	nop
-
-
-funca84a4:	; 800A84A4
+////////////////////////////////
+// funca84a4:	; 800A84A4
 800A84A4	lwc2   zero, $0000(a0)
 800A84A8	lwc2   at, $0004(a0)
 800A84AC	lwc2   v0, $0008(a0)
@@ -9342,9 +8958,8 @@ funca84a4:	; 800A84A4
 800A84D0	swc2   t6, $0008(a1)
 800A84D4	jr     ra 
 800A84D8	nop
-
-
-funca84dc:	; 800A84DC
+////////////////////////////////
+// funca84dc:	; 800A84DC
 800A84DC	lw     a3, $000c(a0)
 800A84E0	lw     a2, $0008(a0)
 800A84E4	lw     a1, $0004(a0)
@@ -9423,9 +9038,8 @@ La85ec:	; 800A85EC
 800A85F8	addu   v0, a1, zero
 800A85FC	jr     ra 
 800A8600	nop
-
-
-funca8604:	; 800A8604
+////////////////////////////////
+// funca8604:	; 800A8604
 800A8604	lw     a3, $000c(a0)
 800A8608	lw     a2, $0008(a0)
 800A860C	lw     a1, $0004(a0)
@@ -9506,9 +9120,8 @@ La871c:	; 800A871C
 800A8728	addu   v0, a1, zero
 800A872C	jr     ra 
 800A8730	nop
-
-
-funca8734:	; 800A8734
+////////////////////////////////
+// funca8734:	; 800A8734
 800A8734	lwc2   zero, $0000(a0)
 800A8738	lwc2   at, $0004(a0)
 800A873C	gte_func16t8,r11r12
@@ -9573,9 +9186,8 @@ La8820:	; 800A8820
 800A8820	addu   v0, a1, zero
 800A8824	jr     ra 
 800A8828	nop
-
-
-funca882c:	; 800A882C
+////////////////////////////////
+// funca882c:	; 800A882C
 800A882C	lwc2   zero, $0000(a0)
 800A8830	lwc2   at, $0004(a0)
 800A8834	lwc2   v0, $0008(a3)
@@ -9637,3 +9249,4 @@ funca882c:	; 800A882C
 La8910:	; 800A8910
 800A8910	addu   v0, a1, zero
 800A8914	jr     ra 
+////////////////////////////////
