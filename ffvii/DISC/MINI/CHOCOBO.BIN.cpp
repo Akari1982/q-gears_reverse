@@ -1020,37 +1020,11 @@ V0 = w[800b7598];
 800A1288	nop
 V0 = V0 + S0;
 800A1290	div    v0, s0
-800A1294	bne    s0, zero, La12a0 [$800a12a0]
-800A1298	nop
-800A129C	break   $01c00
-
-La12a0:	; 800A12A0
-800A12A0	addiu  at, zero, $ffff (=-$1)
-800A12A4	bne    s0, at, La12b8 [$800a12b8]
-800A12A8	lui    at, $8000
-800A12AC	bne    v0, at, La12b8 [$800a12b8]
-800A12B0	nop
-800A12B4	break   $01800
-
-La12b8:	; 800A12B8
 800A12B8	mfhi   s2
 V0 = w[800f507c];
 800A12C4	nop
 V0 = V0 + S0;
 800A12CC	div    v0, s0
-800A12D0	bne    s0, zero, La12dc [$800a12dc]
-800A12D4	nop
-800A12D8	break   $01c00
-
-La12dc:	; 800A12DC
-800A12DC	addiu  at, zero, $ffff (=-$1)
-800A12E0	bne    s0, at, La12f4 [$800a12f4]
-800A12E4	lui    at, $8000
-800A12E8	bne    v0, at, La12f4 [$800a12f4]
-800A12EC	nop
-800A12F0	break   $01800
-
-La12f4:	; 800A12F4
 800A12F4	mfhi   s1
 800A12F8	jal    $system_psyq_push_matrix
 800A12FC	nop
@@ -2458,37 +2432,11 @@ V0 = w[800b7598];
 800A2B20	nop
 V0 = V0 + S0;
 800A2B28	div    v0, s0
-800A2B2C	bne    s0, zero, La2b38 [$800a2b38]
-800A2B30	nop
-800A2B34	break   $01c00
-
-La2b38:	; 800A2B38
-800A2B38	addiu  at, zero, $ffff (=-$1)
-800A2B3C	bne    s0, at, La2b50 [$800a2b50]
-800A2B40	lui    at, $8000
-800A2B44	bne    v0, at, La2b50 [$800a2b50]
-800A2B48	nop
-800A2B4C	break   $01800
-
-La2b50:	; 800A2B50
 800A2B50	mfhi   s1
 V0 = w[800f507c];
 800A2B5C	nop
 V0 = V0 + S0;
 800A2B64	div    v0, s0
-800A2B68	bne    s0, zero, La2b74 [$800a2b74]
-800A2B6C	nop
-800A2B70	break   $01c00
-
-La2b74:	; 800A2B74
-800A2B74	addiu  at, zero, $ffff (=-$1)
-800A2B78	bne    s0, at, La2b8c [$800a2b8c]
-800A2B7C	lui    at, $8000
-800A2B80	bne    v0, at, La2b8c [$800a2b8c]
-800A2B84	nop
-800A2B88	break   $01800
-
-La2b8c:	; 800A2B8C
 800A2B8C	mfhi   a1
 [800f5034] = w(0);
 V0 = A1 < S1;
@@ -2892,19 +2840,6 @@ V1 = V1 - V0;
 V0 = w[SP + 0030];
 V1 = V1 << 01;
 800A3174	div    v1, v0
-800A3178	bne    v0, zero, La3184 [$800a3184]
-800A317C	nop
-800A3180	break   $01c00
-
-La3184:	; 800A3184
-800A3184	addiu  at, zero, $ffff (=-$1)
-800A3188	bne    v0, at, La319c [$800a319c]
-800A318C	lui    at, $8000
-800A3190	bne    v1, at, La319c [$800a319c]
-800A3194	nop
-800A3198	break   $01800
-
-La319c:	; 800A319C
 800A319C	mflo   v1
 T6 = T6 & S1;
 V0 = V1 >> 1f;
@@ -3305,19 +3240,6 @@ A0 = A0 + S4;
 V1 = h[A0 + 0002];
 800A3778	nop
 800A377C	div    v0, v1
-800A3780	bne    v1, zero, La378c [$800a378c]
-800A3784	nop
-800A3788	break   $01c00
-
-La378c:	; 800A378C
-800A378C	addiu  at, zero, $ffff (=-$1)
-800A3790	bne    v1, at, La37a4 [$800a37a4]
-800A3794	lui    at, $8000
-800A3798	bne    v0, at, La37a4 [$800a37a4]
-800A379C	nop
-800A37A0	break   $01800
-
-La37a4:	; 800A37A4
 800A37A4	mfhi   v1
 V0 = hu[A0 + 0000];
 800A37AC	nop
@@ -3331,19 +3253,6 @@ A0 = A0 + S4;
 V1 = h[A0 + 0006];
 800A37D0	nop
 800A37D4	div    v0, v1
-800A37D8	bne    v1, zero, La37e4 [$800a37e4]
-800A37DC	nop
-800A37E0	break   $01c00
-
-La37e4:	; 800A37E4
-800A37E4	addiu  at, zero, $ffff (=-$1)
-800A37E8	bne    v1, at, La37fc [$800a37fc]
-800A37EC	lui    at, $8000
-800A37F0	bne    v0, at, La37fc [$800a37fc]
-800A37F4	nop
-800A37F8	break   $01800
-
-La37fc:	; 800A37FC
 800A37FC	mfhi   a1
 V1 = hu[A0 + 0004];
 V0 = 0032;
@@ -3657,19 +3566,6 @@ A0 = h[S0 + 0004];
 V1 = w[800f5050];
 800A3C78	nop
 800A3C7C	div    a0, v1
-800A3C80	bne    v1, zero, La3c8c [$800a3c8c]
-800A3C84	nop
-800A3C88	break   $01c00
-
-La3c8c:	; 800A3C8C
-800A3C8C	addiu  at, zero, $ffff (=-$1)
-800A3C90	bne    v1, at, La3ca4 [$800a3ca4]
-800A3C94	lui    at, $8000
-800A3C98	bne    a0, at, La3ca4 [$800a3ca4]
-800A3C9C	nop
-800A3CA0	break   $01800
-
-La3ca4:	; 800A3CA4
 800A3CA4	mflo   a0
 A1 = h[S0 + 0010];
 V1 = h[S0 + 0028];
@@ -5048,19 +4944,6 @@ V0 = S2 + V1;
 V0 = V0 << 10;
 V0 = V0 >> 10;
 800A5270	div    v0, v1
-800A5274	bne    v1, zero, La5280 [$800a5280]
-800A5278	nop
-800A527C	break   $01c00
-
-La5280:	; 800A5280
-800A5280	addiu  at, zero, $ffff (=-$1)
-800A5284	bne    v1, at, La5298 [$800a5298]
-800A5288	lui    at, $8000
-800A528C	bne    v0, at, La5298 [$800a5298]
-800A5290	nop
-800A5294	break   $01800
-
-La5298:	; 800A5298
 800A5298	mfhi   v1
 V0 = hu[S1 + 0002];
 800A52A0	nop
@@ -5847,19 +5730,6 @@ V0 = A0 + 0007;
 V1 = h[S1 + 0004];
 800A5D24	nop
 800A5D28	div    v1, v0
-800A5D2C	bne    v0, zero, La5d38 [$800a5d38]
-800A5D30	nop
-800A5D34	break   $01c00
-
-La5d38:	; 800A5D38
-800A5D38	addiu  at, zero, $ffff (=-$1)
-800A5D3C	bne    v0, at, La5d50 [$800a5d50]
-800A5D40	lui    at, $8000
-800A5D44	bne    v1, at, La5d50 [$800a5d50]
-800A5D48	nop
-800A5D4C	break   $01800
-
-La5d50:	; 800A5D50
 800A5D50	mflo   v0
 800A5D54	j      La5db0 [$800a5db0]
 V1 = V1 - V0;
@@ -5874,19 +5744,6 @@ V0 = A0 + 0008;
 V1 = h[S1 + 0004];
 800A5D78	nop
 800A5D7C	div    v1, v0
-800A5D80	bne    v0, zero, La5d8c [$800a5d8c]
-800A5D84	nop
-800A5D88	break   $01c00
-
-La5d8c:	; 800A5D8C
-800A5D8C	addiu  at, zero, $ffff (=-$1)
-800A5D90	bne    v0, at, La5da4 [$800a5da4]
-800A5D94	lui    at, $8000
-800A5D98	bne    v1, at, La5da4 [$800a5da4]
-800A5D9C	nop
-800A5DA0	break   $01800
-
-La5da4:	; 800A5DA4
 800A5DA4	mflo   v0
 800A5DA8	nop
 V1 = V1 - V0;
@@ -5998,19 +5855,6 @@ V0 = h[S1 + 0002];
 V1 = w[800b74fc];
 V0 = V0 + 0001;
 800A5F18	div    v0, v1
-800A5F1C	bne    v1, zero, La5f28 [$800a5f28]
-800A5F20	nop
-800A5F24	break   $01c00
-
-La5f28:	; 800A5F28
-800A5F28	addiu  at, zero, $ffff (=-$1)
-800A5F2C	bne    v1, at, La5f40 [$800a5f40]
-800A5F30	lui    at, $8000
-800A5F34	bne    v0, at, La5f40 [$800a5f40]
-800A5F38	nop
-800A5F3C	break   $01800
-
-La5f40:	; 800A5F40
 800A5F40	mfhi   v1
 V0 = A0 >> 08;
 [S1 + 002c] = h(V0);
@@ -6618,19 +6462,6 @@ V0 = h[V0 + 0002];
 V0 = A3 + V1;
 V0 = V0 + T0;
 800A684C	div    v0, a2
-800A6850	bne    a2, zero, La685c [$800a685c]
-800A6854	nop
-800A6858	break   $01c00
-
-La685c:	; 800A685C
-800A685C	addiu  at, zero, $ffff (=-$1)
-800A6860	bne    a2, at, La6874 [$800a6874]
-800A6864	lui    at, $8000
-800A6868	bne    v0, at, La6874 [$800a6874]
-800A686C	nop
-800A6870	break   $01800
-
-La6874:	; 800A6874
 800A6874	mflo   s0
 800A6878	j      La6884 [$800a6884]
 800A687C	nop
@@ -7096,19 +6927,6 @@ V1 = w[800b74fc];
 800A6F2C	nop
 V0 = S0 + V1;
 800A6F34	div    v0, v1
-800A6F38	bne    v1, zero, La6f44 [$800a6f44]
-800A6F3C	nop
-800A6F40	break   $01c00
-
-La6f44:	; 800A6F44
-800A6F44	addiu  at, zero, $ffff (=-$1)
-800A6F48	bne    v1, at, La6f5c [$800a6f5c]
-800A6F4C	lui    at, $8000
-800A6F50	bne    v0, at, La6f5c [$800a6f5c]
-800A6F54	nop
-800A6F58	break   $01800
-
-La6f5c:	; 800A6F5C
 800A6F5C	mfhi   s2
 V1 = w[800b7500];
 V0 = S2 << 01;
@@ -7153,19 +6971,6 @@ V0 = S2 + V1;
 V0 = V0 << 10;
 V0 = V0 >> 10;
 800A7008	div    v0, v1
-800A700C	bne    v1, zero, La7018 [$800a7018]
-800A7010	nop
-800A7014	break   $01c00
-
-La7018:	; 800A7018
-800A7018	addiu  at, zero, $ffff (=-$1)
-800A701C	bne    v1, at, La7030 [$800a7030]
-800A7020	lui    at, $8000
-800A7024	bne    v0, at, La7030 [$800a7030]
-800A7028	nop
-800A702C	break   $01800
-
-La7030:	; 800A7030
 800A7030	mfhi   v1
 T0 = w[800b7500];
 V0 = hu[S1 + 0002];
@@ -7232,19 +7037,6 @@ V0 = h[S1 + 0002];
 V1 = w[800b74fc];
 V0 = V0 + 0001;
 800A7124	div    v0, v1
-800A7128	bne    v1, zero, La7134 [$800a7134]
-800A712C	nop
-800A7130	break   $01c00
-
-La7134:	; 800A7134
-800A7134	addiu  at, zero, $ffff (=-$1)
-800A7138	bne    v1, at, La714c [$800a714c]
-800A713C	lui    at, $8000
-800A7140	bne    v0, at, La714c [$800a714c]
-800A7144	nop
-800A7148	break   $01800
-
-La714c:	; 800A714C
 800A714C	mfhi   a0
 V0 = A1 >> 08;
 [S1 + 002c] = h(V0);
@@ -7561,19 +7353,6 @@ V0 = h[V0 + 0002];
 V0 = A2 + V1;
 V0 = V0 + T3;
 800A7678	div    v0, a1
-800A767C	bne    a1, zero, La7688 [$800a7688]
-800A7680	nop
-800A7684	break   $01c00
-
-La7688:	; 800A7688
-800A7688	addiu  at, zero, $ffff (=-$1)
-800A768C	bne    a1, at, La76a0 [$800a76a0]
-800A7690	lui    at, $8000
-800A7694	bne    v0, at, La76a0 [$800a76a0]
-800A7698	nop
-800A769C	break   $01800
-
-La76a0:	; 800A76A0
 800A76A0	mflo   s0
 V1 = w[800b75a8];
 800A76AC	nop
@@ -7611,19 +7390,6 @@ V0 = h[V1 + 0002];
 V0 = A2 + A0;
 V0 = V0 + V1;
 800A7730	div    v0, a1
-800A7734	bne    a1, zero, La7740 [$800a7740]
-800A7738	nop
-800A773C	break   $01c00
-
-La7740:	; 800A7740
-800A7740	addiu  at, zero, $ffff (=-$1)
-800A7744	bne    a1, at, La7758 [$800a7758]
-800A7748	lui    at, $8000
-800A774C	bne    v0, at, La7758 [$800a7758]
-800A7750	nop
-800A7754	break   $01800
-
-La7758:	; 800A7758
 800A7758	mflo   s0
 800A775C	j      La7768 [$800a7768]
 800A7760	nop
@@ -8006,19 +7772,6 @@ A0 = h[S1 + 0000];
 800A7D14	addiu  v0, a1, $fff6 (=-$a)
 V0 = A0 + V0;
 800A7D1C	div    v0, a1
-800A7D20	bne    a1, zero, La7d2c [$800a7d2c]
-800A7D24	nop
-800A7D28	break   $01c00
-
-La7d2c:	; 800A7D2C
-800A7D2C	addiu  at, zero, $ffff (=-$1)
-800A7D30	bne    a1, at, La7d44 [$800a7d44]
-800A7D34	lui    at, $8000
-800A7D38	bne    v0, at, La7d44 [$800a7d44]
-800A7D3C	nop
-800A7D40	break   $01800
-
-La7d44:	; 800A7D44
 800A7D44	mfhi   v1
 V0 = A0 << 01;
 V0 = V0 + A0;
@@ -8030,19 +7783,6 @@ V0 = bu[V0 + 0012];
 800A7D6C	nop
 V1 = V1 + V0;
 800A7D74	div    v1, a1
-800A7D78	bne    a1, zero, La7d84 [$800a7d84]
-800A7D7C	nop
-800A7D80	break   $01c00
-
-La7d84:	; 800A7D84
-800A7D84	addiu  at, zero, $ffff (=-$1)
-800A7D88	bne    a1, at, La7d9c [$800a7d9c]
-800A7D8C	lui    at, $8000
-800A7D90	bne    v1, at, La7d9c [$800a7d9c]
-800A7D94	nop
-800A7D98	break   $01800
-
-La7d9c:	; 800A7D9C
 800A7D9C	mfhi   a1
 S0 = 800f5124;
 V1 = w[S0 + 0000];
@@ -8167,36 +7907,10 @@ V0 = h[AT + 75cc];
 800A7FC0	addiu  a1, a0, $ffc4 (=-$3c)
 V0 = V0 + A1;
 800A7FC8	div    v0, a0
-800A7FCC	bne    a0, zero, La7fd8 [$800a7fd8]
-800A7FD0	nop
-800A7FD4	break   $01c00
-
-La7fd8:	; 800A7FD8
-800A7FD8	addiu  at, zero, $ffff (=-$1)
-800A7FDC	bne    a0, at, La7ff0 [$800a7ff0]
-800A7FE0	lui    at, $8000
-800A7FE4	bne    v0, at, La7ff0 [$800a7ff0]
-800A7FE8	nop
-800A7FEC	break   $01800
-
-La7ff0:	; 800A7FF0
 800A7FF0	mfhi   a1
 800A7FF4	nop
 V0 = A1 + 0078;
 800A7FFC	div    v0, a0
-800A8000	bne    a0, zero, La800c [$800a800c]
-800A8004	nop
-800A8008	break   $01c00
-
-La800c:	; 800A800C
-800A800C	addiu  at, zero, $ffff (=-$1)
-800A8010	bne    a0, at, La8024 [$800a8024]
-800A8014	lui    at, $8000
-800A8018	bne    v0, at, La8024 [$800a8024]
-800A801C	nop
-800A8020	break   $01800
-
-La8024:	; 800A8024
 800A8024	mfhi   a0
 V0 = 800b75dc;
 V1 = V1 + V0;
@@ -8248,19 +7962,6 @@ V1 = w[800b74fc];
 800A8118	addiu  v0, v1, $ff9c (=-$64)
 V0 = A0 + V0;
 800A8120	div    v0, v1
-800A8124	bne    v1, zero, La8130 [$800a8130]
-800A8128	nop
-800A812C	break   $01c00
-
-La8130:	; 800A8130
-800A8130	addiu  at, zero, $ffff (=-$1)
-800A8134	bne    v1, at, La8148 [$800a8148]
-800A8138	lui    at, $8000
-800A813C	bne    v0, at, La8148 [$800a8148]
-800A8140	nop
-800A8144	break   $01800
-
-La8148:	; 800A8148
 800A8148	mfhi   v1
 V0 = A1 + 000a;
 [800f507c] = w(V0);
@@ -8274,19 +7975,6 @@ V0 = h[A2 + 0000];
 A0 = V1 + 0064;
 V0 = V0 + A0;
 800A817C	div    v0, v1
-800A8180	bne    v1, zero, La818c [$800a818c]
-800A8184	nop
-800A8188	break   $01c00
-
-La818c:	; 800A818C
-800A818C	addiu  at, zero, $ffff (=-$1)
-800A8190	bne    v1, at, La81a4 [$800a81a4]
-800A8194	lui    at, $8000
-800A8198	bne    v0, at, La81a4 [$800a81a4]
-800A819C	nop
-800A81A0	break   $01800
-
-La81a4:	; 800A81A4
 800A81A4	mfhi   v1
 800A81A8	addiu  v0, a1, $fff1 (=-$f)
 [800b7598] = w(V0);
@@ -8374,36 +8062,10 @@ V0 = h[AT + 75cc];
 800A8334	addiu  a1, a0, $ffc4 (=-$3c)
 V0 = V0 + A1;
 800A833C	div    v0, a0
-800A8340	bne    a0, zero, La834c [$800a834c]
-800A8344	nop
-800A8348	break   $01c00
-
-La834c:	; 800A834C
-800A834C	addiu  at, zero, $ffff (=-$1)
-800A8350	bne    a0, at, La8364 [$800a8364]
-800A8354	lui    at, $8000
-800A8358	bne    v0, at, La8364 [$800a8364]
-800A835C	nop
-800A8360	break   $01800
-
-La8364:	; 800A8364
 800A8364	mfhi   a1
 800A8368	nop
 V0 = A1 + 0078;
 800A8370	div    v0, a0
-800A8374	bne    a0, zero, La8380 [$800a8380]
-800A8378	nop
-800A837C	break   $01c00
-
-La8380:	; 800A8380
-800A8380	addiu  at, zero, $ffff (=-$1)
-800A8384	bne    a0, at, La8398 [$800a8398]
-800A8388	lui    at, $8000
-800A838C	bne    v0, at, La8398 [$800a8398]
-800A8390	nop
-800A8394	break   $01800
-
-La8398:	; 800A8398
 800A8398	mfhi   a2
 S2 = 800b75dc;
 V1 = V1 + S2;
@@ -8423,19 +8085,6 @@ A0 = A0 << 04;
 V1 = h[800f5058];
 800A83FC	nop
 800A8400	div    v0, v1
-800A8404	bne    v1, zero, La8410 [$800a8410]
-800A8408	nop
-800A840C	break   $01c00
-
-La8410:	; 800A8410
-800A8410	addiu  at, zero, $ffff (=-$1)
-800A8414	bne    v1, at, La8428 [$800a8428]
-800A8418	lui    at, $8000
-800A841C	bne    v0, at, La8428 [$800a8428]
-800A8420	nop
-800A8424	break   $01800
-
-La8428:	; 800A8428
 800A8428	mflo   v0
 A0 = w[S0 + 0000];
 A1 = hu[800b134a];
@@ -8449,19 +8098,6 @@ A0 = A0 << 04;
 V1 = h[800f505c];
 800A8464	nop
 800A8468	div    v0, v1
-800A846C	bne    v1, zero, La8478 [$800a8478]
-800A8470	nop
-800A8474	break   $01c00
-
-La8478:	; 800A8478
-800A8478	addiu  at, zero, $ffff (=-$1)
-800A847C	bne    v1, at, La8490 [$800a8490]
-800A8480	lui    at, $8000
-800A8484	bne    v0, at, La8490 [$800a8490]
-800A8488	nop
-800A848C	break   $01800
-
-La8490:	; 800A8490
 800A8490	mflo   v0
 A0 = w[S0 + 0000];
 V1 = hu[S1 + 0000];
@@ -8472,19 +8108,6 @@ V1 = V1 - V0;
 V1 = h[800f505e];
 800A84B4	nop
 800A84B8	div    v0, v1
-800A84BC	bne    v1, zero, La84c8 [$800a84c8]
-800A84C0	nop
-800A84C4	break   $01c00
-
-La84c8:	; 800A84C8
-800A84C8	addiu  at, zero, $ffff (=-$1)
-800A84CC	bne    v1, at, La84e0 [$800a84e0]
-800A84D0	lui    at, $8000
-800A84D4	bne    v0, at, La84e0 [$800a84e0]
-800A84D8	nop
-800A84DC	break   $01800
-
-La84e0:	; 800A84E0
 800A84E0	mflo   v0
 V1 = hu[800b134c];
 A0 = w[S3 + 0000];
@@ -9690,19 +9313,6 @@ V0 = V0 + V1;
 V1 = w[A3 + 006c];
 V0 = V0 << 02;
 800A9740	div    v0, v1
-800A9744	bne    v1, zero, La9750 [$800a9750]
-800A9748	nop
-800A974C	break   $01c00
-
-La9750:	; 800A9750
-800A9750	addiu  at, zero, $ffff (=-$1)
-800A9754	bne    v1, at, La9768 [$800a9768]
-800A9758	lui    at, $8000
-800A975C	bne    v0, at, La9768 [$800a9768]
-800A9760	nop
-800A9764	break   $01800
-
-La9768:	; 800A9768
 800A9768	mflo   v0
 V1 = 00d0;
 T6 = V1 - V0;
