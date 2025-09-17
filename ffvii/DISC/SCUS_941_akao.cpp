@@ -1605,7 +1605,7 @@ int system_akao_execute()
 
     g_akao_mutex = 1;
 
-    if( (command == 0x10) || (command == 0x14) || (command == 0x15) || (command == 0x18) || (command = 0x19) )
+    if( (command == 0x10) || (command == 0x14) || (command == 0x15) || (command == 0x18) || (command == 0x19) )
     {
         akao_offset = w[0x8009a004];
 

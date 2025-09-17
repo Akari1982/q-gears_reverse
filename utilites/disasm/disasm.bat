@@ -1,1 +1,1 @@
-adisasm ENDING.X ENDING.X.asm -v -b 800a0000 800a0030 -u -a
+adisasm SUBMAR.BIN_u SUBMAR.BIN_u.asm -v -b 800a0000 800a0000 -u -a

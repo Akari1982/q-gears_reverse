@@ -750,9 +750,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            A0 = 0x80180000;
-            A1 = 0x800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
             funca00d0();
 
@@ -768,9 +766,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            A0 = 80180000;
-            A1 = 800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
             funca02d0();
 
@@ -786,9 +782,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            A0 = 80180000;
-            A1 = 800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
             funca0390();
 
@@ -804,9 +798,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            A0 = 80180000;
-            A1 = 800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
             funcb6b58();
 
@@ -840,9 +832,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            A0 = 80180000;
-            A1 = 800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
             funca0450();
 
@@ -935,9 +925,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            A0 = 80180000;
-            A1 = 800a0000;
-            func15ca0();
+            func15ca0( 0x80180000, 0x800a0000 );
 
             funca0448();
 
