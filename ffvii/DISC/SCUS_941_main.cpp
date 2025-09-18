@@ -106,7 +106,7 @@ void func112e8()
         A0 = 0x80180000;
     }
 
-    func15ca0( A0, 0x800a0000 ); // gzip decode and copy
+    system_gzip_bin_decompress( A0, 0x800a0000 );
 
     if( w[0x80071e28] != 0x2 )
     {
@@ -278,19 +278,14 @@ void system_field_run()
             if( h[0x800965ec] != 0x2 ) // not battle
             {
                 system_cdrom_start_load_file( w[0x80048d24], w[0x80048d28], 0x80180000, 0 ); // "FIELD/FIELD.BIN"
-
                 while( system_cdrom_read_chain() != 0 ) {}
-
-                A0 = 0x80180000;
+                system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
             }
             else
             {
                 while( system_cdrom_read_chain() != 0 ) {}
-
-                A0 = 0x801c0000;
+                system_gzip_bin_decompress( 0x801c0000, 0x800a0000 );
             }
-
-            func15ca0( A0, 0x800a0000 ); // gzip decode and copy
         }
     }
 
@@ -750,7 +745,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funca00d0();
 
@@ -766,7 +761,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funca02d0();
 
@@ -782,7 +777,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funca0390();
 
@@ -798,7 +793,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funcb6b58();
 
@@ -814,7 +809,7 @@ while( true )
 
             while( system_cdrom_read_chain() != 0 ) {}
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funca00bc( bu[0x8009d5e5] );
 
@@ -832,7 +827,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funca0450();
 
@@ -925,7 +920,7 @@ while( true )
 
             do system_cdrom_read_chain(); while( V0 != 0 )
 
-            func15ca0( 0x80180000, 0x800a0000 );
+            system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
             funca0448();
 

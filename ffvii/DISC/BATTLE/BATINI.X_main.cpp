@@ -1412,9 +1412,9 @@ func145bc(); // load sync
 
 pack_start_scene = bu[80082268 + f1c + scene_pack_id]; // scene.bin look-up table
 
-A0 = 801c0000 + w[801c0000 + (scene_id - pack_start_scene) * 4] * 4; // scene start pointer
-A1 = SP + 110;
-func17108(); // extract gzip
+A0 = 0x801c0000 + w[0x801c0000 + (scene_id - pack_start_scene) * 0x4] * 0x4; // scene start pointer
+A1 = SP + 0x110;
+system_gzip_decompress();
 
 // copy enemy ID
 A0 = 8016360c; // to

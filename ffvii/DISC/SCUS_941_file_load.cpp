@@ -109,26 +109,16 @@ func14a00(); // copy
 
 
 
-////////////////////////////////
-// func14658()
+void func14658( file_id, func )
+{
+    func14578( file_id, 0x801b0000, 0 ); // start load file
 
-file_id = A0;
-func = A1;
+    func145bc( 0 ); // load sync
 
-A0 = file_id;
-A1 = 801b0000; // dst
-A2 = 0; // callback
-func14578(); // start load file
+    system_gzip_bin_decompress( 0x801b0000, 0x800a0000 );
 
-A0 = 0;
-func145bc(); // load sync
-
-A0 = 801b0000;
-A1 = 800a0000;
-func15ca0(); // gzip decode and copy
-
-80014688	jalr   func ra
-////////////////////////////////
+    80014688	jalr   func ra
+}
 
 
 
@@ -167,35 +157,27 @@ while( true )
 // func14750()
 // callback to kernel load
 
-A0 = 801b0000;
-func15b44();
+func15b44( 0x801b0000 );
 
 while( true )
 {
-    func15b50(); // get kernel type
-    type = V0;
+    type = func15b50(); // get kernel type
 
-    if( type == ffff ) return;
+    if( type == 0xffff ) return;
 
-    func15b88();
-    size = V0;
+    size = func15b88();
 
-    if( type == 9 ) // strings
+    if( type == 0x9 ) // strings
     {
-        A0 = size;
-        func14c80();
-
-        A0 = V0; // dst
-        func15bc0();
+        system_gzip_pack_decompress_next_block( func14c80( size ) );
     }
     else
     {
-        dst = w[80048dd4 + type * 4];
+        dst = w[0x80048dd4 + type * 4];
 
         if( dst != 0 )
         {
-            A0 = dst;
-            func15bc0(); // load kernel data
+            system_gzip_pack_decompress_next_block( dst ); // load kernel data
         }
     }
 }
@@ -206,29 +188,25 @@ while( true )
 ////////////////////////////////
 // func14804()
 
-A0 = 801b0000;
-func15b44();
+func15b44( 0x801b0000 );
 
 while( true )
 {
     func15b50(); // get kernel type
 
-    if( V0 == ffff ) return;
+    if( V0 == 0xffff ) return;
 
     if( V0 == 0 )
     {
-        A0 = 801c0000;
-        func15bc0();
+        system_gzip_pack_decompress_next_block( 0x801c0000 );
 
         func149e0();
 
-        A0 = 801c0000;
-        func14980();
+        func14980( 0x801c0000 );
     }
-    else if( V0 == 1 )
+    else if( V0 == 0x1 )
     {
-        A0 = 80063048;
-        func15bc0();
+        system_gzip_pack_decompress_next_block( 0x80063048 );
     }
 }
 ////////////////////////////////
@@ -282,19 +260,12 @@ return 1;
 
 func148a0();
 
-A0 = 2; // INIT\KERNEL.BIN
-A1 = 801b0000; // dst
-A2 = 0; // callback
-func14578(); // start load file
+func14578( 0x2, 0x801b0000, 0 ); // start load file INIT\KERNEL.BIN
 
-A0 = 0;
-func145bc(); // load sync
+func145bc( 0 ); // load sync
 
 // load initialization data to savemap
-A0 = 801b0000;
-A1 = 8009c6e4 + 54;
-A2 = 3;
-func15c3c();
+system_gzip_pack_decompress_by_id( 0x801b0000, 0x8009c6e4 + 0x54, 0x3 );
 ////////////////////////////////
 
 

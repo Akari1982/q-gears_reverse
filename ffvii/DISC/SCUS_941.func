@@ -87,19 +87,21 @@
 80015B44 func15b44
 80015B50 func15b50
 80015B88 func15b88
-80015BC0 func15bc0
-80015C3C func15c3c
-80015CA0 func15ca0
-80015D14 func15d14
-80015D64 func15d64
-80016320 func16320
-80016340 func16340
-800166C0 func166c0
-80016808 func16808
-800169B8 func169b8
-80016F90 func16f90
-8001708C func1708c
-80017108 func17108
+
+// SCUS_941_gzip.cpp
+80015BC0 system_gzip_pack_decompress_next_block
+80015C3C system_gzip_pack_decompress_by_id
+80015CA0 system_gzip_bin_decompress
+80015D14 system_gzip_alloc_workspace
+80015D64 system_gzip_build_huffman
+80016320 system_gzip_free_huffman
+80016340 system_gzip_link_huffman
+800166C0 system_gzip_deflate_uncompressed
+80016808 system_gzip_deflate_fixed_huffman
+800169B8 system_gzip_deflate_dynamic_huffman
+80016F90 system_gzip_deflate_block_parse
+8001708C system_gzip_deflate_parse
+80017108 system_gzip_decompress
 
 // SCUS_941_player_parse.cpp
 80017238 func17238

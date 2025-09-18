@@ -42,9 +42,7 @@ if( battle_id != ffff )
         A0 = S0;
         func145bc(); // wait
 
-        A0 = 801c0000;
-        A1 = 801b0000;
-        func15ca0(); // ungzip
+        system_gzip_bin_decompress( 0x801c0000, 0x801b0000 );
 
         // run battle init
         A0 = battle_id;
@@ -275,9 +273,7 @@ system_cdrom_start_load_file();
 A0 = 800a3354;
 func145bc();
 
-A0 = 801c0000;
-A1 = 801b0000;
-func15ca0();
+system_gzip_bin_decompress( 0x801c0000, 0x801b0000 );
 
 func1b000();
 
