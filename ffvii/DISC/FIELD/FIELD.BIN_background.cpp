@@ -395,62 +395,62 @@ void field_background_add_to_render( FieldRenderData& render_data )
 ////////////////////////////////
 // field_background_scrolling_init()
 
-if( bu[8009abf4 + 1f] == 0 ) // init state
+if( bu[0x8009abf4 + 0x1f] == 0 ) // init state
 {
-    switch( bu[8009abf4 + 1d] )
+    switch( bu[0x8009abf4 + 0x1d] )
     {
         case 0: // instant auto scroll to pc (SCRCC)
         {
-            [8009abf4 + 1f] = b(2); // finished state
-            [8009a100] = h(0); // auto scroll to PC
+            [0x8009abf4 + 0x1f] = b(0x2); // finished state
+            [0x8009a100] = h(0); // auto scroll to PC
 
-            [80071e38] = h(0); // set current screen scroll x
-            [80071e3c] = h(0); // set current screen scroll y
+            [0x80071e38] = h(0); // set current screen scroll x
+            [0x80071e3c] = h(0); // set current screen scroll y
         }
         break;
 
-        case 1:
+        case 0x1:
         {
-            [8009abf4 + 1f] = b(1); // update state
-            [8009a100] = h(1); // scripted scroll
+            [0x8009abf4 + 0x1f] = b(0x1); // update state
+            [0x8009a100] = h(0x1); // scripted scroll
         }
         break;
 
-        case 2: // linear scroll bg to entity
-        case 3: // smooth scroll bg to entity
+        case 0x2: // linear scroll bg to entity
+        case 0x3: // smooth scroll bg to entity
         {
-            [8009abf4 + 1f] = b(1); // update state
-            [8009a100] = h(1); // scripted scroll
+            [0x8009abf4 + 0x1f] = b(0x1); // update state
+            [0x8009a100] = h(0x1); // scripted scroll
 
-            [80075cf8] = h(0);
-            [8009c558] = h(hu[8009abf4 + 20]); // steps
-            [80075e14] = h(hu[80071e38]); // start
-            [80075e1c] = h(hu[80071e3c]); // start
+            [0x80075cf8] = h(0);
+            [0x8009c558] = h(hu[0x8009abf4 + 0x20]); // steps
+            [0x80075e14] = h(hu[0x80071e38]); // start
+            [0x80075e1c] = h(hu[0x80071e3c]); // start
         }
         break;
 
-        case 4: // instant scroll bg to coord (SCR2D)
+        case 0x4: // instant scroll bg to coord (SCR2D)
         {
-            [8009abf4 + 1f] = b(2); // finished state
-            [8009a100] = h(1); // scripted scroll
+            [0x8009abf4 + 0x1f] = b(0x2); // finished state
+            [0x8009a100] = h(0x1); // scripted scroll
 
-            [80071e38] = h(hu[8009abf4 + a]); // set current screen scroll x
-            [80071e3c] = h(hu[8009abf4 + c]); // set current screen scroll y
+            [0x80071e38] = h(hu[0x8009abf4 + 0xa]); // set current screen scroll x
+            [0x80071e3c] = h(hu[0x8009abf4 + 0xc]); // set current screen scroll y
         }
         break;
 
-        case 5: // linear scroll bg to coord (SCR2DL)
-        case 6: // smooth scroll bg to coord (SCR2DC)
+        case 0x5: // linear scroll bg to coord (SCR2DL)
+        case 0x6: // smooth scroll bg to coord (SCR2DC)
         {
-            [8009abf4 + 1f] = b(1); // update state
-            [8009a100] = h(1); // scripted scroll
+            [0x8009abf4 + 0x1f] = b(0x1); // update state
+            [0x8009a100] = h(0x1); // scripted scroll
 
-            [80075cf8] = h(0); // current step
-            [8009c558] = h(hu[8009abf4 + 20]); // steps
-            [80075e14] = h(hu[80071e38]); // start
-            [80075e18] = h(hu[8009abf4 + a]); // end
-            [80075e1c] = h(hu[80071e3c]); // start
-            [80075e20] = h(hu[8009abf4 + c]); // end
+            [0x80075cf8] = h(0); // current step
+            [0x8009c558] = h(hu[0x8009abf4 + 0x20]); // steps
+            [0x80075e14] = h(hu[0x80071e38]); // start
+            [0x80075e18] = h(hu[0x8009abf4 + 0xa]); // end
+            [0x80075e1c] = h(hu[0x80071e3c]); // start
+            [0x80075e20] = h(hu[0x8009abf4 + 0xc]); // end
         }
         break;
     }
@@ -610,12 +610,12 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
 
 ret = A0;
 
-entity_id = bu[8009abf4 + 1e]; // entity we scroll bg to
-[SP + 10] = h(w[80074ea4 + entity_id * 84 + c] >> c); // entity x
-[SP + 12] = h(w[80074ea4 + entity_id * 84 + 10] >> c); // entity y
-[SP + 14] = h((w[80074ea4 + entity_id * 84 + 14] >> c) + hu[8009ac0a]);  // entity z
+entity_id = bu[0x8009abf4 + 0x1e]; // entity we scroll bg to
+[SP + 10] = h(w[0x80074ea4 + entity_id * 0x84 + 0xc] >> 0xc); // entity x
+[SP + 12] = h(w[0x80074ea4 + entity_id * 0x84 + 0x10] >> 0xc); // entity y
+[SP + 14] = h((w[0x80074ea4 + entity_id * 0x84 + 0x14] >> 0xc) + hu[0x8009ac0a]);  // entity z
 
-A0 = SP + 10;
+A0 = SP + 0x10;
 A1 = ret;
 field_calculate_world_to_screen_pos();
 ////////////////////////////////

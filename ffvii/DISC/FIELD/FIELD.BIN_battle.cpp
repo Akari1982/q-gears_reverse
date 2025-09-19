@@ -30,8 +30,8 @@ return bu[800e0638 + V0]; // random
 // funcaba70()
 
 // get encounter table address
-if( bu[8009abf4 + 3c] == 0 ) enc_data = w[80071a54];
-else                         enc_data = w[80071a54] + 18;
+if( bu[0x8009abf4 + 0x3c] == 0 ) enc_data = w[0x80071a54];
+else                             enc_data = w[0x80071a54] + 0x18;
 
 [8009c6d8] = b(bu[8009c6d8] + 20);
 
@@ -44,7 +44,7 @@ if( bu[8009c6d8] == 0 )
     if( ( bu[8009c6e4 + eaa] == 0 ) && ( bu[8009c6e4 + eab] != ff ) ) [8009c6e4 + eab] = b(bu[8009c6e4 + eab] + 1);
 
     A0 = hu[enc_data + 0];
-    if( ( A0 & 1 ) && ( hu[80114488] == 0 ) && ( bu[8009abf4 + 3b] == 0 ) )
+    if( ( A0 & 1 ) && ( hu[80114488] == 0 ) && ( bu[0x8009abf4 + 0x3b] == 0 ) )
     {
         pc_entity_id = h[800965e0];
         move_speed = hu[80074ea4 + pc_entity_id * 84 + 70];
@@ -64,8 +64,8 @@ if( bu[8009c6d8] == 0 )
         {
             field_stop_load_next_map_in_advance();
 
-            [8009abf4 + 1] = b(2);
-            [8007ebc8] = b(1);
+            [0x8009abf4 + 0x1] = b(0x2);
+            [0x8007ebc8] = b(0x1);
 
             funcaba34(); // random
             A0 = (V0 & ff) / 4;

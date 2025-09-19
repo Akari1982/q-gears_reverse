@@ -9040,16 +9040,16 @@ if( A0 >= 3 ) // if not player models
 ////////////////////////////////
 // wm_set_field_to_load()
 
-gate_id = ((((A0 >> 8) - 1) << 1) & 01fe) | (A0 & 1);
+gate_id = ((((A0 >> 0x8) - 0x1) << 0x1) & 0x1fe) | (A0 & 0x1);
 
-[8009abf4 + 2] = h(hu[800bf5f0 + gate_id * c + 6]); // map to load
-[8009abf4 + 4] = h(hu[800bf5f0 + gate_id * c + 0]); // destination x during map load
-[8009abf4 + 6] = h(hu[800bf5f0 + gate_id * c + 2]); // destination y during map load
-[8009abf4 + 22] = h(hu[800bf5f0 + gate_id * c + 4]); // destination z during map load
-[8009abf4 + 24] = h(bu[800bf5f0 + gate_id * c + 8]); // rotation for manual entity during map load
+[0x8009abf4 + 0x2] = h(hu[0x800bf5f0 + gate_id * 0xc + 0x6]); // map to load
+[0x8009abf4 + 0x4] = h(hu[0x800bf5f0 + gate_id * 0xc + 0x0]); // destination x during map load
+[0x8009abf4 + 0x6] = h(hu[0x800bf5f0 + gate_id * 0xc + 0x2]); // destination y during map load
+[0x8009abf4 + 0x22] = h(hu[0x800bf5f0 + gate_id * 0xc + 0x4]); // destination z during map load
+[0x8009abf4 + 0x24] = h(bu[0x800bf5f0 + gate_id * 0xc + 0x8]); // rotation for manual entity during map load
 
-[8011626c] = w(0);
-[80116270] = w(A0);
+[0x8011626c] = w(0);
+[0x80116270] = w(A0);
 ////////////////////////////////
 
 

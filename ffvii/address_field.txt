@@ -226,9 +226,9 @@
 
 80095de0 array of stored background palletes (0x40 items 0x20 size)(each palette is 0x10 items 0x2 size).
 
-800965e0 we store manual visible entity here (pc).
-800965e8 [][]     1 - field background already loading, 0 - not loading. Set 2 if background loading and re make some check and it returns 0.
-800965ec [][]     depending on this value we load field differently. Store 1 here when move from map to map.
+0x800965e0 we store manual visible entity here (pc).
+0x800965e8 [][]     1 - field background already loading, 0 - not loading. Set 2 if background loading and re make some check and it returns 0.
+0x800965ec [][]     depending on this value we load field differently. Store 1 here when move from map to map.
                     1 - 
                     2 - after battle?
                     3 - 
@@ -348,7 +348,7 @@
                     12 - store party and char equipment and materia
                     13 - restore party and char equipment and materia
                     14 - we abort movie play if this.
-                    19 -
+                    19 - we load INSTR2 if we set this (Sephiroth battle?).
                     1a - game over
     + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play. 1 in case of tutorial.
     + 04 [][]     destination x during map load.

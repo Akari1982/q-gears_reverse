@@ -9,7 +9,7 @@
 
 wm_dialog_0_reset_and_pointer_init();
 
-[8009c6e0] = w(8009abf4); // struct with buttons data
+[0x8009c6e0] = w(0x8009abf4); // struct with buttons data
 ////////////////////////////////
 
 

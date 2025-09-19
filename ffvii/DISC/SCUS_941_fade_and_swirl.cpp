@@ -120,7 +120,7 @@ green = A1;
 blue = A2;
 
 rb = hu[80075dec];
-fade_start = hu[8009abf4 + 4e]; // start value of fade
+fade_start = hu[0x8009abf4 + 0x4e]; // start value of fade
 
 A0 = 8007e7a0 + rb * 4;
 A1 = 1;
@@ -183,14 +183,14 @@ system_psyq_clear_otag_r();
 ////////////////////////////////
 // func134f4()
 
-[8009abf4 + 38] = b(0); // fade disabled
+[0x8009abf4 + 0x38] = b(0); // fade disabled
 
-[8009abf4 + 4e] = h(hu[8009abf4 + 4e] - hu[8009abf4 + 50]);
+[0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] - hu[0x8009abf4 + 0x50]);
 
-if( ( hu[8009abf4 + 4e] <= 0 ) || ( hu[80114488] == 1 ) )
+if( ( hu[0x8009abf4 + 0x4e] <= 0 ) || ( hu[0x80114488] == 0x1 ) )
 {
-    [8009abf4 + 4c] = h(0);
-    [8009abf4 + 4e] = h(0);
+    [0x8009abf4 + 0x4c] = h(0);
+    [0x8009abf4 + 0x4e] = h(0);
 }
 ////////////////////////////////
 

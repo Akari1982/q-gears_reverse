@@ -364,35 +364,33 @@ void field_main()
 
         [0x800965ec] = h(0x1); // set prev game state as field
 
-        if( ( bu[0x8009abf4 + 1] == a ) || ( bu[0x8009abf4 + 1] == 1a ) || ( bu[0x8009abf4 + 1] == 5 ) )
+        if( ( bu[0x8009abf4 + 0x1] == 0xa ) || ( bu[0x8009abf4 + 0x1] == 0x1a ) || ( bu[0x8009abf4 + 0x1] == 0x5 ) )
         {
-            A0 = 0;
-            system_psyq_vsync(); // wait
-
+            system_psyq_vsync( 0 );
             return;
         }
 
-        if( bu[0x8009abf4 + 1] == 1 )
+        if( bu[0x8009abf4 + 0x1] == 0x1 )
         {
-            [0x8009abf4 + 64] = h(hu[0x8009a05c]);
+            [0x8009abf4 + 0x64] = h(hu[0x8009a05c]);
 
-            [0x8009a05c] = h(h[0x8009abf4 + 2]);
+            [0x8009a05c] = h(h[0x8009abf4 + 0x2]);
 
-            if( h[0x8009abf4 + 2] != h[0x80071a5c] )
+            if( h[0x8009abf4 + 0x2] != h[0x80071a5c] )
             {
                 field_stop_load_next_map_in_advance();
             }
 
-            if( ( hu[0x8009a05c] - 1 ) < 40 )
+            if( ( hu[0x8009a05c] - 0x1 ) < 0x40 )
             {
-                [0x8009c560] = h(3); // world map
+                [0x8009c560] = h(0x3); // world map
                 func129d0();
 
-                [0x8009abf4 + 4c] = h(3);
-                [0x80071a58] = b(3);
-                [0x8009abf4 + 4e] = h(0);
+                [0x8009abf4 + 0x4c] = h(0x3);
+                [0x80071a58] = b(0x3);
+                [0x8009abf4 + 0x4e] = h(0);
                 [0x8007e768] = h(0);
-                [0x80095dd4] = h(1);
+                [0x80095dd4] = h(0x1);
 
                 A0 = 0;
                 system_psyq_vsync(); // wait
@@ -401,23 +399,22 @@ void field_main()
             }
         }
 
-        if( bu[0x8009abf4 + 1] == c )
+        if( bu[0x8009abf4 + 0x1] == 0xc )
         {
             [0x8009abf4 + 0x64] = h(hu[0x8009a05c]);
             [0x8009a05c] = h(hu[0x8009abf4 + 0x2]);
 
             switch( bu[0x8009abf4 + 0xf2] )
             {
-                case 0: [0x8009c560] = h(6); break; // highway
-                case 1: [0x8009c560] = h(7); break; // chocobo
-                case 2: [0x8009c560] = h(8); break; // snowboard
-                case 3: [0x8009c560] = h(9); break; // condor
-                case 4: [0x8009c560] = h(a); break; // submarine
-                case 5: [0x8009c560] = h(b); break; // jet
-                case 6: [0x8009c560] = h(e); break; // snowboard2
+                case 0: [0x8009c560] = h(0x6); break; // highway
+                case 1: [0x8009c560] = h(0x7); break; // chocobo
+                case 2: [0x8009c560] = h(0x8); break; // snowboard
+                case 3: [0x8009c560] = h(0x9); break; // condor
+                case 4: [0x8009c560] = h(0xa); break; // submarine
+                case 5: [0x8009c560] = h(0xb); break; // jet
+                case 6: [0x8009c560] = h(0xe); break; // snowboard2
             }
-            A0 = 0;
-            system_psyq_vsync(); // wait
+            system_psyq_vsync( 0 );
 
             return;
         }
@@ -425,30 +422,28 @@ void field_main()
         // encounter or disc change
         if( ( bu[0x8009abf4 + 0x1] == 0x2 ) || ( bu[0x8009abf4 + 0x1] == 0xd ) )
         {
-            system_psyq_vsync( 0 ); // wait
+            system_psyq_vsync( 0 );
             return;
         }
 
-        if( h[0x8009c560] == 5 )
+        if( h[0x8009c560] == 0x5 )
         {
             func129d0();
 
             [0x8009abf4 + 0x4c] = h(0xd);
-            [0x80071a58] = b(d);
+            [0x80071a58] = b(0xd);
             [0x8009abf4 + 0x4e] = h(0);
             [0x8007e768] = h(0);
-            [0x80095dd4] = h(1);
+            [0x80095dd4] = h(0x1);
 
-            A0 = 0;
-            system_psyq_vsync(); // wait
+            system_psyq_vsync( 0 );
 
             return;
         }
 
-        if( ( bu[0x8009c560] == d ) || ( bu[0x8009c560] == 10 ) )
+        if( ( bu[0x8009c560] == 0xd ) || ( bu[0x8009c560] == 0x10 ) )
         {
-            A0 = 0;
-            system_psyq_vsync(); // wait
+            system_psyq_vsync( 0 );
 
             return;
         }
@@ -509,11 +504,11 @@ void field_main_loop()
 
     while( true )
     {
-        if( ( S3 << 0x10 ) == 0 ) [0x80075dec] = h(hu[0x80075dec] + 1);
+        if( ( S3 << 0x10 ) == 0 ) [0x80075dec] = h(hu[0x80075dec] + 0x1);
 
-        [0x80075dec] = h(hu[0x80075dec] + 1);
+        [0x80075dec] = h(hu[0x80075dec] + 0x1);
         buf_id = h[0x80075dec];
-        [0x8009abf4 + 0] = b(buf_id);
+        [0x8009abf4 + 0x0] = b(buf_id);
 
         FieldRenderData& render_data = g_field_render_data[buf_id];
 
@@ -566,7 +561,7 @@ void field_main_loop()
 
         if( bu[0x8009abf4 + 0x1] == 0xd ) // disc change
         {
-            [0x8009c560] = h(c); // disc change
+            [0x8009c560] = h(0xc); // disc change
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -995,9 +990,9 @@ if( bu[0x8009abf4 + 0x32] == 0 ) // 0 if PC can move
         [0x80074ea4 + model_id * 84 + 14] = w(V0 << c); // z
     }
 
-    [0x80074ea4 + model_id * 84 + 60] = h(10); // animation speed
-    [0x80074ea4 + model_id * 84 + 6c] = h((h[0x8009abf4 + 10] * 11) >> 8); // solid range value (based by field scale (9 bit fixed point))
-    [0x80074ea4 + model_id * 84 + 70] = h(h[0x8009abf4 + 10] * 2); // movement speed
+    [0x80074ea4 + model_id * 0x84 + 0x60] = h(0x10); // animation speed
+    [0x80074ea4 + model_id * 0x84 + 0x6c] = h((h[0x8009abf4 + 0x10] * 0x11) >> 0x8); // solid range value (based by field scale (9 bit fixed point))
+    [0x80074ea4 + model_id * 0x84 + 0x70] = h(h[0x8009abf4 + 0x10] * 0x2); // movement speed
 }
 
 for( int i = 0; i < h[0x8009abf4 + 0x28]; ++i ) // numbers of entities
@@ -2044,7 +2039,7 @@ else if (A0 < 0)
 
     if (A0 >= 0)
     {
-        V1 = bu[0x8009abf4 + V0 / 8 + b2];
+        V1 = bu[0x8009abf4 + V0 / 0x8 + 0xb2];
         V0 = A0 & 7;
         V1 = V0 >> V1;
         V1 = V1 & 1;
@@ -2433,11 +2428,11 @@ if( ( bu[actor_data + 5d] != 0 ) || ( actor_id != h[0x800965e0] ) ) return 1;
 
 if( w[0x80114454] & 0040 ) // if run button pressed
 {
-    A2 = 8009abf4 + 30; // run
+    A2 = 0x8009abf4 + 0x30; // run
 }
 else
 {
-    A2 = 8009abf4 + 2e; // walk
+    A2 = 0x8009abf4 + 0x2e; // walk
 }
 
 V1 = w[0x8008357c];

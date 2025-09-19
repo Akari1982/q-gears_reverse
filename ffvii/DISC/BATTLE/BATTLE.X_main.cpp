@@ -283,7 +283,7 @@ for( int i = 0; i < 4; ++i )
     [8009cbdc + i] = b(bu[80163790 + i]);
 }
 
-[8009c560] = h(1);
+[0x8009c560] = h(1);
 
 return 1;
 ////////////////////////////////
@@ -9372,31 +9372,23 @@ if( ( w[temp + 218] & 00000001 ) == 0 ) // if we not missing
         800ABEF8	nop
         V0 = w[V1 + 0034];
         800ABF00	lui    a1, $0004
-        V0 = V0 & A1;
-        800ABF08	beq    v0, zero, Labf30 [$800abf30]
-        800ABF0C	nop
-        V0 = hu[800f4958];
-        V1 = S2 << S0;
-        V0 = V0 | V1;
-        [800f4958] = h(V0);
-        800ABF28	j      Labf58 [$800abf58]
-        800ABF2C	nop
 
-        Labf30:	; 800ABF30
-        V0 = bu[V1 + 0028];
-        800ABF34	nop
-        800ABF38	beq    v0, zero, Labf48 [$800abf48]
-        800ABF3C	addiu  v0, v0, $ffff (=-$1)
-        800ABF40	j      Labf58 [$800abf58]
-        [V1 + 0028] = b(V0);
+        if( V0 & A1 )
+        {
+            [0x800f4958] = h(hu[0x800f4958] | (S2 << S0));
+        }
+        else
+        {
+            if( bu[V1 + 0x28] != 0 )
+            {
+                [V1 + 0x28] = b(bu[V1 + 0x28] - 1);
+            }
+            else
+            {
+                [A0 + 0x23c] = w(w[A0 + 0x23c] | A1);
+            }
+        }
 
-        Labf48:	; 800ABF48
-        V0 = w[A0 + 023c];
-        800ABF4C	nop
-        V0 = V0 | A1;
-        [A0 + 023c] = w(V0);
-
-        Labf58:	; 800ABF58
         V1 = w[80063014];
         800ABF60	nop
         V0 = w[V1 + 0218];

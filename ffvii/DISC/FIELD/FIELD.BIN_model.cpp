@@ -76,7 +76,7 @@ block7_data = w[8007e770] + 4;
 model_struct = w[8004a62c];
 model_data = w[model_struct + 4];
 
-entities_n = h[8009abf4 + 28];
+entities_n = h[0x8009abf4 + 0x28];
 
 // update bone matrixes
 for( int i = 0; i < entities_n; ++i )
@@ -259,7 +259,7 @@ for( int i = 0; i < h[8009ac1c]; ++i )
 ////////////////////////////////
 // funcab2b4()
 
-if( ( hu[80114488] == 0 ) || ( bu[8009abf4 + 39] == 1 ) )
+if( ( hu[80114488] == 0 ) || ( bu[0x8009abf4 + 0x39] == 1 ) )
 {
     V0 = w[80083578];
     [80071e40] = w(w[V0]);
@@ -286,13 +286,13 @@ if( h[800965e8] == 1 )
     return;
 }
 
-if( bu[8009abf4 + 1] == 14 )
+if( bu[0x8009abf4 + 0x1] == 0x14 )
 {
     system_movie_abort_play();
 
-    [80114488] = h(0);
-    [800e4d44] = h(0);
-    [8009abf4 + 26] = h(2);
+    [0x80114488] = h(0);
+    [0x800e4d44] = h(0);
+    [0x8009abf4 + 0x26] = h(0x2);
     return;
 }
 

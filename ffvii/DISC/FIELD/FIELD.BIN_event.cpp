@@ -1658,7 +1658,7 @@ if( page_id == 4 ) return;
     }
 }
 
-manual_entity_id = h[0x8009abf4 + 2a];
+manual_entity_id = h[0x8009abf4 + 0x2a];
 triangle_id = hu[0x80074ea4 + manual_entity_id * 84 + 72];
 walkmesh_data = w[0x800e4274];
 

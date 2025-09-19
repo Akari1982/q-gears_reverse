@@ -63,7 +63,7 @@ if( ( bu[0x8009d5e9] & 30 ) == 0 )
     func1117c();
 }
 
-[0x800707bc] = h(hu[0x8009abf4 + 2]);
+[0x800707bc] = h(hu[0x8009abf4 + 0x2]);
 [0x800707be] = h(bu[0x800716d0] | hu[0x8009ac32]);
 
 func146a4(); // load BATTLE.X or BROM.X and run it
@@ -476,7 +476,7 @@ while( true )
 
         if( V0 == 1 )
         {
-            [0x8009abf4 + 1] = b(0);
+            [0x8009abf4 + 0x1] = b(0);
             func33be0();
 
             system_akao_deinit();
@@ -578,7 +578,7 @@ while( true )
                 }
 
                 [0x800722c8] = w(801c0000);
-                [0x8009abf4 + 2] = h(hu[0x80095ddc]);
+                [0x8009abf4 + 0x2] = h(hu[0x80095ddc]);
                 [0x80071744] = w(w[0x80048d2c]);
                 [0x80095dd8] = w(w[0x80048d30]);
 
@@ -599,7 +599,7 @@ while( true )
                     if( ( ( hu[0x800707be] & 1 ) != 0 ) || ( ( w[0x8009d268] == 0 ) && ( ( w[0x80095ddc] & S7 ) != 0  ) ) )
                     {
                         [0x800707be] = h(0);
-                        [0x8009abf4 + 1] = b(1a);
+                        [0x8009abf4 + 0x1] = b(0x1a);
                     }
                     else
                     {
@@ -633,14 +633,14 @@ while( true )
                 [0x800965ec] = h(0x3);
                 [0x8009c560] = h(0x1); // set gamestate to field
             }
-            else if( w[0x80071e28] == 1 )
+            else if( w[0x80071e28] == 0x1 )
             {
                 [0x800965ec] = h(0x3);
                 [0x8009c560] = h(0x2); // set gamestate to battle
             }
-            else if( w[0x80071e28] == 2 )
+            else if( w[0x80071e28] == 0x2 )
             {
-                [0x8009abf4 + 1] = b(a);
+                [0x8009abf4 + 0x1] = b(0xa);
             }
         }
         break;
@@ -649,84 +649,70 @@ while( true )
         {
             while( hu[0x80095dd4] != 0 ) {}
 
-            do
-            {
-                A0 = 1;
-                system_psyq_draw_sync();
-            } while( V0 != 0 )
+            while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
 
             func119e4();
 
             if( bu[0x80071e34] == 1 )
             {
                 func260dc();
-
                 func26090(); // LIMTMENU.MNU
 
                 [0x80071e34] = b(0);
             }
 
-            switch( bu[0x8009abf4 + 1] )
+            switch( bu[0x8009abf4 + 0x1] )
             {
-                case 6: // NAMEMENU.MNU
+                case 0x6: // NAMEMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2];
-                    func24d88();
+                    func24d88( h[0x8009abf4 + 0x2] );
                 }
                 break;
 
-                case 7: // FORMMENU.MNU
+                case 0x7: // FORMMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2];
-                    func24dd4();
-
+                    func24dd4( h[0x8009abf4 + 0x2] );
                     func260dc();
-
                     func26090(); // LIMTMENU.MNU
                 }
                 break;
 
-                case 8: // SHOPMENU.MNU
+                case 0x8: // SHOPMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2];
-                    func24e18();
+                    func24e18( h[0x8009abf4 + 0x2] );
                 }
                 break;
 
-                case 9: // menu
+                case 0x9: // menu
                 {
-                    if( h[0x8009abf4 + 2] == 1 )
+                    if( h[0x8009abf4 + 0x2] == 0x1 )
                     {
-                        A0 = w[0x800e48e0]; // pointer to tutorial settings
-                        system_menu_show();
+                        system_menu_show( w[0x800e48e0] ); // pointer to tutorial settings
                     }
                     else
                     {
-                        A0 = 0;
-                        system_menu_show();
+                        system_menu_show( 0 );
 
-                        [0x8009abf4 + 1] = b(0);
+                        [0x8009abf4 + 0x1] = b(0);
                     }
                 }
                 break;
 
-                case e: // SAVEMENU.MNU
+                case 0xe: // SAVEMENU.MNU
                 {
                     func24e94();
                 }
                 break;
 
-                case 12: // ITEMMENU.MNU
+                case 0x12: // ITEMMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2]; // char id
-                    func24fc4(); // store party and char equipment and materia
+                    func24fc4( h[0x8009abf4 + 0x2] ); // store party and char equipment and materia
                 }
                 break;
 
-                case 13: // ITEMMENU.MNU
+                case 0x13: // ITEMMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2]; // char id
-                    func24f80(); // restore party and char equipment and materia
+                    func24f80( h[0x8009abf4 + 0x2] ); // restore party and char equipment and materia
                 }
                 break;
             }
@@ -846,18 +832,11 @@ while( true )
 
             if( S0 != V0 )
             {
-                A0 = w[0x80048d4c]; // 1efa6 FIELD\DSCHANGE.X
-                A1 = w[0x80048d50]; // 1774 size
-                A2 = 800a0000;
-                A3 = 0;
-                system_cdrom_load_file();
+                system_cdrom_load_file( w[0x80048d4c], w[0x80048d50], 0x800a0000, 0 ); // FIELD\DSCHANGE.X
 
-                A0 = bu[0x8009d588];
-                funca0000();
-
-                if( V0 == 1 )
+                if( funca0000( bu[0x8009d588] ) == 1 )
                 {
-                    [0x8009abf4 + 1] = b(a);
+                    [0x8009abf4 + 0x1] = b(0xa);
                     break;
                 }
             }
@@ -874,7 +853,7 @@ while( true )
         {
             func119e4();
 
-            switch( bu[0x8009abf4 + 1] - f )
+            switch( bu[0x8009abf4 + 0x1] - 0xf )
             {
                 case 0: func24ecc(); break; // ITEMMENU.MNU stole materia from player and store it to savemap
                 case 1: func24f04(); break; // ITEMMENU.MNU restore all stolen materia to equipment and materia list
@@ -883,27 +862,24 @@ while( true )
 
                 case 2: // ITEMMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2]; // char id
-                    func24f3c(); // remove all materia and accessory from char
+                    func24f3c( h[0x8009abf4 + 2] ); // remove all materia and accessory from char
                 }
                 break;
 
                 case 7: // BGINMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2]; // type of action
-                    func250ec(); // check criteria for master materia or bahamut zero
+                    func250ec( h[0x8009abf4 + 2] ); // check criteria for master materia or bahamut zero
                 }
                 break;
 
                 case 8: // BGINMENU.MNU
                 {
-                    A0 = h[0x8009abf4 + 2]; // type of action
-                    func25130(); // removes needed mastered materia and give master materia or bahamut zero
+                    func25130( h[0x8009abf4 + 2] ); // removes needed mastered materia and give master materia or bahamut zero
                 }
                 break;
             }
 
-            if( bu[0x8009abf4 + 1] != 19 )
+            if( bu[0x8009abf4 + 0x1] != 0x19 )
             {
                 field_copy_battle_party_to_party();
             }
@@ -941,7 +917,7 @@ while( true )
         break;
     }
 
-    if( bu[0x8009abf4 + 1] == 5 )
+    if( bu[0x8009abf4 + 0x1] == 0x5 )
     {
         system_cdrom_load_file( w[0x80048d54], w[0x80048d58], 0x800a0000, 0 ); // "FIELD\ENDING.X"
 
@@ -954,7 +930,7 @@ while( true )
         return;
     }
 
-    V1 = bu[0x8009abf4 + 1];
+    V1 = bu[0x8009abf4 + 0x1];
 
     8001274C	beq    v1, 1a, L12774 [$80012774]
 
@@ -964,7 +940,7 @@ while( true )
 
     80012764	bne    v1, a, L11dcc [$80011dcc]
 
-    [0x8009abf4 + 1] = b(0);
+    [0x8009abf4 + 0x1] = b(0);
 
     func33be0();
 
@@ -973,7 +949,7 @@ while( true )
     return;
 
     L12774:	; 80012774
-    [0x8009abf4 + 1] = b(0);
+    [0x8009abf4 + 0x1] = b(0);
     system_akao_execute();
 
     system_cdrom_load_file( w[0x80048d4c], w[0x80048d50], 0x800a0000, 0 ); // FIELD\DSCHANGE.X
