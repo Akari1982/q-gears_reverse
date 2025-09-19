@@ -1126,10 +1126,10 @@ return A0 + w[A0 + A1 * 4];
 ////////////////////////////////
 // system_cdrom_set_lzs_extract()
 
-[80034cf0] = w(A0); // src
-[80034cf4] = w(A1); // dst
-[80034cfc] = w(A1); // dst
-[80034d14] = w(80034e00); // system_cdrom_lzs_extract()
+[0x80034cf0] = w(A0); // src
+[0x80034cf4] = w(A1); // dst
+[0x80034cfc] = w(A1); // dst
+[0x80034d14] = w(0x80034e00); // system_cdrom_lzs_extract()
 ////////////////////////////////
 
 
@@ -1137,18 +1137,18 @@ return A0 + w[A0 + A1 * 4];
 ////////////////////////////////
 // func34d5c()
 
-T0 = w[80034cf0]; // src
-T1 = w[80034cf4]; // dst
-T2 = w[80034cf8];
-T4 = w[80034cfc]; // dst
-T5 = w[80034d00];
-T6 = w[80034d04];
-T7 = 4800;
+T0 = w[0x80034cf0]; // src
+T1 = w[0x80034cf4]; // dst
+T2 = w[0x80034cf8];
+T4 = w[0x80034cfc]; // dst
+T5 = w[0x80034d00];
+T6 = w[0x80034d04];
+T7 = 0x4800;
 
-[80034d10] = w(RA);
+[0x80034d10] = w(RA);
 
-A0 = w[80034d08];
-80034DA8	jr     w[80034d14]; // system_cdrom_lzs_extract()
+A0 = w[0x80034d08];
+80034DA8	jr     w[0x80034d14]; // system_cdrom_lzs_extract()
 ////////////////////////////////
 
 
@@ -1156,122 +1156,100 @@ A0 = w[80034d08];
 ////////////////////////////////
 // func34db0()
 
-[80034d14] = w(RA);
-RA = w[80034d10];
-[80034cf0] = w(T0);
-[80034cf4] = w(T1);
-[80034cf8] = w(T2);
-[80034cfc] = w(T4);
-[80034d00] = w(T5);
-[80034d04] = w(T6);
-[80034d08] = w(A0);
+[0x80034d14] = w(RA);
+RA = w[0x80034d10];
+[0x80034cf0] = w(T0);
+[0x80034cf4] = w(T1);
+[0x80034cf8] = w(T2);
+[0x80034cfc] = w(T4);
+[0x80034d00] = w(T5);
+[0x80034d04] = w(T6);
+[0x80034d08] = w(A0);
 return 1;
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// system_cdrom_lzs_extract()
-
-size_u = w[T0]; // read src
-T0 = T0 + 4; // src
-T7 = T7 - 4; // left
-left_literal = 0;
-
-while( true )
+void system_cdrom_lzs_extract()
 {
-    // if literal byte finished we read another one
-    if( left_literal == 0 )
+    size_u = w[T0]; // read src
+    T0 += 0x4; // src
+    T7 -= 0x4; // left
+    left_literal = 0;
+
+    while( true )
     {
-        literal = bu[T0]; // read src
-        T0 = T0 + 1; // src
-
-        left_literal = 8;
-        size_u = size_u - 1;
-        T7 = T7 - 1; // left
-
-        if( size_u == 0 )
+        // if literal byte finished we read another one
+        if( left_literal == 0 )
         {
-            return 0;
+            literal = bu[T0]; // read src
+            T0 += 0x1; // src
+
+            left_literal = 8;
+            size_u -= 0x1;
+            T7 -= 0x1; // left
+
+            if( size_u == 0 ) return 0;
+
+            if( T7 == 0 ) func34db0();
         }
 
-        if( T7 == 0 )
+        // we read direct data
+        if( literal & 0x1 ) // literal
         {
-            func34db0();
+            [T1] = b(bu[T0]); // read src to dst
+            T0 += 0x1; // src
+            T1 += 0x1; // dst
+
+            size_u -= 0x1;
+            T7 -= 0x1; // left
+
+            if( size_u == 0 ) return 0;
+
+            if( T7 == 0 ) func34db0();
         }
+        else // reference
+        {
+            A0 = bu[T0]; // read src
+            T0 += 0x1; // src
+
+            T7 -= 0x1; // left
+            if( T7 == 0 ) func34db0();
+
+            A1 = bu[T0]; // read src
+            T0 += 0x1; // src
+
+            offset = ((A1 & 0xf0) << 0x4) | A0;
+            length = A1 & 0xf;
+            T3 = T1 + length + 0x3;
+            A3 = T1 - ((T1 - T4 - offset - 0xfee) & 0xfff);
+
+            while( A3 < T4 )
+            {
+                [T1] = b(0);
+                T1 += 0x1; // dst
+                A3 += 0x1;
+            }
+
+            while( T1 < T3 )
+            {
+                [T1] = b(bu[A3]);
+                A3 += 0x1;
+                T1 += 0x1; // dst
+            }
+
+            size_u -= 0x2;
+            T7 -= 0x1; // left
+
+            if( size_u == 0 ) return 0;
+
+            if( T7 <= 0 ) func34db0();
+        }
+
+        literal >>= 0x1;
+        left_literal -= 0x1;
     }
-
-    // we read direct data
-    if( literal & 01 ) // literal
-    {
-        [T1] = b(bu[T0]); // read src to dst
-        T0 = T0 + 1; // src
-        T1 = T1 + 1; // dst
-
-        size_u = size_u - 1;
-        T7 = T7 - 1; // left
-
-        if( size_u == 0 )
-        {
-            return 0;
-        }
-
-        if( T7 == 0 )
-        {
-            func34db0();
-        }
-    }
-    else // reference
-    {
-        A0 = bu[T0]; // read src
-        T0 = T0 + 1; // src
-
-        T7 = T7 - 1; // left
-        if( T7 == 0 )
-        {
-            func34db0();
-        }
-
-        A1 = bu[T0]; // read src
-        T0 = T0 + 1; // src
-
-        offset = ((A1 & f0) << 4) | A0;
-        length = A1 & 0f;
-        T3 = T1 + length + 3;
-        A3 = T1 - ((T1 - T4 - offset - fee) & fff);
-
-        while( A3 < T4 )
-        {
-            [T1] = b(0);
-            T1 = T1 + 1; // dst
-            A3 = A3 + 1;
-        }
-
-        while( T1 < T3 )
-        {
-            [T1] = b(bu[A3]);
-            A3 = A3 + 1;
-            T1 = T1 + 1; // dst
-        }
-
-        size_u = size_u - 2;
-        T7 = T7 - 1; // left
-
-        if( size_u == 0 )
-        {
-            return 0;
-        }
-
-        if( T7 <= 0 )
-        {
-            func34db0();
-        }
-    }
-
-    literal = literal >> 1;
-    left_literal = left_literal - 1;
 }
-////////////////////////////////
 
 
 
