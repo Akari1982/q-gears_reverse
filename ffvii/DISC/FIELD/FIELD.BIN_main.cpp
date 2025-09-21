@@ -105,7 +105,7 @@ if( bu[0x8009abf4 + 0x32] == 0 ) // 0 if PC can move. 1 - otherwise.
 }
 
 // if we play movie or encounter
-if( ( bu[0x8009abf4 + 0x1] == 3 ) || ( hu[0x800e4d44] == 1 ) || ( bu[0x8009abf4 + 0x1] == 2 ) )
+if( ( bu[0x8009abf4 + 0x1] == 0x3 ) || ( hu[0x800e4d44] == 0x1 ) || ( bu[0x8009abf4 + 0x1] == 0x2 ) )
 {
     field_stop_load_next_map_in_advance();
     return;
@@ -117,7 +117,7 @@ if( h[0x80071a5c] == h[0x80095dd0] ) return;
 map_to_load = h[0x80095dd0];
  
 // if file size is greater than buffer
-if( w[0x800da5b8 + map_to_load * 18 + c] > 0004dfff ) return;
+if( w[0x800da5b8 + map_to_load * 0x18 + 0xc] > 0x4dfff ) return;
 
 field_stop_load_next_map_in_advance();
 
@@ -125,8 +125,8 @@ field_stop_load_next_map_in_advance();
 
 if( map_to_load >= 41 ) // if not world map id's
 {
-    A0 = w[0x800da5b8 + map_to_load * 18 + 8]; // MIM sector
-    A1 = w[0x800da5b8 + map_to_load * 18 + c]; // MIM size
+    A0 = w[0x800da5b8 + map_to_load * 0x18 + 0x8]; // MIM sector
+    A1 = w[0x800da5b8 + map_to_load * 0x18 + 0xc]; // MIM size
 }
 else
 {
@@ -134,7 +134,7 @@ else
     A1 = w[0x800def84]; // WORLD/WM.PRE size
 }
 
-A2 = 801b0000;
+A2 = 0x801b0000;
 A3 = 0;
 system_cdrom_start_load_file(); // set data to load in background
 

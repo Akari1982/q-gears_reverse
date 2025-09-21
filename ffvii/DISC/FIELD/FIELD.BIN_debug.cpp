@@ -1,199 +1,112 @@
 ////////////////////////////////
 // field_debug_init_buffers()
 
-for( int i = 0; i < 6; ++i )
+for( int i = 0; i < 0x6; ++i )
 {
-    [800e0748 + i * 17a + 178] = b(1);
+    [0x800e0748 + i * 0x17a + 0x178] = b(0x1);
 }
 
-[8009d824] = b(1); // debug dirty and needs update
-[800e1024] = h(0);
-[80071c08] = b(0); // current debug page
-[800e4210] = h(0); // opaque or semi-transparent 800e3fa8 monochrome rectangle
+[0x8009d824] = b(0x1); // debug dirty and needs update
+[0x800e1024] = h(0);
+[0x80071c08] = b(0); // current debug page
+[0x800e4210] = h(0); // opaque or semi-transparent 800e3fa8 monochrome rectangle
 
-for( int i = 0; i < 158; ++i )
+for( int i = 0; i < 0x158; ++i )
 {
-    [800e1028 + 0 * 1580 + i * 10 + 3] = b(3);
-    [800e1028 + 1 * 1580 + i * 10 + 3] = b(3);
-    [800e1028 + 0 * 1580 + i * 10 + 7] = b(74);
-    [800e1028 + 1 * 1580 + i * 10 + 7] = b(74);
-    [800e1028 + 0 * 1580 + i * 10 + 7] = b(bu[800e1028 + 0 * 1580 + i * 10 + 7] | 1);
-    [800e1028 + 1 * 1580 + i * 10 + 7] = b(bu[800e1028 + 1 * 1580 + i * 10 + 7] | 1);
+    [0x800e1028 + 0x0 * 0x1580 + i * 0x10 + 0x3] = b(0x3);
+    [0x800e1028 + 0x1 * 0x1580 + i * 0x10 + 0x3] = b(0x3);
+    [0x800e1028 + 0x0 * 0x1580 + i * 0x10 + 0x7] = b(0x74);
+    [0x800e1028 + 0x1 * 0x1580 + i * 0x10 + 0x7] = b(0x74);
+    [0x800e1028 + 0x0 * 0x1580 + i * 0x10 + 0x7] = b(bu[0x800e1028 + 0x0 * 0x1580 + i * 0x10 + 0x7] | 0x1);
+    [0x800e1028 + 0x1 * 0x1580 + i * 0x10 + 0x7] = b(bu[0x800e1028 + 0x1 * 0x1580 + i * 0x10 + 0x7] | 0x1);
 }
 
-for( int i = 0; i < 8; ++i )
+for( int i = 0; i < 0x8; ++i )
 {
-    [800e4200 + i * 2] = h(((1e7 - i) << 6) | 0010);
+    [0x800e4200 + i * 0x2] = h(((0x1e7 - i) << 0x6) | 0x0010);
 }
 
-for( int i = 0; i < c; ++i )
+for( int i = 0; i < 0xc; ++i )
 {
-    [800e3fa8 + 0 * c0 + i * 10 + 3] = b(3);
-    [800e3fa8 + 1 * c0 + i * 10 + 3] = b(3);
-    [800e3fa8 + 0 * c0 + i * 10 + 7] = b(60);
-    [800e3fa8 + 1 * c0 + i * 10 + 7] = b(60);
-    [800e3fa8 + 0 * c0 + i * 10 + 7] = b(bu[800e3fa8 + 0 * c0 + i * 10 + 7] | 2);
-    [800e3fa8 + 1 * c0 + i * 10 + 7] = b(bu[800e3fa8 + 1 * c0 + i * 10 + 7] | 2);
+    [0x800e3fa8 + 0x0 * 0xc0 + i * 0x10 + 0x3] = b(0x3);
+    [0x800e3fa8 + 0x1 * 0xc0 + i * 0x10 + 0x3] = b(0x3);
+    [0x800e3fa8 + 0x0 * 0xc0 + i * 0x10 + 0x7] = b(0x60);
+    [0x800e3fa8 + 0x1 * 0xc0 + i * 0x10 + 0x7] = b(0x60);
+    [0x800e3fa8 + 0x0 * 0xc0 + i * 0x10 + 0x7] = b(bu[0x800e3fa8 + 0x0 * 0xc0 + i * 0x10 + 0x7] | 0x2);
+    [0x800e3fa8 + 0x1 * 0xc0 + i * 0x10 + 0x7] = b(bu[0x800e3fa8 + 0x1 * 0xc0 + i * 0x10 + 0x7] | 0x2);
 }
 
-for( int i = 0; i < 18; ++i )
+for( int i = 0; i < 0x18; ++i )
 {
-    [800e3b28 + 0 * 240 + i * 18 + 3] = b(5);
-    [800e3b28 + 1 * 240 + i * 18 + 3] = b(5);
-    [800e3b28 + 0 * 240 + i * 18 + 7] = b(48);
-    [800e3b28 + 1 * 240 + i * 18 + 7] = b(48);
-    [800e3b28 + 0 * 240 + i * 18 + 14] = w(55555555);
-    [800e3b28 + 1 * 240 + i * 18 + 14] = w(55555555);
+    [0x800e3b28 + 0x0 * 0x240 + i * 0x18 + 0x3] = b(0x5);
+    [0x800e3b28 + 0x1 * 0x240 + i * 0x18 + 0x3] = b(0x5);
+    [0x800e3b28 + 0x0 * 0x240 + i * 0x18 + 0x7] = b(0x48);
+    [0x800e3b28 + 0x1 * 0x240 + i * 0x18 + 0x7] = b(0x48);
+    [0x800e3b28 + 0x0 * 0x240 + i * 0x18 + 0x14] = w(0x55555555);
+    [0x800e3b28 + 0x1 * 0x240 + i * 0x18 + 0x14] = w(0x55555555);
 }
 
-system_gpu_get_type();
-type = V0;
+type = system_gpu_get_type();
+S3 = ( (type == 0x1) || (type == 0x2) ) ? = 0x2f : 0x1f;
 
-if( ( type == 1 ) || ( type == 2 ) ) S3 = 2f;
-else                                 S3 = 1f;
-
-for( int i = 0; i < 6; ++i )
+for( int i = 0; i < 0x6; ++i )
 {
-    A0 = 800e4128 + 0 * 48 + i * c;
-    A1 = 0;
-    A2 = 0;
-    A3 = S3;
-    A4 = 0;
-    system_psyq_set_draw_mode();
-
-    A0 = 800e4128 + 1 * 48 + i * c;
-    A1 = 0;
-    A2 = 0;
-    A3 = S3;
-    A4 = 0;
-    system_psyq_set_draw_mode();
+    system_psyq_set_draw_mode( 0x800e4128 + 0 * 0x48 + i * 0xc, 0, 0, S3, 0 );
+    system_psyq_set_draw_mode( 0x800e4128 + 1 * 0x48 + i * 0xc, 0, 0, S3, 0 );
 }
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// field_debug_init_pages()
-
-// page 5
+void field_debug_init_pages()
 {
-    A0 = 5; // page
-    A1 = 6c; // x
-    A2 = 0; // y
-    A3 = 6c; // w
-    A4 = 52; // h
-    field_debug_init_page();
+    {
+        // set up page 5
+        string = 0x800e4254;
 
-    A0 = 800e4254;
-    A1 = 800a12a8; // "Authr:"
-    field_debug_copy_string();
+        field_debug_init_page( 0x5, 0x6c, 0, 0x6c, 0x52 );
+        field_debug_copy_string( string, "Authr:" );
+        field_debug_concat_string( string, w[0x8009c6dc] + 0x10 ); // from field file
+        field_debug_add_string_to_page_next_row( 0x5, string ); // row 0
+        field_debug_copy_string( string, "Event:" );
+        field_debug_concat_string( string, w[0x8009c6dc] + 0x18 ); // from field file
+        field_debug_add_string_to_page_next_row( 0x5, string ); // row 1
+        field_debug_add_string_to_page_next_row( 0x5, "  Go" ); // row 2
+        field_debug_add_string_to_page_next_row( 0x5, "  Stop" ); // row 3
+        field_debug_add_string_to_page_next_row( 0x5, "  Step" ); // row 4
+        field_debug_copy_string_into_page( 0x5, 0x5, "  Actor OFF" );
+        field_debug_copy_string_into_page( 0x5, 0x6, "  Info  OFF" );
+        funcda2cc( 0x5 );
+    }
 
-    A0 = 800e4254;
-    A1 = w[8009c6dc] + 10; // from field file
-    field_debug_concat_string();
+    {
+        field_debug_init_page( 0x4, 0x6c, 0x52, 0x6c, 0x52 );
+        field_debug_add_string_to_page_next_row( 0x4, "Actor:" );
+        funcda2cc( 0x4 );
+    }
 
-    A0 = 5; // page
-    A1 = 800e4254;
-    field_debug_add_string_to_page_next_row(); // row 0
+    {
+        field_debug_init_page( 0x3, 0x6c, 0xa4, 0x6c, 0x5c );
+        field_debug_add_string_to_page_next_row( 0x3, "Word:" );
+        funcda2cc( 0x3 );
+    }
 
-    A0 = 800e4254;
-    A1 = 800a12b0; // "Event:"
-    field_debug_copy_string();
+    {
+        field_debug_init_page( 0x1, 0, 0, 0x6c, 0xca );
+        field_debug_add_string_to_page_next_row( 0x1, "Actor:" );
+        funcda2cc( 0x1 );
+    }
 
-    A0 = 800e4254;
-    A1 = w[8009c6dc] + 18; // from field file
-    field_debug_concat_string();
+    [0x80099ffc] = b(0x3);
+    [0x8007ebcc] = b(0x4);
+    [0x8007ebdc] = b(0x8);
+    [0x80071e24] = b(0);
+    [0x8009d820] = b(0);
+    [0x80070788] = b(0);
+    [0x80071c08] = b(0x5); // current page
 
-    A0 = 5; // page
-    A1 = 800e4254;
-    field_debug_add_string_to_page_next_row(); // row 1
-
-    A0 = 5; // page
-    A1 = 800a12b8; // "  Go"
-    field_debug_add_string_to_page_next_row(); // row 2
-
-    A0 = 5; // page
-    A1 = 800a12c0; // "  Stop"
-    field_debug_add_string_to_page_next_row(); // row 3
-
-    A0 = 5; // page
-    A1 = 800a12c8; // "  Step"
-    field_debug_add_string_to_page_next_row(); // row 4
-
-    A0 = 5; // page
-    A1 = 5; // row
-    A2 = 800a12d0; // "  Actor OFF"
-    field_debug_copy_string_into_page();
-
-    A0 = 5; // page
-    A1 = 6; // row
-    A2 = 800a12dc; // "  Info  OFF"
-    field_debug_copy_string_into_page();
-
-    A0 = 5; // page
-    funcda2cc();
+    funcda1d4( 0x5, 0x4 );
 }
-
-{
-    A0 = 4; // page
-    A1 = 6c; // x
-    A2 = 52; // y
-    A3 = 6c; // w
-    A4 = 52; // h
-    field_debug_init_page();
-
-    A0 = 4; // page
-    A1 = 800e0628; // "Actor:"
-    field_debug_add_string_to_page_next_row();
-
-    A0 = 4; // page
-    funcda2cc();
-}
-
-{
-    A0 = 3; // page
-    A1 = 6c; // x
-    A2 = a4; // y
-    A3 = 6c; // w
-    A4 = 5c; // h
-    field_debug_init_page();
-
-    A0 = 3; // page
-    A1 = 800e0630; // "Word:"
-    field_debug_add_string_to_page_next_row();
-
-    A0 = 3; // page
-    funcda2cc();
-}
-
-{
-    A0 = 1; // page
-    A1 = 0; // x
-    A2 = 0; // y
-    A3 = 6c; // w
-    A4 = ca; // h
-    field_debug_init_page();
-
-    A0 = 1; // page
-    A1 = 800e0628; // "Actor:"
-    field_debug_add_string_to_page_next_row();
-
-    A0 = 1; // page
-    funcda2cc();
-}
-
-[80099ffc] = b(3);
-[8007ebcc] = b(4);
-[8007ebdc] = b(8);
-[80071e24] = b(0);
-[8009d820] = b(0);
-[80070788] = b(0);
-[80071c08] = b(5); // current page
-
-A0 = 5;
-A1 = 4;
-funcda1d4();
-////////////////////////////////
 
 
 
@@ -602,18 +515,18 @@ while( bu[string] != 0 )
 
     switch( bu[string] )
     {
-        case 20: A0 = 3f; break;
-        case 21: A0 = ae; break;
-        case 23: A0 = d6; break;
-        case 2a: A0 = cf; break;
-        case 2b: A0 = b3; break;
-        case 2d: A0 = d0; break;
-        case 2e: A0 = b2; break;
-        case 2f: A0 = d4; break;
-        case 3a: A0 = d5; break;
-        case 3d: A0 = da; break;
-        case 3e: A0 = d9; break;
-        case 3f: A0 = af; break;
+        case 0x20: A0 = 0x3f; break;
+        case 0x21: A0 = 0xae; break;
+        case 0x23: A0 = 0xd6; break;
+        case 0x2a: A0 = 0xcf; break;
+        case 0x2b: A0 = 0xb3; break;
+        case 0x2d: A0 = 0xd0; break;
+        case 0x2e: A0 = 0xb2; break;
+        case 0x2f: A0 = 0xd4; break;
+        case 0x3a: A0 = 0xd5; break;
+        case 0x3d: A0 = 0xda; break;
+        case 0x3e: A0 = 0xd9; break;
+        case 0x3f: A0 = 0xaf; break;
 
         default:
         {
@@ -729,15 +642,11 @@ return 1;
 
 
 
-////////////////////////////////
-// funcda1d4()
-
-page = A0;
-
-[800e0748 + page * 17a + e] = b(A1);
-
-[8009d824] = b(1);
-////////////////////////////////
+void funcda1d4( u8 page, A1 )
+{
+    [0x800e0748 + page * 0x17a + 0xe] = b(A1);
+    [0x8009d824] = b(0x1);
+}
 
 
 
@@ -773,15 +682,11 @@ page = A0;
 
 
 
-////////////////////////////////
-// funcda2cc()
-
-page = A0;
-
-[800e0748 + page * 17a + 178] = b(2);
-
-[8009d824] = b(1);
-////////////////////////////////
+void funcda2cc( u8 page )
+{
+    [0x800e0748 + page * 0x17a + 0x178] = b(0x2);
+    [0x8009d824] = b(1);
+}
 
 
 
@@ -793,20 +698,16 @@ page = A0;
 
 
 
-////////////////////////////////
-// field_debug_copy_string()
-
-dst = A0;
-src = A1;
-
-while( bu[src] != 0 )
+void field_debug_copy_string( u32 dst, u32 src )
 {
-    [dst] = b(bu[src]);
-    dst = dst + 1;
-    src = src + 1;
+    while( bu[src] != 0 )
+    {
+        [dst] = b(bu[src]);
+        dst += 1;
+        src += 1;
+    }
+    [dst] = b(0);
 }
-[dst] = b(0);
-////////////////////////////////
 
 
 

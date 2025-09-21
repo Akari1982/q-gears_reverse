@@ -10819,25 +10819,21 @@ funcb74f0();
 
 if( bu[events_data + 0] == 0 )
 {
-    A0 = 800a0084; // "old Event data!"
-    funcb93b8(); // print
+    funcb93b8( "old Event data!" );
 
     return;
 }
 
-if( ( bu[events_data + 0] >= 2 ) || ( bu[events_data + 1] >= 4 ) )
+if( ( bu[events_data + 0x0] >= 0x2 ) || ( bu[events_data + 1] >= 0x4 ) )
 {
-    A0 = 800a0094; // "old Event program!"
-    funcb93b8();
+    funcb93b8( "old Event program!" );
 
     return;
 }
 
-if( bu[events_data + 1] < 3 )
+if( bu[events_data + 1] < 0x3 )
 {
-    A0 = 800a00a8; // "old Event version!"
-    funcb93b8();
-
+    funcb93b8( "old Event version!" );
     return;
 }
 

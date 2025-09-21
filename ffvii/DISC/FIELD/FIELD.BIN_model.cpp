@@ -14,8 +14,8 @@ field_model_struct_init();
 
 // load field bsx
 field_id = h[8009a05c];
-A0 = w[800da5b8 + field_id * 18 + 10];
-A1 = w[800da5b8 + field_id * 18 + 14];
+A0 = w[0x800da5b8 + field_id * 18 + 10];
+A1 = w[0x800da5b8 + field_id * 18 + 14];
 A2 = 801b0000;
 A3 = 0;
 system_cdrom_start_load_lzs();
@@ -34,8 +34,8 @@ field_model_load_global_models();
 
 A0 = block7;
 A1 = models_struct;
-A2 = 800a00dc; // static var in FIELD.BIN (0 in release version)
-A3 = 801b0000;
+A2 = 0x800a00dc; // static var in FIELD.BIN (0 in release version)
+A3 = 0x801b0000;
 field_model_load_local_model_and_init_all();
 [80075e10] = w(V0);
 

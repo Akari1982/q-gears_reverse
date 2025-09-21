@@ -108,7 +108,7 @@
 800BB1B4 funcbb1b4
 800BB3A8 field_event_opcode_cycle
 800BBBCC field_script_update_animation_state
-800BBF74 field_script_request_run
+800BBF74 field_event_request_run
 800BC338 funcbc338
 800BC438 funcbc438
 800BC4D4 funcbc4d4
@@ -122,8 +122,8 @@
 800C0B54 funcc0b54
 
 // FIELD.BIN_script_opcodes.cpp
-800C0BE8 0x5F NOP
-800C0C18 0x24 WAIT
+800C0BE8 field_event_opcode_5f_nop
+800C0C18 field_event_opcode_24_wait
 800C0DE0 0x80 SETBYTE
 800C0E5C 0x81 SETWORD
 800C0EDC 0x9A LBYTE
@@ -139,32 +139,32 @@
 800C1AE4 0xD3 SLINE
 800C1BF4 0xD1 LINON
 800C1D24 0x2B SLIP
-800C1DE4 0x14 IFUB
-800C1EEC 0x15 IFUBL
-800C2000 funcc2000
-800C228C 0x16 IFSW
-800C2394 0x17 IFSWL
-800C24A8 funcc24a8
-800C2754 0x18 IFUW
-800C285C 0x19 IFUWL
-800C2970 funcc2970
-800C2BFC 0x30 IFKEY
-800C2CA8 0x31 IFKEYON
-800C2D54 0x32 IFKEYOFF
-800C2E00 funcc2e00
-800C2F7C 0x01 REQ
-800C2FFC 0x02 REQSW
-800C307C 0x03 REQEW
-800C30FC 0x04 PREQ
-800C31E4 0x05 PRQSW
-800C32CC 0x06 PRQEW
-800C33B4 funcc33b4
-800C3A20 0x00 RET
-800C3C34 0x07 RETTO
-800C3EA0 0x12 JMPB
-800C3F1C 0x13 JMPBL
-800C3FA0 0x10 JMPF
-800C401C 0x11 JMPFL
+800C1DE4 field_event_opcode_14_if
+800C1EEC field_event_opcode_15_lif
+800C2000 field_event_if_check
+800C228C field_event_opcode_16_if2
+800C2394 field_event_opcode_17_lif2
+800C24A8 field_event_if2_check_signed
+800C2754 field_event_opcode_18_if2
+800C285C field_event_opcode_19_lif2
+800C2970 field_event_if2_check_unsigned
+800C2BFC field_event_opcode_30_key
+800C2CA8 field_event_opcode_31_keyon
+800C2D54 field_event_opcode_32_keyof
+800C2E00 field_event_key_check
+800C2F7C field_event_opcode_01_req
+800C2FFC field_event_opcode_02_reqsw
+800C307C field_event_opcode_03_reqew
+800C30FC field_event_opcode_04_preq
+800C31E4 field_event_opcode_05_prqsw
+800C32CC field_event_opcode_06_prqew
+800C33B4 field_event_request
+800C3A20 field_event_opcode_00_ret
+800C3C34 field_event_opcode_07_retto
+800C3EA0 field_event_opcode_12_back
+800C3F1C field_event_opcode_13_lback
+800C3FA0 field_event_opcode_10_skip
+800C401C field_event_opcode_11_lskip
 800C40A4 0x60 MAPJUMP
 800C42B0 0xD8 PMJMP
 800C4350 0xD9 PMJMP2
@@ -329,8 +329,8 @@
 800CF60C field_copy_battle_party_to_party
 800CF66C funccf66c
 800CF6C0 funccf6c0
-800CF718 0xCB IFPRTYQ
-800CF874 0xCC IFMEMBQ
+800CF718 field_event_opcode_cb_prtyq
+800CF874 field_event_opcode_cc_membq
 800CF9B8 0xCD MMBud
 800CFAF0 0xCE MMBLK
 800CFB84 0xCF MMBUK
