@@ -2,38 +2,28 @@ void ending_main()
 {
     funca2504( 0x280, 0x1e0, 0x200, 0, 0, 0 );
 
-    loopa006c:	; 800A006C
-        A0 = SP + 0x20;
-        A1 = 0x800a0018; // "\STARTUP\SCEAP.LZS;1"
-        system_psyq_cd_search_file();
+    do
+    {
+        system_psyq_cd_search_file( SP + 0x20, "\STARTUP\SCEAP.LZS;1" );
 
         if( V0 <= 0 )
         {
             if( V0 >= -1 )
             {
-                A0 = 0x800a0000; // "scea file read error"
-                system_bios_printf();
-
+                system_bios_printf( "scea file read error" );
                 return;
             }
         }
 
-        A0 = 0x2; // Setloc
-        A1 = SP + 0x20;
-        A2 = 0;
-        system_psyq_cd_control_b(); // execute command
+        system_psyq_cd_control_b( 0x2, SP + 0x20, 0 ); // execute command Setloc
 
-        A0 = (w[SP + 0x24] + 0x7ff) >> 0xb;
-        A1 = 0x80180000;
-        A2 = 0x80;
-        system_psyq_cd_read();
+        system_psyq_cd_read( (w[SP + 0x24] + 0x7ff) >> 0xb, 0x80180000, 0x80 );
 
         do
         {
             V0 = system_psyq_cd_read_sync( 0x1, 0 );
         } while( V0 > 0 );
-
-    800A00E0	bne    v0, zero, loopa006c [$800a006c]
+    } while( V0 != 0 )
 
     func34bb0( 0x80180000, 0x80100000 );
 
@@ -342,16 +332,16 @@ int funca0ab8()
 {
     for( int i = 0; i < 20; ++i )
     {
-        [800a652c + i * 0x88] = h(0);
-        [800a6532 + i * 0x88] = h(0);
-        [800a6534 + i * 0x88] = h(0);
-        [800a6538 + i * 0x88] = w(0);
-        [800a6588 + i * 0x88] = h(0);
-        [800a658a + i * 0x88] = h(0);
-        [800a658c + i * 0x88] = h(0);
-        [800a653c + i * 0x88] = b(0);
-        [800a653d + i * 0x88] = b(0);
-        [800a653e + i * 0x88] = b(0);
+        [0x800a652c + i * 0x88] = h(0);
+        [0x800a6532 + i * 0x88] = h(0);
+        [0x800a6534 + i * 0x88] = h(0);
+        [0x800a6538 + i * 0x88] = w(0);
+        [0x800a6588 + i * 0x88] = h(0);
+        [0x800a658a + i * 0x88] = h(0);
+        [0x800a658c + i * 0x88] = h(0);
+        [0x800a653c + i * 0x88] = b(0);
+        [0x800a653d + i * 0x88] = b(0);
+        [0x800a653e + i * 0x88] = b(0);
     }
 
     funca3178( 0x800a762c, 0x4, 0x80, 0x800a09dc ); // funca09dc()
@@ -361,36 +351,33 @@ int funca0ab8()
 
 
 
-////////////////////////////////
-// funca0ba8()
+int funca0ba8()
+{
+    V1 = w[0x800a6528];
+    V0 = V1 + 0x2;
+    [0x800a6528] = w(V0);
+    A0 = h[V1 + 0x0];
+    V0 = V1 + 0x4;
+    [0x800a6528] = w(V0);
+    A1 = h[V1 + 0x2];
+    S0 = A0 * 0x88;
 
-V1 = w[800a6528];
-V0 = V1 + 0x2;
-[800a6528] = w(V0);
-A0 = h[V1 + 0x0];
-V0 = V1 + 0x4;
-[800a6528] = w(V0);
-A1 = h[V1 + 0x2];
-S0 = A0 << 04;
-S0 = S0 + A0;
-S0 = S0 << 03;
+    [0x800a652c + S0] = h(0x7);
+    [0x800a6532 + S0] = h(0);
+    [0x800a6534 + S0] = h(0);
 
-[800a652c + S0] = h(7);
-[800a6532 + S0] = h(0);
-[800a6534 + S0] = h(0);
+    func34d18( 0x800d0000, A1 );
 
-func34d18( 0x800d0000, A1 );
+    [0x800a6538 + S0] = w(V0);
+    [0x800a6588 + S0] = h(0);
+    [0x800a658a + S0] = h(0);
+    [0x800a658c + S0] = h(0);
+    [0x800a653c + S0] = b(0);
+    [0x800a653d + S0] = b(0);
+    [0x800a653e + S0] = b(0);
 
-[800a6538 + S0] = w(V0);
-[800a6588 + S0] = h(0);
-[800a658a + S0] = h(0);
-[800a658c + S0] = h(0);
-[800a653c + S0] = b(0);
-[800a653d + S0] = b(0);
-[800a653e + S0] = b(0);
-
-return 1;
-////////////////////////////////
+    return 1;
+}
 
 
 
@@ -425,13 +412,8 @@ void funca0cac()
 // callback
 void funca0e68()
 {
-    A0 = w[0x800af3e8];
-    A1 = 0x800a763c + w[0x800af408] * 0x10;
-    system_psyq_add_prim();
-
-    A0 = w[0x800af3e8];
-    A1 = 0x800a765c + w[0x800af408] * 0x10;
-    system_psyq_add_prim();
+    system_psyq_add_prim( w[0x800af3e8], 0x800a763c + w[0x800af408] * 0x10 );
+    system_psyq_add_prim( w[0x800af3e8], 0x800a765c + w[0x800af408] * 0x10 );
 
     for( int i = 0; i < 0x20; ++i )
     {
@@ -497,40 +479,37 @@ int funca0f90()
 
 
 
-////////////////////////////////
-// funca11b4()
-
-V0 = w[0x800a6528];
-V1 = V0 + 0x2;
-[0x800a6528] = w(V1);
-A1 = h[V0 + 0x0];
-V1 = V0 + 0x4;
-[0x800a6528] = w(V1);
-V1 = h[V0 + 0x2];
-
-for( int i = 0; i < 0x20; ++i )
+int funca11b4()
 {
-    if( ( hu[800a652c + i * 0x88 + 0] & 1 ) == 0 )
+    V0 = w[0x800a6528];
+    [0x800a6528] = w(V0 + 0x4);
+
+    A1 = h[V0 + 0x0];
+    V1 = h[V0 + 0x2];
+
+    for( int i = 0; i < 0x20; ++i )
     {
-        [800a652c + i * 0x88 + 0] = h(1);
-        [800a6532 + i * 0x88 + 0] = h(0);
-        [800a6534 + i * 0x88 + 0] = h(V1);
+        if( ( hu[0x800a652c + i * 0x88 + 0] & 0x1 ) == 0 )
+        {
+            [0x800a652c + i * 0x88 + 0] = h(0x1);
+            [0x800a6532 + i * 0x88 + 0] = h(0);
+            [0x800a6534 + i * 0x88 + 0] = h(V1);
 
-        V0 = func34d18( 0x800d0000, A1 );
+            V0 = func34d18( 0x800d0000, A1 );
 
-        [800a6538 + i * 0x88 + 0] = w(V0);
-        [800a6588 + i * 0x88 + 0] = h(18);
-        [800a658a + i * 0x88 + 0] = h(c8);
-        [800a658c + i * 0x88 + 0] = h(0);
-        [800a653c + i * 0x88 + 0] = b(80);
-        [800a653d + i * 0x88 + 0] = b(80);
-        [800a653e + i * 0x88 + 0] = b(80);
-        return 1;
+            [0x800a6538 + i * 0x88 + 0] = w(V0);
+            [0x800a6588 + i * 0x88 + 0] = h(18);
+            [0x800a658a + i * 0x88 + 0] = h(0xc8);
+            [0x800a658c + i * 0x88 + 0] = h(0);
+            [0x800a653c + i * 0x88 + 0] = b(0x80);
+            [0x800a653d + i * 0x88 + 0] = b(0x80);
+            [0x800a653e + i * 0x88 + 0] = b(0x80);
+            return 1;
+        }
     }
-}
 
-return 0;
-////////////////////////////////
+    return 0;
+}
 
 
 
@@ -539,7 +518,7 @@ void funca12f0()
 {
     for( int i = 0; i < 0x20; ++i )
     {
-        if( hu[800a652c + i * 0x88] & 1 )
+        if( hu[0x800a652c + i * 0x88] & 1 )
         {
             funca3368( 0x800a652c + i * 0x88 );
             funca34c4( 0x800a652c + i * 0x88 );

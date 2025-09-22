@@ -484,17 +484,17 @@ u8 field_event_if_check()
 
     switch( operand )
     {
-        case 0x0: return read_memory_block_one_byte( 0x1, 0x2 ) == read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x1: return read_memory_block_one_byte( 0x1, 0x2 ) != read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x2: return read_memory_block_one_byte( 0x1, 0x2 ) >  read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x3: return read_memory_block_one_byte( 0x1, 0x2 ) <  read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x4: return read_memory_block_one_byte( 0x1, 0x2 ) >= read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x5: return read_memory_block_one_byte( 0x1, 0x2 ) <= read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x6: return read_memory_block_one_byte( 0x1, 0x2 ) &  read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x7: return read_memory_block_one_byte( 0x1, 0x2 ) ^  read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x8: return read_memory_block_one_byte( 0x1, 0x2 ) |  read_memory_block_one_byte( 0x2, 0x3 );
-        case 0x9: return read_memory_block_one_byte( 0x1, 0x2 ) & (0x1 << read_memory_block_one_byte( 0x2, 0x3 ));
-        case 0xa: return (read_memory_block_one_byte( 0x1, 0x2 ) & (0x1 << read_memory_block_one_byte( 0x2, 0x3 ))) < 0x1;
+        case 0x0: return field_event_read_memory_u8( 0x1, 0x2 ) == field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x1: return field_event_read_memory_u8( 0x1, 0x2 ) != field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x2: return field_event_read_memory_u8( 0x1, 0x2 ) >  field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x3: return field_event_read_memory_u8( 0x1, 0x2 ) <  field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x4: return field_event_read_memory_u8( 0x1, 0x2 ) >= field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x5: return field_event_read_memory_u8( 0x1, 0x2 ) <= field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x6: return field_event_read_memory_u8( 0x1, 0x2 ) &  field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x7: return field_event_read_memory_u8( 0x1, 0x2 ) ^  field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x8: return field_event_read_memory_u8( 0x1, 0x2 ) |  field_event_read_memory_u8( 0x2, 0x3 );
+        case 0x9: return field_event_read_memory_u8( 0x1, 0x2 ) & (0x1 << field_event_read_memory_u8( 0x2, 0x3 ));
+        case 0xa: return (field_event_read_memory_u8( 0x1, 0x2 ) & (0x1 << field_event_read_memory_u8( 0x2, 0x3 ))) < 0x1;
 
         default:
         {
@@ -571,17 +571,17 @@ u8 field_event_if2_check_signed()
 
     switch( operand )
     {
-        case 0x0: return (s16)read_memory_block_two_bytes( 0x1, 0x2 ) == (s16)read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x1: return (s16)read_memory_block_two_bytes( 0x1, 0x2 ) != (s16)read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x2: return (s16)read_memory_block_two_bytes( 0x1, 0x2 ) >  (s16)read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x3: return (s16)read_memory_block_two_bytes( 0x1, 0x2 ) <  (s16)read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x4: return (s16)read_memory_block_two_bytes( 0x1, 0x2 ) >= (s16)read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x5: return (s16)read_memory_block_two_bytes( 0x1, 0x2 ) <= (s16)read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x6: return read_memory_block_two_bytes( 0x1, 0x2 ) &  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x7: return read_memory_block_two_bytes( 0x1, 0x2 ) ^  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x8: return read_memory_block_two_bytes( 0x1, 0x2 ) |  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x9: return read_memory_block_two_bytes( 0x1, 0x2 ) & (0x1 << read_memory_block_two_bytes( 0x2, 0x4 ));
-        case 0xa: return (read_memory_block_two_bytes( 0x1, 0x2 ) & (0x1 << read_memory_block_two_bytes( 0x2, 0x4 ))) < 0x1;
+        case 0x0: return (s16)field_event_read_memory_s16( 0x1, 0x2 ) == (s16)field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x1: return (s16)field_event_read_memory_s16( 0x1, 0x2 ) != (s16)field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x2: return (s16)field_event_read_memory_s16( 0x1, 0x2 ) >  (s16)field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x3: return (s16)field_event_read_memory_s16( 0x1, 0x2 ) <  (s16)field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x4: return (s16)field_event_read_memory_s16( 0x1, 0x2 ) >= (s16)field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x5: return (s16)field_event_read_memory_s16( 0x1, 0x2 ) <= (s16)field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x6: return field_event_read_memory_s16( 0x1, 0x2 ) &  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x7: return field_event_read_memory_s16( 0x1, 0x2 ) ^  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x8: return field_event_read_memory_s16( 0x1, 0x2 ) |  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x9: return field_event_read_memory_s16( 0x1, 0x2 ) & (0x1 << field_event_read_memory_s16( 0x2, 0x4 ));
+        case 0xa: return (field_event_read_memory_s16( 0x1, 0x2 ) & (0x1 << field_event_read_memory_s16( 0x2, 0x4 ))) < 0x1;
 
         default:
         {
@@ -658,17 +658,17 @@ u8 field_event_if2_check_unsigned()
 
     switch( operand )
     {
-        case 0x0: return read_memory_block_two_bytes( 0x1, 0x2 ) == read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x1: return read_memory_block_two_bytes( 0x1, 0x2 ) != read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x2: return read_memory_block_two_bytes( 0x1, 0x2 ) >  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x3: return read_memory_block_two_bytes( 0x1, 0x2 ) <  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x4: return read_memory_block_two_bytes( 0x1, 0x2 ) >= read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x5: return read_memory_block_two_bytes( 0x1, 0x2 ) <= read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x6: return read_memory_block_two_bytes( 0x1, 0x2 ) &  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x7: return read_memory_block_two_bytes( 0x1, 0x2 ) ^  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x8: return read_memory_block_two_bytes( 0x1, 0x2 ) |  read_memory_block_two_bytes( 0x2, 0x4 );
-        case 0x9: return read_memory_block_two_bytes( 0x1, 0x2 ) & (0x1 << read_memory_block_two_bytes( 0x2, 0x4 ));
-        case 0xa: return (read_memory_block_two_bytes( 0x1, 0x2 ) & (0x1 << read_memory_block_two_bytes( 0x2, 0x4 ))) < 0x1;
+        case 0x0: return field_event_read_memory_s16( 0x1, 0x2 ) == field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x1: return field_event_read_memory_s16( 0x1, 0x2 ) != field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x2: return field_event_read_memory_s16( 0x1, 0x2 ) >  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x3: return field_event_read_memory_s16( 0x1, 0x2 ) <  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x4: return field_event_read_memory_s16( 0x1, 0x2 ) >= field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x5: return field_event_read_memory_s16( 0x1, 0x2 ) <= field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x6: return field_event_read_memory_s16( 0x1, 0x2 ) &  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x7: return field_event_read_memory_s16( 0x1, 0x2 ) ^  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x8: return field_event_read_memory_s16( 0x1, 0x2 ) |  field_event_read_memory_s16( 0x2, 0x4 );
+        case 0x9: return field_event_read_memory_s16( 0x1, 0x2 ) & (0x1 << field_event_read_memory_s16( 0x2, 0x4 ));
+        case 0xa: return (field_event_read_memory_s16( 0x1, 0x2 ) & (0x1 << field_event_read_memory_s16( 0x2, 0x4 ))) < 0x1;
 
         default:
         {

@@ -115,10 +115,10 @@
 800BC9FC field_event_update_actor_debug
 800BEAD4 field_debug_event_opcode
 800BECA4 field_debug_add_parse_value_to_page2
-800BEE10 read_memory_block_one_byte
-800BF3AC store_memory_block_one_byte
-800BF908 read_memory_block_two_bytes
-800C0248 store_memory_block_two_bytes
+800BEE10 field_event_read_memory_u8
+800BF3AC field_event_write_memory_u8
+800BF908 field_event_read_memory_s16
+800C0248 field_event_write_memory_s16
 800C0B54 funcc0b54
 
 // FIELD.BIN_script_opcodes.cpp
@@ -344,9 +344,9 @@
 800D1200 field_event_split_join_end_move
 800D1350 field_event_split_join_set_turn
 800D152C field_event_split_join_end_turn
-800D1654 0x6B FADE
-800D184C 0x25 NFADE
-800D195C 0x6C FADEW
+800D1654 field_event_opcode_6b_fade
+800D184C field_event_opcode_25_nfade
+800D195C field_event_opcode_6c_fadew
 800D1A80 0x6D IDLCK
 800D1B94 0x56 GWCOL
 800D1C68 0x57 SWCOL

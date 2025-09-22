@@ -21,11 +21,11 @@ int field_event_opcode_f2_akao()
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(bu[events_data + script_cur + 0x4]);
-    [0x8009a004] = w(read_memory_block_one_byte( 0x1, 0x5 ));
-    [0x8009a008] = w(read_memory_block_two_bytes( 0x2, 0x6 ));
-    [0x8009a00c] = w(read_memory_block_two_bytes( 0x3, 0x8 ));
-    [0x8009a010] = w(read_memory_block_two_bytes( 0x4, 0xa ));
-    [0x8009a014] = w(read_memory_block_two_bytes( 0x6, 0xc ));
+    [0x8009a004] = w(field_event_read_memory_u8( 0x1, 0x5 ));
+    [0x8009a008] = w(field_event_read_memory_s16( 0x2, 0x6 ));
+    [0x8009a00c] = w(field_event_read_memory_s16( 0x3, 0x8 ));
+    [0x8009a010] = w(field_event_read_memory_s16( 0x4, 0xa ));
+    [0x8009a014] = w(field_event_read_memory_s16( 0x6, 0xc ));
     system_akao_execute();
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0xe);
@@ -46,11 +46,11 @@ int field_event_opcode_da_akao2()
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(bu[events_data + script_cur + 0x4]);
-    [0x8009a004] = w(read_memory_block_two_bytes( 0x1, 0x5 ));
-    [0x8009a008] = w(read_memory_block_two_bytes( 0x2, 0x7 ));
-    [0x8009a00c] = w(read_memory_block_two_bytes( 0x3, 0x9 ));
-    [0x8009a010] = w(read_memory_block_two_bytes( 0x4, 0xb ));
-    [0x8009a014] = w(read_memory_block_two_bytes( 0x6, 0xd ));
+    [0x8009a004] = w(field_event_read_memory_s16( 0x1, 0x5 ));
+    [0x8009a008] = w(field_event_read_memory_s16( 0x2, 0x7 ));
+    [0x8009a00c] = w(field_event_read_memory_s16( 0x3, 0x9 ));
+    [0x8009a010] = w(field_event_read_memory_s16( 0x4, 0xb ));
+    [0x8009a014] = w(field_event_read_memory_s16( 0x6, 0xd ));
 
     system_akao_execute();
 
@@ -71,8 +71,8 @@ int field_event_opcode_f1_se()
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(0x20);
-    [0x8009a004] = w(read_memory_block_one_byte( 0x2, 0x4 ));
-    [0x8009a008] = w(read_memory_block_two_bytes( 0x1, 0x2 ));
+    [0x8009a004] = w(field_event_read_memory_u8( 0x2, 0x4 ));
+    [0x8009a008] = w(field_event_read_memory_s16( 0x1, 0x2 ));
 
     system_akao_execute();
 
@@ -133,8 +133,8 @@ int field_event_opcode_fd_cmusc()
     field_event_clear_akao_struct();
 
     [0x8009a000] = h(bu[events_data + script_cur + 0x3]);
-    [0x8009a008] = w(read_memory_block_two_bytes( 0x3, 0x4 ));
-    [0x8009a00c] = w(read_memory_block_two_bytes( 0x4, 0x6 ));
+    [0x8009a008] = w(field_event_read_memory_s16( 0x3, 0x4 ));
+    [0x8009a00c] = w(field_event_read_memory_s16( 0x4, 0x6 ));
 
     V0 = field_event_set_and_apply_akao();
 
@@ -209,9 +209,9 @@ int field_event_opcode_f7_chmph()
 
     if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "chmph", 0x3 );
 
-    store_memory_block_two_bytes( 0x1, 0x2, h[0x8009a104 + 0x5e] );
+    field_event_write_memory_s16( 0x1, 0x2, h[0x8009a104 + 0x5e] );
 
-    store_memory_block_one_byte( 0x2, 0x3, bu[0x8009a104 + 0x58] );
+    field_event_write_memory_u8( 0x2, 0x3, bu[0x8009a104 + 0x58] );
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x4);
 
@@ -259,7 +259,7 @@ int field_event_opcode_fe_chmst()
     A2 = (w[0x8009a104 + 0x4] > 0) ? 1 : 0;
     if( w[0x80099fcc] != 0 ) A2 |= 0x2;
 
-    store_memory_block_one_byte( 0x2, 0x2, A2 );
+    field_event_write_memory_u8( 0x2, 0x2, A2 );
 
     [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
 

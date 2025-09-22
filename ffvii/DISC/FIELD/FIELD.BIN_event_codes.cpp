@@ -13,11 +13,11 @@ A1 = 0003;
 
 Lc0e08:	; 800C0E08
 A0 = 0002;
-800C0E0C	jal    read_memory_block_one_byte [$800bee10]
+800C0E0C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0003;
 A0 = 0001;
 A1 = 0002;
-800C0E1C	jal    store_memory_block_one_byte [$800bf3ac]
+800C0E1C	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = V0 & 00ff;
 800C0E24	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -54,12 +54,12 @@ A1 = 0004;
 
 Lc0e84:	; 800C0E84
 A0 = 0002;
-800C0E88	jal    read_memory_block_two_bytes [$800bf908]
+800C0E88	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0003;
 A0 = 0001;
 A1 = 0002;
 V0 = V0 << 10;
-800C0E9C	jal    store_memory_block_two_bytes [$800c0248]
+800C0E9C	jal    field_event_write_memory_s16 [$800c0248]
 A2 = V0 >> 10;
 800C0EA4	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -94,11 +94,11 @@ A1 = 0003;
 
 Lc0f04:	; 800C0F04
 A0 = 0002;
-800C0F08	jal    read_memory_block_one_byte [$800bee10]
+800C0F08	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0003;
 A0 = 0001;
 A1 = 0002;
-800C0F18	jal    store_memory_block_one_byte [$800bf3ac]
+800C0F18	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = V0 & 00ff;
 800C0F20	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -133,12 +133,12 @@ A1 = 0004;
 
 Lc0f80:	; 800C0F80
 A0 = 0002;
-800C0F84	jal    read_memory_block_two_bytes [$800bf908]
+800C0F84	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0003;
 V0 = V0 >> 08;
 A0 = 0001;
 A1 = 0002;
-800C0F98	jal    store_memory_block_one_byte [$800bf3ac]
+800C0F98	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = V0 & 00ff;
 800C0FA0	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -182,7 +182,7 @@ A1 = 0005;
 
 Lc1004:	; 800C1004
 A0 = 0002;
-800C1008	jal    read_memory_block_one_byte [$800bee10]
+800C1008	jal    field_event_read_memory_u8 [$800bee10]
 
 Lc100c:	; 800C100C
 A1 = 0004;
@@ -190,7 +190,7 @@ A1 = 0004;
 Lc1010:	; 800C1010
 A0 = 0004;
 A1 = 0005;
-800C1018	jal    read_memory_block_one_byte [$800bee10]
+800C1018	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0 & 00ff;
 A0 = 0001;
 A1 = 0003;
@@ -198,7 +198,7 @@ V0 = V0 & 00ff;
 V0 = V0 << 08;
 S0 = S0 | V0;
 S0 = S0 << 10;
-800C1038	jal    store_memory_block_two_bytes [$800c0248]
+800C1038	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800C1040	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -249,7 +249,7 @@ A0 = 0002;
 V0 = V0 + V1;
 S0 = bu[V0 + 0001];
 A1 = 0003;
-800C10E4	jal    read_memory_block_two_bytes [$800bf908]
+800C10E4	jal    field_event_read_memory_s16 [$800bf908]
 S0 = S0 >> 04;
 800C10EC	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -265,7 +265,7 @@ A0 = 0004;
 V1 = V1 + A1;
 V1 = bu[V1 + 0003];
 A1 = 0005;
-800C1124	jal    read_memory_block_one_byte [$800bee10]
+800C1124	jal    field_event_read_memory_u8 [$800bee10]
 S1 = V1 + V0;
 V1 = V0;
 800C1130	addiu  s0, s0, $ffff (=-$1)
@@ -366,7 +366,7 @@ A0 = 0002;
 V0 = V0 + V1;
 S0 = bu[V0 + 0001];
 A1 = 0003;
-800C127C	jal    read_memory_block_two_bytes [$800bf908]
+800C127C	jal    field_event_read_memory_s16 [$800bf908]
 S0 = S0 >> 04;
 800C1284	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -434,7 +434,7 @@ A0 = 0004;
 A1 = 0005;
 
 Lc1368:	; 800C1368
-800C1368	jal    store_memory_block_one_byte [$800bf3ac]
+800C1368	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S1 & 00ff;
 800C1370	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -458,8 +458,8 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0x9F SEARCHX
-field_file_offset     = w[8009c6dc];
-actor_id_cur        = bu[800722c4];
+field_file_offset     = w[0x8009c6dc];
+actor_id_cur        = bu[0x800722c4];
 script_pointer_offset = 800831fc + actor_id_cur * 2;
 script = field_file_offset + hu[script_pointer_offset];
 
@@ -467,17 +467,17 @@ S0 = bu[script + 1] >> 4;
 
 A0 = 2;
 A1 = 5;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 S2 = bu[script + 4] + V0; // diapason start
 
 A0 = 3;
 A1 = 7;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 S1 = bu[script + 4] + V0; // diapason end
 
 A0 = 4;
 A1 = 9;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 search_x = V0;
 
 switch( S0 )
@@ -521,12 +521,12 @@ switch( S0 )
         if( S1 >= S2 )
         {
             loopc1540:	; 800C1540
-                if( bu[8009c6e4 + ba4 + S2] == search_x )
+                if( bu[0x8009c6e4 + ba4 + S2] == search_x )
                 {
                     A0 = 6;
                     A1 = a;
                     A2 = S2;
-                    store_memory_block_two_bytes;
+                    field_event_write_memory_s16;
 
                     [script_pointer_offset] = h(hu[script_pointer_offset] + b);
                     return;
@@ -554,12 +554,12 @@ switch( S0 )
         if( S1 >= S2 )
         {
             loopc15e4:	; 800C15E4
-                if( bu[80075e24 + S2] == search_x )
+                if( bu[0x80075e24 + S2] == search_x )
                 {
                     A0 = 6;
                     A1 = a;
                     A2 = S2;
-                    store_memory_block_two_bytes;
+                    field_event_write_memory_s16;
 
                     [script_pointer_offset] = h(hu[script_pointer_offset] + b);
                     return;
@@ -576,7 +576,7 @@ switch( S0 )
 A0 = 6;
 A1 = a;
 A2 = -1;
-store_memory_block_two_bytes;
+field_event_write_memory_s16;
 
 [script_pointer_offset] = h(hu[script_pointer_offset] + b);
 ////////////////////////////////
@@ -586,18 +586,18 @@ store_memory_block_two_bytes;
 ////////////////////////////////
 // 0x82 BITON
 A0 = 0001;
-800C16A4	jal    read_memory_block_one_byte [$800bee10]
+800C16A4	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800C16B4	jal    read_memory_block_one_byte [$800bee10]
+800C16B4	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 V1 = 0001;
 V1 = V1 << V0;
 S0 = S0 | V1;
 A0 = 0001;
 A1 = 0002;
-800C16D0	jal    store_memory_block_one_byte [$800bf3ac]
+800C16D0	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800C16D8	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -634,11 +634,11 @@ A1 = 0003;
 
 Lc1740:	; 800C1740
 A0 = 0001;
-800C1744	jal    read_memory_block_one_byte [$800bee10]
+800C1744	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800C1754	jal    read_memory_block_one_byte [$800bee10]
+800C1754	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 V1 = 0001;
 V1 = V1 << V0;
@@ -646,7 +646,7 @@ V1 = 0 NOR V1;
 S0 = S0 & V1;
 A0 = 0001;
 A1 = 0002;
-800C1774	jal    store_memory_block_one_byte [$800bf3ac]
+800C1774	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800C177C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -683,18 +683,18 @@ A1 = 0003;
 
 Lc17e4:	; 800C17E4
 A0 = 0001;
-800C17E8	jal    read_memory_block_one_byte [$800bee10]
+800C17E8	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800C17F8	jal    read_memory_block_one_byte [$800bee10]
+800C17F8	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 V1 = 0001;
 V1 = V1 << V0;
 S0 = S0 ^ V1;
 A0 = 0001;
 A1 = 0002;
-800C1814	jal    store_memory_block_one_byte [$800bf3ac]
+800C1814	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800C181C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -718,11 +718,11 @@ SP = SP + 0018;
 ////////////////////////////////
 // field_event_opcode_d0_line()
 
-actor_id_cur = bu[800722c4];
-current_line_id = h[80095d84];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+current_line_id = h[0x80095d84];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0610; // "line"
     A1 = 8;
@@ -731,18 +731,18 @@ if( bu[8009d820] & 3 )
 
 if( current_line_id < 20 )
 {
-    [8007078c + actor_id_cur] = b(current_line_id);
+    [0x8007078c + actor_id_cur] = b(current_line_id);
 
-    [8007e7ac + current_line_id * 18 + 0] = h(hu[script + 1]); // x1
-    [8007e7ac + current_line_id * 18 + 2] = h(hu[script + 3]); // y1
-    [8007e7ac + current_line_id * 18 + 4] = h(hu[script + 5]); // z1
-    [8007e7ac + current_line_id * 18 + 6] = h(hu[script + 7]); // x2
-    [8007e7ac + current_line_id * 18 + 8] = h(hu[script + 9]); // y2
-    [8007e7ac + current_line_id * 18 + a] = h(hu[script + b]); // z2
-    [8007e7ac + current_line_id * 18 + c] = b(1); // line on
-    [8007e7ac + current_line_id * 18 + d] = b(actor_id_cur);
+    [0x8007e7ac + current_line_id * 18 + 0] = h(hu[script + 1]); // x1
+    [0x8007e7ac + current_line_id * 18 + 2] = h(hu[script + 3]); // y1
+    [0x8007e7ac + current_line_id * 18 + 4] = h(hu[script + 5]); // z1
+    [0x8007e7ac + current_line_id * 18 + 6] = h(hu[script + 7]); // x2
+    [0x8007e7ac + current_line_id * 18 + 8] = h(hu[script + 9]); // y2
+    [0x8007e7ac + current_line_id * 18 + a] = h(hu[script + b]); // z2
+    [0x8007e7ac + current_line_id * 18 + c] = b(1); // line on
+    [0x8007e7ac + current_line_id * 18 + d] = b(actor_id_cur);
 
-    [80095d84] = h(current_line_id + 1);
+    [0x80095d84] = h(current_line_id + 1);
 }
 else
 {
@@ -750,7 +750,7 @@ else
     funcd4848();
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + d);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + d);
 
 return 0;
 ////////////////////////////////
@@ -760,40 +760,40 @@ return 0;
 ////////////////////////////////
 // 0xD3 SLINE
 
-actor_id_cur = bu[800722c4];
-line_id = bu[8007078c + actor_id_cur];
+actor_id_cur = bu[0x800722c4];
+line_id = bu[0x8007078c + actor_id_cur];
 
 A0 = 1;
 A1 = 4;
-read_memory_block_two_bytes();
-[8007e7ac + line_id * 18 + 0] = h(V0);
+field_event_read_memory_s16();
+[0x8007e7ac + line_id * 18 + 0] = h(V0);
 
 A0 = 2;
 A1 = 6;
-read_memory_block_two_bytes();
-[8007e7ac + line_id * 18 + 2] = h(V0);
+field_event_read_memory_s16();
+[0x8007e7ac + line_id * 18 + 2] = h(V0);
 
 A0 = 3;
 A1 = 8;
-read_memory_block_two_bytes();
-[8007e7ac + line_id * 18 + 4] = h(V0);
+field_event_read_memory_s16();
+[0x8007e7ac + line_id * 18 + 4] = h(V0);
 
 A0 = 4;
 A1 = a;
-read_memory_block_two_bytes();
-[8007e7ac + line_id * 18 + 6] = h(V0);
+field_event_read_memory_s16();
+[0x8007e7ac + line_id * 18 + 6] = h(V0);
 
 A0 = 5;
 A1 = c;
-read_memory_block_two_bytes();
-[8007e7ac + line_id * 18 + 8] = h(V0);
+field_event_read_memory_s16();
+[0x8007e7ac + line_id * 18 + 8] = h(V0);
 
 A0 = 6;
 A1 = e;
-read_memory_block_two_bytes();
-[8007e7ac + line_id * 18 + a] = h(V0);
+field_event_read_memory_s16();
+[0x8007e7ac + line_id * 18 + a] = h(V0);
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 10);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 10);
 
 return 0;
 ////////////////////////////////
@@ -802,18 +802,18 @@ return 0;
 
 ////////////////////////////////
 // 0xD1 LINON
-actor_id_cur = bu[800722C4];
+actor_id_cur = bu[0x800722C4];
 
-A1 = bu[8007078C + actor_id_cur];
-A0 = hu[800831FC + actor_id_cur * 2];
-V0 = w[8009C6DC];
+A1 = bu[0x8007078C + actor_id_cur];
+A0 = hu[0x800831FC + actor_id_cur * 2];
+V0 = w[0x8009C6DC];
 line_on = bu[V0 + A0 + 1];
-[8007E7AC + A1 * 18 + C] = b(line_on);
+[0x8007E7AC + A1 * 18 + C] = b(line_on);
 
 if (line_on == 0)
 {
-    V1 = bu[8007078C + A1];
-    [8007E7AC + V1 * 18 + E] = b(0);
+    V1 = bu[0x8007078C + A1];
+    [0x8007E7AC + V1 * 18 + E] = b(0);
 }
 
 move script pointer by 2;
@@ -825,19 +825,19 @@ return 0;
 
 ////////////////////////////////
 // 0x2B SLIP
-V0 = bu[800722C4];
-A1 = bu[8007078C + V0];
-A0 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+A1 = bu[0x8007078C + V0];
+A0 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 V0 = bu[V0 + A0 + 1];
 
-[8007E7AC + A1 * 18 + 16] = b[V0];
+[0x8007E7AC + A1 * 18 + 16] = b[V0];
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -846,7 +846,7 @@ return 0;
 
 ////////////////////////////////
 // 0x60 MAPJUMP
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C40AC	addiu  sp, sp, $ffe8 (=-$18)
 V0 = V0 & 0003;
 800C40B4	beq    v0, zero, Lc40cc [$800c40cc]
@@ -857,7 +857,7 @@ A0 = A0 + 0840;
 A1 = 0008;
 
 Lc40cc:	; 800C40CC
-A1 = w[8009c6e0];
+A1 = w[0x8009c6e0];
 800C40D4	nop
 V1 = bu[A1 + 0001];
 800C40DC	nop
@@ -873,9 +873,9 @@ V0 = 0001;
 [A1 + 0001] = b(V0);
 800C4100	lui    v0, $8008
 V0 = V0 + 31fc;
-A2 = w[8009c6e0];
-A0 = bu[800722c4];
-A1 = w[8009c6dc];
+A2 = w[0x8009c6e0];
+A0 = bu[0x800722c4];
+A1 = w[0x8009c6dc];
 A0 = A0 << 01;
 A0 = A0 + V0;
 [A2 + 0026] = h(0);
@@ -948,7 +948,7 @@ V1 = h[A1 + 0026];
 800C422C	nop
 800C4230	bne    v1, v0, Lc4268 [$800c4268]
 800C4234	nop
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800C4240	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -961,12 +961,12 @@ A0 = A0 + 000a;
 [A1 + 0001] = b(0);
 
 Lc4268:	; 800C4268
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C4270	nop
 V0 = V0 & 0003;
 800C4278	beq    v0, zero, Lc42a0 [$800c42a0]
 V0 = 0001;
-V0 = w[8009c6e0];
+V0 = w[0x8009c6e0];
 800C4288	lui    a0, $800a
 A0 = A0 + 0848;
 A1 = bu[V0 + 0001];
@@ -981,7 +981,7 @@ Lc42a0:	; 800C42A0
 
 ////////////////////////////////
 // 0xD8 PMJMP
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C42B8	addiu  sp, sp, $ffe8 (=-$18)
 V0 = V0 & 0003;
 800C42C0	beq    v0, zero, Lc42d8 [$800c42d8]
@@ -994,8 +994,8 @@ A1 = 0008;
 Lc42d8:	; 800C42D8
 800C42D8	lui    v0, $8008
 V0 = V0 + 31fc;
-A0 = bu[800722c4];
-V1 = w[8009c6dc];
+A0 = bu[0x800722c4];
+V1 = w[0x8009c6dc];
 A0 = A0 << 01;
 A0 = A0 + V0;
 V0 = hu[A0 + 0000];
@@ -1006,14 +1006,14 @@ V0 = hu[A0 + 0000];
 800C430C	nop
 V1 = V1 + V0;
 V0 = hu[A0 + 0000];
-[80095dd0] = h(A1);
+[0x80095dd0] = h(A1);
 V1 = bu[V1 + 0002];
 V0 = V0 + 0003;
 V1 = V1 << 08;
 A1 = A1 | V1;
 [A0 + 0000] = h(V0);
 V0 = 0;
-[80095dd0] = h(A1);
+[0x80095dd0] = h(A1);
 RA = w[SP + 0010];
 SP = SP + 0018;
 800C4348	jr     ra 
@@ -1024,7 +1024,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0xD9 PMJMP2
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C4358	addiu  sp, sp, $ffe8 (=-$18)
 V0 = V0 & 0003;
 800C4360	beq    v0, zero, Lc4378 [$800c4378]
@@ -1035,11 +1035,11 @@ A0 = A0 + 0854;
 A1 = 0008;
 
 Lc4378:	; 800C4378
-V1 = h[800965e8];
+V1 = h[0x800965e8];
 V0 = 0002;
 800C4384	bne    v1, v0, Lc43b4 [$800c43b4]
 V0 = 0001;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800C4394	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -1060,7 +1060,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x20 MINIGAME
-A1 = w[8009c6e0];
+A1 = w[0x8009c6e0];
 800C43F4	nop
 V1 = bu[A1 + 0001];
 800C43FC	nop
@@ -1076,9 +1076,9 @@ V0 = 000c;
 [A1 + 0001] = b(V0);
 800C4420	lui    v0, $8008
 V0 = V0 + 31fc;
-A2 = w[8009c6e0];
-A0 = bu[800722c4];
-A1 = w[8009c6dc];
+A2 = w[0x8009c6e0];
+A0 = bu[0x800722c4];
+A1 = w[0x8009c6dc];
 A0 = A0 << 01;
 A0 = A0 + V0;
 [A2 + 0026] = h(0);
@@ -1157,7 +1157,7 @@ V1 = h[A1 + 0026];
 800C4564	nop
 800C4568	bne    v1, v0, Lc459c [$800c459c]
 V0 = 0001;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800C4578	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -1180,12 +1180,12 @@ SP = SP + 0018;
 ////////////////////////////////
 // field_event_opcode_21_tutor()
 
-field_struct = w[8009c6e0];
-events_data = w[8009c6dc];
-actor_id_cur = bu[800722c4];
-script_cur = hu[800831fc + actor_id_cur * 2];
+field_struct = w[0x8009c6e0];
+events_data = w[0x8009c6dc];
+actor_id_cur = bu[0x800722c4];
+script_cur = hu[0x800831fc + actor_id_cur * 2];
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a08c0; // "tutor"
     A1 = 1;
@@ -1198,11 +1198,11 @@ if( bu[field_struct + 1] == 0 ) // normal field
     [field_struct + 2] = h(1);
     [field_struct + 26] = h(0);
 
-    [8007ebe0] = b(1);
+    [0x8007ebe0] = b(1);
 
     tut_id = bu[events_data + script_cur + 1];
 
-    if( bu[8009d820] & 3 )
+    if( bu[0x8009d820] & 3 )
     {
         A0 = 800a08c8; // "data="
         A1 = tut_id;
@@ -1211,11 +1211,11 @@ if( bu[field_struct + 1] == 0 ) // normal field
     }
 
     V0 = field_event_get_akao_offset_in_field( tut_id );
-    [800e48e0] = w(events_data + V0);
+    [0x800e48e0] = w(events_data + V0);
 }
 else if( bu[field_struct + 1] == 9 ) // tutorial
 {
-    if( bu[8009d820] & 3 )
+    if( bu[0x8009d820] & 3 )
     {
         A0 = 800a08d0; // "evt result="
         A1 = h[field_struct + 26];
@@ -1228,7 +1228,7 @@ else if( bu[field_struct + 1] == 9 ) // tutorial
         [field_struct + 1] = b(0);
         [field_struct + 26] = h(0);
 
-        [800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 2);
+        [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 2);
 
         return 0;
     }
@@ -1242,12 +1242,12 @@ return 1;
 ////////////////////////////////
 // 0xF5 MULCK
 
-A0 = bu[800722c4];
-V1 = hu[800831fc + A0 * 2];
-V0 = w[8009c6dc];
+A0 = bu[0x800722c4];
+V1 = hu[0x800831fc + A0 * 2];
+V0 = w[0x8009c6dc];
 V0 = bu[V0 + V1 + 1];
-[800716d4] = b(V0);
-[800831fc + A0 * 2] = h(V1 + 2);
+[0x800716d4] = b(V0);
+[0x800831fc + A0 * 2] = h(V1 + 2);
 return 0;
 ////////////////////////////////
 
@@ -1255,13 +1255,13 @@ return 0;
 
 ////////////////////////////////
 // 0x27 BGMOVIE
-struct = w[8009c6e0];
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+struct = w[0x8009c6e0];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 [struct + 3a] = b(bu[script + 1]);
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 2);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -1271,12 +1271,12 @@ return 0;
 ////////////////////////////////
 // field_event_opcode_0e_dskcg()
 
-field_struct = w[8009c6e0];
-events_data = w[8009c6dc];
-actor_id_cur = bu[800722c4];
-script_cur = hu[800831fc + actor_id_cur * 2];
+field_struct = w[0x8009c6e0];
+events_data = w[0x8009c6dc];
+actor_id_cur = bu[0x800722c4];
+script_cur = hu[0x800831fc + actor_id_cur * 2];
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a08f4; // "dskcg"
     A1 = 1;
@@ -1286,7 +1286,7 @@ if( bu[8009d820] & 3 )
 if( bu[field_struct + 1] == 0 ) // normal field state
 {
     [field_struct + 1] = b(d); // set to disc change
-    [8009d588] = b(bu[events_data + script_cur + 1]);
+    [0x8009d588] = b(bu[events_data + script_cur + 1]);
 }
 else if( bu[field_struct + 1] == d )
 {
@@ -1295,7 +1295,7 @@ else if( bu[field_struct + 1] == d )
 
     [field_struct + 1] = b(0); // set to normal state
 
-    [800831fc + actor_id_cur * 2] = h(script_cur + 2);
+    [0x800831fc + actor_id_cur * 2] = h(script_cur + 2);
 
     return 0;
 }
@@ -1307,28 +1307,28 @@ return 1;
 
 ////////////////////////////////
 // 0x33 UC
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 V0 = bu[V0 + V1 + 1];
 
-V1 = w[8009C6E0];
+V1 = w[0x8009C6E0];
 [V1 + 32] = b(V0);
-[80081DC4] = b(V0);
+[0x80081DC4] = b(V0);
 
-V0 = bu[80081DC4];
+V0 = bu[0x80081DC4];
 if (V0 == 0)
 {
-    V0 = w[8009C6E0];
+    V0 = w[0x8009C6E0];
     V0 = [V0 + 2A];
-    [800756E8 + V0] = b(00);
+    [0x800756E8 + V0] = b(00);
 }
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -1337,24 +1337,24 @@ return 0;
 
 ////////////////////////////////
 // 0x69 MPDSP
-struct = w[8009c6e0];
-actor_id_cur            = bu[800722c4];
+struct = w[0x8009c6e0];
+actor_id_cur            = bu[0x800722c4];
 current_script_pointer    = 800831fc + actor_id_cur * 2;
-field_file_offset         = w[8009c6dc];
+field_file_offset         = w[0x8009c6dc];
 
 argument1 = hu[current_script_pointer + 0];
 
 [struct + 38] = b(bu[actor_id_cur + argument1 + 1]);
 
 // move pointer by 9
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 2);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 2);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xFB MVCAM
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C556C	addiu  sp, sp, $ffe0 (=-$20)
 V0 = V0 & 0003;
 800C5574	beq    v0, zero, Lc558c [$800c558c]
@@ -1365,21 +1365,21 @@ A0 = A0 + 0910;
 A1 = 0001;
 
 Lc558c:	; 800C558C
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C5594	nop
 V0 = V0 << 01;
 800C559C	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C55B4	nop
 V0 = V0 + V1;
-V1 = w[8009c6e0];
+V1 = w[0x8009c6e0];
 V0 = bu[V0 + 0001];
 800C55C8	nop
 [V1 + 0039] = b(V0);
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800C55D8	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -1399,7 +1399,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0xFF GAMEOVER
-V0 = w[8009c6e0];
+V0 = w[0x8009c6e0];
 [V0 +  1] = b(1a);
 [V0 + 26] = h(0);
 return 1;
@@ -1410,25 +1410,25 @@ return 1;
 ////////////////////////////////
 // 0xBF CC
 
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 A0 = bu[V0 + V1 + 1]; // entity id
 
-V1 = bu[8007EB98 + A0];
+V1 = bu[0x8007EB98 + A0];
 
 if (V1 != FF)
 {
-    V1 = w[8009C6E0];
-    V0 = bu[8007EB98 + A0];
+    V1 = w[0x8009C6E0];
+    V0 = bu[0x8007EB98 + A0];
     [V1 + 2A] = V0;
 }
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -1438,27 +1438,27 @@ return 0;
 ////////////////////////////////
 // 0xA1 CHAR
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0924; // "char"
     A1 = 1;
     field_debug_event_opcode();
 }
 
-actor_id_cur = bu[800722c4];
-entities_data = w[8009c544];
-events_data = w[8009c6dc];
-model_cur = bu[8009c6c4];
+actor_id_cur = bu[0x800722c4];
+entities_data = w[0x8009c544];
+events_data = w[0x8009c6dc];
+model_cur = bu[0x8009c6c4];
 
-[8007eb98 + actor_id_cur] = b(model_cur);
-[8009c6c4] = b(model_cur + 1);
+[0x8007eb98 + actor_id_cur] = b(model_cur);
+[0x8009c6c4] = b(model_cur + 1);
 
-A0 = hu[800831fc + actor_id_cur * 2];
+A0 = hu[0x800831fc + actor_id_cur * 2];
 [entities_data + model_cur * 84 + 57] = b(actor_id_cur);
 [entities_data + model_cur * 84 + 5c] = b(1); // make model visible
 [entities_data + model_cur * 84 + 66] = h(bu[events_data + A0 + 1]);
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 2);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -1467,19 +1467,19 @@ return 0;
 
 ////////////////////////////////
 // 0xA2 DFANM
-actor_id_cur        = bu[800722c4];
-current_model         = bu[8007eb98 + actor_id_cur];
+actor_id_cur        = bu[0x800722c4];
+current_model         = bu[0x8007eb98 + actor_id_cur];
 script_pointer_offset = 800831fc + actor_id_cur * 2;
 
 if( current_model != ff )
 {
-    V0 = w[8009c6dc] + hu[script_pointer_offset];
-    [8008325c + current_model] = b(bu[V0 + 1]); // animation_id
-    [80082248 + current_model] = h(h[8009d828 + current_model] / bu[V0 + 2]); // relative_speed
+    V0 = w[0x8009c6dc] + hu[script_pointer_offset];
+    [0x8008325c + current_model] = b(bu[V0 + 1]); // animation_id
+    [0x80082248 + current_model] = h(h[0x8009d828 + current_model] / bu[V0 + 2]); // relative_speed
 
-    if( bu[800756e8 + current_model] == 3 ) // animation state
+    if( bu[0x800756e8 + current_model] == 3 ) // animation state
     {
-        [800756e8 + current_model] = b(0);
+        [0x800756e8 + current_model] = b(0);
     }
 }
 
@@ -1490,50 +1490,50 @@ if( current_model != ff )
 
 ////////////////////////////////
 // 0xDC CCANM
-entity_id = bu[800722C4];
-V1 = hu[800831FC + entity_id * 2];
-V0 = w[8009C6DC];
+entity_id = bu[0x800722C4];
+V1 = hu[0x800831FC + entity_id * 2];
+V0 = w[0x8009C6DC];
 A0 = V0 + V1;
 V1 = bu[A0 + 3];
 
 if (V1 == 0)
 {
-    V1 = w[8009c6e0];
+    V1 = w[0x8009c6e0];
     [V1 + 2c] = h(bu[A0 + 1]);
 }
 else if (V1 == 1)
 {
-    V1 = w[8009c6e0];
+    V1 = w[0x8009c6e0];
     [V1 + 2e] = h(bu[A0 + 1]);
 }
 else if (V1 == 2)
 {
-    V1 = w[8009c6e0];
+    V1 = w[0x8009c6e0];
     [V1 + 30] = h(bu[A0 + 1]);
 }
 
-[800831FC + entity_id * 2] = hu[hu[800831FC + entity_id * 2] + 4];
+[0x800831FC + entity_id * 2] = hu[hu[0x800831FC + entity_id * 2] + 4];
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcc5b38
-actor_id_cur         = bu[800722c4];
-current_model          = bu[8007eb98 + actor_id_cur];
-current_script_pointer = hu[800831fc + actor_id_cur * 2];
-field_file_offset      = w[8009c6dc];
-entities_data          = w[8009c544];
+actor_id_cur         = bu[0x800722c4];
+current_model          = bu[0x8007eb98 + actor_id_cur];
+current_script_pointer = hu[0x800831fc + actor_id_cur * 2];
+field_file_offset      = w[0x8009c6dc];
+entities_data          = w[0x8009c544];
 
 animation_id = bu[field_file_offset + current_script_pointer + 1];
 [entities_data + current_model * 84 + 5e] = b(animation_id);
-[entities_data + current_model * 84 + 60] = h(h[8009d828 + current_model * 2] / bu[field_file_offset + current_script_pointer + 2]);
+[entities_data + current_model * 84 + 60] = h(h[0x8009d828 + current_model * 2] / bu[field_file_offset + current_script_pointer + 2]);
 [entities_data + current_model * 84 + 62] = h(0);
 
-dat_block7 = w[8008357c];
+dat_block7 = w[0x8008357c];
 V1 = bu[dat_block7 + current_model * 8 + 4]; // 0 1 2 3 4 5 6 7 8 9 for each model
 
-A0 = w[8004a62c];
+A0 = w[0x8004a62c];
 V0 = w[A0 + 4];
 A0 = hu[V0 + V1 * 24 + 1a];
 A1 = w[V0 + V1 * 24 + 1c];
@@ -1545,18 +1545,18 @@ A1 = w[V0 + V1 * 24 + 1c];
 ////////////////////////////////
 // 0xA3 ANIME1
 // 0xAE ANIME2
-actor_id_cur        = bu[800722c4];
-current_model         = bu[8007eb98 + actor_id_cur];
+actor_id_cur        = bu[0x800722c4];
+current_model         = bu[0x8007eb98 + actor_id_cur];
 script_pointer_offset = 800831fc + actor_id_cur * 2;
 
 if( current_model != ff )
 {
-    animation_state = bu[800756e8 + current_model];
+    animation_state = bu[0x800756e8 + current_model];
     if( animation_state != 3 )
     {
         if( animation_state == 4 )
         {
-            [800756E8 + current_model] = b(0);
+            [0x800756E8 + current_model] = b(0);
             [script_pointer_offset] = h(hu[script_pointer_offset] + 3);
             return 0;
         }
@@ -1570,13 +1570,13 @@ if( current_model != ff )
     funcc5b38;
 
     // if this is AE opcode
-    if( bu[8009a058] == ae )
+    if( bu[0x8009a058] == ae )
     {
-        [800756E8 + current_model] = b(5);
+        [0x800756E8 + current_model] = b(5);
     }
     else
     {
-        [800756E8 + current_model] = b(2);
+        [0x800756E8 + current_model] = b(2);
         return 1;
     }
 }
@@ -1589,17 +1589,17 @@ if( current_model != ff )
 ////////////////////////////////
 // 0xAF ANIM!1
 // 0xBA ANIM!2
-actor_id_cur = bu[800722c4];
-current_model = bu[8007eb98 + actor_id_cur];
+actor_id_cur = bu[0x800722c4];
+current_model = bu[0x8007eb98 + actor_id_cur];
 
 if( current_model != ff )
 {
-    anim_state = bu[800756e8 + current_model];
+    anim_state = bu[0x800756e8 + current_model];
     if( anim_state != 3 )
     {
         if( anim_state == 4 )
         {
-            [800756e8 + current_model] = b(3);
+            [0x800756e8 + current_model] = b(3);
             [script_pointer_offset] = h(hu[script_pointer_offset] + 3);
             return 0;
         }
@@ -1613,13 +1613,13 @@ if( current_model != ff )
     funcc5b38;
 
     // if this is AF opcode
-    if( bu[8009a058] == af )
+    if( bu[0x8009a058] == af )
     {
-        [800756e8 + current_model] = b(6);
+        [0x800756e8 + current_model] = b(6);
     }
     else
     {
-        [800756e8 + current_model] = b(2);
+        [0x800756e8 + current_model] = b(2);
         return 1;
     }
 }
@@ -1632,21 +1632,21 @@ if( current_model != ff )
 ////////////////////////////////
 // 0xB0 CANIM1
 // 0xBB CANIM2
-actor_id_cur        = bu[800722C4];
-current_model         = bu[8007EB98 + actor_id_cur]; // A1
-entities_data     = w[8009C544];
+actor_id_cur        = bu[0x800722C4];
+current_model         = bu[0x8007EB98 + actor_id_cur]; // A1
+entities_data     = w[0x8009C544];
 script_pointer_offset = 800831FC + actor_id_cur * 2;
 
 if (current_model != FF)
 {
     // animation state
-    V1 = bu[800756E8 + current_model];
+    V1 = bu[0x800756E8 + current_model];
 
     if (V1 != 3)
     {
         if (V1 == 4)
         {
-            [800756E8 + current_model] = b(0);
+            [0x800756E8 + current_model] = b(0);
 
             A0 = hu[script_pointer_offset];
             A0 = A0 + 5;
@@ -1660,14 +1660,14 @@ if (current_model != FF)
         }
     }
 
-    V1 = w[8009c6dc];
+    V1 = w[0x8009c6dc];
     V0 = hu[script_pointer_offset];
     A1 = bu[V1 + V0 + 4];
 
     [entities_data + current_model * 84 + 5E] = b(bu[V1 + V0 + 1]);
 
-    A2 = w[8009c6dc];
-    [entities_data + current_model * 84 + 60] = h(h[8009d828 + current_model * 2] / A1);
+    A2 = w[0x8009c6dc];
+    [entities_data + current_model * 84 + 60] = h(h[0x8009d828 + current_model * 2] / A1);
 
     V0 = hu[script_pointer_offset];
     V1 = bu[A2 + V0 + 2];
@@ -1678,13 +1678,13 @@ if (current_model != FF)
     A2 = bu[A2 + V0 + 3];
     A2 = A2 / A1;
 
-    V1 = w[8008357c];
+    V1 = w[0x8008357c];
     V0 = bu[V1 + current_model * 8 + 4];
-    A0 = w[8004a62c];
+    A0 = w[0x8004a62c];
     V0 = w[A0 + 4];
     A0 = hu[V0 + V1 * 24 + 1A];
     V1 = w[V0 + V1 * 24 + 1C];
-    V0 = bu[80074F02 + A1 * 84]; // animation id
+    V0 = bu[0x80074F02 + A1 * 84]; // animation id
     V0 = hu[A0 + V1 + V0 * 10]; // frames number
     A0 = V0 - 1;
 
@@ -1697,15 +1697,15 @@ if (current_model != FF)
         [entities_data + current_model * 84 + 64] = h(A2);
     }
 
-    V1 = bu[8009A058];
+    V1 = bu[0x8009A058];
     if (V1 != B0)
     {
-        [800756E8 + current_model] = b(2);
+        [0x800756E8 + current_model] = b(2);
         return 1;
     }
     else
     {
-        [800756E8 + current_model] = b(5);
+        [0x800756E8 + current_model] = b(5);
     }
 }
 
@@ -1721,19 +1721,19 @@ return 0;
 ////////////////////////////////
 // 0xB1 CANM!1
 // 0xBC CANM!2
-actor_id_cur        = bu[800722C4];
-current_model         = bu[8007EB98 + actor_id_cur]; // A1
-entities_data     = w[8009C544];
+actor_id_cur        = bu[0x800722C4];
+current_model         = bu[0x8007EB98 + actor_id_cur]; // A1
+entities_data     = w[0x8009C544];
 script_pointer_offset = 800831FC + actor_id_cur * 2;
 
 if (current_model != FF)
 {
-    V1 = bu[800756E8];
+    V1 = bu[0x800756E8];
     if (V1 != 3)
     {
         if (V1 == 4)
         {
-            [800756E8 + current_model] = b(3);
+            [0x800756E8 + current_model] = b(3);
 
             A0 = hu[script_pointer_offset];
             A0 = A0 + 5;
@@ -1747,16 +1747,16 @@ if (current_model != FF)
         }
     }
 
-    V1 = w[8009C6DC];
+    V1 = w[0x8009C6DC];
     V0 = hu[script_pointer_offset];
     A1 = bu[V1 + V0 + 4];
 
     V1 = bu[V1 + V0 + 1];
     [entities_data + current_model * 84 + 5E] = b(V1);
 
-    A0 = h[8009D828 + current_model * 2];
+    A0 = h[0x8009D828 + current_model * 2];
     A0 = A0 / A1;
-    A2 = w[8009C6DC];
+    A2 = w[0x8009C6DC];
     [entities_data + current_model * 84 + 60] = h(A0);
 
     V0 = hu[script_pointer_offset];
@@ -1768,13 +1768,13 @@ if (current_model != FF)
     A2 = bu[A2 + V0 + 3];
     A2 = A2 / A1;
 
-    V1 = w[8008357C];
+    V1 = w[0x8008357C];
     V0 = bu[V1 + current_model * 8 + 4];
-    A0 = w[8004A62C];
+    A0 = w[0x8004A62C];
     V0 = w[A0 + 4];
     A0 = hu[V0 + V1 * 24 + 1A];
     V1 = w[V0 + V1 * 24 + 1C];
-    V0 = bu[80074F02 + A1 * 84]; // animation id
+    V0 = bu[0x80074F02 + A1 * 84]; // animation id
     V0 = hu[A0 + V1 + V0 * 10]; // frames number
     A0 = V0 - 1;
 
@@ -1787,14 +1787,14 @@ if (current_model != FF)
         [entities_data + current_model * 84 + 64] = h(A2);
     }
 
-    V1 = bu[8009A058];
+    V1 = bu[0x8009A058];
     if (V1 == B1)
     {
-        [800756E8 + current_model] = b(6);
+        [0x800756E8 + current_model] = b(6);
     }
     else
     {
-        [800756E8 + current_model] = b(2);
+        [0x800756E8 + current_model] = b(2);
         return 1;
     }
 }
@@ -1806,15 +1806,15 @@ if (current_model != FF)
 
 ////////////////////////////////
 // 0xAC ANIMW
-actor_id_cur        = bu[800722c4];
-entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + actor_id_cur];
+actor_id_cur        = bu[0x800722c4];
+entities_data     = w[0x8009c544];
+current_model         = bu[0x8007eb98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 script_pointer_offset = 800831fc + actor_id_cur * 2;
 
 if (current_model != FF)
 {
-    V1 = bu[800756E8 + current_model];
+    V1 = bu[0x800756E8 + current_model];
 
     if (V1 == 2 || V1 == 5 || V1 == 6)
     {
@@ -1822,7 +1822,7 @@ if (current_model != FF)
     }
     else if (V1 == 4)
     {
-        [800756E8 + current_model] = b(0);
+        [0x800756E8 + current_model] = b(0);
     }
 }
 
@@ -1833,21 +1833,21 @@ if (current_model != FF)
 
 ////////////////////////////////
 // 0xDD ANIMB
-A1 = entity_id = bu[800722C4];
-A0 = bu[8007EB98 + entity_id];
+A1 = entity_id = bu[0x800722C4];
+A0 = bu[0x8007EB98 + entity_id];
 if (A0 != FF)
 {
-    entities_data = w[8009C544];
+    entities_data = w[0x8009C544];
     current_frame = hu[entities_data + A0 * 84 + 62];
     [entities_data + A0 * 84 + 64] = h(current_frame / 10);
 
-    V1 = bu[8007EB98 + entity_id];
-    [800756E8 + V1] = b(3);
+    V1 = bu[0x8007EB98 + entity_id];
+    [0x800756E8 + V1] = b(3);
 }
 
-V1 = hu[800831FC + entity_id * 2];
+V1 = hu[0x800831FC + entity_id * 2];
 V1 = V1 + 1;
-[800831FC + A0 * 2] = hu[V1];
+[0x800831FC + A0 * 2] = hu[V1];
 
 return 0;
 ////////////////////////////////
@@ -1856,12 +1856,12 @@ return 0;
 
 ////////////////////////////////
 // 0xA8 MOVE
-actor_id_cur        = bu[800722c4];
-entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + actor_id_cur];
+actor_id_cur        = bu[0x800722c4];
+entities_data     = w[0x8009c544];
+current_model         = bu[0x8007eb98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 script_pointer_offset = 800831fc + actor_id_cur * 2;
-game_data_offset      = w[8009c6e0];
+game_data_offset      = w[0x8009c6e0];
 movement_speed        = hu[current_model_offset + 70]
 
 
@@ -1880,14 +1880,14 @@ if( current_model == ff ) // if not visible entity
 // set destination X
 A0 = 1;
 A1 = 2;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << 0c;
 [current_model_offset + 78] = w(V0);
 
 // set destination Y
 A0 = 2;
 A1 = 4;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << 0c;
 [current_model_offset + 7C] = w(V0);
 
@@ -1898,7 +1898,7 @@ if( A0 * 3 < movement_speed )
 {
     if( bu[current_model_offset + 5e] == 2 ) // run animation
     {
-        [800756E8 + current_model] = b(01);
+        [0x800756E8 + current_model] = b(01);
 
         A1 = bu[current_model_offset + 5D];
 
@@ -1921,7 +1921,7 @@ if( A0 * 3 < movement_speed )
             [current_model_offset + 5D] = b(00);
             [current_model_offset + 6A] = b(00);
 
-            [800756E8 + current_model] = b(00);
+            [0x800756E8 + current_model] = b(00);
 
             V0 = hu[script_pointer_offset];
             V0 = V0 + 6;
@@ -1941,7 +1941,7 @@ else
 {
     if( bu[current_model_offset + 5E] == 1 ) // walk animation
     {
-        [800756E8 + current_model] = b(01);
+        [0x800756E8 + current_model] = b(01);
 
         A1 = bu[current_model_offset + 5D];
 
@@ -1964,7 +1964,7 @@ else
             [current_model_offset + 5D] = b(00);
             [current_model_offset + 6A] = b(00);
 
-            [800756E8 + current_model] = b(00);
+            [0x800756E8 + current_model] = b(00);
 
             V0 = hu[script_pointer_offset];
             V0 = V0 + 6;
@@ -1986,20 +1986,20 @@ else
 [current_model_offset + 60] = h(10);
 [current_model_offset + 62] = h(00);
 
-V1 = w[8008357C];
+V1 = w[0x8008357C];
 A1 = bu[V1 + current_model * 8 + 04];
-V1 = w[8004A62C];
+V1 = w[0x8004A62C];
 V1 = w[V1 + 04];
 
 A0 = w[V1 + A1 * 24 + 1C];
 A1 = hu[V1 + A1 * 24 + 1A];
 
-V0 = bu[80074F02 + current_model * 84];
+V0 = bu[0x80074F02 + current_model * 84];
 V0 = hu[A0 + A1 + V0 * 10];
 V0 = V0 - 1;
 [current_model_offset + 64] = h(V0)
 
-[800756E8 + current_model] = b(01);
+[0x800756E8 + current_model] = b(01);
 
 A1 = bu[current_model_offset + 5D];
 
@@ -2023,7 +2023,7 @@ if (A0 == 2)
     [current_model_offset + 5D] = b(00);
     [current_model_offset + 6A] = b(00);
 
-    [800756E8 + current_model] = b(00);
+    [0x800756E8 + current_model] = b(00);
 
     V0 = hu[script_pointer_offset];
     V0 = V0 + 6;
@@ -2041,9 +2041,9 @@ return 1;
 
 ////////////////////////////////
 // 0xAD FMOVE
-actor_id_cur        = bu[800722C4];
-entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + actor_id_cur];
+actor_id_cur        = bu[0x800722C4];
+entities_data     = w[0x8009C544];
+current_model         = bu[0x8007EB98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 script_pointer_offset = 800831FC + actor_id_cur * 2;
 
@@ -2060,14 +2060,14 @@ if (current_model == FF) // if not visible entity
 // set destination X
 A0 = 1;
 A1 = 2;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << 0C;
 [current_model_offset + 78] = w(V0);
 
 // set destination Y
 A0 = 2;
 A1 = 4;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << 0C;
 [current_model_offset + 7C] = w(V0);
 
@@ -2105,9 +2105,9 @@ return 1;
 
 ////////////////////////////////
 // 0xA9 CMOVE
-actor_id_cur        = bu[800722C4];
-entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + actor_id_cur];
+actor_id_cur        = bu[0x800722C4];
+entities_data     = w[0x8009C544];
+current_model         = bu[0x8007EB98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 script_pointer_offset = 800831FC + actor_id_cur * 2;
 
@@ -2125,14 +2125,14 @@ if (current_model == FF) // if not visible entity
 // set destination X
 A0 = 1;
 A1 = 2;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << 0C;
 [current_model_offset + 78] = w(V0);
 
 // set destination Y
 A0 = 2;
 A1 = 4;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << 0C;
 [current_model_offset + 7C] = w(V0);
 
@@ -2173,24 +2173,24 @@ return 1;
 
 ////////////////////////////////
 // 0xDB FCFIX
-V1 = actor_id_cur = bu[800722C4];
-A0 = bu[8007EB98 + actor_id_cur];
+V1 = actor_id_cur = bu[0x800722C4];
+A0 = bu[0x8007EB98 + actor_id_cur];
 if (A0 != FF)
 {
     V0 = A0 * 84;
-    A0 = hu[800831FC + actor_id_cur * 2];
+    A0 = hu[0x800831FC + actor_id_cur * 2];
 
     V1 = V1 + A0;
     V1 = bu[V1 + 1];
 
-    entities_data = w[8009C544];
+    entities_data = w[0x8009C544];
     V0 = V0 + entities_data;
     [V0 + 37] = b(V1);
 }
 
-V1 = hu[800831FC + actor_id_cur * 2];
+V1 = hu[0x800831FC + actor_id_cur * 2];
 V1 = V1 + 2;
-[800831FC + A0 * 2] = hu[V1];
+[0x800831FC + A0 * 2] = hu[V1];
 
 return 0;
 ////////////////////////////////
@@ -2199,17 +2199,17 @@ return 0;
 
 ////////////////////////////////
 // 0xC0 JUMP
-A0 = actor_id_cur    = bu[800722C4];
-V1 = model_id          = bu[8007EB98 + actor_id_cur];
-entities_data = w[8009C544];
+A0 = actor_id_cur    = bu[0x800722C4];
+V1 = model_id          = bu[0x8007EB98 + actor_id_cur];
+entities_data = w[0x8009C544];
 model_data_offset = entities_data + model_id * 84;
 
 if (model_id == FF)
 {
     // move pointer by B
-    V0 = hu[800831FC + actor_id_cur * 2];
+    V0 = hu[0x800831FC + actor_id_cur * 2];
     V0 = V0 + F;
-    [800831FC + V1 * 2] = h(V0);
+    [0x800831FC + V1 * 2] = h(V0);
     return 0;
 }
 
@@ -2229,9 +2229,9 @@ if (V1 == 3)
         [model_data_offset + 6A] = h(0);
 
         // move pointer by B
-        V0 = hu[800831FC + actor_id_cur * 2];
+        V0 = hu[0x800831FC + actor_id_cur * 2];
         V0 = V0 + F;
-        [800831FC + V1 * 2] = h(V0);
+        [0x800831FC + V1 * 2] = h(V0);
         return 0;
     }
 }
@@ -2241,24 +2241,24 @@ if (V1 == 3)
 
 A0 = 1;
 A1 = 3;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << C;
 [model_data_offset + 78] = w(V0);
 
 A0 = 2;
 A1 = 5;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << C;
 [model_data_offset + 7С] = w(V0);
 
 A0 = 3;
 A1 = 7;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 [model_data_offset + 74] = h(V0);
 
 A0 = 4
 A1 = 9;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 [model_data_offset + 30] = h(V0);
 
 return 1;
@@ -2268,16 +2268,16 @@ return 1;
 
 ////////////////////////////////
 // 0xC2 LADER
-actor_id_cur    = bu[800722C4];
-model_id          = bu[8007EB98 + actor_id_cur];
-entities_data = w[8009C544] + model_id * 84;
+actor_id_cur    = bu[0x800722C4];
+model_id          = bu[0x8007EB98 + actor_id_cur];
+entities_data = w[0x8009C544] + model_id * 84;
 
 if (model_id == FF)
 {
     // move pointer by 15
-    V0 = hu[800831FC + actor_id_cur * 2];
+    V0 = hu[0x800831FC + actor_id_cur * 2];
     V0 = V0 + F;
-    [800831FC + V1 * 2] = h(V0);
+    [0x800831FC + V1 * 2] = h(V0);
     return 0;
 }
 
@@ -2296,9 +2296,9 @@ if (V1 == 4 || V1 == 5)
         [entities_data + 6A] = h(0);
 
         // move pointer by 15
-        V0 = hu[800831FC + actor_id_cur * 2];
+        V0 = hu[0x800831FC + actor_id_cur * 2];
         V0 = V0 + F;
-        [800831FC + actor_id_cur * 2] = h(V0);
+        [0x800831FC + actor_id_cur * 2] = h(V0);
         return 0;
     }
 }
@@ -2306,8 +2306,8 @@ if (V1 == 4 || V1 == 5)
 
 
 // init
-V1 = hu[800831FC + actor_id_cur * 2];
-V0 = w[8009C6DC];
+V1 = hu[0x800831FC + actor_id_cur * 2];
+V0 = w[0x8009C6DC];
 V0 = V0 + V1;
 V1 = bu[V0 + B];
 
@@ -2333,41 +2333,41 @@ else if (V1 == 1 || V1 == 3)
 
 A0 = 1;
 A1 = 3;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << C;
 [entities_data + 78] = w(V0);
 
 A0 = 2;
 A1 = 5;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << C;
 [entities_data + 7C] = w(V0);
 
 A0 = 3;
 A1 = 7;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 V0 = V0 << C;
 [entities_data + 80] = w(V0);
 
 A0 = 4;
 A1 = 9;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 [entities_data + 74] = h(V0);
 
 
 
 // animation id
-V1 = hu[800831FC + actor_id_cur * 2];
-V0 = w[8009C6DC];
+V1 = hu[0x800831FC + actor_id_cur * 2];
+V0 = w[0x8009C6DC];
 V1 = bu[V0 + V1 + c];
 [entities_data + 5E] = b(V1);
 
 
 
 // speed of movement
-A1 = hu[800831FC + actor_id_cur * 2];
-V0 = w[8009C6DC];
-V1 = h[8009d828 + model_id * 2] / bu[V0 + A1 + e];
+A1 = hu[0x800831FC + actor_id_cur * 2];
+V0 = w[0x8009C6DC];
+V1 = h[0x8009d828 + model_id * 2] / bu[V0 + A1 + e];
 [entities_data + 60] = h(V1);
 
 
@@ -2377,10 +2377,10 @@ V1 = h[8009d828 + model_id * 2] / bu[V0 + A1 + e];
 
 
 // animation related
-V1 = w[8008357C];
+V1 = w[0x8008357C];
 V1 = bu[V1 + model_id * 8 + 4];
-animation_id = bu[80074EA4 + model_id * 84 + 5E];
-A0 = w[8004A62C];
+animation_id = bu[0x80074EA4 + model_id * 84 + 5E];
+A0 = w[0x8004A62C];
 V0 = w[A0 + 4];
 A1 = w[V0 + V1 * 24 + 1C];
 A0 = hu[V0 + V1 * 24 + 1A];
@@ -2391,13 +2391,13 @@ V0 = V0 - 1;
 
 
 // animation state array
-[800756E8 + model_id] = b(0);
+[0x800756E8 + model_id] = b(0);
 
 
 
 // set direction for model
-A1 = hu[800831FC + actor_id_cur * 2];
-A0 = w[8009C6DC];
+A1 = hu[0x800831FC + actor_id_cur * 2];
+A0 = w[0x8009C6DC];
 A0 = bu[A0 + A1 + D];
 // set direction
 [entities_data + 38] = b(A0);
@@ -2408,7 +2408,7 @@ return 1;
 
 ////////////////////////////////
 // 0x2A PMOVA
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800C7C44	addiu  sp, sp, $ffe8 (=-$18)
 V0 = V0 & 0003;
 800C7C4C	beq    v0, zero, Lc7c64 [$800c7c64]
@@ -2419,14 +2419,14 @@ A0 = A0 + 099c;
 A1 = 0001;
 
 Lc7c64:	; 800C7C64
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C7C6C	nop
 V0 = V0 << 01;
 800C7C74	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C7C8C	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
@@ -2460,9 +2460,9 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0xAA MOVA
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 A0 = bu[V0 + V1 + 1];
 funcc7d5c;
 
@@ -2473,36 +2473,36 @@ return V0;
 
 ////////////////////////////////
 // funcc7d5c
-A1 = bu[800722C4];
-V0 = bu[8007EB98 + A1];
+A1 = bu[0x800722C4];
+V0 = bu[0x8007EB98 + A1];
 A3 = A0;
-A0 = bu[8007EB98 + A3];
+A0 = bu[0x8007EB98 + A3];
 
 if (V0 == FF || A0 == FF)
 {
-    V1 = hu[800831FC + A1 * 2];
+    V1 = hu[0x800831FC + A1 * 2];
     V1 = V1 + 2;
-    [800831FC + A1 * 2] = h(V1);
+    [0x800831FC + A1 * 2] = h(V1);
     return 0;
 }
 
 V1 = V0 * 84;
 V0 = A0 * 84;
-A0 = w[8009C544];
+A0 = w[0x8009C544];
 V0 = V0 + A0;
 V0 = hu[V0 + 6C]; // solid
 [V1 + 68] = h(V0);
 V1 = V1 + A0;
-V1 = bu[8007EB98 + A1];
+V1 = bu[0x8007EB98 + A1];
 V0 = V1 * 84;
 V0 = V0 + A0;
 [V0 + 37] = b(0);
 
-A2 = bu[800722c4];
-A1 = w[8009c544];
+A2 = bu[0x800722c4];
+A1 = w[0x8009c544];
 
-A0 = bu[8007eb98 + A3];
-V0 = bu[8007eb98 + A2];
+A0 = bu[0x8007eb98 + A3];
+V0 = bu[0x8007eb98 + A2];
 [A1 + V0 * 84 + 78] = w(w[A1 + A0 * 84 + c]);
 [A1 + V0 * 84 + 7c] = w(w[A1 + A0 * 84 + 10]);
 
@@ -2512,7 +2512,7 @@ if (V1 == 1)
     A2 = [A1 + V0 * 84 + 6a];
     if (A2 == 1)
     {
-        V0 = w[8009c6e0];
+        V0 = w[0x8009c6e0];
         V1 = h[V0 + 10];
         A0 = hu[A1 + 70];
         V0 = V1 * 3;
@@ -2530,12 +2530,12 @@ if (V1 == 1)
     else if (A2 == 2)
     {
         [A1 + V0 * 84 + 5d] = b(0);
-        V0 = bu[800722c4];
-        V0 = bu[8007eb98 + V0];
-        [800756e8 + V0] = b(0);
+        V0 = bu[0x800722c4];
+        V0 = bu[0x8007eb98 + V0];
+        [0x800756e8 + V0] = b(0);
 
-        A0 = bu[800722c4];
-        [800831fc + A0 * 2] = h(hu[800831fc + A0 * 2] + 2);
+        A0 = bu[0x800722c4];
+        [0x800831fc + A0 * 2] = h(hu[0x800831fc + A0 * 2] + 2);
         return 0;
     }
 
@@ -2551,21 +2551,21 @@ if (V1 == 1)
         [A1 + 005e] = b(V0);
 
         Lc7f4c:	; 800C7F4C
-        A0 = bu[800722c4];
-        V1 = bu[8007eb98 + A0];
-        A2 = w[8009c544];
+        A0 = bu[0x800722c4];
+        V1 = bu[0x8007eb98 + A0];
+        A2 = w[0x8009c544];
         V0 = A2 + V1 * 84;
         [V0 + 60] = h(10);
         [V0 + 62] = h(0);
 
         A0 = V1;
 
-        V1 = w[8008357c];
+        V1 = w[0x8008357c];
         V0 = V1 + A0 * 8;
         A1 = bu[V0 + 4];
 
 
-        V1 = w[8004a62c];
+        V1 = w[0x8004a62c];
         V0 = A1 << 03;
         V0 = V0 + A1;
         V1 = w[V1 + 0004];
@@ -2590,16 +2590,16 @@ if (V1 == 1)
     }
 
     Lc8030:	; 800C8030
-    V1 = bu[800722c4];
-    A0 = bu[8007eb98 + V1];
-    [800756e8 + A0] = b(1);
+    V1 = bu[0x800722c4];
+    A0 = bu[0x8007eb98 + V1];
+    [0x800756e8 + A0] = b(1);
     return 1;
 }
 
 Lc80c8:	; 800C80C8
-V0 = bu[800722c4];
-V1 = bu[8007eb98 + V0];
-V0 = w[8009c544];
+V0 = bu[0x800722c4];
+V1 = bu[0x8007eb98 + V0];
+V0 = w[0x8009c544];
 V0 = V0 + V1 * 84;
 [V0 + 5d] = b(1);
 [V0 + 6a] = b(0);
@@ -2610,9 +2610,9 @@ return 1;
 
 ////////////////////////////////
 // 0xB6 DIRA
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 A0 = bu[V0 + V1 + 1]; // entity id
 
 set_direction_to_actor_id_cur_by_entity_id
@@ -2624,14 +2624,14 @@ return V0;
 
 ////////////////////////////////
 // 0x34 PDIRA
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C81F0	nop
 V0 = V0 << 01;
 800C81F8	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C8210	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
@@ -2668,61 +2668,61 @@ SP = SP + 0018;
 A0 - entity to get
 
 // if current entity not visible entity
-A2 = bu[800722C4];
-V1 = bu[8007EB98 + A2];
+A2 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + A2];
 if (V1 == FF)
 {
-    V1 = hu[800831FC + A2 * 2];
+    V1 = hu[0x800831FC + A2 * 2];
     V1 = V1 + 2;
-    [800831FC + A2 * 2] = h(V1);
+    [0x800831FC + A2 * 2] = h(V1);
 
     return 0;
 }
 
 // if entity to which we want set direction not visible entity
 A3 = A0;
-V0 = bu[8007EB98 + A3];
+V0 = bu[0x8007EB98 + A3];
 if (V0 == FF)
 {
-    V1 = hu[800831FC + A2 * 2];
+    V1 = hu[0x800831FC + A2 * 2];
     V1 = V1 + 2;
-    [800831FC + A2 * 2] = h(V1);
+    [0x800831FC + A2 * 2] = h(V1);
 
     return 0;
 }
 
-A1 = w[8009C544];
+A1 = w[0x8009C544];
 
-V1 = bu[8007EB98 + A2];
+V1 = bu[0x8007EB98 + A2];
 V0 = w[A1 + V1 * 84 + 0C];
 T0 = V0 >> 0C;
 [SP + 10] = w(T0);
 
-V1 = bu[8007EB98 + A2];
+V1 = bu[0x8007EB98 + A2];
 V0 = w[A1 + V1 * 84 + 10];
 T1 = V0 >> 0C;
 [SP + 14] = w(T1);
 
-V1 = bu[8007EB98 + A2];
+V1 = bu[0x8007EB98 + A2];
 V0 = w[A1 + V1 * 84 + 14];
 V0 = V0 >> 0C;
 [SP + 18] = w(V0);
 
 
 
-V1 = bu[8007EB98 + A3];
+V1 = bu[0x8007EB98 + A3];
 V0 = V1 * 84;
 A0 = w[A1 + V0 + 0C];
 A0 = A0 >> 0C;
 [SP + 20] = w(A0);
 
-V1 = bu[8007EB98 + A3];
+V1 = bu[0x8007EB98 + A3];
 V0 = V1 * 84;
 V0 = w[A1 + V0 + 10];
 A2 = V0 >> 0C;
 [SP + 24] = w(A2);
 
-V1 = bu[8007EB98 + A3];
+V1 = bu[0x8007EB98 + A3];
 V0 = V1 * 84;
 V0 = w[A1 + V0 + 14];
 V0 = V0 >> 0C;
@@ -2740,29 +2740,29 @@ A2 = SP + 30;
 
 field_entity_calculate_direction_by_vectors();
 
-V1 = bu[800722C4];
-A0 = bu[8007EB98 + V1];
+V1 = bu[0x800722C4];
+A0 = bu[0x8007EB98 + V1];
 V1 = A0 * 84;
-A0 = w[8009C544];
+A0 = w[0x8009C544];
 [V1 + A0 + 38] = b(V0);
 
-V0 = bu[800722C4];
-V1 = bu[8007EB98 + V0];
+V0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + V0];
 V0 = V1 * 84;
-V1 = w[8009C544];
+V1 = w[0x8009C544];
 [V1 + A0 + 3B] = b(0);
 
-V0 = bu[800722C4];
-V1 = bu[8007EB98 + V0];
+V0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + V0];
 V0 = V1 * 84;
-V1 = w[8009C544];
+V1 = w[0x8009C544];
 [V1 + A0 + 3A] = b(0);
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 1;
 ////////////////////////////////
@@ -2771,9 +2771,9 @@ return 1;
 
 ////////////////////////////////
 // 0xAB TURA
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 
 A0 = bu[V0 + V1 + 1];
 funcc8634;
@@ -2785,14 +2785,14 @@ return V0;
 
 ////////////////////////////////
 // 0x35 PTURA
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800C85B8	nop
 V0 = V0 << 01;
 800C85C0	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800C85D8	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
@@ -2827,12 +2827,12 @@ SP = SP + 0018;
 ////////////////////////////////
 // funcc8634
 rotate_entity = A0;
-actor_id_cur         = bu[800722C4];
-current_model          = bu[8007EB98 + actor_id_cur];
-rotate_model          = bu[8007EB98 + rotate_entity];
-current_script_pointer = hu[800831FC + actor_id_cur * 2];
-field_file_offset      = w[8009C6DC];
-entities_data          = w[8009C544];
+actor_id_cur         = bu[0x800722C4];
+current_model          = bu[0x8007EB98 + actor_id_cur];
+rotate_model          = bu[0x8007EB98 + rotate_entity];
+current_script_pointer = hu[0x800831FC + actor_id_cur * 2];
+field_file_offset      = w[0x8009C6DC];
+entities_data          = w[0x8009C544];
 
 //[entities_data + current_model * 84 + 60] = h(V1);
 
@@ -2840,7 +2840,7 @@ if (current_model == FF || rotate_entity == FF)
 {
     // move pointer by 4
     current_script_pointer = current_script_pointer + 4;
-    [800831FC + actor_id_cur * 2] = h(current_script_pointer);
+    [0x800831FC + actor_id_cur * 2] = h(current_script_pointer);
     return 0;
 }
 
@@ -2852,7 +2852,7 @@ if (V1 == 3)
     [entities_data + current_model * 84 + 39] = b(0)
     // move pointer by 4
     current_script_pointer = current_script_pointer + 4;
-    [800831FC + actor_id_cur * 2] = h(current_script_pointer);
+    [0x800831FC + actor_id_cur * 2] = h(current_script_pointer);
     return 0;
 }
 
@@ -2963,37 +2963,37 @@ return 1;
 
 ////////////////////////////////
 // 0xC3 OFST
-entity_id = bu[800722c4];
-model_id = bu[8007eb98 + entity_id];
+entity_id = bu[0x800722c4];
+model_id = bu[0x8007eb98 + entity_id];
 if (model_id != ff)
 {
-    entities_data = w[8009c544];
+    entities_data = w[0x8009c544];
 
     [entities_data + model_id * 84 + 54] = h(0);
 
     A0 = 4;
     A1 = a;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     [entities_data + model_id * 84 + 52] = h(V0);
 
     A0 = 1;
     A1 = 4;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     [entities_data + model_id * 84 + 44] = h(V0);
 
     A0 = 2;
     A1 = 6;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     [entities_data + model_id * 84 + 4a] = h(V0);
 
     A0 = 3;
     A1 = 8;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     [entities_data + model_id * 84 + 50] = h(V0);
 
     A1 = entity_id * 2;
-    A0 = hu[800831fc + entity_id * 2];
-    V0 = w[8009c6dc];
+    A0 = hu[0x800831fc + entity_id * 2];
+    V0 = w[0x8009c6dc];
     V1 = bu[V0 + A0 + 3]; // read type
     [entities_data + model_id * 84 + 56] = b(V1);
 
@@ -3011,9 +3011,9 @@ if (model_id != ff)
     }
 }
 
-V0 = hu[800831FC + entity_id * 2];
+V0 = hu[0x800831FC + entity_id * 2];
 V0 = V0 + c;
-[800831FC + entity_id * 2] = h(V0);
+[0x800831FC + entity_id * 2] = h(V0);
 return 0;
 ////////////////////////////////
 
@@ -3022,9 +3022,9 @@ return 0;
 ////////////////////////////////
 // 0xC4 OFSTW
 
-entity_id = bu[800722c4];
-model_id = bu[8007eb98 + entity_id];
-entities_data = w[8009c544];
+entity_id = bu[0x800722c4];
+model_id = bu[0x8007eb98 + entity_id];
+entities_data = w[0x8009c544];
 
 if (model_id != ff)
 {
@@ -3040,9 +3040,9 @@ if (model_id != ff)
     [entities_data + model_id * 84 + 56] = b(0);
 }
 
-V0 = hu[800831FC + entity_id * 2];
+V0 = hu[0x800831FC + entity_id * 2];
 V0 = V0 + 1;
-[800831FC + entity_id * 2] = h(V0);
+[0x800831FC + entity_id * 2] = h(V0);
 return 0;
 ////////////////////////////////
 
@@ -3050,11 +3050,11 @@ return 0;
 
 ////////////////////////////////
 // 0xDE TURNW
-entity_id = bu[800722C4];
-model_id = bu[8007EB98 + entity_id];
+entity_id = bu[0x800722C4];
+model_id = bu[0x8007EB98 + entity_id];
 if (model_id != FF)
 {
-    V0 = w[8009C544];
+    V0 = w[0x8009C544];
     V1 = V0 + model_id * 84;
     A1 = bu[V1 + 3B];
     if (A1 != 0)
@@ -3070,9 +3070,9 @@ if (model_id != FF)
     }
 }
 
-V1 = hu[800831FC + entity_id * 2];
+V1 = hu[0x800831FC + entity_id * 2];
 V1 = V1 + 1;
-[800831FC + A0 * 2] = hu[V1]
+[0x800831FC + A0 * 2] = hu[V1]
 return 0;
 ////////////////////////////////
 
@@ -3080,12 +3080,12 @@ return 0;
 
 ////////////////////////////////
 // 0xB5 TURN
-field_file_offset    = w[8009C6DC];
-actor_id_cur       = bu[800722C4];
-model_id             = bu[8007EB98 + actor_id_cur];
-entities_data = w[8009C544];
+field_file_offset    = w[0x8009C6DC];
+actor_id_cur       = bu[0x800722C4];
+model_id             = bu[0x8007EB98 + actor_id_cur];
+entities_data = w[0x8009C544];
 model_data           = entities_data + model_id * 84;
-script_pointer       = hu[800831FC + actor_id_cur * 2]
+script_pointer       = hu[0x800831FC + actor_id_cur * 2]
 
 if (model_id != FF)
 {
@@ -3101,7 +3101,7 @@ if (model_id != FF)
     {
         A0 = 2;
         A1 = 2;
-        read_memory_block_two_bytes;
+        field_event_read_memory_s16;
         A2 = V0;
 
         if (bu[model_data + 3A] == 0 ||
@@ -3127,21 +3127,21 @@ if (model_id != FF)
 
 // move pointer by 6
 script_pointer = script_pointer + 6;
-[800831FC + actor_id_cur * 2] = h(script_pointer);
+[0x800831FC + actor_id_cur * 2] = h(script_pointer);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xB4 TURNGEN
-field_file_offset    = w[8009C6DC];
-actor_id_cur       = bu[800722C4];
-model_id             = bu[8007EB98 + actor_id_cur];
-entities_data = w[8009C544];
+field_file_offset    = w[0x8009C6DC];
+actor_id_cur       = bu[0x800722C4];
+model_id             = bu[0x8007EB98 + actor_id_cur];
+entities_data = w[0x8009C544];
 model_data           = entities_data + model_id * 84;
-script_pointer       = hu[800831FC + actor_id_cur * 2]
+script_pointer       = hu[0x800831FC + actor_id_cur * 2]
 
-V1 = bu[8007EB98 + actor_id_cur];
+V1 = bu[0x8007EB98 + actor_id_cur];
 if (V1 != FF)
 {
     A2 = bu[model_data + 3B];
@@ -3168,7 +3168,7 @@ if (V1 != FF)
 
             A0 = 2;
             A1 = 2;
-            read_memory_block_one_byte;
+            field_event_read_memory_u8;
             [model_data + 3E] = h(V0);
 
             // rotate clockwise/anti-clockwise/closest
@@ -3227,7 +3227,7 @@ if (V1 != FF)
 }
 
 script_pointer = script_pointer + 6;
-[800831FC + actor_id_cur * 2] = hu(script_pointer);
+[0x800831FC + actor_id_cur * 2] = hu(script_pointer);
 return 0;
 ////////////////////////////////
 
@@ -3235,27 +3235,27 @@ return 0;
 
 ////////////////////////////////
 // 0xB3 DIR
-A0 = bu[800722C4];
-V1 = bu[8007EB98 + A0];
+A0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + A0];
 
 if (V1 != FF)
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_one_byte;
-    V1 = bu[800722C4];
-    V1 = bu[8007EB98 + V1];
-    A2 = [8009C544];
+    field_event_read_memory_u8;
+    V1 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + V1];
+    A2 = [0x8009C544];
     [A2 + V1 * 84 + 38] = b(V0);
 
-    V0 = bu[800722C4];
-    V0 = bu[8007EB98 + V0];
-    V1 = [8009C544];
+    V0 = bu[0x800722C4];
+    V0 = bu[0x8007EB98 + V0];
+    V1 = [0x8009C544];
     [V1 + V0 * 84 + 3B] = b(00);
 
-    V0 = bu[800722C4];
-    V0 = bu[8007EB98 + V0];
-    V1 = [8009C544];
+    V0 = bu[0x800722C4];
+    V0 = bu[0x8007EB98 + V0];
+    V1 = [0x8009C544];
     [V1 + V0 * 84 + 3A] = b(00);
 
     V0 = 1;
@@ -3266,10 +3266,10 @@ else
 }
 
 // move pointer by 3
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 3;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return V0;
 ////////////////////////////////
@@ -3278,23 +3278,23 @@ return V0;
 
 ////////////////////////////////
 // 0xC6 SLIDR
-actor_id_cur        = bu[800722c4];
-entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + actor_id_cur];
+actor_id_cur        = bu[0x800722c4];
+entities_data     = w[0x8009c544];
+current_model         = bu[0x8007eb98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 script_pointer_offset = 800831fc + actor_id_cur * 2;
 
 
-V0 = bu[800722C4];
-V1 = bu[8007EB98 + V0];
+V0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + V0];
 
 if( current_model != ff )
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_one_byte;
+    field_event_read_memory_u8;
 
-    V1 = w[8009c6e0];
+    V1 = w[0x8009c6e0];
     AO = V0 * h[V1 + 10]; // multiply by field_scale
 
     if( A0 < 0 )
@@ -3312,24 +3312,24 @@ if( current_model != ff )
 
 ////////////////////////////////
 // 0xD7 SLDR2
-V0 = bu[800722C4];
-V1 = bu[8007EB98 + V0];
+V0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + V0];
 
 if (V1 != FF)
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
 
-    V1 = w[8009C6E0];
+    V1 = w[0x8009C6E0];
     V1 = h[V1 + 10];
     HI/LO = V0 * V1;
     A0 = LO;
 
-    V0 = bu[800722C4];
-    V1 = bu[8007EB98 + V0];
+    V0 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + V0];
     V0 = V1 * 84;
-    V1 = w[8009C544];
+    V1 = w[0x8009C544];
     V1 = V0 + V1;
 
     V0 = A0 >> 09;
@@ -3337,10 +3337,10 @@ if (V1 != FF)
 }
 
 // move pointer by 4
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 4;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3349,25 +3349,25 @@ return 0;
 
 ////////////////////////////////
 // 0xC5 TALKR
-V0 = bu[800722C4];
-V1 = bu[8007EB98 + V0];
+V0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + V0];
 
 if (V1 != FF)
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_one_byte;
+    field_event_read_memory_u8;
 
-    V1 = w[8009C6E0];
+    V1 = w[0x8009C6E0];
     V1 = h[V1 + 10];
     V0 = V0 & FF;
     HI/LO = V0 * V1;
     A0 = LO;
 
-    V0 = bu[800722C4];
-    V1 = bu[8007EB98 + V0];
+    V0 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + V0];
     V0 = V1 * 84;
-    V1 = w[8009C544];
+    V1 = w[0x8009C544];
     V1 = V0 + V1;
 
     if (A0 < 0)
@@ -3380,10 +3380,10 @@ if (V1 != FF)
 }
 
 // move pointer by 3
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 3;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3392,34 +3392,34 @@ return 0;
 
 ////////////////////////////////
 // 0xD6 TLKR2
-V0 = bu[800722C4];
-V1 = bu[8007EB98 + V0];
+V0 = bu[0x800722C4];
+V1 = bu[0x8007EB98 + V0];
 
 if (V1 != FF)
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
 
-    V1 = w[8009C6E0];
+    V1 = w[0x8009C6E0];
     V1 = h[V1 + 10];
     HI/LO = V0 * V1;
     A0 = LO;
 
-    V0 = bu[800722C4];
-    V1 = bu[8007EB98 + V0];
+    V0 = bu[0x800722C4];
+    V1 = bu[0x8007EB98 + V0];
     V0 = V1 * 84;
-    V1 = w[8009C544];
+    V1 = w[0x8009C544];
     V1 = V0 + V1;
     V0 = A0 >> 09;
     [V1 + 6E] = h(V0);
 }
 
 // move pointer by 4
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 4;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3428,18 +3428,18 @@ return 0;
 
 ////////////////////////////////
 // 0xB2 MSPED
-actor_id_cur        = bu[800722c4];
-entities_data     = w[8009c544];
-current_model         = bu[8007eb98 + actor_id_cur];
+actor_id_cur        = bu[0x800722c4];
+entities_data     = w[0x8009c544];
+current_model         = bu[0x8007eb98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 script_pointer_offset = 800831fc + actor_id_cur * 2;
-game_data_offset      = w[8009c6e0];
+game_data_offset      = w[0x8009c6e0];
 
 if( current_model != ff )
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
 
     [current_model_offset + 70] = h(( V0 * h[game_data_offset + 10] ) >> 09);
 }
@@ -3452,49 +3452,49 @@ if( current_model != ff )
 
 ////////////////////////////////
 // 0xBD ASPED
-actor_id_cur = bu[800722c4];
-current_model = bu[8007eb98 + actor_id_cur];
-entities_data = w[8009c544];
+actor_id_cur = bu[0x800722c4];
+current_model = bu[0x8007eb98 + actor_id_cur];
+entities_data = w[0x8009c544];
 
 if( current_model != ff )
 {
     A0 = 2;
     A1 = 2;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
 
     [entities_data + current_model * 84 + 60] = h(V0);
-    [8009d828 + current_model * 2] = h(V0);
+    [0x8009d828 + current_model * 2] = h(V0);
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 4);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 4);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xB7 GETDIR
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 S0 = bu[V0 + V1 + 2]; // entity id
 
-V1 = bu[8007EB98 + S0];
+V1 = bu[0x8007EB98 + S0];
 
 if (V1 != FF)
 {
-    V0 = w[8009C544];
+    V0 = w[0x8009C544];
     A2 = bu[V0 + V1 * 84 + 38];
 
     A0 = 2;
     A1 = 3;
-    store_memory_block_one_byte;
+    field_event_write_memory_u8;
 }
 
 // move pointer by 4
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 4;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3503,7 +3503,7 @@ return 0;
 
 ////////////////////////////////
 // 0x73 PGTDR
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800CA25C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 [SP + 0010] = w(S0);
@@ -3512,7 +3512,7 @@ V0 = V0 << 01;
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800CA284	nop
 V0 = V0 + V1;
 V1 = bu[V0 + 0002];
@@ -3541,7 +3541,7 @@ V0 = bu[AT + 0000];
 800CA2E8	nop
 800CA2EC	beq    v0, v1, Lca354 [$800ca354]
 800CA2F0	nop
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CA2FC	nop
 V0 = V0 & 0003;
 800CA304	beq    v0, zero, Lca31c [$800ca31c]
@@ -3559,15 +3559,15 @@ V0 = bu[AT + 0000];
 A0 = 0002;
 V1 = V0 << 05;
 V1 = V1 + V0;
-V0 = w[8009c544];
+V0 = w[0x8009c544];
 V1 = V1 << 02;
 V1 = V1 + V0;
 A2 = bu[V1 + 0038];
-800CA34C	jal    store_memory_block_one_byte [$800bf3ac]
+800CA34C	jal    field_event_write_memory_u8 [$800bf3ac]
 A1 = 0003;
 
 Lca354:	; 800CA354
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800CA35C	lui    v1, $8008
 V1 = V1 + 31fc;
 V0 = V0 << 01;
@@ -3588,30 +3588,30 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0xB9 GETAI
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 S0 = bu[V0 + V1 + 2]; // entity id
 
-V1 = bu[8007EB98 + S0];
+V1 = bu[0x8007EB98 + S0];
 
 if (V1 != FF)
 {
     V0 = V1 * 84;
-    V1 = w[8009C544];
+    V1 = w[0x8009C544];
     V0 = V0 + V1;
     A2 = h[V0 + 72];
 
     A0 = 2;
     A1 = 3;
-    store_memory_block_two_bytes;
+    field_event_write_memory_s16;
 }
 
 // move pointer by 4
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 4;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3620,17 +3620,17 @@ return 0;
 
 ////////////////////////////////
 // 0xB8 GETAXY
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 S0 = bu[V0 + V1 + 2]; // entity id
 
-V1 = bu[8007EB98 + S0];
+V1 = bu[0x8007EB98 + S0];
 
 if (V1 != FF)
 {
     V0 = V1 * 84;
-    V1 = w[8009C544];
+    V1 = w[0x8009C544];
     V0 = V0 + V1;
     A2 = w[V0 + 0C];
 
@@ -3638,21 +3638,21 @@ if (V1 != FF)
     A1 = 3;
     A2 = A2 << 4;
     A2 = A2 >> 10;
-    store_memory_block_two_bytes;
+    field_event_write_memory_s16;
 
     A0 = 2;
     A1 = 4;
     A2 = w[V0 + 10];
     A2 = A2 << 4;
     A2 = A2 >> 10;
-    store_memory_block_two_bytes;
+    field_event_write_memory_s16;
 }
 
 // move pointer by 5
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 5;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3661,8 +3661,8 @@ return 0;
 
 ////////////////////////////////
 // 0xC1 AXYZI
-V0 = bu[800722c4];
-V1 = bu[8009d820];
+V0 = bu[0x800722c4];
+V1 = bu[0x8009d820];
 800CA5E4	addiu  sp, sp, $ffd8 (=-$28)
 [SP + 001c] = w(S1);
 800CA5EC	lui    s1, $8008
@@ -3674,7 +3674,7 @@ V0 = V0 << 01;
 AT = AT + 31fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 & 0003;
 V0 = V0 + A0;
 S0 = bu[V0 + 0003];
@@ -3695,13 +3695,13 @@ V0 = 00ff;
 A0 = 0001;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = w[V0 + 000c];
 A1 = 0004;
 A2 = A2 << 04;
-800CA67C	jal    store_memory_block_two_bytes [$800c0248]
+800CA67C	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CA684	lui    at, $8008
 800CA688	addiu  at, at, $eb98 (=-$1468)
@@ -3710,13 +3710,13 @@ V1 = bu[AT + 0000];
 A0 = 0002;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = w[V0 + 0010];
 A1 = 0005;
 A2 = A2 << 04;
-800CA6BC	jal    store_memory_block_two_bytes [$800c0248]
+800CA6BC	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CA6C4	lui    at, $8008
 800CA6C8	addiu  at, at, $eb98 (=-$1468)
@@ -3725,13 +3725,13 @@ V1 = bu[AT + 0000];
 A0 = 0003;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = w[V0 + 0014];
 A1 = 0006;
 A2 = A2 << 04;
-800CA6FC	jal    store_memory_block_two_bytes [$800c0248]
+800CA6FC	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CA704	lui    at, $8008
 800CA708	addiu  at, at, $eb98 (=-$1468)
@@ -3740,15 +3740,15 @@ V1 = bu[AT + 0000];
 A0 = 0004;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = h[V0 + 0072];
-800CA734	jal    store_memory_block_two_bytes [$800c0248]
+800CA734	jal    field_event_write_memory_s16 [$800c0248]
 A1 = 0007;
 
 Lca73c:	; 800CA73C
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800CA744	nop
 V1 = V1 << 01;
 V1 = V1 + S1;
@@ -3763,8 +3763,8 @@ V0 = 0;
 
 ////////////////////////////////
 // 0x75 PXYZI
-V0 = bu[800722c4];
-V1 = bu[8009d820];
+V0 = bu[0x800722c4];
+V1 = bu[0x8009d820];
 800CA78C	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 [SP + 0010] = w(S0);
@@ -3773,7 +3773,7 @@ V0 = V0 << 01;
 AT = AT + 31fc;
 AT = AT + V0;
 A0 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 V1 = V1 & 0003;
 V0 = V0 + A0;
 S0 = bu[V0 + 0003];
@@ -3811,13 +3811,13 @@ V1 = bu[AT + 0000];
 A0 = 0001;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = w[V0 + 000c];
 A1 = 0004;
 A2 = A2 << 04;
-800CA85C	jal    store_memory_block_two_bytes [$800c0248]
+800CA85C	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CA864	lui    at, $8008
 800CA868	addiu  at, at, $eb98 (=-$1468)
@@ -3826,13 +3826,13 @@ V1 = bu[AT + 0000];
 A0 = 0002;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = w[V0 + 0010];
 A1 = 0005;
 A2 = A2 << 04;
-800CA89C	jal    store_memory_block_two_bytes [$800c0248]
+800CA89C	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CA8A4	lui    at, $8008
 800CA8A8	addiu  at, at, $eb98 (=-$1468)
@@ -3841,13 +3841,13 @@ V1 = bu[AT + 0000];
 A0 = 0003;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = w[V0 + 0014];
 A1 = 0006;
 A2 = A2 << 04;
-800CA8DC	jal    store_memory_block_two_bytes [$800c0248]
+800CA8DC	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CA8E4	lui    at, $8008
 800CA8E8	addiu  at, at, $eb98 (=-$1468)
@@ -3856,15 +3856,15 @@ V1 = bu[AT + 0000];
 A0 = 0004;
 V0 = V1 << 05;
 V0 = V0 + V1;
-V1 = w[8009c544];
+V1 = w[0x8009c544];
 V0 = V0 << 02;
 V0 = V0 + V1;
 A2 = h[V0 + 0072];
-800CA914	jal    store_memory_block_two_bytes [$800c0248]
+800CA914	jal    field_event_write_memory_s16 [$800c0248]
 A1 = 0007;
 
 Lca91c:	; 800CA91C
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800CA924	lui    v1, $8008
 V1 = V1 + 31fc;
 V0 = V0 << 01;
@@ -3885,26 +3885,26 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0xA4 VISI
-V1 = bu[800722C4];
-A0 = bu[8007EB98 + V1];
+V1 = bu[0x800722C4];
+A0 = bu[0x8007EB98 + V1];
 
 if (A0 != FF)
 {
     V0 = A0 * 84;
-    A0 = hu[800831FC + V1 * 2];
-    V1 = w[8009C6DC];
+    A0 = hu[0x800831FC + V1 * 2];
+    V1 = w[0x8009C6DC];
     V1 = V1 + A0;
     V1 = bu[V1 + 1];
-    A0 = w[8009C544];
+    A0 = w[0x8009C544];
     V0 = V0 + A0;
     [V0 + 5C] = b(V1);
 }
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3913,23 +3913,23 @@ return 0;
 
 ////////////////////////////////
 // 0x7E TLKON
-V1 = bu[800722C4];
-A0 = bu[8007EB98 + V1];
+V1 = bu[0x800722C4];
+A0 = bu[0x8007EB98 + V1];
 
 if (A0 != FF)
 {
-    A0 = hu[800831FC + V1 * 2];
-    V1 = w[8009C6DC];
+    A0 = hu[0x800831FC + V1 * 2];
+    V1 = w[0x8009C6DC];
     V1 = bu[V1 + A0 + 1];
-    V0 = w[8009C544];
+    V0 = w[0x8009C544];
     [V0 + A0 * 84 + 5B] = b(V1);
 }
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -3938,41 +3938,41 @@ return 0;
 
 ////////////////////////////////
 // 0xA5 XYZI
-actor_id_cur        = bu[800722C4];
-entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + actor_id_cur];
+actor_id_cur        = bu[0x800722C4];
+entities_data     = w[0x8009C544];
+current_model         = bu[0x8007EB98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 
 if (current_model != FF)
 {
     A0 = 1;
     A1 = 3;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 0C] = w(V0);
 
     A0 = 2;
     A1 = 5;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 10] = w(V0);
 
     A0 = 3;
     A1 = 7;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 14] = w(V0);
 
     A0 = 4;
     A1 = 9;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     [current_model_offset + 72] = h(V0);
 }
 
 // move pointer by B
-V0 = hu[800831FC + actor_id_cur * 2];
+V0 = hu[0x800831FC + actor_id_cur * 2];
 V0 = V0 + B;
-[800831FC + actor_id_cur * 2] = h(V0);
+[0x800831FC + actor_id_cur * 2] = h(V0);
 
 return 1;
 ////////////////////////////////
@@ -3981,36 +3981,36 @@ return 1;
 
 ////////////////////////////////
 // 0xA7 XYZ
-actor_id_cur        = bu[800722C4];
-entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + actor_id_cur];
+actor_id_cur        = bu[0x800722C4];
+entities_data     = w[0x8009C544];
+current_model         = bu[0x8007EB98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 
 if (current_model != FF)
 {
     A0 = 1;
     A1 = 3;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 0C] = w(V0);
 
     A0 = 2;
     A1 = 5;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 10] = w(V0);
 
     A0 = 3;
     A1 = 7;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 14] = w(V0);
 }
 
 // move pointer by 9
-V0 = hu[800831FC + actor_id_cur  * 2];
+V0 = hu[0x800831FC + actor_id_cur  * 2];
 V0 = V0 + 9;
-[800831FC + actor_id_cur  * 2] = h(V0);
+[0x800831FC + actor_id_cur  * 2] = h(V0);
 
 return 1;
 ////////////////////////////////
@@ -4019,33 +4019,33 @@ return 1;
 
 ////////////////////////////////
 // 0xA6 XYI
-actor_id_cur        = bu[800722C4];
-entities_data     = w[8009C544];
-current_model         = bu[8007EB98 + actor_id_cur];
+actor_id_cur        = bu[0x800722C4];
+entities_data     = w[0x8009C544];
+current_model         = bu[0x8007EB98 + actor_id_cur];
 current_model_offset  = entities_data + current_model * 84;
 
 if (current_model != FF)
 {
     A0 = 1;
     A1 = 3;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 0C] = w(V0);
 
     A0 = 2;
     A1 = 5;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     V0 = V0 << C;
     [current_model_offset + 10] = w(V0);
 
     A0 = 3;
     A1 = 7;
-    read_memory_block_two_bytes;
+    field_event_read_memory_s16;
     [current_model_offset + 72] = w(V0);
 }
 
 // move pointer by 9
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 9);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 9);
 
 return 1;
 ////////////////////////////////
@@ -4055,15 +4055,15 @@ return 1;
 ////////////////////////////////
 // 0x40 MESSAGE
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0aa8; // "mes"
     A1 = 2;
     field_debug_event_opcode();
 }
 
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 A0 = bu[script + 1];
 A1 = bu[script + 2];
@@ -4074,7 +4074,7 @@ if( V0 == 0 )
     return 1;
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 3);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -4083,17 +4083,17 @@ return 0;
 
 ////////////////////////////////
 // 0x43 MPNAM
-V0 = bu[800722C4];          // current entity
-V1 = hu[800831FC + V0 * 2]; // script pointer
-V0 = w[8009C6DC];           // current field file offset.
+V0 = bu[0x800722C4];          // current entity
+V1 = hu[0x800831FC + V0 * 2]; // script pointer
+V0 = w[0x8009C6DC];           // current field file offset.
 A0 = [V0 + V1 + 1];         // dialog_id
 
 copy_dialog_to_map_name;
 
-A0 = bu[800722C4];
-V1 = hu[800831FC + A0 * 2];
+A0 = bu[0x800722C4];
+V1 = hu[0x800831FC + A0 * 2];
 V1 = V1 + 2;
-[800831FC + A0 * 2] = h(V1);
+[0x800831FC + A0 * 2] = h(V1);
 
 return 0;
 ////////////////////////////////
@@ -4105,7 +4105,7 @@ return 0;
 
 A0 = 2;
 A1 = 6;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 
 [SP + 18] = b(V0);
 
@@ -4123,25 +4123,25 @@ manage_ask_window_states
 A0 = 2;
 A1 = 6;
 A2 = bu[SP + 18];
-store_memory_block_one_byte;
+field_event_write_memory_u8;
 
 if (v0 == 0)
 {
-    V1 = w[8009C6E0];
+    V1 = w[0x8009C6E0];
     [V1 + 32] = b(1);
     return 1;
 }
 else
 {
-    V1 = w[8009C6E0];
-    V0 = bu[80081DC4];
+    V1 = w[0x8009C6E0];
+    V0 = bu[0x80081DC4];
     [V1 + 32] = b(V0);
 
     // move pointer by 7
-    V1 = bu[800722C4];
-    V0 = hu[800831FC + V1 * 2];
+    V1 = bu[0x800722C4];
+    V0 = hu[0x800831FC + V1 * 2];
     V0 = V0 + 7;
-    [800831FC + V1 * 2] = h(V0);
+    [0x800831FC + V1 * 2] = h(V0);
 
     return 0;
 }
@@ -4153,7 +4153,7 @@ else
 // 0x2E WCLS
 S0 = window_id;
 
-if ([8008326C + S0] != FF)
+if ([0x8008326C + S0] != FF)
 {
     A0 = S0;
 
@@ -4179,18 +4179,18 @@ else
 ////////////////////////////////
 // 0x2F WSIZEW
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0ac0; // "wsizw"
     A1 = 8;
     field_debug_event_opcode();
 }
 
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 S0 = bu[script + 1];
-V1 = bu[8008326c + S0];
+V1 = bu[0x8008326c + S0];
 
 if( V1 == ff )
 {
@@ -4215,15 +4215,15 @@ return 1;
 // 0x50 WSIZE
 // funccb354()
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0ac8; // "wsize"
     A1 = 8;
     field_debug_event_opcode();
 }
 
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 A0 = bu[script + 1];
 A1 = h[script + 2];
@@ -4232,7 +4232,7 @@ A3 = h[script + 6];
 A4 = h[script + 8];
 field_dialog_set_size();
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + a);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + a);
 
 return 0;
 ////////////////////////////////
@@ -4241,9 +4241,9 @@ return 0;
 
 ////////////////////////////////
 // 0x55 WROW
-V0 = bu[800722C4];          // current entity
-V1 = hu[800831FC + V0 * 2]; // script pointer
-V0 = w[8009C6DC];           // current field file offset.
+V0 = bu[0x800722C4];          // current entity
+V1 = hu[0x800831FC + V0 * 2]; // script pointer
+V0 = w[0x8009C6DC];           // current field file offset.
 A0 = bu[V1 + V0 + 1];
 A1 = bu[V1 + V0 + 2];
 
@@ -4251,10 +4251,10 @@ A1 = A1 * 10 + 9;
 set_window_height;
 
 // move pointer by 3
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 3;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -4263,9 +4263,9 @@ return 0;
 
 ////////////////////////////////
 // 0x51 WMOVE
-V0 = bu[800722C4];          // current entity
-V1 = w[8009C6DC];           // current field file offset.
-V0 = hu[800831FC + V0 * 2]; // script pointer
+V0 = bu[0x800722C4];          // current entity
+V1 = w[0x8009C6DC];           // current field file offset.
+V0 = hu[0x800831FC + V0 * 2]; // script pointer
 V1 = V1 + V0;
 A0 = bu[V1 + 1];
 V0 = bu[V1 + 2];
@@ -4280,10 +4280,10 @@ A2 = (V0 << 8) | A2;
 
 add_x_y_to_window_position;
 
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 6;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -4292,18 +4292,18 @@ return 0;
 
 ////////////////////////////////
 // 0x53 WREST
-V0 = bu[800722C4];          // current entity
-V1 = hu[800831FC + V0 * 2]; // script pointer
-V0 = w[8009C6DC];           // current field file offset.
+V0 = bu[0x800722C4];          // current entity
+V1 = hu[0x800831FC + V0 * 2]; // script pointer
+V0 = w[0x8009C6DC];           // current field file offset.
 A0 = bu[V1 + V0 + 1];
 
 field_window_reset();
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -4362,16 +4362,16 @@ A1 = 0003;
 
 Lcb7ec:	; 800CB7EC
 A0 = 0001;
-800CB7F0	jal    read_memory_block_one_byte [$800bee10]
+800CB7F0	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CB800	jal    read_memory_block_one_byte [$800bee10]
+800CB800	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 & V0;
 A0 = 0001;
 A1 = 0002;
-800CB814	jal    store_memory_block_one_byte [$800bf3ac]
+800CB814	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800CB81C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4408,17 +4408,17 @@ A1 = 0003;
 
 Lcb884:	; 800CB884
 A0 = 0001;
-800CB888	jal    read_memory_block_two_bytes [$800bf908]
+800CB888	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CB898	jal    read_memory_block_two_bytes [$800bf908]
+800CB898	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 A0 = 0001;
 A1 = 0002;
 S0 = S0 & V0;
 S0 = S0 << 10;
-800CB8B0	jal    store_memory_block_two_bytes [$800c0248]
+800CB8B0	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800CB8B8	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4455,16 +4455,16 @@ A1 = 0003;
 
 Lcb920:	; 800CB920
 A0 = 0001;
-800CB924	jal    read_memory_block_one_byte [$800bee10]
+800CB924	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CB934	jal    read_memory_block_one_byte [$800bee10]
+800CB934	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 | V0;
 A0 = 0001;
 A1 = 0002;
-800CB948	jal    store_memory_block_one_byte [$800bf3ac]
+800CB948	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800CB950	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4501,17 +4501,17 @@ A1 = 0003;
 
 Lcb9b8:	; 800CB9B8
 A0 = 0001;
-800CB9BC	jal    read_memory_block_two_bytes [$800bf908]
+800CB9BC	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CB9CC	jal    read_memory_block_two_bytes [$800bf908]
+800CB9CC	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 A0 = 0001;
 A1 = 0002;
 S0 = S0 | V0;
 S0 = S0 << 10;
-800CB9E4	jal    store_memory_block_two_bytes [$800c0248]
+800CB9E4	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800CB9EC	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4548,16 +4548,16 @@ A1 = 0003;
 
 Lcba54:	; 800CBA54
 A0 = 0001;
-800CBA58	jal    read_memory_block_one_byte [$800bee10]
+800CBA58	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBA68	jal    read_memory_block_one_byte [$800bee10]
+800CBA68	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 ^ V0;
 A0 = 0001;
 A1 = 0002;
-800CBA7C	jal    store_memory_block_one_byte [$800bf3ac]
+800CBA7C	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800CBA84	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4594,17 +4594,17 @@ A1 = 0003;
 
 Lcbaec:	; 800CBAEC
 A0 = 0001;
-800CBAF0	jal    read_memory_block_two_bytes [$800bf908]
+800CBAF0	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBB00	jal    read_memory_block_two_bytes [$800bf908]
+800CBB00	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 A0 = 0001;
 A1 = 0002;
 S0 = S0 ^ V0;
 S0 = S0 << 10;
-800CBB18	jal    store_memory_block_two_bytes [$800c0248]
+800CBB18	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800CBB20	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4641,16 +4641,16 @@ A1 = 0003;
 
 Lcbb88:	; 800CBB88
 A0 = 0001;
-800CBB8C	jal    read_memory_block_one_byte [$800bee10]
+800CBB8C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBB9C	jal    read_memory_block_one_byte [$800bee10]
+800CBB9C	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 + V0;
 A0 = 0001;
 A1 = 0002;
-800CBBB0	jal    store_memory_block_one_byte [$800bf3ac]
+800CBBB0	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800CBBB8	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4674,7 +4674,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x76 PLUS!
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0b20; // "plus!"
     A1 = 3;
@@ -4683,12 +4683,12 @@ if( bu[8009d820] & 3 )
 
 A0 = 1;
 A1 = 2;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 S0 = V0 & ff;
 
 A0 = 2;
 A1 = 3;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 V0 = V0 & 00ff;
 
 S0 = S0 + V0;
@@ -4698,10 +4698,10 @@ if( S0 >= 100 ) A2 = ff;
 A0 = 1;
 A1 = 2;
 A2 = A2;
-store_memory_block_one_byte();
+field_event_write_memory_u8();
 
-actor_id_cur = bu[800722c4];
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 4);
+actor_id_cur = bu[0x800722c4];
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 4);
 
 return 0;
 ////////////////////////////////
@@ -4724,17 +4724,17 @@ A1 = 0003;
 
 Lcbcd0:	; 800CBCD0
 A0 = 0001;
-800CBCD4	jal    read_memory_block_two_bytes [$800bf908]
+800CBCD4	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBCE4	jal    read_memory_block_two_bytes [$800bf908]
+800CBCE4	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 A0 = 0001;
 A1 = 0002;
 S0 = S0 + V0;
 S0 = S0 << 10;
-800CBCFC	jal    store_memory_block_two_bytes [$800c0248]
+800CBCFC	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800CBD04	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4771,11 +4771,11 @@ A1 = 0003;
 
 Lcbd6c:	; 800CBD6C
 A0 = 0001;
-800CBD70	jal    read_memory_block_two_bytes [$800bf908]
+800CBD70	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBD80	jal    read_memory_block_two_bytes [$800bf908]
+800CBD80	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 S0 = S0 << 10;
 S0 = S0 >> 10;
@@ -4791,7 +4791,7 @@ A2 = 7fff;
 Lcbdb0:	; 800CBDB0
 A1 = 0002;
 A2 = A2 << 10;
-800CBDB8	jal    store_memory_block_two_bytes [$800c0248]
+800CBDB8	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CBDC0	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4828,16 +4828,16 @@ A1 = 0003;
 
 Lcbe28:	; 800CBE28
 A0 = 0001;
-800CBE2C	jal    read_memory_block_one_byte [$800bee10]
+800CBE2C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBE3C	jal    read_memory_block_one_byte [$800bee10]
+800CBE3C	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 - V0;
 A0 = 0001;
 A1 = 0002;
-800CBE50	jal    store_memory_block_one_byte [$800bf3ac]
+800CBE50	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0 & 00ff;
 800CBE58	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4874,11 +4874,11 @@ A1 = 0003;
 
 Lcbec0:	; 800CBEC0
 A0 = 0001;
-800CBEC4	jal    read_memory_block_one_byte [$800bee10]
+800CBEC4	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBED4	jal    read_memory_block_one_byte [$800bee10]
+800CBED4	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 & 00ff;
 V0 = V0 & 00ff;
@@ -4890,7 +4890,7 @@ A2 = 0;
 Lcbef4:	; 800CBEF4
 A0 = 0001;
 A1 = 0002;
-800CBEFC	jal    store_memory_block_one_byte [$800bf3ac]
+800CBEFC	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = A2 & 00ff;
 800CBF04	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -4927,17 +4927,17 @@ A1 = 0003;
 
 Lcbf6c:	; 800CBF6C
 A0 = 0001;
-800CBF70	jal    read_memory_block_two_bytes [$800bf908]
+800CBF70	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CBF80	jal    read_memory_block_two_bytes [$800bf908]
+800CBF80	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 A0 = 0001;
 A1 = 0002;
 S0 = S0 - V0;
 S0 = S0 << 10;
-800CBF98	jal    store_memory_block_two_bytes [$800c0248]
+800CBF98	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800CBFA0	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -4969,11 +4969,11 @@ A1 = 0003;
 
 Lcc008:	; 800CC008
 A0 = 0001;
-800CC00C	jal    read_memory_block_two_bytes [$800bf908]
+800CC00C	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CC01C	jal    read_memory_block_two_bytes [$800bf908]
+800CC01C	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 S0 = S0 << 10;
 S0 = S0 >> 10;
@@ -4989,7 +4989,7 @@ A2 = 8000;
 Lcc04c:	; 800CC04C
 A1 = 0002;
 A2 = A2 << 10;
-800CC054	jal    store_memory_block_two_bytes [$800c0248]
+800CC054	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CC05C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5026,17 +5026,17 @@ A1 = 0003;
 
 Lcc0c4:	; 800CC0C4
 A0 = 0001;
-800CC0C8	jal    read_memory_block_one_byte [$800bee10]
+800CC0C8	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CC0D8	jal    read_memory_block_one_byte [$800bee10]
+800CC0D8	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 800CC0E0	mult   s0, v0
 A0 = 0001;
 A1 = 0002;
 800CC0EC	mflo   a2
-800CC0F0	jal    store_memory_block_one_byte [$800bf3ac]
+800CC0F0	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = A2 & 00ff;
 800CC0F8	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5073,18 +5073,18 @@ A1 = 0003;
 
 Lcc160:	; 800CC160
 A0 = 0001;
-800CC164	jal    read_memory_block_two_bytes [$800bf908]
+800CC164	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CC174	jal    read_memory_block_two_bytes [$800bf908]
+800CC174	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 800CC17C	mult   s0, v0
 A0 = 0001;
 A1 = 0002;
 800CC188	mflo   a2
 A2 = A2 << 10;
-800CC190	jal    store_memory_block_two_bytes [$800c0248]
+800CC190	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CC198	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5121,11 +5121,11 @@ A1 = 0003;
 
 Lcc200:	; 800CC200
 A0 = 0001;
-800CC204	jal    read_memory_block_one_byte [$800bee10]
+800CC204	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CC214	jal    read_memory_block_one_byte [$800bee10]
+800CC214	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 & 00ff;
 V0 = V0 & 00ff;
@@ -5138,7 +5138,7 @@ Lcc234:	; 800CC234
 800CC234	mflo   s0
 A0 = 0001;
 A1 = 0002;
-800CC240	jal    store_memory_block_one_byte [$800bf3ac]
+800CC240	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = S0;
 800CC248	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5175,13 +5175,13 @@ A1 = 0003;
 
 Lcc2b0:	; 800CC2B0
 A0 = 0001;
-800CC2B4	jal    read_memory_block_two_bytes [$800bf908]
+800CC2B4	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
 
 Lcc2c4:	; 800CC2C4
-800CC2C4	jal    read_memory_block_two_bytes [$800bf908]
+800CC2C4	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 S0 = S0 << 10;
 S0 = S0 >> 10;
@@ -5205,7 +5205,7 @@ Lcc304:	; 800CC304
 A0 = 0001;
 A1 = 0002;
 S0 = S0 << 10;
-800CC314	jal    store_memory_block_two_bytes [$800c0248]
+800CC314	jal    field_event_write_memory_s16 [$800c0248]
 A2 = S0 >> 10;
 800CC31C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5242,11 +5242,11 @@ A1 = 0003;
 
 Lcc384:	; 800CC384
 A0 = 0001;
-800CC388	jal    read_memory_block_one_byte [$800bee10]
+800CC388	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CC398	jal    read_memory_block_one_byte [$800bee10]
+800CC398	jal    field_event_read_memory_u8 [$800bee10]
 S0 = V0;
 S0 = S0 & 00ff;
 V0 = V0 & 00ff;
@@ -5258,7 +5258,7 @@ V0 = V0 & 00ff;
 Lcc3b8:	; 800CC3B8
 800CC3B8	mfhi   a2
 A0 = 0001;
-800CC3C0	jal    store_memory_block_one_byte [$800bf3ac]
+800CC3C0	jal    field_event_write_memory_u8 [$800bf3ac]
 A1 = 0002;
 800CC3C8	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5295,11 +5295,11 @@ A1 = 0003;
 
 Lcc430:	; 800CC430
 A0 = 0001;
-800CC434	jal    read_memory_block_two_bytes [$800bf908]
+800CC434	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0003;
-800CC444	jal    read_memory_block_two_bytes [$800bf908]
+800CC444	jal    field_event_read_memory_s16 [$800bf908]
 S0 = V0;
 S0 = S0 << 10;
 S0 = S0 >> 10;
@@ -5323,7 +5323,7 @@ Lcc484:	; 800CC484
 A0 = 0001;
 A1 = 0002;
 A2 = A2 << 10;
-800CC494	jal    store_memory_block_two_bytes [$800c0248]
+800CC494	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CC49C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5359,12 +5359,12 @@ A1 = 0002;
 
 Lcc500:	; 800CC500
 A0 = 0002;
-800CC504	jal    read_memory_block_one_byte [$800bee10]
+800CC504	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 V0 = V0 + 0001;
 A0 = 0002;
 A1 = 0002;
-800CC518	jal    store_memory_block_one_byte [$800bf3ac]
+800CC518	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = V0 & 00ff;
 800CC520	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5399,7 +5399,7 @@ A1 = 0002;
 
 Lcc580:	; 800CC580
 A0 = 0002;
-800CC584	jal    read_memory_block_one_byte [$800bee10]
+800CC584	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 V0 = V0 & 00ff;
 V0 = V0 + 0001;
@@ -5411,7 +5411,7 @@ A2 = 00ff;
 
 Lcc5a8:	; 800CC5A8
 A1 = 0002;
-800CC5AC	jal    store_memory_block_one_byte [$800bf3ac]
+800CC5AC	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = A2 & 00ff;
 800CC5B4	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -5446,13 +5446,13 @@ A1 = 0003;
 
 Lcc614:	; 800CC614
 A0 = 0002;
-800CC618	jal    read_memory_block_two_bytes [$800bf908]
+800CC618	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0002;
 V0 = V0 + 0001;
 V0 = V0 << 10;
-800CC630	jal    store_memory_block_two_bytes [$800c0248]
+800CC630	jal    field_event_write_memory_s16 [$800c0248]
 A2 = V0 >> 10;
 800CC638	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5487,7 +5487,7 @@ A1 = 0003;
 
 Lcc698:	; 800CC698
 A0 = 0002;
-800CC69C	jal    read_memory_block_two_bytes [$800bf908]
+800CC69C	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 V0 = V0 << 10;
 V0 = V0 >> 10;
@@ -5501,7 +5501,7 @@ A2 = 7fff;
 Lcc6c4:	; 800CC6C4
 A1 = 0002;
 A2 = A2 << 10;
-800CC6CC	jal    store_memory_block_two_bytes [$800c0248]
+800CC6CC	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CC6D4	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5536,12 +5536,12 @@ A1 = 0002;
 
 Lcc734:	; 800CC734
 A0 = 0002;
-800CC738	jal    read_memory_block_one_byte [$800bee10]
+800CC738	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 800CC740	addiu  v0, v0, $ffff (=-$1)
 A0 = 0002;
 A1 = 0002;
-800CC74C	jal    store_memory_block_one_byte [$800bf3ac]
+800CC74C	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = V0 & 00ff;
 800CC754	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5576,7 +5576,7 @@ A1 = 0002;
 
 Lcc7b4:	; 800CC7B4
 A0 = 0002;
-800CC7B8	jal    read_memory_block_one_byte [$800bee10]
+800CC7B8	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0002;
 V0 = V0 & 00ff;
 V1 = ffff;
@@ -5589,7 +5589,7 @@ A2 = 0;
 
 Lcc7e0:	; 800CC7E0
 A1 = 0002;
-800CC7E4	jal    store_memory_block_one_byte [$800bf3ac]
+800CC7E4	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = A2 & 00ff;
 800CC7EC	lui    v1, $8007
 V1 = bu[V1 + 22c4];
@@ -5624,13 +5624,13 @@ A1 = 0003;
 
 Lcc84c:	; 800CC84C
 A0 = 0002;
-800CC850	jal    read_memory_block_two_bytes [$800bf908]
+800CC850	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 A0 = 0002;
 A1 = 0002;
 800CC860	addiu  v0, v0, $ffff (=-$1)
 V0 = V0 << 10;
-800CC868	jal    store_memory_block_two_bytes [$800c0248]
+800CC868	jal    field_event_write_memory_s16 [$800c0248]
 A2 = V0 >> 10;
 800CC870	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5665,7 +5665,7 @@ A1 = 0003;
 
 Lcc8d0:	; 800CC8D0
 A0 = 0002;
-800CC8D4	jal    read_memory_block_two_bytes [$800bf908]
+800CC8D4	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 V0 = V0 << 10;
 V0 = V0 >> 10;
@@ -5679,7 +5679,7 @@ A2 = 8000;
 Lcc8fc:	; 800CC8FC
 A1 = 0002;
 A2 = A2 << 10;
-800CC904	jal    store_memory_block_two_bytes [$800c0248]
+800CC904	jal    field_event_write_memory_s16 [$800c0248]
 A2 = A2 >> 10;
 800CC90C	lui    a0, $8007
 A0 = bu[A0 + 22c4];
@@ -5702,23 +5702,23 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x99 RANDOM
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0bb8;
     A1 = 2;
     field_debug_event_opcode();
 }
 
-[80095dc8] = b(bu[80095dc8] + bu[8004a630]);
+[0x80095dc8] = b(bu[0x80095dc8] + bu[0x8004a630]);
 
 A0 = 2;
 A1 = 2;
-V0 = bu[80095dc8];
-A2 = bu[800e0638 + V0];
-store_memory_block_one_byte();
+V0 = bu[0x80095dc8];
+A2 = bu[0x800e0638 + V0];
+field_event_write_memory_u8();
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 3);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -5730,11 +5730,11 @@ return 0;
 
 A0 = 2;
 A1 = 2;
-read_memory_block_one_byte();
-[8004a630] = b(V0 * 10 + 1);
+field_event_read_memory_u8();
+[0x8004a630] = b(V0 * 10 + 1);
 
-A0 = bu[800722c4];
-[800831fc + A0 * 2] = h(hu[800831fc + A0 * 2] + 3);
+A0 = bu[0x800722c4];
+[0x800831fc + A0 * 2] = h(hu[0x800831fc + A0 * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -5743,7 +5743,7 @@ return 0;
 
 ////////////////////////////////
 // 0xD2 MPJPO
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CD0CC	addiu  sp, sp, $ffe0 (=-$20)
 V0 = V0 & 0003;
 800CD0D4	beq    v0, zero, Lcd0ec [$800cd0ec]
@@ -5754,21 +5754,21 @@ A0 = A0 + 0c00;
 A1 = 0;
 
 Lcd0ec:	; 800CD0EC
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800CD0F4	nop
 V0 = V0 << 01;
 800CD0FC	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800CD114	nop
 V0 = V0 + V1;
-V1 = w[8009c6e0];
+V1 = w[0x8009c6e0];
 V0 = bu[V0 + 0001];
 800CD128	nop
 [V1 + 0036] = b(V0);
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800CD138	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -5788,12 +5788,12 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0xE5 STPAL
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 A0 = 1;
 A1 = 2;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 
 [SP + 10] = h(0);                  // x
 [SP + 12] = h(V0 + 1e0);           // y
@@ -5802,21 +5802,21 @@ read_memory_block_one_byte;
 
 A0 = 2;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 
 A0 = SP + 10;
 A1 = 80095de0 + V0 * 20;
 system_psyq_store_image();
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 5);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xEB STPLS
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 [SP + 10] = h(bu[script + 3]);
 [SP + 12] = h(1e0 + bu[script + 1]);
@@ -5827,19 +5827,19 @@ A0 = SP + 10;
 A1 = 80095de0 + bu[script + 2] * 20 + bu[script + 3] * 2;
 system_psyq_store_image();
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 5);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xE6 LDPAL
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 A0 = 2;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 [SP + 10] = h(0);
 [SP + 12] = h(V0 + 1e0);
 [SP + 14] = h(bu[script + 4] + 1);
@@ -5847,13 +5847,13 @@ read_memory_block_one_byte;
 
 A0 = 1;
 A1 = 2;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 
 A0 = SP + 10;
 A1 = 80095de0 + V0 * 20;
 system_psyq_load_image();
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 5);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
 
 return 0;
 ////////////////////////////////
@@ -5862,8 +5862,8 @@ return 0;
 
 ////////////////////////////////
 // 0xEC LDPLS
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 A2 = bu[script + 3];
 [SP + 10] = h(A2);
@@ -5875,7 +5875,7 @@ A0 = SP + 10;
 A1 = 80095de0 + bu[script + 1] * 20 + A2 * 2;
 system_psyq_load_image;
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 5);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
 ////////////////////////////////
 
 
@@ -5892,39 +5892,39 @@ system_psyq_load_image;
 
 ////////////////////////////////
 // 0xE7 CPPAL
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 length = bu[script + 4] + 1;
 
 A0 = 1;
 A1 = 2;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 src_id = V0;
 
 A0 = 2;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 dst_id = V0;
 
 if( length != 0 )
 {
     A1 = 0;
     loopcdcd0:	; 800CDCD0
-        [80095de0 + dst_id * 20 + A1 * 2] = h(hu[80095de0 + src_id * 20 + A1 * 2]);
+        [0x80095de0 + dst_id * 20 + A1 * 2] = h(hu[0x80095de0 + src_id * 20 + A1 * 2]);
         A1 = A1 + 1;
         V1 = A1 < length;
     800CDCF8	bne    v1, zero, loopcdcd0 [$800cdcd0]
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 5);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 5);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xED CPPAL2
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CDD48	addiu  sp, sp, $ffd8 (=-$28)
 [SP + 0020] = w(RA);
 [SP + 001c] = w(S3);
@@ -5940,13 +5940,13 @@ A1 = 0007;
 
 Lcdd78:	; 800CDD78
 A0 = 0004;
-800CDD7C	jal    read_memory_block_one_byte [$800bee10]
+800CDD7C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0007;
 A0 = 0001;
 A1 = 0005;
 S0 = V0 & 00ff;
-V1 = bu[800722c4];
-V0 = w[8009c6dc];
+V1 = bu[0x800722c4];
+V0 = w[0x8009c6dc];
 V1 = V1 << 01;
 800CDDA4	lui    at, $8008
 AT = AT + 31fc;
@@ -5956,11 +5956,11 @@ V1 = hu[AT + 0000];
 V0 = V0 + V1;
 S3 = bu[V0 + 0003];
 S2 = bu[V0 + 0004];
-800CDDC4	jal    read_memory_block_one_byte [$800bee10]
+800CDDC4	jal    field_event_read_memory_u8 [$800bee10]
 S0 = S0 + 0001;
 S1 = V0 & 00ff;
 A0 = 0002;
-800CDDD4	jal    read_memory_block_one_byte [$800bee10]
+800CDDD4	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0006;
 A1 = V0 & 00ff;
 A0 = S1 + S0;
@@ -5992,7 +5992,7 @@ V0 = V0 < A2;
 [V1 + 0000] = h(A0);
 
 Lcde44:	; 800CDE44
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800CDE4C	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -6015,24 +6015,24 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0xE8 RTPAL
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 size = bu[script + 6] + 1;
 
 A0 = 1;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 src = V0;
 
 A0 = 2;
 A1 = 4;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 dst = V0;
 
 A0 = 4;
 A1 = 5;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 start = V0;
 
 if (size >= start)
@@ -6040,7 +6040,7 @@ if (size >= start)
     A1 = start;
     A2 = 0;
     loopcdf5c:	; 800CDF5C
-        [80095de0 + dst * 20 + A1 * 2] = h(hu[80095de0 + src * 20 + A2 * 2]);
+        [0x80095de0 + dst * 20 + A1 * 2] = h(hu[0x80095de0 + src * 20 + A2 * 2]);
 
         A1 = A1 + 1;
         A2 = A2 + 1;
@@ -6053,7 +6053,7 @@ if (size >= A2)
 {
     A1 = 0;
     loopcdfd0:	; 800CDFD0
-        [80095de0 + dst * 20 + A1 * 2] = h(hu[80095de0 + src * 20 + A2 * 2]);
+        [0x80095de0 + dst * 20 + A1 * 2] = h(hu[0x80095de0 + src * 20 + A2 * 2]);
 
         A1 = A1 + 1;
         A2 = A2 + 1;
@@ -6061,7 +6061,7 @@ if (size >= A2)
     800CE004	beq    v0, zero, loopcdfd0 [$800cdfd0]
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 7);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 7);
 
 return 0;
 ////////////////////////////////
@@ -6070,7 +6070,7 @@ return 0;
 
 ////////////////////////////////
 // 0xEE RTPAL2
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CE05C	addiu  sp, sp, $ffd8 (=-$28)
 [SP + 0020] = w(RA);
 [SP + 001c] = w(S3);
@@ -6086,13 +6086,13 @@ A1 = 0007;
 
 Lce08c:	; 800CE08C
 A0 = 0004;
-800CE090	jal    read_memory_block_one_byte [$800bee10]
+800CE090	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0007;
 A0 = 0001;
 A1 = 0005;
 S0 = V0 & 00ff;
-V1 = bu[800722c4];
-V0 = w[8009c6dc];
+V1 = bu[0x800722c4];
+V0 = w[0x8009c6dc];
 V1 = V1 << 01;
 800CE0B8	lui    at, $8008
 AT = AT + 31fc;
@@ -6102,11 +6102,11 @@ V1 = hu[AT + 0000];
 V0 = V0 + V1;
 S3 = bu[V0 + 0003];
 S2 = bu[V0 + 0004];
-800CE0D8	jal    read_memory_block_one_byte [$800bee10]
+800CE0D8	jal    field_event_read_memory_u8 [$800bee10]
 S0 = S0 + 0001;
 A0 = 0002;
 A1 = 0006;
-800CE0E8	jal    read_memory_block_one_byte [$800bee10]
+800CE0E8	jal    field_event_read_memory_u8 [$800bee10]
 S1 = V0 & 00ff;
 A2 = S1;
 T2 = V0 & 00ff;
@@ -6171,7 +6171,7 @@ V0 = S0 < V0;
 [V1 + 0000] = h(A0);
 
 Lce1cc:	; 800CE1CC
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800CE1D4	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -6194,34 +6194,34 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0xE9 ADPAL
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 S4 = bu[script + 9] + 1;
 
 A0 = 1;
 A1 = 4;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 src_id = V0;
 
 A0 = 2;
 A1 = 5;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 dst_id = V0;
 
 A0 = 3;
 A1 = 6;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 addB = V0; // signed
 
 A0 = 4;
 A1 = 7;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 addG = V0; // signed
 
 A0 = 5;
 A1 = 8;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 addR = V0; // signed
 
 if( S4 != 0 )
@@ -6229,7 +6229,7 @@ if( S4 != 0 )
     T1 = 0;
 
     loopce32c:	; 800CE32C
-        T0 = hu[80095de0 + src_id * 20 + T1 * 2];
+        T0 = hu[0x80095de0 + src_id * 20 + T1 * 2];
 
         A2 = T0 & 1f + addR;
         if( A2 >= 20 )
@@ -6261,11 +6261,11 @@ if( S4 != 0 )
             A0 = 0;
         }
 
-        [80095de0 + dst_id * 20 + T1 * 2] = h((T0 & 8000) | A2 | (A0 << a) | (V1 << 5));
+        [0x80095de0 + dst_id * 20 + T1 * 2] = h((T0 & 8000) | A2 | (A0 << a) | (V1 << 5));
 
-        if( h[80095de0 + dst_id * 20 + T1 * 2] == 0 && T0 != 0 )
+        if( h[0x80095de0 + dst_id * 20 + T1 * 2] == 0 && T0 != 0 )
         {
-            [80095de0 + dst_id * 20 + T1 * 2]= h(8000);
+            [0x80095de0 + dst_id * 20 + T1 * 2]= h(8000);
         }
 
         T1 = T1 + 1;
@@ -6273,14 +6273,14 @@ if( S4 != 0 )
     800CE42C	bne    v0, zero, loopce32c [$800ce32c]
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + a);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + a);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xEF ADPAL2
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CE488	addiu  sp, sp, $ffd0 (=-$30)
 [SP + 0028] = w(RA);
 [SP + 0024] = w(S5);
@@ -6298,35 +6298,35 @@ A1 = 0008;
 
 Lce4c0:	; 800CE4C0
 A0 = 0006;
-800CE4C4	jal    read_memory_block_one_byte [$800bee10]
+800CE4C4	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 000a;
 A0 = 0001;
 A1 = 0006;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 V0 = V0 & 00ff;
 V1 = V1 << 01;
 800CE4E4	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V1;
 A2 = hu[AT + 0000];
-V1 = w[8009c6dc];
+V1 = w[0x8009c6dc];
 800CE4FC	nop
 V1 = V1 + A2;
 S4 = bu[V1 + 0004];
 S5 = bu[V1 + 0005];
-800CE50C	jal    read_memory_block_one_byte [$800bee10]
+800CE50C	jal    field_event_read_memory_u8 [$800bee10]
 S3 = V0 + 0001;
 A0 = 0002;
 A1 = 0007;
-800CE51C	jal    read_memory_block_one_byte [$800bee10]
+800CE51C	jal    field_event_read_memory_u8 [$800bee10]
 S2 = V0 & 00ff;
 S1 = V0 & 00ff;
 A0 = 0003;
-800CE52C	jal    read_memory_block_one_byte [$800bee10]
+800CE52C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0008;
 S0 = V0 & 00ff;
 A0 = 0004;
-800CE53C	jal    read_memory_block_one_byte [$800bee10]
+800CE53C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0009;
 T2 = V0 & 00ff;
 V0 = S1 & 0080;
@@ -6442,7 +6442,7 @@ V0 = V0 < T3;
 V0 = T1 << 10;
 
 Lce6a4:	; 800CE6A4
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800CE6AC	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -6467,42 +6467,42 @@ SP = SP + 0030;
 
 ////////////////////////////////
 // 0xEA MPPAL2
-struct = w[8009c6e0];
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+struct = w[0x8009c6e0];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 length = bu[script + 9] + 1;
 
 A0 = 1;
 A1 = 4;
-read_memory_block_one_byte
+field_event_read_memory_u8
 src_id = V0;
 
 A0 = 2;
 A1 = 5;
-read_memory_block_one_byte
+field_event_read_memory_u8
 dst_id = V0;
 
 A0 = 3;
 A1 = 6;
-read_memory_block_one_byte
+field_event_read_memory_u8
 mulB = V0;
 
 A0 = 4;
 A1 = 7;
-read_memory_block_one_byte
+field_event_read_memory_u8
 mulG = V0;
 
 A0 = 5;
 A1 = 8;
-read_memory_block_one_byte
+field_event_read_memory_u8
 mulR = V0;
 
 if( length != 0 )
 {
     T0 = 0;
     loopce7e8:	; 800CE7E8
-        A3 = hu[80095de0 + src_id * 20 + T0 * 2];
+        A3 = hu[0x80095de0 + src_id * 20 + T0 * 2];
         if( A3 != 0 )
         {
             A1 = ( mulB * ( ( A3 >> 9 ) & 3f ) ) >> 7;
@@ -6523,11 +6523,11 @@ if( length != 0 )
                 A0 = 1f;
             }
 
-            [80095de0 + dst_id * 20 + A2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
+            [0x80095de0 + dst_id * 20 + A2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
 
-            if( hu[80095de0 + dst_id * 20 + A2] == 0 )
+            if( hu[0x80095de0 + dst_id * 20 + A2] == 0 )
             {
-                [80095de0 + dst_id * 20 + A2] = h(8000);
+                [0x80095de0 + dst_id * 20 + A2] = h(8000);
             }
         }
 
@@ -6536,42 +6536,42 @@ if( length != 0 )
     800CE8B0	bne    v0, zero, loopce7e8 [$800ce7e8]
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + a);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + a);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // 0xDF MPPAL
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 src_id = bu[script + 4];
 dst_id = bu[script + 5];
 
 A0 = 6;
 A1 = a;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 length = V0 + 1;
 
 A0 = 1;
 A1 = 6;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 start = V0;
 
 A0 = 2;
 A1 = 7;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 mulB = V0;
 
 A0 = 3;
 A1 = 8;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 mulG = V0;
 
 A0 = 4;
 A1 = 9;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 mulR = V0;
 
 end = start + length;
@@ -6580,7 +6580,7 @@ if( start < end )
 {
     S1 = start;
     loopcea00:	; 800CEA00
-        A3 = hu[80095de0 + src_id * 20 + S1 * 2];
+        A3 = hu[0x80095de0 + src_id * 20 + S1 * 2];
         if( A3 != 0 )
         {
             A1 = (mulB * ((A3 >> 9) & 3f)) >> 7;
@@ -6601,11 +6601,11 @@ if( start < end )
                 A0 = 1f;
             }
 
-            [80095de0 + dst_id * 20 + S1 * 2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
+            [0x80095de0 + dst_id * 20 + S1 * 2] = h((A3 & 8000) | (A1 << a) | (V1 << 5) | A0);
 
-            if (hu[80095de0 + dst_id * 20 + S1 * 2] == 0)
+            if (hu[0x80095de0 + dst_id * 20 + S1 * 2] == 0)
             {
-                [80095de0 + dst_id * 20 + S1 * 2] = h(8000);
+                [0x80095de0 + dst_id * 20 + S1 * 2] = h(8000);
             }
         }
 
@@ -6614,7 +6614,7 @@ if( start < end )
     800CEAC8	bne    v0, zero, loopcea00 [$800cea00]
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + b);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + b);
 
 return 0;
 ////////////////////////////////
@@ -6623,17 +6623,17 @@ return 0;
 
 ////////////////////////////////
 // field_set_1st_party_character_as_manual_model
-V0 = bu[8009c6e4 + 0cad];
+V0 = bu[0x8009c6e4 + 0cad];
 if (V0 != ff) // if character exist
 {
-    A0 = bu[8009ad30 + V0];
+    A0 = bu[0x8009ad30 + V0];
     if (A0 != ff) // if entity exist
     {
-        V0 = bu[8007eb98 + A0];
+        V0 = bu[0x8007eb98 + A0];
         if (V1 != ff) // if model exist
         {
-            V1 = w[8009c6e0];
-            V0 = bu[8007eb98 + A0];
+            V1 = w[0x8009c6e0];
+            V0 = bu[0x8007eb98 + A0];
             [V1 + 2a] = h(V0); // manual model id
         }
     }
@@ -6645,25 +6645,25 @@ if (V0 != ff) // if character exist
 ////////////////////////////////
 // 0xA0 PC
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0c88; // "pc"
     A1 = 1;
     field_debug_event_opcode();
 }
 
-actor_cur = bu[800722c4];
-entities_data = w[8009c544];
-events_data = w[8009c6dc];
-model_cur = bu[8007eb98 + actor_cur];
+actor_cur = bu[0x800722c4];
+entities_data = w[0x8009c544];
+events_data = w[0x8009c6dc];
+model_cur = bu[0x8007eb98 + actor_cur];
 
-V1 = hu[800831fc + actor_cur * 2];
+V1 = hu[0x800831fc + actor_cur * 2];
 char_id = bu[events_data + V1 + 1];
-[8009ad30 + char_id] = b(actor_cur);
+[0x8009ad30 + char_id] = b(actor_cur);
 
 for( int i = 0; i < 3; ++i )
 {
-    if( bu[8009c6e4 + cad + i] == char_id ) // party member in slot 1-3
+    if( bu[0x8009c6e4 + cad + i] == char_id ) // party member in slot 1-3
     {
         if( i != 0 ) // hide not party leader
         {
@@ -6673,21 +6673,21 @@ for( int i = 0; i < 3; ++i )
         }
         else
         {
-            V1 = w[8009c6e0]; // field game state
-            [V1 + 2a] = h(bu[8007eb98 + actor_cur]); // set manual model id
+            V1 = w[0x8009c6e0]; // field game state
+            [V1 + 2a] = h(bu[0x8007eb98 + actor_cur]); // set manual model id
         }
 
-        [800831fc + actor_cur * 2] = h(hu[800831fc + actor_cur * 2] + 2);
+        [0x800831fc + actor_cur * 2] = h(hu[0x800831fc + actor_cur * 2] + 2);
         return 0;
     }
 }
 
-[8009ad30 + char_id] = b(actor_cur);
+[0x8009ad30 + char_id] = b(actor_cur);
 [entities_data + model_cur * 84 + 59] = b(1); // solid off
 [entities_data + model_cur * 84 + 5b] = b(1); // talk off
 [entities_data + model_cur * 84 + 5c] = b(0); // visible off
 
-[800831fc + actor_cur * 2] = h(hu[800831fc + actor_cur * 2] + 2);
+[0x800831fc + actor_cur * 2] = h(hu[0x800831fc + actor_cur * 2] + 2);
 return 0;
 ////////////////////////////////
 
@@ -6695,9 +6695,9 @@ return 0;
 
 ////////////////////////////////
 // 0xC8 PRTYP
-V0 = bu[800722c4];
-V1 = hu[800831fc + V0 * 2];
-V0 = w[8009c6dc];
+V0 = bu[0x800722c4];
+V1 = hu[0x800831fc + V0 * 2];
+V0 = w[0x8009c6dc];
 character_id = bu[V0 + V1 + 1];
 
 
@@ -6705,11 +6705,11 @@ character_id = bu[V0 + V1 + 1];
 // if character already in party
 A0 = 0;
 loopceeac:	; 800CEEAC
-    V0 = bu[8009c6e4 + 0cad + A0]; // party info in savemap
+    V0 = bu[0x8009c6e4 + 0cad + A0]; // party info in savemap
     if (V0 == character_id)
     {
-        V1 = bu[800722c4];
-        [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+        V1 = bu[0x800722c4];
+        [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
         field_set_1st_party_character_as_manual_model;
 
@@ -6727,22 +6727,22 @@ loopceeac:	; 800CEEAC
 // if not in party
 A0 = 0;
 loopcef14:	; 800CEF14
-    V0 = bu[8009c6e4 + 0cad + A0]; // party info in savemap
+    V0 = bu[0x8009c6e4 + 0cad + A0]; // party info in savemap
 
     if (V0 == ff)
     {
-        [8009c6e4 + 0cad + A0] = b(character_id);
+        [0x8009c6e4 + 0cad + A0] = b(character_id);
 
         if (character_id != ff)
         {
-            V1 = hu[8009c6e4 + +10a6];
+            V1 = hu[0x8009c6e4 + +10a6];
             V0 = 1 << character_id;
             V1 = V1 | V0;
-            [8009c6e4 + +10a6] = h(V1);
+            [0x8009c6e4 + +10a6] = h(V1);
         }
 
-        V1 = bu[800722c4];
-        [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+        V1 = bu[0x800722c4];
+        [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
         field_set_1st_party_character_as_manual_model;
 
@@ -6758,17 +6758,17 @@ loopcef14:	; 800CEF14
 
 
 // else add in last slot
-[8009c6e4 + 0cad + 2] = b(character_id);
+[0x8009c6e4 + 0cad + 2] = b(character_id);
 if (character_id != ff)
 {
-    V1 = hu[8009c6e4 + +10a6];
+    V1 = hu[0x8009c6e4 + +10a6];
     V0 = 1 << character_id;
     V1 = V1 | V0;
-    [8009c6e4 + +10a6] = h(V1);
+    [0x8009c6e4 + +10a6] = h(V1);
 }
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
 A0 = A0;
 field_set_1st_party_character_as_manual_model;
@@ -6783,24 +6783,24 @@ return 0;
 
 ////////////////////////////////
 // 0xC9 PRTYM
-V0 = bu[800722c4];
-V1 = hu[800831fc + V0 * 2];
-V0 = w[8009c6dc];
+V0 = bu[0x800722c4];
+V1 = hu[0x800831fc + V0 * 2];
+V0 = w[0x8009c6dc];
 character_id = bu[V0 + V1 + 1];
 
 i = 0;
 loopcf098:	; 800CF098
-    V0 = bu[8009c6e4 + cad + i];
+    V0 = bu[0x8009c6e4 + cad + i];
     if (V0 == character_id)
     {
-        [8009c6e4 + cad + i] = b(ff);
+        [0x8009c6e4 + cad + i] = b(ff);
 
         field_copy_party_to_battle_party;
 
         field_set_1st_party_character_as_manual_model;
 
-        V1 = bu[800722c4];
-        [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+        V1 = bu[0x800722c4];
+        [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
         return 0;
     }
 
@@ -6811,8 +6811,8 @@ loopcf098:	; 800CF098
 field_copy_party_to_battle_party;
 field_set_1st_party_character_as_manual_model;
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -6823,9 +6823,9 @@ return 0;
 // 0xCA PRTYE
 A0 = 0;
 loopcf178:	; 800CF178
-    V0 = bu[800722c4];
-    V1 = hu[800831fc + V0 * 2];
-    V0 = w[8009c6dc];
+    V0 = bu[0x800722c4];
+    V1 = hu[0x800831fc + V0 * 2];
+    V0 = w[0x8009c6dc];
     [SP + 10 + A0] = b(bu[V0 + V1 + A0 + 1]);
 
     A0 = A0 + 1;
@@ -6835,8 +6835,8 @@ loopcf178:	; 800CF178
 A0 = SP + 10;
 funccf368;
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 4);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 4);
 
 return 0;
 ////////////////////////////////
@@ -6845,7 +6845,7 @@ return 0;
 
 ////////////////////////////////
 // 0x0A SPTYE
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CF208	addiu  sp, sp, $ffd8 (=-$28)
 [SP + 0024] = w(RA);
 [SP + 0020] = w(S2);
@@ -6868,7 +6868,7 @@ A0 = S0 << 10;
 A0 = A0 >> 10;
 A1 = S1 + 0003;
 A1 = A1 << 10;
-800CF250	jal    read_memory_block_one_byte [$800bee10]
+800CF250	jal    field_event_read_memory_u8 [$800bee10]
 A1 = A1 >> 10;
 V1 = S2 + S1;
 [V1 + 0000] = b(V0);
@@ -6878,7 +6878,7 @@ V0 = S1 < 0003;
 800CF26C	nop
 800CF270	jal    funccf368 [$800cf368]
 A0 = SP + 0010;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800CF280	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -6900,7 +6900,7 @@ SP = SP + 0028;
 
 ////////////////////////////////
 // 0x0B GTPYE
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800CF2C4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 V0 = V0 & 0003;
@@ -6924,13 +6924,13 @@ A1 = A1 << 10;
 800CF304	addiu  at, at, $d391 (=-$2c6f)
 AT = AT + V1;
 A2 = bu[AT + 0000];
-800CF310	jal    store_memory_block_one_byte [$800bf3ac]
+800CF310	jal    field_event_write_memory_u8 [$800bf3ac]
 A1 = A1 >> 10;
 V1 = S0;
 V0 = V1 < 0003;
 800CF320	bne    v0, zero, loopcf2ec [$800cf2ec]
 800CF324	nop
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800CF330	lui    v1, $8008
 V1 = V1 + 31fc;
 V0 = V0 << 01;
@@ -6958,9 +6958,9 @@ loopcf37c:	; 800CF37C
     {
         j = 0;
         loopcf39c:	; 800CF39C
-            if (bu[8009c6e4 + 0cad + j] == bu[A0 + i])
+            if (bu[0x8009c6e4 + 0cad + j] == bu[A0 + i])
             {
-                [8009c6e4 + 0cad + j] = b(ff);
+                [0x8009c6e4 + 0cad + j] = b(ff);
             }
 
             j = j + 1;
@@ -6976,7 +6976,7 @@ loopcf37c:	; 800CF37C
 
 i = 0;
 loopcf3e0:	; 800CF3E0
-    V0 = bu[8009c6e4 + 0cad + i];
+    V0 = bu[0x8009c6e4 + 0cad + i];
     if (V0 != ff)
     {
         j = 0;
@@ -6984,7 +6984,7 @@ loopcf3e0:	; 800CF3E0
             V0 = bu[A0 + j];
             if (V0 == ff)
             {
-                [A0 + j] = b(bu[8009c6e4 + 0cad + i]);
+                [A0 + j] = b(bu[0x8009c6e4 + 0cad + i]);
                 break;
             }
 
@@ -7007,16 +7007,16 @@ loopcf450:	; 800CF450
         [A0 + i] = b(ff);
     }
 
-    [8009c6e4 + cad + i] = b(bu[A0 + i]);
+    [0x8009c6e4 + cad + i] = b(bu[A0 + i]);
 
     V0 = bu[A0 + i];
     if (V0 != ff)
     {
         V0 = bu[A0 + i];
-        V1 = hu[8009c6e4 + 10a6];
+        V1 = hu[0x8009c6e4 + 10a6];
         V0 = 1 << V0;
         V1 = V1 | V0;
-        [8009c6e4 + 10a6] = h(V1);
+        [0x8009c6e4 + 10a6] = h(V1);
     }
 
     i = i + 1;
@@ -7095,7 +7095,7 @@ A0 = 8009c6e4 + 4f8;
 A1 = SP + 10;
 funccf6c0();
 
-[80071e34] = b(1);
+[0x80071e34] = b(1);
 ////////////////////////////////
 
 
@@ -7159,33 +7159,33 @@ for( int i = 0; i < 3; ++i )
 
 ////////////////////////////////
 // 0xCD MMBud
-V0 = bu[800722c4];
-V1 = hu[800831fc + V0 * 2];
-V0 = w[8009c6dc];
+V0 = bu[0x800722c4];
+V1 = hu[0x800831fc + V0 * 2];
+V0 = w[0x8009c6dc];
 A2 = bu[V0 + V1 + 2];
 V1 = bu[V0 + V1 + 1];
 
 if (V1 != 0)
 {
-    A0 = hu[8009c6e4 + 10a6];
+    A0 = hu[0x8009c6e4 + 10a6];
     V1 = 1 << A2;
     A0 = A0 | V1;
-    [8009c6e4 + 10a6] = h(A0);
+    [0x8009c6e4 + 10a6] = h(A0);
 }
 else
 {
-    V1 = hu[8009c6e4 + 10a6];
+    V1 = hu[0x8009c6e4 + 10a6];
     V0 = 1 << A2;
     V0 = 0 NOR V0;
     V1 = V1 & V0;
-    [8009c6e4 + 10a6] = h(V1);
+    [0x8009c6e4 + 10a6] = h(V1);
 
     V1 = 0;
     loopcfa6c:	; 800CFA6C
-        V0 = bu[8009c6e4 + cad + V1];
+        V0 = bu[0x8009c6e4 + cad + V1];
         if (V0 == A2)
         {
-            [8009c6e4 + cad + V1] = b(ff);
+            [0x8009c6e4 + cad + V1] = b(ff);
         }
 
         V1 = V1 + 1;
@@ -7193,8 +7193,8 @@ else
     800CFAAC	bne    v0, zero, loopcfa6c [$800cfa6c]
 }
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 3);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 3);
 
 return 0;
 ////////////////////////////////
@@ -7203,18 +7203,18 @@ return 0;
 
 ////////////////////////////////
 // 0xCE MMBLK
-A0 = bu[800722c4];
-V1 = hu[800831fc + A0 * 2];
-V0 = w[8009c6dc];
+A0 = bu[0x800722c4];
+V1 = hu[0x800831fc + A0 * 2];
+V0 = w[0x8009c6dc];
 A1 = bu[V0 + V1 + 1];
 
-V0 = hu[8009c6e4 + 10a4];
+V0 = hu[0x8009c6e4 + 10a4];
 V1 = 1 << A1;
 V0 = V0 | V1;
-[8009c6e4 + 10a4] = h(V0);
+[0x8009c6e4 + 10a4] = h(V0);
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -7223,19 +7223,19 @@ return 0;
 
 ////////////////////////////////
 // 0xCF MMBUK
-A0 = bu[800722c4];
-V1 = hu[800831fc + A0 * 2];
-V0 = w[8009c6dc];
+A0 = bu[0x800722c4];
+V1 = hu[0x800831fc + A0 * 2];
+V0 = w[0x8009c6dc];
 A1 = bu[V0 + V1 + 1];
 
-V0 = hu[8009c6e4 + 10a4];
+V0 = hu[0x8009c6e4 + 10a4];
 V1 = 1 << A1;
 V0 = 0 NOR V1;
 V1 = V1 & V0;
-[8009c6e4 + 10a4] = h(V1);
+[0x8009c6e4 + 10a4] = h(V1);
 
-V1 = bu[800722c4];
-[800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+V1 = bu[0x800722c4];
+[0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
 return 0;
 ////////////////////////////////
@@ -7244,23 +7244,23 @@ return 0;
 
 ////////////////////////////////
 // 0xC7 SOLID
-V1 = bu[800722C4];
-model_id = bu[8007EB98 + V1];
+V1 = bu[0x800722C4];
+model_id = bu[0x8007EB98 + V1];
 
 if (A0 != FF)
 {
-    A0 = hu[800831FC + V1 * 2];
-    V1 = w[8009C6DC];
+    A0 = hu[0x800831FC + V1 * 2];
+    V1 = w[0x8009C6DC];
     V1 = bu[V1 + A0 + 1];
-    A0 = w[8009C544];
+    A0 = w[0x8009C544];
     [A0 + model_id * 84 + 59] = b(V1);
 }
 
 // move pointer by 2
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 2;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -7268,140 +7268,10 @@ return 0;
 
 
 ////////////////////////////////
-// 0x6B FADE
-
-v0 = [param + 07];
-[gamedata + 4C] = v0;
-
-switch (v0)
-{
-    case 1, 5, 7, 9:
-    {
-        v0 = [param + 08];
-        v0 = v0 + 1;
-        [gamedata + 4E] = v0;
-    }
-    break;
-
-    case 2, 6, 8, A:
-    {
-        v0 = [param + 08];
-        [gamedata + 4E] = v0;
-    }
-    break;
-}
-
-[gamedata + 50] = [param + 06];
-
-a0 = 1;
-a1 = 3;
-read_memory_block_one_byte
-[gamedata + 52] = v0 & FF;
-
-a0 = 2;
-a1 = 4;
-read_memory_block_one_byte
-[gamedata + 54] = v0 & FF;
-
-a0 = 4;
-a1 = 5;
-read_memory_block_one_byte
-[gamedata + 56] = v0 & FF;
-
-move script pointer by 0x9
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0x25 NFADE
-
-v0 = [param + 03];
-[gamedata + 4C] = v0;
-
-a0 = 1;
-a1 = 4;
-read_memory_block_one_byte
-v0 = v0 & FF;
-[gamedata + 5E] = v0;
-
-a0 = 2;
-a1 = 5;
-read_memory_block_one_byte
-v0 = v0 & FF;
-[gamedata + 60] = v0;
-
-a0 = 3;
-a1 = 6;
-read_memory_block_one_byte
-v0 = v0 & FF;
-[gamedata + 62] = v0;
-
-a0 = 4;
-a1 = 7;
-read_memory_block_one_byte
-[gamedata + 50] = v0 & FF;
-
-[gamedata + 4E] = 0;
-
-v0 = 0;
-
-move script pointer by 0x9
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0x6C FADEW
-struct = w[8009c6e0];
-V0 = hu[struct + 4c];
-
-if (V0 == 1 || V0 == 5 || V0 == 7 || V0 == 9)
-{
-    V0 = w[8009c6e0];
-    800D19D0	nop
-    V0 = hu[V0 + 004e];
-    800D19D8	nop
-    800D19DC	beq    v0, zero, Ld1a48 [$800d1a48]
-
-    return 1;
-}
-else if (V0 == 2 || V0 == 6 || V0 == 8 || V0 == a)
-{
-    V0 = w[8009c6e0];
-    800D19F4	nop
-    V0 = hu[V0 + 004e];
-    800D19FC	nop
-    V0 = V0 < 00ff;
-    800D1A0C	beq    v0, zero, Ld1a48 [$800d1a48]
-
-    return 1;
-}
-else if (V0 == 0 || V0 == 4)
-{
-    Ld1a48:	; 800D1A48
-    V1 = bu[800722c4];
-    800D1A50	lui    v0, $8008
-    V0 = V0 + 31fc;
-    V1 = V1 << 01;
-    V1 = V1 + V0;
-    A0 = hu[V1 + 0000];
-    V0 = 0;
-    A0 = A0 + 0001;
-    [V1 + 0000] = h(A0);
-}
-
-Ld1a70:	; 800D1A70
-return;
-////////////////////////////////
-
-
-
-////////////////////////////////
 // 0x6D IDLCK
-V0 = bu[800722C4];
-V1 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 A2 = V0 + V1;
 V1 = bu[A2 + 2];
 V0 = bu[A2 + 1];
@@ -7416,7 +7286,7 @@ A2 = A0 - V0; // 00000xxx
 
 if (V1 != 0)
 {
-    V0 = w[8009C6E0];
+    V0 = w[0x8009C6E0];
     V0 = V0 + A1;
     V1 = 1 << A2;
     A0 = [V0 + B2];
@@ -7424,7 +7294,7 @@ if (V1 != 0)
 }
 else
 {
-    V0 = w[8009C6E0];
+    V0 = w[0x8009C6E0];
     V1 = 1 << A2;
     V0 = V0 + A1;
     A0 = [V0 + B2];
@@ -7435,10 +7305,10 @@ else
 [V0 + B2] = b(A0);
 
 // move pointer by 4
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 4;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 ////////////////////////////////
 
 
@@ -7447,28 +7317,28 @@ V0 = V0 + 4;
 // 0x56 GWCOL
 A0 = 1;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 
 A0 = 2;
 A1 = 4;
-A2 = bu[80049208 + V0 * 3];
-store_memory_block_one_byte;
+A2 = bu[0x80049208 + V0 * 3];
+field_event_write_memory_u8;
 
 A0 = 3;
 A1 = 5;
-A2 = bu[80049209 + V0 * 3];
-store_memory_block_one_byte;
+A2 = bu[0x80049209 + V0 * 3];
+field_event_write_memory_u8;
 
 A0 = 4;
 A1 = 6;
-A2 = bu[8004920A + V0 * 3];
-store_memory_block_one_byte;
+A2 = bu[0x8004920A + V0 * 3];
+field_event_write_memory_u8;
 
 // move pointer by 7
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 7;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -7479,29 +7349,29 @@ return 0;
 // 0x57 SWCOL
 A0 = 1;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 S0 = V0 * 3;
 
 A0 = 2;
 A1 = 4;
-read_memory_block_one_byte;
-[80049208 + S0] = b(V0);
+field_event_read_memory_u8;
+[0x80049208 + S0] = b(V0);
 
 A0 = 3;
 A1 = 5;
-read_memory_block_one_byte;
-[80049209 + S0] = b(V0);
+field_event_read_memory_u8;
+[0x80049209 + S0] = b(V0);
 
 A0 = 4;
 A1 = 6;
-read_memory_block_one_byte;
-[8004920A + S0] = b(V0);
+field_event_read_memory_u8;
+[0x8004920A + S0] = b(V0);
 
 // move pointer by 7
-V1 = bu[800722C4];
-V0 = hu[800831FC + V1 * 2];
+V1 = bu[0x800722C4];
+V0 = hu[0x800831FC + V1 * 2];
 V0 = V0 + 7;
-[800831FC + V1 * 2] = h(V0);
+[0x800831FC + V1 * 2] = h(V0);
 
 return 0;
 ////////////////////////////////
@@ -7510,7 +7380,7 @@ return 0;
 
 ////////////////////////////////
 // 0x6E LSTMP
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D1D44	addiu  sp, sp, $ffe8 (=-$18)
 V0 = V0 & 0003;
 800D1D4C	beq    v0, zero, Ld1d64 [$800d1d64]
@@ -7521,12 +7391,12 @@ A0 = A0 + 0e38;
 A1 = 0002;
 
 Ld1d64:	; 800D1D64
-V0 = w[8009c6e0];
+V0 = w[0x8009c6e0];
 A0 = 0002;
 A2 = h[V0 + 0064];
-800D1D74	jal    store_memory_block_two_bytes [$800c0248]
+800D1D74	jal    field_event_write_memory_s16 [$800c0248]
 A1 = 0002;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D1D84	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -7546,7 +7416,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x58 STITM
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D1F28	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 V0 = V0 & 0003;
@@ -7559,14 +7429,14 @@ A1 = 0004;
 
 Ld1f4c:	; 800D1F4C
 A0 = 0002;
-800D1F50	jal    read_memory_block_one_byte [$800bee10]
+800D1F50	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0004;
 A0 = 0001;
 A1 = 0002;
 S0 = V0 & 00ff;
-800D1F64	jal    read_memory_block_two_bytes [$800bf908]
+800D1F64	jal    field_event_read_memory_s16 [$800bf908]
 S0 = S0 << 09;
-V1 = bu[8009d820];
+V1 = bu[0x8009d820];
 800D1F74	nop
 V1 = V1 & 0003;
 800D1F7C	beq    v1, zero, Ld1f98 [$800d1f98]
@@ -7579,7 +7449,7 @@ field_debug_add_parse_value_to_page2();
 Ld1f98:	; 800D1F98
 800D1F98	jal    func25380 [$80025380]
 A0 = S0 & ffff;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D1FA8	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -7599,7 +7469,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x59 DLITM
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D1FE4	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 V0 = V0 & 0003;
@@ -7612,14 +7482,14 @@ A1 = 0004;
 
 Ld2008:	; 800D2008
 A0 = 0002;
-800D200C	jal    read_memory_block_one_byte [$800bee10]
+800D200C	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0004;
 A0 = 0001;
 A1 = 0002;
 S0 = V0 & 00ff;
-800D2020	jal    read_memory_block_two_bytes [$800bf908]
+800D2020	jal    field_event_read_memory_s16 [$800bf908]
 S0 = S0 << 09;
-V1 = bu[8009d820];
+V1 = bu[0x8009d820];
 800D2030	nop
 V1 = V1 & 0003;
 800D2038	beq    v1, zero, Ld2054 [$800d2054]
@@ -7633,7 +7503,7 @@ A2 = 0004;
 Ld2054:	; 800D2054
 800D2054	jal    system_menu_inventory_remove_item [$80025288]
 A0 = S0 & ffff;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D2064	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -7653,7 +7523,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x5A CKITM
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D20A0	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 V0 = V0 & 0003;
@@ -7666,11 +7536,11 @@ A1 = 0004;
 
 Ld20c4:	; 800D20C4
 A0 = 0001;
-800D20C8	jal    read_memory_block_two_bytes [$800bf908]
+800D20C8	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 800D20D0	jal    system_menu_inventory_search_item [$80025310]
 A0 = V0 & ffff;
-V1 = bu[8009d820];
+V1 = bu[0x8009d820];
 800D20E0	nop
 V1 = V1 & 0003;
 800D20E8	beq    v1, zero, Ld2104 [$800d2104]
@@ -7691,9 +7561,9 @@ S0 = 0;
 Ld2118:	; 800D2118
 A1 = 0004;
 A2 = S0 & ffff;
-800D2120	jal    store_memory_block_one_byte [$800bf3ac]
+800D2120	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = A2 >> 09;
-A0 = bu[800722c4];
+A0 = bu[0x800722c4];
 800D2130	lui    v0, $8008
 V0 = V0 + 31fc;
 A0 = A0 << 01;
@@ -7718,20 +7588,20 @@ events_data = w[0x8009c6dc];
 actor_id_cur = bu[0x800722c4];
 script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0e78; // "spcal"
     A1 = 8;
     field_debug_event_opcode();
 }
 
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D2198	nop
 V0 = V0 << 01;
 AT = 800831fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D21B8	nop
 V0 = V0 + V1;
 V0 = bu[V0 + 0001];
@@ -7743,7 +7613,7 @@ switch( V0 )
 
 ff a 800D21F8
 
-    V0 = bu[8009d820];
+    V0 = bu[0x8009d820];
     800D2200	nop
     V0 = V0 & 0003;
     800D2208	beq    v0, zero, Ld2220 [$800d2220]
@@ -7764,13 +7634,13 @@ ff a 800D21F8
     800D2234	bne    v0, zero, loopd2224 [$800d2224]
     A0 = S0 | c600;
 
-    V1 = bu[800722c4];
-    [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+    V1 = bu[0x800722c4];
+    [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
     return 0;
 
     case fe:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0e88; // "rsglb"
             A1 = 8;
@@ -7779,15 +7649,15 @@ ff a 800D21F8
 
         func33a90(); // init savemap
 
-        V1 = bu[800722c4];
-        [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+        V1 = bu[0x800722c4];
+        [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
         return 0;
     }
     break;
 
 fd 8 800D227C
 
-    V0 = bu[8009d820];
+    V0 = bu[0x8009d820];
     800D2284	nop
     V0 = V0 & 0003;
     800D228C	beq    v0, zero, Ld22a4 [$800d22a4]
@@ -7798,21 +7668,21 @@ fd 8 800D227C
     A1 = 0008;
 
     Ld22a4:	; 800D22A4
-    V0 = bu[800722c4];
+    V0 = bu[0x800722c4];
     800D22AC	nop
     V0 = V0 << 01;
     800D22B4	lui    at, $8008
     AT = AT + 31fc;
     AT = AT + V0;
     V1 = hu[AT + 0000];
-    V0 = w[8009c6dc];
+    V0 = w[0x8009c6dc];
     800D22CC	nop
     V0 = V0 + V1;
     A0 = bu[V0 + 0002];
     A1 = bu[V0 + 0003];
     800D22DC	jal    funcd7c98 [$800d7c98]
     800D22E0	nop
-    A0 = bu[800722c4];
+    A0 = bu[0x800722c4];
     800D22EC	lui    v0, $8008
     V0 = V0 + 31fc;
     A0 = A0 << 01;
@@ -7824,7 +7694,7 @@ fd 8 800D227C
 
     case fc:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0e98; // "mvlck"
             A1 = 2;
@@ -7832,15 +7702,15 @@ fd 8 800D227C
         }
 
         V0 = 800831fc;
-        A0 = bu[800722c4];
-        A1 = w[8009c6dc];
+        A0 = bu[0x800722c4];
+        A1 = w[0x8009c6dc];
         A0 = A0 << 01;
         A0 = A0 + V0;
         V1 = hu[A0 + 0000];
         800D2358	nop
         A1 = A1 + V1;
         A1 = bu[A1 + 0002];
-        [800716cc] = b(A1);
+        [0x800716cc] = b(A1);
 
         [A0 + 0000] = h(hu[A0 + 0000] + 3);
 
@@ -7860,7 +7730,7 @@ fd 8 800D227C
 
     case fa:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0ea8; // "flitm"
             A1 = 8;
@@ -7877,15 +7747,15 @@ fd 8 800D227C
         V0 = S0 < 0200;
         800D2430	bne    v0, zero, loopd2420 [$800d2420]
         A0 = S0 | c600;
-        V1 = bu[800722c4];
-        [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+        V1 = bu[0x800722c4];
+        [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
         return 0;
     }
     break;
 
     case f9:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0eb0; // "flmat"
             A1 = 8;
@@ -7899,15 +7769,15 @@ fd 8 800D227C
         V0 = S0 < 0050;
         800D2478	bne    v0, zero, Ld2468 [$800d2468]
 
-        V1 = bu[800722c4];
-        [800831fc + V1 * 2] = h(hu[800831fc + V1 * 2] + 2);
+        V1 = bu[0x800722c4];
+        [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
         return 0;
     }
     break;
 
     case f8:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0eb8; // "smspd"
             A1 = 3;
@@ -7915,11 +7785,11 @@ fd 8 800D227C
         }
 
         A0 = 0004;
-        800D24D8	jal    read_memory_block_one_byte [$800bee10]
+        800D24D8	jal    field_event_read_memory_u8 [$800bee10]
         A1 = 0003;
-        A0 = bu[800722c4];
+        A0 = bu[0x800722c4];
         V0 = 0 NOR V0;
-        [8009d7d0] = b(V0);
+        [0x8009d7d0] = b(V0);
         800D24F4	lui    v0, $8008
         V0 = V0 + 31fc;
         A0 = A0 << 01;
@@ -7933,7 +7803,7 @@ fd 8 800D227C
 
     case f7:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             800D252C	lui    a0, $800a
             A0 = A0 + 0ec0;
@@ -7942,12 +7812,12 @@ fd 8 800D227C
         }
 
         A0 = 0004;
-        A2 = bu[8009d7d0];
+        A2 = bu[0x8009d7d0];
         A1 = 0003;
         A2 = 0 NOR A2;
-        800D2550	jal    store_memory_block_one_byte [$800bf3ac]
+        800D2550	jal    field_event_write_memory_u8 [$800bf3ac]
         A2 = A2 & 00ff;
-        A0 = bu[800722c4];
+        A0 = bu[0x800722c4];
         800D2560	lui    v0, $8008
         V0 = V0 + 31fc;
         A0 = A0 << 01;
@@ -7961,7 +7831,7 @@ fd 8 800D227C
 
     case f6:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             800D2598	lui    a0, $800a
             A0 = A0 + 0ec8;
@@ -7970,18 +7840,18 @@ fd 8 800D227C
         }
 
         A0 = 0003;
-        800D25AC	jal    read_memory_block_one_byte [$800bee10]
+        800D25AC	jal    field_event_read_memory_u8 [$800bee10]
         A1 = 0003;
         800D25B4	jal    system_get_character_name_offset [$800257cc]
         A0 = V0 & 00ff;
-        V1 = bu[800722c4];
+        V1 = bu[0x800722c4];
         A2 = V0;
         V1 = V1 << 01;
         800D25CC	lui    at, $8008
         AT = AT + 31fc;
         AT = AT + V1;
         A0 = hu[AT + 0000];
-        V1 = w[8009c6dc];
+        V1 = w[0x8009c6dc];
         800D25E4	nop
         V1 = V1 + A0;
         V0 = bu[V1 + 0002];
@@ -8041,7 +7911,7 @@ fd 8 800D227C
         800D268C	addiu  at, at, $d288 (=-$2d78)
         AT = AT + V0;
         [AT + 0000] = b(V1);
-        A0 = bu[800722c4];
+        A0 = bu[0x800722c4];
         800D26A0	lui    v0, $8008
         V0 = V0 + 31fc;
         A0 = A0 << 01;
@@ -8055,7 +7925,7 @@ fd 8 800D227C
 
     case f5:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0ed0; // "arrow"
             A1 = 8;
@@ -8064,8 +7934,8 @@ fd 8 800D227C
 
         800D26E8	lui    v0, $8008
         V0 = V0 + 31fc;
-        A0 = bu[800722c4];
-        A1 = w[8009c6dc];
+        A0 = bu[0x800722c4];
+        A1 = w[0x8009c6dc];
         A0 = A0 << 01;
         A0 = A0 + V0;
         V1 = hu[A0 + 0000];
@@ -8074,21 +7944,21 @@ fd 8 800D227C
         A1 = bu[A1 + 0002];
         V1 = V1 + 0003;
         [A0 + 0000] = h(V1);
-        [80071c1c] = b(A1);
+        [0x80071c1c] = b(A1);
         return 0;
     }
     break;
 
     default:
     {
-        if( bu[8009d820] & 3 )
+        if( bu[0x8009d820] & 3 )
         {
             A0 = 800a0ed8; // "?????"
             A1 = 8;
             field_debug_event_opcode();
         }
 
-        A0 = bu[800722c4];
+        A0 = bu[0x800722c4];
         [S0 + A0 * 2] = h(hu[S0 + A0 * 2] + 2);
 
         return 0;
@@ -8100,7 +7970,7 @@ fd 8 800D227C
 
 ////////////////////////////////
 // 0x5B SMTRA
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D2994	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 V0 = V0 & 0003;
@@ -8113,23 +7983,23 @@ A1 = 0006;
 
 Ld29b8:	; 800D29B8
 A0 = 0001;
-800D29BC	jal    read_memory_block_one_byte [$800bee10]
+800D29BC	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0003;
 S0 = V0 & 00ff;
 A0 = 0002;
-800D29CC	jal    read_memory_block_one_byte [$800bee10]
+800D29CC	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0004;
 V0 = V0 & 00ff;
 V0 = V0 << 08;
 S0 = S0 | V0;
 A0 = 0003;
-800D29E4	jal    read_memory_block_one_byte [$800bee10]
+800D29E4	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0005;
 V0 = V0 & 00ff;
 V0 = V0 << 10;
 S0 = S0 | V0;
 A0 = 0004;
-800D29FC	jal    read_memory_block_one_byte [$800bee10]
+800D29FC	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0006;
 V0 = V0 << 18;
 800D2A08	jal    func2542c [$8002542c]
@@ -8137,15 +8007,15 @@ A0 = S0 | V0;
 800D2A10	addiu  v1, zero, $ffff (=-$1)
 800D2A14	bne    v0, v1, Ld2a2c [$800d2a2c]
 V0 = 0001;
-[8009d5a7] = b(0);
+[0x8009d5a7] = b(0);
 800D2A24	j      Ld2a34 [$800d2a34]
 800D2A28	nop
 
 Ld2a2c:	; 800D2A2C
-[8009d5a7] = b(V0);
+[0x8009d5a7] = b(V0);
 
 Ld2a34:	; 800D2A34
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D2A3C	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -8165,7 +8035,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x5C DMTRA
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D2A78	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 001c] = w(RA);
 V0 = V0 & 0003;
@@ -8178,38 +8048,38 @@ A1 = 0007;
 
 Ld2a9c:	; 800D2A9C
 A0 = 0001;
-800D2AA0	jal    read_memory_block_one_byte [$800bee10]
+800D2AA0	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0003;
 S0 = V0 & 00ff;
 A0 = 0002;
-800D2AB0	jal    read_memory_block_one_byte [$800bee10]
+800D2AB0	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0004;
 V0 = V0 & 00ff;
 V0 = V0 << 08;
 S0 = S0 | V0;
 A0 = 0003;
-800D2AC8	jal    read_memory_block_one_byte [$800bee10]
+800D2AC8	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0005;
 V0 = V0 & 00ff;
 V0 = V0 << 10;
 S0 = S0 | V0;
 A0 = 0004;
-800D2AE0	jal    read_memory_block_one_byte [$800bee10]
+800D2AE0	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0006;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D2AF0	nop
 V1 = V1 << 01;
 800D2AF8	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V1;
 A0 = hu[AT + 0000];
-V1 = w[8009c6dc];
+V1 = w[0x8009c6dc];
 V0 = V0 << 18;
 V1 = V1 + A0;
 A1 = bu[V1 + 0007];
 800D2B1C	jal    func25648 [$80025648]
 A0 = S0 | V0;
-A0 = bu[800722c4];
+A0 = bu[0x800722c4];
 800D2B2C	lui    v0, $8008
 V0 = V0 + 31fc;
 A0 = A0 << 01;
@@ -8229,7 +8099,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0x5D CMTRA
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D2B68	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 001c] = w(RA);
 V0 = V0 & 0003;
@@ -8242,32 +8112,32 @@ A1 = 0008;
 
 Ld2b8c:	; 800D2B8C
 A0 = 0001;
-800D2B90	jal    read_memory_block_one_byte [$800bee10]
+800D2B90	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0004;
 S0 = V0 & 00ff;
 A0 = 0002;
-800D2BA0	jal    read_memory_block_one_byte [$800bee10]
+800D2BA0	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0005;
 V0 = V0 & 00ff;
 V0 = V0 << 08;
 S0 = S0 | V0;
 A0 = 0003;
-800D2BB8	jal    read_memory_block_one_byte [$800bee10]
+800D2BB8	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0006;
 V0 = V0 & 00ff;
 V0 = V0 << 10;
 S0 = S0 | V0;
 A0 = 0004;
-800D2BD0	jal    read_memory_block_one_byte [$800bee10]
+800D2BD0	jal    field_event_read_memory_u8 [$800bee10]
 A1 = 0007;
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D2BE0	nop
 V1 = V1 << 01;
 800D2BE8	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V1;
 A0 = hu[AT + 0000];
-V1 = w[8009c6dc];
+V1 = w[0x8009c6dc];
 V0 = V0 << 18;
 V1 = V1 + A0;
 A1 = bu[V1 + 0008];
@@ -8275,9 +8145,9 @@ A1 = bu[V1 + 0008];
 A0 = S0 | V0;
 A0 = 0006;
 A1 = 0009;
-800D2C1C	jal    store_memory_block_one_byte [$800bf3ac]
+800D2C1C	jal    field_event_write_memory_u8 [$800bf3ac]
 A2 = V0 & 00ff;
-A0 = bu[800722c4];
+A0 = bu[0x800722c4];
 800D2C2C	lui    v0, $8008
 V0 = V0 + 31fc;
 A0 = A0 << 01;
@@ -8297,9 +8167,9 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0x49 MENU
-struct = w[8009c6e0];
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
+struct = w[0x8009c6e0];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
 A0 = bu[struct + 1];
 if (A0 == 0)
@@ -8308,11 +8178,11 @@ if (A0 == 0)
 
     A0 = 2;
     A1 = 3;
-    read_memory_block_one_byte();
+    field_event_read_memory_u8();
 
     [struct + 2] = h(V0);
 
-    [8007ebe0] = b(1);
+    [0x8007ebe0] = b(1);
 
 
     [struct + 26] = h(0);
@@ -8322,7 +8192,7 @@ if (A0 == 0)
         return 1;
     }
 
-    [800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 4);
+    [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 4);
     return 1;
 }
 else
@@ -8334,7 +8204,7 @@ else
             return 1;
         }
 
-        [800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 4);
+        [0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 4);
         [struct + 1] = b(0);
         [struct + 26] = h(0);
 
@@ -8359,7 +8229,7 @@ else
 
 ////////////////////////////////
 // 0x4A MENU2
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D2E9C	addiu  sp, sp, $ffe0 (=-$20)
 V0 = V0 & 0003;
 800D2EA4	beq    v0, zero, Ld2ebc [$800d2ebc]
@@ -8370,21 +8240,21 @@ A0 = A0 + 0f38;
 A1 = 0001;
 
 Ld2ebc:	; 800D2EBC
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D2EC4	nop
 V0 = V0 << 01;
 800D2ECC	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D2EE4	nop
 V0 = V0 + V1;
-V1 = w[8009c6e0];
+V1 = w[0x8009c6e0];
 V0 = bu[V0 + 0001];
 800D2EF8	nop
 [V1 + 0034] = b(V0);
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D2F08	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -8404,7 +8274,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0x74 GETPC
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D2F44	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 001c] = w(RA);
 V0 = V0 & 0003;
@@ -8416,14 +8286,14 @@ A0 = A0 + 0f40;
 A1 = 0003;
 
 Ld2f68:	; 800D2F68
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D2F70	nop
 V0 = V0 << 01;
 800D2F78	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D2F90	nop
 V0 = V0 + V1;
 V1 = bu[V0 + 0002];
@@ -8436,11 +8306,11 @@ A0 = 0002;
 800D2FB4	addiu  at, at, $cbdc (=-$3424)
 AT = AT + V1;
 A2 = bu[AT + 0000];
-800D2FC0	jal    store_memory_block_one_byte [$800bf3ac]
+800D2FC0	jal    field_event_write_memory_u8 [$800bf3ac]
 A1 = 0003;
 
 Ld2fc8:	; 800D2FC8
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D2FD0	nop
 V1 = V1 << 01;
 V1 = V1 + S0;
@@ -8460,34 +8330,34 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0x41 MPARA
-V0 = bu[800722C4];          // current entity
-V1 = hu[800831FC + V0 * 2]; // script pointer
-V0 = w[8009C6DC];           // current field file offset.
+V0 = bu[0x800722C4];          // current entity
+V1 = hu[0x800831FC + V0 * 2]; // script pointer
+V0 = w[0x8009C6DC];           // current field file offset.
 S0 = [V0 + V1 + 2];         // window_id
 
 A0 = 1;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 
-V1 = bu[800722C4];
-A1 = hu[800831FC + V1 * 2];
-V1 = w[8009C6DC];
+V1 = bu[0x800722C4];
+A1 = hu[0x800831FC + V1 * 2];
+V1 = w[0x8009C6DC];
 V1 = bu[V1 + A1 + 1];
 
 V1 = V1 & 0F;
-[800E4214 + S0 * 8 + V0] = b(V1);
+[0x800E4214 + S0 * 8 + V0] = b(V1);
 
-A0 = bu[800722C4];
-A1 = hu[800831FC + A0 * 2];
-V1 = w[8009C6DC];
+A0 = bu[0x800722C4];
+A1 = hu[0x800831FC + A0 * 2];
+V1 = w[0x8009C6DC];
 V1 = bu[V1 + A1 + 4];
 
-[800E4D48 + S0 * 10 + V0 * 2] = h(V1);
+[0x800E4D48 + S0 * 10 + V0 * 2] = h(V1);
 
 // move pointer to 5
-V1 = hu[800831FC + A0 * 2];
+V1 = hu[0x800831FC + A0 * 2];
 V1 = V1 + 5;
-[800831FC + A0 * 2] = h(V1);
+[0x800831FC + A0 * 2] = h(V1);
 
 return 0;
 ////////////////////////////////
@@ -8496,37 +8366,37 @@ return 0;
 
 ////////////////////////////////
 // 0x42 MPRA2
-V0 = bu[800722C4];          // current entity
-V1 = hu[800831FC + V0 * 2]; // script pointer
-V0 = w[8009C6DC];           // current field file offset.
+V0 = bu[0x800722C4];          // current entity
+V1 = hu[0x800831FC + V0 * 2]; // script pointer
+V0 = w[0x8009C6DC];           // current field file offset.
 S0 = [V0 + V1 + 2];         // window_id
 
 A0 = 1;
 A1 = 3;
-read_memory_block_one_byte;
+field_event_read_memory_u8;
 
-V1 = bu[800722C4];
-A1 = hu[800831FC + V1 * 2];
-V1 = w[8009C6DC];
+V1 = bu[0x800722C4];
+A1 = hu[0x800831FC + V1 * 2];
+V1 = w[0x8009C6DC];
 V1 = bu[V1 + A1 + 1];
 
 V1 = V1 & 0F;
-[800E4214 + S0 * 8 + V0] = b(V1);
+[0x800E4214 + S0 * 8 + V0] = b(V1);
 
-A0 = bu[800722C4];
-A1 = hu[800831FC + A0 * 2];
-V1 = w[8009C6DC];
+A0 = bu[0x800722C4];
+A1 = hu[0x800831FC + A0 * 2];
+V1 = w[0x8009C6DC];
 V1 = bu[V1 + A1 + 4];
 S1 = bu[V1 + A1 + 5];
 
 S1 = S1 << 8;
 V1 = V1 | S1;
-[800E4D48 + S0 * 10 + V0 * 2] = h(V1);
+[0x800E4D48 + S0 * 10 + V0 * 2] = h(V1);
 
 // move pointer to 6
-V1 = hu[800831FC + A0 * 2];
+V1 = hu[0x800831FC + A0 * 2];
 V1 = V1 + 6;
-[800831FC + A0 * 2] = h(V1);
+[0x800831FC + A0 * 2] = h(V1);
 
 return 0;
 ////////////////////////////////
@@ -8537,32 +8407,32 @@ return 0;
 // 0xD4 SIN
 A0 = 1;
 A1 = 3;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 A0 = V0;
 system_get_sin;
 S0 = V0;
 
 A0 = 2;
 A1 = 5;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 
 HI/LO = S0 * V0;
 S0 = LO;
 
 A0 = 3;
 A1 = 7;
-read_memory_block_two_bytes
+field_event_read_memory_s16
 S0 = S0 + V0;
 
 A0 = 4;
 A1 = 9;
 A2 = S0 >> 0C;
-store_memory_block_two_bytes;
+field_event_write_memory_s16;
 
-A0 = bu[800722C4];
-V1 = hu[800831FC + A0 * 2];
+A0 = bu[0x800722C4];
+V1 = hu[0x800831FC + A0 * 2];
 V1 = V1 + A;
-[800831FC + A0 * 2] = h(V1);
+[0x800831FC + A0 * 2] = h(V1);
 
 return 0;
 ////////////////////////////////
@@ -8573,31 +8443,31 @@ return 0;
 // 0xD5 COS
 A0 = 1;
 A1 = 3;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 A0 = V0;
 system_get_cos;
 S0 = V0;
 
 A0 = 2;
 A1 = 5;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 
 S0 = S0 * V0;
 
 A0 = 3;
 A1 = 7;
-read_memory_block_two_bytes
+field_event_read_memory_s16
 S0 = S0 + V0;
 
 A0 = 4;
 A1 = 9;
 A2 = S0 >> 0C;
-store_memory_block_two_bytes;
+field_event_write_memory_s16;
 
-A0 = bu[800722C4];
-V1 = hu[800831FC + A0 * 2];
+A0 = bu[0x800722C4];
+V1 = hu[0x800831FC + A0 * 2];
 V1 = V1 + A;
-[800831FC + A0 * 2] = h(V1);
+[0x800831FC + A0 * 2] = h(V1);
 
 return 0;
 ////////////////////////////////
@@ -8690,7 +8560,7 @@ A0 = S0;
 ////////////////////////////////
 // 0x3E MHMMX
 
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 V0 = V0 & 0003;
 800D3558	beq    v0, zero, Ld3570 [$800d3570]
 
@@ -8766,7 +8636,7 @@ V0 = V1 < 0003;
 A0 = A0 + 0001;
 800D3648	jal    funcd348c [$800d348c]
 800D364C	nop
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D3658	lui    v1, $8008
 V1 = V1 + 31fc;
 V0 = V0 << 01;
@@ -8789,7 +8659,7 @@ SP = SP + 0020;
 // 0x3D HMPMAX2
 // 0x3F HMPMAX3
 
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D3694	addiu  sp, sp, $ffe8 (=-$18)
 [SP + 0014] = w(RA);
 V0 = V0 & 0003;
@@ -8815,7 +8685,7 @@ S0 = S0 + 0001;
 V0 = S0 < 0003;
 800D36E0	bne    v0, zero, loopd36c4 [$800d36c4]
 A0 = S0;
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D36F0	lui    v1, $8008
 V1 = V1 + 31fc;
 V0 = V0 << 01;
@@ -8836,7 +8706,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x45 MPu
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D3730	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
@@ -8851,14 +8721,14 @@ A1 = 0004;
 Ld3758:	; 800D3758
 800D3758	jal    funcd33fc [$800d33fc]
 800D375C	nop
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D3768	nop
 V0 = V0 << 01;
 800D3770	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D3788	nop
 V0 = V0 + V1;
 S1 = bu[V0 + 0002];
@@ -8881,7 +8751,7 @@ V0 = bu[AT + 0000];
 800D37CC	nop
 800D37D0	bne    v0, s1, Ld37f0 [$800d37f0]
 A0 = 0002;
-800D37D8	jal    read_memory_block_two_bytes [$800bf908]
+800D37D8	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0003;
 A0 = S0;
 V0 = V0 << 10;
@@ -8895,7 +8765,7 @@ V0 = S0 < 0003;
 800D37FC	nop
 
 Ld3800:	; 800D3800
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D3808	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -8916,7 +8786,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0x47 MPd
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D3848	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
@@ -8931,14 +8801,14 @@ A1 = 0004;
 Ld3870:	; 800D3870
 800D3870	jal    funcd33fc [$800d33fc]
 800D3874	nop
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D3880	nop
 V0 = V0 << 01;
 800D3888	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D38A0	nop
 V0 = V0 + V1;
 S1 = bu[V0 + 0002];
@@ -8961,7 +8831,7 @@ V0 = bu[AT + 0000];
 800D38E4	nop
 800D38E8	bne    v0, s1, Ld3908 [$800d3908]
 A0 = 0002;
-800D38F0	jal    read_memory_block_two_bytes [$800bf908]
+800D38F0	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0003;
 A0 = S0;
 V0 = V0 << 10;
@@ -8975,7 +8845,7 @@ V0 = S0 < 0003;
 800D3914	nop
 
 Ld3918:	; 800D3918
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D3920	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -8996,7 +8866,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // 0x4D HPu
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D3960	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
@@ -9011,14 +8881,14 @@ A1 = 0004;
 Ld3988:	; 800D3988
 800D3988	jal    funcd33fc [$800d33fc]
 800D398C	nop
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D3998	nop
 V0 = V0 << 01;
 800D39A0	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D39B8	nop
 V0 = V0 + V1;
 S1 = bu[V0 + 0002];
@@ -9041,7 +8911,7 @@ V0 = bu[AT + 0000];
 800D39FC	nop
 800D3A00	bne    v0, s1, Ld3a20 [$800d3a20]
 A0 = 0002;
-800D3A08	jal    read_memory_block_two_bytes [$800bf908]
+800D3A08	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0003;
 A0 = S0;
 V0 = V0 << 10;
@@ -9055,7 +8925,7 @@ V0 = S0 < 0003;
 800D3A2C	nop
 
 Ld3a30:	; 800D3A30
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D3A38	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -9070,7 +8940,7 @@ A0 = A0 + 0005;
 
 ////////////////////////////////
 // 0x4F HPd
-V0 = bu[8009d820];
+V0 = bu[0x8009d820];
 800D3A78	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0018] = w(RA);
 [SP + 0014] = w(S1);
@@ -9085,14 +8955,14 @@ A1 = 0004;
 Ld3aa0:	; 800D3AA0
 800D3AA0	jal    funcd33fc [$800d33fc]
 800D3AA4	nop
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D3AB0	nop
 V0 = V0 << 01;
 800D3AB8	lui    at, $8008
 AT = AT + 31fc;
 AT = AT + V0;
 V1 = hu[AT + 0000];
-V0 = w[8009c6dc];
+V0 = w[0x8009c6dc];
 800D3AD0	nop
 V0 = V0 + V1;
 S1 = bu[V0 + 0002];
@@ -9115,7 +8985,7 @@ V0 = bu[AT + 0000];
 800D3B14	nop
 800D3B18	bne    v0, s1, Ld3b38 [$800d3b38]
 A0 = 0002;
-800D3B20	jal    read_memory_block_two_bytes [$800bf908]
+800D3B20	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0003;
 A0 = S0;
 V0 = V0 << 10;
@@ -9129,7 +8999,7 @@ V0 = S0 < 0003;
 800D3B44	nop
 
 Ld3b48:	; 800D3B48
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D3B50	lui    v0, $8008
 V0 = V0 + 31fc;
 V1 = V1 << 01;
@@ -9151,16 +9021,16 @@ SP = SP + 0020;
 ////////////////////////////////
 // 0x39 GOLDu
 A0 = 0001;
-800D3BB8	jal    read_memory_block_two_bytes [$800bf908]
+800D3BB8	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 S0 = V0 & ffff;
 A0 = 0002;
-800D3BC8	jal    read_memory_block_two_bytes [$800bf908]
+800D3BC8	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0004;
 V0 = V0 << 10;
 800D3BD4	jal    func25b48 [$80025b48]
 A0 = S0 | V0;
-A0 = bu[800722c4];
+A0 = bu[0x800722c4];
 800D3BE4	lui    v0, $8008
 V0 = V0 + 31fc;
 A0 = A0 << 01;
@@ -9181,16 +9051,16 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x3A GOLDd
 A0 = 0001;
-800D3C48	jal    read_memory_block_two_bytes [$800bf908]
+800D3C48	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0002;
 S0 = V0 & ffff;
 A0 = 0002;
-800D3C58	jal    read_memory_block_two_bytes [$800bf908]
+800D3C58	jal    field_event_read_memory_s16 [$800bf908]
 A1 = 0004;
 V0 = V0 << 10;
 800D3C64	jal    func25b10 [$80025b10]
 A0 = S0 | V0;
-A0 = bu[800722c4];
+A0 = bu[0x800722c4];
 800D3C74	lui    v0, $8008
 V0 = V0 + 31fc;
 A0 = A0 << 01;
@@ -9210,7 +9080,7 @@ SP = SP + 0018;
 
 ////////////////////////////////
 // 0x3B CHGLD
-actor_id_cur        = bu[800722c4];
+actor_id_cur        = bu[0x800722c4];
 script_pointer_offset = 800831fc + actor_id_cur * 2;
 
 system_get_party_gil;
@@ -9218,12 +9088,12 @@ gil = V0;
 A0 = 1;
 A1 = 2;
 A2 = (gil << 10) >> 10;
-store_memory_block_two_bytes;
+field_event_write_memory_s16;
 
 A0 = 2;
 A1 = 3;
 A2 = gil >> 10;
-store_memory_block_two_bytes;
+field_event_write_memory_s16;
 
 [script_pointer_offset] = h(hu[script_pointer_offset] + 4);
 ////////////////////////////////
@@ -9233,9 +9103,9 @@ store_memory_block_two_bytes;
 ////////////////////////////////
 // field_event_opcode_38_sttim()
 
-actor_id_cur = bu[800722c4];
+actor_id_cur = bu[0x800722c4];
 
-if( bu[8009d820] & 3 )
+if( bu[0x8009d820] & 3 )
 {
     A0 = 800a0fa8; // "sttim"
     A1 = 5;
@@ -9244,20 +9114,20 @@ if( bu[8009d820] & 3 )
 
 A0 = 1;
 A1 = 3;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 S0 = V0 * e10; // hours
 
 A0 = 2;
 A1 = 4;
-read_memory_block_one_byte();
+field_event_read_memory_u8();
 S0 = S0 + V0 * 3c; // minutes
 
 A0 = 4;
 A1 = 5;
-read_memory_block_one_byte();
-[8009c6e4 + b84] = w(S0 + V0); // seconds
+field_event_read_memory_u8();
+[0x8009c6e4 + b84] = w(S0 + V0); // seconds
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 6);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 6);
 
 return 0;
 ////////////////////////////////
@@ -9266,22 +9136,22 @@ return 0;
 
 ////////////////////////////////
 // 0x36 WSPCL
-V0 = bu[800722c4];
-script_pointer = hu[800831fc + V0 * 2];
-V0 = w[8009c6dc];
+V0 = bu[0x800722c4];
+script_pointer = hu[0x800831fc + V0 * 2];
+V0 = w[0x8009c6dc];
 
 window_id = bu[V0 + script_pointer + 1];
 type = bu[V0 + script_pointer + 2];
 x = bu[V0 + script_pointer + 3];
 y = bu[V0 + script_pointer + 4];
 
-[80083274 + window_id * 30 + 1b] = b(type);
-[80083274 + window_id * 30 + 28] = h(x);
-[80083274 + window_id * 30 + 2a] = h(y);
+[0x80083274 + window_id * 30 + 1b] = b(type);
+[0x80083274 + window_id * 30 + 28] = h(x);
+[0x80083274 + window_id * 30 + 2a] = h(y);
 
 // move pointer by 5
-A0 = bu[800722c4];
-[800831fc + A0 * 2] = h(hu[800831fc + A0 * 2] + 5);
+A0 = bu[0x800722c4];
+[0x800831fc + A0 * 2] = h(hu[0x800831fc + A0 * 2] + 5);
 
 return 0;
 ////////////////////////////////
@@ -9290,34 +9160,34 @@ return 0;
 
 ////////////////////////////////
 // 0x37 WNUMB
-V0 = bu[800722C4];
-V1 = hu[800832FC + V0 * 2];
-V0 = w[8009C6DC];
+V0 = bu[0x800722C4];
+V1 = hu[0x800832FC + V0 * 2];
+V0 = w[0x8009C6DC];
 S1 = bu[V0 + V1 + 2]; // window id
 
 A0 = 1;
 A1 = 3;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 S0 = V0;
 
 A0 = 2;
 A1 = 5;
-read_memory_block_two_bytes;
+field_event_read_memory_s16;
 S0 = S0 + V0 << 10;
 
-V0 = bu[800722C4];
+V0 = bu[0x800722C4];
 V1 = S1 * 30;
-[80083294 + S1 * 30] = w(S0);
-A0 = hu[800831FC + V0 * 2];
-V0 = w[8009C6DC];
+[0x80083294 + S1 * 30] = w(S0);
+A0 = hu[0x800831FC + V0 * 2];
+V0 = w[0x8009C6DC];
 V0 = [V0 + A0 + 7]; // number of digits
-[80083291 + S1 * 30] = b(V0);
+[0x80083291 + S1 * 30] = b(V0);
 
 // move pointer by 8
-A0 = bu[800722C4];
-V1 = hu[800831FC + A0 * 2];
+A0 = bu[0x800722C4];
+V1 = hu[0x800831FC + A0 * 2];
 V1 = V1 + 8;
-[800831FC + A0 * 2] = h(V1);
+[0x800831FC + A0 * 2] = h(V1);
 
 return 0;
 ////////////////////////////////
@@ -9326,7 +9196,7 @@ return 0;
 
 ////////////////////////////////
 // 0x26 BLINK
-V1 = bu[800722c4];
+V1 = bu[0x800722c4];
 800D4450	nop
 800D4454	lui    at, $8008
 800D4458	addiu  at, at, $eb98 (=-$1468)
@@ -9341,16 +9211,16 @@ V1 = V1 << 01;
 AT = AT + 31fc;
 AT = AT + V1;
 A0 = hu[AT + 0000];
-V1 = w[8009c6dc];
+V1 = w[0x8009c6dc];
 V0 = V0 << 02;
 V1 = V1 + A0;
-A0 = w[8009c544];
+A0 = w[0x8009c544];
 V1 = bu[V1 + 0001];
 V0 = V0 + A0;
 [V0 + 0008] = b(V1);
 
 Ld44ac:	; 800D44AC
-V0 = bu[800722c4];
+V0 = bu[0x800722c4];
 800D44B4	lui    v1, $8008
 V1 = V1 + 31fc;
 V0 = V0 << 01;
@@ -9371,17 +9241,17 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0x28 KAWAI
 
-actor_id_cur = bu[800722c4];
-script = w[8009c6dc] + hu[800831fc + actor_id_cur * 2];
-entities_data = w[8009c544];
-entity_id = bu[8007eb98 + actor_id_cur];
+actor_id_cur = bu[0x800722c4];
+script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
+entities_data = w[0x8009c544];
+entity_id = bu[0x8007eb98 + actor_id_cur];
 
 size = bu[script + 1];
 
 if( entity_id != ff )
 {
-    dat_block7 = w[8008357c];
-    models_struct = w[8004a62c];
+    dat_block7 = w[0x8008357c];
+    models_struct = w[0x8004a62c];
     models_data = w[models_struct + 4];
     model_id = bu[dat_block7 + entity_id * 8 + 4];
 
@@ -9407,7 +9277,7 @@ if( entity_id != ff )
     }
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + size);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + size);
 
 return 0;
 ////////////////////////////////
@@ -9417,11 +9287,11 @@ return 0;
 ////////////////////////////////
 // 0x29 KAWIW
 
-actor_id_cur = bu[800722c4];
-entities_data = w[8009c544];
-entity_id = bu[8007eb98 + actor_id_cur];
+actor_id_cur = bu[0x800722c4];
+entities_data = w[0x8009c544];
+entity_id = bu[0x8007eb98 + actor_id_cur];
 
-V1 = bu[8007EB98 + actor_id_cur];
+V1 = bu[0x8007EB98 + actor_id_cur];
 
 if( entity_id != ff )
 {
@@ -9431,7 +9301,7 @@ if( entity_id != ff )
     [entities_data + entity_id * 84 + 0] = h(0);
 }
 
-[800831fc + actor_id_cur * 2] = h(hu[800831fc + actor_id_cur * 2] + 1);
+[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + 1);
 
 return 0;
 ////////////////////////////////
@@ -9472,6 +9342,6 @@ A0 = 0; // page
 A1 = string;
 field_debug_add_string_to_page_next_row();
 
-[80095dcc] = b(1);
-[80099ffc] = b(4);
+[0x80095dcc] = b(1);
+[0x80099ffc] = b(4);
 ////////////////////////////////

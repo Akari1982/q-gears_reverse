@@ -2145,189 +2145,130 @@ void field_debug_add_parse_value_to_page2( param, value, val_size )
 
 
 
-////////////////////////////////
-// read_memory_block_one_byte()
-
-//A0 - memory bank halfbyte 0x0F (always start after opcode itself)
-off = A1; // offset to byte offset in opcode
-
-actor_id_cur = bu[0x800722c4];
-script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-switch( A0 )
+u8 field_event_read_memory_u8( u8 mb_half, u8 off )
 {
-    case 1: V1 = bu[script + 1] >> 4; break; // 1 halfbyte
-    case 2: V1 = bu[script + 1] & f; break; // 2 halfbyte
-    case 3: V1 = bu[script + 2] >> 4; break; // 3 halfbyte
-    case 4: V1 = bu[script + 2] & f; break; // 4 halfbyte
-    case 5: V1 = bu[script + 3] >> 4; break; // 5 halfbyte
-    case 6: V1 = bu[script + 3] & f; break; // 6 halfbyte
+    actor_id_cur = bu[0x800722c4];
+    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
+
+    switch( mb_half )
+    {
+        case 0x1: bank = bu[script + 0x1] >> 0x4; break; // 1 halfbyte
+        case 0x2: bank = bu[script + 0x1] & 0xf; break; // 2 halfbyte
+        case 0x3: bank = bu[script + 0x2] >> 0x4; break; // 3 halfbyte
+        case 0x4: bank = bu[script + 0x2] & 0xf; break; // 4 halfbyte
+        case 0x5: bank = bu[script + 0x3] >> 0x4; break; // 5 halfbyte
+        case 0x6: bank = bu[script + 0x3] & 0xf; break; // 6 halfbyte
+    }
+
+    switch( bank )
+    {
+        case 0x0: // memory bank 0
+        {
+            val = bu[script + off];
+            if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "G cons=", val, 0x2 );
+            return val;
+        }
+
+        case 0x1: // memory bank 1
+        case 0x2: // memory bank 2
+        {
+            indx = bu[script + off];
+            val = bu[0x8009d288 + indx];
+
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
+                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+            }
+            return val;
+        }
+
+        case 0x3: // memory bank 3
+        case 0x4: // memory bank 4
+        {
+            indx = bu[script + off];
+            val = bu[0x8009d288 + 0x100 + indx];
+
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
+                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+            }
+            return val;
+        }
+
+        case b: // memory bank B
+        case c: // memory bank C
+        {
+            indx = bu[script + off];
+            val = bu[0x8009d288 + 0x200 + indx];
+
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
+                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+            }
+            return val;
+        }
+
+        case d: // memory bank D
+        case e: // memory bank E
+        {
+            indx = bu[script + off];
+            val = bu[0x8009d288 + 0x300 + indx];
+
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
+                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+            }
+            return val;
+        }
+
+        case 7: // memory bank 7
+        case f: // memory bank F
+        {
+            indx = bu[script + off];
+            val = bu[0x8009d288 + 0x400 + indx];
+
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
+                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+            }
+            return val;
+        }
+
+        case 5: // memory bank 5
+        case 6: // memory bank 6
+        {
+            indx = bu[script + off];
+            val = bu[0x80075e24 + indx];
+
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
+                field_debug_add_parse_value_to_page2( "G mapv=", val, 0x2 );
+            }
+            return val;
+        }
+
+        default:
+        {
+            if( bu[0x8009d820] & 0x3 ) // debug
+            {
+                field_debug_add_parse_value_to_page2( "G data err=", bank, 0x2 );
+            }
+            funcd4848( "Bad Event arg!" );
+            return 0;
+        }
+    }
 }
 
-switch( V1 )
-{
-    case 0: // memory bank 0
-    {
-        val = bu[script + off];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0300; // "G cons="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    case 1: // memory bank 1
-    case 2: // memory bank 2
-    {
-        indx = bu[script + off];
-        val = bu[0x8009d288 + indx];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0308; // "G indx="
-            A1 = indx;
-            A2 = 4;
-            field_debug_add_parse_value_to_page2();
-
-            A0 = 800a0310; // "G glov="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    case 3: // memory bank 3
-    case 4: // memory bank 4
-    {
-        indx = bu[script + off];
-        val = bu[0x8009d288 + 100 + indx];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0308; // "G indx="
-            A1 = indx;
-            A2 = 4;
-            field_debug_add_parse_value_to_page2();
-
-            A0 = 800a0310; // "G glov="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    case b: // memory bank B
-    case c: // memory bank C
-    {
-        indx = bu[script + off];
-        val = bu[0x8009d288 + 200 + indx];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0308; // "G indx="
-            A1 = indx;
-            A2 = 4;
-            field_debug_add_parse_value_to_page2();
-
-            A0 = 800a0310; // "G glov="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    case d: // memory bank D
-    case e: // memory bank E
-    {
-        indx = bu[script + off];
-        val = bu[0x8009d288 + 300 + indx];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0308; // "G indx="
-            A1 = indx;
-            A2 = 4;
-            field_debug_add_parse_value_to_page2();
-
-            A0 = 800a0310; // "G glov="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    case 7: // memory bank 7
-    case f: // memory bank F
-    {
-        indx = bu[script + off];
-        val = bu[0x8009d288 + 400 + indx];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0308; // "G indx="
-            A1 = indx;
-            A2 = 4;
-            field_debug_add_parse_value_to_page2();
-
-            A0 = 800a0310; // "G glov="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    case 5: // memory bank 5
-    case 6: // memory bank 6
-    {
-        indx = bu[script + off];
-        val = bu[0x80075e24 + indx];
-
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0308; // "G indx="
-            A1 = indx;
-            A2 = 4;
-            field_debug_add_parse_value_to_page2();
-
-            A0 = 800a0318; // "G mapv="
-            A1 = val;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-        return val;
-    }
-
-    default:
-    {
-        if( bu[0x8009d820] & 3 ) // debug
-        {
-            A0 = 800a0320; // "G data err="
-            A1 = V1 & 00ff;
-            A2 = 2;
-            field_debug_add_parse_value_to_page2();
-        }
-
-        A0 = 800a032c; // "Bad Event arg!"
-        funcd4848();
-
-        return 0;
-    }
-}
-////////////////////////////////
-
 
 
 ////////////////////////////////
-// store_memory_block_one_byte()
+// field_event_write_memory_u8()
 
 S0 = A2;
 800BF3B8	addiu  a0, a0, $ffff (=-$1)
@@ -2627,566 +2568,565 @@ Lbf8f4:	; 800BF8F4
 
 
 
+s16 field_event_read_memory_s16()
+{
+    //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
+    //A1 - offset to byte offset in opcode
+
+    800BF90C	addiu  a0, a0, $ffff (=-$1)
+    A0 = A0 << 10;
+    A0 = A0 >> 10;
+    V0 = A0 < 0006;
+
+    800BF920	beq    v0, zero, Lbfab0 [$800bfab0]  // skip halfbyte reading if halfbyte number >6
+
+    V0 = A0 << 02;
+    800BF92C	lui    at, $800a
+    AT = AT + 0414;
+    AT = AT + V0;
+    V0 = w[AT + 0000];
+    800BF93C	nop
+    800BF940	jr     v0 
+    800BF944	nop
+
+    // halfbyte 1
+    V0 = bu[0x800722c4];
+    800BF950	nop
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    800BF970	nop
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0001];
+    800BF97C	j      Lbfab0 [$800bfab0]
+    V1 = V0 >> 04;
+
+    // halfbyte 2
+    V0 = bu[0x800722c4];
+    800BF98C	nop
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    800BF9AC	nop
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0001];
+    800BF9B8	j      Lbfab0 [$800bfab0]
+    V1 = V0 & 000f;
+
+    // halfbyte 3
+    V0 = bu[0x800722c4];
+    800BF9C8	nop
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    800BF9E8	nop
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0002];
+    800BF9F4	j      Lbfab0 [$800bfab0]
+    V1 = V0 >> 04;
+
+    // halfbyte 4
+    V0 = bu[0x800722c4];
+    800BFA04	nop
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    800BFA24	nop
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0002];
+    800BFA30	j      Lbfab0 [$800bfab0]
+    V1 = V0 & 000f;
+
+    // halfbyte 5
+    V0 = bu[0x800722c4];
+    800BFA40	nop
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    800BFA60	nop
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0003];
+    800BFA6C	j      Lbfab0 [$800bfab0]
+    V1 = V0 >> 04;
+
+    // halfbyte 6
+    V0 = bu[0x800722c4];
+    800BFA7C	nop
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    V1 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    800BFA9C	nop
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0003];
+    800BFAA8	nop
+    V1 = V0 & 000f;
+
+    // select memory bank access function
+    Lbfab0:	; 800BFAB0
+    A0 = V1 & 00ff;
+    V0 = A0 < 0010;
+    800BFAB8	beq    v0, zero, Lc01f8 [$800c01f8]  // if memory block > 0xF skip memory bank reading
+    V0 = A0 << 02;
+    800BFAC0	lui    at, $800a
+    AT = AT + 042c;
+    AT = AT + V0;
+    V0 = w[AT + 0000];
+    800BFAD0	nop
+    800BFAD4	jr     v0 
+    800BFAD8	nop
+
+    // memory bank 0
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V1 = bu[V0 + 0001];
+    S0 = bu[V0 + 0000];
+    V0 = bu[0x8009d820];
+    V1 = V1 << 08;
+    V0 = V0 & 0003;
+    800BFB28	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0300;
+    800BFB38	j      Lc01e0 [$800c01e0]
+    A1 = S0 << 10;
+
+    // memory bank 1
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    A1 = bu[V0 + 0000];
+    V0 = bu[0x8009d820];
+    800BFB80	nop
+    V0 = V0 & 0003;
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    800BFB98	beq    v0, zero, Lc0234 [$800c0234]
+    V0 = S0;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFBB8	j      Lc0140 [$800c0140]
+    A1 = S0;
+
+    // memory bank 2
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    A1 = bu[V0 + 0000];
+    V0 = bu[0x8009d820];
+    800BFC00	nop
+    V0 = V0 & 0003;
+    AT = 8009d289;
+    AT = AT + A1;
+    V1 = bu[AT + 0000];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V1 = V1 << 08;
+    800BFC2C	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFC4C	j      Lc01e0 [$800c01e0]
+    A1 = S0 << 10;
+
+    // memory bank 3
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFC8C	nop
+    A1 = V0 | 0100;
+    V0 = bu[0x8009d820];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = V0 & 0003;
+    800BFCB0	beq    v0, zero, Lc0234 [$800c0234]
+    V0 = S0;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFCD0	j      Lc0140 [$800c0140]
+    A1 = S0;
+
+    // memory bank 4
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFD10	nop
+    A1 = V0 | 0100;
+    AT = 8009d289;
+    AT = AT + A1;
+    V1 = bu[AT + 0000];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = bu[0x8009d820];
+    V1 = V1 << 08;
+    V0 = V0 & 0003;
+    800BFD48	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFD68	j      Lc01e0 [$800c01e0]
+    A1 = S0 << 10;
+
+    // memory bank B
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFDA8	nop
+    A1 = V0 | 0200;
+    V0 = bu[0x8009d820];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = V0 & 0003;
+    800BFDCC	beq    v0, zero, Lc0234 [$800c0234]
+    V0 = S0;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFDEC	j      Lc0140 [$800c0140]
+    A1 = S0;
+
+    // memory bank C
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFE2C	nop
+    A1 = V0 | 0200;
+    AT = 8009d289;
+    AT = AT + A1;
+    V1 = bu[AT + 0000];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = bu[0x8009d820];
+    V1 = V1 << 08;
+    V0 = V0 & 0003;
+    800BFE64	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFE84	j      Lc01e0 [$800c01e0]
+    A1 = S0 << 10;
+
+    // memory bank D
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFEC4	nop
+    A1 = V0 | 0300;
+    V0 = bu[0x8009d820];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = V0 & 0003;
+    800BFEE8	beq    v0, zero, Lc0234 [$800c0234]
+    V0 = S0;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFF08	j      Lc0140 [$800c0140]
+    A1 = S0;
+
+    // memory bank E
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFF48	nop
+    A1 = V0 | 0300;
+    AT = 8009d289;
+    AT = AT + A1;
+    V1 = bu[AT + 0000];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = bu[0x8009d820];
+    V1 = V1 << 08;
+    V0 = V0 & 0003;
+    800BFF80	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800BFFA0	j      Lc01e0 [$800c01e0]
+    A1 = S0 << 10;
+
+    // memory bank F
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800BFFE0	nop
+    A1 = V0 | 0400;
+    V0 = bu[0x8009d820];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = V0 & 0003;
+    800C0004	beq    v0, zero, Lc0234 [$800c0234]
+    V0 = S0;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800C0024	j      Lc0140 [$800c0140]
+
+    Lc0028:	; 800C0028
+    A1 = S0;
+
+    // memory bank 7
+    Lc002c:	; 800C002C
+    V0 = bu[0x800722c4];
+
+    funcc0034:	; 800C0034
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+
+    Lc0048:	; 800C0048
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    V0 = bu[V0 + 0000];
+    800C0064	nop
+    A1 = V0 | 0400;
+    AT = 8009d289;
+    AT = AT + A1;
+    V1 = bu[AT + 0000];
+    AT = 8009d288;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V0 = bu[0x8009d820];
+    V1 = V1 << 08;
+    V0 = V0 & 0003;
+    800C009C	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0310; // "G glov="
+    800C00BC	j      Lc01e0 [$800c01e0]
+    A1 = S0 << 10;
+
+    // memory bank 5
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    A1 = bu[V0 + 0000];
+    V0 = bu[0x8009d820];
+    800C0104	nop
+    V0 = V0 & 0003;
+    800C010C	lui    at, $8007
+    AT = AT + 5e24;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    800C011C	beq    v0, zero, Lc0234 [$800c0234]
+    V0 = S0;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0318;
+    A1 = S0;
+
+    Lc0140:	; 800C0140
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    800C0148	j      Lc0234 [$800c0234]
+    V0 = S0;
+
+    // memory bank 6
+    V0 = bu[0x800722c4];
+    V1 = A1 << 10;
+    V0 = V0 << 01;
+    AT = 800831fc;
+    AT = AT + V0;
+
+    Lc016c:	; 800C016C
+    A0 = hu[AT + 0000];
+    V0 = w[0x8009c6dc];
+    V1 = V1 >> 10;
+    V0 = V0 + A0;
+    V0 = V0 + V1;
+    A1 = bu[V0 + 0000];
+    V0 = bu[0x8009d820];
+    800C0190	nop
+    V0 = V0 & 0003;
+    800C0198	lui    at, $8007
+    AT = AT + 5e25;
+    AT = AT + A1;
+    V1 = bu[AT + 0000];
+    800C01A8	lui    at, $8007
+    AT = AT + 5e24;
+    AT = AT + A1;
+    S0 = bu[AT + 0000];
+    V1 = V1 << 08;
+    800C01BC	beq    v0, zero, Lc01ec [$800c01ec]
+    S0 = S0 | V1;
+    A0 = 800a0308; // "G indx="
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    A0 = 800a0318;
+    A1 = S0 << 10;
+
+    Lc01e0:	; 800C01E0
+    A1 = A1 >> 10;
+    A2 = 4;
+    field_debug_add_parse_value_to_page2();
+
+    Lc01ec:	; 800C01EC
+    V0 = S0 << 10;
+    800C01F0	j      Lc0234 [$800c0234]
+    V0 = V0 >> 10;
+
+    // memory bank 8, 9, A, >F
+    Lc01f8:	; 800C01F8
+    V0 = bu[0x8009d820];
+    800C0200	nop
+    V0 = V0 & 0003;
+    800C0208	beq    v0, zero, Lc0220 [$800c0220]
+    A1 = V1 & 00ff;
+    A0 = 800a0320; // "G data err="
+    A2 = 2;
+    field_debug_add_parse_value_to_page2();
+
+    Lc0220:	; 800C0220
+    A0 = 800a032c; // "Bad Event arg!"
+    funcd4848();
+
+    V0 = 0;
+
+    Lc0234:	; 800C0234
+}
+
+
+
 ////////////////////////////////
-// read_memory_block_two_bytes()
-
-//A0 - memory bank halfbyte 0x0F (always start after opcode itself)
-//A1 - offset to byte offset in opcode
-
-800BF90C	addiu  a0, a0, $ffff (=-$1)
-A0 = A0 << 10;
-A0 = A0 >> 10;
-V0 = A0 < 0006;
-
-800BF920	beq    v0, zero, Lbfab0 [$800bfab0]  // skip halfbyte reading if halfbyte number >6
-
-V0 = A0 << 02;
-800BF92C	lui    at, $800a
-AT = AT + 0414;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800BF93C	nop
-800BF940	jr     v0 
-800BF944	nop
-
-// halfbyte 1
-V0 = bu[0x800722c4];
-800BF950	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF970	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800BF97C	j      Lbfab0 [$800bfab0]
-V1 = V0 >> 04;
-
-// halfbyte 2
-V0 = bu[0x800722c4];
-800BF98C	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF9AC	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0001];
-800BF9B8	j      Lbfab0 [$800bfab0]
-V1 = V0 & 000f;
-
-// halfbyte 3
-V0 = bu[0x800722c4];
-800BF9C8	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BF9E8	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800BF9F4	j      Lbfab0 [$800bfab0]
-V1 = V0 >> 04;
-
-// halfbyte 4
-V0 = bu[0x800722c4];
-800BFA04	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BFA24	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0002];
-800BFA30	j      Lbfab0 [$800bfab0]
-V1 = V0 & 000f;
-
-// halfbyte 5
-V0 = bu[0x800722c4];
-800BFA40	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BFA60	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800BFA6C	j      Lbfab0 [$800bfab0]
-V1 = V0 >> 04;
-
-// halfbyte 6
-V0 = bu[0x800722c4];
-800BFA7C	nop
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V1 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-800BFA9C	nop
-V0 = V0 + V1;
-V0 = bu[V0 + 0003];
-800BFAA8	nop
-V1 = V0 & 000f;
-
-// select memory bank access function
-Lbfab0:	; 800BFAB0
-A0 = V1 & 00ff;
-V0 = A0 < 0010;
-800BFAB8	beq    v0, zero, Lc01f8 [$800c01f8]  // if memory block > 0xF skip memory bank reading
-V0 = A0 << 02;
-800BFAC0	lui    at, $800a
-AT = AT + 042c;
-AT = AT + V0;
-V0 = w[AT + 0000];
-800BFAD0	nop
-800BFAD4	jr     v0 
-800BFAD8	nop
-
-// memory bank 0
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V1 = bu[V0 + 0001];
-S0 = bu[V0 + 0000];
-V0 = bu[0x8009d820];
-V1 = V1 << 08;
-V0 = V0 & 0003;
-800BFB28	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0300;
-800BFB38	j      Lc01e0 [$800c01e0]
-A1 = S0 << 10;
-
-// memory bank 1
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-V0 = bu[0x8009d820];
-800BFB80	nop
-V0 = V0 & 0003;
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-800BFB98	beq    v0, zero, Lc0234 [$800c0234]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFBB8	j      Lc0140 [$800c0140]
-A1 = S0;
-
-// memory bank 2
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-V0 = bu[0x8009d820];
-800BFC00	nop
-V0 = V0 & 0003;
-AT = 8009d289;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V1 = V1 << 08;
-800BFC2C	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFC4C	j      Lc01e0 [$800c01e0]
-A1 = S0 << 10;
-
-// memory bank 3
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFC8C	nop
-A1 = V0 | 0100;
-V0 = bu[0x8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BFCB0	beq    v0, zero, Lc0234 [$800c0234]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFCD0	j      Lc0140 [$800c0140]
-A1 = S0;
-
-// memory bank 4
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFD10	nop
-A1 = V0 | 0100;
-AT = 8009d289;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = bu[0x8009d820];
-V1 = V1 << 08;
-V0 = V0 & 0003;
-800BFD48	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFD68	j      Lc01e0 [$800c01e0]
-A1 = S0 << 10;
-
-// memory bank B
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFDA8	nop
-A1 = V0 | 0200;
-V0 = bu[0x8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BFDCC	beq    v0, zero, Lc0234 [$800c0234]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFDEC	j      Lc0140 [$800c0140]
-A1 = S0;
-
-// memory bank C
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFE2C	nop
-A1 = V0 | 0200;
-AT = 8009d289;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = bu[0x8009d820];
-V1 = V1 << 08;
-V0 = V0 & 0003;
-800BFE64	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFE84	j      Lc01e0 [$800c01e0]
-A1 = S0 << 10;
-
-// memory bank D
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFEC4	nop
-A1 = V0 | 0300;
-V0 = bu[0x8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800BFEE8	beq    v0, zero, Lc0234 [$800c0234]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFF08	j      Lc0140 [$800c0140]
-A1 = S0;
-
-// memory bank E
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFF48	nop
-A1 = V0 | 0300;
-AT = 8009d289;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = bu[0x8009d820];
-V1 = V1 << 08;
-V0 = V0 & 0003;
-800BFF80	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800BFFA0	j      Lc01e0 [$800c01e0]
-A1 = S0 << 10;
-
-// memory bank F
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800BFFE0	nop
-A1 = V0 | 0400;
-V0 = bu[0x8009d820];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = V0 & 0003;
-800C0004	beq    v0, zero, Lc0234 [$800c0234]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800C0024	j      Lc0140 [$800c0140]
-
-Lc0028:	; 800C0028
-A1 = S0;
-
-// memory bank 7
-Lc002c:	; 800C002C
-V0 = bu[0x800722c4];
-
-funcc0034:	; 800C0034
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-
-Lc0048:	; 800C0048
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-V0 = bu[V0 + 0000];
-800C0064	nop
-A1 = V0 | 0400;
-AT = 8009d289;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-AT = 8009d288;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V0 = bu[0x8009d820];
-V1 = V1 << 08;
-V0 = V0 & 0003;
-800C009C	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0310; // "G glov="
-800C00BC	j      Lc01e0 [$800c01e0]
-A1 = S0 << 10;
-
-// memory bank 5
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-V0 = bu[0x8009d820];
-800C0104	nop
-V0 = V0 & 0003;
-800C010C	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-800C011C	beq    v0, zero, Lc0234 [$800c0234]
-V0 = S0;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0318;
-A1 = S0;
-
-Lc0140:	; 800C0140
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-800C0148	j      Lc0234 [$800c0234]
-V0 = S0;
-
-// memory bank 6
-V0 = bu[0x800722c4];
-V1 = A1 << 10;
-V0 = V0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-
-Lc016c:	; 800C016C
-A0 = hu[AT + 0000];
-V0 = w[0x8009c6dc];
-V1 = V1 >> 10;
-V0 = V0 + A0;
-V0 = V0 + V1;
-A1 = bu[V0 + 0000];
-V0 = bu[0x8009d820];
-800C0190	nop
-V0 = V0 & 0003;
-800C0198	lui    at, $8007
-AT = AT + 5e25;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-800C01A8	lui    at, $8007
-AT = AT + 5e24;
-AT = AT + A1;
-S0 = bu[AT + 0000];
-V1 = V1 << 08;
-800C01BC	beq    v0, zero, Lc01ec [$800c01ec]
-S0 = S0 | V1;
-A0 = 800a0308; // "G indx="
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-A0 = 800a0318;
-A1 = S0 << 10;
-
-Lc01e0:	; 800C01E0
-A1 = A1 >> 10;
-A2 = 4;
-field_debug_add_parse_value_to_page2();
-
-Lc01ec:	; 800C01EC
-V0 = S0 << 10;
-800C01F0	j      Lc0234 [$800c0234]
-V0 = V0 >> 10;
-
-// memory bank 8, 9, A, >F
-Lc01f8:	; 800C01F8
-V0 = bu[0x8009d820];
-800C0200	nop
-V0 = V0 & 0003;
-800C0208	beq    v0, zero, Lc0220 [$800c0220]
-A1 = V1 & 00ff;
-A0 = 800a0320; // "G data err="
-A2 = 2;
-field_debug_add_parse_value_to_page2();
-
-Lc0220:	; 800C0220
-A0 = 800a032c; // "Bad Event arg!"
-funcd4848();
-
-V0 = 0;
-
-Lc0234:	; 800C0234
-////////////////////////////////
-
-
-
-////////////////////////////////
-// store_memory_block_two_bytes()
+// field_event_write_memory_s16()
 
 S0 = A2;
 800C0254	addiu  a0, a0, $ffff (=-$1)
