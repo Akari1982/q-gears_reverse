@@ -100,7 +100,7 @@ void ending_main()
         }
     }
 
-    for( int i = 0; i < fe; i += 2 )
+    for( int i = 0; i < 0xfe; i += 0x2 )
     {
         rb = rb < 0x1;
 
@@ -119,7 +119,7 @@ void ending_main()
         while( rect.y < 0x1e0 )
         {
             system_psyq_load_image( &rect, image );
-            system_psyq_draw_sync();
+            system_psyq_draw_sync( 0 );
             image += 0xa00;
             rect.y += 0x2;
         }
@@ -762,8 +762,7 @@ V0 = 0001;
 ////////////////////////////////
 // funca17c0()
 
-A0 = 1;
-system_psyq_vsync();
+system_psyq_vsync( 0x1 );
 
 A0 = V0;
 system_bios_srand();

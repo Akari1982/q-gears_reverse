@@ -63,7 +63,7 @@ int field_event_opcode_70_batle()
 
         [field_struct + 0x1] = b(0x2);
 
-        field_event_read_memory_s16( 0x2, 0x2 );
+        V0 = field_event_read_memory_s16( 0x2, 0x2 );
 
         [0x8007ebe0] = b(0x1);
         [field_struct + 0x2] = h(V0);

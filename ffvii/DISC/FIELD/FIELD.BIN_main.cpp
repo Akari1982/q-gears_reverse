@@ -348,8 +348,7 @@ void field_main()
             system_psyq_draw_sync();
         } while( V0 != 0 )
 
-        A0 = 1;
-        system_psyq_vsync(); // wait
+        system_psyq_vsync( 0x1 );
 
         [0x8007eb79] = b(0);
         [0x8007eb8d] = b(0);
@@ -392,9 +391,7 @@ void field_main()
                 [0x8007e768] = h(0);
                 [0x80095dd4] = h(0x1);
 
-                A0 = 0;
-                system_psyq_vsync(); // wait
-
+                system_psyq_vsync( 0 );
                 return;
             }
         }
@@ -444,7 +441,6 @@ void field_main()
         if( ( bu[0x8009c560] == 0xd ) || ( bu[0x8009c560] == 0x10 ) )
         {
             system_psyq_vsync( 0 );
-
             return;
         }
     }
@@ -457,21 +453,22 @@ void field_main_loop()
     // contain move and button update, animation handler and many others
     // model new structure inited here
 
-    [SP + 10] = w(800a0024);
-    [SP + 14] = w(800a0028);
-    [SP + 18] = w(800a002c);
-    [SP + 1c] = w(800a0030);
-    [SP + 20] = w(800a0034);
-    [SP + 24] = w(800a0038);
-    [SP + 28] = w(800a003c);
-    [SP + 2c] = w(800a0040);
-    [SP + 30] = w(800a0044);
-    [SP + 34] = w(800a0048);
-    [SP + 38] = w(800a004c);
-    [SP + 3c] = w(800a0050);
+    [SP + 0x10] = w(w[0x800a0024]); // x 0x0000       y 0x0000
+    [SP + 0x14] = w(w[0x800a0028]); // w 0x01E0 (480) h 0x0008
+    [SP + 0x18] = w(w[0x800a002c]); // x 0x0000       y 0x00E8 (232)
+    [SP + 0x1c] = w(w[0x800a0030]); // w 0x01E0 (480) h 0x0008
+    [SP + 0x20] = w(w[0x800a0034]); // x 0x0000       y 0x01D0 (464)
+    [SP + 0x24] = w(w[0x800a0038]); // w 0x01E0       h 0x0008
 
-    [0x8007eb90] = w(a0); // base offset x for DRAWENV
-    [0x8007eb94] = w(78); // base offset y for DRAWENV
+    [SP + 0x28] = w(w[0x800a003c]); // x 0x0000       y 0x0000
+    [SP + 0x2c] = w(w[0x800a0040]); // w 0x0140 (320) h 0x0008
+    [SP + 0x30] = w(w[0x800a0044]); // x 0x0000       y 0x00E8
+    [SP + 0x34] = w(w[0x800a0048]); // w 0x0140       h 0x0008
+    [SP + 0x38] = w(w[0x800a004c]); // x 0x0000       y 0x01D0
+    [SP + 0x3c] = w(w[0x800a0050]); // w 0x0140       h 0x0008
+
+    [0x8007eb90] = w(0xa0); // base offset x for DRAWENV
+    [0x8007eb94] = w(0x78); // base offset y for DRAWENV
 
     if( ( h[0x800965ec] != 5 ) && ( h[0x800965ec] != d ) ) // if prev state was not menu
     {
@@ -484,7 +481,7 @@ void field_main_loop()
     V0 = w[V0];
     [0x80114458] = w(A0 + hu[V0] * 18); // walkmesh triangle access block
 
-    if( ( h[0x800965ec] != 5 ) && ( h[0x800965ec] != 2 ) && ( h[0x800965ec] != d ) )
+    if( ( h[0x800965ec] != 0x5 ) && ( h[0x800965ec] != 0x2 ) && ( h[0x800965ec] != 0xd ) )
     {
         funca5fb4(); // move PC model position init by walkmesh
     }
@@ -517,13 +514,12 @@ void field_main_loop()
 
         funcab2b4();
 
-        A0 = 0x80071e38; // screen scroll X
-        A1 = 0x80071e3c; // screen scroll Y
-        V0 = funca2f78(); // update buttons
+        // screen scroll X and Y
+        V0 = funca2f78( 0x80071e38, 0x80071e3c ); // update buttons
         [0x80114454] = w(V0);
 
         V1 = w[0x80075d00];
-        [0x8009abf4 + 0x88] = h(hu[V1 + 8]); // movie frame
+        [0x8009abf4 + 0x88] = h(hu[V1 + 0x8]); // movie frame
 
         field_event_update( render_data + 0x1748c ); //(add dialogs and pointer to render)
 
@@ -535,8 +531,8 @@ void field_main_loop()
         field_background_shaking_update( 0x8009abf4 + 0x98 );
         field_background_update_drawenv( render_data );
 
-        A0 = 80074ea4 + h[0x800965e0] * 84; // PC data
-        A1 = w[0x800716c4] + 38; // gateways
+        A0 = 0x80074ea4 + h[0x800965e0] * 0x84; // PC data
+        A1 = w[0x800716c4] + 0x38; // gateways
         field_load_next_map_in_advance();
 
         if( ( w[0x8009abf4 + 0x68] & 0x0000090f ) == 0x0000090f ) // reset game if all shifts and start + select pressed
@@ -624,16 +620,13 @@ void field_main_loop()
             return;
         }
 
-        A0 = w[0x80114454];
-        field_entity_movement_update(); // update move/turns/scroll
+        field_entity_movement_update( w[0x80114454] ); // update move/turns/scroll
 
-        A0 = 0x80074ea4 + h[0x800965e0] * 84; // manual move entity
-        A1 = 0x8007e7ac;
-        field_entity_check_line_interact();
+        field_entity_check_line_interact( 0x80074ea4 + h[0x800965e0] * 84, 0x8007e7ac );
 
         field_entity_check_talk();
 
-        if( ( hu[0x80114488] == 0 ) || ( w[0x8009a060] == 1 ) )
+        if( ( hu[0x80114488] == 0 ) || ( w[0x8009a060] == 0x1 ) )
         {
             field_background_add_to_render( render_data );
         }
@@ -647,35 +640,34 @@ void field_main_loop()
 
         func138ec(); // fade update
 
-        V0 = system_psyq_vsync( 1 );
+        V0 = system_psyq_vsync( 0x1 );
         [0x80114478] = w(V0);
 
-        while( system_psyq_draw_sync( 1 ) != 0 ) {}
+        while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
 
-        V0 = system_psyq_vsync( 1 );
+        V0 = system_psyq_vsync( 0x1 );
         [0x8011447c] = w(V0);
 
         if( ( hu[0x80114488] != 0 ) && ( w[0x800965e4] != 1 ) )
         {
-            system_psyq_vsync( 3 );
+            system_psyq_vsync( 0x3 );
         }
         else
         {
-            system_psyq_vsync( 2 );
+            system_psyq_vsync( 0x2 );
         }
 
         if( ( S3 << 10 ) != 0 )
         {
-            S3 -= 1;
+            S3 -= 0x1;
 
-            if( ( S3 << 10 ) == 0 )
+            if( ( S3 << 0x10 ) == 0 )
             {
-                A0 = 1;
-                system_psyq_set_disp_mask();
+                system_psyq_set_disp_mask( 0x1 );
             }
         }
 
-        system_psyq_reset_graph( 1 );
+        system_psyq_reset_graph( 0x1 );
 
         if( hu[0x80114488] == 0 )
         {
@@ -692,55 +684,24 @@ void field_main_loop()
         system_psyq_put_dispenv( 0x8007eb68 + buf_id * 0x14 );
         system_psyq_put_drawenv( 0x8007eaac + buf_id * 0x5c );
 
-        if( hu[0x80114488] == 0 )
+        if( hu[0x80114488] == 0 ) // normal render
         {
-            A0 = 0x8007eaac + buf_id * 0x5c;
-            A1 = 0;
-            A2 = 0;
-            A3 = 0;
-            system_psyq_clear_image();
+            system_psyq_clear_image( 0x8007eaac + buf_id * 0x5c, 0, 0, 0 );
         }
-        else
+        else // movie
         {
-            if( bu[0x8007eb79 + buf_id * 14] == 0 )
+            // clear first or second frame
+            if( bu[0x8007eb79 + buf_id * 0x14] == 0 )
             {
-                A0 = SP + 28;
-                A1 = 0;
-                A2 = 0;
-                A3 = 0;
-                system_psyq_clear_image();
-
-                A0 = SP + 30;
-                A1 = 0;
-                A2 = 0;
-                A3 = 0;
-                system_psyq_clear_image();
-
-                A0 = SP + 38;
-                A1 = 0;
-                A2 = 0;
-                A3 = 0;
-                system_psyq_clear_image();
+                system_psyq_clear_image( SP + 0x28, 0, 0, 0 );
+                system_psyq_clear_image( SP + 0x30, 0, 0, 0 );
+                system_psyq_clear_image( SP + 0x38, 0, 0, 0 );
             }
             else
             {
-                A0 = SP + 10;
-                A1 = 0;
-                A2 = 0;
-                A3 = 0;
-                system_psyq_clear_image();
-
-                A0 = SP + 18;
-                A1 = 0;
-                A2 = 0;
-                A3 = 0;
-                system_psyq_clear_image();
-
-                A0 = SP + 20;
-                A1 = 0;
-                A2 = 0;
-                A3 = 0;
-                system_psyq_clear_image();
+                system_psyq_clear_image( SP + 0x10, 0, 0, 0 );
+                system_psyq_clear_image( SP + 0x18, 0, 0, 0 );
+                system_psyq_clear_image( SP + 0x20, 0, 0, 0 );
             }
         }
 

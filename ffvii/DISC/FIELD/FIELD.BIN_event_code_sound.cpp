@@ -166,7 +166,7 @@ int field_event_set_and_apply_akao()
         system_akao_execute();
     }
 
-    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 2);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x2);
 
     return 0;
 }

@@ -462,9 +462,9 @@ if( bu[0x8009abf4 + 0x1f] == 0 ) // init state
 ////////////////////////////////
 // field_background_scrolling_update()
 
-if( bu[8009abf4 + 1f] == 1 ) // update state
+if( bu[0x8009abf4 + 1f] == 1 ) // update state
 {
-    switch( bu[8009abf4 + 1d] )
+    switch( bu[0x8009abf4 + 1d] )
     {
         case 1: // instant scroll bg to entity
         {
@@ -475,8 +475,8 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
             field_background_clamp_pos();
 
             // compensate entity screen pos to get it to center
-            [80071e38] = h(0 - hu[SP + 10]);
-            [80071e3c] = h(0 - hu[SP + 12]);
+            [0x80071e38] = h(0 - hu[SP + 10]);
+            [0x80071e3c] = h(0 - hu[SP + 12]);
         }
         break;
 
@@ -488,27 +488,27 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
             A0 = SP + 10;
             field_background_clamp_pos();
 
-            A0 = h[80075e14]; // start
+            A0 = h[0x80075e14]; // start
             A1 = 0 - h[SP + 10]; // end
-            A2 = h[8009c558]; // steps_n
-            A3 = h[80075cf8]; // step
+            A2 = h[0x8009c558]; // steps_n
+            A3 = h[0x80075cf8]; // step
             field_calculate_current_value_by_steps();
-            [80071e38] = h(V0);
+            [0x80071e38] = h(V0);
 
-            A0 = h[80075e1c]; // start
+            A0 = h[0x80075e1c]; // start
             A1 = 0 - h[SP + 12]; // end
-            A2 = h[8009c558]; // steps_n
-            A3 = h[80075cf8]; // step
+            A2 = h[0x8009c558]; // steps_n
+            A3 = h[0x80075cf8]; // step
             field_calculate_current_value_by_steps();
-            [80071e3c] = h(V0);
+            [0x80071e3c] = h(V0);
 
-            if( h[8009c558] == h[80075cf8] )
+            if( h[0x8009c558] == h[0x80075cf8] )
             {
-                [8009abf4 + 1f] = b(2); // finish
+                [0x8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1); // step
+                [0x80075cf8] = h(h[0x80075cf8] + 1); // step
             }
         }
         break;
@@ -521,81 +521,81 @@ if( bu[8009abf4 + 1f] == 1 ) // update state
             A0 = SP + 10;
             field_background_clamp_pos();
 
-            A0 = h[80075e14];
+            A0 = h[0x80075e14];
             A1 = 0 - h[SP + 10];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A2 = h[0x8009c558];
+            A3 = h[0x80075cf8];
             field_calculate_smooth_current_value_by_steps();
-            [80071e38] = h(V0);
+            [0x80071e38] = h(V0);
 
-            A0 = h[80075e1c];
+            A0 = h[0x80075e1c];
             A1 = 0 - h[SP + 12];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A2 = h[0x8009c558];
+            A3 = h[0x80075cf8];
             field_calculate_smooth_current_value_by_steps();
-            [80071e3c] = h(V0);
+            [0x80071e3c] = h(V0);
 
-            if( h[8009c558] == h[80075cf8] )
+            if( h[0x8009c558] == h[0x80075cf8] )
             {
-                [8009abf4 + 1f] = b(2); // finish
+                [0x8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1); // step
+                [0x80075cf8] = h(h[0x80075cf8] + 1); // step
             }
         }
         break;
 
         case 5: // linear scroll bg to coord
         {
-            A0 = h[80075e14]; // start
-            A1 = h[80075e18]; // end
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A0 = h[0x80075e14]; // start
+            A1 = h[0x80075e18]; // end
+            A2 = h[0x8009c558];
+            A3 = h[0x80075cf8];
             field_calculate_current_value_by_steps();
-            [80071e38] = h(V0);
+            [0x80071e38] = h(V0);
 
-            A0 = h[80075e1c];
-            A1 = h[80075e20];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A0 = h[0x80075e1c];
+            A1 = h[0x80075e20];
+            A2 = h[0x8009c558];
+            A3 = h[0x80075cf8];
             field_calculate_current_value_by_steps();
-            [80071e3c] = h(V0);
+            [0x80071e3c] = h(V0);
 
-            if( h[8009c558] == h[80075cf8] )
+            if( h[0x8009c558] == h[0x80075cf8] )
             {
-                [8009abf4 + 1f] = b(2); // finish
+                [0x8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1); // step
+                [0x80075cf8] = h(h[0x80075cf8] + 1); // step
             }
         }
         break;
 
         case 6: // smooth scroll bg to coord
         {
-            A0 = h[80075e14];
-            A1 = h[80075e18];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A0 = h[0x80075e14];
+            A1 = h[0x80075e18];
+            A2 = h[0x8009c558];
+            A3 = h[0x80075cf8];
             field_calculate_smooth_current_value_by_steps();
-            [80071e38] = h(V0);
+            [0x80071e38] = h(V0);
 
-            A0 = h[80075e1c];
-            A1 = h[80075e20];
-            A2 = h[8009c558];
-            A3 = h[80075cf8];
+            A0 = h[0x80075e1c];
+            A1 = h[0x80075e20];
+            A2 = h[0x8009c558];
+            A3 = h[0x80075cf8];
             field_calculate_smooth_current_value_by_steps();
-            [80071e3c] = h(V0);
+            [0x80071e3c] = h(V0);
 
-            if( h[8009c558] == h[80075cf8] )
+            if( h[0x8009c558] == h[0x80075cf8] )
             {
-                [8009abf4 + 1f] = b(2); // finish
+                [0x8009abf4 + 1f] = b(2); // finish
             }
             else
             {
-                [80075cf8] = h(h[80075cf8] + 1); // step
+                [0x80075cf8] = h(h[0x80075cf8] + 1); // step
             }
         }
         break;
@@ -625,7 +625,7 @@ field_calculate_world_to_screen_pos();
 ////////////////////////////////
 // field_background_clamp_pos()
 
-offset_to_triggers = w[800716c4];
+offset_to_triggers = w[0x800716c4];
 
 min_x = h[offset_to_triggers + c];
 min_y = h[offset_to_triggers + e];
@@ -653,7 +653,7 @@ if( bu[S0 + 0] == 1 )
         [S0 + 6] = h(0);
 
         V0 = bu[S0 + 2];
-        V0 = ((bu[800e0638 + V0] * h[S0 + 4]) << 10) >> 10;
+        V0 = ((bu[0x800e0638 + V0] * h[S0 + 4]) << 10) >> 10;
         if (V0 < 0)
         {
             V0 = V0 + ff;
@@ -682,7 +682,7 @@ if( bu[S0 + 0] == 1 )
         [S0 + 6] = h(h[S0 + 8]);
 
         V0 = bu[S0 + 2];
-        V0 = ((bu[800e0638 + V0] * h[S0 + 4]) << 10) >> 10;
+        V0 = ((bu[0x800e0638 + V0] * h[S0 + 4]) << 10) >> 10;
 
         if( h[S0 + 8] >= 0 ) V0 = -V0;
 
@@ -736,8 +736,8 @@ else
 current_rd = A0;
 
 render_data = 0x800e4df0;
-offset_to_triggers = w[800716c4];
-camera_data = w[80071e40];
+offset_to_triggers = w[0x800716c4];
+camera_data = w[0x80071e40];
 drawenv1 = 80113f2c + 0 * 5c;
 drawenv2 = 80113f2c + 1 * 5c;
 drawenv3 = 80113f2c + 2 * 5c;
@@ -749,32 +749,32 @@ drawenv8 = 80113f2c + 7 * 5c;
 drawenv9 = 80113f2c + 8 * 5c;
 drawenva = 80113f2c + 9 * 5c;
 
-[offset_to_triggers + 20] = h((hu[offset_to_triggers + 20] + hu[8009abf4 + a6]) % (h[offset_to_triggers + 18] * 10)); // add x scroll for 2nd background
-[offset_to_triggers + 22] = h((hu[offset_to_triggers + 22] + hu[8009abf4 + a8]) % (h[offset_to_triggers + 1a] * 10)); // add y scroll for 2nd background
+[offset_to_triggers + 20] = h((hu[offset_to_triggers + 20] + hu[0x8009abf4 + a6]) % (h[offset_to_triggers + 18] * 10)); // add x scroll for 2nd background
+[offset_to_triggers + 22] = h((hu[offset_to_triggers + 22] + hu[0x8009abf4 + a8]) % (h[offset_to_triggers + 1a] * 10)); // add y scroll for 2nd background
 
-[offset_to_triggers + 24] = h((hu[offset_to_triggers + 24] + hu[8009abf4 + aa]) % (h[offset_to_triggers + 1c] * 10)); // add x scroll for 3nd background
-[offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
+[offset_to_triggers + 24] = h((hu[offset_to_triggers + 24] + hu[0x8009abf4 + aa]) % (h[offset_to_triggers + 1c] * 10)); // add x scroll for 3nd background
+[offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[0x8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
 
 A0 = h[camera_data + 24]; // H
 system_psyq_set_geom_screen();
 
-if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
+if( ( hu[0x80114488] != 0 ) && ( bu[0x8009abf4 + 0x3a] == 0 ) )
 {
-    if( bu[8009abf4 + 39] != 1 )
+    if( bu[0x8009abf4 + 39] != 1 )
     {
         if( current_rd == render_data )
         {
             // base scroll + map offset
-            [drawenv1 + 8] = h(hu[8007eb90] - hu[camera_data + 20]);
-            [drawenv1 + a] = h(hu[8007eb94] + hu[camera_data + 22]);
+            [drawenv1 + 8] = h(hu[0x8007eb90] - hu[camera_data + 20]);
+            [drawenv1 + a] = h(hu[0x8007eb94] + hu[camera_data + 22]);
             A0 = render_data + 0 * 1789c + 41d4; // Scene settings
             A1 = drawenv1;
             system_psyq_set_drawenv();
         }
         else
         {
-            [drawenv2 + 8] = h(hu[8007eb90] - hu[camera_data + 20]);
-            [drawenv2 + a] = h(hu[8007eb94] + hu[camera_data + 22] + e8);
+            [drawenv2 + 8] = h(hu[0x8007eb90] - hu[camera_data + 20]);
+            [drawenv2 + a] = h(hu[0x8007eb94] + hu[camera_data + 22] + e8);
             A0 = render_data + 1 * 1789c + 41d4;
             A1 = drawenv2;
             system_psyq_set_drawenv();
@@ -785,16 +785,16 @@ if( ( hu[80114488] != 0 ) && ( bu[8009abf4 + 3a] == 0 ) )
         if( current_rd == render_data )
         {
             // base scroll + bg scroll
-            [drawenv1 + 8] = h(hu[8007eb90] + hu[80071e38]);
-            [drawenv1 + 8] = h(hu[8007eb94] + hu[80071e3c]);
+            [drawenv1 + 8] = h(hu[0x8007eb90] + hu[0x80071e38]);
+            [drawenv1 + 8] = h(hu[0x8007eb94] + hu[0x80071e3c]);
             A0 = render_data + 0 * 1789c + 41d4; // Scene settings
             A1 = drawenv1;
             system_psyq_set_drawenv();
         }
         else
         {
-            [drawenv2 + 8] = h(hu[8007eb90] + hu[80071e38]);
-            [drawenv2 + a] = h(hu[8007eb94] + hu[80071e3c] + e8);
+            [drawenv2 + 8] = h(hu[0x8007eb90] + hu[0x80071e38]);
+            [drawenv2 + a] = h(hu[0x8007eb94] + hu[0x80071e3c] + e8);
             A0 = render_data + 1 * 1789c + 41d4;
             A1 = drawenv2;
             system_psyq_set_drawenv();
@@ -805,51 +805,51 @@ else
 {
     // this settings automaticly scrolls to player
     // and add paralax effect to background layers 3 and 4
-    if( h[8009a100] == 0 ) // auto scroll
+    if( h[0x8009a100] == 0 ) // auto scroll
     {
         // VWOFT update
-        A0 = h[8009abf4 + 18]; // start
-        A1 = h[8009abf4 + 1a]; // end
-        A2 = bu[8009abf4 + 12]; // steps_n
-        A3 = bu[8009abf4 + 13]; // step
-             if( bu[8009abf4 + 14] == 1 ) field_calculate_current_value_by_steps();
-        else if( bu[8009abf4 + 14] == 2 ) field_calculate_smooth_current_value_by_steps();
-        [8009abf4 + 16] = h(V0 & ff);
+        A0 = h[0x8009abf4 + 18]; // start
+        A1 = h[0x8009abf4 + 1a]; // end
+        A2 = bu[0x8009abf4 + 12]; // steps_n
+        A3 = bu[0x8009abf4 + 13]; // step
+             if( bu[0x8009abf4 + 14] == 1 ) field_calculate_current_value_by_steps();
+        else if( bu[0x8009abf4 + 14] == 2 ) field_calculate_smooth_current_value_by_steps();
+        [0x8009abf4 + 16] = h(V0 & ff);
 
-        if( bu[8009abf4 + 13] == bu[8009abf4 + 12] )
+        if( bu[0x8009abf4 + 13] == bu[0x8009abf4 + 12] )
         {
-            [8009abf4 + 14] = b(3); // finish
+            [0x8009abf4 + 14] = b(3); // finish
         }
         else
         {
-            [8009abf4 + 13] = b(bu[8009abf4 + 13] + 1);
+            [0x8009abf4 + 13] = b(bu[0x8009abf4 + 13] + 1);
         }
 
         // entity pos + entity offset
-        pc_entity_id = h[800965e0];
-        [SP + 10] = h((w[80074ea4 + pc_entity_id * 84 +  c] >> c) + hu[80074ea4 + pc_entity_id * 84 + 40]);
-        [SP + 12] = h((w[80074ea4 + pc_entity_id * 84 + 10] >> c) + hu[80074ea4 + pc_entity_id * 84 + 46]);
-        [SP + 14] = h((w[80074ea4 + pc_entity_id * 84 + 14] >> c) + hu[80074ea4 + pc_entity_id * 84 + 4c] + (h[8009abf4 + 10] >> 2)); // with field scale
+        pc_entity_id = h[0x800965e0];
+        [SP + 10] = h((w[0x80074ea4 + pc_entity_id * 84 +  c] >> c) + hu[0x80074ea4 + pc_entity_id * 84 + 40]);
+        [SP + 12] = h((w[0x80074ea4 + pc_entity_id * 84 + 10] >> c) + hu[0x80074ea4 + pc_entity_id * 84 + 46]);
+        [SP + 14] = h((w[0x80074ea4 + pc_entity_id * 84 + 14] >> c) + hu[0x80074ea4 + pc_entity_id * 84 + 4c] + (h[0x8009abf4 + 10] >> 2)); // with field scale
 
         A0 = SP + 10;
         A1 = SP + 18;
         field_calculate_world_to_screen_pos();
 
         // base scroll + entity scroll
-        [80114464] = h(hu[8007eb90] + hu[SP + 18]);
-        [80114468] = h(hu[8007eb94] + hu[SP + 1a]);
+        [0x80114464] = h(hu[0x8007eb90] + hu[SP + 18]);
+        [0x80114468] = h(hu[0x8007eb94] + hu[SP + 1a]);
 
-        [SP + 10] = h(w[80074ea4 + pc_entity_id * 84 +  c] >> c);
-        [SP + 12] = h(w[80074ea4 + pc_entity_id * 84 + 10] >> c);
-        [SP + 14] = h(w[80074ea4 + pc_entity_id * 84 + 14] + hu[8009abf4 + 16] >> c);
+        [SP + 10] = h(w[0x80074ea4 + pc_entity_id * 84 +  c] >> c);
+        [SP + 12] = h(w[0x80074ea4 + pc_entity_id * 84 + 10] >> c);
+        [SP + 14] = h(w[0x80074ea4 + pc_entity_id * 84 + 14] + hu[0x8009abf4 + 16] >> c);
 
         A0 = SP + 10;
         A1 = SP + 18;
         field_calculate_world_to_screen_pos();
 
-        [800e48ec] = w(V0);
-        [800e48e4] = h(hu[SP + 18]);
-        [800e48e6] = h(hu[SP + 1a]);
+        [0x800e48ec] = w(V0);
+        [0x800e48e4] = h(hu[SP + 18]);
+        [0x800e48e6] = h(hu[SP + 1a]);
         A0 = SP + 18;
         field_background_clamp_pos();
 
@@ -862,12 +862,12 @@ else
         S7 = (((((h[SP + 18] * h[offset_to_triggers + 2c]) >> 8) + (h[offset_to_triggers + 24] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1c];
         S6 = (((((h[SP + 1a] * h[offset_to_triggers + 2e]) >> 8) + (h[offset_to_triggers + 26] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1e];
 
-        [80114464] = h(hu[80114464] - h[SP + 18]);
-        [80114468] = h(hu[80114468] - h[SP + 1a]);
+        [0x80114464] = h(hu[0x80114464] - h[SP + 18]);
+        [0x80114468] = h(hu[0x80114468] - h[SP + 1a]);
 
         // default scene offset (base scroll + shake - player pos)
-        ofsx = hu[8007eb90] + b[8009abf4 + 8d] - h[SP + 18];
-        ofsy = hu[8007eb94] + b[8009abf4 + 9b] - h[SP + 1a];
+        ofsx = hu[0x8007eb90] + b[0x8009abf4 + 8d] - h[SP + 18];
+        ofsy = hu[0x8007eb94] + b[0x8009abf4 + 9b] - h[SP + 1a];
 
         if( current_rd == render_data )
         {
@@ -877,14 +877,14 @@ else
             A1 = drawenv1;
             system_psyq_set_drawenv();
 
-            [drawenv3 + 8] = h(b[8009abf4 + 8d] - hu[8007eb90] - S5);
-            [drawenv3 + a] = h(b[8009abf4 + 9b] + hu[8007eb94] - S4);
+            [drawenv3 + 8] = h(b[0x8009abf4 + 8d] - hu[0x8007eb90] - S5);
+            [drawenv3 + a] = h(b[0x8009abf4 + 9b] + hu[0x8007eb94] - S4);
             A0 = render_data + 0 * 1789c + 4214; // At start of dynamic layer 3
             A1 = drawenv3;
             system_psyq_set_drawenv();
 
-            [drawenv5 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - S7);
-            [drawenv5 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - S6);
+            [drawenv5 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - S7);
+            [drawenv5 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] - S6);
             A0 = render_data + 0 * 1789c + 4254; // At start of dynamic layer 4
             A1 = drawenv5;
             system_psyq_set_drawenv();
@@ -909,14 +909,14 @@ else
             A1 = drawenv2;
             system_psyq_set_drawenv();
 
-            [drawenv4 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - S5);
-            [drawenv4 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - S4 + e8);
+            [drawenv4 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - S5);
+            [drawenv4 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] - S4 + e8);
             A0 = render_data + 1 * 1789c + 4214;
             A1 = drawenv4;
             system_psyq_set_drawenv();
 
-            [drawenv6 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - S7);
-            [drawenv6 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] - S6 + e8);
+            [drawenv6 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - S7);
+            [drawenv6 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] - S6 + e8);
             A0 = render_data + 1 * 1789c + 4254;
             A1 = drawenv6;
             system_psyq_set_drawenv();
@@ -934,28 +934,28 @@ else
             system_psyq_set_drawenv();
         }
 
-        [80071e38] = h(0 - hu[SP + 18]);
-        [80071e3c] = h(0 - hu[SP + 1a]);
+        [0x80071e38] = h(0 - hu[SP + 18]);
+        [0x80071e3c] = h(0 - hu[SP + 1a]);
 
         // screen center - base scroll - shake + player pos
-        [80071a48] = h(140 - hu[8007eb90] - b[8009abf4 + 8d] + hu[SP + 18]);
-        [80071a4a] = h(e8  - hu[8007eb94] - b[8009abf4 + 9b] + hu[SP + 1a]);
+        [0x80071a48] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + hu[SP + 18]);
+        [0x80071a4a] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + hu[SP + 1a]);
 
-        [80071a4c] = h(140 - hu[8007eb90] - b[8009abf4 + 8d] + S5); // dynamic 3rd layer
-        [80071a4e] = h(e8  - hu[8007eb94] - b[8009abf4 + 9b] + S4); // dynamic 3rd layer
-        [80071a50] = h(140 - hu[8007eb90] - b[8009abf4 + 8d] + S7); // dynamic 4th layer
-        [80071a52] = h(e8  - hu[8007eb94] - b[8009abf4 + 9b] + S6); // dynamic 4th layer
+        [0x80071a4c] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S5); // dynamic 3rd layer
+        [0x80071a4e] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S4); // dynamic 3rd layer
+        [0x80071a50] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S7); // dynamic 4th layer
+        [0x80071a52] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S6); // dynamic 4th layer
     }
     else
     {
-        S3 = ((h[offset_to_triggers + 20] >> 4) - ((h[80071e38] * h[offset_to_triggers + 28]) >> 8)) / h[offset_to_triggers + 18];
-        S4 = ((h[offset_to_triggers + 22] >> 4) - ((h[80071e3c] * h[offset_to_triggers + 2a]) >> 8)) / h[offset_to_triggers + 1a];
-        S5 = ((h[offset_to_triggers + 24] >> 4) - ((h[80071e38] * h[offset_to_triggers + 2c]) >> 8)) / h[offset_to_triggers + 1c];
-        S6 = ((h[offset_to_triggers + 26] >> 4) - ((h[80071e3c] * h[offset_to_triggers + 2e]) >> 8)) / h[offset_to_triggers + 1e];
+        S3 = ((h[offset_to_triggers + 20] >> 4) - ((h[0x80071e38] * h[offset_to_triggers + 28]) >> 8)) / h[offset_to_triggers + 18];
+        S4 = ((h[offset_to_triggers + 22] >> 4) - ((h[0x80071e3c] * h[offset_to_triggers + 2a]) >> 8)) / h[offset_to_triggers + 1a];
+        S5 = ((h[offset_to_triggers + 24] >> 4) - ((h[0x80071e38] * h[offset_to_triggers + 2c]) >> 8)) / h[offset_to_triggers + 1c];
+        S6 = ((h[offset_to_triggers + 26] >> 4) - ((h[0x80071e3c] * h[offset_to_triggers + 2e]) >> 8)) / h[offset_to_triggers + 1e];
 
         // base scroll + shake + map offset + screen scroll
-        ofsx = hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] + h[80071e38];
-        ofsy = hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] + h[80071e3c];
+        ofsx = hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] + h[0x80071e38];
+        ofsy = hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] + h[0x80071e3c];
 
         if( current_rd == render_data ) // if 1st buffer
         {
@@ -965,14 +965,14 @@ else
             A1 = drawenv1;
             system_psyq_set_drawenv();
 
-            [drawenv3 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S3);
-            [drawenv3 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S4);
+            [drawenv3 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S3);
+            [drawenv3 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S4);
             A0 = render_data + 0 * 1789c + 4214; // At start of dynamic layer 3
             A1 = drawenv3;
             system_psyq_set_drawenv();
 
-            [drawenv5 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S5);
-            [drawenv5 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S6);
+            [drawenv5 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S5);
+            [drawenv5 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S6);
             A0 = render_data + 0 * 1789c + 4254; // At start of dynamic layer 4
             A1 = drawenv5;
             system_psyq_set_drawenv();
@@ -997,14 +997,14 @@ else
             A1 = drawenv2;
             system_psyq_set_drawenv();
 
-            [drawenv4 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S3);
-            [drawenv4 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S4 + e8);
+            [drawenv4 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S3);
+            [drawenv4 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S4 + e8);
             A0 = render_data + 1 * 1789c + 4214;
             A1 = drawenv4;
             system_psyq_set_drawenv();
 
-            [drawenv6 + 8] = h(hu[8007eb90] + b[8009abf4 + 8d] - hu[camera_data + 20] - S5);
-            [drawenv6 + a] = h(hu[8007eb94] + b[8009abf4 + 9b] + hu[camera_data + 22] - S6 + e8);
+            [drawenv6 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S5);
+            [drawenv6 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S6 + e8);
             A0 = render_data + 1 * 1789c + 4254;
             A1 = drawenv6;
             system_psyq_set_drawenv();
@@ -1023,13 +1023,13 @@ else
         }
 
         // screen center - base scroll - shake - screen scroll
-        [80071a48] = h(140 - hu[8007eb90] - b[8009abf4 + 8d] - hu[80071e38]);
-        [80071a4a] = h(e8  - hu[8007eb94] - b[8009abf4 + 9b] - hu[80071e3c]);
+        [0x80071a48] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] - hu[0x80071e38]);
+        [0x80071a4a] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] - hu[0x80071e3c]);
         // screen center - base scroll - shake + paralax
-        [80071a4c] = h(140 - hu[8007eb90] - b[8009abf4 + 8d] + S3); // dynamic 3rd layer
-        [80071a4e] = h(e8  - hu[8007eb94] - b[8009abf4 + 9b] + S4); // dynamic 3rd layer
-        [80071a50] = h(140 - hu[8007eb90] - b[8009abf4 + 8d] + S5); // dynamic 4th layer
-        [80071a52] = h(e8  - hu[8007eb94] - b[8009abf4 + 9b] + S6); // dynamic 4th layer
+        [0x80071a4c] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S3); // dynamic 3rd layer
+        [0x80071a4e] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S4); // dynamic 3rd layer
+        [0x80071a50] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S5); // dynamic 4th layer
+        [0x80071a52] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S6); // dynamic 4th layer
     }
 }
 ////////////////////////////////

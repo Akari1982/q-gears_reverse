@@ -40,46 +40,6 @@ SP = SP + 0018;
 
 
 ////////////////////////////////
-// 0x81 SETWORD
-800C0E5C	lui    v0, $800a
-V0 = bu[V0 + d820];
-800C0E64	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C0E6C	beq    v0, zero, Lc0e84 [$800c0e84]
-[SP + 0010] = w(RA);
-800C0E74	lui    a0, $800a
-A0 = A0 + 0500;
-800C0E7C	jal    field_debug_event_opcode [$800bead4]
-A1 = 0004;
-
-Lc0e84:	; 800C0E84
-A0 = 0002;
-800C0E88	jal    field_event_read_memory_s16 [$800bf908]
-A1 = 0003;
-A0 = 0001;
-A1 = 0002;
-V0 = V0 << 10;
-800C0E9C	jal    field_event_write_memory_s16 [$800c0248]
-A2 = V0 >> 10;
-800C0EA4	lui    a0, $8007
-A0 = bu[A0 + 22c4];
-800C0EAC	lui    v0, $8008
-V0 = V0 + 31fc;
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = 0;
-V1 = V1 + 0005;
-[A0 + 0000] = h(V1);
-RA = w[SP + 0010];
-SP = SP + 0018;
-800C0ED4	jr     ra 
-800C0ED8	nop
-////////////////////////////////
-
-
-
-////////////////////////////////
 // 0x9A LBYTE
 800C0EDC	lui    v0, $800a
 V0 = bu[V0 + d820];
@@ -9207,8 +9167,7 @@ V0 = 00ff;
 V0 = A0 << 05;
 V0 = V0 + A0;
 V1 = V1 << 01;
-800D4478	lui    at, $8008
-AT = AT + 31fc;
+AT = 0x800831fc;
 AT = AT + V1;
 A0 = hu[AT + 0000];
 V1 = w[0x8009c6dc];
