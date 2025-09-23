@@ -69,109 +69,87 @@ system_bios_stop_pad();
 
 
 
-////////////////////////////////
-// system_psyq_vsync()
 // Wait for the next vertical blank, or return the vertical blank counter value.
 // libetc.h
-
 // 0 Blocks until vertical sync is generated
 // 1 Returns time elapsed from the point VSync() processing is last completed when mode=1or n in horizontal sync units
 // n (n>1) Blocks from the point VSync() processing is last completed when mode=1 or n until n number of vertical syncs are generated.
 // -n (n>0) Returns absolute time after program boot in vertical sync interval units.
-
-gpustat = w[8005049c]; // 1f801814 GPUSTAT Read GPU Status Register
-timer1_value = w[800504a0]; // 1f801110 Timer 1 Current Counter Value
-
-S0 = w[gpustat];
-
-delta = w[timer1_value] - w[800504a4];
-
-if( A0 < 0 )
+int system_psyq_vsync( int mode )
 {
-    return w[80051568];
-}
-else if( A0 != 1 )
-{
-    if( A0 > 0 )
-    {
-        V0 = w[800504a8] - 1 + A0;
-    }
-    else
-    {
-        V0 = w[800504a8];
-    }
-
-    A1 = 0;
-    if( A0 > 0 )
-    {
-        A1 = A0 - 1;
-    }
-
-    A0 = V0;
-    A1 = A1; // wait timer
-    func3d024();
+    gpustat = w[0x8005049c]; // 1f801814 GPUSTAT Read GPU Status Register
+    timer1_value = w[0x800504a0]; // 1f801110 Timer 1 Current Counter Value
 
     S0 = w[gpustat];
 
-    // wait one cycle
-    A0 = w[80051568] + 1;
-    A1 = 1;
-    func3d024();
+    delta = w[timer1_value] - w[0x800504a4];
 
-    if( S0 & 00080000 )
+    if( mode < 0 )
     {
-        if( ( S0 ^ w[gpustat] ) > 0 )
+        // Returns absolute time after program boot
+        // in vertical sync interval units.
+        return w[0x80051568]; // number of frames from system start
+    }
+    else if( mode != 1 )
+    {
+        if( mode > 0 )
         {
-            loop3cfcc:	; 8003CFCC
-                V0 = (S0 ^ w[gpustat]) & 80000000;
-            8003CFDC	beq    v0, zero, loop3cfcc [$8003cfcc]
+            req_frames = w[0x800504a8] - 1 + mode;
         }
+        else
+        {
+            req_frames = w[0x800504a8];
+        }
+
+        A1 = ( mode > 0 ) ? mode - 1 : 0;
+
+        func3d024( req_frames, A1 ); // wait for requested number of frames
+
+        S0 = w[gpustat];
+
+        func3d024( w[0x80051568] + 0x1, 0x1 ); // wait one more cycle
+
+        if( S0 & 0x00080000 )
+        {
+            if( ( S0 ^ w[gpustat] ) > 0 )
+            {
+                while( ((S0 ^ w[gpustat]) & 0x80000000) == 0 ) {}
+            }
+        }
+
+        [0x800504a8] = w(w[0x80051568]);
+        [0x800504a4] = w(w[timer1_value]);
     }
 
-    [800504a8] = w(w[80051568]);
-    [800504a4] = w(w[timer1_value]);
+    return delta;
 }
 
-return delta;
-////////////////////////////////
 
 
-
-////////////////////////////////
-// func3d024()
-
-A1 = A1 << 0f;
-wait = A1;
-if( w[80051568] < A0 )
+void func3d024( req_frames, A1 )
 {
-    loop3d04c:	; 8003D04C
-        wait = wait - 1;
+    wait = A1 * 0x8000;
+
+    // wait while current number of frames >= requested number of frames
+    while( w[0x80051568] < req_frames )
+    {
+        wait -= 1;
         if( wait == -1 )
         {
-            A0 = 800105a8; // "VSync: timeout"
-            system_bios_std_out_puts();
-
-            A0 = 0;
-            system_bios_change_clear_pad();
-
-            A0 = 3;
-            A1 = 0;
-            system_bios_change_clear_r_cnt();
-
+            system_bios_std_out_puts( "VSync: timeout" );
+            system_bios_change_clear_pad( 0 );
+            system_bios_change_clear_r_cnt( 0x3, 0 );
             return;
         }
-
-        V0 = w[80051568] < A0;
-    8003D0A8	bne    v0, zero, loop3d04c [$8003d04c]
+    }
 }
-////////////////////////////////
 
 
 
 ////////////////////////////////
 // system_interrupts_timer_dma_initialize()
 
-V0 = w[80051534]; // 80051514
+V0 = w[0x80051534]; // 80051514
 8003D0D8	jalr   w[V0 + c] ra // system_interrupts_timer_dma_initialize_inter()
 ////////////////////////////////
 
@@ -180,7 +158,7 @@ V0 = w[80051534]; // 80051514
 ////////////////////////////////
 // system_int_set_interrupt_callback()
 
-V0 = w[80051534]; // 80051514
+V0 = w[0x80051534]; // 80051514
 8003D108	jalr   w[V0 + 8] ra // system_int_set_interrupt_callback_inter()
 ////////////////////////////////
 
@@ -189,7 +167,7 @@ V0 = w[80051534]; // 80051514
 ////////////////////////////////
 // system_dma_additional_callback()
 
-V0 = w[80051534]; // 80051514
+V0 = w[0x80051534]; // 80051514
 8003D138	jalr   w[V0 + 4] ra // system_dma_additional_callback_inter()
 ////////////////////////////////
 
@@ -198,7 +176,7 @@ V0 = w[80051534]; // 80051514
 ////////////////////////////////
 // system_call_main_timer_additional_callback_0()
 
-V0 = w[80051534];
+V0 = w[0x80051534];
 A1 = A0;
 A0 = 0;
 8003D16C	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
@@ -209,7 +187,7 @@ A0 = 0;
 ////////////////////////////////
 // system_call_main_timer_additional_callback_any()
 
-V0 = w[80051534];
+V0 = w[0x80051534];
 8003D19C	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
@@ -218,7 +196,7 @@ V0 = w[80051534];
 ////////////////////////////////
 // func3d1b4()
 
-V0 = w[80051534]; // 80051514
+V0 = w[0x80051534]; // 80051514
 8003D1CC	jalr   w[V0 + 10] ra // func3d670()
 ////////////////////////////////
 
@@ -227,7 +205,7 @@ V0 = w[80051534]; // 80051514
 ////////////////////////////////
 // func3d1e4()
 
-V0 = w[80051534];
+V0 = w[0x80051534];
 8003D1FC	jalr   w[V0 + 18] ra // func3d71c()
 ////////////////////////////////
 
@@ -236,7 +214,7 @@ V0 = w[80051534];
 ////////////////////////////////
 // func3d214()
 
-return hu[800504ae];
+return hu[0x800504ae];
 ////////////////////////////////
 
 
@@ -244,7 +222,7 @@ return hu[800504ae];
 ////////////////////////////////
 // system_get_interrupt_mask_register()
 
-V0 = w[8005153c];
+V0 = w[0x8005153c];
 return hu[V0 + 0];
 ////////////////////////////////
 
@@ -253,7 +231,7 @@ return hu[V0 + 0];
 ////////////////////////////////
 // system_set_interrupt_mask_register()
 
-i_mask = w[8005153c]; // 1f801074 I_MASK - Interrupt mask register
+i_mask = w[0x8005153c]; // 1f801074 I_MASK - Interrupt mask register
 V0 = hu[i_mask];
 [i_mask] = h(A0);
 return V0;
@@ -264,7 +242,7 @@ return V0;
 ////////////////////////////////
 // system_interrupts_timer_dma_initialize_inter()
 
-if( hu[800504ac] != 0 )
+if( hu[0x800504ac] != 0 )
 {
     return 0;
 }
@@ -272,10 +250,10 @@ if( hu[800504ac] != 0 )
 A0 = 0;
 system_set_interrupt_mask_register();
 
-V1 = w[80051538]; // 1f801070 Interrupt status register
+V1 = w[0x80051538]; // 1f801070 Interrupt status register
 [V1] = h(0);
 
-V0 = w[80051540]; // 1f8010f0 DMA Control Register
+V0 = w[0x80051540]; // 1f8010f0 DMA Control Register
 [V0] = w(33333333);
 
 // clear place in memory
@@ -294,19 +272,19 @@ if( V0 != 0 )
     func3d334();
 }
 
-[800504e8] = w(800514c4);
+[0x800504e8] = w(800514c4);
 
 A0 = 800504e4;
 system_bios_set_custom_exit_from_exception();
 
-[800404ac] = h(1);
+[0x800404ac] = h(1);
 
 func3d7d0();
-V1 = w[80051534];
+V1 = w[0x80051534];
 [V1 + 14] = w(V0);
 
 func3d8f8();
-A0 = w[80051534];
+A0 = w[0x80051534];
 [A0 + 4] = w(V0);
 
 system_bios_cd_remove();
@@ -323,10 +301,10 @@ return S0;
 ////////////////////////////////
 // func3d334()
 
-intr_status = w[80051538]; // 1f801070 Interrupt status register
-intr_mask = w[8005153c]; // 1f801074 Interrupt mask register
+intr_status = w[0x80051538]; // 1f801070 Interrupt status register
+intr_mask = w[0x8005153c]; // 1f801074 Interrupt mask register
 
-if( hu[800504ac] == 0 )
+if( hu[0x800504ac] == 0 )
 {
     A0 = 800105ec; // "unexpected interrupt(%04x)"
     A1 = hu[intr_status];
@@ -335,9 +313,9 @@ if( hu[800504ac] == 0 )
     system_bios_return_from_exception();
 }
 
-[800504ae] = h(1);
+[0x800504ae] = h(1);
 
-S0 = hu[intr_mask] & hu[800504dc] & hu[intr_status];
+S0 = hu[intr_mask] & hu[0x800504dc] & hu[intr_status];
 if( S0 != 0 )
 {
     loop3d3d4:	; 8003D3D4
@@ -352,7 +330,7 @@ if( S0 != 0 )
                 if( S0 & 1 )
                 {
                     [intr_status] = h(0 NOR (1 << S1));
-                    V0 = w[800504b0 + S1 * 4];
+                    V0 = w[0x800504b0 + S1 * 4];
                     if( V0 != 0 )
                     {
                         // only for S1:
@@ -366,14 +344,14 @@ if( S0 != 0 )
                 S0 = S0 >> 1;
             8003D428	bne    s0, zero, loop3d3e0 [$8003d3e0]
         }
-        S0 = hu[intr_mask] & hu[800504dc] & hu[intr_status];
+        S0 = hu[intr_mask] & hu[0x800504dc] & hu[intr_status];
     8003D458	bne    s0, zero, loop3d3d4 [$8003d3d4]
 }
 
 if( hu[intr_status] & hu[intr_mask] )
 {
-    V0 = w[80051544];
-    [80051544] = w(V0 + 1);
+    V0 = w[0x80051544];
+    [0x80051544] = w(V0 + 1);
     if( V0 >= 801 )
     {
         A0 = 80010608; // "intr timeout(%04x:%04x)"
@@ -381,16 +359,16 @@ if( hu[intr_status] & hu[intr_mask] )
         A2 = hu[intr_mask];
         system_bios_printf();
 
-        [80051544] = w(0);
+        [0x80051544] = w(0);
         [intr_status] = h(0);
     }
 }
 else
 {
-    [80051544] = w(0);
+    [0x80051544] = w(0);
 }
 
-[800504ae] = h(0);
+[0x800504ae] = h(0);
 
 system_bios_return_from_exception();
 ////////////////////////////////
@@ -400,63 +378,53 @@ system_bios_return_from_exception();
 ////////////////////////////////
 // system_int_set_interrupt_callback_inter()
 
-intr_mask = w[8005153c]; // 1f801074 Interrupt mask register
+intr_mask = w[0x8005153c]; // 1f801074 Interrupt mask register
 
 S1 = A0; // intr id
 S2 = A1; // some func
 
-if( S2 != w[800504b0 + S1 * 4] )
+if( S2 != w[0x800504b0 + S1 * 4] )
 {
-    if( hu[800404ac] != 0 )
+    if( hu[0x800404ac] != 0 )
     {
         S3 = hu[intr_mask];
         [intr_mask] = h(0);
 
         if( S2 != 0 )
         {
-            [800504b0 + S1 * 4] = w(S2);
-            S3 = S3 | (1 << S1);
-            [800504dc] = h(hu[800504dc] | (1 << S1));
+            [0x800504b0 + S1 * 4] = w(S2);
+            S3 |= 1 << S1;
+            [0x800504dc] = h(hu[0x800504dc] | (1 << S1));
         }
         else
         {
-            [800504b0 + S1 * 4] = w(0);
-            S3 = S3 & (0 NOR (1 << S1));
-            [800504dc] = h(hu[800504dc] & (0 NOR (1 << S1)));
+            [0x800504b0 + S1 * 4] = w(0);
+            S3 &= ~(1 << S1);
+            [0x800504dc] = h(hu[0x800504dc] & ~(1 << S1));
         }
 
         if( S1 == 0 )
         {
-            A0 = S2 < 1;
-            system_bios_change_clear_pad();
-
-            A0 = 3;
-            A1 = S2 < 1;
-            system_bios_change_clear_r_cnt();
+            system_bios_change_clear_pad( S2 < 0x1 );
+            system_bios_change_clear_r_cnt( 0x3, S2 < 0x1 );
         }
-        if( S1 == 4 )
+        else if( S1 == 0x4 )
         {
-            A0 = 0;
-            A1 = S2 < 1;
-            system_bios_change_clear_r_cnt();
+            system_bios_change_clear_r_cnt( 0x0, S2 < 0x1 );
         }
-        if( S1 == 5 )
+        else if( S1 == 0x5 )
         {
-            A0 = 1;
-            A1 = S2 < 1;
-            system_bios_change_clear_r_cnt();
+            system_bios_change_clear_r_cnt( 0x1, S2 < 0x1 );
         }
-        if( S1 == 6 )
+        else if( S1 == 0x6 )
         {
-            A0 = 2;
-            A1 = S2 < 1;
-            system_bios_change_clear_r_cnt();
+            system_bios_change_clear_r_cnt( 0x2, S2 < 0x1 );
         }
 
         [intr_mask] = h(S3);
     }
 }
-return w[800504b0 + S1 * 4];
+return w[0x800504b0 + S1 * 0x4];
 ////////////////////////////////
 
 
@@ -464,27 +432,27 @@ return w[800504b0 + S1 * 4];
 ////////////////////////////////
 // func3d670()
 
-if( hu[800504ac] == 0 )
+if( hu[0x800504ac] == 0 )
 {
     return 0;
 }
 
 system_bios_enter_critical_section();
 
-V0 = w[8005153c]; // 1f801074 Interrupt mask register
-[800604de] = h(hu[V0]);
+V0 = w[0x8005153c]; // 1f801074 Interrupt mask register
+[0x800604de] = h(hu[V0]);
 [V0] = h(0);
 
-A0 = w[80051540]; // 1f8010f0 DMA Control Register
-[800504e0] = w(w[A0]);
+A0 = w[0x80051540]; // 1f8010f0 DMA Control Register
+[0x800504e0] = w(w[A0]);
 [A0] = w(w[A0] & 77777777); // disable all DMA
 
-A0 = w[80051538]; // 1f801070 Interrupt status register
+A0 = w[0x80051538]; // 1f801070 Interrupt status register
 [A0] = h(0);
 
 system_bios_set_default_exit_from_exception();
 
-[800504ac] = h(0);
+[0x800504ac] = h(0);
 
 return 800504ac;
 ////////////////////////////////
@@ -549,52 +517,45 @@ if( A1 != 0 )
 ////////////////////////////////
 // func3d7d0()
 
-V1 = w[8005156c];
-[V1] = w(107);
+V1 = w[0x8005156c];
+[V1] = w(0x107);
 
-[80051568] = w(0);
+[0x80051568] = w(0);
 
-A0 = 80051548;
-V0 = 8 - 1;
-loop3d8dc:	; 8003D8DC
-    [A0] = w(0);
-    A0 = A0 + 4;
-    V0 = V0 - 1;
-8003D8E4	bne    v0, -1, loop3d8dc [$8003d8dc]
+for( int i = 0; i < 8; ++i )
+{
+    [0x80051548 + i * 0x4] = w(0);
+}
 
-A0 = 0;
-A1 = 8003d828; // func3d828()
-system_int_set_interrupt_callback();
+// set IRQ0 VBLANK (PAL=50Hz, NTSC=60Hz)
+system_int_set_interrupt_callback( 0, 0x8003d828 ); // func3d828()
 
-return 8003d8a0; // system_main_timer_additional_callback_inter()
+return 0x8003d8a0; // system_main_timer_additional_callback_inter()
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// func3d828()
+void func3d828()
+{
+    [0x80051568] = w(w[0x80051568] + 1); // increase frames num
 
-[80051568] = w(w[80051568] + 1);
-
-S1 = 0;
-loop3d860:	; 8003D860
-    if( w[80051548 + S1 * 4] != 0 )
+    for( int i = 0; i < 0x8; ++i )
     {
-        8003D870	jalr   w[80051548 + S1 * 4] ra
+        if( w[0x80051548 + i * 0x4] != 0 )
+        {
+            8003D870	jalr   w[0x80051548 + i * 4] ra
+        }
     }
-    S1 = S1 + 0001;
-    V0 = S1 < 0008;
-8003D880	bne    v0, zero, loop3d860 [$8003d860]
-////////////////////////////////
+}
 
 
 
 ////////////////////////////////
 // system_main_timer_additional_callback_inter()
 
-if( A1 != w[80051548 + A0 * 4] )
+if( A1 != w[0x80051548 + A0 * 4] )
 {
-    [80051548 + A0 * 4] = w(A1);
+    [0x80051548 + A0 * 4] = w(A1);
 }
 ////////////////////////////////
 
@@ -627,7 +588,7 @@ loop3db84:	; 8003DB84
     V0 = V0 - 1;
 8003DB8C	bne    v0, -1, loop3db84 [$8003db84]
 
-V0 = w[80051570];
+V0 = w[0x80051570];
 [V0] = w(0);
 
 A0 = 3;
@@ -642,7 +603,7 @@ return 8003dacc;
 ////////////////////////////////
 // func3d948()
 
-V0 = w[80051570];
+V0 = w[0x80051570];
 V0 = w[V0 + 0000];
 8003D974	nop
 V0 = V0 >> 18;
@@ -744,20 +705,20 @@ L3daa4:	; 8003DAA4
 // system_dma_additional_callback_inter()
 
 A2 = A0;
-A3 = w[80051574 + A2 * 4];
+A3 = w[0x80051574 + A2 * 4];
 A0 = A1;
 if( A0 != A3 )
 {
     if( A0 != 0 )
     {
-        [80051574 + A2 * 4] = w(A0);
-        A1 = w[80051570];
+        [0x80051574 + A2 * 4] = w(A0);
+        A1 = w[0x80051570];
         [A1] = w((w[A1] & 00ffffff) | 00800000 | (1 << (A2 + 10)));
     }
     else
     {
-        [80051574 + A2 * 4] = w(0);
-        A1 = w[80051570];
+        [0x80051574 + A2 * 4] = w(0);
+        A1 = w[0x80051570];
         [A1] = w((00800000 | (w[A1] & (V0 | ffff))) & (0 NOR (1 << (A2 + 10))));
     }
 }

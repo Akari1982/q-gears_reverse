@@ -1366,6 +1366,10 @@ SP = SP + 0018;
 800A21C4	jr     ra 
 800A21C8	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca21cc
 800A21CC	lui    v0, $800a
 V0 = w[V0 + 6390];
@@ -1431,6 +1435,10 @@ V1 = V1 - V0;
 800A229C	jr     ra 
 V0 = 0001;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca22a4
 800A22A4	lui    v0, $800a
 V0 = w[V0 + 6528];
@@ -1445,11 +1453,19 @@ V0 = h[V0 + 0000];
 800A22CC	jr     ra 
 V0 = 0001;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funca22d4
 800A22D4	lui    at, $800b
 [AT + f410] = w(0);
 800A22DC	jr     ra 
 V0 = 0001;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funca22e4
 800A22E4	lui    v1, $800a
@@ -1505,34 +1521,24 @@ int funca2380()
 
 
 
-////////////////////////////////
-// funca23f8
-800A23F8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-800A2400	jal    $func34410
-800A2404	nop
-V0 = V0 ^ 0008;
-V0 = V0 < 0001;
-RA = w[SP + 0010];
-SP = SP + 0018;
-800A2418	jr     ra 
-800A241C	nop
+int funca23f8()
+{
+    return (func34410() ^ 0x8) < 0x1;
+}
+
+
+
 ////////////////////////////////
 // funca2420
-800A2420	lui    v1, $800a
-V1 = w[V1 + 6528];
-800A2428	nop
+
+V1 = w[0x80096528];
 V0 = V1 + 0002;
-800A2430	lui    at, $800a
-[AT + 6528] = w(V0);
-800A2438	lui    v0, $8007
-V0 = w[V0 + 5d00];
+[0x80096528] = w(V0);
+V0 = w[0x80075d00];
 V1 = h[V1 + 0000];
 V0 = w[V0 + 0008];
-800A2448	nop
 V0 = V0 < V1;
-800A2450	jr     ra 
-V0 = V0 ^ 0001;
+return V0 ^ 0001;
 ////////////////////////////////
 
 
@@ -2151,17 +2157,16 @@ V0 = w[SP + 0014];
 V0 = V0 << 0c;
 [S0 + 0004] = w(V0);
 V1 = w[SP + 0018];
-V0 = 0001;
 V1 = V1 << 0c;
-800A3074	j      La30f4 [$800a30f4]
 [S0 + 0008] = w(V1);
+return 1;
 
 La307c:	; 800A307C
 V0 = 1000;
 
 La3080:	; 800A3080
-800A3080	beq    s1, v0, La30f4 [$800a30f4]
-V0 = 0;
+if( S1 == V0 ) return 0;
+
 V0 = w[S0 + 0000];
 800A308C	nop
 800A3090	mult   s1, v0
@@ -2194,28 +2199,25 @@ V0 = V0 + 0fff;
 La30e8:	; 800A30E8
 V0 = V0 >> 0c;
 [S0 + 0008] = w(V0);
-V0 = 0;
-
-La30f4:	; 800A30F4
+return 0;
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// funca310c()
+void funca310c()
+{
+    [0x800af3c8 + 0x0] = w(0);
+    [0x800af3c8 + 0x4] = w(0x800af3d8); // pointer to next element
+    [0x800af3c8 + 0xc] = h(0);
+    [0x800af3c8 + 0xe] = b(0x1);
+    [0x800af3c8 + 0xf] = b(0xff);
 
-[0x800af3c8 + 0x0] = w(0);
-[0x800af3c8 + 0x4] = w(0x800af3d8); // pointer to next element
-[0x800af3c8 + 0xc] = h(0);
-[0x800af3c8 + 0xe] = b(0x1);
-[0x800af3c8 + 0xf] = b(0xff);
-
-[0x800af3d8 + 0x0] = w(0x800af3c8); // pointer to prev element
-[0x800af3d8 + 0x4] = w(0);
-[0x800af3d8 + 0xc] = h(0x1);
-[0x800af3d8 + 0xe] = b(0x1);
-[0x800af3d8 + 0xf] = b(0);
-////////////////////////////////
+    [0x800af3d8 + 0x0] = w(0x800af3c8); // pointer to prev element
+    [0x800af3d8 + 0x4] = w(0);
+    [0x800af3d8 + 0xc] = h(0x1);
+    [0x800af3d8 + 0xe] = b(0x1);
+    [0x800af3d8 + 0xf] = b(0);
+}
 
 
 
@@ -2341,401 +2343,244 @@ u32 funca3314()
 
 
 
-////////////////////////////////
-// funca3368
+void funca3368( S0 )
+{
+    if( (hu[S0 + 0x0] & 0x10) == 0 ) return;
 
-S0 = A0;
-V0 = hu[S0 + 0000];
-800A337C	nop
-V0 = V0 & 0010;
-800A3384	beq    v0, zero, La3428 [$800a3428]
-A0 = S0 + 001c;
-A1 = S0 + 0078;
-A3 = h[S0 + 0004];
-800A3394	jal    funca379c [$800a379c]
-A2 = SP + 0010;
-800A339C	beq    v0, zero, La33b4 [$800a33b4]
-800A33A0	nop
-V0 = hu[S0 + 0000];
-800A33A8	nop
-V0 = V0 ^ 0010;
-[S0 + 0000] = h(V0);
+    if( funca379c( S0 + 0x1c, S0 + 0x78, SP + 0x10, h[S0 + 0x4] ) != 0 )
+    {
+        // if diff between vectors was too small
+        [S0 + 0x0] = h(hu[S0 + 0x0] ^ 0x10);
+    }
 
-La33b4:	; 800A33B4
-V0 = w[S0 + 0068];
-V1 = w[SP + 0010];
-800A33BC	nop
-V0 = V0 + V1;
-[S0 + 0068] = w(V0);
-V0 = w[S0 + 006c];
-V1 = w[SP + 0014];
-800A33D0	nop
-V0 = V0 + V1;
-[S0 + 006c] = w(V0);
-V0 = w[S0 + 0070];
-V1 = w[SP + 0018];
-A0 = w[S0 + 0068];
-V0 = V0 + V1;
-800A33EC	bgez   a0, La33f8 [$800a33f8]
-[S0 + 0070] = w(V0);
-A0 = A0 + 0fff;
+    [S0 + 0x68] = w(w[S0 + 0x68] + w[SP + 0x10]);
+    [S0 + 0x6c] = w(w[S0 + 0x6c] + w[SP + 0x14]);
+    [S0 + 0x70] = w(w[S0 + 0x70] + w[SP + 0x18]);
 
-La33f8:	; 800A33F8
-A1 = w[S0 + 006c];
-V0 = A0 >> 0c;
-800A3400	bgez   a1, La340c [$800a340c]
-[S0 + 005c] = h(V0);
-A1 = A1 + 0fff;
-
-La340c:	; 800A340C
-V1 = w[S0 + 0070];
-V0 = A1 >> 0c;
-800A3414	bgez   v1, La3420 [$800a3420]
-[S0 + 005e] = h(V0);
-V1 = V1 + 0fff;
-
-La3420:	; 800A3420
-V0 = V1 >> 0c;
-[S0 + 0060] = h(V0);
-
-La3428:	; 800A3428
-////////////////////////////////
+    [S0 + 0x5c] = h(w[S0 + 0x68] / 0x1000);
+    [S0 + 0x5e] = h(w[S0 + 0x6c] / 0x1000);
+    [S0 + 0x60] = h(w[S0 + 0x70] / 0x1000);
+}
 
 
 
-////////////////////////////////
-// funca343c()
+void funca343c( A2 )
+{
+    if( hu[A2 + 0x0] & 0x8 )
+    {
+        [A2 + 0010] = b(bu[A2 + 0x10] + bu[A2 + 0x14]);
+        [A2 + 0x11] = b(bu[A2 + 0x11] + bu[A2 + 0x15]);
+        [A2 + 0x12] = b(bu[A2 + 0x12] + bu[A2 + 0x16]);
 
-A2 = A0;
-V0 = hu[A2 + 0000];
-800A3444	nop
-V0 = V0 & 0008;
-800A344C	beq    v0, zero, La34bc [$800a34bc]
-800A3450	nop
-V0 = bu[A2 + 0010];
-A0 = bu[A2 + 0014];
-V1 = bu[A2 + 0011];
-A1 = bu[A2 + 0015];
-V0 = V0 + A0;
-V1 = V1 + A1;
-[A2 + 0011] = b(V1);
-V1 = bu[A2 + 0012];
-A0 = bu[A2 + 0016];
-[A2 + 0010] = b(V0);
-V0 = hu[A2 + 0002];
-V1 = V1 + A0;
-800A3484	addiu  v0, v0, $ffff (=-$1)
-[A2 + 0002] = h(V0);
-V0 = V0 << 10;
-800A3490	bne    v0, zero, La34bc [$800a34bc]
-[A2 + 0012] = b(V1);
-V0 = hu[A2 + 0000];
-V1 = bu[A2 + 0018];
-A0 = bu[A2 + 0019];
-A1 = bu[A2 + 001a];
-V0 = V0 ^ 0008;
-[A2 + 0000] = h(V0);
-[A2 + 0010] = b(V1);
-[A2 + 0011] = b(A0);
-[A2 + 0012] = b(A1);
+        [A2 + 0x2] = h(hu[A2 + 0x2] - 1);
 
-La34bc:	; 800A34BC
-800A34BC	jr     ra 
-800A34C0	nop
-////////////////////////////////
+        if( A2 + 0x2] == 0 )
+        {
+            [A2 + 0x0] = h(hu[A2 + 0x0] ^ 0x8);
+            [A2 + 0x10] = b(bu[A2 + 0x18]);
+            [A2 + 0x11] = b(bu[A2 + 0x19]);
+            [A2 + 0x12] = b(bu[A2 + 0x1a]);
+        }
+    }
+}
 
 
 
-////////////////////////////////
-// funca34c4
+void funca34c4( S0 )
+{
+    if( hu[S0 + 0x0] & 0x2 ) return;
 
-S0 = A0;
-V0 = hu[S0 + 0000];
-800A34D8	nop
-V0 = V0 & 0002;
-800A34E0	beq    v0, zero, La3578 [$800a3578]
-800A34E4	nop
-V0 = w[S0 + 000c];
-V1 = hu[S0 + 0006];
-A0 = hu[V0 + 0000];
-800A34F4	bne    v1, zero, La3568 [$800a3568]
-800A34F8	nop
-V0 = hu[S0 + 0008];
-800A3500	nop
-V1 = V0 + 0001;
-[S0 + 0008] = h(V1);
-V0 = hu[S0 + 0008];
-800A3510	nop
-V0 = V0 < A0;
-800A3518	bne    v0, zero, La3540 [$800a3540]
-800A351C	nop
-V0 = hu[S0 + 0000];
-800A3524	nop
-V0 = V0 & 0004;
-800A352C	beq    v0, zero, La353c [$800a353c]
-800A3530	addiu  v0, v1, $ffff (=-$1)
-800A3534	j      La3540 [$800a3540]
-[S0 + 0008] = h(0);
+    V0 = w[S0 + 0xc];
+    A0 = hu[V0 + 0x0];
 
-La353c:	; 800A353C
-[S0 + 0008] = h(V0);
+    if( hu[S0 + 0x6] == 0 )
+    {
+        [S0 + 0x8] = h(hu[S0 + 0x8] + 0x1);
 
-La3540:	; 800A3540
-A0 = w[S0 + 000c];
-A1 = hu[S0 + 0008];
-func36244();
+        if( hu[S0 + 0x8] >= A0 )
+        {
+            if( hu[S0 + 0x0] & 0x4 )
+            {
+                [S0 + 0x8] = h(0);
+            }
+            else
+            {
+                [S0 + 0x8] = h(hu[S0 + 0x8] - 1);
+            }
+        }
 
-V0 = w[0x8003623c];
-V0 = bu[V0 + 0x1];
-[S0 + 0006] = h(V0);
+        func36244( w[S0 + 0xc], hu[S0 + 0x8] );
 
-La3568:	; 800A3568
-V0 = hu[S0 + 0006];
-800A3570	addiu  v0, v0, $ffff (=-$1)
-[S0 + 0006] = h(V0);
+        V0 = w[0x8003623c];
+        [S0 + 0x6] = h(bu[V0 + 0x1]);
+    }
 
-La3578:	; 800A3578
-////////////////////////////////
+    [S0 + 0x6] = h(hu[S0 + 0x6] - 0x1);
+}
 
 
 
-////////////////////////////////
-// funca358c
+int funca358c( A0, A1, S3, S2 )
+{
+    S5 = 0;
+    [SP + 0x10] = w(A0);
 
-S3 = A2;
-S2 = A3;
-[SP + 0010] = w(A0);
-A0 = w[S2 + 000c];
-A1 = hu[S2 + 0008];
-800A35CC	jal    $func36244
-S5 = 0;
-S7 = V0;
-800A35D8	lui    s4, $8003
-S4 = w[S4 + 6240];
-800A35E0	lui    s6, $8003
-S6 = w[S6 + 623c];
-800A35E8	beq    s7, zero, La3768 [$800a3768]
-V0 = S3;
-FP = ffff;
-S1 = S4 + 000a;
-S0 = S3 + 0016;
+    func36244( w[S2 + 0xc], hu[S2 + 0x8] );
 
-loopa35fc:	; 800A35FC
-V0 = bu[S2 + 0010];
-A0 = bu[S4 + 0000];
-A3 = hu[S6 + 0006];
-T0 = hu[S2 + 005c];
-V1 = bu[S1 + fff7];
-T1 = hu[S6 + 0004];
-T2 = hu[S2 + 005e];
-A1 = hu[S1 + fffa];
-A2 = hu[S1 + fffc];
-A0 = A0 - A3;
-A0 = A0 + T0;
-A3 = A0;
-V1 = V1 - T1;
-V1 = V1 + T2;
-A1 = A1 + FP;
-A0 = A0 + A1;
-[S0 + ffee] = b(V0);
-V0 = bu[S2 + 0011];
-A2 = A2 + FP;
-[S0 + ffef] = b(V0);
-V0 = V1;
-T0 = bu[S2 + 0012];
-V1 = V1 + A2;
-[S0 + fff2] = h(A3);
-[S0 + fff4] = h(V0);
-[S0 + fffa] = h(A0);
-[S0 + fffc] = h(V0);
-[S0 + 0002] = h(A3);
-[S0 + 0004] = h(V1);
-[S0 + 000a] = h(A0);
-[S0 + 000c] = h(V1);
-[S0 + fff0] = b(T0);
-V0 = bu[S1 + fff8];
-800A3680	nop
-[S0 + fff6] = b(V0);
-V0 = bu[S1 + fff9];
-800A368C	nop
-[S0 + fff7] = b(V0);
-V0 = bu[S1 + fff8];
-800A3698	nop
-V0 = V0 + A1;
-[S0 + fffe] = b(V0);
-V0 = bu[S1 + fff9];
-800A36A8	nop
-[S0 + ffff] = b(V0);
-V0 = bu[S1 + fff8];
-800A36B4	nop
-[S0 + 0006] = b(V0);
-V0 = bu[S1 + fff9];
-800A36C0	nop
-V0 = V0 + A2;
-[S0 + 0007] = b(V0);
-V0 = bu[S1 + fff8];
-800A36D0	nop
-V0 = V0 + A1;
-[S0 + 000e] = b(V0);
-V0 = bu[S1 + fff9];
-800A36E0	nop
-V0 = V0 + A2;
-[S0 + 000f] = b(V0);
-V0 = hu[S1 + fffe];
-800A36F0	nop
-[S0 + 0000] = h(V0);
-V0 = hu[S1 + 0000];
-A0 = S3;
-800A3700	jal    $800468fc
-[S0 + fff8] = h(V0);
-V0 = hu[S2 + 0000];
-800A370C	nop
-V0 = V0 & 8000;
-800A3714	beq    v0, zero, La3740 [$800a3740]
-S1 = S1 + 000c;
-A0 = S3;
-800A3720	jal    $system_psyq_set_semi_trans
-A1 = 0001;
-V0 = hu[S2 + 0000];
-V1 = hu[S0 + 0000];
-V0 = V0 & 6000;
-V0 = V0 >> 08;
-V1 = V1 | V0;
-[S0 + 0000] = h(V1);
+    S7 = V0;
+    800A35D8	lui    s4, $8003
+    S4 = w[S4 + 6240];
+    800A35E0	lui    s6, $8003
+    S6 = w[S6 + 623c];
 
-La3740:	; 800A3740
-A0 = w[SP + 0010];
-A1 = S3;
-system_psyq_add_prim();
+    if( S7 != 0 )
+    {
+        FP = ffff;
+        S1 = S4 + 000a;
+        S0 = S3 + 0016;
 
-S0 = S0 + 0028;
-S3 = S3 + 0028;
-S5 = S5 + 0001;
-V0 = S5 < S7;
-800A375C	bne    v0, zero, loopa35fc [$800a35fc]
-S4 = S4 + 000c;
-V0 = S3;
+        loopa35fc:	; 800A35FC
+            V0 = bu[S2 + 0010];
+            A0 = bu[S4 + 0000];
+            A3 = hu[S6 + 0006];
+            T0 = hu[S2 + 005c];
+            V1 = bu[S1 + fff7];
+            T1 = hu[S6 + 0004];
+            T2 = hu[S2 + 005e];
+            A1 = hu[S1 + fffa];
+            A2 = hu[S1 + fffc];
+            A0 = A0 - A3;
+            A0 = A0 + T0;
+            A3 = A0;
+            V1 = V1 - T1;
+            V1 = V1 + T2;
+            A1 = A1 + FP;
+            A0 = A0 + A1;
+            [S0 + ffee] = b(V0);
+            V0 = bu[S2 + 0011];
+            A2 = A2 + FP;
+            [S0 + ffef] = b(V0);
+            V0 = V1;
+            T0 = bu[S2 + 0012];
+            V1 = V1 + A2;
+            [S0 + fff2] = h(A3);
+            [S0 + fff4] = h(V0);
+            [S0 + fffa] = h(A0);
+            [S0 + fffc] = h(V0);
+            [S0 + 0002] = h(A3);
+            [S0 + 0004] = h(V1);
+            [S0 + 000a] = h(A0);
+            [S0 + 000c] = h(V1);
+            [S0 + fff0] = b(T0);
+            V0 = bu[S1 + fff8];
+            800A3680	nop
+            [S0 + fff6] = b(V0);
+            V0 = bu[S1 + fff9];
+            800A368C	nop
+            [S0 + fff7] = b(V0);
+            V0 = bu[S1 + fff8];
+            800A3698	nop
+            V0 = V0 + A1;
+            [S0 + fffe] = b(V0);
+            V0 = bu[S1 + fff9];
+            800A36A8	nop
+            [S0 + ffff] = b(V0);
+            V0 = bu[S1 + fff8];
+            800A36B4	nop
+            [S0 + 0006] = b(V0);
+            V0 = bu[S1 + fff9];
+            800A36C0	nop
+            V0 = V0 + A2;
+            [S0 + 0007] = b(V0);
+            V0 = bu[S1 + fff8];
+            800A36D0	nop
+            V0 = V0 + A1;
+            [S0 + 000e] = b(V0);
+            V0 = bu[S1 + fff9];
+            800A36E0	nop
+            V0 = V0 + A2;
+            [S0 + 000f] = b(V0);
+            V0 = hu[S1 + fffe];
+            800A36F0	nop
+            [S0 + 0000] = h(V0);
+            V0 = hu[S1 + 0000];
+            [S0 + fff8] = h(V0);
 
-La3768:	; 800A3768
-////////////////////////////////
+            system_psyq_set_poly_ft4( S3 );
+
+            if( hu[S2 + 0x0] & 0x8000 )
+            {
+                system_psyq_set_semi_trans( S3, 0x1 );
+
+                V0 = hu[S2 + 0000];
+                V1 = hu[S0 + 0000];
+                V0 = V0 & 6000;
+                V0 = V0 >> 08;
+                V1 = V1 | V0;
+                [S0 + 0000] = h(V1);
+            }
+
+            A0 = w[SP + 0010];
+            A1 = S3;
+            system_psyq_add_prim();
+
+            S1 = S1 + 000c;
+            S0 = S0 + 0028;
+            S3 = S3 + 0028;
+            S5 = S5 + 0001;
+            S4 = S4 + 000c;
+            V0 = S5 < S7;
+        800A375C	bne    v0, zero, loopa35fc [$800a35fc]
+    }
+
+    return S3;
+}
 
 
 
-////////////////////////////////
-// funca379c()
+// get normalized vector difference
+// scale in 0xc fixed point
+int funca379c( vec1, vec2, res, scale )
+{
+    [SP + 0x10] = w(w[vec2 + 0x0] - h[vec1 + 0x40]);
+    [SP + 0x14] = w(w[vec2 + 0x4] - h[vec1 + 0x42]);
+    [SP + 0x18] = w(w[vec2 + 0x8] - h[vec1 + 0x44]);
 
-V1 = h[A0 + 0040];
-V0 = w[A1 + 0000];
-S1 = A3;
-A3 = V0 - V1;
-[SP + 0010] = w(A3);
-V1 = h[A0 + 0042];
-V0 = w[A1 + 0004];
-S0 = A2;
-A2 = V0 - V1;
-[SP + 0014] = w(A2);
-V1 = h[A0 + 0044];
-V0 = w[A1 + 0008];
-800A37DC	nop
-V0 = V0 - V1;
-800A37E4	bne    a3, zero, La3808 [$800a3808]
-[SP + 0018] = w(V0);
-800A37EC	bgez   a2, La37f8 [$800a37f8]
-V0 = 1000;
-800A37F4	addiu  v0, zero, $f000 (=-$1000)
+    if( w[SP + 0x10] == 0 )
+    {
+        // direction across Y
+        [res + 0x0] = w(0);
+        [res + 0x4] = w(( w[SP + 0x14] < 0 ) ? -0x1000 : 0x1000);
+        [res + 0x8] = w(0);
+    }
+    else if( w[SP + 0x14] == 0 )
+    {
+        // direction across X
+        [res + 0x0] = w(( w[SP + 0x10] < 0 ) ? -0x1000 : 0x1000);
+        [res + 0x4] = w(0);
+        [res + 0x8] = w(0);
+    }
+    else
+    {
+        // normalize vector
+        system_psyq_vector_normal( SP + 0x10, res );
+    }
 
-La37f8:	; 800A37F8
-[S0 + 0000] = w(0);
-[S0 + 0004] = w(V0);
-800A3800	j      La3834 [$800a3834]
-[S0 + 0008] = w(0);
+    // if all coords are small - scale it
+    if( ((w[SP + 0x10] + 0x2) < 0x4) && ((w[SP + 0x14] + 0x2) < 0x4) && ((w[SP + 0x18] + 0x2) < 0x4) )
+    {
+        [res + 0x0] = w(w[SP + 0x10] * 0x1000);
+        [res + 0x4] = w(w[SP + 0x14] * 0x1000);
+        [res + 0x8] = w(w[SP + 0x18] * 0x1000);
+        return 1;
+    }
 
-La3808:	; 800A3808
-800A3808	bne    a2, zero, La382c [$800a382c]
-A0 = SP + 0010;
-800A3810	bgez   a3, La381c [$800a381c]
-V0 = 1000;
-800A3818	addiu  v0, zero, $f000 (=-$1000)
+    if( scale != 0x1000 )
+    {
+        [res + 0x0] = w((w[res + 0x0] * scale) / 0x1000);
+        [res + 0x4] = w((w[res + 0x4] * scale) / 0x1000);
+        [res + 0x8] = w((w[res + 0x8] * scale) / 0x1000);
+    }
 
-La381c:	; 800A381C
-[S0 + 0000] = w(V0);
-[S0 + 0004] = w(0);
-800A3824	j      La3834 [$800a3834]
-[S0 + 0008] = w(0);
-
-La382c:	; 800A382C
-A1 = S0;
-system_psyq_vector_normal();
-
-La3834:	; 800A3834
-V1 = w[SP + 0010];
-800A3838	nop
-V0 = V1 + 0002;
-V0 = V0 < 0004;
-800A3844	beq    v0, zero, La38a8 [$800a38a8]
-V0 = 1000;
-V0 = w[SP + 0014];
-800A3850	nop
-V0 = V0 + 0002;
-V0 = V0 < 0004;
-800A385C	beq    v0, zero, La38a8 [$800a38a8]
-V0 = 1000;
-V0 = w[SP + 0018];
-800A3868	nop
-V0 = V0 + 0002;
-V0 = V0 < 0004;
-800A3874	beq    v0, zero, La38a4 [$800a38a4]
-V0 = V1 << 0c;
-[S0 + 0000] = w(V0);
-V0 = w[SP + 0014];
-800A3884	nop
-V0 = V0 << 0c;
-[S0 + 0004] = w(V0);
-V1 = w[SP + 0018];
-V0 = 0001;
-V1 = V1 << 0c;
-800A389C	j      La391c [$800a391c]
-[S0 + 0008] = w(V1);
-
-La38a4:	; 800A38A4
-V0 = 1000;
-
-La38a8:	; 800A38A8
-800A38A8	beq    s1, v0, La391c [$800a391c]
-V0 = 0;
-V0 = w[S0 + 0000];
-800A38B4	nop
-800A38B8	mult   s1, v0
-800A38BC	mflo   v1
-800A38C0	bgez   v1, La38cc [$800a38cc]
-800A38C4	nop
-V1 = V1 + 0fff;
-
-La38cc:	; 800A38CC
-V0 = w[S0 + 0004];
-800A38D0	nop
-800A38D4	mult   s1, v0
-V0 = V1 >> 0c;
-800A38DC	mflo   v1
-800A38E0	bgez   v1, La38ec [$800a38ec]
-[S0 + 0000] = w(V0);
-V1 = V1 + 0fff;
-
-La38ec:	; 800A38EC
-V0 = w[S0 + 0008];
-800A38F0	nop
-800A38F4	mult   s1, v0
-V0 = V1 >> 0c;
-[S0 + 0004] = w(V0);
-800A3900	mflo   v0
-800A3904	bgez   v0, La3910 [$800a3910]
-800A3908	nop
-V0 = V0 + 0fff;
-
-La3910:	; 800A3910
-V0 = V0 >> 0c;
-[S0 + 0008] = w(V0);
-V0 = 0;
-
-La391c:	; 800A391C
-////////////////////////////////
+    return 0;
+}

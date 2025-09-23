@@ -987,7 +987,7 @@
 80042DB8 system_bios_srand
 80042DC8 system_bios_printf
 
-// SCUS_941_graphic_library_basic.cpp
+// SCUS_941_libgpu.cpp
 80042DD8 func42dd4
 80043634 func43634
 80043644 func43644

@@ -822,8 +822,8 @@ h = A4;
 ////////////////////////////////
 // system_psyq_set_video_mode()
 
-V0 = w[80062bb4];
-[80062bb4] = w(A0);
+V0 = w[0x80062bb4];
+[0x80062bb4] = w(A0);
 return V0;
 ////////////////////////////////
 
@@ -832,7 +832,7 @@ return V0;
 ////////////////////////////////
 // system_psyq_get_video_mode()
 
-return w[80062bb4];
+return w[0x80062bb4];
 ////////////////////////////////
 
 
@@ -868,18 +868,18 @@ if( ( mode & 7 ) == 0 )
 
     system_interrupts_timer_dma_initialize();
 
-    A0 = w[80062bf8] & 00ffffff;
+    A0 = w[0x80062bf8] & 00ffffff;
     system_bios_gpu_cw();
 
     A0 = mode;
     func4602c();
-    [80062c00] = b(V0); // 3 in normal cases
+    [0x80062c00] = b(V0); // 3 in normal cases
 
-    [80062c01] = b(1);
+    [0x80062c01] = b(1);
 
-    V0 = bu[80062c00];
-    [80062c04] = h(hu[80062c80 + V0 * 4]);
-    [80062c06] = h(hu[80062c94 + V0 * 4]);
+    V0 = bu[0x80062c00];
+    [0x80062c04] = h(hu[0x80062c80 + V0 * 4]);
+    [0x80062c06] = h(hu[0x80062c94 + V0 * 4]);
 
     A0 = 80062c00 + 10;
     V0 = 5c - 1;
@@ -897,18 +897,18 @@ if( ( mode & 7 ) == 0 )
         V0 = V0 - 1;
     80046548	bne    v0, -1, loop46540 [$80046540]
 
-    return bu[80062c00];
+    return bu[0x80062c00];
 }
 else
 {
-    if( bu[80062c02] >= 2 )
+    if( bu[0x80062c02] >= 2 )
     {
         A0 = 80010cec; // "ResetGraph(%d)..."
         A1 = mode;
-        80043A58	jalr   w[80062bfc] ra
+        80043A58	jalr   w[0x80062bfc] ra
     }
 
-    V0 = w[80062bf8];
+    V0 = w[0x80062bf8];
     A0 = 1;
     80043A74	jalr   w[V0 + 34] ra
 }
@@ -920,24 +920,24 @@ else
 // system_psyq_set_graph_reverse()
 
 reverse = A0;
-reverse_old = bu[80062c03];
+reverse_old = bu[0x80062c03];
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010d00; // "SetGraphReverse(%d)...\n"
     A1 = reverse;
-    80043ADC	jalr   w[80062bfc] ra
+    80043ADC	jalr   w[0x80062bfc] ra
 }
 
-[80062c03] = b(reverse);
+[0x80062c03] = b(reverse);
 
 A0 = 8;
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 80043AF8	jalr   w[V0 + 28] ra
 
 last_display_mode = V0;
 
-if( bu[80062c03] != 0 )
+if( bu[0x80062c03] != 0 )
 {
     A0 = last_display_mode | 08000080; // add reverse flag to display mode GP1 command
 }
@@ -946,12 +946,12 @@ else
     A0 = last_display_mode | 08000000;
 }
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 80043B38	jalr   w[V0 + 10] ra
 
-if( bu[80062c00] == 2 ) // if old gpu
+if( bu[0x80062c00] == 2 ) // if old gpu
 {
-    if( bu[80062c03] != 0 )
+    if( bu[0x80062c03] != 0 )
     {
         A0 = 20000501; // Ancient Texture enable
     }
@@ -960,7 +960,7 @@ if( bu[80062c00] == 2 ) // if old gpu
         A0 = 20000504; // Ancient Texture Disable
     }
 
-    V1 = w[80062bf8];
+    V1 = w[0x80062bf8];
     80043B80	jalr   w[V1 + 10] ra
 }
 
@@ -978,17 +978,17 @@ return reverse_old;
 // Return value the previously set debug level.
 
 level = A0;
-level_old = bu[80062c02];
+level_old = bu[0x80062c02];
 
-[80062c02] = b(level);
+[0x80062c02] = b(level);
 
 if( level & 00ff )
 {
     A0 = 80010d18; // "SetGraphDebug:level:%d,type:%d reverse:%d"
     A1 = level;
-    A2 = bu[80062c00];
-    A3 = bu[80062c03];
-    80043BF4	jalr   w[80062bfc] ra
+    A2 = bu[0x80062c00];
+    A3 = bu[0x80062c03];
+    80043BF4	jalr   w[0x80062bfc] ra
 }
 
 return level_old;
@@ -999,23 +999,23 @@ return level_old;
 ////////////////////////////////
 // system_psyq_set_grap_que()
 
-que_old = bu[80062c01];
+que_old = bu[0x80062c01];
 que = A0;
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010d44;
     A1 = que;
-    80043C5C	jalr   w[80062bfc] ra
+    80043C5C	jalr   w[0x80062bfc] ra
 }
 
 if( que != que_old )
 {
     A0 = 1; // Cancels the current drawing and flushes the command buffer.
-    V0 = w[80062bf8];
+    V0 = w[0x80062bf8];
     80043C88	jalr   w[V0 + 34] ra
 
-    [80062c01] = b(que);
+    [0x80062c01] = b(que);
 
     A0 = 2; // GPU (lists + image data)
     A1 = 0; // remove callback
@@ -1030,7 +1030,7 @@ return que_old;
 ////////////////////////////////
 // system_gpu_get_type()
 
-return bu[80062c00];
+return bu[0x80062c00];
 ////////////////////////////////
 
 
@@ -1038,7 +1038,7 @@ return bu[80062c00];
 ////////////////////////////////
 // system_psyq_get_graph_debug()
 
-return bu[80062c02];
+return bu[0x80062c02];
 ////////////////////////////////
 
 
@@ -1059,15 +1059,15 @@ return bu[80062c02];
 // callback isn’t called until all the commands have terminated.
 
 callback = A0;
-callback_old = w[80062c0c];
+callback_old = w[0x80062c0c];
 
-[80062c0c] = w(callback);
+[0x80062c0c] = w(callback);
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010d58; // "DrawSyncCallback(%08x)...\n"
     A1 = callback;
-    80043D10	jalr   w[80062bfc] ra
+    80043D10	jalr   w[0x80062bfc] ra
 }
 return callback_old;
 ////////////////////////////////
@@ -1082,11 +1082,11 @@ return callback_old;
 
 mask = A0;
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010d74; // "SetDispMask(%d)..."
     A1 = mask;
-    80043D7C	jalr   w[80062bfc] ra // system_bios_printf()
+    80043D7C	jalr   w[0x80062bfc] ra // system_bios_printf()
 }
 
 if( mask == 0 )
@@ -1103,7 +1103,7 @@ if( mask != 0 )
     A0 = 03000000;
 }
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 V0 = w[V0 + 10];
 80043DB8	jalr   v0 ra
 ////////////////////////////////
@@ -1126,14 +1126,14 @@ V0 = w[V0 + 10];
 
 type = A0;
 
-if( bu[80062c02] >= 0002 ) // debug
+if( bu[0x80062c02] >= 0002 ) // debug
 {
     A0 = 80010d88; // "DrawSync(%d)..."
     A1 = type;
-    80043E0C	jalr   w[80062bfc] ra // system_bios_printf()
+    80043E0C	jalr   w[0x80062bfc] ra // system_bios_printf()
 }
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 V0 = w[V0 + 3c];
 A0 = type;
 80043E28	jalr   v0 ra
@@ -1149,17 +1149,17 @@ return V0;
 string = A0;
 S0 = A1;
 
-if( bu[80062c02] == 1 ) // Checks coordinating registered and drawn primitives.
+if( bu[0x80062c02] == 1 ) // Checks coordinating registered and drawn primitives.
 {
-    if( ( h[80062c04] >= h[S0 + 4] ) && ( h[S0 + 4] > 0 ) && ( h[80062c04] >= h[S0 + 4] + h[S0 + 0] ) && ( h[S0 + 0] >= 0 ) &&
-        ( h[80062c06] >= h[S0 + 2] ) && ( h[S0 + 2] >= 0 ) && ( h[80062c06] >= h[S0 + 2] + h[S0 + 6] ) && (h[S0 + 6] > 0 ) )
+    if( ( h[0x80062c04] >= h[S0 + 4] ) && ( h[S0 + 4] > 0 ) && ( h[0x80062c04] >= h[S0 + 4] + h[S0 + 0] ) && ( h[S0 + 0] >= 0 ) &&
+        ( h[0x80062c06] >= h[S0 + 2] ) && ( h[S0 + 2] >= 0 ) && ( h[0x80062c06] >= h[S0 + 2] + h[S0 + 6] ) && (h[S0 + 6] > 0 ) )
     {
         return;
     }
 
     A0 = 80010d9c; // "%s:bad RECT"
 }
-else if( bu[80062c02] == 2 ) // Registered and drawn primitives are dumped.
+else if( bu[0x80062c02] == 2 ) // Registered and drawn primitives are dumped.
 {
     A0 = 80010dbc; // "%s:"
 }
@@ -1169,14 +1169,14 @@ else
 }
 
 A1 = string;
-80043F28	jalr   w[80062bfc] ra // system_bios_printf()
+80043F28	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010da8; // "(%d,%d)-(%d,%d)"
 A1 = h[S0 + 0];
 A2 = h[S0 + 2];
 A3 = h[S0 + 4];
 A4 = h[S0 + 6];
-80043F50	jalr   w[80062bfc] ra // system_bios_printf()
+80043F50	jalr   w[0x80062bfc] ra // system_bios_printf()
 ////////////////////////////////
 
 
@@ -1199,7 +1199,7 @@ A0 = 80010dc0; // "ClearImage"
 A1 = rect;
 system_graphic_debug_print_rect(); // libgpu debug string
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 A0 = w[V0 + c];
 A1 = rect;
 A2 = 8;
@@ -1228,7 +1228,7 @@ system_graphic_debug_print_rect(); // libgpu debug string
 
 A1 = S0;
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 A0 = w[V0 + 20];
 V0 = w[V0 + 8];
 
@@ -1256,7 +1256,7 @@ A0 = 80010dd8; // "StoreImage"
 A1 = recp;
 system_graphic_debug_print_rect(); // libgpu debug string
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 A0 = w[V0 + 1c];
 A1 = recp;
 A2 = 8;
@@ -1324,12 +1324,12 @@ L44170:	; 80044170
 S0 = A0;
 number_of_entries = A1;
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010df0; // "ClearOTag(%08x,%d)..."
     A1 = S0;
     A2 = number_of_entries;
-    800441C8	jalr   w[80062bfc] ra
+    800441C8	jalr   w[0x80062bfc] ra
 }
 
 number = number - 1;
@@ -1379,13 +1379,13 @@ void system_psyq_clear_otag_r( u32* ot, int n )
 // func442dc
 
 S0 = A0;
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 V0 = w[V0 + 3c];
 S1 = bu[S0 + 3];
 A0 = 0;
 80044300	jalr   v0 ra
 
-V0 = w[80062bf8];
+V0 = w[0x80062bf8];
 V0 = w[V0 + 14];
 A0 = S0 + 4;
 A1 = S1;
@@ -1400,7 +1400,7 @@ void system_psyq_draw_otag( u32* ot )
     {
         A0 = 0x80010e20; // "DrawOTag(%08x)..."
         A1 = ot;
-        80044370	jalr   w[80062bfc] ra
+        80044370	jalr   w[0x80062bfc] ra
     }
 
     V0 = w[0x80062bf8]; // 80062bb8
@@ -1424,11 +1424,11 @@ void system_psyq_draw_otag( u32* ot )
 
 env = A0; // pointer to drawing environment start address
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010e34; // "PutDrawEnv(%08x)..."
     A1 = env;
-    800443F4	jalr   w[80062bfc] ra
+    800443F4	jalr   w[0x80062bfc] ra
 }
 
 dr_env = env + 1c;
@@ -1439,7 +1439,7 @@ system_psyq_set_drawenv();
 
 [dr_env] = w(w[dr_env] | 00ffffff);
 
-V1 = w[80062bf8];
+V1 = w[0x80062bf8];
 A0 = w[V1 + 18];
 A1 = dr_env;
 A2 = 40;
@@ -1476,11 +1476,11 @@ return env;
 
 env = A0;
 
-if( bu[80062c02] >= 2 )
+if( bu[0x80062c02] >= 2 )
 {
     A0 = 80010e4c; // "PutDispEnv(%08x)..."
     A1 = env;
-    800444F8	jalr   w[80062bfc] ra
+    800444F8	jalr   w[0x80062bfc] ra
 }
 
 {
@@ -1492,7 +1492,7 @@ if( bu[80062c02] >= 2 )
     // screen is set via Display Range registers; target=X1,Y2;
     // size=(X2-X1/cycles_per_pix), (Y2-Y1).
 
-    if( ( bu[80062c00] - 1 ) < 2 )
+    if( ( bu[0x80062c00] - 1 ) < 2 )
     {
         A0 = env;
         func45024();
@@ -1505,11 +1505,11 @@ if( bu[80062c02] >= 2 )
     }
 
     A0 = V1;
-    V0 = w[80062bf8];
+    V0 = w[0x80062bf8];
     80044574	jalr   w[V0 + 10] ra
 }
 
-if( ( w[80062c74] != w[env + 8] ) || ( w[80062c78] != w[env + c] ) )
+if( ( w[0x80062c74] != w[env + 8] ) || ( w[0x80062c78] != w[env + c] ) )
 {
     system_psyq_get_video_mode();
     [env + 12] = b(V0); // pad0
@@ -1587,7 +1587,7 @@ if( ( w[80062c74] != w[env + 8] ) || ( w[80062c78] != w[env + c] ) )
     // games).
 
     A0 = 06000000 | ((x2 & fff) << c) | (x1 & fff);
-    A1 = w[80062bf8];
+    A1 = w[0x80062bf8];
     80044734	jalr   w[A1 + 10] ra
 
     // GP1(07h) - Vertical Display range (on Screen)
@@ -1605,12 +1605,12 @@ if( ( w[80062c74] != w[env + 8] ) || ( w[80062c78] != w[env + c] ) )
     // lines (overscan with hidden lines). Many PAL games display only 256 lines
     // (underscan with black borders).
 
-    A1 = w[80062bf8];
+    A1 = w[0x80062bf8];
     A0 = 07000000 | ((y2 & 3ff) << a) | (y1 & 3ff);
     80044760	jalr   w[A1 + 10] ra
 }
 
-if( ( w[80062c7c] != w[env + 10] ) || ( w[80062c6c] != w[env + 0] ) || ( w[80062c70] != w[env + 4] ) )
+if( ( w[0x80062c7c] != w[env + 10] ) || ( w[0x80062c6c] != w[env + 0] ) || ( w[0x80062c70] != w[env + 4] ) )
 {
     // GP1(08h) - Display mode
     //   0-1   Horizontal Resolution 1     (0=256, 1=320, 2=512, 3=640) ;GPUSTAT.17-18
@@ -1642,7 +1642,7 @@ if( ( w[80062c7c] != w[env + 10] ) || ( w[80062c6c] != w[env + 0] ) || ( w[80062
     if( bu[env + 12] == 1 ) S2 |= 08; // Video Mode (1=PAL/50Hz)
     if( bu[env + 11] != 0 ) S2 |= 10; // Display Area Color Depth (1=24bit)
     if( bu[env + 10] != 0 ) S2 |= 20; // Vertical Interlace (1=On)
-    if( bu[80062c03] != 0 ) S2 |= 80; // "Reverseflag" (1=Distorted)
+    if( bu[0x80062c03] != 0 ) S2 |= 80; // "Reverseflag" (1=Distorted)
 
     if( h[env + 4] >= 119 )
     {
@@ -1667,7 +1667,7 @@ if( ( w[80062c7c] != w[env + 10] ) || ( w[80062c6c] != w[env + 0] ) || ( w[80062
 
     if( V0 == 0 ) S2 |= 24; // Vertical Resolution (1=480), Vertical Interlace (1=On)
 
-    V0 = w[80062bf8];
+    V0 = w[0x80062bf8];
     A0 = S2;
     80044890	jalr   w[V0 + 10] ra
 }
@@ -1954,7 +1954,7 @@ V0 = V0 - V1;
 V0 = V0 - A0;
 
 L4507c:	; 8004507C
-V0 = bu[80062c03];
+V0 = bu[0x80062c03];
 80045084	nop
 80045088	beq    v0, zero, L450b4 [$800450b4]
 8004508C	nop
@@ -2001,10 +2001,10 @@ return w[V0 + 0];
 head = A0;
 number = A1;
 
-dma_control = w[80062cf0]; // 1f8010f0
-dma6_channel_control = w[80062cec]; // 1f8010e8
-dma6_block_control = w[80062ce8]; // 1f8010e4
-dma6_base_address = w[80062ce4]; // 1f8010e0
+dma_control = w[0x80062cf0]; // 1f8010f0
+dma6_channel_control = w[0x80062cec]; // 1f8010e8
+dma6_block_control = w[0x80062ce8]; // 1f8010e4
+dma6_base_address = w[0x80062ce4]; // 1f8010e0
 
 [dma_control] = w(w[dma_control] | 08000000); // DMA6, OTC Master Enable
 
@@ -2669,8 +2669,8 @@ loop45a58:	; 80045A58
     func45d18();
 
     L45a70:	; 80045A70
-    V0 = w[80062d04];
-    V1 = w[80062d08];
+    V0 = w[0x80062d04];
+    V1 = w[0x80062d08];
     V0 = V0 + 0001;
     V0 = V0 & 003f;
 80045A88	beq    v0, v1, loop45a58 [$80045a58]
@@ -2681,25 +2681,25 @@ system_set_interrupt_mask_register();
 V1 = 80062c08;
 A0 = 0 | 0001;
 [V1 + 0000] = w(A0);
-V1 = bu[80062c01];
-[80062d0c] = w(V0);
+V1 = bu[0x80062c01];
+[0x80062d0c] = w(V0);
 80045AB8	beq    v1, zero, L45b10 [$80045b10]
 80045ABC	lui    a0, $0400
-V1 = w[80062d04];
-V0 = w[80062d08];
+V1 = w[0x80062d04];
+V0 = w[0x80062d08];
 80045AD4	bne    v1, v0, L45b70 [$80045b70]
 
-V0 = w[80062ce0];
+V0 = w[0x80062ce0];
 V0 = w[V0 + 0000];
 80045AEC	lui    v1, $0100
 V0 = V0 & V1;
 80045AF4	bne    v0, zero, L45b70 [$80045b70]
 
-V0 = w[80062c0c];
+V0 = w[0x80062c0c];
 80045B08	bne    v0, zero, L45b70 [$80045b70]
 
 L45b10:	; 80045B10
-V1 = w[80062cd4];
+V1 = w[0x80062cd4];
 
 loop45b18:	; 80045B18
     V0 = w[V1 + 0000] & A0;
@@ -2709,11 +2709,11 @@ A0 = S0;
 A1 = S2;
 80045B34	jalr   s3 ra
 
-A0 = w[80062d0c];
+A0 = w[0x80062d0c];
 V0 = 80062cf4;
 [V0 + 0000] = w(S3);
-[80062cf8] = w(S0);
-[80062cfc] = w(S2);
+[0x80062cf8] = w(S0);
+[0x80062cfc] = w(S2);
 
 system_set_interrupt_mask_register();
 
@@ -2739,7 +2739,7 @@ L45b98:	; 80045B98
     A0 = A2 << 02;
     A1 = w[A3 + 0000];
     A3 = A3 + 0004;
-    V1 = w[80062d04];
+    V1 = w[0x80062d04];
     A2 = A2 + 0001;
     V0 = V1 << 01;
     V0 = V0 + V1;
@@ -2751,8 +2751,8 @@ L45b98:	; 80045B98
 80045BE0	j      L45b98 [$80045b98]
 
 L45be8:	; 80045BE8
-V0 = w[80062d04];
-V1 = w[80062d04];
+V0 = w[0x80062d04];
+V1 = w[0x80062d04];
 A0 = V0 << 01;
 A0 = A0 + V0;
 A0 = A0 << 05;
@@ -2769,7 +2769,7 @@ AT = AT + A0;
 80045C2C	j      L45c5c [$80045c5c]
 
 L45c34:	; 80045C34
-V1 = w[80062d04];
+V1 = w[0x80062d04];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 05;
@@ -2779,7 +2779,7 @@ AT = AT + V0;
 [AT + 0000] = w(S0);
 
 L45c5c:	; 80045C5C
-V1 = w[80062d04];
+V1 = w[0x80062d04];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 05;
@@ -2787,7 +2787,7 @@ V0 = V0 << 05;
 80045C78	addiu  at, at, $ad48 (=-$52b8)
 AT = AT + V0;
 [AT + 0000] = w(S2);
-V1 = w[80062d04];
+V1 = w[0x80062d04];
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 05;
@@ -2795,16 +2795,16 @@ V0 = V0 << 05;
 80045CA0	addiu  at, at, $ad40 (=-$52c0)
 AT = AT + V0;
 [AT + 0000] = w(S3);
-V0 = w[80062d04];
-A0 = w[80062d0c];
+V0 = w[0x80062d04];
+A0 = w[0x80062d0c];
 V0 = V0 + 0001;
 V0 = V0 & 003f;
-[80062d04] = w(V0);
+[0x80062d04] = w(V0);
 system_set_interrupt_mask_register();
 
 80045CD4	jal    func45d18 [$80045d18]
 
-V0 = w[80062d04] - w[80062d08];
+V0 = w[0x80062d04] - w[0x80062d08];
 V0 = V0 & 3f;
 
 L45cf8:	; 80045CF8
@@ -3036,17 +3036,17 @@ mode = A0;
 
 // GP1 Send GP1 Commands (Display Control)
 // GPUSTAT Read GPU Status Register
-gpu_1f801814 = w[80062cd4];
+gpu_1f801814 = w[0x80062cd4];
 
-dma2_channel_control = w[80062ce0]; // 1f8010a8
-dma_control = w[80062cf0]; // 1f8010f0
+dma2_channel_control = w[0x80062ce0]; // 1f8010a8
+dma_control = w[0x80062cf0]; // 1f8010f0
 
 A0 = 0;
 system_set_interrupt_mask_register();
-[80062d14] = w(V0);
+[0x80062d14] = w(V0);
 
-[80062d08] = w(0);
-[80062d04] = w(0);
+[0x80062d08] = w(0);
+[0x80062d04] = w(0);
 
 if( ( mode & 7 ) == 0 )
 {
@@ -3078,7 +3078,7 @@ else if( ( mode & 7 ) == 1 )
     [gpu_1f801814] = w(01000000);
 }
 
-A0 = w[80062d14];
+A0 = w[0x80062d14];
 system_set_interrupt_mask_register();
 
 if( mode & 7 )
@@ -3200,15 +3200,13 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// func462b0()
+void func462b0()
+{
+    system_psyq_vsync( -1 ); // wait
 
-A0 = -1;
-system_psyq_vsync(); // wait
-
-[80062d18] = w(V0 + f0);
-[80062d1c] = w(0);
-////////////////////////////////
+    [0x80062d18] = w(V0 + 0xf0);
+    [0x80062d1c] = w(0);
+}
 
 
 
@@ -3217,44 +3215,38 @@ system_psyq_vsync(); // wait
 
 // GP1 Send GP1 Commands (Display Control)
 // GPUSTAT Read GPU Status Register
-gpu_1f801814 = w[80062cd4];
+gpu_1f801814 = w[0x80062cd4];
 
-dma_control = w[80062cf0]; // 1f8010f0
-dma2_base_address = w[80062cd8]; // 1f8010a0
-dma2_channel_control = w[80062ce0]; // 1f8010a8
+dma_control = w[0x80062cf0]; // 1f8010f0
+dma2_base_address = w[0x80062cd8]; // 1f8010a0
+dma2_channel_control = w[0x80062ce0]; // 1f8010a8
 
-A0 = -1;
-system_psyq_vsync(); // wait
+system_psyq_vsync( -1 );
 
-if( V0 <= w[80062d18] )
+if( V0 <= w[0x80062d18] )
 {
-    V1 = w[80062d1c];
-    [80062d1c] = w(V1 + 1);
+    V1 = w[0x80062d1c];
+    [0x80062d1c] = w(V1 + 1);
     if( V1 <= f0000 )
     {
         return 0;
     }
 }
 
-A0 = 80010e64; // "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,"
-A1 = (w[80062d04] - w[80062d08]) & 003f;
+A1 = (w[0x80062d04] - w[0x80062d08]) & 0x3f;
 A2 = w[gpu_1f801814];
 A3 = w[dma2_channel_control];
 A4 = w[dma2_base_address];
-system_bios_printf();
+system_bios_printf( "GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x,", A1, A2, A3, A4 );
 
-A0 = 80010e98; // "func=(%08x)(%08x,%08x)"
-A1 = w[80062cf4];
-A2 = w[80062cf8];
-A3 = w[80062cfc];
-system_bios_printf();
+system_bios_printf( "func=(%08x)(%08x,%08x)", w[0x80062cf4], w[0x80062cf8], w[0x80062cfc] );
 
 A0 = 0;
 system_set_interrupt_mask_register();
-[80062d14] = w(V0);
+[0x80062d14] = w(V0);
 
-[80062d04] = w(0);
-[80062d08] = w(0);
+[0x80062d04] = w(0);
+[0x80062d08] = w(0);
 
 // 0 Transfer Direction From Main RAM
 // 1 Memory Address Step Forward;+4
@@ -3267,7 +3259,7 @@ system_set_interrupt_mask_register();
 // GP1(01h) Resets the command buffer.
 [gpu_1f801814] = w(01000000);
 
-A0 = w[80062d14];
+A0 = w[0x80062d14];
 system_set_interrupt_mask_register();
 
 return -1;
@@ -3282,10 +3274,10 @@ mode = A0;
 
 // GP0 Send GP0 Commands/Packets (Rendering and VRAM Access)
 // GPUREAD Read responses to GP0(C0h) and GP1(10h) commands
-gpu_1f801810 = w[80062cd0];
+gpu_1f801810 = w[0x80062cd0];
 // GP1 Send GP1 Commands (Display Control)
 // GPUSTAT Read GPU Status Register
-gpu_1f801814 = w[80062cd4];
+gpu_1f801814 = w[0x80062cd4];
 
 // Read GPU Type (usually 2) See "GPU Versions" notes below
 [gpu_1f801814] = w(10000007);
@@ -3401,7 +3393,7 @@ if( ( V0 == 1 ) || ( V0 == 2 ) )
     A2 = (tpage >> 7) & 3;
     A3 = (tpage << 6) & 7c0;
     A4 = (tpage << 3) & 300;
-    800466B4	jalr   w[80062bfc] ra
+    800466B4	jalr   w[0x80062bfc] ra
 }
 else
 {
@@ -3410,7 +3402,7 @@ else
     A2 = (tpage >> 5) & 3;
     A3 = (tpage << 6) & 7c0;
     A4 = ((tpage << 4) & 100) + ((tpage >> 2) & 200);
-    80046700	jalr   w[80062bfc] ra
+    80046700	jalr   w[0x80062bfc] ra
 }
 ////////////////////////////////
 
@@ -3425,7 +3417,7 @@ clut = A0;
 A0 = 80010ec8; // "clut: (%d,%d)\n"
 A1 = (clut & 3f) << 4;
 A2 = (clut & ffff) >> 6;
-80046744	jalr   w[80062bfc] ra
+80046744	jalr   w[0x80062bfc] ra
 ////////////////////////////////
 
 
@@ -3796,27 +3788,27 @@ A1 = h[env + 0];
 A2 = h[env + 2];
 A3 = h[env + 4];
 A4 = h[env + 6];
-80046B00	jalr   w[80062bfc] ra // system_bios_printf()
+80046B00	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010ef0; // "ofs  (%3d,%3d)\n"
 A1 = h[env + 8];
 A2 = h[env + a];
-80046B20	jalr   w[80062bfc] ra // system_bios_printf()
+80046B20	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010f00; // "tw   (%d,%d)-(%d,%d)\n"
 A1 = h[env + c];
 A2 = h[env + e];
 A3 = h[env + 10];
 A4 = h[env + 12];
-80046B48	jalr   w[80062bfc] ra // system_bios_printf()
+80046B48	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010f18; // "dtd   %d\n"
 A1 = bu[env + 16];
-80046B64	jalr   w[80062bfc] ra // system_bios_printf()
+80046B64	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010f24; // "dfe   %d\n"
 A1 = bu[env + 17];
-80046B80	jalr   w[80062bfc] ra // system_bios_printf()
+80046B80	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 system_gpu_get_type();
 
@@ -3827,7 +3819,7 @@ if( ( V0 == 1 ) || ( V0 == 2 ) )
     A2 = (hu[env + 14] >> 7) & 3;
     A3 = (hu[env + 14] << 6) & 7c0;
     A4 = (hu[env + 14] << 3) & 300;
-    80046BE4	jalr   w[80062bfc] ra // system_bios_printf()
+    80046BE4	jalr   w[0x80062bfc] ra // system_bios_printf()
 }
 else
 {
@@ -3836,7 +3828,7 @@ else
     A2 = (hu[env + 14] >> 5) & 3;
     A3 = (hu[env + 14] << 6) & 7c0;
     A4 = ((hu[env + 14] << 4) & 100) + ((hu[env + 14] >> 2) & 200);
-    80046C34	jalr   w[80062bfc] ra // system_bios_printf()
+    80046C34	jalr   w[0x80062bfc] ra // system_bios_printf()
 }
 ////////////////////////////////
 
@@ -3853,22 +3845,22 @@ A1 = h[env + 0];
 A2 = h[env + 2];
 A3 = h[env + 4];
 A4 = h[env + 6];
-80046C80	jalr   w[80062bfc] ra // system_bios_printf()
+80046C80	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010f4c; // "screen (%3d,%3d)-(%d,%d)\n"
 A1 = h[env + 8];
 A2 = h[env + a];
 A3 = h[env + c];
 A4 = h[env + e];
-80046CA8	jalr   w[80062bfc] ra // system_bios_printf()
+80046CA8	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010f68; // "isinter %d\n"
 A1 = bu[env + 10];
-80046CC4	jalr   w[80062bfc] ra // system_bios_printf()
+80046CC4	jalr   w[0x80062bfc] ra // system_bios_printf()
 
 A0 = 80010f74; // "isrgb24 %d\n"
 A1 = bu[env + 11];
-80046CE0	jalr   w[80062bfc] ra // system_bios_printf()
+80046CE0	jalr   w[0x80062bfc] ra // system_bios_printf()
 ////////////////////////////////
 
 
@@ -3876,7 +3868,7 @@ A1 = bu[env + 11];
 ////////////////////////////////
 // system_psyq_open_tim()
 
-[80070690] = w(A0);
+[0x80070690] = w(A0);
 
 return 0;
 ////////////////////////////////
@@ -3888,13 +3880,13 @@ return 0;
 
 ret = A0;
 
-A0 = w[80070690]; // texture addr
+A0 = w[0x80070690]; // texture addr
 A1 = ret;
 system_read_tim_get_sizes();
 
 if( V0 != -1 )
 {
-    [80070690] = w(w[80070690] + V0 * 4); // offset to next tim
+    [0x80070690] = w(w[0x80070690] + V0 * 4); // offset to next tim
     return ret;
 }
 return 0;
