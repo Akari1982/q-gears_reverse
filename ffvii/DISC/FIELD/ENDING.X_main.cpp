@@ -1,5 +1,13 @@
+u32* l_otags[0x2];          // 0x800a64e4
+
+DR_MODE l_dm[0x2];          // 0x800a64ec
+
 DRAWENV l_draw_env[0x2];    // 0x800af2e0
 DISPENV l_disp_env[0x2];    // 0x800af398
+
+TILE l_tiles[0x2];          // 0x800a6504
+
+u32* l_otag_stored;         // 0x800af3e8
 
 u32 l_buttons1_state;       // 0x800af3f4 controller 1 buttons state
 u32 l_buttons2_state;       // 0x800af3f8 controller 2 buttons state
@@ -7,6 +15,8 @@ u32 l_buttons1_not_pressed; // 0x800af3c0 controller 1 not pressed buttons
 u32 l_buttons2_not_pressed; // 0x800af3c4 controller 2 not pressed buttons
 u32 l_buttons1_pressed;     // 0x800af3ec controller 1 pressed buttons
 u32 l_buttons2_pressed;     // 0x800af3f0 controller 2 pressed buttons
+
+u32* l_otags2[0x2];         // 0x800af400
 
 u32 l_rb;                   // 0x800af408
 
@@ -69,10 +79,10 @@ void ending_main()
             image += 0xa00;
         }
 
-        u32* ot = 0x800a64e4 + rb * 0x4;
+        u32* ot = l_otags[rb];
         system_psyq_clear_otag_r( ot, 0x1 );
 
-        TILE* tile = 0x800a6504 * rb * 10;
+        TILE* tile = &l_tiles[rb];
         system_psyq_set_tile( tile );
         system_psyq_set_semi_trans( tile , 0x1 );
         tile->r0 = i;
@@ -84,7 +94,7 @@ void ending_main()
         tile->h = 0x4a;
         system_psyq_add_prim( ot, tile );
 
-        DR_MODE* dm = 0x800a64ec + rb * 0xc;
+        DR_MODE* dm = &l_dm[rb];
         system_psyq_set_draw_mode( dm, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
         system_psyq_add_prim( ot, dm );
 
@@ -140,10 +150,10 @@ void ending_main()
             rect.y += 0x2;
         }
 
-        u32* ot = 0x800a64e4 + rb * 0x4;
+        u32* ot = l_otags[rb];
         system_psyq_clear_otag_r( ot, 0x1 );
 
-        TILE* tile = 0x800a6504 + rb * 0x10;
+        TILE* tile = &l_tiles[rb];
         system_psyq_set_tile( tile );
         system_psyq_set_semi_trans( tile, 0x1 );
         tile->r0 = i;
@@ -155,7 +165,7 @@ void ending_main()
         tile->h = 0x4a;
         system_psyq_add_prim( ot, tile );
 
-        DR_MODE* dm = 0x800a64ec + rb * 0xc;
+        DR_MODE* dm = &l_dm[rb];
         system_psyq_set_draw_mode( dm, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
         system_psyq_add_prim( ot, dm );
 
@@ -169,9 +179,10 @@ void ending_main()
 
 void ending_main_2( S0 )
 {
-    u32* ot = 0x800af400;
+    u32* ot = l_otags2[0];
 
-    La04f4:	; 800A04F4
+    while( true )
+    {
         ending_render_init( 0x140, 0xf0, 0x200, 0, 0, 0 );
 
         RECT rect;
@@ -192,7 +203,8 @@ void ending_main_2( S0 )
 
         [0x800af410] = w(0x1);
 
-        loopa05a0:	; 800A05A0
+        while( w[0x800af410] != 0 )
+        {
             system_psyq_vsync( 0x1 );
             system_psyq_draw_sync( 0 );
             system_psyq_vsync( 0x1 );
@@ -203,22 +215,20 @@ void ending_main_2( S0 )
 
             if( rb != 0 ) [0x800af3fc] = w(0x801f0000);
 
-            A0 = w[0x8007ebd0];
-            rect.x = hu[A0 + 0x0];
-            rect.y = hu[A0 + 0x2];
+            DRAWENV* draw_env = w[0x8007ebd0];
+            rect.x = draw_env->clip.x;
+            rect.y = draw_env->clip.y;
 
-            V1 = w[0x8007ebd8];
-            if( bu[V1 + 0x11] == 0 )
+            DISPENV* disp_env = w[0x8007ebd8];
+            if( disp_env->isrgb24 == 0 ) // 16-bit mode
             {
-                rect.w = hu[A0 + 0x4];
+                rect.w = draw_env->clip.w;
             }
-            else
+            else // 24-bit mode
             {
-                rect.w = (h[A0 + 0x4] * 0x3) / 2;
+                rect.w = (draw_env->clip.w * 0x3) / 2;
             }
-
-            V0 = w[0x8007ebd0];
-            rect.h = hu[V0 + 0x6];
+            rect.h = draw_env->clip.h;
 
             system_psyq_clear_image( &rect, 0, 0, 0 );
 
@@ -227,12 +237,12 @@ void ending_main_2( S0 )
 
             if( system_cdrom_read_chain() == 0xa )
             {
-                func354cc();
+                func354cc(); // play movie frame
             }
 
             system_psyq_clear_otag_r( ot + l_rb * 0x4, 0x1 );
 
-            [0x800af3e8] = w(ot + l_rb * 0x4);
+            l_otag_stored = ot + l_rb * 0x4;
 
             funca1e20();
             funca3210();
@@ -246,11 +256,8 @@ void ending_main_2( S0 )
                 V0 = l_buttons1_pressed & 0x09f0; // pressed triangle circle cross square start select
                 800A0710	bne    v0, zero, La0734 [$800a0734]
             }
-
-            V0 = w[0x800af410];
-        800A0724	bne    v0, zero, loopa05a0 [$800a05a0]
-
-    800A072C	j      La04f4 [$800a04f4]
+        }
+    }
 
     La0734:	; 800A0734
     // set vol music slide (fade out music)
@@ -265,13 +272,13 @@ void ending_main_2( S0 )
 
         l_rb = rb;
 
-        RECT* draw_area = w[0x8007ebd0];
+        DRAWENV* draw_env = w[0x8007ebd0];
 
         RECT rect;
-        rect.x = draw_area->x;
-        rect.y = draw_area->y;
-        rect.w = draw_area->w;
-        rect.h = draw_area->h;
+        rect.x = draw_env->clip.x;
+        rect.y = draw_env->clip.y;
+        rect.w = draw_env->clip.w;
+        rect.h = draw_env->clip.h;
 
         system_psyq_clear_image( &rect, 0, 0, 0 );
 
@@ -279,14 +286,15 @@ void ending_main_2( S0 )
 
         if( system_cdrom_read_chain() == 0xa )
         {
-            func354cc();
+            func354cc(); // play movie frame
         }
 
         u32 rb = l_rb;
 
-        u32* ot1 = 0x800af400 + rb * 0x4;
+        u32* ot1 = l_otags2[rb];
         system_psyq_clear_otag_r( ot1 , 0x1 );
-        [0x800af3e8] = w(ot1);
+        l_otag_stored = ot1;
+
         funca3210();
         system_psyq_draw_otag( ot1 );
 
@@ -332,7 +340,7 @@ void funca09dc()
             funca34c4( 0x800a652c + i * 0x88 );
             funca343c( 0x800a652c + i * 0x88 );
 
-            V0 = funca358c( w[0x800af3e8], 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
+            V0 = funca358c( l_otag_stored, 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
 
             [0x800af3fc] = w(V0);
         }
@@ -425,8 +433,8 @@ void funca0cac()
 // callback
 void funca0e68()
 {
-    system_psyq_add_prim( w[0x800af3e8], 0x800a763c + l_rb * 0x10 );
-    system_psyq_add_prim( w[0x800af3e8], 0x800a765c + l_rb * 0x10 );
+    system_psyq_add_prim( l_otag_stored, 0x800a763c + l_rb * 0x10 );
+    system_psyq_add_prim( l_otag_stored, 0x800a765c + l_rb * 0x10 );
 
     for( int i = 0; i < 0x20; ++i )
     {
@@ -439,7 +447,7 @@ void funca0e68()
             funca34c4( 0x800a652c + i * 0x88 );
             funca343c( 0x800a652c + i * 0x88 );
 
-            V0 = funca358c( w[0x800af3e8], 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
+            V0 = funca358c( l_otag_stored, 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
 
             [0x800af3fc] = w(V0);
         }
@@ -537,7 +545,7 @@ void funca12f0()
             funca34c4( 0x800a652c + i * 0x88 );
             funca343c( 0x800a652c + i * 0x88 );
 
-            V0 = funca358c( w[0x800af3e8], 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
+            V0 = funca358c( l_otag_stored, 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
 
             [0x800af3fc] = w(V0);
         }
@@ -1445,31 +1453,24 @@ V0 = 0001;
 
 
 
-////////////////////////////////
-// funca22a4
-800A22A4	lui    v0, $800a
-V0 = w[V0 + 6528];
-800A22AC	nop
-V1 = V0 + 0002;
-800A22B4	lui    at, $800a
-[AT + 6528] = w(V1);
-V0 = h[V0 + 0000];
-800A22C0	nop
-800A22C4	lui    at, $800b
-[AT + f40c] = w(V0);
-800A22CC	jr     ra 
-V0 = 0001;
-////////////////////////////////
+int funca22a4()
+{
+    V0 = w[0x800a6528];
+    [0x800a6528] = w(V0 + 0x2);
+
+    [0x800af40c] = w(h[V0]);
+
+    return 1;
+}
 
 
 
-////////////////////////////////
-// funca22d4
-800A22D4	lui    at, $800b
-[AT + f410] = w(0);
-800A22DC	jr     ra 
-V0 = 0001;
-////////////////////////////////
+int funca22d4()
+{
+    [0x800af410] = w(0);
+
+    return 1;
+}
 
 
 
@@ -2428,117 +2429,54 @@ void funca34c4( S0 )
 
 
 
-int funca358c( A0, A1, S3, S2 )
+int funca358c( u32* otag, not_used, POLY_FT4* poly, S2 )
 {
-    S5 = 0;
-    [SP + 0x10] = w(A0);
+    S7 = func36244( w[S2 + 0xc], hu[S2 + 0x8] );
 
-    func36244( w[S2 + 0xc], hu[S2 + 0x8] );
+    // movie tex?
+    S4 = w[0x80036240];
+    S6 = w[0x8003623c];
 
-    S7 = V0;
-    800A35D8	lui    s4, $8003
-    S4 = w[S4 + 6240];
-    800A35E0	lui    s6, $8003
-    S6 = w[S6 + 623c];
-
-    if( S7 != 0 )
+    for( int i = 0; i < S7; ++i )
     {
-        FP = ffff;
-        S1 = S4 + 000a;
-        S0 = S3 + 0016;
+        x = bu[S4 + 0x0] - hu[S6 + 0x6] + hu[S2 + 0x5c];
+        y = bu[S4 + 0x1] - hu[S6 + 0x4] + hu[S2 + 0x5e];
 
-        loopa35fc:	; 800A35FC
-            V0 = bu[S2 + 0010];
-            A0 = bu[S4 + 0000];
-            A3 = hu[S6 + 0006];
-            T0 = hu[S2 + 005c];
-            V1 = bu[S1 + fff7];
-            T1 = hu[S6 + 0004];
-            T2 = hu[S2 + 005e];
-            A1 = hu[S1 + fffa];
-            A2 = hu[S1 + fffc];
-            A0 = A0 - A3;
-            A0 = A0 + T0;
-            A3 = A0;
-            V1 = V1 - T1;
-            V1 = V1 + T2;
-            A1 = A1 + FP;
-            A0 = A0 + A1;
-            [S0 + ffee] = b(V0);
-            V0 = bu[S2 + 0011];
-            A2 = A2 + FP;
-            [S0 + ffef] = b(V0);
-            V0 = V1;
-            T0 = bu[S2 + 0012];
-            V1 = V1 + A2;
-            [S0 + fff2] = h(A3);
-            [S0 + fff4] = h(V0);
-            [S0 + fffa] = h(A0);
-            [S0 + fffc] = h(V0);
-            [S0 + 0002] = h(A3);
-            [S0 + 0004] = h(V1);
-            [S0 + 000a] = h(A0);
-            [S0 + 000c] = h(V1);
-            [S0 + fff0] = b(T0);
-            V0 = bu[S1 + fff8];
-            800A3680	nop
-            [S0 + fff6] = b(V0);
-            V0 = bu[S1 + fff9];
-            800A368C	nop
-            [S0 + fff7] = b(V0);
-            V0 = bu[S1 + fff8];
-            800A3698	nop
-            V0 = V0 + A1;
-            [S0 + fffe] = b(V0);
-            V0 = bu[S1 + fff9];
-            800A36A8	nop
-            [S0 + ffff] = b(V0);
-            V0 = bu[S1 + fff8];
-            800A36B4	nop
-            [S0 + 0006] = b(V0);
-            V0 = bu[S1 + fff9];
-            800A36C0	nop
-            V0 = V0 + A2;
-            [S0 + 0007] = b(V0);
-            V0 = bu[S1 + fff8];
-            800A36D0	nop
-            V0 = V0 + A1;
-            [S0 + 000e] = b(V0);
-            V0 = bu[S1 + fff9];
-            800A36E0	nop
-            V0 = V0 + A2;
-            [S0 + 000f] = b(V0);
-            V0 = hu[S1 + fffe];
-            800A36F0	nop
-            [S0 + 0000] = h(V0);
-            V0 = hu[S1 + 0000];
-            [S0 + fff8] = h(V0);
+        poly->r0 = bu[S2 + 0x10];
+        poly->g0 = bu[S2 + 0011];
+        poly->b0 = bu[S2 + 0x12];
+        poly->x0 = x;
+        poly->y0 = y;
+        poly->u0 = bu[S4 + 0x2];
+        poly->v0 = bu[S4 + 0x3];
+        poly->clut = hu[S4 + 0xa];
+        poly->x1 = x + hu[S4 + 0x4] - 1;
+        poly->y1 = y;
+        poly->u1 = bu[S4 + 0x2] + hu[S4 + 0x4] - 1;
+        poly->v1 = bu[S4 + 0x3];
+        poly->tpage = hu[S4 + 0x8];
+        poly->x2 = x;
+        poly->y2 = y + hu[S4 + 0x6] - 1;
+        poly->u2 = bu[S4 + 0x2];
+        poly->v2 = bu[S4 + 0x3] + hu[S4 + 0x6] - 1;
+        poly->x3 = x + hu[S4 + 0x4] - 1;
+        poly->y3 = y + hu[S4 + 0x6] - 1;
+        poly->u3 = bu[S4 + 0x2] + hu[S4 + 0x4] - 1;
+        poly->v3 = bu[S4 + 0x3] + hu[S4 + 0x6] - 1;
 
-            system_psyq_set_poly_ft4( S3 );
+        system_psyq_set_poly_ft4( poly );
 
-            if( hu[S2 + 0x0] & 0x8000 )
-            {
-                system_psyq_set_semi_trans( S3, 0x1 );
+        if( hu[S2 + 0x0] & 0x8000 )
+        {
+            system_psyq_set_semi_trans( poly, 0x1 );
 
-                V0 = hu[S2 + 0000];
-                V1 = hu[S0 + 0000];
-                V0 = V0 & 6000;
-                V0 = V0 >> 08;
-                V1 = V1 | V0;
-                [S0 + 0000] = h(V1);
-            }
+            poly->tpage |= (hu[S2 + 0x0] & 0x6000) >> 0x8;
+        }
 
-            A0 = w[SP + 0010];
-            A1 = S3;
-            system_psyq_add_prim();
+        system_psyq_add_prim( otag, poly );
 
-            S1 = S1 + 000c;
-            S0 = S0 + 0028;
-            S3 = S3 + 0028;
-            S5 = S5 + 0001;
-            S4 = S4 + 000c;
-            V0 = S5 < S7;
-        800A375C	bne    v0, zero, loopa35fc [$800a35fc]
+        poly += 0x1;
+        S4 += 0xc;
     }
 
     return S3;
