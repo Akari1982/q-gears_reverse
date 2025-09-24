@@ -40,7 +40,7 @@ void field_load_mim_dat_files()
     {
         while( system_cdrom_read_chain() != 0 ) {}
 
-        func34bb0( 0x801b0000, 0x80128000 ); // copy loaded mim
+        system_lzs_decompress( 0x801b0000, 0x80128000 ); // copy loaded mim
     }
 
     // load field dat

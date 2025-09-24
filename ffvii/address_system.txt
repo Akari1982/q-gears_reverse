@@ -476,6 +476,9 @@
 
 0x8007ebe4 default AkaoVoiceAttr.
 
+0x8007ebd0 stored pointer to DRAWENV for movie.
+0x8007ebd8 stored pointer to DISPENV for movie.
+
 0x8007ec10 copy of channels struct for usual music.
 0x800804d0 copy of channels struct for "ffvii_main_theme".
 

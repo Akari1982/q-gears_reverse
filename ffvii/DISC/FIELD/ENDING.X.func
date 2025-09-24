@@ -37,8 +37,8 @@
 800A2420 funca2420
 800A2458 funca2458
 800A24A8 funca24a8
-800A2504 funca2504
-800A273C funca273c
+800A2504 ending_render_init
+800A273C ending_render_vsync
 800A2888 ending_load_tim
 800A2934 funca2934
 800A2974 funca2974

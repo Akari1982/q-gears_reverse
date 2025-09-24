@@ -621,7 +621,7 @@
 80034A58 func34a58
 80034A90 func34a90
 80034B44 system_cdrom_read_chain
-80034BB0 func34bb0
+80034BB0 system_lzs_decompress
 80034CAC func34cac
 80034D18 func34d18
 80034D2C system_cdrom_set_lzs_extract

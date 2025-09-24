@@ -954,89 +954,66 @@ return w[0x80071a60];
 
 
 
-////////////////////////////////
-// func34bb0()
+void system_lzs_decompress( src, dst )
+{
+    u8 control_bit = 0;
+    u8 control_byte = 0;
 
-A2 = A0;
-T0 = 0;
-A3 = 0;
-V0 = w[A2 + 0000];
-T1 = A1;
-V0 = A2 + V0;
-T2 = V0 + 0004;
-A2 = A2 + 0004;
+    input_length = w[src];
+    end = src + input_length + 0x4;
+    src += 0x4;
 
-L34bd0:	; 80034BD0
-80034BD0	bne    t0, zero, L34bf0 [$80034bf0]
-V0 = A3 & 0001;
-V0 = A2 < T2;
-80034BDC	beq    v0, zero, L34ca4 [$80034ca4]
-T0 = 0008;
-A3 = bu[A2 + 0000];
-A2 = A2 + 0001;
-V0 = A3 & 0001;
+    while( true )
+    {
+        if( control_bit == 0 )
+        {
+            if( src >= end ) return;
 
-L34bf0:	; 80034BF0
-80034BF0	beq    v0, zero, L34c14 [$80034c14]
-V0 = A2 < T2;
-80034BF8	beq    v0, zero, L34ca4 [$80034ca4]
-80034BFC	nop
-V0 = bu[A2 + 0000];
-A2 = A2 + 0001;
-[A1 + 0000] = b(V0);
-80034C0C	j      L34c98 [$80034c98]
-A1 = A1 + 0001;
+            control_bit = 0x8;
+            control_byte = bu[src];
+            src += 0x1;
+        }
 
-L34c14:	; 80034C14
-80034C14	beq    v0, zero, L34ca4 [$80034ca4]
-80034C18	nop
-A0 = bu[A2 + 0000];
-A2 = A2 + 0001;
-V1 = bu[A2 + 0000];
-A2 = A2 + 0001;
-V0 = V1 & 00f0;
-V0 = V0 << 04;
-A0 = A0 | V0;
-V0 = A1 - T1;
-V0 = V0 + 0fee;
-V0 = V0 - A0;
-V0 = V0 & 0fff;
-A0 = A1 - V0;
-V1 = V1 & 000f;
-V1 = A1 + V1;
-V0 = A0 < T1;
-80034C58	beq    v0, zero, L34c8c [$80034c8c]
-V1 = V1 + 0003;
+        if( control_byte & 0x1 )
+        {
+            if( src >= end ) return;
 
-loop34c60:	; 80034C60
-[A1 + 0000] = b(0);
-A0 = A0 + 0001;
-V0 = A0 < T1;
-80034C6C	bne    v0, zero, loop34c60 [$80034c60]
-A1 = A1 + 0001;
-80034C74	j      L34c90 [$80034c90]
-V0 = A1 < V1;
+            [dst] = b(bu[src]);
+            src += 0x1;
+            dst += 0x1;
+        }
+        else
+        {
+            if( src >= end ) return;
 
-loop34c7c:	; 80034C7C
-V0 = bu[A0 + 0000];
-A0 = A0 + 0001;
-[A1 + 0000] = b(V0);
-A1 = A1 + 0001;
+            reference1 = bu[src + 0];
+            reference2 = bu[src + 1];
+            src += 0x2;
 
-L34c8c:	; 80034C8C
-V0 = A1 < V1;
+            reference_offset = reference1 | ((reference2 & 0xf0) << 0x4);
+            V0 = (dst + 0xfee - reference_offset) & 0xfff;
+            real_offset = dst - V0;
+            V1 = dst + (reference2 & 0xf) + 0x3;
 
-L34c90:	; 80034C90
-80034C90	bne    v0, zero, loop34c7c [$80034c7c]
-80034C94	nop
+            while( real_offset < dst )
+            {
+                [dst] = b(0);
+                real_offset += 0x1;
+                dst += 0x1;
+            }
 
-L34c98:	; 80034C98
-A3 = A3 >> 01;
-80034C9C	j      L34bd0 [$80034bd0]
-80034CA0	addiu  t0, t0, $ffff (=-$1)
+            while( dst < V1 )
+            {
+                [dst] = b(bu[real_offset]);
+                real_offset += 0x1;
+                dst += 0x1;
+            }
+        }
 
-L34ca4:	; 80034CA4
-////////////////////////////////
+        control_byte >>= 0x1;
+        control_bit -= 0x1;
+    }
+}
 
 
 

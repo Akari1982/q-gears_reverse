@@ -1,6 +1,22 @@
+DRAWENV l_draw_env[0x2];    // 0x800af2e0
+DISPENV l_disp_env[0x2];    // 0x800af398
+
+u32 l_buttons1_state;       // 0x800af3f4 controller 1 buttons state
+u32 l_buttons2_state;       // 0x800af3f8 controller 2 buttons state
+u32 l_buttons1_not_pressed; // 0x800af3c0 controller 1 not pressed buttons
+u32 l_buttons2_not_pressed; // 0x800af3c4 controller 2 not pressed buttons
+u32 l_buttons1_pressed;     // 0x800af3ec controller 1 pressed buttons
+u32 l_buttons2_pressed;     // 0x800af3f0 controller 2 pressed buttons
+
+u32 l_rb;                   // 0x800af408
+
+
+
 void ending_main()
 {
-    funca2504( 0x280, 0x1e0, 0x200, 0, 0, 0 );
+    // Init area 0x280 x 0x1e0 for rendering.
+    // Distance 0x200 and background color is black
+    ending_render_init( 0x280, 0x1e0, 0x200, 0, 0, 0 );
 
     do
     {
@@ -25,7 +41,7 @@ void ending_main()
         } while( V0 > 0 );
     } while( V0 != 0 )
 
-    func34bb0( 0x80180000, 0x80100000 );
+    system_lzs_decompress( 0x80180000, 0x80100000 );
 
     system_psyq_set_disp_mask( 1 );
 
@@ -33,7 +49,7 @@ void ending_main()
     {
         rb = rb < 0x1;
 
-        funca273c( 0 );
+        ending_render_vsync( 0 );
 
         s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
@@ -79,7 +95,7 @@ void ending_main()
     {
         rb = rb < 0x1;
 
-        funca273c( 0 );
+        ending_render_vsync( 0 );
 
         s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
@@ -104,7 +120,7 @@ void ending_main()
     {
         rb = rb < 0x1;
 
-        funca273c( 0 );
+        ending_render_vsync( 0 );
 
         s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
@@ -156,7 +172,7 @@ void ending_main_2( S0 )
     u32* ot = 0x800af400;
 
     La04f4:	; 800A04F4
-        funca2504( 0x140, 0xf0, 0x200, 0, 0, 0 );
+        ending_render_init( 0x140, 0xf0, 0x200, 0, 0, 0 );
 
         RECT rect;
         rect.x = 0;
@@ -181,9 +197,9 @@ void ending_main_2( S0 )
             system_psyq_draw_sync( 0 );
             system_psyq_vsync( 0x1 );
 
-            u32 rb = funca273c( w[0x800af40c] );
+            u32 rb = ending_render_vsync( w[0x800af40c] );
 
-            [0x800af408] = w(rb);
+            l_rb = rb;
 
             if( rb != 0 ) [0x800af3fc] = w(0x801f0000);
 
@@ -214,23 +230,20 @@ void ending_main_2( S0 )
                 func354cc();
             }
 
-            A0 = w[0x800af408];
-            system_psyq_clear_otag_r( ot + A0 * 0x4, 0x1 );
+            system_psyq_clear_otag_r( ot + l_rb * 0x4, 0x1 );
 
-            V0 = w[0x800af408];
-            [0x800af3e8] = w(ot + V0 * 0x4);
+            [0x800af3e8] = w(ot + l_rb * 0x4);
 
             funca1e20();
             funca3210();
 
-            A0 = w[0x800af408];
-            system_psyq_draw_otag( ot + A0 * 0x4 );
+            system_psyq_draw_otag( ot + l_rb * 0x4 );
 
             system_psyq_vsync( 0x1 );
 
             if( S0 == 0 )
             {
-                V0 = w[0x800af3ec] & 0x09f0; // pressed triangle circle cross square start select
+                V0 = l_buttons1_pressed & 0x09f0; // pressed triangle circle cross square start select
                 800A0710	bne    v0, zero, La0734 [$800a0734]
             }
 
@@ -248,9 +261,9 @@ void ending_main_2( S0 )
 
     for( int i = 0; i >= 0xff; i += 0x4 )
     {
-        u32 rb = funca273c( w[0x800af40c] );
+        u32 rb = ending_render_vsync( w[0x800af40c] );
 
-        [0x800af408] = w(rb);
+        l_rb = rb;
 
         RECT* draw_area = w[0x8007ebd0];
 
@@ -269,7 +282,7 @@ void ending_main_2( S0 )
             func354cc();
         }
 
-        s32 rb = w[0x800af408];
+        u32 rb = l_rb;
 
         u32* ot1 = 0x800af400 + rb * 0x4;
         system_psyq_clear_otag_r( ot1 , 0x1 );
@@ -412,8 +425,8 @@ void funca0cac()
 // callback
 void funca0e68()
 {
-    system_psyq_add_prim( w[0x800af3e8], 0x800a763c + w[0x800af408] * 0x10 );
-    system_psyq_add_prim( w[0x800af3e8], 0x800a765c + w[0x800af408] * 0x10 );
+    system_psyq_add_prim( w[0x800af3e8], 0x800a763c + l_rb * 0x10 );
+    system_psyq_add_prim( w[0x800af3e8], 0x800a765c + l_rb * 0x10 );
 
     for( int i = 0; i < 0x20; ++i )
     {
@@ -881,7 +894,7 @@ V0 = 0001;
 // funca19a4()
 
 V0 = w[0x800a63cc];
-V1 = w[0x800af3f4];
+V1 = l_buttons1_state;
 V0 = V0 ^ 0001;
 [0x800a63cc] = w(V0);
 V0 = V1 & 1000;
@@ -1333,15 +1346,9 @@ int funca20f8()
     V0 = w[0x800a6528];
     [0x800a6528] = w(V0 + 0xc);
 
-    A0 = h[V0 + 0x0];
-    A1 = h[V0 + 0x2];
-    A2 = h[V0 + 0x4];
-    A3 = bu[V0 + 0x6];
-    A4 = bu[V0 + 0x8];
-    A5 = bu[V0 + 0xa];
-    funca2504();
+    ending_render_init( h[V0 + 0x0], h[V0 + 0x2], h[V0 + 0x4], bu[V0 + 0x6], bu[V0 + 0x8], bu[V0 + 0xa] );
 
-    funca273c( 0 );
+    ending_render_vsync( 0 );
 
     return 1;
 }
@@ -1583,12 +1590,9 @@ if( V0 != 0 )
 
 
 
-void funca2504( int x, int y, S1, S7, S5, S6 );
+void ending_render_init( int w, int h, long distance, u8 r, u8 g, u8 b );
 {
-    V0 = y ^ 0x1e0;
-    V0 = 0 < V0;
-    V0 = 0 - V0;
-    S4 = V0 & 0xf0;
+    y = (h == 0x1e0) ? 0 : 0xf0;
 
     while( true )
     {
@@ -1608,74 +1612,78 @@ void funca2504( int x, int y, S1, S7, S5, S6 );
 
     system_psyq_set_graph_debug( 0 );
 
-    system_psyq_set_geom_offset( (x / 2), (y / 2) );
+    system_psyq_set_geom_offset( (w / 2), (h / 2) );
 
-    system_psyq_set_geom_screen( S1 );
+    system_psyq_set_geom_screen( distance );
 
-    system_psyq_set_def_drawenv( 0x800af2e0,        0, 0,  x, y );
-    system_psyq_set_def_drawenv( 0x800af2e0 + 0x5c, 0, S4, x, y );
+    system_psyq_set_def_drawenv( &l_draw_env[0], 0, 0, w, h );
+    system_psyq_set_def_drawenv( &l_draw_env[1], 0, y, w, h );
 
-    system_psyq_set_def_dispenv( 0x800af398,        0, S4, x, y );
-    system_psyq_set_def_dispenv( 0x800af398 + 0x14, 0, 0,  x, y );
+    system_psyq_set_def_dispenv( &l_disp_env[0], 0, y, w, h );
+    system_psyq_set_def_dispenv( &l_disp_env[1], 0, 0, w, h );
 
-    [0x800af408] = w(0x1);
-    [0x800af3bd] = b(0);
-    [0x800af3a9] = b(0);
-    [0x800af354] = b(0);
-    [0x800af2f8] = b(0);
-    [0x800af353] = b(0);
-    [0x800af2f7] = b(0);
-    [0x800af352] = b(0);
-    [0x800af2f6] = b(0);
-    [0x800af350] = h(0);
-    [0x800af2f4] = h(0);
-    [0x800af2f9] = b(S7);
-    [0x800af2fa] = b(S5);
-    [0x800af2fb] = b(S6);
-    [0x800af355] = b(S7);
-    [0x800af356] = b(S5);
-    [0x800af357] = b(S6);
+    l_rb = 0x1;
+
+    l_draw_env[0].tpage = 0;
+    l_draw_env[0].dtd = 0;
+    l_draw_env[0].dfe = 0;
+    l_draw_env[0].isbg = 0;
+    l_draw_env[0].r0 = r;
+    l_draw_env[0].g0 = g;
+    l_draw_env[0].b0 = b;
+    l_draw_env[1].tpage = 0;
+    l_draw_env[1].dtd = 0;
+    l_draw_env[1].dfe = 0;
+    l_draw_env[1].isbg = 0;
+    l_draw_env[1].r0 = r;
+    l_draw_env[1].g0 = g;
+    l_draw_env[1].b0 = b;
+
+    // set 16-bit mode
+    l_disp_env[0].isrgb24 = 0;
+    l_disp_env[1].isrgb24 = 0;
 
     RECT rect;
     rect.x = 0;
     rect.y = 0;
-    rect.w = (x * 0x3) / 0x2;
+    rect.w = (w * 0x3) / 0x2;
     rect.h = 0x1e0;
 
     system_psyq_clear_image( &rect, 0, 0, 0 );
 
-    funca273c( 0 );
+    ending_render_vsync( 0 );
 }
 
 
 
-u32 funca273c( int mode )
+u32 ending_render_vsync( int mode )
 {
-    [0x800af408] = w(w[0x800af408] ^ 1);
-    rb = w[0x800af408];
+    l_rb ^= 0x1;
+    rb = l_rb;
 
     system_psyq_draw_sync( 0 );
 
     system_psyq_vsync( mode );
 
-    system_psyq_put_dispenv( 0x800af398 + rb * 0x14 );
-    system_psyq_put_drawenv( 0x800af2e0 + rb * 0x5c );
+    system_psyq_put_dispenv( &l_disp_env[rb] );
+    system_psyq_put_drawenv( &l_draw_env[rb] );
 
-    [0x8007ebd8] = w(0x800af398 + rb * 0x14);
-    [0x8007ebd0] = w(0x800af2e0 + rb * 0x5c);
+    // store env for movie play
+    [0x8007ebd0] = w(&l_draw_env[rb]);
+    [0x8007ebd8] = w(&l_disp_env[rb]);
 
     u32 buttons1 = system_menu_get_current_pad_buttons();
 
     u32 buttons2 = buttons1 >> 0x10; // second controller
-    u32 not_pressed1 = w[0x800af3c0];
-    u32 not_pressed2 = w[0x800af3c4];
+    u32 not_pressed1 = l_buttons1_not_pressed;
+    u32 not_pressed2 = l_buttons2_not_pressed;
 
-    [0x800af3f4] = w(buttons1);                // controller 1 buttons state
-    [0x800af3f8] = w(buttons2);                // controller 2 buttons state
-    [0x800af3c0] = w(~buttons1);               // controller 1 not pressed buttons
-    [0x800af3c4] = w(~buttons2);               // controller 2 not pressed buttons
-    [0x800af3ec] = w(not_pressed1 & buttons1); // controller 1 pressed buttons
-    [0x800af3f0] = w(not_pressed2 & buttons2); // controller 2 pressed buttons
+    l_buttons1_state = buttons1;
+    l_buttons2_state = buttons2;
+    l_buttons1_not_pressed = ~buttons1;
+    l_buttons2_not_pressed = ~buttons2;
+    l_buttons1_pressed = not_pressed1 & buttons1;
+    l_buttons2_pressed = not_pressed2 & buttons2;
 
     return rb;
 }
