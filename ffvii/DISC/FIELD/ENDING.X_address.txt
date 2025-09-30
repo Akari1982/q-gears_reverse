@@ -14,6 +14,36 @@
 
 0x800a6528 [][][][] pointer to credits events data (0x800a5048 or 0x800a3934).
 
+0x800a652c data struct (0x88 size 0x20 items)
+    +  0x0 [][]     flags.
+                        0x0001 - scroll Y pos.
+                        0x0008 - color change
+                        0x4000 - ???
+                        0x8000 - transparency?
+    +  0x2 [][]     steps.
+    +  0x4 [][]     scale for pos move.
+    +  0x6 [][]     ???
+    +  0x8 [][]     id inside file.
+    +  0xc [][][][] pointer to file.
+    + 0x10 []       R.
+    + 0x11 []       G.
+    + 0x12 []       B.
+    + 0x14 []       R step.
+    + 0x15 []       G step.
+    + 0x16 []       B step.
+    + 0x18 []       R dst.
+    + 0x19 []       G dst.
+    + 0x1a []       B dst.
+    + 0x5c [][]     x pos without fraction.
+    + 0x5e [][]     y pos without fraction.
+    + 0x60 [][]     z pos without fraction.
+    + 0x68 [][][][] moved x pos.
+    + 0x6c [][][][] moved y pos.
+    + 0x70 [][][][] moved z pos.
+    + 0x78 [][][][] dest pos x.
+    + 0x7c [][][][] dest pos y.
+    + 0x80 [][][][] dest pos z.
+
 0x800af2e0 array of two global DRAWENV (0x2 items, 0x5c size).
 0x800af398 array of two global DISPENV (0x2 items, 0x14 size).
 0x800af3c0 [][][][] controller 1 not pressed buttons.
@@ -24,7 +54,7 @@
     + 0x4 [][][][] pointer to next element.
     + 0x8 [][][][] callback.
     + 0xc [][]     ???
-    + 0xe []       ???
+    + 0xe []       some type (0x2 - set to 0x4, 0x4 - activate callback).
     + 0xf []       ???
 
 0x800af3e8 stored current 0x800af400 OT1 pointer.

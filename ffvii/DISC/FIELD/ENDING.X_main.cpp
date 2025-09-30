@@ -1,26 +1,69 @@
-u32* l_otags[0x2];          // 0x800a64e4
+u32 l_event_new;                // 0x800a6390
+u32 l_event_cont;               // 0x800a6394
+u32 l_event_wait;               // 0x800a63b0
 
-DR_MODE l_dm[0x2];          // 0x800a64ec
+u32* l_otags3[0x2];             // 0x800a6454
+TILE l_tiles2[0x2];             // 0x800a645c
+DR_MODE l_dm2[0x2];             // 0x800a647c
 
-u32 l_event;                // 0x800a6528
+u32* l_otags[0x2];              // 0x800a64e4
+DR_MODE l_dm[0x2];              // 0x800a64ec
 
-DRAWENV l_draw_env[0x2];    // 0x800af2e0
-DISPENV l_disp_env[0x2];    // 0x800af398
+u32 l_event;                    // 0x800a6528
 
-TILE l_tiles[0x2];          // 0x800a6504
+struct CreditsItem
+{
+    u16 flags;                  // +  0x0
+    u16 steps;                  // +  0x2
+    s16 scale;                  // +  0x4 scale for pos move.
+                                // +  0x6 [][]     ???
+                                // +  0x8 [][]     id inside file.
+                                // +  0xc [][][][] pointer to file.
+    u8 r;                       // + 0x10
+    u8 g;                       // + 0x11
+    u8 b;                       // + 0x12
+    u8 r_step;                  // + 0x14
+    u8 g_step;                  // + 0x15
+    u8 b_step;                  // + 0x16
+    u8 r_dst;                   // + 0x18
+    u8 g_dst;                   // + 0x19
+    u8 b_dst;                   // + 0x1a
+                                // + 0x5c [][]     x pos without fraction.
+                                // + 0x5e [][]     y pos without fraction.
+                                // + 0x60 [][]     z pos without fraction.
+                                // + 0x68 [][][][] moved x pos.
+                                // + 0x6c [][][][] moved y pos.
+                                // + 0x70 [][][][] moved z pos.
+                                // + 0x78 [][][][] dest pos x.
+                                // + 0x7c [][][][] dest pos y.
+                                // + 0x80 [][][][] dest pos z.
+} l_credits[0x20];              // 0x800a652c (0x88 size)
 
-u32* l_otag_stored;         // 0x800af3e8
+TILE l_tiles3[0x2];             // 0x800a763c
+TILE l_tiles4[0x2];             // 0x800a765c
 
-u32 l_buttons1_state;       // 0x800af3f4 controller 1 buttons state
-u32 l_buttons2_state;       // 0x800af3f8 controller 2 buttons state
-u32 l_buttons1_not_pressed; // 0x800af3c0 controller 1 not pressed buttons
-u32 l_buttons2_not_pressed; // 0x800af3c4 controller 2 not pressed buttons
-u32 l_buttons1_pressed;     // 0x800af3ec controller 1 pressed buttons
-u32 l_buttons2_pressed;     // 0x800af3f0 controller 2 pressed buttons
+LINE_G2 l_lines[0x2][0x100];    // 0x800ac2c8
 
-u32* l_otags2[0x2];         // 0x800af400
+DRAWENV l_draw_env[0x2];        // 0x800af2e0
+DISPENV l_disp_env[0x2];        // 0x800af398
 
-u32 l_rb;                   // 0x800af408
+TILE l_tiles[0x2];              // 0x800a6504
+
+u32* l_otag_stored;             // 0x800af3e8
+
+u32 l_buttons1_state;           // 0x800af3f4 controller 1 buttons state
+u32 l_buttons2_state;           // 0x800af3f8 controller 2 buttons state
+POLY_FT4* l_poly_stored;        // 0x800af3fc
+u32 l_buttons1_not_pressed;     // 0x800af3c0 controller 1 not pressed buttons
+u32 l_buttons2_not_pressed;     // 0x800af3c4 controller 2 not pressed buttons
+u32 l_buttons1_pressed;         // 0x800af3ec controller 1 pressed buttons
+u32 l_buttons2_pressed;         // 0x800af3f0 controller 2 pressed buttons
+
+u32* l_otags2[0x2];             // 0x800af400
+
+u32 l_rb;                       // 0x800af408
+u32 l_frames_skip;              // 0x800af40c
+u32 l_draw;                     // 0x800af410
 
 
 
@@ -196,26 +239,26 @@ void ending_main_2( S0 )
         system_psyq_clear_image( &rect, 0, 0, 0 );
         while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
 
-        funca310c(); // init something
+        ending_list_init();
 
-        [0x800af40c] = w(0);
-        [0x800af3fc] = w(0x801f0000);
+        l_frames_skip = 0;
+        l_poly_stored = 0x801f0000;
 
         ending_events_set( ( S0 != 0 ) ? 0x800a5048 : 0x800a3934 );
 
-        [0x800af410] = w(0x1);
+        l_draw = 0x1;
 
-        while( w[0x800af410] != 0 )
+        while( l_draw != 0 )
         {
             system_psyq_vsync( 0x1 );
             system_psyq_draw_sync( 0 );
             system_psyq_vsync( 0x1 );
 
-            u32 rb = ending_render_vsync( w[0x800af40c] );
+            u32 rb = ending_render_vsync( l_frames_skip );
 
             l_rb = rb;
 
-            if( rb != 0 ) [0x800af3fc] = w(0x801f0000);
+            if( rb != 0 ) l_poly_stored = 0x801f0000;
 
             DRAWENV* draw_env = w[0x8007ebd0];
             rect.x = draw_env->clip.x;
@@ -246,8 +289,8 @@ void ending_main_2( S0 )
 
             l_otag_stored = ot + l_rb * 0x4;
 
-            funca1e20();
-            funca3210();
+            ending_events_exec();
+            ending_list_activate_callback();
 
             system_psyq_draw_otag( ot + l_rb * 0x4 );
 
@@ -270,7 +313,7 @@ void ending_main_2( S0 )
 
     for( int i = 0; i >= 0xff; i += 0x4 )
     {
-        u32 rb = ending_render_vsync( w[0x800af40c] );
+        u32 rb = ending_render_vsync( l_frames_skip );
 
         l_rb = rb;
 
@@ -297,13 +340,13 @@ void ending_main_2( S0 )
         system_psyq_clear_otag_r( ot1 , 0x1 );
         l_otag_stored = ot1;
 
-        funca3210();
+        ending_list_activate_callback();
         system_psyq_draw_otag( ot1 );
 
-        u32* ot2 = 0x800a6454 + rb * 0x4;
+        u32* ot2 = l_otags3[rb];
         system_psyq_clear_otag_r( ot2, 0x1 );
 
-        TILE* tile = 0x800a645c + rb * 0x10;
+        TILE* tile = &l_tiles2[rb];
         system_psyq_set_tile( tile );
         system_psyq_set_semi_trans( tile, 0x1 );
         tile->r0 = i;
@@ -315,7 +358,7 @@ void ending_main_2( S0 )
         tile->h = 0xf0;
         system_psyq_add_prim( ot2, tile );
 
-        DR_MODE* dm = 0x800a647c + rb * 0xc;
+        DR_MODE* dm = &l_dm2[rb];
         system_psyq_set_draw_mode( dm, 0, 0, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
         system_psyq_add_prim( ot2, dm );
 
@@ -333,18 +376,16 @@ void funca09dc()
 {
     for( int i = 0; i < 0x20; ++i )
     {
-        if( hu[0x800a652c + i * 0x88] & 1 )
+        if( l_credits[i].flags & 0x0001 )
         {
-            [0x800a6588 + i * 0x88] = h(0x28);
-            [0x800a658a + i * 0x88] = h(0x20);
-            [0x800a658c + i * 0x88] = h(0);
+            [0x800a652c + i * 0x88 + 0x5c] = h(0x28);
+            [0x800a652c + i * 0x88 + 0x5e] = h(0x20);
+            [0x800a652c + i * 0x88 + 0x60] = h(0);
 
             funca34c4( 0x800a652c + i * 0x88 );
-            funca343c( 0x800a652c + i * 0x88 );
+            ending_data_update_colors( 0x800a652c + i * 0x88 );
 
-            V0 = funca358c( l_otag_stored, 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
-
-            [0x800af3fc] = w(V0);
+            l_poly_stored = funca358c( l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88 );
         }
     }
 }
@@ -353,21 +394,21 @@ void funca09dc()
 
 int funca0ab8()
 {
-    for( int i = 0; i < 20; ++i )
+    for( int i = 0; i < 0x20; ++i )
     {
-        [0x800a652c + i * 0x88] = h(0);
-        [0x800a6532 + i * 0x88] = h(0);
-        [0x800a6534 + i * 0x88] = h(0);
-        [0x800a6538 + i * 0x88] = w(0);
-        [0x800a6588 + i * 0x88] = h(0);
-        [0x800a658a + i * 0x88] = h(0);
-        [0x800a658c + i * 0x88] = h(0);
-        [0x800a653c + i * 0x88] = b(0);
-        [0x800a653d + i * 0x88] = b(0);
-        [0x800a653e + i * 0x88] = b(0);
+        l_credits[i].flags = 0x0000;
+        [0x800a652c + i * 0x88 + 0x6] = h(0);
+        [0x800a652c + i * 0x88 + 0x8] = h(0);
+        [0x800a652c + i * 0x88 + 0xc] = w(0);
+        l_credits[i].r = 0;
+        l_credits[i].g = 0;
+        l_credits[i].b = 0;
+        [0x800a652c + i * 0x88 + 0x5c] = h(0);
+        [0x800a652c + i * 0x88 + 0x5e] = h(0);
+        [0x800a652c + i * 0x88 + 0x60] = h(0);
     }
 
-    funca3178( 0x800a762c, 0x4, 0x80, 0x800a09dc ); // funca09dc()
+    ending_list_insert_sorted( 0x800a762c, 0x4, 0x80, 0x800a09dc ); // funca09dc()
 
     return 1;
 }
@@ -376,58 +417,46 @@ int funca0ab8()
 
 int funca0ba8()
 {
-    V1 = l_event;
-    V0 = V1 + 0x2;
-    l_event = V0;
-    A0 = h[V1 + 0x0];
-    V0 = V1 + 0x4;
-    l_event = V0;
-    A1 = h[V1 + 0x2];
-    S0 = A0 * 0x88;
+    u32 ofs = l_event;
+    l_event = ofs + 0x4;
 
-    [0x800a652c + S0] = h(0x7);
-    [0x800a6532 + S0] = h(0);
-    [0x800a6534 + S0] = h(0);
-
-    func34d18( 0x800d0000, A1 );
-
-    [0x800a6538 + S0] = w(V0);
-    [0x800a6588 + S0] = h(0);
-    [0x800a658a + S0] = h(0);
-    [0x800a658c + S0] = h(0);
-    [0x800a653c + S0] = b(0);
-    [0x800a653d + S0] = b(0);
-    [0x800a653e + S0] = b(0);
+    id = h[ofs + 0x0];
+    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x2] );
+    l_credits[id].flags = 0x0004 | 0x0002 | 0x0001;
+    [0x800a652c + id * 0x88 + 0x6] = h(0);
+    [0x800a652c + id * 0x88 + 0x8] = h(0);
+    [0x800a652c + id * 0x88 + 0xc] = w(item_p);
+    l_credits[id].r = 0;
+    l_credits[id].g = 0;
+    l_credits[id].b = 0;
+    [0x800a652c + id * 0x88 + 0x5c] = h(0);
+    [0x800a652c + id * 0x88 + 0x5e] = h(0);
+    [0x800a652c + id * 0x88 + 0x60] = h(0);
 
     return 1;
 }
 
 
 
-void funca0cac()
+void ending_events_0f_change_color()
 {
-    A0 = l_event;
-    l_event = A0 + 0x2;
-    A1 = h[A0 + 0x0];
-    l_event = A0 + 0x4;
-    V1 = h[A0 + 0x2];
-    l_event = A0 + 0x6;
-    A2 = h[A0 + 0x4];
-    V0 = A1 << 0x4;
-    V0 = V0 + A1;
-    V0 = V0 << 0x3;
-    T0 = (A2 - bu[0x800a653c + V0]) / V1;
-    A3 = (A2 - bu[0x800a653d + V0]) / V1;
-    A1 = (A2 - bu[0x800a653e + V0]) / V1;
-    [0x800a652e + V0] = h(V1);
-    [0x800a6544 + V0] = b(A2);
-    [0x800a6545 + V0] = b(A2);
-    [0x800a6546 + V0] = b(A2);
-    [0x800a652c + V0] = h(hu[0x800a652c + V0] | 0x8);
-    [0x800a6540 + V0] = b(T0);
-    [0x800a6541 + V0] = b(A3);
-    [0x800a6542 + V0] = b(A1);
-    [0x800a6394] = w(0x1);
+    u32 ofs = l_event;
+    l_event = ofs + 0x6;
+
+    id = h[ofs + 0x0];
+    steps = h[ofs + 0x2];
+    dest_col = h[ofs + 0x4];
+
+    l_credits[id].flags |= 0x0008;
+    l_credits[id].steps = steps;
+    l_credits[id].r_step = (dest_col - l_credits[id].r) / steps;
+    l_credits[id].g_step = (dest_col - l_credits[id].g) / steps;
+    l_credits[id].b_step = (dest_col - l_credits[id].b) / steps;
+    l_credits[id].r_dst = dest_col;
+    l_credits[id].g_dst = dest_col;
+    l_credits[id].b_dst = dest_col;
+
+    l_event_cont = 0x1;
 }
 
 
@@ -435,23 +464,21 @@ void funca0cac()
 // callback
 void funca0e68()
 {
-    system_psyq_add_prim( l_otag_stored, 0x800a763c + l_rb * 0x10 );
-    system_psyq_add_prim( l_otag_stored, 0x800a765c + l_rb * 0x10 );
+    system_psyq_add_prim( l_otag_stored, &l_tiles3[l_rb] );
+    system_psyq_add_prim( l_otag_stored, &l_tiles4[l_rb] );
 
     for( int i = 0; i < 0x20; ++i )
     {
-        if( hu[0x800a652c + i * 0x88 + 0] & 0x1 )
+        if( l_credits[i].flags & 0x0001 )
         {
             [0x800a652c + i * 0x88 + 0x5e] = h(hu[0x800a652c + i * 0x88 + 0x5e] - 1);
 
-            if( h[0x800a652c + i * 0x88 + 0x5e] == -0x10 ) [0x800a652c + i * 0x88 + 0] = h(0);
+            if( h[0x800a652c + i * 0x88 + 0x5e] == -0x10 ) l_credits[i].flags = 0;
 
             funca34c4( 0x800a652c + i * 0x88 );
-            funca343c( 0x800a652c + i * 0x88 );
+            ending_data_update_colors( 0x800a652c + i * 0x88 );
 
-            V0 = funca358c( l_otag_stored, 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
-
-            [0x800af3fc] = w(V0);
+            l_poly_stored = funca358c( l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88 );
         }
     }
 }
@@ -462,39 +489,40 @@ int funca0f90()
 {
     for( int i = 0; i < 0x20; ++i )
     {
-        [0x800a652c + i * 0x88] = h(0);
-        [0x800a6532 + i * 0x88] = h(0);
-        [0x800a6534 + i * 0x88] = h(0);
-        [0x800a6538 + i * 0x88] = w(0);
-        [0x800a6588 + i * 0x88] = h(0);
-        [0x800a658a + i * 0x88] = h(0);
-        [0x800a658c + i * 0x88] = h(0);
-        [0x800a653c + i * 0x88] = b(0);
-        [0x800a653d + i * 0x88] = b(0);
-        [0x800a653e + i * 0x88] = b(0);
+        l_credits[i].flags = 0x0000;
+        [0x800a652c + i * 0x88 + 0x6] = h(0);
+        [0x800a652c + i * 0x88 + 0x8] = h(0);
+        [0x800a652c + i * 0x88 + 0xc] = w(0);
+        l_credits[i].r = 0;
+        l_credits[i].g = 0;
+        l_credits[i].b = 0;
+        [0x800a652c + i * 0x88 + 0x5c] = h(0);
+        [0x800a652c + i * 0x88 + 0x5e] = h(0);
+        [0x800a652c + i * 0x88 + 0x60] = h(0);
     }
 
-    funca3178( 0x800a762c, 0x4, 0x80, 0x800a0e68 ); // funca0e68()
+    ending_list_insert_sorted( 0x800a762c, 0x4, 0x80, 0x800a0e68 ); // funca0e68()
 
     for( int i = 0; i < 0x2; ++i )
     {
-        system_psyq_set_tile( 0x800a763c + i * 0x10 );
-        system_psyq_set_tile( 0x800a765c + i * 0x10 );
+        system_psyq_set_tile( &l_tiles3[i] );
+        system_psyq_set_tile( &l_tiles4[i] );
 
-        [0x800a7644 + i * 0x10] = h(0);
-        [0x800a7646 + i * 0x10] = h(0);
-        [0x800a7648 + i * 0x10] = h(0x140);
-        [0x800a764a + i * 0x10] = h(0x28);
-        [0x800a7664 + i * 0x10] = h(0);
-        [0x800a7666 + i * 0x10] = h(0xc8);
-        [0x800a7668 + i * 0x10] = h(0x140);
-        [0x800a766a + i * 0x10] = h(0x28);
-        [0x800a7640 + i * 0x10] = b(0);
-        [0x800a7641 + i * 0x10] = b(0);
-        [0x800a7642 + i * 0x10] = b(0);
-        [0x800a7660 + i * 0x10] = b(0);
-        [0x800a7661 + i * 0x10] = b(0);
-        [0x800a7662 + i * 0x10] = b(0);
+        l_tiles3.r0 = 0;
+        l_tiles3.g0 = 0;
+        l_tiles3.b0 = 0;
+        l_tiles3.x0 = 0;
+        l_tiles3.y0 = 0;
+        l_tiles3.w = 0x140;
+        l_tiles3.h = 0x28;
+
+        l_tiles4.r0 = 0;
+        l_tiles4.g0 = 0;
+        l_tiles4.b0 = 0;
+        l_tiles4.x0 = 0;
+        l_tiles4.y0 = 0xc8;
+        l_tiles4.w = 0x140;
+        l_tiles4.h = 0x28;
     }
 
     return 1;
@@ -504,29 +532,25 @@ int funca0f90()
 
 int funca11b4()
 {
-    V0 = l_event;
-    l_event = V0 + 0x4;
+    u32 ofs = l_event;
+    l_event = ofs + 0x4;
 
-    A1 = h[V0 + 0x0];
-    V1 = h[V0 + 0x2];
+    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x0] );
 
     for( int i = 0; i < 0x20; ++i )
     {
-        if( ( hu[0x800a652c + i * 0x88 + 0] & 0x1 ) == 0 )
+        if( ( l_credits[i].flags & 0x0001 ) == 0 )
         {
-            [0x800a652c + i * 0x88 + 0] = h(0x1);
-            [0x800a6532 + i * 0x88 + 0] = h(0);
-            [0x800a6534 + i * 0x88 + 0] = h(V1);
-
-            V0 = func34d18( 0x800d0000, A1 );
-
-            [0x800a6538 + i * 0x88 + 0] = w(V0);
-            [0x800a6588 + i * 0x88 + 0] = h(18);
-            [0x800a658a + i * 0x88 + 0] = h(0xc8);
-            [0x800a658c + i * 0x88 + 0] = h(0);
-            [0x800a653c + i * 0x88 + 0] = b(0x80);
-            [0x800a653d + i * 0x88 + 0] = b(0x80);
-            [0x800a653e + i * 0x88 + 0] = b(0x80);
+            l_credits[i].flags = 0x0001;
+            [0x800a652c + i * 0x88 + 0x6] = h(0);
+            [0x800a652c + i * 0x88 + 0x8] = h(h[ofs + 0x2]);
+            [0x800a652c + i * 0x88 + 0xc] = w(item_p);
+            l_credits[i].r = 0x80;
+            l_credits[i].g = 0x80;
+            l_credits[i].b = 0x80;
+            [0x800a652c + i * 0x88 + 0x5c] = h(0x18);
+            [0x800a652c + i * 0x88 + 0x5e] = h(0xc8);
+            [0x800a652c + i * 0x88 + 0x60] = h(0);
             return 1;
         }
     }
@@ -536,20 +560,18 @@ int funca11b4()
 
 
 
-// callback
+// callback update 3
 void funca12f0()
 {
     for( int i = 0; i < 0x20; ++i )
     {
-        if( hu[0x800a652c + i * 0x88] & 1 )
+        if( l_credits[i].flags & 0x0001 )
         {
-            funca3368( 0x800a652c + i * 0x88 );
+            ending_data_update_position( 0x800a652c + i * 0x88 );
             funca34c4( 0x800a652c + i * 0x88 );
-            funca343c( 0x800a652c + i * 0x88 );
+            ending_data_update_colors( 0x800a652c + i * 0x88 );
 
-            V0 = funca358c( l_otag_stored, 0, w[0x800af3fc], 0x800a652c + i * 0x88 );
-
-            [0x800af3fc] = w(V0);
+            l_poly_stored = funca358c( l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88 );
         }
     }
 }
@@ -560,80 +582,72 @@ int funca139c()
 {
     for( int i = 0; i < 0x20; ++i )
     {
-        [0x800a652c + i * 0x88] = h(0);
-        [0x800a6532 + i * 0x88] = h(0);
-        [0x800a6534 + i * 0x88] = h(0);
-        [0x800a6538 + i * 0x88] = w(0);
-        [0x800a6588 + i * 0x88] = h(0);
-        [0x800a658a + i * 0x88] = h(0);
-        [0x800a658c + i * 0x88] = h(0);
-        [0x800a6594 + i * 0x88] = w(0);
-        [0x800a6598 + i * 0x88] = w(0);
-        [0x800a659c + i * 0x88] = w(0);
-        [0x800a653c + i * 0x88] = b(0);
-        [0x800a653d + i * 0x88] = b(0);
-        [0x800a653e + i * 0x88] = b(0);
+        l_credits[i].flags = 0x0000;
+        [0x800a652c + i * 0x88 + 0x6] = h(0);
+        [0x800a652c + i * 0x88 + 0x8] = h(0);
+        [0x800a652c + i * 0x88 + 0xc] = w(0);
+        l_credits[i].r = 0;
+        l_credits[i].g = 0;
+        l_credits[i].b = 0;
+        [0x800a652c + i * 0x88 + 0x5c] = h(0);
+        [0x800a652c + i * 0x88 + 0x5e] = h(0);
+        [0x800a652c + i * 0x88 + 0x60] = h(0);
+        [0x800a652c + i * 0x88 + 0x68] = w(0);
+        [0x800a652c + i * 0x88 + 0x6c] = w(0);
+        [0x800a652c + i * 0x88 + 0x70] = w(0);
     }
 
-    funca3178( 0x800a762c, 0x4, 0x80, 0x800a12f0 ); // funca12f0()
+    ending_list_insert_sorted( 0x800a762c, 0x4, 0x80, 0x800a12f0 ); // funca12f0()
 
     return 1;
 }
 
 
 
+// 0x15
 int funca14bc()
 {
-    V1 = l_event;
-    l_event = V1 + 0x8;
+    u32 ofs = l_event;
+    l_event = ofs + 0x14;
 
-    S0 = h[V1 + 0x0] * 0x88;
-    [0x800a652c + S0 + 0000] = h(hu[V1 + 0x2]);
-    [0x80096532 + S0 + 0000] = h(0);
-    [0x800a6534 + S0 + 0000] = h(h[V1 + 0x6]);
+    id = h[ofs + 0x0];
+    l_credits[id].flags = hu[ofs + 0x2];
+    [0x800a652c + id * 0x88 + 0x6] = h(0);
+    [0x800a652c + id * 0x88 + 0x8] = h(h[ofs + 0x6]);
 
-    func34d18( 0x800d0000, h[V1 + 0x4] );
+    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x4] );
 
-    V1 = l_event;
-    l_event = V1 + 0x8;
-
-    [0x800a6538 + S0 + 0000] = w(V0);
-    [0x800a652c + S0 + 0068] = w(h[V1 + 0x0]);
-    [0x800a6588 + S0 + 0000] = h(h[V1 + 0x0]);
-    [0x800a652c + S0 + 006c] = w(h[V1 + 0x2]);
-    [0x800a658a + S0 + 0000] = h(h[V1 + 0x2]);
-    [0x800a652c + S0 + 0070] = w(h[V1 + 0x4]);
-    [0x800a658c + S0 + 0000] = h(h[V1 + 0x4]);
-    [0x800a653c + S0 + 0000] = b(bu[V1 + 0x6]);
-
-    V1 = l_event;
-    l_event = V1 + 0x2;
-    [0x800a653d + S0 + 0000] = b(bu[V1 + 0x0]);
-
-    A0 = l_event;
-    l_event = A0 + 0x2;
-
-    [0x800a6594 + S0 + 0000] = w(w[0x800a6594 + S0 + 0000] << 0xc);
-    [0x800a659c + S0 + 0000] = w(w[0x800a659c + S0 + 0000] << 0xc);
-    [0x800a653e + S0 + 0000] = b(bu[A0 + 0x0]);
-    [0x800a6598 + S0 + 0000] = w(w[0x800a6598 + S0 + 0000] << 0xc);
+    [0x800a652c + id * 0x88 + 0xc] = w(item_p);
+    l_credits[id].r = bu[ofs + 0xe];
+    l_credits[id].g = bu[ofs + 0x10]
+    l_credits[id].b = bu[ofs + 0x12];
+    [0x800a652c + id * 0x88 + 0x5c] = h(h[ofs + 0x8]);
+    [0x800a652c + id * 0x88 + 0x5e] = h(h[ofs + 0xa]);
+    [0x800a652c + id * 0x88 + 0x60] = h(h[ofs + 0xe]);
+    [0x800a652c + id * 0x88 + 0x68] = w(h[ofs + 0x8]);
+    [0x800a652c + id * 0x88 + 0x6c] = w(h[ofs + 0xa]);
+    [0x800a652c + id * 0x88 + 0x70] = w(h[ofs + 0xc]);
+    [0x800a652c + id * 0x88 + 0x68] = w(w[0x800a652c + id * 0x88 + 0x68] << 0xc);
+    [0x800a652c + id * 0x88 + 0x6c] = w(w[0x800a652c + id * 0x88 + 0x6c] << 0xc);
+    [0x800a652c + id * 0x88 + 0x70] = w(w[0x800a652c + id * 0x88 + 0x70] << 0xc);
 
     return 1;
 }
 
 
 
+// 0x17
 int funca16e4()
 {
-    A1 = l_event;
-    l_event = A1 + 0xa;
+    u32 ofs = l_event;
+    l_event = ofs + 0xa;
 
-    V0 = h[A1 + 0x0];
-    [0x800a652c + V0 * 0x88 + 0000] = h(hu[0x800a652c + V0 * 0x88 + 0000] | 0x10);
-    [0x800a65a4 + V0 * 0x88 + 0000] = w(h[A1 + 0x2]);
-    [0x800a65a8 + V0 * 0x88 + 0000] = w(h[A1 + 0x4]);
-    [0x800a65ac + V0 * 0x88 + 0000] = w(h[A1 + 0x6]);
-    [0x800a6530 + V0 * 0x88 + 0000] = h(hu[A1 + 0x8]);
+    id = h[ofs + 0x0];
+    l_credits[id].flags |= 0x0010;
+    l_credits[id].scale = hu[ofs + 0x8];
+    [0x800a652c + id * 0x88 + 0x78] = w(h[ofs + 0x2]);
+    [0x800a652c + id * 0x88 + 0x7c] = w(h[ofs + 0x4]);
+    [0x800a652c + id * 0x88 + 0x80] = w(h[ofs + 0x6]);
 
     return 1;
 }
@@ -644,84 +658,55 @@ int funca17c0()
 {
     system_bios_srand( system_psyq_vsync( 0x1 ) );
 
-    A0 = 0;
-    A1 = 0x800a767c;
-    funca2934();
+    funca2934( 0, 0x800a767c );
 
-    S2 = 0;
-    800A1808	addiu  s3, zero, $e000 (=-$2000)
-    800A180C	addiu  s4, zero, $fc13 (=-$3ed)
-
-    V0 = 0x800a76c8;
-    S0 = V0 + 0040;
-    S1 = V0;
-    800A1820	addiu  v0, zero, $fc00 (=-$400)
+    S3 = -0x2000;
+    S4 = -0x3ed;
 
     [0x800a76bc] = h(0);
     [0x800a76be] = h(0);
-    [0x800a76c0] = h(V0);
+    [0x800a76c0] = h(-0x400);
 
-    loopa183c:	; 800A183C
-        A0 = 0x800a767c;
-        A1 = S1;
-        funca2934();
+    for( int i = 0; i < 0x100; ++i )
+    {
+        funca2934( 0x800a767c, 0x800a76c8 + i * 0x4c );
 
-        system_bios_rand();
+        s8 V0 = system_bios_rand();
 
-        [S0 + 0000] = h(S3);
-        S3 = S3 + 0400;
-        V1 = V0 >> 1f;
-        V1 = V1 + V0;
-        V1 = V1 >> 01;
-        V1 = V1 + 4000;
-        V0 = S3 < 2000;
-        [S0 + 0002] = h(S4);
-        800A1874	bne    v0, zero, La1884 [$800a1884]
-        [S0 + 0004] = h(V1);
-        800A187C	addiu  s3, zero, $e000 (=-$2000)
-        S4 = S4 + 0100;
+        [0x800a76c8 + i * 0x4c + 0x40] = h(S3);
+        [0x800a76c8 + i * 0x4c + 0x42] = h(S4);
+        [0x800a76c8 + i * 0x4c + 0x44] = h(0x4000 + V0 / 2);
 
-        La1884:	; 800A1884
-        S0 = S0 + 004c;
-        S1 = S1 + 004c;
-        S2 = S2 + 0001;
-        V0 = S2 < 0100;
-    800A1890	bne    v0, zero, loopa183c [$800a183c]
+        S3 += 0x400;
 
-    S3 = 0;
-    S5 = 0010;
-    S6 = 0x800ac2c8;
-    S4 = 0;
+        if( S3 >= 0x2000 )
+        {
+            S3 = -0x2000;
+            S4 += 0x100;
+        }
+    }
 
-    loopa18ac:	; 800A18AC
-        S2 = 0;
-        S1 = S6;
-        S0 = S4;
+    for( int i = 0; i < 2; ++i )
+    {
+        for( int j = 0; j < 0x100; ++j )
+        {
+            l_lines[i][j].r0 = 0x10;
+            l_lines[i][j].g0 = 0x10;
+            l_lines[i][j].b0 = 0x10;
+            l_lines[i][j].r1 = 0xa0;
+            l_lines[i][j].g1 = 0xdc;
+            l_lines[i][j].r1 = 0xfa;
 
-        loopa18b8:	; 800A18B8
-            [0x800acad4 + S0] = b(0xa0);
-            [0x800ac2d5 + S0] = b(0xdc);
-            [0x800ac2d6 + S0] = b(0xfa);
-            V0 = S0 + S6;
-            [0x800ac2cc + S0] = b(S5);
-            [0x800ac2cd + S0] = b(S5);
-            [0x800ac2ce + S0] = b(S5);
-            [V0 + 0006] = b(0);
-            [V0 + 0005] = b(0);
-            [0x800ac2cc + S0] = b(0);
-            A0 = S4 + S1;
-            system_psyq_set_line_g2();
+            // orerwrite colors
+            l_lines[i][j].r0 = 0;
+            l_lines[i][j].g0 = 0;
+            l_lines[i][j].b0 = 0;
 
-            S1 = S1 + 0014;
-            S2 = S2 + 0001;
-            S0 = S0 + 0014;
-            V0 = S2 < 0100;
-        800A1954	bne    v0, zero, loopa18b8 [$800a18b8]
+            system_psyq_set_line_g2( &l_lines[i][j] );
 
-        S3 = S3 + 0001;
-        S4 = S4 + 1400;
-        V0 = S3 < 0002;
-    800A1964	bne    v0, zero, loopa18ac [$800a18ac]
+            S0 += 0x14;
+        }
+    }
 
     system_psyq_set_disp_mask( 0x1 );
 
@@ -730,288 +715,158 @@ int funca17c0()
 
 
 
-////////////////////////////////
-// funca19a4()
-
-V0 = w[0x800a63cc];
-V1 = l_buttons1_state;
-V0 = V0 ^ 0001;
-[0x800a63cc] = w(V0);
-
-if( V1 & 0x1000 )
+int funca19a4()
 {
-    [0x800a63d8] = w(w[0x800a63d8] - 0x8);
+    [0x800a63cc] = w(w[0x800a63cc] ^ 0x1);
+
+    if( l_buttons1_state & 0x1000 ) // Up
+    {
+        [0x800a63d8] = w(w[0x800a63d8] - 0x8);
+    }
+    else if( l_buttons1_state & 0x4000 ) // Down
+    {
+        [0x800a63d8] = w(w[0x800a63d8] + 0x8);
+    }
+    else if( l_buttons1_state & 0x2000 ) // Right
+    {
+        [0x800a63d4] = w(w[0x800a63d4] + 0x8);
+    }
+    else if( l_buttons1_state & 0x8000 ) // Left
+    {
+        [0x800a63d4] = w(w[0x800a63d4] - 0x8);
+    }
+    else if( l_buttons1_state & 0x0004 ) // L1
+    {
+        [0x800a63d0] = w(w[0x800a63d0] - 0x10);
+    }
+    else if( l_buttons1_state & 0x0008 ) // R1
+    {
+        [0x800a63d0] = w(w[0x800a63d0] + 0x10);
+    }
+
+    [0x800aeadc] = h(0);
+    [0x800aead8] = h(0);
+    [0x800aeada] = h(0);
+    [0x800aeadc] = h(0);
+    [0x800aeac8] = w(0);
+    [0x800aeacc] = w(-0x1000);
+    [0x800aead0] = w(0);
+
+    funca2a2c( 0x800a7684, 0x800a7684 + 0x38, 0x800aead8, 0x800aeac8 );
+
+    S4 = 0x800aeae0 + w[0x800a63cc] * 0x400;
+    system_psyq_clear_otag( S4, 0x100 );
+
+    for( int i = 0; i < 0x100; ++i )
+    {
+        if( w[0x800a63cc] != 0 )
+        {
+            [0x800a76c8 + i * 0x4c + 0x44] = h(hu[0x800a76c8 + i * 0x4c + 0x44] - 0x20);
+        }
+        else
+        {
+            [0x800a76c8 + i * 0x4c + 0x44] = h(hu[0x800a76c8 + i * 0x4c + 0x44] - 0x80);
+        }
+
+        if( h[0x800a76c8 + i * 0x4c + 0x44] < 0 )
+        {
+            [0x800a770c + i * 0x4c] = h(0x4000);
+        }
+
+        funca2f1c( 0x800a76c8 + i * 0x4c );
+
+        S0 = 0x800a76c8 + i * 0x4c + 0x8;
+
+        system_psyq_set_rot_matrix( S0 );
+        system_psyq_set_trans_matrix( S0 );
+
+        rb = w[0x800a63cc];
+
+        A0 = 0x800a63b4; // vec 1
+        A1 = 0x800a63b4 + 0x8; // vec 2
+        A2 = 0x800a63b4 + 0x10; // vec 3
+        A3 = l_lines[rb][i] + 0x8; // xy1
+        A4 = l_lines[rb][i] + 0x10; // xy2
+        A5 = SP + 0x20; // xy3
+        A6 = SP + 0x24; // p
+        A7 = SP + 0x28; // flag
+        depth = system_psyq_rot_trans_pers3();
+
+        [SP + 0x20] = w(h[0x800a770c + i * 0x4c] >> 6);
+
+        A1 = 0xa0 - w[SP + 0x20];
+        [0x800ac2d4 + rb * 0x1400 + i * 0x14] = b(( A1 < 0 ) ? 0 : A1);
+
+        A1 = 0xdc - w[SP + 0x20];
+        [0x800ac2d5 + rb * 0x1400 + i * 0x14] = b(( A1 < 0 ) ? 0 : A1);
+
+        A1 = 0xfa - w[SP + 0x20];
+        [0x800ac2d6 + rb * 0x1400 + i * 0x14] = b(( A1 < 0 ) ? 0 : A1);
+
+        system_psyq_add_prim( S4 + (depth / 0x40) * 0x4, l_lines[rb][i] );
+    }
+
+    system_psyq_draw_otag( S4 );
+
+    return 0;
 }
-else if( V1 & 0x4000 )
-{
-    [0x800a63d8] = w(w[0x800a63d8] + 0x8);
-}
-else if( V1 & 0x2000 )
-{
-    [0x800a63d4] = w(w[0x800a63d4] + 0x8);
-}
-else if( V1 & 0x8000 )
-{
-    [0x800a63d4] = w(w[0x800a63d4] - 0x8);
-}
-else if( V1 & 0x0004 )
-{
-    [0x800a63d0] = w(w[0x800a63d0] - 0x10);
-}
-else if( V1 & 0x0008 )
-{
-    V0 = ;
-    [0x800a63d0] = w(w[0x800a63d0] + 0x10);
-}
-
-A0 = 0x800a7684;
-A2 = 0x800aead8;
-A3 = 0x800aeac8;
-800A1AE0	addiu  v0, zero, $f000 (=-$1000)
-
-[0x800aeadc] = h(0);
-[A2 + 0000] = h(0);
-[0x800aeada] = h(0);
-[0x800aeadc] = h(0);
-[A3 + 0000] = w(0);
-[0x800aeacc] = w(V0);
-[0x800aead0] = w(0);
-A1 = A0 + 0038;
-800A1B14	jal    funca2a2c [$800a2a2c]
-
-A1 = 0100;
-S6 = 0x800a76c8;
-S7 = S6 + 0008;
-S5 = 0x800a63b4;
-S1 = 0;
-S2 = S6 + 0044;
-S3 = 0;
-V0 = w[0x800a63cc];
-V1 = 0x800aeae0;
-V0 = V0 << 0a;
-S4 = V0 + V1;
-
-system_psyq_clear_otag( S4 );
-
-La1b60:	; 800A1B60
-    V0 = w[0x800a63cc];
-    800A1B68	nop
-    800A1B6C	beq    v0, zero, La1b80 [$800a1b80]
-    800A1B70	nop
-    V0 = hu[S2 + 0000];
-    800A1B78	j      La1b8c [$800a1b8c]
-    800A1B7C	addiu  v0, v0, $ffe0 (=-$20)
-
-    La1b80:	; 800A1B80
-    V0 = hu[S2 + 0000];
-    800A1B84	nop
-    800A1B88	addiu  v0, v0, $ff80 (=-$80)
-
-    La1b8c:	; 800A1B8C
-    [S2 + 0000] = h(V0);
-    V0 = h[S2 + 0000];
-    800A1B94	nop
-    800A1B98	bgez   v0, La1bb4 [$800a1bb4]
-    S0 = S3 + S7;
-    V0 = 4000;
-    AT = 0x800a770c;
-    AT = AT + S3;
-    [AT + 0000] = h(V0);
-
-    La1bb4:	; 800A1BB4
-    A0 = S3 + S6;
-    funca2f1c();
-
-    system_psyq_set_rot_matrix( S0 );
-    system_psyq_set_trans_matrix( S0 );
-
-    A0 = S5;
-    A1 = S5 + 0008;
-    A2 = S5 + 0010;
-    V0 = SP + 0020;
-    [SP + 0014] = w(V0);
-    V0 = SP + 0024;
-    [SP + 0018] = w(V0);
-    V0 = SP + 0028;
-    [SP + 001c] = w(V0);
-    V0 = 0x800ac2c8;
-
-    A3 = w[0x800a63cc];
-    V0 = S1 + V0;
-    V1 = A3 << 02;
-    V1 = V1 + A3;
-    V1 = V1 << 0a;
-    V1 = V1 + V0;
-    A3 = V1 + 0008;
-    V1 = V1 + 0010;
-    [SP + 0010] = w(V1);
-    func3bc0c();
-
-    A0 = V0;
-    AT = 0x800a770c;
-    AT = AT + S3;
-    V1 = hu[AT + 0000];
-    V0 = 00a0;
-    V1 = V1 << 10;
-    V1 = V1 >> 16;
-    A1 = V0 - V1;
-    [SP + 0020] = w(V1);
-    800A1C48	bgez   a1, La1c84 [$800a1c84]
-
-    V1 = w[0x800a63cc];
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 0a;
-    V0 = S1 + V0;
-    AT = 0x800ac2d4 + V0;
-    [AT + 0000] = b(0);
-    800A1C7C	j      La1cb0 [$800a1cb0]
-    800A1C80	nop
-
-    La1c84:	; 800A1C84
-    V1 = w[0x800a63cc];
-    800A1C8C	nop
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 0a;
-    V0 = S1 + V0;
-    AT = 0x800ac2d4 + V0;
-    [AT + 0000] = b(A1);
-
-    La1cb0:	; 800A1CB0
-    V1 = w[SP + 0020];
-    V0 = 00dc;
-    A1 = V0 - V1;
-    800A1CBC	bgez   a1, La1cf8 [$800a1cf8]
-
-    V1 = w[0x800a63cc];
-    800A1CCC	nop
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 0a;
-    V0 = S1 + V0;
-    AT = 0x800ac2d5 + V0;
-    [AT + 0000] = b(0);
-    800A1CF0	j      La1d24 [$800a1d24]
-    800A1CF4	nop
-
-    La1cf8:	; 800A1CF8
-    V1 = w[0x800a63cc];
-    800A1D00	nop
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 0a;
-    V0 = S1 + V0;
-    AT = 0x800ac2d5 + V0;
-    [AT + 0000] = b(A1);
-
-    La1d24:	; 800A1D24
-    V1 = w[SP + 0020];
-    V0 = 00fa;
-    A1 = V0 - V1;
-    800A1D30	bgez   a1, La1d6c [$800a1d6c]
-
-    V1 = w[0x800a63cc];
-    800A1D40	nop
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 0a;
-    V0 = S1 + V0;
-    AT = 0x800ac2d6 + V0;
-    [AT + 0000] = b(0);
-    800A1D64	j      La1d9c [$800a1d9c]
-    A0 = A0 >> 06;
-
-    La1d6c:	; 800A1D6C
-    V1 = w[0x800a63cc];
-    800A1D74	nop
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    V0 = V0 << 0a;
-    V0 = S1 + V0;
-    AT = 0x800ac2d6 + V0;
-    [AT + 0000] = b(A1);
-    A0 = A0 >> 06;
-
-    La1d9c:	; 800A1D9C
-    A0 = A0 << 02;
-    A0 = S4 + A0;
-    V1 = 0x800ac2c8 + S1;
-    S1 = S1 + 0014;
-    S2 = S2 + 004c;
-    V0 = w[0x800a63cc];
-    S3 = S3 + 004c;
-    A1 = V0 << 02;
-    A1 = A1 + V0;
-    A1 = A1 << 0a;
-    A1 = A1 + V1;
-    system_psyq_add_prim();
-
-    V0 = S1 < 1400;
-800A1DDC	bne    v0, zero, La1b60 [$800a1b60]
-
-system_psyq_draw_otag( S4 );
-
-return 0;
-////////////////////////////////
 
 
 
-void funca1e20()
+void ending_events_exec()
 {
     do
     {
-        S0 = l_event;
-        l_event = S0 + 0x2;
+        u32 ofs = l_event;
+        l_event = ofs + 0x2;
 
-        [0x800a6394] = w(0);
+        l_event_cont = 0;
 
-        // 00 funca1ee4() // end opcode (infinite repeat)
-        // 01 funca1eec() // load file info to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
-        // 02 funca1f48() // load lzs file to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
-        // 03 funca1fa4() // load finished sync
-        // 04 funca1fc8() // load tim from loaded file (arg1: id of tim inside file)
-        // 05 funca2014() // extract tim from lzs (arg1: id of lzs tim inside file)
-        // 06 funca208c() // start play movie with given id (arg1: movie id)
-        // 07 funca20d4() // wait while movie finished
-        // 08 funca20f8()
-        // 09 funca2190()
-        // 0a funca21cc()
-        // 0b funca0ab8()
+        // 00 funca1ee4()                           // end opcode (infinite repeat)
+        // 01 ending_events_01_load_file_to_temp()  // load file info to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
+        // 02 ending_events_02_load_lzs_to_temp()   // load lzs file to 0x800d0000 (arg1: id of file (0-MOVIE/STAFF.BIN, 1-MOVIE/STAFF2.BIN, 2-MOVIE/OPENING.BIN))
+        // 03 ending_events_03_load_sync()          // load finished sync
+        // 04 funca1fc8()                           // load tim from loaded file (arg1: id of tim inside file)
+        // 05 funca2014()                           // extract tim from lzs (arg1: id of lzs tim inside file)
+        // 06 funca208c()                           // start play movie with given id (arg1: movie id)
+        // 07 funca20d4()                           // wait while movie finished
+        // 08 ending_events_08_render_init()        // init render
+        // 09 ending_events_0a_set_disp_mask()                           // set_disp_mask
+        // 0a ending_events_0a_wait()               // wait number of calls
+        // 0b funca0ab8() // some render insert 1
         // 0c funca2248()
         // 0d funca0ba8()
-        // 0e funca2274()
-        // 0f funca0cac()
-        // 10 funca22a4()
-        // 11 funca0f90()
+        // 0e funca2274()                           // jump
+        // 0f ending_events_0f_change_color()       // set color change for poly
+        // 10 ending_events_10_set_frame_skip()     // set frame skip
+        // 11 funca0f90() // some render insert 2
         // 12 funca11b4()
         // 13 funca22d4()
-        // 14 funca139c()
+        // 14 funca139c() // some render insert 3
         // 15 funca14bc()
         // 16 funca22e4()
         // 17 funca16e4()
-        // 18 funca2328() // plays akao music (arg1: id of akao inside file)
+        // 18 funca2328()                           // plays akao music (arg1: id of akao inside file)
         // 19 funca23f8()
-        // 1a funca2380() // execute AKAO command (arg1: command id, arg2: arg1, arg3: arg2)
+        // 1a ending_events_1a_akao()               // execute AKAO command (arg1: command id, arg2: arg1, arg3: arg2)
         // 1b funca2420()
-        // 1c funca17c0()
-        // 1d funca19a4()
+        // 1c funca17c0()                           // init some lines
+        // 1d funca19a4()                           // draw some lines with reaction to buttons
 
-        V0 = h[S0];
+        V0 = h[ofs];
         800A1E74	jalr   w[0x800a63dc + V0 * 4] ra
 
         if( V0 == 0 )
         {
-            l_event = S0; // execute same opcode again
+            l_event = ofs; // execute same opcode again
 
-            [0x800a6390] = w(0);
+            l_event_new = 0;
         }
         else
         {
-            [0x800a6390] = w(0x1);
+            l_event_new = 0x1;
         }
-    }
-    while( w[0x800a6394] != 0 );
+    } while( l_event_cont != 0 );
 }
 
 
@@ -1030,41 +885,33 @@ int funca1ee4()
 
 
 
-int funca1eec()
+int ending_events_01_load_file_to_temp()
 {
-    V1 = l_event;
-    l_event = V1 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    V0 = h[V1];
-    A0 = w[0x800a6398 + V0 * 0x8 + 0x0];
-    A1 = w[0x800a6398 + V0 * 0x8 + 0x4];
-    A2 = 0x800d0000;
-    A3 = 0;
-    system_cdrom_start_load_file();
+    id = h[ofs];
+    system_cdrom_start_load_file( w[0x800a6398 + id * 0x8 + 0x0], w[0x800a6398 + id * 0x8 + 0x4], 0x800d0000, 0 );
 
     return 1;
 }
 
 
 
-int funca1f48()
+int ending_events_02_load_lzs_to_temp()
 {
-    V1 = l_event;
-    l_event = V1 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    V0 = h[V1];
-    A0 = w[0x800a6398 + V0 * 0x8 + 0x0];
-    A1 = w[0x800a6398 + V0 * 0x8 + 0x4];
-    A2 = 0x800d0000;
-    A3 = 0;
-    system_cdrom_start_load_lzs();
+    id = h[ofs];
+    system_cdrom_start_load_lzs( w[0x800a6398 + id * 0x8 + 0x0], w[0x800a6398 + id * 0x8 + 0x4], 0x800d0000, 0 );
 
     return 1;
 }
 
 
 
-int funca1fa4()
+int ending_events_03_load_sync()
 {
     return func34410() < 0x1;
 }
@@ -1073,10 +920,10 @@ int funca1fa4()
 
 int funca1fc8()
 {
-    V1 = l_event;
-    l_event = V1 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    u32 item_p = func34d18( 0x800d0000, h[V1 + 0x0] );
+    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs] );
 
     ending_load_tim( item_p, SP + 0x10, SP + 0x12 );
 
@@ -1087,17 +934,16 @@ int funca1fc8()
 
 int funca2014()
 {
-    V0 = l_event;
-    l_event = V0 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    if( w[0x800a6390] != 0 )
+    if( l_event_new != 0 )
     {
-        A0 = func34d18( 0x800d0000, h[V0] );
-        A1 = 0x80120000;
-        system_cdrom_set_lzs_extract();
+        u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs] );
+        system_cdrom_set_lzs_extract( item_p, 0x80120000 );
     }
 
-    if( func34d5c() != 0 ) return 0; // wail while lzs extraction finished
+    if( func34d5c() != 0 ) return 0; // wait while lzs extraction finished
 
     ending_load_tim( 0x80120000, SP + 0x10, SP + 0x12 );
 
@@ -1108,11 +954,11 @@ int funca2014()
 
 int funca208c()
 {
-    V0 = l_event;
-    [0x800a6524] = w(0x801a0000);
-    l_event = V0 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    system_movie_play( 0x801a0000, h[V0 + 0x0] );
+    [0x800a6524] = w(0x801a0000);
+    system_movie_play( 0x801a0000, h[ofs] );
 
     return 1;
 }
@@ -1126,12 +972,12 @@ int funca20d4()
 
 
 
-int funca20f8()
+int ending_events_08_render_init()
 {
-    V0 = l_event;
-    l_event = V0 + 0xc;
+    u32 ofs = l_event;
+    l_event = ofs + 0xc;
 
-    ending_render_init( h[V0 + 0x0], h[V0 + 0x2], h[V0 + 0x4], bu[V0 + 0x6], bu[V0 + 0x8], bu[V0 + 0xa] );
+    ending_render_init( h[ofs + 0x0], h[ofs + 0x2], h[ofs + 0x4], bu[ofs + 0x6], bu[ofs + 0x8], bu[ofs + 0xa] );
 
     ending_render_vsync( 0 );
 
@@ -1140,85 +986,64 @@ int funca20f8()
 
 
 
-int funca2190()
+int ending_events_0a_set_disp_mask()
 {
-    V1 = l_event;
-    l_event = V1 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    system_psyq_set_disp_mask( h[V1 + 0000] );
+    system_psyq_set_disp_mask( h[ofs] );
 
     return 1;
 }
 
 
 
-////////////////////////////////
-// funca21cc
+int ending_events_0a_wait()
+{
+    if( l_event_new != 0 )
+    {
+        u32 ofs = l_event;
+        l_event = ofs + 0x2;
 
-V0 = w[0x800a6390];
-800A21D4	nop
-800A21D8	beq    v0, zero, La2210 [$800a2210]
+        l_event_wait = h[ofs];
+    }
+    else
+    {
+        l_event += 0x2;
+    }
 
-V0 = l_event;
-800A21E8	nop
-V1 = V0 + 0002;
-l_event = V1;
-V0 = h[V0 + 0000];
-[0x800a63b0] = w(V0);
-800A2208	j      La2228 [$800a2228]
-800A220C	nop
+    l_event_wait -= 0x1;
 
-La2210:	; 800A2210
-V0 = l_event;
-800A2218	nop
-V0 = V0 + 0002;
-l_event = V0;
-
-La2228:	; 800A2228
-V0 = w[0x800a63b0];
-800A2230	nop
-800A2234	addiu  v0, v0, $ffff (=-$1)
-
-[0x800a63b0] = w(V0);
-800A2240	jr     ra 
-V0 = V0 < 0001;
-////////////////////////////////
+    return l_event_wait < 0x1;
+}
 
 
 
 int funca2248()
 {
-    V0 = funca3314( 0x4 );
-    funca32d8( V0 );
+    ending_list_remove( ending_list_find( 0x4 ) );
 
     return 1;
 }
 
 
 
-////////////////////////////////
-// funca2274
-
-V1 = l_event;
-800A227C	nop
-V0 = h[V1 + 0000];
-800A2284	nop
-V0 = V0 + 0001;
-V0 = V0 << 01;
-V1 = V1 - V0;
-l_event = V1;
-
-return 1;
-////////////////////////////////
-
-
-
-int funca22a4()
+int funca2274()
 {
-    V0 = l_event;
-    l_event = V0 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs - (h[ofs] + 0x1) * 0x2;
 
-    [0x800af40c] = w(h[V0]);
+    return 1;
+}
+
+
+
+int ending_events_10_set_frame_skip()
+{
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
+
+    l_frames_skip = h[ofs];
 
     return 1;
 }
@@ -1227,44 +1052,35 @@ int funca22a4()
 
 int funca22d4()
 {
-    [0x800af410] = w(0);
+    l_draw = 0;
 
     return 1;
 }
 
 
 
-////////////////////////////////
-// funca22e4
+int funca22e4()
+{
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-V1 = l_event;
-800A22EC	nop
-V0 = V1 + 0002;
-l_event = V0;
-V1 = h[V1 + 0000];
-800A2300	nop
-V0 = V1 << 04;
-V0 = V0 + V1;
-V0 = V0 << 03;
-AT = 0x800a652c;
-AT = AT + V0;
-[AT + 0000] = h(0);
-800A2320	jr     ra 
-V0 = 0001;
-////////////////////////////////
+    id = h[ofs];
+    l_credits[id].flags = 0x0000;
+
+    return 1;
+}
 
 
 
 int funca2328()
 {
-    V0 = l_event;
-    l_event = V0 + 0x2;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    func34d18( 0x800d0000, h[V0 + 0x0] );
+    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs] );
 
     [0x8009a000] = h(0x10);
-    [0x8009a004] = w(V0);
-
+    [0x8009a004] = w(item_p);
     system_akao_execute();
 
     return 1;
@@ -1272,14 +1088,14 @@ int funca2328()
 
 
 
-int funca2380()
+int ending_events_1a_akao()
 {
-    V1 = l_event;
-    l_event = V1 + 0x6;
+    u32 ofs = l_event;
+    l_event = ofs + 0x6;
 
-    [0x8009a000] = h(hu[V1 + 0x0]);
-    [0x8009a004] = w(h[V1 + 0x2]);
-    [0x8009a008] = w(h[V1 + 0x4]);
+    [0x8009a000] = h(hu[ofs + 0x0]);
+    [0x8009a004] = w(h[ofs + 0x2]);
+    [0x8009a008] = w(h[ofs + 0x4]);
     system_akao_execute();
 
     return 1;
@@ -1294,58 +1110,52 @@ int funca23f8()
 
 
 
-////////////////////////////////
-// funca2420
-
-V1 = l_event;
-V0 = V1 + 0002;
-l_event = V0;
-V0 = w[0x80075d00];
-V1 = h[V1 + 0000];
-V0 = w[V0 + 0008];
-V0 = V0 < V1;
-return V0 ^ 0001;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2458()
-
-func3d1b4();
-
-system_interrupts_timer_dma_initialize();
-
-A0 = 0;
-system_psyq_reset_graph();
-
-A0 = 0;
-func3ce3c();
-
-system_psyq_init_geom();
-
-system_psyq_spu_init();
-
-system_cdrom_init()
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca24a8()
-
-while( true )
+int funca2420()
 {
-    if( system_psyq_break_draw() != -1 ) break;
+    u32 ofs = l_event;
+    l_event = ofs + 0x2;
 
-    system_psyq_vsync( 0 );
+    V0 = w[0x80075d00];
+    return w[V0 + 0x8] >= h[ofs];
 }
 
-if( V0 != 0 )
+
+
+void funca2458()
 {
-    while( system_psyq_is_idle_gpu( 0x1 ) != 0 ) {}
+    func3d1b4();
+
+    system_interrupts_timer_dma_initialize();
+
+    A0 = 0;
+    system_psyq_reset_graph();
+
+    A0 = 0;
+    func3ce3c();
+
+    system_psyq_init_geom();
+
+    system_psyq_spu_init();
+
+    system_cdrom_init()
 }
-////////////////////////////////
+
+
+
+void funca24a8()
+{
+    while( true )
+    {
+        if( system_psyq_break_draw() != -1 ) break;
+
+        system_psyq_vsync( 0 );
+    }
+
+    if( V0 != 0 )
+    {
+        while( system_psyq_is_idle_gpu( 0x1 ) != 0 ) {}
+    }
+}
 
 
 
@@ -1453,7 +1263,7 @@ void ending_load_tim( u_long* addr, S0, S1 )
 {
     system_psyq_open_tim( addr );
 
-    TIM_IMAGE image; // SP + 0x10
+    TIM_IMAGE image;
     system_psyq_read_tim( &image );
 
     if( image.paddr != 0 )
@@ -1477,632 +1287,323 @@ void ending_load_tim( u_long* addr, S0, S1 )
 
 
 
-////////////////////////////////
-// funca2934()
-
-[A1 + 0] = w(A0);
-[A0 + 4] = w(A1);
-
-[A1 + 28] = w(1000);
-[A1 + 2c] = w(1000);
-[A1 + 30] = w(1000);
-[A1 + 34] = w(1000);
-[A1 + 38] = h(0);
-[A1 + 3a] = h(0);
-[A1 + 3c] = h(0);
-[A1 + 3e] = h(0);
-[A1 + 40] = h(0);
-[A1 + 42] = h(0);
-[A1 + 44] = h(0);
-[A1 + 46] = h(0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2974
-
-S0 = A0;
-S1 = A1;
-A0 = A2;
-A1 = S0;
-system_gte_rotation_matrix_from_xyz();
-
-T4 = S0;
-T5 = w[T4 + 0000];
-T6 = w[T4 + 0004];
-R11R12 = T5;
-R13R21 = T6;
-T5 = w[T4 + 0008];
-T6 = w[T4 + 000c];
-T7 = w[T4 + 0010];
-R22R23 = T5;
-R31R32 = T6;
-R33 = T7;
-T4 = S1;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800A29D0	nop
-800A29D4	nop
-gte_rtv0(); // v0 * rotmatrix
-V0 = S0 + 0014;
-T4 = V0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-V0 = w[S0 + 0014];
-V1 = w[S0 + 001c];
-V0 = 0 - V0;
-[S0 + 0014] = w(V0);
-V0 = w[S0 + 0018];
-[S0 + 1c] = w(0 - V1);
-[S0 + 18] = w(0 - V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2a2c()
-
-S2 = A0;
-S4 = A1;
-S0 = A3;
-V0 = h[A2 + 0000];
-V1 = h[S4 + 0000];
-A0 = SP + 0010;
-V0 = V0 - V1;
-[SP + 0010] = w(V0);
-V0 = h[A2 + 0002];
-V1 = h[S4 + 0002];
-S3 = SP + 0040;
-V0 = V0 - V1;
-[SP + 0014] = w(V0);
-V0 = h[A2 + 0004];
-V1 = h[S4 + 0004];
-A1 = S3;
-V0 = V0 - V1;
-[SP + 0018] = w(V0);
-system_psyq_vector_normal();
-
-V1 = w[SP + 0048];
-V0 = w[S0 + 0008];
-800A2A9C	nop
-800A2AA0	bne    v1, v0, La2aac [$800a2aac]
-V0 = V1 + 0001;
-[SP + 0048] = w(V0);
-
-La2aac:	; 800A2AAC
-T4 = S3;
-R11R12 = w[T4 + 0000];
-R22R23 = w[T4 + 0004];
-R33 = w[T4 + 0008];
-T4 = S0;
-IR3 = w[T4 + 0008];
-IR1 = w[T4 + 0000];
-IR2 = w[T4 + 0004];
-gte_op12(); // Outer product
-S0 = SP + 0010;
-T4 = S0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-A0 = S0;
-S1 = SP + 0020;
-A1 = S1;
-system_psyq_vector_normal();
-
-T4 = S3;
-T5 = w[T4 + 0000];
-T6 = w[T4 + 0004];
-R11R12 = T5;
-T7 = w[T4 + 0008];
-R22R23 = T6;
-R33 = T7;
-T4 = S1;
-IR3 = w[T4 + 0008];
-IR1 = w[T4 + 0000];
-IR2 = w[T4 + 0004];
-800A2B34	nop
-800A2B38	nop
-gte_op12(); // Outer product
-T4 = S0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-A0 = S0;
-A1 = SP + 30;
-system_psyq_vector_normal();
-
-V0 = hu[SP + 0020];
-[S2 + 0000] = h(V0);
-V0 = hu[SP + 0024];
-800A2B6C	nop
-[S2 + 0002] = h(V0);
-V0 = hu[SP + 0028];
-800A2B78	nop
-[S2 + 0004] = h(V0);
-V0 = hu[SP + 0030];
-800A2B84	nop
-[S2 + 0006] = h(V0);
-V0 = hu[SP + 0034];
-800A2B90	nop
-[S2 + 0008] = h(V0);
-V0 = hu[SP + 0038];
-800A2B9C	nop
-[S2 + 000a] = h(V0);
-V0 = hu[SP + 0040];
-800A2BA8	nop
-[S2 + 000c] = h(V0);
-V0 = hu[SP + 0044];
-800A2BB4	nop
-[S2 + 000e] = h(V0);
-V0 = hu[SP + 0048];
-800A2BC0	nop
-[S2 + 0010] = h(V0);
-T4 = S2;
-T5 = w[T4 + 0000];
-T6 = w[T4 + 0004];
-R11R12 = T5;
-R13R21 = T6;
-T5 = w[T4 + 0008];
-T6 = w[T4 + 000c];
-T7 = w[T4 + 0010];
-R22R23 = T5;
-R31R32 = T6;
-R33 = T7;
-T4 = S4;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800A2C00	nop
-800A2C04	nop
-gte_rtv0(); // v0 * rotmatrix
-V0 = S2 + 0014;
-T4 = V0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-V0 = w[S2 + 0014];
-V1 = w[S2 + 001c];
-V0 = 0 - V0;
-[S2 + 0014] = w(V0);
-V0 = w[S2 + 0018];
-V1 = 0 - V1;
-[S2 + 001c] = w(V1);
-V0 = 0 - V0;
-[S2 + 0018] = w(V0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2c68()
-
-S2 = A0;
-S4 = A1;
-S0 = A3;
-V0 = h[A2 + 0000];
-V1 = h[S4 + 0000];
-A0 = SP + 0010;
-V0 = V0 - V1;
-[SP + 0010] = w(V0);
-V0 = h[A2 + 0002];
-V1 = h[S4 + 0002];
-S3 = SP + 0040;
-V0 = V0 - V1;
-[SP + 0014] = w(V0);
-V0 = h[A2 + 0004];
-V1 = h[S4 + 0004];
-A1 = S3;
-V0 = V0 - V1;
-800A2CC8	jal    $system_psyq_vector_normal
-[SP + 0018] = w(V0);
-V1 = w[SP + 0048];
-V0 = w[S0 + 0008];
-800A2CD8	nop
-800A2CDC	bne    v1, v0, La2ce8 [$800a2ce8]
-V0 = V1 + 0001;
-[SP + 0048] = w(V0);
-
-La2ce8:	; 800A2CE8
-T4 = S3;
-T5 = w[T4 + 0000];
-T6 = w[T4 + 0004];
-R11R12 = T5;
-T7 = w[T4 + 0008];
-R22R23 = T6;
-R33 = T7;
-T4 = S0;
-IR3 = w[T4 + 0008];
-IR1 = w[T4 + 0000];
-IR2 = w[T4 + 0004];
-800A2D14	nop
-800A2D18	nop
-gte_op12(); // Outer product
-S0 = SP + 0010;
-T4 = S0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-A0 = S0;
-S1 = SP + 0020;
-800A2D3C	jal    $system_psyq_vector_normal
-A1 = S1;
-T4 = S3;
-T5 = w[T4 + 0000];
-T6 = w[T4 + 0004];
-R11R12 = T5;
-T7 = w[T4 + 0008];
-R22R23 = T6;
-R33 = T7;
-T4 = S1;
-IR3 = w[T4 + 0008];
-IR1 = w[T4 + 0000];
-IR2 = w[T4 + 0004];
-800A2D70	nop
-800A2D74	nop
-gte_op12(); // Outer product
-T4 = S0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-A0 = S0;
-800A2D90	jal    $system_psyq_vector_normal
-A1 = SP + 0030;
-V0 = hu[SP + 0020];
-800A2D9C	nop
-[S2 + 0000] = h(V0);
-V0 = hu[SP + 0024];
-800A2DA8	nop
-[S2 + 0002] = h(V0);
-V0 = hu[SP + 0028];
-800A2DB4	nop
-[S2 + 0004] = h(V0);
-V0 = hu[SP + 0030];
-800A2DC0	nop
-[S2 + 0006] = h(V0);
-V0 = hu[SP + 0034];
-800A2DCC	nop
-[S2 + 0008] = h(V0);
-V0 = hu[SP + 0038];
-800A2DD8	nop
-[S2 + 000a] = h(V0);
-V0 = hu[SP + 0040];
-800A2DE4	nop
-[S2 + 000c] = h(V0);
-V0 = hu[SP + 0044];
-800A2DF0	nop
-[S2 + 000e] = h(V0);
-V0 = hu[SP + 0048];
-800A2DFC	nop
-[S2 + 0010] = h(V0);
-T4 = S2;
-T5 = w[T4 + 0000];
-T6 = w[T4 + 0004];
-R11R12 = T5;
-R13R21 = T6;
-T5 = w[T4 + 0008];
-T6 = w[T4 + 000c];
-T7 = w[T4 + 0010];
-R22R23 = T5;
-R31R32 = T6;
-R33 = T7;
-T4 = S4;
-VXY0 = w[T4 + 0000];
-VZ0 = w[T4 + 0004];
-800A2E3C	nop
-800A2E40	nop
-gte_rtv0(); // v0 * rotmatrix
-V0 = S2 + 0014;
-T4 = V0;
-[T4 + 0000] = w(MAC1);
-[T4 + 0004] = w(MAC2);
-[T4 + 0008] = w(MAC3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2e80()
-
-S0 = A0;
-S1 = S0 + 8;
-
-A0 = S0 + 38;
-A1 = S1;
-system_gte_rotation_matrix_from_xyz();
-
-[S0 + 1c] = w(h[S0 + 40]);
-[S0 + 20] = w(h[S0 + 42]);
-[S0 + 24] = w(h[S0 + 44]);
-
-A0 = S1;
-A1 = S0 + 28;
-system_scale_matrix_by_vector();
-
-A0 = w[S0 + 0] + 8;
-A1 = S1;
-system_gte_matrixes_multiply_A0_A1_to_A1();
-
-A0 = w[S0 + 0] + 8;
-system_psyq_set_rot_matrix();
-
-A0 = w[S0 + 0] + 8;
-system_psyq_set_trans_matrix();
-
-A0 = S0 + 40;
-A1 = S0 + 1c;
-A2 = SP + 10;
-system_gte_rot_trans();
-
-return w[SP + 10];
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2f1c()
-
-S0 = A0;
-A0 = S0 + 38;
-S1 = S0 + 8;
-A1 = S1;
-system_gte_rotation_matrix_from_yxz();
-
-A0 = S1;
-V0 = h[S0 + 40];
-V1 = h[S0 + 42];
-A2 = h[S0 + 44];
-A1 = S0 + 0028;
-[S0 + 001c] = w(V0);
-[S0 + 0020] = w(V1);
-[S0 + 0024] = w(A2);
-system_scale_matrix_by_vector();
-
-A0 = w[S0 + 0000];
-A1 = S1;
-A0 = A0 + 0008;
-system_gte_matrixes_multiply_A0_A1_to_A1();
-
-A0 = w[S0 + 0000];
-A0 = A0 + 0008;
-system_psyq_set_rot_matrix();
-
-A0 = w[S0 + 0000];
-A0 = A0 + 0008;
-system_psyq_set_trans_matrix();
-
-A0 = S0 + 40;
-A1 = S0 + 1c;
-A2 = SP + 10;
-system_gte_rot_trans();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// funca2fb8()
-
-V1 = h[A0 + 0040];
-V0 = w[A1 + 0000];
-S0 = A2;
-V0 = V0 - V1;
-[SP + 0010] = w(V0);
-V1 = h[A0 + 0042];
-V0 = w[A1 + 0004];
-S1 = A3;
-V0 = V0 - V1;
-[SP + 0014] = w(V0);
-V1 = h[A0 + 0044];
-A0 = SP + 0010;
-V0 = w[A1 + 0008];
-A1 = S0;
-V0 = V0 - V1;
-[SP + 0018] = w(V0);
-system_psyq_vector_normal();
-
-V1 = w[SP + 0010];
-800A3010	nop
-V0 = V1 + 0002;
-V0 = V0 < 0004;
-800A301C	beq    v0, zero, La3080 [$800a3080]
-V0 = 1000;
-V0 = w[SP + 0014];
-800A3028	nop
-V0 = V0 + 0002;
-V0 = V0 < 0004;
-800A3034	beq    v0, zero, La3080 [$800a3080]
-V0 = 1000;
-V0 = w[SP + 0018];
-800A3040	nop
-V0 = V0 + 0002;
-V0 = V0 < 0004;
-800A304C	beq    v0, zero, La307c [$800a307c]
-V0 = V1 << 0c;
-[S0 + 0000] = w(V0);
-V0 = w[SP + 0014];
-800A305C	nop
-V0 = V0 << 0c;
-[S0 + 0004] = w(V0);
-V1 = w[SP + 0018];
-V1 = V1 << 0c;
-[S0 + 0008] = w(V1);
-return 1;
-
-La307c:	; 800A307C
-V0 = 1000;
-
-La3080:	; 800A3080
-if( S1 == V0 ) return 0;
-
-V0 = w[S0 + 0000];
-800A308C	nop
-800A3090	mult   s1, v0
-800A3094	mflo   v1
-800A3098	bgez   v1, La30a4 [$800a30a4]
-800A309C	nop
-V1 = V1 + 0fff;
-
-La30a4:	; 800A30A4
-V0 = w[S0 + 0004];
-800A30A8	nop
-800A30AC	mult   s1, v0
-V0 = V1 >> 0c;
-800A30B4	mflo   v1
-800A30B8	bgez   v1, La30c4 [$800a30c4]
-[S0 + 0000] = w(V0);
-V1 = V1 + 0fff;
-
-La30c4:	; 800A30C4
-V0 = w[S0 + 0008];
-800A30C8	nop
-800A30CC	mult   s1, v0
-V0 = V1 >> 0c;
-[S0 + 0004] = w(V0);
-800A30D8	mflo   v0
-800A30DC	bgez   v0, La30e8 [$800a30e8]
-800A30E0	nop
-V0 = V0 + 0fff;
-
-La30e8:	; 800A30E8
-V0 = V0 >> 0c;
-[S0 + 0008] = w(V0);
-return 0;
-////////////////////////////////
-
-
-
-void funca310c()
+void funca2934( A0, A1 )
 {
+    [A1 + 0x0] = w(A0);
+    [A0 + 0x4] = w(A1);
+
+    [A1 + 0x28] = w(0x1000);
+    [A1 + 0x2c] = w(0x1000);
+    [A1 + 0x30] = w(0x1000);
+    [A1 + 0x34] = w(0x1000);
+    [A1 + 0x38] = h(0);
+    [A1 + 0x3a] = h(0);
+    [A1 + 0x3c] = h(0);
+    [A1 + 0x3e] = h(0);
+    [A1 + 0x40] = h(0);
+    [A1 + 0x42] = h(0);
+    [A1 + 0x44] = h(0);
+    [A1 + 0x46] = h(0);
+}
+
+
+
+int funca2974( MATRIX& m_ret, SVECTOR& v1, A2 )
+{
+    system_gte_rotation_matrix_from_xyz( A2, &m_ret );
+    GTE_APPLYMATRIX( &m_ret.m, &v1, &m_ret.t );
+
+    m_ret.t[0] = 0 - m_ret.t[0];
+    m_ret.t[1] = 0 - m_ret.t[1];
+    m_ret.t[2] = 0 - m_ret.t[2];
+}
+
+
+
+void funca2a2c( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
+{
+    VECTOR v;
+    VECTOR v_res1;
+    VECTOR v_res2;
+    VECTOR v_res3;
+
+    v.vx = v2.vx - v1.vx;
+    v.vy = v2.vy - v1.vy;
+    v.vz = v2.vz - v1.vz;
+    system_psyq_vector_normal( &v, &v_res1 );
+
+    if( v_res1.vz == v3.vz )
+    {
+        v_res1.vz += 0x1;
+    }
+
+    GTE_OUTERPRODUCT12( &v_res1, &v3, &v );
+    system_psyq_vector_normal( &v, &v_res2 );
+
+    GTE_OUTERPRODUCT12( &v_res1, &v_res2, &v );
+    system_psyq_vector_normal( &v, &v_res3 );
+
+    m_ret.m[0][0] = hu[SP + 0x20]; // v_res2
+    m_ret.m[0][1] = hu[SP + 0x24];
+    m_ret.m[0][2] = hu[SP + 0x28];
+    m_ret.m[1][0] = hu[SP + 0x30]; // v_res3
+    m_ret.m[1][1] = hu[SP + 0x34];
+    m_ret.m[1][2] = hu[SP + 0x38];
+    m_ret.m[2][0] = hu[SP + 0x40]; // v_res1
+    m_ret.m[2][1] = hu[SP + 0x44];
+    m_ret.m[2][2] = hu[SP + 0x48];
+
+    GTE_APPLYMATRIX( &m_ret.m, &v1, &m_ret.t );
+
+    m_ret.t[0] = 0 - m_ret.t[0];
+    m_ret.t[1] = 0 - m_ret.t[1];
+    m_ret.t[2] = 0 - m_ret.t[2];
+}
+
+
+
+void funca2c68( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
+{
+    VECTOR v;
+    VECTOR v_res1;
+    VECTOR v_res2;
+    VECTOR v_res3;
+
+    v.vx = v2.vx - v1.vx;
+    v.vy = v2.vy - v1.vy;
+    v.vz = v2.vz - v1.vz;
+    system_psyq_vector_normal( &v, &v_res1 );
+
+    if( v_res1.vz == v3.vz )
+    {
+        v_res1.vz += 0x1;
+    }
+
+    GTE_OUTERPRODUCT12( &v_res1, &v3, SP + 0x10 );
+    system_psyq_vector_normal( &v, &v_res2 );
+
+    GTE_OUTERPRODUCT12( &v_res1, &v_res2, &v );
+    system_psyq_vector_normal( &v, &v_res3 );
+
+    m_ret.m[0][0] = hu[SP + 0x20]; // v_res2
+    m_ret.m[0][1] = hu[SP + 0x24];
+    m_ret.m[0][2] = hu[SP + 0x28];
+    m_ret.m[1][0] = hu[SP + 0x30]; // v_res3
+    m_ret.m[1][1] = hu[SP + 0x34];
+    m_ret.m[1][2] = hu[SP + 0x38];
+    m_ret.m[2][0] = hu[SP + 0x40]; // v_res1
+    m_ret.m[2][1] = hu[SP + 0x44];
+    m_ret.m[2][2] = hu[SP + 0x48];
+
+    GTE_APPLYMATRIX( &m_ret.m, &v1, &m_ret.t );
+}
+
+
+
+int funca2e80( S0 )
+{
+    S1 = S0 + 0x8;
+
+    system_gte_rotation_matrix_from_xyz( S0 + 0x38, S1 );
+
+    [S0 + 0x1c] = w(h[S0 + 0x40]);
+    [S0 + 0x20] = w(h[S0 + 0x42]);
+    [S0 + 0x24] = w(h[S0 + 0x44]);
+
+    system_scale_matrix_by_vector( S1, S0 + 0x28 );
+
+    system_gte_matrixes_multiply_A0_A1_to_A1( w[S0 + 0x0] + 0x8, S1 );
+
+    system_psyq_set_rot_matrix( w[S0 + 0x0] + 0x8 );
+
+    system_psyq_set_trans_matrix( w[S0 + 0x0] + 0x8 );
+
+    system_gte_rot_trans( S0 + 0x40, S0 + 0x1c, SP + 0x10 );
+
+    return w[SP + 0x10];
+}
+
+
+
+void funca2f1c( S0 )
+{
+    system_gte_rotation_matrix_from_yxz( S0 + 0x38, S0 + 0x8 );
+
+    [S0 + 0x1c] = w(h[S0 + 0x40]);
+    [S0 + 0x20] = w(h[S0 + 0x42]);
+    [S0 + 0x24] = w(h[S0 + 0x44]);
+
+    system_scale_matrix_by_vector( S0 + 0x8, S0 + 0x28 );
+
+    system_gte_matrixes_multiply_A0_A1_to_A1( w[S0 + 0x0] + 0x8, S0 + 0x8 );
+
+    system_psyq_set_rot_matrix( w[S0 + 0x0] + 0x8 );
+
+    system_psyq_set_trans_matrix( w[S0 + 0x0] + 0x8 );
+
+    system_gte_rot_trans( S0 + 0x40, S0 + 0x1c, SP + 0x10 );
+}
+
+
+
+int funca2fb8( A0, A1, S0, S1 )
+{
+    [SP + 0x10] = w(w[A1 + 0x0] - h[A0 + 0x40]);
+    [SP + 0x14] = w(w[A1 + 0x4] - h[A0 + 0x42]);
+    [SP + 0x18] = w(w[A1 + 0x8] - h[A0 + 0x44]);
+
+    system_psyq_vector_normal( A0 = SP + 0x10, S0 );
+
+    if( ((w[SP + 0x10] + 0x2) < 0x4) && ((w[SP + 0x14] + 0x2) < 0x4) && ((w[SP + 0x18] + 0x2) < 0x4) )
+    {
+        [S0 + 0x0] = w(w[SP + 0x10] << 0xc);
+        [S0 + 0x4] = w(w[SP + 0x14] << 0xc);
+        [S0 + 0x8] = w(w[SP + 0x18] << 0xc);
+
+        return 1;
+    }
+
+    if( S1 != 0x1000 )
+    {
+        [S0 + 0x0] = w((w[S0 + 0x0] * S1) / 0x1000);
+        [S0 + 0x4] = w((w[S0 + 0x4] * S1) / 0x1000);
+        [S0 + 0x8] = w((w[S0 + 0x8] * S1) / 0x1000);
+    }
+    return 0;
+}
+
+
+
+void ending_list_init()
+{
+    // first element
     [0x800af3c8 + 0x0] = w(0);
     [0x800af3c8 + 0x4] = w(0x800af3d8); // pointer to next element
     [0x800af3c8 + 0xc] = h(0);
     [0x800af3c8 + 0xe] = b(0x1);
-    [0x800af3c8 + 0xf] = b(0xff);
+    [0x800af3c8 + 0xf] = b(0xff); // priority
 
+    // last element
     [0x800af3d8 + 0x0] = w(0x800af3c8); // pointer to prev element
     [0x800af3d8 + 0x4] = w(0);
     [0x800af3d8 + 0xc] = h(0x1);
     [0x800af3d8 + 0xe] = b(0x1);
-    [0x800af3d8 + 0xf] = b(0);
+    [0x800af3d8 + 0xf] = b(0); // priority
 }
 
 
 
-void funca3178( A0, A1, A2, A3 )
+void ending_list_insert_sorted( elem, value, u8 sort, callback )
 {
-    T0 = 0x800af3c8;
-    V1 = A2 & 0xff;
+    prev = 0x800af3c8;
 
-    loopa3188:	; 800A3188
-        if( bu[T0 + 0xf] < V1 )
+    do
+    {
+        if( bu[prev + 0xf] < sort )
         {
-            [A0 + 0xc] = h(A1);
-            [A0 + 0x8] = w(A3);
-            [A0 + 0xe] = b(2);
-            [A0 + 0xf] = b(A2);
-            [A0 + 0x4] = w(T0);
-            [A0 + 0x0] = w(w[T0 + 0x0]);
-            [T0 + 0x0] = w(A0);
-            T0 = w[A0 + 0x0];
-            [T0 + 0x4] = w(A0);
+            [elem + 0x0] = w(w[prev + 0x0]);
+            [elem + 0x4] = w(prev);
+            [elem + 0x8] = w(callback);
+            [elem + 0xc] = h(value);
+            [elem + 0xe] = b(0x2);
+            [elem + 0xf] = b(sort);
+
+            // insert
+            [prev + 0x0] = w(elem);
+            prev = w[elem + 0x0];
+            [prev + 0x4] = w(elem);
             return;
         }
-        T0 = w[T0 + 4];
-        V0 = w[T0 + 4];
-    800A31BC	bne    v0, zero, loopa3188 [$800a3188]
 
-    V0 = bu[T0 + 0xf];
-    V1 = A2 & 0xff;
-    if( V0 < V1 )
+        // go to next element
+        prev = w[prev + 4];
+    } while( w[prev + 4] != 0 )
+
+    // insert as last element
+    if( bu[prev + 0xf] < sort )
     {
-        [A0 + 0xc] = h(A1);
-        [A0 + 0x8] = w(A3);
-        [A0 + 0xe] = b(2);
-        [A0 + 0xf] = b(A2);
-        [A0 + 0x4] = w(T0);
-        [A0 + 0x0] = w(w[T0 + 0x0]);
-        [T0 + 0x0] = w(A0);
-        T0 = w[A0 + 0x0];
-        [T0 + 0x4] = w(A0);
+        [elem + 0x0] = w(w[prev + 0x0]);
+        [elem + 0x4] = w(prev);
+        [elem + 0x8] = w(callback);
+        [elem + 0xc] = h(value);
+        [elem + 0xe] = b(0x2);
+        [elem + 0xf] = b(sort);
+
+        [prev + 0x0] = w(elem);
+        prev = w[elem + 0x0];
+        [prev + 0x4] = w(elem);
     }
 }
 
 
 
-void funca3210()
+void ending_list_activate_callback()
 {
-    S0 = w[0x800af3c8 + 0x4];
-    while( w[S0 + 0x4] != 0 )
+    // activate callbacks for type 0x4
+    elem = w[0x800af3c8 + 0x4];
+    while( w[elem + 0x4] != 0 )
     {
-        if( bu[S0 + 0xe] == 0x4 )
+        if( bu[elem + 0xe] == 0x4 )
         {
-            A0 = S0;
-            800A3254	jalr   w[S0 + 0x8] ra
+            A0 = elem;
+            800A3254	jalr   w[elem + 0x8] ra
         }
-        S0 = w[S0 + 0x4];
+        elem = w[elem + 0x4];
     }
 
-    S0 = w[0x800af3c8 + 0x4];
-    while( w[S0 + 0x4] != 0 )
+    elem = w[0x800af3c8 + 0x4];
+    while( w[elem + 0x4] != 0 )
     {
-        if( bu[S0 + 0xe] == 0x2 )
+        if( bu[elem + 0xe] == 0x2 )
         {
-            [S0 + 0xe] = b(0x4);
+            [elem + 0xe] = b(0x4);
         }
-        S0 = w[S0 + 0x4];
+        elem = w[elem + 0x4];
     }
 }
 
 
 
-void funca32d8( A0 )
+void ending_list_remove( elem )
 {
-    V1 = w[A0 + 0x0];
-    V0 = w[A0 + 0x4];
-    [V1 + 0x4] = w(V0);
-    [V0 + 0x0] = w(V1);
+    prev = w[elem + 0x0];
+    next = w[elem + 0x4];
+    [prev + 0x4] = w(next);
+    [next + 0x0] = w(prev);
 }
 
 
 
-void funca32f0( A0 )
+void ending_list_set_elem_type_8( elem )
 {
-    [A0 + 0xe] = b(0x8);
+    [elem + 0xe] = b(0x8);
 }
 
 
 
-void funca32fc( A0 )
+void ending_list_set_elem_type_4( elem )
 {
-    [A0 + 0xe] = b(0x4);
+    [elem + 0xe] = b(0x4);
 }
 
 
 
-void funca3308( A0 )
+void ending_list_set_elem_type_10( elem )
 {
-    [A0 + 0xe] = b(0x10);
+    [elem + 0xe] = b(0x10);
 }
 
 
 
-u32 funca3314()
+u32 ending_list_find( A0 )
 {
-    V1 = w[0x800af3c8 + 0x4];
-    V0 = w[V1 + 0x4];
+    elem = w[0x800af3c8 + 0x4];
 
-    if( V0 != 0 )
+    while( w[elem + 0x4] != 0 )
     {
-        V0 = A0 << 0x10;
-        A0 = V0 >> 0x10;
+        if( hu[elem + 0xc] == A0 ) return elem;
 
-        loopa3334:	; 800A3334
-            V0 = hu[V1 + 0xc];
-            if( V0 == A0 ) return V1;
-
-            V1 = w[V1 + 0x4];
-            V0 = w[V1 + 0x4];
-        800A3354	bne    v0, zero, loopa3334 [$800a3334]
+        elem = w[elem + 0x4];
     }
 
     return 0;
@@ -2110,99 +1611,104 @@ u32 funca3314()
 
 
 
-void funca3368( S0 )
+void ending_data_update_position( CreditsItem& data )
 {
-    if( (hu[S0 + 0x0] & 0x10) == 0 ) return;
-
-    if( funca379c( S0 + 0x1c, S0 + 0x78, SP + 0x10, h[S0 + 0x4] ) != 0 )
+    if( data.flags & 0x0010 )
     {
-        // if diff between vectors was too small
-        [S0 + 0x0] = h(hu[S0 + 0x0] ^ 0x10);
+        VECTOR v;
+        if( funca379c( data + 0x1c, data + 0x78, v, data.scale ) != 0 )
+        {
+            // if diff between vectors was too small
+            data.flags ^= 0x0010;
+        }
+
+        // update pos
+        [data + 0x68] = w(w[data + 0x68] + v.vx);
+        [data + 0x6c] = w(w[data + 0x6c] + v.vy);
+        [data + 0x70] = w(w[data + 0x70] + v.vz);
+
+        // store pos without fraction
+        [data + 0x5c] = h(w[data + 0x68] / 0x1000);
+        [data + 0x5e] = h(w[data + 0x6c] / 0x1000);
+        [data + 0x60] = h(w[data + 0x70] / 0x1000);
     }
-
-    [S0 + 0x68] = w(w[S0 + 0x68] + w[SP + 0x10]);
-    [S0 + 0x6c] = w(w[S0 + 0x6c] + w[SP + 0x14]);
-    [S0 + 0x70] = w(w[S0 + 0x70] + w[SP + 0x18]);
-
-    [S0 + 0x5c] = h(w[S0 + 0x68] / 0x1000);
-    [S0 + 0x5e] = h(w[S0 + 0x6c] / 0x1000);
-    [S0 + 0x60] = h(w[S0 + 0x70] / 0x1000);
 }
 
 
 
-void funca343c( A2 )
+void ending_data_update_colors( CreditsItem& data )
 {
-    if( hu[A2 + 0x0] & 0x8 )
+    if( data.flags & 0x0008 )
     {
-        [A2 + 0010] = b(bu[A2 + 0x10] + bu[A2 + 0x14]);
-        [A2 + 0x11] = b(bu[A2 + 0x11] + bu[A2 + 0x15]);
-        [A2 + 0x12] = b(bu[A2 + 0x12] + bu[A2 + 0x16]);
+        // update colors
+        data.r += data.r_step;
+        data.g += data.g_step;
+        data.b += data.b_step;
 
-        [A2 + 0x2] = h(hu[A2 + 0x2] - 1);
+        data.steps -= 1;
 
-        if( A2 + 0x2] == 0 )
+        if( data.steps == 0 )
         {
-            [A2 + 0x0] = h(hu[A2 + 0x0] ^ 0x8);
-            [A2 + 0x10] = b(bu[A2 + 0x18]);
-            [A2 + 0x11] = b(bu[A2 + 0x19]);
-            [A2 + 0x12] = b(bu[A2 + 0x1a]);
+            data.flags ^= 0x0008; // remove update
+            // set to final
+            data.r = data.r_dst;
+            data.g = data.g_dst;
+            data.r = data.b_dst;
         }
     }
 }
 
 
 
-void funca34c4( S0 )
+void funca34c4( CreditsItem& data )
 {
-    if( hu[S0 + 0x0] & 0x2 ) return;
+    if( data.flags & 0x0002 ) return;
 
-    V0 = w[S0 + 0xc];
+    V0 = w[data + 0xc];
     A0 = hu[V0 + 0x0];
 
-    if( hu[S0 + 0x6] == 0 )
+    if( hu[data + 0x6] == 0 )
     {
-        [S0 + 0x8] = h(hu[S0 + 0x8] + 0x1);
+        [data + 0x8] = h(hu[data + 0x8] + 0x1);
 
-        if( hu[S0 + 0x8] >= A0 )
+        if( hu[data + 0x8] >= A0 )
         {
-            if( hu[S0 + 0x0] & 0x4 )
+            if( data.flags & 0x0004 )
             {
-                [S0 + 0x8] = h(0);
+                [data + 0x8] = h(0);
             }
             else
             {
-                [S0 + 0x8] = h(hu[S0 + 0x8] - 1);
+                [data + 0x8] = h(hu[data + 0x8] - 1);
             }
         }
 
-        func36244( w[S0 + 0xc], hu[S0 + 0x8] );
+        func36244( w[data + 0xc], hu[data + 0x8] );
 
         V0 = w[0x8003623c];
-        [S0 + 0x6] = h(bu[V0 + 0x1]);
+        [data + 0x6] = h(bu[V0 + 0x1]);
     }
 
-    [S0 + 0x6] = h(hu[S0 + 0x6] - 0x1);
+    [data + 0x6] = h(hu[data + 0x6] - 0x1);
 }
 
 
 
-int funca358c( u32* otag, not_used, POLY_FT4* poly, S2 )
+int funca358c( u32* otag, not_used, POLY_FT4* poly, CreditsItem& data )
 {
-    S7 = func36244( w[S2 + 0xc], hu[S2 + 0x8] );
+    item_n = func36244( w[data + 0xc], hu[data + 0x8] );
 
-    // movie tex?
     S4 = w[0x80036240];
     S6 = w[0x8003623c];
 
-    for( int i = 0; i < S7; ++i )
+    for( int i = 0; i < item_n; ++i )
     {
-        x = bu[S4 + 0x0] - hu[S6 + 0x6] + hu[S2 + 0x5c];
-        y = bu[S4 + 0x1] - hu[S6 + 0x4] + hu[S2 + 0x5e];
+        x = hu[data + 0x5c] + bu[S4 + 0x0] - hu[S6 + 0x6];
+        y = hu[data + 0x5e] + bu[S4 + 0x1] - hu[S6 + 0x4];
 
-        poly->r0 = bu[S2 + 0x10];
-        poly->g0 = bu[S2 + 0011];
-        poly->b0 = bu[S2 + 0x12];
+        poly->r0 = data.r;
+        poly->g0 = data.g;
+        poly->b0 = data.b;
         poly->x0 = x;
         poly->y0 = y;
         poly->u0 = bu[S4 + 0x2];
@@ -2224,11 +1730,11 @@ int funca358c( u32* otag, not_used, POLY_FT4* poly, S2 )
 
         system_psyq_set_poly_ft4( poly );
 
-        if( hu[S2 + 0x0] & 0x8000 )
+        if( data.flags & 0x8000 )
         {
             system_psyq_set_semi_trans( poly, 0x1 );
 
-            poly->tpage |= (hu[S2 + 0x0] & 0x6000) >> 0x8;
+            poly->tpage |= (data.flags & 0x6000) >> 0x8;
         }
 
         system_psyq_add_prim( otag, poly );
@@ -2244,46 +1750,47 @@ int funca358c( u32* otag, not_used, POLY_FT4* poly, S2 )
 
 // get normalized vector difference
 // scale in 0xc fixed point
-int funca379c( vec1, vec2, res, scale )
+int funca379c( vec_from, VECTOR& vec_to, VECTOR& res, s16 scale )
 {
-    [SP + 0x10] = w(w[vec2 + 0x0] - h[vec1 + 0x40]);
-    [SP + 0x14] = w(w[vec2 + 0x4] - h[vec1 + 0x42]);
-    [SP + 0x18] = w(w[vec2 + 0x8] - h[vec1 + 0x44]);
+    VECTOR v;
+    v.vx = vec_to.vx - h[vec_from + 0x40];
+    v.vy = vec_to.vy - h[vec_from + 0x42];
+    v.vz = vec_to.vz - h[vec_from + 0x44];
 
-    if( w[SP + 0x10] == 0 )
+    if( v.vx == 0 )
     {
         // direction across Y
-        [res + 0x0] = w(0);
-        [res + 0x4] = w(( w[SP + 0x14] < 0 ) ? -0x1000 : 0x1000);
-        [res + 0x8] = w(0);
+        res.vx = 0;
+        res.vy = ( v.vy < 0 ) ? -0x1000 : 0x1000;
+        res.vz = 0;
     }
-    else if( w[SP + 0x14] == 0 )
+    else if( v.vy == 0 )
     {
         // direction across X
-        [res + 0x0] = w(( w[SP + 0x10] < 0 ) ? -0x1000 : 0x1000);
-        [res + 0x4] = w(0);
-        [res + 0x8] = w(0);
+        res.vx = ( v.vx < 0 ) ? -0x1000 : 0x1000;
+        res.vy = 0;
+        res.vz = 0;
     }
     else
     {
         // normalize vector
-        system_psyq_vector_normal( SP + 0x10, res );
+        system_psyq_vector_normal( &v, res );
     }
 
     // if all coords are small - scale it
-    if( ((w[SP + 0x10] + 0x2) < 0x4) && ((w[SP + 0x14] + 0x2) < 0x4) && ((w[SP + 0x18] + 0x2) < 0x4) )
+    if( ((v.vx + 0x2) < 0x4) && ((v.vy + 0x2) < 0x4) && ((v.vz + 0x2) < 0x4) )
     {
-        [res + 0x0] = w(w[SP + 0x10] * 0x1000);
-        [res + 0x4] = w(w[SP + 0x14] * 0x1000);
-        [res + 0x8] = w(w[SP + 0x18] * 0x1000);
+        res.vx = v.vx * 0x1000;
+        res.vy = v.vy * 0x1000;
+        res.vz = v.vz * 0x1000;
         return 1;
     }
 
     if( scale != 0x1000 )
     {
-        [res + 0x0] = w((w[res + 0x0] * scale) / 0x1000);
-        [res + 0x4] = w((w[res + 0x4] * scale) / 0x1000);
-        [res + 0x8] = w((w[res + 0x8] * scale) / 0x1000);
+        res.vx = (res.vx * scale) / 0x1000;
+        res.vy = (res.vy * scale) / 0x1000;
+        res.vz = (res.vz * scale) / 0x1000;
     }
 
     return 0;

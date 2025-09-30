@@ -730,15 +730,9 @@ else if( tp == 2 )
     [SP + 14] = h(width);
 }
 
-A0 = SP + 10;
-A1 = address;
-system_psyq_load_image();
+system_psyq_load_image( SP + 0x10, address );
 
-A0 = tp;
-A1 = abr;
-A2 = vram_x;
-A3 = vram_y;
-system_psyq_get_tpage();
+system_psyq_get_tpage( tp, abr, vram_x, vram_y );
 
 return V0;
 ////////////////////////////////
@@ -1209,8 +1203,6 @@ A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
 
 
 
-////////////////////////////////
-// system_psyq_load_image()
 // Transfer data to a frame buffer.
 // Transfers the contents of memory from the address p to the rectangular area in the frame buffer specified by recp.
 // Because LoadImage() is a non-blocking function, transmission termination must be detected by DrawSync()
@@ -1218,24 +1210,18 @@ A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
 // The source and destination areas are not affected by the drawing environment (clip, offset). The destination
 // area must be located within a drawable area (0, 0) - (1023, 511). See the description of the DR_LOAD primitive.
 // Return value position of this command in the libgpu command queue.
+int system_psyq_load_image( RECT* recp, u_long* p )
+{
+    system_graphic_debug_print_rect( "LoadImage", recp ); // libgpu debug string
 
-S0 = A0; // RECT *recp, Pointer to destination rectangular area
-S1 = A1; // Pointer to main memory address of source of transmission
+    V0 = w[0x80062bf8];
 
-A0 = 80010dcc; // "LoadImage"
-A1 = S0;
-system_graphic_debug_print_rect(); // libgpu debug string
-
-A1 = S0;
-
-V0 = w[0x80062bf8];
-A0 = w[V0 + 20];
-V0 = w[V0 + 8];
-
-A2 = 8;
-A3 = S1;
-80044044	jalr   v0 ra
-////////////////////////////////
+    A0 = w[V0 + 0x20];
+    A1 = recp;
+    A2 = 8;
+    A3 = p;
+    80044044	jalr   w[V0 + 0x8] ra
+}
 
 
 
@@ -3865,32 +3851,26 @@ A1 = bu[env + 11];
 
 
 
-////////////////////////////////
-// system_psyq_open_tim()
-
-[0x80070690] = w(A0);
-
-return 0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_read_tim()
-
-ret = A0;
-
-A0 = w[0x80070690]; // texture addr
-A1 = ret;
-system_read_tim_get_sizes();
-
-if( V0 != -1 )
+s32 system_psyq_open_tim( u32* addr )
 {
-    [0x80070690] = w(w[0x80070690] + V0 * 4); // offset to next tim
-    return ret;
+    [0x80070690] = w(addr);
+
+    return 0;
 }
-return 0;
-////////////////////////////////
+
+
+
+TIM_IMAGE* system_psyq_read_tim( TIM_IMAGE* timimg )
+{
+    V0 = system_read_tim_get_sizes( w[0x80070690], timimg );
+
+    if( V0 != -1 )
+    {
+        [0x80070690] = w(w[0x80070690] + V0 * 4); // offset to next tim
+        return timimg;
+    }
+    return 0;
+}
 
 
 
@@ -4091,55 +4071,40 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// system_read_tim_get_sizes()
-
-texture = A0;
-ret = A1;
-
-if( w[texture] != 10 )
+u32 system_read_tim_get_sizes( texture, TIM_IMAGE* timimg )
 {
-    return -1;
+    if( w[texture] != 0x10 ) return -1;
+
+    texture = texture + 0x4;
+    timimg->mode = w[texture]; // bpp
+    texture = texture + 0x4;
+
+    if( system_psyq_get_graph_debug() == 0x2 )
+    {
+        system_bios_printf( "id  =%08x", 0x10 );
+        system_bios_printf( "mode=%08x", timimg->mode );
+        system_bios_printf( "timaddr=%08x", texture );
+    }
+
+    if( timimg->mode & 0x8 )
+    {
+        A0 = w[texture + 0x0] / 0x4; // clut length
+        timimg->crect = texture + 0x4; // clut sizes
+        timimg->caddr = texture + 0xc; // clut data
+        texture += A0 * 0x4;
+    }
+    else
+    {
+        A0 = 0x0;
+        timimg->crect = 0;
+        timimg->caddr = 0;
+    }
+
+    timimg->prect = texture + 0x4; // image sizes
+    timimg->paddr = texture + 0xc; // image data
+
+    return A0 + (w[texture + 0x0] / 0x4) + 0x2; // tim size in int
 }
-texture = texture + 4;
-[ret + 0] = w(w[texture]); // bpp
-texture = texture + 4;
-
-system_psyq_get_graph_debug();
-if( V0 == 2 )
-{
-    A0 = 80010f80; // "id  =%08x"
-    A1 = 10;
-    system_bios_printf();
-
-    A0 = 80010f8c; // "mode=%08x"
-    A1 = w[ret + 0];
-    system_bios_printf();
-
-    A0 = 80010f98; // "timaddr=%08x"
-    A1 = texture;
-    system_bios_printf();
-}
-
-if( w[ret + 0] & 8 )
-{
-    [ret + 4] = w(texture + 4); // clut sizes
-    [ret + 8] = w(texture + c); // clut data
-    A0 = w[texture + 0] / 4; // clut length
-    texture = texture + (A0 * 4);
-}
-else
-{
-    A0 = 0;
-    [ret + 4] = w(0);
-    [ret + 8] = w(0);
-}
-
-[ret + c] = w(texture + 4); // image sizes
-[ret + 10] = w(texture + c); // image data
-
-return A0 + (w[texture + 0] / 4) + 2; // tim size in int
-////////////////////////////////
 
 
 

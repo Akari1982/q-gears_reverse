@@ -1030,11 +1030,10 @@ system_psyq_vsync( 0x3c );
 
 
 
-////////////////////////////////
-// func34d18()
-
-return A0 + w[A0 + A1 * 4];
-////////////////////////////////
+u32 system_cdrom_get_pack_pointer( u32 file_p, u32 id )
+{
+    return file_p + w[file_p + id * 4];
+}
 
 
 
@@ -1439,9 +1438,7 @@ if( w[0x80071a60] == a )
     }
     else
     {
-        A0 = w[0x8006e0fc]; // buffer for movie from cd
-        A1 = 0;
-        func34d18();
+        system_cdrom_get_pack_pointer( w[0x8006e0fc], 0 ); // buffer for movie from cd
 
         rb = w[0x80095da8];
         A0 = V0;
@@ -1631,9 +1628,7 @@ else if( V1 == 2 )
 
     [0x80095da8] = w(w[0x80095da8] < 1);
 
-    A0 = w[0x8006e0fc]; // buffer for movie from cd
-    A1 = w[0x8006e110];
-    func34d18();
+    system_cdrom_get_pack_pointer( w[0x8006e0fc], w[0x8006e110] ); // buffer for movie from cd
 
     rb = w[0x80095da8];
     A0 = V0;
@@ -1661,9 +1656,7 @@ else if( V1 == 3 )
 
     [0x80095da8] = w(w[0x80095da8] < 1);
 
-    A0 = w[0x8006e0fc]; // buffer for movie from cd
-    A1 = w[0x8006e110];
-    func34d18();
+    system_cdrom_get_pack_pointer( w[0x8006e0fc], w[0x8006e110] ); // buffer for movie from cd
 
     A0 = V0;
     rb = w[0x80095da8];
@@ -1960,13 +1953,12 @@ else
 
 
 
-////////////////////////////////
-// func36244()
+int func36244( u32 file_p, A1 )
+{
+    A2 = file_p + 0x4 + A1 * 0x8 + h[file_p + 0x2] * 0x4;
+    A3 = file_p + h[A2 + 0x2] * 0x4;
+    [0x8003623c] = w(A2);
+    [0x80036240] = w(file_p + 0x4 + w[A3 + 0x4]);
 
-A2 = A1 * 8 + h[A0 + 2] * 4 + A0 + 4;
-A3 = A0 + h[A2 + 2] * 4;
-[0x8003623c] = w(A2);
-[0x80036240] = w(w[A3 + 4] + A0 + 4);
-
-return w[A3];
-////////////////////////////////
+    return w[A3];
+}

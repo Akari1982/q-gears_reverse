@@ -2246,33 +2246,24 @@ s32 system_psyq_rot_trans_pers( SVECTOR* v0, long* sxy, long* p, long* flag )
 
 
 
-////////////////////////////////
-// func3bc0c
-VXY0 = w[A0 + 0000];
-VZ0 = w[A0 + 0004];
-VXY1 = w[A1 + 0000];
-VZ1 = w[A1 + 0004];
-VXY2 = w[A2 + 0000];
-VZ2 = w[A2 + 0004];
-8003BC24	nop
-gte_RTPT(); // Perspective transform on 3 points
-T0 = w[SP + 0010];
-T1 = w[SP + 0014];
-T2 = w[SP + 0018];
-T3 = w[SP + 001c];
-[A3 + 0000] = w(SXY0);
-[T0 + 0000] = w(SXY1);
-[T1 + 0000] = w(SXY2);
-[T2 + 0000] = w(IR0);
-V1 = FLAG;
-V0 = SZ3;
-[T3 + 0000] = w(V1);
-8003BC58	jr     ra 
-V0 = V0 >> 02;
-8003BC60	nop
-8003BC64	nop
-8003BC68	nop
-////////////////////////////////
+s32 system_psyq_rot_trans_pers3( SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0, long* sxy1, long* sxy2, long* p, long* flag )
+{
+    VXY0 = w[v0 + 0x0];
+    VZ0 = w[v0 + 0x4];
+    VXY1 = w[v1 + 0x0];
+    VZ1 = w[v1 + 0x4];
+    VXY2 = w[v2 + 0x0];
+    VZ2 = w[v2 + 0x4];
+
+    gte_RTPT(); // Perspective transform on 3 points
+
+    [sxy0] = w(SXY0);
+    [sxy1] = w(SXY1);
+    [sxy2] = w(SXY2);
+    [p] = w(IR0);
+    [flag] = w(FLAG);
+    return = SZ3 / 0x4;
+}
 
 
 

@@ -623,7 +623,7 @@
 80034B44 system_cdrom_read_chain
 80034BB0 system_lzs_decompress
 80034CAC func34cac
-80034D18 func34d18
+80034D18 system_cdrom_get_pack_pointer
 80034D2C system_cdrom_set_lzs_extract
 80034D5C func34d5c
 80034DB0 func34db0
@@ -798,7 +798,7 @@
 8003BB7C func3bb7c
 8003BBAC func3bbac
 8003BBDC system_psyq_rot_trans_pers
-8003BC0C func3bc0c
+8003BC0C system_psyq_rot_trans_pers3
 8003BC6C system_gte_rot_trans
 8003BC9C func3bc9c
 8003BD14 func3bd14

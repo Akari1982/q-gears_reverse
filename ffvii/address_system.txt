@@ -397,13 +397,15 @@
 800698ec [][][][] retry set loc number. After some number of retry we reload disc.
 800698f0 temp buffer for lzs compressed file.
 
-8006e0f4 [][][][] set to 0 when set cd load chain to 0xc.
-8006e0f8 [][][][] size to read. Clamp to 0x9 if greater.
+0x8006e0f4 [][][][] set to 0 when set cd load chain to 0xc.
+0x8006e0f8 [][][][] size to read. Clamp to 0x9 if greater.
 
-800707bc [][]     battle id.
-800707be [][]     battle result stored here. Loaded by opcode 0x23 btrlt.
-800707c0 font width data.
-800707c4 command data in kernel (size 0x8).
+0x80070690 [][][][] pointer to tim for loading (set in open tim).
+
+0x800707bc [][]     battle id.
+0x800707be [][]     battle result stored here. Loaded by opcode 0x23 btrlt.
+0x800707c0 font width data.
+0x800707c4 command data in kernel (size 0x8).
     + 0  []       default something.
     + 1  []       target type.
     + 4  [][]     default 8th 2bytes from attack data (Camera movement single).
