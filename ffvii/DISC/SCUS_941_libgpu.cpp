@@ -1,3 +1,7 @@
+u32 l_current_tim;  // 0x80070690
+
+
+
 ////////////////////////////////
 // func42dd4
 80042DD8
@@ -3853,7 +3857,7 @@ A1 = bu[env + 11];
 
 s32 system_psyq_open_tim( u32* addr )
 {
-    [0x80070690] = w(addr);
+    l_current_tim = addr;
 
     return 0;
 }
@@ -3862,11 +3866,11 @@ s32 system_psyq_open_tim( u32* addr )
 
 TIM_IMAGE* system_psyq_read_tim( TIM_IMAGE* timimg )
 {
-    V0 = system_read_tim_get_sizes( w[0x80070690], timimg );
+    V0 = system_read_tim_get_sizes( l_current_tim, timimg );
 
     if( V0 != -1 )
     {
-        [0x80070690] = w(w[0x80070690] + V0 * 4); // offset to next tim
+        l_current_tim += V0 * 0x4; // offset to next tim
         return timimg;
     }
     return 0;
@@ -4075,9 +4079,9 @@ u32 system_read_tim_get_sizes( texture, TIM_IMAGE* timimg )
 {
     if( w[texture] != 0x10 ) return -1;
 
-    texture = texture + 0x4;
+    texture += 0x4;
     timimg->mode = w[texture]; // bpp
-    texture = texture + 0x4;
+    texture += 0x4;
 
     if( system_psyq_get_graph_debug() == 0x2 )
     {
