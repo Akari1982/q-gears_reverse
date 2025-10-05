@@ -58,7 +58,7 @@
 
 800491d0 character id -> savemap block assosiation id. (0-0, 1-1, 2-2, 3-3, 4-4, 5-5, 6-6, 7-7, 8-8, 9-6, A-7)
 
-80049208 colors for windows.
+0x80049208 colors for windows.
     + 0 []       color R1.
     + 1 []       color G1.
     + 2 []       color B1.
@@ -947,17 +947,17 @@
                         0x0100 - Cid.
                         0x0200 - U (unknown).
     +0x10d8 []       battle speed.
-    0x8009d7bd []       battle message speed (used as value >> 2 + 4)
+    +0x10d9 []       battle message speed.
     +0x10da [][]     config flags
+                        0x0003 - sound (0x0-mono,0x1-stereo,0x2-wide)
+                        0x000c - conroller (0x0-normal,0x1-customize)
+                        0x0030 - cursor (0x0-initial,0x1-memory)
+                        0x00c0 - atb/recommended/wait (0x0-active,0x1-recommended,0x2-wait)
+                        0x0300 - camera (0x0-auto,0x1-fixed)
                         0x1c00 - magic order
-                        0x0300 - camera (0x0000-auto,0x0100-fixed)
-                        0x00c0 - atb/recommended/wait (0x0000-atb,0x0040-recommended,0x0080-wait)
-                        0x0010 - cursor (0x0000-initial,0x0010-memory)
-                        0x0004 - conroller (0x0000-normal,0x0004-custom)
-                        0x0001 - sound (0x0000-mono,0x0001-stereo)
     +0x10dc array of button remap. Each record represent one button in buttons mask (0x10 items 0x1 size)
         +0x00 [] new button bit
-    +0x10ec []       message speed.
+    +0x10ec []       field message speed.
 
 
 

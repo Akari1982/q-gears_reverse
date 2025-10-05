@@ -1,0 +1,8 @@
+801D0040 cnfgmenu_play_menu_sound
+801D0080 cnfgmenu_set_akao_to_mono_stereo
+801D0118 cnfgmenu_get_remap_button_id
+801D014C cnfgmenu_draw_button
+801D01C8 cnfgmenu_draw_main_list
+801D069C cnfgmenu_init
+801D080C cnfgmenu_main
+801D1AA0 func1d1aa0
