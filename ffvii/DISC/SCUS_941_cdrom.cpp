@@ -1948,12 +1948,15 @@ else
 
 
 
-int func36244( u32 file_p, A1 )
+int func36244( u32 file_p, id )
 {
-    A2 = file_p + 0x4 + A1 * 0x8 + h[file_p + 0x2] * 0x4;
-    A3 = file_p + h[A2 + 0x2] * 0x4;
-    [0x8003623c] = w(A2);
-    [0x80036240] = w(file_p + 0x4 + w[A3 + 0x4]);
+    num1 = h[file_p + 0x2];
+    file_sub_p = file_p + 0x4 + num1 * 0x4 + id * 0x8;
+    num2 = h[file_sub_p + 0x2];
+    ofs = w[file_p + 0x4 + num2 * 0x4];
 
-    return w[A3];
+    [0x8003623c] = w(file_sub_p);
+    [0x80036240] = w(file_p + ofs + 0x4);
+
+    return w[file_p + ofs]; // number of poly
 }

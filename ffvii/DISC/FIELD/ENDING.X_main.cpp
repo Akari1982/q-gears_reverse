@@ -1664,6 +1664,13 @@ void funca34c4( CreditsItem& data )
 {
     if( data.flags & 0x0002 ) return;
 
+// + 0 [][] some +8 check
+// + 2 [][] number of some items 0x4 size
+// + 4 start of some blocks 0x4 size
+// + X start of some blocks 0x8 size
+//      + 0 [][]
+//      + 2 [][] number of u32 from start of file before some pointer
+
     A0 = hu[data.file + 0x0];
 
     if( hu[data + 0x6] == 0 )
