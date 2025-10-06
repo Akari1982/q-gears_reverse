@@ -877,7 +877,7 @@ L3ea48:	; 8003EA48
         A4 = w[800516cc + V0 * 4];
         system_bios_printf();
 
-        8003EAF8	jal    func3f420 [$8003f420]
+        func3f420();
 
         return -1;
     }
@@ -1009,8 +1009,8 @@ A3 = w[A0 + 0000];
 A0 = 800107bc; // "%s:(%s) Sync=%s, Ready=%s\n"
 system_bios_printf();
 
-8003ED84	jal    func3f420 [$8003f420]
-8003ED88	nop
+func3f420();
+
 8003ED8C	j      L3ed98 [$8003ed98]
 8003ED90	addiu  v0, zero, $ffff (=-$1)
 

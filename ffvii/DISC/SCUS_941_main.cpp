@@ -8,8 +8,8 @@
 // system_entry_point()
 
 // clear working area
-V0 = 80062e0c;
-V1 = 8009fe94;
+V0 = 0x80062e0c;
+V1 = 0x8009fe94;
 loop110d0:	; 800110D0
     [V0] = w(0);
     V0 = V0 + 4;
@@ -17,12 +17,12 @@ loop110d0:	; 800110D0
 800110DC	bne    at, zero, loop110d0 [$800110d0]
 
 // init stack pointer, global pointer and FP
-GP = 80062d44;
-SP = 80000000 | w[0x80011170]; // 0x80200000
+GP = 0x80062d44;
+SP = 0x80000000 | w[0x80011170]; // 0x80200000
 FP = SP;
 
 // init heap right after cleared working area and until stack
-A0 = 8009fe98; // heap address
+A0 = 0x8009fe98; // heap address
 A1 = w[0x80011170] - w[0x80062d34] - 0009fe94; // heap size
 [0x80062e0c] = w(RA);
 system_bios_init_heap();
@@ -149,13 +149,13 @@ if( bu[0x80071a58] != 0 )
 
     func13800();
 
-    A0 = 8007eb68 + h[0x80075dec] * 14;
+    A0 = 0x8007eb68 + h[0x80075dec] * 14;
     system_psyq_put_dispenv();
 
-    A0 = 8007eaac + h[0x80075dec] * 5c;
+    A0 = 0x8007eaac + h[0x80075dec] * 5c;
     system_psyq_put_drawenv();
 
-    A0 = 8007e7a0 + h[0x80075dec] * 4;
+    A0 = 0x8007e7a0 + h[0x80075dec] * 4;
     system_psyq_draw_otag();
 }
 ////////////////////////////////
@@ -228,21 +228,21 @@ void system_init_base()
 ////////////////////////////////
 // system_init_dispenv_drawenv()
 
-A0 = 8007eb68 + 0 * 14; // DISPENV
+A0 = 0x8007eb68 + 0 * 14; // DISPENV
 A1 = 0;
 A2 = e8;
 A3 = 140;
 A4 = f0;
 system_psyq_set_def_dispenv();
 
-A0 = 8007eb68 + 1 * 14; // DISPENV
+A0 = 0x8007eb68 + 1 * 14; // DISPENV
 A1 = 0;
 A2 = 0;
 A3 = 140;
 A4 = f0;
 system_psyq_set_def_dispenv();
 
-A0 = 8007eaac + 0 * 5c; // DRAWENV
+A0 = 0x8007eaac + 0 * 5c; // DRAWENV
 A1 = 0;
 A2 = 8;
 A3 = 140;
@@ -251,7 +251,7 @@ system_psyq_set_def_drawenv();
 [0x8007eaac + 0 * 5c + 16] = b(1); // dithering processing flag (on)
 [0x8007eaac + 0 * 5c + 18] = b(0); // not clear drawing area when drawing environment is set
 
-A0 = 8007eaac + 1 * 5c; // DRAWENV
+A0 = 0x8007eaac + 1 * 5c; // DRAWENV
 A1 = 0;
 A2 = f0;
 A3 = 140;
@@ -260,10 +260,10 @@ system_psyq_set_def_drawenv();
 [0x8007eaac + 1 * 5c + 16] = b(1);
 [0x8007eaac + 1 * 5c + 18] = b(0);
 
-A0 = 8007eb68;
+A0 = 0x8007eb68;
 system_psyq_put_dispenv();
 
-A0 = 8007eaac;
+A0 = 0x8007eaac;
 system_psyq_put_drawenv();
 ////////////////////////////////
 
@@ -406,8 +406,7 @@ A0 = w[0x80048d54]; // sector 1efa9 "FIELD\ENDING.X"
 A1 = w[0x80048d58]; // size f414
 system_cdrom_load_file( A0, A1, 0x800a0000, 0 );
 
-// from FIELD\ENDING.X
-ending_main(); // looks like play squareenix logo
+ending_main_logo();
 
 func148b4(); // load INIT\WINDOW.BIN and INIT\KERNEL.BIN
 
@@ -426,7 +425,7 @@ while( true )
     A1 = w[0x80048d58]; // f414
     system_cdrom_load_file( A0, A1, 0x800a0000, 0 );
 
-    ending_main_2( 0 );
+    ending_main_credits( 0 ); // start credits
 
     [0x8009a000] = h(0xc0);
     [0x8009a004] = w(0x7f);
@@ -461,18 +460,11 @@ while( true )
     L11dcc:	; 80011DCC
     S0 = bu[0x8009d588];
 
-    func343f0();
-
-    if( S0 != V0 )
+    if( S0 != func343f0() )
     {
-        A0 = w[0x80048d4c]; // 1efa6 FIELD\DSCHANGE.X
-        A1 = w[0x80048d50]; // 1774 size
-        A2 = 800a0000;
-        A3 = 0;
-        system_cdrom_load_file()
+        system_cdrom_load_file( w[0x80048d4c], w[0x80048d50], 0x800a0000, 0 ); // FIELD\DSCHANGE.X
 
-        A0 = bu[0x8009d588];
-        funca0000();
+        V0 = funca0000( bu[0x8009d588] );
 
         if( V0 == 1 )
         {
@@ -921,7 +913,7 @@ while( true )
     {
         system_cdrom_load_file( w[0x80048d54], w[0x80048d58], 0x800a0000, 0 ); // "FIELD\ENDING.X"
 
-        ending_main_2( 0x1 );
+        ending_main_credits( 1 ); // ending credits
 
         func33be0();
 

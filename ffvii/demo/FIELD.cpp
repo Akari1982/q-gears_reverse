@@ -1,236 +1,237 @@
-////////////////////////////////
-// field_main()
-800A038C-800A08AC
-
-800A0394	lui    s4, $8007
-800A0398	addiu  s4, s4, $a770 (=-$5890)
-A0 = S4;
-A1 = 0;
-A2 = 0008;
-A3 = 0140;
-[SP + 0018] = w(S0);
-S0 = 00e0;
-[SP + 0030] = w(RA);
-[SP + 002c] = w(S5);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
-800A03C8	jal    $80036e98
-[SP + 0010] = w(S0);
-S5 = S4 + 005c;
-A0 = S5;
-A1 = 0;
-A2 = 00f0;
-A3 = 0140;
-800A03E4	jal    $80036e98
-[SP + 0010] = w(S0);
-800A03EC	lui    s1, $8007
-800A03F0	addiu  s1, s1, $a828 (=-$57d8)
-A0 = S1;
-A1 = 0;
-A2 = 00e8;
-A3 = 0140;
-S0 = 00f0;
-800A0408	jal    $80036f58
-[SP + 0010] = w(S0);
-A0 = S1 + 0014;
-A1 = 0;
-A2 = 0;
-A3 = 0140;
-800A0420	jal    $80036f58
-[SP + 0010] = w(S0);
-S2 = 800c2cfc;
-A0 = S2;
-V0 = 0001;
-[0x8006a786] = b(V0);
-[0x8006a7e2] = b(V0);
-800A0448	jal    $system_psyq_clear_otag_r
-A1 = 0001;
-S3 = 800d3344;
-A0 = S3;
-800A045C	jal    $system_psyq_clear_otag_r
-A1 = 0001;
-S0 = S2 + 0004;
-A0 = S0;
-800A046C	jal    $80032e64
-A1 = S4;
-S1 = 800d3348;
-A0 = S1;
-800A0480	jal    $80032e64
-A1 = S5;
-V1 = ffffff;
-800A0490	lui    t0, $ff00
-S0 = S0 & V1;
-A3 = w[S2 + 0004];
-A2 = w[S2 + 0000];
-A1 = w[S1 + 0000];
-A0 = w[S3 + 0000];
-A3 = A3 & T0;
-V0 = A2 & V1;
-A3 = A3 | V0;
-A2 = A2 & T0;
-A2 = A2 | S0;
-A1 = A1 & T0;
-V0 = A0 & V1;
-A1 = A1 | V0;
-A0 = A0 & T0;
-V1 = S1 & V1;
-A0 = A0 | V1;
-[S2 + 0004] = w(A3);
-[S2 + 0000] = w(A2);
-[S1 + 0000] = w(A1);
-[S3 + 0000] = w(A0);
-
-funca17c0();
-
-if( h[0x8006a850] != 2 )
+// 800A038C
+void field_main()
 {
-    funca09bc();
+    800A0394	lui    s4, $8007
+    800A0398	addiu  s4, s4, $a770 (=-$5890)
+    A0 = S4;
+    A1 = 0;
+    A2 = 0008;
+    A3 = 0140;
+    [SP + 0018] = w(S0);
+    S0 = 00e0;
+    [SP + 0030] = w(RA);
+    [SP + 002c] = w(S5);
+    [SP + 0024] = w(S3);
+    [SP + 0020] = w(S2);
+    [SP + 001c] = w(S1);
+    [SP + 0010] = w(S0);
+
+    800A03C8	jal    $func36e98
+
+    S5 = S4 + 005c;
+    A0 = S5;
+    A1 = 0;
+    A2 = 00f0;
+    A3 = 0140;
+    800A03E4	jal    $func36e98
+    [SP + 0010] = w(S0);
+    800A03EC	lui    s1, $8007
+    800A03F0	addiu  s1, s1, $a828 (=-$57d8)
+    A0 = S1;
+    A1 = 0;
+    A2 = 00e8;
+    A3 = 0140;
+    S0 = 00f0;
+    800A0408	jal    $func36f58
+    [SP + 0010] = w(S0);
+    A0 = S1 + 0014;
+    A1 = 0;
+    A2 = 0;
+    A3 = 0140;
+    800A0420	jal    $func36f58
+    [SP + 0010] = w(S0);
+    S2 = 800c2cfc;
+    A0 = S2;
+    V0 = 0001;
+    [0x8006a786] = b(V0);
+    [0x8006a7e2] = b(V0);
+    800A0448	jal    $system_psyq_clear_otag_r
+    A1 = 0001;
+    S3 = 800d3344;
+    A0 = S3;
+    800A045C	jal    $system_psyq_clear_otag_r
+    A1 = 0001;
+    S0 = S2 + 0004;
+    A0 = S0;
+    800A046C	jal    $func32e64
+    A1 = S4;
+    S1 = 800d3348;
+    A0 = S1;
+    800A0480	jal    $func32e64
+    A1 = S5;
+    V1 = ffffff;
+    800A0490	lui    t0, $ff00
+    S0 = S0 & V1;
+    A3 = w[S2 + 0004];
+    A2 = w[S2 + 0000];
+    A1 = w[S1 + 0000];
+    A0 = w[S3 + 0000];
+    A3 = A3 & T0;
+    V0 = A2 & V1;
+    A3 = A3 | V0;
+    A2 = A2 & T0;
+    A2 = A2 | S0;
+    A1 = A1 & T0;
+    V0 = A0 & V1;
+    A1 = A1 | V0;
+    A0 = A0 & T0;
+    V1 = S1 & V1;
+    A0 = A0 | V1;
+    [S2 + 0004] = w(A3);
+    [S2 + 0000] = w(A2);
+    [S1 + 0000] = w(A1);
+    [S3 + 0000] = w(A0);
+
+    funca17c0();
+
+    if( h[0x8006a850] != 2 )
+    {
+        funca09bc();
+    }
+
+    [0x8006a920] = h(0);
+
+    do
+    {
+        funca09cc();
+
+        if( h[0x8006a850] != 2 )
+        {
+            [0x8008bdc4] = h(0);
+            [0x80065d9c] = h(0);
+            [0x80065da0] = h(0);
+        }
+
+        if( h[0x8006a850] == 1 )
+        {
+            [0x8006a920] = h(3);
+            [0x80065da8] = h(0);
+            [0x8006a720] = h(0);
+            [0x8006aef0] = h(1);
+        }
+
+        // 800b9430   MIM                  ATE                  MAP                  CA                   ID                   BSC
+        // MD1STIN    000008E9 0002ED92    00000947 000014C0    0000094A 00001BAC    0000094E 0000002D    0000094F 0000023C    00000950 000114CE
+        // MD1_1      00000973 0003F3FF    000009F2 00000922    000009F4 00002043    000009F9 0000002D    000009FA 000005F0    000009FB 0000CE12
+        // MD1_2      00000A15 00038AC7    00000A87 0000084D    00000A89 0000200F    00000A8E 0000002D    00000A8F 000005EE    00000A90 0000AE86
+        // NRTHMK     00000AA6 0003358A    00000B0D 000010B8    00000B10 00001EA1    00000B14 0000002B    00000B15 000000D3    00000B16 0000B369
+        // NMKIN_1    00000B2D 00034C16    00000B97 00001875    00000B9B 00001ADA    00000B9F 0000002B    00000BA0 0000064F    00000BA1 000151CA
+        // ELEVTR     00000BCC 0000D9C1    00000BE8 000009AA    00000BEA 00000993    00000BEC 00000028    00000BED 000000AE    00000BEE 00008095
+        // NMKIN_2    00000BFF 00043828    00000C87 00001578    00000C8A 000024B8    00000C8F 0000002B    00000C90 0000091B    00000C92 00006D5C
+        // NMKIN_3    00000CA0 0003B741    00000D17 00001695    00000D1A 0000245D    00000D1F 0000002B    00000D20 00000373    00000D21 00006759
+        // NMKIN_4    00000D2E 00044594    00000DB7 000014A3    00000DBA 00002424    00000DBF 0000002B    00000DC0 000002E4    00000DC1 00002A7F
+        // NMKIN_5    00000DC7 0003600C    00000E34 0000110B    00000E37 0000234D    00000E3C 00000029    00000E3D 000000A0    00000E3E 000055A0
+
+        V0 = h[0x8006527c];
+        A0 = w[0x800b9430 + V0 * 30 + 0]; // MIM sector
+        A1 = w[0x800b9430 + V0 * 30 + 4];
+        A2 = 80120000;
+        A3 = 0;
+        func14d08(); // load file
+
+        loopa05d8:	; 800A05D8
+            func150dc();
+        800A05E0	bne    v0, zero, loopa05d8 [$800a05d8]
+
+        V0 = h[0x8006527c];
+        A0 = w[0x800b9430 + V0 * 30 + 8]; // ATE sector
+        A1 = w[0x800b9430 + V0 * 30 + c];
+        A2 = 801b0000;
+        A3 = 0;
+        func14d08(); // load file
+
+        while( func150dc() != 0 ) {}
+
+        V1 = h[0x8006527c];
+        A0 = w[0x800b9430 + V1 * 30 + 10]; // MAP sector
+        A1 = w[0x800b9430 + V1 * 30 + 14];
+        A2 = 801a4000;
+        A3 = 0;
+        func14d08(); // load file
+
+        if( h[0x8006a850] != 2 )
+        {
+            A0 = 8008be0c; // field_struct
+            A1 = 80065dbc; // entities_data
+            A2 = 801b0000; // events_data
+            field_init_structs_events_actors();
+
+            V0 = h[0x8008b808];
+            [0x80065df6 + V0 * 64] = b(bu[0x8008be24]);
+        }
+        else
+        {
+            [0x8008be26] = h(2);
+        }
+
+        while( func150dc() != 0 ) {}
+
+        V1 = h[0x8006527c];
+        A0 = w[0x800b9430 + V1 * 30 + 18]; // CA sector
+        A1 = w[0x800b9430 + V1 * 30 + 1c];
+        A2 = 801aff00;
+        A3 = 0;
+        func14d08(); // load file
+
+        while( func150dc() != 0 ) {}
+
+        V1 = h[0x8006527c];
+        A0 = w[0x800b9430 + V1 * 30 + 20]; // ID sector
+        A1 = w[0x800b9430 + V1 * 30 + 24];
+        A2 = 801a0000;
+        A3 = 0;
+        func14d08(); // load file
+
+        while( func150dc() != 0 ) {}
+
+        V1 = h[0x8006527c];
+        A0 = w[0x800b9430 + V1 * 30 + 28]; // BSC sector
+        A1 = w[0x800b9430 + V1 * 30 + 2c];
+        A2 = 801c0000;
+        A3 = 0;
+        func14d08(); // load file
+
+        while( func150dc() != 0 ) {}
+
+        A0 = e49; // NARITA\TDB.LZS sector
+        A1 = 1925;
+        A2 = 801b8000;
+        A3 = 0;
+        func14d08(); // load file
+
+        while( func150dc() != 0 ) {}
+
+        if( h[0x8006a850] == 2 )
+        {
+            loopa07fc:	; 800A07FC
+                V0 = hu[0x8006aef0];
+            800A0808	bne    v0, zero, loopa07fc [$800a07fc]
+        }
+        else
+        {
+            [0x8006aef0] = h(0);
+        }
+
+        funca5394( 0, 0x80120000 );
+
+        field_main_loop();
+
+        [0x8006a850] = h(1);
+
+        if( bu[0x8008be0d] == 5 )
+        {
+            A0 = 0;
+            system_psyq_wait_frames();
+
+            return;
+        }
+
+        if( bu[0x8008be0d] == 1 )
+        {
+            [0x8008b828] = h(hu[0x8008be0e]);
+        }
+    } while( bu[0x8008be0d] != 2 )
 }
-
-[0x8006a920] = h(0);
-
-do
-{
-    funca09cc();
-
-    if( h[0x8006a850] != 2 )
-    {
-        [0x8008bdc4] = h(0);
-        [0x80065d9c] = h(0);
-        [0x80065da0] = h(0);
-    }
-
-    if( h[0x8006a850] == 1 )
-    {
-        [0x8006a920] = h(3);
-        [0x80065da8] = h(0);
-        [0x8006a720] = h(0);
-        [0x8006aef0] = h(1);
-    }
-
-    // 800b9430   MIM                  ATE                  MAP                  CA                   ID                   BSC
-    // MD1STIN    000008E9 0002ED92    00000947 000014C0    0000094A 00001BAC    0000094E 0000002D    0000094F 0000023C    00000950 000114CE
-    // MD1_1      00000973 0003F3FF    000009F2 00000922    000009F4 00002043    000009F9 0000002D    000009FA 000005F0    000009FB 0000CE12
-    // MD1_2      00000A15 00038AC7    00000A87 0000084D    00000A89 0000200F    00000A8E 0000002D    00000A8F 000005EE    00000A90 0000AE86
-    // NRTHMK     00000AA6 0003358A    00000B0D 000010B8    00000B10 00001EA1    00000B14 0000002B    00000B15 000000D3    00000B16 0000B369
-    // NMKIN_1    00000B2D 00034C16    00000B97 00001875    00000B9B 00001ADA    00000B9F 0000002B    00000BA0 0000064F    00000BA1 000151CA
-    // ELEVTR     00000BCC 0000D9C1    00000BE8 000009AA    00000BEA 00000993    00000BEC 00000028    00000BED 000000AE    00000BEE 00008095
-    // NMKIN_2    00000BFF 00043828    00000C87 00001578    00000C8A 000024B8    00000C8F 0000002B    00000C90 0000091B    00000C92 00006D5C
-    // NMKIN_3    00000CA0 0003B741    00000D17 00001695    00000D1A 0000245D    00000D1F 0000002B    00000D20 00000373    00000D21 00006759
-    // NMKIN_4    00000D2E 00044594    00000DB7 000014A3    00000DBA 00002424    00000DBF 0000002B    00000DC0 000002E4    00000DC1 00002A7F
-    // NMKIN_5    00000DC7 0003600C    00000E34 0000110B    00000E37 0000234D    00000E3C 00000029    00000E3D 000000A0    00000E3E 000055A0
-
-    V0 = h[0x8006527c];
-    A0 = w[0x800b9430 + V0 * 30 + 0]; // MIM sector
-    A1 = w[0x800b9430 + V0 * 30 + 4];
-    A2 = 80120000;
-    A3 = 0;
-    func14d08(); // load file
-
-    loopa05d8:	; 800A05D8
-        func150dc();
-    800A05E0	bne    v0, zero, loopa05d8 [$800a05d8]
-
-    V0 = h[0x8006527c];
-    A0 = w[0x800b9430 + V0 * 30 + 8]; // ATE sector
-    A1 = w[0x800b9430 + V0 * 30 + c];
-    A2 = 801b0000;
-    A3 = 0;
-    func14d08(); // load file
-
-    while( func150dc() != 0 ) {}
-
-    V1 = h[0x8006527c];
-    A0 = w[0x800b9430 + V1 * 30 + 10]; // MAP sector
-    A1 = w[0x800b9430 + V1 * 30 + 14];
-    A2 = 801a4000;
-    A3 = 0;
-    func14d08(); // load file
-
-    if( h[0x8006a850] != 2 )
-    {
-        A0 = 8008be0c; // field_struct
-        A1 = 80065dbc; // entities_data
-        A2 = 801b0000; // events_data
-        field_init_structs_events_actors();
-
-        V0 = h[0x8008b808];
-        [0x80065df6 + V0 * 64] = b(bu[0x8008be24]);
-    }
-    else
-    {
-        [0x8008be26] = h(2);
-    }
-
-    while( func150dc() != 0 ) {}
-
-    V1 = h[0x8006527c];
-    A0 = w[0x800b9430 + V1 * 30 + 18]; // CA sector
-    A1 = w[0x800b9430 + V1 * 30 + 1c];
-    A2 = 801aff00;
-    A3 = 0;
-    func14d08(); // load file
-
-    while( func150dc() != 0 ) {}
-
-    V1 = h[0x8006527c];
-    A0 = w[0x800b9430 + V1 * 30 + 20]; // ID sector
-    A1 = w[0x800b9430 + V1 * 30 + 24];
-    A2 = 801a0000;
-    A3 = 0;
-    func14d08(); // load file
-
-    while( func150dc() != 0 ) {}
-
-    V1 = h[0x8006527c];
-    A0 = w[0x800b9430 + V1 * 30 + 28]; // BSC sector
-    A1 = w[0x800b9430 + V1 * 30 + 2c];
-    A2 = 801c0000;
-    A3 = 0;
-    func14d08(); // load file
-
-    while( func150dc() != 0 ) {}
-
-    A0 = e49; // NARITA\TDB.LZS sector
-    A1 = 1925;
-    A2 = 801b8000;
-    A3 = 0;
-    func14d08(); // load file
-
-    while( func150dc() != 0 ) {}
-
-    if( h[0x8006a850] == 2 )
-    {
-        loopa07fc:	; 800A07FC
-            V0 = hu[0x8006aef0];
-        800A0808	bne    v0, zero, loopa07fc [$800a07fc]
-    }
-    else
-    {
-        [0x8006aef0] = h(0);
-    }
-
-    funca5394( 0, 0x80120000 );
-
-    field_main_loop();
-
-    [0x8006a850] = h(1);
-
-    if( bu[0x8008be0d] == 5 )
-    {
-        A0 = 0;
-        system_psyq_wait_frames();
-
-        return;
-    }
-
-    if( bu[0x8008be0d] == 1 )
-    {
-        [0x8008b828] = h(hu[0x8008be0e]);
-    }
-} while( bu[0x8008be0d] != 2 )
-////////////////////////////////
 
 
 
@@ -11095,21 +11096,17 @@ akao_n = h[events_data + 6];
 
 [0x800536c0] = b(0); // start index into model struct
 
-string = 800becb0;
+string = 0x800becb0;
 
 for( int i = 0; i < actors_n; ++i )
 {
     [0x80053624] = b(i); // save current actor for use inside opcodes
 
-    if( bu[0x80053618] & 3 )
+    if( bu[0x80053618] & 0x3 )
     {
-        A0 = string;
-        A1 = 800ba8f0; // "Actor:"
-        field_debug_copy_string();
+        field_debug_copy_string( string, "Actor:" );
 
-        A0 = string;
-        A1 = events_data + 18 + i * 8; // field actors names
-        field_debug_concat_string();
+        field_debug_concat_string( string, events_data + 18 + i * 8 ); // field actors names
 
         if( bu[0x80053618] & 1 )
         {
@@ -11504,10 +11501,11 @@ A1 = S0;
 A0 = S1;
 800AB590	jal    field_debug_concat_string [$800b9214]
 A1 = S0;
-800AB598	lui    a1, $800c
-800AB59C	addiu  a1, a1, $a910 (=-$56f0)
-800AB5A0	jal    field_debug_concat_string [$800b9214]
+
+A1 = 0x800ba910; // " Tg="
 A0 = S1;
+field_debug_concat_string();
+
 800AB5A8	lui    v0, $8007
 800AB5AC	addiu  v0, v0, $acf0 (=-$5310)
 800AB5B0	lui    at, $8009
@@ -25877,42 +25875,41 @@ Lb920c:	; 800B920C
 
 
 
-////////////////////////////////
-// field_debug_concat_string()
-800B9214-800B926C
+// 800B9214
+void field_debug_concat_string()
+{
+    V0 = bu[A0 + 0000];
+    800B9218	nop
+    800B921C	beq    v0, zero, Lb923c [$800b923c]
+    800B9220	nop
+    A0 = A0 + 0001;
 
-V0 = bu[A0 + 0000];
-800B9218	nop
-800B921C	beq    v0, zero, Lb923c [$800b923c]
-800B9220	nop
-A0 = A0 + 0001;
+    loopb9228:	; 800B9228
+    V0 = bu[A0 + 0000];
+    800B922C	nop
+    800B9230	bne    v0, zero, loopb9228 [$800b9228]
+    A0 = A0 + 0001;
+    800B9238	addiu  a0, a0, $ffff (=-$1)
 
-loopb9228:	; 800B9228
-V0 = bu[A0 + 0000];
-800B922C	nop
-800B9230	bne    v0, zero, loopb9228 [$800b9228]
-A0 = A0 + 0001;
-800B9238	addiu  a0, a0, $ffff (=-$1)
+    Lb923c:	; 800B923C
+    V0 = bu[A1 + 0000];
+    800B9240	nop
+    800B9244	beq    v0, zero, Lb9268 [$800b9268]
+    800B9248	nop
 
-Lb923c:	; 800B923C
-V0 = bu[A1 + 0000];
-800B9240	nop
-800B9244	beq    v0, zero, Lb9268 [$800b9268]
-800B9248	nop
+    loopb924c:	; 800B924C
+    V0 = bu[A1 + 0000];
+    A1 = A1 + 0001;
+    [A0 + 0000] = b(V0);
+    V0 = bu[A1 + 0000];
+    800B925C	nop
+    800B9260	bne    v0, zero, loopb924c [$800b924c]
+    A0 = A0 + 0001;
 
-loopb924c:	; 800B924C
-V0 = bu[A1 + 0000];
-A1 = A1 + 0001;
-[A0 + 0000] = b(V0);
-V0 = bu[A1 + 0000];
-800B925C	nop
-800B9260	bne    v0, zero, loopb924c [$800b924c]
-A0 = A0 + 0001;
-
-Lb9268:	; 800B9268
-800B9268	jr     ra 
-[A0 + 0000] = b(0);
-////////////////////////////////
+    Lb9268:	; 800B9268
+    800B9268	jr     ra 
+    [A0 + 0000] = b(0);
+}
 
 
 

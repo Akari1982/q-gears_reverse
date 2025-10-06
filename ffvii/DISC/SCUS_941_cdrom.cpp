@@ -30,21 +30,16 @@ system_movie_load_movie_settings(); // load "\MINT\MOVIE_ID.BIN;1" into 8009a1f4
 
 
 
-////////////////////////////////
-// func33be0
-
-system_cdrom_abort_loading();
-
-do
+void func33be0()
 {
-    system_cdrom_read_chain();
-} while( V0 != 0 )
+    system_cdrom_abort_loading();
 
-func3dd84();
+    while( system_cdrom_read_chain() != 0 ) {}
 
-A0 = 0;
-system_cdrom_and_audio_init();
-////////////////////////////////
+    func3dd84();
+
+    system_cdrom_and_audio_init( 0 );
+}
 
 
 

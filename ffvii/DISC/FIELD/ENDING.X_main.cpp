@@ -18,7 +18,7 @@ struct CreditsItem
     s16 scale;                  // +  0x4 scale for pos move.
                                 // +  0x6 [][]     ???
                                 // +  0x8 [][]     id inside file.
-                                // +  0xc [][][][] pointer to file.
+    u32 file;                   // +  0xc
     u8 r;                       // + 0x10
     u8 g;                       // + 0x11
     u8 b;                       // + 0x12
@@ -67,7 +67,7 @@ u32 l_draw;                     // 0x800af410
 
 
 
-void ending_main()
+void ending_main_logo()
 {
     // Init area 0x280 x 0x1e0 for rendering.
     // Distance 0x200 and background color is black
@@ -222,7 +222,7 @@ void ending_main()
 
 
 
-void ending_main_2( S0 )
+void ending_main_credits( S0 )
 {
     u32* ot = l_otags2[0];
 
@@ -399,7 +399,7 @@ int funca0ab8()
         l_credits[i].flags = 0x0000;
         [0x800a652c + i * 0x88 + 0x6] = h(0);
         [0x800a652c + i * 0x88 + 0x8] = h(0);
-        [0x800a652c + i * 0x88 + 0xc] = w(0);
+        l_credits[i].file = 0;
         l_credits[i].r = 0;
         l_credits[i].g = 0;
         l_credits[i].b = 0;
@@ -425,7 +425,7 @@ int funca0ba8()
     l_credits[id].flags = 0x0004 | 0x0002 | 0x0001;
     [0x800a652c + id * 0x88 + 0x6] = h(0);
     [0x800a652c + id * 0x88 + 0x8] = h(0);
-    [0x800a652c + id * 0x88 + 0xc] = w(item_p);
+    l_credits[id].file = item_p;
     l_credits[id].r = 0;
     l_credits[id].g = 0;
     l_credits[id].b = 0;
@@ -492,7 +492,7 @@ int funca0f90()
         l_credits[i].flags = 0x0000;
         [0x800a652c + i * 0x88 + 0x6] = h(0);
         [0x800a652c + i * 0x88 + 0x8] = h(0);
-        [0x800a652c + i * 0x88 + 0xc] = w(0);
+        l_credits[i].file = 0;
         l_credits[i].r = 0;
         l_credits[i].g = 0;
         l_credits[i].b = 0;
@@ -544,7 +544,7 @@ int funca11b4()
             l_credits[i].flags = 0x0001;
             [0x800a652c + i * 0x88 + 0x6] = h(0);
             [0x800a652c + i * 0x88 + 0x8] = h(h[ofs + 0x2]);
-            [0x800a652c + i * 0x88 + 0xc] = w(item_p);
+            l_credits[i].file = item_p;
             l_credits[i].r = 0x80;
             l_credits[i].g = 0x80;
             l_credits[i].b = 0x80;
@@ -585,7 +585,7 @@ int funca139c()
         l_credits[i].flags = 0x0000;
         [0x800a652c + i * 0x88 + 0x6] = h(0);
         [0x800a652c + i * 0x88 + 0x8] = h(0);
-        [0x800a652c + i * 0x88 + 0xc] = w(0);
+        l_credits[i].file = 0;
         l_credits[i].r = 0;
         l_credits[i].g = 0;
         l_credits[i].b = 0;
@@ -617,7 +617,7 @@ int funca14bc()
 
     u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x4] );
 
-    [0x800a652c + id * 0x88 + 0xc] = w(item_p);
+    l_credits[id].file = item_p;
     l_credits[id].r = bu[ofs + 0xe];
     l_credits[id].g = bu[ofs + 0x10]
     l_credits[id].b = bu[ofs + 0x12];
@@ -841,7 +841,7 @@ void ending_events_exec()
         // 10 ending_events_10_set_frame_skip()     // set frame skip
         // 11 funca0f90() // some render insert 2
         // 12 funca11b4()
-        // 13 funca22d4()
+        // 13 ending_events_13_return()
         // 14 funca139c() // some render insert 3
         // 15 funca14bc()
         // 16 funca22e4()
@@ -1050,7 +1050,7 @@ int ending_events_10_set_frame_skip()
 
 
 
-int funca22d4()
+int ending_events_13_return()
 {
     l_draw = 0;
 
@@ -1664,8 +1664,7 @@ void funca34c4( CreditsItem& data )
 {
     if( data.flags & 0x0002 ) return;
 
-    V0 = w[data + 0xc];
-    A0 = hu[V0 + 0x0];
+    A0 = hu[data.file + 0x0];
 
     if( hu[data + 0x6] == 0 )
     {
@@ -1683,7 +1682,7 @@ void funca34c4( CreditsItem& data )
             }
         }
 
-        func36244( w[data + 0xc], hu[data + 0x8] );
+        func36244( data.file, hu[data + 0x8] );
 
         V0 = w[0x8003623c];
         [data + 0x6] = h(bu[V0 + 0x1]);
@@ -1696,7 +1695,7 @@ void funca34c4( CreditsItem& data )
 
 int funca358c( u32* otag, not_used, POLY_FT4* poly, CreditsItem& data )
 {
-    item_n = func36244( w[data + 0xc], hu[data + 0x8] );
+    item_n = func36244( data.file, hu[data + 0x8] );
 
     S4 = w[0x80036240];
     S6 = w[0x8003623c];
