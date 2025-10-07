@@ -1,1 +1,1 @@
-adisasm SUBMAR.BIN_u SUBMAR.BIN_u.asm -v -b 800a0000 800a0000 -u -a
+adisasm SAVEMENU.MNU SAVEMENU.asm -v -b 801D0000 801D0000 -u -a

@@ -442,9 +442,7 @@ while( true )
 
     func33a90(); // init savemap
 
-    func24e5c();
-
-    if( V0 == 1 )
+    if( func24e5c() == 0x1 )
     {
         func14934(); // load INIT\KERNEL.BIN
 

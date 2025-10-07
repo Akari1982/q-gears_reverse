@@ -29,11 +29,11 @@ else
     {
         if( item_id < 120 )
         {
-            icon = a;
+            icon = 0xa;
         }
         else
         {
-            icon = b;
+            icon = 0xb;
         }
     }
     else
@@ -2428,14 +2428,8 @@ for( int i = 0; i < 8; ++i )
 
 
 
-////////////////////////////////
-// func1d3228()
 // load ZENI image for сoin command
-
-A0 = 801d3890; // src
-A1 = 3f0; // x
-A2 = 120; // y
-A3 = 110; // clut x
-A4 = 1e0; // clut y
-system_menu_load_image();
-////////////////////////////////
+void func1d3228()
+{
+    system_menu_load_image( 0x801d3890, 0x3f0, 0x120, 0x110, 0x1e0 );
+}
