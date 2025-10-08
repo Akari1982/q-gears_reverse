@@ -1,4 +1,4 @@
-801D0408 func1d0408
+801D0408 savemenu_play_menu_sound
 801D0448 func1d0448
 801D05C0 func1d05c0
 801D0670 func1d0670
@@ -21,7 +21,7 @@
 801D224C func1d224c
 801D2408 func1d2408
 801D2A34 func1d2a34
-801D2B58 func1d2b58
+801D2B58 startmenu_play_menu_sound
 801D2B98 func1d2b98
 801D2D10 func1d2d10
 801D2DA8 func1d2da8
@@ -36,4 +36,4 @@
 801D39C4 func1d39c4
 801D3AB0 func1d3ab0
 801D4C38 func1d4c38
-801D4CC0 func1d4cc0
+801D4CC0 startmenu_main

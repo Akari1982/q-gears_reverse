@@ -2024,129 +2024,126 @@ else
 
 
 
-////////////////////////////////
-// system_menu_draw_add_window()
-
-if( bu[GP + 0x97] == 0 ) return 0;
-
-A0 = w[GP + 0x174];
-system_get_single_string_width();
-str_w = V0;
-
-state = bu[GP + 0x97];
-if( state == 1 ) // open window
+void system_menu_draw_add_window()
 {
-    w = (str_w / 3) * bu[GP + 0xa1];
+    if( bu[GP + 0x97] == 0 ) return 0;
 
-    if( bu[GP + 0xa0] != 0 )
+    A0 = w[GP + 0x174];
+    system_get_single_string_width();
+    str_w = V0;
+
+    state = bu[GP + 0x97];
+    if( state == 1 ) // open window
     {
-        x = h[GP + 0xa2] + ((str_w + 10) / 2) - (w / 2);
-        y = h[GP + 0xa4] - ((bu[GP + 0xa1] * 8) / 2) - c;
-        h = bu[GP + 0xa1] * 8;
-    }
-    else
-    {
-        x = b4 - (w / 2);
-        y = 68 - ((bu[GP + 0xa1] * 8) / 2);
-        h = bu[GP + 0xa1] * 8;
-    }
+        w = (str_w / 3) * bu[GP + 0xa1];
 
-    [SP + 18] = h(x);
-    [SP + 1a] = h(y);
-    [SP + 1c] = h(w);
-    [SP + 1e] = h(h);
-
-    [GP + 0xa1] = b(bu[GP + 0xa1] + 1);
-    if( bu[GP + 0xa1] == 3 )
-    {
-        [GP + 0x97] = b(2); // state opened
-        [GP + 0xa1] = b(2); // close frame
-    }
-}
-else if( state == 0x2 )
-{
-    if( bu[GP + 0xa0] != 0 )
-    {
-        A0 = 0x8 + h[GP + 0xa2]; // x
-        A1 = 0x6 + h[GP + 0xa4]; // y
-        A2 = w[GP + 0x174]; // text pointer
-        A3 = bu[GP + 0x98]; // color
-        system_menu_draw_string();
-
-        [SP + 0x18] = h(h[GP + 0xa2]); // x
-        [SP + 0x1a] = h(h[GP + 0xa4]); // y
-        [SP + 0x1c] = h(str_w + 0x10); // w
-        [SP + 0x1e] = h(0x18); // h
-    }
-    else
-    {
-        A0 = b4 - str_w / 2;
-        A1 = 6 + 5c;
-        A2 = w[GP + 0x174]; // text pointer
-        A3 = bu[GP + 0x98]; // color
-        system_menu_draw_string();
-
-        [SP + 18] = h(b4 - str_w / 2 - 8); // x
-        [SP + 1a] = h(5c); // y
-        [SP + 1c] = h(str_w + 10); // w
-        [SP + 1e] = h(18); // h
-    }
-
-    if( w[GP + 0x9c] != 0 ) [GP + 0x9c] = w(w[GP + 0x9c] - 1);
-
-    if( w[GP + 0x9c] < 14 )
-    {
-        system_cdrom_read_chain();
-        if( V0 == 0 )
+        if( bu[GP + 0xa0] != 0 )
         {
-            if( ( bu[GP + 0xa0] == 0 ) && ( w[GP + 0x9c] == 0 ) )
+            x = h[GP + 0xa2] + ((str_w + 10) / 2) - (w / 2);
+            y = h[GP + 0xa4] - ((bu[GP + 0xa1] * 8) / 2) - c;
+            h = bu[GP + 0xa1] * 8;
+        }
+        else
+        {
+            x = b4 - (w / 2);
+            y = 68 - ((bu[GP + 0xa1] * 8) / 2);
+            h = bu[GP + 0xa1] * 8;
+        }
+
+        [SP + 18] = h(x);
+        [SP + 1a] = h(y);
+        [SP + 1c] = h(w);
+        [SP + 1e] = h(h);
+
+        [GP + 0xa1] = b(bu[GP + 0xa1] + 1);
+        if( bu[GP + 0xa1] == 3 )
+        {
+            [GP + 0x97] = b(2); // state opened
+            [GP + 0xa1] = b(2); // close frame
+        }
+    }
+    else if( state == 0x2 )
+    {
+        if( bu[GP + 0xa0] != 0 )
+        {
+            A0 = 0x8 + h[GP + 0xa2]; // x
+            A1 = 0x6 + h[GP + 0xa4]; // y
+            A2 = w[GP + 0x174]; // text pointer
+            A3 = bu[GP + 0x98]; // color
+            system_menu_draw_string();
+
+            [SP + 0x18] = h(h[GP + 0xa2]); // x
+            [SP + 0x1a] = h(h[GP + 0xa4]); // y
+            [SP + 0x1c] = h(str_w + 0x10); // w
+            [SP + 0x1e] = h(0x18); // h
+        }
+        else
+        {
+            A0 = b4 - str_w / 2;
+            A1 = 6 + 5c;
+            A2 = w[GP + 0x174]; // text pointer
+            A3 = bu[GP + 0x98]; // color
+            system_menu_draw_string();
+
+            [SP + 18] = h(b4 - str_w / 2 - 8); // x
+            [SP + 1a] = h(5c); // y
+            [SP + 1c] = h(str_w + 10); // w
+            [SP + 1e] = h(18); // h
+        }
+
+        if( w[GP + 0x9c] != 0 ) [GP + 0x9c] = w(w[GP + 0x9c] - 1);
+
+        if( w[GP + 0x9c] < 14 )
+        {
+            system_cdrom_read_chain();
+            if( V0 == 0 )
             {
-                [GP + 0x97] = b(3); // state close
-            }
-            else
-            {
-                func1c498(); // get buttons state
-                if( V0 != 0 ) [GP + 0x97] = b(3); // state close
+                if( ( bu[GP + 0xa0] == 0 ) && ( w[GP + 0x9c] == 0 ) )
+                {
+                    [GP + 0x97] = b(3); // state close
+                }
+                else
+                {
+                    func1c498(); // get buttons state
+                    if( V0 != 0 ) [GP + 0x97] = b(3); // state close
+                }
             }
         }
     }
-}
-else if( state == 3 )
-{
-    w = (str_w / 3) * bu[GP + 0xa1];
-
-    if( bu[GP + 0xa0] != 0 )
+    else if( state == 3 )
     {
-        x = h[GP + 0xa2] + (str_w + 10) / 2 - w / 2;
-        y = h[GP + 0xa4] - (bu[GP + 0xa1] * 8) / 2 - c;
-        h = bu[GP + 0xa1] * 8;
-    }
-    else
-    {
-        x = b4 - w / 2;
-        y = 68 - (bu[GP + 0xa1] * 8) / 2;
-        h = bu[GP + 0xa1] * 8;
+        w = (str_w / 3) * bu[GP + 0xa1];
+
+        if( bu[GP + 0xa0] != 0 )
+        {
+            x = h[GP + 0xa2] + (str_w + 10) / 2 - w / 2;
+            y = h[GP + 0xa4] - (bu[GP + 0xa1] * 8) / 2 - c;
+            h = bu[GP + 0xa1] * 8;
+        }
+        else
+        {
+            x = b4 - w / 2;
+            y = 68 - (bu[GP + 0xa1] * 8) / 2;
+            h = bu[GP + 0xa1] * 8;
+        }
+
+        [SP + 0x18] = h(x);
+        [SP + 0x1a] = h(y);
+        [SP + 0x1c] = h(w);
+        [SP + 0x1e] = h(h);
+
+        [GP + 0xa1] = b(bu[GP + 0xa1] - 0x1);
+        if( bu[GP + 0xa1] == 0 ) [GP + 0x97] = b(0); // state closed
     }
 
-    [SP + 18] = h(x);
-    [SP + 1a] = h(y);
-    [SP + 1c] = h(w);
-    [SP + 1e] = h(h);
+    system_menu_store_window_color();
 
-    [GP + 0xa1] = b(bu[GP + 0xa1] - 1);
-    if( bu[GP + 0xa1] == 0 ) [GP + 0x97] = b(0); // state closed
+    system_menu_set_window_color( 0x80049384 );
+
+    system_menu_draw_window( SP + 0x18 );
+
+    system_menu_restore_window_color();
 }
-
-system_menu_store_window_color();
-
-A0 = 0x80049384;
-system_menu_set_window_color();
-
-A0 = SP + 18;
-system_menu_draw_window();
-
-system_menu_restore_window_color();
-////////////////////////////////
 
 
 
@@ -2817,89 +2814,49 @@ system_menu_set_draw_mode();
 
 
 
-////////////////////////////////
-// system_menu_create_drawenv_dispenv()
+void system_menu_create_drawenv_dispenv( DRAWENV* drawenv, DISPENV* dispenv )
+{
+    system_psyq_vsync( 0 );
 
-drawenv = A0;
-dispenv = A1;
+    system_psyq_set_def_drawenv( drawenv, 0, 0, 0x180, 0x1d8 );
+    drawenv->dfe = 0x1;
+    drawenv->isbg = 0x1;
+    system_psyq_put_drawenv( drawenv );
 
-A0 = 0;
-system_psyq_vsync();
+    system_psyq_vsync( 0 );
 
-A0 = drawenv;
-A1 = 0;
-A2 = 0;
-A3 = 180;
-A4 = 1d8;
-system_psyq_set_def_drawenv();
-[drawenv + 17] = b(1);
-[drawenv + 18] = b(1);
+    system_psyq_set_def_drawenv( drawenv + 0x0, 0,  0x8, 0x180, 0xe0 );
+    system_psyq_set_def_drawenv( drawenv + 0x1, 0, 0xf0, 0x180, 0xe0 );
 
-A0 = drawenv;
-system_psyq_put_drawenv();
+    system_psyq_set_def_dispenv( dispenv + 0x0, 0, 0xe8, 0x16c, 0xf0 );
+    system_psyq_set_def_dispenv( dispenv + 0x1, 0,    0, 0x16c, 0xf0 );
 
-A0 = 0;
-system_psyq_vsync();
+    (drawenv + 0x0)->dtd = 0x1;
+    (drawenv + 0x0)->dfe = 0x1;
+    (drawenv + 0x0)->isbg = 0x1;
+    (drawenv + 0x0)->r0 = 0;
+    (drawenv + 0x0)->g0 = 0;
+    (drawenv + 0x0)->b0 = 0;
 
-A0 = drawenv + 0 * 5c;
-A1 = 0;
-A2 = 8;
-A3 = 180;
-A4 = e0;
-system_psyq_set_def_drawenv();
+    (drawenv + 0x1)->dtd = 0x1;
+    (drawenv + 0x1)->dfe = 0x1;
+    (drawenv + 0x1)->isbg = 0x1;
+    (drawenv + 0x1)->r0 = 0;
+    (drawenv + 0x1)->g0 = 0;
+    (drawenv + 0x1)->b0 = 0;
 
-A0 = drawenv + 1 * 5c;
-A1 = 0;
-A2 = f0;
-A3 = 180;
-A4 = e0;
-system_psyq_set_def_drawenv();
+    V0 = system_gpu_get_type();
+    V0 = ( ( V0 == 1 ) || ( V0 == 2 ) ) ? 0xaf : 0x3f;
+    (drawenv + 0x0)->tpage = V0;
+    (drawenv + 0x1)->tpage = V0;
 
-A0 = dispenv + 0 * 14;
-A1 = 0;
-A2 = e8;
-A3 = 16c;
-A4 = f0;
-system_psyq_set_def_dispenv();
+    system_psyq_vsync( 0 );
 
-A0 = dispenv + 1 * 14;
-A1 = 0;
-A2 = 0;
-A3 = 16c;
-A4 = f0;
-system_psyq_set_def_dispenv();
+    system_psyq_put_dispenv( dispenv );
+    system_psyq_put_drawenv( drawenv );
 
-[drawenv + 0 * 5c + 16] = b(1);
-[drawenv + 0 * 5c + 17] = b(1);
-[drawenv + 0 * 5c + 18] = b(1);
-[drawenv + 0 * 5c + 19] = b(0);
-[drawenv + 0 * 5c + 1a] = b(0);
-[drawenv + 0 * 5c + 1b] = b(0);
-
-[drawenv + 1 * 5c + 16] = b(1);
-[drawenv + 1 * 5c + 17] = b(1);
-[drawenv + 1 * 5c + 18] = b(1);
-[drawenv + 1 * 5c + 19] = b(0);
-[drawenv + 1 * 5c + 1a] = b(0);
-[drawenv + 1 * 5c + 1b] = b(0);
-
-system_gpu_get_type();
-V0 = ( ( V0 == 1 ) || ( V0 == 2 ) ) ? af : 3f;
-[drawenv + 1 * 5c + 14] = h(V0);
-[drawenv + 0 * 5c + 14] = h(V0);
-
-A0 = 0;
-system_psyq_vsync();
-
-A0 = dispenv;
-system_psyq_put_dispenv();
-
-A0 = drawenv;
-system_psyq_put_drawenv();
-
-A0 = 1;
-system_psyq_set_disp_mask();
-////////////////////////////////
+    system_psyq_set_disp_mask( 0x1 );
+}
 
 
 
@@ -4383,8 +4340,7 @@ V0 = 0x80077f64;
 A0 = A0 + V0;
 80022C90	jal    func269c0 [$800269c0]
 
-A0 = w[GP + 0x160];
-80022C9C	jal    func26a00 [$80026a00]
+func26a00( w[GP + 0x160] );
 
 switch( h[GP + 0x94] )
 {
@@ -5822,7 +5778,7 @@ void func24e5c()
     func211c4( 0x10 ); // SAVEMENU.MNU
     while( system_cdrom_read_chain() != 0 ) {}
 
-    func1d4cc0();
+    startmenu_main();
 }
 
 
@@ -6583,18 +6539,15 @@ system_psyq_store_image();
 
 
 
-////////////////////////////////
-// func25bd0()
-
-A1 = A0;
-[SP + 10] = h(340);
-[SP + 12] = h(184);
-[SP + 14] = h(30);
-[SP + 16] = h(78);
-
-A0 = SP + 10;
-system_psyq_load_image();
-////////////////////////////////
+void func25bd0( u32 addr )
+{
+    RECT rect;
+    rect.x = 0x340;
+    rect.y = 0x184;
+    rect.w = 0x30;
+    rect.h = 0x78;
+    system_psyq_load_image( &rect, addr );
+}
 
 
 
@@ -6774,16 +6727,10 @@ A2 = S3;
 
 ////////////////////////////////
 // func25ed4
-80025ED4	addiu  sp, sp, $ffc8 (=-$38)
+
 A0 = 0;
-[SP + 0030] = w(RA);
-[SP + 002c] = w(S5);
-[SP + 0028] = w(S4);
-[SP + 0024] = w(S3);
-[SP + 0020] = w(S2);
-[SP + 001c] = w(S1);
 80025EF4	jal    system_psyq_draw_sync [$80043dd8]
-[SP + 0018] = w(S0);
+
 S3 = 0;
 S5 = 0340;
 S4 = 0100;
@@ -7370,9 +7317,9 @@ void system_menu_set_drawenv( settings, add )
 
 
 
-////////////////////////////////
-// func26b5c()
-////////////////////////////////
+void func26b5c( u8 A0 )
+{
+}
 
 
 

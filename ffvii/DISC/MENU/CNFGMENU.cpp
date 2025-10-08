@@ -51,33 +51,33 @@ u8 l_wnd_color[0xc];        // 0x801d252c
 
 
 
-void cnfgmenu_play_menu_sound( u16 A0 )
+void cnfgmenu_play_menu_sound( u16 sound_id )
 {
     [0x8009a000] = h(0x30);
-    [0x8009a004] = w(A0);
-    [0x8009a008] = w(A0);
+    [0x8009a004] = w(sound_id);
+    [0x8009a008] = w(sound_id);
     system_akao_execute();
 }
 
 
 
-void cnfgmenu_set_akao_to_mono_stereo( A0 )
+void cnfgmenu_set_akao_to_mono_stereo( u8 type )
 {
-    if( A0 == 0 ) // AKAO_MONO
+    if( type == 0 ) // AKAO_MONO
     {
         [0x8009a000] = h(0x81);
         [0x8009a004] = w(0x81);
         [0x8009a008] = w(0x81);
         system_akao_execute();
     }
-    else if( A0 == 0x1 ) // AKAO_STEREO
+    else if( type == 0x1 ) // AKAO_STEREO
     {
         [0x8009a000] = h(0x80);
         [0x8009a004] = w(0x80);
         [0x8009a008] = w(0x80);
         system_akao_execute();
     }
-    else if( A0 == 0x2 ) // AKAO_STEREO_CHANNELS
+    else if( type == 0x2 ) // AKAO_STEREO_CHANNELS
     {
         [0x8009a000] = h(0x82);
         [0x8009a004] = w(0x82);

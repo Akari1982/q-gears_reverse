@@ -5699,16 +5699,42 @@ V1 = V1 | 0401;
 80048960	jr     ra 
 80048964	nop
 ////////////////////////////////
-// func48968
-T2 = 00a0;
-8004896C	jr     t2 
-T1 = 00ab;
-////////////////////////////////
-// func48974
-80048974	nop
-T2 = 00a0;
-8004897C	jr     t2 
-T1 = 00ac;
+
+
+
+// Tests the connection of the Memory Card specified in chan.
+// When calculating chan, “port number” is 0 for Port 1 and 1 for Port 2. “Card number” is zero when a
+// standard controller is connected, and may be in the range 0-3 if a Multi Tap is connected.
+// This function executes asynchronously, so it returns immediately. Processing completion is communicated
+// by an event. (See table below.) In order to use this command with multiple slots in a Multi Tap, you must
+// wait until processing has completed before sending another _card_info() call.
+long system_card_info( long chan )
+{
+    T2 = 0xa0;
+    T1 = 0xab;
+    8004896C	jr     t2
+}
+
+
+
+// Reads file management information for the card specified by chan in the file system in order to get
+// asynchronous access using the I/O management service.
+// When calculating chan, “port number” is 0 for Port 1 and 1 for Port 2. “Card number” is zero when a
+// standard controller is connected, and may be in the range 0-3 if a Multi Tap is connected.
+// _card_load() must be called at least once before you can use open() on a Memory Card file in O_NOWAIT
+// mode. It does not have to be called again unless a card is changed.
+// This function executes asynchronously, so it returns immediately. Processing completion is communicated
+// by an event. (See table below.) In order to use this command with multiple slots in a Multi Tap, you must
+// wait until processing has completed before sending another _card_load() call
+void system_card_load()
+{
+    T2 = 0xa0;
+    T1 = 0xac;
+    8004897C	jr     t2
+}
+
+
+
 ////////////////////////////////
 // func48984
 80048984	nop

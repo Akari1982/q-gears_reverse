@@ -3495,29 +3495,29 @@ if( size != 0 )
 ////////////////////////////////
 // func33a90()
 
-for( int i = 4ff; V1 >=0; --i )
+for( int i = 0x4ff; V1 >=0; --i )
 {
-    [0x8009c6e4 + ba4 + i] = b(0);// clear memorybanks
+    [0x8009c6e4 + 0xba4 + i] = b(0);// clear memorybanks
 }
 
-for( int i = 0; i < 3; ++i )
+for( int i = 0; i < 9x3; ++i )
 {
-    [0x8009c6e4 + 4f8 + i] = b(ff); // clear party member slot
-    [0x8009c6e4 + cad + i] = b(ff); // clear party member slot copy in savemap
+    [0x8009c6e4 + 0x4f8 + i] = b(ff); // clear party member slot
+    [0x8009c6e4 + 0xcad + i] = b(ff); // clear party member slot copy in savemap
 }
 
-[0x8009c6e4 + 4f8] = b(0); // set first party member to cloud
-[0x8009c6e4 + cad] = b(0); // set first party member copy in memorybank to cloud
+[0x8009c6e4 + 0x4f8] = b(0); // set first party member to cloud
+[0x8009c6e4 + 0xcad] = b(0); // set first party member copy in memorybank to cloud
 
-[0x8009c6e4 + 10a6] = h(0001); // character availability mask (cloud only)
+[0x8009c6e4 + 0x10a6] = h(0001); // character availability mask (cloud only)
 
-[0x8009c6e4 + f0c] = b(ff); // field map name for menu
+[0x8009c6e4 + 0xf0c] = b(ff); // field map name for menu
 
-[0x8009c6e4 + bc0] = b(ff); // menu visibility mask
-[0x8009c6e4 + bc1] = b(ff); // menu visibility mask??
+[0x8009c6e4 + 0xbc0] = b(ff); // menu visibility mask
+[0x8009c6e4 + 0xbc1] = b(ff); // menu visibility mask??
 
-[0x8009c6e4 + b80] = w(0); // total seconds played
-[0x8009c6e4 + b84] = w(0); // countdown seconds for timer
+[0x8009c6e4 + 0xb80] = w(0); // total seconds played
+[0x8009c6e4 + 0xb84] = w(0); // countdown seconds for timer
 
 [0x8009ac4c] = h(0);
 [0x8009ac4e] = h(0);

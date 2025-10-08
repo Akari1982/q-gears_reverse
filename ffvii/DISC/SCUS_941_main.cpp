@@ -370,20 +370,19 @@ if( hu[0x8009c560] == 0x0 ) [0x8009c560] = h(0x1); // initial gamestate
 
 
 
-////////////////////////////////
-// func11bb4()
-
-[0x8009c6e4 + 0xea4] = b(0x1); // current disc
-[0x8009c6e4 + 0xb90] = w(0x0);
-[0x8009c6e4 + 0xb94] = h(0x1); // field gamestate
-[0x8009c6e4 + 0xb96] = h(0x74); // current map
-[0x8009c6e4 + 0xb9a] = h(0x0); // x location on field map
-[0x8009c6e4 + 0xb9c] = h(0x0); // y location on field map
-[0x8009c6e4 + 0xb9e] = h(0x0); // triangle id on field map
-[0x8009c6e4 + 0xba0] = b(0x0); // direction on field map
-[0x8009c6e4 + 0xba1] = b(0x0); // seed for battle random in field
-[0x8009c6e4 + 0xba2] = b(0x0); // field encounter timer: offset
-////////////////////////////////
+void func11bb4()
+{
+    [0x8009c6e4 + 0xea4] = b(0x1); // current disc
+    [0x8009c6e4 + 0xb90] = w(0x0);
+    [0x8009c6e4 + 0xb94] = h(0x1); // field gamestate
+    [0x8009c6e4 + 0xb96] = h(0x74); // current map
+    [0x8009c6e4 + 0xb9a] = h(0x0); // x location on field map
+    [0x8009c6e4 + 0xb9c] = h(0x0); // y location on field map
+    [0x8009c6e4 + 0xb9e] = h(0x0); // triangle id on field map
+    [0x8009c6e4 + 0xba0] = b(0x0); // direction on field map
+    [0x8009c6e4 + 0xba1] = b(0x0); // seed for battle random in field
+    [0x8009c6e4 + 0xba2] = b(0x0); // field encounter timer: offset
+}
 
 
 
@@ -442,7 +441,7 @@ while( true )
 
     func33a90(); // init savemap
 
-    if( func24e5c() == 0x1 )
+    if( func24e5c() == 0x1 ) // load newgame menu (1 - start new game)
     {
         func14934(); // load INIT\KERNEL.BIN
 
@@ -450,7 +449,7 @@ while( true )
 
         func33a90(); // init savemap
 
-        func11bb4();
+        func11bb4(); // init new game
     }
 
     func26090(); // LIMTMENU.MNU
