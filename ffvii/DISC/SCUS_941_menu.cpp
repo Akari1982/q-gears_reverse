@@ -5827,6 +5827,7 @@ void func24e5c()
 
 
 
+// save menu?
 void func24e94()
 {
     func211c4( 0xa ); // SAVEMENU.MNU
