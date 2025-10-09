@@ -3338,33 +3338,25 @@ T1 = 0049;
 
 
 
+// Calculate value of member tpage in a primitive.
 u16 system_psyq_get_tpage( int tp, int abr, int x, int y )
 {
-    // Calculate value of member tpage in a primitive.
-
-    tp &= 0x3;
-    abr &= 0x3; // Semi transparent state
-    x &= 0x3ff;
-
     if( ( bu[0x80062c00] == 1 ) || ( bu[0x80062c00] == 2 ) )
     {
-        return (tp << 0x9) | (abr << 0x7) | ((vram_y & 0x300) >> 0x3) | (vram_x >> 0x6);
+        return ((tp & 0x3) << 0x9) | ((abr & 0x3) << 0x7) | ((y & 0x300) >> 0x3) | ((x & 0x3ff) >> 0x6);
     }
     else
     {
-        return ((vram_y & 0x200) << 0x2) | (tp << 0x7) | (abr << 0x5) | ((vram_y & 0x100) >> 0x4) | (vram_x >> 0x6);
+        return ((y & 0x200) << 0x2) | ((tp & 0x3) << 0x7) | ((abr & 0x3) << 0x5) | ((y & 0x100) >> 0x4) | ((x & 0x3ff) >> 0x6);
     }
 }
 
 
 
-u16 system_psyq_get_clut()
-
-x = A0;
-y = A1;
-
-return ((y << 6) | ((x >> 4) & 3f)) & ffff
-////////////////////////////////
+u16 system_psyq_get_clut( s32 x, s32 y )
+{
+    return (y << 0x6) | ((x >> 0x4) & 0x3f);
+}
 
 
 

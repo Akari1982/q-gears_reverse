@@ -311,7 +311,7 @@
 80025C94 system_menu_load_character_clut_from_ram
 80025CD4 system_menu_store_character_clut_to_ram
 80025D14 system_menu_load_image
-80025DF8 func25df8
+80025DF8 system_menu_load_avatars
 80025ED4 func25ed4
 80026034 func26034
 8002603C system_menu_get_materia_color_by_type
@@ -322,10 +322,10 @@
 80026408 func26408
 80026448 system_menu_set_cursor_movement
 800264A8 system_menu_handle_buttons
-800269C0 func269c0
+800269C0 system_menu_set_poly
 800269D0 func269d0
 800269E8 func269e8
-80026A00 func26a00
+80026A00 system_menu_set_otag
 80026A0C func26a0c
 80026A20 func26a20
 80026A34 system_menu_set_draw_mode

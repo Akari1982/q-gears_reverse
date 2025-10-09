@@ -9559,10 +9559,10 @@ V0 = 01e0;
 S0 = 0;
 S4 = S1 + S5;
 A0 = w[S7 + 0000];
-800A9B2C	jal    $func26a00
+800A9B2C	jal    $system_menu_set_otag
 S2 = S5;
 A0 = 80077f64;
-800A9B3C	jal    $func269c0
+800A9B3C	jal    $system_menu_set_poly
 800A9B40	nop
 V1 = S1 & 000f;
 V0 = V1 << 01;
@@ -9799,7 +9799,7 @@ A1 = 0001;
 800A9EC0	jal    $system_psyq_clear_otag_r
 A0 = A0 + 4000;
 A0 = w[S4 + 0000];
-800A9ECC	jal    $func26a00
+800A9ECC	jal    $system_menu_set_otag
 A0 = A0 + 4000;
 V0 = bu[800b66cc];
 A0 = 80077f64;
@@ -9809,7 +9809,7 @@ A0 = 80077f64;
 800A9EF0	addiu  a0, a0, $8f64 (=-$709c)
 
 La9ef4:	; 800A9EF4
-800A9EF4	jal    $func269c0
+800A9EF4	jal    $system_menu_set_poly
 800A9EF8	nop
 V0 = w[800f5074];
 [800f5034] = w(0);
@@ -12552,7 +12552,7 @@ A1 = 0001;
 800AC824	jal    $system_psyq_clear_otag_r
 A0 = A0 + 4000;
 A0 = w[S5 + 0000];
-800AC830	jal    $func26a00
+800AC830	jal    $system_menu_set_otag
 A0 = A0 + 4000;
 V0 = bu[800b66cc];
 A0 = 80077f64;
@@ -12562,7 +12562,7 @@ A0 = 80077f64;
 800AC854	addiu  a0, a0, $8f64 (=-$709c)
 
 Lac858:	; 800AC858
-800AC858	jal    $func269c0
+800AC858	jal    $system_menu_set_poly
 S1 = 0;
 V0 = w[800f5074];
 FP = 800b14cc;

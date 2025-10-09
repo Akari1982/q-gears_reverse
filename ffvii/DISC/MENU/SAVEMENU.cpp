@@ -1,30 +1,32 @@
-#define START_FADEIN  0
-#define START_MENU    1
-#define START_FADEOUT 2
-#define START_FINISH -1
+#define NEWGAME_FADEIN  0
+#define NEWGAME_MENU    1
+#define NEWGAME_FADEOUT 2
+#define NEWGAME_FINISH -1
 
-#define START_WND 0
-#define START_WND 1
-#define START_WND 2
-#define START_WND 3
-#define START_WND 4
-#define START_WND 5
-#define START_WND 6
-#define START_WND_NEWGAME 7
+#define NEWGAME_WND 0
+#define NEWGAME_WND 1
+#define NEWGAME_WND 2
+#define NEWGAME_WND 3
+#define NEWGAME_WND 4
+#define NEWGAME_WND 5
+#define NEWGAME_WND 6
+#define NEWGAME_WND_NEWGAME 7
 
-u32 l_start_wnd;                    // 0x801e2cf8
+u32 l_newgame_wnd;                  // 0x801e2cf8
 
-u8 l_start_wnd_color[0xc] =
+u8 l_newgame_wnd_color[0xc] =
 {
     0x00, 0x00, 0xB0, 0x00, 0x00, 0x80, 0x00, 0x00, 0x50, 0x00, 0x00, 0x20
 };                                  // 0x801e368c
-u32 l_start_return;                 // 0x801e3698
+u32 l_newgame_return;               // 0x801e3698
 
-u32 l_start_state;                  // 0x801e3d54
-u32 l_start_rb;                     // 0x801e3d58
+u32 l_newgame_state;                // 0x801e3d54
+u32 l_newgame_rb;                   // 0x801e3d58
+u32* l_newgame_otag_p;              // 0x801e3d5c
+u32 l_newgame_otag[0x2][0x4];       // 0x801e3d60
 
-DRAWENV l_start_drawenv[0x2];       // 0x801e3e34
-DISPENV l_start_dispenv[0x2];       // 0x801e3eec
+DRAWENV l_newgame_drawenv[0x2];     // 0x801e3e34
+DISPENV l_newgame_dispenv[0x2];     // 0x801e3eec
 
 
 
@@ -40,50 +42,47 @@ void savemenu_play_menu_sound( u16 sound_id )
 
 void func1d0448()
 {
-    801D0448	addiu  sp, sp, $ffd8 (=-$28)
-    [SP + 001c] = w(S1);
     S1 = A0;
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 0003;
-    [SP + 0018] = w(S0);
-    S0 = 0x80062f24;
-    [SP + 0020] = w(RA);
     [V1 + 0003] = b(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 0060;
     [V1 + 0007] = b(V0);
-    A0 = w[S0 + 0000];
+    A0 = g_menu_poly;
     801D0488	jal    $system_psyq_set_semi_trans
     A1 = 0001;
-    V0 = w[0x80062f24];
+    V0 = g_menu_poly;
     801D0498	nop
     [V0 + 0008] = h(0);
-    V0 = w[0x80062f24];
+    V0 = g_menu_poly;
     801D04A8	nop
     [V0 + 000a] = h(0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 0180;
     [V1 + 000c] = h(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 00e8;
     [V1 + 000e] = h(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = w[0x801d4ec4];
     801D04E0	nop
     [V1 + 0004] = b(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = w[0x801d4ec4];
     801D04F8	nop
     [V1 + 0005] = b(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = w[0x801d4ec4];
     801D0510	nop
     [V1 + 0006] = b(V0);
-    A1 = w[S0 + 0000];
-    A0 = w[0x80062fc4];
+    A1 = g_menu_poly;
+    A0 = g_menu_otag;
     V0 = A1 + 0010;
-    801D0528	jal    $system_psyq_add_prim
-    [S0 + 0000] = w(V0);
+    g_menu_poly = V0;
+
+    system_psyq_add_prim();
+
     A0 = 0;
     A1 = 0001;
     V0 = 00ff;
@@ -111,13 +110,7 @@ void func1d0448()
     [0x801d4ec4] = w(V0);
 
     L1d05a0:	; 801D05A0
-    V0 = w[0x801d4ec4];
-    RA = w[SP + 0020];
-    S1 = w[SP + 001c];
-    S0 = w[SP + 0018];
-    SP = SP + 0028;
-    801D05B8	jr     ra 
-    801D05BC	nop
+    return w[0x801d4ec4];
 }
 
 
@@ -155,7 +148,7 @@ void func1d05c0()
     A0 = 0x801e4538;
     801D0648	jal    $func25c14
     801D064C	nop
-    801D0650	jal    $func25df8
+    801D0650	jal    $system_menu_load_avatars
     801D0654	nop
     801D0658	jal    func1d19c4 [$801d19c4]
     801D065C	nop
@@ -397,7 +390,7 @@ void func1d06b0()
     A0 = A0 + V0;
     A0 = A0 << 0c;
     V0 = 0x801d4edc;
-    801D0A44	jal    $func269c0
+    801D0A44	jal    $system_menu_set_poly
     A0 = A0 + V0;
     V1 = w[0x801e3850];
     V0 = 0007;
@@ -1241,13 +1234,13 @@ void func1d1774()
     {
         system_menu_update_buttons();
 
-        func269c0( 0x80077f64 + w[0x801e36b4] * 0x3400 );
+        system_menu_set_poly( 0x80077f64 + w[0x801e36b4] * 0x3400 );
 
         [0x801e3854] = w(0x801e3858 + w[0x801e36b4] * 0x4);
 
         system_psyq_clear_otag( w[0x801e3854], 0x1 );
 
-        func26a00( w[0x801e3854] );
+        system_menu_set_otag( w[0x801e3854] );
 
         system_menu_draw_add_window();
 
@@ -2528,7 +2521,7 @@ void func1d2a34()
 
 
 
-void startmenu_play_menu_sound( u16 sound_id )
+void newgamemenu_play_menu_sound( u16 sound_id )
 {
     [0x8009a000] = h(0x30);
     [0x8009a004] = w(sound_id);
@@ -2541,44 +2534,43 @@ void startmenu_play_menu_sound( u16 sound_id )
 void func1d2b98()
 {
     S1 = A0;
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 0003;
-    S0 = 0x80062f24;
     [V1 + 0003] = b(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 0060;
     [V1 + 0007] = b(V0);
-    A0 = w[S0 + 0000];
+    A0 = g_menu_poly;
     system_psyq_set_semi_trans( 0x1 );
 
-    V0 = w[0x80062f24];
+    V0 = g_menu_poly;
     801D2BE8	nop
     [V0 + 0008] = h(0);
-    V0 = w[0x80062f24];
+    V0 = g_menu_poly;
     801D2BF8	nop
     [V0 + 000a] = h(0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 0180;
     [V1 + 000c] = h(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = 00e8;
     [V1 + 000e] = h(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = w[0x801e2cf4];
     801D2C30	nop
     [V1 + 0004] = b(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = w[0x801e2cf4];
     801D2C48	nop
     [V1 + 0005] = b(V0);
-    V1 = w[0x80062f24];
+    V1 = g_menu_poly;
     V0 = w[0x801e2cf4];
     801D2C60	nop
     [V1 + 0006] = b(V0);
-    A1 = w[S0 + 0000];
-    A0 = w[0x80062fc4];
+    A1 = g_menu_poly;
+    A0 = g_menu_otag;
     V0 = A1 + 0010;
-    [S0 + 0000] = w(V0);
+    g_menu_poly = V0;
     system_psyq_add_prim();
 
     A0 = 0;
@@ -2754,7 +2746,7 @@ void func1d2da8()
     L1d2ee0:	; 801D2EE0
     [A1 + 0008] = h(V0);
 
-    startmenu_play_menu_sound( A0 );
+    newgamemenu_play_menu_sound( A0 );
 
     801D2EE8	j      L1d32b0 [$801d32b0]
 
@@ -3000,7 +2992,7 @@ void func1d2da8()
     [A1 + 0002] = h(0);
 
     L1d322c:	; 801D322C
-    startmenu_play_menu_sound( 0x1 );
+    newgamemenu_play_menu_sound( 0x1 );
 
     801D3234	j      L1d32b0 [$801d32b0]
     801D3238	nop
@@ -3469,12 +3461,12 @@ void func1d370c()
 
 
 
-void func1d39c4()
+void newgamemenu_init()
 {
-    l_start_return = 0;
-    l_start_wnd = START_WND_NEWGAME;
+    l_newgame_return = 0;
+    l_newgame_wnd = NEWGAME_WND_NEWGAME;
 
-    system_menu_set_window_color( l_start_wnd_color );
+    system_menu_set_window_color( l_newgame_wnd_color );
 
     system_menu_load_image( 0x801d4edc, 0x380, 0, 0, 0x1e0 );
 
@@ -3487,18 +3479,18 @@ void func1d39c4()
     func25b8c( 0x801e8f44 );
     func25c14( 0x801e4538 );
 
-    func25df8();
+    system_menu_load_avatars();
 
     func1d19c4();
 }
 
 
 
-u32 func1d3ab0( u32 frame )
+u32 newgamemenu_update( u32 frame )
 {
-    if( (l_start_wnd < 0x2) || (l_start_wnd == 0x7) )
+    if( (l_newgame_wnd < 0x2) || (l_newgame_wnd == 0x7) )
     {
-        if( (l_start_state != START_FADEOUT) && (l_start_state != START_FADEIN) )
+        if( (l_newgame_state != NEWGAME_FADEOUT) && (l_newgame_state != NEWGAME_FADEIN) )
         {
             func1d3668( frame ); // check memory cards
         }
@@ -3506,24 +3498,24 @@ u32 func1d3ab0( u32 frame )
 
     func26b5c( 0x80 );
 
-    if( l_start_state == START_FADEIN )
+    if( l_newgame_state == NEWGAME_FADEIN )
     {
         if( func1d2b98( -0xf ) == 0 )
         {
-            l_start_state = START_MENU;
+            l_newgame_state = NEWGAME_MENU;
         }
     }
-    else if( l_start_state == START_FADEOUT )
+    else if( l_newgame_state == NEWGAME_FADEOUT )
     {
         if( func1d2b98( 0xf ) == 0xff )
         {
-            l_start_state = START_FINISH;
+            l_newgame_state = NEWGAME_FINISH;
         }
     }
 
     func1f6b4();
 
-    switch( l_start_wnd )
+    switch( l_newgame_wnd )
     {
         case 0x0: // slot selection
         {
@@ -3588,7 +3580,7 @@ u32 func1d3ab0( u32 frame )
             V0 = bu[0x801e8f38 + V1];
             if( V0 == 0 )
             {
-                l_start_wnd = 0;
+                l_newgame_wnd = 0;
             }
             else
             {
@@ -3596,8 +3588,8 @@ u32 func1d3ab0( u32 frame )
 
                 S3 = 0x4;
 
-                A0 = 0x801d4edc + l_start_rb * 0x5000;
-                func269c0();
+                A0 = 0x801d4edc + l_newgame_rb * 0x5000;
+                system_menu_set_poly();
 
                 A0 = 0x8;
                 A1 = b[0x801e3d9d] << 06;
@@ -3675,7 +3667,7 @@ u32 func1d3ab0( u32 frame )
                 [SP + 0x44] = h(0x16c);
                 [SP + 0x46] = h(0xc3);
 
-                system_menu_set_drawenv( &l_start_drawenv[l_start_rb] );
+                system_menu_set_drawenv( &l_newgame_drawenv[l_newgame_rb] );
 
                 system_menu_draw_string( 0xa, 0xb, 0x801e2d44, 0x7 ); // "Select a file."
 
@@ -3713,7 +3705,7 @@ u32 func1d3ab0( u32 frame )
         case 0x2:
         case 0x3:
         {
-            if( l_start_wnd == 0x2 )
+            if( l_newgame_wnd == 0x2 )
             {
                 S2 = 0x40;
                 S1 = 0x20;
@@ -3755,7 +3747,7 @@ u32 func1d3ab0( u32 frame )
 
         case 0x4:
         {
-            if( l_start_state != START_FADEOUT )
+            if( l_newgame_state != NEWGAME_FADEOUT )
             {
                 S2 = 0x801e2dd4; // "Loading. Do not remove Memory card."
                 A0 = S2;
@@ -3886,7 +3878,7 @@ u32 func1d3ab0( u32 frame )
         }
         break;
 
-        case START_WND_NEWGAME:
+        case NEWGAME_WND_NEWGAME:
         {
             system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + b[0x801e3e09] * 0xc + 0x6 );
 
@@ -3900,38 +3892,38 @@ u32 func1d3ab0( u32 frame )
             rect.h = 0x100;
             system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
 
-            poly = w[0x80062f24];
+            poly = g_menu_poly;
 
             system_psyq_set_poly_ft4( poly );
-            [poly + 0x4] = b(0x60);
-            [poly + 0x5] = b(0x60);
-            [poly + 0x6] = b(0x60);
-            [poly + 0x8] = h(0x6f);
-            [poly + 0xa] = h(0x54);
-            [poly + 0xc] = b(0);
-            [poly + 0xd] = b(0);
-            [poly + 0xe] = h(system_psyq_get_clut( 0, 0x1e0 ));
-            [poly + 0x10] = h(0x119);
-            [poly + 0x12] = h(0x54);
-            [poly + 0x14] = b(0x96);
-            [poly + 0x15] = b(0);
-            [poly + 0x16] = h(system_psyq_get_tpage( 0x1, 0, 0x380, 0 ));
-            [poly + 0x18] = h(0x6f);
-            [poly + 0x1a] = h(0xea);
-            [poly + 0x1c] = b(0);
-            [poly + 0x1d] = b(0x96);
-            [poly + 0x20] = h(0x119);
-            [poly + 0x22] = h(0xea);
-            [poly + 0x24] = b(0x96);
-            [poly + 0x25] = b(0x96);
-            system_psyq_add_prim( w[0x80062fc4], poly );
+            poly->r0 = 0x60;
+            poly->g0 = 0x60;
+            poly->b0 = 0x60;
+            poly->x0 = 0x6f;
+            poly->y0 = 0x54;
+            poly->u0 = 0;
+            poly->v0 = 0;
+            poly->clut = system_psyq_get_clut( 0, 0x1e0 );
+            poly->x1 = 0x119;
+            poly->y1 = 0x54;
+            poly->u1 = 0x96;
+            poly->v1 = 0;
+            poly->tpage = system_psyq_get_tpage( 0x1, 0, 0x380, 0 );
+            poly->x2 = 0x6f;
+            poly->y2 = 0xea;
+            poly->u2 = 0;
+            poly->v2 = 0x96;
+            poly->x3 = 0x119;
+            poly->y3 = 0xea;
+            poly->u3 = 0x96;
+            poly->v3 = 0x96;
+            system_psyq_add_prim( g_menu_otag, poly );
 
-            [0x80062f24] = w(poly + 0x28);
+            g_menu_poly = poly + 0x28;
         }
         break;
     }
 
-    if( l_start_wnd != START_WND_NEWGAME )
+    if( l_newgame_wnd != NEWGAME_WND_NEWGAME )
     {
         system_menu_draw_string( 0x126, 0xb, 0x801e2cfc, 0x7 ); // "Load"
 
@@ -3944,9 +3936,9 @@ u32 func1d3ab0( u32 frame )
 
     if( func1f6b4() == 0 )
     {
-        if( l_start_state == START_MENU )
+        if( l_newgame_state == NEWGAME_MENU )
         {
-            switch( l_start_wnd )
+            switch( l_newgame_wnd )
             {
                 case 0x0:
                 {
@@ -3971,7 +3963,7 @@ u32 func1d3ab0( u32 frame )
                     801D4598	nop
                     801D459C	beq    v0, zero, L1d46a8 [$801d46a8]
 
-                    startmenu_play_menu_sound( 0x1 );
+                    newgamemenu_play_menu_sound( 0x1 );
 
                     V0 = b[S0 + 0000];
                     801D45B0	nop
@@ -3987,7 +3979,7 @@ u32 func1d3ab0( u32 frame )
                     A1 = 0;
                     A2 = 0001;
                     A3 = 0001;
-                    l_start_wnd = 0x6;
+                    l_newgame_wnd = 0x6;
 
                     V0 = 0002;
                     V1 = 0001;
@@ -4010,7 +4002,7 @@ u32 func1d3ab0( u32 frame )
                     V0 = 000a;
                     [0x801e3f18] = w(V0);
                     V0 = 0002;
-                    l_start_wnd = 0x1;
+                    l_newgame_wnd = 0x1;
 
                     V0 = 0003;
                     [SP + 0010] = w(V0);
@@ -4035,7 +4027,7 @@ u32 func1d3ab0( u32 frame )
                     801D46A4	nop
 
                     L1d46a8:	; 801D46A8
-                    startmenu_play_menu_sound( 0x3 );
+                    newgamemenu_play_menu_sound( 0x3 );
 
                     A0 = 0x801e33b0;
                     801D46B8	jal    $system_menu_request_add_window
@@ -4046,9 +4038,9 @@ u32 func1d3ab0( u32 frame )
                     L1d46c8:	; 801D46C8
                     801D46C8	beq    v0, zero, L1d46ec [$801d46ec]
 
-                    startmenu_play_menu_sound( 0x4 );
+                    newgamemenu_play_menu_sound( 0x4 );
 
-                    l_start_wnd = 0x7;
+                    l_newgame_wnd = 0x7;
                     801D46E4	j      L1d4c10 [$801d4c10]
 
                     L1d46ec:	; 801D46EC
@@ -4083,18 +4075,18 @@ u32 func1d3ab0( u32 frame )
                     V1 = V1 & 0001;
                     801D4764	beq    v1, zero, L1d4bf0 [$801d4bf0]
 
-                    startmenu_play_menu_sound( 0x1 );
+                    newgamemenu_play_menu_sound( 0x1 );
 
-                    l_start_wnd = 0x4;
+                    l_newgame_wnd = 0x4;
                     [0x801e3f18] = w(0xa);
                     801D478C	j      L1d4c10 [$801d4c10]
 
                     L1d4794:	; 801D4794
                     801D4794	beq    v0, zero, L1d4c10 [$801d4c10]
 
-                    startmenu_play_menu_sound( 0x4 );
+                    newgamemenu_play_menu_sound( 0x4 );
 
-                    l_start_wnd = 0;
+                    l_newgame_wnd = 0;
                     801D47AC	j      L1d4c10 [$801d4c10]
                     801D47B0	nop
                 }
@@ -4140,12 +4132,12 @@ u32 func1d3ab0( u32 frame )
                     [0x801e3f20] = w(V0);
                     801D485C	beq    s1, zero, L1d4884 [$801d4884]
 
-                    l_start_wnd = 0;
+                    l_newgame_wnd = 0;
                     A0 = 0x801e3530;
                     A1 = 0x2;
                     system_menu_request_add_window();
 
-                    startmenu_play_menu_sound( 0x3 );
+                    newgamemenu_play_menu_sound( 0x3 );
 
                     L1d4884:	; 801D4884
                     V1 = w[0x801e3f20];
@@ -4153,10 +4145,10 @@ u32 func1d3ab0( u32 frame )
                     801D4890	bne    v1, v0, L1d4c10 [$801d4c10]
 
                     [0x801e3f20] = w(0xe);
-                    l_start_wnd = 0x3;
+                    l_newgame_wnd = 0x3;
                     [0x801e3f18] = w(0xa);
 
-                    startmenu_play_menu_sound( 0x2 );
+                    newgamemenu_play_menu_sound( 0x2 );
 
                     801D48C0	j      L1d4c10 [$801d4c10]
                     801D48C4	nop
@@ -4170,7 +4162,7 @@ u32 func1d3ab0( u32 frame )
                     801D48D4	bne    v1, zero, L1d48ec [$801d48ec]
                     801D48D8	addiu  v0, v1, $ffff (=-$1)
 
-                    l_start_wnd = 0x1;
+                    l_newgame_wnd = 0x1;
                     801D48E8	addiu  v0, v1, $ffff (=-$1)
 
                     L1d48ec:	; 801D48EC
@@ -4219,19 +4211,19 @@ u32 func1d3ab0( u32 frame )
                     V0 = V0 & ffff;
                     801D4988	beq    v1, v0, L1d49b0 [$801d49b0]
 
-                    l_start_wnd = 0x1;
+                    l_newgame_wnd = 0x1;
 
-                    startmenu_play_menu_sound( 0x3 );
+                    newgamemenu_play_menu_sound( 0x3 );
 
                     A0 = 0x801e3158;
                     801D49A8	j      L1d49f8 [$801d49f8]
                     A1 = 0;
 
                     L1d49b0:	; 801D49B0
-                    startmenu_play_menu_sound( 0xd0 );
+                    newgamemenu_play_menu_sound( 0xd0 );
 
                     A0 = hu[0x8009d7be];
-                    l_start_state = START_FADEOUT;
+                    l_newgame_state = NEWGAME_FADEOUT;
 
                     A0 = A0 & 0x3;
                     func1d2d10();
@@ -4239,9 +4231,9 @@ u32 func1d3ab0( u32 frame )
                     801D49D4	j      L1d4a00 [$801d4a00]
 
                     L1d49dc:	; 801D49DC
-                    l_start_wnd = V0;
+                    l_newgame_wnd = V0;
 
-                    startmenu_play_menu_sound( 0x3 );
+                    newgamemenu_play_menu_sound( 0x3 );
 
                     A0 = 0x801e2e88;
                     A1 = S1;
@@ -4281,7 +4273,7 @@ u32 func1d3ab0( u32 frame )
                     801D4A6C	jal    $func42b60
                     801D4A70	nop
                     V1 = V0;
-                    l_start_wnd = 0;
+                    l_newgame_wnd = 0;
                     V0 = 0001;
                     801D4A84	bne    v1, v0, L1d4ad0 [$801d4ad0]
                     801D4A88	nop
@@ -4297,7 +4289,7 @@ u32 func1d3ab0( u32 frame )
                     A1 = 0007;
                     system_menu_request_add_window();
 
-                    startmenu_play_menu_sound( 0xd0 );
+                    newgamemenu_play_menu_sound( 0xd0 );
 
                     801D4AC8	j      L1d4c10 [$801d4c10]
                     801D4ACC	nop
@@ -4314,15 +4306,15 @@ u32 func1d3ab0( u32 frame )
                     801D4AEC	nop
 
                     L1d4af0:	; 801D4AF0
-                    l_start_wnd = 0;
+                    l_newgame_wnd = 0;
 
-                    startmenu_play_menu_sound( 0x4 );
+                    newgamemenu_play_menu_sound( 0x4 );
 
                     801D4B00	j      L1d4c10 [$801d4c10]
                 }
                 break;
 
-                case START_WND_NEWGAME:
+                case NEWGAME_WND_NEWGAME:
                 {
                     if( hu[0x80062d7c] & 0x0020 )
                     {
@@ -4330,24 +4322,24 @@ u32 func1d3ab0( u32 frame )
 
                         if( S0 == 0 )
                         {
-                            startmenu_play_menu_sound( 0xd0 );
+                            newgamemenu_play_menu_sound( 0xd0 );
 
-                            l_start_return = 0x1;
-                            l_start_state = START_FADEOUT;
+                            l_newgame_return = 0x1;
+                            l_newgame_state = NEWGAME_FADEOUT;
                         }
                         else if( S0 == 0x1 )
                         {
                             if( (bu[0x801e8f38] != 0) || (bu[0x801e8f3b] != 0) )
                             {
-                                startmenu_play_menu_sound( 0x1 );
+                                newgamemenu_play_menu_sound( 0x1 );
 
                                 system_menu_set_cursor_movement( 0x801e3d80, 0, 0, 0x1, 0x2, 0, 0, S0, 0x2, 0, 0, 0, S0, 0 );
 
-                                l_start_wnd = 0;
+                                l_newgame_wnd = 0;
                             }
                             else if( bu[0x801e8f3b] == 0 )
                             {
-                                startmenu_play_menu_sound( 0x3 );
+                                newgamemenu_play_menu_sound( 0x3 );
                             }
                         }
                     }
@@ -4362,7 +4354,7 @@ u32 func1d3ab0( u32 frame )
     }
 
     L1d4c10:	; 801D4C10
-    return l_start_return;
+    return l_newgame_return;
 }
 
 
@@ -4379,54 +4371,54 @@ void func1d4c38()
 
     func1d1ba4();
 
-    system_psyq_put_dispenv( l_start_dispenv );
-    system_psyq_put_drawenv( l_start_drawenv );
+    system_psyq_put_dispenv( l_newgame_dispenv );
+    system_psyq_put_drawenv( l_newgame_drawenv );
 }
 
 
 
-void startmenu_main()
+bool newgamemenu_main()
 {
-    system_menu_create_drawenv_dispenv( l_start_drawenv, l_start_dispenv );
+    system_menu_create_drawenv_dispenv( l_newgame_drawenv, l_newgame_dispenv );
 
     u32 frame = 0;
 
-    l_start_state = START_FADEIN;
+    l_newgame_state = NEWGAME_FADEIN;
 
-    func1d39c4();
+    newgamemenu_init();
 
-    l_start_rb = 0;
+    l_newgame_rb = 0;
 
     while( true )
     {
         system_menu_update_buttons();
 
-        func269c0( 0x80077f64 + l_start_rb * 0x3400 );
+        system_menu_set_poly( 0x80077f64 + l_newgame_rb * 0x3400 );
 
-        [0x801e3d5c] = w(0x801e3d60 + l_start_rb * 0x10);
+        l_newgame_otag_p = l_newgame_otag[l_newgame_rb];
 
-        system_psyq_clear_otag( w[0x801e3d5c] , 0x1 );
+        system_psyq_clear_otag( l_newgame_otag_p, 0x1 );
 
-        func26a00( w[0x801e3d5c] );
+        system_menu_set_otag( l_newgame_otag_p );
 
         system_menu_draw_add_window();
 
-        S2 = func1d3ab0( frame );
+        result = newgamemenu_update( frame );
 
-        if( l_start_state == START_FINISH ) break;
+        if( l_newgame_state == NEWGAME_FINISH ) break;
 
         system_psyq_draw_sync( 0 );
 
         system_psyq_vsync( 0 );
 
-        system_psyq_put_dispenv( &l_start_dispenv[l_start_rb] );
-        system_psyq_put_drawenv( &l_start_drawenv[l_start_rb] );
+        system_psyq_put_dispenv( &l_newgame_dispenv[l_newgame_rb] );
+        system_psyq_put_drawenv( &l_newgame_drawenv[l_newgame_rb] );
 
         frame += 0x1;
 
-        system_psyq_draw_otag( w[0x801e3d5c] );
+        system_psyq_draw_otag( l_newgame_otag_p );
 
-        l_start_rb ^= 0x1;
+        l_newgame_rb ^= 0x1;
     }
 
     func1d4c38();
@@ -4447,5 +4439,5 @@ void startmenu_main()
 
     system_calculate_total_lure_gil_preemptive_value();
 
-    return S2;
+    return result;
 }
