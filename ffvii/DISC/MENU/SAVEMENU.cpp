@@ -3794,19 +3794,17 @@ u32 newgamemenu_update( u32 frame )
 
             A0 = h[0x801e3668] + 0xc;
             A1 = h[0x801e366a] + 0x5;
-            A2 = 0x801e2d68;
+            A2 = 0x801e2d68; // "SLOT 1"
             A3 = bu[0x801e8f38];
             A3 = 0 < A3;
             A3 = 0 - A3;
             A3 = A3 & 0x7;
             system_menu_draw_string();
 
-            A2 = 0x801e2d68 + 0x24;
-            A0 = h[0x801e3668];
-            A1 = h[0x801e366a];
+            A0 = h[0x801e3668] + 0xc;
+            A1 = h[0x801e366a] + 0x11;
+            A2 = 0x801e2d8c; // "SLOT 2"
             A3 = bu[0x801e8f3b];
-            A0 = A0 + 0xc;
-            A1 = A1 + 0x11;
             A3 = 0 < A3;
             A3 = 0 - A3;
             A3 = A3 & 0x7;
@@ -3836,17 +3834,16 @@ u32 newgamemenu_update( u32 frame )
             A3 = 0x7;
             system_menu_draw_string();
 
-            S0 = 0xe4;
-            S0 = S0 - S1;
+            S0 = 0xe4 - S1;
             A0 = S0;
-            A2 = 0x801e2d68 + 0x45c;
+            A2 = 0x801e31c4; // "Yes"
             A1 = h[0x801e366e];
             A3 = 0x7;
             A1 = A1 + 0x70;
             system_menu_draw_string();
 
             A0 = S0;
-            A2 = 0x801e2d68 + 0x480;
+            A2 = 0x801e31e8; // "No"
             A1 = h[0x801e366e];
             A3 = 0x7;
             A1 = A1 + 0x7c;
