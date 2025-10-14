@@ -436,12 +436,15 @@ void func1d06b0()
     A1 = A1 << 03;
     A1 = A1 + 001d;
     A1 = S1 + A1;
-    801D0AEC	jal    func1d370c [$801d370c]
     A2 = S0 + A2;
-    801D0AF4	jal    $system_menu_restore_window_color
+    func1d370c();
+
     S1 = S1 + 0040;
-    801D0AFC	j      L1d0b60 [$801d0b60]
+
+    system_menu_restore_window_color();
+
     S0 = S0 + 0001;
+    801D0AFC	j      L1d0b60 [$801d0b60]
 
     L1d0b04:	; 801D0B04
     A2 = 0x801e2e1c;
@@ -1483,47 +1486,25 @@ void func1d1c2c()
     V0 = S3 & ffff;
 
     L1d1cf4:	; 801D1CF4
-    RA = w[SP + 0050];
-    S5 = w[SP + 004c];
-    S4 = w[SP + 0048];
-    S3 = w[SP + 0044];
-    S2 = w[SP + 0040];
-    S1 = w[SP + 003c];
-    S0 = w[SP + 0038];
-    SP = SP + 0058;
-    801D1D14	jr     ra 
-    801D1D18	nop
 }
 
 
 
 void func1d1d1c()
 {
-    V0 = A0 << 02;
-    V0 = V0 + A0;
-    V0 = V0 << 02;
-    V0 = V0 + A0;
-    V0 = V0 << 02;
-    V1 = 0x801e3864;
-    801D1D38	jr     ra 
-    V0 = V0 + V1;
+    return 0x801e3864 + A0 * 0x54;
 }
 
 
 
 void func1d1d40()
 {
-    801D1D40	addiu  sp, sp, $ff90 (=-$70)
-    [SP + 0060] = w(S2);
     S2 = A0;
     V0 = 0280;
     [0x801e8f40] = w(V0);
     V0 = S2 & 0010;
-    [SP + 0068] = w(RA);
-    [SP + 0064] = w(S3);
-    [SP + 005c] = w(S1);
     801D1D68	beq    v0, zero, L1d1d98 [$801d1d98]
-    [SP + 0058] = w(S0);
+
     V0 = S2 & 000f;
     V0 = V0 << 02;
     AT = 0x801e2c78;
@@ -1642,30 +1623,18 @@ void func1d1d40()
     V0 = 0;
 
     L1d1f20:	; 801D1F20
-    RA = w[SP + 0068];
-    S3 = w[SP + 0064];
-    S2 = w[SP + 0060];
-    S1 = w[SP + 005c];
-    S0 = w[SP + 0058];
-    SP = SP + 0070;
-    801D1F38	jr     ra 
-    801D1F3C	nop
 }
 
 
 
 void func1d1f40()
 {
-    801D1F40	addiu  sp, sp, $ff98 (=-$68)
     V1 = A0;
     V0 = 2000;
     [0x801e8f40] = w(V0);
     V0 = V1 & 0010;
-    [SP + 0064] = w(RA);
-    [SP + 0060] = w(S2);
-    [SP + 005c] = w(S1);
     801D1F64	beq    v0, zero, L1d1f94 [$801d1f94]
-    [SP + 0058] = w(S0);
+
     V0 = V1 & 000f;
     V0 = V0 << 02;
     AT = 0x801e2c78;
@@ -1793,13 +1762,6 @@ void func1d1f40()
     V0 = 0;
 
     L1d2134:	; 801D2134
-    RA = w[SP + 0064];
-    S2 = w[SP + 0060];
-    S1 = w[SP + 005c];
-    S0 = w[SP + 0058];
-    SP = SP + 0068;
-    801D2148	jr     ra 
-    801D214C	nop
 }
 
 
@@ -1867,8 +1829,6 @@ void func1d21b8()
 void func1d21e0()
 {
     [0x801e2cb4] = w(A0);
-    801D21E8	jr     ra 
-    801D21EC	nop
 }
 
 
@@ -1897,9 +1857,6 @@ void func1d21f0()
     A1 = A1 + 0001;
 
     L1d2240:	; 801D2240
-    SP = SP + 0008;
-    801D2244	jr     ra 
-    801D2248	nop
 }
 
 
@@ -3231,232 +3188,103 @@ void func1d3668( u32 frame )
 
 
 
-void func1d3698()
+void func1d3698( S1, S2 )
 {
-    801D3698	addiu  sp, sp, $ffe0 (=-$20)
-    [SP + 0014] = w(S1);
-    S1 = A0;
-    [SP + 0018] = w(S2);
-    S2 = A1;
-    [SP + 0010] = w(S0);
-    S0 = 0;
-    [SP + 001c] = w(RA);
+    for( int i = 0; i < 0x14; ++i )
+    {
+        A0 = S2;
+        if( S1 != 0 ) A0 |= 0x10;
 
-    loop1d36b8:	; 801D36B8
-    801D36B8	beq    s1, zero, L1d36c4 [$801d36c4]
-    A0 = S2;
-    A0 = A0 | 0010;
+        if( func1d1d40( A0 ) == 0 ) return 0;
+    }
 
-    L1d36c4:	; 801D36C4
-    801D36C4	jal    func1d1d40 [$801d1d40]
-    801D36C8	nop
-    801D36CC	bne    v0, zero, L1d36dc [$801d36dc]
-    801D36D0	nop
-    801D36D4	j      L1d36ec [$801d36ec]
-    V1 = 0;
-
-    L1d36dc:	; 801D36DC
-    S0 = S0 + 0001;
-    V0 = S0 < 0014;
-    801D36E4	bne    v0, zero, loop1d36b8 [$801d36b8]
-    V1 = 0001;
-
-    L1d36ec:	; 801D36EC
-    V0 = V1;
-    RA = w[SP + 001c];
-    S2 = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0020;
-    801D3704	jr     ra 
-    801D3708	nop
+    return 1;
 }
 
 
 
-void func1d370c()
+// draw save slot
+void func1d370c( A0, S4, A2 )
 {
-    801D370C	addiu  sp, sp, $ffa0 (=-$60)
-    [SP + 0048] = w(S4);
-    S4 = A1;
-    A0 = A2;
-    [SP + 0058] = w(RA);
-    [SP + 0054] = w(S7);
-    [SP + 0050] = w(S6);
-    [SP + 004c] = w(S5);
-    [SP + 0044] = w(S3);
-    [SP + 0040] = w(S2);
-    [SP + 003c] = w(S1);
-    801D3738	jal    func1d1d1c [$801d1d1c]
-    [SP + 0038] = w(S0);
-    A0 = 00c0;
-    A1 = S4 + 002e;
-    S6 = V0;
-    A2 = S6 + 0028;
-    801D3750	jal    $system_menu_draw_string
-    A3 = 0007;
-    S2 = 0;
-    S5 = S4 + 0006;
-    S3 = 0030;
-    S0 = S6;
-    S1 = 0016;
+    save = func1d1d1c( A2 );
 
-    loop1d376c:	; 801D376C
-    V1 = bu[S0 + 0005];
-    V0 = 00ff;
-    801D3774	beq    v1, v0, L1d37ec [$801d37ec]
-    V0 = V1 < 0005;
-    801D377C	bne    v0, zero, L1d378c [$801d378c]
-    A0 = S1;
-    801D3784	j      L1d3790 [$801d3790]
-    [SP + 0010] = w(S3);
+    system_menu_draw_string( 0xc0, S4 + 0x2e, save + 0x28, 0x7 ); // Save location, FF Text format
 
-    L1d378c:	; 801D378C
-    [SP + 0010] = w(0);
+    for( int i = 0; i < 0x3; ++i )
+    {
+        V1 = bu[save + i + 0x5];
+        if( V1 != 0xff )
+        {
+            A4 = ( V1 < 0x5 ) ? 0 : 0x30;
 
-    L1d3790:	; 801D3790
-    A3 = bu[S0 + 0005];
-    V0 = cccccccd;
-    801D379C	multu  a3, v0
-    A1 = S5;
-    A2 = 0030;
-    [SP + 0018] = w(S3);
-    [SP + 001c] = w(S3);
-    801D37B0	mfhi   t0
-    V1 = T0 >> 02;
-    V0 = V1 << 02;
-    V0 = V0 + V1;
-    A3 = A3 - V0;
-    A3 = A3 & 00ff;
-    V0 = A3 << 01;
-    V0 = V0 + A3;
-    V0 = V0 << 04;
-    [SP + 0014] = w(V0);
-    V0 = bu[S0 + 0005];
-    A3 = 0030;
-    [SP + 0024] = w(0);
-    801D37E4	jal    $func1d180
-    [SP + 0020] = w(V0);
+            A0 = 0x16 + i * 0x34;
+            A3 = bu[save + 0x5 + i];
+            V0 = cccccccd;
+            801D379C	multu  a3, v0
+            A1 = S4 + 0x6;
+            A2 = 0x30;
+            801D37B0	mfhi   t0
+            V1 = T0 >> 02;
+            V0 = V1 << 02;
+            V0 = V0 + V1;
+            A3 = A3 - V0;
+            A3 = A3 & 00ff;
+            V0 = A3 << 01;
+            V0 = V0 + A3;
+            V0 = V0 << 04;
 
-    L1d37ec:	; 801D37EC
-    S0 = S0 + 0001;
-    S2 = S2 + 0001;
-    V0 = S2 < 0003;
-    801D37F8	bne    v0, zero, loop1d376c [$801d376c]
-    S1 = S1 + 0034;
-    A0 = 0;
-    A1 = 0001;
-    A2 = 007f;
-    S2 = SP + 0030;
-    A3 = S2;
-    V0 = 00ff;
-    [SP + 0030] = h(0);
-    [SP + 0032] = h(0);
-    [SP + 0034] = h(V0);
-    801D3824	jal    $system_menu_set_draw_mode
-    [SP + 0036] = h(V0);
-    S3 = 0x801e3684;
-    801D3834	jal    $system_get_single_string_width
-    A0 = S3;
-    A0 = V0 + 00c2;
-    A1 = S4 + 001c;
-    A3 = 0002;
-    A2 = bu[S6 + 0004];
-    S0 = 0007;
-    801D3850	jal    $system_menu_draw_digits_without_leading_zeroes
-    [SP + 0010] = w(S0);
-    A0 = 0152;
-    A1 = S4 + 000c;
-    A2 = 00d5;
-    801D3864	jal    $system_menu_draw_single_font_letter
-    A3 = 0007;
-    A0 = w[S6 + 0024];
-    801D3870	jal    $system_get_hours_from_seconds
-    S7 = 0;
-    A0 = 0144;
-    S1 = S4 + 000b;
-    A1 = S1;
-    A2 = V0;
-    A3 = 0002;
-    801D388C	jal    $system_menu_draw_digits_with_leading_zeroes
-    [SP + 0010] = w(S0);
-    A0 = w[S6 + 0024];
-    S5 = 0x801e3650;
-    801D38A0	jal    $system_get_minutes_from_seconds
-    801D38A4	nop
-    A0 = 0159;
-    A1 = S1;
-    A2 = V0;
-    A3 = 0002;
-    801D38B8	jal    $system_menu_draw_digits_with_leading_zeroes
-    [SP + 0010] = w(S0);
-    A0 = 0135;
-    A1 = S4 + 0019;
-    [SP + 0010] = w(S0);
-    A2 = w[S6 + 0020];
-    801D38D0	jal    $system_menu_draw_digits_without_leading_zeroes
-    A3 = 0007;
-    A0 = 0;
-    A1 = 0001;
-    A2 = 007f;
-    A3 = S2;
-    V0 = 0100;
-    [SP + 0030] = h(0);
-    [SP + 0032] = h(0);
-    [SP + 0034] = h(V0);
-    801D38F8	jal    $system_menu_set_draw_mode
-    [SP + 0036] = h(V0);
-    A0 = 00bd;
-    A1 = S4 + 001a;
-    A2 = S3;
-    801D390C	jal    $system_menu_draw_string
-    A3 = 0005;
-    A0 = 00b8;
-    A1 = S4 + 0008;
-    A2 = S6 + 0008;
-    801D3920	jal    $system_menu_draw_string
-    A3 = 0007;
-    A0 = 011c;
-    A1 = S4 + 0009;
-    801D3930	lui    s0, $8005
-    801D3934	addiu  s0, s0, $92f0 (=-$6d10)
-    A2 = S0;
-    801D393C	jal    $system_menu_draw_string
-    A3 = 0007;
-    A0 = 011c;
-    A1 = S4 + 0017;
-    A2 = S0 + 000c;
-    801D3950	jal    $system_menu_draw_string
-    A3 = 0007;
-    801D3958	jal    $system_menu_set_window_color
-    A0 = S6 + 0048;
+            A5 = V0;
+            A3 = 0x30;
+            A6 = 0x30;
+            A7 = 0x30;
+            A8 = bu[save + 0x5 + i];
+            A9 = 0;
+            func1d180();
+        }
+    }
 
-    loop1d3960:	; 801D3960
-    A0 = SP + 0028;
-    801D3964	jal    $system_menu_copy_window_rect
-    A1 = S5;
-    A0 = SP + 0028;
-    A1 = 0;
-    801D3974	jal    $system_menu_move_window_rect
-    A2 = S4;
-    801D397C	jal    $system_menu_draw_window
-    A0 = SP + 0028;
-    S7 = S7 + 0001;
-    V0 = S7 < 0003;
-    801D398C	bne    v0, zero, loop1d3960 [$801d3960]
-    S5 = S5 + 0008;
-    RA = w[SP + 0058];
-    S7 = w[SP + 0054];
-    S6 = w[SP + 0050];
-    S5 = w[SP + 004c];
-    S4 = w[SP + 0048];
-    S3 = w[SP + 0044];
-    S2 = w[SP + 0040];
-    S1 = w[SP + 003c];
-    S0 = w[SP + 0038];
-    SP = SP + 0060;
-    801D39BC	jr     ra 
-    801D39C0	nop
+    RECT rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0xff;
+    rect.h = 0xff;
+    system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
+
+    str_len = system_get_single_string_width( 0x801e3684 );
+    system_menu_draw_digits_without_leading_zeroes( 0xc2 + str_len, S4 + 0x1c, bu[save + 0x4], 0x2, 0x7 ); // Lead character's level
+
+    system_menu_draw_single_font_letter( 0x152, S4 + 0xc, 0xd5, 0x7 );
+
+    hours = system_get_hours_from_seconds( w[save + 0x24] ); // Total number of seconds played
+    system_menu_draw_digits_with_leading_zeroes( 0x144, S4 + 0xb, hours, 0x2, 0x7 );
+
+    minutes = system_get_minutes_from_seconds( w[save + 0x24] );
+    system_menu_draw_digits_with_leading_zeroes( 0x159, S4 + 0xb, minutes, 0x2, 0x7 );
+
+    system_menu_draw_digits_without_leading_zeroes( 0x135, S4 + 0x19, w[save + 0x20], 0x7, 0x7 ); // Amount of Gil
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0x100;
+    rect.h = 0x100;
+    system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
+
+    system_menu_draw_string( 0xbd, S4 + 0x1a, 0x801e3684, 0x5 ); // "Level"
+
+    system_menu_draw_string( 0xb8, S4 + 0x8, save + 0x8, 0x7 ); // Lead character's name
+
+    system_menu_draw_string( 0x11c, S4 + 0x9, 0x800492f0, 0x7 );
+
+    system_menu_draw_string( 0x11c, S4 + 0x17, 0x800492f0 + 0xc, 0x7 );
+
+    system_menu_set_window_color( save + 0x48 );
+
+    for( int i = 0; i < 0x3; ++i )
+    {
+        system_menu_copy_window_rect( SP + 0x28, 0x801e3650 + i * 0x8 );
+        system_menu_move_window_rect( SP + 0x28, 0, S4 );
+        system_menu_draw_window( SP + 0x28 );
+    }
 }
 
 
@@ -3519,56 +3347,20 @@ u32 newgamemenu_update( u32 frame )
     {
         case 0x0: // slot selection
         {
-            S1 = 0x801e3668;
-            A0 = h[S1 + 0000];
-            V0 = b[0x801e3d8b];
-            801D3BB4	addiu  a0, a0, $ffee (=-$12)
-            A1 = V0 << 01;
-            A1 = A1 + V0;
-            A1 = A1 << 02;
-            V0 = h[0x801e366a];
-            A1 = A1 + 0006;
-            A1 = V0 + A1;
-            system_menu_draw_cursor();
+            system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + 0x6 + b[0x801e3d8b] * 0xc );
 
-            S0 = 0x801e2d20; // "Select a slot."
+            system_menu_draw_string( 0xa, 0xb, 0x801e2d20, 0x7 ); // "Select a slot."
+            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] +  0x5, 0x801e2d68, (bu[0x801e8f38] == 0) ? 0 : 0x7 ); // "SLOT 1"
+            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] + 0x11, 0x801e2d8c, (bu[0x801e8f3b] == 0) ? 0 : 0x7 ); // "SLOT 2"
 
-            system_menu_draw_string( 0xa, 0xb, S0, 0x7 );
+            RECT rect;
+            rect.x = 0;
+            rect.y = 0;
+            rect.w = 0x100;
+            rect.h = 0x100;
+            system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
 
-            A2 = S0 + 0048;
-            A0 = h[S1 + 0000];
-            A1 = h[0x801e366a];
-            A3 = bu[0x801e8f38];
-            A0 = A0 + 000c;
-            A1 = A1 + 0005;
-            A3 = 0 < A3;
-            A3 = 0 - A3;
-            A3 = A3 & 0x7;
-            system_menu_draw_string();
-
-            A2 = S0 + 006c;
-            A0 = h[S1 + 0000];
-            A1 = h[0x801e366a];
-            A3 = bu[0x801e8f3b];
-            A0 = A0 + 000c;
-            A1 = A1 + 0011;
-            A3 = 0 < A3;
-            A3 = 0 - A3;
-            A3 = A3 & 0x7;
-            system_menu_draw_string();
-
-            A0 = 0;
-            A1 = 0x1;
-            A2 = 0x7f;
-            A3 = SP + 0x40;
-            [SP + 0x40] = h(0);
-            [SP + 0x42] = h(0);
-            [SP + 0x44] = h(0x100);
-            [SP + 0x46] = h(0x100);
-            system_menu_set_draw_mode();
-
-            A0 = S1;
-            system_menu_draw_window();
+            system_menu_draw_window( 0x801e3668 );
         }
         break;
 
@@ -3586,113 +3378,51 @@ u32 newgamemenu_update( u32 frame )
             {
                 func269d0();
 
-                S3 = 0x4;
+                system_menu_set_poly( 0x801d4edc + l_newgame_rb * 0x5000 );
 
-                A0 = 0x801d4edc + l_newgame_rb * 0x5000;
-                system_menu_set_poly();
+                system_menu_draw_cursor( 0x8, (b[0x801e3d9d] * 0x40) | 0x38 );
 
-                A0 = 0x8;
-                A1 = b[0x801e3d9d] << 06;
-                A1 = A1 | 0038;
-                system_menu_draw_cursor();
-
-                if( h[0x801e3d9a] == 0 )
-                {
-                    S3 = 0x3;
-                }
+                S3 = ( h[0x801e3d9a] == 0 ) ? 0x3 : 0x4;
 
                 if( S3 != 0 )
                 {
-                    S0 = 0;
                     S2 = 0x801e3d8b + 0x9;
-                    S1 = 0;
 
-                    loop1d3d40:	; 801D3D40
-                        V1 = h[S2 + 0000];
-                        V0 = hu[0x80062f3c];
-                        V1 = S0 + V1;
-                        V0 = V0 >> V1;
-                        V0 = V0 & 0001;
-                        if( V0 != 0 )
+                    for( int i = 0; i < S3; ++i )
+                    {
+                        if( (hu[0x80062f3c] >> (i + h[S2])) & 0x1 )
                         {
-                            system_menu_store_window_color( 0x32 );
+                            system_menu_store_window_color();
 
-                            A0 = 0;
-                            A1 = b[S2 + 000d];
-                            A2 = h[S2 + 0000];
-                            A1 = A1 << 03;
-                            A1 = A1 + 001d;
-                            A1 = S1 + A1;
-                            A2 = S0 + A2;
-                            func1d370c();
+                            func1d370c( 0, 0x1d + i * 0x40 + b[S2 + 0xd] * 0x8, i + h[S2] );
 
                             system_menu_restore_window_color();
                         }
                         else
                         {
-                            A1 = b[S2 + 000d];
-                            A1 = A1 << 03;
-                            A1 = A1 + 0x37;
-                            A1 = S1 + A1;
-                            A2 = 0x801e2e1c;
-                            A3 = 0x6;
-                            system_menu_draw_string();
+                            system_menu_draw_string( 0x32, 0x37 + i * 0x40 + b[S2 + 0xd] * 0x8, 0x801e2e1c, 0x6 ); // "EMPTY"
 
                             system_menu_copy_window_rect( SP + 0x38, 0x801e3660 );
-
-                            A0 = SP + 0x38;
-                            A1 = 0;
-                            A2 = b[S2 + 0xd];
-                            A2 = A2 << 0x3;
-                            A2 = A2 + 0x1d;
-                            A2 = S1 + A2;
-                            system_menu_move_window_rect();
-
+                            system_menu_move_window_rect( SP + 0x38, 0, 0x1d + i * 0x40 + b[S2 + 0xd] * 0x8 );
                             system_menu_draw_window( SP + 0x38 );
 
                         }
-
-                        S1 = S1 + 0x40;
-                        S0 = S0 + 0x1;
-                        V0 = S0 < S3;
-                    801D3DF8	bne    v0, zero, loop1d3d40 [$801d3d40]
+                    }
                 }
 
                 func26b5c( 0x80 );
 
-                A1 = SP + 0x40;
-
-                [SP + 0x40] = h(0);
-                [SP + 0x42] = h(0x1d);
-                [SP + 0x44] = h(0x16c);
-                [SP + 0x46] = h(0xc3);
-
-                system_menu_set_drawenv( &l_newgame_drawenv[l_newgame_rb] );
+                RECT rect;
+                rect.x = 0;
+                rect.y = 0x1d;
+                rect.w = 0x16c;
+                rect.h = 0xc3;
+                system_menu_set_drawenv( &l_newgame_drawenv[l_newgame_rb], &rect );
 
                 system_menu_draw_string( 0xa, 0xb, 0x801e2d44, 0x7 ); // "Select a file."
-
-                A0 = 0xce;
-                A1 = 0xb;
-                S0 = 0x801e2d44 + 0xfc;
-                A2 = S0;
-                A3 = 0x6;
-                system_menu_draw_string();
-
-                system_get_single_string_width( S0 );
-
-                A0 = V0 + 00d0;
-                A1 = 000b;
-                A3 = 0007;
-                S1 = 0x801e2d44 - 0x48;
-                V0 = h[0x801e3d94];
-                V1 = b[0x801e3d9d];
-                V0 = V0 + 000d;
-                V1 = V1 + V0;
-                A2 = V1 << 03;
-                A2 = A2 + V1;
-                A2 = A2 << 02;
-                A2 = A2 + S1;
-                system_menu_draw_string();
+                system_menu_draw_string( 0xce, 0xb, 0x801e2e40, 0x6 ); // "FILE"
+                u16 str_w = system_get_single_string_width( 0x801e2e40 );
+                system_menu_draw_string( 0xd0 + str_w, 0xb, 0x801e2cfc + (0xd + b[0x801e3d9d] + h[0x801e3d94]) * 0x24, 0x7 ); // "01" - "15"
 
                 system_menu_set_window_rect( SP + 0x38, 0xc8, 0x5, 0x4e, 0x18 );
                 system_menu_draw_window( SP + 0x38 );
@@ -3722,14 +3452,7 @@ u32 newgamemenu_update( u32 frame )
 
             if( w[0x801e3f1c] == 0 )
             {
-                A0 = 0x7a;
-                A1 = 0x75;
-                A2 = (w[0x801e3f20] + 0x1) * 0x8;
-                A3 = 0x8;
-                A4 = S2;
-                A5 = S1;
-                A6 = S0;
-                system_menu_draw_progress_bar();
+                system_menu_draw_progress_bar( 0x7a, 0x75, (w[0x801e3f20] + 0x1) * 0x8, 0x8, S2, S1, S0 );
 
                 RECT rect;
                 rect.x = 0;
@@ -3749,10 +3472,7 @@ u32 newgamemenu_update( u32 frame )
         {
             if( l_newgame_state != NEWGAME_FADEOUT )
             {
-                S2 = 0x801e2dd4; // "Loading. Do not remove Memory card."
-                A0 = S2;
-
-                system_get_single_string_width();
+                V0 = system_get_single_string_width( 0x801e2dd4 );
 
                 S1 = V0 + 0x10;
                 S0 = S1 >> 1f;
@@ -3760,7 +3480,7 @@ u32 newgamemenu_update( u32 frame )
                 S0 = S0 >> 01;
                 A0 = 0xbe - S0;
                 A1 = 0x73;
-                A2 = S2;
+                A2 = 0x801e2dd4; // "Loading. Do not remove Memory card."
                 A3 = 0x7;
                 system_menu_draw_string();
 
@@ -3795,19 +3515,13 @@ u32 newgamemenu_update( u32 frame )
             A0 = h[0x801e3668] + 0xc;
             A1 = h[0x801e366a] + 0x5;
             A2 = 0x801e2d68; // "SLOT 1"
-            A3 = bu[0x801e8f38];
-            A3 = 0 < A3;
-            A3 = 0 - A3;
-            A3 = A3 & 0x7;
+            A3 = (bu[0x801e8f38] == 0) ? 0 : 0x7;
             system_menu_draw_string();
 
             A0 = h[0x801e3668] + 0xc;
             A1 = h[0x801e366a] + 0x11;
             A2 = 0x801e2d8c; // "SLOT 2"
-            A3 = bu[0x801e8f3b];
-            A3 = 0 < A3;
-            A3 = 0 - A3;
-            A3 = A3 & 0x7;
+            A3 = (bu[0x801e8f3b] == 0) ? 0 : 0x7;
             system_menu_draw_string();
 
             RECT rect;
@@ -4052,9 +3766,8 @@ u32 newgamemenu_update( u32 frame )
                         if( hu[0x80062d7c] & 0x0020 )
                         {
                             V0 = b[0x801e3d9d] + h[0x801e3d94];
-                            V1 = hu[0x80062f3c] >> V0;
 
-                            if( V1 & 0x1 )
+                            if( (hu[0x80062f3c] >> V0) & 0x1 )
                             {
                                 newgamemenu_play_menu_sound( 0x1 );
 

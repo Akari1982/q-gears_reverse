@@ -577,70 +577,55 @@ g_menu_poly = poly + 0x28;
 
 
 
-////////////////////////////////
-// func1d180()
-
-S4 = A0;
-S0 = A9;
-S7 = A4;
-S2 = A5;
-S5 = A1;
-clut = A8;
-S6 = A2;
-[SP + 10] = h(A6);
-FP = A3;
-[SP + 18] = h(A7);
-
-system_psyq_set_poly_ft4( g_menu_poly );
-
-system_psyq_set_shade_tex( g_menu_poly, 0x1 );
-
-S3 = S4;
-S0 = S0 << 10;
-S1 = S5;
-if( S0 != 0 )
+void func1d180()
 {
-    system_psyq_set_semi_trans( g_menu_poly, 0x1 );
+    S4 = A0;
+    S0 = A9;
+    S7 = A4;
+    S2 = A5;
+    S5 = A1;
+    clut = A8;
+    S6 = A2;
+    [SP + 10] = h(A6);
+    FP = A3;
+    [SP + 18] = h(A7);
+
+    system_psyq_set_poly_ft4( g_menu_poly );
+
+    system_psyq_set_shade_tex( g_menu_poly, 0x1 );
+
+    S3 = S4;
+    S0 = S0 << 10;
+    S1 = S5;
+    if( S0 != 0 )
+    {
+        system_psyq_set_semi_trans( g_menu_poly, 0x1 );
+    }
+
+    [g_menu_poly + 0x8] = h(S3);
+    [g_menu_poly + 0xa] = h(S1);
+    [g_menu_poly + 0xc] = b(S7);
+    [g_menu_poly + 0xd] = b(S2);
+    [g_menu_poly + 0x10] = h(S4 + S6);
+    [g_menu_poly + 0x12] = h(S1);
+    [g_menu_poly + 0x14] = b(hu[SP + 0010] + S7);
+    [g_menu_poly + 0x15] = b(S2);
+    [g_menu_poly + 0x18] = h(S3);
+    [g_menu_poly + 0x1a] = h(S5 + FP);
+    [g_menu_poly + 0x1c] = b(S7);
+    [g_menu_poly + 0x1d] = b(S2 + hu[SP + 0018]);
+    [g_menu_poly + 0x20] = h(S4 + S6);
+    [g_menu_poly + 0x22] = h(S5 + FP);
+    [g_menu_poly + 0x24] = b(hu[SP + 0010] + S7);
+    [g_menu_poly + 0x25] = b(S2 + hu[SP + 0018]);
+
+    [g_menu_poly + e] = h(system_psyq_get_clut( 0x180, clut ));
+    [g_menu_poly + 16] = h(system_psyq_get_tpage( 0x1, 0, 0x340, 0x100 ));
+
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+
+    g_menu_poly += 0x28;
 }
-
-V0 = g_menu_poly;
-[V0 + 8] = h(S3);
-[V0 + a] = h(S1);
-[V0 + c] = b(S7);
-[V0 + d] = b(S2);
-[V0 + 10] = h(S4 + S6);
-[V0 + 12] = h(S1);
-[V0 + 14] = b(hu[SP + 0010] + S7);
-[V0 + 15] = b(S2);
-[V0 + 18] = h(S3);
-[V0 + 1a] = h(S5 + FP);
-[V0 + 1c] = b(S7);
-[V0 + 1d] = b(S2 + hu[SP + 0018]);
-[V0 + 20] = h(S4 + S6);
-[V0 + 22] = h(S5 + FP);
-[V0 + 24] = b(hu[SP + 0010] + S7);
-[V0 + 25] = b(S2 + hu[SP + 0018]);
-
-A0 = 180;
-A1 = clut;
-system_psyq_get_clut();
-
-V1 = g_menu_poly;
-[V1 + e] = h(V0);
-
-A0 = 1;
-A1 = 0;
-A2 = 340;
-A3 = 100;
-system_psyq_get_tpage();
-
-V1 = g_menu_poly;
-[V1 + 16] = h(V0);
-
-system_psyq_add_prim( g_menu_otag, g_menu_poly );
-
-g_menu_poly += 0x28;
-////////////////////////////////
 
 
 
