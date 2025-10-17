@@ -200,7 +200,7 @@
 8001CB48 system_menu_update_buttons
 8001CDA4 func1cda4
 8001CF3C system_menu_draw_avatar
-8001D180 func1d180
+8001D180 system_menu_draw_avatar_2
 8001D3C0 func1d3c0
 8001D47C func1d47c
 8001D56C func1d56c

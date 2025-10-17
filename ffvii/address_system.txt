@@ -795,7 +795,20 @@
     + 4 [][][][] step.
     + 8 [][][][] steps.
 
-8009c6e4 savemap start
+0x8009c6e4 savemap start
+    +   0x4 []       save preview lead character's level.
+    +   0x5 []       save preview char 0.
+    +   0x6 []       save preview char 1.
+    +   0x7 []       save preview char 2.
+    +   0x8 save preview lead character's name (0x10 size).
+    +  0x18 [][]     save preview lead character's current HP
+    +  0x1a [][]     save preview lead character's max HP
+    +  0x1c [][]     save preview lead character's current MP
+    +  0x1e [][]     save preview lead character's max MP
+    +  0x20 [][][][] save preview amount of gil.
+    +  0x24 [][][][] save preview number of seconds played.
+    +  0x28 save preview location name (0x18 size).
+    +  0x48 save preview window color (0xc size).
     +  0x54          savemap character data (0x84 size).
         +0x00 []       character id.
         +0x01 []       level.
@@ -913,7 +926,7 @@
     + 0xeaa (+0x06) []       some value that increments each battle check.
     + 0xeab (+0x07) []       some value that increments each battle check.
     + 0xf04       []       ??? Northern Cave - Progress (TODO: more info) 
-    + 0xf0c field map name for menu (0x17 size).
+    + 0xf0c field map name for menu (0x18 size).
     + 0xf24 
     + 0xf2a (+0x86) []       flags
                             0x10 - used in world map

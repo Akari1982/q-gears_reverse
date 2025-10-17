@@ -3,15 +3,16 @@
 #define NEWGAME_FADEOUT 2
 #define NEWGAME_FINISH -1
 
-#define NEWGAME_WND 0
-#define NEWGAME_WND 1
-#define NEWGAME_WND 2
-#define NEWGAME_WND 3
-#define NEWGAME_WND 4
+#define NEWGAME_WND_SELECT_SLOT 0
+#define NEWGAME_WND_SELECT_FILE 1
+#define NEWGAME_WND_CHECKING_1 2
+#define NEWGAME_WND_CHECKING_2 3
+#define NEWGAME_WND_LOADING 4
 #define NEWGAME_WND 5
-#define NEWGAME_WND 6
+#define NEWGAME_WND_FORMAT 6
 #define NEWGAME_WND_NEWGAME 7
 
+u32 l_newgame_fade;                 // 0x801e2cf4
 u32 l_newgame_wnd;                  // 0x801e2cf8
 
 u8 l_newgame_wnd_color[0xc] =
@@ -139,23 +140,18 @@ void func1d05c0()
     [SP + 0028] = w(0);
     [SP + 002c] = w(0);
     [SP + 0030] = w(V1);
-    801D0628	jal    $system_menu_set_cursor_movement
     [SP + 0034] = w(0);
+    system_menu_set_cursor_movement();
+
     801D0630	lui    a0, $801f
     801D0634	addiu  a0, a0, $8f44 (=-$70bc)
-    801D0638	jal    $func25b8c
-    801D063C	nop
-    A0 = 0x801e4538;
-    801D0648	jal    $func25c14
-    801D064C	nop
-    801D0650	jal    $system_menu_load_avatars
-    801D0654	nop
-    801D0658	jal    func1d19c4 [$801d19c4]
-    801D065C	nop
-    RA = w[SP + 0038];
-    SP = SP + 0040;
-    801D0668	jr     ra 
-    801D066C	nop
+    func25b8c();
+
+    func25c14( 0x801e4538 );
+
+    system_menu_load_avatars();
+
+    func1d19c4();
 }
 
 
@@ -437,7 +433,7 @@ void func1d06b0()
     A1 = A1 + 001d;
     A1 = S1 + A1;
     A2 = S0 + A2;
-    func1d370c();
+    newgamemenu_draw_save_slot();
 
     S1 = S1 + 0040;
 
@@ -1281,7 +1277,7 @@ void func1d1774()
 
 
 
-void func1d1950()
+u16 func1d1950()
 {
     V1 = ffff;
     A0 = A0 & ffff;
@@ -1627,7 +1623,7 @@ void func1d1d40()
 
 
 
-void func1d1f40()
+s16 func1d1f40()
 {
     V1 = A0;
     V0 = 2000;
@@ -1663,8 +1659,7 @@ void func1d1f40()
     801D1FD0	addiu  v0, zero, $ffff (=-$1)
     801D1FD4	bne    s0, v0, L1d1fe4 [$801d1fe4]
     S1 = 001e;
-    801D1FDC	j      L1d2134 [$801d2134]
-    V0 = 0001;
+    return 0x1;
 
     L1d1fe4:	; 801D1FE4
     801D1FE4	addiu  s2, zero, $ffff (=-$1)
@@ -1688,8 +1683,8 @@ void func1d1f40()
     801D202C	nop
     801D2030	jal    $func42b50
     A0 = S0;
-    801D2038	j      L1d2134 [$801d2134]
-    V0 = 0002;
+
+    return 0x2;
 
     L1d2040:	; 801D2040
     801D2040	jal    $func42b50
@@ -1747,21 +1742,20 @@ void func1d1f40()
     V1 = 0;
 
     loop1d2100:	; 801D2100
-    801D2100	lui    at, $800a
-    801D2104	addiu  at, at, $c72c (=-$38d4)
-    AT = AT + V1;
-    V0 = bu[AT + 0000];
-    801D2110	nop
-    801D2114	lui    at, $8005
-    801D2118	addiu  at, at, $9208 (=-$6df8)
-    AT = AT + V1;
-    [AT + 0000] = b(V0);
-    V1 = V1 + 0001;
-    V0 = V1 < 000c;
+        801D2100	lui    at, $800a
+        801D2104	addiu  at, at, $c72c (=-$38d4)
+        AT = AT + V1;
+        V0 = bu[AT + 0000];
+        801D2110	nop
+        801D2114	lui    at, $8005
+        801D2118	addiu  at, at, $9208 (=-$6df8)
+        AT = AT + V1;
+        [AT + 0000] = b(V0);
+        V1 = V1 + 0001;
+        V0 = V1 < 000c;
     801D212C	bne    v0, zero, loop1d2100 [$801d2100]
-    V0 = 0;
 
-    L1d2134:	; 801D2134
+    return 0;
 }
 
 
@@ -1781,8 +1775,6 @@ void func1d2150()
     V0 = 0;
 
     L1d217c:	; 801D217C
-    801D217C	jr     ra 
-    801D2180	nop
 }
 
 
@@ -1802,31 +1794,24 @@ void func1d2184()
     V0 = 0;
 
     L1d21b0:	; 801D21B0
-    801D21B0	jr     ra 
-    801D21B4	nop
 }
 
 
 
-void func1d21b8()
+void func1d21b8( u8* dst, u8* src )
 {
-    V1 = 0;
 
-    loop1d21bc:	; 801D21BC
-    V0 = bu[A1 + 0000];
-    A1 = A1 + 0001;
-    V1 = V1 + 0001;
-    [A0 + 0000] = b(V0);
-    V0 = V1 < 0040;
-    801D21D0	bne    v0, zero, loop1d21bc [$801d21bc]
-    A0 = A0 + 0001;
-    801D21D8	jr     ra 
-    801D21DC	nop
+    for( int i = 0; i < 0x40; ++i )
+    {
+        [dst] = b(bu[src]);
+        src += 0x1;
+        dst += 0x1;
+    }
 }
 
 
 
-void func1d21e0()
+void func1d21e0( A0 )
 {
     [0x801e2cb4] = w(A0);
 }
@@ -1835,160 +1820,64 @@ void func1d21e0()
 
 void func1d21f0()
 {
-    801D21F0	addiu  sp, sp, $fff8 (=-$8)
-    V0 = w[0x801e2cb4];
-    801D21FC	nop
-    801D2200	blez   v0, L1d2240 [$801d2240]
-    V1 = 0;
-    A2 = 00ff;
+    for( int i = 0; i < w[0x801e2cb4]; ++i )
+    {
+        [A0] = b(bu[A1]);
 
-    loop1d220c:	; 801D220C
-    V0 = bu[A1 + 0000];
-    801D2210	nop
-    [A0 + 0000] = b(V0);
-    V0 = bu[A1 + 0000];
-    801D221C	nop
-    801D2220	beq    v0, a2, L1d2240 [$801d2240]
-    A0 = A0 + 0001;
-    V0 = w[0x801e2cb4];
-    V1 = V1 + 0001;
-    V0 = V1 < V0;
-    801D2238	bne    v0, zero, loop1d220c [$801d220c]
-    A1 = A1 + 0001;
+        if( bu[A1] == 0xff ) break;
 
-    L1d2240:	; 801D2240
+        A0 += 0x1;
+        A1 += 0x1;
+    }
 }
 
 
 
 void func1d224c()
 {
-    801D224C	addiu  sp, sp, $ffe0 (=-$20)
-    V1 = 0;
-    [SP + 0018] = w(RA);
-    [SP + 0014] = w(S1);
-    [SP + 0010] = w(S0);
+    for( int i = 0; i < 0x3; ++i )
+    {
+        [0x8009c6e4 + 0x5 + i] = b(bu[0x8009c6e4 + 0x4f8 + i]);
+    }
 
-    loop1d2260:	; 801D2260
-    801D2260	lui    at, $800a
-    801D2264	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + V1;
-    V0 = bu[AT + 0000];
-    801D2270	nop
-    801D2274	lui    at, $800a
-    801D2278	addiu  at, at, $c6e9 (=-$3917)
-    AT = AT + V1;
-    [AT + 0000] = b(V0);
-    V1 = V1 + 0001;
-    V0 = V1 < 0003;
-    801D228C	bne    v0, zero, loop1d2260 [$801d2260]
-    801D2290	nop
-    801D2294	jal    func1d21e0 [$801d21e0]
-    A0 = 0010;
-    V1 = 0;
-    801D22A0	lui    a0, $800a
-    801D22A4	addiu  a0, a0, $c6ec (=-$3914)
-    S1 = 0;
+    for( int i = 0; i < 0x3; ++i )
+    {
+        u8 char_id = bu[0x8009c6e4 + 0x4f8 + i];
+        if( char_id != 0xff )
+        {
+            func1d21e0( 0x10 );
+            func1d21f0( 0x8009c6e4 + 0x8, 0x8009c6e4 + 0x54 + char_id * 0x84 + 0x10); // copy Lead character's name
 
-    loop1d22ac:	; 801D22AC
-    801D22AC	lui    at, $800a
-    801D22B0	addiu  at, at, $cbdc (=-$3424)
-    AT = AT + V1;
-    A1 = bu[AT + 0000];
-    V0 = 00ff;
-    801D22C0	beq    a1, v0, L1d2370 [$801d2370]
-    S0 = A1 << 05;
-    S0 = S0 + A1;
-    S0 = S0 << 02;
-    A1 = A0 + 005c;
-    801D22D4	jal    func1d21f0 [$801d21f0]
-    A1 = S0 + A1;
-    801D22DC	lui    at, $800a
-    801D22E0	addiu  at, at, $c739 (=-$38c7)
-    AT = AT + S0;
-    V0 = bu[AT + 0000];
-    801D22EC	nop
-    [0x8009c6e8] = b(V0);
-    801D22F8	lui    at, $800a
-    801D22FC	addiu  at, at, $d85c (=-$27a4)
-    AT = AT + S1;
-    V0 = hu[AT + 0000];
-    801D2308	nop
-    [0x8009c6fc] = h(V0);
-    801D2314	lui    at, $800a
-    801D2318	addiu  at, at, $d85e (=-$27a2)
-    AT = AT + S1;
-    V0 = hu[AT + 0000];
-    801D2324	nop
-    [0x8009c6fe] = h(V0);
-    801D2330	lui    at, $800a
-    801D2334	addiu  at, at, $d860 (=-$27a0)
-    AT = AT + S1;
-    V0 = hu[AT + 0000];
-    801D2340	nop
-    [0x8009c700] = h(V0);
-    801D234C	lui    at, $800a
-    801D2350	addiu  at, at, $d862 (=-$279e)
-    AT = AT + S1;
-    V0 = hu[AT + 0000];
-    801D235C	nop
-    [0x8009c702] = h(V0);
-    801D2368	j      L1d2384 [$801d2384]
-    V1 = 0;
+            [0x8009c6e4 + 0x4] = b(bu[0x8009c739 + S0]); // Lead character's level
+            [0x8009c6e4 + 0x18] = h(hu[0x8009d85c + i * 0x440]); // Lead character's current HP
+            [0x8009c6e4 + 0x1a] = h(hu[0x8009d85e + i * 0x440]); // Lead character's max HP
+            [0x8009c6e4 + 0x1c] = h(hu[0x8009d860 + i * 0x440]); // Lead character's current MP
+            [0x8009c6e4 + 0x1e] = h(hu[0x8009d862 + i * 0x440]); // Lead character's max MP
+            break;
+        }
+    }
 
-    L1d2370:	; 801D2370
-    V1 = V1 + 0001;
-    V0 = V1 < 0003;
-    801D2378	bne    v0, zero, loop1d22ac [$801d22ac]
-    S1 = S1 + 0440;
-    V1 = 0;
+    for( int i = 0; i < 0xc; ++i )
+    {
+        [0x8009c6e4 + 0x48 + i] = b(bu[0x80049208 + i]); // copy window color
+    }
 
-    L1d2384:	; 801D2384
-    801D2384	lui    at, $8005
-    801D2388	addiu  at, at, $9208 (=-$6df8)
-    AT = AT + V1;
-    V0 = bu[AT + 0000];
-    801D2394	nop
-    801D2398	lui    at, $800a
-    801D239C	addiu  at, at, $c72c (=-$38d4)
-    AT = AT + V1;
-    [AT + 0000] = b(V0);
-    V1 = V1 + 0001;
-    V0 = V1 < 000c;
-    801D23B0	bne    v0, zero, L1d2384 [$801d2384]
-    801D23B4	nop
-    V0 = w[0x8009d260];
-    V1 = w[0x8009d264];
-    801D23C8	lui    s0, $800a
-    801D23CC	addiu  s0, s0, $c704 (=-$38fc)
-    [S0 + 0000] = w(V0);
-    [0x8009c708] = w(V1);
-    801D23DC	jal    func1d21e0 [$801d21e0]
-    A0 = 0018;
-    A0 = S0 + 0008;
-    801D23E8	jal    func1d21f0 [$801d21f0]
-    A1 = S0 + 0eec;
-    RA = w[SP + 0018];
-    S1 = w[SP + 0014];
-    S0 = w[SP + 0010];
-    SP = SP + 0020;
-    801D2400	jr     ra 
-    801D2404	nop
+    [0x8009c6e4 + 0x20] = w(w[0x8009c6e4 + 0xb7c]); // Amount of Gil
+    [0x8009c6e4 + 0x24] = w(w[0x8009c6e4 + 0xb80]); // Total number of seconds played
+
+    func1d21e0( 0x18 );
+    func1d21f0( 0x8009c6e4 + 0x28, 0x8009c6e4 + 0xf0c ); // Location name
 }
 
 
 
 void func1d2408()
 {
-    801D2408	addiu  sp, sp, $fdd8 (=-$228)
-    [SP + 021c] = w(S3);
     S3 = A0;
-    [SP + 0214] = w(S1);
     S1 = A1;
-    [SP + 0220] = w(RA);
-    [SP + 0218] = w(S2);
-    801D2424	jal    func1d224c [$801d224c]
-    [SP + 0210] = w(S0);
+
+    func1d224c(); // update save preview from game data
+
     S0 = 0x801e6d38;
     A0 = S0 + 0004;
     V0 = 2000;
@@ -2239,8 +2128,8 @@ void func1d2408()
     A1 = S0;
     V0 = 0001;
     [0x80062d99] = b(V0);
-    801D2824	jal    func1d1950 [$801d1950]
-    801D2828	nop
+    func1d1950();
+
     A3 = 0x801e7138;
     801D2834	addiu  a2, s0, $fffc (=-$4)
     V1 = A2 | A3;
@@ -2386,27 +2275,17 @@ void func1d2408()
     V0 = 0;
 
     L1d2a14:	; 801D2A14
-    RA = w[SP + 0220];
-    S3 = w[SP + 021c];
-    S2 = w[SP + 0218];
-    S1 = w[SP + 0214];
-    S0 = w[SP + 0210];
-    SP = SP + 0228;
-    801D2A2C	jr     ra 
-    801D2A30	nop
 }
 
 
 
 void func1d2a34()
 {
-    801D2A34	addiu  sp, sp, $ffa0 (=-$60)
-    [SP + 0050] = w(S0);
     S0 = A0;
     V0 = S0 & 0010;
-    [SP + 0058] = w(RA);
+
     801D2A48	beq    v0, zero, L1d2a78 [$801d2a78]
-    [SP + 0054] = w(S1);
+
     V0 = S0 & 000f;
     V0 = V0 << 02;
     AT = 0x801e2c78;
@@ -2468,12 +2347,6 @@ void func1d2a34()
     V0 = V0 >> 10;
 
     L1d2b40:	; 801D2B40
-    RA = w[SP + 0058];
-    S1 = w[SP + 0054];
-    S0 = w[SP + 0050];
-    SP = SP + 0060;
-    801D2B50	jr     ra 
-    801D2B54	nop
 }
 
 
@@ -2488,135 +2361,65 @@ void newgamemenu_play_menu_sound( u16 sound_id )
 
 
 
-void func1d2b98()
+void newgamemenu_fade( s32 fade_step )
 {
-    S1 = A0;
-    V1 = g_menu_poly;
-    V0 = 0003;
-    [V1 + 0003] = b(V0);
-    V1 = g_menu_poly;
-    V0 = 0060;
-    [V1 + 0007] = b(V0);
-    A0 = g_menu_poly;
-    system_psyq_set_semi_trans( 0x1 );
+    SETTILE( g_menu_poly );
+    g_menu_poly->r0 = l_newgame_fade;
+    g_menu_poly->g0 = l_newgame_fade;
+    g_menu_poly->b0 = l_newgame_fade;
+    g_menu_poly->x0 = 0;
+    g_menu_poly->y0 = 0;
+    g_menu_poly->w = 0x180;
+    g_menu_poly->h = 0xe8;
+    system_psyq_set_semi_trans( g_menu_poly, 0x1 );
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+    g_menu_poly += 0x10;
 
-    V0 = g_menu_poly;
-    801D2BE8	nop
-    [V0 + 0008] = h(0);
-    V0 = g_menu_poly;
-    801D2BF8	nop
-    [V0 + 000a] = h(0);
-    V1 = g_menu_poly;
-    V0 = 0180;
-    [V1 + 000c] = h(V0);
-    V1 = g_menu_poly;
-    V0 = 00e8;
-    [V1 + 000e] = h(V0);
-    V1 = g_menu_poly;
-    V0 = w[0x801e2cf4];
-    801D2C30	nop
-    [V1 + 0004] = b(V0);
-    V1 = g_menu_poly;
-    V0 = w[0x801e2cf4];
-    801D2C48	nop
-    [V1 + 0005] = b(V0);
-    V1 = g_menu_poly;
-    V0 = w[0x801e2cf4];
-    801D2C60	nop
-    [V1 + 0006] = b(V0);
-    A1 = g_menu_poly;
-    A0 = g_menu_otag;
-    V0 = A1 + 0010;
-    g_menu_poly = V0;
-    system_psyq_add_prim();
+    RECT rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0xff;
+    rect.h = 0xff;
+    system_menu_set_draw_mode( 0, 0x1, 0x5f, &rect );
 
-    A0 = 0;
-    A1 = 0001;
-    V0 = 00ff;
-    A2 = 005f;
-    A3 = SP + 0010;
-    [SP + 0010] = h(0);
-    [SP + 0012] = h(0);
-    [SP + 0014] = h(V0);
-    [SP + 0016] = h(V0);
-    system_menu_set_draw_mode();
+    l_newgame_fade += fade_step;
 
-    V0 = w[0x801e2cf4];
-    V0 = V0 + S1;
-    [0x801e2cf4] = w(V0);
-    801D2CC0	bgez   v0, L1d2cd0 [$801d2cd0]
-    801D2CC4	nop
-    [0x801e2cf4] = w(0);
+    if( l_newgame_fade > 0 ) l_newgame_fade = 0;
+    if( l_newgame_fade >= 0x100 ) l_newgame_fade = 0xff;
 
-    L1d2cd0:	; 801D2CD0
-    V0 = w[0x801e2cf4];
-    V0 = V0 < 0100;
-    801D2CE0	bne    v0, zero, L1d2cf0 [$801d2cf0]
-    V0 = 00ff;
-    [0x801e2cf4] = w(V0);
-
-    L1d2cf0:	; 801D2CF0
-    return w[0x801e2cf4];
+    return l_newgame_fade;
 }
 
 
 
-void func1d2d10()
+void func1d2d10( u8 type )
 {
-    801D2D10	addiu  sp, sp, $ffe8 (=-$18)
-    V0 = 0001;
-    801D2D18	beq    a0, v0, L1d2d60 [$801d2d60]
-    [SP + 0010] = w(RA);
-    V0 = A0 < 0002;
-    801D2D24	beq    v0, zero, L1d2d3c [$801d2d3c]
-    801D2D28	nop
-    801D2D2C	beq    a0, zero, L1d2d50 [$801d2d50]
-    V0 = 0081;
-    801D2D34	j      L1d2d90 [$801d2d90]
-    801D2D38	nop
-
-    L1d2d3c:	; 801D2D3C
-    V0 = 0002;
-    801D2D40	beq    a0, v0, L1d2d74 [$801d2d74]
-    V0 = 0082;
-    801D2D48	j      L1d2d90 [$801d2d90]
-    801D2D4C	nop
-
-    L1d2d50:	; 801D2D50
-    [0x8009a000] = h(V0);
-    801D2D58	j      L1d2d80 [$801d2d80]
-    V0 = 0081;
-
-    L1d2d60:	; 801D2D60
-    V0 = 0080;
-    [0x8009a000] = h(V0);
-    801D2D6C	j      L1d2d80 [$801d2d80]
-    V0 = 0080;
-
-    L1d2d74:	; 801D2D74
-    [0x8009a000] = h(V0);
-    V0 = 0082;
-
-    L1d2d80:	; 801D2D80
-    [0x8009a004] = w(V0);
-    [0x8009a008] = w(V0);
-
-    L1d2d90:	; 801D2D90
-    801D2D90	jal    $system_akao_execute
-    801D2D94	nop
-    RA = w[SP + 0010];
-    SP = SP + 0018;
-    801D2DA0	jr     ra 
-    801D2DA4	nop
+    if( type == 0 )
+    {
+        [0x8009a000] = h(0x81);
+        [0x8009a004] = w(0x81);
+        [0x8009a008] = w(0x81);
+    }
+    else if( type == 0x1 )
+    {
+        [0x8009a000] = h(0x80);
+        [0x8009a004] = w(0x80);
+        [0x8009a008] = w(0x80);
+    }
+    else if( type == 0x2 )
+    {
+        [0x8009a000] = h(0x82);
+        [0x8009a004] = w(0x82);
+        [0x8009a008] = w(0x82);
+    }
+    system_akao_execute();
 }
 
 
 
 void func1d2da8()
 {
-    801D2DA8	addiu  sp, sp, $ffb8 (=-$48)
     A1 = A0;
-    [SP + 0040] = w(RA);
     V1 = h[A1 + 0008];
     801D2DB8	nop
     801D2DBC	bne    v1, zero, L1d323c [$801d323c]
@@ -2990,10 +2793,6 @@ void func1d2da8()
     [A1 + 0002] = h(V0);
 
     L1d32b0:	; 801D32B0
-    RA = w[SP + 0040];
-    SP = SP + 0048;
-    801D32B8	jr     ra 
-    801D32BC	nop
 }
 
 
@@ -3010,24 +2809,10 @@ void func1d32c0()
 
 void func1d3318()
 {
-    A0 = w[0x8009a034];
-    801D3320	addiu  sp, sp, $ffe8 (=-$18)
-    [SP + 0010] = w(RA);
-    801D3328	jal    $system_bios_test_event
-    801D332C	nop
-    A0 = w[0x8009a038];
-    801D3338	jal    $system_bios_test_event
-    801D333C	nop
-    A0 = w[0x8009a03c];
-    801D3348	jal    $system_bios_test_event
-    801D334C	nop
-    A0 = w[0x8009a040];
-    801D3358	jal    $system_bios_test_event
-    801D335C	nop
-    RA = w[SP + 0010];
-    SP = SP + 0018;
-    801D3368	jr     ra 
-    801D336C	nop
+    system_bios_test_event( w[0x8009a034] );
+    system_bios_test_event( w[0x8009a038] );
+    system_bios_test_event( w[0x8009a03c] );
+    system_bios_test_event( w[0x8009a040] );
 }
 
 
@@ -3047,37 +2832,13 @@ void func1d3370()
 
 void func1d33f4()
 {
-    801D33F4	addiu  sp, sp, $ffe0 (=-$20)
-    [SP + 0014] = w(S1);
-    801D33FC	lui    s1, $800a
-    801D3400	addiu  s1, s1, $a034 (=-$5fcc)
-    [SP + 0010] = w(S0);
-    S0 = 0001;
-    [SP + 0018] = w(RA);
-
-    loop1d3410:	; 801D3410
-    A0 = w[S1 + 0000];
-    801D3414	jal    $system_bios_test_event
-    801D3418	nop
-    801D341C	beq    v0, s0, L1d3460 [$801d3460]
-    V0 = 0;
-    A0 = w[S1 + 0004];
-    801D3428	jal    $system_bios_test_event
-    801D342C	nop
-    801D3430	beq    v0, s0, L1d3460 [$801d3460]
-    V0 = 0001;
-    A0 = w[S1 + 0008];
-    801D343C	jal    $system_bios_test_event
-    801D3440	nop
-    801D3444	beq    v0, s0, L1d3460 [$801d3460]
-    V0 = 0002;
-    A0 = w[S1 + 000c];
-    801D3450	jal    $system_bios_test_event
-    801D3454	nop
-    801D3458	bne    v0, s0, loop1d3410 [$801d3410]
-    V0 = 0003;
-
-    L1d3460:	; 801D3460
+    while( true )
+    {
+        if( system_bios_test_event( w[0x8009a034] ) == 0x1 ) return 0x0; // event ok
+        if( system_bios_test_event( w[0x8009a038] ) == 0x1 ) return 0x1; // event err write
+        if( system_bios_test_event( w[0x8009a03c] ) == 0x1 ) return 0x2; // event err busy
+        if( system_bios_test_event( w[0x8009a040] ) == 0x1 ) return 0x3; // event err eject or unformatted
+    }
 }
 
 
@@ -3204,7 +2965,7 @@ void func1d3698( S1, S2 )
 
 
 // draw save slot
-void func1d370c( A0, S4, A2 )
+void newgamemenu_draw_save_slot( A0, S4, A2 )
 {
     save = func1d1d1c( A2 );
 
@@ -3212,34 +2973,10 @@ void func1d370c( A0, S4, A2 )
 
     for( int i = 0; i < 0x3; ++i )
     {
-        V1 = bu[save + i + 0x5];
-        if( V1 != 0xff )
+        avatar = bu[save + 0x5 + i];
+        if( avatar != 0xff )
         {
-            A4 = ( V1 < 0x5 ) ? 0 : 0x30;
-
-            A0 = 0x16 + i * 0x34;
-            A3 = bu[save + 0x5 + i];
-            V0 = cccccccd;
-            801D379C	multu  a3, v0
-            A1 = S4 + 0x6;
-            A2 = 0x30;
-            801D37B0	mfhi   t0
-            V1 = T0 >> 02;
-            V0 = V1 << 02;
-            V0 = V0 + V1;
-            A3 = A3 - V0;
-            A3 = A3 & 00ff;
-            V0 = A3 << 01;
-            V0 = V0 + A3;
-            V0 = V0 << 04;
-
-            A5 = V0;
-            A3 = 0x30;
-            A6 = 0x30;
-            A7 = 0x30;
-            A8 = bu[save + 0x5 + i];
-            A9 = 0;
-            func1d180();
+            system_menu_draw_avatar_2( 0x16 + i * 0x34, 0x6 + S4, 0x30, 0x30, (avatar < 0x5) ? 0 : 0x30, (avatar % 0x5) * 0x30, 0x30, 0x30, avatar, 0 );
         }
     }
 
@@ -3316,7 +3053,7 @@ void newgamemenu_init()
 
 u32 newgamemenu_update( u32 frame )
 {
-    if( (l_newgame_wnd < 0x2) || (l_newgame_wnd == 0x7) )
+    if( (l_newgame_wnd == NEWGAME_WND_SELECT_SLOT) || (l_newgame_wnd == NEWGAME_WND_SELECT_FILE) || (l_newgame_wnd == NEWGAME_WND_NEWGAME) )
     {
         if( (l_newgame_state != NEWGAME_FADEOUT) && (l_newgame_state != NEWGAME_FADEIN) )
         {
@@ -3328,14 +3065,14 @@ u32 newgamemenu_update( u32 frame )
 
     if( l_newgame_state == NEWGAME_FADEIN )
     {
-        if( func1d2b98( -0xf ) == 0 )
+        if( newgamemenu_fade( -0xf ) == 0 )
         {
             l_newgame_state = NEWGAME_MENU;
         }
     }
     else if( l_newgame_state == NEWGAME_FADEOUT )
     {
-        if( func1d2b98( 0xf ) == 0xff )
+        if( newgamemenu_fade( 0xf ) == 0xff )
         {
             l_newgame_state = NEWGAME_FINISH;
         }
@@ -3345,7 +3082,7 @@ u32 newgamemenu_update( u32 frame )
 
     switch( l_newgame_wnd )
     {
-        case 0x0: // slot selection
+        case NEWGAME_WND_SELECT_SLOT:
         {
             system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + 0x6 + b[0x801e3d8b] * 0xc );
 
@@ -3364,15 +3101,12 @@ u32 newgamemenu_update( u32 frame )
         }
         break;
 
-        case 0x1: // selection of save data file
+        case NEWGAME_WND_SELECT_FILE:
         {
             V0 = b[0x801e3d8b];
-            V1 = V0 << 01;
-            V1 = V1 + V0;
-            V0 = bu[0x801e8f38 + V1];
-            if( V0 == 0 )
+            if( bu[0x801e8f38 + V0 * 0x3] == 0 )
             {
-                l_newgame_wnd = 0;
+                l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
             }
             else
             {
@@ -3393,9 +3127,7 @@ u32 newgamemenu_update( u32 frame )
                         if( (hu[0x80062f3c] >> (i + h[S2])) & 0x1 )
                         {
                             system_menu_store_window_color();
-
-                            func1d370c( 0, 0x1d + i * 0x40 + b[S2 + 0xd] * 0x8, i + h[S2] );
-
+                            newgamemenu_draw_save_slot( 0, 0x1d + i * 0x40 + b[S2 + 0xd] * 0x8, i + h[S2] );
                             system_menu_restore_window_color();
                         }
                         else
@@ -3432,10 +3164,10 @@ u32 newgamemenu_update( u32 frame )
         }
         break;
 
-        case 0x2:
-        case 0x3:
+        case NEWGAME_WND_CHECKING_1:
+        case NEWGAME_WND_CHECKING_2:
         {
-            if( l_newgame_wnd == 0x2 )
+            if( l_newgame_wnd == NEWGAME_WND_CHECKING_1 )
             {
                 S2 = 0x40;
                 S1 = 0x20;
@@ -3468,61 +3200,27 @@ u32 newgamemenu_update( u32 frame )
         }
         break;
 
-        case 0x4:
+        case NEWGAME_WND_LOADING:
         {
             if( l_newgame_state != NEWGAME_FADEOUT )
             {
-                V0 = system_get_single_string_width( 0x801e2dd4 );
-
-                S1 = V0 + 0x10;
-                S0 = S1 >> 1f;
-                S0 = S1 + S0;
-                S0 = S0 >> 01;
-                A0 = 0xbe - S0;
-                A1 = 0x73;
-                A2 = 0x801e2dd4; // "Loading. Do not remove Memory card."
-                A3 = 0x7;
-                system_menu_draw_string();
-
-                V0 = 0x18;
-                [SP + 0x10] = w(V0);
-                A0 = SP + 0x38;
-                A1 = 00b6;
-                A1 = A1 - S0;
-                A2 = 006d;
-                A3 = S1;
-                system_menu_set_window_rect();
+                str_w = system_get_single_string_width( 0x801e2dd4 );
+                system_menu_draw_string( 0xbe - (str_w + 0x10) / 2, 0x73, 0x801e2dd4, 0x7 ); // "Loading. Do not remove Memory card."
+                system_menu_set_window_rect( SP + 0x38, 0xb6 - (str_w + 0x10) / 2, 0x6d, str_w + 0x10, 0x18 );
                 system_menu_draw_window( SP + 0x38 );
             }
         }
         break;
 
-        case 0x6:
+        case NEWGAME_WND_FORMAT:
         {
             if( S0 & 0x0002 )
             {
-                A0 = h[0x801e3668] - 0x12;
-                V0 = b[0x801e3d8b];
-                A1 = V0 << 01;
-                A1 = A1 + V0;
-                A1 = A1 << 0x2;
-                V0 = h[0x801e366a];
-                A1 = A1 + 0x6;
-                A1 = V0 + A1;
-                system_menu_draw_cursor();
+                system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + 0x6 + b[0x801e3d8b] * 0xc );
             }
 
-            A0 = h[0x801e3668] + 0xc;
-            A1 = h[0x801e366a] + 0x5;
-            A2 = 0x801e2d68; // "SLOT 1"
-            A3 = (bu[0x801e8f38] == 0) ? 0 : 0x7;
-            system_menu_draw_string();
-
-            A0 = h[0x801e3668] + 0xc;
-            A1 = h[0x801e366a] + 0x11;
-            A2 = 0x801e2d8c; // "SLOT 2"
-            A3 = (bu[0x801e8f3b] == 0) ? 0 : 0x7;
-            system_menu_draw_string();
+            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] +  0x5, 0x801e2d68, (bu[0x801e8f38] == 0) ? 0 : 0x7 ); // "SLOT 1"
+            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] + 0x11, 0x801e2d8c, (bu[0x801e8f3b] == 0) ? 0 : 0x7 ); // "SLOT 2"
 
             RECT rect;
             rect.x = 0;
@@ -3535,45 +3233,17 @@ u32 newgamemenu_update( u32 frame )
 
             system_menu_draw_string( 0xa, 0xb, 0x801e3320, 0x7 ); // "Not formatted"
 
-            system_get_single_string_width( 0x801e3350 );
+            str_w = system_get_single_string_width( 0x801e3350 );
 
-            S2 = V0 + 0x10;
-            S1 = S2 >> 1f;
-            S1 = S2 + S1;
-            S1 = S1 >> 01;
+            S1 = (str_w + 0x10) / 2;
 
-            A0 = 0xbe - S1;
-            A1 = h[0x801e366e] + 0x63;
-            A2 = 0x801e3350; // "Want to format it now?"
-            A3 = 0x7;
-            system_menu_draw_string();
+            system_menu_draw_string( 0xbe - S1, h[0x801e366e] + 0x63, 0x801e3350, 0x7 ); // "Want to format it now?"
+            system_menu_draw_string( 0xe4 - S1, h[0x801e366e] + 0x70, 0x801e31c4, 0x7 ); // "Yes"
+            system_menu_draw_string( 0xe4 - S1, h[0x801e366e] + 0x7c, 0x801e31e8, 0x7 ); // "No"
 
-            S0 = 0xe4 - S1;
-            A0 = S0;
-            A2 = 0x801e31c4; // "Yes"
-            A1 = h[0x801e366e];
-            A3 = 0x7;
-            A1 = A1 + 0x70;
-            system_menu_draw_string();
+            system_menu_draw_cursor( 0xc8 - S1, h[0x801e366e] + 0x73 + b[0x801e3df7] * 0xc );
 
-            A0 = S0;
-            A2 = 0x801e31e8; // "No"
-            A1 = h[0x801e366e];
-            A3 = 0x7;
-            A1 = A1 + 0x7c;
-            system_menu_draw_string();
-
-            A0 = 0xc8 - S1;
-            V1 = b[0x801e3df7];
-            A1 = h[0x801e366e];
-            V0 = V1 << 01;
-            V0 = V0 + V1;
-            V0 = V0 << 02;
-            A1 = A1 + 0x73;
-            A1 = V0 + A1;
-            system_menu_draw_cursor();
-
-            system_menu_set_window_rect( SP + 0x38, 0xb6 - S1, h[0x801e366e] + 0x5d, S2, 0x30 );
+            system_menu_set_window_rect( SP + 0x38, 0xb6 - S1, h[0x801e366e] + 0x5d, str_w + 0x10, 0x30 );
             system_menu_draw_window( SP + 0x38 );
         }
         break;
@@ -3640,312 +3310,199 @@ u32 newgamemenu_update( u32 frame )
         {
             switch( l_newgame_wnd )
             {
-                case 0x0:
+                case NEWGAME_WND_SELECT_SLOT:
                 {
-                    V1 = hu[0x80062d7c];
-                    801D4550	nop
-                    V0 = V1 & 0020;
-                    801D4558	beq    v0, zero, L1d46c8 [$801d46c8]
-                    V0 = V1 & 0040;
-                    S0 = 0x801e3d8b;
-                    V1 = b[S0 + 0000];
-                    801D456C	nop
-                    V0 = V1 < 0002;
-                    801D4574	beq    v0, zero, L1d4c10 [$801d4c10]
-                    801D4578	nop
-                    801D457C	bltz   v1, L1d4c10 [$801d4c10]
-                    V0 = V1 << 01;
-                    V0 = V0 + V1;
-                    801D4588	lui    at, $801f
-                    801D458C	addiu  at, at, $8f38 (=-$70c8)
-                    AT = AT + V0;
-                    V0 = bu[AT + 0000];
-                    801D4598	nop
-                    801D459C	beq    v0, zero, L1d46a8 [$801d46a8]
-
-                    newgamemenu_play_menu_sound( 0x1 );
-
-                    V0 = b[S0 + 0000];
-                    801D45B0	nop
-                    V1 = V0 << 01;
-                    V1 = V1 + V0;
-                    801D45BC	lui    at, $801f
-                    801D45C0	addiu  at, at, $8f3a (=-$70c6)
-                    AT = AT + V1;
-                    V0 = bu[AT + 0000];
-                    801D45CC	nop
-                    801D45D0	beq    v0, zero, L1d4620 [$801d4620]
-                    A0 = S0 + 0061;
-                    A1 = 0;
-                    A2 = 0001;
-                    A3 = 0001;
-                    l_newgame_wnd = 0x6;
-
-                    V0 = 0002;
-                    V1 = 0001;
-                    [SP + 0010] = w(V0);
-                    [SP + 0014] = w(0);
-                    [SP + 0018] = w(0);
-                    [SP + 001c] = w(V1);
-                    [SP + 0020] = w(V0);
-                    [SP + 0024] = w(0);
-                    [SP + 0028] = w(0);
-                    [SP + 002c] = w(0);
-                    801D4618	j      L1d4698 [$801d4698]
-                    [SP + 0030] = w(V1);
-
-                    L1d4620:	; 801D4620
-                    A0 = S0 + 0007;
-                    A1 = 0;
-                    A2 = 0;
-                    A3 = 0001;
-                    V0 = 000a;
-                    [0x801e3f18] = w(V0);
-                    V0 = 0002;
-                    l_newgame_wnd = 0x1;
-
-                    V0 = 0003;
-                    [SP + 0010] = w(V0);
-                    V0 = 000f;
-                    [0x801e3f20] = w(0);
-                    [0x801e3f14] = w(0);
-                    [0x80062f3c] = h(0);
-                    [0x801e3f1c] = w(V1);
-                    [SP + 0014] = w(0);
-                    [SP + 0018] = w(0);
-                    [SP + 001c] = w(V1);
-                    [SP + 0020] = w(V0);
-                    [SP + 0024] = w(0);
-                    [SP + 0028] = w(0);
-                    [SP + 002c] = w(0);
-                    [SP + 0030] = w(0);
-
-                    L1d4698:	; 801D4698
-                    801D4698	jal    $system_menu_set_cursor_movement
-                    [SP + 0034] = w(0);
-                    801D46A0	j      L1d4c10 [$801d4c10]
-                    801D46A4	nop
-
-                    L1d46a8:	; 801D46A8
-                    newgamemenu_play_menu_sound( 0x3 );
-
-                    A0 = 0x801e33b0;
-                    801D46B8	jal    $system_menu_request_add_window
-                    A1 = 0007;
-                    801D46C0	j      L1d4c10 [$801d4c10]
-                    801D46C4	nop
-
-                    L1d46c8:	; 801D46C8
-                    801D46C8	beq    v0, zero, L1d46ec [$801d46ec]
-
-                    newgamemenu_play_menu_sound( 0x4 );
-
-                    l_newgame_wnd = 0x7;
-                    801D46E4	j      L1d4c10 [$801d4c10]
-
-                    L1d46ec:	; 801D46EC
-                    A0 = 0x801e3d80;
-                    system_menu_handle_buttons();
-                    801D4B68	j      L1d4c10 [$801d4c10]
-                }
-                break;
-
-                case 0x1:
-                {
-                    S0 = 0x801e3da1;
-                    S1 = b[S0 + 0000];
-                    801D470C	addiu  a0, s0, $fff1 (=-$f)
-                    func1d2da8();
-
-                    V0 = b[S0 + 0000];
-
-                    801D4718	bne    v0, zero, L1d4c10 [$801d4c10]
-
-                    if( S1 == 0 )
+                    if( hu[0x80062d7c] & 0x0020 )
                     {
-                        if( hu[0x80062d7c] & 0x0020 )
+                        V1 = b[0x801e3d8b];
+                        if( (V1 < 0x2) && (V1 >= 0) )
                         {
-                            V0 = b[0x801e3d9d] + h[0x801e3d94];
-
-                            if( (hu[0x80062f3c] >> V0) & 0x1 )
+                            if( bu[0x801e8f38 + V1 * 0x3] == 0 )
                             {
-                                newgamemenu_play_menu_sound( 0x1 );
+                                newgamemenu_play_menu_sound( 0x3 );
 
-                                l_newgame_wnd = 0x4;
-                                [0x801e3f18] = w(0xa);
+                                system_menu_request_add_window( 0x801e33b0, 0x7 );
                             }
                             else
                             {
-                                newgamemenu_play_menu_sound( 0x3 );
+                                newgamemenu_play_menu_sound( 0x1 );
+
+                                V0 = b[0x801e3d8b];
+                                if( bu[0x801e8f3a + V0 * 0x3] != 0 )
+                                {
+                                    l_newgame_wnd = NEWGAME_WND_FORMAT;
+
+                                    system_menu_set_cursor_movement( 0x801e3d8b + 0x61, 0, 0x1, 0x1, 0x2, 0, 0, 0x1, 0x2, 0, 0, 0, 0x1, 0 );
+                                }
+                                else
+                                {
+                                    l_newgame_wnd = NEWGAME_WND_CHECKING_1;
+
+                                    [0x801e3f18] = w(0xa);
+                                    [0x801e3f20] = w(0);
+                                    [0x801e3f14] = w(0);
+                                    [0x80062f3c] = h(0);
+                                    [0x801e3f1c] = w(0x1);
+
+                                    system_menu_set_cursor_movement( 0x801e3d8b + 0x7, 0, 0, 0x1, 0x3, 0, 0, 0x1, 0xf, 0, 0, 0, 0, 0 );
+                                }
                             }
                         }
-                        else if( hu[0x80062d7c] & 0x0040 )
-                        {
-                            newgamemenu_play_menu_sound( 0x4 );
+                    }
+                    else if( hu[0x80062d7c] & 0x0040 )
+                    {
+                        l_newgame_wnd = NEWGAME_WND_NEWGAME;
 
-                            l_newgame_wnd = 0;
+                        newgamemenu_play_menu_sound( 0x4 );
+                    }
+                    else
+                    {
+                        system_menu_handle_buttons( 0x801e3d80 );
+                    }
+                }
+                break;
+
+                case NEWGAME_WND_SELECT_FILE:
+                {
+                    S1 = b[0x801e3da1];
+
+                    func1d2da8( 0x801e3d92 );
+
+                    if( b[0x801e3da1] == 0 )
+                    {
+                        if( S1 == 0 )
+                        {
+                            if( hu[0x80062d7c] & 0x0020 )
+                            {
+                                V0 = b[0x801e3d9d] + h[0x801e3d94];
+
+                                if( (hu[0x80062f3c] >> V0) & 0x1 )
+                                {
+                                    l_newgame_wnd = NEWGAME_WND_LOADING;
+
+                                    [0x801e3f18] = w(0xa);
+
+                                    newgamemenu_play_menu_sound( 0x1 );
+                                }
+                                else
+                                {
+                                    newgamemenu_play_menu_sound( 0x3 );
+                                }
+                            }
+                            else if( hu[0x80062d7c] & 0x0040 )
+                            {
+                                l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
+
+                                newgamemenu_play_menu_sound( 0x4 );
+                            }
                         }
                     }
-                    801D478C	j      L1d4c10 [$801d4c10]
                 }
                 break;
 
-                case 0x2:
+                case NEWGAME_WND_CHECKING_1:
                 {
-                    V0 = w[0x801e3f18];
-                    801D47C0	bne    v0, zero, L1d4910 [$801d4910]
-                    801D47C4	addiu  v0, v0, $ffff (=-$1)
-                    V0 = w[0x801e3f1c];
-                    801D47D0	nop
-                    801D47D4	beq    v0, zero, L1d480c [$801d480c]
-                    801D47D8	nop
-                    A0 = b[0x801e3d8b];
-                    [0x801e3f18] = w(0);
-                    [0x801e3f1c] = w(0);
-                    801D47F4	jal    func1d1c2c [$801d1c2c]
-                    801D47F8	nop
-                    [0x80062f3c] = h(V0);
-                    801D4804	j      L1d4c10 [$801d4c10]
-                    801D4808	nop
-
-                    L1d480c:	; 801D480C
-                    V0 = hu[0x80062f3c];
-                    A1 = w[0x801e3f20];
-                    801D481C	nop
-                    V0 = V0 >> A1;
-                    V0 = V0 & 0001;
-                    801D4828	beq    v0, zero, L1d4844 [$801d4844]
-                    S1 = 0;
-                    A0 = b[0x801e3d8b];
-                    801D4838	jal    func1d3698 [$801d3698]
-                    801D483C	nop
-                    S1 = V0;
-
-                    L1d4844:	; 801D4844
-                    V0 = w[0x801e3f20];
-                    801D484C	nop
-                    V0 = V0 + 0001;
-                    [0x801e3f20] = w(V0);
-                    801D485C	beq    s1, zero, L1d4884 [$801d4884]
-
-                    l_newgame_wnd = 0;
-                    A0 = 0x801e3530;
-                    A1 = 0x2;
-                    system_menu_request_add_window();
-
-                    newgamemenu_play_menu_sound( 0x3 );
-
-                    L1d4884:	; 801D4884
-                    V1 = w[0x801e3f20];
-                    V0 = 000f;
-                    801D4890	bne    v1, v0, L1d4c10 [$801d4c10]
-
-                    [0x801e3f20] = w(0xe);
-                    l_newgame_wnd = 0x3;
-                    [0x801e3f18] = w(0xa);
-
-                    newgamemenu_play_menu_sound( 0x2 );
-
-                    801D48C0	j      L1d4c10 [$801d4c10]
-                    801D48C4	nop
-                }
-                break;
-
-                case 0x3:
-                {
-                    V1 = w[0x801e3f18];
-                    801D48D0	nop
-                    801D48D4	bne    v1, zero, L1d48ec [$801d48ec]
-                    801D48D8	addiu  v0, v1, $ffff (=-$1)
-
-                    l_newgame_wnd = 0x1;
-                    801D48E8	addiu  v0, v1, $ffff (=-$1)
-
-                    L1d48ec:	; 801D48EC
-                    [0x801e3f18] = w(V0);
-                    801D48F4	j      L1d4c10 [$801d4c10]
-                    801D48F8	nop
-                }
-                break;
-
-                case 0x4:
-                {
-                    V0 = w[0x801e3f18];
-                    801D4904	nop
-                    801D4908	beq    v0, zero, L1d4920 [$801d4920]
-                    801D490C	addiu  v0, v0, $ffff (=-$1)
-
-                    L1d4910:	; 801D4910
-                    [0x801e3f18] = w(V0);
-                    801D4918	j      L1d4c10 [$801d4c10]
-                    801D491C	nop
-
-                    L1d4920:	; 801D4920
-                    A0 = b[0x801e3d9d];
-                    V0 = 0001;
-                    [0x80062d99] = b(V0);
-                    V0 = h[0x801e3d94];
-                    V1 = b[0x801e3d8b];
-                    A0 = A0 + V0;
-
-                    if( V1 != 0 )
+                    if( w[0x801e3f18] != 0 )
                     {
-                        A0 |= 0x10;
+                        [0x801e3f18] = w(w[0x801e3f18] - 0x1);
                     }
+                    else
+                    {
+                        if( w[0x801e3f1c] != 0 )
+                        {
+                            [0x801e3f18] = w(0);
+                            [0x801e3f1c] = w(0);
+                            [0x80062f3c] = h(func1d1c2c( b[0x801e3d8b] ));
+                        }
+                        else
+                        {
+                            S1 = ( (hu[0x80062f3c] >> w[0x801e3f20]) & 0x1 ) ? func1d3698( b[0x801e3d8b] ) : 0;
 
-                    func1d1f40();
+                            [0x801e3f20] = w(w[0x801e3f20] + 0x1);
 
-                    S1 = (V0 << 0x10) >> 0x10;
-                    V0 = 0x1;
-                    801D4964	bne    s1, zero, L1d49dc [$801d49dc]
+                            if( S1 != 0 )
+                            {
+                                l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
 
-                    A0 = 0x10f0;
-                    S0 = 0x8009c6e4;
-                    A1 = S0 + 0x4;
+                                newgamemenu_play_menu_sound( 0x3 );
+                                system_menu_request_add_window( 0x801e3530, 0x2 );
+                            }
 
-                    func1d1950();
+                            if( w[0x801e3f20] == 0xf )
+                            {
+                                l_newgame_wnd = NEWGAME_WND_CHECKING_2;
 
-                    V1 = w[S0 + 0000];
-                    V0 = V0 & ffff;
-                    801D4988	beq    v1, v0, L1d49b0 [$801d49b0]
+                                [0x801e3f18] = w(0xa);
+                                [0x801e3f20] = w(0xe);
 
-                    l_newgame_wnd = 0x1;
-
-                    newgamemenu_play_menu_sound( 0x3 );
-
-                    A0 = 0x801e3158;
-                    A1 = 0;
-                    801D49A8	j      L1d49f8 [$801d49f8]
-
-                    L1d49b0:	; 801D49B0
-                    newgamemenu_play_menu_sound( 0xd0 );
-
-                    A0 = hu[0x8009d7be];
-                    l_newgame_state = NEWGAME_FADEOUT;
-
-                    A0 = A0 & 0x3;
-                    func1d2d10();
-
-                    801D49D4	j      L1d4a00 [$801d4a00]
-
-                    L1d49dc:	; 801D49DC
-                    l_newgame_wnd = V0;
-
-                    newgamemenu_play_menu_sound( 0x3 );
-
-                    A0 = 0x801e2e88;
-                    A1 = S1;
-
-                    L1d49f8:	; 801D49F8
-                    system_menu_request_add_window();
-
-                    L1d4a00:	; 801D4A00
-                    [0x80062d99] = b(0);
-                    801D4A08	j      L1d4c10 [$801d4c10]
+                                newgamemenu_play_menu_sound( 0x2 );
+                            }
+                        }
+                    }
                 }
                 break;
 
-                case 0x6:
+                case NEWGAME_WND_CHECKING_2:
+                {
+                    if( w[0x801e3f18] == 0 )
+                    {
+                        l_newgame_wnd = NEWGAME_WND_SELECT_FILE;
+                    }
+                    [0x801e3f18] = w(w[0x801e3f18] - 1);
+                }
+                break;
+
+                case NEWGAME_WND_LOADING:
+                {
+                    if( w[0x801e3f18] != 0 )
+                    {
+                        [0x801e3f18] = w(w[0x801e3f18] - 0x1);
+                    }
+                    else
+                    {
+                        [0x80062d99] = b(0x1);
+
+                        A0 = h[0x801e3d94] + b[0x801e3d9d];
+                        if( b[0x801e3d8b] != 0 ) A0 |= 0x10;
+
+                        S1 = func1d1f40();
+
+                        if( S1 == 0 )
+                        {
+                            if( func1d1950( 0x10f0, 0x8009c6e8 ) != w[0x8009c6e4] )
+                            {
+                                l_newgame_wnd = NEWGAME_WND_SELECT_FILE;
+
+                                [0x80062d99] = b(0);
+
+                                newgamemenu_play_menu_sound( 0x3 );
+                                system_menu_request_add_window( 0x801e3158, 0 );
+                            }
+                            else
+                            {
+                                l_newgame_state = NEWGAME_FADEOUT;
+
+                                newgamemenu_play_menu_sound( 0xd0 );
+
+                                [0x80062d99] = b(0);
+
+                                func1d2d10( hu[0x8009d7be] & 0x3 );
+                            }
+                        }
+                        else
+                        {
+                            l_newgame_wnd = NEWGAME_WND_SELECT_FILE;
+
+                            [0x80062d99] = b(0);
+
+                            newgamemenu_play_menu_sound( 0x3 );
+                            system_menu_request_add_window( 0x801e2e88, S1 );
+                        }
+                    }
+                }
+                break;
+
+                case NEWGAME_WND_FORMAT:
                 {
                     system_menu_handle_buttons( 0x801e3dec );
 
@@ -3953,41 +3510,35 @@ u32 newgamemenu_update( u32 frame )
                     {
                         if( b[0x801e3df7] != 0 )
                         {
-                            l_newgame_wnd = 0;
+                            l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
+
                             newgamemenu_play_menu_sound( 0x4 );
                         }
                         else
                         {
-                            A0 = ( b[0x801e3d8b] != 0 ) ? 0x801d03b8 : 0x801d03c0;
+                            l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
 
-                            V1 = func42b60();
-
-                            l_newgame_wnd = 0;
-
-                            if( V1 != 0x1 )
+                            if( func42b60( ( b[0x801e3d8b] != 0 ) ? 0x801d03b8 : 0x801d03c0 ) != 0x1 )
                             {
-                                system_menu_request_add_window( 0x801e32f0, 0x7 );
-
                                 newgamemenu_play_menu_sound( 0x3 );
+                                system_menu_request_add_window( 0x801e32f0, 0x7 );
                             }
                             else
                             {
                                 V1 = b[0x801e3d8b];
                                 [0x801e8f3a + V1 * 0x3] = b(0);
 
-                                system_menu_request_add_window( 0x801e32c0, 0x7 );
-
                                 newgamemenu_play_menu_sound( 0xd0 );
+                                system_menu_request_add_window( 0x801e32c0, 0x7 );
                             }
                         }
                     }
                     else if( hu[0x80062d7c] & 0x0040 )
                     {
-                        l_newgame_wnd = 0;
+                        l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
 
                         newgamemenu_play_menu_sound( 0x4 );
                     }
-                    801D4B00	j      L1d4c10 [$801d4c10]
                 }
                 break;
 
@@ -4008,11 +3559,10 @@ u32 newgamemenu_update( u32 frame )
                         {
                             if( (bu[0x801e8f38] != 0) || (bu[0x801e8f3b] != 0) )
                             {
+                                l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
+
                                 newgamemenu_play_menu_sound( 0x1 );
-
                                 system_menu_set_cursor_movement( 0x801e3d80, 0, 0, 0x1, 0x2, 0, 0, S0, 0x2, 0, 0, 0, S0, 0 );
-
-                                l_newgame_wnd = 0;
                             }
                             else if( bu[0x801e8f3b] == 0 )
                             {
@@ -4030,7 +3580,6 @@ u32 newgamemenu_update( u32 frame )
         }
     }
 
-    L1d4c10:	; 801D4C10
     return l_newgame_return;
 }
 
@@ -4107,7 +3656,7 @@ bool newgamemenu_main()
 
     for( int i = 0; i < 0x3; ++i )
     {
-        if( bu[0x8009cbdc + i] != 0xff )
+        if( bu[0x8009c6e4 + 0x4f8 + i] != 0xff )
         {
             system_init_player_stat_from_equip( i );
             system_init_player_stat_from_materia( i );

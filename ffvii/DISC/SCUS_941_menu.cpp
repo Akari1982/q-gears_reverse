@@ -463,217 +463,129 @@ void system_menu_update_buttons()
 
 
 
-////////////////////////////////
-// func1cda4()
-
-system_psyq_set_poly_ft4( g_menu_poly );
-
-system_psyq_set_shade_tex( g_menu_poly, 0x1 );
-
-V0 = g_menu_poly;
-[V0 + 8] = h(0);
-[V0 + a] = h(5);
-[V0 + c] = b(0);
-[V0 + d] = b(0);
-[V0 + 10] = h(40);
-[V0 + 12] = h(5);
-[V0 + 14] = b(80);
-[V0 + 15] = b(0);
-[V0 + 18] = h(0);
-[V0 + 1a] = h(45);
-[V0 + 1c] = b(0);
-[V0 + 1d] = b(80);
-[V0 + 20] = h(40);
-[V0 + 22] = h(45);
-[V0 + 24] = b(80);
-[V0 + 25] = b(80);
-
-A0 = 0;
-A1 = 1fe;
-system_psyq_get_clut();
-
-V1 = g_menu_poly;
-[V1 + e] = h(V0);
-
-A0 = 1;
-A1 = 0;
-A2 = 340;
-A3 = 0;
-system_psyq_get_tpage();
-
-V1 = g_menu_poly;
-[V1 + 16] = h(V0);
-
-system_psyq_add_prim( g_menu_otag, g_menu_poly );
-
-g_menu_poly += 0x28;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_menu_draw_avatar()
-
-x = A0;
-y = A1;
-width = A2;
-height = A3;
-u = A4;
-v = A5;
-tex_w = A6;
-tex_h = A7;
-color = A8;
-transparency = A9;
-
-poly = g_menu_poly;
-
-A0 = poly;
-system_psyq_set_poly_ft4();
-
-A0 = poly;
-A1 = 1;
-system_psyq_set_shade_tex();
-
-if( transparency != 0 )
+void func1cda4()
 {
-    A0 = poly;
-    A1 = 1;
-    system_psyq_set_semi_trans();
-}
-
-[poly + 8] = h(x);
-[poly + a] = h(y);
-[poly + c] = b(u);
-[poly + d] = b(v);
-[poly + 10] = h(x + width);
-[poly + 12] = h(y);
-[poly + 14] = b(u + tex_w);
-[poly + 15] = b(v);
-[poly + 18] = h(x);
-[poly + 1a] = h(y + height);
-[poly + 1c] = b(u);
-[poly + 1d] = b(v + tex_h);
-[poly + 20] = h(x + width);
-[poly + 22] = h(y + height);
-[poly + 24] = b(u + tex_w);
-[poly + 25] = b(v + tex_h);
-
-A0 = 100;
-A1 = 1e0 + color;
-system_psyq_get_clut();
-[poly + e] = h(V0);
-
-A0 = 1;
-A1 = 0;
-A2 = 3c0;
-A3 = 100;
-system_psyq_get_tpage();
-[poly + 16] = h(V0);
-
-system_psyq_add_prim( g_menu_otag, poly );
-
-g_menu_poly = poly + 0x28;
-////////////////////////////////
-
-
-
-void func1d180()
-{
-    S4 = A0;
-    S0 = A9;
-    S7 = A4;
-    S2 = A5;
-    S5 = A1;
-    clut = A8;
-    S6 = A2;
-    [SP + 10] = h(A6);
-    FP = A3;
-    [SP + 18] = h(A7);
-
     system_psyq_set_poly_ft4( g_menu_poly );
-
     system_psyq_set_shade_tex( g_menu_poly, 0x1 );
 
-    S3 = S4;
-    S0 = S0 << 10;
-    S1 = S5;
-    if( S0 != 0 )
-    {
-        system_psyq_set_semi_trans( g_menu_poly, 0x1 );
-    }
-
-    [g_menu_poly + 0x8] = h(S3);
-    [g_menu_poly + 0xa] = h(S1);
-    [g_menu_poly + 0xc] = b(S7);
-    [g_menu_poly + 0xd] = b(S2);
-    [g_menu_poly + 0x10] = h(S4 + S6);
-    [g_menu_poly + 0x12] = h(S1);
-    [g_menu_poly + 0x14] = b(hu[SP + 0010] + S7);
-    [g_menu_poly + 0x15] = b(S2);
-    [g_menu_poly + 0x18] = h(S3);
-    [g_menu_poly + 0x1a] = h(S5 + FP);
-    [g_menu_poly + 0x1c] = b(S7);
-    [g_menu_poly + 0x1d] = b(S2 + hu[SP + 0018]);
-    [g_menu_poly + 0x20] = h(S4 + S6);
-    [g_menu_poly + 0x22] = h(S5 + FP);
-    [g_menu_poly + 0x24] = b(hu[SP + 0010] + S7);
-    [g_menu_poly + 0x25] = b(S2 + hu[SP + 0018]);
-
-    [g_menu_poly + e] = h(system_psyq_get_clut( 0x180, clut ));
-    [g_menu_poly + 16] = h(system_psyq_get_tpage( 0x1, 0, 0x340, 0x100 ));
+    g_menu_poly->x0 = 0;
+    g_menu_poly->y0 = 0x5;
+    g_menu_poly->u0 = 0;
+    g_menu_poly->v0 = 0;
+    g_menu_poly->clut = system_psyq_get_clut( 0, 0x1fe );
+    g_menu_poly->x1 = 0x40;
+    g_menu_poly->y1 = 0x5;
+    g_menu_poly->u1 = 0x80;
+    g_menu_poly->v1 = 0;
+    g_menu_poly->tpage = system_psyq_get_tpage( 0x1, 0, 0x340, 0 );
+    g_menu_poly->x2 = 0;
+    g_menu_poly->y2 = 0x45;
+    g_menu_poly->u2 = 0;
+    g_menu_poly->v2 = 0x80;
+    g_menu_poly->x3 = 0x40;
+    g_menu_poly->y3 = 0x45;
+    g_menu_poly->u3 = 0x80;
+    g_menu_poly->v3 = 0x80;
 
     system_psyq_add_prim( g_menu_otag, g_menu_poly );
-
     g_menu_poly += 0x28;
 }
 
 
 
-////////////////////////////////
-// func1d3c0()
+void system_menu_draw_avatar( s16 x, s16 y, s16 w, s16 h, u8 u, u8 v, u8 tex_w, u8 tex_h, u16 color, u8 trans )
+{
+    system_psyq_set_poly_ft4( g_menu_poly );
+    system_psyq_set_shade_tex( g_menu_poly, 0x1 );
+    if( trans != 0 ) system_psyq_set_semi_trans( g_menu_poly, 0x1 );
 
-S0 = A0;
-S1 = A1;
+    g_menu_poly->x0 = x;
+    g_menu_poly->y0 = y;
+    g_menu_poly->u0 = u;
+    g_menu_poly->v0 = v;
+    g_menu_poly->clut = system_psyq_get_clut( 0x100, 0x1e0 + color );
+    g_menu_poly->x1 = x + w;
+    g_menu_poly->y1 = y;
+    g_menu_poly->u1 = u + tex_w;
+    g_menu_poly->v1 = v;
+    g_menu_poly->tpage = system_psyq_get_tpage( 0x1, 0, 0x3c0, 0x100 );
+    g_menu_poly->x2 = x;
+    g_menu_poly->y2 = y + h;
+    g_menu_poly->u2 = u;
+    g_menu_poly->v2 = v + tex_h;
+    g_menu_poly->x3 = x + w;
+    g_menu_poly->y3 = y + h;
+    g_menu_poly->u3 = u + tex_w;
+    g_menu_poly->v3 = v + tex_h;
 
-system_psyq_set_tile1( g_menu_poly );
-
-V0 = g_menu_poly;
-[V0 + 4] = b(ff);
-[V0 + 5] = b(ff);
-[V0 + 6] = b(0);
-[V0 + 8] = h(S0);
-[V0 + a] = h(S1);
-
-system_psyq_add_prim( g_menu_otag, g_menu_poly );
-
-g_menu_poly += 0xc;
-////////////////////////////////
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+    g_menu_poly += 0x28;
+}
 
 
 
-////////////////////////////////
-// func1d47c()
+void system_menu_draw_avatar_2( s16 x, s16 y, s16 w, s16 h, u8 u, u8 v, u8 tex_w, u8 tex_h, u16 clut_y, u8 trans )
+{
+    system_psyq_set_poly_ft4( g_menu_poly );
+    system_psyq_set_shade_tex( g_menu_poly, 0x1 );
+    if( trans != 0 ) system_psyq_set_semi_trans( g_menu_poly, 0x1 );
 
-S2 = A0;
-S0 = A3;
-S3 = A1;
-S1 = A2;
+    g_menu_poly->x0 = x;
+    g_menu_poly->y0 = y;
+    g_menu_poly->u0 = u;
+    g_menu_poly->v0 = v;
+    g_menu_poly->clut = system_psyq_get_clut( 0x180, clut_y );
+    g_menu_poly->x1 = x + w;
+    g_menu_poly->y1 = y;
+    g_menu_poly->u1 = u + tex_w;
+    g_menu_poly->v1 = v;
+    g_menu_poly->tpage = system_psyq_get_tpage( 0x1, 0, 0x340, 0x100 );
+    g_menu_poly->x2 = x;
+    g_menu_poly->y2 = y + h;
+    g_menu_poly->u2 = u;
+    g_menu_poly->v2 = v + tex_h;
+    g_menu_poly->x3 = x + w;
+    g_menu_poly->y3 = y + h;
+    g_menu_poly->u3 = u + tex_w;
+    g_menu_poly->v3 = v + tex_h;
 
-system_psyq_set_line_f2( g_menu_poly );
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+    g_menu_poly += 0x28;
+}
 
-V0 = g_menu_poly;
-[V0 + 4] = b(S0 >> 10);
-[V0 + 5] = b(S0 >> 8);
-[V0 + 6] = b(S0);
-[V0 + 8] = h(S2);
-[V0 + a] = h(S1);
-[V0 + c] = h(S3);
-[V0 + e] = h(S1);
 
-system_psyq_add_prim( g_menu_otag, g_menu_poly );
 
-g_menu_poly += 0x10;
-////////////////////////////////
+void func1d3c0( s16 x, s16 y )
+{
+    system_psyq_set_tile1( g_menu_poly );
+    g_menu_poly->r0 = 0xff;
+    g_menu_poly->g0 = 0xff;
+    g_menu_poly->b0 = 0;
+    g_menu_poly->x0 = x;
+    g_menu_poly->y0 = y;
+
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+    g_menu_poly += 0xc;
+}
+
+
+
+void func1d47c( s16 x0, s16 x1, s16 y, u32 color )
+{
+    system_psyq_set_line_f2( g_menu_poly );
+
+    g_menu_poly->r0 = color >> 0x10;
+    g_menu_poly->g0 = color >> 0x8;
+    g_menu_poly->b0 = color;
+    g_menu_poly->x0 = x1;
+    g_menu_poly->y0 = y;
+    g_menu_poly->x1 = y1;
+    g_menu_poly->y1 = y;
+
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+
+    g_menu_poly += 0x10;
+}
 
 
 
@@ -722,7 +634,7 @@ pos_y = A1;
 dialog_width = A2;
 message = A3;
 
-for( int i = 0, count = 0; i < 400; ++i, ++count )
+for( int i = 0, count = 0; i < 0x400; ++i, ++count )
 {
     letter = bu[message];
 
@@ -731,115 +643,81 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
         break;
     }
 
-    if( letter == e7 ) // new row
+    if( letter == 0xe7 ) // new row
     {
         pos_x = 8;
-        pos_y = pos_y + 10;
+        pos_y += 0x10;
         message = message + 1;
         [GP + 0x258] = w(w[GP + 0x258] + 1);
         [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
         continue;
     }
-    else if( ( letter == e8 ) || ( letter == e9 ) )
+    else if( ( letter == 0xe8 ) || ( letter == 0xe9 ) )
     {
         break;
     }
-    else if( letter == ff ) // end of string
+    else if( letter == 0xff ) // end of string
     {
         break;
     }
-    else if( ( letter == f6 ) || ( letter == f7 ) || ( letter == f8 ) || ( letter == f9 ) )
+    else if( ( letter == 0xf6 ) || ( letter == 0xf7 ) || ( letter == 0xf8 ) || ( letter == 0xf9 ) )
     {
-        A0 = 0;
-        A1 = 1;
-        A2 = 380;
-        A3 = 100;
-        system_psyq_get_tpage();
+        RECT rect;
+        rect.x = 0;
+        rect.y = 0;
+        rect.w = 0x100;
+        rect.h = 0x100;
+        system_menu_set_draw_mode( 0, 0x1, system_psyq_get_tpage( 0, 0x1, 0x380, 0x100 ), &rect );
 
-        [SP + 10] = h(0);
-        [SP + 12] = h(0);
-        [SP + 14] = h(100);
-        [SP + 16] = h(100);
-
-        A0 = 0;
-        A1 = 1;
-        A2 = V0 & ffff;
-        A3 = SP + 10;
-        system_menu_set_draw_mode();
-
-        [g_menu_poly + 0x3] = b(4);
-        [g_menu_poly + 0x7] = b(64);
-
+        SETSPRT( g_menu_poly );
         system_psyq_set_shade_tex( g_menu_poly, 0x1 );
 
-        if( w[GP + 0x7c] != 0 )
-        {
-            system_psyq_set_semi_trans( g_menu_poly, 0x1 );
-        }
+        if( w[GP + 0x7c] != 0 ) system_psyq_set_semi_trans( g_menu_poly, 0x1 );
 
         [g_menu_poly + 0x8] = h(pos_x);
         [g_menu_poly + 0xa] = h(pos_y - 2);
 
-        V0 = g_menu_poly;
-        if( letter == f6 ) // circle
+        if( letter == 0xf6 ) // circle
         {
-            [V0 + c] = b(60);
-            [V0 + d] = b(40);
+            [g_menu_poly + c] = b(0x60);
+            [g_menu_poly + d] = b(0x40);
         }
-        if( letter == f7 ) // triangle
+        if( letter == 0xf7 ) // triangle
         {
-            [V0 + c] = b(90);
-            [V0 + d] = b(40);
+            [g_menu_poly + c] = b(0x90);
+            [g_menu_poly + d] = b(0x40);
         }
-        if( letter == f8 ) // square
+        if( letter == 0xf8 ) // square
         {
-            [V0 + c] = b(80);
-            [V0 + d] = b(40);
+            [g_menu_poly + c] = b(0x80);
+            [g_menu_poly + d] = b(0x40);
         }
-        if( letter == f9 ) // cross
+        if( letter == 0xf9 ) // cross
         {
-            [V0 + c] = b(70);
-            [V0 + d] = b(40);
+            [g_menu_poly + c] = b(0x70);
+            [g_menu_poly + d] = b(0x40);
         }
 
-        [V0 + 10] = h(10);
-        [V0 + 12] = h(10);
+        [g_menu_poly + e] = h(system_psyq_get_clut( 0x100, 0x1ea ));
+        [g_menu_poly + 10] = h(0x10);
+        [g_menu_poly + 12] = h(0x10);
 
-        A0 = 100;
-        A1 = 1ea;
-        system_psyq_get_clut();
-
-        V1 = g_menu_poly;
-        [V1 + e] = h(V0);
-
-        message = message + 1;
+        message += 0x1;
 
         system_psyq_add_prim( g_menu_otag, g_menu_poly );
-
         g_menu_poly += 0x14;
 
         [GP + 0x78] = h(hu[GP + 0x78] - 1);
 
-        A0 = 0;
-        A1 = 1;
-        A2 = 3c0;
-        A3 = 100;
-        system_psyq_get_tpage();
+        RECT rect;
+        rect.x = 0;
+        rect.y = 0;
+        rect.w = 0x100;
+        rect.h = 0x100;
+        system_menu_set_draw_mode( 0, 0x1, system_psyq_get_tpage( 0, 0x1, 0x3c0, 0x100 ), &rect );
 
-        [SP + 10] = h(0);
-        [SP + 12] = h(0);
-        [SP + 14] = h(100);
-        [SP + 16] = h(100);
-
-        A0 = 0;
-        A1 = 1;
-        A2 = V0 & ffff;
-        A3 = SP + 10;
-        system_menu_set_draw_mode();
-
-        [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
-        pos_x = pos_x + 10;
-        continue;
+        [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x1);
+        pos_x += 0x10;
     }
     else
     {
@@ -849,82 +727,82 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         switch( letter )
         {
-            case fa: // extended char
+            case 0xfa: // extended char
             {
-                message = message + 1;
-                tex_y = 84;
-                set_start = e7;
-                [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
+                message += 0x1;
+                tex_y = 0x84;
+                set_start = 0xe7;
+                [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x1);
             }
             break;
 
-            case fb: // extended char
+            case 0xfb: // extended char
             {
-                message = message + 1;
+                message += 0x1;
                 tex_y = 0;
-                clut_x = 10;
-                set_start = 1b9;
-                [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
+                clut_x = 0x10;
+                set_start = 0x1b9;
+                [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x1);
             }
             break;
 
-            case fc: // extended char
+            case 0xfc: // extended char
             {
-                message = message + 1;
-                tex_y = 84;
-                clut_x = 10;
-                set_start = 2a0;
-                [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
+                message += 0x1;
+                tex_y = 0x84;
+                clut_x = 0x10;
+                set_start = 0x2a0;
+                [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x1);
             }
             break;
 
-            case fd: // extended char
+            case 0xfd: // extended char
             {
-                message = message + 1;
-                tex_y = 84;
-                set_start = 372;
-                [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
+                message += 0x1;
+                tex_y = 0x84;
+                set_start = 0x372;
+                [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x1);
             }
             break;
 
-            case fe:
+            case 0xfe:
             {
-                message = message + 1;
+                message += 0x1;
                 ex_letter = bu[message];
 
-                if( ex_letter < d2 )
+                if( ex_letter < 0xd2 )
                 {
-                    [GP + 0x2ac] = w(w[GP + 0x2ac] + 1);
-                    tex_y = 84;
-                    clut_x = 10;
-                    set_start = 444;
+                    [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x1);
+                    tex_y = 0x84;
+                    clut_x = 0x10;
+                    set_start = 0x444;
                 }
                 else
                 {
-                    [GP + 0x2ac] = w(w[GP + 0x2ac] + 2);
+                    [GP + 0x2ac] = w(w[GP + 0x2ac] + 0x2);
 
-                    if( ex_letter < da ) // colours d2 d3 d4 d5 d6 d7 d8 d9
+                    if( ex_letter < 0xda ) // colours d2 d3 d4 d5 d6 d7 d8 d9
                     {
-                        [GP + 0x70] = h(A0 - d2);
-                        message = message + 1;
+                        [GP + 0x70] = h(A0 - 0xd2);
+                        message += 0x1;
                         continue;
                     }
-                    else if( ex_letter == da ) // special colour
+                    else if( ex_letter == 0xda ) // special colour
                     {
-                        [GP + 0x72] = h(hu[GP + 0x72] ^ 1);
-                        message = message + 1;
+                        [GP + 0x72] = h(hu[GP + 0x72] ^ 0x1);
+                        message += 0x1;
                         continue;
                     }
-                    else if( ex_letter == db ) // rainbow colour
+                    else if( ex_letter == 0xdb ) // rainbow colour
                     {
-                        [GP + 0x74] = h(hu[GP + 0x74] ^ 1);
-                        message = message + 1;
+                        [GP + 0x74] = h(hu[GP + 0x74] ^ 0x1);
+                        message += 0x1;
                         continue;
                     }
-                    else if( ex_letter == e9 ) // mono width
+                    else if( ex_letter == 0xe9 ) // mono width
                     {
-                        [GP + 0x80] = w(w[GP + 0x80] ^ 1);
-                        message = message + 1;
+                        [GP + 0x80] = w(w[GP + 0x80] ^ 0x1);
+                        message += 0x1;
                         continue;
                     }
                 }
@@ -934,7 +812,7 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
 
         if( h[GP + 0x74] != 0 ) // rainbow colour
         {
-            clut_y = (((h[GP + 0x76] / 4) - count) & 7) | 1f0;
+            clut_y = (((h[GP + 0x76] / 4) - count) & 7) | 0x1f0;
         }
         else
         {
@@ -946,11 +824,11 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
                 }
                 else
                 {
-                    clut_y = 1f0;
+                    clut_y = 0x1f0;
 
                     if( h[GP + 0x70] == 0 )
                     {
-                        pos_x = pos_x + clut_x;
+                        pos_x += clut_x;
                         continue;
                     }
                 }
@@ -1025,22 +903,12 @@ for( int i = 0, count = 0; i < 400; ++i, ++count )
     }
 }
 
-A0 = 0;
-A1 = 1;
-A2 = 380;
-A3 = 100;
-system_psyq_get_tpage();
-
-[SP + 10] = h(0);
-[SP + 12] = h(0);
-[SP + 14] = h(100);
-[SP + 16] = h(100);
-
-A0 = 0;
-A1 = 01;
-A2 = V0 & ffff;
-A3 = SP + 10;
-system_menu_set_draw_mode();
+RECT rect
+rect.x = 0;
+rect.y = 0;
+rect.w = 0x100;
+rect.h = 0x100;
+system_menu_set_draw_mode( 0, 0x1, system_psyq_get_tpage( 0, 0x1, 0x380, 0x100 ), &rect );
 
 return pos_y;
 ////////////////////////////////
@@ -3364,39 +3232,20 @@ else
 
 
 
-////////////////////////////////
-// func21bac()
+void func21bac( s16 x, s16 y )
+{
+    RECT rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0x100;
+    rect.x = 0x100;
+    system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
 
-x = A0;
-y = A1;
+    system_menu_draw_string( x + 0x8, y + 0x6, 0x80049338, 0x6 );
 
-[SP + 18] = h(0);
-[SP + 1a] = h(0);
-[SP + 1c] = h(100);
-[SP + 1e] = h(100);
-
-A0 = 0;
-A1 = 1;
-A2 = 7f;
-A3 = SP + 18;
-system_menu_set_draw_mode();
-
-A0 = x + 8;
-A1 = y + 6;
-A2 = 0x80049338;
-A3 = 6;
-system_menu_draw_string();
-
-A0 = SP + 20;
-A1 = x;
-A2 = y;
-A3 = 50;
-A4 = 14;
-system_menu_set_window_rect();
-
-A0 = SP + 20;
-system_menu_draw_window();
-////////////////////////////////
+    system_menu_set_window_rect( SP + 0x20, x, y, 0x50, 0x14 );
+    system_menu_draw_window( SP + 0x20 );
+}
 
 
 
@@ -6401,7 +6250,12 @@ L25b40:	; 80025B40
 80025B40	jr     ra 
 80025B44	nop
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // func25b48
+
 A1 = 0x8009d260;
 V0 = w[A1 + 0000];
 80025B54	nop
@@ -6554,7 +6408,7 @@ void system_menu_load_avatars()
     for( int i = 0; i < 0x9; ++i )
     {
         system_cdrom_load_file( w[0x80048fe8 + i * 0x8 + 0x0], w[0x80048fe8 + i * 0x8 + 0x4], SP + 0x20, 0 );
-        system_menu_load_image( SP + 0x20, 0x340 + (i / 0x3) * 0x18, 0x100 + (i % 0x3) * 0x30, 0x180, i );
+        system_menu_load_image( SP + 0x20, 0x340 + (i / 0x5) * 0x18, 0x100 + (i % 0x5) * 0x30, 0x180, i );
         system_psyq_draw_sync( 0 );
     }
 }
@@ -6786,284 +6640,256 @@ for( int i = 0; i < 3; ++i ) // go through all party members
 
 
 
-////////////////////////////////
-// func26408
-
-[0x8009a000] = w(0x30);
-[0x8009a004] = w(A0 & 0xffff);
-[0x8009a008] = w(A0 & 0xffff);
-
-system_akao_execute();
-////////////////////////////////
-
-
-
-void system_menu_set_cursor_movement( A0 )
+void func26408( u16 sound_id )
 {
-    [A0 + 0x0] = h(A5);
-    [A0 + 0x2] = h(A6); // scroll pos
-    [A0 + 0x4] = h(A7);
-    [A0 + 0x6] = h(A8); // total y items
-    [A0 + 0x8] = h(A13); // scroll dir (0 - not scroll, 1 - up, 2 - down)
-    [A0 + 0xa] = b(A1); // x cursor pos
-    [A0 + 0xb] = b(A2); // y cursor pos
-    [A0 + 0xc] = b(A3); // x pos items
-    [A0 + 0xd] = b(A4); // y pos items
-    [A0 + 0xe] = b(A9);
-    [A0 + 0xf] = b(A10); // scroll animation frame
-    [A0 + 0x10] = b(A11); // x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move)
-    [A0 + 0x11] = b(A12); // y warp around (0 - not warp)
+    [0x8009a000] = w(0x30);
+    [0x8009a004] = w(sound_id);
+    [0x8009a008] = w(sound_id);
+    system_akao_execute();
 }
 
 
 
-////////////////////////////////
-// system_menu_handle_buttons()
-
-data = A0;
-
-if( h[data + 8] != 0 )
+void system_menu_set_cursor_movement( data )
 {
-    if( h[data + 8] == 1 )
-    {
-        [data + f] = b(bu[data + f] + 1);
-
-        if( ( bu[data + f] << 18 ) == 0 )
-        {
-            [data + 8] = h(0);
-            [data + f] = b(0);
-        }
-    }
-    else if( h[data + 8] == 2 )
-    {
-        [data + f] = b(b[data + f] - 1);
-        if( b[data + f] == -4 )
-        {
-            [data + 2] = h(hu[data + 2] + 1);
-            [data + 8] = h(0);
-            [data + f] = b(0);
-        }
-    }
+    [data + 0x0] = h(A5);
+    [data + 0x2] = h(A6); // scroll pos
+    [data + 0x4] = h(A7);
+    [data + 0x6] = h(A8); // total y items
+    [data + 0x8] = h(A13); // scroll dir (0 - not scroll, 1 - up, 2 - down)
+    [data + 0xa] = b(A1); // x cursor pos
+    [data + 0xb] = b(A2); // y cursor pos
+    [data + 0xc] = b(A3); // x pos items
+    [data + 0xd] = b(A4); // y pos items
+    [data + 0xe] = b(A9);
+    [data + 0xf] = b(A10); // scroll animation frame
+    [data + 0x10] = b(A11); // x warp around (0 - not warp, 1 - warp around, 2 - warp around with y move)
+    [data + 0x11] = b(A12); // y warp around (0 - not warp)
 }
 
-pressed = hu[0x80062d7e];
 
-if( pressed & 1000 ) // up
+
+void system_menu_handle_buttons( data )
 {
-    [data + b] = b(bu[data + b] - 1); // discrease y
-
-    if( b[data + 11] != 0 ) // warp around y
+    if( h[data + 0x8] != 0 )
     {
-        if( ( b[data + 11] >= 0 ) && ( b[data + 11] < 3 ) )
+        if( h[data + 0x8] == 0x1 )
         {
-            if( b[data + b] < 0 )
+            [data + 0xf] = b(bu[data + 0xf] + 0x1);
+
+            if( ( bu[data + 0xf] << 0x18 ) == 0 )
             {
-                [data + b] = b(bu[data + d] - 1);
-            }
-
-            A0 = 1;
-            system_menu_sound();
-        }
-    }
-    else
-    {
-        if( b[data + b] < 0 )
-        {
-            [data + b] = b(0);
-
-            if( h[data + 2] > 0 )
-            {
-                [data + 2] = h(h[data + 2] - 1);
-                [data + f] = b(-3);
-                [data + 8] = h(1);
-
-                A0 = 1;
-                system_menu_sound();
+                [data + 0x8] = h(0);
+                [data + 0xf] = b(0);
             }
         }
-        else
+        else if( h[data + 0x8] == 0x2 )
         {
-            A0 = 1;
-            system_menu_sound();
-        }
-    }
-}
-else if( pressed & 4000 ) // down
-{
-    [data + b] = b(bu[data + b] + 1);
-
-    if( b[data + 11] != 0 )
-    {
-        if( b[data + 11] >= 0 && b[data + 11] < 3 )
-        {
-            if( b[data + b] >= b[data + d] )
+            [data + 0xf] = b(b[data + 0xf] - 0x1);
+            if( b[data + 0xf] == -0x4 )
             {
-                [data + b] = b(0);
-            }
-
-            A0 = 1;
-            system_menu_sound();
-        }
-    }
-    else
-    {
-        if( b[data + b] >= b[data + d] )
-        {
-            [data + b] = b(b[data + d] - 1);
-
-            if( h[data + 2] < h[data + 6] - b[data + d] )
-            {
-                [data + f] = b(-1)
-                [data + 8] = h(2);
-
-                A0 = 1;
-                system_menu_sound();
+                [data + 0x2] = h(hu[data + 0x2] + 0x1);
+                [data + 0x8] = h(0);
+                [data + 0xf] = b(0);
             }
         }
-        else
-        {
-            A0 = 1;
-            system_menu_sound();
-        }
     }
-}
-else if( pressed & 8000 == 0 ) // left
-{
-    if( b[data + 10] == 0 )
-    {
-        [data + a] = b(bu[data + a] - 1);
 
-        if( b[data + a] < 0 )
-        {
-            [data + a] = b(0);
-        }
+    pressed = hu[0x80062d7e];
 
-        A0 = 1;
-        system_menu_sound();
-    }
-    else if( b[data + 10] == 1 )
+    if( pressed & 0x1000 ) // up
     {
-        [data + a] = b(bu[data + a] - 1);
-        if( bu[data + a] < 0 )
-        {
-            [data + a] = b(bu[data + c] - 1);
-        }
+        [data + 0xb] = b(bu[data + 0xb] - 0x1); // discrease y
 
-        A0 = 1;
-        system_menu_sound();
-    }
-    else if( b[data + 10] == 2 )
-    {
-        if( ( hu[data + a] != 0 ) || ( h[data + 2] != 0 ) )
+        if( b[data + 0x11] != 0 ) // warp around y
         {
-            [data + a] = b(bu[data + a] - 1);
-            if( bu[data + a] < 0 )
+            if( (b[data + 0x11] >= 0) && (b[data + 0x11] < 3) )
             {
-                [data + b] = b(bu[data + b] - 1);
-                [data + a] = b(bu[data + c] - 1);
-
-                if( bu[data + b] < 0 )
+                if( b[data + 0xb] < 0 )
                 {
-                    [data + b] = b(0);
-                    if( h[data + 2] > 0 )
-                    {
-                        [data + 2] = h(h[data + 2] - 1);
-                        [data + f] = b(-3);
-                        [data + 8] = h(1);
-                    }
+                    [data + 0xb] = b(bu[data + 0xd] - 0x1);
+                }
+                system_menu_sound( 0x1 );
+            }
+        }
+        else
+        {
+            if( b[data + 0xb] < 0 )
+            {
+                [data + 0xb] = b(0);
+
+                if( h[data + 0x2] > 0 )
+                {
+                    [data + 0x2] = h(h[data + 0x2] - 0x1);
+                    [data + 0xf] = b(-0x3);
+                    [data + 0x8] = h(0x1);
+                    system_menu_sound( 0x1 );
                 }
             }
-
-            A0 = 1;
-            system_menu_sound();
+            else
+            {
+                system_menu_sound( 0x1 );
+            }
         }
     }
-}
-else if( pressed & 2000 ) // right
-{
-    if( b[data + 10] == 0 )
+    else if( pressed & 0x4000 ) // down
     {
-        [data + a] = b(b[data + a] + 1);
+        [data + 0xb] = b(bu[data + 0xb] + 0x1);
 
-        if( b[data + a] >= b[data + c] )
+        if( b[data + 0x11] != 0 )
         {
-            [data + a] = b(b[data + c] - 1);
+            if( (b[data + 0x11] >= 0) && (b[data + 0x11] < 0x3) )
+            {
+                if( b[data + 0xb] >= b[data + 0xd] )
+                {
+                    [data + 0xb] = b(0);
+                }
+                system_menu_sound( 0x1 );
+            }
         }
         else
         {
-            A0 = 1;
-            system_menu_sound();
-        }
-    }
-    else if( b[data + 10] == 1 )
-    {
-        [data + a] = b(b[data + a] + 1);
-
-        if( b[data + a] >= b[data + c] )
-        {
-            [data + a] = b(0);
-        }
-
-        A0 = 1;
-        system_menu_sound();
-    }
-    else if( b[data + 10] == 2 )
-    {
-        if( ( b[data + a] != ( b[data + c] - 1 ) ) || ( b[data + b] != ( b[data + d] - 1 ) ) || ( h[data + 2] != ( h[data + 6] - b[data + d] ) ) )
-        {
-            [data + a] = b(b[data + a] + 1);
-
-            if( b[data + a] >= b[data + c] )
+            if( b[data + 0xb] >= b[data + 0xd] )
             {
-                [data + a] = b(0);
-                [data + b] = b(b[data + b] + 1);
+                [data + 0xb] = b(b[data + 0xd] - 0x1);
 
-                if( b[data + b] >= b[data + d] )
+                if( h[data + 0x2] < (h[data + 0x6] - b[data + 0xd]) )
                 {
-                    [data + b] = b(b[data + d] - 1);
-
-                    if( h[data + 2] < ( h[data + 6] - b[data + d] ) )
-                    {
-                        [data + f] = b(-1);
-                        [data + 8] = h(2);
-                    }
+                    [data + 0xf] = b(-0x1)
+                    [data + 0x8] = h(0x2);
+                    system_menu_sound( 0x1 );
                 }
             }
+            else
+            {
+                system_menu_sound( 0x1 );
+            }
+        }
+    }
+    else if( pressed & 0x8000 == 0 ) // left
+    {
+        if( b[data + 0x10] == 0 )
+        {
+            [data + 0xa] = b(bu[data + 0xa] - 0x1);
 
-            A0 = 1;
-            system_menu_sound();
+            if( b[data + 0xa] < 0 )
+            {
+                [data + 0xa] = b(0);
+            }
+            system_menu_sound( 0x1 );
+        }
+        else if( b[data + 0x10] == 0x1 )
+        {
+            [data + 0xa] = b(bu[data + 0xa] - 0x1);
+            if( bu[data + 0xa] < 0 )
+            {
+                [data + 0xa] = b(bu[data + 0xc] - 0x1);
+            }
+            system_menu_sound( 0x1 );
+        }
+        else if( b[data + 0x10] == 0x2 )
+        {
+            if( (hu[data + 0xa] != 0) || (h[data + 0x2] != 0) )
+            {
+                [data + 0xa] = b(bu[data + 0xa] - 0x1);
+                if( bu[data + 0xa] < 0 )
+                {
+                    [data + 0xb] = b(bu[data + 0xb] - 0x1);
+                    [data + 0xa] = b(bu[data + 0xc] - 0x1);
+
+                    if( bu[data + 0xb] < 0 )
+                    {
+                        [data + 0xb] = b(0);
+                        if( h[data + 0x2] > 0 )
+                        {
+                            [data + 0x2] = h(h[data + 0x2] - 0x1);
+                            [data + 0xf] = b(-0x3);
+                            [data + 0x8] = h(0x1);
+                        }
+                    }
+                }
+                system_menu_sound( 0x1 );
+            }
+        }
+    }
+    else if( pressed & 0x2000 ) // right
+    {
+        if( b[data + 0x10] == 0 )
+        {
+            [data + 0xa] = b(b[data + 0xa] + 0x1);
+
+            if( b[data + 0xa] >= b[data + 0xc] )
+            {
+                [data + 0xa] = b(b[data + 0xc] - 0x1);
+            }
+            else
+            {
+                system_menu_sound( 0x1 );
+            }
+        }
+        else if( b[data + 0x10] == 1 )
+        {
+            [data + 0xa] = b(b[data + 0xa] + 1);
+
+            if( b[data + 0xa] >= b[data + 0xc] )
+            {
+                [data + 0xa] = b(0);
+            }
+            system_menu_sound( 0x1 );
+        }
+        else if( b[data + 0x10] == 0x2 )
+        {
+            if( (b[data + 0xa] != (b[data + 0xc] - 0x1)) || (b[data + 0xb] != (b[data + 0xd] - 0x1)) || (h[data + 0x2] != (h[data + 0x6] - b[data + 0xd])) )
+            {
+                [data + 0xa] = b(b[data + 0xa] + 0x1);
+
+                if( b[data + 0xa] >= b[data + 0xc] )
+                {
+                    [data + 0xa] = b(0);
+                    [data + 0xb] = b(b[data + 0xb] + 0x1);
+
+                    if( b[data + 0xb] >= b[data + 0xd] )
+                    {
+                        [data + 0xb] = b(b[data + 0xd] - 0x1);
+
+                        if( h[data + 0x2] < (h[data + 0x6] - b[data + 0xd]) )
+                        {
+                            [data + 0xf] = b(-0x1);
+                            [data + 0x8] = h(0x2);
+                        }
+                    }
+                }
+                system_menu_sound( 0x1 );
+            }
+        }
+    }
+    else if( pressed & 0x0008 ) // R1
+    {
+        [data + 0x2] = h(h[data + 0x2] + b[data + 0xd]);
+
+        if( h[data + 0x2] > (h[data + 0x6] - b[data + 0xd]) )
+        {
+            [data + 0x2] = h(h[data + 0x6] - b[data + 0xd]);
+        }
+        else
+        {
+            system_menu_sound( 0x1 );
+        }
+    }
+    else if( pressed & 0x0004 ) // L1
+    {
+        [data + 0x2] = h(hu[data + 0x2] - b[data + 0xd]);
+
+        if( hu[data + 0x2] < 0 )
+        {
+            [data + 0x2] = h(0);
+        }
+        else
+        {
+            system_menu_sound( 0x1 );
         }
     }
 }
-else if( pressed & 0008 ) // R1
-{
-    [data + 2] = h(h[data + 2] + b[data + d]);
-
-    if( h[data + 2] > ( h[data + 6] - b[data + d] ) )
-    {
-        [data + 2] = h(h[data + 6] - b[data + d]);
-    }
-    else
-    {
-        A0 = 1;
-        system_menu_sound();
-    }
-}
-else if( pressed & 0004 ) // L1
-{
-    [data + 2] = h(hu[data + 2] - b[data + d]);
-
-    if( hu[data + 2] < 0 )
-    {
-        [data + 2] = h(0);
-    }
-    else
-    {
-        A0 = 1;
-        system_menu_sound();
-    }
-}
-////////////////////////////////
 
 
 

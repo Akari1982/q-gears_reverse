@@ -22,7 +22,7 @@
 801D2408 func1d2408
 801D2A34 func1d2a34
 801D2B58 newgamemenu_play_menu_sound
-801D2B98 func1d2b98
+801D2B98 newgamemenu_fade
 801D2D10 func1d2d10
 801D2DA8 func1d2da8
 801D32C0 func1d32c0
@@ -32,7 +32,7 @@
 801D3478 func1d3478
 801D3668 func1d3668
 801D3698 func1d3698
-801D370C func1d370c
+801D370C newgamemenu_draw_save_slot
 801D39C4 newgamemenu_init
 801D3AB0 newgamemenu_update
 801D4C38 func1d4c38
