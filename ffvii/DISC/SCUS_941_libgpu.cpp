@@ -792,28 +792,23 @@ DRAWENV* system_psyq_set_def_drawenv( DRAWENV* env, int x, int y, int w, int h )
 
 
 
-////////////////////////////////
-// system_psyq_set_def_dispenv()
+DISPENV* system_psyq_set_def_dispenv( DISPENV* disp, int x, int y, int w, int h )
+{
+    disp->disp.x = x;
+    disp->disp.y = y;
+    disp->disp.w = w;
+    disp->disp.h = h;
+    disp->screen.x = 0;
+    disp->screen.y = 0;
+    disp->screen.w = 0;
+    disp->screen.h = 0;
+    disp->isinter = 0;
+    disp->isrgb24 = 0;
+    disp->pad0 = 0;
+    disp->pad1 = 0;
+    return disp;
+}
 
-disp = A0;
-x = A1;
-y = A2;
-w = A3;
-h = A4;
-
-[disp + 0] = h(x);
-[disp + 2] = h(y);
-[disp + 4] = h(w);
-[disp + 6] = h(h);
-[disp + 8] = h(0);
-[disp + a] = h(0);
-[disp + c] = h(0);
-[disp + e] = h(0);
-[disp + 10] = b(0);
-[disp + 11] = b(0);
-[disp + 12] = b(0);
-[disp + 13] = b(0);
-////////////////////////////////
 
 
 
@@ -908,7 +903,7 @@ else
 
     V0 = w[0x80062bf8];
     A0 = 1;
-    80043A74	jalr   w[V0 + 34] ra
+    80043A74	jalr   w[V0 + 0x34] ra
 }
 ////////////////////////////////
 
@@ -920,9 +915,9 @@ else
 reverse = A0;
 reverse_old = bu[0x80062c03];
 
-if( bu[0x80062c02] >= 2 )
+if( bu[0x80062c02] >= 0x2 )
 {
-    A0 = 80010d00; // "SetGraphReverse(%d)...\n"
+    A0 = 0x80010d00; // "SetGraphReverse(%d)...\n"
     A1 = reverse;
     80043ADC	jalr   w[0x80062bfc] ra
 }
@@ -931,35 +926,35 @@ if( bu[0x80062c02] >= 2 )
 
 A0 = 8;
 V0 = w[0x80062bf8];
-80043AF8	jalr   w[V0 + 28] ra
+80043AF8	jalr   w[V0 + 0x28] ra
 
 last_display_mode = V0;
 
 if( bu[0x80062c03] != 0 )
 {
-    A0 = last_display_mode | 08000080; // add reverse flag to display mode GP1 command
+    A0 = last_display_mode | 0x08000080; // add reverse flag to display mode GP1 command
 }
 else
 {
-    A0 = last_display_mode | 08000000;
+    A0 = last_display_mode | 0x08000000;
 }
 
 V0 = w[0x80062bf8];
-80043B38	jalr   w[V0 + 10] ra
+80043B38	jalr   w[V0 + 0x10] ra // func458f0()
 
-if( bu[0x80062c00] == 2 ) // if old gpu
+if( bu[0x80062c00] == 0x2 ) // if old gpu
 {
     if( bu[0x80062c03] != 0 )
     {
-        A0 = 20000501; // Ancient Texture enable
+        A0 = 0x20000501; // Ancient Texture enable
     }
     else
     {
-        A0 = 20000504; // Ancient Texture Disable
+        A0 = 0x20000504; // Ancient Texture Disable
     }
 
     V1 = w[0x80062bf8];
-    80043B80	jalr   w[V1 + 10] ra
+    80043B80	jalr   w[V1 + 0x10] ra // func458f0()
 }
 
 return reverse_old;
@@ -1080,30 +1075,21 @@ return callback_old;
 
 mask = A0;
 
-if( bu[0x80062c02] >= 2 )
+if( bu[0x80062c02] >= 0x2 )
 {
-    A0 = 80010d74; // "SetDispMask(%d)..."
+    A0 = 0x80010d74; // "SetDispMask(%d)..."
     A1 = mask;
     80043D7C	jalr   w[0x80062bfc] ra // system_bios_printf()
 }
 
 if( mask == 0 )
 {
-    A0 = 80062c6c;
-    A1 = -1;
-    A2 = 14;
-    func46530();
+    func46530( 0x80062c6c, -0x1, 0x14 );
 }
 
-A0 = 03000001;
-if( mask != 0 )
-{
-    A0 = 03000000;
-}
-
+A0 = (mask != 0) ? 0x03000000 : 0x03000001;
 V0 = w[0x80062bf8];
-V0 = w[V0 + 10];
-80043DB8	jalr   v0 ra
+80043DB8	jalr   w[V0 + 0x10] ra // func458f0()
 ////////////////////////////////
 
 
@@ -1132,7 +1118,7 @@ if( bu[0x80062c02] >= 0002 ) // debug
 }
 
 V0 = w[0x80062bf8];
-V0 = w[V0 + 3c];
+V0 = w[V0 + 0x3c];
 A0 = type;
 80043E28	jalr   v0 ra
 
@@ -1193,16 +1179,14 @@ r = A1;
 g = A2;
 b = A3;
 
-A0 = 80010dc0; // "ClearImage"
-A1 = rect;
-system_graphic_debug_print_rect(); // libgpu debug string
+system_graphic_debug_print_rect( "ClearImage", rect );
 
 V0 = w[0x80062bf8];
-A0 = w[V0 + c];
+A0 = w[V0 + 0xc];
 A1 = rect;
-A2 = 8;
+A2 = 0x8;
 A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
-80043FD8	jalr   w[V0 + 8] ra
+80043FD8	jalr   w[V0 + 0x8] ra // func45a24()
 ////////////////////////////////
 
 
@@ -1222,9 +1206,9 @@ int system_psyq_load_image( RECT* recp, u_long* p )
 
     A0 = w[V0 + 0x20];
     A1 = recp;
-    A2 = 8;
+    A2 = 0x8;
     A3 = p;
-    80044044	jalr   w[V0 + 0x8] ra
+    80044044	jalr   w[V0 + 0x8] ra // func45a24()
 }
 
 
@@ -1247,11 +1231,11 @@ A1 = recp;
 system_graphic_debug_print_rect(); // libgpu debug string
 
 V0 = w[0x80062bf8];
-A0 = w[V0 + 1c];
+A0 = w[V0 + 0x1c];
 A1 = recp;
-A2 = 8;
+A2 = 0x8;
 A3 = p;
-800440A8	jalr   w[V0 + 8] ra
+800440A8	jalr   w[V0 + 0x8] ra // func45a24()
 ////////////////////////////////
 
 
@@ -1370,14 +1354,14 @@ void system_psyq_clear_otag_r( u32* ot, int n )
 
 S0 = A0;
 V0 = w[0x80062bf8];
-V0 = w[V0 + 3c];
-S1 = bu[S0 + 3];
+V0 = w[V0 + 0x3c];
+S1 = bu[S0 + 0x3];
 A0 = 0;
 80044300	jalr   v0 ra
 
 V0 = w[0x80062bf8];
-V0 = w[V0 + 14];
-A0 = S0 + 4;
+V0 = w[V0 + 0x14];
+A0 = S0 + 0x4;
 A1 = S1;
 8004431C	jalr   v0 ra
 ////////////////////////////////
@@ -1399,291 +1383,258 @@ void system_psyq_draw_otag( u32* ot )
     A1 = ot;
     A2 = 0;
     A3 = 0;
-    80044394	jalr   w[V0 + 0x8] ra // func45a24
+    80044394	jalr   w[V0 + 0x8] ra // func45a24()
 }
 
 
 
-////////////////////////////////
-// system_psyq_put_drawenv()
 // Set the drawing environment
 // The basic drawing parameters (such as the drawing offset and the drawing clip area) are set according to
 // the values specified in env.
 // The drawing environment is effective until the next time PutDrawEnv() is executed, or until the DR_ENV primitive is executed.
 // Return value - a pointer to the drawing environment set. On failure, returns 0
-
-env = A0; // pointer to drawing environment start address
-
-if( bu[0x80062c02] >= 2 )
+DRAWENV* system_psyq_put_drawenv( DRAWENV* env )
 {
-    A0 = 80010e34; // "PutDrawEnv(%08x)..."
-    A1 = env;
-    800443F4	jalr   w[0x80062bfc] ra
+    if( bu[0x80062c02] >= 0x2 )
+    {
+        A0 = 0x80010e34; // "PutDrawEnv(%08x)..."
+        A1 = env;
+        800443F4	jalr   w[0x80062bfc] ra
+    }
+
+    DR_ENV* dr_env = &(env->dr_env);
+
+    system_psyq_set_drawenv( dr_env, env );
+
+    dr_env->tag |= 0x00ffffff;
+
+    V1 = w[0x80062bf8];
+    A0 = w[V1 + 0x18];
+    A1 = dr_env;
+    A2 = 0x40;
+    A3 = 0;
+    8004443C	jalr   w[V1 + 0x8] ra // func45a24()
+
+    system_bios_memcpy( 0x80062c10, env, 0x5c );
+
+    return env;
 }
 
-dr_env = env + 1c;
-
-A0 = dr_env;
-A1 = env;
-system_psyq_set_drawenv();
-
-[dr_env] = w(w[dr_env] | 00ffffff);
-
-V1 = w[0x80062bf8];
-A0 = w[V1 + 18];
-A1 = dr_env;
-A2 = 40;
-A3 = 0;
-8004443C	jalr   w[V1 + 8] ra
-
-A0 = 80062c10;
-A1 = env;
-A2 = 5c;
-system_bios_memcpy();
-
-return env;
-////////////////////////////////
 
 
-
-////////////////////////////////
-// system_psyq_get_drawenv()
-
-env = A0;
-
-A0 = env;
-A1 = 80062c10;
-A2 = 5c;
-system_bios_memcpy();
-
-return env;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_put_dispenv()
-
-env = A0;
-
-if( bu[0x80062c02] >= 2 )
+DRAWENV* system_psyq_get_drawenv( DRAWENV* env )
 {
-    A0 = 80010e4c; // "PutDispEnv(%08x)..."
-    A1 = env;
-    800444F8	jalr   w[0x80062bfc] ra
+    system_bios_memcpy( env, 0x80062c10, 0x5c );
+    return env;
 }
 
+
+
+DISPENV* system_psyq_put_dispenv( DISPENV* env )
 {
-    // GP1(05h) - Start of Display area (in VRAM)
-    //   0-9   X (0-1023)    (halfword address in VRAM)  (relative to begin of VRAM)
-    //   10-18 Y (0-511)     (scanline number in VRAM)   (relative to begin of VRAM)
-    //   19-23 Not used (zero)
-    // Upper/left Display source address in VRAM. The size and target position on
-    // screen is set via Display Range registers; target=X1,Y2;
-    // size=(X2-X1/cycles_per_pix), (Y2-Y1).
-
-    if( ( bu[0x80062c00] - 1 ) < 2 )
+    if( bu[0x80062c02] >= 2 )
     {
-        A0 = env;
-        func45024();
-
-        V1 = 05000000 | ((hu[env + 2] & fff) << c) | (V0 & fff); // Start of Display area (in VRAM)
-    }
-    else
-    {
-        V1 = 05000000 | ((hu[env + 2] & 3ff) << a) | (hu[env + 0] & 3ff); // Start of Display area (in VRAM)
+        A0 = 0x80010e4c; // "PutDispEnv(%08x)..."
+        A1 = env;
+        800444F8	jalr   w[0x80062bfc] ra
     }
 
-    A0 = V1;
-    V0 = w[0x80062bf8];
-    80044574	jalr   w[V0 + 10] ra
-}
-
-if( ( w[0x80062c74] != w[env + 8] ) || ( w[0x80062c78] != w[env + c] ) )
-{
-    system_psyq_get_video_mode();
-    [env + 12] = b(V0); // pad0
-
-    x1 = 260 + h[env + 8] * a; // screen.x
-
-    if( bu[env + 12] == 0 ) y1 = h[env + a] + 10;
-    else                    y1 = h[env + a] + 13;
-
-    if( h[env + c] != 0 ) x2 = x1 + h[env + c] * a;
-    else                  x2 = x1 + a00;
-
-    if( h[env + e] != 0 ) y2 = y1 + h[env + e];
-    else                  y2 = y1 + f0;
-
-    if( x1 < 1f4 )       x1 = 1f4;
-    else if( x1 >= cdb ) x1 = cda;
-
-    if( x2 >= x1 + 50 )
     {
-        if( x2 >= cdb ) x2 = 0cda;
-    }
-    else
-    {
-        x2 = x1 + 50;
-    }
+        // GP1(05h) - Start of Display area (in VRAM)
+        //   0-9   X (0-1023)    (halfword address in VRAM)  (relative to begin of VRAM)
+        //   10-18 Y (0-511)     (scanline number in VRAM)   (relative to begin of VRAM)
+        //   19-23 Not used (zero)
+        // Upper/left Display source address in VRAM. The size and target position on
+        // screen is set via Display Range registers; target=X1,Y2;
+        // size=(X2-X1/cycles_per_pix), (Y2-Y1).
 
-    if( y1 < 0 )
-    {
-        y1 = 0;
-    }
-    else
-    {
-        if( bu[env + 12] != 0 )
+        if( ( bu[0x80062c00] - 0x1 ) < 0x2 )
         {
-            if( y1 >= 137 ) y1 = 136;
+            V1 = 0x05000000 | ((env->disp.y & 0xfff) << 0xc) | (func45024( env ) & 0xfff); // Start of Display area (in VRAM)
         }
         else
         {
-            if( y1 >= ff ) y1 = fe;
+            V1 = 0x05000000 | ((env->disp.y & 0x3ff) << 0xa) | (env->disp.x & 0x3ff); // Start of Display area (in VRAM)
         }
+
+        A0 = V1;
+        V0 = w[0x80062bf8];
+        80044574	jalr   w[V0 + 0x10] ra // func458f0()
     }
 
-    if( y2 >= y1 + 1 )
+    if( ( w[0x80062c74] != w[env + 8] ) || ( w[0x80062c78] != w[env + c] ) )
     {
-        if( bu[env + 12] != 0 )
+        env->pad0 = system_psyq_get_video_mode();
+
+        x1 = 0x260 + env->screen.x * 0xa;
+
+        if( bu[env + 12] == 0 ) y1 = env->screen.y + 0x10;
+        else                    y1 = env->screen.y + 0x13;
+
+        if( env->screen.w != 0 ) x2 = x1 + env->screen.w * 0xa;
+        else                     x2 = x1 + 0xa00;
+
+        if( env->screen.h != 0 ) y2 = y1 + env->screen.h;
+        else                     y2 = y1 + 0xf0;
+
+        if( x1 < 0x1f4 ) x1 = 0x1f4;
+        else if( x1 >= 0xcdb ) x1 = 0xcda;
+
+        if( x2 >= x1 + 0x50 )
         {
-            if( y2 >= 139 ) y2 = 138;
+            if( x2 >= 0xcdb ) x2 = 0xcda;
         }
         else
         {
-            if( y2 >= 101 ) y2 = 100;
+            x2 = x1 + 0x50;
         }
+
+        if( y1 < 0 )
+        {
+            y1 = 0;
+        }
+        else
+        {
+            if( env->pad0 != 0 )
+            {
+                if( y1 >= 0x137 ) y1 = 0x136;
+            }
+            else
+            {
+                if( y1 >= 0xff ) y1 = 0xfe;
+            }
+        }
+
+        if( y2 >= y1 + 0x1 )
+        {
+            if( env->pad0 != 0 )
+            {
+                if( y2 >= 0x139 ) y2 = 0x138;
+            }
+            else
+            {
+                if( y2 >= 0x101 ) y2 = 0x100;
+            }
+        }
+        else
+        {
+            y2 = y1 + 0x1;
+        }
+
+        // GP1(06h) - Horizontal Display range (on Screen)
+        //   0-11   X1 (260h+0)       ;12bit       ;\counted in 53.222400MHz units,
+        //   12-23  X2 (260h+320*8)   ;12bit       ;/relative to HSYNC
+        // Specifies the horizontal range within which the display area is displayed. For
+        // resolutions other than 320 pixels it may be necessary to fine adjust the value
+        // to obtain an exact match (eg. X2=X1+pixels*cycles_per_pix).
+        // The number of displayed pixels per line is "(((X2-X1)/cycles_per_pix)+2) AND
+        // NOT 3" (ie. the hardware is rounding the width up/down to a multiple of 4
+        // pixels).
+        // Most games are using a width equal to the horizontal resolution (ie. 256, 320,
+        // 368, 512, 640 pixels). A few games are using slightly smaller widths (probably
+        // due to programming bugs). Pandemonium 2 is using a bigger "overscan" width
+        // (ensuring an intact picture without borders even on mis-calibrated TV sets).
+        // The 260h value is the first visible pixel on normal TV Sets, this value is used
+        // by MOST NTSC games, and SOME PAL games (see below notes on Mis-Centered PAL
+        // games).
+
+        A0 = 0x06000000 | ((x2 & 0xfff) << 0xc) | (x1 & 0xfff);
+        A1 = w[0x80062bf8];
+        80044734	jalr   w[A1 + 0x10] ra // func458f0()
+
+        // GP1(07h) - Vertical Display range (on Screen)
+        //   0-9   Y1 (NTSC=88h-(224/2), (PAL=A3h-(264/2))  ;\scanline numbers on screen,
+        //   10-19 Y2 (NTSC=88h+(224/2), (PAL=A3h+(264/2))  ;/relative to VSYNC
+        //   20-23 Not used (zero)
+        // Specifies the vertical range within which the display area is displayed. The
+        // number of lines is Y2-Y1 (unlike as for the width, there's no rounding applied
+        // to the height). If Y2 is set to a much too large value, then the hardware stops
+        // to generate vblank interrupts (IRQ0).
+        // The 88h/A3h values are the middle-scanlines on normal TV Sets, these values are
+        // used by MOST NTSC games, and SOME PAL games (see below notes on Mis-Centered
+        // PAL games).
+        // The 224/264 values are for fullscreen pictures. Many NTSC games display 240
+        // lines (overscan with hidden lines). Many PAL games display only 256 lines
+        // (underscan with black borders).
+
+        A1 = w[0x80062bf8];
+        A0 = 0x07000000 | ((y2 & 0x3ff) << 0xa) | (y1 & 0x3ff);
+        80044760	jalr   w[A1 + 0x10] ra // func458f0()
     }
-    else
+
+    if( ( w[0x80062c7c] != w[env + 10] ) || ( w[0x80062c6c] != w[env + 0] ) || ( w[0x80062c70] != w[env + 4] ) )
     {
-        y2 = y1 + 1;
+        // GP1(08h) - Display mode
+        //   0-1   Horizontal Resolution 1     (0=256, 1=320, 2=512, 3=640) ;GPUSTAT.17-18
+        //   2     Vertical Resolution         (0=240, 1=480, when Bit5=1)  ;GPUSTAT.19
+        //   3     Video Mode                  (0=NTSC/60Hz, 1=PAL/50Hz)    ;GPUSTAT.20
+        //   4     Display Area Color Depth    (0=15bit, 1=24bit)           ;GPUSTAT.21
+        //   5     Vertical Interlace          (0=Off, 1=On)                ;GPUSTAT.22
+        //   6     Horizontal Resolution 2     (0=256/320/512/640, 1=368)   ;GPUSTAT.16
+        //   7     "Reverseflag"               (0=Normal, 1=Distorted)      ;GPUSTAT.14
+        //   8-23  Not used (zero)
+        // Note: Interlace must be enabled to see all lines in 480-lines mode (interlace
+        // is causing ugly flickering, so a non-interlaced low resolution image is
+        // typically having better quality than a high resolution interlaced image, a
+        // pretty bad example are the intro screens shown by the BIOS). The Display Area
+        // Color Depth does NOT affect the Drawing Area (the Drawing Area is <always>
+        // 15bit).
+        // When the "Reverseflag" is set, the display scrolls down 2 lines or so, and
+        // colored regions are getting somehow hatched/distorted, but black and white
+        // regions are still looking okay. Don't know what that's good for? Probably
+        // relates to PAL/NTSC-Color Clock vs PSX-Dot Clock mismatches: Bit7=0 causes
+        // Flimmering errors (errors at different locations in each frame), and Bit7=1
+        // causes Static errors (errors at same locations in all frames)?
+
+        S2 = 0x08000000;
+
+        env->pad0 = system_psyq_get_video_mode();
+
+        if( env->pad0 == 1 ) S2 |= 0x08; // Video Mode (1=PAL/50Hz)
+        if( env->isrgb24 != 0 ) S2 |= 0x10; // Display Area Color Depth (1=24bit)
+        if( env->isinter != 0 ) S2 |= 0x20; // Vertical Interlace (1=On)
+        if( bu[0x80062c03] != 0 ) S2 |= 0x80; // "Reverseflag" (1=Distorted)
+
+        if( env->disp.w >= 0x119 )
+        {
+            if( env->disp.w >= 0x161 )
+            {
+                if( env->disp.w < 0x191 )      S2 |= 0x40; // Horizontal Resolution 2 (1=368)
+                else if( env->disp.w < 0x231 ) S2 |= 0x02; // Horizontal Resolution 1 (2=512)
+                else                           S2 |= 0x03; // Horizontal Resolution 1 (3=640)
+            }
+            else
+            {
+                S2 |= 0x01; //  // Horizontal Resolution 1 (1=320)
+            }
+        }
+        else
+        {
+            S2 |= 0x00; //  // Horizontal Resolution 1 (0=256)
+        }
+
+        if( env->pad0 == 0 ) V0 = env->disp.h < 0x101;
+        else                 V0 = env->disp.h < 0x121;
+
+        if( V0 == 0 ) S2 |= 0x24; // Vertical Resolution (1=480), Vertical Interlace (1=On)
+
+        V0 = w[0x80062bf8];
+        A0 = S2;
+        80044890	jalr   w[V0 + 0x10] ra // func458f0()
     }
 
-    // GP1(06h) - Horizontal Display range (on Screen)
-    //   0-11   X1 (260h+0)       ;12bit       ;\counted in 53.222400MHz units,
-    //   12-23  X2 (260h+320*8)   ;12bit       ;/relative to HSYNC
-    // Specifies the horizontal range within which the display area is displayed. For
-    // resolutions other than 320 pixels it may be necessary to fine adjust the value
-    // to obtain an exact match (eg. X2=X1+pixels*cycles_per_pix).
-    // The number of displayed pixels per line is "(((X2-X1)/cycles_per_pix)+2) AND
-    // NOT 3" (ie. the hardware is rounding the width up/down to a multiple of 4
-    // pixels).
-    // Most games are using a width equal to the horizontal resolution (ie. 256, 320,
-    // 368, 512, 640 pixels). A few games are using slightly smaller widths (probably
-    // due to programming bugs). Pandemonium 2 is using a bigger "overscan" width
-    // (ensuring an intact picture without borders even on mis-calibrated TV sets).
-    // The 260h value is the first visible pixel on normal TV Sets, this value is used
-    // by MOST NTSC games, and SOME PAL games (see below notes on Mis-Centered PAL
-    // games).
+    system_bios_memcpy( 0x80062c6c, env, 0x14 );
 
-    A0 = 06000000 | ((x2 & fff) << c) | (x1 & fff);
-    A1 = w[0x80062bf8];
-    80044734	jalr   w[A1 + 10] ra
-
-    // GP1(07h) - Vertical Display range (on Screen)
-    //   0-9   Y1 (NTSC=88h-(224/2), (PAL=A3h-(264/2))  ;\scanline numbers on screen,
-    //   10-19 Y2 (NTSC=88h+(224/2), (PAL=A3h+(264/2))  ;/relative to VSYNC
-    //   20-23 Not used (zero)
-    // Specifies the vertical range within which the display area is displayed. The
-    // number of lines is Y2-Y1 (unlike as for the width, there's no rounding applied
-    // to the height). If Y2 is set to a much too large value, then the hardware stops
-    // to generate vblank interrupts (IRQ0).
-    // The 88h/A3h values are the middle-scanlines on normal TV Sets, these values are
-    // used by MOST NTSC games, and SOME PAL games (see below notes on Mis-Centered
-    // PAL games).
-    // The 224/264 values are for fullscreen pictures. Many NTSC games display 240
-    // lines (overscan with hidden lines). Many PAL games display only 256 lines
-    // (underscan with black borders).
-
-    A1 = w[0x80062bf8];
-    A0 = 07000000 | ((y2 & 3ff) << a) | (y1 & 3ff);
-    80044760	jalr   w[A1 + 10] ra
+    return env;
 }
 
-if( ( w[0x80062c7c] != w[env + 10] ) || ( w[0x80062c6c] != w[env + 0] ) || ( w[0x80062c70] != w[env + 4] ) )
+
+
+DISPENV* system_psyq_get_dispenv( DISPENV* env )
 {
-    // GP1(08h) - Display mode
-    //   0-1   Horizontal Resolution 1     (0=256, 1=320, 2=512, 3=640) ;GPUSTAT.17-18
-    //   2     Vertical Resolution         (0=240, 1=480, when Bit5=1)  ;GPUSTAT.19
-    //   3     Video Mode                  (0=NTSC/60Hz, 1=PAL/50Hz)    ;GPUSTAT.20
-    //   4     Display Area Color Depth    (0=15bit, 1=24bit)           ;GPUSTAT.21
-    //   5     Vertical Interlace          (0=Off, 1=On)                ;GPUSTAT.22
-    //   6     Horizontal Resolution 2     (0=256/320/512/640, 1=368)   ;GPUSTAT.16
-    //   7     "Reverseflag"               (0=Normal, 1=Distorted)      ;GPUSTAT.14
-    //   8-23  Not used (zero)
-    // Note: Interlace must be enabled to see all lines in 480-lines mode (interlace
-    // is causing ugly flickering, so a non-interlaced low resolution image is
-    // typically having better quality than a high resolution interlaced image, a
-    // pretty bad example are the intro screens shown by the BIOS). The Display Area
-    // Color Depth does NOT affect the Drawing Area (the Drawing Area is <always>
-    // 15bit).
-    // When the "Reverseflag" is set, the display scrolls down 2 lines or so, and
-    // colored regions are getting somehow hatched/distorted, but black and white
-    // regions are still looking okay. Don't know what that's good for? Probably
-    // relates to PAL/NTSC-Color Clock vs PSX-Dot Clock mismatches: Bit7=0 causes
-    // Flimmering errors (errors at different locations in each frame), and Bit7=1
-    // causes Static errors (errors at same locations in all frames)?
-
-    S2 = 08000000;
-
-    system_psyq_get_video_mode();
-    [env + 12] = b(V0);
-
-    if( bu[env + 12] == 1 ) S2 |= 08; // Video Mode (1=PAL/50Hz)
-    if( bu[env + 11] != 0 ) S2 |= 10; // Display Area Color Depth (1=24bit)
-    if( bu[env + 10] != 0 ) S2 |= 20; // Vertical Interlace (1=On)
-    if( bu[0x80062c03] != 0 ) S2 |= 80; // "Reverseflag" (1=Distorted)
-
-    if( h[env + 4] >= 119 )
-    {
-        if( h[env + 4] >= 161 )
-        {
-            if( h[env + 4] < 191 )      S2 |= 40; // Horizontal Resolution 2 (1=368)
-            else if( h[env + 4] < 231 ) S2 |= 02; // Horizontal Resolution 1 (2=512)
-            else                        S2 |= 03; // Horizontal Resolution 1 (3=640)
-        }
-        else
-        {
-            S2 |= 01; //  // Horizontal Resolution 1 (1=320)
-        }
-    }
-    else
-    {
-        S2 |= 00; //  // Horizontal Resolution 1 (0=256)
-    }
-
-    if( bu[env + 12] == 0 ) V0 = h[env + 6] < 101;
-    else                    V0 = h[env + 6] < 121;
-
-    if( V0 == 0 ) S2 |= 24; // Vertical Resolution (1=480), Vertical Interlace (1=On)
-
-    V0 = w[0x80062bf8];
-    A0 = S2;
-    80044890	jalr   w[V0 + 10] ra
+    system_bios_memcpy( env, 0x80062c6c, 0x14 );
+    return env;
 }
-
-A0 = 80062c6c;
-A1 = env;
-A2 = 14;
-system_bios_memcpy();
-
-return env;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_psyq_get_dispenv()
-
-env = A0;
-
-A0 = env;
-A1 = 80062c6c;
-A2 = 14;
-system_bios_memcpy();
-
-return env;
-////////////////////////////////
 
 
 
@@ -2167,7 +2118,7 @@ V0 = w[T0 + 0004];
 L453d4:	; 800453D4
 800453D4	lui    a0, $8007
 A0 = A0 + 0550;
-800453DC	jal    func45984 [$80045984]
+func45984();
 
 return 0;
 ////////////////////////////////
@@ -2526,32 +2477,21 @@ L458cc:	; 800458CC
 
 
 
-////////////////////////////////
-// func458f0
-800458F0	lui    v0, $8006
-V0 = w[V0 + 2cd4];
-800458F8	nop
-[V0 + 0000] = w(A0);
-V0 = A0 >> 18;
-80045904	lui    at, $8007
-AT = AT + 0590;
-AT = AT + V0;
-[AT + 0000] = b(A0);
-80045914	jr     ra 
-80045918	nop
-////////////////////////////////
+void func458f0( A0 )
+{
+    // GP1 Send GP1 Commands (Display Control)
+    // GPUSTAT Read GPU Status Register
+    gpu_1f801814 = w[0x80062cd4];
+    [gpu_1f801814] = w(A0);
+    [0x80070590 + (A0 >> 0x18)] = b(A0);
+}
 
 
 
-////////////////////////////////
-// func4591c
-8004591C	lui    at, $8007
-AT = AT + 0590;
-AT = AT + A0;
-V0 = bu[AT + 0000];
-8004592C	jr     ra 
-80045930	nop
-////////////////////////////////
+u8 func4591c( A0 )
+{
+    return bu[0x80070590 + A0];
+}
 
 
 
@@ -2586,26 +2526,21 @@ SP = SP + 0008;
 
 
 ////////////////////////////////
-// func45984:	; 80045984
+// func45984()
 80045984	lui    v1, $0400
-80045988	lui    v0, $8006
-V0 = w[V0 + 2cd4];
+
+V0 = w[0x80062cd4];
 V1 = V1 | 0002;
 [V0 + 0000] = w(V1);
-80045998	lui    v0, $8006
-V0 = w[V0 + 2cd8];
+V0 = w[0x80062cd8];
 800459A0	nop
 [V0 + 0000] = w(A0);
-800459A8	lui    v0, $8006
-V0 = w[V0 + 2cdc];
+V0 = w[0x80062cdc];
 800459B0	lui    v1, $0100
 [V0 + 0000] = w(0);
-800459B8	lui    v0, $8006
-V0 = w[V0 + 2ce0];
+V0 = w[0x80062ce0];
 V1 = V1 | 0401;
 [V0 + 0000] = w(V1);
-800459C8	jr     ra 
-800459CC	nop
 ////////////////////////////////
 
 

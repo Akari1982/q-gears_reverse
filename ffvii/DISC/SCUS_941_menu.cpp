@@ -2602,11 +2602,11 @@ void system_menu_create_drawenv_dispenv( DRAWENV* drawenv, DISPENV* dispenv )
 
     system_psyq_vsync( 0 );
 
-    system_psyq_set_def_drawenv( drawenv + 0x0, 0,  0x8, 0x180, 0xe0 );
-    system_psyq_set_def_drawenv( drawenv + 0x1, 0, 0xf0, 0x180, 0xe0 );
+    system_psyq_set_def_drawenv( drawenv + 0x0, 0,  0x8, 0x180, 0xe0 ); // 0,   8 (384x224)
+    system_psyq_set_def_drawenv( drawenv + 0x1, 0, 0xf0, 0x180, 0xe0 ); // 0, 240 (384x224)
 
-    system_psyq_set_def_dispenv( dispenv + 0x0, 0, 0xe8, 0x16c, 0xf0 );
-    system_psyq_set_def_dispenv( dispenv + 0x1, 0,    0, 0x16c, 0xf0 );
+    system_psyq_set_def_dispenv( dispenv + 0x0, 0, 0xe8, 0x16c, 0xf0 ); // 0, 232 (364x240)
+    system_psyq_set_def_dispenv( dispenv + 0x1, 0,    0, 0x16c, 0xf0 ); // 0,   0 (364x240)
 
     (drawenv + 0x0)->dtd = 0x1;
     (drawenv + 0x0)->dfe = 0x1;
