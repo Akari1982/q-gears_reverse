@@ -1348,57 +1348,31 @@ g_menu_poly = packet;
 
 
 
-////////////////////////////////
-// system_menu_draw_cursor()
+void system_menu_draw_cursor( s16 x, s16 y )
+{
+    SETSPRT( g_menu_poly );
 
-x = A0;
-y = A1;
+    system_psyq_set_semi_trans( g_menu_poly, 0x1 );
+    system_psyq_set_shade_tex( g_menu_poly, 0x1 );
 
-poly = g_menu_poly;
-[poly + 3] = b(4); // size
-[poly + 7] = b(64); // Textured Rectangle, variable size, opaque, texture-blending
+    g_menu_poly->x0 = x;
+    g_menu_poly->y0 = y;
+    g_menu_poly->u0 = 0xe0;
+    g_menu_poly->v0 = 0x8;
+    g_menu_poly->clut = system_psyq_get_clut( 0x100, 0x1e1 );
+    g_menu_poly->w = 0x18;
+    g_menu_poly->h = 0x10;
 
-A0 = poly;
-A1 = 1;
-system_psyq_set_semi_trans();
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+    g_menu_poly += 0x14;
 
-A0 = poly;
-A1 = 1;
-system_psyq_set_shade_tex();
-
-[poly + 8] = h(x);
-[poly + a] = h(y);
-[poly + c] = b(e0); // u
-[poly + d] = b(8); // v
-[poly + 10] = h(18); // width
-[poly + 12] = h(10); // height
-
-A0 = 100;
-A1 = 1e1;
-system_psyq_get_clut();
-[poly + e] = h(V0);
-
-system_psyq_add_prim( g_menu_otag, poly );
-
-g_menu_poly = poly + 0x14;
-
-A0 = 0; // tp
-A1 = 2; // abr
-A2 = 3c0; // vram x
-A3 = 100; // vram y
-system_psyq_get_tpage();
-
-[SP + 10] = h(0);
-[SP + 12] = h(0);
-[SP + 14] = h(ff);
-[SP + 16] = h(ff);
-
-A0 = 0; // drawing to display area is blocked
-A1 = 1; // dithering on
-A2 = V0 & ffff; // init value
-A3 = SP + 10; // window rect
-system_menu_set_draw_mode();
-////////////////////////////////
+    RECT rect;
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0xff;
+    rect.h = 0xff;
+    system_menu_set_draw_mode( 0, 0x1, system_psyq_get_tpage( 0, 0x2, 0x3c0, 0x100 ), &rect );
+}
 
 
 

@@ -3,7 +3,7 @@
 
 V1 = 0;
 loop14c48:	; 80014C48
-    [80062d44 + cc + V1] = b(A0); // some GP values
+    [0x80062d44 + cc + V1] = b(A0); // some GP values
     A0 = A0 >> 1;
     V1 = V1 + 1;
     V0 = V1 < 8;
@@ -18,8 +18,8 @@ loop14c48:	; 80014C48
 // func14c70()
 // reset kernel string load
 
-[GP + d8] = w(0);
-[GP + dc] = w(0);
+[GP + 0xd8] = w(0);
+[GP + 0xdc] = w(0);
 ////////////////////////////////
 
 
@@ -30,13 +30,13 @@ loop14c48:	; 80014C48
 
 size = A0;
 
-pack_id = w[GP + d8];
-[GP + d8] = w(pack_id + 1);
+pack_id = w[GP + 0xd8];
+[GP + 0xd8] = w(pack_id + 0x1);
 
 dst_offset = w[GP + dc];
-[80069490 + pack_id * 2] = h(dst_offset);
-[GP + dc] = w(dst_offset + size);
-return 80063690 + dst_offset;
+[0x80069490 + pack_id * 2] = h(dst_offset);
+[GP + 0xdc] = w(dst_offset + size);
+return 0x80063690 + dst_offset;
 ////////////////////////////////
 
 
@@ -127,8 +127,8 @@ pack_id = A0;
 string_id = A1;
 add = A2;
 
-offset = hu[80069490 + (pack_id + add) * 2];
-return 80063690 + offset + hu[80063690 + offset + string_id * 2];
+offset = hu[0x80069490 + (pack_id + add) * 2];
+return 80063690 + offset + hu[0x80063690 + offset + string_id * 2];
 ////////////////////////////////
 
 
@@ -293,7 +293,7 @@ L14ea0:	; 80014EA0
             V0 = V1 < 0003;
             80014FC0	beq    v0, zero, L14fe4 [$80014fe4]
             V0 = V1 << 04;
-            A0 = b[801636b8 + V0];
+            A0 = b[0x801636b8 + V0];
 
             L14fd4:	; 80014FD4
             A1 = S0;
@@ -308,7 +308,7 @@ L14ea0:	; 80014EA0
             A0 = S0;
             80014FF0	addiu  v0, v1, $fffc (=-$4)
             V0 = V0 << 04;
-            V0 = h[80163658 + V0];
+            V0 = h[0x80163658 + V0];
             A2 = 0020;
             A1 = V0 << 01;
             A1 = A1 + V0;
@@ -427,7 +427,7 @@ while( write_size < 100 )
         size = (letter >> 6) << 1 + 4;
         for( int i = 0; i < size; ++i )
         {
-            [80063560 + write_size + i] = b(bu[src2 + offset + i]);
+            [0x80063560 + write_size + i] = b(bu[src2 + offset + i]);
             dst += 1;
             write_size += 1;
         }
@@ -520,10 +520,10 @@ if( type == 4 ) // items
         // correct string id by this value to search in correct pack
 
         // 0080 0100 0120 0180 FFFF
-        if( string_id < hu[8001010e + i * 2] )
+        if( string_id < hu[0x8001010e + i * 2] )
         {
-            type = bu[80010118 + i]; // 04 0A 0B 0C 0D
-            string_id -= hu[8001010e + i * 2 - 2];
+            type = bu[0x80010118 + i]; // 04 0A 0B 0C 0D
+            string_id -= hu[0x8001010e + i * 2 - 2];
             break;
         }
     }
@@ -541,11 +541,11 @@ if( type < 4 )
     // 38-47 summon
     // 48-7f enemy skill
     // 80- limits
-    A1 = string_id + bu[80010120 + type]; // 00 38 48 80
+    A1 = string_id + bu[0x80010120 + type]; // 00 38 48 80
     if( A1 < e0 ) string_id = A1;
 }
 
-pack = bu[80010124 + type]; // 01 01 01 01 02 00 FF FF FF FF 03 04 05 06 07
+pack = bu[0x80010124 + type]; // 01 01 01 01 02 00 FF FF FF FF 03 04 05 06 07
 if( pack != ff )
 {
     A0 = pack + add; // pack id
@@ -577,7 +577,7 @@ else if( type == 7 )
     if( string_id >= 6 ) return string;
 
     V0 = string_id << 04;
-    V0 = h[80163658 + V0];
+    V0 = h[0x80163658 + V0];
     S1 = string_id + 4;
 
     A0 = 80063660;
@@ -593,12 +593,12 @@ else if( type == 7 )
     V1 = S1 << 04;
     V1 = V1 + S1;
     S3 = V1 << 02;
-    V1 = bu[800f5bc7 + S3];
+    V1 = bu[0x800f5bc7 + S3];
     S0 = V0;
 
     if( V1 != ff )
     {
-        V0 = w[800f7ed0];
+        V0 = w[0x800f7ed0];
         V0 = V1 + V0;
         [S0 + 0000] = b(V0);
         S0 = S0 + 0001;
@@ -609,7 +609,7 @@ else if( type == 7 )
     V0 = V0 << 02;
     V0 = V0 + S1;
     S1 = V0 << 03;
-    if( w[800f83e4 + S1] & 40 )
+    if( w[0x800f83e4 + S1] & 40 )
     {
         A0 = 71;
         system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
@@ -621,10 +621,10 @@ else if( type == 7 )
         S0 = V0;
     }
 
-    if( bu[800f5be1 + S3] & 40 )
+    if( bu[0x800f5be1 + S3] & 40 )
     {
-        [SP + 110] = h(hu[800f5bf4 + S3]);
-        [SP + 112] = h(w[800f8410 + S1]);
+        [SP + 110] = h(hu[0x800f5bf4 + S3]);
+        [SP + 112] = h(w[0x800f8410 + S1]);
 
         A0 = 7f;
         system_get_pointer_to_decompressed_battle_text_in_kernel_with_id();
@@ -709,7 +709,7 @@ if( w[GP + 1d0] < 0 )
     return;
 }
 
-if( hu[800f83a4 + 22] & 0008 )
+if( hu[0x800f83a4 + 22] & 0008 )
 {
     return;
 }
@@ -717,14 +717,14 @@ if( hu[800f83a4 + 22] & 0008 )
 [GP + 1d0] = w(w[GP + 1d0] | 0100);
 [GP + 21c] = w(0);
 
-while( hu[80062d44 + 44] != 10c )
+while( hu[0x80062d44 + 44] != 10c )
 {
     funca3278();
 
     funcb6d6c();
 }
 
-[800f83a4 + 22] = h(hu[800f83a4 + 22] | 0008);
+[0x800f83a4 + 22] = h(hu[0x800f83a4 + 22] | 0008);
 ////////////////////////////////
 
 
@@ -746,7 +746,7 @@ if( A0 != 0 ) [GP + e4] = w(w[GP + e4] | 0007);
 
 for( int i = 0; i < 3; ++i )
 {
-    char_id = bu[8009c6e4 + 4f8 + i];
+    char_id = bu[0x8009c6e4 + 4f8 + i];
 
     if( char_id == ff )
     {
@@ -756,11 +756,11 @@ for( int i = 0; i < 3; ++i )
     {
         for( int j = 0; j < 9; ++j )
         {
-            if( bu[8009c6e4 + 54 + j * 84 + 0] == char_id )
+            if( bu[0x8009c6e4 + 54 + j * 84 + 0] == char_id )
             {
-                T3 = w[80075d24 + i * 30 + 0];
-                A2 = w[80075d24 + i * 30 + 4];
-                V1 = w[80075d04 + i * 4];
+                T3 = w[0x80075d24 + i * 30 + 0];
+                A2 = w[0x80075d24 + i * 30 + 4];
+                V1 = w[0x80075d04 + i * 4];
 
                 T0 = 1;
                 for( ; T0 < b; ++T0 )
@@ -768,81 +768,81 @@ for( int i = 0; i < 3; ++i )
                     if( V1 < A2 ) break;
 
                     T3 = A2;
-                    A2 = w[80075d28 + i * 30 + k * 4];
+                    A2 = w[0x80075d28 + i * 30 + k * 4];
                 }
 
-                if( T0 == b ) [80075d04 + i * 4] = w(w[80075d14 + i * 4]);
+                if( T0 == b ) [0x80075d04 + i * 4] = w(w[0x80075d14 + i * 4]);
 
                 V0 = w[GP + e0];
                 80015780	beq    v0, zero, L157fc [$800157fc]
 
-                V0 = w[80075d14 + i * 4];
-                A1 = w[80075d04 + i * 4];
+                V0 = w[0x80075d14 + i * 4];
+                A1 = w[0x80075d04 + i * 4];
                 V0 = A1 < V0;
                 80015798	beq    v0, zero, L157e4 [$800157e4]
                 V0 = A1 < A2;
                 800157A0	beq    v0, zero, L157d8 [$800157d8]
                 V0 = A2 - T3;
-                V1 = bu[80075de4 + i] + V0;
+                V1 = bu[0x80075de4 + i] + V0;
                 V0 = V1 >> 08;
                 V0 = A1 + V0;
-                [80075d04 + i * 4] = w(V0);
-                [80075de4 + i] = b(V1);
-                V0 = w[80075d04 + i * 4];
+                [0x80075d04 + i * 4] = w(V0);
+                [0x80075de4 + i] = b(V1);
+                V0 = w[0x80075d04 + i * 4];
                 V0 = V0 < A2;
                 800157D0	bne    v0, zero, L157fc [$800157fc]
                 800157D4	nop
 
                 L157d8:	; 800157D8
-                [80075d04 + i * 4] = w(A2);
-                [80075de4 + i] = b(0);
+                [0x80075d04 + i * 4] = w(A2);
+                [0x80075de4 + i] = b(0);
                 800157DC	j      L157fc [$800157fc]
 
                 L157e4:	; 800157E4
-                A0 = w[80075d14 + i * 4];
+                A0 = w[0x80075d14 + i * 4];
                 [GP + e4] = w(w[GP + e4] | (1 << i));
-                [80075d04 + i * 4] = w(A0);
+                [0x80075d04 + i * 4] = w(A0);
 
                 L157fc:	; 800157FC
                 V0 = (w[GP + e4] >> i) & 1;
                 8001580C	bne    v0, zero, L15838 [$80015838]
 
-                V1 = bu[80075de8 + i];
+                V1 = bu[0x80075de8 + i];
                 V0 = V1 + T0 - 1;
                 V0 = V0 < 63;
                 80015830	bne    v0, zero, L158a0 [$800158a0]
                 V0 = V1 + T0;
 
                 L15838:	; 80015838
-                [8009d7ed + i * c] = b(bu[8009c6e4 + 54 + j * 84 + 1]); // level
-                [8009d7e8 + i * c] = w(w[8009c6e4 + 54 + j * 84 + 3c]); // current exp
-                [8009d7e4 + i * c] = w(w[8009c6e4 + 54 + j * 84 + 80]); // exp to next level
-                [8009d7ec + i * c] = b(bu[8009c6e4 + 54 + j * 84 + 21]); // level progress bar
+                [0x8009d7ed + i * c] = b(bu[0x8009c6e4 + 54 + j * 84 + 1]); // level
+                [0x8009d7e8 + i * c] = w(w[0x8009c6e4 + 54 + j * 84 + 3c]); // current exp
+                [0x8009d7e4 + i * c] = w(w[0x8009c6e4 + 54 + j * 84 + 80]); // exp to next level
+                [0x8009d7ec + i * c] = b(bu[0x8009c6e4 + 54 + j * 84 + 21]); // level progress bar
                 80015898	j      L1593c [$8001593c]
 
                 L158a0:	; 800158A0
-                [8009d7ed + i * c] = b(V0 - 1);
-                [8009d7e8 + i * c] = w(w[80075d04 + i * 4]);
-                [8009d7ec + i * c] = b(0);
-                [8009d7e4 + i * c] = w(A2 - w[80075d04 + i * 4]);
+                [0x8009d7ed + i * c] = b(V0 - 1);
+                [0x8009d7e8 + i * c] = w(w[0x80075d04 + i * 4]);
+                [0x8009d7ec + i * c] = b(0);
+                [0x8009d7e4 + i * c] = w(A2 - w[0x80075d04 + i * 4]);
 
                 if( A2 != T3 )
                 {
-                    V1 = w[80075d04 + i * 4];
+                    V1 = w[0x80075d04 + i * 4];
                     V1 = V1 - T3;
                     V0 = V1 << 04;
                     V0 = V0 - V1;
                     V0 = V0 << 02;
                     V0 = V0 + V1;
                     V1 = A2 - T3;
-                    [8009d7ec + i * c] = b(V0 / V1);
+                    [0x8009d7ec + i * c] = b(V0 / V1);
                 }
                 break;
             }
         }
 
         L1593c:	; 8001593C
-        if( ( w[GP + e8] >> i ) & 1 ) [8009d7ed + i * c] = b(0);
+        if( ( w[GP + e8] >> i ) & 1 ) [0x8009d7ed + i * c] = b(0);
     }
 }
 
@@ -970,37 +970,7 @@ limit_id = A1;
 
 if( char_id < 9 )
 {
-    return bu[80082268 + char_id * 38 + c + limit_id] - 80;
+    return bu[0x80082268 + char_id * 38 + c + limit_id] - 80;
 }
 return 7f;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func15b44()
-
-[GP + 0xec] = w(A0);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func15b50()
-// get kernel type
-
-A0 = w[GP + 0xec];
-
-return ( hu[A0 + 0x0] != 0 ) ? hu[A0 + 0x4] : ffff;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func15b88()
-// get kernel string offsets
-
-A0 = w[GP + 0xec];
-
-return ( hu[A0 + 0x0] != 0 ) ? hu[A0 + 0x2] : 0;
 ////////////////////////////////

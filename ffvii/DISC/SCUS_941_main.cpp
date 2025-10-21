@@ -407,7 +407,7 @@ system_cdrom_load_file( A0, A1, 0x800a0000, 0 );
 
 ending_main_logo();
 
-func148b4(); // load INIT\WINDOW.BIN and INIT\KERNEL.BIN
+system_init_kernel(); // load INIT\WINDOW.BIN and INIT\KERNEL.BIN
 
 while( true )
 {

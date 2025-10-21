@@ -12,22 +12,24 @@
 #define NEWGAME_WND_FORMAT 6
 #define NEWGAME_WND_NEWGAME 7
 
-u32 l_newgame_fade;                 // 0x801e2cf4
-u32 l_newgame_wnd;                  // 0x801e2cf8
+u32 l_newgame_fade;                         // 0x801e2cf4
+u32 l_newgame_wnd;                          // 0x801e2cf8
+
+DVECTOR l_newgame_center = {0x96, 0x5d};    // 0x801e3668
 
 u8 l_newgame_wnd_color[0xc] =
 {
     0x00, 0x00, 0xB0, 0x00, 0x00, 0x80, 0x00, 0x00, 0x50, 0x00, 0x00, 0x20
-};                                  // 0x801e368c
-u32 l_newgame_return;               // 0x801e3698
+};                                          // 0x801e368c
+u32 l_newgame_return;                       // 0x801e3698
 
-u32 l_newgame_state;                // 0x801e3d54
-u32 l_newgame_rb;                   // 0x801e3d58
-u32* l_newgame_otag_p;              // 0x801e3d5c
-u32 l_newgame_otag[0x2][0x4];       // 0x801e3d60
+u32 l_newgame_state;                        // 0x801e3d54
+u32 l_newgame_rb;                           // 0x801e3d58
+u32* l_newgame_otag_p;                      // 0x801e3d5c
+u32 l_newgame_otag[0x2][0x4];               // 0x801e3d60
 
-DRAWENV l_newgame_drawenv[0x2];     // 0x801e3e34
-DISPENV l_newgame_dispenv[0x2];     // 0x801e3eec
+DRAWENV l_newgame_drawenv[0x2];             // 0x801e3e34
+DISPENV l_newgame_dispenv[0x2];             // 0x801e3eec
 
 
 
@@ -3084,11 +3086,11 @@ u32 newgamemenu_update( u32 frame )
     {
         case NEWGAME_WND_SELECT_SLOT:
         {
-            system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + 0x6 + b[0x801e3d8b] * 0xc );
+            system_menu_draw_cursor( l_newgame_center.vx - 0x12, l_newgame_center.vy + 0x6 + b[0x801e3d8b] * 0xc );
 
             system_menu_draw_string( 0xa, 0xb, 0x801e2d20, 0x7 ); // "Select a slot."
-            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] +  0x5, 0x801e2d68, (bu[0x801e8f38] == 0) ? 0 : 0x7 ); // "SLOT 1"
-            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] + 0x11, 0x801e2d8c, (bu[0x801e8f3b] == 0) ? 0 : 0x7 ); // "SLOT 2"
+            system_menu_draw_string( l_newgame_center.vx + 0xc, l_newgame_center.vy +  0x5, 0x801e2d68, (bu[0x801e8f38] == 0) ? 0 : 0x7 ); // "SLOT 1"
+            system_menu_draw_string( l_newgame_center.vx + 0xc, l_newgame_center.vy + 0x11, 0x801e2d8c, (bu[0x801e8f3b] == 0) ? 0 : 0x7 ); // "SLOT 2"
 
             RECT rect;
             rect.x = 0;
@@ -3097,7 +3099,7 @@ u32 newgamemenu_update( u32 frame )
             rect.h = 0x100;
             system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
 
-            system_menu_draw_window( 0x801e3668 );
+            system_menu_draw_window( &l_newgame_center );
         }
         break;
 
@@ -3216,11 +3218,11 @@ u32 newgamemenu_update( u32 frame )
         {
             if( S0 & 0x0002 )
             {
-                system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + 0x6 + b[0x801e3d8b] * 0xc );
+                system_menu_draw_cursor( l_newgame_center.vx - 0x12, l_newgame_center.vy + 0x6 + b[0x801e3d8b] * 0xc );
             }
 
-            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] +  0x5, 0x801e2d68, (bu[0x801e8f38] == 0) ? 0 : 0x7 ); // "SLOT 1"
-            system_menu_draw_string( h[0x801e3668] + 0xc, h[0x801e366a] + 0x11, 0x801e2d8c, (bu[0x801e8f3b] == 0) ? 0 : 0x7 ); // "SLOT 2"
+            system_menu_draw_string( l_newgame_center.vx + 0xc, l_newgame_center.vy +  0x5, 0x801e2d68, (bu[0x801e8f38] == 0) ? 0 : 0x7 ); // "SLOT 1"
+            system_menu_draw_string( l_newgame_center.vx + 0xc, l_newgame_center.vy + 0x11, 0x801e2d8c, (bu[0x801e8f3b] == 0) ? 0 : 0x7 ); // "SLOT 2"
 
             RECT rect;
             rect.x = 0;
@@ -3229,7 +3231,7 @@ u32 newgamemenu_update( u32 frame )
             rect.h = 0x100;
             system_menu_set_draw_mode( 0, 0x1, 0x7f, &rect );
 
-            system_menu_draw_window( 0x801e3668 );
+            system_menu_draw_window( &l_newgame_center );
 
             system_menu_draw_string( 0xa, 0xb, 0x801e3320, 0x7 ); // "Not formatted"
 
@@ -3250,10 +3252,10 @@ u32 newgamemenu_update( u32 frame )
 
         case NEWGAME_WND_NEWGAME:
         {
-            system_menu_draw_cursor( h[0x801e3668] - 0x12, h[0x801e366a] + b[0x801e3e09] * 0xc + 0x6 );
+            system_menu_draw_cursor( l_newgame_center.vx - 0x12, l_newgame_center.vy + b[0x801e3e09] * 0xc + 0x6 );
 
-            system_menu_draw_string( h[0x801e3668] + 0x8, h[0x801e366a] + 0x6, 0x801e317c, 0x7 ); // "NEW GAME"
-            system_menu_draw_string( h[0x801e3668] + 0x8, h[0x801e366a] + 0x12, 0x801e2e64, ( (bu[0x801e8f38] != 0) || (bu[0x801e8f3b] != 0) ) ? 0x7 : 0 ); // "Continue?"
+            system_menu_draw_string( l_newgame_center.vx + 0x8, l_newgame_center.vy + 0x6, 0x801e317c, 0x7 ); // "NEW GAME"
+            system_menu_draw_string( l_newgame_center.vx + 0x8, l_newgame_center.vy + 0x12, 0x801e2e64, ( (bu[0x801e8f38] != 0) || (bu[0x801e8f3b] != 0) ) ? 0x7 : 0 ); // "Continue?"
 
             RECT rect;
             rect.x = 0;

@@ -48,10 +48,10 @@
 80014750 func14750
 80014804 func14804
 800148A0 func148a0
-800148B4 func148b4
+800148B4 system_init_kernel
 80014934 func14934
-80014980 func14980
-800149E0 func149e0
+80014980 system_load_decompressed_image
+800149E0 system_load_draw_sync
 80014A00 func14a00
 
 // SCUS_941_math.cpp
@@ -84,11 +84,11 @@
 80015668 func15668
 800159B0 func159b0
 80015AFC system_get_limit_command_id
-80015B44 func15b44
-80015B50 func15b50
-80015B88 func15b88
 
 // SCUS_941_gzip.cpp
+80015B44 system_gzip_set_data_block
+80015B50 system_gzip_get_type
+80015B88 system_gzip_get_size
 80015BC0 system_gzip_pack_decompress_next_block
 80015C3C system_gzip_pack_decompress_by_id
 80015CA0 system_gzip_bin_decompress

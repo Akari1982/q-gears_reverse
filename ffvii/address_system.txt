@@ -5,6 +5,8 @@
 80034cfc lzs extracted buffer.
 80034d14 lzs extract function.
 
+0x80048d84 load INIT/YAMADA.BIN here (size 0x50).
+
 0x80048dd4 destination array for kernel data by types.
     0 800707C4 command data.
     1 800708C4 attack data.
@@ -332,6 +334,8 @@
 0x80063010 [][][][] index in 0x80081dc8 array.
 80063014 [][][][] pointer to temp array for action calculation.
 
+0x80063048 load type 1 pack grom INIT/WINDOW.BIN here.
+
 80063560 we copy kernel string here to display.
 80063690 kernel strings start.
 8006893e battle and battle-screen text in kernel
@@ -404,7 +408,7 @@
 
 0x800707bc [][]     battle id.
 0x800707be [][]     battle result stored here. Loaded by opcode 0x23 btrlt.
-0x800707c0 font width data.
+0x800707c0 pointer to 0x80063048 - font width data.
 0x800707c4 command data in kernel (size 0x8).
     + 0  []       default something.
     + 1  []       target type.

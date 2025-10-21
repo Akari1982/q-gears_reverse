@@ -3381,8 +3381,8 @@ ot = A0;
 p0 = A1;
 p1 = A2;
 
-[p1] = w(w[p1] & ff000000 | w[ot] & 00ffffff);
-[ot] = w(w[ot] & ff000000 | p0 & 00ffffff);
+[p1] = w(w[p1] & 0xff000000 | w[ot] & 0x00ffffff);
+[ot] = w(w[ot] & 0xff000000 | p0 & 0x00ffffff);
 ////////////////////////////////
 
 
@@ -3396,7 +3396,7 @@ p1 = A2;
 p0 = A0;
 p1 = A1;
 
-[p0] = w((w[p0] & ff000000) | (p1 & 00ffffff));
+[p0] = w((w[p0] & ff000000) | (p1 & 0x00ffffff));
 ////////////////////////////////
 
 
@@ -3406,7 +3406,7 @@ p1 = A1;
 // Sets the tag pointer of the primitive specified by p to point at a special terminator value that signals the end
 // of the list when it is executed. Any primitives already pointed to by p are removed from the list.
 
-[A0] = w(w[A0] | 00ffffff);
+[A0] = w(w[A0] | 0x00ffffff);
 ////////////////////////////////
 
 
@@ -3436,7 +3436,6 @@ void system_psyq_set_shade_tex( void* p, int tge )
         p->code &= 0xfe;
     }
 }
-////////////////////////////////
 
 
 

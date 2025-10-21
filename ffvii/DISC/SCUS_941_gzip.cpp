@@ -1,3 +1,26 @@
+void system_gzip_set_data_block( u32 )
+{
+    [GP + 0xec] = w(A0);
+}
+
+
+
+u16 system_gzip_get_type()
+{
+    A0 = w[GP + 0xec];
+    return ( hu[A0 + 0x0] != 0 ) ? hu[A0 + 0x4] : 0xffff;
+}
+
+
+
+u16 system_gzip_get_size()
+{
+    A0 = w[GP + 0xec];
+    return ( hu[A0 + 0x0] != 0 ) ? hu[A0 + 0x2] : 0;
+}
+
+
+
 int system_gzip_pack_decompress_next_block( u32 dst )
 {
     u32 data = w[GP + 0xec];
