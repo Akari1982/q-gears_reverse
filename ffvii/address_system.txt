@@ -211,7 +211,8 @@
                                4 - change from one menu to another without return
                                5 - back to main menu
                                6 - play fadeout and menu list expand animation
-    + b8              []       number of letters in string to render.
+    + b8              []       max string length to render.
+    + b9              []       use draw mode for whole string render or for individual letters.
     + b0              []       global or single letter draw mode for menu text render (0 - single letter, whole string otherwise).
     + bc (0x80062e00) [][][][] sound event.
     +110              []       store array of values from 0x5 type materia to use in paired functions.
