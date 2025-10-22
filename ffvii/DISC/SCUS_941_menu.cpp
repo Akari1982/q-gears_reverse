@@ -1,6 +1,9 @@
 ﻿u32* g_menu_poly;       // 0x80062f24
 u32* g_menu_otag;       // 0x80062fc4
 
+u8 l_max_string_size;   // 0x80062dfc (GP + 0xb8)
+u8 l_str_global_mode;   // 0x80062dfd (GP + 0xb9)
+
 
 
 void func1c434()
@@ -29,11 +32,11 @@ void func1c434()
 ////////////////////////////////
 // func1c498()
 
-if( bu[0x800696ac + 0] == ff ) return 0; // FFh=timeout/wrong ID2
+if( bu[0x800696ac + 0] == 0xff ) return 0; // FFh=timeout/wrong ID2
 
-if( bu[0x800696ac + 1] != 41 ) return 0; // 41h=digital_pad
+if( bu[0x800696ac + 0x1] != 0x41 ) return 0; // 41h=digital_pad
 
-return (bu[0x800696ac + 3] NOR (bu[0x800696ac + 2] << 8)) & ffff; // get buttons state
+return (bu[0x800696ac + 0x3] NOR (bu[0x800696ac + 0x2] << 0x8)) & 0xffff; // get buttons state
 ////////////////////////////////
 
 
@@ -675,27 +678,27 @@ for( int i = 0, count = 0; i < 0x400; ++i, ++count )
         if( w[GP + 0x7c] != 0 ) system_psyq_set_semi_trans( g_menu_poly, 0x1 );
 
         [g_menu_poly + 0x8] = h(pos_x);
-        [g_menu_poly + 0xa] = h(pos_y - 2);
+        [g_menu_poly + 0xa] = h(pos_y - 0x2);
 
         if( letter == 0xf6 ) // circle
         {
-            [g_menu_poly + c] = b(0x60);
-            [g_menu_poly + d] = b(0x40);
+            [g_menu_poly + 0xc] = b(0x60);
+            [g_menu_poly + 0xd] = b(0x40);
         }
         if( letter == 0xf7 ) // triangle
         {
-            [g_menu_poly + c] = b(0x90);
-            [g_menu_poly + d] = b(0x40);
+            [g_menu_poly + 0xc] = b(0x90);
+            [g_menu_poly + 0xd] = b(0x40);
         }
         if( letter == 0xf8 ) // square
         {
-            [g_menu_poly + c] = b(0x80);
-            [g_menu_poly + d] = b(0x40);
+            [g_menu_poly + 0xc] = b(0x80);
+            [g_menu_poly + 0xd] = b(0x40);
         }
         if( letter == 0xf9 ) // cross
         {
-            [g_menu_poly + c] = b(0x70);
-            [g_menu_poly + d] = b(0x40);
+            [g_menu_poly + 0xc] = b(0x70);
+            [g_menu_poly + 0xd] = b(0x40);
         }
 
         [g_menu_poly + e] = h(system_psyq_get_clut( 0x100, 0x1ea ));
@@ -840,22 +843,22 @@ for( int i = 0, count = 0; i < 0x400; ++i, ++count )
         }
 
         letter = bu[message];
-        tex_x = (letter % 15) * c;
-        tex_y += (letter / 15) * c;
+        tex_x = (letter % 0x15) * 0xc;
+        tex_y += (letter / 0x15) * 0xc;
         font_padding = w[0x800707c0];
-        letter_pad = bu[font_padding + letter + set_start] >> 5;
-        letter_w = bu[font_padding + letter + set_start] & 1f;
+        letter_pad = bu[font_padding + letter + set_start] >> 0x5;
+        letter_w = bu[font_padding + letter + set_start] & 0x1f;
 
         if( dialog_width < ( pos_x + letter_pad + letter_w ) ) // if this letter is on next row
         {
-            pos_x = 8;
-            pos_y = pos_y + 10;
-            [GP + 0x258] = w(w[GP + 0x258] + 1);
+            pos_x = 0x8;
+            pos_y += 0x10;
+            [GP + 0x258] = w(w[GP + 0x258] + 0x1);
         }
 
         if( w[GP + 0x80] == 0 ) // if not monowidth
         {
-            pos_x = pos_x + letter_pad;
+            pos_x += letter_pad;
         }
 
         V1 = g_menu_poly;
@@ -869,32 +872,25 @@ for( int i = 0, count = 0; i < 0x400; ++i, ++count )
             system_psyq_set_semi_trans( g_menu_poly, 0x1 );
         }
 
-        V0 = g_menu_poly;
-        [V0 + 8] = h(pos_x);
-        [V0 + a] = h(pos_y);
-        [V0 + c] = b(tex_x);
-        [V0 + d] = b(tex_y);
-        [V0 + 10] = h(c);
-        [V0 + 12] = h(c);
+        [g_menu_poly + 0x8] = h(pos_x);
+        [g_menu_poly + 0xa] = h(pos_y);
+        [g_menu_poly + 0xc] = b(tex_x);
+        [g_menu_poly + 0xd] = b(tex_y);
+        [g_menu_poly + 0xe] = h(system_psyq_get_clut( clut_x | 100, clut_y ));
+        [g_menu_poly + 0x10] = h(c);
+        [g_menu_poly + 0x12] = h(c);
 
-        A0 = clut_x | 100;
-        A1 = clut_y;
-        system_psyq_get_clut();
-
-        V1 = g_menu_poly;
-        [V1 + e] = h(V0);
 
         system_psyq_add_prim( g_menu_otag, g_menu_poly );
-
         g_menu_poly += 0x14;
 
         if( w[GP + 0x80] == 0 ) // if not monowidth
         {
-            pos_x = pos_x + letter_w;
+            pos_x += letter_w;
         }
         else
         {
-            pos_x = pos_x + d;
+            pos_x += 0xd;
         }
 
         message = message + 1;
@@ -1569,7 +1565,7 @@ number_to_render = A1; // 4 in field, 1 in wm
 ot = A2;
 buffer_id = A3;
 
-[0x80062dfd] = b(1);
+l_str_global_mode = 0x1;
 [GP + 0x76] = h(hu[GP + 0x76] + 1);
 g_menu_otag = ot;
 g_menu_poly = 0x80077f64 + buffer_id * 0x3400; // set buffer for primitives
@@ -4161,7 +4157,7 @@ switch( h[GP + 0x94] )
 // func22de4()
 
 [GP + 0x16c] = h(0);
-[0x80062dfd] = b(1);
+l_str_global_mode = 0x1;
 
 A0 = 0;
 func15668();
@@ -4966,16 +4962,16 @@ if( w[GP + 0xb4] == 1 ) // normal menu list
     {
         if( w[GP + 0x220] == 0 ) // menu list selection
         {
-            A0 = 10b;
-            A1 = d + b[0x8009a0c8 + 0 * 12 + b] * c;
+            A0 = 0x10b;
+            A1 = 0xd + b[0x8009a0c8 + 0 * 0x12 + 0xb] * 0xc;
             system_menu_draw_cursor();
         }
-        else if( w[GP + 0x220] == 1 ) // character selection
+        else if( w[GP + 0x220] == 0x1 ) // character selection
         {
-            if( frame & 2 ) // blinking selected
+            if( frame & 0x2 ) // blinking selected
             {
-                A0 = 10b;
-                A1 = d + b[0x8009a0c8 + 0 * 12 + b] * c;
+                A0 = 0x10b;
+                A1 = 0xd + b[0x8009a0c8 + 0 * 0x12 + 0xb] * 0xc;
                 system_menu_draw_cursor();
             }
 
@@ -5307,7 +5303,7 @@ tutorial_data = A0;
 [GP + 0x1c8] = w(0); // previous menu for animation to play
 [GP + 0x250] = w(0); // selected menu
 
-[0x80062dfd] = b(0);
+l_str_global_mode = 0;
 
 if( tutorial_data == 0 )
 {
@@ -6956,11 +6952,10 @@ void func26b5c( u8 A0 )
 
 
 
-////////////////////////////////
-// func26b64()
-
-[GP + 0xb8] = b(A0);
-////////////////////////////////
+void func26b64( u8 max )
+{
+    l_max_string_size = max;
+}
 
 
 
@@ -6969,7 +6964,7 @@ void func26b5c( u8 A0 )
 
 A2 = 0;
 
-if( bu[GP + 0xb8] <= 0 )
+if( l_max_string_size <= 0 )
 {
     return 0;
 }
@@ -7029,7 +7024,7 @@ loop26ba0:	; 80026BA0
     A1 = A1 + V1 >> 5 + V1 & 1f;
 
     A2 = A2 + 1;
-    V0 = A2 < bu[GP + 0xb8];
+    V0 = A2 < l_max_string_size;
 80026C44	bne    v0, zero, loop26ba0 [$80026ba0]
 
 return A1;
@@ -7099,48 +7094,42 @@ s16 system_menu_draw_single_letter( s16 x, s16 y, u8 color, u8* letter )
     u8 glyph = *letter;
     font_padding = w[0x800707c0];
 
-    prim = g_menu_poly;
-    [prim + 3] = b(4);
-    [prim + 7] = b(64); // Textured Rectangle, variable size, opaque, texture-blending
+    SETSPRT( g_menu_poly );
 
-    letter_pad = bu[font_padding + glyph + set_start] >> 5;
-    letter_w = bu[font_padding + glyph + set_start] & 1f
+    letter_pad = bu[font_padding + glyph + set_start] >> 0x5;
+    letter_w = bu[font_padding + glyph + set_start] & 0x1f
 
-    system_psyq_set_shade_tex( prim, 0x1 );
+    system_psyq_set_shade_tex( g_menu_poly, 0x1 );
 
     x += letter_pad;
     tex_x = (glyph % 0x15) * 0xc;
     tex_y += (glyph / 0x15) * 0xc;
 
-    [prim + 0x8] = h(x);
-    [prim + 0xa] = h(y);
-    [prim + 0xc] = b(tex_x);
-    [prim + 0xd] = b(tex_y);
-    [prim + 0xe] = h(system_psyq_get_clut( clut_x | 0x100, color + 0x1f0 ));
-    [prim + 0x10] = h(0xc); // width
-    [prim + 0x12] = h(0xc); // height
+    g_menu_poly->x0 = x;
+    g_menu_poly->y0 = y;
+    g_menu_poly->u0 = tex_x;
+    g_menu_poly->v0 = tex_y;
+    g_menu_poly->clut = system_psyq_get_clut( clut_x | 0x100, color + 0x1f0 );
+    g_menu_poly->w = 0xc;
+    g_menu_poly->h = 0xc;
 
-    system_psyq_add_prim( g_menu_otag, prim );
-
-    prim += 0x14;
+    system_psyq_add_prim( g_menu_otag, g_menu_poly );
+    g_menu_poly += 0x14;
 
     x += letter_w;
 
-    if( bu[GP + 0xb9] == 0 )
+    if( l_str_global_mode == 0 )
     {
         RECT rect;
         rect.x = 0;
         rect.y = 0;
         rect.w = 0xff;
         rect.h = 0xff;
-        system_psyq_set_draw_mode( prim, 0, 0x1, (((tpage + 0x380) & 0x3ff) >> 0x6) | 0x30, &rect );
+        system_psyq_set_draw_mode( g_menu_poly, 0, 0x1, (((tpage + 0x380) & 0x3ff) >> 0x6) | 0x30, &rect );
 
-        system_psyq_add_prim( g_menu_otag, prim );
-
-        prim += 0xc;
+        system_psyq_add_prim( g_menu_otag, g_menu_poly );
+        g_menu_poly += 0xc;
     }
-
-    g_menu_poly = prim;
 
     return x;
 }
@@ -7151,14 +7140,13 @@ void system_menu_draw_string( s16 x, s16 y, u8* text, u8 color )
 {
     if( text == 0 ) return;
 
-    for( int i = 0; i < bu[GP + 0xb8]; ++i )
+    for( int i = 0; i < l_max_string_size; ++i )
     {
         letter = bu[text];
 
         if( letter == 0xff ) break;
 
-        // fa fb fc fd fe f8
-        if( ( ( ( letter + 0x6 ) & ff ) < 0x5 ) || ( letter == 0xf8 ) )
+        if( (letter == 0xf8) || (letter == 0xfa) || (letter == 0xfb) || (letter == 0xfc) || (letter == 0xfd) || (letter == 0xfe) )
         {
             A3 = bu[text + 0x1] | letter;
             text += 0x2;
@@ -7172,7 +7160,7 @@ void system_menu_draw_string( s16 x, s16 y, u8* text, u8 color )
         x = system_menu_draw_single_letter( x, y, color, A3 );
     }
 
-    if( bu[GP + 0xb9] != 0 )
+    if( l_str_global_mode != 0 )
     {
         RECT rect;
         rect.x = 0;
@@ -7189,16 +7177,71 @@ void system_menu_draw_string( s16 x, s16 y, u8* text, u8 color )
 
 
 
-////////////////////////////////
-// system_menu_draw_single_font_letter()
-
-pos_x = A0;
-pos_y = A1;
-character = A2;
-color = A3;
-
-if( character < 29 ) // dakuten characters
+int system_menu_draw_single_font_letter()
 {
+    pos_x = A0;
+    pos_y = A1;
+    character = A2;
+    color = A3;
+
+    if( character < 29 ) // dakuten characters
+    {
+        packet = g_menu_poly;
+        [packet + 3] = b(3);
+        [packet + 7] = b(74);
+
+        A0 = packet;
+        A1 = 1;
+        system_psyq_set_shade_tex();
+
+        [packet + 8] = h(pos_x);
+        [packet + a] = h(pos_y - 8);
+        [packet + c] = b(88);
+        [packet + d] = b(98);
+
+        A0 = 100;
+        A1 = (color & ff) + 1e0;
+        system_psyq_get_clut();
+
+        [packet + e] = h(V0);
+
+        g_menu_poly = packet + 0x10;
+
+        system_psyq_add_prim( g_menu_otag, packet );
+
+        character = character + 40;
+    }
+    else if( ( ( ( character + 4c ) & ff ) >= 1a ) && ( ( ( character - 29 ) & ff ) < a ) ) // handakuten characters
+    {
+        packet = g_menu_poly;
+        [packet + 3] = b(3);
+        [packet + 7] = b(74);
+
+        A0 = packet;
+        A1 = 1;
+        system_psyq_set_shade_tex();
+
+        [packet + 8] = h(pos_x);
+        [packet + a] = h(pos_y - 8);
+        [packet + c] = b(90);
+        [packet + d] = b(98);
+
+        A0 = 100;
+        A1 = (color & ff) + 1e0;
+        system_psyq_get_clut();
+
+        [packet + e] = h(V0);
+
+        g_menu_poly = packet + 0x10;
+
+        system_psyq_add_prim( g_menu_otag, packet );
+
+        character = character + 17;
+    }
+
+    tex_x = ((character & f) * 8) | 80;
+    tex_y = ((character >> 4) * 8) | 80;
+
     packet = g_menu_poly;
     [packet + 3] = b(3);
     [packet + 7] = b(74);
@@ -7208,75 +7251,19 @@ if( character < 29 ) // dakuten characters
     system_psyq_set_shade_tex();
 
     [packet + 8] = h(pos_x);
-    [packet + a] = h(pos_y - 8);
-    [packet + c] = b(88);
-    [packet + d] = b(98);
+    [packet + a] = h(pos_y);
+    [packet + c] = b(tex_x);
+    [packet + d] = b(tex_y);
 
     A0 = 100;
     A1 = (color & ff) + 1e0;
     system_psyq_get_clut();
-
     [packet + e] = h(V0);
 
     g_menu_poly = packet + 0x10;
 
     system_psyq_add_prim( g_menu_otag, packet );
-
-    character = character + 40;
 }
-else if( ( ( ( character + 4c ) & ff ) >= 1a ) && ( ( ( character - 29 ) & ff ) < a ) ) // handakuten characters
-{
-    packet = g_menu_poly;
-    [packet + 3] = b(3);
-    [packet + 7] = b(74);
-
-    A0 = packet;
-    A1 = 1;
-    system_psyq_set_shade_tex();
-
-    [packet + 8] = h(pos_x);
-    [packet + a] = h(pos_y - 8);
-    [packet + c] = b(90);
-    [packet + d] = b(98);
-
-    A0 = 100;
-    A1 = (color & ff) + 1e0;
-    system_psyq_get_clut();
-
-    [packet + e] = h(V0);
-
-    g_menu_poly = packet + 0x10;
-
-    system_psyq_add_prim( g_menu_otag, packet );
-
-    character = character + 17;
-}
-
-tex_x = ((character & f) * 8) | 80;
-tex_y = ((character >> 4) * 8) | 80;
-
-packet = g_menu_poly;
-[packet + 3] = b(3);
-[packet + 7] = b(74);
-
-A0 = packet;
-A1 = 1;
-system_psyq_set_shade_tex();
-
-[packet + 8] = h(pos_x);
-[packet + a] = h(pos_y);
-[packet + c] = b(tex_x);
-[packet + d] = b(tex_y);
-
-A0 = 100;
-A1 = (color & ff) + 1e0;
-system_psyq_get_clut();
-[packet + e] = h(V0);
-
-g_menu_poly = packet + 0x10;
-
-system_psyq_add_prim( g_menu_otag, packet );
-////////////////////////////////
 
 
 
@@ -7293,7 +7280,7 @@ if( pointer == 0 )
     return;
 }
 
-for( int i = 0; i < bu[GP + 0xb8]; ++i )
+for( int i = 0; i < l_max_string_size; ++i )
 {
     A2 = bu[pointer];
     if( A2 == ff )

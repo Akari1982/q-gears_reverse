@@ -2439,7 +2439,7 @@ void func1d2da8()
     801D2DF0	bltz   v1, L1d32b0 [$801d32b0]
     V0 = V1 < 0003;
     801D2DF8	beq    v0, zero, L1d32b0 [$801d32b0]
-    801D2DFC	nop
+
     801D2E00	j      L1d2e40 [$801d2e40]
     801D2E04	nop
 

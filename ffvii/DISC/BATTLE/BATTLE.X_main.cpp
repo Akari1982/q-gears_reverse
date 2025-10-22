@@ -1542,8 +1542,7 @@ V0 = V0 & 0010;
 800A2DF0	bne    v0, zero, La2eec [$800a2eec]
 800A2DF4	addiu  v0, v1, $fffc (=-$4)
 V0 = V0 << 04;
-800A2DFC	lui    at, $8016
-AT = AT + V0;
+AT = 0x80160000 + V0;
 V1 = h[AT + 3658];
 800A2E08	nop
 V0 = V1 << 01;
