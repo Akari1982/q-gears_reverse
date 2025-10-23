@@ -4,7 +4,7 @@ u16 g_bg3_anim_start;// 0x801144c8
 
 
 
-void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgId* bg_anim, DR_MODE* dm )
+void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgAnim* bg_anim, DR_MODE* dm )
 {
     V0 = w[0x8009d848];
     background = w[V0];

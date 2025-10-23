@@ -16,7 +16,7 @@ field_model_struct_init();
 field_id = h[0x8009a05c];
 A0 = w[0x800da5b8 + field_id * 18 + 10];
 A1 = w[0x800da5b8 + field_id * 18 + 14];
-A2 = 801b0000;
+A2 = 0x801b0000;
 A3 = 0;
 system_cdrom_start_load_lzs();
 

@@ -16689,7 +16689,7 @@ V1 = bu[A3 + 0000];
 V0 = bu[A3 + 0001];
 800E4D88	nop
 800E4D8C	bne    v1, v0, Le4db4 [$800e4db4]
-800E4D90	nop
+
 V0 = bu[A3 + 0002];
 800E4D98	nop
 800E4D9C	bne    v1, v0, Le4db4 [$800e4db4]

@@ -12,14 +12,14 @@ void field_rain_init( FieldRenderData* render_data )
         g_field_rain[i].render = 0;
 
         system_psyq_set_line_f2( &render_data->rain[i] );
-        system_psyq_set_semi_trans( &render_data->rain[i], 1 );
+        system_psyq_set_semi_trans( &render_data->rain[i], 0x1 );
 
         render_data->rain[i].r0 = 0x10;
         render_data->rain[i].g0 = 0x10;
         render_data->rain[i].b0 = 0x10;
     }
 
-    system_psyq_set_draw_mode( &render_data->rain_dm, 0, 0, system_psyq_get_tpage( 0, 1, 0, 0 ), 0 );
+    system_psyq_set_draw_mode( &render_data->rain_dm, 0, 0, system_psyq_get_tpage( 0, 0x1, 0, 0 ), 0 );
 }
 
 

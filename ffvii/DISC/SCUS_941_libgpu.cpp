@@ -706,40 +706,35 @@ V0 = A0;
 
 
 
-////////////////////////////////
-// func436c0()
-
-address = A0;
-tp = A1;
-abr = A2;
-vram_x = A3;
-vram_y = A4;
-width = A5;
-height = A6;
-
-[SP + 10] = h(vram_x);
-[SP + 12] = h(vram_y);
-[SP + 16] = h(height);
-
-if( tp == 0 )
+// Loads a texture pattern from the memory area starting at the address pix into the frame buffer area starting
+// at the address (x, y), and calculates the texture page ID for the loaded texture pattern.
+// The texture pattern size w represents the number of pixels, not the actual size of the transfer area in the
+// frame buffer....
+// LoadTPage() calls LoadImage() internally.
+u16 system_psyq_load_tpage( u32* pix, int tp, int abr, int x, int y, int w, int h )
 {
-    [SP + 14] = h(width / 4);
-}
-else if( tp == 1 )
-{
-    [SP + 14] = h(width / 2);
-}
-else if( tp == 2 )
-{
-    [SP + 14] = h(width);
-}
+    RECT rect;
+    rect.x = x;
+    rect.y = y;
+    rect.h = h;
 
-system_psyq_load_image( SP + 0x10, address );
+    if( tp == 0 )
+    {
+        rect.w = w / 0x4;
+    }
+    else if( tp == 0x1 )
+    {
+        rect.w = w / 0x2;
+    }
+    else if( tp == 0x2 )
+    {
+        rect.w = w;
+    }
 
-system_psyq_get_tpage( tp, abr, vram_x, vram_y );
+    system_psyq_load_image( &rect, pix );
 
-return V0;
-////////////////////////////////
+    return system_psyq_get_tpage( tp, abr, x, y );
+}
 
 
 

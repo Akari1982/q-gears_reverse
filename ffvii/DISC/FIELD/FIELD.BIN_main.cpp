@@ -314,8 +314,7 @@ void field_main()
 
         funcbb1b4(); // enable party models and unlink unused models
 
-        A0 = 8007e7ac;
-        field_line_clear_all_actors();
+        field_line_clear_all_actors( 0x8007e7ac );
 
         [0x800716d0] = b(0); // random encounter related
 
@@ -324,9 +323,7 @@ void field_main()
 
         if( ( h[0x800965ec] != 0x5 ) && ( h[0x800965ec] != 0xd ) ) // if was not nemu
         {
-            A0 = 0;
-            A1 = 0x80128000;
-            field_load_mim_to_vram();
+            field_load_mim_to_vram( 0, 0x80128000 );
         }
 
         if( h[0x800965ec] == 0x2 ) // if it was battle
@@ -353,13 +350,8 @@ void field_main()
         [0x8007eb79] = b(0);
         [0x8007eb8d] = b(0);
 
-        V0 = h[0x80075dec];
-        A0 = 8007eb68 + V0 * 14;
-        system_psyq_put_dispenv();
-
-        V0 = h[0x80075dec];
-        A0 = 8007eaac + V0 * 5c;
-        system_psyq_put_drawenv();
+        system_psyq_put_dispenv( 8007eb68 + h[0x80075dec] * 0x14 );
+        system_psyq_put_drawenv( 8007eaac + h[0x80075dec] * 0x5c );
 
         [0x800965ec] = h(0x1); // set prev game state as field
 
@@ -450,22 +442,12 @@ void field_main()
 
 void field_main_loop()
 {
-    // contain move and button update, animation handler and many others
-    // model new structure inited here
-
-    [SP + 0x10] = w(w[0x800a0024]); // x 0x0000       y 0x0000
-    [SP + 0x14] = w(w[0x800a0028]); // w 0x01E0 (480) h 0x0008
-    [SP + 0x18] = w(w[0x800a002c]); // x 0x0000       y 0x00E8 (232)
-    [SP + 0x1c] = w(w[0x800a0030]); // w 0x01E0 (480) h 0x0008
-    [SP + 0x20] = w(w[0x800a0034]); // x 0x0000       y 0x01D0 (464)
-    [SP + 0x24] = w(w[0x800a0038]); // w 0x01E0       h 0x0008
-
-    [SP + 0x28] = w(w[0x800a003c]); // x 0x0000       y 0x0000
-    [SP + 0x2c] = w(w[0x800a0040]); // w 0x0140 (320) h 0x0008
-    [SP + 0x30] = w(w[0x800a0044]); // x 0x0000       y 0x00E8
-    [SP + 0x34] = w(w[0x800a0048]); // w 0x0140       h 0x0008
-    [SP + 0x38] = w(w[0x800a004c]); // x 0x0000       y 0x01D0
-    [SP + 0x3c] = w(w[0x800a0050]); // w 0x0140       h 0x0008
+    RECT rect1 = { 0x0, 0x0, 0x1e0, 0x8 }
+    RECT rect2 = { 0x0, 0xe0, 0x1e0, 0x8 }
+    RECT rect3 = { 0x0, 0x1d0, 0x1e0, 0x8 }
+    RECT rect4 = { 0x0, 0x0, 0x140, 0x8 }
+    RECT rect5 = { 0x0, 0xe8, 0x140, 0x8 }
+    RECT rect6 = { 0x0, 0x1d0, 0x140, 0x8 }
 
     [0x8007eb90] = w(0xa0); // base offset x for DRAWENV
     [0x8007eb94] = w(0x78); // base offset y for DRAWENV
@@ -486,8 +468,8 @@ void field_main_loop()
         funca5fb4(); // move PC model position init by walkmesh
     }
 
-    field_background_init_packets( &g_field_render_data[0].bg_1, &g_field_render_data[0].bg_1, &g_field_render_data[0].bg_anim, &g_field_render_data[0].bg_dm );
-    field_background_init_packets( &g_field_render_data[1].bg_1, &g_field_render_data[1].bg_2, &g_field_render_data[1].bg_anim, &g_field_render_data[1].bg_dm );
+    field_background_init_packets( g_field_render_data[0].bg_1, g_field_render_data[0].bg_2, g_field_render_data[0].bg_anim, g_field_render_data[0].bg_dm );
+    field_background_init_packets( g_field_render_data[1].bg_1, g_field_render_data[1].bg_2, g_field_render_data[1].bg_anim, g_field_render_data[1].bg_dm );
 
     field_rain_init( &g_field_render_data[0] );
     field_rain_init( &g_field_render_data[1] );
@@ -682,32 +664,32 @@ void field_main_loop()
         }
 
         system_psyq_put_dispenv( 0x8007eb68 + buf_id * 0x14 );
-        system_psyq_put_drawenv( 0x8007eaac + buf_id * 0x5c );
+        system_psyq_put_drawenv( &g_draw_env[buf_id] );
 
         if( hu[0x80114488] == 0 ) // normal render
         {
-            system_psyq_clear_image( 0x8007eaac + buf_id * 0x5c, 0, 0, 0 );
+            system_psyq_clear_image( &(g_draw_env[buf_id].clip), 0, 0, 0 );
         }
         else // movie
         {
             // clear first or second frame
             if( bu[0x8007eb79 + buf_id * 0x14] == 0 )
             {
-                system_psyq_clear_image( SP + 0x28, 0, 0, 0 );
-                system_psyq_clear_image( SP + 0x30, 0, 0, 0 );
-                system_psyq_clear_image( SP + 0x38, 0, 0, 0 );
+                system_psyq_clear_image( &rect4, 0, 0, 0 );
+                system_psyq_clear_image( &rect5, 0, 0, 0 );
+                system_psyq_clear_image( &rect6, 0, 0, 0 );
             }
             else
             {
-                system_psyq_clear_image( SP + 0x10, 0, 0, 0 );
-                system_psyq_clear_image( SP + 0x18, 0, 0, 0 );
-                system_psyq_clear_image( SP + 0x20, 0, 0, 0 );
+                system_psyq_clear_image( &rect1, 0, 0, 0 );
+                system_psyq_clear_image( &rect2, 0, 0, 0 );
+                system_psyq_clear_image( &rect3, 0, 0, 0 );
             }
         }
 
         // store env for movie
         [0x8007ebd8] = w(0x8007eb68 + buf_id * 0x14); // DISPENV
-        [0x8007ebd0] = w(0x80113f2c + buf_id * 0x5c); // DRAWENV
+        [0x8007ebd0] = w(&g_bg_draw_env[buf_id]); // DRAWENV
         funcab310(); // play movie?
 
         if( bu[0x8009abf4 + 0x38] == 0 )
@@ -728,88 +710,60 @@ void field_main_loop()
 
 
 
-////////////////////////////////
-// field_load_mim_to_vram()
-
-mim_data = A1;
-
-// 1st part of mim - palette settings
-[0x800e4d90] = w(mim_data + c);
-[0x800e4d94] = w(w[mim_data + 0]);
-[0x800e4d98] = h(hu[mim_data + 4]);
-[0x800e4d9a] = h(hu[mim_data + 6]);
-[0x800e4d9c] = h(hu[mim_data + 8]);
-[0x800e4d9e] = h(hu[mim_data + a]);
-
-// 2nd part 1st image
-mim_data = mim_data + ((w[mim_data + 0] >> 2) << 2);
-[0x800e4da4] = w(mim_data + c);
-[0x800e4da8] = w(w[mim_data + 0]);
-[0x800e4dac] = h(hu[mim_data + 4]);
-[0x800e4dae] = h(hu[mim_data + 6]);
-[0x800e4db0] = h(hu[mim_data + 8] * 2);
-[0x800e4db2] = h(hu[mim_data + a]);
-
-// 3rd part 2nd image
-mim_data = mim_data + ((w[mim_data + 0] >> 2) << 2);
-[0x800e4dd4] = w(mim_data + c);
-[0x800e4dd8] = w(w[mim_data + 0]);
-[0x800e4ddc] = h(hu[mim_data + 4]);
-[0x800e4dde] = h(hu[mim_data + 6]);
-[0x800e4de0] = h(hu[mim_data + 8] << 1);
-[0x800e4de2] = h(hu[mim_data + a]);
-
-A0 = 0;
-system_psyq_draw_sync();
-
-// load palette to vram
+void field_load_mim_to_vram( A0, mim_data )
 {
-    [SP + 20] = h(0);
-    [SP + 22] = h(1e0);
-    [SP + 24] = h(100);
-    [SP + 26] = h(10);
-    
-    A0 = SP + 20;
-    A1 = w[0x800e4d90];
-    system_psyq_load_image();
-    
-    A0 = 0;
-    system_psyq_draw_sync();
+    // 1st part of mim - palette settings
+    [0x800e4d90] = w(mim_data + 0xc);
+    [0x800e4d94] = w(w[mim_data + 0x0]);
+    [0x800e4d98] = h(hu[mim_data + 0x4]);
+    [0x800e4d9a] = h(hu[mim_data + 0x6]);
+    [0x800e4d9c] = h(hu[mim_data + 0x8]);
+    [0x800e4d9e] = h(hu[mim_data + 0xa]);
+
+    // 2nd part 1st image
+    mim_data += (w[mim_data + 0x0] >> 0x2) << 0x2;
+    [0x800e4da4] = w(mim_data + 0xc);
+    [0x800e4da8] = w(w[mim_data + 0x0]);
+    [0x800e4dac] = h(hu[mim_data + 0x4]);
+    [0x800e4dae] = h(hu[mim_data + 0x6]);
+    [0x800e4db0] = h(hu[mim_data + 0x8] * 0x2);
+    [0x800e4db2] = h(hu[mim_data + 0xa]);
+
+    // 3rd part 2nd image
+    mim_data += (w[mim_data + 0x0] >> 0x2) << 0x2;
+    [0x800e4dd4] = w(mim_data + 0xc);
+    [0x800e4dd8] = w(w[mim_data + 0x0]);
+    [0x800e4ddc] = h(hu[mim_data + 0x4]);
+    [0x800e4dde] = h(hu[mim_data + 0x6]);
+    [0x800e4de0] = h(hu[mim_data + 0x8] * 0x2);
+    [0x800e4de2] = h(hu[mim_data + 0xa]);
+
+    system_psyq_draw_sync( 0 );
+
+    // load palette to vram
+    {
+        RECT rect;
+        rect.x = 0;
+        rect.y = 0x1e0;
+        rect.w = 0x100;
+        rect.h = 0x10;
+        system_psyq_load_image( &rect, w[0x800e4d90] );
+        system_psyq_draw_sync( 0 );
+    }
+
+    // load 1st image to vram
+    {
+        [0x800e4db4] = h(system_psyq_load_tpage( w[0x800e4da4], 0x1, 0, h[0x800e4dac], h[0x800e4dae], hu[0x800e4db0], hu[0x800e4db2] ));
+        system_psyq_draw_sync( 0 );
+    }
+
+    // load 2nd image to vram
+    if( w[0x800e4dd8] != 0 )
+    {
+        [0x800e4de4] = h(system_psyq_load_tpage( w[0x800e4dd4], 0x1, 0, h[0x800e4ddc], h[0x800e4dde], hu[0x800e4de0], hu[0x800e4de2] ));
+        system_psyq_draw_sync( 0 );
+    }
 }
-
-// load 1st image to vram
-{
-    A0 = w[0x800e4da4]; // address
-    A1 = 1; // tp 8 bit clut
-    A2 = 0; // abr
-    A3 = h[0x800e4dac]; // vram_x
-    A4 = h[0x800e4dae]; // vram_y
-    A5 = hu[0x800e4db0]; // width
-    A6 = hu[0x800e4db2]; // height
-    func436c0(); // load texture to vram and return texpage settings to use this texture
-    [0x800e4db4] = h(V0);
-
-    A0 = 0;
-    system_psyq_draw_sync();
-}
-
-// load 2nd image to vram
-if( w[0x800e4dd8] != 0 )
-{
-    A0 = w[0x800e4dd4];
-    A1 = 1; // tp 8 bit clut
-    A2 = 0; // abr
-    A3 = h[0x800e4ddc]; // vram_x
-    A4 = h[0x800e4dde]; // vram_y
-    A5 = hu[0x800e4de0]; // width
-    A6 = hu[0x800e4de2]; // height
-    func436c0(); // load texture to vram and return texpage settings to use this texture
-    [0x800e4de4] = h(V0);
-
-    A0 = 0;
-    system_psyq_draw_sync();
-}
-////////////////////////////////
 
 
 

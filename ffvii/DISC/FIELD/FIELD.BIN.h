@@ -17,10 +17,10 @@ struct FieldRenderData
     DR_ENV bg_drenv4_s;         // 0x4254 start dynamic layer 4
     DR_ENV bg_drenv3_e;         // 0x4294 end dynamic layer 3
     DR_ENV bg_drenv4_e;         // 0x42d4 end dynamic layer 4
-    SPRT_16 bg_1[0x9c4];        // 0x4914 draft 1st and 2nd layer
-    SPRT bg_2[0x200];           // 0xe554 draft 3rd and 4th layer
-    FieldBgAnim bg_anim[0xbc4]; // 0x10d54 animation packets data
-    DR_MODE bg_dm[0x6a4]        // 0x124dc draw mode
+    SPRT_16 bg_1[0x9c4];        // 0x4914 poly 1st and 2nd layer
+    SPRT bg_2[0x200];           // 0xe554 poly 3rd and 4th layer
+    FieldBgAnim bg_anim[0xbc4]; // 0x10d54 animation data
+    DR_MODE bg_dm[0x6a4];       // 0x124dc draw mode
     u32 ot_ui;                  // 0x1748c
     DR_MODE rain_dm;            // 0x17490
     LINE_F2 rain[0x40];         // 0x1749c

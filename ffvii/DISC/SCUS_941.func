@@ -992,7 +992,7 @@
 80043634 func43634
 80043644 func43644
 80043654 func43654
-800436C0 func436c0
+800436C0 system_psyq_load_tpage
 800437AC func437ac
 80043814 system_psyq_set_def_drawenv
 800438D4 system_psyq_set_def_dispenv
