@@ -44,7 +44,7 @@ if( bu[0x8009c6d8] == 0 )
     if( ( bu[0x8009c6e4 + eaa] == 0 ) && ( bu[0x8009c6e4 + eab] != ff ) ) [0x8009c6e4 + eab] = b(bu[0x8009c6e4 + eab] + 1);
 
     A0 = hu[enc_data + 0];
-    if( ( A0 & 1 ) && ( hu[0x80114488] == 0 ) && ( bu[0x8009abf4 + 0x3b] == 0 ) )
+    if( ( A0 & 1 ) && ( g_movie_play == 0 ) && ( bu[0x8009abf4 + 0x3b] == 0 ) )
     {
         pc_entity_id = h[0x800965e0];
         move_speed = hu[0x80074ea4 + pc_entity_id * 84 + 70];

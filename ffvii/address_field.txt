@@ -9,26 +9,26 @@
 
 80063048 start of font padding file.
 
-8007078c []       array of actor to line data. (size 0x01).
+0x8007078c []       array of actor to line data. (size 0x01).
 
-800707c0 [][][][] offset to font padding file.
+0x800707c0 [][][][] offset to font padding file.
 
-800716c4 [][][][] offset to sector 5 triggers.
+0x800716c4 [][][][] offset to sector 5 triggers.
 
-800716c8 []       store here entity id for which we calculate debug draw.
+0x800716c8 []       store here entity id for which we calculate debug draw.
 
-800716d0 []       store 0 or 4 here during random encounter.
+0x800716d0 []       store 0 or 4 here during random encounter.
 
-800716d4 []       store music lock here. MULCK opcode.
+0x800716d4 []       store music lock here. MULCK opcode.
 
 0x800716dc array of wait value Init with 0. (size 0x2).
 
-8007173c [][]     danger counter.
+0x8007173c [][]     danger counter.
 
 0x80071748 array of actors 0x8 priority script offsets. (size 0x10 for each actor, 0x2 for each priority).
 
-0x80071a54 offset to sector 6 encounters.
-
+0x80071a54 [][][][] offset to sector 6 encounters.
+0x80071a58 [][][][] ???
 0x80071a5c [][]     map for which we loading background in background.
 
 0x80071a88 array of arrays of actors priority slots actors. Each actor has its own array of stored actors id for each priority slot (items 0x8 size 0x1).

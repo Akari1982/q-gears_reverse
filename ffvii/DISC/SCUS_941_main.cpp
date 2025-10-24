@@ -123,13 +123,12 @@ void func112e8()
 
     if( h[0x8009a05c] != h[0x80071a5c] || h[0x8009a05c] == 0 )
     {
-        V0 = wm_main( 0x80071e28, 0x800730cc, 0x80095ddc, 0 );
-        [0x80075dec] = h(V0);
+        g_field_rb = wm_main( 0x80071e28, 0x800730cc, 0x80095ddc, 0 );
     }
     else
     {
-        V0 = wm_main( 0x80071e28, 0x800730cc, 0x80095ddc, 0x801b0000 );
-        [0x80075dec] = h(V0);
+        g_field_rb = wm_main( 0x80071e28, 0x800730cc, 0x80095ddc, 0x801b0000 );
+
         [0x80071a5c] = h(0);
         [0x800965e8] = h(0);
     }
@@ -144,19 +143,15 @@ void func112e8()
 
 if( bu[0x80071a58] != 0 )
 {
-    [0x80075dec] = h(hu[0x80075dec] + 1);
-    [0x80075dec] = h(hu[0x80075dec] & 1);
+    g_field_rb += 0x1;
+    g_field_rb &= 0x1;
 
     func13800();
 
-    A0 = 0x8007eb68 + h[0x80075dec] * 14;
-    system_psyq_put_dispenv();
+    system_psyq_put_dispenv( &g_field_disp_env[g_field_rb] );
+    system_psyq_put_drawenv( &g_field_draw_env[g_field_rb] );
 
-    A0 = 0x8007eaac + h[0x80075dec] * 5c;
-    system_psyq_put_drawenv();
-
-    A0 = 0x8007e7a0 + h[0x80075dec] * 4;
-    system_psyq_draw_otag();
+    system_psyq_draw_otag( 0x8007e7a0 + g_field_rb * 0x4 );
 }
 ////////////////////////////////
 
@@ -167,38 +162,38 @@ if( bu[0x80071a58] != 0 )
 
 switch( h[0x80095dd4] )
 {
-    case 1: func1146c(); break; // some field render
-    case 2: funcd8d78(); break; // world map render
-    case 3: system_battle_swirl_render(); break;
-    case 4: system_menu_draw_battle_result(); break;
+    case 0x1: func1146c(); break; // some field render
+    case 0x2: funcd8d78(); break; // world map render
+    case 0x3: system_battle_swirl_render(); break;
+    case 0x4: system_menu_draw_battle_result(); break;
 }
 
 if( ( bu[0x80062d98] == 0 ) && ( bu[0x80062d99] == 0 ) )
 {
-    [0x8009d26c] = w(w[0x8009d26c] + 444);
+    [0x8009d26c] = w(w[0x8009d26c] + 0x444);
 
-    if( ( w[0x8009d26c] >> 10 ) != 0 )
+    if( ( w[0x8009d26c] >> 0x10 ) != 0 )
     {
-        [0x8009d264] = w(w[0x8009d264] + 1);
-        [0x8009d26c] = w(w[0x8009d26c] & ffff);
+        [0x8009d264] = w(w[0x8009d264] + 0x1);
+        [0x8009d26c] = w(w[0x8009d26c] & 0xffff);
     }
 
-    [0x8009d270] = w(w[0x8009d270] + 444);
+    [0x8009d270] = w(w[0x8009d270] + 0x444);
 
-    if( ( w[0x8009d270] >> 10 ) != 0 )
+    if( ( w[0x8009d270] >> 0x10 ) != 0 )
     {
-        if( bu[0x8009d2e7] & 2 )
+        if( bu[0x8009d2e7] & 0x2 )
         {
-            [0x8009d268] = w(w[0x8009d268] + 1);
-            [0x8009d270] = w(w[0x8009d270] & ffff);
+            [0x8009d268] = w(w[0x8009d268] + 0x1);
+            [0x8009d270] = w(w[0x8009d270] & 0xffff);
         }
         else
         {
             if( w[0x8009d268] != 0 )
             {
-                [0x8009d268] = w(w[0x8009d268] - 1);
+                [0x8009d268] = w(w[0x8009d268] - 0x1);
             }
-            [0x8009d270] = w(w[0x8009d270] & ffff);
+            [0x8009d270] = w(w[0x8009d270] & 0xffff);
         }
     }
 }
@@ -225,47 +220,22 @@ void system_init_base()
 
 
 
-////////////////////////////////
-// system_init_dispenv_drawenv()
+void system_init_dispenv_drawenv()
+{
+    system_psyq_set_def_dispenv( &g_field_disp_env[0x0], 0, 0xe8, 0x140, 0xf0 );
+    system_psyq_set_def_dispenv( &g_field_disp_env[0x1], 0,    0, 0x140, 0xf0 );
 
-A0 = 0x8007eb68 + 0 * 14; // DISPENV
-A1 = 0;
-A2 = e8;
-A3 = 140;
-A4 = f0;
-system_psyq_set_def_dispenv();
+    system_psyq_set_def_drawenv( &g_field_draw_env[0x0], 0, 0x8, 0x140, 0xe0 );
+    g_field_draw_env[0x0].dtd = 0x1;
+    g_field_draw_env[0x0].isbg = 0;
 
-A0 = 0x8007eb68 + 1 * 14; // DISPENV
-A1 = 0;
-A2 = 0;
-A3 = 140;
-A4 = f0;
-system_psyq_set_def_dispenv();
+    system_psyq_set_def_drawenv( &g_field_draw_env[0x1], 0, 0xf0, 0x140, 0xe0 );
+    g_field_draw_env[0x1].dtd = 0x1;
+    g_field_draw_env[0x1].isbg = 0;
 
-A0 = 0x8007eaac + 0 * 5c; // DRAWENV
-A1 = 0;
-A2 = 8;
-A3 = 140;
-A4 = e0;
-system_psyq_set_def_drawenv();
-[0x8007eaac + 0 * 5c + 16] = b(1); // dithering processing flag (on)
-[0x8007eaac + 0 * 5c + 18] = b(0); // not clear drawing area when drawing environment is set
-
-A0 = 0x8007eaac + 1 * 5c; // DRAWENV
-A1 = 0;
-A2 = f0;
-A3 = 140;
-A4 = e0;
-system_psyq_set_def_drawenv();
-[0x8007eaac + 1 * 5c + 16] = b(1);
-[0x8007eaac + 1 * 5c + 18] = b(0);
-
-A0 = 0x8007eb68;
-system_psyq_put_dispenv();
-
-A0 = 0x8007eaac;
-system_psyq_put_drawenv();
-////////////////////////////////
+    system_psyq_put_dispenv( &g_field_disp_env[0] );
+    system_psyq_put_drawenv( &g_field_draw_env[0] );
+}
 
 
 

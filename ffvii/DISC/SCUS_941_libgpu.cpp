@@ -1160,29 +1160,23 @@ A4 = h[S0 + 6];
 
 
 
-////////////////////////////////
-// system_psyq_clear_image()
 // Sets the rectangular area rect in the Frame Buffer to RGB color values (r, g, b).
 // Because this is a non-blocking function, the end of the operation must be detected using DrawSync() or by
 // installing a callback with DrawSyncCallback(). The drawing area is not affected by the drawing environment (clip/offset).
 // When the width and height of the rectangular area exceeds (w,h)=(1024,512), only the (w,h)=(1023,511) area is cleared.
 // When in interlace mode, use ClearImage2() instead.
 // Return value - position of this command in the libgpu command queue.
+int system_psyq_clear_image( RECT* rect, u_char r, u_char g, u_char b )
+{
+    system_graphic_debug_print_rect( "ClearImage", rect );
 
-rect = A0; // pointer to rectangular area to be cleared
-r = A1;
-g = A2;
-b = A3;
-
-system_graphic_debug_print_rect( "ClearImage", rect );
-
-V0 = w[0x80062bf8];
-A0 = w[V0 + 0xc];
-A1 = rect;
-A2 = 0x8;
-A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
-80043FD8	jalr   w[V0 + 0x8] ra // func45a24()
-////////////////////////////////
+    V0 = w[0x80062bf8];
+    A0 = w[V0 + 0xc];
+    A1 = rect;
+    A2 = 0x8;
+    A3 = ((b & 00ff) << 10) | ((g & 00ff) << 08) | (r & 00ff);
+    80043FD8	jalr   w[V0 + 0x8] ra // func45a24()
+}
 
 
 

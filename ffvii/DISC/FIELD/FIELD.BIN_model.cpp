@@ -68,7 +68,7 @@ funcafde4();
 
 ot = A0;
 
-[0x800df114] = b(hu[0x80075dec]);
+[0x800df114] = b(g_field_rb);
 [0x800df118] = w(ot);
 
 S5 = 1f800000;
@@ -259,7 +259,7 @@ for( int i = 0; i < h[0x8009ac1c]; ++i )
 ////////////////////////////////
 // funcab2b4()
 
-if( ( hu[0x80114488] == 0 ) || ( bu[0x8009abf4 + 0x39] == 1 ) )
+if( ( g_movie_play == 0 ) || ( bu[0x8009abf4 + 0x39] == 0x1 ) )
 {
     V0 = w[0x80083578];
     [0x80071e40] = w(w[V0]);
@@ -276,12 +276,12 @@ else
 // funcab310()
 
 // if field background already loading
-if( h[0x800965e8] == 1 )
+if( h[0x800965e8] == 0x1 )
 {
     system_cdrom_read_chain();
     if( V0 == 0 )
     {
-        [0x800965e8] = h(2);
+        [0x800965e8] = h(0x2);
     }
     return;
 }
@@ -290,7 +290,7 @@ if( bu[0x8009abf4 + 0x1] == 0x14 )
 {
     system_movie_abort_play();
 
-    [0x80114488] = h(0);
+    g_movie_play = 0;
     [0x800e4d44] = h(0);
     [0x8009abf4 + 0x26] = h(0x2);
     return;
@@ -300,24 +300,24 @@ system_cdrom_read_chain();
 
 if( V0 == 0 ) // do nothing
 {
-    if( ( bu[0x8009abf4 + 1] == 3 ) && ( h[0x8009abf4 + 26] == 0 ) )
+    if( ( bu[0x8009abf4 + 0x1] == 0x3 ) && ( h[0x8009abf4 + 0x26] == 0 ) )
     {
         A0 = w[0x80075e10];
         if( A0 >= 0x801affff ) A0 = 0x801b0000;
         A1 = h[0x8009abf4 + 0x2]; // movie id
         system_movie_play();
 
-        [0x8009abf4 + 26] = h(1);
-        [0x800e4d44] = h(1);
+        [0x8009abf4 + 0x26] = h(0x1);
+        [0x800e4d44] = h(0x1);
     }
 
-    if( h[0x80114488] == 1 )
+    if( g_movie_play == 0x1 )
     {
-        [0x801142c8] = h(1);
+        [0x801142c8] = h(0x1);
 
-        [0x80114488] = h(0);
+        g_movie_play = 0;
         [0x800e4d44] = h(0);
-        [0x8009abf4 + 26] = h(2);
+        [0x8009abf4 + 0x26] = h(0x2);
     }
 }
 else if( V0 == 0xa ) // movie played
@@ -332,7 +332,7 @@ else if( V0 == 0xa ) // movie played
 
         func354cc();
 
-        [0x80114488] = h(1);
+        g_movie_play = 0x1;
     }
 }
 ////////////////////////////////

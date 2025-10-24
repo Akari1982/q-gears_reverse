@@ -63,52 +63,34 @@ for( int i = 0; i < 2; ++i )
 
 
 
-////////////////////////////////
-// func129d0()
-
-rb = h[0x80075dec];
-
-A0 = 8007eb68 + V0 * 14; // rect
-A1 = h[0x8007eb68 + ((rb + 1) & 1) * 14]; // x
-A2 = h[0x8007eb6a + ((rb + 1) & 1) * 14]; // y
-system_psyq_move_image();
-
-do
+void func129d0()
 {
-    A0 = 1;
-    system_psyq_draw_sync();
-} while( V0 != 0 )
-////////////////////////////////
+    // move image from one disp area to another
+    A0 = &g_field_disp_env[g_field_rb].disp;
+    A1 = g_field_disp_env[(g_field_rb + 0x1) & 0x1].disp.x;
+    A2 = g_field_disp_env[(g_field_rb + 0x1) & 0x1].disp.y;
+    system_psyq_move_image();
+
+    while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
+}
 
 
 
-////////////////////////////////
-// func12a8c()
+void func12a8c( u8 gray )
+{
+    system_psyq_clear_otag_r( 0x8007e7a0 + g_field_rb * 0x4, 0x1 );
 
-gray = A0;
+    [0x8009a078 + g_field_rb * 0x30] = b(gray);
+    [0x8009a088 + g_field_rb * 0x30] = b(gray);
+    [0x8009a079 + g_field_rb * 0x30] = b(gray);
+    [0x8009a089 + g_field_rb * 0x30] = b(gray);
+    [0x8009a07a + g_field_rb * 0x30] = b(gray);
+    [0x8009a08a + g_field_rb * 0x30] = b(gray);
 
-rb = hu[0x80075dec];
-
-A0 = 8007e7a0 + rb * 4;
-A1 = 1;
-system_psyq_clear_otag_r();
-
-[0x8009a078 + rb * 30] = b(gray);
-[0x8009a088 + rb * 30] = b(gray);
-[0x8009a079 + rb * 30] = b(gray);
-[0x8009a089 + rb * 30] = b(gray);
-[0x8009a07a + rb * 30] = b(gray);
-[0x8009a08a + rb * 30] = b(gray);
-
-[0x8009a074 + rb * 30] = w((w[0x8009a074 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a074 + rb * 30) & 00ffffff))
-
-[0x8009a084 + rb * 30] = w((w[0x8009a084 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a084 + rb * 30) & 00ffffff));
-
-[0x8009a068 + rb * 30] = w((w[0x8009a068 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a068 + rb * 30) & 00ffffff));
-////////////////////////////////
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a074 + g_field_rb * 0x30 );
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a084 + g_field_rb * 0x30 );
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a068 + g_field_rb * 0x30 );
+}
 
 
 
@@ -119,7 +101,7 @@ red = A0;
 green = A1;
 blue = A2;
 
-rb = hu[0x80075dec];
+rb = g_field_rb;
 fade_start = hu[0x8009abf4 + 0x4e]; // start value of fade
 
 A0 = 8007e7a0 + rb * 4;
@@ -152,7 +134,7 @@ red = A0;
 green = A1;
 blue = A2;
 
-rb = hu[0x80075dec];
+rb = g_field_rb;
 
 A0 = 8007e7a0 + rb * 4;
 A1 = 1;
@@ -187,7 +169,7 @@ system_psyq_clear_otag_r();
 
 [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] - hu[0x8009abf4 + 0x50]);
 
-if( ( hu[0x8009abf4 + 0x4e] <= 0 ) || ( hu[0x80114488] == 0x1 ) )
+if( (hu[0x8009abf4 + 0x4e] <= 0) || (g_movie_play == 0x1) )
 {
     [0x8009abf4 + 0x4c] = h(0);
     [0x8009abf4 + 0x4e] = h(0);
@@ -199,13 +181,13 @@ if( ( hu[0x8009abf4 + 0x4e] <= 0 ) || ( hu[0x80114488] == 0x1 ) )
 ////////////////////////////////
 // func13564()
 
-[0x8009abf4 + 38] = b(0); // fade disabled
+[0x8009abf4 + 0x38] = b(0); // fade disabled
 
-[0x8009abf4 + 4e] = h(hu[0x8009abf4 + 4e] + hu[0x8009abf4 + 50]);
+[0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + hu[0x8009abf4 + 0x50]);
 
-if( ( hu[0x8009abf4 + 4e] >= 100 ) )
+if( ( hu[0x8009abf4 + 0x4e] >= 0x100 ) )
 {
-    [0x8009abf4 + 4e] = h(ff);
+    [0x8009abf4 + 0x4e] = h(0xff);
 }
 ////////////////////////////////
 
@@ -271,39 +253,33 @@ func131b8();
 ////////////////////////////////
 // func13800()
 
-if( bu[0x80071a58] == 3 )
+if( bu[0x80071a58] == 0x3 )
 {
-    [0x8009ac42] = h(hu[0x8009ac42] + 1);
+    [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
 
-    if( hu[0x8009ac42] == 22 )
+    if( hu[0x8009ac42] == 0x22 )
     {
         [0x8009ac40] = h(0);
         [0x80095dd4] = h(0); // set render func to 0
         [0x80071a58] = b(0);
     }
 
-    A0 = 2;
-    func12840();
-
-    A0 = 10;
-    func12a8c();
+    func12840( 0x2 );
+    func12a8c( 0x10 );
 }
 else
 {
-    [0x8009ac42] = h(hu[0x8009ac42] + 1);
+    [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
 
-    if( hu[0x8009ac42] == 12 )
+    if( hu[0x8009ac42] == 0x12 )
     {
         [0x8009ac40] = h(0);
         [0x80095dd4] = h(0); // set render func to 0
         [0x80071a58] = b(0);
     }
 
-    A0 = 2;
-    func12840();
-
-    A0 = 20;
-    func12a8c();
+    func12840( 0x2 );
+    func12a8c( 0x20 );
 }
 ////////////////////////////////
 
@@ -652,7 +628,7 @@ system_psyq_set_geom_screen();
 
 [0x8019daa0] = w(0);
 
-if( hu[0x80075dec] == 0 ) // rb
+if( g_field_rb == 0 ) // rb
 {
     [SP + 18] = h(0);
     [SP + 1a] = h(8);

@@ -730,309 +730,254 @@ else
 
 
 
-////////////////////////////////
-// field_background_update_drawenv()
-
-current_rd = A0;
-
-render_data = 0x800e4df0;
-offset_to_triggers = w[0x800716c4];
-camera_data = w[0x80071e40];
-drawenv1 = 80113f2c + 0 * 5c;
-drawenv2 = 80113f2c + 1 * 5c;
-drawenv3 = 80113f2c + 2 * 5c;
-drawenv4 = 80113f2c + 3 * 5c;
-drawenv5 = 80113f2c + 4 * 5c;
-drawenv6 = 80113f2c + 5 * 5c;
-drawenv7 = 80113f2c + 6 * 5c;
-drawenv8 = 80113f2c + 7 * 5c;
-drawenv9 = 80113f2c + 8 * 5c;
-drawenva = 80113f2c + 9 * 5c;
-
-[offset_to_triggers + 20] = h((hu[offset_to_triggers + 20] + hu[0x8009abf4 + a6]) % (h[offset_to_triggers + 18] * 10)); // add x scroll for 2nd background
-[offset_to_triggers + 22] = h((hu[offset_to_triggers + 22] + hu[0x8009abf4 + a8]) % (h[offset_to_triggers + 1a] * 10)); // add y scroll for 2nd background
-
-[offset_to_triggers + 24] = h((hu[offset_to_triggers + 24] + hu[0x8009abf4 + aa]) % (h[offset_to_triggers + 1c] * 10)); // add x scroll for 3nd background
-[offset_to_triggers + 26] = h((hu[offset_to_triggers + 26] + hu[0x8009abf4 + ac]) % (h[offset_to_triggers + 1e] * 10)); // add y scroll for 3nd background
-
-A0 = h[camera_data + 24]; // H
-system_psyq_set_geom_screen();
-
-if( ( hu[0x80114488] != 0 ) && ( bu[0x8009abf4 + 0x3a] == 0 ) )
+void field_background_update_drawenv( FieldRenderData* current_rd )
 {
-    if( bu[0x8009abf4 + 39] != 1 )
+    render_data = &g_field_render_data[0];
+    offset_to_triggers = w[0x800716c4];
+    camera_data = w[0x80071e40];
+
+    DRAWENV* drawenv1 = &g_bg_draw_env[0x0];
+    DRAWENV* drawenv2 = &g_bg_draw_env[0x1];
+    DRAWENV* drawenv3 = &g_bg_draw_env[0x2];
+    DRAWENV* drawenv4 = &g_bg_draw_env[0x3];
+    DRAWENV* drawenv5 = &g_bg_draw_env[0x4];
+    DRAWENV* drawenv6 = &g_bg_draw_env[0x5];
+    DRAWENV* drawenv7 = &g_bg_draw_env[0x6];
+    DRAWENV* drawenv8 = &g_bg_draw_env[0x7];
+    DRAWENV* drawenv9 = &g_bg_draw_env[0x8];
+    DRAWENV* drawenva = &g_bg_draw_env[0x9];
+
+    [offset_to_triggers + 0x20] = h((hu[offset_to_triggers + 0x20] + hu[0x8009abf4 + 0xa6]) % (h[offset_to_triggers + 0x18] * 0x10)); // add x scroll for 2nd background
+    [offset_to_triggers + 0x22] = h((hu[offset_to_triggers + 0x22] + hu[0x8009abf4 + 0xa8]) % (h[offset_to_triggers + 0x1a] * 0x10)); // add y scroll for 2nd background
+    [offset_to_triggers + 0x24] = h((hu[offset_to_triggers + 0x24] + hu[0x8009abf4 + 0xaa]) % (h[offset_to_triggers + 0x1c] * 0x10)); // add x scroll for 3nd background
+    [offset_to_triggers + 0x26] = h((hu[offset_to_triggers + 0x26] + hu[0x8009abf4 + 0xac]) % (h[offset_to_triggers + 0x1e] * 0x10)); // add y scroll for 3nd background
+
+    A0 = h[camera_data + 24]; // H
+    system_psyq_set_geom_screen();
+
+    if( ( g_movie_play != 0 ) && ( bu[0x8009abf4 + 0x3a] == 0 ) )
     {
-        if( current_rd == render_data )
+        if( bu[0x8009abf4 + 0x39] != 0x1 )
         {
-            // base scroll + map offset
-            [drawenv1 + 8] = h(hu[0x8007eb90] - hu[camera_data + 20]);
-            [drawenv1 + a] = h(hu[0x8007eb94] + hu[camera_data + 22]);
-            A0 = render_data + 0 * 1789c + 41d4; // Scene settings
-            A1 = drawenv1;
-            system_psyq_set_drawenv();
+            if( current_rd == render_data )
+            {
+                // base scroll + map offset
+                drawenv1->ofs[0] = g_base_ofs_x - hu[camera_data + 0x20];
+                drawenv1->ofs[1] = g_base_ofs_y + hu[camera_data + 0x22];
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 ); // Scene settings
+            }
+            else
+            {
+                drawenv2->ofs[0] = g_base_ofs_x - hu[camera_data + 0x20];
+                drawenv2->ofs[1] = g_base_ofs_y + hu[camera_data + 0x22] + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+            }
         }
         else
         {
-            [drawenv2 + 8] = h(hu[0x8007eb90] - hu[camera_data + 20]);
-            [drawenv2 + a] = h(hu[0x8007eb94] + hu[camera_data + 22] + e8);
-            A0 = render_data + 1 * 1789c + 41d4;
-            A1 = drawenv2;
-            system_psyq_set_drawenv();
+            if( current_rd == render_data )
+            {
+                // base scroll + bg scroll
+                drawenv1->ofs[0] = g_base_ofs_x + hu[0x80071e38];
+                drawenv1->ofs[1] = g_base_ofs_y + hu[0x80071e3c];
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 ); // Scene settings
+            }
+            else
+            {
+                drawenv2->ofs[0] = g_base_ofs_x + hu[0x80071e38];
+                drawenv2->ofs[1] = g_base_ofs_y + hu[0x80071e3c] + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+            }
         }
     }
     else
     {
-        if( current_rd == render_data )
+        // this settings automaticly scrolls to player
+        // and add paralax effect to background layers 3 and 4
+        if( h[0x8009a100] == 0 ) // auto scroll
         {
-            // base scroll + bg scroll
-            [drawenv1 + 8] = h(hu[0x8007eb90] + hu[0x80071e38]);
-            [drawenv1 + 8] = h(hu[0x8007eb94] + hu[0x80071e3c]);
-            A0 = render_data + 0 * 1789c + 41d4; // Scene settings
-            A1 = drawenv1;
-            system_psyq_set_drawenv();
+            // VWOFT update
+            A0 = h[0x8009abf4 + 0x18]; // start
+            A1 = h[0x8009abf4 + 0x1a]; // end
+            A2 = bu[0x8009abf4 + 0x12]; // steps_n
+            A3 = bu[0x8009abf4 + 0x13]; // step
+
+            if( bu[0x8009abf4 + 0x14] == 0x1 ) field_calculate_current_value_by_steps();
+            else if( bu[0x8009abf4 + 0x14] == 0x2 ) field_calculate_smooth_current_value_by_steps();
+
+            [0x8009abf4 + 16] = h(V0 & 0xff);
+
+            if( bu[0x8009abf4 + 0x13] == bu[0x8009abf4 + 0x12] )
+            {
+                [0x8009abf4 + 0x14] = b(0x3); // finish
+            }
+            else
+            {
+                [0x8009abf4 + 0x13] = b(bu[0x8009abf4 + 0x13] + 0x1);
+            }
+
+            // entity pos + entity offset
+            pc_entity_id = h[0x800965e0];
+            [SP + 0x10] = h((w[0x80074ea4 + pc_entity_id * 0x84 +  0xc] >> 0xc) + hu[0x80074ea4 + pc_entity_id * 0x84 + 0x40]);
+            [SP + 0x12] = h((w[0x80074ea4 + pc_entity_id * 0x84 + 0x10] >> 0xc) + hu[0x80074ea4 + pc_entity_id * 0x84 + 0x46]);
+            [SP + 0x14] = h((w[0x80074ea4 + pc_entity_id * 0x84 + 0x14] >> 0xc) + hu[0x80074ea4 + pc_entity_id * 0x84 + 0x4c] + (h[0x8009abf4 + 0x10] >> 0x2)); // with field scale
+
+            field_calculate_world_to_screen_pos( SP + 0x10, SP + 0x18 );
+
+            // base scroll + entity scroll
+            [0x80114464] = h(g_base_ofs_x + hu[SP + 0x18]);
+            [0x80114468] = h(g_base_ofs_y + hu[SP + 0x1a]);
+
+            [SP + 0x10] = h(w[0x80074ea4 + pc_entity_id * 0x84 +  0xc] >> 0xc);
+            [SP + 0x12] = h(w[0x80074ea4 + pc_entity_id * 0x84 + 0x10] >> 0xc);
+            [SP + 0x14] = h(w[0x80074ea4 + pc_entity_id * 0x84 + 0x14] + hu[0x8009abf4 + 16] >> 0xc);
+
+            field_calculate_world_to_screen_pos( SP + 0x10, SP + 0x18 );
+
+            [0x800e48ec] = w(V0);
+            [0x800e48e4] = h(hu[SP + 0x18]);
+            [0x800e48e6] = h(hu[SP + 0x1a]);
+
+            field_background_clamp_pos( SP + 0x18 );
+
+            funca45d4( offset_to_triggers, SP + 0x18 );
+
+            S5 = (((((h[SP + 0x18] * h[offset_to_triggers + 0x28]) >> 0x8) + (h[offset_to_triggers + 0x20] >> 0x4)) << 0x10) >> 0x10) % h[offset_to_triggers + 0x18];
+            S4 = (((((h[SP + 0x1a] * h[offset_to_triggers + 0x2a]) >> 0x8) + (h[offset_to_triggers + 0x22] >> 0x4)) << 0x10) >> 0x10) % h[offset_to_triggers + 0x1a];
+            S7 = (((((h[SP + 0x18] * h[offset_to_triggers + 0x2c]) >> 0x8) + (h[offset_to_triggers + 0x24] >> 0x4)) << 0x10) >> 0x10) % h[offset_to_triggers + 0x1c];
+            S6 = (((((h[SP + 0x1a] * h[offset_to_triggers + 0x2e]) >> 0x8) + (h[offset_to_triggers + 0x26] >> 0x4)) << 0x10) >> 0x10) % h[offset_to_triggers + 0x1e];
+
+            [0x80114464] = h(hu[0x80114464] - h[SP + 0x18]);
+            [0x80114468] = h(hu[0x80114468] - h[SP + 0x1a]);
+
+            // default scene offset (base scroll + shake - player pos)
+            ofsx = g_base_ofs_x + b[0x8009abf4 + 0x8d] - h[SP + 0x18];
+            ofsy = g_base_ofs_y + b[0x8009abf4 + 0x9b] - h[SP + 0x1a];
+
+            if( current_rd == render_data )
+            {
+                drawenv1->ofs[0] = ofsx;
+                drawenv1->ofs[1] = ofsy;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 );
+
+                drawenv3->ofs[0] = b[0x8009abf4 + 0x8d] - g_base_ofs_x - S5;
+                drawenv3->ofs[1] = b[0x8009abf4 + 0x9b] + g_base_ofs_y - S4;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv3_s, drawenv3 ); // At start of dynamic layer 3
+
+                drawenv5->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - S7;
+                drawenv5->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] - S6;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv4_s, drawenv5 ); // At start of dynamic layer 4
+
+                drawenv7->ofs[0] = ofsx;
+                drawenv7->ofs[1] = ofsy;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv3_e, drawenv7 ); // At end of dynamic layer 3
+
+                drawenv9->ofs[0] = ofsx;
+                drawenv9->ofs[1] = ofsy;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv4_e, drawenv9 ); // At end of dynamic layer 4
+            }
+            else
+            {
+                drawenv2->ofs[0] = ofsx;
+                drawenv2->ofs[1] = ofsy + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+
+                drawenv4->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 8d] - S5;
+                drawenv4->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 9b] - S4 + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv3_s, drawenv4 );
+
+                drawenv6->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 8d] - S7;
+                drawenv6->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 9b] - S6 + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv4_s, drawenv6 );
+
+                drawenv8->ofs[0] = ofsx;
+                drawenv8->ofs[1] = ofsy + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv3_e, drawenv8 );
+
+                drawenva->ofs[0] = ofsx;
+                drawenva->ofs[1] = ofsy + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv4_e, drawenva );
+            }
+
+            [0x80071e38] = h(0 - hu[SP + 0x18]);
+            [0x80071e3c] = h(0 - hu[SP + 0x1a]);
+
+            // screen center - base scroll - shake + player pos
+            [0x80071a48] = h(0x140 - g_base_ofs_x - b[0x8009abf4 + 0x8d] + hu[SP + 0x18]);
+            [0x80071a4a] = h(0xe8  - g_base_ofs_y - b[0x8009abf4 + 0x9b] + hu[SP + 0x1a]);
+
+            [0x80071a4c] = h(0x140 - g_base_ofs_x - b[0x8009abf4 + 0x8d] + S5); // dynamic 3rd layer
+            [0x80071a4e] = h(0xe8  - g_base_ofs_y - b[0x8009abf4 + 0x9b] + S4); // dynamic 3rd layer
+            [0x80071a50] = h(0x140 - g_base_ofs_x - b[0x8009abf4 + 0x8d] + S7); // dynamic 4th layer
+            [0x80071a52] = h(0xe8  - g_base_ofs_y - b[0x8009abf4 + 0x9b] + S6); // dynamic 4th layer
         }
         else
         {
-            [drawenv2 + 8] = h(hu[0x8007eb90] + hu[0x80071e38]);
-            [drawenv2 + a] = h(hu[0x8007eb94] + hu[0x80071e3c] + e8);
-            A0 = render_data + 1 * 1789c + 41d4;
-            A1 = drawenv2;
-            system_psyq_set_drawenv();
+            S3 = ((h[offset_to_triggers + 0x20] >> 0x4) - ((h[0x80071e38] * h[offset_to_triggers + 0x28]) >> 0x8)) / h[offset_to_triggers + 0x18];
+            S4 = ((h[offset_to_triggers + 0x22] >> 0x4) - ((h[0x80071e3c] * h[offset_to_triggers + 0x2a]) >> 0x8)) / h[offset_to_triggers + 0x1a];
+            S5 = ((h[offset_to_triggers + 0x24] >> 0x4) - ((h[0x80071e38] * h[offset_to_triggers + 0x2c]) >> 0x8)) / h[offset_to_triggers + 0x1c];
+            S6 = ((h[offset_to_triggers + 0x26] >> 0x4) - ((h[0x80071e3c] * h[offset_to_triggers + 0x2e]) >> 0x8)) / h[offset_to_triggers + 0x1e];
+
+            // base scroll + shake + map offset + screen scroll
+            ofsx = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] + h[0x80071e38];
+            ofsy = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] + h[0x80071e3c];
+
+            if( current_rd == render_data ) // if 1st buffer
+            {
+                drawenv1->ofs[0] = ofsx;
+                drawenv1->ofs[1] = ofsy;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 ); // Scene settings
+
+                drawenv3->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] - S3;
+                drawenv3->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] - S4;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv3_s, drawenv3 ); // At start of dynamic layer 3
+
+                drawenv5->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] - S5;
+                drawenv5->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] - S6;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv4_s, drawenv5 ); // At start of dynamic layer 4
+
+                drawenv7->ofs[0] = ofsx;
+                drawenv7->ofs[1] = ofsy;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv3_e, drawenv7 ); // At end of dynamic layer 3
+
+                drawenv9->ofs[0] = ofsx;
+                drawenv9->ofs[1] = ofsy;
+                system_psyq_set_drawenv( &render_data[0x0].bg_drenv4_e, drawenv9 ); // At end of dynamic layer 4
+            }
+            else // 2nd buffer
+            {
+                drawenv2->ofs[0] = ofsx;
+                drawenv2->ofs[1] = ofsy + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+
+                drawenv4->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] - S3;
+                drawenv4->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] - S4 + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv3_s, drawenv4 );
+
+                drawenv6->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] - S5;
+                drawenv6->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] - S6 + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv4_s, drawenv6 );
+
+                drawenv8->ofs[0] = ofsx;
+                drawenv8->ofs[1] = ofsy + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv3_e, drawenv8 );
+
+                drawenva->ofs[0] = ofsx;
+                drawenva->ofs[1] = ofsy + 0xe8;
+                system_psyq_set_drawenv( &render_data[0x1].bg_drenv4_e, drawenva );
+            }
+
+            // screen center - base scroll - shake - screen scroll
+            [0x80071a48] = h(0x140 - g_base_ofs_x - b[0x8009abf4 + 0x8d] - hu[0x80071e38]);
+            [0x80071a4a] = h(0xe8  - g_base_ofs_y - b[0x8009abf4 + 0x9b] - hu[0x80071e3c]);
+            // screen center - base scroll - shake + paralax
+            [0x80071a4c] = h(0x140 - g_base_ofs_x - b[0x8009abf4 + 0x8d] + S3); // dynamic 3rd layer
+            [0x80071a4e] = h(0xe8  - g_base_ofs_y - b[0x8009abf4 + 0x9b] + S4); // dynamic 3rd layer
+            [0x80071a50] = h(0x140 - g_base_ofs_x - b[0x8009abf4 + 0x8d] + S5); // dynamic 4th layer
+            [0x80071a52] = h(0xe8  - g_base_ofs_y - b[0x8009abf4 + 0x9b] + S6); // dynamic 4th layer
         }
     }
 }
-else
-{
-    // this settings automaticly scrolls to player
-    // and add paralax effect to background layers 3 and 4
-    if( h[0x8009a100] == 0 ) // auto scroll
-    {
-        // VWOFT update
-        A0 = h[0x8009abf4 + 18]; // start
-        A1 = h[0x8009abf4 + 1a]; // end
-        A2 = bu[0x8009abf4 + 12]; // steps_n
-        A3 = bu[0x8009abf4 + 13]; // step
-             if( bu[0x8009abf4 + 14] == 1 ) field_calculate_current_value_by_steps();
-        else if( bu[0x8009abf4 + 14] == 2 ) field_calculate_smooth_current_value_by_steps();
-        [0x8009abf4 + 16] = h(V0 & ff);
-
-        if( bu[0x8009abf4 + 13] == bu[0x8009abf4 + 12] )
-        {
-            [0x8009abf4 + 14] = b(3); // finish
-        }
-        else
-        {
-            [0x8009abf4 + 13] = b(bu[0x8009abf4 + 13] + 1);
-        }
-
-        // entity pos + entity offset
-        pc_entity_id = h[0x800965e0];
-        [SP + 10] = h((w[0x80074ea4 + pc_entity_id * 84 +  c] >> c) + hu[0x80074ea4 + pc_entity_id * 84 + 40]);
-        [SP + 12] = h((w[0x80074ea4 + pc_entity_id * 84 + 10] >> c) + hu[0x80074ea4 + pc_entity_id * 84 + 46]);
-        [SP + 14] = h((w[0x80074ea4 + pc_entity_id * 84 + 14] >> c) + hu[0x80074ea4 + pc_entity_id * 84 + 4c] + (h[0x8009abf4 + 10] >> 2)); // with field scale
-
-        A0 = SP + 10;
-        A1 = SP + 18;
-        field_calculate_world_to_screen_pos();
-
-        // base scroll + entity scroll
-        [0x80114464] = h(hu[0x8007eb90] + hu[SP + 18]);
-        [0x80114468] = h(hu[0x8007eb94] + hu[SP + 1a]);
-
-        [SP + 10] = h(w[0x80074ea4 + pc_entity_id * 84 +  c] >> c);
-        [SP + 12] = h(w[0x80074ea4 + pc_entity_id * 84 + 10] >> c);
-        [SP + 14] = h(w[0x80074ea4 + pc_entity_id * 84 + 14] + hu[0x8009abf4 + 16] >> c);
-
-        A0 = SP + 10;
-        A1 = SP + 18;
-        field_calculate_world_to_screen_pos();
-
-        [0x800e48ec] = w(V0);
-        [0x800e48e4] = h(hu[SP + 18]);
-        [0x800e48e6] = h(hu[SP + 1a]);
-        A0 = SP + 18;
-        field_background_clamp_pos();
-
-        A0 = offset_to_triggers;
-        A1 = SP + 18;
-        funca45d4();
-
-        S5 = (((((h[SP + 18] * h[offset_to_triggers + 28]) >> 8) + (h[offset_to_triggers + 20] >> 4)) << 10) >> 10) % h[offset_to_triggers + 18];
-        S4 = (((((h[SP + 1a] * h[offset_to_triggers + 2a]) >> 8) + (h[offset_to_triggers + 22] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1a];
-        S7 = (((((h[SP + 18] * h[offset_to_triggers + 2c]) >> 8) + (h[offset_to_triggers + 24] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1c];
-        S6 = (((((h[SP + 1a] * h[offset_to_triggers + 2e]) >> 8) + (h[offset_to_triggers + 26] >> 4)) << 10) >> 10) % h[offset_to_triggers + 1e];
-
-        [0x80114464] = h(hu[0x80114464] - h[SP + 18]);
-        [0x80114468] = h(hu[0x80114468] - h[SP + 1a]);
-
-        // default scene offset (base scroll + shake - player pos)
-        ofsx = hu[0x8007eb90] + b[0x8009abf4 + 8d] - h[SP + 18];
-        ofsy = hu[0x8007eb94] + b[0x8009abf4 + 9b] - h[SP + 1a];
-
-        if( current_rd == render_data )
-        {
-            [drawenv1 + 8] = h(ofsx);
-            [drawenv1 + a] = h(ofsy);
-            A0 = render_data + 0 * 1789c + 41d4; // Scene settings
-            A1 = drawenv1;
-            system_psyq_set_drawenv();
-
-            [drawenv3 + 8] = h(b[0x8009abf4 + 8d] - hu[0x8007eb90] - S5);
-            [drawenv3 + a] = h(b[0x8009abf4 + 9b] + hu[0x8007eb94] - S4);
-            A0 = render_data + 0 * 1789c + 4214; // At start of dynamic layer 3
-            A1 = drawenv3;
-            system_psyq_set_drawenv();
-
-            [drawenv5 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - S7);
-            [drawenv5 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] - S6);
-            A0 = render_data + 0 * 1789c + 4254; // At start of dynamic layer 4
-            A1 = drawenv5;
-            system_psyq_set_drawenv();
-
-            [drawenv7 + 8] = h(ofsx);
-            [drawenv7 + a] = h(ofsy);
-            A0 = render_data + 0 * 1789c + 4294; // At end of dynamic layer 3
-            A1 = drawenv7;
-            system_psyq_set_drawenv();
-
-            [drawenv9 + 8] = h(ofsx);
-            [drawenv9 + a] = h(ofsy);
-            A0 = render_data + 0 * 1789c + 42d4; // At end of dynamic layer 4
-            A1 = drawenv9;
-            system_psyq_set_drawenv();
-        }
-        else
-        {
-            [drawenv2 + 8] = h(ofsx);
-            [drawenv2 + a] = h(ofsy + e8);
-            A0 = render_data + 1 * 1789c + 41d4;
-            A1 = drawenv2;
-            system_psyq_set_drawenv();
-
-            [drawenv4 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - S5);
-            [drawenv4 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] - S4 + e8);
-            A0 = render_data + 1 * 1789c + 4214;
-            A1 = drawenv4;
-            system_psyq_set_drawenv();
-
-            [drawenv6 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - S7);
-            [drawenv6 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] - S6 + e8);
-            A0 = render_data + 1 * 1789c + 4254;
-            A1 = drawenv6;
-            system_psyq_set_drawenv();
-
-            [drawenv8 + 8] = h(ofsx);
-            [drawenv8 + a] = h(ofsy + e8);
-            A0 = render_data + 1 * 1789c + 4294;
-            A1 = drawenv8;
-            system_psyq_set_drawenv();
-
-            [drawenva + 8] = h(ofsx);
-            [drawenva + a] = h(ofsy + e8);
-            A0 = render_data + 1 * 1789c + 42d4;
-            A1 = drawenva;
-            system_psyq_set_drawenv();
-        }
-
-        [0x80071e38] = h(0 - hu[SP + 18]);
-        [0x80071e3c] = h(0 - hu[SP + 1a]);
-
-        // screen center - base scroll - shake + player pos
-        [0x80071a48] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + hu[SP + 18]);
-        [0x80071a4a] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + hu[SP + 1a]);
-
-        [0x80071a4c] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S5); // dynamic 3rd layer
-        [0x80071a4e] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S4); // dynamic 3rd layer
-        [0x80071a50] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S7); // dynamic 4th layer
-        [0x80071a52] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S6); // dynamic 4th layer
-    }
-    else
-    {
-        S3 = ((h[offset_to_triggers + 20] >> 4) - ((h[0x80071e38] * h[offset_to_triggers + 28]) >> 8)) / h[offset_to_triggers + 18];
-        S4 = ((h[offset_to_triggers + 22] >> 4) - ((h[0x80071e3c] * h[offset_to_triggers + 2a]) >> 8)) / h[offset_to_triggers + 1a];
-        S5 = ((h[offset_to_triggers + 24] >> 4) - ((h[0x80071e38] * h[offset_to_triggers + 2c]) >> 8)) / h[offset_to_triggers + 1c];
-        S6 = ((h[offset_to_triggers + 26] >> 4) - ((h[0x80071e3c] * h[offset_to_triggers + 2e]) >> 8)) / h[offset_to_triggers + 1e];
-
-        // base scroll + shake + map offset + screen scroll
-        ofsx = hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] + h[0x80071e38];
-        ofsy = hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] + h[0x80071e3c];
-
-        if( current_rd == render_data ) // if 1st buffer
-        {
-            [drawenv1 + 8] = h(ofsx);
-            [drawenv1 + a] = h(ofsy);
-            A0 = render_data + 0 * 1789c + 41d4; // Scene settings
-            A1 = drawenv1;
-            system_psyq_set_drawenv();
-
-            [drawenv3 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S3);
-            [drawenv3 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S4);
-            A0 = render_data + 0 * 1789c + 4214; // At start of dynamic layer 3
-            A1 = drawenv3;
-            system_psyq_set_drawenv();
-
-            [drawenv5 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S5);
-            [drawenv5 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S6);
-            A0 = render_data + 0 * 1789c + 4254; // At start of dynamic layer 4
-            A1 = drawenv5;
-            system_psyq_set_drawenv();
-
-            [drawenv7 + 8] = h(ofsx);
-            [drawenv7 + a] = h(ofsy);
-            A0 = render_data + 0 * 1789c + 4294; // At end of dynamic layer 3
-            A1 = drawenv7;
-            system_psyq_set_drawenv();
-
-            [drawenv9 + 8] = h(ofsx);
-            [drawenv9 + a] = h(ofsy);
-            A0 = render_data + 0 * 1789c + 42d4; // At end of dynamic layer 4
-            A1 = drawenv9;
-            system_psyq_set_drawenv();
-        }
-        else // 2nd buffer
-        {
-            [drawenv2 + 8] = h(ofsx);
-            [drawenv2 + a] = h(ofsy + e8);
-            A0 = render_data + 1 * 1789c + 41d4;
-            A1 = drawenv2;
-            system_psyq_set_drawenv();
-
-            [drawenv4 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S3);
-            [drawenv4 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S4 + e8);
-            A0 = render_data + 1 * 1789c + 4214;
-            A1 = drawenv4;
-            system_psyq_set_drawenv();
-
-            [drawenv6 + 8] = h(hu[0x8007eb90] + b[0x8009abf4 + 8d] - hu[camera_data + 20] - S5);
-            [drawenv6 + a] = h(hu[0x8007eb94] + b[0x8009abf4 + 9b] + hu[camera_data + 22] - S6 + e8);
-            A0 = render_data + 1 * 1789c + 4254;
-            A1 = drawenv6;
-            system_psyq_set_drawenv();
-
-            [drawenv8 + 8] = h(ofsx);
-            [drawenv8 + a] = h(ofsy + e8);
-            A0 = render_data + 1 * 1789c + 4294;
-            A1 = drawenv8;
-            system_psyq_set_drawenv();
-
-            [drawenva + 8] = h(ofsx);
-            [drawenva + a] = h(ofsy + e8);
-            A0 = render_data + 1 * 1789c + 42d4;
-            A1 = drawenva;
-            system_psyq_set_drawenv();
-        }
-
-        // screen center - base scroll - shake - screen scroll
-        [0x80071a48] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] - hu[0x80071e38]);
-        [0x80071a4a] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] - hu[0x80071e3c]);
-        // screen center - base scroll - shake + paralax
-        [0x80071a4c] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S3); // dynamic 3rd layer
-        [0x80071a4e] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S4); // dynamic 3rd layer
-        [0x80071a50] = h(140 - hu[0x8007eb90] - b[0x8009abf4 + 8d] + S5); // dynamic 4th layer
-        [0x80071a52] = h(e8  - hu[0x8007eb94] - b[0x8009abf4 + 9b] + S6); // dynamic 4th layer
-    }
-}
-////////////////////////////////
 
 
 

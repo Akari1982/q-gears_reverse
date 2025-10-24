@@ -1,6 +1,12 @@
-FieldRenderData g_field_render_data[0x2]; // 0x800e4df0
-DRAWENV g_draw_env[0x2]; // 0x8007eaac
-DRAWENV g_bg_draw_env[0xa]; // 0x80113f2c
+u16 g_field_rb;                             // 0x80075dec
+
+DRAWENV g_field_draw_env[0x2];              // 0x8007eaac
+DISPENV g_field_disp_env[0x2];              // 0x8007eb68
+
+u32 g_base_ofs_x;                           // 0x8007eb90
+u32 g_base_ofs_y;                           // 0x8007eb94
+
+FieldRenderData g_field_render_data[0x2];   // 0x800e4df0
 
 u8 g_field_random[] =
 {
@@ -20,7 +26,11 @@ u8 g_field_random[] =
     0x3a, 0xe4, 0x7c, 0xe0, 0x69, 0xa1, 0xb7, 0x05, 0x39, 0x74, 0x01, 0x9f, 0xbd, 0xc3, 0x84, 0xfc,
     0x77, 0x86, 0x13, 0x4e, 0xbf, 0xf2, 0x53, 0x5b, 0xed, 0x21, 0x8b, 0x6d, 0xc2, 0x41, 0xb6, 0xdb,
     0x3c, 0xd3, 0x28, 0xec, 0x2d, 0xe2, 0x9b, 0xa6, 0x42, 0x52, 0x57, 0x5f, 0xe5, 0xab, 0xb0, 0x0c
-}; // 0x800e0638
+};                                          // 0x800e0638
+
+DRAWENV g_bg_draw_env[0xa];                 // 0x80113f2c
+
+u16 g_movie_play;                           // 0x80114488
 
 
 
@@ -147,8 +157,8 @@ void field_main()
 {
     system_psyq_clear_otag_r( &g_field_render_data[0].ot_drenv, 0x1 );
     system_psyq_clear_otag_r( &g_field_render_data[1].ot_drenv, 0x1 );
-    system_psyq_set_drawenv( &g_field_render_data[0].drenv, &g_draw_env[0] );
-    system_psyq_set_drawenv( &g_field_render_data[1].drenv, &g_draw_env[1] );
+    system_psyq_set_drawenv( &g_field_render_data[0].drenv, &g_field_draw_env[0] );
+    system_psyq_set_drawenv( &g_field_render_data[1].drenv, &g_field_draw_env[1] );
     ADDPRIM( &g_field_render_data[0].ot_drenv, &g_field_render_data[0].drenv );
     ADDPRIM( &g_field_render_data[1].ot_drenv, &g_field_render_data[1].drenv );
 
@@ -350,8 +360,8 @@ void field_main()
         [0x8007eb79] = b(0);
         [0x8007eb8d] = b(0);
 
-        system_psyq_put_dispenv( 8007eb68 + h[0x80075dec] * 0x14 );
-        system_psyq_put_drawenv( 8007eaac + h[0x80075dec] * 0x5c );
+        system_psyq_put_dispenv( &g_field_disp_env[g_field_rb] );
+        system_psyq_put_drawenv( &g_field_draw_env[g_field_rb] );
 
         [0x800965ec] = h(0x1); // set prev game state as field
 
@@ -449,8 +459,8 @@ void field_main_loop()
     RECT rect5 = { 0x0, 0xe8, 0x140, 0x8 }
     RECT rect6 = { 0x0, 0x1d0, 0x140, 0x8 }
 
-    [0x8007eb90] = w(0xa0); // base offset x for DRAWENV
-    [0x8007eb94] = w(0x78); // base offset y for DRAWENV
+    g_base_ofs_x = 0xa0;
+    g_base_ofs_y = 0x78;
 
     if( ( h[0x800965ec] != 5 ) && ( h[0x800965ec] != d ) ) // if prev state was not menu
     {
@@ -474,8 +484,8 @@ void field_main_loop()
     field_rain_init( &g_field_render_data[0] );
     field_rain_init( &g_field_render_data[1] );
 
-    S3 = 1;
-    [0x80114488] = h(0);
+    u8 first_frame = 0x1;
+    g_movie_play = 0;
     [0x801142c8] = h(0);
     [0x800e4d44] = h(0);
     [0x80071c0c] = b(0);
@@ -483,10 +493,10 @@ void field_main_loop()
 
     while( true )
     {
-        if( ( S3 << 0x10 ) == 0 ) [0x80075dec] = h(hu[0x80075dec] + 0x1);
+        if( first_frame == 0 ) g_field_rb += 0x1;
+        g_field_rb &= 0x1;
 
-        [0x80075dec] = h(hu[0x80075dec] + 0x1);
-        buf_id = h[0x80075dec];
+        buf_id = g_field_rb;
         [0x8009abf4 + 0x0] = b(buf_id);
 
         FieldRenderData& render_data = g_field_render_data[buf_id];
@@ -511,7 +521,7 @@ void field_main_loop()
         field_background_scrolling_update();
         field_background_shaking_update( 0x8009abf4 + 0x8a );
         field_background_shaking_update( 0x8009abf4 + 0x98 );
-        field_background_update_drawenv( render_data );
+        field_background_update_drawenv( &render_data );
 
         A0 = 0x80074ea4 + h[0x800965e0] * 0x84; // PC data
         A1 = w[0x800716c4] + 0x38; // gateways
@@ -568,7 +578,7 @@ void field_main_loop()
         }
 
         // triangle pressed, menu not called, movie not requested or played
-        if( ( w[0x80114454] & 0x0010 ) && ( bu[0x8009abf4 + 0x34] == 0 ) && ( hu[0x800e4d44] == 0 ) && ( hu[0x80114488] == 0 ) )
+        if( ( w[0x80114454] & 0x0010 ) && ( bu[0x8009abf4 + 0x34] == 0 ) && ( hu[0x800e4d44] == 0 ) && ( g_movie_play == 0 ) )
         {
             [0x8009c560] = h(0x5); // load menu
             [0x8009abf4 + 0x1] = b(0x9); // load menu
@@ -608,7 +618,7 @@ void field_main_loop()
 
         field_entity_check_talk();
 
-        if( ( hu[0x80114488] == 0 ) || ( w[0x8009a060] == 0x1 ) )
+        if( (g_movie_play == 0) || (w[0x8009a060] == 0x1) )
         {
             field_background_add_to_render( render_data );
         }
@@ -630,7 +640,7 @@ void field_main_loop()
         V0 = system_psyq_vsync( 0x1 );
         [0x8011447c] = w(V0);
 
-        if( ( hu[0x80114488] != 0 ) && ( w[0x800965e4] != 1 ) )
+        if( (g_movie_play != 0) && (w[0x800965e4] != 1) )
         {
             system_psyq_vsync( 0x3 );
         }
@@ -639,11 +649,11 @@ void field_main_loop()
             system_psyq_vsync( 0x2 );
         }
 
-        if( ( S3 << 10 ) != 0 )
+        if( first_frame != 0 )
         {
-            S3 -= 0x1;
+            first_frame -= 0x1;
 
-            if( ( S3 << 0x10 ) == 0 )
+            if( first_frame == 0 )
             {
                 system_psyq_set_disp_mask( 0x1 );
             }
@@ -651,7 +661,7 @@ void field_main_loop()
 
         system_psyq_reset_graph( 0x1 );
 
-        if( hu[0x80114488] == 0 )
+        if( g_movie_play == 0 )
         {
             if( h[0x801142c8] == 0 )
             {
@@ -663,12 +673,12 @@ void field_main_loop()
             }
         }
 
-        system_psyq_put_dispenv( 0x8007eb68 + buf_id * 0x14 );
-        system_psyq_put_drawenv( &g_draw_env[buf_id] );
+        system_psyq_put_dispenv( &g_field_disp_env[buf_id] );
+        system_psyq_put_drawenv( &g_field_draw_env[buf_id] );
 
-        if( hu[0x80114488] == 0 ) // normal render
+        if( g_movie_play == 0 ) // normal render
         {
-            system_psyq_clear_image( &(g_draw_env[buf_id].clip), 0, 0, 0 );
+            system_psyq_clear_image( &(g_field_draw_env[buf_id].clip), 0, 0, 0 );
         }
         else // movie
         {
@@ -688,19 +698,19 @@ void field_main_loop()
         }
 
         // store env for movie
-        [0x8007ebd8] = w(0x8007eb68 + buf_id * 0x14); // DISPENV
+        [0x8007ebd8] = w(&g_field_disp_env[buf_id]); // DISPENV
         [0x8007ebd0] = w(&g_bg_draw_env[buf_id]); // DRAWENV
         funcab310(); // play movie?
 
         if( bu[0x8009abf4 + 0x38] == 0 )
         {
             system_psyq_draw_otag( &render_data.ot_bg_drenv );
-            system_psyq_draw_otag( render_data.ot_scene + 0x1000 - 1 ); // scene OT (rendered reversed)
+            system_psyq_draw_otag( render_data.ot_scene + 0x1000 - 0x1 ); // scene OT (rendered reversed)
             system_psyq_draw_otag( &render_data.ot_drenv );
 
             if( hu[0x8009abf4 + 0x4c] != 0 ) // fade type
             {
-                system_psyq_draw_otag( 0x8007e7a0 + buf_id * 4 );
+                system_psyq_draw_otag( 0x8007e7a0 + buf_id * 0x4 );
             }
         }
 
