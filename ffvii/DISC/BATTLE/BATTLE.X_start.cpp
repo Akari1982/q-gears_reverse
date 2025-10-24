@@ -270,7 +270,7 @@ Lb353c:	; 800B353C
     800B3660	j      Lb353c [$800b353c]
 
     Lb3668:	; 800B3668
-    800B3668	jal    battle_update_render [$800b7fdc]
+    battle_update_render();
 
     if( bu[801635fc] == 0 )
     {

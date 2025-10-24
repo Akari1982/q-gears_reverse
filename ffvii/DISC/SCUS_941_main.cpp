@@ -162,7 +162,7 @@ if( bu[0x80071a58] != 0 )
 
 switch( h[0x80095dd4] )
 {
-    case 0x1: func1146c(); break; // some field render
+    case 0x1: func1146c(); break; // fade transition
     case 0x2: funcd8d78(); break; // world map render
     case 0x3: system_battle_swirl_render(); break;
     case 0x4: system_menu_draw_battle_result(); break;

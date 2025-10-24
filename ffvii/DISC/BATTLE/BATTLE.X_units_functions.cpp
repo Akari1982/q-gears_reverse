@@ -4928,7 +4928,7 @@ A0 = 800f4e8c + w[0x800f1994] * 100;
 A1 = 40;
 system_psyq_clear_otag();
 
-800D8EB8	jal    $800484a8
+800D8EB8	jal    $system_psyq_break_draw
 
 S0 = V0;
 800D8EC4	addiu  v0, zero, $ffff (=-$1)
@@ -4939,7 +4939,7 @@ if( S0 != - 1 )
 
     loopd8ee8:	; 800D8EE8
         A0 = 1;
-        800D8EE8	jal    $80048540
+        800D8EE8	jal    $system_psyq_is_idle_gpu
     800D8EF0	bne    v0, zero, loopd8ee8 [$800d8ee8]
 
     A0 = 800f508c + w[0x800f1994] * 10;
@@ -5018,7 +5018,7 @@ A0 = A0 << 08;
 A0 = A0 + V0;
 800D9064	jal    funcdde90 [$800dde90]
 
-800D906C	jal    $800484a8
+800D906C	jal    $system_psyq_break_draw
 
 S0 = V0;
 800D9078	addiu  v0, zero, $ffff (=-$1)
@@ -5027,7 +5027,7 @@ S0 = V0;
 
 loopd9084:	; 800D9084
     A0 = 1;
-    800D9084	jal    $80048540
+    800D9084	jal    $system_psyq_is_idle_gpu
 
 800D908C	bne    v0, zero, loopd9084 [$800d9084]
 A1 = S0;
