@@ -1361,8 +1361,7 @@ if( ( w[800e55fc] != 0 ) && ( w[800e5628] <= 0 ) )
 
     if( V0 != 0 )
     {
-        system_get_buttons_with_config_remap();
-        buttons = V0;
+        buttons = system_menu_get_remapped_buttons();
 
         // if this is top-down view on planet then when rotation
         // buttons pressed we switch to front view

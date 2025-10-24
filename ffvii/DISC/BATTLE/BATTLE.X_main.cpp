@@ -2200,7 +2200,7 @@ return S0;
 ////////////////////////////////
 // funca38fc
 
-S0 = hu[80062d78];
+S0 = g_menu_buttons_1;
 
 A0 = 0;
 funca72c8();
@@ -2522,7 +2522,7 @@ battle_copy_action_to_battle_queue();
 // funca3ed0
 
 V0 = w[800f39e8];
-V1 = hu[80062d78];
+V1 = g_menu_buttons_1;
 A2 = w[80062f14];
 S2 = 0;
 V0 = V0 + 0001;

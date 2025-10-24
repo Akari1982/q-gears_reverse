@@ -67,7 +67,7 @@ for( int i = 0; i < 2; ++i )
 A0 = 801d01e0 + w[801d01c4] * 12;
 system_menu_handle_buttons();
 
-if( hu[80062d7e] & 0040 )
+if( g_menu_repeated_1 & 0x0040 )
 {
     A0 = 5;
     A1 = 0;

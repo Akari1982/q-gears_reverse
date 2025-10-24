@@ -1256,7 +1256,7 @@ switch( w[801d3e48] )
                 [801d3e48] = w(3); // key item list
             }
         }
-        else if( hu[80062d7e] & 0040 ) // cross repeated
+        else if( g_menu_repeated_1 & 0x0040 ) // cross repeated
         {
             itemmenu_play_sound( 0x4 );
 

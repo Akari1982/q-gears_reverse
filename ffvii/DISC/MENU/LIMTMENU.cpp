@@ -642,12 +642,12 @@ void func1d042c()
     801D0ADC	jr     v0 
     801D0AE0	nop
 
-    V0 = hu[0x80062d7e];
+    V0 = g_menu_repeated_1;
     801D0AEC	nop
     V0 = V0 & 0040;
     801D0AF4	bne    v0, zero, L1d1144 [$801d1144]
     V0 = 0001;
-    V0 = hu[0x80062d7c];
+    V0 = g_menu_pressed_1;
     801D0B04	nop
     V0 = V0 & 0020;
     801D0B0C	beq    v0, zero, L1d116c [$801d116c]
@@ -682,7 +682,7 @@ void func1d042c()
     [0x801d2320] = w(V0);
     801D0B90	j      L1d116c [$801d116c]
     801D0B94	nop
-    V1 = hu[0x80062d7e];
+    V1 = g_menu_repeated_1;
     801D0BA0	nop
     V0 = V1 & 0040;
     801D0BA8	beq    v0, zero, L1d0bd4 [$801d0bd4]
@@ -804,7 +804,7 @@ void func1d042c()
     801D0D60	nop
     801D0D64	j      L1d116c [$801d116c]
     801D0D68	nop
-    V1 = hu[0x80062d7e];
+    V1 = g_menu_repeated_1;
     801D0D74	nop
     V0 = V1 & 0020;
     801D0D7C	beq    v0, zero, L1d0e94 [$801d0e94]
@@ -884,7 +884,7 @@ void func1d042c()
     801D0E98	nop
     801D0E9C	j      L1d0ec0 [$801d0ec0]
     V0 = 0001;
-    V0 = hu[0x80062d7e];
+    V0 = g_menu_repeated_1;
     801D0EAC	nop
     V0 = V0 & 0040;
     801D0EB4	beq    v0, zero, L1d116c [$801d116c]
@@ -897,7 +897,7 @@ void func1d042c()
     A0 = 0004;
     801D0ED0	j      L1d116c [$801d116c]
     801D0ED4	nop
-    V1 = hu[0x80062d7c];
+    V1 = g_menu_pressed_1;
     801D0EE0	nop
     V0 = V1 & 0020;
     801D0EE8	beq    v0, zero, L1d1154 [$801d1154]

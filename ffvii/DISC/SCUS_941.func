@@ -195,7 +195,7 @@
 8001C5BC system_menu_tutorial_update_script
 8001C788 system_menu_tutorial_update_get_buttons
 8001C808 system_menu_get_current_pad_buttons
-8001C8D4 system_get_buttons_with_config_remap
+8001C8D4 system_menu_get_remapped_buttons
 8001C980 func1c980
 8001CB48 system_menu_update_buttons
 8001CDA4 func1cda4

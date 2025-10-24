@@ -2236,9 +2236,9 @@ if( w[entity + 4] != 0 )
 
         if( V0 != 0 )
         {
-            system_get_buttons_with_config_remap();
+            system_menu_get_remapped_buttons();
 
-            if( V0 & 0020 ) // circle button pressed
+            if( V0 & 0x0020 ) // circle button pressed
             {
                 A1 = 4;
             }

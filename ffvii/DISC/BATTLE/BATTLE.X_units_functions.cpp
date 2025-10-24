@@ -5055,7 +5055,7 @@ if( bu[0x80062d99] == 0 )
     800D9118	jal    funce0e34 [$800e0e34]
 }
 
-if( hu[0x80062d7c] & 0800 ) // first pad pressed start
+if( g_menu_pressed_1 & 0x0800 ) // first pad pressed start
 {
     if( bu[0x80163c7c] == 4 )
     {
@@ -5517,7 +5517,7 @@ V0 = V0 + V1;
 [0x800f3898] = h(V0);
 
 Ld9a64:	; 800D9A64
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800D9A6C	nop
 V0 = V0 & 0080;
 800D9A74	bne    v0, zero, Ld9bd4 [$800d9bd4]
@@ -9316,7 +9316,7 @@ V1 = hu[AT + 0000];
 [0x800f57dc] = h(V1);
 800DD9E0	bne    v0, zero, Ldda00 [$800dda00]
 800DD9E4	nop
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800DD9F0	nop
 V0 = V0 & 0080;
 800DD9F8	beq    v0, zero, Ldda18 [$800dda18]
@@ -9663,7 +9663,7 @@ V0 = bu[AT + 0000];
 800DDF68	nop
 800DDF6C	beq    v0, zero, Lddfb4 [$800ddfb4]
 V0 = S0 + 0001;
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800DDF7C	nop
 V0 = V0 & 0080;
 800DDF84	bne    v0, zero, Lddfb4 [$800ddfb4]
@@ -9968,8 +9968,7 @@ V0 = w[0x800f99e4];
 A0 = 800f92e2;
 800DE4EC	jal    $system_menu_handle_buttons
 800DE4F0	nop
-V0 = hu[0x80062d7e];
-800DE4FC	nop
+V0 = g_menu_repeated_1;
 V0 = V0 & 0020;
 800DE504	beq    v0, zero, Lde5c4 [$800de5c4]
 V0 = 0001;
@@ -10094,7 +10093,7 @@ V0 = V0 < 0003;
 V0 = S0 << 10;
 
 Lde6ac:	; 800DE6AC
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 V1 = hu[0x80163762];
 V0 = V0 & 0002;
 [0x800f3150] = b(V1);
@@ -10107,7 +10106,7 @@ V0 = V0 ^ 0040;
 [V1 + 0000] = b(V0);
 
 Lde6e8:	; 800DE6E8
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DE6F0	nop
 V0 = V0 & 0100;
 800DE6F8	beq    v0, zero, Lde718 [$800de718]
@@ -10284,7 +10283,7 @@ V0 = w[0x800f99e4];
 800DE96C	nop
 800DE970	bne    v0, zero, Ldeb00 [$800deb00]
 800DE974	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800DE980	nop
 V0 = V1 & 0020;
 800DE988	beq    v0, zero, Lde9f0 [$800de9f0]
@@ -10558,7 +10557,7 @@ V0 = S3 << 10;
 V0 = V0 >> 10;
 800DEDCC	bne    v1, v0, Ldee24 [$800dee24]
 V0 = S3 << 10;
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DEDDC	nop
 V0 = V0 & 8000;
 800DEDE4	beq    v0, zero, Ldee24 [$800dee24]
@@ -10579,7 +10578,7 @@ Ldee24:	; 800DEE24
 V0 = V0 >> 10;
 800DEE28	bne    v1, v0, Ldeeb8 [$800deeb8]
 800DEE2C	nop
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DEE38	nop
 V0 = V0 & 2000;
 800DEE40	beq    v0, zero, Ldeeb8 [$800deeb8]
@@ -10611,7 +10610,7 @@ V0 = 0001;
 800DEEB4	nop
 
 Ldeeb8:	; 800DEEB8
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DEEC0	nop
 V0 = V0 & 0020;
 800DEEC8	beq    v0, zero, Ldf224 [$800df224]
@@ -10895,7 +10894,7 @@ V0 = h[S0 + 0008];
 800DF360	nop
 800DF364	bne    v0, zero, Ldf50c [$800df50c]
 800DF368	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800DF374	nop
 V0 = V1 & 0020;
 800DF37C	beq    v0, zero, Ldf4d8 [$800df4d8]
@@ -11084,7 +11083,7 @@ V0 = h[S0 + 0008];
 800DF658	nop
 800DF65C	bne    v0, zero, Ldf7a0 [$800df7a0]
 800DF660	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800DF66C	nop
 V0 = V1 & 0020;
 800DF674	beq    v0, zero, Ldf76c [$800df76c]
@@ -11193,7 +11192,7 @@ V0 = w[0x800f99e4];
 800DF808	nop
 800DF80C	bne    v0, zero, Ldf8e0 [$800df8e0]
 800DF810	nop
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DF81C	nop
 V0 = V0 & 0020;
 800DF824	beq    v0, zero, Ldf89c [$800df89c]
@@ -11226,7 +11225,7 @@ A0 = 0003;
 800DF898	nop
 
 Ldf89c:	; 800DF89C
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DF8A4	nop
 V0 = V0 & 2040;
 800DF8AC	beq    v0, zero, Ldf8e0 [$800df8e0]
@@ -11267,7 +11266,7 @@ V0 = w[0x800f99e4];
 800DF920	nop
 800DF924	bne    v0, zero, Ldf9e0 [$800df9e0]
 800DF928	nop
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DF934	nop
 V0 = V0 & 0020;
 800DF93C	beq    v0, zero, Ldf99c [$800df99c]
@@ -11290,7 +11289,7 @@ A0 = 0003;
 A0 = 0001;
 
 Ldf99c:	; 800DF99C
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800DF9A4	nop
 V0 = V0 & 8040;
 800DF9AC	beq    v0, zero, Ldf9e0 [$800df9e0]
@@ -11391,7 +11390,7 @@ V0 = h[S0 + 0008];
 800DFB1C	nop
 800DFB20	bne    v0, zero, Ldfc1c [$800dfc1c]
 800DFB24	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800DFB30	nop
 V0 = V1 & 0020;
 800DFB38	beq    v0, zero, Ldfbe8 [$800dfbe8]
@@ -11518,7 +11517,7 @@ if( h[0x800f3896] == 4 )
 
         if( h[S0 + 8] == 0 )
         {
-            V1 = hu[0x80062d7e];
+            V1 = g_menu_repeated_1;
             V0 = V1 & 0020;
             800DFEE0	beq    v0, zero, Ldff98 [$800dff98]
             V0 = 0001;
@@ -11685,7 +11684,7 @@ V0 = w[0x800f99e4];
 800E0178	nop
 800E017C	jal    $system_menu_handle_buttons
 A0 = S0;
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E018C	nop
 V0 = V1 & 0020;
 800E0194	beq    v0, zero, Le0224 [$800e0224]
@@ -11771,7 +11770,7 @@ V0 = w[0x800f99e4];
 800E02DC	nop
 800E02E0	bne    v0, zero, Le03b4 [$800e03b4]
 800E02E4	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E02F0	nop
 V0 = V1 & 0020;
 800E02F8	beq    v0, zero, Le0370 [$800e0370]
@@ -11859,7 +11858,7 @@ V0 = w[0x800f99e4];
 800E0438	nop
 800E043C	bne    v0, zero, Le0514 [$800e0514]
 800E0440	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E044C	nop
 V0 = V1 & 0020;
 800E0454	beq    v0, zero, Le04cc [$800e04cc]
@@ -11991,7 +11990,7 @@ A0 = 800f9132;
 
 Le063c:	; 800E063C
 800E063C	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E0648	nop
 V0 = V0 & 0020;
 800E0650	beq    v0, zero, Le077c [$800e077c]
@@ -12012,7 +12011,7 @@ Le0688:	; 800E0688
 A0 = 0;
 800E0690	j      Le077c [$800e077c]
 800E0694	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E06A0	nop
 V0 = V0 & 0020;
 800E06A8	beq    v0, zero, Le077c [$800e077c]
@@ -12024,7 +12023,7 @@ V0 = 0003;
 [0x800f57d4] = b(V0);
 800E06C8	j      Le077c [$800e077c]
 800E06CC	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E06D8	nop
 V0 = V0 & 0020;
 800E06E0	beq    v0, zero, Le077c [$800e077c]
@@ -12035,7 +12034,7 @@ V0 = 0001;
 [0x800f57d4] = b(V0);
 800E06FC	j      Le077c [$800e077c]
 800E0700	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E070C	nop
 V0 = V0 & 0020;
 800E0714	beq    v0, zero, Le077c [$800e077c]
@@ -12052,7 +12051,7 @@ V1 = V0 + 0001;
 [0x80163604] = b(V1);
 800E0754	j      Le077c [$800e077c]
 800E0758	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E0764	nop
 V0 = V0 & 0020;
 800E076C	beq    v0, zero, Le077c [$800e077c]
@@ -12128,7 +12127,7 @@ V0 = 0009;
 A0 = 800f9144;
 800E086C	jal    $system_menu_handle_buttons
 800E0870	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E087C	nop
 V0 = V0 & 0020;
 800E0884	beq    v0, zero, Le08b4 [$800e08b4]
@@ -12535,7 +12534,7 @@ V0 = V0 + V1;
 V0 = V0 << 06;
 V1 = 800f90c6;
 S1 = V0 + V1;
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 S3 = 801671b8;
 V0 = V0 & 0080;
 800E0F08	beq    v0, zero, Le0f20 [$800e0f20]
@@ -12570,7 +12569,7 @@ V0 = bu[0x800f5167];
 800E0F80	nop
 800E0F84	beq    v0, v1, Le1014 [$800e1014]
 800E0F88	nop
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E0F94	nop
 V0 = V0 & 0010;
 800E0F9C	beq    v0, zero, Le1018 [$800e1018]
@@ -12718,7 +12717,7 @@ V0 = w[0x800f99e4];
 800E11CC	nop
 800E11D0	bne    v0, zero, Le15b4 [$800e15b4]
 800E11D4	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E11E0	nop
 V0 = V1 & 0020;
 800E11E8	beq    v0, zero, Le14a0 [$800e14a0]
@@ -13772,7 +13771,7 @@ V0 = V0 >> 10;
 800E2278	nop
 
 Le227c:	; 800E227C
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800E2284	nop
 V0 = V0 & 0080;
 800E228C	beq    v0, zero, Le2c38 [$800e2c38]
@@ -14188,7 +14187,7 @@ V0 = V0 >> 10;
 V1 = 0002;
 800E28D0	bne    v0, v1, Le28f0 [$800e28f0]
 800E28D4	nop
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800E28E0	nop
 V0 = V0 & 0080;
 800E28E8	beq    v0, zero, Le2974 [$800e2974]
@@ -14248,7 +14247,7 @@ V0 = V0 >> 10;
 V1 = 0002;
 800E29B8	bne    v0, v1, Le29d8 [$800e29d8]
 V0 = S5;
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800E29C8	nop
 V0 = V0 & 0080;
 800E29D0	beq    v0, zero, Le2abc [$800e2abc]
@@ -14338,7 +14337,7 @@ V0 = V0 >> 10;
 V1 = 0002;
 800E2B00	bne    v0, v1, Le2b20 [$800e2b20]
 V0 = S4 << 10;
-V0 = hu[0x80062d78];
+V0 = g_menu_buttons_1;
 800E2B10	nop
 V0 = V0 & 0080;
 800E2B18	beq    v0, zero, Le2b5c [$800e2b5c]
@@ -16892,7 +16891,7 @@ V0 = bu[0x800f5760];
 [0x800f5760] = b(V0);
 
 Le50f8:	; 800E50F8
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E5100	nop
 V0 = V0 & 0020;
 800E5108	beq    v0, zero, Le5294 [$800e5294]
@@ -17326,7 +17325,7 @@ V0 = bu[0x800f5760];
 [0x800f5760] = b(V0);
 
 Le5750:	; 800E5750
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E5758	nop
 V0 = V0 & 0020;
 800E5760	beq    v0, zero, Le57e8 [$800e57e8]
@@ -17710,7 +17709,7 @@ V0 = bu[0x800f5760];
 [0x800f5760] = b(V0);
 
 Le5d58:	; 800E5D58
-V0 = hu[0x80062d7c];
+V0 = g_menu_pressed_1;
 800E5D60	nop
 V0 = V0 & 0020;
 800E5D68	beq    v0, zero, Le5efc [$800e5efc]
@@ -19099,7 +19098,7 @@ SP = SP + 0060;
 800E716C	nop
 ////////////////////////////////
 // funce7170
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 V1 = bu[0x800f38a6];
 800E7180	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0018] = w(RA);
@@ -19115,7 +19114,7 @@ V0 = 0006;
 800E71AC	nop
 
 Le71b0:	; 800E71B0
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800E71B8	nop
 V0 = V0 & a000;
 800E71C0	beq    v0, zero, Le762c [$800e762c]
@@ -19146,7 +19145,7 @@ V0 = V1 & 0010;
 V0 = V1 & 0001;
 800E7220	beq    v0, zero, Le762c [$800e762c]
 800E7224	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E7230	nop
 V0 = V1 & 2000;
 800E7238	beq    v0, zero, Le7290 [$800e7290]
@@ -19202,7 +19201,7 @@ V0 = V1 & 0010;
 V0 = V1 & 0001;
 800E7318	beq    v0, zero, Le762c [$800e762c]
 800E731C	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E7328	nop
 V0 = V1 & 8000;
 800E7330	beq    v0, zero, Le7360 [$800e7360]
@@ -19241,7 +19240,7 @@ V0 = 0006;
 800E73BC	nop
 
 Le73c0:	; 800E73C0
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800E73C8	nop
 V0 = V0 & a000;
 800E73D0	beq    v0, zero, Le762c [$800e762c]
@@ -19272,7 +19271,7 @@ V0 = V1 & 0010;
 V0 = V1 & 0001;
 800E7430	beq    v0, zero, Le762c [$800e762c]
 800E7434	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E7440	nop
 V0 = V1 & 2000;
 800E7448	beq    v0, zero, Le7488 [$800e7488]
@@ -19311,7 +19310,7 @@ V0 = V1 & 0010;
 V0 = V1 & 0001;
 800E74D8	beq    v0, zero, Le762c [$800e762c]
 800E74DC	nop
-V1 = hu[0x80062d7e];
+V1 = g_menu_repeated_1;
 800E74E8	nop
 V0 = V1 & 8000;
 800E74F0	beq    v0, zero, Le753c [$800e753c]
@@ -19588,7 +19587,7 @@ Le7938:	; 800E7938
 800E7944	nop
 
 Le7948:	; 800E7948
-V0 = hu[0x80062d7e];
+V0 = g_menu_repeated_1;
 800E7950	nop
 V0 = V0 & 000c;
 800E7958	beq    v0, zero, Le7a20 [$800e7a20]

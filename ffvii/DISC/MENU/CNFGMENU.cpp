@@ -409,7 +409,7 @@ void cnfgmenu_main( u32 frame )
         {
             case CNFG_MAIN:
             {
-                if( hu[0x80062d7e] & 0x0040 ) // cross
+                if( g_menu_repeated_1 & 0x0040 ) // cross
                 {
                     cnfgmenu_play_menu_sound( 0x4 );
                     system_menu_set_menu_list_animation( 0x5, 0 );
@@ -421,7 +421,7 @@ void cnfgmenu_main( u32 frame )
                     {
                         case 0x0: // Window color
                         {
-                            if( hu[0x80062d7c] & 0x0020 ) // circle
+                            if( g_menu_pressed_1 & 0x0020 ) // circle
                             {
                                 l_window = CNFG_WND_CORNER;
                                 cnfgmenu_play_menu_sound( 0x1 );
@@ -433,7 +433,7 @@ void cnfgmenu_main( u32 frame )
                         {
                             sound = hu[0x8009c6e4 + 0x10da] & 0x3;
 
-                            if( (hu[0x80062d7e] & 0x2000) && (sound != 0x1) ) // right
+                            if( (g_menu_repeated_1 & 0x2000) && (sound != 0x1) ) // right
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 sound += 0x1;
@@ -441,7 +441,7 @@ void cnfgmenu_main( u32 frame )
                                 cnfgmenu_set_akao_to_mono_stereo( sound ); // change sound
                             }
 
-                            if( (hu[0x80062d7e] & 0x8000) && (sound != 0) ) // left
+                            if( (g_menu_repeated_1 & 0x8000) && (sound != 0) ) // left
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 sound -= 1;
@@ -456,7 +456,7 @@ void cnfgmenu_main( u32 frame )
                             controller = (hu[0x8009c6e4 + 0x10da] >> 0x2) & 0x3;
                             S2 = controller;
 
-                            if( (hu[0x80062d7c] & 0x0020) && (controller == 0x1) ) // circle
+                            if( (g_menu_pressed_1 & 0x0020) && (controller == 0x1) ) // circle
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 l_window = CNFG_BUTTONS;
@@ -464,14 +464,14 @@ void cnfgmenu_main( u32 frame )
                             }
                             else
                             {
-                                if( (hu[0x80062d7e] & 0x2000) && (controller != 0x1) ) // right
+                                if( (g_menu_repeated_1 & 0x2000) && (controller != 0x1) ) // right
                                 {
                                     cnfgmenu_play_menu_sound( 0x1 );
                                     controller += 0x1;
                                     [0x8009c6e4 + 0x10da] = h((hu[0x8009c6e4 + 0x10da] & 0xfff3) | (controller << 0x2));
                                 }
 
-                                if( (hu[0x80062d7e] & 0x8000) && (controller != 0) ) // left
+                                if( (g_menu_repeated_1 & 0x8000) && (controller != 0) ) // left
                                 {
                                     cnfgmenu_play_menu_sound( 0x1 );
                                     controller -= 0x1;
@@ -485,14 +485,14 @@ void cnfgmenu_main( u32 frame )
                         {
                             cursor = (hu[0x8009c6e4 + 0x10da] >> 0x4) & 0x3;
 
-                            if( (hu[0x80062d7e] & 0x2000) && (cursor != 0x1) ) // right
+                            if( (g_menu_repeated_1 & 0x2000) && (cursor != 0x1) ) // right
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 cursor += 0x1;
                                 [0x8009c6e4 + 0x10da] = h((hu[0x8009c6e4 + 0x10da] & 0xffcf) | (cursor << 0x4));
                             }
 
-                            if( (hu[0x80062d7e] & 0x8000) && (cursor != 0) ) // left
+                            if( (g_menu_repeated_1 & 0x8000) && (cursor != 0) ) // left
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 cursor -= 0x1;
@@ -505,14 +505,14 @@ void cnfgmenu_main( u32 frame )
                         {
                             u8 atb = (hu[0x8009c6e4 + 0x10da] >> 0x6) & 0x3;
 
-                            if( (hu[0x80062d7e] & 0x2000) && (atb != 0x2) ) // right
+                            if( (g_menu_repeated_1 & 0x2000) && (atb != 0x2) ) // right
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 atb += 0x1;
                                 [0x8009c6e4 + 0x10da] = h((hu[0x8009c6e4 + 0x10da] & 0xff3f) | (atb << 0x6));
                             }
 
-                            if( (hu[0x80062d7e] & 0x8000) && (atb != 0) ) // left
+                            if( (g_menu_repeated_1 & 0x8000) && (atb != 0) ) // left
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 atb -= 0x1;
@@ -523,13 +523,13 @@ void cnfgmenu_main( u32 frame )
 
                         case 0x5: // Battle speed
                         {
-                            if( (hu[0x80062d78] & 0x2000) && (bu[0x8009c6e4 + 0x10d8] != 0xff) ) // right
+                            if( (g_menu_buttons_1 & 0x2000) && (bu[0x8009c6e4 + 0x10d8] != 0xff) ) // right
                             {
                                 if( frame & 0x4 ) cnfgmenu_play_menu_sound( 0x1 );
                                 [0x8009c6e4 + 0x10d8] = b(bu[0x8009c6e4 + 0x10d8] + 0x1);
                             }
 
-                            if( (hu[0x80062d78] & 0x8000) && (bu[0x8009c6e4 + 0x10d8] != 0) ) // left
+                            if( (g_menu_buttons_1 & 0x8000) && (bu[0x8009c6e4 + 0x10d8] != 0) ) // left
                             {
                                 if( frame & 0x4 ) cnfgmenu_play_menu_sound( 0x1 );
                                 [0x8009c6e4 + 0x10d8] = b(bu[0x8009c6e4 + 0x10d8] - 0x1);
@@ -539,13 +539,13 @@ void cnfgmenu_main( u32 frame )
 
                         case 0x6: // Battle message
                         {
-                            if( (hu[0x80062d78] & 0x2000) && (bu[0x8009c6e4 + 0x10d9] != 0xff) ) // right
+                            if( (g_menu_buttons_1 & 0x2000) && (bu[0x8009c6e4 + 0x10d9] != 0xff) ) // right
                             {
                                 if( frame & 0x4 ) cnfgmenu_play_menu_sound( 0x1 );
                                 [0x8009c6e4 + 0x10d9] = b(bu[0x8009c6e4 + 0x10d9] + 0x1);
                             }
 
-                            if( (hu[0x80062d78] & 0x8000) && (bu[0x8009c6e4 + 0x10d9] != 0) ) // left
+                            if( (g_menu_buttons_1 & 0x8000) && (bu[0x8009c6e4 + 0x10d9] != 0) ) // left
                             {
                                 if( frame & 0x4 ) cnfgmenu_play_menu_sound( 0x1 );
                                 [0x8009c6e4 + 0x10d9] = b(bu[0x8009c6e4 + 0x10d9] - 0x1);
@@ -555,13 +555,13 @@ void cnfgmenu_main( u32 frame )
 
                         case 0x7: // Field message
                         {
-                            if( (hu[0x80062d78] & 0x2000) && (bu[0x8009c6e4 + 0x10ec] != 0xff) ) // right
+                            if( (g_menu_buttons_1 & 0x2000) && (bu[0x8009c6e4 + 0x10ec] != 0xff) ) // right
                             {
                                 if( frame & 0x4 != 0 ) cnfgmenu_play_menu_sound( 0x1 );
                                 [0x8009c6e4 + 0x10ec] = b(bu[0x8009c6e4 + 0x10ec] + 0x1);
                             }
 
-                            if( (hu[0x80062d78] & 0x8000) && (bu[0x8009c6e4 + 0x10ec] != 0) ) // left
+                            if( (g_menu_buttons_1 & 0x8000) && (bu[0x8009c6e4 + 0x10ec] != 0) ) // left
                             {
                                 if( frame & 0x4 ) cnfgmenu_play_menu_sound( 0x1 );
                                 [0x8009c6e4 + 0x10ec] = b(bu[0x8009c6e4 + 0x10ec] - 0x1);
@@ -573,14 +573,14 @@ void cnfgmenu_main( u32 frame )
 
                             u8 angle = (hu[0x8009c6e4 + 0x10da] >> 0x8) & 0x3;
 
-                            if( (hu[0x80062d7e] & 0x2000) && (angle != 0x1) ) // right
+                            if( (g_menu_repeated_1 & 0x2000) && (angle != 0x1) ) // right
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 angle += 0x1;
                                 [0x8009c6e4 + 0x10da] = h((hu[0x8009c6e4 + 0x10da] & 0xfcff) | (angle << 0x8));
                             }
 
-                            if( (hu[0x80062d7e] & 0x8000) && (angle != 0) ) // left
+                            if( (g_menu_repeated_1 & 0x8000) && (angle != 0) ) // left
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 angle -= 0x1;
@@ -593,14 +593,14 @@ void cnfgmenu_main( u32 frame )
                         {
                             u8 order = (hu[0x8009c6e4 + 0x10da] >> 0xa) & 0x7;
 
-                            if( (hu[0x80062d7e] & 0x2000) && (order != 0x5) ) // right
+                            if( (g_menu_repeated_1 & 0x2000) && (order != 0x5) ) // right
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 order += 0x1;
                                 [0x8009c6e4 + 0x10da] = h((hu[0x8009c6e4 + 0x10da] & 0xe3ff) | (order << 0xa));
                             }
 
-                            if( (hu[0x80062d7e] & 0x8000) && (order != 0) ) // left
+                            if( (g_menu_repeated_1 & 0x8000) && (order != 0) ) // left
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 order -= 0x1;
@@ -615,7 +615,7 @@ void cnfgmenu_main( u32 frame )
 
             case CNFG_WND_CORNER:
             {
-                if( hu[0x80062d7c] & 0x0040 ) // cross
+                if( g_menu_pressed_1 & 0x0040 ) // cross
                 {
                     for( int i = 0; i < 0xc; ++i )
                     {
@@ -625,7 +625,7 @@ void cnfgmenu_main( u32 frame )
                     cnfgmenu_play_menu_sound( 0x4 );
                     l_window = CNFG_MAIN;
                 }
-                else if( hu[0x80062d7c] & 0x0020 ) // circle
+                else if( g_menu_pressed_1 & 0x0020 ) // circle
                 {
                     cnfgmenu_play_menu_sound( 0x1 );
                     l_window = CNFG_WND_COLOR;
@@ -637,12 +637,12 @@ void cnfgmenu_main( u32 frame )
             {
                 i8 id = b[0x801d24cc + 0x12 + 0xb] * 0x6 + b[0x801d24cc + 0x12 + 0xa] * 0x3 + b[0x801d24cc + 0x24 + 0xb];
 
-                if( hu[0x80062d7c] & 0x40 )
+                if( g_menu_pressed_1 & 0x0040 )
                 {
                     cnfgmenu_play_menu_sound( 0x4 );
                     l_window = CNFG_WND_CORNER;
                 }
-                else if( hu[0x80062d78] & 0x2000 ) // right
+                else if( g_menu_buttons_1 & 0x2000 ) // right
                 {
                     if( l_wnd_color[id] != 0xff )
                     {
@@ -650,7 +650,7 @@ void cnfgmenu_main( u32 frame )
                         l_wnd_color[id] += 0x1;
                     }
                 }
-                else if( hu[0x80062d78] & 0x8000 ) // left
+                else if( g_menu_buttons_1 & 0x8000 ) // left
                 {
                     if( l_wnd_color[id] != 0 )
                     {
@@ -687,17 +687,17 @@ void cnfgmenu_main( u32 frame )
                         }
                         else
                         {
-                            if( (hu[0x80062d7e] & 0x1000) && (l_selected_remap != 0x1) ) // up
+                            if( (g_menu_repeated_1 & 0x1000) && (l_selected_remap != 0x1) ) // up
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 l_selected_remap -= 0x1;
                             }
-                            else if( (hu[0x80062d7e] & 0x4000) && (l_selected_remap != 0xa) ) // down
+                            else if( (g_menu_repeated_1 & 0x4000) && (l_selected_remap != 0xa) ) // down
                             {
                                 cnfgmenu_play_menu_sound( 0x1 );
                                 l_selected_remap += 0x1;
                             }
-                            else if( hu[0x80062d7e] & 0xa000 ) // left or right
+                            else if( g_menu_repeated_1 & 0xa000 ) // left or right
                             {
                                 u8 req_buttons = 0;
                                 for( int i = 0; i < 0x3; ++i )

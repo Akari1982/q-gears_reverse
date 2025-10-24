@@ -85,7 +85,7 @@ V0 = h[80083274 + 0 * 30 + 2c];
 if( V0 != 0 )
 {
     // update buttons
-    system_get_buttons_with_config_remap();
+    system_menu_get_remapped_buttons();
     A1 = V0;
     A0 = w[8009c6e0];
     prev = w[A0 + 68];
@@ -93,7 +93,7 @@ if( V0 != 0 )
     [A0 + 70] = w(A1 & (0 NOR prev));
 
     // update buttons
-    system_get_buttons_with_config_remap();
+    system_menu_get_remapped_buttons();
     A1 = V0;
     A0 = w[8009c6e0];
     prev = w[A0 + 78];

@@ -779,7 +779,7 @@ prev = w[0x8009abf4 + 0x68];
 [0x8009abf4 + 0x70] = w((V0 ^ prev) & V0);
 [0x8009abf4 + 0x74] = w((V0 ^ prev) & ~V0);
 
-system_get_buttons_with_config_remap();
+system_menu_get_remapped_buttons();
 
 prev = w[0x8009abf4 + 0x78];
 [0x80114454] = w(V0);

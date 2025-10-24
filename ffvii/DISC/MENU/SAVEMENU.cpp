@@ -798,7 +798,7 @@ void func1d06b0()
     801D109C	jr     v0 
     801D10A0	nop
 
-    V0 = hu[0x80062d7c];
+    V0 = g_menu_pressed_1;
     801D10AC	nop
     V0 = V0 & 0020;
     801D10B4	beq    v0, zero, L1d1224 [$801d1224]
@@ -897,7 +897,7 @@ void func1d06b0()
     801D123C	nop
     801D1240	beq    v0, zero, L1d127c [$801d127c]
     801D1244	nop
-    V0 = hu[0x80062d7c];
+    V0 = g_menu_pressed_1;
     801D1250	nop
     V0 = V0 & 0040;
     801D1258	beq    v0, zero, L1d1754 [$801d1754]
@@ -910,7 +910,7 @@ void func1d06b0()
     801D1278	nop
 
     L1d127c:	; 801D127C
-    V0 = hu[0x80062d7c];
+    V0 = g_menu_pressed_1;
     801D1284	nop
     V0 = V0 & 0040;
     801D128C	beq    v0, zero, L1d1754 [$801d1754]
@@ -936,7 +936,7 @@ void func1d06b0()
     801D12E0	nop
     801D12E4	bne    s0, zero, L1d1754 [$801d1754]
     801D12E8	nop
-    V1 = hu[0x80062d7c];
+    V1 = g_menu_pressed_1;
     801D12F4	nop
     V0 = V1 & 0020;
     801D12FC	beq    v0, zero, L1d1360 [$801d1360]
@@ -1098,7 +1098,7 @@ void func1d06b0()
     A0 = 0x801e3808;
     801D15A4	jal    $system_menu_handle_buttons
     801D15A8	nop
-    V1 = hu[0x80062d7c];
+    V1 = g_menu_pressed_1;
     801D15B4	nop
     V0 = V1 & 0020;
     801D15BC	beq    v0, zero, L1d168c [$801d168c]
@@ -1159,7 +1159,7 @@ void func1d06b0()
     [0x801e3850] = w(0);
     801D169C	j      L1d1734 [$801d1734]
     801D16A0	nop
-    V1 = hu[0x80062d7c];
+    V1 = g_menu_pressed_1;
     801D16AC	nop
     V0 = V1 & 0020;
     801D16B4	beq    v0, zero, L1d1720 [$801d1720]
@@ -2426,7 +2426,7 @@ void func1d2da8()
     801D2DB8	nop
     801D2DBC	bne    v1, zero, L1d323c [$801d323c]
     V0 = 0001;
-    V1 = hu[0x80062d7e];
+    V1 = g_menu_repeated_1;
     801D2DCC	nop
     V0 = V1 & 1000;
     801D2DD4	beq    v0, zero, L1d2e64 [$801d2e64]
@@ -3314,7 +3314,7 @@ u32 newgamemenu_update( u32 frame )
             {
                 case NEWGAME_WND_SELECT_SLOT:
                 {
-                    if( hu[0x80062d7c] & 0x0020 )
+                    if( g_menu_pressed_1 & BUTTON_CIRCLE )
                     {
                         V1 = b[0x801e3d8b];
                         if( (V1 < 0x2) && (V1 >= 0) )
@@ -3351,7 +3351,7 @@ u32 newgamemenu_update( u32 frame )
                             }
                         }
                     }
-                    else if( hu[0x80062d7c] & 0x0040 )
+                    else if( g_menu_pressed_1 & BUTTON_CROSS )
                     {
                         l_newgame_wnd = NEWGAME_WND_NEWGAME;
 
@@ -3374,7 +3374,7 @@ u32 newgamemenu_update( u32 frame )
                     {
                         if( S1 == 0 )
                         {
-                            if( hu[0x80062d7c] & 0x0020 )
+                            if( g_menu_pressed_1 & BUTTON_CIRCLE )
                             {
                                 V0 = b[0x801e3d9d] + h[0x801e3d94];
 
@@ -3391,7 +3391,7 @@ u32 newgamemenu_update( u32 frame )
                                     newgamemenu_play_menu_sound( 0x3 );
                                 }
                             }
-                            else if( hu[0x80062d7c] & 0x0040 )
+                            else if( g_menu_pressed_1 & BUTTON_CROSS )
                             {
                                 l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
 
@@ -3508,7 +3508,7 @@ u32 newgamemenu_update( u32 frame )
                 {
                     system_menu_handle_buttons( 0x801e3dec );
 
-                    if( hu[0x80062d7c] & 0x0020 )
+                    if( g_menu_pressed_1 & BUTTON_CIRCLE )
                     {
                         if( b[0x801e3df7] != 0 )
                         {
@@ -3535,7 +3535,7 @@ u32 newgamemenu_update( u32 frame )
                             }
                         }
                     }
-                    else if( hu[0x80062d7c] & 0x0040 )
+                    else if( g_menu_pressed_1 & BUTTON_CROSS )
                     {
                         l_newgame_wnd = NEWGAME_WND_SELECT_SLOT;
 
@@ -3546,7 +3546,7 @@ u32 newgamemenu_update( u32 frame )
 
                 case NEWGAME_WND_NEWGAME:
                 {
-                    if( hu[0x80062d7c] & 0x0020 )
+                    if( g_menu_pressed_1 & BUTTON_CIRCLE )
                     {
                         S0 = b[0x801e3e09];
 

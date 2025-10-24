@@ -172,7 +172,6 @@
 
 0x80062f04 [][][][] ???
 
-0x80062fa0
 0x80062d44 GP
     + 0x1c              [][]     first pad start button delay (0 - delay, 1 - fast)
     + 0x1e              [][]     second pad start button delay (0 - delay, 1 - fast)
@@ -261,7 +260,7 @@
     +0x244              [][][][] some flags. used in loading units.
     +0x250              [][][][] selected menu.
     +0x258              [][][][] text row count.
-    +0x25c (0x80062fa0) [][][][] ???
+    +0x25c (0x80062fa0) [][][][] tutorial on
     +0x278              [][][][] total number of stars currently parsing materia has.
     +0x27c              [][][][] state of main menu.
                               -1 - dissapear complete (exit menu cycle).
@@ -282,19 +281,18 @@
 0x80062cec [][][][] 0x1f8010e8.
 0x80062cf0 [][][][] 0x1f8010f0.
 
-
-80062d78 [][]     first pad button mask (remaped if needed)
-80062d7a [][]     first pad previous button mask.
-80062d7c [][]     first pad pressed button mask.
-80062d7e [][]     first pad repeated button mask with pressed mask.
-80062d80 [][]     second pad button mask.
-80062d82 [][]     second pad previous button mask.
-80062d84 [][]     second pad pressed button mask.
-80062d86 [][]     second pad repeated button mask with pressed mask.
-80062d88 [][]     first pad button mask from 80062d78.
-80062d8a [][]     first pad previous button mask.
-80062d8c [][]     first pad pressed button mask.
-80062d8e [][]     first pad repeated (different speed) button mask with pressed mask.
+0x80062d78 [][]     first pad button mask (remaped if needed)
+0x80062d7a [][]     first pad previous button mask.
+0x80062d7c [][]     first pad pressed button mask.
+0x80062d7e [][]     first pad repeated button mask with pressed mask.
+0x80062d80 [][]     second pad button mask.
+0x80062d82 [][]     second pad previous button mask.
+0x80062d84 [][]     second pad pressed button mask.
+0x80062d86 [][]     second pad repeated button mask with pressed mask.
+0x80062d88 [][]     first pad button mask from 80062d78.
+0x80062d8a [][]     first pad previous button mask.
+0x80062d8c [][]     first pad pressed button mask.
+0x80062d8e [][]     first pad repeated (different speed) button mask with pressed mask.
                     0x0001 - L2
                     0x0002 - R2
                     0x0004 - L1.
@@ -392,15 +390,15 @@
 8006966c [][][][] we copy 8 weapon materia data here (size 0x4).
 8006968c [][][][] we copy 8 armor materia data here (size 0x4).
 
-800696ac first pad buffer.
-800696ac + 22 second pad buffer.
+0x800696ac first pad buffer.
+0x800696ac + 22 second pad buffer.
     +00 []       status (00h=okay, FFh=timeout/wrong ID2)
     +01 []       ID1    (eg. 41h=digital_pad, 73h=analogue_pad, 12h=mouse, etc.)
     +02 [][]     (max 16 halfwords, depending on lower 4bit of ID1)
 
-800698e8 [][][][] start cd sector to load (increment during load chain).
-800698ec [][][][] retry set loc number. After some number of retry we reload disc.
-800698f0 temp buffer for lzs compressed file.
+0x800698e8 [][][][] start cd sector to load (increment during load chain).
+0x800698ec [][][][] retry set loc number. After some number of retry we reload disc.
+0x800698f0 temp buffer for lzs compressed file.
 
 0x8006e0f4 [][][][] set to 0 when set cd load chain to 0xc.
 0x8006e0f8 [][][][] size to read. Clamp to 0x9 if greater.

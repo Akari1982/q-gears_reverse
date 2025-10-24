@@ -372,8 +372,7 @@ if( V0 == 3 ) // snowfield
     return;
 }
 
-system_get_buttons_with_config_remap();
-buttons = V0;
+buttons = system_menu_get_remapped_buttons();
 
 V1 = w[801163d4];
 

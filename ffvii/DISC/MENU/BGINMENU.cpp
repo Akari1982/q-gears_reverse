@@ -67,7 +67,7 @@ for( int i = 0; i < 0x2; ++i )
 
 system_menu_handle_buttons( 0x801d0860 + w[0x801d07f0] * 0x12 );
 
-if( hu[0x80062d7e] & 0x0040 ) // cross pressed
+if( g_menu_repeated_1 & 0x0040 ) // cross pressed
 {
     system_menu_set_menu_list_animation( 0x5, 0 );
     system_menu_load_menu_file_by_id( 0 ); // close menu

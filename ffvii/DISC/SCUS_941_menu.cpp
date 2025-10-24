@@ -1,8 +1,30 @@
-﻿u32* g_menu_poly;       // 0x80062f24
-u32* g_menu_otag;       // 0x80062fc4
+﻿#define BUTTON_L2       0x0001
+#define BUTTON_R2       0x0002
+#define BUTTON_L1       0x0004
+#define BUTTON_R1       0x0008
+#define BUTTON_TRIANGLE 0x0010
+#define BUTTON_CIRCLE   0x0020
+#define BUTTON_CROSS    0x0040
+#define BUTTON_SQUARE   0x0080
+#define BUTTON_SELECT   0x0100
+#define BUTTON_START    0x0800
+#define BUTTON_UP       0x1000
+#define BUTTON_RIGHT    0x2000
+#define BUTTON_DOWN     0x4000
+#define BUTTON_LEFT     0x8000
 
-u8 l_max_string_size;   // 0x80062dfc (GP + 0xb8)
-u8 l_str_global_mode;   // 0x80062dfd (GP + 0xb9)
+u16 g_menu_buttons_1;       // 0x80062d78
+u16 g_menu_buttons_prev_1;  // 0x80062d7a
+u16 g_menu_pressed_1;       // 0x80062d7c
+u16 g_menu_repeated_1;      // 0x80062d7e
+
+u8 l_max_string_size;       // 0x80062dfc (GP + 0xb8)
+u8 l_str_global_mode;       // 0x80062dfd (GP + 0xb9)
+
+u32 l_tutorial_on;          // 0x80062fa0 (GP + 0x25c)
+
+u32* g_menu_poly;           // 0x80062f24
+u32* g_menu_otag;           // 0x80062fc4
 
 
 
@@ -15,7 +37,7 @@ void func1c434()
         system_bios_start_pad();
         system_bios_init_pad( 0x800696ac, 0x4, 0x800696ac + 0x22, 0x4 );
     }
-    [0x80062fa0] = w(0); // tutorial off
+    l_tutorial_on = 0;
 }
 
 
@@ -150,7 +172,7 @@ switch( V1 )
         system_menu_set_pos_add_window();
 
         [GP + 0x150] = w(0); // wait
-        [0x80062fa0] = w(0); // tutorial off
+        l_tutorial_on = 0;
         return 0000;
     }
 
@@ -198,7 +220,7 @@ return 0000;
 
 u32 system_menu_get_current_pad_buttons()
 {
-    if( w[0x80062fa0] == 0 ) // input enabled
+    if( l_tutorial_on == 0 )
     {
         if( bu[0x800696ac] != 0xff ) // if data ok
         {
@@ -243,14 +265,14 @@ u32 system_menu_get_current_pad_buttons()
 
 
 
-void system_get_buttons_with_config_remap()
+void system_menu_get_remapped_buttons()
 {
     u32 buttons = system_menu_get_current_pad_buttons();
     cb1 = buttons & 0x0000ffff; // first controller
     cb2 = buttons & 0xffff0000; // second controller
 
     // if controller config set to normal or input not enabled
-    if( ( ( ( hu[0x8009c6e4 + 0x10da] >> 0x2 ) & 0x3 ) == 0 ) || ( w[0x80062fa0] != 0 ) )
+    if( ( ( ( hu[0x8009c6e4 + 0x10da] >> 0x2 ) & 0x3 ) == 0 ) || ( l_tutorial_on != 0 ) )
     {
         return cb2 | cb1;
     }
@@ -278,11 +300,11 @@ void system_get_buttons_with_config_remap()
 ////////////////////////////////
 // func1c980()
 
-[0x80062d88] = h(hu[0x80062d78]);
-[0x80062d8c] = h((hu[0x80062d78] ^ hu[0x80062d8a]) & hu[0x80062d78]);
+[0x80062d88] = h(g_menu_buttons_1);
+[0x80062d8c] = h((g_menu_buttons_1 ^ hu[0x80062d8a]) & g_menu_buttons_1);
 [0x80062d8e] = h(0);
 
-if( hu[0x80062d78] == hu[0x80062d8a] )
+if( g_menu_buttons_1 == hu[0x80062d8a] )
 {
     if( h[GP + 0x24] == 0 )
     {
@@ -305,7 +327,7 @@ if( hu[0x80062d78] == hu[0x80062d8a] )
         else
         {
             [GP + 0x28] = h(0);
-            [0x80062d8e] = h(hu[0x80062d78]);
+            [0x80062d8e] = h(g_menu_buttons_1);
         }
     }
 }
@@ -367,27 +389,27 @@ void system_menu_update_buttons()
     u32 buttons = system_menu_get_current_pad_buttons();
 
     // not custom or input not enabled
-    if( ( ( ( hu[0x8009c6e4 + 0x10da] >> 0x2 ) & 0x3 ) == 0 ) || ( w[0x80062fa0] != 0 ) )
+    if( ( ( ( hu[0x8009c6e4 + 0x10da] >> 0x2 ) & 0x3 ) == 0 ) || ( l_tutorial_on != 0 ) )
     {
-        [0x80062d78] = h(buttons);
+        g_menu_buttons_1 = buttons;
     }
     else // remap
     {
-        [0x80062d78] = h(0);
+        g_menu_buttons_1 = 0;
 
         for( int i = 0; i < 0x10; ++i )
         {
             if( buttons & ( 1 << i ) )
             {
-                [0x80062d78] = h(hu[0x80062d78] | (1 << bu[0x8009c6e4 + 0x10dc + i]));
+                g_menu_buttons_1 |= 0x1 << bu[0x8009c6e4 + 0x10dc + i];
             }
         }
     }
 
-    [0x80062d7c] = h((hu[0x80062d78] ^ hu[0x80062d7a]) & hu[0x80062d78]); // pressed
-    [0x80062d7e] = h(0); // repeated
+    g_menu_pressed_1 = (g_menu_buttons_1 ^ g_menu_buttons_prev_1) & g_menu_buttons_1;
+    g_menu_repeated_1 = 0;
 
-    if( hu[0x80062d78] == hu[0x80062d7a] )
+    if( g_menu_buttons_1 == g_menu_buttons_prev_1 )
     {
         if( h[GP + 0x1c] == 0 )
         {
@@ -410,7 +432,7 @@ void system_menu_update_buttons()
             else
             {
                 [GP + 0x20] = h(0);
-                [0x80062d7e] = h(hu[0x80062d78]);
+                g_menu_repeated_1 = g_menu_buttons_1;
             }
         }
     }
@@ -420,8 +442,8 @@ void system_menu_update_buttons()
         [GP + 0x1c] = h(0);
     }
 
-    [0x80062d7a] = h(hu[0x80062d78]); // previous
-    [0x80062d7e] = h(hu[0x80062d7e] | hu[0x80062d7c]);
+    g_menu_buttons_prev_1 = g_menu_buttons_1;
+    g_menu_repeated_1 |= g_menu_pressed_1;
 
     [0x80062d80] = h(buttons >> 0x10); // second pad buttons mask
     [0x80062d84] = h((hu[0x80062d80] ^ hu[0x80062d82]) & hu[0x80062d80]); // pressed
@@ -2674,8 +2696,7 @@ V1 = h[GP + 0x94];
 V0 = 0002;
 800212C0	bne    v1, v0, L21350 [$80021350]
 
-V0 = hu[0x80062d7e];
-800212D0	nop
+V0 = g_menu_repeated_1;
 V0 = V0 & 0820;
 800212D8	beq    v0, zero, L21350 [$80021350]
 800212DC	nop
@@ -2770,8 +2791,7 @@ V0 = V0 >> 18;
 80021448	nop
 
 L2144c:	; 8002144C
-V0 = hu[0x80062d7c];
-80021454	nop
+V0 = g_menu_pressed_1;
 V1 = V0 & 0820;
 V0 = V0 & V1;
 80021460	beq    v0, zero, L21534 [$80021534]
@@ -3394,8 +3414,7 @@ system_menu_draw_window();
 
 if( bu[GP + 0x96] != 0 )
 {
-    A0 = hu[0x80062d7c];
-    func15668();
+    func15668( g_menu_pressed_1 );
     [SP + 38] = w(V0);
 }
 
@@ -3933,7 +3952,7 @@ if( h[GP + 0x164] == 0x14 )
 {
     if( bu[GP + 0x96] != 0 )
     {
-        if( hu[0x80062d7c] != 0 )
+        if( g_menu_pressed_1 != 0 )
         {
             if( w[SP + 38] == 0 )
             {
@@ -3955,7 +3974,7 @@ if( h[GP + 0x94] == 0 )
     {
         [GP + 0x164] = h(14);
 
-        if( hu[0x80062d7c] != 0 )
+        if( g_menu_pressed_1 != 0 )
         {
             [GP + 0x96] = b(1);
 
@@ -4716,7 +4735,7 @@ if( ( w[GP + 0xb4] == 1 ) && ( w[GP + 0x27c] == 1 ) )
 
     if( w[GP + 0x220] == 0 ) // menu list selection
     {
-        if( ( hu[0x80062d7c] & 0020 ) && ( ( hu[GP + 0x208] >> b[0x8009a0c8 + 0 * 24 + b] ) & 1 ) && ( ( ( hu[GP + 0x208] >> hu[GP + 0x20c] ) & 1 ) == 0 ) ) // confirm and allowed to do it
+        if( ( g_menu_pressed_1 & BUTTON_CIRCLE ) && ( ( hu[GP + 0x208] >> b[0x8009a0c8 + 0 * 24 + b] ) & 1 ) && ( ( ( hu[GP + 0x208] >> hu[GP + 0x20c] ) & 1 ) == 0 ) ) // confirm and allowed to do it
         {
             if( b[0x8009a0c8 + 0 * 24 + b] != 5 )
             {
@@ -4754,7 +4773,7 @@ if( ( w[GP + 0xb4] == 1 ) && ( w[GP + 0x27c] == 1 ) )
         }
         else
         {
-            if( hu[0x80062d7c] & 0040 ) // cancel
+            if( g_menu_pressed_1 & BUTTON_CROSS )
             {
                 A0 = 4;
                 system_menu_sound();
@@ -4766,9 +4785,9 @@ if( ( w[GP + 0xb4] == 1 ) && ( w[GP + 0x27c] == 1 ) )
     }
     else if( w[GP + 0x220] == 1 ) // character selection
     {
-        if( hu[0x80062d7c] & 0020 == 0 )
+        if( (g_menu_pressed_1 & BUTTON_CIRCLE) == 0 )
         {
-            if( hu[0x80062d7c] & 0040 != 0 ) // cancel
+            if( g_menu_pressed_1 & BUTTON_CROSS )
             {
                 A0 = 4;
                 system_menu_sound();
@@ -4807,9 +4826,9 @@ if( ( w[GP + 0xb4] == 1 ) && ( w[GP + 0x27c] == 1 ) )
     }
     else if( w[GP + 0x220] == 2 ) // order menu
     {
-        if( hu[0x80062d7c] & 0020 == 0 )
+        if( (g_menu_pressed_1 & BUTTON_CIRCLE) == 0 )
         {
-            if( hu[0x80062d7c] & 0040 != 0 ) // cancel
+            if( g_menu_pressed_1 & BUTTON_CROSS )
             {
                 A0 = 4;
                 system_menu_sound();
@@ -5312,13 +5331,13 @@ if( tutorial_data == 0 )
     A2 = 0;
     system_menu_set_pos_add_window();
 
-    [0x80062fa0] = w(0); // tutorial off
+    l_tutorial_on = 0;
 }
 else
 {
     [GP + 0x150] = w(14);
     [GP + 0x158] = w(tutorial_data);
-    [0x80062fa0] = w(1); // tutorial ON
+    l_tutorial_on = 1;
 }
 
 if( bu[0x8009d2a4] & 4 ) [GP + 0x2e0] = b(1);
@@ -5371,7 +5390,7 @@ do
 
     g_menu_otag = w[GP + 0x160]; // ot
 
-    if( w[0x80062fa0] != 0 ) // tutorial on
+    if( l_tutorial_on != 0 )
     {
         if( w[GP + 0x27c] != -1 ) // if not closed
         {
@@ -5455,7 +5474,7 @@ system_menu_load_character_clut_from_ram();
 
 func24a04();
 
-[0x80062fa0] = w(0); // tutorial off
+l_tutorial_on = 0;
 
 A0 = 4;
 system_psyq_vsync();
@@ -6665,7 +6684,7 @@ void system_menu_handle_buttons( data )
         }
     }
 
-    pressed = hu[0x80062d7e];
+    pressed = g_menu_repeated_1;
 
     if( pressed & 0x1000 ) // up
     {
