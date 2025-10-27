@@ -138,68 +138,66 @@ void func112e8()
 
 
 
-////////////////////////////////
-// func1146c()
-
-if( bu[0x80071a58] != 0 )
+void func1146c()
 {
-    g_field_rb += 0x1;
-    g_field_rb &= 0x1;
-
-    func13800();
-
-    system_psyq_put_dispenv( &g_field_disp_env[g_field_rb] );
-    system_psyq_put_drawenv( &g_field_draw_env[g_field_rb] );
-
-    system_psyq_draw_otag( 0x8007e7a0 + g_field_rb * 0x4 );
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func1155c()
-
-switch( h[0x80095dd4] )
-{
-    case 0x1: func1146c(); break; // fade transition
-    case 0x2: funcd8d78(); break; // world map render
-    case 0x3: system_battle_swirl_render(); break;
-    case 0x4: system_menu_draw_battle_result(); break;
-}
-
-if( ( bu[0x80062d98] == 0 ) && ( bu[0x80062d99] == 0 ) )
-{
-    [0x8009d26c] = w(w[0x8009d26c] + 0x444);
-
-    if( ( w[0x8009d26c] >> 0x10 ) != 0 )
+    if( bu[0x80071a58] != 0 )
     {
-        [0x8009d264] = w(w[0x8009d264] + 0x1);
-        [0x8009d26c] = w(w[0x8009d26c] & 0xffff);
+        g_field_rb += 0x1;
+        g_field_rb &= 0x1;
+
+        func13800();
+
+        system_psyq_put_dispenv( &g_field_disp_env[g_field_rb] );
+        system_psyq_put_drawenv( &g_field_draw_env[g_field_rb] );
+
+        system_psyq_draw_otag( 0x8007e7a0 + g_field_rb * 0x4 );
+    }
+}
+
+
+
+void func1155c()
+{
+    switch( h[0x80095dd4] )
+    {
+        case 0x1: func1146c(); break; // fade transition
+        case 0x2: funcd8d78(); break; // world map render
+        case 0x3: system_battle_swirl_render(); break;
+        case 0x4: system_menu_draw_battle_result(); break;
     }
 
-    [0x8009d270] = w(w[0x8009d270] + 0x444);
-
-    if( ( w[0x8009d270] >> 0x10 ) != 0 )
+    if( ( bu[0x80062d98] == 0 ) && ( bu[0x80062d99] == 0 ) )
     {
-        if( bu[0x8009d2e7] & 0x2 )
+        [0x8009d26c] = w(w[0x8009d26c] + 0x444);
+
+        if( ( w[0x8009d26c] >> 0x10 ) != 0 )
         {
-            [0x8009d268] = w(w[0x8009d268] + 0x1);
-            [0x8009d270] = w(w[0x8009d270] & 0xffff);
+            [0x8009d264] = w(w[0x8009d264] + 0x1);
+            [0x8009d26c] = w(w[0x8009d26c] & 0xffff);
         }
-        else
+
+        [0x8009d270] = w(w[0x8009d270] + 0x444);
+
+        if( ( w[0x8009d270] >> 0x10 ) != 0 )
         {
-            if( w[0x8009d268] != 0 )
+            if( bu[0x8009d2e7] & 0x2 )
             {
-                [0x8009d268] = w(w[0x8009d268] - 0x1);
+                [0x8009d268] = w(w[0x8009d268] + 0x1);
+                [0x8009d270] = w(w[0x8009d270] & 0xffff);
             }
-            [0x8009d270] = w(w[0x8009d270] & 0xffff);
+            else
+            {
+                if( w[0x8009d268] != 0 )
+                {
+                    [0x8009d268] = w(w[0x8009d268] - 0x1);
+                }
+                [0x8009d270] = w(w[0x8009d270] & 0xffff);
+            }
         }
     }
-}
 
-[0x8007e768] = h(1);
-////////////////////////////////
+    [0x8007e768] = h(0x1);
+}
 
 
 
@@ -266,12 +264,11 @@ void system_field_run()
 
 
 
-////////////////////////////////
-// func11920()
-
-[0x800965e8] = h(0);
-[0x80071a5c] = h(0);
-////////////////////////////////
+void func11920()
+{
+    [0x800965e8] = h(0);
+    [0x80071a5c] = h(0);
+}
 
 
 
@@ -293,30 +290,29 @@ void system_init_akao_engine()
 
 
 
-////////////////////////////////
-// func119e4()
-
-if( h[0x8009c560] == 0x3 ) // current gamestate worlkmap
+void func119e4()
 {
-    [0x8009c6e4 + b90] = w(2);
-    [0x8009c6e4 + b94] = h(3); // store worldmap gamestate
-}
-else
-{
-    [0x8009c6e4 + b90] = w(0);
-    [0x8009c6e4 + b94] = h(1); // store field gamestate
-}
+    if( h[0x8009c560] == 0x3 ) // current gamestate worlkmap
+    {
+        [0x8009c6e4 + b90] = w(2);
+        [0x8009c6e4 + b94] = h(3); // store worldmap gamestate
+    }
+    else
+    {
+        [0x8009c6e4 + b90] = w(0);
+        [0x8009c6e4 + b94] = h(1); // store field gamestate
+    }
 
-[0x8009c6e4 + b96] = h(g_field_map_id); // current field id
+    [0x8009c6e4 + b96] = h(g_field_map_id); // current field id
 
-pc_entity = h[0x800965e0];
-[0x8009c6e4 + b9a] = h(w[0x80074eb0 + pc_entity * 84] >> c); // x location on field map
-[0x8009c6e4 + b9c] = h(w[0x80074eb4 + pc_entity * 84] >> c); // y location on field map
-[0x8009c6e4 + b9e] = h(hu[0x80074f16 + pc_entity * 84]); // triangle id on field map
-[0x8009c6e4 + ba0] = b(bu[0x80074eda + pc_entity * 84]); // direction on field map
-[0x8009c6e4 + ba1] = b(bu[0x8009c540]); // seed for battle random in field
-[0x8009c6e4 + ba2] = b(bu[0x8009ad2c]); // field encounter timer: offset
-////////////////////////////////
+    pc_entity = h[0x800965e0];
+    [0x8009c6e4 + b9a] = h(w[0x80074eb0 + pc_entity * 84] >> c); // x location on field map
+    [0x8009c6e4 + b9c] = h(w[0x80074eb4 + pc_entity * 84] >> c); // y location on field map
+    [0x8009c6e4 + b9e] = h(hu[0x80074f16 + pc_entity * 84]); // triangle id on field map
+    [0x8009c6e4 + ba0] = b(bu[0x80074eda + pc_entity * 84]); // direction on field map
+    [0x8009c6e4 + ba1] = b(bu[0x8009c540]); // seed for battle random in field
+    [0x8009c6e4 + ba2] = b(bu[0x8009ad2c]); // field encounter timer: offset
+}
 
 
 
@@ -687,9 +683,7 @@ void system_main()
             case 0x6:
             {
                 system_cdrom_start_load_file( w[0x80048d74], w[0x80048d78], 0x80180000, 0 ); // "MINI\HIGHWAY.BIN"
-
-                do system_cdrom_read_chain(); while( V0 != 0 )
-
+                while( system_cdrom_read_chain() != 0 ) {}
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funca00d0();
@@ -703,9 +697,7 @@ void system_main()
             case 0x7:
             {
                 system_cdrom_start_load_file( w[0x80048d5c], w[0x80048d60], 0x80180000, 0 ); // "MINI\CHOCOBO.BIN"
-
-                do system_cdrom_read_chain(); while( V0 != 0 )
-
+                while( system_cdrom_read_chain() != 0 ) {}
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funca02d0();
@@ -719,9 +711,7 @@ void system_main()
             case 0x8:
             {
                 system_cdrom_start_load_file( w[0x80048d3c], w[0x80048d40], 0x80180000, 0 ); // "MINI\SNOBO.BIN"
-
-                do system_cdrom_read_chain(); while( V0 != 0 )
-
+                while( system_cdrom_read_chain() != 0 ) {}
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funca0390();
@@ -735,9 +725,7 @@ void system_main()
             case 0x9:
             {
                 system_cdrom_start_load_file( w[0x80048d34], w[0x80048d38], 0x80180000, 0 ); // "MINI\CONDOR.BIN"
-
-                do system_cdrom_read_chain(); while( V0 != 0 )
-
+                while( system_cdrom_read_chain() != 0 ) {}
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funcb6b58();
@@ -751,9 +739,7 @@ void system_main()
             case 0xa:
             {
                 system_cdrom_start_load_file( w[0x80048d6c], w[0x80048d70], 0x80180000, 0 ); // "MINI\SUBMAR.BIN"
-
                 while( system_cdrom_read_chain() != 0 ) {}
-
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funca00bc( bu[0x8009d5e5] );
@@ -769,9 +755,7 @@ void system_main()
             case 0xb:
             {
                 system_cdrom_start_load_file( w[0x80048d64], w[0x80048d68], 0x80180000, 0 ); // "MINI\JET.BIN"
-
-                do system_cdrom_read_chain(); while( V0 != 0 )
-
+                while( system_cdrom_read_chain() != 0 ) {}
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funca0450();
@@ -852,9 +836,7 @@ void system_main()
             case 0xe:
             {
                 system_cdrom_start_load_file( w[0x80048d44], w[0x80048d48], 0x80180000, 0 ); // "MINI\SNOBO2.BIN"
-
-                do system_cdrom_read_chain(); while( V0 != 0 )
-
+                while( system_cdrom_read_chain() != 0 ) {}
                 system_gzip_bin_decompress( 0x80180000, 0x800a0000 );
 
                 funca0448();
