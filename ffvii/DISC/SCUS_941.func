@@ -13,8 +13,8 @@
 80011920 func11920
 80011938 system_init_akao_engine
 800119E4 func119e4
-80011AEC func11aec
-80011BB4 func11bb4
+80011AEC system_init_field_from_savemap
+80011BB4 system_init_new_game
 80011C1C system_main
 
 // SCUS_941_fade.cpp

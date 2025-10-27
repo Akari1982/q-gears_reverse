@@ -329,8 +329,8 @@
     + 12 [][]     some type (0, 1, 2, 3)
 
 0x8009abf4 field_struct. 0x8009c6e0 points here.
-    + 00 []       render buffer id (there are 2 render buffers)
-    + 01 []       some state
+    + 0x00 []       render buffer id (there are 2 render buffers)
+    + 0x01 []       some state
                     00 - normal field.
                     01 - load new field or world (finalize field in this case).
                     02 - encounter.
@@ -350,72 +350,73 @@
                     14 - we abort movie play if this.
                     19 - we load INSTR2 if we set this (Sephiroth battle?).
                     1a - game over
-    + 02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play. 1 in case of tutorial.
-    + 04 [][]     destination x during map load.
-    + 06 [][]     destination y during map load.
-    + 0a [][]     background X scroll to this position.
-    + 0c [][]     background Y scroll to this position.
-    + 10 [][]     field scale (9 bit fixed point).
-    + 12 []       steps number. Set to 0 in 0x6A VWOFT opcode.
-    + 13 []       current step. Set to 0 in 0x6A VWOFT opcode.
-    + 14 []       type and state of VWOFT. (1-linear, 2-smooth, 3-finish)
-    + 16 [][]     set to 2-3 bytes in 0x6A VWOFT opcode.
-    + 18 [][]     start. Set to 0 in 0x6A VWOFT opcode.
-    + 1a [][]     end. Set to 0 in 0x6A VWOFT opcode.
-    + 1d []       type of background scroll. (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
-    + 1e []       store entity id to which we scroll background.
-    + 1f []       state of background scroll. (0-init 1-action 2-finish).
-    + 20 [][]     speed of background scroll. Number of steps?
-    + 22 [][]     destination z during map load. (most likely triangle id).
-    + 24 [][]     saved rotation for manual entity during map load.
-    + 26 [][]     movie state (0-not played, 1-start, ) tutorial state (0 from tutor opcode).
-    + 28 [][]     number of entities.
-    + 2a []       manual entity id.
-    + 2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
-    + 2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
-    + 30 [][]     animation for run. Set in CCANM (XX,-,-,2)
-    + 32 []       0 if player has control. 1 - otherwise.
-    + 33 []       if 1 here model will not automove. And animation will not play.
-    + 34 []       we store MENU byte here. Checked when call menu.
-    + 35 []       ???
-    + 36 []       check gateways during move or not (0 - check).
-    + 37 []       scroll lock.
-    + 38 []       0 - disable fade.
-    + 39 []       ???
-    + 3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
-    + 3b []       battle field check on/off (0/1).
-    + 3c []       battle table to use (0 or 1).
-    + 3d []       battle flags.
+    + 0x02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play. 1 in case of tutorial.
+    + 0x04 [][]     destination x during map load.
+    + 0x06 [][]     destination y during map load.
+    + 0x0a [][]     background X scroll to this position.
+    + 0x0c [][]     background Y scroll to this position.
+    + 0x10 [][]     field scale (9 bit fixed point).
+    + 0x12 []       steps number. Set to 0 in 0x6A VWOFT opcode.
+    + 0x13 []       current step. Set to 0 in 0x6A VWOFT opcode.
+    + 0x14 []       type and state of VWOFT. (1-linear, 2-smooth, 3-finish)
+    + 0x16 [][]     set to 2-3 bytes in 0x6A VWOFT opcode.
+    + 0x18 [][]     start. Set to 0 in 0x6A VWOFT opcode.
+    + 0x1a [][]     end. Set to 0 in 0x6A VWOFT opcode.
+    + 0x1d []       type of background scroll. (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
+    + 0x1e []       store entity id to which we scroll background.
+    + 0x1f []       state of background scroll. (0-init 1-action 2-finish).
+    + 0x20 [][]     speed of background scroll. Number of steps?
+    + 0x22 [][]     destination z during map load. (most likely triangle id).
+    + 0x24 [][]     saved rotation for manual entity during map load.
+    + 0x26 [][]     movie state (0-not played, 1-start, ) tutorial state (0 from tutor opcode).
+    + 0x28 [][]     number of entities.
+    + 0x2a []       manual entity id.
+    + 0x2c [][]     animation for stand. Set in CCANM (XX,-,-,0)
+    + 0x2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
+    + 0x30 [][]     animation for run. Set in CCANM (XX,-,-,2)
+    + 0x32 []       0 if player has control. 1 - otherwise.
+    + 0x33 []       if 1 here model will not automove. And animation will not play.
+    + 0x34 []       we store MENU byte here. Checked when call menu.
+    + 0x35 []       ???
+    + 0x36 []       check gateways during move or not (0 - check).
+    + 0x37 []       scroll lock.
+    + 0x38 []       0 - disable fade.
+    + 0x39 []       ???
+    + 0x3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
+    + 0x3b []       battle field check on/off (0/1).
+    + 0x3c []       battle table to use (0 or 1).
+    + 0x3d []       battle flags.
                     0x01 Disable game over. After a party defeat, the game returns to the previous field.
-    + 3e [][]     battle flags.
+    + 0x3e [][]     battle flags.
                     0x80 Do not display the AP/EXP/Gil/items received screens.
                     0x40 Activates the battle arena. The next chosen BATTLE instead takes place in the arena, but keeping the same enemy formation. The "keep going/no way" interface is enabled.
                     0x20 Do not play the battle victory music.
                     0x08 The party cannot escape the battle.
                     0x04 Pre-emptive attack.
                     0x02 The battle is timed; the player must complete the battle before the timer reaches zero, or the battle exits, with no AP/EXP/Gil/items received screens displayed. 
-    + 44 [][][][] offset to battle music (global, with field file offset).
-    + 48 [][][][] offset to field music (global, with field file offset).
-    + 4c [][]     we store FADE and NFADE type here.
-    + 4e [][]     we store start value on FADE and zero on NFADE here.
-    + 50 [][]     we store FADE and NFADE speed here.
-    + 52 [][]     we store FADE R-value here.
-    + 54 [][]     we store FADE G-value here.
-    + 56 [][]     we store FADE B-value here.
-    + 58 [][]     probably current fade R.
-    + 5a [][]     probably current fade G.
-    + 5c [][]     probably current fade B.
-    + 5e [][]     we store NFADE 1/4-byte_value here.
-    + 60 [][]     we store NFADE 2/5-byte_value here.
-    + 62 [][]     we store NFADE 3/6-byte_value here.
-    + 68 [][][][] currently pressed buttons for both controllers without remap.
-    + 6c [][][][] previously pressed buttons for both controllers without remap.
-    + 70 [][][][] new pressed buttons for both controllers without remap.
-    + 74 [][][][] released buttons for both controllers without remap.
-    + 78 [][][][] currently pressed buttons for both controllers with remap.
-    + 7c [][][][] previously pressed buttons for both controllers with remap.
-    + 80 [][][][] new pressed buttons for both controllers with remap.
-    + 84 [][][][] released buttons for both controllers with remap.
+    + 0x44 [][][][] offset to battle music (global, with field file offset).
+    + 0x48 [][][][] offset to field music (global, with field file offset).
+    + 0x4c [][]     we store FADE and NFADE type here.
+    + 0x4e [][]     we store start value on FADE and zero on NFADE here.
+    + 0x50 [][]     we store FADE and NFADE speed here.
+    + 0x52 [][]     we store FADE R-value here.
+    + 0x54 [][]     we store FADE G-value here.
+    + 0x56 [][]     we store FADE B-value here.
+    + 0x58 [][]     probably current fade R.
+    + 0x5a [][]     probably current fade G.
+    + 0x5c [][]     probably current fade B.
+    + 0x5e [][]     we store NFADE 1/4-byte_value here.
+    + 0x60 [][]     we store NFADE 2/5-byte_value here.
+    + 0x62 [][]     we store NFADE 3/6-byte_value here.
+    + 0x64 [][]     prev field (store current field here during load of next).
+    + 0x68 [][][][] currently pressed buttons for both controllers without remap.
+    + 0x6c [][][][] previously pressed buttons for both controllers without remap.
+    + 0x70 [][][][] new pressed buttons for both controllers without remap.
+    + 0x74 [][][][] released buttons for both controllers without remap.
+    + 0x78 [][][][] currently pressed buttons for both controllers with remap.
+    + 0x7c [][][][] previously pressed buttons for both controllers with remap.
+    + 0x80 [][][][] new pressed buttons for both controllers with remap.
+    + 0x84 [][][][] released buttons for both controllers with remap.
                     0001 - L2
                     0002 - R2
                     0004 - L1.
@@ -430,34 +431,34 @@
                     2000 - right button
                     4000 - down button.
                     8000 - left button
-    + 88 [][]     movie frame.
-    + 8a []       if 1 we activate X shaking. 0 - deactivate.
-    + 8b []       state of shaking single X movement (0 - init, 1 - action)
-    + 8c []       random shake array index single X movement.
-    + 8d []       store here smooth shake single X movement.
-    + 8e [][]     shake single X movement strength.
-    + 90 [][]     start position of shake single X movement.
-    + 92 [][]     end position of shake single X movement.
-    + 94 [][]     number of steps for shake single X movement.
-    + 96 [][]     current step for shake single X movement.
-    + 98 []       if 1 we activate Y shaking. 0 - deactivate.
-    + 99 []       state of shaking single Y movement (0 - init, 1 - action)
-    + 9a []       random shake array index single Y movement.
-    + 9b []       store here smooth shake single Y movement.
-    + 9c [][]     shake single Y movement strength.
-    + 9e [][]     start position of shake single Y movement.
-    + a0 [][]     end position of shake single Y movement.
-    + a2 [][]     number of steps for shake single Y movement.
-    + a4 [][]     current step for shake single Y movement.
-    + a6 [][]     x scroll for 2nd background.
-    + a8 [][]     y scroll for 2nd background.
-    + aa [][]     x scroll for 3rd background.
-    + ac [][]     y scroll for 3rd background.
-    + ae [][]     depth for background 3rd layer.
-    + b0 [][]     depth for background 2nd layer.
-    + b2          triangle lock array (bit per triangle) (0x40 items)
-    + f2          background state array (0x40 items)
-    + f2          minigame:
+    + 0x88 [][]     movie frame.
+    + 0x8a []       if 1 we activate X shaking. 0 - deactivate.
+    + 0x8b []       state of shaking single X movement (0 - init, 1 - action)
+    + 0x8c []       random shake array index single X movement.
+    + 0x8d []       store here smooth shake single X movement.
+    + 0x8e [][]     shake single X movement strength.
+    + 0x90 [][]     start position of shake single X movement.
+    + 0x92 [][]     end position of shake single X movement.
+    + 0x94 [][]     number of steps for shake single X movement.
+    + 0x96 [][]     current step for shake single X movement.
+    + 0x98 []       if 1 we activate Y shaking. 0 - deactivate.
+    + 0x99 []       state of shaking single Y movement (0 - init, 1 - action)
+    + 0x9a []       random shake array index single Y movement.
+    + 0x9b []       store here smooth shake single Y movement.
+    + 0x9c [][]     shake single Y movement strength.
+    + 0x9e [][]     start position of shake single Y movement.
+    + 0xa0 [][]     end position of shake single Y movement.
+    + 0xa2 [][]     number of steps for shake single Y movement.
+    + 0xa4 [][]     current step for shake single Y movement.
+    + 0xa6 [][]     x scroll for 2nd background.
+    + 0xa8 [][]     y scroll for 2nd background.
+    + 0xaa [][]     x scroll for 3rd background.
+    + 0xac [][]     y scroll for 3rd background.
+    + 0xae [][]     depth for background 3rd layer.
+    + 0xb0 [][]     depth for background 2nd layer.
+    + 0xb2          triangle lock array (bit per triangle) (0x40 items)
+    + 0xf2          background state array (0x40 items)
+    + 0xf2          minigame:
                     0 - highway
                     1 - chocobo
                     2 - snowboard

@@ -3653,8 +3653,8 @@ bool newgamemenu_main()
 
     system_psyq_vsync( 0 );
 
-    system_psyq_put_dispenv( 0x801e3f00 );
-    system_psyq_put_drawenv( 0x801e3e90 );
+    system_psyq_put_dispenv( &l_newgame_dispenv[0x1] );
+    system_psyq_put_drawenv( &l_newgame_drawenv[0x1] );
 
     for( int i = 0; i < 0x3; ++i )
     {

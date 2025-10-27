@@ -6,116 +6,119 @@ u16 g_bg3_anim_start;// 0x801144c8
 
 void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgAnim* bg_anim, DR_MODE* dm )
 {
-    V0 = w[0x8009d848];
-    background = w[V0];
+    u32 count1 = 0;
+    u32 count2 = 0;
 
-    count1 = 0;
-    count2 = 0;
-    g_bg2_dm_start = 0;
-    g_bg3_dm_start = 0;
+    u32 g_bg2_dm_start = 0;
+    u32 g_bg3_dm_start = 0;
 
-    block1 = background + 10;
-    coords = background + w[background + 0];
-    tpage = background + w[background + 4];
-    coords2 = background + w[background + 8];
-    coords3 = background + w[background + c];
+    u32 background = w[g_field_background_p];
+    u32 block1 = background + 0x10;
+    u32 coords = background + w[background + 0x0];
+    u32 tpage = background + w[background + 0x4];
 
     // background static 1st layer
     while( true )
     {
-        if( h[block1] == 0x7fff )
+        if( h[block1 + 0x0] == 0x7fff )
         {
             block1 += 0x2;
             break;
         }
-        else if( h[block1] == 0x7ffe )
+
+        if( h[block1 + 0x0] == 0x7ffe )
         {
-            system_psyq_set_draw_mode( dm, 0, 1, hu[tpage], 0 );
-            dm += 1;
+
+            system_psyq_set_draw_mode( dm, 0, 0x1, hu[tpage], 0 );
+            dm += 0x1;
             tpage += 0x2;
-            g_bg2_dm_start += 1;
+            g_bg2_dm_start += 0x1;
         }
         else
         {
             for( int i = h[block1 + 0x4]; i != 0; --i )
             {
-                SETLEN( p1, 0x3 );
+                system_psyq_set_sprt16( p1 );
+                system_psyq_set_shade_tex( p1, 0x1 )
+                system_psyq_set_semi_trans( p1, 0 );
                 p1->r0 = 0x80;
                 p1->g0 = 0x80;
                 p1->b0 = 0x80;
-                p1->code = 0x7d; // Textured Rectangle, 16x16, opaque, raw-texture
                 p1->x0 = hu[coords + 0];
-                p1->y0 = hu[coords + 2];
-                p1->u0 = bu[coords + 4];
-                p1->v0 = bu[coords + 5];
-                p1->clut = hu[coords + 6];
-                p1 += 1;
+                p1->y0 = hu[coords + 0x2];
+                p1->u0 = bu[coords + 0x4];
+                p1->v0 = bu[coords + 0x5];
+                p1->clut = hu[coords + 0x6];
+                p1 += 0x1;
                 coords += 0x8;
-
-                bg_anim += 1;
-
-                count1 += 1;
+                bg_anim += 0x2;
+                count1 += 0x1;
             }
         }
-
         block1 += 0x6;
     }
 
     g_bg2_dm_start = count1 - g_bg2_dm_start;
+    u32 coords2 = background + w[background + 0x8];
 
     // background 2nd layer with depth
     while( true )
     {
-        if( h[block1] == 0x7fff )
+        if( h[block1 + 0x0] == 0x7fff )
         {
             block1 += 0x2;
             break;
         }
 
-        for( int i = h[block1 + 0x4]; i != 0; --i )
+        for( int i = h[block1 + 0x4]; i != 0; --i  )
         {
-            u16 tpage = hu[coords2 + 8];
-            system_psyq_set_draw_mode( dm, 0, 1, tpage, 0 );
+            system_psyq_set_draw_mode( dm, 0, 0x1, hu[coords2 + 0x8], 0 );
             dm += 1;
-            g_bg3_dm_start += 1;
+            g_bg3_dm_start += 0x1;
 
-            SETLEN( p1, 0x3 );
-            [p1 + 4] = h(hu[coords2 + a]); // distance
+            system_psyq_set_sprt16( p1 );
+            system_psyq_set_shade_tex( p1, 0x1 );
+            system_psyq_set_semi_trans( p1, (bu[coords2 + 0xc] & 0x80) ? 0x1 : 0 );
+
+            p1->r0 = bu[coords2 + 0xa]; // this is depth used in render
+            p1->g0 = hu[coords2 + 0xa] >> 0x8;  // this is depth used in render
             p1->b0 = 0x80;
-            p1->code = ( hu[coords2 + c] & 0x80 ) ? 0x7f : 0x7d; // add transparency
-            p1->x0 = hu[coords2 + 0];
-            p1->y0 = hu[coords2 + 2];
-            p1->u0 = bu[coords2 + 4];
-            p1->v0 = bu[coords2 + 5];
-            p1->clut = hu[coords2 + 6];
-            p1 += 1;
+            p1->x0 = hu[coords2 + 0x0];
+            p1->y0 = hu[coords2 + 0x2];
+            p1->u0 = bu[coords2 + 0x4];
+            p1->v0 = bu[coords2 + 0x5];
+            p1->clut = hu[coords2 + 0x6];
+            p1 += 0x1;
+
+            bg_anim->anim_id = bu[coords2 + 0xc];
+            bg_anim->frame_id = bu[coords2 + 0xd];
+            bg_anim += 0x1;
+
             coords2 += 0xe;
-
-            bg_anim->anim_id = bu[coords2 + c];
-            bg_anim->frame_id = bu[coords2 + d];
-            bg_anim += 1;
-
-            count1 += 1;
+            count1 += 0x1;
         }
 
         block1 += 0x6;
     }
 
-    g_bg3_anim_start = count1;
+    u32 g_bg3_anim_start = count1;
+    u32 coords3 = background + w[background + 0xc];
 
     // background dynamic 3rd layer
     while( true )
     {
-        if( h[block1] == 0x7fff )
+        if( h[block1 + 0x0] == 0x7fff )
         {
             block1 += 0x2;
             break;
         }
-        else if( h[block1] == 0x7ffe )
+
+        if( h[block1 + 0x0] == 0x7ffe )
         {
-            system_psyq_set_draw_mode( dm, 0, 1, hu[tpage], 0 );
-            dm += 1;
-            tpage += 2;
+            system_psyq_set_draw_mode( dm, 0, 0x1, hu[tpage], 0 );
+            dm += 0x1;
+            tpage += 0x2;
+            block1 += 0x6;
         }
         else
         {
@@ -123,26 +126,28 @@ void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgAnim* bg_anim,
 
             for( int i = h[block1 + 0x4]; i != 0; --i )
             {
-                SETLEN( p2, 0x4 );
+                system_psyq_set_sprt( p2 );
+                system_psyq_set_shade_tex( p2, 0x1 );
+                system_psyq_set_semi_trans( p2, (bu[coords3 + 0x8] & 0x80) ? 0x1 : 0 );
+
                 p2->r0 = 0x80;
                 p2->g0 = 0x80;
                 p2->b0 = 0x80;
-                p2->code = ( bu[coords3 + 8] & 0x80 ) ? 0x67 : 0x65;
-                p2->x0 = hu[coords3 + 0];
-                p2->y0 = hu[coords3 + 2];
-                p2->u0 = bu[coords3 + 4];
-                p2->v0 = bu[coords3 + 5];
-                p2->clut = hu[coords3 + 6];
+                p2->x0 = hu[coords3 + 0x0];
+                p2->y0 = hu[coords3 + 0x2];
+                p2->u0 = bu[coords3 + 0x4];
+                p2->v0 = bu[coords3 + 0x5];
+                p2->clut = hu[coords3 + 0x6];
                 p2->w = 0x20;
                 p2->h = 0x20;
-                p2 += 1;
+                p2 += 0x1;
+
+                bg_anim->anim_id = bu[coords3 + 0x8];
+                bg_anim->frame_id = bu[coords3 + 0x9];
+                bg_anim += 0x1;
                 coords3 += 0xa;
 
-                bg_anim->anim_id = bu[coords3 + 8];
-                bg_anim->frame_id = bu[coords3 + 9];
-                bg_anim += 1;
-
-                count2 += 1;
+                count2 += 0x1;
             }
         }
 
@@ -152,15 +157,17 @@ void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgAnim* bg_anim,
     // background dynamic 4th layer
     while( true )
     {
-        if( h[block1] == 0x7fff )
+        if( h[block1 + 0x0] == 0x7fff )
         {
             break;
         }
-        else if( h[block1] == 0x7ffe )
+
+        if( h[block1 + 0x0] == 0x7ffe )
         {
-            system_psyq_set_draw_mode( dm, 0, 1, hu[tpage], 0 );
-            dm += 1;
-            tpage += 2;
+            system_psyq_set_draw_mode( dm, 0, 0x1, hu[tpage], 0 );
+            dm += 0x1;
+            tpage += 0x2;
+            block1 += 0x6;
         }
         else
         {
@@ -168,26 +175,28 @@ void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgAnim* bg_anim,
 
             for( int i = h[block1 + 0x4]; i != 0; --i )
             {
-                SETLEN( p2, 0x4 );
+                system_psyq_set_sprt( p2 );
+                system_psyq_set_shade_tex( p2, 0x1 );
+                system_psyq_set_semi_trans( p2, (bu[coords3 + 0x8] & 0x80) ? 0x1 : 0 );
+
                 p2->r0 = 0x80;
                 p2->g0 = 0x80;
                 p2->b0 = 0x80;
-                p2->code = ( bu[coords3 + 0x8] & 0x80 ) ? 0x67 : 0x65;
-                p2->x0 = hu[coords3 + 0];
-                p2->y0 = hu[coords3 + 2];
-                p2->u0 = bu[coords3 + 4];
-                p2->v0 = bu[coords3 + 5];
-                p2->clut = hu[coords3 + 6];
+                p2->x0 = hu[coords3 + 0x0];
+                p2->y0 = hu[coords3 + 0x2];
+                p2->u0 = bu[coords3 + 0x4];
+                p2->v0 = bu[coords3 + 0x5];
+                p2->clut = hu[coords3 + 0x6];
                 p2->w = 0x20;
                 p2->h = 0x20;
-                p2 += 1;
+                p2 += 0x1;
+
+                bg_anim->anim_id = bu[coords3 + 0x8];
+                bg_anim->frame_id = bu[coords3 + 0x9];
+                bg_anim += 0x1;
                 coords3 += 0xa;
 
-                bg_anim->anim_id = bu[coords3 + 8]; // animation
-                bg_anim->frame_id = bu[coords3 + 9]; // index
-                bg_anim += 1;
-
-                count2 += 1;
+                count2 += 0x1;
             }
         }
 
@@ -199,8 +208,7 @@ void field_background_init_packets( SPRT_16* p1, SPRT* p2, FieldBgAnim* bg_anim,
 
 void field_background_add_to_render( FieldRenderData& render_data )
 {
-    V0 = w[0x8009d848];
-    background = w[V0];
+    background = w[g_field_background_p];
 
     offset_to_triggers = w[0x800716c4];
 
@@ -266,7 +274,7 @@ void field_background_add_to_render( FieldRenderData& render_data )
                 {
                     if( ( anim_id == 0 ) || ( bu[0x8009abf4 + 0xf2 + anim_id] & frame_id ) )
                     {
-                        u16 depth = (bu[render_data + 0x4914 + bg_id * 0x10 + 0x5] << 8) + (bu[render_data + 0x4914 + bg_id * 0x10 + 0x4]);
+                        u16 depth = (render_data.bg_1[bg_id].g0 << 8) + (render_data.bg_1[bg_id].r0);
                         ADDPRIM( &render_data.ot_scene[depth], &render_data.bg_1[bg_id] );
 
                         u16 dm_id = bg_id - g_bg2_dm_start;
@@ -752,7 +760,7 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
     [offset_to_triggers + 0x24] = h((hu[offset_to_triggers + 0x24] + hu[0x8009abf4 + 0xaa]) % (h[offset_to_triggers + 0x1c] * 0x10)); // add x scroll for 3nd background
     [offset_to_triggers + 0x26] = h((hu[offset_to_triggers + 0x26] + hu[0x8009abf4 + 0xac]) % (h[offset_to_triggers + 0x1e] * 0x10)); // add y scroll for 3nd background
 
-    A0 = h[camera_data + 24]; // H
+    A0 = h[camera_data + 0x24]; // H
     system_psyq_set_geom_screen();
 
     if( ( g_movie_play != 0 ) && ( bu[0x8009abf4 + 0x3a] == 0 ) )
@@ -764,13 +772,13 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
                 // base scroll + map offset
                 drawenv1->ofs[0] = g_base_ofs_x - hu[camera_data + 0x20];
                 drawenv1->ofs[1] = g_base_ofs_y + hu[camera_data + 0x22];
-                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 ); // Scene settings
+                system_psyq_set_drawenv( &render_data[0x0].scene_drenv, drawenv1 ); // Scene settings
             }
             else
             {
                 drawenv2->ofs[0] = g_base_ofs_x - hu[camera_data + 0x20];
                 drawenv2->ofs[1] = g_base_ofs_y + hu[camera_data + 0x22] + 0xe8;
-                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+                system_psyq_set_drawenv( &render_data[0x1].scene_drenv, drawenv2 );
             }
         }
         else
@@ -780,13 +788,13 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
                 // base scroll + bg scroll
                 drawenv1->ofs[0] = g_base_ofs_x + hu[0x80071e38];
                 drawenv1->ofs[1] = g_base_ofs_y + hu[0x80071e3c];
-                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 ); // Scene settings
+                system_psyq_set_drawenv( &render_data[0x0].scene_drenv, drawenv1 ); // Scene settings
             }
             else
             {
                 drawenv2->ofs[0] = g_base_ofs_x + hu[0x80071e38];
                 drawenv2->ofs[1] = g_base_ofs_y + hu[0x80071e3c] + 0xe8;
-                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+                system_psyq_set_drawenv( &render_data[0x1].scene_drenv, drawenv2 );
             }
         }
     }
@@ -858,10 +866,10 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
             {
                 drawenv1->ofs[0] = ofsx;
                 drawenv1->ofs[1] = ofsy;
-                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 );
+                system_psyq_set_drawenv( &render_data[0x0].scene_drenv, drawenv1 );
 
-                drawenv3->ofs[0] = b[0x8009abf4 + 0x8d] - g_base_ofs_x - S5;
-                drawenv3->ofs[1] = b[0x8009abf4 + 0x9b] + g_base_ofs_y - S4;
+                drawenv3->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - S5;
+                drawenv3->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] - S4;
                 system_psyq_set_drawenv( &render_data[0x0].bg_drenv3_s, drawenv3 ); // At start of dynamic layer 3
 
                 drawenv5->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - S7;
@@ -880,7 +888,7 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
             {
                 drawenv2->ofs[0] = ofsx;
                 drawenv2->ofs[1] = ofsy + 0xe8;
-                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+                system_psyq_set_drawenv( &render_data[0x1].scene_drenv, drawenv2 );
 
                 drawenv4->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 8d] - S5;
                 drawenv4->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 9b] - S4 + 0xe8;
@@ -926,7 +934,7 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
             {
                 drawenv1->ofs[0] = ofsx;
                 drawenv1->ofs[1] = ofsy;
-                system_psyq_set_drawenv( &render_data[0x0].bg_drenv, drawenv1 ); // Scene settings
+                system_psyq_set_drawenv( &render_data[0x0].scene_drenv, drawenv1 ); // Scene settings
 
                 drawenv3->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] - S3;
                 drawenv3->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] - S4;
@@ -948,7 +956,7 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
             {
                 drawenv2->ofs[0] = ofsx;
                 drawenv2->ofs[1] = ofsy + 0xe8;
-                system_psyq_set_drawenv( &render_data[0x1].bg_drenv, drawenv2 );
+                system_psyq_set_drawenv( &render_data[0x1].scene_drenv, drawenv2 );
 
                 drawenv4->ofs[0] = g_base_ofs_x + b[0x8009abf4 + 0x8d] - hu[camera_data + 0x20] - S3;
                 drawenv4->ofs[1] = g_base_ofs_y + b[0x8009abf4 + 0x9b] + hu[camera_data + 0x22] - S4 + 0xe8;

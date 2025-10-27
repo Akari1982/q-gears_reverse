@@ -5,7 +5,7 @@
 800A16CC field_main
 800A2314 field_main_loop
 800A2D5C field_load_mim_to_vram
-800A2F78 funca2f78
+800A2F78 field_buttons_update
 800A3020 field_background_init_packets
 800A364C field_background_add_to_render
 800A4094 field_calculate_current_value_by_steps
@@ -46,7 +46,7 @@
 800AA930 field_model_load_and_init
 800AAB24 funcaab24
 800AB2AC funcab2ac
-800AB2B4 funcab2b4
+800AB2B4 field_camera_assign
 800AB310 funcab310
 
 // FIELD.BIN_rain.cpp
@@ -165,7 +165,7 @@
 800C3F1C field_event_opcode_13_lback
 800C3FA0 field_event_opcode_10_skip
 800C401C field_event_opcode_11_lskip
-800C40A4 0x60 MAPJUMP
+800C40A4 field_event_opcode_60_mjump
 800C42B0 0xD8 PMJMP
 800C4350 0xD9 PMJMP2
 800C43C4 0x20 MINIGAME

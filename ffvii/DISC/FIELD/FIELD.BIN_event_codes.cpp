@@ -804,138 +804,40 @@ return 0;
 
 
 
-////////////////////////////////
-// 0x60 MAPJUMP
-V0 = bu[0x8009d820];
-800C40AC	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C40B4	beq    v0, zero, Lc40cc [$800c40cc]
-[SP + 0010] = w(RA);
-800C40BC	lui    a0, $800a
-A0 = A0 + 0840;
-800C40C4	jal    field_debug_event_opcode [$800bead4]
-A1 = 0008;
+int field_event_opcode_60_mjump()
+{
+    field_struct = w[0x8009c6e0];
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-Lc40cc:	; 800C40CC
-A1 = w[0x8009c6e0];
-800C40D4	nop
-V1 = bu[A1 + 0001];
-800C40DC	nop
-800C40E0	beq    v1, zero, Lc40f8 [$800c40f8]
-V0 = 0001;
-800C40E8	beq    v1, v0, Lc4228 [$800c4228]
-V0 = 0002;
-800C40F0	j      Lc4268 [$800c4268]
-800C40F4	nop
+    if( bu[0x8009d820] & 0x3 ) field_debug_event_opcode( "mjump", 0x8 );
 
-Lc40f8:	; 800C40F8
-V0 = 0001;
-[A1 + 0001] = b(V0);
-800C4100	lui    v0, $8008
-V0 = V0 + 31fc;
-A2 = w[0x8009c6e0];
-A0 = bu[0x800722c4];
-A1 = w[0x8009c6dc];
-A0 = A0 << 01;
-A0 = A0 + V0;
-[A2 + 0026] = h(0);
-V0 = hu[A0 + 0000];
-800C4130	nop
-V0 = A1 + V0;
-V1 = bu[V0 + 0001];
-800C413C	nop
-[A2 + 0002] = h(V1);
-V0 = hu[A0 + 0000];
-800C4148	nop
-V0 = A1 + V0;
-V0 = bu[V0 + 0002];
-800C4154	nop
-V0 = V0 << 08;
-V1 = V1 | V0;
-[A2 + 0002] = h(V1);
-V0 = hu[A0 + 0000];
-800C4168	nop
-V0 = A1 + V0;
-V1 = bu[V0 + 0003];
-800C4174	nop
-[A2 + 0004] = h(V1);
-V0 = hu[A0 + 0000];
-800C4180	nop
-V0 = A1 + V0;
-V0 = bu[V0 + 0004];
-800C418C	nop
-V0 = V0 << 08;
-V1 = V1 | V0;
-[A2 + 0004] = h(V1);
-V0 = hu[A0 + 0000];
-800C41A0	nop
-V0 = A1 + V0;
-V1 = bu[V0 + 0005];
-800C41AC	nop
-[A2 + 0006] = h(V1);
-V0 = hu[A0 + 0000];
-800C41B8	nop
-V0 = A1 + V0;
-V0 = bu[V0 + 0006];
-800C41C4	nop
-V0 = V0 << 08;
-V1 = V1 | V0;
-[A2 + 0006] = h(V1);
-V0 = hu[A0 + 0000];
-800C41D8	nop
-V0 = A1 + V0;
-V1 = bu[V0 + 0007];
-800C41E4	nop
-[A2 + 0022] = h(V1);
-V0 = hu[A0 + 0000];
-800C41F0	nop
-V0 = A1 + V0;
-V0 = bu[V0 + 0008];
-800C41FC	nop
-V0 = V0 << 08;
-V1 = V1 | V0;
-[A2 + 0022] = h(V1);
-V0 = hu[A0 + 0000];
-800C4210	nop
-A1 = A1 + V0;
-V1 = bu[A1 + 0009];
-V0 = 0001;
-800C4220	j      Lc42a0 [$800c42a0]
-[A2 + 0024] = h(V1);
+    if( bu[field_struct + 0x1] == 0 )
+    {
+        [field_struct + 0x1] = b(0x1);
+        [field_struct + 0x2] = h(hu[events_data + script_cur + 0x1]); // field id
+        [field_struct + 0x4] = h(hu[events_data + script_cur + 0x3]); // x
+        [field_struct + 0x6] = h(hu[events_data + script_cur + 0x5]); // y
+        [field_struct + 0x22] = h(hu[events_data + script_cur + 0x7]); // z
+        [field_struct + 0x24] = h(bu[events_data + script_cur + 0x9]); // dir
+        [field_struct + 0x26] = h(0);
+        return 1;
+    }
+    else if( bu[field_struct + 0x1] == 0x1 )
+    {
+        if( h[field_struct + 0x26] == 0x2 )
+        {
+            [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0xa);
+            [field_struct + 0x1] = b(0);
+            return 0;
+        }
+    }
 
-Lc4228:	; 800C4228
-V1 = h[A1 + 0026];
-800C422C	nop
-800C4230	bne    v1, v0, Lc4268 [$800c4268]
-800C4234	nop
-V1 = bu[0x800722c4];
-800C4240	lui    v0, $8008
-V0 = V0 + 31fc;
-V1 = V1 << 01;
-V1 = V1 + V0;
-A0 = hu[V1 + 0000];
-V0 = 0;
-A0 = A0 + 000a;
-[V1 + 0000] = h(A0);
-800C4260	j      Lc42a0 [$800c42a0]
-[A1 + 0001] = b(0);
+    if( bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2( "evt cmd=", bu[field_struct + 0x1], 0x2 );
 
-Lc4268:	; 800C4268
-V0 = bu[0x8009d820];
-800C4270	nop
-V0 = V0 & 0003;
-800C4278	beq    v0, zero, Lc42a0 [$800c42a0]
-V0 = 0001;
-V0 = w[0x8009c6e0];
-800C4288	lui    a0, $800a
-A0 = A0 + 0848;
-A1 = bu[V0 + 0001];
-800C4294	jal    field_debug_add_parse_value_to_page2 [$800beca4]
-A2 = 0002;
-V0 = 0001;
-
-Lc42a0:	; 800C42A0
-////////////////////////////////
+    return 0x1;
+}
 
 
 

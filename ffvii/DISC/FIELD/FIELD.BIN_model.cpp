@@ -13,9 +13,8 @@ field_model_struct_init();
 [0x800e0204] = w(V0); // place to load next BCX
 
 // load field bsx
-field_id = h[0x8009a05c];
-A0 = w[0x800da5b8 + field_id * 18 + 10];
-A1 = w[0x800da5b8 + field_id * 18 + 14];
+A0 = w[0x800da5b8 + g_field_map_id * 18 + 10];
+A1 = w[0x800da5b8 + g_field_map_id * 18 + 14];
 A2 = 0x801b0000;
 A3 = 0;
 system_cdrom_start_load_lzs();
@@ -256,19 +255,17 @@ for( int i = 0; i < h[0x8009ac1c]; ++i )
 
 
 
-////////////////////////////////
-// funcab2b4()
-
-if( ( g_movie_play == 0 ) || ( bu[0x8009abf4 + 0x39] == 0x1 ) )
+void field_camera_assign()
 {
-    V0 = w[0x80083578];
-    [0x80071e40] = w(w[V0]);
+    if( ( g_movie_play == 0 ) || ( bu[0x8009abf4 + 0x39] == 0x1 ) )
+    {
+        [0x80071e40] = w(w[g_field_camera_p]);
+    }
+    else
+    {
+        [0x80071e40] = w(w[0x80083270]);
+    }
 }
-else
-{
-    [0x80071e40] = w(w[0x80083270]);
-}
-////////////////////////////////
 
 
 

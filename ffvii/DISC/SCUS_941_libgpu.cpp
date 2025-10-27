@@ -1062,30 +1062,27 @@ return callback_old;
 
 
 
-////////////////////////////////
-// system_psyq_set_disp_mask()
 // Puts display mask into the status specified by mask.
 // mask = 0: not displayed on screen;
 // mask = 1; displayed on screen.
-
-mask = A0;
-
-if( bu[0x80062c02] >= 0x2 )
+void system_psyq_set_disp_mask( int mask )
 {
-    A0 = 0x80010d74; // "SetDispMask(%d)..."
-    A1 = mask;
-    80043D7C	jalr   w[0x80062bfc] ra // system_bios_printf()
-}
+    if( bu[0x80062c02] >= 0x2 )
+    {
+        A0 = 0x80010d74; // "SetDispMask(%d)..."
+        A1 = mask;
+        80043D7C	jalr   w[0x80062bfc] ra // system_bios_printf()
+    }
 
-if( mask == 0 )
-{
-    func46530( 0x80062c6c, -0x1, 0x14 );
-}
+    if( mask == 0 )
+    {
+        func46530( 0x80062c6c, -0x1, 0x14 );
+    }
 
-A0 = (mask != 0) ? 0x03000000 : 0x03000001;
-V0 = w[0x80062bf8];
-80043DB8	jalr   w[V0 + 0x10] ra // func458f0()
-////////////////////////////////
+    A0 = (mask != 0) ? 0x03000000 : 0x03000001;
+    V0 = w[0x80062bf8];
+    80043DB8	jalr   w[V0 + 0x10] ra // func458f0()
+}
 
 
 

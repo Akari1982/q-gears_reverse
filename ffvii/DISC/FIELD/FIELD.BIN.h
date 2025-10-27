@@ -9,10 +9,10 @@ struct FieldRenderData
     u32 ot_scene[0x1000];       // 0x0
     SPRT_16 arrows[0x18];       // 0x4000
     DR_MODE arrows_dm;          // 0x4180
-    u32 ot_drenv;               // 0x418c
-    u32 ot_bg_drenv;            // 0x4190
+    u32 ot_fade_drenv;          // 0x418c
+    u32 ot_scene_drenv;         // 0x4190
     DR_ENV drenv;               // 0x4194
-    DR_ENV bg_drenv;            // 0x41d4
+    DR_ENV scene_drenv;         // 0x41d4
     DR_ENV bg_drenv3_s;         // 0x4214 start dynamic layer 3
     DR_ENV bg_drenv4_s;         // 0x4254 start dynamic layer 4
     DR_ENV bg_drenv3_e;         // 0x4294 end dynamic layer 3

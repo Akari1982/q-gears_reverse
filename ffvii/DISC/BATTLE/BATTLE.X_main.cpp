@@ -9823,7 +9823,6 @@ V0 = w[V0 + 0024];
 800AC574	beq    v0, zero, Lac594 [$800ac594]
 V0 = 000d;
 V1 = w[V1 + 0028];
-800AC580	nop
 800AC584	bne    v1, v0, Lac598 [$800ac598]
 V0 = S0 << 01;
 800AC58C	jal    funcab788 [$800ab788]
