@@ -862,7 +862,7 @@ void system_main()
         {
             system_cdrom_load_file( w[0x80048d54], w[0x80048d58], 0x800a0000, 0 ); // "FIELD\ENDING.X"
 
-            ending_main_credits( 1 ); // ending credits
+            ending_main_credits( 0x1 ); // ending credits
 
             func33be0();
 
