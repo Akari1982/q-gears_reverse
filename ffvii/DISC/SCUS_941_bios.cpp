@@ -63,8 +63,6 @@ T1 = 72;
 
 
 
-////////////////////////////////
-// system_bios_set_mem_size()
 // A(9Fh) - SetMemSize(megabytes)
 // Changes the effective RAM size (2 or 8 megabytes) by manipulating port 1F801060h,
 // and additionally stores the size in megabytes in RAM at [00000060h].
@@ -72,24 +70,26 @@ T1 = 72;
 // correct physical memory size), but initializes the I/O port to 8MB (which mirrors
 // the physical 2MB within that 8MB region), so the initial values don't match up with each other.
 // Caution: Applying the correct size of 2MB may cause the "realloc" function
-//  to crash (that function may accidently access memory above 2MB).
-T2 = a0;
-T1 = 9f;
-800429D4	jr     t2 
-////////////////////////////////
+// to crash (that function may accidently access memory above 2MB).
+void system_psyq_set_mem( unsigned long n )
+{
+    T2 = a0;
+    T1 = 9f;
+    800429D4	jr     t2
+}
 
 
 
-////////////////////////////////
-// system_bios_system_error_boot_or_disk_failure()
 // A(A1h) - SystemErrorBootOrDiskFailure(type,errorcode) ;type "B"=Boot,"D"=Disk
 // These are used "SystemError" functions. The functions are repeatedly jumping to
 // themselves, causing the system to hang. Possibly useful for debugging software
 // which may hook that functions.
-T2 = a0;
-T1 = a1;
-800429E4	jr     t2 
-////////////////////////////////
+void system_psyq_system_error( char c, long n )
+{
+    T2 = a0;
+    T1 = a1;
+    800429E4	jr     t2
+}
 
 
 

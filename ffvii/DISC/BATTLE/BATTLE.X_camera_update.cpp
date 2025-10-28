@@ -464,7 +464,7 @@ func3d1b4;
 
 A0 = 61;
 A1 = 1;
-system_bios_system_error_boot_or_disk_failure();
+system_psyq_system_error();
 ////////////////////////////////
 
 
@@ -504,7 +504,7 @@ A0 = 0001;
 800BC028	jal    func3d1b4 [$8003d1b4]
 800BC02C	nop
 A0 = 0061;
-800BC034	jal    system_bios_system_error_boot_or_disk_failure [$800429e0]
+800BC034	jal    system_psyq_system_error [$800429e0]
 A1 = 0002;
 ////////////////////////////////
 
@@ -535,7 +535,7 @@ func3d1b4; // disable dma, set default exit from exception
 
 A0 = 61;
 A1 = 4;
-system_bios_system_error_boot_or_disk_failure();
+system_psyq_system_error();
 return V0;
 ////////////////////////////////
 
@@ -563,7 +563,7 @@ int funcbc11c( int A0 )
 
     func3d1b4();
 
-    system_bios_system_error_boot_or_disk_failure( 0x61, 0x3 );
+    system_psyq_system_error( 0x61, 0x3 );
 }
 
 

@@ -357,7 +357,7 @@ void system_main()
     [SP + 0x14] = w(w[0x80010018]); // "le.x"
     [SP + 0x18] = b(b[0x8001001c]); // ""
 
-    system_bios_set_mem_size( 0x8 ); // set memsize to 8mb
+    system_psyq_set_mem( 0x8 ); // set memsize to 8mb
 
     system_init_base(); // init intr, graph, spu, gte and so on
 

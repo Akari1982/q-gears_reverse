@@ -18,17 +18,17 @@ void field_init_structs_events_actors( field_struct, entities_data, events_data 
     {
         if( bu[events_data + 0x0] < 2 )
         {
-            system_bios_system_error_boot_or_disk_failure( 0x4b, 0xa ); // "K" (old Event data!)
+            system_psyq_system_error( 0x4b, 0xa ); // "K" (old Event data!)
         }
 
         if( bu[events_data + 0x1] < 5 )
         {
-            system_bios_system_error_boot_or_disk_failure( 0x4b, 0xb ); // "K" (old Event version!)
+            system_psyq_system_error( 0x4b, 0xb ); // "K" (old Event version!)
         }
 
         if( ( bu[events_data + 0x0] >= 3 ) || ( bu[events_data + 0x1] >= 6 ) )
         {
-            system_bios_system_error_boot_or_disk_failure( 0x4b, 0xc ); // "K" (old Event program!)
+            system_psyq_system_error( 0x4b, 0xc ); // "K" (old Event program!)
         }
     }
 
@@ -74,21 +74,21 @@ if( bu[0x8007ebe0] != 0 )
         {
             A0 = 4b;
             A1 = b;
-            system_bios_system_error_boot_or_disk_failure();
+            system_psyq_system_error();
         }
 
         if( bu[events_data + 0] < 2 )
         {
             A0 = 4b;
             A1 = a;
-            system_bios_system_error_boot_or_disk_failure();
+            system_psyq_system_error();
         }
 
         if( ( bu[events_data + 1] >= 6 ) || ( bu[events_data + 0] >= 3 ) )
         {
             A0 = 4b;
             A1 = c;
-            system_bios_system_error_boot_or_disk_failure();
+            system_psyq_system_error();
         }
     }
 }

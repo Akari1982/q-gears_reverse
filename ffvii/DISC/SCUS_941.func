@@ -932,16 +932,16 @@
 80042394 func42394
 8004242C func4242c
 800424C4 func424c4
-800425FC func425f8
-8004262C func4262c
+800425FC system_psyq_dec_dct_vlc_size_2
+8004262C system_psyq_dec_dct_vlc_2
 
 // SCUS_941_bios.cpp
 80042990 system_bios_init_heap
 800429A0 system_bios_flush_cache
 800429B0 func429b0
 800429C0 system_bios_cd_remove
-800429D0 system_bios_set_mem_size
-800429E0 system_bios_system_error_boot_or_disk_failure
+800429D0 system_psyq_set_mem
+800429E0 system_psyq_system_error
 800429F0 system_bios_deliver_event
 80042A00 system_bios_open_event
 80042A10 system_bios_close_event

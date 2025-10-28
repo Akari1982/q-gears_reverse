@@ -1420,7 +1420,7 @@ if( w[0x80071a60] == a )
                 rb = w[0x80095da8];
                 A0 = addr;
                 A1 = w[0x80095d9c + rb * 4];
-                func4262c();
+                system_psyq_dec_dct_vlc_2();
 
                 A0 = addr;
                 func40ac8(); // StFreeRing
@@ -1438,7 +1438,7 @@ if( w[0x80071a60] == a )
         rb = w[0x80095da8];
         A0 = V0;
         A1 = w[0x80095d9c + rb * 4];
-        func4262c()
+        system_psyq_dec_dct_vlc_2()
     }
 
     [0x80071a60] = w(8);
@@ -1628,7 +1628,7 @@ else if( V1 == 2 )
     rb = w[0x80095da8];
     A0 = V0;
     A1 = w[0x80095d9c + rb * 4];
-    func4262c();
+    system_psyq_dec_dct_vlc_2();
 
     V0 = w[0x8006e110];
     [0x8006e110] = w(V0 + 1);
@@ -1656,7 +1656,7 @@ else if( V1 == 3 )
     A0 = V0;
     rb = w[0x80095da8];
     A1 = w[0x80095d9c + rb * 4];
-    func4262c();
+    system_psyq_dec_dct_vlc_2();
 
     [0x8006e110] = w(w[0x8006e110] + 1);
 
@@ -1856,7 +1856,7 @@ rb = w[0x80095da8];
 
 A0 = addr;
 A1 = w[0x80095d9c + rb * 4]; // memory
-func4262c();
+system_psyq_dec_dct_vlc_2();
 
 A0 = addr;
 func40ac8(); // StFreeRing
