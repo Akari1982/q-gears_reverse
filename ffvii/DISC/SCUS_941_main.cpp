@@ -496,15 +496,15 @@ void system_main()
 
                         if( hu[0x800707be] & 0x8 )
                         {
-                            [0x8009d2a0 + 0x2] = b(bu[0x8009d2a0 + 0x2] + 1);
+                            [0x8009d2a0 + 0x2] = b(bu[0x8009d2a0 + 0x2] + 0x1);
                             if( bu[0x8009d2a0 + 0x2] == 0 )
                             {
-                                [0x8009d2a0 + 0x3] = b(bu[0x8009d2a0 + 0x3] + 1);
+                                [0x8009d2a0 + 0x3] = b(bu[0x8009d2a0 + 0x3] + 0x1);
                             }
                         }
                     }
 
-                    if( hu[0x800707be] & 1 )
+                    if( hu[0x800707be] & 0x1 )
                     {
                         if( bu[0x8009ac31] == 0 )
                         {
@@ -539,8 +539,7 @@ void system_main()
 
                     func111e4(); // we load battle here
 
-                    V0 = hu[0x800707be] & 8;
-                    if( V0 != 0 )
+                    if( hu[0x800707be] & 0x8 )
                     {
                         [0x8009d2a2] = b(bu[0x8009d2a2] + 1);
 
@@ -551,7 +550,7 @@ void system_main()
                     }
                     else
                     {
-                        if( ( ( hu[0x800707be] & 1 ) != 0 ) || ( ( w[0x8009d268] == 0 ) && ( ( w[0x80095ddc] & S7 ) != 0  ) ) )
+                        if( ((hu[0x800707be] & 0x1) != 0) || ((w[0x8009d268] == 0) && ((w[0x80095ddc] & S7) != 0)) )
                         {
                             [0x800707be] = h(0);
                             [0x8009abf4 + 0x1] = b(0x1a);
@@ -608,7 +607,7 @@ void system_main()
 
                 func119e4();
 
-                if( bu[0x80071e34] == 1 )
+                if( bu[0x80071e34] == 0x1 )
                 {
                     func260dc();
                     func26090(); // LIMTMENU.MNU
