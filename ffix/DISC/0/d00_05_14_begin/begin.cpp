@@ -1898,11 +1898,9 @@ void funca8fdc()
 
 ////////////////////////////////
 // funca903c
-800A903C	addiu  sp, sp, $ffd8 (=-$28)
-[SP + 0018] = w(S2);
+
 800A9044	lui    s2, $00ff
 800A9048	lui    v0, $800b
-[SP + 001c] = w(S3);
 800A9050	lui    s3, $8007
 T0 = w[V0 + b32c];
 V0 = 0004;
@@ -1910,13 +1908,9 @@ A1 = A1 << 10;
 A0 = A0 | A1;
 V1 = w[S3 + 7170];
 S2 = S2 | ffff;
-[SP + 0020] = w(S4);
 800A9070	lui    s4, $8007
-[SP + 0010] = w(S0);
 S0 = A2 << 02;
-[SP + 0014] = w(S1);
 800A9080	lui    s1, $ff00
-[SP + 0024] = w(RA);
 [V1 + 0003] = b(V0);
 V0 = T0 << 01;
 V1 = T0 << 09;
@@ -1954,7 +1948,7 @@ A1 = 0001;
 A3 = hu[A3 + 0006];
 A2 = A1;
 A3 = A3 | 0020;
-800A9118	jal    $func2420c
+func2420c();
 
 V0 = w[S4 + 716c];
 A0 = w[S3 + 7170];
@@ -1972,14 +1966,6 @@ A0 = A0 & S2;
 V0 = V0 & S1;
 V0 = V0 | A0;
 [S0 + 0000] = w(V0);
-RA = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-800A9178	jr     ra 
-SP = SP + 0028;
 ////////////////////////////////
 
 
@@ -2028,13 +2014,12 @@ bool funca9220()
 
     funca9968();
 
-    La9288:	; 800A9288
+    do
+    {
         funca9b14();
-
         func19194();
 
-        V1 = w[0x800ab3c8];
-        switch( V1 )
+        switch( w[0x800ab3c8] )
         {
             case 0x0:
             {
@@ -2144,9 +2129,7 @@ bool funca9220()
                                         [V0 + 0x0] = h(0x1e0);
                                     }
 
-                                    A0 = 0x800a706c; // "Fr: %d\n"
-                                    A1 = hu[0x800ab2ce];
-                                    system_bios_printf();
+                                    system_bios_printf( "Fr: %d\n", hu[0x800ab2ce] );
                                 }
                                 else
                                 {
@@ -2277,9 +2260,8 @@ bool funca9220()
         }
 
         funca9b58(); // main render (during video and menu)
-
-        V0 = w[0x800ab3c8] < 0x5;
-    800A9924	bne    v0, zero, La9288 [$800a9288]
+    }
+    while( w[0x800ab3c8] < 0x5 );
 
     return (w[0x800ab3c8] ^ 0x6) < 0x1;
 }
@@ -2463,11 +2445,11 @@ bool funca9e14( bool A0 )
         if( T4 == 0 )
         {
             S5 = 0;
-            S1 = -1;
+            S1 = -0x1;
             [0x800ab440] = w(0x1);
             [0x800ab2ec] = b(0x1);
         }
-        else if( T4 == 1 )
+        else if( T4 == 0x1 )
         {
             if( S5 >= 0x4 )
             {
@@ -2483,12 +2465,9 @@ bool funca9e14( bool A0 )
             {
                 T5 = w[SP + 0x40];
 
-                if( S1 == -1 )
+                if( S1 == -0x1 )
                 {
-                    A0 = 0x4;
-                    A1 = (hu[0x800ab2dc + (S5 + T5 * 4) * 2]) | 0x00040000;
-                    A2 = 0;
-                    S0 = func1c7fc();
+                    S0 = func1c7fc( 0x4, (hu[0x800ab2dc + (S5 + T5 * 4) * 2]) | 0x00040000, 0 );
 
                     func1d9cc( S0, 0, 0xe0, 0x280, 0 );
 
