@@ -73,7 +73,6 @@ void system_main()
                 }
                 break;
             }
-
         } while( ( w[struct + 0x0] & 0x1 ) == 0x0 )
 
         func1d30c();
