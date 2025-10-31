@@ -403,7 +403,6 @@ la7b34:	; 800a7b34
     funcae930(); // some draw
 
     V0 = w[S0 + 794c];
-    800A803C	nop
     V0 = w[V0 + 0000];
     800A8044	nop
     V0 = V0 & 000f;
