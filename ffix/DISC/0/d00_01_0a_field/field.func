@@ -295,7 +295,7 @@
 800C75B4 funcc75b4
 800C75E0 funcc75e0
 800C760C funcc760c
-800C768C funcc768c
+800C768C field_get_x_y_rotation_from_walkmesh_for_model
 800C76E8 funcc76e8
 800C7720 funcc7720
 800C778C funcc778c
