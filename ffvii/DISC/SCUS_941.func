@@ -18,18 +18,18 @@
 80011C1C system_main
 
 // SCUS_941_fade.cpp
-80012840 func12840
-800128B8 func128b8
+80012840 system_fade_set_draw_mode
+800128B8 system_fade_init_poly
 800129D0 func129d0
-80012A8C func12a8c
-80012DB0 func12db0
+80012A8C system_fade_set_poly_monochrome
+80012DB0 system_fade_set_poly_rgb
 800131B8 func131b8
 800134F4 func134f4
 80013564 func13564
 800135C0 func135c0
 80013624 func13624
 80013800 func13800
-800138EC func138ec
+800138EC system_fade_update
 80013C9C system_battle_swirl_update
 800140A4 system_battle_swirl_render
 800140F4 system_battle_swirl_init

@@ -1,65 +1,41 @@
-﻿////////////////////////////////
-// func12840()
-
-A1 = A0;
-A0 = 0;
-A2 = 0;
-A3 = 0;
-system_psyq_get_tpage();
-S0 = V0 & ffff;
-
-A0 = 8009a068;
-A1 = 0;
-A2 = 0;
-A3 = S0;
-A4 = 0;
-system_psyq_set_draw_mode();
-
-A0 = 8009a068 + 30;
-A1 = 0;
-A2 = 0;
-A3 = S0;
-A4 = 0;
-system_psyq_set_draw_mode();
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func128b8()
-
-for( int i = 0; i < 2; ++i )
+﻿void system_fade_set_draw_mode( int abr )
 {
-    for( int j = 0; j < 2; ++j )
-    {
-        A0 = 8009a074 + i * 30 + j * 10;
-        system_psyq_set_tile();
-
-        A0 = 8009a074 + i * 30 + j * 10;
-        A1 = 1;
-        system_psyq_set_semi_trans();
-
-        A0 = 8009a074 + i * 30 + J * 10;
-        A1 = 1;
-        system_psyq_set_shade_tex();
-
-        [0x8009a074 + i * 30 + j * 10 + 4] = b(0);
-        [0x8009a074 + i * 30 + j * 10 + 5] = b(0);
-        [0x8009a074 + i * 30 + j * 10 + 6] = b(0);
-        [0x8009a074 + i * 30 + j * 10 + c] = h(a0);
-        [0x8009a074 + i * 30 + j * 10 + e] = h(e0);
-    }
+    u16 tpage = system_psyq_get_tpage( 0, abr, 0, 0 );
+    system_psyq_set_draw_mode( 0x8009a068 + 0x0 * 0x30, 0, 0, tpage, 0 );
+    system_psyq_set_draw_mode( 0x8009a068 + 0x1 * 0x30, 0, 0, tpage, 0 );
 }
 
-[0x8009a07c] = h(0);
-[0x8009a07e] = h(0);
-[0x8009a08c] = h(a0);
-[0x8009a08e] = h(0);
-[0x8009a0ac] = h(0);
-[0x8009a0ae] = h(0);
-[0x8009a0bc] = h(a0);
-[0x8009a0be] = h(0);
-////////////////////////////////
+
+
+void system_fade_init_poly()
+{
+    for( int i = 0; i < 0x2; ++i )
+    {
+        for( int j = 0; j < 0x2; ++j )
+        {
+            u32 poly* = 0x8009a074 + i * 0x30 + j * 0x10;
+            system_psyq_set_tile( poly );
+            system_psyq_set_semi_trans( poly, 0x1 );
+            system_psyq_set_shade_tex( poly, 0x1 );
+
+            poly->r0 = 0;
+            poly->g0 = 0;
+            poly->b0 = 0;
+            poly->w = 0xa0;
+            poly->h = 0xe0;
+        }
+    }
+
+    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0x8] = h(0);
+    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0xa] = h(0);
+    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0x8] = h(a0);
+    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0xa] = h(0);
+
+    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0x8] = h(0);
+    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0xa] = h(0);
+    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0x8] = h(a0);
+    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0xa] = h(0);
+}
 
 
 
@@ -76,13 +52,14 @@ void func129d0()
 
 
 
-void func12a8c( u8 gray )
+void system_fade_set_poly_monochrome( u8 gray )
 {
     system_psyq_clear_otag_r( 0x8007e7a0 + g_field_rb * 0x4, 0x1 );
 
     [0x8009a078 + g_field_rb * 0x30] = b(gray);
     [0x8009a088 + g_field_rb * 0x30] = b(gray);
     [0x8009a079 + g_field_rb * 0x30] = b(gray);
+
     [0x8009a089 + g_field_rb * 0x30] = b(gray);
     [0x8009a07a + g_field_rb * 0x30] = b(gray);
     [0x8009a08a + g_field_rb * 0x30] = b(gray);
@@ -94,198 +71,143 @@ void func12a8c( u8 gray )
 
 
 
-////////////////////////////////
-// func12db0()
-
-red = A0;
-green = A1;
-blue = A2;
-
-rb = g_field_rb;
-fade_start = hu[0x8009abf4 + 0x4e]; // start value of fade
-
-A0 = 8007e7a0 + rb * 4;
-A1 = 1;
-system_psyq_clear_otag_r();
-
-[0x8009a078 + rb * 30] = b((fade_start * red) >> 8);
-[0x8009a088 + rb * 30] = b((fade_start * red) >> 8);
-[0x8009a079 + rb * 30] = b((fade_start * green) >> 8);
-[0x8009a089 + rb * 30] = b((fade_start * green) >> 8);
-[0x8009a07a + rb * 30] = b((fade_start * blue) >> 8);
-[0x8009a08a + rb * 30] = b((fade_start * blue) >> 8);
-
-[0x8009a074 + rb * 30] = w((w[0x8009a074 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a074 + rb * 30) & 00ffffff));
-
-[0x8009a084 + rb * 30] = w((w[0x8009a084 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a084 + rb * 30) & 00ffffff));
-
-[0x8009a068 + rb * 30] = w((w[0x8009a068 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a068 + rb * 30) & 00ffffff));
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func131b8()
-
-red = A0;
-green = A1;
-blue = A2;
-
-rb = g_field_rb;
-
-A0 = 8007e7a0 + rb * 4;
-A1 = 1;
-system_psyq_clear_otag_r();
-
-[0x8009a078 + rb * 30] = b(red);
-[0x8009a088 + rb * 30] = b(red);
-
-[0x8009a079 + rb * 30] = b(green);
-[0x8009a089 + rb * 30] = b(green);
-
-[0x8009a07a + rb * 30] = b(blue);
-[0x8009a08a + rb * 30] = b(blue);
-
-[0x8009a074 + rb * 30] = w((w[0x8009a074 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 04] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a074 + rb * 30) & 00ffffff))
-
-[0x8009a084 + rb * 30] = w((w[0x8009a084 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 04] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 04] & ff000000) | ((8009a084 + rb * 30) & 00ffffff));
-
-
-[0x8009a068 + rb * 30] = w((w[0x8009a068 + rb * 30] & ff000000) | (w[0x8007e7a0 + rb * 4] & 00ffffff));
-[0x8007e7a0 + rb * 4] = w((w[0x8007e7a0 + rb * 4] & ff000000) | ((8009a068 + rb * 30) & 00ffffff));
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func134f4()
-
-[0x8009abf4 + 0x38] = b(0); // fade disabled
-
-[0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] - hu[0x8009abf4 + 0x50]);
-
-if( (hu[0x8009abf4 + 0x4e] <= 0) || (g_movie_play == 0x1) )
+void system_fade_set_poly_rgb( u8 r, u8 g, u8 b )
 {
-    [0x8009abf4 + 0x4c] = h(0);
-    [0x8009abf4 + 0x4e] = h(0);
-}
-////////////////////////////////
+    fade_start = hu[0x8009abf4 + 0x4e]; // start value of fade
 
+    system_psyq_clear_otag_r( 0x8007e7a0 + g_field_rb * 0x4, 0x1 );
 
+    [0x8009a078 + g_field_rb * 0x30] = b((fade_start * r) >> 8);
+    [0x8009a079 + g_field_rb * 0x30] = b((fade_start * g) >> 8);
+    [0x8009a07a + g_field_rb * 0x30] = b((fade_start * b) >> 8);
 
-////////////////////////////////
-// func13564()
+    [0x8009a088 + g_field_rb * 0x30] = b((fade_start * r) >> 8);
+    [0x8009a089 + g_field_rb * 0x30] = b((fade_start * g) >> 8);
+    [0x8009a08a + g_field_rb * 0x30] = b((fade_start * b) >> 8);
 
-[0x8009abf4 + 0x38] = b(0); // fade disabled
-
-[0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + hu[0x8009abf4 + 0x50]);
-
-if( ( hu[0x8009abf4 + 0x4e] >= 0x100 ) )
-{
-    [0x8009abf4 + 0x4e] = h(0xff);
-}
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func135c0()
-
-current = A0;
-final   = A1;
-step    = A2;
-speed   = A3;
-return current + ((final - current) * step) / speed;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func13624()
-
-[0x8009abf4 + 0x38] = b(0); // fade disabled
-
-V0 = hu[0x8009abf4 + 0x4e] + 1;
-[0x8009abf4 + 0x4e] = h(V0);
-
-if( V0 >= hu[0x8009abf4 + 0x50] )
-{
-    [0x8009abf4 + 0x58] = h(hu[0x8009abf4 + 0x5e]); // fade r
-    [0x8009abf4 + 0x5a] = h(hu[0x8009abf4 + 0x60]); // fade g
-    [0x8009abf4 + 0x5c] = h(hu[0x8009abf4 + 0x62]); // fade b
-    [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x50]); // start of fade to speed
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a074 + g_field_rb * 0x30 );
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a084 + g_field_rb * 0x30 );
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a068 + g_field_rb * 0x30 );
 }
 
-A0 = hu[0x8009abf4 + 0x58]; // current
-A1 = hu[0x8009abf4 + 0x5e]; // final
-A2 = hu[0x8009abf4 + 0x4e]; // step
-A3 = hu[0x8009abf4 + 0x50]; // speed
-func135c0();
-[0x8009abf4 + 0x52] = h(V0);
-
-A0 = hu[0x8009abf4 + 0x5a]; // current
-A1 = hu[0x8009abf4 + 0x60]; // final
-A2 = hu[0x8009abf4 + 0x4e]; // step
-A3 = hu[0x8009abf4 + 0x50]; // speed
-func135c0();
-[0x8009abf4 + 0x54] = h(V0);
-
-A0 = hu[0x8009abf4 + 0x5c]; // current
-A1 = hu[0x8009abf4 + 0x62]; // final
-A2 = hu[0x8009abf4 + 0x4e]; // step
-A3 = hu[0x8009abf4 + 0x50]; // speed
-func135c0();
-[0x8009abf4 + 0x56] = h(V0);
-
-A0 = hu[0x8009abf4 + 0x52]; // r
-A1 = hu[0x8009abf4 + 0x54]; // g
-A2 = hu[0x8009abf4 + 0x56]; // b
-func131b8();
-////////////////////////////////
 
 
-
-////////////////////////////////
-// func13800()
-
-if( bu[0x80071a58] == 0x3 )
+void func131b8( u8 r, u8 g, u8 b )
 {
-    [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
+    system_psyq_clear_otag_r( 0x8007e7a0 + rb * 0x4, 0x1 );
 
-    if( hu[0x8009ac42] == 0x22 )
+    [0x8009a078 + g_field_rb * 0x30] = b(r);
+    [0x8009a079 + g_field_rb * 0x30] = b(g);
+    [0x8009a07a + g_field_rb * 0x30] = b(b);
+
+    [0x8009a088 + g_field_rb * 0x30] = b(r);
+    [0x8009a089 + g_field_rb * 0x30] = b(g);
+    [0x8009a08a + g_field_rb * 0x30] = b(b);
+
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a074 + g_field_rb * 0x30 );
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a084 + g_field_rb * 0x30 );
+    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a068 + g_field_rb * 0x30 );
+}
+
+
+
+void func134f4()
+{
+    [0x8009abf4 + 0x38] = b(0); // fade disabled
+
+    [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] - hu[0x8009abf4 + 0x50]);
+
+    if( (hu[0x8009abf4 + 0x4e] <= 0) || (g_movie_play == 0x1) )
     {
-        [0x8009ac40] = h(0);
-        [0x80095dd4] = h(0); // set render func to 0
-        [0x80071a58] = b(0);
+        [0x8009abf4 + 0x4c] = h(0);
+        [0x8009abf4 + 0x4e] = h(0);
+    }
+}
+
+
+
+void func13564()
+{
+    [0x8009abf4 + 0x38] = b(0); // fade disabled
+
+    [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + hu[0x8009abf4 + 0x50]);
+
+    if( ( hu[0x8009abf4 + 0x4e] >= 0x100 ) )
+    {
+        [0x8009abf4 + 0x4e] = h(0xff);
+    }
+}
+
+
+
+s16 func135c0( s16 current, s16 end, s16 step, s16 speed )
+{
+    return current + ((end - current) * step) / speed;
+}
+
+
+
+void func13624()
+{
+    [0x8009abf4 + 0x38] = b(0); // fade disabled
+
+    [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + 0x1);
+
+    if( hu[0x8009abf4 + 0x4e] >= hu[0x8009abf4 + 0x50] )
+    {
+        [0x8009abf4 + 0x58] = h(hu[0x8009abf4 + 0x5e]); // fade r
+        [0x8009abf4 + 0x5a] = h(hu[0x8009abf4 + 0x60]); // fade g
+        [0x8009abf4 + 0x5c] = h(hu[0x8009abf4 + 0x62]); // fade b
+        [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x50]); // start of fade to speed
     }
 
-    func12840( 0x2 );
-    func12a8c( 0x10 );
+    [0x8009abf4 + 0x52] = h(func135c0( hu[0x8009abf4 + 0x58], hu[0x8009abf4 + 0x5e], hu[0x8009abf4 + 0x4e], hu[0x8009abf4 + 0x50] )); // current, final, step, speed
+    [0x8009abf4 + 0x54] = h(func135c0( hu[0x8009abf4 + 0x5a], hu[0x8009abf4 + 0x60], hu[0x8009abf4 + 0x4e], hu[0x8009abf4 + 0x50] )); // current, final, step, speed
+    [0x8009abf4 + 0x56] = h(func135c0( hu[0x8009abf4 + 0x5c], hu[0x8009abf4 + 0x62], hu[0x8009abf4 + 0x4e], hu[0x8009abf4 + 0x50] )); // current, final, step, speed
+
+    A0 = hu[0x8009abf4 + 0x52]; // r
+    A1 = hu[0x8009abf4 + 0x54]; // g
+    A2 = hu[0x8009abf4 + 0x56]; // b
+    func131b8();
 }
-else
+
+
+
+void func13800()
 {
-    [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
-
-    if( hu[0x8009ac42] == 0x12 )
+    if( bu[0x80071a58] == 0x3 )
     {
-        [0x8009ac40] = h(0);
-        [0x80095dd4] = h(0); // set render func to 0
-        [0x80071a58] = b(0);
+        [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
+
+        if( hu[0x8009ac42] == 0x22 )
+        {
+            [0x8009ac40] = h(0);
+            [0x80095dd4] = h(0); // set render func to 0
+            [0x80071a58] = b(0);
+        }
+
+        system_fade_set_draw_mode( 0x2 );
+        system_fade_set_poly_monochrome( 0x10 );
     }
+    else
+    {
+        [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
 
-    func12840( 0x2 );
-    func12a8c( 0x20 );
+        if( hu[0x8009ac42] == 0x12 )
+        {
+            [0x8009ac40] = h(0);
+            [0x80095dd4] = h(0); // set render func to 0
+            [0x80071a58] = b(0);
+        }
+
+        system_fade_set_draw_mode( 0x2 );
+        system_fade_set_poly_monochrome( 0x20 );
+    }
 }
-////////////////////////////////
 
 
 
-void func138ec()
+void system_fade_update()
 {
     switch( hu[0x8009abf4 + 0x4c] )
     {
@@ -300,17 +222,17 @@ void func138ec()
 
         case 0x1:
         {
-            func12840( 0x2 );
+            system_fade_set_draw_mode( 0x2 );
             func134f4(); // discrease to zero
-            func12db0( 0x100 - hu[0x8009abf4 + 0x52], 0x100 - hu[0x8009abf4 + 0x54], 0x100 - hu[0x8009abf4 + 0x56] );
+            system_fade_set_poly_rgb( 0x100 - hu[0x8009abf4 + 0x52], 0x100 - hu[0x8009abf4 + 0x54], 0x100 - hu[0x8009abf4 + 0x56] );
         }
         break;
 
         case 0x2:
         {
-            func12840( 0x2 );
+            system_fade_set_draw_mode( 0x2 );
             func13564(); // increase to ff
-            func12db0( 0x100 - hu[0x8009abf4 + 0x52], 0x100 - hu[0x8009abf4 + 0x54], 0x100 - hu[0x8009abf4 + 0x56] );
+            system_fade_set_poly_rgb( 0x100 - hu[0x8009abf4 + 0x52], 0x100 - hu[0x8009abf4 + 0x54], 0x100 - hu[0x8009abf4 + 0x56] );
         }
         break;
 
@@ -325,8 +247,8 @@ void func138ec()
             }
             else
             {
-                func12840( 0x2 );
-                func12a8c( 0x10 );
+                system_fade_set_draw_mode( 0x2 );
+                system_fade_set_poly_monochrome( 0x10 );
             }
         }
         break;
@@ -339,24 +261,24 @@ void func138ec()
 
         case 0x5:
         {
-            func12840( 0x1 );
+            system_fade_set_draw_mode( 0x1 );
             func134f4(); // discrease to zero
-            func12db0( hu[0x8009abf4 + 0x52], hu[0x8009abf4 + 0x54], hu[0x8009abf4 + 0x56] );
+            system_fade_set_poly_rgb( hu[0x8009abf4 + 0x52], hu[0x8009abf4 + 0x54], hu[0x8009abf4 + 0x56] );
         }
         break;
 
         case 0x6:
         {
             [0x8009abf4 + 0x38] = b(0);
-            func12840( 0x1 );
+            system_fade_set_draw_mode( 0x1 );
             func13564(); // increase to ff
-            func12db0( hu[0x8009abf4 + 0x52], hu[0x8009abf4 + 0x54], hu[0x8009abf4 + 0x56] );
+            system_fade_set_poly_rgb( hu[0x8009abf4 + 0x52], hu[0x8009abf4 + 0x54], hu[0x8009abf4 + 0x56] );
         }
         break;
 
         case 0x7:
         {
-            func12840( 0x2 );
+            system_fade_set_draw_mode( 0x2 );
             func134f4(); // discrease to zero
             func131b8( 0x100 - hu[0x8009abf4 + 0x52], 0x100 - hu[0x8009abf4 + 0x54], 0x100 - hu[0x8009abf4 + 0x56] );
         }
@@ -364,7 +286,7 @@ void func138ec()
 
         case 0x8:
         {
-            func12840( 0x2 );
+            system_fade_set_draw_mode( 0x2 );
             func13564(); // increase to ff
             func131b8( 0x100 - hu[0x8009abf4 + 0x52], 0x100 - hu[0x8009abf4 + 0x54], 0x100 - hu[0x8009abf4 + 0x56] );
         }
@@ -372,7 +294,7 @@ void func138ec()
 
         case 0x9:
         {
-            func12840( 0x1 );
+            system_fade_set_draw_mode( 0x1 );
             func134f4; // discrease to zero
             func131b8( hu[0x8009abf4 + 0x52], hu[0x8009abf4 + 0x54], hu[0x8009abf4 + 0x56] ); // immediate
         }
@@ -381,7 +303,7 @@ void func138ec()
         case 0xa:
         {
             [0x8009abf4 + 0x38] = b(0);
-            func12840( 0x1 );
+            system_fade_set_draw_mode( 0x1 );
             func13564(); // increase to ff
             func131b8( hu[0x8009abf4 + 0x52], hu[0x8009abf4 + 0x54], hu[0x8009abf4 + 0x56] ); // immediate
         }
@@ -389,14 +311,14 @@ void func138ec()
 
         case 0xb:
         {
-            func12840( 0x1 );
+            system_fade_set_draw_mode( 0x1 );
             func13624();
         }
         break;
 
         case 0xc:
         {
-            func12840( 0x2 );
+            system_fade_set_draw_mode( 0x2 );
             func13624();
         }
         break;
@@ -412,8 +334,8 @@ void func138ec()
             }
             else
             {
-                func12840( 0x2 );
-                func12a8c( 0x20 );
+                system_fade_set_draw_mode( 0x2 );
+                system_fade_set_poly_monochrome( 0x20 );
             }
         }
         break;

@@ -211,7 +211,7 @@ void field_main()
     ADDPRIM( &g_field_render_data[0].ot_scene_drenv, &g_field_render_data[0].scene_drenv );
     ADDPRIM( &g_field_render_data[1].ot_scene_drenv, &g_field_render_data[1].scene_drenv );
 
-    func128b8(); // fade
+    system_fade_init_poly();
 
     [0x8009ac40] = h(0);
 
@@ -636,7 +636,7 @@ void field_main_loop()
 
         field_arrows_add_to_render( render_data.ot_scene, w[0x80071e40], w[0x800716c4] + 0x38 );
 
-        func138ec(); // fade update
+        system_fade_update();
 
         V0 = system_psyq_vsync( 0x1 );
         [0x80114478] = w(V0);
