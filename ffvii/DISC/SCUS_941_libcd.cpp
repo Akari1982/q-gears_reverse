@@ -1437,7 +1437,7 @@ return 0;
 [0x80051638] = w(0);
 [0x8005163c] = w(0);
 
-system_interrupts_timer_dma_initialize();
+system_psyq_reset_callback();
 
 A0 = 2; // IRQ2 CDROM
 A1 = 8003faac; // system_cdrom_interrupt_handler()
@@ -1463,7 +1463,7 @@ system_bios_printf();
 [0x8005163c] = w(0);
 [0x80051638] = w(0);
 
-system_interrupts_timer_dma_initialize();
+system_psyq_reset_callback();
 
 A0 = 2;
 A1 = 8003faac;

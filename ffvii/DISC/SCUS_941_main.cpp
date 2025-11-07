@@ -143,7 +143,7 @@ void func1146c()
         system_psyq_put_dispenv( &g_field_disp_env[g_field_rb] );
         system_psyq_put_drawenv( &g_field_draw_env[g_field_rb] );
 
-        system_psyq_draw_otag( 0x8007e7a0 + g_field_rb * 0x4 );
+        system_psyq_draw_otag( &g_fade_ot[g_field_rb] );
     }
 }
 
@@ -154,7 +154,7 @@ void func1155c()
     switch( h[0x80095dd4] )
     {
         case 0x1: func1146c(); break; // fade transition
-        case 0x2: funcd8d78(); break; // world map render
+        case 0x2: funcd8d78(); break; // some battle draw
         case 0x3: system_battle_swirl_render(); break;
         case 0x4: system_menu_draw_battle_result(); break;
     }
@@ -196,14 +196,14 @@ void func1155c()
 
 void system_init_base()
 {
-    func3d1b4(); // disable dma, set default exit from exception
-    system_interrupts_timer_dma_initialize();
+    system_psyq_stop_callback();
+    system_psyq_reset_callback();
     system_psyq_reset_graph( 0 );
     system_psyq_spu_init();
 
     [0x80095dd4] = h(0);
 
-    system_call_main_timer_additional_callback_0( 0x8001155c ); // set render func func1155c()
+    system_psyq_vsync_callback( 0x8001155c ); // set render func func1155c()
     system_psyq_set_graph_debug( 0 );
     system_psyq_set_disp_mask( 0 );
     system_psyq_init_geom();
@@ -415,7 +415,7 @@ void system_main()
 
             if( funca0000( bu[0x8009d588] ) == 0x1 )
             {
-                [0x8009abf4 + 0x1] = b(0);
+                g_field_control.cmd = FIELD_CMD_NONE;
 
                 func33be0();
 
@@ -496,7 +496,7 @@ void system_main()
                         {
                             if( bu[0x8009ac31] == 0 )
                             {
-                                [0x8009abf4 + 0x1] = b(0x1a);
+                                g_field_control.cmd = FIELD_CMD_GAME_OVER;
                                 [0x800707be] = h(0);
                             }
                         }
@@ -543,7 +543,7 @@ void system_main()
                             if( ((hu[0x800707be] & 0x1) != 0) || ((w[0x8009d268] == 0) && (w[0x80095ddc] & 0x20000000)) )
                             {
                                 [0x800707be] = h(0);
-                                [0x8009abf4 + 0x1] = b(0x1a);
+                                g_field_control.cmd = FIELD_CMD_GAME_OVER;
                                 [0x800965ec] = h(0x2);
                                 [0x8009c560] = h(0x3);
                             }
@@ -574,33 +574,33 @@ void system_main()
                     func112e8(); // load "WORLD\WORLD.BIN"
 
                     V1 = w[0x80071e28];
-                    if( V1 == 0 )
+                    if (V1 == 0)
                     {
                         [0x800965ec] = h(0x3);
                         [0x8009c560] = h(0x1); // set gamestate to field
                     }
-                    else if( V1 == 0x1 )
+                    else if (V1 == 0x1)
                     {
                         [0x800965ec] = h(0x3);
                         [0x8009c560] = h(0x2); // set gamestate to battle
 
                     }
-                    else if( V1 == 0x2 )
+                    else if (V1 == 0x2)
                     {
-                        [0x8009abf4 + 0x1] = b(0xa);
+                        g_field_control.cmd = FIELD_CMD_RESET;
                     }
                 }
                 break;
 
                 case 0x5: // menu
                 {
-                    while( hu[0x80095dd4] != 0 ) {}
+                    while (hu[0x80095dd4] != 0) {}
 
-                    while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
+                    while (system_psyq_draw_sync(0x1) != 0) {}
 
                     func119e4();
 
-                    if( bu[0x80071e34] == 0x1 )
+                    if (bu[0x80071e34] == 0x1)
                     {
                         func260dc();
 
@@ -609,39 +609,37 @@ void system_main()
                         [0x80071e34] = b(0);
                     }
 
-                    switch( bu[0x8009abf4 + 0x1] )
+                    switch (g_field_control.cmd)
                     {
-                        case 0x6:  func24d88( h[0x8009abf6] ); break; // NAMEMENU.MNU
+                        case FIELD_CMD_MENU_NAME: func24d88( h[0x8009abf4 + 0x2] ); break; // NAMEMENU.MNU
 
-                        case 0x7: // FORMMENU.MNU
+                        case FIELD_CMD_MENU_FORM: // FORMMENU.MNU
                         {
-                            func24dd4( h[0x8009abf6] );
+                            func24dd4( h[0x8009abf4 + 0x2] );
                             func260dc();
                             func26090(); // LIMTMENU.MNU
                         }
                         break;
 
-                        case 0x8:  func24e18( h[0x8009abf6] ); break; // SHOPMENU.MNU
+                        case FIELD_CMD_MENU_SHOP: func24e18( h[0x8009abf4 + 0x2] ); break; // SHOPMENU.MNU
 
-                        case 0x9: // menu
+                        case FIELD_CMD_MENU_MAIN:
                         {
-                            V0 = h[0x8009abf6 + 0x0];
-                            if( V0 == 0x1 )
+                            if( h[0x8009abf4 + 0x2] == 0x1 )
                             {
                                 system_menu_show( w[0x800e48e0] ); // pointer to tutorial settings
                             }
                             else
                             {
                                 system_menu_show( 0 );
-
-                                [0x8009abf4 + 0x1] = b(0);
+                                g_field_control.cmd = FIELD_CMD_NONE;
                             }
                         }
                         break;
 
-                        case 0xe:  func24e94(); break; // SAVEMENU.MNU
-                        case 0x12: func24fc4( h[0x8009abf6] ); break; // ITEMMENU.MNU store party and char equipment and materia
-                        case 0x13: func24f80( h[0x8009abf6] ); break; // ITEMMENU.MNU restore party and char equipment and materia
+                        case FIELD_CMD_MENU_SAVE: func24e94(); break; // SAVEMENU.MNU
+                        case FIELD_CMD_PARTY_STORE: func24fc4( h[0x8009abf4 + 0x2] ); break; // ITEMMENU.MNU store party and char equipment and materia
+                        case FIELD_CMD_PARTY_RESTORE: func24f80( h[0x8009abf4 + 0x2] ); break; // ITEMMENU.MNU restore party and char equipment and materia
                     }
 
                     field_copy_battle_party_to_party();
@@ -662,7 +660,7 @@ void system_main()
 
                     [0x800965ec] = h(0x6);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -676,7 +674,7 @@ void system_main()
 
                     [0x800965ec] = h(0x7);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -690,7 +688,7 @@ void system_main()
 
                     [0x800965ec] = h(0x8);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -704,7 +702,7 @@ void system_main()
 
                     [0x800965ec] = h(0x9);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -720,7 +718,7 @@ void system_main()
                     [0x8009d5e7] = b(A0 >> 0x8);
                     [0x800965ec] = h(0xa);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -736,7 +734,7 @@ void system_main()
                     [0x8009d3eb] = b(A0 >> 0x8);
                     [0x800965ec] = h(0xb);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -756,7 +754,7 @@ void system_main()
 
                         if( funca0000( bu[0x8009d588] ) == 0x1 )
                         {
-                            [0x8009abf4 + 0x1] = b(0xa);
+                            g_field_control.cmd = FIELD_CMD_RESET;
                         }
                         else
                         {
@@ -774,7 +772,7 @@ void system_main()
                 {
                     func119e4();
 
-                    switch(  bu[0x8009abf4 + 0x1] )
+                    switch (g_field_control.cmd)
                     {
                         case  0xf: func24ecc(); break; // ITEMMENU.MNU stole materia from player and store it to savemap
                         case 0x10: func24f04(); break; // ITEMMENU.MNU restore all stolen materia to equipment and materia list
@@ -785,7 +783,7 @@ void system_main()
                         case 0x18: func25040(); // store characters lv for Jenova Synthesis Boost formula
                     }
 
-                    if( bu[0x8009abf4 + 0x1] != 0x19 )
+                    if (g_field_control.cmd != 0x19)
                     {
                         field_copy_battle_party_to_party();
                     }
@@ -806,7 +804,7 @@ void system_main()
 
                     [0x800965ec] = h(0xe);
                     [0x8009c560] = h(0x1); // set gamestate to field
-                    [0x8009abf4 + 0x1] = b(0x1);
+                    g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
 
@@ -821,7 +819,7 @@ void system_main()
                 break;
             }
 
-            if( bu[0x8009abf4 + 0x1] == 0x5 )
+            if( g_field_control.cmd == FIELD_CMD_CREDITS )
             {
                 system_cdrom_load_file( w[0x80048d54], w[0x80048d58], 0x800a0000, 0 ); // "FIELD\ENDING.X"
 
@@ -833,18 +831,20 @@ void system_main()
 
                 restart = true;
             }
-            else if( bu[0x8009abf4 + 0x1] == 0xa )
+            else if( g_field_control.cmd == FIELD_CMD_RESET )
             {
-                [0x8009abf4 + 0x1] = b(0);
+                g_field_control.cmd = FIELD_CMD_NONE;
+
                 func33be0();
 
                 system_akao_deinit();
 
                 restart = true;
             }
-            else if( bu[0x8009abf4 + 0x1] == 0x1a )
+            else if( g_field_control.cmd == FIELD_CMD_GAME_OVER )
             {
-                [0x8009abf4 + 0x1] = b(0);
+                g_field_control.cmd = FIELD_CMD_NONE;
+
                 system_akao_execute();
 
                 system_cdrom_load_file( w[0x80048d4c], w[0x80048d50], 0x800a0000, 0 ); // FIELD\DSCHANGE.X

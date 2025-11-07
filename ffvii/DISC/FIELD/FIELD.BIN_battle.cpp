@@ -60,11 +60,11 @@ if( bu[0x8009c6d8] == 0 )
 
         danger_counter = hu[0x8007173c]; // danger counter
 
-        if( V0 < ( (danger_counter * bu[0x80062f19]) >> c ) ) // danger check
+        if (V0 < ((danger_counter * bu[0x80062f19]) >> 0xc)) // danger check
         {
             field_stop_load_next_map_in_advance();
 
-            [0x8009abf4 + 0x1] = b(0x2);
+            g_field_control.cmd = FIELD_CMD_BATTLE;
             [0x8007ebc8] = b(0x1);
 
             funcaba34(); // random

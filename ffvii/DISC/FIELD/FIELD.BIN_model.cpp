@@ -269,67 +269,65 @@ void field_camera_assign()
 
 
 
-////////////////////////////////
-// funcab310()
-
-// if field background already loading
-if( h[0x800965e8] == 0x1 )
+void funcab310()
 {
-    system_cdrom_read_chain();
-    if( V0 == 0 )
+    // if field background already loading
+    if (h[0x800965e8] == 0x1)
     {
-        [0x800965e8] = h(0x2);
-    }
-    return;
-}
-
-if( bu[0x8009abf4 + 0x1] == 0x14 )
-{
-    system_movie_abort_play();
-
-    g_movie_play = 0;
-    [0x800e4d44] = h(0);
-    [0x8009abf4 + 0x26] = h(0x2);
-    return;
-}
-
-system_cdrom_read_chain();
-
-if( V0 == 0 ) // do nothing
-{
-    if( ( bu[0x8009abf4 + 0x1] == 0x3 ) && ( h[0x8009abf4 + 0x26] == 0 ) )
-    {
-        A0 = w[0x80075e10];
-        if( A0 >= 0x801affff ) A0 = 0x801b0000;
-        A1 = h[0x8009abf4 + 0x2]; // movie id
-        system_movie_play();
-
-        [0x8009abf4 + 0x26] = h(0x1);
-        [0x800e4d44] = h(0x1);
+        if( system_cdrom_read_chain() == 0 )
+        {
+            [0x800965e8] = h(0x2);
+        }
+        return;
     }
 
-    if( g_movie_play == 0x1 )
+    if (g_field_control.cmd == FIELD_CMD_MOVIE_STOP)
     {
-        [0x801142c8] = h(0x1);
+        system_movie_abort_play();
 
         g_movie_play = 0;
         [0x800e4d44] = h(0);
         [0x8009abf4 + 0x26] = h(0x2);
+        return;
+    }
+
+    V0 = system_cdrom_read_chain();
+
+    if( V0 == 0 ) // do nothing
+    {
+        if ((g_field_control.cmd == FIELD_CMD_MOVIE_PLAY) && (h[0x8009abf4 + 0x26] == 0))
+        {
+            A0 = w[0x80075e10];
+            if (A0 >= 0x801affff) A0 = 0x801b0000;
+            A1 = h[0x8009abf4 + 0x2]; // movie id
+            system_movie_play();
+
+            [0x8009abf4 + 0x26] = h(0x1);
+            [0x800e4d44] = h(0x1);
+        }
+
+        if (g_movie_play == 0x1)
+        {
+            [0x801142c8] = h(0x1);
+
+            g_movie_play = 0;
+            [0x800e4d44] = h(0);
+            [0x8009abf4 + 0x26] = h(0x2);
+        }
+    }
+    else if (V0 == 0xa) // movie played
+    {
+        if (g_field_control.cmd == FIELD_CMD_MOVIE_PLAY)
+        {
+            [0x8009abf4 + 0x26] = h(0x2);
+        }
+        else if (g_field_control.cmd == FIELD_CMD_MOVIE_CONT)
+        {
+            [0x8009abf4 + 0x26] = h(0x1);
+
+            func354cc();
+
+            g_movie_play = 0x1;
+        }
     }
 }
-else if( V0 == 0xa ) // movie played
-{
-    if( bu[0x8009abf4 + 0x1] == 0x3 )
-    {
-        [0x8009abf4 + 0x26] = h(0x2);
-    }
-    else if( bu[0x8009abf4 + 0x1] == 0x4 )
-    {
-        [0x8009abf4 + 0x26] = h(0x1);
-
-        func354cc();
-
-        g_movie_play = 0x1;
-    }
-}
-////////////////////////////////

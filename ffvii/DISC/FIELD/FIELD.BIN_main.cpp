@@ -13,12 +13,12 @@ u32 g_base_ofs_y;                           // 0x8007eb94
 u32 g_field_camera_p;                       // 0x80083578
 u32 g_field_walkmesh_p;                     // 0x8009a044
 u16 g_field_map_id;                         // 0x8009a05c
+
+FieldControl g_field_control;               // 0x8009abf4
+
 u32 g_field_triggers_p;                     // 0x8009ad28
 u32 g_field_encounters_p;                   // 0x8009c55c
 u32 g_field_background_p;                   // 0x8009d848
-
-
-
 
 FieldRenderData g_field_render_data[0x2];   // 0x800e4df0
 
@@ -98,69 +98,61 @@ if( h[0x800965e8] == 1 )
 
 
 
-////////////////////////////////
-// field_load_next_map_in_advance()
-
-pc_data = A0;
-gateways = A1; // triggers data
-
-x = w[pc_data + c] >> c;
-y = w[pc_data + 10] >> c;
-
-if( bu[0x8009abf4 + 0x32] == 0 ) // 0 if PC can move. 1 - otherwise.
+void field_load_next_map_in_advance(pc_data, gateways)
 {
-    closest = 7fffffff;
-    for( int i = 0; i < c; ++i )
+    x = w[pc_data + 0xc] >> 0xc;
+    y = w[pc_data + 0x10] >> 0xc;
+
+    if (g_field_control.control_lock == 0) // 0 if PC can move. 1 - otherwise.
     {
-        map_id = hu[gateways + i * 18 + 12];
-        if( map_id != 7fff )
+        closest = 0x7fffffff;
+        for (int i = 0; i < 0xc; ++i)
         {
-            A0 = (h[gateways + i * 18 + 0] - x) * (h[gateways + i * 18 + 0] - x) + (h[gateways + i * 18 + 2] - y) * (h[gateways + i * 18 + 2] - y);
-            if( A0 < closest )
+            map_id = hu[gateways + i * 0x18 + 0x12];
+            if (map_id != 0x7fff)
             {
-                [0x80095dd0] = h(map_id);
-                closest = A0;
+                A0 = (h[gateways + i * 0x18 + 0x0] - x) * (h[gateways + i * 0x18 + 0x0] - x) + (h[gateways + i * 0x18 + 0x2] - y) * (h[gateways + i * 0x18 + 0x2] - y);
+                if (A0 < closest)
+                {
+                    [0x80095dd0] = h(map_id);
+                    closest = A0;
+                }
             }
         }
     }
-}
 
-// if we play movie or encounter
-if( ( bu[0x8009abf4 + 0x1] == 0x3 ) || ( hu[0x800e4d44] == 0x1 ) || ( bu[0x8009abf4 + 0x1] == 0x2 ) )
-{
+    // if we play movie or encounter
+    if ((g_field_control.cmd == FIELD_CMD_MOVIE_PLAY) || (hu[0x800e4d44] == 0x1) || (g_field_control.cmd == FIELD_CMD_BATTLE))
+    {
+        field_stop_load_next_map_in_advance();
+        return;
+    }
+
+    // if we already load data for that map
+    if (h[0x80071a5c] == h[0x80095dd0]) return;
+
+    map_to_load = h[0x80095dd0];
+
+    // if file size is greater than buffer
+    if (w[0x800da5b8 + map_to_load * 0x18 + 0xc] > 0x4dfff) return;
+
     field_stop_load_next_map_in_advance();
-    return;
+
+    [0x80071a5c] = h(map_to_load);
+
+    if (map_to_load >= 0x41) // if not world map id's
+    {
+        A0 = w[0x800da5b8 + map_to_load * 0x18 + 0x8]; // MIM sector
+        A1 = w[0x800da5b8 + map_to_load * 0x18 + 0xc]; // MIM size
+        system_cdrom_start_load_file(A0, A1, 0x801b0000, 0);
+    }
+    else
+    {
+        system_cdrom_start_load_file(w[0x800def80], w[0x800def84], 0x801b0000, 0); // WORLD/WM.PRE
+    }
+
+    [0x800965e8] = h(1); // field background already loading
 }
-
-// if we already load data for that map
-if( h[0x80071a5c] == h[0x80095dd0] ) return;
-
-map_to_load = h[0x80095dd0];
- 
-// if file size is greater than buffer
-if( w[0x800da5b8 + map_to_load * 0x18 + 0xc] > 0x4dfff ) return;
-
-field_stop_load_next_map_in_advance();
-
-[0x80071a5c] = h(map_to_load);
-
-if( map_to_load >= 41 ) // if not world map id's
-{
-    A0 = w[0x800da5b8 + map_to_load * 0x18 + 0x8]; // MIM sector
-    A1 = w[0x800da5b8 + map_to_load * 0x18 + 0xc]; // MIM size
-}
-else
-{
-    A0 = w[0x800def80]; // WORLD/WM.PRE sector
-    A1 = w[0x800def84]; // WORLD/WM.PRE size
-}
-
-A2 = 0x801b0000;
-A3 = 0;
-system_cdrom_start_load_file(); // set data to load in background
-
-[0x800965e8] = h(1); // field background already loading
-////////////////////////////////
 
 
 
@@ -269,7 +261,7 @@ void field_main()
                 [0x8007ebc8] = b(0);
                 [0x8009c6d8] = b(0);
                 [0x8007173c] = h(0);
-                [0x8009abf4 + 0x1] = b(0);
+                g_field_control.cmd = FIELD_CMD_NONE;
             }
         }
 
@@ -373,13 +365,13 @@ void field_main()
 
         [0x800965ec] = h(0x1); // set prev game state as field
 
-        if( ( bu[0x8009abf4 + 0x1] == 0xa ) || ( bu[0x8009abf4 + 0x1] == 0x1a ) || ( bu[0x8009abf4 + 0x1] == 0x5 ) )
+        if ((g_field_control.cmd == FIELD_CMD_RESET) || (g_field_control.cmd == FIELD_CMD_GAME_OVER) || (g_field_control.cmd == FIELD_CMD_CREDITS))
         {
-            system_psyq_vsync( 0 );
+            system_psyq_vsync(0);
             return;
         }
 
-        if( bu[0x8009abf4 + 0x1] == 0x1 )
+        if (g_field_control.cmd == FIELD_CMD_MAP)
         {
             [0x8009abf4 + 0x64] = h(g_field_map_id);
 
@@ -406,7 +398,7 @@ void field_main()
             }
         }
 
-        if( bu[0x8009abf4 + 0x1] == 0xc )
+        if (g_field_control.cmd == FIELD_CMD_MINIGAME)
         {
             [0x8009abf4 + 0x64] = h(g_field_map_id);
             g_field_map_id = hu[0x8009abf4 + 0x2];
@@ -427,13 +419,13 @@ void field_main()
         }
 
         // encounter or disc change
-        if( ( bu[0x8009abf4 + 0x1] == 0x2 ) || ( bu[0x8009abf4 + 0x1] == 0xd ) )
+        if ((g_field_control.cmd == FIELD_CMD_BATTLE) || (g_field_control.cmd == FIELD_CMD_DISC_CHANGE))
         {
-            system_psyq_vsync( 0 );
+            system_psyq_vsync(0);
             return;
         }
 
-        if( h[0x8009c560] == 0x5 )
+        if (h[0x8009c560] == 0x5)
         {
             func129d0();
 
@@ -443,7 +435,7 @@ void field_main()
             [0x8007e768] = h(0);
             [0x80095dd4] = h(0x1);
 
-            system_psyq_vsync( 0 );
+            system_psyq_vsync(0);
 
             return;
         }
@@ -533,50 +525,58 @@ void field_main_loop()
         A1 = w[0x800716c4] + 0x38; // gateways
         field_load_next_map_in_advance();
 
-        if( ( w[0x8009abf4 + 0x68] & 0x0000090f ) == 0x0000090f ) // reset game if all shifts and start + select pressed
+        if ((w[0x8009abf4 + 0x68] & 0x0000090f) == 0x0000090f) // reset game if all shifts and start + select pressed
         {
-            [0x8009abf4 + 0x1] = b(0xa);
+            g_field_control.cmd = FIELD_CMD_RESET;
+
             system_movie_abort_play();
 
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        if( bu[0x8009abf4 + 0x1] == 0x1 )
-        {
-            return;
-        }
+        if (g_field_control.cmd == FIELD_CMD_MAP) return;
 
-        if( bu[0x8009abf4 + 0x1] == 0xc )
+        if (g_field_control.cmd == FIELD_CMD_MINIGAME)
         {
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        if( bu[0x8009abf4 + 0x1] == 0xd ) // disc change
+        if (g_field_control.cmd == FIELD_CMD_DISC_CHANGE)
         {
             [0x8009c560] = h(0xc); // disc change
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        if( bu[0x8009abf4 + 0x1] == 0x19 )
+        if (g_field_control.cmd == 0x19)
         {
             [0x8009c560] = h(0x10);
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        V1 = bu[0x8009abf4 + 0x1];
-
-        if( ( V1 == 0xf ) || ( V1 == 0x10 ) || ( V1 == 0x11 ) || ( V1 == 0x15 ) || ( V1 == 0x16 ) || ( V1 == 0x17 ) || ( V1 == 0x18 ) )
+        if ((g_field_control.cmd == 0xf) ||
+            (g_field_control.cmd == 0x10) ||
+            (g_field_control.cmd == 0x11) ||
+            (g_field_control.cmd == 0x15) ||
+            (g_field_control.cmd == 0x16) ||
+            (g_field_control.cmd == 0x17) ||
+            (g_field_control.cmd == 0x18))
         {
             [0x8009c560] = h(0xd);
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        if( ( V1 == 0x6 ) || ( V1 == 0x7 ) || ( V1 == 0x8 ) || ( V1 == 0x9 ) || ( V1 == 0xe ) || ( V1 == 0x12 ) || ( V1 == 0x13 ) )
+        if ((g_field_control.cmd == FIELD_CMD_MENU_NAME) ||
+            (g_field_control.cmd == FIELD_CMD_MENU_FORM) ||
+            (g_field_control.cmd == FIELD_CMD_MENU_SHOP) ||
+            (g_field_control.cmd == FIELD_CMD_MENU_MAIN) ||
+            (g_field_control.cmd == FIELD_CMD_MENU_SAVE) ||
+            (g_field_control.cmd == FIELD_CMD_PARTY_STORE) ||
+            (g_field_control.cmd == FIELD_CMD_PARTY_RESTORE))
         {
             [0x8009c560] = h(0x5);
             field_stop_load_next_map_in_advance();
@@ -584,22 +584,22 @@ void field_main_loop()
         }
 
         // triangle pressed, menu not called, movie not requested or played
-        if( ( g_buttons_state & 0x0010 ) && ( bu[0x8009abf4 + 0x34] == 0 ) && ( hu[0x800e4d44] == 0 ) && ( g_movie_play == 0 ) )
+        if ((g_buttons_state & 0x0010) && (bu[0x8009abf4 + 0x34] == 0) && (hu[0x800e4d44] == 0) && (g_movie_play == 0))
         {
             [0x8009c560] = h(0x5); // load menu
-            [0x8009abf4 + 0x1] = b(0x9); // load menu
-            [0x8009abf4 + 0x2] = h(0); // menu id
+            g_field_control.cmd = FIELD_CMD_MENU_MAIN;
+            g_field_control.arg = 0; // without tutorial
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        if( ( bu[0x8009abf4 + 0x1] == 0x5 ) || ( bu[0x8009abf4 + 0x1] == 0x1a ) )
+        if ((g_field_control.cmd == FIELD_CMD_CREDITS) || (g_field_control.cmd == FIELD_CMD_GAME_OVER))
         {
             field_stop_load_next_map_in_advance();
             return;
         }
 
-        if( bu[0x8009abf4 + 0x1] == 0x2 )
+        if (g_field_control.cmd == FIELD_CMD_BATTLE)
         {
             V1 = h[0x800965e0]; // manual move entity
 
@@ -716,7 +716,7 @@ void field_main_loop()
 
             if( hu[0x8009abf4 + 0x4c] != 0 ) // fade type
             {
-                system_psyq_draw_otag( 0x8007e7a0 + buf_id * 0x4 );
+                system_psyq_draw_otag( &g_fade_ot[buf_id] );
             }
         }
 
@@ -1200,25 +1200,22 @@ for( int i = 0; i < entities_n; ++i )
                 V1 = w[0x800716c4];
                 [0x80074ea4 + pc_entity * 84 + 36] = b(bu[V1 + 9] + bu[0x80074ea4 + pc_entity * 84 + 36] + bu[0x80074ea4 + pc_entity * 84 + 35]);
 
-                A0 = i;
-                field_entity_move_by_walkmesh();
-                A0 = V0;
+                A0 = field_entity_move_by_walkmesh(i);
 
                 // if this byte == 0 store move direction as model direction
-                if( bu[0x80074ea4 + pc_entity * 84 + 37] == 0 )
+                if( bu[0x80074ea4 + pc_entity * 0x84 + 0x37] == 0)
                 {
-                    80074ea4 + pc_entity * 84 + 38] = b(bu[0x80074ea4 + pc_entity * 84 + 36]);
+                    [0x80074ea4 + pc_entity * 0x84 + 0x38] = b(bu[0x80074ea4 + pc_entity * 0x84 + 0x36]);
                 }
 
-                if( ( bu[0x8009abf4 + 0x1] != 1 ) && ( A0 == 1 ) )
+                if ((g_field_control.cmd != FIELD_CMD_MAP) && (A0 == 0x1))
                 {
                     funcaba70();
                 }
             }
         }
 
-        A0 = i;
-        handle_animation_update();
+        handle_animation_update(i);
     }
 }
 
@@ -1574,8 +1571,8 @@ for( int i = 0; i < entities_n; ++i )
 
 void set_gateway_to_map_load()
 {
-    [0x8009abf4 + 0x1] = b(0x1);
-    [0x8009abf4 + 0x2] = h(hu[A0 + 0x12]); // map id
+    g_field_control.cmd = FIELD_CMD_MAP;
+    g_field_control.arg = hu[A0 + 0x12]; // map id
     [0x8009abf4 + 0x4] = h(hu[A0 + 0xc]); // x
     [0x8009abf4 + 0x6] = h(hu[A0 + 0xe]); // y
     [0x8009abf4 + 0x22] = h(hu[A0 + 0x10]); // z

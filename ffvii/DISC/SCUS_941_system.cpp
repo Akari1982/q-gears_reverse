@@ -26,7 +26,7 @@ K0 = K0 + 0008;
 [AT + 33f4] = w(A0);
 8003CE50	lui    at, $8007
 [AT + e11c] = w(V0);
-8003CE58	jal    system_interrupts_timer_dma_initialize [$8003d0c0]
+8003CE58	jal    system_psyq_reset_callback [$8003d0c0]
 8003CE5C	nop
 8003CE60	lui    a0, $2000
 8003CE64	lui    a1, $8007
@@ -146,12 +146,17 @@ void func3d024( req_frames, A1 )
 
 
 
-////////////////////////////////
-// system_interrupts_timer_dma_initialize()
-
-V0 = w[0x80051534]; // 80051514
-8003D0D8	jalr   w[V0 + c] ra // system_interrupts_timer_dma_initialize_inter()
-////////////////////////////////
+// Initializes all system callbacks. Sets all callback functions to 0 (unregistered), and after securing the interrupt
+// context stack, sets up the environment for accepting interrupts.
+// ResetCallback() must be called after program boot, before any other processing is performed.
+// The environment initialized by ResetCallback() remains valid until StopCallback() is called.
+// It is acceptable to continuously call ResetCallback() without StopCallback(). However, the second and
+// subsequent calls are ignored.
+void system_psyq_reset_callback()
+{
+    V0 = w[0x80051534]; // 80051514
+    8003D0D8	jalr   w[V0 + c] ra // system_psyq_reset_callback_inter()
+}
 
 
 
@@ -173,14 +178,19 @@ V0 = w[0x80051534]; // 80051514
 
 
 
-////////////////////////////////
-// system_call_main_timer_additional_callback_0()
-
-V0 = w[0x80051534];
-A1 = A0;
-A0 = 0;
-8003D16C	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
-////////////////////////////////
+// Specifies that the routine at address func should be executed at the start of the vertical blank interrupt. If
+// func is 0, then any previous callback routine is disabled.
+// Subsequent interrupts are masked inside func. Therefore, it is necessary to return quickly after performing
+// necessary processes using func.
+// Although the specified function is called during an interrupt, it is not the actual interrupt handler. It should
+// be written as a normal subroutine that are called by the main interrupt handler
+void system_psyq_vsync_callback( void (*func)() )
+{
+    V0 = w[0x80051534];
+    A0 = 0;
+    A1 = func;
+    8003D16C	jalr   w[V0 + 14] ra // system_main_timer_additional_callback_inter()
+}
 
 
 
@@ -193,12 +203,13 @@ V0 = w[0x80051534];
 
 
 
-////////////////////////////////
-// func3d1b4()
-
-V0 = w[0x80051534]; // 80051514
-8003D1CC	jalr   w[V0 + 10] ra // func3d670()
-////////////////////////////////
+// Stops all system callbacks.
+// Before terminating programs, StopCallback() can be called to disable all interrupts.
+void system_psyq_stop_callback()
+{
+    V0 = w[0x80051534]; // 80051514
+    8003D1CC	jalr   w[V0 + 10] ra // func3d670()
+}
 
 
 
@@ -240,7 +251,7 @@ return V0;
 
 
 ////////////////////////////////
-// system_interrupts_timer_dma_initialize_inter()
+// system_psyq_reset_callback_inter()
 
 if( hu[0x800504ac] != 0 )
 {

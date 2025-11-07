@@ -457,14 +457,11 @@ loopbbed0:	; 800BBED0
 
 func3cebc;
 
-A0 = 1;
-system_psyq_reset_graph;
+system_psyq_reset_graph( 0x1 );
 
-func3d1b4;
+system_psyq_stop_callback;
 
-A0 = 61;
-A1 = 1;
-system_psyq_system_error();
+system_psyq_system_error( 0x61, 0x1 );
 ////////////////////////////////
 
 
@@ -498,14 +495,12 @@ loopbbfa0:	; 800BBFA0
 800BC010	bne    v0, zero, loopbbfa0 [$800bbfa0]
 
 800BC018	jal    func3cebc [$8003cebc]
-800BC01C	nop
-800BC020	jal    system_psyq_reset_graph [$80043938]
-A0 = 0001;
-800BC028	jal    func3d1b4 [$8003d1b4]
-800BC02C	nop
-A0 = 0061;
-800BC034	jal    system_psyq_system_error [$800429e0]
-A1 = 0002;
+
+system_psyq_reset_graph( 0x1 );
+
+system_psyq_stop_callback();
+
+system_psyq_system_error( 0x61, 0x2 );
 ////////////////////////////////
 
 
@@ -528,15 +523,11 @@ for( int i = 0; i < 3c; ++i )
 
 system_bios_stop_pad();
 
-A0 = 1;
-system_psyq_reset_graph;
+system_psyq_reset_graph( 0x1 );
 
-func3d1b4; // disable dma, set default exit from exception
+system_psyq_stop_callback();
 
-A0 = 61;
-A1 = 4;
-system_psyq_system_error();
-return V0;
+return system_psyq_system_error( 0x61, 0x4 );
 ////////////////////////////////
 
 
@@ -561,7 +552,7 @@ int funcbc11c( int A0 )
 
     system_psyq_reset_graph( 1 );
 
-    func3d1b4();
+    system_psyq_stop_callback();
 
     system_psyq_system_error( 0x61, 0x3 );
 }

@@ -120,8 +120,8 @@ void field_init_default_values()
     events_data = w[0x8009c6dc];
     entities_data = w[0x8009c544];
 
-    [field_struct + 0x1] = b(0); // state normal field
-    [field_struct + 0x2] = h(0); // map to load
+    field_struct->cmd = FIELD_CMD_NONE;
+    field_struct->arg = 0;
     [field_struct + 0x10] = h(hu[events_data + 0x8]); // field scale (9 bit fixed point)
     [field_struct + 0x12] = b(0); // set to 0 in 0x6A VWOFT opcode
     [field_struct + 0x13] = b(0); // set to 0 in 0x6A VWOFT opcode

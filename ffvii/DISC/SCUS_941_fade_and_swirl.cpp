@@ -1,22 +1,33 @@
-﻿void system_fade_set_draw_mode( int abr )
+﻿struct FadePoly
 {
-    u16 tpage = system_psyq_get_tpage( 0, abr, 0, 0 );
-    system_psyq_set_draw_mode( 0x8009a068 + 0x0 * 0x30, 0, 0, tpage, 0 );
-    system_psyq_set_draw_mode( 0x8009a068 + 0x1 * 0x30, 0, 0, tpage, 0 );
+    DR_MODE dr_mode;    // 0x8009a068
+    TILE tile[0x2];     // 0x8009a074
+}
+FadePoly l_fade[0x2];   // 0x8009a068 (size 0x30)
+
+u32 g_fade_ot[0x2];     // 0x8007e7a0
+
+
+
+void system_fade_set_draw_mode(int abr)
+{
+    u16 tpage = system_psyq_get_tpage(0, abr, 0, 0);
+    system_psyq_set_draw_mode(&l_fade[0x0].dr_mode, 0, 0, tpage, 0);
+    system_psyq_set_draw_mode(&l_fade[0x1].dr_mode, 0, 0, tpage, 0);
 }
 
 
 
 void system_fade_init_poly()
 {
-    for( int i = 0; i < 0x2; ++i )
+    for (int i = 0; i < 0x2; ++i)
     {
-        for( int j = 0; j < 0x2; ++j )
+        for (int j = 0; j < 0x2; ++j)
         {
-            u32 poly* = 0x8009a074 + i * 0x30 + j * 0x10;
-            system_psyq_set_tile( poly );
-            system_psyq_set_semi_trans( poly, 0x1 );
-            system_psyq_set_shade_tex( poly, 0x1 );
+            u32 poly* = &l_fade[i].tile[j];
+            system_psyq_set_tile(poly);
+            system_psyq_set_semi_trans(poly, 0x1);
+            system_psyq_set_shade_tex(poly, 0x1);
 
             poly->r0 = 0;
             poly->g0 = 0;
@@ -26,15 +37,15 @@ void system_fade_init_poly()
         }
     }
 
-    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0x8] = h(0);
-    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0xa] = h(0);
-    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0x8] = h(a0);
-    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0xa] = h(0);
+    l_fade[0x0].tile[0x0].x0 = 0;
+    l_fade[0x0].tile[0x0].y0 = 0;
+    l_fade[0x0].tile[0x1].x0 = 0xa0;
+    l_fade[0x0].tile[0x1].y0 = 0;
 
-    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0x8] = h(0);
-    [0x8009a074 + 0x0 * 0x30 + 0x0 * 0x10 + 0xa] = h(0);
-    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0x8] = h(a0);
-    [0x8009a074 + 0x0 * 0x30 + 0x1 * 0x10 + 0xa] = h(0);
+    l_fade[0x1].tile[0x0].x0 = 0;
+    l_fade[0x1].tile[0x0].y0 = 0;
+    l_fade[0x1].tile[0x1].x0 = 0xa0;
+    l_fade[0x1].tile[0x1].y0 = 0;
 }
 
 
@@ -54,19 +65,18 @@ void func129d0()
 
 void system_fade_set_poly_monochrome( u8 gray )
 {
-    system_psyq_clear_otag_r( 0x8007e7a0 + g_field_rb * 0x4, 0x1 );
+    system_psyq_clear_otag_r( &g_fade_ot[g_field_rb], 0x1 );
 
-    [0x8009a078 + g_field_rb * 0x30] = b(gray);
-    [0x8009a088 + g_field_rb * 0x30] = b(gray);
-    [0x8009a079 + g_field_rb * 0x30] = b(gray);
+    l_fade[g_field_rb].tile[0x0].r0 = gray;
+    l_fade[g_field_rb].tile[0x0].g0 = gray;
+    l_fade[g_field_rb].tile[0x0].b0 = gray;
+    l_fade[g_field_rb].tile[0x1].r0 = gray;
+    l_fade[g_field_rb].tile[0x1].g0 = gray;
+    l_fade[g_field_rb].tile[0x1].b0 = gray;
 
-    [0x8009a089 + g_field_rb * 0x30] = b(gray);
-    [0x8009a07a + g_field_rb * 0x30] = b(gray);
-    [0x8009a08a + g_field_rb * 0x30] = b(gray);
-
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a074 + g_field_rb * 0x30 );
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a084 + g_field_rb * 0x30 );
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a068 + g_field_rb * 0x30 );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].tile[0x0] );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].tile[0x1] );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].dr_mode );
 }
 
 
@@ -75,38 +85,36 @@ void system_fade_set_poly_rgb( u8 r, u8 g, u8 b )
 {
     fade_start = hu[0x8009abf4 + 0x4e]; // start value of fade
 
-    system_psyq_clear_otag_r( 0x8007e7a0 + g_field_rb * 0x4, 0x1 );
+    system_psyq_clear_otag_r( &g_fade_ot[g_field_rb], 0x1 );
 
-    [0x8009a078 + g_field_rb * 0x30] = b((fade_start * r) >> 8);
-    [0x8009a079 + g_field_rb * 0x30] = b((fade_start * g) >> 8);
-    [0x8009a07a + g_field_rb * 0x30] = b((fade_start * b) >> 8);
+    l_fade[g_field_rb].tile[0x0].r0 = (fade_start * r) >> 0x8;
+    l_fade[g_field_rb].tile[0x0].g0 = (fade_start * g) >> 0x8;
+    l_fade[g_field_rb].tile[0x0].b0 = (fade_start * b) >> 0x8;
+    l_fade[g_field_rb].tile[0x1].r0 = (fade_start * r) >> 0x8;
+    l_fade[g_field_rb].tile[0x1].g0 = (fade_start * g) >> 0x8;
+    l_fade[g_field_rb].tile[0x1].b0 = (fade_start * b) >> 0x8;
 
-    [0x8009a088 + g_field_rb * 0x30] = b((fade_start * r) >> 8);
-    [0x8009a089 + g_field_rb * 0x30] = b((fade_start * g) >> 8);
-    [0x8009a08a + g_field_rb * 0x30] = b((fade_start * b) >> 8);
-
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a074 + g_field_rb * 0x30 );
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a084 + g_field_rb * 0x30 );
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a068 + g_field_rb * 0x30 );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].tile[0x0] );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].tile[0x1] );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].dr_mode );
 }
 
 
 
 void func131b8( u8 r, u8 g, u8 b )
 {
-    system_psyq_clear_otag_r( 0x8007e7a0 + rb * 0x4, 0x1 );
+    system_psyq_clear_otag_r( &g_fade_ot[g_field_rb], 0x1 );
 
-    [0x8009a078 + g_field_rb * 0x30] = b(r);
-    [0x8009a079 + g_field_rb * 0x30] = b(g);
-    [0x8009a07a + g_field_rb * 0x30] = b(b);
+    l_fade[g_field_rb].tile[0x0].r0 = r;
+    l_fade[g_field_rb].tile[0x0].g0 = g;
+    l_fade[g_field_rb].tile[0x0].b0 = b;
+    l_fade[g_field_rb].tile[0x1].r0 = r;
+    l_fade[g_field_rb].tile[0x1].g0 = g;
+    l_fade[g_field_rb].tile[0x1].b0 = b;
 
-    [0x8009a088 + g_field_rb * 0x30] = b(r);
-    [0x8009a089 + g_field_rb * 0x30] = b(g);
-    [0x8009a08a + g_field_rb * 0x30] = b(b);
-
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a074 + g_field_rb * 0x30 );
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a084 + g_field_rb * 0x30 );
-    ADDPRIM( 0x8007e7a0 + g_field_rb * 0x4, 0x8009a068 + g_field_rb * 0x30 );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].tile[0x0] );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].tile[0x1] );
+    ADDPRIM( &g_fade_ot[g_field_rb], &l_fade[g_field_rb].dr_mode );
 }
 
 

@@ -355,7 +355,7 @@
 800D1F20 0x58 STITM
 800D1FDC 0x59 DLITM
 800D2098 0x5A CKITM
-800D2164 0x0F SPECIAL
+800D2164 field_event_opcode_0f_spcal
 800D2794 field_event_opcode_2d_bgscr
 800D28A8 field_event_opcode_2c_bgdph
 800D298C 0x5B SMTRA

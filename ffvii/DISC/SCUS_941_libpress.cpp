@@ -6,7 +6,7 @@
 S0 = A0;
 if( S0 == 0 )
 {
-    system_interrupts_timer_dma_initialize()
+    system_psyq_reset_callback()
 }
 
 A0 = S0;

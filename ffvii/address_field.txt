@@ -330,26 +330,26 @@
 
 0x8009abf4 field_struct. 0x8009c6e0 points here.
     + 0x00 []       render buffer id (there are 2 render buffers)
-    + 0x01 []       some state
-                    00 - normal field.
-                    01 - load new field or world (finalize field in this case).
-                    02 - encounter.
-                    03 - start play movie.
-                    04 - continue play movie.
-                    05 - some menu.
-                    06 - name menu.
-                    07 - form menu.
-                    08 - shop menu.
-                    09 - main menu and tutorial.
-                    0a - set when field reset game by all shifts and start + select.
-                    0c - minigame start.
-                    0d - disc change
-                    0e - save menu
-                    12 - store party and char equipment and materia
-                    13 - restore party and char equipment and materia
-                    14 - we abort movie play if this.
-                    19 - we load INSTR2 if we set this (Sephiroth battle?).
-                    1a - game over
+    + 0x01 []       command
+                    0x00 - none.
+                    0x01 - load new field or world (finalize field in this case).
+                    0x02 - encounter.
+                    0x03 - start play movie.
+                    0x04 - continue play movie.
+                    0x05 - some menu.
+                    0x06 - name menu.
+                    0x07 - form menu.
+                    0x08 - shop menu.
+                    0x09 - main menu and tutorial.
+                    0x0a - set when field reset game by all shifts and start + select.
+                    0x0c - minigame start.
+                    0x0d - disc change
+                    0x0e - save menu
+                    0x12 - store party and char equipment and materia
+                    0x13 - restore party and char equipment and materia
+                    0x14 - we abort movie play if this.
+                    0x19 - we load INSTR2 if we set this (Sephiroth battle?).
+                    0x1a - game over
     + 0x02 [][]     map to load (gateway activation) or battle to fight. Or param to menu. Or movie to play. 1 in case of tutorial.
     + 0x04 [][]     destination x during map load.
     + 0x06 [][]     destination y during map load.

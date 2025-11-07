@@ -854,7 +854,7 @@ if( ( mode & 7 ) == 0 )
         V0 = V0 - 1;
     80046548	bne    v0, -1, loop46540 [$80046540]
 
-    system_interrupts_timer_dma_initialize();
+    system_psyq_reset_callback();
 
     A0 = w[0x80062bf8] & 00ffffff;
     system_bios_gpu_cw();

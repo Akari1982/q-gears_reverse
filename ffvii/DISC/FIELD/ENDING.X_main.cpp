@@ -1123,15 +1123,13 @@ int funca2420()
 
 void funca2458()
 {
-    func3d1b4();
+    system_psyq_stop_callback();
 
-    system_interrupts_timer_dma_initialize();
+    system_psyq_reset_callback();
 
-    A0 = 0;
-    system_psyq_reset_graph();
+    system_psyq_reset_graph( 0 );
 
-    A0 = 0;
-    func3ce3c();
+    func3ce3c( 0 );
 
     system_psyq_init_geom();
 

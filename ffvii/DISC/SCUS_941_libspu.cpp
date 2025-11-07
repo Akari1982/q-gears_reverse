@@ -66,7 +66,7 @@ void system_psyq_spu_init()
 
 void func362b8( S0 )
 {
-    system_interrupts_timer_dma_initialize();
+    system_psyq_reset_callback();
 
     func3642c( S0 );
 
