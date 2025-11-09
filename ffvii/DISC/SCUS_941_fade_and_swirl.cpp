@@ -50,7 +50,7 @@ void system_fade_init_poly()
 
 
 
-void func129d0()
+void system_fade_copy_screen()
 {
     // move image from one disp area to another
     A0 = &g_field_disp_env[g_field_rb].disp;
@@ -181,16 +181,16 @@ void func13624()
 
 
 
-void func13800()
+void system_fade_bg_update()
 {
     if( bu[0x80071a58] == 0x3 )
     {
-        [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
+        [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + 0x1);
 
-        if( hu[0x8009ac42] == 0x22 )
+        if( hu[0x8009abf4 + 0x4e] == 0x22 )
         {
-            [0x8009ac40] = h(0);
-            [0x80095dd4] = h(0); // set render func to 0
+            [0x8009abf4 + 0x4c] = h(0);
+            g_bg_render = BG_RENDER_NONE;
             [0x80071a58] = b(0);
         }
 
@@ -199,12 +199,12 @@ void func13800()
     }
     else
     {
-        [0x8009ac42] = h(hu[0x8009ac42] + 0x1);
+        [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + 0x1);
 
-        if( hu[0x8009ac42] == 0x12 )
+        if( hu[0x8009abf4 + 0x4e] == 0x12 )
         {
-            [0x8009ac40] = h(0);
-            [0x80095dd4] = h(0); // set render func to 0
+            [0x8009abf4 + 0x4c] = h(0);
+            g_bg_render = BG_RENDER_NONE;
             [0x80071a58] = b(0);
         }
 
@@ -251,7 +251,7 @@ void system_fade_update()
             if( hu[0x8009abf4 + 0x4e] == 0x22 )
             {
                 [0x8009abf4 + 0x4c] = h(0);
-                [0x80095dd4] = h(0); // set render func to 0
+                g_bg_render = BG_RENDER_NONE;
             }
             else
             {
@@ -338,7 +338,7 @@ void system_fade_update()
             if( hu[0x8009abf4 + 0x4e] == 0x12 )
             {
                 [0x8009ac40] = h(0);
-                [0x80095dd4] = h(0); // set render func to 0
+                g_bg_render = BG_RENDER_NONE;
             }
             else
             {
@@ -391,9 +391,9 @@ if( V1 >= 2f )
         }
     }
 
-    if( w[0x8019da9c] >= 4f )
+    if( w[0x8019da9c] >= 0x4f )
     {
-        [0x80095dd4] = h(0); // set render func to 0
+        g_bg_render = BG_RENDER_NONE;
     }
 }
 else
@@ -508,10 +508,9 @@ if( ( w[0x8019daa0] & 1 ) == 0 )
 ////////////////////////////////
 // system_battle_swirl_init()
 
-[0x80095dd4] = h(0); // set render func to 0
+g_bg_render = BG_RENDER_NONE;
 
-A0 = 0;
-system_psyq_vsync();
+system_psyq_vsync(0);
 
 A0 = 8019da80;
 system_psyq_get_dispenv();
@@ -672,5 +671,5 @@ func14a00(); // copy to second buffer
 
 system_battle_swirl_update();
 
-[0x80095dd4] = h(3); //  // set render func to 3 (swirl render)
+g_bg_render = BG_RENDER_BATTLE_SWIRL; // set render func to 3 (swirl render)
 ////////////////////////////////

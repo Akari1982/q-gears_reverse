@@ -636,25 +636,14 @@ L42d30:	; 80042D30
 
 
 
-////////////////////////////////
-// system_bios_save_state()
-// A(13h) - SaveState(buf)
-// Stores some (not all) CPU registers in the specified buffer (30h bytes):
-// 00h 4    r31 (ra) (aka caller's pc)
-// 04h 4    r29 (sp)
-// 08h 4    r30 (fp)
-// 0Ch 4x8  r16..r23
-// 2Ch 4    r28 (gp)
-// That type of buffer can be used with "ioabort", "RestoreState", and also
-// "SetCustomExitFromException(addr)".
-// The "SaveState" function (initially) returns 0, however, it may return again -
-// to the same return address - with another return value (which should be usually
-// non-zero, to indicate that the state has been restored (eg. ioabort passes 1 as
-// return value).
-80042D58	addiu  t2, zero, $00a0
-80042D5C	jr     t2 
-80042D60	addiu  t1, zero, $0013
-////////////////////////////////
+// Stores the destination information for a non-local jump at p. If longjmp(p, val) is executed, the system
+// returns from setjmp().
+int system_psyq_setjmp( jmp_buf p )
+{
+    80042D58	addiu  t2, zero, $00a0
+    80042D5C	jr     t2 
+    80042D60	addiu  t1, zero, $0013
+}
 
 
 

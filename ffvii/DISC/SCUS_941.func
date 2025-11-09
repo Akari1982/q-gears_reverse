@@ -6,7 +6,7 @@
 80011274 func11274
 800112E8 func112e8
 8001146C func1146c
-8001155C func1155c
+8001155C system_background_render
 8001171C system_init_base
 80011784 system_init_dispenv_drawenv
 80011860 system_field_run
@@ -20,7 +20,7 @@
 // SCUS_941_fade.cpp
 80012840 system_fade_set_draw_mode
 800128B8 system_fade_init_poly
-800129D0 func129d0
+800129D0 system_fade_copy_screen
 80012A8C system_fade_set_poly_monochrome
 80012DB0 system_fade_set_poly_rgb
 800131B8 func131b8
@@ -28,7 +28,7 @@
 80013564 func13564
 800135C0 func135c0
 80013624 func13624
-80013800 func13800
+80013800 system_fade_bg_update
 800138EC system_fade_update
 80013C9C system_battle_swirl_update
 800140A4 system_battle_swirl_render
@@ -832,12 +832,12 @@
 8003D214 func3d214
 8003D224 system_get_interrupt_mask_register
 8003D23C system_set_interrupt_mask_register
-8003D258 system_psyq_reset_callback_inter
-8003D334 func3d334
+8003D258 system_start_intr
+8003D334 system_trap_intr
 8003D51C system_int_set_interrupt_callback_inter
 8003D670 func3d670
 8003D71C func3d71c
-8003D7A4 func3d7a4
+8003D7A4 system_memclr
 8003D7D0 func3d7d0
 8003D828 func3d828
 8003D8A0 system_main_timer_additional_callback_inter
@@ -978,7 +978,7 @@
 80042D00 func42d00
 80042D38 system_bios_exit
 80042D48 system_bios_std_out_puts
-80042D58 system_bios_save_state
+80042D58 system_psyq_setjmp
 80042D68 system_bios_strcmp
 80042D78 system_bios_strncmp
 80042D88 system_bios_bcopy
