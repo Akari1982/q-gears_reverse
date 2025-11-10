@@ -95,9 +95,9 @@ la7b34:	; 800a7b34
     V0 = A1 | 0002;
     [A2 + 0000] = w(V0);
     A0 = 0;
-    800A7C18	jal    $80032120
+    800A7C18	jal    $func32120
     A1 = A0;
-    800A7C20	jal    $8004a9e8
+    800A7C20	jal    $func4a9e8
     800A7C24	nop
 
     la7c28:	; 800a7c28
@@ -508,8 +508,8 @@ void funca8344()
     [0x80067948] = w(V1 + 0x2000);
     [0x80067948] = w(V1 + 0x2050);
 
-    V0 = w[0x8006794c];
-    V0 = w[V0 + 0x1c];
+    struct = w[0x8006794c];
+    V0 = w[struct + 0x1c];
     [V0 + 0x8e4] = w(V1 + 0x2000);
 }
 
@@ -6668,117 +6668,35 @@ RA = w[SP + 0010];
 800AE780	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// funcae788
-800AE788	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(S0);
-V0 = w[0x8006794c];
-[SP + 0014] = w(RA);
-V1 = w[V0 + 001c];
-800AE7A0	nop
-V0 = w[V1 + 08e4];
-800AE7A8	nop
-V0 = w[V0 + 0000];
-800AE7B0	nop
-V0 = V0 & 0200;
-800AE7B8	beq    v0, zero, lae8fc [$800ae8fc]
-800AE7BC	nop
-V0 = bu[V1 + 0008];
-800AE7C4	nop
-V0 = V0 << 02;
-V0 = V1 + V0;
-A0 = w[V0 + 0010];
-800AE7D4	jal    $800134c8
-A1 = 1000;
-V0 = w[S0 + 0x794c];
-800AE7E0	nop
-V0 = w[V0 + 001c];
-800AE7E8	lui    a1, $800d
-V1 = bu[V0 + 0008];
-800AE7F0	addiu  a1, a1, $9f60 (=-$60a0)
-V1 = V1 ^ 0001;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + A1;
-V1 = 0002;
-[V0 + 0003] = b(V1);
-A2 = w[S0 + 0x794c];
-800AE814	nop
-V0 = w[A2 + 001c];
-800AE81C	nop
-V1 = bu[V0 + 0008];
-800AE824	nop
-V1 = V1 ^ 0001;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + A1;
-800AE83C	lui    v1, $e600
-[V0 + 0004] = w(V1);
-V0 = w[A2 + 001c];
-800AE848	nop
-V1 = bu[V0 + 0008];
-800AE850	lui    a3, $00ff
-V1 = V1 ^ 0001;
-V0 = V1 << 01;
-V0 = V0 + V1;
-V0 = V0 << 03;
-V0 = V0 + A1;
-[V0 + 0008] = w(0);
-V1 = w[A2 + 001c];
-A3 = A3 | ffff;
-V0 = bu[V1 + 0008];
-800AE878	lui    t0, $ff00
-V0 = V0 ^ 0001;
-A0 = V0 << 01;
-A0 = A0 + V0;
-A0 = A0 << 03;
-A0 = A0 + A1;
-V0 = V0 << 02;
-V1 = V1 + V0;
-V0 = w[V1 + 0010];
-V1 = w[A0 + 0000];
-V0 = w[V0 + 0x3ffc];
-V1 = V1 & T0;
-V0 = V0 & A3;
-V1 = V1 | V0;
-[A0 + 0000] = w(V1);
-V0 = w[A2 + 001c];
-800AE8B8	nop
-A0 = bu[V0 + 0008];
-800AE8C0	nop
-A0 = A0 ^ 0001;
-V1 = A0 << 02;
-V0 = V0 + V1;
-A2 = w[V0 + 0010];
-V0 = A0 << 01;
-V0 = V0 + A0;
-V0 = V0 << 03;
-V0 = V0 + A1;
-V1 = w[A2 + 0x3ffc];
-V0 = V0 & A3;
-V1 = V1 & T0;
-V1 = V1 | V0;
-800AE8F4	j      lae918 [$800ae918]
-[A2 + 0x3ffc] = w(V1);
 
-lae8fc:	; 800ae8fc
-V0 = bu[V1 + 0008];
-800AE900	nop
-V0 = V0 << 02;
-V0 = V1 + V0;
-A0 = w[V0 + 0010];
-800AE910	jal    $system_psyq_clear_otag_r
-A1 = 1000;
 
-lae918:	; 800ae918
-800AE918	jal    $func4c204
-800AE91C	nop
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-800AE928	jr     ra 
-SP = SP + 0018;
-////////////////////////////////
+
+void funcae788()
+{
+    struct = w[0x8006794c];
+    struct1c = w[struct + 0x1c];
+    V0 = w[struct1c + 0x8e4];
+    if (w[V0 + 0x0] & 0x200)
+    {
+        V0 = bu[struct1c + 0x8];
+        system_psyq_clear_otag(w[struct1c + 0x10 + V0 * 0x4], 0x1000);
+
+        V1 = bu[struct1c + 0x8] ^ 0x1;
+        [0x800c9f60 + V1 * 0x18 + 0x3] = b(0x2);
+        [0x800c9f60 + V1 * 0x18 + 0x4] = w(0xe6000000);
+        [0x800c9f60 + V1 * 0x18 + 0x8] = w(0);
+
+        V0 = w[struct1c + 0x10 + V1 * 0x4];
+        ADDPRIM(V0 + 0x3ffc, 0x800c9f60 + V1* 0x18);
+    }
+    else
+    {
+        V0 = bu[struct1c + 0x8];
+        system_psyq_clear_otag_r(w[struct1c + 0x10 + V0 * 0x4], 0x1000);
+    }
+
+    func4c204();
+}
 
 
 
@@ -7331,7 +7249,7 @@ A0 = A0 | 000b;
 800AF138	addiu  s1, s0, $9f98 (=-$6068)
 A0 = S1;
 A1 = 0001;
-800AF144	jal    $800134c8
+800AF144	jal    $system_psyq_clear_otag
 S2 = V0;
 V0 = w[S3 + 0x794c];
 800AF150	nop
@@ -7791,7 +7709,7 @@ loopaf7b0:	; 800af7b0
 800AF7C4	lui    s0, $800d
 800AF7C8	addiu  s0, s0, $9f98 (=-$6068)
 A0 = S0;
-800AF7D0	jal    $800134c8
+800AF7D0	jal    $system_psyq_clear_otag
 A1 = 0001;
 A2 = S0;
 A3 = 00eb;
@@ -14803,7 +14721,7 @@ SP = SP + 0020;
 // funcb5870
 A0 = 0004;
 [SP + 0010] = w(RA);
-800B587C	jal    $80032120
+800B587C	jal    $func32120
 A1 = 0002;
 800B5884	lui    a0, $800b
 800B5888	jal    $80032628
@@ -14841,7 +14759,7 @@ A1 = bu[V0 + 0002];
 V0 = h[V0 + 0004];
 A1 = A1 & 0003;
 A1 = A1 << 0e;
-800B58FC	jal    $80032120
+800B58FC	jal    $func32120
 A1 = A1 | V0;
 800B5904	lui    a0, $800b
 800B5908	jal    $80032628
