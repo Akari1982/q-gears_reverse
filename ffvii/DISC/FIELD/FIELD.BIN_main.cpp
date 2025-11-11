@@ -208,7 +208,11 @@ void field_main()
     [0x8009ac40] = h(0);
 
     // clear if prev game state was not field, battle, worldmap or menu
-    if ((h[0x800965ec] != 0x1) && (h[0x800965ec] != 0x2) && (h[0x800965ec] != 0x3) && (h[0x800965ec] != 0x5) && (h[0x800965ec] != 0xd))
+    if ((g_game_state_prev != GAME_STATE_FIELD) &&
+        (g_game_state_prev != GAME_STATE_BATTLE) &&
+        (g_game_state_prev != GAME_STATE_WORLDMAP) &&
+        (g_game_state_prev != 0x5) &&
+        (g_game_state_prev != 0xd))
     {
         RECT rect;
         rect.x = 0;
@@ -226,21 +230,21 @@ void field_main()
         [0x80095dd0] = h(0x0); // map id to load in advance
 
         // if prev state field or map
-        if ((h[0x800965ec] == 0x1) || (h[0x800965ec] == 0x3))
+        if ((g_game_state_prev == GAME_STATE_FIELD) || (g_game_state_prev == GAME_STATE_WORLDMAP))
         {
             if (hu[0x8009abf4 + 0x4c] == 0x0)
             {
                 system_fade_copy_screen();
 
                 [0x8009abf4 + 0x4c] = h(0x3);
-                [0x80071a58] = b(0x3);
+                g_bg_fade_type = 0x3;
                 [0x8009abf4 + 0x4e] = h(0x0);
                 [0x8007e768] = h(0x0);
                 g_bg_render = BG_RENDER_FADE;
             }
         }
 
-        if ((h[0x800965ec] != 0x5) && (h[0x800965ec] != 0xd)) // if was not menu
+        if ((g_game_state_prev != 0x5) && (g_game_state_prev != 0xd)) // if was not menu
         {
             g_field_events_p = 0x80114fe4; // events
             g_field_walkmesh_p = 0x80114fe8; // walkmesh
@@ -253,7 +257,7 @@ void field_main()
             field_load_mim_dat_files();
         }
 
-        if (h[0x800965ec] == 0x2) // battle
+        if (g_game_state_prev == GAME_STATE_BATTLE)
         {
             [0x8007ebe0] = b(0x1);
 
@@ -271,7 +275,7 @@ void field_main()
         while (system_psyq_draw_sync(0x1) != 0) {}
 
         // if prev state not 0xd menu set fade out
-        if (h[0x800965ec] != 0xd)
+        if (g_game_state_prev != 0xd)
         {
             [0x8009abf4 + 0x4c] = h(0x1);
             [0x8009abf4 + 0x4e] = h(0x100);
@@ -281,15 +285,15 @@ void field_main()
             [0x8009abf4 + 0x56] = h(0x0);
         }
 
-        if ((h[0x800965ec] == 0x0) || // 
-            (h[0x800965ec] == 0x1) || // field
-            (h[0x800965ec] == 0x3) || // world map
-            (h[0x800965ec] == 0x6) || // highway
-            (h[0x800965ec] == 0x7) || // chocobo
-            (h[0x800965ec] == 0x8) || // snowboard
-            (h[0x800965ec] == 0x9) || // condor
-            (h[0x800965ec] == 0xa) || // submarine
-            (h[0x800965ec] == 0xb))  // jet
+        if ((g_game_state_prev == GAME_STATE_NONE) ||
+            (g_game_state_prev == GAME_STATE_FIELD) ||
+            (g_game_state_prev == GAME_STATE_WORLDMAP) ||
+            (g_game_state_prev == 0x6) || // highway
+            (g_game_state_prev == 0x7) || // chocobo
+            (g_game_state_prev == 0x8) || // snowboard
+            (g_game_state_prev == 0x9) || // condor
+            (g_game_state_prev == 0xa) || // submarine
+            (g_game_state_prev == 0xb))  // jet
         {
             [0x8009abf4 + 0xa6] = h(0x0); // x scroll for 2nd background
             [0x8009abf4 + 0xa8] = h(0x0); // y scroll for 2nd background
@@ -336,12 +340,12 @@ void field_main()
         field_arrows_init(g_field_render_data[0].arrows, &g_field_render_data[0].arrows_dm);
         field_arrows_init(g_field_render_data[1].arrows, &g_field_render_data[1].arrows_dm);
 
-        if ((h[0x800965ec] != 0x5) && (h[0x800965ec] != 0xd)) // if was not nemu
+        if ((g_game_state_prev != 0x5) && (g_game_state_prev != 0xd)) // if was not nemu
         {
             field_load_mim_to_vram(0, 0x80128000);
         }
 
-        if (h[0x800965ec] == 0x2) // if it was battle
+        if (g_game_state_prev == GAME_STATE_BATTLE)
         {
             [0x8009a000] = h(0xf5);
             system_akao_execute();
@@ -364,7 +368,7 @@ void field_main()
         system_psyq_put_dispenv(&g_field_disp_env[g_field_rb]);
         system_psyq_put_drawenv(&g_field_draw_env[g_field_rb]);
 
-        [0x800965ec] = h(0x1); // set prev game state as field
+        g_game_state_prev = GAME_STATE_FIELD;
 
         if ((g_field_control.cmd == FIELD_CMD_RESET) || (g_field_control.cmd == FIELD_CMD_GAME_OVER) || (g_field_control.cmd == FIELD_CMD_CREDITS))
         {
@@ -385,11 +389,11 @@ void field_main()
 
             if ((g_field_map_id - 0x1) < 0x40)
             {
-                [0x8009c560] = h(0x3); // world map
+                g_game_state_cur = GAME_STATE_WORLDMAP;
                 system_fade_copy_screen();
 
                 [0x8009abf4 + 0x4c] = h(0x3);
-                [0x80071a58] = b(0x3);
+                g_bg_fade_type = 0x3;
                 [0x8009abf4 + 0x4e] = h(0);
                 [0x8007e768] = h(0);
                 g_bg_render = BG_RENDER_FADE;
@@ -406,13 +410,13 @@ void field_main()
 
             switch (bu[0x8009abf4 + 0xf2])
             {
-                case 0: [0x8009c560] = h(0x6); break; // highway
-                case 1: [0x8009c560] = h(0x7); break; // chocobo
-                case 2: [0x8009c560] = h(0x8); break; // snowboard
-                case 3: [0x8009c560] = h(0x9); break; // condor
-                case 4: [0x8009c560] = h(0xa); break; // submarine
-                case 5: [0x8009c560] = h(0xb); break; // jet
-                case 6: [0x8009c560] = h(0xe); break; // snowboard2
+                case 0: g_game_state_cur = 0x6; break; // highway
+                case 1: g_game_state_cur = 0x7; break; // chocobo
+                case 2: g_game_state_cur = 0x8; break; // snowboard
+                case 3: g_game_state_cur = 0x9; break; // condor
+                case 4: g_game_state_cur = 0xa; break; // submarine
+                case 5: g_game_state_cur = 0xb; break; // jet
+                case 6: g_game_state_cur = 0xe; break; // snowboard2
             }
             system_psyq_vsync(0);
 
@@ -426,12 +430,12 @@ void field_main()
             return;
         }
 
-        if (h[0x8009c560] == 0x5)
+        if (g_game_state_cur == 0x5)
         {
             system_fade_copy_screen();
 
             [0x8009abf4 + 0x4c] = h(0xd);
-            [0x80071a58] = b(0xd);
+            g_bg_fade_type = 0xd;
             [0x8009abf4 + 0x4e] = h(0);
             [0x8007e768] = h(0);
             g_bg_render = BG_RENDER_FADE;
@@ -441,7 +445,7 @@ void field_main()
             return;
         }
 
-        if ((bu[0x8009c560] == 0xd) || (bu[0x8009c560] == 0x10))
+        if ((g_game_state_cur == 0xd) || (g_game_state_cur == 0x10))
         {
             system_psyq_vsync(0);
             return;
@@ -463,17 +467,17 @@ void field_main_loop()
     g_base_ofs_x = 0xa0;
     g_base_ofs_y = 0x78;
 
-    if ((h[0x800965ec] != 5) && (h[0x800965ec] != d)) // if prev state was not menu
+    if ((g_game_state_prev != 0x5) && (g_game_state_prev != 0xd)) // if prev state was not menu
     {
         field_model_load_and_init();
     }
 
-    A0 = w[g_field_walkmesh_p] + 4;
+    A0 = w[g_field_walkmesh_p] + 0x4;
     [0x800e4274] = w(A0); // offset to walkmesh block
     V0 = w[g_field_walkmesh_p];
-    [0x80114458] = w(A0 + hu[V0] * 18); // walkmesh triangle access block
+    [0x80114458] = w(A0 + hu[V0] * 0x18); // walkmesh triangle access block
 
-    if ((h[0x800965ec] != 0x5) && (h[0x800965ec] != 0x2) && (h[0x800965ec] != 0xd))
+    if ((g_game_state_prev != 0x5) && (g_game_state_prev != GAME_STATE_BATTLE) && (g_game_state_prev != 0xd))
     {
         funca5fb4(); // move PC model position init by walkmesh
     }
@@ -546,14 +550,14 @@ void field_main_loop()
 
         if (g_field_control.cmd == FIELD_CMD_DISC_CHANGE)
         {
-            [0x8009c560] = h(0xc); // disc change
+            g_game_state_cur = 0xc; // disc change
             field_stop_load_next_map_in_advance();
             return;
         }
 
         if (g_field_control.cmd == 0x19)
         {
-            [0x8009c560] = h(0x10);
+            g_game_state_cur = 0x10;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -566,7 +570,7 @@ void field_main_loop()
             (g_field_control.cmd == 0x17) ||
             (g_field_control.cmd == 0x18))
         {
-            [0x8009c560] = h(0xd);
+            g_game_state_cur = 0xd;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -579,7 +583,7 @@ void field_main_loop()
             (g_field_control.cmd == FIELD_CMD_PARTY_STORE) ||
             (g_field_control.cmd == FIELD_CMD_PARTY_RESTORE))
         {
-            [0x8009c560] = h(0x5);
+            g_game_state_cur = 0x5;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -587,7 +591,7 @@ void field_main_loop()
         // triangle pressed, menu not called, movie not requested or played
         if ((g_buttons_state & 0x0010) && (bu[0x8009abf4 + 0x34] == 0) && (hu[0x800e4d44] == 0) && (g_movie_play == 0))
         {
-            [0x8009c560] = h(0x5); // load menu
+            g_game_state_cur = 0x5; // load menu
             g_field_control.cmd = FIELD_CMD_MENU_MAIN;
             g_field_control.arg = 0; // without tutorial
             field_stop_load_next_map_in_advance();
@@ -612,7 +616,7 @@ void field_main_loop()
             if (V0 < 0) V0 = V0 & 0xfff;
             [0x8009abf4 + 0x6] = h(V0 >> 0xc);
 
-            [0x8009c560] = h(2); // battle
+            g_game_state_cur = GAME_STATE_BATTLE;
             [0x8009abf4 + 0x22] = h(hu[0x80074ea4 + V1 * 0x84 + 0x72]);
 
             field_stop_load_next_map_in_advance();

@@ -5,7 +5,7 @@
 800111E4 func111e4
 80011274 func11274
 800112E8 func112e8
-8001146C func1146c
+8001146C system_background_fade_render
 8001155C system_background_render
 8001171C system_init_base
 80011784 system_init_dispenv_drawenv

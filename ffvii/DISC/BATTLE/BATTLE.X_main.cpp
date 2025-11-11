@@ -283,7 +283,7 @@ for( int i = 0; i < 4; ++i )
     [8009cbdc + i] = b(bu[80163790 + i]);
 }
 
-[0x8009c560] = h(1);
+g_game_state_cur = GAME_STATE_FIELD;
 
 return 1;
 ////////////////////////////////

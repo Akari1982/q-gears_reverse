@@ -1,11 +1,12 @@
-﻿struct FadePoly
+﻿u8 g_bg_fade_type;         // 0x80071a58
+u32 g_fade_ot[0x2];     // 0x8007e7a0
+
+struct FadePoly
 {
     DR_MODE dr_mode;    // 0x8009a068
     TILE tile[0x2];     // 0x8009a074
 }
 FadePoly l_fade[0x2];   // 0x8009a068 (size 0x30)
-
-u32 g_fade_ot[0x2];     // 0x8007e7a0
 
 
 
@@ -183,7 +184,7 @@ void func13624()
 
 void system_fade_bg_update()
 {
-    if( bu[0x80071a58] == 0x3 )
+    if( g_bg_fade_type == 0x3 )
     {
         [0x8009abf4 + 0x4e] = h(hu[0x8009abf4 + 0x4e] + 0x1);
 
@@ -191,7 +192,7 @@ void system_fade_bg_update()
         {
             [0x8009abf4 + 0x4c] = h(0);
             g_bg_render = BG_RENDER_NONE;
-            [0x80071a58] = b(0);
+            g_bg_fade_type = 0;
         }
 
         system_fade_set_draw_mode( 0x2 );
@@ -205,7 +206,7 @@ void system_fade_bg_update()
         {
             [0x8009abf4 + 0x4c] = h(0);
             g_bg_render = BG_RENDER_NONE;
-            [0x80071a58] = b(0);
+            g_bg_fade_type = 0;
         }
 
         system_fade_set_draw_mode( 0x2 );
