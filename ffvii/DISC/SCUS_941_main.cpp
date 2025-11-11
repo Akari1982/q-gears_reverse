@@ -10,7 +10,7 @@ u16 g_bg_render;        // 0x80095dd4
 #define GAME_STATE_BATTLE 0x2
 #define GAME_STATE_WORLDMAP 0x3
 s16 g_game_state_prev;  // 0x800965ec
-s16 g_game_state_cur;   // 0x8009c560
+s16 g_game_state;   // 0x8009c560
 
 
 void func110b8()
@@ -300,7 +300,7 @@ void system_init_akao_engine()
 
 void func119e4()
 {
-    if (g_game_state_cur == GAME_STATE_WORLDMAP)
+    if (g_game_state == GAME_STATE_WORLDMAP)
     {
         [0x8009c6e4 + 0xb90] = w(GAME_STATE_BATTLE);
         [0x8009c6e4 + 0xb94] = h(GAME_STATE_WORLDMAP);
@@ -327,9 +327,9 @@ void func119e4()
 void system_init_field_from_savemap()
 {
     [0x80071e28] = w(w[0x8009c6e4 + 0xb90]);
-    g_game_state_cur = hu[0x8009c6e4 + 0xb94]; // restore gamestate
+    g_game_state = hu[0x8009c6e4 + 0xb94]; // restore gamestate
 
-    if (g_game_state_cur == GAME_STATE_NONE) g_game_state_cur = GAME_STATE_FIELD; // initial gamestate
+    if (g_game_state == GAME_STATE_NONE) g_game_state = GAME_STATE_FIELD; // initial gamestate
 
     g_field_map_id = hu[0x8009c6e4 + 0xb96]; // current field id
     [0x8009ac58] = h(hu[0x8009c6e4 + 0xb96]); // current field id
@@ -347,7 +347,7 @@ void system_init_new_game()
 {
     [0x8009c6e4 + 0xea4] = b(0x1); // current disc
     [0x8009c6e4 + 0xb90] = w(0x0);
-    [0x8009c6e4 + 0xb94] = h(0x1); // field gamestate
+    [0x8009c6e4 + 0xb94] = h(GAME_STATE_FIELD); // field gamestate
     [0x8009c6e4 + 0xb96] = h(0x74); // current map
     [0x8009c6e4 + 0xb9a] = h(0x0); // x location on field map
     [0x8009c6e4 + 0xb9c] = h(0x0); // y location on field map
@@ -453,7 +453,7 @@ void system_main()
         bool restart = false;
         while (restart == false)
         {
-            switch (g_game_state_cur)
+            switch (g_game_state)
             {
                 case GAME_STATE_FIELD:
                 {
@@ -516,7 +516,7 @@ void system_main()
                             }
                         }
                         g_game_state_prev = GAME_STATE_BATTLE;
-                        g_game_state_cur = GAME_STATE_FIELD;
+                        g_game_state = GAME_STATE_FIELD;
                     }
                     else
                     {
@@ -551,7 +551,7 @@ void system_main()
                             }
 
                             g_game_state_prev = GAME_STATE_BATTLE;
-                            g_game_state_cur = GAME_STATE_WORLDMAP;
+                            g_game_state = GAME_STATE_WORLDMAP;
                         }
                         else
                         {
@@ -560,7 +560,7 @@ void system_main()
                                 [0x800707be] = h(0);
                                 g_field_control.cmd = FIELD_CMD_GAME_OVER;
                                 g_game_state_prev = GAME_STATE_BATTLE;
-                                g_game_state_cur = GAME_STATE_WORLDMAP;
+                                g_game_state = GAME_STATE_WORLDMAP;
                             }
                             else
                             {
@@ -569,12 +569,12 @@ void system_main()
                                     while (g_bg_render != BG_RENDER_NONE) {}
 
                                     g_game_state_prev = GAME_STATE_FIELD; // maybe error, needs more check!!!
-                                    g_game_state_cur = GAME_STATE_FIELD; // set gamestate to field
+                                    g_game_state = GAME_STATE_FIELD; // set gamestate to field
                                 }
                                 else
                                 {
                                     g_game_state_prev = GAME_STATE_BATTLE;
-                                    g_game_state_cur = GAME_STATE_WORLDMAP;
+                                    g_game_state = GAME_STATE_WORLDMAP;
                                 }
                             }
                         }
@@ -592,12 +592,12 @@ void system_main()
                     if (V1 == 0)
                     {
                         g_game_state_prev = GAME_STATE_WORLDMAP;
-                        g_game_state_cur = GAME_STATE_FIELD;
+                        g_game_state = GAME_STATE_FIELD;
                     }
                     else if (V1 == 0x1)
                     {
                         g_game_state_prev = GAME_STATE_WORLDMAP;
-                        g_game_state_cur = GAME_STATE_BATTLE;
+                        g_game_state = GAME_STATE_BATTLE;
 
                     }
                     else if (V1 == 0x2)
@@ -661,7 +661,7 @@ void system_main()
 
                     [0x8009ac1a] = h(0x2);
                     g_game_state_prev = 0x5;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                 }
                 break;
 
@@ -674,7 +674,7 @@ void system_main()
                     funca00d0();
 
                     g_game_state_prev = 0x6;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -688,7 +688,7 @@ void system_main()
                     funca02d0();
 
                     g_game_state_prev = 0x7;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -702,7 +702,7 @@ void system_main()
                     funca0390();
 
                     g_game_state_prev = 0x8;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -716,7 +716,7 @@ void system_main()
                     funcb6b58();
 
                     g_game_state_prev = 0x9;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -732,7 +732,7 @@ void system_main()
                     [0x8009d5e6] = b(A0);
                     [0x8009d5e7] = b(A0 >> 0x8);
                     g_game_state_prev = 0xa;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -748,7 +748,7 @@ void system_main()
                     [0x8009d3ea] = b(A0);
                     [0x8009d3eb] = b(A0 >> 0x8);
                     g_game_state_prev = 0xb;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -761,7 +761,7 @@ void system_main()
 
                         [0x8009ac1a] = h(0x2);
                         g_game_state_prev = 0xc;
-                        g_game_state_cur = GAME_STATE_FIELD;
+                        g_game_state = GAME_STATE_FIELD;
                     }
                     else
                     {
@@ -777,7 +777,7 @@ void system_main()
 
                             [0x8009ac1a] = h(0x2);
                             g_game_state_prev = 0xc;
-                            g_game_state_cur = GAME_STATE_FIELD;
+                            g_game_state = GAME_STATE_FIELD;
                         }
                     }
                 }
@@ -805,7 +805,7 @@ void system_main()
 
                     [0x8009abf4 + 0x26] = h(0x2);
                     g_game_state_prev = 0xd;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                 }
                 break;
 
@@ -818,7 +818,7 @@ void system_main()
                     funca0448();
 
                     g_game_state_prev = 0xe;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -829,7 +829,7 @@ void system_main()
 
                     [0x8009ac1a] = h(0x2);
                     g_game_state_prev = 0x10;
-                    g_game_state_cur = GAME_STATE_FIELD;
+                    g_game_state = GAME_STATE_FIELD;
                 }
                 break;
             }

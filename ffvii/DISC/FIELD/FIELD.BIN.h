@@ -15,9 +15,8 @@
 #define FIELD_CMD_PARTY_STORE 0x12
 #define FIELD_CMD_PARTY_RESTORE 0x13
 #define FIELD_CMD_MOVIE_STOP 0x14
+#define FIELD_CMD_SEPHIROTH 0x19
 #define FIELD_CMD_GAME_OVER 0x1a
-
-                    0x19 - we load INSTR2 if we set this (Sephiroth battle?).
 
 struct FieldControl
 {
@@ -69,12 +68,12 @@ struct FieldControl
                         //               0x02 The battle is timed; the player must complete the battle before the timer reaches zero, or the battle exits, with no AP/EXP/Gil/items received screens displayed. 
                         // 0x44 [][][][] offset to battle music (global, with field file offset).
                         // 0x48 [][][][] offset to field music (global, with field file offset).
-                        // 0x4c [][]     we store FADE and NFADE type here.
-                        // 0x4e [][]     we store start value on FADE and zero on NFADE here.
+    u16 fade_type;      // 0x4c FADE and NFADE type here.
+    u16 fade_step;      // 0x4e
                         // 0x50 [][]     we store FADE and NFADE speed here.
-                        // 0x52 [][]     we store FADE R-value here.
-                        // 0x54 [][]     we store FADE G-value here.
-                        // 0x56 [][]     we store FADE B-value here.
+    u16 fade_r;         // 0x52 [][]     we store FADE R-value here.
+    u16 fade_g;         // 0x54 [][]     we store FADE G-value here.
+    u16 fade_b;         // 0x56 [][]     we store FADE B-value here.
                         // 0x58 [][]     probably current fade R.
                         // 0x5a [][]     probably current fade G.
                         // 0x5c [][]     probably current fade B.

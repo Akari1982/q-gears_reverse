@@ -232,13 +232,13 @@ void field_main()
         // if prev state field or map
         if ((g_game_state_prev == GAME_STATE_FIELD) || (g_game_state_prev == GAME_STATE_WORLDMAP))
         {
-            if (hu[0x8009abf4 + 0x4c] == 0x0)
+            if (g_field_control.fade_type == 0x0)
             {
                 system_fade_copy_screen();
 
-                [0x8009abf4 + 0x4c] = h(0x3);
+                g_field_control.fade_type = 0x3;
+                g_field_control.fade_step = 0;
                 g_bg_fade_type = 0x3;
-                [0x8009abf4 + 0x4e] = h(0x0);
                 [0x8007e768] = h(0x0);
                 g_bg_render = BG_RENDER_FADE;
             }
@@ -277,12 +277,12 @@ void field_main()
         // if prev state not 0xd menu set fade out
         if (g_game_state_prev != 0xd)
         {
-            [0x8009abf4 + 0x4c] = h(0x1);
-            [0x8009abf4 + 0x4e] = h(0x100);
+            g_field_control.fade_type = 0x1;
+            g_field_control.fade_step = 0x100;
             [0x8009abf4 + 0x50] = h(0x10);
-            [0x8009abf4 + 0x52] = h(0x0);
-            [0x8009abf4 + 0x54] = h(0x0);
-            [0x8009abf4 + 0x56] = h(0x0);
+            g_field_control.fade_r = 0x0;
+            g_field_control.fade_g = 0x0;
+            g_field_control.fade_b = 0x0;
         }
 
         if ((g_game_state_prev == GAME_STATE_NONE) ||
@@ -389,12 +389,12 @@ void field_main()
 
             if ((g_field_map_id - 0x1) < 0x40)
             {
-                g_game_state_cur = GAME_STATE_WORLDMAP;
+                g_game_state = GAME_STATE_WORLDMAP;
                 system_fade_copy_screen();
 
-                [0x8009abf4 + 0x4c] = h(0x3);
+                g_field_control.fade_type = 0x3;
+                g_field_control.fade_step = 0;
                 g_bg_fade_type = 0x3;
-                [0x8009abf4 + 0x4e] = h(0);
                 [0x8007e768] = h(0);
                 g_bg_render = BG_RENDER_FADE;
 
@@ -410,13 +410,13 @@ void field_main()
 
             switch (bu[0x8009abf4 + 0xf2])
             {
-                case 0: g_game_state_cur = 0x6; break; // highway
-                case 1: g_game_state_cur = 0x7; break; // chocobo
-                case 2: g_game_state_cur = 0x8; break; // snowboard
-                case 3: g_game_state_cur = 0x9; break; // condor
-                case 4: g_game_state_cur = 0xa; break; // submarine
-                case 5: g_game_state_cur = 0xb; break; // jet
-                case 6: g_game_state_cur = 0xe; break; // snowboard2
+                case 0: g_game_state = 0x6; break; // highway
+                case 1: g_game_state = 0x7; break; // chocobo
+                case 2: g_game_state = 0x8; break; // snowboard
+                case 3: g_game_state = 0x9; break; // condor
+                case 4: g_game_state = 0xa; break; // submarine
+                case 5: g_game_state = 0xb; break; // jet
+                case 6: g_game_state = 0xe; break; // snowboard2
             }
             system_psyq_vsync(0);
 
@@ -430,13 +430,13 @@ void field_main()
             return;
         }
 
-        if (g_game_state_cur == 0x5)
+        if (g_game_state == 0x5)
         {
             system_fade_copy_screen();
 
-            [0x8009abf4 + 0x4c] = h(0xd);
+            g_field_control.fade_type = 0xd;
+            g_field_control.fade_step = 0;
             g_bg_fade_type = 0xd;
-            [0x8009abf4 + 0x4e] = h(0);
             [0x8007e768] = h(0);
             g_bg_render = BG_RENDER_FADE;
 
@@ -445,7 +445,7 @@ void field_main()
             return;
         }
 
-        if ((g_game_state_cur == 0xd) || (g_game_state_cur == 0x10))
+        if ((g_game_state == 0xd) || (g_game_state == 0x10))
         {
             system_psyq_vsync(0);
             return;
@@ -550,14 +550,14 @@ void field_main_loop()
 
         if (g_field_control.cmd == FIELD_CMD_DISC_CHANGE)
         {
-            g_game_state_cur = 0xc; // disc change
+            g_game_state = 0xc; // disc change
             field_stop_load_next_map_in_advance();
             return;
         }
 
         if (g_field_control.cmd == 0x19)
         {
-            g_game_state_cur = 0x10;
+            g_game_state = 0x10;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -570,7 +570,7 @@ void field_main_loop()
             (g_field_control.cmd == 0x17) ||
             (g_field_control.cmd == 0x18))
         {
-            g_game_state_cur = 0xd;
+            g_game_state = 0xd;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -583,7 +583,7 @@ void field_main_loop()
             (g_field_control.cmd == FIELD_CMD_PARTY_STORE) ||
             (g_field_control.cmd == FIELD_CMD_PARTY_RESTORE))
         {
-            g_game_state_cur = 0x5;
+            g_game_state = 0x5;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -591,7 +591,7 @@ void field_main_loop()
         // triangle pressed, menu not called, movie not requested or played
         if ((g_buttons_state & 0x0010) && (bu[0x8009abf4 + 0x34] == 0) && (hu[0x800e4d44] == 0) && (g_movie_play == 0))
         {
-            g_game_state_cur = 0x5; // load menu
+            g_game_state = 0x5; // load menu
             g_field_control.cmd = FIELD_CMD_MENU_MAIN;
             g_field_control.arg = 0; // without tutorial
             field_stop_load_next_map_in_advance();
@@ -616,7 +616,7 @@ void field_main_loop()
             if (V0 < 0) V0 = V0 & 0xfff;
             [0x8009abf4 + 0x6] = h(V0 >> 0xc);
 
-            g_game_state_cur = GAME_STATE_BATTLE;
+            g_game_state = GAME_STATE_BATTLE;
             [0x8009abf4 + 0x22] = h(hu[0x80074ea4 + V1 * 0x84 + 0x72]);
 
             field_stop_load_next_map_in_advance();
@@ -718,7 +718,7 @@ void field_main_loop()
             system_psyq_draw_otag(render_data.ot_scene + 0x1000 - 0x1); // scene OT (rendered reversed)
             system_psyq_draw_otag(&render_data.ot_fade_drenv);
 
-            if (hu[0x8009abf4 + 0x4c] != 0) // fade type
+            if (g_field_control.fade_type != 0)
             {
                 system_psyq_draw_otag(&g_fade_ot[buf_id]);
             }
