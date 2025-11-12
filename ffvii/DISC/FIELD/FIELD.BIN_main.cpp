@@ -237,7 +237,7 @@ void field_main()
                 system_fade_copy_screen();
 
                 g_field_control.fade_type = 0x3;
-                g_field_control.fade_step = 0;
+                g_field_control.fade_steps = 0;
                 g_bg_fade_type = 0x3;
                 [0x8007e768] = h(0x0);
                 g_bg_render = BG_RENDER_FADE;
@@ -278,8 +278,8 @@ void field_main()
         if (g_game_state_prev != 0xd)
         {
             g_field_control.fade_type = 0x1;
-            g_field_control.fade_step = 0x100;
-            [0x8009abf4 + 0x50] = h(0x10);
+            g_field_control.fade_steps = 0x100;
+            g_field_control.fade_step = 0x10;
             g_field_control.fade_r = 0x0;
             g_field_control.fade_g = 0x0;
             g_field_control.fade_b = 0x0;
@@ -393,7 +393,7 @@ void field_main()
                 system_fade_copy_screen();
 
                 g_field_control.fade_type = 0x3;
-                g_field_control.fade_step = 0;
+                g_field_control.fade_steps = 0;
                 g_bg_fade_type = 0x3;
                 [0x8007e768] = h(0);
                 g_bg_render = BG_RENDER_FADE;
@@ -435,7 +435,7 @@ void field_main()
             system_fade_copy_screen();
 
             g_field_control.fade_type = 0xd;
-            g_field_control.fade_step = 0;
+            g_field_control.fade_steps = 0;
             g_bg_fade_type = 0xd;
             [0x8007e768] = h(0);
             g_bg_render = BG_RENDER_FADE;
@@ -712,7 +712,7 @@ void field_main_loop()
         [0x8007ebd0] = w(&g_bg_draw_env[buf_id]); // DRAWENV
         funcab310(); // play movie?
 
-        if (bu[0x8009abf4 + 0x38] == 0)
+        if (g_field_control.disable_render == 0)
         {
             system_psyq_draw_otag(&render_data.ot_scene_drenv);
             system_psyq_draw_otag(render_data.ot_scene + 0x1000 - 0x1); // scene OT (rendered reversed)

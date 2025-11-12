@@ -52,7 +52,7 @@ struct FieldControl
                         // 0x35 []       ???
                         // 0x36 []       check gateways during move or not (0 - check).
                         // 0x37 []       scroll lock.
-                        // 0x38 []       0 - disable fade.
+    u8 disable_render;  // 0x38
                         // 0x39 []       ???
                         // 0x3a []       we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode.
                         // 0x3b []       battle field check on/off (0/1).
@@ -69,8 +69,8 @@ struct FieldControl
                         // 0x44 [][][][] offset to battle music (global, with field file offset).
                         // 0x48 [][][][] offset to field music (global, with field file offset).
     u16 fade_type;      // 0x4c FADE and NFADE type here.
-    u16 fade_step;      // 0x4e
-                        // 0x50 [][]     we store FADE and NFADE speed here.
+    s16 fade_steps;     // 0x4e
+    u16 fade_step;      // 0x50
     u16 fade_r;         // 0x52 [][]     we store FADE R-value here.
     u16 fade_g;         // 0x54 [][]     we store FADE G-value here.
     u16 fade_b;         // 0x56 [][]     we store FADE B-value here.

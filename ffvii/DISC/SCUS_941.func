@@ -24,8 +24,8 @@
 80012A8C system_fade_set_poly_monochrome
 80012DB0 system_fade_set_poly_rgb_gradual
 800131B8 system_fade_set_poly_rgb_direct
-800134F4 func134f4
-80013564 func13564
+800134F4 system_fade_steps_discrease
+80013564 system_fade_steps_increase
 800135C0 func135c0
 80013624 func13624
 80013800 system_fade_bg_update
