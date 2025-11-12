@@ -270,7 +270,6 @@ void field_main()
         }
 
         while (g_bg_render != BG_RENDER_NONE) {}
-
         while (system_psyq_draw_sync(0x1) != 0) {}
 
         // if prev state not 0xd menu set fade out
@@ -643,11 +642,8 @@ void field_main_loop()
         system_fade_update();
 
         [0x80114478] = w(system_psyq_vsync(0x1));
-
         while (system_psyq_draw_sync(0x1) != 0) {}
-
-        V0 = system_psyq_vsync(0x1);
-        [0x8011447c] = w(V0);
+        [0x8011447c] = w(system_psyq_vsync(0x1));
 
         if ((g_movie_play != 0) && (w[0x800965e4] != 1))
         {

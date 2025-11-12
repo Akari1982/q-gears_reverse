@@ -39,7 +39,7 @@ system_cdrom_start_load_file();
 
 
 
-void func14578( file_id, dst, callback )
+void func14578(file_id, dst, callback)
 {
     // 66020000 00000000 0 "INIT\YAMADA.BIN"
     // 67020000 D2330000 1 "INIT\WINDOW.BIN"
@@ -70,12 +70,12 @@ func = A0;
 
 loop145cc:	; 800145CC
     system_cdrom_read_chain();
-    if( V0 == 0 )
+    if (V0 == 0)
     {
         return;
     }
 
-    if( func != 0 )
+    if (func != 0)
     {
         800145E4	jalr   func ra
     }
@@ -86,19 +86,19 @@ loop145cc:	; 800145CC
 
 void func14610()
 {
-    system_cdrom_start_load_file( 0x266, 0x800, SP + 0x10, 0 ); // INIT/YAMADA.BIN
-    func145bc( 0 ); // load sync
-    func14a00( 0x80048d84, SP + 0x10, 0x50 ); // copy
+    system_cdrom_start_load_file(0x266, 0x800, SP + 0x10, 0); // INIT/YAMADA.BIN
+    func145bc(0); // load sync
+    func14a00(0x80048d84, SP + 0x10, 0x50); // copy
 }
 
 
 
-void func14658( file_id, func )
+void func14658(file_id, func)
 {
-    func14578( file_id, 0x801b0000, 0 ); // start load file
-    func145bc( 0 ); // load sync
+    func14578(file_id, 0x801b0000, 0); // start load file
+    func145bc(0); // load sync
 
-    system_gzip_bin_decompress( 0x801b0000, 0x800a0000 );
+    system_gzip_bin_decompress(0x801b0000, 0x800a0000);
 
     80014688	jalr   func ra
 }
@@ -108,9 +108,9 @@ void func14658( file_id, func )
 ////////////////////////////////
 // func146a4()
 
-while( true )
+while(true)
 {
-    if( h[0x8009c560] == 2 )
+    if (h[0x8009c560] == 2)
     {
         system_battle_swirl_init();
 
@@ -118,9 +118,9 @@ while( true )
         A1 = 800a1158; // battle_main()
         func14658(); // load and run
     }
-    else if( h[0x8009c560] == 4 )
+    else if (h[0x8009c560] == 4)
     {
-        func145bc( 0 ); // load sync
+        func145bc(0); // load sync
 
         A0 = 3; // BROM.X
         A1 = 800a00cc; // start func
@@ -138,26 +138,26 @@ while( true )
 // callback to kernel load
 void func14750()
 {
-    system_gzip_set_data_block( 0x801b0000 );
+    system_gzip_set_data_block(0x801b0000);
 
-    while( true )
+    while(true)
     {
         u16 type = system_gzip_get_type(); // get kernel type
 
-        if( type == 0xffff ) return;
+        if (type == 0xffff) return;
 
         u16 size = system_gzip_get_size();
 
-        if( type == 0x9 ) // strings
+        if (type == 0x9) // strings
         {
-            system_gzip_pack_decompress_next_block( func14c80( size ) );
+            system_gzip_pack_decompress_next_block(func14c80(size));
         }
         else
         {
             dst = w[0x80048dd4 + type * 4];
-            if( dst != 0 )
+            if (dst != 0)
             {
-                system_gzip_pack_decompress_next_block( dst ); // load kernel data
+                system_gzip_pack_decompress_next_block(dst); // load kernel data
             }
         }
     }
@@ -167,24 +167,24 @@ void func14750()
 
 void func14804()
 {
-    system_gzip_set_data_block( 0x801b0000 );
+    system_gzip_set_data_block(0x801b0000);
 
-    while( true )
+    while(true)
     {
         u16 type = system_gzip_get_type(); // get kernel type
 
-        if( type == 0xffff ) return;
+        if (type == 0xffff) return;
 
-        if( type == 0 ) // image
+        if (type == 0) // image
         {
-            system_gzip_pack_decompress_next_block( 0x801c0000 );
+            system_gzip_pack_decompress_next_block(0x801c0000);
 
             system_load_draw_sync();
-            system_load_decompressed_image( 0x801c0000 );
+            system_load_decompressed_image(0x801c0000);
         }
-        else if( type == 0x1 ) // font width data
+        else if (type == 0x1) // font width data
         {
-            system_gzip_pack_decompress_next_block( 0x80063048 );
+            system_gzip_pack_decompress_next_block(0x80063048);
         }
     }
 }
@@ -209,11 +209,11 @@ int system_init_kernel()
     func14610(); // load INIT/YAMADA.BIN
     func14c70();
 
-    func14578( 0x1, 0x801b0000, 0x80014804 ); // INIT\WINDOW.BIN func14804() callback
-    func145bc( 0 ); // load sync
+    func14578(0x1, 0x801b0000, 0x80014804); // INIT\WINDOW.BIN func14804() callback
+    func145bc(0); // load sync
 
-    func14578( 0x2, 0x801b0000, 0x80014750 ); // INIT\KERNEL.BIN func14750() callback
-    func145bc( 0 ); // load sync
+    func14578(0x2, 0x801b0000, 0x80014750); // INIT\KERNEL.BIN func14750() callback
+    func145bc(0); // load sync
 
     return 1;
 }
@@ -225,32 +225,32 @@ int system_init_kernel()
 
 func148a0();
 
-func14578( 0x2, 0x801b0000, 0 ); // start load file INIT\KERNEL.BIN
+func14578(0x2, 0x801b0000, 0); // start load file INIT\KERNEL.BIN
 
-func145bc( 0 ); // load sync
+func145bc(0); // load sync
 
 // load initialization data to savemap
-system_gzip_pack_decompress_by_id( 0x801b0000, 0x8009c6e4 + 0x54, 0x3 );
+system_gzip_pack_decompress_by_id(0x801b0000, 0x8009c6e4 + 0x54, 0x3);
 ////////////////////////////////
 
 
 
-void system_load_decompressed_image( u32 src )
+void system_load_decompressed_image(u32 src)
 {
-    if( w[src + 0x4] & 0x8 )
+    if (w[src + 0x4] & 0x8)
     {
-        system_psyq_load_image( src + 0xc, src + 0x14 );
+        system_psyq_load_image(src + 0xc, src + 0x14);
         src += (w[src + 0x8] >> 0x2) << 0x2;
     }
 
-    system_psyq_load_image( src + 0xc, src + 0x14 );
+    system_psyq_load_image(src + 0xc, src + 0x14);
 }
 
 
 
 void system_load_draw_sync()
 {
-    system_psyq_draw_sync( 0 );
+    system_psyq_draw_sync(0);
 }
 
 
@@ -262,7 +262,7 @@ dst = A0;
 src = A1;
 size = A2 / 4;
 
-for( int i = 0; i < size; ++ i )
+for (int i = 0; i < size; ++ i)
 {
     [dst + i * 4] = w(w[src + i * 4]);
 }
