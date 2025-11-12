@@ -71,15 +71,15 @@ struct FieldControl
     u16 fade_type;      // 0x4c FADE and NFADE type here.
     s16 fade_steps;     // 0x4e
     u16 fade_step;      // 0x50
-    u16 fade_r;         // 0x52 [][]     we store FADE R-value here.
-    u16 fade_g;         // 0x54 [][]     we store FADE G-value here.
-    u16 fade_b;         // 0x56 [][]     we store FADE B-value here.
-                        // 0x58 [][]     probably current fade R.
-                        // 0x5a [][]     probably current fade G.
-                        // 0x5c [][]     probably current fade B.
-                        // 0x5e [][]     we store NFADE 1/4-byte_value here.
-                        // 0x60 [][]     we store NFADE 2/5-byte_value here.
-                        // 0x62 [][]     we store NFADE 3/6-byte_value here.
+    u16 fade_r;         // 0x52
+    u16 fade_g;         // 0x54
+    u16 fade_b;         // 0x56
+    u16 nfade_r_from;   // 0x58
+    u16 nfade_g_from;   // 0x5a
+    u16 nfade_b_from;   // 0x5c
+    u16 nfade_r_to;     // 0x5e
+    u16 nfade_g_to;     // 0x60
+    u16 nfade_b_to;     // 0x62
                         // 0x64 [][]     prev field (store current field here during load of next).
                         // 0x68 [][][][] currently pressed buttons for both controllers without remap.
                         // 0x6c [][][][] previously pressed buttons for both controllers without remap.

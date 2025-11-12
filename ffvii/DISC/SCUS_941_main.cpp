@@ -9,8 +9,8 @@ u16 g_bg_render;        // 0x80095dd4
 #define GAME_STATE_FIELD 0x1
 #define GAME_STATE_BATTLE 0x2
 #define GAME_STATE_WORLDMAP 0x3
-s16 g_game_state_prev;  // 0x800965ec
-s16 g_game_state;   // 0x8009c560
+s16 g_gamestate_prev;   // 0x800965ec
+s16 g_gamestate;        // 0x8009c560
 
 
 void func110b8()
@@ -97,7 +97,7 @@ void func11274()
 
 void func112e8()
 {
-    if (g_game_state_prev == GAME_STATE_BATTLE)
+    if (g_gamestate_prev == GAME_STATE_BATTLE)
     {
         while (system_cdrom_read_chain() != 0) {}
 
@@ -118,7 +118,7 @@ void func112e8()
 
     if (w[0x80071e28] != 0x2)
     {
-        if (g_game_state_prev == GAME_STATE_BATTLE)
+        if (g_gamestate_prev == GAME_STATE_BATTLE)
         {
             [0x80071e28] = w(0x1);
         }
@@ -148,7 +148,7 @@ void func112e8()
 
 void system_background_fade_render()
 {
-    if (g_bg_fade_type != 0)
+    if (g_bg_fade_type != FADE_TYPE_NONE)
     {
         g_field_rb += 0x1;
         g_field_rb &= 0x1;
@@ -247,11 +247,11 @@ void system_init_dispenv_drawenv()
 
 void system_field_run()
 {
-    if (g_game_state_prev != 0x5)
+    if (g_gamestate_prev != 0x5)
     {
-        if (g_game_state_prev != 0xd)
+        if (g_gamestate_prev != 0xd)
         {
-            if (g_game_state_prev != GAME_STATE_BATTLE)
+            if (g_gamestate_prev != GAME_STATE_BATTLE)
             {
                 system_cdrom_start_load_file(w[0x80048d24], w[0x80048d28], 0x80180000, 0); // "FIELD/FIELD.BIN"
                 while (system_cdrom_read_chain() != 0) {}
@@ -300,7 +300,7 @@ void system_init_akao_engine()
 
 void func119e4()
 {
-    if (g_game_state == GAME_STATE_WORLDMAP)
+    if (g_gamestate == GAME_STATE_WORLDMAP)
     {
         [0x8009c6e4 + 0xb90] = w(GAME_STATE_BATTLE);
         [0x8009c6e4 + 0xb94] = h(GAME_STATE_WORLDMAP);
@@ -327,9 +327,9 @@ void func119e4()
 void system_init_field_from_savemap()
 {
     [0x80071e28] = w(w[0x8009c6e4 + 0xb90]);
-    g_game_state = hu[0x8009c6e4 + 0xb94]; // restore gamestate
+    g_gamestate = hu[0x8009c6e4 + 0xb94]; // restore gamestate
 
-    if (g_game_state == GAME_STATE_NONE) g_game_state = GAME_STATE_FIELD; // initial gamestate
+    if (g_gamestate == GAME_STATE_NONE) g_gamestate = GAME_STATE_FIELD; // initial gamestate
 
     g_field_map_id = hu[0x8009c6e4 + 0xb96]; // current field id
     [0x8009ac58] = h(hu[0x8009c6e4 + 0xb96]); // current field id
@@ -448,12 +448,12 @@ void system_main()
 
         system_init_field_from_savemap();
 
-        g_game_state_prev = GAME_STATE_NONE;
+        g_gamestate_prev = GAME_STATE_NONE;
 
         bool restart = false;
         while (restart == false)
         {
-            switch (g_game_state)
+            switch (g_gamestate)
             {
                 case GAME_STATE_FIELD:
                 {
@@ -479,7 +479,7 @@ void system_main()
                         [0x80071e34] = b(0);
                     }
 
-                    if (g_game_state_prev == GAME_STATE_FIELD)
+                    if (g_gamestate_prev == GAME_STATE_FIELD)
                     {
                         if (bu[0x80071e30] == 0) // battle not locked
                         {
@@ -515,8 +515,8 @@ void system_main()
                                 [0x800707be] = h(0);
                             }
                         }
-                        g_game_state_prev = GAME_STATE_BATTLE;
-                        g_game_state = GAME_STATE_FIELD;
+                        g_gamestate_prev = GAME_STATE_BATTLE;
+                        g_gamestate = GAME_STATE_FIELD;
                     }
                     else
                     {
@@ -550,8 +550,8 @@ void system_main()
                                 [0x8009d2a3] = b(bu[0x8009d2a3] + 0x1);
                             }
 
-                            g_game_state_prev = GAME_STATE_BATTLE;
-                            g_game_state = GAME_STATE_WORLDMAP;
+                            g_gamestate_prev = GAME_STATE_BATTLE;
+                            g_gamestate = GAME_STATE_WORLDMAP;
                         }
                         else
                         {
@@ -559,8 +559,8 @@ void system_main()
                             {
                                 [0x800707be] = h(0);
                                 g_field_control.cmd = FIELD_CMD_GAME_OVER;
-                                g_game_state_prev = GAME_STATE_BATTLE;
-                                g_game_state = GAME_STATE_WORLDMAP;
+                                g_gamestate_prev = GAME_STATE_BATTLE;
+                                g_gamestate = GAME_STATE_WORLDMAP;
                             }
                             else
                             {
@@ -568,13 +568,13 @@ void system_main()
                                 {
                                     while (g_bg_render != BG_RENDER_NONE) {}
 
-                                    g_game_state_prev = GAME_STATE_FIELD; // maybe error, needs more check!!!
-                                    g_game_state = GAME_STATE_FIELD; // set gamestate to field
+                                    g_gamestate_prev = GAME_STATE_FIELD; // maybe error, needs more check!!!
+                                    g_gamestate = GAME_STATE_FIELD; // set gamestate to field
                                 }
                                 else
                                 {
-                                    g_game_state_prev = GAME_STATE_BATTLE;
-                                    g_game_state = GAME_STATE_WORLDMAP;
+                                    g_gamestate_prev = GAME_STATE_BATTLE;
+                                    g_gamestate = GAME_STATE_WORLDMAP;
                                 }
                             }
                         }
@@ -591,13 +591,13 @@ void system_main()
                     V1 = w[0x80071e28];
                     if (V1 == 0)
                     {
-                        g_game_state_prev = GAME_STATE_WORLDMAP;
-                        g_game_state = GAME_STATE_FIELD;
+                        g_gamestate_prev = GAME_STATE_WORLDMAP;
+                        g_gamestate = GAME_STATE_FIELD;
                     }
                     else if (V1 == 0x1)
                     {
-                        g_game_state_prev = GAME_STATE_WORLDMAP;
-                        g_game_state = GAME_STATE_BATTLE;
+                        g_gamestate_prev = GAME_STATE_WORLDMAP;
+                        g_gamestate = GAME_STATE_BATTLE;
 
                     }
                     else if (V1 == 0x2)
@@ -660,8 +660,8 @@ void system_main()
                     field_copy_battle_party_to_party();
 
                     [0x8009ac1a] = h(0x2);
-                    g_game_state_prev = 0x5;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0x5;
+                    g_gamestate = GAME_STATE_FIELD;
                 }
                 break;
 
@@ -673,8 +673,8 @@ void system_main()
 
                     funca00d0();
 
-                    g_game_state_prev = 0x6;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0x6;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -687,8 +687,8 @@ void system_main()
 
                     funca02d0();
 
-                    g_game_state_prev = 0x7;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0x7;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -701,8 +701,8 @@ void system_main()
 
                     funca0390();
 
-                    g_game_state_prev = 0x8;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0x8;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -715,8 +715,8 @@ void system_main()
 
                     funcb6b58();
 
-                    g_game_state_prev = 0x9;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0x9;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -731,8 +731,8 @@ void system_main()
 
                     [0x8009d5e6] = b(A0);
                     [0x8009d5e7] = b(A0 >> 0x8);
-                    g_game_state_prev = 0xa;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0xa;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -747,8 +747,8 @@ void system_main()
 
                     [0x8009d3ea] = b(A0);
                     [0x8009d3eb] = b(A0 >> 0x8);
-                    g_game_state_prev = 0xb;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0xb;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -760,8 +760,8 @@ void system_main()
                         system_init_dispenv_drawenv();
 
                         [0x8009ac1a] = h(0x2);
-                        g_game_state_prev = 0xc;
-                        g_game_state = GAME_STATE_FIELD;
+                        g_gamestate_prev = 0xc;
+                        g_gamestate = GAME_STATE_FIELD;
                     }
                     else
                     {
@@ -776,8 +776,8 @@ void system_main()
                             system_init_dispenv_drawenv();
 
                             [0x8009ac1a] = h(0x2);
-                            g_game_state_prev = 0xc;
-                            g_game_state = GAME_STATE_FIELD;
+                            g_gamestate_prev = 0xc;
+                            g_gamestate = GAME_STATE_FIELD;
                         }
                     }
                 }
@@ -804,8 +804,8 @@ void system_main()
                     }
 
                     [0x8009abf4 + 0x26] = h(0x2);
-                    g_game_state_prev = 0xd;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0xd;
+                    g_gamestate = GAME_STATE_FIELD;
                 }
                 break;
 
@@ -817,8 +817,8 @@ void system_main()
 
                     funca0448();
 
-                    g_game_state_prev = 0xe;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0xe;
+                    g_gamestate = GAME_STATE_FIELD;
                     g_field_control.cmd = FIELD_CMD_MAP;
                 }
                 break;
@@ -828,8 +828,8 @@ void system_main()
                     func11274(); // load instr2.dat instr2.all
 
                     [0x8009ac1a] = h(0x2);
-                    g_game_state_prev = 0x10;
-                    g_game_state = GAME_STATE_FIELD;
+                    g_gamestate_prev = 0x10;
+                    g_gamestate = GAME_STATE_FIELD;
                 }
                 break;
             }

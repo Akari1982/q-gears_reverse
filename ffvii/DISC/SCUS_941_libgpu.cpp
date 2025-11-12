@@ -1226,51 +1226,25 @@ A3 = p;
 
 
 
-////////////////////////////////
-// system_psyq_move_image()
+int system_psyq_move_image(RECT *rect, int x, int y)
+{
+    system_graphic_debug_print_rect("MoveImage", rect);
 
-S0 = A0;
-S2 = A1;
-S1 = A2;
-A0 = 80010de4; // "MoveImage"
-A1 = S0;
-800440F0	jal    system_graphic_debug_print_rect [$80043e44]
+    if (rect->w == 0) return -1;
+    if (rect->h == 0) return -1;
 
-V0 = h[S0 + 0004];
-800440FC	nop
-80044100	beq    v0, zero, L44170 [$80044170]
-80044104	addiu  v0, zero, $ffff (=-$1)
-V0 = h[S0 + 0006];
-8004410C	nop
-80044110	bne    v0, zero, L44120 [$80044120]
-V0 = S1 << 10;
-80044118	j      L44170 [$80044170]
-8004411C	addiu  v0, zero, $ffff (=-$1)
+    [0x80062cb0] = w(w[rect + 0x0]);
+    [0x80062cb4] = w((y << 0x10) | (x & 0xffff));
+    [0x80062cb8] = w(w[rect + 0x4]);
 
-L44120:	; 80044120
-V1 = S2 & ffff;
-V0 = V0 | V1;
-80044128	lui    a1, $8006
-A1 = A1 + 2cb0;
-A0 = w[S0 + 0000];
-80044134	lui    v1, $8006
-V1 = w[V1 + 2bf8];
-A2 = 0014;
-80044140	lui    at, $8006
-[AT + 2cb4] = w(V0);
-[A1 + 0000] = w(A0);
-V0 = w[S0 + 0004];
-A3 = 0;
-80044154	lui    at, $8006
-[AT + 2cb8] = w(V0);
-A0 = w[V1 + 0018];
-V0 = w[V1 + 0008];
-80044164	nop
-80044168	jalr   v0 ra
-8004416C	addiu  a1, a1, $fff8 (=-$8)
+    V1 = w[0x80062bf8];
 
-L44170:	; 80044170
-////////////////////////////////
+    A0 = w[V1 + 0x18];
+    A1 = 0x80062ca8;
+    A2 = 0x14;
+    A3 = 0;
+    80044168	jalr   w[V1 + 0x8] ra
+}
 
 
 

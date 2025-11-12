@@ -9,8 +9,8 @@
 #define FADE_TYPE_INC_DIR_SUB       0x8
 #define FADE_TYPE_DIS_DIR_ADD       0x9
 #define FADE_TYPE_INC_DIR_ADD       0xa
-#define FADE_TYPE_ADD               0xb
-#define FADE_TYPE_SUB               0xc
+#define FADE_TYPE_ADD_INTERPOLATE   0xb
+#define FADE_TYPE_SUB_INTERPOLATE   0xc
 #define FADE_TYPE_BG_FAST_SUB       0xd
 
 u8 g_bg_fade_type;         // 0x80071a58
@@ -141,7 +141,7 @@ void system_fade_steps_discrease()
 
     if ((g_field_control.fade_steps <= 0) || (g_movie_play == 0x1))
     {
-        g_field_control.fade_type = 0;
+        g_field_control.fade_type = FADE_TYPE_NONE;
         g_field_control.fade_steps = 0;
     }
 }
@@ -162,14 +162,14 @@ void system_fade_steps_increase()
 
 
 
-s16 func135c0(s16 current, s16 end, s16 step, s16 speed)
+s16 system_fade_color_interpolate(s16 col_from, s16 col_to, s16 steps_cur, s16 steps_dst)
 {
-    return current + ((end - current) * step) / speed;
+    return col_from + ((col_to - col_from) * steps_cur) / steps_dst;
 }
 
 
 
-void func13624()
+void system_fade_set_poly_rgb_interpolate()
 {
     g_field_control.disable_render = 0;
 
@@ -177,49 +177,46 @@ void func13624()
 
     if (g_field_control.fade_steps >= g_field_control.fade_step)
     {
-        [0x8009abf4 + 0x58] = h(hu[0x8009abf4 + 0x5e]); // fade r
-        [0x8009abf4 + 0x5a] = h(hu[0x8009abf4 + 0x60]); // fade g
-        [0x8009abf4 + 0x5c] = h(hu[0x8009abf4 + 0x62]); // fade b
+        g_field_control.nfade_r_from = g_field_control.nfade_r_to;
+        g_field_control.nfade_g_from = g_field_control.nfade_g_to;
+        g_field_control.nfade_b_from = g_field_control.nfade_b_to;
         g_field_control.fade_steps = g_field_control.fade_step;
     }
 
-    g_field_control.fade_r = func135c0(hu[0x8009abf4 + 0x58], hu[0x8009abf4 + 0x5e], g_field_control.fade_steps, g_field_control.fade_step); // current, final, step, speed
-    g_field_control.fade_g = func135c0(hu[0x8009abf4 + 0x5a], hu[0x8009abf4 + 0x60], g_field_control.fade_steps, g_field_control.fade_step); // current, final, step, speed
-    g_field_control.fade_b = func135c0(hu[0x8009abf4 + 0x5c], hu[0x8009abf4 + 0x62], g_field_control.fade_steps, g_field_control.fade_step); // current, final, step, speed
+    g_field_control.fade_r = system_fade_color_interpolate(g_field_control.nfade_r_from, g_field_control.nfade_r_to, g_field_control.fade_steps, g_field_control.fade_step);
+    g_field_control.fade_g = system_fade_color_interpolate(g_field_control.nfade_g_from, g_field_control.nfade_g_to, g_field_control.fade_steps, g_field_control.fade_step);
+    g_field_control.fade_b = system_fade_color_interpolate(g_field_control.nfade_b_from, g_field_control.nfade_b_to, g_field_control.fade_steps, g_field_control.fade_step);
 
-    A0 = g_field_control.fade_r;
-    A1 = g_field_control.fade_g;
-    A2 = g_field_control.fade_b;
-    system_fade_set_poly_rgb_direct();
+    system_fade_set_poly_rgb_direct(g_field_control.fade_r, g_field_control.fade_g, g_field_control.fade_b);
 }
 
 
 
 void system_fade_bg_update()
 {
-    if (g_bg_fade_type == 0x3)
+    if (g_bg_fade_type == FADE_TYPE_BG_SLOW_SUB)
     {
         g_field_control.fade_steps += 0x1;
 
         if (g_field_control.fade_steps == 0x22)
         {
-            g_field_control.fade_type = 0;
+            g_field_control.fade_type = FADE_TYPE_NONE;
             g_bg_render = BG_RENDER_NONE;
-            g_bg_fade_type = 0;
+            g_bg_fade_type = FADE_TYPE_NONE;
         }
 
         system_fade_set_draw_mode(0x2);
         system_fade_set_poly_monochrome(0x10);
     }
-    else
+    else // FADE_TYPE_BG_FAST_SUB
     {
         g_field_control.fade_steps += 0x1;
 
         if (g_field_control.fade_steps == 0x12)
         {
-            g_field_control.fade_type = 0;
+            g_field_control.fade_type = FADE_TYPE_NONE;
             g_bg_render = BG_RENDER_NONE;
-            g_bg_fade_type = 0;
+            g_bg_fade_type = FADE_TYPE_NONE;
         }
 
         system_fade_set_draw_mode(0x2);
@@ -233,16 +230,16 @@ void system_fade_update()
 {
     switch (g_field_control.fade_type)
     {
-        case 0x0:
+        case FADE_TYPE_NONE:
         {
             g_field_control.disable_render = 0;
-            [0x8009abf4 + 0x58] = h(0);
-            [0x8009abf4 + 0x5a] = h(0);
-            [0x8009abf4 + 0x5c] = h(0);
+            g_field_control.nfade_r_from = 0;
+            g_field_control.nfade_g_from = 0;
+            g_field_control.nfade_b_from = 0;
         }
         break;
 
-        case 0x1:
+        case FADE_TYPE_DIS_GRAD_SUB:
         {
             system_fade_set_draw_mode(0x2); // 1.0 x B - 1.0 x F
             system_fade_steps_discrease();
@@ -250,7 +247,7 @@ void system_fade_update()
         }
         break;
 
-        case 0x2:
+        case FADE_TYPE_INC_GRAD_SUB:
         {
             system_fade_set_draw_mode(0x2);
             system_fade_steps_increase();
@@ -258,13 +255,13 @@ void system_fade_update()
         }
         break;
 
-        case 0x3:
+        case FADE_TYPE_BG_SLOW_SUB:
         {
             g_field_control.fade_steps += 0x1;
 
             if (g_field_control.fade_steps == 0x22)
             {
-                g_field_control.fade_type = 0;
+                g_field_control.fade_type = FADE_TYPE_NONE;
                 g_bg_render = BG_RENDER_NONE;
             }
             else
@@ -275,13 +272,13 @@ void system_fade_update()
         }
         break;
 
-        case 0x4:
+        case FADE_TYPE_DISABLE_RENDER:
         {
             g_field_control.disable_render = 0x1;
         }
         break;
 
-        case 0x5:
+        case FADE_TYPE_DIS_GRAD_ADD:
         {
             system_fade_set_draw_mode(0x1);
             system_fade_steps_discrease();
@@ -289,7 +286,7 @@ void system_fade_update()
         }
         break;
 
-        case 0x6:
+        case FADE_TYPE_INC_GRAD_ADD:
         {
             g_field_control.disable_render = 0;
             system_fade_set_draw_mode(0x1);
@@ -298,7 +295,7 @@ void system_fade_update()
         }
         break;
 
-        case 0x7:
+        case FADE_TYPE_DIS_DIR_SUB:
         {
             system_fade_set_draw_mode(0x2);
             system_fade_steps_discrease();
@@ -306,7 +303,7 @@ void system_fade_update()
         }
         break;
 
-        case 0x8:
+        case FADE_TYPE_INC_DIR_SUB:
         {
             system_fade_set_draw_mode(0x2);
             system_fade_steps_increase();
@@ -314,7 +311,7 @@ void system_fade_update()
         }
         break;
 
-        case 0x9:
+        case FADE_TYPE_DIS_DIR_ADD:
         {
             system_fade_set_draw_mode(0x1);
             system_fade_steps_discrease();
@@ -322,7 +319,7 @@ void system_fade_update()
         }
         break;
 
-        case 0xa:
+        case FADE_TYPE_INC_DIR_ADD:
         {
             g_field_control.disable_render = 0;
             system_fade_set_draw_mode(0x1);
@@ -331,27 +328,27 @@ void system_fade_update()
         }
         break;
 
-        case 0xb:
+        case FADE_TYPE_ADD_INTERPOLATE:
         {
             system_fade_set_draw_mode(0x1);
-            func13624();
+            system_fade_set_poly_rgb_interpolate();
         }
         break;
 
-        case 0xc:
+        case FADE_TYPE_SUB_INTERPOLATE:
         {
             system_fade_set_draw_mode(0x2);
-            func13624();
+            system_fade_set_poly_rgb_interpolate();
         }
         break;
 
-        case 0xd:
+        case FADE_TYPE_BG_FAST_SUB:
         {
             g_field_control.fade_steps += 0x1;
 
             if (g_field_control.fade_steps == 0x12)
             {
-                g_field_control.fade_type = 0;
+                g_field_control.fade_type = FADE_TYPE_NONE;
                 g_bg_render = BG_RENDER_NONE;
             }
             else

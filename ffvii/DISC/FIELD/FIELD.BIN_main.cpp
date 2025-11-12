@@ -208,11 +208,11 @@ void field_main()
     [0x8009ac40] = h(0);
 
     // clear if prev game state was not field, battle, worldmap or menu
-    if ((g_game_state_prev != GAME_STATE_FIELD) &&
-        (g_game_state_prev != GAME_STATE_BATTLE) &&
-        (g_game_state_prev != GAME_STATE_WORLDMAP) &&
-        (g_game_state_prev != 0x5) &&
-        (g_game_state_prev != 0xd))
+    if ((g_gamestate_prev != GAME_STATE_FIELD) &&
+        (g_gamestate_prev != GAME_STATE_BATTLE) &&
+        (g_gamestate_prev != GAME_STATE_WORLDMAP) &&
+        (g_gamestate_prev != 0x5) &&
+        (g_gamestate_prev != 0xd))
     {
         RECT rect;
         rect.x = 0;
@@ -229,22 +229,21 @@ void field_main()
         [0x80071a5c] = h(0x0); // map id loading in advance
         [0x80095dd0] = h(0x0); // map id to load in advance
 
-        // if prev state field or map
-        if ((g_game_state_prev == GAME_STATE_FIELD) || (g_game_state_prev == GAME_STATE_WORLDMAP))
+        if ((g_gamestate_prev == GAME_STATE_FIELD) || (g_gamestate_prev == GAME_STATE_WORLDMAP))
         {
-            if (g_field_control.fade_type == 0x0)
+            if (g_field_control.fade_type == FADE_TYPE_NONE)
             {
                 system_fade_copy_screen();
 
-                g_field_control.fade_type = 0x3;
+                g_field_control.fade_type = FADE_TYPE_BG_SLOW_SUB;
                 g_field_control.fade_steps = 0;
-                g_bg_fade_type = 0x3;
-                [0x8007e768] = h(0x0);
+                g_bg_fade_type = FADE_TYPE_BG_SLOW_SUB;
+                [0x8007e768] = h(0);
                 g_bg_render = BG_RENDER_FADE;
             }
         }
 
-        if ((g_game_state_prev != 0x5) && (g_game_state_prev != 0xd)) // if was not menu
+        if ((g_gamestate_prev != 0x5) && (g_gamestate_prev != 0xd)) // if was not menu
         {
             g_field_events_p = 0x80114fe4; // events
             g_field_walkmesh_p = 0x80114fe8; // walkmesh
@@ -257,7 +256,7 @@ void field_main()
             field_load_mim_dat_files();
         }
 
-        if (g_game_state_prev == GAME_STATE_BATTLE)
+        if (g_gamestate_prev == GAME_STATE_BATTLE)
         {
             [0x8007ebe0] = b(0x1);
 
@@ -275,9 +274,9 @@ void field_main()
         while (system_psyq_draw_sync(0x1) != 0) {}
 
         // if prev state not 0xd menu set fade out
-        if (g_game_state_prev != 0xd)
+        if (g_gamestate_prev != 0xd)
         {
-            g_field_control.fade_type = 0x1;
+            g_field_control.fade_type = FADE_TYPE_DIS_GRAD_SUB;
             g_field_control.fade_steps = 0x100;
             g_field_control.fade_step = 0x10;
             g_field_control.fade_r = 0x0;
@@ -285,15 +284,15 @@ void field_main()
             g_field_control.fade_b = 0x0;
         }
 
-        if ((g_game_state_prev == GAME_STATE_NONE) ||
-            (g_game_state_prev == GAME_STATE_FIELD) ||
-            (g_game_state_prev == GAME_STATE_WORLDMAP) ||
-            (g_game_state_prev == 0x6) || // highway
-            (g_game_state_prev == 0x7) || // chocobo
-            (g_game_state_prev == 0x8) || // snowboard
-            (g_game_state_prev == 0x9) || // condor
-            (g_game_state_prev == 0xa) || // submarine
-            (g_game_state_prev == 0xb))  // jet
+        if ((g_gamestate_prev == GAME_STATE_NONE) ||
+            (g_gamestate_prev == GAME_STATE_FIELD) ||
+            (g_gamestate_prev == GAME_STATE_WORLDMAP) ||
+            (g_gamestate_prev == 0x6) || // highway
+            (g_gamestate_prev == 0x7) || // chocobo
+            (g_gamestate_prev == 0x8) || // snowboard
+            (g_gamestate_prev == 0x9) || // condor
+            (g_gamestate_prev == 0xa) || // submarine
+            (g_gamestate_prev == 0xb))  // jet
         {
             [0x8009abf4 + 0xa6] = h(0x0); // x scroll for 2nd background
             [0x8009abf4 + 0xa8] = h(0x0); // y scroll for 2nd background
@@ -340,12 +339,12 @@ void field_main()
         field_arrows_init(g_field_render_data[0].arrows, &g_field_render_data[0].arrows_dm);
         field_arrows_init(g_field_render_data[1].arrows, &g_field_render_data[1].arrows_dm);
 
-        if ((g_game_state_prev != 0x5) && (g_game_state_prev != 0xd)) // if was not nemu
+        if ((g_gamestate_prev != 0x5) && (g_gamestate_prev != 0xd)) // if was not nemu
         {
             field_load_mim_to_vram(0, 0x80128000);
         }
 
-        if (g_game_state_prev == GAME_STATE_BATTLE)
+        if (g_gamestate_prev == GAME_STATE_BATTLE)
         {
             [0x8009a000] = h(0xf5);
             system_akao_execute();
@@ -368,7 +367,7 @@ void field_main()
         system_psyq_put_dispenv(&g_field_disp_env[g_field_rb]);
         system_psyq_put_drawenv(&g_field_draw_env[g_field_rb]);
 
-        g_game_state_prev = GAME_STATE_FIELD;
+        g_gamestate_prev = GAME_STATE_FIELD;
 
         if ((g_field_control.cmd == FIELD_CMD_RESET) || (g_field_control.cmd == FIELD_CMD_GAME_OVER) || (g_field_control.cmd == FIELD_CMD_CREDITS))
         {
@@ -389,12 +388,12 @@ void field_main()
 
             if ((g_field_map_id - 0x1) < 0x40)
             {
-                g_game_state = GAME_STATE_WORLDMAP;
+                g_gamestate = GAME_STATE_WORLDMAP;
                 system_fade_copy_screen();
 
-                g_field_control.fade_type = 0x3;
+                g_field_control.fade_type = FADE_TYPE_BG_SLOW_SUB;
                 g_field_control.fade_steps = 0;
-                g_bg_fade_type = 0x3;
+                g_bg_fade_type = FADE_TYPE_BG_SLOW_SUB;
                 [0x8007e768] = h(0);
                 g_bg_render = BG_RENDER_FADE;
 
@@ -410,13 +409,13 @@ void field_main()
 
             switch (bu[0x8009abf4 + 0xf2])
             {
-                case 0: g_game_state = 0x6; break; // highway
-                case 1: g_game_state = 0x7; break; // chocobo
-                case 2: g_game_state = 0x8; break; // snowboard
-                case 3: g_game_state = 0x9; break; // condor
-                case 4: g_game_state = 0xa; break; // submarine
-                case 5: g_game_state = 0xb; break; // jet
-                case 6: g_game_state = 0xe; break; // snowboard2
+                case 0: g_gamestate = 0x6; break; // highway
+                case 1: g_gamestate = 0x7; break; // chocobo
+                case 2: g_gamestate = 0x8; break; // snowboard
+                case 3: g_gamestate = 0x9; break; // condor
+                case 4: g_gamestate = 0xa; break; // submarine
+                case 5: g_gamestate = 0xb; break; // jet
+                case 6: g_gamestate = 0xe; break; // snowboard2
             }
             system_psyq_vsync(0);
 
@@ -430,13 +429,13 @@ void field_main()
             return;
         }
 
-        if (g_game_state == 0x5)
+        if (g_gamestate == 0x5)
         {
             system_fade_copy_screen();
 
-            g_field_control.fade_type = 0xd;
+            g_field_control.fade_type = FADE_TYPE_BG_FAST_SUB;
             g_field_control.fade_steps = 0;
-            g_bg_fade_type = 0xd;
+            g_bg_fade_type = FADE_TYPE_BG_FAST_SUB;
             [0x8007e768] = h(0);
             g_bg_render = BG_RENDER_FADE;
 
@@ -445,7 +444,7 @@ void field_main()
             return;
         }
 
-        if ((g_game_state == 0xd) || (g_game_state == 0x10))
+        if ((g_gamestate == 0xd) || (g_gamestate == 0x10))
         {
             system_psyq_vsync(0);
             return;
@@ -467,7 +466,7 @@ void field_main_loop()
     g_base_ofs_x = 0xa0;
     g_base_ofs_y = 0x78;
 
-    if ((g_game_state_prev != 0x5) && (g_game_state_prev != 0xd)) // if prev state was not menu
+    if ((g_gamestate_prev != 0x5) && (g_gamestate_prev != 0xd)) // if prev state was not menu
     {
         field_model_load_and_init();
     }
@@ -477,7 +476,7 @@ void field_main_loop()
     V0 = w[g_field_walkmesh_p];
     [0x80114458] = w(A0 + hu[V0] * 0x18); // walkmesh triangle access block
 
-    if ((g_game_state_prev != 0x5) && (g_game_state_prev != GAME_STATE_BATTLE) && (g_game_state_prev != 0xd))
+    if ((g_gamestate_prev != 0x5) && (g_gamestate_prev != GAME_STATE_BATTLE) && (g_gamestate_prev != 0xd))
     {
         funca5fb4(); // move PC model position init by walkmesh
     }
@@ -550,14 +549,14 @@ void field_main_loop()
 
         if (g_field_control.cmd == FIELD_CMD_DISC_CHANGE)
         {
-            g_game_state = 0xc; // disc change
+            g_gamestate = 0xc; // disc change
             field_stop_load_next_map_in_advance();
             return;
         }
 
         if (g_field_control.cmd == 0x19)
         {
-            g_game_state = 0x10;
+            g_gamestate = 0x10;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -570,7 +569,7 @@ void field_main_loop()
             (g_field_control.cmd == 0x17) ||
             (g_field_control.cmd == 0x18))
         {
-            g_game_state = 0xd;
+            g_gamestate = 0xd;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -583,7 +582,7 @@ void field_main_loop()
             (g_field_control.cmd == FIELD_CMD_PARTY_STORE) ||
             (g_field_control.cmd == FIELD_CMD_PARTY_RESTORE))
         {
-            g_game_state = 0x5;
+            g_gamestate = 0x5;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -591,7 +590,7 @@ void field_main_loop()
         // triangle pressed, menu not called, movie not requested or played
         if ((g_buttons_state & 0x0010) && (bu[0x8009abf4 + 0x34] == 0) && (hu[0x800e4d44] == 0) && (g_movie_play == 0))
         {
-            g_game_state = 0x5; // load menu
+            g_gamestate = 0x5; // load menu
             g_field_control.cmd = FIELD_CMD_MENU_MAIN;
             g_field_control.arg = 0; // without tutorial
             field_stop_load_next_map_in_advance();
@@ -616,7 +615,7 @@ void field_main_loop()
             if (V0 < 0) V0 = V0 & 0xfff;
             [0x8009abf4 + 0x6] = h(V0 >> 0xc);
 
-            g_game_state = GAME_STATE_BATTLE;
+            g_gamestate = GAME_STATE_BATTLE;
             [0x8009abf4 + 0x22] = h(hu[0x80074ea4 + V1 * 0x84 + 0x72]);
 
             field_stop_load_next_map_in_advance();
@@ -718,7 +717,7 @@ void field_main_loop()
             system_psyq_draw_otag(render_data.ot_scene + 0x1000 - 0x1); // scene OT (rendered reversed)
             system_psyq_draw_otag(&render_data.ot_fade_drenv);
 
-            if (g_field_control.fade_type != 0)
+            if (g_field_control.fade_type != FADE_TYPE_NONE)
             {
                 system_psyq_draw_otag(&g_fade_ot[buf_id]);
             }
@@ -889,26 +888,26 @@ if (bu[0x8009abf4 + 0x32] == 0) // 0 if PC can move
         [0x80074ea4 + model_id * 84 + c] = w(h[0x8009abf4 + 0x4] << 0xc); // x
         [0x80074ea4 + model_id * 84 + 10] = w(h[0x8009abf4 + 0x6] << 0xc); // y
 
-        A0 = SP + 10;
-        A1 = walkmesh_data + triangle_id * 18 + 8;
-        A2 = walkmesh_data + triangle_id * 18 + 0;
+        A0 = SP + 0x10;
+        A1 = walkmesh_data + triangle_id * 0x18 + 0x8;
+        A2 = walkmesh_data + triangle_id * 0x18 + 0x0;
         field_walkmesh_vector_sub();
 
-        A0 = SP + 20;
-        A1 = walkmesh_data + triangle_id * 18 + 10;
-        A2 = walkmesh_data + triangle_id * 18 + 8;
+        A0 = SP + 0x20;
+        A1 = walkmesh_data + triangle_id * 0x18 + 0x10;
+        A2 = walkmesh_data + triangle_id * 0x18 + 0x8;
         field_walkmesh_vector_sub();
 
-        [SP + 30] = w(h[0x8009abf4 + 4]); // x
-        [SP + 34] = w(h[0x8009abf4 + 6]); // y
+        [SP + 0x30] = w(h[0x8009abf4 + 0x4]); // x
+        [SP + 0x34] = w(h[0x8009abf4 + 0x6]); // y
 
-        A0 = SP + 10;
-        A1 = SP + 20;
-        A2 = SP + 30;
+        A0 = SP + 0x10;
+        A1 = SP + 0x20;
+        A2 = SP + 0x30;
         A3 = walkmesh_data + triangle_id * 18;
         field_walkmesh_calculate_z();
 
-        [0x80074ea4 + model_id * 84 + 14] = w(V0 << c); // z
+        [0x80074ea4 + model_id * 0x84 + 0x14] = w(V0 << 0xc); // z
     }
 
     [0x80074ea4 + model_id * 0x84 + 0x60] = h(0x10); // animation speed
@@ -2353,17 +2352,17 @@ else
 }
 
 V1 = w[0x8008357c];
-V0 = bu[V1 + actor_id * 8 + 4];
+V0 = bu[V1 + actor_id * 0x8 + 0x4];
 A0 = w[0x8004a62c];
-V1 = w[A0 + 4];
-V1 = bu[V1 + V0 * 24];
+V1 = w[A0 + 0x4];
+V1 = bu[V1 + V0 * 0x24];
 
 A0 = 0;
 if (h[A2] < V1)
 {
     A0 = bu[A2]; // load animation id
 }
-[actor_data + 5e] = b(A0);
+[actor_data + 0x5e] = b(A0);
 
 return 1;
 ////////////////////////////////

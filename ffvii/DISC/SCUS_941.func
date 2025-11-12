@@ -26,8 +26,8 @@
 800131B8 system_fade_set_poly_rgb_direct
 800134F4 system_fade_steps_discrease
 80013564 system_fade_steps_increase
-800135C0 func135c0
-80013624 func13624
+800135C0 system_fade_color_interpolate
+80013624 system_fade_set_poly_rgb_interpolate
 80013800 system_fade_bg_update
 800138EC system_fade_update
 80013C9C system_battle_swirl_update
