@@ -160,10 +160,10 @@ void field_main()
 {
     system_psyq_clear_otag_r(&g_field_render_data[0].ot_fade_drenv, 0x1);
     system_psyq_clear_otag_r(&g_field_render_data[1].ot_fade_drenv, 0x1);
-    system_psyq_set_drawenv(&g_field_render_data[0].drenv, &g_field_draw_env[0]);
-    system_psyq_set_drawenv(&g_field_render_data[1].drenv, &g_field_draw_env[1]);
-    ADDPRIM(&g_field_render_data[0].ot_fade_drenv, &g_field_render_data[0].drenv);
-    ADDPRIM(&g_field_render_data[1].ot_fade_drenv, &g_field_render_data[1].drenv);
+    system_psyq_set_drawenv(&g_field_render_data[0].fade_drenv, &g_field_draw_env[0]);
+    system_psyq_set_drawenv(&g_field_render_data[1].fade_drenv, &g_field_draw_env[1]);
+    ADDPRIM(&g_field_render_data[0].ot_fade_drenv, &g_field_render_data[0].fade_drenv);
+    ADDPRIM(&g_field_render_data[1].ot_fade_drenv, &g_field_render_data[1].fade_drenv);
 
     system_psyq_set_def_drawenv(&g_bg_draw_env[0], 0x0, 0x8, 0x140, 0xe0);
     g_bg_draw_env[0]->dtd = 1;

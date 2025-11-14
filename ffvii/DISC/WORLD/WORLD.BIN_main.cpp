@@ -10,11 +10,11 @@
 buffer_id = w[0x800d05e8];
 [0x800d05e8] = w(buffer_id < 1);
 
-[0x800bd130] = w(800c8564 + buffer_id * 4074); // OT for render
+[0x800bd130] = w(0x800c8564 + buffer_id * 0x4074); // OT for render
 [0x800c752c] = b(bu[0x800d05e8]); // render buffer id
-[0x800d05dc] = w(w[0x800cc564 + buffer_id * 4074]); // pointer to polygon buffer
-[0x800d05e0] = w(w[0x800cc564 + buffer_id * 4074]); // pointer to polygon buffer
-[0x800d05e4] = w(0x800c84f4 + buffer_id * 4074);
+[0x800d05dc] = w(w[0x800cc564 + buffer_id * 0x4074]); // pointer to polygon buffer
+[0x800d05e0] = w(w[0x800cc564 + buffer_id * 0x4074]); // pointer to polygon buffer
+[0x800d05e4] = w(0x800c84f4 + buffer_id * 0x4074);
 ////////////////////////////////
 
 
@@ -30,9 +30,9 @@ return w[0x800d05e8];
 ////////////////////////////////
 // funca0be4()
 
-V1 = w[0x800d05e0] + A0 * 28;
+V1 = w[0x800d05e0] + A0 * 0x28;
 
-if (V1 < (w[0x800d05dc] + 20800))
+if (V1 < (w[0x800d05dc] + 0x20800))
 {
     S0 = w[0x800d05e0];
     [0x800d05e0] = w(V1);
@@ -59,43 +59,26 @@ while (true)
 {
     if (type != 0)
     {
-        A0 = sector;
-        A1 = size;
-        A2 = dst;
-        A3 = 0;
-        system_cdrom_start_load_lzs();
+        system_cdrom_start_load_lzs(sector, size, dst, 0);
     }
     else
     {
-        A0 = sector;
-        A1 = size;
-        A2 = dst;
-        A3 = 0;
-        system_cdrom_start_load_file();
+        system_cdrom_start_load_file(sector, size, dst, 0);
     }
 
     int i = 0;
     if (V0 == 0)
     {
 
-        for (; i < 2710; ++i)
+        for (; i < 0x2710; ++i)
         {
-            system_cdrom_read_chain();
+            if (system_cdrom_read_chain() == 0) break;
 
-            if (V0 == 0)
-            {
-                break;
-            }
-
-            A0 = 0;
-            system_psyq_vsync(); // wait
+            system_psyq_vsync(0); // wait
         }
     }
 
-    if (i < 2710)
-    {
-        break;
-    }
+    if (i < 0x2710) break;
 
     system_cdrom_init();
 }
@@ -204,12 +187,11 @@ if (A0 != 0)
         800A0EF0	bne    v0, zero, loopa0ecc [$800a0ecc]
     }
 
-    txz_data = 80190004;
+    txz_data = 0x80190004;
 
     [0x800e567c] = w(0);
 
-    A0 = 0;
-    system_psyq_draw_sync();
+    system_psyq_draw_sync(0);
 
     A0 = 0;
     S0 = txz_data + (w[txz_data] >> 2) << 2;
@@ -243,7 +225,7 @@ else
     // wait until render sets to base 0
     while (g_bg_render != BG_RENDER_NONE) {}
 
-    txz_data = 8013a7d0;
+    txz_data = 0x8013a7d0;
 }
 
 // block 2
@@ -289,8 +271,7 @@ for (int i = 0; i < 1c00; ++i)
     [0x800d05ec + i * 4] = w(w[script + i * 4]);
 }
 
-A0 = txz_data;
-funcb6348();
+funcb6348(txz_data);
 
 wm_init_model_variables_and_array();
 
@@ -320,11 +301,9 @@ if (w[0x800e5634] == 2) // underwater
 
     for (int i = 1; i < 10; ++i)
     {
-        A0 = i;
-        funcb0334();
+        funcb0334(i);
 
-        A0 = 0;
-        system_psyq_draw_sync();
+        system_psyq_draw_sync(0);
     }
 }
 
@@ -471,25 +450,19 @@ for (int i = 0; i < w[0x800d75ec]; ++i)
     system_psyq_load_image();
 }
 
-A0 = 0;
-system_psyq_draw_sync();
+system_psyq_draw_sync(0);
 
 A0 = S4 ^ 1;
 A0 = A0 < 1;
 A0 = S4 - A0;
 system_psyq_vsync();
 
-A0 = 1;
-system_psyq_reset_graph();
+system_psyq_reset_graph(0x1);
 
-A0 = w[0x800d05e4];
-system_psyq_put_drawenv();
+system_psyq_put_drawenv(w[0x800d05e4]);
+system_psyq_put_dispenv(w[0x800d05e4] + 0x5c);
 
-A0 = w[0x800d05e4] + 5c;
-system_psyq_put_dispenv();
-
-A0 = w[0x800bd130] + 2710;
-system_psyq_draw_otag();
+system_psyq_draw_otag(w[0x800bd130] + 0x2710);
 ////////////////////////////////
 
 
@@ -507,7 +480,7 @@ system_psyq_draw_otag();
 
 if (w[0x800e55f4] != 0)
 {
-    return w[0x800bd130] + 2710; // main render
+    return w[0x800bd130] + 0x2710; // main render
 }
 return 0;
 ////////////////////////////////
@@ -519,7 +492,7 @@ return 0;
 
 terrain_data = A0;
 model_id = A1;
-S2 = 0 < ((terrain_data & e0) ^ e0);
+S2 = 0 < ((terrain_data & 0xe0) ^ 0xe0);
 
 on_bridge = 0;
 
@@ -528,7 +501,7 @@ wm_get_pc_entity_terrain_id();
 // pc entity can't go off the bridge, inly via "Bridgehead"
 // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
 // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
-if ((V0 == d) || (V0 == e))
+if ((V0 == 0xd) || (V0 == 0xe))
 {
     wm_get_model_id_from_pc_entity();
     if (V0 == model_id)
@@ -539,14 +512,16 @@ if ((V0 == d) || (V0 == e))
 
 switch (model_id)
 {
-    case 0-2: // cloud tifa cid
+    case 0x0: // cloud
+    case 0x1: // tifa
+    case 0x2: // cid
     {
         if (on_bridge != 0)
         {
             // 0x00002000 13 Corel Bridge                 Tiny bridge over the waterfall from Costa del Sol to Corel.
             // 0x00004000 14 Wutai Bridge                 Rickety rope bridges south of Wutai.
             // 0x20000000 29 Bridgehead                   Small area at both ends of every bridge. May have some special meaning.
-            return (20006000 >> (terrain_data & 1f)) & 1;
+            return (0x20006000 >> (terrain_data & 0x1f)) & 0x1;
         }
         else
         {
@@ -746,15 +721,11 @@ switch (model_id)
     }
     break;
 
-    case 5: // tiny bronco
+    case 0x5: // tiny bronco
     {
-        wm_is_pc_entity_pos_need_recalculation();
-
-        if (V0 != 0)
+        if (wm_is_pc_entity_pos_need_recalculation() != 0)
         {
-            funcbc1ac();
-
-            if (V0 != 2)
+            if (funcbc1ac() != 0x2)
             {
                 if (w[0x800e5658] >= 0)
                 {
@@ -764,27 +735,23 @@ switch (model_id)
         }
         else
         {
-            funcbc1ac();
-
-            if (V0 == 2)
+            if (funcbc1ac() == 0x2)
             {
                 // 0x00000800 11 Riverside                    Beach-like area where river and land meet.
                 // 0x00020000 17 Beach                        Where land and shallow water meets.
-                return (00020800 >> (terrain_data & 1f)) & 1;
+                return (00020800 >> (terrain_data & 0x1f)) & 0x1;
             }
         }
         // 0x00000010  4 River Crossing               Buggy, tiny bronco and water-capable chocobos.
         // 0x00000020  5 River                        Tiny bronco and chocobos.
         // 0x00000040  6 Water                        Shallow water, same as above.
-        return (00000070 >> (terrain_data & 1f)) & 1;
+        return (0x00000070 >> (terrain_data & 0x1f)) & 0x1;
     }
     break;
 
-    case 6: // buggy
+    case 0x6: // buggy
     {
-        funcbc1ac();
-
-        if (V0 == 2)
+        if (funcbc1ac() == 2)
         {
             // 0x00000001  0 Grass                        Most things can go here.
             // 0x00000002  1 Forest                       No landing here, but anything else goes.
@@ -800,7 +767,7 @@ switch (model_id)
             // 0x00080000 19 Canyon                       The ground in cosmo canyon has this type, walkability seems to be the same as wasteland.
             // 0x00100000 20 Mountain Pass                The small path through the mountains connecting Costa del Sol and Corel.
             // 0x02000000 25 Jungle                       Walkability same as forest, used in southern parts of the map.
-            if (((021b6f83 >> (terrain_data & 1f)) & 1) != 0)
+            if (((0x021b6f83 >> (terrain_data & 0x1f)) & 0x1) != 0)
             {
                 return 0 < S2;
             }
@@ -828,7 +795,7 @@ switch (model_id)
     }
     break;
 
-    case d: // submarine
+    case 0xd: // submarine
     {
         funcbc1ac();
 
@@ -863,7 +830,7 @@ switch (model_id)
     }
     break;
 
-    case 8: // cargo ship
+    case 0x8: // cargo ship
     {
         // 0x00000008  3 Sea                          Deep water, only gold chocobo and submarine can go here.
         // 0x00040000 18 Sub Pen                      Only place where you can enter/exit the submarine.
@@ -872,7 +839,7 @@ switch (model_id)
     }
     break;
 
-    case 64:
+    case 0x64:
     {
         return ((terrain_data & 1f) ^ 7) < 1;
     }
@@ -2552,7 +2519,7 @@ switch (w[0x800e566c])
     }
     break;
 
-    case 2:
+    case 0x2:
     {
         wm_fade_is_stopped();
         if (V0 != 0)
@@ -2596,15 +2563,16 @@ switch (w[0x800e566c])
     }
     break;
 
-    case 3: // battle
+    case 0x3: // battle
     {
         [0x800e566c] = w(9);
     }
     break;
 
-    case 4 5: // submarine float submerge
+    case 0x4:
+    case 0x5: // submarine float submerge
     {
-        A0 = SP + 10;
+        A0 = SP + 0x10;
         wm_get_position_from_pc_entity();
 
         A0 = w[SP + 14] + w[0x800e5644];
@@ -3178,7 +3146,7 @@ S7 = A2; // 80095ddc
 
 [0x800e566c] = w(0);
 
-while (w[0x800e566c] < 9)
+while (w[0x800e566c] < 0x9)
 {
     if (w[S2] != 0)
     {
@@ -3210,11 +3178,11 @@ while (w[0x800e566c] < 9)
     {
         if (S0 > 0)
         {
-            A0 = a; // progress
+            A0 = 0xa; // progress
         }
         else
         {
-            A0 = 9; // progress
+            A0 = 0x9; // progress
         }
     }
     else
@@ -3233,7 +3201,7 @@ while (w[0x800e566c] < 9)
 
     funcb650c(); // play some AKAO commands
 
-    if ((S0 == 3) || (S0 == 4) || (S0 == 6) || (S0 == 8))
+    if ((S0 == 0x3) || (S0 == 0x4) || (S0 == 0x6) || (S0 == 0x8))
     {
         [0x80115a68] = w(1); // not attach 80109e54 entity to highwind
     }
@@ -3261,66 +3229,41 @@ while (w[0x800e566c] < 9)
     funcb7228(); // load data from savemap
 
     // force front view for underwater
-    if (w[0x800e5634] == 2)
+    if (w[0x800e5634] == 0x2)
     {
-        A0 = 2;
-        wm_set_camera_view();
+        wm_set_camera_view(0x2);
     }
 
     [0x800e5604] = w(0); // not used
 
     funca31f8(); // some camera settings
-
     funca12ac(); // we create render buffer for skybox and skybox overlay here
-
     wm_mutex_mask_init();
-
     funcaf0b0();
-
     wm_fade_init();
-
     funcb104c();
-
     funcb7c1c();
-
-    A0 = 1;
-    funcb7c6c();
-
+    funcb7c6c(0x1);
     funca4138();
-
-    A0 = 800be5e8; // offset to string (in binary)
-    wm_dialogs_init();
-
+    wm_dialogs_init(0x800be5e8); // offset to string (in binary)
     funcb04ac();
-
     funcae8ac(); // create some packets
-
     funcb392c();
-
     funca8a88();
-
     funcbb8b0();
-
-    A0 = 7f;
-    wm_set_music_volume();
-
-    A0 = 800d05ec; // .EV file
-    wm_script_init_variables();
-
-    A0 = 0;
-    wm_script_run_system_function_on_system_entity();
-
+    wm_set_music_volume(0x7f);
+    wm_script_init_variables(0x800d05ec); // .EV file
+    wm_script_run_system_function_on_system_entity(0);
     wm_script_run_all();
-
     wm_get_model_id_from_pc_entity();
 
     if (V0 == 3)
     {
-        [0x800e5640] = w(fa0);
+        [0x800e5640] = w(0xfa0);
     }
     else
     {
-        [0x800e5640] = w(7d0);
+        [0x800e5640] = w(0x7d0);
     }
 
     if (((w[S2] - 1) < 2) || ((w[0x800e566c] - 6) < 2))
@@ -3341,7 +3284,7 @@ while (w[0x800e566c] < 9)
         funca98a4();
 
         A0 = -bb8;
-        800A4928	jal    funcaa02c [$800aa02c]
+        funcaa02c();
     }
 
     funca835c(); // .BOT loader
@@ -3396,7 +3339,7 @@ while (w[0x800e566c] < 9)
         {
             funca9878();
 
-            if ((V0 != 0) || (S0 >= c9))
+            if ((V0 != 0) || (S0 >= 0xc9))
             {
                 [0x80116508] = w((w[0x80116508] * 7 + w[SP + 14]) / 8);
             }
@@ -3404,15 +3347,15 @@ while (w[0x800e566c] < 9)
             {
                 if (w[0x80116508] >= w[SP + 14])
                 {
-                    [0x80116508] = w(w[0x80116508] - 32);
+                    [0x80116508] = w(w[0x80116508] - 0x32);
                 else
                 {
-                    [0x80116508] = w(w[0x80116508] + 32);
+                    [0x80116508] = w(w[0x80116508] + 0x32);
                 }
             }
             else
             {
-                [0x80116508] = w(w[SP + 14]);
+                [0x80116508] = w(w[SP + 0x14]);
             }
         }
 
@@ -3420,11 +3363,9 @@ while (w[0x800e566c] < 9)
 
         funca44c4();
 
-        A0 = SP + 10;
-        wm_get_position_from_pc_entity();
+        wm_get_position_from_pc_entity(SP + 0x10);
 
-        A0 = SP + 10;
-        wm_update_lighting_from_points();
+        wm_update_lighting_from_points(SP + 0x10);
 
         wm_script_run_all();
 
@@ -3467,14 +3408,12 @@ while (w[0x800e566c] < 9)
         800A4B3C	nop
 
         La4b40:	; 800A4B40
-        A0 = SP + 10;
-        wm_get_position_from_pc_entity();
+        wm_get_position_from_pc_entity(SP + 0x10);
 
-        wm_get_pc_entity_original_y();
-        S1 = V0;
+        S1 = wm_get_pc_entity_original_y();
 
-        V0 = w[SP + 14];
-        S0 = S1 + c8;
+        V0 = w[SP + 0x14];
+        S0 = S1 + 0xc8;
         V0 = S0 < V0;
 
         [0x800e55f8] = w(V0);
@@ -3515,29 +3454,25 @@ while (w[0x800e566c] < 9)
         800A4BD4	jal    funcaa238 [$800aa238]
 
         La4bdc:	; 800A4BDC
-        A0 = h[0x800e560c];
-        wm_update_skybox_overlay_vertexes();
+        wm_update_skybox_overlay_vertexes(h[0x800e560c]);
 
-        A0 = h[0x800e560c];
-        funcaea48(); // update meteor?
+        funcaea48(h[0x800e560c]); // update meteor?
 
         funca4268();
 
         wm_fade_render();
 
-        if (w[0x800e566c] < 9)
+        if (w[0x800e566c] < 0x9)
         {
-            if (w[0x800e5634] != 3)
+            if (w[0x800e5634] != 0x3)
             {
-                A0 = h[0x800e560c];
-                wm_ui_map_update();
+                wm_ui_map_update(h[0x800e560c]);
             }
         }
 
-        A0 = 0;
-        funcbbd20(); // some button handling
+        funcbbd20(0); // some button handling
 
-        800A4C44	jal    funcb2e90 [$800b2e90]
+        funcb2e90();
 
         A0 = w[0x800c65ec];
         system_psyq_set_geom_screen();
@@ -3559,57 +3494,43 @@ while (w[0x800e566c] < 9)
         }
 
         A0 = h[0x8011650c];
-        if (w[0x8011650c] == 1)
+        if (w[0x8011650c] == 0x1)
         {
-            A0 = A0 - 1;
+            A0 -= 0x1;
         }
         wm_render_all();
 
-        system_menu_get_current_pad_buttons();
-
-        if ((V0 & 090f) == 090f) // reset game if all shifts and start + select pressed
+        if ((system_menu_get_current_pad_buttons() & 0x090f) == 0x090f) // reset game if all shifts and start + select pressed
         {
             wm_reset_game();
         }
     }
 
-    A0 = 1;
-    wm_script_run_system_function_on_system_entity();
+    wm_script_run_system_function_on_system_entity(0x1);
 
     // finish all scripts
     while (true)
     {
-        wm_script_is_any_script_runs();
-        if (V0 == 0)
-        {
-            break;
-        }
+        if (wm_script_is_any_script_runs() == 0) break;
         wm_script_run_all();
     }
 
     wm_abort_map_loading_wrapper();
 
-    A0 = S2;
-    A1 = S4;
-    A2 = S7;
-    800A4D44	jal    funcb7620 [$800b7620]
+    funcb7620(S2, S4, S7);
 
-    if (w[S2] == 1)
+    if (w[S2] == 0x1)
     {
-        A0 = 3;
-        wm_add_mutex_priority();
+        wm_add_mutex_priority(0x3);
 
         funca38c8();
     }
 
-    800A4D6C	jal    funcb650c [$800b650c]
+    funcb650c();
 
-    loopa4d74:	; 800A4D74
-        A0 = 1;
-        system_psyq_draw_sync();
-    800A4D7C	bne    v0, zero, loopa4d74 [$800a4d74]
+    while (system_psyq_draw_sync(0x1) != 0) {}
 
-    800A4D84	jal    funca3908 [$800a3908]
+    funca3908();
 }
 
 wm_get_current_render_buffer_id();

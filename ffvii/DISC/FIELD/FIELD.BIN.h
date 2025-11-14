@@ -153,7 +153,7 @@ struct FieldRenderData
     DR_MODE arrows_dm;          // 0x4180
     u32 ot_fade_drenv;          // 0x418c
     u32 ot_scene_drenv;         // 0x4190
-    DR_ENV drenv;               // 0x4194
+    DR_ENV fade_drenv;          // 0x4194
     DR_ENV scene_drenv;         // 0x41d4
     DR_ENV bg_drenv3_s;         // 0x4214 start dynamic layer 3
     DR_ENV bg_drenv4_s;         // 0x4254 start dynamic layer 4
