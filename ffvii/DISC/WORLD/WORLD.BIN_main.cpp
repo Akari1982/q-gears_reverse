@@ -1106,7 +1106,7 @@ funca3304();
 
 A0 = SP + 10;
 A1 = SP + 38;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 [SP + 18] = w(0);
 [SP + 1c] = w(0);
@@ -1160,7 +1160,7 @@ V0 = w[SP + 78];
 
 A0 = SP + 10;
 A1 = SP + 38;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 [SP + 10] = h(0);
 [SP + 12] = h(0);
@@ -1168,7 +1168,7 @@ system_gte_rotation_matrix_from_xyz();
 
 A0 = SP + 10;
 A1 = SP + 58;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 58;
 A1 = SP + 38;
@@ -1720,7 +1720,7 @@ if ((w[0x800e55fc] != 0) && (w[0x800e5628] <= 0))
             [SP + 3c] = h(0);
             A0 = SP + 38;
             A1 = SP + 10;
-            system_gte_rotation_matrix_from_xyz();
+            system_psyq_rot_matrix();
 
             [SP + 50] = w(0);
             [SP + 54] = w(0);
@@ -4637,7 +4637,7 @@ A1 = SP + 0010;
 S0 = 0 - S0;
 V0 = S0 + 0380;
 [SP + 003a] = h(V0);
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 0010;
 system_psyq_set_rot_matrix();
@@ -4653,7 +4653,7 @@ A0 = S3;
 A1 = SP + 0010;
 800A6270	addiu  s0, s0, $fc80 (=-$380)
 [SP + 003a] = h(S0);
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 0010;
 system_psyq_set_rot_matrix();
@@ -5562,7 +5562,7 @@ S2 = A3;
 
 A0 = angles;
 A1 = SP + 10;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 10;
 system_psyq_set_rot_matrix();

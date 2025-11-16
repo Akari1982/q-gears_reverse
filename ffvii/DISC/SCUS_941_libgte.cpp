@@ -23,20 +23,20 @@ if (A0 >= 801)
 {
     if (A0 < c01)
     {
-        return -h[80049e54 + A0 * 2];
+        return -h[0x80049e54 + A0 * 2];
     }
     else
     {
-        return -h[8004ae54 + (1000 - A0) * 2];
+        return -h[0x8004ae54 + (1000 - A0) * 2];
     }
 }
 else if (A0 >= 401)
 {
-    return h[8004ae54 + (800 - A0) * 2];
+    return h[0x8004ae54 + (800 - A0) * 2];
 }
 else
 {
-    return h[8004ae54 + A0 * 2];
+    return h[0x8004ae54 + A0 * 2];
 }
 ////////////////////////////////
 
@@ -58,12 +58,12 @@ if (A0 < 801)
         V0 = 400;
         V0 = V0 - A0;
         V0 = V0 * 2;
-        V0 = h[8004AE54 + V0];
+        V0 = h[0x8004AE54 + V0];
     }
     else
     {
         V0 = A0 * 2;
-        V0 = h[8004A654 + V0];
+        V0 = h[0x8004A654 + V0];
         V0 = 0 - V0;
     }
 }
@@ -71,14 +71,14 @@ else
 {
     if (A0 >= c01)
     {
-        V0 = h[8004a654 + A0 * 2];
+        V0 = h[0x8004a654 + A0 * 2];
     }
     else
     {
         V0 = c00;
         V0 = V0 - A0;
         V0 = V0 * 2;
-        V0 = h[8004ae54 + V0];
+        V0 = h[0x8004ae54 + V0];
         V0 = 0 - V0;
     }
 }
@@ -296,11 +296,11 @@ SP = SP + 0020;
 // system_psyq_init_geom()
 // Initialize the geometry transform engine.
 
-[8004b658] = w(RA);
+[0x8004b658] = w(RA);
 
 system_patch_bios_exception_handler();
 
-RA = w[8004b658];
+RA = w[0x8004b658];
 
 SR |= 40000000; // CU2 COP2 Enable (0=Disable, 1=Enable) (GTE in PSX)
 ZSF3 = 155;
@@ -340,7 +340,7 @@ else
 }
 
 // 00 - 1000    с0 - 1fef
-T5 = h[8004b668 + (T4 - 40) * 2];
+T5 = h[0x8004b668 + (T4 - 40) * 2];
 
 if( T1 >= 0 )
 {
@@ -477,7 +477,7 @@ else
     T4 = V0 >> T3;
 }
 
-T5 = [8004b7fc + (T4 - 40) * 2];
+T5 = [0x8004b7fc + (T4 - 40) * 2];
 
 IR0 = T5;
 IR1 = T0;
@@ -1576,30 +1576,30 @@ return A0;
 
 
 
-////////////////////////////////
-// system_scale_matrix_by_vector
-R11 = ((w[A0 + 0] & ffff) << 10) >> 10;
-R12 = (w[A0 + 0] >> 10);
-R13 = ((w[A0 + 4] & ffff) << 10) >> 10;
-R21 = (w[A0 + 4] >> 10);
-R22 = ((w[A0 + 8] & ffff) << 10) >> 10;
-R23 = (w[A0 + 8] >> 10);
-R31 = ((w[A0 + c] & ffff) << 10) >> 10;
-R32 = (w[A0 + c] >> 10);
-R33 = ((w[A0 + 10] & ffff) << 10) >> 10;
+MATRIX* system_psyq_scale_matrix(MATRIX* m, VECTOR* v)
+{
+    R11 = ((w[A0 + 0x0] & 0xffff) << 0x10) >> 0x10;
+    R12 = (w[A0 + 0x0] >> 0x10);
+    R13 = ((w[A0 + 0x4] & 0xffff) << 0x10) >> 0x10;
+    R21 = (w[A0 + 0x4] >> 0x10);
+    R22 = ((w[A0 + 0x8] & 0xffff) << 0x10) >> 0x10;
+    R23 = (w[A0 + 0x8] >> 0x10);
+    R31 = ((w[A0 + 0xc] & 0xffff) << 0x10) >> 0x10;
+    R32 = (w[A0 + 0xc] >> 0x10);
+    R33 = ((w[A0 + 0x10] & 0xffff) << 0x10) >> 0x10;
 
-vector1 = w[A1 + 0];
-vector2 = w[A1 + 4];
-vector3 = w[A1 + 8];
+    vector1 = w[A1 + 0x0];
+    vector2 = w[A1 + 0x4];
+    vector3 = w[A1 + 0x8];
 
-[A0 + 0] = w((((R11 * vector1) >> c) & ffff) | (((R12 * vector2) >> c) << 10));
-[A0 + 4] = w((((R13 * vector3) >> c) & ffff) | (((R21 * vector1) >> c) << 10));
-[A0 + 8] = w((((R22 * vector2) >> c) & ffff) | (((R23 * vector3) >> c) << 10));
-[A0 + c] = w((((R31 * vector1) >> c) & ffff) | (((R32 * vector2) >> c) << 10));
-[A0 + 10] = w((R33 * vector3) >> c);
+    [A0 + 0x0] = w((((R11 * vector1) >> 0xc) & 0xffff) | (((R12 * vector2) >> 0xc) << 0x10));
+    [A0 + 0x4] = w((((R13 * vector3) >> 0xc) & 0xffff) | (((R21 * vector1) >> 0xc) << 0x10));
+    [A0 + 0x8] = w((((R22 * vector2) >> 0xc) & 0xffff) | (((R23 * vector3) >> 0xc) << 0x10));
+    [A0 + 0xc] = w((((R31 * vector1) >> 0xc) & 0xffff) | (((R32 * vector2) >> 0xc) << 0x10));
+    [A0 + 0x10] = w((R33 * vector3) >> 0xc);
 
-return A0;
-////////////////////////////////
+    return A0;
+}
 
 
 
@@ -2485,66 +2485,65 @@ return A1;
 
 
 
-////////////////////////////////
-// system_gte_rotation_matrix_from_xyz()
+MATRIX* system_psyq_rot_matrix(SVECTOR* r, MATRIX* m)
+{
+    T7 = h[A0 + 0];
+    if( T7 < 0 )
+    {
+        T7 = (0 - T7) & 0xfff;
+        T9 = w[0x8004bc98 + T7 * 0x4];
+        sinX = 0 - ((T9 << 0x10) >> 0x10);
+    }
+    else
+    {
+        T9 = T7 & 0xfff;
+        T9 = w[0x8004bc98 + T9 * 0x4];
+        sinX = (T9 << 0x10) >> 0x10;
+    }
+    cosX = T9 >> 0x10;
 
-T7 = h[A0 + 0];
-if( T7 < 0 )
-{
-    T7 = (0 - T7) & fff;
-    T9 = w[8004bc98 + T7 * 4];
-    sinX = 0 - ((T9 << 10) >> 10);
-}
-else
-{
-    T9 = T7 & fff;
-    T9 = w[8004bc98 + T9 * 4];
-    sinX = (T9 << 10) >> 10;
-}
-cosX = T9 >> 10;
+    T7 = h[A0 + 0x2];
+    if( T7 < 0 )
+    {
+        T7 = (0 - T7) & 0xfff;
+        T9 = w[0x8004bc98 + T7 * 0x4];
+        sinY = 0 - ((T9 << 0x10) >> 0x10);
+    }
+    else
+    {
+        T9 = T7 & 0xfff;
+        T9 = w[0x8004bc98 + T9 * 0x4];
+        sinY = (T9 << 0x10) >> 0x10;
+    }
+    cosY = T9 >> 0x10;
 
-T7 = h[A0 + 2];
-if( T7 < 0 )
-{
-    T7 = (0 - T7) & fff;
-    T9 = w[8004bc98 + T7 * 4];
-    sinY = 0 - ((T9 << 10) >> 10);
-}
-else
-{
-    T9 = T7 & 0fff;
-    T9 = w[8004bc98 + T9 * 4];
-    sinY = (T9 << 10) >> 10;
-}
-cosY = T9 >> 10;
+    T7 = h[A0 + 0x4];
+    if( T7 < 0 )
+    {
+        T7 = (0 - T7) & 0xfff;
+        T9 = w[0x8004bc98 + T7 * 0x4];
+        sinZ = 0 - ((T9 << 0x10) >> 0x10);
+    }
+    else
+    {
+        T9 = T7 & 0xfff;
+        T9 = w[0x8004bc98 + T9 * 0x4];
+        sinZ = (T9 << 0x10) >> 0x10;
+    }
+    cosZ = T9 >> 0x10;
 
-T7 = h[A0 + 4];
-if( T7 < 0 )
-{
-    T7 = (0 - T7) & fff;
-    T9 = w[8004bc98 + T7 * 4];
-    sinZ = 0 - ((T9 << 10) >> 10);
-}
-else
-{
-    T9 = T7 & fff;
-    T9 = w[8004bc98 + T9 * 4];
-    sinZ = (T9 << 10) >> 10;
-}
-cosZ = T9 >> 10;
+    [A1 + 0x0] = h(((cosZ * cosY) >> 0xc));
+    [A1 + 0x2] = h((0 - (sinZ * cosY)) >> 0xc);
+    [A1 + 0x4] = h(sinY);
+    [A1 + 0x6] = h(((sinZ * cosX) >> 0xc) - (((cosZ * (0 - sinY) >> 0xc) * sinX) >> 0xc));
+    [A1 + 0x8] = h(((cosZ * cosX) >> 0xc) + ((((sinZ * (0 - sinY)) >> 0xc) * sinX) >> 0xc));
+    [A1 + 0xa] = h((0 - (cosY * sinX)) >> 0xc);
+    [A1 + 0xc] = h(((sinZ * sinX) >> 0xc) + (((cosZ * (0 - sinY) >> 0xc) * cosX) >> 0xc));
+    [A1 + 0xe] = h(((cosZ * sinX) >> 0xc) - ((((sinZ * (0 - sinY)) >> 0xc) * cosX) >> 0xc));
+    [A1 + 0x10] = h((cosY * cosX) >> 0xc);
 
-[A1 + 0] = h(((cosZ * cosY) >> c));
-[A1 + 2] = h((0 - (sinZ * cosY)) >> c);
-[A1 + 4] = h(sinY);
-[A1 + 6] = h(((sinZ * cosX) >> c) - (((cosZ * (0 - sinY) >> c) * sinX) >> c));
-[A1 + 8] = h(((cosZ * cosX) >> c) + ((((sinZ * (0 - sinY)) >> c) * sinX) >> c));
-[A1 + a] = h((0 - (cosY * sinX)) >> c);
-[A1 + c] = h(((sinZ * sinX) >> c) + (((cosZ * (0 - sinY) >> c) * cosX) >> c));
-[A1 + e] = h(((cosZ * sinX) >> c) - ((((sinZ * (0 - sinY)) >> c) * cosX) >> c));
-[A1 + 10] = h((cosY * cosX) >> c);
-
-return A1;
-////////////////////////////////
+    return A1;
+}
 
 
 
@@ -2555,13 +2554,13 @@ T7 = h[A0 + 0];
 if( T7 < 0 )
 {
     T7 = (0 - T7) & fff;
-    T9 = w[8004bc98 + T7 * 4];
+    T9 = w[0x8004bc98 + T7 * 4];
     sinX = 0 - ((T9 << 10) >> 10);
 }
 else
 {
     T7 = T7 & fff;
-    T9 = w[8004bc98 + T7 * 4];
+    T9 = w[0x8004bc98 + T7 * 4];
     sinX = (T9 << 10) >> 10;
 }
 cosX = T9 >> 10;
@@ -2570,13 +2569,13 @@ T7 = h[A0 + 2];
 if( T7 < 0 )
 {
     T7 = (0 - T7) & fff;
-    T9 = w[8004bc98 + T7 * 4];
+    T9 = w[0x8004bc98 + T7 * 4];
     sinY = 0 - ((T9 << 10) >> 10);
 }
 else
 {
     T7 = T7 & fff;
-    T9 = w[8004bc98 + T7 * 4];
+    T9 = w[0x8004bc98 + T7 * 4];
     sinY = (T9 << 10) >> 10;
 }
 cosY = T9 >> 10;
@@ -2585,13 +2584,13 @@ T7 = h[A0 + 4];
 if( T7 < 0 )
 {
     T7 = (0 - T7) & fff;
-    T9 = w[8004bc98 + T7 * 4];
+    T9 = w[0x8004bc98 + T7 * 4];
     sinZ = 0 - ((T9 << 10) >> 10);
 }
 else
 {
     T7 = T7 & fff;
-    T9 = w[8004bc98 + T7 * 4];
+    T9 = w[0x8004bc98 + T7 * 4];
     sinZ = (T9 << 10) >> 10;
 }
 cosZ = T9 >> 10;
@@ -2808,14 +2807,14 @@ angle = A0;
 if( angle < 0 )
 {
     angle = (0 - angle) & fff;
-    T9 = w[8004bc98 + angle * 4];
+    T9 = w[0x8004bc98 + angle * 4];
     sin = 0 - (T9 << 10) >> 10;
     cos = T9 >> 10;
 }
 else
 {
     angle = angle & fff;
-    T9 = w[8004bc98 + angle * 4];
+    T9 = w[0x8004bc98 + angle * 4];
     sin = (T9 << 10) >> 10;
     cos = T9 >> 10;
 }
@@ -2847,14 +2846,14 @@ angle = A0;
 if( angle < 0 )
 {
     angle = (0 - angle) & fff;
-    T9 = w[8004bc98 + angle * 4];
+    T9 = w[0x8004bc98 + angle * 4];
     sin = (T9 << 10) >> 10;
     cos = T9 >> 10;
 }
 else
 {
     angle = angle & fff;
-    T9 = w[8004bc98 + angle * 4];
+    T9 = w[0x8004bc98 + angle * 4];
     sin = 0 - ((T9 << 10) >> 10);
     cos = T9 >> 10;
 }
@@ -2886,14 +2885,14 @@ angle = A0;
 if( angle < 0 )
 {
     angle = (0 - angle) & fff;
-    T9 = w[8004bc98 + angle * 4];
+    T9 = w[0x8004bc98 + angle * 4];
     sin = 0 - ((T9 << 10) >> 10);
     cos = T9 >> 10;
 }
 else
 {
     angle = angle & fff;
-    T9 = w[8004bc98 + angle * 4];
+    T9 = w[0x8004bc98 + angle * 4];
     sin = (T9 << 10) >> 10;
     cos = T9 >> 10;
 }
@@ -3008,7 +3007,7 @@ L3cd94:	; 8003CD94
 ////////////////////////////////
 // system_patch_bios_exception_handler()
 
-[80062ed0] = w(RA);
+[0x80062ed0] = w(RA);
 
 system_bios_enter_critical_section();
 
@@ -3049,5 +3048,5 @@ system_bios_flush_cache();
 
 system_bios_exit_critical_section();
 
-RA = w[80062ed0];
+RA = w[0x80062ed0];
 ////////////////////////////////

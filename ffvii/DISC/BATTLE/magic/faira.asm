@@ -21,7 +21,7 @@ system_create_rotation_matrix_from_euler_angle;
 
 A0 = 801bd7c8;
 A1 = SP + 40;
-system_scale_matrix_by_vector;
+system_psyq_scale_matrix;
 
 [801bd7dc] = w(h[S1 + 4]); // X
 [801bd7e0] = w(h[S1 + 6]); // Y (0)

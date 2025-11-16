@@ -71,40 +71,40 @@ void ending_main_logo()
 {
     // Init area 0x280 x 0x1e0 for rendering.
     // Distance 0x200 and background color is black
-    ending_render_init( 0x280, 0x1e0, 0x200, 0, 0, 0 );
+    ending_render_init(0x280, 0x1e0, 0x200, 0, 0, 0);
 
     do
     {
-        system_psyq_cd_search_file( SP + 0x20, "\STARTUP\SCEAP.LZS;1" );
+        system_psyq_cd_search_file(SP + 0x20, "\STARTUP\SCEAP.LZS;1");
 
-        if( V0 <= 0 )
+        if (V0 <= 0)
         {
-            if( V0 >= -1 )
+            if (V0 >= -1)
             {
-                system_bios_printf( "scea file read error" );
+                system_bios_printf("scea file read error");
                 return;
             }
         }
 
-        system_psyq_cd_control_b( 0x2, SP + 0x20, 0 ); // execute command Setloc
+        system_psyq_cd_control_b(0x2, SP + 0x20, 0); // execute command Setloc
 
-        system_psyq_cd_read( (w[SP + 0x24] + 0x7ff) >> 0xb, 0x80180000, 0x80 );
+        system_psyq_cd_read((w[SP + 0x24] + 0x7ff) >> 0xb, 0x80180000, 0x80);
 
         do
         {
-            V0 = system_psyq_cd_read_sync( 0x1, 0 );
-        } while( V0 > 0 );
-    } while( V0 != 0 )
+            V0 = system_psyq_cd_read_sync(0x1, 0);
+        } while (V0 > 0);
+    } while (V0 != 0)
 
-    system_lzs_decompress( 0x80180000, 0x80100000 );
+    system_lzs_decompress(0x80180000, 0x80100000);
 
-    system_psyq_set_disp_mask( 1 );
+    system_psyq_set_disp_mask(1);
 
-    for( int i = 0xfe; i <= 0; i -= 2 )
+    for (int i = 0xfe; i <= 0; i -= 2)
     {
         rb = rb < 0x1;
 
-        ending_render_vsync( 0 );
+        ending_render_vsync(0);
 
         s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
@@ -116,20 +116,20 @@ void ending_main_logo()
         rect.w = 0x280;
         rect.h = 1;
 
-        while( rect.y < 0x1e0 )
+        while (rect.y < 0x1e0)
         {
-            system_psyq_load_image( &rect, image );
-            system_psyq_draw_sync( 0 );
+            system_psyq_load_image(&rect, image);
+            system_psyq_draw_sync(0);
             rect.y += 0x2;
             image += 0xa00;
         }
 
         u32* ot = l_otags[rb];
-        system_psyq_clear_otag_r( ot, 0x1 );
+        system_psyq_clear_otag_r(ot, 0x1);
 
         TILE* tile = &l_tiles[rb];
-        system_psyq_set_tile( tile );
-        system_psyq_set_semi_trans( tile , 0x1 );
+        system_psyq_set_tile(tile);
+        system_psyq_set_semi_trans(tile , 0x1);
         tile->r0 = i;
         tile->g0 = i;
         tile->b0 = i;
@@ -137,20 +137,20 @@ void ending_main_logo()
         tile->y0 = 0xc8;
         tile->w = 0x244;
         tile->h = 0x4a;
-        system_psyq_add_prim( ot, tile );
+        system_psyq_add_prim(ot, tile);
 
         DR_MODE* dm = &l_dm[rb];
-        system_psyq_set_draw_mode( dm, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
-        system_psyq_add_prim( ot, dm );
+        system_psyq_set_draw_mode(dm, 0x1, 0x1, system_psyq_get_tpage(0x2, 0x2, 0, 0), 0);
+        system_psyq_add_prim(ot, dm);
 
-        system_psyq_draw_otag( ot );
+        system_psyq_draw_otag(ot);
     }
 
-    for( int i = 0; i < 0x12c; ++i )
+    for (int i = 0; i < 0x12c; ++i)
     {
         rb = rb < 0x1;
 
-        ending_render_vsync( 0 );
+        ending_render_vsync(0);
 
         s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
@@ -162,20 +162,20 @@ void ending_main_logo()
         rect.w = 0x280;
         rect.h = 1;
 
-        while( rect.y < 0x1e0 )
+        while (rect.y < 0x1e0)
         {
-            system_psyq_load_image( &rect, image );
-            system_psyq_draw_sync( 0 );
+            system_psyq_load_image(&rect, image);
+            system_psyq_draw_sync(0);
             image += 0xa00;
             rect.y += 0x2;
         }
     }
 
-    for( int i = 0; i < 0xfe; i += 0x2 )
+    for (int i = 0; i < 0xfe; i += 0x2)
     {
         rb = rb < 0x1;
 
-        ending_render_vsync( 0 );
+        ending_render_vsync(0);
 
         s16 even_odd = system_psyq_get_ode() ^ 0x1;
 
@@ -187,20 +187,20 @@ void ending_main_logo()
         rect.w = 0x280;
         rect.h = 1;
 
-        while( rect.y < 0x1e0 )
+        while (rect.y < 0x1e0)
         {
-            system_psyq_load_image( &rect, image );
-            system_psyq_draw_sync( 0 );
+            system_psyq_load_image(&rect, image);
+            system_psyq_draw_sync(0);
             image += 0xa00;
             rect.y += 0x2;
         }
 
         u32* ot = l_otags[rb];
-        system_psyq_clear_otag_r( ot, 0x1 );
+        system_psyq_clear_otag_r(ot, 0x1);
 
         TILE* tile = &l_tiles[rb];
-        system_psyq_set_tile( tile );
-        system_psyq_set_semi_trans( tile, 0x1 );
+        system_psyq_set_tile(tile);
+        system_psyq_set_semi_trans(tile, 0x1);
         tile->r0 = i;
         tile->g0 = i;
         tile->b0 = i;
@@ -208,64 +208,64 @@ void ending_main_logo()
         tile->y0 = 0xc8;
         tile->w = 0x244;
         tile->h = 0x4a;
-        system_psyq_add_prim( ot, tile );
+        system_psyq_add_prim(ot, tile);
 
         DR_MODE* dm = &l_dm[rb];
-        system_psyq_set_draw_mode( dm, 0x1, 0x1, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
-        system_psyq_add_prim( ot, dm );
+        system_psyq_set_draw_mode(dm, 0x1, 0x1, system_psyq_get_tpage(0x2, 0x2, 0, 0), 0);
+        system_psyq_add_prim(ot, dm);
 
-        system_psyq_draw_otag( ot );
+        system_psyq_draw_otag(ot);
     }
 
-    system_psyq_set_disp_mask( 0 );
+    system_psyq_set_disp_mask(0);
 }
 
 
 
-void ending_main_credits( S0 )
+void ending_main_credits(S0)
 {
     u32* ot = l_otags2[0];
 
-    while( true )
+    while (true)
     {
-        ending_render_init( 0x140, 0xf0, 0x200, 0, 0, 0 );
+        ending_render_init(0x140, 0xf0, 0x200, 0, 0, 0);
 
         RECT rect;
         rect.x = 0;
         rect.y = 0;
-        rect.w = ( S0 != 0 ) ? 0x3c0 : 0x1e0;
+        rect.w = (S0 != 0) ? 0x3c0 : 0x1e0;
         rect.h = 0x1e0;
 
-        system_psyq_clear_image( &rect, 0, 0, 0 );
-        while( system_psyq_draw_sync( 0x1 ) != 0 ) {}
+        system_psyq_clear_image(&rect, 0, 0, 0);
+        while (system_psyq_draw_sync(0x1) != 0) {}
 
         ending_list_init();
 
         l_frames_skip = 0;
         l_poly_stored = 0x801f0000;
 
-        ending_events_set( ( S0 != 0 ) ? 0x800a5048 : 0x800a3934 );
+        ending_events_set((S0 != 0) ? 0x800a5048 : 0x800a3934);
 
         l_draw = 0x1;
 
-        while( l_draw != 0 )
+        while (l_draw != 0)
         {
-            system_psyq_vsync( 0x1 );
-            system_psyq_draw_sync( 0 );
-            system_psyq_vsync( 0x1 );
+            system_psyq_vsync(0x1);
+            system_psyq_draw_sync(0);
+            system_psyq_vsync(0x1);
 
-            u32 rb = ending_render_vsync( l_frames_skip );
+            u32 rb = ending_render_vsync(l_frames_skip);
 
             l_rb = rb;
 
-            if( rb != 0 ) l_poly_stored = 0x801f0000;
+            if (rb != 0) l_poly_stored = 0x801f0000;
 
             DRAWENV* draw_env = w[0x8007ebd0];
             rect.x = draw_env->clip.x;
             rect.y = draw_env->clip.y;
 
             DISPENV* disp_env = w[0x8007ebd8];
-            if( disp_env->isrgb24 == 0 ) // 16-bit mode
+            if (disp_env->isrgb24 == 0) // 16-bit mode
             {
                 rect.w = draw_env->clip.w;
             }
@@ -275,28 +275,28 @@ void ending_main_credits( S0 )
             }
             rect.h = draw_env->clip.h;
 
-            system_psyq_clear_image( &rect, 0, 0, 0 );
+            system_psyq_clear_image(&rect, 0, 0, 0);
 
-            system_psyq_draw_sync( 0 );
-            system_psyq_vsync( 0x1 );
+            system_psyq_draw_sync(0);
+            system_psyq_vsync(0x1);
 
-            if( system_cdrom_read_chain() == 0xa )
+            if (system_cdrom_read_chain() == 0xa)
             {
                 func354cc(); // play movie frame
             }
 
-            system_psyq_clear_otag_r( ot + l_rb * 0x4, 0x1 );
+            system_psyq_clear_otag_r(ot + l_rb * 0x4, 0x1);
 
             l_otag_stored = ot + l_rb * 0x4;
 
             ending_events_exec();
             ending_list_activate_callback();
 
-            system_psyq_draw_otag( ot + l_rb * 0x4 );
+            system_psyq_draw_otag(ot + l_rb * 0x4);
 
-            system_psyq_vsync( 0x1 );
+            system_psyq_vsync(0x1);
 
-            if( S0 == 0 )
+            if (S0 == 0)
             {
                 V0 = l_buttons1_pressed & 0x09f0; // pressed triangle circle cross square start select
                 800A0710	bne    v0, zero, La0734 [$800a0734]
@@ -311,9 +311,9 @@ void ending_main_credits( S0 )
     [0x8009a008] = w(0); // dest volume
     system_akao_execute();
 
-    for( int i = 0; i >= 0xff; i += 0x4 )
+    for (int i = 0; i >= 0xff; i += 0x4)
     {
-        u32 rb = ending_render_vsync( l_frames_skip );
+        u32 rb = ending_render_vsync(l_frames_skip);
 
         l_rb = rb;
 
@@ -325,11 +325,11 @@ void ending_main_credits( S0 )
         rect.w = draw_env->clip.w;
         rect.h = draw_env->clip.h;
 
-        system_psyq_clear_image( &rect, 0, 0, 0 );
+        system_psyq_clear_image(&rect, 0, 0, 0);
 
-        system_psyq_draw_sync( 0 );
+        system_psyq_draw_sync(0);
 
-        if( system_cdrom_read_chain() == 0xa )
+        if (system_cdrom_read_chain() == 0xa)
         {
             func354cc(); // play movie frame
         }
@@ -337,18 +337,18 @@ void ending_main_credits( S0 )
         u32 rb = l_rb;
 
         u32* ot1 = l_otags2[rb];
-        system_psyq_clear_otag_r( ot1 , 0x1 );
+        system_psyq_clear_otag_r(ot1 , 0x1);
         l_otag_stored = ot1;
 
         ending_list_activate_callback();
-        system_psyq_draw_otag( ot1 );
+        system_psyq_draw_otag(ot1);
 
         u32* ot2 = l_otags3[rb];
-        system_psyq_clear_otag_r( ot2, 0x1 );
+        system_psyq_clear_otag_r(ot2, 0x1);
 
         TILE* tile = &l_tiles2[rb];
-        system_psyq_set_tile( tile );
-        system_psyq_set_semi_trans( tile, 0x1 );
+        system_psyq_set_tile(tile);
+        system_psyq_set_semi_trans(tile, 0x1);
         tile->r0 = i;
         tile->g0 = i;
         tile->b0 = i;
@@ -356,17 +356,17 @@ void ending_main_credits( S0 )
         tile->y0 = 0;
         tile->w = 0x140;
         tile->h = 0xf0;
-        system_psyq_add_prim( ot2, tile );
+        system_psyq_add_prim(ot2, tile);
 
         DR_MODE* dm = &l_dm2[rb];
-        system_psyq_set_draw_mode( dm, 0, 0, system_psyq_get_tpage( 0x2, 0x2, 0, 0 ), 0 );
-        system_psyq_add_prim( ot2, dm );
+        system_psyq_set_draw_mode(dm, 0, 0, system_psyq_get_tpage(0x2, 0x2, 0, 0), 0);
+        system_psyq_add_prim(ot2, dm);
 
-        system_psyq_draw_otag( ot2 );
+        system_psyq_draw_otag(ot2);
     }
 
-    system_psyq_vsync( 0x4 );
-    system_psyq_reset_graph( 0x1 );
+    system_psyq_vsync(0x4);
+    system_psyq_reset_graph(0x1);
 }
 
 
@@ -374,18 +374,18 @@ void ending_main_credits( S0 )
 // callback
 void funca09dc()
 {
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
-        if( l_credits[i].flags & 0x0001 )
+        if (l_credits[i].flags & 0x0001)
         {
             [0x800a652c + i * 0x88 + 0x5c] = h(0x28);
             [0x800a652c + i * 0x88 + 0x5e] = h(0x20);
             [0x800a652c + i * 0x88 + 0x60] = h(0);
 
-            funca34c4( 0x800a652c + i * 0x88 );
-            ending_data_update_colors( 0x800a652c + i * 0x88 );
+            funca34c4(0x800a652c + i * 0x88);
+            ending_data_update_colors(0x800a652c + i * 0x88);
 
-            l_poly_stored = funca358c( l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88 );
+            l_poly_stored = funca358c(l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88);
         }
     }
 }
@@ -394,7 +394,7 @@ void funca09dc()
 
 int funca0ab8()
 {
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
         l_credits[i].flags = 0x0000;
         [0x800a652c + i * 0x88 + 0x6] = h(0);
@@ -408,7 +408,7 @@ int funca0ab8()
         [0x800a652c + i * 0x88 + 0x60] = h(0);
     }
 
-    ending_list_insert_sorted( 0x800a762c, 0x4, 0x80, 0x800a09dc ); // funca09dc()
+    ending_list_insert_sorted(0x800a762c, 0x4, 0x80, 0x800a09dc); // funca09dc()
 
     return 1;
 }
@@ -421,7 +421,7 @@ int funca0ba8()
     l_event = ofs + 0x4;
 
     id = h[ofs + 0x0];
-    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x2] );
+    u32 item_p = system_cdrom_get_pack_pointer(0x800d0000, h[ofs + 0x2]);
     l_credits[id].flags = 0x0004 | 0x0002 | 0x0001;
     [0x800a652c + id * 0x88 + 0x6] = h(0);
     [0x800a652c + id * 0x88 + 0x8] = h(0);
@@ -464,21 +464,21 @@ void ending_events_0f_change_color()
 // callback
 void funca0e68()
 {
-    system_psyq_add_prim( l_otag_stored, &l_tiles3[l_rb] );
-    system_psyq_add_prim( l_otag_stored, &l_tiles4[l_rb] );
+    system_psyq_add_prim(l_otag_stored, &l_tiles3[l_rb]);
+    system_psyq_add_prim(l_otag_stored, &l_tiles4[l_rb]);
 
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
-        if( l_credits[i].flags & 0x0001 )
+        if (l_credits[i].flags & 0x0001)
         {
             [0x800a652c + i * 0x88 + 0x5e] = h(hu[0x800a652c + i * 0x88 + 0x5e] - 1);
 
-            if( h[0x800a652c + i * 0x88 + 0x5e] == -0x10 ) l_credits[i].flags = 0;
+            if (h[0x800a652c + i * 0x88 + 0x5e] == -0x10) l_credits[i].flags = 0;
 
-            funca34c4( 0x800a652c + i * 0x88 );
-            ending_data_update_colors( 0x800a652c + i * 0x88 );
+            funca34c4(0x800a652c + i * 0x88);
+            ending_data_update_colors(0x800a652c + i * 0x88);
 
-            l_poly_stored = funca358c( l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88 );
+            l_poly_stored = funca358c(l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88);
         }
     }
 }
@@ -487,7 +487,7 @@ void funca0e68()
 
 int funca0f90()
 {
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
         l_credits[i].flags = 0x0000;
         [0x800a652c + i * 0x88 + 0x6] = h(0);
@@ -501,12 +501,12 @@ int funca0f90()
         [0x800a652c + i * 0x88 + 0x60] = h(0);
     }
 
-    ending_list_insert_sorted( 0x800a762c, 0x4, 0x80, 0x800a0e68 ); // funca0e68()
+    ending_list_insert_sorted(0x800a762c, 0x4, 0x80, 0x800a0e68); // funca0e68()
 
-    for( int i = 0; i < 0x2; ++i )
+    for (int i = 0; i < 0x2; ++i)
     {
-        system_psyq_set_tile( &l_tiles3[i] );
-        system_psyq_set_tile( &l_tiles4[i] );
+        system_psyq_set_tile(&l_tiles3[i]);
+        system_psyq_set_tile(&l_tiles4[i]);
 
         l_tiles3.r0 = 0;
         l_tiles3.g0 = 0;
@@ -535,11 +535,11 @@ int funca11b4()
     u32 ofs = l_event;
     l_event = ofs + 0x4;
 
-    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x0] );
+    u32 item_p = system_cdrom_get_pack_pointer(0x800d0000, h[ofs + 0x0]);
 
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
-        if( ( l_credits[i].flags & 0x0001 ) == 0 )
+        if ((l_credits[i].flags & 0x0001) == 0)
         {
             l_credits[i].flags = 0x0001;
             [0x800a652c + i * 0x88 + 0x6] = h(0);
@@ -563,15 +563,15 @@ int funca11b4()
 // callback update 3
 void funca12f0()
 {
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
-        if( l_credits[i].flags & 0x0001 )
+        if (l_credits[i].flags & 0x0001)
         {
-            ending_data_update_position( 0x800a652c + i * 0x88 );
-            funca34c4( 0x800a652c + i * 0x88 );
-            ending_data_update_colors( 0x800a652c + i * 0x88 );
+            ending_data_update_position(0x800a652c + i * 0x88);
+            funca34c4(0x800a652c + i * 0x88);
+            ending_data_update_colors(0x800a652c + i * 0x88);
 
-            l_poly_stored = funca358c( l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88 );
+            l_poly_stored = funca358c(l_otag_stored, 0, l_poly_stored, 0x800a652c + i * 0x88);
         }
     }
 }
@@ -580,7 +580,7 @@ void funca12f0()
 
 int funca139c()
 {
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
         l_credits[i].flags = 0x0000;
         [0x800a652c + i * 0x88 + 0x6] = h(0);
@@ -597,7 +597,7 @@ int funca139c()
         [0x800a652c + i * 0x88 + 0x70] = w(0);
     }
 
-    ending_list_insert_sorted( 0x800a762c, 0x4, 0x80, 0x800a12f0 ); // funca12f0()
+    ending_list_insert_sorted(0x800a762c, 0x4, 0x80, 0x800a12f0); // funca12f0()
 
     return 1;
 }
@@ -615,7 +615,7 @@ int funca14bc()
     [0x800a652c + id * 0x88 + 0x6] = h(0);
     [0x800a652c + id * 0x88 + 0x8] = h(h[ofs + 0x6]);
 
-    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs + 0x4] );
+    u32 item_p = system_cdrom_get_pack_pointer(0x800d0000, h[ofs + 0x4]);
 
     l_credits[id].file = item_p;
     l_credits[id].r = bu[ofs + 0xe];
@@ -656,9 +656,9 @@ int funca16e4()
 
 int funca17c0()
 {
-    system_bios_srand( system_psyq_vsync( 0x1 ) );
+    system_bios_srand(system_psyq_vsync(0x1));
 
-    funca2934( 0, 0x800a767c );
+    funca2934(0, 0x800a767c);
 
     S3 = -0x2000;
     S4 = -0x3ed;
@@ -667,9 +667,9 @@ int funca17c0()
     [0x800a76be] = h(0);
     [0x800a76c0] = h(-0x400);
 
-    for( int i = 0; i < 0x100; ++i )
+    for (int i = 0; i < 0x100; ++i)
     {
-        funca2934( 0x800a767c, 0x800a76c8 + i * 0x4c );
+        funca2934(0x800a767c, 0x800a76c8 + i * 0x4c);
 
         s8 V0 = system_bios_rand();
 
@@ -679,16 +679,16 @@ int funca17c0()
 
         S3 += 0x400;
 
-        if( S3 >= 0x2000 )
+        if (S3 >= 0x2000)
         {
             S3 = -0x2000;
             S4 += 0x100;
         }
     }
 
-    for( int i = 0; i < 2; ++i )
+    for (int i = 0; i < 2; ++i)
     {
-        for( int j = 0; j < 0x100; ++j )
+        for (int j = 0; j < 0x100; ++j)
         {
             l_lines[i][j].r0 = 0x10;
             l_lines[i][j].g0 = 0x10;
@@ -702,13 +702,13 @@ int funca17c0()
             l_lines[i][j].g0 = 0;
             l_lines[i][j].b0 = 0;
 
-            system_psyq_set_line_g2( &l_lines[i][j] );
+            system_psyq_set_line_g2(&l_lines[i][j]);
 
             S0 += 0x14;
         }
     }
 
-    system_psyq_set_disp_mask( 0x1 );
+    system_psyq_set_disp_mask(0x1);
 
     return 1;
 }
@@ -719,27 +719,27 @@ int funca19a4()
 {
     [0x800a63cc] = w(w[0x800a63cc] ^ 0x1);
 
-    if( l_buttons1_state & 0x1000 ) // Up
+    if (l_buttons1_state & 0x1000) // Up
     {
         [0x800a63d8] = w(w[0x800a63d8] - 0x8);
     }
-    else if( l_buttons1_state & 0x4000 ) // Down
+    else if (l_buttons1_state & 0x4000) // Down
     {
         [0x800a63d8] = w(w[0x800a63d8] + 0x8);
     }
-    else if( l_buttons1_state & 0x2000 ) // Right
+    else if (l_buttons1_state & 0x2000) // Right
     {
         [0x800a63d4] = w(w[0x800a63d4] + 0x8);
     }
-    else if( l_buttons1_state & 0x8000 ) // Left
+    else if (l_buttons1_state & 0x8000) // Left
     {
         [0x800a63d4] = w(w[0x800a63d4] - 0x8);
     }
-    else if( l_buttons1_state & 0x0004 ) // L1
+    else if (l_buttons1_state & 0x0004) // L1
     {
         [0x800a63d0] = w(w[0x800a63d0] - 0x10);
     }
-    else if( l_buttons1_state & 0x0008 ) // R1
+    else if (l_buttons1_state & 0x0008) // R1
     {
         [0x800a63d0] = w(w[0x800a63d0] + 0x10);
     }
@@ -752,14 +752,14 @@ int funca19a4()
     [0x800aeacc] = w(-0x1000);
     [0x800aead0] = w(0);
 
-    funca2a2c( 0x800a7684, 0x800a7684 + 0x38, 0x800aead8, 0x800aeac8 );
+    funca2a2c(0x800a7684, 0x800a7684 + 0x38, 0x800aead8, 0x800aeac8);
 
     S4 = 0x800aeae0 + w[0x800a63cc] * 0x400;
-    system_psyq_clear_otag( S4, 0x100 );
+    system_psyq_clear_otag(S4, 0x100);
 
-    for( int i = 0; i < 0x100; ++i )
+    for (int i = 0; i < 0x100; ++i)
     {
-        if( w[0x800a63cc] != 0 )
+        if (w[0x800a63cc] != 0)
         {
             [0x800a76c8 + i * 0x4c + 0x44] = h(hu[0x800a76c8 + i * 0x4c + 0x44] - 0x20);
         }
@@ -768,17 +768,17 @@ int funca19a4()
             [0x800a76c8 + i * 0x4c + 0x44] = h(hu[0x800a76c8 + i * 0x4c + 0x44] - 0x80);
         }
 
-        if( h[0x800a76c8 + i * 0x4c + 0x44] < 0 )
+        if (h[0x800a76c8 + i * 0x4c + 0x44] < 0)
         {
             [0x800a770c + i * 0x4c] = h(0x4000);
         }
 
-        funca2f1c( 0x800a76c8 + i * 0x4c );
+        funca2f1c(0x800a76c8 + i * 0x4c);
 
         S0 = 0x800a76c8 + i * 0x4c + 0x8;
 
-        system_psyq_set_rot_matrix( S0 );
-        system_psyq_set_trans_matrix( S0 );
+        system_psyq_set_rot_matrix(S0);
+        system_psyq_set_trans_matrix(S0);
 
         rb = w[0x800a63cc];
 
@@ -795,18 +795,18 @@ int funca19a4()
         [SP + 0x20] = w(h[0x800a770c + i * 0x4c] >> 6);
 
         A1 = 0xa0 - w[SP + 0x20];
-        [0x800ac2d4 + rb * 0x1400 + i * 0x14] = b(( A1 < 0 ) ? 0 : A1);
+        [0x800ac2d4 + rb * 0x1400 + i * 0x14] = b((A1 < 0) ? 0 : A1);
 
         A1 = 0xdc - w[SP + 0x20];
-        [0x800ac2d5 + rb * 0x1400 + i * 0x14] = b(( A1 < 0 ) ? 0 : A1);
+        [0x800ac2d5 + rb * 0x1400 + i * 0x14] = b((A1 < 0) ? 0 : A1);
 
         A1 = 0xfa - w[SP + 0x20];
-        [0x800ac2d6 + rb * 0x1400 + i * 0x14] = b(( A1 < 0 ) ? 0 : A1);
+        [0x800ac2d6 + rb * 0x1400 + i * 0x14] = b((A1 < 0) ? 0 : A1);
 
-        system_psyq_add_prim( S4 + (depth / 0x40) * 0x4, l_lines[rb][i] );
+        system_psyq_add_prim(S4 + (depth / 0x40) * 0x4, l_lines[rb][i]);
     }
 
-    system_psyq_draw_otag( S4 );
+    system_psyq_draw_otag(S4);
 
     return 0;
 }
@@ -856,7 +856,7 @@ void ending_events_exec()
         V0 = h[ofs];
         800A1E74	jalr   w[0x800a63dc + V0 * 4] ra
 
-        if( V0 == 0 )
+        if (V0 == 0)
         {
             l_event = ofs; // execute same opcode again
 
@@ -866,12 +866,12 @@ void ending_events_exec()
         {
             l_event_new = 0x1;
         }
-    } while( l_event_cont != 0 );
+    } while (l_event_cont != 0);
 }
 
 
 
-void ending_events_set( A0 )
+void ending_events_set(A0)
 {
     l_event = A0;
 }
@@ -891,7 +891,7 @@ int ending_events_01_load_file_to_temp()
     l_event = ofs + 0x2;
 
     id = h[ofs];
-    system_cdrom_start_load_file( w[0x800a6398 + id * 0x8 + 0x0], w[0x800a6398 + id * 0x8 + 0x4], 0x800d0000, 0 );
+    system_cdrom_start_load_file(w[0x800a6398 + id * 0x8 + 0x0], w[0x800a6398 + id * 0x8 + 0x4], 0x800d0000, 0);
 
     return 1;
 }
@@ -904,7 +904,7 @@ int ending_events_02_load_lzs_to_temp()
     l_event = ofs + 0x2;
 
     id = h[ofs];
-    system_cdrom_start_load_lzs( w[0x800a6398 + id * 0x8 + 0x0], w[0x800a6398 + id * 0x8 + 0x4], 0x800d0000, 0 );
+    system_cdrom_start_load_lzs(w[0x800a6398 + id * 0x8 + 0x0], w[0x800a6398 + id * 0x8 + 0x4], 0x800d0000, 0);
 
     return 1;
 }
@@ -923,9 +923,9 @@ int funca1fc8()
     u32 ofs = l_event;
     l_event = ofs + 0x2;
 
-    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs] );
+    u32 item_p = system_cdrom_get_pack_pointer(0x800d0000, h[ofs]);
 
-    ending_load_tim( item_p, SP + 0x10, SP + 0x12 );
+    ending_load_tim(item_p, SP + 0x10, SP + 0x12);
 
     return 1;
 }
@@ -937,15 +937,15 @@ int funca2014()
     u32 ofs = l_event;
     l_event = ofs + 0x2;
 
-    if( l_event_new != 0 )
+    if (l_event_new != 0)
     {
-        u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs] );
-        system_cdrom_set_lzs_extract( item_p, 0x80120000 );
+        u32 item_p = system_cdrom_get_pack_pointer(0x800d0000, h[ofs]);
+        system_cdrom_set_lzs_extract(item_p, 0x80120000);
     }
 
-    if( func34d5c() != 0 ) return 0; // wait while lzs extraction finished
+    if (func34d5c() != 0) return 0; // wait while lzs extraction finished
 
-    ending_load_tim( 0x80120000, SP + 0x10, SP + 0x12 );
+    ending_load_tim(0x80120000, SP + 0x10, SP + 0x12);
 
     return 1;
 }
@@ -958,7 +958,7 @@ int funca208c()
     l_event = ofs + 0x2;
 
     [0x800a6524] = w(0x801a0000);
-    system_movie_play( 0x801a0000, h[ofs] );
+    system_movie_play(0x801a0000, h[ofs]);
 
     return 1;
 }
@@ -977,9 +977,9 @@ int ending_events_08_render_init()
     u32 ofs = l_event;
     l_event = ofs + 0xc;
 
-    ending_render_init( h[ofs + 0x0], h[ofs + 0x2], h[ofs + 0x4], bu[ofs + 0x6], bu[ofs + 0x8], bu[ofs + 0xa] );
+    ending_render_init(h[ofs + 0x0], h[ofs + 0x2], h[ofs + 0x4], bu[ofs + 0x6], bu[ofs + 0x8], bu[ofs + 0xa]);
 
-    ending_render_vsync( 0 );
+    ending_render_vsync(0);
 
     return 1;
 }
@@ -991,7 +991,7 @@ int ending_events_0a_set_disp_mask()
     u32 ofs = l_event;
     l_event = ofs + 0x2;
 
-    system_psyq_set_disp_mask( h[ofs] );
+    system_psyq_set_disp_mask(h[ofs]);
 
     return 1;
 }
@@ -1000,7 +1000,7 @@ int ending_events_0a_set_disp_mask()
 
 int ending_events_0a_wait()
 {
-    if( l_event_new != 0 )
+    if (l_event_new != 0)
     {
         u32 ofs = l_event;
         l_event = ofs + 0x2;
@@ -1021,7 +1021,7 @@ int ending_events_0a_wait()
 
 int funca2248()
 {
-    ending_list_remove( ending_list_find( 0x4 ) );
+    ending_list_remove(ending_list_find(0x4));
 
     return 1;
 }
@@ -1077,7 +1077,7 @@ int funca2328()
     u32 ofs = l_event;
     l_event = ofs + 0x2;
 
-    u32 item_p = system_cdrom_get_pack_pointer( 0x800d0000, h[ofs] );
+    u32 item_p = system_cdrom_get_pack_pointer(0x800d0000, h[ofs]);
 
     [0x8009a000] = h(0x10);
     [0x8009a004] = w(item_p);
@@ -1127,9 +1127,9 @@ void funca2458()
 
     system_psyq_reset_callback();
 
-    system_psyq_reset_graph( 0 );
+    system_psyq_reset_graph(0);
 
-    func3ce3c( 0 );
+    func3ce3c(0);
 
     system_psyq_init_geom();
 
@@ -1142,52 +1142,52 @@ void funca2458()
 
 void funca24a8()
 {
-    while( true )
+    while (true)
     {
-        if( system_psyq_break_draw() != -1 ) break;
+        if (system_psyq_break_draw() != -1) break;
 
-        system_psyq_vsync( 0 );
+        system_psyq_vsync(0);
     }
 
-    if( V0 != 0 )
+    if (V0 != 0)
     {
-        while( system_psyq_is_idle_gpu( 0x1 ) != 0 ) {}
+        while (system_psyq_is_idle_gpu(0x1) != 0) {}
     }
 }
 
 
 
-void ending_render_init( int w, int h, long distance, u8 r, u8 g, u8 b );
+void ending_render_init(int w, int h, long distance, u8 r, u8 g, u8 b);
 {
     y = (h == 0x1e0) ? 0 : 0xf0;
 
-    while( true )
+    while (true)
     {
-        if( system_psyq_break_draw() != -1 ) break;
+        if (system_psyq_break_draw() != -1) break;
 
-        system_psyq_vsync( 0 );
+        system_psyq_vsync(0);
     }
 
-    if( V0 != 0 )
+    if (V0 != 0)
     {
-        while( system_psyq_is_idle_gpu( 1 ) != 0 ) {}
+        while (system_psyq_is_idle_gpu(1) != 0) {}
     }
 
-    system_psyq_reset_graph( 0x1 );
+    system_psyq_reset_graph(0x1);
 
-    system_psyq_set_disp_mask( 0 );
+    system_psyq_set_disp_mask(0);
 
-    system_psyq_set_graph_debug( 0 );
+    system_psyq_set_graph_debug(0);
 
-    system_psyq_set_geom_offset( (w / 2), (h / 2) );
+    system_psyq_set_geom_offset((w / 2), (h / 2));
 
-    system_psyq_set_geom_screen( distance );
+    system_psyq_set_geom_screen(distance);
 
-    system_psyq_set_def_drawenv( &l_draw_env[0], 0, 0, w, h );
-    system_psyq_set_def_drawenv( &l_draw_env[1], 0, y, w, h );
+    system_psyq_set_def_drawenv(&l_draw_env[0], 0, 0, w, h);
+    system_psyq_set_def_drawenv(&l_draw_env[1], 0, y, w, h);
 
-    system_psyq_set_def_dispenv( &l_disp_env[0], 0, y, w, h );
-    system_psyq_set_def_dispenv( &l_disp_env[1], 0, 0, w, h );
+    system_psyq_set_def_dispenv(&l_disp_env[0], 0, y, w, h);
+    system_psyq_set_def_dispenv(&l_disp_env[1], 0, 0, w, h);
 
     l_rb = 0x1;
 
@@ -1216,24 +1216,24 @@ void ending_render_init( int w, int h, long distance, u8 r, u8 g, u8 b );
     rect.w = (w * 0x3) / 0x2;
     rect.h = 0x1e0;
 
-    system_psyq_clear_image( &rect, 0, 0, 0 );
+    system_psyq_clear_image(&rect, 0, 0, 0);
 
-    ending_render_vsync( 0 );
+    ending_render_vsync(0);
 }
 
 
 
-u32 ending_render_vsync( int mode )
+u32 ending_render_vsync(int mode)
 {
     l_rb ^= 0x1;
     rb = l_rb;
 
-    system_psyq_draw_sync( 0 );
+    system_psyq_draw_sync(0);
 
-    system_psyq_vsync( mode );
+    system_psyq_vsync(mode);
 
-    system_psyq_put_dispenv( &l_disp_env[rb] );
-    system_psyq_put_drawenv( &l_draw_env[rb] );
+    system_psyq_put_dispenv(&l_disp_env[rb]);
+    system_psyq_put_drawenv(&l_draw_env[rb]);
 
     // store env for movie play
     [0x8007ebd0] = w(&l_draw_env[rb]);
@@ -1257,27 +1257,27 @@ u32 ending_render_vsync( int mode )
 
 
 
-void ending_load_tim( u_long* addr, S0, S1 )
+void ending_load_tim(u_long* addr, S0, S1)
 {
-    system_psyq_open_tim( addr );
+    system_psyq_open_tim(addr);
 
     TIM_IMAGE image;
-    system_psyq_read_tim( &image );
+    system_psyq_read_tim(&image);
 
-    if( image.paddr != 0 )
+    if (image.paddr != 0)
     {
-        system_psyq_load_image( image.prect, image.paddr );
+        system_psyq_load_image(image.prect, image.paddr);
 
-        system_psyq_get_tpage( image.mode, 0, image.prect->x, image.prect->y );
+        system_psyq_get_tpage(image.mode, 0, image.prect->x, image.prect->y);
 
         [S0] = h(V0);
     }
 
-    if( image.caddr != 0 )
+    if (image.caddr != 0)
     {
-        system_psyq_load_image( image.crect, image.caddr );
+        system_psyq_load_image(image.crect, image.caddr);
 
-        system_psyq_get_clut( image.crect->x, image.crect->y );
+        system_psyq_get_clut(image.crect->x, image.crect->y);
 
         [S1] = h(V0);
     }
@@ -1285,7 +1285,7 @@ void ending_load_tim( u_long* addr, S0, S1 )
 
 
 
-void funca2934( A0, A1 )
+void funca2934(A0, A1)
 {
     [A1 + 0x0] = w(A0);
     [A0 + 0x4] = w(A1);
@@ -1306,10 +1306,10 @@ void funca2934( A0, A1 )
 
 
 
-int funca2974( MATRIX& m_ret, SVECTOR& v1, A2 )
+int funca2974(MATRIX& m_ret, SVECTOR& v1, A2)
 {
-    system_gte_rotation_matrix_from_xyz( A2, &m_ret );
-    GTE_APPLYMATRIX( &m_ret.m, &v1, &m_ret.t );
+    system_psyq_rot_matrix(A2, &m_ret);
+    GTE_APPLYMATRIX(&m_ret.m, &v1, &m_ret.t);
 
     m_ret.t[0] = 0 - m_ret.t[0];
     m_ret.t[1] = 0 - m_ret.t[1];
@@ -1318,7 +1318,7 @@ int funca2974( MATRIX& m_ret, SVECTOR& v1, A2 )
 
 
 
-void funca2a2c( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
+void funca2a2c(MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3)
 {
     VECTOR v;
     VECTOR v_res1;
@@ -1328,18 +1328,18 @@ void funca2a2c( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
     v.vx = v2.vx - v1.vx;
     v.vy = v2.vy - v1.vy;
     v.vz = v2.vz - v1.vz;
-    system_psyq_vector_normal( &v, &v_res1 );
+    system_psyq_vector_normal(&v, &v_res1);
 
-    if( v_res1.vz == v3.vz )
+    if (v_res1.vz == v3.vz)
     {
         v_res1.vz += 0x1;
     }
 
-    GTE_OUTERPRODUCT12( &v_res1, &v3, &v );
-    system_psyq_vector_normal( &v, &v_res2 );
+    GTE_OUTERPRODUCT12(&v_res1, &v3, &v);
+    system_psyq_vector_normal(&v, &v_res2);
 
-    GTE_OUTERPRODUCT12( &v_res1, &v_res2, &v );
-    system_psyq_vector_normal( &v, &v_res3 );
+    GTE_OUTERPRODUCT12(&v_res1, &v_res2, &v);
+    system_psyq_vector_normal(&v, &v_res3);
 
     m_ret.m[0][0] = hu[SP + 0x20]; // v_res2
     m_ret.m[0][1] = hu[SP + 0x24];
@@ -1351,7 +1351,7 @@ void funca2a2c( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
     m_ret.m[2][1] = hu[SP + 0x44];
     m_ret.m[2][2] = hu[SP + 0x48];
 
-    GTE_APPLYMATRIX( &m_ret.m, &v1, &m_ret.t );
+    GTE_APPLYMATRIX(&m_ret.m, &v1, &m_ret.t);
 
     m_ret.t[0] = 0 - m_ret.t[0];
     m_ret.t[1] = 0 - m_ret.t[1];
@@ -1360,7 +1360,7 @@ void funca2a2c( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
 
 
 
-void funca2c68( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
+void funca2c68(MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3)
 {
     VECTOR v;
     VECTOR v_res1;
@@ -1370,18 +1370,18 @@ void funca2c68( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
     v.vx = v2.vx - v1.vx;
     v.vy = v2.vy - v1.vy;
     v.vz = v2.vz - v1.vz;
-    system_psyq_vector_normal( &v, &v_res1 );
+    system_psyq_vector_normal(&v, &v_res1);
 
-    if( v_res1.vz == v3.vz )
+    if (v_res1.vz == v3.vz)
     {
         v_res1.vz += 0x1;
     }
 
-    GTE_OUTERPRODUCT12( &v_res1, &v3, SP + 0x10 );
-    system_psyq_vector_normal( &v, &v_res2 );
+    GTE_OUTERPRODUCT12(&v_res1, &v3, SP + 0x10);
+    system_psyq_vector_normal(&v, &v_res2);
 
-    GTE_OUTERPRODUCT12( &v_res1, &v_res2, &v );
-    system_psyq_vector_normal( &v, &v_res3 );
+    GTE_OUTERPRODUCT12(&v_res1, &v_res2, &v);
+    system_psyq_vector_normal(&v, &v_res3);
 
     m_ret.m[0][0] = hu[SP + 0x20]; // v_res2
     m_ret.m[0][1] = hu[SP + 0x24];
@@ -1393,66 +1393,66 @@ void funca2c68( MATRIX& m_ret, SVECTOR& v1, SVECTOR& v2, VECTOR& v3 )
     m_ret.m[2][1] = hu[SP + 0x44];
     m_ret.m[2][2] = hu[SP + 0x48];
 
-    GTE_APPLYMATRIX( &m_ret.m, &v1, &m_ret.t );
+    GTE_APPLYMATRIX(&m_ret.m, &v1, &m_ret.t);
 }
 
 
 
-int funca2e80( S0 )
+int funca2e80(S0)
 {
     S1 = S0 + 0x8;
 
-    system_gte_rotation_matrix_from_xyz( S0 + 0x38, S1 );
+    system_psyq_rot_matrix(S0 + 0x38, S1);
 
     [S0 + 0x1c] = w(h[S0 + 0x40]);
     [S0 + 0x20] = w(h[S0 + 0x42]);
     [S0 + 0x24] = w(h[S0 + 0x44]);
 
-    system_scale_matrix_by_vector( S1, S0 + 0x28 );
+    system_psyq_scale_matrix(S1, S0 + 0x28);
 
-    system_gte_matrixes_multiply_A0_A1_to_A1( w[S0 + 0x0] + 0x8, S1 );
+    system_gte_matrixes_multiply_A0_A1_to_A1(w[S0 + 0x0] + 0x8, S1);
 
-    system_psyq_set_rot_matrix( w[S0 + 0x0] + 0x8 );
+    system_psyq_set_rot_matrix(w[S0 + 0x0] + 0x8);
 
-    system_psyq_set_trans_matrix( w[S0 + 0x0] + 0x8 );
+    system_psyq_set_trans_matrix(w[S0 + 0x0] + 0x8);
 
-    system_gte_rot_trans( S0 + 0x40, S0 + 0x1c, SP + 0x10 );
+    system_gte_rot_trans(S0 + 0x40, S0 + 0x1c, SP + 0x10);
 
     return w[SP + 0x10];
 }
 
 
 
-void funca2f1c( S0 )
+void funca2f1c(S0)
 {
-    system_gte_rotation_matrix_from_yxz( S0 + 0x38, S0 + 0x8 );
+    system_gte_rotation_matrix_from_yxz(S0 + 0x38, S0 + 0x8);
 
     [S0 + 0x1c] = w(h[S0 + 0x40]);
     [S0 + 0x20] = w(h[S0 + 0x42]);
     [S0 + 0x24] = w(h[S0 + 0x44]);
 
-    system_scale_matrix_by_vector( S0 + 0x8, S0 + 0x28 );
+    system_psyq_scale_matrix(S0 + 0x8, S0 + 0x28);
 
-    system_gte_matrixes_multiply_A0_A1_to_A1( w[S0 + 0x0] + 0x8, S0 + 0x8 );
+    system_gte_matrixes_multiply_A0_A1_to_A1(w[S0 + 0x0] + 0x8, S0 + 0x8);
 
-    system_psyq_set_rot_matrix( w[S0 + 0x0] + 0x8 );
+    system_psyq_set_rot_matrix(w[S0 + 0x0] + 0x8);
 
-    system_psyq_set_trans_matrix( w[S0 + 0x0] + 0x8 );
+    system_psyq_set_trans_matrix(w[S0 + 0x0] + 0x8);
 
-    system_gte_rot_trans( S0 + 0x40, S0 + 0x1c, SP + 0x10 );
+    system_gte_rot_trans(S0 + 0x40, S0 + 0x1c, SP + 0x10);
 }
 
 
 
-int funca2fb8( A0, A1, S0, S1 )
+int funca2fb8(A0, A1, S0, S1)
 {
     [SP + 0x10] = w(w[A1 + 0x0] - h[A0 + 0x40]);
     [SP + 0x14] = w(w[A1 + 0x4] - h[A0 + 0x42]);
     [SP + 0x18] = w(w[A1 + 0x8] - h[A0 + 0x44]);
 
-    system_psyq_vector_normal( A0 = SP + 0x10, S0 );
+    system_psyq_vector_normal(A0 = SP + 0x10, S0);
 
-    if( ((w[SP + 0x10] + 0x2) < 0x4) && ((w[SP + 0x14] + 0x2) < 0x4) && ((w[SP + 0x18] + 0x2) < 0x4) )
+    if (((w[SP + 0x10] + 0x2) < 0x4) && ((w[SP + 0x14] + 0x2) < 0x4) && ((w[SP + 0x18] + 0x2) < 0x4))
     {
         [S0 + 0x0] = w(w[SP + 0x10] << 0xc);
         [S0 + 0x4] = w(w[SP + 0x14] << 0xc);
@@ -1461,7 +1461,7 @@ int funca2fb8( A0, A1, S0, S1 )
         return 1;
     }
 
-    if( S1 != 0x1000 )
+    if (S1 != 0x1000)
     {
         [S0 + 0x0] = w((w[S0 + 0x0] * S1) / 0x1000);
         [S0 + 0x4] = w((w[S0 + 0x4] * S1) / 0x1000);
@@ -1491,13 +1491,13 @@ void ending_list_init()
 
 
 
-void ending_list_insert_sorted( elem, value, u8 sort, callback )
+void ending_list_insert_sorted(elem, value, u8 sort, callback)
 {
     prev = 0x800af3c8;
 
     do
     {
-        if( bu[prev + 0xf] < sort )
+        if (bu[prev + 0xf] < sort)
         {
             [elem + 0x0] = w(w[prev + 0x0]);
             [elem + 0x4] = w(prev);
@@ -1515,10 +1515,10 @@ void ending_list_insert_sorted( elem, value, u8 sort, callback )
 
         // go to next element
         prev = w[prev + 4];
-    } while( w[prev + 4] != 0 )
+    } while (w[prev + 4] != 0)
 
     // insert as last element
-    if( bu[prev + 0xf] < sort )
+    if (bu[prev + 0xf] < sort)
     {
         [elem + 0x0] = w(w[prev + 0x0]);
         [elem + 0x4] = w(prev);
@@ -1539,9 +1539,9 @@ void ending_list_activate_callback()
 {
     // activate callbacks for type 0x4
     elem = w[0x800af3c8 + 0x4];
-    while( w[elem + 0x4] != 0 )
+    while (w[elem + 0x4] != 0)
     {
-        if( bu[elem + 0xe] == 0x4 )
+        if (bu[elem + 0xe] == 0x4)
         {
             A0 = elem;
             800A3254	jalr   w[elem + 0x8] ra
@@ -1550,9 +1550,9 @@ void ending_list_activate_callback()
     }
 
     elem = w[0x800af3c8 + 0x4];
-    while( w[elem + 0x4] != 0 )
+    while (w[elem + 0x4] != 0)
     {
-        if( bu[elem + 0xe] == 0x2 )
+        if (bu[elem + 0xe] == 0x2)
         {
             [elem + 0xe] = b(0x4);
         }
@@ -1562,7 +1562,7 @@ void ending_list_activate_callback()
 
 
 
-void ending_list_remove( elem )
+void ending_list_remove(elem)
 {
     prev = w[elem + 0x0];
     next = w[elem + 0x4];
@@ -1572,34 +1572,34 @@ void ending_list_remove( elem )
 
 
 
-void ending_list_set_elem_type_8( elem )
+void ending_list_set_elem_type_8(elem)
 {
     [elem + 0xe] = b(0x8);
 }
 
 
 
-void ending_list_set_elem_type_4( elem )
+void ending_list_set_elem_type_4(elem)
 {
     [elem + 0xe] = b(0x4);
 }
 
 
 
-void ending_list_set_elem_type_10( elem )
+void ending_list_set_elem_type_10(elem)
 {
     [elem + 0xe] = b(0x10);
 }
 
 
 
-u32 ending_list_find( A0 )
+u32 ending_list_find(A0)
 {
     elem = w[0x800af3c8 + 0x4];
 
-    while( w[elem + 0x4] != 0 )
+    while (w[elem + 0x4] != 0)
     {
-        if( hu[elem + 0xc] == A0 ) return elem;
+        if (hu[elem + 0xc] == A0) return elem;
 
         elem = w[elem + 0x4];
     }
@@ -1609,12 +1609,12 @@ u32 ending_list_find( A0 )
 
 
 
-void ending_data_update_position( CreditsItem& data )
+void ending_data_update_position(CreditsItem& data)
 {
-    if( data.flags & 0x0010 )
+    if (data.flags & 0x0010)
     {
         VECTOR v;
-        if( funca379c( data + 0x1c, data + 0x78, v, data.scale ) != 0 )
+        if (funca379c(data + 0x1c, data + 0x78, v, data.scale) != 0)
         {
             // if diff between vectors was too small
             data.flags ^= 0x0010;
@@ -1634,9 +1634,9 @@ void ending_data_update_position( CreditsItem& data )
 
 
 
-void ending_data_update_colors( CreditsItem& data )
+void ending_data_update_colors(CreditsItem& data)
 {
-    if( data.flags & 0x0008 )
+    if (data.flags & 0x0008)
     {
         // update colors
         data.r += data.r_step;
@@ -1645,7 +1645,7 @@ void ending_data_update_colors( CreditsItem& data )
 
         data.steps -= 1;
 
-        if( data.steps == 0 )
+        if (data.steps == 0)
         {
             data.flags ^= 0x0008; // remove update
             // set to final
@@ -1658,9 +1658,9 @@ void ending_data_update_colors( CreditsItem& data )
 
 
 
-void funca34c4( CreditsItem& data )
+void funca34c4(CreditsItem& data)
 {
-    if( data.flags & 0x0002 ) return;
+    if (data.flags & 0x0002) return;
 
 // + 0 [][] some +8 check
 // + 2 [][] number of some items 0x4 size
@@ -1671,13 +1671,13 @@ void funca34c4( CreditsItem& data )
 
     A0 = hu[data.file + 0x0];
 
-    if( hu[data + 0x6] == 0 )
+    if (hu[data + 0x6] == 0)
     {
         [data + 0x8] = h(hu[data + 0x8] + 0x1);
 
-        if( hu[data + 0x8] >= A0 )
+        if (hu[data + 0x8] >= A0)
         {
-            if( data.flags & 0x0004 )
+            if (data.flags & 0x0004)
             {
                 [data + 0x8] = h(0);
             }
@@ -1687,7 +1687,7 @@ void funca34c4( CreditsItem& data )
             }
         }
 
-        func36244( data.file, hu[data + 0x8] );
+        func36244(data.file, hu[data + 0x8]);
 
         V0 = w[0x8003623c];
         [data + 0x6] = h(bu[V0 + 0x1]);
@@ -1698,14 +1698,14 @@ void funca34c4( CreditsItem& data )
 
 
 
-int funca358c( u32* otag, not_used, POLY_FT4* poly, CreditsItem& data )
+int funca358c(u32* otag, not_used, POLY_FT4* poly, CreditsItem& data)
 {
-    item_n = func36244( data.file, hu[data + 0x8] );
+    item_n = func36244(data.file, hu[data + 0x8]);
 
     S4 = w[0x80036240];
     S6 = w[0x8003623c];
 
-    for( int i = 0; i < item_n; ++i )
+    for (int i = 0; i < item_n; ++i)
     {
         x = hu[data + 0x5c] + bu[S4 + 0x0] - hu[S6 + 0x6];
         y = hu[data + 0x5e] + bu[S4 + 0x1] - hu[S6 + 0x4];
@@ -1732,16 +1732,16 @@ int funca358c( u32* otag, not_used, POLY_FT4* poly, CreditsItem& data )
         poly->u3 = bu[S4 + 0x2] + hu[S4 + 0x4] - 1;
         poly->v3 = bu[S4 + 0x3] + hu[S4 + 0x6] - 1;
 
-        system_psyq_set_poly_ft4( poly );
+        system_psyq_set_poly_ft4(poly);
 
-        if( data.flags & 0x8000 )
+        if (data.flags & 0x8000)
         {
-            system_psyq_set_semi_trans( poly, 0x1 );
+            system_psyq_set_semi_trans(poly, 0x1);
 
             poly->tpage |= (data.flags & 0x6000) >> 0x8;
         }
 
-        system_psyq_add_prim( otag, poly );
+        system_psyq_add_prim(otag, poly);
 
         poly += 0x1;
         S4 += 0xc;
@@ -1754,35 +1754,35 @@ int funca358c( u32* otag, not_used, POLY_FT4* poly, CreditsItem& data )
 
 // get normalized vector difference
 // scale in 0xc fixed point
-int funca379c( vec_from, VECTOR& vec_to, VECTOR& res, s16 scale )
+int funca379c(vec_from, VECTOR& vec_to, VECTOR& res, s16 scale)
 {
     VECTOR v;
     v.vx = vec_to.vx - h[vec_from + 0x40];
     v.vy = vec_to.vy - h[vec_from + 0x42];
     v.vz = vec_to.vz - h[vec_from + 0x44];
 
-    if( v.vx == 0 )
+    if (v.vx == 0)
     {
         // direction across Y
         res.vx = 0;
-        res.vy = ( v.vy < 0 ) ? -0x1000 : 0x1000;
+        res.vy = (v.vy < 0) ? -0x1000 : 0x1000;
         res.vz = 0;
     }
-    else if( v.vy == 0 )
+    else if (v.vy == 0)
     {
         // direction across X
-        res.vx = ( v.vx < 0 ) ? -0x1000 : 0x1000;
+        res.vx = (v.vx < 0) ? -0x1000 : 0x1000;
         res.vy = 0;
         res.vz = 0;
     }
     else
     {
         // normalize vector
-        system_psyq_vector_normal( &v, res );
+        system_psyq_vector_normal(&v, res);
     }
 
     // if all coords are small - scale it
-    if( ((v.vx + 0x2) < 0x4) && ((v.vy + 0x2) < 0x4) && ((v.vz + 0x2) < 0x4) )
+    if (((v.vx + 0x2) < 0x4) && ((v.vy + 0x2) < 0x4) && ((v.vz + 0x2) < 0x4))
     {
         res.vx = v.vx * 0x1000;
         res.vy = v.vy * 0x1000;
@@ -1790,7 +1790,7 @@ int funca379c( vec_from, VECTOR& vec_to, VECTOR& res, s16 scale )
         return 1;
     }
 
-    if( scale != 0x1000 )
+    if (scale != 0x1000)
     {
         res.vx = (res.vx * scale) / 0x1000;
         res.vy = (res.vy * scale) / 0x1000;

@@ -2,8 +2,8 @@
 
 8004a62c offset to new model structure at 80138250.
 
-80062f19 [] looks like enemy lure value (looks like 0xc fixed point)
-80062f1b [] 
+0x80062f19 [] looks like enemy lure value (looks like 0xc fixed point)
+0x80062f1b [] looks like enemy away value
 
 80062f24 addresss of current message render data.
 
@@ -126,10 +126,10 @@
             5 - play and set to 0.
             6 - play and set to 3.
 
-80075cf8 [][]     current background scroll step.
+0x80075cf8 [][]     current background scroll step.
 
-80075d00 [][][][] store pointer to StHEADER (ring header) here for movie reading (80075df0)
-80075df0 StHEADER (0x20 size)
+0x80075d00 [][][][] store pointer to StHEADER (ring header) here for movie reading (80075df0)
+0x80075df0 StHEADER (0x20 size)
     +  0 [][]     id.
     +  2 [][]     type.
     +  4 [][]     secCount.
@@ -142,27 +142,27 @@
     + 18 [][][][] dummy2.
     + 1c [][][][] CdlLOC loc;
 
-80075e10 [][][][] BCX start address. Color data. Looks like free place to do something.
-80075e10 [][]     DP ???
-80075e12 [][]     DP ???
-80075e14 [][]     start X position of scroll.
-80075e18 [][]     end X position of scroll.
-80075e1c [][]     start Y position of scroll.
-80075e20 [][]     end Y position of scroll.
-80075e24 temp memory in script 5/6.
+0x80075e10 [][][][] BCX start address. Color data. Looks like free place to do something.
+0x80075e10 [][]     DP ???
+0x80075e12 [][]     DP ???
+0x80075e14 [][]     start X position of scroll.
+0x80075e18 [][]     end X position of scroll.
+0x80075e1c [][]     start Y position of scroll.
+0x80075e20 [][]     end Y position of scroll.
+0x80075e24 temp memory in script 5/6.
 
-80075dec [][]     screen index (ffvii uses two render buffers). Used to render to specific buffers.
+0x80075dec [][]     screen index (ffvii uses two render buffers). Used to render to specific buffers.
 
-80077f64 message render related data. (0x3400 size each)
+0x80077f64 message render related data. (0x3400 size each)
 
-8007e770 [][][][] offset to field models header (block 7 in DAT file).
+0x8007e770 [][][][] offset to field models header (block 7 in DAT file).
 
-8007e7a0          array of some fade data. (size 0x4).
-8007e7a8 [][][][] offset to dialog block.
+0x8007e7a0          array of some fade data. (size 0x4).
+0x8007e7a8 [][][][] offset to dialog block.
 
-8007e7b8
+0x8007e7b8
 
-8007e7ac array of LINE data. (size 0x18).
+0x8007e7ac array of LINE data. (size 0x18).
     + 00 [][] x1.
     + 02 [][] y1.
     + 04 [][] z1.
@@ -181,15 +181,15 @@
     + 15 []   actor move to line (for talk check).
     + 16 []   store SLIP byte here.
 
-8007eb08 packet settings for 80100820.
+0x8007eb08 packet settings for 80100820.
 
-8007eb90 [][]     base offset x for DRAWENV. Init with 0xa0.
-8007eb94 [][]     base offset y for DRAWENV. Init with 0x78.
+0x8007eb90 [][]     base offset x for DRAWENV. Init with 0xa0.
+0x8007eb94 [][]     base offset y for DRAWENV. Init with 0x78.
 0x8007eb98 array of entity_id for actors. -1 if no entity assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
 
-8007ebc8 []       store 1 here during random encounter.
+0x8007ebc8 []       store 1 here during random encounter.
 
-8007ebd8 [][][][] 
+0x8007ebd8 [][][][] 
 
 0x8007ebe0 []       init with 1. Set to 1 when start battle via opcode.
 

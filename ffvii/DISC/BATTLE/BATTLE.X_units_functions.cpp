@@ -129,12 +129,12 @@ A3 = w[0x80163c74];
 battle_effect_sprite_add();
 [0x80163c74] = w(V0);
 
-if( bu[0x80062d98] == 0 )
+if (bu[0x80062d98] == 0)
 {
     V0 = h[S2 + 2];
     [S2 + 2] = h(V0 + 1);
 
-    if( V0 >= 7 )
+    if (V0 >= 7)
     {
         [S2 + 0] = h(-1);
     }
@@ -2330,7 +2330,7 @@ VXY2 = p2;
 VZ2 = 0;
 gte_RTPT(); // Perspective transform on 3 points
 
-if( TRZ <= 0 )
+if (TRZ <= 0)
 {
     return otc;
 }
@@ -2340,12 +2340,12 @@ depth = TRZ >> (10 - priority);
 [otc] = w((w[buffer + depth * 4] & 00ffffff) | 09000000);
 [buffer + depth * 4] = w(otc & 00ffffff);
 
-if( ( SXY0 - SXY1) == 0 )
+if ((SXY0 - SXY1) == 0)
 {
     SXY1 = SXY1 + 1;
 }
 
-if( ( SXY0 - SXY2P ) == 0 )
+if ((SXY0 - SXY2P) == 0)
 {
     SXY2P = SXY2P + 10000;
 }
@@ -3601,21 +3601,21 @@ else
 V0 = h[0x801590d4];
 S1 = 801621f0 + V0 * 20;
 
-if( bu[0x80062d98] == 0 )
+if (bu[0x80062d98] == 0)
 {
     current_frame = h[S1 + 2];
     start_frame = h[S1 + 8];
 
-    if( current_frame >= start_frame )
+    if (current_frame >= start_frame)
     {
         real_current_frame = current_frame - start_frame;
         final_frame = hu[S1 + a];
 
-        if( real_current_frame < final_frame & ff7f )
+        if (real_current_frame < final_frame & ff7f)
         {
             // skip every second frame
             // this creates effect of fireshot blinking
-            if( real_current_frame & 1 )
+            if (real_current_frame & 1)
             {
                 [S1 + 2] = h(current_frame + 1);
                 return;
@@ -4704,20 +4704,18 @@ AT = AT + V0;
 ////////////////////////////////
 // funcd8a88()
 
-A0 = 0;
-system_psyq_draw_sync();
+system_psyq_draw_sync(0);
 
-A0 = bu[0x800f19a4];
-system_psyq_vsync();
+system_psyq_vsync(bu[0x800f19a4]);
 
-A0 = 800faff4;
-if( w[0x801517c0] == A0 )
+A0 = 0x800faff4;
+if (w[0x801517c0] == A0)
 {
-    A0 = A0 + 40f4;
+    A0 = A0 + 0x40f4;
 }
 [0x801517c0] = w(A0);
 
-[0x800f8368] = w(w[0x800f8368] ^ 1);
+[0x800f8368] = w(w[0x800f8368] ^ 0x1);
 ////////////////////////////////
 
 
@@ -4726,8 +4724,8 @@ if( w[0x801517c0] == A0 )
 // funcd8af0()
 
 [0x8009a000] = h(A0);
-[0x8009a004] = w(A0 & ffff);
-[0x8009a008] = w(A0 & ffff);
+[0x8009a004] = w(A0 & 0xffff);
+[0x8009a008] = w(A0 & 0xffff);
 system_akao_execute();
 ////////////////////////////////
 
@@ -4736,7 +4734,7 @@ system_akao_execute();
 ////////////////////////////////
 // funcd8b2c()
 
-if( bu[0x80062d99] != 0 )
+if (bu[0x80062d99] != 0)
 {
     A0 = 0x98;
     funcd8af0();
@@ -4879,7 +4877,7 @@ AT = AT + A0;
 
 [0x80062fdc] = w(0);
 
-if( w[0x800f1990] != w[0x800f8368] )
+if (w[0x800f1990] != w[0x800f8368])
 {
     [0x80062fdc] = w(1);
 
@@ -4889,7 +4887,7 @@ if( w[0x800f1990] != w[0x800f8368] )
     A0 = w[0x801517c0];
     system_psyq_put_drawenv();
 
-    if( bu[0x801620a0] == 0 )
+    if (bu[0x801620a0] == 0)
     {
         A0 = w[0x801517c0];
         A1 = bu[A0 + 19];
@@ -4901,7 +4899,7 @@ if( w[0x800f1990] != w[0x800f8368] )
     800D8E08	jal    funcd8b60 [$800d8b60]
 
     A0 = 800ff0d4;
-    if( w[0x800f8368] == 0 )
+    if (w[0x800f8368] == 0)
     {
         A0 = A0 + 40f4;
     }
@@ -4932,7 +4930,7 @@ system_psyq_clear_otag();
 
 S0 = V0;
 800D8EC4	addiu  v0, zero, $ffff (=-$1)
-if( S0 != - 1 )
+if (S0 != - 1)
 {
     A0 = 800f508c + w[0x800f1994] * 10;
     800D8EE0	jal    funcdbec8 [$800dbec8]
@@ -4987,7 +4985,7 @@ system_psyq_add_prim();
 A2 = 00a6;
 V0 = w[0x800f8368];
 S2 = 800f57d8;
-if( V0 == 0 )
+if (V0 == 0)
 {
     A2 = 196;
 }
@@ -5041,7 +5039,7 @@ A0 = A0 + V0;
 Ld90b0:	; 800D90B0
 system_menu_update_buttons();
 
-if( w[0x800f1990] != w[0x800f8368] )
+if (w[0x800f1990] != w[0x800f8368])
 {
     [0x800f1990] = w(w[0x800f8368]);
 
@@ -5050,14 +5048,14 @@ if( w[0x800f1990] != w[0x800f8368] )
     [0x80062d98] = b(bu[0x80062d99]);
 }
 
-if( bu[0x80062d99] == 0 )
+if (bu[0x80062d99] == 0)
 {
     800D9118	jal    funce0e34 [$800e0e34]
 }
 
-if( g_menu_pressed_1 & 0x0800 ) // first pad pressed start
+if (g_menu_pressed_1 & 0x0800) // first pad pressed start
 {
-    if( bu[0x80163c7c] == 4 )
+    if (bu[0x80163c7c] == 4)
     {
         [0x80062d99] = b(bu[0x80062d99] ^ 1);
 
@@ -5072,7 +5070,7 @@ if( g_menu_pressed_1 & 0x0800 ) // first pad pressed start
     }
 }
 
-if( bu[0x80062d99] == 0 )
+if (bu[0x80062d99] == 0)
 {
     800D9198	jal    funca38fc [$800a38fc]
 }
@@ -8669,7 +8667,7 @@ A1 = A1 >> 10;
 ////////////////////////////////
 // funcdcf94()
 
-if( A0 == -1 )
+if (A0 == -1)
 {
     [0x800f1e4f] = b(0);
 }
@@ -8711,7 +8709,7 @@ V0 = S0 < 000c;
 
 Ldd030:	; 800DD030
 V0 = bu[0x800f1e4f];
-if( V0 != 0 )
+if (V0 != 0)
 {
     A0 = 8;
     A1 = hu[0x800f1e50];
@@ -11472,7 +11470,7 @@ unit_id = A0;
 
 V1 = bu[0x800f38a0]; // some unit id
 
-if( w[0x800f57cc] == 0 )
+if (w[0x800f57cc] == 0)
 {
     [0x800f9106 + V1 * 240 + 0] = b(0);
     [0x800f9107 + V1 * 240 + 0] = b(0);
@@ -11508,14 +11506,14 @@ A0 = bu[0x800f38a0];
 S2 = 8009db94 + A0 * 440;
 S0 = 800f90fc + A0 * 240;
 
-if( h[0x800f3896] == 4 )
+if (h[0x800f3896] == 4)
 {
-    if( w[0x800f99e4] == 0 )
+    if (w[0x800f99e4] == 0)
     {
         A0 = S0;
         system_menu_handle_buttons();
 
-        if( h[S0 + 8] == 0 )
+        if (h[S0 + 8] == 0)
         {
             V1 = g_menu_repeated_1;
             V0 = V1 & 0020;
@@ -11562,7 +11560,7 @@ if( h[0x800f3896] == 4 )
             800DFF94	nop
 
             Ldff98:	; 800DFF98
-            if( V1 & 0040 )
+            if (V1 & 0040)
             {
                 [0x800f99e4] = w(1);
                 [0x800f3896] = h(1);

@@ -67,13 +67,13 @@ void func111e4()
     [0x8009a000] = h(0xf4);
     system_akao_execute();
 
-    if ((bu[0x8009d5e9] & 30) == 0)
+    if ((bu[0x8009c6e4 + 0xf05] & 0x30) == 0)
     {
         func1117c(0x2b);
     }
 
-    [0x800707bc] = h(hu[0x8009abf4 + 0x2]);
-    [0x800707be] = h(bu[0x800716d0] | hu[0x8009ac32]);
+    [0x800707bc] = h(g_field_control.arg);
+    [0x800707be] = h(bu[0x800716d0] | hu[0x8009abf4 + 0x3e]); // battle flags
 
     func146a4(); // load BATTLE.X or BROM.X and run it
 
@@ -141,7 +141,7 @@ void func112e8()
         [0x800965e8] = h(0);
     }
 
-    g_field_map_id = hu[0x8009abf4 + 0x2];
+    g_field_map_id = g_field_control.arg;
 }
 
 
@@ -464,18 +464,12 @@ void system_main()
                 case GAME_STATE_BATTLE:
                 case 0x4:
                 {
-                    [0x8009d2a0 + 0x0] = b(bu[0x8009d2a0 + 0x0] + 0x1);
-
-                    if (bu[0x8009d2a0 + 0x0] == 0)
-                    {
-                        [0x8009d2a0 + 0x1] = b(bu[0x8009d2a0 + 0x1] + 0x1);
-                    }
+                    [0x8009c6e4 + 0xbbc] = h(hu[0x8009c6e4 + 0xbbc] + 0x1);
 
                     if (bu[0x80071e34] == 0x1)
                     {
                         func260dc();
                         func26090(); // LIMTMENU.MNU
-
                         [0x80071e34] = b(0);
                     }
 
@@ -496,20 +490,15 @@ void system_main()
 
                             func111e4(); // we load battle here
 
-                            if (hu[0x800707be] & 0x8)
+                            if (hu[0x800707be] & 0x8) // escaped
                             {
-                                [0x8009d2a0 + 0x2] = b(bu[0x8009d2a0 + 0x2] + 0x1);
-
-                                if (bu[0x8009d2a0 + 0x2] == 0)
-                                {
-                                    [0x8009d2a0 + 0x3] = b(bu[0x8009d2a0 + 0x3] + 0x1);
-                                }
+                                [0x8009c6e4 + 0xbbe] = h(hu[0x8009c6e4 + 0xbbe] + 0x1);
                             }
                         }
 
-                        if (hu[0x800707be] & 0x1)
+                        if (hu[0x800707be] & 0x1) // dead
                         {
-                            if (bu[0x8009ac31] == 0)
+                            if (bu[0x8009abf4 + 0x3d] == 0) // if gameover not disabled
                             {
                                 g_field_control.cmd = FIELD_CMD_GAME_OVER;
                                 [0x800707be] = h(0);
@@ -541,21 +530,16 @@ void system_main()
 
                         func111e4(); // we load battle here
 
-                        if (hu[0x800707be] & 0x8)
+                        if (hu[0x800707be] & 0x8) // escaped
                         {
-                            [0x8009d2a2] = b(bu[0x8009d2a2] + 0x1);
-
-                            if (bu[0x8009d2a2] == 0)
-                            {
-                                [0x8009d2a3] = b(bu[0x8009d2a3] + 0x1);
-                            }
+                            [0x8009c6e4 + 0xbbe] = h(hu[0x8009c6e4 + 0xbbe] + 0x1);
 
                             g_gamestate_prev = GAME_STATE_BATTLE;
                             g_gamestate = GAME_STATE_WORLDMAP;
                         }
                         else
                         {
-                            if (((hu[0x800707be] & 0x1) != 0) || ((w[0x8009d268] == 0) && (w[0x80095ddc] & 0x20000000)))
+                            if ((hu[0x800707be] & 0x1) || ((w[0x8009c6e4 + 0xb84] == 0) && (w[0x80095ddc] & 0x20000000)))
                             {
                                 [0x800707be] = h(0);
                                 g_field_control.cmd = FIELD_CMD_GAME_OVER;
@@ -568,8 +552,8 @@ void system_main()
                                 {
                                     while (g_bg_render != BG_RENDER_NONE) {}
 
-                                    g_gamestate_prev = GAME_STATE_FIELD; // maybe error, needs more check!!!
-                                    g_gamestate = GAME_STATE_FIELD; // set gamestate to field
+                                    g_gamestate_prev = GAME_STATE_BATTLE;
+                                    g_gamestate = GAME_STATE_FIELD;
                                 }
                                 else
                                 {
@@ -618,29 +602,27 @@ void system_main()
                     if (bu[0x80071e34] == 0x1)
                     {
                         func260dc();
-
                         func26090(); // LIMTMENU.MNU
-
                         [0x80071e34] = b(0);
                     }
 
                     switch (g_field_control.cmd)
                     {
-                        case FIELD_CMD_MENU_NAME: func24d88(h[0x8009abf4 + 0x2]); break; // NAMEMENU.MNU
+                        case FIELD_CMD_MENU_NAME: func24d88(g_field_control.arg); break; // NAMEMENU.MNU
 
                         case FIELD_CMD_MENU_FORM: // FORMMENU.MNU
                         {
-                            func24dd4(h[0x8009abf4 + 0x2]);
+                            func24dd4(g_field_control.arg);
                             func260dc();
                             func26090(); // LIMTMENU.MNU
                         }
                         break;
 
-                        case FIELD_CMD_MENU_SHOP: func24e18(h[0x8009abf4 + 0x2]); break; // SHOPMENU.MNU
+                        case FIELD_CMD_MENU_SHOP: func24e18(g_field_control.arg); break; // SHOPMENU.MNU
 
                         case FIELD_CMD_MENU_MAIN:
                         {
-                            if (h[0x8009abf4 + 0x2] == 0x1)
+                            if (g_field_control.arg == 0x1)
                             {
                                 system_menu_show(w[0x800e48e0]); // pointer to tutorial settings
                             }
@@ -653,8 +635,8 @@ void system_main()
                         break;
 
                         case FIELD_CMD_MENU_SAVE: func24e94(); break; // SAVEMENU.MNU
-                        case FIELD_CMD_PARTY_STORE: func24fc4(h[0x8009abf4 + 0x2]); break; // ITEMMENU.MNU store party and char equipment and materia
-                        case FIELD_CMD_PARTY_RESTORE: func24f80(h[0x8009abf4 + 0x2]); break; // ITEMMENU.MNU restore party and char equipment and materia
+                        case FIELD_CMD_PARTY_STORE: func24fc4(g_field_control.arg); break; // ITEMMENU.MNU store party and char equipment and materia
+                        case FIELD_CMD_PARTY_RESTORE: func24f80(g_field_control.arg); break; // ITEMMENU.MNU restore party and char equipment and materia
                     }
 
                     field_copy_battle_party_to_party();

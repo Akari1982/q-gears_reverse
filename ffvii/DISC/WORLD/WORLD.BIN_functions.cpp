@@ -372,7 +372,7 @@ if (S1 != 0)
 
     A0 = SP + 30;
     A1 = SP + 10;
-    system_gte_rotation_matrix_from_xyz();
+    system_psyq_rot_matrix();
 
     A0 = SP + 10;
     system_psyq_set_rot_matrix();
@@ -588,7 +588,7 @@ funca1dc0();
 
 A0 = SP + 18;
 A1 = SP + 30;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 30;
 system_psyq_set_rot_matrix();
@@ -907,7 +907,7 @@ A0 = SP + 0070;
 S0 = SP + 0138;
 A1 = S0;
 [SP + 0074] = h(V0);
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 800AECB8	jal    $system_psyq_set_rot_matrix
 A0 = S0;
@@ -5049,7 +5049,7 @@ S0 = SP + 0040;
 A1 = S0;
 800B34A8	mflo   v0
 V0 = V0 >> 11;
-800B34B0	jal    $system_gte_rotation_matrix_from_xyz
+800B34B0	jal    $system_psyq_rot_matrix
 [SP + 0014] = h(V0);
 800B34B8	jal    $system_psyq_set_rot_matrix
 A0 = S0;
@@ -5238,7 +5238,7 @@ S0 = SP + 0040;
 A1 = S0;
 800B372C	mflo   v0
 V0 = V0 >> 10;
-800B3734	jal    $system_gte_rotation_matrix_from_xyz
+800B3734	jal    $system_psyq_rot_matrix
 [SP + 0014] = h(V0);
 800B373C	jal    $system_psyq_set_rot_matrix
 A0 = S0;
@@ -5450,7 +5450,7 @@ system_psyq_set_trans_matrix();
 
 A0 = SP + 30;
 A1 = SP + 10;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 10;
 system_psyq_set_rot_matrix();
@@ -5475,7 +5475,7 @@ gte_rtv0tr(); // v0 * rotmatrix + tr vector
 
 A0 = SP + 30;
 A1 = SP + 10;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 10;
 system_psyq_set_rot_matrix();
@@ -5899,7 +5899,7 @@ A0 = SP + 0028;
 [SP + 0028] = h(0);
 V0 = hu[S1 + 001a];
 A1 = S3;
-800B41B0	jal    $system_gte_rotation_matrix_from_xyz
+800B41B0	jal    $system_psyq_rot_matrix
 [SP + 002a] = h(V0);
 800B41B8	j      Lb41c4 [$800b41c4]
 A0 = S3;
@@ -7594,7 +7594,7 @@ wm_set_translation_vector_in_screen_space();
 
 A0 = SP + 30;
 A1 = SP + 40;
-system_gte_rotation_matrix_from_xyz();
+system_psyq_rot_matrix();
 
 A0 = SP + 40;
 A1 = SP + 60;

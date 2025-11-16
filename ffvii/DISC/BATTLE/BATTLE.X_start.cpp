@@ -10,8 +10,7 @@ funcb383c(); // we load camera and stage here.
 
 funcb430c(); // we read first block of stage and set stage scrolling.
 
-A0 = 0;
-system_psyq_vsync(); // wait
+system_psyq_vsync(0); // wait
 
 A0 = 0; // not displayed on screen
 system_psyq_set_disp_mask();
@@ -26,7 +25,7 @@ funcb3e2c(); // init some callbacks and data
 
 battle_queue1_camera_init();
 
-A0 = 800c4d10; // funcc4d10() battle fade in effect
+A0 = 0x800c4d10; // funcc4d10() battle fade in effect
 funcbc04c(); // add effect callback
 
 battle_update_render();
@@ -34,7 +33,7 @@ battle_update_render();
 battle_update_render();
 
 // wait until render sets to base 0
-while( g_bg_render != BG_RENDER_NONE ) {}
+while (g_bg_render != BG_RENDER_NONE) {}
 
 S1 = 3;
 
@@ -46,7 +45,7 @@ system_psyq_set_disp_mask();
 S0 = 80151922;
 
 Lb31bc:	; 800B31BC
-switch( bu[80163c7c] )
+switch (bu[80163c7c])
 {
     case 0: // load enemies models
     {
@@ -66,9 +65,9 @@ switch( bu[80163c7c] )
     {
         battle_update_render();
 
-        if( bu[800f7df4] == bu[80166f64] ) // all enemies loaded
+        if (bu[800f7df4] == bu[80166f64]) // all enemies loaded
         {
-            if( bu[801518dc] == 0 ) // cdrom finished
+            if (bu[801518dc] == 0) // cdrom finished
             {
                 battle_load_seffects();
 
@@ -87,7 +86,7 @@ switch( bu[80163c7c] )
 
         battle_enemys_init_bones_and_animations();
 
-        for( int i = 4; i < bu[800f7e04] + 4; ++i )
+        for (int i = 4; i < bu[800f7e04] + 4; ++i)
         {
             [801518e4 + i * b9c + 3e] = b(bu[801518e4 + i * b9c + 3e] | 04); // set enemy units to appear
         }
@@ -102,9 +101,9 @@ switch( bu[80163c7c] )
     {
         battle_update_render();
 
-        if( bu[80166f64] == 3 ) // all players loaded
+        if (bu[80166f64] == 3) // all players loaded
         {
-            if( bu[801518dc] == 0 ) // cdrom finished
+            if (bu[801518dc] == 0) // cdrom finished
             {
                 battle_players_init_bones_and_animations();
 
@@ -124,7 +123,7 @@ switch( bu[80163c7c] )
     {
         battle_update_render();
 
-        if( bu[801635fc] == 0 )
+        if (bu[801635fc] == 0)
         {
             [80163c7c] = b(4);
 
@@ -143,7 +142,7 @@ switch( bu[80163c7c] )
 
 [80163c7c] = b(5);
 
-for( int i = 4; i < a; ++i )
+for (int i = 4; i < a; ++i)
 {
     [801518e4 + i * b9c + 25] = b((bu[801518e4 + i * b9c + 25] | 40) & 7f);
 }
@@ -167,22 +166,22 @@ V0 = w[SP + 0010];
 [800f9d9c] = b(0);
 [800f9d98] = b(0);
 
-if( V0 != 0 )
+if (V0 != 0)
 {
     loopb3474:	; 800B3474
         [SP + 10] = w(1);
 
-        if( ( hu[801513dc + 0] & 20 ) == 0 )
+        if ((hu[801513dc + 0] & 20) == 0)
         {
-            if( ( hu[801513dc + 74] & 20 ) == 0 )
+            if ((hu[801513dc + 74] & 20) == 0)
             {
-                if( ( hu[801513dc + e8] & 20 ) == 0 )
+                if ((hu[801513dc + e8] & 20) == 0)
                 {
-                    if( ( hu[801513dc + 15c] & 20 ) == 0 )
+                    if ((hu[801513dc + 15c] & 20) == 0)
                     {
-                        if( ( hu[801513dc + 1d0] & 20 ) == 0 )
+                        if ((hu[801513dc + 1d0] & 20) == 0)
                         {
-                            if( ( hu[801513dc + 244] & 20 ) == 0 )
+                            if ((hu[801513dc + 244] & 20) == 0)
                             {
                                 [SP + 10] = w(0);
                             }
@@ -198,7 +197,7 @@ if( V0 != 0 )
     800B3504	bne    v0, zero, loopb3474 [$800b3474]
 }
 
-for( int i = 4; i < a; ++i )
+for (int i = 4; i < a; ++i)
 {
     A0 = S0 & 00ff;
     800B3510	jal    funcb5aac [$800b5aac]
@@ -261,7 +260,7 @@ Lb353c:	; 800B353C
 
     battle_enemys_init_bones_and_animations();
 
-    for( int i = 4; i < bu[800f7e04] + 4; ++i )
+    for (int i = 4; i < bu[800f7e04] + 4; ++i)
     {
         [80154792 + i * b9c] = b(bu[80154792 + i * b9c] | 04);
     }
@@ -272,7 +271,7 @@ Lb353c:	; 800B353C
     Lb3668:	; 800B3668
     battle_update_render();
 
-    if( bu[801635fc] == 0 )
+    if (bu[801635fc] == 0)
     {
         [80163c7c] = b(4);
     }
@@ -284,11 +283,11 @@ Lb353c:	; 800B353C
 ////////////////////////////////
 // battle_enemys_play_init_animations()
 
-if( ( hu[8016360c + 18] & 0002 ) == 0 )
+if ((hu[8016360c + 18] & 0002) == 0)
 {
-    for( int i = 1; i < bu[800f7e04]; ++ i )
+    for (int i = 1; i < bu[800f7e04]; ++ i)
     {
-        for( int j = 0; j < i * 4; ++j )
+        for (int j = 0; j < i * 4; ++j)
         {
             enemy_id = h[800f7e08 + i * c + 0];
             model_file = w[800f8384 + enemy_id * 4];
@@ -416,7 +415,7 @@ battle_load_enemy_model();
 
 [800f8398] = w(w[800f8394] + V0);
 
-if( bu[800f7df4] >= 3 ) // number of inited enemy
+if (bu[800f7df4] >= 3) // number of inited enemy
 {
     V0 = w[800f7df8 + 8];
     A0 = w[800e8050 + V0 * 8 + 0];
@@ -446,7 +445,7 @@ battle_load_enemy_model();
 
 [800f8394] = w(w[800f8390] + V0);
 
-if( bu[800f7df4] >= 2 ) // number of inited enemy
+if (bu[800f7df4] >= 2) // number of inited enemy
 {
     V0 = w[800f7df8 + 4];
     A0 = w[800e8050 + V0 * 8 + 0];
@@ -474,7 +473,7 @@ A0 = h[800fa9c6];
 battle_load_player_model();
 
 A1 = h[800fa9c8];
-if( A1 != c8 )
+if (A1 != c8)
 {
     A0 = w[800e8068 + A1 * 8 + 0];
     A1 = w[800e8068 + A1 * 8 + 4];
@@ -505,7 +504,7 @@ A0 = h[800fa9ca];
 battle_load_player_model();
 
 A1 = h[800fa9cc];
-if( A1 != c8 )
+if (A1 != c8)
 {
     A0 = w[800e8068 + A1 * 8 + 0];
     A1 = w[800e8068 + A1 * 8 + 4];
@@ -624,9 +623,9 @@ A0 = 3;
 A1 = 3;
 battle_init_models_animation_and_color();
 
-if( hu[80163614] == 39 ) // if safer battle stage
+if (hu[80163614] == 39) // if safer battle stage
 {
-    for( int i = 0; i < a; ++i )
+    for (int i = 0; i < a; ++i)
     {
         [801518e4 + i * b9c + 25] = b(bu[801518e4 + i * b9c + 25] | 10);
     }
@@ -664,12 +663,12 @@ if( hu[80163614] == 39 ) // if safer battle stage
 [80163c7c] = b(0);
 [80166f58] = b(0);
 
-for( int i = 0; i < a; ++i )
+for (int i = 0; i < a; ++i)
 {
     [801518e4 + i * b9c + 26] = b(1);
 }
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     [800f9f28 + i * 4] = w(0);
 }
@@ -680,7 +679,7 @@ A0 = bu[801590cc];
 [800f8374] = b(e);
 
 V1 = bu[801590e0];
-[80163798 + V1 * c + 8] = h(-2); // camera id ( -2 - start battle camera)
+[80163798 + V1 * c + 8] = h(-2); // camera id (-2 - start battle camera)
 
 funcbc1e0(); // init damage, unit movement, effect and camera callback arrays
 
@@ -693,9 +692,9 @@ funcc5bec(); // init 800f9da8 array
 // funcb3fac()
 // check if enemy has formation record
 
-for( int i = 0; i < 6; ++i )
+for (int i = 0; i < 6; ++i)
 {
-    if( h[8016360c + 4c + i * 10 + 0] == A0 ) // battle formation enemy id
+    if (h[8016360c + 4c + i * 10 + 0] == A0) // battle formation enemy id
     {
         [800f7df4] = b(bu[800f7df4] + 1);
         return 0;
@@ -715,11 +714,11 @@ return -1;
 [800fa6d0] = b(bu[8016360c + 1a]); // formation type id
 [80163f30] = b(bu[8016360c + 1b]); // init camera script id
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     A0 = i;
     funcb3fac(); // check if enemy exist in formation
-    if( V0 != -1 )
+    if (V0 != -1)
     {
         V0 = h[8016360c + i * 2] + 14; // add 14 to skip player files
     }
@@ -728,15 +727,15 @@ for( int i = 0; i < 3; ++i )
 
 [800f7e04] = b(0);
 
-for( int i = 0; i < 6; ++i )
+for (int i = 0; i < 6; ++i)
 {
-    if( h[8016360c + 4c + i * 10 + 0] != -1) // battle formation enemy id
+    if (h[8016360c + 4c + i * 10 + 0] != -1) // battle formation enemy id
     {
         [800f7e04] = b(bu[800f7e04] + 1);
     }
 }
 
-for( int i = 0; i < 6; ++i )
+for (int i = 0; i < 6; ++i)
 {
     [800f7e08 + i * c + 0] = h(hu[8016360c + 4c + i * 10 + 0]);
     [800f7e08 + i * c + 2] = h(hu[8016360c + 4c + i * 10 + 2]);
@@ -745,31 +744,31 @@ for( int i = 0; i < 6; ++i )
     [800f7e08 + i * c + 8] = w(w[8016360c + 4c + i * 10 + c]);
 }
 
-if( w[800f7df8] == -1 )
+if (w[800f7df8] == -1)
 {
-    for( int i = 0; i < 6; ++i )
+    for (int i = 0; i < 6; ++i)
     {
-        if( h[800f7e08 + i * c + 0] != -1 )
+        if (h[800f7e08 + i * c + 0] != -1)
         {
             [800f7e08 + i * c + 0] = h(h[800f7e08 + i * c + 0] - 1);
         }
     }
 }
 
-if( w[800f7dfc] == -1 )
+if (w[800f7dfc] == -1)
 {
-    for( int i = 0; i < 6; ++i )
+    for (int i = 0; i < 6; ++i)
     {
-        if( ( h[800f7e08 + i * c + 0] != -1 ) && ( h[800f7e08 + i * c + 0] != 0 ) )
+        if ((h[800f7e08 + i * c + 0] != -1) && (h[800f7e08 + i * c + 0] != 0))
         {
             [800f7e08 + i * c + 0] = h(h[800f7e08 + i * c + 0] - 1);
         }
     }
 }
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
-    if( w[800f7df8 + 0] == -1 )
+    if (w[800f7df8 + 0] == -1)
     {
         [800f7df8 + 8] = w(w[800f7df8 + 0]);
         [800f7df8 + 0] = w(w[800f7df8 + 4]);
@@ -777,18 +776,18 @@ for( int i = 0; i < 3; ++i )
     }
 }
 
-for( int i = 0; i < 2; ++i )
+for (int i = 0; i < 2; ++i)
 {
-    if( w[800f7df8 + 4] == -1 )
+    if (w[800f7df8 + 4] == -1)
     {
         [800f7df8 + 8] = w(w[800f7df8 + 4]);
         [800f7df8 + 4] = w(w[800f7df8 + 8]);
     }
 }
 
-for( int i = 0; i < 6; ++i )
+for (int i = 0; i < 6; ++i)
 {
-    if( h[800f7e08 + i * c + 0] != -1 )
+    if (h[800f7e08 + i * c + 0] != -1)
     {
         [800f7e08 + i * c + 0] = h(h[800f7e08 + i * c + 0] + 3);
     }
@@ -811,7 +810,7 @@ for( int i = 0; i < 6; ++i )
 [800fa63c + 2a] = h(0);
 [800fa63c + 2c] = h(0);
 
-for( int i = 0; i < a; ++i )
+for (int i = 0; i < a; ++i)
 {
     // reset rotation and translation for field parts transformation matrixes
     [800f8158 + i * 34 + 20] = h(0)
@@ -825,9 +824,9 @@ for( int i = 0; i < a; ++i )
 
 V1 = w[801590e4 + 4]; // offset to first file (settings)
 V1 = bu[801590e4 + V1 + 0]; // type of field
-if( V1 == 0 ) // mesh with horisontal scrolling parts (field 47 - Corel Train Battle)
+if (V1 == 0) // mesh with horisontal scrolling parts (field 47 - Corel Train Battle)
 {
-    for( int i = 0; i < a; ++i )
+    for (int i = 0; i < a; ++i)
     {
         [800f8158 + i * 34 + 30] = w(800fa63c);
     }
@@ -840,7 +839,7 @@ if( V1 == 0 ) // mesh with horisontal scrolling parts (field 47 - Corel Train Ba
     [800f8158 + 7 * 34 + 2c] = h(b1e0);
     [800f8158 + 8 * 34 + 2c] = h(63c0);
 }
-else if( V1 == 2 ) // mesh with vertical scrolling parts (field 12 - Shinra Elevators)
+else if (V1 == 2) // mesh with vertical scrolling parts (field 12 - Shinra Elevators)
 {
     [800f8158 + 1 * 34 + 30] = w(800fa63c);
     [800f8158 + 2 * 34 + 30] = w(800fa63c);
@@ -849,13 +848,13 @@ else if( V1 == 2 ) // mesh with vertical scrolling parts (field 12 - Shinra Elev
 
     [800f8158 + 4 * 34 + 2a] = h(30d4);
 }
-else if( V1 == 3 )// mesh with lifestream (field 4e - Final Battle - Sephiroth)
+else if (V1 == 3)// mesh with lifestream (field 4e - Final Battle - Sephiroth)
 {
     [800f8158 + 1 * 34 + 30] = w(800fa63c);
     [800f8158 + 2 * 34 + 30] = w(800fa63c);
     [800f8158 + 3 * 34 + 30] = w(800fa63c);
 }
-else if( V1 == 4 ) // mesh with rotating parts (field 39 - Safer Battle)
+else if (V1 == 4) // mesh with rotating parts (field 39 - Safer Battle)
 {
     [800f8158 + 1 * 34 + 30] = w(800fa63c);
     [800f8158 + 2 * 34 + 30] = w(800fa63c);
@@ -866,7 +865,7 @@ else if( V1 == 4 ) // mesh with rotating parts (field 39 - Safer Battle)
 }
 
 // reset root translation and ???
-for( int i = 0; i < a; ++i )
+for (int i = 0; i < a; ++i)
 {
     [801518e4 + i * b9c + 168] = h(0);
     [801518e4 + i * b9c + 16a] = h(0);
@@ -881,7 +880,7 @@ for( int i = 0; i < a; ++i )
 [800f5b73] = b(1f);
 [800f5b74] = h(0);
 
-if( hu[8016360c + 8] == 3a ) // if battle id == Kalm Flashback (with rain)
+if (hu[8016360c + 8] == 3a) // if battle id == Kalm Flashback (with rain)
 {
     funcc57b0(); // settings for specific scene model mesh for rain
 }
@@ -894,11 +893,11 @@ if( hu[8016360c + 8] == 3a ) // if battle id == Kalm Flashback (with rain)
 
 formation_type = bu[800fa6d0];
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
-    if( hu[801636b8 + i * 10 + 6] & 1 ) // if backrow
+    if (hu[801636b8 + i * 10 + 6] & 1) // if backrow
     {
-        if( h[800e8f94 + formation_type * 26 + i * 2] == 0 ) // if look forward (rotation)
+        if (h[800e8f94 + formation_type * 26 + i * 2] == 0) // if look forward (rotation)
         {
             V0 = 204;
         }
@@ -918,17 +917,17 @@ for( int i = 0; i < 3; ++i )
 
 formation_type = bu[800fa6d0];
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     [801518e4 + i * b9c + 18] = h(hu[800e8f94 + formation_type * 6 + i * 2]); // default rot
 
-    if( formation_type == 2 )
+    if (formation_type == 2)
     {
         [801518e4 + i * b9c + 162] = h(0); // rotation Y
     }
     else
     {
-        if( hu[800707bc] == 3d6 ) // battle id
+        if (hu[800707bc] == 3d6) // battle id
         {
             [801518e4 + i * b9c + 18] = h(0); // default rot
             [801518e4 + i * b9c + 162] = h(0); // rotation Y
@@ -950,7 +949,7 @@ for( int i = 0; i < 3; ++i )
 // battle_player_models_update_bones_pos()
 
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     [80151200 + S0 * 74 + 32] = b(i);
 }
@@ -960,21 +959,21 @@ inbuild_model = w[800f839c];
 
 inbuild_settings = w[inbuild_model + 8];
 
-for( int i = 0; i < 8; ++i )
+for (int i = 0; i < 8; ++i)
 {
     [inbuild_settings + i * 4 + 24] = w(inbuild_settings + w[inbuild_settings + i * 4 + 24]);
 }
 
-for( int i = 0; i < 4a; ++i )
+for (int i = 0; i < 4a; ++i)
 {
     [inbuild_settings + i * 4 + 68] = w(inbuild_settings + w[inbuild_settings + i * 4 + 68]);
 }
 
 [800f9980] = b(0);
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
-    if( b[801636b8 + i * 10 + 0] != -1 )
+    if (b[801636b8 + i * 10 + 0] != -1)
     {
         model_file = w[800f8384 + i * 4];
         [model_file + 8] = w(model_file + w[model_file + 8]);
@@ -983,19 +982,19 @@ for( int i = 0; i < 3; ++i )
     }
 }
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
-    if( b[801636b8 + i * 10 + 0] != -1 )
+    if (b[801636b8 + i * 10 + 0] != -1)
     {
         model_file = w[800f8384 + i * 4];
         anim_settings = w[model_file + 8];
 
-        for( int j = 0; j < 8; ++j )
+        for (int j = 0; j < 8; ++j)
         {
             [anim_settings + j * 4 + 24] = w(anim_settings + w[anim_settings + j * 4 + 24]);
         }
 
-        for( int j = 0; j < 4a; ++j )
+        for (int j = 0; j < 4a; ++j)
         {
             [anim_settings + j * 4 + 68] = w(anim_settings + w[anim_settings + j * 4 + 68]);
         }
@@ -1029,11 +1028,11 @@ battle_model_update_all_bones_height();
 formation_type = bu[800fa6d0];
 players_num = bu[800f9980];
 
-if( players_num == 1 )
+if (players_num == 1)
 {
     battle_player_modify_default_pos_by_formation();
 
-    for( int i = 0; i < 3; ++i )
+    for (int i = 0; i < 3; ++i)
     {
         [80163c80 + i * 6 + 0] = h(0);
         [80163c80 + i * 6 + 2] = h(hu[800e8e84 + formation_type * 12 + i * 6 + 2]);
@@ -1042,11 +1041,11 @@ if( players_num == 1 )
 
     battle_player_set_default_rotation();
 }
-else if( players_num != 2 )
+else if (players_num != 2)
 {
     battle_player_modify_default_pos_by_formation();
 
-    for( int i = 0; i < 3; ++i )
+    for (int i = 0; i < 3; ++i)
     {
         [80163c80 + i * 6 + 0] = h(hu[800e8e84 + formation_type * 12 + i * 6 + 0]);
         [80163c80 + i * 6 + 2] = h(hu[800e8e84 + formation_type * 12 + i * 6 + 2]);
@@ -1059,13 +1058,13 @@ else
 {
     A0 = formation_type * c;
     V1 = 800e8fcc + formation_type * 4;
-    for( int i = 0; i < 3; ++i )
+    for (int i = 0; i < 3; ++i)
     {
-        if( b[801636b8 + i * 10] != -1 )
+        if (b[801636b8 + i * 10] != -1)
         {
-            if( hu[801636be + i * 10] & 1 )
+            if (hu[801636be + i * 10] & 1)
             {
-                if( h[V1] == 0 )
+                if (h[V1] == 0)
                 {
                     V0 = hu[800e8f2c + A0] + 204;
                 }
@@ -1081,9 +1080,9 @@ else
     }
 
     V1 = formation_type * c;
-    for( int i = 0; i < 3; ++i )
+    for (int i = 0; i < 3; ++i)
     {
-        if( b[801636b8 + i * 10] != -1 )
+        if (b[801636b8 + i * 10] != -1)
         {
             [80163c80 + i * 6 + 0] = h(hu[800e8f28 + V1 + 0]);
             [80163c80 + i * 6 + 2] = h(hu[800e8f28 + V1 + 2]);
@@ -1093,13 +1092,13 @@ else
     }
 
     V1 = 800e8fcc + formation_type * 4;
-    for( int i = 0; i < 3; ++i )
+    for (int i = 0; i < 3; ++i)
     {
-        if( b[801636b8 + i * 10 + 0] != -1 )
+        if (b[801636b8 + i * 10 + 0] != -1)
         {
             [801518e4 + i * b9c + 18] = h(hu[V1 + 0000]);
 
-            if( formation_type == 2 )
+            if (formation_type == 2)
             {
                 [801518e4 + i * b9c + 162] = h(0);
                 V1 = V1 + 2;
@@ -1115,12 +1114,12 @@ else
     }
 }
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     [80163784 + i] = b(bu[801636b8 + i * 10 + 1]);
 }
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     [801518e4 + i * b9c + 168] = h(hu[80163c80 + i * 6 + 0]);
     [801518e4 + i * b9c + 16a] = h(hu[80163c80 + i * 6 + 2]);
@@ -1135,7 +1134,7 @@ for( int i = 0; i < 3; ++i )
 
 unit_id = A0;
 
-if( bu[801636b8 + unit_id * 10 + 0] != -1 )
+if (bu[801636b8 + unit_id * 10 + 0] != -1)
 {
     unit_index = bu[80151200 + unit_id * 74 + 32];
     model_file = w[800f8384 + unit_index * 4];
@@ -1160,18 +1159,18 @@ if( bu[801636b8 + unit_id * 10 + 0] != -1 )
     [80151200 + unit_id * 78 + 2e] = h(0);
     [80151200 + unit_id * 78 + 30] = h(hu[settings + 64]);
 
-    for( int i = 0; i < 4; ++i )
+    for (int i = 0; i < 4; ++i)
     {
         [80151200 + unit_id * 78 + 4 + i * 2] = h(hu[settings + 44 + i * 2]);
     }
 
-    for( int i = 0; i < 6; ++i )
+    for (int i = 0; i < 6; ++i)
     {
         [80151200 + unit_id * 78 + e + i * 2] = h(hu[settings + 4c + i * 2]);
         [80151200 + unit_id * 78 + 1a + i * 2] = h(hu[settings + 58 + i * 2]);
     }
 
-    if( bu[801518e4 + unit_id * b9c + 27] & 80 ) // if with weapon
+    if (bu[801518e4 + unit_id * b9c + 27] & 80) // if with weapon
     {
         [800fa6d8 + unit_id * 40 + 38] = w(801518e4 + unit_id * b9c + 140);
 
@@ -1182,7 +1181,7 @@ if( bu[801636b8 + unit_id * 10 + 0] != -1 )
     }
 
     // copy joints
-    for( int i = 0; i < 10; ++i )
+    for (int i = 0; i < 10; ++i)
     {
         [8015190f + unit_id * b9c + i] = b(bu[settings + 12 + i]);
     }
@@ -1195,49 +1194,49 @@ if( bu[801636b8 + unit_id * 10 + 0] != -1 )
 // battle_parse_enemy_models()
 
 // init unit index
-for( int i = 4; i < bu[800f7e04] + 4; ++i )
+for (int i = 4; i < bu[800f7e04] + 4; ++i)
 {
     [80151200 + i * 74 + 32] = b(0);
 }
 
 // set global pointers to settings (animation in here)
-for( int i = 0; i < bu[800f7df4]; ++i )
+for (int i = 0; i < bu[800f7df4]; ++i)
 {
     model_file = w[800f8390 + i * 4];
     [model_file + 8] = w(model_file + w[model_file + 8]);
 }
 
 // ???
-for( int i = 0; i < bu[800f7df4]; ++i )
+for (int i = 0; i < bu[800f7df4]; ++i)
 {
     model_file = w[800f8390 + i * 4];
     settings_file = w[model_file + 8];
 
-    for( int j = 0; j < 8; ++j )
+    for (int j = 0; j < 8; ++j)
     {
         [settings_file + 24 + j * 4] = w(settings_file + w[settings_file + 24 + j * 4]);
     }
 }
 
 // set global offsets to all animation scripts
-for( int i = 0; i < bu[800f7df4]; ++i )
+for (int i = 0; i < bu[800f7df4]; ++i)
 {
     model_file = w[800f8390 + i * 4];
     settings_file = w[model_file + 8];
 
-    for( int j = 0; j < 20; ++j )
+    for (int j = 0; j < 20; ++j)
     {
         [settings_file + 68 + j * 4] = w(settings_file + w[settings_file + 68 + j * 4]);
     }
 }
 
-for( int i = 0; i < bu[800f7e04]; ++i )
+for (int i = 0; i < bu[800f7e04]; ++i)
 {
     A0 = i + 4; // init id
     battle_enemy_init_model_with_settings();
 }
 
-for( int i = 4; i < bu[800f7e04] + 4; ++i )
+for (int i = 4; i < bu[800f7e04] + 4; ++i)
 {
     [80163784 + i] = b(bu[801636b8 + i * 10 + 1]); // idle action id
 
@@ -1248,7 +1247,7 @@ for( int i = 4; i < bu[800f7e04] + 4; ++i )
     [801518e4 + i * b9c + 160] = h(0); // root x rotation
     [801518e4 + i * b9c + 164] = h(0); // root z rotation
 
-    switch( bu[800fa6d0] ) // formation type
+    switch (bu[800fa6d0]) // formation type
     {
         case 1: // enemy look from left to left initial, left to right normal
         {
@@ -1298,7 +1297,7 @@ for( int i = 4; i < bu[800f7e04] + 4; ++i )
 
 unit_id = A0;
 
-if( bu[80151200 + unit_id * 74 + 32] == 6 )
+if (bu[80151200 + unit_id * 74 + 32] == 6)
 {
     enemy_id = 6;
 }
@@ -1326,7 +1325,7 @@ settings = w[model_file + 8];
 [801518e4 + unit_id * b9c + 29] = b(0); // additional G
 [801518e4 + unit_id * b9c + 2a] = b(0); // additional B
 
-if( h[settings + 0] != 0 )
+if (h[settings + 0] != 0)
 {
     [801518e4 + unit_id * b9c + 27] = b(bu[801518e4 + unit_id * b9c + 27] | 40);
 }
@@ -1337,12 +1336,12 @@ if( h[settings + 0] != 0 )
 [80151200 + unit_id * 78 + 2e] = h(0);
 [80151200 + unit_id * 78 + 30] = h(hu[settings + 64]);
 
-for( int i = 0; i < 4; ++i )
+for (int i = 0; i < 4; ++i)
 {
     [80151200 + unit_id * 78 + 4 + i * 2] = h(hu[settings + 44 + i * 2]);
 }
 
-for( int i = 0; i < 6; ++i )
+for (int i = 0; i < 6; ++i)
 {
     [80151200 + unit_id * 78 + e + i * 2] = h(hu[settings + 4c + i * 2]);
     [80151200 + unit_id * 78 + 1a + i * 2] = h(hu[settings + 58 + i * 2]);
@@ -1350,7 +1349,7 @@ for( int i = 0; i < 6; ++i )
 
 [801636b8 + unit_id * 10 + 4] = b(bu[801518e4 + unit_id * b9c + 27] & 3f);
 
-if( bu[801518e4 + unit_id * b9c + 27] & 80 ) // if weapon exist
+if (bu[801518e4 + unit_id * b9c + 27] & 80) // if weapon exist
 {
     [800fa6d8 + unit_id * 40 + 38] = w(801518e4 + unit_id * b9c + 140);
 
@@ -1363,7 +1362,7 @@ if( bu[801518e4 + unit_id * b9c + 27] & 80 ) // if weapon exist
 }
 
 // copy joints
-for( int i = 0; i < 10; ++i )
+for (int i = 0; i < 10; ++i)
 {
     [801518e4 + unit_id * b9c + 2b + i] = b(bu[settings + 12 + i]);
 }
@@ -1375,13 +1374,13 @@ for( int i = 0; i < 10; ++i )
 // battle_enemy_models_update_bones_pos_clut()
 
 // go through all enemies models
-for( int i = 0; i < bu[800f7df4]; ++i )
+for (int i = 0; i < bu[800f7df4]; ++i)
 {
-    for( int j = 4; j < a; ++j )
+    for (int j = 4; j < a; ++j)
     {
-        if( h[801518e4 + j * b9e + 0] == w[800f7df8 + i * 4] )
+        if (h[801518e4 + j * b9e + 0] == w[800f7df8 + i * 4])
         {
-            if( hu[8016360c + 8] == 4e ) // location id (Final Battle - Sephiroth)
+            if (hu[8016360c + 8] == 4e) // location id (Final Battle - Sephiroth)
             {
                 A0 = j;
                 A1 = 13 + i;
@@ -1400,7 +1399,7 @@ for( int i = 0; i < bu[800f7df4]; ++i )
 
 // set CLUT offsets for all enemies
 [801518e4 + 3 * b9c + 16] = h(240);
-if( hu[8016360c + 8] == 4e ) // location id (Final Battle - Sephiroth)
+if (hu[8016360c + 8] == 4e) // location id (Final Battle - Sephiroth)
 {
     [801518e4 + 4 * b9c + 16] = h(0);
 }
@@ -1414,7 +1413,7 @@ else
 [801518e4 + 8 * b9c + 16] = h(600);
 [801518e4 + 9 * b9c + 16] = h(6c0);
 
-for( int i = 4; i < a; ++i )
+for (int i = 4; i < a; ++i)
 {
     A0 = 801518e4 + i * b9c + 140;
     A1 = 801518e4 + i * b9c + b68; // store A0 to this +30
@@ -1503,7 +1502,7 @@ return w[8001b0000 + num * 4]; // size
 
 enemy_num = A0;
 
-if( hu[80163614] == 4e ) // if final battle with sephiroth field
+if (hu[80163614] == 4e) // if final battle with sephiroth field
 {
     A1 = enemy_num + 13;
     A2 = 0;
@@ -1521,9 +1520,9 @@ num = w[801b0000]
 A0 = 801b0000 + w[801b0000 + num * 4]; // offset to last block in battle model file (texture)
 battle_set_load_tim_to_vram();
 
-for( int i = 4; i <= bu[800f7e04] + 4; ++i ) // go through all enemy inits
+for (int i = 4; i <= bu[800f7e04] + 4; ++i) // go through all enemy inits
 {
-    if( h[800f7e08 + i * c + 0] == ( enemy_num + 3 ) ) // if this is enemy from file we loaded
+    if (h[800f7e08 + i * c + 0] == (enemy_num + 3)) // if this is enemy from file we loaded
     {
         A0 = 801b0000 + w[801b0000 + num * 4];
         A1 = i;
@@ -1539,26 +1538,26 @@ for( int i = 4; i <= bu[800f7e04] + 4; ++i ) // go through all enemy inits
 
 S2 = A0;
 
-if( S2 == 0 )
+if (S2 == 0)
 {
     A1 = 0;
     S3 = 0;
     S4 = 0;
 }
-else if( S2 == 1 )
+else if (S2 == 1)
 {
     A1 = 10;
     S3 = 1;
     S4 = c0;
 }
-else if( S2 == 2 )
+else if (S2 == 2)
 {
     A1 = 11;
     S3 = 2;
     S4 = 180;
 }
 
-if( b[801636b8 + S2 * 10 + 0] != -1 )
+if (b[801636b8 + S2 * 10 + 0] != -1)
 {
     section_n = w[801b0000 + 0];
     A0 = 801b0000 + w[801b0000 + section_n * 4 - 40]; // last section
@@ -1595,12 +1594,12 @@ funcb60e0();
 
 unit_id = A0;
 
-for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i ) // number of bones
+for (int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i) // number of bones
 {
     [801518e4 + unit_id * b9c + 3f + i] = b(bu[801518e4 + unit_id * b9c + 3f + i] | 08);
 }
 
-for( int i = 0; i < h[800fa714 + unit_id * 40]; ++i ) // number of bones in secondary animation
+for (int i = 0; i < h[800fa714 + unit_id * 40]; ++i) // number of bones in secondary animation
 {
     [800fa716 + unit_id * 40 + i] = b(bu[800fa716 + unit_id * 40 + i] | 08);
 }
@@ -2189,7 +2188,7 @@ SP = SP + 0010;
 ////////////////////////////////
 // battle_init_models_animation_and_color()
 
-for( int i = A0; i < A1; ++i )
+for (int i = A0; i < A1; ++i)
 {
     [801518e4 + i * b9c + 2] = h(0); // animation id
     [801518e4 + i * b9c + 6] = h(1000); // scale
@@ -2202,14 +2201,14 @@ for( int i = A0; i < A1; ++i )
     [801518e4 + i * b9c + 2a] = b(0); // B additional color
     [801518e4 + i * b9c + 3e] = b(1);
 
-    if( i >= 4 )
+    if (i >= 4)
     {
-        if( ( w[800f7e10 + (i - 4) * c + 0] & 4 ) == 0 )
+        if ((w[800f7e10 + (i - 4) * c + 0] & 4) == 0)
         {
             [801518e4 + i * b9c + 25] = b(0);
         }
 
-        if( ( w[800f7e10 + (i - 4) * c + 0] & 1 ) == 0 )
+        if ((w[800f7e10 + (i - 4) * c + 0] & 1) == 0)
         {
             [801518e4 + i * b9c + 25] = b(bu[801518e4 + i * b9c + 25] | 04);
         }

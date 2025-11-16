@@ -1,11 +1,11 @@
 ////////////////////////////////
 // battle_queue1_execute()
 
-A0 = bu[801590e0];
-while( b[80163798 + A0 * c + 0] != -1 )
+A0 = bu[0x801590e0];
+while (b[0x80163798 + A0 * c + 0] != -1)
 {
-    V1 = b[80163798 + A0 * c + 1];
-    switch( V1 )
+    V1 = b[0x80163798 + A0 * c + 1];
+    switch (V1)
     {
         case 0:
         {
@@ -14,160 +14,160 @@ while( b[80163798 + A0 * c + 0] != -1 )
 
             battle_update_render();
 
-            [801590e0] = b(bu[801590e0] + 1);
+            [0x801590e0] = b(bu[0x801590e0] + 1);
         }
         break;
 
         case 1: // play animation
         {
-            if( bu[800f7de4] != 0 )
+            if (bu[0x800f7de4] != 0)
             {
-                [800f7de4] = b(0);
+                [0x800f7de4] = b(0);
 
                 battle_queue1_camera_init();
 
-                q1_id = bu[801590e0];
-                [801590cc] = b(bu[80163798 + q1_id * c + 0]); // unit id
+                q1_id = bu[0x801590e0];
+                [0x801590cc] = b(bu[0x80163798 + q1_id * c + 0]); // unit id
 
-                unit_id = bu[801590cc];
-                [801518e4 + unit_id * b9c + 3e] = b(bu[801518e4 + unit_id * b9c + 3e] | 01);
-                [801518e4 + unit_id * b9c + 26] = b(0);
+                unit_id = bu[0x801590cc];
+                [0x801518e4 + unit_id * b9c + 3e] = b(bu[0x801518e4 + unit_id * b9c + 3e] | 01);
+                [0x801518e4 + unit_id * b9c + 26] = b(0);
 
                 battle_queue1_init_play_animation(); // init data in units struct
 
-                [800f9774] = b(0);
+                [0x800f9774] = b(0);
 
-                while( true )
+                while (true)
                 {
-                    qt_id = h[80163798 + q1_id * c + a];
+                    qt_id = h[0x80163798 + q1_id * c + a];
 
-                    if( b[800fa9d0 + qt_id * c + 0] == -1 ) // target id
+                    if (b[0x800fa9d0 + qt_id * c + 0] == -1) // target id
                     {
                         break;
                     }
 
-                    [800fafe0] = b(bu[800fa9d0 + qt_id * c + 1]); // attacker id
+                    [0x800fafe0] = b(bu[0x800fa9d0 + qt_id * c + 1]); // attacker id
 
                     battle_queue1_add_new_target();
 
-                    if( bu[800f9774] != 1 )
+                    if (bu[0x800f9774] != 1)
                     {
-                        [800f99e8] = b(f);
-                        [800fa6d4] = b(f);
-                        [80161eec] = b(f);
+                        [0x800f99e8] = b(f);
+                        [0x800fa6d4] = b(f);
+                        [0x80161eec] = b(f);
 
-                        [801031f0] = b(1);
+                        [0x801031f0] = b(1);
                     }
                     else
                     {
-                        V0 = bu[800fa9d0 + qt_id * c + 0]; // target id
-                        [800f99e8] = b(V0);
-                        [800fa6d4] = b(V0);
-                        [80161eec] = b(V0);
+                        V0 = bu[0x800fa9d0 + qt_id * c + 0]; // target id
+                        [0x800f99e8] = b(V0);
+                        [0x800fa6d4] = b(V0);
+                        [0x80161eec] = b(V0);
 
-                        if( b[800fa9d0 + qt_id * c + 2] == 9 ) // hurt animation script
+                        if (b[0x800fa9d0 + qt_id * c + 2] == 9) // hurt animation script
                         {
-                            [800f99e8] = b(bu[800fa9d0 + qt_id * c + 1]); // attacker id
+                            [0x800f99e8] = b(bu[0x800fa9d0 + qt_id * c + 1]); // attacker id
                         }
 
-                        [801031f0] = b(0);
+                        [0x801031f0] = b(0);
                     }
 
-                    [80163798 + q1_id * c + a] = h(qt_id + 1);
+                    [0x80163798 + q1_id * c + a] = h(qt_id + 1);
                 }
 
                 battle_queue1_update_target_masks();
             }
 
-            [801517bc] = b(0);
+            [0x801517bc] = b(0);
 
             battle_update_render();
 
-            if( bu[800f7de4] != 0 )
+            if (bu[0x800f7de4] != 0)
             {
-                [801590e0] = b(bu[801590e0] + 1);
+                [0x801590e0] = b(bu[0x801590e0] + 1);
             }
         }
         break;
 
         case 2:
         {
-            q1_id = bu[801590e0];
-            A0 = h[80163798 + q1_id * c + 6]; // string index in buffer + 0x100
-            A1 = bu[80163798 + q1_id * c + 5]; // string argument
-            A2 = bu[80163798 + q1_id * c + 3]; // 0
-            A3 = bu[80163798 + q1_id * c + 2]; // 0
+            q1_id = bu[0x801590e0];
+            A0 = h[0x80163798 + q1_id * c + 6]; // string index in buffer + 0x100
+            A1 = bu[0x80163798 + q1_id * c + 5]; // string argument
+            A2 = bu[0x80163798 + q1_id * c + 3]; // 0
+            A3 = bu[0x80163798 + q1_id * c + 2]; // 0
             funcc5c18();
 
             battle_update_render();
 
-            [801590e0] = b(bu[801590e0] + 1);
+            [0x801590e0] = b(bu[0x801590e0] + 1);
         }
         break;
 
         case 3:
         {
-            if( bu[800f7de4] != 0 )
+            if (bu[0x800f7de4] != 0)
             {
-                [800f7de4] = b(0);
+                [0x800f7de4] = b(0);
 
                 battle_queue1_camera_init();
 
-                q1_id = bu[801590e0];
-                qt_id = h[80163798 + q1_id * c + a];
+                q1_id = bu[0x801590e0];
+                qt_id = h[0x80163798 + q1_id * c + a];
 
-                [801590cc] = b(bu[800fa9d1 + qt_id * c + 0]);
+                [0x801590cc] = b(bu[0x800fa9d1 + qt_id * c + 0]);
 
-                A0 = bu[801590cc];
-                [801518e4 + A0 * b9c + 26] = b(1);
+                A0 = bu[0x801590cc];
+                [0x801518e4 + A0 * b9c + 26] = b(1);
 
                 battle_queue1_init_play_animation();
 
-                [800f9774] = b(0);
+                [0x800f9774] = b(0);
 
-                V0 = b[800fa9d0 + qt_id * c + 0];
+                V0 = b[0x800fa9d0 + qt_id * c + 0];
 
-                while( V0 != -1 )
+                while (V0 != -1)
                 {
                     battle_queue1_add_new_target();
 
                     qt_id = qt_id + 1;
-                    [80163798 + q1_id * c + a] = h(qt_id);
+                    [0x80163798 + q1_id * c + a] = h(qt_id);
 
-                    V0 = b[800fa9d0 + qt_id * c + 0];
+                    V0 = b[0x800fa9d0 + qt_id * c + 0];
                 }
 
-                [801517bc] = b(1);
+                [0x801517bc] = b(1);
 
                 battle_queue1_update_target_masks();
             }
 
             battle_update_render();
 
-            if( bu[800f7de4] != 0 )
+            if (bu[0x800f7de4] != 0)
             {
-                [801590e0] = b(bu[801590e0] + 1);
+                [0x801590e0] = b(bu[0x801590e0] + 1);
             }
         }
         break;
 
         case 4: // 14700B80
         {
-            if( bu[800f7de4] != 0 )
+            if (bu[0x800f7de4] != 0)
             {
-                index = bu[801590e0];
-                unit_id = b[80163798 + index * c + 0];
+                index = bu[0x801590e0];
+                unit_id = b[0x80163798 + index * c + 0];
 
-                [800f7de4] = b(0);
+                [0x800f7de4] = b(0);
 
-                [1f800004] = w(b[80163798 + index * c + 5] << 8); // animation action id
-                [1f800008] = w(h[801518ea + unit_id * b9c]);
+                [1f800004] = w(b[0x80163798 + index * c + 5] << 8); // animation action id
+                [1f800008] = w(h[0x801518ea + unit_id * b9c]);
 
                 A0 = 800c5694;
                 funcbbeac();
                 data_id = V0;
 
-                if( w[1f800004] < w[1f800008] )
+                if (w[1f800004] < w[1f800008])
                 {
                     V0 = w[1f800008] - w[1f800004];
                 }
@@ -176,50 +176,50 @@ while( b[80163798 + A0 * c + 0] != -1 )
                     V0 = w[1f800004] - w[1f800008];
                 }
 
-                [8015190a + unit_id * b9c] = b(0);
+                [0x8015190a + unit_id * b9c] = b(0);
 
-                [80162978 + data_id * 20 + 2] = h(V0 / h[80163798 + index * c + 6]);
-                [80162978 + data_id * 20 + 4] = h(hu[80163798 + index * c + 6]);
-                [80162978 + data_id * 20 + 6] = h(unit_id);
+                [0x80162978 + data_id * 20 + 2] = h(V0 / h[0x80163798 + index * c + 6]);
+                [0x80162978 + data_id * 20 + 4] = h(hu[0x80163798 + index * c + 6]);
+                [0x80162978 + data_id * 20 + 6] = h(unit_id);
 
-                [80163798 + index * c + 8] = h(-1);
+                [0x80163798 + index * c + 8] = h(-1);
             }
 
             battle_update_render();
 
-            if( bu[800f7de4] != 0 )
+            if (bu[0x800f7de4] != 0)
             {
-                [801590e0] = b(bu[801590e0] + 1);
+                [0x801590e0] = b(bu[0x801590e0] + 1);
             }
         }
         break;
 
         case 5:
         {
-            index = bu[801590e0];
-            unit_id = b[80163798 + index * c + 0];
+            index = bu[0x801590e0];
+            unit_id = b[0x80163798 + index * c + 0];
 
-            [801518e4 + unit_id * b9c + 3e] = b(bu[801518e4 + unit_id * b9c + 3e] | 20);
+            [0x801518e4 + unit_id * b9c + 3e] = b(bu[0x801518e4 + unit_id * b9c + 3e] | 20);
 
-            [80151200 + unit_id * 74] = w(w[801636b8 + unit_id * 10 + 8]); // unit status
+            [0x80151200 + unit_id * 74] = w(w[0x801636b8 + unit_id * 10 + 8]); // unit status
 
-            V1 = w[80151200 + unit_id * 74];
-            if( V1 != 00000010 && V1 != 00000020 ) // sadness and fury
+            V1 = w[0x80151200 + unit_id * 74];
+            if (V1 != 00000010 && V1 != 00000020) // sadness and fury
             {
-                [801518e4 + unit_id * b9c + 162] = h(hu[801518e4 + unit_id * b9c + 18]); // store rotation
+                [0x801518e4 + unit_id * b9c + 162] = h(hu[0x801518e4 + unit_id * b9c + 18]); // store rotation
             }
 
             battle_update_render();
 
-            [801590e0] = b(bu[801590e0] + 1);
+            [0x801590e0] = b(bu[0x801590e0] + 1);
         }
         break;
     }
 
-    A0 = bu[801590e0];
+    A0 = bu[0x801590e0];
 }
 
-[801590e0] = b(0);
+[0x801590e0] = b(0);
 
 battle_update_render();
 ////////////////////////////////
@@ -229,34 +229,34 @@ battle_update_render();
 ////////////////////////////////
 // battle_queue1_init_play_animation()
 
-unit_id = bu[801590cc]
-q1_id = bu[801590e0];
+unit_id = bu[0x801590cc]
+q1_id = bu[0x801590e0];
 
-if( bu[800fa6d0] == 2 ) // formation type id
+if (bu[0x800fa6d0] == 2) // formation type id
 {
-    if( unit_id < 4 ) // player
+    if (unit_id < 4) // player
     {
-        [801518e4 + unit_id * b9c + 18] = h(800); // default rotation
-        [801518e4 + unit_id * b9c + 162] = h(800); // current rotation
+        [0x801518e4 + unit_id * b9c + 18] = h(800); // default rotation
+        [0x801518e4 + unit_id * b9c + 162] = h(800); // current rotation
     }
 }
 
-if( bu[800fa6d0] == 1 ) // formation type id
+if (bu[0x800fa6d0] == 1) // formation type id
 {
-    if( unit_id >= 4 )
+    if (unit_id >= 4)
     {
-        [801518e4 + unit_id * b9c + 18] = h(800); // default rotation
-        [801518e4 + unit_id * b9c + 162] = h(800); // current rotation
+        [0x801518e4 + unit_id * b9c + 18] = h(800); // default rotation
+        [0x801518e4 + unit_id * b9c + 162] = h(800); // current rotation
     }
 }
 
-[801518e4 + unit_id * b9c + 2] = h(b[80163798 + q1_id * c + 5]); // animation id
-[801518e4 + unit_id * b9c + 22] = b(bu[80163798 + q1_id * c + 2]); // effect id
-[801518e4 + unit_id * b9c + 23] = b(bu[80163798 + q1_id * c + 3]); // action id
-[80151200 + unit_id * 74 + 3e] = h(hu[80163798 + q1_id * c + 6]);
+[0x801518e4 + unit_id * b9c + 2] = h(b[0x80163798 + q1_id * c + 5]); // animation id
+[0x801518e4 + unit_id * b9c + 22] = b(bu[0x80163798 + q1_id * c + 2]); // effect id
+[0x801518e4 + unit_id * b9c + 23] = b(bu[0x80163798 + q1_id * c + 3]); // action id
+[0x80151200 + unit_id * 74 + 3e] = h(hu[0x80163798 + q1_id * c + 6]);
 
-[80163b38] = b(0);
-[80162090] = b(0);
+[0x80163b38] = b(0);
+[0x80162090] = b(0);
 
 battle_queue1_clear_targets();
 ////////////////////////////////
@@ -266,12 +266,12 @@ battle_queue1_clear_targets();
 ////////////////////////////////
 // battle_queue1_clear_targets()
 
-for( int i = 0; i < 4e; ++i ) // target count
+for (int i = 0; i < 4e; ++i) // target count
 {
-    [801517f0 + i + 0] = b(-1); // target id
-    [80163cc0 + i * 8 + 0] = b(0); // target id
-    [80163cc2 + i * 8 + 0] = h(0); // flags
-    [80163cc4 + i * 8 + 0] = w(0); // store status of target
+    [0x801517f0 + i + 0] = b(-1); // target id
+    [0x80163cc0 + i * 8 + 0] = b(0); // target id
+    [0x80163cc2 + i * 8 + 0] = h(0); // flags
+    [0x80163cc4 + i * 8 + 0] = w(0); // store status of target
 }
 ////////////////////////////////
 
@@ -280,40 +280,40 @@ for( int i = 0; i < 4e; ++i ) // target count
 ////////////////////////////////
 // battle_queue1_add_new_target()
 
-q1_id = bu[801590e0];
-q2_id = h[80163798 + q1_id * c + a];
-tcount = bu[800f9774];
+q1_id = bu[0x801590e0];
+q2_id = h[0x80163798 + q1_id * c + a];
+tcount = bu[0x800f9774];
 
-[80163cc0 + tcount * 8 + 0] = b(bu[800fa9d0 + q2_id * c + 0]); // target id
-[801517f0 + tcount] = b(bu[800fa9d0 + q2_id * c + 0]); // target id
+[0x80163cc0 + tcount * 8 + 0] = b(bu[0x800fa9d0 + q2_id * c + 0]); // target id
+[0x801517f0 + tcount] = b(bu[0x800fa9d0 + q2_id * c + 0]); // target id
 
 
-[80163cc2 + tcount * 8] = h(hu[800fa9d0 + q2_id * c + 4]); // flags
+[0x80163cc2 + tcount * 8] = h(hu[0x800fa9d0 + q2_id * c + 4]); // flags
 
-[80163cc4 + tcount * 8] = w(w[800fa9d0 + q2_id * c + 8]); // store status of target
+[0x80163cc4 + tcount * 8] = w(w[0x800fa9d0 + q2_id * c + 8]); // store status of target
 
-A0 = bu[80163cc0 + tcount * 8];
-[801518e8 + A0 * b9c] = h(bu[800fa9d0 + q2_id * c + 2]); // hurt animation
+A0 = bu[0x80163cc0 + tcount * 8];
+[0x801518e8 + A0 * b9c] = h(bu[0x800fa9d0 + q2_id * c + 2]); // hurt animation
 
-V1 = b[800fa9d0 + q2_id * c + 3];
-[800f99ec + tcount * c] = h(hu[800f9f3c + V1 * e + 2]); // damage
-[800f99ee + tcount * c] = h(hu[800f9f3c + V1 * e + 4]); // flags
-[800f99f4 + tcount * c] = h(V1);
-[800f99f6 + tcount * c] = h(q2_id);
+V1 = b[0x800fa9d0 + q2_id * c + 3];
+[0x800f99ec + tcount * c] = h(hu[0x800f9f3c + V1 * e + 2]); // damage
+[0x800f99ee + tcount * c] = h(hu[0x800f9f3c + V1 * e + 4]); // flags
+[0x800f99f4 + tcount * c] = h(V1);
+[0x800f99f6 + tcount * c] = h(q2_id);
 
-V1 = b[800fa9d0 + q2_id * c + 3];
-if( V1 == -1 )
+V1 = b[0x800fa9d0 + q2_id * c + 3];
+if (V1 == -1)
 {
-    [800f99f0 + tcount * c] = h(-1);
-    [800f99f2 + tcount * c] = h(-1);
+    [0x800f99f0 + tcount * c] = h(-1);
+    [0x800f99f2 + tcount * c] = h(-1);
 }
 else
 {
-    [800f99f0 + tcount * c] = h(hu[800f9f3c + V1 * e + a]); // impact sound
-    [800f99f2 + tcount * c] = h(hu[800f9f3c + V1 * e + c]); // impact effect id
+    [0x800f99f0 + tcount * c] = h(hu[0x800f9f3c + V1 * e + a]); // impact sound
+    [0x800f99f2 + tcount * c] = h(hu[0x800f9f3c + V1 * e + c]); // impact effect id
 }
 
-[800f9774] = b(tcount + 1);
+[0x800f9774] = b(tcount + 1);
 ////////////////////////////////
 
 
@@ -321,47 +321,47 @@ else
 ////////////////////////////////
 // battle_queue1_update_target_masks()
 
-[80151774] = h(0); // target mask
-[801517b4] = h(0);
-[800f836c] = h(0);
-[80161de8] = h(0);
-[80162088] = h(0);
-[80163608] = h(0);
-[800fa69c] = h(0);
+[0x80151774] = h(0); // target mask
+[0x801517b4] = h(0);
+[0x800f836c] = h(0);
+[0x80161de8] = h(0);
+[0x80162088] = h(0);
+[0x80163608] = h(0);
+[0x800fa69c] = h(0);
 
 // go through all targets
-for( int i = 0; i < bu[800f9774]; ++i )
+for (int i = 0; i < bu[0x800f9774]; ++i)
 {
-    [80151774] = h(hu[80151774] | (1 << bu[80163cc0 + i * 8]));
+    [0x80151774] = h(hu[0x80151774] | (1 << bu[0x80163cc0 + i * 8]));
 
-    if( hu[80163cc2 + i * 8] & 0001 )
+    if (hu[0x80163cc2 + i * 8] & 0001)
     {
-        [801517b4] = h[hu[801517b4] | (1 << bu[80163cc0 + i * 8])];
+        [0x801517b4] = h[hu[0x801517b4] | (1 << bu[0x80163cc0 + i * 8])];
     }
 
-    if( hu[80163cc2 + i * 8] & 0002 )
+    if (hu[0x80163cc2 + i * 8] & 0002)
     {
-        [800f836c] = h[hu[800f836c] | (1 << bu[80163cc0 + i * 8])];
+        [0x800f836c] = h[hu[0x800f836c] | (1 << bu[0x80163cc0 + i * 8])];
     }
 
-    if( hu[80163cc2 + i * 8] & 0004 ) // unit is dead
+    if (hu[0x80163cc2 + i * 8] & 0004) // unit is dead
     {
-        [80161de8] = h[hu[80161de8] | (1 << bu[80163cc0 + i * 8])];
+        [0x80161de8] = h[hu[0x80161de8] | (1 << bu[0x80163cc0 + i * 8])];
     }
 
-    if( hu[80163cc2 + i * 8] & 0008 )
+    if (hu[0x80163cc2 + i * 8] & 0008)
     {
-        [80162088] = h[hu[80162088] | (1 << bu[80163cc0 + i * 8])];
+        [0x80162088] = h[hu[0x80162088] | (1 << bu[0x80163cc0 + i * 8])];
     }
 
-    if( hu[80163cc2 + i * 8] & 0010 )
+    if (hu[0x80163cc2 + i * 8] & 0010)
     {
-        [80163608] = h[hu[80163608] | (1 << bu[80163cc0 + i * 8])];
+        [0x80163608] = h[hu[0x80163608] | (1 << bu[0x80163cc0 + i * 8])];
     }
 
-    if( hu[80163cc2 + i * 8] & 0020 )
+    if (hu[0x80163cc2 + i * 8] & 0020)
     {
-        [800fa69c] = h[hu[800fa69c] | (1 << bu[80163cc0 + i * 8])];
+        [0x800fa69c] = h[hu[0x800fa69c] | (1 << bu[0x80163cc0 + i * 8])];
     }
 }
 ////////////////////////////////
@@ -371,11 +371,11 @@ for( int i = 0; i < bu[800f9774]; ++i )
 ////////////////////////////////
 // funcb7f6c()
 
-while( bu[80062d99] != 0 )
+while (bu[0x80062d99] != 0)
 {
     battle_cdrom_read_chain();
 }
-[80062d98] = b(0);
+[0x80062d98] = b(0);
 ////////////////////////////////
 
 
@@ -384,7 +384,7 @@ while( bu[80062d99] != 0 )
 // battle_cdrom_read_chain()
 
 system_cdrom_read_chain();
-[801518dc] = b(V0);
+[0x801518dc] = b(V0);
 ////////////////////////////////
 
 
@@ -394,65 +394,64 @@ system_cdrom_read_chain();
 
 battle_cdrom_read_chain();
 
-A0 = w[801517c0] + 40a4; // 800faff4 + 40a4 = 800ff098
+A0 = w[0x801517c0] + 40a4; // 800faff4 + 40a4 = 800ff098
 A1 = 10;
 system_psyq_clear_otag_r();
 
-A0 = w[801517c0] + 4070;
+A0 = w[0x801517c0] + 4070;
 A1 = 2;
 system_psyq_clear_otag();
 
-A0 = w[801517c0] + 4078;
+A0 = w[0x801517c0] + 4078;
 A1 = 2;
 system_psyq_clear_otag();
 
-A0 = w[801517c0] + 70;
+A0 = w[0x801517c0] + 70;
 A1 = 1000;
 system_psyq_clear_otag_r();
 
-A0 = w[801517c0] + 4080;
+A0 = w[0x801517c0] + 4080;
 A1 = 9;
 system_psyq_clear_otag_r();
 
-A0 = w[801517c0] + 40e4;
+A0 = w[0x801517c0] + 40e4;
 A1 = 2;
 system_psyq_clear_otag();
 
-A0 = w[801517c0] + 40ec;
+A0 = w[0x801517c0] + 40ec;
 A1 = 2;
 system_psyq_clear_otag();
 
-if( w[800f8368] == 0 )
+if (w[0x800f8368] == 0)
 {
-    [80163c74] = w(80168000);
+    [0x80163c74] = w(80168000);
 }
 else
 {
-    [80163c74] = w(80164000);
+    [0x80163c74] = w(80164000);
 }
 
-A0 = 1;
-funcb8360();
+funcb8360(0x1);
 
 funcc5cc0(); // add next show string element 800f9da8
 
 funcb8438(); // we load stage model to packets here
 
-for( int i = 0; i < a; ++i )
+for (int i = 0; i < a; ++i)
 {
-    if( bu[801518e4 + i * b9c + 26] == 0 )
+    if (bu[0x801518e4 + i * b9c + 26] == 0)
     {
-        [800f7de4] = b(0);
+        [0x800f7de4] = b(0);
         break;
     }
 
-    if( h[80162080] == 0 )
+    if (h[0x80162080] == 0)
     {
-        [800f7de4] = b(1);
+        [0x800f7de4] = b(1);
     }
     else
     {
-        [800f7de4] = b(0);
+        [0x800f7de4] = b(0);
     }
 }
 
@@ -461,29 +460,26 @@ for( int i = 0; i < a; ++i )
 A0 = 2;
 funcb8360();
 
-A0 = w[801517c0] + 40e4;
+A0 = w[0x801517c0] + 40e4;
 800B8140	jal    funcdcfd4 [$800dcfd4]
 
-if( bu[800f9d94] == 0 )
+if (bu[0x800f9d94] == 0)
 {
-    A0 = 1;
-    system_psyq_reset_graph();
+    system_psyq_reset_graph(0x1);
 
-    [800f9d94] = b(1);
+    [0x800f9d94] = b(1);
 }
 
-if( hu[8016376a] & 0002 )
+if (hu[0x8016376a] & 0x0002)
 {
-    A0 = w[801517c0] + 40e4;
+    A0 = w[0x801517c0] + 40e4;
     A1 = 10;
     A2 = 10;
-    A3 = w[8009d268];
+    A3 = w[0x8009d268];
     funce16b8(); // add render packets to queue
 }
 
-A0 = 1;
-system_psyq_vsync();
-[800fa9b8] = w(V0);
+[0x800fa9b8] = w(system_psyq_vsync(0x1));
 
 funcd25e8(); // perform images operations (load store move clear)
 
@@ -491,18 +487,18 @@ battle_cdrom_read_chain();
 
 funcd8a88(); // switch buffers
 
-[80158d08] = w(V0);
+[0x80158d08] = w(V0);
 
-A0 = h[80162084];
+A0 = h[0x80162084];
 system_psyq_set_geom_screen();
 
-[801516f4] = b(bu[801516f4] + 1);
+[0x801516f4] = b(bu[0x801516f4] + 1);
 
 funcb7f6c(); // some cdrom sync
 
 funcb950c();
 
-[801516a0] = h(hu[800f198c]);
+[0x801516a0] = h(hu[0x800f198c]);
 ////////////////////////////////
 
 
@@ -510,12 +506,12 @@ funcb950c();
 ////////////////////////////////
 // funcb8234
 
-if( A0 != 0 )
+if (A0 != 0)
 {
-    A0 = bu[801590cc];
+    A0 = bu[0x801590cc];
     800B8248	jal    funcd0c80 [$800d0c80]
 
-    [801517bc] = b(0);
+    [0x801517bc] = b(0);
 }
 ////////////////////////////////
 
@@ -577,7 +573,7 @@ T0 = T0 + 0001;
 V0 = T0 < 000a;
 800B8348	bne    v0, zero, loopb8284 [$800b8284]
 A2 = A2 + 0010;
-[80163787] = b(0);
+[0x80163787] = b(0);
 800B8358	jr     ra 
 800B835C	nop
 ////////////////////////////////
@@ -589,16 +585,16 @@ A2 = A2 + 0010;
 
 type = A0;
 
-A0 = w[80163c74];
+A0 = w[0x80163c74];
 A1 = 1; // drawing to display area is permitted
 A2 = 1; // dithering processing flag on
 A3 = (type & 3) * 20; // initial value of texture page
 A4 = 0;
 system_psyq_set_draw_mode();
 
-A0 = w[801517c0] + 4078; // inited OT for 2 packets
-A1 = w[80163c74];
-[80163c74] = w(A1 + c);
+A0 = w[0x801517c0] + 4078; // inited OT for 2 packets
+A1 = w[0x80163c74];
+[0x80163c74] = w(A1 + c);
 system_psyq_add_prim();
 ////////////////////////////////
 
@@ -649,13 +645,13 @@ SP = SP + 0018;
 
 funcb9568; // update field geometry and set it to render
 
-if( bu[801635fc] != 0 )
+if (bu[0x801635fc] != 0)
 {
-    [801635fc] = b(bu[801635fc] - 1);
+    [0x801635fc] = b(bu[0x801635fc] - 1);
 }
 
-V1 = bu[80163c7c];
-switch( V1 )
+V1 = bu[0x80163c7c];
+switch (V1)
 {
     case 2:
     {
@@ -678,7 +674,7 @@ switch( V1 )
 
         800B84C0	jal    funcb905c [$800b905c]
 
-        A0 = bu[801517bc];
+        A0 = bu[0x801517bc];
         800B84D0	jal    funcb8234 [$800b8234]
 
         800B84D8	jal    funcbc440 [$800bc440]
@@ -695,16 +691,16 @@ battle_cdrom_read_chain();
 
 funcb91cc();
 
-[80151694] = h(hu[8016375a]);
+[0x80151694] = h(hu[0x8016375a]);
 
 funcb85e0();
 
-A0 = h[800f8370]; // camera id to use
-A1 = bu[801590cc]; // attacker id
-A1 = bu[801518e4 + A1 * b9c + 22];
+A0 = h[0x800f8370]; // camera id to use
+A1 = bu[0x801590cc]; // attacker id
+A1 = bu[0x801518e4 + A1 * b9c + 22];
 funcbc81c; // we read camera data here
 
-A0 = h[800f8370]; // camera id to use
+A0 = h[0x800f8370]; // camera id to use
 funcbc8b0; // copy data to camera vectors
 
 800B8578	jal    funcb8268 [$800b8268]
@@ -732,23 +728,23 @@ funcbb75c; // create primary and final camera matrix
 ////////////////////////////////
 // funcb85e0
 
-V1 = bu[800f7ed4];
+V1 = bu[0x800f7ed4];
 V0 = 0064;
 800B85F0	beq    v1, v0, Lb86bc [$800b86bc]
 
-V0 = hu[800fa6b8];
+V0 = hu[0x800fa6b8];
 
 800B8604	beq    v0, zero, Lb86bc [$800b86bc]
 
 funcbb804();
 
 V0 = 0005;
-[80163c7c] = b(V0);
+[0x80163c7c] = b(V0);
 800B8620	jal    funcd8b2c [$800d8b2c]
 800B8624	nop
-V1 = bu[801590e0];
+V1 = bu[0x801590e0];
 V0 = 0064;
-[800f7ed4] = b(V0);
+[0x800f7ed4] = b(V0);
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
@@ -781,21 +777,21 @@ V0 = A1 < 0003;
 A0 = A0 + 0074;
 
 Lb86bc:	; 800B86BC
-V1 = bu[800f9d98];
+V1 = bu[0x800f9d98];
 V0 = 0064;
 800B86C8	beq    v1, v0, Lb8734 [$800b8734]
 800B86CC	nop
-V0 = hu[800707be];
+V0 = hu[0x800707be];
 800B86D8	nop
 V0 = V0 & 0001;
 800B86E0	beq    v0, zero, Lb8734 [$800b8734]
 V0 = 0005;
-[80163c7c] = b(V0);
+[0x80163c7c] = b(V0);
 800B86F0	jal    funcd8b2c [$800d8b2c]
 800B86F4	nop
-V1 = bu[801590e0];
+V1 = bu[0x801590e0];
 V0 = 0064;
-[800f9d98] = b(V0);
+[0x800f9d98] = b(V0);
 V0 = V1 << 01;
 V0 = V0 + V1;
 V0 = V0 << 02;
@@ -807,9 +803,9 @@ battle_queue1_camera_init();
 
 
 Lb8734:	; 800B8734
-if( bu[0x801590d8] == 0 )
+if (bu[0x801590d8] == 0)
 {
-    if( hu[0x80163b80] != 0 )
+    if (hu[0x80163b80] != 0)
     {
         funcbb864();
 
@@ -817,11 +813,11 @@ if( bu[0x801590d8] == 0 )
     }
 }
 
-V1 = bu[800f9d9c];
+V1 = bu[0x800f9d9c];
 V0 = 0x64;
 800B877C	beq    v1, v0, Lb887c [$800b887c]
 
-V0 = hu[800707be];
+V0 = hu[0x800707be];
 V0 = V0 & 0008;
 800B8794	beq    v0, zero, Lb887c [$800b887c]
 A1 = 0;
@@ -858,12 +854,12 @@ V0 = A1 < 0003;
 800B8820	bne    v0, zero, loopb87b0 [$800b87b0]
 A3 = A3 + 0074;
 V0 = 0064;
-[800f9d9c] = b(V0);
+[0x800f9d9c] = b(V0);
 V0 = 0005;
-[80163c7c] = b(V0);
+[0x80163c7c] = b(V0);
 800B8840	jal    funcd8b2c [$800d8b2c]
 800B8844	nop
-V1 = bu[801590e0];
+V1 = bu[0x801590e0];
 800B8850	nop
 V0 = V1 << 01;
 V0 = V0 + V1;
@@ -882,9 +878,9 @@ Lb887c:	; 800B887C
 ////////////////////////////////
 // funcb888c()
 
-for( int i = 0; i < 4e; ++i )
+for (int i = 0; i < 4e; ++i)
 {
-    if( A0 == bu[801517f0 + i] )
+    if (A0 == bu[0x801517f0 + i])
     {
         return i;
     }
@@ -902,8 +898,8 @@ unit_id = A0;
 A0 = 800ce970;
 funcbbeac;
 S0 = V0;
-[80162978 + S0 * 20 + 4] = h(0);
-[80162978 + S0 * 20 + 8] = h(unit_id);
+[0x80162978 + S0 * 20 + 4] = h(0);
+[0x80162978 + S0 * 20 + 8] = h(unit_id);
 
 A0 = unit_id;
 funcb888c;
@@ -979,14 +975,14 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // funcb8a34
-[80162978 + A1 * 20 + 06] = h(hu[800f99ec + A0 * c + 8]);
-[80162978 + A1 * 20 + 0a] = h(hu[800f99ec + A0 * c + 0]); // damage.
-[80162978 + A1 * 20 + 0c] = h(bu[801590cc]); // attacker id
-[80162978 + A1 * 20 + 0e] = h(hu[800f99ec + A0 * c + 2]); // 1f800220 damage flags (heal damage to mp critical).
-[80162978 + A1 * 20 + 10] = w(h[800f99ec + A0 * c + 4]); // impact sound.
-[80162978 + A1 * 20 + 14] = w(h[800f99f2 + A0 * c]); // impact effect id.
-[80162978 + A1 * 20 + 18] = b(bu[800f8cf0]); // 1 in 0xbe opcode or 0 in 0xf7 opcode
-[80162978 + A1 * 20 + 19] = b(bu[800f99ec + A0 * c + a]);
+[0x80162978 + A1 * 20 + 06] = h(hu[0x800f99ec + A0 * c + 8]);
+[0x80162978 + A1 * 20 + 0a] = h(hu[0x800f99ec + A0 * c + 0]); // damage.
+[0x80162978 + A1 * 20 + 0c] = h(bu[0x801590cc]); // attacker id
+[0x80162978 + A1 * 20 + 0e] = h(hu[0x800f99ec + A0 * c + 2]); // 1f800220 damage flags (heal damage to mp critical).
+[0x80162978 + A1 * 20 + 10] = w(h[0x800f99ec + A0 * c + 4]); // impact sound.
+[0x80162978 + A1 * 20 + 14] = w(h[0x800f99f2 + A0 * c]); // impact effect id.
+[0x80162978 + A1 * 20 + 18] = b(bu[0x800f8cf0]); // 1 in 0xbe opcode or 0 in 0xf7 opcode
+[0x80162978 + A1 * 20 + 19] = b(bu[0x800f99ec + A0 * c + a]);
 ////////////////////////////////
 
 
@@ -996,12 +992,12 @@ SP = SP + 0020;
 
 S1 = 80151778;
 
-while( true )
+while (true)
 {
     A0 = SP + 10; // we store address of current 800f4d2c
     funcd4ff0; // we read 800f4cec hurt byte here
 
-    switch( V0 )
+    switch (V0)
     {
         case 0:
         {
@@ -1011,7 +1007,7 @@ while( true )
 
         case 4 5 // normal hurt
         {
-            [800f8378] = b(0);
+            [0x800f8378] = b(0);
 
             V0 = w[SP + 10];
             S0 = h[V0 + 0]; // unit id
@@ -1019,11 +1015,11 @@ while( true )
             A0 = S0;
             funcb88cc;
 
-            [801518e4 + S0 * b9c + 3e] = b(bu[801518e4 + S0 * b9c + 3e] | 20);
+            [0x801518e4 + S0 * b9c + 3e] = b(bu[0x801518e4 + S0 * b9c + 3e] | 20);
 
             A0 = S0;
             funcb888c;
-            [80151200 + S0 * 74 + 0] = w(w[80163cc4 + V0 * 8]);
+            [0x80151200 + S0 * 74 + 0] = w(w[0x80163cc4 + V0 * 8]);
         }
         break;
 
@@ -1035,7 +1031,7 @@ while( true )
             A0 = S0;
             funcd6814; // add reflection effect
 
-            [801518e4 + S0 * b9c + 26] = b(1);
+            [0x801518e4 + S0 * b9c + 26] = b(1);
         }
         break;
 
@@ -1043,7 +1039,7 @@ while( true )
         {
             V0 = w[SP + 0010];
             A0 = h[V0 + 0000];
-            [800f8378] = b(0);
+            [0x800f8378] = b(0);
             800B8C58	jal    funcb88cc [$800b88cc]
         }
         break;
@@ -1052,7 +1048,7 @@ while( true )
         {
             V1 = w[SP + 0010];
             V0 = 0001;
-            [800f8378] = b(V0);
+            [0x800f8378] = b(V0);
             S0 = h[V1 + 0000];
             A1 = h[V1 + 0010];
             800B8C80	jal    funcb8944 [$800b8944]
@@ -1081,7 +1077,7 @@ while( true )
             V0 = V0 << 10;
             V0 = V0 >> 0d;
             V1 = V1 << 02;
-            A0 = bu[80163b38];
+            A0 = bu[0x80163b38];
             AT = 80163cc4;
             AT = AT + V0;
             V0 = w[AT + 0000];
@@ -1089,7 +1085,7 @@ while( true )
             AT = 80151200;
             AT = AT + V1;
             [AT + 0000] = w(V0);
-            [80163b38] = b(A0);
+            [0x80163b38] = b(A0);
         }
         break;
 
@@ -1108,16 +1104,16 @@ while( true )
             [S1 + 0004] = h(V0);
             V0 = hu[V1 + 0010];
             A0 = 800c7340;
-            [800fafe8] = h(V0);
+            [0x800fafe8] = h(V0);
             800B8D6C	jal    funcbbeac [$800bbeac]
             800B8D70	nop
-            [800f8364] = b(0);
+            [0x800f8364] = b(0);
         }
         break;
 
         case 2:
         {
-            [800f8364] = b(ff);
+            [0x800f8364] = b(ff);
         }
         break;
 
@@ -1126,8 +1122,8 @@ while( true )
             V1 = w[SP + 10];
             V0 = h[V1 + 10];
 
-            A0 = w[800e8c90 + V0 * 8 + 0];
-            A1 = w[800e8c90 + V0 * 8 + 4];
+            A0 = w[0x800e8c90 + V0 * 8 + 0];
+            A1 = w[0x800e8c90 + V0 * 8 + 4];
             A2 = w[V1 + c];
             A3 = 0;
             system_cdrom_start_load_lzs();
@@ -1184,18 +1180,18 @@ AT = AT + V0;
 ////////////////////////////////
 // funcb8ee4()
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
-    if( b[801636b8 + i * 10 + 0] != -1 )
+    if (b[0x801636b8 + i * 10 + 0] != -1)
     {
         A0 = i;
         800B8F38	jal    funcb5fc4 [$800b5fc4]
 
-        if( ( bu[80151909 + i * b9c + 0] & 2 ) == 0 )
+        if ((bu[0x80151909 + i * b9c + 0] & 2) == 0)
         {
             A0 = i; // unit id
-            V0 = bu[80151232 + i * 74 + 0];
-            A3 = w[800f8384 + V0 * 4 + 0];
+            V0 = bu[0x80151232 + i * 74 + 0];
+            A3 = w[0x800f8384 + V0 * 4 + 0];
             A1 = w[A3 + 8];
             A2 = A3 + c;
             A1 = A1 + 68;
@@ -1212,9 +1208,9 @@ for( int i = 0; i < 3; ++i )
 
 unit_id = A0;
 
-if( bu[80151232 + unit_id * 74 + 0] != 6 )
+if (bu[0x80151232 + unit_id * 74 + 0] != 6)
 {
-    V0 = h[800f7e08 + (unit_id - 4) * c + 0];
+    V0 = h[0x800f7e08 + (unit_id - 4) * c + 0];
 }
 else
 {
@@ -1222,7 +1218,7 @@ else
 }
 
 A0 = unit_id;
-A3 = w[800f8384 + V0 * 4 + 0];
+A3 = w[0x800f8384 + V0 * 4 + 0];
 A1 = w[A3 + 8] + 68;
 A2 = A3 + c;
 battle_execute_unit_animation_script();
@@ -1233,7 +1229,7 @@ battle_execute_unit_animation_script();
 ////////////////////////////////
 // funcb905c()
 
-V0 = bu[800f7e04];
+V0 = bu[0x800f7e04];
 S0 = 0004;
 V0 = V0 + 0004;
 V0 = S0 < V0;
@@ -1260,7 +1256,7 @@ A1 = S3;
 A2 = S4;
 
 Lb90d8:	; 800B90D8
-V0 = bu[800f7e04];
+V0 = bu[0x800f7e04];
 S0 = S0 + 0001;
 V0 = V0 + 0004;
 V0 = S0 < V0;
@@ -1268,7 +1264,7 @@ V0 = S0 < V0;
 A0 = S0 << 10;
 
 Lb90f4:	; 800B90F4
-V0 = bu[800f7e04];
+V0 = bu[0x800f7e04];
 S0 = 0004;
 V0 = V0 + 0004;
 V0 = S0 < V0;
@@ -1306,7 +1302,7 @@ A2 = S4;
 
 Lb9188:	; 800B9188
 S2 = S2 + 0074;
-V0 = bu[800f7e04];
+V0 = bu[0x800f7e04];
 S0 = S0 + 0001;
 V0 = V0 + 0004;
 V0 = S0 < V0;
@@ -1321,17 +1317,17 @@ Lb91a8:	; 800B91A8
 ////////////////////////////////
 // funcb91cc()
 
-if( ( hu[8009d7be] & 0300 ) == 0100 )
+if ((hu[0x8009d7be] & 0300) == 0100)
 {
-    for( int i = 0; i < 3; ++i )
+    for (int i = 0; i < 3; ++i)
     {
-        [80163acc + i * 34 + 0] = w(w[80151a54 + i * b9c + 0]);
-        [80163ac6 + i * 34 + 0] = h(-1f4);
-        [80163ac4 + i * 34 + 0] = h(hu[80151a4c + i * b9c + 0]);
-        [80163ac8 + i * 34 + 0] = h(hu[80151a50 + i * b9c + 0]);
-        [80163abc + i * 34 + 0] = h(hu[80151a44 + i * b9c + 0]);
-        [80163abe + i * 34 + 0] = h(hu[80151a46 + i * b9c + 0]);
-        [80163ac0 + i * 34 + 0] = h(hu[80151a48 + i * b9c + 0]);
+        [0x80163acc + i * 34 + 0] = w(w[0x80151a54 + i * b9c + 0]);
+        [0x80163ac6 + i * 34 + 0] = h(-1f4);
+        [0x80163ac4 + i * 34 + 0] = h(hu[0x80151a4c + i * b9c + 0]);
+        [0x80163ac8 + i * 34 + 0] = h(hu[0x80151a50 + i * b9c + 0]);
+        [0x80163abc + i * 34 + 0] = h(hu[0x80151a44 + i * b9c + 0]);
+        [0x80163abe + i * 34 + 0] = h(hu[0x80151a46 + i * b9c + 0]);
+        [0x80163ac0 + i * 34 + 0] = h(hu[0x80151a48 + i * b9c + 0]);
 
         A0 = 80163abc + i * 34;
         A1 = 80163abc - 20 + i * 34;
@@ -1346,13 +1342,13 @@ if( ( hu[8009d7be] & 0300 ) == 0100 )
         A3 = SP + 18;
         system_psyq_rot_trans_pers();
 
-        [80151700 + i * 8 + 0] = h(hu[SP + 10]);
-        [80151702 + i * 8 + 0] = h(h[SP + 12]);
+        [0x80151700 + i * 8 + 0] = h(hu[SP + 10]);
+        [0x80151702 + i * 8 + 0] = h(h[SP + 12]);
     }
 
-    for( int i = 4; i < a; ++i )
+    for (int i = 4; i < a; ++i)
     {
-        bone_id = bu[8015477f + i * b9c + 0];
+        bone_id = bu[0x8015477f + i * b9c + 0];
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
         system_psyq_set_rot_matrix();
@@ -1366,15 +1362,15 @@ if( ( hu[8009d7be] & 0300 ) == 0100 )
         A3 = SP + 18;
         system_psyq_rot_trans_pers();
 
-        [80151700 + i * 8 + 0] = h(hu[SP + 10]);
-        [80151702 + i * 8 + 0] = h(h[SP + 12]);
+        [0x80151700 + i * 8 + 0] = h(hu[SP + 10]);
+        [0x80151702 + i * 8 + 0] = h(h[SP + 12]);
     }
 }
 else
 {
-    for( int i = 0; i < a; ++i )
+    for (int i = 0; i < a; ++i)
     {
-        bone_id = bu[801518e4 + i * b9c + 2b]; // get bone for first joint
+        bone_id = bu[0x801518e4 + i * b9c + 2b]; // get bone for first joint
 
         A0 = 801518e4 + i * b9c + 174 + bone_id * 34;
         system_psyq_set_rot_matrix();
@@ -1388,8 +1384,8 @@ else
         A3 = SP + 18;
         system_psyq_rot_trans_pers();
 
-        [80151700 + i * 8 + 0] = h(hu[SP + 10]);
-        [80151702 + i * 8 + 0] = h(h[SP + 12]);
+        [0x80151700 + i * 8 + 0] = h(hu[SP + 10]);
+        [0x80151702 + i * 8 + 0] = h(h[SP + 12]);
     }
 }
 ////////////////////////////////
@@ -1399,10 +1395,10 @@ else
 ////////////////////////////////
 // funcb950c()
 
-for( int i = 0; i < a; ++i )
+for (int i = 0; i < a; ++i)
 {
-    [801516fc + i * 8 + 0] = h(hu[80151700 + i * 8 + 0]);
-    [801516fe + i * 8 + 0] = h(hu[80151702 + i * 8 + 0]);
+    [0x801516fc + i * 8 + 0] = h(hu[0x80151700 + i * 8 + 0]);
+    [0x801516fe + i * 8 + 0] = h(hu[0x80151702 + i * 8 + 0]);
 }
 ////////////////////////////////
 
@@ -1411,15 +1407,15 @@ for( int i = 0; i < a; ++i )
 ////////////////////////////////
 // funcb9568()
 
-if( ( bu[800f8380] & 08 ) == 0 && hu[8016360c + 8] == 3a ) // if battle location == Kalm Flashback (with rain)
+if ((bu[0x800f8380] & 08) == 0 && hu[0x8016360c + 8] == 3a) // if battle location == Kalm Flashback (with rain)
 {
     funcc5864();
 }
 
 // set far color
-A0 = bu[800f5b70];
-A1 = bu[800f5b71];
-A2 = bu[800f5b72];
+A0 = bu[0x800f5b70];
+A1 = bu[0x800f5b71];
+A2 = bu[0x800f5b72];
 system_gte_set_far_colour();
 
 A0 = 800f8158 + 0 * 34 + 20;
@@ -1432,54 +1428,54 @@ battle_update_matrix_with_self_and_parent_and_set_to_gte();
 V1 = w[V0];
 S1 = 801590e4 + V1;
 
-switch( bu[S1 + 00] )
+switch (bu[S1 + 00])
 {
     case 0:
     {
-        V0 = bu[800f8380];
+        V0 = bu[0x800f8380];
         if ((V0 & 2) == 0)
         {
             funcba24c; // set Y shaking for 1st parts group (emulate train shaking)
 
             A0 = 1;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
 
             A0 = 5;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
 
             A0 = 6;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
 
             A0 = 7;
-            A1 = w[801517c0] + 70;
+            A1 = w[0x801517c0] + 70;
             A2 = c;
             A3 = 0;
             funcba360;
 
             A0 = b;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
         }
 
-        V0 = w[801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
-        [8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
+        V0 = w[0x801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
+        [0x8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
 
-        A0 = bu[800f8380];
+        A0 = bu[0x800f8380];
         if ((A0 & 1) == 0)
         {
             if ((A0 & 4) == 0)
@@ -1493,21 +1489,21 @@ switch( bu[S1 + 00] )
 
                 A0 = 4;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
 
                 A0 = 3;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
 
                 A0 = 2;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
@@ -1566,40 +1562,40 @@ switch( bu[S1 + 00] )
 
     case 3:
     {
-        V0 = bu[800f8380];
+        V0 = bu[0x800f8380];
         V0 = V0 & 2;
         if (V0 == 0)
         {
             A0 = 1;
             A2 = 0;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 4070;
             funcba360;
         }
 
-        V1 = bu[800f8380];
+        V1 = bu[0x800f8380];
         if ((V1 & 1) == 0)
         {
             if ((V1 & 4) == 0)
             {
                 A0 = 2;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
 
                 A0 = 3;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
 
                 A0 = 4;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
@@ -1608,9 +1604,9 @@ switch( bu[S1 + 00] )
 
 
             // rotate by Y
-            [800f8158 + 1 * 34 + 22] = h(hu[800f8158 + 1 * 34 + 22] + 1);
-            [800f8158 + 2 * 34 + 22] = h(hu[800f8158 + 2 * 34 + 22] + 2);
-            [800f8158 + 3 * 34 + 22] = h(hu[800f8158 + 3 * 34 + 22] + 4);
+            [0x800f8158 + 1 * 34 + 22] = h(hu[0x800f8158 + 1 * 34 + 22] + 1);
+            [0x800f8158 + 2 * 34 + 22] = h(hu[0x800f8158 + 2 * 34 + 22] + 2);
+            [0x800f8158 + 3 * 34 + 22] = h(hu[0x800f8158 + 3 * 34 + 22] + 4);
 
 
 
@@ -1624,7 +1620,7 @@ switch( bu[S1 + 00] )
 
             A0 = 5;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
@@ -1638,7 +1634,7 @@ switch( bu[S1 + 00] )
 
             A0 = 6;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
@@ -1652,24 +1648,24 @@ switch( bu[S1 + 00] )
 
             A0 = 7;
             A2 = c;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A3 = 0;
             A1 = A1 + 70;
             funcba360;
         }
 
-        V0 = w[801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
-        [8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
+        V0 = w[0x801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
+        [0x8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
     }
     break;
 
     case 1 5:
     {
-        V0 = bu[800f8380];
+        V0 = bu[0x800f8380];
         if ((V0 & 2) == 0)
         {
             A0 = 1;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 4070;
             A2 = 0;
             A3 = 0;
@@ -1682,7 +1678,7 @@ switch( bu[S1 + 00] )
                 A0 = 5;
 
                 loopb9a30:	; 800B9A30
-                    A1 = w[801517C0]; // 800FAFF4
+                    A1 = w[0x801517C0]; // 800FAFF4
                     A1 = A1 + 4070;
                     A2 = 0;
                     A3 = 0;
@@ -1694,37 +1690,37 @@ switch( bu[S1 + 00] )
             }
         }
 
-        V0 = w[801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
-        [8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
+        V0 = w[0x801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
+        [0x8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
 
-        A0 = bu[800f8380];
+        A0 = bu[0x800f8380];
         if ((A0 & 1) == 0)
         {
             if ((A0 & 4) == 0)
             {
                 A0 = 2;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
 
                 A0 = 3;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
 
                 A0 = 4;
                 A2 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A3 = 0;
                 A1 = A1 + 40a4;
                 funcba360;
             }
 
-            number_of_sector = w[801590E4]; // numbers of sectors in battle field file
+            number_of_sector = w[0x801590E4]; // numbers of sectors in battle field file
             number_of_sector = number_of_sector - 1; // numbers of sectors in battle field file without texture.
 
             S0 = bu[S1 + 1];
@@ -1732,7 +1728,7 @@ switch( bu[S1 + 00] )
             {
                 loopb9b08:	; 800B9B08
                     A0 = S0;
-                    A1 = w[801517c0]; // 800FAFF4
+                    A1 = w[0x801517c0]; // 800FAFF4
                     A1 = A1 + 70;
                     A2 = c;
                     A3 = 0;
@@ -1748,21 +1744,21 @@ switch( bu[S1 + 00] )
 
     case 2:
     {
-        V0 = w[801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
-        [8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
+        V0 = w[0x801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
+        [0x8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
 
-        V1 = bu[800f8380];
+        V1 = bu[0x800f8380];
         if ((V1 & 1) == 0)
         {
             A0 = 1;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 70;
             A2 = c;
             A3 = 0;
             funcba360;
 
             A0 = 7;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 70;
             A2 = c;
             A3 = 0;
@@ -1776,14 +1772,14 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 2;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 70;
             A2 = c;
             A3 = 0;
             funcba360;
 
             A0 = 8;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 70;
             A2 = c;
             A3 = 0;
@@ -1797,16 +1793,16 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             // move translation Y
-            if (h[800f8158 + 2 * 34 + 2a] == -30d4)
+            if (h[0x800f8158 + 2 * 34 + 2a] == -30d4)
             {
-                [800f8158 + 2 * 34 + 2a] = h(0);
+                [0x800f8158 + 2 * 34 + 2a] = h(0);
             }
-            [800f8158 + 2 * 34 + 2a] = h(hu[800f8158 + 2 * 34 + 2a] - 64);
+            [0x800f8158 + 2 * 34 + 2a] = h(hu[0x800f8158 + 2 * 34 + 2a] - 64);
 
             S0 = 3;
             loopb9c5c:	; 800B9C5C
                 A0 = S0;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 70;
                 A2 = c;
                 A3 = 0;
@@ -1819,7 +1815,7 @@ switch( bu[S1 + 00] )
             S0 = 9;
             loopb9c88:	; 800B9C88
                 A0 = S0;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 70;
                 A2 = c;
                 A3 = 0;
@@ -1837,16 +1833,16 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             // move translation Y
-            if (h[800f8158 + 4 * 34 + 2a] == 0)
+            if (h[0x800f8158 + 4 * 34 + 2a] == 0)
             {
-                [800f8158 + 4 * 34 + 2a] = h(30d4);
+                [0x800f8158 + 4 * 34 + 2a] = h(30d4);
             }
-            [800f8158 + 4 * 34 + 2a] = h(hu[800f8158 + 4 * 34 + 2a] - 64);
+            [0x800f8158 + 4 * 34 + 2a] = h(hu[0x800f8158 + 4 * 34 + 2a] - 64);
 
             S0 = 3;
             loopb9d0c:	; 800B9D0C
                 A0 = S0;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 70;
                 A2 = c;
                 A3 = 0;
@@ -1859,7 +1855,7 @@ switch( bu[S1 + 00] )
             S0 = 9;
             loopb9d3c:	; 800B9D3C
                 A0 = S0;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 70;
                 A2 = c;
                 A3 = 0;
@@ -1877,7 +1873,7 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 6;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 70;
             A2 = c;
             A3 = 0;
@@ -1894,34 +1890,34 @@ switch( bu[S1 + 00] )
 
     case 4:
     {
-        V0 = bu[800f8380];
+        V0 = bu[0x800f8380];
         if ((V0 & 2) == 0)
         {
             A0 = 1;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 40a4;
             A2 = 3;
             A3 = 0;
             funcba360;
 
             A0 = 5;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 40a4;
             A2 = 3;
             A3 = 0;
             funcba360;
         }
 
-        V0 = w[801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
-        [8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
+        V0 = w[0x801590e4 + 8]; // offset to 1st sector with mesh (sector after control sector)
+        [0x8016209c] = w(801590e4 + V0 & 7fffffff); // store offset to first sector here.
 
-        A0 = bu[800f8380];
+        A0 = bu[0x800f8380];
         if ((A0 & 1) == 0)
         {
             if ((A0 & 4) == 0)
             {
                 A0 = 2;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 40a4;
                 A2 = 4;
                 A3 = 0;
@@ -1935,14 +1931,14 @@ switch( bu[S1 + 00] )
                 battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
                 A0 = 3;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 40a4;
                 A2 = 4;
                 A3 = 0;
                 funcba360;
 
                 A0 = 4;
-                A1 = w[801517c0];
+                A1 = w[0x801517c0];
                 A1 = A1 + 40a4;
                 A2 = 4;
                 A3 = 0;
@@ -1951,8 +1947,8 @@ switch( bu[S1 + 00] )
 
 
 
-            [800f8158 + 1 * 34 + 24] = h(hu[800f8158 + 1 * 34 + 24] + 8); // rotation z
-            [800f8158 + 1 * 34 + 2a] = h(-9c4); translation y
+            [0x800f8158 + 1 * 34 + 24] = h(hu[0x800f8158 + 1 * 34 + 24] + 8); // rotation z
+            [0x800f8158 + 1 * 34 + 2a] = h(-9c4); translation y
 
             A0 = 800f8158 + 1 * 34 + 20;
             A1 = 800f8158 + 1 * 34;
@@ -1962,7 +1958,7 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 6;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 4070;
             A2 = 0;
             A3 = 0;
@@ -1970,8 +1966,8 @@ switch( bu[S1 + 00] )
 
 
 
-            [800f8158 + 2 * 34 + 24] = h(hu[800f8158 + 2 * 34 + 24] + 6); // rotation z
-            [800f8158 + 2 * 34 + 2a] = h(-9c4);
+            [0x800f8158 + 2 * 34 + 24] = h(hu[0x800f8158 + 2 * 34 + 24] + 6); // rotation z
+            [0x800f8158 + 2 * 34 + 2a] = h(-9c4);
 
             A0 = 800f8158 + 2 * 34 + 20;
             A1 = 800f8158 + 2 * 34;
@@ -1981,14 +1977,14 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 7;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 4070;
             A2 = 0;
             A3 = 0;
             funcba360;
 
-            [800f8158 + 3 * 34 + 24] = h(hu[800f8158 + 3 * 34 + 24] + 4); // rotation z
-            [800f8158 + 3 * 34 + 2a] = h(-9c4);
+            [0x800f8158 + 3 * 34 + 24] = h(hu[0x800f8158 + 3 * 34 + 24] + 4); // rotation z
+            [0x800f8158 + 3 * 34 + 2a] = h(-9c4);
 
             A0 = 800f8158 + 3 * 34 + 20;
             A1 = 800f8158 + 3 * 34;
@@ -1998,7 +1994,7 @@ switch( bu[S1 + 00] )
             battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
             A0 = 8;
-            A1 = w[801517c0];
+            A1 = w[0x801517c0];
             A1 = A1 + 4070;
             A2 = 0;
             A3 = 0;
@@ -2030,30 +2026,30 @@ battle_update_matrix_with_self_and_parent_and_set_to_gte();
 
 
 
-if (h[800f8158 + dynamic_id * 34 + 2c] == max)
+if (h[0x800f8158 + dynamic_id * 34 + 2c] == max)
 {
-    [800f8158 + dynamic_id * 34 + 2c] = h(start);
+    [0x800f8158 + dynamic_id * 34 + 2c] = h(start);
 }
-[800f8158 + dynamic_id * 34 + 2c] = h(hu[800f8158 + dynamic_id * 34 + 2c] + addition);
+[0x800f8158 + dynamic_id * 34 + 2c] = h(hu[0x800f8158 + dynamic_id * 34 + 2c] + addition);
 
 
 
 A0 = 8;
-A1 = w[801517c0];
+A1 = w[0x801517c0];
 A1 = A1 + 70;
 A2 = c;
 A3 = 0;
 funcba360;
 
 A0 = 9;
-A1 = w[801517c0];
+A1 = w[0x801517c0];
 A1 = A1 + 70;
 A2 = c;
 A3 = 0;
 funcba360;
 
 A0 = a;
-A1 = w[801517c0];
+A1 = w[0x801517c0];
 A1 = A1 + 70;
 A2 = c;
 A3 = 0;
@@ -2065,38 +2061,38 @@ funcba360;
 ////////////////////////////////
 // funcba24c
 // set Y shaking for 1st parts group
-[800f8158 + 2a] = h(0); // translation Y
+[0x800f8158 + 2a] = h(0); // translation Y
 
-if (h[80163b44] == 0)
+if (h[0x80163b44] == 0)
 {
-    [800f8158 + 2a] = h(ffd8);
+    [0x800f8158 + 2a] = h(ffd8);
 }
 
-if (h[80163b46] == 0)
+if (h[0x80163b46] == 0)
 {
-    [800f8158 + 2a] = h(hu[800f8158 + 2a] - 50);
+    [0x800f8158 + 2a] = h(hu[0x800f8158 + 2a] - 50);
 }
 
-[80163b44] = h((h[80163b44] - 1) & 3);
-[80163b46] = h((h[80163b46] - 1) & 1f);
+[0x80163b44] = h((h[0x80163b44] - 1) & 3);
+[0x80163b46] = h((h[0x80163b46] - 1) & 1f);
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // funcba2bc
-V0 = h[80163b44 + A0 * 2];
+V0 = h[0x80163b44 + A0 * 2];
 if (V0 < 10)
 {
-    V1 = hu[800f8158 + A0 * 34 + 2a] - 19;
+    V1 = hu[0x800f8158 + A0 * 34 + 2a] - 19;
 }
 else
 {
-    V1 = hu[800f8158 + A0 * 34 + 2a] + 19;
+    V1 = hu[0x800f8158 + A0 * 34 + 2a] + 19;
 }
-[800f8158 + A0 * 34 + 2a] = h(V1);
+[0x800f8158 + A0 * 34 + 2a] = h(V1);
 
-[80163b44 + A0 * 2] = h((hu[80163b44 + A0 * 2] - 1) & 1f);
+[0x80163b44 + A0 * 2] = h((hu[0x80163b44 + A0 * 2] - 1) & 1f);
 ////////////////////////////////
 
 
@@ -2108,7 +2104,7 @@ else
 // A2 = c or 0;
 // A3 = 0;
 
-V1 = w[801590e8 + A0 * 4]; // offset to part
+V1 = w[0x801590e8 + A0 * 4]; // offset to part
 T0 = 801590e4 + V1 & 7fffffff; // global offset to part
 if (V1 & 80000000)
 {
@@ -2123,15 +2119,15 @@ V1 = V1 | A3 | 0180;
 [1f800320] = w(T0); // global offset to part
 [1f800324] = w(V1);
 [1f800328] = h(0000);
-[1f80032a] = h(hu[800f5b74]);
+[1f80032a] = h(hu[0x800f5b74]);
 [1f80032c] = h(0020); // blending for this part 0.5xB + 0.5xF
 [1f80032e] = h(0000);
 
 A0 = 1f800320;
 A2 = A2;
-A3 = w[80153c74];
+A3 = w[0x80153c74];
 funcd29d4();
-[80163c74] = w(V0);
+[0x80163c74] = w(V0);
 
 return;
 ////////////////////////////////
@@ -2191,7 +2187,7 @@ SP = SP + 0028;
 800BA4C4	nop
 ////////////////////////////////
 // funcba4c8
-V0 = bu[800f7e04];
+V0 = bu[0x800f7e04];
 800BA4D0	addiu  sp, sp, $ffe0 (=-$20)
 [SP + 0014] = w(S1);
 S1 = 0004;
@@ -2230,7 +2226,7 @@ V0 = V0 & 0080;
 A0 = S0;
 
 Lba560:	; 800BA560
-V0 = bu[800f7e04];
+V0 = bu[0x800f7e04];
 S1 = S1 + 0001;
 V0 = V0 + 0004;
 V0 = S1 < V0;
@@ -2256,13 +2252,13 @@ unit_id = A0;
 
 [1f80000c] = w(0);
 
-scale = h[801518e4 + unit_id * b9c + 6];
+scale = h[0x801518e4 + unit_id * b9c + 6];
 
-if( hu[80151200 + unit_id * 74 + c] & 0020 )
+if (hu[0x80151200 + unit_id * 74 + c] & 0020)
 {
-    [1f800000] = w((h[80151200 + unit_id * 74 + 38] * scale) >> c);
-    [1f800004] = w((h[80151200 + unit_id * 74 + 3a] * scale) >> c);
-    [1f800008] = w((h[80151200 + unit_id * 74 + 3c] * scale) >> c);
+    [1f800000] = w((h[0x80151200 + unit_id * 74 + 38] * scale) >> c);
+    [1f800004] = w((h[0x80151200 + unit_id * 74 + 3a] * scale) >> c);
+    [1f800008] = w((h[0x80151200 + unit_id * 74 + 3c] * scale) >> c);
 }
 else
 {
@@ -2282,17 +2278,17 @@ A0 = 801518e4 + unit_id * b9c + 140;
 A1 = 1f800000; // scale
 battle_update_matrix_with_scale_and_set_to_gte();
 
-A0 = bu[801518e4 + unit_id * b9c + 28]; // r
-A1 = bu[801518e4 + unit_id * b9c + 29]; // g
-A2 = bu[801518e4 + unit_id * b9c + 2a]; // b
+A0 = bu[0x801518e4 + unit_id * b9c + 28]; // r
+A1 = bu[0x801518e4 + unit_id * b9c + 29]; // g
+A2 = bu[0x801518e4 + unit_id * b9c + 2a]; // b
 system_gte_set_far_colour();
 
 A0 = unit_id;
 funcc14c0(); // ???
 
-number_of_bones = h[801518e4 + unit_id * b9c + 10];
+number_of_bones = h[0x801518e4 + unit_id * b9c + 10];
 
-for( int i = 0; i < number_of_bones; ++i )
+for (int i = 0; i < number_of_bones; ++i)
 {
     A0 = 801518e4 + unit_id * b9c + 174 + i * 34 + 20; // rotation data
     A1 = 801518e4 + unit_id * b9c + 174 + i * 34; // ret matrix
@@ -2302,9 +2298,9 @@ for( int i = 0; i < number_of_bones; ++i )
 A0 = unit_id;
 battle_update_model_matrixes_with_self_and_parent();
 
-for( int i = 0; i < number_of_bones; ++i )
+for (int i = 0; i < number_of_bones; ++i)
 {
-    if( w[801518e4 + unit_id * b9c + 78 + i * 4] != 0 ) // bone exist
+    if (w[0x801518e4 + unit_id * b9c + 78 + i * 4] != 0) // bone exist
     {
         matrix = 801518e4 + unit_id * b9c + 174 + i * 34;
         R11R12 = w[matrix + 0];
@@ -2316,46 +2312,46 @@ for( int i = 0; i < number_of_bones; ++i )
         TRY = w[matrix + 18];
         TRZ = w[matrix + 1c];
 
-        if( h[801518e4 + unit_id * b9c + 0] == 9e )
+        if (h[0x801518e4 + unit_id * b9c + 0] == 9e)
         {
-            [1f800320 + 4] = w(bu[801518e4 + unit_id * b9c + 3f + i] | 01b8);
+            [1f800320 + 4] = w(bu[0x801518e4 + unit_id * b9c + 3f + i] | 01b8);
         }
         else
         {
-            [1f800320 + 4] = w(bu[801518e4 + unit_id * b9c + 3f + i] | 0190);
+            [1f800320 + 4] = w(bu[0x801518e4 + unit_id * b9c + 3f + i] | 0190);
         }
 
-        [1f800320 + 0] = w(w[801518e4 + unit_id * b9c + i * 4 + 78]);
-        [1f800320 + 8] = h(hu[8015122e + unit_id * 74 + 0000]);
-        [1f800320 + a] = h(hu[801518f8 + unit_id * b9c + 0000]);
+        [1f800320 + 0] = w(w[0x801518e4 + unit_id * b9c + i * 4 + 78]);
+        [1f800320 + 8] = h(hu[0x8015122e + unit_id * 74 + 0000]);
+        [1f800320 + a] = h(hu[0x801518f8 + unit_id * b9c + 0000]);
         [1f800320 + c] = h(20);
-        [1f800320 + e] = h(hu[801518fa + unit_id * b9c + 0000]);
+        [1f800320 + e] = h(hu[0x801518fa + unit_id * b9c + 0000]);
 
-        if( ( bu[801518e4 + unit_id * b9c + 25] & 04 ) == 0 )
+        if ((bu[0x801518e4 + unit_id * b9c + 25] & 04) == 0)
         {
             A0 = 1f800320;
-            A1 = w[801517c0] + 70;
+            A1 = w[0x801517c0] + 70;
             A2 = c;
-            A3 = w[80163c74];
+            A3 = w[0x80163c74];
             funcd29d4();
 
-            [80163c74] = w(V0);
+            [0x80163c74] = w(V0);
         }
     }
 }
 
-V1 = bu[801518e4 + unit_id * b9c + 25];
+V1 = bu[0x801518e4 + unit_id * b9c + 25];
 
-if( ( V1 & 04 ) == 0 )
+if ((V1 & 04) == 0)
 {
-    if( ( V1 & 10 ) == 0 )
+    if ((V1 & 10) == 0)
     {
-        V0 = hu[8016375a];
+        V0 = hu[0x8016375a];
         V0 = V0 >> unit_id;
         V0 = V0 & 0001;
-        if( V0 == 0 )
+        if (V0 == 0)
         {
-            A0 = bu[8015190c + unit_id * b9c + 0000] >> 2;
+            A0 = bu[0x8015190c + unit_id * b9c + 0000] >> 2;
             A1 = A0;
             A2 = A0;
             system_gte_set_far_colour();
@@ -2379,21 +2375,21 @@ if( ( V1 & 04 ) == 0 )
         [1f800220 + 0020] = h(0);
         [1f80000c] = w(0);
 
-        if( h[801518f0 + unit_id * b9c + 0000] == -1 )
+        if (h[0x801518f0 + unit_id * b9c + 0000] == -1)
         {
             [1f800220 + 002a] = h(0);
-            [80151a4e + unit_id * b9c + 0000] = h(0);
+            [0x80151a4e + unit_id * b9c + 0000] = h(0);
             [1f800220 + 0028] = h(0);
             [1f800220 + 002c] = h(0);
         }
         else
         {
             [1f800220 + 002a] = h(0);
-            V0 = hu[80151a80 + unit_id * b9c + 0000];
-            [80151a4e + unit_id * b9c + 0000] = h(0);
+            V0 = hu[0x80151a80 + unit_id * b9c + 0000];
+            [0x80151a4e + unit_id * b9c + 0000] = h(0);
             [1f800220 + 0028] = h(V0);
-            V0 = hu[80151a84 + unit_id * b9c + 0000];
-            V1 = hu[801518f0 + unit_id * b9c + 0000];
+            V0 = hu[0x80151a84 + unit_id * b9c + 0000];
+            V1 = hu[0x801518f0 + unit_id * b9c + 0000];
             V0 = V0 + V1;
             [1f800220 + 002c] = h(V0);
         }
@@ -2403,7 +2399,7 @@ if( ( V1 & 04 ) == 0 )
         S1 = 80151a24 + unit_id * b9c;
         A0 = S1 + 0020;
         A1 = S1;
-        V0 = h[801518ea + unit_id * b9c + 0000];
+        V0 = h[0x801518ea + unit_id * b9c + 0000];
         S2 = 1f800000;
         [S4 + 0000] = w(V0);
         [S3 + 0000] = w(V0);
@@ -2418,10 +2414,10 @@ if( ( V1 & 04 ) == 0 )
         battle_update_matrix_with_scale_and_set_to_gte();
 
         A0 = 1f800220 + 0020;
-        V1 = hu[801518ec + unit_id * b9c + 0000];
+        V1 = hu[0x801518ec + unit_id * b9c + 0000];
         [S3 + 0000] = w(1000);
         [S2 + 0000] = w(V1);
-        V0 = hu[801518ee + unit_id * b9c + 0000];
+        V0 = hu[0x801518ee + unit_id * b9c + 0000];
         A1 = 1f800220;
         [S4 + 0000] = w(V0);
         system_gte_rotation_matrix_from_yxz();
@@ -2435,19 +2431,19 @@ if( ( V1 & 04 ) == 0 )
 
         A0 = 1f800320;
         A2 = 0;
-        A3 = w[80163c74];
+        A3 = w[0x80163c74];
         [A0 + 0000] = w(800ea294);
         [A0 + 0004] = w(190);
         [A0 + 000e] = h(0);
         [A0 + 0008] = h(0);
-        V1 = hu[801518f8 + unit_id * b9c + 0000];
-        A1 = w[801517c0];
+        V1 = hu[0x801518f8 + unit_id * b9c + 0000];
+        A1 = w[0x801517c0];
         [A0 + 000c] = h(20);
         A1 = A1 + 4078;
         [A0 + 000a] = h(V1);
         funcd29d4();
 
-        [80163c74] = w(V0);
+        [0x80163c74] = w(V0);
 
         A0 = S1;
         A1 = 1f800220 + 34;
@@ -2464,7 +2460,7 @@ if( ( V1 & 04 ) == 0 )
 
 unit_id = A0;
 
-for( int i = 0; i < h[801518e4 + unit_id * b9c + 10]; ++i ) // number of bones
+for (int i = 0; i < h[0x801518e4 + unit_id * b9c + 10]; ++i) // number of bones
 {
     matrix = 801518e4 + unit_id * b9c + 174 + i * 34;
     parent_matrix = w[matrix + 30];
@@ -2579,7 +2575,7 @@ scale = A1;
 
 A0 = matrix;
 A1 = scale;
-system_scale_matrix_by_vector();
+system_psyq_scale_matrix();
 
 A0 = matrix;
 system_psyq_set_rot_matrix();
@@ -2713,12 +2709,12 @@ V0 = V0 & 0004;
 V1 = S6 << 10;
 A0 = S3;
 A2 = 000c;
-A1 = w[801517c0];
-A3 = w[80163c74];
+A1 = w[0x801517c0];
+A3 = w[0x80163c74];
 A1 = A1 + 0070;
 funcd29d4();
 
-[80163c74] = w(V0);
+[0x80163c74] = w(V0);
 
 Lbb250:	; 800BB250
 V1 = S6 << 10;
@@ -2774,9 +2770,9 @@ V0 = V0 & 000f;
 800BB308	nop
 800BB30C	jal    funce1a2c [$800e1a2c]
 800BB310	nop
-[800e8e80] = h(V0);
-V1 = hu[800e8e80];
-V0 = hu[800e8e82];
+[0x800e8e80] = h(V0);
+V1 = hu[0x800e8e80];
+V0 = hu[0x800e8e82];
 800BB32C	nop
 800BB330	beq    v1, v0, Lbb408 [$800bb408]
 800BB334	nop
@@ -2834,9 +2830,9 @@ V0 = T0 < 0022;
 A3 = A3 + 0004;
 
 Lbb408:	; 800BB408
-V0 = hu[800e8e80];
+V0 = hu[0x800e8e80];
 800BB410	nop
-[800e8e82] = h(V0);
+[0x800e8e82] = h(V0);
 
 Lbb41c:	; 800BB41C
 RA = w[SP + 0014];
@@ -2854,11 +2850,11 @@ SP = SP + 0018;
 unit_id = A0;
 add_height = A1;
 
-number_of_bones = h[801518e4 + unit_id * b9c + 10];
-for( int i = 0; i < number_of_bones; ++i )
+number_of_bones = h[0x801518e4 + unit_id * b9c + 10];
+for (int i = 0; i < number_of_bones; ++i)
 {
-    A0 = w[801518e4 + unit_id * b9c + 78 + i * 4];
-    if( A0 != 0 )
+    A0 = w[0x801518e4 + unit_id * b9c + 78 + i * 4];
+    if (A0 != 0)
     {
         A1 = add_height;
         battle_model_update_bone_height();
@@ -2871,8 +2867,8 @@ for( int i = 0; i < number_of_bones; ++i )
 ////////////////////////////////
 // funcbb4f8()
 
-V0 = w[801b0000];
-A0 = 801b0000 + w[801b0000 + V0 * 4]; // offset to texture part (last file)
+V0 = w[0x801b0000];
+A0 = 801b0000 + w[0x801b0000 + V0 * 4]; // offset to texture part (last file)
 A1 = 0;
 A2 = 0; // x add to clut
 A3 = 0; // y add to clut

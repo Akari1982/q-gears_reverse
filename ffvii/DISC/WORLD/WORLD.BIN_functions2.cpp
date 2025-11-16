@@ -895,7 +895,7 @@ if( ( V0 == 2 ) || ( V0 == 3 ) )
     [SP + 0010] = h(0);
     [SP + 0014] = h(T1);
 
-    system_gte_rotation_matrix_from_xyz();
+    system_psyq_rot_matrix();
 
     A0 = S0;
     S4 = SP + 0018;

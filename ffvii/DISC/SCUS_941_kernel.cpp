@@ -3,7 +3,7 @@
 
 V1 = 0;
 loop14c48:	; 80014C48
-    [0x80062d44 + cc + V1] = b(A0); // some GP values
+    [0x80062d44 + 0xcc + V1] = b(A0); // some GP values
     A0 = A0 >> 1;
     V1 = V1 + 1;
     V0 = V1 < 8;

@@ -717,19 +717,19 @@
 8003A0B8 system_psyq_vector_normal_ss
 8003A0E8 system_normalize_vector_T0_T1_T2
 8003A1A4 func3a1a4
-8003A288 func3a288
-8003A30C func3a30c
-8003A35C func3a35c
-8003A3AC func3a3ac
-8003A434 func3a434
-8003A4BC func3a4bc
-8003A51C func3a51c
+8003A288 func3a288 gteMIMefunc
+8003A30C func3a30c LoadAverage12
+8003A35C func3a35c LoadAverage0
+8003A3AC func3a3ac LoadAverageShort12
+8003A434 func3a434 LoadAverageShort0
+8003A4BC func3a4bc LoadAverageByte
+8003A51C func3a51c LoadAverageCol
 8003A59C func3a59c
-8003A63C system_transformation_data_multiply
+8003A63C system_transformation_data_multiply CompMatrix
 8003A79C system_gte_matrixes_multiply_A0_A1_to_A2
 8003A8A8 system_gte_matrix_multiply_A0_to_A1
 8003A98C func3a98c
-8003AA74 func3aa74
+8003AA74 func3aa74 SetMulMatrix
 8003AB84 func3ab84
 8003ACE4 func3ace4
 8003AD14 func3ad14
@@ -737,82 +737,82 @@
 8003AED8 system_psyq_pop_matrix
 8003AF78 func3af78
 8003AFC0 func3afc0
-8003B008 func3b008
-8003B05C func3b05c
-8003B16C system_gte_matrixes_multiply_A0_A1_to_A1
-8003B27C func3b27c
-8003B2CC system_gte_apply_matrix_sv
-8003B32C system_gte_copy_matrix_translation_part
-8003B35C system_scale_matrix_by_vector
+8003B008 func3b008 ReadColorMatrix
+8003B05C func3b05c MulMatrix
+8003B16C system_gte_matrixes_multiply_A0_A1_to_A1 MulMatrix2
+8003B27C func3b27c ApplyMatrix
+8003B2CC system_gte_apply_matrix_sv ApplyMatrixSV
+8003B32C system_gte_copy_matrix_translation_part TransMatrix
+8003B35C system_psyq_scale_matrix
 8003B48C system_psyq_set_rot_matrix
 8003B4BC system_psyq_set_light_matrix
 8003B4EC system_psyq_set_color_matrix
 8003B51C system_psyq_set_trans_matrix
-8003B53C func3b53c
-8003B54C func3b54c
-8003B55C func3b55c
-8003B56C func3b56c
-8003B58C func3b58c
-8003B5A0 func3b5a0
-8003B5B4 func3b5b4
-8003B5C0 func3b5c0
-8003B5D4 func3b5d4
-8003B5EC func3b5ec
-8003B600 func3b600
-8003B614 func3b614
-8003B628 func3b628
-8003B634 func3b634
-8003B640 func3b640
-8003B64C func3b64c
-8003B66C func3b66c
-8003B67C system_gte_set_background_colour
-8003B69C system_gte_set_far_colour
+8003B53C func3b53c SetVertex0
+8003B54C func3b54c SetVertex1
+8003B55C func3b55c SetVertex2
+8003B56C func3b56c SetVertexTri
+8003B58C func3b58c SetRGBfifo
+8003B5A0 func3b5a0 SetIR123
+8003B5B4 func3b5b4 SetIR0
+8003B5C0 func3b5c0 SetSZfifo3
+8003B5D4 func3b5d4 SetSZfifo4
+8003B5EC func3b5ec SetSXSYfifo
+8003B600 func3b600 SetRii
+8003B614 func3b614 SetMAC123
+8003B628 func3b628 SetData32
+8003B634 func3b634 SetDQA
+8003B640 func3b640 SetDQB
+8003B64C func3b64c ReadGeomOffset
+8003B66C func3b66c ReadGeomScreen
+8003B67C system_gte_set_background_colour SetBackColor
+8003B69C system_gte_set_far_colour SetFarColor
 8003B6BC system_psyq_set_geom_offset
 8003B6DC system_psyq_set_geom_screen
-8003B6EC func3b6ec
-8003B710 func3b710
-8003B72C func3b72c
-8003B748 func3b748
-8003B784 func3b784
-8003B7A8 func3b7a8
-8003B7F0 func3b7f0
-8003B810 func3b810
-8003B854 func3b854
-8003B87C func3b87c
-8003B8A0 func3b8a0
-8003B8B0 func3b8b0
-8003B8CC func3b8cc
-8003B8F4 func3b8f4
-8003B91C func3b91c
-8003B958 func3b958
-8003B97C func3b97c
-8003B9A4 func3b9a4
-8003B9CC func3b9cc
-8003B9EC func3b9ec
-8003BA10 system_gte_outer_product_12
-8003BA68 system_gte_outer_product_0
-8003BAC0 func3bac0
-8003BADC func3badc
-8003BB0C func3bb0c
-8003BB44 func3bb44
-8003BB7C func3bb7c
-8003BBAC func3bbac
+8003B6EC func3b6ec LocalLight
+8003B710 func3b710 DpqColor
+8003B72C func3b72c NormalColor
+8003B748 func3b748 NormalColor3
+8003B784 func3b784 NormalColorDpq
+8003B7A8 func3b7a8 NormalColorDpq3
+8003B7F0 func3b7f0 NormalColorCol
+8003B810 func3b810 NormalColorCol3
+8003B854 func3b854 ColorDpq
+8003B87C func3b87c ColorCol
+8003B8A0 func3b8a0 AverageSZ3
+8003B8B0 func3b8b0 AverageSZ4
+8003B8CC func3b8cc LightColor
+8003B8F4 func3b8f4 DpqColorLight
+8003B91C func3b91c DpqColor3
+8003B958 func3b958 Intpl
+8003B97C func3b97c Square12
+8003B9A4 func3b9a4 Square0
+8003B9CC func3b9cc AverageZ3
+8003B9EC func3b9ec AverageZ4
+8003BA10 system_gte_outer_product_12 OuterProduct12
+8003BA68 system_gte_outer_product_0 OuterProduct0
+8003BAC0 func3bac0 Lzc
+8003BADC func3badc RotTransSV
+8003BB0C func3bb0c SquareSS12
+8003BB44 func3bb44 SquareSS0
+8003BB7C func3bb7c SquareSL12
+8003BBAC func3bbac SquareSL0
 8003BBDC system_psyq_rot_trans_pers
 8003BC0C system_psyq_rot_trans_pers3
-8003BC6C system_gte_rot_trans
-8003BC9C func3bc9c
-8003BD14 func3bd14
-8003BD7C system_perspective_transformation_on_4_points
-8003BDFC func3bdfc
-8003BE8C func3be8c
+8003BC6C system_gte_rot_trans RotTrans
+8003BC9C func3bc9c RotTransPers4
+8003BD14 func3bd14 RotAverage3
+8003BD7C system_perspective_transformation_on_4_points RotAverage4
+8003BDFC func3bdfc RotAverageNclip3
+8003BE8C func3be8c RotAverageNclip4
 8003BF3C system_gte_transpose_matrix
-8003BF8C system_gte_rotation_matrix_from_xyz
-8003C21C system_gte_rotation_matrix_from_yxz
-8003C4AC func3c4ac
-8003C73C system_gte_rotate_matrix_by_x
-8003C8DC system_gte_rotate_matrix_by_y
-8003CA7C system_gte_rotate_matrix_by_z
-8003CC1C func3cc1c
+8003BF8C system_psyq_rot_matrix
+8003C21C system_gte_rotation_matrix_from_yxz RotMatrixYXZ
+8003C4AC func3c4ac RotMatrixZYX
+8003C73C system_gte_rotate_matrix_by_x RotMatrixX
+8003C8DC system_gte_rotate_matrix_by_y RotMatrixY
+8003CA7C system_gte_rotate_matrix_by_z RotMatrixZ
+8003CC1C func3cc1c ratan2
 8003CD9C system_patch_bios_exception_handler
 
 // SCUS_941_system.cpp

@@ -328,21 +328,21 @@
 
 0x80062fe6 [][]     global pitch addition?
 
-80062fea [][][][] used as some tempo modificator for AKAO sequenser.
+0x80062fea [][][][] used as some tempo modificator for AKAO sequenser.
 
 0x80063010 [][][][] index in 0x80081dc8 array.
-80063014 [][][][] pointer to temp array for action calculation.
+0x80063014 [][][][] pointer to temp array for action calculation.
 
 0x80063048 load type 1 pack grom INIT/WINDOW.BIN here.
 
-80063560 we copy kernel string here to display.
-80063690 kernel strings start.
-8006893e battle and battle-screen text in kernel
+0x80063560 we copy kernel string here to display.
+0x80063690 kernel strings start.
+0x8006893e battle and battle-screen text in kernel
 
-80069490 array of kernel string pack pointers (0x2 size).
+0x80069490 array of kernel string pack pointers (0x2 size).
 
 // temp data to init
-800694b4 []       0x10 slots array where we store number of summons (we just add number of active stars to current value, so if 2 or more materias equipped there can be more than 5 summons of the same type). Set 0xff in case of master summon.
+0x800694b4 []       0x10 slots array where we store number of summons (we just add number of active stars to current value, so if 2 or more materias equipped there can be more than 5 summons of the same type). Set 0xff in case of master summon.
 800694c4 []       0x10 slots array. Init with 0. Add 1 to this every time we add paired Quadra Magic with this summon.
 800694d4 []       0x10 slots array. Init with 0. Add number of stars in Quadra Magic linked to this summon.
 800694e4 [][]     Init with 0. Add materia strength modifier (Materia 00 Plus). Limit to 0x64.
@@ -432,22 +432,24 @@
                   12 func34420() do nothing.
                   13 abort loading.
                         13 (set cd pause) -> 14 (check if cd paused and finish) -> 0
-80071a68 []       amm.
-80071a69 []       ass.
-80071a6a []       asect.
-80071a6c [][][][] cdrom left load size.
-80071a80 [][][][] cdrom load buffer ptr.
-80071a84 [][][][] cdrom load callback.
+0x80071a68 []       amm.
+0x80071a69 []       ass.
+0x80071a6a []       asect.
+0x80071a6c [][][][] cdrom left load size.
+0x80071a80 [][][][] cdrom load buffer ptr.
+0x80071a84 [][][][] cdrom load callback.
 
-80071c24 accessory data in kernel (0x10 size).
+0x80071c24 accessory data in kernel (0x10 size).
 
-80071e28 [][][][] some data world map related.
-80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
+0x80071e28 [][][][] some data world map related.
+0x80071e2c number of opened windows. Increment this during window initialization. Decrement during closing.
 
-80071e44 armor data in kernel (0x24 size).
-800722cc item data in kernel (0x1c size).
-800730d0 materia data in kernel file (0x14 size).
-800738a0 weapon data in kernel (0x2c size).
+0x80071e34 []       if set then we call some limit menu func (maybe open limit menu? or some additional action like fill limit)
+
+0x80071e44 armor data in kernel (0x24 size).
+0x800722cc item data in kernel (0x1c size).
+0x800730d0 materia data in kernel file (0x14 size).
+0x800738a0 weapon data in kernel (0x2c size).
 
 0x80075f28 INSTR.DAT number of struct with size 0x40
     +00 [][][][] start offset.
@@ -537,7 +539,7 @@
 
 0x80089580 load effect.all file here
 
-80095dd4 [][]     render type func. Render called in separate thread so we set type of render func to call from main thread.
+0x80095dd4 [][]     render type func. Render called in separate thread so we set type of render func to call from main thread.
                   0 - normal render.
                   3 - battle swirl effect.
 
@@ -898,7 +900,8 @@
     + 0xbb9 (+0x15) []       countdown timer minutes.
     + 0xbba (+0x16) []       countdown timer seconds.
     + 0xbbb (+0x17) []       countdown timer frames. From 0 to 30 (dec) in one sec.
-    + 0xbbe       [][]     number of escapes.
+    + 0xbbc (+0x18) [][]     number of battles.
+    + 0xbbe (+0x1a) [][]     number of escapes.
     + 0xbc0 (+0x1c) [][]     menu visibility mask.
     + 0xbc2 (+0x1e) [][]     menu locking mask.
                             0x0001 - item
@@ -928,7 +931,9 @@
     + 0xea4 savemap memory bank d/e start
     + 0xeaa (+0x06) []       some value that increments each battle check.
     + 0xeab (+0x07) []       some value that increments each battle check.
-    + 0xf04       []       ??? Northern Cave - Progress (TODO: more info) 
+    + 0xf04         []       ??? Northern Cave - Progress (TODO: more info)
+    + 0xf05         []       ??? Northern Cave - Progress (TODO: more info)
+                                0x30 - some music effects.
     + 0xf0c field map name for menu (0x18 size).
     + 0xf24 
     + 0xf2a (+0x86) []       flags

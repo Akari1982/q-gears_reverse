@@ -1510,7 +1510,7 @@ V0 = 0001;
 800A1C08	bne    v1, v0, La1c54 [$800a1c54]
 800A1C0C	nop
 A1 = w[S0 + 0000];
-800A1C14	jal    $system_gte_rotation_matrix_from_xyz
+800A1C14	jal    $system_psyq_rot_matrix
 A1 = A1 + 0004;
 A0 = S2;
 A2 = 0;
@@ -2432,13 +2432,13 @@ A1 = S1;
 V0 = 0 - V0;
 V1 = 0 - V1;
 [SP + 0028] = h(V0);
-800A2D9C	jal    $system_gte_rotation_matrix_from_xyz
+800A2D9C	jal    $system_psyq_rot_matrix
 [SP + 002a] = h(V1);
 800A2DA4	lui    a0, $800b
 800A2DA8	addiu  a0, a0, $83a0 (=-$7c60)
 800A2DAC	lui    s0, $800b
 800A2DB0	addiu  s0, s0, $8380 (=-$7c80)
-800A2DB4	jal    $system_gte_rotation_matrix_from_xyz
+800A2DB4	jal    $system_psyq_rot_matrix
 A1 = S0;
 A0 = S0;
 A1 = S1;
@@ -6451,7 +6451,7 @@ La6a60:	; 800A6A60
 800A6A60	bne    s0, v0, La6a74 [$800a6a74]
 A0 = S5 + 0018;
 A1 = w[S5 + 00d4];
-800A6A6C	jal    $system_gte_rotation_matrix_from_xyz
+800A6A6C	jal    $system_psyq_rot_matrix
 A1 = A1 + 0004;
 
 La6a74:	; 800A6A74
@@ -7929,7 +7929,7 @@ V0 = w[AT + 0000];
 [S0 + 0000] = w(V0);
 [SP + 0010] = h(S4);
 [SP + 0012] = h(S5);
-800A81B0	jal    $system_gte_rotation_matrix_from_xyz
+800A81B0	jal    $system_psyq_rot_matrix
 [SP + 0014] = h(S6);
 V0 = S0;
 [V0 + 0018] = w(S7);

@@ -10878,7 +10878,7 @@ S4 = V0 + A2;
 [SP + 0054] = w(S1);
 [SP + 0050] = w(S0);
 [SP + 0030] = h(0);
-800AAF78	jal    $system_gte_rotation_matrix_from_xyz
+800AAF78	jal    $system_psyq_rot_matrix
 [SP + 0032] = h(0);
 A0 = SP + 0010;
 S0 = 800b7444;

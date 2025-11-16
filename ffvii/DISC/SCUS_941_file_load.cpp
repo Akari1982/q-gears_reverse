@@ -105,33 +105,28 @@ void func14658(file_id, func)
 
 
 
-////////////////////////////////
-// func146a4()
-
-while(true)
+void func146a4()
 {
-    if (h[0x8009c560] == 2)
+    while (true)
     {
-        system_battle_swirl_init();
+        if (h[0x8009c560] == 0x2)
+        {
+            system_battle_swirl_init();
 
-        A0 = 5; // BATTLE.X
-        A1 = 800a1158; // battle_main()
-        func14658(); // load and run
-    }
-    else if (h[0x8009c560] == 4)
-    {
-        func145bc(0); // load sync
+            func14658(0x5, 0x800a1158); // load and run BATTLE.X battle_main()
+        }
+        else if (h[0x8009c560] == 0x4)
+        {
+            func145bc(0); // load sync
 
-        A0 = 3; // BROM.X
-        A1 = 800a00cc; // start func
-        func14658(); // load and run
-    }
-    else
-    {
-        return;
+            func14658(0x3, 0x800a00cc); // load and run BROM.X
+        }
+        else
+        {
+            return;
+        }
     }
 }
-////////////////////////////////
 
 
 

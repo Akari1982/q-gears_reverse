@@ -13,15 +13,37 @@
 #define FADE_TYPE_SUB_INTERPOLATE   0xc
 #define FADE_TYPE_BG_FAST_SUB       0xd
 
-u8 g_bg_fade_type;         // 0x80071a58
-u32 g_fade_ot[0x2];     // 0x8007e7a0
+u8 g_bg_fade_type;              // 0x80071a58
+u32 g_fade_ot[0x2];             // 0x8007e7a0
 
 struct FadePoly
 {
-    DR_MODE dr_mode;    // 0x8009a068
-    TILE tile[0x2];     // 0x8009a074
+    DR_MODE dr_mode;            // 0x8009a068
+    TILE tile[0x2];             // 0x8009a074
 }
-FadePoly l_fade[0x2];   // 0x8009a068 (size 0x30)
+FadePoly l_fade[0x2];           // 0x8009a068 (size 0x30)
+
+
+
+struct BattleSwirl
+{
+    u32 ot;
+    POLY_FT4 poly[0xa][0x7];
+}
+BattleSwirl l_swirl[0x2];       // 0x8019c000-0x8019d5e0
+u32 l_swirl_ot;                 // 0x8019d5e8
+SVECTOR l_swirl_vec[0xb][0x8];  // 0x8019d5ec
+
+DVECTOR l_swirl_pos[0xb][0x8];  // 0x8019d8ac
+SVECTOR l_swirl_rot_vec;        // 0x8019da0c
+VECTOR l_swirl_scale_vec;       // 0x8019da14
+DRAWENV l_swirl_drawenv;        // 0x8019da24
+DISPENV l_swirl_dispenv;        // 0x8019da80
+u32 l_swirl_rb;                 // 0x8019da94
+u32 l_swirl_scale;              // 0x8019da98
+u32 l_swirl_step;               // 0x8019da9c
+u32 l_swirl_is_render;          // 0x8019daa0
+u32 l_swirl_col;                // 0x8019daa4
 
 
 
@@ -363,324 +385,228 @@ void system_fade_update()
 
 
 
-////////////////////////////////
-// system_battle_swirl_update()
-
-A0 = 80062d44;
-A1 = 0;
-A2 = 8;
-system_psyq_move_image();
-
-[0x8019da94] = w(w[0x8019da94] + 1);
-
-rb = w[0x8019da94] & 1;
-
-ot = 8019c000 + rb * af4;
-
-[0x8019d5e8] = w(ot);
-
-V1 = w[0x8019da9c];
-[0x8019da9c] = w(V1 + 1);
-
-if (V1 >= 2f)
+void system_battle_swirl_update()
 {
-    if (w[0x8019daa4] != 0)
-    {
-        [0x8019daa4] = w(w[0x8019daa4] - 1);
-    }
+    system_psyq_move_image(0x80062d44, 0, 0x8);
 
-    [SP + 10] = b(w[0x8019daa4]);
-    [SP + 11] = b(w[0x8019daa4]);
-    [SP + 12] = b(w[0x8019daa4]);
-    [SP + 13] = b(bu[0x8019c00b + rb * af4]);
+    l_swirl_rb += 0x1;
+    u32 rb = l_swirl_rb & 0x1;
 
-    for(int i = 0; i < 7; ++i)
+    BattleSwirl swirl = l_swirl[rb];
+
+    l_swirl_ot = l_swirl[rb].ot;
+
+    u32 step = l_swirl_step;
+    l_swirl_step += 0x1;
+
+    if (step >= 0x2f) // start fade out
     {
-        for(int j = 0; j < a; ++j)
+        if (l_swirl_col != 0) l_swirl_col -= 0x1;
+
+        for(int y = 0; y < 0x7; ++y)
         {
-            [ot + j * 118 + i * 28 + 8] = w(w[SP + 10]);
+            for(int x = 0; x < 0xa; ++x)
+            {
+                swirl.poly[x][y].r0 = l_swirl_col;
+                swirl.poly[x][y].g0 = l_swirl_col;
+                swirl.poly[x][y].b0 = l_swirl_col;
+                swirl.poly[x][y].code = l_swirl[rb].poly[0][0].code;
+            }
+        }
+
+        if (l_swirl_step >= 0x4f)
+        {
+            g_bg_render = BG_RENDER_NONE;
+        }
+    }
+    else
+    {
+        for(int y = 0; y < 0x7; ++y)
+        {
+            for(int x = 0; x < 0xa; ++x)
+            {
+                swirl.poly[x][y].tpage = system_psyq_get_tpage(0x2, ((l_swirl_step % 0x5) == 0) ? 0x3 : 0, (x << 0x5) & 0xffc0, 0);
+            }
         }
     }
 
-    if (w[0x8019da9c] >= 0x4f)
+    system_psyq_rot_matrix(&l_swirl_rot_vec, 0x80063028);
+    system_psyq_scale_matrix(0x80063028, &l_swirl_scale_vec);
+    system_psyq_set_rot_matrix(0x80063028);
+    system_psyq_set_trans_matrix(0x80063028);
+
+    u32 scale = l_swirl_scale;
+    l_swirl_scale += 0xa;
+
+    l_swirl_rot_vec.vz -= 0x3;
+    l_swirl_scale_vec.vx += scale / 0x10;
+    l_swirl_scale_vec.vy += scale / 0x10;
+
+    for(int y = 0; y < 0x8; ++y)
     {
-        g_bg_render = BG_RENDER_NONE;
-    }
-}
-else
-{
-    for(int i = 0; i < 7; ++i)
-    {
-        for(int j = 0; j < a; ++j)
+        for(int x = 0; x < 0xb; ++x)
         {
-            A1 = w[0x8019da9c];
-            T2 = hi(A1 * 66666667)
-            V0 = A1 >> 1f;
-            V1 = T2 >> 1;
-            V1 = V1 - V0;
+            system_psyq_rot_trans_pers(&l_swirl_vec[x][y], &l_swirl_pos[x][y], SP + 0x18, SP + 0x1c);
+        }
+    }
 
-            V0 = V1 << 2;
-            V0 = V0 + V1;
+    system_psyq_clear_otag(&swirl.ot, 0x1);
 
-            A1 = A1 - V0;
-            A1 = A1 < 1;
-            A1 = 0 - A1;
-            A1 = A1 & 3; // abr
+    for(int y = 0; y < 0x7; ++y)
+    {
+        for(int x = 0; x < 0xa; ++x)
+        {
+            poly = &swirl.poly[x][y];
 
-            A0 = 2; // tp
-            A2 = (j << 5) & ffffffc0; // vram_x
-            A3 = 0; // vram_y
-            system_psyq_get_tpage();
-            [ot + j * 118 + i * 28 + 1a] = h(V0);
+            poly->x0 = l_swirl_pos[x + 0x0][y + 0x0].vx;
+            poly->y0 = l_swirl_pos[x + 0x0][y + 0x0].vy;
+            poly->x1 = l_swirl_pos[x + 0x1][y + 0x0].vx;
+            poly->y1 = l_swirl_pos[x + 0x1][y + 0x0].vy;
+            poly->x2 = l_swirl_pos[x + 0x0][y + 0x1].vx;
+            poly->y2 = l_swirl_pos[x + 0x0][y + 0x1].vy;
+            poly->x3 = l_swirl_pos[x + 0x1][y + 0x1].vx;
+            poly->y3 = l_swirl_pos[x + 0x1][y + 0x1].vy;
+
+            system_psyq_add_prim(swirl, poly);
         }
     }
 }
 
-A0 = 8019da0c; // rot vec
-A1 = 80063028; // res rot matrix
-system_gte_rotation_matrix_from_xyz();
 
-A0 = 80063028; // rot matrix
-A1 = 8019da14; // vector
-system_scale_matrix_by_vector();
 
-A0 = 80063028; // rot matrix
-system_psyq_set_rot_matrix();
-
-A0 = 80063028; // rot matrix
-system_psyq_set_trans_matrix();
-
-A0 = w[0x8019da98];
-[0x8019da98] = w(A0 + a);
-
-[0x8019da10] = h(hu[0x8019da10] - 3); // rot z
-
-// scale
-[0x8019da14] = w(w[0x8019da14] + A0 / 10); // scale x
-[0x8019da18] = w(w[0x8019da18] + A0 / 10); // scale y
-
-for(int i = 0; i < 8; ++i)
+void system_battle_swirl_render()
 {
-    for(int j = 0; j < b; ++j)
+    l_swirl_is_render += 0x1;
+
+    if ((l_swirl_is_render & 0x1) == 0)
     {
-        A0 = 8019d5ec + j * 40 + i * 8; // vector
-        A1 = 8019d8ac + j * 20 + i * 4;
-        A2 = SP + 18;
-        A3 = SP + 1c;
-        system_psyq_rot_trans_pers();
-    }
+        system_psyq_draw_otag(l_swirl_ot);
 
-}
-
-A0 = ot;
-A1 = 1;
-system_psyq_clear_otag();
-
-for(int i = 0; i < 7; ++i)
-{
-    for(int j = 0; j < a; ++j)
-    {
-        packet = ot + j * 118 + i * 28;
-
-        [packet +  c] = h(hu[0x8019d8ac + i * 4 + j * 20]);
-        [packet +  e] = h(hu[0x8019d8ae + i * 4 + j * 20]);
-        [packet + 14] = h(hu[0x8019d8ac + i * 4 + (j + 1) * 20]);
-        [packet + 16] = h(hu[0x8019d8ae + i * 4 + (j + 1) * 20]);
-        [packet + 1c] = h(hu[0x8019d8ac + 4 + i * 4 + j * 20]);
-        [packet + 1e] = h(hu[0x8019d8ae + 4 + i * 4 + j * 20]);
-        [packet + 24] = h(hu[0x8019d8ac + (j + 1) * 20]);
-        [packet + 26] = h(hu[0x8019d8ae + (j + 1) * 20]);
-
-        A0 = ot;
-        A1 = packet + 4;
-        system_psyq_add_prim();
+        system_battle_swirl_update();
     }
 }
-////////////////////////////////
 
 
 
-////////////////////////////////
-// system_battle_swirl_render()
-
-[0x8019daa0] = w(w[0x8019daa0] + 1);
-
-if ((w[0x8019daa0] & 1) == 0)
+void system_battle_swirl_init()
 {
-    A0 = w[0x8019d5e8];
-    system_psyq_draw_otag();
+    g_bg_render = BG_RENDER_NONE;
+
+    system_psyq_vsync(0);
+
+    system_psyq_get_dispenv(&l_swirl_dispenv);
+    system_psyq_set_def_dispenv(&l_swirl_dispenv, 0, 0xe8, 0x140, 0xf0);
+    l_swirl_dispenv.screen.y = (l_swirl_dispenv.screen.y < 0x11) ? 0 : 0x18;
+    l_swirl_dispenv.isrgb24 = 0; // 16-bit mode
+
+    system_psyq_set_def_drawenv(&l_swirl_drawenv, 0, 0xf0, 0x140, 0xe0);
+    l_swirl_drawenv.tpage = 0;
+    l_swirl_drawenv.dtd = 0; // dithering processing flag off
+    l_swirl_drawenv.dfe = 0x1; // drawing to display area is permitted
+    l_swirl_drawenv.isbg = 0; // does not clear drawing area when drawing environment is set
+
+    system_psyq_put_dispenv(&l_swirl_dispenv);
+    system_psyq_put_drawenv(&l_swirl_drawenv);
+
+    system_psyq_set_geom_offset(0x9f, 0x77);
+    system_psyq_set_geom_screen(0x1e0);
+
+    l_swirl_is_render = 0;
+
+    // if current screen 0 then we copy it's content to screen 1
+    if (g_field_rb == 0)
+    {
+        RECT rect;
+        rect.x = 0;
+        rect.y = 0x8;
+        rect.w = 0x140;
+        rect.h = 0xe0;
+        system_psyq_move_image(&rect, 0, 0xf0);
+    }
+
+    // add transparency flag because we will use it as texture and do blending
+    RECT rect1, rect2;
+    u32 temp1, temp2;
+    for (int i = 0; i < 0x4; ++i)
+    {
+        rect2 = rect1;
+        temp2 = temp1;
+
+        rect1.x = 0;
+        rect1.y = 0xf0 + i * 0x4a;
+        rect1.w = 0x140;
+        rect1.h = 0x4a;
+        temp1 = (i & 0x1) ? 0x801b0000 : 0x801b8000;
+
+        system_psyq_draw_sync(0);
+
+        if (i > 0)
+        {
+            for(int j = 0; j < 0x2e40; ++j)
+            {
+                [temp2 + j * 0x4] = w(w[temp2 + j * 0x4] | 0x80008000); // add transparency flag
+            }
+            system_psyq_load_image(&rect2, temp2);
+        }
+
+        if (i < 0x3)
+        {
+            system_psyq_store_image(&rect1, temp1);
+        }
+    }
+
+    l_swirl_step = 0;
+    l_swirl_col = 0x80;
+    l_swirl_scale = 0x4;
+    l_swirl_scale_vec.vx = 0x820;
+    l_swirl_scale_vec.vy = 0x820;
+    l_swirl_scale_vec.vz = 0x1000;
+    l_swirl_rot_vec.vx = 0;
+    l_swirl_rot_vec.vy = 0;
+    l_swirl_rot_vec.vz = 0;
+
+    // set up vertexes for swirl effect
+    // they will be transformed by calculated matrix to screen space
+    for(int y = 0; y < 0x8; ++y)
+    {
+        for(int x = 0; x < 0xb; ++x)
+        {
+            l_swirl_vec[x][y].vx = -0xa0 + x * 0x20;
+            l_swirl_vec[x][y].vy = -0x70 + y * 0x20;
+            l_swirl_vec[x][y].vz = 0;
+        }
+    }
+
+    for(int y = 0; y < 0x7; ++y)
+    {
+        for(int x = 0; x < 0xa; ++x)
+        {
+            poly = l_swirl[0].poly[x][y];
+
+            system_psyq_set_poly_ft4(poly);
+            system_psyq_set_semi_trans(poly, 0x1);
+            system_psyq_set_shade_tex(poly, 0);
+
+            u8 u = (x * 0x20) & 0x3f;
+            u8 v = 0x8 + y * 0x20;
+
+            poly->r0 = 0x80;
+            poly->g0 = 0x80;
+            poly->b0 = 0x80;
+            poly->u0 = u;
+            poly->v0 = v;
+            poly->u1 = u + 0x1f;
+            poly->v1 = v;
+            poly->u2 = u;
+            poly->v2 = v + 0x1f;
+            poly->u3 = u + 0x1f;
+            poly->v3 = v + 0x1f;
+        }
+    }
+
+    func14a00(&l_swirl[0x1], &l_swirl[0x0], 0xaf4); // copy to second buffer
 
     system_battle_swirl_update();
+
+    g_bg_render = BG_RENDER_BATTLE_SWIRL; // set render func to 3 (swirl render)
 }
-////////////////////////////////
-
-
-
-////////////////////////////////
-// system_battle_swirl_init()
-
-g_bg_render = BG_RENDER_NONE;
-
-system_psyq_vsync(0);
-
-A0 = 8019da80;
-system_psyq_get_dispenv();
-
-S0 = h[0x8019da8a];
-S0 = S0 < 0011;
-S0 = S0 ^ 0001;
-S0 = 0 - S0;
-S0 = S0 & 0018;
-
-A0 = 8019da80;
-A1 = 0;
-A2 = e8;
-A3 = 140;
-A4 = f0;
-system_psyq_set_def_dispenv();
-
-A0 = 8019da24;
-A1 = 0;
-A2 = f0;
-A3 = 140;
-A4 = e0;
-system_psyq_set_def_drawenv();
-
-[0x8019da8a] = h(S0);
-[0x8019da91] = b(0);
-[0x8019da3a] = b(0);
-[0x8019da3b] = b(1);
-[0x8019da3c] = b(0);
-[0x8019da38] = h(0);
-
-A0 = 8019da80;
-system_psyq_put_dispenv();
-
-A0 = 8019da24;
-system_psyq_put_drawenv();
-
-A0 = 9f;
-A1 = 77;
-system_psyq_set_geom_offset();
-
-A0 = 1e0;
-system_psyq_set_geom_screen();
-
-[0x8019daa0] = w(0);
-
-if (g_field_rb == 0) // rb
-{
-    [SP + 18] = h(0);
-    [SP + 1a] = h(8);
-    [SP + 1c] = h(140);
-    [SP + 1e] = h(e0);
-
-    A0 = SP + 18;
-    A1 = 0;
-    A2 = f0;
-    system_psyq_move_image();
-}
-
-for(int i = 0; i < 4; ++i)
-{
-    [SP + 20] = w(w[SP + 18]);
-    [SP + 24] = w(w[SP + 1c]);
-
-    S0 = S4;
-    S4 = 801b8000;
-
-    [SP + 18] = h(0);
-    [SP + 1a] = h(f0 + i * 4a);
-    [SP + 1c] = h(140);
-    [SP + 1e] = h(4a);
-
-    if (i & 1)
-    {
-        S4 = 801b0000;
-    }
-
-    A0 = 0;
-    system_psyq_draw_sync();
-
-    if (i > 0)
-    {
-        for(int j = 0; j < 2e40; ++j)
-        {
-            [S0 + j * 4] = w(w[S0 + j * 4] | 80008000);
-        }
-
-        A0 = SP + 20;
-        A1 = S0;
-        system_psyq_load_image();
-    }
-
-    if (i < 3)
-    {
-        A0 = SP + 18;
-        A1 = S4;
-        system_psyq_store_image();
-    }
-}
-
-// scale vector
-[0x8019da14] = w(820);  // x
-[0x8019da18] = w(820);  // y
-[0x8019da1c] = w(1000); // z
-
-[0x8019da98] = w(4); // scaler (increment over time)
-
-[0x8019da0c] = h(0); [0x8019da0e] = h(0); [0x8019da10] = h(0); // rot vec (rotate by z)
-
-[0x8019da9c] = w(0);
-[0x8019daa4] = w(80);
-
-for(int i = 0; i < 8; ++i)
-{
-    for(int j = 0; j < b; ++j)
-    {
-        [0x8019d5ec + j * 40 + i * 8 + 0] = h(-a0 + j * 20);
-        [0x8019d5ec + j * 40 + i * 8 + 2] = h(- 70 + i * 20);
-        [0x8019d5ec + j * 40 + i * 8 + 4] = h(0);
-    }
-}
-
-for(int i = 0; i < 7; ++i)
-{
-    for(int j = 0; j < a; ++j)
-    {
-        packet = 8019c000 + j * 118 + i * 28;
-
-        A0 = packet + 4;
-        system_psyq_set_poly_ft4();
-
-        A0 = packet + 4;
-        A1 = 1;
-        system_psyq_set_semi_trans();
-
-        A0 = packet + 4;
-        A1 = 0;
-        system_psyq_set_shade_tex();
-
-        [packet + 8] = b(80); // r
-        [packet + 9] = b(80); // g
-        [packet + a] = b(80); // b
-        [packet + 10] = b((j << 5) & 3f);      // u0
-        [packet + 11] = b(8 + i * 20);         // v0
-        [packet + 18] = b((j << 5) & 3f + 1f); // u1
-        [packet + 19] = b(8 + i * 20);         // v1
-        [packet + 20] = b((j << 5) & 3f);      // u2
-        [packet + 21] = b(27 + i * 20);        // v2
-        [packet + 28] = b((j << 5) & 3f + 1f); // u3
-        [packet + 29] = b(27 + i * 20);        // v3
-    }
-}
-
-A0 = 8019caf4; // dst
-A1 = 8019c000; // src
-A2 = af4; // size
-func14a00(); // copy to second buffer
-
-system_battle_swirl_update();
-
-g_bg_render = BG_RENDER_BATTLE_SWIRL; // set render func to 3 (swirl render)
-////////////////////////////////
