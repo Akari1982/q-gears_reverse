@@ -378,7 +378,7 @@ system_psyq_set_geom_screen();
 if (w[0x800e5630] != 0) // shake enabled
 {
     wm_random_get();
-    S0 = 9e + (V0 >> 6);
+    S0 = 0x9e + (V0 >> 6);
 
     wm_random_get();
 
@@ -387,7 +387,7 @@ if (w[0x800e5630] != 0) // shake enabled
 }
 else
 {
-    A0 = a0;
+    A0 = 0xa0;
     A1 = w[0x800e55f0];
 }
 

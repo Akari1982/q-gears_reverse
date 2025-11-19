@@ -1180,7 +1180,6 @@ void ending_render_init(int w, int h, long distance, u8 r, u8 g, u8 b);
     system_psyq_set_graph_debug(0);
 
     system_psyq_set_geom_offset((w / 2), (h / 2));
-
     system_psyq_set_geom_screen(distance);
 
     system_psyq_set_def_drawenv(&l_draw_env[0], 0, 0, w, h);

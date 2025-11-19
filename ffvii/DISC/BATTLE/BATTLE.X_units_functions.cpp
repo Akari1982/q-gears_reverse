@@ -5097,13 +5097,8 @@ system_menu_update_buttons();
 func1c980(); // update pressed repeated buttons mask
 
 system_psyq_init_geom();
-
-A0 = screen_size_x / 2;
-A1 = screen_size_y / 2;
-system_psyq_set_geom_offset();
-
-A0 = proj_plane_dist;
-system_psyq_set_geom_screen();
+system_psyq_set_geom_offset(screen_size_x / 2, screen_size_y / 2);
+system_psyq_set_geom_screen(proj_plane_dist);
 
 A0 = 800faff4;
 A1 = 0; // clip rect x

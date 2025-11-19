@@ -69,7 +69,7 @@ L18ae4:	; 80018AE4
 [0x80068158 + 2] = b(5a);
 [0x80068158 + 3] = b(a6);
 
-for( int i = 0; i < 2; ++i )
+for (int i = 0; i < 2; ++i)
 {
     [0x80073930 + i * 4] = w(0);
     [0x80073988 + i * 4] = w(0);
@@ -78,7 +78,7 @@ for( int i = 0; i < 2; ++i )
     [0x800739a0 + i * 4] = w(0);
     [0x800739a8 + i * 4] = w(0);
 
-    for( int j = 0; j < 20; ++j )
+    for (int j = 0; j < 20; ++j)
     {
         [0x80073730 + i * 80 + j * 4] = w(0);
         [0x80073830 + i * 80 + j * 4] = w(0);
@@ -199,7 +199,7 @@ void func19194()
     S7 = 0x800739a8;
     S5 = 0;
 
-    for( int i = 0; i < 2; ++i )
+    for (int i = 0; i < 2; ++i)
     {
         A0 = S5;
         func19aa8();
@@ -413,7 +413,7 @@ void func19194()
         V1 = bu[A1 + 8158];
         V0 = V0 < V1;
         T2 = 800739a0;
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             V1 = S1 + T2;
             [V1 + 0000] = w(w[V1 + 0000] | 0010);
@@ -422,7 +422,7 @@ void func19194()
         V1 = bu[S2 + 0003];
         V0 = bu[A0 + 0001];
         V0 = V0 < V1;
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             T2 = 800739a0;
             V1 = S1 + T2;
@@ -546,7 +546,7 @@ void func19194()
 LZCS = A1; // count leading zeroes
 
 V1 = 0x1f;
-if( A1 != 80000000 )
+if (A1 != 80000000)
 {
     V1 -= LZCR; // result of count
 }
@@ -556,14 +556,14 @@ if( A1 != 80000000 )
 
 
 
-void func19750( A0 )
+void func19750(A0)
 {
     [A0] = w(w[0x80068158]);
 }
 
 
 
-void func19774( A0 )
+void func19774(A0)
 {
     [0x80068158] = w(w[A0]);
 }
@@ -1046,7 +1046,7 @@ A1 = A2 + 0030;
 [A2 + 30] = w(S0);
 [A2 + 120] = w(S1);
 
-for( int i = 0; i < 2; ++i )
+for (int i = 0; i < 2; ++i)
 {
     V0 = w[A1 + 0000];
     A0 = A2 + 5d;
@@ -1461,7 +1461,7 @@ SP = SP + 0018;
 // func1a3cc()
 
 V0 = 800739b8;
-if( A0 & f0 ) V0 += f0;
+if (A0 & f0) V0 += f0;
 
 return V0;
 ////////////////////////////////
@@ -1819,7 +1819,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // func1a848()
 
-if( ( hu[A0 + e6] != 0 ) && ( bu[A0 + 46] == ff ) ) return 0;
+if ((hu[A0 + e6] != 0) && (bu[A0 + 46] == ff)) return 0;
 
 return 1;
 ////////////////////////////////
@@ -4004,7 +4004,7 @@ func1c720();
 [0x80073c40 + 0] = h(0);
 [0x80073c40 + 2] = h(0);
 
-for( int i = f; i >= 0; --i )
+for (int i = f; i >= 0; --i)
 {
     [0x80073c40 + 4 + f * 4] = w(0);
 }
@@ -4012,7 +4012,7 @@ for( int i = f; i >= 0; --i )
 
 
 
-int func1c750( u32 file_p )
+int func1c750(u32 file_p)
 {
     // add item to array
 
@@ -4026,15 +4026,15 @@ int func1c750( u32 file_p )
 
 
 
-int func1c784( u32 file_p )
+int func1c784(u32 file_p)
 {
     // remove item from array
 
     files_n = h[0x80073c40 + 0x2] - 1;
 
-    for( int i = files_n; i >= 0; --i )
+    for (int i = files_n; i >= 0; --i)
     {
-        if( w[0x80073c40 + 0x4 + i * 0x4] == file_p )
+        if (w[0x80073c40 + 0x4 + i * 0x4] == file_p)
         {
             [0x80073c40 + 0x2] = h(files_n); // discrease num of files
             [0x80073c40 + 0x4 + i * 0x4] = w(w[0x80073c40 + 0x4 + files_n * 0x4]);
@@ -4059,7 +4059,7 @@ inner_file = A2;
 
 files_n = h[0x80073c40 + 2] - 1;
 
-for( int i = files_n; i >= 0; --i )
+for (int i = files_n; i >= 0; --i)
 {
     A0 = w[0x80073c40 + 4 + i * 4]; // file ptr
     A1 = type;
@@ -4067,12 +4067,12 @@ for( int i = files_n; i >= 0; --i )
     A3 = inner_file;
     func1c8b0();
 
-    if( V0 != -1 ) return V0;
+    if (V0 != -1) return V0;
 
     S1 = S1 - 4;
 }
 
-if( ( V0 == -1 ) && ( ( type & 1 ) == 0 ) ) return 0;
+if ((V0 == -1) && ((type & 1) == 0)) return 0;
 
 return -1;
 ////////////////////////////////
@@ -4098,49 +4098,49 @@ file_index = A2 & ffff;
 resource_type = (A2 >> 10) & ff;
 inner_file = A3;
 
-if( file_p == 0 ) return 0;
+if (file_p == 0) return 0;
 
 file_pointer_start = file_p + 4;
 files_n = bu[file_p + 1];
 
-for( int i = 0; i < files_n; ++i )
+for (int i = 0; i < files_n; ++i)
 {
     T0 = w[file_pointer_start + 0]
     T4 = (T0 >> 18) & 7f; // type of part
-    if( resource_type == T4 )
+    if (resource_type == T4)
     {
         resource_address = file_pointer_start + T0 & 00ffffff; // address of part
         resource_n = bu[resource_address + 1]; // number of files of that type
 
-        if( type == 0 ) return resource_address;
+        if (type == 0) return resource_address;
 
-        if( type == 1 ) return resource_n;
+        if (type == 1) return resource_n;
 
         identifiers_address = resource_address + 4;
         pointers_address = identifiers_address + resource_n * 2;
         V0 = pointers_address & 3;
-        if( V0 != 0 ) // align address to 4 bytes
+        if (V0 != 0) // align address to 4 bytes
         {
             V0 -= 4;
             pointers_address -= V0;
         }
 
-        if( type == 2 )
+        if (type == 2)
         {
             V0 = w[pointers_address + file_index * 4];
             return pointers_address + file_index * 4 + V0 & 00ffffff;
         }
 
-        if( type == 3 )
+        if (type == 3)
         {
             return (T4 << 10) | hu[identifiers_address + file_index * 2];
         }
 
-        for( int j = 0; j < resource_n; ++j )
+        for (int j = 0; j < resource_n; ++j)
         {
-            if( hu[identifiers_address] == file_index )
+            if (hu[identifiers_address] == file_index)
             {
-                switch( type )
+                switch (type)
                 {
                     case 4:
                     {
@@ -4270,7 +4270,7 @@ struct = w[0x8006794c];
 
 func1cbd0();
 
-system_init_enviroments( 0xe0 );
+system_init_enviroments(0xe0);
 
 func1dcb8(); // load .IMG
 
@@ -4319,13 +4319,13 @@ void func1cbd0()
     [struct + 0x1c] = w(0);
     [struct + 0x20] = w(-0x1);
 
-    system_drawenv_set_background_color( 0, 0, 0 );
+    system_drawenv_set_background_color(0, 0, 0);
 
-    system_init_enviroments( 0xe0 );
+    system_init_enviroments(0xe0);
 
     [struct + 0x9] = b(0);
 
-    for( int i = e; i >= 0; --i )
+    for (int i = e; i >= 0; --i)
     {
         struct14 = w[struct + 0x14];
         [struct14 + i * 0x10 + 0x0] = w(i);
@@ -4339,7 +4339,7 @@ void func1cbd0()
 
     [struct + 0x30] = w(0);
 
-    for( int i = 0; i < 0xf; ++i )
+    for (int i = 0; i < 0xf; ++i)
     {
         [struct + 0x34 + i] = b(0);
     }
@@ -4378,28 +4378,28 @@ h = A0;
 
 S2 = 0;
 
-if( func2f800() != 0 ) S2 = 1;
-if( func2f810() != 0 ) S2 = 1;
+if (func2f800() != 0) S2 = 1;
+if (func2f810() != 0) S2 = 1;
 
 S0 = func2f864();
 
-func2f9a8( SP + 0x18 );
+func2f9a8(SP + 0x18);
 
-if( S0 == 1 )
+if (S0 == 1)
 {
     [SP + 18] = b(ff - bu[SP + 18]); // r
     [SP + 19] = b(ff - bu[SP + 19]); // g
     [SP + 1a] = b(ff - bu[SP + 1a]); // b
 }
 
-if( S2 == 0 )
+if (S2 == 0)
 {
     [SP + 18] = b(bu[drawenv + 0 * 5c + 19]); // r
     [SP + 19] = b(bu[drawenv + 0 * 5c + 1a]); // g
     [SP + 1a] = b(bu[drawenv + 0 * 5c + 1b]); // b
 }
 
-if( h[dispenv + 0 * 14 + 6] < h )
+if (h[dispenv + 0 * 14 + 6] < h)
 {
     [SP + 20] = h(0);
     [SP + 22] = h(hu[dispenv + 0 * 14 + 6]);
@@ -4465,7 +4465,7 @@ A0 = 0;
 system_psyq_vsync();
 
 V0 = w[struct + 1c];
-if( V0 != 0 )
+if (V0 != 0)
 {
     A0 = dispenv + bu[V0 + 8] * 14;
     system_psyq_put_dispenv();
@@ -4478,27 +4478,27 @@ void func1cfb4()
 {
     struct = w[0x8006794c];
 
-    if( w[struct + 0x1c] != 0 )
+    if (w[struct + 0x1c] != 0)
     {
-        system_psyq_vsync( 0 );
+        system_psyq_vsync(0);
 
         V0 = w[struct + 0x1c];
         frame_id = bu[V0 + 0x8]; // frame buffer index
 
-        system_psyq_put_dispenv( w[struct + 0xc] + frame_id * 0x14 );
+        system_psyq_put_dispenv(w[struct + 0xc] + frame_id * 0x14);
 
         S1 = 0;
 
-        system_memcpy( 0x80073c88, w[struct + 0x10] + (frame_id ^ 1) * 0x5c, 0x5c );
+        system_memcpy(0x80073c88, w[struct + 0x10] + (frame_id ^ 1) * 0x5c, 0x5c);
 
-        if( func2f800() != 0 ) S1 = 1;
-        else if( func2f810() != 0 ) S1 = 1;
+        if (func2f800() != 0) S1 = 1;
+        else if (func2f810() != 0) S1 = 1;
 
         S0 = func2f864();
 
-        func2f9a8( SP + 0x10 );
+        func2f9a8(SP + 0x10);
 
-        if( ( S1 != 0 ) && ( S0 == 0 ) )
+        if ((S1 != 0) && (S0 == 0))
         {
             [0x80073c88 + 0x18] = b(1);
             [0x80073c88 + 0x19] = b(bu[SP + 0x10]);
@@ -4510,9 +4510,9 @@ void func1cfb4()
             [0x80073ca0] = b(0);
         }
 
-        system_psyq_put_drawenv( 0x80073c88 );
+        system_psyq_put_drawenv(0x80073c88);
 
-        system_psyq_draw_sync( 0 );
+        system_psyq_draw_sync(0);
     }
 }
 
@@ -4525,9 +4525,9 @@ dst = A0;
 src = A1;
 size = A2;
 
-if( dst >= src )
+if (dst >= src)
 {
-    while( size > 0 )
+    while(size > 0)
     {
         size =- 1;
         [dst + size] = b(bu[src + size]);
@@ -4535,7 +4535,7 @@ if( dst >= src )
 }
 else
 {
-    while( size > 0 )
+    while(size > 0)
     {
         size =- 1;
         [dst] = b(bu[src]);
@@ -4577,7 +4577,7 @@ h = A4;
 [env + 1b] = b(0); // background color b
 
 system_psyq_get_video_mode();
-if( V0 != 0 )
+if (V0 != 0)
 {
     [env + 17] = b(h < 121); // 0: drawing to display area is blocked1: drawing to display area is permitted
 }
@@ -4659,7 +4659,7 @@ struct4 = w[0x80067940];
 V1 = struct4 + 8e8;
 [struct + 1c] = w(struct4);
 
-for( int i = 0; i < 2; ++i )
+for (int i = 0; i < 2; ++i)
 {
     [struct4 + 10 + i * 4] = w(V1 + 20);
     V1 += 4040;
@@ -4716,7 +4716,7 @@ S0 = w[struct + 1c];
 [S0 + 852] = h(ffff);
 [S0 + 8c4] = w(0);
 
-for( int i = 1; i >= 0; --i )
+for (int i = 1; i >= 0; --i)
 {
     [S0 + 81c + i * 2] = h(ffff);
     [S0 + 820 + i * 2] = h(ffff);
@@ -4734,7 +4734,7 @@ for( int i = 1; i >= 0; --i )
 [S0 + 8ac] = w(-1);
 [S0 + 8b0] = h(ffff);
 
-for( int i = 1; i >= 0; --i )
+for (int i = 1; i >= 0; --i)
 {
     [S0 + 830 + i * 2] = h(ffff);
     [S0 + 834 + i * 2] = h(ffff);
@@ -4746,7 +4746,7 @@ for( int i = 1; i >= 0; --i )
 [S0 + 838] = w(0);
 [S0 + 83c] = w(0);
 
-for( int i = 8; i >= 0; --i )
+for (int i = 8; i >= 0; --i)
 {
     A0 = w[S0 + 8d8] + i * 14;
     func1e3a4();
@@ -4759,7 +4759,7 @@ for( int i = 8; i >= 0; --i )
 [S0 + 8dc] = w(0);
 [S0 + 8e0] = w(0);
 
-for( int i = 1; i >= 0; --i )
+for (int i = 1; i >= 0; --i)
 {
     [S0 + 7ec + i * 4] = w(-1);
     [S0 + 7f4 + i * 4] = w(-1);
@@ -4781,12 +4781,12 @@ system_bios_memset();
 [S0 + 8bc] = w(0);
 [S0 + 8e4] = w(0);
 
-for( int i = 0; i >= 0; --i )
+for (int i = 0; i >= 0; --i)
 {
     [S0 + 849 + i] = b(0);
 }
 
-for( int i = 7; i >= 0; --i )
+for (int i = 7; i >= 0; --i)
 {
     [S0 + 8cc + i] = b(0);
 }
@@ -4796,12 +4796,12 @@ for( int i = 7; i >= 0; --i )
 
 int func1d610()
 {
-    u32 file = func1c7fc( 0x4, 0x90084, 0 ); // get address of file
-    u32 size = func1c7fc( 0x5, 0x90084, 0 ); // get size of file
+    u32 file = func1c7fc(0x4, 0x90084, 0); // get address of file
+    u32 size = func1c7fc(0x5, 0x90084, 0); // get size of file
 
     func55df4();
 
-    func55e14( file, size, 1 );
+    func55e14(file, size, 1);
 
     return 0;
 }
@@ -4826,14 +4826,14 @@ A2 = 0;
 func1c7fc();
 [S0 + 7d4] = w(V0);
 
-for( int i = 0; i < 8; ++i )
+for (int i = 0; i < 8; ++i)
 {
     A0 = 4; // get address of file
     A1 = 00040000 | hu[SP + 10 + i * 2];
     A2 = 0;
     func1c7fc();
 
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         A0 = V0;
         system_file_load_tim();
@@ -4904,7 +4904,7 @@ V0 = V0 & 0x0000d988; //
 struct += 0x24;
 [struct + 0x4] = w(0);
 
-for( int i = 0; i < 0x8; ++i )
+for (int i = 0; i < 0x8; ++i)
 {
     [struct + 0x4] = w(w[struct + 0x4] | (i << (i * 4)));
 }
@@ -4919,16 +4919,16 @@ func2397c();
 
 struct = w[0x8006794c];
 
-for( int i = 0; i < 2; ++i )
+for (int i = 0; i < 2; ++i)
 {
     S2 = ;
 
-    for( int j = 0; j < 8; ++j )
+    for (int j = 0; j < 8; ++j)
     {
         A0 = struct + 24;
         V0 = w[struct + 24];
         V0 = V0 >> 1;
-        if( ( V0 & 1 ) == 1 )
+        if ((V0 & 1) == 1)
         {
             V0 = w[A0 + 4];
             V0 = V0 >> (j * 4);
@@ -4956,7 +4956,7 @@ for( int i = 0; i < 2; ++i )
 
         V1 = V1 >> 1;
         V1 = V1 & 0001;
-        if( V1 == 1 )
+        if (V1 == 1)
         {
             V1 = A0 << 02;
             V0 = w[A1 + 0004];
@@ -5057,7 +5057,7 @@ void func239d0()
     A1 = w[struct1c + 0x14];
     A2 = w[struct1c + 0x7e0];
     A3 = A2 + 0x4000;
-    func2beec( A0, A1, A2, A3 );
+    func2beec(A0, A1, A2, A3);
 }
 
 
@@ -5645,9 +5645,9 @@ S5 = A1;
 S4 = A2;
 S2 = A3;
 
-if( S2 == 0 ) return;
+if (S2 == 0) return;
 
-system_menu_itoa( bu[S2 + 0xb], SP + 0x18, 0x2, 0x1 );
+system_menu_itoa(bu[S2 + 0xb], SP + 0x18, 0x2, 0x1);
 
 A0 = S3;
 A1 = S5;
@@ -5702,11 +5702,11 @@ L2433c:	; 8002433C
 S1 = 0003;
 
 L24340:	; 80024340
-system_menu_itoa( hu[S2 + 0x10], SP + 0x18, 0x4, 0x1 );
+system_menu_itoa(hu[S2 + 0x10], SP + 0x18, 0x4, 0x1);
 
 [SP + 0x1c] = b(0x2f);
 
-system_menu_itoa( hu[S2 + 0x18], SP + 0x1d, -1, 0x1 );
+system_menu_itoa(hu[S2 + 0x18], SP + 0x1d, -1, 0x1);
 
 A0 = S3 + 0x16;
 A1 = S5 + 0x17;
@@ -5731,13 +5731,13 @@ V0 = V0 < A0;
 V0 = V0 ^ 1;
 S1 = V0 << 02;
 
-system_menu_itoa( A0, SP + 0x18, 0x3, 0x1 );
+system_menu_itoa(A0, SP + 0x18, 0x3, 0x1);
 
 [SP + 0x1b] = b(0x2f);
 
-system_menu_itoa( h[S2 + 0x1a], SP + 0x1c, -1, 0x1 );
+system_menu_itoa(h[S2 + 0x1a], SP + 0x1c, -1, 0x1);
 
-func2b56c( S3 + 0x1d, S5 + 0x20, S4, SP + 0x18, S1 );
+func2b56c(S3 + 0x1d, S5 + 0x20, S4, SP + 0x18, S1);
 ////////////////////////////////
 
 
@@ -7798,7 +7798,7 @@ V0 = V0 | A0;
 [A1 + 0000] = w(V0);
 
 L26350:	; 80026350
-func275dc( S1, S2, S3, 0x2, 0 );
+func275dc(S1, S2, S3, 0x2, 0);
 
 V1 = w[0x80077170];
 V0 = 0003;
@@ -8519,22 +8519,22 @@ SP = SP + 0020;
 
 
 
-void func26e14( s16 x, s16 y, s16 depth, int party_id )
+void func26e14(s16 x, s16 y, s16 depth, int party_id)
 {
     u32 struct = w[0x8006794c];
     u32 struct1c = w[struct + 0x1c];
     u32 char_data = w[struct1c + 0x54c + party_id * 4];
 
-    if( char_data != 0 )
+    if (char_data != 0)
     {
-        func28af0( x, y, depth, party_id, hu[char_data + 0x10] < 0x1 );
-        func26f8c( x + 0x26, y + 0x3, depth, party_id );
+        func28af0(x, y, depth, party_id, hu[char_data + 0x10] < 0x1);
+        func26f8c(x + 0x26, y + 0x3, depth, party_id);
     }
 }
 
 
 
-void func26ea0( s16 x, s16 y, s16 depth, A3 )
+void func26ea0(s16 x, s16 y, s16 depth, A3)
 {
     V0 = w[0x8006794c];
     S0 = A3;
@@ -8578,29 +8578,29 @@ void func26ea0( s16 x, s16 y, s16 depth, A3 )
     A5 = hu[A3 + 0x10] < 0x1;
     func283e0();
 
-    func27a4c( x + 0x26, y, depth, S0 );
+    func27a4c(x + 0x26, y, depth, S0);
 
     L26f70:	; 80026F70
 }
 
 
 
-void func26f8c( s16 x, s16 y, s16 depth, int party_id )
+void func26f8c(s16 x, s16 y, s16 depth, int party_id)
 {
     u32 struct = w[0x8006794c];
     u32 struct1c = w[struct + 0x1c];
-    func2423c( x, y, depth, w[struct1c + 0x54c + party_id * 4] );
+    func2423c(x, y, depth, w[struct1c + 0x54c + party_id * 4]);
 }
 
 
 
-void func26fc4( s16 x, s16 y, s16 depth, S3 )
+void func26fc4(s16 x, s16 y, s16 depth, S3)
 {
-    for( int i = 0; i < 0x7; ++i )
+    for (int i = 0; i < 0x7; ++i)
     {
-        if( ( S3 >> i ) & 0x1 )
+        if ((S3 >> i) & 0x1)
         {
-            func275dc( x, y, depth, h[0x80068f70 + i * 0x2], 0 );
+            func275dc(x, y, depth, h[0x80068f70 + i * 0x2], 0);
 
             S2 += 0xc;
         }
@@ -8609,10 +8609,10 @@ void func26fc4( s16 x, s16 y, s16 depth, S3 )
 
 
 
-void func2705c( A0, s16 depth, A2 )
+void func2705c(A0, s16 depth, A2)
 {
     A2 = w[0x80068f80 + A2 * 4];
-    if( A2 != 0 )
+    if (A2 != 0)
     {
         A0 = A0;
         A1 = depth;
@@ -8648,9 +8648,9 @@ SP = SP + 0020;
 
 
 
-void func270ec( s16 x, s16 y, s16 depth )
+void func270ec(s16 x, s16 y, s16 depth)
 {
-    func275dc( x, y, depth, 0x1, 0x0 );
+    func275dc(x, y, depth, 0x1, 0x0);
 }
 
 
@@ -8725,8 +8725,8 @@ V0 = V1 & 00ff;
 L2720c:	; 8002720C
 8002720C	beq    v0, zero, L2727c [$8002727c]
 
-system_menu_itoa( S1, SP + 0x20, 0x3, 0x1 );
-system_menu_itoa( S2, SP + 0x24, -1, 0x1 );
+system_menu_itoa(S1, SP + 0x20, 0x3, 0x1);
+system_menu_itoa(S2, SP + 0x24, -1, 0x1);
 
 V0 = 002f;
 [SP + 0023] = b(V0);
@@ -8823,14 +8823,14 @@ V0 = SP + 0030;
 
 
 
-void func273c0( S16 x, s16 y, s16 depth, S1, S0 )
+void func273c0(S16 x, s16 y, s16 depth, S1, S0)
 {
-    system_menu_itoa( S1, SP + 0x18, 0x2, 0x1 );
-    system_menu_itoa( S0, SP + 0x1b, -1, 0x1 );
+    system_menu_itoa(S1, SP + 0x18, 0x2, 0x1);
+    system_menu_itoa(S0, SP + 0x1b, -1, 0x1);
     [SP + 0x1a] = b(0x2f);
 
-    func275dc( x, y, depth, 0xc1, 0 );
-    func2b5b4( x + 0xf, y + 0x1, depth, SP + 0x18, ( S1 == 0 ) ? 0x4 : 0x0 );
+    func275dc(x, y, depth, 0xc1, 0);
+    func2b5b4(x + 0xf, y + 0x1, depth, SP + 0x18, (S1 == 0) ? 0x4 : 0x0);
 }
 
 
@@ -8934,7 +8934,7 @@ SP = SP + 0020;
 
 
 // add cursor to render
-u8 func275dc( s16 x, s16 y, s16 depth, id, A4 )
+u8 func275dc(s16 x, s16 y, s16 depth, id, A4)
 {
     u32* p = w[0x80077170];
     [p + 0x3] = b(0x4);
@@ -8942,18 +8942,18 @@ u8 func275dc( s16 x, s16 y, s16 depth, id, A4 )
     A3 = 0x800686d0 + id * 8;
     u32* ot = w[0x8007716c] + depth * 4;
 
-    [p + 0x4] = w(( A4 != 0 ) ? 0x66606060 : 0x64808080);
+    [p + 0x4] = w((A4 != 0) ? 0x66606060 : 0x64808080);
     [p + 0x8] = w((y << 0x10) | x);
     [p + 0xc] = w(w[A3 + 0x0]);
     [p + 0x10] = w((bu[A3 + 0x5] << 0x10) | bu[A3 + 0x4]);
 
-    ADDPRIM( ot, p );
+    ADDPRIM(ot, p);
     p += 0x14;
 
     [p + 0x3] = b(0x1);
     [p + 0x4] = w(0xe1000600 | (hu[A3 + 0x6] & 0x9ff));
 
-    ADDPRIM( ot, p );
+    ADDPRIM(ot, p);
     p += 0x8;
 
     [0x80077170] = w(p);
@@ -9184,26 +9184,26 @@ V0 = T0 + 0008;
 
 
 
-void func27a4c( s16 x, s16 y, s16 depth, int party_id )
+void func27a4c(s16 x, s16 y, s16 depth, int party_id)
 {
     u32 struct = w[0x8006794c];
     u32 struct1c = w[struct + 0x1c];
 
     u32 char_data = w[struct1c + 0x54c + party_id * 4];
 
-    if( char_data != 0 )
+    if (char_data != 0)
     {
-        system_menu_itoa( bu[char_data + 0xb], SP + 0x18, 0x2, 0x1 ); // level
-        func2b5fc( x, y, depth, char_data, 0 );
-        func2b56c( x + 0x26, y + 0xe, depth, SP + 0x18, 0 );
-        func275dc( x, y + 0xe, depth, 0xb4, 0 );
-        func26fc4( x, y + 0x1c, depth, bu[char_data + 0x38], 0 ); // status bits
+        system_menu_itoa(bu[char_data + 0xb], SP + 0x18, 0x2, 0x1); // level
+        func2b5fc(x, y, depth, char_data, 0);
+        func2b56c(x + 0x26, y + 0xe, depth, SP + 0x18, 0);
+        func275dc(x, y + 0xe, depth, 0xb4, 0);
+        func26fc4(x, y + 0x1c, depth, bu[char_data + 0x38], 0); // status bits
 
         [SP + 0x28] = h(x - 0x4);
         [SP + 0x2a] = h(y + 0x18);
         [SP + 0x2c] = h(0x60);
         [SP + 0x2e] = h(0x12);
-        func2dee4( SP + 0x28, depth, 0 );
+        func2dee4(SP + 0x28, depth, 0);
     }
 }
 
@@ -10297,9 +10297,9 @@ V0 = 000e;
 
 
 
-void func28af0( s16 x, s16 y, s16 depth, int party_id, u8 A4 )
+void func28af0(s16 x, s16 y, s16 depth, int party_id, u8 A4)
 {
-    func283e0( x, y, depth, party_id, 0x2e, A4 );
+    func283e0(x, y, depth, party_id, 0x2e, A4);
 }
 
 
@@ -11446,19 +11446,19 @@ SP = SP + 0058;
 
 
 
-int func29b4c( s16 x, s16 y, u32* ot, A3, A4, u32* p )
+int func29b4c(s16 x, s16 y, u32* ot, A3, A4, u32* p)
 {
-    color = ( A4 != 0 ) ? 0x64404040 : 0x64808080; // Textured Rectangle, variable size, opaque, texture-blending
+    color = (A4 != 0) ? 0x64404040 : 0x64808080; // Textured Rectangle, variable size, opaque, texture-blending
 
     clut = hu[0x800686d0 + 0x172];
 
-    if( A4 == 1 )
+    if (A4 == 1)
     {
         clut += 0x40;
         color = 0x66000000; // Textured Rectangle, variable size, semi-transp, texture-blending
     }
 
-    if( A3 == 0 ) return p;
+    if (A3 == 0) return p;
 
     A1 = 0x800686d0 - 0x40;
     T9 = 0x800686d0 - 0x140;
@@ -11466,17 +11466,17 @@ int func29b4c( s16 x, s16 y, u32* ot, A3, A4, u32* p )
     T0 = 0;
 
     V1 = bu[A3];
-    while( V1 != 0 )
+    while(V1 != 0)
     {
         V0 = V1 - 0x41;
-        if( V0 < 0x1a )
+        if (V0 < 0x1a)
         {
             T0 = A1 + bu[A3] * 0x8;
         }
         else
         {
             V0 = V1 - 0x61;
-            if( V0 < 0x1a )
+            if (V0 < 0x1a)
             {
                 T0 = T9 + bu[A3] * 0x8;
             }
@@ -11485,26 +11485,26 @@ int func29b4c( s16 x, s16 y, u32* ot, A3, A4, u32* p )
                 V0 = V1 - 0x30;
                 V1 = V1 & 00ff;
 
-                if( V0 < 0xa )
+                if (V0 < 0xa)
                 {
                     T0 = T8 + bu[A3] * 0x8;
                 }
-                else if( V1 == 0x26 )
+                else if (V1 == 0x26)
                 {
                     T0 = 0x80068890;
                 }
-                else if( V1 == 0x2e )
+                else if (V1 == 0x2e)
                 {
                     T0 = 0x80068ce0;
                 }
-                else if( V1 == 0x5f )
+                else if (V1 == 0x5f)
                 {
                     T0 = 0x80068dc8;
                 }
             }
         }
 
-        if( bu[A3] != 0x20 )
+        if (bu[A3] != 0x20)
         {
             [p + 0x3] = b(0x4);
             [p + 0x4] = w(color);
@@ -11512,7 +11512,7 @@ int func29b4c( s16 x, s16 y, u32* ot, A3, A4, u32* p )
             [p + 0xс] = w((clut << 0x10) | hu[T0 + 0x0]);
             [p + 0x10] = w((bu[T0 + 0x5] << 0x10) | bu[T0 + 0x4]);
 
-            ADDPRIM( ot, p );
+            ADDPRIM(ot, p);
 
             T3 = bu[T0 + 0x4];
 
@@ -11529,10 +11529,10 @@ int func29b4c( s16 x, s16 y, u32* ot, A3, A4, u32* p )
         V1 = bu[A3];
     }
 
-    SETLEN( p, 0x1 );
+    SETLEN(p, 0x1);
     [p + 0x4] = w(0xe100061f);
 
-    ADDPRIM( ot, p );
+    ADDPRIM(ot, p);
 
     return p + 0x8;
 }
@@ -13211,20 +13211,20 @@ SP = SP + 0028;
 
 
 // dont called in start menu
-void func2b524( s16 x, s16 y, s16 depth, A3, A4 )
+void func2b524(s16 x, s16 y, s16 depth, A3, A4)
 {
     u32* ot = w[0x8007716c] + depth * 4;
     u32* p = w[0x80077170];
-    p = func29b4c( x, y, ot, A3, A4, p );
+    p = func29b4c(x, y, ot, A3, A4, p);
 
     [0x80077170] = w(p);
 }
 
 
 
-void func2b56c( s16 x, s16 y, s16 depth, A3, A4 );
+void func2b56c(s16 x, s16 y, s16 depth, A3, A4);
 {
-    V0 = func29d60( x, y, w[0x8007716c] + depth * 4, A3, A4, w[0x80077170] );
+    V0 = func29d60(x, y, w[0x8007716c] + depth * 4, A3, A4, w[0x80077170]);
 
     [0x80077170] = w(V0);
 }
@@ -13255,9 +13255,9 @@ SP = SP + 0020;
 
 
 
-void func2b5fc( s16 x, s16 y, s16 depth, A3, A4 )
+void func2b5fc(s16 x, s16 y, s16 depth, A3, A4)
 {
-    V0 = func2920c( x, y, w[0x8007716c] + depth * 4, A3, A4, w[0x80077170] );
+    V0 = func2920c(x, y, w[0x8007716c] + depth * 4, A3, A4, w[0x80077170]);
 
     [0x80077170] = w(V0);
 }
@@ -13602,29 +13602,29 @@ V0 = A1 + 0008;
 
 
 
-void system_menu_itoa( int input, u8* buffer, u32 len, u8 fill )
+void system_menu_itoa(int input, u8* buffer, u32 len, u8 fill)
 {
-    S2 = ( fill != 0 ) ? 0x30 : 0x0; // "0" or nothing
+    S2 = (fill != 0) ? 0x30 : 0x0; // "0" or nothing
 
-    if( len < 0 )
+    if (len < 0)
     {
-        func2bbe8( input, buffer, fill );
+        func2bbe8(input, buffer, fill);
     }
     else
     {
-        system_bios_memset( buffer, (fill == 0 ) ? 0xf : 0x20, len );
+        system_bios_memset(buffer, (fill == 0) ? 0xf : 0x20, len);
 
-        for( int i = 0; i < len; ++i )
+        for (int i = 0; i < len; ++i)
         {
             u32 remainder = input / 0xa;
             [len + buffer - i - 0x1] = b(input - remainder * 0xa + S2);
 
-            if( remainder == 0 ) break;
+            if (remainder == 0) break;
 
             input = remainder;
         }
 
-        [buffer + len] = b(( fill == 0 ) ? 0xff : 0x0);
+        [buffer + len] = b((fill == 0) ? 0xff : 0x0);
     }
 }
 
@@ -13635,7 +13635,7 @@ void func2bbe8()
     A3 = A0;
     T0 = 0;
 
-    if( A2 == 0 )
+    if (A2 == 0)
     {
         A2 = 0;
         V0 = 0xb;
@@ -13648,21 +13648,21 @@ void func2bbe8()
         T2 = 0;
     }
 
-    if( A3 == 0 )
+    if (A3 == 0)
     {
         [A1 + 0000] = b(A2);
         A1 = A1 + 0001;
     }
     else
     {
-        if( A3 < 0 )
+        if (A3 < 0)
         {
             [A1 + 0000] = b(V0);
             A1 = A1 + 0001;
             A3 = 0 - A3;
         }
 
-        if( A3 != 0 )
+        if (A3 != 0)
         {
             T1 = 66666667;
 
@@ -13684,7 +13684,7 @@ void func2bbe8()
             8002BC80	bne    a3, zero, loop2bc4c [$8002bc4c]
         }
 
-        if( T0 > 0 )
+        if (T0 > 0)
         {
             V1 = 0;
 
@@ -13907,7 +13907,7 @@ void func2beec()
 
     [S0 + 0x1] = b(0);
     [S0 + 0x2] = b(0);
-    [S0 + 0x8] = w(system_psyq_vsync( -0x1 ));
+    [S0 + 0x8] = w(system_psyq_vsync(-0x1));
 }
 
 
@@ -13915,16 +13915,16 @@ void func2beec()
 // called but didnt affects start menu
 void func2bfd0()
 {
-    S2 = system_psyq_vsync( -1 );
+    S2 = system_psyq_vsync(-1);
 
     S1 = S2 - w[0x80077150];
 
-    if( ( S1 == 0 ) || ( S1 >= 0x10 ) )
+    if ((S1 == 0) || (S1 >= 0x10))
     {
         S1 = 0x1;
     }
 
-    for( int i = 0; i < S1; ++i )
+    for (int i = 0; i < S1; ++i)
     {
         func2e180();
     }
@@ -14071,21 +14071,21 @@ void func2c210()
     [0x80077524] = w(V1);
     [0x80077528] = w(V1);
 
-    func19750( 0x8007717c );
+    func19750(0x8007717c);
 
     S3 = 0x8006bc40;
 
-    for( int i = 0; i < 0x2; ++i )
+    for (int i = 0; i < 0x2; ++i)
     {
-        func2c52c( i );
+        func2c52c(i);
 
-        for( int j = 0; j < 0x17; ++j )
+        for (int j = 0; j < 0x17; ++j)
         {
-            func2c5cc( i, j );
-            func2c740( i, j, bu[S3 + j * 0x8 + 0x4] );
-            func2c974( i, j, w[S3 + j * 0x8 + 0x0] );
-            func2c870( i, j, bu[S3 + j * 0x8 + 0x5] );
-            func2c8ac( i, j, bu[S3 + j * 0x8 + 0x6] );
+            func2c5cc(i, j);
+            func2c740(i, j, bu[S3 + j * 0x8 + 0x4]);
+            func2c974(i, j, w[S3 + j * 0x8 + 0x0]);
+            func2c870(i, j, bu[S3 + j * 0x8 + 0x5]);
+            func2c8ac(i, j, bu[S3 + j * 0x8 + 0x6]);
         }
     }
 }
@@ -14294,13 +14294,13 @@ SP = SP + 0020;
 
 
 
-void func2c5cc( A0, A1 )
+void func2c5cc(A0, A1)
 {
     S0 = 0x80077188 + A0 * 0x1cc + A1 * 0x14;
     [S0 + 0x1] = b(0);
     [S0 + 0x2] = b(0);
     [S0 + 0x4] = w(w[0x800739a0 + A0 * 0x4]);
-    [S0 + 0x8] = w(system_psyq_vsync( -0x1 ));
+    [S0 + 0x8] = w(system_psyq_vsync(-0x1));
 }
 
 
@@ -14376,14 +14376,14 @@ V0 = bu[V0 + 0000];
 
 
 
-void func2c740( A0, A1, S4 )
+void func2c740(A0, A1, S4)
 {
     S2 = 0x80077188 + A0 * 0x1cc + A1 * 0x14;
     [S2 + 0x0] = b(S4);
     [S2 + 0x1] = b(0);
     [S2 + 0x2] = b(0);
     [S2 + 0x4] = w(w[0x800739a0 + A0 * 0x4]);
-    [S2 + 0x8] = w(system_psyq_vsync( -0x1 ));
+    [S2 + 0x8] = w(system_psyq_vsync(-0x1));
 }
 
 
@@ -14426,14 +14426,14 @@ V0 = hu[V0 + 0012];
 
 
 
-void func2c870( A0, A1, A2 )
+void func2c870(A0, A1, A2)
 {
     [0x80077188 + A0 * 0x1cc + A1 * 0x14 + 0x10] = h(A2);
 }
 
 
 
-void func2c8ac( A0, A1, A2 )
+void func2c8ac(A0, A1, A2)
 {
     [0x80077188 + A0 * 0x1cc + A1 * 0x14 + 0x12] = h(A2);
 }
@@ -14482,7 +14482,7 @@ V0 = w[V0 + 000c];
 
 
 
-void func2c974( A0, A1, A2 )
+void func2c974(A0, A1, A2)
 {
     [0x80077188 + A0 * 0x1cc + A1 * 0x14 + 0xc] = w(A2);
 }
@@ -14492,28 +14492,28 @@ void func2c974( A0, A1, A2 )
 // called in main menu
 void func2c9b0()
 {
-    for( int i = 0; i < 0xa; ++i )
+    for (int i = 0; i < 0xa; ++i)
     {
-        if( bu[0x80077530 + i * 0x54 + 0x1c] != 0 )
+        if (bu[0x80077530 + i * 0x54 + 0x1c] != 0)
         {
-            if( func2e4bc( 0x80077530 + i * 0x54 ) != 0 )
+            if (func2e4bc(0x80077530 + i * 0x54) != 0)
             {
-                if( w[0x80077530 + i * 0x54 + 0x24] != 0 )
+                if (w[0x80077530 + i * 0x54 + 0x24] != 0)
                 {
                     // dont called in start menu
-                    func2e588( 0x80077530 + i * 0x54 );
+                    func2e588(0x80077530 + i * 0x54);
                 }
 
                 V0 = w[0x80077530 + i * 0x54 + 0x44];
-                if( V0 != 0 )
+                if (V0 != 0)
                 {
                     A0 = 0x80077530 + i * 0x54;
                     8002CA28	jalr   v0 ra
                 }
 
-                if( bu[0x80077530 + i * 0x54 + 0x1c] == 3 )
+                if (bu[0x80077530 + i * 0x54 + 0x1c] == 3)
                 {
-                    if( bu[0x80077530 + i * 0x54 + 0x33] < bu[0x80077530 + i * 0x54 + 0x32] )
+                    if (bu[0x80077530 + i * 0x54 + 0x33] < bu[0x80077530 + i * 0x54 + 0x32])
                     {
                         A0 = 0x80077530 + i * 0x54 + 0x8;
                         A1 = h[0x80077530 + i * 0x54 + 0x18]; // depth
@@ -14528,9 +14528,9 @@ void func2c9b0()
                 func2d9b4(); // dont called
 
                 V1 = w[0x80077530 + i * 0x54 + 0x40];
-                if( V1 != 0 )
+                if (V1 != 0)
                 {
-                    if( bu[0x80077530 + i * 0x54 + 0x1e] != 0 )
+                    if (bu[0x80077530 + i * 0x54 + 0x1e] != 0)
                     {
                         A0 = 0x80077530 + i * 0x54;
                         8002CA94	jalr   v1 ra
@@ -14542,13 +14542,13 @@ void func2c9b0()
                 A2 = bu[0x80077530 + i * 0x54 + 0x1a];
                 func2d9b4();
 
-                if( bu[0x80077530 + i * 0x54 + 0x1a] != 4 )
+                if (bu[0x80077530 + i * 0x54 + 0x1a] != 4)
                 {
                     A0 = 0x80077530 + i * 0x54;
                     func2cb18();
                 }
 
-                if( bu[0x80077530 + i * 0x54 + 0x1f] != 0 )
+                if (bu[0x80077530 + i * 0x54 + 0x1f] != 0)
                 {
                     A0 = 0x80077530 + i * 0x54 + 0x8;
                     A1 = h[0x80077530 + i * 0x54 + 0x18];
@@ -15197,12 +15197,12 @@ SP = SP + 0018;
 
 
 
-void func2d7e8( A0 )
+void func2d7e8(A0)
 {
     A2 = A0;
     V1 = bu[A2 + 0x28];
 
-    if( ( V1 == 0 ) || ( V1 == 4 ) )
+    if ((V1 == 0) || (V1 == 4))
     {
         V0 = hu[A2 + 000c];
         V1 = hu[A2 + 0014];
@@ -15233,7 +15233,7 @@ void func2d7e8( A0 )
         V0 = V0 & 001f;
         [A2 + 003b] = b(V0);
     }
-    if( V1 == 1 )
+    if (V1 == 1)
     {
         V0 = hu[A2 + 000e];
         V1 = hu[A2 + 0016];
@@ -15249,7 +15249,7 @@ void func2d7e8( A0 )
         [A2 + 000c] = h(V1);
         [A2 + 003b] = b(V0);
     }
-    else if( V1 == 2 )
+    else if (V1 == 2)
     {
         A0 = hu[A2 + 002c];
         V0 = hu[A2 + 002e];
@@ -15268,7 +15268,7 @@ void func2d7e8( A0 )
         V0 = V0 + A0;
         [A2 + 0008] = h(V0);
 
-        if( V1 == 0 )
+        if (V1 == 0)
         {
             [A2 + 0xa] = h(hu[A2 + 0xa] + A1);
         }
@@ -15285,15 +15285,15 @@ void func2d7e8( A0 )
         [A2 + 003b] = b(V1);
     }
 
-    if( h[A2 + 0xc] < 0 ) [A2 + 0xc] = h(0);
-    if( h[A2 + 0xe] < 0 ) [A2 + 0xe] = h(0);
+    if (h[A2 + 0xc] < 0) [A2 + 0xc] = h(0);
+    if (h[A2 + 0xe] < 0) [A2 + 0xe] = h(0);
 
-    if( ( h[A2 + 0xc] == 0 ) || ( h[A2 + 0xe] == 0 ) )
+    if ((h[A2 + 0xc] == 0) || (h[A2 + 0xe] == 0))
     {
         [A2 + 0x1c] = b(0);
 
         V0 = w[A2 + 0x4c];
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A0 = A2;
             8002D99C	jalr   v0 ra
@@ -15303,7 +15303,7 @@ void func2d7e8( A0 )
 
 
 
-void func2d9b4( RECT* rect, s16 depth, A2 )
+void func2d9b4(RECT* rect, s16 depth, A2)
 {
     T0 = 0x80077148;
     V0 = w[0x8006794c];
@@ -15325,7 +15325,7 @@ void func2d9b4( RECT* rect, s16 depth, A2 )
     S0 = w[0x80077170];
     A3 = A0 + V0;
     V0 = SP + 0x18;
-    if( rect != 0 )
+    if (rect != 0)
     {
         A2 = V0 + A2;
         V1 = bu[A2 + 0000];
@@ -15365,7 +15365,7 @@ void func2d9b4( RECT* rect, s16 depth, A2 )
         V0 = V0 >> 10;
         V0 = V0 < V1;
         V1 = hu[A3 + 0000];
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             V0 = V1 - A1;
             V0 = T0 - V0;
@@ -15378,7 +15378,7 @@ void func2d9b4( RECT* rect, s16 depth, A2 )
         V0 = V0 >> 10;
         V0 = V0 < V1;
         V1 = hu[A3 + 0002];
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             V0 = V1 - A0;
             V0 = A2 - V0;
@@ -15386,12 +15386,12 @@ void func2d9b4( RECT* rect, s16 depth, A2 )
             [SP + 0012] = h(hu[A3 + 0002]);
         }
 
-        if( ( h[A3 + 0x0] + h[A3 + 0x4] ) < ( h[SP + 0x10] + h[SP + 0x14] ) )
+        if ((h[A3 + 0x0] + h[A3 + 0x4]) < (h[SP + 0x10] + h[SP + 0x14]))
         {
             [SP + 0x14] = h(hu[A3 + 0x0] + hu[A3 + 0x4] - hu[SP + 0x10]);
         }
 
-        if( ( h[A3 + 0x2] + h[A3 + 0x6] ) < ( h[SP + 0x12] + h[SP + 0x16] ) )
+        if ((h[A3 + 0x2] + h[A3 + 0x6]) < (h[SP + 0x12] + h[SP + 0x16]))
         {
             [SP + 0x16] = h(hu[A3 + 0x2] + hu[A3 + 0x6] - hu[SP + 0x12]);
         }
@@ -15402,7 +15402,7 @@ void func2d9b4( RECT* rect, s16 depth, A2 )
         [SP + 0x14] = w(w[A3 + 0x4])
     }
 
-    system_psyq_set_draw_area( S0, SP + 0x10 );
+    system_psyq_set_draw_area(S0, SP + 0x10);
 
     A1 = w[0x8007716c] + depth * 4;
 
@@ -15787,11 +15787,11 @@ void func2e180()
         S0 = S0 + 0054;
 
         L2e210:	; 8002E210
-        if( V1 == V0 )
+        if (V1 == V0)
         {
-            if( bu[S3 + 0x1] != V1 )
+            if (bu[S3 + 0x1] != V1)
             {
-                func2d7e8( S1 );
+                func2d7e8(S1);
             }
         }
 
@@ -15992,7 +15992,7 @@ SP = SP + 0018;
 void func2e490()
 {
     V1 = 0x80077530;
-    for( int i = 0; i < 0xa; ++i )
+    for (int i = 0; i < 0xa; ++i)
     {
         [V1 + i * 0x54 + 0x1b] = b(i);
         [V1 + i * 0x54 + 0x1c] = b(0);
@@ -16065,29 +16065,29 @@ SP = SP + 0010;
 
 
 
-void func2e588( S0 )
+void func2e588(S0)
 {
-    if( w[S0 + 0x24] == 0 ) return;
+    if (w[S0 + 0x24] == 0) return;
 
     s16 depth = h[S0 + 0x18];
 
-    if( bu[S0 + 0x1c] != 3 )
+    if (bu[S0 + 0x1c] != 3)
     {
-        func2d9b4( 0, depth, 0x4 );
+        func2d9b4(0, depth, 0x4);
     }
 
     s16 x = h[S0 + 0x0] + h[S0 + 0x20];
     s16 y = h[S0 + 0xa] + b[S0 + 0x22];
-    func2b524( x, y, depth, w[S0 + 0x24], ( bu[S0 + 0x1e] == 0 ) ? 0x2 : 0x0 );
+    func2b524(x, y, depth, w[S0 + 0x24], (bu[S0 + 0x1e] == 0) ? 0x2 : 0x0);
 
-    if( bu[S0 + 0x1c] != 3 )
+    if (bu[S0 + 0x1c] != 3)
     {
         [SP + 0x18] = h(hu[S0 + 0x8]);
         [SP + 0x1a] = h(hu[S0 + 0xa] - 3);
         [SP + 0x1e] = h(0x8);
         [SP + 0x1c] = h(hu[S0 + 0xc]);
 
-        func2d9b4( SP + 0x18, depth, 0x4);
+        func2d9b4(SP + 0x18, depth, 0x4);
     }
 }
 
@@ -16149,7 +16149,7 @@ SP = SP + 0028;
 
 
 
-void func2e718( RECT* rect, s16 depth, data )
+void func2e718(RECT* rect, s16 depth, data)
 {
     S1 = (w[0x80077150] >> 0x4) & 0x1;
     S2 = bu[data + 0x5] < (bu[data + 0x2] - bu[data + 0x3]);
@@ -16158,14 +16158,14 @@ void func2e718( RECT* rect, s16 depth, data )
     A1 = rect->y + 0x5;
     A2 = depth;
     A3 = 0xb8;
-    A4 = ( bu[data + 0x5] != 0 ) ? S1 : 0x1;
+    A4 = (bu[data + 0x5] != 0) ? S1 : 0x1;
     func275dc();
 
     A0 = rect->x + rect->w - 0x6;
     A1 = rect->y + rect->h - 0xe;
     A2 = depth;
     A3 = 0xb9;
-    A4 = ( S2 & 0xff ) ? S1 : 0x1;
+    A4 = (S2 & 0xff) ? S1 : 0x1;
     func275dc();
 }
 
@@ -17256,25 +17256,25 @@ void func2f6c8()
 
     V1 = 0x80077878;
 
-    if( fb != 0 ) V1 += 0x200;
+    if (fb != 0) V1 += 0x200;
     [0x80077c78 + 0x18] = w(V1);
 
-    if( bu[0x80077c78 + 0x2] != 0 )
+    if (bu[0x80077c78 + 0x2] != 0)
     {
         A0 = bu[0x80077c78 + 0x0];
         V0 = w[0x8006bd04 + A0 * 0xc + 0x4];
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A0 = 0x80077c78;
             8002F738	jalr   v0 ra
         }
     }
 
-    if( w[0x80077c78 + 0x0] & 0xffff0000 )
+    if (w[0x80077c78 + 0x0] & 0xffff0000)
     {
         A0 = bu[0x80077c78 + 0x0];
         V0 = w[0x8006bd04 + A0 * 0xc + 0x8];
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A0 = 0x80077c78;
             8002F784	jalr   v0 ra
@@ -17282,16 +17282,16 @@ void func2f6c8()
         }
     }
 
-    if( bu[0x80077c78 + 0x2] != 0 )
+    if (bu[0x80077c78 + 0x2] != 0)
     {
         [0x80077c78 + 0xc] = w(w[0x80077c78 + 0xc] + 0x1);
 
-        if( w[0x80077c78 + 0xc] >= h[0x80077c78 + 0x8] )
+        if (w[0x80077c78 + 0xc] >= h[0x80077c78 + 0x8])
         {
             [0x80077c78 + 0x2] = b(0);
 
             V0 = w[0x80077c78 + 0x10];
-            if( V0 != 0 )
+            if (V0 != 0)
             {
                 8002F7D0	jalr   v0 ra
             }
@@ -17301,7 +17301,7 @@ void func2f6c8()
 
 
 
-u8 func2f7e8( u8 A0 )
+u8 func2f7e8(u8 A0)
 {
     V0 = bu[0x80077c78 + 0x2];
     [0x80077c78 + 0x2] = b(A0);
@@ -17319,7 +17319,7 @@ u8 func2f800()
 
 bool func2f810()
 {
-    if( bu[0x80077c78 + 0x2] == 0 )
+    if (bu[0x80077c78 + 0x2] == 0)
     {
         return 0 < bu[0x80077c78 + 0x3];
     }
@@ -17370,7 +17370,7 @@ void func2f884()
 
 
 
-u32 func2f8a8( u32 A0 )
+u32 func2f8a8(u32 A0)
 {
     V0 = w[0x80077c78 + 0x10];
     [0x80077c78 + 0x10] = w(A0);
@@ -17399,7 +17399,7 @@ u8 func2f8d4()
 // func2f8e4()
 
 V0 = w[0x80077c78 + 0x1c];
-if( A0 == 0 ) A0 = 1;
+if (A0 == 0) A0 = 1;
 [0x80077c78 + 0x1c] = w(A0);
 
 return V0;
@@ -17428,7 +17428,7 @@ V0 = bu[0x80077c7b];
 
 
 
-u16 func2f93c( u16 A0 )
+u16 func2f93c(u16 A0)
 {
     V0 = hu[0x80077c78 + 0xa];
     [0x80077c78 + 0xa] = h(A0);
@@ -17470,7 +17470,7 @@ L2f9a0:	; 8002F9A0
 
 
 
-void func2f9a8( A0 )
+void func2f9a8(A0)
 {
     [A0] = w(w[0x80077c78 + 0x28]);
 }
@@ -17521,22 +17521,22 @@ SP = SP + 0018;
 
 
 
-void func2fa50( S0 )
+void func2fa50(S0)
 {
-    func2f93c( 0 )
-    func2f8bc( 1 );
-    func2fc8c( 1, 1, 0, 0xffffff );
-    func2fc8c( 1, 1, S0, 0 );
+    func2f93c(0)
+    func2f8bc(1);
+    func2fc8c(1, 1, 0, 0xffffff);
+    func2fc8c(1, 1, S0, 0);
 }
 
 
 
-void func2faac( S0 )
+void func2faac(S0)
 {
-    func2f93c( 0 );
-    func2f8bc( 1 );
-    func2fc8c( 1, 1, 0, 0 );
-    func2fc8c( 1, 1, S0, 0xffffff );
+    func2f93c(0);
+    func2f8bc(1);
+    func2fc8c(1, 1, 0, 0);
+    func2fc8c(1, 1, S0, 0xffffff);
 }
 
 
@@ -17656,7 +17656,7 @@ void func2fc30()
 ////////////////////////////////
 // func2fc8c()
 
-if( A2 == 0 )
+if (A2 == 0)
 {
     [0x80077c78 + 28] = w(A3);
 }
@@ -17669,7 +17669,7 @@ else
     [0x80077c78 + 0x0] = b(A0);
     [0x80077c78 + 0x1] = b(A1);
     [0x80077c78 + 0x2] = b(1);
-    [0x80077c78 + 0x3] = b((A3 & 0x00ffffff ) != 0);
+    [0x80077c78 + 0x3] = b((A3 & 0x00ffffff) != 0);
     [0x80077c78 + 0x5] = b(V1);
     [0x80077c78 + 0x8] = h(A2);
     [0x80077c78 + 0xc] = w(0);
@@ -17677,7 +17677,7 @@ else
     [0x80077c78 + 0x24] = w(A3);
 
     V0 = w[0x8006bd04 + A0 * 3 * 4];
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         A0 = 80077c78;
         8002FD58	jalr   v0 ra
@@ -19894,12 +19894,12 @@ void func3264c()
 
 void func32658()
 {
-    if( bu[0x80077db0 + 0x5] != 0 )
+    if (bu[0x80077db0 + 0x5] != 0)
     {
         V0 = bu[0x80077db0];
         V0 = w[0x8006ca64 + V0 * 4];
 
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             80032698	jalr   v0 ra
         }
@@ -23049,7 +23049,7 @@ V0 = 80077de8;
 ////////////////////////////////
 // func35580()
 
-if( A0 == 0 )
+if (A0 == 0)
 {
     [0x80077de8 + 10] = h(8);
     [0x80077de8 + 12] = h(8);
@@ -25585,7 +25585,7 @@ func4ac80();
 
 S0 = 0;
 
-if( w[0x8007b718] == 0 )
+if (w[0x8007b718] == 0)
 {
     8004BC54	jal    func4e7fc [$8004e7fc]
 
@@ -25659,7 +25659,7 @@ V1 = V1 + A0;
 ////////////////////////////////
 // func4bd2c()
 
-if( A0 < 3 )
+if (A0 < 3)
 {
     V1 = w[0x8006e660];
     return hu[V1 + A0 * 10 + 0];
@@ -27823,15 +27823,15 @@ S6 = A3;
 
 pointer_to_text = 0;
 
-if( text_id >= 0 )
+if (text_id >= 0)
 {
     texts_data = w[0x8007b954];
 
-    if( text_id < w[texts_data + 0] ) // index less than number of texts
+    if (text_id < w[texts_data + 0]) // index less than number of texts
     {
         pointer_to_text = texts_data + 4;
 
-        if( w[0x8007b708] == 4 ) // if battle
+        if (w[0x8007b708] == 4) // if battle
         {
             V0 = text_id * 4;
         }
@@ -27844,7 +27844,7 @@ if( text_id >= 0 )
 
         [0x8007b942] = h(((A2 >> 10) & fff) + 9);
 
-        if( w[0x8007b708] == 4 ) // if battle
+        if (w[0x8007b708] == 4) // if battle
         {
             V1 = A2 >> 1c;
         }
@@ -27861,7 +27861,7 @@ if( text_id >= 0 )
 
 
 
-if( pointer_to_text != 0 )
+if (pointer_to_text != 0)
 {
     [0x8007bb90] = w(0);
     [0x8007b94a] = b(0);
@@ -27874,7 +27874,7 @@ if( pointer_to_text != 0 )
         V1 = bu[pointer_to_text];
         pointer_to_text = pointer_to_text + 1;
 
-        if( V1 != f9 )
+        if (V1 != f9)
         {
             break;
         }
@@ -27882,7 +27882,7 @@ if( pointer_to_text != 0 )
         V1 = bu[pointer_to_text];
         pointer_to_text = pointer_to_text +1;
 
-        switch( V1 )
+        switch (V1)
         {
             case 07: // CCE30480
             {
@@ -27899,7 +27899,7 @@ if( pointer_to_text != 0 )
                 A1 = bu[pointer_to_text];
                 A2 = w[0x8007b974];
                 V1 = A1 - 1;
-                if( A1 != 0 )
+                if (A1 != 0)
                 {
 
                     loop4e428:	; 8004E428
@@ -27924,7 +27924,7 @@ if( pointer_to_text != 0 )
                 pointer_to_text = pointer_to_text + 1;
 
                 V1 = V1 - 1;
-                if( V1 != -1 )
+                if (V1 != -1)
                 {
                     A1 = -1;
 
@@ -27937,7 +27937,7 @@ if( pointer_to_text != 0 )
                 }
 
                 V1 = w[0x8007b95c];
-                if( A1 >= V1 )
+                if (A1 >= V1)
                 {
                     A1 = V1 - 1;
                 }
@@ -27987,7 +27987,7 @@ if( pointer_to_text != 0 )
                 [SP + 14] = w(hu[pointer_to_text + 0])
                 pointer_to_text = pointer_to_text + 2;
 
-                if( w[SP + 14] != ffff )
+                if (w[SP + 14] != ffff)
                 {
                     loop4e648:	; 8004E648
                         [SP + 14] = w(A0);
@@ -27998,7 +27998,7 @@ if( pointer_to_text != 0 )
                         V1 = V1 >> c;
                         V1 = V1 & f;
 
-                        if( ( V1 == 0 ) || ( w[0x8007b960] >> (V1 - 1) & 1 ) )
+                        if ((V1 == 0) || (w[0x8007b960] >> (V1 - 1) & 1))
                         {
                             [SP + 10] = w(pointer_to_text);
                             A0 = SP + 10;
@@ -28007,7 +28007,7 @@ if( pointer_to_text != 0 )
 
                             pointer_to_text = w[SP + 10];
 
-                            if( h[0x8007b942] < w[SP + 14] )
+                            if (h[0x8007b942] < w[SP + 14])
                             {
                                 [0x8007b942] = h(hu[SP + 14]);
                             }
@@ -28016,7 +28016,7 @@ if( pointer_to_text != 0 )
                         {
                             V1 = bu[pointer_to_text];
                             pointer_to_text = pointer_to_text +1;
-                            if( V1 != ff )
+                            if (V1 != ff)
                             {
                                 loop4e6d0:	; 8004E6D0
                                     V1 = bu[pointer_to_text];
@@ -28051,7 +28051,7 @@ if( pointer_to_text != 0 )
 V0 = w[0x8006794c];
 V0 = w[V0 + 1c];
 V0 = w[V0 + 54c + A0 * 4];
-if( V0 != 0 )
+if (V0 != 0)
 {
     return w[V0 + 34] & f;
 }
@@ -28170,7 +28170,7 @@ V0 = V1 & V0;
 V1 = 8007b9c0;
 A0 = V1 + 1b8;
 V0 = V1 < A0;
-if( V0 != 0 )
+if (V0 != 0)
 {
     loop4e93c:	; 8004E93C
         [V1 + 0008] = h(0);
@@ -34001,10 +34001,10 @@ return 0;
 
 
 
-u32 func55230( S0 )
+u32 func55230(S0)
 {
     A0 = func565dc();
-    if( A0 == 0 )
+    if (A0 == 0)
     {
         [0x800809dc] = w(S0 + 0x10);
         [0x800809e4] = w(S0 + 0x210);
@@ -34016,34 +34016,34 @@ u32 func55230( S0 )
 
 
 
-void func55290( file ) // called from field file
+void func55290(file) // called from field file
 {
     [0x80080aa0 + 0x0] = w(file);
-    system_akao_command_execute( 0x10 ); // load file
+    system_akao_command_execute(0x10); // load file
 }
 
 
 
-void func552b8( A0 )
+void func552b8(A0)
 {
     [0x80080aa0 + 0x0] = w(A0);
-    system_akao_command_execute( 0x11 );
+    system_akao_command_execute(0x11);
 }
 
 
 
-void func552e0( file, A1 )
+void func552e0(file, A1)
 {
     [0x80080aa0 + 0x0] = w(file);
     [0x80080aa0 + 0x4] = w(A1);
-    system_akao_command_execute( 0x14 );
+    system_akao_command_execute(0x14);
 }
 
 
 
 void func55310()
 {
-    system_akao_command_execute( 0x40 );
+    system_akao_command_execute(0x40);
 }
 
 
@@ -34051,7 +34051,7 @@ void func55310()
 ////////////////////////////////
 // func55330()
 
-if( w[0x8007f790] == 0 )
+if (w[0x8007f790] == 0)
 {
     [0x8007f95a] = h(0);
 }
@@ -34060,70 +34060,70 @@ return 0;
 
 
 
-void func55350( file, A1 )
+void func55350(file, A1)
 {
     [0x80080aa0 + 0x0] = w(file);
     [0x80080aa0 + 0x4] = w(A1 & 0x7f);
-    system_akao_command_execute( 0x19 );
+    system_akao_command_execute(0x19);
 }
 
 
 
-void func55384( file, A1, A2 )
+void func55384(file, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(file);
     [0x80080aa0 + 0x4] = w(A1);
     [0x80080aa0 + 0x8] = w(A2 & 0x7f);
-    system_akao_command_execute( 0x1a );
+    system_akao_command_execute(0x1a);
 }
 
 
 
-void func553bc( A0, A1 )
+void func553bc(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1);
-    system_akao_command_execute( 0x12 );
+    system_akao_command_execute(0x12);
 }
 
 
 
-int func553ec( S0, A1, A2, A3 )
+int func553ec(S0, A1, A2, A3)
 {
     [0x80080aa0 + 0x0] = w(S0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2 & 0xff);
     [0x80080aa0 + 0xc] = w(A3 & 0x7f);
 
-    if( S0 < 0x400 )
+    if (S0 < 0x400)
     {
-        V0 = system_akao_command_execute( 0x20 );
+        V0 = system_akao_command_execute(0x20);
         return V0;
     }
 
-    V0 = func565dc( A0 );
-    if( V0 == 0 )
+    V0 = func565dc(A0);
+    if (V0 == 0)
     {
-        system_akao_command_execute( 0x24 );
+        system_akao_command_execute(0x24);
         return S0;
     }
 }
 
 
 
-void func5546c( A0, A1 )
+void func5546c(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
-    system_akao_command_execute( 0x21 );
+    system_akao_command_execute(0x21);
 }
 
 
 
-void func554a8( A0 )
+void func554a8(A0)
 {
     [0x80080aa0] = w(A0 & 0x3ff);
-    system_akao_command_execute( 0x30 );
+    system_akao_command_execute(0x30);
 }
 
 
@@ -34203,352 +34203,352 @@ return 0;
 
 void func555a8()
 {
-    system_akao_command_execute( ( A0 == 1 ) ? 0x81 : 0x80 );
+    system_akao_command_execute((A0 == 1) ? 0x81 : 0x80);
 }
 
 
 
-void func555dc( A0 )
+void func555dc(A0)
 {
     [0x80080aa0 + 0x0] = w(A0);
-    system_akao_command_execute( 0x90 );
+    system_akao_command_execute(0x90);
 }
 
 
 
-void func55604( A0 )
+void func55604(A0)
 {
     [0x80080aa0 + 0x0] = w(A0);
-    system_akao_command_execute( 0x92 );
+    system_akao_command_execute(0x92);
 }
 
 
 
-void func5562c( A0 )
+void func5562c(A0)
 {
-    if( A0 == 1 )
+    if (A0 == 1)
     {
-        system_akao_command_execute( 0x9b );
+        system_akao_command_execute(0x9b);
     }
-    else if( A0 == 2 )
+    else if (A0 == 2)
     {
-        system_akao_command_execute( 0x9d );
+        system_akao_command_execute(0x9d);
     }
-    else if( A0 == 3 )
+    else if (A0 == 3)
     {
-        system_akao_command_execute( 0x9f );
+        system_akao_command_execute(0x9f);
     }
     else
     {
-        system_akao_command_execute( 0x99 );
+        system_akao_command_execute(0x99);
     }
 }
 
 
 
-void func55698( A0 )
+void func55698(A0)
 {
-    if( A0 == 1 )
+    if (A0 == 1)
     {
-        system_akao_command_execute( 0x9a);
+        system_akao_command_execute(0x9a);
     }
-    else if( A0 == 2 )
+    else if (A0 == 2)
     {
-        system_akao_command_execute( 0x9c);
+        system_akao_command_execute(0x9c);
     }
-    else if( A0 == 3 )
+    else if (A0 == 3)
     {
-        system_akao_command_execute( 0x9e );
+        system_akao_command_execute(0x9e);
     }
     else
     {
-        system_akao_command_execute( 0x98 );
+        system_akao_command_execute(0x98);
     }
 }
 
 
 
-void func55704( A0 )
+void func55704(A0)
 {
     [0x80080aa0 + 0x0] = w(A0 & 0x7f);
-    system_akao_command_execute( 0xa8 );
+    system_akao_command_execute(0xa8);
 }
 
 
 
-void func55730( A0, A1 )
+void func55730(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0x7f);
-    system_akao_command_execute( 0xa9 );
+    system_akao_command_execute(0xa9);
 }
 
 
 
-void func55764( A0, A1, A2 )
+void func55764(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2 & 0x7f);
-    system_akao_command_execute( 0xa0 );
+    system_akao_command_execute(0xa0);
 }
 
 
 
-void func557a8( A0, A1, A2, A3 )
+void func557a8(A0, A1, A2, A3)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2);
     [0x80080aa0 + 0xc] = w(A3 & 0x7f);
-    system_akao_command_execute( 0xa1 );
+    system_akao_command_execute(0xa1);
 }
 
 
 
-void func557f0( A0 )
+void func557f0(A0)
 {
     [0x80080aa0 + 0x0] = w(A0 & 0xff);
-    system_akao_command_execute( 0xaa );
+    system_akao_command_execute(0xaa);
 }
 
 
 
-void func5581c( A0, A1 )
+void func5581c(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
-    system_akao_command_execute( 0xab );
+    system_akao_command_execute(0xab);
 }
 
 
 
-void func55850( A0, A1, A2 )
+void func55850(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2 & 0xff);
-    system_akao_command_execute( 0xa2 );
+    system_akao_command_execute(0xa2);
 }
 
 
 
-void func55894( A0, A1, A2, A3 )
+void func55894(A0, A1, A2, A3)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2);
     [0x80080aa0 + 0xc] = w(A3 & 0xff);
-    system_akao_command_execute( 0xa3 );
+    system_akao_command_execute(0xa3);
 }
 
 
 
-void func558dc( A0 )
+void func558dc(A0)
 {
     [0x80080aa0 + 0x0] = w(A0 & 0xff);
-    system_akao_command_execute( 0xac );
+    system_akao_command_execute(0xac);
 }
 
 
 
-void func55908( A0, A1 )
+void func55908(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
-    system_akao_command_execute( 0xad );
+    system_akao_command_execute(0xad);
 }
 
 
 
-void func5593c( A0, A1, A2 )
+void func5593c(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2 & 0xff);
-    system_akao_command_execute( 0xa4 );
+    system_akao_command_execute(0xa4);
 }
 
 
 
-void func55980( A0, A1, A2, A3 )
+void func55980(A0, A1, A2, A3)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xffffff);
     [0x80080aa0 + 0x8] = w(A2);
     [0x80080aa0 + 0xc] = w(A3 & 0xff);
-    system_akao_command_execute( 0xa5 );
+    system_akao_command_execute(0xa5);
 }
 
 
 
-void func559c8( A0, A1 )
+void func559c8(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0x7f);
-    system_akao_command_execute( 0xc0 );
+    system_akao_command_execute(0xc0);
 }
 
 
 
-void func559fc( A0, A1, A2 )
+void func559fc(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1);
     [0x80080aa0 + 0x8] = w(A2 & 0x7f);
-    system_akao_command_execute( 0xc1 );
+    system_akao_command_execute(0xc1);
 }
 
 
 
-void func55a34( A0, A1, A2, A3 )
+void func55a34(A0, A1, A2, A3)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1);
     [0x80080aa0 + 0x8] = w(A2 & 0x7f);
     [0x80080aa0 + 0xc] = w(A3 & 0x7f);
-    system_akao_command_execute( 0xc2 );
+    system_akao_command_execute(0xc2);
 }
 
 
 
-void func55a74( A0, A1 )
+void func55a74(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0x7f);
-    system_akao_command_execute( 0xc4 );
+    system_akao_command_execute(0xc4);
 }
 
 
 
-void func55aa8( A0, A1, A2 )
+void func55aa8(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1);
     [0x80080aa0 + 0x8] = w(A2 & 0x7f);
-    system_akao_command_execute( 0xc5 );
+    system_akao_command_execute(0xc5);
 }
 
 
 
-void func55ae0( A0 )
+void func55ae0(A0)
 {
     [0x80080aa0 + 0x0] = w(A0);
-    system_akao_command_execute( 0x70 );
+    system_akao_command_execute(0x70);
 }
 
 
 
-void func55b08( A0, A1 )
+void func55b08(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1);
-    system_akao_command_execute( 0x71 );
+    system_akao_command_execute(0x71);
 }
 
 
 
-void func55b38( A0, A1, A2 )
+void func55b38(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1);
     [0x80080aa0 + 0x8] = w(A2);
-    system_akao_command_execute( 0x72 );
+    system_akao_command_execute(0x72);
 }
 
 
 
-void func55b6c( A0 )
+void func55b6c(A0)
 {
     [0x80080aa0 + 0x0] = w(A0 & 0xff);
-    system_akao_command_execute( 0xd0 );
+    system_akao_command_execute(0xd0);
 }
 
 
 
-void func55b98( A0, A1 )
+void func55b98(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
-    system_akao_command_execute( 0xd1 );
+    system_akao_command_execute(0xd1);
 }
 
 
 
-void func55bcc( A0, A1, A2 )
+void func55bcc(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
     [0x80080aa0 + 0x8] = w(A2 & 0xff);
-    system_akao_command_execute( 0xd2 );
+    system_akao_command_execute(0xd2);
 }
 
 
 
-void func55c08( A0 )
+void func55c08(A0)
 {
     [0x80080aa0 + 0x0] = w(A0 & 0xff);
-    system_akao_command_execute( 0xd4 );
+    system_akao_command_execute(0xd4);
 }
 
 
 
-void func55c34( A0, A1 )
+void func55c34(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
-    system_akao_command_execute( 0xd5 );
+    system_akao_command_execute(0xd5);
 }
 
 
 
-void func55c68( A0, A1, A2 )
+void func55c68(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
     [0x80080aa0 + 0x8] = w(A2 & 0xff);
-    system_akao_command_execute( 0xd6 );
+    system_akao_command_execute(0xd6);
 }
 
 
 
-void func55ca4( A0 )
+void func55ca4(A0)
 {
     [0x80080aa0 + 0x0] = w(A0 & 0xff);
-    system_akao_command_execute( 0xd8 );
+    system_akao_command_execute(0xd8);
 }
 
 
 
-void func55cd0( A0, A1 )
+void func55cd0(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
-    system_akao_command_execute( 0xd9 );
+    system_akao_command_execute(0xd9);
 }
 
 
 
-void func55d04( A0, A1, A2 )
+void func55d04(A0, A1, A2)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w(A1 & 0xff);
     [0x80080aa0 + 0x8] = w(A2 & 0xff);
-    system_akao_command_execute( 0xda );
+    system_akao_command_execute(0xda);
 }
 
 
 
 void func55d40()
 {
-    system_akao_command_execute( 0xf0 );
+    system_akao_command_execute(0xf0);
 }
 
 
 
 void func55d60()
 {
-    system_akao_command_execute( 0xf1 );
+    system_akao_command_execute(0xf1);
 }
 
 
@@ -34604,15 +34604,15 @@ int func55df4()
 
 
 
-u32 func55e14( file, size, sync )
+u32 func55e14(file, size, sync)
 {
-    if( w[0x80083158] & 0x00000001 )
+    if (w[0x80083158] & 0x00000001)
     {
-        if( w[0x80083228 + 0x4] == 0 )
+        if (w[0x80083228 + 0x4] == 0)
         {
-            if( w[file + 0x0] == 0x4f414b41 )
+            if (w[file + 0x0] == 0x4f414b41)
             {
-                system_akao_copy( file, 0x80080a30, 0x40 );
+                system_akao_copy(file, 0x80080a30, 0x40);
 
                 file += 0x40;
                 size -= 0x40;
@@ -34630,20 +34630,20 @@ u32 func55e14( file, size, sync )
             }
         }
 
-        if( w[0x80083228 + 0xc] != 0 )
+        if (w[0x80083228 + 0xc] != 0)
         {
-            if( size == 0 )
+            if (size == 0)
             {
-                if( w[0x80083230] == 0 )
+                if (w[0x80083230] == 0)
                 {
                     [0x80083158] = w(w[0x80083158] & 0xfffffffe);
                 }
                 return w[0x80083230];
             }
 
-            S0 = ( w[0x80083228 + 0xc] >= size ) ? size : w[0x80083228 + 0xc];
+            S0 = (w[0x80083228 + 0xc] >= size) ? size : w[0x80083228 + 0xc];
 
-            system_akao_copy( file, w[0x80083228 + 0x0], S0 );
+            system_akao_copy(file, w[0x80083228 + 0x0], S0);
 
             V0 = (S0 / 4) * 4;
             file += V0;
@@ -34651,7 +34651,7 @@ u32 func55e14( file, size, sync )
             [0x80083228 + 0x0] = w(w[0x80083228 + 0x0] + V0);
             [0x80083228 + 0xc] = w(w[0x80083228 + 0xc] - S0);
 
-            if( w[0x80083228 + 0xc] == 0 )
+            if (w[0x80083228 + 0xc] == 0)
             {
                 A0 = 0x8007f970 + w[0x80080a30 + 0x18] * 0x10;
                 A1 = A0;
@@ -34661,30 +34661,30 @@ u32 func55e14( file, size, sync )
             }
         }
 
-        if( size != 0 )
+        if (size != 0)
         {
-            if( w[0x80083228 + 0x8] == 0 )
+            if (w[0x80083228 + 0x8] == 0)
             {
                 [0x80083158] = w(w[0x80083158] & 0xfffffffe);
                 return w[0x80083230];
             }
 
-            size = ( w[0x80083228 + 0x8] >= size ) ? size : w[0x80083228 + 0x8];
+            size = (w[0x80083228 + 0x8] >= size) ? size : w[0x80083228 + 0x8];
 
-            func5652c( w[0x80083228 + 0x4] );
+            func5652c(w[0x80083228 + 0x4]);
 
-            func56644( file, size ); // write to spu here
+            func56644(file, size); // write to spu here
 
             [0x80083228 + 0x4] = w(w[0x80083228 + 0x4] + size);
             [0x80083228 + 0x8] = w(w[0x80083228 + 0x8] - size);
 
-            if( sync != 0 )
+            if (sync != 0)
             {
                 func566d0(); // some wait?
             }
         }
 
-        if( w[0x80083230] == 0 )
+        if (w[0x80083230] == 0)
         {
             [0x80083158] = w(w[0x80083158] & 0xfffffffe);
         }
@@ -34825,15 +34825,15 @@ SP = SP + 0018;
 
 
 
-void func561c4( S0, S1, S2 )
+void func561c4(S0, S1, S2)
 {
-    V0 = func565dc( A0 );
-    if( V0 == 0 )
+    V0 = func565dc(A0);
+    if (V0 == 0)
     {
         [0x80080aa0 + 0x0] = w(S0);
         [0x80080aa0 + 0x4] = w((S1 & 0xff) << 0x8);
         [0x80080aa0 + 0x8] = w(S2);
-        system_akao_command_execute( 0xe0 );
+        system_akao_command_execute(0xe0);
     }
 }
 
@@ -34841,32 +34841,32 @@ void func561c4( S0, S1, S2 )
 
 void func56228()
 {
-    system_akao_command_execute( 0xe2 );
+    system_akao_command_execute(0xe2);
 }
 
 
 
-void func56248( A0 )
+void func56248(A0)
 {
     [0x80080aa0 + 0x0] = w((A0 & 0x7f) << 0x8);
-    system_akao_command_execute( 0xe4 );
+    system_akao_command_execute(0xe4);
 }
 
 
 
-void func56278( A0, A1 )
+void func56278(A0, A1)
 {
     [0x80080aa0 + 0x0] = w(A0);
     [0x80080aa0 + 0x4] = w((A1 & 0x7f) << 0x8);
-    system_akao_command_execute( 0xe5 );
+    system_akao_command_execute(0xe5);
 }
 
 
 
-void func562b0( A0 )
+void func562b0(A0)
 {
     [0x80080aa0 + 0x0] = w((A0 & 0xff) << 0x8);
-    system_akao_command_execute( 0xe6 );
+    system_akao_command_execute(0xe6);
 }
 
 
@@ -34877,17 +34877,17 @@ void func562b0( A0 )
 S1 = A0;
 S0 = A1;
 
-S3 = func565dc( A0 );
+S3 = func565dc(A0);
 
-if( S3 == 0 )
+if (S3 == 0)
 {
     func566d0();
 
-    S2 = ( S0 == 0 ) ? 0x4f100 : 0x59100;
+    S2 = (S0 == 0) ? 0x4f100 : 0x59100;
     S0 = S1;
     S1 = S1 + 0x40;
 
-    func5652c( S2 );
+    func5652c(S2);
 
     A0 = S1; // src
     A1 = w[S0 + 10]; // size
@@ -34895,7 +34895,7 @@ if( S3 == 0 )
 
     [S0 + 0x20] = w(S2);
 
-    system_akao_copy( S0, 0x8007f720, 0x70 );
+    system_akao_copy(S0, 0x8007f720, 0x70);
 }
 else
 {
@@ -34907,37 +34907,37 @@ return S3;
 
 
 
-void func56388( A0, A1 )
+void func56388(A0, A1)
 {
     [0x80080aa0 + 0x0] = w((A0 & 0xff) << 0x8);
     [0x80080aa0 + 0x4] = w(A1);
-    system_akao_command_execute( 0xed );
+    system_akao_command_execute(0xed);
 }
 
 
 
-void func563c0( S1, S2, S0, S3 )
+void func563c0(S1, S2, S0, S3)
 {
-    V0 = func565dc( S1 );
-    if( V0 == 0 )
+    V0 = func565dc(S1);
+    if (V0 == 0)
     {
         [0x80080aa0 + 0x0] = w(S1);
         [0x80080aa0 + 0x4] = w((S2 & 0xff) << 0x8);
-        [0x80080aa0 + 0x8] = w(( S0 == 0 ) ? 0x4f100 : 0x59100);
+        [0x80080aa0 + 0x8] = w((S0 == 0) ? 0x4f100 : 0x59100);
         [0x80080aa0 + 0xc] = w(S3);
-        system_akao_command_execute( 0xec );
+        system_akao_command_execute(0xec);
     }
 }
 
 
 
-int func56448( A0, A1 )
+int func56448(A0, A1)
 {
-    if( A1 != 0 )
+    if (A1 != 0)
     {
         [0x80080aa0 + 0x0] = w(A0);
         [0x80080aa0 + 0x4] = w(A1);
-        system_akao_command_execute( 0xe8 );
+        system_akao_command_execute(0xe8);
 
         return 0;
     }
@@ -34999,11 +34999,11 @@ SP = SP + 0018;
 
 
 
-u32 func5652c( addr )
+u32 func5652c(addr)
 {
-    if( ( addr - 0x1010 ) > 0x7efe8 ) return 0;
+    if ((addr - 0x1010) > 0x7efe8) return 0;
 
-    V0 = func17830( -1 );
+    V0 = func17830(-1);
     [0x80067a00] = h(V0);
 
     return hu[0x80067a00] << w[0x80067a10];
@@ -35040,7 +35040,7 @@ T0 = T0 + 0010;
 
 
 
-u32 func565dc( A0 )
+u32 func565dc(A0)
 {
     return w[A0] + 0xb0beb4bf;
 }
@@ -35112,7 +35112,7 @@ do
         [SP + 0] = w(w[0x800809e0]);
         [SP + 4] = w(w[0x800809e0]);
     800566E8	bne    v1, v0, loop566dc [$800566dc]
-} while( V1 == 1 )
+} while(V1 == 1)
 ////////////////////////////////
 
 
@@ -35125,7 +35125,7 @@ S1 = A1;
 
 V0 = func565dc();
 
-if( V0 != 0 ) return -1;
+if (V0 != 0) return -1;
 
 A0 = S0;
 A1 = S1;
@@ -35149,7 +35149,7 @@ S1 = S0;
 
 func566d0();
 
-if( w[S0 + 0x0] != 0x4f414b41 )
+if (w[S0 + 0x0] != 0x4f414b41)
 {
     [0x800809e0] = w(-1);
 
@@ -35174,7 +35174,7 @@ A2 = S2;
 A3 = w[S1 + 0x1c];
 func5658c();
 
-if( S4 != 0 )
+if (S4 != 0)
 {
     func566d0();
 }
@@ -35333,9 +35333,9 @@ func5c86c();
 A0 = 1;
 system_psyq_spu_set_reverb();
 
-for( int i = 0; i < 0x18; ++i )
+for (int i = 0; i < 0x18; ++i)
 {
-    system_psyq_spu_set_voice_loop_start_addr( i, 0x1030 );
+    system_psyq_spu_set_voice_loop_start_addr(i, 0x1030);
 }
 
 80056AF0	lui    v0, $8008
@@ -35351,33 +35351,33 @@ void func56b18()
 {
     func16e48();
 
-    func56d5c( 0x4, 0x80080990 );
+    func56d5c(0x4, 0x80080990);
 
-    system_psyq_spu_set_transfer_mode( 0 ); // SPU_TRANSFER_BY_DMA
+    system_psyq_spu_set_transfer_mode(0); // SPU_TRANSFER_BY_DMA
 
-    func5652c( 0x1010 );
+    func5652c(0x1010);
 
-    func56644( 0x8006f334, 0x40 ); // write to spu here
+    func56644(0x8006f334, 0x40); // write to spu here
 
     func566d0();
 
     func5681c();
 
-    system_psyq_spu_set_irq( 0 );
+    system_psyq_spu_set_irq(0);
 
-    system_psyq_spu_set_irq_callback( 0 );
+    system_psyq_spu_set_irq_callback(0);
 
-    while( func4bc90( 0xf2000002, 0x44e8, 0x1000 ) == 0 ) {}
+    while(func4bc90(0xf2000002, 0x44e8, 0x1000) == 0) {}
 
-    while( func4bd64( 0xf2000002 ) == 0 ) {}
+    while(func4bd64(0xf2000002) == 0) {}
 
     do
     {
-        V0 = system_bios_open_event( 0xf2000002, 0x2, 0x1000, 0x8005d6bc ); // system_akao_main()
+        V0 = system_bios_open_event(0xf2000002, 0x2, 0x1000, 0x8005d6bc); // system_akao_main()
         [0x8006f318] = w(V0);
-    } while( V0 == -1 )
+    } while(V0 == -1)
 
-    while( system_bios_enable_event( w[0x8006f318] ) == 0 ) {}
+    while(system_bios_enable_event(w[0x8006f318]) == 0) {}
 }
 
 
@@ -35385,7 +35385,7 @@ void func56b18()
 ////////////////////////////////
 // func56c08()
 
-if( w[0x800809e0] == 1 )
+if (w[0x800809e0] == 1)
 {
     A0 = 8006f334; // src
     A1 = 40; // size
@@ -35398,7 +35398,7 @@ do
 {
     A0 = f2000002;
     func4bd94();
-} while( V0 == 0 )
+} while(V0 == 0)
 
 A0 = f2000002;
 A1 = 2;
@@ -35408,15 +35408,15 @@ do
 {
     A0 = w[0x8006f318];
     system_bios_disable_event();
-} while( V0 == 0 )
+} while(V0 == 0)
 
 do
 {
     A0 = w[0x8006f318];
     system_bios_close_event();
-} while( V0 == 0 )
+} while(V0 == 0)
 
-system_spu_key_off( 0x00ffffff );
+system_spu_key_off(0x00ffffff);
 
 func56cdc();
 ////////////////////////////////
@@ -35426,7 +35426,7 @@ func56cdc();
 ////////////////////////////////
 // func56cdc()
 
-if( w[0x800679d8] == 1 )
+if (w[0x800679d8] == 1)
 {
     [0x800679d8] = w(0);
 
@@ -35455,7 +35455,7 @@ if( w[0x800679d8] == 1 )
 
 V0 = A0;
 
-if( V0 <= 0 ) return 0;
+if (V0 <= 0) return 0;
 
 [0x80067a48] = w(V0);
 [0x80067a4c] = w(0);
@@ -35480,21 +35480,21 @@ on_off = A0;
 
 spu = w[0x800679e8];
 
-if( on_off == 0 )
+if (on_off == 0)
 {
     [0x8006797c] = w(0);
     // 7 Reverb Master Enable    (0=Disabled, 1=Enabled)
     // disable reverb
     [spu + 1aa] = h(hu[spu + 1aa] & ff7f); // SPU Control Register (SPUCNT)
 }
-else if( on_off == 1 )
+else if (on_off == 1)
 {
-    if( w[0x80067980] != 1 )
+    if (w[0x80067980] != 1)
     {
         A0 = w[0x80067984]; // reverb work area start address
         func17fc0(); // check if reverb work area was not reserved
 
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             [0x8006797c] = w(0);
             // disable reverb
@@ -35528,14 +35528,14 @@ on_off = A0;
 
 spu = w[0x800679e8];
 
-if( ( on_off == 0 ) || ( on_off == 3 ) ) // SPU_OFF or SPU_RESET
+if ((on_off == 0) || (on_off == 3)) // SPU_OFF or SPU_RESET
 {
     [spu + 1aa] = h(hu[spu + 1aa] & ffbf); // disable IRQ9
 
     V1 = 1;
-    while( hu[spu + 1aa] & 0040 ) //   6     IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+    while(hu[spu + 1aa] & 0040) //   6     IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
     {
-        if( V1 >= f01 )
+        if (V1 >= f01)
         {
             A0 = 80012090; // "SPU:T/O [%s]\n"
             A1 = 800120a0; // "wait (IRQ/ON)"
@@ -35547,14 +35547,14 @@ if( ( on_off == 0 ) || ( on_off == 3 ) ) // SPU_OFF or SPU_RESET
     }
 }
 
-if( ( on_off == 1 ) || ( on_off == 3 ) ) // SPU_ON or SPU_RESET
+if ((on_off == 1) || (on_off == 3)) // SPU_ON or SPU_RESET
 {
     [spu + 1aa] = h(hu[spu + 1aa] | 0040); // enable IRQ9
 
     V1 = 1;
-    while( ( hu[spu + 1aa] & 0040 ) == 0 ) //   6     IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
+    while((hu[spu + 1aa] & 0040) == 0) //   6     IRQ9 Enable (0=Disabled/Acknowledge, 1=Enabled; only when Bit15=1)
     {
-        if( V1 >= f01 )
+        if (V1 >= f01)
         {
             A0 = 80012090; // "SPU:T/O [%s]\n"
             A1 = 800120b0; // "wait (IRQ/OFF)"
@@ -35577,7 +35577,7 @@ return on_off;
 func = A0;
 prev = w[0x80067a24];
 
-if( func != prev )
+if (func != prev)
 {
     [0x80067a24] = w(func);
 
@@ -35613,13 +35613,13 @@ system_int_set_interrupt_callback();
 addr = A0;
 size = A1;
 
-if( size > 7eff0 ) size = 7eff0;
+if (size > 7eff0) size = 7eff0;
 
 A0 = addr;
 A1 = size;
 func17788(); // read from spu
 
-if( w[0x80067a20] == 0 ) [0x80067a1c] = w(0);
+if (w[0x80067a20] == 0) [0x80067a1c] = w(0);
 
 return size;
 ////////////////////////////////
@@ -35646,13 +35646,13 @@ return size;
 addr = A0;
 size = A1;
 
-if( size > 7eff0 ) size = 7eff0;
+if (size > 7eff0) size = 7eff0;
 
 A0 = addr;
 A1 = size;
 func17704(); // write to spu
 
-if( w[0x80067a20] == 0 ) [0x80067a1c] = w(0);
+if (w[0x80067a20] == 0) [0x80067a1c] = w(0);
 
 return size;
 ////////////////////////////////
@@ -35668,8 +35668,8 @@ return size;
 // DMA transfer is always used when transferring data from the sound buffer to main memory.
 // When a transfer is done without first calling this function, the transfer mode is the previously set value
 
-if( A0 == 0 ) V0 = 0; // SPU_TRANSFER_BY_DMA
-else if( A0 == 1 ) V0 = 1; // SPU_TRANSFER_BY_IO
+if (A0 == 0) V0 = 0; // SPU_TRANSFER_BY_DMA
+else if (A0 == 1) V0 = 1; // SPU_TRANSFER_BY_IO
 else V0 = 0;
 
 [0x80067978] = w(A0);
@@ -35687,7 +35687,7 @@ else V0 = 0;
 func = A0;
 prev = w[0x80067a20];
 
-if( func != prev )
+if (func != prev)
 {
     [0x80067a20] = w(func);
 }
@@ -36101,16 +36101,16 @@ system_psyq_spu_set_irq();
 A0 = 0;
 system_psyq_spu_set_irq_callback();
 
-system_spu_key_off( w[S0 + 0xc] );
+system_spu_key_off(w[S0 + 0xc]);
 
-if( w[S0 + 0x8] & 0x0400 )
+if (w[S0 + 0x8] & 0x0400)
 {
-    system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] - 0x2, 0x1030 );
-    system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] - 0x1, 0x1030 );
+    system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] - 0x2, 0x1030);
+    system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] - 0x1, 0x1030);
 }
 
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] + 0x0, 0x1030 );
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] + 0x1, 0x1030 );
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] + 0x0, 0x1030);
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] + 0x1, 0x1030);
 
 A1 = 80080a70;
 A2 = w[S0 + 000c];
@@ -36186,7 +36186,7 @@ SP = SP + 0020;
 S0 = w[0x80083168];
 S0 = S0 + 800;
 
-func5652c( 0x2100 );
+func5652c(0x2100);
 
 A0 = 80060fa8; // func60fa8()
 system_psyq_spu_set_transfer_callback();
@@ -36234,7 +36234,7 @@ V0 = w[S3 + 0020];
 [S0 + 000c] = w(S1);
 [S0 + 0018] = w(V0);
 
-system_spu_key_off( S1 );
+system_spu_key_off(S1);
 
 V0 = w[S3 + 0018];
 [S0 + 0008] = w(V0);
@@ -36243,12 +36243,12 @@ V0 = hu[S3 + 001c];
 [S0 + 000c] = w(S1);
 [S0 + 0058] = w(V0);
 
-system_spu_key_off( S1 );
+system_spu_key_off(S1);
 
 A0 = 0; // SPU_TRANSFER_BY_DMA
 system_psyq_spu_set_transfer_mode();
 
-func5652c( 0x1100 );
+func5652c(0x1100);
 
 V0 = w[S0 + 0008];
 [0x800809e0] = w(S2);
@@ -36270,11 +36270,11 @@ A0 = w[A1 + 0008];
 V0 = A0 & 0001;
 [S0 + 0004] = w(V1);
 
-if( V0 != 0 )
+if (V0 != 0)
 {
     V0 = A0 & 0002;
     A2 = A1;
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         V0 = w[S3 + 0014];
         V1 = w[A1 + 0014];
@@ -36296,7 +36296,7 @@ if( V0 != 0 )
 else
 {
     V0 = A0 & 0002;
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         V1 = w[A1 + 0014];
         V0 = w[S3 + 0014];
@@ -36359,14 +36359,14 @@ L60cf4:	; 80060CF4
 
 
 void
-func60d1c( A0, A1, A2, A3 )
+func60d1c(A0, A1, A2, A3)
 {
     V0 = w[0x8008315c];
     S0 = A0;
     S1 = A2;
     S2 = A3;
     V0 = V0 & 0002;
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         V1 = h[0x8006f640];
         V0 = w[0x800831a8];
@@ -36429,17 +36429,17 @@ func60d1c( A0, A1, A2, A3 )
     L60e34:	; 80060E34
     A1 = (V1 << 10) >> 10;
     A2 = (A2 << 10) >> 10;
-    system_psyq_spu_set_voice_volume_attr( S0, A1, A2, SPU_VOICE_DIRECT );
+    system_psyq_spu_set_voice_volume_attr(S0, A1, A2, SPU_VOICE_DIRECT);
 
-    system_psyq_spu_set_voice_pitch( S0, w[0x800831c0] );
-    system_psyq_spu_set_voice_start_addr( S0, S1 );
-    system_psyq_spu_set_voice_loop_start_addr( S0, S2 );
+    system_psyq_spu_set_voice_pitch(S0, w[0x800831c0]);
+    system_psyq_spu_set_voice_start_addr(S0, S1);
+    system_psyq_spu_set_voice_loop_start_addr(S0, S2);
 
-    system_psyq_spu_set_voice_ar_attr( S0, 0x0, SPU_VOICE_LINEARIncN );
-    system_psyq_spu_set_voice_dr( S0, 0xf );
-    system_psyq_spu_set_voice_sl( S0, 0xf );
-    system_psyq_spu_set_voice_sr_attr( S0, 0x7f, SPU_VOICE_LINEARDecN );
-    system_psyq_spu_set_voice_rr_attr( S0, 0x6, SPU_VOICE_LINEARDecN );
+    system_psyq_spu_set_voice_ar_attr(S0, 0x0, SPU_VOICE_LINEARIncN);
+    system_psyq_spu_set_voice_dr(S0, 0xf);
+    system_psyq_spu_set_voice_sl(S0, 0xf);
+    system_psyq_spu_set_voice_sr_attr(S0, 0x7f, SPU_VOICE_LINEARDecN);
+    system_psyq_spu_set_voice_rr_attr(S0, 0x6, SPU_VOICE_LINEARDecN);
 }
 
 
@@ -36486,7 +36486,7 @@ L60f68:	; 80060F68
 80060F68	jal    func62304 [$80062304]
 A0 = S2 + 0008;
 A0 = ;
-system_spu_key_on( w[0x80083174] );
+system_spu_key_on(w[0x80083174]);
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -36615,8 +36615,8 @@ S1 = S4;
 L61164:	; 80061164
 S0 = 80083168;
 
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] + 0x0, S1 );
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] + 0x1, S4 );
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] + 0x0, S1);
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] + 0x1, S4);
 
 A0 = S1 + 8;
 80061188	jal    func62304 [$80062304]
@@ -36742,7 +36742,7 @@ A0 = w[S2 + 0010];
 S0 = T0 >> 10;
 A1 = S0;
 A2 = S0;
-system_psyq_spu_set_voice_volume_attr(, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(, SPU_VOICE_DIRECT);
 
 A1 = S0;
 80061364	j      L61404 [$80061404]
@@ -36759,7 +36759,7 @@ S0 = S0 >> 10;
 A1 = S0;
 A0 = w[S2 + 0010];
 A3 = A2;
-system_psyq_spu_set_voice_volume_attr(, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(, SPU_VOICE_DIRECT);
 
 80061398	j      L61400 [$80061400]
 A1 = 0;
@@ -36783,7 +36783,7 @@ V0 = h[V1 + 0000];
 S1 = A1 >> 10;
 800613EC	mflo   v0
 S0 = V0 >> 10;
-system_psyq_spu_set_voice_volume_attr( w[S2 + 0x10], S1, S0, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(w[S2 + 0x10], S1, S0, SPU_VOICE_DIRECT);
 
 A1 = S1;
 
@@ -36791,7 +36791,7 @@ L61400:	; 80061400
 A2 = S0;
 
 L61404:	; 80061404
-system_psyq_spu_set_voice_volume_attr( w[S2 + 0x10] + 0x1, A1, A2, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(w[S2 + 0x10] + 0x1, A1, A2, SPU_VOICE_DIRECT);
 
 L61414:	; 80061414
 ////////////////////////////////
@@ -36861,7 +36861,7 @@ V0 = w[S2 + 0040];
 80061500	mult   v0, v1
 8006150C	mflo   t0
 S0 = T0 >> 10;
-system_psyq_spu_set_voice_volume_attr( w[S2 + 0x10], S0, S0, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(w[S2 + 0x10], S0, S0, SPU_VOICE_DIRECT);
 
 A1 = S0;
 80061524	j      L615d0 [$800615d0]
@@ -36876,7 +36876,7 @@ V1 = V1 >> 08;
 S0 = w[S2 + 0040];
 S0 = S0 << 0f;
 S0 = S0 >> 10;
-system_psyq_spu_set_voice_volume_attr( w[S2 + 0x10], S0, 0, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(w[S2 + 0x10], S0, 0, SPU_VOICE_DIRECT);
 
 80061560	j      L615cc [$800615cc]
 A1 = 0;
@@ -36901,7 +36901,7 @@ V0 = h[V1 + 0000];
 S1 = A2 >> 10;
 800615B8	mflo   v0
 S0 = V0 >> 10;
-system_psyq_spu_set_voice_volume_attr( w[S2 + 0x10], S1, S0, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(w[S2 + 0x10], S1, S0, SPU_VOICE_DIRECT);
 
 A1 = S1;
 
@@ -36909,7 +36909,7 @@ L615cc:	; 800615CC
 A2 = S0;
 
 L615d0:	; 800615D0
-system_psyq_spu_set_voice_volume_attr( w[S2 + 0x10] + 0x1, A1, A2, SPU_VOICE_DIRECT );
+system_psyq_spu_set_voice_volume_attr(w[S2 + 0x10] + 0x1, A1, A2, SPU_VOICE_DIRECT);
 
 L615e0:	; 800615E0
 ////////////////////////////////
@@ -36981,7 +36981,7 @@ A0 = S1;
 A0 = 800615f8;
 system_psyq_spu_set_irq_callback();
 
-system_spu_key_on( w[S0 + 0xc] );
+system_spu_key_on(w[S0 + 0xc]);
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -37026,7 +37026,7 @@ A0 = V1 | S1;
 [S3 + 000c] = w(V1);
 [S3 + 0018] = w(V0);
 
-system_spu_key_off( A0 );
+system_spu_key_off(A0);
 
 V0 = w[S4 + 0018];
 800617A4	nop
@@ -37133,7 +37133,7 @@ A0 = A0 | V0;
 [S1 + 0010] = w(S0);
 [S1 + 000c] = w(A0);
 
-system_spu_key_off( A0 | V1 );
+system_spu_key_off(A0 | V1);
 
 S0 = S2;
 V0 = w[S0 + 0018];
@@ -37248,7 +37248,7 @@ A0 = A0 + 0001;
 L61ae4:	; 80061AE4
 80061AE4	jal    func60d1c [$80060d1c]
 
-system_spu_key_on( w[0x80083174] );
+system_spu_key_on(w[0x80083174]);
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -37383,7 +37383,7 @@ V0 = w[S0 + 0020];
 [S1 + 0034] = w(0);
 [S1 + 0018] = w(V0);
 
-system_spu_key_off( A0 );
+system_spu_key_off(A0);
 
 V0 = w[S0 + 0018];
 80061CEC	nop
@@ -37394,7 +37394,7 @@ V0 = hu[S0 + 001c];
 A0 = 0; // SPU_TRANSFER_BY_DMA
 system_psyq_spu_set_transfer_mode();
 
-func5652c( 0x1100 );
+func5652c(0x1100);
 
 [0x800809e0] = w(S4);
 
@@ -37505,7 +37505,7 @@ L61ea4:	; 80061EA4
 80061EA4	jal    func62304 [$80062304]
 A0 = S2 + 0008;
 
-system_spu_key_on( w[0x80083174] );
+system_spu_key_on(w[0x80083174]);
 
 A0 = 1;
 system_psyq_spu_set_irq();
@@ -37642,8 +37642,8 @@ S1 = S4;
 L620b8:	; 800620B8
 S0 = 80083168;
 
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] + 0x0, S1 );
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] + 0x1, S4 );
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] + 0x0, S1);
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] + 0x1, S4);
 
 800620DC	jal    func62304 [$80062304]
 A0 = S1 + 0008;
@@ -37674,7 +37674,7 @@ A2 = 2000;
 A3 = 800621d4;
 8006215C	jal    func61fbc [$80061fbc]
 
-if( V0 == 0x1030 )
+if (V0 == 0x1030)
 {
     A1 = 0x1030;
     S1 = 0x1030;
@@ -37685,8 +37685,8 @@ else
     S1 = 0x2900;
 }
 
-system_psyq_spu_set_voice_loop_start_addr( w[0x80083168 + 0x10] - 0x2, A1 );
-system_psyq_spu_set_voice_loop_start_addr( w[0x80083168 + 0x10] - 0x1, S1 );
+system_psyq_spu_set_voice_loop_start_addr(w[0x80083168 + 0x10] - 0x2, A1);
+system_psyq_spu_set_voice_loop_start_addr(w[0x80083168 + 0x10] - 0x1, S1);
 
 800621A4	j      L621c0 [$800621c0]
 
@@ -37732,8 +37732,8 @@ A1 = 4100;
 L6223c:	; 8006223C
 S0 = 80083168;
 
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] - 0x2, A1 );
-system_psyq_spu_set_voice_loop_start_addr( w[S0 + 0x10] - 0x1, S1 );
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] - 0x2, A1);
+system_psyq_spu_set_voice_loop_start_addr(w[S0 + 0x10] - 0x1, S1);
 
 80062260	j      L6227c [$8006227c]
 
@@ -37789,7 +37789,7 @@ SP = SP + 0018;
 
 addr = A0;
 
-if( addr <= 7fff8 )
+if (addr <= 7fff8)
 {
     A0 = d2; // 1f801da4 reg (Sound RAM IRQ Address)
     A1 = addr;
@@ -39012,7 +39012,7 @@ S2 = A0 & ffff;
 
 file_n = h[0x80073c40 + 2] - 1;
 
-for( int i = file_n; i >= 0; --i )
+for (int i = file_n; i >= 0; --i)
 {
     A0 = w[0x80073c40 + 4 + i * 4];
     A1 = 2; // return address of file with index A2 & ffff in given resource
@@ -39021,13 +39021,13 @@ for( int i = file_n; i >= 0; --i )
     func1c8b0();
     file_p = V0;
 
-    if( file_p != -1 )
+    if (file_p != -1)
     {
         obj_n = bu[file_p + 1] - 1;
 
-        for( int j = obj_n; j >= 0; --j )
+        for (int j = obj_n; j >= 0; --j)
         {
-            if( hu[file_p + 4 + j * c + 0] == S2 ) return file_p + 4 + j * c;
+            if (hu[file_p + 4 + j * c + 0] == S2) return file_p + 4 + j * c;
         }
     }
 }

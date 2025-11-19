@@ -7,8 +7,8 @@ void field_main()
     do
     {
         V0 = w[struct + 0x1c];
-        funca7aac( h[V0 + 0x3a] ); // start of character data
-    } while( ( w[struct + 0x0] & 0x3 ) == 0 )
+        funca7aac(h[V0 + 0x3a]); // start of character data
+    } while((w[struct + 0x0] & 0x3) == 0)
 
     funca82f8();
 }
@@ -24,346 +24,268 @@ void funca7aac()
     do
     {
         V0 = w[struct + 0x1c];
-        funca7b10( h[V0 + 0xc] );
+        funca7b10(h[V0 + 0xc]);
     }
-    while( (w[struct + 0x0] & 0x7) == 0 )
+    while((w[struct + 0x0] & 0x7) == 0)
 
     funca8698();
 }
 
 
 
-////////////////////////////////
-// funca7b10()
+void funca7b10()
+{
+    funca89c4(); // field load
 
-funca89c4(); // field load
+    system_psyq_set_disp_mask(0x1);
 
-system_psyq_set_disp_mask( 0x1 );
+    struct = w[0x8006794c];
 
-struct = w[0x8006794c];
+    S1 = 0x8006794c;
 
-S1 = 0x8006794c;
+    la7b34:	; 800a7b34
+        funcae788();
 
-la7b34:	; 800a7b34
-    funcae788();
+        func19194();
 
-    func19194();
-
-    V0 = w[0x80073990];
-    V0 = V0 & 0x04000000;
-    800A7B54	beq    v0, zero, la7b88 [$800a7b88]
-    V1 = w[0x800739a0];
-    800A7B60	nop
-    V0 = V1 & 00f8;
-    800A7B68	beq    v0, zero, la7b88 [$800a7b88]
-    V0 = fe0001;
-    V0 = V1 & V0;
-    800A7B78	bne    v0, zero, la7b88 [$800a7b88]
-    800A7B7C	nop
-    800A7B80	jal    funcaf740 [$800af740]
-    800A7B84	nop
-
-    la7b88:	; 800a7b88
-    V0 = w[struct + 0x1c];
-    800A7B94	nop
-    V0 = w[V0 + 0000];
-    800A7B9C	nop
-    V0 = V0 & 0100;
-    800A7BA4	bne    v0, zero, la8030 [$800a8030]
-    800A7BA8	nop
-    800A7BAC	jal    funcadb74 [$800adb74]
-    800A7BB0	nop
-    V0 = w[ox8006794c];
-    800A7BB8	nop
-    A2 = w[V0 + 001c];
-    800A7BC0	nop
-    A1 = w[A2 + 0000];
-    800A7BC8	nop
-    V0 = A1 & 0001;
-    800A7BD0	bne    v0, zero, la7c28 [$800a7c28]
-    V0 = w[0x80073990];
-    800A7BDC	lui    v1, $0004
-    V0 = V0 & V1;
-    800A7BE4	beq    v0, zero, la7c28 [$800a7c28]
-    A0 = w[0x800739a0];
-    V1 = V1 | 00f0;
-    V1 = A0 & V1;
-    800A7BF8	beq    v1, zero, la7c28 [$800a7c28]
-    V0 = 4fa0009;
-    V0 = A0 & V0;
-    800A7C08	bne    v0, zero, la7c28 [$800a7c28]
-    V0 = A1 | 0002;
-    [A2 + 0000] = w(V0);
-    A0 = 0;
-    800A7C18	jal    $func32120
-    A1 = A0;
-    800A7C20	jal    $func4a9e8
-    800A7C24	nop
-
-    la7c28:	; 800a7c28
-    V0 = w[struct + 0x1c];
-    if( (w[V0 + 0x0] & 0x2) == 0 )
-    {
-        switch( func4bc38() )
+        if (w[0x80073990] & 0x04000000)
         {
-            case 0x3:
+            V1 = w[0x800739a0];
+            if (V1 & 0xf8)
             {
-                V0 = w[struct + 0x1c];
-                V0 = w[V0 + 0x8e4];
-                V0 = w[V0 + 0xc];
-                V1 = w[V0 + 0x14];
-                [V1 + 0x4a] = b(0x2);
-                funcaed04();
-            }
-            break;
-
-            case 0x4:
-            {
-                V0 = w[struct + 0x1c];
-                V0 = w[V0 + 0x8e4];
-                V0 = w[V0 + 0xc];
-                A1 = w[V0 + 0x14];
-                V1 = h[A1 + 0xa];
-                if( V1 == 0x3e80 )
+                if ((V1 & 0xfe0001) == 0)
                 {
-                    [A1 + 004a] = b(0x4);
+                    funcaf740();
+                }
+            }
+        }
+
+        V0 = w[struct + 0x1c];
+        V0 = w[V0 + 0000];
+        V0 = V0 & 0x100;
+        800A7BA4	bne    v0, zero, la8030 [$800a8030]
+
+        funcadb74();
+
+        A2 = w[struct + 0x1c];
+        A1 = w[A2 + 0x0];
+        V0 = A1 & 0x1;
+        if (V0 == 0)
+        {
+            if (w[0x80073990] & 0x40000)
+            {
+                A0 = w[0x800739a0];
+                if (A0 & 0x400f0)
+                {
+                    if ((A0 & 0x4fa0009) == 0)
+                    {
+                        [A2 + 0x0] = w(A1 | 0x2);
+
+                        func32120(0, 0);
+
+                        func4a9e8();
+                    }
+                }
+            }
+        }
+
+        V0 = w[struct + 0x1c];
+        if ((w[V0 + 0x0] & 0x2) == 0)
+        {
+            switch (func4bc38())
+            {
+                case 0x3:
+                {
+                    V0 = w[struct + 0x1c];
+                    V0 = w[V0 + 0x8e4];
+                    V0 = w[V0 + 0xc];
+                    V1 = w[V0 + 0x14];
+                    [V1 + 0x4a] = b(0x2);
+                    funcaed04();
+                }
+                break;
+
+                case 0x4:
+                {
+                    V0 = w[struct + 0x1c];
+                    V0 = w[V0 + 0x8e4];
+                    V0 = w[V0 + 0xc];
+                    A1 = w[V0 + 0x14];
+                    V1 = h[A1 + 0xa];
+                    if (V1 == 0x3e80)
+                    {
+                        [A1 + 004a] = b(0x4);
+                        [struct + 0x0] = w(w[struct + 0x0] | 0x2);
+                    }
+                    else
+                    {
+                        [struct + 0x0] = w(w[struct + 0x0] | 0x8);
+                    }
+                }
+                break;
+
+                case 0x5:
+                {
+                    V0 = w[struct + 0x1c];
+                    V0 = w[V0 + 0x8e4];
+                    V0 = w[V0 + 0xc];
+                    V1 = w[V0 + 0x14];
+                    [V1 + 0x4a] = b(0x3);
                     [struct + 0x0] = w(w[struct + 0x0] | 0x2);
                 }
-                else
+                break;
+
+                case 0x7:
                 {
-                    [struct + 0x0] = w(w[struct + 0x0] | 0x8);
+                    V0 = w[struct + 0x1c];
+                    V0 = w[V0 + 0x8e4];
+                    V0 = w[V0 + 0xc];
+                    V1 = w[V0 + 0x14];
+                    [V1 + 0x4a] = b(0x9);
+                    [struct + 0x0] = w(w[struct + 0x0] | 0x2);
                 }
-            }
-            break;
+                break;
 
-            case 0x5:
-            {
-                V0 = w[struct + 0x1c];
-                V0 = w[V0 + 0x8e4];
-                V0 = w[V0 + 0xc];
-                V1 = w[V0 + 0x14];
-                [V1 + 0x4a] = b(0x3);
-                [struct + 0x0] = w(w[struct + 0x0] | 0x2);
+                case 0x8:
+                {
+                    V0 = w[struct + 0x1c];
+                    V0 = w[V0 + 0x8e4];
+                    V0 = w[V0 + 0xc];
+                    V1 = w[V0 + 0x14];
+                    [V1 + 0x4a] = b(0x7);
+                    [struct + 0x0] = w(w[struct + 0x0] | 0x2);
+                }
+                break;
             }
-            break;
-
-            case 0x7:
-            {
-                V0 = w[struct + 0x1c];
-                V0 = w[V0 + 0x8e4];
-                V0 = w[V0 + 0xc];
-                V1 = w[V0 + 0x14];
-                [V1 + 0x4a] = b(0x9);
-                [struct + 0x0] = w(w[struct + 0x0] | 0x2);
-            }
-            break;
-
-            case 0x8:
-            {
-                V0 = w[struct + 0x1c];
-                V0 = w[V0 + 0x8e4];
-                V0 = w[V0 + 0xc];
-                V1 = w[V0 + 0x14];
-                [V1 + 0x4a] = b(0x7);
-                [struct + 0x0] = w(w[struct + 0x0] | 0x2);
-            }
-            break;
         }
-    }
 
-    V0 = w[struct + 0x1c];
-    V0 = w[V0 + 0000];
-    800A7DBC	nop
-    V0 = V0 & 0001;
-    800A7DC4	bne    v0, zero, la7dd4 [$800a7dd4]
-    800A7DC8	nop
-    800A7DCC	jal    $80032100
-    800A7DD0	nop
+        V0 = w[struct + 0x1c];
+        if ((w[V0 + 0x0] & 0x1) == 0)
+        {
+            func32100();
+        }
 
-    la7dd4:	; 800a7dd4
-    A0 = w[0x8006794c];
-    800A7DD8	nop
-    A1 = w[A0 + 0000];
-    800A7DE0	lui    v0, $0010
-    V0 = A1 & V0;
-    800A7DE8	beq    v0, zero, la7e14 [$800a7e14]
-    V0 = A1 | 0008;
-    V1 = w[A0 + 001c];
-    [A0 + 0000] = w(V0);
-    A0 = w[V1 + 08e4];
-    800A7DFC	nop
-    V0 = w[A0 + 0000];
-    800A7E04	lui    v1, $0001
-    V0 = V0 | V1;
-    [A0 + 0000] = w(V0);
-    800A7E0C	j      la8054 [$800a8054]
+        A0 = w[0x8006794c];
+        A1 = w[A0 + 0000];
+        800A7DE0	lui    v0, $0010
+        V0 = A1 & V0;
+        800A7DE8	beq    v0, zero, la7e14 [$800a7e14]
+        V0 = A1 | 0008;
+        V1 = w[A0 + 001c];
+        [A0 + 0000] = w(V0);
+        A0 = w[V1 + 08e4];
+        800A7DFC	nop
+        V0 = w[A0 + 0000];
+        800A7E04	lui    v1, $0001
+        V0 = V0 | V1;
+        [A0 + 0000] = w(V0);
+        800A7E0C	j      la8054 [$800a8054]
 
-    la7e14:	; 800a7e14
-    V0 = w[A0 + 001c];
-    800A7E18	nop
-    V0 = w[V0 + 0000];
-    800A7E20	nop
-    V0 = V0 & 0008;
-    800A7E28	bne    v0, zero, la7e38 [$800a7e38]
-    800A7E2C	nop
-    800A7E30	jal    funcbfee0 [$800bfee0]
-    800A7E34	nop
+        la7e14:	; 800a7e14
+        V0 = w[A0 + 0x1c];
+        if ((w[V0 + 0x0] & 0x8) == 0)
+        {
+            funcbfee0();
+        }
 
-    la7e38:	; 800a7e38
-    V0 = w[struct + 0x1c];
-    V0 = w[V0 + 0x0];
-    if( (V0 & 0x4) == 0 )
-    {
-        funcab3cc(); // model update
-    }
+        V0 = w[struct + 0x1c];
+        if ((w[V0 + 0x0] & 0x4) == 0)
+        {
+            funcab3cc(); // model update
+        }
 
-    V0 = w[struct + 0x1c];
-    800A7E70	nop
-    V0 = w[V0 + 08e4];
-    800A7E78	nop
-    V0 = w[V0 + 0000];
-    800A7E80	nop
-    V0 = V0 & 0008;
-    800A7E88	bne    v0, zero, la7ea0 [$800a7ea0]
-    800A7E8C	nop
-    800A7E90	jal    funcc60f0 [$800c60f0]
-    800A7E94	nop
-    800A7E98	jal    funcc7100 [$800c7100]
-    800A7E9C	nop
+        V0 = w[struct + 0x1c];
+        V0 = w[V0 + 0x8e4];
+        if ((w[V0 + 0x0] & 0x8) == 0)
+        {
+            funcc60f0();
+            funcc7100();
+        }
 
-    la7ea0:	; 800a7ea0
-    V0 = w[struct + 0x1c];
-    800A7EAC	nop
-    V0 = w[V0 + 08e4];
-    800A7EB4	nop
-    V0 = w[V0 + 0000];
-    800A7EBC	nop
-    V0 = V0 & 0010;
-    800A7EC4	bne    v0, zero, la7ed4 [$800a7ed4]
-    800A7EC8	nop
-    800A7ECC	jal    $80054b78
-    800A7ED0	nop
+        V0 = w[struct + 0x1c];
+        V0 = w[V0 + 0x8e4];
+        if ((w[V0 + 0x0] & 0x10) == 0)
+        {
+            func54b78();
+        }
 
-    la7ed4:	; 800a7ed4
-    V0 = w[struct + 0x1c];
-    800A7EE0	nop
-    V0 = w[V0 + 0000];
-    800A7EE8	nop
-    V0 = V0 & 0010;
-    800A7EF0	bne    v0, zero, la7f00 [$800a7f00]
-    800A7EF4	nop
-    800A7EF8	jal    funcafde8 [$800afde8]
-    800A7EFC	nop
+        V0 = w[struct + 0x1c];
+        if ((w[V0 + 0x0] & 0x10) == 0)
+        {
+            funcafde8();
+        }
 
-    la7f00:	; 800a7f00
-    V0 = w[struct + 0x1c];
-    800A7F0C	nop
-    V0 = w[V0 + 0000];
-    800A7F14	nop
-    V0 = V0 & 0008;
-    800A7F1C	bne    v0, zero, la7f2c [$800a7f2c]
-    800A7F20	nop
-    800A7F24	jal    funcb3684 [$800b3684]
-    800A7F28	nop
+        V0 = w[struct + 0x1c];
+        if ((w[V0 + 0x0] & 0x8) == 0)
+        {
+            funcb3684();
+        }
 
-    la7f2c:	; 800a7f2c
-    V0 = w[struct + 0x1c];
-    V0 = w[V0 + 08e4];
-    800A7F40	nop
-    V0 = w[V0 + 0000];
-    800A7F48	nop
-    V0 = V0 & 0001;
-    800A7F50	bne    v0, zero, la7f60 [$800a7f60]
-    800A7F54	nop
-    800A7F58	jal    $80023a0c
-    800A7F5C	nop
+        V0 = w[struct + 0x1c];
+        V0 = w[V0 + 0x8e4];
+        if ((w[V0 + 0x0] & 0x1) == 0)
+        {
+            func23a0c();
+        }
 
-    la7f60:	; 800a7f60
-    V0 = w[struct + 0x1c];
-    800A7F6C	nop
-    V0 = w[V0 + 08e4];
-    800A7F74	nop
-    V0 = w[V0 + 0000];
-    800A7F7C	nop
-    V0 = V0 & 0800;
-    800A7F84	bne    v0, zero, la7f94 [$800a7f94]
-    800A7F88	nop
-    800A7F8C	jal    $80032098
-    800A7F90	nop
+        V0 = w[struct + 0x1c];
+        V0 = w[V0 + 0x8e4];
+        if ((w[V0 + 0x0] & 0x800) == 0)
+        {
+            func32098();
+        }
 
-    la7f94:	; 800a7f94
-    V0 = w[S1 + 0000];
-    800A7F98	nop
-    V0 = w[V0 + 001c];
-    800A7FA0	nop
-    V0 = w[V0 + 08e4];
-    800A7FA8	nop
-    V0 = w[V0 + 0000];
-    800A7FB0	nop
-    V0 = V0 & 0004;
-    800A7FB8	bne    v0, zero, la7fc8 [$800a7fc8]
-    800A7FBC	nop
-    800A7FC0	jal    funcaed6c [$800aed6c]
-    800A7FC4	nop
+        V0 = w[S1 + 0000];
+        V0 = w[V0 + 0x1c];
+        V0 = w[V0 + 0x8e4];
+        if ((w[V0 + 0x0] & 0x4) == 0)
+        {
+            funcaed6c();
+        }
 
-    la7fc8:	; 800a7fc8
-    V0 = w[S1 + 0000];
-    800A7FCC	nop
-    V0 = w[V0 + 001c];
-    800A7FD4	nop
-    V0 = w[V0 + 08e4];
-    800A7FDC	nop
-    V0 = w[V0 + 0000];
-    800A7FE4	nop
-    V0 = V0 & 0080;
-    800A7FEC	bne    v0, zero, la7ffc [$800a7ffc]
-    800A7FF0	nop
-    800A7FF4	jal    $80023a4c
-    800A7FF8	nop
+        V0 = w[S1 + 0000];
+        V0 = w[V0 + 0x1c];
+        V0 = w[V0 + 0x8e4];
+        if ((w[V0 + 0x0] & 0x80) == 0)
+        {
+            func23a4c();
+        }
 
-    la7ffc:	; 800a7ffc
-    V0 = w[S1 + 0000];
-    800A8000	nop
-    V0 = w[V0 + 001c];
-    800A8008	nop
-    V0 = w[V0 + 08e4];
-    800A8010	nop
-    V0 = w[V0 + 0000];
-    800A8018	nop
-    V0 = V0 & 1000;
-    800A8020	bne    v0, zero, la8030 [$800a8030]
-    800A8024	nop
+        V0 = w[S1 + 0000];
+        V0 = w[V0 + 001c];
+        V0 = w[V0 + 08e4];
+        V0 = w[V0 + 0000];
+        V0 = V0 & 1000;
+        800A8020	bne    v0, zero, la8030 [$800a8030]
+        800A8024	nop
 
-    la8028:	; 800a8028
-    800A8028	jal    $8002246c
-    800A802C	nop
+        la8028:	; 800a8028
+        func2246c();
 
-    la8030:	; 800a8030
-    funcae930(); // some draw
+        la8030:	; 800a8030
+        funcae930(); // some draw
 
-    V0 = w[struct + 0x0];
-    800A8044	nop
-    V0 = V0 & 000f;
-800A804C	beq    v0, zero, la7b34 [$800a7b34]
+        V0 = w[struct + 0x0] & 0xf;
+    800A804C	beq    v0, zero, la7b34 [$800a7b34]
 
-la8054:	; 800a8054
-800A8054	jal    funcb4f9c [$800b4f9c]
-800A8058	nop
-800A805C	beq    v0, zero, la806c [$800a806c]
+    la8054:	; 800a8054
+    funcb4f9c();
 
-funcb4a5c(); // some draw
+    800A805C	beq    v0, zero, la806c [$800a806c]
 
-la806c:	; 800a806c
-800A806C	jal    funcb54cc [$800b54cc]
-800A8070	nop
-V0 = V0 & 00ff;
-800A8078	beq    v0, zero, la8088 [$800a8088]
+    funcb4a5c(); // some draw
 
-funcb50a4();
+    la806c:	; 800a806c
+    800A806C	jal    funcb54cc [$800b54cc]
+    800A8070	nop
+    V0 = V0 & 00ff;
+    800A8078	beq    v0, zero, la8088 [$800a8088]
 
-la8088:	; 800a8088
-800A8088	jal    funca8e58 [$800a8e58]
-////////////////////////////////
+    funcb50a4();
+
+    la8088:	; 800a8088
+    800A8088	jal    funca8e58 [$800a8e58]
+}
 
 
 
@@ -448,17 +370,17 @@ void funca8198()
 
     [struct + 0x9] = b(0x2);
 
-    system_init_enviroments( 0xe0 );
+    system_init_enviroments(0xe0);
 
     func1cfb4();
 
-    system_psyq_set_disp_mask( 0x1 );
+    system_psyq_set_disp_mask(0x1);
 
     [struct1c + 0x838] = w(0x800aab30);
     [struct1c + 0x83c] = w(0x800b0124);
     [struct1c + 0x8bc] = w(0x800b36e0);
 
-    func21cdc( 0 );
+    func21cdc(0);
 
     [struct + 0x0] = w(w[struct + 0x0] & 0xfffffff8);
 
@@ -475,9 +397,9 @@ void funca8198()
     funca83e0();
     func239d0();
 
-    if( w[struct1c + 0x0] & 0x00400000 )
+    if (w[struct1c + 0x0] & 0x00400000)
     {
-        funcb0124( 0x8601, 0, 0x78, 0, 0 );
+        funcb0124(0x8601, 0, 0x78, 0, 0);
     }
 
     func2fc30(); // empty
@@ -489,7 +411,7 @@ void funca8198()
 
 void funca82f8()
 {
-    for( int i = 0x1; i >= 0; --i )
+    for (int i = 0x1; i >= 0; --i)
     {
         [0x800739b0 + i * 0x2 + 0x0] = b(0);
         [0x800739b0 + i * 0x2 + 0x1] = b(0);
@@ -605,7 +527,7 @@ A0 = 0;
 800A84CC	lui    v0, $8006
 
 la84d0:	; 800a84d0
-func1e218( 0x1, 0x2714 );
+func1e218(0x1, 0x2714);
 
 800A84D8	lui    v1, $8006
 S0 = V1;
@@ -661,9 +583,9 @@ int funca8588()
     struct1c = w[struct + 0x1c];
     V0 = w[struct1c + 0x8e4];
     A0 = w[struct1c + 0x10];
-    if( A0 != 0 )
+    if (A0 != 0)
     {
-        func1c784( A0 );
+        func1c784(A0);
 
         V0 = w[struct1c + 0x8e4];
         [V0 + 0x10] = w(0);
@@ -674,7 +596,7 @@ int funca8588()
 
 
 
-void funca85f4( S2 )
+void funca85f4(S2)
 {
     struct = w[0x8006794c];
     struct1c = w[struct + 0x1c];
@@ -688,8 +610,8 @@ void funca85f4( S2 )
 
     funca8724();
     func1cfb4();
-    funca87dc( S0, S2 );
-    funca879c( S0, S2 );
+    funca87dc(S0, S2);
+    funca879c(S0, S2);
 
     [S0 + 0x4] = w(w[0x80067948]);
 }
@@ -702,7 +624,7 @@ void funca8698()
     struct1c = w[struct + 0x1c];
     V0 = w[struct1c + 0x8e4];
     S0 = w[V0 + 0xc];
-    funca8990( S0, h[struct1c + 0x3a] );
+    funca8990(S0, h[struct1c + 0x3a]);
 
     [struct1c + 0x3a] = h(hu[S0 + 0x10]);
 }
@@ -913,7 +835,7 @@ SP = SP + 0018;
 // A0 = 32 after start movie
 // A0 = 34 next room - meeting with baku
 // A0 = 64 start of alexandria
-void funca89c4( field_id )
+void funca89c4(field_id)
 {
     struct = w[0x8006794c];
     struct1c = w[struct + 0x1c];
@@ -938,7 +860,7 @@ void funca89c4( field_id )
     V1 = w[struct1c + 0x8e4];
     [V1 + 0] = w(w[V1 + 0] & 0x00000004);
 
-    func1ccb4( 0, 0, 0 ); // reset 8006794c + 0x10 data (unknown)
+    func1ccb4(0, 0, 0); // reset 8006794c + 0x10 data (unknown)
 
     [0x80073998] = w(w[0x80073998] & ffff0006);
 
@@ -963,37 +885,37 @@ void funca89c4( field_id )
 
     [S4 + 0xa] = h(field_id);
 
-    funca9bdc( S4, field_id ); // we load textures here
-    funca97d4( S4, field_id ); // maybe get pointer to script
-    funca9814( S4, field_id ); // init pointer to file 0x1e type
-    funca9860( S4 ); // we read tileset db pointer here
-    funca9954( S4, field_id );
+    funca9bdc(S4, field_id); // we load textures here
+    funca97d4(S4, field_id); // maybe get pointer to script
+    funca9814(S4, field_id); // init pointer to file 0x1e type
+    funca9860(S4); // we read tileset db pointer here
+    funca9954(S4, field_id);
 
     V0 = w[struct1c + 0x8e4];
     V0 = w[V0 + 0xc];
     A1 = w[V0 + 0x14];
-    funcaa01c( A1 + 0x50, A1 + 0x52 );
+    funcaa01c(A1 + 0x50, A1 + 0x52);
 
     funcb3a80();
 
     funca9998();
 
-    funcb0124( 0x900, -0x1, 0, 0, 0 );
+    funcb0124(0x900, -0x1, 0, 0, 0);
 
-    func49ed8( w[S4 + 0xc] ); // offset to script, we parse init script here
+    func49ed8(w[S4 + 0xc]); // offset to script, we parse init script here
 
-    system_init_script_system( w[S4 + 0xc] );
+    system_init_script_system(w[S4 + 0xc]);
 
     funcac474();
 
     funca9aac();
 
-    while( funcb0124( 0xc00, -0x1, 0, 0, 0 ) != 0 ) {}
+    while(funcb0124(0xc00, -0x1, 0, 0, 0) != 0) {}
 
     S1 = 0;
     func4bfb0();
 
-    func4aaf0( 0 );
+    func4aaf0(0);
 
     [struct1c + 0x38] = b(V0);
     V0 = w[0x80067948];
@@ -1072,7 +994,7 @@ void funca89c4( field_id )
     A1 = A1 + 0009;
     [0x80067948] = w(funcad44c());
 
-    funcb2528( S4, field_id );
+    funcb2528(S4, field_id);
 
     funcb1c98();
 
@@ -1755,7 +1677,7 @@ func1c7fc;
 
 [S0 + 0x4c] = w(V0);
 
-if( V0 != 0 )
+if (V0 != 0)
 {
     A0 = V0;
     800A9844	jal    func54a28 [$80054a28]
@@ -1800,7 +1722,7 @@ funcbfce8();
 
 funcc7430();
 
-func1c7fc( 0x9, S1, 0x000b0000 );
+func1c7fc(0x9, S1, 0x000b0000);
 
 A0 = 4;
 A1 = V0;
@@ -1964,7 +1886,7 @@ A1 = w[S1 + 0000];
 800A9B58	nop
 800A9B5C	beq    a1, s4, la9b88 [$800a9b88]
 
-func1e218( 0xa, A1 ); // dir 0xa - party members Data (including models)
+func1e218(0xa, A1); // dir 0xa - party members Data (including models)
 
 V1 = w[V0 + 0004];
 800A9B70	nop
@@ -2016,12 +1938,12 @@ V0 = w[pointer1c + 0x808];
 V1 = w[0x80067948];
 S0 = V0 << b;
 V0 = V1 + S0;
-if( 801ddf00 - V0 <= 16fff )
+if (801ddf00 - V0 <= 16fff)
 {
     S0 = 801d6f00 - V1;
     V0 = S0;
 
-    if( S0 < 0 )
+    if (S0 < 0)
     {
         V0 = S0 + 0x7ff;
     }
@@ -2037,7 +1959,7 @@ S1 = 00050000 | field_id;
 A0 = S1;
 func220e8; // maybe field loading.
 
-if( V0 != 0 )
+if (V0 != 0)
 {
     A0 = S1;
     func21e5c;
@@ -2104,7 +2026,7 @@ S1 = V0;
 
 
 
-if( S1 != 0 )
+if (S1 != 0)
 {
     A0 = field_file;
     A1 = 5;
@@ -2114,7 +2036,7 @@ if( S1 != 0 )
 
     T0 = w[pointer1c + 0x854 + 0x10];
 
-    if( w[0x80067948] + T0 < S1 + V0 )
+    if (w[0x80067948] + T0 < S1 + V0)
     {
 
         [pointer1c + 0x854 + 0] = w(w[pointer1c + 0x800]);
@@ -2145,7 +2067,7 @@ if( S1 != 0 )
     func1c8b0; // get number of texture files.
 
     S0 = V0 - 1;
-    if( S0 >= 0 )
+    if (S0 >= 0)
     {
         loopa9e80:	; 800A9E80
             A0 = S1;
@@ -2154,7 +2076,7 @@ if( S1 != 0 )
             A3 = 0;
             func1c8b0; // get addresses of tim files
 
-            if( V0 != -1 )
+            if (V0 != -1)
             {
                 A0 = V0;
                 func1d8a8; // load tim files?
@@ -2171,7 +2093,7 @@ if( S1 != 0 )
     func1c8b0; // get number of files of resource type 17 (sprites)
 
     S0 = V0 - 1;
-    if( S0 >= 0 )
+    if (S0 >= 0)
     {
         loopa9ed4:	; 800A9ED4
             A0 = S1;
@@ -2180,7 +2102,7 @@ if( S1 != 0 )
             A3 = 0;
             func1c8b0; // get addresses of 17 type files
 
-            if( V0 != -1 )
+            if (V0 != -1)
             {
                 A0 = V0;
                 funcc9968; // load sprites textures data
@@ -2223,7 +2145,7 @@ A0 = 0;
 A1 = w[pointer1c + 0x854 + 0x10];
 V0 = w[pointer1c + 0x854 + 0x4];
 
-if( A1 < V0 )
+if (A1 < V0)
 {
     [pointer1c + 0x854 +  0] = w(w[pointer1c + 0x800]);
     [pointer1c + 0x854 +  4] = w(w[pointer1c + 0x8] << b);
@@ -2648,7 +2570,7 @@ loopaa4d0:	; 800AA4D0
 
 S0 = A0;
 
-S1 = func1e218( 0xa, S0 );
+S1 = func1e218(0xa, S0);
 
 V0 = w[S1 + 000c];
 V1 = w[S1 + 0004];
@@ -3448,11 +3370,11 @@ func1c7fc;
 A2 = V0;
 
 V0 = bu[A2 + 0x1];
-if( V0 - 1 >= 0 )
+if (V0 - 1 >= 0)
 {
     A2 = A2 + 0x4;
     loopab034:	; 800AB034
-        if( hu[A2] == ( S0 & ffff ) )
+        if (hu[A2] == (S0 & ffff))
         {
             [output_clut_texpage] = w(A2 + w[A2 + 0x4] & 00ffffff);
             [output_tpx_tpy] = w(w[output_clut_texpage] + bu[A2 + 0x7] * 4);
@@ -3514,24 +3436,24 @@ S1 = 0;
 // add main models
 system_get_pointer_to_first_element_in_script_list;
 S0 = V0;
-if( S0 == 0 )
+if (S0 == 0)
 {
     pointer = start_pointer;
 
     loopab154:	; 800AB154
         A0 = w[S0 + 0x4]; // pointer to allocated script memory
-        if( bu[A0 + e] == 1 )
+        if (bu[A0 + e] == 1)
         {
-            if( bu[A0 + f] & 01 )
+            if (bu[A0 + f] & 01)
             {
-                if( bu[A0 + 0x5] == 4 ) // model entity type
+                if (bu[A0 + 0x5] == 4) // model entity type
                 {
                     A0 = bu[A0 + 0x3b];
                     func1e350;
 
                     A0 = V0;
                     V0 = w[A0 + 0x8];
-                    if( w[V0 + 0x1c] == 0 )
+                    if (w[V0 + 0x1c] == 0)
                     {
                         [pointer] = w(A0);
                         pointer = pointer + 0x4;
@@ -3549,15 +3471,15 @@ if( S0 == 0 )
 // because we need to update attached model matrixes after main models
 system_get_pointer_to_first_element_in_script_list;
 S0 = V0;
-if( S0 != 0 )
+if (S0 != 0)
 {
     loopab1e8:	; 800AB1E8
         A0 = w[S0 + 0x4]; // pointer to allocated script memory
-        if( bu[A0 + e] == 1 )
+        if (bu[A0 + e] == 1)
         {
-            if( bu[A0 + f] & 1 )
+            if (bu[A0 + f] & 1)
             {
-                if( bu[A0 + 0x5] == 4 ) // model entity type
+                if (bu[A0 + 0x5] == 4) // model entity type
                 {
                     A0 = bu[A0 + 0x3b];
                     func1e350;
@@ -3565,14 +3487,14 @@ if( S0 != 0 )
                     A0 = V0;
                     V0 = w[A0 + 0x8];
                     A3 = w[V0 + 0x1c];
-                    if( A3 != 0 )
+                    if (A3 != 0)
                     {
-                        if( S1 > 0 )
+                        if (S1 > 0)
                         {
                             A2 = 0;
                             loopab260:	; 800AB260
                                 V0 = w[start_pointer + A2 * 4];
-                                if( w[V0 + 0x8] == A3 )
+                                if (w[V0 + 0x8] == A3)
                                 {
                                     [start_pointer + S1 * 4] = w(A0);
                                     S1 = S1 + 0x1;
@@ -3598,9 +3520,9 @@ V0 = w[V0 + 0x1c];
 V0 = w[V0 + 0x8e4];
 V0 = w[V0 + c];
 V0 = w[V0 + 0x14];
-if( b[V0 + 0x42] != 0 )
+if (b[V0 + 0x42] != 0)
 {
-    if( S1 > 0 )
+    if (S1 > 0)
     {
         A2 = 0;
         loopab2fc:	; 800AB2FC
@@ -3608,14 +3530,14 @@ if( b[V0 + 0x42] != 0 )
             model_data = w[V0 + 0x8];
             model_file = w[model_data + 0x8];
             model_file_parts = w[model_file + 0x10];
-            if( model_file_parts >= 0 ) // if this is not direct address get pointer to model data
+            if (model_file_parts >= 0) // if this is not direct address get pointer to model data
             {
                 model_file_parts = model_file + model_file_parts;
             }
 
             A1 = 0;
             number_of_model = bu[model_file + 0x3];
-            if( number_of_model > 0 )
+            if (number_of_model > 0)
             {
                 A0 = 0;
                 loopab33c:	; 800AB33C
@@ -3625,7 +3547,7 @@ if( b[V0 + 0x42] != 0 )
                 800AB34C	bne    v0, zero, loopab33c [$800ab33c]
             }
 
-            if( ( w[model_data + 0x10] + bu[model_file + 0x2] * 20 + bu[model_file + 0x3] * c + A1 * 2 ) >= ( w[0x80067944] + f1700 ) )
+            if ((w[model_data + 0x10] + bu[model_file + 0x2] * 20 + bu[model_file + 0x3] * c + A1 * 2) >= (w[0x80067944] + f1700))
             {
                 [start_pointer + A2 * 4] = w(0);
             }
@@ -3644,7 +3566,7 @@ return S1;
 ////////////////////////////////
 // funcab3cc
 
-if( hu[0x800c9d44] & 0040 )
+if (hu[0x800c9d44] & 0040)
 {
     A0 = SP + 0x60;
     A1 = SP + 0x64;
@@ -3672,16 +3594,16 @@ field_add_model_data_pointers;
 number_of_models = V0;
 
 // update rotation and translation data with data from scripts
-if( number_of_models < 0 )
+if (number_of_models < 0)
 {
     S3 = 0;
     loopab488:	; 800AB488
         V1 = w[SP + 0x10 + S3 * 4];
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             model_data = w[V1 + 0x8];
             script = w[V1 + c];
-            if( w[V1 + 0] & 00000002 )
+            if (w[V1 + 0] & 00000002)
             {
                 A0 = bu[script + 0x3b];
                 A1 = SP + 0x68;
@@ -3722,12 +3644,12 @@ if( number_of_models < 0 )
 
 // set up animation file
 // and update local animation offsets to global one
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
     loopab568:	; 800AB568
         V1 = w[SP + 0x10 + S3 * 4];
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             model_data = w[V1 + 0x8];
             script = w[V1 + c];
@@ -3741,13 +3663,13 @@ if( number_of_models > 0 )
             [model_data + c] = w(animation_file);
 
             // if animation file exist update local offsets to global one
-            if( animation_file != 0 )
+            if (animation_file != 0)
             {
-                if( w[animation_file + c] >= 0 )
+                if (w[animation_file + c] >= 0)
                 {
                     [animation_file + c] = w(animation_file + w[animation_file + c]);
 
-                    if( w[animation_file + 0x10] >= 0 )
+                    if (w[animation_file + 0x10] >= 0)
                     {
                         [animation_file + 0x10] = w(animation_file + w[animation_file + 0x10]);
                     }
@@ -3763,17 +3685,17 @@ if( number_of_models > 0 )
 
 
 // and bone rotation matrixes and translation vectors depending on current frame in animation
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
     loopab5ec:	; 800AB5EC
         V1 = w[SP + 0x10 + S3 * 4];
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             model_data = w[V1 + 0x8];
             script = w[V1 + c];
 
-            if( hu[model_data + 0] & 0001 )
+            if (hu[model_data + 0] & 0001)
             {
                 A0 = model_data;
                 A1 = bu[script + 0x3a]; // frame id
@@ -3806,12 +3728,12 @@ TRY = w[V0 + 0x30];
 TRZ = w[V0 + 0x34];
 
 // don't render model that too far or too close to camera (0x64 - 0x1000-0x64)
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
     loopab6c4:	; 800AB6C4
         V1 = w[SP + 0x10 + S3 * 4];
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             model_data = w[V1 + 0x8];
             bone_data = w[model_data + 0x20];
@@ -3833,7 +3755,7 @@ if( number_of_models > 0 )
             V0 = w[V0 + 0x14];
             V1 = w[SP + 0x6c] / 4 + h[V0 + 0x30];
             [SP + 0x6c] = w(V1);
-            if( V1 < 64 || V1 > ( 1000 - 64 ) )
+            if (V1 < 64 || V1 > (1000 - 64))
             {
                 [SP + 0x10 + S3 * 4] = w(0);
             }
@@ -3844,12 +3766,12 @@ if( number_of_models > 0 )
     800AB7A0	bne    v0, zero, loopab6c4 [$800ab6c4]
 }
 
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
     loopab7b8:	; 800AB7B8
         V1 = w[SP + 0x10 + S3 * 4];
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             model_data = w[V1 + 0x8];
             model_file = w[model_data + 0x8];
@@ -3857,13 +3779,13 @@ if( number_of_models > 0 )
             [1f8003fc] = w(SP);
             SP = 1f8003f0;
 
-            if( number_of_parts != 0 )
+            if (number_of_parts != 0)
             {
-                if( ( w[V1 + 0] & 00100000 ) == 0 )
+                if ((w[V1 + 0] & 00100000) == 0)
                 {
                     S1 = 0;
                     loopab854:	; 800AB854
-                        if( ( w[model_data + 0x14] & ( 1 << S1 ) ) == 0 )
+                        if ((w[model_data + 0x14] & (1 << S1)) == 0)
                         {
                             A0 = model_data; // struct with settings
                             A1 = S1; // model id
@@ -3882,7 +3804,7 @@ if( number_of_models > 0 )
                 {
                     S1 = 0;
                     Lab808:	; 800AB808
-                        if( ( w[model_data + 0x14] & ( 1 << S1 ) ) == 0 )
+                        if ((w[model_data + 0x14] & (1 << S1)) == 0)
                         {
                             A0 = model_data;
                             A1 = S1;
@@ -3907,12 +3829,12 @@ if( number_of_models > 0 )
     800AB8A0	bne    v0, zero, loopab7b8 [$800ab7b8]
 }
 
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
     loopab8b8:	; 800AB8B8
         V1 = w[SP + 0x10 + S3 * 4];
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             script = w[V1 + c];
 
@@ -3932,7 +3854,7 @@ if( number_of_models > 0 )
     800AB904	bne    v0, zero, loopab8b8 [$800ab8b8]
 }
 
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
 
@@ -3981,7 +3903,7 @@ if( number_of_models > 0 )
     800AB9AC	bne    v0, zero, loopab918 [$800ab918]
 }
 
-if( number_of_models > 0 )
+if (number_of_models > 0)
 {
     S3 = 0;
     S0 = SP + 0010;
@@ -3989,7 +3911,7 @@ if( number_of_models > 0 )
     loopab9c0:	; 800AB9C0
         V1 = w[S0 + 0000];
         800AB9C4	nop
-        if( V1 != 0 )
+        if (V1 != 0)
         {
             V0 = w[V1 + 0008];
             800AB9D4	nop
@@ -4013,7 +3935,7 @@ V0 = w[V0 + 001c];
 V0 = w[V0 + 0000];
 800ABA18	nop
 V0 = V0 & 0002;
-if( V0 == 0 )
+if (V0 == 0)
 {
     A0 = SP + 0x10;
     A1 = number_of_models;
@@ -4033,7 +3955,7 @@ V1 = V1 & 0040;
 V0 = V0 << 02;
 A0 = A0 + V0;
 [A0 + 0010] = w(S7);
-if( V1 == 0 )
+if (V1 == 0)
 {
     800ABA64	jal    funcc0fb0 [$800c0fb0]
 }
@@ -4061,7 +3983,7 @@ S3 = V0;
 
 
 
-switch( S5 )
+switch (S5)
 {
     case 0:
 
@@ -4170,7 +4092,7 @@ switch( S5 )
     800ABC88	nop
     V0 = V0 & 0001;
     S4 = S1;
-    if( V0 == 0 )
+    if (V0 == 0)
     {
         V0 = w[S3 + 000c];
         V1 = w[S1 + 000c];
@@ -4388,9 +4310,9 @@ switch( S5 )
         A2 = S7;
         funcb2100;
         V1 = V0;
-        if( V1 == 0 )
+        if (V1 == 0)
         {
-            if( S3 != 13 )
+            if (S3 != 13)
             {
                 A0 = S3;
                 A1 = S6;
@@ -4400,19 +4322,19 @@ switch( S5 )
             }
         }
 
-        if( S5 == 10 )
+        if (S5 == 10)
         {
             [V1 + 0x8] = h(FP);
         }
-        else if( S5 == 11 )
+        else if (S5 == 11)
         {
             [V1 + a] = h(FP);
         }
-        else if( S5 == 12 )
+        else if (S5 == 12)
         {
             [V1 + 0x1] = b(FP > 0);
         }
-        else if( S5 == 13 )
+        else if (S5 == 13)
         {
             A0 = S3;
             A1 = S6;
@@ -4909,7 +4831,7 @@ SP = SP + 0018;
 // funcac67c
 A1 = 9;
 loopac68c:	; 800AC68C
-    if( w[0x800c9ccc + A1 * c + 0x4] != 0 && w[0x800c9ccc + A1 * c + 0x4] <= A0 )
+    if (w[0x800c9ccc + A1 * c + 0x4] != 0 && w[0x800c9ccc + A1 * c + 0x4] <= A0)
     {
         [0x800c9ccc + A1 * c + 0x4] = w(0);
         [0x800c9ccc + A1 * c + 0x8] = w(0);
@@ -4930,7 +4852,7 @@ S1 = V0;
 
 [SP + 0x70] = w(0);
 
-if( ( w[S1 + 0] & 00000010 ) == 0 )
+if ((w[S1 + 0] & 00000010) == 0)
 {
     V0 = w[0x8006794c];
     V0 = w[V0 + 0x1c];
@@ -4939,13 +4861,13 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     V0 = w[V0 + 0x14];
     S0 = w[V0 + 0x1c];
 
-    if( S0 != 0 )
+    if (S0 != 0)
     {
         A0 = S0;
         A1 = w[S1 + 0x4];
         funcb3294;
 
-        if( V0 == 0 )
+        if (V0 == 0)
         {
             A0 = S0;
             A1 = -1;
@@ -4969,7 +4891,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     V0 = w[V0 + 0x14];
     V1 = h[V0 + 0x50];
     A1 = V1;
-    if( V1 < 0 )
+    if (V1 < 0)
     {
         A1 = V1 & 3f;
     }
@@ -4981,7 +4903,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     V0 = V0 << 10;
     S3 = V0 >> f;
     A2 = A0;
-    if( V0 < 0 )
+    if (V0 < 0)
     {
         A2 = A0 + ff;
     }
@@ -5004,7 +4926,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
         V0 = w[V0 + 0] & 00000200;
 
         S6 = 0;
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             V1 = e6000002;
             V0 = FP + S7 + bu[A0 + 0x8] * 10;
@@ -5073,7 +4995,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
         V0 = 3fd0;
         [V1 + 000e] = h(V0);
 
-        if( S5 == 0 )
+        if (S5 == 0)
         {
             V0 = w[SP + 0x30];
             [V0 + c] = b(S3);
@@ -5085,7 +5007,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
             [V0 + 0x24] = b(S4);
             [V0 + 0x25] = b(S2);
         }
-        else if( S5 == 1 )
+        else if (S5 == 1)
         {
             V0 = w[SP + 0x34];
             [V0 + c] = b(S4);
@@ -5097,7 +5019,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
             [V0 + 0x24] = b(S3);
             [V0 + 0x25] = b(S2);
         }
-        else if( S5 == 2 )
+        else if (S5 == 2)
         {
             V0 = w[SP + 0x38];
             [V0 + c] = b(S3);
@@ -5109,7 +5031,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
             [V0 + 0x24] = b(S4);
             [V0 + 0x25] = b(S1);
         }
-        else if( S5 == 3 )
+        else if (S5 == 3)
         {
             V0 = w[SP + 0x3c];
             [V0 + c] = b(S4);
@@ -5127,7 +5049,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
         V0 = w[V0 + 0x8e4];
         V0 = w[V0 + 0] & 00000200;
 
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             V1 = e6000002;
             A1 = w[S0];
@@ -5349,19 +5271,19 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = w[SP + 0x48];
 
     V1 = w[SP + 0x4c];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x54];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x58];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
@@ -5379,12 +5301,12 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = V1 + T1;
     V0 = 0 - A0;
     V0 = V0 < A1;
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         V0 = 1000;
         V0 = V0 - A0;
         V0 = A1 < V0;
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A2 = 00ffffff;
             V0 = bu[A3 + 0008];
@@ -5425,19 +5347,19 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = w[SP + 0x4c];
 
     V1 = w[SP + 0x50];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x58];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x5c];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
@@ -5453,12 +5375,12 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = V1 + T1;
     V0 = 0 - A0;
     V0 = V0 < A1;
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         V0 = 1000;
         V0 = V0 - A0;
         V0 = A1 < V0;
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A2 = 00ffffff;
             V0 = bu[A3 + 0008];
@@ -5499,13 +5421,13 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = w[SP + 0x54];
 
     V1 = w[SP + 0x60];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x64];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
@@ -5521,11 +5443,11 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = V1 + T1;
     V0 = 0 - A0;
     V0 = V0 < A1;
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         V0 = 1000 - A0;
         V0 = A1 < V0;
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A2 = 00ffffff;
             V0 = bu[A3 + 0008];
@@ -5567,19 +5489,19 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     A1 = w[SP + 0x58];
 
     V1 = w[SP + 0x5c];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x64];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
 
     V1 = w[SP + 0x68];
-    if( A1 < V1 )
+    if (A1 < V1)
     {
         A1 = V1;
     }
@@ -5591,7 +5513,7 @@ if( ( w[S1 + 0] & 00000010 ) == 0 )
     V0 = w[V0 + 0x14];
     A0 = h[V0 + 0x30];
     A1 = w[SP + 0x70] + A1 >> 2;
-    if( ( -A0 < A1 ) && ( A1 < ( 1000 - A0 ) ) )
+    if ((-A0 < A1) && (A1 < (1000 - A0)))
     {
         A1 = A1 << 2;
         frame_id = bu[A3 + 0x8];
@@ -5636,7 +5558,7 @@ script = w[data + c];
 scale_x = (w[S2 + 0] >> 8) & 0fff;
 scale_z = w[S2 + 0] >> 14;
 
-if( w[data + 0] & 00000020 )
+if (w[data + 0] & 00000020)
 {
     A0 = w[S2 + 0x4] & 0fff;
     system_get_cos_by_rotation;
@@ -5917,7 +5839,7 @@ A0 = w[V0 + 001c];
 A0 = A0 + 0854;
 800ADC10	bne    v0, zero, ladc6c [$800adc6c]
 
-func1e218( 0x0, 0x64 );
+func1e218(0x0, 0x64);
 
 T0 = f1700;
 A1 = 15000;
@@ -6436,7 +6358,7 @@ V1 = 01e0;
 
 lae428:	; 800ae428
 lae42c:	; 800ae42c
-system_bios_printf( "Fr: %d\n", hu[0x800c9d46] );
+system_bios_printf("Fr: %d\n", hu[0x800c9d46]);
 
 800AE43C	j      lae45c [$800ae45c]
 800AE440	lui    v1, $800d
@@ -6759,9 +6681,9 @@ V0 = 0002;
 laea00:	; 800aea00
 800AEA10	lui    s0, $800d
 V0 = w[S1 + 0x794c];
-system_psyq_vsync( bu[V0 + 0x9] );
+system_psyq_vsync(bu[V0 + 0x9]);
 
-system_psyq_reset_graph( 0x1 );
+system_psyq_reset_graph(0x1);
 
 V0 = hu[S0 + 0x9d44];
 800AEA20	nop
@@ -10725,11 +10647,11 @@ V0 = w[field + 0x58] + V1 * c;
 V1 = V0 - c;
 
 loopb2150:	; 800B2150
-    if( bu[V1 + 0] == bu[script + 0x3b] )
+    if (bu[V1 + 0] == bu[script + 0x3b])
     {
-        if( hu[V1 + 0x4] == A1 & ffff )
+        if (hu[V1 + 0x4] == A1 & ffff)
         {
-            if( h[V1 + 0x6] == ((A2 << 10) >> 10) )
+            if (h[V1 + 0x6] == ((A2 << 10) >> 10))
             {
                 return V1;
             }
@@ -12004,13 +11926,13 @@ V0 = 0;
 
 ////////////////////////////////
 // funcb3294
-if( bu[A0 + 0x9] != 0 )
+if (bu[A0 + 0x9] != 0)
 {
     start = A0 + bu[A0 + 0x6] * c + c;
     pointer = start + bu[A0 + 0x9] * 8 - 8;
 
     loopb32d0:	; 800B32D0
-        if( hu[pointer] == A1 )
+        if (hu[pointer] == A1)
         {
             return pointer;
         }
@@ -13041,7 +12963,7 @@ V0 = bu[V1 + 0002];
 lb4044:	; 800b4044
 800B4044	beq    s1, zero, lb4090 [$800b4090]
 
-func1e218( 0x0, 0x1000b );
+func1e218(0x0, 0x1000b);
 
 A0 = 0x1000b;
 A2 = w[V0 + 0x4];
@@ -14040,7 +13962,7 @@ V1 = w[A1 + 0000];
 V0 = V0 & S3;
 V1 = V1 & S6;
 V1 = V1 | V0;
-800B4E94	jal    $80032098
+800B4E94	jal    $func32098
 [A1 + 0000] = w(V1);
 800B4E9C	jal    $system_psyq_draw_sync
 A0 = 0;
@@ -14049,9 +13971,9 @@ V0 = 0002;
 [V1 + 0009] = b(V0);
 V0 = w[S5 + 0x794c];
 
-system_psyq_vsync( bu[V0 + 0x9] );
+system_psyq_vsync(bu[V0 + 0x9]);
 
-system_psyq_reset_graph( 0x1 );
+system_psyq_reset_graph(0x1);
 
 V1 = w[S5 + 0x794c];
 800B4ED0	nop
@@ -14208,7 +14130,7 @@ lb50f8:	; 800b50f8
 ////////////////////////////////
 // funcb5114()
 
-system_psyq_draw_sync( 0 );
+system_psyq_draw_sync(0);
 
 A1 = 0;
 A2 = 4000300;
@@ -14271,7 +14193,7 @@ V0 = w[V1 + 0008];
 800B5210	nop
 
 lb5214:	; 800b5214
-system_psyq_draw_sync( 0 );
+system_psyq_draw_sync(0);
 
 A1 = 0;
 A0 = 80073998;
@@ -14354,17 +14276,17 @@ SP = SP + 0018;
 
 800B5334	jal    $80032100
 
-800B533C	jal    $80023a0c
+800B533C	jal    $func23a0c
 800B5340	lui    s0, $8006
-800B5344	jal    $80032098
+800B5344	jal    $func32098
 800B5348	nop
 800B534C	jal    $80023a4c
 
-system_psyq_draw_sync( 0 );
+system_psyq_draw_sync(0);
 
-system_psyq_vsync( 0 );
+system_psyq_vsync(0);
 
-system_psyq_reset_graph( 0x1 );
+system_psyq_reset_graph(0x1);
 
 V1 = w[S0 + 0x794c];
 800B5370	nop
@@ -14806,7 +14728,7 @@ S3 = w[V0 + 0x10 + index * 4] - b[part_data + 0x13] * 4;
 
 V1 = w[model_data + 0x44];
 A2 = w[V1 + part_id * c + 0x4];
-if( index != 0 )
+if (index != 0)
 {
     A2 = A2 + hu[part_data + 0];
 }
@@ -14816,7 +14738,7 @@ mesh_data = w[part_data + 0x1c];
 
 
 number_of_quads = hu[part_data + 0x2]; // number of quads
-if( number_of_quads != 0 )
+if (number_of_quads != 0)
 {
     loopb5a18:	; 800B5A18
         vertex1 = h[mesh_data + 0];
@@ -14824,7 +14746,7 @@ if( number_of_quads != 0 )
         vertex3 = h[mesh_data + 0x4];
         vertex4 = h[mesh_data + 0x6];
 
-        if( ( bu[mesh_data + 0x15] & 02 ) == 0 )
+        if ((bu[mesh_data + 0x15] & 02) == 0)
         {
             SXY0 = w[0x800711a8 + vertex1 * 4];
             SXY1 = w[0x800711a8 + vertex2 * 4];
@@ -14834,7 +14756,7 @@ if( number_of_quads != 0 )
 
             gte_NCLIP; // Normal clipping.
 
-            if( MAC0 <= 0 )
+            if (MAC0 <= 0)
             {
                 continue;
             }
@@ -15364,7 +15286,7 @@ H = hu[V0 + a]; // Projection plane distance
 
 
 number_of_bones = bu[model_file + 0x2];
-if( number_of_bones != 0 )
+if (number_of_bones != 0)
 {
     vertex_id = 0;
 
@@ -15372,7 +15294,7 @@ if( number_of_bones != 0 )
     Lb6208:	; 800B6208
         vertex_groups = w[parts_data + part_id * 28 + 0x14];
         vertex_number = hu[vertex_groups + bone_id * 2];
-        if( vertex_number != 0 )
+        if (vertex_number != 0)
         {
             // set camera matrix
             V0 = w[0x8006794c];
@@ -15574,7 +15496,7 @@ model_file = w[model_data + 0x8];
 
 
 number_of_parts = bu[model_file + 0x3];
-if( number_of_parts != 0 )
+if (number_of_parts != 0)
 {
     part_id = 0;
     Lb65bc:	; 800B65BC
@@ -15599,7 +15521,7 @@ if( number_of_parts != 0 )
 
             // monochrome textured quads
             number_of_monochrome_textured_quads = hu[part_data + 0x2];
-            if( number_of_monochrome_textured_quads != 0 )
+            if (number_of_monochrome_textured_quads != 0)
             {
                 quad_id = 0;
                 Lb65fc:	; 800B65FC
@@ -15626,7 +15548,7 @@ if( number_of_parts != 0 )
                     [packet_data + e] = h(hu[V0 + image_id * 4 + 0x2]); // CLUT
                     [packet_data + 0x16] = h(hu[V0 + image_id * 4 + 0] & ffdf); // reset blending by default
 
-                    if( bu[mesh_data + 0x15] & 1 )
+                    if (bu[mesh_data + 0x15] & 1)
                     {
                         [packet_data + 0x16] = h(hu[packet_data + 0x16] | (bu[mesh_data + 0x15] & e0));
                         [packet_data + 0x7] = b(bu[packet_data + 0x7] | 02); // semi transparency on
@@ -15657,7 +15579,7 @@ if( number_of_parts != 0 )
 
             // monochrome textured triangles
             number_of_monochrome_textured_triangles = hu[part_data + 0x4];
-            if( number_of_monochrome_textured_triangles != 0 )
+            if (number_of_monochrome_textured_triangles != 0)
             {
                 triangle_id = 0;
                 Lb6824:	; 800B6824
@@ -15682,7 +15604,7 @@ if( number_of_parts != 0 )
                     [packet_data + e] = h(hu[V1 + image_id * 4 + 0x2]); // CLUT
                     [packet_data + 0x16] = h(hu[V1 + image_id * 4 + 0] & ffdf); // reset blending by default
 
-                    if( bu[mesh_data + 0x12] & 01 )
+                    if (bu[mesh_data + 0x12] & 01)
                     {
                         [packet_data + 0x16] = h(hu[packet_data + 0x16] | (bu[mesh_data + 0x12] & e0));
                         [packet_data + 0x7] = b(bu[packet_data + 0x7] | 02);
@@ -15711,7 +15633,7 @@ if( number_of_parts != 0 )
 
             // shaded textured quads
             number_of_shaded_textured_quads = hu[part_data + 0x6];
-            if( number_of_shaded_textured_quads != 0 )
+            if (number_of_shaded_textured_quads != 0)
             {
                 quad_id = 0;
                 Lb69fc:	; 800B69FC
@@ -15751,7 +15673,7 @@ if( number_of_parts != 0 )
                     [packet_data + e] = h(hu[V1 + image_id * 4 + 0x2]);
                     [packet_data + 0x1a] = h(hu[V1 + image_id * 4 + 0] & ffdf);
 
-                    if( bu[mesh_data + 0x1c] & 01 )
+                    if (bu[mesh_data + 0x1c] & 01)
                     {
                         [packet_data + 0x1a] = h(hu[packet_data + 0x1a] | (bu[mesh_data + 0x1c] & e0));
                         [packet_data + 0x7] = b(bu[packet_data + 0x7] | 02);
@@ -15782,7 +15704,7 @@ if( number_of_parts != 0 )
 
             // shaded textured triangles
             number_of_shaded_textured_triangles = hu[part_data + 0x8];
-            if( number_of_shaded_textured_triangles != 0 )
+            if (number_of_shaded_textured_triangles != 0)
             {
                 triangle_id = 0;
                 Lb6cd0:	; 800B6CD0
@@ -15816,7 +15738,7 @@ if( number_of_parts != 0 )
                     [packet_data + e] = h(hu[V1 + image_id * 4 + 0x2]);
                     [packet_data + 0x1a] = h(hu[V1 + image_id * 4 + 0] & ffdf);
 
-                    if( bu[mesh_data + f] & 01 )
+                    if (bu[mesh_data + f] & 01)
                     {
                         [packet_data + 0x1a] = h(hu[packet_data + 0x1a] | (bu[mesh_data + f] & e0));
                         [packet_data + 0x7] = b(bu[packet_data + 0x7] | 02);
@@ -15845,7 +15767,7 @@ if( number_of_parts != 0 )
 
             // gradated quads
             number_of_gradated_quads = hu[part_data + a];
-            if( number_of_gradated_quads != 0 )
+            if (number_of_gradated_quads != 0)
             {
                 quad_id = 0;
                 loopb6f20:	; 800B6F20
@@ -15882,7 +15804,7 @@ if( number_of_parts != 0 )
 
             // gradated triangles
             number_of_gradated_triangles = hu[part_data + c];
-            if( number_of_gradated_triangles != 0 )
+            if (number_of_gradated_triangles != 0)
             {
                 triangle_id = 0;
                 loopb702c:	; 800B702C
@@ -15915,7 +15837,7 @@ if( number_of_parts != 0 )
 
             // monochrome quads
             number_of_monochrome_quads = hu[part_data + e];
-            if( number_of_monochrome_quads != 0 )
+            if (number_of_monochrome_quads != 0)
             {
                 quad_id = 0;
                 loopb7104:	; 800B7104
@@ -15938,7 +15860,7 @@ if( number_of_parts != 0 )
 
             // monochrome triangles
             number_of_monochrome_triangles = hu[part_data + 0x10];
-            if( number_of_monochrome_triangles != 0 )
+            if (number_of_monochrome_triangles != 0)
             {
                 triangle_id = 0;
                 loopb7168:	; 800B7168
@@ -16731,7 +16653,7 @@ SP = SP + 0020;
 
 ////////////////////////////////
 // funcb7cec
-if( hu[A0 + 0] & 0002 )
+if (hu[A0 + 0] & 0002)
 {
     R11R12 = w[A0 + 0x24];
     R13R21 = w[A0 + 0x28];
@@ -16844,12 +16766,12 @@ model_data = A0;
 frame_id = A1;
 animation_file = w[model_data + c];
 
-if( animation_file == 0 )
+if (animation_file == 0)
 {
     main_data = w[model_data + 0x1c];
     root_matrix = w[model_data + 0x20];
 
-    if( main_data != 0 ) // is this attached model
+    if (main_data != 0) // is this attached model
     {
         V0 = w[main_data + 0x20] + bu[model_data + 0x4] * 20;
 
@@ -16903,7 +16825,7 @@ else
 
     // place where we store bone matrixes. If number of bones less then 0x1f then we store to temp wlse store to final place
     S2 = 1f800018;
-    if( number_of_bones >= 1f )
+    if (number_of_bones >= 1f)
     {
         S2 = w[model_data + 0x20]; // offset to bone matrixes
     }
@@ -16911,7 +16833,7 @@ else
 
 
     // create root translation
-    if( hu[animation_file + a] & 1 )
+    if (hu[animation_file + a] & 1)
     {
         [S2 + 0x14] = w(h[animation_file + 0x4]);
     }
@@ -16921,7 +16843,7 @@ else
         [S2 + 0x14] = w(h[animation_file + V1 + frame_id * 2]);
     }
 
-    if( hu[animation_file + a] & 2 )
+    if (hu[animation_file + a] & 2)
     {
         [S2 + 0x18] = w(h[animation_file + 0x6]);
     }
@@ -16931,7 +16853,7 @@ else
         [S2 + 0x18] = w(h[animation_file + V1 + frame_id * 2]);
     }
 
-    if( hu[animation_file + a] & 4 )
+    if (hu[animation_file + a] & 4)
     {
         [S2 + 0x1c] = w(h[animation_file + 0x8]);
     }
@@ -16954,21 +16876,21 @@ else
         flag = hu[high_angle_offset + 0x6];
 
         T1 = h[high_angle_offset + 0];
-        if( ( flag & 1 ) == 0 )
+        if ((flag & 1) == 0)
         {
             T1 = b[animation_file + T1 + frame_id];
         }
         T1 = T1 << 4;
 
         T2 = h[high_angle_offset + 0x2];
-        if( ( flag & 2 ) == 0 )
+        if ((flag & 2) == 0)
         {
             T2 = b[animation_file + T2 + frame_id];
         }
         T2 = T2 << 4;
 
         T3 = h[high_angle_offset + 0x4];
-        if( ( flag & 4 ) == 0 )
+        if ((flag & 4) == 0)
         {
             T3 = b[animation_file + T3 + frame_id];
         }
@@ -16979,15 +16901,15 @@ else
         [1f800004] = w(T3);
 
         // if there is low range angles
-        if( low_angle_offset != 0 )
+        if (low_angle_offset != 0)
         {
             flag = hu[low_angle_offset + 0x6];
 
             T1 = hu[low_angle_offset + 0];
-            if( ( flag & 1 ) == 0 )
+            if ((flag & 1) == 0)
             {
                 T1 = b[animation_file + T1 + frame_id / 2];
-                if( frame_id & 1 )
+                if (frame_id & 1)
                 {
                     T1 = T1 >> 4;
                 }
@@ -16995,10 +16917,10 @@ else
             T1 = T1 & f;
 
             T2 = hu[low_angle_offset + 0x2];
-            if( ( flag & 2 ) == 0 )
+            if ((flag & 2) == 0)
             {
                 T2 = b[animation_file + T2 + frame_id / 2];
-                if( frame_id & 1 )
+                if (frame_id & 1)
                 {
                     T2 = T2 >> 4;
                 }
@@ -17006,10 +16928,10 @@ else
             T2 = T2 & f;
 
             T3 = hu[low_angle_offset + 0x4];
-            if( ( flag & 4 ) == 0 )
+            if ((flag & 4) == 0)
             {
                 T3 = b[animation_file + T3 + frame_id / 2];
-                if( frame_id & 1 )
+                if (frame_id & 1)
                 {
                     T3 = T3 >> 4;
                 }
@@ -17036,7 +16958,7 @@ else
 
     // root matrix
     main_data = w[model_data + 0x1c];
-    if( main_data != 0 )
+    if (main_data != 0)
     {
         V0 = w[main_data + 0x20] + bu[model_data + 0x4] * 20;
 
@@ -17161,7 +17083,7 @@ else
 
 
     // copy from temp to normal place
-    if( number_of_bones < 1f )
+    if (number_of_bones < 1f)
     {
         bone_data = w[model_data + 0x20];
 
@@ -19346,12 +19268,12 @@ model_data = A0;
 frame_id = A1;
 animation_file = w[model_data + c];
 
-if( animation_file == 0 )
+if (animation_file == 0)
 {
     main_data = w[model_data + 0x1c];
     root_matrix = w[model_data + 0x20];
 
-    if( main_data != 0 ) // is this attached model
+    if (main_data != 0) // is this attached model
     {
         V0 = w[main_data + 0x20] + bu[model_data + 0x4] * 20;
 
@@ -19391,7 +19313,7 @@ else
 
     // place where we store bone matrixes. If number of bones less then 0x1f then we store to temp wlse store to final place
     S2 = 1f800018;
-    if( number_of_bones >= 1f )
+    if (number_of_bones >= 1f)
     {
         S2 = w[model_data + 0x20];
     }
@@ -19399,7 +19321,7 @@ else
 
 
     // create root translation
-    if( hu[animation_file + a] & 1 )
+    if (hu[animation_file + a] & 1)
     {
         [S2 + 0x14] = w(h[animation_file + 0x4]);
     }
@@ -19409,7 +19331,7 @@ else
         [S2 + 0x14] = w(h[animation_file + V1 + frame_id * 2]);
     }
 
-    if( hu[animation_file + a] & 2 )
+    if (hu[animation_file + a] & 2)
     {
         [S2 + 0x18] = w(h[animation_file + 0x6]);
     }
@@ -19419,7 +19341,7 @@ else
         [S2 + 0x18] = w(h[animation_file + V1 + frame_id * 2]);
     }
 
-    if( hu[animation_file + a] & 4 )
+    if (hu[animation_file + a] & 4)
     {
         [S2 + 0x1c] = w(h[animation_file + 0x8]);
     }
@@ -19442,21 +19364,21 @@ else
         flag = hu[high_angle_offset + 0x6];
 
         T1 = hu[high_angle_offset + 0];
-        if( ( flag & 1 ) == 0 )
+        if ((flag & 1) == 0)
         {
             T1 = b[animation_file + T1 + frame_id];
         }
         T1 = T1 << 4;
 
         T2 = hu[high_angle_offset + 0x2];
-        if( ( flag & 2 ) == 0 )
+        if ((flag & 2) == 0)
         {
             T2 = b[animation_file + T2 + frame_id];
         }
         T2 = T2 << 4;
 
         T3 = hu[high_angle_offset + 0x4];
-        if( ( T4 & 4 ) == 0 )
+        if ((T4 & 4) == 0)
         {
             T3 = b[animation_file + T3 + frame_id];
         }
@@ -19465,15 +19387,15 @@ else
         [1f800000] = w((T2 << 10) | (T1 & ffff));
         [1f800004] = w(T3);
 
-        if( low_angle_offset != 0 )
+        if (low_angle_offset != 0)
         {
             flag = hu[low_angle_offset + 0x6];
 
             T1 = hu[low_angle_offset + 0];
-            if( ( flag & 1 ) == 0 )
+            if ((flag & 1) == 0)
             {
                 T1 = b[animation_file + T1 + frame_id / 2];
-                if( frame_id & 1 )
+                if (frame_id & 1)
                 {
                     T1 = T1 >> 4;
                 }
@@ -19481,10 +19403,10 @@ else
             T1 = T1 & f;
 
             T2 = hu[low_angle_offset + 0x2];
-            if( ( flag & 2 ) == 0 )
+            if ((flag & 2) == 0)
             {
                 T2 = b[animation_file + T2 + frame_id / 2];
-                if( frame_id & 1 )
+                if (frame_id & 1)
                 {
                     T2 = T2 >> 4;
                 }
@@ -19492,10 +19414,10 @@ else
             T2 = T2 & f;
 
             T3 = hu[low_angle_offset + 0x4];
-            if( ( flag & 4 ) == 0 )
+            if ((flag & 4) == 0)
             {
                 T3 = b[animation_file + T3 + frame_id / 2];
-                if( frame_id & 1 )
+                if (frame_id & 1)
                 {
                     T3 = T3 >> 4;
                 }
@@ -19522,7 +19444,7 @@ else
 
     // root matrix
     main_data = w[model_data + 0x1c];
-    if( main_data != 0 )
+    if (main_data != 0)
     {
         V0 = w[main_data + 0x20] + bu[model_data + 0x4] * 20;
 
@@ -19632,7 +19554,7 @@ else
 
 
 
-        if( S1 == bu[model_file + 0x6] )
+        if (S1 == bu[model_file + 0x6])
         {
             // reset all previous rotation
             [SP + 0x10] = w(w[S2 + S1 * 20 + 0x14] - h[model_data + 0x48]);
@@ -19684,7 +19606,7 @@ else
             [S2 + S1 * 20 + 0x10] = h(hu[SP + 0x58]);
 
             // restore scaling if model was scaled
-            if( hu[model_data + 0] & 2 )
+            if (hu[model_data + 0] & 2)
             {
                 R11R12 = w[S2 + S1 * 20 + 0];
                 R13R21 = w[S2 + S1 * 20 + 0x4];
@@ -19725,7 +19647,7 @@ else
 
 
     // copy from temp to normal place
-    if( number_of_bones < 1f )
+    if (number_of_bones < 1f)
     {
         bone_data = w[model_data + 0x20];
 
@@ -20113,14 +20035,14 @@ vertex_data = w[parts_data + part_id * 28 + 0x18];
 
 
 
-if( number_of_bones != 0 )
+if (number_of_bones != 0)
 {
     bone_id = 0;
     loopbb57c:	; 800BB57C
         vertex_groups = w[parts_data + part_id * 28 + 0x14];
         number_of_vertex = hu[vertex_groups + bone_id * 2];
 
-        if( number_of_vertex != 0 )
+        if (number_of_vertex != 0)
         {
             T0 = 800711a8 + total_vertex * 4;
             A3 = 80070520 + total_vertex * 4;
@@ -20147,7 +20069,7 @@ if( number_of_bones != 0 )
                 [T0 + 0x2] = h(IR2);
                 [A3 + 0] = w(IR3);
 
-                if( h[T0 + 0x2] >= A2 )
+                if (h[T0 + 0x2] >= A2)
                 {
                     [T0 + 0x2] = h(A2);
                     [A3 + 0x2] = h(1000);
@@ -20231,7 +20153,7 @@ S4 = w[V1 + 0x10 + index * 4];
 
 V1 = w[model_data + 0x44];
 T5 = w[V1 + part_id * c + 0x4];
-if( index != 0 )
+if (index != 0)
 {
     T5 = T5 + hu[part_data + 0];
 }
@@ -20242,7 +20164,7 @@ mesh_data = w[part_data + 0x1c];
 
 // quads
 number_of_quads = hu[part_data + 0x2];
-if( number_of_quads != 0 )
+if (number_of_quads != 0)
 {
     T6 = 0;
     loopbb7ec:	; 800BB7EC
@@ -20253,9 +20175,9 @@ if( number_of_quads != 0 )
 
         A0 = w[0x80070520 + vertex1 * 4] + w[0x80070520 + vertex2 * 4] + w[0x80070520 + vertex3 * 4] + w[0x80070520 + vertex4 * 4];
 
-        if( A0 <= 3fffffff )
+        if (A0 <= 3fffffff)
         {
-            if( ( bu[mesh_data + 0x15] & 02 ) == 0 )
+            if ((bu[mesh_data + 0x15] & 02) == 0)
             {
                 SXY0 = w[0x800711a8 + vertex1 * 4];
                 SXY1 = w[0x800711a8 + vertex3 * 4];
@@ -20265,7 +20187,7 @@ if( number_of_quads != 0 )
 
                 gte_NCLIP; // Normal clipping.
 
-                if( MAC0 <= 0 )
+                if (MAC0 <= 0)
                 {
                     continue;
                 }
@@ -20299,7 +20221,7 @@ A2 = T5;
 
 
 S0 = hu[part_data + 0x4];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -20398,7 +20320,7 @@ T5 = A2;
 
 
 S0 = hu[part_data + 0x6];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -20500,7 +20422,7 @@ A2 = T5;
 
 
 S0 = hu[part_data + 0x8];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -20599,7 +20521,7 @@ T5 = A2;
 
 
 S0 = hu[part_data + a];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -20701,7 +20623,7 @@ A2 = T5;
 
 
 S0 = hu[part_data + c];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -20800,7 +20722,7 @@ T5 = A2;
 
 
 S0 = hu[part_data + e];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -20902,7 +20824,7 @@ A2 = T5;
 
 
 S0 = hu[part_data + 0x10];
-if( S0 != 0 )
+if (S0 != 0)
 {
     T6 = 0;
     S3 = 800711a8;
@@ -21970,7 +21892,7 @@ frame_buffer = 0;
 number_of_tiles = hu[tile_block_data + 0x26];
 
 loopbd1dc:	; 800BD1DC
-    if( number_of_tiles != 0 )
+    if (number_of_tiles != 0)
     {
         tile_id = 0;
         loopbd1f0:	; 800BD1F0
@@ -21985,7 +21907,7 @@ loopbd1dc:	; 800BD1DC
             [packets + 0x14] = b(bu[S1 + tile_id * 8 + 0x4]); // V
             [packets + 0x15] = b(bu[S1 + tile_id * 8 + 0x3]); // U
 
-            if( ( w[S1 + tile_id * 8 + 0x4] >> 1c ) & 1 )
+            if ((w[S1 + tile_id * 8 + 0x4] >> 1c) & 1)
             {
                 V0 = bu[packets + f] | 2;
             }
@@ -22003,7 +21925,7 @@ loopbd1dc:	; 800BD1DC
 
             A3 = w[S1 + tile_id * 8 + 0];
 
-            if( ( (A3 >> 14) & 3 ) == 0 )
+            if (((A3 >> 14) & 3) == 0)
             {
                 A0 = 0;
             }
@@ -22026,7 +21948,7 @@ loopbd1dc:	; 800BD1DC
 
             V1 = w[S1 + tile_id * 8 + 0] & 000001ff;
 
-            if( S7 < V1 )
+            if (S7 < V1)
             {
                 S7 = V1;
             }
@@ -22065,11 +21987,11 @@ block_numbers = hu[tileset + 0x6];
 [0x800c9da4 + 0x28] = w(w[0x800c9da4 + 0x2c]);
 T0 = tileset + w[tileset + c]; // animations
 T2 = tileset + w[tileset + 0x10]; // blocks
-if( block_numbers != 0 )
+if (block_numbers != 0)
 {
     block_id = 0;
     loopbd3dc:	; 800BD3DC
-        if( bu[T2 + block_id * 38 + 0] & 40 )
+        if (bu[T2 + block_id * 38 + 0] & 40)
         {
             V0 = w[0x800c9da4 + 0x28] + bu[0x800c9da4 + 0x24] * c;
             [V0 + 0] = b(10);
@@ -22080,7 +22002,7 @@ if( block_numbers != 0 )
             [0x800c9da4 + 0x24] = b(bu[0x800c9da4 + 0x24] + 0x1);
             [0x800c9da4 + 0x34] = w(w[0x800c9da4 + 0x34] + c);
 
-            if( bu[T2 + block_id * 38 + 0] & 20 )
+            if (bu[T2 + block_id * 38 + 0] & 20)
             {
                 block_id = block_id + w[T0 + 0] >> 8;
                 T0 = T0 + 0x10;
@@ -22793,7 +22715,7 @@ V0 = A1 >> 2;
 V0 = V0 << 2;
 
 // if not четное
-if( V0 != A1 )
+if (V0 != A1)
 {
     loopbdfd8:	; 800BDFD8
         A1 = A1 + 0x1;
@@ -22836,7 +22758,7 @@ loopbe02c:	; 800BE02C
 
 
 
-if( number_of_blocks != 0 )
+if (number_of_blocks != 0)
 {
     S0 = 0;
     tile_block = tileset_file + w[tileset_file + 0x10];
@@ -22854,7 +22776,7 @@ if( number_of_blocks != 0 )
         A2 = FP; // end_of_packets
         field_init_background_packets;
 
-        if( V0 != 1 )
+        if (V0 != 1)
         {
             return 0;
         }
@@ -22890,7 +22812,7 @@ V0 = A0 << 2;
 V0 = V0 + 0x800c9da4;
 S5 = w[V0 + 0x8];
 V0 = T9 << 1;
-if( A0 != 0 )
+if (A0 != 0)
 {
     V0 = V0 + T9;
     V0 = V0 << 3;
@@ -22911,7 +22833,7 @@ T3 = tileset + V0;
 V0 = V1 & 4;
 800BE1F8	beq    v0, zero, Lbe7ac [$800be7ac]
 
-if( V1 & 1 )
+if (V1 & 1)
 {
     V0 = w[T2 + 0x24] >> 7;
     V1 = 800ca068;
@@ -22945,7 +22867,7 @@ V0 = V0 + V1;
 A2 = hu[V0 + b8];
 A3 = hu[V0 + ba];
 V1 = 100;
-if( A1 < 0 )
+if (A1 < 0)
 {
     V1 = V1 - A1;
     V1 = (V1 << 10) >> 10;
@@ -24876,7 +24798,7 @@ A0 = w[0x800c9da4 + 0x18];
 A1 = SP + 0x18;
 funcbded4;
 
-if( V0 != 1 )
+if (V0 != 1)
 {
     return 0;
 }
@@ -24889,7 +24811,7 @@ anim = tileset_data + w[tileset_data + c]; // offset to tileset animations
 block = tileset_data + w[tileset_data + 0x10]; // offset to tileset blocks
 
 number_of_animations = hu[tileset_data + 0x4];
-if( number_of_animations != 0 )
+if (number_of_animations != 0)
 {
     anim_id = 0;
     loopbfdc4:	; 800BFDC4
@@ -26088,10 +26010,10 @@ S0 = A0 + bu[0x800ca068 + 0x75] * 34 + w[A0 + 0x18];
 
 func12ad4;
 
-if( ( ( V0 & 2 ) == 0 ) || ( w[0x80071e34] < 2 ) )
+if (((V0 & 2) == 0) || (w[0x80071e34] < 2))
 {
-    OFX = ( h[S0 + 0x20] + h[0x800ca068 + c] ) << 10;
-    OFY = ( h[S0 + 0x22] + h[0x800ca068 + e] ) << 10;
+    OFX = (h[S0 + 0x20] + h[0x800ca068 + c]) << 10;
+    OFY = (h[S0 + 0x22] + h[0x800ca068 + e]) << 10;
 }
 
 return 1;
@@ -26103,7 +26025,7 @@ return 1;
 // funcc0fb0
 // restore screen offset to GPU
 func12ad4;
-if( V0 & 2 )
+if (V0 & 2)
 {
     return 1;
 }
@@ -28297,7 +28219,7 @@ else
     A0 = 0;
     number_of_triangles = hu[walkmesh_header + 0x24];
 
-    if( move_to_triangle < number_of_triangles )
+    if (move_to_triangle < number_of_triangles)
     {
         loopc3864:	; 800C3864
             [walkmesh_triangles_data + A0 * 28 + 0] = h(hu[walkmesh_triangles_data + A0 * 28 + 0] & ff7f);
@@ -28322,7 +28244,7 @@ else
         A3 = SP + 0x34; // side of triangle which we can't pass
         funcc31f8; // try move away from side of triangle
 
-        if( V0 == 0 )
+        if (V0 == 0)
         {
             [entity_data + 0x6] = h(triangle_id);
 
@@ -29062,15 +28984,15 @@ T0 = A0;
 
 A0 = 800c9df0;
 
-if( V1 == 0 ) return 0x8000;
+if (V1 == 0) return 0x8000;
 
-if( T0 >= hu[0x800c9df2] ) return 0x4000;
+if (T0 >= hu[0x800c9df2]) return 0x4000;
 
 A0 = w[0x800c9df4] + T0 * 0x28;
 
-if( (hu[A0 + 0x0] & 0x0001) == 0 ) return 0;
+if ((hu[A0 + 0x0] & 0x0001) == 0) return 0;
 
-if( (h[A0 + 0x4] == -0x1) || (h[A0 + 0x6] == -0x1) ) // if triangle id and group ad not set
+if ((h[A0 + 0x4] == -0x1) || (h[A0 + 0x6] == -0x1)) // if triangle id and group ad not set
 {
     V0 = w[A0 + 0x24];
 
@@ -30162,125 +30084,125 @@ else
 
 
 
-void funcc5a7c( S7 )
+void funcc5a7c(S7)
 {
-    if( S7 == 0 ) return;
+    if (S7 == 0) return;
 
-    system_bios_printf( "BGI Text Dump\n" );
-    system_bios_printf( "=============\n" );
-    system_bios_printf( "Data Size		 : %d [+4 for file magic]\n", hu[S7 + 0x0] );
-    system_bios_printf( "Original Position: (%6d,%6d,%6d)\n", h[S7 + 0x2], h[S7 + 0x4], h[S7 + 0x6] );
-    system_bios_printf( "Current Position : (%6d,%6d,%6d)\n", h[S7 + 0x8], h[S7 + 0xa], h[S7 + 0xc] );
-    system_bios_printf( "Minimum Values   : (%6d,%6d,%6d)\n", h[S7 + 0xe], h[S7 + 0x10], h[S7 + 0x12] );
-    system_bios_printf( "Maximum Values   : (%6d,%6d,%6d)\n", h[S7 + 0x14], h[S7 + 0x16], h[S7 + 0x18] );
-    system_bios_printf( "Default Char Pos : (%6d,%6d,%6d)\n", h[S7 + 0x1a], h[S7 + 0x1c], h[S7 + 0x1e] );
-    system_bios_printf( "Active Floor	 : %d\n", h[S7 + 0x20]);
-    system_bios_printf( "Active Triangle  : %d\n", h[S7 + 0x22] );
+    system_bios_printf("BGI Text Dump\n");
+    system_bios_printf("=============\n");
+    system_bios_printf("Data Size		 : %d [+4 for file magic]\n", hu[S7 + 0x0]);
+    system_bios_printf("Original Position: (%6d,%6d,%6d)\n", h[S7 + 0x2], h[S7 + 0x4], h[S7 + 0x6]);
+    system_bios_printf("Current Position : (%6d,%6d,%6d)\n", h[S7 + 0x8], h[S7 + 0xa], h[S7 + 0xc]);
+    system_bios_printf("Minimum Values   : (%6d,%6d,%6d)\n", h[S7 + 0xe], h[S7 + 0x10], h[S7 + 0x12]);
+    system_bios_printf("Maximum Values   : (%6d,%6d,%6d)\n", h[S7 + 0x14], h[S7 + 0x16], h[S7 + 0x18]);
+    system_bios_printf("Default Char Pos : (%6d,%6d,%6d)\n", h[S7 + 0x1a], h[S7 + 0x1c], h[S7 + 0x1e]);
+    system_bios_printf("Active Floor	 : %d\n", h[S7 + 0x20]);
+    system_bios_printf("Active Triangle  : %d\n", h[S7 + 0x22]);
 
     u16 triangle_count = hu[S7 + 0x24];
     u16 triangle_offset = hu[S7 + 0x26];
-    system_bios_printf( "Triangle Count   : %d\n", triangle_count );
-    system_bios_printf( "Triangle Offset  : %d\n", triangle_offset );
-    for( int i = 0; i < triangle_count; ++i )
+    system_bios_printf("Triangle Count   : %d\n", triangle_count);
+    system_bios_printf("Triangle Offset  : %d\n", triangle_offset);
+    for (int i = 0; i < triangle_count; ++i)
     {
         u32 triangle = S7 + triangle_offset + i * 0x28;
-        system_bios_printf( "  %4d: Flags			= 0x%04X\n", i, hu[triangle + 0x0] );
-        system_bios_printf( "		Data			 = %d\n", hu[triangle + 0x2] );
-        system_bios_printf( "		Floor Index 	 = %d\n", h[triangle + 0x4] );
-        system_bios_printf( "		Normal Index	 = %d\n", h[triangle + 0x6] );
-        system_bios_printf( "		Theta X 		 = %d\n", h[triangle + 0x8] );
-        system_bios_printf( "		Theta Z 		 = %d\n", h[triangle + 0xa] );
-        system_bios_printf( "		D				 = %ld\n", w[triangle + 0x24] );
-        system_bios_printf( "		Center  		 = (%6d,%6d,%6d)\n", h[triangle + 0x1e], h[triangle + 0x20], h[triangle + 0x22] );
-        system_bios_printf( "		Vertex Indices   = (%6d,%6d,%6d)\n", h[triangle + 0xc], h[triangle + 0xe], h[triangle + 0x10] );
-        system_bios_printf( "		Edge Indices	 = (%6d,%6d,%6d)\n", h[triangle + 0x12], h[triangle + 0x14], h[triangle + 0x16] );
-        system_bios_printf( "		Neighbor Indices = (%6d,%6d,%6d)\n", h[triangle + 0x18], h[triangle + 0x1a], h[triangle + 0x1c] );
+        system_bios_printf("  %4d: Flags			= 0x%04X\n", i, hu[triangle + 0x0]);
+        system_bios_printf("		Data			 = %d\n", hu[triangle + 0x2]);
+        system_bios_printf("		Floor Index 	 = %d\n", h[triangle + 0x4]);
+        system_bios_printf("		Normal Index	 = %d\n", h[triangle + 0x6]);
+        system_bios_printf("		Theta X 		 = %d\n", h[triangle + 0x8]);
+        system_bios_printf("		Theta Z 		 = %d\n", h[triangle + 0xa]);
+        system_bios_printf("		D				 = %ld\n", w[triangle + 0x24]);
+        system_bios_printf("		Center  		 = (%6d,%6d,%6d)\n", h[triangle + 0x1e], h[triangle + 0x20], h[triangle + 0x22]);
+        system_bios_printf("		Vertex Indices   = (%6d,%6d,%6d)\n", h[triangle + 0xc], h[triangle + 0xe], h[triangle + 0x10]);
+        system_bios_printf("		Edge Indices	 = (%6d,%6d,%6d)\n", h[triangle + 0x12], h[triangle + 0x14], h[triangle + 0x16]);
+        system_bios_printf("		Neighbor Indices = (%6d,%6d,%6d)\n", h[triangle + 0x18], h[triangle + 0x1a], h[triangle + 0x1c]);
     }
 
     u16 edge_count V1 = hu[S7 + 0x28];
     u16 edge_offset V0 = hu[S7 + 0x2a];
-    system_bios_printf( "Edge Count  	 : %d\n", edge_count );
-    system_bios_printf( "Edge Offset 	 : %d\n", edge_offset );
-    for( int i = 0; i < edge_count; ++i )
+    system_bios_printf("Edge Count  	 : %d\n", edge_count);
+    system_bios_printf("Edge Offset 	 : %d\n", edge_offset);
+    for (int i = 0; i < edge_count; ++i)
     {
-        system_bios_printf( "  %4d: Flags	   = 0x%04X\n", i, hu[S7 + edge_offset + i * 0x4 + 0x0] );
-        system_bios_printf( "		Edge Clone  = %d\n", h[S7 + edge_offset + i * 0x4 + 0x2] );
+        system_bios_printf("  %4d: Flags	   = 0x%04X\n", i, hu[S7 + edge_offset + i * 0x4 + 0x0]);
+        system_bios_printf("		Edge Clone  = %d\n", h[S7 + edge_offset + i * 0x4 + 0x2]);
     }
 
     u16 keyframe_count = hu[S7 + 0x2c];
     u16 keyframe_offset V0 = hu[S7 + 0x2e];
-    system_bios_printf( "Keyframe Animation Count  : %d\n", keyframe_count );
-    system_bios_printf( "Keyframe Animation Offset : %d\n", keyframe_offset );
+    system_bios_printf("Keyframe Animation Count  : %d\n", keyframe_count);
+    system_bios_printf("Keyframe Animation Offset : %d\n", keyframe_offset);
 
-    for( int i = 0; i < keyframe_count; ++i )
+    for (int i = 0; i < keyframe_count; ++i)
     {
         u32 keyframe = S7 + keyframe_offset + i * 0x10;
         u16 frame_count = hu[keyframe + 0x2];
         u16 frame_offset = w[keyframe + 0xc];
-        system_bios_printf( "  %4d: Flags		  = 0x%04X\n", i, hu[keyframe + 0x0] );
-        system_bios_printf( "		Frame Count    = %d\n", frame_count );
-        system_bios_printf( "		Current Frame  = %ld\n", w[keyframe + 0x8] );
-        system_bios_printf( "		Frame Rate     = %d\n", h[keyframe + 0x4] );
-        system_bios_printf( "		Counter 	   = %d\n", hu[keyframe + 0x6] );
-        system_bios_printf( "		Frame Offset   = %ld\n", w[keyframe + 0xc] );
+        system_bios_printf("  %4d: Flags		  = 0x%04X\n", i, hu[keyframe + 0x0]);
+        system_bios_printf("		Frame Count    = %d\n", frame_count);
+        system_bios_printf("		Current Frame  = %ld\n", w[keyframe + 0x8]);
+        system_bios_printf("		Frame Rate     = %d\n", h[keyframe + 0x4]);
+        system_bios_printf("		Counter 	   = %d\n", hu[keyframe + 0x6]);
+        system_bios_printf("		Frame Offset   = %ld\n", w[keyframe + 0xc]);
 
-        for( int j = 0; j < frame_count; ++j )
+        for (int j = 0; j < frame_count; ++j)
         {
             u32 frame = S7 + frame_offset + i * 0x8;
             u16 triangle_count = hu[frame + 0x4];
             u16 triangle_offset = hu[frame + 0x6];
-            system_bios_printf( "		%4d: Frame Flags     = 0x%04X\n", j, hu[frame + 0x0] );
-            system_bios_printf( "              Value           = %d\n", h[frame + 0x2] );
-            system_bios_printf( "              Triangle Count  = %d\n", triangle_count );
-            system_bios_printf( "			  Triangle Offset = %d\n", triangle_offset );
-            for( int k = 0; k < triangle_count; ++k )
+            system_bios_printf("		%4d: Frame Flags     = 0x%04X\n", j, hu[frame + 0x0]);
+            system_bios_printf("              Value           = %d\n", h[frame + 0x2]);
+            system_bios_printf("              Triangle Count  = %d\n", triangle_count);
+            system_bios_printf("			  Triangle Offset = %d\n", triangle_offset);
+            for (int k = 0; k < triangle_count; ++k)
             {
-                system_bios_printf( "				%4d: Triangle Ndx = %ld\n", j, w[S7 + triangle_offset + k * 0x4] );
+                system_bios_printf("				%4d: Triangle Ndx = %ld\n", j, w[S7 + triangle_offset + k * 0x4]);
             }
         }
     }
 
     u16 floor_count = hu[S7 + 0x30];
     u16 floor_offset = hu[S7 + 0x32];
-    system_bios_printf( "Floor Count 	 : %d\n", floor_count );
-    system_bios_printf( "Floor Offset	 : %d\n", floor_offset );
-    for( int i = 0; i < floor_count; ++i )
+    system_bios_printf("Floor Count 	 : %d\n", floor_count);
+    system_bios_printf("Floor Offset	 : %d\n", floor_offset);
+    for (int i = 0; i < floor_count; ++i)
     {
         u32 floor = S7 + floor_offset + i * 0x20;
-        system_bios_printf( "  %4d: Flags				= %d\n", i, hu[floor + 0x0] );
-        system_bios_printf( "		Floor Index 		  = %d\n", hu[floor + 0x2] );
-        system_bios_printf( "		Original Position	  = (%6d,%6d,%6d)\n", h[floor + 0x4], h[floor + 0x6], h[floor + 0x8] );
-        system_bios_printf( "		Current Position	  = (%6d,%6d,%6d)\n", h[floor + 0xa], h[floor + 0xc], h[floor + 0xe] );
-        system_bios_printf( "		Minumim Values  	  = (%6d,%6d,%6d)\n", h[floor + 0x10], h[floor + 0x12], h[floor + 0x14] );
-        system_bios_printf( "		Maximum Values  	  = (%6d,%6d,%6d)\n", h[floor + 0x16], h[floor + 0x18], h[floor + 0x1a] );
+        system_bios_printf("  %4d: Flags				= %d\n", i, hu[floor + 0x0]);
+        system_bios_printf("		Floor Index 		  = %d\n", hu[floor + 0x2]);
+        system_bios_printf("		Original Position	  = (%6d,%6d,%6d)\n", h[floor + 0x4], h[floor + 0x6], h[floor + 0x8]);
+        system_bios_printf("		Current Position	  = (%6d,%6d,%6d)\n", h[floor + 0xa], h[floor + 0xc], h[floor + 0xe]);
+        system_bios_printf("		Minumim Values  	  = (%6d,%6d,%6d)\n", h[floor + 0x10], h[floor + 0x12], h[floor + 0x14]);
+        system_bios_printf("		Maximum Values  	  = (%6d,%6d,%6d)\n", h[floor + 0x16], h[floor + 0x18], h[floor + 0x1a]);
 
         u16 triangle_count = hu[floor + 0x1c];
         u16 triangle_id_offset = hu[floor + 0x1e];
-        system_bios_printf( "		Triangle Count  	  = %d\n", triangle_count );
-        system_bios_printf( "		Triangle Index Offset = %d\n", triangle_id_offset );
-        for( int j = 0; i < triangle_count; ++j )
+        system_bios_printf("		Triangle Count  	  = %d\n", triangle_count);
+        system_bios_printf("		Triangle Index Offset = %d\n", triangle_id_offset);
+        for (int j = 0; i < triangle_count; ++j)
         {
-            system_bios_printf( "		  %4d: Triangle Ndx = %ld\n", j, w[S7 + triangle_id_offset + j * 0x4] );
+            system_bios_printf("		  %4d: Triangle Ndx = %ld\n", j, w[S7 + triangle_id_offset + j * 0x4]);
         }
     }
 
     u16 vertex_count = hu[S7 + 0x38];
     u16 vertex_offset = hu[S7 + 0x3a];
-    system_bios_printf( "Vertex Count	 : %d\n", vertex_count );
-    system_bios_printf( "Vertex Offset	 : %d\n", vertex_offset );
-    for( int i = 0; i < vertex_count; ++i )
+    system_bios_printf("Vertex Count	 : %d\n", vertex_count);
+    system_bios_printf("Vertex Offset	 : %d\n", vertex_offset);
+    for (int i = 0; i < vertex_count; ++i)
     {
-        system_bios_printf( "  %4d: (%d,%d,%d)\n", i, h[S7 + vertex_offset + i * 0x6 + 0x0], h[S7 + vertex_offset + i * 0x6 + 0x2], h[S7 + vertex_offset + i * 0x6 + 0x4] );
+        system_bios_printf("  %4d: (%d,%d,%d)\n", i, h[S7 + vertex_offset + i * 0x6 + 0x0], h[S7 + vertex_offset + i * 0x6 + 0x2], h[S7 + vertex_offset + i * 0x6 + 0x4]);
     }
 
     u16 normal_count = hu[S7 + 0x34];
     u16 normal_offset = hu[S7 + 0x36];
-    system_bios_printf( "Normal Count	 : %d\n", normal_count );
-    system_bios_printf( "Normal Offset	 : %d\n", normal_offset );
-    for( int i = 0; i < normal_count; ++i )
+    system_bios_printf("Normal Count	 : %d\n", normal_count);
+    system_bios_printf("Normal Offset	 : %d\n", normal_offset);
+    for (int i = 0; i < normal_count; ++i)
     {
-        system_bios_printf( "  %4d: (%lx,%lx,%lx)\n", i, w[S7 + normal_offset + i * 0x10 + 0x0], w[S7 + normal_offset + i * 0x10 + 0x4], w[S7 + normal_offset + i * 0x10 + 0x8] );
-        system_bios_printf( "          1/ny = %lx\n", w[S7 + normal_offset + i * 0x10 + 0xc] );
+        system_bios_printf("  %4d: (%lx,%lx,%lx)\n", i, w[S7 + normal_offset + i * 0x10 + 0x0], w[S7 + normal_offset + i * 0x10 + 0x4], w[S7 + normal_offset + i * 0x10 + 0x8]);
+        system_bios_printf("          1/ny = %lx\n", w[S7 + normal_offset + i * 0x10 + 0xc]);
     }
 }
 
@@ -31657,9 +31579,9 @@ u16 funcc73ac()
 {
     u16 ret = 0;
 
-    for( int i = 0; i < hu[0x800c9df0 + 0x2]; ++i )
+    for (int i = 0; i < hu[0x800c9df0 + 0x2]; ++i)
     {
-        if( funcc44f4( i ) > 0 )
+        if (funcc44f4(i) > 0)
         {
             ret += 0x1;
         }
@@ -31687,7 +31609,7 @@ int funcc7450()
 
 
 
-void funcc7458( A0 )
+void funcc7458(A0)
 {
     [A0 + 0000] = w(0x1);
 }
@@ -33076,42 +32998,42 @@ lc86b4:	; 800c86b4
 
 
 
-void funcc86c8( A0, S0 )
+void funcc86c8(A0, S0)
 {
-    func28a40( A0, SP + 0x10, SP + 0x18, SP + 0x20 );
-    func28a40( S0, SP + 0x28, SP + 0x30, SP + 0x38 );
+    func28a40(A0, SP + 0x10, SP + 0x18, SP + 0x20);
+    func28a40(S0, SP + 0x28, SP + 0x30, SP + 0x38);
 
-    system_psyq_store_image( SP + 0x10, 0x80076f80 );
-    system_psyq_draw_sync( 0 );
+    system_psyq_store_image(SP + 0x10, 0x80076f80);
+    system_psyq_draw_sync(0);
 
-    system_psyq_move_image( SP + 0x18, 0x3c0, 0x1b0 );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(SP + 0x18, 0x3c0, 0x1b0);
+    system_psyq_draw_sync(0);
 
-    system_psyq_move_image( SP + 0x20, 0x3d0, 0x1b0 );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(SP + 0x20, 0x3d0, 0x1b0);
+    system_psyq_draw_sync(0);
 
-    system_psyq_move_image( SP + 0x28, h[SP + 0x10], h[SP + 0x12] );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(SP + 0x28, h[SP + 0x10], h[SP + 0x12]);
+    system_psyq_draw_sync(0);
 
-    system_psyq_move_image( SP + 0x30, h[SP + 0x18], h[SP + 0x1a] );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(SP + 0x30, h[SP + 0x18], h[SP + 0x1a]);
+    system_psyq_draw_sync(0);
 
-    system_psyq_move_image( SP + 0x38, h[SP + 0x20], h[SP + 0x22] );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(SP + 0x38, h[SP + 0x20], h[SP + 0x22]);
+    system_psyq_draw_sync(0);
 
-    system_psyq_load_image( SP + 0x28, 0x80076f80 );
-    system_psyq_draw_sync( 0 );
+    system_psyq_load_image(SP + 0x28, 0x80076f80);
+    system_psyq_draw_sync(0);
 
     RECT rect;
     rect.x = 0x3c0;
     rect.y = 0x1b0;
     rect.w = 0x3d0;
     rect.h = 0x1b0;
-    system_psyq_move_image( &rect, h[SP + 0x30], h[SP + 0x32] );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(&rect, h[SP + 0x30], h[SP + 0x32]);
+    system_psyq_draw_sync(0);
 
-    system_psyq_move_image( SP + 0x20, h[SP + 0x38], h[SP + 0x3a] );
-    system_psyq_draw_sync( 0 );
+    system_psyq_move_image(SP + 0x20, h[SP + 0x38], h[SP + 0x3a]);
+    system_psyq_draw_sync(0);
 }
 
 
@@ -34327,7 +34249,7 @@ something2 = A0 + w[A0 + 0x4];
 S5 = A0 + w[sprites + 0];
 
 number_of_something2 = w[A0 + 0x8];
-if( number_of_something2 > 0 )
+if (number_of_something2 > 0)
 {
     S2 = 0;
     loopc99b4:	; 800C99B4
@@ -34353,7 +34275,7 @@ if( number_of_something2 > 0 )
 
 number_of_sprites = w[sprites + 0x4];
 S3 = sprites + 0x8;
-if( number_of_sprites > 0 )
+if (number_of_sprites > 0)
 {
     S2 = 0;
     loopc9a30:	; 800C9A30

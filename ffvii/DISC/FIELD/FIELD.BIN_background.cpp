@@ -760,8 +760,7 @@ void field_background_update_drawenv( FieldRenderData* current_rd )
     [offset_to_triggers + 0x24] = h((hu[offset_to_triggers + 0x24] + hu[0x8009abf4 + 0xaa]) % (h[offset_to_triggers + 0x1c] * 0x10)); // add x scroll for 3nd background
     [offset_to_triggers + 0x26] = h((hu[offset_to_triggers + 0x26] + hu[0x8009abf4 + 0xac]) % (h[offset_to_triggers + 0x1e] * 0x10)); // add y scroll for 3nd background
 
-    A0 = h[camera_data + 0x24]; // H
-    system_psyq_set_geom_screen();
+    system_psyq_set_geom_screen(h[camera_data + 0x24]);
 
     if( ( g_movie_play != 0 ) && ( bu[0x8009abf4 + 0x3a] == 0 ) )
     {
