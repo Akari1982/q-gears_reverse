@@ -738,28 +738,17 @@ u16 system_psyq_load_tpage( u32* pix, int tp, int abr, int x, int y, int w, int 
 
 
 
-////////////////////////////////
-// func437ac
+u16 system_psyq_load_clut(u32* clut, s32 x, s32 y)
+{
+    RECT rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = 0x100;
+    rect.h = 0x1;
+    system_psyq_load_image(&rect, clut);
 
-V0 = A0;
-S0 = A1;
-S1 = A2;
-A0 = SP + 0010;
-A1 = V0;
-V0 = 0100;
-[SP + 0014] = h(100);
-V0 = 0001;
-[SP + 0010] = h(S0);
-[SP + 0012] = h(S1);
-[SP + 0016] = h(V0);
-800437E4	jal    system_psyq_load_image [$80044000]
-
-A0 = S0;
-A1 = S1;
-system_psyq_get_clut();
-
-return V0 & ffff;
-////////////////////////////////
+    return system_psyq_get_clut(x, y);
+}
 
 
 

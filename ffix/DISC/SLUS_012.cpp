@@ -1460,8 +1460,8 @@ SP = SP + 0018;
 ////////////////////////////////
 // func1a3cc()
 
-V0 = 800739b8;
-if (A0 & f0) V0 += f0;
+V0 = 0x800739b8;
+if (A0 & 0xf0) V0 += 0xf0;
 
 return V0;
 ////////////////////////////////
@@ -1819,43 +1819,31 @@ SP = SP + 0018;
 ////////////////////////////////
 // func1a848()
 
-if ((hu[A0 + e6] != 0) && (bu[A0 + 46] == ff)) return 0;
+if ((hu[A0 + 0xe6] != 0) && (bu[A0 + 0x46] == 0xff)) return 0;
 
-return 1;
+return 0x1;
 ////////////////////////////////
 
 
 
+int func1a888()
+{
+    V1 = w[0x80068200];
+    if ((w[V1 + 0x4] & 0x1) == 0) return 0;
+    if ((w[V1 + 0x0] & 0x1) == 0) return 0;
+
+    V0 = w[0x800681b4];
+    if (V0 != 0)
+    {
+        8001A8D4	jalr   v0 ra
+    }
+
+    return = 0x1;
+}
 ////////////////////////////////
-// func1a888
-V1 = w[0x80068200];
-8001A890	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0010] = w(RA);
-V0 = w[V1 + 0004];
-8001A89C	nop
-V0 = V0 & 0001;
-8001A8A4	beq    v0, zero, L1a8e0 [$8001a8e0]
-V0 = 0;
-V0 = w[V1 + 0000];
-8001A8B0	nop
-V0 = V0 & 0001;
-8001A8B8	beq    v0, zero, L1a8e0 [$8001a8e0]
-V0 = 0;
-V0 = w[0x800681b4];
-8001A8C8	nop
-8001A8CC	beq    v0, zero, L1a8dc [$8001a8dc]
-8001A8D0	nop
-8001A8D4	jalr   v0 ra
-8001A8D8	nop
 
-L1a8dc:	; 8001A8DC
-V0 = 0001;
 
-L1a8e0:	; 8001A8E0
-RA = w[SP + 0010];
-SP = SP + 0018;
-8001A8E8	jr     ra 
-8001A8EC	nop
+
 ////////////////////////////////
 // func1a8f0
 V1 = w[0x80068204];
@@ -9699,7 +9687,7 @@ A0 = 0;
 S2 = bu[SP + 0044];
 A1 = S1 + 01f3;
 [SP + 0028] = w(RA);
-8002823C	jal    func28d90 [$80028d90]
+8002823C	jal    system_psyq_get_clut [$80028d90]
 [SP + 001c] = w(S3);
 80028244	bltz   s1, L283bc [$800283bc]
 T1 = V0;
@@ -9847,7 +9835,7 @@ A0 = S7 & 0001;
 A0 = A0 << 07;
 A0 = V0 + A0;
 A1 = S7 >> 01;
-80028470	jal    func28d90 [$80028d90]
+80028470	jal    system_psyq_get_clut [$80028d90]
 A1 = V1 + A1;
 T2 = S7 << 05;
 A0 = w[0x80077170];
@@ -10480,15 +10468,16 @@ RA = w[SP + 0010];
 80028D88	jr     ra 
 SP = SP + 0018;
 ////////////////////////////////
-// func28d90
-V0 = A1 << 06;
-A0 = A0 >> 04;
-A0 = A0 & 003f;
-V0 = V0 | A0;
-80028DA0	jr     ra 
-V0 = V0 & ffff;
-80028DA8	nop
-80028DAC	nop
+
+
+
+u16 system_psyq_get_clut( s32 x, s32 y )
+{
+    return (y << 0x6) | ((x >> 0x4) & 0x3f);
+}
+
+
+
 ////////////////////////////////
 // func28db0
 80028DB0	addiu  sp, sp, $ffc0 (=-$40)
@@ -41167,27 +41156,17 @@ SP = SP + 0030;
 
 
 
-////////////////////////////////
-// func65148()
+u16 system_psyq_load_clut(u32* clut, s32 x, s32 y)
+{
+    RECT rect;
+    rect.x = x;
+    rect.y = y;
+    rect.w = 0x100;
+    rect.h = 0x1;
+    system_psyq_load_image(&rect, clut);
 
-V0 = A0;
-S0 = A1;
-S1 = A2;
-
-[SP + 10] = h(S0);
-[SP + 12] = h(S1);
-[SP + 14] = h(100);
-[SP + 16] = h(1);
-
-A0 = SP + 10;
-A1 = V0;
-system_psyq_load_image();
-
-A0 = S0;
-A1 = S1;
-func28d90();
-return V0 & ffff;
-////////////////////////////////
+    return system_psyq_get_clut(x, y);
+}
 
 
 
