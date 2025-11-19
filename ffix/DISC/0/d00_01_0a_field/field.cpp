@@ -40,10 +40,10 @@ void funca7b10()
     system_psyq_set_disp_mask(0x1);
 
     struct = w[0x8006794c];
+    struct1c = w[struct + 0x1c];
 
-    S1 = 0x8006794c;
-
-    la7b34:	; 800a7b34
+    do
+    {
         funcae788();
 
         func19194();
@@ -60,231 +60,186 @@ void funca7b10()
             }
         }
 
-        V0 = w[struct + 0x1c];
-        V0 = w[V0 + 0000];
-        V0 = V0 & 0x100;
-        800A7BA4	bne    v0, zero, la8030 [$800a8030]
-
-        funcadb74();
-
-        A2 = w[struct + 0x1c];
-        A1 = w[A2 + 0x0];
-        V0 = A1 & 0x1;
-        if (V0 == 0)
+        if ((w[struct1c + 0x0] & 0x100) == 0)
         {
-            if (w[0x80073990] & 0x40000)
+            funcadb74();
+
+            if ((w[struct1c + 0x0] & 0x1) == 0)
             {
-                A0 = w[0x800739a0];
-                if (A0 & 0x400f0)
+                if (w[0x80073990] & 0x40000)
                 {
-                    if ((A0 & 0x4fa0009) == 0)
+                    A0 = w[0x800739a0];
+                    if (A0 & 0x400f0)
                     {
-                        [A2 + 0x0] = w(A1 | 0x2);
+                        if ((A0 & 0x4fa0009) == 0)
+                        {
+                            [struct1c + 0x0] = w(w[struct1c + 0x0] | 0x2);
 
-                        func32120(0, 0);
+                            func32120(0, 0);
 
-                        func4a9e8();
+                            func4a9e8();
+                        }
                     }
                 }
             }
-        }
 
-        V0 = w[struct + 0x1c];
-        if ((w[V0 + 0x0] & 0x2) == 0)
-        {
-            switch (func4bc38())
+            if ((w[struct1c + 0x0] & 0x2) == 0)
             {
-                case 0x3:
+                switch (func4bc38())
                 {
-                    V0 = w[struct + 0x1c];
-                    V0 = w[V0 + 0x8e4];
-                    V0 = w[V0 + 0xc];
-                    V1 = w[V0 + 0x14];
-                    [V1 + 0x4a] = b(0x2);
-                    funcaed04();
-                }
-                break;
-
-                case 0x4:
-                {
-                    V0 = w[struct + 0x1c];
-                    V0 = w[V0 + 0x8e4];
-                    V0 = w[V0 + 0xc];
-                    A1 = w[V0 + 0x14];
-                    V1 = h[A1 + 0xa];
-                    if (V1 == 0x3e80)
+                    case 0x3:
                     {
-                        [A1 + 004a] = b(0x4);
+                        V0 = w[struct1c + 0x8e4];
+                        V0 = w[V0 + 0xc];
+                        V1 = w[V0 + 0x14];
+                        [V1 + 0x4a] = b(0x2);
+                        funcaed04();
+                    }
+                    break;
+
+                    case 0x4:
+                    {
+                        V0 = w[struct1c + 0x8e4];
+                        V0 = w[V0 + 0xc];
+                        A1 = w[V0 + 0x14];
+                        V1 = h[A1 + 0xa];
+                        if (V1 == 0x3e80)
+                        {
+                            [A1 + 004a] = b(0x4);
+                            [struct + 0x0] = w(w[struct + 0x0] | 0x2);
+                        }
+                        else
+                        {
+                            [struct + 0x0] = w(w[struct + 0x0] | 0x8);
+                        }
+                    }
+                    break;
+
+                    case 0x5:
+                    {
+                        V0 = w[struct1c + 0x8e4];
+                        V0 = w[V0 + 0xc];
+                        V1 = w[V0 + 0x14];
+                        [V1 + 0x4a] = b(0x3);
                         [struct + 0x0] = w(w[struct + 0x0] | 0x2);
                     }
-                    else
+                    break;
+
+                    case 0x7:
                     {
-                        [struct + 0x0] = w(w[struct + 0x0] | 0x8);
+                        V0 = w[struct1c + 0x8e4];
+                        V0 = w[V0 + 0xc];
+                        V1 = w[V0 + 0x14];
+                        [V1 + 0x4a] = b(0x9);
+                        [struct + 0x0] = w(w[struct + 0x0] | 0x2);
                     }
-                }
-                break;
+                    break;
 
-                case 0x5:
-                {
-                    V0 = w[struct + 0x1c];
-                    V0 = w[V0 + 0x8e4];
-                    V0 = w[V0 + 0xc];
-                    V1 = w[V0 + 0x14];
-                    [V1 + 0x4a] = b(0x3);
-                    [struct + 0x0] = w(w[struct + 0x0] | 0x2);
+                    case 0x8:
+                    {
+                        V0 = w[struct1c + 0x8e4];
+                        V0 = w[V0 + 0xc];
+                        V1 = w[V0 + 0x14];
+                        [V1 + 0x4a] = b(0x7);
+                        [struct + 0x0] = w(w[struct + 0x0] | 0x2);
+                    }
+                    break;
                 }
-                break;
+            }
 
-                case 0x7:
-                {
-                    V0 = w[struct + 0x1c];
-                    V0 = w[V0 + 0x8e4];
-                    V0 = w[V0 + 0xc];
-                    V1 = w[V0 + 0x14];
-                    [V1 + 0x4a] = b(0x9);
-                    [struct + 0x0] = w(w[struct + 0x0] | 0x2);
-                }
-                break;
+            if ((w[struct1c + 0x0] & 0x1) == 0)
+            {
+                func32100();
+            }
 
-                case 0x8:
-                {
-                    V0 = w[struct + 0x1c];
-                    V0 = w[V0 + 0x8e4];
-                    V0 = w[V0 + 0xc];
-                    V1 = w[V0 + 0x14];
-                    [V1 + 0x4a] = b(0x7);
-                    [struct + 0x0] = w(w[struct + 0x0] | 0x2);
-                }
+            if (w[struct + 0x0] & 0x100000)
+            {
+                [struct + 0x0] = w(w[struct + 0x0] | 0x8);
+
+                A0 = w[struct1c + 0x8e4];
+                [A0 + 0x0] = w(w[A0 + 0x0] | 0x10000);
                 break;
+            }
+
+            if ((w[struct1c + 0x0] & 0x8) == 0)
+            {
+                funcbfee0();
+            }
+
+            if ((w[struct1c + 0x0] & 0x4) == 0)
+            {
+                funcab3cc(); // model update
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x8) == 0)
+            {
+                funcc60f0();
+                funcc7100();
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x10) == 0)
+            {
+                func54b78();
+            }
+
+            if ((w[struct1c + 0x0] & 0x10) == 0)
+            {
+                funcafde8();
+            }
+
+            if ((w[struct1c + 0x0] & 0x8) == 0)
+            {
+                funcb3684();
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x1) == 0)
+            {
+                func23a0c();
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x800) == 0)
+            {
+                func32098();
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x4) == 0)
+            {
+                funcaed6c();
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x80) == 0)
+            {
+                func23a4c();
+            }
+
+            V0 = w[struct1c + 0x8e4];
+            if ((w[V0 + 0x0] & 0x1000) == 0)
+            {
+                func2246c();
             }
         }
 
-        V0 = w[struct + 0x1c];
-        if ((w[V0 + 0x0] & 0x1) == 0)
-        {
-            func32100();
-        }
-
-        A0 = w[0x8006794c];
-        A1 = w[A0 + 0000];
-        800A7DE0	lui    v0, $0010
-        V0 = A1 & V0;
-        800A7DE8	beq    v0, zero, la7e14 [$800a7e14]
-        V0 = A1 | 0008;
-        V1 = w[A0 + 001c];
-        [A0 + 0000] = w(V0);
-        A0 = w[V1 + 08e4];
-        800A7DFC	nop
-        V0 = w[A0 + 0000];
-        800A7E04	lui    v1, $0001
-        V0 = V0 | V1;
-        [A0 + 0000] = w(V0);
-        800A7E0C	j      la8054 [$800a8054]
-
-        la7e14:	; 800a7e14
-        V0 = w[A0 + 0x1c];
-        if ((w[V0 + 0x0] & 0x8) == 0)
-        {
-            funcbfee0();
-        }
-
-        V0 = w[struct + 0x1c];
-        if ((w[V0 + 0x0] & 0x4) == 0)
-        {
-            funcab3cc(); // model update
-        }
-
-        V0 = w[struct + 0x1c];
-        V0 = w[V0 + 0x8e4];
-        if ((w[V0 + 0x0] & 0x8) == 0)
-        {
-            funcc60f0();
-            funcc7100();
-        }
-
-        V0 = w[struct + 0x1c];
-        V0 = w[V0 + 0x8e4];
-        if ((w[V0 + 0x0] & 0x10) == 0)
-        {
-            func54b78();
-        }
-
-        V0 = w[struct + 0x1c];
-        if ((w[V0 + 0x0] & 0x10) == 0)
-        {
-            funcafde8();
-        }
-
-        V0 = w[struct + 0x1c];
-        if ((w[V0 + 0x0] & 0x8) == 0)
-        {
-            funcb3684();
-        }
-
-        V0 = w[struct + 0x1c];
-        V0 = w[V0 + 0x8e4];
-        if ((w[V0 + 0x0] & 0x1) == 0)
-        {
-            func23a0c();
-        }
-
-        V0 = w[struct + 0x1c];
-        V0 = w[V0 + 0x8e4];
-        if ((w[V0 + 0x0] & 0x800) == 0)
-        {
-            func32098();
-        }
-
-        V0 = w[S1 + 0000];
-        V0 = w[V0 + 0x1c];
-        V0 = w[V0 + 0x8e4];
-        if ((w[V0 + 0x0] & 0x4) == 0)
-        {
-            funcaed6c();
-        }
-
-        V0 = w[S1 + 0000];
-        V0 = w[V0 + 0x1c];
-        V0 = w[V0 + 0x8e4];
-        if ((w[V0 + 0x0] & 0x80) == 0)
-        {
-            func23a4c();
-        }
-
-        V0 = w[S1 + 0000];
-        V0 = w[V0 + 001c];
-        V0 = w[V0 + 08e4];
-        V0 = w[V0 + 0000];
-        V0 = V0 & 1000;
-        800A8020	bne    v0, zero, la8030 [$800a8030]
-        800A8024	nop
-
-        la8028:	; 800a8028
-        func2246c();
-
-        la8030:	; 800a8030
         funcae930(); // some draw
+    }
+    while ((w[struct + 0x0] & 0xf) == 0);
 
-        V0 = w[struct + 0x0] & 0xf;
-    800A804C	beq    v0, zero, la7b34 [$800a7b34]
+    if (funcb4f9c() != 0)
+    {
+        funcb4a5c(); // some draw
+    }
 
-    la8054:	; 800a8054
-    funcb4f9c();
+    if (funcb54cc() & 0xff)
+    {
+        funcb50a4();
+    }
 
-    800A805C	beq    v0, zero, la806c [$800a806c]
-
-    funcb4a5c(); // some draw
-
-    la806c:	; 800a806c
-    800A806C	jal    funcb54cc [$800b54cc]
-    800A8070	nop
-    V0 = V0 & 00ff;
-    800A8078	beq    v0, zero, la8088 [$800a8088]
-
-    funcb50a4();
-
-    la8088:	; 800a8088
-    800A8088	jal    funca8e58 [$800a8e58]
+    funca8e58();
 }
 
 
@@ -6887,33 +6842,24 @@ laecf0:	; 800aecf0
 
 
 
-////////////////////////////////
-// funcaed04
-V0 = w[0x8006794c];
-800AED0C	nop
-V0 = w[V0 + 001c];
-800AED14	nop
-V0 = w[V0 + 08e4];
-800AED1C	nop
-V0 = w[V0 + 000c];
-800AED24	lui    a0, $800d
-V0 = w[V0 + 0014];
-800AED2C	addiu  v1, a0, $9ef0 (=-$6110)
-[V0 + 0041] = b(0);
-V0 = 0004;
-[V1 + 001e] = h(V0);
-V0 = 0043;
-[A0 + 0x9ef0] = h(V0);
-V0 = 003c;
-[V1 + 0004] = h(V0);
-V0 = 1919;
-800AED50	lui    a0, $8007
-[V1 + 0014] = h(V0);
-V0 = w[A0 + 0x3998];
-800AED5C	lui    v1, $0400
-V0 = V0 | V1;
-800AED64	jr     ra 
-[A0 + 0x3998] = w(V0);
+void funcaed04()
+{
+    struct = w[0x8006794c];
+    struct1c = w[struct + 0x1c];
+    V0 = w[struct1c + 0x8e4];
+    V0 = w[V0 + 0xc];
+    V0 = w[V0 + 0x14];
+    [V0 + 0x41] = b(0);
+    [0x800c9ef0 + 0x0] = h(0x43);
+    [0x800c9ef0 + 0x4] = h(0x3c);
+    [0x800c9ef0 + 0x14] = h(0x1919);
+    [0x800c9ef0 + 0x1e] = h(0x4);
+
+    [0x80073998] = w(w[0x80073998] | 0x4000000);
+}
+
+
+
 ////////////////////////////////
 // funcaed6c
 800AED6C	addiu  sp, sp, $ffc0 (=-$40)
