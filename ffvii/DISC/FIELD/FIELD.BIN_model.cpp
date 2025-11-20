@@ -19,7 +19,7 @@ A2 = 0x801b0000;
 A3 = 0;
 system_cdrom_start_load_lzs();
 
-do system_cdrom_read_chain(); while( V0 != 0 )
+do system_cdrom_read_chain(); while (V0 != 0)
 
 [1f800000] = w(800df08c); // CLOUD.BCX start sector.
 [1f800004] = w(800df0d4); // FIELD.TDB start sector.
@@ -40,12 +40,12 @@ field_model_load_local_model_and_init_all();
 
 models_data = w[models_struct + 4];
 
-for( int i = 1; i < bu[models_struct + 0]; ++i ) // number of models
+for (int i = 1; i < bu[models_struct + 0]; ++i) // number of models
 {
     [models_data + i * 24 + 0] = b(0);
 }
 
-for( int i = 0; i < bu[models_struct + 0]; ++i ) // number of models
+for (int i = 0; i < bu[models_struct + 0]; ++i) // number of models
 {
     [1f800000] = b(1);
     [1f800001] = b(1);
@@ -78,9 +78,9 @@ model_data = w[model_struct + 4];
 entities_n = h[0x8009abf4 + 0x28];
 
 // update bone matrixes
-for( int i = 0; i < entities_n; ++i )
+for (int i = 0; i < entities_n; ++i)
 {
-    if( bu[S1 + 4] != ff )
+    if (bu[S1 + 4] != ff)
     {
         model_id = bu[block7_data + i * 8 + 4];
 
@@ -92,16 +92,14 @@ for( int i = 0; i < entities_n; ++i )
         [model_data + model_id * 24 +  c] = w(h(SP + 12));
         [model_data + model_id * 24 + 10] = w(h[SP + 14]);
 
-        A0 = SP + 10;
-        A1 = SP + 18;
-        field_calculate_world_to_screen_pos(); // return distance to screen
+        field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18); // return distance to screen
 
-        if( V0 < f00 )
+        if (V0 < 0xf00)
         {
             [model_data + model_id * 24 + 7] = b(bu[0x80074ea4 + i * 84 + 38]); // model direction
 
             V1 = b[model_data + model_id * 24 + 1]; // +1[] KAWAI byte in new structure
-            if( ( V1 == 4 ) || ( V1 == 8 ) || ( V1 == 9 ) || ( V1 == b ) || ( V1 == c ) )
+            if ((V1 == 4) || (V1 == 8) || (V1 == 9) || (V1 == b) || (V1 == c))
             {
                 // identity matrix
                 [SP + 20] = h(1000); [SP + 22] = h(0);    [SP + 24] = h(0);
@@ -144,22 +142,21 @@ for( int i = 0; i < entities_n; ++i )
 }
 
 // update vervexes in drafts
-for( int i = 0; i < entities_n; ++i )
+for (int i = 0; i < entities_n; ++i)
 {
-    if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
+    if (bu[block7_data + i * 8 + 4] != ff) // model enabled
     {
         [SP + 10] = h(w[0x80074ea4 + i * 84 + c] >> c);
         [SP + 12] = h(w[0x80074ea4 + i * 84 + 10] >> c);
         [SP + 14] = h((w[0x80074ea4 + i * 84 + 14] >> c) - a);
-        A0 = SP + 10;
-        A1 = SP + 18;
-        field_calculate_world_to_screen_pos(); // return distance to screen
 
-        if( V0 < f00 )
+        field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18); // return distance to screen
+
+        if (V0 < f00)
         {
             model_id = bu[block7_data + i * 8 + 4];
             S0 = b[model_data + model_id * 24 + 1]; // +1[] KAWAI byte in new structure
-            if( ( S0 == 4 ) || ( S0 == 8 ) || ( S0 == 9 ) || ( S0 == b ) || ( S0 == c ) )
+            if ((S0 == 4) || (S0 == 8) || (S0 == 9) || (S0 == b) || (S0 == c))
             {
                 A0 = model_data + model_id * 24;
                 funcae23c();
@@ -178,22 +175,20 @@ for( int i = 0; i < entities_n; ++i )
 }
 
 // update model kawai
-for( int i = 0; i < entities_n; ++i )
+for (int i = 0; i < entities_n; ++i)
 {
-    if( bu[block7_data + i * 8 + 4] != ff ) // model enabled
+    if (bu[block7_data + i * 8 + 4] != ff) // model enabled
     {
         S3 = h[0x80074ea4 + i * 84 + 0];
-        if( S3 == 1 ) // if kawaii
+        if (S3 == 1) // if kawaii
         {
             [SP + 10] = h(w[0x80074ea4 + i * 84 + c] >> c);
             [SP + 12] = h(w[0x80074ea4 + i * 84 + 10] >> c);
             [SP + 14] = h((w[0x80074ea4 + i * 84 + 14] >> c) - a);
 
-            A0 = SP + 10;
-            A1 = SP + 18;
-            field_calculate_world_to_screen_pos(); // return distance to screen
+            field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18); // return distance to screen
 
-            if( V0 < f00 )
+            if (V0 < f00)
             {
                 V1 = w[0x8004a62c];
                 A2 = bu[block7_data + i * 8 + 4]; // model id
@@ -202,7 +197,7 @@ for( int i = 0; i < entities_n; ++i )
                 A3 = w[0x80071e40]; // offset to camera section
                 field_model_kawai_execute();
 
-                if( V0 == 1 )
+                if (V0 == 1)
                 {
                     [0x80074ea4 + i * 84 + 0] = h(2);
                 }
@@ -211,13 +206,13 @@ for( int i = 0; i < entities_n; ++i )
     }
 }
 
-for( int i = 0; i < h[0x8009ac1c]; ++i )
+for (int i = 0; i < h[0x8009ac1c]; ++i)
 {
-    if( bu[block7_data + i * 8 + 4] != ff )
+    if (bu[block7_data + i * 8 + 4] != ff)
     {
-        if( bu[0x80074ea4 + i * 84 + 8] != 1 )
+        if (bu[0x80074ea4 + i * 84 + 8] != 1)
         {
-            if( bu[0x80074ea4 + i * 84 + 9] == 0 )
+            if (bu[0x80074ea4 + i * 84 + 9] == 0)
             {
                 [S5 + 0] = b(2);
                 [S5 + 1] = b(2);
@@ -257,7 +252,7 @@ for( int i = 0; i < h[0x8009ac1c]; ++i )
 
 void field_camera_assign()
 {
-    if( ( g_movie_play == 0 ) || ( bu[0x8009abf4 + 0x39] == 0x1 ) )
+    if ((g_movie_play == 0) || (bu[0x8009abf4 + 0x39] == 0x1))
     {
         [0x80071e40] = w(w[g_field_camera_p]);
     }
@@ -274,7 +269,7 @@ void funcab310()
     // if field background already loading
     if (h[0x800965e8] == 0x1)
     {
-        if( system_cdrom_read_chain() == 0 )
+        if (system_cdrom_read_chain() == 0)
         {
             [0x800965e8] = h(0x2);
         }
@@ -293,7 +288,7 @@ void funcab310()
 
     V0 = system_cdrom_read_chain();
 
-    if( V0 == 0 ) // do nothing
+    if (V0 == 0) // do nothing
     {
         if ((g_field_control.cmd == FIELD_CMD_MOVIE_PLAY) && (h[0x8009abf4 + 0x26] == 0))
         {
