@@ -1,4 +1,4 @@
-void field_init_structs_events_actors( field_struct, entities_data, events_data )
+void field_init_structs_events_actors(field_struct, entities_data, events_data)
 {
     [0x8009c6e0] = w(field_struct);
     [0x8009c544] = w(entities_data); // pointer to model data
@@ -8,7 +8,7 @@ void field_init_structs_events_actors( field_struct, entities_data, events_data 
     [0x8009fe8c] = b(0);
     [0x80095dcc] = b(0);
 
-    if( h[field_struct + 0x6a] & 0x0100 ) // if select key
+    if (h[field_struct + 0x6a] & 0x0100) // if select key
     {
         [0x80095dcc] = b(1);
         [0x80099ffc] = b(4); // script related
@@ -16,19 +16,19 @@ void field_init_structs_events_actors( field_struct, entities_data, events_data 
 
     // file version check
     {
-        if( bu[events_data + 0x0] < 2 )
+        if (bu[events_data + 0x0] < 2)
         {
-            system_psyq_system_error( 0x4b, 0xa ); // "K" (old Event data!)
+            system_psyq_system_error(0x4b, 0xa); // "K" (old Event data!)
         }
 
-        if( bu[events_data + 0x1] < 5 )
+        if (bu[events_data + 0x1] < 5)
         {
-            system_psyq_system_error( 0x4b, 0xb ); // "K" (old Event version!)
+            system_psyq_system_error(0x4b, 0xb); // "K" (old Event version!)
         }
 
-        if( ( bu[events_data + 0x0] >= 3 ) || ( bu[events_data + 0x1] >= 6 ) )
+        if ((bu[events_data + 0x0] >= 3) || (bu[events_data + 0x1] >= 6))
         {
-            system_psyq_system_error( 0x4b, 0xc ); // "K" (old Event program!)
+            system_psyq_system_error(0x4b, 0xc); // "K" (old Event program!)
         }
     }
 
@@ -36,7 +36,7 @@ void field_init_structs_events_actors( field_struct, entities_data, events_data 
     field_init_default_values();
     field_event_run_init();
 
-    if( bu[0x800716d4] == 0 ) // music not locked
+    if (bu[0x800716d4] == 0) // music not locked
     {
         clear_akao();
 
@@ -52,7 +52,7 @@ void field_init_structs_events_actors( field_struct, entities_data, events_data 
 
 ot = A0;
 
-if( bu[0x8007ebe0] != 0 )
+if (bu[0x8007ebe0] != 0)
 {
     funcd4bfc(); // init window
 
@@ -70,21 +70,21 @@ if( bu[0x8007ebe0] != 0 )
 
     // file check version
     {
-        if( bu[events_data + 1] < 5 )
+        if (bu[events_data + 1] < 5)
         {
             A0 = 4b;
             A1 = b;
             system_psyq_system_error();
         }
 
-        if( bu[events_data + 0] < 2 )
+        if (bu[events_data + 0] < 2)
         {
             A0 = 4b;
             A1 = a;
             system_psyq_system_error();
         }
 
-        if( ( bu[events_data + 1] >= 6 ) || ( bu[events_data + 0] >= 3 ) )
+        if ((bu[events_data + 1] >= 6) || (bu[events_data + 0] >= 3))
         {
             A0 = 4b;
             A1 = c;
@@ -93,12 +93,12 @@ if( bu[0x8007ebe0] != 0 )
     }
 }
 
-if( ( bu[0x80099ffc] != 4 ) && ( ( bu[0x80099ffc] != 5 ) || ( bu[0x80070788] != 0 ) ) )
+if ((bu[0x80099ffc] != 4) && ((bu[0x80099ffc] != 5) || (bu[0x80070788] != 0)))
 {
     field_event_opcode_cycle();
 }
 
-if( bu[0x80071e2c] ) // if at least 1 window is opened
+if (bu[0x80071e2c]) // if at least 1 window is opened
 {
     A0 = 80083274;
     A1 = 4; // render max 4 dialogs
@@ -162,15 +162,15 @@ void field_init_default_values()
 
     [0x80081dc4] = b(0); // current UC opcode state.
 
-    for( int i = 0; i < 0x100; ++i )
+    for (int i = 0; i < 0x100; ++i)
     {
         [0x80075e24 + i] = b(0); // clear temp memory in script 5/6
     }
 
     // reset events scripts
-    for( int i = 0; i < 0x8; ++i )
+    for (int i = 0; i < 0x8; ++i)
     {
-        for( int j = 0; j < bu[events_data + 0x2]; ++j ) // go through all actors
+        for (int j = 0; j < bu[events_data + 0x2]; ++j) // go through all actors
         {
             [0x80071748 + j * 0x10 + i * 2] = h(0); // priority script offsets
             [0x800833f8 + j * 0x8 + i] = b(0); // array of script running state
@@ -179,7 +179,7 @@ void field_init_default_values()
         }
     }
 
-    for( int i = 0; i < bu[events_data + 0x2]; ++i ) // go through all actors
+    for (int i = 0; i < bu[events_data + 0x2]; ++i) // go through all actors
     {
         [0x8009a1c4 + i] = b(0x7); // array of current priority slot used by actor
         [0x8007eb98 + i] = b(0xff); // array of actors model id data. -1 - no model.
@@ -189,7 +189,7 @@ void field_init_default_values()
         [0x80114498 + i] = b(0); // not debug script output
     }
 
-    for( int i = 0; i < bu[events_data + 0x3]; ++i ) // go through all entities
+    for (int i = 0; i < bu[events_data + 0x3]; ++i) // go through all entities
     {
         [entities_data + i * 0x84 + 0x0] = h(0); // store 1 here in KAWAI opcode. Store 2 here ir field_model_kawai_execute function returns 1
         [entities_data + i * 0x84 + 0x2] = h(0); // store 0 here in KAWAI opcode.
@@ -247,26 +247,26 @@ void field_init_default_values()
         [0x80082248 + i * 2] = h(10); // model default animation speed
     }
 
-    for( int i = 0; i < 0x40; ++i )
+    for (int i = 0; i < 0x40; ++i)
     {
         [field_struct + 0xf2 + i] = b(0); // background state
     }
 
-    for( int i = 0; i < 0x40; ++i )
+    for (int i = 0; i < 0x40; ++i)
     {
         [field_struct + 0xb2 + i] = b(0); // triangle lock array (bit per triangle)
     }
 
-    for( int i = 0; i < 0x40; ++i )
+    for (int i = 0; i < 0x40; ++i)
     {
-        for( int j = 0; j < 0x10; ++j )
+        for (int j = 0; j < 0x10; ++j)
         {
             [0x80095de0 + i * 0x20 + j * 0x2] = h(0); // array of stored background palletes
         }
     }
 
     // init lines
-    for( int i = 0; i < 0x20; ++i )
+    for (int i = 0; i < 0x20; ++i)
     {
         [0x8007e7ac + i * 0x18 + 0x0] = h(0); // x1
         [0x8007e7ac + i * 0x18 + 0x2] = h(0); // y1
@@ -286,7 +286,7 @@ void field_init_default_values()
     }
     [0x80095d84] = h(0); // number of inited lines
 
-    for( int i = 0; i < 8; ++i )
+    for (int i = 0; i < 8; ++i)
     {
         [0x8009ad30 + i] = b(0xff); // player character array of assigned actor_id
     }
@@ -309,23 +309,23 @@ akao_n = h[events_data + 6];
 
 string = 0x800e4254;
 
-for( int i = 0; i < actors_n; ++i )
+for (int i = 0; i < actors_n; ++i)
 {
     [0x800722c4] = b(i); // save current actor for use inside opcodes
 
-    if( bu[0x80071e24] & 0x3 )
+    if (bu[0x80071e24] & 0x3)
     {
-        field_debug_copy_string( string, "Actor:" );
-        field_debug_concat_string( string, events_data + 20 + i * 8 );
+        field_debug_copy_string(string, "Actor:");
+        field_debug_concat_string(string, events_data + 20 + i * 8);
 
-        if( bu[0x80071e24] & 0x1 )
+        if (bu[0x80071e24] & 0x1)
         {
-            field_debug_copy_string_into_page( 0x4, 0, string );
+            field_debug_copy_string_into_page(0x4, 0, string);
         }
 
-        if( bu[0x80071e24] & 0x2 )
+        if (bu[0x80071e24] & 0x2)
         {
-            funcd4840( string ); // empty
+            funcd4840(string); // empty
         }
     }
 
@@ -334,7 +334,7 @@ for( int i = 0; i < actors_n; ++i )
 
     opcode = bu[events_data + script];
 
-    while( opcode != 0 ) // do until RET opcode
+    while (opcode != 0) // do until RET opcode
     {
         [0x8009a058] = b(opcode);
         800BB0F4	jalr   w[0x800e0228 + opcode * 0x4] ra
@@ -362,18 +362,18 @@ block7_header = w[0x8007e770];
 actors_n = bu[events_data + 0x2];
 models_n = hu[block7_header + 0x2];
 
-for( int i = 0; i < 3; ++i )
+for (int i = 0; i < 3; ++i)
 {
     char_id = bu[0x8009c6e4 + cad + i];
-    if( char_id != 0xff )
+    if (char_id != 0xff)
     {
         actor_id = bu[0x8009ad30 + char_id];
-        if( actor_id != 0xff )
+        if (actor_id != 0xff)
         {
             model_id = bu[0x8007eb98 + actor_id];
-            if( model_id != 0xff )
+            if (model_id != 0xff)
             {
-                if( model_id < models_n )
+                if (model_id < models_n)
                 {
                     V1 = w[0x8008357c];
                     [V1 + model_id * 8 + 5] = b(1); // set as used model
@@ -383,15 +383,15 @@ for( int i = 0; i < 3; ++i )
     }
 }
 
-for( int i = 0; i < models_n; ++i )
+for (int i = 0; i < models_n; ++i)
 {
     V1 = w[0x8008357c];
-    if( bu[V1 + i * 0x8 + 0x5] == 0 ) // if this model not used
+    if (bu[V1 + i * 0x8 + 0x5] == 0) // if this model not used
     {
-        for( int j = 0; j < actors_n; ++j )
+        for (int j = 0; j < actors_n; ++j)
         {
             model_id = bu[0x8007eb98 + j];
-            if( model_id == i )
+            if (model_id == i)
             {
                 [entities_data + model_id * 0x84 + 0x59] = b(1); // model solidity (1 - off, 0 - on)
                 [entities_data + model_id * 0x84 + 0x5b] = b(1); // model talkability (1 - off, 0 - on)
@@ -417,7 +417,7 @@ field_struct = w[0x8009c6e0];
     hms = w[0x8009c6e4 + 0xb80];
 
     h = hms / 0xe10; // hours played
-    if( h >= 0x100 ) h = 0xff;
+    if (h >= 0x100) h = 0xff;
     [0x8009c6e4 + 0xbb4] = b(h); // hour
 
     ms = hms - ((hms / 0xe10) * 0xe10);
@@ -426,7 +426,7 @@ field_struct = w[0x8009c6e0];
 
     s = ms - (m * 0x3c);
 
-    if( bu[0x8009c6e4 + 0xbb6] != s )
+    if (bu[0x8009c6e4 + 0xbb6] != s)
     {
         [0x8009c6e4 + 0xbb6] = b(s);
         [0x8009c6e4 + 0xbb7] = b(0);
@@ -442,7 +442,7 @@ field_struct = w[0x8009c6e0];
     hms = w[0x8009c6e4 + b84];
 
     h = hms / e10;
-    if( h >= 100 ) h = ff;
+    if (h >= 100) h = ff;
     [0x8009c6e4 + bb8] = b(h);
 
     ms = hms - ((hms / e10) * e10);
@@ -451,12 +451,12 @@ field_struct = w[0x8009c6e0];
 
     s = ms - (m * 3c);
 
-    if( bu[0x8009c6e4 + bba] != s )
+    if (bu[0x8009c6e4 + bba] != s)
     {
         [0x8009c6e4 + bba] = b(s);
         [0x8009c6e4 + bbb] = b(1e); // 30
     }
-    else if( bu[0x8009c6e4 + bbb] != 0 )
+    else if (bu[0x8009c6e4 + bbb] != 0)
     {
         [0x8009c6e4 + bbb] = b(bu[0x8009c6e4 + bbb] - 1);
     }
@@ -464,108 +464,108 @@ field_struct = w[0x8009c6e0];
 
 // update talk and call talking/push script
 talked = 0;
-for( int i = 0; i < bu[events_data + 0x3]; ++i ) // visible entity
+for (int i = 0; i < bu[events_data + 0x3]; ++i) // visible entity
 {
-    if( bu[entities_data + i * 0x84 + 0x5a] != 0 ) // if model talks with somthing
+    if (bu[entities_data + i * 0x84 + 0x5a] != 0) // if model talks with somthing
     {
-        if( bu[field_struct + 0x32] == 0 ) // player has control
+        if (bu[field_struct + 0x32] == 0) // player has control
         {
-            if( talked == 0 )
+            if (talked == 0)
             {
                 talked = 0x1;
-                field_event_request_run( bu[entities_data + i * 0x84 + 0x57], 0x1, 0x1 );
+                field_event_request_run(bu[entities_data + i * 0x84 + 0x57], 0x1, 0x1);
             }
         }
 
         [entities_data + i * 0x84 + 0x5a] = b(0); // talk finishes
     }
 
-    if( bu[entities_data + i * 0x84 + 0x58] != 0 ) // if entity push something
+    if (bu[entities_data + i * 0x84 + 0x58] != 0) // if entity push something
     {
-        field_event_request_run( bu[entities_data + i * 0x84 + 0x57], 0x1, 0x2 );
+        field_event_request_run(bu[entities_data + i * 0x84 + 0x57], 0x1, 0x2);
 
         [entities_data + i * 0x84 + 0x58] = b(0); // push finished
     }
 }
 
 // update lines and call according scripts
-for( int i = 0; i < h[0x80095d84]; ++i )
+for (int i = 0; i < h[0x80095d84]; ++i)
 {
     // talk to line
-    if( bu[0x8007e7ac + i * 0x18 + 0x11] != 0 )
+    if (bu[0x8007e7ac + i * 0x18 + 0x11] != 0)
     {
-        if( bu[field_struct + 0x32] == 0 ) // player has control
+        if (bu[field_struct + 0x32] == 0) // player has control
         {
-            field_event_request_run( bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x1 );
+            field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x1);
         }
         [0x8007e7ac + i * 0x18 + 0x11] = b(0);
     }
 
     // entity move to line
-    if( bu[0x8007e7ac + i * 0x18 + 0x10] != 0 )
+    if (bu[0x8007e7ac + i * 0x18 + 0x10] != 0)
     {
-        field_event_request_run( bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x2 );
+        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x2);
         [0x8007e7ac + i * 0x18 + 0x10] = b(0);
     }
 
     // entity cross line
-    if( bu[0x8007e7ac + i * 0x18 + 0xf] != 0 )
+    if (bu[0x8007e7ac + i * 0x18 + 0xf] != 0)
     {
-        field_event_request_run( bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x3 );
+        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x3);
         [0x8007e7ac + i * 0x18 + 0xf] = b(0);
     }
 
     // entity move inside line
-    if( bu[0x8007e7ac + i * 0x18 + 0xe] != 0 )
+    if (bu[0x8007e7ac + i * 0x18 + 0xe] != 0)
     {
-        field_event_request_run( bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x4 );
+        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x4);
     }
 
     // entity enter line
-    if( bu[0x8007e7ac + i * 0x18 + 0x12] != 0 )
+    if (bu[0x8007e7ac + i * 0x18 + 0x12] != 0)
     {
-        field_event_request_run( bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x5 );
+        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x5);
         [0x8007e7ac + i * 0x18 + 0x12] = b(0);
     }
 
     // entity leave line
-    if( bu[0x8007e7ac + i * 0x18 + 13] != 0 )
+    if (bu[0x8007e7ac + i * 0x18 + 13] != 0)
     {
-        field_event_request_run( bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x6 );
+        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x6);
         [0x8007e7ac + i * 0x18 + 0x13] = b(0);
     }
 }
 
 // update events
-for( int left_a = bu[events_data + 0x2]; left_a != 0; --left_a )// number of actors
+for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of actors
 {
     // if current actor id greater than number of actors - then use 0 as id
-    if( bu[0x800722c4] >= bu[events_data + 0x2] ) [0x800722c4] = b(0);
+    if (bu[0x800722c4] >= bu[events_data + 0x2]) [0x800722c4] = b(0);
 
-    if( bu[0x80071e24] & 0x3 )
+    if (bu[0x80071e24] & 0x3)
     {
-        field_event_update_actor_debug( 0x4, bu[0x800722c4] );
+        field_event_update_actor_debug(0x4, bu[0x800722c4]);
     }
 
     actor_id_cur = bu[0x800722c4];
 
     // update actor that called split/join and actors that not perform split/join
     // events of actors that perform split/join are paused
-    if( ( bu[0x80081d90 + actor_id_cur] == 0 ) || ( bu[0x800e48f0] == actor_id_cur ) )
+    if ((bu[0x80081d90 + actor_id_cur] == 0) || (bu[0x800e48f0] == actor_id_cur))
     {
-        for( int left_o = 0x8; left_o != 0; --left_o )
+        for (int left_o = 0x8; left_o != 0; --left_o)
         {
             // clean page 3 for opcode debug
-            if( bu[0x80099ffc] == 0x5 )
+            if (bu[0x80099ffc] == 0x5)
             {
-                if( bu[0x8009d820] & 0x1 ) // debug
+                if (bu[0x8009d820] & 0x1) // debug
                 {
                     actor_id_cur = bu[0x800722c4];
-                    if( ( ( bu[0x80071e24] & 0x4 ) == 0 ) || ( bu[0x80114498 + actor_id_cur] != 0 ) ) // if we want to debug actor data
+                    if (((bu[0x80071e24] & 0x4) == 0) || (bu[0x80114498 + actor_id_cur] != 0)) // if we want to debug actor data
                     {
-                        for( int i = 0x1; i < 0x9; ++i )
+                        for (int i = 0x1; i < 0x9; ++i)
                         {
-                            field_debug_copy_string_into_page( 0x3, i, "" );
+                            field_debug_copy_string_into_page(0x3, i, "");
                         }
                     }
                 }
@@ -579,22 +579,22 @@ for( int left_a = bu[events_data + 0x2]; left_a != 0; --left_a )// number of act
             opcode = bu[0x8009a058];
             800BB9C8	jalr   w[0x800e0228 + opcode * 4] ra
 
-            if( V0 == 0 ) // continue exec
+            if (V0 == 0) // continue exec
             {
-                if( bu[0x80099ffc] != 5 ) continue;
+                if (bu[0x80099ffc] != 5) continue;
 
                 // not debug
-                if( ( bu[0x8009d820] & 1 ) == 0 ) continue;
+                if ((bu[0x8009d820] & 1) == 0) continue;
 
-                if( bu[0x80071e24] & 4 )
+                if (bu[0x80071e24] & 4)
                 {
                     actor_id_cur = bu[0x800722c4];
-                    if( bu[0x80114498 + actor_id_cur] == 0 ) continue;
+                    if (bu[0x80114498 + actor_id_cur] == 0) continue;
                 }
 
                 [0x8009a064] = w(w[0x8009a064] + 1);
 
-                if( w[0x8009a064] >= 8 )
+                if (w[0x8009a064] >= 8)
                 {
                     [0x8009a064] = w(0);
                     [0x800722c4] = b(bu[0x800722c4] + 1);
@@ -602,21 +602,21 @@ for( int left_a = bu[events_data + 0x2]; left_a != 0; --left_a )// number of act
             }
             else // break flow
             {
-                if( bu[0x80099ffc] != 5 ) break;
+                if (bu[0x80099ffc] != 5) break;
 
                 // not debug
-                if( ( bu[0x8009d820] & 1 ) == 0 ) break;
+                if ((bu[0x8009d820] & 1) == 0) break;
 
-                if( bu[0x80071e24] & 4 )
+                if (bu[0x80071e24] & 4)
                 {
                     actor_id_cur = bu[0x800722c4];
-                    if( bu[0x80114498 + actor_id_cur] == 0 ) break;
+                    if (bu[0x80114498 + actor_id_cur] == 0) break;
                 }
 
                 [0x800722c4] = b(bu[0x800722c4] + 1);
             }
 
-            if( bu[0x80099ffc] == 5 ) [0x80070788] = b(0); // stop script update
+            if (bu[0x80099ffc] == 5) [0x80070788] = b(0); // stop script update
 
             field_script_update_animation_state();
 
@@ -626,19 +626,19 @@ for( int left_a = bu[events_data + 0x2]; left_a != 0; --left_a )// number of act
 
     [0x800722c4] = b(bu[0x800722c4] + 1);
 
-    if( bu[0x80099ffc] == 5 )
+    if (bu[0x80099ffc] == 5)
     {
-        if( bu[0x80071e24] & 1 )
+        if (bu[0x80071e24] & 1)
         {
-            if( ( bu[0x80071e24] & 4 ) == 0 ) break;
+            if ((bu[0x80071e24] & 4) == 0) break;
 
             actor_id_cur = bu[0x800722c4];
-            if( bu[0x80114498 + actor_id_cur] != 0 ) break;
+            if (bu[0x80114498 + actor_id_cur] != 0) break;
         }
     }
 }
 
-if( bu[0x80099ffc] == 5 ) [0x80070788] = b(0); // stop script update
+if (bu[0x80099ffc] == 5) [0x80070788] = b(0); // stop script update
 
 field_script_update_animation_state();
 ////////////////////////////////
@@ -656,22 +656,22 @@ pc = bu[field_struct + 0x32];
 
 number_of_entity = bu[events_data + 2];
 
-if( number_of_entity > 0 )
+if (number_of_entity > 0)
 {
     T2 = 0;
     Lbbbf0:	; 800BBBF0
         model = bu[0x8007eb98 + T2];
-        if( model != ff )
+        if (model != ff)
         {
-            if( model != manual_model || pc != 0 )
+            if (model != manual_model || pc != 0)
             {
-                switch( bu[0x800756e8 + model] )
+                switch(bu[0x800756e8 + model])
                 {
                     case 0:
                     {
                         animation_id = bu[entities_data + model * 84 + 5e];
                         default_animation = bu[0x8008325c + model];
-                        if( animation_id != default_animation )
+                        if (animation_id != default_animation)
                         {
                             [entities_data + model * 84 + 5e] = b(default_animation);
                             default_animation_speed = hu[0x80082248 + model * 2];
@@ -748,7 +748,7 @@ if( number_of_entity > 0 )
                         current_frame_value = hu[entities_data + model * 84 + 62];
                         number_of_frames = h[entities_data + model * 84 + 64];
 
-                        if( current_frame_value / 10 >= number_of_frames )
+                        if (current_frame_value / 10 >= number_of_frames)
                         {
                             [0x800756e8 + model] = b(0);
                         }
@@ -761,7 +761,7 @@ if( number_of_entity > 0 )
                         V0 = V0 / 10;
                         V1 = h[entities_data + model * 84 + 64];
 
-                        if( V0 >= V1 ) [0x800756e8 + model] = b(3);
+                        if (V0 >= V1) [0x800756e8 + model] = b(3);
                     }
                     break;
                 }
@@ -776,7 +776,7 @@ if( number_of_entity > 0 )
 
 
 
-int field_event_request_run( s16 actor_id, u8 req_priority, u8 event_id )
+int field_event_request_run(s16 actor_id, u8 req_priority, u8 event_id)
 {
     events_data = w[0x8009c6dc];
     entities_data = w[0x8009c544];
@@ -785,36 +785,36 @@ int field_event_request_run( s16 actor_id, u8 req_priority, u8 event_id )
     actors_n = bu[events_data + 0x2];
     akao_n = h[events_data + 0x6];
 
-    if( bu[0x8009d820] & 0x3 )
+    if (bu[0x8009d820] & 0x3)
     {
         string = 0x800e4288;
-        switch( event_id )
+        switch(event_id)
         {
-            case 1: field_debug_copy_string( string, "Talk=" ); break;
-            case 2: field_debug_copy_string( string, "Push=" ); break;
-            case 3: field_debug_copy_string( string, "Acrs=" ); break;
-            case 4: field_debug_copy_string( string, "Toch=" ); break;
-            case 5: field_debug_copy_string( string, "TochON =" ); break;
-            case 6: field_debug_copy_string( string, "TochOFF=" ); break;
+            case 1: field_debug_copy_string(string, "Talk="); break;
+            case 2: field_debug_copy_string(string, "Push="); break;
+            case 3: field_debug_copy_string(string, "Acrs="); break;
+            case 4: field_debug_copy_string(string, "Toch="); break;
+            case 5: field_debug_copy_string(string, "TochON ="); break;
+            case 6: field_debug_copy_string(string, "TochOFF="); break;
         }
-        field_debug_concat_string( string, w[0x8009c6dc] + 0x20 + actor_id * 0x8 );
-        field_debug_add_parse_value_to_page2( string, 0, 0 );
+        field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8);
+        field_debug_add_parse_value_to_page2(string, 0, 0);
     }
 
-    if( req_priority >= cur_priority ) // if requested priority lower or equal to current then ignore request
+    if (req_priority >= cur_priority) // if requested priority lower or equal to current then ignore request
     {
-        if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "=ignored", 0, 0 );
+        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("=ignored", 0, 0);
 
         return 0;
     }
 
     // if event on this priority running or finishes
-    if( slot_state != 0 ) return slot_state;
+    if (slot_state != 0) return slot_state;
 
     event_ofs = hu[events_data + 0x20 + actors_n * 0x8 + akao_n * 0x4 + actor_id * 0x40 + event_id * 0x2];
     opcode = bu[events_data + event_ofs];
 
-    if( opcode != 0 ) // if not return opcode - add this script to priority slot
+    if (opcode != 0) // if not return opcode - add this script to priority slot
     {
         [0x801142d4 + actor_id * 0x8 + req_priority] = b(event_id);
         [0x80071748 + actor_id * 0x10 + cur_priority * 0x2] = h(hu[0x800831fc + actor_id * 0x2]); // store current event pos to current priority
@@ -823,9 +823,9 @@ int field_event_request_run( s16 actor_id, u8 req_priority, u8 event_id )
 
         entity_id = bu[0x8007eb98 + actor_id];
 
-        if( entity_id != 0xff )
+        if (entity_id != 0xff)
         {
-            if( bu[entities_data + entity_id * 0x84 + 0x5d] == 0x1 ) // if entity in moving state
+            if (bu[entities_data + entity_id * 0x84 + 0x5d] == 0x1) // if entity in moving state
             {
                 [entities_data + entity_id * 0x84 + 0x5e] = b(0); // reset animation id
                 [entities_data + entity_id * 0x84 + 0x62] = h(0); // reset current frame
@@ -836,11 +836,11 @@ int field_event_request_run( s16 actor_id, u8 req_priority, u8 event_id )
 
         [0x800716dc + actor_id * 0x2] = h(0); // reset wait
 
-        if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "=recieved", 0, 0 );
+        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("=recieved", 0, 0);
     }
     else
     {
-        if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "=ret", 0, 0 );
+        if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("=ret", 0, 0);
     }
     return 1;
 }
@@ -866,7 +866,7 @@ int field_event_request_run( s16 actor_id, u8 req_priority, u8 event_id )
 system_gpu_get_type();
 type = V0;
 
-if( ( type == 1 ) || ( type == 2 ) )
+if ((type == 1) || (type == 2))
 {
     [0x800e4932] = h(2f);
     [0x800e490a] = h(2f);
@@ -889,24 +889,20 @@ else
 
 
 
-////////////////////////////////
-// funcbc438()
 // add pointer and triangles to render
-
-ot = A0;
-
-field_struct = w[0x8009c6e0];
-if( w[field_struct + 0x80] & 0100 ) // select pressed
+void funcbc438(ot)
 {
-    [0x8009d5a6] = b(bu[0x8009d5a6] ^ 1);
-}
+    field_struct = w[0x8009c6e0];
+    if (field_struct->remap_new & BUTTON_SELECT)
+    {
+        [0x8009d5a6] = b(bu[0x8009d5a6] ^ 1);
+    }
 
-if( ( ( bu[0x8009d5a6] == 1 ) && ( bu[field_struct + 0x32] == 0 ) ) || ( bu[0x8009d5a6] & 2 ) )
-{
-    A0 = ot;
-    funcbc4d4();
+    if (((bu[0x8009d5a6] == 1) && (bu[field_struct + 0x32] == 0)) || (bu[0x8009d5a6] & 2))
+    {
+        funcbc4d4(ot);
+    }
 }
-////////////////////////////////
 
 
 
@@ -915,23 +911,23 @@ if( ( ( bu[0x8009d5a6] == 1 ) && ( bu[field_struct + 0x32] == 0 ) ) || ( bu[0x80
 
 ot = A0;
 
-if( bu[0x80071c1c] != 0 ) return;
+if (bu[0x80071c1c] != 0) return;
 
 A2 = h[0x80114464];
 A3 = h[0x80114468];
 
-if( ( A2 == 7fff ) && ( A3 == 7fff ) ) return;
+if ((A2 == 7fff) && (A3 == 7fff)) return;
 
-if( A2 >= 141 ) A2 = 140;
-if( A2 < 0 ) A2 = 0;
-if( A3 >= e1 ) A3 = e0;
-if( A3 < 0 ) A3 = 0;
+if (A2 >= 141) A2 = 140;
+if (A2 < 0) A2 = 0;
+if (A3 >= e1) A3 = e0;
+if (A3 < 0) A3 = 0;
 
 [0x80114490] = b(bu[0x80114490] ^ 1);
 
 rb = bu[0x80114490];
 
-if( A2 >= 123 )
+if (A2 >= 123)
 {
     [0x800e48f4 + rb * 28 +  8] = h(A2 - 10);
     [0x800e48f4 + rb * 28 +  c] = b(8f);
@@ -954,7 +950,7 @@ else
     [0x800e48f4 + rb * 28 + 24] = b(90);
 }
 
-if( A3 < 11 )
+if (A3 < 11)
 {
     [0x800e4901 + rb * 28] = b(6f);
     [0x800e4909 + rb * 28] = b(6f);
@@ -993,72 +989,72 @@ string = 0x800e4254;
 temp = 0x800e4288;
 
 {
-    if( page_id == 0x4 )
+    if (page_id == 0x4)
     {
-        if( bu[0x80071e24] & 0x4 )
+        if (bu[0x80071e24] & 0x4)
         {
             // debug output for this actor not set
-            if( bu[0x80114498 + actor_id] == 0 ) return;
+            if (bu[0x80114498 + actor_id] == 0) return;
         }
 
         [0x800716c8] = b(actor_id);
 
-        if( bu[0x80114498 + actor_id] != 0 )
+        if (bu[0x80114498 + actor_id] != 0)
         {
-            field_debug_set_page_color( 0x4, 0x7f, 0x1, 0x7f );
+            field_debug_set_page_color(0x4, 0x7f, 0x1, 0x7f);
         }
         else
         {
-            field_debug_set_page_color( 0x4, 0x7, 0xf, 0x1f );
+            field_debug_set_page_color(0x4, 0x7, 0xf, 0x1f);
         }
 
-        field_debug_copy_string( string, "Actor:" );
+        field_debug_copy_string(string, "Actor:");
     }
     else
     {
-        field_debug_copy_string( string, "ctrl:" );
+        field_debug_copy_string(string, "ctrl:");
     }
 
-    field_debug_concat_string( string, w[0x8009c6dc] + 0x20 + actor_id * 0x8 ); // name of entity
+    field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8); // name of entity
 
-    if( ( bu[0x8009fe8c] | ( bu[0x80071e24] & 1 ) ) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0, string );
+        field_debug_copy_string_into_page(page_id, 0, string);
     }
 }
 
 {
-    field_debug_copy_string( string, "RqLv=" ); // request level
+    field_debug_copy_string(string, "RqLv="); // request level
 
     priority = bu[0x8009a1c4 + actor_id]; // currently used priority slot
 
-    field_int_to_string( priority, temp );
-    field_debug_concat_string( string, temp );
-    field_debug_concat_string( string, " Tg=" );
+    field_int_to_string(priority, temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " Tg=");
 
     script_id = bu[0x801142d4 + actor_id * 0x8 + priority]; // priority queue script id
 
-    if( script_id == 0x0 )
+    if (script_id == 0x0)
     {
-        field_debug_concat_string( string, "dft" );
+        field_debug_concat_string(string, "dft");
     }
-    else if( script_id == 0x1 )
+    else if (script_id == 0x1)
     {
-        field_debug_concat_string( string, "tlk" );
+        field_debug_concat_string(string, "tlk");
     }
-    else if( script_id == 0x2 )
+    else if (script_id == 0x2)
     {
-        field_debug_concat_string( string, "psh" );
+        field_debug_concat_string(string, "psh");
     }
     else
     {
-        field_int2_to_string( script_id, temp );
-        field_debug_concat_string( string, temp );
+        field_int2_to_string(script_id, temp);
+        field_debug_concat_string(string, temp);
     }
 
-    if( ( bu[0x8009fe8c] | (bu[0x80071e24] & 1) ) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x1, string );
+        field_debug_copy_string_into_page(page_id, 0x1, string);
     }
 }
 
@@ -1066,40 +1062,40 @@ entity_id = bu[0x8007eb98 + actor_id];
 line_id = bu[0x8007078c + actor_id];
 entities_data = w[0x8009c544];
 
-if( entity_id != 0xff )
+if (entity_id != 0xff)
 {
-    field_debug_copy_string( string, "man=" );
-    field_int2_to_string( entity_id, temp );
-    field_debug_concat_string( string, temp );
-    field_debug_concat_string( string, " dir=" );
-    field_int2_to_string( bu[entities_data + entity_id * 0x84 + 0x38], temp );
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "man=");
+    field_int2_to_string(entity_id, temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " dir=");
+    field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x38], temp);
+    field_debug_concat_string(string, temp);
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x2, string );
-        field_debug_set_row_color( page_id, 0x2, 0x2 );
+        field_debug_copy_string_into_page(page_id, 0x2, string);
+        field_debug_set_row_color(page_id, 0x2, 0x2);
     }
 }
-else if( line_id != 0xff )
+else if (line_id != 0xff)
 {
-    field_debug_copy_string( string, "line=" );
-    field_int2_to_string( line_id, temp );
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "line=");
+    field_int2_to_string(line_id, temp);
+    field_debug_concat_string(string, temp);
 
-    if( bu[0x8007e7ac + line_id * 0x18 + 0xc] != 0 ) // line on
+    if (bu[0x8007e7ac + line_id * 0x18 + 0xc] != 0) // line on
     {
-        field_debug_concat_string( string, " on" );
+        field_debug_concat_string(string, " on");
     }
     else
     {
-        field_debug_concat_string( string, " off" );
+        field_debug_concat_string(string, " off");
     }
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x2, string );
-        field_debug_set_row_color( page_id, 0x2, 0x3 );
+        field_debug_copy_string_into_page(page_id, 0x2, string);
+        field_debug_set_row_color(page_id, 0x2, 0x3);
     }
 }
 else
@@ -1108,7 +1104,7 @@ else
     A1 = 800a01f8; // "Abst"
     field_debug_copy_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 2;
@@ -1122,37 +1118,37 @@ else
     }
 }
 
-if( entity_id != 0xff )
+if (entity_id != 0xff)
 {
-    field_debug_copy_string( string, "X=" );
-    field_int4_to_string( w[entities_data + entity_id * 0x84 + 0xc] >> 0xc, temp );
-    field_debug_concat_string( string, temp );
-    field_debug_concat_string( string, " Y=" );
-    field_int4_to_string( w[entities_data + entity_id * 0x84 + 0x10] >> 0xc, temp );
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "X=");
+    field_int4_to_string(w[entities_data + entity_id * 0x84 + 0xc] >> 0xc, temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " Y=");
+    field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x10] >> 0xc, temp);
+    field_debug_concat_string(string, temp);
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x3, string );
-        field_debug_set_row_color( page_id, 0x3, 0x1 );
+        field_debug_copy_string_into_page(page_id, 0x3, string);
+        field_debug_set_row_color(page_id, 0x3, 0x1);
     }
 
-    field_debug_copy_string( string, "Z=" );
-    field_int4_to_string( w[entities_data + entity_id * 0x84 + 0x14] >> 0xc, temp );
-    field_debug_concat_string( string, temp );
-    field_debug_concat_string( string, " I=" );
-    field_int4_to_string( hu[entities_data + entity_id * 0x84 + 0x72], temp ); // triangle id
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "Z=");
+    field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x14] >> 0xc, temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " I=");
+    field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x72], temp); // triangle id
+    field_debug_concat_string(string, temp);
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x4, string );
+        field_debug_copy_string_into_page(page_id, 0x4, string);
     }
 
-    field_int_to_string( bu[0x800756e8 + entity_id], string );
-    field_debug_concat_string( string, "am" );
-    field_int2_to_string( bu[entities_data + entity_id * 0x84 + 0x5e], temp ); // animation id
-    field_debug_concat_string( string, temp );
+    field_int_to_string(bu[0x800756e8 + entity_id], string);
+    field_debug_concat_string(string, "am");
+    field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x5e], temp); // animation id
+    field_debug_concat_string(string, temp);
 
     A0 = string;
     A1 = 800a0238; // ".";
@@ -1178,7 +1174,7 @@ if( entity_id != 0xff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 5;
@@ -1191,7 +1187,7 @@ if( entity_id != 0xff )
         field_debug_set_row_color();
     }
 
-    if( bu[entities_data + entity_id * 84 + 5c] != 0 ) // visibility
+    if (bu[entities_data + entity_id * 84 + 5c] != 0) // visibility
     {
         A0 = string;
         A1 = 800a023c; // "V"
@@ -1204,7 +1200,7 @@ if( entity_id != 0xff )
         field_debug_copy_string();
     }
 
-    if( bu[entities_data + entity_id * 84 + 5b] != 0 ) // talkability
+    if (bu[entities_data + entity_id * 84 + 5b] != 0) // talkability
     {
         A0 = string;
         A1 = 800a0238; // "."
@@ -1217,7 +1213,7 @@ if( entity_id != 0xff )
         field_debug_concat_string();
     }
 
-    if( bu[entities_data + entity_id * 84 + 59] != 0 ) // solidity
+    if (bu[entities_data + entity_id * 84 + 59] != 0) // solidity
     {
         A0 = string;
         A1 = 800a0238; // "."
@@ -1254,19 +1250,19 @@ if( entity_id != 0xff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x6, string );
+        field_debug_copy_string_into_page(page_id, 0x6, string);
     }
 
-    field_debug_copy_string( string, "MS" );
-    field_int4_to_string( hu[entities_data + entity_id * 0x84 + 0x70], temp ); // movement speed
-    field_debug_concat_string( string, temp );
-    field_debug_concat_string( string, " AS" );
-    field_int4_to_string( h[entities_data + entity_id * 0x84 + 0x60], temp ); // animation speed
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "MS");
+    field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x70], temp); // movement speed
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " AS");
+    field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x60], temp); // animation speed
+    field_debug_concat_string(string, temp);
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 7;
@@ -1279,7 +1275,7 @@ if( entity_id != 0xff )
         field_debug_set_row_color();
     }
 }
-else if( line_id != ff )
+else if (line_id != ff)
 {
     A0 = string;
     A1 = 800a0258; // "AX"
@@ -1305,7 +1301,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 3;
@@ -1325,7 +1321,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 4;
@@ -1357,7 +1353,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 5;
@@ -1377,7 +1373,7 @@ else if( line_id != ff )
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 6;
@@ -1392,7 +1388,7 @@ else if( line_id != ff )
 }
 else
 {
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 3;
@@ -1421,7 +1417,7 @@ else
     }
 }
 
-if( page_id == 4 ) return;
+if (page_id == 4) return;
 
 {
     A0 = string;
@@ -1448,7 +1444,7 @@ if( page_id == 4 ) return;
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 01)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 01)) != 0)
     {
         A0 = page_id;
         A1 = 8;
@@ -1479,7 +1475,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 9;
@@ -1518,7 +1514,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = a;
@@ -1540,7 +1536,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = b;
@@ -1579,7 +1575,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = c;
@@ -1601,7 +1597,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = d;
@@ -1640,7 +1636,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = e;
@@ -1665,7 +1661,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = f;
@@ -1704,7 +1700,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 10;
@@ -1715,15 +1711,15 @@ walkmesh_data = w[0x800e4274];
 
 // game progress, control, battle members and battle check
 {
-    field_debug_copy_string( string, "SF" );
-    field_int4_to_string( hu[0x8009c6e4 + 0xba4], temp ); // game progress
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "SF");
+    field_int4_to_string(hu[0x8009c6e4 + 0xba4], temp); // game progress
+    field_debug_concat_string(string, temp);
 
     field_struct = w[0x8009c6e0];
 
-    if( bu[field_struct + 0x32] != 0 ) // PC cant move
+    if (bu[field_struct + 0x32] != 0) // PC cant move
     {
-        if( bu[0x80081dc4] != 0 ) // UC move state
+        if (bu[0x80081dc4] != 0) // UC move state
         {
             A0 = string;
             A1 = 800a0238; // "."
@@ -1738,7 +1734,7 @@ walkmesh_data = w[0x800e4274];
     }
     else // PC can move
     {
-        if( bu[0x80081dc4] != 0 ) // UC move state
+        if (bu[0x80081dc4] != 0) // UC move state
         {
             A0 = string;
             A1 = 800a02bc; // "+"
@@ -1780,7 +1776,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( bu[game_state + 3b] != 0 ) // battle field check on/off (0/1).
+    if (bu[game_state + 3b] != 0) // battle field check on/off (0/1).
     {
         A0 = string;
         A1 = 800a02c8; // ">"
@@ -1793,7 +1789,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A2 = string;
@@ -1833,23 +1829,23 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( bu[0x800716d4] != 0 ) // music locked
+    if (bu[0x800716d4] != 0) // music locked
     {
         A0 = string;
         A1 = 800a02d4; // "M"
         field_debug_concat_string();
     }
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
     {
         A0 = page_id;
         A1 = 12;
         A2 = string;
         field_debug_copy_string_into_page();
 
-        if( 801affff < w[0x80075e10] )
+        if (801affff < w[0x80075e10])
         {
-            if( bu[0x8009d29b] & 10 )
+            if (bu[0x8009d29b] & 10)
             {
                 A0 = page_id;
                 A1 = 12;
@@ -1865,15 +1861,15 @@ walkmesh_data = w[0x800e4274];
             }
         }
 
-        if( 0x801adfff < w[0x80075e10] )      A2 = 0x5;
-        else if( 0x801aafff < w[0x80075e10] ) A2 = 0x4;
-        else if( 0x801a7fff < w[0x80075e10] ) A2 = 0x1;
-        else if( 0x801a3fff < w[0x80075e10] ) A2 = 0x3;
-        else if( 0x8019ffff < w[0x80075e10] ) A2 = 0x2;
-        else if( 0x80197fff < w[0x80075e10] ) A2 = 0x0;
+        if (0x801adfff < w[0x80075e10])      A2 = 0x5;
+        else if (0x801aafff < w[0x80075e10]) A2 = 0x4;
+        else if (0x801a7fff < w[0x80075e10]) A2 = 0x1;
+        else if (0x801a3fff < w[0x80075e10]) A2 = 0x3;
+        else if (0x8019ffff < w[0x80075e10]) A2 = 0x2;
+        else if (0x80197fff < w[0x80075e10]) A2 = 0x0;
         else                                  A2 = 0x7;
 
-        field_debug_set_row_color( page_id, 0x12, A2 );
+        field_debug_set_row_color(page_id, 0x12, A2);
     }
 }
 
@@ -1903,7 +1899,7 @@ walkmesh_data = w[0x800e4274];
     A1 = temp;
     field_debug_concat_string();
 
-    if( hu[0x8009c6e4 + 10a6] & 1 )
+    if (hu[0x8009c6e4 + 10a6] & 1)
     {
         A0 = string;
         A1 = 800a02d8; // "C"
@@ -1916,7 +1912,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 2 )
+    if (hu[0x8009c6e4 + 10a6] & 2)
     {
         A0 = string;
         A1 = 800a02c4; // "B"
@@ -1929,7 +1925,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 4 )
+    if (hu[0x8009c6e4 + 10a6] & 4)
     {
         A0 = string;
         A1 = 800a0240; // "T"
@@ -1942,7 +1938,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 8 )
+    if (hu[0x8009c6e4 + 10a6] & 8)
     {
         A0 = string;
         A1 = 800a02dc; // "E"
@@ -1955,7 +1951,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 10 )
+    if (hu[0x8009c6e4 + 10a6] & 10)
     {
         A0 = string;
         A1 = 800a02e0; // "R"
@@ -1968,7 +1964,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 20 )
+    if (hu[0x8009c6e4 + 10a6] & 20)
     {
         A0 = string;
         A1 = 800a02e4; // "Y"
@@ -1981,7 +1977,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 40 )
+    if (hu[0x8009c6e4 + 10a6] & 40)
     {
         A0 = string;
         A1 = 800a02e8; // "K"
@@ -1994,7 +1990,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 80 )
+    if (hu[0x8009c6e4 + 10a6] & 80)
     {
         A0 = string;
         A1 = 800a023c; // "V"
@@ -2007,7 +2003,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 100 )
+    if (hu[0x8009c6e4 + 10a6] & 100)
     {
         A0 = string;
         A1 = 800a02ec; // "D"
@@ -2020,7 +2016,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 200 )
+    if (hu[0x8009c6e4 + 10a6] & 200)
     {
         A0 = string;
         A1 = 800a02f0; // "U"
@@ -2033,7 +2029,7 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( hu[0x8009c6e4 + 10a6] & 400 )
+    if (hu[0x8009c6e4 + 10a6] & 400)
     {
         A0 = string;
         A1 = 800a02f4; // "F"
@@ -2046,10 +2042,10 @@ walkmesh_data = w[0x800e4274];
         field_debug_concat_string();
     }
 
-    if( (bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0 )
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page( page_id, 0x13, string );
-        field_debug_set_row_color( page_id, 0x13, 0 );
+        field_debug_copy_string_into_page(page_id, 0x13, string);
+        field_debug_set_row_color(page_id, 0x13, 0);
     }
 }
 ////////////////////////////////
@@ -2064,37 +2060,37 @@ args_n = A1; // number of arg
 
 actor_id_cur = bu[0x800722c4];
 
-if( bu[0x80071e24] & 04 )
+if (bu[0x80071e24] & 04)
 {
-    if( bu[0x80114498 + actor_id_cur] == 0 ) return;
+    if (bu[0x80114498 + actor_id_cur] == 0) return;
 }
 
 string = 0x800e4254;
 temp = 0x800e4288;
 
 // create debug string "Word:[OPCODE]"
-field_debug_copy_string( string, "Word:" );
+field_debug_copy_string(string, "Word:");
 
-field_debug_concat_string( string, opcode_name );
+field_debug_concat_string(string, opcode_name);
 
-if( bu[0x8009d820] & 0x1 ) field_debug_copy_string_into_page( 0x3, 0, string );
+if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, 0, string);
 
 S4 = args_n + 1;
 
 // create string "argX=XX"
-while( args_n != 0 )
+while (args_n != 0)
 {
-    field_debug_copy_string( string, "arg" );
-    field_int_to_string( S4 - args_n, temp );
-    field_debug_concat_string( string, temp );
+    field_debug_copy_string(string, "arg");
+    field_int_to_string(S4 - args_n, temp);
+    field_debug_concat_string(string, temp);
 
-    field_debug_concat_string( string, "=" );
+    field_debug_concat_string(string, "=");
 
     V0 = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2] + S4 - args_n;
-    field_int2_to_string( bu[V0], temp );
-    field_debug_concat_string( string, temp );
+    field_int2_to_string(bu[V0], temp);
+    field_debug_concat_string(string, temp);
 
-    if( bu[0x8009d820] & 0x1 ) field_debug_copy_string_into_page( 0x3, S4 - args_n, string );
+    if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, S4 - args_n, string);
 
     args_n -= 1;
 }
@@ -2102,12 +2098,12 @@ while( args_n != 0 )
 
 
 
-void field_debug_add_parse_value_to_page2( param, value, val_size )
+void field_debug_add_parse_value_to_page2(param, value, val_size)
 {
-    if( bu[0x80071e24] & 0x4 )
+    if (bu[0x80071e24] & 0x4)
     {
         V0 = bu[0x800722c4];
-        if( bu[0x80114498 + V0] == 0 )
+        if (bu[0x80114498 + V0] == 0)
         {
             return;
         }
@@ -2116,40 +2112,40 @@ void field_debug_add_parse_value_to_page2( param, value, val_size )
     string = 0x800e4254;
     temp = 0x800e4288;
 
-    field_debug_copy_string( string, param );
+    field_debug_copy_string(string, param);
 
-    if( val_size == 0x1 )
+    if (val_size == 0x1)
     {
-        field_int_to_string( temp, value );
+        field_int_to_string(temp, value);
     }
-    else if( val_size == 0x2 )
+    else if (val_size == 0x2)
     {
-        field_int2_to_string( temp, value );
+        field_int2_to_string(temp, value);
     }
-    else if( val_size == 0x4 )
+    else if (val_size == 0x4)
     {
-        field_int4_to_string( temp, value );
+        field_int4_to_string(temp, value);
     }
     else
     {
-        field_debug_copy_string( temp, "" );
+        field_debug_copy_string(temp, "");
     }
 
-    field_debug_concat_string( string, temp );
+    field_debug_concat_string(string, temp);
 
-    if( bu[0x8009d820] & 0x1 ) field_debug_add_string_to_page_next_row( 0x2, string );
+    if (bu[0x8009d820] & 0x1) field_debug_add_string_to_page_next_row(0x2, string);
 
-    if( bu[0x8009d820] & 0x2 ) funcd4840( string ); // empty. Was used for debug
+    if (bu[0x8009d820] & 0x2) funcd4840(string); // empty. Was used for debug
 }
 
 
 
-u8 field_event_read_memory_u8( u8 mb_half, u8 off )
+u8 field_event_read_memory_u8(u8 mb_half, u8 off)
 {
     actor_id_cur = bu[0x800722c4];
     script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
 
-    switch( mb_half )
+    switch(mb_half)
     {
         case 0x1: bank = bu[script + 0x1] >> 0x4; break; // 1 halfbyte
         case 0x2: bank = bu[script + 0x1] & 0xf; break; // 2 halfbyte
@@ -2159,12 +2155,12 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
         case 0x6: bank = bu[script + 0x3] & 0xf; break; // 6 halfbyte
     }
 
-    switch( bank )
+    switch(bank)
     {
         case 0x0: // memory bank 0
         {
             val = bu[script + off];
-            if( bu[0x8009d820] & 0x3 ) field_debug_add_parse_value_to_page2( "G cons=", val, 0x2 );
+            if (bu[0x8009d820] & 0x3) field_debug_add_parse_value_to_page2("G cons=", val, 0x2);
             return val;
         }
 
@@ -2174,10 +2170,10 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
             indx = bu[script + off];
             val = bu[0x8009d288 + indx];
 
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
-                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
             }
             return val;
         }
@@ -2188,10 +2184,10 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x100 + indx];
 
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
-                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
             }
             return val;
         }
@@ -2202,10 +2198,10 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x200 + indx];
 
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
-                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
             }
             return val;
         }
@@ -2216,10 +2212,10 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x300 + indx];
 
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
-                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
             }
             return val;
         }
@@ -2230,10 +2226,10 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x400 + indx];
 
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
-                field_debug_add_parse_value_to_page2( "G glov=", val, 0x2 );
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x2);
             }
             return val;
         }
@@ -2244,21 +2240,21 @@ u8 field_event_read_memory_u8( u8 mb_half, u8 off )
             indx = bu[script + off];
             val = bu[0x80075e24 + indx];
 
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G indx=", indx, 0x4 );
-                field_debug_add_parse_value_to_page2( "G mapv=", val, 0x2 );
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G mapv=", val, 0x2);
             }
             return val;
         }
 
         default:
         {
-            if( bu[0x8009d820] & 0x3 ) // debug
+            if (bu[0x8009d820] & 0x3) // debug
             {
-                field_debug_add_parse_value_to_page2( "G data err=", bank, 0x2 );
+                field_debug_add_parse_value_to_page2("G data err=", bank, 0x2);
             }
-            funcd4848( "Bad Event arg!" );
+            funcd4848("Bad Event arg!");
             return 0;
         }
     }
@@ -3244,7 +3240,7 @@ A1 = bu[V0 + 0000];
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3277,7 +3273,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V0);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     S0 = V1 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3307,7 +3303,7 @@ A1 = V0 | 0100;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3341,7 +3337,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3371,7 +3367,7 @@ A1 = V0 | 0200;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3405,7 +3401,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3435,7 +3431,7 @@ A1 = V0 | 0300;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3471,7 +3467,7 @@ AT = AT + A1;
 AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3501,7 +3497,7 @@ A1 = V0 | 0400;
 AT = 8009d288;
 AT = AT + A1;
 [AT + 0000] = b(S0);
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3536,7 +3532,7 @@ AT = 8009d289;
 AT = AT + A1;
 [AT + 0000] = b(V1);
 
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     S0 = A0 >> 10;
     A0 = 800a0394; // "S indx="
@@ -3561,7 +3557,7 @@ V0 = V0 + V1;
 A1 = bu[V0 + 0000];
 [0x80075e24 + A1] = b(S0);
 
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A2 = 4;
@@ -3597,7 +3593,7 @@ AT = AT + A1;
 [AT + 0000] = b(V0);
 S0 = V1 >> 10;
 
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a0394; // "S indx="
     A1 = A1;
@@ -3612,7 +3608,7 @@ if( bu[0x8009d820] & 3 )
 800C0B00	j      Lc0b40 [$800c0b40]
 
 Lc0b08:	; 800C0B08
-if( bu[0x8009d820] & 3 )
+if (bu[0x8009d820] & 3)
 {
     A0 = 800a03ac; // "S data err="
     A1 = V1 & ff;
@@ -3632,7 +3628,7 @@ Lc0b40:	; 800C0B40
 // funcc0b54()
 // called as opcodes 0c 0d 1a 1b 1c 1d 1e 1f 44 46 4c 4e be
 
-if( bu[0x8009d820] & 0x3 ) // debug
+if (bu[0x8009d820] & 0x3) // debug
 {
     string = 0x800e4288;
 
@@ -3657,7 +3653,7 @@ if( bu[0x8009d820] & 0x3 ) // debug
 }
 else
 {
-    funcd4848( "Bad Event code!" );
+    funcd4848("Bad Event code!");
 }
 
 return 1;

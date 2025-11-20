@@ -81,28 +81,14 @@ struct FieldControl
     u16 nfade_g_to;     // 0x60
     u16 nfade_b_to;     // 0x62
                         // 0x64 [][]     prev field (store current field here during load of next).
-                        // 0x68 [][][][] currently pressed buttons for both controllers without remap.
-                        // 0x6c [][][][] previously pressed buttons for both controllers without remap.
-                        // 0x70 [][][][] new pressed buttons for both controllers without remap.
-                        // 0x74 [][][][] released buttons for both controllers without remap.
-                        // 0x78 [][][][] currently pressed buttons for both controllers with remap.
-                        // 0x7c [][][][] previously pressed buttons for both controllers with remap.
-                        // 0x80 [][][][] new pressed buttons for both controllers with remap.
-                        // 0x84 [][][][] released buttons for both controllers with remap.
-                        //               0001 - L2
-                        //               0002 - R2
-                        //               0004 - L1.
-                        //               0008 - R1.
-                        //               0010 - triangle.
-                        //               0020 - circle.
-                        //               0040 - cross.
-                        //               0080 - square.
-                        //               0100 - select.
-                        //               0800 - start.
-                        //               1000 - up button.
-                        //               2000 - right button
-                        //               4000 - down button.
-                        //               8000 - left button
+    u32 btn_pressed;    // 0x68
+    u32 btn_prev;       // 0x6c
+    u32 btn_new;        // 0x70
+    u32 btn_released;   // 0x74
+    u32 remap_pressed;  // 0x78
+    u32 remap_prev;     // 0x7c
+    u32 remap_new;      // 0x80
+    u32 remap_released; // 0x84
                         // 0x88 [][]     movie frame.
                         // 0x8a []       if 1 we activate X shaking. 0 - deactivate.
                         // 0x8b []       state of shaking single X movement (0 - init, 1 - action)
