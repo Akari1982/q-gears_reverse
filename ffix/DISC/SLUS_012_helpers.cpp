@@ -1,7 +1,8 @@
-////////////////////////////////
-// func50cf8
-return ((A0 & 0003) << 7) | ((A1 & 0003) << 5) | ((A3 & 0100) >> 4) | ((A2 & 03ff) >> 6) | ((A3 & 0200) << 2);
-////////////////////////////////
+// Calculate value of member tpage in a primitive.
+u16 system_psyq_get_tpage( int tp, int abr, int x, int y )
+{
+    return ((y & 0x200) << 0x2) | ((tp & 0x3) << 0x7) | ((abr & 0x3) << 0x5) | ((y & 0x100) >> 0x4) | ((x & 0x3ff) >> 0x6);
+}
 
 
 

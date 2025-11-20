@@ -988,7 +988,7 @@
 80050AAC func50aac
 80050BE0 func50be0
 80050CA8 func50ca8
-80050CF8 func50cf8
+80050CF8 system_psyq_get_tpage
 80050D38 func50d38
 80050E34 func50e34
 80050EFC func50efc

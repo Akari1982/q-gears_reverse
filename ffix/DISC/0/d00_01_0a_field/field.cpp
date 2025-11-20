@@ -21810,118 +21810,83 @@ SP = SP + 0020;
 
 
 
-////////////////////////////////
-// funcbd130
-// field_init_background_packets
-tile_block_data = A0;
-packets = A1;
-end_of_packets = A2;
+int field_init_background_packets(tile_block_data, packets, end_of_packets)
+{
+    tileset_file = w[0x800c9da4 + 0x10];
+    S7 = bu[0x800ca108] + 0xdf;
+    [tile_block_data + 0x30] = w(packets);
 
-tileset_file = w[0x800c9da4 + 0x10];
-S7 = bu[0x800ca108] + df;
-[tile_block_data + 0x30] = w(packets);
+    xy_data = w(tileset_file + w[tile_block_data + 0x28]);
+    [SP + 0x14] = w(tileset_file + w[tile_block_data + 0x2c]);
 
-xy_data = w(tileset_file + w[tile_block_data + 0x28]);
-[SP + 0x14] = w(tileset_file + w[tile_block_data + 0x2c]);
+    // set global tile block position
+    [tile_block_data + 0x18] = h(hu[tile_block_data + 0xc] + hu[tileset_file + 0x30]);
+    [tile_block_data + 0x1a] = h(hu[tile_block_data + 0xe] + hu[tileset_file + 0x32]);
 
-// set global tile block position
-[tile_block_data + 0x18] = h(hu[tile_block_data + c] + hu[tileset_file + 0x30]);
-[tile_block_data + 0x1a] = h(hu[tile_block_data + e] + hu[tileset_file + 0x32]);
+    [tile_block_data + 0x24] = w(w[tile_block_data + 0x24] & 0xfffffeff & 0xffff01ff);
 
-[tile_block_data + 0x24] = w(w[tile_block_data + 0x24] & fffffeff & ffff01ff);
+    S1 = w[SP + 0x14];
+    u16 tiles_n = hu[tile_block_data + 0x26];
 
-
-
-
-S1 = w[SP + 0x14];
-frame_buffer = 0;
-number_of_tiles = hu[tile_block_data + 0x26];
-
-loopbd1dc:	; 800BD1DC
-    if (number_of_tiles != 0)
+    for (int i = 0; i < 0x2; ++i)
     {
-        tile_id = 0;
-        loopbd1f0:	; 800BD1F0
-            [packets + b] = b(03);
-            [packets + c] = b(80); // R
-            [packets + d] = b(80); // G
-            [packets + e] = b(80); // B
-            [packets + f] = b(7c); // 16x16 sprite
+        for (int j = 0; j < tiles_n; ++j)
+        {
+            [packets + 0xb] = b(0x03);
+            [packets + 0xc] = b(0x80); // R
+            [packets + 0xd] = b(0x80); // G
+            [packets + 0xe] = b(0x80); // B
+            [packets + 0xf] = b(0x7c); // 16x16 sprite
 
-            [packets + 0x10] = h(hu[tile_block_data + 0x18] + (w[xy_data + tile_id * 4] >> 16)); // X
-            [packets + 0x12] = h(hu[tile_block_data + 0x1a] + ((w[xy_data + tile_id * 4] >> c) & 3ff)); // Y
-            [packets + 0x14] = b(bu[S1 + tile_id * 8 + 0x4]); // V
-            [packets + 0x15] = b(bu[S1 + tile_id * 8 + 0x3]); // U
+            [packets + 0x10] = h(hu[tile_block_data + 0x18] + (w[xy_data + j * 0x4] >> 0x16)); // X
+            [packets + 0x12] = h(hu[tile_block_data + 0x1a] + ((w[xy_data + j * 0x4] >> 0xc) & 0x3ff)); // Y
+            [packets + 0x14] = b(bu[S1 + j * 0x8 + 0x4]); // V
+            [packets + 0x15] = b(bu[S1 + j * 0x8 + 0x3]); // U
 
-            if ((w[S1 + tile_id * 8 + 0x4] >> 1c) & 1)
+            if ((w[S1 + j * 0x8 + 0x4] >> 0x1c) & 0x1)
             {
-                V0 = bu[packets + f] | 2;
+                V0 = bu[packets + 0xf] | 0x02;
             }
             else
             {
-                V0 = bu[packets + f] & fd;
+                V0 = bu[packets + 0xf] & 0xfd;
             }
-            [packets + f] = b(V0);
+            [packets + 0xf] = b(V0);
 
-            A1 = w[S1 + tile_id * 8 + 0];
-            A0 = A1 >> 5;
-            A0 = A0 & 3f0;
-            A1 = A1 & 1ff;
-            [packets + 0x16] = h((A1 << 6) | ((A0 >> 4) & 3f)); // clut
+            A1 = w[S1 + j * 0x8 + 0x0];
+            [packets + 0x16] = h(system_psyq_get_clut((A1 >> 0x5) & 0x3f0, A1 & 0x1ff));
 
-            A3 = w[S1 + tile_id * 8 + 0];
+            A3 = w[S1 + j * 0x8 + 0x0];
 
-            if (((A3 >> 14) & 3) == 0)
-            {
-                A0 = 0;
-            }
-            else
-            {
-                A0 = 1;
-            }
-
-            A1 = (A3 >> 16) & 0003;
-            A2 = (A3 >> a) & 03c0;
-            A3 = (A3 >> 7) & 0100;
-            V0 = ((A0 & 0003) << 7) | ((A1 & 0003) << 5) | ((A3 & 0100) >> 4) | ((A2 & 03ff) >> 6) | ((A3 & 0200) << 2)
+            tp = ((A3 >> 0x14) & 0x3) ? 0x1 : 0;
+            abr = (A3 >> 0x16) & 0x3;
+            x = (A3 >> 0xa) & 0x3c0;
+            y = (A3 >> 0x7) & 0x100;
+            V0 = system_psyq_get_tpage(tp, abr, x, y);
 
             A2 = V0;
             A0 = packets;
             A1 = packets + 0x8;
-            [packets + 0x3] = b(1);
-            [packets + 0x4] = w((A2 & 9ff) | e1000600);
-            800BD300	jal    func62b4c [$80062b4c]
+            [packets + 0x3] = b(0x1);
+            [packets + 0x4] = w((A2 & 0x9ff) | 0xe1000600);
+            func62b4c();
 
-            V1 = w[S1 + tile_id * 8 + 0] & 000001ff;
+            V1 = w[S1 + j * 0x8 + 0x0] & 0x1ff;
 
             if (S7 < V1)
             {
                 S7 = V1;
             }
 
-            packets = packets + 0x18;
-
-            tile_id = tile_id + 0x1;
-            V0 = tile_id < number_of_tiles;
-        800BD334	bne    v0, zero, loopbd1f0 [$800bd1f0]
-
+            packets += 0x18;
+        }
     }
 
+    [end_of_packets] = w(packets);
+    [0x800ca108] = b(S7 + 0x21);
 
-
-    frame_buffer = frame_buffer + 0x1;
-    V0 = frame_buffer < 2;
-800BD354	bne    v0, zero, loopbd1dc [$800bd1dc]
-
-
-
-[end_of_packets] = w(packets);
-[0x800ca108] = b(S7 + 0x21);
-
-
-
-return 1;
-////////////////////////////////
+    return 0x1;
+}
 
 
 
@@ -22624,125 +22589,97 @@ SP = SP + 0048;
 
 
 
-////////////////////////////////
-// funcbded4
-S3 = A0;
-tileset_file = w[0x800c9da4 + 0x10];
-FP = A1;
-
-A0 = bu[0x800ca068 + 0x75]; // camera id
-funcc0bcc;
-
-
-
-
-
-[0x800c9da4 + 0x1c] = w(S3);
-
-camera_offset = A2 = tileset_file + w[tileset_file + 0x18] + bu[0x800ca068 + 0x75] * 34;
-[0x800ca068 + a4] = h((h[A2 + 0x28] + h[A2 + 0x2a]) / 2);
-[0x800ca068 +  4] = h((h[A2 + 0x28] + h[A2 + 0x2a]) / 2);
-
-[0x800ca068 + a6] = h((h[A2 + 0x2c] + h[A2 + 0x2e]) / 2);
-[0x800ca068 +  6] = h((h[A2 + 0x2c] + h[A2 + 0x2e]) / 2);
-
-[tileset_file + 0x30] = h(hu[tileset_file + 0x24] - ((h[A2 + 0x28] + h[A2 + 0x2a]) / 2) + a0);
-
-number_of_blocks = hu[tileset_file + 0x6];
-
-
-V1 = hu[0x800ca068 + 0x6] - 70;
-[tileset_file + 0x32] = h(hu[tileset_file + 0x26] - V1);
-
-
-A1 = number_of_blocks * 3;
-
-V0 = A1 >> 2;
-V0 = V0 << 2;
-
-// if not четное
-if (V0 != A1)
+int funcbded4()
 {
-    loopbdfd8:	; 800BDFD8
+    S3 = A0;
+    tileset_file = w[0x800c9da4 + 0x10];
+    FP = A1;
+
+    funcc0bcc(bu[0x800ca068 + 0x75]); // camera id
+
+    [0x800c9da4 + 0x1c] = w(S3);
+
+    camera_offset = A2 = tileset_file + w[tileset_file + 0x18] + bu[0x800ca068 + 0x75] * 34;
+    [0x800ca068 + a4] = h((h[A2 + 0x28] + h[A2 + 0x2a]) / 2);
+    [0x800ca068 +  4] = h((h[A2 + 0x28] + h[A2 + 0x2a]) / 2);
+
+    [0x800ca068 + a6] = h((h[A2 + 0x2c] + h[A2 + 0x2e]) / 2);
+    [0x800ca068 +  6] = h((h[A2 + 0x2c] + h[A2 + 0x2e]) / 2);
+
+    [tileset_file + 0x30] = h(hu[tileset_file + 0x24] - ((h[A2 + 0x28] + h[A2 + 0x2a]) / 2) + a0);
+
+    blocks_n = hu[tileset_file + 0x6];
+
+
+    V1 = hu[0x800ca068 + 0x6] - 70;
+    [tileset_file + 0x32] = h(hu[tileset_file + 0x26] - V1);
+
+
+    A1 = blocks_n * 3;
+
+    V0 = A1 >> 2;
+    V0 = V0 << 2;
+
+    // if not четное
+    if (V0 != A1)
+    {
+        loopbdfd8:	; 800BDFD8
+            A1 = A1 + 0x1;
+            V0 = A1 >> 2;
+            V0 = V0 << 2;
+        800BDFE0	bne    v0, a1, loopbdfd8 [$800bdfd8]
+    }
+
+    [0x800c9da4 + 0x20] = w(S3 + A1);
+
+    A1 += blocks_n;
+
+    loopbdffc:	; 800BDFFC
+        V0 = A1 << 2;
+        V0 = V0 >> 2;
         A1 = A1 + 0x1;
-        V0 = A1 >> 2;
-        V0 = V0 << 2;
-    800BDFE0	bne    v0, a1, loopbdfd8 [$800bdfd8]
-}
+    800BE004	bne    v0, a1, loopbdffc [$800bdffc]
 
-[0x800c9da4 + 0x20] = w(S3 + A1);
+    A1 = A1 - 1;
+    [FP] = w(S3 + A1); // start of background packets
 
-A1 = A1 + number_of_blocks;
+    for (int i = 0; i < 0x4; ++i)
+    {
+        [800ca068 + i * 0x4 + 0xa8] = h(0);
+        [800ca068 + i * 0x4 + 0xaa] = h(0);
+        [800ca068 + i * 0x4 + 0xb8] = h(hu[A2 + 0x24]);
+        [800ca068 + i * 0x4 + 0xba] = h(hu[A2 + 0x26]);
+        [800ca068 + i * 0x2 + 0xc8] = h(0x100);
+        [800ca068 + i * 0x2 + 0xd0] = h(0x100);
+    }
 
-loopbdffc:	; 800BDFFC
-    V0 = A1 << 2;
-    V0 = V0 >> 2;
-    A1 = A1 + 0x1;
-800BE004	bne    v0, a1, loopbdffc [$800bdffc]
-
-A1 = A1 - 1;
-[FP] = w(S3 + A1); // start of background packets
-
-
-S0 = 0;
-V1 = 800ca068;
-A1 = 800ca068;
-
-loopbe02c:	; 800BE02C
-    [V1 + a8] = h(0);
-    [V1 + aa] = h(0);
-    [V1 + b8] = h(hu[A2 + 0x24]);
-    [V1 + ba] = h(hu[A2 + 0x26]);
-    [A1 + c8] = h(0100);
-    [A1 + d0] = h(0100);
-
-    A1 = A1 + 0x2;
-    V1 = V1 + 0x4;
-    S0 = S0 + 0x1;
-    V0 = S0 < 4;
-800BE05C	bne    v0, zero, loopbe02c [$800be02c]
-
-
-
-if (number_of_blocks != 0)
-{
-    S0 = 0;
     tile_block = tileset_file + w[tileset_file + 0x10];
 
-    loopbe088:	; 800BE088
+    for (int i = 0; i < blocks_n; ++i)
+    {
         V0 = w[0x800c9da4 + 0x1c];
-        [V0 + S0 * 3 + 0] = b(80);
-        [V0 + S0 * 3 + 0x1] = b(80);
-        [V0 + S0 * 3 + 0x2] = b(80);
-
-        A0 = tile_block + S0 * 38; // tile_block_data
-        V0 = w[0x800c9da4 + 0x20] + S0;
+        [V0 + i * 0x3 + 0x0] = b(0x80);
+        [V0 + i * 0x3 + 0x1] = b(0x80);
+        [V0 + i * 0x3 + 0x2] = b(0x80);
+        V0 = w[0x800c9da4 + 0x20] + i;
         [V0] = b(0);
-        A1 = w[FP]; // packets
-        A2 = FP; // end_of_packets
-        field_init_background_packets;
 
-        if (V0 != 1)
-        {
-            return 0;
-        }
+        field_init_background_packets(tile_block + i * 0x38, w[FP], FP);
 
-        [tile_block + S0 * 38 + 0x10] = h(-8000);
-        [tile_block + S0 * 38 + 0x12] = h(7fff);
-        [tile_block + S0 * 38 + 0x14] = h(-8000);
-        [tile_block + S0 * 38 + 0x16] = h(7fff);
+        if (V0 != 1) return 0;
 
-        S0 = S0 + 0x1;
-        V0 = S0 < number_of_blocks;
-    800BE0FC	bne    v0, zero, loopbe088 [$800be088]
+        [tile_block + i * 0x38 + 0x10] = h(-0x8000);
+        [tile_block + i * 0x38 + 0x12] = h(0x7fff);
+        [tile_block + i * 0x38 + 0x14] = h(-0x8000);
+        [tile_block + i * 0x38 + 0x16] = h(0x7fff);
+    }
+
+    [0x800ca068 + 0x72] = b(0);
+    [0x800ca068 + 0x73] = b(0);
+    [0x800ca068 + 0x0] = w(w[0x800ca068 + 0x0] & 0xfffff3ff);
+
+    return 1;
 }
-
-[0x800ca068 + 0x72] = b(0);
-[0x800ca068 + 0x73] = b(0);
-[0x800ca068 + 0] = w(w[0x800ca068 + 0] & fffff3ff);
-
-return 1;
-////////////////////////////////
 
 
 
@@ -25761,52 +25698,50 @@ SP = SP + 0030;
 
 
 
-////////////////////////////////
-// funcc0bcc
-camera_id = A0;
-tileset_file = w[0x800c9da4 + 0x10];
-camera_offset = w[tileset_file + 0x18];
-A2 = w[0x800ca068 + 0x20];
-[A2 + 0] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0]);
+int funcc0bcc()
+{
+    camera_id = A0;
+    tileset_file = w[0x800c9da4 + 0x10];
+    camera_offset = w[tileset_file + 0x18];
+    A2 = w[0x800ca068 + 0x20];
+    [A2 + 0] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0]);
 
-H = hu[tileset_file + camera_offset + camera_id * 34 + 0]; // Projection plane distance
+    H = hu[tileset_file + camera_offset + camera_id * 34 + 0]; // Projection plane distance
 
-A2 = w[0x800ca068 + 0x1c];
-[A2 + 0] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x2]); // R11
-[A2 + 0x2] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x4]); // R12
-[A2 + 0x4] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x6]); // R13
-[A2 + 0x6] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x8]); // R21
-[A2 + 0x8] = h(hu[tileset_file + camera_offset + camera_id * 34 + a]); // R22
-[A2 + a] = h(hu[tileset_file + camera_offset + camera_id * 34 + c]); // R23
-[A2 + c] = h(hu[tileset_file + camera_offset + camera_id * 34 + e]); // R31
-[A2 + e] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x10]); // R32
-[A2 + 0x10] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x12]); // R33
-[A2 + 0x14] = w(w[tileset_file + camera_offset + camera_id * 34 + 0x14]); // TX
-[A2 + 0x18] = w(w[tileset_file + camera_offset + camera_id * 34 + 0x18]); // TY
-[A2 + 0x1c] = w(w[tileset_file + camera_offset + camera_id * 34 + 0x1c]); // TZ
-[tileset_file + 0x2a] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x2a]);
-[tileset_file + 0x2e] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x2e]);
-[0x800ca068 + 0x75] = b(camera_id);
+    A2 = w[0x800ca068 + 0x1c];
+    [A2 + 0x0] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x2]); // R11
+    [A2 + 0x2] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x4]); // R12
+    [A2 + 0x4] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x6]); // R13
+    [A2 + 0x6] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x8]); // R21
+    [A2 + 0x8] = h(hu[tileset_file + camera_offset + camera_id * 34 + a]); // R22
+    [A2 + 0xa] = h(hu[tileset_file + camera_offset + camera_id * 34 + c]); // R23
+    [A2 + 0xc] = h(hu[tileset_file + camera_offset + camera_id * 34 + e]); // R31
+    [A2 + 0xe] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x10]); // R32
+    [A2 + 0x10] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x12]); // R33
+    [A2 + 0x14] = w(w[tileset_file + camera_offset + camera_id * 34 + 0x14]); // TX
+    [A2 + 0x18] = w(w[tileset_file + camera_offset + camera_id * 34 + 0x18]); // TY
+    [A2 + 0x1c] = w(w[tileset_file + camera_offset + camera_id * 34 + 0x1c]); // TZ
+    [tileset_file + 0x2a] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x2a]);
+    [tileset_file + 0x2e] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x2e]);
+    [0x800ca068 + 0x75] = b(camera_id);
 
-[0x800ca068 + 0] = w(w[0x800ca068 + 0] | 00000080);
+    [0x800ca068 + 0] = w(w[0x800ca068 + 0] | 00000080);
 
-V0 = w[0x8006794c];
-V0 = w[V0 + 0x1c];
-V0 = w[V0 + 0x8e4];
-V0 = w[V0 + c];
-V0 = w[V0 + 0x14];
-[V0 + 0x30] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x30]);
+    V0 = w[0x8006794c];
+    V0 = w[V0 + 0x1c];
+    V0 = w[V0 + 0x8e4];
+    V0 = w[V0 + c];
+    V0 = w[V0 + 0x14];
+    [V0 + 0x30] = h(hu[tileset_file + camera_offset + camera_id * 34 + 0x30]);
 
-return 1;
-////////////////////////////////
+    return 1;
+}
 
 
 
-////////////////////////////////
-// funcc0d38
-800C0D38	jr     ra 
-800C0D3C	nop
-////////////////////////////////
+void funcc0d38()
+{
+}
 
 
 
@@ -31320,6 +31255,10 @@ S0 = w[SP + 0010];
 800C70F8	jr     ra 
 SP = SP + 0020;
 ////////////////////////////////
+
+
+
+////////////////////////////////
 // funcc7100
 800C7100	addiu  sp, sp, $ffd0 (=-$30)
 800C7104	lui    v0, $800d
@@ -31459,6 +31398,10 @@ S0 = w[SP + 0010];
 V0 = 0001;
 800C72D0	jr     ra 
 SP = SP + 0030;
+////////////////////////////////
+
+
+
 ////////////////////////////////
 // funcc72d8
 800C72DC	lui    v0, $800d
