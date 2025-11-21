@@ -210,8 +210,8 @@ void field_main()
     if ((g_gamestate_prev != GAME_STATE_FIELD) &&
         (g_gamestate_prev != GAME_STATE_BATTLE) &&
         (g_gamestate_prev != GAME_STATE_WORLDMAP) &&
-        (g_gamestate_prev != 0x5) &&
-        (g_gamestate_prev != 0xd))
+        (g_gamestate_prev != GAME_STATE_MENU) &&
+        (g_gamestate_prev != GAME_STATE_MENU_FUNC))
     {
         RECT rect;
         rect.x = 0;
@@ -427,7 +427,7 @@ void field_main()
             return;
         }
 
-        if (g_gamestate == 0x5)
+        if (g_gamestate == GAME_STATE_MENU)
         {
             system_fade_copy_screen();
 
@@ -442,7 +442,7 @@ void field_main()
             return;
         }
 
-        if ((g_gamestate == 0xd) || (g_gamestate == 0x10))
+        if ((g_gamestate == GAME_STATE_MENU_FUNC) || (g_gamestate == 0x10))
         {
             system_psyq_vsync(0);
             return;
@@ -464,7 +464,7 @@ void field_main_loop()
     g_base_ofs_x = 0xa0;
     g_base_ofs_y = 0x78;
 
-    if ((g_gamestate_prev != 0x5) && (g_gamestate_prev != 0xd)) // if prev state was not menu
+    if ((g_gamestate_prev != GAME_STATE_MENU) && (g_gamestate_prev != GAME_STATE_MENU_FUNC))
     {
         field_model_load_and_init();
     }
@@ -474,7 +474,7 @@ void field_main_loop()
     V0 = w[g_field_walkmesh_p];
     [0x80114458] = w(A0 + hu[V0] * 0x18); // walkmesh triangle access block
 
-    if ((g_gamestate_prev != 0x5) && (g_gamestate_prev != GAME_STATE_BATTLE) && (g_gamestate_prev != 0xd))
+    if ((g_gamestate_prev != GAME_STATE_MENU) && (g_gamestate_prev != GAME_STATE_BATTLE) && (g_gamestate_prev != GAME_STATE_MENU_FUNC))
     {
         funca5fb4(); // move PC model position init by walkmesh
     }
@@ -507,7 +507,6 @@ void field_main_loop()
 
         field_camera_assign();
 
-        // screen scroll X and Y
         l_buttons_state = field_buttons_update(0x80071e38, 0x80071e3c); // update buttons
 
         V1 = w[0x80075d00];
@@ -568,7 +567,7 @@ void field_main_loop()
             (g_field_control.cmd == 0x17) ||
             (g_field_control.cmd == 0x18))
         {
-            g_gamestate = 0xd;
+            g_gamestate = GAME_STATE_MENU_FUNC;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -581,7 +580,7 @@ void field_main_loop()
             (g_field_control.cmd == FIELD_CMD_PARTY_STORE) ||
             (g_field_control.cmd == FIELD_CMD_PARTY_RESTORE))
         {
-            g_gamestate = 0x5;
+            g_gamestate = GAME_STATE_MENU;
             field_stop_load_next_map_in_advance();
             return;
         }
@@ -589,7 +588,7 @@ void field_main_loop()
         // triangle pressed, menu not called, movie not requested or played
         if ((l_buttons_state & BUTTON_TRIANGLE) && (bu[0x8009abf4 + 0x34] == 0) && (hu[0x800e4d44] == 0) && (g_movie_play == 0))
         {
-            g_gamestate = 0x5; // load menu
+            g_gamestate = GAME_STATE_MENU;
             g_field_control.cmd = FIELD_CMD_MENU_MAIN;
             g_field_control.arg = 0; // without tutorial
             field_stop_load_next_map_in_advance();
@@ -944,8 +943,7 @@ void handle_animation_update(entity_id)
     A0 = bu[dat_block7 + entity_id * 8 + 4];
     if (A0 != 0xff)
     {
-        models_struct = w[0x8004a62c];
-        models_data = w[models_struct + 4];
+        models_data = w[g_field_models + 0x4];
         offst = w[models_data + A0 * 24 + 1c];
         anim_offst = hu[models_data + A0 * 24 + 1a];
 
@@ -991,11 +989,10 @@ void field_entity_movement_update(u32 input)
     for (int i = 0; i < entities_n; ++i)
     {
         V1 = w[0x8008357c];
-        V0 = bu[V1 + i * 8 + 4];
-        if (V0 != ff)
+        V0 = bu[V1 + i * 0x8 + 0x4];
+        if (V0 != 0xff)
         {
-            A0 = w[0x8004a62c];
-            A0 = w[A0 + 4];
+            A0 = w[g_field_models + 0x4];
             V1 = A0 + V0 * 24;
 
             V0 = bu[0x80074ea4 + i * 84 + 5c]; // model visibility
@@ -1366,8 +1363,7 @@ void field_entity_movement_update(u32 input)
             A0 = bu[V0 + i * 8 + 4];
             if (A0 != ff)
             {
-                V1 = w[0x8004a62c];
-                V1 = w[V1 + 4];
+                V1 = w[g_field_models + 0x4];
                 V0 = V1 + A0 * 24;
                 A0 = hu[V0 + 1a];
                 V0 = w[V0 + 1c];
@@ -2337,8 +2333,7 @@ else
 
 V1 = w[0x8008357c];
 V0 = bu[V1 + actor_id * 0x8 + 0x4];
-A0 = w[0x8004a62c];
-V1 = w[A0 + 0x4];
+V1 = w[g_field_models + 0x4];
 V1 = bu[V1 + V0 * 0x24];
 
 A0 = 0;

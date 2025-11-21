@@ -381,8 +381,7 @@ int field_event_split_join_set_move(u8 actor_id, s16 x, s16 y, u8 steps, u8 from
     // set animation
     dat_block7 = w[0x8008357c];
     model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
-    models_struct = w[0x8004a62c];
-    models_data = w[models_struct + 0x4];
+    models_data = w[g_field_models + 0x4];
     A1 = hu[models_data + model_id * 0x24 + 0x1a]; // local offset to animation
     A0 = w[models_data + model_id * 0x24 + 0x1c]; // offset to data for this model and bones offset.
     animation_id = bu[0x80074ea4 + entity_id * 0x84 + 0x5e];

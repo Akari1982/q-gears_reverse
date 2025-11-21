@@ -1,7 +1,5 @@
 80049208 window RGB. (size [r][g][b]x4)
 
-8004a62c offset to new model structure at 80138250.
-
 0x80062f19 [] looks like enemy lure value (looks like 0xc fixed point)
 0x80062f1b [] looks like enemy away value
 
@@ -1520,7 +1518,7 @@
 
 
 
-80138250 header for model struct. 8004a62c points here.
+0x80138250 header for model struct. 8004a62c points here.
     + 0 []       number of inited models.
     + 1 []       store 00 here during init.
     + 2 [][]     store 00 here during init.

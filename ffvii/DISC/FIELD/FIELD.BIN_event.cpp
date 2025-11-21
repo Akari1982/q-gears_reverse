@@ -680,8 +680,7 @@ if (number_of_entity > 0)
 
                             V1 = w[0x8008357c];
                             A1 = bu[V1 + model * 8 + 4];
-                            V1 = w[0x8004a62c];
-                            V1 = w[V1 + 4];
+                            V1 = w[g_field_models + 0x4];
                             A1 = hu[V1 + A1 * 24 + 1a];
                             A0 = w[V1 + A1 * 24 + 1c];
                             number_of_frames = hu[A0 + A1 + default_animation * 10];
@@ -691,8 +690,7 @@ if (number_of_entity > 0)
                         {
                             V1 = w[0x8008357c];
                             A1 = bu[V1 + model * 8 + 4];
-                            V1 = w[0x8004a62c];
-                            V1 = w[V1 + 4];
+                            V1 = w[g_field_models + 0x4];
                             A0 = hu[V1 + model * 24 + 1a];
                             V1 = w[V1 + model * 24 + 1c];
                             animation_id = bu[entities_data + model * 84 + 5e];

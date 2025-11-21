@@ -1370,8 +1370,7 @@ animation_id = bu[field_file_offset + current_script_pointer + 1];
 dat_block7 = w[0x8008357c];
 V1 = bu[dat_block7 + current_model * 8 + 4]; // 0 1 2 3 4 5 6 7 8 9 for each model
 
-A0 = w[0x8004a62c];
-V0 = w[A0 + 4];
+V0 = w[g_field_models + 0x4];
 A0 = hu[V0 + V1 * 24 + 1a];
 A1 = w[V0 + V1 * 24 + 1c];
 [entities_data + current_model * 84 + 64] = h(hu[A1 + A0 + animation_id * 10] - 1); // frames number
@@ -1517,8 +1516,7 @@ if (current_model != FF)
 
     V1 = w[0x8008357c];
     V0 = bu[V1 + current_model * 8 + 4];
-    A0 = w[0x8004a62c];
-    V0 = w[A0 + 4];
+    V0 = w[g_field_models + 0x4];
     A0 = hu[V0 + V1 * 24 + 1A];
     V1 = w[V0 + V1 * 24 + 1C];
     V0 = bu[0x80074F02 + A1 * 84]; // animation id
@@ -1607,8 +1605,7 @@ if (current_model != FF)
 
     V1 = w[0x8008357C];
     V0 = bu[V1 + current_model * 8 + 4];
-    A0 = w[0x8004A62C];
-    V0 = w[A0 + 4];
+    V0 = w[g_field_models + 0x4];
     A0 = hu[V0 + V1 * 24 + 1A];
     V1 = w[V0 + V1 * 24 + 1C];
     V0 = bu[0x80074F02 + A1 * 84]; // animation id
@@ -1825,8 +1822,7 @@ else
 
 V1 = w[0x8008357C];
 A1 = bu[V1 + current_model * 8 + 04];
-V1 = w[0x8004A62C];
-V1 = w[V1 + 04];
+V1 = w[g_field_models + 0x4];
 
 A0 = w[V1 + A1 * 24 + 1C];
 A1 = hu[V1 + A1 * 24 + 1A];
@@ -2217,8 +2213,7 @@ V1 = h[0x8009d828 + model_id * 2] / bu[V0 + A1 + e];
 V1 = w[0x8008357C];
 V1 = bu[V1 + model_id * 8 + 4];
 animation_id = bu[0x80074EA4 + model_id * 84 + 5E];
-A0 = w[0x8004A62C];
-V0 = w[A0 + 4];
+V0 = w[g_field_models + 0x4];
 A1 = w[V0 + V1 * 24 + 1C];
 A0 = hu[V0 + V1 * 24 + 1A];
 V0 = hu[A1 + A0 + animation_id * 10];
@@ -2402,10 +2397,9 @@ if (V1 == 1)
         A1 = bu[V0 + 4];
 
 
-        V1 = w[0x8004a62c];
         V0 = A1 << 03;
         V0 = V0 + A1;
-        V1 = w[V1 + 0004];
+        V1 = w[g_field_models + 0x4];
         V0 = V0 << 02;
         V0 = V0 + V1;
         V1 = A0 << 05;
@@ -8921,8 +8915,7 @@ size = bu[script + 1];
 if (entity_id != ff)
 {
     dat_block7 = w[0x8008357c];
-    models_struct = w[0x8004a62c];
-    models_data = w[models_struct + 4];
+    models_data = w[g_field_models + 0x4];
     model_id = bu[dat_block7 + entity_id * 8 + 4];
 
     [models_data + model_id * 24 + 1] = b(bu[script + 2]); // write kawai to new structure

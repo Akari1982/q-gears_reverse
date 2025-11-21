@@ -164,3 +164,34 @@ struct FieldRain
     s16 z;                      // 0x14
     u16 render;                 // 0x16
 };
+
+struct FieldModels
+{
+    u8 inited_n;                // 0x0
+                                // 0x1 []       store 00 here during init.
+                                // 0x2 [][]     store 00 here during init.
+    FieldModel* data            // 0x4
+                                // 0x8 [][][][] store 00 here during init. Offset to texture in bsx file.
+};
+
+struct FieldModel
+{
+                                //  0x0 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
+                                //  0x1 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
+                                //  0x2 []       number of bones.
+                                //  0x3 []       number of parts.
+                                //  0x4 []       number of animation.
+                                //  0x5 []       rotation x.
+                                //  0x6 []       rotation y.
+                                //  0x7 []       rotation z (direction).
+                                //  0x8 [][][][] translation x.
+                                //  0xc [][][][] translation y.
+                                // 0x10 [][][][] translation z.
+                                // 0x14 []       global model id.
+                                // 0x15 []       face id in global texture (load palette with this id to vram).
+                                // 0x16 [][]     model scale. Store 1000 here during init. (12bit fixed point)
+                                // 0x18 [][]     local offset to model parts.
+                                // 0x1a [][]     local offset to animation.
+                                // 0x1c [][][][] offset to data for this model and bones offset.
+                                // 0x20 [][][][] offset to part matrixes.
+};

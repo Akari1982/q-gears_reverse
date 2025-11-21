@@ -676,85 +676,82 @@ for (int i = 0; i < w[bsx_add + 0]; ++i)
 
 
 
-////////////////////////////////
-// field_model_struct_init()
-
-block7_header = A0;
-block7_models = block7_header + 4;
-models_struct = A1;
-model_data = models_struct + c;
-
-[models_struct + 0] = b(0);
-
-models_n = hu[block7_header + 2];
-
-for (int i = 0; i < models_n; ++i)
+u32 field_model_struct_init(block7_header, FieldModels* models_struct)
 {
-    if (bu[block7_models + i * 8 + 5] != 0)
-    {
-        [block7_models + i * 8 + 4] = b(bu[models_struct + 0]);
-        [models_struct + 0] = b(bu[models_struct + 0] + 1);
-    }
-    else
-    {
-        [block7_models + i * 8 + 4] = b(ff);
-    }
-}
+    block7_models = block7_header + 0x4;
+    model_data = models_struct + 0xc;
 
-[models_struct + 1] = b(0);
-[models_struct + 2] = h(0);
-[models_struct + 4] = w(model_data);
-[models_struct + 8] = w(0);
+    models_struct->inited_n = 0;
 
-A1 = model_data + bu[models_struct + 0] * 24;
+    models_n = hu[block7_header + 2];
 
-for (int i = 0; i < models_n; ++i)
-{
-    if (bu[block7_models + i * 8 + 5] != 0) // if model enabled
+    for (int i = 0; i < models_n; ++i)
     {
-        // number of animation for addition model 3 at least
-        if ((bu[block7_models + i * 8 + 7] - 1) < 9)
+        if (bu[block7_models + i * 8 + 5] != 0)
         {
-            if (bu[block7_models + i * 8 + 3] < 3)
-            {
-                [block7_models + i * 8 + 3] = b(3);
-            }
+            [block7_models + i * 8 + 4] = b(models_struct->inited_n);
+            models_struct->inited_n += 0x1;
         }
-
-        model_id = bu[block7_models + i * 8 + 4];
-        [model_data + model_id * 24 +  0] = b(1);
-        [model_data + model_id * 24 +  1] = bu(ff);
-        [model_data + model_id * 24 +  2] = b(bu[block7_models + i * 8 + 1]); // bones
-        [model_data + model_id * 24 +  3] = b(bu[block7_models + i * 8 + 2]); // parts
-        [model_data + model_id * 24 +  4] = b(bu[block7_models + i * 8 + 3]); // animations
-        [model_data + model_id * 24 +  5] = b(0);
-        [model_data + model_id * 24 +  6] = b(0);
-        [model_data + model_id * 24 +  7] = b(0);
-        [model_data + model_id * 24 +  8] = w(0);
-        [model_data + model_id * 24 +  c] = w(0);
-        [model_data + model_id * 24 + 10] = w(0);
-        [model_data + model_id * 24 + 14] = b(bu[block7_models + i * 8 + 7]); // global model id
-        [model_data + model_id * 24 + 15] = b(bu[block7_models + i * 8 + 0]); // face id
-        [model_data + model_id * 24 + 16] = h(1000);
-
-        A0 = bu[block7_models + i * 8 + 1] * 4;
-        [model_data + model_id * 24 + 18] = h(A0); // local offset to model parts part.
-
-        A0 += bu[block7_models + i * 8 + 2] * 20;
-        [model_data + model_id * 24 + 1a] = h(A0); // local offset to animation part.
-
-        [model_data + model_id * 24 + 1c] = w(A1); // start offset of data for this model
-        [model_data + model_id * 24 + 20] = w(0);
-
-        // calculate offset to next model data
-        A1 += bu[block7_models + i * 8 + 1] * 4 + bu[block7_models + i * 8 + 2] * 20 + bu[block7_models + i * 8 + 3] * 10;
+        else
+        {
+            [block7_models + i * 8 + 4] = b(0xff);
+        }
     }
+
+    [models_struct + 1] = b(0);
+    [models_struct + 2] = h(0);
+    models_struct->data = model_data;
+    [models_struct + 8] = w(0);
+
+    A1 = model_data + bu[models_struct + 0] * 24;
+
+    for (int i = 0; i < models_n; ++i)
+    {
+        if (bu[block7_models + i * 8 + 5] != 0) // if model enabled
+        {
+            // number of animation for addition model 3 at least
+            if ((bu[block7_models + i * 8 + 7] - 1) < 9)
+            {
+                if (bu[block7_models + i * 8 + 3] < 3)
+                {
+                    [block7_models + i * 8 + 3] = b(3);
+                }
+            }
+
+            model_id = bu[block7_models + i * 8 + 4];
+            [model_data + model_id * 24 +  0] = b(1);
+            [model_data + model_id * 24 +  1] = bu(ff);
+            [model_data + model_id * 24 +  2] = b(bu[block7_models + i * 8 + 1]); // bones
+            [model_data + model_id * 24 +  3] = b(bu[block7_models + i * 8 + 2]); // parts
+            [model_data + model_id * 24 +  4] = b(bu[block7_models + i * 8 + 3]); // animations
+            [model_data + model_id * 24 +  5] = b(0);
+            [model_data + model_id * 24 +  6] = b(0);
+            [model_data + model_id * 24 +  7] = b(0);
+            [model_data + model_id * 24 +  8] = w(0);
+            [model_data + model_id * 24 +  c] = w(0);
+            [model_data + model_id * 24 + 10] = w(0);
+            [model_data + model_id * 24 + 14] = b(bu[block7_models + i * 8 + 7]); // global model id
+            [model_data + model_id * 24 + 15] = b(bu[block7_models + i * 8 + 0]); // face id
+            [model_data + model_id * 24 + 16] = h(1000);
+
+            A0 = bu[block7_models + i * 8 + 1] * 4;
+            [model_data + model_id * 24 + 18] = h(A0); // local offset to model parts part.
+
+            A0 += bu[block7_models + i * 8 + 2] * 20;
+            [model_data + model_id * 24 + 1a] = h(A0); // local offset to animation part.
+
+            [model_data + model_id * 24 + 1c] = w(A1); // start offset of data for this model
+            [model_data + model_id * 24 + 20] = w(0);
+
+            // calculate offset to next model data
+            A1 += bu[block7_models + i * 8 + 1] * 4 + bu[block7_models + i * 8 + 2] * 20 + bu[block7_models + i * 8 + 3] * 10;
+        }
+    }
+
+    [0x800e0204] = w(0);
+
+    return A1;
 }
-
-[0x800e0204] = w(0);
-
-return A1;
-////////////////////////////////
 
 
 

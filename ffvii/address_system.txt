@@ -111,6 +111,7 @@
 
 0x8004a60c
 
+0x8004a62c [][][][] pointer to new model structure at 0x80138250. Hardcoded into exe (0x3ae2c)
 0x8004a630 []       random seed for field.
 
 0x8004a68c [][][][] key status (mask of channels with on voices).

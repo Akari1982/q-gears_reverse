@@ -1,16 +1,21 @@
-#define BG_RENDER_NONE 0x0
-#define BG_RENDER_FADE 0x1
-#define BG_RENDER_BATTLE 0x2
-#define BG_RENDER_BATTLE_SWIRL 0x3
-#define BG_RENDER_BATTLE_RESULT 0x4
-u16 g_bg_render;        // 0x80095dd4
+u32 g_field_models = 0x80138250;    // 0x8004a62c
 
-#define GAME_STATE_NONE 0x0
-#define GAME_STATE_FIELD 0x1
-#define GAME_STATE_BATTLE 0x2
-#define GAME_STATE_WORLDMAP 0x3
-s16 g_gamestate_prev;   // 0x800965ec
-s16 g_gamestate;        // 0x8009c560
+#define BG_RENDER_NONE          0x0
+#define BG_RENDER_FADE          0x1
+#define BG_RENDER_BATTLE        0x2
+#define BG_RENDER_BATTLE_SWIRL  0x3
+#define BG_RENDER_BATTLE_RESULT 0x4
+u16 g_bg_render;                    // 0x80095dd4
+
+#define GAME_STATE_NONE         0x0
+#define GAME_STATE_FIELD        0x1
+#define GAME_STATE_BATTLE       0x2
+#define GAME_STATE_WORLDMAP     0x3
+#define GAME_STATE_MENU         0x5
+#define GAME_STATE_MENU_FUNC    0xd
+s16 g_gamestate_prev;               // 0x800965ec
+s16 g_gamestate;                    // 0x8009c560
+
 
 
 void func110b8()
@@ -247,21 +252,18 @@ void system_init_dispenv_drawenv()
 
 void system_field_run()
 {
-    if (g_gamestate_prev != 0x5)
+    if (g_gamestate_prev != GAME_STATE_MENU) && (g_gamestate_prev != GAME_STATE_MENU_FUNC))
     {
-        if (g_gamestate_prev != 0xd)
+        if (g_gamestate_prev != GAME_STATE_BATTLE)
         {
-            if (g_gamestate_prev != GAME_STATE_BATTLE)
-            {
-                system_cdrom_start_load_file(w[0x80048d24], w[0x80048d28], 0x80180000, 0); // "FIELD/FIELD.BIN"
-                while (system_cdrom_read_chain() != 0) {}
-                system_gzip_bin_decompress(0x80180000, 0x800a0000);
-            }
-            else
-            {
-                while (system_cdrom_read_chain() != 0) {}
-                system_gzip_bin_decompress(0x801c0000, 0x800a0000);
-            }
+            system_cdrom_start_load_file(w[0x80048d24], w[0x80048d28], 0x80180000, 0); // "FIELD/FIELD.BIN"
+            while (system_cdrom_read_chain() != 0) {}
+            system_gzip_bin_decompress(0x80180000, 0x800a0000);
+        }
+        else
+        {
+            while (system_cdrom_read_chain() != 0) {}
+            system_gzip_bin_decompress(0x801c0000, 0x800a0000);
         }
     }
 
@@ -591,7 +593,7 @@ void system_main()
                 }
                 break;
 
-                case 0x5: // menu
+                case GAME_STATE_MENU:
                 {
                     while (g_bg_render != BG_RENDER_NONE) {}
 
@@ -641,8 +643,8 @@ void system_main()
 
                     field_copy_battle_party_to_party();
 
-                    [0x8009ac1a] = h(0x2);
-                    g_gamestate_prev = 0x5;
+                    [0x8009abf4 + 0x26] = h(0x2);
+                    g_gamestate_prev = GAME_STATE_MENU;
                     g_gamestate = GAME_STATE_FIELD;
                 }
                 break;
@@ -765,7 +767,7 @@ void system_main()
                 }
                 break;
 
-                case 0xd:
+                case GAME_STATE_MENU_FUNC:
                 {
                     func119e4();
 
@@ -786,7 +788,7 @@ void system_main()
                     }
 
                     [0x8009abf4 + 0x26] = h(0x2);
-                    g_gamestate_prev = 0xd;
+                    g_gamestate_prev = GAME_STATE_MENU_FUNC;
                     g_gamestate = GAME_STATE_FIELD;
                 }
                 break;
@@ -809,7 +811,7 @@ void system_main()
                 {
                     func11274(); // load instr2.dat instr2.all
 
-                    [0x8009ac1a] = h(0x2);
+                    [0x8009abf4 + 0x26] = h(0x2);
                     g_gamestate_prev = 0x10;
                     g_gamestate = GAME_STATE_FIELD;
                 }
