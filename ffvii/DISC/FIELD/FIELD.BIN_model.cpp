@@ -1,63 +1,62 @@
-////////////////////////////////
-// field_model_load_and_init()
-
-[0x800dfca0] = w(80128000); // address for global texture
-
-block7 = w[0x8007e770];
-models_struct = w[0x8004a62c];
-
-A0 = block7;
-A1 = models_struct;
-field_model_struct_init();
-[0x80075e10] = w(V0); // BCX start
-[0x800e0204] = w(V0); // place to load next BCX
-
-// load field bsx
-A0 = w[0x800da5b8 + g_field_map_id * 18 + 10];
-A1 = w[0x800da5b8 + g_field_map_id * 18 + 14];
-A2 = 0x801b0000;
-A3 = 0;
-system_cdrom_start_load_lzs();
-
-do system_cdrom_read_chain(); while (V0 != 0)
-
-[1f800000] = w(800df08c); // CLOUD.BCX start sector.
-[1f800004] = w(800df0d4); // FIELD.TDB start sector.
-
-A0 = block7;
-A1 = models_struct;
-A2 = w[0x80075e10]; // place for BCX
-A3 = 1; // load global texture
-field_model_load_global_models();
-[0x80075e10] = w(V0);
-
-A0 = block7;
-A1 = models_struct;
-A2 = 0x800a00dc; // static var in FIELD.BIN (0 in release version)
-A3 = 0x801b0000;
-field_model_load_local_model_and_init_all();
-[0x80075e10] = w(V0);
-
-models_data = w[models_struct + 4];
-
-for (int i = 1; i < bu[models_struct + 0]; ++i) // number of models
+void field_model_load_and_init()
 {
-    [models_data + i * 24 + 0] = b(0);
-}
+    [0x800dfca0] = w(0x80128000); // address for global texture
 
-for (int i = 0; i < bu[models_struct + 0]; ++i) // number of models
-{
-    [1f800000] = b(1);
-    [1f800001] = b(1);
-    [1f800002] = b(0);
-    [1f800003] = b(i);
-    A0 = models_data + i * 24;
-    A1 = 1f800000;
-    field_model_kawai_load_eyes_mouth_tex_to_vram();
-}
+    block7 = w[0x8007e770];
+    models_struct = w[0x8004a62c];
 
-funcafde4();
-////////////////////////////////
+    A0 = block7;
+    A1 = models_struct;
+    field_model_struct_init();
+    [0x80075e10] = w(V0); // BCX start
+    [0x800e0204] = w(V0); // place to load next BCX
+
+    // load field bsx
+    A0 = w[0x800da5b8 + g_field_map_id * 18 + 10];
+    A1 = w[0x800da5b8 + g_field_map_id * 18 + 14];
+    A2 = 0x801b0000;
+    A3 = 0;
+    system_cdrom_start_load_lzs();
+
+    do system_cdrom_read_chain(); while (V0 != 0)
+
+    [1f800000] = w(800df08c); // CLOUD.BCX start sector.
+    [1f800004] = w(800df0d4); // FIELD.TDB start sector.
+
+    A0 = block7;
+    A1 = models_struct;
+    A2 = w[0x80075e10]; // place for BCX
+    A3 = 1; // load global texture
+    field_model_load_global_models();
+    [0x80075e10] = w(V0);
+
+    A0 = block7;
+    A1 = models_struct;
+    A2 = 0x800a00dc; // static var in FIELD.BIN (0 in release version)
+    A3 = 0x801b0000;
+    field_model_load_local_model_and_init_all();
+    [0x80075e10] = w(V0);
+
+    models_data = w[models_struct + 4];
+
+    for (int i = 1; i < bu[models_struct + 0]; ++i) // number of models
+    {
+        [models_data + i * 24 + 0] = b(0);
+    }
+
+    for (int i = 0; i < bu[models_struct + 0]; ++i) // number of models
+    {
+        [1f800000] = b(1);
+        [1f800001] = b(1);
+        [1f800002] = b(0);
+        [1f800003] = b(i);
+        A0 = models_data + i * 24;
+        A1 = 1f800000;
+        field_model_kawai_load_eyes_mouth_tex_to_vram();
+    }
+
+    funcafde4();
+}
 
 
 
