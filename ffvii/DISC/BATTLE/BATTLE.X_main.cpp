@@ -34,10 +34,7 @@ if (battle_id != 0xffff)
             S3 = 0x800b30e4; // battle_normal_start_sequence()
         }
 
-        A0 = 0x6;
-        A1 = 0x801c0000;
-        A2 = 0;
-        func14578(); // load BATTLE/BATINI.X
+        func14578(0x6, 0x801c0000, 0); // load BATTLE/BATINI.X
 
         func145bc(S0); // wait
 
@@ -51,9 +48,9 @@ if (battle_id != 0xffff)
 
         for (int i = 0; i < 0xa; ++i)
         {
-            [0x801636b8 + i * 0x10 + 0x8] = w(w[0x800f83e0 + i * 68 + 0] & 0fffffff);
-            [0x801636b8 + i * 0x10 + 0xc] = w(w[0x800f83e0 + i * 68 + 0] & 0fffffff);
-            [0x800f5bb8 + i * 0x44 + 0xe] = b(bu[0x800f5bb8 + i * 44 + e] | 0f);
+            [0x801636b8 + i * 0x10 + 0x8] = w(w[0x800f83e0 + i * 0x68 + 0x0] & 0x0fffffff);
+            [0x801636b8 + i * 0x10 + 0xc] = w(w[0x800f83e0 + i * 0x68 + 0x0] & 0x0fffffff);
+            [0x800f5bb8 + i * 0x44 + 0xe] = b(bu[0x800f5bb8 + i * 0x44 + 0xe] | 0f);
         }
 
         800A12EC	jalr   s3 ra // we call function that loads field and camera here (stops when already show start of battle but no anyone take action)

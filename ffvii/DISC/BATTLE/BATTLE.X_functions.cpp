@@ -389,117 +389,87 @@ system_cdrom_read_chain();
 
 
 
-////////////////////////////////
-// battle_update_render()
-
-battle_cdrom_read_chain();
-
-A0 = w[0x801517c0] + 40a4; // 800faff4 + 40a4 = 800ff098
-A1 = 10;
-system_psyq_clear_otag_r();
-
-A0 = w[0x801517c0] + 4070;
-A1 = 2;
-system_psyq_clear_otag();
-
-A0 = w[0x801517c0] + 4078;
-A1 = 2;
-system_psyq_clear_otag();
-
-A0 = w[0x801517c0] + 70;
-A1 = 1000;
-system_psyq_clear_otag_r();
-
-A0 = w[0x801517c0] + 4080;
-A1 = 9;
-system_psyq_clear_otag_r();
-
-A0 = w[0x801517c0] + 40e4;
-A1 = 2;
-system_psyq_clear_otag();
-
-A0 = w[0x801517c0] + 40ec;
-A1 = 2;
-system_psyq_clear_otag();
-
-if (w[0x800f8368] == 0)
+void battle_update_render()
 {
-    [0x80163c74] = w(80168000);
-}
-else
-{
-    [0x80163c74] = w(80164000);
-}
+    battle_cdrom_read_chain();
 
-funcb8360(0x1);
+    system_psyq_clear_otag_r(w[0x801517c0] + 0x40a4, 0x10);
+    system_psyq_clear_otag(w[0x801517c0] + 0x4070, 0x2);
+    system_psyq_clear_otag(w[0x801517c0] + 0x4078, 0x2);
+    system_psyq_clear_otag_r(w[0x801517c0] + 0x70, 0x1000);
+    system_psyq_clear_otag_r(w[0x801517c0] + 0x4080, 0x9);
+    system_psyq_clear_otag(w[0x801517c0] + 0x40e4, 0x2);
+    system_psyq_clear_otag(w[0x801517c0] + 0x40ec, 0x2);
 
-funcc5cc0(); // add next show string element 800f9da8
-
-funcb8438(); // we load stage model to packets here
-
-for (int i = 0; i < a; ++i)
-{
-    if (bu[0x801518e4 + i * b9c + 26] == 0)
+    if (w[0x800f8368] == 0)
     {
-        [0x800f7de4] = b(0);
-        break;
-    }
-
-    if (h[0x80162080] == 0)
-    {
-        [0x800f7de4] = b(1);
+        [0x80163c74] = w(0x80168000);
     }
     else
     {
-        [0x800f7de4] = b(0);
+        [0x80163c74] = w(0x80164000);
     }
+
+    funcb8360(0x1);
+
+    funcc5cc0(); // add next show string element 800f9da8
+
+    funcb8438(); // we load stage model to packets here
+
+    for (int i = 0; i < 0xa; ++i)
+    {
+        if (bu[0x801518e4 + i * 0xb9c + 0x26] == 0)
+        {
+            [0x800f7de4] = b(0);
+            break;
+        }
+
+        if (h[0x80162080] == 0)
+        {
+            [0x800f7de4] = b(1);
+        }
+        else
+        {
+            [0x800f7de4] = b(0);
+        }
+    }
+
+    funca3ed0();
+
+    funcb8360(0x2);
+
+    funcdcfd4(w[0x801517c0] + 0x40e4);
+
+    if (bu[0x800f9d94] == 0)
+    {
+        system_psyq_reset_graph(0x1);
+
+        [0x800f9d94] = b(1);
+    }
+
+    if (hu[0x8016376a] & 0x0002)
+    {
+        funce16b8(w[0x801517c0] + 0x40e4, 0x10, 0x10, w[0x8009d268]); // add render packets to queue
+    }
+
+    [0x800fa9b8] = w(system_psyq_vsync(0x1));
+
+    funcd25e8(); // perform images operations (load store move clear)
+
+    battle_cdrom_read_chain();
+
+    [0x80158d08] = w(funcd8a88()); // switch buffers
+
+    system_psyq_set_geom_screen(h[0x80162084]);
+
+    [0x801516f4] = b(bu[0x801516f4] + 1);
+
+    funcb7f6c(); // some cdrom sync
+
+    funcb950c();
+
+    [0x801516a0] = h(hu[0x800f198c]);
 }
-
-800B8128	jal    funca3ed0 [$800a3ed0]
-
-A0 = 2;
-funcb8360();
-
-A0 = w[0x801517c0] + 40e4;
-800B8140	jal    funcdcfd4 [$800dcfd4]
-
-if (bu[0x800f9d94] == 0)
-{
-    system_psyq_reset_graph(0x1);
-
-    [0x800f9d94] = b(1);
-}
-
-if (hu[0x8016376a] & 0x0002)
-{
-    A0 = w[0x801517c0] + 40e4;
-    A1 = 10;
-    A2 = 10;
-    A3 = w[0x8009d268];
-    funce16b8(); // add render packets to queue
-}
-
-[0x800fa9b8] = w(system_psyq_vsync(0x1));
-
-funcd25e8(); // perform images operations (load store move clear)
-
-battle_cdrom_read_chain();
-
-funcd8a88(); // switch buffers
-
-[0x80158d08] = w(V0);
-
-A0 = h[0x80162084];
-system_psyq_set_geom_screen();
-
-[0x801516f4] = b(bu[0x801516f4] + 1);
-
-funcb7f6c(); // some cdrom sync
-
-funcb950c();
-
-[0x801516a0] = h(hu[0x800f198c]);
-////////////////////////////////
 
 
 
@@ -643,7 +613,7 @@ SP = SP + 0018;
 ////////////////////////////////
 // funcb8438()
 
-funcb9568; // update field geometry and set it to render
+funcb9568(); // update field geometry and set it to render
 
 if (bu[0x801635fc] != 0)
 {
@@ -2864,13 +2834,8 @@ for (int i = 0; i < number_of_bones; ++i)
 
 
 
-////////////////////////////////
-// funcbb4f8()
-
-V0 = w[0x801b0000];
-A0 = 801b0000 + w[0x801b0000 + V0 * 4]; // offset to texture part (last file)
-A1 = 0;
-A2 = 0; // x add to clut
-A3 = 0; // y add to clut
-battle_set_load_tim_to_vram();
-////////////////////////////////
+void funcbb4f8()
+{
+    V0 = w[0x801b0000];
+    battle_set_load_tim_to_vram(0x801b0000 + w[0x801b0000 + V0 * 0x4], 0, 0, 0); // offset to texture part (last file)
+}
