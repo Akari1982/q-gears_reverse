@@ -101,7 +101,7 @@
 800B9B0C kawai_action_d
 
 // FIELD.BIN_event.cpp
-800BA534 field_init_structs_events_actors
+800BA534 field_event_init
 800BA65C field_event_update
 800BA7C4 field_init_default_values
 800BAF54 field_event_run_init

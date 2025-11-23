@@ -675,45 +675,38 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// field_event_opcode_d0_line()
-
-actor_id_cur = bu[0x800722c4];
-current_line_id = h[0x80095d84];
-script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2];
-
-if (bu[0x8009d820] & 3)
+int field_event_opcode_d0_line()
 {
-    A0 = 800a0610; // "line"
-    A1 = 8;
-    field_debug_event_opcode();
+    actor_id_cur = bu[0x800722c4];
+    current_line_id = h[0x80095d84];
+    script = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 0x2];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("line", 8);
+
+    if (current_line_id < 0x20)
+    {
+        [0x8007078c + actor_id_cur] = b(current_line_id);
+
+        [0x8007e7ac + current_line_id * 0x18 + 0x0] = h(hu[script + 0x1]); // x1
+        [0x8007e7ac + current_line_id * 0x18 + 0x2] = h(hu[script + 0x3]); // y1
+        [0x8007e7ac + current_line_id * 0x18 + 0x4] = h(hu[script + 0x5]); // z1
+        [0x8007e7ac + current_line_id * 0x18 + 0x6] = h(hu[script + 0x7]); // x2
+        [0x8007e7ac + current_line_id * 0x18 + 0x8] = h(hu[script + 0x9]); // y2
+        [0x8007e7ac + current_line_id * 0x18 + 0xa] = h(hu[script + 0xb]); // z2
+        [0x8007e7ac + current_line_id * 0x18 + 0xc] = b(0x1); // line on
+        [0x8007e7ac + current_line_id * 0x18 + 0xd] = b(actor_id_cur);
+
+        [0x80095d84] = h(current_line_id + 0x1);
+    }
+    else
+    {
+        funcd4848("many lineobj!");
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0xd);
+
+    return 0;
 }
-
-if (current_line_id < 20)
-{
-    [0x8007078c + actor_id_cur] = b(current_line_id);
-
-    [0x8007e7ac + current_line_id * 18 + 0] = h(hu[script + 1]); // x1
-    [0x8007e7ac + current_line_id * 18 + 2] = h(hu[script + 3]); // y1
-    [0x8007e7ac + current_line_id * 18 + 4] = h(hu[script + 5]); // z1
-    [0x8007e7ac + current_line_id * 18 + 6] = h(hu[script + 7]); // x2
-    [0x8007e7ac + current_line_id * 18 + 8] = h(hu[script + 9]); // y2
-    [0x8007e7ac + current_line_id * 18 + a] = h(hu[script + b]); // z2
-    [0x8007e7ac + current_line_id * 18 + c] = b(1); // line on
-    [0x8007e7ac + current_line_id * 18 + d] = b(actor_id_cur);
-
-    [0x80095d84] = h(current_line_id + 1);
-}
-else
-{
-    A0 = 800a0618; // "many lineobj!"
-    funcd4848();
-}
-
-[0x800831fc + actor_id_cur * 2] = h(hu[0x800831fc + actor_id_cur * 2] + d);
-
-return 0;
-////////////////////////////////
 
 
 
@@ -8983,28 +8976,12 @@ return 0;
 
 
 
-////////////////////////////////
-// funcd4848()
+void funcd4848(u32 string)
+{
+    field_debug_init_page(0, 0x64, 0x64, 0x96, 0xc);
+    field_debug_set_page_color(0, 0x7f, 0, 0);
+    field_debug_add_string_to_page_next_row(0, string);
 
-string = A0;
-
-A0 = 0; // page
-A1 = 64; // x
-A2 = 64; // y
-A3 = 96; // w
-A4 = c; // h
-field_debug_init_page();
-
-A0 = 0;
-A1 = 7f;
-A2 = 0;
-A3 = 0;
-field_debug_set_page_color();
-
-A0 = 0; // page
-A1 = string;
-field_debug_add_string_to_page_next_row();
-
-[0x80095dcc] = b(1);
-[0x80099ffc] = b(4);
-////////////////////////////////
+    [0x80095dcc] = b(0x1);
+    [0x80099ffc] = b(0x4);
+}

@@ -178,9 +178,9 @@ struct FieldModel
 {
                                 //  0x0 []       store 01 here during init. Store 0 here after initialization if number of models greater than 1.
                                 //  0x1 []       store 0xff here during init. Store KAWAI second byte here. (4,8,9,b,c - one kind, others - other)
-                                //  0x2 []       number of bones.
-                                //  0x3 []       number of parts.
-                                //  0x4 []       number of animation.
+    u8 bones_n;                 //  0x2
+    u8 parts_n;                 //  0x3
+    u8 anim_n;                  //  0x4
                                 //  0x5 []       rotation x.
                                 //  0x6 []       rotation y.
                                 //  0x7 []       rotation z (direction).
@@ -194,4 +194,65 @@ struct FieldModel
                                 // 0x1a [][]     local offset to animation.
                                 // 0x1c [][][][] offset to data for this model and bones offset.
                                 // 0x20 [][][][] offset to part matrixes.
+};
+
+struct FieldEntity
+{
+                                // 0x00 [][]     store 1 here in KAWAI opcode. Store 2 here if run_kawai function returns 1 (maybe end kawai)
+                                // 0x02 [][]     store 0 here in KAWAI opcode.
+                                // 0x04 [][][][] kawai settings. Offset to KAWAI opcode data in script (like offset to opcode + 3).
+                                // 0x08 []       blinking. 0 - on, 1 - off.
+                                // 0x09 []       store 0 here in KAWAI opcode under some curcumstances.
+                                // 0x0c [][][][] x.
+                                // 0x10 [][][][] y.
+                                // 0x14 [][][][] z.
+                                // 0x18 [][][][] x start (in JUMP and LADER).
+                                // 0x1c [][][][] y start (in JUMP and LADER).
+                                // 0x20 [][][][] z start (in JUMP and LADER).
+                                // 0x2c [][]     b value for JUMP function.
+                                // 0x30 [][]     store number of steps for JUMP and LADER here.
+                                // 0x32 [][]     current step for JUMP and LADER.
+                                // 0x35 []       shift addition to move direction.
+                                // 0x36 []       move direction (used when calculated movement).
+                                // 0x37 []       lock rotation. (1 - direction will not be changed)
+                                // 0x38 []       direction.
+                                // 0x39 []       number of steps for turn.
+                                // 0x3a []       current step for turn.
+                                // 0x3b []       state of turn.
+                                // 0x3c [][]     start direction (for TURN), we store model direction here at start of turn.
+                                // 0x3e [][]     end direction (for TURN).
+                                // 0x40 [][]     real X offset value.
+                                // 0x42 [][]     start X offset value.
+                                // 0x44 [][]     end X offset value.
+                                // 0x46 [][]     real Y offset value.
+                                // 0x48 [][]     start Y offset value.
+                                // 0x4a [][]     end Y offset value.
+                                // 0x4c [][]     real Z offset value.
+                                // 0x4e [][]     start Z offset value.
+                                // 0x50 [][]     end Z offset value.
+                                // 0x52 [][]     steps in offseting.
+                                // 0x54 [][]     current step in offsetting.
+                                // 0x56 []       type of offsetting (LINEAR SMOOTH INSTANT).
+                                // 0x57 []       actor id that controls this model (set in CHAR opcode).
+                                // 0x58 []       pc entity collide with this entity. (1 - true/0 - false).
+                                // 0x59 []       model solidity (1 - off, 0 - on).
+                                // 0x5a []       pc entity talk with this entity. (1 - true/0 - false).
+                                // 0x5b []       model talkability (1 - off, 0 - on).
+                                // 0x5c []       model visibility (1 - on, 0 - off).
+                                // 0x5d []       model state.
+                                // 0x5e []       animation id.
+                                // 0x60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER. 4bit fixed point.
+                                // 0x62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
+                                // 0x64 [][]     number of frames. Set during MOVE and LADER opcode.
+                                // 0x66 [][]     char id. Set with CHAR opcode.
+                                // 0x68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
+                                // 0x6a [][]     stage of state.
+                                // 0x6c [][]     solid range value.
+                                // 0x6e [][]     talk range value.
+                                // 0x70 [][]     movement speed. For MOVE-type opcodes.
+                                // 0x72 [][]     triangle id.
+                                // 0x74 [][]     move to triangle (LADER and JUMP).
+                                // 0x78 [][][][] move to x (MOVE and LADER and JUMP).
+                                // 0x7c [][][][] move to y (MOVE and LADER and JUMP).
+                                // 0x80 [][][][] move to z (MOVE and LADER and JUMP).
 };

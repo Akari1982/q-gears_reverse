@@ -1,35 +1,32 @@
-void field_init_structs_events_actors(field_struct, entities_data, events_data)
+void field_event_init(FieldControl* field_struct, entities_data, events_data)
 {
     [0x8009c6e0] = w(field_struct);
     [0x8009c544] = w(entities_data); // pointer to model data
     [0x8009c6dc] = w(events_data); // field events pointer
 
-    [0x8007ebe0] = b(1);
+    [0x8007ebe0] = b(0x1);
     [0x8009fe8c] = b(0);
     [0x80095dcc] = b(0);
 
-    if (h[field_struct + 0x6a] & 0x0100) // if select key
+    // if select pressed on second controller
+    if ((field_struct->btn_pressed >> 0x10) & BUTTON_SELECT)
     {
-        [0x80095dcc] = b(1);
-        [0x80099ffc] = b(4); // script related
+        [0x80095dcc] = b(0x1);
+        [0x80099ffc] = b(0x4); // script related
     }
 
     // file version check
+    if (bu[events_data + 0x1] < 0x5)
     {
-        if (bu[events_data + 0x0] < 2)
-        {
-            system_psyq_system_error(0x4b, 0xa); // "K" (old Event data!)
-        }
-
-        if (bu[events_data + 0x1] < 5)
-        {
-            system_psyq_system_error(0x4b, 0xb); // "K" (old Event version!)
-        }
-
-        if ((bu[events_data + 0x0] >= 3) || (bu[events_data + 0x1] >= 6))
-        {
-            system_psyq_system_error(0x4b, 0xc); // "K" (old Event program!)
-        }
+        system_psyq_system_error(0x4b, 0xb); // "K" (old Event version!)
+    }
+    if (bu[events_data + 0x0] < 0x2)
+    {
+        system_psyq_system_error(0x4b, 0xa); // "K" (old Event data!)
+    }
+    if ((bu[events_data + 0x0] >= 0x3) || (bu[events_data + 0x1] >= 0x6))
+    {
+        system_psyq_system_error(0x4b, 0xc); // "K" (old Event program!)
     }
 
     field_window_reset_all();
@@ -47,70 +44,52 @@ void field_init_structs_events_actors(field_struct, entities_data, events_data)
 
 
 
-////////////////////////////////
-// field_event_update()
-
-ot = A0;
-
-if (bu[0x8007ebe0] != 0)
+void field_event_update(u32 ot)
 {
-    funcd4bfc(); // init window
-
-    funcbc338(); // init pointer
-
-    field_debug_init_buffers();
-
-    field_debug_init_pages();
-
-    events_data = w[0x8009c6dc];
-
-    [0x80095dcc] = b(0);
-    [0x8009fe8c] = b(0);
-    [0x8007ebe0] = b(0);
-
-    // file check version
+    if (bu[0x8007ebe0] != 0)
     {
-        if (bu[events_data + 1] < 5)
-        {
-            A0 = 4b;
-            A1 = b;
-            system_psyq_system_error();
-        }
+        funcd4bfc(); // init window
 
+        funcbc338(); // init pointer
+
+        field_debug_init_buffers();
+
+        field_debug_init_pages();
+
+        events_data = w[0x8009c6dc];
+
+        [0x80095dcc] = b(0);
+        [0x8009fe8c] = b(0);
+        [0x8007ebe0] = b(0);
+
+        // file check version
+        if (bu[events_data + 0x1] < 0x5)
+        {
+            system_psyq_system_error(0x4b, 0xb); // "K" (old Event version!)
+        }
         if (bu[events_data + 0] < 2)
         {
-            A0 = 4b;
-            A1 = a;
-            system_psyq_system_error();
+            system_psyq_system_error(0x4b, 0xa); // "K" (old Event data!)
         }
-
-        if ((bu[events_data + 1] >= 6) || (bu[events_data + 0] >= 3))
+        if ((bu[events_data + 0x1] >= 0x6) || (bu[events_data + 0x0] >= 0x3))
         {
-            A0 = 4b;
-            A1 = c;
-            system_psyq_system_error();
+            system_psyq_system_error(0x4b, 0xc); // "K" (old Event program!)
         }
     }
-}
 
-if ((bu[0x80099ffc] != 4) && ((bu[0x80099ffc] != 5) || (bu[0x80070788] != 0)))
-{
-    field_event_opcode_cycle();
-}
+    if ((bu[0x80099ffc] != 0x4) && ((bu[0x80099ffc] != 0x5) || (bu[0x80070788] != 0)))
+    {
+        field_event_opcode_cycle();
+    }
 
-if (bu[0x80071e2c]) // if at least 1 window is opened
-{
-    A0 = 80083274;
-    A1 = 4; // render max 4 dialogs
-    A2 = ot;
-    field_struct = w[0x8009c6e0];
-    A3 = bu[field_struct + 0x0] ^ 1;
-    system_menu_draw_dialog();
-}
+    if (bu[0x80071e2c]) // if at least 1 window is opened
+    {
+        field_struct = w[0x8009c6e0];
+        system_menu_draw_dialog(0x80083274, 0x4, ot, bu[field_struct + 0x0] ^ 0x1);
+    }
 
-A0 = ot;
-funcbc438(); // add pointer and triangles to render
-////////////////////////////////
+    funcbc438(ot); // add pointer and triangles to render
+}
 
 
 
@@ -298,58 +277,57 @@ void field_init_default_values()
 
 
 
-////////////////////////////////
-// field_event_run_init()
-
-events_data = w[0x8009c6dc];
-actors_n = bu[events_data + 2];
-akao_n = h[events_data + 6];
-
-[0x8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
-
-string = 0x800e4254;
-
-for (int i = 0; i < actors_n; ++i)
+void field_event_run_init()
 {
-    [0x800722c4] = b(i); // save current actor for use inside opcodes
+    events_data = w[0x8009c6dc];
+    actors_n = bu[events_data + 0x2];
+    akao_n = h[events_data + 0x6];
 
-    if (bu[0x80071e24] & 0x3)
+    [0x8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
+
+    string = 0x800e4254;
+
+    for (int i = 0; i < actors_n; ++i)
     {
-        field_debug_copy_string(string, "Actor:");
-        field_debug_concat_string(string, events_data + 20 + i * 8);
+        [0x800722c4] = b(i); // save current actor for use inside opcodes
 
-        if (bu[0x80071e24] & 0x1)
+        if (bu[0x80071e24] & 0x3)
         {
-            field_debug_copy_string_into_page(0x4, 0, string);
+            field_debug_copy_string(string, "Actor:");
+            field_debug_concat_string(string, events_data + 20 + i * 8);
+
+            if (bu[0x80071e24] & 0x1)
+            {
+                field_debug_copy_string_into_page(0x4, 0, string);
+            }
+
+            if (bu[0x80071e24] & 0x2)
+            {
+                funcd4840(string); // empty
+            }
         }
 
-        if (bu[0x80071e24] & 0x2)
+        script = hu[events_data + 0x20 + actors_n * 0x8 + akao_n * 0x4 + i * 0x40]; // get offset to init script (1st)
+        [0x800831fc + i * 0x2] = h(script);
+
+        opcode = bu[events_data + script];
+
+        while (opcode != 0) // do until RET opcode
         {
-            funcd4840(string); // empty
+            [0x8009a058] = b(opcode);
+            800BB0F4	jalr   w[0x800e0228 + opcode * 0x4] ra
+
+            // read next opcode
+            V1 = hu[0x800831fc + i * 0x2];
+            opcode = bu[events_data + V1];
         }
+
+        // skip ret opcode for next run
+        [0x800831fc + i * 0x2] = h(hu[0x800831fc + i * 0x2] + 0x1);
     }
 
-    script = hu[events_data + 0x20 + actors_n * 0x8 + akao_n * 0x4 + i * 0x40]; // get offset to init script (1st)
-    [0x800831fc + i * 0x2] = h(script);
-
-    opcode = bu[events_data + script];
-
-    while (opcode != 0) // do until RET opcode
-    {
-        [0x8009a058] = b(opcode);
-        800BB0F4	jalr   w[0x800e0228 + opcode * 0x4] ra
-
-        // read next opcode
-        V1 = hu[0x800831fc + i * 0x2];
-        opcode = bu[events_data + V1];
-    }
-
-    // skip ret opcode for next run
-    [0x800831fc + i * 0x2] = h(hu[0x800831fc + i * 0x2] + 0x1);
+    [0x800722c4] = b(0); // clear current actor
 }
-
-[0x800722c4] = b(0); // clear current actor
-////////////////////////////////
 
 
 
@@ -581,28 +559,28 @@ for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of acto
 
             if (V0 == 0) // continue exec
             {
-                if (bu[0x80099ffc] != 5) continue;
+                if (bu[0x80099ffc] != 0x5) continue;
 
                 // not debug
-                if ((bu[0x8009d820] & 1) == 0) continue;
+                if ((bu[0x8009d820] & 0x1) == 0) continue;
 
-                if (bu[0x80071e24] & 4)
+                if (bu[0x80071e24] & 0x4)
                 {
                     actor_id_cur = bu[0x800722c4];
                     if (bu[0x80114498 + actor_id_cur] == 0) continue;
                 }
 
-                [0x8009a064] = w(w[0x8009a064] + 1);
+                [0x8009a064] = w(w[0x8009a064] + 0x1);
 
-                if (w[0x8009a064] >= 8)
+                if (w[0x8009a064] >= 0x8)
                 {
                     [0x8009a064] = w(0);
-                    [0x800722c4] = b(bu[0x800722c4] + 1);
+                    [0x800722c4] = b(bu[0x800722c4] + 0x1);
                 }
             }
             else // break flow
             {
-                if (bu[0x80099ffc] != 5) break;
+                if (bu[0x80099ffc] != 0x5) break;
 
                 // not debug
                 if ((bu[0x8009d820] & 1) == 0) break;
@@ -616,7 +594,7 @@ for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of acto
                 [0x800722c4] = b(bu[0x800722c4] + 1);
             }
 
-            if (bu[0x80099ffc] == 5) [0x80070788] = b(0); // stop script update
+            if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
 
             field_script_update_animation_state();
 
@@ -626,9 +604,9 @@ for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of acto
 
     [0x800722c4] = b(bu[0x800722c4] + 1);
 
-    if (bu[0x80099ffc] == 5)
+    if (bu[0x80099ffc] == 0x5)
     {
-        if (bu[0x80071e24] & 1)
+        if (bu[0x80071e24] & 0x1)
         {
             if ((bu[0x80071e24] & 4) == 0) break;
 
@@ -638,7 +616,7 @@ for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of acto
     }
 }
 
-if (bu[0x80099ffc] == 5) [0x80070788] = b(0); // stop script update
+if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
 
 field_script_update_animation_state();
 ////////////////////////////////
@@ -977,747 +955,224 @@ else
 
 
 
-////////////////////////////////
-// field_event_update_actor_debug()
-
-page_id = A0;
-actor_id = A1;
-
-string = 0x800e4254;
-temp = 0x800e4288;
-
+void field_event_update_actor_debug(u8 page_id, u8 actor_id)
 {
-    if (page_id == 0x4)
+    string = 0x800e4254;
+    temp = 0x800e4288;
+
     {
-        if (bu[0x80071e24] & 0x4)
+        if (page_id == 0x4)
         {
-            // debug output for this actor not set
-            if (bu[0x80114498 + actor_id] == 0) return;
-        }
+            if (bu[0x80071e24] & 0x4)
+            {
+                // debug output for this actor not set
+                if (bu[0x80114498 + actor_id] == 0) return;
+            }
 
-        [0x800716c8] = b(actor_id);
+            [0x800716c8] = b(actor_id);
 
-        if (bu[0x80114498 + actor_id] != 0)
-        {
-            field_debug_set_page_color(0x4, 0x7f, 0x1, 0x7f);
+            if (bu[0x80114498 + actor_id] != 0)
+            {
+                field_debug_set_page_color(0x4, 0x7f, 0x1, 0x7f);
+            }
+            else
+            {
+                field_debug_set_page_color(0x4, 0x7, 0xf, 0x1f);
+            }
+
+            field_debug_copy_string(string, "Actor:");
         }
         else
         {
-            field_debug_set_page_color(0x4, 0x7, 0xf, 0x1f);
+            field_debug_copy_string(string, "ctrl:");
         }
 
-        field_debug_copy_string(string, "Actor:");
+        field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8); // name of entity
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0, string);
+        }
     }
-    else
+
     {
-        field_debug_copy_string(string, "ctrl:");
-    }
+        field_debug_copy_string(string, "RqLv="); // request level
 
-    field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8); // name of entity
+        priority = bu[0x8009a1c4 + actor_id]; // currently used priority slot
 
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0, string);
-    }
-}
-
-{
-    field_debug_copy_string(string, "RqLv="); // request level
-
-    priority = bu[0x8009a1c4 + actor_id]; // currently used priority slot
-
-    field_int_to_string(priority, temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " Tg=");
-
-    script_id = bu[0x801142d4 + actor_id * 0x8 + priority]; // priority queue script id
-
-    if (script_id == 0x0)
-    {
-        field_debug_concat_string(string, "dft");
-    }
-    else if (script_id == 0x1)
-    {
-        field_debug_concat_string(string, "tlk");
-    }
-    else if (script_id == 0x2)
-    {
-        field_debug_concat_string(string, "psh");
-    }
-    else
-    {
-        field_int2_to_string(script_id, temp);
+        field_int_to_string(priority, temp);
         field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " Tg=");
+
+        script_id = bu[0x801142d4 + actor_id * 0x8 + priority]; // priority queue script id
+
+        if (script_id == 0x0)
+        {
+            field_debug_concat_string(string, "dft");
+        }
+        else if (script_id == 0x1)
+        {
+            field_debug_concat_string(string, "tlk");
+        }
+        else if (script_id == 0x2)
+        {
+            field_debug_concat_string(string, "psh");
+        }
+        else
+        {
+            field_int2_to_string(script_id, temp);
+            field_debug_concat_string(string, temp);
+        }
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x1, string);
+        }
     }
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x1, string);
-    }
-}
-
-entity_id = bu[0x8007eb98 + actor_id];
-line_id = bu[0x8007078c + actor_id];
-entities_data = w[0x8009c544];
-
-if (entity_id != 0xff)
-{
-    field_debug_copy_string(string, "man=");
-    field_int2_to_string(entity_id, temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " dir=");
-    field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x38], temp);
-    field_debug_concat_string(string, temp);
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x2, string);
-        field_debug_set_row_color(page_id, 0x2, 0x2);
-    }
-}
-else if (line_id != 0xff)
-{
-    field_debug_copy_string(string, "line=");
-    field_int2_to_string(line_id, temp);
-    field_debug_concat_string(string, temp);
-
-    if (bu[0x8007e7ac + line_id * 0x18 + 0xc] != 0) // line on
-    {
-        field_debug_concat_string(string, " on");
-    }
-    else
-    {
-        field_debug_concat_string(string, " off");
-    }
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x2, string);
-        field_debug_set_row_color(page_id, 0x2, 0x3);
-    }
-}
-else
-{
-    A0 = string;
-    A1 = 800a01f8; // "Abst"
-    field_debug_copy_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 2;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 2;
-        A2 = 6;
-        field_debug_set_row_color();
-    }
-}
-
-if (entity_id != 0xff)
-{
-    field_debug_copy_string(string, "X=");
-    field_int4_to_string(w[entities_data + entity_id * 0x84 + 0xc] >> 0xc, temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " Y=");
-    field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x10] >> 0xc, temp);
-    field_debug_concat_string(string, temp);
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x3, string);
-        field_debug_set_row_color(page_id, 0x3, 0x1);
-    }
-
-    field_debug_copy_string(string, "Z=");
-    field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x14] >> 0xc, temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " I=");
-    field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x72], temp); // triangle id
-    field_debug_concat_string(string, temp);
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x4, string);
-    }
-
-    field_int_to_string(bu[0x800756e8 + entity_id], string);
-    field_debug_concat_string(string, "am");
-    field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x5e], temp); // animation id
-    field_debug_concat_string(string, temp);
-
-    A0 = string;
-    A1 = 800a0238; // ".";
-    field_debug_concat_string();
-
-    A0 = h[entities_data + entity_id * 84 + 62]; // current frame
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a0238; // ".";
-    field_debug_concat_string();
-
-    A0 = h[entities_data + entity_id * 84 + 64]; // frames number
-    A1 = temp;
-    field_int2_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 5;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 5;
-        A2 = 7;
-        field_debug_set_row_color();
-    }
-
-    if (bu[entities_data + entity_id * 84 + 5c] != 0) // visibility
-    {
-        A0 = string;
-        A1 = 800a023c; // "V"
-        field_debug_copy_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // ".";
-        field_debug_copy_string();
-    }
-
-    if (bu[entities_data + entity_id * 84 + 5b] != 0) // talkability
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0240; // "T"
-        field_debug_concat_string();
-    }
-
-    if (bu[entities_data + entity_id * 84 + 59] != 0) // solidity
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0244; // "S"
-        field_debug_concat_string();
-    }
-
-    A0 = string;
-    A1 = 800a0248; // ":TR"
-    field_debug_concat_string();
-
-    A0 = hu[entities_data + entity_id * 84 + 6e]; // talk range
-    A1 = temp;
-    field_int2_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a024c; // ".SR"
-    field_debug_concat_string();
-
-    A0 = hu[entities_data + entity_id * 84 + 6c]; // solid range
-    A1 = temp;
-    field_int2_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x6, string);
-    }
-
-    field_debug_copy_string(string, "MS");
-    field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x70], temp); // movement speed
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " AS");
-    field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x60], temp); // animation speed
-    field_debug_concat_string(string, temp);
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 7;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 7;
-        A2 = 7;
-        field_debug_set_row_color();
-    }
-}
-else if (line_id != ff)
-{
-    A0 = string;
-    A1 = 800a0258; // "AX"
-    field_debug_copy_string();
-
-    A0 = h[0x8007e7ac + line_id * 18 + 0];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a025c; // " AY"
-    field_debug_concat_string();
-
-    A0 = h[0x8007e7ac + line_id * 18 + 2];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 3;
-        A2 = string;
-        field_debug_copy_string_into_page();
-    }
-
-    A0 = string;
-    A1 = 800a0260; // "AZ"
-    field_debug_copy_string();
-
-    A0 = h[0x8007e7ac + line_id * 18 + 4];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 4;
-        A2 = string;
-        field_debug_copy_string_into_page();
-    }
-
-    A0 = string;
-    A1 = 800a0264; // "BX"
-    field_debug_copy_string();
-
-    A0 = h[0x8007e7ac + line_id * 18 + 6];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a0268; // " BY"
-    field_debug_concat_string();
-
-    A0 = h[0x8007e7ac + line_id * 18 + 8];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 5;
-        A2 = string;
-        field_debug_copy_string_into_page();
-    }
-
-    A0 = string;
-    A1 = 800a026c; // "BZ"
-    field_debug_copy_string();
-
-    A0 = h[0x8007e7ac + line_id * 18 + a];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 6;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 7;
-        A2 = 800a0270; // ""
-        field_debug_copy_string_into_page();
-    }
-}
-else
-{
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 3;
-        A2 = 800a0270; // ""
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 4;
-        A2 = 800a0270; // ""
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 5;
-        A2 = 800a0270; // ""
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 6;
-        A2 = 800a0270; // ""
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 7;
-        A2 = 800a0270; // ""
-        field_debug_copy_string_into_page();
-    }
-}
-
-if (page_id == 4) return;
-
-{
-    A0 = string;
-    A1 = 800a0274; // "SX"
-    field_debug_copy_string();
-
-    A0 = h[0x80071e38]; // current screen scroll X
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A1 = 800a0278; // " SY"
-    A0 = string;
-    field_debug_concat_string();
-
-    A0 = h[0x80071e3c]; // current screen scroll Y
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 01)) != 0)
-    {
-        A0 = page_id;
-        A1 = 8;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 8;
-        A2 = 3;
-        field_debug_set_row_color();
-    }
-}
-
-manual_entity_id = h[0x8009abf4 + 0x2a];
-triangle_id = hu[0x80074ea4 + manual_entity_id * 84 + 72];
-walkmesh_data = w[0x800e4274];
-
-{
-    A0 = string;
-    A1 = 800a027c; // "B-R    X="
-    field_debug_copy_string();
-
-    A0 = h[walkmesh_data + triangle_id * 18 + 0];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 9;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 9;
-        A2 = 2;
-        field_debug_set_row_color();
-    }
-}
-
-{
-    A0 = string;
-    A1 = 800a0288; // "Y="
-    field_debug_copy_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + 2];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a028c; // " Z="
-    field_debug_concat_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + 4];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = a;
-        A2 = string;
-        field_debug_copy_string_into_page();
-    }
-}
-
-{
-    A1 = 800a0290; // "R-G    X="
-    A0 = string;
-    field_debug_copy_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + 8];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = b;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = b;
-        A2 = 4;
-        field_debug_set_row_color();
-    }
-}
-
-{
-    A0 = string;
-    A1 = 800a0288; // "Y="
-    field_debug_copy_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + a];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a028c; // " Z="
-    field_debug_concat_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + c];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = c;
-        A2 = string;
-        field_debug_copy_string_into_page();
-    }
-}
-
-{
-    A0 = string;
-    A1 = 800a029c; // "G-B    X="
-    field_debug_copy_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + 10];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = d;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = d;
-        A2 = 3;
-        field_debug_set_row_color();
-    }
-}
-
-{
-    A0 = string;
-    A1 = 800a0288; // "Y="
-    field_debug_copy_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + 12];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a028c; // " Z="
-    field_debug_concat_string();
-
-    A0 = h[h[walkmesh_data + triangle_id * 18 + 14];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = e;
-        A2 = string;
-        field_debug_copy_string_into_page();
-    }
-}
-
-{
-    A1 = 800a02a8; // "Offset X="
-    A0 = string;
-    field_debug_copy_string();
 
     entity_id = bu[0x8007eb98 + actor_id];
+    line_id = bu[0x8007078c + actor_id];
     entities_data = w[0x8009c544];
 
-    A0 = h[entities_data + entity_id * 84 + 40];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+    if (entity_id != 0xff)
     {
-        A0 = page_id;
-        A1 = f;
-        A2 = string;
-        field_debug_copy_string_into_page();
+        field_debug_copy_string(string, "man=");
+        field_int2_to_string(entity_id, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " dir=");
+        field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x38], temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = page_id;
-        A1 = f;
-        A2 = 2;
-        field_debug_set_row_color();
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x2, string);
+            field_debug_set_row_color(page_id, 0x2, 0x2);
+        }
     }
-}
-
-{
-    A0 = string;
-    A1 = 800a0288; // "Y=";
-    field_debug_copy_string();
-
-    A0 = h[entities_data + entity_id * 84 + 46];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a028c; // " Z="
-    field_debug_concat_string();
-
-    A0 = h[entities_data + entity_id * 84 + 4c];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+    else if (line_id != 0xff)
     {
-        A0 = page_id;
-        A1 = 10;
-        A2 = string;
-        field_debug_copy_string_into_page();
+        field_debug_copy_string(string, "line=");
+        field_int2_to_string(line_id, temp);
+        field_debug_concat_string(string, temp);
+
+        if (bu[0x8007e7ac + line_id * 0x18 + 0xc] != 0) // line on
+        {
+            field_debug_concat_string(string, " on");
+        }
+        else
+        {
+            field_debug_concat_string(string, " off");
+        }
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x2, string);
+            field_debug_set_row_color(page_id, 0x2, 0x3);
+        }
     }
-}
-
-// game progress, control, battle members and battle check
-{
-    field_debug_copy_string(string, "SF");
-    field_int4_to_string(hu[0x8009c6e4 + 0xba4], temp); // game progress
-    field_debug_concat_string(string, temp);
-
-    field_struct = w[0x8009c6e0];
-
-    if (bu[field_struct + 0x32] != 0) // PC cant move
+    else
     {
-        if (bu[0x80081dc4] != 0) // UC move state
+        A0 = string;
+        A1 = 800a01f8; // "Abst"
+        field_debug_copy_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 2;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 2;
+            A2 = 6;
+            field_debug_set_row_color();
+        }
+    }
+
+    if (entity_id != 0xff)
+    {
+        field_debug_copy_string(string, "X=");
+        field_int4_to_string(w[entities_data + entity_id * 0x84 + 0xc] >> 0xc, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " Y=");
+        field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x10] >> 0xc, temp);
+        field_debug_concat_string(string, temp);
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x3, string);
+            field_debug_set_row_color(page_id, 0x3, 0x1);
+        }
+
+        field_debug_copy_string(string, "Z=");
+        field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x14] >> 0xc, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " I=");
+        field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x72], temp); // triangle id
+        field_debug_concat_string(string, temp);
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x4, string);
+        }
+
+        field_int_to_string(bu[0x800756e8 + entity_id], string);
+        field_debug_concat_string(string, "am");
+        field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x5e], temp); // animation id
+        field_debug_concat_string(string, temp);
+
+        A0 = string;
+        A1 = 800a0238; // ".";
+        field_debug_concat_string();
+
+        A0 = h[entities_data + entity_id * 84 + 62]; // current frame
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a0238; // ".";
+        field_debug_concat_string();
+
+        A0 = h[entities_data + entity_id * 84 + 64]; // frames number
+        A1 = temp;
+        field_int2_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 5;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 5;
+            A2 = 7;
+            field_debug_set_row_color();
+        }
+
+        if (bu[entities_data + entity_id * 84 + 5c] != 0) // visibility
+        {
+            A0 = string;
+            A1 = 800a023c; // "V"
+            field_debug_copy_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // ".";
+            field_debug_copy_string();
+        }
+
+        if (bu[entities_data + entity_id * 84 + 5b] != 0) // talkability
         {
             A0 = string;
             A1 = 800a0238; // "."
@@ -1726,16 +1181,577 @@ walkmesh_data = w[0x800e4274];
         else
         {
             A0 = string;
-            A1 = 800a02b8; // "/"
+            A1 = 800a0240; // "T"
             field_debug_concat_string();
         }
-    }
-    else // PC can move
-    {
-        if (bu[0x80081dc4] != 0) // UC move state
+
+        if (bu[entities_data + entity_id * 84 + 59] != 0) // solidity
         {
             A0 = string;
-            A1 = 800a02bc; // "+"
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0244; // "S"
+            field_debug_concat_string();
+        }
+
+        A0 = string;
+        A1 = 800a0248; // ":TR"
+        field_debug_concat_string();
+
+        A0 = hu[entities_data + entity_id * 84 + 6e]; // talk range
+        A1 = temp;
+        field_int2_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a024c; // ".SR"
+        field_debug_concat_string();
+
+        A0 = hu[entities_data + entity_id * 84 + 6c]; // solid range
+        A1 = temp;
+        field_int2_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x6, string);
+        }
+
+        field_debug_copy_string(string, "MS");
+        field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x70], temp); // movement speed
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " AS");
+        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x60], temp); // animation speed
+        field_debug_concat_string(string, temp);
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 7;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 7;
+            A2 = 7;
+            field_debug_set_row_color();
+        }
+    }
+    else if (line_id != ff)
+    {
+        A0 = string;
+        A1 = 800a0258; // "AX"
+        field_debug_copy_string();
+
+        A0 = h[0x8007e7ac + line_id * 18 + 0];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a025c; // " AY"
+        field_debug_concat_string();
+
+        A0 = h[0x8007e7ac + line_id * 18 + 2];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 3;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+
+        A0 = string;
+        A1 = 800a0260; // "AZ"
+        field_debug_copy_string();
+
+        A0 = h[0x8007e7ac + line_id * 18 + 4];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 4;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+
+        A0 = string;
+        A1 = 800a0264; // "BX"
+        field_debug_copy_string();
+
+        A0 = h[0x8007e7ac + line_id * 18 + 6];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a0268; // " BY"
+        field_debug_concat_string();
+
+        A0 = h[0x8007e7ac + line_id * 18 + 8];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 5;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+
+        A0 = string;
+        A1 = 800a026c; // "BZ"
+        field_debug_copy_string();
+
+        A0 = h[0x8007e7ac + line_id * 18 + a];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 6;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 7;
+            A2 = 800a0270; // ""
+            field_debug_copy_string_into_page();
+        }
+    }
+    else
+    {
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 3;
+            A2 = 800a0270; // ""
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 4;
+            A2 = 800a0270; // ""
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 5;
+            A2 = 800a0270; // ""
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 6;
+            A2 = 800a0270; // ""
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 7;
+            A2 = 800a0270; // ""
+            field_debug_copy_string_into_page();
+        }
+    }
+
+    if (page_id == 4) return;
+
+    {
+        A0 = string;
+        A1 = 800a0274; // "SX"
+        field_debug_copy_string();
+
+        A0 = h[0x80071e38]; // current screen scroll X
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A1 = 800a0278; // " SY"
+        A0 = string;
+        field_debug_concat_string();
+
+        A0 = h[0x80071e3c]; // current screen scroll Y
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 01)) != 0)
+        {
+            A0 = page_id;
+            A1 = 8;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 8;
+            A2 = 3;
+            field_debug_set_row_color();
+        }
+    }
+
+    manual_entity_id = h[0x8009abf4 + 0x2a];
+    triangle_id = hu[0x80074ea4 + manual_entity_id * 84 + 72];
+    walkmesh_data = w[0x800e4274];
+
+    {
+        A0 = string;
+        A1 = 800a027c; // "B-R    X="
+        field_debug_copy_string();
+
+        A0 = h[walkmesh_data + triangle_id * 18 + 0];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 9;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 9;
+            A2 = 2;
+            field_debug_set_row_color();
+        }
+    }
+
+    {
+        A0 = string;
+        A1 = 800a0288; // "Y="
+        field_debug_copy_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + 2];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a028c; // " Z="
+        field_debug_concat_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + 4];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = a;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+    }
+
+    {
+        A1 = 800a0290; // "R-G    X="
+        A0 = string;
+        field_debug_copy_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + 8];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = b;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = b;
+            A2 = 4;
+            field_debug_set_row_color();
+        }
+    }
+
+    {
+        A0 = string;
+        A1 = 800a0288; // "Y="
+        field_debug_copy_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + a];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a028c; // " Z="
+        field_debug_concat_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + c];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = c;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+    }
+
+    {
+        A0 = string;
+        A1 = 800a029c; // "G-B    X="
+        field_debug_copy_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + 10];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = d;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = d;
+            A2 = 3;
+            field_debug_set_row_color();
+        }
+    }
+
+    {
+        A0 = string;
+        A1 = 800a0288; // "Y="
+        field_debug_copy_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + 12];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a028c; // " Z="
+        field_debug_concat_string();
+
+        A0 = h[h[walkmesh_data + triangle_id * 18 + 14];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = e;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+    }
+
+    {
+        A1 = 800a02a8; // "Offset X="
+        A0 = string;
+        field_debug_copy_string();
+
+        entity_id = bu[0x8007eb98 + actor_id];
+        entities_data = w[0x8009c544];
+
+        A0 = h[entities_data + entity_id * 84 + 40];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = f;
+            A2 = string;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = f;
+            A2 = 2;
+            field_debug_set_row_color();
+        }
+    }
+
+    {
+        A0 = string;
+        A1 = 800a0288; // "Y=";
+        field_debug_copy_string();
+
+        A0 = h[entities_data + entity_id * 84 + 46];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a028c; // " Z="
+        field_debug_concat_string();
+
+        A0 = h[entities_data + entity_id * 84 + 4c];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 10;
+            A2 = string;
+            field_debug_copy_string_into_page();
+        }
+    }
+
+    // game progress, control, battle members and battle check
+    {
+        field_debug_copy_string(string, "SF");
+        field_int4_to_string(hu[0x8009c6e4 + 0xba4], temp); // game progress
+        field_debug_concat_string(string, temp);
+
+        field_struct = w[0x8009c6e0];
+
+        if (bu[field_struct + 0x32] != 0) // PC cant move
+        {
+            if (bu[0x80081dc4] != 0) // UC move state
+            {
+                A0 = string;
+                A1 = 800a0238; // "."
+                field_debug_concat_string();
+            }
+            else
+            {
+                A0 = string;
+                A1 = 800a02b8; // "/"
+                field_debug_concat_string();
+            }
+        }
+        else // PC can move
+        {
+            if (bu[0x80081dc4] != 0) // UC move state
+            {
+                A0 = string;
+                A1 = 800a02bc; // "+"
+                field_debug_concat_string();
+            }
+            else
+            {
+                A0 = string;
+                A1 = 800a02c0; // "*"
+                field_debug_concat_string();
+            }
+        }
+
+        A0 = string;
+        A1 = 800a02c4; // "B"
+        field_debug_concat_string();
+
+        A0 = bu[0x8009c6e4 + 4f8]; // party member in slot1 (used in battle)
+        A1 = temp;
+        field_int_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = bu[0x8009c6e4 + 4f9]; // party member in slot2 (used in battle)
+        A1 = temp;
+        field_int_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = bu[0x8009c6e4 + 4fa]; // party member in slot3 (used in battle)
+        A1 = temp;
+        field_int_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if (bu[game_state + 3b] != 0) // battle field check on/off (0/1).
+        {
+            A0 = string;
+            A1 = 800a02c8; // ">"
             field_debug_concat_string();
         }
         else
@@ -1744,309 +1760,267 @@ walkmesh_data = w[0x800e4274];
             A1 = 800a02c0; // "*"
             field_debug_concat_string();
         }
-    }
 
-    A0 = string;
-    A1 = 800a02c4; // "B"
-    field_debug_concat_string();
-
-    A0 = bu[0x8009c6e4 + 4f8]; // party member in slot1 (used in battle)
-    A1 = temp;
-    field_int_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = bu[0x8009c6e4 + 4f9]; // party member in slot2 (used in battle)
-    A1 = temp;
-    field_int_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = bu[0x8009c6e4 + 4fa]; // party member in slot3 (used in battle)
-    A1 = temp;
-    field_int_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if (bu[game_state + 3b] != 0) // battle field check on/off (0/1).
-    {
-        A0 = string;
-        A1 = 800a02c8; // ">"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a02c0; // "*"
-        field_debug_concat_string();
-    }
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A2 = string;
-        A1 = 11;
-        field_debug_copy_string_into_page();
-
-        A0 = page_id;
-        A1 = 11;
-        A2 = 6;
-        field_debug_set_row_color();
-    }
-}
-
-{
-
-    A0 = string;
-    A1 = 800a02cc; // "DP "
-    field_debug_copy_string();
-
-    A0 = hu[0x80075e12];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 800a02d0; // " "
-    field_debug_concat_string();
-
-    A0 = hu[0x80075e10];
-    A1 = temp;
-    field_int4_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if (bu[0x800716d4] != 0) // music locked
-    {
-        A0 = string;
-        A1 = 800a02d4; // "M"
-        field_debug_concat_string();
-    }
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
-    {
-        A0 = page_id;
-        A1 = 12;
-        A2 = string;
-        field_debug_copy_string_into_page();
-
-        if (801affff < w[0x80075e10])
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
         {
-            if (bu[0x8009d29b] & 10)
-            {
-                A0 = page_id;
-                A1 = 12;
-                A2 = 5;
-                field_debug_set_row_color();
-            }
-            else
-            {
-                A0 = page_id;
-                A1 = 12;
-                A2 = 3;
-                field_debug_set_row_color();
-            }
+            A0 = page_id;
+            A2 = string;
+            A1 = 11;
+            field_debug_copy_string_into_page();
+
+            A0 = page_id;
+            A1 = 11;
+            A2 = 6;
+            field_debug_set_row_color();
+        }
+    }
+
+    {
+
+        A0 = string;
+        A1 = 800a02cc; // "DP "
+        field_debug_copy_string();
+
+        A0 = hu[0x80075e12];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = string;
+        A1 = 800a02d0; // " "
+        field_debug_concat_string();
+
+        A0 = hu[0x80075e10];
+        A1 = temp;
+        field_int4_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if (bu[0x800716d4] != 0) // music locked
+        {
+            A0 = string;
+            A1 = 800a02d4; // "M"
+            field_debug_concat_string();
         }
 
-        if (0x801adfff < w[0x80075e10])      A2 = 0x5;
-        else if (0x801aafff < w[0x80075e10]) A2 = 0x4;
-        else if (0x801a7fff < w[0x80075e10]) A2 = 0x1;
-        else if (0x801a3fff < w[0x80075e10]) A2 = 0x3;
-        else if (0x8019ffff < w[0x80075e10]) A2 = 0x2;
-        else if (0x80197fff < w[0x80075e10]) A2 = 0x0;
-        else                                  A2 = 0x7;
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        {
+            A0 = page_id;
+            A1 = 12;
+            A2 = string;
+            field_debug_copy_string_into_page();
 
-        field_debug_set_row_color(page_id, 0x12, A2);
+            if (801affff < w[0x80075e10])
+            {
+                if (bu[0x8009d29b] & 10)
+                {
+                    A0 = page_id;
+                    A1 = 12;
+                    A2 = 5;
+                    field_debug_set_row_color();
+                }
+                else
+                {
+                    A0 = page_id;
+                    A1 = 12;
+                    A2 = 3;
+                    field_debug_set_row_color();
+                }
+            }
+
+            if (0x801adfff < w[0x80075e10])      A2 = 0x5;
+            else if (0x801aafff < w[0x80075e10]) A2 = 0x4;
+            else if (0x801a7fff < w[0x80075e10]) A2 = 0x1;
+            else if (0x801a3fff < w[0x80075e10]) A2 = 0x3;
+            else if (0x8019ffff < w[0x80075e10]) A2 = 0x2;
+            else if (0x80197fff < w[0x80075e10]) A2 = 0x0;
+            else                                  A2 = 0x7;
+
+            field_debug_set_row_color(page_id, 0x12, A2);
+        }
+    }
+
+    // print party members and character availability mask
+    {
+        A0 = bu[0x8009c6e4 + cad]; // party member in slot 1
+        A1 = temp;
+        field_int_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_copy_string();
+
+        A0 = bu[0x8009c6e4 + cae]; // party member in slot 2
+        A1 = temp;
+        field_int_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        A0 = bu[0x8009c6e4 + caf]; // party member in slot 3
+        A1 = temp;
+        field_int_to_string();
+
+        A0 = string;
+        A1 = temp;
+        field_debug_concat_string();
+
+        if (hu[0x8009c6e4 + 10a6] & 1)
+        {
+            A0 = string;
+            A1 = 800a02d8; // "C"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 2)
+        {
+            A0 = string;
+            A1 = 800a02c4; // "B"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 4)
+        {
+            A0 = string;
+            A1 = 800a0240; // "T"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 8)
+        {
+            A0 = string;
+            A1 = 800a02dc; // "E"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 10)
+        {
+            A0 = string;
+            A1 = 800a02e0; // "R"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 20)
+        {
+            A0 = string;
+            A1 = 800a02e4; // "Y"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 40)
+        {
+            A0 = string;
+            A1 = 800a02e8; // "K"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 80)
+        {
+            A0 = string;
+            A1 = 800a023c; // "V"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 100)
+        {
+            A0 = string;
+            A1 = 800a02ec; // "D"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 200)
+        {
+            A0 = string;
+            A1 = 800a02f0; // "U"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if (hu[0x8009c6e4 + 10a6] & 400)
+        {
+            A0 = string;
+            A1 = 800a02f4; // "F"
+            field_debug_concat_string();
+        }
+        else
+        {
+            A0 = string;
+            A1 = 800a0238; // "."
+            field_debug_concat_string();
+        }
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+        {
+            field_debug_copy_string_into_page(page_id, 0x13, string);
+            field_debug_set_row_color(page_id, 0x13, 0);
+        }
     }
 }
-
-// print party members and character availability mask
-{
-    A0 = bu[0x8009c6e4 + cad]; // party member in slot 1
-    A1 = temp;
-    field_int_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_copy_string();
-
-    A0 = bu[0x8009c6e4 + cae]; // party member in slot 2
-    A1 = temp;
-    field_int_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    A0 = bu[0x8009c6e4 + caf]; // party member in slot 3
-    A1 = temp;
-    field_int_to_string();
-
-    A0 = string;
-    A1 = temp;
-    field_debug_concat_string();
-
-    if (hu[0x8009c6e4 + 10a6] & 1)
-    {
-        A0 = string;
-        A1 = 800a02d8; // "C"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 2)
-    {
-        A0 = string;
-        A1 = 800a02c4; // "B"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 4)
-    {
-        A0 = string;
-        A1 = 800a0240; // "T"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 8)
-    {
-        A0 = string;
-        A1 = 800a02dc; // "E"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 10)
-    {
-        A0 = string;
-        A1 = 800a02e0; // "R"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 20)
-    {
-        A0 = string;
-        A1 = 800a02e4; // "Y"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 40)
-    {
-        A0 = string;
-        A1 = 800a02e8; // "K"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 80)
-    {
-        A0 = string;
-        A1 = 800a023c; // "V"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 100)
-    {
-        A0 = string;
-        A1 = 800a02ec; // "D"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 200)
-    {
-        A0 = string;
-        A1 = 800a02f0; // "U"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if (hu[0x8009c6e4 + 10a6] & 400)
-    {
-        A0 = string;
-        A1 = 800a02f4; // "F"
-        field_debug_concat_string();
-    }
-    else
-    {
-        A0 = string;
-        A1 = 800a0238; // "."
-        field_debug_concat_string();
-    }
-
-    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-    {
-        field_debug_copy_string_into_page(page_id, 0x13, string);
-        field_debug_set_row_color(page_id, 0x13, 0);
-    }
-}
-////////////////////////////////
 
 
 
@@ -2553,8 +2527,7 @@ A2 = 2;
 field_debug_add_parse_value_to_page2();
 
 Lbf8e4:	; 800BF8E4
-A0 = 800a032c; // "Bad Event arg!"
-funcd4848();
+funcd4848("Bad Event arg!");
 
 Lbf8f4:	; 800BF8F4
 ////////////////////////////////
@@ -3108,8 +3081,7 @@ s16 field_event_read_memory_s16()
     field_debug_add_parse_value_to_page2();
 
     Lc0220:	; 800C0220
-    A0 = 800a032c; // "Bad Event arg!"
-    funcd4848();
+    funcd4848("Bad Event arg!");
 
     V0 = 0;
 
@@ -3614,8 +3586,7 @@ if (bu[0x8009d820] & 3)
     field_debug_add_parse_value_to_page2();
 }
 
-A0 = 800a032c; // "Bad Event arg!"
-funcd4848();
+funcd4848("Bad Event arg!");
 
 Lc0b40:	; 800C0B40
 ////////////////////////////////

@@ -306,10 +306,7 @@ void field_main()
             V1 = w[0x800716c4];
             [0x8009abf4 + 0x16] = h(hu[V1 + a]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
 
-            A0 = 0x8009abf4; // start of game data
-            A1 = 0x80074ea4;
-            A2 = w[g_field_events_p]; // events pointer
-            field_init_structs_events_actors();
+            field_event_init(&g_field_control, 0x80074ea4, w[g_field_events_p]);
 
             V0 = h[0x8009abf4 + 0x2a]; // manual entity id
             [0x80074ea4 + V0 * 0x84 + 0x38] = b(hu[0x8009abf4 + 0x24]); // model direction

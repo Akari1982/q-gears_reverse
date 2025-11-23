@@ -9,12 +9,7 @@ void field_model_load_and_init()
     [0x800e0204] = w(V0); // place to load next BCX
 
     // load field bsx
-    A0 = w[0x800da5b8 + g_field_map_id * 0x18 + 0x10];
-    A1 = w[0x800da5b8 + g_field_map_id * 0x18 + 0x14];
-    A2 = 0x801b0000;
-    A3 = 0;
-    system_cdrom_start_load_lzs();
-
+    system_cdrom_start_load_lzs(w[0x800da5b8 + g_field_map_id * 0x18 + 0x10], w[0x800da5b8 + g_field_map_id * 0x18 + 0x14], 0x801b0000, 0);
     while (system_cdrom_read_chain() != 0) {}
 
     [0x1f800000] = w(0x800df08c); // CLOUD.BCX start sector.
@@ -36,7 +31,6 @@ void field_model_load_and_init()
         [0x1f800001] = b(0x1);
         [0x1f800002] = b(0);
         [0x1f800003] = b(i);
-
         field_model_kawai_load_eyes_mouth_tex_to_vram(models_data + i * 0x24, 0x1f800000);
     }
 

@@ -1,232 +1,219 @@
-////////////////////////////////
-// field_model_load_local_model_and_init_all()
-
-block_7 = A0;
-models_struct = A1;
-bsx_file = A3;
-
-model_data = w[models_struct + 4];
-
-if (bu[A2] != 0) // use CLOUD.BCX instead of bsx
+u32 field_model_load_local_model_and_init_all(block_7, models_struct, A2, bsx_file)
 {
-    S5 = w[1f800000];
-    A0 = w[S5 + 0]; // CLOUD.BCX start sector
-    A1 = w[S5 + 4]; // CLOUD.BCX size
-    A2 = bsx_file;
-    A3 = 0;
-    system_cdrom_start_load_lzs();
+    model_data = w[models_struct + 0x4];
 
-    do system_cdrom_read_chain(); while(V0 != 0)
-}
-else
-{
-    // copy bsx to new location
-    T1 = w[bsx_file] / 4 + (0 < (w[bsx_file] & 3)); // count number of ints
-
-    dst = w[0x800e0204]; // new BSX file address
-    for (int i = 0; i < T1; ++i)
+    if (bu[A2] != 0) // use CLOUD.BCX instead of bsx
     {
-        [dst + i * 4 + 0] = w(w[bsx_file + i * 4 + 0]);
+        S5 = w[0x1f800000];
+        system_cdrom_start_load_lzs(w[S5 + 0x0], w[S5 + 0x4], bsx_file, 0); // CLOUD.BCX
+        while (system_cdrom_read_chain() != 0) {}
     }
-    bsx_file = dst;
-}
-
-bsx_header = bsx_file + w[bsx_file + 4]; // offset to start data in BSX
-bsx_texture = bsx_header + w[bsx_header + 8]; // global offset to texture in BSX
-
-// if tdb mod section exist
-if (w[bsx_texture + 4] & ffffff00)
-{
-    A0 = bsx_texture + ((bu[bsx_texture + 5] << 10) | hu[bsx_texture + 6]);
-    field_model_bsx_tdb_modify();
-}
-
-A0 = bsx_texture;
-field_model_bsx_texture_load_to_vram();
-
-A0 = 0;
-system_psyq_draw_sync();
-
-for (int i = 0; i < w[bsx_header + 4]; ++i) // number of models
-{
-    if (bu[block_7 + i * 8 + 5] != 0) // if model enabled
+    else
     {
-        model_id = bu[block_7 + i * 8 + 4];
+        // copy bsx to new location
+        T1 = w[bsx_file] / 0x4 + (0 < (w[bsx_file] & 0x3)); // count number of ints
 
-        [model_data + model_id * 24 + 16] = h(hu[bsx_header + 10 + i * 30 + 2]); // set scale
-
-        src = bsx_header + 10 + i * 30 + w[bsx_header + 10 + i * 30 + 4];
-
-        // copy bones
-        dst = w[model_data + model_id * 24 + 1c];
-        start_id = b[bsx_header + 10 + i * 30 + 12];
-        for (int i = 0; i < bu[bsx_header + 10 + i * 30 + 17]; ++i) // number of bones
+        dst = w[0x800e0204]; // new BSX file address
+        for (int i = 0; i < T1; ++i)
         {
-            [dst + (start_id + i) * 4] = w(w[src]);
-            src += 4;
+            [dst + i * 4 + 0] = w(w[bsx_file + i * 4 + 0]);
         }
+        bsx_file = dst;
+    }
 
-        // copy model parts
-        dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 18];
-        start_id = b[bsx_header + 10 + i * 30 + 1e];
-        for (int i = 0; i < bu[bsx_header + 10 + i * 30 + 23]; ++i) // number of parts
-        {
-            [dst + (start_id + i) * 20 +  0] = w(w[src +  0]);
-            [dst + (start_id + i) * 20 +  4] = w(w[src +  4]);
-            [dst + (start_id + i) * 20 +  8] = w(w[src +  8]);
-            [dst + (start_id + i) * 20 +  c] = w(w[src +  c]);
-            [dst + (start_id + i) * 20 + 10] = w(w[src + 10]);
-            [dst + (start_id + i) * 20 + 14] = w(w[src + 14]);
-            [dst + (start_id + i) * 20 + 18] = w(bsx_file + w[src + 18] - 80000000);
-            [dst + (start_id + i) * 20 + 1c] = w(w[src + 1c]);
-            src += 20;
-        }
+    bsx_header = bsx_file + w[bsx_file + 4]; // offset to start data in BSX
+    bsx_texture = bsx_header + w[bsx_header + 8]; // global offset to texture in BSX
 
-        dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 1a];
-        start_id = b[bsx_header + 10 + i * 30 + 2a];
-        for (int i = 0; i < bu[bsx_header + 10 + i * 30 + 2f]; ++i) // number of animation
+    // if tdb mod section exist
+    if (w[bsx_texture + 0x4] & 0xffffff00)
+    {
+        field_model_bsx_tdb_modify(bsx_texture + ((bu[bsx_texture + 0x5] << 0x10) | hu[bsx_texture + 0x6]));
+    }
+
+    field_model_bsx_texture_load_to_vram(bsx_texture);
+
+    system_psyq_draw_sync(0);
+
+    for (int i = 0; i < w[bsx_header + 0x4]; ++i) // number of models
+    {
+        if (bu[block_7 + i * 8 + 5] != 0) // if model enabled
         {
-            [dst + (start_id + i) * 10 + 0] = w(w[src + 0]);
-            [dst + (start_id + i) * 10 + 4] = w(w[src + 4]);
-            [dst + (start_id + i) * 10 + 8] = w(w[src + 8]);
-            [dst + (start_id + i) * 10 + c] = w(bsx_file + w[src + c] - 80000000);
-            src += 10;
+            model_id = bu[block_7 + i * 8 + 4];
+
+            [model_data + model_id * 24 + 16] = h(hu[bsx_header + 10 + i * 30 + 2]); // set scale
+
+            src = bsx_header + 10 + i * 30 + w[bsx_header + 10 + i * 30 + 4];
+
+            // copy bones
+            dst = w[model_data + model_id * 24 + 1c];
+            start_id = b[bsx_header + 10 + i * 30 + 12];
+            for (int i = 0; i < bu[bsx_header + 10 + i * 30 + 17]; ++i) // number of bones
+            {
+                [dst + (start_id + i) * 4] = w(w[src]);
+                src += 4;
+            }
+
+            // copy model parts
+            dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 18];
+            start_id = b[bsx_header + 10 + i * 30 + 1e];
+            for (int i = 0; i < bu[bsx_header + 10 + i * 30 + 23]; ++i) // number of parts
+            {
+                [dst + (start_id + i) * 20 +  0] = w(w[src +  0]);
+                [dst + (start_id + i) * 20 +  4] = w(w[src +  4]);
+                [dst + (start_id + i) * 20 +  8] = w(w[src +  8]);
+                [dst + (start_id + i) * 20 +  c] = w(w[src +  c]);
+                [dst + (start_id + i) * 20 + 10] = w(w[src + 10]);
+                [dst + (start_id + i) * 20 + 14] = w(w[src + 14]);
+                [dst + (start_id + i) * 20 + 18] = w(bsx_file + w[src + 18] - 80000000);
+                [dst + (start_id + i) * 20 + 1c] = w(w[src + 1c]);
+                src += 20;
+            }
+
+            dst = w[model_data + model_id * 24 + 1c] + hu[model_data + model_id * 24 + 1a];
+            start_id = b[bsx_header + 10 + i * 30 + 2a];
+            for (int i = 0; i < bu[bsx_header + 10 + i * 30 + 2f]; ++i) // number of animation
+            {
+                [dst + (start_id + i) * 10 + 0] = w(w[src + 0]);
+                [dst + (start_id + i) * 10 + 4] = w(w[src + 4]);
+                [dst + (start_id + i) * 10 + 8] = w(w[src + 8]);
+                [dst + (start_id + i) * 10 + c] = w(bsx_file + w[src + c] - 80000000);
+                src += 10;
+            }
         }
     }
-}
 
-color_data = bsx_header + w[bsx_header + c];
+    color_data = bsx_header + w[bsx_header + c];
 
-for (int i = 0; i < number_of_model; ++i)
-{
-    [color_data + i * 30 +  0] = w(w[bsx_header + 10 + i * 30 +  0]);
-    [color_data + i * 30 +  4] = w(w[bsx_header + 10 + i * 30 +  4]);
-    [color_data + i * 30 +  8] = w(w[bsx_header + 10 + i * 30 +  8]);
-    [color_data + i * 30 +  c] = w(w[bsx_header + 10 + i * 30 +  c]);
-    [color_data + i * 30 + 10] = w(w[bsx_header + 10 + i * 30 + 10]);
-    [color_data + i * 30 + 14] = w(w[bsx_header + 10 + i * 30 + 14]);
-    [color_data + i * 30 + 18] = w(w[bsx_header + 10 + i * 30 + 18]);
-    [color_data + i * 30 + 1c] = w(w[bsx_header + 10 + i * 30 + 1c]);
-    [color_data + i * 30 + 20] = w(w[bsx_header + 10 + i * 30 + 20]);
-    [color_data + i * 30 + 24] = w(w[bsx_header + 10 + i * 30 + 24]);
-    [color_data + i * 30 + 28] = w(w[bsx_header + 10 + i * 30 + 28]);
-    [color_data + i * 30 + 2c] = w(w[bsx_header + 10 + i * 30 + 2c]);
-}
-
-for (int i = 0; i < number_of_model; ++i)
-{
-    if (bu[block_7 + i * 8 + 5] != 0) // if model is enabled
+    for (int i = 0; i < number_of_model; ++i)
     {
-        model_id = bu[block_7 + i * 8 + 4];
+        [color_data + i * 30 +  0] = w(w[bsx_header + 10 + i * 30 +  0]);
+        [color_data + i * 30 +  4] = w(w[bsx_header + 10 + i * 30 +  4]);
+        [color_data + i * 30 +  8] = w(w[bsx_header + 10 + i * 30 +  8]);
+        [color_data + i * 30 +  c] = w(w[bsx_header + 10 + i * 30 +  c]);
+        [color_data + i * 30 + 10] = w(w[bsx_header + 10 + i * 30 + 10]);
+        [color_data + i * 30 + 14] = w(w[bsx_header + 10 + i * 30 + 14]);
+        [color_data + i * 30 + 18] = w(w[bsx_header + 10 + i * 30 + 18]);
+        [color_data + i * 30 + 1c] = w(w[bsx_header + 10 + i * 30 + 1c]);
+        [color_data + i * 30 + 20] = w(w[bsx_header + 10 + i * 30 + 20]);
+        [color_data + i * 30 + 24] = w(w[bsx_header + 10 + i * 30 + 24]);
+        [color_data + i * 30 + 28] = w(w[bsx_header + 10 + i * 30 + 28]);
+        [color_data + i * 30 + 2c] = w(w[bsx_header + 10 + i * 30 + 2c]);
+    }
 
-        A0 = model_data + model_id * 24;
-        A1 = bsx_header; // where create packets drafts
-        A2 = model_id; // model id
-        field_model_create_packets_and_scale();
-        bsx_header = V0; // next place for packets
-
-        face_id = bu[model_data + model_id * 24 + 15];
-
-        if (face_id < 21)
+    for (int i = 0; i < number_of_model; ++i)
+    {
+        if (bu[block_7 + i * 8 + 5] != 0) // if model is enabled
         {
-            [SP + 30] = h(140);
-            [SP + 32] = h(1e0 + model_id);
-            [SP + 34] = h(10);
-            [SP + 36] = h(1);
+            model_id = bu[block_7 + i * 8 + 4];
 
-            tdb_file = w[0x800dfca0];
+            A0 = model_data + model_id * 24;
+            A1 = bsx_header; // where create packets drafts
+            A2 = model_id; // model id
+            field_model_create_packets_and_scale();
+            bsx_header = V0; // next place for packets
 
-            A0 = SP + 30;
-            A1 = tdb_file + w[tdb_file + c] + face_id * 20; // palette data
-            system_psyq_load_image(); // load image to VRAM
+            face_id = bu[model_data + model_id * 24 + 15];
 
-            [1f800000] = b(0); // eye1
-            [1f800001] = b(0); // eye2
-            [1f800002] = b(0); // mouth
-            [1f800003] = b(model_id);
+            if (face_id < 21)
+            {
+                [SP + 30] = h(140);
+                [SP + 32] = h(1e0 + model_id);
+                [SP + 34] = h(10);
+                [SP + 36] = h(1);
+
+                tdb_file = w[0x800dfca0];
+
+                A0 = SP + 30;
+                A1 = tdb_file + w[tdb_file + c] + face_id * 20; // palette data
+                system_psyq_load_image(); // load image to VRAM
+
+                [1f800000] = b(0); // eye1
+                [1f800001] = b(0); // eye2
+                [1f800002] = b(0); // mouth
+                [1f800003] = b(model_id);
+
+                A0 = model_data + model_id * 24;
+                A1 = 1f800000;
+                field_model_kawai_load_eyes_mouth_tex_to_vram();
+            }
+
+            // identity matrix
+            [SP + 10] = h(1000); [SP + 12] = h(0);    [SP + 14] = h(0);
+            [SP + 16] = h(0);    [SP + 18] = h(1000); [SP + 1a] = h(0);
+            [SP + 1c] = h(0);    [SP + 1e] = h(0);    [SP + 20] = h(1000);
+            [SP + 24] = w(0);    [SP + 28] = w(0);    [SP + 2c] = w(0);
+
+            [1f800000] = w(1); // not use model rotation and translation
+            A0 = model_data + model_id * 24;
+            A1 = SP + 10;
+            A2 = 0; // animation id
+            A3 = 0; // frame id
+            field_model_animation_calculate_matrixes();
+
+            // copy lighting colors and matrixes
+            [1f800000] = b(bu[color_data + i * 30 + 8]);
+            [1f800001] = b(bu[color_data + i * 30 + 9]);
+            [1f800002] = b(bu[color_data + i * 30 + a]);
+            [1f800003] = b(bu[color_data + i * 30 + 14]);
+            [1f800004] = b(bu[color_data + i * 30 + 15]);
+            [1f800005] = b(bu[color_data + i * 30 + 16]);
+            [1f800006] = b(bu[color_data + i * 30 + 20]);
+            [1f800007] = b(bu[color_data + i * 30 + 21]);
+            [1f800008] = b(bu[color_data + i * 30 + 22);
+            [1f800009] = b(bu[color_data + i * 30 + 2c]);
+            [1f80000a] = b(bu[color_data + i * 30 + 2d]);
+            [1f80000b] = b(bu[color_data + i * 30 + 2e]);
+            [1f80000c] = b(bu[color_data + i * 30 + c]);
+            [1f80000d] = b(bu[color_data + i * 30 + d]);
+            [1f80000e] = b(bu[color_data + i * 30 + e]);
+            [1f80000f] = b(bu[color_data + i * 30 + f]);
+            [1f800010] = b(bu[color_data + i * 30 + 10]);
+            [1f800011] = b(bu[color_data + i * 30 + 11]);
+            [1f800012] = b(bu[color_data + i * 30 + 18]);
+            [1f800013] = b(bu[color_data + i * 30 + 19]);
+            [1f800014] = b(bu[color_data + i * 30 + 1a]);
+            [1f800015] = b(bu[color_data + i * 30 + 1b]);
+            [1f800016] = b(bu[color_data + i * 30 + 1c]);
+            [1f800017] = b(bu[color_data + i * 30 + 1d]);
+            [1f800018] = b(bu[color_data + i * 30 + 24]);
+            [1f800019] = b(bu[color_data + i * 30 + 25]);
+            [1f80001a] = b(bu[color_data + i * 30 + 26]);
+            [1f80001b] = b(bu[color_data + i * 30 + 27]);
+            [1f80001c] = b(bu[color_data + i * 30 + 28]);
+            [1f80001d] = b(bu[color_data + i * 30 + 29]);
+
+            [1f80001e] = b(0); // calculate anyway false
 
             A0 = model_data + model_id * 24;
             A1 = 1f800000;
-            field_model_kawai_load_eyes_mouth_tex_to_vram();
+            field_model_lighting_apply_to_model();
+
+            [1f800000 + 0] = h(0); // r
+            [1f800000 + 2] = h(0); // g
+            [1f800000 + 4] = h(0); // b
+            [1f800000 + 6] = b(1); // for all packets
+            A0 = model_data + model_id * 24;
+            A1 = 1f800000;
+            field_model_kawai_set_color_to_model_packets();
+
+            [0x800df114] = b(bu[0x800df114] ^ 1); // switch to second buffer
+
+            [1f800000 + 0] = h(0); // r
+            [1f800000 + 2] = h(0); // g
+            [1f800000 + 4] = h(0); // b
+            [1f800000 + 6] = b(1); // for all packets
+
+            A0 = model_data + model_id * 24;
+            A1 = 1f800000;
+            field_model_kawai_set_color_to_model_packets();
+
+            [0x800df114] = b(bu[0x800df114] ^ 1); // switch back
         }
-
-        // identity matrix
-        [SP + 10] = h(1000); [SP + 12] = h(0);    [SP + 14] = h(0);
-        [SP + 16] = h(0);    [SP + 18] = h(1000); [SP + 1a] = h(0);
-        [SP + 1c] = h(0);    [SP + 1e] = h(0);    [SP + 20] = h(1000);
-        [SP + 24] = w(0);    [SP + 28] = w(0);    [SP + 2c] = w(0);
-
-        [1f800000] = w(1); // not use model rotation and translation
-        A0 = model_data + model_id * 24;
-        A1 = SP + 10;
-        A2 = 0; // animation id
-        A3 = 0; // frame id
-        field_model_animation_calculate_matrixes();
-
-        // copy lighting colors and matrixes
-        [1f800000] = b(bu[color_data + i * 30 + 8]);
-        [1f800001] = b(bu[color_data + i * 30 + 9]);
-        [1f800002] = b(bu[color_data + i * 30 + a]);
-        [1f800003] = b(bu[color_data + i * 30 + 14]);
-        [1f800004] = b(bu[color_data + i * 30 + 15]);
-        [1f800005] = b(bu[color_data + i * 30 + 16]);
-        [1f800006] = b(bu[color_data + i * 30 + 20]);
-        [1f800007] = b(bu[color_data + i * 30 + 21]);
-        [1f800008] = b(bu[color_data + i * 30 + 22);
-        [1f800009] = b(bu[color_data + i * 30 + 2c]);
-        [1f80000a] = b(bu[color_data + i * 30 + 2d]);
-        [1f80000b] = b(bu[color_data + i * 30 + 2e]);
-        [1f80000c] = b(bu[color_data + i * 30 + c]);
-        [1f80000d] = b(bu[color_data + i * 30 + d]);
-        [1f80000e] = b(bu[color_data + i * 30 + e]);
-        [1f80000f] = b(bu[color_data + i * 30 + f]);
-        [1f800010] = b(bu[color_data + i * 30 + 10]);
-        [1f800011] = b(bu[color_data + i * 30 + 11]);
-        [1f800012] = b(bu[color_data + i * 30 + 18]);
-        [1f800013] = b(bu[color_data + i * 30 + 19]);
-        [1f800014] = b(bu[color_data + i * 30 + 1a]);
-        [1f800015] = b(bu[color_data + i * 30 + 1b]);
-        [1f800016] = b(bu[color_data + i * 30 + 1c]);
-        [1f800017] = b(bu[color_data + i * 30 + 1d]);
-        [1f800018] = b(bu[color_data + i * 30 + 24]);
-        [1f800019] = b(bu[color_data + i * 30 + 25]);
-        [1f80001a] = b(bu[color_data + i * 30 + 26]);
-        [1f80001b] = b(bu[color_data + i * 30 + 27]);
-        [1f80001c] = b(bu[color_data + i * 30 + 28]);
-        [1f80001d] = b(bu[color_data + i * 30 + 29]);
-
-        [1f80001e] = b(0); // calculate anyway false
-
-        A0 = model_data + model_id * 24;
-        A1 = 1f800000;
-        field_model_lighting_apply_to_model();
-
-        [1f800000 + 0] = h(0); // r
-        [1f800000 + 2] = h(0); // g
-        [1f800000 + 4] = h(0); // b
-        [1f800000 + 6] = b(1); // for all packets
-        A0 = model_data + model_id * 24;
-        A1 = 1f800000;
-        field_model_kawai_set_color_to_model_packets();
-
-        [0x800df114] = b(bu[0x800df114] ^ 1); // switch to second buffer
-
-        [1f800000 + 0] = h(0); // r
-        [1f800000 + 2] = h(0); // g
-        [1f800000 + 4] = h(0); // b
-        [1f800000 + 6] = b(1); // for all packets
-
-        A0 = model_data + model_id * 24;
-        A1 = 1f800000;
-        field_model_kawai_set_color_to_model_packets();
-
-        [0x800df114] = b(bu[0x800df114] ^ 1); // switch back
     }
-}
 
-[0x800e0200] = w(color_data);
-return color_data;
-////////////////////////////////
+    [0x800e0200] = w(color_data);
+    return color_data;
+}
 
 
 
@@ -592,23 +579,18 @@ return packet + hu[parts_data + 16] * 2;
 
 
 
-////////////////////////////////
-// field_model_bsx_texture_load_to_vram()
-
-bsx_texture = A0; // BSX texture address
-
-for (int i = 0; i < bu[bsx_texture + 4]; ++i) // number of textures
+void field_model_bsx_texture_load_to_vram(bsx_texture)
 {
-    [SP + 10] = h(hu[bsx_texture + 8 + i * c + 4]); // vram x
-    [SP + 12] = h(hu[bsx_texture + 8 + i * c + 6]); // vram y
-    [SP + 14] = h(hu[bsx_texture + 8 + i * c + 0]); // width
-    [SP + 16] = h(hu[bsx_texture + 8 + i * c + 2]); // height
-
-    A0 = SP + 10;
-    A1 = bsx_texture + w[bsx_texture + 8 + i * c + 8];
-    system_psyq_load_image();
+    for (int i = 0; i < bu[bsx_texture + 0x4]; ++i) // number of textures
+    {
+        RECT rect;
+        rect.x = hu[bsx_texture + 0x8 + i * 0xc + 0x4];
+        rect.y = hu[bsx_texture + 0x8 + i * 0xc + 0x6];
+        rect.w = hu[bsx_texture + 0x8 + i * 0xc + 0x0];
+        rect.h = hu[bsx_texture + 0x8 + i * 0xc + 0x2];
+        system_psyq_load_image(&rect, bsx_texture + w[bsx_texture + 0x8 + i * 0xc + 0x8]);
+    }
 }
-////////////////////////////////
 
 
 
@@ -679,72 +661,73 @@ for (int i = 0; i < w[bsx_add + 0]; ++i)
 u32 field_model_struct_init(block7_header, FieldModels* models_struct)
 {
     block7_models = block7_header + 0x4;
-    model_data = models_struct + 0xc;
+    FieldModel* model = models_struct + 0xc;
 
     models_struct->inited_n = 0;
 
-    models_n = hu[block7_header + 2];
+    models_n = hu[block7_header + 0x2];
 
     for (int i = 0; i < models_n; ++i)
     {
-        if (bu[block7_models + i * 8 + 5] != 0)
+        if (bu[block7_models + i * 0x8 + 0x5] != 0)
         {
-            [block7_models + i * 8 + 4] = b(models_struct->inited_n);
+            [block7_models + i * 0x8 + 0x4] = b(models_struct->inited_n);
             models_struct->inited_n += 0x1;
         }
         else
         {
-            [block7_models + i * 8 + 4] = b(0xff);
+            [block7_models + i * 0x8 + 0x4] = b(0xff);
         }
     }
 
-    [models_struct + 1] = b(0);
-    [models_struct + 2] = h(0);
-    models_struct->data = model_data;
-    [models_struct + 8] = w(0);
+    [models_struct + 0x1] = b(0);
+    [models_struct + 0x2] = h(0);
+    models_struct->data = model;
+    [models_struct + 0x8] = w(0);
 
-    A1 = model_data + bu[models_struct + 0] * 24;
+    A1 = model + bu[models_struct + 0x0] * 0x24;
 
     for (int i = 0; i < models_n; ++i)
     {
-        if (bu[block7_models + i * 8 + 5] != 0) // if model enabled
+        if (bu[block7_models + i * 0x8 + 0x5] != 0) // if model enabled
         {
             // number of animation for addition model 3 at least
-            if ((bu[block7_models + i * 8 + 7] - 1) < 9)
+            if ((bu[block7_models + i * 0x8 + 0x7] - 0x1) < 0x9)
             {
-                if (bu[block7_models + i * 8 + 3] < 3)
+                if (bu[block7_models + i * 0x8 + 0x3] < 0x3)
                 {
-                    [block7_models + i * 8 + 3] = b(3);
+                    [block7_models + i * 0x8 + 0x3] = b(0x3);
                 }
             }
 
-            model_id = bu[block7_models + i * 8 + 4];
-            [model_data + model_id * 24 +  0] = b(1);
-            [model_data + model_id * 24 +  1] = bu(ff);
-            [model_data + model_id * 24 +  2] = b(bu[block7_models + i * 8 + 1]); // bones
-            [model_data + model_id * 24 +  3] = b(bu[block7_models + i * 8 + 2]); // parts
-            [model_data + model_id * 24 +  4] = b(bu[block7_models + i * 8 + 3]); // animations
-            [model_data + model_id * 24 +  5] = b(0);
-            [model_data + model_id * 24 +  6] = b(0);
-            [model_data + model_id * 24 +  7] = b(0);
-            [model_data + model_id * 24 +  8] = w(0);
-            [model_data + model_id * 24 +  c] = w(0);
-            [model_data + model_id * 24 + 10] = w(0);
-            [model_data + model_id * 24 + 14] = b(bu[block7_models + i * 8 + 7]); // global model id
-            [model_data + model_id * 24 + 15] = b(bu[block7_models + i * 8 + 0]); // face id
-            [model_data + model_id * 24 + 16] = h(1000);
+            u8 face_id = bu[block7_models + i * 0x8 + 0x0];
+            u8 bones_n = bu[block7_models + i * 0x8 + 0x1]
+            u8 parts_n = bu[block7_models + i * 0x8 + 0x2];
+            u8 anim_n = bu[block7_models + i * 0x8 + 0x3];
+            u8 model_id = bu[block7_models + i * 0x8 + 0x4];
+            u8 global_model_id = bu[block7_models + i * 0x8 + 0x7];
 
-            A0 = bu[block7_models + i * 8 + 1] * 4;
-            [model_data + model_id * 24 + 18] = h(A0); // local offset to model parts part.
-
-            A0 += bu[block7_models + i * 8 + 2] * 20;
-            [model_data + model_id * 24 + 1a] = h(A0); // local offset to animation part.
-
-            [model_data + model_id * 24 + 1c] = w(A1); // start offset of data for this model
-            [model_data + model_id * 24 + 20] = w(0);
+            [model + model_id * 0x24 +  0x0] = b(0x1);
+            [model + model_id * 0x24 +  0x1] = bu(0xff);
+            model[model_id]->bones_n = bones_n;
+            model[model_id]->parts_n = parts_n;
+            model[model_id]->anim_n = anim_n;
+            [model + model_id * 0x24 +  0x5] = b(0);
+            [model + model_id * 0x24 +  0x6] = b(0);
+            [model + model_id * 0x24 +  0x7] = b(0);
+            [model + model_id * 0x24 +  0x8] = w(0);
+            [model + model_id * 0x24 +  0xc] = w(0);
+            [model + model_id * 0x24 + 0x10] = w(0);
+            [model + model_id * 0x24 + 0x14] = b(global_model_id);
+            [model + model_id * 0x24 + 0x15] = b(face_id);
+            [model + model_id * 0x24 + 0x16] = h(0x1000);
+            [model + model_id * 0x24 + 0x18] = h(bones_n * 0x4); // local offset to model parts part.
+            [model + model_id * 0x24 + 0x1a] = h(bones_n * 0x4 + parts_n * 0x20); // local offset to animation part.
+            [model + model_id * 0x24 + 0x1c] = w(A1); // start offset of data for this model
+            [model + model_id * 0x24 + 0x20] = w(0);
 
             // calculate offset to next model data
-            A1 += bu[block7_models + i * 8 + 1] * 4 + bu[block7_models + i * 8 + 2] * 20 + bu[block7_models + i * 8 + 3] * 10;
+            A1 += bones_n * 0x4 + parts_n * 0x20 + anim_n * 0x10;
         }
     }
 
