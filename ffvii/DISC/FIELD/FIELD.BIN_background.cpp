@@ -613,20 +613,15 @@ if (bu[0x8009abf4 + 1f] == 1) // update state
 
 
 
-////////////////////////////////
-// field_background_get_entity_screen_pos()
+void field_background_get_entity_screen_pos(ret)
+{
+    entity_id = bu[0x8009abf4 + 0x1e]; // entity we scroll bg to
+    [SP + 10] = h(g_field_entities[entity_id].pos_x >> 0xc);
+    [SP + 12] = h(g_field_entities[entity_id].pos_y >> 0xc);
+    [SP + 14] = h((g_field_entities[entity_id].pos_z >> 0xc) + hu[0x8009ac0a]);
 
-ret = A0;
-
-entity_id = bu[0x8009abf4 + 0x1e]; // entity we scroll bg to
-[SP + 10] = h(w[0x80074ea4 + entity_id * 0x84 + 0xc] >> 0xc); // entity x
-[SP + 12] = h(w[0x80074ea4 + entity_id * 0x84 + 0x10] >> 0xc); // entity y
-[SP + 14] = h((w[0x80074ea4 + entity_id * 0x84 + 0x14] >> 0xc) + hu[0x8009ac0a]);  // entity z
-
-A0 = SP + 0x10;
-A1 = ret;
-field_calculate_world_to_screen_pos();
-////////////////////////////////
+    field_calculate_world_to_screen_pos(SP + 0x10, ret);
+}
 
 
 
@@ -825,9 +820,9 @@ void field_background_update_drawenv(FieldRenderData* current_rd)
 
             // entity pos + entity offset
             pc_entity_id = h[0x800965e0];
-            [SP + 0x10] = h((w[0x80074ea4 + pc_entity_id * 0x84 +  0xc] >> 0xc) + hu[0x80074ea4 + pc_entity_id * 0x84 + 0x40]);
-            [SP + 0x12] = h((w[0x80074ea4 + pc_entity_id * 0x84 + 0x10] >> 0xc) + hu[0x80074ea4 + pc_entity_id * 0x84 + 0x46]);
-            [SP + 0x14] = h((w[0x80074ea4 + pc_entity_id * 0x84 + 0x14] >> 0xc) + hu[0x80074ea4 + pc_entity_id * 0x84 + 0x4c] + (h[0x8009abf4 + 0x10] >> 0x2)); // with field scale
+            [SP + 0x10] = h((g_field_entities[pc_entity_id].pos_x >> 0xc) + hu[g_field_entities + pc_entity_id * 0x84 + 0x40]);
+            [SP + 0x12] = h((g_field_entities[pc_entity_id].pos_y >> 0xc) + hu[g_field_entities + pc_entity_id * 0x84 + 0x46]);
+            [SP + 0x14] = h((g_field_entities[pc_entity_id].pos_z >> 0xc) + hu[g_field_entities + pc_entity_id * 0x84 + 0x4c] + (h[0x8009abf4 + 0x10] >> 0x2)); // with field scale
 
             field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18);
 
@@ -835,9 +830,9 @@ void field_background_update_drawenv(FieldRenderData* current_rd)
             [0x80114464] = h(g_base_ofs_x + hu[SP + 0x18]);
             [0x80114468] = h(g_base_ofs_y + hu[SP + 0x1a]);
 
-            [SP + 0x10] = h(w[0x80074ea4 + pc_entity_id * 0x84 +  0xc] >> 0xc);
-            [SP + 0x12] = h(w[0x80074ea4 + pc_entity_id * 0x84 + 0x10] >> 0xc);
-            [SP + 0x14] = h(w[0x80074ea4 + pc_entity_id * 0x84 + 0x14] + hu[0x8009abf4 + 16] >> 0xc);
+            [SP + 0x10] = h(g_field_entities[pc_entity_id].pos_x >> 0xc);
+            [SP + 0x12] = h(g_field_entities[pc_entity_id].pos_y >> 0xc);
+            [SP + 0x14] = h(g_field_entities[pc_entity_id].pos_z + hu[0x8009abf4 + 0x16] >> 0xc);
 
             field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18);
 

@@ -384,7 +384,7 @@ int field_event_split_join_set_move(u8 actor_id, s16 x, s16 y, u8 steps, u8 from
     models_data = w[g_field_models + 0x4];
     A1 = hu[models_data + model_id * 0x24 + 0x1a]; // local offset to animation
     A0 = w[models_data + model_id * 0x24 + 0x1c]; // offset to data for this model and bones offset.
-    animation_id = bu[0x80074ea4 + entity_id * 0x84 + 0x5e];
+    animation_id = bu[g_field_entities + entity_id * 0x84 + 0x5e];
     [entities_data + entity_id * 0x84 + 0x60] = h(0x10); // animation speed
     [entities_data + entity_id * 0x84 + 0x62] = h(0); // current frame
     [entities_data + entity_id * 0x84 + 0x64] = h(hu[A1 + A0 + animation_id * 0x10 + 0] - 0x1); // number of frames in animation

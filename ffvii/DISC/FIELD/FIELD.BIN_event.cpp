@@ -175,9 +175,9 @@ void field_init_default_values()
         [entities_data + i * 0x84 + 0x4] = w(0); // offset to KAWAI opcode data in script
         [entities_data + i * 0x84 + 0x8] = b(0); // blinking. 0 - on, 1 - off.
         [entities_data + i * 0x84 + 0x9] = b(0); // store 0 here in KAWAI opcode under some curcumstances.
-        [entities_data + i * 0x84 + 0xc] = w(0); // x
-        [entities_data + i * 0x84 + 0x10] = w(0); // y
-        [entities_data + i * 0x84 + 0x14] = w(0); // z
+        entities_data->pos_x = 0;
+        entities_data->pos_y = 0;
+        entities_data->pos_z = 0;
         [entities_data + i * 0x84 + 0x36] = b(0); // move direction
         [entities_data + i * 0x84 + 0x37] = b(0); // lock rotation
         [entities_data + i * 0x84 + 0x38] = b(0); // model direction
@@ -214,11 +214,11 @@ void field_init_default_values()
         [entities_data + i * 0x84 + 0x6c] = h((h[field_struct + 0x10] * 0x1e) / 0x200); // solid range value
         [entities_data + i * 0x84 + 0x6e] = h((h[field_struct + 0x10] * 0x50) / 0x200); // talk range value
         [entities_data + i * 0x84 + 0x70] = h(h[field_struct + 0x10] * 0x2); // movement speed
-        [entities_data + i * 0x84 + 0x72] = h(0); // triangle
-        [entities_data + i * 0x84 + 0x74] = h(0); // move to triangle
-        [entities_data + i * 0x84 + 0x78] = w(0); // move to x
-        [entities_data + i * 0x84 + 0x7c] = w(0); // move to y
-        [entities_data + i * 0x84 + 0x80] = w(0); // move to z
+        entities_data[i].pos_i = 0;
+        entities_data[i].move_to_i = 0;
+        entities_data[i].move_to_x = 0;
+        entities_data[i].move_to_y = 0;
+        entities_data[i].move_to_z = 0;
 
         [0x8008325c + i] = b(0); // model default animation
         [0x800756e8 + i] = b(0); // model animation state
@@ -1093,10 +1093,10 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     if (entity_id != 0xff)
     {
         field_debug_copy_string(string, "X=");
-        field_int4_to_string(w[entities_data + entity_id * 0x84 + 0xc] >> 0xc, temp);
+        field_int4_to_string(entities_data->pos_x >> 0xc, temp);
         field_debug_concat_string(string, temp);
         field_debug_concat_string(string, " Y=");
-        field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x10] >> 0xc, temp);
+        field_int4_to_string(entities_data->pos_y >> 0xc, temp);
         field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
@@ -1106,10 +1106,10 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         }
 
         field_debug_copy_string(string, "Z=");
-        field_int4_to_string(w[entities_data + entity_id * 0x84 + 0x14] >> 0xc, temp);
+        field_int4_to_string(entities_data->pos_z >> 0xc, temp);
         field_debug_concat_string(string, temp);
         field_debug_concat_string(string, " I=");
-        field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x72], temp); // triangle id
+        field_int4_to_string(entities_data[entity_id].pos_i, temp); // triangle id
         field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
@@ -1431,7 +1431,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     }
 
     manual_entity_id = h[0x8009abf4 + 0x2a];
-    triangle_id = hu[0x80074ea4 + manual_entity_id * 84 + 72];
+    triangle_id = hu[g_field_entities + manual_entity_id * 84 + 72];
     walkmesh_data = w[0x800e4274];
 
     {

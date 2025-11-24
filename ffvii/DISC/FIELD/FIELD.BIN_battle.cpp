@@ -55,7 +55,7 @@ void funcaba70()
         if ((enabled == 0x1) && (g_movie_play == 0) && (bu[0x8009abf4 + 0x3b] == 0))
         {
             pc_entity_id = h[0x800965e0];
-            move_speed = hu[0x80074ea4 + pc_entity_id * 0x84 + 0x70];
+            move_speed = hu[g_field_entities + pc_entity_id * 0x84 + 0x70];
 
             [0x8007173c] = h(hu[0x8007173c] + (move_speed / rate)); // add encounter rate for this battle table
 

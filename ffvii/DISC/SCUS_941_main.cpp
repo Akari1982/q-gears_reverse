@@ -61,7 +61,7 @@ void func1117c(S0)
 
     [0x8009a000] = h(0x20);
     [0x8009a004] = w(0x40);
-    [0x8009a008] = w(0xS0);
+    [0x8009a008] = w(S0);
     system_akao_execute();
 }
 

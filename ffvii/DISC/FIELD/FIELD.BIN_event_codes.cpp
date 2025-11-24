@@ -2205,7 +2205,7 @@ V1 = h[0x8009d828 + model_id * 2] / bu[V0 + A1 + e];
 // animation related
 V1 = w[0x8008357C];
 V1 = bu[V1 + model_id * 8 + 4];
-animation_id = bu[0x80074EA4 + model_id * 84 + 5E];
+animation_id = bu[g_field_entities + model_id * 84 + 5E];
 V0 = w[g_field_models + 0x4];
 A1 = w[V0 + V1 * 24 + 1C];
 A0 = hu[V0 + V1 * 24 + 1A];

@@ -4978,7 +4978,7 @@ else if (bu[kawai_settings + 0] == 1) // render
     field_model_kawai_set_color_to_packets_below_level();
 
     // add splash water effect if animation id != idle
-    if (bu[0x80074ea4 + entity_id * 84 + 5e] != 0) // animation id
+    if (bu[g_field_entities + entity_id * 84 + 5e] != 0) // animation id
     {
         bone_data = w[model_data + 1c];
         rb = bu[0x800df114];

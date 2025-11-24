@@ -74,11 +74,11 @@ void field_rain_update()
                 rnd1 = g_field_random[g_field_rain[i].rnd_seed & 0xff];
                 rnd2 = g_field_random[(g_field_rain[i].rnd_seed * 3) & 0xff];
 
-                g_field_rain[i].p2.vx = -0x600 + (w[0x80074ea4 + pc_entity_id * 0x84 + 0xc] >> 0xc) + rnd1 * 0xc;
-                g_field_rain[i].p2.vy = -0x600 + (w[0x80074ea4 + pc_entity_id * 0x84 + 0x10] >> 0xc) + rnd2 * 0xc;
+                g_field_rain[i].p2.vx = -0x600 + (g_field_entities[pc_entity_id].pos_x >> 0xc) + rnd1 * 0xc;
+                g_field_rain[i].p2.vy = -0x600 + (g_field_entities[pc_entity_id].pos_y >> 0xc) + rnd2 * 0xc;
                 g_field_rain[i].p1.vx = g_field_rain[i].p2.vx;
                 g_field_rain[i].p1.vy = g_field_rain[i].p2.vy;
-                g_field_rain[i].z = -0x300 + (w[0x80074ea4 + pc_entity_id * 0x84 + 0x14] >> 0xc);
+                g_field_rain[i].z = -0x300 + (g_field_entities[pc_entity_id].pos_z >> 0xc);
             }
             else
             {

@@ -61,9 +61,9 @@ for (int i = 0; i < entities_n; ++i)
     {
         model_id = bu[block7_data + i * 8 + 4];
 
-        [SP + 10] = h((w[0x80074ea4 + i * 84 +  c] >> c) + hu[0x80074ea4 + i * 84 + 40]);     // model position X + model offset X
-        [SP + 12] = h((w[0x80074ea4 + i * 84 + 10] >> c) + hu[0x80074ea4 + i * 84 + 46]);     // model position Y + model offset Y
-        [SP + 14] = h((w[0x80074ea4 + i * 84 + 14] >> c) + hu[0x80074ea4 + i * 84 + 4c] - a); // model position Z + model offset Z
+        [SP + 10] = h((g_field_entities[i].pos_x >> c) + hu[g_field_entities + i * 84 + 40]);     // model position X + model offset X
+        [SP + 12] = h((g_field_entities[i].pos_y >> c) + hu[g_field_entities + i * 84 + 46]);     // model position Y + model offset Y
+        [SP + 14] = h((g_field_entities[i].pos_z >> c) + hu[g_field_entities + i * 84 + 4c] - a); // model position Z + model offset Z
 
         [model_data + model_id * 24 +  8] = w(h(SP + 10));
         [model_data + model_id * 24 +  c] = w(h(SP + 12));
@@ -73,7 +73,7 @@ for (int i = 0; i < entities_n; ++i)
 
         if (V0 < 0xf00)
         {
-            [model_data + model_id * 24 + 7] = b(bu[0x80074ea4 + i * 84 + 38]); // model direction
+            [model_data + model_id * 24 + 7] = b(bu[g_field_entities + i * 84 + 38]); // model direction
 
             V1 = b[model_data + model_id * 24 + 1]; // +1[] KAWAI byte in new structure
             if ((V1 == 4) || (V1 == 8) || (V1 == 9) || (V1 == b) || (V1 == c))
@@ -88,8 +88,8 @@ for (int i = 0; i < entities_n; ++i)
 
                 A0 = model_data + model_id * 24;
                 A1 = SP + 20;
-                A2 = bu[0x80074ea4 + i * 84 + 5e]; // animation id
-                A3 = h[0x80074ea4 + i * 84 + 62] / 10; // frame id
+                A2 = bu[g_field_entities + i * 84 + 5e]; // animation id
+                A3 = h[g_field_entities + i * 84 + 62] / 10; // frame id
                 field_model_animation_calculate_matrixes();
 
                 // set camera matrix as root bone transformation
@@ -110,8 +110,8 @@ for (int i = 0; i < entities_n; ++i)
 
                 A0 = model_data + model_id * 24;
                 A1 = w[0x80071e40]; // offset to camera section
-                A2 = bu[0x80074ea4 + i * 84 + 5e]; // animation id
-                A3 = hu[0x80074ea4 + i * 84 + 62] / 10; // frame id
+                A2 = bu[g_field_entities + i * 84 + 5e]; // animation id
+                A3 = hu[g_field_entities + i * 84 + 62] / 10; // frame id
                 field_model_animation_calculate_matrixes();
             }
         }
@@ -123,9 +123,9 @@ for (int i = 0; i < entities_n; ++i)
 {
     if (bu[block7_data + i * 8 + 4] != ff) // model enabled
     {
-        [SP + 10] = h(w[0x80074ea4 + i * 84 + c] >> c);
-        [SP + 12] = h(w[0x80074ea4 + i * 84 + 10] >> c);
-        [SP + 14] = h((w[0x80074ea4 + i * 84 + 14] >> c) - a);
+        [SP + 10] = h(w[g_field_entities + i * 84 + c] >> c);
+        [SP + 12] = h(w[g_field_entities + i * 84 + 10] >> c);
+        [SP + 14] = h((w[g_field_entities + i * 84 + 14] >> c) - a);
 
         field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18); // return distance to screen
 
@@ -156,12 +156,12 @@ for (int i = 0; i < entities_n; ++i)
 {
     if (bu[block7_data + i * 8 + 4] != ff) // model enabled
     {
-        S3 = h[0x80074ea4 + i * 84 + 0];
+        S3 = h[g_field_entities + i * 84 + 0];
         if (S3 == 1) // if kawaii
         {
-            [SP + 10] = h(w[0x80074ea4 + i * 84 + c] >> c);
-            [SP + 12] = h(w[0x80074ea4 + i * 84 + 10] >> c);
-            [SP + 14] = h((w[0x80074ea4 + i * 84 + 14] >> c) - a);
+            [SP + 10] = h(w[g_field_entities + i * 84 + c] >> c);
+            [SP + 12] = h(w[g_field_entities + i * 84 + 10] >> c);
+            [SP + 14] = h((w[g_field_entities + i * 84 + 14] >> c) - a);
 
             field_calculate_world_to_screen_pos(SP + 0x10, SP + 0x18); // return distance to screen
 
@@ -169,13 +169,13 @@ for (int i = 0; i < entities_n; ++i)
             {
                 A2 = bu[block7_data + i * 8 + 4]; // model id
                 A0 = w[g_field_models + 0x4] + A2 * 24;
-                A1 = w[0x80074ea4 + i * 84 + 4]; // kawai_settings
+                A1 = w[g_field_entities + i * 84 + 4]; // kawai_settings
                 A3 = w[0x80071e40]; // offset to camera section
                 field_model_kawai_execute();
 
                 if (V0 == 1)
                 {
-                    [0x80074ea4 + i * 84 + 0] = h(2);
+                    [g_field_entities + i * 84 + 0] = h(2);
                 }
             }
         }
@@ -186,9 +186,9 @@ for (int i = 0; i < h[0x8009ac1c]; ++i)
 {
     if (bu[block7_data + i * 8 + 4] != ff)
     {
-        if (bu[0x80074ea4 + i * 84 + 8] != 1)
+        if (bu[g_field_entities + i * 84 + 8] != 1)
         {
-            if (bu[0x80074ea4 + i * 84 + 9] == 0)
+            if (bu[g_field_entities + i * 84 + 9] == 0)
             {
                 [S5 + 0] = b(2);
                 [S5 + 1] = b(2);
@@ -196,7 +196,7 @@ for (int i = 0; i < h[0x8009ac1c]; ++i)
                 [S5 + 3] = b(i);
 
                 V1 = bu[0x801144d8];
-                [0x80074ea4 + i * 84 + 9] = b((bu[0x800e0638 + V1] & 1f) + 40);
+                [g_field_entities + i * 84 + 9] = b((bu[0x800e0638 + V1] & 1f) + 40);
                 [0x801144d8] = b(bu[0x801144d8] + 1);
 
             }
@@ -206,7 +206,7 @@ for (int i = 0; i < h[0x8009ac1c]; ++i)
                 [S5 + 1] = b(1);
                 [S5 + 2] = b(0);
                 [S5 + 3] = b(i);
-                [0x80074ea4 + i * 84 + 9] = b(bu[0x80074ea4 + i * 84 + 9] - 1);
+                [g_field_entities + i * 84 + 9] = b(bu[g_field_entities + i * 84 + 9] - 1);
             }
 
             A0 = w[g_field_models + 0x4] + i * 24;
