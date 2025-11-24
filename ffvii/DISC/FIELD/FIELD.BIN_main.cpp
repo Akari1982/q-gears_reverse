@@ -1179,7 +1179,7 @@ void field_entity_movement_update(u32 input)
 
                     // read field global rotation byte
                     V1 = w[0x800716c4];
-                    [g_field_entities + pc_entity * 84 + 36] = b(bu[V1 + 9] + bu[g_field_entities + pc_entity * 84 + 36] + bu[g_field_entities + pc_entity * 84 + 35]);
+                    [g_field_entities + pc_entity * 0x84 + 0x36] = b(bu[V1 + 0x9] + bu[g_field_entities + pc_entity * 0x84 + 0x36] + bu[g_field_entities + pc_entity * 0x84 + 0x35]);
 
                     A0 = field_entity_move_by_walkmesh(i);
 
@@ -2113,27 +2113,17 @@ else if (((actor_id != h[0x800965e0]) || ((actor_id == h[0x800965e0]) && (bu[0x8
         [1f800090] = w(hu[g_field_entities + actor_id * 84 + 6c] * V0);
 
         // with solid range y
-        A0 = (bu[g_field_entities + actor_id * 84 + 36] + 20) & ff;
+        A0 = (bu[g_field_entities + actor_id * 0x84 + 0x36] + 0x20) & 0xff;
         get_direction_vector_y();
-        [1f800094] = w(hu[g_field_entities + actor_id * 84 + 6c] * (0 - V0));
+        [1f800094] = w(hu[g_field_entities + actor_id * 0x84 + 0x6c] * (0 - V0));
 
-        [1f800080] = w(w[1f800070] + w[1f800090]); // x with solid addition
-        [1f800084] = w(w[1f800074] + w[1f800094]); // y with solid addition
-        [1f800088] = w(w[1f800078]);
+        [0x1f800080] = w(w[0x1f800070] + w[0x1f800090]); // x with solid addition
+        [0x1f800084] = w(w[0x1f800074] + w[0x1f800094]); // y with solid addition
+        [0x1f800088] = w(w[0x1f800078]);
 
         // check if we cross border of triangle
-        A0 = current_triangle_address;
-        A1 = 1f800080;
-        A2 = 1f800090;
-        A3 = 1f800060;
-        walkmesh_border_cross();
-        first_border_cross = V0;
-
-        A0 = actor_id;
-        A1 = 1f800080;
-        entity_collision_check();
-        first_entity_collision = V0;
-
+        first_border_cross = walkmesh_border_cross(current_triangle_address, 0x1f800080, 0x1f800090, 0x1f800060);
+        first_entity_collision = entity_collision_check(actor_id, 0x1f800080);
         [current_triangle_address] = h(g_field_entities[actor_id].pos_i);
     }
 
@@ -2329,7 +2319,7 @@ return 1;
 entity_check = A0;
 entities_n = h[0x8009abf4 + 0x28];
 given_position = A1;
-solid_range = hu[g_field_entities + entity_check * 84 + 6c];
+solid_range = hu[g_field_entities + entity_check * 84 + 0x6c];
 
 T2 = 0;
 
@@ -2337,13 +2327,13 @@ for (int i = 0; i < entities_n; ++i)
 {
     if (i != entity_check)
     {
-        if (bu[g_field_entities + i * 84 + 59] == 0) // if entity solid
+        if (bu[g_field_entities + i * 0x84 + 0x59] == 0) // if entity solid
         {
             if (((g_field_entities[i].pos_z >> c) - w[given_position + 8] + 0x7e) < 0xfe) // if Z value not very different
             {
-                A0 = (solid_range + hu[g_field_entities + i * 84 + 6c]) / 2;
-                V1 = (g_field_entities[i].pos_x - w[given_position + 0]) >> 0xc;
-                V0 = (g_field_entities[i].pos_y - w[given_position + 4]) >> 0xc;
+                A0 = (solid_range + hu[g_field_entities + i * 0x84 + 0x6c]) / 0x2;
+                V1 = (g_field_entities[i].pos_x - w[given_position + 0x0]) >> 0xc;
+                V0 = (g_field_entities[i].pos_y - w[given_position + 0x4]) >> 0xc;
 
                 if (((V1 * V1) + (V0 * V0)) < (A0 * A0)) // if we collide
                 {
@@ -2576,7 +2566,7 @@ for (int i = 0; i < 20; ++i)
 
 
 
-void move_gateway_check(FieldEntity* entity, S1, VECTOR* new_pos)
+void move_gateway_check(FieldEntity* entity, trigger_data, VECTOR* new_pos)
 {
     VECTOR v_old;
     v_old.vx = entity->pos_x >> 0xc;
@@ -2592,21 +2582,21 @@ void move_gateway_check(FieldEntity* entity, S1, VECTOR* new_pos)
     {
         if (hu[S0 + 0xa] != 0x7fff)
         {
-            u32 dist = move_distance_to_line(S1 + i * 0x18, &v_old, 0x1f800020);
+            u32 dist = move_distance_to_line(trigger_data + i * 0x18, &v_old, 0x1f800020);
 
             if ((dist != -1) && (dist < (hu[entity + 0x6c] * hu[entity + 0x6c]))
             {
-                x1 = h[S1 + i * 0x18 + 0x0];
-                y1 = h[S1 + i * 0x18 + 0x2];
-                x2 = h[S1 + i * 0x18 + 0x6];
-                y2 = h[S1 + i * 0x18 + 0x8];
+                x1 = h[trigger_data + i * 0x18 + 0x0];
+                y1 = h[trigger_data + i * 0x18 + 0x2];
+                x2 = h[trigger_data + i * 0x18 + 0x6];
+                y2 = h[trigger_data + i * 0x18 + 0x8];
 
                 T0 = ((x2 - x1) * (v_old.vy - y1)) - ((v_old.vx - x1) * (y2 - y1));
                 A0 = ((x2 - x1) * (v_new.vy - y1)) - ((v_new.vx - x1) * (y2 - y1));
 
                 if (((A0 > 0) && (T0 <= 0)) || ((T0 > 0) && (A0 <= 0)) || ((A0 >= 0) && (T0 < 0)) || ((T0 >= 0) && (A0 < 0))
                 {
-                    set_gateway_to_map_load(S1 + i * 0x18);
+                    set_gateway_to_map_load(trigger_data + i * 0x18);
                 }
             }
         }
@@ -2656,7 +2646,7 @@ s16 field_trigger_background_manipulate(trigger_data, state)
 
 
 
-void move_trigger_check(FieldEntity* entity, S1)
+void move_trigger_check(FieldEntity* entity, trigger_data)
 {
     [SP + 10] = w(w[0x800a00bc + 0x0]);
     [SP + 14] = w(w[0x800a00bc + 0x4]);
@@ -2669,9 +2659,9 @@ void move_trigger_check(FieldEntity* entity, S1)
 
     for (int i = 0; i < 0xc; ++i)
     {
-        if (bu[S1 + i * 0x10 + 0xc] != 0xff) // enterstate
+        if (bu[trigger_data + i * 0x10 + 0xc] != 0xff) // enterstate
         {
-            u32 dist = move_distance_to_line(S1 + i * 0x10, &vec1, &vec2);
+            u32 dist = move_distance_to_line(trigger_data + i * 0x10, &vec1, &vec2);
 
             // if we closer to line than solid range
             if ((dist != -0x1) && (dist < (hu[entity + 0x6c] * hu[entity + 0x6c])))
@@ -2684,38 +2674,38 @@ void move_trigger_check(FieldEntity* entity, S1)
                     if (V0 >= 0x80) continue;
                 }
 
-                if (field_trigger_background_manipulate(S1 + i * 0x10, bu[S1 + i * 0x10 + 0xe]) == 0x1)
+                if (field_trigger_background_manipulate(trigger_data + i * 0x10, bu[trigger_data + i * 0x10 + 0xe]) == 0x1)
                 {
-                    V0 = bu[S1 + i * 0x10 + 0xf];
+                    V0 = bu[trigger_data + i * 0x10 + 0xf];
                     func1117c(hu[SP + 0x10 + V0 * 0x2]); // play sound
                 }
             }
             else
             {
-                A3 = bu[S1 + i * 0x10 + 0xe]; // default state
+                A3 = bu[trigger_data + i * 0x10 + 0xe]; // default state
                 if (A3 >= 0x4)
                 {
-                    x1 = h[S1 + i * 0x10 + 0x0];
-                    y1 = h[S1 + i * 0x10 + 0x2];
-                    x2 = h[S1 + i * 0x10 + 0x6];
-                    y2 = h[S1 + i * 0x10 + 0x8];
+                    x1 = h[trigger_data + i * 0x10 + 0x0];
+                    y1 = h[trigger_data + i * 0x10 + 0x2];
+                    x2 = h[trigger_data + i * 0x10 + 0x6];
+                    y2 = h[trigger_data + i * 0x10 + 0x8];
                     if ((((x2 - x1) * (vec1.vy - y1)) - ((y2 - y1) * (vec1.vx - x1))) > 0) continue;
                 }
 
                 if ((A3 == 0x2) || (A4 == 0x4))
                 {
-                    if (field_trigger_background_manipulate(S1 + i * 0x10, 0x1) == 0x1)
+                    if (field_trigger_background_manipulate(trigger_data + i * 0x10, 0x1) == 0x1)
                     {
-                        V0 = bu[S1 + i * 0x10 + 0xf];
+                        V0 = bu[trigger_data + i * 0x10 + 0xf];
                         func1117c(hu[SP + 0x10 + V0 * 0x2]); // play sound
                     }
                 }
 
-                if (bu[S1 + i * 0x10 + 0xe] != 0x5)
+                if (bu[trigger_data + i * 0x10 + 0xe] != 0x5)
                 {
-                    if (field_trigger_background_manipulate(S1 + i * 0x10, 0) == 0x1)
+                    if (field_trigger_background_manipulate(trigger_data + i * 0x10, 0) == 0x1)
                     {
-                        V0 = bu[S1 + i * 0x10 + 0xf];
+                        V0 = bu[trigger_data + i * 0x10 + 0xf];
                         func1117c(hu[SP + 0x10 + V0 * 0x2]); // play sound
                     }
                 }
