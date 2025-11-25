@@ -583,7 +583,7 @@ for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of acto
                 if (bu[0x80099ffc] != 0x5) break;
 
                 // not debug
-                if ((bu[0x8009d820] & 1) == 0) break;
+                if ((bu[0x8009d820] & 0x1) == 0) break;
 
                 if (bu[0x80071e24] & 4)
                 {
@@ -647,14 +647,14 @@ if (number_of_entity > 0)
                 {
                     case 0:
                     {
-                        animation_id = bu[entities_data + model * 84 + 5e];
+                        animation_id = bu[entities_data + model * 0x84 + 5e];
                         default_animation = bu[0x8008325c + model];
                         if (animation_id != default_animation)
                         {
-                            [entities_data + model * 84 + 5e] = b(default_animation);
+                            [entities_data + model * 0x84 + 5e] = b(default_animation);
                             default_animation_speed = hu[0x80082248 + model * 2];
-                            [entities_data + model * 84 + 60] = h(default_animation_speed);
-                            [entities_data + model * 84 + 62] = h(0);
+                            [entities_data + model * 0x84 + 60] = h(default_animation_speed);
+                            [entities_data + model * 0x84 + 62] = h(0);
 
                             V1 = w[0x8008357c];
                             A1 = bu[V1 + model * 8 + 4];
@@ -662,7 +662,7 @@ if (number_of_entity > 0)
                             A1 = hu[V1 + A1 * 24 + 1a];
                             A0 = w[V1 + A1 * 24 + 1c];
                             number_of_frames = hu[A0 + A1 + default_animation * 10];
-                            [entities_data + model * 84 + 64] = h(number_of_frames - 1);
+                            [entities_data + model * 0x84 + 64] = h(number_of_frames - 1);
                         }
                         else
                         {
@@ -671,16 +671,16 @@ if (number_of_entity > 0)
                             V1 = w[g_field_models + 0x4];
                             A0 = hu[V1 + model * 24 + 1a];
                             V1 = w[V1 + model * 24 + 1c];
-                            animation_id = bu[entities_data + model * 84 + 5e];
+                            animation_id = bu[entities_data + model * 0x84 + 5e];
                             number_of_frames = hu[A0 + V1 + animation_id * 10];
-                            [entities_data + model * 84 + 64] = h(number_of_frames - 1);
+                            [entities_data + model * 0x84 + 64] = h(number_of_frames - 1);
 
-                            current_frame_value = hu[entities_data + model * 84 + 62];
-                            number_of_frames = h[entities_data + model * 84 + 64];
+                            current_frame_value = hu[entities_data + model * 0x84 + 62];
+                            number_of_frames = h[entities_data + model * 0x84 + 64];
 
                             if (current_frame_value / 10 >= number_of_frames)
                             {
-                                [entities_data + model * 84 + 62] = h(0);
+                                [entities_data + model * 0x84 + 62] = h(0);
                             }
                         }
                     }
@@ -688,25 +688,25 @@ if (number_of_entity > 0)
 
                     case 1:
                     {
-                        current_frame_value = hu[entities_data + model * 84 + 62];
-                        number_of_frames = h[entities_data + model * 84 + 64];
+                        current_frame_value = hu[entities_data + model * 0x84 + 62];
+                        number_of_frames = h[entities_data + model * 0x84 + 64];
 
                         if (current_frame_value / 10 >= number_of_frames)
                         {
-                            [entities_data + model * 84 + 62] = h(0);
+                            [entities_data + model * 0x84 + 62] = h(0);
                         }
                     }
                     break;
 
                     case 2:
                     {
-                        current_frame_value = hu[entities_data + model * 84 + 62];
-                        number_of_frames = h[entities_data + model * 84 + 64];
+                        current_frame_value = hu[entities_data + model * 0x84 + 62];
+                        number_of_frames = h[entities_data + model * 0x84 + 64];
 
                         if (current_frame_value / 10 >= number_of_frames)
                         {
                             [0x800756e8 + model] = b(4);
-                            [entities_data + model * 84 + 62] = h(number_of_frames * 10);
+                            [entities_data + model * 0x84 + 62] = h(number_of_frames * 10);
                         }
                     }
                     break;
@@ -714,15 +714,15 @@ if (number_of_entity > 0)
                     case 3:
                     case 4:
                     {
-                        number_of_frames = hu[entities_data + model * 84 + 64];
-                        [entities_data + model * 84 + 62] = h(number_of_frames * 10);
+                        number_of_frames = hu[entities_data + model * 0x84 + 64];
+                        [entities_data + model * 0x84 + 62] = h(number_of_frames * 10);
                     }
                     break;
 
                     case 5:
                     {
-                        current_frame_value = hu[entities_data + model * 84 + 62];
-                        number_of_frames = h[entities_data + model * 84 + 64];
+                        current_frame_value = hu[entities_data + model * 0x84 + 62];
+                        number_of_frames = h[entities_data + model * 0x84 + 64];
 
                         if (current_frame_value / 10 >= number_of_frames)
                         {
@@ -733,9 +733,9 @@ if (number_of_entity > 0)
 
                     case 6:
                     {
-                        V0 = hu[entities_data + model * 84 + 62];
+                        V0 = hu[entities_data + model * 0x84 + 62];
                         V0 = V0 / 10;
-                        V1 = h[entities_data + model * 84 + 64];
+                        V1 = h[entities_data + model * 0x84 + 64];
 
                         if (V0 >= V1) [0x800756e8 + model] = b(3);
                     }
@@ -989,7 +989,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
 
         field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8); // name of entity
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             field_debug_copy_string_into_page(page_id, 0, string);
         }
@@ -1040,7 +1040,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         field_int2_to_string(entity_id, temp);
         field_debug_concat_string(string, temp);
         field_debug_concat_string(string, " dir=");
-        field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x38], temp);
+        field_int2_to_string(entities_data[entity_id].dir, temp);
         field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
@@ -1072,31 +1072,22 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     }
     else
     {
-        A0 = string;
-        A1 = 800a01f8; // "Abst"
-        field_debug_copy_string();
+        field_debug_copy_string(string, "Abst");
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 2;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 2;
-            A2 = 6;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0x2, string);
+            field_debug_set_row_color(page_id, 0x2, 0x6);
         }
     }
 
     if (entity_id != 0xff)
     {
         field_debug_copy_string(string, "X=");
-        field_int4_to_string(entities_data->pos_x >> 0xc, temp);
+        field_int4_to_string(entities_data[entity_id].pos_x >> 0xc, temp);
         field_debug_concat_string(string, temp);
         field_debug_concat_string(string, " Y=");
-        field_int4_to_string(entities_data->pos_y >> 0xc, temp);
+        field_int4_to_string(entities_data[entity_id].pos_y >> 0xc, temp);
         field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
@@ -1106,13 +1097,13 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         }
 
         field_debug_copy_string(string, "Z=");
-        field_int4_to_string(entities_data->pos_z >> 0xc, temp);
+        field_int4_to_string(entities_data[entity_id].pos_z >> 0xc, temp);
         field_debug_concat_string(string, temp);
         field_debug_concat_string(string, " I=");
         field_int4_to_string(entities_data[entity_id].pos_i, temp); // triangle id
         field_debug_concat_string(string, temp);
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             field_debug_copy_string_into_page(page_id, 0x4, string);
         }
@@ -1121,45 +1112,20 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         field_debug_concat_string(string, "am");
         field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x5e], temp); // animation id
         field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, ".");
+        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x62], temp); // current frame
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, ".");
+        field_int2_to_string(h[entities_data + entity_id * 0x84 + 0x64], temp); // frames number
+        field_debug_concat_string(string, temp);
 
-        A0 = string;
-        A1 = 800a0238; // ".";
-        field_debug_concat_string();
-
-        A0 = h[entities_data + entity_id * 84 + 62]; // current frame
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a0238; // ".";
-        field_debug_concat_string();
-
-        A0 = h[entities_data + entity_id * 84 + 64]; // frames number
-        A1 = temp;
-        field_int2_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 5;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 5;
-            A2 = 7;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0x5, string);
+            field_debug_set_row_color(page_id, 0x5, 0x7);
         }
 
-        if (bu[entities_data + entity_id * 84 + 5c] != 0) // visibility
+        if (bu[entities_data + entity_id * 0x84 + 5c] != 0) // visibility
         {
             A0 = string;
             A1 = 800a023c; // "V"
@@ -1172,7 +1138,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_copy_string();
         }
 
-        if (bu[entities_data + entity_id * 84 + 5b] != 0) // talkability
+        if (bu[entities_data + entity_id * 0x84 + 5b] != 0) // talkability
         {
             A0 = string;
             A1 = 800a0238; // "."
@@ -1185,7 +1151,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_concat_string();
         }
 
-        if (bu[entities_data + entity_id * 84 + 59] != 0) // solidity
+        if (bu[entities_data + entity_id * 0x84 + 59] != 0) // solidity
         {
             A0 = string;
             A1 = 800a0238; // "."
@@ -1198,53 +1164,29 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_concat_string();
         }
 
-        A0 = string;
-        A1 = 800a0248; // ":TR"
-        field_debug_concat_string();
+        field_debug_concat_string(string, ":TR");
+        field_int2_to_string(entities_data[entity_id].talk_range, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, ".SR");
+        field_int2_to_string(entities_data[entity_id].solid_range, temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = hu[entities_data + entity_id * 84 + 6e]; // talk range
-        A1 = temp;
-        field_int2_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a024c; // ".SR"
-        field_debug_concat_string();
-
-        A0 = hu[entities_data + entity_id * 84 + 6c]; // solid range
-        A1 = temp;
-        field_int2_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             field_debug_copy_string_into_page(page_id, 0x6, string);
         }
 
         field_debug_copy_string(string, "MS");
-        field_int4_to_string(hu[entities_data + entity_id * 0x84 + 0x70], temp); // movement speed
+        field_int4_to_string(entities_data[entity_id].move_speed, temp);
         field_debug_concat_string(string, temp);
         field_debug_concat_string(string, " AS");
-        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x60], temp); // animation speed
+        field_int4_to_string(entities_data[entity_id].anim_speed, temp);
         field_debug_concat_string(string, temp);
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 7;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 7;
-            A2 = 7;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0x7, string);
+            field_debug_set_row_color(page_id, 0x7, 0x7);
         }
     }
     else if (line_id != ff)
@@ -1253,7 +1195,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a0258; // "AX"
         field_debug_copy_string();
 
-        A0 = h[0x8007e7ac + line_id * 18 + 0];
+        A0 = h[0x8007e7ac + line_id * 0x18 + 0];
         A1 = temp;
         field_int4_to_string();
 
@@ -1265,7 +1207,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a025c; // " AY"
         field_debug_concat_string();
 
-        A0 = h[0x8007e7ac + line_id * 18 + 2];
+        A0 = h[0x8007e7ac + line_id * 0x18 + 2];
         A1 = temp;
         field_int4_to_string();
 
@@ -1273,7 +1215,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = 3;
@@ -1285,7 +1227,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a0260; // "AZ"
         field_debug_copy_string();
 
-        A0 = h[0x8007e7ac + line_id * 18 + 4];
+        A0 = h[0x8007e7ac + line_id * 0x18 + 4];
         A1 = temp;
         field_int4_to_string();
 
@@ -1293,7 +1235,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = 4;
@@ -1305,7 +1247,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a0264; // "BX"
         field_debug_copy_string();
 
-        A0 = h[0x8007e7ac + line_id * 18 + 6];
+        A0 = h[0x8007e7ac + line_id * 0x18 + 6];
         A1 = temp;
         field_int4_to_string();
 
@@ -1317,7 +1259,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a0268; // " BY"
         field_debug_concat_string();
 
-        A0 = h[0x8007e7ac + line_id * 18 + 8];
+        A0 = h[0x8007e7ac + line_id * 0x18 + 8];
         A1 = temp;
         field_int4_to_string();
 
@@ -1325,7 +1267,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = 5;
@@ -1337,7 +1279,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a026c; // "BZ"
         field_debug_copy_string();
 
-        A0 = h[0x8007e7ac + line_id * 18 + a];
+        A0 = h[0x8007e7ac + line_id * 0x18 + a];
         A1 = temp;
         field_int4_to_string();
 
@@ -1345,7 +1287,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = 6;
@@ -1360,7 +1302,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     }
     else
     {
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = 3;
@@ -1392,167 +1334,73 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     if (page_id == 4) return;
 
     {
-        A0 = string;
-        A1 = 800a0274; // "SX"
-        field_debug_copy_string();
+        field_debug_copy_string(string, "SX");
+        field_int4_to_string(h[0x80071e38], temp); // current screen scroll X
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(" SY", string);
+        field_int4_to_string(h[0x80071e3c], temp); // current screen scroll Y
+        field_debug_concat_string(string, temp);
 
-        A0 = h[0x80071e38]; // current screen scroll X
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A1 = 800a0278; // " SY"
-        A0 = string;
-        field_debug_concat_string();
-
-        A0 = h[0x80071e3c]; // current screen scroll Y
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 01)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 8;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 8;
-            A2 = 3;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0x8, string);
+            field_debug_set_row_color(page_id, 0x8, 0x3);
         }
     }
 
     manual_entity_id = h[0x8009abf4 + 0x2a];
-    triangle_id = hu[g_field_entities + manual_entity_id * 84 + 72];
+    triangle_id = g_field_entities[manual_entity_id].pos_i;
     walkmesh_data = w[0x800e4274];
 
     {
-        A0 = string;
-        A1 = 800a027c; // "B-R    X="
-        field_debug_copy_string();
+        field_debug_copy_string(string, "B-R    X=");
+        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x0], temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = h[walkmesh_data + triangle_id * 18 + 0];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 9;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 9;
-            A2 = 2;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0x9, string);
+            field_debug_set_row_color(page_id, 0x9, 0x2);
         }
     }
 
     {
-        A0 = string;
-        A1 = 800a0288; // "Y="
-        field_debug_copy_string();
+        field_debug_copy_string(string, "Y=");
+        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x2], temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " Z=");
+        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x4], temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = h[h[walkmesh_data + triangle_id * 18 + 2];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a028c; // " Z="
-        field_debug_concat_string();
-
-        A0 = h[h[walkmesh_data + triangle_id * 18 + 4];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = a;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0xa, string);
         }
     }
 
     {
-        A1 = 800a0290; // "R-G    X="
-        A0 = string;
-        field_debug_copy_string();
+        field_debug_copy_string(string, "R-G    X=");
+        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x8], temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = h[h[walkmesh_data + triangle_id * 18 + 8];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = b;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = b;
-            A2 = 4;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0xb, string);
+            field_debug_set_row_color(page_id, 0xb, 0x4);
         }
     }
 
     {
-        A0 = string;
-        A1 = 800a0288; // "Y="
-        field_debug_copy_string();
+        field_debug_copy_string(string, "Y=");
+        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xa], temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " Z=");
+        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xc], temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = h[h[walkmesh_data + triangle_id * 18 + a];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a028c; // " Z="
-        field_debug_concat_string();
-
-        A0 = h[h[walkmesh_data + triangle_id * 18 + c];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = c;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0xc, string);
         }
     }
 
@@ -1561,7 +1409,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a029c; // "G-B    X="
         field_debug_copy_string();
 
-        A0 = h[h[walkmesh_data + triangle_id * 18 + 10];
+        A0 = h[h[walkmesh_data + triangle_id * 0x18 + 10];
         A1 = temp;
         field_int4_to_string();
 
@@ -1569,7 +1417,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = d;
@@ -1588,7 +1436,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a0288; // "Y="
         field_debug_copy_string();
 
-        A0 = h[h[walkmesh_data + triangle_id * 18 + 12];
+        A0 = h[h[walkmesh_data + triangle_id * 0x18 + 12];
         A1 = temp;
         field_int4_to_string();
 
@@ -1600,7 +1448,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = 800a028c; // " Z="
         field_debug_concat_string();
 
-        A0 = h[h[walkmesh_data + triangle_id * 18 + 14];
+        A0 = h[h[walkmesh_data + triangle_id * 0x18 + 14];
         A1 = temp;
         field_int4_to_string();
 
@@ -1608,7 +1456,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = e;
@@ -1625,7 +1473,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         entity_id = bu[0x8007eb98 + actor_id];
         entities_data = w[0x8009c544];
 
-        A0 = h[entities_data + entity_id * 84 + 40];
+        A0 = h[entities_data + entity_id * 0x84 + 40];
         A1 = temp;
         field_int4_to_string();
 
@@ -1633,51 +1481,31 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
-            A1 = f;
+            A1 = 0xf;
             A2 = string;
             field_debug_copy_string_into_page();
 
             A0 = page_id;
-            A1 = f;
-            A2 = 2;
+            A1 = 0xf;
+            A2 = 0x2;
             field_debug_set_row_color();
         }
     }
 
     {
-        A0 = string;
-        A1 = 800a0288; // "Y=";
-        field_debug_copy_string();
+        field_debug_copy_string(string, "Y=");
+        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x46], temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " Z=");
+        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x4c], temp);
+        field_debug_concat_string(string, temp);
 
-        A0 = h[entities_data + entity_id * 84 + 46];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a028c; // " Z="
-        field_debug_concat_string();
-
-        A0 = h[entities_data + entity_id * 84 + 4c];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 10;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0x10, string);
         }
     }
 
@@ -1761,7 +1589,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_concat_string();
         }
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A2 = string;
@@ -1808,7 +1636,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_concat_string();
         }
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 1)) != 0)
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
             A0 = page_id;
             A1 = 12;
@@ -1817,7 +1645,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
 
             if (801affff < w[0x80075e10])
             {
-                if (bu[0x8009d29b] & 10)
+                if (bu[0x8009d29b] & 0x10)
                 {
                     A0 = page_id;
                     A1 = 12;
@@ -1871,7 +1699,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         A1 = temp;
         field_debug_concat_string();
 
-        if (hu[0x8009c6e4 + 10a6] & 1)
+        if (hu[0x8009c6e4 + 10a6] & 0x1)
         {
             A0 = string;
             A1 = 800a02d8; // "C"
@@ -1923,7 +1751,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_concat_string();
         }
 
-        if (hu[0x8009c6e4 + 10a6] & 10)
+        if (hu[0x8009c6e4 + 10a6] & 0x10)
         {
             A0 = string;
             A1 = 800a02e0; // "R"
@@ -1975,7 +1803,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_concat_string();
         }
 
-        if (hu[0x8009c6e4 + 10a6] & 100)
+        if (hu[0x8009c6e4 + 10a6] & 0x100)
         {
             A0 = string;
             A1 = 800a02ec; // "D"

@@ -215,7 +215,7 @@ struct FieldEntity
                                 // 0x35 []       shift addition to move direction.
                                 // 0x36 []       move direction (used when calculated movement).
                                 // 0x37 []       lock rotation. (1 - direction will not be changed)
-                                // 0x38 []       direction.
+    u8 dir;                     // 0x38
                                 // 0x39 []       number of steps for turn.
                                 // 0x3a []       current step for turn.
                                 // 0x3b []       state of turn.
@@ -241,15 +241,15 @@ struct FieldEntity
                                 // 0x5c []       model visibility (1 - on, 0 - off).
                                 // 0x5d []       model state.
                                 // 0x5e []       animation id.
-                                // 0x60 [][]     animation speed. Store 10 here during MOVE opcode and animation speed during LADER. 4bit fixed point.
+    u16 anim_speed;             // 0x60
                                 // 0x62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
                                 // 0x64 [][]     number of frames. Set during MOVE and LADER opcode.
                                 // 0x66 [][]     char id. Set with CHAR opcode.
                                 // 0x68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
                                 // 0x6a [][]     stage of state.
-                                // 0x6c [][]     solid range value.
-                                // 0x6e [][]     talk range value.
-                                // 0x70 [][]     movement speed. For MOVE-type opcodes.
+    u16 solid_range;            // 0x6c
+    u16 talk_range;             // 0x6e
+    u16 move_speed;             // 0x70
     s16 pos_i;                  // 0x72
     s16 move_to_i;              // 0x74
     s32 move_to_x;              // 0x78

@@ -24,8 +24,8 @@
 800A65A4 field_entity_movement_update
 800A82A0 set_gateway_to_map_load
 800A8304 field_entity_check_talk
-800A8600 get_direction_vector_x
-800A8620 get_direction_vector_y
+800A8600 field_entity_get_dir_vector_x
+800A8620 field_entity_get_dir_vector_y
 800A8640 field_entity_calculate_direction_by_vectors
 800A8858 funca8858
 800A8968 walkmesh_border_cross
