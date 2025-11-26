@@ -1761,205 +1761,507 @@ return 0;
 
 
 
-////////////////////////////////
-// walkmesh_border_cross()
-
-triangle_info_offset      = A0;
-triangle_id               = hu[triangle_info_offset];
-offset_to_id_block        = w[0x800e4274];
-offset_to_id_access_block = w[0x80114458];
-offset_to_triangle        = offset_to_id_block + triangle_id * 18
-offset_to_triangle_access = offset_to_id_access_block + triangle_id * 6
-position                  = A1;
-S4 = A2; // we multiply board vector with this vector and return +8 or -8 according to it
-S1 = A3; // we store collision board here
-S3 = 0;
-
-[0x1f800030] = w(w[position + 0] >> c);
-[0x1f800034] = w(w[position + 4] >> c);
-[0x1f800038] = w(0);
-
-[0x80113f28] = h(ffff);
-
-// jump here if we can cross side of previous triangle
-La89f0:	; 800A89F0
-A0 = 1f800000;
-A1 = offset_to_triangle + 8;
-A2 = offset_to_triangle;
-field_walkmesh_vector_sub();
-
-A0 = 1f800010;
-A1 = offset_to_triangle + 10;
-A2 = offset_to_triangle + 8;
-field_walkmesh_vector_sub();
-
-A0 = 1f800020;
-A1 = offset_to_triangle;
-A2 = offset_to_triangle + 10;
-field_walkmesh_vector_sub();
-
-A3 = (w[0x1f800030] - h[offset_to_triangle + 00]) * w[0x1f800004];
-T2 = (w[0x1f800034] - h[offset_to_triangle + 02]) * w[0x1f800000];
-T1 = (w[0x1f800030] - h[offset_to_triangle + 08]) * w[0x1f800014];
-T0 = (w[0x1f800034] - h[offset_to_triangle + 0a]) * w[0x1f800010];
-A0 = (w[0x1f800030] + h[offset_to_triangle + 10]) * w[0x1f800024];
-V0 = (w[0x1f800034] - h[offset_to_triangle + 12]) * w[0x1f800020];
-
-A3 = A3 - T2;
-T1 = T1 - T0;
-A0 = A0 - V0;
-
-// if we cross AB
-if (A3 < 0)
+s8 field_entity_walkmesh_border_cross()
 {
-    A0 = hu[offset_to_triangle_access + 0];
-    if (A0 >= 0)
-    {
-        V1 = bu[0x8009abf4 + V0 / 8 + 0xb2];
-        V0 = A0 & 7;
-        V1 = V0 >> V1;
-        V1 = V1 & 1;
-        if (V1 == 0)
-        {
-            [triangle_info_offset] = h(A0);
-            800A8D1C	j      La89f0 [$800a89f0]
-        }
-    }
+    S2 = A0;
+    S5 = A1;
+    S4 = A2;
+    S1 = A3;
+    S3 = 0;
+    V0 = w[S5 + 0000];
 
-    [S1] = w(w[0x1f800000] + 0);
-    [S1] = w(w[0x1f800004] + 4);
-    [S1] = w(w[0x1f800008] + 8);
+    800A89A4	bgez   v0, La89b0 [$800a89b0]
+    800A89A8	lui    s0, $1f80
+    V0 = V0 + 0fff;
 
-    V1 = w[0x1f800000];
-    V0 = w[S4];
-    HI/LO = V1 * V0;
-    V1 = LO;
+    La89b0:	; 800A89B0
+    V0 = V0 >> 0c;
+    [1f800030] = w(V0);
+    V0 = w[S5 + 0004];
+    800A89C0	nop
+    800A89C4	bgez   v0, La89d0 [$800a89d0]
+    800A89C8	nop
+    V0 = V0 + 0fff;
 
-    A0 = w[0x1f800004];
-    V0 = w[S4 + 4];
-    HI/LO = A0 * V0;
-    V0 = LO;
+    La89d0:	; 800A89D0
+    V0 = V0 >> 0c;
+    [1f800034] = w(V0);
+    V0 = ffff;
+    [1f800038] = w(0);
+    [80113f28] = h(V0);
 
+    La89f0:	; 800A89F0
+    V0 = hu[S2 + 0000];
+    A0 = S0;
+    A2 = V0 << 01;
+    A2 = A2 + V0;
+    A2 = A2 << 03;
+    V0 = w[800e4274];
+    A1 = A2 + 0008;
+    A1 = A1 + V0;
+    800A8A14	jal    field_walkmesh_vector_sub [$800a8df4]
+    A2 = A2 + V0;
+    V0 = hu[S2 + 0000];
+    A0 = S0 + 0010;
+    A2 = V0 << 01;
+    A2 = A2 + V0;
+    A2 = A2 << 03;
+    A1 = A2 + 0010;
+    V0 = w[800e4274];
+    A2 = A2 + 0008;
+    A1 = A1 + V0;
+    800A8A44	jal    field_walkmesh_vector_sub [$800a8df4]
+    A2 = A2 + V0;
+    V0 = hu[S2 + 0000];
+    A0 = S0 + 0020;
+    A2 = V0 << 01;
+    A2 = A2 + V0;
+    V0 = w[800e4274];
+    A2 = A2 << 03;
+    A1 = A2 + V0;
+    A2 = A2 + 0010;
+    800A8A70	jal    field_walkmesh_vector_sub [$800a8df4]
+    A2 = A2 + V0;
+    V1 = hu[S2 + 0000];
+    A1 = w[S0 + 0030];
+    V0 = V1 << 01;
+    T3 = V0 + V1;
+    V0 = w[800e4274];
+    A0 = T3 << 03;
+    A0 = A0 + V0;
+    V0 = h[A0 + 0000];
+    V1 = w[S0 + 0004];
+    V0 = A1 - V0;
+    800A8AA4	mult   v0, v1
+    A2 = w[S0 + 0034];
+    V0 = h[A0 + 0002];
+    800A8AB0	mflo   a3
+    V1 = w[S0 + 0000];
+    V0 = A2 - V0;
+    800A8ABC	mult   v0, v1
+    V0 = h[A0 + 0008];
+    800A8AC4	mflo   t2
+    V1 = w[S0 + 0014];
+    V0 = A1 - V0;
+    800A8AD0	mult   v0, v1
+    V0 = h[A0 + 000a];
+    800A8AD8	mflo   t1
+    V1 = w[S0 + 0010];
+    V0 = A2 - V0;
+    800A8AE4	mult   v0, v1
+    V1 = h[A0 + 0010];
+    800A8AEC	mflo   t0
+    V0 = w[S0 + 0024];
+    A1 = A1 - V1;
+    800A8AF8	mult   a1, v0
+    V1 = h[A0 + 0012];
+    800A8B00	mflo   a0
+    V0 = w[S0 + 0020];
+    A2 = A2 - V1;
+    800A8B0C	mult   a2, v0
+    A3 = A3 - T2;
+    T1 = T1 - T0;
+    800A8B18	mflo   v0
+    800A8B1C	bltz   a3, La8b3c [$800a8b3c]
+    A0 = A0 - V0;
+    800A8B24	bltz   t1, La8c0c [$800a8c0c]
+    800A8B28	nop
+    800A8B2C	bgez   a0, La8d98 [$800a8d98]
+    800A8B30	nop
+    800A8B34	j      La8c04 [$800a8c04]
+    800A8B38	nop
+
+    La8b3c:	; 800A8B3C
+    V1 = w[80114458];
+    V0 = T3 << 01;
+    V0 = V0 + V1;
+    A0 = hu[V0 + 0000];
+    800A8B50	nop
+    V0 = A0 << 10;
+    A1 = V0 >> 10;
+    800A8B5C	bltz   a1, La8b8c [$800a8b8c]
+    V0 = V0 >> 13;
+    800A8B64	lui    at, $800a
+    800A8B68	addiu  at, at, $aca6 (=-$535a)
+    AT = AT + V0;
+    V1 = bu[AT + 0000];
+    V0 = V0 << 03;
+    V0 = A1 - V0;
+    V1 = V1 >> V0;
+    V1 = V1 & 0001;
+    800A8B84	beq    v1, zero, La8d1c [$800a8d1c]
+    800A8B88	nop
+
+    La8b8c:	; 800A8B8C
+    V0 = w[S0 + 0000];
+    800A8B90	nop
+    [S1 + 0000] = w(V0);
+    V0 = w[S0 + 0004];
+    800A8B9C	nop
+    [S1 + 0004] = w(V0);
+    V0 = w[S0 + 0008];
+    800A8BA8	nop
+    [S1 + 0008] = w(V0);
+    V1 = w[S0 + 0000];
+    V0 = w[S4 + 0000];
+    800A8BB8	nop
+    800A8BBC	mult   v1, v0
+    A0 = w[S0 + 0004];
+    800A8BC4	mflo   v1
+    V0 = w[S4 + 0004];
+    800A8BCC	nop
+    800A8BD0	mult   a0, v0
+    800A8BD4	mflo   v0
     V1 = V1 + V0;
-    if (V1 >= 0)
-    {
-        S3 = 8;
-    }
-    else
-    {
-        S3 = -8;
-    }
+    800A8BDC	bltz   v1, La8be8 [$800a8be8]
+    800A8BE0	addiu  s3, zero, $fff8 (=-$8)
+    S3 = 0008;
 
-    [0x801144cc] = h(0);
-    [0x80113f28] = h(triangle_id);
-}
-// if we cross BC
-else if (T1 < 0)
-{
-    // if we can cross this side
-    A0 = hu[offset_to_triangle_access + 2];
+    La8be8:	; 800A8BE8
+    V0 = hu[S2 + 0000];
+    [801144cc] = h(0);
+    [80113f28] = h(V0);
+    800A8BFC	j      La8d9c [$800a8d9c]
+    A0 = S0;
 
-    if (A0 >= 0)
-    {
-        V1 = bu[0x8009abf4 + V0 / 8 + 0xb2];
-        V0 = A0 & 7;
-        V1 = V0 >> V1;
-        V1 = V1 & 1;
-        if (V1 == 0)
-        {
-            [triangle_info_offset] = h(A0);
-            800A8D1C	j      La89f0 [$800a89f0]
-        }
-    }
+    La8c04:	; 800A8C04
+    800A8C04	bgez   t1, La8cc4 [$800a8cc4]
+    800A8C08	nop
 
-    V0 = w[0x1f800010];
-    [S1] = w(V0);
-    V0 = w[0x1f800014];
-    [S1] = w(V0 + 4);
-    V0 = w[0x1f800018];
-    [S1] = w(V0 + 8);
+    La8c0c:	; 800A8C0C
+    V1 = w[80114458];
+    V0 = T3 << 01;
+    V0 = V0 + V1;
+    A0 = hu[V0 + 0002];
+    800A8C20	nop
+    V0 = A0 << 10;
+    A1 = V0 >> 10;
+    800A8C2C	bltz   a1, La8c5c [$800a8c5c]
+    V0 = V0 >> 13;
+    800A8C34	lui    at, $800a
+    800A8C38	addiu  at, at, $aca6 (=-$535a)
+    AT = AT + V0;
+    V1 = bu[AT + 0000];
+    V0 = V0 << 03;
+    V0 = A1 - V0;
+    V1 = V1 >> V0;
+    V1 = V1 & 0001;
+    800A8C54	beq    v1, zero, La8d1c [$800a8d1c]
+    800A8C58	nop
 
-    V1 = w[0x1f800010];
-    V0 = w[S4];
-    HI/LO = V1 * V0;
-    V1 = LO;
-
-    A0 = w[0x1f800014];
-    V0 = w[S4 + 4];
-    HI/LO = A0 * V0;
-    V0 = LO;
-
+    La8c5c:	; 800A8C5C
+    V0 = w[S0 + 0010];
+    800A8C60	nop
+    [S1 + 0000] = w(V0);
+    V0 = w[S0 + 0014];
+    800A8C6C	nop
+    [S1 + 0004] = w(V0);
+    V0 = w[S0 + 0018];
+    800A8C78	nop
+    [S1 + 0008] = w(V0);
+    V1 = w[S0 + 0010];
+    V0 = w[S4 + 0000];
+    800A8C88	nop
+    800A8C8C	mult   v1, v0
+    A0 = w[S0 + 0014];
+    800A8C94	mflo   v1
+    V0 = w[S4 + 0004];
+    800A8C9C	nop
+    800A8CA0	mult   a0, v0
+    800A8CA4	mflo   v0
     V1 = V1 + V0;
-    if (V1 >= 0)
-    {
-        S3 = 8;
-    }
-    else
-    {
-        S3 = -8;
-    }
+    800A8CAC	bltz   v1, La8cb8 [$800a8cb8]
+    800A8CB0	addiu  s3, zero, $fff8 (=-$8)
+    S3 = 0008;
 
-    [0x801144cc] = h(1);
-    [0x80113f28] = h(triangle_id);
-}
-// if we cross CA
-else if (A0 < 0)
-{
-    A0 = hu[offset_to_triangle_access + 4];
+    La8cb8:	; 800A8CB8
+    V1 = hu[S2 + 0000];
+    800A8CBC	j      La8d88 [$800a8d88]
+    V0 = 0001;
 
-    if (A0 >= 0)
-    {
-        V1 = bu[0x8009abf4 + V0 / 0x8 + 0xb2];
-        V0 = A0 & 7;
-        V1 = V0 >> V1;
-        V1 = V1 & 1;
-        if (V1 == 0)
-        {
-            [triangle_info_offset] = h(A0);
-            800A8D1C	j      La89f0 [$800a89f0]
-        }
-    }
+    La8cc4:	; 800A8CC4
+    800A8CC4	bgez   a0, La89f0 [$800a89f0]
+    V0 = T3 << 01;
+    V1 = w[80114458];
+    800A8CD4	nop
+    V0 = V0 + V1;
+    A0 = hu[V0 + 0004];
+    800A8CE0	nop
+    V0 = A0 << 10;
+    A1 = V0 >> 10;
+    800A8CEC	bltz   a1, La8d24 [$800a8d24]
+    V0 = V0 >> 13;
+    800A8CF4	lui    at, $800a
+    800A8CF8	addiu  at, at, $aca6 (=-$535a)
+    AT = AT + V0;
+    V1 = bu[AT + 0000];
+    V0 = V0 << 03;
+    V0 = A1 - V0;
+    V1 = V1 >> V0;
+    V1 = V1 & 0001;
+    800A8D14	bne    v1, zero, La8d24 [$800a8d24]
+    800A8D18	nop
 
-    V0 = w[0x1f800020];
-    [S1] = w(V0);
-    V0 = w[0x1f800024];
-    [S1] = w(V0 + 4);
-    V0 = w[0x1f800028];
-    [S1] = w(V0 + 8);
+    La8d1c:	; 800A8D1C
+    800A8D1C	j      La89f0 [$800a89f0]
+    [S2 + 0000] = h(A0);
 
-    V1 = w[0x1f800020];
-    V0 = w[S4];
-    HI/LO = V1 * V0;
-    V1 = LO;
-
-    A0 = w[0x1f800024];
-    V0 = w[S4 + 4];
-    HI/LO = A0 * V0;
-    V0 = LO;
-
+    La8d24:	; 800A8D24
+    V0 = w[S0 + 0020];
+    800A8D28	nop
+    [S1 + 0000] = w(V0);
+    V0 = w[S0 + 0024];
+    800A8D34	nop
+    [S1 + 0004] = w(V0);
+    V0 = w[S0 + 0028];
+    800A8D40	nop
+    [S1 + 0008] = w(V0);
+    V1 = w[S0 + 0020];
+    V0 = w[S4 + 0000];
+    800A8D50	nop
+    800A8D54	mult   v1, v0
+    A0 = w[S0 + 0024];
+    800A8D5C	mflo   v1
+    V0 = w[S4 + 0004];
+    800A8D64	nop
+    800A8D68	mult   a0, v0
+    800A8D6C	mflo   v0
     V1 = V1 + V0;
-    if (V1 >= 0)
+    800A8D74	bltz   v1, La8d80 [$800a8d80]
+    800A8D78	addiu  s3, zero, $fff8 (=-$8)
+    S3 = 0008;
+
+    La8d80:	; 800A8D80
+    V1 = hu[S2 + 0000];
+    V0 = 0002;
+
+    La8d88:	; 800A8D88
+    [801144cc] = h(V0);
+    [80113f28] = h(V1);
+
+    La8d98:	; 800A8D98
+    A0 = S0;
+
+    La8d9c:	; 800A8D9C
+    A1 = S0 | 0010;
+    V0 = hu[S2 + 0000];
+    A2 = A0 | 0030;
+    A3 = V0 << 01;
+    A3 = A3 + V0;
+    V0 = w[800e4274];
+    A3 = A3 << 03;
+    A3 = A3 + V0;
+    field_walkmesh_calculate_z();
+
+    [S5 + 0008] = w(V0);
+    return S3;
+
+
+
+
+
+
+
+
+
+
+
+    triangle_info_offset      = A0;
+    triangle_id               = hu[triangle_info_offset];
+    offset_to_id_block        = w[0x800e4274];
+    offset_to_id_access_block = w[0x80114458];
+    offset_to_triangle        = offset_to_id_block + triangle_id * 18
+    offset_to_triangle_access = offset_to_id_access_block + triangle_id * 6
+    position                  = A1;
+    S4 = A2; // we multiply board vector with this vector and return +8 or -8 according to it
+    S1 = A3; // we store collision board here
+    S3 = 0;
+
+    [0x1f800030] = w(w[position + 0] >> c);
+    [0x1f800034] = w(w[position + 4] >> c);
+    [0x1f800038] = w(0);
+
+    [0x80113f28] = h(ffff);
+
+    // jump here if we can cross side of previous triangle
+    La89f0:	; 800A89F0
+    A0 = 1f800000;
+    A1 = offset_to_triangle + 8;
+    A2 = offset_to_triangle;
+    field_walkmesh_vector_sub();
+
+    A0 = 1f800010;
+    A1 = offset_to_triangle + 10;
+    A2 = offset_to_triangle + 8;
+    field_walkmesh_vector_sub();
+
+    A0 = 1f800020;
+    A1 = offset_to_triangle;
+    A2 = offset_to_triangle + 10;
+    field_walkmesh_vector_sub();
+
+    A3 = (w[0x1f800030] - h[offset_to_triangle + 00]) * w[0x1f800004];
+    T2 = (w[0x1f800034] - h[offset_to_triangle + 02]) * w[0x1f800000];
+    T1 = (w[0x1f800030] - h[offset_to_triangle + 08]) * w[0x1f800014];
+    T0 = (w[0x1f800034] - h[offset_to_triangle + 0a]) * w[0x1f800010];
+    A0 = (w[0x1f800030] + h[offset_to_triangle + 10]) * w[0x1f800024];
+    V0 = (w[0x1f800034] - h[offset_to_triangle + 12]) * w[0x1f800020];
+
+    A3 = A3 - T2;
+    T1 = T1 - T0;
+    A0 = A0 - V0;
+
+    // if we cross AB
+    if (A3 < 0)
     {
-        S3 = 8;
+        A0 = hu[offset_to_triangle_access + 0];
+        if (A0 >= 0)
+        {
+            V1 = bu[0x8009abf4 + V0 / 8 + 0xb2];
+            V0 = A0 & 7;
+            V1 = V0 >> V1;
+            V1 = V1 & 1;
+            if (V1 == 0)
+            {
+                [triangle_info_offset] = h(A0);
+                800A8D1C	j      La89f0 [$800a89f0]
+            }
+        }
+
+        [S1] = w(w[0x1f800000] + 0);
+        [S1] = w(w[0x1f800004] + 4);
+        [S1] = w(w[0x1f800008] + 8);
+
+        V1 = w[0x1f800000];
+        V0 = w[S4];
+        HI/LO = V1 * V0;
+        V1 = LO;
+
+        A0 = w[0x1f800004];
+        V0 = w[S4 + 4];
+        HI/LO = A0 * V0;
+        V0 = LO;
+
+        V1 = V1 + V0;
+        if (V1 >= 0)
+        {
+            S3 = 8;
+        }
+        else
+        {
+            S3 = -8;
+        }
+
+        [0x801144cc] = h(0);
+        [0x80113f28] = h(triangle_id);
     }
-    else
+    // if we cross BC
+    else if (T1 < 0)
     {
-        S3 = -8;
+        // if we can cross this side
+        A0 = hu[offset_to_triangle_access + 2];
+
+        if (A0 >= 0)
+        {
+            V1 = bu[0x8009abf4 + V0 / 8 + 0xb2];
+            V0 = A0 & 7;
+            V1 = V0 >> V1;
+            V1 = V1 & 1;
+            if (V1 == 0)
+            {
+                [triangle_info_offset] = h(A0);
+                800A8D1C	j      La89f0 [$800a89f0]
+            }
+        }
+
+        V0 = w[0x1f800010];
+        [S1] = w(V0);
+        V0 = w[0x1f800014];
+        [S1] = w(V0 + 4);
+        V0 = w[0x1f800018];
+        [S1] = w(V0 + 8);
+
+        V1 = w[0x1f800010];
+        V0 = w[S4];
+        HI/LO = V1 * V0;
+        V1 = LO;
+
+        A0 = w[0x1f800014];
+        V0 = w[S4 + 4];
+        HI/LO = A0 * V0;
+        V0 = LO;
+
+        V1 = V1 + V0;
+        if (V1 >= 0)
+        {
+            S3 = 8;
+        }
+        else
+        {
+            S3 = -8;
+        }
+
+        [0x801144cc] = h(1);
+        [0x80113f28] = h(triangle_id);
+    }
+    // if we cross CA
+    else if (A0 < 0)
+    {
+        A0 = hu[offset_to_triangle_access + 4];
+
+        if (A0 >= 0)
+        {
+            V1 = bu[0x8009abf4 + V0 / 0x8 + 0xb2];
+            V0 = A0 & 7;
+            V1 = V0 >> V1;
+            V1 = V1 & 1;
+            if (V1 == 0)
+            {
+                [triangle_info_offset] = h(A0);
+                800A8D1C	j      La89f0 [$800a89f0]
+            }
+        }
+
+        V0 = w[0x1f800020];
+        [S1] = w(V0);
+        V0 = w[0x1f800024];
+        [S1] = w(V0 + 4);
+        V0 = w[0x1f800028];
+        [S1] = w(V0 + 8);
+
+        V1 = w[0x1f800020];
+        V0 = w[S4];
+        HI/LO = V1 * V0;
+        V1 = LO;
+
+        A0 = w[0x1f800024];
+        V0 = w[S4 + 4];
+        HI/LO = A0 * V0;
+        V0 = LO;
+
+        V1 = V1 + V0;
+        if (V1 >= 0)
+        {
+            S3 = 8;
+        }
+        else
+        {
+            S3 = -8;
+        }
+
+        [0x801144cc] = h(2);
+        [0x80113f28] = h(triangle_id);
     }
 
-    [0x801144cc] = h(2);
-    [0x80113f28] = h(triangle_id);
+    A0 = 1f800000;
+    A1 = 1f800010;
+    A2 = 1f800030;
+    A3 = offset_to_triangle;
+    field_walkmesh_calculate_z();
+    [position + 8] = w(V0);
+
+    return S3;
 }
-
-A0 = 1f800000;
-A1 = 1f800010;
-A2 = 1f800030;
-A3 = offset_to_triangle;
-field_walkmesh_calculate_z();
-[position + 8] = w(V0);
-
-return S3;
-////////////////////////////////
 
 
 
@@ -2004,800 +2306,176 @@ return (V0 + T2 + A3 - A1 - V1) / (vec1 + 0);
 
 
 
-int field_entity_move_by_walkmesh()
+int field_entity_move_by_walkmesh(s16 entity_id)
 {
-    T0 = A0;
-    S1 = 1f800040;
-    V1 = T0 << 10;
-    V1 = V1 >> 10;
-    V0 = V1 << 05;
-    V0 = V0 + V1;
-    V0 = V0 << 02;
-    AT = 80074f16;
-    AT = AT + V0;
-    V0 = hu[AT + 0000];
-    800A8FE4	lui    s0, $1f80
-    [SP + 0010] = h(V0);
-    V1 = hu[SP + 0010];
-    S0 = S0 | 0060;
-    V0 = V1 << 01;
-    V0 = V0 + V1;
-    V1 = w[0x800e4274];
-    V0 = V0 << 03;
-    V0 = V0 + V1;
-    V1 = h[V0 + 0008];
-    A1 = h[V0 + 0000];
-    800A9014	lui    a0, $1f80
-    V1 = V1 - A1;
-    [S1 + 0000] = w(V1);
-    V1 = h[V0 + 000a];
-    A1 = h[V0 + 0002];
-    A0 = A0 | 0040;
-    V1 = V1 - A1;
-    [1f800044] = w(V1);
-    V1 = h[V0 + 000c];
-    A2 = h[V0 + 0004];
-    800A9040	lui    a1, $1f80
-    V1 = V1 - A2;
-    [1f800048] = w(V1);
-    V1 = h[V0 + 0010];
-    A2 = h[V0 + 0008];
-    A1 = A1 | 0050;
-    V1 = V1 - A2;
-    [1f800050] = w(V1);
-    V1 = h[V0 + 0012];
-    A3 = h[V0 + 000a];
-    800A9070	lui    a2, $1f80
-    V1 = V1 - A3;
-    [1f800054] = w(V1);
-    V1 = h[V0 + 0014];
-    V0 = h[V0 + 000c];
-    [SP + 0018] = h(T0);
-    V1 = V1 - V0;
-    [1f800058] = w(V1);
-    800A9098	jal    $8003ba68
-    A2 = A2 | 0060;
-    V0 = w[S0 + 0000];
-    800A90A4	nop
-    800A90A8	bgez   v0, La90b4 [$800a90b4]
-    800A90AC	nop
-    V0 = V0 + 00ff;
+    triggers_block_offset = w[0x800716c4];
+    id_block_offset = w[0x800e4274];
 
-    La90b4:	; 800A90B4
-    V1 = w[1f800064];
-    V0 = V0 >> 08;
-    800A90C0	bgez   v1, La90cc [$800a90cc]
-    [S0 + 0000] = w(V0);
-    V1 = V1 + 00ff;
+    u16 pos_i = g_field_entities[actor_id].pos_i;
 
-    La90cc:	; 800A90CC
-    A2 = w[1f800068];
-    V0 = V1 >> 08;
-    [1f800064] = w(V0);
-    800A90E0	bgez   a2, La90ec [$800a90ec]
-    800A90E4	lui    a0, $1f80
-    A2 = A2 + 00ff;
+    VECTOR cross;
+    VECTOR pos_new;
+    VECTOR solid_move;
+    VECTOR check_pos;
 
-    La90ec:	; 800A90EC
-    A0 = A0 | 0060;
-    800A90F0	lui    a1, $1f80
-    V0 = A2 >> 08;
-    [1f800068] = w(V0);
-    800A9100	jal    $8003a08c
-    A1 = A1 | 0060;
-    V0 = w[S0 + 0000];
-    800A910C	nop
-    800A9110	mult   v0, v0
-    800A9114	mflo   v1
-    800A9118	bgez   v1, La9124 [$800a9124]
-    800A911C	nop
-    V1 = V1 + 0fff;
+    VECTOR vec_ba;
+    vec_ba.vx = h[id_block_offset + pos_i * 0x18 + 0x8] - h[id_block_offset + pos_i * 0x18 + 0x0];
+    vec_ba.vy = h[id_block_offset + pos_i * 0x18 + 0xa] - h[id_block_offset + pos_i * 0x18 + 0x2];
+    vec_ba.vz = h[id_block_offset + pos_i * 0x18 + 0xc] - h[id_block_offset + pos_i * 0x18 + 0x4];
+    VECTOR vec_cb;
+    vec_cb.vx = h[id_block_offset + pos_i * 0x18 + 0x10] - h[id_block_offset + pos_i * 0x18 + 0x8];
+    vec_cb.vy = h[id_block_offset + pos_i * 0x18 + 0x12] - h[id_block_offset + pos_i * 0x18 + 0xa];
+    vec_cb.vz = h[id_block_offset + pos_i * 0x18 + 0x14] - h[id_block_offset + pos_i * 0x18 + 0xc];
 
-    La9124:	; 800A9124
-    V0 = w[1f800068];
-    800A912C	nop
-    800A9130	mult   v0, v0
-    800A9134	mflo   a0
-    800A9138	bgez   a0, La9144 [$800a9144]
-    V0 = V1 >> 0c;
-    A0 = A0 + 0fff;
+    VECTOR vec_norm;
+    system_psyq_outer_product_0(&vec_ba, &vec_cb, &vec_norm);
+    vec_norm.vx >>= 0x8;
+    vec_norm.vy >>= 0x8;
+    vec_norm.vz >>= 0x8;
+    system_psyq_vector_normal(&vec_norm, &vec_norm);
 
-    La9144:	; 800A9144
-    A0 = A0 >> 0c;
-    A0 = V0 + A0;
-    func3a59c();
+    vec_norm.vx = (vec_norm.vz << 0xc) / func3a59c(((vec_norm.vx * vec_norm.vx) >> 0xc) + ((vec_norm.vz * vec_norm.vz) >> 0xc));
+    vec_norm.vy = (vec_norm.vz << 0xc) / func3a59c(((vec_norm.vy * vec_norm.vy) >> 0xc) + ((vec_norm.vz * vec_norm.vz) >> 0xc));
 
-    A0 = w[1f800068];
-    800A9158	nop
-    V1 = A0 << 0c;
-    800A9160	div    v1, v0
-    800A9188	mflo   v1
-    V0 = w[1f800064];
-    800A9194	nop
-    800A9198	mult   v0, v0
-    800A919C	mflo   v0
-    800A91A0	bgez   v0, La91ac [$800a91ac]
-    [S0 + 0000] = w(V1);
-    V0 = V0 + 0fff;
+    if (vec_norm.vx >= 0x1001) vec_norm.vx = 0x1000;
+    if (vec_norm.vx < -0x1000) vec_norm.vx = -0x1000;
+    if (vec_norm.vy >= 0x1001) vec_norm.vy = 0x1000;
+    if (vec_norm.vy < -0x1000) vec_norm.vy = -0x1000;
+    if (vec_norm.vz >= 0x1001) vec_norm.vz = 0x1000;
+    if (vec_norm.vz < -0x1000) vec_norm.vz = -0x1000;
 
-    La91ac:	; 800A91AC
-    800A91AC	mult   a0, a0
-    800A91B0	mflo   a0
-    800A91B4	bgez   a0, La91c0 [$800a91c0]
-    V0 = V0 >> 0c;
-    A0 = A0 + 0fff;
+    s32 norm_x = (vec_norm.vx >= 0) ? vec_norm.vx : -vec_norm.vx;
+    s32 norm_y = (vec_norm.vy >= 0) ? vec_norm.vy : -vec_norm.vy;
 
-    La91c0:	; 800A91C0
-    A0 = A0 >> 0c;
-    800A91C4	jal    $func3a59c
-    A0 = V0 + A0;
-    V1 = w[1f800068];
-    800A91D4	nop
-    V1 = V1 << 0c;
-    800A91DC	div    v1, v0
-    800A9204	mflo   v1
-    V0 = w[S0 + 0000];
-    800A920C	nop
-    V0 = V0 < 1001;
-    [1f800064] = w(V1);
-    800A921C	bne    v0, zero, La9228 [$800a9228]
-    V0 = 1000;
-    [S0 + 0000] = w(V0);
-
-    La9228:	; 800A9228
-    V0 = w[S0 + 0000];
-    800A922C	nop
-    800A9230	slti   v0, v0, $f000 (=-$1000)
-    800A9234	beq    v0, zero, La9240 [$800a9240]
-    800A9238	addiu  v0, zero, $f000 (=-$1000)
-    [S0 + 0000] = w(V0);
-
-    La9240:	; 800A9240
-    V0 = V1 < 1001;
-    800A9244	bne    v0, zero, La9254 [$800a9254]
-    V0 = 1000;
-    [1f800064] = w(V0);
-
-    La9254:	; 800A9254
-    V0 = w[S1 + 0024];
-    800A9258	nop
-    800A925C	slti   v0, v0, $f000 (=-$1000)
-    800A9260	beq    v0, zero, La926c [$800a926c]
-    800A9264	addiu  v0, zero, $f000 (=-$1000)
-    [S1 + 0024] = w(V0);
-
-    La926c:	; 800A926C
-    V0 = w[S1 + 0028];
-    800A9270	nop
-    V0 = V0 < 1001;
-    800A9278	bne    v0, zero, La9284 [$800a9284]
-    V0 = 1000;
-    [S1 + 0028] = w(V0);
-
-    La9284:	; 800A9284
-    V0 = w[S1 + 0028];
-    800A9288	nop
-    800A928C	slti   v0, v0, $f000 (=-$1000)
-    800A9290	beq    v0, zero, La929c [$800a929c]
-    800A9294	addiu  v0, zero, $f000 (=-$1000)
-    [S1 + 0028] = w(V0);
-
-    La929c:	; 800A929C
-    T3 = w[S1 + 0020];
-    800A92A0	nop
-    800A92A4	bgez   t3, La92b4 [$800a92b4]
-    [SP + 0038] = w(T3);
-    T3 = 0 - T3;
-    [SP + 0038] = w(T3);
-
-    La92b4:	; 800A92B4
-    T3 = w[S1 + 0024];
-    800A92B8	nop
-    800A92BC	bgez   t3, La92cc [$800a92cc]
-    [SP + 0040] = w(T3);
-    T3 = 0 - T3;
-    [SP + 0040] = w(T3);
-
-    La92cc:	; 800A92CC
-    S7 = 0;
-    T3 = hu[SP + 0018];
-    S2 = S1 + 0040;
-    V0 = T3 << 10;
-    S3 = V0 >> 10;
-    V0 = S3 << 05;
-    V0 = V0 + S3;
-    S0 = V0 << 02;
-    T3 = S1 + 0050;
-    [SP + 0048] = w(T3);
-
+    u8 cycle = 0;
     while (true)
     {
-        S7 += 0x1;
+        cycle += 0x1;
 
-        if (S3 == h[0x800965e0])
+        if (entity_id == h[0x800965e0])
         {
             if (bu[0x80071c0c] == 0x1)
             {
-
-                if (S7 >= 0x3)
+                if (cycle >= 0x3)
                 {
                     [0x80071c0c] = b(0);
                     break;
                 }
             }
         }
-        if (S7 >= 0x11) break;
+        if (cycle >= 0x11) break;
 
-        field_entity_get_dir_vector_x(bu[0x80074eda + S0]);
+        // calculate new position
+        pos_new.vx =  (field_entity_get_dir_vector_x(g_field_entities[entity_id].move_dir) * norm_x) >> 0xc;
+        pos_new.vy = -(field_entity_get_dir_vector_y(g_field_entities[entity_id].move_dir) * norm_y) >> 0xc;
+        pos_new.vx = (pos_new.vx * g_field_entities[entity_id].move_speed) >> 0x8;
+        pos_new.vy = (pos_new.vy * g_field_entities[entity_id].move_speed) >> 0x8;
+        pos_new.vx += g_field_entities[entity_id].pos_x;
+        pos_new.vy += g_field_entities[entity_id].pos_y;
+        pos_new.vz = g_field_entities[entity_id].pos_z;
 
-        V0 = V0 << 10;
-        T3 = w[SP + 0x38];
-        V0 = V0 >> 10;
-        V0 = V0 * T3;
-        V0 = V0 >> 0c;
-        [S1 + 0030] = w(V0);
-        A0 = bu[0x80074eda + S0];
-        V0 = field_entity_get_dir_vector_y();
+        // check right
+        solid_move.vx =  field_entity_get_dir_vector_x((g_field_entities[entity_id].move_dir + 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        solid_move.vy = -field_entity_get_dir_vector_y((g_field_entities[entity_id].move_dir + 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        check_pos.vx = pos_new.vx + solid_move.vx;
+        check_pos.vy = pos_new.vy + solid_move.vy;
+        check_pos.vz = pos_new.vz;
+        s32 cross1 = field_entity_walkmesh_border_cross(&pos_i, &check_pos, &solid_move, &cross);
+        u8 collide1 = (field_entity_collision_check(entity_id, &check_pos) > 0) ? 0x1 : 0;
+        pos_i = g_field_entities[actor_id].pos_i;
 
-        T3 = w[SP + 0040];
-        V0 = V0 * T3;
-        V0 = 0 - V0;
-        V0 = V0 >> 0c;
-        [S1 + 0034] = w(V0);
-        AT = 80074f14;
-        AT = AT + S0;
-        V1 = hu[AT + 0000];
-        V0 = w[S1 + 0030];
-        V0 = V1 * V0;
-        V0 = V0 >> 0x8;
-        [S1 + 0030] = w(V0);
-        AT = 80074f14;
-        AT = AT + S0;
-        V1 = hu[AT + 0000];
-        V0 = w[S1 + 0034];
-        V0 = V1 * V0;
-        V0 = V0 >> 0x8;
-        [S1 + 0034] = w(V0);
-        AT = 80074eb0;
-        AT = AT + S0;
-        V0 = w[AT + 0000];
-        V1 = w[S1 + 0030];
-        800A9444	nop
-        V0 = V0 + V1;
-        [S1 + 0030] = w(V0);
-        AT = 80074eb4;
-        AT = AT + S0;
-        V0 = w[AT + 0000];
-        V1 = w[S1 + 0034];
-        800A9464	nop
-        V0 = V0 + V1;
-        [S1 + 0034] = w(V0);
-        AT = 80074eb8;
-        AT = AT + S0;
-        V0 = w[AT + 0000];
-        800A9480	nop
-        [S1 + 0038] = w(V0);
+        // check left
+        solid_move.vx =  field_entity_get_dir_vector_x((g_field_entities[entity_id].move_dir - 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        solid_move.vy = -field_entity_get_dir_vector_y((g_field_entities[entity_id].move_dir - 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        check_pos.vx = pos_new.vx + solid_move.vx;
+        check_pos.vy = pos_new.vy + solid_move.vy;
+        check_pos.vz = pos_new.vz;
+        s32 cross2 = field_entity_walkmesh_border_cross(&pos_i, &check_pos, &solid_move, &cross);
+        u8 collide2 = (field_entity_collision_check(entity_id, &check_pos) > 0) ? 0x1 : 0;
+        pos_i = g_field_entities[actor_id].pos_i;
 
-        field_entity_get_dir_vector_x((bu[0x80074eda + S0] + 0x20) & 0xff);
+        // check direct
+        solid_move.vx =  field_entity_get_dir_vector_x(g_field_entities[entity_id].move_dir) * g_field_entities[entity_id].solid_range;
+        solid_move.vy = -field_entity_get_dir_vector_y(g_field_entities[entity_id].move_dir) * g_field_entities[entity_id].solid_range;
+        check_pos.vx = pos_new.vx + solid_move.vx;
+        check_pos.vy = pos_new.vy + solid_move.vy;
+        check_pos.vz = pos_new.vz;
+        s32 cross3 = field_entity_walkmesh_border_cross(&pos_i, &check_pos, &solid_move, &cross);
+        u8 collide3 = (field_entity_collision_check(entity_id, &check_pos) != 0) ? (cross3 < 0x1) * 0x8 : 0;
 
-        V0 = V0 << 10;
-        AT = 80074f10;
-        AT = AT + S0;
-        V1 = hu[AT + 0000];
-        V0 = V0 >> 10;
-        800A94C0	mult   v0, v1
-        800A94C4	mflo   v0
-        [S1 + 0050] = w(V0);
-        V0 = field_entity_get_dir_vector_y((bu[0x80074eda + S0] + 0x20) & 0xff);
+        if ((cross3 == 0) && (cross1 == 0) && (cross2 == 0) && (collide3 == 0) && (collide1 == 0) && (collide2 == 0)) break;
 
-        V1 = hu[0x80074f10 + S0];
-        V0 = 0 - V0;
-        800A9508	mult   v0, v1
-        A0 = SP + 0010;
-        A1 = S2;
-        A2 = w[SP + 0048];
-        T1 = w[S1 + 0050];
-        T0 = w[S1 + 0038];
-        V1 = w[S1 + 0034];
-        A3 = S1 + 0010;
-        [S1 + 0048] = w(T0);
-        800A952C	mflo   v0
-        [S1 + 0054] = w(V0);
-        V0 = w[S1 + 0030];
-        T2 = w[S1 + 0054];
-        V0 = V0 + T1;
-        V1 = V1 + T2;
-        [S1 + 0040] = w(V0);
-        [S1 + 0044] = w(V1);
-        800A9548	jal    funca8968 [$800a8968]
-
-        A0 = S3;
-        A1 = S2;
-        [SP + 0020] = w(V0);
-        800A9558	jal    funca9b64 [$800a9b64]
-
-        V1 = hu[0x80074f16 + S0];
-        [SP + 0010] = h(V1);
-        V0 = 0 < V0;
-        [SP + 0028] = w(V0);
-        field_entity_get_dir_vector_x((bu[0x80074eda + S0] - 0x20) & 0xff);
-        V0 = V0 << 10;
-        V0 = V0 >> 10;
-
-        V1 = hu[0x80074f10 + S0];
-        V0 = V0 * V1;
-        [S1 + 0x50] = w(V0);
-
-        V0 = field_entity_get_dir_vector_y((bu[0x80074eda + S0] - 0x20) & 0xff);
-
-        V1 = hu[0x80074f10 + S0];
-        V0 = 0 - V0;
-        800A95FC	mult   v0, v1
-        A0 = SP + 0x10;
-        A1 = S2;
-        A2 = w[SP + 0048];
-        T1 = w[S1 + 0050];
-        T0 = w[S1 + 0038];
-        V1 = w[S1 + 0034];
-        A3 = S1 + 0020;
-        [S1 + 0048] = w(T0);
-        800A9620	mflo   v0
-        [S1 + 0054] = w(V0);
-        V0 = w[S1 + 0030];
-        T2 = w[S1 + 0054];
-        V0 = V0 + T1;
-        V1 = V1 + T2;
-        [S1 + 0040] = w(V0);
-        [S1 + 0044] = w(V1);
-        FP = funca8968();
-
-        funca9b64(S3, S2);
-
-        V1 = hu[0x80074f16 + S0];
-        [SP + 0x10] = h(V1);
-        S6 = 0 < V0;
-
-        field_entity_get_dir_vector_x(bu[0x80074eda + S0]);
-
-        V0 = V0 << 10;
-        V0 = V0 >> 10;
-
-        V1 = hu[0x80074f10 + S0];
-        V0 = V0 * V1;
-        [S1 + 0x50] = w(V0);
-        S4 = 0;
-
-        V0 = field_entity_get_dir_vector_y(bu[0x80074eda + S0]);
-
-        V1 = hu[0x80074f10 + S0];
-        V0 = 0 - V0;
-        800A96DC	mult   v0, v1
-        A0 = SP + 0010;
-        A1 = S2;
-        A2 = w[SP + 0x48];
-        T1 = w[S1 + 0x50];
-        T0 = w[S1 + 0x38];
-        V1 = w[S1 + 0x34];
-        A3 = S1;
-        [S1 + 0048] = w(T0);
-        800A9700	mflo   v0
-        [S1 + 0054] = w(V0);
-        V0 = w[S1 + 0030];
-        T2 = w[S1 + 0054];
-        V0 = V0 + T1;
-        V1 = V1 + T2;
-        [S1 + 0040] = w(V0);
-        [S1 + 0044] = w(V1);
-        S5 = funca8968();
-
-        if (funca9b64(S3, S2) != 0)
+        if ((entity_id == h[0x800965e0]) && (g_field_control.control_lock == 0))
         {
-            V0 = S5 < 0x1;
-            S4 = V0 << 0x3;
-        }
-
-        if ((S5 == 0) && (w[SP + 0x20] == 0) && (FP == 0) && (S4 == 0) && (w[SP + 0x28] == 0) && (S6 == 0)) break;
-
-        if ((S3 == h[0x800965e0]) && (bu[0x8009ac26] == 0))
-        {
-            if ((S4 != 0) || (w[SP + 0x28] != 0) || (S6 != 0)) break;
+            if ((collide3 != 0) || (collide1 != 0) || (collide2 != 0)) break;
         }
         else
         {
-            if ((S5 != 0) && (w[SP + 0x20] == 0) && (FP == 0))
+            if ((cross3 != 0) && (cross1 == 0) && (cross2 == 0))
             {
-                [0x80074eda + S0] = b(bu[0x80074eda + S0] - S5);
+                g_field_entities[entity_id].move_dir -= cross3;
             }
-            else if ((S4 != 0) && (w[SP + 0x28] == 0) && (S6 == 0))
+            else if ((collide3 != 0) && (collide1 == 0) && (collide2 == 0))
             {
-                [0x80074eda + S0] = b(bu[0x80074eda + S0] - S4);
+                g_field_entities[entity_id].move_dir -= collide3;
             }
         }
 
-        if (w[SP + 0x20] != 0)
+        if (cross1 != 0)
         {
-            if (FP != 0) break;
+            if (cross2 != 0) break;
 
-            [0x80074eda + S0] = b(bu[0x80074eda + S0] - 0x8);
+            g_field_entities[entity_id].move_dir -= 0x8;
         }
-        else if (w[SP + 0x28] != 0)
+        else if (collide1 != 0)
         {
-            [0x80074eda + S0] = b(bu[0x80074eda + S0] - 0x8);
+            g_field_entities[entity_id].move_dir -= 0x8;
         }
         else
         {
-            if ((FP != 0) || (S6 != 0))
+            if ((cross2 != 0) || (collide2 != 0))
             {
-                [0x80074eda + S0] = b(bu[0x80074eda + S0] + 0x8);
+                g_field_entities[entity_id].move_dir += 0x8;
             }
         }
     }
 
-    S2 = S1 + 0x30;
-    A1 = S2;
-    A2 = S1 + 0x50;
-    T3 = hu[SP + 0x18];
-    A3 = S1;
-    S0 = T3 << 0x10;
-    S0 = S0 >> 0x10;
-    V0 = S0 << 0x5;
-    V0 = V0 + S0;
-    S3 = V0 << 0x2;
-    A0 = 0x80074f16 + S3;
+    s32 cross_4 = w(field_entity_walkmesh_border_cross(&g_field_entities[actor_id].pos_i, &pos_new, &solid_move, &cross));
 
-    [SP + 0x30] = w(funca8968());
-
-    if (S0 == h[0x800965e0])
+    if ((entity_id == h[0x800965e0]) && (g_field_control.control_lock == 0))
     {
-        if (bu[0x8009ac26] == 0)
-        {
-            S0 = 0x80074f16 + S3 - 0x72;
-            [0x80071c0c] = b(funca9eec(S0, 0x8007e7ac, S2));
+        [0x80071c0c] = b(field_entity_move_line_check(&g_field_entities[entity_id], 0x8007e7ac, &pos_new));
 
-            if (bu[0x8009ac2a] == 0)
-            {
-                funcaa348(S0, w[0x800716c4] + 0x38, S2);
-            }
-
-            funcaa5e4(S0, w[0x800716c4] + 0x158, S2);
-        }
-    }
-
-    if (S5 != 0) return 0;
-
-    T3 = w[SP + 0x20];
-    if (T3 != 0) return 0;
-
-    if (FP != 0) return 0;
-
-    if (S4 != 0) return 0;
-
-    T3 = w[SP + 0x28];
-    if (T3 != 0) return 0;
-
-    if (S6 != 0 ) return 0;
-
-    T3 = w[SP + 0x30];
-
-    if (T3 != 0) return 0;
-
-    T3 = hu[SP + 0x18];
-    V0 = T3 << 10;
-    A0 = V0 >> 10;
-    V0 = A0 << 05;
-    V0 = V0 + A0;
-    V1 = w[S1 + 0030];
-    A1 = V0 << 02;
-    [0x80074eb0 + A1] = w(V1);
-    V0 = w[S1 + 0x34];
-    AT = 0x80074eb4 + A1;
-    [AT + 0000] = w(V0);
-    V0 = w[S1 + 0x38];
-    V1 = bu[0x80074f01 + A1];
-    V0 = V0 << 0xc;
-    [0x80074eb8 + A1] = w(V0);
-    if (V1 != 0) return 0x1;
-
-    if (A0 != h[0x800965e0]) return 0x1;
-
-    V0 = w[0x80114454];
-    V1 = 0x10;
-    [0x80074f04 + A1] = h(V1);
-
-    if (V0 & 0x40)
-    {
-        V0 = A0 * 0x8;
-        V1 = w[0x8008357c];
-        V0 = V0 + V1;
-        A2 = 0x8009ac24;
-    }
-    else
-    {
-        V0 = A0 * 0x8;
-        V1 = w[0x8008357c];
-        A2 = 0x8009ac22;
-        V0 = V0 + V1;
-    }
-
-    V1 = bu[V0 + 0x4];
-    A0 = w[0x8004a62c];
-    V0 = V1 * 0x24;
-    V1 = w[A0 + 0x4];
-    V0 = V0 + V1;
-    V1 = bu[V0 + 0x4];
-    V0 = h[A2 + 0x0];
-
-    [0x80074f02 + A1] = b((V0 < V1) ? bu[A2] : 0);
-
-    return 0x1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    triggers_block_offset = w[0x800716C4];
-    id_block_offset = w[0x800E4274];
-
-    actor_id = A0;
-    [SP + 18] = actor_id;
-
-    current_triangle = g_field_entities[actor_id].pos_i;
-    [current_triangle_address] = current_triangle;
-    Ax = h[id_block_offset + current_triangle * 0x18 + 0x0];
-    Ay = h[id_block_offset + current_triangle * 0x18 + 0x2];
-    Az = h[id_block_offset + current_triangle * 0x18 + 0x4];
-    Bx = h[id_block_offset + current_triangle * 0x18 + 0x8];
-    By = h[id_block_offset + current_triangle * 0x18 + 0xa];
-    Bz = h[id_block_offset + current_triangle * 0x18 + 0xc];
-    Cx = h[id_block_offset + current_triangle * 0x18 + 0x10];
-    Cy = h[id_block_offset + current_triangle * 0x18 + 0x12];
-    Cz = h[id_block_offset + current_triangle * 0x18 + 0x14];
-
-    [0x1f800040] = w(Bx - Ax);
-    [0x1f800044] = w(By - Ay);
-    [0x1f800048] = w(Bz - Az);
-    [0x1f800050] = w(Cx - Bx);
-    [0x1f800054] = w(Cy - By);
-    [0x1f800058] = w(Cz - Bz);
-
-    system_gte_outer_product_0(0x1f800040, 0x1f800050, 0x1f800060);
-
-    [0x1f800060] = w(w[0x1f800060] >> 8);
-    [0x1f800064] = w(w[0x1f800064] >> 8);
-    [0x1f800068] = w(w[0x1f800068] >> 8);
-
-    system_psyq_vector_normal(0x1f800060, 0x1f800060);
-
-    V0 = w[0x1f800060];
-    A0 = w[0x1f800068];
-    A0 = ((V0 * V0) >> 0xc) + ((A0 * A0) >> 0xc);
-    func3a59c();
-    [0x1f800060] = w((w[0x1f800068] << 0xc) / V0);
-
-    V0 = w[0x1f800064];
-    A0 = w[0x1f800068];
-    A0 = ((V0 * V0) >> 0xc) + ((A0 * A0) >> 0xc);
-    func3a59c();
-    [0x1f800064] = w((w[0x1f800068] << 0xc) / V0);
-
-    V0 = w[0x1f800060];
-    [0x1f800060] = (V0 >= 0x1001) ? w(0x1000) : w(V0);
-    [0x1f800060] = (V0 < -0x1000) ? w(-0x1000) : w(V0);
-
-    V0 = w[0x1f800064];
-    [0x1f800064] = (V0 >= 0x1001) ? w(0x1000) : w(V0);
-    [0x1f800064] = (V0 < -0x1000) ? w(-0x1000) : w(V0);
-
-    V0 = w[0x1f800068];
-    [0x1f800068] = (V0 >= 0x1001) ? w(0x1000) : w(V0);
-    [0x1f800068] = (V0 < -0x1000) ? w(-0x1000) : w(V0);
-
-    T3 = w[0x1f800060];
-    [SP + 0x38] = (T3 < 0) ? w(-T3) : w(T3);
-
-    T3 = w[0x1f800064];
-    [SP + 0x40] = (T3 < 0) ? w(-T3) : w(T3);
-
-    S7 = 0;
-
-    // loop
-    La92f4:	; 800A92F4
-    S7 += 0x1;
-
-    if ((actor_id == h[0x800965e0]) && (bu[0x80071c0c] == 1) && (S7 >= 3))
-    {
-        [0x80071c0c] = b(0);
-    }
-    else if (((actor_id != h[0x800965e0]) || ((actor_id == h[0x800965e0]) && (bu[0x80071c0c] == 1) && (S7 < 3)) || ((actor_id == h[0x800965e0]) && (bu[0x80071c0c] != 1) && (S7 < 11)))
-    {
-        {
-            u8 move_dir = bu[g_field_entities + actor_id * 0x84 + 0x36];
-            [0x1f800070] = w(( field_entity_get_dir_vector_x(move_dir) * w[SP + 0x38]) >> 0xc);
-            [0x1f800074] = w((-field_entity_get_dir_vector_y(move_dir) * w[SP + 0x40]) >> 0xc);
-
-            // multiply move vector by speed
-            [0x1f800070] = w((hu[g_field_entities + actor_id * 0x84 + 0x70] * w[0x1f800070]) >> 0x8);
-            [0x1f800074] = w((hu[g_field_entities + actor_id * 0x84 + 0x70] * w[0x1f800074]) >> 0x8);
-
-            [0x1f800070] = w(w[0x1f800070] + g_field_entities[actor_id].pos_x); // x with move vector
-            [0x1f800074] = w(w[0x1f800074] + g_field_entities[actor_id].pos_y); // y with move vector
-            [0x1f800078] = w(g_field_entities[actor_id].pos_z); // store z as is
-
-            u8 move_dir = (bu[g_field_entities + actor_id * 0x84 + 0x36] + 0x20) & 0xff;
-            [0x1f800090] = w(g_field_entities[actor_id].solid_range *  field_entity_get_dir_vector_x(move_dir));
-            [0x1f800094] = w(g_field_entities[actor_id].solid_range * -field_entity_get_dir_vector_y(move_dir));
-
-            [0x1f800080] = w(w[0x1f800070] + w[0x1f800090]); // x with solid addition
-            [0x1f800084] = w(w[0x1f800074] + w[0x1f800094]); // y with solid addition
-            [0x1f800088] = w(w[0x1f800078]);
-
-            // check if we cross border of triangle
-            first_border_cross = walkmesh_border_cross(current_triangle_address, 0x1f800080, 0x1f800090, 0x1f800060);
-            first_entity_collision = entity_collision_check(actor_id, 0x1f800080);
-            [current_triangle_address] = h(g_field_entities[actor_id].pos_i);
-        }
-
-        {
-            u8 move_dir = (bu[g_field_entities + actor_id * 0x84 + 0x36] - 0x20) & 0xff;
-            [0x1f800090] = w(g_field_entities[actor_id].solid_range *  field_entity_get_dir_vector_x(move_dir));
-            [0x1f800094] = w(g_field_entities[actor_id].solid_range * -field_entity_get_dir_vector_y(move_dir));
-
-            [0x1f800080] = w(w[0x1f800070] + w[0x1f800090]);
-            [0x1f800084] = w(w[0x1f800074] + w[0x1f800094]);
-            [0x1f800088] = w(w[0x1f800078]);
-
-            second_border_cross = walkmesh_border_cross(current_triangle_address, 0x1f800080, 0x1f800090, 0x1f800060);
-            second_entity_collision = entity_collision_check(actor_id, 0x1f800080);
-            [current_triangle_address] = h(g_field_entities[actor_id].pos_i);
-        }
-
-        {
-            u8 move_dir = bu[g_field_entities + actor_id * 0x84 + 0x36];
-            [0x1f800090] = w(g_field_entities[actor_id].solid_range *  field_entity_get_dir_vector_x(move_dir));
-            [0x1f800094] = w(g_field_entities[actor_id].solid_range * -field_entity_get_dir_vector_y(move_dir));
-
-            [0x1f800080] = w(w[0x1f800070] + w[0x1f800090]);
-            [0x1f800084] = w(w[0x1f800074] + w[0x1f800094]);
-            [0x1f800088] = w(w[0x1f800078]);
-
-            third_border_cross = walkmesh_border_cross(current_triangle_address, 0x1f800080, 0x1f800090, 0x1f800040);
-
-            entity_collision_check(actor_id, 0x1f800080);
-
-            S4 = 0;
-
-            // if we collide with entity
-            if (V0 != 0)
-            {
-                // 0 and -8 => S4 = 8 else 0;
-                V0 = third_border_cross < 1;
-                S4 = V0 * 8;
-            }
-        }
-
-        if ((third_border_cross != 0) || (first_border_cross != 0) || (second_border_cross != 0) || (S4 != 0) || (first_entity_collision != 0) || (second_entity_collision != 0))
-        {
-            // NPC
-            if ((actor_id != h[0x800965e0]) || (bu[0x8009abf4 + 0x32] != 0))
-            {
-                // if we collide only directly into triangle border
-                if ((third_border_cross != 0) && (first_border_cross == 0) && (second_border_cross == 0))
-                {
-                    [g_field_entities + actor_id * 84 + 36] = b(bu[g_field_entities + actor_id * 84 + 36] - 5);
-                }
-                // or if we only collide into others entity directly
-                else if ((S4 != 0) && (first_entity_collision == 0) && (second_entity_collision == 0))
-                {
-                    [g_field_entities + actor_id * 84 + 36] = b(bu[g_field_entities + actor_id * 84 + 36] - S4);
-                }
-
-                // if not both left and right check was fail
-                if ((first_border_cross == 0) || (second_border_cross == 0))
-                {
-                    if (((first_border_cross == 0) && (first_entity_collision != 0)) || ((first_border_cross != 0) && (second_border_cross == 0)))
-                    {
-                        [g_field_entities + actor_id * 84 + 36] = b(bu[g_field_entities + actor_id * 84 + 36] - 8);
-                    }
-                    if ((first_border_cross == 0) && (first_entity_collision == 0) && ((second_border_cross != 0) || (second_entity_collision != 0)))
-                    {
-                        [g_field_entities + actor_id * 84 + 36] = b(bu[g_field_entities + actor_id * 84 + 36] + 8);
-                    }
-
-                    800A98E8	j      La92f4 [$800a92f4]
-                }
-            }
-            // PC and we not collide to others visible entitys.
-            else if ((S4 == 0) && (first_entity_collision == 0) && (second_entity_collision == 0))
-            {
-                // if not both left and right check was fail
-                if ((first_border_cross == 0) || (second_border_cross == 0))
-                {
-                    if (((first_border_cross == 0) && (first_entity_collision != 0)) || ((first_border_cross != 0) && (second_border_cross == 0)))
-                    {
-                        [g_field_entities + actor_id * 84 + 36] = b(bu[g_field_entities + actor_id * 84 + 36] - 8);
-                    }
-                    if ((first_border_cross == 0) && (first_entity_collision == 0) && ((second_border_cross != 0) || (second_entity_collision != 0)))
-                    {
-                        [g_field_entities + actor_id * 84 + 36] = b(bu[g_field_entities + actor_id * 84 + 36] + 8);
-                    }
-
-                    800A98E8	j      La92f4 [$800a92f4]
-                }
-            }
-        }
-    }
-
-    last_border_cross = w(walkmesh_border_cross(g_field_entities[actor_id].pos_i, 0x1f800070, 0x1f800090, 0x1f800040));
-
-    // if entity we moving is PC entity and we are moving it ourself
-    if ((actor_id == h[0x800965e0]) && (bu[0x8009abf4 + 0x32] == 0))
-    {
-        [0x80071c0c] = b(move_line_check(&g_field_entities[actor_id], 0x8007e7ac, 0x1f800070));
-
-        // gateways check
         if (bu[0x8009abf4 + 0x36] == 0)
         {
-            move_gateway_check(&g_field_entities[actor_id], triggers_block_offset + 0x38, 0x1f800070);
+            field_entity_move_gateway_check(&g_field_entities[entity_id], triggers_block_offset + 0x38, &pos_new);
         }
 
-        move_trigger_check(&g_field_entities[actor_id], triggers_block_offset + 0x158);
+        field_entity_move_trigger_check(&g_field_entities[entity_id], triggers_block_offset + 0x158, &pos_new);
     }
 
-    if ((third_border_cross != 0) ||
-        (first_border_cross != 0) ||
-        (second_border_cross != 0) ||
-        (S4 != 0) ||
-        (first_entity_collision != 0) ||
-        (second_entity_collision != 0) ||
-        (last_border_cross != 0))
+    if ((cross3 != 0) || (cross1 != 0) || (cross2 != 0) || (collide3 != 0) || (collide1 != 0) || (collide2 != 0) || (cross_4 != 0)) return 0;
+
+    g_field_entities[entity_id].pos_x = pos_new.vx;
+    g_field_entities[entity_id].pos_y = pos_new.vy;
+    g_field_entities[entity_id].pos_z = pos_new.vz << 0xc;
+
+    if (bu[g_field_entities + entity_id * 0x84 + 0x5d] == 0)
     {
-        return 0;
+        if (entity_id == h[0x800965e0])
+        {
+            g_field_entities[entity_id].anim_speed = 0x10;
+
+            s16 anim_id = (l_buttons_state & BUTTON_CROSS) ? h[0x8009abf4 + 0x30] : h[0x8009abf4 + 0x2e]; // run or walk anim
+
+            dat_block7 = w[0x8008357c];
+            model_data = w[g_field_models + 0x4];
+
+            model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
+            anim_n = bu[model_data + model_id * 0x24 + 0x4];
+            g_field_entities[entity_id].anim_id = (anim_id < anim_n) ? anim_id : 0;
+        }
     }
-
-    g_field_entities[actor_id].pos_x = w[0x1f800070];
-    g_field_entities[actor_id].pos_y = w[0x1f800074];
-    g_field_entities[actor_id].pos_z = w[0x1f800078] << 0xc;
-
-    if ((bu[g_field_entities + actor_id * 84 + 0x5d] != 0) || (actor_id != h[0x800965e0])) return 0x1;
-
-    [g_field_entities + actor_id * 84 + 0x60] = h(0x10); // set animation if this is manual movement
-
-    if (l_buttons_state & BUTTON_CROSS)
-    {
-        A2 = 0x8009abf4 + 0x30; // run
-    }
-    else
-    {
-        A2 = 0x8009abf4 + 0x2e; // walk
-    }
-
-    V1 = w[0x8008357c];
-    V0 = bu[V1 + actor_id * 0x8 + 0x4];
-    V1 = w[g_field_models + 0x4];
-    V1 = bu[V1 + V0 * 0x24];
-
-    A0 = 0;
-    if (h[A2] < V1)
-    {
-        A0 = bu[A2]; // load animation id
-    }
-    [g_field_entities + actor_id * 84 + 0x5e] = b(A0);
 
     return 0x1;
 }
@@ -2805,7 +2483,7 @@ int field_entity_move_by_walkmesh()
 
 
 ////////////////////////////////
-// entity_collision_check()
+// field_entity_collision_check()
 
 entity_check = A0;
 entities_n = h[0x8009abf4 + 0x28];
@@ -2887,7 +2565,7 @@ return -1;
 
 
 ////////////////////////////////
-// move_line_check()
+// field_entity_move_line_check()
 
 entity_data_offset = A0;
 line_data = A1;
@@ -3054,7 +2732,7 @@ for (int i = 0; i < 20; ++i)
 
 
 
-void move_gateway_check(FieldEntity* entity, trigger_data, VECTOR* new_pos)
+void field_entity_move_gateway_check(FieldEntity* entity, trigger_data, VECTOR* new_pos)
 {
     VECTOR v_old;
     v_old.vx = entity->pos_x >> 0xc;
@@ -3134,7 +2812,7 @@ s16 field_trigger_background_manipulate(trigger_data, state)
 
 
 
-void move_trigger_check(FieldEntity* entity, trigger_data)
+void field_entity_move_trigger_check(FieldEntity* entity, trigger_data)
 {
     [SP + 10] = w(w[0x800a00bc + 0x0]);
     [SP + 14] = w(w[0x800a00bc + 0x4]);

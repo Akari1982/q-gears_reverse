@@ -213,7 +213,7 @@ struct FieldEntity
                                 // 0x30 [][]     store number of steps for JUMP and LADER here.
                                 // 0x32 [][]     current step for JUMP and LADER.
                                 // 0x35 []       shift addition to move direction.
-                                // 0x36 []       move direction (used when calculated movement).
+    u8 move_dir;                // 0x36
                                 // 0x37 []       lock rotation. (1 - direction will not be changed)
     u8 dir;                     // 0x38
                                 // 0x39 []       number of steps for turn.
@@ -240,7 +240,7 @@ struct FieldEntity
                                 // 0x5b []       model talkability (1 - off, 0 - on).
                                 // 0x5c []       model visibility (1 - on, 0 - off).
                                 // 0x5d []       model state.
-                                // 0x5e []       animation id.
+    u8 anim_id;                 // 0x5e
     u16 anim_speed;             // 0x60
                                 // 0x62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
                                 // 0x64 [][]     number of frames. Set during MOVE and LADER opcode.

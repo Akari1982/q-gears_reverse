@@ -776,52 +776,29 @@ T2 = T2 >> T3;
 
 LZCS = A0;
 V0 = LZCR;
-AT = 0020;
-8003A5B0	beq    v0, at, L3a628 [$8003a628]
-8003A5B4	nop
-T0 = V0 & 0001;
-8003A5BC	addiu  t2, zero, $fffe (=-$2)
-T2 = V0 & T2;
-T1 = 0013;
-8003A5C8	sub    t1, t1, t2
-T1 = T1 >> 01;
-T3 = T2 + ffe8;
-8003A5D4	bltz   t3, L3a5e4 [$8003a5e4]
-8003A5D8	nop
-T4 = A0 << T3;
-8003A5E0	beq    zero, zero, L3a5f0 [$8003a5f0]
 
-L3a5e4:	; 8003A5E4
-T3 = 0018;
-8003A5E8	sub    t3, t3, t2
-T4 = A0 >> T3;
+if (V0 == 0x20) return 0;
 
-L3a5f0:	; 8003A5F0
-T4 = T4 + ffc0;
-T4 = T4 << 01;
-8003A5F8	lui    t5, $8005
-T5 = T5 + T4;
-T5 = h[T5 + b668];
-8003A604	nop
-8003A608	bltz   t1, L3a61c [$8003a61c]
-8003A60C	nop
-V0 = T5 << T1;
-8003A614	jr     ra 
-8003A618	nop
+T0 = V0 & 0x1;
+T2 = V0 & 0xfffffffe;
+T1 = (0x13 - T2) >> 0x1;
+T3 = T2 - 0x18;
+if (T3 >= 0)
+{
+    T4 = A0 << T3;
+}
+else
+{
+    T4 = A0 >> (0x18 - T2);
+}
 
+T5 = h[0x8004b668 + (T4 - 0x40) * 0x2];
+if (T1 >= 0)
+{
+    return T5 << T1;
+}
 
-L3a61c:	; 8003A61C
-8003A61C	sub    t1, zero, t1
-8003A620	jr     ra 
-V0 = T5 >> T1;
-
-
-L3a628:	; 8003A628
-8003A628	jr     ra 
-V0 = 0000;
-8003A630	nop
-8003A634	nop
-8003A638	nop
+return T5 >> -T1;
 ////////////////////////////////
 
 
@@ -2117,30 +2094,29 @@ R33 = T7;
 
 
 
-////////////////////////////////
-// system_gte_outer_product_0()
+void system_psyq_outer_product_0(VECTOR* v0, VECTOR* v1, VECTOR* v2)
+{
+    // store
+    T5 = R11R12;
+    T6 = R22R23;
+    T7 = R33;
 
-// store
-T5 = R11R12;
-T6 = R22R23;
-T7 = R33;
+    R11R12 = w[A0 + 0];
+    R22R23 = w[A0 + 4];
+    R33 = w[A0 + 8];
+    IR1 = w[A1 + 0];
+    IR2 = w[A1 + 4];
+    IR3 = w[A1 + 8];
+    gte_OP(); // Outer Product
+    [A2 + 0] = w(MAC1);
+    [A2 + 4] = w(MAC2);
+    [A2 + 8] = w(MAC3);
 
-R11R12 = w[A0 + 0];
-R22R23 = w[A0 + 4];
-R33 = w[A0 + 8];
-IR1 = w[A1 + 0];
-IR2 = w[A1 + 4];
-IR3 = w[A1 + 8];
-gte_OP(); // Outer Product
-[A2 + 0] = w(MAC1);
-[A2 + 4] = w(MAC2);
-[A2 + 8] = w(MAC3);
-
-// restore
-R11R12 = T5;
-R22R23 = T6;
-R33 = T7;
-////////////////////////////////
+    // restore
+    R11R12 = T5;
+    R22R23 = T6;
+    R33 = T7;
+}
 
 
 

@@ -1348,7 +1348,7 @@ A2 = A2 >> 01;
 [SP + 0048] = w(A2);
 A2 = A2 - T3;
 [SP + 0078] = w(A2);
-800A1988	jal    $system_gte_outer_product_0
+800A1988	jal    $system_psyq_outer_product_0
 A2 = S0;
 A0 = S0;
 800A1994	jal    $system_psyq_vector_normal
@@ -6919,13 +6919,13 @@ V1 = w[SP + 0068];
 V0 = V0 >> 02;
 V1 = V1 >> 02;
 [SP + 0044] = w(V0);
-800A7248	jal    $system_gte_outer_product_0
+800A7248	jal    $system_psyq_outer_product_0
 [SP + 0048] = w(V1);
 A0 = SP + 0030;
 A1 = SP + 0040;
 800A7258	lui    s0, $800b
 800A725C	addiu  s0, s0, $893c (=-$76c4)
-800A7260	jal    $system_gte_outer_product_0
+800A7260	jal    $system_psyq_outer_product_0
 A2 = S0;
 T1 = w[SP + 0070];
 T4 = w[S1 + 0000];

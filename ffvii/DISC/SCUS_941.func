@@ -790,7 +790,7 @@
 8003B9CC func3b9cc AverageZ3
 8003B9EC func3b9ec AverageZ4
 8003BA10 system_gte_outer_product_12 OuterProduct12
-8003BA68 system_gte_outer_product_0 OuterProduct0
+8003BA68 system_psyq_outer_product_0
 8003BAC0 func3bac0 Lzc
 8003BADC func3badc RotTransSV
 8003BB0C func3bb0c SquareSS12
