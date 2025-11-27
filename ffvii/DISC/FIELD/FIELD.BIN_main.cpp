@@ -1769,21 +1769,10 @@ s8 field_entity_walkmesh_border_cross()
     S1 = A3;
     S3 = 0;
     V0 = w[S5 + 0000];
-
-    800A89A4	bgez   v0, La89b0 [$800a89b0]
     800A89A8	lui    s0, $1f80
-    V0 = V0 + 0fff;
-
-    La89b0:	; 800A89B0
     V0 = V0 >> 0c;
     [1f800030] = w(V0);
     V0 = w[S5 + 0004];
-    800A89C0	nop
-    800A89C4	bgez   v0, La89d0 [$800a89d0]
-    800A89C8	nop
-    V0 = V0 + 0fff;
-
-    La89d0:	; 800A89D0
     V0 = V0 >> 0c;
     [1f800034] = w(V0);
     V0 = ffff;
@@ -1799,8 +1788,9 @@ s8 field_entity_walkmesh_border_cross()
     V0 = w[800e4274];
     A1 = A2 + 0008;
     A1 = A1 + V0;
-    800A8A14	jal    field_walkmesh_vector_sub [$800a8df4]
     A2 = A2 + V0;
+    field_walkmesh_vector_sub();
+
     V0 = hu[S2 + 0000];
     A0 = S0 + 0010;
     A2 = V0 << 01;
@@ -1810,8 +1800,9 @@ s8 field_entity_walkmesh_border_cross()
     V0 = w[800e4274];
     A2 = A2 + 0008;
     A1 = A1 + V0;
-    800A8A44	jal    field_walkmesh_vector_sub [$800a8df4]
     A2 = A2 + V0;
+    field_walkmesh_vector_sub();
+
     V0 = hu[S2 + 0000];
     A0 = S0 + 0020;
     A2 = V0 << 01;
@@ -1820,8 +1811,9 @@ s8 field_entity_walkmesh_border_cross()
     A2 = A2 << 03;
     A1 = A2 + V0;
     A2 = A2 + 0010;
-    800A8A70	jal    field_walkmesh_vector_sub [$800a8df4]
     A2 = A2 + V0;
+    field_walkmesh_vector_sub();
+
     V1 = hu[S2 + 0000];
     A1 = w[S0 + 0030];
     V0 = V1 << 01;
@@ -1832,36 +1824,30 @@ s8 field_entity_walkmesh_border_cross()
     V0 = h[A0 + 0000];
     V1 = w[S0 + 0004];
     V0 = A1 - V0;
-    800A8AA4	mult   v0, v1
+    A3 = V0 * V1;
     A2 = w[S0 + 0034];
     V0 = h[A0 + 0002];
-    800A8AB0	mflo   a3
     V1 = w[S0 + 0000];
     V0 = A2 - V0;
-    800A8ABC	mult   v0, v1
+    T2 = V0 * V1;
     V0 = h[A0 + 0008];
-    800A8AC4	mflo   t2
     V1 = w[S0 + 0014];
     V0 = A1 - V0;
-    800A8AD0	mult   v0, v1
+    T1 = V0 * V1;
     V0 = h[A0 + 000a];
-    800A8AD8	mflo   t1
     V1 = w[S0 + 0010];
     V0 = A2 - V0;
-    800A8AE4	mult   v0, v1
+    T0 = V0 * V1;
     V1 = h[A0 + 0010];
-    800A8AEC	mflo   t0
     V0 = w[S0 + 0024];
     A1 = A1 - V1;
-    800A8AF8	mult   a1, v0
+    A0 = A1 * V0;
     V1 = h[A0 + 0012];
-    800A8B00	mflo   a0
     V0 = w[S0 + 0020];
     A2 = A2 - V1;
-    800A8B0C	mult   a2, v0
+    V0 = A2 * V0;
     A3 = A3 - T2;
     T1 = T1 - T0;
-    800A8B18	mflo   v0
     800A8B1C	bltz   a3, La8b3c [$800a8b3c]
     A0 = A0 - V0;
     800A8B24	bltz   t1, La8c0c [$800a8c0c]
@@ -1881,10 +1867,7 @@ s8 field_entity_walkmesh_border_cross()
     A1 = V0 >> 10;
     800A8B5C	bltz   a1, La8b8c [$800a8b8c]
     V0 = V0 >> 13;
-    800A8B64	lui    at, $800a
-    800A8B68	addiu  at, at, $aca6 (=-$535a)
-    AT = AT + V0;
-    V1 = bu[AT + 0000];
+    V1 = bu[0x8009aca6 + V0];
     V0 = V0 << 03;
     V0 = A1 - V0;
     V1 = V1 >> V0;
@@ -1913,16 +1896,13 @@ s8 field_entity_walkmesh_border_cross()
     800A8BD0	mult   a0, v0
     800A8BD4	mflo   v0
     V1 = V1 + V0;
-    800A8BDC	bltz   v1, La8be8 [$800a8be8]
-    800A8BE0	addiu  s3, zero, $fff8 (=-$8)
-    S3 = 0008;
+    S3 = (V1 >= 0) ? 0x8 : -0x8;
 
-    La8be8:	; 800A8BE8
     V0 = hu[S2 + 0000];
     [801144cc] = h(0);
     [80113f28] = h(V0);
-    800A8BFC	j      La8d9c [$800a8d9c]
     A0 = S0;
+    800A8BFC	j      La8d9c [$800a8d9c]
 
     La8c04:	; 800A8C04
     800A8C04	bgez   t1, La8cc4 [$800a8cc4]
@@ -1938,10 +1918,7 @@ s8 field_entity_walkmesh_border_cross()
     A1 = V0 >> 10;
     800A8C2C	bltz   a1, La8c5c [$800a8c5c]
     V0 = V0 >> 13;
-    800A8C34	lui    at, $800a
-    800A8C38	addiu  at, at, $aca6 (=-$535a)
-    AT = AT + V0;
-    V1 = bu[AT + 0000];
+    V1 = bu[0x8009aca6 + V0];
     V0 = V0 << 03;
     V0 = A1 - V0;
     V1 = V1 >> V0;
@@ -1961,23 +1938,17 @@ s8 field_entity_walkmesh_border_cross()
     [S1 + 0008] = w(V0);
     V1 = w[S0 + 0010];
     V0 = w[S4 + 0000];
-    800A8C88	nop
-    800A8C8C	mult   v1, v0
+    V1 = V1 * V0;
     A0 = w[S0 + 0014];
-    800A8C94	mflo   v1
     V0 = w[S4 + 0004];
-    800A8C9C	nop
-    800A8CA0	mult   a0, v0
-    800A8CA4	mflo   v0
+    V0 = A0 * V0;
     V1 = V1 + V0;
-    800A8CAC	bltz   v1, La8cb8 [$800a8cb8]
-    800A8CB0	addiu  s3, zero, $fff8 (=-$8)
-    S3 = 0008;
 
-    La8cb8:	; 800A8CB8
+    S3 = (V1 >= 0) ? 0x8 : -0x8;
+
     V1 = hu[S2 + 0000];
+    V0 = 0x1;
     800A8CBC	j      La8d88 [$800a8d88]
-    V0 = 0001;
 
     La8cc4:	; 800A8CC4
     800A8CC4	bgez   a0, La89f0 [$800a89f0]
@@ -1991,10 +1962,7 @@ s8 field_entity_walkmesh_border_cross()
     A1 = V0 >> 10;
     800A8CEC	bltz   a1, La8d24 [$800a8d24]
     V0 = V0 >> 13;
-    800A8CF4	lui    at, $800a
-    800A8CF8	addiu  at, at, $aca6 (=-$535a)
-    AT = AT + V0;
-    V1 = bu[AT + 0000];
+    V1 = bu[0x8009aca6 + V0];
     V0 = V0 << 03;
     V0 = A1 - V0;
     V1 = V1 >> V0;
@@ -2008,32 +1976,23 @@ s8 field_entity_walkmesh_border_cross()
 
     La8d24:	; 800A8D24
     V0 = w[S0 + 0020];
-    800A8D28	nop
     [S1 + 0000] = w(V0);
     V0 = w[S0 + 0024];
-    800A8D34	nop
     [S1 + 0004] = w(V0);
     V0 = w[S0 + 0028];
-    800A8D40	nop
     [S1 + 0008] = w(V0);
     V1 = w[S0 + 0020];
     V0 = w[S4 + 0000];
-    800A8D50	nop
-    800A8D54	mult   v1, v0
+    V1 = V1 * V0;
     A0 = w[S0 + 0024];
-    800A8D5C	mflo   v1
     V0 = w[S4 + 0004];
-    800A8D64	nop
-    800A8D68	mult   a0, v0
-    800A8D6C	mflo   v0
+    V0 = A0 * V0;
     V1 = V1 + V0;
-    800A8D74	bltz   v1, La8d80 [$800a8d80]
-    800A8D78	addiu  s3, zero, $fff8 (=-$8)
-    S3 = 0008;
 
-    La8d80:	; 800A8D80
-    V1 = hu[S2 + 0000];
-    V0 = 0002;
+    S3 = (V1 >= 0) ? 0x8 : -0x8;
+
+    V1 = hu[S2 + 0x0];
+    V0 = 0x2;
 
     La8d88:	; 800A8D88
     [801144cc] = h(V0);
@@ -2049,11 +2008,11 @@ s8 field_entity_walkmesh_border_cross()
     A3 = V0 << 01;
     A3 = A3 + V0;
     V0 = w[800e4274];
-    A3 = A3 << 03;
+    A3 = A3 << 0x3;
     A3 = A3 + V0;
     field_walkmesh_calculate_z();
 
-    [S5 + 0008] = w(V0);
+    [S5 + 0x8] = w(V0);
     return S3;
 
 
