@@ -190,9 +190,9 @@ void field_main()
     system_psyq_set_def_drawenv(&g_bg_draw_env[7], 0x0, 0xf0, 0x140, 0xe0);
     g_bg_draw_env[7]->dtd = 1;
     g_bg_draw_env[7]->isbg = 0;
-    system_psyq_set_def_drawenv(&g_bg_draw_env[8], 0x0, 0x8, 0x140, 0xe0);
-    g_bg_draw_env[8]->dtd = 1;
-    g_bg_draw_env[8]->isbg = 0;
+    system_psyq_set_def_drawenv(&g_bg_draw_env[0x8], 0x0, 0x8, 0x140, 0xe0);
+    g_bg_draw_env[0x8]->dtd = 1;
+    g_bg_draw_env[0x8]->isbg = 0;
     system_psyq_set_def_drawenv(&g_bg_draw_env[9], 0x0, 0xf0, 0x140, 0xe0);
     g_bg_draw_env[9]->dtd = 1;
     g_bg_draw_env[9]->isbg = 0;
@@ -1761,258 +1761,203 @@ return 0;
 
 
 
-s8 field_entity_walkmesh_border_cross()
+s8 field_entity_walkmesh_border_cross(u32 triangle_info_offset, VECTOR* position, S4, S1)
 {
-    S2 = A0;
-    S5 = A1;
-    S4 = A2;
-    S1 = A3;
+    S4 = A2; // we multiply board vector with this vector and return +8 or -8 according to it
+    S1 = A3; // we store collision board here
+
+    u16 triangle_id = hu[triangle_info_offset];
+    offset_to_id_block        = w[0x800e4274];
+    offset_to_id_access_block = w[0x80114458];
+    offset_to_triangle        = offset_to_id_block + triangle_id * 18
+    offset_to_triangle_access = offset_to_id_access_block + triangle_id * 6
+
     S3 = 0;
-    V0 = w[S5 + 0000];
-    800A89A8	lui    s0, $1f80
-    V0 = V0 >> 0c;
-    [1f800030] = w(V0);
-    V0 = w[S5 + 0004];
-    V0 = V0 >> 0c;
-    [1f800034] = w(V0);
-    V0 = ffff;
-    [1f800038] = w(0);
-    [80113f28] = h(V0);
 
-    La89f0:	; 800A89F0
-    V0 = hu[S2 + 0000];
-    A0 = S0;
-    A2 = V0 << 01;
-    A2 = A2 + V0;
-    A2 = A2 << 03;
-    V0 = w[800e4274];
-    A1 = A2 + 0008;
-    A1 = A1 + V0;
-    A2 = A2 + V0;
-    field_walkmesh_vector_sub();
+    [0x1f800030] = w(position->vx >> 0xc);
+    [0x1f800034] = w(position->vy >> 0xc);
+    [0x1f800038] = w(0);
+    [0x80113f28] = h(0xffff);
 
-    V0 = hu[S2 + 0000];
-    A0 = S0 + 0010;
-    A2 = V0 << 01;
-    A2 = A2 + V0;
-    A2 = A2 << 03;
-    A1 = A2 + 0010;
-    V0 = w[800e4274];
-    A2 = A2 + 0008;
-    A1 = A1 + V0;
-    A2 = A2 + V0;
-    field_walkmesh_vector_sub();
+    while (true)
+    {
+        V0 = hu[triangle_info_offset];
+        A0 = 0x1f80000;
+        A2 = V0 << 01;
+        A2 = A2 + V0;
+        A2 = A2 << 03;
+        V0 = offset_to_id_block;
+        A1 = A2 + 0008;
+        A1 = A1 + V0;
+        A2 = A2 + V0;
+        field_walkmesh_vector_sub();
 
-    V0 = hu[S2 + 0000];
-    A0 = S0 + 0020;
-    A2 = V0 << 01;
-    A2 = A2 + V0;
-    V0 = w[800e4274];
-    A2 = A2 << 03;
-    A1 = A2 + V0;
-    A2 = A2 + 0010;
-    A2 = A2 + V0;
-    field_walkmesh_vector_sub();
+        V0 = hu[triangle_info_offset];
+        A0 = 0x1f80010;
+        A2 = V0 << 01;
+        A2 = A2 + V0;
+        A2 = A2 << 03;
+        A1 = A2 + 0010;
+        V0 = offset_to_id_block;
+        A2 = A2 + 0008;
+        A1 = A1 + V0;
+        A2 = A2 + V0;
+        field_walkmesh_vector_sub();
 
-    V1 = hu[S2 + 0000];
-    A1 = w[S0 + 0030];
-    V0 = V1 << 01;
-    T3 = V0 + V1;
-    V0 = w[800e4274];
-    A0 = T3 << 03;
-    A0 = A0 + V0;
-    V0 = h[A0 + 0000];
-    V1 = w[S0 + 0004];
-    V0 = A1 - V0;
-    A3 = V0 * V1;
-    A2 = w[S0 + 0034];
-    V0 = h[A0 + 0002];
-    V1 = w[S0 + 0000];
-    V0 = A2 - V0;
-    T2 = V0 * V1;
-    V0 = h[A0 + 0008];
-    V1 = w[S0 + 0014];
-    V0 = A1 - V0;
-    T1 = V0 * V1;
-    V0 = h[A0 + 000a];
-    V1 = w[S0 + 0010];
-    V0 = A2 - V0;
-    T0 = V0 * V1;
-    V1 = h[A0 + 0010];
-    V0 = w[S0 + 0024];
-    A1 = A1 - V1;
-    A0 = A1 * V0;
-    V1 = h[A0 + 0012];
-    V0 = w[S0 + 0020];
-    A2 = A2 - V1;
-    V0 = A2 * V0;
-    A3 = A3 - T2;
-    T1 = T1 - T0;
-    800A8B1C	bltz   a3, La8b3c [$800a8b3c]
-    A0 = A0 - V0;
-    800A8B24	bltz   t1, La8c0c [$800a8c0c]
-    800A8B28	nop
-    800A8B2C	bgez   a0, La8d98 [$800a8d98]
-    800A8B30	nop
-    800A8B34	j      La8c04 [$800a8c04]
-    800A8B38	nop
+        V0 = hu[triangle_info_offset];
+        A0 = 0x1f80020;
+        A2 = V0 << 01;
+        A2 = A2 + V0;
+        V0 = offset_to_id_block;
+        A2 = A2 << 03;
+        A1 = A2 + V0;
+        A2 = A2 + 0010;
+        A2 = A2 + V0;
+        field_walkmesh_vector_sub();
 
-    La8b3c:	; 800A8B3C
-    V1 = w[80114458];
-    V0 = T3 << 01;
-    V0 = V0 + V1;
-    A0 = hu[V0 + 0000];
-    800A8B50	nop
-    V0 = A0 << 10;
-    A1 = V0 >> 10;
-    800A8B5C	bltz   a1, La8b8c [$800a8b8c]
-    V0 = V0 >> 13;
-    V1 = bu[0x8009aca6 + V0];
-    V0 = V0 << 03;
-    V0 = A1 - V0;
-    V1 = V1 >> V0;
-    V1 = V1 & 0001;
-    800A8B84	beq    v1, zero, La8d1c [$800a8d1c]
-    800A8B88	nop
+        V1 = hu[triangle_info_offset];
+        V0 = V1 << 01;
+        T3 = V0 + V1;
+        A0 = T3 * 0x8;
+        A0 = offset_to_id_block + A0;
+        V0 = w[0x1f80030] - h[A0 + 0x0];
+        A3 = V0 * w[0x1f800004];
+        V0 = w[0x1f800034] - h[A0 + 0x2];
+        T2 = V0 * w[0x1f800000];
+        T1 = (w[0x1f80030] - h[A0 + 0x08]) * w[0x1f800014];
+        T0 = (w[0x1f800034] - h[A0 + 0xa]) * w[0x1f800010];
+        A0 = (w[0x1f80030] - h[A0 + 0x10]) * w[0x1f800024];
+        V0 = (w[0x1f800034] - h[A0 + 0x12]) * w[0x1f800020];
+        A3 = A3 - T2;
+        T1 = T1 - T0;
+        A0 = A0 - V0;
+        800A8B1C	bltz   a3, La8b3c [$800a8b3c]
 
-    La8b8c:	; 800A8B8C
-    V0 = w[S0 + 0000];
-    800A8B90	nop
-    [S1 + 0000] = w(V0);
-    V0 = w[S0 + 0004];
-    800A8B9C	nop
-    [S1 + 0004] = w(V0);
-    V0 = w[S0 + 0008];
-    800A8BA8	nop
-    [S1 + 0008] = w(V0);
-    V1 = w[S0 + 0000];
-    V0 = w[S4 + 0000];
-    800A8BB8	nop
-    800A8BBC	mult   v1, v0
-    A0 = w[S0 + 0004];
-    800A8BC4	mflo   v1
-    V0 = w[S4 + 0004];
-    800A8BCC	nop
-    800A8BD0	mult   a0, v0
-    800A8BD4	mflo   v0
-    V1 = V1 + V0;
-    S3 = (V1 >= 0) ? 0x8 : -0x8;
+        800A8B24	bltz   t1, La8c0c [$800a8c0c]
 
-    V0 = hu[S2 + 0000];
-    [801144cc] = h(0);
-    [80113f28] = h(V0);
-    A0 = S0;
-    800A8BFC	j      La8d9c [$800a8d9c]
+        if (A0 >= 0)
+        {
+            V0 = hu[triangle_info_offset];
+            position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
 
-    La8c04:	; 800A8C04
-    800A8C04	bgez   t1, La8cc4 [$800a8cc4]
-    800A8C08	nop
+            return S3;
+        }
 
-    La8c0c:	; 800A8C0C
-    V1 = w[80114458];
-    V0 = T3 << 01;
-    V0 = V0 + V1;
-    A0 = hu[V0 + 0002];
-    800A8C20	nop
-    V0 = A0 << 10;
-    A1 = V0 >> 10;
-    800A8C2C	bltz   a1, La8c5c [$800a8c5c]
-    V0 = V0 >> 13;
-    V1 = bu[0x8009aca6 + V0];
-    V0 = V0 << 03;
-    V0 = A1 - V0;
-    V1 = V1 >> V0;
-    V1 = V1 & 0001;
-    800A8C54	beq    v1, zero, La8d1c [$800a8d1c]
-    800A8C58	nop
+        800A8C04	bgez   t1, La8cc4 [$800a8cc4]
+        800A8C08	nop
 
-    La8c5c:	; 800A8C5C
-    V0 = w[S0 + 0010];
-    800A8C60	nop
-    [S1 + 0000] = w(V0);
-    V0 = w[S0 + 0014];
-    800A8C6C	nop
-    [S1 + 0004] = w(V0);
-    V0 = w[S0 + 0018];
-    800A8C78	nop
-    [S1 + 0008] = w(V0);
-    V1 = w[S0 + 0010];
-    V0 = w[S4 + 0000];
-    V1 = V1 * V0;
-    A0 = w[S0 + 0014];
-    V0 = w[S4 + 0004];
-    V0 = A0 * V0;
-    V1 = V1 + V0;
+        La8c0c:	; 800A8C0C
+        V1 = offset_to_id_access_block;
+        V0 = T3 << 01;
+        V0 = V0 + V1;
+        A0 = hu[V0 + 0002];
+        800A8C20	nop
+        V0 = A0 << 10;
+        A1 = V0 >> 10;
+        if (A1 >= 0)
+        {
+            V0 = V0 >> 13;
+            V1 = bu[0x8009aca6 + V0];
+            V0 = V0 << 03;
+            V0 = A1 - V0;
+            V1 = V1 >> V0;
+            V1 = V1 & 0001;
+            if (V1 == 0)
+            {
+                [triangle_info_offset] = h(A0);
+                continue;
+            }
+        }
 
-    S3 = (V1 >= 0) ? 0x8 : -0x8;
+        [S1 + 0x0] = w(w[0x1f800010]);
+        [S1 + 0x4] = w(w[0x1f800014]);
+        [S1 + 0x8] = w(w[0x1f800018]);
 
-    V1 = hu[S2 + 0000];
-    V0 = 0x1;
-    800A8CBC	j      La8d88 [$800a8d88]
+        V1 = (w[0x1f800010] * w[S4 + 0x0]) + (w[0x1f800014] * w[S4 + 0x4]);
+        S3 = (V1 >= 0) ? 0x8 : -0x8;
 
-    La8cc4:	; 800A8CC4
-    800A8CC4	bgez   a0, La89f0 [$800a89f0]
-    V0 = T3 << 01;
-    V1 = w[80114458];
-    800A8CD4	nop
-    V0 = V0 + V1;
-    A0 = hu[V0 + 0004];
-    800A8CE0	nop
-    V0 = A0 << 10;
-    A1 = V0 >> 10;
-    800A8CEC	bltz   a1, La8d24 [$800a8d24]
-    V0 = V0 >> 13;
-    V1 = bu[0x8009aca6 + V0];
-    V0 = V0 << 03;
-    V0 = A1 - V0;
-    V1 = V1 >> V0;
-    V1 = V1 & 0001;
-    800A8D14	bne    v1, zero, La8d24 [$800a8d24]
-    800A8D18	nop
+        [0x801144cc] = h(0x1);
+        [0x80113f28] = h(hu[triangle_info_offset]);
 
-    La8d1c:	; 800A8D1C
-    800A8D1C	j      La89f0 [$800a89f0]
-    [S2 + 0000] = h(A0);
+        V0 = hu[triangle_info_offset];
+        position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
+
+        return S3;
+
+        La8b3c:	; 800A8B3C
+        V1 = offset_to_id_access_block;
+        V0 = T3 << 01;
+        V0 = V0 + V1;
+        A0 = hu[V0 + 0000];
+        800A8B50	nop
+        V0 = A0 << 10;
+        A1 = V0 >> 10;
+        if (A1 >= 0)
+        {
+            V0 = V0 >> 13;
+            V1 = bu[0x8009aca6 + V0];
+            V0 = V0 << 03;
+            V0 = A1 - V0;
+            V1 = V1 >> V0;
+            V1 = V1 & 0x1;
+            if (V1 == 0)
+            {
+                [triangle_info_offset] = h(A0);
+                continue;
+            }
+        }
+
+        [S1 + 0x0] = w(w[0x1f800000]);
+        [S1 + 0x4] = w(w[0x1f800004]);
+        [S1 + 0x8] = w(w[0x1f800008]);
+
+        V1 = (w[0x1f800000] * w[S4 + 0x0]) + (w[0x1f800004] * w[S4 + 0x4]);
+        S3 = (V1 >= 0) ? 0x8 : -0x8;
+
+        [0x801144cc] = h(0);
+        [0x80113f28] = h(hu[triangle_info_offset]);
+
+        V0 = hu[triangle_info_offset];
+        position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
+
+        return S3;
+
+        La8cc4:	; 800A8CC4
+        if (A0 < 0)
+        {
+            A0 = hu[offset_to_id_access_block + 0x4 + T3 * 0x2];
+            V0 = A0 << 10;
+            A1 = V0 >> 10;
+            800A8CEC	bltz   a1, La8d24 [$800a8d24]
+            V0 = V0 >> 13;
+            V1 = bu[0x8009aca6 + V0];
+            V0 = V0 << 03;
+            V0 = A1 - V0;
+            V1 = V1 >> V0;
+            V1 = V1 & 0x1;
+            if (V1 == 0)
+            {
+                [triangle_info_offset] = h(A0);
+                continue;
+            }
+        }
+    }
 
     La8d24:	; 800A8D24
-    V0 = w[S0 + 0020];
-    [S1 + 0000] = w(V0);
-    V0 = w[S0 + 0024];
-    [S1 + 0004] = w(V0);
-    V0 = w[S0 + 0028];
-    [S1 + 0008] = w(V0);
-    V1 = w[S0 + 0020];
-    V0 = w[S4 + 0000];
-    V1 = V1 * V0;
-    A0 = w[S0 + 0024];
-    V0 = w[S4 + 0004];
-    V0 = A0 * V0;
-    V1 = V1 + V0;
+    [S1 + 0x0] = w(w[0x1f800020]);
+    [S1 + 0x4] = w(w[0x1f800024]);
+    [S1 + 0x8] = w(w[0x1f800028]);
+
+    V1 = w[0x1f800020] * w[S4 + 0x0] + w[0x1f800024] * w[S4 + 0x4];
 
     S3 = (V1 >= 0) ? 0x8 : -0x8;
 
-    V1 = hu[S2 + 0x0];
-    V0 = 0x2;
+    [0x801144cc] = h(0x2);
+    [0x80113f28] = h(hu[triangle_info_offset]);
 
-    La8d88:	; 800A8D88
-    [801144cc] = h(V0);
-    [80113f28] = h(V1);
+    V0 = hu[triangle_info_offset];
+    position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
 
-    La8d98:	; 800A8D98
-    A0 = S0;
-
-    La8d9c:	; 800A8D9C
-    A1 = S0 | 0010;
-    V0 = hu[S2 + 0000];
-    A2 = A0 | 0030;
-    A3 = V0 << 01;
-    A3 = A3 + V0;
-    V0 = w[800e4274];
-    A3 = A3 << 0x3;
-    A3 = A3 + V0;
-    field_walkmesh_calculate_z();
-
-    [S5 + 0x8] = w(V0);
     return S3;
 
 
