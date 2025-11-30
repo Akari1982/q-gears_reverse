@@ -29,8 +29,8 @@
 800A8640 field_entity_calculate_direction_by_vectors
 800A8858 funca8858
 800A8968 field_entity_walkmesh_border_cross
-800A8DF4 field_walkmesh_vector_sub
-800A8E34 field_walkmesh_calculate_z
+800A8DF4 field_entity_vector_sub
+800A8E34 field_entity_calculate_z
 800A8F88 field_entity_move_by_walkmesh
 800A9B64 field_entity_collision_check
 800A9CE8 move_distance_to_line

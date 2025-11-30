@@ -1489,12 +1489,12 @@
 
 801142D4 [] priority queue script id. (size 0x08 0x01).
 
-80114454 [][][][] currently pressed buttons for both controllers with remap.
-80114458 [][][][] offset to walkmesh triangle access block.
-8011445C [][] time to wait for windows. (size 0x2).
+0x80114454 [][][][] currently pressed buttons for both controllers with remap.
+0x80114458 [][][][] offset to walkmesh triangle access block.
+0x8011445C [][] time to wait for windows. (size 0x2).
 
-80114470 [][] field dialog value which content value how mush characters add at current character copy. (size 0x08 0x2).
-80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
+0x80114470 [][] field dialog value which content value how mush characters add at current character copy. (size 0x08 0x2).
+0x80114480 [][] field dialog OK button speed modificator. (size 0x08 0x2).
 
 80114488 [][]     movie played (1 - played).
 

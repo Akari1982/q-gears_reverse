@@ -881,23 +881,17 @@ if (bu[0x8009abf4 + 0x32] == 0) // 0 if PC can move
         A0 = SP + 0x10;
         A1 = walkmesh_data + triangle_id * 0x18 + 0x8;
         A2 = walkmesh_data + triangle_id * 0x18 + 0x0;
-        field_walkmesh_vector_sub();
+        field_entity_vector_sub();
 
         A0 = SP + 0x20;
         A1 = walkmesh_data + triangle_id * 0x18 + 0x10;
         A2 = walkmesh_data + triangle_id * 0x18 + 0x8;
-        field_walkmesh_vector_sub();
+        field_entity_vector_sub();
 
         [SP + 0x30] = w(h[0x8009abf4 + 0x4]); // x
         [SP + 0x34] = w(h[0x8009abf4 + 0x6]); // y
 
-        A0 = SP + 0x10;
-        A1 = SP + 0x20;
-        A2 = SP + 0x30;
-        A3 = walkmesh_data + triangle_id * 18;
-        field_walkmesh_calculate_z();
-
-        g_field_entities[model_id].pos_z = V0 << 0xc;
+        g_field_entities[model_id].pos_z = field_entity_calculate_z(SP + 0x10, SP + 0x20, SP + 0x30, walkmesh_data + triangle_id * 0x18) << 0xc;
     }
 
     [g_field_entities + model_id * 0x84 + 0x60] = h(0x10); // animation speed
@@ -1267,13 +1261,13 @@ void field_entity_movement_update(u32 input)
                 id_offset = w[0x800e4274];
                 A1 = id_offset + V0 * 18 + 8;
                 A2 = id_offset + V0 * 18;
-                field_walkmesh_vector_sub();
+                field_entity_vector_sub();
 
                 V0 = g_field_entities[i].move_to_i;
                 A0 = SP + 20;
                 A1 = id_offset + V0 * 0x18 + 0x10;
                 A2 = id_offset + V0 * 0x18 + 0x8;
-                field_walkmesh_vector_sub();
+                field_entity_vector_sub();
 
                 [SP + 0x30] = w(g_field_entities[i].move_to_x >> 0xc);
                 [SP + 0x34] = w(g_field_entities[i].move_to_y >> 0xc);
@@ -1284,7 +1278,7 @@ void field_entity_movement_update(u32 input)
                 A1 = SP + 0x20;
                 A2 = SP + 0x30;
                 A3 = id_offset + V0 * 18;
-                field_walkmesh_calculate_z();
+                field_entity_calculate_z();
                 Z_fin = V0 << c;
                 g_field_entities[i].move_to_z = Z_fin;
 
@@ -1631,25 +1625,19 @@ s16 field_entity_get_dir_vector_y()
 
 
 
-u8 field_entity_calculate_direction_by_vectors()
+u8 field_entity_calculate_direction_by_vectors(VECTOR* current_pos, VECTOR* dest_pos, u32& res)
 {
-    current_pos = A0;
-    dest_pos = A1;
-    res = A2;
-
-    dest_x = w[dest_pos + 0];
-    dest_y = w[dest_pos + 4];
-    cur_x = w[current_pos + 0];
-    cur_y = w[current_pos + 4];
+    s32 dest_x = dest_pos->vx;
+    s32 dest_y = dest_pos->vy;
+    s32 cur_x = current_pos->vx;
+    s32 cur_y = current_pos->vy;
 
     S2 = dest_x - cur_x;
     S1 = dest_y - cur_y;
 
-    A0 = S2 * S2 + S1 * S1;
-    system_square_root();
-    dist = V0;
+    u32 dist = system_square_root(S2 * S2 + S1 * S1);
 
-    [res] = w(dist);
+    res = dist;
 
     V1 = (S2 << c) / dist;
     A0 = (S1 << c) / dist;
@@ -1761,452 +1749,151 @@ return 0;
 
 
 
-s8 field_entity_walkmesh_border_cross(u32 triangle_info_offset, VECTOR* position, S4, S1)
+s8 field_entity_walkmesh_border_cross(u32 triangle_info_offset, VECTOR* position, VECTOR* dir, VECTOR* collision)
 {
-    S4 = A2; // we multiply board vector with this vector and return +8 or -8 according to it
-    S1 = A3; // we store collision board here
-
-    u16 triangle_id = hu[triangle_info_offset];
-    offset_to_id_block        = w[0x800e4274];
+    offset_to_id_block = w[0x800e4274];
     offset_to_id_access_block = w[0x80114458];
-    offset_to_triangle        = offset_to_id_block + triangle_id * 18
-    offset_to_triangle_access = offset_to_id_access_block + triangle_id * 6
 
-    S3 = 0;
+    VECTOR pos_s;
+    pos_s.vx = position->vx >> 0xc;
+    pos_s.vy = position->vy >> 0xc;
+    pos_s.vz = 0;
 
-    [0x1f800030] = w(position->vx >> 0xc);
-    [0x1f800034] = w(position->vy >> 0xc);
-    [0x1f800038] = w(0);
     [0x80113f28] = h(0xffff);
+
+    VECTOR vec_ba;
+    VECTOR vec_cb;
+    VECTOR vec_ac;
 
     while (true)
     {
-        V0 = hu[triangle_info_offset];
-        A0 = 0x1f80000;
-        A2 = V0 << 01;
-        A2 = A2 + V0;
-        A2 = A2 << 03;
-        V0 = offset_to_id_block;
-        A1 = A2 + 0008;
-        A1 = A1 + V0;
-        A2 = A2 + V0;
-        field_walkmesh_vector_sub();
+        u16 id = hu[triangle_info_offset];
+        field_entity_vector_sub(&vec_ba, offset_to_id_block + V0 * 0x18 +  0x8, offset_to_id_block + id * 0x18 +  0x0); // BA
+        field_entity_vector_sub(&vec_cb, offset_to_id_block + V0 * 0x18 + 0x10, offset_to_id_block + id * 0x18 +  0x8); // CB
+        field_entity_vector_sub(&vec_ac, offset_to_id_block + V0 * 0x18 +  0x0, offset_to_id_block + id * 0x18 + 0x10); // AC
 
-        V0 = hu[triangle_info_offset];
-        A0 = 0x1f80010;
-        A2 = V0 << 01;
-        A2 = A2 + V0;
-        A2 = A2 << 03;
-        A1 = A2 + 0010;
-        V0 = offset_to_id_block;
-        A2 = A2 + 0008;
-        A1 = A1 + V0;
-        A2 = A2 + V0;
-        field_walkmesh_vector_sub();
+        A3 = (pos_s.vx - h[offset_to_id_block + id * 0x18 +  0x0]) * vec_ba.vy;
+        T2 = (pos_s.vy - h[offset_to_id_block + id * 0x18 +  0x2]) * vec_ba.vx;
+        T1 = (pos_s.vx - h[offset_to_id_block + id * 0x18 +  0x8]) * vec_cb.vy;
+        T0 = (pos_s.vy - h[offset_to_id_block + id * 0x18 +  0xa]) * vec_cb.vx;
+        A0 = (pos_s.vx - h[offset_to_id_block + id * 0x18 + 0x10]) * vec_ac.vy;
+        V0 = (pos_s.vy - h[offset_to_id_block + id * 0x18 + 0x12]) * vec_ac.vx;
+        cross_ba = A3 - T2;
+        cross_cb = T1 - T0;
+        cross_ac = A0 - V0;
 
-        V0 = hu[triangle_info_offset];
-        A0 = 0x1f80020;
-        A2 = V0 << 01;
-        A2 = A2 + V0;
-        V0 = offset_to_id_block;
-        A2 = A2 << 03;
-        A1 = A2 + V0;
-        A2 = A2 + 0010;
-        A2 = A2 + V0;
-        field_walkmesh_vector_sub();
-
-        V1 = hu[triangle_info_offset];
-        V0 = V1 << 01;
-        T3 = V0 + V1;
-        A0 = T3 * 0x8;
-        A0 = offset_to_id_block + A0;
-        V0 = w[0x1f80030] - h[A0 + 0x0];
-        A3 = V0 * w[0x1f800004];
-        V0 = w[0x1f800034] - h[A0 + 0x2];
-        T2 = V0 * w[0x1f800000];
-        T1 = (w[0x1f80030] - h[A0 + 0x08]) * w[0x1f800014];
-        T0 = (w[0x1f800034] - h[A0 + 0xa]) * w[0x1f800010];
-        A0 = (w[0x1f80030] - h[A0 + 0x10]) * w[0x1f800024];
-        V0 = (w[0x1f800034] - h[A0 + 0x12]) * w[0x1f800020];
-        A3 = A3 - T2;
-        T1 = T1 - T0;
-        A0 = A0 - V0;
-        800A8B1C	bltz   a3, La8b3c [$800a8b3c]
-
-        800A8B24	bltz   t1, La8c0c [$800a8c0c]
-
-        if (A0 >= 0)
+        if (cross_ba < 0)
         {
-            V0 = hu[triangle_info_offset];
-            position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
-
-            return S3;
-        }
-
-        800A8C04	bgez   t1, La8cc4 [$800a8cc4]
-        800A8C08	nop
-
-        La8c0c:	; 800A8C0C
-        V1 = offset_to_id_access_block;
-        V0 = T3 << 01;
-        V0 = V0 + V1;
-        A0 = hu[V0 + 0002];
-        800A8C20	nop
-        V0 = A0 << 10;
-        A1 = V0 >> 10;
-        if (A1 >= 0)
-        {
-            V0 = V0 >> 13;
-            V1 = bu[0x8009aca6 + V0];
-            V0 = V0 << 03;
-            V0 = A1 - V0;
-            V1 = V1 >> V0;
-            V1 = V1 & 0001;
-            if (V1 == 0)
+            s16 new_id = h[offset_to_id_access_block + id * 0x6 + 0x0];
+            if (new_id >= 0)
             {
-                [triangle_info_offset] = h(A0);
-                continue;
+                if (((bu[0x8009aca6 + new_id / 0x8] >> (new_id % 0x8)) & 0x1) == 0)
+                {
+                    [triangle_info_offset] = h(new_id);
+                    continue;
+                }
             }
+
+            collision->vx = vec_ba.vx;
+            collision->vy = vec_ba.vy;
+            collision->vz = vec_ba.vz;
+
+            s8 fix = ((vec_ba.vx * dir->vx) + (vec_ba.vy * dir->vy) >= 0) ? 0x8 : -0x8;
+
+            [0x801144cc] = h(0);
+            [0x80113f28] = h(hu[triangle_info_offset]);
+
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return fix;
         }
-
-        [S1 + 0x0] = w(w[0x1f800010]);
-        [S1 + 0x4] = w(w[0x1f800014]);
-        [S1 + 0x8] = w(w[0x1f800018]);
-
-        V1 = (w[0x1f800010] * w[S4 + 0x0]) + (w[0x1f800014] * w[S4 + 0x4]);
-        S3 = (V1 >= 0) ? 0x8 : -0x8;
-
-        [0x801144cc] = h(0x1);
-        [0x80113f28] = h(hu[triangle_info_offset]);
-
-        V0 = hu[triangle_info_offset];
-        position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
-
-        return S3;
-
-        La8b3c:	; 800A8B3C
-        V1 = offset_to_id_access_block;
-        V0 = T3 << 01;
-        V0 = V0 + V1;
-        A0 = hu[V0 + 0000];
-        800A8B50	nop
-        V0 = A0 << 10;
-        A1 = V0 >> 10;
-        if (A1 >= 0)
+        else if (cross_cb < 0)
         {
-            V0 = V0 >> 13;
-            V1 = bu[0x8009aca6 + V0];
-            V0 = V0 << 03;
-            V0 = A1 - V0;
-            V1 = V1 >> V0;
-            V1 = V1 & 0x1;
-            if (V1 == 0)
+            s16 new_id = h[offset_to_id_access_block + id * 0x6 + 0x2];
+            if (new_id >= 0)
             {
-                [triangle_info_offset] = h(A0);
-                continue;
+                if (((bu[0x8009aca6 + new_id / 0x8] >> (new_id % 0x8)) & 0x1) == 0)
+                {
+                    [triangle_info_offset] = h(new_id);
+                    continue;
+                }
             }
+
+            collision->vx = vec_cb.vx;
+            collision->vy = vec_cb.vy;
+            collision->vz = vec_cb.vz;
+
+            s8 fix = ((vec_cb.vx * dir->vx) + (&vec_cb.vy * dir->vy) >= 0) ? 0x8 : -0x8;
+
+            [0x801144cc] = h(0x1);
+            [0x80113f28] = h(hu[triangle_info_offset]);
+
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return fix;
         }
-
-        [S1 + 0x0] = w(w[0x1f800000]);
-        [S1 + 0x4] = w(w[0x1f800004]);
-        [S1 + 0x8] = w(w[0x1f800008]);
-
-        V1 = (w[0x1f800000] * w[S4 + 0x0]) + (w[0x1f800004] * w[S4 + 0x4]);
-        S3 = (V1 >= 0) ? 0x8 : -0x8;
-
-        [0x801144cc] = h(0);
-        [0x80113f28] = h(hu[triangle_info_offset]);
-
-        V0 = hu[triangle_info_offset];
-        position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
-
-        return S3;
-
-        La8cc4:	; 800A8CC4
-        if (A0 < 0)
+        else if (cross_ac < 0)
         {
-            A0 = hu[offset_to_id_access_block + 0x4 + T3 * 0x2];
-            V0 = A0 << 10;
-            A1 = V0 >> 10;
-            800A8CEC	bltz   a1, La8d24 [$800a8d24]
-            V0 = V0 >> 13;
-            V1 = bu[0x8009aca6 + V0];
-            V0 = V0 << 03;
-            V0 = A1 - V0;
-            V1 = V1 >> V0;
-            V1 = V1 & 0x1;
-            if (V1 == 0)
+            s16 new_id = h[offset_to_id_access_block + id * 0x6 + 0x4];
+            if (new_id >= 0)
             {
-                [triangle_info_offset] = h(A0);
-                continue;
+                if (((bu[0x8009aca6 + new_id / 0x8] >> (new_id % 0x8)) & 0x1) == 0)
+                {
+                    [triangle_info_offset] = h(new_id);
+                    continue;
+                }
             }
+
+            collision->vx = vec_ac.vx;
+            collision->vy = vec_ac.vy;
+            collision->vz = vec_ac.vz;
+
+            s8 fix = ((vec_ac.vx * dir->vx) + (vec_ac.vy * dir->vy) >= 0) ? 0x8 : -0x8;
+
+            [0x801144cc] = h(0x2);
+            [0x80113f28] = h(hu[triangle_info_offset]);
+
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return fix;
+        }
+        else if ((cross_cb >= 0) && (cross_ac >= 0))
+        {
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return 0;
         }
     }
-
-    La8d24:	; 800A8D24
-    [S1 + 0x0] = w(w[0x1f800020]);
-    [S1 + 0x4] = w(w[0x1f800024]);
-    [S1 + 0x8] = w(w[0x1f800028]);
-
-    V1 = w[0x1f800020] * w[S4 + 0x0] + w[0x1f800024] * w[S4 + 0x4];
-
-    S3 = (V1 >= 0) ? 0x8 : -0x8;
-
-    [0x801144cc] = h(0x2);
-    [0x80113f28] = h(hu[triangle_info_offset]);
-
-    V0 = hu[triangle_info_offset];
-    position->vz = field_walkmesh_calculate_z(0x1f800000, 0x1f800010, 0x1f800030, offset_to_id_block + V0 * 0x18);
-
-    return S3;
-
-
-
-
-
-
-
-
-
-
-
-    triangle_info_offset      = A0;
-    triangle_id               = hu[triangle_info_offset];
-    offset_to_id_block        = w[0x800e4274];
-    offset_to_id_access_block = w[0x80114458];
-    offset_to_triangle        = offset_to_id_block + triangle_id * 18
-    offset_to_triangle_access = offset_to_id_access_block + triangle_id * 6
-    position                  = A1;
-    S4 = A2; // we multiply board vector with this vector and return +8 or -8 according to it
-    S1 = A3; // we store collision board here
-    S3 = 0;
-
-    [0x1f800030] = w(w[position + 0] >> c);
-    [0x1f800034] = w(w[position + 4] >> c);
-    [0x1f800038] = w(0);
-
-    [0x80113f28] = h(ffff);
-
-    // jump here if we can cross side of previous triangle
-    La89f0:	; 800A89F0
-    A0 = 1f800000;
-    A1 = offset_to_triangle + 8;
-    A2 = offset_to_triangle;
-    field_walkmesh_vector_sub();
-
-    A0 = 1f800010;
-    A1 = offset_to_triangle + 10;
-    A2 = offset_to_triangle + 8;
-    field_walkmesh_vector_sub();
-
-    A0 = 1f800020;
-    A1 = offset_to_triangle;
-    A2 = offset_to_triangle + 10;
-    field_walkmesh_vector_sub();
-
-    A3 = (w[0x1f800030] - h[offset_to_triangle + 00]) * w[0x1f800004];
-    T2 = (w[0x1f800034] - h[offset_to_triangle + 02]) * w[0x1f800000];
-    T1 = (w[0x1f800030] - h[offset_to_triangle + 08]) * w[0x1f800014];
-    T0 = (w[0x1f800034] - h[offset_to_triangle + 0a]) * w[0x1f800010];
-    A0 = (w[0x1f800030] + h[offset_to_triangle + 10]) * w[0x1f800024];
-    V0 = (w[0x1f800034] - h[offset_to_triangle + 12]) * w[0x1f800020];
-
-    A3 = A3 - T2;
-    T1 = T1 - T0;
-    A0 = A0 - V0;
-
-    // if we cross AB
-    if (A3 < 0)
-    {
-        A0 = hu[offset_to_triangle_access + 0];
-        if (A0 >= 0)
-        {
-            V1 = bu[0x8009abf4 + V0 / 8 + 0xb2];
-            V0 = A0 & 7;
-            V1 = V0 >> V1;
-            V1 = V1 & 1;
-            if (V1 == 0)
-            {
-                [triangle_info_offset] = h(A0);
-                800A8D1C	j      La89f0 [$800a89f0]
-            }
-        }
-
-        [S1] = w(w[0x1f800000] + 0);
-        [S1] = w(w[0x1f800004] + 4);
-        [S1] = w(w[0x1f800008] + 8);
-
-        V1 = w[0x1f800000];
-        V0 = w[S4];
-        HI/LO = V1 * V0;
-        V1 = LO;
-
-        A0 = w[0x1f800004];
-        V0 = w[S4 + 4];
-        HI/LO = A0 * V0;
-        V0 = LO;
-
-        V1 = V1 + V0;
-        if (V1 >= 0)
-        {
-            S3 = 8;
-        }
-        else
-        {
-            S3 = -8;
-        }
-
-        [0x801144cc] = h(0);
-        [0x80113f28] = h(triangle_id);
-    }
-    // if we cross BC
-    else if (T1 < 0)
-    {
-        // if we can cross this side
-        A0 = hu[offset_to_triangle_access + 2];
-
-        if (A0 >= 0)
-        {
-            V1 = bu[0x8009abf4 + V0 / 8 + 0xb2];
-            V0 = A0 & 7;
-            V1 = V0 >> V1;
-            V1 = V1 & 1;
-            if (V1 == 0)
-            {
-                [triangle_info_offset] = h(A0);
-                800A8D1C	j      La89f0 [$800a89f0]
-            }
-        }
-
-        V0 = w[0x1f800010];
-        [S1] = w(V0);
-        V0 = w[0x1f800014];
-        [S1] = w(V0 + 4);
-        V0 = w[0x1f800018];
-        [S1] = w(V0 + 8);
-
-        V1 = w[0x1f800010];
-        V0 = w[S4];
-        HI/LO = V1 * V0;
-        V1 = LO;
-
-        A0 = w[0x1f800014];
-        V0 = w[S4 + 4];
-        HI/LO = A0 * V0;
-        V0 = LO;
-
-        V1 = V1 + V0;
-        if (V1 >= 0)
-        {
-            S3 = 8;
-        }
-        else
-        {
-            S3 = -8;
-        }
-
-        [0x801144cc] = h(1);
-        [0x80113f28] = h(triangle_id);
-    }
-    // if we cross CA
-    else if (A0 < 0)
-    {
-        A0 = hu[offset_to_triangle_access + 4];
-
-        if (A0 >= 0)
-        {
-            V1 = bu[0x8009abf4 + V0 / 0x8 + 0xb2];
-            V0 = A0 & 7;
-            V1 = V0 >> V1;
-            V1 = V1 & 1;
-            if (V1 == 0)
-            {
-                [triangle_info_offset] = h(A0);
-                800A8D1C	j      La89f0 [$800a89f0]
-            }
-        }
-
-        V0 = w[0x1f800020];
-        [S1] = w(V0);
-        V0 = w[0x1f800024];
-        [S1] = w(V0 + 4);
-        V0 = w[0x1f800028];
-        [S1] = w(V0 + 8);
-
-        V1 = w[0x1f800020];
-        V0 = w[S4];
-        HI/LO = V1 * V0;
-        V1 = LO;
-
-        A0 = w[0x1f800024];
-        V0 = w[S4 + 4];
-        HI/LO = A0 * V0;
-        V0 = LO;
-
-        V1 = V1 + V0;
-        if (V1 >= 0)
-        {
-            S3 = 8;
-        }
-        else
-        {
-            S3 = -8;
-        }
-
-        [0x801144cc] = h(2);
-        [0x80113f28] = h(triangle_id);
-    }
-
-    A0 = 1f800000;
-    A1 = 1f800010;
-    A2 = 1f800030;
-    A3 = offset_to_triangle;
-    field_walkmesh_calculate_z();
-    [position + 8] = w(V0);
-
-    return S3;
 }
 
 
 
-////////////////////////////////
-// field_walkmesh_vector_sub()
-
-ret = A0; // address to save point1 - point2
-p1 = A1;
-p2 = A2;
-
-[ret + 0] = w(h[p1 + 0] - h[p2 + 0]);
-[ret + 4] = w(h[p1 + 2] - h[p2 + 2]);
-[ret + 8] = w(h[p1 + 4] - h[p2 + 4]);
-////////////////////////////////
+void field_entity_vector_sub(VECTOR* ret, SVECTOR* p1, SVECTOR* p2)
+{
+    ret->vx = p1->vx - p2->vx;
+    ret->vy = p1->vy - p2->vy;
+    ret->vz = p1->vz - p2->vz;
+}
 
 
 
-////////////////////////////////
-// field_walkmesh_calculate_z()
+s32 field_entity_calculate_z(VECTOR* vec1, VECTOR* vec2, VECTOR* pos, offset_to_triangle)
+{
+    VECTOR norm;
+    norm.vx = (vec2->vy * vec1->vz) - (vec1->vy * vec2->vz);
+    norm.vy = (vec1->vx * vec2->vz) - (vec1->vz * vec2->vx);
+    norm.vz = (vec2->vx * vec1->vy) - (vec1->vx * vec2->vy);
+    vec1->vx = w(h[offset_to_triangle + 0x0]);
+    vec1->vy = w(h[offset_to_triangle + 0x2]);
+    vec1->vz = w(h[offset_to_triangle + 0x4]);
 
-vec1 = A0;
-vec2 = A1;
-pos  = A2;
-offset_to_triangle = A3;
-
-[SP + 0] = w((w[vec2 + 4] * w[vec1 + 8]) - (w[vec1 + 4] * w[vec2 + 8]));
-[SP + 4] = w((w[vec1 + 0] * w[vec2 + 8]) - (w[vec1 + 8] * w[vec2 + 0]));
-[SP + 8] = w((w[vec2 + 0] * w[vec1 + 4]) - (w[vec1 + 0] * w[vec2 + 4]));
-
-[vec1 + 0] = w(h[offset_to_triangle + 0]);
-[vec1 + 4] = w(h[offset_to_triangle + 2]);
-[vec1 + 8] = w(h[offset_to_triangle + 4]);
-
-V0 = w[SP + 0] * w[vec1 + 0];
-T2 = w[SP + 4] * w[vec1 + 4];
-A3 = w[SP + 8] * h[offset_to_triangle + 4];
-A1 = w[SP + 0] * w[pos + 0];
-V1 = w[SP + 4] * w[pos + 4];
-
-return (V0 + T2 + A3 - A1 - V1) / (vec1 + 0);
-////////////////////////////////
+    s32 a_px = norm.vx * vec1->vx;
+    s32 b_py = norm.vy * vec1->vy;
+    s32 c_pz = norm.vz * h[offset_to_triangle + 0x4];
+    s32 a_posx = norm.vx * pos->vx;
+    s32 b_posy = norm.vy * pos->vy;
+    return ((a_px + b_py + c_pz) - (a_posx + b_posy)) / norm.vz;
+}
 
 
 
@@ -2386,39 +2073,39 @@ int field_entity_move_by_walkmesh(s16 entity_id)
 
 
 
-////////////////////////////////
-// field_entity_collision_check()
-
-entity_check = A0;
-entities_n = h[0x8009abf4 + 0x28];
-given_position = A1;
-solid_range = hu[g_field_entities + entity_check * 84 + 0x6c];
-
-T2 = 0;
-
-for (int i = 0; i < entities_n; ++i)
+int field_entity_collision_check(s16 entity_id, VECTOR* pos)
 {
-    if (i != entity_check)
-    {
-        if (bu[g_field_entities + i * 0x84 + 0x59] == 0) // if entity solid
-        {
-            if (((g_field_entities[i].pos_z >> c) - w[given_position + 8] + 0x7e) < 0xfe) // if Z value not very different
-            {
-                A0 = (solid_range + hu[g_field_entities + i * 0x84 + 0x6c]) / 0x2;
-                V1 = (g_field_entities[i].pos_x - w[given_position + 0x0]) >> 0xc;
-                V0 = (g_field_entities[i].pos_y - w[given_position + 0x4]) >> 0xc;
+    u8 collide = 0;
 
-                if (((V1 * V1) + (V0 * V0)) < (A0 * A0)) // if we collide
+    s16 entities_n = h[0x8009abf4 + 0x28];
+    for (int i = 0; i < entities_n; ++i)
+    {
+        if (i != entity_id)
+        {
+            if (bu[g_field_entities + i * 0x84 + 0x59] == 0) // if entity solid
+            {
+                if (((g_field_entities[i].pos_z >> 0xc) - pos->vz + 0x7e) < 0xfe) // if Z value not very different
                 {
-                    T2 = 1;
-                    if (entity_check == h[0x800965e0]) [g_field_entities + i * 84 + 58] = b(1); // if PC
+                    s32 sol_dist = (g_field_entities[entity_id].solid_range + g_field_entities[i].solid_range) / 0x2;
+                    s32 x_dist = (g_field_entities[i].pos_x - pos->vx) >> 0xc;
+                    s32 y_dist = (g_field_entities[i].pos_y - pos->vy) >> 0xc;
+
+                    if (((x_dist * x_dist) + (y_dist * y_dist)) < (sol_dist * sol_dist)) // if we collide
+                    {
+                        collide = 0x1;
+
+                        if (entity_id == h[0x800965e0])
+                        {
+                            [g_field_entities + i * 0x84 + 0x58] = b(1); // store collide for script activation
+                        }
+                    }
                 }
             }
         }
     }
+
+    return collide;
 }
-return T2;
-////////////////////////////////
 
 
 
@@ -2468,101 +2155,94 @@ return -1;
 
 
 
-////////////////////////////////
-// field_entity_move_line_check()
-
-entity_data_offset = A0;
-line_data = A1;
-FP = 0;
-
-[0x1f800000] = w(w[entity_data_offset + c] >> c); //old position x
-[0x1f800004] = w(w[entity_data_offset + 10] >> c); //old position y
-[0x1f800008] = w(w[entity_data_offset + 14] >> c); //old position z
-[0x1f800010] = w(w[A2 + 0] >> c); //new position x
-[0x1f800014] = w(w[A2 + 4] >> c); //new position y
-[0x1f800018] = w(w[entity_data_offset + 14] >> c); //old position z
-
-for (int i = 0; i < 20; ++i) // go through all lines
+int field_entity_move_line_check(FieldEntity* entity, line_data, A2)
 {
-    if (bu[line_data + i * 0x18 + 0xc] == 0x1) // if line active
+    FP = 0;
+
+    VECTOR old;
+    old.vx = entity->pos_x >> 0xc;
+    old.vy = entity->pos_y >> 0xc;
+    old.vz = entity->pos_z >> 0xc;
+
+    [0x1f800010] = w(w[A2 + 0] >> c); //new position x
+    [0x1f800014] = w(w[A2 + 4] >> c); //new position y
+    [0x1f800018] = w(entity->pos_z >> 0xc); //old position z
+
+    for (int i = 0; i < 20; ++i) // go through all lines
     {
-        [line_data + i * 0x18 + 0x15] = b(0);
-
-        move_distance_to_line(line_data + i * 0x18, 0x1f800000, 0x1f800020);
-
-        distance = V1 = V0;
-        [SP + 10] = w(V1);
-
-        solid_range = hu[entity_data_offset + 6c];
-
-        // if we closer to line than solid range
-        if (V1 != -1 && V1 < solid_range * solid_range)
+        if (bu[line_data + i * 0x18 + 0xc] == 0x1) // if line active
         {
-            if (bu[line_data + i * 0x18 + 16] == 1)
+            [line_data + i * 0x18 + 0x15] = b(0);
+
+            move_distance_to_line(line_data + i * 0x18, &old, 0x1f800020);
+
+            distance = V1 = V0;
+            [SP + 10] = w(V1);
+
+            // if we closer to line than solid range
+            if ((V1 != -0x1) && (V1 < (entity->solid_range * entity->solid_range)))
             {
-                FP = 1;
-            }
+                if (bu[line_data + i * 0x18 + 0x16] == 0x1)
+                {
+                    FP = 1;
+                }
 
-            if (bu[line_data + i * 0x18 + e] == 0)
-            {
-                [line_data + i * 0x18 + 12] = b(1);
-            }
-            [line_data + i * 0x18 + e] = b(1);
+                if (bu[line_data + i * 0x18 + e] == 0)
+                {
+                    [line_data + i * 0x18 + 12] = b(1);
+                }
+                [line_data + i * 0x18 + e] = b(1);
 
-            x1 = h[line_data + i * 0x18 + 0]; // x1
-            y1 = h[line_data + i * 0x18 + 2]; // y1
-            x2 = h[line_data + i * 0x18 + 6]; // x2
-            y2 = h[line_data + i * 0x18 + 8]; // y2
-            old_x = w[0x1f800000];
-            old_y = w[0x1f800004];
-            new_x = w[0x1f800010];
-            new_y = w[0x1f800014];
+                x1 = h[line_data + i * 0x18 + 0]; // x1
+                y1 = h[line_data + i * 0x18 + 2]; // y1
+                x2 = h[line_data + i * 0x18 + 6]; // x2
+                y2 = h[line_data + i * 0x18 + 8]; // y2
+                old_x = old.vx;
+                old_y = old.vy;
+                new_x = w[0x1f800010];
+                new_y = w[0x1f800014];
 
-            T0 = ((x2 - x1) * (old_y - y1)) - ((old_x - x1) * (y2 - y1));
-            A0 = ((x2 - x1) * (new_y - y1)) - ((new_x - x1) * (y2 - y1));
+                T0 = ((x2 - x1) * (old_y - y1)) - ((old_x - x1) * (y2 - y1));
+                A0 = ((x2 - x1) * (new_y - y1)) - ((new_x - x1) * (y2 - y1));
 
-            // if we cross the line
-            if ((A0 > 0 && T0 <= 0) || (T0 > 0 && A0 <= 0) || (A0 >= 0 && T0 < 0) || (T0 >= 0 && A0 < 0))
-            {
-                [line_data + i * 0x18 + f] = b(1);
-            }
+                // if we cross the line
+                if ((A0 > 0 && T0 <= 0) || (T0 > 0 && A0 <= 0) || (A0 >= 0 && T0 < 0) || (T0 >= 0 && A0 < 0))
+                {
+                    [line_data + i * 0x18 + 0xf] = b(0x1);
+                }
 
-            // if previously we where stay on line
-            if (w[0x1f800000] == w[0x1f800020] && w[0x1f800004] == w[0x1f800024])
-            {
-                [line_data + i * 0x18 + 10] = b(1);
-                [line_data + i * 0x18 + 15] = b(1);
-            }
-            else
-            {
-                A0 = 1f800000;
-                A1 = 1f800020;
-                A2 = SP + 10;
-                field_entity_calculate_direction_by_vectors();
-                [line_data + i * 0x18 + 14] = b(V0);
-
-                // if we move to line
-                if (((bu[line_data + i * 0x18 + 14] - bu[entity_data_offset + 36] + 40) & ff) < 80)
+                // if previously we where stay on line
+                if ((old.vx == w[0x1f800020]) && (old.vy == w[0x1f800024]))
                 {
                     [line_data + i * 0x18 + 10] = b(1);
                     [line_data + i * 0x18 + 15] = b(1);
                 }
-            }
-        }
-        else
-        {
-            if (bu[line_data + i * 0x18 + e] == 1)
-            {
-                [line_data + i * 0x18 + 13] = b(1);
-            }
+                else
+                {
+                    [line_data + i * 0x18 + 0x14] = b(field_entity_calculate_direction_by_vectors(&old, 0x1f800020, SP + 0x10));
 
-            [line_data + i * 0x18 + e] = b(0);
+                    // if we move to line
+                    if (((bu[line_data + i * 0x18 + 0x14] - entity->move_dir + 0x40) & 0xff) < 0x80)
+                    {
+                        [line_data + i * 0x18 + 0x10] = b(0x1);
+                        [line_data + i * 0x18 + 0x15] = b(0x1);
+                    }
+                }
+            }
+            else
+            {
+                if (bu[line_data + i * 0x18 + 0xe] == 0x1)
+                {
+                    [line_data + i * 0x18 + 0x13] = b(0x1);
+                }
+
+                [line_data + i * 0x18 + 0xe] = b(0);
+            }
         }
     }
-}
 
-return FP;
-////////////////////////////////
+    return FP;
+}
 
 
 
