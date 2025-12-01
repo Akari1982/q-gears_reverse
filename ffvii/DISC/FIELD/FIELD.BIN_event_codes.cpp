@@ -2562,7 +2562,7 @@ A0 = SP + 10;
 A1 = SP + 20;
 A2 = SP + 30;
 
-field_entity_calculate_direction_by_vectors();
+field_entity_move_dir_by_vec();
 
 V1 = bu[0x800722C4];
 A0 = bu[0x8007EB98 + V1];
@@ -2720,7 +2720,7 @@ if (bu[entities_data + current_model * 84 + 3A] != 0 &&
     A0 = SP + 10;
     A1 = SP + 20;
     A2 = SP + 30;
-    field_entity_calculate_direction_by_vectors();
+    field_entity_move_dir_by_vec();
 
     [entities_data + current_model * 84 + 3E] = h(V0);
 
