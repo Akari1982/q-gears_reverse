@@ -212,7 +212,7 @@ int field_event_join_set(u8 actor_id, u8 speed)
         [SP + 0x2c] = w(w[entities_data + V1 * 0x84 + 0x10] >> 0xc);
         [SP + 0x30] = w(w[entities_data + V1 * 0x84 + 0x14] >> 0xc);
 
-        V0 = field_entity_move_dir_by_vec(SP + 0x18, SP + 0x28, SP + 0x38);
+        V0 = field_entity_dir_by_vec(SP + 0x18, SP + 0x28, SP + 0x38);
         field_event_split_join_set_turn(actor_id, bu[0x8007eb98 + actor_id], bu[entities_data + A1 * 0x84 + 0x38], V0 & 0xff);
 
         [0x80081d90 + actor_id] = b(0x2);
@@ -348,7 +348,7 @@ int field_event_split_join_set_move(u8 actor_id, s16 x, s16 y, u8 steps, u8 from
     [SP + 0x24] = w(y);
     [SP + 0x28] = w(w[entities_data + entity_id * 0x84 + 0x14] >> 0xc);
 
-    field_entity_move_dir_by_vec(SP + 0x10, SP + 0x20, SP + 0x30);
+    field_entity_dir_by_vec(SP + 0x10, SP + 0x20, SP + 0x30);
 
     // movement speed
     [entities_data + entity_id * 0x84 + 0x70] = h((w[SP + 0x30] << 0x8) / steps);

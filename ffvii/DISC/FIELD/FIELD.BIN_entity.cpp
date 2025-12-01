@@ -1,0 +1,1443 @@
+void field_entity_movement_update(u32 input)
+{
+    entities_n = h[0x8009abf4 + 0x28];
+    pc_entity = h[0x800965e0];
+
+    if (entities_n <= 0) return;
+
+    for (int i = 0; i < entities_n; ++i)
+    {
+        V1 = w[0x8008357c];
+        V0 = bu[V1 + i * 0x8 + 0x4];
+        if (V0 != 0xff)
+        {
+            A0 = w[g_field_models + 0x4];
+            V1 = A0 + V0 * 24;
+
+            V0 = bu[g_field_entities + i * 84 + 5c]; // model visibility
+            if (V0 == 1) [V1] = b(1);
+            else          [V1] = b(0);
+        }
+    }
+
+    // turn update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        state = bu[g_field_entities + i * 84 + 3b];
+        if (state == 1)
+        {
+            A0 = h[g_field_entities + i * 84 + 3c];
+            A1 = h[g_field_entities + i * 84 + 3e];
+            A2 = bu[g_field_entities + i * 84 + 39];
+            A3 = bu[g_field_entities + i * 84 + 3a];
+            field_calculate_current_value_by_steps();
+            [g_field_entities + i * 84 + 38] = b(V0);
+
+            if (bu[g_field_entities + i * 84 + 3a] == bu[g_field_entities + i * 84 + 39])
+            {
+                [g_field_entities + i * 84 + 3b] = b(3);
+            }
+            else
+            {
+                [g_field_entities + i * 84 + 3a] = b(bu[g_field_entities + i * 84 + 3a] + 1);
+            }
+        }
+        else if (state == 2)
+        {
+            A0 = h[g_field_entities + i * 84 + 3c];
+            A1 = h[g_field_entities + i * 84 + 3e];
+            A2 = bu[g_field_entities + i * 84 + 39];
+            A3 = bu[g_field_entities + i * 84 + 3a];
+            field_calculate_smooth_current_value_by_steps();
+            [g_field_entities + i * 84 + 38] = b(V0);
+
+            if (bu[g_field_entities + i * 84 + 3a] == bu[g_field_entities + i * 84 + 39])
+            {
+                [g_field_entities + i * 84 + 3b] = b(3);
+            }
+            else
+            {
+                [g_field_entities + i * 84 + 3a] = b(bu[g_field_entities + i * 84 + 3a] + 1);
+            }
+        }
+    }
+
+    // offset update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        type = bu[g_field_entities + i * 84 + 56];
+
+        if (type == 1)
+        {
+            A0 = hu[g_field_entities + i * 84 + 42];
+            A1 = hu[g_field_entities + i * 84 + 44];
+            A2 = hu[g_field_entities + i * 84 + 52];
+            A3 = hu[g_field_entities + i * 84 + 54];
+            field_calculate_current_value_by_steps();
+            [g_field_entities + i * 84 + 40] = h(V0);
+
+            A0 = hu[g_field_entities + i * 84 + 48];
+            A1 = hu[g_field_entities + i * 84 + 4a];
+            A2 = hu[g_field_entities + i * 84 + 52];
+            A3 = hu[g_field_entities + i * 84 + 54];
+            field_calculate_current_value_by_steps();
+            [g_field_entities + i * 84 + 46] = h(V0);
+
+            A0 = hu[g_field_entities + i * 84 + 4e];
+            A1 = hu[g_field_entities + i * 84 + 50];
+            A2 = hu[g_field_entities + i * 84 + 52];
+            A3 = hu[g_field_entities + i * 84 + 54];
+            field_calculate_current_value_by_steps();
+            [g_field_entities + i * 84 + 4c] = h(V0);
+        }
+        else if (type == 2)
+        {
+            A0 = hu[g_field_entities + i * 84 + 42];
+            A1 = hu[g_field_entities + i * 84 + 44];
+            A2 = hu[g_field_entities + i * 84 + 52];
+            A3 = hu[g_field_entities + i * 84 + 54];
+            field_calculate_smooth_current_value_by_steps();
+            [g_field_entities + i * 84 + 40] = h(V0);
+
+            A0 = hu[g_field_entities + i * 84 + 48];
+            A1 = hu[g_field_entities + i * 84 + 4a];
+            A2 = hu[g_field_entities + i * 84 + 52];
+            A3 = hu[g_field_entities + i * 84 + 54];
+            field_calculate_smooth_current_value_by_steps();
+            [g_field_entities + i * 84 + 46] = h(V0);
+
+            A0 = hu[g_field_entities + i * 84 + 4e];
+            A1 = hu[g_field_entities + i * 84 + 50];
+            A2 = hu[g_field_entities + i * 84 + 52];
+            A3 = hu[g_field_entities + i * 84 + 54];
+            field_calculate_smooth_current_value_by_steps();
+            [g_field_entities + i * 84 + 0x4c] = h(V0);
+        }
+        else
+        {
+            continue;
+        }
+
+        if (hu[g_field_entities + i * 84 + 54] != hu[g_field_entities + i * 84 + 52])
+        {
+            [g_field_entities + i * 84 + 54] = h(hu[g_field_entities + i * 84 + 54] + 1);
+        }
+        else
+        {
+            [g_field_entities + i * 84 + 56] = b(3);
+        }
+
+        if (i == pc_entity)
+        {
+            field_entity_line_clear(0x8007e7ac);
+        }
+    }
+
+    // manual move update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        // if model not performing auto action
+        if (bu[g_field_entities + i * 84 + 5d] == 0)
+        {
+            if ((i == pc_entity) && (bu[0x8009abf4 + 0x32] != 1)) // if we can control this entity (manual model and UC == 0)
+            {
+                move_add_shift_rotate(input);
+
+                // set idle animation id by default
+                [g_field_entities + pc_entity * 0x84 + 0x5e] = b(bu[0x8009abf4 + 0x2c]);
+
+                field_scale = h[0x8009abf4 + 0x10];
+
+                if (input & BUTTON_CROSS)
+                {
+                    if (bu[0x8009abf4 + 0x3a] == 0)
+                    {
+                        V0 = field_scale * 0x8;
+                    }
+                    else
+                    {
+                        V0 = field_scale * 0xc;
+                    }
+                }
+                else
+                {
+                    if (bu[0x8009abf4 + 0x3a] != 0)
+                    {
+                        V0 = field_scale * 0x3;
+                    }
+                    else
+                    {
+                        V0 = field_scale * 0x2;
+                    }
+                }
+
+                [g_field_entities + pc_entity * 84 + 70] = h(V0); // set speed
+
+                if (input & (BUTTON_UP | BUTTON_RIGHT | BUTTON_DOWN | BUTTON_LEFT))
+                {
+                    if (input & BUTTON_UP)
+                    {
+                        [g_field_entities + pc_entity * 84 + 36] = b(0);
+
+                        if (input & BUTTON_LEFT) [g_field_entities + pc_entity * 84 + 36] = b(0x20);
+                        if (input & BUTTON_RIGHT) [g_field_entities + pc_entity * 84 + 36] = b(0xe0);
+                    }
+                    else
+                    {
+                        if (input & BUTTON_DOWN)
+                        {
+                            [g_field_entities + pc_entity * 0x84 + 0x36] = b(0x80);
+
+                            if (input & BUTTON_LEFT) [g_field_entities + pc_entity * 0x84 + 0x36] = b(0x60);
+                            if (input & BUTTON_RIGHT) [g_field_entities + pc_entity * 0x84 + 0x36] = b(0xa0);
+                        }
+                        else
+                        {
+                            if (input & BUTTON_RIGHT) [g_field_entities + pc_entity * 84 + 36] = b(c0);
+                            if (input & BUTTON_LEFT) [g_field_entities + pc_entity * 84 + 36] = b(40);
+                        }
+                    }
+
+                    // read field global rotation byte
+                    V1 = w[0x800716c4];
+                    [g_field_entities + pc_entity * 0x84 + 0x36] = b(bu[V1 + 0x9] + bu[g_field_entities + pc_entity * 0x84 + 0x36] + bu[g_field_entities + pc_entity * 0x84 + 0x35]);
+
+                    A0 = field_entity_move(i);
+
+                    // if this byte == 0 store move direction as model direction
+                    if (bu[g_field_entities + pc_entity * 0x84 + 0x37] == 0)
+                    {
+                        [g_field_entities + pc_entity * 0x84 + 0x38] = b(bu[g_field_entities + pc_entity * 0x84 + 0x36]);
+                    }
+
+                    if ((g_field_control.cmd != FIELD_CMD_MAP) && (A0 == 0x1))
+                    {
+                        funcaba70();
+                    }
+                }
+            }
+
+            handle_animation_update(i);
+        }
+    }
+
+    // auto move update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        if (bu[g_field_entities + i * 84 + 5d] == 1)
+        {
+            if (bu[0x8009abf4 + 0x33] != 1)
+            {
+                [g_field_entities + i * 84 + 0x35] = b(0);
+
+                field_entity_auto_move(&g_field_entities[i], h[g_field_entities + i * 84 + 0x68]);
+
+                if (V0 == 0)
+                {
+                    [g_field_entities + i * 84 + 6a] = h(2);
+                }
+                else
+                {
+                    [g_field_entities + i * 84 + 6a] = h(1);
+
+                    field_entity_move(i);
+
+                    if (bu[g_field_entities + i * 84 + 37] == 0)
+                    {
+                        [g_field_entities + i * 84 + 38] = b(bu[g_field_entities + i * 84 + 36]);
+                    }
+                }
+
+                A0 = i;
+                handle_animation_update();
+
+                if (i == pc_entity)
+                {
+                    field_entity_line_clear(0x8007e7ac);
+                }
+            }
+        }
+    }
+
+    // jump update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        V1 = bu[g_field_entities + i * 84 + 5d];
+        // if jump
+        if (V1 == 3)
+        {
+            A0 = i * 84 + 10;
+
+            V0 = h[g_field_entities + i * 84 + 6a];
+            if (V0 == 0)
+            {
+                V0 = g_field_entities[i].move_to_i;
+                V1 = g_field_entities[i].pos_x;
+                A3 = g_field_entities[i].pos_y;
+                T0 = g_field_entities[i].pos_z;
+
+                // byte added to rotation byte in triggers and to move direction and stored in move direction.
+                [g_field_entities + i * 0x84 + 0x35] = b(0);
+                [g_field_entities + i * 0x84 + 0x18] = w(V1);
+                [g_field_entities + i * 0x84 + 0x1c] = w(A3);
+                [g_field_entities + i * 0x84 + 0x20] = w(T0);
+
+                id_offset = w[0x800e4274];
+                A1 = id_offset + V0 * 18 + 8;
+                A2 = id_offset + V0 * 18;
+                field_entity_vector_sub();
+
+                V0 = g_field_entities[i].move_to_i;
+                A0 = SP + 20;
+                A1 = id_offset + V0 * 0x18 + 0x10;
+                A2 = id_offset + V0 * 0x18 + 0x8;
+                field_entity_vector_sub();
+
+                [SP + 0x30] = w(g_field_entities[i].move_to_x >> 0xc);
+                [SP + 0x34] = w(g_field_entities[i].move_to_y >> 0xc);
+
+                V0 = g_field_entities[i].move_to_i;
+
+                Z_fin = field_entity_calculate_z(SP + 0x10, SP + 0x20, SP + 0x30, id_offset + V0 * 18) << 0xc;
+                g_field_entities[i].move_to_z = Z_fin;
+
+                Z_start = w[g_field_entities + i * 84 + 20];
+                steps = h[g_field_entities + i * 84 + 30];
+                b_value = (Z_fin - Z_start) / steps - steps * 0x1740;
+                [g_field_entities + i * 0x84 + 0x2c] = w(b_value);
+
+                [g_field_entities + i * 0x84 + 0x32] = h(0);
+                [g_field_entities + i * 0x84 + 0x6a] = w(0x1);
+            }
+            else
+            {
+                V1 = h[g_field_entities + i * 84 + 32];
+                V0 = h[g_field_entities + i * 84 + 30];
+                A3 = V1;
+                // if current substep == number of steps
+                if (V0 == V1)
+                {
+                    g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
+
+                    [g_field_entities + i * 0x84 + 0x6a] = h(0x2);
+                }
+                else
+                {
+                    [g_field_entities + i * 0x84 + 0x32] = h(A3 + 0x1);
+
+                    A0 = w[g_field_entities + i * 0x84 + 0x18];
+                    A1 = w[g_field_entities + i * 0x84 + 0x78];
+                    A2 = h[g_field_entities + i * 0x84 + 0x30];
+                    A3 = h[g_field_entities + i * 0x84 + 0x32];
+                    g_field_entities[i].pos_x = field_calculate_current_value_by_steps();
+
+                    A0 = w[0x80074ec0 + i * 0x84];
+                    A1 = w[0x80074f20 + i * 0x84];
+                    A2 = h[g_field_entities + i * 0x84 + 0x30];
+                    A3 = h[g_field_entities + i * 0x84 + 0x32];
+                    g_field_entities[i].pos_y = field_calculate_current_value_by_steps();
+
+                    step = h[g_field_entities + i * 0x84 + 0x32];
+                    g_field_entities[i].pos_z = w[g_field_entities + i * 0x84 + 0x20] - step ^ 0x2 * 0x1740 + step * h[g_field_entities + i * 0x84 + 0x2c];
+                }
+            }
+
+            handle_animation_update(i);
+
+            if (i == pc_entity)
+            {
+                field_entity_line_clear(0x8007e7ac);
+            }
+        }
+    }
+
+    // ladder update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        V1 = bu[g_field_entities + i * 84 + 5d];
+        if ((V1 == 4) || (V1 == 5))
+        {
+            V0 = w[0x8008357c];
+            A0 = bu[V0 + i * 8 + 4];
+            if (A0 != ff)
+            {
+                V1 = w[g_field_models + 0x4];
+                V0 = V1 + A0 * 24;
+                A0 = hu[V0 + 1a];
+                V0 = w[V0 + 1c];
+
+                V1 = h[g_field_entities + i * 84 + 6a];
+                S3 = A0 + V0;
+                if (V1 == 0)
+                {
+                    // copy current coords as start coords
+                    X_cur = g_field_entities[i].pos_x;
+                    [g_field_entities + i * 0x84 + 0x18] = w(X_cur);
+                    Y_cur = g_field_entities[i].pos_y;
+                    [g_field_entities + i * 0x84 + 0x1c] = w(Y_cur);
+                    Z_cur = g_field_entities[i].pos_z;
+                    [g_field_entities + i * 0x84 + 0x20] = w(Z_cur);
+
+                    X_fin = g_field_entities[i].move_to_x;
+                    A1 = (X_fin - X_cur) >> 0xc;
+                    [SP + 10] = w(A1);
+
+                    Y_fin = g_field_entities[i].move_to_y;
+                    A0 = (Y_fin - Y_cur) >> 0xc;
+                    [SP + 14] = w(A0);
+
+                    Z_fin = g_field_entities[i].move_to_z;
+                    V0 = (Z_fin - Z_cur) >> 0xc;
+                    [SP + 18] = w(V0);
+
+                    system_square_root(A1 * A1 + A0 * A0 + V0 * V0);
+
+                    [g_field_entities + i * 0x84 + 0x30] = h(V0 * 0x4);
+                    [g_field_entities + i * 0x84 + 0x32] = h(0);
+                    [g_field_entities + i * 0x84 + 0x6a] = h(0x1);
+
+                    [g_field_entities + i * 0x84 + 0x35] = b(0);
+
+                    V1 = bu[g_field_entities + i * 0x84 + 0x5e];
+                    [g_field_entities + i * 0x84 + 0x64] = h(hu[S3 + V1 * 0x10] - 1);
+
+                    if (i == pc_entity)
+                    {
+                        field_entity_line_clear(0x8007e7ac);
+                    }
+                }
+                else
+                {
+                    uc = bu[0x8009abf4 + 0x32];
+                    if ((i == pc_entity) && (uc == 0))
+                    {
+                        V1 = bu[g_field_entities + i * 84 + 5d];
+                        up_down_switch = h[g_field_entities + i * 84 + 68];
+                        if (V1 == 0x5)
+                        {
+                            if (up_down_switch == 0)
+                            {
+                                start = BUTTON_LEFT;
+                                ens = BUTTON_RIGHT;
+                            }
+                            else
+                            {
+                                start = BUTTON_RIGHT;
+                                ens = BUTTON_LEFT;
+                            }
+                        }
+                        else
+                        {
+                            if (up_down_switch == 0)
+                            {
+                                start = BUTTON_DOWN;
+                                ens = BUTTON_UP;
+                            }
+                            else
+                            {
+                                start = BUTTON_UP;
+                                ens = BUTTON_DOWN;
+                            }
+                        }
+
+                        if (input & start)
+                        {
+                            step = h[g_field_entities + i * 84 + 32];
+                            if (step == 0)
+                            {
+                                [g_field_entities + i * 84 + 6a] = h(2);
+                            }
+                            else
+                            {
+                                step = step - 1;
+                                [g_field_entities + i * 84 + 32] = h(step);
+
+                                V0 = hu[g_field_entities + i * 84 + 62] - hu[g_field_entities + i * 84 + 60]; // reduce by animation_speed
+                                [g_field_entities + i * 84 + 62] = h(V0);
+                                V0 = V0 << 10;
+
+                                if (V0 < 0)
+                                {
+                                    [g_field_entities + i * 84 + 62] = h(hu[g_field_entities + i * 84 + 64] * 10);
+                                }
+                            }
+                        }
+
+                        if (input & end)
+                        {
+                            step = h[g_field_entities + i * 84 + 32];
+                            steps = h[g_field_entities + i * 84 + 30];
+                            if (step == steps)
+                            {
+                                g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
+                                [g_field_entities + i * 0x84 + 0x6a] = h(0x2);
+                            }
+                            else
+                            {
+                                step = step + 1;
+                                [g_field_entities + i * 84 + 32] = h(step);
+
+                                V0 = hu[g_field_entities + i * 84 + 62] + hu[g_field_entities + i * 84 + 60]; // increment by animation speed
+                                [g_field_entities + i * 84 + 62] = h(V0);
+
+                                if (hu[g_field_entities + i * 84 + 64] < (V0 * 10))
+                                {
+                                    [g_field_entities + i * 84 + 62] = h(0);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        step = h[g_field_entities + i * 84 + 32];
+                        steps = h[g_field_entities + i * 84 + 30];
+                        if (step == steps)
+                        {
+                            g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
+                            [g_field_entities + i * 84 + 6a] = h(2);
+                        }
+                        else
+                        {
+                            step = step + 1;
+                            [g_field_entities + i * 84 + 32] = h(step);
+
+
+                            V0 = hu[g_field_entities + i * 84 + 62];
+                            animation_speed = hu[g_field_entities + i * 84 + 60];
+                            V0 = V0 + animation_speed();
+                            [g_field_entities + i * 84 + 62] = h(V0);
+
+                            V1 = hu[g_field_entities + i * 84 + 64];
+                            V0 = V0 * 10;
+
+                            if (V1 < V0)
+                            {
+                                [g_field_entities + i * 84 + 62] = h(0);
+                            }
+                        }
+                    }
+
+                    A0 = w[g_field_entities + i * 0x84 + 0x18];
+                    A1 = g_field_entities[i].move_to_x;
+                    A2 = w[g_field_entities + i * 0x84 + 0x30];
+                    A3 = w[g_field_entities + i * 0x84 + 0x32];
+                    g_field_entities[i].pos_x = field_calculate_current_value_by_steps();
+
+                    A0 = w[g_field_entities + i * 0x84 + 0x1c];
+                    A1 = g_field_entities[i].move_to_y;
+                    A2 = w[g_field_entities + i * 0x84 + 0x30];
+                    A3 = w[g_field_entities + i * 0x84 + 0x32];
+                    g_field_entities[i].pos_y = field_calculate_current_value_by_steps();
+
+                    A0 = w[g_field_entities + i * 0x84 + 0x20];
+                    A1 = g_field_entities[i].move_to_z;
+                    A2 = w[g_field_entities + i * 0x84 + 0x30];
+                    A3 = w[g_field_entities + i * 0x84 + 0x32];
+                    g_field_entities[i].pos_z = field_calculate_current_value_by_steps();
+                }
+            }
+        }
+    }
+}
+
+
+
+int field_entity_move(s16 entity_id)
+{
+    triggers_block_offset = w[0x800716c4];
+    id_block_offset = w[0x800e4274];
+
+    u16 pos_i = g_field_entities[actor_id].pos_i;
+
+    VECTOR cross;
+    VECTOR pos_new;
+    VECTOR solid_move;
+    VECTOR check_pos;
+
+    VECTOR vec_ba;
+    vec_ba.vx = h[id_block_offset + pos_i * 0x18 + 0x8] - h[id_block_offset + pos_i * 0x18 + 0x0];
+    vec_ba.vy = h[id_block_offset + pos_i * 0x18 + 0xa] - h[id_block_offset + pos_i * 0x18 + 0x2];
+    vec_ba.vz = h[id_block_offset + pos_i * 0x18 + 0xc] - h[id_block_offset + pos_i * 0x18 + 0x4];
+    VECTOR vec_cb;
+    vec_cb.vx = h[id_block_offset + pos_i * 0x18 + 0x10] - h[id_block_offset + pos_i * 0x18 + 0x8];
+    vec_cb.vy = h[id_block_offset + pos_i * 0x18 + 0x12] - h[id_block_offset + pos_i * 0x18 + 0xa];
+    vec_cb.vz = h[id_block_offset + pos_i * 0x18 + 0x14] - h[id_block_offset + pos_i * 0x18 + 0xc];
+
+    VECTOR vec_norm;
+    system_psyq_outer_product_0(&vec_ba, &vec_cb, &vec_norm);
+    vec_norm.vx >>= 0x8;
+    vec_norm.vy >>= 0x8;
+    vec_norm.vz >>= 0x8;
+    system_psyq_vector_normal(&vec_norm, &vec_norm);
+
+    vec_norm.vx = (vec_norm.vz << 0xc) / func3a59c(((vec_norm.vx * vec_norm.vx) >> 0xc) + ((vec_norm.vz * vec_norm.vz) >> 0xc));
+    vec_norm.vy = (vec_norm.vz << 0xc) / func3a59c(((vec_norm.vy * vec_norm.vy) >> 0xc) + ((vec_norm.vz * vec_norm.vz) >> 0xc));
+
+    if (vec_norm.vx >= 0x1001) vec_norm.vx = 0x1000;
+    if (vec_norm.vx < -0x1000) vec_norm.vx = -0x1000;
+    if (vec_norm.vy >= 0x1001) vec_norm.vy = 0x1000;
+    if (vec_norm.vy < -0x1000) vec_norm.vy = -0x1000;
+    if (vec_norm.vz >= 0x1001) vec_norm.vz = 0x1000;
+    if (vec_norm.vz < -0x1000) vec_norm.vz = -0x1000;
+
+    s32 norm_x = (vec_norm.vx >= 0) ? vec_norm.vx : -vec_norm.vx;
+    s32 norm_y = (vec_norm.vy >= 0) ? vec_norm.vy : -vec_norm.vy;
+
+    u8 cycle = 0;
+    while (true)
+    {
+        cycle += 0x1;
+
+        if (entity_id == h[0x800965e0])
+        {
+            if (bu[0x80071c0c] == 0x1) // if slipping disabled
+            {
+                if (cycle >= 0x3)
+                {
+                    [0x80071c0c] = b(0);
+                    break;
+                }
+            }
+        }
+        if (cycle >= 0x11) break;
+
+        // calculate new position
+        pos_new.vx =  (field_entity_get_dir_vector_x(g_field_entities[entity_id].move_dir) * norm_x) >> 0xc;
+        pos_new.vy = -(field_entity_get_dir_vector_y(g_field_entities[entity_id].move_dir) * norm_y) >> 0xc;
+        pos_new.vx = (pos_new.vx * g_field_entities[entity_id].move_speed) >> 0x8;
+        pos_new.vy = (pos_new.vy * g_field_entities[entity_id].move_speed) >> 0x8;
+        pos_new.vx += g_field_entities[entity_id].pos_x;
+        pos_new.vy += g_field_entities[entity_id].pos_y;
+        pos_new.vz = g_field_entities[entity_id].pos_z;
+
+        // check right
+        solid_move.vx =  field_entity_get_dir_vector_x((g_field_entities[entity_id].move_dir + 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        solid_move.vy = -field_entity_get_dir_vector_y((g_field_entities[entity_id].move_dir + 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        check_pos.vx = pos_new.vx + solid_move.vx;
+        check_pos.vy = pos_new.vy + solid_move.vy;
+        check_pos.vz = pos_new.vz;
+        s32 cross1 = field_entity_walkmech_cross(&pos_i, &check_pos, &solid_move, &cross);
+        u8 collide1 = (field_entity_collision_check(entity_id, &check_pos) > 0) ? 0x1 : 0;
+        pos_i = g_field_entities[actor_id].pos_i;
+
+        // check left
+        solid_move.vx =  field_entity_get_dir_vector_x((g_field_entities[entity_id].move_dir - 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        solid_move.vy = -field_entity_get_dir_vector_y((g_field_entities[entity_id].move_dir - 0x20) & 0xff) * g_field_entities[entity_id].solid_range;
+        check_pos.vx = pos_new.vx + solid_move.vx;
+        check_pos.vy = pos_new.vy + solid_move.vy;
+        check_pos.vz = pos_new.vz;
+        s32 cross2 = field_entity_walkmech_cross(&pos_i, &check_pos, &solid_move, &cross);
+        u8 collide2 = (field_entity_collision_check(entity_id, &check_pos) > 0) ? 0x1 : 0;
+        pos_i = g_field_entities[actor_id].pos_i;
+
+        // check direct
+        solid_move.vx =  field_entity_get_dir_vector_x(g_field_entities[entity_id].move_dir) * g_field_entities[entity_id].solid_range;
+        solid_move.vy = -field_entity_get_dir_vector_y(g_field_entities[entity_id].move_dir) * g_field_entities[entity_id].solid_range;
+        check_pos.vx = pos_new.vx + solid_move.vx;
+        check_pos.vy = pos_new.vy + solid_move.vy;
+        check_pos.vz = pos_new.vz;
+        s32 cross3 = field_entity_walkmech_cross(&pos_i, &check_pos, &solid_move, &cross);
+        u8 collide3 = (field_entity_collision_check(entity_id, &check_pos) != 0) ? (cross3 < 0x1) * 0x8 : 0;
+
+        if ((cross3 == 0) && (cross1 == 0) && (cross2 == 0) && (collide3 == 0) && (collide1 == 0) && (collide2 == 0)) break;
+
+        if ((entity_id == h[0x800965e0]) && (g_field_control.control_lock == 0))
+        {
+            if ((collide3 != 0) || (collide1 != 0) || (collide2 != 0)) break;
+        }
+        else
+        {
+            if ((cross3 != 0) && (cross1 == 0) && (cross2 == 0))
+            {
+                g_field_entities[entity_id].move_dir -= cross3;
+            }
+            else if ((collide3 != 0) && (collide1 == 0) && (collide2 == 0))
+            {
+                g_field_entities[entity_id].move_dir -= collide3;
+            }
+        }
+
+        if (cross1 != 0)
+        {
+            if (cross2 != 0) break;
+
+            g_field_entities[entity_id].move_dir -= 0x8;
+        }
+        else if (collide1 != 0)
+        {
+            g_field_entities[entity_id].move_dir -= 0x8;
+        }
+        else
+        {
+            if ((cross2 != 0) || (collide2 != 0))
+            {
+                g_field_entities[entity_id].move_dir += 0x8;
+            }
+        }
+    }
+
+    s32 cross_4 = w(field_entity_walkmech_cross(&g_field_entities[actor_id].pos_i, &pos_new, &solid_move, &cross));
+
+    if ((entity_id == h[0x800965e0]) && (g_field_control.control_lock == 0))
+    {
+        [0x80071c0c] = b(field_entity_line_check(&g_field_entities[entity_id], 0x8007e7ac, &pos_new));
+
+        if (bu[0x8009abf4 + 0x36] == 0)
+        {
+            field_entity_gateway_check(&g_field_entities[entity_id], triggers_block_offset + 0x38, &pos_new);
+        }
+
+        field_entity_trigger_check(&g_field_entities[entity_id], triggers_block_offset + 0x158, &pos_new);
+    }
+
+    if ((cross3 != 0) || (cross1 != 0) || (cross2 != 0) || (collide3 != 0) || (collide1 != 0) || (collide2 != 0) || (cross_4 != 0)) return 0;
+
+    g_field_entities[entity_id].pos_x = pos_new.vx;
+    g_field_entities[entity_id].pos_y = pos_new.vy;
+    g_field_entities[entity_id].pos_z = pos_new.vz << 0xc;
+
+    if (bu[g_field_entities + entity_id * 0x84 + 0x5d] == 0)
+    {
+        if (entity_id == h[0x800965e0])
+        {
+            g_field_entities[entity_id].anim_speed = 0x10;
+
+            s16 anim_id = (l_buttons_state & BUTTON_CROSS) ? h[0x8009abf4 + 0x30] : h[0x8009abf4 + 0x2e]; // run or walk anim
+
+            dat_block7 = w[0x8008357c];
+            model_data = w[g_field_models + 0x4];
+
+            model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
+            anim_n = bu[model_data + model_id * 0x24 + 0x4];
+            g_field_entities[entity_id].anim_id = (anim_id < anim_n) ? anim_id : 0;
+        }
+    }
+
+    return 0x1;
+}
+
+
+
+s16 field_entity_get_dir_vector_x()
+{
+    return h[0x800df120 + A0 * 0x4 + 0x0];
+}
+
+
+
+s16 field_entity_get_dir_vector_y()
+{
+    return = h[0x800df120 + A0 * 0x4 + 0x2];
+}
+
+
+
+s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTOR* dir, VECTOR* collision)
+{
+    offset_to_id_block = w[0x800e4274];
+    offset_to_id_access_block = w[0x80114458];
+
+    VECTOR pos_s;
+    pos_s.vx = position->vx >> 0xc;
+    pos_s.vy = position->vy >> 0xc;
+    pos_s.vz = 0;
+
+    [0x80113f28] = h(0xffff);
+
+    VECTOR vec_ba;
+    VECTOR vec_cb;
+    VECTOR vec_ac;
+
+    while (true)
+    {
+        u16 id = hu[triangle_info_offset];
+        field_entity_vector_sub(&vec_ba, offset_to_id_block + V0 * 0x18 +  0x8, offset_to_id_block + id * 0x18 +  0x0); // BA
+        field_entity_vector_sub(&vec_cb, offset_to_id_block + V0 * 0x18 + 0x10, offset_to_id_block + id * 0x18 +  0x8); // CB
+        field_entity_vector_sub(&vec_ac, offset_to_id_block + V0 * 0x18 +  0x0, offset_to_id_block + id * 0x18 + 0x10); // AC
+
+        A3 = (pos_s.vx - h[offset_to_id_block + id * 0x18 +  0x0]) * vec_ba.vy;
+        T2 = (pos_s.vy - h[offset_to_id_block + id * 0x18 +  0x2]) * vec_ba.vx;
+        T1 = (pos_s.vx - h[offset_to_id_block + id * 0x18 +  0x8]) * vec_cb.vy;
+        T0 = (pos_s.vy - h[offset_to_id_block + id * 0x18 +  0xa]) * vec_cb.vx;
+        A0 = (pos_s.vx - h[offset_to_id_block + id * 0x18 + 0x10]) * vec_ac.vy;
+        V0 = (pos_s.vy - h[offset_to_id_block + id * 0x18 + 0x12]) * vec_ac.vx;
+        cross_ba = A3 - T2;
+        cross_cb = T1 - T0;
+        cross_ac = A0 - V0;
+
+        if (cross_ba < 0)
+        {
+            s16 new_id = h[offset_to_id_access_block + id * 0x6 + 0x0];
+            if (new_id >= 0)
+            {
+                if (((bu[0x8009aca6 + new_id / 0x8] >> (new_id % 0x8)) & 0x1) == 0)
+                {
+                    [triangle_info_offset] = h(new_id);
+                    continue;
+                }
+            }
+
+            collision->vx = vec_ba.vx;
+            collision->vy = vec_ba.vy;
+            collision->vz = vec_ba.vz;
+
+            s8 fix = ((vec_ba.vx * dir->vx) + (vec_ba.vy * dir->vy) >= 0) ? 0x8 : -0x8;
+
+            [0x801144cc] = h(0);
+            [0x80113f28] = h(hu[triangle_info_offset]);
+
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return fix;
+        }
+        else if (cross_cb < 0)
+        {
+            s16 new_id = h[offset_to_id_access_block + id * 0x6 + 0x2];
+            if (new_id >= 0)
+            {
+                if (((bu[0x8009aca6 + new_id / 0x8] >> (new_id % 0x8)) & 0x1) == 0)
+                {
+                    [triangle_info_offset] = h(new_id);
+                    continue;
+                }
+            }
+
+            collision->vx = vec_cb.vx;
+            collision->vy = vec_cb.vy;
+            collision->vz = vec_cb.vz;
+
+            s8 fix = ((vec_cb.vx * dir->vx) + (&vec_cb.vy * dir->vy) >= 0) ? 0x8 : -0x8;
+
+            [0x801144cc] = h(0x1);
+            [0x80113f28] = h(hu[triangle_info_offset]);
+
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return fix;
+        }
+        else if (cross_ac < 0)
+        {
+            s16 new_id = h[offset_to_id_access_block + id * 0x6 + 0x4];
+            if (new_id >= 0)
+            {
+                if (((bu[0x8009aca6 + new_id / 0x8] >> (new_id % 0x8)) & 0x1) == 0)
+                {
+                    [triangle_info_offset] = h(new_id);
+                    continue;
+                }
+            }
+
+            collision->vx = vec_ac.vx;
+            collision->vy = vec_ac.vy;
+            collision->vz = vec_ac.vz;
+
+            s8 fix = ((vec_ac.vx * dir->vx) + (vec_ac.vy * dir->vy) >= 0) ? 0x8 : -0x8;
+
+            [0x801144cc] = h(0x2);
+            [0x80113f28] = h(hu[triangle_info_offset]);
+
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return fix;
+        }
+        else if ((cross_cb >= 0) && (cross_ac >= 0))
+        {
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+
+            return 0;
+        }
+    }
+}
+
+
+
+void field_entity_vector_sub(VECTOR* ret, SVECTOR* p1, SVECTOR* p2)
+{
+    ret->vx = p1->vx - p2->vx;
+    ret->vy = p1->vy - p2->vy;
+    ret->vz = p1->vz - p2->vz;
+}
+
+
+
+s32 field_entity_calculate_z(VECTOR* vec1, VECTOR* vec2, VECTOR* pos, offset_to_triangle)
+{
+    VECTOR norm;
+    norm.vx = (vec2->vy * vec1->vz) - (vec1->vy * vec2->vz);
+    norm.vy = (vec1->vx * vec2->vz) - (vec1->vz * vec2->vx);
+    norm.vz = (vec2->vx * vec1->vy) - (vec1->vx * vec2->vy);
+    vec1->vx = w(h[offset_to_triangle + 0x0]);
+    vec1->vy = w(h[offset_to_triangle + 0x2]);
+    vec1->vz = w(h[offset_to_triangle + 0x4]);
+
+    s32 a_px = norm.vx * vec1->vx;
+    s32 b_py = norm.vy * vec1->vy;
+    s32 c_pz = norm.vz * h[offset_to_triangle + 0x4];
+    s32 a_posx = norm.vx * pos->vx;
+    s32 b_posy = norm.vy * pos->vy;
+    return ((a_px + b_py + c_pz) - (a_posx + b_posy)) / norm.vz;
+}
+
+
+
+int field_entity_collision_check(s16 entity_id, VECTOR* pos)
+{
+    u8 collide = 0;
+
+    s16 entities_n = h[0x8009abf4 + 0x28];
+    for (int i = 0; i < entities_n; ++i)
+    {
+        if (i != entity_id)
+        {
+            if (bu[g_field_entities + i * 0x84 + 0x59] == 0) // if entity solid
+            {
+                if (((g_field_entities[i].pos_z >> 0xc) - pos->vz + 0x7e) < 0xfe) // if Z value not very different
+                {
+                    s32 sol_dist = (g_field_entities[entity_id].solid_range + g_field_entities[i].solid_range) / 0x2;
+                    s32 x_dist = (g_field_entities[i].pos_x - pos->vx) >> 0xc;
+                    s32 y_dist = (g_field_entities[i].pos_y - pos->vy) >> 0xc;
+
+                    if (((x_dist * x_dist) + (y_dist * y_dist)) < (sol_dist * sol_dist)) // if we collide
+                    {
+                        collide = 0x1;
+
+                        if (entity_id == h[0x800965e0])
+                        {
+                            [g_field_entities + i * 0x84 + 0x58] = b(1); // store collide for script activation
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return collide;
+}
+
+
+
+int field_entity_line_check(FieldEntity* entity, u32 line_data, VECTOR* pos)
+{
+    s32 slip_disable = 0;
+
+    VECTOR v_old;
+    v_old.vx = entity->pos_x >> 0xc;
+    v_old.vy = entity->pos_y >> 0xc;
+    v_old.vz = entity->pos_z >> 0xc;
+
+    VECTOR v_new;
+    v_new.vx = pos->vx >> 0xc; //new position x
+    v_new.vy = pos->vy >> 0xc; //new position y
+    v_new.vz = entity->pos_z >> 0xc; //old position z
+
+    VECTOR proj;
+
+    for (int i = 0; i < 0x20; ++i) // go through all lines
+    {
+        if (bu[line_data + i * 0x18 + 0xc] == 0x1) // if line active
+        {
+            [line_data + i * 0x18 + 0x15] = b(0); // move to line false
+
+            s32 sqr_dist = field_entity_sqr_dist_to_line(line_data + i * 0x18, &v_old, &proj);
+
+            // if we closer to line than solid range
+            if ((sqr_dist != -0x1) && (sqr_dist < (entity->solid_range * entity->solid_range)))
+            {
+                if (bu[line_data + i * 0x18 + 0x16] == 0x1) // if we slip
+                {
+                    slip_disable = 0x1;
+                }
+
+                if (bu[line_data + i * 0x18 + 0xe] == 0) // if player not in line
+                {
+                    [line_data + i * 0x18 + 0x12] = b(0x1); // entered line flag
+                }
+                [line_data + i * 0x18 + 0xe] = b(0x1); // store that player in line already
+
+                s16 x1 = h[line_data + i * 0x18 + 0x0];
+                s16 y1 = h[line_data + i * 0x18 + 0x2];
+                s16 x2 = h[line_data + i * 0x18 + 0x6];
+                s16 y2 = h[line_data + i * 0x18 + 0x8];
+
+                s32 side_old = ((x2 - x1) * (v_old.vy - y1)) - ((v_old.vx - x1) * (y2 - y1));
+                s32 side_new = ((x2 - x1) * (v_new.vy - y1)) - ((v_new.vx - x1) * (y2 - y1));
+
+                // if we cross the line
+                if (((side_new > 0) && (side_old <= 0)) || ((side_old > 0) && (side_new <= 0)) || ((side_new >= 0) && (side_old < 0)) || ((side_old >= 0) && (side_new < 0)))
+                {
+                    [line_data + i * 0x18 + 0xf] = b(0x1); // cross line flag
+                }
+
+                // if previously we where stay on line
+                if ((v_old.vx == proj.vx) && (v_old.vy == proj.vy))
+                {
+                    [line_data + i * 0x18 + 0x10] = b(0x1); // move to line script flag
+                    [line_data + i * 0x18 + 0x15] = b(0x1); // move to line talk check
+                }
+                else
+                {
+                    s32 dist;
+                    [line_data + i * 0x18 + 0x14] = b(field_entity_dir_by_vec(&v_old, &proj, &dist));
+
+                    // if we move to line
+                    if (((bu[line_data + i * 0x18 + 0x14] - entity->move_dir + 0x40) & 0xff) < 0x80)
+                    {
+                        [line_data + i * 0x18 + 0x10] = b(0x1);
+                        [line_data + i * 0x18 + 0x15] = b(0x1);
+                    }
+                }
+            }
+            else // we not on line
+            {
+                if (bu[line_data + i * 0x18 + 0xe] == 0x1) // if we was on line but now not
+                {
+                    [line_data + i * 0x18 + 0x13] = b(0x1); // leave line flag
+                }
+
+                [line_data + i * 0x18 + 0xe] = b(0);
+            }
+        }
+    }
+
+    return slip_disable;
+}
+
+
+
+s32 field_entity_sqr_dist_to_line(s32 line_offset, VECTOR* pos, VECTOR* ret)
+{
+    s16 x1 = h[line_offset + 0x0];
+    s16 y1 = h[line_offset + 0x2];
+    s16 z1 = h[line_offset + 0x4];
+    s16 x2 = h[line_offset + 0x6];
+    s16 y2 = h[line_offset + 0x8];
+    s16 z2 = h[line_offset + 0xa];
+    s32 x3 = pos->vx;
+    s32 y3 = pos->vy;
+    s32 z3 = pos->vz;
+
+    // calculate projection on line
+    s32 num_x = (x1 - x3) * (x2 - x1);
+    s32 num_y = (y1 - y3) * (y2 - y1);
+    s32 num_z = (z1 - z3) * (z2 - z1);
+    s32 den_x = (x2 - x1) * (x2 - x1);
+    s32 den_y = (y2 - y1) * (y2 - y1);
+    s32 den_z = (z2 - z1) * (z2 - z1);
+    s32 t = -(num_x + num_y + num_z) / (den_x + den_y + den_z);
+
+    s32 x = x1 + t * (x2 - x1);
+    s32 y = y1 + t * (y2 - y1);
+    s32 z = z1 + t * (z2 - z1);
+
+    ret->vx = x;
+    ret->vy = y;
+    ret->vz = z;
+
+    // check if founded point inside line
+    if ((((x1 >= x) && (x2 <= x)) || ((x1 < x) && (x2 >= x))) && (((y1 >= y) && (y2 <= y)) || ((y1 < y) && (y2 >= y))))
+    {
+        return (x - x3) * (x - x3) + (y - y3) * (y - y3) + (z - z3) * (z - z3);
+    }
+
+    return -1;
+}
+
+
+
+u8 field_entity_dir_by_vec(VECTOR* current_pos, VECTOR* dest_pos, u32& dist)
+{
+    s32 dest_x = dest_pos->vx;
+    s32 dest_y = dest_pos->vy;
+    s32 cur_x = current_pos->vx;
+    s32 cur_y = current_pos->vy;
+
+    s32 x = dest_x - cur_x;
+    s32 y = dest_y - cur_y;
+
+    dist = system_square_root((x * x) + (y * y));
+
+    x = ((x << 0xc) / dist) >> 0x5;
+    y = ((y << 0xc) / dist) >> 0x5;
+
+    u32 dir;
+
+    if ((y * y) < (x * x))
+    {
+        if (x > 0)
+        {
+            dir = (y > 0) ? 0x40 + bu[0x800def88 + y * 0x2] : 0x40 - bu[0x800def88 - y * 0x2];
+        }
+        else
+        {
+            dir = (y > 0) ? -0x40 - bu[0x800def88 + y * 0x2] : -0x40 + bu[0x800def88 - y * 0x2];
+        }
+    }
+    else
+    {
+        if (y > 0)
+        {
+            dir = (x > 0) ? 0x80 - bu[0x800def88 + y * 0x2] : 0x80 + bu[0x800def88 - y * 0x2];
+        }
+        else
+        {
+            dir = (x > 0) ? bu[0x800def88 + y * 0x2] : 0 - bu[0x800def88 - y * 0x2];
+        }
+    }
+
+    return dir;
+}
+
+
+
+void field_entity_gateway_check(FieldEntity* entity, u32 trigger_data, VECTOR* new_pos)
+{
+    VECTOR v_old;
+    v_old.vx = entity->pos_x >> 0xc;
+    v_old.vy = entity->pos_y >> 0xc;
+    v_old.vz = entity->pos_z >> 0xc;
+
+    VECTOR v_new;
+    v_new.vx = new_pos->vx >> 0xc;
+    v_new.vy = new_pos->vy >> 0xc;
+    v_new.vz = new_pos->vz >> 0xc;
+
+    for (int i = 0; i < 0xc; ++i)
+    {
+        if (hu[S0 + 0xa] != 0x7fff)
+        {
+            VECTOR proj;
+            s32 sqr_dist = field_entity_sqr_dist_to_line(trigger_data + i * 0x18, &v_old, &proj);
+
+            if ((sqr_dist != -1) && (sqr_dist < (hu[entity + 0x6c] * hu[entity + 0x6c]))
+            {
+                x1 = h[trigger_data + i * 0x18 + 0x0];
+                y1 = h[trigger_data + i * 0x18 + 0x2];
+                x2 = h[trigger_data + i * 0x18 + 0x6];
+                y2 = h[trigger_data + i * 0x18 + 0x8];
+
+                s32 side_old = ((x2 - x1) * (v_old.vy - y1)) - ((v_old.vx - x1) * (y2 - y1));
+                s32 side_new = ((x2 - x1) * (v_new.vy - y1)) - ((v_new.vx - x1) * (y2 - y1));
+
+                if (((side_new > 0) && (side_old <= 0)) || ((side_old > 0) && (side_new <= 0)) || ((side_new >= 0) && (side_old < 0)) || ((side_old >= 0) && (side_new < 0))
+                {
+                    field_entity_gateway_map_load(trigger_data + i * 0x18);
+                }
+            }
+        }
+    }
+}
+
+
+
+void field_entity_gateway_map_load(u32 trigger_data)
+{
+    g_field_control.cmd = FIELD_CMD_MAP;
+    g_field_control.arg = hu[A0 + 0x12]; // map id
+    [0x8009abf4 + 0x4] = h(hu[A0 + 0xc]); // x
+    [0x8009abf4 + 0x6] = h(hu[A0 + 0xe]); // y
+    [0x8009abf4 + 0x22] = h(hu[A0 + 0x10]); // z
+    [0x8009abf4 + 0x24] = h(bu[A0 + 0x14]); // rotation
+}
+
+
+
+void field_entity_trigger_check(FieldEntity* entity, trigger_data)
+{
+    static sound_id[] = {0x0, 0x36, 0x7a, 0x12a};
+
+    VECTOR pos;
+    pos.vx = entity->pos_x >> 0xc;
+    pos.vy = entity->pos_y >> 0xc;
+    pos.vz = entity->pos_z >> 0xc;
+
+    for (int i = 0; i < 0xc; ++i)
+    {
+        if (bu[trigger_data + i * 0x10 + 0xc] != 0xff) // enterstate
+        {
+            VECTOR proj;
+            s32 sqr_dist = field_entity_sqr_dist_to_line(trigger_data + i * 0x10, &pos, &proj);
+
+            // if we closer to line than solid range
+            if ((sqr_dist != -0x1) && (sqr_dist < (entity->solid_range * entity->solid_range)))
+            {
+                // if coords change
+                if ((pos.vx != proj.vx) || (pos.vy != proj.vy))
+                {
+                    s32 dist;
+                    u8 dir = field_entity_dir_by_vec(&pos, &proj, &dist);
+                    dir = (dir - entity->move_dir + 0x40) & 0xff;
+                    if (dir >= 0x80) continue;
+                }
+
+                if (field_entity_bg_trigger_activate(trigger_data + i * 0x10, bu[trigger_data + i * 0x10 + 0xe]) == 0x1)
+                {
+                    u8 sound = bu[trigger_data + i * 0x10 + 0xf];
+                    func1117c(sound_id[sound]); // play sound
+                }
+            }
+            else
+            {
+                u8 state = bu[trigger_data + i * 0x10 + 0xe]; // default state
+                if (state >= 0x4)
+                {
+                    x1 = h[trigger_data + i * 0x10 + 0x0];
+                    y1 = h[trigger_data + i * 0x10 + 0x2];
+                    x2 = h[trigger_data + i * 0x10 + 0x6];
+                    y2 = h[trigger_data + i * 0x10 + 0x8];
+                    if ((((x2 - x1) * (pos.vy - y1)) - ((y2 - y1) * (pos.vx - x1))) > 0) continue;
+                }
+
+                if ((state == 0x2) || (state == 0x4))
+                {
+                    if (field_entity_bg_trigger_activate(trigger_data + i * 0x10, 0x1) == 0x1)
+                    {
+                        u8 sound = bu[trigger_data + i * 0x10 + 0xf];
+                        func1117c(sound_id[sound]); // play sound
+                    }
+                }
+
+                if (state != 0x5)
+                {
+                    if (field_entity_bg_trigger_activate(trigger_data + i * 0x10, 0) == 0x1)
+                    {
+                        u8 sound = bu[trigger_data + i * 0x10 + 0xf];
+                        func1117c(sound_id[sound]); // play sound
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+s16 field_entity_bg_trigger_activate(trigger_data, u8 state)
+{
+    s16 ret = 0;
+
+    switch (state)
+    {
+        // set bit
+        case 0x0:
+        case 0x2:
+        case 0x4:
+        {
+            byte_id = bu[trigger_data + 0xc];
+            bit_id = bu[trigger_data + 0xd];
+            if ((bu[0x8009abf4 + 0xf2 + byte_id] & (0x1 << bit_id)) == 0) ret = 0x1;
+
+            [0x8009abf4 + 0xf2 + byte_id] = b(bu[0x8009abf4 + 0xf2 + byte_id] | (0x1 << bit_id));
+        }
+        break;
+
+        // unset bit
+        case 0x1:
+        case 0x3:
+        case 0x5:
+        {
+            byte_id = bu[trigger_data + 0xc];
+            bit_id = bu[trigger_data + 0xd];
+            if (((bu[0x8009abf4 + 0xf2 + byte_id] | ~(0x1 << bit_id)) & 0xff) == 0xff) ret = 0x1;
+
+            [0x8009abf4 + 0xf2 + byte_id] = b(bu[0x8009abf4 + 0xf2 + byte_id] & ~(0x1 << bit_id));
+        }
+    }
+
+    return ret;
+}
+
+
+
+void field_entity_bg_trigger_init(u32 trigger_data)
+{
+    for (int i = 0; i < 0xc; ++i)
+    {
+        if (bu[trigger_data + i * 0x10 + 0xc] != 0xff) // trigger exist
+        {
+            u8 state = bu[trigger_data + i * 0x10 + 0xe]; // default state
+
+            if ((state == 0) || (state == 2) || (state == 4))
+            {
+                field_entity_bg_trigger_activate(trigger_data + i * 0x10, 0x1);
+            }
+            else if ((state == 0x1) || (state == 0x3) || (state == 0x5))
+            {
+                field_entity_bg_trigger_activate(trigger_data + i * 0x10, 0);
+            }
+        }
+    }
+}
+
+
+
+void field_entity_line_clear(s32 lines)
+{
+    for (int i = 0; i < 0x20; ++i)
+    {
+        [lines + i * 0x18 + 0x15] = b(0);
+    }
+}
+
+
+
+void field_entity_line_interact(FieldEntity* entity, u32 line_data)
+{
+    VECTOR pos;
+    pos.vx = entity->pos_x >> 0xc;
+    pos.vy = entity->pos_y >> 0xc;
+    pos.vz = entity->pos_z >> 0xc;
+
+    for (int i = 0; i < 0x20; ++i)
+    {
+        if (bu[line_data + i * 0x18 + 0xc] == 0x1)
+        {
+            if (bu[entity + 5d] == 0)
+            {
+                VECTOR proj;
+                s32 sqr_dist = field_entity_sqr_dist_to_line(line_data + i * 0x18, &pos, &proj);
+
+                // if we closer to line than solid range
+                if ((sqr_dist != -0x1) && (sqr_dist < (entity->solid_range * entity->solid_range)))
+                {
+                    if (bu[line_data + i * 0x18 + 0xe] == 0)
+                    {
+                        [line_data + i * 0x18 + 0x12] = b(0x1);
+                    }
+                    [line_data + i * 0x18 + 0xe] = b(0x1);
+                }
+                else
+                {
+                    if (bu[line_data + i * 0x18 + 0xe] == 0x1)
+                    {
+                        [line_data + i * 0x18 + 0x13] = b(0x1);
+                    }
+                    [line_data + i * 0x18 + 0xe] = b(0);
+                }
+
+                // check if we talk to line
+                if (bu[line_data + i * 0x18 + 0x15] == 0x1)
+                {
+                    if (((bu[line_data + i * 0x18 + 0x14] - entity->move_dir + 0x20) & 0xff) < 0x40)
+                    {
+                        if ((g_field_control.remap_pressed & BUTTON_CIRCLE) && ((g_field_control.remap_prev & BUTTON_CIRCLE) == 0))
+                        {
+                            [line_data + i * 0x18 + 0x11] = b(0x1);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+s32 field_entity_auto_move(FieldEntity* entity, s16 solid_add)
+{
+    VECTOR cur;
+    cur.vx = entity->pos_x >> 0xc;
+    cur.vy = entity->pos_y >> 0xc;
+    VECTOR dst;
+    dst.vx = entity->move_to_x >> 0xc;
+    dst.vy = entity->move_to_y >> 0xc;
+
+    s32 sqr_dist = (dst.vx - cur.vx) * (dst.vx - cur.vx) + (dst.vy - cur.vy) * (dst.vy - cur.vy);
+
+    solid_range = entity->solid_range;
+
+    if ((solid_add == 0) || ((((solid_range + solid_add) * (solid_range + solid_add)) + 1000) < sqr_dist))
+    {
+        if ((sqr_dist >= ((entity->move_speed * entity->move_speed) >> 0x10)) && (sqr_dist >= 0x4))
+        {
+            s32 dist;
+            entity->move_dir = field_entity_dir_by_vec(&cur, &dst, &dist) - b[entity + 35];
+
+            return 0x1;
+        }
+
+        entity->pos_x = entity->move_to_x;
+        entity->pos_y = entity->move_to_y;
+    }
+
+    return 0;
+}
+
+
+
+void field_entity_check_talk()
+{
+    if (g_field_control.remap_pressed & BUTTON_CIRCLE)
+    {
+        if ((g_field_control.remap_prev & BUTTON_CIRCLE) == 0)
+        {
+            s16 pc_id = h[0x800965e0];
+            VECTOR pos1;
+            pos1.vx = g_field_entities[pc_id].pos_x >> 0xc;
+            pos1.vy = g_field_entities[pc_id].pos_y >> 0xc;
+            pos1.vz = g_field_entities[pc_id].pos_z >> 0xc;
+
+            entities_n = h[0x8009abf4 + 0x28];
+
+            s16 angle[0x10];
+
+            for (int i = 0; i < entities_n; ++i)
+            {
+                angle[i] = 0x100;
+
+                if (i != pc_id)
+                {
+                    if (bu[g_field_entities + i * 0x84 + 0x5b] == 0) // if model talkable
+                    {
+                        VECTOR pos2;
+                        pos2.vx = g_field_entities[i].pos_x >> 0xc;
+                        pos2.vy = g_field_entities[i].pos_y >> 0xc;
+                        pos2.vz = g_field_entities[i].pos_z >> 0xc;
+
+                        if ((pos1.vx != pos2.vx) || (pos1.vy != pos2.vy))
+                        {
+                            if ((pos1.vz - pos2.vz + 0xff) < 0x1ff) // height difference
+                            {
+                                s32 dist;
+                                field_entity_dir_by_vec(&pos1, &pos2, &dist);
+
+                                dir = (bu[g_field_entities + pc_id * 84 + 0x38] - V0) & 0xff;
+
+                                if (dir >= 0x81)
+                                {
+                                    angle[i] = 0x100 - dir;
+                                }
+                                else
+                                {
+                                    angle[i] = dir;
+                                }
+
+                                if (dist >= (g_field_entities[i].talk_range + g_field_entities[pc_id].solid_range))
+                                {
+                                    angle[i] = 0x100;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            s16 min = 0x40;
+            s16 id = pc_id;
+
+            for (int i = 0; i < entities_n; ++i)
+            {
+                // select lowest angle to talk entity
+                if (angle[i] < min)
+                {
+                    min = angle[i];
+                    id = i;
+                }
+            }
+
+            if ((id != pc_id) && (min != 0x40))
+            {
+                [g_field_entities + id * 0x84 + 0x5a] = b(0x1); // set that this entity is in talking state
+            }
+        }
+    }
+}

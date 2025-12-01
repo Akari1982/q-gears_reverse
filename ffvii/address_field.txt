@@ -32,7 +32,7 @@
 0x80071a88 array of arrays of actors priority slots actors. Each actor has its own array of stored actors id for each priority slot (items 0x8 size 0x1).
 
 0x80071c08 []       current debug page.
-0x80071c0c store that we in line and SLIP byte in line == 1 during field_entity_move_line_check.
+0x80071c0c store that we in line and SLIP byte in line == 1 during field_entity_line_check.
 
 0x80071c1c []       init with 0.
 
@@ -1479,7 +1479,7 @@
 8011016c [0x8008357c]  some model related data (size 0x8)
 8011016c + 04 []
 
-80113f28 [][] store current triangle here during field_entity_walkmesh_border_cross.
+80113f28 [][] store current triangle here during field_entity_walkmech_cross.
 
 80113f2c array DRAWENV structs (0xa items 0x5c size).
 
@@ -1504,7 +1504,7 @@
 
 80114498 array of debug actors opcodes and data (1) or not (0) (size 0x1).
 
-801144cc [][] store which side we cross here during field_entity_walkmesh_border_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
+801144cc [][] store which side we cross here during field_entity_walkmech_cross if we cant cross board (0 - BA, 1 - CB, 2 - AC).
 
 801144dc [][] temp variable string. First we write variable here and then copy it to window string. (size 0x10).
 
