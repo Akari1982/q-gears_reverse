@@ -1,150 +1,95 @@
 void field_entity_movement_update(u32 input)
 {
     entities_n = h[0x8009abf4 + 0x28];
-    pc_entity = h[0x800965e0];
+    s16 pc_id = h[0x800965e0];
 
     if (entities_n <= 0) return;
 
     for (int i = 0; i < entities_n; ++i)
     {
-        V1 = w[0x8008357c];
-        V0 = bu[V1 + i * 0x8 + 0x4];
-        if (V0 != 0xff)
+        dat_block7 = w[0x8008357c];
+        model_id = bu[dat_block7 + i * 0x8 + 0x4];
+        if (model_id != 0xff)
         {
-            A0 = w[g_field_models + 0x4];
-            V1 = A0 + V0 * 24;
-
-            V0 = bu[g_field_entities + i * 84 + 5c]; // model visibility
-            if (V0 == 1) [V1] = b(1);
-            else          [V1] = b(0);
+            model_data = w[g_field_models + 0x4];
+            [model_data + model_id * 0x24 + 0x0] = b((bu[g_field_entities + i * 0x84 + 0x5c] == 0x1) ? 0x1 : 0);
         }
     }
 
     // turn update
     for (int i = 0; i < entities_n; ++i)
     {
-        state = bu[g_field_entities + i * 84 + 3b];
-        if (state == 1)
-        {
-            A0 = h[g_field_entities + i * 84 + 3c];
-            A1 = h[g_field_entities + i * 84 + 3e];
-            A2 = bu[g_field_entities + i * 84 + 39];
-            A3 = bu[g_field_entities + i * 84 + 3a];
-            field_calculate_current_value_by_steps();
-            [g_field_entities + i * 84 + 38] = b(V0);
+        FieldEntity& entity = g_field_entities[i];
 
-            if (bu[g_field_entities + i * 84 + 3a] == bu[g_field_entities + i * 84 + 39])
-            {
-                [g_field_entities + i * 84 + 3b] = b(3);
-            }
-            else
-            {
-                [g_field_entities + i * 84 + 3a] = b(bu[g_field_entities + i * 84 + 3a] + 1);
-            }
+        if (entity.turn_type == 0x1)
+        {
+            entity.dir = field_calculate_current_value_by_steps(entity.turn_start, entity.turn_end, entity.turn_steps, entity.turn_step);
         }
-        else if (state == 2)
+        else if (entity.turn_type == 0x2)
         {
-            A0 = h[g_field_entities + i * 84 + 3c];
-            A1 = h[g_field_entities + i * 84 + 3e];
-            A2 = bu[g_field_entities + i * 84 + 39];
-            A3 = bu[g_field_entities + i * 84 + 3a];
-            field_calculate_smooth_current_value_by_steps();
-            [g_field_entities + i * 84 + 38] = b(V0);
-
-            if (bu[g_field_entities + i * 84 + 3a] == bu[g_field_entities + i * 84 + 39])
-            {
-                [g_field_entities + i * 84 + 3b] = b(3);
-            }
-            else
-            {
-                [g_field_entities + i * 84 + 3a] = b(bu[g_field_entities + i * 84 + 3a] + 1);
-            }
-        }
-    }
-
-    // offset update
-    for (int i = 0; i < entities_n; ++i)
-    {
-        type = bu[g_field_entities + i * 84 + 56];
-
-        if (type == 1)
-        {
-            A0 = hu[g_field_entities + i * 84 + 42];
-            A1 = hu[g_field_entities + i * 84 + 44];
-            A2 = hu[g_field_entities + i * 84 + 52];
-            A3 = hu[g_field_entities + i * 84 + 54];
-            field_calculate_current_value_by_steps();
-            [g_field_entities + i * 84 + 40] = h(V0);
-
-            A0 = hu[g_field_entities + i * 84 + 48];
-            A1 = hu[g_field_entities + i * 84 + 4a];
-            A2 = hu[g_field_entities + i * 84 + 52];
-            A3 = hu[g_field_entities + i * 84 + 54];
-            field_calculate_current_value_by_steps();
-            [g_field_entities + i * 84 + 46] = h(V0);
-
-            A0 = hu[g_field_entities + i * 84 + 4e];
-            A1 = hu[g_field_entities + i * 84 + 50];
-            A2 = hu[g_field_entities + i * 84 + 52];
-            A3 = hu[g_field_entities + i * 84 + 54];
-            field_calculate_current_value_by_steps();
-            [g_field_entities + i * 84 + 4c] = h(V0);
-        }
-        else if (type == 2)
-        {
-            A0 = hu[g_field_entities + i * 84 + 42];
-            A1 = hu[g_field_entities + i * 84 + 44];
-            A2 = hu[g_field_entities + i * 84 + 52];
-            A3 = hu[g_field_entities + i * 84 + 54];
-            field_calculate_smooth_current_value_by_steps();
-            [g_field_entities + i * 84 + 40] = h(V0);
-
-            A0 = hu[g_field_entities + i * 84 + 48];
-            A1 = hu[g_field_entities + i * 84 + 4a];
-            A2 = hu[g_field_entities + i * 84 + 52];
-            A3 = hu[g_field_entities + i * 84 + 54];
-            field_calculate_smooth_current_value_by_steps();
-            [g_field_entities + i * 84 + 46] = h(V0);
-
-            A0 = hu[g_field_entities + i * 84 + 4e];
-            A1 = hu[g_field_entities + i * 84 + 50];
-            A2 = hu[g_field_entities + i * 84 + 52];
-            A3 = hu[g_field_entities + i * 84 + 54];
-            field_calculate_smooth_current_value_by_steps();
-            [g_field_entities + i * 84 + 0x4c] = h(V0);
+            entity.dir = field_calculate_smooth_current_value_by_steps(entity.turn_start, entity.turn_end, entity.turn_steps, entity.turn_step);
         }
         else
         {
             continue;
         }
 
-        if (hu[g_field_entities + i * 84 + 54] != hu[g_field_entities + i * 84 + 52])
+        if (entity.turn_step == entity.turn_steps)
         {
-            [g_field_entities + i * 84 + 54] = h(hu[g_field_entities + i * 84 + 54] + 1);
+            entity.turn_type = 0x3;
         }
         else
         {
-            [g_field_entities + i * 84 + 56] = b(3);
+            entity.turn_step += 0x1;
+        }
+    }
+
+    // offset update
+    for (int i = 0; i < entities_n; ++i)
+    {
+        FieldEntity& entity = g_field_entities[i];
+
+        if (entity.ofs_type == 0x1)
+        {
+            entity.ofs_x = field_calculate_current_value_by_steps(entity.ofs_start_x, entity.ofs_end_x, entity.ofs_steps, entity.ofs_step);
+            entity.ofs_y = field_calculate_current_value_by_steps(entity.ofs_start_y, entity.ofs_end_y, entity.ofs_steps, entity.ofs_step);
+            entity.ofs_z = field_calculate_current_value_by_steps(entity.ofs_start_z, entity.ofs_end_z, entity.ofs_steps, entity.ofs_step);
+        }
+        else if (entity.ofs_type == 0x2)
+        {
+            entity.ofs_x = field_calculate_smooth_current_value_by_steps(entity.ofs_start_x, entity.ofs_end_x, entity.ofs_steps, entity.ofs_step);
+            entity.ofs_y = field_calculate_smooth_current_value_by_steps(entity.ofs_start_y, entity.ofs_end_y, entity.ofs_steps, entity.ofs_step);
+            entity.ofs_z = field_calculate_smooth_current_value_by_steps(entity.ofs_start_z, entity.ofs_end_z, entity.ofs_steps, entity.ofs_step);
+        }
+        else
+        {
+            continue;
         }
 
-        if (i == pc_entity)
+        if (entity.ofs_step != entity.ofs_steps)
         {
-            field_entity_line_clear(0x8007e7ac);
+            entity.ofs_step += 0x1;
         }
+        else
+        {
+            entity.ofs_type = 0x3;
+        }
+
+        if (i == pc_id) field_entity_line_clear(0x8007e7ac);
     }
 
     // manual move update
     for (int i = 0; i < entities_n; ++i)
     {
         // if model not performing auto action
-        if (bu[g_field_entities + i * 84 + 5d] == 0)
+        if (bu[g_field_entities + i * 0x84 + 5d] == 0)
         {
-            if ((i == pc_entity) && (bu[0x8009abf4 + 0x32] != 1)) // if we can control this entity (manual model and UC == 0)
+            if ((i == pc_id) && (bu[0x8009abf4 + 0x32] != 1)) // if we can control this entity (manual model and UC == 0)
             {
                 move_add_shift_rotate(input);
 
                 // set idle animation id by default
-                [g_field_entities + pc_entity * 0x84 + 0x5e] = b(bu[0x8009abf4 + 0x2c]);
+                [g_field_entities + pc_id * 0x84 + 0x5e] = b(bu[0x8009abf4 + 0x2c]);
 
                 field_scale = h[0x8009abf4 + 0x10];
 
@@ -171,43 +116,43 @@ void field_entity_movement_update(u32 input)
                     }
                 }
 
-                [g_field_entities + pc_entity * 84 + 70] = h(V0); // set speed
+                [g_field_entities + pc_id * 0x84 + 70] = h(V0); // set speed
 
                 if (input & (BUTTON_UP | BUTTON_RIGHT | BUTTON_DOWN | BUTTON_LEFT))
                 {
                     if (input & BUTTON_UP)
                     {
-                        [g_field_entities + pc_entity * 84 + 36] = b(0);
+                        [g_field_entities + pc_id * 0x84 + 36] = b(0);
 
-                        if (input & BUTTON_LEFT) [g_field_entities + pc_entity * 84 + 36] = b(0x20);
-                        if (input & BUTTON_RIGHT) [g_field_entities + pc_entity * 84 + 36] = b(0xe0);
+                        if (input & BUTTON_LEFT) [g_field_entities + pc_id * 0x84 + 36] = b(0x20);
+                        if (input & BUTTON_RIGHT) [g_field_entities + pc_id * 0x84 + 36] = b(0xe0);
                     }
                     else
                     {
                         if (input & BUTTON_DOWN)
                         {
-                            [g_field_entities + pc_entity * 0x84 + 0x36] = b(0x80);
+                            [g_field_entities + pc_id * 0x84 + 0x36] = b(0x80);
 
-                            if (input & BUTTON_LEFT) [g_field_entities + pc_entity * 0x84 + 0x36] = b(0x60);
-                            if (input & BUTTON_RIGHT) [g_field_entities + pc_entity * 0x84 + 0x36] = b(0xa0);
+                            if (input & BUTTON_LEFT) [g_field_entities + pc_id * 0x84 + 0x36] = b(0x60);
+                            if (input & BUTTON_RIGHT) [g_field_entities + pc_id * 0x84 + 0x36] = b(0xa0);
                         }
                         else
                         {
-                            if (input & BUTTON_RIGHT) [g_field_entities + pc_entity * 84 + 36] = b(c0);
-                            if (input & BUTTON_LEFT) [g_field_entities + pc_entity * 84 + 36] = b(40);
+                            if (input & BUTTON_RIGHT) [g_field_entities + pc_id * 0x84 + 36] = b(c0);
+                            if (input & BUTTON_LEFT) [g_field_entities + pc_id * 0x84 + 36] = b(40);
                         }
                     }
 
                     // read field global rotation byte
                     V1 = w[0x800716c4];
-                    [g_field_entities + pc_entity * 0x84 + 0x36] = b(bu[V1 + 0x9] + bu[g_field_entities + pc_entity * 0x84 + 0x36] + bu[g_field_entities + pc_entity * 0x84 + 0x35]);
+                    [g_field_entities + pc_id * 0x84 + 0x36] = b(bu[V1 + 0x9] + bu[g_field_entities + pc_id * 0x84 + 0x36] + bu[g_field_entities + pc_id * 0x84 + 0x35]);
 
                     A0 = field_entity_move(i);
 
                     // if this byte == 0 store move direction as model direction
-                    if (bu[g_field_entities + pc_entity * 0x84 + 0x37] == 0)
+                    if (bu[g_field_entities + pc_id * 0x84 + 0x37] == 0)
                     {
-                        [g_field_entities + pc_entity * 0x84 + 0x38] = b(bu[g_field_entities + pc_entity * 0x84 + 0x36]);
+                        [g_field_entities + pc_id * 0x84 + 0x38] = b(bu[g_field_entities + pc_id * 0x84 + 0x36]);
                     }
 
                     if ((g_field_control.cmd != FIELD_CMD_MAP) && (A0 == 0x1))
@@ -224,34 +169,34 @@ void field_entity_movement_update(u32 input)
     // auto move update
     for (int i = 0; i < entities_n; ++i)
     {
-        if (bu[g_field_entities + i * 84 + 5d] == 1)
+        if (bu[g_field_entities + i * 0x84 + 5d] == 1)
         {
             if (bu[0x8009abf4 + 0x33] != 1)
             {
-                [g_field_entities + i * 84 + 0x35] = b(0);
+                [g_field_entities + i * 0x84 + 0x35] = b(0);
 
-                field_entity_auto_move(&g_field_entities[i], h[g_field_entities + i * 84 + 0x68]);
+                field_entity_auto_move(&g_field_entities[i], h[g_field_entities + i * 0x84 + 0x68]);
 
                 if (V0 == 0)
                 {
-                    [g_field_entities + i * 84 + 6a] = h(2);
+                    [g_field_entities + i * 0x84 + 6a] = h(2);
                 }
                 else
                 {
-                    [g_field_entities + i * 84 + 6a] = h(1);
+                    [g_field_entities + i * 0x84 + 6a] = h(1);
 
                     field_entity_move(i);
 
-                    if (bu[g_field_entities + i * 84 + 37] == 0)
+                    if (bu[g_field_entities + i * 0x84 + 37] == 0)
                     {
-                        [g_field_entities + i * 84 + 38] = b(bu[g_field_entities + i * 84 + 36]);
+                        [g_field_entities + i * 0x84 + 0x38] = b(bu[g_field_entities + i * 0x84 + 36]);
                     }
                 }
 
                 A0 = i;
                 handle_animation_update();
 
-                if (i == pc_entity)
+                if (i == pc_id)
                 {
                     field_entity_line_clear(0x8007e7ac);
                 }
@@ -262,13 +207,13 @@ void field_entity_movement_update(u32 input)
     // jump update
     for (int i = 0; i < entities_n; ++i)
     {
-        V1 = bu[g_field_entities + i * 84 + 5d];
+        V1 = bu[g_field_entities + i * 0x84 + 5d];
         // if jump
         if (V1 == 3)
         {
-            A0 = i * 84 + 10;
+            A0 = i * 0x84 + 10;
 
-            V0 = h[g_field_entities + i * 84 + 6a];
+            V0 = h[g_field_entities + i * 0x84 + 6a];
             if (V0 == 0)
             {
                 V0 = g_field_entities[i].move_to_i;
@@ -301,8 +246,8 @@ void field_entity_movement_update(u32 input)
                 Z_fin = field_entity_calculate_z(SP + 0x10, SP + 0x20, SP + 0x30, id_offset + V0 * 18) << 0xc;
                 g_field_entities[i].move_to_z = Z_fin;
 
-                Z_start = w[g_field_entities + i * 84 + 20];
-                steps = h[g_field_entities + i * 84 + 30];
+                Z_start = w[g_field_entities + i * 0x84 + 20];
+                steps = h[g_field_entities + i * 0x84 + 30];
                 b_value = (Z_fin - Z_start) / steps - steps * 0x1740;
                 [g_field_entities + i * 0x84 + 0x2c] = w(b_value);
 
@@ -311,8 +256,8 @@ void field_entity_movement_update(u32 input)
             }
             else
             {
-                V1 = h[g_field_entities + i * 84 + 32];
-                V0 = h[g_field_entities + i * 84 + 30];
+                V1 = h[g_field_entities + i * 0x84 + 32];
+                V0 = h[g_field_entities + i * 0x84 + 30];
                 A3 = V1;
                 // if current substep == number of steps
                 if (V0 == V1)
@@ -344,7 +289,7 @@ void field_entity_movement_update(u32 input)
 
             handle_animation_update(i);
 
-            if (i == pc_entity)
+            if (i == pc_id)
             {
                 field_entity_line_clear(0x8007e7ac);
             }
@@ -354,7 +299,7 @@ void field_entity_movement_update(u32 input)
     // ladder update
     for (int i = 0; i < entities_n; ++i)
     {
-        V1 = bu[g_field_entities + i * 84 + 5d];
+        V1 = bu[g_field_entities + i * 0x84 + 5d];
         if ((V1 == 4) || (V1 == 5))
         {
             V0 = w[0x8008357c];
@@ -366,7 +311,7 @@ void field_entity_movement_update(u32 input)
                 A0 = hu[V0 + 1a];
                 V0 = w[V0 + 1c];
 
-                V1 = h[g_field_entities + i * 84 + 6a];
+                V1 = h[g_field_entities + i * 0x84 + 6a];
                 S3 = A0 + V0;
                 if (V1 == 0)
                 {
@@ -401,7 +346,7 @@ void field_entity_movement_update(u32 input)
                     V1 = bu[g_field_entities + i * 0x84 + 0x5e];
                     [g_field_entities + i * 0x84 + 0x64] = h(hu[S3 + V1 * 0x10] - 1);
 
-                    if (i == pc_entity)
+                    if (i == pc_id)
                     {
                         field_entity_line_clear(0x8007e7ac);
                     }
@@ -409,10 +354,10 @@ void field_entity_movement_update(u32 input)
                 else
                 {
                     uc = bu[0x8009abf4 + 0x32];
-                    if ((i == pc_entity) && (uc == 0))
+                    if ((i == pc_id) && (uc == 0))
                     {
-                        V1 = bu[g_field_entities + i * 84 + 5d];
-                        up_down_switch = h[g_field_entities + i * 84 + 68];
+                        V1 = bu[g_field_entities + i * 0x84 + 5d];
+                        up_down_switch = h[g_field_entities + i * 0x84 + 68];
                         if (V1 == 0x5)
                         {
                             if (up_down_switch == 0)
@@ -442,31 +387,31 @@ void field_entity_movement_update(u32 input)
 
                         if (input & start)
                         {
-                            step = h[g_field_entities + i * 84 + 32];
+                            step = h[g_field_entities + i * 0x84 + 32];
                             if (step == 0)
                             {
-                                [g_field_entities + i * 84 + 6a] = h(2);
+                                [g_field_entities + i * 0x84 + 6a] = h(2);
                             }
                             else
                             {
                                 step = step - 1;
-                                [g_field_entities + i * 84 + 32] = h(step);
+                                [g_field_entities + i * 0x84 + 32] = h(step);
 
-                                V0 = hu[g_field_entities + i * 84 + 62] - hu[g_field_entities + i * 84 + 60]; // reduce by animation_speed
-                                [g_field_entities + i * 84 + 62] = h(V0);
+                                V0 = hu[g_field_entities + i * 0x84 + 62] - hu[g_field_entities + i * 0x84 + 60]; // reduce by animation_speed
+                                [g_field_entities + i * 0x84 + 62] = h(V0);
                                 V0 = V0 << 10;
 
                                 if (V0 < 0)
                                 {
-                                    [g_field_entities + i * 84 + 62] = h(hu[g_field_entities + i * 84 + 64] * 10);
+                                    [g_field_entities + i * 0x84 + 62] = h(hu[g_field_entities + i * 0x84 + 64] * 10);
                                 }
                             }
                         }
 
                         if (input & end)
                         {
-                            step = h[g_field_entities + i * 84 + 32];
-                            steps = h[g_field_entities + i * 84 + 30];
+                            step = h[g_field_entities + i * 0x84 + 32];
+                            steps = h[g_field_entities + i * 0x84 + 30];
                             if (step == steps)
                             {
                                 g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
@@ -475,44 +420,44 @@ void field_entity_movement_update(u32 input)
                             else
                             {
                                 step = step + 1;
-                                [g_field_entities + i * 84 + 32] = h(step);
+                                [g_field_entities + i * 0x84 + 32] = h(step);
 
-                                V0 = hu[g_field_entities + i * 84 + 62] + hu[g_field_entities + i * 84 + 60]; // increment by animation speed
-                                [g_field_entities + i * 84 + 62] = h(V0);
+                                V0 = hu[g_field_entities + i * 0x84 + 62] + hu[g_field_entities + i * 0x84 + 60]; // increment by animation speed
+                                [g_field_entities + i * 0x84 + 62] = h(V0);
 
-                                if (hu[g_field_entities + i * 84 + 64] < (V0 * 10))
+                                if (hu[g_field_entities + i * 0x84 + 64] < (V0 * 10))
                                 {
-                                    [g_field_entities + i * 84 + 62] = h(0);
+                                    [g_field_entities + i * 0x84 + 62] = h(0);
                                 }
                             }
                         }
                     }
                     else
                     {
-                        step = h[g_field_entities + i * 84 + 32];
-                        steps = h[g_field_entities + i * 84 + 30];
+                        step = h[g_field_entities + i * 0x84 + 32];
+                        steps = h[g_field_entities + i * 0x84 + 30];
                         if (step == steps)
                         {
                             g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
-                            [g_field_entities + i * 84 + 6a] = h(2);
+                            [g_field_entities + i * 0x84 + 6a] = h(2);
                         }
                         else
                         {
                             step = step + 1;
-                            [g_field_entities + i * 84 + 32] = h(step);
+                            [g_field_entities + i * 0x84 + 32] = h(step);
 
 
-                            V0 = hu[g_field_entities + i * 84 + 62];
-                            animation_speed = hu[g_field_entities + i * 84 + 60];
+                            V0 = hu[g_field_entities + i * 0x84 + 62];
+                            animation_speed = hu[g_field_entities + i * 0x84 + 60];
                             V0 = V0 + animation_speed();
-                            [g_field_entities + i * 84 + 62] = h(V0);
+                            [g_field_entities + i * 0x84 + 62] = h(V0);
 
-                            V1 = hu[g_field_entities + i * 84 + 64];
+                            V1 = hu[g_field_entities + i * 0x84 + 64];
                             V0 = V0 * 10;
 
                             if (V1 < V0)
                             {
-                                [g_field_entities + i * 84 + 62] = h(0);
+                                [g_field_entities + i * 0x84 + 62] = h(0);
                             }
                         }
                     }
@@ -1400,7 +1345,7 @@ void field_entity_check_talk()
                                 s32 dist;
                                 field_entity_dir_by_vec(&pos1, &pos2, &dist);
 
-                                dir = (bu[g_field_entities + pc_id * 84 + 0x38] - V0) & 0xff;
+                                dir = (bu[g_field_entities + pc_id * 0x84 + 0x38] - V0) & 0xff;
 
                                 if (dir >= 0x81)
                                 {

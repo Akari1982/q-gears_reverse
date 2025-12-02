@@ -216,23 +216,23 @@ struct FieldEntity
     u8 move_dir;                // 0x36
                                 // 0x37 []       lock rotation. (1 - direction will not be changed)
     u8 dir;                     // 0x38
-                                // 0x39 []       number of steps for turn.
-                                // 0x3a []       current step for turn.
-                                // 0x3b []       state of turn.
-                                // 0x3c [][]     start direction (for TURN), we store model direction here at start of turn.
-                                // 0x3e [][]     end direction (for TURN).
-                                // 0x40 [][]     real X offset value.
-                                // 0x42 [][]     start X offset value.
-                                // 0x44 [][]     end X offset value.
-                                // 0x46 [][]     real Y offset value.
-                                // 0x48 [][]     start Y offset value.
-                                // 0x4a [][]     end Y offset value.
-                                // 0x4c [][]     real Z offset value.
-                                // 0x4e [][]     start Z offset value.
-                                // 0x50 [][]     end Z offset value.
-                                // 0x52 [][]     steps in offseting.
-                                // 0x54 [][]     current step in offsetting.
-                                // 0x56 []       type of offsetting (LINEAR SMOOTH INSTANT).
+    u8 turn_steps;              // 0x39
+    u8 turn_step;               // 0x3a
+    u8 turn_type                // 0x3b
+    s16 turn_start;             // 0x3c
+    s16 turn_end;               // 0x3e
+    s16 ofs_x;                  // 0x40
+    s16 ofs_start_x;            // 0x42
+    s16 ofs_end_x;              // 0x44
+    s16 ofs_y;                  // 0x46
+    s16 ofs_start_y;            // 0x48
+    s16 ofs_end_y;              // 0x4a
+    s16 ofs_z;                  // 0x4c
+    s16 ofs_start_z;            // 0x4e
+    s16 ofs_end_z;              // 0x50
+    u16 ofs_steps;              // 0x52
+    u16 ofs_step;               // 0x54
+    u8 ofs_type;                // 0x56
                                 // 0x57 []       actor id that controls this model (set in CHAR opcode).
                                 // 0x58 []       pc entity collide with this entity. (1 - true/0 - false).
                                 // 0x59 []       model solidity (1 - off, 0 - on).
