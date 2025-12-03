@@ -7,12 +7,12 @@ void field_entity_movement_update(u32 input)
 
     for (int i = 0; i < entities_n; ++i)
     {
-        dat_block7 = w[0x8008357c];
-        model_id = bu[dat_block7 + i * 0x8 + 0x4];
+        u32 dat_block7 = w[0x8008357c];
+        u8 model_id = bu[dat_block7 + i * 0x8 + 0x4];
         if (model_id != 0xff)
         {
             model_data = w[g_field_models + 0x4];
-            [model_data + model_id * 0x24 + 0x0] = b((bu[g_field_entities + i * 0x84 + 0x5c] == 0x1) ? 0x1 : 0);
+            [model_data + model_id * 0x24 + 0x0] = b((g_field_entities[i].visible == 0x1) ? 0x1 : 0);
         }
     }
 
@@ -81,120 +81,94 @@ void field_entity_movement_update(u32 input)
     // manual move update
     for (int i = 0; i < entities_n; ++i)
     {
+        FieldEntity& entity = g_field_entities[i];
+
         // if model not performing auto action
-        if (bu[g_field_entities + i * 0x84 + 5d] == 0)
+        if (entity.action == 0)
         {
-            if ((i == pc_id) && (bu[0x8009abf4 + 0x32] != 1)) // if we can control this entity (manual model and UC == 0)
+            if ((i == pc_id) && (g_field_control.control_lock != 0x1))
             {
-                move_add_shift_rotate(input);
+                field_entity_add_rotate(input, i);
 
                 // set idle animation id by default
-                [g_field_entities + pc_id * 0x84 + 0x5e] = b(bu[0x8009abf4 + 0x2c]);
+                entity.anim_id = bu[0x8009abf4 + 0x2c];
 
-                field_scale = h[0x8009abf4 + 0x10];
+                s16 field_scale = h[0x8009abf4 + 0x10];
 
                 if (input & BUTTON_CROSS)
                 {
-                    if (bu[0x8009abf4 + 0x3a] == 0)
-                    {
-                        V0 = field_scale * 0x8;
-                    }
-                    else
-                    {
-                        V0 = field_scale * 0xc;
-                    }
+                    entity.move_speed = (bu[0x8009abf4 + 0x3a] == 0) ? field_scale * 0x8 : field_scale * 0xc;
                 }
                 else
                 {
-                    if (bu[0x8009abf4 + 0x3a] != 0)
-                    {
-                        V0 = field_scale * 0x3;
-                    }
-                    else
-                    {
-                        V0 = field_scale * 0x2;
-                    }
+                    entity.move_speed = (bu[0x8009abf4 + 0x3a] != 0) ? field_scale * 0x3 : field_scale * 0x2;
                 }
-
-                [g_field_entities + pc_id * 0x84 + 70] = h(V0); // set speed
 
                 if (input & (BUTTON_UP | BUTTON_RIGHT | BUTTON_DOWN | BUTTON_LEFT))
                 {
                     if (input & BUTTON_UP)
                     {
-                        [g_field_entities + pc_id * 0x84 + 36] = b(0);
+                        entity.move_dir = 0;
 
-                        if (input & BUTTON_LEFT) [g_field_entities + pc_id * 0x84 + 36] = b(0x20);
-                        if (input & BUTTON_RIGHT) [g_field_entities + pc_id * 0x84 + 36] = b(0xe0);
+                        if (input & BUTTON_LEFT) entity.move_dir = 0x20;
+                        if (input & BUTTON_RIGHT) entity.move_dir = 0xe0;
+                    }
+                    else if (input & BUTTON_DOWN)
+                    {
+                        g_field_entities[pc_id].move_dir = 0x80;
+
+                        if (input & BUTTON_LEFT) entity.move_dir = 0x60;
+                        if (input & BUTTON_RIGHT) entity.move_dir = 0xa0;
                     }
                     else
                     {
-                        if (input & BUTTON_DOWN)
-                        {
-                            [g_field_entities + pc_id * 0x84 + 0x36] = b(0x80);
-
-                            if (input & BUTTON_LEFT) [g_field_entities + pc_id * 0x84 + 0x36] = b(0x60);
-                            if (input & BUTTON_RIGHT) [g_field_entities + pc_id * 0x84 + 0x36] = b(0xa0);
-                        }
-                        else
-                        {
-                            if (input & BUTTON_RIGHT) [g_field_entities + pc_id * 0x84 + 36] = b(c0);
-                            if (input & BUTTON_LEFT) [g_field_entities + pc_id * 0x84 + 36] = b(40);
-                        }
+                        if (input & BUTTON_RIGHT) entity.move_dir = 0xc0;
+                        if (input & BUTTON_LEFT) entity.move_dir = 0x40;
                     }
 
-                    // read field global rotation byte
-                    V1 = w[0x800716c4];
-                    [g_field_entities + pc_id * 0x84 + 0x36] = b(bu[V1 + 0x9] + bu[g_field_entities + pc_id * 0x84 + 0x36] + bu[g_field_entities + pc_id * 0x84 + 0x35]);
+                    u32 triggers = w[0x800716c4]; // read field global rotation byte
+                    entity.move_dir += bu[triggers + 0x9] + entity.move_dir_add;
 
-                    A0 = field_entity_move(i);
+                    u8 moved = field_entity_move(i);
 
-                    // if this byte == 0 store move direction as model direction
-                    if (bu[g_field_entities + pc_id * 0x84 + 0x37] == 0)
+                    if (entity.dir_lock == 0) entity.dir = entity.move_dir;
+
+                    if ((g_field_control.cmd != FIELD_CMD_MAP) && (moved == 0x1))
                     {
-                        [g_field_entities + pc_id * 0x84 + 0x38] = b(bu[g_field_entities + pc_id * 0x84 + 0x36]);
-                    }
-
-                    if ((g_field_control.cmd != FIELD_CMD_MAP) && (A0 == 0x1))
-                    {
-                        funcaba70();
+                        field_battle_check();
                     }
                 }
             }
 
-            handle_animation_update(i);
+            field_entity_animation_update(i);
         }
     }
 
     // auto move update
     for (int i = 0; i < entities_n; ++i)
     {
-        if (bu[g_field_entities + i * 0x84 + 5d] == 1)
+        FieldEntity& entity = g_field_entities[i];
+
+        if (entity.action == 0x1)
         {
-            if (bu[0x8009abf4 + 0x33] != 1)
+            if (bu[0x8009abf4 + 0x33] != 0x1)
             {
-                [g_field_entities + i * 0x84 + 0x35] = b(0);
+                entity.move_dir_add = 0;
 
-                field_entity_auto_move(&g_field_entities[i], h[g_field_entities + i * 0x84 + 0x68]);
-
-                if (V0 == 0)
+                if (field_entity_auto_move(&entity, entity.action_arg) == 0)
                 {
-                    [g_field_entities + i * 0x84 + 6a] = h(2);
+                    entity.action_state = 0x2;
                 }
                 else
                 {
-                    [g_field_entities + i * 0x84 + 6a] = h(1);
+                    entity.action_state = 0x1;
 
                     field_entity_move(i);
 
-                    if (bu[g_field_entities + i * 0x84 + 37] == 0)
-                    {
-                        [g_field_entities + i * 0x84 + 0x38] = b(bu[g_field_entities + i * 0x84 + 36]);
-                    }
+                    if (entity.dir_lock == 0) entity.dir = entity.move_dir;
                 }
 
-                A0 = i;
-                handle_animation_update();
+                field_entity_animation_update(i);
 
                 if (i == pc_id)
                 {
@@ -207,33 +181,31 @@ void field_entity_movement_update(u32 input)
     // jump update
     for (int i = 0; i < entities_n; ++i)
     {
-        V1 = bu[g_field_entities + i * 0x84 + 5d];
-        // if jump
-        if (V1 == 3)
-        {
-            A0 = i * 0x84 + 10;
+        FieldEntity& entity = g_field_entities[i];
 
-            V0 = h[g_field_entities + i * 0x84 + 6a];
-            if (V0 == 0)
+        if (entity.action == 0x3) // if jump
+        {
+            if (entity.action_state == 0)
             {
-                V0 = g_field_entities[i].move_to_i;
-                V1 = g_field_entities[i].pos_x;
-                A3 = g_field_entities[i].pos_y;
-                T0 = g_field_entities[i].pos_z;
+                V0 = entity.move_to_i;
+                V1 = entity.pos_x;
+                A3 = entity.pos_y;
+                T0 = entity.pos_z;
 
                 // byte added to rotation byte in triggers and to move direction and stored in move direction.
-                [g_field_entities + i * 0x84 + 0x35] = b(0);
+                entity.move_dir_add = 0;
                 [g_field_entities + i * 0x84 + 0x18] = w(V1);
                 [g_field_entities + i * 0x84 + 0x1c] = w(A3);
                 [g_field_entities + i * 0x84 + 0x20] = w(T0);
 
                 id_offset = w[0x800e4274];
+                A0 = SP + 0x10;
                 A1 = id_offset + V0 * 18 + 8;
                 A2 = id_offset + V0 * 18;
                 field_entity_vector_sub();
 
                 V0 = g_field_entities[i].move_to_i;
-                A0 = SP + 20;
+                A0 = SP + 0x20;
                 A1 = id_offset + V0 * 0x18 + 0x10;
                 A2 = id_offset + V0 * 0x18 + 0x8;
                 field_entity_vector_sub();
@@ -287,7 +259,7 @@ void field_entity_movement_update(u32 input)
                 }
             }
 
-            handle_animation_update(i);
+            field_entity_animation_update(i);
 
             if (i == pc_id)
             {
@@ -299,19 +271,19 @@ void field_entity_movement_update(u32 input)
     // ladder update
     for (int i = 0; i < entities_n; ++i)
     {
-        V1 = bu[g_field_entities + i * 0x84 + 5d];
-        if ((V1 == 4) || (V1 == 5))
+        V1 = bu[g_field_entities + i * 0x84 + 0x5d];
+        if ((V1 == 0x4) || (V1 == 0x5))
         {
-            V0 = w[0x8008357c];
-            A0 = bu[V0 + i * 8 + 4];
-            if (A0 != ff)
+            u32 dat_block7 = w[0x8008357c];
+            u8 model_id = bu[dat_block7 + i * 0x8 + 0x4];
+            if (model_id != 0xff)
             {
                 V1 = w[g_field_models + 0x4];
-                V0 = V1 + A0 * 24;
-                A0 = hu[V0 + 1a];
-                V0 = w[V0 + 1c];
+                V0 = V1 + model_id * 24;
+                A0 = hu[V0 + 0x1a];
+                V0 = w[V0 + 0x1c];
 
-                V1 = h[g_field_entities + i * 0x84 + 6a];
+                V1 = h[g_field_entities + i * 0x84 + 0x6a];
                 S3 = A0 + V0;
                 if (V1 == 0)
                 {
@@ -341,7 +313,7 @@ void field_entity_movement_update(u32 input)
                     [g_field_entities + i * 0x84 + 0x32] = h(0);
                     [g_field_entities + i * 0x84 + 0x6a] = h(0x1);
 
-                    [g_field_entities + i * 0x84 + 0x35] = b(0);
+                    g_field_entities[i].move_dir_add = 0;
 
                     V1 = bu[g_field_entities + i * 0x84 + 0x5e];
                     [g_field_entities + i * 0x84 + 0x64] = h(hu[S3 + V1 * 0x10] - 1);
@@ -489,7 +461,7 @@ void field_entity_movement_update(u32 input)
 
 int field_entity_move(s16 entity_id)
 {
-    triggers_block_offset = w[0x800716c4];
+    u32 triggers = w[0x800716c4];
     id_block_offset = w[0x800e4274];
 
     u16 pos_i = g_field_entities[actor_id].pos_i;
@@ -629,10 +601,10 @@ int field_entity_move(s16 entity_id)
 
         if (bu[0x8009abf4 + 0x36] == 0)
         {
-            field_entity_gateway_check(&g_field_entities[entity_id], triggers_block_offset + 0x38, &pos_new);
+            field_entity_gateway_check(&g_field_entities[entity_id], triggers + 0x38, &pos_new);
         }
 
-        field_entity_trigger_check(&g_field_entities[entity_id], triggers_block_offset + 0x158, &pos_new);
+        field_entity_trigger_check(&g_field_entities[entity_id], triggers + 0x158, &pos_new);
     }
 
     if ((cross3 != 0) || (cross1 != 0) || (cross2 != 0) || (collide3 != 0) || (collide1 != 0) || (collide2 != 0) || (cross_4 != 0)) return 0;
@@ -649,10 +621,10 @@ int field_entity_move(s16 entity_id)
 
             s16 anim_id = (l_buttons_state & BUTTON_CROSS) ? h[0x8009abf4 + 0x30] : h[0x8009abf4 + 0x2e]; // run or walk anim
 
-            dat_block7 = w[0x8008357c];
+            u32 dat_block7 = w[0x8008357c];
             model_data = w[g_field_models + 0x4];
 
-            model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
+            u8 model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
             anim_n = bu[model_data + model_id * 0x24 + 0x4];
             g_field_entities[entity_id].anim_id = (anim_id < anim_n) ? anim_id : 0;
         }
@@ -1382,6 +1354,71 @@ void field_entity_check_talk()
             if ((id != pc_id) && (min != 0x40))
             {
                 [g_field_entities + id * 0x84 + 0x5a] = b(0x1); // set that this entity is in talking state
+            }
+        }
+    }
+}
+
+
+
+void field_entity_add_rotate(u32 button, u8 entity_id)
+{
+    if (g_field_control.control_lock == 0)
+    {
+        if (g_field_control.remap_pressed & BUTTON_R1)
+        {
+            g_field_entities[entity_id].move_dir_add = 0xe0;
+        }
+        else if (g_field_control.remap_pressed & BUTTON_L1)
+        {
+            g_field_entities[entity_id].move_dir_add = 0x20;
+        }
+        else
+        {
+            g_field_entities[entity_id].move_dir_add = 0;
+        }
+    }
+}
+
+
+
+void field_entity_animation_update(u8 entity_id)
+{
+    u32 dat_block7 = w[0x8008357c];
+    u8 model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
+    if (model_id != 0xff)
+    {
+        models_data = w[g_field_models + 0x4];
+        offst = w[models_data + model_id * 0x24 + 0x1c];
+        anim_offst = hu[models_data + model_id * 0x24 + 0x1a];
+
+        FieldEntity& entity = g_field_entities[entity_id];
+
+        // don't play automove
+        if (bu[0x8009abf4 + 0x33] == 0x1) return;
+
+        // increase current frame if value by animation speed
+        entity.anim_frame += entity.anim_speed;
+
+        // if this is controllable entity
+        if ((entity_id == h[0x800965e0]) && (g_field_control.control_lock == 0))
+        {
+            u8 anim_id = entity.anim_id;
+            u16 frame_n = hu[offst + anim_offst + anim_id * 0x10 + 0x0];
+            entity.anim_frames_n = frame_n - 0x1;
+
+            if (entity.anim_frame > (frame_n - 0x1) << 0x4)
+            {
+                entity.anim_frame = 0;
+            }
+        }
+        else
+        {
+            u16 frame_n = entity.anim_frames_n;
+
+            if (entity.anim_frame > (frame_n << 0x4))
+            {
+                entity.anim_frame = frame_n << 0x4;
             }
         }
     }

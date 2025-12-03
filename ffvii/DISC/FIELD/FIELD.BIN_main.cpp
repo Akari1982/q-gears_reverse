@@ -306,7 +306,7 @@ void field_main()
             [0x80071e3c] = h(0x0); // current screen scroll Y
 
             V1 = w[0x800716c4];
-            [0x8009abf4 + 0x16] = h(hu[V1 + a]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
+            [0x8009abf4 + 0x16] = h(hu[V1 + 0xa]); // set to 2-3 bytes in 0x6A VWOFT opcode / Height to focus the camera on the character (0= normal focus, <0= focus below, >0= focus above) 
 
             field_event_init(&g_field_control, &g_field_entities, w[g_field_events_p]);
 
@@ -317,7 +317,7 @@ void field_main()
 
             for (int i = 0; i < 0x10; ++i)
             {
-                [0x8009a048 + i] = b(-1) // init array of states for KAWAI
+                [0x8009a048 + i] = b(-0x1) // init array of states for KAWAI
             }
 
             field_entity_bg_trigger_init(w[0x800716c4] + 0x158); // offset to sector 5 background triggers
@@ -859,7 +859,7 @@ u32 field_calculate_world_to_screen_pos(world_pos, screen_pos)
 ////////////////////////////////
 // funca5fb4()
 
-if (bu[0x8009abf4 + 0x32] == 0) // 0 if PC can move
+if (g_field_control.control_lock == 0) // 0 if PC can move
 {
     model_id = h[0x8009abf4 + 0x2a];
     [0x800965e0] = h(model_id);
@@ -897,66 +897,3 @@ for (int i = 0; i < h[0x8009abf4 + 0x28]; ++i) // numbers of entities
     [g_field_entities + i * 84 + 35] = b(0); // shift addition to move direction
 }
 ////////////////////////////////
-
-
-
-void move_add_shift_rotate(button, model_id)
-{
-    if (bu[0x8009abf4 + 0x32] == 0) // UC byte
-    {
-        if (g_field_control.remap_pressed & BUTTON_R1)
-        {
-            [g_field_entities + model_id * 0x84 + 0x35] = b(0xe0);
-        }
-        else if (g_field_control.remap_pressed & BUTTON_L1)
-        {
-            [g_field_entities + model_id * 0x84 + 0x35] = b(0x20);
-        }
-        else
-        {
-            [g_field_entities + model_id * 0x84 + 0x35] = b(0);
-        }
-    }
-}
-
-
-
-void handle_animation_update(entity_id)
-{
-    dat_block7 = w[0x8008357c];
-    A0 = bu[dat_block7 + entity_id * 8 + 4];
-    if (A0 != 0xff)
-    {
-        models_data = w[g_field_models + 0x4];
-        offst = w[models_data + A0 * 24 + 1c];
-        anim_offst = hu[models_data + A0 * 24 + 1a];
-
-        // don't play automove
-        if (bu[0x8009abf4 + 0x33] == 0x1) return;
-
-        // increase current frame if value by animation speed
-        [g_field_entities + entity_id * 84 + 62] = h(hu[g_field_entities + entity_id * 84 + 62] + hu[g_field_entities + entity_id * 84 + 60]);
-
-        // if this is controllable entity
-        if ((entity_id == h[0x800965e0]) && (bu[0x8009abf4 + 0x32] == 0))
-        {
-            animation_id = bu[g_field_entities + entity_id * 84 + 5e];
-            frame_n = hu[offst + anim_offst + animation_id * 10 + 0];
-            [g_field_entities + entity_id * 84 + 64] = h(frame_n - 1);
-
-            if (h[g_field_entities + entity_id * 84 + 62] > (frame_n - 1) << 4)
-            {
-                [g_field_entities + entity_id * 84 + 62] = h(0);
-            }
-        }
-        else
-        {
-            frame_n = h[g_field_entities + entity_id * 84 + 64];
-
-            if (h[g_field_entities + entity_id * 0x84 + 0x62] > (frame_n << 0x4))
-            {
-                [g_field_entities + entity_id * 0x84 + 0x62] = h(frame_n << 0x4);
-            }
-        }
-    }
-}

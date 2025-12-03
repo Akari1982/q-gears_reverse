@@ -25,7 +25,7 @@ u8 funcaba34()
 
 
 
-void funcaba70()
+void field_battle_check()
 {
     // get encounter table address
     if (bu[0x8009abf4 + 0x3c] == 0)

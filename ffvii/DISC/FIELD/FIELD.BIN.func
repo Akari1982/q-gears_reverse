@@ -19,8 +19,8 @@
 800A496C field_background_scrolling_update
 800A4BEC field_background_update_drawenv
 800A5FB4 funca5fb4
-800A635C move_add_shift_rotate
-800A6418 handle_animation_update
+800A635C field_entity_add_rotate
+800A6418 field_entity_animation_update
 800A65A4 field_entity_movement_update
 800A82A0 field_entity_gateway_map_load
 800A8304 field_entity_check_talk
@@ -57,7 +57,7 @@
 // FIELD.BIN_model_render.cpp
 800AB9C8 funcab9c8
 800ABA34 funcaba34
-800ABA70 funcaba70
+800ABA70 field_battle_check
 800ABF0C field_arrows_init
 800ABFE8 field_arrows_add_to_render
 800AC35C field_model_load_local_model_and_init_all

@@ -212,9 +212,9 @@ struct FieldEntity
                                 // 0x2c [][]     b value for JUMP function.
                                 // 0x30 [][]     store number of steps for JUMP and LADER here.
                                 // 0x32 [][]     current step for JUMP and LADER.
-                                // 0x35 []       shift addition to move direction.
+    u8 move_dir_add;            // 0x35
     u8 move_dir;                // 0x36
-                                // 0x37 []       lock rotation. (1 - direction will not be changed)
+    u8 dir_lock;                // 0x37
     u8 dir;                     // 0x38
     u8 turn_steps;              // 0x39
     u8 turn_step;               // 0x3a
@@ -238,15 +238,15 @@ struct FieldEntity
                                 // 0x59 []       model solidity (1 - off, 0 - on).
                                 // 0x5a []       pc entity talk with this entity. (1 - true/0 - false).
                                 // 0x5b []       model talkability (1 - off, 0 - on).
-                                // 0x5c []       model visibility (1 - on, 0 - off).
-                                // 0x5d []       model state.
+    u8 visible;                 // 0x5c
+    u8 action;                  // 0x5d
     u8 anim_id;                 // 0x5e
     u16 anim_speed;             // 0x60
-                                // 0x62 [][]     current frame. Store 0 here during MOVE and LADER opcode. 4bit fixed point.
-                                // 0x64 [][]     number of frames. Set during MOVE and LADER opcode.
+    u16 anim_frame;             // 0x62
+    u16 anim_frames_n;          // 0x64
                                 // 0x66 [][]     char id. Set with CHAR opcode.
-                                // 0x68 [][]     0 or 1 during LADER (forward or reverse). Solid addition MOVE (0) MOVA (solid range of entity we moving to).
-                                // 0x6a [][]     stage of state.
+    u16 action_arg;             // 0x68
+    u16 action_state;           // 0x6a
     u16 solid_range;            // 0x6c
     u16 talk_range;             // 0x6e
     u16 move_speed;             // 0x70
