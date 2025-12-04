@@ -11,7 +11,7 @@ void field_entity_movement_update(u32 input)
         u8 model_id = bu[dat_block7 + i * 0x8 + 0x4];
         if (model_id != 0xff)
         {
-            model_data = w[g_field_models + 0x4];
+            u32 model_data = w[g_field_models + 0x4];
             [model_data + model_id * 0x24 + 0x0] = b((g_field_entities[i].visible == 0x1) ? 0x1 : 0);
         }
     }
@@ -170,10 +170,7 @@ void field_entity_movement_update(u32 input)
 
                 field_entity_animation_update(i);
 
-                if (i == pc_id)
-                {
-                    field_entity_line_clear(0x8007e7ac);
-                }
+                if (i == pc_id) field_entity_line_clear(0x8007e7ac);
             }
         }
     }
@@ -187,220 +184,146 @@ void field_entity_movement_update(u32 input)
         {
             if (entity.action_state == 0)
             {
-                V0 = entity.move_to_i;
-                V1 = entity.pos_x;
-                A3 = entity.pos_y;
-                T0 = entity.pos_z;
-
-                // byte added to rotation byte in triggers and to move direction and stored in move direction.
                 entity.move_dir_add = 0;
-                [g_field_entities + i * 0x84 + 0x18] = w(V1);
-                [g_field_entities + i * 0x84 + 0x1c] = w(A3);
-                [g_field_entities + i * 0x84 + 0x20] = w(T0);
+                entity.move_start_x = entity.pos_x;
+                entity.move_start_y = entity.pos_y;
+                entity.move_start_z = entity.pos_z;
 
                 id_offset = w[0x800e4274];
-                A0 = SP + 0x10;
-                A1 = id_offset + V0 * 18 + 8;
-                A2 = id_offset + V0 * 18;
-                field_entity_vector_sub();
+                VECTOR ba;
+                VECTOR cb;
+                field_entity_vector_sub(&ba, id_offset + entity.move_end_i * 0x18 +  0x8, id_offset + entity.move_end_i * 0x18 + 0x0);
+                field_entity_vector_sub(&cb, id_offset + entity.move_end_i * 0x18 + 0x10, id_offset + entity.move_end_i * 0x18 + 0x8);
 
-                V0 = g_field_entities[i].move_to_i;
-                A0 = SP + 0x20;
-                A1 = id_offset + V0 * 0x18 + 0x10;
-                A2 = id_offset + V0 * 0x18 + 0x8;
-                field_entity_vector_sub();
+                VECTOR dst;
+                dst.vx = entity.move_end_x >> 0xc;
+                dst.vy = entity.move_end_y >> 0xc;
 
-                [SP + 0x30] = w(g_field_entities[i].move_to_x >> 0xc);
-                [SP + 0x34] = w(g_field_entities[i].move_to_y >> 0xc);
+                entity.move_end_z = field_entity_calculate_z(&ba, &cb, &dst, id_offset + entity.move_end_i * 0x18) << 0xc;
 
-                V0 = g_field_entities[i].move_to_i;
+                entity.move_b = ((entity.move_end_z - entity.move_start_z) / entity.move_steps) - (entity.move_steps * 0x1740);
 
-                Z_fin = field_entity_calculate_z(SP + 0x10, SP + 0x20, SP + 0x30, id_offset + V0 * 18) << 0xc;
-                g_field_entities[i].move_to_z = Z_fin;
-
-                Z_start = w[g_field_entities + i * 0x84 + 20];
-                steps = h[g_field_entities + i * 0x84 + 30];
-                b_value = (Z_fin - Z_start) / steps - steps * 0x1740;
-                [g_field_entities + i * 0x84 + 0x2c] = w(b_value);
-
-                [g_field_entities + i * 0x84 + 0x32] = h(0);
-                [g_field_entities + i * 0x84 + 0x6a] = w(0x1);
+                entity.move_step = 0;
+                entity.action_state = 0x1;
             }
             else
             {
-                V1 = h[g_field_entities + i * 0x84 + 32];
-                V0 = h[g_field_entities + i * 0x84 + 30];
-                A3 = V1;
-                // if current substep == number of steps
-                if (V0 == V1)
+                if (entity.move_steps == entity.move_step)
                 {
-                    g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
+                    entity.pos_i = entity.move_end_i;
 
-                    [g_field_entities + i * 0x84 + 0x6a] = h(0x2);
+                    entity.action_state = 0x2;
                 }
                 else
                 {
-                    [g_field_entities + i * 0x84 + 0x32] = h(A3 + 0x1);
+                    entity.move_step += 0x1;
 
-                    A0 = w[g_field_entities + i * 0x84 + 0x18];
-                    A1 = w[g_field_entities + i * 0x84 + 0x78];
-                    A2 = h[g_field_entities + i * 0x84 + 0x30];
-                    A3 = h[g_field_entities + i * 0x84 + 0x32];
-                    g_field_entities[i].pos_x = field_calculate_current_value_by_steps();
-
-                    A0 = w[0x80074ec0 + i * 0x84];
-                    A1 = w[0x80074f20 + i * 0x84];
-                    A2 = h[g_field_entities + i * 0x84 + 0x30];
-                    A3 = h[g_field_entities + i * 0x84 + 0x32];
-                    g_field_entities[i].pos_y = field_calculate_current_value_by_steps();
-
-                    step = h[g_field_entities + i * 0x84 + 0x32];
-                    g_field_entities[i].pos_z = w[g_field_entities + i * 0x84 + 0x20] - step ^ 0x2 * 0x1740 + step * h[g_field_entities + i * 0x84 + 0x2c];
+                    entity.pos_x = field_calculate_current_value_by_steps(entity.move_start_x, entity.move_end_x, entity.move_steps, entity.move_step);
+                    entity.pos_y = field_calculate_current_value_by_steps(entity.move_start_y, entity.move_end_y, entity.move_steps, entity.move_step);
+                    entity.pos_z = entity.move_start_z - (entity.move_step * entity.move_step) * 0x1740 + entity.move_step * entity.move_b;
                 }
             }
 
             field_entity_animation_update(i);
 
-            if (i == pc_id)
-            {
-                field_entity_line_clear(0x8007e7ac);
-            }
+            if (i == pc_id) field_entity_line_clear(0x8007e7ac);
         }
     }
 
     // ladder update
     for (int i = 0; i < entities_n; ++i)
     {
-        V1 = bu[g_field_entities + i * 0x84 + 0x5d];
-        if ((V1 == 0x4) || (V1 == 0x5))
+        FieldEntity& entity = g_field_entities[i];
+
+        if ((entity.action == 0x4) || (entity.action == 0x5))
         {
             u32 dat_block7 = w[0x8008357c];
             u8 model_id = bu[dat_block7 + i * 0x8 + 0x4];
             if (model_id != 0xff)
             {
-                V1 = w[g_field_models + 0x4];
-                V0 = V1 + model_id * 24;
-                A0 = hu[V0 + 0x1a];
-                V0 = w[V0 + 0x1c];
+                u32 model_data = w[g_field_models + 0x4];
 
-                V1 = h[g_field_entities + i * 0x84 + 0x6a];
-                S3 = A0 + V0;
-                if (V1 == 0)
+                S3 = w[model_data + model_id * 0x24 + 0x1c] + hu[model_data + model_id * 0x24 + 0x1a];
+                if (entity.action_state == 0)
                 {
-                    // copy current coords as start coords
-                    X_cur = g_field_entities[i].pos_x;
-                    [g_field_entities + i * 0x84 + 0x18] = w(X_cur);
-                    Y_cur = g_field_entities[i].pos_y;
-                    [g_field_entities + i * 0x84 + 0x1c] = w(Y_cur);
-                    Z_cur = g_field_entities[i].pos_z;
-                    [g_field_entities + i * 0x84 + 0x20] = w(Z_cur);
+                    entity.move_start_x = entity.pos_x;
+                    entity.move_start_y = entity.pos_y;
+                    entity.move_start_x = entity.pos_z;
 
-                    X_fin = g_field_entities[i].move_to_x;
-                    A1 = (X_fin - X_cur) >> 0xc;
-                    [SP + 10] = w(A1);
+                    s32 move_x = (entity.move_end_x - entity.pos_x) >> 0xc;
+                    s32 move_y = (entity.move_end_y - entity.pos_y) >> 0xc;
+                    s32 move_z = (entity.move_end_z - entity.pos_z) >> 0xc;
 
-                    Y_fin = g_field_entities[i].move_to_y;
-                    A0 = (Y_fin - Y_cur) >> 0xc;
-                    [SP + 14] = w(A0);
+                    entity.move_steps = system_square_root(move_x * move_x + move_y * move_y + move_z * move_z) * 0x4;
+                    entity.move_step = 0;
+                    entity.action_state = 0x1;
 
-                    Z_fin = g_field_entities[i].move_to_z;
-                    V0 = (Z_fin - Z_cur) >> 0xc;
-                    [SP + 18] = w(V0);
+                    entity.move_dir_add = 0;
 
-                    system_square_root(A1 * A1 + A0 * A0 + V0 * V0);
+                    entity.anim_frames_n = hu[S3 + entity.anim_id * 0x10] - 1;
 
-                    [g_field_entities + i * 0x84 + 0x30] = h(V0 * 0x4);
-                    [g_field_entities + i * 0x84 + 0x32] = h(0);
-                    [g_field_entities + i * 0x84 + 0x6a] = h(0x1);
-
-                    g_field_entities[i].move_dir_add = 0;
-
-                    V1 = bu[g_field_entities + i * 0x84 + 0x5e];
-                    [g_field_entities + i * 0x84 + 0x64] = h(hu[S3 + V1 * 0x10] - 1);
-
-                    if (i == pc_id)
-                    {
-                        field_entity_line_clear(0x8007e7ac);
-                    }
+                    if (i == pc_id) field_entity_line_clear(0x8007e7ac);
                 }
                 else
                 {
                     uc = bu[0x8009abf4 + 0x32];
                     if ((i == pc_id) && (uc == 0))
                     {
-                        V1 = bu[g_field_entities + i * 0x84 + 5d];
-                        up_down_switch = h[g_field_entities + i * 0x84 + 68];
-                        if (V1 == 0x5)
+                        u32 start, end;
+
+                        if (entity.action == 0x5)
                         {
-                            if (up_down_switch == 0)
+                            if (entity.action_arg == 0)
                             {
                                 start = BUTTON_LEFT;
-                                ens = BUTTON_RIGHT;
+                                end = BUTTON_RIGHT;
                             }
                             else
                             {
                                 start = BUTTON_RIGHT;
-                                ens = BUTTON_LEFT;
+                                end = BUTTON_LEFT;
                             }
                         }
                         else
                         {
-                            if (up_down_switch == 0)
+                            if (entity.action_arg == 0)
                             {
                                 start = BUTTON_DOWN;
-                                ens = BUTTON_UP;
+                                end = BUTTON_UP;
                             }
                             else
                             {
                                 start = BUTTON_UP;
-                                ens = BUTTON_DOWN;
+                                end = BUTTON_DOWN;
                             }
                         }
 
                         if (input & start)
                         {
-                            step = h[g_field_entities + i * 0x84 + 32];
-                            if (step == 0)
+                            if (entity.move_step == 0)
                             {
-                                [g_field_entities + i * 0x84 + 6a] = h(2);
+                                entity.action_state = 0x2;
                             }
                             else
                             {
-                                step = step - 1;
-                                [g_field_entities + i * 0x84 + 32] = h(step);
-
-                                V0 = hu[g_field_entities + i * 0x84 + 62] - hu[g_field_entities + i * 0x84 + 60]; // reduce by animation_speed
-                                [g_field_entities + i * 0x84 + 62] = h(V0);
-                                V0 = V0 << 10;
-
-                                if (V0 < 0)
-                                {
-                                    [g_field_entities + i * 0x84 + 62] = h(hu[g_field_entities + i * 0x84 + 64] * 10);
-                                }
+                                entity.move_step -= 0x1;
+                                entity.anim_frame -= entity.anim_speed;
+                                if (entity.anim_frame < 0) entity.anim_frame = entity.anim_frames_n * 0x10;
                             }
                         }
 
                         if (input & end)
                         {
-                            step = h[g_field_entities + i * 0x84 + 32];
-                            steps = h[g_field_entities + i * 0x84 + 30];
-                            if (step == steps)
+                            if (entity.move_step == entity.move_steps)
                             {
-                                g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
-                                [g_field_entities + i * 0x84 + 0x6a] = h(0x2);
+                                entity.pos_i = entity.move_end_i;
+                                entity.action_state = 0x2;
                             }
                             else
                             {
-                                step = step + 1;
-                                [g_field_entities + i * 0x84 + 32] = h(step);
-
-                                V0 = hu[g_field_entities + i * 0x84 + 62] + hu[g_field_entities + i * 0x84 + 60]; // increment by animation speed
-                                [g_field_entities + i * 0x84 + 62] = h(V0);
-
-                                if (hu[g_field_entities + i * 0x84 + 64] < (V0 * 10))
-                                {
-                                    [g_field_entities + i * 0x84 + 62] = h(0);
-                                }
+                                entity.move_step += 0x1;
+                                entity.anim_frame += entity.anim_speed;
+                                if (entity.anim_frames_n < (entity.anim_frame * 0x10)) entity.anim_frame = 0;
                             }
                         }
                     }
@@ -410,7 +333,7 @@ void field_entity_movement_update(u32 input)
                         steps = h[g_field_entities + i * 0x84 + 30];
                         if (step == steps)
                         {
-                            g_field_entities[i].pos_i = g_field_entities[i].move_to_i;
+                            g_field_entities[i].pos_i = g_field_entities[i].move_end_i;
                             [g_field_entities + i * 0x84 + 6a] = h(2);
                         }
                         else
@@ -435,19 +358,19 @@ void field_entity_movement_update(u32 input)
                     }
 
                     A0 = w[g_field_entities + i * 0x84 + 0x18];
-                    A1 = g_field_entities[i].move_to_x;
+                    A1 = g_field_entities[i].move_end_x;
                     A2 = w[g_field_entities + i * 0x84 + 0x30];
                     A3 = w[g_field_entities + i * 0x84 + 0x32];
                     g_field_entities[i].pos_x = field_calculate_current_value_by_steps();
 
                     A0 = w[g_field_entities + i * 0x84 + 0x1c];
-                    A1 = g_field_entities[i].move_to_y;
+                    A1 = g_field_entities[i].move_end_y;
                     A2 = w[g_field_entities + i * 0x84 + 0x30];
                     A3 = w[g_field_entities + i * 0x84 + 0x32];
                     g_field_entities[i].pos_y = field_calculate_current_value_by_steps();
 
                     A0 = w[g_field_entities + i * 0x84 + 0x20];
-                    A1 = g_field_entities[i].move_to_z;
+                    A1 = g_field_entities[i].move_end_z;
                     A2 = w[g_field_entities + i * 0x84 + 0x30];
                     A3 = w[g_field_entities + i * 0x84 + 0x32];
                     g_field_entities[i].pos_z = field_calculate_current_value_by_steps();
@@ -462,7 +385,7 @@ void field_entity_movement_update(u32 input)
 int field_entity_move(s16 entity_id)
 {
     u32 triggers = w[0x800716c4];
-    id_block_offset = w[0x800e4274];
+    id_offset = w[0x800e4274];
 
     u16 pos_i = g_field_entities[actor_id].pos_i;
 
@@ -472,13 +395,13 @@ int field_entity_move(s16 entity_id)
     VECTOR check_pos;
 
     VECTOR vec_ba;
-    vec_ba.vx = h[id_block_offset + pos_i * 0x18 + 0x8] - h[id_block_offset + pos_i * 0x18 + 0x0];
-    vec_ba.vy = h[id_block_offset + pos_i * 0x18 + 0xa] - h[id_block_offset + pos_i * 0x18 + 0x2];
-    vec_ba.vz = h[id_block_offset + pos_i * 0x18 + 0xc] - h[id_block_offset + pos_i * 0x18 + 0x4];
+    vec_ba.vx = h[id_offset + pos_i * 0x18 + 0x8] - h[id_offset + pos_i * 0x18 + 0x0];
+    vec_ba.vy = h[id_offset + pos_i * 0x18 + 0xa] - h[id_offset + pos_i * 0x18 + 0x2];
+    vec_ba.vz = h[id_offset + pos_i * 0x18 + 0xc] - h[id_offset + pos_i * 0x18 + 0x4];
     VECTOR vec_cb;
-    vec_cb.vx = h[id_block_offset + pos_i * 0x18 + 0x10] - h[id_block_offset + pos_i * 0x18 + 0x8];
-    vec_cb.vy = h[id_block_offset + pos_i * 0x18 + 0x12] - h[id_block_offset + pos_i * 0x18 + 0xa];
-    vec_cb.vz = h[id_block_offset + pos_i * 0x18 + 0x14] - h[id_block_offset + pos_i * 0x18 + 0xc];
+    vec_cb.vx = h[id_offset + pos_i * 0x18 + 0x10] - h[id_offset + pos_i * 0x18 + 0x8];
+    vec_cb.vy = h[id_offset + pos_i * 0x18 + 0x12] - h[id_offset + pos_i * 0x18 + 0xa];
+    vec_cb.vz = h[id_offset + pos_i * 0x18 + 0x14] - h[id_offset + pos_i * 0x18 + 0xc];
 
     VECTOR vec_norm;
     system_psyq_outer_product_0(&vec_ba, &vec_cb, &vec_norm);
@@ -622,7 +545,7 @@ int field_entity_move(s16 entity_id)
             s16 anim_id = (l_buttons_state & BUTTON_CROSS) ? h[0x8009abf4 + 0x30] : h[0x8009abf4 + 0x2e]; // run or walk anim
 
             u32 dat_block7 = w[0x8008357c];
-            model_data = w[g_field_models + 0x4];
+            u32 model_data = w[g_field_models + 0x4];
 
             u8 model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
             anim_n = bu[model_data + model_id * 0x24 + 0x4];
@@ -635,14 +558,14 @@ int field_entity_move(s16 entity_id)
 
 
 
-s16 field_entity_get_dir_vector_x()
+s16 field_entity_get_dir_vector_x(A0)
 {
     return h[0x800df120 + A0 * 0x4 + 0x0];
 }
 
 
 
-s16 field_entity_get_dir_vector_y()
+s16 field_entity_get_dir_vector_y(A0)
 {
     return = h[0x800df120 + A0 * 0x4 + 0x2];
 }
@@ -651,7 +574,7 @@ s16 field_entity_get_dir_vector_y()
 
 s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTOR* dir, VECTOR* collision)
 {
-    offset_to_id_block = w[0x800e4274];
+    id_offset = w[0x800e4274];
     offset_to_id_access_block = w[0x80114458];
 
     VECTOR pos_s;
@@ -668,16 +591,16 @@ s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTO
     while (true)
     {
         u16 id = hu[triangle_info_offset];
-        field_entity_vector_sub(&vec_ba, offset_to_id_block + V0 * 0x18 +  0x8, offset_to_id_block + id * 0x18 +  0x0); // BA
-        field_entity_vector_sub(&vec_cb, offset_to_id_block + V0 * 0x18 + 0x10, offset_to_id_block + id * 0x18 +  0x8); // CB
-        field_entity_vector_sub(&vec_ac, offset_to_id_block + V0 * 0x18 +  0x0, offset_to_id_block + id * 0x18 + 0x10); // AC
+        field_entity_vector_sub(&vec_ba, id_offset + id * 0x18 +  0x8, id_offset + id * 0x18 +  0x0); // BA
+        field_entity_vector_sub(&vec_cb, id_offset + id * 0x18 + 0x10, id_offset + id * 0x18 +  0x8); // CB
+        field_entity_vector_sub(&vec_ac, id_offset + id * 0x18 +  0x0, id_offset + id * 0x18 + 0x10); // AC
 
-        A3 = (pos_s.vx - h[offset_to_id_block + id * 0x18 +  0x0]) * vec_ba.vy;
-        T2 = (pos_s.vy - h[offset_to_id_block + id * 0x18 +  0x2]) * vec_ba.vx;
-        T1 = (pos_s.vx - h[offset_to_id_block + id * 0x18 +  0x8]) * vec_cb.vy;
-        T0 = (pos_s.vy - h[offset_to_id_block + id * 0x18 +  0xa]) * vec_cb.vx;
-        A0 = (pos_s.vx - h[offset_to_id_block + id * 0x18 + 0x10]) * vec_ac.vy;
-        V0 = (pos_s.vy - h[offset_to_id_block + id * 0x18 + 0x12]) * vec_ac.vx;
+        A3 = (pos_s.vx - h[id_offset + id * 0x18 +  0x0]) * vec_ba.vy;
+        T2 = (pos_s.vy - h[id_offset + id * 0x18 +  0x2]) * vec_ba.vx;
+        T1 = (pos_s.vx - h[id_offset + id * 0x18 +  0x8]) * vec_cb.vy;
+        T0 = (pos_s.vy - h[id_offset + id * 0x18 +  0xa]) * vec_cb.vx;
+        A0 = (pos_s.vx - h[id_offset + id * 0x18 + 0x10]) * vec_ac.vy;
+        V0 = (pos_s.vy - h[id_offset + id * 0x18 + 0x12]) * vec_ac.vx;
         cross_ba = A3 - T2;
         cross_cb = T1 - T0;
         cross_ac = A0 - V0;
@@ -703,7 +626,7 @@ s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTO
             [0x801144cc] = h(0);
             [0x80113f28] = h(hu[triangle_info_offset]);
 
-            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, id_offset + id * 0x18);
 
             return fix;
         }
@@ -728,7 +651,7 @@ s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTO
             [0x801144cc] = h(0x1);
             [0x80113f28] = h(hu[triangle_info_offset]);
 
-            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, id_offset + id * 0x18);
 
             return fix;
         }
@@ -753,13 +676,13 @@ s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTO
             [0x801144cc] = h(0x2);
             [0x80113f28] = h(hu[triangle_info_offset]);
 
-            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, id_offset + id * 0x18);
 
             return fix;
         }
         else if ((cross_cb >= 0) && (cross_ac >= 0))
         {
-            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, offset_to_id_block + id * 0x18);
+            position->vz = field_entity_calculate_z(&vec_ba, &vec_cb, &pos_s, id_offset + id * 0x18);
 
             return 0;
         }
@@ -1255,8 +1178,8 @@ s32 field_entity_auto_move(FieldEntity* entity, s16 solid_add)
     cur.vx = entity->pos_x >> 0xc;
     cur.vy = entity->pos_y >> 0xc;
     VECTOR dst;
-    dst.vx = entity->move_to_x >> 0xc;
-    dst.vy = entity->move_to_y >> 0xc;
+    dst.vx = entity->move_end_x >> 0xc;
+    dst.vy = entity->move_end_y >> 0xc;
 
     s32 sqr_dist = (dst.vx - cur.vx) * (dst.vx - cur.vx) + (dst.vy - cur.vy) * (dst.vy - cur.vy);
 
@@ -1272,8 +1195,8 @@ s32 field_entity_auto_move(FieldEntity* entity, s16 solid_add)
             return 0x1;
         }
 
-        entity->pos_x = entity->move_to_x;
-        entity->pos_y = entity->move_to_y;
+        entity->pos_x = entity->move_end_x;
+        entity->pos_y = entity->move_end_y;
     }
 
     return 0;
@@ -1388,7 +1311,7 @@ void field_entity_animation_update(u8 entity_id)
     u8 model_id = bu[dat_block7 + entity_id * 0x8 + 0x4];
     if (model_id != 0xff)
     {
-        models_data = w[g_field_models + 0x4];
+        u32 models_data = w[g_field_models + 0x4];
         offst = w[models_data + model_id * 0x24 + 0x1c];
         anim_offst = hu[models_data + model_id * 0x24 + 0x1a];
 

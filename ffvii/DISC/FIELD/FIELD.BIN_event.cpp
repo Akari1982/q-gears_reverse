@@ -215,10 +215,10 @@ void field_init_default_values()
         [entities_data + i * 0x84 + 0x6e] = h((h[field_struct + 0x10] * 0x50) / 0x200); // talk range value
         [entities_data + i * 0x84 + 0x70] = h(h[field_struct + 0x10] * 0x2); // movement speed
         entities_data[i].pos_i = 0;
-        entities_data[i].move_to_i = 0;
-        entities_data[i].move_to_x = 0;
-        entities_data[i].move_to_y = 0;
-        entities_data[i].move_to_z = 0;
+        entities_data[i].move_end_i = 0;
+        entities_data[i].move_end_x = 0;
+        entities_data[i].move_end_y = 0;
+        entities_data[i].move_end_z = 0;
 
         [0x8008325c + i] = b(0); // model default animation
         [0x800756e8 + i] = b(0); // model animation state

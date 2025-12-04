@@ -206,12 +206,12 @@ struct FieldEntity
     s32 pos_x;                  // 0x0c
     s32 pos_y;                  // 0x10
     s32 pos_z;                  // 0x14
-                                // 0x18 [][][][] x start (in JUMP and LADER).
-                                // 0x1c [][][][] y start (in JUMP and LADER).
-                                // 0x20 [][][][] z start (in JUMP and LADER).
-                                // 0x2c [][]     b value for JUMP function.
-                                // 0x30 [][]     store number of steps for JUMP and LADER here.
-                                // 0x32 [][]     current step for JUMP and LADER.
+    s32 move_start_x;           // 0x18
+    s32 move_start_y;           // 0x1c
+    s32 move_start_z;           // 0x20
+    s16 move_b;                 // 0x2c
+    s16 move_steps;             // 0x30
+    s16 move_step;              // 0x32
     u8 move_dir_add;            // 0x35
     u8 move_dir;                // 0x36
     u8 dir_lock;                // 0x37
@@ -245,14 +245,14 @@ struct FieldEntity
     u16 anim_frame;             // 0x62
     u16 anim_frames_n;          // 0x64
                                 // 0x66 [][]     char id. Set with CHAR opcode.
-    u16 action_arg;             // 0x68
-    u16 action_state;           // 0x6a
+    s16 action_arg;             // 0x68
+    s16 action_state;           // 0x6a
     u16 solid_range;            // 0x6c
     u16 talk_range;             // 0x6e
     u16 move_speed;             // 0x70
     s16 pos_i;                  // 0x72
-    s16 move_to_i;              // 0x74
-    s32 move_to_x;              // 0x78
-    s32 move_to_y;              // 0x7c
-    s32 move_to_z;              // 0x80
+    s16 move_end_i;             // 0x74
+    s32 move_end_x;             // 0x78
+    s32 move_end_y;             // 0x7c
+    s32 move_end_z;             // 0x80
 };
