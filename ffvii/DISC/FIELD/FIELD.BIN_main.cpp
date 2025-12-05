@@ -4,6 +4,8 @@ FieldEntity g_field_entities[];             // 0x80074ea4
 
 u16 g_field_rb;                             // 0x80075dec
 
+FieldLine g_field_lines[0x20];              // 0x8007e7ac
+
 DRAWENV g_field_draw_env[0x2];              // 0x8007eaac
 
 u32 g_field_events_p;                       // 0x8007eb64
@@ -475,7 +477,7 @@ void field_main_loop()
 
     if ((g_gamestate_prev != GAME_STATE_MENU) && (g_gamestate_prev != GAME_STATE_BATTLE) && (g_gamestate_prev != GAME_STATE_MENU_FUNC))
     {
-        funca5fb4(); // move PC model position init by walkmesh
+        field_entity_init_pos();
     }
 
     field_background_init_packets(g_field_render_data[0].bg_1, g_field_render_data[0].bg_2, g_field_render_data[0].bg_anim, g_field_render_data[0].bg_dm);
@@ -619,7 +621,7 @@ void field_main_loop()
 
         field_entity_movement_update(l_buttons_state);
 
-        field_entity_line_interact(&g_field_entities[h[0x800965e0]], 0x8007e7ac);
+        field_entity_line_interact(&g_field_entities[h[0x800965e0]], g_field_lines);
 
         field_entity_check_talk();
 
@@ -721,63 +723,6 @@ void field_main_loop()
 
 
 
-void field_load_mim_to_vram(A0, mim_data)
-{
-    // 1st part of mim - palette settings
-    [0x800e4d90] = w(mim_data + 0xc);
-    [0x800e4d94] = w(w[mim_data + 0x0]);
-    [0x800e4d98] = h(hu[mim_data + 0x4]);
-    [0x800e4d9a] = h(hu[mim_data + 0x6]);
-    [0x800e4d9c] = h(hu[mim_data + 0x8]);
-    [0x800e4d9e] = h(hu[mim_data + 0xa]);
-
-    // 2nd part 1st image
-    mim_data += (w[mim_data + 0x0] >> 0x2) << 0x2;
-    [0x800e4da4] = w(mim_data + 0xc);
-    [0x800e4da8] = w(w[mim_data + 0x0]);
-    [0x800e4dac] = h(hu[mim_data + 0x4]);
-    [0x800e4dae] = h(hu[mim_data + 0x6]);
-    [0x800e4db0] = h(hu[mim_data + 0x8] * 0x2);
-    [0x800e4db2] = h(hu[mim_data + 0xa]);
-
-    // 3rd part 2nd image
-    mim_data += (w[mim_data + 0x0] >> 0x2) << 0x2;
-    [0x800e4dd4] = w(mim_data + 0xc);
-    [0x800e4dd8] = w(w[mim_data + 0x0]);
-    [0x800e4ddc] = h(hu[mim_data + 0x4]);
-    [0x800e4dde] = h(hu[mim_data + 0x6]);
-    [0x800e4de0] = h(hu[mim_data + 0x8] * 0x2);
-    [0x800e4de2] = h(hu[mim_data + 0xa]);
-
-    system_psyq_draw_sync(0);
-
-    // load palette to vram
-    {
-        RECT rect;
-        rect.x = 0;
-        rect.y = 0x1e0;
-        rect.w = 0x100;
-        rect.h = 0x10;
-        system_psyq_load_image(&rect, w[0x800e4d90]);
-        system_psyq_draw_sync(0);
-    }
-
-    // load 1st image to vram
-    {
-        [0x800e4db4] = h(system_psyq_load_tpage(w[0x800e4da4], 0x1, 0, h[0x800e4dac], h[0x800e4dae], hu[0x800e4db0], hu[0x800e4db2]));
-        system_psyq_draw_sync(0);
-    }
-
-    // load 2nd image to vram
-    if (w[0x800e4dd8] != 0)
-    {
-        [0x800e4de4] = h(system_psyq_load_tpage(w[0x800e4dd4], 0x1, 0, h[0x800e4ddc], h[0x800e4dde], hu[0x800e4de0], hu[0x800e4de2]));
-        system_psyq_draw_sync(0);
-    }
-}
-
-
-
 u32 field_buttons_update()
 {
     l_buttons_state = system_menu_get_current_pad_buttons();
@@ -798,102 +743,3 @@ u32 field_buttons_update()
 
     return l_buttons_state;
 }
-
-
-
-////////////////////////////////
-// field_calculate_current_value_by_steps()
-
-start = A0;
-end = A1;
-steps_n = A2;
-step = A3;
-delta = end - start;
-V1 = delta + 0007ffff;
-if (V1 <= 000ffffe)
-{
-    V0 = (delta * step) / steps_n;
-}
-else
-{
-    V0 = (delta / steps_n) * step;
-}
-
-return start + V0;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// field_calculate_smooth_current_value_by_steps()
-
-start = A0;
-end = A1;
-steps_n = A2;
-step = A3 << c;
-
-A0 = (((step / steps_n) >> 5) - 80) & ff;
-field_entity_get_dir_vector_y();
-
-return start + (((V0 + 1000) * (end - start)) >> c) / 2;
-////////////////////////////////
-
-
-
-u32 field_calculate_world_to_screen_pos(world_pos, screen_pos)
-{
-    system_psyq_push_matrix();
-
-    system_psyq_set_rot_matrix(w[0x80071e40]);
-    system_psyq_set_trans_matrix(w[0x80071e40]);
-    system_psyq_set_geom_offset(0, 0);
-    world_pos = system_psyq_rot_trans_pers(world_pos, screen_pos, SP + 0x10, SP + 0x14);
-
-    system_psyq_pop_matrix();
-
-    return world_pos;
-}
-
-
-
-////////////////////////////////
-// funca5fb4()
-
-if (g_field_control.control_lock == 0) // 0 if PC can move
-{
-    model_id = h[0x8009abf4 + 0x2a];
-    [0x800965e0] = h(model_id);
-    triangle_id = hu[0x8009abf4 + 0x22];
-    g_field_entities[model_id].pos_i = triangle_id;
-    walkmesh_data = w[0x800e4274];
-
-    if (h[0x8009abf4 + 0x4] == 0x7fff) // destination x during map load
-    {
-        g_field_entities[model_id].pos_x = ((h[walkmesh_data + triangle_id * 0x18 + 0x0] + h[walkmesh_data + triangle_id * 0x18 + 0x8] + h[walkmesh_data + triangle_id * 0x18 + 0x10]) / 3) << 0xc;
-        g_field_entities[model_id].pos_y = ((h[walkmesh_data + triangle_id * 0x18 + 0x2] + h[walkmesh_data + triangle_id * 0x18 + 0xa] + h[walkmesh_data + triangle_id * 0x18 + 0x12]) / 3) << 0xc;
-        g_field_entities[model_id].pos_z = ((h[walkmesh_data + triangle_id * 0x18 + 0x4] + h[walkmesh_data + triangle_id * 0x18 + 0xc] + h[walkmesh_data + triangle_id * 0x18 + 0x14]) / 3) << 0xc;
-    }
-    else
-    {
-        g_field_entities[model_id].pos_x = w(h[0x8009abf4 + 0x4] << 0xc);
-        g_field_entities[model_id].pos_y = w(h[0x8009abf4 + 0x6] << 0xc);
-
-        field_entity_vector_sub(SP + 0x10, walkmesh_data + triangle_id * 0x18 + 0x8, walkmesh_data + triangle_id * 0x18 + 0x0);
-        field_entity_vector_sub(SP + 0x20, walkmesh_data + triangle_id * 0x18 + 0x10, walkmesh_data + triangle_id * 0x18 + 0x8);
-
-        [SP + 0x30] = w(h[0x8009abf4 + 0x4]); // x
-        [SP + 0x34] = w(h[0x8009abf4 + 0x6]); // y
-
-        g_field_entities[model_id].pos_z = field_entity_calculate_z(SP + 0x10, SP + 0x20, SP + 0x30, walkmesh_data + triangle_id * 0x18) << 0xc;
-    }
-
-    [g_field_entities + model_id * 0x84 + 0x60] = h(0x10); // animation speed
-    [g_field_entities + model_id * 0x84 + 0x6c] = h((h[0x8009abf4 + 0x10] * 0x11) >> 0x8); // solid range value (based by field scale (9 bit fixed point))
-    [g_field_entities + model_id * 0x84 + 0x70] = h(h[0x8009abf4 + 0x10] * 0x2); // movement speed
-}
-
-for (int i = 0; i < h[0x8009abf4 + 0x28]; ++i) // numbers of entities
-{
-    [g_field_entities + i * 84 + 35] = b(0); // shift addition to move direction
-}
-////////////////////////////////

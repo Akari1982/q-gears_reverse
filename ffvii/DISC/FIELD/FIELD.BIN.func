@@ -18,7 +18,9 @@
 800A48B8 field_background_get_entity_screen_pos
 800A496C field_background_scrolling_update
 800A4BEC field_background_update_drawenv
-800A5FB4 funca5fb4
+
+// FIELD.BIN_entity.cpp
+800A5FB4 field_entity_init_pos
 800A635C field_entity_add_rotate
 800A6418 field_entity_animation_update
 800A65A4 field_entity_movement_update
@@ -136,9 +138,9 @@
 800C1714 0x83 BITOFF
 800C17B8 0x84 BITXOR
 800C1858 field_event_opcode_d0_line
-800C1AE4 0xD3 SLINE
-800C1BF4 0xD1 LINON
-800C1D24 0x2B SLIP
+800C1AB4 field_event_opcode_d3_sline
+800C1BF4 field_event_opcode_d1_linon
+800C1D24 field_event_opcode_2b_slip
 800C1DE4 field_event_opcode_14_if
 800C1EEC field_event_opcode_15_lif
 800C2000 field_event_if_check

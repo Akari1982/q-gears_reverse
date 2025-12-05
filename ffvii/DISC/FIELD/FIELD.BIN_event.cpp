@@ -247,21 +247,21 @@ void field_init_default_values()
     // init lines
     for (int i = 0; i < 0x20; ++i)
     {
-        [0x8007e7ac + i * 0x18 + 0x0] = h(0); // x1
-        [0x8007e7ac + i * 0x18 + 0x2] = h(0); // y1
-        [0x8007e7ac + i * 0x18 + 0x4] = h(0); // z1
-        [0x8007e7ac + i * 0x18 + 0x6] = h(0); // x2
-        [0x8007e7ac + i * 0x18 + 0x8] = h(0); // y2
-        [0x8007e7ac + i * 0x18 + 0xa] = h(0); // z2
-        [0x8007e7ac + i * 0x18 + 0xc] = b(0); // line on/off. (1 - true/0 - false)
-        [0x8007e7ac + i * 0x18 + 0xd] = b(0); // parent actor
-        [0x8007e7ac + i * 0x18 + 0xe] = b(0); // actor currently in LINE (with solid).  Script call
-        [0x8007e7ac + i * 0x18 + 0xf] = b(0); // actor cross LINE. Script call (removed after script call)
-        [0x8007e7ac + i * 0x18 + 0x10] = b(0); // actor move to line. Script call (removed after script call)
-        [0x8007e7ac + i * 0x18 + 0x11] = b(0); // actor talk to LINE. (1 - true/0 - false)
-        [0x8007e7ac + i * 0x18 + 0x12] = b(0); // actor enter LINE. Script call (removed after script call)
-        [0x8007e7ac + i * 0x18 + 0x13] = b(0); // actor leave LINE. Script call (removed after script call)
-        [0x8007e7ac + i * 0x18 + 0x16] = b(0); // store SLIP byte here
+        g_field_lines[i].ax = 0;
+        g_field_lines[i].ay = 0;
+        g_field_lines[i].az = 0;
+        g_field_lines[i].bx = 0;
+        g_field_lines[i].by = 0;
+        g_field_lines[i].bz = 0;
+        g_field_lines[i].on = 0;
+        g_field_lines[i].actor_id = 0;
+        g_field_lines[i].ev_inside = 0;
+        g_field_lines[i].ev_cross = 0;
+        g_field_lines[i].ev_towards = 0;
+        g_field_lines[i].ev_talk = 0;
+        g_field_lines[i].ev_enter = 0;
+        g_field_lines[i].ev_leave = 0;
+        g_field_lines[i].slip = 0;
     }
     [0x80095d84] = h(0); // number of inited lines
 
@@ -383,243 +383,238 @@ for (int i = 0; i < models_n; ++i)
 
 
 
-////////////////////////////////
-// field_event_opcode_cycle()
-
-entities_data = w[0x8009c544];
-events_data = w[0x8009c6dc];
-field_struct = w[0x8009c6e0];
-
-// update played time in memory bank
+void field_event_opcode_cycle()
 {
-    hms = w[0x8009c6e4 + 0xb80];
+    entities_data = w[0x8009c544];
+    events_data = w[0x8009c6dc];
+    field_struct = w[0x8009c6e0];
 
-    h = hms / 0xe10; // hours played
-    if (h >= 0x100) h = 0xff;
-    [0x8009c6e4 + 0xbb4] = b(h); // hour
-
-    ms = hms - ((hms / 0xe10) * 0xe10);
-    m = ms / 0x3c;
-    [0x8009c6e4 + 0xbb5] = b(m); // minutes
-
-    s = ms - (m * 0x3c);
-
-    if (bu[0x8009c6e4 + 0xbb6] != s)
+    // update played time in memory bank
     {
-        [0x8009c6e4 + 0xbb6] = b(s);
-        [0x8009c6e4 + 0xbb7] = b(0);
-    }
-    else
-    {
-        [0x8009c6e4 + 0xbb7] = b(bu[0x8009c6e4 + 0xbb7] + 1);
-    }
-}
+        hms = w[0x8009c6e4 + 0xb80];
 
-// update countdown timer in memory bank
-{
-    hms = w[0x8009c6e4 + b84];
+        h = hms / 0xe10; // hours played
+        if (h >= 0x100) h = 0xff;
+        [0x8009c6e4 + 0xbb4] = b(h); // hour
 
-    h = hms / e10;
-    if (h >= 100) h = ff;
-    [0x8009c6e4 + bb8] = b(h);
+        ms = hms - ((hms / 0xe10) * 0xe10);
+        m = ms / 0x3c;
+        [0x8009c6e4 + 0xbb5] = b(m); // minutes
 
-    ms = hms - ((hms / e10) * e10);
-    m = ms / 3c;
-    [0x8009c6e4 + bb9] = b(m);
+        s = ms - (m * 0x3c);
 
-    s = ms - (m * 3c);
-
-    if (bu[0x8009c6e4 + bba] != s)
-    {
-        [0x8009c6e4 + bba] = b(s);
-        [0x8009c6e4 + bbb] = b(1e); // 30
-    }
-    else if (bu[0x8009c6e4 + bbb] != 0)
-    {
-        [0x8009c6e4 + bbb] = b(bu[0x8009c6e4 + bbb] - 1);
-    }
-}
-
-// update talk and call talking/push script
-talked = 0;
-for (int i = 0; i < bu[events_data + 0x3]; ++i) // visible entity
-{
-    if (bu[entities_data + i * 0x84 + 0x5a] != 0) // if model talks with somthing
-    {
-        if (bu[field_struct + 0x32] == 0) // player has control
+        if (bu[0x8009c6e4 + 0xbb6] != s)
         {
-            if (talked == 0)
-            {
-                talked = 0x1;
-                field_event_request_run(bu[entities_data + i * 0x84 + 0x57], 0x1, 0x1);
-            }
+            [0x8009c6e4 + 0xbb6] = b(s);
+            [0x8009c6e4 + 0xbb7] = b(0);
         }
-
-        [entities_data + i * 0x84 + 0x5a] = b(0); // talk finishes
-    }
-
-    if (bu[entities_data + i * 0x84 + 0x58] != 0) // if entity push something
-    {
-        field_event_request_run(bu[entities_data + i * 0x84 + 0x57], 0x1, 0x2);
-
-        [entities_data + i * 0x84 + 0x58] = b(0); // push finished
-    }
-}
-
-// update lines and call according scripts
-for (int i = 0; i < h[0x80095d84]; ++i)
-{
-    // talk to line
-    if (bu[0x8007e7ac + i * 0x18 + 0x11] != 0)
-    {
-        if (bu[field_struct + 0x32] == 0) // player has control
+        else
         {
-            field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x1);
+            [0x8009c6e4 + 0xbb7] = b(bu[0x8009c6e4 + 0xbb7] + 1);
         }
-        [0x8007e7ac + i * 0x18 + 0x11] = b(0);
     }
 
-    // entity move to line
-    if (bu[0x8007e7ac + i * 0x18 + 0x10] != 0)
+    // update countdown timer in memory bank
     {
-        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x2);
-        [0x8007e7ac + i * 0x18 + 0x10] = b(0);
-    }
+        hms = w[0x8009c6e4 + b84];
 
-    // entity cross line
-    if (bu[0x8007e7ac + i * 0x18 + 0xf] != 0)
-    {
-        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x3);
-        [0x8007e7ac + i * 0x18 + 0xf] = b(0);
-    }
+        h = hms / e10;
+        if (h >= 100) h = ff;
+        [0x8009c6e4 + bb8] = b(h);
 
-    // entity move inside line
-    if (bu[0x8007e7ac + i * 0x18 + 0xe] != 0)
-    {
-        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x4);
-    }
+        ms = hms - ((hms / e10) * e10);
+        m = ms / 3c;
+        [0x8009c6e4 + bb9] = b(m);
 
-    // entity enter line
-    if (bu[0x8007e7ac + i * 0x18 + 0x12] != 0)
-    {
-        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x5);
-        [0x8007e7ac + i * 0x18 + 0x12] = b(0);
-    }
+        s = ms - (m * 3c);
 
-    // entity leave line
-    if (bu[0x8007e7ac + i * 0x18 + 13] != 0)
-    {
-        field_event_request_run(bu[0x8007e7ac + i * 0x18 + 0xd], 0x1, 0x6);
-        [0x8007e7ac + i * 0x18 + 0x13] = b(0);
-    }
-}
-
-// update events
-for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of actors
-{
-    // if current actor id greater than number of actors - then use 0 as id
-    if (bu[0x800722c4] >= bu[events_data + 0x2]) [0x800722c4] = b(0);
-
-    if (bu[0x80071e24] & 0x3)
-    {
-        field_event_update_actor_debug(0x4, bu[0x800722c4]);
-    }
-
-    actor_id_cur = bu[0x800722c4];
-
-    // update actor that called split/join and actors that not perform split/join
-    // events of actors that perform split/join are paused
-    if ((bu[0x80081d90 + actor_id_cur] == 0) || (bu[0x800e48f0] == actor_id_cur))
-    {
-        for (int left_o = 0x8; left_o != 0; --left_o)
+        if (bu[0x8009c6e4 + bba] != s)
         {
-            // clean page 3 for opcode debug
-            if (bu[0x80099ffc] == 0x5)
+            [0x8009c6e4 + bba] = b(s);
+            [0x8009c6e4 + bbb] = b(1e); // 30
+        }
+        else if (bu[0x8009c6e4 + bbb] != 0)
+        {
+            [0x8009c6e4 + bbb] = b(bu[0x8009c6e4 + bbb] - 1);
+        }
+    }
+
+    // update talk and call talking/push script
+    talked = 0;
+    for (int i = 0; i < bu[events_data + 0x3]; ++i) // visible entity
+    {
+        if (bu[entities_data + i * 0x84 + 0x5a] != 0) // if model talks with somthing
+        {
+            if (field_struct->control_lock == 0) // player has control
             {
-                if (bu[0x8009d820] & 0x1) // debug
+                if (talked == 0)
                 {
-                    actor_id_cur = bu[0x800722c4];
-                    if (((bu[0x80071e24] & 0x4) == 0) || (bu[0x80114498 + actor_id_cur] != 0)) // if we want to debug actor data
+                    talked = 0x1;
+                    field_event_request_run(bu[entities_data + i * 0x84 + 0x57], 0x1, 0x1);
+                }
+            }
+
+            [entities_data + i * 0x84 + 0x5a] = b(0); // talk finishes
+        }
+
+        if (bu[entities_data + i * 0x84 + 0x58] != 0) // if entity push something
+        {
+            field_event_request_run(bu[entities_data + i * 0x84 + 0x57], 0x1, 0x2);
+
+            [entities_data + i * 0x84 + 0x58] = b(0); // push finished
+        }
+    }
+
+    // update lines and call according scripts
+    for (int i = 0; i < h[0x80095d84]; ++i)
+    {
+        FieldLine& line = g_field_lines[i];
+
+        if (line.ev_talk != 0)
+        {
+            if (field_struct->control_lock == 0)
+            {
+                field_event_request_run(line.actor_id, 0x1, 0x1);
+            }
+            line.ev_talk = 0;
+        }
+
+        if (line.ev_towards != 0)
+        {
+            field_event_request_run(line.actor_id, 0x1, 0x2);
+            line.ev_towards = 0;
+        }
+
+        if (line.ev_cross != 0)
+        {
+            field_event_request_run(line.actor_id, 0x1, 0x3);
+            line.ev_cross = 0;
+        }
+
+        if (line.ev_inside != 0)
+        {
+            field_event_request_run(line.actor_id, 0x1, 0x4);
+        }
+
+        if (line.ev_enter != 0)
+        {
+            field_event_request_run(line.actor_id, 0x1, 0x5);
+            line.ev_enter = 0;
+        }
+
+        if (line.ev_leave != 0)
+        {
+            field_event_request_run(line.actor_id, 0x1, 0x6);
+            line.ev_leave = 0;
+        }
+    }
+
+    // update events
+    for (int left_a = bu[events_data + 0x2]; left_a != 0; --left_a)// number of actors
+    {
+        // if current actor id greater than number of actors - then use 0 as id
+        if (bu[0x800722c4] >= bu[events_data + 0x2]) [0x800722c4] = b(0);
+
+        if (bu[0x80071e24] & 0x3)
+        {
+            field_event_update_actor_debug(0x4, bu[0x800722c4]);
+        }
+
+        actor_id_cur = bu[0x800722c4];
+
+        // update actor that called split/join and actors that not perform split/join
+        // events of actors that perform split/join are paused
+        if ((bu[0x80081d90 + actor_id_cur] == 0) || (bu[0x800e48f0] == actor_id_cur))
+        {
+            for (int left_o = 0x8; left_o != 0; --left_o)
+            {
+                // clean page 3 for opcode debug
+                if (bu[0x80099ffc] == 0x5)
+                {
+                    if (bu[0x8009d820] & 0x1) // debug
                     {
-                        for (int i = 0x1; i < 0x9; ++i)
+                        actor_id_cur = bu[0x800722c4];
+                        if (((bu[0x80071e24] & 0x4) == 0) || (bu[0x80114498 + actor_id_cur] != 0)) // if we want to debug actor data
                         {
-                            field_debug_copy_string_into_page(0x3, i, "");
+                            for (int i = 0x1; i < 0x9; ++i)
+                            {
+                                field_debug_copy_string_into_page(0x3, i, "");
+                            }
                         }
                     }
                 }
-            }
 
-            actor_id_cur = bu[0x800722c4];
-            script_cur = hu[0x800831fc + actor_id_cur * 2];
-            opcode = bu[events_data + script_cur];
-            [0x8009a058] = b(opcode);
+                actor_id_cur = bu[0x800722c4];
+                script_cur = hu[0x800831fc + actor_id_cur * 2];
+                opcode = bu[events_data + script_cur];
+                [0x8009a058] = b(opcode);
 
-            opcode = bu[0x8009a058];
-            800BB9C8	jalr   w[0x800e0228 + opcode * 4] ra
+                opcode = bu[0x8009a058];
+                800BB9C8	jalr   w[0x800e0228 + opcode * 4] ra
 
-            if (V0 == 0) // continue exec
-            {
-                if (bu[0x80099ffc] != 0x5) continue;
-
-                // not debug
-                if ((bu[0x8009d820] & 0x1) == 0) continue;
-
-                if (bu[0x80071e24] & 0x4)
+                if (V0 == 0) // continue exec
                 {
-                    actor_id_cur = bu[0x800722c4];
-                    if (bu[0x80114498 + actor_id_cur] == 0) continue;
+                    if (bu[0x80099ffc] != 0x5) continue;
+
+                    // not debug
+                    if ((bu[0x8009d820] & 0x1) == 0) continue;
+
+                    if (bu[0x80071e24] & 0x4)
+                    {
+                        actor_id_cur = bu[0x800722c4];
+                        if (bu[0x80114498 + actor_id_cur] == 0) continue;
+                    }
+
+                    [0x8009a064] = w(w[0x8009a064] + 0x1);
+
+                    if (w[0x8009a064] >= 0x8)
+                    {
+                        [0x8009a064] = w(0);
+                        [0x800722c4] = b(bu[0x800722c4] + 0x1);
+                    }
                 }
-
-                [0x8009a064] = w(w[0x8009a064] + 0x1);
-
-                if (w[0x8009a064] >= 0x8)
+                else // break flow
                 {
-                    [0x8009a064] = w(0);
+                    if (bu[0x80099ffc] != 0x5) break;
+
+                    // not debug
+                    if ((bu[0x8009d820] & 0x1) == 0) break;
+
+                    if (bu[0x80071e24] & 0x4)
+                    {
+                        actor_id_cur = bu[0x800722c4];
+                        if (bu[0x80114498 + actor_id_cur] == 0) break;
+                    }
+
                     [0x800722c4] = b(bu[0x800722c4] + 0x1);
                 }
+
+                if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
+
+                field_script_update_animation_state();
+
+                return;
             }
-            else // break flow
-            {
-                if (bu[0x80099ffc] != 0x5) break;
-
-                // not debug
-                if ((bu[0x8009d820] & 0x1) == 0) break;
-
-                if (bu[0x80071e24] & 4)
-                {
-                    actor_id_cur = bu[0x800722c4];
-                    if (bu[0x80114498 + actor_id_cur] == 0) break;
-                }
-
-                [0x800722c4] = b(bu[0x800722c4] + 1);
-            }
-
-            if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
-
-            field_script_update_animation_state();
-
-            return;
         }
-    }
 
-    [0x800722c4] = b(bu[0x800722c4] + 1);
+        [0x800722c4] = b(bu[0x800722c4] + 0x1);
 
-    if (bu[0x80099ffc] == 0x5)
-    {
-        if (bu[0x80071e24] & 0x1)
+        if (bu[0x80099ffc] == 0x5)
         {
-            if ((bu[0x80071e24] & 4) == 0) break;
+            if (bu[0x80071e24] & 0x1)
+            {
+                if ((bu[0x80071e24] & 0x4) == 0) break;
 
-            actor_id_cur = bu[0x800722c4];
-            if (bu[0x80114498 + actor_id_cur] != 0) break;
+                actor_id_cur = bu[0x800722c4];
+                if (bu[0x80114498 + actor_id_cur] != 0) break;
+            }
         }
     }
+
+    if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
+
+    field_script_update_animation_state();
 }
-
-if (bu[0x80099ffc] == 0x5) [0x80070788] = b(0); // stop script update
-
-field_script_update_animation_state();
-////////////////////////////////
 
 
 
@@ -1055,7 +1050,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         field_int2_to_string(line_id, temp);
         field_debug_concat_string(string, temp);
 
-        if (bu[0x8007e7ac + line_id * 0x18 + 0xc] != 0) // line on
+        if (g_field_lines[line_id].on != 0)
         {
             field_debug_concat_string(string, " on");
         }
@@ -1189,149 +1184,64 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             field_debug_set_row_color(page_id, 0x7, 0x7);
         }
     }
-    else if (line_id != ff)
+    else if (line_id != 0xff)
     {
-        A0 = string;
-        A1 = 800a0258; // "AX"
-        field_debug_copy_string();
-
-        A0 = h[0x8007e7ac + line_id * 0x18 + 0];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a025c; // " AY"
-        field_debug_concat_string();
-
-        A0 = h[0x8007e7ac + line_id * 0x18 + 2];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
+        field_debug_copy_string(string, "AX");
+        field_int4_to_string(g_field_lines[line_id].ax, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " AY");
+        field_int4_to_string(g_field_lines[line_id].ay, temp);
+        field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 3;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0x3, string);
         }
 
-        A0 = string;
-        A1 = 800a0260; // "AZ"
-        field_debug_copy_string();
-
-        A0 = h[0x8007e7ac + line_id * 0x18 + 4];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
+        field_debug_copy_string(string, "AZ");
+        field_int4_to_string(g_field_lines[line_id].az, temp);
+        field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 4;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0x4, string);
         }
 
-        A0 = string;
-        A1 = 800a0264; // "BX"
-        field_debug_copy_string();
-
-        A0 = h[0x8007e7ac + line_id * 0x18 + 6];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a0268; // " BY"
-        field_debug_concat_string();
-
-        A0 = h[0x8007e7ac + line_id * 0x18 + 8];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
+        field_debug_copy_string(string, "BX");
+        field_int4_to_string(g_field_lines[line_id].bx, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " BY");
+        field_int4_to_string(g_field_lines[line_id].by, temp);
+        field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 5;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0x5, string);
         }
 
-        A0 = string;
-        A1 = 800a026c; // "BZ"
-        field_debug_copy_string();
-
-        A0 = h[0x8007e7ac + line_id * 0x18 + a];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
+        field_debug_copy_string(string, "BZ");
+        field_int4_to_string(g_field_lines[line_id].bz, temp);
+        field_debug_concat_string(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 6;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 7;
-            A2 = 800a0270; // ""
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0x6, string);
+            field_debug_copy_string_into_page(page_id, 0x7, "");
         }
     }
     else
     {
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 3;
-            A2 = 800a0270; // ""
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 4;
-            A2 = 800a0270; // ""
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 5;
-            A2 = 800a0270; // ""
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 6;
-            A2 = 800a0270; // ""
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 7;
-            A2 = 800a0270; // ""
-            field_debug_copy_string_into_page();
+            field_debug_copy_string_into_page(page_id, 0x3, "");
+            field_debug_copy_string_into_page(page_id, 0x4, "");
+            field_debug_copy_string_into_page(page_id, 0x5, "");
+            field_debug_copy_string_into_page(page_id, 0x6, "");
+            field_debug_copy_string_into_page(page_id, 0x7, "");
         }
     }
 
-    if (page_id == 4) return;
+    if (page_id == 0x4) return;
 
     {
         field_debug_copy_string(string, "SX");

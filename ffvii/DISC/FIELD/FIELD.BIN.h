@@ -256,3 +256,24 @@ struct FieldEntity
     s32 move_end_y;             // 0x7c
     s32 move_end_z;             // 0x80
 };
+
+struct FieldLine
+{
+    s16 ax;                     // 0x00
+    s16 ay;                     // 0x02
+    s16 az;                     // 0x04
+    s16 bx;                     // 0x06
+    s16 by;                     // 0x08
+    s16 bz;                     // 0x0a
+    u8 on;                      // 0x0c
+    u8 actor_id;                // 0x0d
+    u8 ev_inside;               // 0x0e
+    u8 ev_cross;                // 0x0f
+    u8 ev_towards;              // 0x10
+    u8 ev_talk;                 // 0x11
+    u8 ev_enter;                // 0x12
+    u8 ev_leave;                // 0x13
+    u8 dir_to_line;             // 0x14
+    u8 can_talk;                // 0x15
+    u8 slip;                    // 0x16
+};

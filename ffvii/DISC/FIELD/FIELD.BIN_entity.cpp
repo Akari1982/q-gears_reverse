@@ -1,6 +1,52 @@
+void field_entity_init_pos()
+{
+    if (g_field_control.control_lock == 0) // 0 if PC can move
+    {
+        id = h[0x8009abf4 + 0x2a];
+        [0x800965e0] = h(id);
+        triangle_id = hu[0x8009abf4 + 0x22];
+        g_field_entities[id].pos_i = triangle_id;
+        u32 id_offset = w[0x800e4274];
+
+        if (h[0x8009abf4 + 0x4] == 0x7fff) // destination x during map load
+        {
+            g_field_entities[id].pos_x = ((h[id_offset + triangle_id * 0x18 + 0x0] + h[id_offset + triangle_id * 0x18 + 0x8] + h[id_offset + triangle_id * 0x18 + 0x10]) / 3) << 0xc;
+            g_field_entities[id].pos_y = ((h[id_offset + triangle_id * 0x18 + 0x2] + h[id_offset + triangle_id * 0x18 + 0xa] + h[id_offset + triangle_id * 0x18 + 0x12]) / 3) << 0xc;
+            g_field_entities[id].pos_z = ((h[id_offset + triangle_id * 0x18 + 0x4] + h[id_offset + triangle_id * 0x18 + 0xc] + h[id_offset + triangle_id * 0x18 + 0x14]) / 3) << 0xc;
+        }
+        else
+        {
+            g_field_entities[id].pos_x = w(h[0x8009abf4 + 0x4] << 0xc);
+            g_field_entities[id].pos_y = w(h[0x8009abf4 + 0x6] << 0xc);
+
+            VECTOR ba;
+            VECTOR cb;
+            field_entity_vector_sub(&ba, id_offset + triangle_id * 0x18 + 0x8,  id_offset + triangle_id * 0x18 + 0x0);
+            field_entity_vector_sub(&cb, id_offset + triangle_id * 0x18 + 0x10, id_offset + triangle_id * 0x18 + 0x8);
+
+            VECTOR pos;
+            pos.vx = h[0x8009abf4 + 0x4];
+            pos.vy = h[0x8009abf4 + 0x6];
+            g_field_entities[id].pos_z = field_entity_calculate_z(&ba, &cb, &pos, id_offset + triangle_id * 0x18) << 0xc;
+        }
+
+        g_field_entities[id].anim_speed = 0x10;
+        g_field_entities[id].solid_range = (h[0x8009abf4 + 0x10] * 0x11) >> 0x8;
+        g_field_entities[id].move_speed = h[0x8009abf4 + 0x10] * 0x2;
+    }
+
+    s16 entities_n = h[0x8009abf4 + 0x28];
+    for (int i = 0; i < entities_n; ++i)
+    {
+        g_field_entities[i].move_dir_add = 0;
+    }
+}
+
+
+
 void field_entity_movement_update(u32 input)
 {
-    entities_n = h[0x8009abf4 + 0x28];
+    s16 entities_n = h[0x8009abf4 + 0x28];
     s16 pc_id = h[0x800965e0];
 
     if (entities_n <= 0) return;
@@ -75,7 +121,7 @@ void field_entity_movement_update(u32 input)
             entity.ofs_type = 0x3;
         }
 
-        if (i == pc_id) field_entity_line_clear(0x8007e7ac);
+        if (i == pc_id) field_entity_line_clear(g_field_lines);
     }
 
     // manual move update
@@ -170,7 +216,7 @@ void field_entity_movement_update(u32 input)
 
                 field_entity_animation_update(i);
 
-                if (i == pc_id) field_entity_line_clear(0x8007e7ac);
+                if (i == pc_id) field_entity_line_clear(g_field_lines);
             }
         }
     }
@@ -226,7 +272,7 @@ void field_entity_movement_update(u32 input)
 
             field_entity_animation_update(i);
 
-            if (i == pc_id) field_entity_line_clear(0x8007e7ac);
+            if (i == pc_id) field_entity_line_clear(g_field_lines);
         }
     }
 
@@ -262,12 +308,11 @@ void field_entity_movement_update(u32 input)
 
                     entity.anim_frames_n = hu[S3 + entity.anim_id * 0x10] - 1;
 
-                    if (i == pc_id) field_entity_line_clear(0x8007e7ac);
+                    if (i == pc_id) field_entity_line_clear(g_field_lines);
                 }
                 else
                 {
-                    uc = bu[0x8009abf4 + 0x32];
-                    if ((i == pc_id) && (uc == 0))
+                    if ((i == pc_id) && (g_field_control.control_lock == 0))
                     {
                         u32 start, end;
 
@@ -329,51 +374,23 @@ void field_entity_movement_update(u32 input)
                     }
                     else
                     {
-                        step = h[g_field_entities + i * 0x84 + 32];
-                        steps = h[g_field_entities + i * 0x84 + 30];
-                        if (step == steps)
+                        if (entity.move_step == entity.move_steps)
                         {
-                            g_field_entities[i].pos_i = g_field_entities[i].move_end_i;
-                            [g_field_entities + i * 0x84 + 6a] = h(2);
+                            entity.pos_i = entity.move_end_i;
+                            entity.action_state = 0x2;
                         }
                         else
                         {
-                            step = step + 1;
-                            [g_field_entities + i * 0x84 + 32] = h(step);
-
-
-                            V0 = hu[g_field_entities + i * 0x84 + 62];
-                            animation_speed = hu[g_field_entities + i * 0x84 + 60];
-                            V0 = V0 + animation_speed();
-                            [g_field_entities + i * 0x84 + 62] = h(V0);
-
-                            V1 = hu[g_field_entities + i * 0x84 + 64];
-                            V0 = V0 * 10;
-
-                            if (V1 < V0)
-                            {
-                                [g_field_entities + i * 0x84 + 62] = h(0);
+                            entity.move_step += 0x1;
+                            entity.anim_frame += entity.anim_speed;
+                            if (entity.anim_frames_n < (entity.anim_frame * 0x10)) entity.anim_frame = 0;
                             }
                         }
                     }
 
-                    A0 = w[g_field_entities + i * 0x84 + 0x18];
-                    A1 = g_field_entities[i].move_end_x;
-                    A2 = w[g_field_entities + i * 0x84 + 0x30];
-                    A3 = w[g_field_entities + i * 0x84 + 0x32];
-                    g_field_entities[i].pos_x = field_calculate_current_value_by_steps();
-
-                    A0 = w[g_field_entities + i * 0x84 + 0x1c];
-                    A1 = g_field_entities[i].move_end_y;
-                    A2 = w[g_field_entities + i * 0x84 + 0x30];
-                    A3 = w[g_field_entities + i * 0x84 + 0x32];
-                    g_field_entities[i].pos_y = field_calculate_current_value_by_steps();
-
-                    A0 = w[g_field_entities + i * 0x84 + 0x20];
-                    A1 = g_field_entities[i].move_end_z;
-                    A2 = w[g_field_entities + i * 0x84 + 0x30];
-                    A3 = w[g_field_entities + i * 0x84 + 0x32];
-                    g_field_entities[i].pos_z = field_calculate_current_value_by_steps();
+                    entity.pos_x = field_calculate_current_value_by_steps(entity.move_start_x, entity.move_end_x, entity.move_steps, entity.move_step);
+                    entity.pos_y = field_calculate_current_value_by_steps(entity.move_start_y, entity.move_end_y, entity.move_steps, entity.move_step);
+                    entity.pos_z = field_calculate_current_value_by_steps(entity.move_start_z, entity.move_end_z, entity.move_steps, entity.move_step);
                 }
             }
         }
@@ -385,7 +402,7 @@ void field_entity_movement_update(u32 input)
 int field_entity_move(s16 entity_id)
 {
     u32 triggers = w[0x800716c4];
-    id_offset = w[0x800e4274];
+    u32 id_offset = w[0x800e4274];
 
     u16 pos_i = g_field_entities[actor_id].pos_i;
 
@@ -520,7 +537,7 @@ int field_entity_move(s16 entity_id)
 
     if ((entity_id == h[0x800965e0]) && (g_field_control.control_lock == 0))
     {
-        [0x80071c0c] = b(field_entity_line_check(&g_field_entities[entity_id], 0x8007e7ac, &pos_new));
+        [0x80071c0c] = b(field_entity_line_check(&g_field_entities[entity_id], g_field_lines, &pos_new));
 
         if (bu[0x8009abf4 + 0x36] == 0)
         {
@@ -574,7 +591,7 @@ s16 field_entity_get_dir_vector_y(A0)
 
 s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTOR* dir, VECTOR* collision)
 {
-    id_offset = w[0x800e4274];
+    u32 id_offset = w[0x800e4274];
     offset_to_id_access_block = w[0x80114458];
 
     VECTOR pos_s;
@@ -756,7 +773,7 @@ int field_entity_collision_check(s16 entity_id, VECTOR* pos)
 
 
 
-int field_entity_line_check(FieldEntity* entity, u32 line_data, VECTOR* pos)
+int field_entity_line_check(FieldEntity* entity, FieldLine* lines, VECTOR* pos)
 {
     s32 slip_disable = 0;
 
@@ -774,67 +791,56 @@ int field_entity_line_check(FieldEntity* entity, u32 line_data, VECTOR* pos)
 
     for (int i = 0; i < 0x20; ++i) // go through all lines
     {
-        if (bu[line_data + i * 0x18 + 0xc] == 0x1) // if line active
-        {
-            [line_data + i * 0x18 + 0x15] = b(0); // move to line false
+        FieldLine& line = g_field_lines[i];
 
-            s32 sqr_dist = field_entity_sqr_dist_to_line(line_data + i * 0x18, &v_old, &proj);
+        if (line.on == 0x1)
+        {
+            line.can_talk = 0;
+
+            s32 sqr_dist = field_entity_sqr_dist_to_line(&lines[i], &v_old, &proj);
 
             // if we closer to line than solid range
             if ((sqr_dist != -0x1) && (sqr_dist < (entity->solid_range * entity->solid_range)))
             {
-                if (bu[line_data + i * 0x18 + 0x16] == 0x1) // if we slip
-                {
-                    slip_disable = 0x1;
-                }
+                if (line.slip == 0x1) slip_disable = 0x1;
 
-                if (bu[line_data + i * 0x18 + 0xe] == 0) // if player not in line
-                {
-                    [line_data + i * 0x18 + 0x12] = b(0x1); // entered line flag
-                }
-                [line_data + i * 0x18 + 0xe] = b(0x1); // store that player in line already
+                if (line.ev_inside == 0) line.ev_enter = 0x1;
 
-                s16 x1 = h[line_data + i * 0x18 + 0x0];
-                s16 y1 = h[line_data + i * 0x18 + 0x2];
-                s16 x2 = h[line_data + i * 0x18 + 0x6];
-                s16 y2 = h[line_data + i * 0x18 + 0x8];
+                line.ev_inside = 0x1;
 
-                s32 side_old = ((x2 - x1) * (v_old.vy - y1)) - ((v_old.vx - x1) * (y2 - y1));
-                s32 side_new = ((x2 - x1) * (v_new.vy - y1)) - ((v_new.vx - x1) * (y2 - y1));
+                s32 side_old = ((line.bx - line.ax) * (v_old.vy - line.ay)) - ((v_old.vx - line.ax) * (line.by - line.ay));
+                s32 side_new = ((line.bx - line.ax) * (v_new.vy - line.ay)) - ((v_new.vx - line.ax) * (line.by - line.ay));
 
                 // if we cross the line
                 if (((side_new > 0) && (side_old <= 0)) || ((side_old > 0) && (side_new <= 0)) || ((side_new >= 0) && (side_old < 0)) || ((side_old >= 0) && (side_new < 0)))
                 {
-                    [line_data + i * 0x18 + 0xf] = b(0x1); // cross line flag
+                    line.ev_cross = 0x1;
                 }
 
                 // if previously we where stay on line
                 if ((v_old.vx == proj.vx) && (v_old.vy == proj.vy))
                 {
-                    [line_data + i * 0x18 + 0x10] = b(0x1); // move to line script flag
-                    [line_data + i * 0x18 + 0x15] = b(0x1); // move to line talk check
+                    line.ev_towards = 0x1;
+                    line.can_talk = 0x1;
                 }
                 else
                 {
                     s32 dist;
-                    [line_data + i * 0x18 + 0x14] = b(field_entity_dir_by_vec(&v_old, &proj, &dist));
+                    line.dir_to_line = field_entity_dir_by_vec(&v_old, &proj, &dist);
 
                     // if we move to line
-                    if (((bu[line_data + i * 0x18 + 0x14] - entity->move_dir + 0x40) & 0xff) < 0x80)
+                    if (((line.dir_to_line - entity->move_dir + 0x40) & 0xff) < 0x80)
                     {
-                        [line_data + i * 0x18 + 0x10] = b(0x1);
-                        [line_data + i * 0x18 + 0x15] = b(0x1);
+                        line.ev_towards = 0x1;
+                        line.can_talk = 0x1;
                     }
                 }
             }
             else // we not on line
             {
-                if (bu[line_data + i * 0x18 + 0xe] == 0x1) // if we was on line but now not
-                {
-                    [line_data + i * 0x18 + 0x13] = b(0x1); // leave line flag
-                }
-
-                [line_data + i * 0x18 + 0xe] = b(0);
+                // if we was on line but now not
+                if (line.ev_inside == 0x1) line.ev_leave = 0x1;
+                line.ev_inside = 0;
             }
         }
     }
@@ -844,14 +850,14 @@ int field_entity_line_check(FieldEntity* entity, u32 line_data, VECTOR* pos)
 
 
 
-s32 field_entity_sqr_dist_to_line(s32 line_offset, VECTOR* pos, VECTOR* ret)
+s32 field_entity_sqr_dist_to_line(FieldLine* line, VECTOR* pos, VECTOR* ret)
 {
-    s16 x1 = h[line_offset + 0x0];
-    s16 y1 = h[line_offset + 0x2];
-    s16 z1 = h[line_offset + 0x4];
-    s16 x2 = h[line_offset + 0x6];
-    s16 y2 = h[line_offset + 0x8];
-    s16 z2 = h[line_offset + 0xa];
+    s16 x1 = line->ax;
+    s16 y1 = line->ay;
+    s16 z1 = line->az;
+    s16 x2 = line->bx;
+    s16 y2 = line->by;
+    s16 z2 = line->bz;
     s32 x3 = pos->vx;
     s32 y3 = pos->vy;
     s32 z3 = pos->vz;
@@ -1110,17 +1116,17 @@ void field_entity_bg_trigger_init(u32 trigger_data)
 
 
 
-void field_entity_line_clear(s32 lines)
+void field_entity_line_clear(FieldLine* lines)
 {
     for (int i = 0; i < 0x20; ++i)
     {
-        [lines + i * 0x18 + 0x15] = b(0);
+        lines[i].can_talk = 0;
     }
 }
 
 
 
-void field_entity_line_interact(FieldEntity* entity, u32 line_data)
+void field_entity_line_interact(FieldEntity* entity, FieldLine* lines)
 {
     VECTOR pos;
     pos.vx = entity->pos_x >> 0xc;
@@ -1129,39 +1135,35 @@ void field_entity_line_interact(FieldEntity* entity, u32 line_data)
 
     for (int i = 0; i < 0x20; ++i)
     {
-        if (bu[line_data + i * 0x18 + 0xc] == 0x1)
+        FieldLine& line = lines[i];
+
+        if (line.on == 0x1)
         {
-            if (bu[entity + 5d] == 0)
+            if (entity->action == 0)
             {
                 VECTOR proj;
-                s32 sqr_dist = field_entity_sqr_dist_to_line(line_data + i * 0x18, &pos, &proj);
+                s32 sqr_dist = field_entity_sqr_dist_to_line(&lines[i], &pos, &proj);
 
                 // if we closer to line than solid range
                 if ((sqr_dist != -0x1) && (sqr_dist < (entity->solid_range * entity->solid_range)))
                 {
-                    if (bu[line_data + i * 0x18 + 0xe] == 0)
-                    {
-                        [line_data + i * 0x18 + 0x12] = b(0x1);
-                    }
-                    [line_data + i * 0x18 + 0xe] = b(0x1);
+                    if (line.ev_inside == 0) line.ev_enter = 0x1;
+                    line.ev_inside = 0x1;
                 }
                 else
                 {
-                    if (bu[line_data + i * 0x18 + 0xe] == 0x1)
-                    {
-                        [line_data + i * 0x18 + 0x13] = b(0x1);
-                    }
-                    [line_data + i * 0x18 + 0xe] = b(0);
+                    if (line.ev_inside == 0x1) line.ev_leave = 0x1;
+                    line.ev_inside = 0;
                 }
 
                 // check if we talk to line
-                if (bu[line_data + i * 0x18 + 0x15] == 0x1)
+                if (line.can_talk == 0x1)
                 {
-                    if (((bu[line_data + i * 0x18 + 0x14] - entity->move_dir + 0x20) & 0xff) < 0x40)
+                    if (((line.dir_to_line - entity->move_dir + 0x20) & 0xff) < 0x40)
                     {
                         if ((g_field_control.remap_pressed & BUTTON_CIRCLE) && ((g_field_control.remap_prev & BUTTON_CIRCLE) == 0))
                         {
-                            [line_data + i * 0x18 + 0x11] = b(0x1);
+                            line.ev_talk = 0x1;
                         }
                     }
                 }
@@ -1216,7 +1218,7 @@ void field_entity_check_talk()
             pos1.vy = g_field_entities[pc_id].pos_y >> 0xc;
             pos1.vz = g_field_entities[pc_id].pos_z >> 0xc;
 
-            entities_n = h[0x8009abf4 + 0x28];
+            s16 entities_n = h[0x8009abf4 + 0x28];
 
             s16 angle[0x10];
 
@@ -1330,18 +1332,13 @@ void field_entity_animation_update(u8 entity_id)
             u16 frame_n = hu[offst + anim_offst + anim_id * 0x10 + 0x0];
             entity.anim_frames_n = frame_n - 0x1;
 
-            if (entity.anim_frame > (frame_n - 0x1) << 0x4)
-            {
-                entity.anim_frame = 0;
-            }
+            if (entity.anim_frame > ((frame_n - 0x1) * 0x10)) entity.anim_frame = 0;
         }
         else
         {
-            u16 frame_n = entity.anim_frames_n;
-
-            if (entity.anim_frame > (frame_n << 0x4))
+            if (entity.anim_frame > (entity.anim_frames_n * 0x10))
             {
-                entity.anim_frame = frame_n << 0x4;
+                entity.anim_frame = entity.anim_frames_n * 0x10;
             }
         }
     }

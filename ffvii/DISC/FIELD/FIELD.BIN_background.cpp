@@ -472,15 +472,12 @@ if (bu[0x8009abf4 + 0x1f] == 0) // init state
 
 if (bu[0x8009abf4 + 1f] == 1) // update state
 {
-    switch(bu[0x8009abf4 + 1d])
+    switch(bu[0x8009abf4 + 0x1d])
     {
-        case 1: // instant scroll bg to entity
+        case 0x1: // instant scroll bg to entity
         {
-            A0 = SP + 10;
-            field_background_get_entity_screen_pos();
-
-            A0 = SP + 10;
-            field_background_clamp_pos();
+            field_background_get_entity_screen_pos(SP + 0x10);
+            field_background_clamp_pos(SP + 0x10);
 
             // compensate entity screen pos to get it to center
             [0x80071e38] = h(0 - hu[SP + 10]);
@@ -488,7 +485,7 @@ if (bu[0x8009abf4 + 1f] == 1) // update state
         }
         break;
 
-        case 2: // linear scroll bg to entity
+        case 0x2: // linear scroll bg to entity
         {
             A0 = SP + 10;
             field_background_get_entity_screen_pos();
@@ -497,7 +494,7 @@ if (bu[0x8009abf4 + 1f] == 1) // update state
             field_background_clamp_pos();
 
             A0 = h[0x80075e14]; // start
-            A1 = 0 - h[SP + 10]; // end
+            A1 = 0 - h[SP + 0x10]; // end
             A2 = h[0x8009c558]; // steps_n
             A3 = h[0x80075cf8]; // step
             field_calculate_current_value_by_steps();
@@ -1032,3 +1029,60 @@ if (bu[offset_to_triggers + 14] == 2)
     [T4 + 2] = h(hu[offset_to_triggers + 12] + (((T2 * A1) / A2) >> 8) - 78);
 }
 ////////////////////////////////
+
+
+
+void field_load_mim_to_vram(A0, mim_data)
+{
+    // 1st part of mim - palette settings
+    [0x800e4d90] = w(mim_data + 0xc);
+    [0x800e4d94] = w(w[mim_data + 0x0]);
+    [0x800e4d98] = h(hu[mim_data + 0x4]);
+    [0x800e4d9a] = h(hu[mim_data + 0x6]);
+    [0x800e4d9c] = h(hu[mim_data + 0x8]);
+    [0x800e4d9e] = h(hu[mim_data + 0xa]);
+
+    // 2nd part 1st image
+    mim_data += (w[mim_data + 0x0] >> 0x2) << 0x2;
+    [0x800e4da4] = w(mim_data + 0xc);
+    [0x800e4da8] = w(w[mim_data + 0x0]);
+    [0x800e4dac] = h(hu[mim_data + 0x4]);
+    [0x800e4dae] = h(hu[mim_data + 0x6]);
+    [0x800e4db0] = h(hu[mim_data + 0x8] * 0x2);
+    [0x800e4db2] = h(hu[mim_data + 0xa]);
+
+    // 3rd part 2nd image
+    mim_data += (w[mim_data + 0x0] >> 0x2) << 0x2;
+    [0x800e4dd4] = w(mim_data + 0xc);
+    [0x800e4dd8] = w(w[mim_data + 0x0]);
+    [0x800e4ddc] = h(hu[mim_data + 0x4]);
+    [0x800e4dde] = h(hu[mim_data + 0x6]);
+    [0x800e4de0] = h(hu[mim_data + 0x8] * 0x2);
+    [0x800e4de2] = h(hu[mim_data + 0xa]);
+
+    system_psyq_draw_sync(0);
+
+    // load palette to vram
+    {
+        RECT rect;
+        rect.x = 0;
+        rect.y = 0x1e0;
+        rect.w = 0x100;
+        rect.h = 0x10;
+        system_psyq_load_image(&rect, w[0x800e4d90]);
+        system_psyq_draw_sync(0);
+    }
+
+    // load 1st image to vram
+    {
+        [0x800e4db4] = h(system_psyq_load_tpage(w[0x800e4da4], 0x1, 0, h[0x800e4dac], h[0x800e4dae], hu[0x800e4db0], hu[0x800e4db2]));
+        system_psyq_draw_sync(0);
+    }
+
+    // load 2nd image to vram
+    if (w[0x800e4dd8] != 0)
+    {
+        [0x800e4de4] = h(system_psyq_load_tpage(w[0x800e4dd4], 0x1, 0, h[0x800e4ddc], h[0x800e4dde], hu[0x800e4de0], hu[0x800e4de2]));
+        system_psyq_draw_sync(0);
+    }
+}
