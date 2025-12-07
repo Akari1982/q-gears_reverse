@@ -2,13 +2,14 @@ void field_entity_init_pos()
 {
     if (g_field_control.control_lock == 0) // 0 if PC can move
     {
-        id = h[0x8009abf4 + 0x2a];
+        s16 id = g_field_control.player_id;
+        u16 triangle_id = g_field_control.spawn_i;
+
         [0x800965e0] = h(id);
-        triangle_id = hu[0x8009abf4 + 0x22];
         g_field_entities[id].pos_i = triangle_id;
         u32 id_offset = w[0x800e4274];
 
-        if (h[0x8009abf4 + 0x4] == 0x7fff) // destination x during map load
+        if (g_field_control.spawn_x == 0x7fff)
         {
             g_field_entities[id].pos_x = ((h[id_offset + triangle_id * 0x18 + 0x0] + h[id_offset + triangle_id * 0x18 + 0x8] + h[id_offset + triangle_id * 0x18 + 0x10]) / 3) << 0xc;
             g_field_entities[id].pos_y = ((h[id_offset + triangle_id * 0x18 + 0x2] + h[id_offset + triangle_id * 0x18 + 0xa] + h[id_offset + triangle_id * 0x18 + 0x12]) / 3) << 0xc;
@@ -16,27 +17,26 @@ void field_entity_init_pos()
         }
         else
         {
-            g_field_entities[id].pos_x = w(h[0x8009abf4 + 0x4] << 0xc);
-            g_field_entities[id].pos_y = w(h[0x8009abf4 + 0x6] << 0xc);
+            g_field_entities[id].pos_x = w(g_field_control.spawn_x << 0xc);
+            g_field_entities[id].pos_y = w(g_field_control.spawn_y << 0xc);
 
             VECTOR ba;
             VECTOR cb;
-            field_entity_vector_sub(&ba, id_offset + triangle_id * 0x18 + 0x8,  id_offset + triangle_id * 0x18 + 0x0);
+            field_entity_vector_sub(&ba, id_offset + triangle_id * 0x18 +  0x8, id_offset + triangle_id * 0x18 + 0x0);
             field_entity_vector_sub(&cb, id_offset + triangle_id * 0x18 + 0x10, id_offset + triangle_id * 0x18 + 0x8);
 
             VECTOR pos;
-            pos.vx = h[0x8009abf4 + 0x4];
-            pos.vy = h[0x8009abf4 + 0x6];
-            g_field_entities[id].pos_z = field_entity_calculate_z(&ba, &cb, &pos, id_offset + triangle_id * 0x18) << 0xc;
+            pos.vx = g_field_control.spawn_x;
+            pos.vy = g_field_control.spawn_y;
+            g_field_entities[id].pos_z = field_entity_calculate_z(&ba, &cb, &pos, id_offset + triangle_id * 0x18 + 0x0) << 0xc;
         }
 
         g_field_entities[id].anim_speed = 0x10;
-        g_field_entities[id].solid_range = (h[0x8009abf4 + 0x10] * 0x11) >> 0x8;
-        g_field_entities[id].move_speed = h[0x8009abf4 + 0x10] * 0x2;
+        g_field_entities[id].solid_range = (g_field_control.scale * 0x11) >> 0x8;
+        g_field_entities[id].move_speed = g_field_control.scale * 0x2;
     }
 
-    s16 entities_n = h[0x8009abf4 + 0x28];
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         g_field_entities[i].move_dir_add = 0;
     }
@@ -46,12 +46,11 @@ void field_entity_init_pos()
 
 void field_entity_movement_update(u32 input)
 {
-    s16 entities_n = h[0x8009abf4 + 0x28];
     s16 pc_id = h[0x800965e0];
 
-    if (entities_n <= 0) return;
+    if (g_field_control.entities_n <= 0) return;
 
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         u32 dat_block7 = w[0x8008357c];
         u8 model_id = bu[dat_block7 + i * 0x8 + 0x4];
@@ -63,7 +62,7 @@ void field_entity_movement_update(u32 input)
     }
 
     // turn update
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         FieldEntity& entity = g_field_entities[i];
 
@@ -91,7 +90,7 @@ void field_entity_movement_update(u32 input)
     }
 
     // offset update
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         FieldEntity& entity = g_field_entities[i];
 
@@ -125,7 +124,7 @@ void field_entity_movement_update(u32 input)
     }
 
     // manual move update
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         FieldEntity& entity = g_field_entities[i];
 
@@ -137,17 +136,17 @@ void field_entity_movement_update(u32 input)
                 field_entity_add_rotate(input, i);
 
                 // set idle animation id by default
-                entity.anim_id = bu[0x8009abf4 + 0x2c];
+                entity.anim_id = g_field_control.anim_stand;
 
-                s16 field_scale = h[0x8009abf4 + 0x10];
+                s16 field_scale = g_field_control.scale;
 
                 if (input & BUTTON_CROSS)
                 {
-                    entity.move_speed = (bu[0x8009abf4 + 0x3a] == 0) ? field_scale * 0x8 : field_scale * 0xc;
+                    entity.move_speed = (g_field_control.speed_up == 0) ? field_scale * 0x8 : field_scale * 0xc;
                 }
                 else
                 {
-                    entity.move_speed = (bu[0x8009abf4 + 0x3a] != 0) ? field_scale * 0x3 : field_scale * 0x2;
+                    entity.move_speed = (g_field_control.speed_up != 0) ? field_scale * 0x3 : field_scale * 0x2;
                 }
 
                 if (input & (BUTTON_UP | BUTTON_RIGHT | BUTTON_DOWN | BUTTON_LEFT))
@@ -191,13 +190,13 @@ void field_entity_movement_update(u32 input)
     }
 
     // auto move update
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         FieldEntity& entity = g_field_entities[i];
 
         if (entity.action == 0x1)
         {
-            if (bu[0x8009abf4 + 0x33] != 0x1)
+            if (g_field_control.move_lock != 0x1)
             {
                 entity.move_dir_add = 0;
 
@@ -222,7 +221,7 @@ void field_entity_movement_update(u32 input)
     }
 
     // jump update
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         FieldEntity& entity = g_field_entities[i];
 
@@ -245,7 +244,7 @@ void field_entity_movement_update(u32 input)
                 dst.vx = entity.move_end_x >> 0xc;
                 dst.vy = entity.move_end_y >> 0xc;
 
-                entity.move_end_z = field_entity_calculate_z(&ba, &cb, &dst, id_offset + entity.move_end_i * 0x18) << 0xc;
+                entity.move_end_z = field_entity_calculate_z(&ba, &cb, &dst, id_offset + entity.move_end_i * 0x18 + 0x0) << 0xc;
 
                 entity.move_b = ((entity.move_end_z - entity.move_start_z) / entity.move_steps) - (entity.move_steps * 0x1740);
 
@@ -277,7 +276,7 @@ void field_entity_movement_update(u32 input)
     }
 
     // ladder update
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         FieldEntity& entity = g_field_entities[i];
 
@@ -539,7 +538,7 @@ int field_entity_move(s16 entity_id)
     {
         [0x80071c0c] = b(field_entity_line_check(&g_field_entities[entity_id], g_field_lines, &pos_new));
 
-        if (bu[0x8009abf4 + 0x36] == 0)
+        if (g_field_control.gateway_lock == 0)
         {
             field_entity_gateway_check(&g_field_entities[entity_id], triggers + 0x38, &pos_new);
         }
@@ -608,9 +607,9 @@ s8 field_entity_walkmech_cross(u32 triangle_info_offset, VECTOR* position, VECTO
     while (true)
     {
         u16 id = hu[triangle_info_offset];
-        field_entity_vector_sub(&vec_ba, id_offset + id * 0x18 +  0x8, id_offset + id * 0x18 +  0x0); // BA
-        field_entity_vector_sub(&vec_cb, id_offset + id * 0x18 + 0x10, id_offset + id * 0x18 +  0x8); // CB
-        field_entity_vector_sub(&vec_ac, id_offset + id * 0x18 +  0x0, id_offset + id * 0x18 + 0x10); // AC
+        field_entity_vector_sub(&vec_ba, id_offset + id * 0x18 +  0x8, id_offset + id * 0x18 +  0x0);
+        field_entity_vector_sub(&vec_cb, id_offset + id * 0x18 + 0x10, id_offset + id * 0x18 +  0x8);
+        field_entity_vector_sub(&vec_ac, id_offset + id * 0x18 +  0x0, id_offset + id * 0x18 + 0x10);
 
         A3 = (pos_s.vx - h[id_offset + id * 0x18 +  0x0]) * vec_ba.vy;
         T2 = (pos_s.vy - h[id_offset + id * 0x18 +  0x2]) * vec_ba.vx;
@@ -741,8 +740,7 @@ int field_entity_collision_check(s16 entity_id, VECTOR* pos)
 {
     u8 collide = 0;
 
-    s16 entities_n = h[0x8009abf4 + 0x28];
-    for (int i = 0; i < entities_n; ++i)
+    for (int i = 0; i < g_field_control.entities_n; ++i)
     {
         if (i != entity_id)
         {
@@ -979,10 +977,10 @@ void field_entity_gateway_map_load(u32 trigger_data)
 {
     g_field_control.cmd = FIELD_CMD_MAP;
     g_field_control.arg = hu[A0 + 0x12]; // map id
-    [0x8009abf4 + 0x4] = h(hu[A0 + 0xc]); // x
-    [0x8009abf4 + 0x6] = h(hu[A0 + 0xe]); // y
-    [0x8009abf4 + 0x22] = h(hu[A0 + 0x10]); // z
-    [0x8009abf4 + 0x24] = h(bu[A0 + 0x14]); // rotation
+    g_field_control.spawn_x = hu[A0 + 0xc];
+    g_field_control.spawn_y = hu[A0 + 0xe];
+    g_field_control.spawn_i = hu[A0 + 0x10];
+    g_field_control.spawn_rot = bu[A0 + 0x14]; // rotation
 }
 
 
@@ -1218,11 +1216,9 @@ void field_entity_check_talk()
             pos1.vy = g_field_entities[pc_id].pos_y >> 0xc;
             pos1.vz = g_field_entities[pc_id].pos_z >> 0xc;
 
-            s16 entities_n = h[0x8009abf4 + 0x28];
-
             s16 angle[0x10];
 
-            for (int i = 0; i < entities_n; ++i)
+            for (int i = 0; i < g_field_control.entities_n; ++i)
             {
                 angle[i] = 0x100;
 
@@ -1266,7 +1262,7 @@ void field_entity_check_talk()
             s16 min = 0x40;
             s16 id = pc_id;
 
-            for (int i = 0; i < entities_n; ++i)
+            for (int i = 0; i < g_field_control.entities_n; ++i)
             {
                 // select lowest angle to talk entity
                 if (angle[i] < min)
@@ -1320,7 +1316,7 @@ void field_entity_animation_update(u8 entity_id)
         FieldEntity& entity = g_field_entities[entity_id];
 
         // don't play automove
-        if (bu[0x8009abf4 + 0x33] == 0x1) return;
+        if (g_field_control.move_lock == 0x1) return;
 
         // increase current frame if value by animation speed
         entity.anim_frame += entity.anim_speed;

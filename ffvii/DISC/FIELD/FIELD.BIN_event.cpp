@@ -101,7 +101,7 @@ void field_init_default_values()
 
     field_struct->cmd = FIELD_CMD_NONE;
     field_struct->arg = 0;
-    [field_struct + 0x10] = h(hu[events_data + 0x8]); // field scale (9 bit fixed point)
+    field_struct->scale = hu[events_data + 0x8]; // field scale (9 bit fixed point)
     [field_struct + 0x12] = b(0); // set to 0 in 0x6A VWOFT opcode
     [field_struct + 0x13] = b(0); // set to 0 in 0x6A VWOFT opcode
     [field_struct + 0x14] = b(0); // set to 0 in 0x6A VWOFT opcode
@@ -109,18 +109,18 @@ void field_init_default_values()
     [field_struct + 0x1a] = h(0); // set to 0 in 0x6A VWOFT opcode
     [field_struct + 0x1d] = b(0); // set to (0-SCRCC(instant), 4-SCR2D(instant), 5-SCR2DL, 6-SCR2DC)
     [field_struct + 0x26] = h(0); // battle state?
-    [field_struct + 0x28] = h(bu[events_data + 0x3]); // number of models
-    [field_struct + 0x2a] = h(0); // manual model id
-    [field_struct + 0x2c] = h(0); // animation for stand
+    field_struct->entities_n = bu[events_data + 0x3];
+    field_struct->player_id = 0;
+    field_struct->anim_stand = 0;
     [field_struct + 0x2e] = h(1); // animation for walk
     [field_struct + 0x30] = h(2); // animation for run
-    [field_struct + 0x32] = b(0); // 0 if PC can move. 1 - otherwise
-    [field_struct + 0x33] = b(0); // if 1 here model will not automove. And animation will not play
+    field_struct->control_lock = 0;
+    field_struct->move_lock = 0;
     [field_struct + 0x34] = b(0); // MENU byte
     [field_struct + 0x35] = b(0);
-    [field_struct + 0x36] = b(0); // check gateways (0 - check)
+    field_struct->gateway_lock = 0;
     [field_struct + 0x37] = b(0); // scroll lock
-    [field_struct + 0x3a] = b(0); // we set walk run pc speed to 3/12 instead of 2/8 if this not 0. Set in BGMOVIE opcode
+    field_struct->speed_up = 0;
     [field_struct + 0x3b] = b(0); // battle field check on/off (0/1)
     [field_struct + 0x3c] = b(0); // battle table to use (0 or 1)
     [field_struct + 0x3d] = b(0);
@@ -1262,117 +1262,70 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     triangle_id = g_field_entities[manual_entity_id].pos_i;
     walkmesh_data = w[0x800e4274];
 
-    {
-        field_debug_copy_string(string, "B-R    X=");
-        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x0], temp);
-        field_debug_concat_string(string, temp);
+    field_debug_copy_string(string, "B-R    X=");
+    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x0], temp);
+    field_debug_concat_string(string, temp);
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            field_debug_copy_string_into_page(page_id, 0x9, string);
-            field_debug_set_row_color(page_id, 0x9, 0x2);
-        }
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+    {
+        field_debug_copy_string_into_page(page_id, 0x9, string);
+        field_debug_set_row_color(page_id, 0x9, 0x2);
     }
 
-    {
-        field_debug_copy_string(string, "Y=");
-        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x2], temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " Z=");
-        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x4], temp);
-        field_debug_concat_string(string, temp);
+    field_debug_copy_string(string, "Y=");
+    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x2], temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " Z=");
+    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x4], temp);
+    field_debug_concat_string(string, temp);
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            field_debug_copy_string_into_page(page_id, 0xa, string);
-        }
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+    {
+        field_debug_copy_string_into_page(page_id, 0xa, string);
     }
 
-    {
-        field_debug_copy_string(string, "R-G    X=");
-        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x8], temp);
-        field_debug_concat_string(string, temp);
+    field_debug_copy_string(string, "R-G    X=");
+    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x8], temp);
+    field_debug_concat_string(string, temp);
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            field_debug_copy_string_into_page(page_id, 0xb, string);
-            field_debug_set_row_color(page_id, 0xb, 0x4);
-        }
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+    {
+        field_debug_copy_string_into_page(page_id, 0xb, string);
+        field_debug_set_row_color(page_id, 0xb, 0x4);
     }
 
-    {
-        field_debug_copy_string(string, "Y=");
-        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xa], temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " Z=");
-        field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xc], temp);
-        field_debug_concat_string(string, temp);
+    field_debug_copy_string(string, "Y=");
+    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xa], temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " Z=");
+    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xc], temp);
+    field_debug_concat_string(string, temp);
 
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            field_debug_copy_string_into_page(page_id, 0xc, string);
-        }
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+    {
+        field_debug_copy_string_into_page(page_id, 0xc, string);
     }
 
+    field_debug_copy_string(string, "G-B    X=");
+    field_int4_to_string(h[h[walkmesh_data + triangle_id * 0x18 + 0x10], temp);
+    field_debug_concat_string(string, temp);
+
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        A0 = string;
-        A1 = 800a029c; // "G-B    X="
-        field_debug_copy_string();
-
-        A0 = h[h[walkmesh_data + triangle_id * 0x18 + 10];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            A0 = page_id;
-            A1 = d;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = d;
-            A2 = 3;
-            field_debug_set_row_color();
-        }
+        field_debug_copy_string_into_page(page_id, 0xd, string);
+        field_debug_set_row_color(page_id, 0xd, 0x3);
     }
 
+    field_debug_copy_string(string, "Y=");
+    field_int4_to_string(h[h[walkmesh_data + triangle_id * 0x18 + 0x12], temp);
+    field_debug_concat_string(string, temp);
+    field_debug_concat_string(string, " Z=");
+    field_int4_to_string(h[h[walkmesh_data + triangle_id * 0x18 + 0x14], temp);
+    field_debug_concat_string(string, temp);
+
+    if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        A0 = string;
-        A1 = 800a0288; // "Y="
-        field_debug_copy_string();
-
-        A0 = h[h[walkmesh_data + triangle_id * 0x18 + 12];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a028c; // " Z="
-        field_debug_concat_string();
-
-        A0 = h[h[walkmesh_data + triangle_id * 0x18 + 14];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            A0 = page_id;
-            A1 = e;
-            A2 = string;
-            field_debug_copy_string_into_page();
-        }
+        field_debug_copy_string_into_page(page_id, 0xe, string);
     }
 
     {
@@ -1383,7 +1336,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
         entity_id = bu[0x8007eb98 + actor_id];
         entities_data = w[0x8009c544];
 
-        A0 = h[entities_data + entity_id * 0x84 + 40];
+        A0 = h[entities_data + entity_id * 0x84 + 0x40];
         A1 = temp;
         field_int4_to_string();
 
@@ -1393,15 +1346,8 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 0xf;
-            A2 = string;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 0xf;
-            A2 = 0x2;
-            field_debug_set_row_color();
+            field_debug_copy_string_into_page(page_id, 0xf, string);
+            field_debug_set_row_color(page_id, 0xf, 0x2);
         }
     }
 
@@ -1514,30 +1460,12 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     }
 
     {
-
-        A0 = string;
-        A1 = 800a02cc; // "DP "
-        field_debug_copy_string();
-
-        A0 = hu[0x80075e12];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = string;
-        A1 = 800a02d0; // " "
-        field_debug_concat_string();
-
-        A0 = hu[0x80075e10];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
+        field_debug_copy_string(string, "DP ");
+        field_int4_to_string(hu[0x80075e12], temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, " ");
+        field_int4_to_string(hu[0x80075e10], temp);
+        field_debug_concat_string(string, temp);
 
         if (bu[0x800716d4] != 0) // music locked
         {
@@ -1577,7 +1505,7 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             else if (0x801a3fff < w[0x80075e10]) A2 = 0x3;
             else if (0x8019ffff < w[0x80075e10]) A2 = 0x2;
             else if (0x80197fff < w[0x80075e10]) A2 = 0x0;
-            else                                  A2 = 0x7;
+            else                                 A2 = 0x7;
 
             field_debug_set_row_color(page_id, 0x12, A2);
         }

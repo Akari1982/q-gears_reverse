@@ -1405,15 +1405,15 @@
 800e41c4 [][]     debug render draw mode settings count.
 800e41c8 otc pointers for debug rendering (0x1c size per buffer, 0x04 per page).
 
-800e4200 debug clut array for pages (0x2 size 0x8 items).
-800e4210 [][]     opaque or semi-transparent 800e3fa8 monochrome rectangle. Init with 0.
-800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
-800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
-800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
-800e4254 temp debug string. We copy here string "Actor:[entity name]" for debug purpose.
-800e4274 offset to walkmesh block.
-800e4278 array of name reading offset for dialog windows. (size 0x2).
-800e4280 array of current variable for windows. (size 0x2).
+0x800e4200 debug clut array for pages (0x2 size 0x8 items).
+0x800e4210 [][]     opaque or semi-transparent 800e3fa8 monochrome rectangle. Init with 0.
+0x800e4214 memory bank array for getting variable for windows. 8 for each window. (size 0x8 0x1)
+0x800e4234 reading offsets in dialog in field. One for each window. (size 0x4).
+0x800e424c total window height. Height of window with extra rows. Set this during B state in window as 8008328A (current row) * 10 + 11. (size 0x2).
+0x800e4254 temp debug string. We copy here string "Actor:[entity name]" for debug purpose.
+0x800e4274 offset to walkmesh block.
+0x800e4278 array of name reading offset for dialog windows. (size 0x2).
+0x800e4280 array of current variable for windows. (size 0x2).
 
 800e42a8 array of stored entities move speed (0x2 size).
 
