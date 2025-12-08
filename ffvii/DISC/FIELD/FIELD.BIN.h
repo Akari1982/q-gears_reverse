@@ -43,9 +43,9 @@ struct FieldControl
                                 // 0x26 [][]     movie state (0-not played, 1-start, ) tutorial state (0 from tutor opcode).
     s16 entities_n;             // 0x28
     s16 player_id;              // 0x2a
-    u8 anim_stand;              // 0x2c
-                                // 0x2e [][]     animation for walk. Set in CCANM (XX,-,-,1)
-                                // 0x30 [][]     animation for run. Set in CCANM (XX,-,-,2)
+    u16 anim_stand;             // 0x2c
+    u16 anim_walk;              // 0x2e
+    u16 anim_run;               // 0x30
     u8 control_lock;            // 0x32
     u8 move_lock;               // 0x33
                                 // 0x34 []       we store MENU byte here. Checked when call menu.

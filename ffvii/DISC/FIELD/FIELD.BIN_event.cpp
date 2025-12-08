@@ -112,8 +112,8 @@ void field_init_default_values()
     field_struct->entities_n = bu[events_data + 0x3];
     field_struct->player_id = 0;
     field_struct->anim_stand = 0;
-    [field_struct + 0x2e] = h(1); // animation for walk
-    [field_struct + 0x30] = h(2); // animation for run
+    field_struct->anim_walk = 0x1;
+    field_struct->anim_run = 0x2;
     field_struct->control_lock = 0;
     field_struct->move_lock = 0;
     [field_struct + 0x34] = b(0); // MENU byte
