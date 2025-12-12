@@ -668,16 +668,8 @@ if (current_model != ff)
 // 0xAF ANIM!1
 // 0xBA ANIM!2
 
-V0 = bu[0x8009d820];
-800C5E88	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C5E90	beq    v0, zero, Lc5ea8 [$800c5ea8]
-[SP + 0010] = w(RA);
-A0 = 800a0944;
-800C5EA0	jal    field_debug_event_opcode [$800bead4]
-A1 = 0002;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("anim!", 0x2);
 
-Lc5ea8:	; 800C5EA8
 A0 = bu[0x800722c4];
 800C5EB0	nop
 800C5EB4	lui    at, $8008
@@ -815,16 +807,8 @@ if (current_model != ff)
 // 0xB0 CANIM1
 // 0xBB CANIM2
 
-V0 = bu[0x8009d820];
-800C5FFC	addiu  sp, sp, $ffe0 (=-$20)
-V0 = V0 & 0003;
-800C6004	beq    v0, zero, Lc601c [$800c601c]
-[SP + 0018] = w(RA);
-A0 = 800a094c;
-800C6014	jal    field_debug_event_opcode [$800bead4]
-A1 = 0004;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("canim", 0x4);
 
-Lc601c:	; 800C601C
 A0 = bu[0x800722c4];
 800C6024	nop
 800C6028	lui    at, $8008
@@ -918,19 +902,6 @@ V0 = A2 + V0;
 V1 = bu[V0 + 0002];
 800C6190	nop
 800C6194	div    v1, a1
-800C6198	bne    a1, zero, Lc61a4 [$800c61a4]
-800C619C	nop
-800C61A0	break   $01c00
-
-Lc61a4:	; 800C61A4
-800C61A4	addiu  at, zero, $ffff (=-$1)
-800C61A8	bne    a1, at, Lc61bc [$800c61bc]
-800C61AC	lui    at, $8000
-800C61B0	bne    v1, at, Lc61bc [$800c61bc]
-800C61B4	nop
-800C61B8	break   $01800
-
-Lc61bc:	; 800C61BC
 800C61BC	mflo   v1
 800C61C0	lui    at, $8008
 800C61C4	addiu  at, at, $eb98 (=-$1468)
@@ -1161,16 +1132,8 @@ return 0;
 // 0xB1 CANM!1
 // 0xBC CANM!2
 
-V0 = bu[0x8009d820];
-800C63D4	addiu  sp, sp, $ffe0 (=-$20)
-V0 = V0 & 0003;
-800C63DC	beq    v0, zero, Lc63f4 [$800c63f4]
-[SP + 0018] = w(RA);
-A0 = 800a0954;
-800C63EC	jal    field_debug_event_opcode [$800bead4]
-A1 = 0004;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("canm!", 0x4);
 
-Lc63f4:	; 800C63F4
 A0 = bu[0x800722c4];
 800C63FC	nop
 800C6400	lui    at, $8008
@@ -1480,16 +1443,8 @@ if (current_model != FF)
 ////////////////////////////////
 // 0xAC ANIMW
 
-V0 = bu[0x8009d820];
-800C6750	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C6758	beq    v0, zero, Lc6770 [$800c6770]
-[SP + 0010] = w(RA);
-A0 = 800a095c;
-800C6768	jal    field_debug_event_opcode [$800bead4]
-A1 = 0;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("animw", 0x0);
 
-Lc6770:	; 800C6770
 A0 = bu[0x800722c4];
 800C6778	nop
 800C677C	lui    at, $8008
@@ -1581,16 +1536,8 @@ if (current_model != FF)
 ////////////////////////////////
 // 0xDD ANIMB
 
-V0 = bu[0x8009d820];
-800C6854	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C685C	beq    v0, zero, Lc6874 [$800c6874]
-[SP + 0010] = w(RA);
-A0 = 800a0964;
-800C686C	jal    field_debug_event_opcode [$800bead4]
-A1 = 0;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("animb", 0x0);
 
-Lc6874:	; 800C6874
 A1 = bu[0x800722c4];
 800C687C	nop
 800C6880	lui    at, $8008
@@ -1660,16 +1607,8 @@ return 0;
 ////////////////////////////////
 // 0xA8 MOVE
 
-V0 = bu[0x8009d820];
-800C692C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C6934	beq    v0, zero, Lc694c [$800c694c]
-[SP + 0010] = w(RA);
-A0 = 800a096c;
-800C6944	jal    field_debug_event_opcode [$800bead4]
-A1 = 0005;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("move", 0x5);
 
-Lc694c:	; 800C694C
 A1 = bu[0x800722c4];
 800C6954	nop
 800C6958	lui    at, $8008
@@ -2113,16 +2052,8 @@ return 1;
 ////////////////////////////////
 // 0xAD FMOVE
 
-V0 = bu[0x8009d820];
-800C6D6C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C6D74	beq    v0, zero, Lc6d8c [$800c6d8c]
-[SP + 0010] = w(RA);
-A0 = 800a0974;
-800C6D84	jal    field_debug_event_opcode [$800bead4]
-A1 = 0005;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("fmove", 0x5);
 
-Lc6d8c:	; 800C6D8C
 A1 = bu[0x800722c4];
 800C6D94	nop
 800C6D98	lui    at, $8008
@@ -2337,16 +2268,8 @@ return 1;
 ////////////////////////////////
 // 0xA9 CMOVE
 
-V0 = bu[0x8009d820];
-800C6FE0	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C6FE8	beq    v0, zero, Lc7000 [$800c7000]
-[SP + 0010] = w(RA);
-A0 = 800a097c;
-800C6FF8	jal    field_debug_event_opcode [$800bead4]
-A1 = 0005;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("cmove", 0x5);
 
-Lc7000:	; 800C7000
 A1 = bu[0x800722c4];
 800C7008	nop
 800C700C	lui    at, $8008
@@ -2579,16 +2502,8 @@ return 1;
 ////////////////////////////////
 // 0xDB FCFIX
 
-V0 = bu[0x8009d820];
-800C7294	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C729C	beq    v0, zero, Lc72b4 [$800c72b4]
-[SP + 0010] = w(RA);
-A0 = 800a0984;
-800C72AC	jal    field_debug_event_opcode [$800bead4]
-A1 = 0001;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("fcfix", 0x1);
 
-Lc72b4:	; 800C72B4
 V1 = bu[0x800722c4];
 800C72BC	nop
 800C72C0	lui    at, $8008
@@ -2656,16 +2571,8 @@ return 0;
 ////////////////////////////////
 // 0xC0 JUMP
 
-V0 = bu[0x8009d820];
-800C735C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C7364	beq    v0, zero, Lc737c [$800c737c]
-[SP + 0010] = w(RA);
-A0 = 800a098c;
-800C7374	jal    field_debug_event_opcode [$800bead4]
-A1 = 0008;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("jump", 0x8);
 
-Lc737c:	; 800C737C
 A0 = bu[0x800722c4];
 800C7384	nop
 800C7388	lui    at, $8008
@@ -2889,16 +2796,8 @@ return 1;
 ////////////////////////////////
 // 0xC2 LADER
 
-V0 = bu[0x8009d820];
-800C75F8	addiu  sp, sp, $ffd8 (=-$28)
-V0 = V0 & 0003;
-800C7600	beq    v0, zero, Lc7618 [$800c7618]
-[SP + 0020] = w(RA);
-A0 = 800a0994;
-800C7610	jal    field_debug_event_opcode [$800bead4]
-A1 = 0008;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("lader", 0x8);
 
-Lc7618:	; 800C7618
 A0 = bu[0x800722c4];
 800C7620	nop
 800C7624	lui    at, $8008
@@ -3191,19 +3090,6 @@ V1 = h[AT + 0000];
 V0 = bu[V0 + 000e];
 800C7AB8	nop
 800C7ABC	div    v1, v0
-800C7AC0	bne    v0, zero, Lc7acc [$800c7acc]
-800C7AC4	nop
-800C7AC8	break   $01c00
-
-Lc7acc:	; 800C7ACC
-800C7ACC	addiu  at, zero, $ffff (=-$1)
-800C7AD0	bne    v0, at, Lc7ae4 [$800c7ae4]
-800C7AD4	lui    at, $8000
-800C7AD8	bne    v1, at, Lc7ae4 [$800c7ae4]
-800C7ADC	nop
-800C7AE0	break   $01800
-
-Lc7ae4:	; 800C7AE4
 800C7AE4	mflo   v1
 A3 = w[0x8009c544];
 V0 = A0 << 05;
@@ -3426,19 +3312,10 @@ return 1;
 
 ////////////////////////////////
 // 0x2A PMOVA
-V0 = bu[0x8009d820];
-800C7C44	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C7C4C	beq    v0, zero, Lc7c64 [$800c7c64]
-[SP + 0010] = w(RA);
-800C7C54	lui    a0, $800a
-A0 = A0 + 099c;
-800C7C5C	jal    field_debug_event_opcode [$800bead4]
-A1 = 0001;
 
-Lc7c64:	; 800C7C64
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pmova", 0x1);
+
 V0 = bu[0x800722c4];
-800C7C6C	nop
 V0 = V0 << 01;
 800C7C74	lui    at, $8008
 AT = AT + 31fc;
@@ -3479,16 +3356,8 @@ SP = SP + 0018;
 ////////////////////////////////
 // 0xAA MOVA
 
-V0 = bu[0x8009d820];
-800C7CF0	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C7CF8	beq    v0, zero, Lc7d10 [$800c7d10]
-[SP + 0010] = w(RA);
-A0 = 800a09a4;
-800C7D08	jal    field_debug_event_opcode [$800bead4]
-A1 = 0001;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("mova", 0x1);
 
-Lc7d10:	; 800C7D10
 V0 = bu[0x800722c4];
 800C7D18	nop
 V0 = V0 << 01;
@@ -3915,16 +3784,8 @@ return 1;
 ////////////////////////////////
 // 0xB6 DIRA
 
-V0 = bu[0x8009d820];
-800C8154	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C815C	beq    v0, zero, Lc8174 [$800c8174]
-[SP + 0010] = w(RA);
-A0 = 800a09ac;
-800C816C	jal    field_debug_event_opcode [$800bead4]
-A1 = 0001;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("dira", 0x1);
 
-Lc8174:	; 800C8174
 V0 = bu[0x800722c4];
 800C817C	nop
 V0 = V0 << 01;
@@ -3960,16 +3821,8 @@ return V0;
 ////////////////////////////////
 // 0x34 PDIRA
 
-V0 = bu[0x8009d820];
-800C81C8	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C81D0	beq    v0, zero, Lc81e8 [$800c81e8]
-[SP + 0010] = w(RA);
-A0 = 800a09b4;
-800C81E0	jal    field_debug_event_opcode [$800bead4]
-A1 = 0001;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("pdira", 0x1);
 
-Lc81e8:	; 800C81E8
 V0 = bu[0x800722c4];
 800C81F0	nop
 V0 = V0 << 01;
@@ -4330,16 +4183,8 @@ return 1;
 ////////////////////////////////
 // 0xAB TURA
 
-V0 = bu[0x8009d820];
-800C851C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C8524	beq    v0, zero, Lc853c [$800c853c]
-[SP + 0010] = w(RA);
-A0 = 800a09bc;
-800C8534	jal    field_debug_event_opcode [$800bead4]
-A1 = 0003;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("tura", 0x3);
 
-Lc853c:	; 800C853C
 V0 = bu[0x800722c4];
 800C8544	nop
 V0 = V0 << 01;
@@ -4374,16 +4219,8 @@ return V0;
 ////////////////////////////////
 // 0x35 PTURA
 
-V0 = bu[0x8009d820];
-800C8590	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C8598	beq    v0, zero, Lc85b0 [$800c85b0]
-[SP + 0010] = w(RA);
-A0 = 800a09c4;
-800C85A8	jal    field_debug_event_opcode [$800bead4]
-A1 = 0003;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ptura", 0x3);
 
-Lc85b0:	; 800C85B0
 V0 = bu[0x800722c4];
 800C85B8	nop
 V0 = V0 << 01;
@@ -5256,16 +5093,8 @@ return 0;
 ////////////////////////////////
 // 0xC4 OFSTW
 
-V0 = bu[0x8009d820];
-800C8F6C	addiu  sp, sp, $ffe8 (=-$18)
-V0 = V0 & 0003;
-800C8F74	beq    v0, zero, Lc8f8c [$800c8f8c]
-[SP + 0010] = w(RA);
-A0 = 800a09e4;
-800C8F84	jal    field_debug_event_opcode [$800bead4]
-A1 = 0;
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("ofstw", 0x0);
 
-Lc8f8c:	; 800C8F8C
 A0 = bu[0x800722c4];
 800C8F94	nop
 800C8F98	lui    at, $8008
@@ -5371,17 +5200,9 @@ AT = AT + A0;
 V1 = bu[AT + 0000];
 V0 = 00ff;
 800C90A4	beq    v1, v0, Lc91a8 [$800c91a8]
-800C90A8	nop
-V0 = bu[0x8009d820];
-800C90B4	nop
-V0 = V0 & 0003;
-800C90BC	beq    v0, zero, Lc90d4 [$800c90d4]
-800C90C0	nop
-A0 = 800a09ec;
-800C90CC	jal    field_debug_event_opcode [$800bead4]
-A1 = 0;
 
-Lc90d4:	; 800C90D4
+if (bu[0x8009d820] & 0x3) field_debug_event_opcode("turnw", 0x0);
+
 A0 = bu[0x800722c4];
 800C90DC	nop
 800C90E0	lui    at, $8008
