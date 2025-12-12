@@ -189,7 +189,7 @@
 800C50EC 0x27 BGMOVIE
 800C5194 field_event_opcode_61_scrlo
 800C523C field_event_opcode_0e_dskcg
-800C532C 0x33 UC
+800C532C field_event_opcode_33_uc
 800C5414 field_event_opcode_71_btlon
 800C54BC 0x69 MPDSP
 800C5564 0xFB MVCAM
