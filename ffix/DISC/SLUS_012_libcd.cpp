@@ -1423,7 +1423,7 @@ loop1f8dc:	; 8001F8DC
 V1 = S1 & 00ff;
 
 L1f904:	; 8001F904
-if( V1 == e )
+if (V1 == e)
 {
     [0x8006826c] = b(bu[S0 + 0000]);
 }
@@ -2211,13 +2211,13 @@ param_ptr = A1;
 
 sync_handler = w[0x80068250];
 
-for( int i = 3; i != -1 ; --i )
+for(int i = 3; i != -1 ; --i)
 {
     [0x80068250] = w(0);
 
-    if( cdl_command != 1 )
+    if (cdl_command != 1)
     {
-        if( bu[0x8006825c] & 10 )
+        if (bu[0x8006825c] & 10)
         {
             A0 = 1; // Getstat
             A1 = 0;
@@ -2227,9 +2227,9 @@ for( int i = 3; i != -1 ; --i )
         }
     }
 
-    if( param_ptr != 0 )
+    if (param_ptr != 0)
     {
-        if( w[0x80068558 + cdl_command * 4] != 0 )
+        if (w[0x80068558 + cdl_command * 4] != 0)
         {
             A0 = 2; // CdlSetloc Set the seek target position.
             A1 = param_ptr;
@@ -2237,7 +2237,7 @@ for( int i = 3; i != -1 ; --i )
             A3 = 0;
             system_cdrom_cdl_command_exec();
 
-            if( V0 != 0 ) continue;
+            if (V0 != 0) continue;
         }
     }
 
@@ -2249,7 +2249,7 @@ for( int i = 3; i != -1 ; --i )
     A3 = 1;
     system_cdrom_cdl_command_exec();
 
-    if( V0 == 0 ) return 1;
+    if (V0 == 0) return 1;
 }
 
 [0x80068250] = w(sync_handler);
@@ -2269,13 +2269,13 @@ return_ptr = A2;
 
 sync_handler = w[0x80068250];
 
-for( int i = 3; i != -1 ; --i )
+for(int i = 3; i != -1 ; --i)
 {
     [0x80078250] = w(0);
 
-    if( cdl_command != 1 )
+    if (cdl_command != 1)
     {
-        if( bu[0x8006825c] & 10 )
+        if (bu[0x8006825c] & 10)
         {
             A0 = 1;
             A1 = 0;
@@ -2285,9 +2285,9 @@ for( int i = 3; i != -1 ; --i )
         }
     }
 
-    if( param_ptr != 0 )
+    if (param_ptr != 0)
     {
-        if( w[0x80068558 + cdl_command * 4] != 0 )
+        if (w[0x80068558 + cdl_command * 4] != 0)
         {
             A0 = 2;
             A1 = param_ptr;
@@ -2295,7 +2295,7 @@ for( int i = 3; i != -1 ; --i )
             A3 = 0;
             system_cdrom_cdl_command_exec();
 
-            if( V0 != 0 ) continue;
+            if (V0 != 0) continue;
         }
     }
 
@@ -2307,7 +2307,7 @@ for( int i = 3; i != -1 ; --i )
     A3 = 0;
     system_cdrom_cdl_command_exec();
 
-    if( V0 == 0 )
+    if (V0 == 0)
     {
         A0 = 0;
         A1 = return_ptr;
@@ -3029,11 +3029,11 @@ L21120:	; 80021120
 // system_psyq_cd_init()
 
 // try to init 4 times
-for( int i = 4; i != -1; --i )
+for(int i = 4; i != -1; --i)
 {
     func211d0();
 
-    if( V0 == 1 )
+    if (V0 == 1)
     {
         [0x80068250] = w(8002120c);
         [0x80068254] = w(80021234);
@@ -3057,7 +3057,7 @@ return 0;
 
 system_cdrom_init_inter();
 
-if( V0 == 0 )
+if (V0 == 0)
 {
     system_cdrom_audio_init();
 
@@ -3419,11 +3419,11 @@ return hu[V0 + 0x2];
 
 struct = w[0x8006794c];
 
-if( bu[struct + 0x8] == 3 ) return 0;
+if (bu[struct + 0x8] == 3) return 0;
 
-if( bu[A0 + 0x5] != 4 ) return 0;
+if (bu[A0 + 0x5] != 4) return 0;
 
-if( hu[A0 + 0x34] == ffff ) return 0;
+if (hu[A0 + 0x34] == ffff) return 0;
 
 A0 = bu[A0 + 0x3b];
 funcc44f4();
@@ -3449,7 +3449,7 @@ size = A2;
 dst = A3;
 callback = A6;
 
-if( A0 != 0 )
+if (A0 != 0)
 {
     [A0 + 0] = w(sector);
     [A0 + 0x4] = w(size);
@@ -3472,15 +3472,15 @@ return A0;
 
 S0 = A0;
 
-if( S0 == 0 ) return 0;
+if (S0 == 0) return 0;
 
 V1 = w[S0 + 0x1c];
 
-if( V1 == 1 )
+if (V1 == 1)
 {
     func22b18(); // loading status
 
-    if( V0 == 0 ) // finish loading
+    if (V0 == 0) // finish loading
     {
         [S0 + 0x1c] = w(2);
     }
@@ -3488,20 +3488,20 @@ if( V1 == 1 )
     return w[S0 + 0x1c];
 
 }
-else if( V1 == 2 )
+else if (V1 == 2)
 {
     size = w[S0 + 0x4] - w[S0 + c];
     V1 = w[S0 + 0x10];
 
-    if( V1 != -1 )
+    if (V1 != -1)
     {
-        if( V1 < size )
+        if (V1 < size)
         {
             size = V1;
         }
     }
 
-    if( size != 0 )
+    if (size != 0)
     {
         struct = w[0x8006794c];
 
@@ -3518,14 +3518,14 @@ else if( V1 == 2 )
 
     return w3;
 }
-else if( V1 == 3 )
+else if (V1 == 3)
 {
     func22b18(); // loading status
 
-    if( V0 == 0 ) // finish loading
+    if (V0 == 0) // finish loading
     {
         V0 = w[S0 + 0x14];
-        if( V0 != 0 )
+        if (V0 != 0)
         {
             A0 = S0;
             800218E0	jalr   v0 ra
@@ -3546,7 +3546,7 @@ return 0;
 ////////////////////////////////
 // func21910()
 
-if( w[A0 + 0x1c] < 3 ) return 0;
+if (w[A0 + 0x1c] < 3) return 0;
 
 return w[0x800761dc + 0];
 ////////////////////////////////
@@ -3604,9 +3604,9 @@ V0 = V0 | 0020;
 
 
 
-bool func219fc( u32 load_data )
+bool func219fc(u32 load_data)
 {
-    if( load_data == 0 ) return 0;
+    if (load_data == 0) return 0;
 
     return 0 < ~w[load_data + 0x4];
 }
@@ -3653,30 +3653,30 @@ L21a7c:	; 80021A7C
 
 
 
-bool func21a8c( u32  load_data )
+bool func21a8c(u32  load_data)
 {
     V1 = hu[load_data + 0x0];
 
-    if( ( V1 & 0x0082 ) == 0 ) return 0;
-    if( V1 & 0x0001 ) return 0;
-    if( hu[load_data + 0x2] != 0 ) return 0;
-    if( V1 & 0x0020 ) return 0;
-    if( w[load_data + 0x8] == 0 ) return 0;
+    if ((V1 & 0x0082) == 0) return 0;
+    if (V1 & 0x0001) return 0;
+    if (hu[load_data + 0x2] != 0) return 0;
+    if (V1 & 0x0020) return 0;
+    if (w[load_data + 0x8] == 0) return 0;
 
     return 1;
 }
 
 
 
-bool func21ae0( u32  load_data )
+bool func21ae0(u32  load_data)
 {
     V1 = hu[ load_data + 0x0 ]
 
-    if( ( V1 & 0x0082 ) == 0 ) return 0;
-    if( V1 & 0x0001 ) return 0;
-    if( ( V1 & 0x0020 ) == 0 ) return 0;
-    if( h[load_data + 0x24] == 0 ) return 0;
-    if( h[load_data + 0x26] == 0 ) return 0;
+    if ((V1 & 0x0082) == 0) return 0;
+    if (V1 & 0x0001) return 0;
+    if ((V1 & 0x0020) == 0) return 0;
+    if (h[load_data + 0x24] == 0) return 0;
+    if (h[load_data + 0x26] == 0) return 0;
 
     return 1;
 }
@@ -3689,7 +3689,7 @@ bool func21ae0( u32  load_data )
 S1 = A0;
 S0 = A1;
 
-V0 = func21a8c( S0 );
+V0 = func21a8c(S0);
 
 80021B54	beq    v0, zero, L21b6c [$80021b6c]
 80021B58	nop
@@ -3754,14 +3754,14 @@ L21c0c:	; 80021C0C
 
 V1 = 0;
 
-if( hu[A0 + 0] & 0001 )
+if (hu[A0 + 0] & 0001)
 {
     do
     {
         A0 = 0;
         func22d3c();
         V0 = V0 & ff;
-    } while( V0 == 0 )
+    } while(V0 == 0)
 
     V1 = 1;
 }
@@ -3783,7 +3783,7 @@ S0 = w[V0 + 0x8c8];
 [S0 + 0x2] = b(0);
 [S0 + 0x3] = b(-1);
 
-for( int i = 5; i >= 0; --i )
+for(int i = 5; i >= 0; --i)
 {
     A0 = S0 + 0x4 + i * 28;
     func21938();
@@ -3797,7 +3797,7 @@ func21938();
 
 
 
-void func21cdc( A0 )
+void func21cdc(A0)
 {
     struct = w[0x8006794c];
     V0 = w[struct + 0x1c];
@@ -3816,7 +3816,7 @@ S1 = w[V0 + 0x8c8];
 
 V1 = b[S1 + 0x2];
 
-if( V1 >= 6 ) return 0;
+if (V1 >= 6) return 0;
 
 S0 = S1 + 0x4 + V1 * 28;
 
@@ -3840,13 +3840,13 @@ A1 = w[V0 + 0x8c8];
 V0 = b[A1 + 0x2] - 1;
 V1 = b[A1 + 0x3];
 
-while( V1 < V0 )
+while(V1 < V0)
 {
     V1 = b[A1 + 0x3] + 0x1;
     [A1 + 0x3] = b(V1);
     A0 = A1 + 0x4 + V1 * 28;
 
-    if( w[A0 + 0x4] != -1 )
+    if (w[A0 + 0x4] != -1)
     {
         [A0 + 0] = h(hu[A0 + 0] | 0040);
 
@@ -3871,7 +3871,7 @@ u32 func21e20()
 
 
 
-u32 func21e5c( u32 file_id )
+u32 func21e5c(u32 file_id)
 {
     struct = w[0x8006794c];
     V0 = w[struct + 0x1c];
@@ -3879,9 +3879,9 @@ u32 func21e5c( u32 file_id )
     A3 = w[V0 + 0x8c8];
     A1 = b[A3 + 0x2] - 1;
 
-    while( A1 >= 0 )
+    while(A1 >= 0)
     {
-        if( ( w[A3 + 0x4 + A1 * 0x28 + 0x4] & 0x00ffffff ) == ( file_id & 0x00ffffff ) )
+        if ((w[A3 + 0x4 + A1 * 0x28 + 0x4] & 0x00ffffff) == (file_id & 0x00ffffff))
         {
             return A3 + 0x4 + A1 * 0x28;
         }
@@ -3954,12 +3954,12 @@ int func21fb4()
 {
     u32 load_data = func21e20();
 
-    if( load_data == 0 ) return 0;
+    if (load_data == 0) return 0;
 
-    if( func219fc( load_data ) != 0 )
+    if (func219fc(load_data) != 0)
     {
-        if( ( hu[load_data + 0x0] & 0x0001 ) == 0 ) return 0;
-        if( ( hu[load_data + 0x0] & 0x0080 ) == 0 ) return ( hu[load_data + 0x0] & 0x0002 ) < 1;
+        if ((hu[load_data + 0x0] & 0x0001) == 0) return 0;
+        if ((hu[load_data + 0x0] & 0x0080) == 0) return (hu[load_data + 0x0] & 0x0002) < 1;
     }
 
     return -1;
@@ -3969,7 +3969,7 @@ int func21fb4()
 
 void func22020()
 {
-    while( func21fb4() > 0 ) {}
+    while(func21fb4() > 0) {}
 
     func22050();
 }
@@ -3980,7 +3980,7 @@ void func22050()
 {
     u32 load_data = func21e20();
 
-    if( load_data != 0 )
+    if (load_data != 0)
     {
         [load_data + 0] = h(hu[load_data + 0] & 0xff7e);
     }
@@ -3992,34 +3992,34 @@ u32 func2208c()
 {
     u32 load_data = func21e20();
 
-    if( func219fc( load_data ) == 0 ) return 0;
+    if (func219fc(load_data) == 0) return 0;
 
-    if( func21a1c( load_data ) != 0 )
+    if (func21a1c(load_data) != 0)
     {
-        func21c20( load_data );
+        func21c20(load_data);
     }
 
-    while( func21fb4() > 0 ) {}
+    while(func21fb4() > 0) {}
 
     return load_data;
 }
 
 
 
-bool func220e8( u32 file_id )
+bool func220e8(u32 file_id)
 {
     bool loaded = 0;
 
-    load_data = func21e5c( file_id );
+    load_data = func21e5c(file_id);
 
-    if( load_data != 0 )
+    if (load_data != 0)
     {
-        if( ( hu[load_data + 0] & 0x0001 ) != 0 )
+        if ((hu[load_data + 0] & 0x0001) != 0)
         {
             func22020();
         }
 
-        if( ( func21ae0( load_data ) != 0 ) || ( func21a8c( load_data ) != 0 ) )
+        if ((func21ae0(load_data) != 0) || (func21a8c(load_data) != 0))
         {
             loaded = 1;
         }
@@ -4028,15 +4028,15 @@ bool func220e8( u32 file_id )
     {
         load_data = func21e20();
 
-        if( load_data != 0 )
+        if (load_data != 0)
         {
-            if( ~w[load_data + 0x4] != 0 )
+            if (~w[load_data + 0x4] != 0)
             {
-                if( bu[load_data + 0x6] == ( ( file_id >> 0x10 ) & 0xff ) )
+                if (bu[load_data + 0x6] == ((file_id >> 0x10) & 0xff))
                 {
-                    if( ( w[load_data + 0x4] & 0xffff ) != ( file_id & 0xffff ) )
+                    if ((w[load_data + 0x4] & 0xffff) != (file_id & 0xffff))
                     {
-                        func21c20( load_data );
+                        func21c20(load_data);
                     }
                 }
             }
@@ -4173,14 +4173,14 @@ V0 = S3;
 
 
 
-void func22390( u32 file_id )
+void func22390(u32 file_id)
 {
-    load_data = func21e5c( file_id );
+    load_data = func21e5c(file_id);
 
-    if( load_data != 0 )
+    if (load_data != 0)
     {
-        func21c20( load_data );
-        func21938( load_data );
+        func21c20(load_data);
+        func21938(load_data);
     }
 }
 
@@ -4384,7 +4384,7 @@ data = A0;
 src = data;
 dst = 800761d0 + 944;
 end = data + 0x24;
-while( src != end )
+while(src != end)
 {
     [dst + 0] = w(w[src + 0]);
     src += 4;
@@ -4403,7 +4403,7 @@ system_psyq_cd_ready_callback();
 A0 = w[data + 0x10];
 system_psyq_cd_sync_callback();
 
-if( bu[data + 0] & 01 )
+if (bu[data + 0] & 01)
 {
     [0x800761d0 + 0] = b(1);
 
@@ -4417,7 +4417,7 @@ if( bu[data + 0] & 01 )
 }
 else
 {
-    if( w[SP + 0x10] != 4 )
+    if (w[SP + 0x10] != 4)
     {
         [0x800761d0 + 0] = b(4);
 
@@ -4431,7 +4431,7 @@ else
         [0x800761d0 + 0] = b(0);
 
         func = w[0x800761d0 + 944 + 0x18];
-        if( func != 0 )
+        if (func != 0)
         {
             A0 = 800761d0;
             800227A4	jalr   func ra
@@ -4452,13 +4452,13 @@ result = A1; // Pointer to an 8-byte array containing status and result informat
 
 error = 0;
 
-if( result != 0 )
+if (result != 0)
 {
     [0x80076b0c + 0] = w(w[result + 0]);
     [0x80076b0c + 0x4] = w(w[result + 0x4]);
 }
 
-if( status == 1 ) // CdlDataReady
+if (status == 1) // CdlDataReady
 {
     A0 = SP + 0x10; // dst
     A1 = 3; // size
@@ -4470,7 +4470,7 @@ if( status == 1 ) // CdlDataReady
 
     A0 = w[0x800761d0 + 0x18];
 
-    if( A0 == 0 )
+    if (A0 == 0)
     {
         V0 = w[0x800761d0 + 944 + 0x4]; // sector
     }
@@ -4479,9 +4479,9 @@ if( status == 1 ) // CdlDataReady
         V0 = A0 + 0x1;
     }
 
-    if( sector != V0 ) error = 1;
+    if (sector != V0) error = 1;
 
-    if( error != 0 )
+    if (error != 0)
     {
         A0 = 0;
         system_psyq_cd_ready_callback();
@@ -4501,7 +4501,7 @@ if( status == 1 ) // CdlDataReady
         func2291c();
 
         // finish if num of sectors to read 0 or ???
-        if( ( w[0x800761d0 + 0x4] == 0 ) || ( bu[0x800761d0 + 0x2] != 0 ) )
+        if ((w[0x800761d0 + 0x4] == 0) || (bu[0x800761d0 + 0x2] != 0))
         {
             A0 = 0;
             system_psyq_cd_ready_callback();
@@ -4536,7 +4536,7 @@ else
 
 S1 = w[0x800761d0 + 944 + c];
 
-if( S1 == -1 )
+if (S1 == -1)
 {
     S1 = 800761d0 + 944 + 0x1c;
 }
@@ -4544,7 +4544,7 @@ if( S1 == -1 )
 V0 = w[0x800761d0 + 0x14];
 dst = w[S1 + V0 * 8 + 0x4];
 
-if( dst != 0 )
+if (dst != 0)
 {
     A0 = dst + (w[0x800761d0 + 0x10] / 4) * 4;
     A1 = 200;
@@ -4557,22 +4557,22 @@ if( dst != 0 )
 
 A0 = w[0x800761d0 + 0x14];
 
-if( w[0x800761d0 + 0x10] >= w[S1 + A0 * 8 + 0] ) // compare with size
+if (w[0x800761d0 + 0x10] >= w[S1 + A0 * 8 + 0]) // compare with size
 {
     [0x800761d0 + 0x10] = w(0);
     [0x800761d0 + 0x14] = w(A0 + 0x1);
 
-    if( w[0x800761d0 + 0x4] != 0 )
+    if (w[0x800761d0 + 0x4] != 0)
     {
         V0 = w[0x800761d0 + 0x14];
 
-        if( w[S1 + V0 * 8 + 0] == 0 ) // filesize
+        if (w[S1 + V0 * 8 + 0] == 0) // filesize
         {
             do
             {
                 V0 = w[0x800761d0 + 0x14] + 0x1;
                 [0x800761d0 + 0x14] = w(V0);
-            } while( w[S1 + V0 * 8 + 0] == 0 )
+            } while(w[S1 + V0 * 8 + 0] == 0)
         }
     }
 }
@@ -4586,11 +4586,11 @@ if( w[0x800761d0 + 0x10] >= w[S1 + A0 * 8 + 0] ) // compare with size
 do
 {
     system_psyq_cd_init();
-} while( V0 == 0 )
+} while(V0 == 0)
 
 S0 = 1;
 
-if( S0 != 0 )
+if (S0 != 0)
 {
     A0 = 0;
     system_psyq_cd_set_debug();
@@ -4611,13 +4611,13 @@ return S0;
 
 void func22a80()
 {
-    system_cdrom_and_audio_init( 0x1 );
+    system_cdrom_and_audio_init(0x1);
 
-    system_psyq_cd_sync_callback( 0 );
+    system_psyq_cd_sync_callback(0);
 
-    system_psyq_cd_ready_callback( 0 );
+    system_psyq_cd_ready_callback(0);
 
-    system_bios_memset( 0x800761d0, 0, 0x98c );
+    system_bios_memset(0x800761d0, 0, 0x98c);
 }
 
 
@@ -4631,7 +4631,7 @@ A0 = SP + 0x10; // CdlFILE*
 A1 = filename;
 system_psyq_cd_search_file();
 
-if( V0 != 0 )
+if (V0 != 0)
 {
     A0 = SP + 0x10;
     system_psyq_cd_pos_to_int();
@@ -4660,17 +4660,17 @@ u8 func22b18()
 
 S1 = bu[0x800761d0 + 0];
 
-if( S1 != 0 )
+if (S1 != 0)
 {
-    system_psyq_cd_ready_callback( 0 );
+    system_psyq_cd_ready_callback(0);
 
-    system_psyq_cd_sync_callback( 0 );
+    system_psyq_cd_sync_callback(0);
 
     [0x800761d0 + 0x0] = b(0);
     [0x800761d0 + 0x2] = b(0);
     [0x800761d0 + 0x3] = b(0);
 
-    while( system_psyq_cd_control_b( 0x9, 0, SP + 0x10 ) == 0 ) {}
+    while(system_psyq_cd_control_b(0x9, 0, SP + 0x10) == 0) {}
 }
 
 return S1;
@@ -4683,11 +4683,8 @@ return S1;
 
 func21340();
 
-A0 = 0;
-system_psyq_cd_sync_callback();
-
-A0 = 0;
-system_psyq_cd_ready_callback();
+system_psyq_cd_sync_callback(0);
+system_psyq_cd_ready_callback(0);
 
 [0x800761d0 + 0] = b(0);
 ////////////////////////////////
@@ -4696,11 +4693,11 @@ system_psyq_cd_ready_callback();
 
 void func22bd0()
 {
-    system_psyq_cd_control_b( 0xe, 0, 0 );
+    system_psyq_cd_control_b(0xe, 0, 0);
 
-    system_psyq_vsync( 0x3 );
+    system_psyq_vsync(0x3);
 
-    system_psyq_cd_control_b( 0x8, 0, 0 );
+    system_psyq_cd_control_b(0x8, 0, 0);
 }
 
 
@@ -4712,8 +4709,8 @@ void func22bd0()
 [SP + 0x14] = w(A0);
 [SP + 0x18] = w(0);
 [SP + 0x1c] = w(0);
-[SP + 0x20] = w(800231a0); // cd_sync_callback - func231a0()
-[SP + 0x24] = w(800227c8); // cd_ready_callback - func227c8()
+[SP + 0x20] = w(0x800231a0); // cd_sync_callback - func231a0()
+[SP + 0x24] = w(0x800227c8); // cd_ready_callback - func227c8()
 [SP + 0x28] = w(A1);
 
 A0 = SP + 0x10;
@@ -4734,8 +4731,8 @@ V1 = 80076148;
 [V1 + 0x4] = w(A0); // file sector
 [V1 + 0x8] = w(A1); // file size
 [V1 + c] = w(-1);
-[V1 + 0x10] = w(800231a0); // cd_sync_callback - func231a0()
-[V1 + 0x14] = w(800227c8); // cd_ready_callback - func227c8()
+[V1 + 0x10] = w(0x800231a0); // cd_sync_callback - func231a0()
+[V1 + 0x14] = w(0x800227c8); // cd_ready_callback - func227c8()
 [V1 + 0x18] = w(A3); // end callback
 [V1 + 0x1c] = w(A1); // file size
 [V1 + 0x20] = w(A2); // file dst
@@ -4752,7 +4749,7 @@ return V0;
 // func22cc4()
 
 T1 = 0;
-for( int i = 0; i < A2; ++i )
+for(int i = 0; i < A2; ++i)
 {
     T1 += w[A1 + i * 8];
 }
@@ -4761,8 +4758,8 @@ for( int i = 0; i < A2; ++i )
 [SP + 0x14] = w(A0);
 [SP + 0x18] = w(T1);
 [SP + 0x1c] = w(A1);
-[SP + 0x20] = w(800231a0); // cd_sync_callback - func231a0()
-[SP + 0x24] = w(800227c8); // cd_ready_callback - func227c8()
+[SP + 0x20] = w(0x800231a0); // cd_sync_callback - func231a0()
+[SP + 0x24] = w(0x800227c8); // cd_ready_callback - func227c8()
 [SP + 0x28] = w(A3);
 
 A0 = SP + 0x10;
@@ -4780,7 +4777,7 @@ return V0;
 [SP + 0x14] = w(0); // file sector
 [SP + 0x18] = w(0); // file size
 [SP + 0x1c] = w(0);
-[SP + 0x20] = w(800231a0); // cd_sync_callback - func231a0()
+[SP + 0x20] = w(0x800231a0); // cd_sync_callback - func231a0()
 [SP + 0x24] = w(0);
 [SP + 0x28] = w(A0); // end callback
 
@@ -4799,19 +4796,16 @@ return V0;
 [SP + 0x14] = w(A0);
 [SP + 0x18] = w(0);
 [SP + 0x1c] = w(0);
-[SP + 0x20] = w(800231a0); // cd_sync_callback - func231a0()
-[SP + 0x24] = w(800227c8); // cd_ready_callback - func227c8()
+[SP + 0x20] = w(0x800231a0); // cd_sync_callback - func231a0()
+[SP + 0x24] = w(0x800227c8); // cd_ready_callback - func227c8()
 [SP + 0x28] = w(0);
 
 A0 = SP + 0x10;
 func230b8();
 
-if( V0 == 0 ) return 0;
+if (V0 == 0) return 0;
 
-do
-{
-    func22b18();
-} while( V0 != 0 )
+while (func22b18() != 0) {}
 
 return 1;
 ////////////////////////////////
@@ -4827,12 +4821,12 @@ dst = A2;
 
 V1 = 80076148;
 
-[V1 + 0] = b(3); // flags
+[V1 + 0] = b(0x3); // flags
 [V1 + 0x4] = w(sector);
 [V1 + 0x8] = w(size);
-[V1 + c] = w(-1);
-[V1 + 0x10] = w(800231a0); // cd_sync_callback - func231a0()
-[V1 + 0x14] = w(800227c8); // cd_ready_callback - func227c8()
+[V1 + 0xc] = w(-1);
+[V1 + 0x10] = w(0x800231a0); // cd_sync_callback - func231a0()
+[V1 + 0x14] = w(0x800227c8); // cd_ready_callback - func227c8()
 [V1 + 0x18] = w(0); // end callback
 [V1 + 0x1c] = w(size);
 [V1 + 0x20] = w(dst);
@@ -4840,12 +4834,9 @@ V1 = 80076148;
 A0 = V1;
 func230b8();
 
-if( V0 == 0 ) return 0;
+if (V0 == 0) return 0;
 
-do
-{
-    func22b18();
-} while( V0 != 0 )
+while (func22b18() != 0) {}
 
 return 1;
 ////////////////////////////////
@@ -4867,12 +4858,9 @@ A0 = SP + 0x10;
 func230b8();
 
 V0 = V0 & 00ff;
-if( V0 == 0 ) return 0;
+if (V0 == 0) return 0;
 
-do
-{
-    func22b18();
-} while( V0 != 0 )
+while (func22b18() != 0) {}
 
 return 1;
 ////////////////////////////////
@@ -4922,7 +4910,7 @@ return V0;
 
 S3 = A0;
 
-if( bu[0x800761d0 + 0] != 5 )
+if (bu[0x800761d0 + 0] != 5)
 {
 
     A0 = 0;
@@ -4963,7 +4951,7 @@ return V0;
 ////////////////////////////////
 // func23018()
 
-if( bu[0x800761d0 + 0] != 0 )
+if (bu[0x800761d0 + 0] != 0)
 {
     [0x800761d0 + 0x2] = b(0);
     [0x800761d0 + 0x3] = b(0);
@@ -4985,7 +4973,7 @@ return 1;
 
 u8 func2306c()
 {
-    system_psyq_cd_control_b( 0x1, 0, 0x80076b0c );
+    system_psyq_cd_control_b(0x1, 0, 0x80076b0c);
 
     return func230a0() & 0xff;
 }
@@ -5017,12 +5005,12 @@ data = A0;
 
 [0x800761d0 + 0x1] = b(0);
 
-if( w[SP + 0x10] == 0 )
+if (w[SP + 0x10] == 0)
 {
-    if( bu[data + 0] & 04 )
+    if (bu[data + 0] & 04)
     {
         func = w[data + 0x18];
-        if( func != 0 )
+        if (func != 0)
         {
             80023104	jalr   func ra
         }
@@ -5035,12 +5023,12 @@ if( w[SP + 0x10] == 0 )
 }
 else
 {
-    if( bu[0x800761d0 + 0x2] != 0 ) return 0;
+    if (bu[0x800761d0 + 0x2] != 0) return 0;
 
     src = data;
     dst = 800761d0 + 968;
     end = data + 0x24;
-    while( src != end )
+    while(src != end)
     {
         [dst] = w(w[src]);
         src += 4;
@@ -5049,7 +5037,7 @@ else
 
     [0x800761d0 + 0x2] = b(1);
 
-    if( bu[0x800761d0 + 0] == 0 )
+    if (bu[0x800761d0 + 0] == 0)
     {
         A0 = data;
         func2267c();
@@ -5069,20 +5057,20 @@ status = A0; // Return code of CdSync (2 - CdlComplete: Command complete, 5 - Cd
 result = A1; // Pointer to an 8-byte array containing status and result information
 
 // store result
-if( result != 0 )
+if (result != 0)
 {
     [0x80076b0c + 0] = w(w[result + 0]);
     [0x80076b0c + 0x4] = w(w[result + 0x4]);
 }
 
-if( bu[0x800761d0 + 0x2] != 0 )
+if (bu[0x800761d0 + 0x2] != 0)
 {
     A0 = status;
     func2325c();
 }
 else
 {
-    if( status == 2 ) // CdlComplete: Command complete
+    if (status == 2) // CdlComplete: Command complete
     {
         V0 = bu[0x800761d0 + 0];
         // 0 00000000
@@ -5093,13 +5081,13 @@ else
         // 5 8002350C func2350c()
         func = w[0x80068668 + V0 * 4];
 
-        if( func != 0 )
+        if (func != 0)
         {
             A0 = 2;
             80023244	jalr   func ra
         }
     }
-    else if( status == 5 ) // CdlDiskError: Error detected
+    else if (status == 5) // CdlDiskError: Error detected
     {
         A0 = 5;
         func23304();
@@ -5112,13 +5100,13 @@ else
 ////////////////////////////////
 // func2325c()
 
-if( ( A0 != 5 ) && ( A0 != 2 ) ) return;
+if ((A0 != 5) && (A0 != 2)) return;
 
-if( bu[0x800761d0 + 0] != 3 )
+if (bu[0x800761d0 + 0] != 3)
 {
     V0 = w[0x800761d0 + 944 + 0x18];
 
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         A0 = 800761d0;
         800232A8	jalr   v0 ra
@@ -5129,7 +5117,7 @@ if( bu[0x800761d0 + 0] != 3 )
 }
 else
 {
-    if( ( bu[0x800761d0 + 944 + 0] & 08 ) == 0 )
+    if ((bu[0x800761d0 + 944 + 0] & 08) == 0)
     {
         A0 = 0;
         system_psyq_cd_ready_callback();
@@ -5148,9 +5136,9 @@ else
 ////////////////////////////////
 // func23304()
 
-if( bu[0x800761d0 + 0] == 3 )
+if (bu[0x800761d0 + 0] == 3)
 {
-    if( bu[0x800761d0 + 944 + 0] & 08 ) return;
+    if (bu[0x800761d0 + 944 + 0] & 08) return;
 }
 
 [0x800761d0 + 0x3] = b(1);
@@ -5174,7 +5162,7 @@ S0 = A0;
 
 system_psyq_cd_mode();
 
-if( V0 != a0 )
+if (V0 != a0)
 {
     [0x800761d0] = b(2);
 
@@ -5200,12 +5188,12 @@ else
 
 V1 = bu[0x800761d0 + 944 + 0];
 
-if( V1 & 02 )
+if (V1 & 02)
 {
     [0x800761d0 + 0x18] = w(0);
     [0x800761d0] = b(3);
 
-    if( V1 & 08 )
+    if (V1 & 08)
     {
         A0 = 800235a0;
         system_psyq_cd_ready_callback();
@@ -5247,12 +5235,12 @@ system_psyq_cd_ready_callback();
 A0 = 0;
 system_psyq_cd_sync_callback();
 
-if( bu[0x800761d0 + 0x3] == 0 )
+if (bu[0x800761d0 + 0x3] == 0)
 {
     [0x800761d0 + 0] = b(0);
 
     V0 = w[0x800761d0 + 95c];
-    if( V0 != 0 )
+    if (V0 != 0)
     {
         8002349C	jalr   v0 ra
     }
@@ -5262,7 +5250,7 @@ else
     src = 800761d0 + 944;
     dst = 80076178;
     end = 800761d0 + 968;
-    while( src != end )
+    while(src != end)
     {
         [dst + 0] = w(w[src + 0]);
         src += 4;
@@ -5282,7 +5270,7 @@ else
 src = 800761d0 + 944;
 dst = 800761a8;
 end = 800761d0 + 968;
-while( src != end )
+while(src != end)
 {
     [dst] = w(w[src]);
     src += 4;
@@ -5307,14 +5295,14 @@ system_psyq_cd_control_f();
 ////////////////////////////////
 // func235a0()
 
-if( A1 != 0 )
+if (A1 != 0)
 {
     T1 = 80076b0c;
     [T1 + 0] = w(w[A1 + 0]);
     [T1 + 0x4] = w(w[A1 + 0x4]);
 }
 
-if( bu[0x800761d0 + 0x2] != 0 )
+if (bu[0x800761d0 + 0x2] != 0)
 {
     A0 = 0;
     system_psyq_cd_ready_callback();
@@ -5339,19 +5327,19 @@ else
 
 S0 = A0;
 
-if( S0 == 2 )
+if (S0 == 2)
 {
     system_cdrom_reinit_inter();
 }
 else
 {
     system_cdrom_init_inter();
-    if( V0 != 0 ) return 0;
+    if (V0 != 0) return 0;
 
-    if( S0 == 1 )
+    if (S0 == 1)
     {
         system_cdrom_audio_init();
-        if( V0 != 0 ) return 0;
+        if (V0 != 0) return 0;
     }
 }
 

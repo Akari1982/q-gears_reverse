@@ -66,7 +66,7 @@ L18ae4:	; 80018AE4
 
 [0x80068158 + 0] = b(5a);
 [0x80068158 + 1] = b(a6);
-[0x80068158 + 2] = b(5a);
+[0x80068158 + 0x2] = b(5a);
 [0x80068158 + 3] = b(a6);
 
 for (int i = 0; i < 2; ++i)
@@ -1000,7 +1000,7 @@ A0 = w[0x800681c0] + f0;
 80019D10	jalr   w[0x80068190] ra
 
 [0x80073c38 + 0] = w(0);
-[0x80073c38 + 4] = w(0);
+[0x80073c38 + 0x4] = w(0);
 
 [0x800681c4] = w(1);
 ////////////////////////////////
@@ -1080,8 +1080,8 @@ A1 = 1e0;
 system_bios_bzero();
 
 [0x800739b8 + 3c] = w(80073b98);
-[0x800739b8 + 40] = w(80073be0);
-[0x800739b8 + 12c] = w(80073b98 + 23);
+[0x800739b8 + 0x40] = w(80073be0);
+[0x800739b8 + 12c] = w(80073b98 + 0x23);
 
 [0x8006818c] = w(80019f90); // func19f90()
 [0x80068190] = w(80019f28);
@@ -1093,7 +1093,7 @@ system_bios_bzero();
 [0x800681b0] = w(8001a084);
 
 [0x800681c0] = w(800739b8);
-[0x800739b8 + 130] = w(80073be0 + 23);
+[0x800739b8 + 130] = w(80073be0 + 0x23);
 [0x800681ac] = w(8001a4fc);
 ////////////////////////////////
 
@@ -3990,11 +3990,11 @@ func1c720();
 // clear array
 
 [0x80073c40 + 0] = h(0);
-[0x80073c40 + 2] = h(0);
+[0x80073c40 + 0x2] = h(0);
 
 for (int i = f; i >= 0; --i)
 {
-    [0x80073c40 + 4 + f * 4] = w(0);
+    [0x80073c40 + 0x4 + f * 4] = w(0);
 }
 ////////////////////////////////
 
@@ -4037,33 +4037,22 @@ int func1c784(u32 file_p)
 
 
 
-////////////////////////////////
-// func1c7fc()
-// A0 - type of return
-
-type = A0;
-file_id = A1;
-inner_file = A2;
-
-files_n = h[0x80073c40 + 2] - 1;
-
-for (int i = files_n; i >= 0; --i)
+int func1c7fc(type, file_id, inner_file)
 {
-    A0 = w[0x80073c40 + 4 + i * 4]; // file ptr
-    A1 = type;
-    A2 = file_id;
-    A3 = inner_file;
-    func1c8b0();
+    s16 files_n = h[0x80073c40 + 0x2] - 0x1;
 
-    if (V0 != -1) return V0;
+    for (int i = files_n; i >= 0; --i)
+    {
+        V0 = func1c8b0(w[0x80073c40 + 0x4 + i * 4], type, file_id, inner_file);
+        if (V0 != -1) return V0;
 
-    S1 = S1 - 4;
+        S1 -= 0x4;
+    }
+
+    if ((V0 == -1) && ((type & 0x1) == 0)) return 0;
+
+    return -1;
 }
-
-if ((V0 == -1) && ((type & 1) == 0)) return 0;
-
-return -1;
-////////////////////////////////
 
 
 
@@ -4088,7 +4077,7 @@ inner_file = A3;
 
 if (file_p == 0) return 0;
 
-file_pointer_start = file_p + 4;
+file_pointer_start = file_p + 0x4;
 files_n = bu[file_p + 1];
 
 for (int i = 0; i < files_n; ++i)
@@ -4104,7 +4093,7 @@ for (int i = 0; i < files_n; ++i)
 
         if (type == 1) return resource_n;
 
-        identifiers_address = resource_address + 4;
+        identifiers_address = resource_address + 0x4;
         pointers_address = identifiers_address + resource_n * 2;
         V0 = pointers_address & 3;
         if (V0 != 0) // align address to 4 bytes
@@ -4138,7 +4127,7 @@ for (int i = 0; i < files_n; ++i)
 
                     case 5:
                     {
-                        return (w[pointers_address + 4] & 00ffffff) - w[pointers_address + 0] & 00ffffff + 4;
+                        return (w[pointers_address + 0x4] & 00ffffff) - w[pointers_address + 0] & 00ffffff + 0x4;
                     }
                     break;
 
@@ -4268,7 +4257,7 @@ func23918(); // sound related
 
 func23a2c();
 
-[struct + 4] = w(w[0x80067940]);
+[struct + 0x4] = w(w[0x80067940]);
 ////////////////////////////////
 
 
@@ -4389,12 +4378,12 @@ if (S2 == 0)
 
 if (h[dispenv + 0 * 14 + 6] < h)
 {
-    [SP + 20] = h(0);
-    [SP + 22] = h(hu[dispenv + 0 * 14 + 6]);
-    [SP + 24] = h(280);
-    [SP + 26] = h(h - hu[dispenv + 0 * 14 + 6]);
+    [SP + 0x20] = h(0);
+    [SP + 0x22] = h(hu[dispenv + 0 * 14 + 6]);
+    [SP + 0x24] = h(280);
+    [SP + 0x26] = h(h - hu[dispenv + 0 * 14 + 6]);
 
-    A0 = SP + 20;
+    A0 = SP + 0x20;
     A1 = bu[SP + 18]; // r
     A2 = bu[SP + 19]; // g
     A3 = bu[SP + 1a]; // b
@@ -4547,8 +4536,8 @@ w = A3;
 h = A4;
 
 [env + 0] = h(x); // clip rect x
-[env + 2] = h(y); // clip rect y
-[env + 4] = h(w); // clip rect width
+[env + 0x2] = h(y); // clip rect y
+[env + 0x4] = h(w); // clip rect width
 [env + 6] = h(h); // clip rect height
 [env + 8] = h(x); // offset to primitive x
 [env + a] = h(y); // offset to primitive y
@@ -4587,8 +4576,8 @@ w = A3;
 h = A4;
 
 [disp + 0] = h(x);
-[disp + 2] = h(y);
-[disp + 4] = h(w);
+[disp + 0x2] = h(y);
+[disp + 0x4] = h(w);
 [disp + 6] = h(h);
 [disp + 8] = h(0); // output screen display area x.
 [disp + a] = h(0); // output screen display area y.
@@ -4606,7 +4595,7 @@ h = A4;
 // func1d268()
 
 struct = w[0x8006794c];
-[0x80067940] = w(w[struct + 4]);
+[0x80067940] = w(w[struct + 0x4]);
 
 func1d32c(); // otag init
 
@@ -4625,7 +4614,7 @@ func1d610(); // load some sound
 
 func1d67c(); // load some images to vram
 
-[S1 + 4] = w(w[0x80067940]);
+[S1 + 0x4] = w(w[0x80067940]);
 ////////////////////////////////
 
 
@@ -4649,7 +4638,7 @@ V1 = struct4 + 8e8;
 
 for (int i = 0; i < 2; ++i)
 {
-    [struct4 + 10 + i * 4] = w(V1 + 20);
+    [struct4 + 10 + i * 4] = w(V1 + 0x20);
     V1 += 4040;
 }
 
@@ -4663,8 +4652,8 @@ for (int i = 0; i < 2; ++i)
 [struct4 + 8c8] = w(V1 + 60c + 8000);
 [struct4 + 814] = w(V1 + 60c + 8000 + 120);
 [struct4 + 818] = w(V1 + 60c + 8000 + 6920);
-[struct4 + 828] = w(V1 + 60c + 8000 + 6920 + 2000);
-[struct4 + 82c] = w(V1 + 60c + 8000 + 6920 + 2800);
+[struct4 + 828] = w(V1 + 60c + 8000 + 6920 + 0x2000);
+[struct4 + 82c] = w(V1 + 60c + 8000 + 6920 + 0x2800);
 ////////////////////////////////
 
 
@@ -4676,7 +4665,7 @@ struct = w[0x8006794c];
 S0 = w[struct + 1c];
 
 [S0 + 0] = w(0); // flags
-[S0 + 4] = w(0);
+[S0 + 0x4] = w(0);
 [S0 + 8] = b(0); // frame buffer index
 [S0 + 9] = b(0);
 [S0 + a] = h(200); // projection plane distance
@@ -4684,9 +4673,9 @@ S0 = w[struct + 1c];
 [S0 + e] = h(235);
 // matrix
 [S0 + 18] = h(1000); [S0 + 1a] = h(0);    [S0 + 1c] = h(0);
-[S0 + 1e] = h(0);    [S0 + 20] = h(1000); [S0 + 22] = h(0);
-[S0 + 24] = h(0);    [S0 + 26] = h(0);    [S0 + 28] = h(1000);
-[S0 + 2c] = w(0);    [S0 + 30] = w(0);    [S0 + 34] = w(0);
+[S0 + 1e] = h(0);    [S0 + 0x20] = h(1000); [S0 + 0x22] = h(0);
+[S0 + 0x24] = h(0);    [S0 + 0x26] = h(0);    [S0 + 0x28] = h(1000);
+[S0 + 0x2c] = w(0);    [S0 + 30] = w(0);    [S0 + 34] = w(0);
 
 [S0 + 38] = b(0);
 [S0 + 39] = b(0);
@@ -4789,7 +4778,7 @@ int func1d610()
 
     func55df4();
 
-    func55e14(file, size, 1);
+    func55e14(file, size, 0x1);
 
     return 0;
 }
@@ -4913,12 +4902,12 @@ for (int i = 0; i < 2; ++i)
 
     for (int j = 0; j < 8; ++j)
     {
-        A0 = struct + 24;
-        V0 = w[struct + 24];
+        A0 = struct + 0x24;
+        V0 = w[struct + 0x24];
         V0 = V0 >> 1;
         if ((V0 & 1) == 1)
         {
-            V0 = w[A0 + 4];
+            V0 = w[A0 + 0x4];
             V0 = V0 >> (j * 4);
             V0 = V0 & 000f;
         }
@@ -4939,8 +4928,8 @@ for (int i = 0; i < 2; ++i)
 
     loop2384c:	; 8002384C
         A0 = w[S1 + 0];
-        A1 = struct + 24;
-        V1 = w[struct + 24];
+        A1 = struct + 0x24;
+        V1 = w[struct + 0x24];
 
         V1 = V1 >> 1;
         V1 = V1 & 0001;
@@ -5370,10 +5359,10 @@ SP = SP + 0050;
 
 func24070();
 
-[0x80076b60 + 404] = w(80076b60 + 4);
+[0x80076b60 + 0x404] = w(80076b60 + 0x4);
 
 A0 = w[0x8006794c];
-[A0 + 2c] = w(0);
+[A0 + 0x2c] = w(0);
 
 A0 = -1;
 system_psyq_vsync();
@@ -5500,7 +5489,7 @@ V0 = A0 >> 05;
 
 A0 = -1;
 system_psyq_vsync();
-[0x80076f68 + 4] = w(V0);
+[0x80076f68 + 0x4] = w(V0);
 ////////////////////////////////
 
 
@@ -13137,7 +13126,7 @@ SP = SP + 0050;
 [SP + 0010] = w(S0);
 8002B448	lui    s0, $8007
 [V0 + 7140] = w(A0);
-A0 = A0 + 4000;
+A0 = A0 + 0x4000;
 A1 = 0;
 A2 = 03f0;
 [SP + 0014] = w(RA);
@@ -17625,19 +17614,19 @@ void func2fc30()
 // func2fc38()
 
 [0x80077c78 + 0] = b(0);
-[0x80077c78 + 2] = b(0);
+[0x80077c78 + 0x2] = b(0);
 [0x80077c78 + 3] = b(0);
-[0x80077c78 + 4] = b(0);
+[0x80077c78 + 0x4] = b(0);
 [0x80077c78 + 5] = b(0);
 [0x80077c78 + a] = h(-1);
 [0x80077c78 + 10] = w(0);
 [0x80077c78 + 1c] = w(1);
-[0x80077c78 + 24] = b(0);
-[0x80077c78 + 25] = b(0);
-[0x80077c78 + 26] = b(0);
-[0x80077c78 + 28] = b(0);
-[0x80077c78 + 29] = b(0);
-[0x80077c78 + 2a] = b(0);
+[0x80077c78 + 0x24] = b(0);
+[0x80077c78 + 0x25] = b(0);
+[0x80077c78 + 0x26] = b(0);
+[0x80077c78 + 0x28] = b(0);
+[0x80077c78 + 0x29] = b(0);
+[0x80077c78 + 0x2a] = b(0);
 ////////////////////////////////
 
 
@@ -17647,7 +17636,7 @@ void func2fc30()
 
 if (A2 == 0)
 {
-    [0x80077c78 + 28] = w(A3);
+    [0x80077c78 + 0x28] = w(A3);
 }
 else
 {
@@ -19822,10 +19811,10 @@ SP = SP + 0018;
 
 [0x80077db0 + 0] = b(0);
 [0x80077db0 + 3] = b(0);
-[0x80077db0 + 4] = b(0);
+[0x80077db0 + 0x4] = b(0);
 [0x80077db0 + 5] = b(0);
 [0x80077db0 + 1c] = w(0);
-[0x80077db0 + 24] = w(0);
+[0x80077db0 + 0x24] = w(0);
 
 func35430();
 ////////////////////////////////
@@ -19842,7 +19831,7 @@ V0 = bu[0x80077dbb];
 800325F8	nop
 800325FC	lui    a0, $8003
 80032600	jal    func2f8a8 [$8002f8a8]
-A0 = A0 + 2384;
+A0 = A0 + 0x2384;
 80032608	j      L32618 [$80032618]
 8003260C	nop
 
@@ -19956,7 +19945,7 @@ A1 = A1 << 0b;
 A0 = A3 + A0;
 8003277C	lui    a3, $8003
 80032780	jal    func22c60 [$80022c60]
-A3 = A3 + 29fc;
+A3 = A3 + 0x29fc;
 
 L32788:	; 80032788
 RA = w[SP + 0010];
@@ -20006,7 +19995,7 @@ A1 = A1 << 0b;
 A0 = A0 + A3;
 80032838	lui    a3, $8003
 8003283C	jal    func22c60 [$80022c60]
-A3 = A3 + 2a18;
+A3 = A3 + 0x2a18;
 V0 = V0 & 00ff;
 80032848	beq    v0, zero, L32854 [$80032854]
 V0 = 0002;
@@ -20124,7 +20113,7 @@ V0 = func2f810();
 800329BC	nop
 800329C0	lui    a0, $8003
 800329C4	jal    func2f8a8 [$8002f8a8]
-A0 = A0 + 2238;
+A0 = A0 + 0x2238;
 800329CC	j      L329ec [$800329ec]
 800329D0	nop
 
@@ -20136,7 +20125,7 @@ L329d4:	; 800329D4
 
 L329e4:	; 800329E4
 800329E4	jal    func2f5a0 [$8002f5a0]
-A0 = A0 + 2238;
+A0 = A0 + 0x2238;
 
 L329ec:	; 800329EC
 RA = w[SP + 0010];
@@ -22957,7 +22946,7 @@ SP = SP + 0030;
 A0 = 0;
 func35580();
 
-A0 = 80077de8 + 20;
+A0 = 80077de8 + 0x20;
 A1 = 80010e48;
 func35b24();
 ////////////////////////////////
@@ -23048,7 +23037,7 @@ if (A0 == 0)
 else
 {
     [0x80077de8 + 10] = w(w[A0 + 0]);
-    [0x80077de8 + 14] = w(w[A0 + 4]);
+    [0x80077de8 + 14] = w(w[A0 + 0x4]);
 }
 ////////////////////////////////
 
@@ -23433,11 +23422,11 @@ V0 = V0 | T1;
 
 [A0 + 0] = b(0);
 [A0 + 1] = b(0);
-[A0 + 2] = b(0);
+[A0 + 0x2] = b(0);
 [A0 + 3] = b(bu[A1 + 0]);
-[A0 + 4] = w(A1);
-[A0 + 8] = w(A1 + 4);
-[A0 + c] = w(A1 + 4 + h[A1 + 0] * 8);
+[A0 + 0x4] = w(A1);
+[A0 + 8] = w(A1 + 0x4);
+[A0 + c] = w(A1 + 0x4 + h[A1 + 0] * 8);
 [A0 + 10] = w(A1);
 [A0 + 14] = w(0);
 ////////////////////////////////
@@ -25666,7 +25655,7 @@ V0 = A0 & ffff;
 A0 = V0 << 02;
 A1 = w[0x8006e65c];
 A0 = w[0x8006e664 + A0];
-[A1 + 4] = w(w[A1 + 4] | A0);
+[A1 + 0x4] = w(w[A1 + 0x4] | A0);
 return V0 < 3;
 ////////////////////////////////
 
@@ -25785,7 +25774,7 @@ loop4beec:	; 8004BEEC
     A2 = A2 + 0001;
     [V0 + 0000] = b(V1);
     V0 = A2 < 0209;
-    A0 = A0 + 4;
+    A0 = A0 + 0x4;
 8004BF00	bne    v0, zero, loop4beec [$8004beec]
 
 system_reset_random();
@@ -25810,7 +25799,7 @@ V1 = 8007b744 + 1ec;
 
 loop4bf50:	; 8004BF50
     [V0] = w(w[V0] XOR w[V0 - 20]);
-    V0 = V0 + 4;
+    V0 = V0 + 0x4;
 8004BF64	bne    v0, v1, loop4bf50 [$8004bf50]
 ////////////////////////////////
 
@@ -27818,7 +27807,7 @@ if (text_id >= 0)
 
     if (text_id < w[texts_data + 0]) // index less than number of texts
     {
-        pointer_to_text = texts_data + 4;
+        pointer_to_text = texts_data + 0x4;
 
         if (w[0x8007b708] == 4) // if battle
         {
@@ -27878,7 +27867,7 @@ if (pointer_to_text != 0)
                 [0x8007b960] = w(-1);
                 [0x8007b95c] = w(bu[pointer_to_text + 0]);
                 [0x8007b96c] = w(bu[pointer_to_text + 1] - 1)
-                pointer_to_text = pointer_to_text + 2;
+                pointer_to_text = pointer_to_text + 0x2;
             }
             break;
 
@@ -27938,7 +27927,7 @@ if (pointer_to_text != 0)
             case 03: // C8E40480
             {
                 [0x8007b940] = h(hu[pointer_to_text + 0]); // left x pos of dialog.
-                [0x8007b948] = b(bu[pointer_to_text + 2]); // top y pos of dialog.
+                [0x8007b948] = b(bu[pointer_to_text + 0x2]); // top y pos of dialog.
                 [0x8007b94a] = b(ff);
                 pointer_to_text = pointer_to_text + 3;
             }
@@ -27953,8 +27942,8 @@ if (pointer_to_text != 0)
             case 5f: // 28E50480
             {
                 [S4] = w(h[pointer_to_text + 0]);
-                [S5] = w(h[pointer_to_text + 2]);
-                [S6] = w(h[pointer_to_text + 4]);
+                [S5] = w(h[pointer_to_text + 0x2]);
+                [S6] = w(h[pointer_to_text + 0x4]);
                 pointer_to_text = pointer_to_text + 6;
             }
             break;
@@ -27974,7 +27963,7 @@ if (pointer_to_text != 0)
             case 0d: // 10E60480
             {
                 [SP + 14] = w(hu[pointer_to_text + 0])
-                pointer_to_text = pointer_to_text + 2;
+                pointer_to_text = pointer_to_text + 0x2;
 
                 if (w[SP + 14] != ffff)
                 {
@@ -28015,7 +28004,7 @@ if (pointer_to_text != 0)
                         }
 
                         [SP + 14] = w(hu[pointer_to_text + 0]);
-                        pointer_to_text = pointer_to_text + 2;
+                        pointer_to_text = pointer_to_text + 0x2;
 
                         A0 = w[SP + 14];
                     8004E718	bne    a0, ffff, loop4e648 [$8004e648]
@@ -28058,7 +28047,7 @@ else
 [0x8007b978] = w(0);
 
 [0x8007b988 + 0] = w(0);
-[0x8007b988 + 4] = w(0);
+[0x8007b988 + 0x4] = w(0);
 ////////////////////////////////
 
 
@@ -28163,7 +28152,7 @@ if (V0 != 0)
 {
     loop4e93c:	; 8004E93C
         [V1 + 0008] = h(0);
-        V1 = V1 + 2c;
+        V1 = V1 + 0x2c;
         V0 = V1 < A0;
     8004E948	bne    v0, zero, loop4e93c [$8004e93c]
 }
@@ -30128,7 +30117,7 @@ V0 = bu[V0 + 0008];
 S0 = w[V1 + bc18];
 80050AD4	beq    v0, zero, L50ae0 [$80050ae0]
 80050AD8	lui    v0, $8008
-S0 = S0 + 22b0;
+S0 = S0 + 0x22b0;
 
 L50ae0:	; 80050AE0
 80050AE0	addiu  v1, v0, $bc20 (=-$43e0)
@@ -30243,7 +30232,7 @@ A1 = 0;
 A2 = A1;
 80050C5C	jal    func2420c [$8002420c]
 A3 = V0 & ffff;
-V0 = S1 + 4560;
+V0 = S1 + 0x4560;
 V1 = S2 + 0a68;
 T0 = w[S0 + 0010];
 T1 = w[S0 + 0014];
@@ -35100,7 +35089,7 @@ do
 {
     loop566dc:	; 800566DC
         [SP + 0] = w(w[0x800809e0]);
-        [SP + 4] = w(w[0x800809e0]);
+        [SP + 0x4] = w(w[0x800809e0]);
     800566E8	bne    v1, v0, loop566dc [$800566dc]
 } while(V1 == 1)
 ////////////////////////////////
@@ -35452,7 +35441,7 @@ if (V0 <= 0) return 0;
 [0x80067a50] = w(A1);
 
 [A1 + 0] = w(40001010);
-[A1 + 4] = w((10000 << w[0x80067a10]) - 1010);
+[A1 + 0x4] = w((10000 << w[0x80067a10]) - 1010);
 
 return V0;
 ////////////////////////////////
@@ -36934,7 +36923,7 @@ V0 = V1 < 2001;
 80061648	bne    v0, zero, L61678 [$80061678]
 V1 = V1 >> 01;
 A0 = w[S0 + 002c];
-A0 = A0 + 2000;
+A0 = A0 + 0x2000;
 func5652c();
 
 
@@ -37559,7 +37548,7 @@ A1 = 2100;
 L61fa0:	; 80061FA0
 80061FA0	lui    a2, $8006
 80061FA4	jal    func61e1c [$80061e1c]
-A2 = A2 + 2118;
+A2 = A2 + 0x2118;
 ////////////////////////////////
 
 
@@ -37685,7 +37674,7 @@ A0 = 1100;
 A2 = 1000;
 800621B4	lui    a3, $8006
 800621B8	jal    func61fbc [$80061fbc]
-A3 = A3 + 21d4;
+A3 = A3 + 0x21d4;
 
 L621c0:	; 800621C0
 ////////////////////////////////
@@ -37708,7 +37697,7 @@ A1 = 3900;
 A2 = 2000;
 80062214	lui    a3, $8006
 80062218	jal    func61fbc [$80061fbc]
-A3 = A3 + 2118;
+A3 = A3 + 0x2118;
 A1 = V0;
 V0 = 1030;
 80062228	bne    a1, v0, L62238 [$80062238]
@@ -37732,7 +37721,7 @@ A0 = 2100;
 A2 = 1000;
 80062270	lui    a3, $8006
 80062274	jal    func61fbc [$80061fbc]
-A3 = A3 + 2118;
+A3 = A3 + 0x2118;
 
 L6227c:	; 8006227C
 ////////////////////////////////
@@ -38175,7 +38164,7 @@ S5 = A1;
 [SP + 0020] = w(S2);
 [SP + 001c] = w(S1);
 [SP + 0018] = w(S0);
-T1 = V0 + 21c0;
+T1 = V0 + 0x21c0;
 80062864	lwl    a2, $0003(t1)
 80062868	lwr    a2, $0000(t1)
 8006286C	lwl    a3, $0007(t1)
@@ -38393,7 +38382,7 @@ SP = SP + 0038;
 // func62b30
 80062B30	lui    v0, $8001
 80062B34	jr     ra 
-V0 = V0 + 21c8;
+V0 = V0 + 0x21c8;
 ////////////////////////////////
 
 
@@ -39000,11 +38989,11 @@ V0 = A0;
 
 S2 = A0 & ffff;
 
-file_n = h[0x80073c40 + 2] - 1;
+file_n = h[0x80073c40 + 0x2] - 1;
 
 for (int i = file_n; i >= 0; --i)
 {
-    A0 = w[0x80073c40 + 4 + i * 4];
+    A0 = w[0x80073c40 + 0x4 + i * 4];
     A1 = 2; // return address of file with index A2 & ffff in given resource
     A2 = 00120000;
     A3 = 0;
@@ -39017,7 +39006,7 @@ for (int i = file_n; i >= 0; --i)
 
         for (int j = obj_n; j >= 0; --j)
         {
-            if (hu[file_p + 4 + j * c + 0] == S2) return file_p + 4 + j * c;
+            if (hu[file_p + 0x4 + j * c + 0] == S2) return file_p + 0x4 + j * c;
         }
     }
 }
@@ -39804,7 +39793,7 @@ V0 = V1 < 002d;
 V0 = V1 << 02;
 80063F40	lui    at, $8001
 AT = AT + V0;
-V0 = w[AT + 25a0];
+V0 = w[AT + 0x25a0];
 80063F4C	nop
 80063F50	jr     v0 
 80063F54	nop
@@ -40026,7 +40015,7 @@ V1 = V1 | 0050;
 [SP + 0210] = w(V1);
 80064228	lui    a3, $8001
 8006422C	j      L6423c [$8006423c]
-A3 = A3 + 2578;
+A3 = A3 + 0x2578;
 A3 = 8001258c;
 
 L6423c:	; 8006423C
@@ -41357,7 +41346,7 @@ V0 = V0 & 0040;
 80065474	nop
 80065478	lui    a0, $8001
 8006547C	jal    system_bios_printf [$80015c38]
-A0 = A0 + 266c;
+A0 = A0 + 0x266c;
 80065484	j      L654dc [$800654dc]
 V0 = 0001;
 
@@ -41980,7 +41969,7 @@ V0 = V0 >> 11;
 S0 = A0;
 80065CC8	lui    v0, $8001
 [SP + 001c] = w(RA);
-T1 = V0 + 2798;
+T1 = V0 + 0x2798;
 80065CD4	lwl    a2, $0003(t1)
 80065CD8	lwr    a2, $0000(t1)
 A3 = b[T1 + 0004];

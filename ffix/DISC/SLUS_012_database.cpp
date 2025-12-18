@@ -4,17 +4,17 @@
 struct = w[0x8006794c];
 struct1c = w[struct + 0x1c];
 
-file_data = func1e218( 0x1, 0x271a ); // dir 0x1 file_id 0x271a
+file_data = func1e218(0x1, 0x271a); // dir 0x1 file_id 0x271a
 
 sector = w[file_data + 0x4]; // file sector
 size = (w[file_data + 0xc] - w[file_data + 0x4]) * 0x800; // size
-func2177c( struct1c + 0x854, sector, size, w[0x80067940], 0, -1, 0 );
+func2177c(struct1c + 0x854, sector, size, w[0x80067940], 0, -1, 0);
 
-while( func217c4( struct1c + 0x854 ) != 0 ) {}
+while(func217c4(struct1c + 0x854) != 0) {}
 
 [struct1c + 0x7d8] = w(w[0x80067940]);
 
-func1c750( w[struct1c + 0x7d8] ); // add loaded file
+func1c750(w[struct1c + 0x7d8]); // add loaded file
 
 A0 = w[struct1c + 0x7d8];
 A1 = 0x0; // type "address of resource"
@@ -32,12 +32,12 @@ return 0;
 ////////////////////////////////
 // func1d848()
 
-V0 = w[8006794c];
+V0 = w[0x8006794c];
 V0 = w[V0 + 1c];
 A0 = w[V0 + 7d8];
 func1c784();
 
-V0 = w[8006794c];
+V0 = w[0x8006794c];
 V1 = w[V0 + 1c];
 [V1 + 7d8] = w(0);
 
@@ -46,43 +46,35 @@ return 0;
 
 
 
-////////////////////////////////
-// system_file_load_tim()
-
-tim = A0;
-
-image = tim + 8;
-
-if( w[tim + 4] & 8 ) // has clut
+void system_file_load_tim(u32 tim)
 {
-    A0 = tim + c;
-    A1 = tim + 14;
-    system_psyq_load_image(); // load clut
+    image = tim + 0x8;
 
-    image += (w[tim + 8] / 4) *4;
+    if (w[tim + 0x4] & 0x8) // has clut
+    {
+        system_psyq_load_image(tim + 0xc, tim + 0x14);
+        image += (w[tim + 0x8] / 0x4) * 0x4;
+    }
+
+    system_psyq_load_image(image + 0x4, image + 0xc);
 }
 
-A0 = image + 4;
-A1 = image + c;
-system_psyq_load_image(); // load image
-////////////////////////////////
 
 
-
-void func1d910( A0, A1, A2 )
+void func1d910(A0, A1, A2)
 {
-    if( A0 == 0 ) return;
+    if (A0 == 0) return;
 
     V1 = A0 + 0x8;
 
-    if( w[A0 + 0x4] & 0x8 )
+    if (w[A0 + 0x4] & 0x8)
     {
-        if( A1 != 0 ) [A1] = w(A0 + 0xc);
+        if (A1 != 0) [A1] = w(A0 + 0xc);
 
         V1 += ((w[A0 + 0x8] >> 0x2) << 0x2);
     }
 
-    if( A2 != 0 ) [A2] = w(V1 + 0x4);
+    if (A2 != 0) [A2] = w(V1 + 0x4);
 }
 
 
@@ -125,13 +117,13 @@ L1d9c4:	; 8001D9C4
 
 
 
-void func1d9cc( A0, A1, A2, A3, A4 )
+void func1d9cc(A0, A1, A2, A3, A4)
 {
-    if( A0 == 0 ) return;
+    if (A0 == 0) return;
 
     V1 = A0 + 0x8;
 
-    if( w[A0 + 0x4] & 0x8 )
+    if (w[A0 + 0x4] & 0x8)
     {
         [A0 + 0xc] = h(A1);
         [A0 + 0xe] = h(A2);
@@ -144,7 +136,7 @@ void func1d9cc( A0, A1, A2, A3, A4 )
 
 
 
-u8 func1da18( A0 )
+u8 func1da18(A0)
 {
     return (A0 >> 0x7) & 0x3;
 }
@@ -201,143 +193,114 @@ L1da9c:	; 8001DA9C
 
 
 
-////////////////////////////////
-// func1daa4()
-
-S6 = A0; // offset to previous file
-S7 = A1; // offset to file
-S4 = A2;
-S2 = A3; // some address
-S1 = 0;
-if( S4 != 0 && S1 < S4 )
+int func1daa4(S6, S7, S4, S2)
 {
-    loop1daf8:	; 8001DAF8
-        V0 = bu[80068234];
-        A1 = S4 - S1;
-        V1 = V0 + 1;
-        [80068234] = b(V1);
-        V1 = V0 * 8;
-        S0 = 80073ce8 + V1;
-        if (V0 >= 5)
-        {
-            [80068234] = b(0);
-        }
+    S1 = 0;
 
-        if (S2 != 0)
-        {
-            [S0 + 0] = h(hu[S2 + 0]);
-            [S0 + 2] = h(hu[S2 + 2]);
-            [S0 + 4] = h(hu[S2 + 4]);
-            [S0 + 6] = h(hu[S2 + 6]);
-        }
-        else
-        {
-            A0 = w[8006794c];
-            V0 = w[A0 + 1c];
-            V1 = w[A0 + 10] + bu[V0 + 8] * 5c;
-            [S0 + 0] = h(hu[V1 + 0]);
-            [S0 + 2] = h(hu[V1 + 2]);
-            [S0 + 4] = h(140);
-            [S0 + 6] = h(da);
-        }
+    if ((S4 != 0) && (S1 < S4))
+    {
+        loop1daf8:	; 8001DAF8
+            V0 = bu[0x80068234];
+            A1 = S4 - S1;
+            V1 = V0 + 1;
+            [0x80068234] = b(V1);
 
-        V1 = A1 / 2;
-        A0 = V1 / h[S0 + 6];
-        if (A0 == 0 && A1 != 0)
-        {
-            V0 = V1 << 10;
-            A0 = 1;
-            [S0 + 6] = h(V1);
-            if (V0 == 0)
+            RECT* rect = 0x80073ce8 + V0 * 0x8;
+
+            if (V0 >= 0x5) [0x80068234] = b(0);
+
+            if (S2 != 0)
             {
-                [S0 + 6] = h(V1 + A0);
+                rect->x = hu[S2 + 0x0];
+                rect->y = hu[S2 + 0x2];
+                rect->w = hu[S2 + 0x4];
+                rect->h = hu[S2 + 0x6];
             }
-        }
-        else if (h[S0 + 4] < A0)
-        {
-            A0 = V1;
-        }
+            else
+            {
+                struct = w[0x8006794c];
+                struct1c = w[struct + 0x1c];
+                DRAWENV drenv* = w[struct + 0x10] + bu[struct1c + 0x8] * 0x5c;
+                rect->x = drenv->clip.x;
+                rect->y = drenv->clip.y;
+                rect->w = 0x140;
+                rect->h = 0xda;
+            }
 
-        [S0 + 4] = h(A0);
+            V1 = A1 / 0x2;
+            A0 = V1 / rect->h;
+            if ((A0 == 0) && (A1 != 0))
+            {
+                V0 = V1 << 0x10;
+                A0 = 0x1;
+                rect->h = V1;
+                if (V0 == 0) rect->h += 0x1;
+            }
+            else if (rect->w < A0)
+            {
+                A0 = V1;
+            }
+            rect->w = A0;
 
-        A0 = S0;
-        A1 = S7 + S1;
-        system_psyq_load_image();
+            system_psyq_load_image(rect, S7 + S1);
 
-        loop1dc48:	; 8001DC48
-            8001DC48	jal    func22b18 [$80022b18]
-        8001DC50	bne    v0, zero, loop1dc48 [$8001dc48]
+            while (func22b18() != 0) {}
 
-        A0 = S0;
-        A1 = S6 + S1;
-        system_psyq_store_image();
+            system_psyq_store_image(rect, S6 + S1);
 
-        T0 = h[S0 + 4] + h[S0 + 6];
-        S1 = S1 + T0 * 2;
-        V0 = S1 < S4;
-    8001DC80	bne    v0, zero, loop1daf8 [$8001daf8]
+            T0 = rect->w + h[S0 + 0x6];
+            S1 = S1 + T0 * 0x2;
+            V0 = S1 < S4;
+        8001DC80	bne    v0, zero, loop1daf8 [$8001daf8]
+    }
+
+    return S1;
 }
-
-return S1;
-////////////////////////////////
 
 
 
 ////////////////////////////////
 // func1dcb8()
 
-struct = w[8006794c];
+struct = w[0x8006794c];
 
-[SP + 28] = w(w[800103f0]); // "\SLUS_012.51;1" disc 1
-[SP + 2c] = w(w[800103f4]); // "\SLUS_012.95;1" disc 2
-[SP + 30] = w(w[800103f8]); // "\SLUS_012.96;1" disc 3
-[SP + 34] = w(w[800103fc]); // "\SLUS_012.97;1" disc 4
+[SP + 28] = w(w[0x800103f0]); // "\SLUS_012.51;1" disc 1
+[SP + 2c] = w(w[0x800103f4]); // "\SLUS_012.95;1" disc 2
+[SP + 30] = w(w[0x800103f8]); // "\SLUS_012.96;1" disc 3
+[SP + 34] = w(w[0x800103fc]); // "\SLUS_012.97;1" disc 4
 
 [struct + b] = b(ff);
 
-for( int i = 0; i < 4; ++i )
+for(int i = 0; i < 4; ++i)
 {
     A0 = SP + 10; // CdlFILE *fp
     A1 = w[SP + 28 + i * 4];
     system_psyq_cd_search_file();
 
-    if( V0 != 0 ) // file found
+    if (V0 != 0) // file found
     {
         [struct + b] = b(1 << i);
         break;
     }
 }
 
-if( bu[struct + b] != ff )
+if (bu[struct + b] != ff)
 {
-    do
-    {
-        func22b18();
-    } while( V0 != 0 )
+    while (func22b18() != 0) {}
 
-    while( true )
+    while (true)
     {
         A0 = 80010400; // "\FF9.IMG;1"
         system_cdrom_get_sector_by_filename();
         [struct + 20] = w(V0); // store sector
 
-        if( V0 != -1 ) break;
+        if (V0 != -1) break;
 
-        do
-        {
-            func22b18();
-        } while( V0 != 0 )
+        while (func22b18() != 0) {}
     }
 
-    do
-    {
-        func22b18();
-    } while( V0 != 0 )
-
-    do
-    {
-        func22b18();
-    } while( V0 != 0 )
+    while (func22b18() != 0) {}
+    while (func22b18() != 0) {}
 
     dst = struct - 1800;
 
@@ -347,10 +310,7 @@ if( bu[struct + b] != ff )
     A3 = 0; // end callback
     func22c60(); // load sectors to memory
 
-    do
-    {
-        func22b18();
-    } while( V0 != 0 )
+    while (func22b18() != 0) {}
 
     dir_n = w[dst + 8];
     [struct + 30] = w(dir_n);
@@ -367,9 +327,9 @@ if( bu[struct + b] != ff )
 ////////////////////////////////
 // func1de50()
 
-struct = w[8006794c];
+struct = w[0x8006794c];
 
-if( ( w[struct + 0] & 00100000 ) == 0 ) return;
+if ((w[struct + 0] & 00100000) == 0) return;
 
 [SP + 14] = w(0);
 
@@ -380,7 +340,7 @@ FP = w[0x80067944] + 0x14c700;
 
 A2 = w[struct14 + d * 10 + 8] * 800 + w[struct14 + d * 10 + 4] * 2;
 
-if( A2 & 800 )
+if (A2 & 800)
 {
     A2 += 800 - (A2 & 800);
 }
@@ -392,10 +352,7 @@ A2 = FP; // dst
 A3 = 0; // end callback
 func22c60(); // load sectors to memory
 
-do
-{
-    func22b18();
-} while( V0 != 0 )
+while (func22b18() != 0) {}
 
 dir_data = FP + 10;
 dir_src = FP;
@@ -457,14 +414,14 @@ dir_dst = struct;
 
     // calculate size for files in dir b
     file_list_8_cur = file_list_8 + (files_n_8 - 1) * 8;
-    while( file_list_8_cur >= file_list_8 )
+    while(file_list_8_cur >= file_list_8)
     {
         file_list_b_cur = file_list_b + (files_n_b - 1) * 8;
-        while( file_list_b_cur >= file_list_b )
+        while(file_list_b_cur >= file_list_b)
         {
-            if( hu[file_list_b_cur + 0] == hu[file_list_8_cur + 2] )
+            if (hu[file_list_b_cur + 0] == hu[file_list_8_cur + 2])
             {
-                if( hu[file_list_b_cur + 2] == 0 )
+                if (hu[file_list_b_cur + 2] == 0)
                 {
                     [file_list_b_cur + 2] = h(1);
                     [SP + 14] = w(w[SP + 14] + 1);
@@ -480,15 +437,15 @@ dir_dst = struct;
     [struct18 + b * 4] = w(dir_dst);
 
     file_list_8_cur = file_list_8 + (files_n_8 - 1) * 8;
-    while( file_list_8_cur >= file_list_8 )
+    while(file_list_8_cur >= file_list_8)
     {
         dst = w[struct18 + b * 4];
         file_list_b_cur = file_list_b + (files_n_b - 1) * 8;
-        while( file_list_b_cur >= file_list_b )
+        while(file_list_b_cur >= file_list_b)
         {
-            if( hu[file_list_b_cur + 0] == hu[file_list_8_cur + 2] )
+            if (hu[file_list_b_cur + 0] == hu[file_list_8_cur + 2])
             {
-                if( hu[file_list_b_cur + 2] == 1 )
+                if (hu[file_list_b_cur + 2] == 1)
                 {
                     A0 = dst; // dst
                     A1 = file_list_b_cur; // src
@@ -538,13 +495,13 @@ dir_dst = struct;
 
 
 
-u32 func1e218( dir_id, file_id )
+u32 func1e218(dir_id, file_id)
 {
     struct = w[0x8006794c];
     dir_data = w[struct + 0x14] + dir_id * 0x10;
     struct18 = w[struct + 0x18];
 
-    if( w[dir_data + 0x0] == 0x3 ) // hierarchical directory
+    if (w[dir_data + 0x0] == 0x3) // hierarchical directory
     {
         return w[struct18 + 0xd * 0x4] + file_id * 0x2;
     }
@@ -553,9 +510,9 @@ u32 func1e218( dir_id, file_id )
     file_list = w[struct18 + dir_id * 0x4];
     file_list_cur = file_list + (files_n - 0x1) * 0x8;
 
-    while( file_list_cur >= file_list )
+    while(file_list_cur >= file_list)
     {
-        if( hu[file_list_cur + 0] == ( file_id & 0xffff ) ) return file_list_cur;
+        if (hu[file_list_cur + 0] == (file_id & 0xffff)) return file_list_cur;
 
         file_list_cur -= 0x8;
     }
@@ -568,9 +525,9 @@ u32 func1e218( dir_id, file_id )
 ////////////////////////////////
 // func1e2ac()
 
-struct = w[8006794c];
+struct = w[0x8006794c];
 
-if( bu[struct + 8] == 1 ) // field
+if (bu[struct + 8] == 1) // field
 {
     V0 = w[struct + 1c];
     V0 = w[V0 + 8e4];
@@ -578,14 +535,14 @@ if( bu[struct + 8] == 1 ) // field
     V0 = w[V0 + 14];
     [V0 + a] = h(A0);
 }
-else if( bu[struct + 8] == 2 ) // battle
+else if (bu[struct + 8] == 2) // battle
 {
     V0 = w[struct + 1c];
     V0 = w[V0 + 8e4];
     V0 = w[V0 + 11c0];
     [V0 + 4] = h(A0);
 }
-else if( bu[struct + 8] == 3 )
+else if (bu[struct + 8] == 3)
 {
     V0 = w[struct + 1c];
     V0 = w[V0 + 8e4];
@@ -599,10 +556,10 @@ else if( bu[struct + 8] == 3 )
 ////////////////////////////////
 // func1e350()
 
-struct = w[8006794c];
+struct = w[0x8006794c];
 V1 = w[struct + 1c];
 
-if( A0 >= 9 )
+if (A0 >= 9)
 {
     return w[V1 + 8e0] + A0 * 14 - b4;
 }
