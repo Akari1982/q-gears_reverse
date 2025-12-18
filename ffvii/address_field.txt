@@ -483,9 +483,9 @@
 
 8009d70b []       some flag.
 
-8009d820 unknown value that checked x & 3 == 0.
-8009d824 []       debug dirty and needs update.
-8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here. 4bit fixed point.
+0x8009d820 unknown value that checked x & 3 == 0.
+0x8009d824 []       debug dirty and needs update.
+0x8009d828 [][] array of animation speed. ASPED set speed to model data+60 and here. 4bit fixed point.
 
 8009fe8c []       init with 0. Looks like debug flag
 
