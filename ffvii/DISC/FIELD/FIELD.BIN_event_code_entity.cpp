@@ -147,136 +147,47 @@ void funcc5b38()
 
 
 
-////////////////////////////////
-// 0xA3 ANIME1
-// 0xAE ANIME2
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("anime", 0x2);
-
-A0 = bu[0x800722c4];
-AT = 0x8007eb98 + A0;
-A1 = bu[AT + 0000];
-V0 = 00ff;
-800C5D30	beq    a1, v0, Lc5dd4 [$800c5dd4]
-V0 = 0003;
-AT = 800756e8;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-800C5D48	nop
-800C5D4C	beq    v1, v0, Lc5d80 [$800c5d80]
-V0 = V1 < 0004;
-800C5D54	bne    v0, zero, Lc5d70 [$800c5d70]
-V0 = V1 < 0002;
-V0 = 0004;
-800C5D60	beq    v1, v0, Lc5e30 [$800c5e30]
-V0 = 0001;
-800C5D68	j      Lc5e70 [$800c5e70]
-800C5D6C	nop
-
-Lc5d70:	; 800C5D70
-800C5D70	beq    v0, zero, Lc5e6c [$800c5e6c]
-800C5D74	nop
-800C5D78	bltz   v1, Lc5e70 [$800c5e70]
-V0 = 0001;
-
-Lc5d80:	; 800C5D80
-800C5D80	jal    funcc5b38 [$800c5b38]
-800C5D84	nop
-V1 = bu[0x8009a058];
-V0 = 00ae;
-800C5D94	bne    v1, v0, Lc5df8 [$800c5df8]
-800C5D98	nop
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-V0 = 0005;
-AT = 800756e8;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-A0 = bu[0x800722c4];
-
-Lc5dd4:	; 800C5DD4
-V0 = 800831fc;
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = 0;
-V1 = V1 + 0003;
-800C5DF0	j      Lc5e70 [$800c5e70]
-[A0 + 0000] = h(V1);
-
-Lc5df8:	; 800C5DF8
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-V0 = 0002;
-AT = 800756e8;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-800C5E28	j      Lc5e70 [$800c5e70]
-V0 = 0001;
-
-Lc5e30:	; 800C5E30
-AT = 800756e8;
-AT = AT + A1;
-[AT + 0000] = b(0);
-V1 = bu[0x800722c4];
-V0 = 800831fc;
-V1 = V1 << 01;
-V1 = V1 + V0;
-A0 = hu[V1 + 0000];
-V0 = 0;
-A0 = A0 + 0003;
-800C5E64	j      Lc5e70 [$800c5e70]
-[V1 + 0000] = h(A0);
-
-Lc5e6c:	; 800C5E6C
-V0 = 0001;
-
-Lc5e70:	; 800C5E70
-
-
-
-
-
-actor_id_cur        = bu[0x800722c4];
-current_model         = bu[0x8007eb98 + actor_id_cur];
-script_pointer_offset = 800831fc + actor_id_cur * 2;
-
-if (current_model != ff)
+int field_event_opcode_a3_ae_anime()
 {
-    animation_state = bu[0x800756e8 + current_model];
-    if (animation_state != 3)
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("anime", 0x2);
+
+    u8 model_cur = bu[0x8007eb98 + actor_id_cur];
+
+    if (model_cur != 0xff)
     {
-        if (animation_state == 4)
+        u8 anim_state = bu[0x800756e8 + model_cur];
+        if (anim_state == 0x4)
         {
-            [0x800756E8 + current_model] = b(0);
-            [script_pointer_offset] = h(hu[script_pointer_offset] + 3);
+            [0x800756e8 + model_cur] = b(0);
+            [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
             return 0;
         }
 
-        if (animation_state > 4 || animation_state == 2)
+        if (anim_state != 0x3)
         {
-            return 1;
+            if (anim_state >= 0x2) return 0x1;
+            if (anim_state < 0) return 0x1;
+        }
+
+        funcc5b38();
+
+        if (bu[0x8009a058] == 0xae) // opcode
+        {
+            [0x800756e8 + model_cur] = b(0x5);
+        }
+        else
+        {
+            [0x800756e8 + model_cur] = b(0x2);
+            return 0x1;
         }
     }
 
-    funcc5b38;
-
-    // if this is AE opcode
-    if (bu[0x8009a058] == ae)
-    {
-        [0x800756E8 + current_model] = b(5);
-    }
-    else
-    {
-        [0x800756E8 + current_model] = b(2);
-        return 1;
-    }
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+    return 0;
 }
-
-[script_pointer_offset] = h(hu[script_pointer_offset] + 3);
-////////////////////////////////
 
 
 
@@ -313,8 +224,8 @@ Lc5f08:	; 800C5F08
 V0 = 0001;
 
 Lc5f18:	; 800C5F18
-800C5F18	jal    funcc5b38 [$800c5b38]
-800C5F1C	nop
+funcc5b38();
+
 V1 = bu[0x8009a058];
 V0 = 00af;
 800C5F2C	bne    v1, v0, Lc5f6c [$800c5f6c]
@@ -387,7 +298,7 @@ if (current_model != ff)
         }
     }
 
-    funcc5b38;
+    funcc5b38();
 
     // if this is AF opcode
     if (bu[0x8009a058] == af)
