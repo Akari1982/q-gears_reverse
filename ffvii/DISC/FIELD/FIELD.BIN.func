@@ -200,10 +200,8 @@
 800C5A2C field_event_opcode_dc_ccanm
 800C5B38 funcc5b38
 800C5CE8 field_event_opcode_a3_ae_anime
-800C5E80 0xAF ANIM!1
-800C5E80 0xBA ANIM!2
-800C5FF4 0xB0 CANIM1
-800C5FF4 0xBB CANIM2
+800C5E80 field_event_opcode_af_ba_anim
+800C5FF4 field_event_opcode_b0_bb_canim
 800C63CC 0xB1 CANM!1
 800C63CC 0xBC CANM!2
 800C6748 0xAC ANIMW

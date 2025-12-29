@@ -162,19 +162,179 @@ int field_event_opcode_a3_ae_anime()
         if (anim_state == 0x4)
         {
             [0x800756e8 + model_cur] = b(0);
-            [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+        }
+        else
+        {
+            if (anim_state != 0x3)
+            {
+                if (anim_state >= 0x2) return 0x1;
+                if (anim_state < 0) return 0x1;
+            }
+
+            funcc5b38();
+
+            if (bu[0x8009a058] == 0xae) // opcode
+            {
+                [0x800756e8 + model_cur] = b(0x5);
+            }
+            else
+            {
+                [0x800756e8 + model_cur] = b(0x2);
+                return 0x1;
+            }
+        }
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+    return 0;
+}
+
+
+
+int field_event_opcode_af_ba_anim()
+{
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("anim!", 0x2);
+
+    u8 model_cur = bu[0x8007eb98 + actor_id_cur];
+
+    if (model_cur != 0xff)
+    {
+        u8 anim_state = bu[0x800756e8 + model_cur];
+
+        if (anim_state == 0x4)
+        {
+            [0x800756e8 + model_cur] = b(0x3);
+        }
+        else
+        {
+            if (anim_state != 0x3)
+            {
+                if (anim_state >= 0x2) return 0x1;
+                if (anim_state < 0) return 0x1;
+            }
+
+            funcc5b38();
+
+            if (bu[0x8009a058] == 0xaf) // opcode
+            {
+                [0x800756e8 + model_cur] = b(0x6);
+            }
+            else
+            {
+                [0x800756e8 + model_cur] = b(0x2);
+                return 0x1;
+            }
+        }
+    }
+
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+    return 0;
+}
+
+
+
+int field_event_opcode_b0_bb_canim()
+{
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    entities_data = w[0x8009c544];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if (bu[0x8009d820] & 0x3) field_debug_event_opcode("canim", 0x4);
+
+    u8 model_cur = bu[0x8007eb98 + actor_id_cur];
+
+    if (model_cur != 0xff)
+    {
+        V0 = 0003;
+        V1 = bu[0x800756e8 + model_cur];
+        800C6054	nop
+        800C6058	beq    v1, v0, Lc6094 [$800c6094]
+        V0 = V1 < 0004;
+        800C6060	bne    v0, zero, Lc607c [$800c607c]
+        V0 = V1 < 0002;
+
+        if (V1 == 0x4)
+        {
+            [0x800756e8 + model_cur] = b(0);
+
+            [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
             return 0;
         }
 
-        if (anim_state != 0x3)
+        return 0x1;
+
+        Lc607c:	; 800C607C
+        if (V0 == 0) return 0x1;
+        if (V1 < 0) return 0x1;
+
+        Lc6094:	; 800C6094
+        A1 = bu[events_data + script_cur + 0x4];
+        V1 = bu[events_data + script_cur + 0x1];
+        V0 = entities_data + model_cur * 0x84;
+        [V0 + 0x5e] = b(V1);
+        V0 = model_cur << 01;
+        A0 = h[0x8009d828 + V0];
+        A0 = A0 / A1;
+        A3 = actor_id_cur * 0x2;
+        V0 = model_cur << 05;
+        V0 = V0 + model_cur;
+        V0 = V0 << 02;
+        V0 = entities_data + V0;
+        [V0 + 0ч60] = h(A0);
+        A3 = 0x800831fc + A3;
+        V0 = hu[A3 + 0000];
+        V0 = events_data + V0;
+        V1 = bu[V0 + 0002];
+        V1 = V1 / A1;
+        V0 = model_cur << 05;
+        V0 = V0 + model_cur;
+        V0 = V0 << 02;
+        V0 = entities_data + V0;
+        V1 = V1 << 04;
+        [V0 + 0x62] = h(V1);
+        V0 = hu[A3 + 0000];
+        A2 = events_data + V0;
+        A2 = bu[A2 + 0x3];
+        A2 = A2 / A1;
+        V1 = w[0x8008357c];
+        V0 = model_cur << 03;
+        V0 = V0 + V1;
+        V0 = bu[V0 + 0004];
+        V1 = V0 << 03;
+        V1 = V1 + V0;
+        V0 = w[g_field_models + 0x4];
+        V1 = V1 << 02;
+        V1 = V1 + V0;
+        V0 = model_cur << 05;
+        V0 = V0 + model_cur;
+        A1 = V0 << 02;
+        A0 = hu[V1 + 0x1a];
+        V1 = w[V1 + 0x1c];
+        V0 = bu[0x80074f02 + A1];
+        A0 = A0 + V1;
+        V0 = V0 << 04;
+        V0 = V0 + A0;
+        V0 = hu[V0 + 0000];
+        V1 = 0xffff;
+        V0 = V0 + V1;
+        A0 = V0;
+        V0 = V0 << 10;
+        V0 = V0 >> 10;
+        V0 = V0 < A2;
+        if (V0 != 0)
         {
-            if (anim_state >= 0x2) return 0x1;
-            if (anim_state < 0) return 0x1;
+            [entities_data + A1 + 0x64] = h(A0);
+        }
+        else
+        {
+            [entities_data + A1 + 0x64] = h(A2);
         }
 
-        funcc5b38();
-
-        if (bu[0x8009a058] == 0xae) // opcode
+        if (bu[0x8009a058] == 0xb0)
         {
             [0x800756e8 + model_cur] = b(0x5);
         }
@@ -185,412 +345,95 @@ int field_event_opcode_a3_ae_anime()
         }
     }
 
-    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x3);
+    [0x800831fc + actor_id_cur * 0x2] = h(script_cur + 0x5);
+    return 0;
+
+
+
+
+
+    actor_id_cur        = bu[0x800722C4];
+    current_model         = bu[0x8007EB98 + actor_id_cur]; // A1
+    entities_data     = w[0x8009C544];
+    script_pointer_offset = 800831FC + actor_id_cur * 2;
+
+    if (current_model != FF)
+    {
+        // animation state
+        V1 = bu[0x800756E8 + current_model];
+
+        if (V1 != 3)
+        {
+            if (V1 == 4)
+            {
+                [0x800756E8 + current_model] = b(0);
+
+                A0 = hu[script_pointer_offset];
+                A0 = A0 + 5;
+                [script_pointer_offset] = h(A0);
+                return 0;
+            }
+
+            if (V1 == 2 || V1 > 4)
+            {
+                return 1;
+            }
+        }
+
+        V1 = w[0x8009c6dc];
+        V0 = hu[script_pointer_offset];
+        A1 = bu[V1 + V0 + 4];
+
+        [entities_data + current_model * 84 + 5E] = b(bu[V1 + V0 + 1]);
+
+        A2 = w[0x8009c6dc];
+        [entities_data + current_model * 84 + 60] = h(h[0x8009d828 + current_model * 2] / A1);
+
+        V0 = hu[script_pointer_offset];
+        V1 = bu[A2 + V0 + 2];
+        V1 = V1 * 10 / A1;
+        [entities_data + current_model * 84 + 62] = h(V1);
+
+        V0 = h[script_pointer_offset];
+        A2 = bu[A2 + V0 + 3];
+        A2 = A2 / A1;
+
+        V1 = w[0x8008357c];
+        V0 = bu[V1 + current_model * 8 + 4];
+        V0 = w[g_field_models + 0x4];
+        A0 = hu[V0 + V1 * 24 + 1A];
+        V1 = w[V0 + V1 * 24 + 1C];
+        V0 = bu[0x80074F02 + A1 * 84]; // animation id
+        V0 = hu[A0 + V1 + V0 * 10]; // frames number
+        A0 = V0 - 1;
+
+        if (A0 < A2)
+        {
+            [entities_data + current_model * 84 + 64] = h(A0);
+        }
+        else
+        {
+            [entities_data + current_model * 84 + 64] = h(A2);
+        }
+
+        V1 = bu[0x8009A058];
+        if (V1 != B0)
+        {
+            [0x800756E8 + current_model] = b(2);
+            return 1;
+        }
+        else
+        {
+            [0x800756E8 + current_model] = b(5);
+        }
+    }
+
+    // move pointer by 5
+    V0 = hu[script_pointer_offset];
+    V0 = V0 + 5;
+    [script_pointer_offset] = h(V0);
     return 0;
 }
-
-
-
-////////////////////////////////
-// 0xAF ANIM!1
-// 0xBA ANIM!2
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("anim!", 0x2);
-
-A0 = bu[0x800722c4];
-AT = 0x8007eb98 + A0;
-A1 = bu[AT + 0000];
-V0 = 00ff;
-800C5EC8	beq    a1, v0, Lc5fbc [$800c5fbc]
-V0 = 0003;
-AT = 800756e8;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-800C5EE0	nop
-800C5EE4	beq    v1, v0, Lc5f18 [$800c5f18]
-V0 = V1 < 0004;
-800C5EEC	bne    v0, zero, Lc5f08 [$800c5f08]
-V0 = V1 < 0002;
-V0 = 0004;
-800C5EF8	beq    v1, v0, Lc5fa4 [$800c5fa4]
-V0 = 0003;
-800C5F00	j      Lc5fe4 [$800c5fe4]
-V0 = 0001;
-
-Lc5f08:	; 800C5F08
-800C5F08	beq    v0, zero, Lc5fe0 [$800c5fe0]
-800C5F0C	nop
-800C5F10	bltz   v1, Lc5fe4 [$800c5fe4]
-V0 = 0001;
-
-Lc5f18:	; 800C5F18
-funcc5b38();
-
-V1 = bu[0x8009a058];
-V0 = 00af;
-800C5F2C	bne    v1, v0, Lc5f6c [$800c5f6c]
-800C5F30	nop
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-V0 = 0006;
-AT = 800756e8;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-800C5F64	j      Lc5fb4 [$800c5fb4]
-800C5F68	nop
-
-Lc5f6c:	; 800C5F6C
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-V0 = 0002;
-AT = 800756e8;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-800C5F9C	j      Lc5fe4 [$800c5fe4]
-V0 = 0001;
-
-Lc5fa4:	; 800C5FA4
-AT = 800756e8;
-AT = AT + A1;
-[AT + 0000] = b(V0);
-
-Lc5fb4:	; 800C5FB4
-A0 = bu[0x800722c4];
-
-Lc5fbc:	; 800C5FBC
-V0 = 800831fc;
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = 0;
-V1 = V1 + 0003;
-800C5FD8	j      Lc5fe4 [$800c5fe4]
-[A0 + 0000] = h(V1);
-
-Lc5fe0:	; 800C5FE0
-V0 = 0001;
-
-Lc5fe4:	; 800C5FE4
-
-
-
-
-actor_id_cur = bu[0x800722c4];
-current_model = bu[0x8007eb98 + actor_id_cur];
-
-if (current_model != ff)
-{
-    anim_state = bu[0x800756e8 + current_model];
-    if (anim_state != 3)
-    {
-        if (anim_state == 4)
-        {
-            [0x800756e8 + current_model] = b(3);
-            [script_pointer_offset] = h(hu[script_pointer_offset] + 3);
-            return 0;
-        }
-
-        if (anim_state > 4 || anim_state == 2)
-        {
-            return 1;
-        }
-    }
-
-    funcc5b38();
-
-    // if this is AF opcode
-    if (bu[0x8009a058] == af)
-    {
-        [0x800756e8 + current_model] = b(6);
-    }
-    else
-    {
-        [0x800756e8 + current_model] = b(2);
-        return 1;
-    }
-}
-
-[script_pointer_offset] = h(hu[script_pointer_offset] + 3);
-////////////////////////////////
-
-
-
-////////////////////////////////
-// 0xB0 CANIM1
-// 0xBB CANIM2
-
-if (bu[0x8009d820] & 0x3) field_debug_event_opcode("canim", 0x4);
-
-A0 = bu[0x800722c4];
-AT = 0x8007eb98 + A0;
-A1 = bu[AT + 0000];
-V0 = 00ff;
-800C603C	beq    a1, v0, Lc6320 [$800c6320]
-V0 = 0003;
-AT = 800756e8;
-AT = AT + A1;
-V1 = bu[AT + 0000];
-800C6054	nop
-800C6058	beq    v1, v0, Lc6094 [$800c6094]
-V0 = V1 < 0004;
-800C6060	bne    v0, zero, Lc607c [$800c607c]
-V0 = V1 < 0002;
-V0 = 0004;
-800C606C	beq    v1, v0, Lc637c [$800c637c]
-V0 = 0001;
-800C6074	j      Lc63bc [$800c63bc]
-800C6078	nop
-
-Lc607c:	; 800C607C
-800C607C	beq    v0, zero, Lc63b8 [$800c63b8]
-800C6080	nop
-800C6084	bltz   v1, Lc63bc [$800c63bc]
-V0 = 0001;
-A0 = bu[0x800722c4];
-
-Lc6094:	; 800C6094
-V1 = w[0x8009c6dc];
-V0 = A0 << 01;
-AT = 800831fc;
-AT = AT + V0;
-V0 = hu[AT + 0000];
-AT = 0x8007eb98 + A0;
-A0 = bu[AT + 0000];
-V1 = V1 + V0;
-V0 = A0 << 05;
-V0 = V0 + A0;
-V0 = V0 << 02;
-A1 = bu[V1 + 0004];
-A0 = w[0x8009c544];
-V1 = bu[V1 + 0001];
-V0 = V0 + A0;
-[V0 + 005e] = b(V1);
-T0 = bu[0x800722c4];
-AT = 0x8007eb98 + T0;
-V1 = bu[AT + 0000];
-800C6104	nop
-V0 = V1 << 01;
-800C610C	lui    at, $800a
-800C6110	addiu  at, at, $d828 (=-$27d8)
-AT = AT + V0;
-A0 = h[AT + 0000];
-800C611C	nop
-800C6120	div    a0, a1
-800C6148	mflo   a0
-T1 = w[0x8009c544];
-A2 = w[0x8009c6dc];
-A3 = T0 << 01;
-V0 = V1 << 05;
-V0 = V0 + V1;
-V0 = V0 << 02;
-V0 = V0 + T1;
-[V0 + 0060] = h(A0);
-V0 = 800831fc;
-A3 = A3 + V0;
-V0 = hu[A3 + 0000];
-800C6184	nop
-V0 = A2 + V0;
-V1 = bu[V0 + 0002];
-800C6190	nop
-800C6194	div    v1, a1
-800C61BC	mflo   v1
-AT = 0x8007eb98 + T0;
-A0 = bu[AT + 0000];
-800C61D0	nop
-V0 = A0 << 05;
-V0 = V0 + A0;
-V0 = V0 << 02;
-V0 = V0 + T1;
-V1 = V1 << 04;
-[V0 + 0062] = h(V1);
-V0 = hu[A3 + 0000];
-800C61F0	nop
-A2 = A2 + V0;
-A2 = bu[A2 + 0003];
-800C61FC	nop
-800C6200	div    a2, a1
-800C6228	mflo   a2
-AT = 0x8007eb98 + T0;
-A1 = bu[AT + 0000];
-V1 = w[0x8008357c];
-V0 = A1 << 03;
-V0 = V0 + V1;
-V0 = bu[V0 + 0004];
-A0 = g_field_models;
-V1 = V0 << 03;
-V1 = V1 + V0;
-V0 = w[A0 + 0004];
-V1 = V1 << 02;
-V1 = V1 + V0;
-V0 = A1 << 05;
-V0 = V0 + A1;
-A1 = V0 << 02;
-A0 = hu[V1 + 001a];
-V1 = w[V1 + 001c];
-AT = 80074f02;
-AT = AT + A1;
-V0 = bu[AT + 0000];
-A0 = A0 + V1;
-V0 = V0 << 04;
-V0 = V0 + A0;
-V0 = hu[V0 + 0000];
-V1 = ffff;
-V0 = V0 + V1;
-A0 = V0;
-V0 = V0 << 10;
-V0 = V0 >> 10;
-V0 = V0 < A2;
-800C62B8	beq    v0, zero, Lc62cc [$800c62cc]
-V1 = A2;
-V0 = A1 + T1;
-800C62C4	j      Lc62d4 [$800c62d4]
-[V0 + 0064] = h(A0);
-
-Lc62cc:	; 800C62CC
-V0 = A1 + T1;
-[V0 + 0064] = h(V1);
-
-Lc62d4:	; 800C62D4
-V1 = bu[0x8009a058];
-V0 = 00b0;
-800C62E0	bne    v1, v0, Lc6344 [$800c6344]
-800C62E4	nop
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-V0 = 0005;
-AT = 800756e8;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-A0 = bu[0x800722c4];
-
-Lc6320:	; 800C6320
-V0 = 800831fc;
-A0 = A0 << 01;
-A0 = A0 + V0;
-V1 = hu[A0 + 0000];
-V0 = 0;
-V1 = V1 + 0005;
-800C633C	j      Lc63bc [$800c63bc]
-[A0 + 0000] = h(V1);
-
-Lc6344:	; 800C6344
-V0 = bu[0x800722c4];
-AT = 0x8007eb98 + V0;
-V1 = bu[AT + 0000];
-V0 = 0002;
-AT = 800756e8;
-AT = AT + V1;
-[AT + 0000] = b(V0);
-800C6374	j      Lc63bc [$800c63bc]
-V0 = 0001;
-
-Lc637c:	; 800C637C
-AT = 800756e8;
-AT = AT + A1;
-[AT + 0000] = b(0);
-V1 = bu[0x800722c4];
-V0 = 800831fc;
-V1 = V1 << 01;
-V1 = V1 + V0;
-A0 = hu[V1 + 0000];
-V0 = 0;
-A0 = A0 + 0005;
-800C63B0	j      Lc63bc [$800c63bc]
-[V1 + 0000] = h(A0);
-
-Lc63b8:	; 800C63B8
-V0 = 0001;
-
-Lc63bc:	; 800C63BC
-
-
-
-
-actor_id_cur        = bu[0x800722C4];
-current_model         = bu[0x8007EB98 + actor_id_cur]; // A1
-entities_data     = w[0x8009C544];
-script_pointer_offset = 800831FC + actor_id_cur * 2;
-
-if (current_model != FF)
-{
-    // animation state
-    V1 = bu[0x800756E8 + current_model];
-
-    if (V1 != 3)
-    {
-        if (V1 == 4)
-        {
-            [0x800756E8 + current_model] = b(0);
-
-            A0 = hu[script_pointer_offset];
-            A0 = A0 + 5;
-            [script_pointer_offset] = h(A0);
-            return 0;
-        }
-
-        if (V1 == 2 || V1 > 4)
-        {
-            return 1;
-        }
-    }
-
-    V1 = w[0x8009c6dc];
-    V0 = hu[script_pointer_offset];
-    A1 = bu[V1 + V0 + 4];
-
-    [entities_data + current_model * 84 + 5E] = b(bu[V1 + V0 + 1]);
-
-    A2 = w[0x8009c6dc];
-    [entities_data + current_model * 84 + 60] = h(h[0x8009d828 + current_model * 2] / A1);
-
-    V0 = hu[script_pointer_offset];
-    V1 = bu[A2 + V0 + 2];
-    V1 = V1 * 10 / A1;
-    [entities_data + current_model * 84 + 62] = h(V1);
-
-    V0 = h[script_pointer_offset];
-    A2 = bu[A2 + V0 + 3];
-    A2 = A2 / A1;
-
-    V1 = w[0x8008357c];
-    V0 = bu[V1 + current_model * 8 + 4];
-    V0 = w[g_field_models + 0x4];
-    A0 = hu[V0 + V1 * 24 + 1A];
-    V1 = w[V0 + V1 * 24 + 1C];
-    V0 = bu[0x80074F02 + A1 * 84]; // animation id
-    V0 = hu[A0 + V1 + V0 * 10]; // frames number
-    A0 = V0 - 1;
-
-    if (A0 < A2)
-    {
-        [entities_data + current_model * 84 + 64] = h(A0);
-    }
-    else
-    {
-        [entities_data + current_model * 84 + 64] = h(A2);
-    }
-
-    V1 = bu[0x8009A058];
-    if (V1 != B0)
-    {
-        [0x800756E8 + current_model] = b(2);
-        return 1;
-    }
-    else
-    {
-        [0x800756E8 + current_model] = b(5);
-    }
-}
-
-// move pointer by 5
-V0 = hu[script_pointer_offset];
-V0 = V0 + 5;
-[script_pointer_offset] = h(V0);
-return 0;
-////////////////////////////////
 
 
 
