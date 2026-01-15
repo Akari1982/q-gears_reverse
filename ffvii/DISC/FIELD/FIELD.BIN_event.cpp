@@ -67,7 +67,7 @@ void field_event_update(u32 ot)
         {
             system_psyq_system_error(0x4b, 0xb); // "K" (old Event version!)
         }
-        if (bu[events_data + 0] < 2)
+        if (bu[events_data + 0] < 0x2)
         {
             system_psyq_system_error(0x4b, 0xa); // "K" (old Event data!)
         }
