@@ -113,155 +113,155 @@
 
 80077c82 [][]     set in 0xec opcode.
 
-80077de0 []       store here 1 if we change party member.
+0x80077de0 []       store here 1 if we change party member.
 
-80077e60 Script state. 8007aecc points here. We store values here from script. 0x17c8 size.
-+0011 []       store 0xff here from script at start of map 0x20 and 0x00.
-+0013 []       fome flags. remove bit 0x80 here from script at start of map 0x20 and 0x00.
-
-+0050 start of memory allocated area. Here we store data for runned script.
-      divided in 3 blocks (seted in A2, seted in script data, seted in A3)
-      looks like A2 - system script data. This is used in field scripting itself (0x14).
-    + 00 [][][][] offset to script opcodes.
-    + 04 []       priority of current script. Store 7 here if we call 0x04 opcode. Less is greater priority.
-    + 05 []       type of entity.
-                    0x01 - additional script entity. We use memory of entity with [+7] equal to [+7]-0x40 of this entity.
-                    0x02 - script entity (memory default size 0x14).
-                    0x03 - inactive movable entity?
-                    0x04 - model entity. We can collide place and do other things with this entity (memory default size 0xac). 
-    + 06 []       entity data id. Use this to index in script file.
-    + 07 []       entity id. Can be not unique and share memory with some other entity. Something in 0x9c and 0xe2 opcode. If we search entity - we search by this.
-    + 08 []       amount of allocated memory requested in A2 (in 4 bytes ints). First block.
-    + 09 []       amount of allocated memory requested in A2 + allocated memory seted in script data (in 4 bytes ints). Second block. After this memory is memory for yielded scripts data.
-    + 0a []       number of yielded scripts. Increased by 2 every time we yield new script. (used to calculate position of stored data)
-                    +00 [][][][] pointer to yelded script - w[scripting_system + 16f0].
-                    +04 []       stored [+7] from 8007b70c entity.
-                    +05 []       stored [+4] priority from 0x8007b70c entity if some flag in function set (0xff otherwise).
-                    +06 []       stored [+4] priority of yelded script.
-                    +07 []       stored [+d] wait of yelded script.
-    + 0c []       looks like yielded scripts memory. Always 0x10 (allocated 0x10*4 bytes).
-    + 0d []       wait steps. 0x00 - run script. 0xff - full pause. 0xfe - wait until some value in 8007b9c0 not reach 0 (related with +10). Other values will be discreased by 1 each time script tries to run.
-    + 0e []       init with 0. Maybe script state. 0 - init, 1 - stop, 2 - run. If state 0 and we run script - it seted to 2 and not parse script this frame. We run script cycle if this != 3. Set to 3 during some strange circumstances in script system init.
-    + 0f []       Some flags. ? in 0x9c and 0xe2 opcode.
-                    0x01 - active? renderable? visible?
-                    0x02 - 
-                    0x04 - 
-                    0x08 - if set then entity not talkable.
-                    0x80 - perform rotate. In 0x50 opcode we wait until this flag is not set.
-    + 10 []       window id. Init with 0xff.
-    + 12 []       we copy this to +e. Or copy +e here.
-0x3 type entity.
-    + 14 [][][][] number of something.
-    + 18 array of something (0x8 items).
-        + 00 [][]     ?
-        + 02 [][]     ?
-0x4 type entity.
-    + 14 [][][][] current x.
-    + 18 [][][][] current y.
-    + 1c [][][][] current z.
-    + 20 [][]     x rotation.
-    + 22 [][]     y rotation.
-    + 24 [][]     z rotation.
-    + 2d []       this is in case of long models. 0x10 - collision radius on direction will be twice as much.
-    + 2f []       
-    + 30 [][]     set to 0 when set up XYZ position in scripts.
-    + 34 [][]     ? in 0x9c and 0xa8 and 0xe2 opcode.
-    + 36 [][]     store +76 here in 0x9c and 0xe2 opcode. Current animation id.
-    + 38 []       ? in 0xe2 opcode. Store number of frames in current animation here. When start some animations.
-    + 39 []       some animation frame id.
-    + 3a []       current animation frame id. Store +60 here in 0x9c and 0xe2 opcode.
-    + 3b []       ? in 0xa8 and 0xe2 opcode. Index of model data struct.
-    + 3c []       solid radius.
-    + 3d []       talk radius.
-    + 3e []       store some window id here.
-    + 40 [][][][] destination x?
-    + 44 [][][][] destination y?
-    + 48 [][][][] destination z?
-    + 4c [][]     set in 0x7a opcode. Animation id for left? turn.
-    + 4e [][]     set in 0x7b opcode. Animation id for right? turn.
-    + 50 [][]     add 0x0008 bit in 0xe2 opcode. Remove 0x0030 bits when set up XYZ to entity in script. Add 0x0003 bits in 0x8b opcode. Set 0x0007 bits in 0x47 opcode.
-                    0x0003 - looks like solid and talk flags.
-                    0x0020 - if set we will not rotate during scripted movement.
-    + 52 [][]     end y rotation.
-    + 54 [][]     set in 0x33 opcode. Some animation id. Stand?
-    + 56 [][]     set in 0x34 opcode. Some animation id. Walk?
-    + 58 [][]     set in 0x35 opcode. Some animation id. Run?
-    + 5a [][]     Some animation id?
-    + 5c []       maybe move speed. Addition to collision WITH this entity. Not used when caclulated how this model collides with something (in case of talk (4) and 2). Set in 0x26 opcode.
-    + 5d []       store +69 here in 0x9c and 0xe2 opcode. Store something calculated in 0xe2 opcode (maybe).
-    + 5e []       
-    + 5f []       set in 0x55 opcode.
-    + 60 []       store 0 here in 0x9c opcode. Store +90 here in 0xe2 opcode. Store 0 here at start of rotation animation?
-    + 61 []       store +90 -1 here in 0x9c opcode. Store +91 here in 0xe2 opcode.
-    + 62 []       store 8 here in 0x9c opcode.
-                    0x80 - perform animation. In 0x41 opcode we wait until this flag is not set.
-    + 63 []       set to 0xff in 0x25 opcode.
-    + 64 []       store 0 here in 0x9c and 0xe2 opcode.
-    + 68 []       store 0 here in 0xe2 opcode. Current JUMP step.
-    + 69 []       ? in 0x9c and 0xe2 opcode.
-    + 6a []       set in 0x8b opcode.
-    + 6b []       set in 0x8b opcode.
-    + 6c [][]     rotation per step?
-    + 6e [][]     
-    + 71 []       
-    + 72 []       
-    + 73 []       
-    + 74 [][]     set in 0x52 opcode.
-    + 76 [][]     ? in 0x9c and 0xe2 opcode. set in 0x94 opcode. Some animation id.
-    + 78 [][][][] store 0x7fffffff here when set XYZ in script opcode.
-    + 7c []       set in 0x86 opcode.
-    + 7d []       set in 0x86 opcode.
-    + 7e []       set in 0x86 opcode.
-    + 7f []       set in 0x86 opcode.
-    + 80 [][]     store current rotation here.
-    + 82 [][]     amount of rotation per step?
-    + 8a [][]     store here hu[8007ae5c] in text init functions.
-    + 8c [][]     store here hu[8007ae60] in text init functions.
-    + 8e [][]     store here hu[8007ae64] in text init functions.
-    + 90 []       ? in 0x9c and 0xe2 opcode. Set in 0x94 opcode.
-    + 91 []       ? in 0xe2 opcode. Set in 0x94 opcode.
-    + 92 []       store 1 byte  ([e2][ ][ ][ ][ ][ ][ ][ ][x]) from opcode 0xe2 here. Total JUMP step.
-    + 93 []       store 1 byte of +7 data of entity we talking to.
-    + 94 [][]     store 2 bytes ([e2][ ][x][x][ ][ ][ ][ ][ ]) from opcode 0xe2 here. Destination JUMP X.
-    + 96 [][]     store 2 bytes ([e2][ ][ ][ ][ ][ ][x][x][ ]) from opcode 0xe2 here. Destination JUMP Z.
-    + 98 [][][][] pointer to entity we collide with.
-    + 9c [][][][] squared collision infiltration with entity +98.
-    + a4 [][]     store +14 here in 0xe2 opcode. Start X here.
-    + a6 [][]     store +18 here in 0xe2 opcode. Start Y here.
-    + a8 [][]     store +1c here in 0xe2 opcode. Start Z here.
-    + aa [][]     store 2 bytes ([e2][ ][ ][ ][x][x][ ][ ][ ]) from opcode 0xe2 here. JUMP height?
-
-+1450 - start of list of memory allocated area (size 0xc).
-    + 00 [][][][] pointer to start of memory allocated block.
-    + 04 [][][][] pointer to end of memory allocated block.
-    + 08 [][][][] address of next element in list. 0 if last element (not linked to anything).
-+15c4 - last element (end of list of memory allocated area).
-+15d0 [][][][] pointer to first element in script allocated memory list.
-+15d4 [][][][] pointer to last element in script allocated memory list.
-
-+15d8 - start of script list (size 0x8).
-    + 00 [][][][] address of next element in list. 0 if last element (not linked to anything).
-    + 04 [][][][] pointer to allocated memory.
-+16d0 - last element.
-+16d8 [][][][] pointer to first element in script list.
-+16dc [][][][] pointer to current element in script list.
-+16e0 [][][][] pointer to last element in script list.
-
-+16e4 []       party 1 entity id.
-+16e5 []       party 2 entity id.
-+16e6 []       party 3 entity id.
-+16e7 []       party 4 entity id.
-+16e8 [][]     init with 0. Store 1 byte * 0x10 ([67][ ][x][ ]) from opcode 0x67 here. Not readed anywhere.
-+16ea [][]     init with 0. Store 1 byte * 0x10 ([67][ ][ ][x]) from opcode 0x67 here. Not readed anywhere.
-+16ec []       init with 0. Store 1 here in 0x2e opcode.
-+16ed []       init with 0. ? in 0x9c, 0x9d, 0xe2 opcode. Some entity id. Set to 0 if we init script with same memory id as here.
-+16ee []       if this is 1 or 3 then we store current script state to 80079630 when start battle module.
-+16ef []       init with 0.
-+16f0 [][][][] maybe pointer to scripts (opcodes) in script file.
-+16f4 [][]     
-+16f8 []       init with 0.
-+1700 [][]     init with 0. Store something here in 0x2e opcode. Set to -1 in 0x90 opcode.
-+17c0 end
+0x80077e60 Script state. 0x8007aecc points here. We store values here from script. 0x17c8 size.
+    +0x11 []       store 0xff here from script at start of map 0x20 and 0x00.
+    +0x13 []       fome flags. remove bit 0x80 here from script at start of map 0x20 and 0x00.
+    
+    +0x50 start of memory allocated area. Here we store data for runned script.
+        divided in 3 blocks (seted in A2, seted in script data, seted in A3)
+        looks like A2 - system script data. This is used in field scripting itself (0x14).
+        + 00 [][][][] offset to script opcodes.
+        + 04 []       priority of current script. Store 7 here if we call 0x04 opcode. Less is greater priority.
+        + 05 []       type of entity.
+                        0x01 - additional script entity. We use memory of entity with [+7] equal to [+7]-0x40 of this entity.
+                        0x02 - script entity (memory default size 0x14).
+                        0x03 - inactive movable entity?
+                        0x04 - model entity. We can collide place and do other things with this entity (memory default size 0xac). 
+        + 06 []       entity data id. Use this to index in script file.
+        + 07 []       entity id. Can be not unique and share memory with some other entity. Something in 0x9c and 0xe2 opcode. If we search entity - we search by this.
+        + 08 []       amount of allocated memory requested in A2 (in 4 bytes ints). First block.
+        + 09 []       amount of allocated memory requested in A2 + allocated memory seted in script data (in 4 bytes ints). Second block. After this memory is memory for yielded scripts data.
+        + 0a []       number of yielded scripts. Increased by 2 every time we yield new script. (used to calculate position of stored data)
+                        +00 [][][][] pointer to yelded script - w[scripting_system + 16f0].
+                        +04 []       stored [+7] from 8007b70c entity.
+                        +05 []       stored [+4] priority from 0x8007b70c entity if some flag in function set (0xff otherwise).
+                        +06 []       stored [+4] priority of yelded script.
+                        +07 []       stored [+d] wait of yelded script.
+        + 0c []       looks like yielded scripts memory. Always 0x10 (allocated 0x10*4 bytes).
+        + 0d []       wait steps. 0x00 - run script. 0xff - full pause. 0xfe - wait until some value in 8007b9c0 not reach 0 (related with +10). Other values will be discreased by 1 each time script tries to run.
+        + 0e []       init with 0. Maybe script state. 0 - init, 1 - stop, 2 - run. If state 0 and we run script - it seted to 2 and not parse script this frame. We run script cycle if this != 3. Set to 3 during some strange circumstances in script system init.
+        + 0f []       Some flags. ? in 0x9c and 0xe2 opcode.
+                        0x01 - active? renderable? visible?
+                        0x02 - 
+                        0x04 - 
+                        0x08 - if set then entity not talkable.
+                        0x80 - perform rotate. In 0x50 opcode we wait until this flag is not set.
+        + 10 []       window id. Init with 0xff.
+        + 12 []       we copy this to +e. Or copy +e here.
+    0x3 type entity.
+        + 14 [][][][] number of something.
+        + 18 array of something (0x8 items).
+            + 00 [][]     ?
+            + 02 [][]     ?
+    0x4 type entity.
+        + 14 [][][][] current x.
+        + 18 [][][][] current y.
+        + 1c [][][][] current z.
+        + 20 [][]     x rotation.
+        + 22 [][]     y rotation.
+        + 24 [][]     z rotation.
+        + 2d []       this is in case of long models. 0x10 - collision radius on direction will be twice as much.
+        + 2f []       
+        + 30 [][]     set to 0 when set up XYZ position in scripts.
+        + 34 [][]     ? in 0x9c and 0xa8 and 0xe2 opcode.
+        + 36 [][]     store +76 here in 0x9c and 0xe2 opcode. Current animation id.
+        + 38 []       ? in 0xe2 opcode. Store number of frames in current animation here. When start some animations.
+        + 39 []       some animation frame id.
+        + 3a []       current animation frame id. Store +60 here in 0x9c and 0xe2 opcode.
+        + 3b []       ? in 0xa8 and 0xe2 opcode. Index of model data struct.
+        + 3c []       solid radius.
+        + 3d []       talk radius.
+        + 3e []       store some window id here.
+        + 40 [][][][] destination x?
+        + 44 [][][][] destination y?
+        + 48 [][][][] destination z?
+        + 4c [][]     set in 0x7a opcode. Animation id for left? turn.
+        + 4e [][]     set in 0x7b opcode. Animation id for right? turn.
+        + 50 [][]     add 0x0008 bit in 0xe2 opcode. Remove 0x0030 bits when set up XYZ to entity in script. Add 0x0003 bits in 0x8b opcode. Set 0x0007 bits in 0x47 opcode.
+                        0x0003 - looks like solid and talk flags.
+                        0x0020 - if set we will not rotate during scripted movement.
+        + 52 [][]     end y rotation.
+        + 54 [][]     set in 0x33 opcode. Some animation id. Stand?
+        + 56 [][]     set in 0x34 opcode. Some animation id. Walk?
+        + 58 [][]     set in 0x35 opcode. Some animation id. Run?
+        + 5a [][]     Some animation id?
+        + 5c []       maybe move speed. Addition to collision WITH this entity. Not used when caclulated how this model collides with something (in case of talk (4) and 2). Set in 0x26 opcode.
+        + 5d []       store +69 here in 0x9c and 0xe2 opcode. Store something calculated in 0xe2 opcode (maybe).
+        + 5e []       
+        + 5f []       set in 0x55 opcode.
+        + 60 []       store 0 here in 0x9c opcode. Store +90 here in 0xe2 opcode. Store 0 here at start of rotation animation?
+        + 61 []       store +90 -1 here in 0x9c opcode. Store +91 here in 0xe2 opcode.
+        + 62 []       store 8 here in 0x9c opcode.
+                        0x80 - perform animation. In 0x41 opcode we wait until this flag is not set.
+        + 63 []       set to 0xff in 0x25 opcode.
+        + 64 []       store 0 here in 0x9c and 0xe2 opcode.
+        + 68 []       store 0 here in 0xe2 opcode. Current JUMP step.
+        + 69 []       ? in 0x9c and 0xe2 opcode.
+        + 6a []       set in 0x8b opcode.
+        + 6b []       set in 0x8b opcode.
+        + 6c [][]     rotation per step?
+        + 6e [][]     
+        + 71 []       
+        + 72 []       
+        + 73 []       
+        + 74 [][]     set in 0x52 opcode.
+        + 76 [][]     ? in 0x9c and 0xe2 opcode. set in 0x94 opcode. Some animation id.
+        + 78 [][][][] store 0x7fffffff here when set XYZ in script opcode.
+        + 7c []       set in 0x86 opcode.
+        + 7d []       set in 0x86 opcode.
+        + 7e []       set in 0x86 opcode.
+        + 7f []       set in 0x86 opcode.
+        + 80 [][]     store current rotation here.
+        + 82 [][]     amount of rotation per step?
+        + 8a [][]     store here hu[8007ae5c] in text init functions.
+        + 8c [][]     store here hu[8007ae60] in text init functions.
+        + 8e [][]     store here hu[8007ae64] in text init functions.
+        + 90 []       ? in 0x9c and 0xe2 opcode. Set in 0x94 opcode.
+        + 91 []       ? in 0xe2 opcode. Set in 0x94 opcode.
+        + 92 []       store 1 byte  ([e2][ ][ ][ ][ ][ ][ ][ ][x]) from opcode 0xe2 here. Total JUMP step.
+        + 93 []       store 1 byte of +7 data of entity we talking to.
+        + 94 [][]     store 2 bytes ([e2][ ][x][x][ ][ ][ ][ ][ ]) from opcode 0xe2 here. Destination JUMP X.
+        + 96 [][]     store 2 bytes ([e2][ ][ ][ ][ ][ ][x][x][ ]) from opcode 0xe2 here. Destination JUMP Z.
+        + 98 [][][][] pointer to entity we collide with.
+        + 9c [][][][] squared collision infiltration with entity +98.
+        + a4 [][]     store +14 here in 0xe2 opcode. Start X here.
+        + a6 [][]     store +18 here in 0xe2 opcode. Start Y here.
+        + a8 [][]     store +1c here in 0xe2 opcode. Start Z here.
+        + aa [][]     store 2 bytes ([e2][ ][ ][ ][x][x][ ][ ][ ]) from opcode 0xe2 here. JUMP height?
+    
+    +1450 - start of list of memory allocated area (size 0xc).
+        + 00 [][][][] pointer to start of memory allocated block.
+        + 04 [][][][] pointer to end of memory allocated block.
+        + 08 [][][][] address of next element in list. 0 if last element (not linked to anything).
+    +15c4 - last element (end of list of memory allocated area).
+    +15d0 [][][][] pointer to first element in script allocated memory list.
+    +15d4 [][][][] pointer to last element in script allocated memory list.
+    
+    +15d8 - start of script list (size 0x8).
+        + 00 [][][][] address of next element in list. 0 if last element (not linked to anything).
+        + 04 [][][][] pointer to allocated memory.
+    +16d0 - last element.
+    +16d8 [][][][] pointer to first element in script list.
+    +16dc [][][][] pointer to current element in script list.
+    +16e0 [][][][] pointer to last element in script list.
+    
+    +16e4 []       party 1 entity id.
+    +16e5 []       party 2 entity id.
+    +16e6 []       party 3 entity id.
+    +16e7 []       party 4 entity id.
+    +16e8 [][]     init with 0. Store 1 byte * 0x10 ([67][ ][x][ ]) from opcode 0x67 here. Not readed anywhere.
+    +16ea [][]     init with 0. Store 1 byte * 0x10 ([67][ ][ ][x]) from opcode 0x67 here. Not readed anywhere.
+    +16ec []       init with 0. Store 1 here in 0x2e opcode.
+    +16ed []       init with 0. ? in 0x9c, 0x9d, 0xe2 opcode. Some entity id. Set to 0 if we init script with same memory id as here.
+    +16ee []       if this is 1 or 3 then we store current script state to 80079630 when start battle module.
+    +16ef []       init with 0.
+    +16f0 [][][][] maybe pointer to scripts (opcodes) in script file.
+    +16f4 [][]     
+    +16f8 []       init with 0.
+    +1700 [][]     init with 0. Store something here in 0x2e opcode. Set to -1 in 0x90 opcode.
+    +17c0 end
 
 
 80079630 copy of 80077e60 script state. We store it here during initialization of new script state.

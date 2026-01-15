@@ -6687,9 +6687,9 @@ V0 = V0 & 0001;
 8003A9FC	beq    v0, zero, L3aa1c [$8003aa1c]
 8003AA00	lui    v0, $8008
 8003AA04	jal    func52da0 [$80052da0]
-8003AA08	nop
-8003AA0C	jal    system_read_from_stack_command_not_from_script [$80052d40]
-8003AA10	nop
+
+system_read_from_stack_command_not_from_script();
+
 8003AA14	j      L3aa38 [$8003aa38]
 8003AA18	lui    a1, $8008
 

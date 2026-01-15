@@ -1012,6 +1012,7 @@
 800515EC func515ec
 80051600 func51600
 80051610 func51610
+// script
 80051638 func51638
 80051668 func51668
 800516A0 func516a0
@@ -1020,7 +1021,7 @@
 80051878 func51878
 80051920 func51920
 80051B58 func51b58
-80051D4C system_read_from_stack_command_from_script
+80051D4C system_event_read_command_from_stack
 80051E8C func51e8c
 80051F18 func51f18
 80051F54 system_script_parse_stack

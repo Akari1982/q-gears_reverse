@@ -293,12 +293,12 @@ void field_event_run_init()
 
         if (bu[0x80071e24] & 0x3)
         {
-            field_debug_copy_string(string, "Actor:");
-            field_debug_concat_string(string, events_data + 20 + i * 8);
+            field_debug_string_copy(string, "Actor:");
+            field_debug_string_concat(string, events_data + 20 + i * 8);
 
             if (bu[0x80071e24] & 0x1)
             {
-                field_debug_copy_string_into_page(0x4, 0, string);
+                field_debug_string_copy_into_page(0x4, 0, string);
             }
 
             if (bu[0x80071e24] & 0x2)
@@ -536,7 +536,7 @@ void field_event_opcode_cycle()
                         {
                             for (int i = 0x1; i < 0x9; ++i)
                             {
-                                field_debug_copy_string_into_page(0x3, i, "");
+                                field_debug_string_copy_into_page(0x3, i, "");
                             }
                         }
                     }
@@ -759,14 +759,14 @@ int field_event_request_run(s16 actor_id, u8 req_priority, u8 event_id)
         string = 0x800e4288;
         switch(event_id)
         {
-            case 1: field_debug_copy_string(string, "Talk="); break;
-            case 2: field_debug_copy_string(string, "Push="); break;
-            case 3: field_debug_copy_string(string, "Acrs="); break;
-            case 4: field_debug_copy_string(string, "Toch="); break;
-            case 5: field_debug_copy_string(string, "TochON ="); break;
-            case 6: field_debug_copy_string(string, "TochOFF="); break;
+            case 1: field_debug_string_copy(string, "Talk="); break;
+            case 2: field_debug_string_copy(string, "Push="); break;
+            case 3: field_debug_string_copy(string, "Acrs="); break;
+            case 4: field_debug_string_copy(string, "Toch="); break;
+            case 5: field_debug_string_copy(string, "TochON ="); break;
+            case 6: field_debug_string_copy(string, "TochOFF="); break;
         }
-        field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8);
+        field_debug_string_concat(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8);
         field_debug_add_parse_value_to_page2(string, 0, 0);
     }
 
@@ -948,13 +948,13 @@ else
 
 
 
-void field_event_update_actor_debug(u8 page_id, u8 actor_id)
+void field_event_update_actor_debug(u8 page, u8 actor_id)
 {
     string = 0x800e4254;
     temp = 0x800e4288;
 
     {
-        if (page_id == 0x4)
+        if (page == 0x4)
         {
             if (bu[0x80071e24] & 0x4)
             {
@@ -973,53 +973,53 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
                 field_debug_set_page_color(0x4, 0x7, 0xf, 0x1f);
             }
 
-            field_debug_copy_string(string, "Actor:");
+            field_debug_string_copy(string, "Actor:");
         }
         else
         {
-            field_debug_copy_string(string, "ctrl:");
+            field_debug_string_copy(string, "ctrl:");
         }
 
-        field_debug_concat_string(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8); // name of entity
+        field_debug_string_concat(string, w[0x8009c6dc] + 0x20 + actor_id * 0x8); // name of entity
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0, string);
+            field_debug_string_copy_into_page(page, 0, string);
         }
     }
 
     {
-        field_debug_copy_string(string, "RqLv="); // request level
+        field_debug_string_copy(string, "RqLv="); // request level
 
         priority = bu[0x8009a1c4 + actor_id]; // currently used priority slot
 
-        field_int_to_string(priority, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " Tg=");
+        field_debug_string_u8hex(priority, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " Tg=");
 
         script_id = bu[0x801142d4 + actor_id * 0x8 + priority]; // priority queue script id
 
         if (script_id == 0x0)
         {
-            field_debug_concat_string(string, "dft");
+            field_debug_string_concat(string, "dft");
         }
         else if (script_id == 0x1)
         {
-            field_debug_concat_string(string, "tlk");
+            field_debug_string_concat(string, "tlk");
         }
         else if (script_id == 0x2)
         {
-            field_debug_concat_string(string, "psh");
+            field_debug_string_concat(string, "psh");
         }
         else
         {
-            field_int2_to_string(script_id, temp);
-            field_debug_concat_string(string, temp);
+            field_debug_string_u16hex(script_id, temp);
+            field_debug_string_concat(string, temp);
         }
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x1, string);
+            field_debug_string_copy_into_page(page, 0x1, string);
         }
     }
 
@@ -1029,230 +1029,187 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
 
     if (entity_id != 0xff)
     {
-        field_debug_copy_string(string, "man=");
-        field_int2_to_string(entity_id, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " dir=");
-        field_int2_to_string(entities_data[entity_id].dir, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "man=");
+        field_debug_string_u16hex(entity_id, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " dir=");
+        field_debug_string_u16hex(entities_data[entity_id].dir, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x2, string);
-            field_debug_set_row_color(page_id, 0x2, 0x2);
+            field_debug_string_copy_into_page(page, 0x2, string);
+            field_debug_set_row_color(page, 0x2, 0x2);
         }
     }
     else if (line_id != 0xff)
     {
-        field_debug_copy_string(string, "line=");
-        field_int2_to_string(line_id, temp);
-        field_debug_concat_string(string, temp);
-
-        if (g_field_lines[line_id].on != 0)
-        {
-            field_debug_concat_string(string, " on");
-        }
-        else
-        {
-            field_debug_concat_string(string, " off");
-        }
+        field_debug_string_copy(string, "line=");
+        field_debug_string_u16hex(line_id, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, (g_field_lines[line_id].on != 0) ? " on" : " off");
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x2, string);
-            field_debug_set_row_color(page_id, 0x2, 0x3);
+            field_debug_string_copy_into_page(page, 0x2, string);
+            field_debug_set_row_color(page, 0x2, 0x3);
         }
     }
     else
     {
-        field_debug_copy_string(string, "Abst");
+        field_debug_string_copy(string, "Abst");
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x2, string);
-            field_debug_set_row_color(page_id, 0x2, 0x6);
+            field_debug_string_copy_into_page(page, 0x2, string);
+            field_debug_set_row_color(page, 0x2, 0x6);
         }
     }
 
     if (entity_id != 0xff)
     {
-        field_debug_copy_string(string, "X=");
-        field_int4_to_string(entities_data[entity_id].pos_x >> 0xc, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " Y=");
-        field_int4_to_string(entities_data[entity_id].pos_y >> 0xc, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "X=");
+        field_debug_string_u32hex(entities_data[entity_id].pos_x >> 0xc, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " Y=");
+        field_debug_string_u32hex(entities_data[entity_id].pos_y >> 0xc, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x3, string);
-            field_debug_set_row_color(page_id, 0x3, 0x1);
+            field_debug_string_copy_into_page(page, 0x3, string);
+            field_debug_set_row_color(page, 0x3, 0x1);
         }
 
-        field_debug_copy_string(string, "Z=");
-        field_int4_to_string(entities_data[entity_id].pos_z >> 0xc, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " I=");
-        field_int4_to_string(entities_data[entity_id].pos_i, temp); // triangle id
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "Z=");
+        field_debug_string_u32hex(entities_data[entity_id].pos_z >> 0xc, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " I=");
+        field_debug_string_u32hex(entities_data[entity_id].pos_i, temp); // triangle id
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x4, string);
+            field_debug_string_copy_into_page(page, 0x4, string);
         }
 
-        field_int_to_string(bu[0x800756e8 + entity_id], string);
-        field_debug_concat_string(string, "am");
-        field_int2_to_string(bu[entities_data + entity_id * 0x84 + 0x5e], temp); // animation id
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, ".");
-        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x62], temp); // current frame
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, ".");
-        field_int2_to_string(h[entities_data + entity_id * 0x84 + 0x64], temp); // frames number
-        field_debug_concat_string(string, temp);
-
-        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
-        {
-            field_debug_copy_string_into_page(page_id, 0x5, string);
-            field_debug_set_row_color(page_id, 0x5, 0x7);
-        }
-
-        if (bu[entities_data + entity_id * 0x84 + 5c] != 0) // visibility
-        {
-            A0 = string;
-            A1 = 800a023c; // "V"
-            field_debug_copy_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // ".";
-            field_debug_copy_string();
-        }
-
-        if (bu[entities_data + entity_id * 0x84 + 5b] != 0) // talkability
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0240; // "T"
-            field_debug_concat_string();
-        }
-
-        if (bu[entities_data + entity_id * 0x84 + 59] != 0) // solidity
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0244; // "S"
-            field_debug_concat_string();
-        }
-
-        field_debug_concat_string(string, ":TR");
-        field_int2_to_string(entities_data[entity_id].talk_range, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, ".SR");
-        field_int2_to_string(entities_data[entity_id].solid_range, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_u8hex(bu[0x800756e8 + entity_id], string);
+        field_debug_string_concat(string, "am");
+        field_debug_string_u16hex(bu[entities_data + entity_id * 0x84 + 0x5e], temp); // animation id
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, ".");
+        field_debug_string_u32hex(h[entities_data + entity_id * 0x84 + 0x62], temp); // current frame
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, ".");
+        field_debug_string_u16hex(h[entities_data + entity_id * 0x84 + 0x64], temp); // frames number
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x6, string);
+            field_debug_string_copy_into_page(page, 0x5, string);
+            field_debug_set_row_color(page, 0x5, 0x7);
         }
 
-        field_debug_copy_string(string, "MS");
-        field_int4_to_string(entities_data[entity_id].move_speed, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " AS");
-        field_int4_to_string(entities_data[entity_id].anim_speed, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, (bu[entities_data + entity_id * 0x84 + 0x5c] != 0) ? "V" : "."); // visibility
+        field_debug_string_concat(string, (bu[entities_data + entity_id * 0x84 + 0x5b] != 0) ? "." : "T"); // talkability
+        field_debug_string_concat(string, (bu[entities_data + entity_id * 0x84 + 0x59] != 0) ? "." : "S"); // solidity
+
+        field_debug_string_concat(string, ":TR");
+        field_debug_string_u16hex(entities_data[entity_id].talk_range, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, ".SR");
+        field_debug_string_u16hex(entities_data[entity_id].solid_range, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x7, string);
-            field_debug_set_row_color(page_id, 0x7, 0x7);
+            field_debug_string_copy_into_page(page, 0x6, string);
+        }
+
+        field_debug_string_copy(string, "MS");
+        field_debug_string_u32hex(entities_data[entity_id].move_speed, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " AS");
+        field_debug_string_u32hex(entities_data[entity_id].anim_speed, temp);
+        field_debug_string_concat(string, temp);
+
+        if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
+        {
+            field_debug_string_copy_into_page(page, 0x7, string);
+            field_debug_set_row_color(page, 0x7, 0x7);
         }
     }
     else if (line_id != 0xff)
     {
-        field_debug_copy_string(string, "AX");
-        field_int4_to_string(g_field_lines[line_id].ax, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " AY");
-        field_int4_to_string(g_field_lines[line_id].ay, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "AX");
+        field_debug_string_u32hex(g_field_lines[line_id].ax, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " AY");
+        field_debug_string_u32hex(g_field_lines[line_id].ay, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x3, string);
+            field_debug_string_copy_into_page(page, 0x3, string);
         }
 
-        field_debug_copy_string(string, "AZ");
-        field_int4_to_string(g_field_lines[line_id].az, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "AZ");
+        field_debug_string_u32hex(g_field_lines[line_id].az, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x4, string);
+            field_debug_string_copy_into_page(page, 0x4, string);
         }
 
-        field_debug_copy_string(string, "BX");
-        field_int4_to_string(g_field_lines[line_id].bx, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " BY");
-        field_int4_to_string(g_field_lines[line_id].by, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "BX");
+        field_debug_string_u32hex(g_field_lines[line_id].bx, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " BY");
+        field_debug_string_u32hex(g_field_lines[line_id].by, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x5, string);
+            field_debug_string_copy_into_page(page, 0x5, string);
         }
 
-        field_debug_copy_string(string, "BZ");
-        field_int4_to_string(g_field_lines[line_id].bz, temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "BZ");
+        field_debug_string_u32hex(g_field_lines[line_id].bz, temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x6, string);
-            field_debug_copy_string_into_page(page_id, 0x7, "");
+            field_debug_string_copy_into_page(page, 0x6, string);
+            field_debug_string_copy_into_page(page, 0x7, "");
         }
     }
     else
     {
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x3, "");
-            field_debug_copy_string_into_page(page_id, 0x4, "");
-            field_debug_copy_string_into_page(page_id, 0x5, "");
-            field_debug_copy_string_into_page(page_id, 0x6, "");
-            field_debug_copy_string_into_page(page_id, 0x7, "");
+            field_debug_string_copy_into_page(page, 0x3, "");
+            field_debug_string_copy_into_page(page, 0x4, "");
+            field_debug_string_copy_into_page(page, 0x5, "");
+            field_debug_string_copy_into_page(page, 0x6, "");
+            field_debug_string_copy_into_page(page, 0x7, "");
         }
     }
 
-    if (page_id == 0x4) return;
+    if (page == 0x4) return;
 
     {
-        field_debug_copy_string(string, "SX");
-        field_int4_to_string(h[0x80071e38], temp); // current screen scroll X
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(" SY", string);
-        field_int4_to_string(h[0x80071e3c], temp); // current screen scroll Y
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "SX");
+        field_debug_string_u32hex(h[0x80071e38], temp); // current screen scroll X
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(" SY", string);
+        field_debug_string_u32hex(h[0x80071e3c], temp); // current screen scroll Y
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x8, string);
-            field_debug_set_row_color(page_id, 0x8, 0x3);
+            field_debug_string_copy_into_page(page, 0x8, string);
+            field_debug_set_row_color(page, 0x8, 0x3);
         }
     }
 
@@ -1260,244 +1217,160 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
     triangle_id = g_field_entities[manual_entity_id].pos_i;
     walkmesh_data = w[0x800e4274];
 
-    field_debug_copy_string(string, "B-R    X=");
-    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x0], temp);
-    field_debug_concat_string(string, temp);
+    field_debug_string_copy(string, "B-R    X=");
+    field_debug_string_u32hex(h[walkmesh_data + triangle_id * 0x18 + 0x0], temp);
+    field_debug_string_concat(string, temp);
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page(page_id, 0x9, string);
-        field_debug_set_row_color(page_id, 0x9, 0x2);
+        field_debug_string_copy_into_page(page, 0x9, string);
+        field_debug_set_row_color(page, 0x9, 0x2);
     }
 
-    field_debug_copy_string(string, "Y=");
-    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x2], temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " Z=");
-    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x4], temp);
-    field_debug_concat_string(string, temp);
+    field_debug_string_copy(string, "Y=");
+    field_debug_string_u32hex(h[walkmesh_data + triangle_id * 0x18 + 0x2], temp);
+    field_debug_string_concat(string, temp);
+    field_debug_string_concat(string, " Z=");
+    field_debug_string_u32hex(h[walkmesh_data + triangle_id * 0x18 + 0x4], temp);
+    field_debug_string_concat(string, temp);
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page(page_id, 0xa, string);
+        field_debug_string_copy_into_page(page, 0xa, string);
     }
 
-    field_debug_copy_string(string, "R-G    X=");
-    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0x8], temp);
-    field_debug_concat_string(string, temp);
+    field_debug_string_copy(string, "R-G    X=");
+    field_debug_string_u32hex(h[walkmesh_data + triangle_id * 0x18 + 0x8], temp);
+    field_debug_string_concat(string, temp);
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page(page_id, 0xb, string);
-        field_debug_set_row_color(page_id, 0xb, 0x4);
+        field_debug_string_copy_into_page(page, 0xb, string);
+        field_debug_set_row_color(page, 0xb, 0x4);
     }
 
-    field_debug_copy_string(string, "Y=");
-    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xa], temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " Z=");
-    field_int4_to_string(h[walkmesh_data + triangle_id * 0x18 + 0xc], temp);
-    field_debug_concat_string(string, temp);
+    field_debug_string_copy(string, "Y=");
+    field_debug_string_u32hex(h[walkmesh_data + triangle_id * 0x18 + 0xa], temp);
+    field_debug_string_concat(string, temp);
+    field_debug_string_concat(string, " Z=");
+    field_debug_string_u32hex(h[walkmesh_data + triangle_id * 0x18 + 0xc], temp);
+    field_debug_string_concat(string, temp);
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page(page_id, 0xc, string);
+        field_debug_string_copy_into_page(page, 0xc, string);
     }
 
-    field_debug_copy_string(string, "G-B    X=");
-    field_int4_to_string(h[h[walkmesh_data + triangle_id * 0x18 + 0x10], temp);
-    field_debug_concat_string(string, temp);
+    field_debug_string_copy(string, "G-B    X=");
+    field_debug_string_u32hex(h[h[walkmesh_data + triangle_id * 0x18 + 0x10], temp);
+    field_debug_string_concat(string, temp);
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page(page_id, 0xd, string);
-        field_debug_set_row_color(page_id, 0xd, 0x3);
+        field_debug_string_copy_into_page(page, 0xd, string);
+        field_debug_set_row_color(page, 0xd, 0x3);
     }
 
-    field_debug_copy_string(string, "Y=");
-    field_int4_to_string(h[h[walkmesh_data + triangle_id * 0x18 + 0x12], temp);
-    field_debug_concat_string(string, temp);
-    field_debug_concat_string(string, " Z=");
-    field_int4_to_string(h[h[walkmesh_data + triangle_id * 0x18 + 0x14], temp);
-    field_debug_concat_string(string, temp);
+    field_debug_string_copy(string, "Y=");
+    field_debug_string_u32hex(h[h[walkmesh_data + triangle_id * 0x18 + 0x12], temp);
+    field_debug_string_concat(string, temp);
+    field_debug_string_concat(string, " Z=");
+    field_debug_string_u32hex(h[h[walkmesh_data + triangle_id * 0x18 + 0x14], temp);
+    field_debug_string_concat(string, temp);
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_copy_string_into_page(page_id, 0xe, string);
+        field_debug_string_copy_into_page(page, 0xe, string);
     }
 
     {
-        A1 = 800a02a8; // "Offset X="
-        A0 = string;
-        field_debug_copy_string();
+        field_debug_string_copy(string, "Offset X=");
 
         entity_id = bu[0x8007eb98 + actor_id];
         entities_data = w[0x8009c544];
 
-        A0 = h[entities_data + entity_id * 0x84 + 0x40];
-        A1 = temp;
-        field_int4_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
+        field_debug_string_u32hex(h[entities_data + entity_id * 0x84 + 0x40], temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0xf, string);
-            field_debug_set_row_color(page_id, 0xf, 0x2);
+            field_debug_string_copy_into_page(page, 0xf, string);
+            field_debug_set_row_color(page, 0xf, 0x2);
         }
     }
 
     {
-        field_debug_copy_string(string, "Y=");
-        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x46], temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " Z=");
-        field_int4_to_string(h[entities_data + entity_id * 0x84 + 0x4c], temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "Y=");
+        field_debug_string_u32hex(h[entities_data + entity_id * 0x84 + 0x46], temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " Z=");
+        field_debug_string_u32hex(h[entities_data + entity_id * 0x84 + 0x4c], temp);
+        field_debug_string_concat(string, temp);
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x10, string);
+            field_debug_string_copy_into_page(page, 0x10, string);
         }
     }
 
     // game progress, control, battle members and battle check
     {
-        field_debug_copy_string(string, "SF");
-        field_int4_to_string(hu[0x8009c6e4 + 0xba4], temp); // game progress
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "SF");
+        field_debug_string_u32hex(hu[0x8009c6e4 + 0xba4], temp); // game progress
+        field_debug_string_concat(string, temp);
 
         field_struct = w[0x8009c6e0];
 
         if (bu[field_struct + 0x32] != 0) // PC cant move
         {
-            if (bu[0x80081dc4] != 0) // UC move state
-            {
-                A0 = string;
-                A1 = 800a0238; // "."
-                field_debug_concat_string();
-            }
-            else
-            {
-                A0 = string;
-                A1 = 800a02b8; // "/"
-                field_debug_concat_string();
-            }
+            field_debug_string_concat(string, (bu[0x80081dc4] != 0) ? "." : "/"); // UC move state
         }
         else // PC can move
         {
-            if (bu[0x80081dc4] != 0) // UC move state
-            {
-                A0 = string;
-                A1 = 800a02bc; // "+"
-                field_debug_concat_string();
-            }
-            else
-            {
-                A0 = string;
-                A1 = 800a02c0; // "*"
-                field_debug_concat_string();
-            }
+            field_debug_string_concat(string, (bu[0x80081dc4] != 0) ? "+" : "*"); // UC move state
         }
 
-        A0 = string;
-        A1 = 800a02c4; // "B"
-        field_debug_concat_string();
+        field_debug_string_concat(string, "B");
 
-        A0 = bu[0x8009c6e4 + 4f8]; // party member in slot1 (used in battle)
-        A1 = temp;
-        field_int_to_string();
+        field_debug_string_u8hex(bu[0x8009c6e4 + 0x4f8], temp); // party member in slot1 (used in battle)
+        field_debug_string_concat(string, temp);
+        field_debug_string_u8hex(bu[0x8009c6e4 + 0x4f9], temp); // party member in slot2 (used in battle)
+        field_debug_string_concat(string, temp);
+        field_debug_string_u8hex(bu[0x8009c6e4 + 0x4fa], temp); // party member in slot3 (used in battle)
+        field_debug_string_concat(string, temp);
 
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = bu[0x8009c6e4 + 4f9]; // party member in slot2 (used in battle)
-        A1 = temp;
-        field_int_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = bu[0x8009c6e4 + 4fa]; // party member in slot3 (used in battle)
-        A1 = temp;
-        field_int_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if (bu[game_state + 3b] != 0) // battle field check on/off (0/1).
-        {
-            A0 = string;
-            A1 = 800a02c8; // ">"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a02c0; // "*"
-            field_debug_concat_string();
-        }
+        field_debug_string_concat(string, (bu[game_state + 3b] != 0) ? ">" : "*"); // battle field check on/off (0/1)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A2 = string;
-            A1 = 11;
-            field_debug_copy_string_into_page();
-
-            A0 = page_id;
-            A1 = 11;
-            A2 = 6;
-            field_debug_set_row_color();
+            field_debug_string_copy_into_page(page, string, 0x11);
+            field_debug_set_row_color(page, 0x11, 0x6);
         }
     }
 
     {
-        field_debug_copy_string(string, "DP ");
-        field_int4_to_string(hu[0x80075e12], temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, " ");
-        field_int4_to_string(hu[0x80075e10], temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "DP ");
+        field_debug_string_u32hex(hu[0x80075e12], temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, " ");
+        field_debug_string_u32hex(hu[0x80075e10], temp);
+        field_debug_string_concat(string, temp);
 
         if (bu[0x800716d4] != 0) // music locked
         {
-            A0 = string;
-            A1 = 800a02d4; // "M"
-            field_debug_concat_string();
+            field_debug_string_concat(string, "M");
         }
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            A0 = page_id;
-            A1 = 12;
-            A2 = string;
-            field_debug_copy_string_into_page();
+            field_debug_string_copy_into_page(page, 0x12, string);
 
-            if (801affff < w[0x80075e10])
+            if (0x801affff < w[0x80075e10])
             {
-                if (bu[0x8009d29b] & 0x10)
-                {
-                    A0 = page_id;
-                    A1 = 12;
-                    A2 = 5;
-                    field_debug_set_row_color();
-                }
-                else
-                {
-                    A0 = page_id;
-                    A1 = 12;
-                    A2 = 3;
-                    field_debug_set_row_color();
-                }
+                field_debug_set_row_color(page, 0x12, (bu[0x8009d29b] & 0x10) ? 0x5 : 0x3);
             }
 
-            if (0x801adfff < w[0x80075e10])      A2 = 0x5;
+            if      (0x801adfff < w[0x80075e10]) A2 = 0x5;
             else if (0x801aafff < w[0x80075e10]) A2 = 0x4;
             else if (0x801a7fff < w[0x80075e10]) A2 = 0x1;
             else if (0x801a3fff < w[0x80075e10]) A2 = 0x3;
@@ -1505,183 +1378,35 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
             else if (0x80197fff < w[0x80075e10]) A2 = 0x0;
             else                                 A2 = 0x7;
 
-            field_debug_set_row_color(page_id, 0x12, A2);
+            field_debug_set_row_color(page, 0x12, A2);
         }
     }
 
     // print party members and character availability mask
     {
-        A0 = bu[0x8009c6e4 + cad]; // party member in slot 1
-        A1 = temp;
-        field_int_to_string();
+        field_debug_string_u8hex(bu[0x8009c6e4 + 0xcad], temp); // party member in slot 1
+        field_debug_string_copy(string, temp);
+        field_debug_string_u8hex(bu[0x8009c6e4 + 0xcae], temp); // party member in slot 2
+        field_debug_string_concat(string, temp);
+        field_debug_string_u8hex(bu[0x8009c6e4 + 0xcaf], temp); // party member in slot 3
+        field_debug_string_concat(string, temp);
 
-        A0 = string;
-        A1 = temp;
-        field_debug_copy_string();
-
-        A0 = bu[0x8009c6e4 + cae]; // party member in slot 2
-        A1 = temp;
-        field_int_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        A0 = bu[0x8009c6e4 + caf]; // party member in slot 3
-        A1 = temp;
-        field_int_to_string();
-
-        A0 = string;
-        A1 = temp;
-        field_debug_concat_string();
-
-        if (hu[0x8009c6e4 + 10a6] & 0x1)
-        {
-            A0 = string;
-            A1 = 800a02d8; // "C"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 2)
-        {
-            A0 = string;
-            A1 = 800a02c4; // "B"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 4)
-        {
-            A0 = string;
-            A1 = 800a0240; // "T"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 8)
-        {
-            A0 = string;
-            A1 = 800a02dc; // "E"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 0x10)
-        {
-            A0 = string;
-            A1 = 800a02e0; // "R"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 20)
-        {
-            A0 = string;
-            A1 = 800a02e4; // "Y"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 40)
-        {
-            A0 = string;
-            A1 = 800a02e8; // "K"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 80)
-        {
-            A0 = string;
-            A1 = 800a023c; // "V"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 0x100)
-        {
-            A0 = string;
-            A1 = 800a02ec; // "D"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 200)
-        {
-            A0 = string;
-            A1 = 800a02f0; // "U"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
-
-        if (hu[0x8009c6e4 + 10a6] & 400)
-        {
-            A0 = string;
-            A1 = 800a02f4; // "F"
-            field_debug_concat_string();
-        }
-        else
-        {
-            A0 = string;
-            A1 = 800a0238; // "."
-            field_debug_concat_string();
-        }
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0001) ? "C" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0002) ? "B" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0004) ? "T" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0008) ? "E" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0010) ? "R" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0020) ? "Y" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0040) ? "K" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0080) ? "V" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0100) ? "D" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0200) ? "U" : ".");
+        field_debug_string_concat(string, (hu[0x8009c6e4 + 0x10a6] & 0x0400) ? "F" : ".");
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_copy_string_into_page(page_id, 0x13, string);
-            field_debug_set_row_color(page_id, 0x13, 0);
+            field_debug_string_copy_into_page(page, 0x13, string);
+            field_debug_set_row_color(page, 0x13, 0);
         }
     }
 }
@@ -1702,24 +1427,24 @@ void field_debug_event_opcode(u8* opcode_name, u8 args_n)
     string = 0x800e4254;
     temp = 0x800e4288;
 
-    field_debug_copy_string(string, "Word:");
-    field_debug_concat_string(string, opcode_name);
+    field_debug_string_copy(string, "Word:");
+    field_debug_string_concat(string, opcode_name);
 
-    if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, 0, string);
+    if (bu[0x8009d820] & 0x1) field_debug_string_copy_into_page(0x3, 0, string);
 
     args_max = args_n + 1;
 
     // create string "argX=XX"
     for (; args_n != 0; --args_n)
     {
-        field_debug_copy_string(string, "arg");
-        field_int_to_string(args_max - args_n, temp);
-        field_debug_concat_string(string, temp);
-        field_debug_concat_string(string, "=");
-        field_int2_to_string(bu[events_data + script_cur + args_max - args_n], temp);
-        field_debug_concat_string(string, temp);
+        field_debug_string_copy(string, "arg");
+        field_debug_string_u8hex(args_max - args_n, temp);
+        field_debug_string_concat(string, temp);
+        field_debug_string_concat(string, "=");
+        field_debug_string_u16hex(bu[events_data + script_cur + args_max - args_n], temp);
+        field_debug_string_concat(string, temp);
 
-        if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, args_max - args_n, string);
+        if (bu[0x8009d820] & 0x1) field_debug_string_copy_into_page(0x3, args_max - args_n, string);
     }
 }
 
@@ -1737,26 +1462,26 @@ void field_debug_add_parse_value_to_page2(param, value, val_size)
     string = 0x800e4254;
     temp = 0x800e4288;
 
-    field_debug_copy_string(string, param);
+    field_debug_string_copy(string, param);
 
     if (val_size == 0x1)
     {
-        field_int_to_string(temp, value);
+        field_debug_string_u8hex(temp, value);
     }
     else if (val_size == 0x2)
     {
-        field_int2_to_string(temp, value);
+        field_debug_string_u16hex(temp, value);
     }
     else if (val_size == 0x4)
     {
-        field_int4_to_string(temp, value);
+        field_debug_string_u32hex(temp, value);
     }
     else
     {
-        field_debug_copy_string(temp, "");
+        field_debug_string_copy(temp, "");
     }
 
-    field_debug_concat_string(string, temp);
+    field_debug_string_concat(string, temp);
 
     if (bu[0x8009d820] & 0x1) field_debug_add_string_to_page_next_row(0x2, string);
 
@@ -2923,8 +2648,8 @@ int funcc0b54()
     {
         string = 0x800e4288;
 
-        field_int2_to_string(bu[0x8009a058], string); // current opcode
-        field_debug_concat_string(string, "???");
+        field_debug_string_u16hex(bu[0x8009a058], string); // current opcode
+        field_debug_string_concat(string, "???");
         field_debug_event_opcode(string, 0x8);
         field_debug_set_page_color(0x3, 0x7f, 0, 0);
     }

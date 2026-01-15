@@ -68,7 +68,7 @@ while (S0 != 0)
                         {
                             S6 = S6 + 2;
 
-                            system_read_from_stack_command_from_script;
+                            system_event_read_command_from_stack;
                             if (V0 == 0)
                             {
                                 S6 = S6 + h[S6 - 2];
@@ -82,7 +82,7 @@ while (S0 != 0)
                         {
                             S6 = S6 + 2;
 
-                            system_read_from_stack_command_from_script;
+                            system_event_read_command_from_stack;
                             if (V0 != 0)
                             {
                                 S6 = S6 + h[S6 - 2];
@@ -113,7 +113,7 @@ while (S0 != 0)
                         {
                             T2 = bu[S6 + 0];
 
-                            system_read_from_stack_command_from_script;
+                            system_event_read_command_from_stack;
                             V0 = V0 & ffff;
 
                             A0 = 0;
@@ -140,7 +140,7 @@ while (S0 != 0)
                         {
                             T2 = bu[S6 + 0];
                             T3 = h[S6 + 1];
-                            system_read_from_stack_command_from_script;
+                            system_event_read_command_from_stack;
 
                             if (V0 >= T3 && V0 < T3 + T2)
                             {
@@ -160,7 +160,7 @@ while (S0 != 0)
                         {
                             T2 = hu[S6 + 0];
                             T3 = h[S6 + 2];
-                            system_read_from_stack_command_from_script;
+                            system_event_read_command_from_stack;
 
                             if (V0 >= T3 && V0 < T3 + T2)
                             {

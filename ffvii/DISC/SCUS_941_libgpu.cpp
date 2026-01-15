@@ -3468,21 +3468,18 @@ void system_psyq_set_shade_tex(void* p, int tge)
 
 
 
-////////////////////////////////
-// system_psyq_set_sprt8()
-// Initialize a SPRT8 primitive.
-
-[A0 + 3] = b(3);
-[A0 + 7] = b(74);
-////////////////////////////////
+void system_psyq_set_sprt8(SPRT_8* p)
+{
+    SETLEN(p, 0x3);
+    SETCODE(p, 0x74);
+}
 
 
 
 void system_psyq_set_sprt16(SPRT_16* p)
 {
-    // Initialize a SPRT16 primitive.
-    [p + 0x3] = b(0x3);
-    p->code = 0x7c;
+    SETLEN(p, 0x3);
+    SETCODE(p, 0x7c);
 }
 
 

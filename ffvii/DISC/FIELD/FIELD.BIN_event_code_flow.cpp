@@ -176,9 +176,9 @@ int field_event_request(s16 req_type, u8 actor_id, u8 req_priority, u8 event_id)
     if (bu[0x8009d820] & 0x3)
     {
         string = 0x800e4288;
-        field_debug_copy_string(string, "rq=");
-        field_debug_concat_string(string, events_data + 0x20 + actor_id * 0x8); // name of entity
-        field_debug_concat_string(string, "/");
+        field_debug_string_copy(string, "rq=");
+        field_debug_string_concat(string, events_data + 0x20 + actor_id * 0x8); // name of entity
+        field_debug_string_concat(string, "/");
         field_debug_add_parse_value_to_page2(string, event_id, 0x2);
     }
 
