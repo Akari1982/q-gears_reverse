@@ -1,5 +1,5 @@
 ////////////////////////////////
-BCX file for model. Loaded to free space after model structs. Free space stored at 80075e10.
+BCX file for model. Loaded to free space after model structs. Free space stored at 0x80075e10.
 
     +  0 [][][][] size of file.
     +  4 [][][][] offset to model description.

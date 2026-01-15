@@ -669,7 +669,7 @@ u32 field_model_struct_init(block7_header, FieldModels* models_struct)
 
     for (int i = 0; i < models_n; ++i)
     {
-        if (bu[block7_models + i * 0x8 + 0x5] != 0)
+        if (bu[block7_models + i * 0x8 + 0x5] != 0) // we need to load this model
         {
             [block7_models + i * 0x8 + 0x4] = b(models_struct->inited_n);
             models_struct->inited_n += 0x1;

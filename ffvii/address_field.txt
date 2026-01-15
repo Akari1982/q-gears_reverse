@@ -115,7 +115,7 @@
     + 0x7c [][][][] move to y (MOVE and LADER and JUMP).
     + 0x80 [][][][] move to z (MOVE and LADER and JUMP).
 
-800756e8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
+0x800756e8 [] array of animation state? Store 0 here if we set UC to 0. Store 1 here if we MOVE. (size 0x1)
             0 - play default animation.
             1 - if current frame >= number of frames - set first frame. (we start load anim after this)
             2 - play animation.
@@ -183,7 +183,7 @@
 
 0x8007eb90 [][]     base offset x for DRAWENV. Init with 0xa0.
 0x8007eb94 [][]     base offset y for DRAWENV. Init with 0x78.
-0x8007eb98 array of entity_id for actors. -1 if no entity assigned to this actor. (size 0x01). Inited with value from 8009c6c4.
+0x8007eb98 array of entity_id for actors. -1 if no entity assigned to this actor. (size 0x01). Inited with value from 0x8009c6c4.
 
 0x8007ebc8 []       store 1 here during random encounter.
 
@@ -209,7 +209,7 @@
 
 0x800831fc actors current script pointers array (0x2 size for each actor).
 
-8008325c [] array of model default animation.
+0x8008325c [] array of model default animation.
 
 0x800833f8 array of arrays of actors script running states. (size 0x8 for each actor, 0x1 for each slot state). 0x00 - not started, 0x01 - running, 0x02 - finished.
 
@@ -465,9 +465,9 @@
                     5 - jet
                     6 - snowboard2
 
-8009ad30 array of actor_id for characters (items 0x8 size 0x01).
+0x8009ad30 array of actor_id for characters (items 0x8 size 0x01).
 
-8009c544 [][][][] pointer to entity structs at 80074ea4.
+0x8009c544 [][][][] pointer to entity structs at 80074ea4.
 
 8009c558 [][]     total number of background scroll steps.
 
@@ -1522,7 +1522,7 @@
     + 0 []       number of inited models.
     + 1 []       store 00 here during init.
     + 2 [][]     store 00 here during init.
-    + 4 [][][][] offset to model data (8013825c).
+    + 4 [][][][] offset to model data (0x8013825c).
     + 8 [][][][] store 00 here during init. Offset to texture in bsx file.
     + с new structures for model data (we init it and copy data from 7 dat block during level loading) (size 0x24)
         +  0 []       store 0x1 here during init. Store 0 here after initialization if number of models greater than 0x1.

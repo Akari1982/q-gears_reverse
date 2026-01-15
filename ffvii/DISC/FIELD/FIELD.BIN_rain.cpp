@@ -3,69 +3,69 @@ u8 g_rain_force; // 0x800e48d8
 
 
 
-void field_rain_init( FieldRenderData* render_data )
+void field_rain_init(FieldRenderData* render_data)
 {
-    for( int i = 0; i < 0x40; ++i )
+    for (int i = 0; i < 0x40; ++i)
     {
         g_field_rain[i].wait = i % 0x8;
         g_field_rain[i].rnd_seed = h(i * 4);
         g_field_rain[i].render = 0;
 
-        system_psyq_set_line_f2( &render_data->rain[i] );
-        system_psyq_set_semi_trans( &render_data->rain[i], 0x1 );
+        system_psyq_set_line_f2(&render_data->rain[i]);
+        system_psyq_set_semi_trans(&render_data->rain[i], 0x1);
 
         render_data->rain[i].r0 = 0x10;
         render_data->rain[i].g0 = 0x10;
         render_data->rain[i].b0 = 0x10;
     }
 
-    system_psyq_set_draw_mode( &render_data->rain_dm, 0, 0, system_psyq_get_tpage( 0, 0x1, 0, 0 ), 0 );
+    system_psyq_set_draw_mode(&render_data->rain_dm, 0, 0, system_psyq_get_tpage(0, 0x1, 0, 0), 0);
 }
 
 
 
-void field_rain_add_to_render( u32* ot, LINE_F2* rain, MATRIX* m, DR_MODE* dm )
+void field_rain_add_to_render(u32* ot, LINE_F2* rain, MATRIX* m, DR_MODE* dm)
 {
     system_psyq_push_matrix();
-    system_psyq_set_rot_matrix( m );
-    system_psyq_set_trans_matrix( m );
+    system_psyq_set_rot_matrix(m);
+    system_psyq_set_trans_matrix(m);
 
-    for( int i = 0; i < 0x40; ++i )
+    for (int i = 0; i < 0x40; ++i)
     {
-        if( g_field_rain[i].render == 1 )
+        if (g_field_rain[i].render == 0x1)
         {
             s32 p, flag;
-            system_psyq_rot_trans_pers( &g_field_rain[i].p1, &rain[i].x0, &p, &flag );
-            system_psyq_rot_trans_pers( &g_field_rain[i].p2, &rain[i].x1, &p, &flag );
-            system_psyq_add_prim( ot, &rain[i] );
+            system_psyq_rot_trans_pers(&g_field_rain[i].p1, &rain[i].x0, &p, &flag);
+            system_psyq_rot_trans_pers(&g_field_rain[i].p2, &rain[i].x1, &p, &flag);
+            system_psyq_add_prim(ot, &rain[i]);
         }
     }
 
     system_psyq_pop_matrix();
 
-    ADDPRIM( ot, dm );
+    ADDPRIM(ot, dm);
 }
 
 
 
 void field_rain_update()
 {
-    if( bu[0x8009c6e4 + 0xfa4 + 0x83] & 0x80 )
+    if (bu[0x8009c6e4 + 0xfa4 + 0x83] & 0x80)
     {
-        if( g_rain_force != 0xff ) g_rain_force += 1;
+        if (g_rain_force != 0xff) g_rain_force += 1;
     }
-    else if( g_rain_force != 0 )
+    else if (g_rain_force != 0)
     {
         g_rain_force -= 1;
     }
 
     pc_entity_id = h[0x800965e0]; // manual visible entity
 
-    for( int i = 0; i < 0x40; ++i )
+    for (int i = 0; i < 0x40; ++i)
     {
-        if( g_field_rain[i].wait == 0 ) // update
+        if (g_field_rain[i].wait == 0) // update
         {
-            if( i < ( g_rain_force / 4 ) )
+            if (i < (g_rain_force / 4))
             {
                 g_field_rain[i].wait = 0x7;
                 g_field_rain[i].rnd_seed += 1;

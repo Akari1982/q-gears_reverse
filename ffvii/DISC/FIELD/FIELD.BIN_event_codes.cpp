@@ -1964,9 +1964,9 @@ loopceeac:	; 800CEEAC
         V1 = bu[0x800722c4];
         [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
-        field_set_1st_party_character_as_manual_model;
+        field_set_1st_party_character_as_manual_model();
 
-        field_copy_party_to_battle_party;
+        field_copy_party_to_battle_party();
 
         return 0;
     }
@@ -1997,9 +1997,9 @@ loopcef14:	; 800CEF14
         V1 = bu[0x800722c4];
         [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
-        field_set_1st_party_character_as_manual_model;
+        field_set_1st_party_character_as_manual_model();
 
-        field_copy_party_to_battle_party;
+        field_copy_party_to_battle_party();
 
         return 0;
     }
@@ -2024,10 +2024,10 @@ V1 = bu[0x800722c4];
 [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
 
 A0 = A0;
-field_set_1st_party_character_as_manual_model;
+field_set_1st_party_character_as_manual_model();
 
 A0 = 1;
-field_copy_party_to_battle_party;
+field_copy_party_to_battle_party();
 
 return 0;
 ////////////////////////////////
@@ -2050,7 +2050,7 @@ loopcf098:	; 800CF098
 
         field_copy_party_to_battle_party;
 
-        field_set_1st_party_character_as_manual_model;
+        field_set_1st_party_character_as_manual_model();
 
         V1 = bu[0x800722c4];
         [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
@@ -2061,8 +2061,8 @@ loopcf098:	; 800CF098
     V0 = i < 3;
 800CF0EC	bne    v0, zero, loopcf098 [$800cf098]
 
-field_copy_party_to_battle_party;
-field_set_1st_party_character_as_manual_model;
+field_copy_party_to_battle_party();
+field_set_1st_party_character_as_manual_model();
 
 V1 = bu[0x800722c4];
 [0x800831fc + V1 * 2] = h(hu[0x800831fc + V1 * 2] + 2);
@@ -2278,8 +2278,8 @@ loopcf450:	; 800CF450
 
 
 
-field_copy_party_to_battle_party;
-field_set_1st_party_character_as_manual_model;
+field_copy_party_to_battle_party();
+field_set_1st_party_character_as_manual_model();
 ////////////////////////////////
 
 
@@ -4092,15 +4092,3 @@ return 0;
 ////////////////////////////////
 // funcd4840
 ////////////////////////////////
-
-
-
-void funcd4848(u32 string)
-{
-    field_debug_init_page(0, 0x64, 0x64, 0x96, 0xc);
-    field_debug_set_page_color(0, 0x7f, 0, 0);
-    field_debug_add_string_to_page_next_row(0, string);
-
-    [0x80095dcc] = b(0x1);
-    [0x80099ffc] = b(0x4);
-}

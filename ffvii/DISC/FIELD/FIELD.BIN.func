@@ -202,29 +202,28 @@
 800C5CE8 field_event_opcode_a3_ae_anime
 800C5E80 field_event_opcode_af_ba_anim
 800C5FF4 field_event_opcode_b0_bb_canim
-800C63CC 0xB1 CANM!1
-800C63CC 0xBC CANM!2
-800C6748 0xAC ANIMW
-800C684C 0xDD ANIMB
-800C6924 0xA8 MOVE
-800C6D64 0xAD FMOVE
-800C6FD8 0xA9 CMOVE
-800C728C 0xDB FCFIX
-800C7354 0xC0 JUMP
-800C75F0 0xC2 LADER
-800C7C3C 0x2A PMOVA
-800C7CE8 0xAA MOVA
+800C63CC field_event_opcode_b1_bc_canm
+800C6748 field_event_opcode_ac_animw
+800C684C field_event_opcode_dd_animb
+800C6924 field_event_opcode_a8_move
+800C6D64 field_event_opcode_ad_fmove
+800C6FD8 field_event_opcode_a9_cmove
+800C728C field_event_opcode_db_fcfix
+800C7354 field_event_opcode_c0_jump
+800C75F0 field_event_opcode_c2_lader
+800C7C3C field_event_opcode_2a_pmova
+800C7CE8 field_event_opcode_aa_mova
 800C7D5C funcc7d5c
-800C814C 0xB6 DIRA
-800C81C0 0x34 PDIRA
+800C814C field_event_opcode_b6_dira
+800C81C0 field_event_opcode_34_pdira
 800C826C set_direction_to_current_entity_by_entity_id
-800C8514 0xAB TURA
-800C8588 0x35 PTURA
+800C8514 field_event_opcode_ab_tura
+800C8588 field_event_opcode_35_ptura
 800C8634 funcc8634
-800C8B98 0xC3 OFST
+800C8B98 field_event_opcode_c3_ofst
 800C8F64 0xC4 OFSTW
 800C9080 0xDE TURNW
-800C91D8 0xB5 TURN
+800C91D8 field_event_opcode_b5_turn
 800C955C 0xB4 TURNGEN
 800C9A20 0xB3 DIR
 800C9B88 0xC6 SLIDR
@@ -241,7 +240,7 @@
 800CA77C 0x75 PXYZI
 800CA95C 0xA4 VISI
 800CAA24 0x7E TLKON
-800CAAEC 0xA5 XYZI
+800CAAEC field_event_opcode_a5_xyzi
 800CAC98 0xA7 XYZ
 800CADFC 0xA6 XYI
 800CAF60 0x40 MESSAGE
@@ -316,7 +315,7 @@
 800CE6F4 0xEA MPPAL2
 800CE904 0xDF MPPAL
 800CEB20 field_set_1st_party_character_as_manual_model
-800CEB94 0xA0 PC
+800CEB94 field_event_opcode_a0_pc
 800CEE44 0xC8 PRTYP
 800CF028 0xC9 PRTYM
 800CF140 0xCA PRTYE
@@ -394,7 +393,7 @@
 800D4780 0x29 KAWIW
 800D4838 funcd4838
 800D4840 funcd4840
-800D4848 funcd4848
+800D4848 field_event_debug_error
 
 // FIELD.BIN_dialog.cpp
 800D48C0 field_window_reset_all

@@ -233,11 +233,11 @@ struct FieldEntity
     u16 ofs_steps;              // 0x52
     u16 ofs_step;               // 0x54
     u8 ofs_type;                // 0x56
-                                // 0x57 []       actor id that controls this model (set in CHAR opcode).
+    u8 actor_id;                // 0x57
                                 // 0x58 []       pc entity collide with this entity. (1 - true/0 - false).
-                                // 0x59 []       model solidity (1 - off, 0 - on).
+    u8 solid_off;               // 0x59
                                 // 0x5a []       pc entity talk with this entity. (1 - true/0 - false).
-                                // 0x5b []       model talkability (1 - off, 0 - on).
+    u8 talk_off;                // 0x5b
     u8 visible;                 // 0x5c
     u8 action;                  // 0x5d
     u8 anim_id;                 // 0x5e

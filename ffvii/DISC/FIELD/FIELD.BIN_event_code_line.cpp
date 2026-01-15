@@ -27,7 +27,7 @@ int field_event_opcode_d0_line()
     }
     else
     {
-        funcd4848("many lineobj!");
+        field_event_debug_error("many lineobj!");
     }
 
     [0x800831fc + actor_id_cur * 0x2] = h(hu[0x800831fc + actor_id_cur * 0x2] + 0xd);

@@ -283,7 +283,7 @@ void field_event_run_init()
     actors_n = bu[events_data + 0x2];
     akao_n = h[events_data + 0x6];
 
-    [0x8009c6c4] = b(0); // start index into model struct 80074ea4 (increment every time we init model)
+    [0x8009c6c4] = b(0); // start index into entity struct 0x80074ea4 (increment every time we init model)
 
     string = 0x800e4254;
 
@@ -331,55 +331,53 @@ void field_event_run_init()
 
 
 
-////////////////////////////////
-// funcbb1b4()
-
-events_data = w[0x8009c6dc];
-entities_data = w[0x8009c544];
-block7_header = w[0x8007e770];
-actors_n = bu[events_data + 0x2];
-models_n = hu[block7_header + 0x2];
-
-for (int i = 0; i < 3; ++i)
+void funcbb1b4()
 {
-    char_id = bu[0x8009c6e4 + cad + i];
-    if (char_id != 0xff)
+    events_data = w[0x8009c6dc];
+    entities_data = w[0x8009c544];
+    block7_header = w[0x8007e770];
+    dat_block7 = w[0x8008357c];
+    actors_n = bu[events_data + 0x2];
+    models_n = hu[block7_header + 0x2];
+
+    for (int i = 0; i < 0x3; ++i)
     {
-        actor_id = bu[0x8009ad30 + char_id];
-        if (actor_id != 0xff)
+        u8 char_id = bu[0x8009c6e4 + 0xcad + i];
+        if (char_id != 0xff)
         {
-            model_id = bu[0x8007eb98 + actor_id];
-            if (model_id != 0xff)
+            u8 actor_id = bu[0x8009ad30 + char_id];
+            if (actor_id != 0xff)
             {
-                if (model_id < models_n)
+                u8 model_id = bu[0x8007eb98 + actor_id];
+                if (model_id != 0xff)
                 {
-                    V1 = w[0x8008357c];
-                    [V1 + model_id * 8 + 5] = b(1); // set as used model
+                    if (model_id < models_n)
+                    {
+                        [dat_block7 + model_id * 0x8 + 0x5] = b(0x1); // set party model to load
+                    }
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < models_n; ++i)
+    {
+        if (bu[dat_block7 + i * 0x8 + 0x5] == 0) // if this model wont be loading
+        {
+            for (int j = 0; j < actors_n; ++j)
+            {
+                model_id = bu[0x8007eb98 + j];
+                if (model_id == i)
+                {
+                    [entities_data + model_id * 0x84 + 0x59] = b(1); // model solidity (1 - off, 0 - on)
+                    [entities_data + model_id * 0x84 + 0x5b] = b(1); // model talkability (1 - off, 0 - on)
+                    [entities_data + model_id * 0x84 + 0x5c] = b(0); // model visibility (1 - on, 0 - off)
+                    [0x8007eb98 + j] = b(0xff); // unlink model from actor
                 }
             }
         }
     }
 }
-
-for (int i = 0; i < models_n; ++i)
-{
-    V1 = w[0x8008357c];
-    if (bu[V1 + i * 0x8 + 0x5] == 0) // if this model not used
-    {
-        for (int j = 0; j < actors_n; ++j)
-        {
-            model_id = bu[0x8007eb98 + j];
-            if (model_id == i)
-            {
-                [entities_data + model_id * 0x84 + 0x59] = b(1); // model solidity (1 - off, 0 - on)
-                [entities_data + model_id * 0x84 + 0x5b] = b(1); // model talkability (1 - off, 0 - on)
-                [entities_data + model_id * 0x84 + 0x5c] = b(0); // model visibility (1 - on, 0 - off)
-                [0x8007eb98 + j] = b(ff); // unlink model from actor
-            }
-        }
-    }
-}
-////////////////////////////////
 
 
 
@@ -1690,61 +1688,50 @@ void field_event_update_actor_debug(u8 page_id, u8 actor_id)
 
 
 
-////////////////////////////////
-// field_debug_event_opcode()
-
-opcode_name = A0; // opcode name text
-args_n = A1; // number of arg
-
-actor_id_cur = bu[0x800722c4];
-
-if (bu[0x80071e24] & 04)
+void field_debug_event_opcode(u8* opcode_name, u8 args_n)
 {
-    if (bu[0x80114498 + actor_id_cur] == 0) return;
+    events_data = w[0x8009c6dc];
+    actor_id_cur = bu[0x800722c4];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
+
+    if (bu[0x80071e24] & 0x4)
+    {
+        if (bu[0x80114498 + actor_id_cur] == 0) return;
+    }
+
+    string = 0x800e4254;
+    temp = 0x800e4288;
+
+    field_debug_copy_string(string, "Word:");
+    field_debug_concat_string(string, opcode_name);
+
+    if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, 0, string);
+
+    args_max = args_n + 1;
+
+    // create string "argX=XX"
+    for (; args_n != 0; --args_n)
+    {
+        field_debug_copy_string(string, "arg");
+        field_int_to_string(args_max - args_n, temp);
+        field_debug_concat_string(string, temp);
+        field_debug_concat_string(string, "=");
+        field_int2_to_string(bu[events_data + script_cur + args_max - args_n], temp);
+        field_debug_concat_string(string, temp);
+
+        if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, args_max - args_n, string);
+    }
 }
-
-string = 0x800e4254;
-temp = 0x800e4288;
-
-// create debug string "Word:[OPCODE]"
-field_debug_copy_string(string, "Word:");
-
-field_debug_concat_string(string, opcode_name);
-
-if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, 0, string);
-
-S4 = args_n + 1;
-
-// create string "argX=XX"
-while (args_n != 0)
-{
-    field_debug_copy_string(string, "arg");
-    field_int_to_string(S4 - args_n, temp);
-    field_debug_concat_string(string, temp);
-
-    field_debug_concat_string(string, "=");
-
-    V0 = w[0x8009c6dc] + hu[0x800831fc + actor_id_cur * 2] + S4 - args_n;
-    field_int2_to_string(bu[V0], temp);
-    field_debug_concat_string(string, temp);
-
-    if (bu[0x8009d820] & 0x1) field_debug_copy_string_into_page(0x3, S4 - args_n, string);
-
-    args_n -= 1;
-}
-////////////////////////////////
 
 
 
 void field_debug_add_parse_value_to_page2(param, value, val_size)
 {
+    actor_id_cur = bu[0x800722c4];
+
     if (bu[0x80071e24] & 0x4)
     {
-        V0 = bu[0x800722c4];
-        if (bu[0x80114498 + V0] == 0)
-        {
-            return;
-        }
+        if (bu[0x80114498 + actor_id_cur] == 0) return;
     }
 
     string = 0x800e4254;
@@ -1785,12 +1772,12 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
 
     switch(mb_half)
     {
-        case 0x1: bank = bu[script + 0x1] >> 0x4; break; // 1 halfbyte
-        case 0x2: bank = bu[script + 0x1] & 0xf; break; // 2 halfbyte
-        case 0x3: bank = bu[script + 0x2] >> 0x4; break; // 3 halfbyte
-        case 0x4: bank = bu[script + 0x2] & 0xf; break; // 4 halfbyte
-        case 0x5: bank = bu[script + 0x3] >> 0x4; break; // 5 halfbyte
-        case 0x6: bank = bu[script + 0x3] & 0xf; break; // 6 halfbyte
+        case 0x1: bank = bu[script + 0x1] >> 0x4; break;
+        case 0x2: bank = bu[script + 0x1] & 0xf; break;
+        case 0x3: bank = bu[script + 0x2] >> 0x4; break;
+        case 0x4: bank = bu[script + 0x2] & 0xf; break;
+        case 0x5: bank = bu[script + 0x3] >> 0x4; break;
+        case 0x6: bank = bu[script + 0x3] & 0xf; break;
     }
 
     switch(bank)
@@ -1892,7 +1879,7 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
             {
                 field_debug_add_parse_value_to_page2("G data err=", bank, 0x2);
             }
-            funcd4848("Bad Event arg!");
+            field_event_debug_error("Bad Event arg!");
             return 0;
         }
     }
@@ -2193,565 +2180,235 @@ A2 = 2;
 field_debug_add_parse_value_to_page2();
 
 Lbf8e4:	; 800BF8E4
-funcd4848("Bad Event arg!");
+field_event_debug_error("Bad Event arg!");
 
 Lbf8f4:	; 800BF8F4
 ////////////////////////////////
 
 
 
-s16 field_event_read_memory_s16()
+s16 field_event_read_memory_s16(s16 bank_id, s16 ofs)
 {
-    //A0 - memory bank halfbyte 0x0F (always start after opcode itself)
-    //A1 - offset to byte offset in opcode
+    actor_id_cur = bu[0x800722c4];
+    events_data = w[0x8009c6dc];
+    script_cur = hu[0x800831fc + actor_id_cur * 0x2];
 
-    800BF90C	addiu  a0, a0, $ffff (=-$1)
-    A0 = A0 << 10;
-    A0 = A0 >> 10;
-    V0 = A0 < 0006;
+    u8 bank = -1;
 
-    800BF920	beq    v0, zero, Lbfab0 [$800bfab0]  // skip halfbyte reading if halfbyte number >6
+    switch (bank_id - 0x1)
+    {
+        case 0x0: bank = bu[events_data + script_cur + 0x1] >> 0x4; break;
+        case 0x1: bank = bu[events_data + script_cur + 0x1] & 0xf;  break;
+        case 0x2: bank = bu[events_data + script_cur + 0x2] >> 0x4; break;
+        case 0x3: bank = bu[events_data + script_cur + 0x2] & 0xf;  break;
+        case 0x4: bank = bu[events_data + script_cur + 0x3] >> 0x4; break;
+        case 0x5: bank = bu[events_data + script_cur + 0x3] & 0xf;  break;
+    }
 
-    V0 = A0 << 02;
-    800BF92C	lui    at, $800a
-    AT = AT + 0414;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    800BF93C	nop
-    800BF940	jr     v0 
-    800BF944	nop
+    switch (bank)
+    {
+        case 0x0: // memory bank 0
+        {
+            u16 val = hu[events_data + script_cur + ofs];
 
-    // halfbyte 1
-    V0 = bu[0x800722c4];
-    800BF950	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800BF970	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0001];
-    800BF97C	j      Lbfab0 [$800bfab0]
-    V1 = V0 >> 04;
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G cons=", val, 0x4);
+            }
 
-    // halfbyte 2
-    V0 = bu[0x800722c4];
-    800BF98C	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800BF9AC	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0001];
-    800BF9B8	j      Lbfab0 [$800bfab0]
-    V1 = V0 & 000f;
+            return val;
+        }
+        break;
 
-    // halfbyte 3
-    V0 = bu[0x800722c4];
-    800BF9C8	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800BF9E8	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0002];
-    800BF9F4	j      Lbfab0 [$800bfab0]
-    V1 = V0 >> 04;
+        case 0x1: // memory bank 1
+        {
+            u32 indx = bu[events_data + script_cur + ofs];
+            u16 val = bu[0x8009d288 + indx];
 
-    // halfbyte 4
-    V0 = bu[0x800722c4];
-    800BFA04	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800BFA24	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0002];
-    800BFA30	j      Lbfab0 [$800bfab0]
-    V1 = V0 & 000f;
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    // halfbyte 5
-    V0 = bu[0x800722c4];
-    800BFA40	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800BFA60	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0003];
-    800BFA6C	j      Lbfab0 [$800bfab0]
-    V1 = V0 >> 04;
+            return val;
+        }
+        break;
 
-    // halfbyte 6
-    V0 = bu[0x800722c4];
-    800BFA7C	nop
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    V1 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    800BFA9C	nop
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0003];
-    800BFAA8	nop
-    V1 = V0 & 000f;
+        case 0x2: // memory bank 2
+        {
+            u32 indx = bu[events_data + script_cur + ofs];
+            u16 val = hu[0x8009d288 + indx];
 
-    // select memory bank access function
-    Lbfab0:	; 800BFAB0
-    A0 = V1 & 00ff;
-    V0 = A0 < 0010;
-    800BFAB8	beq    v0, zero, Lc01f8 [$800c01f8]  // if memory block > 0xF skip memory bank reading
-    V0 = A0 << 02;
-    800BFAC0	lui    at, $800a
-    AT = AT + 042c;
-    AT = AT + V0;
-    V0 = w[AT + 0000];
-    800BFAD0	nop
-    800BFAD4	jr     v0 
-    800BFAD8	nop
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    // memory bank 0
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V1 = bu[V0 + 0001];
-    S0 = bu[V0 + 0000];
-    V0 = bu[0x8009d820];
-    V1 = V1 << 08;
-    V0 = V0 & 0003;
-    800BFB28	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0300;
-    800BFB38	j      Lc01e0 [$800c01e0]
-    A1 = S0 << 10;
+            return val;
+        }
+        break;
 
-    // memory bank 1
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    A1 = bu[V0 + 0000];
-    V0 = bu[0x8009d820];
-    800BFB80	nop
-    V0 = V0 & 0003;
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    800BFB98	beq    v0, zero, Lc0234 [$800c0234]
-    V0 = S0;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+        case 0x3: // memory bank 3
+        {
+            u32 indx = 0x100 | bu[events_data + script_cur + ofs];
+            u16 val = bu[0x8009d288 + indx];
 
-    A0 = 800a0310; // "G glov="
-    800BFBB8	j      Lc0140 [$800c0140]
-    A1 = S0;
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    // memory bank 2
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    A1 = bu[V0 + 0000];
-    V0 = bu[0x8009d820];
-    800BFC00	nop
-    V0 = V0 & 0003;
-    AT = 8009d289;
-    AT = AT + A1;
-    V1 = bu[AT + 0000];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V1 = V1 << 08;
-    800BFC2C	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            return val;
+        }
+        break;
 
-    A0 = 800a0310; // "G glov="
-    800BFC4C	j      Lc01e0 [$800c01e0]
-    A1 = S0 << 10;
+        case 0x4: // memory bank 4
+        {
+            u32 indx = 0x100 | bu[events_data + script_cur + ofs];
+            u16 val = h[0x8009d288 + indx];
 
-    // memory bank 3
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFC8C	nop
-    A1 = V0 | 0100;
-    V0 = bu[0x8009d820];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = V0 & 0003;
-    800BFCB0	beq    v0, zero, Lc0234 [$800c0234]
-    V0 = S0;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    A0 = 800a0310; // "G glov="
-    800BFCD0	j      Lc0140 [$800c0140]
-    A1 = S0;
+            return val;
+        }
+        break;
 
-    // memory bank 4
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFD10	nop
-    A1 = V0 | 0100;
-    AT = 8009d289;
-    AT = AT + A1;
-    V1 = bu[AT + 0000];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = bu[0x8009d820];
-    V1 = V1 << 08;
-    V0 = V0 & 0003;
-    800BFD48	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+        case 0xb: // memory bank B
+        {
+            u32 indx = 0x200 | bu[events_data + script_cur + ofs];
+            u16 val = bu[0x8009d288 + indx];
 
-    A0 = 800a0310; // "G glov="
-    800BFD68	j      Lc01e0 [$800c01e0]
-    A1 = S0 << 10;
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    // memory bank B
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFDA8	nop
-    A1 = V0 | 0200;
-    V0 = bu[0x8009d820];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = V0 & 0003;
-    800BFDCC	beq    v0, zero, Lc0234 [$800c0234]
-    V0 = S0;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            return val;
+        }
+        break;
 
-    A0 = 800a0310; // "G glov="
-    800BFDEC	j      Lc0140 [$800c0140]
-    A1 = S0;
+        case 0xc: // memory bank C
+        {
+            u32 indx = 0x200 | bu[events_data + script_cur + ofs];
+            u16 val = hu[0x8009d288 + indx];
 
-    // memory bank C
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFE2C	nop
-    A1 = V0 | 0200;
-    AT = 8009d289;
-    AT = AT + A1;
-    V1 = bu[AT + 0000];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = bu[0x8009d820];
-    V1 = V1 << 08;
-    V0 = V0 & 0003;
-    800BFE64	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    A0 = 800a0310; // "G glov="
-    800BFE84	j      Lc01e0 [$800c01e0]
-    A1 = S0 << 10;
+            return val;
+        }
+        break;
 
-    // memory bank D
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFEC4	nop
-    A1 = V0 | 0300;
-    V0 = bu[0x8009d820];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = V0 & 0003;
-    800BFEE8	beq    v0, zero, Lc0234 [$800c0234]
-    V0 = S0;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+        case 0xd: // memory bank D
+        {
+            u32 indx = 0x300 | bu[events_data + script_cur + ofs];
+            u16 val = bu[0x8009d288 + indx];
 
-    A0 = 800a0310; // "G glov="
-    800BFF08	j      Lc0140 [$800c0140]
-    A1 = S0;
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    // memory bank E
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFF48	nop
-    A1 = V0 | 0300;
-    AT = 8009d289;
-    AT = AT + A1;
-    V1 = bu[AT + 0000];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = bu[0x8009d820];
-    V1 = V1 << 08;
-    V0 = V0 & 0003;
-    800BFF80	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            return val;
+        }
+        break;
 
-    A0 = 800a0310; // "G glov="
-    800BFFA0	j      Lc01e0 [$800c01e0]
-    A1 = S0 << 10;
+        case 0xe: // memory bank E
+        {
+            u32 indx = 0x300 | bu[events_data + script_cur + ofs];
+            u16 val = h[0x8009d288 + indx];
 
-    // memory bank F
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800BFFE0	nop
-    A1 = V0 | 0400;
-    V0 = bu[0x8009d820];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = V0 & 0003;
-    800C0004	beq    v0, zero, Lc0234 [$800c0234]
-    V0 = S0;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    A0 = 800a0310; // "G glov="
-    800C0024	j      Lc0140 [$800c0140]
+            return val;
+        }
+        break;
 
-    Lc0028:	; 800C0028
-    A1 = S0;
+        case 0xf: // memory bank F
+        {
+            u32 indx = 0x400 | bu[events_data + script_cur + ofs];
+            u16 val = bu[0x8009d288 + indx];
 
-    // memory bank 7
-    Lc002c:	; 800C002C
-    V0 = bu[0x800722c4];
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    funcc0034:	; 800C0034
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
+            return val;
+        }
+        break;
 
-    Lc0048:	; 800C0048
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    V0 = bu[V0 + 0000];
-    800C0064	nop
-    A1 = V0 | 0400;
-    AT = 8009d289;
-    AT = AT + A1;
-    V1 = bu[AT + 0000];
-    AT = 8009d288;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V0 = bu[0x8009d820];
-    V1 = V1 << 08;
-    V0 = V0 & 0003;
-    800C009C	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+        case 0x7: // memory bank 7
+        {
+            u32 indx = 0x400 | bu[events_data + script_cur + ofs];
+            u16 val = hu[0x8009d288 + indx];
 
-    A0 = 800a0310; // "G glov="
-    800C00BC	j      Lc01e0 [$800c01e0]
-    A1 = S0 << 10;
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G glov=", val, 0x4);
+            }
 
-    // memory bank 5
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    A1 = bu[V0 + 0000];
-    V0 = bu[0x8009d820];
-    800C0104	nop
-    V0 = V0 & 0003;
-    800C010C	lui    at, $8007
-    AT = AT + 5e24;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    800C011C	beq    v0, zero, Lc0234 [$800c0234]
-    V0 = S0;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            return val;
+        }
+        break;
 
-    A0 = 800a0318;
-    A1 = S0;
+        case 0x5: // memory bank 5
+        {
+            u32 indx = bu[events_data + script_cur + ofs];
+            u16 val = bu[0x80075e24 + indx];
 
-    Lc0140:	; 800C0140
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G mapv=", val, 0x4);
+            }
 
-    800C0148	j      Lc0234 [$800c0234]
-    V0 = S0;
+            return val;
+        }
+        break;
 
-    // memory bank 6
-    V0 = bu[0x800722c4];
-    V1 = A1 << 10;
-    V0 = V0 << 01;
-    AT = 800831fc;
-    AT = AT + V0;
+        case 0x6: // memory bank 6
+        {
+            u32 indx = bu[events_data + script_cur + ofs];
+            u16 val = hu[0x80075e24 + indx];
 
-    Lc016c:	; 800C016C
-    A0 = hu[AT + 0000];
-    V0 = w[0x8009c6dc];
-    V1 = V1 >> 10;
-    V0 = V0 + A0;
-    V0 = V0 + V1;
-    A1 = bu[V0 + 0000];
-    V0 = bu[0x8009d820];
-    800C0190	nop
-    V0 = V0 & 0003;
-    800C0198	lui    at, $8007
-    AT = AT + 5e25;
-    AT = AT + A1;
-    V1 = bu[AT + 0000];
-    800C01A8	lui    at, $8007
-    AT = AT + 5e24;
-    AT = AT + A1;
-    S0 = bu[AT + 0000];
-    V1 = V1 << 08;
-    800C01BC	beq    v0, zero, Lc01ec [$800c01ec]
-    S0 = S0 | V1;
-    A0 = 800a0308; // "G indx="
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
+            if (bu[0x8009d820] & 0x3)
+            {
+                field_debug_add_parse_value_to_page2("G indx=", indx, 0x4);
+                field_debug_add_parse_value_to_page2("G mapv=", val, 0x4);
+            }
 
-    A0 = 800a0318;
-    A1 = S0 << 10;
-
-    Lc01e0:	; 800C01E0
-    A1 = A1 >> 10;
-    A2 = 4;
-    field_debug_add_parse_value_to_page2();
-
-    Lc01ec:	; 800C01EC
-    V0 = S0 << 10;
-    800C01F0	j      Lc0234 [$800c0234]
-    V0 = V0 >> 10;
+            return val;
+        }
+    }
 
     // memory bank 8, 9, A, >F
-    Lc01f8:	; 800C01F8
-    V0 = bu[0x8009d820];
-    800C0200	nop
-    V0 = V0 & 0003;
-    800C0208	beq    v0, zero, Lc0220 [$800c0220]
-    A1 = V1 & 00ff;
-    A0 = 800a0320; // "G data err="
-    A2 = 2;
-    field_debug_add_parse_value_to_page2();
+    if (bu[0x8009d820] & 0x3)
+    {
+        field_debug_add_parse_value_to_page2("G data err=", access, 0x2);
+    }
 
-    Lc0220:	; 800C0220
-    funcd4848("Bad Event arg!");
+    field_event_debug_error("Bad Event arg!");
 
-    V0 = 0;
-
-    Lc0234:	; 800C0234
+    return 0;
 }
 
 
@@ -3252,44 +2909,41 @@ if (bu[0x8009d820] & 3)
     field_debug_add_parse_value_to_page2();
 }
 
-funcd4848("Bad Event arg!");
+field_event_debug_error("Bad Event arg!");
 
 Lc0b40:	; 800C0B40
 ////////////////////////////////
 
 
 
-////////////////////////////////
-// funcc0b54()
 // called as opcodes 0c 0d 1a 1b 1c 1d 1e 1f 44 46 4c 4e be
-
-if (bu[0x8009d820] & 0x3) // debug
+int funcc0b54()
 {
-    string = 0x800e4288;
+    if (bu[0x8009d820] & 0x3) // debug
+    {
+        string = 0x800e4288;
 
-    A0 = bu[0x8009a058]; // saved current opcode
-    A1 = string;
-    field_int2_to_string();
+        field_int2_to_string(bu[0x8009a058], string); // current opcode
+        field_debug_concat_string(string, "???");
+        field_debug_event_opcode(string, 0x8);
+        field_debug_set_page_color(0x3, 0x7f, 0, 0);
+    }
+    else
+    {
+        field_event_debug_error("Bad Event code!");
+    }
 
-
-    A0 = string;
-    A1 = 800a04c0; // "???"
-    field_debug_concat_string();
-
-    A0 = string;
-    A1 = 8;
-    field_debug_event_opcode();
-
-    A0 = 3;
-    A1 = 7f;
-    A2 = 0;
-    A3 = 0;
-    field_debug_set_page_color();
-}
-else
-{
-    funcd4848("Bad Event code!");
+    return 0x1;
 }
 
-return 1;
-////////////////////////////////
+
+
+void field_event_debug_error(u32 string)
+{
+    field_debug_init_page(0, 0x64, 0x64, 0x96, 0xc);
+    field_debug_set_page_color(0, 0x7f, 0, 0);
+    field_debug_add_string_to_page_next_row(0, string);
+
+    [0x80095dcc] = b(0x1);
+    [0x80099ffc] = b(0x4);
+}
