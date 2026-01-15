@@ -592,8 +592,8 @@ void field_debug_string_copy(u32 dst, u32 src)
     while (bu[src] != 0)
     {
         [dst] = b(bu[src]);
-        dst += 1;
-        src += 1;
+        dst += 0x1;
+        src += 0x1;
     }
     [dst] = b(0);
 }
@@ -604,14 +604,14 @@ void field_debug_string_concat(u32 dst, u32 src)
 {
     while(bu[dst] != 0)
     {
-        dst = dst + 1;
+        dst += 0x1;
     }
 
     while(bu[src] != 0)
     {
         [dst] = b(bu[src]);
-        dst = dst + 1;
-        src = src + 1;
+        dst += 0x1;
+        src += 0x1;
     }
     [dst] = b(0);
 }
@@ -623,8 +623,8 @@ int field_debug_string_size(u32 src)
     pos = 0;
     while(bu[src] != 0)
     {
-        src += 1;
-        pos += 1;
+        src += 0x1;
+        pos += 0x1;
     }
     return pos;
 }
@@ -639,9 +639,9 @@ void field_debug_string_part_copy(u32 dst, u32 src, u32 size)
 
         while (size != -1)
         {
-            [dst] = b(bu[A1]);
+            [dst] = b(bu[src]);
             size -= 0x1;
-            A1 += 0x1;
+            src += 0x1;
             dst += 0x1;
         }
     }
