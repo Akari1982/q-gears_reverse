@@ -54,7 +54,7 @@ void field_event_update(u32 ot)
 
         field_debug_init_buffers();
 
-        field_debug_init_pages();
+        field_debug_page_inits();
 
         events_data = w[0x8009c6dc];
 
@@ -298,7 +298,7 @@ void field_event_run_init()
 
             if (bu[0x80071e24] & 0x1)
             {
-                field_debug_string_copy_into_page(0x4, 0, string);
+                field_debug_page_set_string_to_row(0x4, 0, string);
             }
 
             if (bu[0x80071e24] & 0x2)
@@ -536,7 +536,7 @@ void field_event_opcode_cycle()
                         {
                             for (int i = 0x1; i < 0x9; ++i)
                             {
-                                field_debug_string_copy_into_page(0x3, i, "");
+                                field_debug_page_set_string_to_row(0x3, i, "");
                             }
                         }
                     }
@@ -966,11 +966,11 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
             if (bu[0x80114498 + actor_id] != 0)
             {
-                field_debug_set_page_color(0x4, 0x7f, 0x1, 0x7f);
+                field_debug_page_set_color(0x4, 0x7f, 0x1, 0x7f);
             }
             else
             {
-                field_debug_set_page_color(0x4, 0x7, 0xf, 0x1f);
+                field_debug_page_set_color(0x4, 0x7, 0xf, 0x1f);
             }
 
             field_debug_string_copy(string, "Actor:");
@@ -984,7 +984,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0, string);
+            field_debug_page_set_string_to_row(page, 0, string);
         }
     }
 
@@ -1019,7 +1019,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x1, string);
+            field_debug_page_set_string_to_row(page, 0x1, string);
         }
     }
 
@@ -1038,8 +1038,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x2, string);
-            field_debug_set_row_color(page, 0x2, 0x2);
+            field_debug_page_set_string_to_row(page, 0x2, string);
+            field_debug_page_set_row_color(page, 0x2, 0x2);
         }
     }
     else if (line_id != 0xff)
@@ -1051,8 +1051,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x2, string);
-            field_debug_set_row_color(page, 0x2, 0x3);
+            field_debug_page_set_string_to_row(page, 0x2, string);
+            field_debug_page_set_row_color(page, 0x2, 0x3);
         }
     }
     else
@@ -1061,8 +1061,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x2, string);
-            field_debug_set_row_color(page, 0x2, 0x6);
+            field_debug_page_set_string_to_row(page, 0x2, string);
+            field_debug_page_set_row_color(page, 0x2, 0x6);
         }
     }
 
@@ -1077,8 +1077,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x3, string);
-            field_debug_set_row_color(page, 0x3, 0x1);
+            field_debug_page_set_string_to_row(page, 0x3, string);
+            field_debug_page_set_row_color(page, 0x3, 0x1);
         }
 
         field_debug_string_copy(string, "Z=");
@@ -1090,7 +1090,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x4, string);
+            field_debug_page_set_string_to_row(page, 0x4, string);
         }
 
         field_debug_string_u8hex(bu[0x800756e8 + entity_id], string);
@@ -1106,8 +1106,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x5, string);
-            field_debug_set_row_color(page, 0x5, 0x7);
+            field_debug_page_set_string_to_row(page, 0x5, string);
+            field_debug_page_set_row_color(page, 0x5, 0x7);
         }
 
         field_debug_string_copy(string, (bu[entities_data + entity_id * 0x84 + 0x5c] != 0) ? "V" : "."); // visibility
@@ -1123,7 +1123,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x6, string);
+            field_debug_page_set_string_to_row(page, 0x6, string);
         }
 
         field_debug_string_copy(string, "MS");
@@ -1135,8 +1135,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x7, string);
-            field_debug_set_row_color(page, 0x7, 0x7);
+            field_debug_page_set_string_to_row(page, 0x7, string);
+            field_debug_page_set_row_color(page, 0x7, 0x7);
         }
     }
     else if (line_id != 0xff)
@@ -1150,7 +1150,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x3, string);
+            field_debug_page_set_string_to_row(page, 0x3, string);
         }
 
         field_debug_string_copy(string, "AZ");
@@ -1159,7 +1159,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x4, string);
+            field_debug_page_set_string_to_row(page, 0x4, string);
         }
 
         field_debug_string_copy(string, "BX");
@@ -1171,7 +1171,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x5, string);
+            field_debug_page_set_string_to_row(page, 0x5, string);
         }
 
         field_debug_string_copy(string, "BZ");
@@ -1180,19 +1180,19 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x6, string);
-            field_debug_string_copy_into_page(page, 0x7, "");
+            field_debug_page_set_string_to_row(page, 0x6, string);
+            field_debug_page_set_string_to_row(page, 0x7, "");
         }
     }
     else
     {
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x3, "");
-            field_debug_string_copy_into_page(page, 0x4, "");
-            field_debug_string_copy_into_page(page, 0x5, "");
-            field_debug_string_copy_into_page(page, 0x6, "");
-            field_debug_string_copy_into_page(page, 0x7, "");
+            field_debug_page_set_string_to_row(page, 0x3, "");
+            field_debug_page_set_string_to_row(page, 0x4, "");
+            field_debug_page_set_string_to_row(page, 0x5, "");
+            field_debug_page_set_string_to_row(page, 0x6, "");
+            field_debug_page_set_string_to_row(page, 0x7, "");
         }
     }
 
@@ -1208,8 +1208,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x8, string);
-            field_debug_set_row_color(page, 0x8, 0x3);
+            field_debug_page_set_string_to_row(page, 0x8, string);
+            field_debug_page_set_row_color(page, 0x8, 0x3);
         }
     }
 
@@ -1223,8 +1223,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_string_copy_into_page(page, 0x9, string);
-        field_debug_set_row_color(page, 0x9, 0x2);
+        field_debug_page_set_string_to_row(page, 0x9, string);
+        field_debug_page_set_row_color(page, 0x9, 0x2);
     }
 
     field_debug_string_copy(string, "Y=");
@@ -1236,7 +1236,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_string_copy_into_page(page, 0xa, string);
+        field_debug_page_set_string_to_row(page, 0xa, string);
     }
 
     field_debug_string_copy(string, "R-G    X=");
@@ -1245,8 +1245,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_string_copy_into_page(page, 0xb, string);
-        field_debug_set_row_color(page, 0xb, 0x4);
+        field_debug_page_set_string_to_row(page, 0xb, string);
+        field_debug_page_set_row_color(page, 0xb, 0x4);
     }
 
     field_debug_string_copy(string, "Y=");
@@ -1258,7 +1258,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_string_copy_into_page(page, 0xc, string);
+        field_debug_page_set_string_to_row(page, 0xc, string);
     }
 
     field_debug_string_copy(string, "G-B    X=");
@@ -1267,8 +1267,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_string_copy_into_page(page, 0xd, string);
-        field_debug_set_row_color(page, 0xd, 0x3);
+        field_debug_page_set_string_to_row(page, 0xd, string);
+        field_debug_page_set_row_color(page, 0xd, 0x3);
     }
 
     field_debug_string_copy(string, "Y=");
@@ -1280,7 +1280,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
     if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
     {
-        field_debug_string_copy_into_page(page, 0xe, string);
+        field_debug_page_set_string_to_row(page, 0xe, string);
     }
 
     {
@@ -1294,8 +1294,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0xf, string);
-            field_debug_set_row_color(page, 0xf, 0x2);
+            field_debug_page_set_string_to_row(page, 0xf, string);
+            field_debug_page_set_row_color(page, 0xf, 0x2);
         }
     }
 
@@ -1309,7 +1309,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x10, string);
+            field_debug_page_set_string_to_row(page, 0x10, string);
         }
     }
 
@@ -1343,8 +1343,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, string, 0x11);
-            field_debug_set_row_color(page, 0x11, 0x6);
+            field_debug_page_set_string_to_row(page, string, 0x11);
+            field_debug_page_set_row_color(page, 0x11, 0x6);
         }
     }
 
@@ -1363,11 +1363,11 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x12, string);
+            field_debug_page_set_string_to_row(page, 0x12, string);
 
             if (0x801affff < w[0x80075e10])
             {
-                field_debug_set_row_color(page, 0x12, (bu[0x8009d29b] & 0x10) ? 0x5 : 0x3);
+                field_debug_page_set_row_color(page, 0x12, (bu[0x8009d29b] & 0x10) ? 0x5 : 0x3);
             }
 
             if      (0x801adfff < w[0x80075e10]) A2 = 0x5;
@@ -1378,7 +1378,7 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
             else if (0x80197fff < w[0x80075e10]) A2 = 0x0;
             else                                 A2 = 0x7;
 
-            field_debug_set_row_color(page, 0x12, A2);
+            field_debug_page_set_row_color(page, 0x12, A2);
         }
     }
 
@@ -1405,8 +1405,8 @@ void field_event_update_actor_debug(u8 page, u8 actor_id)
 
         if ((bu[0x8009fe8c] | (bu[0x80071e24] & 0x1)) != 0)
         {
-            field_debug_string_copy_into_page(page, 0x13, string);
-            field_debug_set_row_color(page, 0x13, 0);
+            field_debug_page_set_string_to_row(page, 0x13, string);
+            field_debug_page_set_row_color(page, 0x13, 0);
         }
     }
 }
@@ -1430,7 +1430,7 @@ void field_debug_event_opcode(u8* opcode_name, u8 args_n)
     field_debug_string_copy(string, "Word:");
     field_debug_string_concat(string, opcode_name);
 
-    if (bu[0x8009d820] & 0x1) field_debug_string_copy_into_page(0x3, 0, string);
+    if (bu[0x8009d820] & 0x1) field_debug_page_set_string_to_row(0x3, 0, string);
 
     args_max = args_n + 1;
 
@@ -1444,7 +1444,7 @@ void field_debug_event_opcode(u8* opcode_name, u8 args_n)
         field_debug_string_u16hex(bu[events_data + script_cur + args_max - args_n], temp);
         field_debug_string_concat(string, temp);
 
-        if (bu[0x8009d820] & 0x1) field_debug_string_copy_into_page(0x3, args_max - args_n, string);
+        if (bu[0x8009d820] & 0x1) field_debug_page_set_string_to_row(0x3, args_max - args_n, string);
     }
 }
 
@@ -1483,7 +1483,7 @@ void field_debug_add_parse_value_to_page2(param, value, val_size)
 
     field_debug_string_concat(string, temp);
 
-    if (bu[0x8009d820] & 0x1) field_debug_add_string_to_page_next_row(0x2, string);
+    if (bu[0x8009d820] & 0x1) field_debug_page_add_string_to_next_row(0x2, string);
 
     if (bu[0x8009d820] & 0x2) funcd4840(string); // empty. Was used for debug
 }
@@ -2651,7 +2651,7 @@ int funcc0b54()
         field_debug_string_u16hex(bu[0x8009a058], string); // current opcode
         field_debug_string_concat(string, "???");
         field_debug_event_opcode(string, 0x8);
-        field_debug_set_page_color(0x3, 0x7f, 0, 0);
+        field_debug_page_set_color(0x3, 0x7f, 0, 0);
     }
     else
     {
@@ -2665,9 +2665,9 @@ int funcc0b54()
 
 void field_event_debug_error(u32 string)
 {
-    field_debug_init_page(0, 0x64, 0x64, 0x96, 0xc);
-    field_debug_set_page_color(0, 0x7f, 0, 0);
-    field_debug_add_string_to_page_next_row(0, string);
+    field_debug_page_init(0, 0x64, 0x64, 0x96, 0xc);
+    field_debug_page_set_color(0, 0x7f, 0, 0);
+    field_debug_page_add_string_to_next_row(0, string);
 
     [0x80095dcc] = b(0x1);
     [0x80099ffc] = b(0x4);

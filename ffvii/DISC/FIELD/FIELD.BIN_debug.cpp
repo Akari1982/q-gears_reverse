@@ -27,22 +27,18 @@ u8 g_field_debug_digits[] = {
     '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };   // 0x800e0208
 
 FieldDebugPage g_field_debug[0x6];              // 0x800e0748
-
 s16 g_field_debug_rb;                           // 0x800e1024
-
 SPRT_8 g_field_debug_char[0x2][0x158];          // 0x800e1028
 LINE_F3 g_field_debug_line_f3[0x2][0x18];       // 0x800e3b28
 TILE g_field_debug_tile[0x2][0xc];              // 0x800e3fa8
 TILE g_field_debug_dr_mode[0x2][0x6];           // 0x800e4128
-
 s16 g_field_debug_r_chars;                      // 0x800e41b8
 s16 g_field_debug_r_lines;                      // 0x800e41bc
 s16 g_field_debug_r_rect;                       // 0x800e41c0
 s16 g_field_debug_r_dm;                         // 0x800e41c4
 u32 g_field_debug_ot[0x2][0x7];                 // 0x800e41c8
 u16 g_field_debug_clut[0x8];                    // 0x800e4200
-
-
+u16 g_field_debug_transp;                       // 0x800e4210
 
 
 
@@ -56,7 +52,7 @@ void field_debug_init_buffers()
     g_field_debug_dirty = 0x1;
     g_field_debug_rb = 0;
     g_field_debug_cur_page = 0;
-    [0x800e4210] = h(0); // opaque or semi-transparent 800e3fa8 monochrome rectangle
+    g_field_debug_transp = 0;
 
     for (int i = 0; i < 0x158; ++i)
     {
@@ -97,34 +93,34 @@ void field_debug_init_buffers()
 
 
 
-void field_debug_init_pages()
+void field_debug_page_inits()
 {
     // set up page 5
     string = 0x800e4254;
-    field_debug_init_page(0x5, 0x6c, 0, 0x6c, 0x52);
+    field_debug_page_init(0x5, 0x6c, 0, 0x6c, 0x52);
     field_debug_string_copy(string, "Authr:");
     field_debug_string_concat(string, w[0x8009c6dc] + 0x10); // from field file
-    field_debug_add_string_to_page_next_row(0x5, string); // row 0
+    field_debug_page_add_string_to_next_row(0x5, string); // row 0
     field_debug_string_copy(string, "Event:");
     field_debug_string_concat(string, w[0x8009c6dc] + 0x18); // from field file
-    field_debug_add_string_to_page_next_row(0x5, string); // row 1
-    field_debug_add_string_to_page_next_row(0x5, "  Go"); // row 2
-    field_debug_add_string_to_page_next_row(0x5, "  Stop"); // row 3
-    field_debug_add_string_to_page_next_row(0x5, "  Step"); // row 4
-    field_debug_string_copy_into_page(0x5, 0x5, "  Actor OFF");
-    field_debug_string_copy_into_page(0x5, 0x6, "  Info  OFF");
+    field_debug_page_add_string_to_next_row(0x5, string); // row 1
+    field_debug_page_add_string_to_next_row(0x5, "  Go"); // row 2
+    field_debug_page_add_string_to_next_row(0x5, "  Stop"); // row 3
+    field_debug_page_add_string_to_next_row(0x5, "  Step"); // row 4
+    field_debug_page_set_string_to_row(0x5, 0x5, "  Actor OFF");
+    field_debug_page_set_string_to_row(0x5, 0x6, "  Info  OFF");
     field_debug_page_hide(0x5);
 
-    field_debug_init_page(0x4, 0x6c, 0x52, 0x6c, 0x52);
-    field_debug_add_string_to_page_next_row(0x4, "Actor:");
+    field_debug_page_init(0x4, 0x6c, 0x52, 0x6c, 0x52);
+    field_debug_page_add_string_to_next_row(0x4, "Actor:");
     field_debug_page_hide(0x4);
 
-    field_debug_init_page(0x3, 0x6c, 0xa4, 0x6c, 0x5c);
-    field_debug_add_string_to_page_next_row(0x3, "Word:");
+    field_debug_page_init(0x3, 0x6c, 0xa4, 0x6c, 0x5c);
+    field_debug_page_add_string_to_next_row(0x3, "Word:");
     field_debug_page_hide(0x3);
 
-    field_debug_init_page(0x1, 0, 0, 0x6c, 0xca);
-    field_debug_add_string_to_page_next_row(0x1, "Actor:");
+    field_debug_page_init(0x1, 0, 0, 0x6c, 0xca);
+    field_debug_page_add_string_to_next_row(0x1, "Actor:");
     field_debug_page_hide(0x1);
 
     [0x80099ffc] = b(0x3);
@@ -135,38 +131,38 @@ void field_debug_init_pages()
     [0x80070788] = b(0);
     g_field_debug_cur_page = 0x5;
 
-    funcda1d4(0x5, 0x4);
+    field_debug_page_set_head_row(0x5, 0x4);
 }
 
 
 
-int funcd8194(s16 x, s16 y, s16 w, s16 h)
+int field_debug_pages_reset_pos_size(s16 x, s16 y, s16 w, s16 h)
 {
     for (int i = 0; i < 0x6; ++i)
     {
         if (g_field_debug[i].state != DEBUG_PAGE_RENDER)
         {
-            field_debug_set_pos_size(i, x, y, w, h);
-            field_debug_reset_strings(i);
+            field_debug_page_set_pos_size(i, x, y, w, h);
+            field_debug_page_reset_strings(i);
             return i;
         }
     }
 
-    field_debug_set_pos_size(0, x, y, w, h);
-    field_debug_reset_strings(0);
+    field_debug_page_set_pos_size(0, x, y, w, h);
+    field_debug_page_reset_strings(0);
 
     return 0;
 }
 
 
 
-void field_debug_init_page(u8 page, s16 x, s16 y, s16 w, s16 h)
+void field_debug_page_init(u8 page, s16 x, s16 y, s16 w, s16 h)
 {
-    field_debug_set_pos_size(page, x, y, w, h);
+    field_debug_page_set_pos_size(page, x, y, w, h);
 
     if (g_field_debug[page].state != DEBUG_PAGE_HIDE)
     {
-        field_debug_reset_strings(page);
+        field_debug_page_reset_strings(page);
     }
     else
     {
@@ -177,7 +173,7 @@ void field_debug_init_page(u8 page, s16 x, s16 y, s16 w, s16 h)
 
 
 
-void field_debug_set_pos_size(u8 page, s16 x, s16 y, s16 w, s16 h)
+void field_debug_page_set_pos_size(u8 page, s16 x, s16 y, s16 w, s16 h)
 {
     g_field_debug[page].x = x;
     g_field_debug[page].y = y;
@@ -189,7 +185,7 @@ void field_debug_set_pos_size(u8 page, s16 x, s16 y, s16 w, s16 h)
 
 
 
-void funcd83a8(u8 page, s16 x, s16 y)
+void field_debug_page_add_pos(u8 page, s16 x, s16 y)
 {
     g_field_debug[page].x += x;
     g_field_debug[page].y += y;
@@ -199,7 +195,7 @@ void funcd83a8(u8 page, s16 x, s16 y)
 
 
 
-int funcd8420(u8 page, s16 w, s16 y)
+int field_debug_page_add_size(u8 page, s16 w, s16 y)
 {
     g_field_debug[page].w += w;
     g_field_debug[page].h += h;
@@ -209,14 +205,14 @@ int funcd8420(u8 page, s16 w, s16 y)
 
 
 
-bool funcd8498(u8 page)
+bool field_debug_page_is_render(u8 page)
 {
-    return g_field_debug[page].state < 0x1;
+    return g_field_debug[page].state < DEBUG_PAGE_NOT_INIT;
 }
 
 
 
-void field_debug_reset_strings(u8 page)
+void field_debug_page_reset_strings(u8 page)
 {
     for (int i = 0; i < 0x18; ++i)
     {
@@ -236,7 +232,7 @@ void field_debug_reset_strings(u8 page)
 
 
 
-void funcd85c0()
+void field_debug_render_clear()
 {
     g_field_debug_r_chars = 0;
     g_field_debug_r_lines = 0;
@@ -251,7 +247,7 @@ void field_debug_render(u32 ot)
 {
     if (g_field_debug_dirty != 0)
     {
-        funcd85c0();
+        field_debug_render_clear();
 
         system_psyq_clear_otag(&g_field_debug_ot[g_field_debug_rb], 0x7);
 
@@ -266,7 +262,7 @@ void field_debug_render(u32 ot)
         g_field_debug_dirty = 0;
     }
 
-    ADDPRIM(ot, 0x800e41e0 + g_field_debug_rb * 0x1c);
+    ADDPRIM(ot, &g_field_debug_ot[g_field_debug_rb][0x7 - 0x1] );
 }
 
 
@@ -331,25 +327,25 @@ void field_debug_render_page(u8 page)
     }
     else
     {
-        V1 = g_field_debug[page].cur_row;
-        if (V1 != 0) // if strings exist
+        cur_row = g_field_debug[page].cur_row;
+        if (cur_row != 0) // if strings exist
         {
-            S1 = V1 - 0x1;
+            cur_row -= 0x1;
         }
         else // if there is no strings on page
         {
-            S1 = ((g_field_debug[page].h + 0x2) / 0xa) - 0x1;
+            cur_row = ((g_field_debug[page].h + 0x2) / 0xa) - 0x1;
         }
 
         g_field_debug_line_f3[rb][n_polyline].r0 = (g_field_debug[page].r >> 0x1) | 0x3f;
         g_field_debug_line_f3[rb][n_polyline].g0 = (g_field_debug[page].g << 0x2) | 0x7f;
         g_field_debug_line_f3[rb][n_polyline].b0 = g_field_debug[page].b | 0x3f;
         g_field_debug_line_f3[rb][n_polyline].x0 = g_field_debug[page].x + 0x2;
-        g_field_debug_line_f3[rb][n_polyline].y0 = g_field_debug[page].y + S1 * 0xa + 0xa;
+        g_field_debug_line_f3[rb][n_polyline].y0 = g_field_debug[page].y + cur_row * 0xa + 0xa;
         g_field_debug_line_f3[rb][n_polyline].x1 = g_field_debug[page].x + g_field_debug[page].w - 0x2;
-        g_field_debug_line_f3[rb][n_polyline].y1 = g_field_debug[page].y + S1 * 0xa + 0xa;
+        g_field_debug_line_f3[rb][n_polyline].y1 = g_field_debug[page].y + cur_row * 0xa + 0xa;
         g_field_debug_line_f3[rb][n_polyline].x2 = g_field_debug[page].x + g_field_debug[page].w - 0x2;
-        g_field_debug_line_f3[rb][n_polyline].y2 = g_field_debug[page].y + S1 * 0xa;
+        g_field_debug_line_f3[rb][n_polyline].y2 = g_field_debug[page].y + cur_row * 0xa;
 
         ADDPRIM(&g_field_debug_ot[rb][page], &g_field_debug_line_f3[rb][n_polyline]);
         n_polyline += 1;
@@ -420,11 +416,11 @@ void field_debug_render_page(u8 page)
         g_field_debug_tile[rb][n_monorect].b0 = g_field_debug[page].b;
     }
 
-    if (h[0x800e4210] == 0x1)
+    if (g_field_debug_transp == 0x1)
     {
         system_psyq_set_semi_trans(&g_field_debug_tile[rb][n_monorect], 0x1);
     }
-    else if (h[0x800e4210] == 0x2)
+    else if (g_field_debug_transp == 0x2)
     {
         system_psyq_set_semi_trans(&g_field_debug_tile[rb][n_monorect], 0x0);
     }
@@ -468,32 +464,29 @@ void field_debug_render_string(u8 page, u8 row, u8* string, s16 x, s16 y)
 
             default:
             {
-                     if (bu[string] < 0x3a) A0 = bu[string] + 0x3;
+                if      (bu[string] < 0x3a) A0 = bu[string] + 0x3;
                 else if (bu[string] < 0x61) A0 = bu[string] + 0x73;
                 else                        A0 = bu[string] + 0x53;
             }
         }
 
-        color_id = g_field_debug[page].colors[row];
-        rb = g_field_debug_rb;
-        T1 = g_field_debug_r_chars;
-        g_field_debug_char[rb][T1].x0 = x;
-        g_field_debug_char[rb][T1].y0 = y;
-        g_field_debug_char[rb][T1].u = ((A0 & 0xf) << 0x3) - 0x80;
-        g_field_debug_char[rb][T1].v = ((A0 >> 0x1) & 0x78) - 0x80;
-        g_field_debug_char[rb][T1].clut = g_field_debug_clut[color_id];
+        g_field_debug_char[g_field_debug_rb][g_field_debug_r_chars].x0 = x;
+        g_field_debug_char[g_field_debug_rb][g_field_debug_r_chars].y0 = y;
+        g_field_debug_char[g_field_debug_rb][g_field_debug_r_chars].u = ((A0 & 0xf) << 0x3) - 0x80;
+        g_field_debug_char[g_field_debug_rb][g_field_debug_r_chars].v = ((A0 >> 0x1) & 0x78) - 0x80;
+        g_field_debug_char[g_field_debug_rb][g_field_debug_r_chars].clut = g_field_debug_clut[g_field_debug[page].colors[row]];
 
-        ADDPRIM(&g_field_debug_ot[rb][page], &g_field_debug_char[rb][T1]);
+        ADDPRIM(&g_field_debug_ot[g_field_debug_rb][page], &g_field_debug_char[g_field_debug_rb][g_field_debug_r_chars]);
 
-        g_field_debug_r_chars = T1 + 0x1;
+        g_field_debug_r_chars += 0x1;
         x += 0x8;
-        string += 1;
+        string += 0x1;
     }
 }
 
 
 
-void field_debug_add_string_to_page_next_row(u8 page, u8* string)
+void field_debug_page_add_string_to_next_row(u8 page, u8* string)
 {
     field_debug_string_copy(&g_field_debug[page].strings[g_field_debug[page].cur_row], string);
 
@@ -510,7 +503,7 @@ void field_debug_add_string_to_page_next_row(u8 page, u8* string)
 
 
 
-void funcd9ffc(u8 page, u8* string, u8 color)
+void field_debug_page_add_string_to_next_row_with_color(u8 page, u8* string, u8 color)
 {
     field_debug_string_copy(&g_field_debug[page].strings[g_field_debug[page].cur_row], string);
 
@@ -528,7 +521,7 @@ void funcd9ffc(u8 page, u8* string, u8 color)
 
 
 
-void field_debug_string_copy_into_page(u8 page, u8 row, u8* string)
+void field_debug_page_set_string_to_row(u8 page, u8 row, u8* string)
 {
     field_debug_string_copy(g_field_debug[page].strings[row], string);
 
@@ -537,7 +530,7 @@ void field_debug_string_copy_into_page(u8 page, u8 row, u8* string)
 
 
 
-int field_debug_set_row_color(u8 page, u8 row, u8 color)
+int field_debug_page_set_row_color(u8 page, u8 row, u8 color)
 {
     g_field_debug[page].colors[row] = color;
 
@@ -546,7 +539,7 @@ int field_debug_set_row_color(u8 page, u8 row, u8 color)
 
 
 
-void funcda1d4(u8 page, u8 head_row)
+void field_debug_page_set_head_row(u8 page, u8 head_row)
 {
     g_field_debug[page].head_row = head_row;
 
@@ -555,7 +548,7 @@ void funcda1d4(u8 page, u8 head_row)
 
 
 
-void field_debug_set_page_color(u8 page, u8 r, u8 g, u8 b)
+void field_debug_page_set_color(u8 page, u8 r, u8 g, u8 b)
 {
     if (g_field_debug[page].state == DEBUG_PAGE_RENDER)
     {
@@ -587,9 +580,9 @@ void field_debug_page_hide(u8 page)
 
 
 
-void funcda310()
+void field_debug_transp_switch()
 {
-    [0x800e4210] = h((hu[0x800e4210] + 0x1) & 0x3);
+    g_field_debug_transp = (g_field_debug_transp + 0x1) & 0x3;
 }
 
 
@@ -638,79 +631,72 @@ int field_debug_string_size(u32 src)
 
 
 
-////////////////////////////////
-// funcda3f0()
-
-800DA3F4	beq    a2, zero, Lda418 [$800da418]
-800DA3F8	addiu  v1, a2, $ffff (=-$1)
-800DA3FC	addiu  a2, zero, $ffff (=-$1)
-
-loopda400:	; 800DA400
-    V0 = bu[A1 + 0000];
-    A1 = A1 + 0001;
-    800DA408	addiu  v1, v1, $ffff (=-$1)
-    [A0 + 0000] = b(V0);
-    A0 = A0 + 0001;
-800DA410	bne    v1, a2, loopda400 [$800da400]
-
-Lda418:	; 800DA418
-////////////////////////////////
-
-
-
-void field_debug_string_u8hex()
+void field_debug_string_part_copy(u32 dst, u32 src, u32 size)
 {
-    [A1 + 0] = b(g_field_debug_digits[A0 & 0xf]);
-    [A1 + 1] = b(0);
-}
+    if (size != 0)
+    {
+        size -= 0x1;
 
-
-
-void field_debug_string_u16hex()
-{
-    [A1 + 0] = b(g_field_debug_digits[(A0 & 0xf0) >> 0x4]);
-    [A1 + 1] = b(g_field_debug_digits[(A0 & 0x0f) >> 0x0]);
-    [A1 + 2] = b(0);
-}
-
-
-
-void field_debug_string_u32hex()
-{
-    [A1 + 0] = b(g_field_debug_digits[(A0 & 0xf000) >> 0xc]);
-    [A1 + 1] = b(g_field_debug_digits[(A0 & 0x0f00) >> 0x8]);
-    [A1 + 2] = b(g_field_debug_digits[(A0 & 0x00f0) >> 0x4]);
-    [A1 + 3] = b(g_field_debug_digits[(A0 & 0x000f] >> 0x0]);
-    [A1 + 4] = b(0);
-}
-
-
-
-void funcda4fc(u32 number, )
-{
-    T1 = 0;
-    V1 = 0x2710;
-    pos = 0;
-    A3 = A1;
-
-    loopda514:	; 800DA514
-        digit = number / V1;
-
-        if ((T1 != 0) || (digit != 0))
+        while (size != -1)
         {
-            T1 = 0x1;
+            [dst] = b(bu[A1]);
+            size -= 0x1;
+            A1 += 0x1;
+            dst += 0x1;
+        }
+    }
+}
 
-            [A3] = b(g_field_debug_digits[digit]);
-            pos += 0x1;
-            A3 += 0x1;
+
+
+void field_debug_string_u8hex(u32 number, u32 dst)
+{
+    [dst + 0x0] = b(g_field_debug_digits[number & 0xf]);
+    [dst + 0x1] = b(0);
+}
+
+
+
+void field_debug_string_u16hex(u32 number, u32 dst)
+{
+    [dst + 0x0] = b(g_field_debug_digits[(number & 0xf0) >> 0x4]);
+    [dst + 0x1] = b(g_field_debug_digits[(number & 0x0f) >> 0x0]);
+    [dst + 0x2] = b(0);
+}
+
+
+
+void field_debug_string_u32hex(u32 number, u32 dst)
+{
+    [dst + 0x0] = b(g_field_debug_digits[(number & 0xf000) >> 0xc]);
+    [dst + 0x1] = b(g_field_debug_digits[(number & 0x0f00) >> 0x8]);
+    [dst + 0x2] = b(g_field_debug_digits[(number & 0x00f0) >> 0x4]);
+    [dst + 0x3] = b(g_field_debug_digits[(number & 0x000f] >> 0x0]);
+    [dst + 0x4] = b(0);
+}
+
+
+
+void field_debug_string_u16dec(u16 number, u32 dst)
+{
+    bool start = false;
+    div = 0x2710; // 10000
+
+    while (div > 0x2)
+    {
+        u8 digit = number / div;
+
+        if ((start != false) || (digit != 0))
+        {
+            start = true;
+            [dst] = b(g_field_debug_digits[digit]);
+            dst += 0x1;
         }
 
-        number -= digit * V1;
-        V1 = V1 / 0xa;
+        number -= digit * div;
+        div /= 0xa;
+    }
 
-        V0 = V1 < 0x2;
-    800DA594	beq    v0, zero, loopda514 [$800da514]
-
-    [A1 + pos + 0x0] = b(g_field_debug_digits[number]);
-    [A1 + pos + 0x1] = b(0);
+    [dst + 0x0] = b(g_field_debug_digits[number]);
+    [dst + 0x1] = b(0);
 }
