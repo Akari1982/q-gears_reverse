@@ -225,8 +225,8 @@
 800C9080 0xDE TURNW
 800C91D8 field_event_opcode_b5_turn
 800C955C 0xB4 TURNGEN
-800C9A20 0xB3 DIR
-800C9B88 0xC6 SLIDR
+800C9A20 field_event_opcode_b3_dir
+800C9B88 field_event_opcode_c6_slidr
 800C9C84 0xD7 SLDR2
 800C9D80 0xC5 TALKR
 800C9E7C 0xD6 TLKR2
@@ -238,8 +238,8 @@
 800CA490 0xB8 GETAXY
 800CA5D4 0xC1 AXYZI
 800CA77C 0x75 PXYZI
-800CA95C 0xA4 VISI
-800CAA24 0x7E TLKON
+800CA95C field_event_opcode_a4_visi
+800CAA24 field_event_opcode_7e_tlkon
 800CAAEC field_event_opcode_a5_xyzi
 800CAC98 0xA7 XYZ
 800CADFC 0xA6 XYI
@@ -332,7 +332,7 @@
 800CF9B8 0xCD MMBud
 800CFAF0 0xCE MMBLK
 800CFB84 0xCF MMBUK
-800CFC1C 0xC7 SOLID
+800CFC1C field_event_opcode_c7_solid
 800CFCE4 field_event_opcode_6a_vwoft
 800CFE78 field_event_opcode_08_join
 800D0180 field_event_opcode_09_split

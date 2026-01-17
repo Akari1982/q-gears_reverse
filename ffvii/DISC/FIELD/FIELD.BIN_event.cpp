@@ -1542,8 +1542,8 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
             return val;
         }
 
-        case b: // memory bank B
-        case c: // memory bank C
+        case 0xb: // memory bank B
+        case 0xc: // memory bank C
         {
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x200 + indx];
@@ -1556,8 +1556,8 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
             return val;
         }
 
-        case d: // memory bank D
-        case e: // memory bank E
+        case 0xd: // memory bank D
+        case 0xe: // memory bank E
         {
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x300 + indx];
@@ -1570,8 +1570,8 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
             return val;
         }
 
-        case 7: // memory bank 7
-        case f: // memory bank F
+        case 0x7: // memory bank 7
+        case 0xf: // memory bank F
         {
             indx = bu[script + off];
             val = bu[0x8009d288 + 0x400 + indx];
@@ -1584,8 +1584,8 @@ u8 field_event_read_memory_u8(u8 mb_half, u8 off)
             return val;
         }
 
-        case 5: // memory bank 5
-        case 6: // memory bank 6
+        case 0x5: // memory bank 5
+        case 0x6: // memory bank 6
         {
             indx = bu[script + off];
             val = bu[0x80075e24 + indx];
