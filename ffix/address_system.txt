@@ -1,4 +1,4 @@
-80011a44 [][][][] pointer to something.
+0x80011a44 [][][][] pointer to something.
 
 800678ac [][][][] pointer to some init struct (8006788c).
     + 0 [][][][] 80010290
@@ -34,7 +34,7 @@
 
 80067e58 array of pointers to reverb work area (0xa items, 0x4 size).
 
-80068158 [][][][] store here pointer from 80011a44.
+0x80068158 [][][][] store here pointer from 0x80011a44.
 
 8006bd34 array of square roots (0x2 byte item).
 
@@ -268,30 +268,30 @@
 
 8007ad1e []       checked in script system init function.
 
-8007adf8 [][][][] store here pointer to entity scripts settings in script file (+80).
-8007adfc [][][][] store here humber of entity. (+3 from start of script file)
-8007ae04 [][][][] init with 0. A bit later set to 4.
-8007ae10 [][]     store here some mask. Maybe mask for unit we want to attack.
-8007ae12 [][]     store here mask of founded script memory allocated area in 8007aed0.
-8007ae14 [][]     player mask.
-8007ae16 [][]     enemy mask.
-8007ae18 [][]     units mask.
-8007ae20 [][][][] store here system_get_how_much_we_need_rotate_to_face_entity during talk collision check.
-8007ae2c [][][][] store screen X for entity here in 0xa9 opcode.
-8007ae30 [][][][] store screen Y for entity here in 0xa9 opcode.
-8007ae4c [][][][] set to -5a0 during script initialization.
-8007ae50 [][][][] set to 0 during script initialization.
-8007ae58 [][][][] set to 0 during script initialization.
-8007ae5c [][][][] set to 0 at start of text opcode parsing.
-8007ae60 [][][][] set to 0 at start of text opcode parsing.
-8007ae64 [][][][] set to 0 at start of text opcode parsing.
-8007ae68 [][][][] set to 0 during script initialization. Store current script data here when adding new dialog window.
-8007ae8c [][][][] store here pointer to +2c data in script file (+2c).
-8007aea0 [][][][] store pointer to start of current opcode here (to restore it if needed)
-8007aec0 [][][][] set to 0 during script initialization.
-8007aec8 [][][][] set to 0 during script initialization.
-8007aecc [][][][] pointer to 80077e60 struct or data.
-8007aed0 array of 8 offsets to script memory allocated area. Reset to 0 when start scripts.
+0x8007adf8 [][][][] store here pointer to entity scripts settings in script file (+80).
+0x8007adfc [][][][] store here humber of entity. (+3 from start of script file)
+0x8007ae04 [][][][] init with 0. A bit later set to 4.
+0x8007ae10 [][]     store here some mask. Maybe mask for unit we want to attack.
+0x8007ae12 [][]     store here mask of founded script memory allocated area in 8007aed0.
+0x8007ae14 [][]     player mask.
+0x8007ae16 [][]     enemy mask.
+0x8007ae18 [][]     units mask.
+0x8007ae20 [][][][] store here system_get_how_much_we_need_rotate_to_face_entity during talk collision check.
+0x8007ae2c [][][][] store screen X for entity here in 0xa9 opcode.
+0x8007ae30 [][][][] store screen Y for entity here in 0xa9 opcode.
+0x8007ae4c [][][][] set to -5a0 during script initialization.
+0x8007ae50 [][][][] set to 0 during script initialization.
+0x8007ae58 [][][][] set to 0 during script initialization.
+0x8007ae5c [][][][] set to 0 at start of text opcode parsing.
+0x8007ae60 [][][][] set to 0 at start of text opcode parsing.
+0x8007ae64 [][][][] set to 0 at start of text opcode parsing.
+0x8007ae68 [][][][] set to 0 during script initialization. Store current script data here when adding new dialog window.
+0x8007ae8c [][][][] store here pointer to +2c data in script file (+2c).
+0x8007aea0 [][][][] store pointer to start of current opcode here (to restore it if needed)
+0x8007aec0 [][][][] set to 0 during script initialization.
+0x8007aec8 [][][][] set to 0 during script initialization.
+0x8007aecc [][][][] pointer to 80077e60 struct or data.
+0x8007aed0 array of 8 offsets to script memory allocated area. Reset to 0 when start scripts.
 
 8007aef0-8007b6ef some array to store script variable.
 +  2 [][]     set to 0x2710 at start of field 20 if flag 0x01 in +17 is set (then remove this flag).
@@ -302,15 +302,15 @@
 +  e []       some state (0,1,9). Related to +b. Set to 0 at start of field 20.
 + 17 []       some flags. Checked and used in field 20. Not really used.
 
-8007b6f0 [][][][] address to store script stack pointer.
-8007b6f8 [][][][] used in usual scripts.
-8007b6fc [][][][] set to 0 during script initialization.
-8007b700 [][][][] pointer to stores script pointer from 8007aed0.
-8007b704 [][][][] pointer to current executed script allocated memory (or some other script memory).
-8007b708 [][][][] some state. 0x01 - when we run field. 0x02 - when we run battle. 0x04 - when battle module finished (maybe end menu.)
-8007b70c [][][][] pointer to allocated script memory for currently executed script.
-8007b710 [][][][] set to 0xa during script initialization.
-8007b718 [][][][] set to 0 during script initialization.
+0x8007b6f0 [][][][] address to store script stack pointer.
+0x8007b6f8 [][][][] used in usual scripts.
+0x8007b6fc [][][][] set to 0 during script initialization.
+0x8007b700 [][][][] pointer to stores script pointer from 8007aed0.
+0x8007b704 [][][][] pointer to current executed script allocated memory (or some other script memory).
+0x8007b708 [][][][] some state. 0x01 - when we run field. 0x02 - when we run battle. 0x04 - when battle module finished (maybe end menu.)
+0x8007b70c [][][][] pointer to allocated script memory for currently executed script.
+0x8007b710 [][][][] set to 0xa during script initialization.
+0x8007b718 [][][][] set to 0 during script initialization.
 
 8007b720 [][][][] address of current random value.
 8007b724 array of 0x20c random values.
