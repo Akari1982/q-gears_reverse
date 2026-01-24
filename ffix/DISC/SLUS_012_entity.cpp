@@ -100,123 +100,114 @@ return 0;
 
 
 
-////////////////////////////////
-// func367d0
+u32 func367d0(entity_id, S0, S1, yielded_scripts_memory)
 
-entity_scripts_settings = w[0x8007adf8];
+    entity_scripts_settings = w[0x8007adf8];
 
-entity_id = A0;
-S0 = A1; // memory id
-S1 = A2;
-yielded_scripts_memory = A3;
-if (S0 == 0)
-{
-    S0 = entity_id;
-}
+    // S0 memory id
 
+    if (S0 == 0) S0 = entity_id;
 
-
-A0 = S0;
-func4b040; // get pointer to already allocated memory
-if (V0 != 0)
-{
-    A0 = V0;
-    func36978; // move this script call at the end of script list or insert it to end
-}
-
-
-
-S1 = ceil(S1 / 4); // 14/4=4
-S2 = ceil(bu[entity_scripts_settings + entity_id * 8 + 4] / 4); // some requested memory
-A0 = S1 + S2 + yielded_scripts_memory; // memory amount (in bytes * 4) (4+0+10=14)
-func36650; // insert new memory in memory list
-allocated_memory = V0;
-
-
-
-// clear allocated memory
-A1 = allocated_memory;
-while (allocated_memory < allocated_memory + S1 * 4 + S2 * 4)
-{
-    [A1] = w(0);
-    A1 = A1 + 4;
-}
-
-
-
-// insert script into script list
-A1 = w[0x8007aecc];
-V1 = w[A1 + 16e0];
-[A1 + 16e0] = w(w[V1 + 0]); // set new last element
-
-A2 = w[A1 + 16dc];
-if (A2 != 0)
-{
-    [A2 + 0] = w(V1); // set link to new element in list
-}
-else
-{
-    [A1 + 16d8] = w(V1); // set first element
-}
-[A1 + 16dc] = w(V1); // set current element
-
-[V1 + 0] = w(0); // this is last element so link to next element == 0
-[V1 + 4] = w(allocated_memory); // set link to allocated memory
-
-
-
-// initialize memory
-[allocated_memory + 5] = b(0);
-[allocated_memory + 6] = b(entity_id);
-[allocated_memory + 7] = b(S0);
-[allocated_memory + 8] = b(S1);
-[allocated_memory + 9] = b(S1 + S2);
-[allocated_memory + c] = b(yielded_scripts_memory);
-[allocated_memory + e] = b(0);
-[allocated_memory + 10] = b(ff);
-
-
-
-offset_to_data = entity_scripts_settings + hu[entity_scripts_settings + entity_id * 8 + 0];
-offset_to_data = offset_to_data + 2;
-
-number_of_scripts = bu[offset_to_data + 1];
-if (number_of_scripts != 0)
-{
-    A1 = 0;
-    loop368f8:	; 800368F8
-        if (hu[offset_to_data + A1 * 4 + 0] == 0)
-        {
-            break;
-        }
-
-        A1 = A1 + 1;
-        V0 = A1 < number_of_scripts;
-    8003690C	bne    v0, zero, loop368f8 [$800368f8]
-
-    if (A1 < number_of_scripts)
+    A0 = S0;
+    func4b040; // get pointer to already allocated memory
+    if (V0 != 0)
     {
-        offset_to_data = offset_to_data + hu[offset_to_data + A1 * 4 + 2];
+        func36978(V0); // move this script call at the end of script list or insert it to end
+    }
+
+
+
+    S1 = ceil(S1 / 4); // 14/4=4
+    S2 = ceil(bu[entity_scripts_settings + entity_id * 8 + 4] / 4); // some requested memory
+    A0 = S1 + S2 + yielded_scripts_memory; // memory amount (in bytes * 4) (4+0+10=14)
+    func36650; // insert new memory in memory list
+    allocated_memory = V0;
+
+
+
+    // clear allocated memory
+    A1 = allocated_memory;
+    while (allocated_memory < allocated_memory + S1 * 4 + S2 * 4)
+    {
+        [A1] = w(0);
+        A1 = A1 + 4;
+    }
+
+
+
+    // insert script into script list
+    A1 = w[0x8007aecc];
+    V1 = w[A1 + 16e0];
+    [A1 + 16e0] = w(w[V1 + 0]); // set new last element
+
+    A2 = w[A1 + 16dc];
+    if (A2 != 0)
+    {
+        [A2 + 0] = w(V1); // set link to new element in list
+    }
+    else
+    {
+        [A1 + 16d8] = w(V1); // set first element
+    }
+    [A1 + 16dc] = w(V1); // set current element
+
+    [V1 + 0] = w(0); // this is last element so link to next element == 0
+    [V1 + 4] = w(allocated_memory); // set link to allocated memory
+
+
+
+    // initialize memory
+    [allocated_memory + 5] = b(0);
+    [allocated_memory + 6] = b(entity_id);
+    [allocated_memory + 7] = b(S0);
+    [allocated_memory + 8] = b(S1);
+    [allocated_memory + 9] = b(S1 + S2);
+    [allocated_memory + c] = b(yielded_scripts_memory);
+    [allocated_memory + e] = b(0);
+    [allocated_memory + 10] = b(ff);
+
+
+
+    offset_to_data = entity_scripts_settings + hu[entity_scripts_settings + entity_id * 8 + 0];
+    offset_to_data = offset_to_data + 2;
+
+    number_of_scripts = bu[offset_to_data + 1];
+    if (number_of_scripts != 0)
+    {
+        A1 = 0;
+        loop368f8:	; 800368F8
+            if (hu[offset_to_data + A1 * 4 + 0] == 0)
+            {
+                break;
+            }
+
+            A1 = A1 + 1;
+            V0 = A1 < number_of_scripts;
+        8003690C	bne    v0, zero, loop368f8 [$800368f8]
+
+        if (A1 < number_of_scripts)
+        {
+            offset_to_data = offset_to_data + hu[offset_to_data + A1 * 4 + 2];
+        }
+        else
+        {
+            offset_to_data = 0;
+        }
     }
     else
     {
         offset_to_data = 0;
     }
-}
-else
-{
-    offset_to_data = 0;
-}
 
-[allocated_memory + 0] = w(offset_to_data);
+    [allocated_memory + 0] = w(offset_to_data);
 
-return allocated_memory;
-////////////////////////////////
+    return allocated_memory;
+}
 
 
 
 ////////////////////////////////
-// func36978
+// func36978()
 // A0 - allocated memory
 // if we cant find allocated memory in existing scripts - return 0.
 // else - return pointer to next script in list
@@ -3767,7 +3758,7 @@ case 00 01 02 03 04 05 06 0a 0b 0c 0d 0e 0f 11 13 15 17 19 1c 22 30 31 32 6c 6d 
 }
 break;
 
-case 07: // D49C0380
+case 0x07:
 {
     T0 = w[0x8007b70c];
     V0 = w[T0];
@@ -3777,7 +3768,7 @@ case 07: // D49C0380
     A0 = w[0x8007b6f4];
     A2 = 14;
     A3 = 10;
-    func367d0;
+    func367d0();
     [V0 + 5] = w(2);
 
     [0x8007b6f8] = w(1);
@@ -3797,7 +3788,7 @@ case 08: // 109D0380
     A0 = w[0x8007b6f4];
     A2 = 38;
     A3 = 10;
-    func367d0;
+    func367d0();
     [V0 + 5] = b(3);
     [V0 + f] = b(1);
 
@@ -4497,7 +4488,7 @@ case 43: // E0F50380
 
     if (A0 != 0)
     {
-        func36978;
+        func36978(A0);
     }
 
     [0x8007b6f8] = w(1);
