@@ -657,6 +657,8 @@
          +3d []       accessories id.
     + 54c array of four party character data pointers (0x4 size 0x4 items).
     + 560 [][][][] some value. Increment in 0xce opcode.
+    + 568 [][]     ???
+    + 56e []       ???
     + 570 []       init with 0 when start overall scripts.
     + 571 []       set up in 0x2a opcode.
     + 574 some array of 0x100 values (0x2 size).
