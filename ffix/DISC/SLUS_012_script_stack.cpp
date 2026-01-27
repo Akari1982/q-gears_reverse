@@ -61,7 +61,7 @@ void system_script_parse_stack()
             case 0x7c:
             {
                 [S4] = w(S7);
-                func37acc();
+                func37acc(A0);
                 S7 = w[S4];
 
                 [S7] = w(0x1c000000 | V0);

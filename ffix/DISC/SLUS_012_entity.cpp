@@ -1002,249 +1002,158 @@ return S3;
 
 
 
-////////////////////////////////
-// func37528
-80037528	addiu  sp, sp, $ffd0 (=-$30)
-[SP + 0014] = w(S1);
-A1 = w[0x8007b6f0];
-[SP + 0028] = w(S6);
-S6 = A0;
-[SP + 0018] = w(S2);
-[SP + 002c] = w(RA);
-[SP + 0024] = w(S5);
-[SP + 0020] = w(S4);
-[SP + 001c] = w(S3);
-[SP + 0010] = w(S0);
-A0 = w[A1 + fff8];
-V1 = 0005;
-V0 = A0 >> 1a;
-V0 = V0 & 0007;
-80037568	bne    v0, v1, L37600 [$80037600]
-S2 = 0;
-S0 = A0 & 0007;
-V0 = 0003;
-80037578	beq    s0, v0, L375c0 [$800375c0]
-V0 = S0 < 0004;
-80037580	beq    v0, zero, L37598 [$80037598]
-V0 = 0002;
-80037588	beq    s0, v0, L375ac [$800375ac]
-8003758C	lui    v1, $8008
-80037590	j      L375ec [$800375ec]
-80037594	addiu  v1, v1, $ae10 (=-$51f0)
-
-L37598:	; 80037598
-V0 = 0004;
-8003759C	beq    s0, v0, L375d4 [$800375d4]
-800375A0	lui    v1, $8008
-800375A4	j      L375ec [$800375ec]
-800375A8	addiu  v1, v1, $ae10 (=-$51f0)
-
-L375ac:	; 800375AC
-800375AC	jal    funcbec64 [$800bec64]
-A0 = 0;
-800375B4	lui    v1, $8008
-800375B8	j      L375e4 [$800375e4]
-[V1 + ae14] = h(V0);
-
-L375c0:	; 800375C0
-800375C0	jal    funcbec64 [$800bec64]
-A0 = 0001;
-800375C8	lui    v1, $8008
-800375CC	j      L375e4 [$800375e4]
-[V1 + ae16] = h(V0);
-
-L375d4:	; 800375D4
-800375D4	jal    funcbec64 [$800bec64]
-A0 = 0002;
-[0x8007ae18] = h(V0);
-
-L375e4:	; 800375E4
-800375E4	lui    v1, $8008
-800375E8	addiu  v1, v1, $ae10 (=-$51f0)
-
-L375ec:	; 800375EC
-V0 = S0 << 01;
-V0 = V0 + V1;
-S0 = hu[V0 + 0000];
-800375F8	j      L37620 [$80037620]
-S3 = 0;
-
-L37600:	; 80037600
-80037600	addiu  v0, a1, $fffc (=-$4)
-80037604	jal    system_read_from_stack_command_not_from_script [$80052d40]
-[S1 + b6f0] = w(V0);
-V1 = w[S1 + b6f0];
-S0 = V0;
-V1 = V1 + 0008;
-[S1 + b6f0] = w(V1);
-S3 = 0;
-
-L37620:	; 80037620
-80037620	lui    s5, $8008
-80037624	lui    s4, $8008
-80037628	lui    v0, $8008
-8003762C	addiu  s1, v0, $aed0 (=-$5130)
-
-loop37630:	; 80037630
-V0 = S0 & 0001;
-80037634	beq    v0, zero, L37664 [$80037664]
-S2 = S2 >> 01;
-V0 = w[S1 + 0000];
-80037640	jal    system_read_from_stack_command_not_from_script [$80052d40]
-[S5 + b700] = w(V0);
-80037648	beq    v0, zero, L37654 [$80037654]
-8003764C	nop
-S2 = S2 | 0080;
-
-L37654:	; 80037654
-V0 = w[S4 + b6f0];
-80037658	nop
-V0 = V0 + 0004;
-[S4 + b6f0] = w(V0);
-
-L37664:	; 80037664
-S0 = S0 >> 01;
-S3 = S3 + 0001;
-V0 = S3 < 0008;
-80037670	bne    v0, zero, loop37630 [$80037630]
-S1 = S1 + 0004;
-V0 = w[0x8007b6f0];
-80037680	nop
-80037684	addiu  v0, v0, $fff8 (=-$8)
-[S0 + b6f0] = w(V0);
-V0 = 0044;
-80037690	beq    s6, v0, L376d8 [$800376d8]
-V0 = S6 < 0045;
-80037698	beq    v0, zero, L376b0 [$800376b0]
-V0 = 0043;
-800376A0	beq    s6, v0, L376c4 [$800376c4]
-800376A4	nop
-800376A8	j      L37704 [$80037704]
-800376AC	nop
-
-L376b0:	; 800376B0
-V0 = 0045;
-800376B4	beq    s6, v0, L376ec [$800376ec]
-800376B8	nop
-800376BC	j      L37704 [$80037704]
-800376C0	nop
-
-L376c4:	; 800376C4
-800376C4	jal    system_read_from_stack_command_not_from_script [$80052d40]
-800376C8	nop
-V1 = w[S0 + b6f0];
-800376D0	j      L376fc [$800376fc]
-S2 = S2 & V0;
-
-L376d8:	; 800376D8
-800376D8	jal    system_read_from_stack_command_not_from_script [$80052d40]
-800376DC	nop
-V1 = w[S0 + b6f0];
-800376E4	j      L376fc [$800376fc]
-S2 = S2 ^ V0;
-
-L376ec:	; 800376EC
-800376EC	jal    system_read_from_stack_command_not_from_script [$80052d40]
-800376F0	nop
-V1 = w[S0 + b6f0];
-S2 = S2 | V0;
-
-L376fc:	; 800376FC
-V1 = V1 + 0004;
-[S0 + b6f0] = w(V1);
-
-L37704:	; 80037704
-80037704	jal    system_save_from_stack_command_not_from_script [$80052d70]
-A0 = S2;
-V0 = S2;
-RA = w[SP + 002c];
-S6 = w[SP + 0028];
-S5 = w[SP + 0024];
-S4 = w[SP + 0020];
-S3 = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-80037730	jr     ra 
-SP = SP + 0030;
-////////////////////////////////
-
-
-
-////////////////////////////////
-// func37738
-A1 = w[0x8007b6f0];
-A0 = w[A1 - 8];
-V0 = (A0 >> 1a) & 7;
-S1 = 0;
-if (V0 != 5)
+int func37528(S6)
 {
-    [0x8007b6f0] = w(A1 - 4);
-    system_read_from_stack_command_not_from_script;
-    A0 = V0;
-    A1 = 0;
-    [0x8007b6f0] = w(w[0x8007b6f0] - 8);
-}
-else
-{
-    S0 = A0 & 7;
-    if (S0 == 2)
+    A1 = w[0x8007b6f0];
+    A0 = w[A1 - 0x8];
+    V0 = (A0 >> 0x1a) & 0x7;
+
+    S2 = 0;
+
+    if (V0 != 0x5)
     {
-        A0 = 0;
-        battle_get_units_mask;
-        [0x8007ae14] = h(V0);
+
+        [0x8007b6f0] = w(A1 - 0x4);
+
+        S0 = system_read_from_stack_command_not_from_script();
+
+        [0x8007b6f0] = w(w[0x8007b6f0] + 0x8);
     }
-    else if (S0 == 3)
+    else
     {
-        A0 = 1;
-        battle_get_units_mask;
-        [0x8007ae16] = h(V0);
-    }
-    else if (S0 == 4)
-    {
-        A0 = 2;
-        battle_get_units_mask;
-        [0x8007ae18] = h(V0);
+        S0 = A0 & 0x7;
+
+        if (S0 == 0x2)
+        {
+            [0x8007ae14] = h(funcbec64(0));
+        }
+        else if (S0 == 0x3)
+        {
+            [0x8007ae16] = h(funcbec64(0x1));
+        }
+        else if (S0 == 0x4)
+        {
+            [0x8007ae18] = h(funcbec64(0x2));
+        }
+
+        S0 = hu[0x8007ae10 + S0 * 0x2];
     }
 
-    A0 = hu[0x8007ae10 + S0 * 2]
-    A1 = 0;
-}
-
-if ((A0 & 1) == 0)
-{
-    A1 = 1;
-    A0 = A0 >> 1;
-    if ((A0 & 1) == 0)
+    for (int i = 0; i < 0x8; ++i)
     {
-        loop3783c:	; 8003783C
-            A1 = A1 + 1;
-            if (A1 >= 8)
+        S2 >>= 0x1;
+
+        if (S0 & 0x1)
+        {
+            [0x8007b700] = w(w[0x8007aed0 + i * 0x4]);
+
+            if (system_read_from_stack_command_not_from_script() != 0)
             {
-                [0x8007b6f0] = w(w[0x8007b6f0] - 8);
-                return 0;
+                S2 |= 0x80;
             }
 
-            A0 = A0 >> 1;
-            V0 = A0 & 1;
-        8003784C	beq    v0, zero, loop3783c [$8003783c]
+            [0x8007b6f0] = w(w[0x8007b6f0] + 0x4);
+        }
+
+        S0 >>= 0x1;
     }
+
+    [0x8007b6f0] = w(w[0x8007b6f0] - 0x8);
+
+    if (S6 == 0x43)
+    {
+        S2 &= system_read_from_stack_command_not_from_script();
+
+        [0x8007b6f0] = w(w[0x8007b6f0] + 0x4);
+    }
+    else if (S6 == 0x44)
+    {
+        S2 ^= system_read_from_stack_command_not_from_script();
+
+        [0x8007b6f0] = w(w[0x8007b6f0] + 0x4);
+    }
+    else if (S6 == 0x45)
+    {
+        S2 |= system_read_from_stack_command_not_from_script();
+
+        [0x8007b6f0] = w(w[0x8007b6f0] + 0x4);
+    }
+
+    system_save_from_stack_command_not_from_script(S2);
+
+    return S2;
 }
 
-if (A1 < 8)
+
+
+int func37738()
 {
-    [0x8007b700] = w(w[0x8007aed0 + A1 * 4]);
-    system_read_from_stack_command_not_from_script;
-    S1 = V0;
-}
-else
-{
-    [0x8007b6f0] = w(w[0x8007b6f0] - 4);
-}
+    A1 = w[0x8007b6f0];
+    A0 = w[A1 - 0x8];
+    V0 = (A0 >> 0x1a) & 0x7;
 
-[0x8007b6f0] = w(w[0x8007b6f0] - 4);
+    if (V0 != 0x5)
+    {
+        [0x8007b6f0] = w(A1 - 0x4);
 
-return S1;
+        A0 = system_read_from_stack_command_not_from_script();
+
+        [0x8007b6f0] = w(w[0x8007b6f0] - 0x8);
+    }
+    else
+    {
+        S0 = A0 & 0x7;
+
+        if (S0 == 0x2)
+        {
+            [0x8007ae14] = h(battle_get_units_mask(0));
+        }
+        else if (S0 == 0x3)
+        {
+            [0x8007ae16] = h(battle_get_units_mask(0x1));
+        }
+        else if (S0 == 0x4)
+        {
+            [0x8007ae18] = h(battle_get_units_mask(0x2));
+        }
+
+        A0 = hu[0x8007ae10 + S0 * 2]
+    }
+
+    A1 = 0;
+    if ((A0 & 0x1) == 0)
+    {
+        A1 = 0x1;
+        A0 >>= 0x1;
+        while ((A0 & 0x1) == 0)
+        {
+            A1 += 0x1;
+            if (A1 >= 0x8)
+            {
+                [0x8007b6f0] = w(w[0x8007b6f0] - 0x8);
+                return 0;
+            }
+            A0 >>= 0x1;
+        }
+    }
+
+    if (A1 < 0x8)
+    {
+        [0x8007b700] = w(w[0x8007aed0 + A1 * 0x4]);
+
+        S1 = system_read_from_stack_command_not_from_script();
+    }
+    else
+    {
+        [0x8007b6f0] = w(w[0x8007b6f0] - 0x4);
+
+        S1 = 0;
+    }
+
+    [0x8007b6f0] = w(w[0x8007b6f0] - 0x4);
+
+    return S1;
+}
 ////////////////////////////////
 
 
@@ -1418,155 +1327,149 @@ SP = SP + 0030;
 
 int func37acc(A0)
 {
-    [SP + 0x10] = w(0);
-
     V1 = A0 - 0x8;
-    V0 = V1 < 0x6a;
-    80037AE0	beq    v0, zero, L37d58 [$80037d58]
 
-
-
-    V0 = w[0x800113ec + V1 * 4];
-
-    80037B00	jr     v0 
-
-    case 0x52:
+    switch (A0)
     {
-        character_id = system_read_from_stack_command_not_from_script();
-
-        if (character_id >= 0x9) character_id -= 0x4;
-
-        V0 = w[0x8006794c];
-        S0 = w[V0 + 0x1c];
-        return hu[S0 + 0x3c + character_id * 0x90 + 0x10];
-    }
-
-    case 0x64:
-    {
-        A0 = system_read_from_stack_command_not_from_script();
-
-        if (A0 < 0x100)
+        case 0x52:
         {
-            V0 = func27f34();
-        }
-        else if (A0 < 0x200)
-        {
-            V0 = func281a4(A0 - 0x100);
-        }
-        else
-        {
-            V0 = func62560(A0 - 0x200);
+            character_id = system_read_from_stack_command_not_from_script();
+
+            if (character_id >= 0x9) character_id -= 0x4;
+
+            V0 = w[0x8006794c];
+            S0 = w[V0 + 0x1c];
+            return hu[S0 + 0x3c + character_id * 0x90 + 0x10];
         }
 
-        return V0;
-    }
-
-    case 0x08:
-    case 0x09:
-    case 0x0a:
-    case 0x0b:
-    {
-        return func36aac();
-    }
-
-    case 0x0f:
-    case 0x4b:
-    case 0x4c:
-    {
-        return func36ffc();
-    }
-
-    case 0x2e:
-    case 0x43:
-    case 0x44:
-    case 0x45:
-    {
-        return func37528();
-    }
-
-    case 0x65:
-    {
-        A0 = system_read_from_stack_command_not_from_script();
-
-        funcc7ee8(A0, SP + 0x10);
-
-        return w[SP + 10];
-    }
-
-    case 0x53:
-    {
-        V0 = w[0x8006794c];
-        S0 = w[V0 + 0x1c];
-        character_id = system_read_from_stack_command_not_from_script();
-        if (character_id >= 0x9) character_id -= 0x4;
-
-        return hu[S0 + character_id * 0x90 + 0x54];
-    }
-
-    case 0x6e:
-    {
-        V0 = w[0x8006794c];
-        S0 = w[V0 + 0x1c];
-        character_id = system_read_from_stack_command_not_from_script();
-        if (character_id >= 0x9) character_id -= 0x4;
-
-        return h[S0 + character_id * 0x90 + 0x4e];
-    }
-
-    case 0x6f:
-    {
-        V0 = w[0x8006794c];
-        S0 = w[V0 + 0x1c];
-        character_id = system_read_from_stack_command_not_from_script();
-        if (character_id >= 0x9) character_id -= 0x4;
-
-        return h[S0 + character_id * 0x90 + 0x56];
-    }
-
-    case 0x70:
-    {
-        [SP + 0x14] = h(-0x1);
-        A0 = system_read_from_stack_command_not_from_script();
-
-        if (A0 != 0)
+        case 0x64:
         {
-            if (bu[A0 + 0x5] == 0x4)
+            A0 = system_read_from_stack_command_not_from_script();
+
+            if (A0 < 0x100)
             {
-                funcc76e8(bu[A0 + 0x3b], SP + 0x14, SP + 0x16);
+                V0 = func27f34();
             }
-        }
-
-        return h[SP + 0x14];
-    }
-
-    case 0x71:
-    {
-        [SP + 0x16] = h(-0x1);
-        A0 = system_read_from_stack_command_not_from_script();
-
-        if (A0 != 0)
-        {
-            if (bu[A0 + 0x5] == 0x4)
+            else if (A0 < 0x200)
             {
-                funcc76e8(bu[A0 + 0x3b], SP + 0x14, SP + 0x16);
+                V0 = func281a4(A0 - 0x100);
             }
+            else
+            {
+                V0 = func62560(A0 - 0x200);
+            }
+
+            return V0;
         }
 
-        return h[SP + 0x16];
+        case 0x08:
+        case 0x09:
+        case 0x0a:
+        case 0x0b:
+        {
+            return func36aac();
+        }
+
+        case 0x0f:
+        case 0x4b:
+        case 0x4c:
+        {
+            return func36ffc();
+        }
+
+        case 0x2e:
+        case 0x43:
+        case 0x44:
+        case 0x45:
+        {
+            return func37528();
+        }
+
+        case 0x65:
+        {
+            A0 = system_read_from_stack_command_not_from_script();
+
+            funcc7ee8(A0, SP + 0x10);
+
+            return w[SP + 10];
+        }
+
+        case 0x53:
+        {
+            V0 = w[0x8006794c];
+            S0 = w[V0 + 0x1c];
+            character_id = system_read_from_stack_command_not_from_script();
+            if (character_id >= 0x9) character_id -= 0x4;
+
+            return hu[S0 + character_id * 0x90 + 0x54];
+        }
+
+        case 0x6e:
+        {
+            V0 = w[0x8006794c];
+            S0 = w[V0 + 0x1c];
+            character_id = system_read_from_stack_command_not_from_script();
+            if (character_id >= 0x9) character_id -= 0x4;
+
+            return h[S0 + character_id * 0x90 + 0x4e];
+        }
+
+        case 0x6f:
+        {
+            V0 = w[0x8006794c];
+            S0 = w[V0 + 0x1c];
+            character_id = system_read_from_stack_command_not_from_script();
+            if (character_id >= 0x9) character_id -= 0x4;
+
+            return h[S0 + character_id * 0x90 + 0x56];
+        }
+
+        case 0x70:
+        {
+            [SP + 0x14] = h(-0x1);
+            A0 = system_read_from_stack_command_not_from_script();
+
+            if (A0 != 0)
+            {
+                if (bu[A0 + 0x5] == 0x4)
+                {
+                    funcc76e8(bu[A0 + 0x3b], SP + 0x14, SP + 0x16);
+                }
+            }
+
+            return h[SP + 0x14];
+        }
+
+        case 0x71:
+        {
+            [SP + 0x16] = h(-0x1);
+            A0 = system_read_from_stack_command_not_from_script();
+
+            if (A0 != 0)
+            {
+                if (bu[A0 + 0x5] == 0x4)
+                {
+                    funcc76e8(bu[A0 + 0x3b], SP + 0x14, SP + 0x16);
+                }
+            }
+
+            return h[SP + 0x16];
+        }
+
+        case 0x6c:
+        {
+            system_read_from_stack_command_not_from_script();
+        }
+
+        case 0x5a:
+        case 0x5b:
+        case 0x5c:
+        {
+            system_read_from_stack_command_not_from_script();
+        }
     }
 
-80037D48 6c
-
-    system_read_from_stack_command_not_from_script();
-
-80037D50 5a 5b 5c
-
-    system_read_from_stack_command_not_from_script();
-
-80037D58 0c 0d 0e 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f 20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2f 30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f 40 41 42 46 47 48 49 4a 4d 4e 4f 50 51 54 55 56 57 58 59 5d 5e 5f 60 61 62 63 66 67 68 69 6a 6b 6d
-
-    L37d58:	; 80037D58
-    return w[SP + 10];
+    return 0;
 }
 
 
