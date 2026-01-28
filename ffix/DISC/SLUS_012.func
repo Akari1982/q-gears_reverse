@@ -841,6 +841,8 @@
 80036528 func36528
 80036560 func36560
 80036634 func36634
+
+// events
 80036650 func36650
 800367D0 func367d0
 80036978 func36978
@@ -991,8 +993,6 @@
 80050CF8 system_psyq_get_tpage
 80050D38 func50d38
 80050E34 func50e34
-
-// script
 80050EFC func50efc
 80050F4C func50f4c
 80050F68 func50f68
@@ -1042,6 +1042,7 @@
 800530A8 system_rotate_vector_by_x_y_axis
 80053124 func53124
 800531D0 system_get_how_much_we_need_rotate_to_face_entity
+
 80053204 func53204
 80053384 func53384
 8005338C func5338c
