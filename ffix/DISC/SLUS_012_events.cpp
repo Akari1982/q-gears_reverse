@@ -1908,81 +1908,75 @@ if (bu[entity_struct + e] == 2) // if script is runned then we stop it and run s
 
 
 
-////////////////////////////////
-// func384d0
 // run script
-// A3 = 0; pause current script or not
-
-entity_scripts_settings = w[0x8007adf8];
-scripting_system        = w[0x8007aecc];
-
-entity_struct   = A0;
-priority        = A1;
-script_to_start = A2;
-
-script_pointer  = 0;
-
-if (entity_struct != 0)
+void func384d0(entity_struct, priority, script_to_start, pause)
 {
-    if (priority < bu[entity_struct + 4])
+    entity_scripts_settings = w[0x8007adf8];
+    scripting_system = w[0x8007aecc];
+
+    script_pointer  = 0;
+
+    if (entity_struct != 0)
     {
-        entity_id = bu[entity_struct + 6];
-        V1 = entity_scripts_settings + hu[entity_scripts_settings + entity_id * 8];
-        number_of_scripts = hu[V1] >> 8;
-
-        A0 = V1 + 2;
-
-        if (number_of_scripts != 0)
+        if (priority < bu[entity_struct + 0x4])
         {
-            loop38524:	; 80038524
-                if (hu[A0] == script_to_start)
-                {
-                    break;
-                }
+            entity_id = bu[entity_struct + 0x6];
+            V1 = entity_scripts_settings + hu[entity_scripts_settings + entity_id * 0x8];
+            number_of_scripts = hu[V1] >> 0x8;
 
-                A0 = A0 + 4;
-                number_of_scripts = number_of_scripts - 1;
-            80038538	bne    number_of_scripts, zero, loop38524 [$80038524]
+            A0 = V1 + 0x2;
 
             if (number_of_scripts != 0)
             {
-                script_pointer = V1 + hu[A0] + 4;
+                loop38524:	; 80038524
+                    if (hu[A0] == script_to_start)
+                    {
+                        break;
+                    }
+
+                    A0 = A0 + 4;
+                    number_of_scripts = number_of_scripts - 1;
+                80038538	bne    number_of_scripts, zero, loop38524 [$80038524]
+
+                if (number_of_scripts != 0)
+                {
+                    script_pointer = V1 + hu[A0] + 0x4;
+                }
             }
-        }
 
-        if (script_pointer != 0)
-        {
-            A2 = entity_struct + bu[entity_struct + 9] * 4 + bu[entity_struct + a] * 4;
-
-            [A2 + 0] = w(w[entity_struct + 0] - w[scripting_system + 16f0]);
-
-            A1 = w[0x8007b70c];
-
-            if (A3 != 0)
+            if (script_pointer != 0)
             {
-                [A2 + 4] = w((bu[A1 + 7] << 18) | (bu[A1 + 4] << 10) | (bu[entity_struct + 4] << 8) | bu[entity_struct + d]);
-            }
-            else
-            {
-                [A2 + 4] = w((bu[A1 + 7] << 18) | 00ff0000           | (bu[entity_struct + 4] << 8) | bu[entity_struct + d]);
-            }
+                A2 = entity_struct + bu[entity_struct + 0x9] * 0x4 + bu[entity_struct + 0xa] * 0x4;
 
-            if (A3 != 0)
-            {
-                V1 = w[0x8007b70c];
-                [V1 + d] = b(ff); // pause script
-            }
+                [A2 + 0x0] = w(w[entity_struct + 0x0] - w[scripting_system + 0x16f0]);
 
-            [entity_struct + 0] = w(script_pointer);
-            [entity_struct + 4] = b(priority);
-            [entity_struct + a] = b(bu[entity_struct + a] + 2); // increment runned script stack
-            [entity_struct + d] = b(0); // set pause to 0
+                A1 = w[0x8007b70c];
+
+                if (pause != 0)
+                {
+                    [A2 + 0x4] = w((bu[A1 + 0x7] << 0x18) | (bu[A1 + 0x4] << 0x10) | (bu[entity_struct + 0x4] << 0x8) | bu[entity_struct + 0xd]);
+                }
+                else
+                {
+                    [A2 + 0x4] = w((bu[A1 + 0x7] << 0x18) | 0x00ff0000 | (bu[entity_struct + 0x4] << 0x8) | bu[entity_struct + 0xd]);
+                }
+
+                if (pause != 0)
+                {
+                    V1 = w[0x8007b70c];
+                    [V1 + 0xd] = b(0xff); // pause script
+                }
+
+                [entity_struct + 0x0] = w(script_pointer);
+                [entity_struct + 0x4] = b(priority);
+                [entity_struct + 0xa] = b(bu[entity_struct + 0xa] + 0x2); // increment runned script stack
+                [entity_struct + 0xd] = b(0); // set pause to 0
+            }
         }
     }
-}
 
-return script_pointer != 0;
-////////////////////////////////
+    return script_pointer != 0;
+}
 
 
 
@@ -17828,14 +17822,11 @@ void system_init_script_system(u32 script_file)
 
 ////////////////////////////////
 // func4a8a4
-8004A8A4	addiu  sp, sp, $ffe0 (=-$20)
+
 V1 = w[0x8007b708];
 V0 = 0001;
-[SP + 001c] = w(RA);
-[SP + 0018] = w(S2);
-[SP + 0014] = w(S1);
 8004A8C0	beq    v1, v0, L4a8ec [$8004a8ec]
-[SP + 0010] = w(S0);
+
 V0 = 0003;
 8004A8CC	beq    v1, v0, L4a8ec [$8004a8ec]
 V0 = w[0x8006794c];
@@ -17908,22 +17899,15 @@ L4a9cc:	; 8004A9CC
 [V0 + ad1e] = b(0);
 
 L4a9d0:	; 8004A9D0
-RA = w[SP + 001c];
-S2 = w[SP + 0018];
-S1 = w[SP + 0014];
-S0 = w[SP + 0010];
-8004A9E0	jr     ra 
-SP = SP + 0020;
 ////////////////////////////////
 
 
 
 ////////////////////////////////
 // func4a9e8
-8004A9E8	addiu  sp, sp, $ffe8 (=-$18)
-[SP + 0014] = w(RA);
+
 8004A9F0	jal    func4e958 [$8004e958]
-[SP + 0010] = w(S0);
+
 8004A9F8	jal    func4ff98 [$8004ff98]
 A0 = 0;
 V1 = w[0x8007b708];
@@ -17994,10 +17978,6 @@ A2 = 0004;
 A3 = 0;
 
 L4aae0:	; 8004AAE0
-RA = w[SP + 0014];
-S0 = w[SP + 0010];
-8004AAE8	jr     ra 
-SP = SP + 0018;
 ////////////////////////////////
 
 
@@ -18447,31 +18427,31 @@ SP = SP + 0018;
 
 
 
-////////////////////////////////
-// func4b040
 // get pointer to allocated memory
-V0 = w[0x8007aecc];
-V1 = w[V0 + 16d8]; // first element in script list
-if (V1 != 0)
+u32 func4b040()
 {
-    loop4b05c:	; 8004B05C
-        V0 = w[V1 + 4];
-        if (bu[V0 + 7] == A0)
-        {
-            break;
-        }
+    V0 = w[0x8007aecc];
+    V1 = w[V0 + 16d8]; // first element in script list
+    if (V1 != 0)
+    {
+        loop4b05c:	; 8004B05C
+            V0 = w[V1 + 4];
+            if (bu[V0 + 7] == A0)
+            {
+                break;
+            }
 
-        V1 = w[V1 + 0];
-    8004B07C	bne    v1, zero, loop4b05c [$8004b05c]
+            V1 = w[V1 + 0];
+        8004B07C	bne    v1, zero, loop4b05c [$8004b05c]
+    }
+
+    if (V1 != 0)
+    {
+        return w[V1 + 4];
+    }
+
+    return 0;
 }
-
-if (V1 != 0)
-{
-    return w[V1 + 4];
-}
-
-return 0;
-////////////////////////////////
 
 
 

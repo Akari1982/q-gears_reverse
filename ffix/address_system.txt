@@ -290,7 +290,7 @@
 0x8007aea0 [][][][] store pointer to start of current opcode here (to restore it if needed)
 0x8007aec0 [][][][] set to 0 during script initialization.
 0x8007aec8 [][][][] set to 0 during script initialization.
-0x8007aecc [][][][] pointer to 80077e60 struct or data.
+0x8007aecc [][][][] pointer to 0x80077e60 struct or data.
 0x8007aed0 array of 8 offsets to script memory allocated area. Reset to 0 when start scripts.
 
 8007aef0-8007b6ef some array to store script variable.
