@@ -1911,6 +1911,8 @@ if (bu[entity_struct + e] == 2) // if script is runned then we stop it and run s
 // run script
 void func384d0(entity_struct, priority, script_to_start, pause)
 {
+
+
     entity_scripts_settings = w[0x8007adf8];
     scripting_system = w[0x8007aecc];
 
