@@ -3212,7 +3212,7 @@ int func39c38()
             8003C678	j      L3ca10 [$8003ca10]
             V0 = V0 >> A3;
 
-        case 0x1d + 0x7: // 0x8003C680
+        case 0x24:
 
             8003C680	jal    func38150 [$80038150]
             8003C684	nop
@@ -3237,7 +3237,7 @@ int func39c38()
             [V1 + b6f8] = w(0x1);
             return 0x1;
 
-        case 0x99: // 0x8003C6D4
+        case 0xa0:
 
             A1 = 0;
             A0 = w[0x8007ae24];
@@ -3256,7 +3256,7 @@ int func39c38()
 
             return 0x1
 
-        case 0x9b: // 0x8003C71C
+        case 0xa2:
 
             V0 = w[0x8007b6f4];
             8003C724	nop
@@ -3362,7 +3362,7 @@ int func39c38()
             8003C884	j      L3c9f8 [$8003c9f8]
             A3 = 0002;
 
-        case 0xe1: // 0x8003C88C
+        case 0xe8:
 
             V0 = w[0x8007b6f4];
             8003C894	nop
@@ -3487,7 +3487,7 @@ int func39c38()
             }
             return 0x1;
 
-        case 0x4e: // 0x8003CA38
+        case 0x55:
 
             V0 = w[0x8007b6f4];
             8003CA40	nop
@@ -3526,7 +3526,7 @@ int func39c38()
             [S0 + 005f] = b(S2);
             return 0;
 
-        case 0x1f: // 0x8003CAB4
+        case 0x26:
 
             V0 = w[0x8007b6f4];
             8003CABC	nop
@@ -3561,7 +3561,7 @@ int func39c38()
             [S0 + 005c] = b(A3);
             return V0;
 
-        case 0x9f: // 0x8003CB28
+        case 0xa6:
 
             V0 = w[0x8007b6f4];
             8003CB30	nop
@@ -3596,7 +3596,7 @@ int func39c38()
             [S0 + 005e] = b(A3);
             return V0;
 
-        case 0x95: // 0x8003CB9C
+        case 0x9c:
 
             V0 = 0008;
             [S0 + 0062] = b(V0);
@@ -3655,7 +3655,7 @@ int func39c38()
 
             return 0;
 
-        case 0x96: // 0x8003CC6C
+        case 0x9d:
 
             A0 = bu[S0 + 003b];
             8003CC70	jal    func1e350 [$8001e350]
@@ -3721,7 +3721,7 @@ int func39c38()
 
             return 0;
 
-        case 0xdb: // 0x8003CD58
+        case 0xe2:
 
             V0 = w[0x8007b6f4];
             8003CD60	nop
@@ -3968,7 +3968,7 @@ int func39c38()
 
             return 0;
 
-        case 0xd5: // 0x8003D0C0
+        case 0xdc:
 
             A2 = bu[S0 + 0068];
             S3 = bu[S0 + 0092];
@@ -4067,7 +4067,7 @@ int func39c38()
             [S0 + 001c] = w(A0);
             return 0;
 
-        case 0x22: // 0x8003D214
+        case 0x29:
 
             8003D214	lui    v0, $8008
             8003D218	lui    v1, $8008
@@ -4184,7 +4184,7 @@ int func39c38()
             S1 = S1 + 0004;
             return 0;
 
-        case 0x9d: // 0x8003D3AC
+        case 0xa4:
 
             V0 = w[0x8007aecc];
             8003D3B4	nop
@@ -4298,7 +4298,7 @@ int func39c38()
             [V0 + ae24] = w(0);
             return 0;
 
-        case 0x97: // 0x8003D52C
+        case 0x9e:
 
             V0 = w[0x8007aecc];
             8003D534	nop
@@ -4383,7 +4383,7 @@ int func39c38()
 
             return 0;
 
-        case 0x6f: // 0x8003D658
+        case 0x76:
 
             8003D658	lui    v0, $8008
             8003D65C	lui    v1, $8008
@@ -4463,7 +4463,7 @@ int func39c38()
             8003D768	j      L3eee4 [$8003eee4]
             [S0 + 001a] = h(A3);
 
-        case 0x70: // 0x8003D770
+        case 0x77:
 
             A0 = w[0x8007b704];
             8003D778	nop
@@ -4549,7 +4549,7 @@ int func39c38()
             8003D898	j      L3eee4 [$8003eee4]
             [S0 + 0002] = h(A3);
 
-        case 0x71: // 0x8003D8A0
+        case 0x78:
 
             A0 = w[0x8007b704];
             8003D8A8	nop
@@ -4576,7 +4576,7 @@ int func39c38()
 
             return 0;
 
-        case 0x24: // 0x8003D8F8
+        case 0x2b:
 
             V0 = w[0x8007b6f4];
             8003D900	nop
@@ -4618,7 +4618,7 @@ int func39c38()
             [A2 + b6f4] = w(V0);
             return 0x4;
 
-        case 0xaf: // 0x8003D990
+        case 0xb6:
 
             V0 = w[0x8007b6f4];
             8003D998	nop
@@ -4660,7 +4660,7 @@ int func39c38()
             [A2 + b6f4] = w(V0);
             return 0x5;
 
-        case 0xa7: // 0x8003DA28
+        case 0xae:
 
             V0 = w[0x8007b6f4];
             8003DA30	nop
@@ -4702,11 +4702,12 @@ int func39c38()
             [A2 + b6f4] = w(V0);
             return 0x7;
 
-        case 0xee: // 0x8003DAC0
-
+        case 0xf5:
+        {
             return 0x8;
+        }
 
-        case 0x23: // 0x8003DAC8
+        case 0x2a:
 
             8003DAC8	lui    v1, $8008
             V0 = w[0x8007b6f4];
@@ -4751,7 +4752,7 @@ int func39c38()
             8003DB64	j      L3dc80 [$8003dc80]
             8003DB68	lui    v0, $8008
 
-        case 0x85: // 0x8003DB6C
+        case 0x8c:
 
             8003DB6C	lui    v1, $8008
             V0 = w[0x8007b6f4];
@@ -4864,7 +4865,7 @@ int func39c38()
             [V1 + 0571] = b(V0);
             return 0x3;
 
-        case 0x50: // 0x8003DD00
+        case 0x57:
 
             V0 = w[0x8007b6f4];
             8003DD08	nop
@@ -4905,7 +4906,7 @@ int func39c38()
             }
             return 0;
 
-        case 0x35:
+        case 0x3c:
 
             V0 = w[0x8007b6f4];
             8003DD90	nop
@@ -5080,7 +5081,7 @@ int func39c38()
             [0x8007b6f4] = w(V1);
             return V0;
 
-        case 0x25:
+        case 0x2c:
         {
             V0 = w[0x8007b70c];
             A0 = w[0x8007aecc];
@@ -5089,7 +5090,7 @@ int func39c38()
             return 0;
         }
 
-        case 0x26:
+        case 0x2d:
         {
             V0 = w[0x8007aecc];
             [V0 + 0x16ec] = b(0);
@@ -5102,7 +5103,7 @@ int func39c38()
             return 0;
         }
 
-        case 0x27:
+        case 0x2e:
         {
             V1 = w[0x8007aecc];
             [V1 + 0x16ec] = b(0x1);
@@ -5127,7 +5128,7 @@ int func39c38()
             return 0;
         }
 
-        case 0x28: // 0x8003E0C0
+        case 0x2f:
 
             V0 = w[0x8007b6f4];
             8003E0C8	nop
@@ -5210,7 +5211,7 @@ int func39c38()
             [A1 + b6f4] = w(A0);
             return 0;
 
-        case 0xcd: // 0x8003E1E8
+        case 0xd4:
 
             A0 = w[0x8007b704];
             8003E1F0	nop
@@ -5353,7 +5354,7 @@ int func39c38()
 
             return 0;
 
-        case 0x45: // 0x8003E3C4
+        case 0x4c:
 
             8003E3C4	jal    func38150 [$80038150]
             8003E3C8	nop
@@ -5444,7 +5445,7 @@ int func39c38()
 
             return 0;
 
-        case 0x46: // 0x8003E4D8
+        case 0x4d:
 
             8003E4D8	jal    func38150 [$80038150]
             8003E4DC	nop
@@ -5475,7 +5476,7 @@ int func39c38()
 
             return 0;
 
-        case 0x98: // 0x8003E530
+        case 0x9f:
 
             8003E530	jal    func38150 [$80038150]
             8003E534	nop
@@ -5606,7 +5607,7 @@ int func39c38()
             [S4 + 002f] = b(S3);
             return 0;
 
-        case 0xb9: // 0x8003E6E0
+        case 0xc0:
 
             8003E6E0	jal    func38150 [$80038150]
             8003E6E4	nop
@@ -5688,7 +5689,7 @@ int func39c38()
 
             return 0;
 
-        case 0xba: // 0x8003E7E4
+        case 0xc1:
 
             8003E7E4	jal    func38150 [$80038150]
             8003E7E8	nop
@@ -5768,7 +5769,7 @@ int func39c38()
 
             return 0;
 
-        case 0xbb: // 0x8003E8E8
+        case 0xc2:
 
             8003E8E8	jal    func38150 [$80038150]
             8003E8EC	nop
@@ -5841,7 +5842,7 @@ int func39c38()
 
             return 0;
 
-        case 0xc5: // 0x8003E9C8
+        case 0xcc:
 
             A0 = bu[S4 + 003b];
             8003E9CC	jal    func1e350 [$8001e350]
@@ -5887,7 +5888,7 @@ int func39c38()
             [S0 + 0000] = w(A0);
             return 0;
 
-        case 0xc6: // 0x8003EA70
+        case 0xcd:
 
             A0 = bu[S4 + 003b];
             8003EA74	jal    func1e350 [$8001e350]
@@ -5934,7 +5935,7 @@ int func39c38()
             [S0 + 0000] = w(V1);
             return 0;
 
-        case 0x47: // 0x8003EB1C
+        case 0x4e:
 
             V0 = w[0x8007b70c];
             8003EB24	nop
@@ -5969,7 +5970,7 @@ int func39c38()
             [A0 + 0000] = w(V1);
             return 0;
 
-        case 0x48: // 0x8003EB90
+        case 0x4f:
 
             A2 = w[0x8007b70c];
             8003EB9C	lui    a1, $8008
@@ -5980,7 +5981,7 @@ int func39c38()
             [A2 + 0000] = w(V1);
             return 0x6;
 
-        case 0x2c: // 0x8003EBB8
+        case 0x33:
 
             V0 = w[0x8007b6f4];
             8003EBC0	nop
@@ -6020,7 +6021,7 @@ int func39c38()
             8003EC38	j      L3eee4 [$8003eee4]
             [S0 + 0054] = h(A3);
 
-        case 0x2d: // 0x8003EC40
+        case 0x34:
 
             V0 = w[0x8007b6f4];
             8003EC48	nop
@@ -6060,7 +6061,7 @@ int func39c38()
             8003ECC0	j      L3eee4 [$8003eee4]
             [S0 + 0056] = h(A3);
 
-        case 0x2e: // 0x8003ECC8
+        case 0x35:
 
             V0 = w[0x8007b6f4];
             8003ECD0	nop
@@ -6100,7 +6101,7 @@ int func39c38()
             8003ED48	j      L3eee4 [$8003eee4]
             [S0 + 0058] = h(A3);
 
-        case 0x73: // 0x8003ED50
+        case 0x7a:
 
             V0 = w[0x8007b6f4];
             8003ED58	nop
@@ -6140,7 +6141,7 @@ int func39c38()
             8003EDD0	j      L3eee4 [$8003eee4]
             [S0 + 004c] = h(A3);
 
-        case 0x74: // 0x8003EDD8
+        case 0x7b:
 
             V0 = w[0x8007b6f4];
             8003EDE0	nop
@@ -6180,7 +6181,7 @@ int func39c38()
             8003EE58	j      L3eee4 [$8003eee4]
             [S0 + 004e] = h(A3);
 
-        case 0x4b: // 0x8003EE60
+        case 0x52:
 
             V0 = w[0x8007b6f4];
             8003EE68	nop
@@ -6224,7 +6225,7 @@ int func39c38()
             [A2 + b6f4] = w(A0);
             return V0;
 
-        case 0x8d: // 0x8003EEF0
+        case 0x94:
 
             V0 = w[0x8007b6f4];
             8003EEF8	nop
@@ -6323,7 +6324,7 @@ int func39c38()
             [S0 + 0091] = b(A3);
             return 0;
 
-        case 0x38: // 0x8003F048
+        case 0x3f:
 
             V0 = w[0x8007b6f4];
             8003F050	nop
@@ -6391,7 +6392,7 @@ int func39c38()
             [S0 + 0063] = b(A3);
             return 0;
 
-        case 0x37: // 0x8003F12C
+        case 0x3e:
 
             V0 = w[0x8007b6f4];
             8003F134	nop
@@ -6425,7 +6426,7 @@ int func39c38()
             [S0 + 0069] = b(A3);
             return 0;
 
-        case 0x7f: // 0x8003F1A0
+        case 0x86:
 
             V0 = w[0x8007b6f4];
             8003F1A8	nop
@@ -6549,7 +6550,7 @@ int func39c38()
             [S0 + 007f] = b(A3);
             return 0;
 
-        case 0x36: // 0x8003F34C
+        case 0x3d:
 
             V0 = w[0x8007b6f4];
             8003F354	nop
@@ -6613,13 +6614,13 @@ int func39c38()
             [S0 + 0061] = b(A3);
             return 0;
 
-        case 0xb6: // 0x8003F428
+        case 0xbd:
 
             8003F428	jal    func38150 [$80038150]
             8003F42C	nop
             S0 = V0;
 
-        case 0x39: // 0x8003F434
+        case 0x40:
 
             V0 = w[0x8007b6f4];
             8003F43C	nop
@@ -6708,7 +6709,7 @@ int func39c38()
 
             return 0;
 
-        case 0xb7: // 0x8003F574
+        case 0xb7 + 0x7: // 0x8003F574
 
             8003F574	jal    func38150 [$80038150]
             8003F578	nop
