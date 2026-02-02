@@ -857,7 +857,7 @@
 80037D6C func37d6c
 80038150 system_get_entity_script_data_pointer_from_script
 80038278 func38278
-800384D0 func384d0
+800384D0 system_event_script_run
 80038618 system_check_entity_collisions
 80038990 func38990
 80038D3C func38d3c

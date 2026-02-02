@@ -1908,8 +1908,7 @@ if (bu[entity_struct + e] == 2) // if script is runned then we stop it and run s
 
 
 
-// run script
-void func384d0(entity_struct, priority, script_to_start, pause)
+void system_event_script_run(entity_struct, priority, script_to_start, pause)
 {
 
 
@@ -3665,7 +3664,7 @@ case 10: // B09E0380
 
     A1 = S2; // priority
     A3 = 0; // not pause current
-    func384d0; // run script
+    system_event_script_run; // run script
 
     return 0;
 }
@@ -3692,7 +3691,7 @@ case 14: // E09F0380
         A1 = S2; // priority
         A2 = S5; // script to start
         A3 = 1; // pause current
-        func384d0;
+        system_event_script_run;
     }
     else
     {
@@ -6235,7 +6234,7 @@ V0 = V0 + 0001;
 [V1 + 0000] = w(V0);
 
 L3a36c:	; 8003A36C
-8003A36C	jal    func384d0 [$800384d0]
+8003A36C	jal    system_event_script_run [$800384d0]
 8003A370	nop
 8003A374	j      L475b4 [$800475b4]
 V0 = 0;
@@ -6377,7 +6376,7 @@ V0 = w[V1 + 0000];
 A3 = 0001;
 A2 = bu[V0 + 0000];
 V0 = V0 + A3;
-8003A564	jal    func384d0 [$800384d0]
+8003A564	jal    system_event_script_run [$800384d0]
 [V1 + 0000] = w(V0);
 8003A56C	j      L475b4 [$800475b4]
 V0 = 0001;
@@ -15944,7 +15943,7 @@ if (S0 != 0)
             A1 = 1; // priority
             A2 = 8;
             A3 = 0;
-            func384d0;
+            system_event_script_run();
 
             if (V0 != 0)
             {
@@ -15956,7 +15955,7 @@ if (S0 != 0)
         A1 = 1; // priority
         A2 = 3;
         A3 = 0;
-        func384d0;
+        system_event_script_run;
 
         if (V0 != 0)
         {
@@ -15981,7 +15980,7 @@ if (S0 != 0)
     A0 = S0;
     A1 = 1; // priority
     A2 = 0002;
-    80048B6C	jal    func384d0 [$800384d0]
+    80048B6C	jal    system_event_script_run [$800384d0]
     A3 = 0;
 }
 
@@ -16062,7 +16061,7 @@ S0 = S7;
 A0 = S0;
 A1 = 1; // priority
 A2 = 0008;
-80048C64	jal    func384d0 [$800384d0]
+80048C64	jal    system_event_script_run [$800384d0]
 A3 = 0;
 if (V0 != 0)
 {
@@ -16073,7 +16072,7 @@ A0 = S0;
 L48c74:	; 80048C74
 A1 = 1; // priority
 A2 = 0003;
-80048C7C	jal    func384d0 [$800384d0]
+80048C7C	jal    system_event_script_run [$800384d0]
 A3 = 0;
 80048C84	j      L48e3c [$80048e3c]
 S0 = 0;
@@ -16224,7 +16223,7 @@ if (S0 != 0)
     A0 = S0;
     A1 = 1; // priority
     A2 = 0002;
-    80048E4C	jal    func384d0 [$800384d0]
+    80048E4C	jal    system_event_script_run [$800384d0]
     A3 = 0;
 }
 return V0;
@@ -16516,7 +16515,7 @@ V0 = bu[S2 + 000b];
 A0 = S2;
 A1 = 0003;
 A2 = 0005;
-80049284	jal    func384d0 [$800384d0]
+80049284	jal    system_event_script_run [$800384d0]
 A3 = 0;
 8004928C	beq    v0, zero, L49298 [$80049298]
 80049290	nop
@@ -17777,7 +17776,7 @@ void system_init_script_system(u32 script_file)
         A1 = 0x0; // priority
         A2 = 0xa; // script
         A3 = 0x0;
-        func384d0(); // run script
+        system_event_script_run(); // run script
 
         V0 = w[0x8007aecc];
         A0 = w[V0 + 16d8];
@@ -17976,7 +17975,7 @@ A0 = w[V1 + 0004];
 L4aad0:	; 8004AAD0
 A1 = 0001;
 A2 = 0004;
-8004AAD8	jal    func384d0 [$800384d0]
+8004AAD8	jal    system_event_script_run [$800384d0]
 A3 = 0;
 
 L4aae0:	; 8004AAE0
@@ -18107,7 +18106,7 @@ L4ac5c:	; 8004AC5C
 
 L4ac60:	; 8004AC60
 [V0 + ae34] = w(A3);
-8004AC64	jal    func384d0 [$800384d0]
+8004AC64	jal    system_event_script_run [$800384d0]
 A3 = 0;
 T0 = V0;
 
@@ -18565,7 +18564,7 @@ A2 = A2 | V0;
 V0 = T0 & 0003;
 A1 = 0001;
 A2 = A2 | V0;
-8004B1D4	jal    func384d0 [$800384d0]
+8004B1D4	jal    system_event_script_run [$800384d0]
 A3 = 0;
 RA = w[SP + 0010];
 8004B1E0	nop
